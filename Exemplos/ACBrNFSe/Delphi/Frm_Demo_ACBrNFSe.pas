@@ -944,7 +944,7 @@ end;
 
 procedure TfrmDemo_ACBrNFSe.btnEnviaremailClick(Sender: TObject);
 var
- vAux, vNumLote : String;
+ vAux: String;
  sCC: TStrings;
 begin
  OpenDialog1.Title := 'Selecione a NFSe';
