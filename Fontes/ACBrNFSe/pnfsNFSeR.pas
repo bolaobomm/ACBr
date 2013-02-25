@@ -398,7 +398,7 @@ end;
 
 procedure TNFSeR.Rps_ProvedorGoiania;
 var
- item: Integer;
+// item: Integer;
  ok  : Boolean;
 begin
  	if Leitor.rExtrai(1, 'InfDeclaracaoPrestacaoServico') <> '' then
@@ -959,7 +959,7 @@ end;
 
 procedure TNFSeR.NFSe_ProvedorGoiania;
 var
- 	item: Integer;
+// 	item: Integer;
  	ok  : Boolean;
 begin
  	if Leitor.rExtrai(3, 'ValoresNfse') <> '' then

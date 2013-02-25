@@ -36,7 +36,7 @@ uses
     ACBrProvedorEquiplano, ACBrProvedorfintelISS, ACBrProvedorDigifred,
     ACBrProvedorBetha, ACBrProvedorBetim, ACBrProvedorSaatri,
     ACBrProvedorAbaco, ACBrProvedorGoiania, ACBrProvedorIssCuritiba,
-    ACBrProvedorBHISS;
+    ACBrProvedorBHISS, ACBrProvedorNatal;
 
 type
 
@@ -1140,7 +1140,7 @@ begin
   proGoiania:     FProvedorClass := TProvedorGoiania.Create;
   proIssCuritiba: FProvedorClass := TProvedorIssCuritiba.Create;
   proBHISS:       FProvedorClass := TProvedorBHISS.Create;
-  //proNatal:       FProvedorClass := TProvedorNatal.Create;
+  proNatal:       FProvedorClass := TProvedorNatal.Create;
  end;
 
  FPrefixo2     := FConfiguracoes.WebServices.Prefixo2;
@@ -1925,6 +1925,7 @@ begin
   except
 		on E: Exception do
 		begin
+     Result := False;
      if Assigned(TACBrNFSe( FACBrNFSe ).OnGerarLog) then
         TACBrNFSe( FACBrNFSe ).OnGerarLog(E.Message);
      raise Exception.Create(E.Message);
@@ -2941,7 +2942,7 @@ var
  Prefixo4      : String;
  FRetListaNfse : AnsiString;
  FRetNfse      : AnsiString;
- i, j, k, p, ii: Integer;
+ i, j, k, p    : Integer;
  PathSalvar    : String;
 begin
  inherited Executar;
@@ -3187,6 +3188,8 @@ end;
 function TNFSeLinkNFSe.Executar: Boolean;
 begin
  inherited Executar;
+
+ Result := True;
 end;
 
 { TNFSeGerarLoteRPS }
@@ -3202,6 +3205,8 @@ end;
 function TNFSeGerarLoteRPS.Executar: Boolean;
 begin
  inherited Executar;
+
+ Result := True;
 end;
 
 end.

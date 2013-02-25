@@ -276,8 +276,8 @@ begin
 end;
 
 function TACBrNFSe.Gerar(ARps: Integer): Boolean;
-var
- i: Integer;
+//var
+// i: Integer;
 begin
  if NotasFiscais.Count <= 0
   then begin
@@ -312,8 +312,8 @@ begin
 end;
 
 function TACBrNFSe.GerarLote(ALote: String): Boolean;
-var
- i: Integer;
+//var
+// i: Integer;
 begin
  if NotasFiscais.Count <= 0
   then begin

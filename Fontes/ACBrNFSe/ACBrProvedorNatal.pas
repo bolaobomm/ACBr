@@ -445,6 +445,9 @@ end;
 function TProvedorNatal.GeraEnvelopeRecepcionarLoteRPS(URLNS: String;
   CabMsg, DadosMsg, DadosSenha: AnsiString): AnsiString;
 begin
+ Result := '';
+ raise Exception.Create( 'Opção não implementada para este provedor.' );
+(*
  result := '<?xml version="1.0" encoding="UTF-8"?>' +
            '<S:Envelope xmlns:S="http://schemas.xmlsoap.org/soap/envelope/" ' +
                        'xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" ' +
@@ -457,11 +460,15 @@ begin
              '</EnviarLoteRpsEnvio>' +
             '</S:Body>' +
            '</S:Envelope>';
+*)           
 end;
 
 function TProvedorNatal.GeraEnvelopeConsultarSituacaoLoteRPS(
   URLNS: String; CabMsg, DadosMsg, DadosSenha: AnsiString): AnsiString;
 begin
+ Result := '';
+ raise Exception.Create( 'Opção não implementada para este provedor.' );
+(*
  result := '<?xml version="1.0" encoding="UTF-8"?>' +
            '<S:Envelope xmlns:S="http://schemas.xmlsoap.org/soap/envelope/" ' +
                        'xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" ' +
@@ -474,11 +481,15 @@ begin
              '</ConsultarSituacaoLoteRpsEnvio>' +
             '</S:Body>' +
            '</S:Envelope>';
+*)
 end;
 
 function TProvedorNatal.GeraEnvelopeConsultarLoteRPS(URLNS: String;
   CabMsg, DadosMsg, DadosSenha: AnsiString): AnsiString;
 begin
+ Result := '';
+ raise Exception.Create( 'Opção não implementada para este provedor.' );
+(*
  result := '<?xml version="1.0" encoding="UTF-8"?>' +
            '<S:Envelope xmlns:S="http://schemas.xmlsoap.org/soap/envelope/" ' +
                        'xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" ' +
@@ -491,11 +502,15 @@ begin
              '</ConsultarLoteRpsEnvio>' +
             '</S:Body>' +
            '</S:Envelope>';
+*)
 end;
 
 function TProvedorNatal.GeraEnvelopeConsultarNFSeporRPS(URLNS: String;
   CabMsg, DadosMsg, DadosSenha: AnsiString): AnsiString;
 begin
+ Result := '';
+ raise Exception.Create( 'Opção não implementada para este provedor.' );
+(*
  result := '<?xml version="1.0" encoding="UTF-8"?>' +
            '<S:Envelope xmlns:S="http://schemas.xmlsoap.org/soap/envelope/" ' +
                        'xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" ' +
@@ -508,11 +523,15 @@ begin
              '</ConsultarNfseRpsEnvio>' +
             '</S:Body>' +
            '</S:Envelope>';
+*)
 end;
 
 function TProvedorNatal.GeraEnvelopeConsultarNFSe(URLNS: String; CabMsg,
   DadosMsg, DadosSenha: AnsiString): AnsiString;
 begin
+ Result := '';
+ raise Exception.Create( 'Opção não implementada para este provedor.' );
+(*
  result := '<?xml version="1.0" encoding="UTF-8"?>' +
            '<S:Envelope xmlns:S="http://schemas.xmlsoap.org/soap/envelope/" ' +
                        'xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" ' +
@@ -525,11 +544,15 @@ begin
              '</ConsultarNfseEnvio>' +
             '</S:Body>' +
            '</S:Envelope>';
+*)
 end;
 
 function TProvedorNatal.GeraEnvelopeCancelarNFSe(URLNS: String; CabMsg,
   DadosMsg, DadosSenha: AnsiString): AnsiString;
 begin
+ Result := '';
+ raise Exception.Create( 'Opção não implementada para este provedor.' );
+(*
  result := '<?xml version="1.0" encoding="UTF-8"?>' +
            '<S:Envelope xmlns:S="http://schemas.xmlsoap.org/soap/envelope/" ' +
                        'xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" ' +
@@ -542,6 +565,7 @@ begin
              '</CancelarNfseEnvio>' +
             '</S:Body>' +
            '</S:Envelope>';
+*)           
 end;
 
 function TProvedorNatal.GeraEnvelopeGerarNFSe(URLNS: String; CabMsg,
