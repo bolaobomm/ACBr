@@ -130,7 +130,8 @@ type
   TpcnIndicadorPagamento = (ipVista, ipPrazo, ipOutras);
   TpcnTipoNFe = (tnEntrada, tnSaida);
   // Alterado por Italo em 24/09/2012 para contemplar a NFC-e
-  TpcnTipoImpressao = (tiSemGeracao, tiRetrato, tiPaisagem, tiSimplificado, tiNFCe, tiResumido, tiMsgEletronica);
+  // Alterado por Italo em 25/02/2013 removido o valor tiResumido
+  TpcnTipoImpressao = (tiSemGeracao, tiRetrato, tiPaisagem, tiSimplificado, tiNFCe, tiMsgEletronica);
 
   // Tipo teSVCRS, teSVCSP incluido por Italo em 03/08/2011 (usado no CTe versão 1.04)
   // Alterado por Italo em 24/09/2012 para contemplar a NFC-e
@@ -608,16 +609,17 @@ end;
 // B21 - Formato de Impressão do DANFE *****************************************
 
 // Alterado por Italo em 24/09/2012 para contemplar a NFC-e
+// Alterado por Italo em 25/02/2013 removido o valor tiResumido
 function TpImpToStr(const t: TpcnTipoImpressao): string;
 begin
-  result := EnumeradoToStr(t, ['0', '1', '2', '3', '4', '5', '6'],
-                              [tiSemGeracao, tiRetrato, tiPaisagem, tiSimplificado, tiNFCe, tiResumido, tiMsgEletronica]);
+  result := EnumeradoToStr(t, ['0', '1', '2', '3', '4', '5'],
+                              [tiSemGeracao, tiRetrato, tiPaisagem, tiSimplificado, tiNFCe, tiMsgEletronica]);
 end;
 
 function StrToTpImp(var ok: boolean; const s: string): TpcnTipoImpressao;
 begin
-  result := StrToEnumerado(ok, s, ['0', '1', '2', '3', '4', '5', '6'],
-                                  [tiSemGeracao, tiRetrato, tiPaisagem, tiSimplificado, tiNFCe, tiResumido, tiMsgEletronica]);
+  result := StrToEnumerado(ok, s, ['0', '1', '2', '3', '4', '5'],
+                                  [tiSemGeracao, tiRetrato, tiPaisagem, tiSimplificado, tiNFCe, tiMsgEletronica]);
 end;
 
 function TpMaskToStrText(const t: TpcteMask): string;
