@@ -38,6 +38,8 @@
 |*  - Criação e distribuição da Primeira Versao
 |* 15/03/2010: Alessandro Yamasaki
 |*  - Adicionado o REGISTRO 0500: PLANO DE CONTAS CONTÁBEIS
+|* 13/9/2011: Adolfo Jefferson Fernandes Lopes
+|*  - Registro0206.LocalizaRegistro - ANP 
 *******************************************************************************}
 
 unit ACBrEFDBloco_0;
@@ -421,6 +423,7 @@ type
     procedure SetItem(Index: Integer; const Value: TRegistro0206);
   public
     function New(AOwner: TRegistro0200): TRegistro0206;
+    function LocalizaRegistro(pCOD_COMB: string): boolean;{:ANP - Localiza :AJ-13/9/2011 05:34:36:}
     property Items[Index: Integer]: TRegistro0206 read GetItem write SetItem;
   end;
 
@@ -855,6 +858,22 @@ end;
 function TRegistro0206List.GetItem(Index: Integer): TRegistro0206;
 begin
   Result := TRegistro0206(Inherited Items[Index]);
+end;
+
+function TRegistro0206List.LocalizaRegistro(pCOD_COMB: string): boolean;
+{:ANP - Localiza :AJ-13/9/2011 05:33:04:}
+var
+  intFor: integer;
+begin
+  Result := false;
+  for intFor := 0 to Self.Count - 1 do
+  begin
+    if Self.Items[intFor].COD_COMB = pCOD_COMB then
+    begin
+      Result := true;
+      Break;
+    end;
+  end;
 end;
 
 function TRegistro0206List.New(AOwner: TRegistro0200): TRegistro0206;
