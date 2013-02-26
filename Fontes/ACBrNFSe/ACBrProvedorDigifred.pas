@@ -254,7 +254,8 @@ begin
               '</' + Prefixo4 + 'ListaRps>' +
              '</' + Prefixo3 + 'LoteRps>';
 
-  Result := TagI + DadosMsg + TagF;
+//  Result := TagI + DadosMsg + TagF;
+ Result := DadosMsg;
 end;
 
 function TProvedorDigifred.Gera_DadosMsgConsSitLote(Prefixo3, Prefixo4,
@@ -285,7 +286,8 @@ begin
                 Protocolo +
               '</' + Prefixo3 + 'Protocolo>';
 
- Result := TagI + DadosMsg + TagF;
+// Result := TagI + DadosMsg + TagF;
+ Result := DadosMsg;
 end;
 
 function TProvedorDigifred.Gera_DadosMsgConsLote(Prefixo3, Prefixo4,
@@ -316,7 +318,8 @@ begin
                 Protocolo +
               '</' + Prefixo3 + 'Protocolo>';
 
- Result := TagI + DadosMsg + TagF;
+// Result := TagI + DadosMsg + TagF;
+ Result := DadosMsg;
 end;
 
 function TProvedorDigifred.Gera_DadosMsgConsNFSe(Prefixo3, Prefixo4,
@@ -359,7 +362,8 @@ begin
                                '</' + Prefixo3 + 'DataFinal>' +
                               '</' + Prefixo3 + 'PeriodoEmissao>';
 
- Result := TagI + DadosMsg + TagF;
+// Result := TagI + DadosMsg + TagF;
+ Result := DadosMsg;
 end;
 
 function TProvedorDigifred.Gera_DadosMsgConsNFSeRPS(Prefixo3, Prefixo4,
@@ -398,7 +402,8 @@ begin
               '</' + Prefixo4 + 'InscricaoMunicipal>' +
              '</' + Prefixo3 + 'Prestador>';
 
- Result := TagI + DadosMsg + TagF;
+// Result := TagI + DadosMsg + TagF;
+ Result := DadosMsg;
 end;
 
 function TProvedorDigifred.Gera_DadosMsgCancelarNFSe(Prefixo4, NameSpaceDad, NumeroNFSe,
@@ -433,7 +438,8 @@ begin
               '</' + Prefixo4 + 'CodigoCancelamento>' +
              '</' + Prefixo4 + 'InfPedidoCancelamento>';
 
- Result := TagI + DadosMsg + TagF;
+// Result := TagI + DadosMsg + TagF;
+ Result := DadosMsg;
 end;
 
 function TProvedorDigifred.Gera_DadosMsgGerarNFSe(Prefixo3, Prefixo4,
