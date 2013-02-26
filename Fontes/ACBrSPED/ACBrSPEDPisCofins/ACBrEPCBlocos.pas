@@ -233,10 +233,11 @@ type
 //                         raSubstituto    // 1 - Remessa do arquivo substituto
 //                        );
   /// Indicador do tipo de operação:
-  TACBrTipoOperacao = (
-                        tpEntradaAquisicao, // 0 - Entrada
-                        tpSaidaPrestacao    // 1 - Saída
-                       );
+  TACBrIndTipoOper = (
+                      tpEntradaAquisicao, // 0 - Entrada
+                      tpSaidaPrestacao    // 1 - Saída
+                     );
+  TACBrTipoOperacao = TACBrIndTipoOper;
 
   /// Indicador do emitente do documento fiscal
   TACBrEmitente = (
@@ -244,13 +245,14 @@ type
                     edTerceiros               // 1 - Terceiro
                    );
   /// Indicador do tipo do frete
-  TACBrTipoFrete = (
-                     tfPorContaTerceiros,     // 0 - Por conta de terceiros
-                     tfPorContaEmitente,      // 1 - Por conta do emitente
-                     tfPorContaDestinatario,  // 2 - Por conta do destinatário
-                     tfSemCobrancaFrete,      // 9 - Sem cobrança de frete
-                     tfNenhum                 // Preencher vazio
-                    );
+  TACBrIndFrt = (
+                 tfPorContaEmitente,     // 0 - Por conta de terceiros
+                 tfPorContaDestinatario, // 1 - Por conta do emitente
+                 tfPorContaTerceiros,    // 2 - Por conta do destinatário
+                 tfSemCobrancaFrete,     // 9 - Sem cobrança de frete
+                 tfNenhum
+                );
+  TACBrTipoFrete = TACBrIndFrt;
 
   /// Indicador do tipo do frete da operação de redespacho
 //  TACBrTipoFreteRedespacho = (
@@ -297,10 +299,12 @@ type
 //                     );
 
   /// Movimentação física do ITEM/PRODUTO:
-  TACBrMovimentacaoFisica = (
-                              mfSim,           // 0 - Sim
-                              mfNao            // 1 - Não
+  TACBrIndMovFisica = (
+                        mfSim,           // 0 - Sim
+                        mfNao            // 1 - Não
                              );
+  TACBrMovimentacaoFisica = TACBrIndMovFisica;
+
   /// Indicador de período de apuração do IPI
   TACBrApuracaoIPI = (
                        iaMensal,               // 0 - Mensal
@@ -1070,8 +1074,6 @@ sdRegimeEspecNEsp = sdfEspecial;
 
 function CodVerToStr(AValue: TACBrCodVer): string;
 function StrToCodVer(AValue: string): TACBrCodVer;
-function IndMovToStr(AValue: TACBrIndMov): string;
-function StrToIndMov(AValue: string): TACBrIndMov;
 function TipoEscritToStr(AValue: TACBrTipoEscrit): string;
 function StrToTipoEscrit(AValue: string): TACBrTipoEscrit;
 function IndNatPJToStr(AValue: TACBrIndNatPJ): string;
@@ -1110,6 +1112,12 @@ function CstIcmsToStr(AValue: TACBrCstIcms): string;
 function StrToCstIcms(AValue: String): TACBrCstIcms;
 function CstIpiToStr(AValue: TACBrCstIpi): string;
 function StrToCstIpi(AValue: String): TACBrCstIpi;
+function IndTipoOperToStr(AVAlue: TACBrIndTipoOper): string;
+function StrToIndTipoOper(AVAlue: string): TACBrIndTipoOper;
+function IndMovFisicaToStr(AValue: TACBrIndMovFisica): string;
+function StrToIndMovFisica(AValue: string): TACBrIndMovFisica;
+function IndFrtToStr(AValue: TACBrIndFrt): string;
+function StrToIndFrt(AValue: string): TACBrIndFrt;
 
 implementation
 
@@ -1176,22 +1184,6 @@ begin
    else
    if AValue = '003' then
       Result := vlVersao201;
-end;
-
-function IndMovToStr(AValue: TACBrIndMov): string;
-begin
-   Result := IntToStr( Integer( AValue ) + 1 );
-
-//   Result := EnumeradoToStr(AValue, ['0', '1'], [imComDados,
-//                                                 imSemDados]);
-end;
-
-function StrToIndMov(AValue: string): TACBrIndMov;
-begin
-   Result := TACBrIndMov( StrToIntDef( AValue, 1) );
-
-//   Result := StrToEnumerado(AValue, ['0', '1'], [imComDados,
-//                                                 imSemDados]);
 end;
 
 function TipoEscritToStr(AValue: TACBrTipoEscrit): string;
@@ -1276,13 +1268,6 @@ begin
       Result := indAtivoOutros
    else
       Result := TACBrIndAtiv( StrToIntDef( AValue, 9) );
-
-//   Result := StrToEnumerado(AValue, ['0', '1', '2', '3', '4', '9'], [indAtivIndustrial,
-//                                                                     indAtivPrestadorServico,
-//                                                                     indAtivComercio,
-//                                                                     indAtivoFincanceira,
-//                                                                     indAtivoImobiliaria,
-//                                                                     indAtivoOutros]);
 end;
 
 function CodIncTribToStr(AValue: TACBrCodIncTrib): string;
@@ -1322,17 +1307,11 @@ end;
 function CodTipoContToStr(AValue: TACBrCodTipoCont): string;
 begin
    Result := IntToStr( Integer( AValue ) + 1 );
-
-//   Result := EnumeradoToStr(AValue, ['1', '2'], [codIndTipoConExclAliqBasica,
-//                                                 codIndTipoAliqEspecificas]);
 end;
 
 function StrToCodTipoCont(AValue: string): TACBrCodTipoCont;
 begin
-   Result := TACBrCodTipoCont( StrToIntDef( AValue, 1) -1 );
-
-//   Result := StrToEnumerado(AValue, ['1', '2'], [codIndTipoConExclAliqBasica,
-//                                                 codIndTipoAliqEspecificas]);
+   Result := TACBrCodTipoCont( StrToIntDef( AValue, 0) -1 );
 end;
 
 function IndRegCumToStr(AValue: TACBrIndRegCum): string;
@@ -1493,18 +1472,25 @@ end;
 
 function IndPgtoToStr(AValue: TACBrIndPgto): string;
 begin
+{
+Indicador do tipo de pagamento:
+0- À vista;
+1- A prazo;
+9- Sem pagamento.
+13  IND_PGTO
+Obs.: A partir de 01/07/2012 passará a ser:
+Indicador do tipo de pagamento:
+0- À vista;
+1- A prazo;
+2 - Outros
+}
    if AValue = tpSemPagamento then
       Result := '9'
    else
    if AValue = tpNenhum then
       Result := ''
    else
-      Result := IntToStr( Integer( AValue ) + 1 );
-
-//   Result := EnumeradoToStr(AValue, ['0', '1', '9', ''], [tpVista,
-//                                                          tpPrazo,
-//                                                          tpSemPagamento,
-//                                                          tpNenhum]);
+      Result := IntToStr( Integer( AValue ) );
 end;
 
 function StrToIndPgto(AValue: string): TACBrIndPgto;
@@ -1516,11 +1502,6 @@ begin
       Result := tpNenhum
    else
       Result := TACBrIndPgto( StrToIntDef( AValue, 9) );
-
-//   Result := StrToEnumerado(AValue, ['0', '1', '9', ''], [tpVista,
-//                                                          tpPrazo,
-//                                                          tpSemPagamento,
-//                                                          tpNenhum]);
 end;
 
 function NatBcCredToStr(AValue: TACBrNatBcCred): string;
@@ -1685,6 +1666,82 @@ begin
          Break;
       end;
    end;
+end;
+
+function IndTipoOperToStr(AValue: TACBrIndTipoOper): string;
+begin
+   Result := IntToStr( Integer( AValue ) );
+end;
+
+function StrToIndTipoOper(AValue: string): TACBrIndTipoOper;
+begin
+   Result := TACBrIndTipoOper( StrToIntDef( AValue, 0) );
+end;
+
+function IndFrtToStr(AValue: TACBrIndFrt): string;
+begin
+{
+  TACBrIndFrt = (
+                 tfPorContaEmitente,     // 0 - Por conta de terceiros
+                 tfPorContaDestinatario, // 1 - Por conta do emitente
+                 tfPorContaTerceiros,    // 2 - Por conta do destinatário
+                 tfSemCobrancaFrete,     // 9 - Sem cobrança de frete
+                 tfNenhum
+Indicador do tipo do frete:
+0- Por conta de terceiros;
+1- Por conta do emitente;
+2- Por conta do destinatário;
+9- Sem cobrança de frete.
+17  IND_FRT
+Obs.: A partir de 01/01/2012 passará a ser:
+Indicador do tipo do frete:
+0- Por conta do emitente;
+1- Por conta do destinatário/remetente;
+2- Por conta de terceiros;
+9- Sem cobrança de frete.
+
+   if DT_INI >= EncodeDate(2012,01,01) then
+   begin
+}
+      if AValue = tfSemCobrancaFrete then
+      begin
+         Result := '9';
+         Exit;
+      end
+      else
+      if AValue = tfNenhum then
+      begin
+         Result := '';
+         Exit;
+      end;
+      Result := IntToStr( Integer( AValue ) );
+//   end;
+end;
+
+function StrToIndFrt(AValue: string): TACBrIndFrt;
+begin
+   if AValue = '9' then
+   begin
+      Result := tfSemCobrancaFrete;
+      Exit;
+   end
+   else
+   if AValue = '' then
+   begin
+      Result := tfNenhum;
+      Exit;
+   end;
+   Result := TACBrIndFrt( StrToIntDef( AValue, 0) );
+end;
+
+function IndMovFisicaToStr(AValue: TACBrIndMovFisica): string;
+begin
+   Result := IntToStr( Integer( AValue ) );
+end;
+
+function StrToIndMovFisica(AValue: string): TACBrIndMovFisica;
+begin
+   Result := TACBrIndMovFisica( StrToIntDef( AValue, 0) );
 end;
 
 end.

@@ -534,21 +534,21 @@ begin
           if Bloco_0.DT_INI < StrToDate('01/07/2012') then
           begin
             case IND_FRT of
-	          tfPorContaTerceiros        : strIND_FRT := '0';
-	          tfPorContaEmitente         : strIND_FRT := '1';
-	          tfPorContaDestinatario     : strIND_FRT := '2';
-	          tfSemCobrancaFrete         : strIND_FRT := '9';
-	          tfNenhum : strIND_FRT      := '';
+	          tfPorContaTerceiros    : strIND_FRT := '0';
+	          tfPorContaEmitente     : strIND_FRT := '1';
+	          tfPorContaDestinatario : strIND_FRT := '2';
+	          tfSemCobrancaFrete     : strIND_FRT := '9';
+	          tfNenhum               : strIND_FRT := '';
             end;
           end
           else
           begin
             case IND_FRT of
-	          tfPorContaEmitente         : strIND_FRT := '0';
-	          tfPorContaDestinatario     : strIND_FRT := '1';
-	          tfPorContaTerceiros        : strIND_FRT := '2';
-	          tfSemCobrancaFrete         : strIND_FRT := '9';
-	          tfNenhum : strIND_FRT      := '';
+	          tfPorContaEmitente     : strIND_FRT := '0';
+	          tfPorContaDestinatario : strIND_FRT := '1';
+	          tfPorContaTerceiros    : strIND_FRT := '2';
+	          tfSemCobrancaFrete     : strIND_FRT := '9';
+	          tfNenhum               : strIND_FRT := '';
             end;
           end;
 
