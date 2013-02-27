@@ -58,6 +58,9 @@
 |*  - Desmarcada a propriedade StoreInDFM do FastReport para não gravar
 |*    o relatório no DFM e evitar o erro de compilação em versão menores
 |*    do delphi, favor utilizar o arquivo externo.
+|* 26/02/2013: João Henrique de Souza
+|*  - Foi realizado inúmeras modificações para Normalizar o Danfe com o Manual
+|*    e ter uma versão que fosse possível imprimir com o FR que vem com o Delphi
 ******************************************************************************}
 {$I ACBr.inc}
 
@@ -107,6 +110,171 @@ type
     frxReport: TfrxReport;
     cdsEventos: TClientDataSet;
     frxEventos: TfrxDBDataset;
+    cdsIdentificacaoId: TStringField;
+    cdsIdentificacaoChave: TStringField;
+    cdsIdentificacaocUF: TStringField;
+    cdsIdentificacaocNF: TStringField;
+    cdsIdentificacaoNatOp: TStringField;
+    cdsIdentificacaoIndPag: TStringField;
+    cdsIdentificacaoMod_: TStringField;
+    cdsIdentificacaoSerie: TStringField;
+    cdsIdentificacaoNNF: TStringField;
+    cdsIdentificacaoDEmi: TStringField;
+    cdsIdentificacaoDSaiEnt: TStringField;
+    cdsIdentificacaoTpNF: TStringField;
+    cdsIdentificacaoCMunFG: TStringField;
+    cdsIdentificacaoTpImp: TStringField;
+    cdsIdentificacaoTpEmis: TStringField;
+    cdsIdentificacaoCDV: TStringField;
+    cdsIdentificacaoTpAmb: TStringField;
+    cdsIdentificacaoFinNFe: TStringField;
+    cdsIdentificacaoProcEmi: TStringField;
+    cdsIdentificacaoVerProc: TStringField;
+    cdsIdentificacaoHoraSaida: TStringField;
+    cdsEmitenteCNPJ: TStringField;
+    cdsEmitenteXNome: TStringField;
+    cdsEmitenteXFant: TStringField;
+    cdsEmitenteXLgr: TStringField;
+    cdsEmitenteNro: TStringField;
+    cdsEmitenteXCpl: TStringField;
+    cdsEmitenteXBairro: TStringField;
+    cdsEmitenteCMun: TStringField;
+    cdsEmitenteXMun: TStringField;
+    cdsEmitenteUF: TStringField;
+    cdsEmitenteCEP: TStringField;
+    cdsEmitenteCPais: TStringField;
+    cdsEmitenteXPais: TStringField;
+    cdsEmitenteFone: TStringField;
+    cdsEmitenteIE: TStringField;
+    cdsEmitenteIM: TStringField;
+    cdsEmitenteIEST: TStringField;
+    cdsEmitenteCRT: TStringField;
+    cdsDestinatarioCNPJCPF: TStringField;
+    cdsDestinatarioXNome: TStringField;
+    cdsDestinatarioXLgr: TStringField;
+    cdsDestinatarioNro: TStringField;
+    cdsDestinatarioXCpl: TStringField;
+    cdsDestinatarioXBairro: TStringField;
+    cdsDestinatarioCMun: TStringField;
+    cdsDestinatarioXMun: TStringField;
+    cdsDestinatarioUF: TStringField;
+    cdsDestinatarioCEP: TStringField;
+    cdsDestinatarioCPais: TStringField;
+    cdsDestinatarioXPais: TStringField;
+    cdsDestinatarioFone: TStringField;
+    cdsDestinatarioIE: TStringField;
+    cdsDadosProdutosCProd: TStringField;
+    cdsDadosProdutoscEAN: TStringField;
+    cdsDadosProdutosXProd: TStringField;
+    cdsDadosProdutosinfAdProd: TStringField;
+    cdsDadosProdutosNCM: TStringField;
+    cdsDadosProdutosEXTIPI: TStringField;
+    cdsDadosProdutosgenero: TStringField;
+    cdsDadosProdutosCFOP: TStringField;
+    cdsDadosProdutosUCom: TStringField;
+    cdsDadosProdutosQCom: TFloatField;
+    cdsDadosProdutosVUnCom: TFloatField;
+    cdsDadosProdutosVProd: TFloatField;
+    cdsDadosProdutoscEANTrib: TStringField;
+    cdsDadosProdutosUTrib: TStringField;
+    cdsDadosProdutosQTrib: TFloatField;
+    cdsDadosProdutosVUnTrib: TFloatField;
+    cdsDadosProdutosvFrete: TFloatField;
+    cdsDadosProdutosvSeg: TFloatField;
+    cdsDadosProdutosvDesc: TStringField;
+    cdsDadosProdutosORIGEM: TStringField;
+    cdsDadosProdutosCST: TStringField;
+    cdsDadosProdutosVBC: TFloatField;
+    cdsDadosProdutosPICMS: TFloatField;
+    cdsDadosProdutosVICMS: TFloatField;
+    cdsDadosProdutosVIPI: TFloatField;
+    cdsDadosProdutosPIPI: TFloatField;
+    cdsParametrosResumoCanhoto: TStringField;
+    cdsParametrosMensagem0: TStringField;
+    cdsParametrosImagem: TStringField;
+    cdsParametrosSistema: TStringField;
+    cdsParametrosUsuario: TStringField;
+    cdsParametrosFax: TStringField;
+    cdsParametrosSite: TStringField;
+    cdsParametrosEmail: TStringField;
+    cdsParametrosDesconto: TStringField;
+    cdsParametrosChaveAcesso_Descricao: TStringField;
+    cdsParametrosContingencia_ID: TStringField;
+    cdsParametrosContingencia_Descricao: TStringField;
+    cdsParametrosContingencia_Valor: TStringField;
+    cdsParametrosLinhasPorPagina: TIntegerField;
+    cdsParametrosLogoExpandido: TStringField;
+    cdsDuplicatasNDup: TStringField;
+    cdsDuplicatasDVenc: TStringField;
+    cdsDuplicatasVDup: TFloatField;
+    cdsCalculoImpostoVBC: TFloatField;
+    cdsCalculoImpostoVICMS: TFloatField;
+    cdsCalculoImpostoVBCST: TFloatField;
+    cdsCalculoImpostoVST: TFloatField;
+    cdsCalculoImpostoVProd: TFloatField;
+    cdsCalculoImpostoVFrete: TFloatField;
+    cdsCalculoImpostoVSeg: TFloatField;
+    cdsCalculoImpostoVDesc: TFloatField;
+    cdsCalculoImpostoVII: TFloatField;
+    cdsCalculoImpostoVIPI: TFloatField;
+    cdsCalculoImpostoVPIS: TFloatField;
+    cdsCalculoImpostoVCOFINS: TFloatField;
+    cdsCalculoImpostoVOutro: TFloatField;
+    cdsCalculoImpostoVNF: TFloatField;
+    cdsTransportadorModFrete: TStringField;
+    cdsTransportadorCNPJCPF: TStringField;
+    cdsTransportadorXNome: TStringField;
+    cdsTransportadorIE: TStringField;
+    cdsTransportadorXEnder: TStringField;
+    cdsTransportadorXMun: TStringField;
+    cdsTransportadorUF: TStringField;
+    cdsVeiculoPLACA: TStringField;
+    cdsVeiculoUF: TStringField;
+    cdsVeiculoRNTC: TStringField;
+    cdsVolumesQVol: TFloatField;
+    cdsVolumesEsp: TStringField;
+    cdsVolumesMarca: TStringField;
+    cdsVolumesNVol: TStringField;
+    cdsVolumesPesoL: TFloatField;
+    cdsVolumesPesoB: TFloatField;
+    cdsISSQNvSERV: TFloatField;
+    cdsISSQNvBC: TFloatField;
+    cdsISSQNvISS: TFloatField;
+    cdsFaturaPagamento: TStringField;
+    cdsFaturanFat: TStringField;
+    cdsFaturavOrig: TFloatField;
+    cdsFaturavDesc: TFloatField;
+    cdsFaturavLiq: TFloatField;
+    cdsLocalRetiradaCNPJ: TStringField;
+    cdsLocalRetiradaXLgr: TStringField;
+    cdsLocalRetiradaNro: TStringField;
+    cdsLocalRetiradaXCpl: TStringField;
+    cdsLocalRetiradaXBairro: TStringField;
+    cdsLocalRetiradaCMun: TStringField;
+    cdsLocalRetiradaXMun: TStringField;
+    cdsLocalRetiradaUF: TStringField;
+    cdsLocalEntregaCNPJ: TStringField;
+    cdsLocalEntregaXLgr: TStringField;
+    cdsLocalEntregaNro: TStringField;
+    cdsLocalEntregaXCpl: TStringField;
+    cdsLocalEntregaXBairro: TStringField;
+    cdsLocalEntregaCMun: TStringField;
+    cdsLocalEntregaXMun: TStringField;
+    cdsLocalEntregaUF: TStringField;
+    cdsInformacoesAdicionaisOBS: TStringField;
+    cdsInformacoesAdicionaisLinhasOBS: TIntegerField;
+    cdsParametrosDESCR_CST: TStringField;
+    cdsEmitenteDESCR_CST: TStringField;
+    cdsEmitenteDADOS_ENDERECO: TStringField;
+    cdsDadosProdutosDescricaoProduto: TStringField;
+    cdsDadosProdutosChaveNFe: TStringField;
+    cdsDuplicatasChaveNFe: TStringField;
+    cdsParametrosConsultaAutenticidade: TStringField;
+    cdsParametrosTotalLiquido: TStringField;
+    cdsParametrosCasas_qCom: TIntegerField;
+    cdsParametrosCasas_vUnCom: TIntegerField;
+    cdsParametrosMask_qCom: TStringField;
+    cdsParametrosMask_vUnCom: TStringField;
     constructor Create(AOwner: TComponent); override;
   private
     FDANFEClassOwner: TACBrNFeDANFEClass;
@@ -265,22 +433,6 @@ begin
   with cdsCalculoImposto do
   begin
     Close;
-    FieldDefs.Clear;
-    FieldDefs.Add('VBC', ftFloat);
-    FieldDefs.Add('VICMS', ftFloat);
-    FieldDefs.Add('VBCST', ftFloat);
-    FieldDefs.Add('VST', ftFloat);
-    FieldDefs.Add('VProd', ftFloat);
-    FieldDefs.Add('VFrete', ftFloat);
-    FieldDefs.Add('VSeg', ftFloat);
-    FieldDefs.Add('VDesc', ftFloat);
-    FieldDefs.Add('VII', ftFloat);
-    FieldDefs.Add('VIPI', ftFloat);
-    FieldDefs.Add('VPIS', ftFloat);
-    FieldDefs.Add('VCOFINS', ftFloat);
-    FieldDefs.Add('VOutro', ftFloat);
-    FieldDefs.Add('VNF', ftFloat);
-
     CreateDataSet;
     Append;
 
@@ -343,34 +495,6 @@ begin
   with cdsDadosProdutos do
   begin
     Close;
-    FieldDefs.Clear;
-    FieldDefs.Add('CProd', ftString, 60); //Codigo
-    FieldDefs.Add('cEAN', ftString, 60); //GTIN
-    FieldDefs.Add('XProd', ftString, 120); //Descricao
-    FieldDefs.Add('infAdProd', ftString, 500); //Inf. Adic. Produto
-    FieldDefs.Add('NCM', ftString, 8); //NCM
-    FieldDefs.Add('EXTIPI', ftString, 8); //EX_TIPI
-    FieldDefs.Add('genero', ftString, 8); //genero
-    FieldDefs.Add('CFOP', ftString, 4); //CFOP
-    FieldDefs.Add('UCom', ftString, 6); //Unidade
-    FieldDefs.Add('QCom', ftFloat); //Quantidade
-    FieldDefs.Add('VUnCom', ftFloat); //ValorUnitario
-    FieldDefs.Add('VProd', ftFloat); //ValorTotal
-    FieldDefs.Add('cEANTrib', ftString, 60); //GTIN Trib.
-    FieldDefs.Add('UTrib', ftString, 6); //Unidade
-    FieldDefs.Add('QTrib', ftFloat); //Quantidade
-    FieldDefs.Add('VUnTrib', ftFloat); //ValorUnitario
-    FieldDefs.Add('vFrete', ftFloat); //Total do Frete
-    FieldDefs.Add('vSeg', ftFloat); //Total do Seguro
-    FieldDefs.Add('vDesc', ftString, 16); //Desconto
-    FieldDefs.Add('ORIGEM', ftString, 1); //ORIGEM
-    FieldDefs.Add('CST', ftString, 3); //CST
-    FieldDefs.Add('VBC', ftFloat); //ValorBase
-    FieldDefs.Add('PICMS', ftFloat); //Aliquota
-    FieldDefs.Add('VICMS', ftFloat); //Valor
-    FieldDefs.Add('VIPI', ftFloat); //Valor IPI
-    FieldDefs.Add('PIPI', ftFloat); //Aliquota IPI
-
     CreateDataSet;
 
     for i := 0 to NFe.Det.Count - 1 do
@@ -379,6 +503,7 @@ begin
 
       with FNFe.Det.Items[i].Prod do
       begin
+        FieldByName('ChaveNFe').AsString := FNFe.infNFe.ID;
         FieldByName('cProd').AsString := cProd;
         FieldByName('cEAN').AsString := cEAN;
         FieldByName('XProd').AsString := StringReplace(xProd, ';', #13, [rfReplaceAll]);
@@ -594,6 +719,11 @@ begin
         end;
       end;
 
+      cdsDadosProdutosDescricaoProduto.AsString := Trim(FieldByName('xProd').AsString);
+      if Trim(FieldByName('InfAdProd').AsString) <> '' then
+        cdsDadosProdutosDescricaoProduto.AsString := cdsDadosProdutosDescricaoProduto.AsString+#13+
+                                                     trim(FieldByName('InfAdProd').AsString);
+
       Post;
     end;
   end;
@@ -605,22 +735,6 @@ begin
   with cdsDestinatario do
   begin
     Close;
-    FieldDefs.Clear;
-    FieldDefs.Add('CNPJCPF', ftString, 18);
-    FieldDefs.Add('XNome', ftString, 60);
-    FieldDefs.Add('XLgr', ftString, 60);
-    FieldDefs.Add('Nro', ftString, 60);
-    FieldDefs.Add('XCpl', ftString, 60);
-    FieldDefs.Add('XBairro', ftString, 60);
-    FieldDefs.Add('CMun', ftString, 7);
-    FieldDefs.Add('XMun', ftString, 60);
-    FieldDefs.Add('UF', ftString, 2);
-    FieldDefs.Add('CEP', ftString, 9);
-    FieldDefs.Add('CPais', ftString, 4);
-    FieldDefs.Add('XPais', ftString, 60);
-    FieldDefs.Add('Fone', ftString, 15);
-    FieldDefs.Add('IE', ftString, 14);
-
     CreateDataSet;
     Append;
 
@@ -665,11 +779,6 @@ begin
   with cdsDuplicatas do
   begin
     Close;
-    FieldDefs.Clear;
-    FieldDefs.Add('NDup', ftString, 60);
-    FieldDefs.Add('DVenc', ftString, 10);
-    FieldDefs.Add('VDup', ftFloat);
-
     CreateDataSet;
 
     for i := 0 to NFe.Cobr.Dup.Count - 1 do
@@ -677,6 +786,7 @@ begin
       Append;
       with FNFe.Cobr.Dup[i] do
       begin
+        FieldByName('ChaveNFe').AsString := FNFe.infNFe.ID;
         FieldByName('NDup').AsString := NDup;
         FieldByName('DVenc').AsString := DFeUtil.FormatDate(DateToStr(DVenc));
         FieldByName('VDup').AsFloat := DFeUtil.StringToFloatDef(FloatToStr(VDup), 0);
@@ -693,26 +803,6 @@ begin
   with cdsEmitente do
   begin
     Close;
-    FieldDefs.Clear;
-    FieldDefs.Add('CNPJ', ftString, 18);
-    FieldDefs.Add('XNome', ftString, 60);
-    FieldDefs.Add('XFant', ftString, 60);
-    FieldDefs.Add('XLgr', ftString, 60);
-    FieldDefs.Add('Nro', ftString, 60);
-    FieldDefs.Add('XCpl', ftString, 60);
-    FieldDefs.Add('XBairro', ftString, 60);
-    FieldDefs.Add('CMun', ftString, 7);
-    FieldDefs.Add('XMun', ftString, 60);
-    FieldDefs.Add('UF', ftString, 2);
-    FieldDefs.Add('CEP', ftString, 9);
-    FieldDefs.Add('CPais', ftString, 4);
-    FieldDefs.Add('XPais', ftString, 60);
-    FieldDefs.Add('Fone', ftString, 15);
-    FieldDefs.Add('IE', ftString, 14);
-    FieldDefs.Add('IM', ftString, 15);
-    FieldDefs.Add('IEST', ftString, 15);
-    FieldDefs.Add('CRT', ftString, 1);
-
     CreateDataSet;
     Append;
 
@@ -739,6 +829,22 @@ begin
       FieldByName('IM').AsString := IM;
       FieldByName('IEST').AsString := IEST;
       FieldByName('CRT').AsString := CRTToStr(CRT);
+
+      if Trim(FieldByName('CRT').AsString) = '3' then
+        FieldByName('DESCR_CST').AsString := 'CST'
+      else
+        FieldByName('DESCR_CST').AsString  := 'CSOSN';
+
+      cdsEmitenteDADOS_ENDERECO.AsString :=
+        Trim(FieldByName('XLgr').AsString) + ', ' + trim(FieldByName('Nro').AsString) + #13 +
+        Trim(FieldByName('XBairro').AsString) + ' - ' + Trim(FieldByName('XMun').AsString) + ' - ' + Trim(FieldByName('UF').AsString) + #13 +
+        'Fone: ' + Trim(FieldByName('Fone').AsString) + ' CEP: ' + Trim(FieldByName('CEP').AsString);
+      if trim(FDANFEClassOwner.Site) <> '' then
+        cdsEmitenteDADOS_ENDERECO.AsString := cdsEmitenteDADOS_ENDERECO.AsString + #13 +
+        trim(FDANFEClassOwner.Site);
+      if trim(FDANFEClassOwner.Email) <> '' then
+        cdsEmitenteDADOS_ENDERECO.AsString := cdsEmitenteDADOS_ENDERECO.AsString + #13 +
+        trim(FDANFEClassOwner.Email);
     end;
 
     Post;
@@ -750,18 +856,12 @@ begin
   with cdsFatura do
   begin
     Close;
-    FieldDefs.Clear;
-    FieldDefs.Add('Pagamento', ftString, 20);
-    FieldDefs.Add('nFat', ftString, 60);
-    FieldDefs.Add('vOrig', ftFloat);
-    FieldDefs.Add('vDesc', ftFloat);
-    FieldDefs.Add('vLiq', ftFloat);
-
     CreateDataSet;
-    Append;
 
-    if DFeUtil.EstaVazio(FNFe.Cobr.Fat.nFat) then
+    if DFeUtil.NaoEstaVazio(FNFe.Cobr.Fat.nFat) then
     begin
+      Append;
+
       if FNFe.Cobr.Dup.Count = 0 then
       begin
         if FNFe.Ide.indPag = ipVista then
@@ -772,20 +872,18 @@ begin
           FieldByName('Pagamento').AsString := ''
       end
       else
-        FieldByName('Pagamento').AsString := ''
-    end
-    else
-      FieldByName('Pagamento').AsString := '';
+        FieldByName('Pagamento').AsString := '';
 
-    with FNFe.Cobr.Fat do
-    begin
-      FieldByName('nfat').AsString := nFat;
-      FieldByName('vOrig').AsFloat := DFeUtil.StringToFloatDef(FloatToStr(vOrig), 0);
-      FieldByName('vDesc').AsFloat := DFeUtil.StringToFloatDef(FloatToStr(vDesc), 0);
-      FieldByName('vLiq').AsFloat := DFeUtil.StringToFloatDef(FloatToStr(vLiq), 0);
+      with FNFe.Cobr.Fat do
+      begin
+        FieldByName('nfat').AsString := nFat;
+        FieldByName('vOrig').AsFloat := DFeUtil.StringToFloatDef(FloatToStr(vOrig), 0);
+        FieldByName('vDesc').AsFloat := DFeUtil.StringToFloatDef(FloatToStr(vDesc), 0);
+        FieldByName('vLiq').AsFloat := DFeUtil.StringToFloatDef(FloatToStr(vLiq), 0);
+      end;
+
+      Post;
     end;
-
-    Post;
   end;
 end;
 
@@ -794,30 +892,6 @@ begin
   with cdsIdentificacao do
   begin
     Close;
-    FieldDefs.Clear;
-    //FieldDefs.Add('Versao', ftString, 4);
-    FieldDefs.Add('Id', ftString, 44);
-    FieldDefs.Add('Chave', ftString, 60);
-    FieldDefs.Add('CUF', ftString, 2);
-    FieldDefs.Add('CNF', ftString, 9);
-    FieldDefs.Add('NatOp', ftString, 60);
-    FieldDefs.Add('IndPag', ftString, 1);
-    FieldDefs.Add('Mod_', ftString, 2);
-    FieldDefs.Add('Serie', ftString, 3);
-    FieldDefs.Add('NNF', ftString, 11);
-    FieldDefs.Add('DEmi', ftString, 10);
-    FieldDefs.Add('DSaiEnt', ftString, 10);
-    FieldDefs.Add('TpNF', ftString, 1);
-    FieldDefs.Add('CMunFG', ftString, 7);
-    FieldDefs.Add('TpImp', ftString, 1);
-    FieldDefs.Add('TpEmis', ftString, 1);
-    FieldDefs.Add('CDV', ftString, 1);
-    FieldDefs.Add('TpAmb', ftString, 1);
-    FieldDefs.Add('FinNFe', ftString, 1);
-    FieldDefs.Add('ProcEmi', ftString, 1);
-    FieldDefs.Add('VerProc', ftString, 20);
-    FieldDefs.Add('HoraSaida', ftString, 10);
-
     CreateDataSet;
     Append;
 
@@ -874,10 +948,6 @@ begin
   with cdsInformacoesAdicionais do
   begin
     Close;
-    FieldDefs.Clear;
-    FieldDefs.Add('OBS', ftString, 6900);
-    FieldDefs.Add('LinhasOBS', ftInteger);
-
     CreateDataSet;
     Append;
 
@@ -960,11 +1030,6 @@ begin
   with cdsISSQN do
   begin
     Close;
-    FieldDefs.Clear;
-    FieldDefs.Add('vSERV', ftFloat);
-    FieldDefs.Add('vBC', ftFloat);
-    FieldDefs.Add('vISS', ftFloat);
-
     CreateDataSet;
     Append;
     with FNFe.Total.ISSQNtot do
@@ -983,16 +1048,6 @@ begin
   with cdsLocalEntrega do
   begin
     Close;
-    FieldDefs.Clear;
-    FieldDefs.Add('CNPJ', ftString, 18); //recebe CPF tb
-    FieldDefs.Add('XLgr', ftString, 60);
-    FieldDefs.Add('Nro', ftString, 60);
-    FieldDefs.Add('XCpl', ftString, 60);
-    FieldDefs.Add('XBairro', ftString, 60);
-    FieldDefs.Add('CMun', ftString, 7);
-    FieldDefs.Add('XMun', ftString, 60);
-    FieldDefs.Add('UF', ftString, 2);
-
     CreateDataSet;
 
     if DFeUtil.NaoEstaVazio(FNFe.Entrega.CNPJCPF) then
@@ -1030,16 +1085,6 @@ begin
   with cdsLocalRetirada do
   begin
     Close;
-    FieldDefs.Clear;
-    FieldDefs.Add('CNPJ', ftString, 18); //recebe CPF tb
-    FieldDefs.Add('XLgr', ftString, 60);
-    FieldDefs.Add('Nro', ftString, 60);
-    FieldDefs.Add('XCpl', ftString, 60);
-    FieldDefs.Add('XBairro', ftString, 60);
-    FieldDefs.Add('CMun', ftString, 7);
-    FieldDefs.Add('XMun', ftString, 60);
-    FieldDefs.Add('UF', ftString, 2);
-
     CreateDataSet;
 
     if DFeUtil.NaoEstaVazio(FNFe.Retirada.CNPJCPF) then
@@ -1080,22 +1125,6 @@ begin
   with cdsParametros do
   begin
     Close;
-    FieldDefs.Clear;
-    FieldDefs.Add('ResumoCanhoto', ftString, 200);
-    FieldDefs.Add('Mensagem0', ftString, 60);
-    FieldDefs.Add('Imagem', ftString, 256);
-    FieldDefs.Add('Sistema', ftString, 60);
-    FieldDefs.Add('Usuario', ftString, 60);
-    FieldDefs.Add('Fax', ftString, 60);
-    FieldDefs.Add('Site', ftString, 60);
-    FieldDefs.Add('Email', ftString, 60);
-    FieldDefs.Add('Desconto', ftString, 60);
-    FieldDefs.Add('ChaveAcesso_Descricao', ftString, 90);
-    FieldDefs.Add('Contingencia_ID', ftString, 36);
-    FieldDefs.Add('Contingencia_Descricao', ftString, 60);
-    FieldDefs.Add('Contingencia_Valor', ftString, 60);
-    FieldDefs.Add('LinhasPorPagina', ftInteger);
-    FieldDefs.Add('LogoExpandido', ftString, 1);
     CreateDataSet;
     Append;
 
@@ -1121,7 +1150,7 @@ begin
         else
         if (not ((DFeUtil.EstaVazio(FDANFEClassOwner.ProtocoloNFe)) and
            (DFeUtil.EstaVazio(FNFe.procNFe.nProt)))) and
-           (FNFe.procNFe.cStat = 101) then
+           (FNFe.procNFe.cStat in [101,151,155]) then
           FieldByName('Mensagem0').AsString := 'NFe Cancelada'
         else
         begin
@@ -1143,7 +1172,7 @@ begin
       FieldByName('LogoExpandido').AsString := '1'
     else
       FieldByName('LogoExpandido').AsString := '0';
-    
+
     if FDANFEClassOwner.Sistema <> '' then
       FieldByName('Sistema').AsString := FDANFEClassOwner.Sistema
     else
@@ -1163,16 +1192,24 @@ begin
     FieldByName('Email').AsString := FDANFEClassOwner.Email;
 
     if FDANFEClassOwner.ImprimirDescPorc then
-      FieldByName('Desconto').AsString := 'DESC %'
+      FieldByName('Desconto').AsString := '%'
     else
-      FieldByName('Desconto').AsString := 'V.DESC.';
+      FieldByName('Desconto').AsString := 'VALOR';
 
+    if FDANFEClassOwner.ImprimirTotalLiquido then
+      FieldByName('TotalLiquido').AsString := 'LÍQUIDO'
+    else
+      FieldByName('TotalLiquido').AsString := 'TOTAL';
+
+    FieldByName('Contingencia_ID').AsString := '';
+    FieldByName('ConsultaAutenticidade').AsString := 'Consulta de autenticidade no portal nacional da NF-e'+#13+
+                                                     'www.nfe.fazenda.gov.br/portal ou no site da Sefaz autorizadora';
     if ((FNFe.Ide.tpEmis=teNormal) or (FNFe.Ide.tpEmis = teSCAN)) then
     begin
       FieldByName('ChaveAcesso_Descricao').AsString := 'CHAVE DE ACESSO';
       FieldByName('Contingencia_ID').AsString := '';
 
-      if ((FDANFEClassOwner.NFeCancelada) or (FNFe.procNFe.cStat=101)) then
+      if ((FDANFEClassOwner.NFeCancelada) or (FNFe.procNFe.cStat in [101,151,155])) then
         FieldByName('Contingencia_Descricao').AsString := 'PROTOCOLO DE HOMOLOGAÇÃO DO CANCELAMENTO'
       else
         FieldByName('Contingencia_Descricao').AsString := 'PROTOCOLO DE AUTORIZAÇÃO DE USO';
@@ -1197,6 +1234,7 @@ begin
       begin
         FieldByName('Contingencia_Descricao').AsString := 'DADOS DA NF-E';
         FieldByName('Contingencia_Valor').AsString := NotaUtil.FormatarChaveContigencia(vChave_Contingencia);
+        FieldByName('ConsultaAutenticidade').AsString := '';
       end
       else
       if (FNFe.Ide.tpEmis = teDPEC) then
@@ -1212,6 +1250,12 @@ begin
     end;
 
     FieldByName('LinhasPorPagina').AsInteger := FDANFEClassOwner.ProdutosPorPagina;
+
+    FieldByName('Mask_qCom').AsString     := FDANFEClassOwner.CasasDecimais._Mask_qCom;
+    FieldByName('Mask_vUnCom').AsString   := FDANFEClassOwner.CasasDecimais._Mask_vUnCom;
+    FieldByName('Casas_qCom').AsInteger   := FDANFEClassOwner.CasasDecimais._qCom;
+    FieldByName('Casas_vUnCom').AsInteger := FDANFEClassOwner.CasasDecimais._vUnCom;
+
     Post;
   end;
 end;
@@ -1223,15 +1267,6 @@ begin
   with cdsTransportador do
   begin
     Close;
-    FieldDefs.Clear;
-    FieldDefs.Add('ModFrete', ftString, 14);
-    FieldDefs.Add('CNPJCPF', ftString, 18);
-    FieldDefs.Add('XNome', ftString, 60);
-    FieldDefs.Add('IE', ftString, 14);
-    FieldDefs.Add('XEnder', ftString, 60);
-    FieldDefs.Add('XMun', ftString, 60);
-    FieldDefs.Add('UF', ftString, 2);
-
     CreateDataSet;
     Append;
 
@@ -1274,11 +1309,6 @@ begin
   with cdsVeiculo do
   begin
     Close;
-    FieldDefs.Clear;
-    FieldDefs.Add('PLACA', ftString, 8);
-    FieldDefs.Add('UF', ftString, 2);
-    FieldDefs.Add('RNTC', ftString, 20);
-
     CreateDataSet;
     Append;
 
@@ -1300,14 +1330,6 @@ begin
   with cdsVolumes do
   begin
     Close;
-    FieldDefs.Clear;
-    FieldDefs.Add('QVol', ftFloat);
-    FieldDefs.Add('Esp', ftString, 60);
-    FieldDefs.Add('Marca', ftString, 60);
-    FieldDefs.Add('NVol', ftString, 60);
-    FieldDefs.Add('PesoL', ftFloat);
-    FieldDefs.Add('PesoB', ftFloat);
-
     CreateDataSet;
 
     for i := 0 to NFe.Transp.Vol.Count - 1 do
@@ -1336,32 +1358,6 @@ begin
   with cdsEventos do
   begin
     Close;
-    FieldDefs.Clear;
-
-    FieldDefs.Add('DescricaoTipoEvento', ftString, 150);
-    FieldDefs.Add('Modelo', ftString, 2);
-    FieldDefs.Add('Serie', ftString, 3);
-    FieldDefs.Add('Numero', ftString, 9);
-    FieldDefs.Add('MesAno', ftString, 5);
-    FieldDefs.Add('Barras', ftString, 44);
-    FieldDefs.Add('ChaveAcesso', ftString, 60);
-
-    FieldDefs.Add('cOrgao', ftInteger);
-    FieldDefs.Add('tpAmb', ftString, 100);
-    FieldDefs.Add('dhEvento', ftDateTime);
-    FieldDefs.Add('TipoEvento', ftString, 6);
-    FieldDefs.Add('DescEvento', ftString, 100);
-    FieldDefs.Add('nSeqEvento', ftInteger);
-    FieldDefs.Add('versaoEvento', ftString, 10);
-    FieldDefs.Add('cStat', ftInteger);
-    FieldDefs.Add('xMotivo', ftString, 100);
-    FieldDefs.Add('nProt', ftString, 20);
-    FieldDefs.Add('dhRegEvento', ftDateTime);
-
-    FieldDefs.Add('xJust', ftBlob);
-    FieldDefs.Add('xCondUso', ftBlob);
-    FieldDefs.Add('xCorrecao', ftBlob);
-
     CreateDataSet;
 
     for i := 0 to FEvento.Evento.Count - 1 do
