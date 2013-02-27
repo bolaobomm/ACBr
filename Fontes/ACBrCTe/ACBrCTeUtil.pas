@@ -487,13 +487,13 @@ end;
 // Incluido por Italo em 03/10/2012
 class function CTeUtil.GetURLPE(AAmbiente: Integer; ALayOut: TLayOut): WideString;
 begin
-  Result := CTeUtil.GetURLSP(AAmbiente, ALayOut);
-  {
+//  Result := CTeUtil.GetURLSP(AAmbiente, ALayOut);
+
   case ALayOut of
-   LayCTeCadastro: Result := CTeUtil.SeSenao(AAmbiente = 1, '', '');
+   LayCTeCadastro: Result := CTeUtil.SeSenao(AAmbiente = 1, 'https://nfe.sefaz.pe.gov.br/nfe-service/services/CadConsultaCadastro2', '');
    else Result := CTeUtil.GetURLSP(AAmbiente, ALayOut);
   end;
-  }
+
 end;
 
 // Incluido por Italo em 03/10/2012
