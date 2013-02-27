@@ -490,7 +490,7 @@ begin
 //  Result := CTeUtil.GetURLSP(AAmbiente, ALayOut);
 
   case ALayOut of
-   LayCTeCadastro: Result := CTeUtil.SeSenao(AAmbiente = 1, 'https://nfe.sefaz.pe.gov.br/nfe-service/services/CadConsultaCadastro2', '');
+   LayCTeCadastro: Result := DFeUtil.SeSenao(AAmbiente = 1, 'https://nfe.sefaz.pe.gov.br/nfe-service/services/CadConsultaCadastro2', '');
    else Result := CTeUtil.GetURLSP(AAmbiente, ALayOut);
   end;
 
