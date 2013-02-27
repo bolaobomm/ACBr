@@ -1252,10 +1252,10 @@ begin
     begin
       vChave_Contingencia := NotaUtil.GerarChaveContingencia(FNFe);
       FieldByName('ChaveAcesso_Descricao').AsString := 'CHAVE DE ACESSO';
-      FieldByName('Contingencia_ID').AsString := vChave_Contingencia;
 
       if ((FNFe.Ide.tpEmis = teContingencia) or (FNFe.Ide.tpEmis = teFSDA)) then
       begin
+        FieldByName('Contingencia_ID').AsString := vChave_Contingencia;
         FieldByName('Contingencia_Descricao').AsString := 'DADOS DA NF-E';
         FieldByName('Contingencia_Valor').AsString := NotaUtil.FormatarChaveContigencia(vChave_Contingencia);
         FieldByName('ConsultaAutenticidade').AsString := '';

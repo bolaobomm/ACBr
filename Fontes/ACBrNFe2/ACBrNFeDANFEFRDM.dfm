@@ -980,7 +980,7 @@ object dmACBrNFeFR: TdmACBrNFeFR
     PrintOptions.Printer = 'Default'
     PrintOptions.PrintOnSheet = 0
     ReportOptions.CreateDate = 40401.475989294000000000
-    ReportOptions.LastChange = 41332.391414699070000000
+    ReportOptions.LastChange = 41332.576115520830000000
     ScriptLanguage = 'PascalScript'
     StoreInDFM = False
     Left = 48
