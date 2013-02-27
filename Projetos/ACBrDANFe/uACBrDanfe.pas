@@ -5,7 +5,7 @@ interface
 uses
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms, RLConsts,
   Dialogs, ACBrNFeDANFEClass, ACBrNFeDANFERaveCB, ACBrNFe, IniFiles, ExtCtrls,
-  ACBrNFeUtil, pcnConversao, ACBrNFeDANFeRLClass, ACBrNFeDANFERave, ACBrNFeDANFeRL;
+  ACBrNFeUtil, ACBrDFeUtil, pcnConversao, ACBrNFeDANFeRLClass, ACBrNFeDANFERave, ACBrNFeDANFeRL;
 
 type
   Tfrm_danfe = class(TForm)
@@ -117,9 +117,10 @@ var
 begin
    result:=false;
 
+   wString:=TStringList.Create;
    IniFile := ExtractFilePath(Application.ExeName)+'ACBrDANFe.ini';
+   Ini:=TIniFile.Create(IniFile);
    try
-      wString:=TStringList.Create;
       if not FileExists(IniFile) then
       begin
          wString.Text:=wArquivoINI;
@@ -127,7 +128,6 @@ begin
          Delay(3000);
       end;
 
-      Ini:=TIniFile.Create(IniFile);
       try
          wDanfe := Trim(Ini.ReadString('DANFe','DANFe' ,'RaveCB'));
          if wDanfe='Rave' then
@@ -166,7 +166,7 @@ begin
             Sistema                        := Trim(Ini.ReadString('PROPRIEDADES_DANFe','Sistema' ,''));
             Site                           := Trim(Ini.ReadString('PROPRIEDADES_DANFe','Site' ,''));
             TamanhoFonte_DemaisCampos      := Ini.ReadInteger('PROPRIEDADES_DANFe','TamanhoFonte_DemaisCampos' ,10);
-            TipoDANFE                      := NotaUtil.SeSenao(Trim(Ini.ReadString('PROPRIEDADEs_DANFe','TipoDANFE' ,'tiRetrato'))='tiRetrato',tiRetrato, tiPaisagem);
+            TipoDANFE                      := DFeUtil.SeSenao(Trim(Ini.ReadString('PROPRIEDADEs_DANFe','TipoDANFE' ,'tiRetrato'))='tiRetrato',tiRetrato, tiPaisagem);
             Usuario                        := Trim(Ini.ReadString('PROPRIEDADES_DANFe','Usuario' ,''));
          end;
 
@@ -182,7 +182,7 @@ begin
          with ACBrNFeDANFeRaveCB1 do
          begin
             EspessuraBorda                 := Ini.ReadInteger('PROPRIEDADEs_DANFe_RAVECB','EspessuraBorda' ,2);
-            Fonte                          := NotaUtil.SeSenao(Trim(Ini.ReadString('PROPRIEDADEs_DANFe_RAVECB','Fonte' ,'ftTimes'))='ftTimes',ftTimes, ftCourier);
+            Fonte                          := DFeUtil.SeSenao(Trim(Ini.ReadString('PROPRIEDADEs_DANFe_RAVECB','Fonte' ,'ftTimes'))='ftTimes',ftTimes, ftCourier);
             ImprimirDetalhamentoEspecifico := Ini.ReadBool('PROPRIEDADEs_DANFe_RAVECB','ImprimirDetalhamentoEspecifico' ,true);
             TamanhoCampoCodigo             := Ini.ReadInteger('PROPRIEDADEs_DANFe_RAVECB','TamanhoCampoCodigo' ,10);
             TamanhoFonte_ANTT              := Ini.ReadInteger('PROPRIEDADES_DANFe_RAVE','TamanhoFonte_ANTT' ,10);
@@ -191,12 +191,12 @@ begin
 
          with ACBrNFeDANFeRL1 do
          begin
-            FonteDANFE                     := NotaUtil.SeSenao(Trim(Ini.ReadString('PROPRIEDADEs_DANFe_FORTES','FonteDANFE' ,'fdTimesNewRoman'))='fdTimesNewRoman',fdTimesNewRoman,
-                                                               NotaUtil.SeSenao(Trim(Ini.ReadString('PROPRIEDADEs_DANFe_FORTES','FonteDANFE' ,'fdCourierNew'))='fdCourierNew',fdCourierNew,
+            FonteDANFE                     := DFeUtil.SeSenao(Trim(Ini.ReadString('PROPRIEDADEs_DANFe_FORTES','FonteDANFE' ,'fdTimesNewRoman'))='fdTimesNewRoman',fdTimesNewRoman,
+                                                               DFeUtil.SeSenao(Trim(Ini.ReadString('PROPRIEDADEs_DANFe_FORTES','FonteDANFE' ,'fdCourierNew'))='fdCourierNew',fdCourierNew,
                                                                fdArial));
             LarguraCodProd                 := Ini.ReadInteger('PROPRIEDADEs_DANFe_FORTES','LarguraCodProd' ,0);
             MarcadAgua                     := Trim(Ini.ReadString('PROPRIEDADES_DANFe_FORTES','MarcadAgua' ,''));
-            PosCanhoto                     := NotaUtil.SeSenao(Trim(Ini.ReadString('PROPRIEDADEs_DANFe_FORTES','PosCanhoto' ,'pcCabecalho'))='pcCabecalho',pcCabecalho,pcRodape);
+            PosCanhoto                     := DFeUtil.SeSenao(Trim(Ini.ReadString('PROPRIEDADEs_DANFe_FORTES','PosCanhoto' ,'pcCabecalho'))='pcCabecalho',pcCabecalho,pcRodape);
             TamanhoFonte_RazaoSocial       := Ini.ReadInteger('PROPRIEDADES_DANFe_FORTES','TamanhoFonte_RazaoSocial' ,12);
          end;
 
