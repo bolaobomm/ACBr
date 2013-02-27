@@ -447,7 +447,7 @@ begin
                      AStr := AStr + '</Rps>';
                      // Alterado por Cleiver em 26/02/2013
                      if (AProvedor = proGoiania)
-                      then AXML := AXML + '</GerarNfseEnvio>';
+                      then AStr := AStr + '</GerarNfseEnvio>';
                     end;
       else begin
             AStr := copy(AStr, 1, pos('</Rps>', AStr) - 1);
@@ -455,7 +455,7 @@ begin
             AStr := AStr + '</Rps>';
             // Alterado por Cleiver em 26/02/2013
             if (AProvedor = proRecife)
-             then AXML := AXML + '</GerarNfseEnvio>';
+             then AStr := AStr + '</GerarNfseEnvio>';
            end;
      end;
     end;
@@ -920,28 +920,28 @@ begin
         Tipo := 2;
    end;
 
-  AXML := AXML+'<Signature xmlns="http://www.w3.org/2000/09/xmldsig#"'+
-                     DFeUtil.SeSenao(FURISig = '', '',' Id="Ass_'+ FURISig +'"')+'>'+
-                 '<SignedInfo>'+
-                  '<CanonicalizationMethod Algorithm="http://www.w3.org/TR/2001/REC-xml-c14n-20010315" />'+
-                  '<SignatureMethod Algorithm="http://www.w3.org/2000/09/xmldsig#rsa-sha1" />'+
-                  '<Reference URI="'+DFeUtil.SeSenao(FURIRef = '', '','#'+FURIRef)+'">'+
-                   '<Transforms>'+
-                    '<Transform Algorithm="http://www.w3.org/2000/09/xmldsig#enveloped-signature" />'+
-                    DFeUtil.SeSenao((AProvedor in [profintelISS, proGovBr, proISSNet]), '',
-                    '<Transform Algorithm="http://www.w3.org/TR/2001/REC-xml-c14n-20010315" />') +
-                   '</Transforms>'+
-                   '<DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" />'+
-                   '<DigestValue></DigestValue>'+
-                  '</Reference>'+
-                 '</SignedInfo>'+
-                 '<SignatureValue></SignatureValue>'+
-                 '<KeyInfo>'+
-                  '<X509Data>'+
-                    '<X509Certificate></X509Certificate>'+
-                  '</X509Data>'+
-                 '</KeyInfo>'+
-                '</Signature>';
+  AXML := AXML + '<Signature xmlns="http://www.w3.org/2000/09/xmldsig#"'+
+                       DFeUtil.SeSenao(FURISig = '', '',' Id="Ass_'+ FURISig +'"')+'>'+
+                  '<SignedInfo>'+
+                   '<CanonicalizationMethod Algorithm="http://www.w3.org/TR/2001/REC-xml-c14n-20010315" />'+
+                   '<SignatureMethod Algorithm="http://www.w3.org/2000/09/xmldsig#rsa-sha1" />'+
+                   '<Reference URI="'+DFeUtil.SeSenao(FURIRef = '', '','#'+FURIRef)+'">'+
+                    '<Transforms>'+
+                     '<Transform Algorithm="http://www.w3.org/2000/09/xmldsig#enveloped-signature" />'+
+                     DFeUtil.SeSenao((AProvedor in [profintelISS, proGovBr, proISSNet]), '',
+                     '<Transform Algorithm="http://www.w3.org/TR/2001/REC-xml-c14n-20010315" />') +
+                    '</Transforms>'+
+                    '<DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" />'+
+                    '<DigestValue></DigestValue>'+
+                   '</Reference>'+
+                  '</SignedInfo>'+
+                  '<SignatureValue></SignatureValue>'+
+                  '<KeyInfo>'+
+                   '<X509Data>'+
+                     '<X509Certificate></X509Certificate>'+
+                   '</X509Data>'+
+                  '</KeyInfo>'+
+                 '</Signature>';
 
   AXML := FTagI + AXML + FTagF;
 
@@ -1007,28 +1007,28 @@ begin
     then Numero := ''
     else Numero := '#';
 
-   AXML := AXML+'<Signature xmlns="http://www.w3.org/2000/09/xmldsig#"'+
+   AXML := AXML + '<Signature xmlns="http://www.w3.org/2000/09/xmldsig#"'+
                      DFeUtil.SeSenao(FURISig = '', '',' Id="Ass_'+ FURISig +'"')+'>'+
-                 '<SignedInfo>'+
-                  '<CanonicalizationMethod Algorithm="http://www.w3.org/TR/2001/REC-xml-c14n-20010315" />'+
-                  '<SignatureMethod Algorithm="http://www.w3.org/2000/09/xmldsig#rsa-sha1" />'+
-                  '<Reference URI="'+DFeUtil.SeSenao(FURIRef = '', '',Numero+FURIRef)+'">'+
-                   '<Transforms>'+
-                    '<Transform Algorithm="http://www.w3.org/2000/09/xmldsig#enveloped-signature" />'+
-                    DFeUtil.SeSenao((AProvedor in [profintelISS, proGovBr, proISSNet]), '',
-                    '<Transform Algorithm="http://www.w3.org/TR/2001/REC-xml-c14n-20010315" />') +
-                   '</Transforms>'+
-                   '<DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" />'+
-                   '<DigestValue></DigestValue>'+
-                  '</Reference>'+
-                 '</SignedInfo>'+
-                 '<SignatureValue></SignatureValue>'+
-                 '<KeyInfo>'+
-                  '<X509Data>'+
-                    '<X509Certificate></X509Certificate>'+
-                  '</X509Data>'+
-                 '</KeyInfo>'+
-                '</Signature>';
+                   '<SignedInfo>'+
+                    '<CanonicalizationMethod Algorithm="http://www.w3.org/TR/2001/REC-xml-c14n-20010315" />'+
+                    '<SignatureMethod Algorithm="http://www.w3.org/2000/09/xmldsig#rsa-sha1" />'+
+                    '<Reference URI="'+DFeUtil.SeSenao(FURIRef = '', '',Numero+FURIRef)+'">'+
+                     '<Transforms>'+
+                      '<Transform Algorithm="http://www.w3.org/2000/09/xmldsig#enveloped-signature" />'+
+                      DFeUtil.SeSenao((AProvedor in [profintelISS, proGovBr, proISSNet]), '',
+                      '<Transform Algorithm="http://www.w3.org/TR/2001/REC-xml-c14n-20010315" />') +
+                     '</Transforms>'+
+                     '<DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" />'+
+                     '<DigestValue></DigestValue>'+
+                    '</Reference>'+
+                   '</SignedInfo>'+
+                   '<SignatureValue></SignatureValue>'+
+                   '<KeyInfo>'+
+                    '<X509Data>'+
+                      '<X509Certificate></X509Certificate>'+
+                    '</X509Data>'+
+                   '</KeyInfo>'+
+                  '</Signature>';
 
  AXML := FTagI + AXML + FTagF;
 
@@ -1104,7 +1104,7 @@ begin
 
  if xmlHeaderAntes <> ''
   then begin
-   I := pos('?>',AXMLAssinado);
+   I := pos('?>', AXMLAssinado);
    if I > 0
     then begin
      xmlHeaderDepois := copy(AXMLAssinado,1,I+1);
