@@ -453,6 +453,9 @@ object dmACBrNFeFR: TdmACBrNFeFR
     object cdsParametrosMask_vUnCom: TStringField
       FieldName = 'Mask_vUnCom'
     end
+    object cdsParametrosLogoCarregado: TBlobField
+      FieldName = 'LogoCarregado'
+    end
   end
   object cdsInformacoesAdicionais: TClientDataSet
     Aggregates = <>
@@ -860,7 +863,8 @@ object dmACBrNFeFR: TdmACBrNFeFR
       'Casas_qCom=Casas_qCom'
       'Casas_vUnCom=Casas_vUnCom'
       'Mask_qCom=Mask_qCom'
-      'Mask_vUnCom=Mask_vUnCom')
+      'Mask_vUnCom=Mask_vUnCom'
+      'LogoCarregado=LogoCarregado')
     OpenDataSource = False
     DataSet = cdsParametros
     BCDToCurrency = False
@@ -976,7 +980,7 @@ object dmACBrNFeFR: TdmACBrNFeFR
     PrintOptions.Printer = 'Default'
     PrintOptions.PrintOnSheet = 0
     ReportOptions.CreateDate = 40401.475989294000000000
-    ReportOptions.LastChange = 41332.327629583330000000
+    ReportOptions.LastChange = 41332.391414699070000000
     ScriptLanguage = 'PascalScript'
     StoreInDFM = False
     Left = 48

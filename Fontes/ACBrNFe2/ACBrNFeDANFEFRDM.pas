@@ -275,6 +275,7 @@ type
     cdsParametrosCasas_vUnCom: TIntegerField;
     cdsParametrosMask_qCom: TStringField;
     cdsParametrosMask_vUnCom: TStringField;
+    cdsParametrosLogoCarregado: TBlobField;
     constructor Create(AOwner: TComponent); override;
   private
     FDANFEClassOwner: TACBrNFeDANFEClass;
@@ -1120,6 +1121,8 @@ procedure TdmACBrNFeFR.CarregaParametros;
 var
   vChave_Contingencia: String;
   vResumo: String;
+  vStream: TMemoryStream;
+  vStringStream: TStringStream;
 begin
   { parâmetros }
   with cdsParametros do
@@ -1165,8 +1168,29 @@ begin
     end;
 
     // Carregamento da imagem
-    if DANFEClassOwner.Logo <> '' then
+    if DFeUtil.NaoEstaVazio(DANFEClassOwner.Logo) then
+    begin
       FieldByName('Imagem').AsString := DANFEClassOwner.Logo;
+      vStream := TMemoryStream.Create;
+      try
+        if FileExists(DANFEClassOwner.Logo) then
+           vStream.LoadFromFile(DANFEClassOwner.Logo)
+        else
+        begin
+           vStringStream:= TStringStream.Create(DANFEClassOwner.Logo);
+           try
+              vStream.LoadFromStream(vStringStream);
+           finally
+              vStringStream.Free;
+           end;
+        end;
+
+        vStream.Position := 0;
+        cdsParametrosLogoCarregado.LoadFromStream(vStream);
+      finally
+        vStream.Free;
+      end;
+    end;
 
     if DANFEClassOwner.ExpandirLogoMarca then
       FieldByName('LogoExpandido').AsString := '1'
