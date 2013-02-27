@@ -158,7 +158,6 @@ begin
     dmDanfe.frxReport.PrintOptions.Printer := Impressora;
   end;
 
-
   // preparar relatorio
   if Assigned(NFE) then
   begin
