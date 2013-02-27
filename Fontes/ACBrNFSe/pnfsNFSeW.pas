@@ -137,7 +137,14 @@ begin
   then Atributo := ' xmlns:' + stringReplace(Prefixo4, ':', '', []) + '="' + FURL + FDefTipos + '"'
   else Atributo := ' xmlns="' + FURL + FDefTipos + '"';
 
- Gerador.wGrupo('Rps' + Atributo);
+ // Alterado Por Cleiver em 01/02/2013
+ if (FProvedor = proGoiania)
+  then begin
+   Gerador.wGrupo('GerarNfseEnvio' + Atributo);
+	 Gerador.wGrupo('Rps');
+  end
+	else Gerador.wGrupo('Rps' + Atributo);
+
  FNFSe.InfID.ID := SomenteNumeros(FNFSe.IdentificacaoRps.Numero) + FNFSe.IdentificacaoRps.Serie;
 
  case FProvedor of
@@ -196,7 +203,13 @@ begin
     end;
   end;
 
- Gerador.wGrupo('/Rps');
+ // Alterado por Cleiver em 01/02/2013
+ if (FProvedor = proGoiania)
+  then begin
+   Gerador.wGrupo('/Rps');
+   Gerador.wGrupo('/GerarNfseEnvio');
+  end
+	else Gerador.wGrupo('/Rps');
 
  Gerador.gtAjustarRegistros(NFSe.InfID.ID);
  Result := (Gerador.ListaDeAlertas.Count = 0);
@@ -295,6 +308,30 @@ begin
 	                 Gerador.wCampoNFSe(tcDe2, '#25', 'Aliquota              ', 01, 05, 0, NFSe.Servico.Valores.Aliquota, '');
                  Gerador.wCampoNFSe(tcDe2, '#27', 'DescontoIncondicionado', 01, 15, 1, NFSe.Servico.Valores.DescontoIncondicionado, '');
                  Gerador.wGrupoNFSe('/Valores');
+                 Gerador.wCampoNFSe(tcStr, '#31', 'CodigoTributacaoMunicipio', 01, 0020, 1, NFSe.Servico.CodigoTributacaoMunicipio, '');
+                 Gerador.wCampoNFSe(tcStr, '#32', 'Discriminacao            ', 01, 2000, 1, NFSe.Servico.Discriminacao, '');
+                 Gerador.wCampoNFSe(tcStr, '#33', 'CodigoMunicipio          ', 01, 0007, 1, SomenteNumeros(NFSe.Servico.CodigoMunicipio), '');
+                 Gerador.wGrupoNFSe('/Servico');
+                end;
+	// Alterado por Cleiver em 01/02/2013
+  proRecife:    begin
+                 Gerador.wGrupoNFSe('Servico');
+                 Gerador.wGrupoNFSe('Valores');
+                 Gerador.wCampoNFSe(tcDe2, '#13', 'ValorServicos', 01, 15, 1, NFSe.Servico.Valores.ValorServicos, '');
+                 Gerador.wCampoNFSe(tcDe2, '#14', 'ValorDeducoes', 01, 15, 1, NFSe.Servico.Valores.ValorDeducoes, '');
+                 Gerador.wCampoNFSe(tcDe2, '#15', 'ValorPis     ', 01, 15, 1, NFSe.Servico.Valores.ValorPis, '');
+                 Gerador.wCampoNFSe(tcDe2, '#16', 'ValorCofins  ', 01, 15, 1, NFSe.Servico.Valores.ValorCofins, '');
+                 Gerador.wCampoNFSe(tcDe2, '#17', 'ValorInss    ', 01, 15, 1, NFSe.Servico.Valores.ValorInss, '');
+                 Gerador.wCampoNFSe(tcDe2, '#18', 'ValorIr      ', 01, 15, 1, NFSe.Servico.Valores.ValorIr, '');
+                 Gerador.wCampoNFSe(tcDe2, '#19', 'ValorCsll    ', 01, 15, 1, NFSe.Servico.Valores.ValorCsll, '');
+                 Gerador.wCampoNFSe(tcStr, '#20', 'IssRetido    ', 01, 01, 1, SituacaoTributariaToStr(NFSe.Servico.Valores.IssRetido), '');
+                 Gerador.wCampoNFSe(tcDe2, '#21', 'ValorIss     ', 01, 15, 1, NFSe.Servico.Valores.ValorIss, '');
+								 if NFSe.OptanteSimplesNacional = snSim then
+	                 Gerador.wCampoNFSe(tcDe2, '#25', 'Aliquota   ', 01, 05, 0, NFSe.Servico.Valores.Aliquota, '')
+                 else
+	                 Gerador.wCampoNFSe(tcDe2, '#25', 'Aliquota   ', 01, 05, 1, NFSe.Servico.Valores.Aliquota, '');
+                 Gerador.wGrupoNFSe('/Valores');
+                 Gerador.wCampoNFSe(tcStr, '#29', 'ItemListaServico         ', 01, 0005, 1, NFSe.Servico.ItemListaServico, '');
                  Gerador.wCampoNFSe(tcStr, '#31', 'CodigoTributacaoMunicipio', 01, 0020, 1, NFSe.Servico.CodigoTributacaoMunicipio, '');
                  Gerador.wCampoNFSe(tcStr, '#32', 'Discriminacao            ', 01, 2000, 1, NFSe.Servico.Discriminacao, '');
                  Gerador.wCampoNFSe(tcStr, '#33', 'CodigoMunicipio          ', 01, 0007, 1, SomenteNumeros(NFSe.Servico.CodigoMunicipio), '');
@@ -657,8 +694,8 @@ begin
 
  GerarIdentificacaoRPS;
 
- Gerador.wCampoNFSe(tcDat,    '#4', 'DataEmissao', 19, 19, 1, NFSe.DataEmissao, DSC_DEMI);
-
+ // Alterado por Cleiver em 26/02/2013
+ Gerador.wCampoNFSe(tcDatHor, '#4', 'DataEmissao', 19, 19, 1, NFSe.DataEmissao, DSC_DEMI);
  Gerador.wCampoNFSe(tcStr,    '#9', 'Status     ', 01, 01, 1, StatusRPSToStr(NFSe.Status), '');
  Gerador.wGrupoNFSe('/Rps');
 

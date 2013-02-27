@@ -240,7 +240,8 @@ begin
     Prefixo4 := '';
 
     Leitor.Grupo := Leitor.Arquivo;
-    if leitor.rExtrai(1, 'GerarNfseResposta') <> '' then
+    // Alterado por Cleiver em 26/02/2013
+    if (leitor.rExtrai(1, 'GerarNfseResposta') <> '') or (leitor.rExtrai(1, 'GerarNfseResponse') <> '') then
     begin
       // Ler a Lista de NFSe
       if leitor.rExtrai(2, 'ListaNfse') <> '' then
@@ -301,6 +302,18 @@ begin
                  then ListaNfse.FCompNfse[i].FNFSe.Servico.CodigoMunicipio := Leitor.rCampo(tcStr, 'MunicipioPrestacaoServico')
                  else ListaNfse.FCompNfse[i].FNFSe.Servico.CodigoMunicipio := Leitor.rCampo(tcStr, 'CodigoMunicipio');
 
+                // Alterado por Cleiver em 26/02/2013
+                if (ListaNfse.FCompNfse[i].FNFSe.Servico.ItemListaServico <> '')
+                 then begin
+                  Item := StrToInt(SomenteNumeros(ListaNfse.FCompNfse[i].FNfse.Servico.ItemListaServico));
+                  if Item<100 then Item:=Item*100+1;
+
+                  ListaNfse.FCompNfse[i].FNFSe.Servico.ItemListaServico := FormatFloat('0000', Item);
+                  ListaNfse.FCompNfse[i].FNFSe.Servico.ItemListaServico :=
+                      Copy(ListaNfse.FCompNfse[i].FNFSe.Servico.ItemListaServico, 1, 2) + '.' +
+                      Copy(ListaNfse.FCompNfse[i].FNFSe.Servico.ItemListaServico, 3, 2);
+                 end;
+                (*
                 Item := StrToInt(SomenteNumeros(ListaNfse.FCompNfse[i].FNfse.Servico.ItemListaServico));
                 if Item<100 then Item:=Item*100+1;
 
@@ -308,13 +321,15 @@ begin
                 ListaNfse.FCompNfse[i].FNFSe.Servico.ItemListaServico :=
                     Copy(ListaNfse.FCompNfse[i].FNFSe.Servico.ItemListaServico, 1, 2) + '.' +
                     Copy(ListaNfse.FCompNfse[i].FNFSe.Servico.ItemListaServico, 3, 2);
-
+                *)
                 if length(ListaNfse.FCompNfse[i].FNFSe.Servico.CodigoMunicipio)<7
                  then ListaNfse.FCompNfse[i].FNFSe.Servico.CodigoMunicipio :=
                        Copy(ListaNfse.FCompNfse[i].FNFSe.Servico.CodigoMunicipio, 1, 2) +
                        FormatFloat('00000', StrToIntDef(Copy(ListaNfse.FCompNfse[i].FNFSe.Servico.CodigoMunicipio, 3, 5), 0));
 
-                ListaNfse.FCompNfse[i].FNFSe.Servico.xItemListaServico := CodigoToDesc(ListaNfse.FCompNfse[i].FNFSe.Servico.ItemListaServico);
+                //Alterado por Cleiver em 26/02/2013
+                if (ListaNfse.FCompNfse[i].FNFSe.Servico.ItemListaServico <> '')
+                 then ListaNfse.FCompNfse[i].FNFSe.Servico.xItemListaServico := CodigoToDesc(ListaNfse.FCompNfse[i].FNFSe.Servico.ItemListaServico);
 
                 if Leitor.rExtrai(7, 'Valores') <> ''
                  then begin

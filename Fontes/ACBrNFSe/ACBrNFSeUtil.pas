@@ -445,11 +445,17 @@ begin
                      AStr := AStr + '</InfDeclaracaoPrestacaoServico>';
                      AStr := AStr + Assinatura;
                      AStr := AStr + '</Rps>';
+                     // Alterado por Cleiver em 26/02/2013
+                     if (AProvedor = proGoiania)
+                      then AXML := AXML + '</GerarNfseEnvio>';
                     end;
       else begin
             AStr := copy(AStr, 1, pos('</Rps>', AStr) - 1);
             AStr := AStr + Assinatura;
             AStr := AStr + '</Rps>';
+            // Alterado por Cleiver em 26/02/2013
+            if (AProvedor = proRecife)
+             then AXML := AXML + '</GerarNfseEnvio>';
            end;
      end;
     end;
@@ -640,11 +646,17 @@ begin
                      AXML := AXML + '</InfDeclaracaoPrestacaoServico>';
                      AXML := AXML + Assinatura;
                      AXML := AXML + '</Rps>';
+                     // Alterado por Cleiver em 26/02/2013
+                     if (AProvedor = proGoiania)
+                      then AXML := AXML + '</GerarNfseEnvio>';
                     end;
       else begin
             AXML := copy(AXML, 1, pos('</Rps>', AXML) - 1);
             AXML := AXML + Assinatura;
             AXML := AXML + '</Rps>';
+            // Alterado por Cleiver em 26/02/2013
+            if (AProvedor = proGoiania)
+             then AXML := AXML + '</GerarNfseEnvio>';
            end;
      end;
 
@@ -749,6 +761,10 @@ begin
                    AXML := AXML + '</Signature>';
                    AXML := AXML + '</Rps>';
 
+                   // Alterado por Cleiver em 26/02/2013
+                   if (AProvedor = proGoiania)
+                    then AXML := AXML + '</GerarNfseEnvio>';
+
                    XMLAssinado := AXML;
                   end
                   else
@@ -824,6 +840,13 @@ begin
      PosFim      := DFeUtil.PosLast('<X509Certificate>', XMLAssinado);
      XMLAssinado := copy(XMLAssinado, 1, PosIni) +
                     copy(XMLAssinado, PosFim, length(XMLAssinado));
+
+     // Alterado por Cleiver em 26/02/2013
+     if (AProvedor = proRecife)
+      then begin
+       XMLAssinado := copy(XMLAssinado, 1, length(XMLAssinado) - 17);
+       XMLAssinado  := XMLAssinado + '</GerarNfseEnvio>';
+     end;
     end;
   end
   else raise Exception.Create('Assinatura Falhou.');

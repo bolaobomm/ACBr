@@ -777,6 +777,8 @@ var
 begin
  Cidade := '';
  case ACodigo of
+  //Alterado por Cleiver em 26/02/2013
+    25300: Cidade := 'Goiânia/GO';
   1302603: Cidade := 'Manaus/AM';
 
   1400100: Cidade := 'Boa Vista/RR';
