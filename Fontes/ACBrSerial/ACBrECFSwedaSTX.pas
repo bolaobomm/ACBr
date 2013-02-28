@@ -2662,8 +2662,8 @@ begin
     NumeroDeSerieMFD := Copy(RetCMD,76,21);
     CRZ              := StrToIntDef( Copy(RetCMD,168,04), 0) ;
     COO              := StrToIntDef( Copy(RetCMD,193,06), 0) ;
-    DataDoMovimento  := StringToDateTime( Copy(RetCMD,199,5) + DateSeparator+
-                                          Copy(RetCMD,207,2), 'dd/mm/yy' );
+    DataDoMovimento  := StringToDateTimeDef( Copy(RetCMD,199,5) + DateSeparator+
+                                             Copy(RetCMD,207,2), 0, 'dd/mm/yy' );
     NumeroCOOInicial := Copy(RetCMD,210,06) ;
     CRO              := StrToIntDef( Copy(RetCMD,216,04), 0) ;
     VendaLiquida     := RoundTo( StrToFloatDef( copy(RetCMD,272,18),0) / 100, -2) ;

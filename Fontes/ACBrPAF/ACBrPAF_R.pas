@@ -238,8 +238,11 @@ type
 
   /// REGISTRO TIPO R05 - DETALHE DO CUPOM FISCAL, DA NOTA FISCAL DE VENDA A CONSUMIDOR OU DO BILHETE DE PASSAGEM
 
+  { TRegistroR05 }
+
   TRegistroR05 = class
   private
+    FNUM_CONT: integer;
     fRegistroValido: boolean;
     fNUM_ITEM: integer;         /// Número do item registrado no documento
     fCOD_ITEM: string;          /// Código do produto ou serviço registrado no documento
@@ -281,6 +284,7 @@ type
     property IPPT: string read FIPPT write FIPPT;
     property QTDE_DECIMAL: integer read FQTDE_DECIMAL write FQTDE_DECIMAL;
     property VL_DECIMAL: integer read FVL_DECIMAL write FVL_DECIMAL;
+    property NUM_CONT: integer read FNUM_CONT write FNUM_CONT;
   end;
 
   /// REGISTRO R05 - Lista
@@ -552,6 +556,7 @@ end;
 constructor TRegistroR05.Create;
 begin
   fRegistroValido := True;
+  FNUM_CONT       := -1;
 end;
 
 { TRegistroR06 }

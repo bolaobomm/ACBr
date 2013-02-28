@@ -440,7 +440,7 @@ begin
                                              RFill(FRegistroR01.MODELO_ECF, 20, ifThen(RegistroValido, ' ', '?')) +
                                              LFill(RegR04.NUM_USU, 2) +
                                              LFill(RegR04.COO, 6) +
-                                             LFill(RegR04.NUM_CONT, 6) +
+                                             LFill( IfThen(NUM_CONT=-1, RegR04.NUM_CONT, NUM_CONT), 6) +
                                              LFill(NUM_ITEM, 3) +
                                              RFill(COD_ITEM, 14) +
                                              RFill(DESC_ITEM, 100) +

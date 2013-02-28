@@ -199,6 +199,8 @@ function TACBrAAC.AchaECF(const NumSerie : String) : TACBrAACECF ;
 Var
   I : Integer ;
 begin
+  GravaLog( 'AchaECF( '+NumSerie+' )' );
+
   VerificaReCarregarArquivo;
 
   Result := nil;
@@ -210,6 +212,11 @@ begin
     else
        Inc( I ) ;
   end ;
+
+  if not Assigned(Result) then
+     GravaLog( '  Falha' )
+  else
+     GravaLog( '  Ok' );
 end ;
 
 procedure TACBrAAC.AbrirArquivo ;
@@ -631,6 +638,8 @@ var
    CRONovo, CNINovo : Integer ;
    NewECF : TACBrAACECF ;
 begin
+  GravaLog( 'VerificarGTECF( '+ NumeroSerie+ ', '+FloatToStr(ValorGT) +' )' );
+
   Result := 0;
   VerificaReCarregarArquivo;
 
@@ -642,12 +651,14 @@ begin
      if fsIdentPAF.Paf.RecompoeNumSerie and
         Assigned( fsOnVerificarRecomporNumSerie ) then
      begin
+        GravaLog( '  OnVerificarRecomporNumSerie' );
         CRONovo := 0;
         CNINovo := 0;
 
         fsOnVerificarRecomporNumSerie( NumeroSerie, ValorGT, CRONovo, CNINovo ) ;
         if (CRONovo > 0) then
         begin
+           GravaLog( '    Recompondo' );
            NewECF := TACBrAACECF.Create;
            NewECF.NumeroSerie    := NumeroSerie;
            NewECF.CRO            := CRONovo;
@@ -670,11 +681,14 @@ begin
        if fsIdentPAF.Paf.RecompoeGT and
           Assigned( fsOnVerificarRecomporValorGT ) then
        begin
+          GravaLog( '  OnVerificarRecomporValorGT' );
+
           ValorGTNovo := AECF.ValorGT;
           fsOnVerificarRecomporValorGT( NumeroSerie, ValorGTNovo );
 
           if RoundTo( ValorGTNovo, -2) <> RoundTo( AECF.ValorGT, -2) then
           begin
+             GravaLog( '    Recompondo' );
              AtualizarValorGT( NumeroSerie, ValorGTNovo );
              Result := 0;
           end ;
@@ -759,7 +773,7 @@ begin
      exit ;
 
   try
-     WriteToTXT(fsArqLOG, FormatDateTime('dd/mm hh:nn',Now)+' - '+AString, True);
+     WriteToTXT(fsArqLOG, FormatDateTime('dd/mm hh:nn:ss:zzz',Now)+' - '+AString, True);
   except
   end ;
 end ;

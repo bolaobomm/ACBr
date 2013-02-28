@@ -206,9 +206,7 @@ const
   cACBrECFSetAACException                = 'Não é possível mudar ACBrECF.AAC com o componente ativo' ;
 
   cACBrAACNumSerieNaoEncontardoException = 'ECF de Número de série %s não encontrado no Arquivo Auxiliar Criptografado.' ;
-  cACBrAACValorGTInvalidoException       = 'Há divergência no Valor do Grande Total'+sLineBreak+
-                                           'Valor do ECF....: %m'+sLineBreak+
-                                           'Valor do Arquivo: %m' ;
+  cACBrAACValorGTInvalidoException       = 'Divergência no Valor do Grande Total.';
 
 implementation
 

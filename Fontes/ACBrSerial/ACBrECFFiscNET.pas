@@ -3088,9 +3088,9 @@ begin
     // TODO: CNS Contador de Operações não Sujeitas ao ICMS         575  580
 
     if Length(RetCmd) > 587 then
-       DataDoMovimento := StringToDateTime( copy( RetCmd, 583, 2 ) + DateSeparator +
-                                            copy( RetCmd, 585, 2 ) + DateSeparator +
-                                            copy( RetCmd, 587, 2 ), 'dd/mm/yy' );
+       DataDoMovimento := StringToDateTimeDef( copy( RetCmd, 583, 2 ) + DateSeparator +
+                                               copy( RetCmd, 585, 2 ) + DateSeparator +
+                                               copy( RetCmd, 587, 2 ), 0, 'dd/mm/yy' );
     if Length(RetCmd) > 589 then
        AcrescimoICMS := RoundTo( StrToFloatDef( copy( RetCmd, 589, 14 ), 0 ) / 100, -2 ) ;
 

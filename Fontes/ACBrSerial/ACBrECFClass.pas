@@ -4473,10 +4473,6 @@ begin
      P := 4 ;
 
   fsMD5 := copy(AValue,P,Length(AValue));
-
-  // "NL" adicionado conforme requisito VIII-B item 6, somente para o DF
-  if NotaLegalDF.Imprimir then
-    fsMD5 := fsMD5+ '"NL"'
 end ;
 
 constructor TACBrECFRodape.Create;

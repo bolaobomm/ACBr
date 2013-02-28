@@ -4528,9 +4528,9 @@ begin
   with fpDadosReducaoZClass do
   begin
     { REDUÇÃO Z }
-    DataDoMovimento := StringToDateTime( copy(RetCmd,1,2)+DateSeparator+
-                                         copy(RetCmd,3,2)+DateSeparator+
-                                         copy(RetCmd,7,2), 'dd/mm/yy' );
+    DataDoMovimento := StringToDateTimeDef( copy(RetCmd,1,2)+DateSeparator+
+                                            copy(RetCmd,3,2)+DateSeparator+
+                                            copy(RetCmd,7,2), 0, 'dd/mm/yy' );
 
     { TOTALIZADORES }
     ValorGrandeTotal  := RoundTo( StrToFloatDef( copy(RetCmd,  9,18),0) / 100, -2 ) ;

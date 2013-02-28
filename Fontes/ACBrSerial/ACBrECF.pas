@@ -1177,6 +1177,13 @@ var wRetentar : Boolean ;   { Variaveis de Trabalho, usadas para transportar }
     wDescricaoGrande : Boolean ;
     wIntervaloAposComando : Integer ;
     wIgnorarTagsFormatacao: Boolean;
+    wInfoRodapeCupomMania: Boolean;
+    wInfoRodapeMinasLegal: Boolean;
+    wInfoRodapeParaibaLegal: Boolean;
+    wInfoRodapeMD5: String;
+    wInfoRodapeNotaLegalDFImprimir: Boolean;
+    wInfoRodapeNotaLegalDFProgramaDeCredito: Boolean;
+
 begin
   if fsModelo = AValue then exit ;
 
@@ -1208,6 +1215,13 @@ begin
   wDescricaoGrande      := DescricaoGrande ;
   wOnAguardandoRespostaChange := OnAguardandoRespostaChange ;
   wIgnorarTagsFormatacao:= IgnorarTagsFormatacao;
+
+  wInfoRodapeCupomMania   := InfoRodapeCupom.CupomMania ;
+  wInfoRodapeMinasLegal   := InfoRodapeCupom.MinasLegal ;
+  wInfoRodapeParaibaLegal := InfoRodapeCupom.ParaibaLegal ;
+  wInfoRodapeMD5          := InfoRodapeCupom.MD5;
+  wInfoRodapeNotaLegalDFImprimir := InfoRodapeCupom.NotaLegalDF.Imprimir;
+  wInfoRodapeNotaLegalDFProgramaDeCredito := InfoRodapeCupom.NotaLegalDF.ProgramaDeCredito;
 
   FreeAndNil( fsECF ) ;
 
@@ -1259,6 +1273,13 @@ begin
   OnAguardandoRespostaChange := wOnAguardandoRespostaChange ;
   DescricaoGrande      := wDescricaoGrande ;
   IgnorarTagsFormatacao:= wIgnorarTagsFormatacao;
+
+  InfoRodapeCupom.CupomMania           := wInfoRodapeCupomMania;
+  InfoRodapeCupom.MinasLegal           := wInfoRodapeMinasLegal;
+  InfoRodapeCupom.ParaibaLegal         := wInfoRodapeParaibaLegal;
+  InfoRodapeCupom.MD5                  := wInfoRodapeMD5;
+  InfoRodapeCupom.NotaLegalDF.Imprimir := wInfoRodapeNotaLegalDFImprimir;
+  InfoRodapeCupom.NotaLegalDF.ProgramaDeCredito := wInfoRodapeNotaLegalDFProgramaDeCredito;
 
   fsModelo := AValue;
 end;
@@ -2934,7 +2955,15 @@ begin
 
   // atende ao requisito do Paf-ECF
   if Trim(InfoRodapeCupom.MD5) <> EmptyStr then
+  begin
     Result := 'MD-5:' + Trim(InfoRodapeCupom.MD5);
+
+    { "NL" adicionado conforme requisito VIII-B item 6, somente para o DF e
+      se existir consumidor atribuido }
+    if InfoRodapeCupom.NotaLegalDF.Imprimir and
+       (Consumidor.Enviado and (Consumidor.Documento <> '') ) then
+      Result := Result + '"NL"'
+  end;
 
   // atende ao requisito do paf-ECF V item 2
   if Trim(InfoRodapeCupom.PreVenda) <> EmptyStr then
@@ -2984,12 +3013,12 @@ begin
     Rodape := Rodape + #10 +
       'PARAÍBA LEGAL – RECEITA CIDADÃ' + #10 +
       Format(
-        'TORPEDO PREMIADO: %s %s %s %s', [
+        'TORPEDO PREMIADO: %s %s %s', [
         OnlyNumber(Self.CNPJ),
         FormatDateTime('ddmmyyyy', Self.DataHora),
-        IntToStr(TruncFix(Self.Subtotal * 100)),
-        OnlyNumber(Consumidor.Documento)
-      ]);
+        IntToStr(TruncFix(Self.Subtotal * 100))
+      ])+ #10 +
+      OnlyNumber(Consumidor.Documento) ;
   end
   else if InfoRodapeCupom.NotaLegalDF.Imprimir then
   begin
@@ -5252,8 +5281,8 @@ begin
      raise EACBrAAC_NumSerieNaoEncontrado.Create( ACBrStr( Format(
            cACBrAACNumSerieNaoEncontardoException, [ fsNumSerieCache ] )) )
   else if Erro = -2 then
-     raise EACBrAAC_ValorGTInvalido.Create( ACBrStr( Format(
-           cACBrAACValorGTInvalidoException , [ValorGT_ECF, ValorGT_AAC] )) );
+     raise EACBrAAC_ValorGTInvalido.Create( ACBrStr(
+           cACBrAACValorGTInvalidoException ) );
 end ;
 
 procedure TACBrECF.DoAtualizarValorGT ;
@@ -5430,12 +5459,22 @@ begin
   // acertar para que saia o texto "MD-5" antes do numero
   MD5Texto := 'MD-5:' + copy(MD5, P, Length(MD5) );
 
-  // "NL" adicionado conforme requisito VIII-B item 6, somente para o DF
-  if InfoRodapeCupom.NotaLegalDF.Imprimir then
-    MD5Texto := MD5Texto + '"NL"';
-
   try
-     fsECF.IdentificaPAF(NomeVersao, MD5Texto);
+     { Nota Legal, impede o uso de IdentificaPAF, pois o sufixo "NL" no MD5
+       deve ser adicionado apenas se o Consumidor for identificado, o que
+       ocorre após a abertura do Cupom.
+       conforme requisito VIII-B item 6, somente para o DF }
+
+     if not InfoRodapeCupom.NotaLegalDF.Imprimir then
+       fsECF.IdentificaPAF(NomeVersao, MD5Texto)
+     else
+     begin
+       try
+          fsECF.IdentificaPAF('','');  // Remove programação da memoria do ECF
+       except
+       end;
+       InfoRodapeCupom.MD5 := MD5;
+     end;
   except
      // Se não conseguiu programar os dados PAF-ECF,
      // usa o InfoRodapeCupom para imprimir o MD5
