@@ -375,7 +375,7 @@ begin
     Self.Items[i].Alertas := LocNFSeW.Gerador.ListaDeAlertas.Text;
     Self.Items[i].XML_Rps := LocNFSeW.Gerador.ArquivoFormatoXML;
 
-    if FConfiguracoes.Geral.Salvar
+    if FConfiguracoes.WebServices.Salvar
      then FConfiguracoes.Geral.Save(NotaUtil.PathWithDelim(FConfiguracoes.Arquivos.GetPathRPS) + Self.Items[i].NFSe.InfID.ID+'-Rps2.xml', LocNFSeW.Gerador.ArquivoFormatoXML);
 
     if self.Configuracoes.Certificados.AssinaRPS
@@ -418,8 +418,9 @@ begin
 
     Leitor.Free;
 
-    if FConfiguracoes.Geral.Salvar
-     then FConfiguracoes.Geral.Save(NotaUtil.PathWithDelim(FConfiguracoes.Arquivos.GetPathRPS) + Self.Items[i].NFSe.InfID.ID+'-Rps.xml', vAssinada);
+//    if FConfiguracoes.Geral.Salvar
+//     then
+    FConfiguracoes.Geral.Save(NotaUtil.PathWithDelim(FConfiguracoes.Arquivos.GetPathRPS) + Self.Items[i].NFSe.InfID.ID+'-Rps.xml', vAssinada);
 
     if DFeUtil.NaoEstaVazio(Self.Items[i].NomeArq)
      then FConfiguracoes.Geral.Save(ExtractFileName(Self.Items[i].NomeArq), vAssinada, ExtractFilePath(Self.Items[i].NomeArq));

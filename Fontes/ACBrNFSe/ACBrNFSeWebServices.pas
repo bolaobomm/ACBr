@@ -1481,18 +1481,15 @@ begin
                                                      FTagI,
                                                      FTagF);
 
-// if FConfiguracoes.WebServices.Salvar
-//  then FConfiguracoes.Geral.Save('-xxx1.xml', FDadosMsg);
-
  FDadosMsg := TNFSeGerarLoteRPS(Self).FNotasFiscais.AssinarLoteRps(TNFSeGerarLoteRps(Self).NumeroLote, FDadosMSg);
 
-  if FConfiguracoes.Geral.Salvar
-   then begin
+//  if FConfiguracoes.Geral.Salvar
+//   then begin
     PathSalvar := FConfiguracoes.Arquivos.GetPathGer;
     TNFSeGerarLoteRps(Self).FNotasFiscais.Items[0].NomeArq := PathWithDelim(PathSalvar) +
                                                               TNFSeGerarLoteRps(Self).NumeroLote+'-lot-rps.xml';
     FConfiguracoes.Geral.Save(TNFSeGerarLoteRps(Self).NumeroLote+'-lot-rps.xml', FDadosMsg, PathSalvar);
-   end;
+//   end;
 
  if FProvedorClass.GetValidarLote
   then begin
@@ -2300,14 +2297,14 @@ try
 
           FRetNFSe := FProvedorClass.GeraRetornoNFSe(Prefixo3, FRetNFSe, FNomeCidade);
 
-          if FConfiguracoes.Geral.Salvar
-           then begin
+//          if FConfiguracoes.Geral.Salvar
+//           then begin
             PathSalvar := FConfiguracoes.Arquivos.GetPathNFSe(0);
             FConfiguracoes.Geral.Save(NFSeRetorno.ListaNfse.CompNfse.Items[i].Nfse.Numero + '-nfse.xml',
                                       NotaUtil.RetirarPrefixos(FRetNfse), PathSalvar);
             if FNotasFiscais.Count>0
              then FNotasFiscais.Items[ii].NomeArq := PathWithDelim(PathSalvar) + NFSeRetorno.ListaNfse.CompNfse.Items[i].Nfse.Numero + '-nfse.xml';
-           end;
+//           end;
 
           FRetListaNfse := Copy(FRetListaNfse, j + 11 + p, length(FRetListaNfse));
 
@@ -2497,14 +2494,14 @@ begin
 
       FRetNFSe := FProvedorClass.GeraRetornoNFSe(Prefixo3, FRetNFSe, FNomeCidade);
 
-      if FConfiguracoes.Geral.Salvar
-       then begin
+//      if FConfiguracoes.Geral.Salvar
+//       then begin
         PathSalvar := FConfiguracoes.Arquivos.GetPathNFSe(0);
         FConfiguracoes.Geral.Save(NFSeRetorno.ListaNfse.CompNfse.Items[i].Nfse.Numero + '-nfse.xml',
                                   NotaUtil.RetirarPrefixos(FRetNfse), PathSalvar);
         if FNotasFiscais.Count>0
          then FNotasFiscais.Items[i].NomeArq := PathWithDelim(PathSalvar) + NFSeRetorno.ListaNfse.CompNfse.Items[i].Nfse.Numero + '-nfse.xml';
-       end;
+//       end;
 
       FNotasFiscais.Items[i].NFSe.Protocolo         := NFSeRetorno.ListaNfse.CompNfse.Items[i].Nfse.Protocolo;
       FNotasFiscais.Items[i].NFSe.CodigoVerificacao := NFSeRetorno.ListaNfse.CompNfse.Items[i].Nfse.CodigoVerificacao;
@@ -2696,12 +2693,12 @@ begin
 
       FRetNFSe := FProvedorClass.GeraRetornoNFSe(Prefixo3, FRetNFSe, FNomeCidade);
 
-      if FConfiguracoes.Geral.Salvar
-       then begin
+//      if FConfiguracoes.Geral.Salvar
+//       then begin
         PathSalvar := FConfiguracoes.Arquivos.GetPathNFSe(NFSeRetorno.ListaNfse.CompNfse.Items[i].Nfse.DataEmissao);
         FConfiguracoes.Geral.Save(NFSeRetorno.ListaNfse.CompNfse.Items[i].Nfse.Numero + '-nfse.xml',
                                   NotaUtil.RetirarPrefixos(FRetNfse), PathSalvar);
-       end;
+//       end;
       FRetListaNfse := Copy(FRetListaNfse, j + 11 + p, length(FRetListaNfse));
       inc(i);
      end
@@ -3046,14 +3043,14 @@ begin
 
       FRetNFSe := FProvedorClass.GeraRetornoNFSe(Prefixo3, FRetNFSe, FNomeCidade);
 
-      if FConfiguracoes.Geral.Salvar
-       then begin
+//      if FConfiguracoes.Geral.Salvar
+//       then begin
         PathSalvar := FConfiguracoes.Arquivos.GetPathNFSe(0);
         FConfiguracoes.Geral.Save(NFSeRetorno.ListaNfse.CompNfse.Items[i].Nfse.Numero + '-nfse.xml',
                                       NotaUtil.RetirarPrefixos(FRetNfse), PathSalvar);
         if FNotasFiscais.Count>0
          then FNotasFiscais.Items[i].NomeArq := PathWithDelim(PathSalvar) + NFSeRetorno.ListaNfse.CompNfse.Items[i].Nfse.Numero + '-nfse.xml';
-       end;
+//       end;
       FRetListaNfse := Copy(FRetListaNfse, j + 11 + p, length(FRetListaNfse));
 
       inc(i);
