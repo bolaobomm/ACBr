@@ -1063,6 +1063,70 @@ begin
                QTD_REG_BLC := Bloco_1.Registro1800Count;
             end;
          end;
+         if Bloco_1.Registro1900Count > 0 then
+         begin
+            with New do
+            begin
+               REG_BLC := '1900';
+               QTD_REG_BLC := Bloco_1.Registro1900Count;
+            end;
+         end;
+         if Bloco_1.Registro1910Count > 0 then
+         begin
+            with New do
+            begin
+               REG_BLC := '1910';
+               QTD_REG_BLC := Bloco_1.Registro1910Count;
+            end;
+         end;
+         if Bloco_1.Registro1920Count > 0 then
+         begin
+            with New do
+            begin
+               REG_BLC := '1920';
+               QTD_REG_BLC := Bloco_1.Registro1920Count;
+            end;
+         end;
+         if Bloco_1.Registro1921Count > 0 then
+         begin
+            with New do
+            begin
+               REG_BLC := '1921';
+               QTD_REG_BLC := Bloco_1.Registro1921Count;
+            end;
+         end;
+         if Bloco_1.Registro1922Count > 0 then
+         begin
+            with New do
+            begin
+               REG_BLC := '1922';
+               QTD_REG_BLC := Bloco_1.Registro1922Count;
+            end;
+         end;
+         if Bloco_1.Registro1923Count > 0 then
+         begin
+            with New do
+            begin
+               REG_BLC := '1923';
+               QTD_REG_BLC := Bloco_1.Registro1923Count;
+            end;
+         end;
+         if Bloco_1.Registro1925Count > 0 then
+         begin
+            with New do
+            begin
+               REG_BLC := '1925';
+               QTD_REG_BLC := Bloco_1.Registro1925Count;
+            end;
+         end;
+         if Bloco_1.Registro1926Count > 0 then
+         begin
+            with New do
+            begin
+               REG_BLC := '1926';
+               QTD_REG_BLC := Bloco_1.Registro1926Count;
+            end;
+         end;
       end;
    end;
 end;
