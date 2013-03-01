@@ -2907,9 +2907,9 @@ begin
     { Alimenta a class com os dados atuais do ECF }
     with fpDadosReducaoZClass do
     begin
-      DataDoMovimento := StringToDateTime( copy(RetCmd,1237,2) + DateSeparator +
+      DataDoMovimento := StringToDateTimeDef( copy(RetCmd,1237,2) + DateSeparator +
                                            copy(RetCmd,1239,2) + DateSeparator +
-                                           copy(RetCmd,1241,2), 'dd/mm/yy' );
+                                              copy(RetCmd,1241,2), 0, 'dd/mm/yy' );
 
       CRO  := StrToIntDef( copy(RetCmd,  3,4), 0) ;
       CRZ  := StrToIntDef( copy(RetCmd,  7,4), 0) ;

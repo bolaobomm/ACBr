@@ -38,10 +38,19 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+Data: 28/02/2013
+-- ACBrAAC --
+[*] Melhoria na gravação dos Logs   (por: DSA)
+
+-- ACBrConsts --
+[*] Remoção da exibição dos Valores do Grande Total na Mensagem de erro de
+    divergência do G.T. (a pedido de homologador PAF-ECF)     (por: DSA)
+
 Data: 14/02/2013
-[+] Função DesligarMaquina modificada para permitir efetuar apenas o LogOff  (por: DSA)
+-- ACBrUtil --
+[+] Função DesligarMaquina modificada para permitir efetuar apenas o LogOff
     DesligarMaquina(Reboot: Boolean = False; Forcar: Boolean = False;
-                    LogOff: Boolean = False) ;
+                    LogOff: Boolean = False) ;                        (por: DSA)
 
 Data: 01/02/2013
 -- ACBrAAC --

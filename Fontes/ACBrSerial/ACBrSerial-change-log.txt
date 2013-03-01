@@ -97,6 +97,24 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+Data: 28/02/2013
+-- ACBrECF --
+[-] Correção de bug, onde o ACBrECF perdia as configurações de InfoRodape,
+    quando o modelo era modificado     (por: DSA)
+
+[-] Modificação da exibição da informação no rodapé para o programa Nota Legal,
+    de "DF". O Sufixo "NL" só deve ser exibido após o MD5, se houver
+    identificação do consumidor. (a pedido de homologador PAF-ECF)    (por: DSA)
+
+[*] Modificação da exibição da informação no rodapé para o programa Paraiba Legal,
+    O texto atual da lei, impede a impressão de todo texto em uma única linha,
+    pois ultrapassa 56 caracteres. O CPF do identificação do consumidor será
+    impresso na linha de baixo (a pedido de homologador PAF-ECF)    (por: DSA)
+
+[*] Ajustes em GetDadosUltimaReducaoZ em vários modelos para que o comando não
+    seja interrompido, caso a Data de Movimento retornada pelo ECF seja inválida
+    (por: DSA)
+
 Data: 04/02/2013
 -- ACBrECF --
 [-] Correção do rodape Cupom Mania estava pegando a data do computador (por: Rafael Dias)
