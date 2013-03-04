@@ -136,7 +136,7 @@ begin
    Result := '0';
 
    // numero base para o calculo do primeiro e segundo digitos
-   ANumeroDoc := padR(AnsiString(ACBrTitulo.NumeroDocumento), 13, '0');
+   ANumeroDoc := padR(rightStr(AnsiString(ACBrTitulo.NossoNumero),13),13,'0');
 
    // Calculo do primeiro digito
    ANumeroBase := ANumeroDoc;

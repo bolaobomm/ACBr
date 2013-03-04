@@ -66,6 +66,7 @@ type
     function CodMotivoRejeicaoToDescricao(const TipoOcorrencia: TACBrTipoOcorrencia; CodMotivo: Integer): string; override;
 
     function CodOcorrenciaToTipo(const CodOcorrencia: Integer): TACBrTipoOcorrencia; override;
+    function TipoOCorrenciaToCod(const TipoOcorrencia: TACBrTipoOcorrencia): String; override;
    end;
 
 implementation
@@ -199,6 +200,28 @@ begin
 
     DigitoCodBarras := CalcularDigitoCodigoBarras(CodigoBarras);
     Result:= copy( CodigoBarras, 1, 4) + DigitoCodBarras + copy( CodigoBarras, 5, 44);
+end;
+
+function TACBrCaixaEconomica.TipoOCorrenciaToCod(
+  const TipoOcorrencia: TACBrTipoOcorrencia): String;
+begin
+//escol
+  case TipoOcorrencia of
+    toRetornoRegistroConfirmado: Result := '02';
+    toRetornoRegistroRecusado: Result := '03';
+    toRetornoLiquidado: Result := '06';
+    toRetornoAbatimentoConcedido: Result := '12';
+    toRetornoAbatimentoCancelado: Result := '13';
+    toRetornoVencimentoAlterado: Result := '14';
+    toRetornoRecebimentoInstrucaoProtestar: Result := '19';
+    toRetornoRecebimentoInstrucaoSustarProtesto: Result := '20';
+    toRetornoInstrucaoRejeitada: Result := '26';
+    toRetornoDebitoTarifas: Result := '28';
+    toRetornoALteracaoOutrosDadosRejeitada: Result := '30';
+    toRetornoRecebimentoInstrucaoAlterarDados: Result := '45';
+  else
+    Result := '00';
+  end;
 end;
 
 function TACBrCaixaEconomica.MontarCampoCodigoCedente (
@@ -544,11 +567,11 @@ begin
             //05 = Liquidação Sem Registro
             Vencimento := StringToDateTimeDef( Copy(Linha,74,2)+'/'+
                                                Copy(Linha,76,2)+'/'+
-                                               Copy(Linha,78,2),0, 'DD/MM/YY' );
+                                               Copy(Linha,80,2),0, 'DD/MM/YY' );
 
             ValorDocumento       := StrToFloatDef(Copy(Linha,82,15),0)/100;
             ValorDespesaCobranca := StrToFloatDef(Copy(Linha,199,15),0)/100;
-            NossoNumero          := Copy(Linha,40,11);
+            NossoNumero          := Copy(Linha,42,15);  
             Carteira             := Copy(Linha,40,2);
 
           end

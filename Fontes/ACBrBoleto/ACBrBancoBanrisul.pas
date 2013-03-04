@@ -316,24 +316,24 @@ begin
 
       {Pegando Código da Ocorrencia}
     case OcorrenciaOriginal.Tipo of
-      toRemessaBaixar            : Ocorrencia:='02'; {Pedido de Baixa}
-      toRemessaConcederAbatimento: Ocorrencia:='04'; {Concessão de Abatimento}
-      toRemessaCancelarAbatimento: Ocorrencia:='05'; {Cancelamento de Abatimento concedido}
-      toRemessaAlterarVencimento : Ocorrencia:='06'; {Alteração de vencimento}
-      toRemessaProtestar                    : Ocorrencia :='09'; {Pedido de protesto}
+      toRemessaBaixar                        : Ocorrencia:='02'; {Pedido de Baixa}
+      toRemessaConcederAbatimento            : Ocorrencia:='04'; {Concessão de Abatimento}
+      toRemessaCancelarAbatimento            : Ocorrencia:='05'; {Cancelamento de Abatimento concedido}
+      toRemessaAlterarVencimento             : Ocorrencia:='06'; {Alteração de vencimento}
+      toRemessaProtestar                     : Ocorrencia:='09'; {Pedido de protesto}
       toRemessaCancelarInstrucaoProtestoBaixa: Ocorrencia:='18'; {Sustar protesto e baixar}
-      toRemessaCancelarInstrucaoProtesto    : Ocorrencia:='19'; {Sustar protesto e manter na carteira}
-      toRemessaOutrasOcorrencias: Ocorrencia:='31'; {Alteração de Outros Dados}
+      toRemessaCancelarInstrucaoProtesto     : Ocorrencia:='19'; {Sustar protesto e manter na carteira}
+      toRemessaOutrasOcorrencias             : Ocorrencia:='31'; {Alteração de Outros Dados}
     else
       Ocorrencia:='01'; {Remessa}
     end;
     
     {Pegando Tipo de Boleto}
     case ACBrBoleto.Cedente.ResponEmissao of
-      tbCliEmite : TipoBoleto:='08';   //Cobrança credenciada Banrisul
-      tbBancoReemite : TipoBoleto:='04'; //Cobrança Direta
-      else
-        TipoBoleto:='08'; //Cobrança credenciada Banrisul
+      tbCliEmite    : TipoBoleto:='08';   //Cobrança credenciada Banrisul
+      tbBancoReemite: TipoBoleto:='04'; //Cobrança Direta
+    else
+      TipoBoleto:='08'; //Cobrança credenciada Banrisul
     end;
 
     { Pegando o Aceite do Titulo }
@@ -350,21 +350,31 @@ begin
       TipoSacado:='99';
     end;
 
+    {para manter compatibilidade com versões anteriores}
+    if trim(Instrucao1) = '' then begin
+      // estava fixo "09" para 1ª instrução
+      Instrucao1 := '09';
+    end;
+    if (DataProtesto = 0) then begin
+      // estava fixo "04" para dias de protesto
+      DataProtesto := IncDay(Vencimento, 4);
+    end;
+
     with ACBrBoleto do
     begin
       cd:= OnlyNumber(Cedente.CodigoCedente);
 
       wLinha:= '1'                                                              + // ID Registro
                space(16)                                                        +
-               padL(copy(trim(Cedente.Agencia), 1, 4)+cd, 13, '0')              + // Codigo da Empresa no Banco
+               padR(copy(trim(Cedente.Agencia), 1, 4)+cd, 13, '0')              + // Codigo da Empresa no Banco
                space(7)                                                         +
-               space(25)                                                        +
+               space(25)                                                        + // id do título para o cedente (usado no arquivo de retorno)
                PadL(NossoNumero, 8, '0')+CalculaDigitosChaveASBACE(NossoNumero) +
-               space(32)                                                        +
+               space(32)                                                        + // msg no bloqueto
                space(3)                                                         +
-               '1'                                                              + //padrão 1 (cobrança simples)
+               '1'                                                              + // padrão 1 (cobrança simples)
                Ocorrencia                                                       +     
-               padR(NumeroDocumento, 10)                                        +
+               padL(NumeroDocumento, 10)                                        +
                FormatDateTime('ddmmyy', Vencimento)                             +
                IntToStrZero(Round(ValorDocumento*100), 13)                      +
                '041'                                                            +
@@ -372,31 +382,35 @@ begin
                TipoBoleto                                                       + 
                aTipoAceite                                                      +
                FormatDateTime('ddmmyy', DataDocumento)                          + // Data de Emissão
-               '09'                                                             + 
-               PadR(Instrucao2, 2)                                              +
-               '0'                                                              +  
+               PadR(trim(Instrucao1), 2)                                        + // 1ª instrução (padrão "09"=Protestar caso impago)
+               PadR(trim(Instrucao2), 2)                                        +
+               PadR(trim(CodigoMora), 1)                                        + // código de mora (0=Valor diário; 1=Taxa Mensal)
                FormatCurr('000000000000', ValorMoraJuros*100)                   +
-               '000000'                                                         +
-               '0000000000000'                                                  +
-               '0000000000000'                                                  +
-               '0000000000000'                                                  +
+               IfThen(DataDesconto = 0,
+                      '000000',
+                      FormatDateTime('ddmmyy', DataDesconto))                   + // data para concessão de descontos
+               IntToStrZero(Round(ValorDesconto*100), 13)                       + // valor do desconto a ser concedido
+               IntToStrZero(Round(ValorIOF*100), 13)                            + // *valor IOF (para carteira "X" é: taxa juros + IOF + zeros)
+               IntToStrZero(Round(ValorAbatimento*100), 13)                     + // valor do abatimento
                TipoSacado                                                       +
-               PadL(OnlyNumber(Sacado.CNPJCPF), 14, '0')                        +
+               PadR(OnlyNumber(Sacado.CNPJCPF), 14, '0')                        +
                PadL(Sacado.NomeSacado, 35)                                      +
                space(5)                                                         +
                PadL(Sacado.Logradouro+' '+
                     Sacado.Numero+' '+
                     Sacado.Complemento, 40)                                     +
                space(7)                                                         +
-               '000'                                                            +
-               '00'                                                             +
+               '000'                                                            + // taxa para multa após o vencimento
+               '00'                                                             + // dias para multa após o vencimento
                PadL(OnlyNumber(Sacado.CEP), 8, '0')                             +
                PadL(Sacado.Cidade, 15)                                          +
                PadL(Sacado.UF, 2)                                               +
-               '0000'                                                           +
+               '0000'                                                           + // taxa ao dia para pagamento antecipado
                space(1)                                                         +
-               '0000000000000'                                                  +
-               '04'                                                             +
+               '0000000000000'                                                  + // valor para cálculo de desconto
+               IfThen((DataProtesto <> 0) and (DataProtesto > Vencimento),
+                      padR(IntToStr(DaysBetween(DataProtesto, Vencimento)), 2, '0'),
+                      '00')                                                     + // dias para protesto/devolução automática
                space(23)                                                        +
                IntToStrZero(aRemessa.Count + 1, 6);
 

@@ -58,7 +58,7 @@ uses ACBrBase,  {Units da ACBr}
      Graphics, Contnrs, Classes;
 
 const
-  CACBrBoleto_Versao = '0.0.63a' ;
+  CACBrBoleto_Versao = '0.0.64a' ;
 
 type
   TACBrTipoCobranca =
@@ -532,6 +532,8 @@ type
     fACBrBoleto           : TACBrBoleto;
     fTextoLivre           : String;
 
+    fCodigoMora           : String;
+
     procedure SetCarteira(const AValue: String);
     procedure SetNossoNumero ( const AValue: String ) ;
     procedure SetParcela ( const AValue: Integer ) ;
@@ -587,6 +589,8 @@ type
      property PercentualMulta      : Double   read fPercentualMulta       write fPercentualMulta;
 
      property TextoLivre : String read fTextoLivre write fTextoLivre;
+
+     property CodigoMora : String read fCodigoMora write fCodigoMora;
    end;
 
   { TListadeBoletos }
@@ -970,6 +974,8 @@ begin
    fValorRecebido        := 0;
    fReferencia           := '';
    fVersao               := '';
+
+   fCodigoMora := '0';
 end;
 
 destructor TACBrTitulo.Destroy;

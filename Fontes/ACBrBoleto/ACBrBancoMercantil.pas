@@ -73,14 +73,19 @@ begin
    fpNome   := 'Banco Mercantil';
    fpNumero:= 389;
    fpTamanhoMaximoNossoNum := 6;
+   fpTamanhoCarteira:= 2;
 end;
 
 function TACBrBancoMercantil.FormataNossoNumero(const ACBrTitulo :TACBrTitulo): String;
 var
   ANossoNumero: string;
+  aModalidade: String;
 begin
+   aModalidade:= IfThen(Length(trim(ACBrTitulo.ACBrBoleto.Cedente.Modalidade)) = 2,
+                        ACBrTitulo.ACBrBoleto.Cedente.Modalidade,'22');
+
    ANossoNumero := padL(ACBrTitulo.ACBrBoleto.Cedente.Agencia,4,'0') + //4
-                   '22'                                              + //6
+                   aModalidade                                       + //6
                    ACBrTitulo.Carteira                               + //8
                    padL(ACBrTitulo.NossoNumero, 6, '0')              + //14
                    CalcularDigitoVerificador(ACBrTitulo);              //15
@@ -89,11 +94,17 @@ begin
 end;
 
 function TACBrBancoMercantil.CalcularDigitoVerificador(const ACBrTitulo: TACBrTitulo ): String;
+var
+  aModalidade: String;
 begin
    Modulo.CalculoPadrao;
    Modulo.MultiplicadorAtual   := 2;
+
+   aModalidade:= IfThen(Length(trim(ACBrTitulo.ACBrBoleto.Cedente.Modalidade)) = 2,
+                        ACBrTitulo.ACBrBoleto.Cedente.Modalidade,'22');
+
    Modulo.Documento := ACBrTitulo.ACBrBoleto.Cedente.Agencia +
-                       '22' +
+                       aModalidade +
                        ACBrTitulo.Carteira +
                        padL(ACBrTitulo.NossoNumero, 6, '0');
 
@@ -145,8 +156,7 @@ function TACBrBancoMercantil.MontarCampoCodigoCedente (
 begin
    Result := ACBrTitulo.ACBrBoleto.Cedente.Agencia       + '-' +
              ACBrTitulo.ACBrBoleto.Cedente.AgenciaDigito + '/' +
-             ACBrTitulo.ACBrBoleto.Cedente.Conta         + '-' +
-             ACBrTitulo.ACBrBoleto.Cedente.ContaDigito;
+             ACBrTitulo.ACBrBoleto.Cedente.CodigoCedente;
 end;
 
 procedure TACBrBancoMercantil.GerarRegistroHeader400(NumeroRemessa : Integer; aRemessa:TStringList);

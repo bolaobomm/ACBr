@@ -52,6 +52,25 @@ Data: 05/03/13
 [-] Adicionado impressão do bairro do sacado nos dados do endereço. (por: Juliana Tamizou)
 http://www.projetoacbr.com.br/forum/index.php?/topic/9256-campo-bairro-n%C3%A3o-aparece-acbrboletofcfortesfr/
 
+-- ACBrBoleto ver. 0.0.65a --
+-- ACBrBancoHSBC --
+[*] Corrigido campo utilizado para cálculo do NossoNúmero(Antes estava sendo utilizado o 
+     Número do Documento). (por: Marco Tema)
+http://www.projetoacbr.com.br/forum/index.php?/topic/8965-boletos-hsbc-reprovados/
+
+-- ACBrBancoBanrisul --
+[-] Corrigido geração do arquivo remessa CNAB400 para considerar as informações de desconto
+    e mora diária. (por: Fabio Schunig)
+http://www.projetoacbr.com.br/forum/index.php?/topic/1699-boleto-banrisul-com-problema/page-2
+
+-- ACBrBancoMercantil --
+[-] Corrigido impressão dos boletos para funcionar para outras faixas de Nosso Número além da 22,
+    para isso passado a utilizar o campo Modalidade para determinar a faixa correta (caso não seja
+    informado nada neste campo será assumido o valor '22' que antes era fixo. (por: Juliana Tamizou)
+
+-- ACBrCaixaEconomica --
+[-] Corrigido leitura do arquivo retorno CNAB240. (por: Alberto)
+
 Data: 25/02/2013
 -- ACBrBancoob --
 [-] Correção no tamanho da conta
