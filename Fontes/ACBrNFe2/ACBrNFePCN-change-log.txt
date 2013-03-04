@@ -47,6 +47,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+04/03/2013
+----------
+[-] Acerto no envio de e-mail normal, não estava anexando o XML
+    por regys.silveira
+
 29/01/12
 --------
 [-] Acertos feitos pelo usuário Luis Fernando para o DANFE quickreport.
