@@ -643,11 +643,13 @@ begin
       txtNumeroDocumento2.Caption     := Titulo.NumeroDocumento;
       txtEspecieDoc2.Caption          := Titulo.EspecieDoc;
       txtAceite2.Caption              := ifThen(Titulo.Aceite = atSim,'S','N');
-      txtDataProcessamento2.Caption   := FormatDateTime('dd/mm/yyyy',Now);
+      txtDataProcessamento2.Caption   := IfThen(Titulo.DataProcessamento = 0,
+                                                FormatDateTime('dd/mm/yyyy',Now),
+                                                FormatDateTime('dd/mm/yyyy',Titulo.DataProcessamento));
       txtNossoNumero2.Caption         := NossoNum;
       txtUsoBanco2.Caption            := Titulo.UsoBanco;
       txtCarteira2.Caption            := Titulo.Carteira;
-      txtEspecie2.Caption             := 'R$';
+      txtEspecie2.Caption             := IfThen(trim(Titulo.EspecieMod) = '','R$',Titulo.EspecieMod);
       txtValorDocumento2.Caption      := FormatFloat('###,###,##0.00',Titulo.ValorDocumento);
       txtNomeSacado2.Caption          := Titulo.Sacado.NomeSacado;
       txtEnderecoSacado2.Caption      := Titulo.Sacado.Logradouro + ' '+
@@ -750,7 +752,7 @@ begin
 
       txtUsoBanco2.Caption            := Titulo.UsoBanco;
       txtCarteira.Caption             := Titulo.Carteira;
-      txtEspecie2.Caption             := 'R$';
+      txtEspecie2.Caption             := IfThen(trim(Titulo.EspecieMod) = '','R$',Titulo.EspecieMod);
       txtParcela.Caption              := IntToStrZero(Titulo.Parcela,3)+' /';
       txtTotPar.Caption               := IntToStrZero(Titulo.TotalParcelas,3);
 
@@ -798,7 +800,9 @@ begin
       txtCodigoCedente4.Caption       := CodCedente;
 
       txtNumeroDocumento4.Caption     := Titulo.NumeroDocumento;
-      txtDataProcessamento4.Caption   := FormatDateTime('dd/mm/yyyy',Now);
+      txtDataProcessamento4.Caption   := IfThen(Titulo.DataProcessamento = 0,
+                                                FormatDateTime('dd/mm/yyyy',Now),
+                                                FormatDateTime('dd/mm/yyyy',Titulo.DataProcessamento));
       txtNossoNumero4.Caption         := NossoNum;
       txtEspecie4.Caption             := 'R$';
       txtValorDocumento4.Caption      := FormatFloat('###,###,##0.00',Titulo.ValorDocumento);

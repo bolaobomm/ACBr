@@ -52,6 +52,10 @@ Data: 05/03/13
 [-] Adicionado impressão do bairro do sacado nos dados do endereço. (por: Juliana Tamizou)
 http://www.projetoacbr.com.br/forum/index.php?/topic/9256-campo-bairro-n%C3%A3o-aparece-acbrboletofcfortesfr/
 
+[-] Efetuado correção para que seja impresso no boleto o conteúdo dos campos EspecieMOD e DataProcessamento
+    informados para o titulo, caso nada seja informado continuam sendo impressas as informações padrão.
+    (por: Juliana Tamizou)
+
 -- ACBrBoleto ver. 0.0.65a --
 -- ACBrBancoHSBC --
 [*] Corrigido campo utilizado para cálculo do NossoNúmero(Antes estava sendo utilizado o 
