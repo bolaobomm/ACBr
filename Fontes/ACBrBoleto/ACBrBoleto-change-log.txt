@@ -47,6 +47,10 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+Data: 05/03/13
+-- ACBrBoletoFC_Fortes ver. 0.0.19a --
+[-] Adicionado impressão do bairro do sacado nos dados do endereço. (por: Juliana Tamizou)
+http://www.projetoacbr.com.br/forum/index.php?/topic/9256-campo-bairro-n%C3%A3o-aparece-acbrboletofcfortesfr/
 
 Data: 25/02/2013
 -- ACBrBancoob --

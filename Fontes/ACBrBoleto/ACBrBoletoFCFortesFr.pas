@@ -52,7 +52,7 @@ uses
   ACBrBoleto, ACBrBarCode ;
 
 const
-  CACBrBoletoFCFortes_Versao = '0.0.18a' ;
+  CACBrBoletoFCFortes_Versao = '0.0.19a' ;
 
 type
 
@@ -755,7 +755,8 @@ begin
       txtTotPar.Caption               := IntToStrZero(Titulo.TotalParcelas,3);
 
       txtEndSacado.Caption            := Titulo.Sacado.Logradouro + ' '+
-                                         Titulo.Sacado.Numero + Titulo.Sacado.Complemento;
+                                         Titulo.Sacado.Numero + ' ' + Titulo.Sacado.Complemento +
+                                         ' ' + Titulo.Sacado.Bairro;
       txtCidadeSacado.Caption         := Titulo.Sacado.CEP + ' '+Titulo.Sacado.Cidade +
                                          ' '+Titulo.Sacado.UF;
       txtCPF.Caption                  := Titulo.Sacado.CNPJCPF;
