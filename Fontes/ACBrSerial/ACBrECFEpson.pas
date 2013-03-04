@@ -1820,9 +1820,10 @@ begin
   except
      on E : Exception do
      begin
-        if (pos('0107',E.Message) <> 0) then   // Erro de Hora fora da faixa ?
+        if (pos('0107',E.Message) > 0) or     // Erro de Hora fora da faixa ?
+           (pos('0503',E.Message) > 0) then   // Data em intervalo inválido.
            ReducaoZ(0)                         // Tenta sem DataHora
-        else if (pos('0102',E.Message) <> 0) then   // Comando inválido para o documento atual.
+        else if (pos('0102',E.Message) > 0) then   // Comando inválido para o documento atual.
          begin                                      //  Ficou algum Cupom aberto ?
            CancelaCupom ;
            ReducaoZ(DataHora);
