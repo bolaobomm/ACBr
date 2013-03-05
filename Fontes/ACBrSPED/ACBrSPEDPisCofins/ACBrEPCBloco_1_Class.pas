@@ -390,7 +390,7 @@ begin
                LFill( NUM_PROC ) +
                LFill( ID_SEC_JUD ) +
                LFill( ID_VARA ) +
-               LFill( IND_NAT_ACAO ) + //Verificar criação da tabela no ACBrEPCBlocos
+               LFill( IND_NAT_ACAO, 2) + //Verificar criação da tabela no ACBrEPCBlocos
                LFill( DESC_DEC_JUD ) +
                LFill( DT_SENT_JUD ) ) ;
         end;
@@ -415,7 +415,7 @@ begin
 
           Add( LFill('1020') +
                LFill( NUM_PROC ) +
-               LFill( IND_NAT_ACAO ) + //Verificar criação da tabela no ACBrEPCBlocos
+               LFill( IND_NAT_ACAO, 2 ) + //Verificar criação da tabela no ACBrEPCBlocos
                LFill( DT_DEC_ADM ) ) ;
         end;
         ///
