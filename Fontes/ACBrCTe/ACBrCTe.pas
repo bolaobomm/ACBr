@@ -416,6 +416,9 @@ begin
         m.AddPartText(CorpoEmail, p);
      end;
 
+    if StreamCTe <> nil then
+      m.AddPartBinary(StreamCTe, NomeArq, p);
+
      if assigned(Anexos) then
      for i := 0 to Anexos.Count - 1 do
      begin
