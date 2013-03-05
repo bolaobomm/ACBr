@@ -187,7 +187,7 @@ end;
 
 function TACBrBanrisul.MontarCodigoBarras(const ACBrTitulo: TACBrTitulo): string;
 var
-  CodigoBarras, FatorVencimento, DigitoCodBarras, CampoLivre, Modalidade: string;
+  CodigoBarras, FatorVencimento, DigitoCodBarras, CampoLivre, Modalidade,digitoVerificador: string;
   DigitoNum: Integer;
   v_calc  : Integer;
 begin
@@ -201,48 +201,18 @@ begin
      FatorVencimento:=CalcularFatorVencimento(ACBrTitulo.Vencimento);
 
      CampoLivre:= Modalidade +'1'+
-                  padR(copy(trim(ACBrBoleto.Cedente.Agencia),2,3), 3, '0')+{ Código agência (cooperativa) }
-                  padR(OnlyNumber(ACBrBoleto.Cedente.Conta), 7, '0')+{ Código cedente = Número da conta }
+                  padR(copy(trim(ACBrBoleto.Cedente.Agencia),1,4), 4, '0')+{ Código agência (cooperativa) }
+                  padR(OnlyNumber(ACBrBoleto.Cedente.CodigoCedente), 7, '0')+{ Código cedente = codigoCedente }
                   padR(NossoNumero, 8, '0')+{ Nosso número }
                   '40';
 
-     {Calculando Módulo 10}
-     Modulo.MultiplicadorInicial:= 1;
-     Modulo.MultiplicadorFinal:= 2;
-     Modulo.MultiplicadorAtual:= 2;
-     Modulo.FormulaDigito := frModulo10;
-     Modulo.Documento := CampoLivre;
-     Modulo.Calcular;
-     CampoLivre := CampoLivre +  IntToStr(Modulo.DigitoFinal);
+     
 
-     {Calculando Módulo 11}
-     Modulo.CalculoPadrao;
-     Modulo.MultiplicadorFinal:= 7;
-     Modulo.Documento:= CampoLivre;
-     Modulo.Calcular;
+     DigitoVerificador:= CalculaDigitosChaveASBACE(CampoLivre);
+
+     CampoLivre := CampoLivre + DigitoVerificador;
 
      
-     if (Modulo.ModuloFinal >= 10) or (Modulo.ModuloFinal = 1) or (Modulo.ModuloFinal <0) then {pg. 35 do manual banrisul modulo 10 acresta + 1 no digito Verificador e refazer o calculo modulo 11 novamente}
-     begin
-       {Calculando Módulo 10}
-       v_calc := StrToInt(copy(CampoLivre,24,1));
-       v_calc := v_calc + 1;
-
-       if (v_calc >=10) then
-         v_calc  := 0;
-
-       CampoLivre := copy(CampoLivre,1,23) + IntToStr(v_calc) ;
-
-       {Calculando Módulo 11}
-       Modulo.CalculoPadrao;
-       Modulo.MultiplicadorFinal:= 7;
-       Modulo.Documento:= CampoLivre;
-       Modulo.Calcular;
-       CampoLivre := CampoLivre + IntToStr(Modulo.DigitoFinal);
-     end
-     else
-       CampoLivre := CampoLivre + IntToStr(Modulo.DigitoFinal);
-
      CodigoBarras:= PadR(IntToStr(Numero), 3, '0')+'9'+
                     FatorVencimento+{ Fator de vencimento, não obrigatório }
                     IntToStrZero(Round(ACBrTitulo.ValorDocumento*100), 10)+{ valor do documento }

@@ -66,6 +66,9 @@ http://www.projetoacbr.com.br/forum/index.php?/topic/8965-boletos-hsbc-reprovado
 [-] Corrigido geração do arquivo remessa CNAB400 para considerar as informações de desconto
     e mora diária. (por: Fabio Schunig)
 http://www.projetoacbr.com.br/forum/index.php?/topic/1699-boleto-banrisul-com-problema/page-2
+[-] Aplicado correção para resolver o problema onde em alguns casos o DV do Campo Livre ficava
+    incorreto.(por: Jairo da Costa)
+http://www.projetoacbr.com.br/forum/index.php?/topic/9111-boleto-banrisul/
 
 -- ACBrBancoMercantil --
 [-] Corrigido impressão dos boletos para funcionar para outras faixas de Nosso Número além da 22,
