@@ -144,7 +144,7 @@ type
 
 implementation
 
-uses ACBrSpedUtils;
+uses ACBrSpedUtils, StrUtils;
 
 { TBloco_0 }
 
@@ -409,7 +409,7 @@ begin
             LFill( CNPJ ) +
             LFill( UF ) +
             LFill( COD_MUN, 7 ) +
-            LFill( SUFRAMA, 9 ) +
+            IfThen(SUFRAMA = '', LFill( SUFRAMA) , LFill( SUFRAMA, 9 ) ) + // Preencher Suframa apenas se tiver algum número
             LFill( strIND_NAT_PJ ) +
             LFill( strIND_ATIV ) );
        ///
