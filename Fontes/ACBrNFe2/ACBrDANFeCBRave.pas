@@ -870,11 +870,27 @@ end;
 
 procedure TEventoRave.RavePrint(Sender: TObject);
 begin
-  with BaseReport  do begin
-    FNFIndex:=0;
-    FCurrentPage:=0;
-    ImprimirEventoRetrato(Self);
-  end;
+  with BaseReport do
+    begin
+      FNFIndex := 0;
+      FCurrentPage := 0;
+
+     // **********************************************
+     // Incluído por Peterson em 06/03/2012 para que
+     // cada item de 'FACBrNFe.EventoNFe.Evento.Items[]'
+     // seja em impresso em uma nova página
+      while FNFIndex < FACBrNFe.EventoNFe.Evento.Count do
+        begin
+          FPageNum := 0;
+
+          if (FNFIndex > 0) then
+            NewPage;
+
+          ImprimirEventoRetrato(Self);
+          Inc(FNFIndex);
+        end;
+     // ***** Final da inclusão ******
+    end;
 end;
 
 procedure TEventoRave.SetFontText;
