@@ -1607,8 +1607,8 @@ begin
              LFill(COD_MOD,2)              +
              LFill(DT_DOC_INI, 'ddmmyyyy') +
              LFill(DT_DOC_FIN, 'ddmmyyyy') +
-             LFill(NUM_DOC_INI,6)          +
-             LFill(NUM_DOC_FIN,6)          +
+             LFill(NUM_DOC_INI, 6, True)   +
+             LFill(NUM_DOC_FIN, 6, True)   +
              LFill(VL_DOC,0,2)             +
              LFill(VL_DOC_CANC,0,2)) ;
       end;
