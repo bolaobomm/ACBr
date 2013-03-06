@@ -806,8 +806,8 @@ begin
       with RegD100.RegistroD111.Items[intFor] do
       begin
         case IND_PROC of
-          opJusticaFederal : strIND_PROC := '0';
-          opSecexRFB       : strIND_PROC := '1';
+          opJusticaFederal : strIND_PROC := '1';
+          opSecexRFB       : strIND_PROC := '3';
           opOutros         : strIND_PROC := '9';
           opNenhum         : strIND_PROC := '';
         end;
@@ -1009,8 +1009,8 @@ begin
       with RegD200.RegistroD209.Items[intFor] do
       begin
         case IND_PROC of
-          opJusticaFederal : strIND_PROC := '0';
-          opSecexRFB       : strIND_PROC := '1';
+          opJusticaFederal : strIND_PROC := '1';
+          opSecexRFB       : strIND_PROC := '3';
           opOutros         : strIND_PROC := '9';
           opNenhum         : strIND_PROC := '';
         end;
@@ -1156,8 +1156,8 @@ begin
       with RegD300.RegistroD309.Items[intFor] do
       begin
         case IND_PROC of
-          opJusticaFederal : strIND_PROC := '0';
-          opSecexRFB       : strIND_PROC := '1';
+          opJusticaFederal : strIND_PROC := '1';
+          opSecexRFB       : strIND_PROC := '3';
           opOutros         : strIND_PROC := '9';
           opNenhum         : strIND_PROC := '';
         end;
@@ -1306,8 +1306,8 @@ begin
       with RegD350.RegistroD359.Items[intFor] do
       begin
         case IND_PROC of
-          opJusticaFederal : strIND_PROC := '0';
-          opSecexRFB       : strIND_PROC := '1';
+          opJusticaFederal : strIND_PROC := '1';
+          opSecexRFB       : strIND_PROC := '3';
           opOutros         : strIND_PROC := '9';
           opNenhum         : strIND_PROC := '';
         end;
@@ -1578,8 +1578,8 @@ begin
       with RegD500.RegistroD509.Items[intFor] do
       begin
         case IND_PROC of
-          opJusticaFederal : strIND_PROC := '0';
-          opSecexRFB       : strIND_PROC := '1';
+          opJusticaFederal : strIND_PROC := '1';
+          opSecexRFB       : strIND_PROC := '3';
           opOutros         : strIND_PROC := '9';
           opNenhum         : strIND_PROC := '';
         end;

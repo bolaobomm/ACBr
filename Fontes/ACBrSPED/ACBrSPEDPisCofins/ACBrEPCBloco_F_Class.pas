@@ -534,8 +534,8 @@ begin
       with RegF100.RegistroF111.Items[intFor] do
       begin
         case IND_PROC of
-          opJusticaFederal : strIND_PROC := '0';
-          opSecexRFB       : strIND_PROC := '1';
+          opJusticaFederal : strIND_PROC := '1';
+          opSecexRFB       : strIND_PROC := '3';
           opOutros         : strIND_PROC := '9';
           opNenhum         : strIND_PROC := '';
         end;
@@ -721,8 +721,8 @@ begin
       with RegF130.RegistroF139.Items[intFor] do
       begin
         case IND_PROC of
-          opJusticaFederal : strIND_PROC := '0';
-          opSecexRFB       : strIND_PROC := '1';
+          opJusticaFederal : strIND_PROC := '1';
+          opSecexRFB       : strIND_PROC := '3';
           opOutros         : strIND_PROC := '9';
           opNenhum         : strIND_PROC := '';
         end;
@@ -920,8 +920,8 @@ begin
       with RegF200.RegistroF211.Items[intFor] do
       begin
         case IND_PROC of
-          opJusticaFederal : strIND_PROC := '0';
-          opSecexRFB       : strIND_PROC := '1';
+          opJusticaFederal : strIND_PROC := '1';
+          opSecexRFB       : strIND_PROC := '3';
           opOutros         : strIND_PROC := '9';
           opNenhum         : strIND_PROC := '';
         end;
