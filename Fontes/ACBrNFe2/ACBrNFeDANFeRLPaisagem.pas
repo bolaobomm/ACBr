@@ -800,7 +800,7 @@ begin
     end;
 
   // Exibe a informação correta no label da chave de acesso
-  if FNFe.procNFe.cStat > 0 then
+   if FNFe.procNFe.cStat > 0 then
     begin
       if FNFe.procNFe.cStat = 100 then
         begin
@@ -809,16 +809,17 @@ begin
           rllDadosVariaveis3_Descricao.Caption := 'PROTOCOLO DE AUTORIZAÇÃO DE USO';
           rllDadosVariaveis3_Descricao.Visible := True;
         end;
-      if FNFe.procNFe.cStat = 101 then
+      // Adicionados o 151 e 155 ou a propriedade FNFeCancelada=True - Alterado por Jorge Henrique em 22/02/2013
+      if ((FNFe.procNFe.cStat in [101, 151, 155]) or (FNFeCancelada)) then
         begin
           rlbCodigoBarras.Visible := False;
           rllXmotivo.Caption := 'NF-e CANCELADA';
           rllXmotivo.Visible := True;
-          rllDadosVariaveis3_Descricao.Caption :=
-                                    'PROTOCOLO DE HOMOLOGAÇÃO DE CANCELAMENTO';
+          rllDadosVariaveis3_Descricao.Caption := 'PROTOCOLO DE HOMOLOGAÇÃO DE CANCELAMENTO';
           rllDadosVariaveis3_Descricao.Visible := True;
         end;
-      if FNFe.procNFe.cStat = 102 then
+      // cStat de denegacao correto eh o 110 e nao 102 - Alterado por Jorge Henrique em 22/02/2013
+      if FNFe.procNFe.cStat = 110 then
         begin
           rlbCodigoBarras.Visible := False;
           rllXmotivo.Caption := 'NF-e DENEGADA';
@@ -826,8 +827,9 @@ begin
           rllDadosVariaveis3_Descricao.Caption := 'PROTOCOLO DE DENEGAÇÃO DE USO';
           rllDadosVariaveis3_Descricao.Visible := True;
         end;
-      if (FNFe.procNFe.cStat <> 100) and (FNFe.procNFe.cStat <> 101) and
-                                               (FNFe.procNFe.cStat <> 103) then
+
+      // Aproveitei o codigo adicionado ao DanfeQR pelo Italo em 27/01/2012
+      if not FNFe.procNFe.cStat in [100, 101, 110, 151, 155] then
         begin
           rlbCodigoBarras.Visible := False;
           rllXmotivo.Caption := FNFe.procNFe.xMotivo;
@@ -835,9 +837,7 @@ begin
           rllDadosVariaveis3_Descricao.Visible := False;
           rllDadosVariaveis3.Visible := False;
         end;
-    end
-  else
-    begin
+    end else begin
       if (FNFe.Ide.tpEmis in [teNormal, teSCAN]) then
         begin
           rlbCodigoBarras.Visible := False;
@@ -1135,8 +1135,13 @@ begin
             rllDadosVariaveis1b.Visible := False;
           end;
         rlbCodigoBarrasFS.Visible := False;
-        rllDadosVariaveis3.Caption := FNFe.procNFe.nProt + ' ' +
-                                          DateTimeToStr(FNFe.procNFe.dhRecbto);
+        // Alteracao aplicada para corrigir a impressao do protocolo da NFe
+        // quando emitindo DANFE candelado.
+        // Alterado por Jorge Henrique em 22/02/2013
+        if FProtocoloNFe <> '' then
+           rllDadosVariaveis3.Caption:= FProtocoloNFe
+        else
+          rllDadosVariaveis3.Caption := FNFe.procNFe.nProt + ' ' +DateTimeToStr(FNFe.procNFe.dhRecbto);
         rllAvisoContingencia.Visible := False;
         rlbAvisoContingencia.Visible := False;
       end

@@ -150,6 +150,7 @@ type
     FExibirEAN: Boolean;
     FProtocoloNFe : String;
     FResumoCanhoto_Texto: String;
+    FNFeCancelada: Boolean; // Incluido em 22/02/2013 por Jorge Henrique
     cdsItens:  {$IFDEF BORLAND} TClientDataSet {$ELSE} TBufDataset{$ENDIF};
     procedure ConfigDataSet;
   public
@@ -176,7 +177,8 @@ type
                     ATamanhoFonte_RazaoSocial: Integer = 8;
                     AExibirEAN: Boolean = False;
                     AProtocoloNFe: String = '';
-                    AResumoCanhoto_Texto: String = '');
+                    AResumoCanhoto_Texto: String = '';
+                    ANFECancelada: Boolean = False); // Incluido em 22/02/2013 por Jorge Henrique
 
     class procedure SavePDF(ANFe: TNFe; ALogo: String = '';
                     AMarcaDagua: String = ''; ALarguraCodProd: Integer = 54;
@@ -198,7 +200,8 @@ type
                     ATamanhoFonte_RazaoSocial: Integer = 8;
                     AExibirEAN: Boolean = False;
                     AProtocoloNFe: String = '';
-                    AResumoCanhoto_Texto: String = '');
+                    AResumoCanhoto_Texto: String = '';
+                    ANFECancelada: Boolean = False); // Incluido em 22/02/2013 por Jorge Henrique
   end;
 
    const
@@ -314,7 +317,8 @@ class procedure TfrlDANFeRL.Imprimir(ANFe: TNFe; ALogo: String = '';
                 ATamanhoFonte_RazaoSocial: Integer = 8;
                 AExibirEAN: Boolean = False;
                 AProtocoloNFe: String = '';
-                AResumoCanhoto_Texto: String = '');
+                AResumoCanhoto_Texto: String = '';
+                ANFECancelada: Boolean = False); // Incluido em 22/02/2013 por Jorge Henrique
 
 begin
   with Create ( nil ) do
@@ -347,6 +351,7 @@ begin
       FExibirEAN := AExibirEAN;
       FProtocoloNFe := AProtocoloNFe;
       FResumoCanhoto_Texto := AResumoCanhoto_Texto;
+      FNFeCancelada := ANFeCancelada; // Incluido em 22/02/2013 por Jorge Henrique
 
       if FImpressora > '' then
         RLPrinter.PrinterName := FImpressora;
@@ -386,7 +391,8 @@ class procedure TfrlDANFeRL.SavePDF(ANFe: TNFe; ALogo: String = '';
                     ATamanhoFonte_RazaoSocial: Integer = 8;
                     AExibirEAN: Boolean = False;
                     AProtocoloNFe: String = '';
-                    AResumoCanhoto_Texto: String = '');
+                    AResumoCanhoto_Texto: String = '';
+                    ANFECancelada: Boolean = False); // Incluido em 22/02/2013 por Jorge Henrique
 begin
   with Create ( nil ) do
     try
@@ -416,6 +422,7 @@ begin
       FExibirEAN := AExibirEAN;
       FProtocoloNFe := AProtocoloNFe;
       FResumoCanhoto_Texto := AResumoCanhoto_Texto;
+      FNFeCancelada := ANFeCancelada; // Incluido em 22/02/2013 por Jorge Henrique
 
       with RLPDFFilter1.DocumentInfo do
         begin

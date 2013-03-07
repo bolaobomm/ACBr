@@ -177,7 +177,7 @@ begin
           MargemInferior, MargemEsquerda, MargemDireita, CasasDecimais._qCom,
           CasasDecimais._vUnCom, ProdutosPorPagina, Impressora,
           TamanhoFonte_RazaoSocial, ExibirEAN, ProtocoloNFe,
-          ExibirResumoCanhoto_Texto);
+          ExibirResumoCanhoto_Texto, NFeCancelada);
         end;
     end
   else
@@ -189,7 +189,7 @@ begin
       MargemInferior, MargemEsquerda, MargemDireita, CasasDecimais._qCom,
       CasasDecimais._vUnCom, ProdutosPorPagina, Impressora,
       TamanhoFonte_RazaoSocial, ExibirEAN, ProtocoloNFe,
-      ExibirResumoCanhoto_Texto);
+      ExibirResumoCanhoto_Texto, NFeCancelada);
     end;
 
   frlDANFeRL.Free;
@@ -216,7 +216,7 @@ begin
           ExpandirLogoMarca, FonteDANFE, MargemSuperior,
           MargemInferior, MargemEsquerda, MargemDireita, CasasDecimais._qCom,
           CasasDecimais._vUnCom, ProdutosPorPagina, TamanhoFonte_RazaoSocial,
-          ExibirEAN, ProtocoloNFe, ExibirResumoCanhoto_Texto);
+          ExibirEAN, ProtocoloNFe, ExibirResumoCanhoto_Texto, NFeCancelada);
         end;
     end
   else
@@ -228,9 +228,9 @@ begin
       MargemSuperior, MargemInferior, MargemEsquerda, MargemDireita,
       CasasDecimais._qCom, CasasDecimais._vUnCom, ProdutosPorPagina,
       TamanhoFonte_RazaoSocial, ExibirEAN, ProtocoloNFe,
-      ExibirResumoCanhoto_Texto);
+      ExibirResumoCanhoto_Texto, NFeCancelada);
     end;
-   
+
 
   frlDANFeRL.Free;
 end;
