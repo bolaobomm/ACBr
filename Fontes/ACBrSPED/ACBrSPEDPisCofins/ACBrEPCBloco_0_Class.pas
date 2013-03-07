@@ -409,7 +409,7 @@ begin
             LFill( CNPJ ) +
             LFill( UF ) +
             LFill( COD_MUN, 7 ) +
-            IfThen(SUFRAMA = '', LFill( SUFRAMA) , LFill( SUFRAMA, 9 ) ) + // Preencher Suframa apenas se tiver algum número
+            LFill( SUFRAMA, 9, True ) +
             LFill( strIND_NAT_PJ ) +
             LFill( strIND_ATIV ) );
        ///
