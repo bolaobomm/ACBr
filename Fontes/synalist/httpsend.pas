@@ -481,9 +481,9 @@ begin
   if FAddPortNumberToHost
     and (((Port <> '80') and (UpperCase(Prot) = 'HTTP'))
     or ((Port <> '443') and (UpperCase(Prot) = 'HTTPS'))) then
-     FHeaders.Insert(0, 'Host: ' + s + ':' + Port)
+    FHeaders.Insert(0, 'Host: ' + s + ':' + Port)
   else
-     FHeaders.Insert(0, 'Host: ' + s);
+    FHeaders.Insert(0, 'Host: ' + s);
   if UsingProxy then
     URI := Prot + '://' + s + ':' + Port + URI;
   if URI = '/*' then
