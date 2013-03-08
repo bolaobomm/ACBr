@@ -60,7 +60,7 @@ type TModalResult = (mrNone = 0, mrYes = 6, mrNo = 7, mrOK = 1, mrCancel = 2, mr
 {$ENDIF}
 
 const
-   CACBrTEFD_Versao      = '4.3.0' ;
+   CACBrTEFD_Versao      = '4.3.1' ;
    CACBrTEFD_EsperaSTS   = 7 ;
    CACBrTEFD_EsperaSleep = 250 ;
    CACBrTEFD_NumVias     = 2 ;
@@ -587,6 +587,7 @@ type
      Procedure LerRespostaRequisicao ; virtual;
      procedure FinalizarResposta( ApagarArqResp : Boolean ) ; virtual;
 
+     Function CriarResposta( Tipo: TACBrTEFDTipo ): TACBrTEFDResp;
      Function CopiarResposta : String ; virtual;
 
      procedure ProcessarResposta ; virtual;
@@ -597,7 +598,6 @@ type
 
      procedure ImprimirRelatorio ; virtual;
      procedure ConfirmarESolicitarImpressaoTransacoesPendentes ; virtual ;
-
 
      Procedure VerificarTransacaoPagamento(Valor : Double); virtual;
      Function TransacaoEPagamento( AHeader: String ): Boolean;
@@ -2077,6 +2077,16 @@ begin
    Resp.Clear;
 end;
 
+function TACBrTEFDClass.CriarResposta(Tipo : TACBrTEFDTipo) : TACBrTEFDResp ;
+begin
+  Case Tipo of
+    gpCliSiTef : Result := TACBrTEFDRespCliSiTef.Create;
+    gpVeSPague : Result := TACBrTEFDRespVeSPague.Create;
+  else
+    Result := TACBrTEFDRespTXT.Create;
+  end ;
+end ;
+
 procedure TACBrTEFDClass.CancelarTransacoesPendentesClass;
 Var
   ArquivosVerficar    : TStringList ;
@@ -2160,13 +2170,7 @@ begin
         if not JaCancelado then
          begin
            { Criando cópia da Resposta Atual }
-           Case Tipo of
-             gpCliSiTef : RespostaCancela := TACBrTEFDRespCliSiTef.Create;
-             gpVeSPague : RespostaCancela := TACBrTEFDRespVeSPague.Create;
-           else
-             RespostaCancela := TACBrTEFDRespTXT.Create;
-           end ;
-
+           RespostaCancela := CriarResposta( Tipo );
            RespostaCancela.Assign( Resp );
 
            { Enviando NCN ou CNC }
@@ -2403,11 +2407,13 @@ Var
   ArquivosVerficar : TStringList ;
   ArqMask, NSUs    : AnsiString;
   ExibeMsg         : Boolean ;
+  RespostaConfirmada : TACBrTEFDResp ;
 begin
   ArquivosVerficar := TStringList.Create;
 
   try
      ArquivosVerficar.Clear;
+     TACBrTEFD(Owner).RespostasPendentes.Clear;
 
      { Achando Arquivos de Backup deste GP }
      ArqMask  := TACBrTEFD(Owner).PathBackup + PathDelim + 'ACBr_' + Self.Name + '_*.tef' ;
@@ -2429,6 +2435,11 @@ begin
         try
            CNF;   {Confirma}
 
+           { Criando cópia da Resposta Atual }
+           RespostaConfirmada := CriarResposta( Resp.TipoGP );
+           RespostaConfirmada.Assign( Resp );
+           TACBrTEFD(Owner).RespostasPendentes.Add( RespostaConfirmada );
+
            if Trim(Resp.NSU) <> '' then
               NSUs := NSUs + Resp.NSU + sLineBreak;
 
@@ -2436,6 +2447,18 @@ begin
            ArquivosVerficar.Delete( 0 );
         except
         end;
+     end;
+
+     // Chamando evento de confirmação das Respostas //
+     with TACBrTEFD(Owner) do
+     begin
+       try
+          if Assigned( OnDepoisConfirmarTransacoes ) and
+             (RespostasPendentes.Count > 0) then
+             OnDepoisConfirmarTransacoes( RespostasPendentes );
+       finally
+          RespostasPendentes.Clear;
+       end;
      end;
 
      if ExibeMsg then

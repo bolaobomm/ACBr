@@ -2552,6 +2552,10 @@ object Form1: TForm1
           Caption = 'Decimais'
           OnClick = MenuItem29Click
         end
+        object MenuItem31: TMenuItem
+          Caption = 'Colunas'
+          OnClick = MenuItem31Click
+        end
       end
       object N19: TMenuItem
         Caption = '-'

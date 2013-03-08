@@ -108,6 +108,7 @@ type
     edAAC_SH_IM : TEdit ;
     edAAC_ECF_GT : TDBEdit ;
     edAAC_SH_RazaoSocial : TEdit ;
+    MenuItem31: TMenuItem;
     mTotalTroco: TMenuItem;
     sePaginaCodigo: TSpinEdit;
     edtDtInicial : TDateEdit ;
@@ -476,6 +477,7 @@ type
     procedure MenuItem23Click(Sender : TObject) ;
     procedure MenuItem29Click(Sender: TObject);
     procedure MenuItem30Click(Sender: TObject);
+    procedure MenuItem31Click(Sender: TObject);
     procedure miTesteArredondamentoClick(Sender: TObject);
     procedure miEstornoCCDClick(Sender : TObject) ;
     procedure miLeituraCMC7Click(Sender: TObject);
@@ -739,7 +741,7 @@ begin
 end;
 
 {-----------------------------------------------------------------------------}
-Procedure TForm1.TrataErros(Sender: TObject; E: Exception);
+procedure TForm1.TrataErros(Sender: TObject; E: Exception);
 var
   Erro : String ;
 begin
@@ -765,7 +767,7 @@ begin
      StatusBar1.Panels[0].Text :=  EstadoECF ;
 end;
 
-Function TForm1.EstadoECF : String ;
+function TForm1.EstadoECF: String;
 begin
   try
      Result :=  Estados[ ACBrECF1.Estado ] ;
@@ -1812,6 +1814,12 @@ begin
   mResp.Lines.Add( 'NumReducoesZRestantes: '+ACBrECF1.NumReducoesZRestantes );
 
   AtualizaMemos;
+end;
+
+procedure TForm1.MenuItem31Click(Sender: TObject);
+begin
+  mResp.Lines.Add( 'Colunas: ( '+ IntToStr(ACBrECF1.Colunas)+' )' );
+  AtualizaMemos ;
 end;
 
 procedure TForm1.miTesteArredondamentoClick(Sender: TObject);

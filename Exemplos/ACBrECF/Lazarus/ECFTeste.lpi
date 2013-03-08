@@ -279,7 +279,7 @@
     </Other>
   </CompilerOptions>
   <Debugging>
-    <BreakPoints Count="1">
+    <BreakPoints Count="2">
       <Item1>
         <Kind Value="bpkSource"/>
         <WatchScope Value="wpsLocal"/>
@@ -287,6 +287,13 @@
         <Source Value="..\..\..\Fontes\ACBrSerial\ACBrDevice.pas"/>
         <Line Value="829"/>
       </Item1>
+      <Item2>
+        <Kind Value="bpkSource"/>
+        <WatchScope Value="wpsLocal"/>
+        <WatchKind Value="wpkWrite"/>
+        <Source Value="..\..\..\Fontes\ACBrSerial\ACBrECFEpson.pas"/>
+        <Line Value="1798"/>
+      </Item2>
     </BreakPoints>
     <Watches Count="1">
       <Item1>
