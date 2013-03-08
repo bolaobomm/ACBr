@@ -79,7 +79,6 @@ type
     function Add( const AString : AnsiString; AddDelimiter : Boolean = True ) : Integer;
     function RFill(Value: String;
                    Size: Integer = 0;
-                   Nulo: Boolean = false;
                    Caracter: Char = ' '): String; overload;
     function LFill(Value: String;
                    Size: Integer = 0;
@@ -210,14 +209,8 @@ end;
 
 function TACBrTXTClass.RFill(Value: String;
                              Size: Integer = 0;
-                             Nulo: Boolean = false;
                              Caracter: Char = ' '): String;
 begin
-  if (Nulo) and (Length(Value) = 0) then
-  begin
-     Result := FDelimitador;
-     Exit;
-  end;
   /// Se a propriedade TrimString = true, Result retorna sem espaços em branco
   /// iniciais e finais.
   if FTrimString then
