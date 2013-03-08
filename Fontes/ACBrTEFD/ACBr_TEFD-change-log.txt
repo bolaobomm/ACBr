@@ -49,7 +49,7 @@ Símbolo : Significado
 
 Data:  13/03/2013 - 4.3.1
 -- ACBrTEFDClass --
-[-] Correção no metodo ConfirmarESolicitarImpressaoTransacoesPendentes, não
+[-] Correção no metodo ConfirmarESolicitarImpressaoTransacoesPendentes,
     utilizado pelos GPs CliSiTEF e VSPague. O metodo não fazia a chamada do
     evento OnDepoisConfirmarTransacoes.   (por: DSA)
 
