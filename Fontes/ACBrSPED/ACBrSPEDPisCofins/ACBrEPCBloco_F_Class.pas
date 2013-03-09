@@ -1218,7 +1218,7 @@ begin
                   DFill( ALIQ_COFINS, 4 )      +
                   LFill( VL_COFINS,0,2 )       +
                   LFill( COD_MOD )             +
-                  LFill( CFOP, 4 )             +
+                  LFill( CFOP, 4, True )       + //Pode ser nulo.
                   LFill( COD_CTA )             +
                   LFill( INFO_COMPL ) ) ;
            end;
