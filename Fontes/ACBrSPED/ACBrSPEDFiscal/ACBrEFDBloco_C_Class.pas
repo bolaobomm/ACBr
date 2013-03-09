@@ -955,7 +955,8 @@ begin
         with RegC001.RegistroC100.Items[intFor] do
         begin
 		
-          Check(not((COD_MOD = '55') and (Trim(CHV_NFE) = '')), '(C-C100) Nota: %s' +sLineBreak+
+          Check(not((COD_MOD = '55') and (COD_SIT <> sdDoctoNumInutilizada) and (Trim(CHV_NFE) = '')),
+                                                                '(C-C100) Nota: %s' +sLineBreak+
                                                                 '         Série: %s'+sLineBreak+
                                                                 '         Emitida no dia: %s'+sLineBreak+
                                                                 '         Modelo: %s'        +sLineBreak+
