@@ -1612,39 +1612,39 @@ begin
                        LFill( DESCR_COMPL ) +
                        LFill( QTD, 0, 5 ) +
                        LFill( UNID ) +
-                       LFill( VL_ITEM,0,2 ) +
-                       LFill( VL_DESC,0,2 ) +
+                       LFill( VL_ITEM, 0, 2 ) +
+                       LFill( VL_DESC, 0, 2 ) +
                        LFill( Integer(IND_MOV), 0 ) +
-                       LFill( CST_ICMS,3 ) +
-                       LFill( CFOP,4 ) +
+                       LFill( CST_ICMS, 3 ) +
+                       LFill( CFOP, 4 ) +
                        LFill( COD_NAT ) +
-                       LFill( VL_BC_ICMS,0,2 ) +
-                       LFill( ALIQ_ICMS,0,2 ) +
-                       LFill( VL_ICMS,0,2 ) +
-                       LFill( VL_BC_ICMS_ST,0,2 ) +
-                       LFill( ALIQ_ST,0,2 ) +
-                       LFill( VL_ICMS_ST,0,2 ) +
+                       LFill( VL_BC_ICMS, 0, 2 ) +
+                       LFill( ALIQ_ICMS,  0, 2 ) +
+                       LFill( VL_ICMS, 0, 2 ) +
+                       LFill( VL_BC_ICMS_ST, 0, 2 ) +
+                       LFill( ALIQ_ST, 0, 2 ) +
+                       LFill( VL_ICMS_ST, 0, 2 ) +
                        LFill( Integer(IND_APUR), 0 ) +
                        // LFill( strCST_IPI ) +
                        LFill( CST_IPI ) +
                        LFill( COD_ENQ ) +
-                       LFill( VL_BC_IPI,0,2 ) +
-                       LFill( ALIQ_IPI,0,2 ) +
-                       LFill( VL_IPI,0,2 ) +
+                       LFill( VL_BC_IPI, 0, 2 ) +
+                       LFill( ALIQ_IPI,  0, 2 ) +
+                       LFill( VL_IPI, 0, 2 ) +
                        // LFill( strCST_PIS ) +
                        LFill( CST_PIS ) +
-                       LFill( VL_BC_PIS,0,2 ) +
-                       LFill( ALIQ_PIS_PERC,0,2 ) +
-                       LFill( QUANT_BC_PIS,0,3 ) +
-                       LFill( ALIQ_PIS_R,0,4 ) +
-                       LFill( VL_PIS,0,2 ) +
+                       LFill( VL_BC_PIS, 0, 2 ) +
+                       LFill( ALIQ_PIS_PERC, 0, 4 ) +
+                       LFill( QUANT_BC_PIS,  0, 3 ) +
+                       LFill( ALIQ_PIS_R, 0, 4 ) +
+                       LFill( VL_PIS, 0, 2 ) +
                        // LFill( strCST_COFINS ) +
                        LFill( CST_COFINS ) +
-                       LFill( VL_BC_COFINS,0,2 ) +
-                       LFill( ALIQ_COFINS_PERC,0,2 ) +
-                       LFill( QUANT_BC_COFINS,0,3 ) +
-                       LFill( ALIQ_COFINS_R,0,4 ) +
-                       LFill( VL_COFINS,0,2 ) +
+                       LFill( VL_BC_COFINS, 0, 2 ) +
+                       LFill( ALIQ_COFINS_PERC, 0, 4 ) +
+                       LFill( QUANT_BC_COFINS,  0, 3 ) +
+                       LFill( ALIQ_COFINS_R, 0, 4 ) +
+                       LFill( VL_COFINS, 0, 2 ) +
                        LFill( COD_CTA );
           //-- Write
           if Assigned(FOnWriteRegistroC170) then
