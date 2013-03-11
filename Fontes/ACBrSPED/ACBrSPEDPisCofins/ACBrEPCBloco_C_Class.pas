@@ -2033,7 +2033,7 @@ begin
              LFill(CstPisToStr(CST_PIS))  +
              LFill(VL_ITEM,0,2)        +
              DFill(VL_BC_PIS,      2, True) +
-             DFill(ALIQ_PIS,       4, False) +
+             DFill(ALIQ_PIS,       4, True) +
              DFill(QUANT_BC_PIS,   3, True) +
              DFill(ALIQ_PIS_QUANT, 4, True) +
              LFill(VL_PIS,0,2)         +
