@@ -60,7 +60,7 @@ type TModalResult = (mrNone = 0, mrYes = 6, mrNo = 7, mrOK = 1, mrCancel = 2, mr
 {$ENDIF}
 
 const
-   CACBrTEFD_Versao      = '4.3.1' ;
+   CACBrTEFD_Versao      = '4.3.2' ;
    CACBrTEFD_EsperaSTS   = 7 ;
    CACBrTEFD_EsperaSleep = 250 ;
    CACBrTEFD_NumVias     = 2 ;

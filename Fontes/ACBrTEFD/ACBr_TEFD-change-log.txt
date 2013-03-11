@@ -47,7 +47,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
-Data:  13/03/2013 - 4.3.1
+Data:  11/03/2013 - 4.3.2
+-- ACBrTEFDCliSiTEF --
+[*] Envio da mensagem opmRemoverMsgOperador e opmRemoverMsgCliente no caso
+    de cancelamento de operações em OnObtemCampo  (por: DSA)
+
+Data:  08/03/2013 - 4.3.1
 -- ACBrTEFDClass --
 [-] Correção no metodo ConfirmarESolicitarImpressaoTransacoesPendentes,
     utilizado pelos GPs CliSiTEF e VSPague. O metodo não fazia a chamada do

@@ -1206,6 +1206,12 @@ begin
             else if not Digitado then
                Continua := -1 ;  { Cancela operacao }
 
+            if (Voltar and (Result = 10000)) or (not Digitado) then
+            begin
+              DoExibeMsg( opmRemoverMsgOperador, '' ) ;
+              DoExibeMsg( opmRemoverMsgCliente, '' ) ;
+            end ;
+
             StrPCopy(Buffer, Resposta);
 
          until Result <> 10000;
