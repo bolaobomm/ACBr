@@ -1060,7 +1060,7 @@ var
 begin
   inherited;
    PrintBand := QRNFe.PageNumber = 1;
-   iQuantDup := 0;
+//   iQuantDup := 0;
 
    // Destinatario
 
@@ -1240,7 +1240,8 @@ begin
       vTpEmissao:=4
     else
     if FNFe.Ide.tpEmis = teFSDA then
-      vTpEmissao:=5;
+      vTpEmissao:=5
+    else vTpEmissao:=0;
 
     case vTpEmissao of
       2:begin

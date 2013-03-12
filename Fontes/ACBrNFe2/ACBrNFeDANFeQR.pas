@@ -71,10 +71,11 @@ uses
 type
   TfqrDANFeQR = class(TForm)
     QRNFe: TQuickRep;
+    procedure FormDestroy(Sender: TObject);
   private
     { Private declarations }
   protected
-    //BarCode : TBarCode128c ;
+    //BarCode : TBarCode128c;
     FACBrNFe            : TACBrNFe;
     FNFe                : TNFe;
     FLogo               : String;
@@ -101,7 +102,7 @@ type
     FLocalImpCanhoto    : Integer; //Incluido por Luis Fernando em  22/01/2013
 
     procedure qrlSemValorFiscalPrint(sender: TObject; var Value: String);
-    procedure SetBarCodeImage ( ACode : String ; QRImage : TQRImage ) ;
+    procedure SetBarCodeImage ( ACode : String; QRImage : TQRImage );
   public
     { Public declarations }
     HrTotalPages : integer; //hrsoft 4/8/2010
@@ -113,7 +114,7 @@ type
                              ANumCopias          : Integer   = 1;
                              ASistema            : String    = '';
                              ASite               : String    = '';
-                             AUsuario            : String    = '' ;
+                             AUsuario            : String    = '';
                              APreview            : Boolean   = True;
                              AMargemSuperior     : Double    = 0.8;
                              AMargemInferior     : Double    = 0.8;
@@ -152,7 +153,8 @@ type
 
 implementation
 
-uses MaskUtils ;
+uses MaskUtils;
+
 var Printer: TPrinter;
 
 {$R *.dfm}
@@ -165,7 +167,7 @@ class procedure TfqrDANFeQR.Imprimir(ANFe               : TNFe;
                                     ANumCopias          : Integer   = 1;
                                     ASistema            : String    = '';
                                     ASite               : String    = '';
-                                    AUsuario            : String    = '' ;
+                                    AUsuario            : String    = '';
                                     APreview            : Boolean   = True;
                                     AMargemSuperior     : Double    = 0.8;
                                     AMargemInferior     : Double    = 0.8;
@@ -224,16 +226,19 @@ begin
            QRNFe.Preview;
          end
          else begin
-           AfterPreview := True ;
+           AfterPreview := True;
            QRNFe.PrinterSettings.Copies := FNumCopias; // Incluido por Italo em 15/10/2010
            QRNFe.Prepare;
            HrTotalPages := QRNFe.QRPrinter.PageCount; //hrsoft 4/8/2010
-           QRNFe.Print ;
+           QRNFe.Print;
          end;
 
      finally
-        Free ;
-     end ;
+        // Incluido por Rodrigo Fernandes em 11/03/2013
+        // Liberando o objeto Printer da memoria
+        Printer.Free;
+        Free;
+     end;
 end;
 
 class procedure TfqrDANFeQR.SavePDF(AFile               : String;
@@ -293,9 +298,9 @@ begin
                 TQRShape(Components[i]).Pen.Width := 1;
               end;
           end;
-        AfterPreview := True ;
+        AfterPreview := True;
         QRNFe.Prepare;
-        qf := TQRPDFDocumentFilter.Create(AFile) ;
+        qf := TQRPDFDocumentFilter.Create(AFile);
         qf.CompressionOn := False;
         QRNFe.QRPrinter.ExportToFilter( qf );
         qf.Free;
@@ -310,18 +315,25 @@ procedure TfqrDANFeQR.qrlSemValorFiscalPrint(sender: TObject;
 begin
   inherited;
   if FSemValorFiscal then
-     Value := '' ;
+     Value := '';
 end;
 
 procedure TfqrDANFeQR.SetBarCodeImage(ACode: String; QRImage: TQRImage);
 var
- b : TBarCode128c ;
+ b : TBarCode128c;
 begin
    b := TBarCode128c.Create;
-//      Width  := QRImage.Width ;
-   b.Code := ACode ;
+//      Width  := QRImage.Width;
+   b.Code := ACode;
    b.PaintCodeToCanvas( ACode, QRImage.Canvas, QRImage.ClientRect );
-   b.free ;
+   b.free;
+end;
+
+// Incluido por Rodrigo Fernandes em 11/03/2013
+procedure TfqrDANFeQR.FormDestroy(Sender: TObject);
+begin
+  QRNFe.QRPrinter.Free;
+  QRNFe.Free;
 end;
 
 end.
