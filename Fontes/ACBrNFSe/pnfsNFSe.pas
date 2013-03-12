@@ -307,6 +307,7 @@ type
     FRegimeEspecialTributacao: TnfseRegimeEspecialTributacao;
     FOptanteSimplesNacional: TnfseSimNao;
     FIncentivadorCultural: TnfseSimNao;
+    FProducao: TnfseSimNao;
     FStatus: TnfseStatusRps;
     FRpsSubstituido: TIdentificacaoRps;
     FServico: TDadosServico;
@@ -348,6 +349,7 @@ type
     property RegimeEspecialTributacao: TnfseRegimeEspecialTributacao read FRegimeEspecialTributacao write FRegimeEspecialTributacao;
     property OptanteSimplesNacional: TnfseSimNao read FOptanteSimplesNacional write FOptanteSimplesNacional;
     property IncentivadorCultural: TnfseSimNao read FIncentivadorCultural write FIncentivadorCultural;
+    property Producao: TnfseSimNao read FProducao write FProducao;
     property Status: TnfseStatusRps read FStatus write FStatus;
     property RpsSubstituido: TIdentificacaoRps read FRpsSubstituido write FRpsSubstituido;
     property Servico: TDadosServico read FServico write FServico;

@@ -138,6 +138,7 @@ begin
  ConfigURL.HomConsultaSitLoteRPS := 'https://sim.digifred.net.br/frederico_homolog/nfse/ws/principal';
  ConfigURL.HomConsultaNFSe       := 'https://sim.digifred.net.br/frederico_homolog/nfse/ws/principal';
  ConfigURL.HomCancelaNFSe        := 'https://sim.digifred.net.br/frederico_homolog/nfse/ws/principal';
+ ConfigURL.HomGerarNFSe          := 'https://sim.digifred.net.br/frederico_homolog/nfse/ws/principal';
 
  ConfigURL.ProNomeCidade         := '';
  ConfigURL.ProRecepcaoLoteRPS    := 'https://sim.digifred.net.br/frederico/nfse/ws/principal';
@@ -146,6 +147,7 @@ begin
  ConfigURL.ProConsultaSitLoteRPS := 'https://sim.digifred.net.br/frederico/nfse/ws/principal';
  ConfigURL.ProConsultaNFSe       := 'https://sim.digifred.net.br/frederico/nfse/ws/principal';
  ConfigURL.ProCancelaNFSe        := 'https://sim.digifred.net.br/frederico/nfse/ws/principal';
+ ConfigURL.ProGerarNFSe          := 'https://sim.digifred.net.br/frederico/nfse/ws/principal';
 
  Result := ConfigURL;
 end;
@@ -164,7 +166,7 @@ begin
    acConsNFSeRps: Result := True;
    acConsNFSe:    Result := True;
    acCancelar:    Result := True;
-   acGerar:       Result := False;
+   acGerar:       Result := True;
    else           Result := False;
  end;
 end;
@@ -187,7 +189,7 @@ begin
                              '<' + Prefixo3 + 'Pedido>' +
                               '<' + Prefixo4 + 'InfPedidoCancelamento' +
                                  DFeUtil.SeSenao(Identificador <> '', ' ' + Identificador + '="' + URI + '"', '') + '>';
-   acGerar:       Result := '';
+   acGerar:       Result := '<' + Prefixo3 + 'GerarNfseEnvio' + NameSpaceDad;
  end;
 end;
 
@@ -214,7 +216,7 @@ begin
    acConsNFSe:    Result := '</' + Prefixo3 + 'ConsultarNfseEnvio>';
    acCancelar:    Result := '</' + Prefixo3 + 'Pedido>' +
                             '</' + Prefixo3 + 'CancelarNfseEnvio>';
-   acGerar:       Result := '';
+   acGerar:       Result := '</' + Prefixo3 + 'GerarNfseEnvio>';
  end;
 end;
 
@@ -445,8 +447,10 @@ end;
 function TProvedorDigifred.Gera_DadosMsgGerarNFSe(Prefixo3, Prefixo4,
   Identificador, NameSpaceDad, VersaoDados, VersaoXML, NumeroLote, CNPJ,
   IM, QtdeNotas: String; Notas, TagI, TagF: AnsiString): AnsiString;
+var
+ DadosMsg: AnsiString;
 begin
- Result := '';
+ Result := Notas;
 end;
 
 function TProvedorDigifred.GeraEnvelopeRecepcionarLoteRPS(URLNS: String;
@@ -574,7 +578,23 @@ end;
 function TProvedorDigifred.GeraEnvelopeGerarNFSe(URLNS: String; CabMsg,
   DadosMsg, DadosSenha: AnsiString): AnsiString;
 begin
- Result := '';
+ result := '<?xml version="1.0" encoding="UTF-8"?>' +
+           '<s:Envelope xmlns:s="http://schemas.xmlsoap.org/soap/envelope/"' +
+                      ' xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"' +
+                      ' xmlns:xsd="http://www.w3.org/2001/XMLSchema">' +
+            '<s:Body>' +
+             '<ns2:RecepcionarLoteRpsRequest xmlns:ns2="' + URLNS + '">' +
+              '<nfseCabecMsg>' +
+                '&lt;?xml version="1.0" encoding="UTF-8"?&gt;' +
+                StringReplace(StringReplace(CabMsg, '<', '&lt;', [rfReplaceAll]), '>', '&gt;', [rfReplaceAll]) +
+              '</nfseCabecMsg>' +
+              '<nfseDadosMsg>' +
+                '&lt;?xml version="1.0" encoding="UTF-8"?&gt;' +
+                 StringReplace(StringReplace(DadosMsg, '<', '&lt;', [rfReplaceAll]), '>', '&gt;', [rfReplaceAll]) +
+              '</nfseDadosMsg>' +
+             '</ns2:RecepcionarLoteRpsRequest>' +
+            '</s:Body>' +
+           '</s:Envelope>';
  raise Exception.Create( 'Opção não implementada para este provedor.' );
 end;
 
@@ -587,7 +607,7 @@ begin
    acConsNFSeRps: Result := 'http://nfse.abrasf.org.br/ConsultarNfsePorRps';
    acConsNFSe:    Result := 'http://nfse.abrasf.org.br/ConsultarNfseServicoPrestado';
    acCancelar:    Result := 'http://nfse.abrasf.org.br/CancelarNfse';
-   acGerar:       Result := '';
+   acGerar:       Result := 'http://nfse.abrasf.org.br/GerarNfse';
  end;
 end;
 
@@ -600,7 +620,7 @@ begin
    acConsNFSeRps: Result := SeparaDados( RetornoWS, 'outputXML' );
    acConsNFSe:    Result := SeparaDados( RetornoWS, 'outputXML' );
    acCancelar:    Result := SeparaDados( RetornoWS, 'outputXML' );
-   acGerar:       Result := '';
+   acGerar:       Result := SeparaDados( RetornoWS, 'outputXML' );
  end;
 end;
 

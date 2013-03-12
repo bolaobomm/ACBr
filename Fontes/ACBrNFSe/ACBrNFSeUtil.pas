@@ -440,6 +440,9 @@ begin
      case AProvedor of
       profintelISS,
       proGoiania,
+      proDigifred,
+      proISSDigital,
+      proISSe,
       proSaatri:    begin
                      AStr := copy(AStr, 1, pos('</InfDeclaracaoPrestacaoServico>', AStr) - 1);
                      AStr := AStr + '</InfDeclaracaoPrestacaoServico>';
@@ -454,7 +457,7 @@ begin
             AStr := AStr + Assinatura;
             AStr := AStr + '</Rps>';
             // Alterado por Cleiver em 26/02/2013
-            if (AProvedor = proRecife)
+            if (AProvedor = proGoiania)
              then AStr := AStr + '</GerarNfseEnvio>';
            end;
      end;
@@ -641,6 +644,9 @@ begin
      case AProvedor of
       profintelISS,
       proGoiania,
+      proDigifred,
+      proISSDigital,
+      proISSe,
       proSaatri:    begin
                      AXML := copy(AXML, 1, pos('</InfDeclaracaoPrestacaoServico>', AXML) - 1);
                      AXML := AXML + '</InfDeclaracaoPrestacaoServico>';
@@ -737,6 +743,9 @@ begin
    case AProvedor of
     profintelISS,
     proGoiania,
+    proDigifred,
+    proISSDigital,
+    proISSe,
     proSaatri: begin
                  //By Akai - L. Massao Aihara ==================================
                  //MUDA A ASSINATURA...

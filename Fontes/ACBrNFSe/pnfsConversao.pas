@@ -40,7 +40,7 @@ type
   TnfseProvedor = ( proNenhum, proTiplan, proISSNET, proWebISS, proGINFES, proDSF, proProdemge, proAbaco, proBetha,
                     proEquiplano, proISSIntel, proProdam, proGovBR, proRecife, proSimplISS, proThema, proRJ,
                     proPublica, profintelISS, proDigifred, proBetim, proSaatri, proFISSLEX,
-                    proGoiania, proIssCuritiba, proBHISS, proNatal );
+                    proGoiania, proIssCuritiba, proBHISS, proNatal, proISSDigital, proISSe );
 
   TnfseAcao = ( acRecepcionar, acConsSit, acConsLote, acConsNFSeRps, acConsNFSe, acCancelar, acGerar );
 
@@ -287,11 +287,12 @@ begin
                            ['Nenhum', 'Tiplan', 'ISS.NET', 'WebISS', 'GINFES', 'DSF', 'Prodemge', 'Abaco',
                             'Betha', 'Equiplano', 'ISSIntel', 'Prodam', 'GovBR', 'Recife',
                             'SimplISS', 'Thema', 'RJ', 'Publica', 'fintelISS', 'Digifred', 'Betim', 'Saatri',
-                            'FISSLEX', 'Goiania', 'IssCuritiba', 'BHISS', 'Natal'],
+                            'FISSLEX', 'Goiania', 'IssCuritiba', 'BHISS', 'Natal', 'ISSDigital', 'ISSe'],
                            [proNenhum, proTiplan, proISSNET, proWebISS, proGINFES, proDSF, proProdemge, proAbaco,
                             proBetha, proEquiplano, proISSIntel, proProdam, proGovBR, proRecife,
                             proSimplISS, proThema, proRJ, proPublica, profintelISS, proDigifred, proBetim,
-                            proSaatri, proFISSLEX, proGoiania, proIssCuritiba, proBHISS, proNatal]);
+                            proSaatri, proFISSLEX, proGoiania, proIssCuritiba, proBHISS, proNatal,
+                            proISSDigital, proISSe]);
 end;
 
 function StrToProvedor(var ok: boolean; const s: string):TnfseProvedor;
@@ -300,11 +301,12 @@ begin
                            ['Nenhum', 'Tiplan', 'ISS.NET', 'WebISS', 'GINFES', 'DSF', 'Prodemge', 'Abaco',
                             'Betha', 'Equiplano', 'ISSIntel', 'Prodam', 'GovBR', 'Recife',
                             'SimplISS', 'Thema', 'RJ', 'Publica', 'fintelISS', 'Digifred', 'Betim', 'Saatri',
-                            'FISSLEX', 'Goiania', 'IssCuritiba', 'BHISS', 'Natal'],
+                            'FISSLEX', 'Goiania', 'IssCuritiba', 'BHISS', 'Natal', 'ISSDigital', 'ISSe'],
                            [proNenhum, proTiplan, proISSNET, proWebISS, proGINFES, proDSF, proProdemge, proAbaco,
                             proBetha, proEquiplano, proISSIntel, proProdam, proGovBR, proRecife,
                             proSimplISS, proThema, proRJ, proPublica, profintelISS, proDigifred, proBetim,
-                            proSaatri, proFISSLEX, proGoiania, proIssCuritiba, proBHISS, proNatal]);
+                            proSaatri, proFISSLEX, proGoiania, proIssCuritiba, proBHISS, proNatal,
+                            proISSDigital, proISSe]);
 end;
 
 // Descrição do Serviço ********************************************************
@@ -742,8 +744,8 @@ begin
   4318705  // Sao Leopoldo/RS
          : Provedor := 'Thema';
 
-  3131307, // Ipatinga/MG
-  3157807  // Santa Luzia/MG
+//  3157807, // Santa Luzia/MG
+  3131307  // Ipatinga/MG
          : Provedor := 'ISSIntel';
 
   1400100, // Boa Vista/RR
@@ -765,6 +767,12 @@ begin
 
   2408102  // Natal/RN
          : Provedor := 'Natal';
+
+  3157807  // Santa Luzia/MG
+         : Provedor := 'ISSDigital';
+
+  4115200  // Maringa/PR
+         : Provedor := 'ISSe';
  end;
  Result := Provedor;
 end;
@@ -946,6 +954,7 @@ begin
   4108601: Cidade := 'Goioerê/PR';
   4113700: Cidade := 'Londrina/PR';
   4114302: Cidade := 'Mandirituba/PR';
+  4115200: Cidade := 'Maringa/PR';
   4115804: Cidade := 'Medianeira/PR';
   4118204: Cidade := 'Paranagua/PR';
   4118402: Cidade := 'Paranavaí/PR';

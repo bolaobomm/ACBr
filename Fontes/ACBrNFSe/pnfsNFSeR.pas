@@ -98,6 +98,7 @@ begin
    NFSe.RegimeEspecialTributacao := StrToRegimeEspecialTributacao(ok, Leitor.rCampo(tcStr, 'RegimeEspecialTributacao'));
    NFSe.OptanteSimplesNacional   := StrToSimNao(ok, Leitor.rCampo(tcStr, 'OptanteSimplesNacional'));
    NFSe.IncentivadorCultural     := StrToSimNao(ok, Leitor.rCampo(tcStr, 'IncentivoFiscal'));
+   NFSe.Producao                 := StrToSimNao(ok, Leitor.rCampo(tcStr, 'Producao'));
 
    if (Leitor.rExtrai(2, 'Prestador') <> '')
     then begin
