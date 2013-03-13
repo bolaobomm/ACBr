@@ -1343,7 +1343,7 @@ begin
    if AValue = tiOutras then
       Result := '99'
    else
-      Result := FormatFloat('00', Integer( AValue ) + 1 );
+      Result := FormatFloat('00', Integer( AValue ));
 
 //   Result := EnumeradoToStr(AValue, ['00', '01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '99'],
 //                                    [tiMercadoriaRevenda,
