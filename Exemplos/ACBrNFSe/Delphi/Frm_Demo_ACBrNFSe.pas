@@ -443,6 +443,11 @@ begin
      // TnfseSimNao = ( snSim, snNao );
      IncentivadorCultural := snSim;
 
+     // TnfseSimNao = ( snSim, snNao );
+     // snSim = Ambiente de Produção
+     // snNao = Ambiente de Homologação
+     Producao := snNao;
+
      // TnfseStatusRPS = ( srNormal, srCancelado );
      Status := srNormal;
 
