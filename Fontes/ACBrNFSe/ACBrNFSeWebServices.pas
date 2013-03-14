@@ -1086,6 +1086,7 @@ begin
 
  case FProvedor of
   proSaatri: URISig := 'Cancelamento_' + TNFSeCancelarNfse(Self).FCnpj;
+  proIssIntel,
   proISSNet: begin
               URISig := '';
               URIRef := 'http://www.w3.org/TR/2000/REC-xhtml1-20000126/';
@@ -2286,7 +2287,7 @@ begin
 
     FRetornoWS := TiraAcentos(ParseText(StrStream.DataString, True));
     FRetWS     := FProvedorClass.GetRetornoWS(acConsLote, FRetornoWS);
-    
+
     StrStream.Free;
   {$ENDIF}
 
@@ -2544,6 +2545,9 @@ begin
 
   NFSeRetorno.Leitor.Arquivo := FRetWS;
   NFSeRetorno.LerXml;
+
+ // Incluido por Ricardo Miranda em 14/03/2013
+  FRetWS := NotaUtil.RetirarPrefixos(FRetWS);
 
   // Alterado por Rodrigo Cantelli
   if FProvedor = proBetha

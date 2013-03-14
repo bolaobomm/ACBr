@@ -89,7 +89,7 @@ function TProvedorISSIntel.GetConfigCidade(ACodCidade,
 var
  ConfigCidade: TConfigCidade;
 begin
- ConfigCidade.VersaoSoap    := '1.2';
+ ConfigCidade.VersaoSoap    := '1.1';
  ConfigCidade.CodigoSchemas := 1;
  ConfigCidade.Prefixo2      := '';
  ConfigCidade.Prefixo3      := '';
@@ -97,6 +97,12 @@ begin
  ConfigCidade.Identificador := 'Id';
 
  case ACodCidade of
+  2925303: begin // Porto Seguro/BA
+            ConfigCidade.CodigoURLs := 1;
+            if AAmbiente = 1
+             then ConfigCidade.NameSpaceEnvelope := 'https://portoseguro-ba.issintel.com.br/webservices/abrasf/api'
+             else ConfigCidade.NameSpaceEnvelope := 'https://portoseguro-ba.treino-issintel.com.br/webservices/abrasf/api';
+           end;
   3131307: begin // Ipatinga/MG
             ConfigCidade.CodigoURLs := 1;
             if AAmbiente = 1
@@ -142,6 +148,10 @@ var
  ConfigURL: TConfigURL;
 begin
  case ACodCidade of
+  2925303: begin
+            ConfigURL.HomNomeCidade := 'portoseguro-ba';
+            ConfigURL.ProNomeCidade := 'portoseguro-ba';
+           end;
   3131307: begin
             ConfigURL.HomNomeCidade := 'ipatinga-mg';
             ConfigURL.ProNomeCidade := 'ipatinga-mg';
@@ -182,7 +192,7 @@ begin
    acConsLote:    Result := False;
    acConsNFSeRps: Result := False;
    acConsNFSe:    Result := False;
-   acCancelar:    Result := False;
+   acCancelar:    Result := True;
    acGerar:       Result := False;
    else           Result := False;
  end;
@@ -190,12 +200,14 @@ end;
 
 function TProvedorISSIntel.GetValidarLote: Boolean;
 begin
- Result := True;
+ // Alterado por Italo em 14/03/2013
+ Result := False;
 end;
 
 function TProvedorISSIntel.Gera_TagI(Acao: TnfseAcao; Prefixo3, Prefixo4,
   NameSpaceDad, Identificador, URI: String): AnsiString;
 begin
+{
  case Acao of
    acRecepcionar: Result := '<' + Prefixo3 + 'EnviarLoteRpsEnvio' + NameSpaceDad;
    acConsSit:     Result := '<' + Prefixo3 + 'ConsultarSituacaoLoteRpsEnvio' + NameSpaceDad;
@@ -206,6 +218,18 @@ begin
                              '<' + Prefixo3 + 'Pedido>' +
                               '<' + Prefixo4 + 'InfPedidoCancelamento' +
                                  DFeUtil.SeSenao(Identificador <> '', ' ' + Identificador + '="' + URI + '"', '') + '>';
+   acGerar:       Result := '';
+ end;
+}
+ case Acao of
+   acRecepcionar: Result := '<' + Prefixo3 + 'EnviarLoteRpsEnvio>';
+   acConsSit:     Result := '<' + Prefixo3 + 'ConsultarSituacaoLoteRpsEnvio>';
+   acConsLote:    Result := '<' + Prefixo3 + 'ConsultarLoteRpsEnvio>';
+   acConsNFSeRps: Result := '<' + Prefixo3 + 'ConsultarNfseRpsEnvio>';
+   acConsNFSe:    Result := '<' + Prefixo3 + 'ConsultarNfseEnvio>';
+   acCancelar:    Result := '<' + Prefixo3 + 'CancelarNfseEnvio>' +
+                             '<' + Prefixo3 + 'Pedido>' +
+                              '<' + Prefixo4 + 'InfPedidoCancelamento>';
    acGerar:       Result := '';
  end;
 end;
@@ -244,7 +268,7 @@ var
  DadosMsg: AnsiString;
 begin
  DadosMsg := '<' + Prefixo3 + 'LoteRps'+
-               DFeUtil.SeSenao(Identificador <> '', ' ' + Identificador + '="' + NumeroLote + '"', '') +
+               DFeUtil.SeSenao(Identificador <> '', ' ' + Identificador + '="' + NumeroLote + '"', '') + '>' +
                ' versao="' + VersaoDados + '">' +
               '<' + Prefixo4 + 'NumeroLote>' +
                 NumeroLote +
@@ -452,7 +476,8 @@ begin
               '</' + Prefixo4 + 'CodigoCancelamento>' +
              '</' + Prefixo4 + 'InfPedidoCancelamento>';
 
- Result := TagI + DadosMsg + TagF;
+// Result := TagI + DadosMsg + TagF;
+ Result := DadosMsg;
 end;
 
 function TProvedorISSIntel.Gera_DadosMsgGerarNFSe(Prefixo3, Prefixo4,
@@ -466,102 +491,84 @@ function TProvedorISSIntel.GeraEnvelopeRecepcionarLoteRPS(URLNS: String;
   CabMsg, DadosMsg, DadosSenha: AnsiString): AnsiString;
 begin
  result := '<?xml version="1.0" encoding="UTF-8"?>' +
-           '<s:Envelope xmlns:s="http://schemas.xmlsoap.org/soap/envelope/" ' +
-//                       'xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" ' +
-//                       'xmlns:xsd="http://www.w3.org/2001/XMLSchema" ' +
-                       'xmlns:urn="' + URLNS + '">' +
-            '<S:Body>' +
-             '<urn:RecepcionarLoteRps>' +
-//               StringReplace(StringReplace(DadosMsg, '<', '&lt;', [rfReplaceAll]), '>', '&gt;', [rfReplaceAll]) +
-               DadosMsg +
-             '</urn:RecepcionarLoteRps>' +
-            '</s:Body>' +
-           '</s:Envelope>';
+           '<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:urn="urn:seriorsIssIntel">' +
+            '<soapenv:Header/>' +
+             '<soapenv:Body>' +
+              '<urn:RecepcionarLoteRps>' +
+                DadosMsg +
+              '</urn:RecepcionarLoteRps>' +
+             '</soapenv:Body>' +
+            '</soapenv:Envelope>';
 end;
 
 function TProvedorISSIntel.GeraEnvelopeConsultarSituacaoLoteRPS(
   URLNS: String; CabMsg, DadosMsg, DadosSenha: AnsiString): AnsiString;
 begin
  result := '<?xml version="1.0" encoding="UTF-8"?>' +
-           '<s:Envelope xmlns:s="http://schemas.xmlsoap.org/soap/envelope/" ' +
-//                       'xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" ' +
-//                       'xmlns:xsd="http://www.w3.org/2001/XMLSchema" ' +
-                       'xmlns:urn="' + URLNS + '">' +
-            '<s:Body>' +
-             '<urn:ConsultarSituacaoLoteRps>' +
-//               StringReplace(StringReplace(DadosMsg, '<', '&lt;', [rfReplaceAll]), '>', '&gt;', [rfReplaceAll]) +
-               DadosMsg +
-             '</urn:ConsultarSituacaoLoteRps>' +
-            '</s:Body>' +
-           '</s:Envelope>';
+           '<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:urn="urn:seriorsIssIntel">' +
+            '<soapenv:Header/>' +
+             '<soapenv:Body>' +
+              '<urn:ConsultarSituacaoLoteRps>' +
+                DadosMsg +
+              '</urn:ConsultarSituacaoLoteRps>' +
+             '</soapenv:Body>' +
+            '</soapenv:Envelope>';
 end;
 
 function TProvedorISSIntel.GeraEnvelopeConsultarLoteRPS(URLNS: String;
   CabMsg, DadosMsg, DadosSenha: AnsiString): AnsiString;
 begin
  result := '<?xml version="1.0" encoding="UTF-8"?>' +
-           '<s:Envelope xmlns:s="http://schemas.xmlsoap.org/soap/envelope/" ' +
-//                       'xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" ' +
-//                       'xmlns:xsd="http://www.w3.org/2001/XMLSchema" ' +
-                       'xmlns:urn="' + URLNS + '">' +
-            '<s:Body>' +
-             '<urn:ConsultarLoteRps>' +
-//               StringReplace(StringReplace(DadosMsg, '<', '&lt;', [rfReplaceAll]), '>', '&gt;', [rfReplaceAll]) +
-               DadosMsg +
-             '</urn:ConsultarLoteRps>' +
-            '</s:Body>' +
-           '</s:Envelope>';
+           '<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:urn="urn:seriorsIssIntel">' +
+            '<soapenv:Header/>' +
+             '<soapenv:Body>' +
+              '<urn:ConsultarLoteRps>' +
+                DadosMsg +
+              '</urn:ConsultarLoteRps>' +
+             '</soapenv:Body>' +
+            '</soapenv:Envelope>';
 end;
 
 function TProvedorISSIntel.GeraEnvelopeConsultarNFSeporRPS(URLNS: String;
   CabMsg, DadosMsg, DadosSenha: AnsiString): AnsiString;
 begin
  result := '<?xml version="1.0" encoding="UTF-8"?>' +
-           '<s:Envelope xmlns:s="http://schemas.xmlsoap.org/soap/envelope/" ' +
-//                       'xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" ' +
-//                       'xmlns:xsd="http://www.w3.org/2001/XMLSchema" ' +
-                       'xmlns:urn="' + URLNS + '">' +
-            '<s:Body>' +
-             '<urn:ConsultarNfsePorRps>' +
-//               StringReplace(StringReplace(DadosMsg, '<', '&lt;', [rfReplaceAll]), '>', '&gt;', [rfReplaceAll]) +
-               DadosMsg +
-             '</urn:ConsultarNfsePorRps>' +
-            '</s:Body>' +
-           '</s:Envelope>';
+           '<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:urn="urn:seriorsIssIntel">' +
+            '<soapenv:Header/>' +
+             '<soapenv:Body>' +
+              '<urn:ConsultarNfsePorRps>' +
+                DadosMsg +
+              '</urn:ConsultarNfsePorRps>' +
+             '</soapenv:Body>' +
+            '</soapenv:Envelope>';
 end;
 
 function TProvedorISSIntel.GeraEnvelopeConsultarNFSe(URLNS: String; CabMsg,
   DadosMsg, DadosSenha: AnsiString): AnsiString;
 begin
  result := '<?xml version="1.0" encoding="UTF-8"?>' +
-           '<s:Envelope xmlns:s="http://schemas.xmlsoap.org/soap/envelope/" ' +
-//                       'xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" ' +
-//                       'xmlns:xsd="http://www.w3.org/2001/XMLSchema" ' +
-                       'xmlns:urn="' + URLNS + '">' +
-            '<s:Body>' +
-             '<urn:ConsultarNfse>' +
-//               StringReplace(StringReplace(DadosMsg, '<', '&lt;', [rfReplaceAll]), '>', '&gt;', [rfReplaceAll]) +
-               DadosMsg +
-             '</urn:ConsultarNfse>' +
-            '</s:Body>' +
-           '</s:Envelope>';
+           '<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:urn="urn:seriorsIssIntel">' +
+            '<soapenv:Header/>' +
+             '<soapenv:Body>' +
+              '<urn:ConsultarNfse>' +
+                DadosMsg +
+              '</urn:ConsultarNfse>' +
+             '</soapenv:Body>' +
+            '</soapenv:Envelope>';
 end;
 
 function TProvedorISSIntel.GeraEnvelopeCancelarNFSe(URLNS: String; CabMsg,
   DadosMsg, DadosSenha: AnsiString): AnsiString;
 begin
  result := '<?xml version="1.0" encoding="UTF-8"?>' +
-           '<s:Envelope xmlns:s="http://schemas.xmlsoap.org/soap/envelope/" ' +
-//                       'xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" ' +
-//                       'xmlns:xsd="http://www.w3.org/2001/XMLSchema" ' +
-                       'xmlns:urn="' + URLNS + '">' +
-            '<s:Body>' +
-             '<urn:CancelarNfse>' +
-//               StringReplace(StringReplace(DadosMsg, '<', '&lt;', [rfReplaceAll]), '>', '&gt;', [rfReplaceAll]) +
-               DadosMsg +
-             '</urn:CancelarNfse>' +
-            '</s:Body>' +
-           '</s:Envelope>';
+           '<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:urn="urn:seriorsIssIntel">' +
+            '<soapenv:Header/>' +
+             '<soapenv:Body>' +
+              '<urn:CancelarNfse>' +
+                DadosMsg +
+              '</urn:CancelarNfse>' +
+             '</soapenv:Body>' +
+            '</soapenv:Envelope>';
 end;
 
 function TProvedorISSIntel.GeraEnvelopeGerarNFSe(URLNS: String; CabMsg,
@@ -586,6 +593,7 @@ end;
 
 function TProvedorISSIntel.GetRetornoWS(Acao: TnfseAcao; RetornoWS: AnsiString): AnsiString;
 begin
+{
  case Acao of
    acRecepcionar: Result := SeparaDados( RetornoWS, 'Body' );
    acConsSit:     Result := SeparaDados( RetornoWS, 'Body' );
@@ -593,6 +601,16 @@ begin
    acConsNFSeRps: Result := SeparaDados( RetornoWS, 'Body' );
    acConsNFSe:    Result := SeparaDados( RetornoWS, 'Body' );
    acCancelar:    Result := SeparaDados( RetornoWS, 'Body' );
+   acGerar:       Result := '';
+ end;
+}
+ case Acao of
+   acRecepcionar: Result := SeparaDados( RetornoWS, 'env:Body' );
+   acConsSit:     Result := SeparaDados( RetornoWS, 'env:Body' );
+   acConsLote:    Result := SeparaDados( RetornoWS, 'env:Body' );
+   acConsNFSeRps: Result := SeparaDados( RetornoWS, 'env:Body' );
+   acConsNFSe:    Result := SeparaDados( RetornoWS, 'env:Body' );
+   acCancelar:    Result := SeparaDados( RetornoWS, 'env:Body' );
    acGerar:       Result := '';
  end;
 end;

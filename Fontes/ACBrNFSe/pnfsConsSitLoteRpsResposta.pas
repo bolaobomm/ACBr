@@ -4,8 +4,7 @@ interface
 
 uses
   SysUtils, Classes,
-  pcnAuxiliar, pcnConversao, pcnLeitor,
-  pnfsConversao, pnfsNFSe;
+  pcnAuxiliar, pcnConversao, pcnLeitor, pnfsConversao, pnfsNFSe, ACBrNFSeUtil;
 
 type
 
@@ -146,8 +145,12 @@ var
   i: Integer;
 begin
   result := False;
+  
   try
-    Leitor.Grupo := Leitor.Arquivo;
+    // Incluido por Ricardo Miranda em 14/03/2013
+    Leitor.Arquivo := NotaUtil.RetirarPrefixos(Leitor.Arquivo);
+    Leitor.Grupo   := Leitor.Arquivo;
+
     if leitor.rExtrai(1, prefixo3 + 'ConsultarSituacaoLoteRpsResposta') <> '' then
     begin
       InfSit.FNumeroLote := Leitor.rCampo(tcStr, prefixo3 + 'NumeroLote');

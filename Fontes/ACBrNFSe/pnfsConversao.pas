@@ -745,6 +745,7 @@ begin
          : Provedor := 'Thema';
 
 //  3157807, // Santa Luzia/MG
+  2925303, // Porto Seguro/BA
   3131307  // Ipatinga/MG
          : Provedor := 'ISSIntel';
 
@@ -814,6 +815,7 @@ begin
   2910727: Cidade := 'Eunapolis/BA';
   2910800: Cidade := 'Feira de Santana/BA';
   2919207: Cidade := 'Lauro de Freitas/BA';
+  2925303: Cidade := 'Porto Seguro/BA';
   2927408: Cidade := 'Salvador/BA';
 
   3104205: Cidade := 'Arcos/MG';

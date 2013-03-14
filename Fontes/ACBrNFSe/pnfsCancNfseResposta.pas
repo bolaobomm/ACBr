@@ -149,22 +149,24 @@ function TretCancNFSe.LerXml: boolean;
 var
   i: Integer;
 begin
-result := False;
+  result := False;
+  
   try
+    // Incluido por Ricardo Miranda em 14/03/2013
+    Leitor.Arquivo := NotaUtil.RetirarPrefixos(Leitor.Arquivo);
+    Leitor.Grupo   := Leitor.Arquivo;
+
   { Incluído por Márcio Teixeira em 14/02/2013 para tratar os retornos do Ginfes.
     Fiz seguindo a seguinte idéia: se infCanc.DataHora tiver data, então foi
     cancelado com sucesso, caso contrário houve algum problema.
   }
   if Pos('www.ginfes.com.br', Leitor.Arquivo) <> 0
    then begin
-    Leitor.Grupo := Leitor.Arquivo;
-
     if (leitor.rExtrai(1, Prefixo2 + 'CancelarNfseResposta') <> '')
      then begin
-      if AnsiLowerCase(Leitor.rCampo(tcStr, Prefixo2 + 'Sucesso')) = 'true' then
-        infCanc.DataHora                := Leitor.rCampo(tcDatHor, Prefixo2 + 'DataHora')
-      else
-        infCanc.DataHora                := 0;
+      if AnsiLowerCase(Leitor.rCampo(tcStr, Prefixo2 + 'Sucesso')) = 'true'
+       then infCanc.DataHora := Leitor.rCampo(tcDatHor, Prefixo2 + 'DataHora')
+       else infCanc.DataHora := 0;
 
       InfCanc.FPedido.InfID.ID           := '';
       InfCanc.FPedido.CodigoCancelamento := '';
@@ -184,7 +186,6 @@ result := False;
     end
   else
     begin
-      Leitor.Grupo := Leitor.Arquivo;
       // Alterado por Rodrigo Cantelli
       if (leitor.rExtrai(1, Prefixo3 + 'CancelarNfseResposta') <> '') or (leitor.rExtrai(1, Prefixo3 + 'CancelarNfseReposta') <> '') then
       begin

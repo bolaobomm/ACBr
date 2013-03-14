@@ -179,6 +179,20 @@ type
     qrlISSReter: TQRLabel;
     qrmPrefeitura: TQRMemo;
     qrmDescricao: TQRMemo;
+    QRShape18: TQRShape;
+    QRLabel33: TQRLabel;
+    QRShape11: TQRShape;
+    QRLabel26: TQRLabel;
+    qrlPrestNomeCompEnt: TQRLabel;
+    QRLabel28: TQRLabel;
+    QRShape19: TQRShape;
+    QRShape20: TQRShape;
+    QRLabel57: TQRLabel;
+    qrlNumeroNotaCompEnt: TQRLabel;
+    QRShape21: TQRShape;
+    QRLabel58: TQRLabel;
+    QRLabel59: TQRLabel;
+    QRLabel60: TQRLabel;
     procedure qrb_1_CabecalhoBeforePrint(Sender: TQRCustomBand;
       var PrintBand: Boolean);
     procedure qrb_2_PrestadorServicoBeforePrint(Sender: TQRCustomBand;
@@ -205,7 +219,7 @@ type
 implementation
 
 uses
- StrUtils, DateUtils,
+ StrUtils, DateUtils, 
  ACBrUtil, ACBrDFeUtil, ACBrNFSeUtil, pnfsNFSe;
 
 {$R *.dfm}
@@ -255,6 +269,9 @@ begin
                          ';', #13#10, [rfReplaceAll,rfIgnoreCase] ) );
 
  qrlNumNF0.Caption  := FormatFloat('00000000000', StrToFloatDef(FNFSe.Numero, 0));
+ // Alterado em 27/12/2012  Daniel Jr -> passando parâmetro para Comprovante de Entrega.
+ qrlNumeroNotaCompEnt.Caption := FormatFloat('00000000000', StrToFloatDef(FNFSe.Numero, 0));
+
  qrlEmissao.Caption := DFeUtil.FormatDateTime(DateTimeToStr(FNFSe.DataEmissao));
  qrlCodVerificacao.Caption := FNFSe.CodigoVerificacao;
  t:=length(FNFSe.Competencia);
@@ -278,6 +295,9 @@ begin
  qrlPrestCNPJ.Caption := DFeUtil.FormatarCNPJ( FNFSe.PrestadorServico.IdentificacaoPrestador.Cnpj );
  qrlPrestInscMunicipal.Caption := FNFSe.PrestadorServico.IdentificacaoPrestador.InscricaoMunicipal;
  qrlPrestNome.Caption := FNFSe.PrestadorServico.RazaoSocial;
+ // Alterado em 27/12/2012  Daniel Jr -> passando parâmetro para Comprovante de Entrega.
+ qrlPrestNomeCompEnt.Caption := FNFSe.PrestadorServico.RazaoSocial;
+ 
  qrlPrestEndereco.Caption := Trim( FNFSe.PrestadorServico.Endereco.Endereco )+', '+
                              Trim( FNFSe.PrestadorServico.Endereco.Numero )+' - '+
                              Trim( FNFSe.PrestadorServico.Endereco.Bairro )+
@@ -417,6 +437,7 @@ begin
                                      FNFSe.Servico.Valores.ValorCofins + FNFSe.Servico.Valores.ValorInss +
                                      FNFSe.Servico.Valores.ValorIr + FNFSe.Servico.Valores.ValorCsll );
  qrlOutrasRetencoes.Caption     := DFeUtil.FormatFloat( FNFSe.Servico.Valores.OutrasRetencoes );
+
  qrlValorIssRetido.Caption      := DFeUtil.FormatFloat( FNFSe.Servico.Valores.ValorIssRetido );
 
  qrlValorLiquido.Caption := DFeUtil.FormatFloat( FNFSe.Servico.Valores.ValorLiquidoNfse );
@@ -471,19 +492,16 @@ begin
  qrlValorDeducoes.Caption       := DFeUtil.FormatFloat( FNFSe.Servico.Valores.ValorDeducoes );
  qrlDescIncondicionado2.Caption := DFeUtil.FormatFloat( FNFSe.Servico.Valores.DescontoIncondicionado );
  qrlBaseCalc.Caption            := DFeUtil.FormatFloat( FNFSe.Servico.Valores.BaseCalculo );
-
- // Alterado por Italo em 16/01/2013
- if FNFSe.Servico.Valores.Aliquota >= 1.00
-  then qrlAliquota.Caption := DFeUtil.FormatFloat( FNFSe.Servico.Valores.Aliquota )
-  else qrlAliquota.Caption := DFeUtil.FormatFloat( FNFSe.Servico.Valores.Aliquota * 100 );
-
+ qrlAliquota.Caption            := DFeUtil.FormatFloat( FNFSe.Servico.Valores.Aliquota );
  // TnfseSimNao = ( snSim, snNao )
  case FNFSe.Servico.Valores.IssRetido of
   stRetencao     : qrlISSReter.Caption := 'Sim';
   stNormal       : qrlISSReter.Caption := 'Não';
   stSubstituicao : qrlISSReter.Caption := 'ST';
  end;
- qrlValorISS.Caption := DFeUtil.FormatFloat( FNFSe.Servico.Valores.ValorIss );
+
+ // Alterado esta linha em 27/12/2012  Daniel Jr - Pois o ICMS não estava sendo dividido por 100) Ex 1,00 estava 100,00
+ qrlValorISS.Caption := DFeUtil.FormatFloat( (FNFSe.Servico.Valores.ValorIss / 100) );
 
 // qrlValorCredito.Caption := DFeUtil.FormatFloat( FNFSe.ValorCredito );
 

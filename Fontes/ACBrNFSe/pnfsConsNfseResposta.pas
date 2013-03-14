@@ -233,15 +233,16 @@ var
   VersaoXML: String;
 begin
   result := False;
+  
   try
     Leitor.Arquivo := NotaUtil.RetirarPrefixos(Leitor.Arquivo);
-    VersaoXML := NotaUtil.VersaoXML(Leitor.Arquivo);
+    VersaoXML      := NotaUtil.VersaoXML(Leitor.Arquivo);
+    Leitor.Grupo   := Leitor.Arquivo;
 
     k        := 0; //length(Prefixo4);
     Prefixo3 := '';
     Prefixo4 := '';
 
-    Leitor.Grupo := Leitor.Arquivo;
     if (leitor.rExtrai(1, Prefixo3 + 'ConsultarNfseResposta') <> '') or
        (leitor.rExtrai(1, Prefixo3 + 'ConsultarNfseServicoPrestadoResposta') <> '') then
     begin

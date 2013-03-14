@@ -1314,6 +1314,8 @@ begin
  AXML := StringReplace( AXML, 'ns3:', '', [rfReplaceAll] );
  AXML := StringReplace( AXML, 'ns4:', '', [rfReplaceAll] );
  AXML := StringReplace( AXML, 'tc:', '', [rfReplaceAll] );
+ // Incluido por Ricardo Miranda em 14/03/2013
+ AXML := StringReplace( AXML, 'ii:', '', [rfReplaceAll] );
 
  result := AXML;
 end;
