@@ -1914,7 +1914,7 @@ begin
 
       // Cancelamento retorna dados do Cupom Fiscal Cancelado e nao do Cancelamento
       fsNumCupom := '' ; // RespostasComando['COO'].AsString;
-      fsNumCCF   := RespostasComando['CCF'].AsString;
+      fsNumCCF   := '' ; // RespostasComando['CCF'].AsString;
     end
     else
       raise EACBrECFCMDInvalido.Create( ACBrStr('Não existe documento para cancelar.') );
