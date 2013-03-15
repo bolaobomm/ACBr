@@ -7,7 +7,8 @@ uses
   SysUtils,
   IniFiles,
   ACBrNFeMonitor1 in 'ACBrNFeMonitor1.pas' {frmAcbrNfeMonitor},
-  DoACBrNFeUnit in 'DoACBrNFeUnit.pas';
+  DoACBrNFeUnit in 'DoACBrNFeUnit.pas',
+  DoACBrCTeUnit in 'DoACBrCTeUnit.pas';
 
 {$R *.res}
 var 

@@ -35,10 +35,10 @@ interface
 Uses SysUtils, Classes, Math ;
 
 Const
-   Objetos = '"NFE"' ;
+   Objetos = '"NFE","CTE"' ;
 
 type
-TACBrNFeCmd = class
+TACBrNFeCTeCmd = class
   private
     fsParams : TStringList ;
     fsComando: WideString;
@@ -64,18 +64,18 @@ implementation
 uses StrUtils;
 
 {----------------------------------- TACBrCmd ---------------------------------}
-constructor TACBrNFeCmd.Create;
+constructor TACBrNFeCTeCmd.Create;
 begin
   fsParams := TStringList.Create ;
 end;
 
-destructor TACBrNFeCmd.Destroy;
+destructor TACBrNFeCTeCmd.Destroy;
 begin
   fsParams.Free ;
   inherited Destroy ;
 end;
 
-function TACBrNFeCmd.Params(Index: Integer): String;
+function TACBrNFeCTeCmd.Params(Index: Integer): String;
 begin
   if Index > fsParams.Count-1 then
      Result := ''
@@ -83,7 +83,7 @@ begin
      Result := fsParams[Index] ;
 end;
 
-procedure TACBrNFeCmd.SetComando(const Value: WideString);
+procedure TACBrNFeCTeCmd.SetComando(const Value: WideString);
 Var P,PaI,PaF,Pv : Integer ;
     wComando, wParam, wProxChar : WideString ;
 begin

@@ -4133,7 +4133,7 @@ object frmAcbrNfeMonitor: TfrmAcbrNfeMonitor
       Top = 1
       Width = 569
       Height = 261
-      ActivePage = WebService
+      ActivePage = Diretorios
       Align = alClient
       Style = tsFlatButtons
       TabOrder = 0
@@ -4741,7 +4741,7 @@ object frmAcbrNfeMonitor: TfrmAcbrNfeMonitor
           Left = 304
           Top = 105
           Width = 250
-          Height = 91
+          Height = 80
           Caption = 'Forma de Emiss'#227'o'
           Columns = 2
           ItemIndex = 0
@@ -4820,6 +4820,18 @@ object frmAcbrNfeMonitor: TfrmAcbrNfeMonitor
             TabOrder = 1
             OnKeyPress = edtNumCopiaKeyPress
           end
+        end
+        object rgTipoCancelamento: TRadioGroup
+          Left = 305
+          Top = 187
+          Width = 250
+          Height = 38
+          Caption = 'Tipo de Cancelamento'
+          Columns = 2
+          Items.Strings = (
+            'Por Evento'
+            'Anterior')
+          TabOrder = 4
         end
       end
       object Email: TTabSheet
@@ -4950,7 +4962,7 @@ object frmAcbrNfeMonitor: TfrmAcbrNfeMonitor
         end
       end
       object DANFE: TTabSheet
-        Caption = 'DANFE'
+        Caption = 'DANFE/DACTE'
         ImageIndex = 4
         object PageControl2: TPageControl
           Left = 0
@@ -5017,7 +5029,7 @@ object frmAcbrNfeMonitor: TfrmAcbrNfeMonitor
               Top = -2
               Width = 152
               Height = 33
-              Caption = 'DANFE'
+              Caption = 'DANFE/DACTE'
               Columns = 2
               ItemIndex = 0
               Items.Strings = (
@@ -5345,7 +5357,7 @@ object frmAcbrNfeMonitor: TfrmAcbrNfeMonitor
         ImageIndex = 6
         object sbPathNFe: TSpeedButton
           Left = 258
-          Top = 94
+          Top = 74
           Width = 23
           Height = 24
           Glyph.Data = {
@@ -5366,21 +5378,21 @@ object frmAcbrNfeMonitor: TfrmAcbrNfeMonitor
         end
         object Label32: TLabel
           Left = 6
-          Top = 80
+          Top = 60
           Width = 94
           Height = 13
           Caption = 'Pasta Arquivos NFe'
         end
         object Label33: TLabel
           Left = 6
-          Top = 120
+          Top = 100
           Width = 142
           Height = 13
           Caption = 'Pasta Arquivos Cancelamento'
         end
         object sbPathCan: TSpeedButton
           Left = 258
-          Top = 134
+          Top = 114
           Width = 23
           Height = 24
           Glyph.Data = {
@@ -5401,14 +5413,14 @@ object frmAcbrNfeMonitor: TfrmAcbrNfeMonitor
         end
         object Label34: TLabel
           Left = 288
-          Top = 80
+          Top = 60
           Width = 127
           Height = 13
           Caption = 'Pasta Arquivos Inutiliza'#231#227'o'
         end
         object sbPathInu: TSpeedButton
           Left = 531
-          Top = 94
+          Top = 74
           Width = 23
           Height = 24
           Glyph.Data = {
@@ -5429,14 +5441,14 @@ object frmAcbrNfeMonitor: TfrmAcbrNfeMonitor
         end
         object Label35: TLabel
           Left = 288
-          Top = 120
+          Top = 100
           Width = 103
           Height = 13
           Caption = 'Pasta Arquivos DPEC'
         end
         object sbPathDPEC: TSpeedButton
           Left = 531
-          Top = 134
+          Top = 114
           Width = 23
           Height = 24
           Glyph.Data = {
@@ -5457,14 +5469,14 @@ object frmAcbrNfeMonitor: TfrmAcbrNfeMonitor
         end
         object Label28: TLabel
           Left = 6
-          Top = 160
+          Top = 180
           Width = 117
           Height = 13
           Caption = 'Salvar arquivos PDF em:'
         end
         object sbPathPDF: TSpeedButton
           Left = 259
-          Top = 172
+          Top = 194
           Width = 23
           Height = 24
           Glyph.Data = {
@@ -5483,9 +5495,72 @@ object frmAcbrNfeMonitor: TfrmAcbrNfeMonitor
           NumGlyphs = 2
           OnClick = sbPathPDFClick
         end
+        object Label46: TLabel
+          Left = 6
+          Top = 140
+          Width = 192
+          Height = 13
+          Caption = 'Pasta Arquivos CC-e - Carta de Corre'#231#227'o'
+        end
+        object sbPathCCe: TSpeedButton
+          Left = 258
+          Top = 154
+          Width = 23
+          Height = 24
+          Glyph.Data = {
+            76010000424D7601000000000000760000002800000020000000100000000100
+            04000000000000010000130B0000130B00001000000000000000000000000000
+            800000800000008080008000000080008000808000007F7F7F00BFBFBF000000
+            FF0000FF000000FFFF00FF000000FF00FF00FFFF0000FFFFFF0033333333B333
+            333B33FF33337F3333F73BB3777BB7777BB3377FFFF77FFFF77333B000000000
+            0B3333777777777777333330FFFFFFFF07333337F33333337F333330FFFFFFFF
+            07333337F3FF3FFF7F333330F00F000F07333337F77377737F333330FFFFFFFF
+            07333FF7F3FFFF3F7FFFBBB0F0000F0F0BB37777F7777373777F3BB0FFFFFFFF
+            0BBB3777F3FF3FFF77773330F00F000003333337F773777773333330FFFF0FF0
+            33333337F3FF7F37F3333330F08F0F0B33333337F7737F77FF333330FFFF003B
+            B3333337FFFF77377FF333B000000333BB33337777777F3377FF3BB3333BB333
+            3BB33773333773333773B333333B3333333B7333333733333337}
+          NumGlyphs = 2
+          OnClick = sbPathCCeClick
+        end
+        object Label47: TLabel
+          Left = 288
+          Top = 140
+          Width = 108
+          Height = 13
+          Caption = 'Pasta Arquivos Evento'
+        end
+        object sbPathEvento: TSpeedButton
+          Left = 530
+          Top = 154
+          Width = 23
+          Height = 24
+          Glyph.Data = {
+            76010000424D7601000000000000760000002800000020000000100000000100
+            04000000000000010000130B0000130B00001000000000000000000000000000
+            800000800000008080008000000080008000808000007F7F7F00BFBFBF000000
+            FF0000FF000000FFFF00FF000000FF00FF00FFFF0000FFFFFF0033333333B333
+            333B33FF33337F3333F73BB3777BB7777BB3377FFFF77FFFF77333B000000000
+            0B3333777777777777333330FFFFFFFF07333337F33333337F333330FFFFFFFF
+            07333337F3FF3FFF7F333330F00F000F07333337F77377737F333330FFFFFFFF
+            07333FF7F3FFFF3F7FFFBBB0F0000F0F0BB37777F7777373777F3BB0FFFFFFFF
+            0BBB3777F3FF3FFF77773330F00F000003333337F773777773333330FFFF0FF0
+            33333337F3FF7F37F3333330F08F0F0B33333337F7737F77FF333330FFFF003B
+            B3333337FFFF77377FF333B000000333BB33337777777F3377FF3BB3333BB333
+            3BB33773333773333773B333333B3333333B7333333733333337}
+          NumGlyphs = 2
+          OnClick = sbPathEventoClick
+        end
+        object edtPathCCe: TEdit
+          Left = 6
+          Top = 156
+          Width = 252
+          Height = 21
+          TabOrder = 8
+        end
         object cbxSalvarArqs: TCheckBox
           Left = 6
-          Top = 8
+          Top = 0
           Width = 210
           Height = 17
           Caption = 'Salvar Arquivos em Pastas Separadas'
@@ -5494,7 +5569,7 @@ object frmAcbrNfeMonitor: TfrmAcbrNfeMonitor
         end
         object cbxPastaMensal: TCheckBox
           Left = 6
-          Top = 32
+          Top = 20
           Width = 210
           Height = 17
           Caption = 'Criar Pastas Mensalmente'
@@ -5503,7 +5578,7 @@ object frmAcbrNfeMonitor: TfrmAcbrNfeMonitor
         end
         object cbxAdicionaLiteral: TCheckBox
           Left = 6
-          Top = 56
+          Top = 40
           Width = 210
           Height = 17
           Caption = 'Adicionar Literal no nome das pastas'
@@ -5511,47 +5586,63 @@ object frmAcbrNfeMonitor: TfrmAcbrNfeMonitor
         end
         object edtPathNFe: TEdit
           Left = 6
-          Top = 96
-          Width = 252
-          Height = 21
-          TabOrder = 3
-        end
-        object edtPathCan: TEdit
-          Left = 6
-          Top = 136
+          Top = 76
           Width = 252
           Height = 21
           TabOrder = 4
         end
+        object edtPathCan: TEdit
+          Left = 6
+          Top = 116
+          Width = 252
+          Height = 21
+          TabOrder = 6
+        end
         object edtPathInu: TEdit
           Left = 288
-          Top = 96
+          Top = 76
           Width = 244
           Height = 21
           TabOrder = 5
         end
         object edtPathDPEC: TEdit
           Left = 288
-          Top = 136
+          Top = 116
           Width = 244
-          Height = 21
-          TabOrder = 6
-        end
-        object edtPathPDF: TEdit
-          Left = 6
-          Top = 174
-          Width = 252
           Height = 21
           TabOrder = 7
         end
+        object edtPathPDF: TEdit
+          Left = 6
+          Top = 196
+          Width = 252
+          Height = 21
+          TabOrder = 10
+        end
         object cbxEmissaoPathNFe: TCheckBox
           Left = 288
-          Top = 8
+          Top = 0
           Width = 233
           Height = 17
           Caption = 'Salvar NFe pelo campo Data de Emiss'#227'o'
           Enabled = False
-          TabOrder = 8
+          TabOrder = 3
+        end
+        object edtPathEvento: TEdit
+          Left = 288
+          Top = 156
+          Width = 244
+          Height = 21
+          TabOrder = 9
+        end
+        object cbxSalvaCCeCancelamentoPathEvento: TCheckBox
+          Left = 288
+          Top = 20
+          Width = 233
+          Height = 17
+          Caption = 'Salvar Arqs Canc./CCe na pasta Eventos'
+          Enabled = False
+          TabOrder = 11
         end
       end
       object Testes: TTabSheet
@@ -5564,77 +5655,157 @@ object frmAcbrNfeMonitor: TfrmAcbrNfeMonitor
           Height = 230
           Align = alLeft
           TabOrder = 0
-          object btnStatusServ: TButton
-            Left = 5
-            Top = 6
-            Width = 140
-            Height = 25
-            Caption = 'Status Servi'#231'o'
+          object PageControl3: TPageControl
+            Left = 1
+            Top = 1
+            Width = 152
+            Height = 228
+            ActivePage = TabSheet3
+            Align = alLeft
+            Style = tsFlatButtons
             TabOrder = 0
-            OnClick = btnStatusServClick
-          end
-          object btnValidarXML: TButton
-            Left = 5
-            Top = 118
-            Width = 140
-            Height = 25
-            Caption = 'Validar XML'
-            TabOrder = 1
-            OnClick = btnValidarXMLClick
-          end
-          object btnImprimir: TButton
-            Left = 5
-            Top = 146
-            Width = 140
-            Height = 25
-            Caption = 'Imprimir'
-            TabOrder = 2
-            OnClick = btnImprimirClick
-          end
-          object btnInutilizar: TButton
-            Left = 5
-            Top = 174
-            Width = 140
-            Height = 25
-            Caption = 'Inutilizar NFe'
-            TabOrder = 3
-            OnClick = btnInutilizarClick
-          end
-          object btnConsultar: TButton
-            Left = 5
-            Top = 62
-            Width = 140
-            Height = 25
-            Caption = 'Consultar'
-            TabOrder = 4
-            OnClick = btnConsultarClick
-          end
-          object btnCancNF: TButton
-            Left = 5
-            Top = 90
-            Width = 140
-            Height = 25
-            Caption = 'Cancelamento NFe'
-            TabOrder = 5
-            OnClick = btnCancNFClick
-          end
-          object btnEnviar: TButton
-            Left = 5
-            Top = 34
-            Width = 140
-            Height = 25
-            Caption = 'Enviar XML NFe'
-            TabOrder = 6
-            OnClick = btnEnviarClick
-          end
-          object btnEnviarEmail: TButton
-            Left = 5
-            Top = 201
-            Width = 140
-            Height = 25
-            Caption = 'Enviar Email'
-            TabOrder = 7
-            OnClick = btnEnviarEmailClick
+            object TabSheet3: TTabSheet
+              Caption = 'NF-e'
+              object btnStatusServ: TButton
+                Left = 0
+                Top = 2
+                Width = 140
+                Height = 22
+                Caption = 'Status Servi'#231'o'
+                TabOrder = 0
+                OnClick = btnStatusServClick
+              end
+              object btnValidarXML: TButton
+                Left = 0
+                Top = 102
+                Width = 140
+                Height = 22
+                Caption = 'Validar XML'
+                TabOrder = 1
+                OnClick = btnValidarXMLClick
+              end
+              object btnImprimir: TButton
+                Left = 0
+                Top = 127
+                Width = 140
+                Height = 22
+                Caption = 'Imprimir NFe'
+                TabOrder = 2
+                OnClick = btnImprimirClick
+              end
+              object btnInutilizar: TButton
+                Left = 0
+                Top = 149
+                Width = 140
+                Height = 22
+                Caption = 'Inutilizar NFe'
+                TabOrder = 3
+                OnClick = btnInutilizarClick
+              end
+              object btnConsultar: TButton
+                Left = 0
+                Top = 52
+                Width = 140
+                Height = 22
+                Caption = 'Consultar NFe'
+                TabOrder = 4
+                OnClick = btnConsultarClick
+              end
+              object btnCancNF: TButton
+                Left = 0
+                Top = 77
+                Width = 140
+                Height = 22
+                Caption = 'Cancelamento NFe'
+                TabOrder = 5
+                OnClick = btnCancNFClick
+              end
+              object btnEnviar: TButton
+                Left = 0
+                Top = 27
+                Width = 140
+                Height = 22
+                Caption = 'Enviar XML NFe'
+                TabOrder = 6
+                OnClick = btnEnviarClick
+              end
+              object btnEnviarEmail: TButton
+                Left = -1
+                Top = 173
+                Width = 140
+                Height = 22
+                Caption = 'Enviar Email'
+                TabOrder = 7
+                OnClick = btnEnviarEmailClick
+              end
+            end
+            object TabSheet4: TTabSheet
+              Caption = 'CT-e'
+              ImageIndex = 1
+              object btnStatusServCTe: TButton
+                Left = 1
+                Top = 6
+                Width = 140
+                Height = 22
+                Caption = 'Status Servi'#231'o'
+                TabOrder = 0
+                OnClick = btnStatusServCTeClick
+              end
+              object btnValidarXMLCTe: TButton
+                Left = 1
+                Top = 118
+                Width = 140
+                Height = 22
+                Caption = 'Validar XML'
+                TabOrder = 1
+                OnClick = btnValidarXMLCTeClick
+              end
+              object btnImprimirCTe: TButton
+                Left = 1
+                Top = 146
+                Width = 140
+                Height = 22
+                Caption = 'Imprimir CTe'
+                TabOrder = 2
+                OnClick = btnImprimirCTeClick
+              end
+              object btnInutilizarCTe: TButton
+                Left = 1
+                Top = 174
+                Width = 140
+                Height = 22
+                Caption = 'Inutilizar CTe'
+                TabOrder = 3
+                OnClick = btnInutilizarCTeClick
+              end
+              object btnConsultarCTe: TButton
+                Left = 1
+                Top = 62
+                Width = 140
+                Height = 22
+                Caption = 'Consultar CTe'
+                TabOrder = 4
+                OnClick = btnConsultarCTeClick
+              end
+              object btnCancelarCTe: TButton
+                Left = 1
+                Top = 90
+                Width = 140
+                Height = 22
+                Caption = 'Cancelamento CTe'
+                TabOrder = 5
+                OnClick = btnCancelarCTeClick
+              end
+              object btnEnviarCTe: TButton
+                Left = 1
+                Top = 34
+                Width = 140
+                Height = 22
+                Caption = 'Enviar XML CTe'
+                TabOrder = 6
+                OnClick = btnEnviarCTeClick
+              end
+            end
           end
         end
         object Panel2: TPanel
@@ -5729,10 +5900,6 @@ object frmAcbrNfeMonitor: TfrmAcbrNfeMonitor
     Configuracoes.WebServices.AguardarConsultaRet = 0
     Configuracoes.WebServices.IntervaloTentativas = 1000
     Configuracoes.WebServices.AjustaAguardaConsultaRet = False
-    Configuracoes.Arquivos.PathNFe = 'C:\Program Files\Borland\Delphi7\Bin\'
-    Configuracoes.Arquivos.PathCan = 'C:\Program Files\Borland\Delphi7\Bin\'
-    Configuracoes.Arquivos.PathInu = 'C:\Program Files\Borland\Delphi7\Bin\'
-    Configuracoes.Arquivos.PathDPEC = 'C:\Program Files\Borland\Delphi7\Bin\'
     DANFE = ACBrNFeDANFERaveCB1
     OnGerarLog = ACBrNFe1GerarLog
     Left = 136
@@ -6169,6 +6336,7 @@ object frmAcbrNfeMonitor: TfrmAcbrNfeMonitor
     ProdutosPorPagina = 0
     ImprimirDetalhamentoEspecifico = True
     NFeCancelada = False
+    LocalImpCanhoto = 0
     EspessuraBorda = 1
     TamanhoFonte_RazaoSocial = 12
     TamanhoFonte_ANTT = 10
@@ -6196,11 +6364,42 @@ object frmAcbrNfeMonitor: TfrmAcbrNfeMonitor
     ProdutosPorPagina = 0
     ImprimirDetalhamentoEspecifico = True
     NFeCancelada = False
+    LocalImpCanhoto = 0
     TamanhoCampoCodigo = 0
     TamanhoFonte_ANTT = 10
     Fonte = ftTimes
     EspessuraBorda = 1
+    MostrarSetup = False
     Left = 201
     Top = 25
+  end
+  object ACBrCTe1: TACBrCTe
+    Configuracoes.Geral.PathSalvar = 'C:\Program Files\Borland\Delphi7\Bin\'
+    Configuracoes.WebServices.UF = 'SP'
+    Configuracoes.WebServices.AguardarConsultaRet = 0
+    Configuracoes.WebServices.IntervaloTentativas = 1000
+    Configuracoes.WebServices.AjustaAguardaConsultaRet = False
+    DACTe = ACBrCTeDACTeQR1
+    OnGerarLog = ACBrCTe1GerarLog
+    Left = 393
+    Top = 24
+  end
+  object ACBrCTeDACTeQR1: TACBrCTeDACTeQR
+    ACBrCTE = ACBrCTe1
+    PathPDF = 'C:\Program Files\Borland\Delphi7\Bin\'
+    ImprimirHoraSaida = False
+    MostrarPreview = False
+    MostrarStatus = False
+    TipoDACTE = tiSemGeracao
+    TamanhoPapel = tpA4
+    NumCopias = 1
+    ImprimirDescPorc = False
+    MargemInferior = 0.800000000000000000
+    MargemSuperior = 0.800000000000000000
+    MargemEsquerda = 0.600000000000000000
+    MargemDireita = 0.510000000000000000
+    CTeCancelada = False
+    Left = 425
+    Top = 28
   end
 end
