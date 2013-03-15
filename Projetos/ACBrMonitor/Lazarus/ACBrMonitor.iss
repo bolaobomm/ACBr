@@ -61,6 +61,7 @@ Source: ..\Exemplos\php_socket.zip; DestDir: {app}\Exemplos; Flags: ignoreversio
 Source: LICENCA.TXT; DestDir: {app}; Flags: ignoreversion; Components: programa
 Source: LICENSE.TXT; DestDir: {app}; Flags: ignoreversion; Components: programa
 Source: ACBrMonitor.chm; DestDir: {app}; Flags: ignoreversion; Components: help
+Source: ACBrMonitor.pdf; DestDir: {app}; Flags: ignoreversion; Components: help
 Source: {#ACBrDIR}\DLLs\Diversos\inpout32.dll; DestDir: {sys}; Flags: ; Components: programa
 Source: {#ACBrDIR}\DLLs\OpenSSL\openssl.exe; DestDir: {app}; Flags: ; Components: programa
 Source: {#ACBrDIR}\DLLs\OpenSSL\libeay32.dll; DestDir: {app}; Flags: ; Components: programa
