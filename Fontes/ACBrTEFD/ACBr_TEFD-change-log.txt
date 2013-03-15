@@ -47,6 +47,14 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+Data:  15/03/2013 - 4.3.3
+-- ACBrTEFDClass --
+[*] Removida verificação se limita a transação no mesmo valor do Saldo Restante
+    para o último cartão, quando for TEF dedicado, pois nos testes do TEF
+    dedicado, é permitido informar outra forma de pagamento mesmo após atingir o
+    número máximo de cartões.
+    Verificação permanece no caso de TEF derivado de TEF discado (por: DSA)
+
 Data:  11/03/2013 - 4.3.2
 -- ACBrTEFDCliSiTEF --
 [*] Envio da mensagem opmRemoverMsgOperador e opmRemoverMsgCliente no caso

@@ -687,8 +687,8 @@ implementation
 {$R *.lfm}
 
 uses ACBrUtil, ACBrECFBematech, VendeItem, EfetuaPagamento,
-     Relatorio, Sobre, TypInfo, Math, IniFiles, strutils,
-     ConfiguraSerial, uDAV, uDAVOS, ACBrPAFClass;
+     Relatorio, Sobre, Math, IniFiles, strutils,
+     ConfiguraSerial, uDAV, uDAVOS, ACBrPAFClass, typinfo;
      
 procedure TForm1.FormCreate(Sender: TObject);
 Var

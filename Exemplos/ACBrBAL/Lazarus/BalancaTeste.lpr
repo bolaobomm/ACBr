@@ -10,6 +10,8 @@ uses
   Forms
   { add your units here }, BalancaTeste1, ACBrSerial;
 
+{$R *.res}
+
 begin
   Application.Initialize;
   Application.CreateForm(TForm1, Form1);

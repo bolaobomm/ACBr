@@ -8,37 +8,37 @@ object Form1: TForm1
   ClientHeight = 337
   ClientWidth = 452
   OnClose = FormClose
-  ParentFont = False
-  LCLVersion = '0.9.26'
+  OnCreate = FormCreate
+  LCLVersion = '1.1'
   object Label2: TLabel
     Left = 208
-    Height = 14
+    Height = 15
     Top = 135
-    Width = 78
+    Width = 85
     Caption = 'Ultima Resposta'
     ParentColor = False
   end
   object Label3: TLabel
     Left = 208
-    Height = 14
+    Height = 15
     Top = 90
-    Width = 82
+    Width = 93
     Caption = 'Ultimo Peso Lido:'
     ParentColor = False
   end
   object Label9: TLabel
     Left = 208
-    Height = 14
+    Height = 15
     Top = 280
-    Width = 41
+    Width = 47
     Caption = 'TimeOut'
     ParentColor = False
   end
   object Label10: TLabel
     Left = 208
-    Height = 14
+    Height = 15
     Top = 188
-    Width = 52
+    Width = 59
     Caption = 'Mensagem'
     ParentColor = False
   end
@@ -106,7 +106,7 @@ object Form1: TForm1
   end
   object edtTimeOut: TEdit
     Left = 208
-    Height = 24
+    Height = 23
     Top = 296
     Width = 73
     OnKeyPress = edtTimeOutKeyPress
@@ -117,7 +117,7 @@ object Form1: TForm1
     Left = 208
     Height = 19
     Top = 259
-    Width = 121
+    Width = 126
     Caption = 'Monitorar a Balança'
     OnClick = chbMonitorarClick
     TabOrder = 5
@@ -140,66 +140,66 @@ object Form1: TForm1
     TabOrder = 7
     object Label1: TLabel
       Left = 16
-      Height = 16
+      Height = 15
       Top = 6
-      Width = 50
+      Width = 41
       Caption = 'Balanca'
       ParentColor = False
     end
     object Label4: TLabel
       Left = 16
-      Height = 16
+      Height = 15
       Top = 49
-      Width = 70
+      Width = 59
       Caption = 'Porta Serial'
       ParentColor = False
     end
     object Label5: TLabel
       Left = 16
-      Height = 16
+      Height = 15
       Top = 92
-      Width = 58
+      Width = 50
       Caption = 'Baud rate'
       ParentColor = False
     end
     object Label6: TLabel
       Left = 16
-      Height = 16
+      Height = 15
       Top = 137
-      Width = 54
+      Width = 46
       Caption = 'Data Bits'
       ParentColor = False
     end
     object Label7: TLabel
       Left = 16
-      Height = 16
+      Height = 15
       Top = 181
-      Width = 34
+      Width = 30
       Caption = 'Parity'
       ParentColor = False
     end
     object Label8: TLabel
       Left = 16
-      Height = 16
+      Height = 15
       Top = 271
-      Width = 80
+      Width = 70
       Caption = 'Handshaking'
       ParentColor = False
     end
     object Label11: TLabel
       Left = 16
-      Height = 16
+      Height = 15
       Top = 224
-      Width = 53
+      Width = 46
       Caption = 'Stop Bits'
       ParentColor = False
     end
     object cmbBalanca: TComboBox
       Left = 16
-      Height = 21
+      Height = 23
       Top = 22
       Width = 145
-      ItemHeight = 13
+      ItemHeight = 15
       ItemIndex = 1
       Items.Strings = (
         'Nenhuma'
@@ -212,10 +212,10 @@ object Form1: TForm1
     end
     object cmbPortaSerial: TComboBox
       Left = 16
-      Height = 21
+      Height = 23
       Top = 65
       Width = 145
-      ItemHeight = 13
+      ItemHeight = 15
       ItemIndex = 0
       Items.Strings = (
         'COM1'
@@ -232,10 +232,10 @@ object Form1: TForm1
     end
     object cmbBaudRate: TComboBox
       Left = 16
-      Height = 21
+      Height = 23
       Top = 110
       Width = 145
-      ItemHeight = 13
+      ItemHeight = 15
       ItemIndex = 6
       Items.Strings = (
         '110'
@@ -257,10 +257,10 @@ object Form1: TForm1
     end
     object cmbDataBits: TComboBox
       Left = 16
-      Height = 21
+      Height = 23
       Top = 153
       Width = 145
-      ItemHeight = 13
+      ItemHeight = 15
       ItemIndex = 3
       Items.Strings = (
         '5'
@@ -274,10 +274,10 @@ object Form1: TForm1
     end
     object cmbHandShaking: TComboBox
       Left = 16
-      Height = 21
+      Height = 23
       Top = 289
       Width = 145
-      ItemHeight = 13
+      ItemHeight = 15
       ItemIndex = 0
       Items.Strings = (
         'Nenhum'
@@ -291,10 +291,10 @@ object Form1: TForm1
     end
     object cmbParity: TComboBox
       Left = 16
-      Height = 21
+      Height = 23
       Top = 198
       Width = 145
-      ItemHeight = 13
+      ItemHeight = 15
       ItemIndex = 0
       Items.Strings = (
         'none'
@@ -309,10 +309,10 @@ object Form1: TForm1
     end
     object cmbStopBits: TComboBox
       Left = 16
-      Height = 21
+      Height = 23
       Top = 242
       Width = 145
-      ItemHeight = 13
+      ItemHeight = 15
       ItemIndex = 0
       Items.Strings = (
         's1'

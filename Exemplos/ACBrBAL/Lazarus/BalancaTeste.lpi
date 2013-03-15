@@ -8,6 +8,10 @@
         <LRSInOutputDirectory Value="False"/>
       </Flags>
       <MainUnit Value="0"/>
+      <UseXPManifest Value="True"/>
+      <XPManifest>
+        <DpiAware Value="True"/>
+      </XPManifest>
       <ActiveWindowIndexAtStart Value="0"/>
     </General>
     <VersionInfo>
@@ -15,6 +19,9 @@
       <CharSet Value=""/>
       <StringTable ProductVersion=""/>
     </VersionInfo>
+    <BuildModes Count="1">
+      <Item1 Name="default" Default="True"/>
+    </BuildModes>
     <PublishOptions>
       <Version Value="2"/>
       <IgnoreBinaries Value="False"/>
@@ -46,12 +53,14 @@
         <Filename Value="balancateste1.pas"/>
         <IsPartOfProject Value="True"/>
         <ComponentName Value="Form1"/>
+        <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
         <UnitName Value="BalancaTeste1"/>
+        <IsVisibleTab Value="True"/>
         <EditorIndex Value="0"/>
         <WindowIndex Value="0"/>
-        <TopLine Value="1"/>
-        <CursorPos X="40" Y="9"/>
+        <TopLine Value="159"/>
+        <CursorPos X="7" Y="172"/>
         <UsageCount Value="21"/>
         <Loaded Value="True"/>
         <LoadedDesigner Value="True"/>
@@ -59,11 +68,10 @@
       <Unit2>
         <Filename Value="..\..\..\Fontes\ACBrSerial\ACBrBAL.pas"/>
         <UnitName Value="ACBrBAL"/>
-        <IsVisibleTab Value="True"/>
         <EditorIndex Value="1"/>
         <WindowIndex Value="0"/>
-        <TopLine Value="172"/>
-        <CursorPos X="35" Y="184"/>
+        <TopLine Value="77"/>
+        <CursorPos X="21" Y="95"/>
         <UsageCount Value="11"/>
         <Loaded Value="True"/>
       </Unit2>
@@ -78,7 +86,7 @@
         <Loaded Value="True"/>
       </Unit3>
     </Units>
-    <JumpHistory Count="4" HistoryIndex="3">
+    <JumpHistory Count="8" HistoryIndex="7">
       <Position1>
         <Filename Value="balancateste1.pas"/>
         <Caret Line="119" Column="3" TopLine="117"/>
@@ -95,13 +103,29 @@
         <Filename Value="..\..\..\Fontes\ACBrSerial\ACBrBAL.pas"/>
         <Caret Line="59" Column="15" TopLine="43"/>
       </Position4>
+      <Position5>
+        <Filename Value="..\..\..\Fontes\ACBrSerial\ACBrBAL.pas"/>
+        <Caret Line="187" Column="16" TopLine="142"/>
+      </Position5>
+      <Position6>
+        <Filename Value="..\..\..\Fontes\ACBrSerial\ACBrBAL.pas"/>
+        <Caret Line="1" Column="1" TopLine="1"/>
+      </Position6>
+      <Position7>
+        <Filename Value="balancateste1.pas"/>
+        <Caret Line="3" Column="17" TopLine="1"/>
+      </Position7>
+      <Position8>
+        <Filename Value="balancateste1.pas"/>
+        <Caret Line="171" Column="63" TopLine="159"/>
+      </Position8>
     </JumpHistory>
   </ProjectOptions>
   <CompilerOptions>
-    <Version Value="9"/>
+    <Version Value="11"/>
     <PathDelim Value="\"/>
     <SearchPaths>
-      <SrcPath Value="$(LazarusDir)\lcl\;$(LazarusDir)\lcl\interfaces\$(LCLWidgetType)\"/>
+      <SrcPath Value="$(LazarusDir)\lcl;$(LazarusDir)\lcl\interfaces\$(LCLWidgetType)"/>
     </SearchPaths>
     <Parsing>
       <SyntaxOptions>
@@ -109,6 +133,11 @@
       </SyntaxOptions>
     </Parsing>
     <Linking>
+      <Debugging>
+        <GenerateDebugInfo Value="False"/>
+        <StripSymbols Value="True"/>
+      </Debugging>
+      <LinkSmart Value="True"/>
       <Options>
         <Win32>
           <GraphicApplication Value="True"/>
@@ -129,4 +158,5 @@
       </Item2>
     </Exceptions>
   </Debugging>
+  <EditorMacros Count="0"/>
 </CONFIG>

@@ -50,6 +50,7 @@ type
     procedure edtTimeOutKeyPress(Sender: TObject; var Key: Char);
     procedure chbMonitorarClick(Sender: TObject);
     procedure ACBrBAL1LePeso(Peso: Double; Resposta: String);
+    procedure FormCreate(Sender : TObject) ;
   private
     { private declarations }
     Function Converte( cmd : String) : String;
@@ -61,6 +62,7 @@ var
   Form1: TForm1; 
 
 implementation
+Uses typinfo ;
 
 function TForm1.Converte(cmd: String): String;
 var A : Integer ;
@@ -161,6 +163,16 @@ begin
        -10 : Memo1.Lines.Text := 'Sobrepeso !' ;
       end;
     end ;
+end;
+
+procedure TForm1.FormCreate(Sender : TObject) ;
+var
+  I : TACBrBALModelo ;
+begin
+  cmbBalanca.Items.Clear ;
+  For I := Low(TACBrBALModelo) to High(TACBrBALModelo) do
+     cmbBalanca.Items.Add( GetEnumName(TypeInfo(TACBrBALModelo), integer(I) ) ) ;
+
 end;
 
 procedure TForm1.FormClose(Sender: TObject; var CloseAction: TCloseAction);

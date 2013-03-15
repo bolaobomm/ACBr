@@ -60,7 +60,7 @@ type TModalResult = (mrNone = 0, mrYes = 6, mrNo = 7, mrOK = 1, mrCancel = 2, mr
 {$ENDIF}
 
 const
-   CACBrTEFD_Versao      = '4.3.2' ;
+   CACBrTEFD_Versao      = '4.3.3' ;
    CACBrTEFD_EsperaSTS   = 7 ;
    CACBrTEFD_EsperaSleep = 250 ;
    CACBrTEFD_NumVias     = 2 ;
@@ -2647,12 +2647,20 @@ begin
                                            'Troco Máximo de R$ '+FormatCurr('0.00',TrocoMaximo) ) );
      end ;
 
-    if MultiplosCartoes and (NumeroMaximoCartoes > 0) and   // Tem multiplos Cartoes ?
-       (Valor <> RespostasPendentes.SaldoRestante) and      // Valor é diferente do Saldo Restante a Pagar ?
-       ((NumeroMaximoCartoes - RespostasPendentes.Count) <= 1) then  // Está no último cartão ?
+    if MultiplosCartoes and (NumeroMaximoCartoes > 0) and      // Tem multiplos Cartoes ?
+       (RespostasPendentes.Count >= NumeroMaximoCartoes) then  // Já informou todos cartões ?
        raise Exception.Create( ACBrStr( 'Multiplos Cartões Limitado a '+
-             IntToStr(NumeroMaximoCartoes)+' operações.'+sLineBreak+
-             'Esta Operação TEF deve ser igual ao Saldo a Pagar' ) );
+             IntToStr(NumeroMaximoCartoes)+' operações.' ) );
+
+    if Self is TACBrTEFDClassTXT then   // Limita Saldo Restante se for derivado de TEF discado
+    begin
+      if MultiplosCartoes and (NumeroMaximoCartoes > 0) and   // Tem multiplos Cartoes ?
+         (Valor <> RespostasPendentes.SaldoRestante) and      // Valor é diferente do Saldo Restante a Pagar ?
+         ((NumeroMaximoCartoes - RespostasPendentes.Count) <= 1) then  // Está no último cartão ?
+         raise Exception.Create( ACBrStr( 'Multiplos Cartões Limitado a '+
+               IntToStr(NumeroMaximoCartoes)+' operações.'+sLineBreak+
+               'Esta Operação TEF deve ser igual ao Saldo a Pagar' ) );
+    end ;
   end;
 end;
 
