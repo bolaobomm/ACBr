@@ -48,6 +48,34 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+15/03/2013
+[+]	: Adicionado na aba "WebService" a opção de escolher se o cancelamento será feito por evento ou do modo antigo(Por padrão será adota Evento, exceto para os estados PR|ES|MA|PA|PI|RN)
+[+]	: Adiconado na aba "Diretórios" os campos para configurar os Paths para Salvar os arquivos da CCe e Eventos e a opção "Salvar Arqs Canc./CCe na pasta Eventos", caso esta opção esteja selecionada, qdo o cancelamento for feito por evento será gravado dentro do diretório configurado no campo "Pasta Arquivos Evento" dentro do subdiretório Cancelamento, e as CCes serão gravadas na mesma pasta dentro do subdiretório CCe. Os demais eventos serão gravados nos subdiretórios Confirmacao, Ciencia, Desconhecimento e NaoRealizada
+[+]	: Adicionado o comando "ImprimirEventoPDF", segue o mesmo padrão do comando ImprimirEvento 
+[+]	: Adicionado o comando "EnviarEmailEvento" com a seguinte sintaxe: EnviarEmailEvento(cEmailDestino,cArqEvento,[cArqNFe],cEnviaPDF,[cAssunto],[cEmailsCopias])
+[+]	: Adicionado o comando "DownloadNFe" com a seguinte sintaxe: DownloadNFe(cCNPJ,cChaveNFe) - para baixar várias NFes passe no parâmetro cChaveNFe as Chaves separadas por ;(ponto e vírgula)
+[+]	: Adicionado o comando "ConsultaNFeDest" com a seguinte sintaxe: ConsultaNFeDest(cCNPJ,nIndicadorNFe,nIndicadorEmissor,cultimoNSU). 
+[+]	: Adicionado o comando "EnviarEvento" com a sintaxe parecida com a do comando NFE.CARTADECORRECAO;
+
+EX:
+NFE.ENVIAREVENTO("[EVENTO]
+idLote=2
+[EVENTO001]
+chNFe=351109XXXXXXXXXXXXXX550010000055661000055660
+cOrgao=35
+CNPJ=XXXXXXXXXXXXXX
+dhEvento=15/03/13 15:55:00
+tpEvento=
+nSeqEvento=1
+versaoEvento=1.00
+descEvento=
+xCorrecao=
+xCondUso=
+nProt=
+xJust=") - Preencha e envie para o ACBrNFeMonitor apenas os campos necessários para cada tipo de evento.
+[+]	: Adicionado suporte a envio de CTe
+[*]	: Alterado retorno do comando "ConsultaCadastro" para permitir exibir os dados quando o webservice retornar mais de uma informação
+
 21/03/2012
 [+]     : Adicionado o suporte a variáveis no assunto e corpo do e-mail
             [EmitNome]
