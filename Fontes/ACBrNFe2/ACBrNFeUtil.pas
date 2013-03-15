@@ -58,7 +58,7 @@ uses {$IFNDEF ACBrNFeOpenSSL}ACBrCAPICOM_TLB, ACBrMSXML2_TLB, JwaWinCrypt, {$END
   {$ELSE}
      StrUtils,
   {$ENDIF}
-  ACBrNFeConfiguracoes, pcnConversao, pcnNFe, ACBrDFeUtil;
+  ACBrNFeConfiguracoes, pcnConversao, pcnNFe, ACBrDFeUtil, Windows;
 
 
 {$IFDEF ACBrNFeOpenSSL}
@@ -1854,7 +1854,7 @@ end ;
 
 class procedure NotaUtil.ConfAmbiente;
 begin
-  DecimalSeparator := ',';
+ DecimalSeparator := ',';
 end;
 
 class function NotaUtil.PathAplication: String;

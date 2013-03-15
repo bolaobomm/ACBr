@@ -156,6 +156,7 @@ type
     FMensal   : Boolean;
     FLiteral  : Boolean;
     FEmissaoPathNFe  : Boolean;
+    FSalvarEvento : Boolean;
     FPathNFe  : String;
     FPathCan  : String;
     FPathInu  : String;
@@ -171,12 +172,13 @@ type
     function GetPathNFe(Data : TDateTime = 0): String;
     function GetPathCCe: String;
     function GetPathMDe: String;
-    function GetPathEvento: String;
+    function GetPathEvento(tipoEvento : TpcnTpEvento): String;
   published
     property Salvar     : Boolean read FSalvar  write FSalvar  default False ;
     property PastaMensal: Boolean read FMensal  write FMensal  default False ;
     property AdicionarLiteral: Boolean read FLiteral write FLiteral default False ;
     property EmissaoPathNFe: Boolean read FEmissaoPathNFe write FEmissaoPathNFe default False ;
+    property SalvarCCeCanEvento: Boolean read FSalvarEvento write FSalvarEvento default False ;
     property PathNFe : String read FPathNFe  write FPathNFe;
     property PathCan : String read FPathCan  write FPathCan;
     property PathInu : String read FPathInu  write FPathInu;
@@ -406,7 +408,7 @@ begin
       if  CertStoreMem = nil then
        begin
          CertStoreMem := CoStore.Create;
-         CertStoreMem.Open(CAPICOM_MEMORY_STORE, 'Memoria', CAPICOM_STORE_OPEN_MAXIMUM_ALLOWED);
+         CertStoreMem.Open(CAPICOM_MEMORY_STORE, 'MemoriaACBr', CAPICOM_STORE_OPEN_READ_ONLY);
          CertStoreMem.Add(Cert);
 
          if (FSenhaCert <> '') and PrivateKey.IsHardwareDevice then
@@ -600,7 +602,7 @@ begin
   Result  := Dir;
 end;
 
-function TArquivosConf.GetPathEvento: String;
+function TArquivosConf.GetPathEvento(tipoEvento : TpcnTpEvento): String;
 var
   wDia, wMes, wAno : Word;
   Dir : String;
@@ -622,6 +624,15 @@ begin
      if copy(Dir,length(Dir)-2,3) <> 'Evento' then
         Dir := PathWithDelim(Dir)+'Evento';
    end;
+
+  case tipoEvento of
+    teCCe                      : Dir := PathWithDelim(Dir)+'CCe';
+    teCancelamento             : Dir := PathWithDelim(Dir)+'Cancelamento';
+    teManifDestConfirmacao     : Dir := PathWithDelim(Dir)+'Confirmacao';
+    teManifDestCiencia         : Dir := PathWithDelim(Dir)+'Ciencia';
+    teManifDestDesconhecimento : Dir := PathWithDelim(Dir)+'Desconhecimento';
+    teManifDestOperNaoRealizada: Dir := PathWithDelim(Dir)+'NaoRealizada';
+  end;
 
   if not DirectoryExists(Dir) then
      ForceDirectories(Dir);

@@ -54,7 +54,7 @@ unit ACBrNFeDANFERaveDM;
 
 interface
 
-uses Dialogs,
+uses Windows, Dialogs,
   Forms, SysUtils, Classes, StdCtrls,
   RpRave, RpBase, RpSystem, RpDefine, RpCon, RpRender, RpRenderPDF,
   pcnNFe, pcnConversao, ACBrNFeDANFEClass;
@@ -215,6 +215,12 @@ end;
 
 procedure TdmACBrNFeRave.RvSystem1BeforePrint(Sender: TObject);
 begin
+  with Sender as TBaseReport do
+   begin
+     SelectPaper('A4');
+     SetPaperSize(DMPAPER_A4,0,0);
+   end;
+
    //processo para não exibir o quadro ISSQN no DANFE_Rave513
    if ((FNFe.Total.ISSQNtot.VServ=0) and
        (FNFe.Total.ISSQNtot.VBC=0) and

@@ -544,7 +544,7 @@ uses {$IFDEF ACBrNFeOpenSSL}
      pcnRetEnvNFe, pcnConsReciNFe ,
      pcnConsCad,
      pcnNFeR, pcnLeitor,
-     pcnEnvDPEC, pcnConsDPEC, Math;
+     pcnEnvDPEC, pcnConsDPEC, Math, pcnEventoNFe;
 
 {$IFNDEF ACBrNFeOpenSSL}
 const
@@ -3337,7 +3337,12 @@ begin
       FConfiguracoes.Geral.Save(FPathArqEnv, FDadosMsg);
 
     if FConfiguracoes.Arquivos.Salvar then
-      FConfiguracoes.Geral.Save(FPathArqEnv, FDadosMsg, FConfiguracoes.Arquivos.GetPathCCe);
+     begin
+       if not FConfiguracoes.Arquivos.SalvarCCeCanEvento then
+          FConfiguracoes.Geral.Save(FPathArqEnv, FDadosMsg, FConfiguracoes.Arquivos.GetPathCCe)
+       else
+          FConfiguracoes.Geral.Save(FPathArqEnv, FDadosMsg, FConfiguracoes.Arquivos.GetPathEvento(teCCe));
+     end;
 
     {$IFDEF ACBrNFeOpenSSL}
        HTTP.Document.LoadFromStream(Stream);
@@ -3394,7 +3399,12 @@ begin
       FConfiguracoes.Geral.Save(FPathArqResp, FRetWS);
 
     if FConfiguracoes.Arquivos.Salvar then
-      FConfiguracoes.Geral.Save(FPathArqResp, FRetWS, FConfiguracoes.Arquivos.GetPathCCe);
+     begin
+       if not FConfiguracoes.Arquivos.SalvarCCeCanEvento then
+          FConfiguracoes.Geral.Save(FPathArqResp, FRetWS, FConfiguracoes.Arquivos.GetPathCCe)
+       else
+          FConfiguracoes.Geral.Save(FPathArqResp, FRetWS, FConfiguracoes.Arquivos.GetPathEvento(teCCe));
+     end;
 
     //gerar arquivo proc de cce
     if Result then
@@ -3443,8 +3453,14 @@ begin
 
               if FConfiguracoes.Geral.Salvar then
                  FConfiguracoes.Geral.Save(NomeArq, wProc.Text);
+
               if FConfiguracoes.Arquivos.Salvar then
-                 FConfiguracoes.Geral.Save(NomeArq, wProc.Text, FConfiguracoes.Arquivos.GetPathCCe);
+               begin
+                 if not FConfiguracoes.Arquivos.SalvarCCeCanEvento then
+                    FConfiguracoes.Geral.Save(NomeArq, wProc.Text, FConfiguracoes.Arquivos.GetPathCCe)
+                 else
+                    FConfiguracoes.Geral.Save(NomeArq, wProc.Text, FConfiguracoes.Arquivos.GetPathEvento(teCCe));
+               end;
               wProc.Free;
               break;
             end;
@@ -3535,17 +3551,19 @@ begin
 
   try
     TACBrNFe( FACBrNFe ).SetStatus( stNFeEvento );
-    FPathArqEnv := IntToStr(FEvento.idLote)+ '-ped-evento.xml';
+    FPathArqEnv := IntToStr(FEvento.idLote)+'-ped-evento.xml';
 
     if FConfiguracoes.Geral.Salvar then
       FConfiguracoes.Geral.Save(FPathArqEnv, FDadosMsg);
 
     if FConfiguracoes.Arquivos.Salvar then
      begin
-       if FEvento.Evento.Items[0].InfEvento.tpEvento = teCCe then
+       if (FEvento.Evento.Items[0].InfEvento.tpEvento = teCCe) and not FConfiguracoes.Arquivos.SalvarCCeCanEvento then
           FConfiguracoes.Geral.Save(FPathArqEnv, FDadosMsg, FConfiguracoes.Arquivos.GetPathCCe)
+       else if (FEvento.Evento.Items[0].InfEvento.tpEvento = teCancelamento) and not FConfiguracoes.Arquivos.SalvarCCeCanEvento then
+          FConfiguracoes.Geral.Save(FPathArqEnv, FDadosMsg, FConfiguracoes.Arquivos.GetPathCan)
        else
-          FConfiguracoes.Geral.Save(FPathArqEnv, FDadosMsg, FConfiguracoes.Arquivos.GetPathEvento);
+          FConfiguracoes.Geral.Save(FPathArqEnv, FDadosMsg, FConfiguracoes.Arquivos.GetPathEvento(FEvento.Evento.Items[0].InfEvento.tpEvento));
      end;
 
     {$IFDEF ACBrNFeOpenSSL}
@@ -3592,16 +3610,19 @@ begin
     FTpAmb   := EventoRetorno.tpAmb;
     Result   := (EventoRetorno.cStat = 128) or (EventoRetorno.cStat = 135) or (EventoRetorno.cStat = 136);
 
-   FPathArqResp := IntToStr(FEvento.idLote) + '-eve.xml';
+    FPathArqResp := IntToStr(FEvento.idLote) + '-eve.xml';
+
     if FConfiguracoes.Geral.Salvar then
       FConfiguracoes.Geral.Save(FPathArqResp, FRetWS);
 
     if FConfiguracoes.Arquivos.Salvar then
      begin
-       if FEvento.Evento.Items[0].InfEvento.tpEvento = teCCe then
+       if (FEvento.Evento.Items[0].InfEvento.tpEvento = teCCe) and not FConfiguracoes.Arquivos.SalvarCCeCanEvento  then
           FConfiguracoes.Geral.Save(FPathArqResp, FRetWS, FConfiguracoes.Arquivos.GetPathCCe)
+       else if (FEvento.Evento.Items[0].InfEvento.tpEvento = teCancelamento) and not FConfiguracoes.Arquivos.SalvarCCeCanEvento  then
+          FConfiguracoes.Geral.Save(FPathArqEnv, FDadosMsg, FConfiguracoes.Arquivos.GetPathCan)
        else
-          FConfiguracoes.Geral.Save(FPathArqResp, FRetWS, FConfiguracoes.Arquivos.GetPathEvento);
+          FConfiguracoes.Geral.Save(FPathArqResp, FRetWS, FConfiguracoes.Arquivos.GetPathEvento(FEvento.Evento.Items[0].InfEvento.tpEvento));
      end;
 
     //gerar arquivo proc de evento
@@ -3614,6 +3635,10 @@ begin
          begin
            if FEvento.Evento.Items[i].InfEvento.chNFe = EventoRetorno.retEvento.Items[j].RetInfEvento.chNFe then
             begin
+              FEvento.Evento.Items[i].RetInfEvento.nProt       := EventoRetorno.retEvento.Items[j].RetInfEvento.nProt;
+              FEvento.Evento.Items[i].RetInfEvento.dhRegEvento := EventoRetorno.retEvento.Items[j].RetInfEvento.dhRegEvento;
+              FEvento.Evento.Items[i].RetInfEvento.cStat       := EventoRetorno.retEvento.Items[j].RetInfEvento.cStat;
+
               wProc := TStringList.Create;
               wProc.Add('<?xml version="1.0" encoding="UTF-8" ?>');
               wProc.Add('<procEventoNFe versao="' + NFeEventoNFe + '" xmlns="http://www.portalfiscal.inf.br/nfe">');
@@ -3644,8 +3669,6 @@ begin
 
               EventoRetorno.retEvento.Items[j].RetInfEvento.XML:=wProc.Text;
 
-
-
               NomeArq := FEvento.Evento.Items[i].InfEvento.chNFe +
                          FEvento.Evento.Items[i].InfEvento.TipoEvento +
                          IntToStr(FEvento.Evento.Items[i].InfEvento.nSeqEvento) +
@@ -3653,12 +3676,15 @@ begin
 
               if FConfiguracoes.Geral.Salvar then
                  FConfiguracoes.Geral.Save(NomeArq, wProc.Text);
+
               if FConfiguracoes.Arquivos.Salvar then
                begin
-                 if FEvento.Evento.Items[0].InfEvento.tpEvento = teCCe then
+                 if (FEvento.Evento.Items[0].InfEvento.tpEvento = teCCe) and not FConfiguracoes.Arquivos.SalvarCCeCanEvento  then
                     FConfiguracoes.Geral.Save(NomeArq, wProc.Text, FConfiguracoes.Arquivos.GetPathCCe)
+                 else if (FEvento.Evento.Items[0].InfEvento.tpEvento = teCancelamento) and not FConfiguracoes.Arquivos.SalvarCCeCanEvento then
+                    FConfiguracoes.Geral.Save(NomeArq, wProc.Text, FConfiguracoes.Arquivos.GetPathCan)
                  else
-                    FConfiguracoes.Geral.Save(NomeArq, wProc.Text, FConfiguracoes.Arquivos.GetPathEvento);
+                    FConfiguracoes.Geral.Save(NomeArq, wProc.Text, FConfiguracoes.Arquivos.GetPathEvento(FEvento.Evento.Items[0].InfEvento.tpEvento));
                end;
               wProc.Free;
               break;
@@ -3793,6 +3819,7 @@ begin
               'Recebimento : '+DFeUtil.SeSenao(FretConsNFeDest.dhResp = 0, '', DateTimeToStr(RetConsNFeDest.dhResp))+LineBreak+
               'Ind. Continuação : '+IndicadorContinuacaoToStr(FretConsNFeDest.indCont)+LineBreak+
               'Último NSU : '+FretConsNFeDest.ultNSU+LineBreak;
+              
       if FConfiguracoes.WebServices.Visualizar then
         ShowMessage(aMsg);
 
