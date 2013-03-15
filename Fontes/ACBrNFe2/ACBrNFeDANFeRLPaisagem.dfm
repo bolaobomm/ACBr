@@ -3003,9 +3003,9 @@ inherited frlDANFeRLPaisagem: TfrlDANFeRLPaisagem
         Tag = 10
         Left = 482
         Top = 31
-        Width = 90
+        Width = 123
         Height = 7
-        Caption = 'OUTRAS DESP. ACCESS.'
+        Caption = 'OUTRAS DESPESAS ACESS'#211'RIAS'
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
         Font.Height = -7

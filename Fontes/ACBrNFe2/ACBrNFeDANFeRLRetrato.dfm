@@ -3,13 +3,13 @@ inherited frlDANFeRLRetrato: TfrlDANFeRLRetrato
   Top = 108
   Width = 820
   Height = 655
-  VertScrollBar.Position = 167
+  VertScrollBar.Position = 255
   Caption = 'frlDANFeRLRetrato'
   OldCreateOrder = True
   PixelsPerInch = 96
   TextHeight = 13
   inherited RLNFe: TRLReport
-    Top = -167
+    Top = -255
     Background.Arrange = baDistributed
     Background.Height = 96
     Background.Width = 175
@@ -4878,9 +4878,9 @@ inherited frlDANFeRLRetrato: TfrlDANFeRLRetrato
         Tag = 10
         Left = 325
         Top = 45
-        Width = 90
+        Width = 85
         Height = 7
-        Caption = 'OUTRAS DESP. ACCESS.'
+        Caption = 'OUTRAS DESP. ACESS.'
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
         Font.Height = -7

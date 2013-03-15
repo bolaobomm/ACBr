@@ -86,6 +86,8 @@
 |*    estiver no Delphi. Obrigatória a utilização da versão 3.70B ou superior
 |*    do Fortes Report. Download disponível em
 |*    http://sourceforge.net/projects/fortesreport/files/
+|* 14/03/2013: Peterson de Cerqueira Matos
+|*  - Início da impressão dos eventos em Fortes Report
 ******************************************************************************}
 {$I ACBr.inc}
 unit ACBrNFeDANFeRLClass;
@@ -98,8 +100,10 @@ uses SysUtils, Classes,
   {$ELSE}
   Forms, Dialogs,
   {$ENDIF}
-  ACBrNFeDANFEClass, ACBrNFeDANFeRL,RLConsts, ACBrNFeDANFeRLRetrato,
-  ACBrNFeDANFeRLPaisagem, pcnNFe, pcnConversao, StrUtils;
+  ACBrNFeDANFEClass, RLConsts,
+  ACBrNFeDANFeRL, ACBrNFeDANFeRLRetrato, ACBrNFeDANFeRLPaisagem,
+  ACBrNFeDANFeEventoRL, ACBrNFeDANFeEventoRLRetrato,
+  pcnNFe, pcnConversao, StrUtils;
 
 type
   TACBrNFeDANFeRL = class( TACBrNFeDANFEClass )
@@ -110,11 +114,14 @@ type
     FFonteDANFE: TFonteDANFE;
     FTamanhoFonte_RazaoSocial: Integer;
     FExibirEAN: Boolean;
+    FTipoDANFE: TpcnTipoImpressao;
   public
     constructor Create(AOwner: TComponent); override;
     destructor Destroy; override;
     procedure ImprimirDANFE(NFE : TNFe = nil); override ;
     procedure ImprimirDANFEPDF(NFE : TNFe = nil); override ;
+    procedure ImprimirEVENTO(NFE : TNFe = nil); override ;
+    procedure ImprimirEVENTOPDF(NFE : TNFe = nil); override ;
     procedure SetExibirEAN(Value: Boolean); virtual;
     procedure SetTipoDANFE(Value: TpcnTipoImpressao); virtual;
   published
@@ -137,6 +144,7 @@ uses ACBrNFe, ACBrNFeUtil, ACBrUtil;
 var
   i : Integer;
   frlDANFeRL: TfrlDANFeRL;
+  frlDANFeEventoRL: TfrlDANFeEventoRL;
 
 constructor TACBrNFeDANFeRL.Create(AOwner: TComponent);
 begin
@@ -251,6 +259,40 @@ begin
     end;
 
   FTipoDANFE := Value;
+end;
+
+procedure TACBrNFeDANFeRL.ImprimirEVENTO(NFE: TNFe);
+begin
+  case TipoDANFE of
+    tiRetrato, tiPaisagem:
+              frlDANFeEventoRL := TfrlDANFeEventoRLRetrato.Create(Self);
+  end;
+
+  for i := 0 to (TACBrNFe(ACBrNFe).EventoNFe.Evento.Count - 1) do
+    begin
+      frlDANFeEventoRL.Imprimir(TACBrNFe(ACBrNFe).EventoNFe,
+      FLogo, FMarcadagua, FNumCopias, FSistema, FUsuario, FMostrarPreview,
+      FFonteDANFE, FMargemSuperior, FMargemInferior, FMargemEsquerda,
+      FMargemDireita, FImpressora, i);
+    end;
+end;
+
+procedure TACBrNFeDANFeRL.ImprimirEVENTOPDF(NFE: TNFe);
+var sFile: String;
+begin
+  case TipoDANFE of
+    tiRetrato, tiPaisagem:
+              frlDANFeEventoRL := TfrlDANFeEventoRLRetrato.Create(Self);
+  end;
+
+  for i := 0 to (TACBrNFe(ACBrNFe).EventoNFe.Evento.Count - 1) do
+    begin
+      sFile := TACBrNFe(ACBrNFe).DANFE.PathPDF +
+      Copy(TACBrNFe(ACBrNFe).EventoNFe.Evento.Items[i].InfEvento.id, 3, 52) + '.pdf';
+      frlDANFeEventoRL.SavePDF(TACBrNFe(ACBrNFe).EventoNFe,
+      FLogo, FMarcadagua, sFile, FSistema, FUsuario, FFonteDANFE,
+      FMargemSuperior, FMargemInferior, FMargemEsquerda, FMargemDireita, i);
+    end;
 end;
 
 end.
