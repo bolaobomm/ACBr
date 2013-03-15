@@ -55,7 +55,7 @@ Source: leia-me.txt; DestDir: {app}; Flags: isreadme ignoreversion; Components: 
 Source: LICENCA.TXT; DestDir: {app}; Flags: ignoreversion; Components: programa
 Source: LICENSE.TXT; DestDir: {app}; Flags: ignoreversion; Components: programa
 Source: ACBrNFeMonitor.chm; DestDir: {app}; Flags: ignoreversion; Components: help
-Source: ACBrNFeMonitor-change-log.txt; DestDir: {app}; Flags: ignoreversion; Components: help
+Source: ACBrNFeMonitor.pdf; DestDir: {app}; Flags: ignoreversion; Components: help
 ;Source: {#QTDLL}; DestDir: {sys}; Flags: ; Components: programa
 Source: ..\..\..\DLLs\OpenSSL\libeay32.dll; DestDir: {app}; Flags: ; Components: programa
 Source: ..\..\..\DLLs\OpenSSL\ssleay32.dll; DestDir: {app}; Flags: ; Components: programa
