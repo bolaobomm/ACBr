@@ -1373,7 +1373,7 @@ begin
   begin
 
     if (nfe.Det[i].Imposto.COFINSST.vBC + nfe.Det[i].Imposto.COFINSST.pCOFINS > 0) and (nfe.Det[i].Imposto.COFINSST.qBCProd + nfe.Det[i].Imposto.COFINSST.vAliqProd > 0) then
-      Gerador.wAlerta('T01', 'COFINSST', DSC_PISOUTR, 'As TAG <vBC> e <pCOFINS> não podem ser informadas em conjunto com as TAG <qBCProd> e <vAliqProd>');
+      Gerador.wAlerta('T01', 'COFINSST', DSC_COFINSST, 'As TAG <vBC> e <pCOFINS> não podem ser informadas em conjunto com as TAG <qBCProd> e <vAliqProd>');
 
     if (nfe.Det[i].Imposto.COFINSST.vBC + nfe.Det[i].Imposto.COFINSST.pCOFINS > 0) then
     begin
@@ -1403,7 +1403,7 @@ begin
     (nfe.Det[i].Imposto.ISSQN.cListServ > 0) then
   begin
     Gerador.wGrupo('ISSQN', 'U01');
-    Gerador.wCampo(tcDe2, 'U02', 'vBC        ', 01, 15, 1, nfe.Det[i].Imposto.ISSQN.vBC, DSC_VBC);
+    Gerador.wCampo(tcDe2, 'U02', 'vBC        ', 01, 15, 1, nfe.Det[i].Imposto.ISSQN.vBC, DSC_VBCISS);
     Gerador.wCampo(tcDe2, 'U03', 'vAliq      ', 01, 05, 1, nfe.Det[i].Imposto.ISSQN.vAliq, DSC_VAliq);
     Gerador.wCampo(tcDe2, 'U04', 'vISSQN     ', 01, 15, 1, nfe.Det[i].Imposto.ISSQN.vISSQN, DSC_VISSQN);
     Gerador.wCampo(tcInt, 'U05', 'cMunFG     ', 07, 07, 1, nfe.Det[i].Imposto.ISSQN.cMunFG, DSC_CMUNFG);

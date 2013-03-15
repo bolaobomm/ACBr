@@ -525,7 +525,7 @@ var
   i: integer;
 begin
   result := false;
-  if copy(chave, 1, 3) <> 'NFe' then
+  if (copy(chave, 1, 3) <> 'NFe') and (copy(chave, 1, 3) <> 'CTe') then
     exit;
   try
     i := 0;
