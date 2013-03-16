@@ -421,6 +421,9 @@ const
   DSC_INDNFE = 'Indicador de NF-e consultada';
   DSC_INDEMI = 'Indicador do Emissor da NF-e';
   DSC_ULTNSU = 'Último NSU recebido pela Empresa';
+  //Incluido po Peterson em 16/03/2013
+  DSC_COFINSST = 'Alíquota do imposto do COFINS ST';
+  DSC_VBCISS = 'Valor da BC do ISS';
 
   // CTE //
 
