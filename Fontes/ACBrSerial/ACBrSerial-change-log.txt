@@ -97,6 +97,20 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+Data: 17/03/2013
+-- ACBrECF --
+[+] Adicionada funcionalidade de Impressão de Rodapé de Bar e Restaurantes
+    (por: Rafael Batiati)
+[-] Correção de Bug no método IdentificaPAF, que mesmo quando o MD5 era informado
+    vazio, adicionava o prefixo "MD-5:"  (por: DSA)
+[*] Ajuste nas sub-propriedades de InfoRodape, que não precisavam ser salvas no
+    DFM/LFM e ajuste valores Default   (por: DSA)
+
+-- ACBrECFBematech --
+[*] Ajuste no método GetDadosUltimaReducaoZ para consequir recuperar corretamente
+    os valores dos Registradores de Operações não Fiscais, mesmo quando os mesmos
+    não estão programados na sequencia correta, no ECF   (por: DSA)
+
 Data: 28/02/2013
 -- ACBrECF --
 [-] Correção de bug, onde o ACBrECF perdia as configurações de InfoRodape,

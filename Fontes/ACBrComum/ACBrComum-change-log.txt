@@ -38,6 +38,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+Data: 17/03/2013
+-- ACBr.inc --
+[*] Ajuste para compilar corretamente nas últimas versões do Lazarus e
+    FPC 2.7.1, que por padrão trazem a diretiva "CONSOLE" ligada   (por: DSA)
+
 Data: 28/02/2013
 -- ACBrAAC --
 [*] Melhoria na gravação dos Logs   (por: DSA)
