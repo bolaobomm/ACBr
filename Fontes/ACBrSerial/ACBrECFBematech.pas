@@ -2839,7 +2839,7 @@ end;
 function TACBrECFBematech.GetDadosUltimaReducaoZ: AnsiString;
 Var
   RetCmd, S, SS : AnsiString ;
-  I : Integer ;
+  I, P : Integer ;
   ECFCRZ, ECFCRO : String;
   AliqZ: TACBrECFAliquota;
   CNFZ: TACBrECFComprovanteNaoFiscal;
@@ -2963,8 +2963,9 @@ begin
       begin
         CNFZ := TACBrECFComprovanteNaoFiscal.Create ;
         CNFZ.Assign( fpComprovantesNaoFiscais[I] );
-        CNFZ.Total    := RoundTo( StrToFloatDef( copy(S,(I*14)+1,14),0) / 100, -2) ;
-        CNFZ.Contador := StrToIntDef( copy(SS,(I*4)+1,4), 0);
+        P := StrToIntDef(CNFZ.Indice,I+1)-1;
+        CNFZ.Total    := RoundTo( StrToFloatDef( copy(S,(P*14)+1,14),0) / 100, -2) ;
+        CNFZ.Contador := StrToIntDef( copy(SS,(P*4)+1,4), 0);
 
         TotalizadoresNaoFiscais.Add( CNFZ ) ;
       end;

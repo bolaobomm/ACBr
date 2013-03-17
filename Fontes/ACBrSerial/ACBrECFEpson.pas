@@ -3190,7 +3190,7 @@ function TACBrECFEpson.GetDadosUltimaReducaoZ: AnsiString;
 var
   Aliq, AliqZ : TACBrECFAliquota ;
   ECFCRZ, DtStr, HrStr : String ;
-  I, J : Integer ;
+  J : Integer ;
   DataMov, DataFechaZ : TDateTime;
   ECFEst: TACBrECFEstado;
 begin

@@ -75,7 +75,6 @@
         <Filename Value="ACBrMonitorConsole.lpr"/>
         <IsPartOfProject Value="True"/>
         <UnitName Value="ACBrMonitorConsole"/>
-        <IsVisibleTab Value="True"/>
         <EditorIndex Value="0"/>
         <WindowIndex Value="0"/>
         <TopLine Value="120"/>
@@ -248,10 +247,13 @@
       <Unit22>
         <Filename Value="..\..\..\Fontes\ACBrComum\ACBrUtil.pas"/>
         <UnitName Value="ACBrUtil"/>
+        <IsVisibleTab Value="True"/>
+        <EditorIndex Value="1"/>
         <WindowIndex Value="0"/>
-        <TopLine Value="93"/>
-        <CursorPos X="35" Y="104"/>
+        <TopLine Value="77"/>
+        <CursorPos X="23" Y="89"/>
         <UsageCount Value="10"/>
+        <Loaded Value="True"/>
       </Unit22>
       <Unit23>
         <Filename Value="..\..\..\Fontes\ACBrSerial\ACBrECF.pas"/>
@@ -449,7 +451,7 @@
         <UsageCount Value="10"/>
       </Unit47>
       <Unit48>
-        <Filename Value="..\..\..\..\..\..\..\..\usr\local\share\lazarus\lcl\lclrescache.pas"/>
+        <Filename Value="C:\usr\local\share\lazarus\lcl\lclrescache.pas"/>
         <UnitName Value="LCLResCache"/>
         <WindowIndex Value="0"/>
         <TopLine Value="394"/>
@@ -473,7 +475,7 @@
         <DefaultSyntaxHighlighter Value="None"/>
       </Unit50>
     </Units>
-    <JumpHistory Count="6" HistoryIndex="5">
+    <JumpHistory Count="9" HistoryIndex="8">
       <Position1>
         <Filename Value="ACBrMonitorConsole.lpr"/>
         <Caret Line="147" Column="24" TopLine="141"/>
@@ -498,6 +500,18 @@
         <Filename Value="ACBrMonitorConsole.lpr"/>
         <Caret Line="133" Column="60" TopLine="120"/>
       </Position6>
+      <Position7>
+        <Filename Value="..\..\..\Fontes\ACBrComum\ACBrUtil.pas"/>
+        <Caret Line="104" Column="35" TopLine="93"/>
+      </Position7>
+      <Position8>
+        <Filename Value="..\..\..\Fontes\ACBrComum\ACBrUtil.pas"/>
+        <Caret Line="903" Column="23" TopLine="892"/>
+      </Position8>
+      <Position9>
+        <Filename Value="..\..\..\Fontes\ACBrComum\ACBrUtil.pas"/>
+        <Caret Line="1" Column="1" TopLine="1"/>
+      </Position9>
     </JumpHistory>
   </ProjectOptions>
   <CompilerOptions>

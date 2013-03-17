@@ -384,6 +384,7 @@ TACBrECF = class( TACBrComponent )
     procedure SetInfoRodapeCupom(const Value: TACBrECFRodape);
     function GetRespostasComandoClass: TACBrInformacoes;
     function GetRodape: String;
+    function GetRodapeRestaurante: String;
     function GetRodapeUF: String;
     function GetOnChequeEstado: TACBrECFOnChequeEstado;
     procedure SetOnChequeEstado(const Value: TACBrECFOnChequeEstado);
@@ -1183,6 +1184,7 @@ var wRetentar : Boolean ;   { Variaveis de Trabalho, usadas para transportar }
     wInfoRodapeMD5: String;
     wInfoRodapeNotaLegalDFImprimir: Boolean;
     wInfoRodapeNotaLegalDFProgramaDeCredito: Boolean;
+    wInfoRodapeRestauranteImprimir: Boolean;
 
 begin
   if fsModelo = AValue then exit ;
@@ -1222,6 +1224,7 @@ begin
   wInfoRodapeMD5          := InfoRodapeCupom.MD5;
   wInfoRodapeNotaLegalDFImprimir := InfoRodapeCupom.NotaLegalDF.Imprimir;
   wInfoRodapeNotaLegalDFProgramaDeCredito := InfoRodapeCupom.NotaLegalDF.ProgramaDeCredito;
+  wInfoRodapeRestauranteImprimir := InfoRodapeCupom.Restaurante.Imprimir;
 
   FreeAndNil( fsECF ) ;
 
@@ -1280,6 +1283,7 @@ begin
   InfoRodapeCupom.MD5                  := wInfoRodapeMD5;
   InfoRodapeCupom.NotaLegalDF.Imprimir := wInfoRodapeNotaLegalDFImprimir;
   InfoRodapeCupom.NotaLegalDF.ProgramaDeCredito := wInfoRodapeNotaLegalDFProgramaDeCredito;
+  InfoRodapeCupom.Restaurante.Imprimir := wInfoRodapeRestauranteImprimir;
 
   fsModelo := AValue;
 end;
@@ -2977,8 +2981,60 @@ begin
   if Trim(InfoRodapeCupom.DavOs) <> EmptyStr then
     Result := Result + 'DAV-OS' + Trim(InfoRodapeCupom.DavOs);
 
+  Result := Trim(Result) + sLineBreak + Trim(GetRodapeRestaurante);
   Result := Trim(Result) + sLineBreak + Trim(GetRodapeUF);
   Result := Trim(Result);
+end;
+
+function TACBrECF.GetRodapeRestaurante: String;
+Var
+  Rodape : String ;
+begin
+  Rodape := EmptyStr;
+
+   // atende ao requisito do paf-ECF XXXVIII do Bloco III (Bares, Restaurantes e Similares)
+  If InfoRodapeCupom.Restaurante.Imprimir then
+  begin
+
+    {
+    no Cupom Fiscal a que se refere o item 8A deste requisito,
+    tratando-se de ECF que imprima o campo "informações suplementares",
+    imprimir neste campo, a partir do primeiro caracter, a seguinte informação:
+    a) ECF: nnn - Conferência de Mesa - CER nº xxxxxx - COO nº yyyyyy,
+       onde “nnn” é o número seqüencial do ECF atribuído pelo usuário onde foi emitido o Conferência de Mesa,
+       “xxxxxx” é o número do Contador Específico de Relatório Gerencial (CER)
+       e “yyyyyy” é o número do Contador de Ordem de Operação (COO) do Relatório Gerencial - Conferência de Mesa,
+       quando for o caso de impressão da Conferência de Mesa.
+    b) Consumo da Mesa xxx – SEM EMISSÃO DE CONFERÊNCIA DE MESA, onde xxx é o número da “Mesa Aberta”.
+    }
+      if (InfoRodapeCupom.Restaurante.COO > 0) then
+      begin
+
+        Rodape := Rodape + #10 + 'ECF:'
+        + Format('%3.3d', [InfoRodapeCupom.Restaurante.ECF])
+        + ' - Conf. de Mesa';
+
+          if InfoRodapeCupom.Restaurante.CER > 0 then
+          begin
+            Rodape := Rodape + ' - CER:' +
+            Format('%4.4d', [InfoRodapeCupom.Restaurante.CER]);
+          end;
+
+        Rodape := Rodape + ' – COO:' +
+        Format('%6.6d', [InfoRodapeCupom.Restaurante.COO]);
+
+      end
+      else
+      begin
+
+        Rodape := Rodape + #10 + 'Mesa '
+        + InfoRodapeCupom.Restaurante.Mesa
+        + ' – SEM EMISSÃO DE CONFERÊNCIA DE MESA'
+
+      end;
+  end;
+
+  Result := ACBrStr( Rodape );
 end;
 
 function TACBrECF.GetRodapeUF: String;
@@ -5446,18 +5502,23 @@ var
 begin
   ComandoLOG := 'IdentificaPAF('+NomeVersao+' , '+MD5+')';
 
-  // Verificando se usuário já informou o pre-fixo "MD5", "MD5:" ou "MD-5"
-  MD5Texto := UpperCase(MD5);
-  P        := 1 ;
-  if LeftStr(MD5Texto,5) = 'MD-5:' then
-     P := 6
-  else if LeftStr(MD5Texto,4) = 'MD5:' then
-     P := 5
-  else if LeftStr(MD5Texto,3) = 'MD5' then
-     P := 4 ;
+  if Trim(MD5) = '' then
+    MD5Texto := ''
+  else
+  begin
+    // Verificando se usuário já informou o pre-fixo "MD5", "MD5:" ou "MD-5"
+    MD5Texto := UpperCase(MD5);
+    P        := 1 ;
+    if LeftStr(MD5Texto,5) = 'MD-5:' then
+       P := 6
+    else if LeftStr(MD5Texto,4) = 'MD5:' then
+       P := 5
+    else if LeftStr(MD5Texto,3) = 'MD5' then
+       P := 4 ;
 
-  // acertar para que saia o texto "MD-5" antes do numero
-  MD5Texto := 'MD-5:' + copy(MD5, P, Length(MD5) );
+    // acertar para que saia o texto "MD-5" antes do numero
+    MD5Texto := 'MD-5:' + copy(MD5, P, Length(MD5) );
+  end ;
 
   try
      { Nota Legal, impede o uso de IdentificaPAF, pois o sufixo "NL" no MD5
@@ -5465,7 +5526,7 @@ begin
        ocorre após a abertura do Cupom.
        conforme requisito VIII-B item 6, somente para o DF }
 
-     if not InfoRodapeCupom.NotaLegalDF.Imprimir then
+     if not InfoRodapeCupom.NotaLegalDF.Imprimir  then
        fsECF.IdentificaPAF(NomeVersao, MD5Texto)
      else
      begin

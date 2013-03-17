@@ -42,12 +42,12 @@
         <PackageName Value="LCL"/>
       </Item2>
     </RequiredPackages>
-    <Units Count="4">
+    <Units Count="7">
       <Unit0>
         <Filename Value="BalancaTeste.lpr"/>
         <IsPartOfProject Value="True"/>
         <UnitName Value="BalancaTeste"/>
-        <UsageCount Value="21"/>
+        <UsageCount Value="23"/>
       </Unit0>
       <Unit1>
         <Filename Value="balancateste1.pas"/>
@@ -59,9 +59,9 @@
         <IsVisibleTab Value="True"/>
         <EditorIndex Value="0"/>
         <WindowIndex Value="0"/>
-        <TopLine Value="159"/>
-        <CursorPos X="7" Y="172"/>
-        <UsageCount Value="21"/>
+        <TopLine Value="51"/>
+        <CursorPos X="23" Y="63"/>
+        <UsageCount Value="23"/>
         <Loaded Value="True"/>
         <LoadedDesigner Value="True"/>
       </Unit1>
@@ -72,7 +72,7 @@
         <WindowIndex Value="0"/>
         <TopLine Value="77"/>
         <CursorPos X="21" Y="95"/>
-        <UsageCount Value="11"/>
+        <UsageCount Value="12"/>
         <Loaded Value="True"/>
       </Unit2>
       <Unit3>
@@ -82,11 +82,35 @@
         <WindowIndex Value="0"/>
         <TopLine Value="49"/>
         <CursorPos X="1" Y="1"/>
-        <UsageCount Value="11"/>
+        <UsageCount Value="12"/>
         <Loaded Value="True"/>
       </Unit3>
+      <Unit4>
+        <Filename Value="..\..\..\Fontes\ACBrTEFD\ACBrTEFDCliSiTef.pas"/>
+        <UnitName Value="ACBrTEFDCliSiTef"/>
+        <WindowIndex Value="0"/>
+        <TopLine Value="34"/>
+        <CursorPos X="48" Y="38"/>
+        <UsageCount Value="10"/>
+      </Unit4>
+      <Unit5>
+        <Filename Value="..\..\..\Fontes\ACBrTEFD\ACBr_TEFD-change-log.txt"/>
+        <WindowIndex Value="0"/>
+        <TopLine Value="41"/>
+        <CursorPos X="30" Y="46"/>
+        <UsageCount Value="11"/>
+        <DefaultSyntaxHighlighter Value="None"/>
+      </Unit5>
+      <Unit6>
+        <Filename Value="..\..\..\Fontes\ACBrTEFD\ACBrTEFDClass.pas"/>
+        <UnitName Value="ACBrTEFDClass"/>
+        <WindowIndex Value="0"/>
+        <TopLine Value="49"/>
+        <CursorPos X="34" Y="63"/>
+        <UsageCount Value="10"/>
+      </Unit6>
     </Units>
-    <JumpHistory Count="8" HistoryIndex="7">
+    <JumpHistory Count="9" HistoryIndex="8">
       <Position1>
         <Filename Value="balancateste1.pas"/>
         <Caret Line="119" Column="3" TopLine="117"/>
@@ -119,6 +143,10 @@
         <Filename Value="balancateste1.pas"/>
         <Caret Line="171" Column="63" TopLine="159"/>
       </Position8>
+      <Position9>
+        <Filename Value="balancateste1.pas"/>
+        <Caret Line="172" Column="7" TopLine="159"/>
+      </Position9>
     </JumpHistory>
   </ProjectOptions>
   <CompilerOptions>

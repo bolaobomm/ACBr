@@ -55,7 +55,6 @@ uses
   {$ENDIF} ;
 
 {$IFDEF FRAMEWORK}
-{$UNDEF CONSOLE}
 type TModalResult = (mrNone = 0, mrYes = 6, mrNo = 7, mrOK = 1, mrCancel = 2, mrAbort = 3, mrRetry = 4, mrIgnore = 5, mrAll = 8, mrNoToAll = 9, mrYesToAll = 10);
 {$ENDIF}
 
@@ -2809,8 +2808,5 @@ begin
   inherited Insert(Index, Obj);
 end;
 
-{$IFDEF FRAMEWORK}
-{$DEFINE CONSOLE}
-{$ENDIF}
 end.
 

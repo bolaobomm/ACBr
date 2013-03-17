@@ -2359,11 +2359,6 @@ object Form1: TForm1
     ConfigBarras.MostrarCodigo = True
     ConfigBarras.LarguraLinha = 3
     ConfigBarras.Altura = 10
-    InfoRodapeCupom.CupomMania = False
-    InfoRodapeCupom.MinasLegal = False
-    InfoRodapeCupom.ParaibaLegal = False
-    InfoRodapeCupom.NotaLegalDF.Imprimir = False
-    InfoRodapeCupom.NotaLegalDF.ProgramaDeCredito = False
     Left = 128
     Top = 317
   end

@@ -75,11 +75,29 @@ TACBrECFRodapeNotaLegalDF = class( TPersistent )
     fsValorICMS: Double;
     fsValorISS: Double;
     fsImprimir: Boolean;
+  public
   published
-    property Imprimir: Boolean read fsImprimir write fsImprimir;
-    property ProgramaDeCredito: Boolean read fsProgramaDeCredito write fsProgramaDeCredito;
-    property ValorICMS: Double read fsValorICMS write fsValorICMS;
-    property ValorISS: Double read fsValorISS write fsValorISS;
+    property Imprimir: Boolean read fsImprimir write fsImprimir default False;
+    property ProgramaDeCredito: Boolean read fsProgramaDeCredito
+       write fsProgramaDeCredito default False;
+    property ValorICMS: Double read fsValorICMS write fsValorICMS stored false;
+    property ValorISS : Double read fsValorISS  write fsValorISS  stored false;
+end;
+
+TACBrECFRodapeRestaurante = class( TPersistent )
+  private
+    fsECF : Integer;
+    fsCER:  Integer;
+    fsCOO:  Integer;
+    fsMesa: String;
+    fsImprimir: Boolean;
+  public
+  published
+    property Imprimir : Boolean read fsImprimir write fsImprimir default False;
+    property ECF      : Integer read fsECF      write fsECF stored false;
+    property CER      : Integer read fsCER      write fsCER stored false;
+    property COO      : Integer read fsCOO      write fsCOO stored false;
+    property Mesa     : String  read fsMesa     write fsMesa stored false;
 end;
 
 TACBrECFRodape = class( TPersistent )
@@ -88,6 +106,7 @@ TACBrECFRodape = class( TPersistent )
     fsDavOs: String;
     fsMD5: String;
     fsDav: String;
+    fsRestaurante: TACBrECFRodapeRestaurante;
     fsMinasLegal: Boolean;
     fsCupomMania: Boolean;
     fsNotaLegalDF: TACBrECFRodapeNotaLegalDF;
@@ -100,12 +119,13 @@ TACBrECFRodape = class( TPersistent )
     procedure Clear;
   published
     property MD5         : String  read fsMD5         write SetMD5;
-    property Dav         : String  read fsDav         write fsDav;
-    property DavOs       : String  read fsDavOs       write fsDavOs;
-    property PreVenda    : String  read fsPreVenda    write fsPreVenda;
-    property CupomMania  : Boolean read fsCupomMania  write fsCupomMania;
-    property MinasLegal  : Boolean read fsMinasLegal  write fsMinasLegal;
-    property ParaibaLegal: Boolean read fsParaibaLegal write fsParaibaLegal;
+    property Dav         : String  read fsDav         write fsDav   stored False;
+    property DavOs       : String  read fsDavOs       write fsDavOs stored False;
+    property PreVenda    : String  read fsPreVenda    write fsPreVenda stored False;
+    property Restaurante : TACBrECFRodapeRestaurante read fsRestaurante write fsRestaurante;
+    property CupomMania  : Boolean read fsCupomMania  write fsCupomMania default False;
+    property MinasLegal  : Boolean read fsMinasLegal  write fsMinasLegal default False;
+    property ParaibaLegal: Boolean read fsParaibaLegal write fsParaibaLegal default False;
     property NotaLegalDF : TACBrECFRodapeNotaLegalDF read fsNotaLegalDF write fsNotaLegalDF;
 end;
 
@@ -4480,11 +4500,14 @@ begin
   fsMD5        := EmptyStr;
   fsCupomMania := False;
   fsMinasLegal := False;
-  fsNotaLegalDF := TACBrECFRodapeNotaLegalDF.Create;
+  fsParaibaLegal := False;
 
-  // colocado somente no create para não perder as configurações no clear
+  fsNotaLegalDF := TACBrECFRodapeNotaLegalDF.Create;
   fsNotaLegalDF.Imprimir := False;
   fsNotaLegalDF.fsProgramaDeCredito := False;
+
+  fsRestaurante := TACBrECFRodapeRestaurante.Create;
+  fsRestaurante.Imprimir := False;
 
   Self.Clear;
 end;
@@ -4492,6 +4515,7 @@ end;
 destructor TACBrECFRodape.Destroy;
 begin
   FreeAndNil(fsNotaLegalDF);
+  FreeAndNil(fsRestaurante);
   inherited;
 end;
 
@@ -4500,6 +4524,11 @@ begin
   fsDav        := EmptyStr;
   fsDavOs      := EmptyStr;
   fsPreVenda   := EmptyStr;
+
+  fsRestaurante.Imprimir:= False;
+  fsRestaurante.CER    := 0;
+  fsRestaurante.COO    := 0;
+  fsRestaurante.ECF    := 0;
 
   // restante dos dados do nota legal DF não deve limpar
   fsNotaLegalDF.fsValorICMS := 0.00;

@@ -1,7 +1,7 @@
 object Form1: TForm1
-  Left = 376
+  Left = 373
   Height = 418
-  Top = 196
+  Top = 192
   Width = 547
   Caption = 'Teste de Impressora Fiscal'
   ClientHeight = 398
@@ -3320,13 +3320,6 @@ object Form1: TForm1
     ConfigBarras.MostrarCodigo = True
     ConfigBarras.LarguraLinha = 3
     ConfigBarras.Altura = 10
-    InfoRodapeCupom.CupomMania = False
-    InfoRodapeCupom.MinasLegal = False
-    InfoRodapeCupom.ParaibaLegal = False
-    InfoRodapeCupom.NotaLegalDF.Imprimir = False
-    InfoRodapeCupom.NotaLegalDF.ProgramaDeCredito = False
-    InfoRodapeCupom.NotaLegalDF.ValorICMS = 0
-    InfoRodapeCupom.NotaLegalDF.ValorISS = 0
     left = 312
     top = 328
   end
