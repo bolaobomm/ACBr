@@ -1164,7 +1164,7 @@ begin
                LFill( strCOD_CRED )         +   
                LFill( VL_CRED_PIS ,0,2 )    +
                LFill( VL_CRED_COFINS ,0,2 ) +
-               LFill( VL_CRED_COFINS ,0,2 ) ) ;
+               LFill( PER_CRED_CIS ,0,2 ) ) ;
         end;
         ///
         RegistroF990.QTD_LIN_F := RegistroF990.QTD_LIN_F + 1;
