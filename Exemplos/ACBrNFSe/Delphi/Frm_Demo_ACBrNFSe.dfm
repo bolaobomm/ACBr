@@ -343,6 +343,7 @@ object frmDemo_ACBrNFSe: TfrmDemo_ACBrNFSe
               'Guaiba/4309308/RS'
               'Guapore/4309407/RS'
               'Guarapari/3202405/ES'
+              'Guaratingueta/3518404/SP'
               'Guarulhos/3518800/SP'
               'Hortolandia/3519071/SP'
               'Ijui/4310207/RS'
@@ -420,6 +421,7 @@ object frmDemo_ACBrNFSe: TfrmDemo_ACBrNFSe
               'Tangara da Serra/5107958/MT'
               'Tatui/3554003/SP'
               'Telemaco Borba/4127106/PR'
+              'Tijucas/4218004/SC'
               'Uba/3169901/MG'
               'Uberaba/3170107/MG'
               'Umuarama/4128104/PR'
@@ -427,6 +429,7 @@ object frmDemo_ACBrNFSe: TfrmDemo_ACBrNFSe
               'Urussanga/ 4219002/SC'
               'Vargem Grande do Sul/3556404/SP'
               'Varginha/3170701/MG'
+              'Varzea Grande/5108402/MT'
               'Votuporanga/3557105/SP')
           end
           object edtCodCidade: TEdit
