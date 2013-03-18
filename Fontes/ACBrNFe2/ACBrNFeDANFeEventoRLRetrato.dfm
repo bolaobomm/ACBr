@@ -3,13 +3,11 @@ inherited frlDANFeEventoRLRetrato: TfrlDANFeEventoRLRetrato
   Top = 127
   Width = 816
   Height = 655
-  VertScrollBar.Position = 125
   Caption = 'frlDANFeEventoRLRetrato'
   OldCreateOrder = True
   PixelsPerInch = 96
   TextHeight = 13
   inherited RLEvento: TRLReport
-    Top = -125
     Background.Arrange = baDistributed
     Background.Height = 96
     Background.Width = 175
@@ -691,12 +689,12 @@ inherited frlDANFeEventoRLRetrato: TfrlDANFeEventoRLRetrato
         Tag = 30
         Left = 0
         Top = 20
-        Width = 117
-        Height = 15
+        Width = 134
+        Height = 16
         Caption = 'CONDI'#199#213'ES DE USO'
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
-        Font.Height = -12
+        Font.Height = -13
         Font.Name = 'Arial'
         Font.Style = [fsBold]
         HoldStyle = hsRelatively
