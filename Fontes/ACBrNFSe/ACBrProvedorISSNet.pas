@@ -150,6 +150,10 @@ begin
             ConfigURL.HomNomeCidade := 'cuiaba';
             ConfigURL.ProNomeCidade := 'cuiaba';
            end;
+  5108402: begin
+            ConfigURL.HomNomeCidade := 'varzeagrande';
+            ConfigURL.ProNomeCidade := 'varzeagrande';
+           end;
   5201108: begin
             ConfigURL.HomNomeCidade := 'anapolis';
             ConfigURL.ProNomeCidade := 'anapolis';

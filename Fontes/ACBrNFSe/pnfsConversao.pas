@@ -574,6 +574,7 @@ begin
   3513009, // Cotia/SP
   3513801, // Diadema/SP
   3516200, // Franca/SP
+  3518404, // Guaratinguetá/SP
   3518800, // Guarulhos/SP
   3519071, // Hortolandia/SP
   3523909, // Itu/SP
@@ -608,6 +609,7 @@ begin
   3530607, // Mogi das Cruzes/SP
   4313409, // Novo Hamburgo/RS
   5103403, // Cuiaba/MT
+  5108402, // Várzea Grande/MT
   5201108, // Anapolis/GO
   5201405  // Aparecida de Goiania/GO
          : Provedor := 'ISS.NET';
@@ -723,6 +725,7 @@ begin
   4217600, // Siderópolis/SC
   4217808, // Taió/SC
   4217907, // Tangará/SC
+  4218004, // Tijucas/SC
   4219002, // Urussanga/SC
   4219606, // Xavantina/SC
   4219705, // Xaxim/SC
@@ -891,6 +894,7 @@ begin
   3513009: Cidade := 'Cotia/SP';
   3513801: Cidade := 'Diadema/SP';
   3516200: Cidade := 'Franca/SP';
+  3518404: Cidade := 'Guaratinguetá/SP';
   3518800: Cidade := 'Guarulhos/SP';
   3519071: Cidade := 'Hortolandia/SP';
   3523503: Cidade := 'Itatinga/SP';
@@ -1014,6 +1018,7 @@ begin
   4217600: Cidade := 'Siderópolis/SC';
   4217808: Cidade := 'Taió/SC';
   4217907: Cidade := 'Tangará/SC';
+  4218004: Cidade := 'Tijucas/SC';
   4219002: Cidade := 'Urussanga/SC';
   4219606: Cidade := 'Xavantina/SC';
   4219705: Cidade := 'Xaxim/SC';
@@ -1042,6 +1047,7 @@ begin
   5107602: Cidade := 'Rondonopolis/MT';
   5107909: Cidade := 'Sinop/MT';
   5107958: Cidade := 'Tangara da Serra/MT';
+  5108402: Cidade := 'Várzea Grande/MT';
 
   5201108: Cidade := 'Anapolis/GO';
   5201405: Cidade := 'Aparecida de Goiania/GO';
