@@ -1382,6 +1382,30 @@ begin
   with cdsEventos do
   begin
     Close;
+
+    FieldDefs.Clear;
+    FieldDefs.Add('DescricaoTipoEvento', ftString, 150);
+    FieldDefs.Add('Modelo', ftString, 2);
+    FieldDefs.Add('Serie', ftString, 3);
+    FieldDefs.Add('Numero', ftString, 9);
+    FieldDefs.Add('MesAno', ftString, 5);
+    FieldDefs.Add('Barras', ftString, 44);
+    FieldDefs.Add('ChaveAcesso', ftString, 60);
+    FieldDefs.Add('cOrgao', ftInteger);
+    FieldDefs.Add('tpAmb', ftString, 100);
+    FieldDefs.Add('dhEvento', ftDateTime);
+    FieldDefs.Add('TipoEvento', ftString, 6);
+    FieldDefs.Add('DescEvento', ftString, 100);
+    FieldDefs.Add('nSeqEvento', ftInteger);
+    FieldDefs.Add('versaoEvento', ftString, 10);
+    FieldDefs.Add('cStat', ftInteger);
+    FieldDefs.Add('xMotivo', ftString, 100);
+    FieldDefs.Add('nProt', ftString, 20);
+    FieldDefs.Add('dhRegEvento', ftDateTime);
+    FieldDefs.Add('xJust', ftBlob);
+    FieldDefs.Add('xCondUso', ftBlob);
+    FieldDefs.Add('xCorrecao', ftBlob);
+
     CreateDataSet;
 
     for i := 0 to FEvento.Evento.Count - 1 do
