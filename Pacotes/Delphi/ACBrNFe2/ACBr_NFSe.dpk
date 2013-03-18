@@ -84,6 +84,7 @@ contains
   ACBrProvedorGoiania in '..\..\..\Fontes\ACBrNFSe\ACBrProvedorGoiania.pas',
   ACBrProvedorIssCuritiba in '..\..\..\Fontes\ACBrNFSe\ACBrProvedorISSCuritiba.pas',
   ACBrProvedorBHISS in '..\..\..\Fontes\ACBrNFSe\ACBrProvedorBHISS.pas',
-  ACBrProvedorNatal in '..\..\..\Fontes\ACBrNFSe\ACBrProvedorNatal.pas';
+  ACBrProvedorNatal in '..\..\..\Fontes\ACBrNFSe\ACBrProvedorNatal.pas',
+  ACBrProvedorISSDigital in '..\..\..\Fontes\ACBrNFSe\ACBrProvedorISSDigital.pas';
 
 end.
