@@ -265,6 +265,8 @@ begin
     FieldDefs.Add('BICMS',ftString,18);
     FieldDefs.Add('ALIQICMS',ftString,6);
     FieldDefs.Add('VALORICMS',ftString,18);
+    FieldDefs.Add('BICMSST',ftString,18);
+    FieldDefs.Add('VALORICMSST',ftString,18);
     FieldDefs.Add('ALIQIPI',ftString,6);
     FieldDefs.Add('VALORIPI',ftString,18);
 

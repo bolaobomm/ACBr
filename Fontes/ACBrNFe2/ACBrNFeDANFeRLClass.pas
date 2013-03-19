@@ -114,7 +114,6 @@ type
     FFonteDANFE: TFonteDANFE;
     FTamanhoFonte_RazaoSocial: Integer;
     FExibirEAN: Boolean;
-    FTipoDANFE: TpcnTipoImpressao;
   public
     constructor Create(AOwner: TComponent); override;
     destructor Destroy; override;
@@ -134,7 +133,7 @@ type
     property TamanhoFonte_RazaoSocial: Integer read FTamanhoFonte_RazaoSocial
                                               write FTamanhoFonte_RazaoSocial;
     property ExibirEAN: Boolean read FExibirEAN write SetExibirEAN;
-    property TipoDANFE: TpcnTipoImpressao read FTipoDANFE write SetTipoDANFE;
+    property TipoDANFE: TpcnTipoImpressao read FTipoDANFE write SetTipoDANFE default tiRetrato;
   end;
 
 implementation
@@ -160,6 +159,7 @@ begin
   FProdutosPorPagina := 0;
   FTamanhoFonte_RazaoSocial := 8;
   FExibirEAN := False;
+  FTipoDANFE := tiRetrato;
 end;
 
 destructor TACBrNFeDANFeRL.Destroy;
@@ -263,7 +263,7 @@ end;
 
 procedure TACBrNFeDANFeRL.ImprimirEVENTO(NFE: TNFe);
 begin
-  case TipoDANFE of
+  case FTipoDANFE of
     tiRetrato, tiPaisagem:
               frlDANFeEventoRL := TfrlDANFeEventoRLRetrato.Create(Self);
   end;
@@ -280,7 +280,7 @@ end;
 procedure TACBrNFeDANFeRL.ImprimirEVENTOPDF(NFE: TNFe);
 var sFile: String;
 begin
-  case TipoDANFE of
+  case FTipoDANFE of
     tiRetrato, tiPaisagem:
               frlDANFeEventoRL := TfrlDANFeEventoRLRetrato.Create(Self);
   end;

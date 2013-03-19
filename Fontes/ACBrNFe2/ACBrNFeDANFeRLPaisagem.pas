@@ -281,11 +281,11 @@ type
     RLLabel51: TRLLabel;
     rllDescontos: TRLLabel;
     RLLabel46: TRLLabel;
-    rllBaseICMST: TRLLabel;
+    rllBaseICMSST: TRLLabel;
     RLLabel52: TRLLabel;
     rllAcessorias: TRLLabel;
     RLLabel47: TRLLabel;
-    rllValorICMST: TRLLabel;
+    rllValorICMSST: TRLLabel;
     RLLabel53: TRLLabel;
     rllValorIPI: TRLLabel;
     RLLabel48: TRLLabel;
@@ -525,6 +525,16 @@ type
     LinhaProdEAN: TRLDraw;
     rlsDivProdEAN: TRLDraw;
     RLLabel12: TRLLabel;
+    rlsDivProd14: TRLDraw;
+    LinhaProd17: TRLDraw;
+    RLLabel1: TRLLabel;
+    RLLabel2: TRLLabel;
+    txtBaseICMSST: TRLDBText;
+    rlsDivProd15: TRLDraw;
+    LinhaProd18: TRLDraw;
+    txtValorICMSST: TRLDBText;
+    RLLabel3: TRLLabel;
+    RLLabel4: TRLLabel;
     procedure RLNFeBeforePrint(Sender: TObject; var PrintIt: Boolean);
     procedure rlbEmitenteBeforePrint(Sender: TObject;
       var PrintIt: Boolean);
@@ -1339,17 +1349,17 @@ procedure TfrlDANFeRLPaisagem.Imposto;
 begin
   with FNFe.Total.ICMSTot do
   begin
-    rllBaseICMS.Caption      := DFeUtil.FormatFloat(VBC, '###,###,###,##0.00');
-    rllValorICMS.Caption     := DFeUtil.FormatFloat(VICMS, '###,###,###,##0.00');
-    rllBaseICMST.Caption     := DFeUtil.FormatFloat(VBCST, '###,###,###,##0.00');
-    rllValorICMST.Caption    := DFeUtil.FormatFloat(VST, '###,###,###,##0.00');
-    rllTotalProdutos.Caption := DFeUtil.FormatFloat(VProd, '###,###,###,##0.00');
-    rllValorFrete.Caption    := DFeUtil.FormatFloat(VFrete, '###,###,###,##0.00');
-    rllValorSeguro.Caption   := DFeUtil.FormatFloat(VSeg, '###,###,###,##0.00');
-    rllDescontos.Caption     := DFeUtil.FormatFloat(VDesc, '###,###,###,##0.00');
-    rllAcessorias.Caption    := DFeUtil.FormatFloat(VOutro, '###,###,###,##0.00');
-    rllValorIPI.Caption      := DFeUtil.FormatFloat(VIPI, '###,###,###,##0.00');
-    rllTotalNF.Caption       := DFeUtil.FormatFloat(VNF, '###,###,###,##0.00');
+    rllBaseICMS.Caption       := DFeUtil.FormatFloat(VBC, '###,###,###,##0.00');
+    rllValorICMS.Caption      := DFeUtil.FormatFloat(VICMS, '###,###,###,##0.00');
+    rllBaseICMSST.Caption     := DFeUtil.FormatFloat(VBCST, '###,###,###,##0.00');
+    rllValorICMSST.Caption    := DFeUtil.FormatFloat(VST, '###,###,###,##0.00');
+    rllTotalProdutos.Caption  := DFeUtil.FormatFloat(VProd, '###,###,###,##0.00');
+    rllValorFrete.Caption     := DFeUtil.FormatFloat(VFrete, '###,###,###,##0.00');
+    rllValorSeguro.Caption    := DFeUtil.FormatFloat(VSeg, '###,###,###,##0.00');
+    rllDescontos.Caption      := DFeUtil.FormatFloat(VDesc, '###,###,###,##0.00');
+    rllAcessorias.Caption     := DFeUtil.FormatFloat(VOutro, '###,###,###,##0.00');
+    rllValorIPI.Caption       := DFeUtil.FormatFloat(VIPI, '###,###,###,##0.00');
+    rllTotalNF.Caption        := DFeUtil.FormatFloat(VNF, '###,###,###,##0.00');
   end;
 end;
 
@@ -1363,10 +1373,6 @@ begin
         mfContaTerceiros: rllTransModFrete.Caption := '2 - TERCEIROS';
         mfSemFrete: rllTransModFrete.Caption := '9 - SEM FRETE';
       end;
-
-      rllTransCodigoANTT.Caption := '';
-      rllTransPlaca.Caption := '';
-      rllTransUFPlaca.Caption := '';
 
       with Transporta do
         begin
@@ -1390,6 +1396,7 @@ begin
 
   with FNFe.Transp.VeicTransp do
   begin
+    rllTransCodigoANTT.Caption := RNTC;
     rllTransPlaca.Caption   :=  Placa;
     rllTransUFPlaca.Caption :=  UF;
   end;
@@ -1595,7 +1602,7 @@ end;
 
 procedure TfrlDANFeRLPaisagem.Itens;
 var nItem : Integer ;
-sCST, sBCICMS, sALIQICMS, sVALORICMS, sALIQIPI, sVALORIPI : String ;
+sCST, sBCICMS, sBCICMSST, sALIQICMS, sVALORICMS, sVALORICMSST, sALIQIPI, sVALORIPI : String ;
 begin
  
   for nItem := 0 to (FNFe.Det.Count - 1) do
@@ -1629,66 +1636,21 @@ begin
                         sCST := OrigToStr(orig) + CSTICMSToStr(CST)
                       else
                         sCST := '';
-                      sBCICMS    := '0,00';
-                      sALIQICMS  := '0,00';
-                      sVALORICMS := '0,00';
 
-                      if (CST = cst00) then
-                        begin
-                          sBCICMS    := FormatFloat('###,###,###,##0.00', VBC);
-                          sALIQICMS  := FormatFloat('###,###,###,##0.00', PICMS);
-                          sVALORICMS := FormatFloat('###,###,###,##0.00', VICMS);
-                        end
-                      else if (CST = cst10) then
-                        begin
-                          sBCICMS    := FormatFloat('###,###,###,##0.00', VBC);
-                          sALIQICMS  := FormatFloat('###,###,###,##0.00', PICMS);
-                          sVALORICMS := FormatFloat('###,###,###,##0.00', VICMS);
-                        end
-                      else if (CST = cst20) then
-                        begin
-                          sBCICMS    := FormatFloat('###,###,###,##0.00', VBC);
-                          sALIQICMS  := FormatFloat('###,###,###,##0.00', PICMS);
-                          sVALORICMS := FormatFloat('###,###,###,##0.00', VICMS);
-                        end
-                      else if (CST = cst30) then
-                        begin
-                          {sBCICMS    := FormatFloat('###,###,###,##0.00', VBCST);
-                          sALIQICMS  := FormatFloat('###,###,###,##0.00', PICMSST);
-                          sVALORICMS := FormatFloat('###,###,###,##0.00', VICMSST);}
-                        end
-                      else if (CST = cst40) or (CST = cst41) or (CST = cst50) then
-                        begin
-                          // Campos vazios
-                        end
-                      else if (CST = cst51) then
-                        begin
-                          sBCICMS    := FormatFloat('###,###,###,##0.00', VBC);
-                          sALIQICMS  := FormatFloat('###,###,###,##0.00', PICMS);
-                          sVALORICMS := FormatFloat('###,###,###,##0.00', VICMS);
-                        end
-                      else if (CST = cst60) then
-                        begin
-                          sBCICMS    := FormatFloat('###,###,###,##0.00', VBCST);
-                          sVALORICMS := FormatFloat('###,###,###,##0.00', VICMSST);
-                        end
-                      else if (CST = cst70) then
-                        begin
-                          sBCICMS    := FormatFloat('###,###,###,##0.00', VBC);
-                          sALIQICMS  := FormatFloat('###,###,###,##0.00', PICMS);
-                          sVALORICMS := FormatFloat('###,###,###,##0.00', VICMS);
-                        end
-                      else if (CST = cst90) then
-                        begin
-                          sBCICMS    := FormatFloat('###,###,###,##0.00', VBC);
-                          sALIQICMS  := FormatFloat('###,###,###,##0.00', PICMS);
-                          sVALORICMS := FormatFloat('###,###,###,##0.00', VICMS);
-                       end;
+                      sBCICMS      := FormatFloat('###,###,###,##0.00', VBC);
+                      sALIQICMS    := FormatFloat('###,###,###,##0.00', PICMS);
+                      sVALORICMS   := FormatFloat('###,###,###,##0.00', VICMS);
+                      sALIQICMS    := FormatFloat('###,###,###,##0.00', pICMS);
+                      sBCICMSST    := FormatFloat('###,###,###,##0.00', vBCST);
+                      sVALORICMSST := FormatFloat('###,###,###,##0.00', vICMSST);
 
-                      cdsItens.FieldByName('CST').AsString := sCST;
-                      cdsItens.FieldByName('BICMS').AsString := sBCICMS;
-                      cdsItens.FieldByName('ALIQICMS').AsString := sALIQICMS;
-                      cdsItens.FieldByName('VALORICMS').AsString := sVALORICMS;
+                      cdsItens.FieldByName('CST').AsString         := sCST;
+                      cdsItens.FieldByName('BICMS').AsString       := sBCICMS;
+                      cdsItens.FieldByName('ALIQICMS').AsString    := sALIQICMS;
+                      cdsItens.FieldByName('VALORICMS').AsString   := sVALORICMS;
+                      cdsItens.FieldByName('BICMSST').AsString     := sBCICMSST;
+                      cdsItens.FieldByName('VALORICMSST').AsString := sVALORICMSST;
+
                       lblCST.Caption := 'CST';
                       lblCST.Font.Size := 5;
                       lblCST.Top := 13;
@@ -1713,19 +1675,29 @@ begin
                       sALIQICMS  := '0,00';
                       sVALORICMS := '0,00';
 
-                      case CSOSN of
+                 {     case CSOSN of
                         csosn900:
                           begin
                             sBCICMS    := FormatFloat('#,##0.00', VBC);
                             sALIQICMS  := FormatFloat('#,##0.00', PICMS);
                             sVALORICMS := FormatFloat('#,##0.00', VICMS);
                          end;
-                      end;
+                      end;    }
 
+                      sBCICMS      := FormatFloat('###,###,###,##0.00', VBC);
+                      sALIQICMS    := FormatFloat('###,###,###,##0.00', PICMS);
+                      sVALORICMS   := FormatFloat('###,###,###,##0.00', VICMS);
+                      sALIQICMS    := FormatFloat('###,###,###,##0.00', pICMS);
+                      sBCICMSST    := FormatFloat('###,###,###,##0.00', vBCST);
+                      sVALORICMSST := FormatFloat('###,###,###,##0.00', vICMSST);
+
+                      cdsItens.FieldByName('CST').AsString         := sCST;
                       cdsItens.FieldByName('BICMS').AsString       := sBCICMS;
                       cdsItens.FieldByName('ALIQICMS').AsString    := sALIQICMS;
                       cdsItens.FieldByName('VALORICMS').AsString   := sVALORICMS;
-                      //===========  Final do trecho copiado do Danfe em Quick Report ===============                      
+                      cdsItens.FieldByName('BICMSST').AsString     := sBCICMSST;
+                      cdsItens.FieldByName('VALORICMSST').AsString := sVALORICMSST;
+                      //===========  Final do trecho copiado do Danfe em Quick Report ===============
 
                       lblCST.Caption := 'CSOSN';
                       lblCST.Font.Size := 4;
@@ -2025,7 +1997,9 @@ begin
   self.txtValorUnitario.DataSource := DataSource1;
   self.txtValorTotal.DataSource := DataSource1;
   self.txtBaseICMS.DataSource := DataSource1;
+  self.txtBaseICMSST.DataSource := DataSource1;
   self.txtValorICMS.DataSource := DataSource1;
+  self.txtValorICMSST.DataSource := DataSource1;
   self.txtValorIPI.DataSource := DataSource1;
   self.txtAliqICMS.DataSource := DataSource1;
   self.txtAliqIPI.DataSource := DataSource1;

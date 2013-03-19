@@ -3,13 +3,11 @@ inherited frlDANFeRLPaisagem: TfrlDANFeRLPaisagem
   Top = 115
   Width = 1149
   Height = 732
-  VertScrollBar.Position = 96
   Caption = 'frlDANFeRLPaisagem'
   OldCreateOrder = True
   PixelsPerInch = 96
   TextHeight = 13
   inherited RLNFe: TRLReport
-    Top = -96
     Width = 1123
     Height = 794
     Background.Arrange = baDistributed
@@ -118,20 +116,20 @@ inherited frlDANFeRLPaisagem: TfrlDANFeRLPaisagem
       object pnlCabecalho1: TRLPanel
         Left = 0
         Top = 0
-        Width = 497
+        Width = 400
         Height = 26
         Align = faLeftMost
         object rlsRectProdutos1: TRLDraw
           Left = 0
           Top = 7
-          Width = 497
+          Width = 400
           Height = 19
           Align = faWidth
         end
         object rllCinza1: TRLLabel
           Left = 1
           Top = 8
-          Width = 495
+          Width = 398
           Height = 16
           AutoSize = False
           Caption = '  '
@@ -184,7 +182,7 @@ inherited frlDANFeRLPaisagem: TfrlDANFeRLPaisagem
           Tag = 10
           Left = 128
           Top = 13
-          Width = 366
+          Width = 240
           Height = 7
           Alignment = taCenter
           AutoSize = False
@@ -225,20 +223,20 @@ inherited frlDANFeRLPaisagem: TfrlDANFeRLPaisagem
         end
       end
       object pnlCabecalho2: TRLPanel
-        Left = 496
+        Left = 399
         Top = 0
-        Width = 501
+        Width = 598
         Height = 26
         object rlsRectProdutos2: TRLDraw
           Left = 0
           Top = 7
-          Width = 501
+          Width = 598
           Height = 19
         end
         object rllCinza2: TRLLabel
           Left = 1
           Top = 8
-          Width = 498
+          Width = 595
           Height = 16
           AutoSize = False
           Caption = '  '
@@ -319,7 +317,7 @@ inherited frlDANFeRLPaisagem: TfrlDANFeRLPaisagem
           HoldStyle = hsRelatively
         end
         object rlsDivProd10: TRLDraw
-          Left = 369
+          Left = 466
           Top = 7
           Width = 1
           Height = 19
@@ -328,7 +326,7 @@ inherited frlDANFeRLPaisagem: TfrlDANFeRLPaisagem
           HoldStyle = hsRelatively
         end
         object rlsDivProd11: TRLDraw
-          Left = 410
+          Left = 507
           Top = 7
           Width = 1
           Height = 19
@@ -337,7 +335,7 @@ inherited frlDANFeRLPaisagem: TfrlDANFeRLPaisagem
           HoldStyle = hsRelatively
         end
         object rlsDivProd12: TRLDraw
-          Left = 450
+          Left = 547
           Top = 7
           Width = 1
           Height = 19
@@ -551,7 +549,7 @@ inherited frlDANFeRLPaisagem: TfrlDANFeRLPaisagem
         end
         object RLLabel92: TRLLabel
           Tag = 10
-          Left = 371
+          Left = 468
           Top = 9
           Width = 38
           Height = 7
@@ -568,7 +566,7 @@ inherited frlDANFeRLPaisagem: TfrlDANFeRLPaisagem
         end
         object RLLabel93: TRLLabel
           Tag = 10
-          Left = 371
+          Left = 468
           Top = 16
           Width = 38
           Height = 7
@@ -585,7 +583,7 @@ inherited frlDANFeRLPaisagem: TfrlDANFeRLPaisagem
         end
         object RLLabel94: TRLLabel
           Tag = 10
-          Left = 412
+          Left = 509
           Top = 9
           Width = 38
           Height = 7
@@ -602,7 +600,7 @@ inherited frlDANFeRLPaisagem: TfrlDANFeRLPaisagem
         end
         object RLLabel95: TRLLabel
           Tag = 10
-          Left = 412
+          Left = 509
           Top = 16
           Width = 38
           Height = 7
@@ -619,7 +617,7 @@ inherited frlDANFeRLPaisagem: TfrlDANFeRLPaisagem
         end
         object RLLabel96: TRLLabel
           Tag = 10
-          Left = 452
+          Left = 549
           Top = 8
           Width = 46
           Height = 7
@@ -635,7 +633,7 @@ inherited frlDANFeRLPaisagem: TfrlDANFeRLPaisagem
           ParentFont = False
         end
         object RLLabel97: TRLLabel
-          Left = 453
+          Left = 550
           Top = 17
           Width = 24
           Height = 7
@@ -651,7 +649,7 @@ inherited frlDANFeRLPaisagem: TfrlDANFeRLPaisagem
           ParentFont = False
         end
         object RLLabel98: TRLLabel
-          Left = 477
+          Left = 574
           Top = 17
           Width = 24
           Height = 7
@@ -667,7 +665,7 @@ inherited frlDANFeRLPaisagem: TfrlDANFeRLPaisagem
           ParentFont = False
         end
         object RLDraw54: TRLDraw
-          Left = 450
+          Left = 547
           Top = 16
           Width = 50
           Height = 1
@@ -675,13 +673,99 @@ inherited frlDANFeRLPaisagem: TfrlDANFeRLPaisagem
           HoldStyle = hsRelatively
         end
         object rlsDivProd13: TRLDraw
-          Left = 475
+          Left = 572
           Top = 16
           Width = 1
           Height = 9
           Angle = 90.000000000000000000
           DrawKind = dkLine
           HoldStyle = hsRelatively
+        end
+        object rlsDivProd14: TRLDraw
+          Left = 369
+          Top = 7
+          Width = 1
+          Height = 19
+          Angle = 90.000000000000000000
+          DrawKind = dkLine
+          HoldStyle = hsRelatively
+        end
+        object RLLabel1: TRLLabel
+          Tag = 10
+          Left = 371
+          Top = 9
+          Width = 52
+          Height = 7
+          Alignment = taCenter
+          AutoSize = False
+          Caption = 'BASE CALC'
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -7
+          Font.Name = 'Arial'
+          Font.Style = []
+          HoldStyle = hsRelatively
+          ParentFont = False
+        end
+        object RLLabel2: TRLLabel
+          Tag = 10
+          Left = 371
+          Top = 16
+          Width = 52
+          Height = 7
+          Alignment = taCenter
+          AutoSize = False
+          Caption = 'ICMS S.T.'
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -7
+          Font.Name = 'Arial'
+          Font.Style = []
+          HoldStyle = hsRelatively
+          ParentFont = False
+        end
+        object rlsDivProd15: TRLDraw
+          Left = 424
+          Top = 7
+          Width = 1
+          Height = 19
+          Angle = 90.000000000000000000
+          DrawKind = dkLine
+          HoldStyle = hsRelatively
+        end
+        object RLLabel3: TRLLabel
+          Tag = 10
+          Left = 426
+          Top = 9
+          Width = 40
+          Height = 7
+          Alignment = taCenter
+          AutoSize = False
+          Caption = 'VALOR'
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -7
+          Font.Name = 'Arial'
+          Font.Style = []
+          HoldStyle = hsRelatively
+          ParentFont = False
+        end
+        object RLLabel4: TRLLabel
+          Tag = 10
+          Left = 426
+          Top = 16
+          Width = 40
+          Height = 7
+          Alignment = taCenter
+          AutoSize = False
+          Caption = 'ICMS S.T.'
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -7
+          Font.Name = 'Arial'
+          Font.Style = []
+          HoldStyle = hsRelatively
+          ParentFont = False
         end
       end
     end
@@ -2985,7 +3069,7 @@ inherited frlDANFeRLPaisagem: TfrlDANFeRLPaisagem
         HoldStyle = hsRelatively
         ParentFont = False
       end
-      object rllBaseICMST: TRLLabel
+      object rllBaseICMSST: TRLLabel
         Left = 436
         Top = 11
         Width = 186
@@ -3043,7 +3127,7 @@ inherited frlDANFeRLPaisagem: TfrlDANFeRLPaisagem
         HoldStyle = hsRelatively
         ParentFont = False
       end
-      object rllValorICMST: TRLLabel
+      object rllValorICMSST: TRLLabel
         Left = 635
         Top = 11
         Width = 148
@@ -3894,7 +3978,7 @@ inherited frlDANFeRLPaisagem: TfrlDANFeRLPaisagem
       object pnlDescricao1: TRLPanel
         Left = 0
         Top = 0
-        Width = 497
+        Width = 400
         Height = 13
         Align = faLeftMost
         AutoExpand = True
@@ -3935,7 +4019,7 @@ inherited frlDANFeRLPaisagem: TfrlDANFeRLPaisagem
         object rlmDescricao: TRLDBMemo
           Left = 128
           Top = 1
-          Width = 337
+          Width = 241
           Height = 10
           DataField = 'DESCRICAO'
           Font.Charset = DEFAULT_CHARSET
@@ -3971,9 +4055,9 @@ inherited frlDANFeRLPaisagem: TfrlDANFeRLPaisagem
         end
       end
       object pnlDescricao2: TRLPanel
-        Left = 496
+        Left = 399
         Top = 0
-        Width = 501
+        Width = 598
         Height = 13
         object txtNCM: TRLDBText
           Left = 1
@@ -4109,7 +4193,7 @@ inherited frlDANFeRLPaisagem: TfrlDANFeRLPaisagem
           ParentFont = False
         end
         object txtValorICMS: TRLDBText
-          Left = 371
+          Left = 468
           Top = 1
           Width = 38
           Height = 11
@@ -4124,7 +4208,7 @@ inherited frlDANFeRLPaisagem: TfrlDANFeRLPaisagem
           ParentFont = False
         end
         object txtValorIPI: TRLDBText
-          Left = 412
+          Left = 509
           Top = 1
           Width = 37
           Height = 11
@@ -4139,7 +4223,7 @@ inherited frlDANFeRLPaisagem: TfrlDANFeRLPaisagem
           ParentFont = False
         end
         object txtAliqICMS: TRLDBText
-          Left = 452
+          Left = 549
           Top = 1
           Width = 23
           Height = 11
@@ -4154,7 +4238,7 @@ inherited frlDANFeRLPaisagem: TfrlDANFeRLPaisagem
           ParentFont = False
         end
         object txtAliqIPI: TRLDBText
-          Left = 477
+          Left = 574
           Top = 1
           Width = 23
           Height = 11
@@ -4249,7 +4333,7 @@ inherited frlDANFeRLPaisagem: TfrlDANFeRLPaisagem
           HoldStyle = hsRelatively
         end
         object LinhaProd12: TRLDraw
-          Left = 369
+          Left = 466
           Top = 0
           Width = 1
           Height = 13
@@ -4259,7 +4343,7 @@ inherited frlDANFeRLPaisagem: TfrlDANFeRLPaisagem
           HoldStyle = hsRelatively
         end
         object LinhaProd13: TRLDraw
-          Left = 410
+          Left = 507
           Top = 0
           Width = 1
           Height = 13
@@ -4269,7 +4353,7 @@ inherited frlDANFeRLPaisagem: TfrlDANFeRLPaisagem
           HoldStyle = hsRelatively
         end
         object LinhaProd14: TRLDraw
-          Left = 450
+          Left = 547
           Top = 0
           Width = 1
           Height = 13
@@ -4279,7 +4363,7 @@ inherited frlDANFeRLPaisagem: TfrlDANFeRLPaisagem
           HoldStyle = hsRelatively
         end
         object LinhaProd15: TRLDraw
-          Left = 475
+          Left = 572
           Top = 0
           Width = 1
           Height = 13
@@ -4289,7 +4373,7 @@ inherited frlDANFeRLPaisagem: TfrlDANFeRLPaisagem
           HoldStyle = hsRelatively
         end
         object LinhaProd16: TRLDraw
-          Left = 500
+          Left = 597
           Top = 0
           Width = 1
           Height = 13
@@ -4307,6 +4391,56 @@ inherited frlDANFeRLPaisagem: TfrlDANFeRLPaisagem
           Angle = 90.000000000000000000
           DrawKind = dkLine
           HoldStyle = hsRelatively
+        end
+        object LinhaProd17: TRLDraw
+          Left = 369
+          Top = 0
+          Width = 1
+          Height = 13
+          Align = faHeight
+          Angle = 90.000000000000000000
+          DrawKind = dkLine
+          HoldStyle = hsRelatively
+        end
+        object txtBaseICMSST: TRLDBText
+          Left = 371
+          Top = 1
+          Width = 52
+          Height = 11
+          Alignment = taRightJustify
+          AutoSize = False
+          DataField = 'BICMSST'
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -8
+          Font.Name = 'Arial'
+          Font.Style = []
+          ParentFont = False
+        end
+        object LinhaProd18: TRLDraw
+          Left = 424
+          Top = 0
+          Width = 1
+          Height = 13
+          Align = faHeight
+          Angle = 90.000000000000000000
+          DrawKind = dkLine
+          HoldStyle = hsRelatively
+        end
+        object txtValorICMSST: TRLDBText
+          Left = 426
+          Top = 1
+          Width = 39
+          Height = 11
+          Alignment = taRightJustify
+          AutoSize = False
+          DataField = 'VALORICMSST'
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -8
+          Font.Name = 'Arial'
+          Font.Style = []
+          ParentFont = False
         end
       end
     end
