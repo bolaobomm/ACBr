@@ -86,6 +86,7 @@ contains
   ACBrNFeDANFeRLClass in '..\..\..\Fontes\ACBrNFe2\ACBrNFeDANFeRLClass.pas',
   ACBrNFeDANFeRLReg in '..\..\..\Fontes\ACBrNFe2\ACBrNFeDANFeRLReg.pas',
   ACBrNFeDANFeRLRetrato in '..\..\..\Fontes\ACBrNFe2\ACBrNFeDANFeRLRetrato.pas' {frlDANFeRLRetrato},
-  ACBrNFeDANFeRLPaisagem in '..\..\..\Fontes\ACBrNFe2\ACBrNFeDANFeRLPaisagem.pas' {frlDANFeRLPaisagem};
-
+  ACBrNFeDANFeRLPaisagem in '..\..\..\Fontes\ACBrNFe2\ACBrNFeDANFeRLPaisagem.pas' {frlDANFeRLPaisagem},
+  ACBrNFeDANFeEventoRL in '..\..\..\Fontes\ACBrNFe2\ACBrNFeDANFeEventoRL.pas' {frlDANFeEventoRL},
+  ACBrNFeDANFeEventoRLRetrato in '..\..\..\Fontes\ACBrNFe2\ACBrNFeDANFeEventoRLRetrato.pas' {frlDANFeEventoRLRetrato};
 end.
