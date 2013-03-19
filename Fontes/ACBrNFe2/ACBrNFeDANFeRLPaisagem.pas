@@ -141,7 +141,15 @@ uses
   {$ELSE}
   Windows, Messages, Graphics, Controls, Forms, Dialogs, ExtCtrls, MaskUtils, StdCtrls,
   {$ENDIF}
-  RLReport, RLFilters, RLPDFFilter, {$IFDEF BORLAND} XMLIntf, XMLDoc, jpeg,{$ENDIF}
+  RLReport, RLFilters, RLPDFFilter,
+    {$IFDEF BORLAND}
+  XMLIntf, XMLDoc,
+    {$IF CompilerVersion >= 22}
+      Vcl.Imaging.jpeg,
+    {$ELSE}
+      jpeg,
+    {$IFEND}
+  {$ENDIF}
   ACBrNFeDANFeRL, pcnConversao, RLBarcode,  DB, StrUtils;
 
 type
@@ -545,6 +553,7 @@ type
     procedure rlbDadosAdicionaisAfterPrint(Sender: TObject);
     procedure rlbObsItemBeforePrint(Sender: TObject; var PrintIt: Boolean);
     procedure rlbEmitenteAfterPrint(Sender: TObject);
+    procedure pnlDescricao1AfterPrint(Sender: TObject);
   private
     FRecebemoDe : string;
     procedure InitDados;
@@ -1937,10 +1946,11 @@ begin
         rlbItens.PageBreaking := pbNone;
     end; // if FProdutosPorPagina = 0
 
-  for i := 1 to 16 do
+{  for i := 1 to 18 do
     TRLDraw(FindComponent ('LinhaProd' + intToStr(i))).Height :=
                                                         (LinhaFimItens.Top + 1);
-
+ }
+ 
   if RLNFe.PageNumber > 1 then
     begin
       iAumento := pnlCanhoto.Width + pnlDivisao.Width;
@@ -2004,6 +2014,11 @@ begin
   self.txtAliqICMS.DataSource := DataSource1;
   self.txtAliqIPI.DataSource := DataSource1;
   self.txtValorDesconto.DataSource := DataSource1;
+end;
+
+procedure TfrlDANFeRLPaisagem.pnlDescricao1AfterPrint(Sender: TObject);
+begin
+  pnlDescricao2.Height := pnlDescricao1.Height;
 end;
 
 end.

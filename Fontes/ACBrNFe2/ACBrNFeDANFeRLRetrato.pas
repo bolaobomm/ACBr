@@ -137,7 +137,15 @@ uses
   {$ELSE}
   Windows, Messages, Graphics, Controls, Forms, Dialogs, ExtCtrls, MaskUtils, StdCtrls,
   {$ENDIF}
-  RLReport, RLFilters, RLPDFFilter, {$IFDEF BORLAND} XMLIntf, XMLDoc, jpeg, {$ENDIF}
+  RLReport, RLFilters, RLPDFFilter,
+  {$IFDEF BORLAND}
+  XMLIntf, XMLDoc,
+    {$IF CompilerVersion >= 22}
+      Vcl.Imaging.jpeg,
+    {$ELSE}
+      jpeg,
+    {$IFEND}
+  {$ENDIF}
   ACBrNFeDANFeRL, pcnConversao, RLBarcode, DB, StrUtils;
 
 type

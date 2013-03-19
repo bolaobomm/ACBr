@@ -3,13 +3,13 @@ inherited frlDANFeRLRetrato: TfrlDANFeRLRetrato
   Top = 108
   Width = 820
   Height = 655
-  VertScrollBar.Position = 352
+  VertScrollBar.Position = 505
   Caption = 'frlDANFeRLRetrato'
   OldCreateOrder = True
   PixelsPerInch = 96
   TextHeight = 13
   inherited RLNFe: TRLReport
-    Top = -352
+    Top = -505
     Background.Arrange = baDistributed
     Background.Height = 96
     Background.Width = 175
