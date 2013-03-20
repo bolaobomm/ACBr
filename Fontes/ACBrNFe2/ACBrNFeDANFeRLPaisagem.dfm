@@ -739,7 +739,7 @@ inherited frlDANFeRLPaisagem: TfrlDANFeRLPaisagem
           Tag = 10
           Left = 467
           Top = 9
-          Width = 39
+          Width = 40
           Height = 7
           Alignment = taCenter
           AutoSize = False
@@ -756,7 +756,7 @@ inherited frlDANFeRLPaisagem: TfrlDANFeRLPaisagem
           Tag = 10
           Left = 467
           Top = 16
-          Width = 39
+          Width = 40
           Height = 7
           Alignment = taCenter
           AutoSize = False
@@ -4052,7 +4052,6 @@ inherited frlDANFeRLPaisagem: TfrlDANFeRLPaisagem
         Top = 0
         Width = 598
         Height = 13
-        AutoExpand = True
         object txtNCM: TRLDBText
           Left = 1
           Top = 1

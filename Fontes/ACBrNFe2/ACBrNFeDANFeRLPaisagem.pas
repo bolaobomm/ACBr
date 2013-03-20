@@ -721,7 +721,6 @@ begin
 //    rlbFatura.Visible := False;
 
   RLNFe.Title := Copy (FNFe.InfNFe.Id, 4, 44);
-
 end;
 
 procedure TfrlDANFeRLPaisagem.rlbEmitenteBeforePrint(Sender: TObject;
@@ -1920,14 +1919,12 @@ begin
   rllCinza1.Width := rllCinza1.Width + iAumento;
   rlmDescricaoProduto.Width := rlmDescricaoProduto.Width + iAumento;
   pnlCabecalho2.Left := pnlCabecalho2.Left + iAumento;
-
 end;
 
 procedure TfrlDANFeRLPaisagem.rlbItensBeforePrint(Sender: TObject;
   var PrintIt: Boolean);
-var i, iAumento: Integer;
+var iAumento: Integer;
 begin
-
   // Controla os itens por página
   iItemAtual := iItemAtual + 1;
 
@@ -1937,20 +1934,23 @@ begin
     begin
       if iItemAtual = FProdutosPorPagina then
         begin
-          if RLNFe.PageNumber = 2 then
-            rlbItens.PageBreaking := pbAfterPrint
-          else
-            rlbItens.PageBreaking := pbBeforePrint;
+          rlbItens.PageBreaking := pbBeforePrint;
+          // Necessário informar medidas absolutas porque a primeira linha
+          // da página 2 recebia medidas da página 1
+          if RLNFe.PageNumber = 1 then
+            begin
+              pnlDescricao1.Width := 472;
+              rlmDescricao.Width := 386;
+              LinhaFimItens.Width := 1070;
+              pnlDescricao2.Left := 472;
+            end;
         end
       else
         rlbItens.PageBreaking := pbNone;
-    end; // if FProdutosPorPagina = 0
+    end;
 
-{  for i := 1 to 18 do
-    TRLDraw(FindComponent ('LinhaProd' + intToStr(i))).Height :=
-                                                        (LinhaFimItens.Top + 1);
- }
- 
+  // Faz o deslocamento dos itens para suprir
+  // a ausência do canhoto nas próximas páginas
   if RLNFe.PageNumber > 1 then
     begin
       iAumento := pnlCanhoto.Width + pnlDivisao.Width;
@@ -1959,7 +1959,6 @@ begin
       LinhaFimItens.Width := LinhaFimItens.Width + iAumento;
       pnlDescricao2.Left := pnlDescricao2.Left + iAumento;
     end;
-
 end;
 
 procedure TfrlDANFeRLPaisagem.rlbDadosAdicionaisAfterPrint(
