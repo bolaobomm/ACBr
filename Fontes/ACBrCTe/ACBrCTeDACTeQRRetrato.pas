@@ -930,7 +930,7 @@ begin
   inherited;
   PrintBand := (QRCTe.PageNumber = 1) and (FCTe.Ide.modal <> mdAereo) and (FPosRecibo = prCabecalho);
 
-  qrlSerie2.Caption  := FormatFloat( '000', FCTe.Ide.serie);
+  qrlSerie2.Caption  := IntToStr(FCTe.Ide.serie); // FormatFloat( '000', FCTe.Ide.serie);
   qrlNumCte2.Caption := FormatFloat( '000,000,000', FCTe.Ide.nCT );
   // TpcteTipoCTe = (tcNormal, tcComplemento, tcAnulacao, tcSubstituto);
   qrb_01_Recibo.Enabled := (FCTe.Ide.tpCTe = tcNormal) or (FCTe.Ide.tpCTe = tcComplemento);
@@ -969,7 +969,7 @@ begin
 
   qrlModal.Caption := TpModalToStrText(FCTe.Ide.modal);
   qrlModelo.Caption := FCTe.Ide.modelo;
-  qrlSerie.Caption := FormatFloat( '000', FCTe.Ide.serie);
+  qrlSerie.Caption := IntToStr(FCTe.Ide.serie);  //FormatFloat( '000', FCTe.Ide.serie);
   qrlNumCte.Caption := FormatFloat( '000,000,000', FCTe.Ide.nCT );
   qrlPageNumber.Caption := format('%2.2d', [QRCTe.PageNumber]) + '/' + format('%2.2d', [FTotalPages]);
   qrlEmissao.Caption := DFeUtil.FormatDateTime(DateTimeToStr(FCTe.Ide.dhEmi));
@@ -2021,7 +2021,7 @@ begin
   inherited;
   PrintBand := (QRCTe.PageNumber = 1);
 
-  qrlSerie3.Caption  := FormatFloat( '000', FCTe.Ide.serie);
+  qrlSerie3.Caption  := IntToStr(FCTe.Ide.serie); // FormatFloat( '000', FCTe.Ide.serie);
   qrlNumCte3.Caption := FormatFloat( '000,000,000', FCTe.Ide.nCT );
 
   // TpcteTipoCTe = (tcNormal, tcComplemento, tcAnulacao, tcSubstituto);
