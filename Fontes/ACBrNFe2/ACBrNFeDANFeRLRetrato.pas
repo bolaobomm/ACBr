@@ -1973,16 +1973,10 @@ begin
   else
     begin
       if iItemAtual = FProdutosPorPagina then
-        begin
-          if RLNFe.PageNumber = 2 then
-            rlbItens.PageBreaking := pbAfterPrint
-          else
-            rlbItens.PageBreaking := pbBeforePrint;
-        end
+        rlbItens.PageBreaking := pbBeforePrint
       else
         rlbItens.PageBreaking := pbNone;
     end; // if FProdutosPorPagina = 0
-
 end;
 
 procedure TfrlDANFeRLRetrato.rlbEmitenteAfterPrint(Sender: TObject);
