@@ -535,6 +535,7 @@ begin
       profintelISS,
       proSaatri,
       proISSDigital,
+      proISSe,
       proGoiania: vNotas := vNotas +
                               '<' + Prefixo4 + 'Rps>' +
                                '<' + Prefixo4 + 'InfDeclaracaoPrestacaoServico' +
@@ -576,7 +577,7 @@ begin
   else begin
    for i := 0 to TNFSeEnviarLoteRPS(Self).FNotasFiscais.Count-1 do
     begin
-     if (FProvedor in [profintelISS, proSaatri, proGoiania, proISSDigital])
+     if (FProvedor in [profintelISS, proSaatri, proGoiania, proISSDigital, proISSe])
       then vNotas := vNotas + '<' + Prefixo4 + 'Rps>' +
                                '<' + Prefixo4 + 'InfDeclaracaoPrestacaoServico' +
                                  RetornarConteudoEntre(TNFSeEnviarLoteRPS(Self).FNotasFiscais.Items[I].XML_Rps,
@@ -1314,6 +1315,7 @@ begin
       profintelISS,
       proSaatri,
       proISSDigital,
+      proISSe,
       proGoiania: vNotas := vNotas +
                               '<' + Prefixo4 + 'Rps>' +
                                '<' + Prefixo4 + 'InfDeclaracaoPrestacaoServico' +
@@ -1355,7 +1357,7 @@ begin
   else begin
    for i := 0 to TNFSeGerarNFSe(Self).FNotasFiscais.Count-1 do
     begin
-     if (FProvedor in [profintelISS, proSaatri, proGoiania, proISSDigital])
+     if (FProvedor in [profintelISS, proSaatri, proGoiania, proISSDigital, proISSe])
       then vNotas := vNotas + '<' + Prefixo4 + 'Rps>' +
                                '<' + Prefixo4 + 'InfDeclaracaoPrestacaoServico' +
                                  RetornarConteudoEntre(TNFSeGerarNFSe(Self).FNotasFiscais.Items[I].XML_Rps,
@@ -1487,6 +1489,7 @@ begin
       profintelISS,
       proSaatri,
       proISSDigital,
+      proISSe,
       proGoiania: vNotas := vNotas +
                               '<' + Prefixo4 + 'Rps>' +
                                '<' + Prefixo4 + 'InfDeclaracaoPrestacaoServico' +
@@ -1511,7 +1514,7 @@ begin
   else begin
    for i := 0 to TNFSeGerarLoteRPS(Self).FNotasFiscais.Count-1 do
     begin
-     if (FProvedor in [profintelISS, proSaatri, proGoiania, proISSDigital])
+     if (FProvedor in [profintelISS, proSaatri, proGoiania, proISSDigital, proISSe])
       then vNotas := vNotas + '<' + Prefixo4 + 'Rps>' +
                                '<' + Prefixo4 + 'InfDeclaracaoPrestacaoServico' +
                                  RetornarConteudoEntre(TNFSeGerarLoteRPS(Self).FNotasFiscais.Items[I].XML_Rps,
