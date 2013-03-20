@@ -1,15 +1,15 @@
 inherited frlDANFeRLRetrato: TfrlDANFeRLRetrato
-  Left = 202
-  Top = 108
+  Left = 218
+  Top = 116
   Width = 820
   Height = 655
-  VertScrollBar.Position = 505
+  VertScrollBar.Position = 523
   Caption = 'frlDANFeRLRetrato'
   OldCreateOrder = True
   PixelsPerInch = 96
   TextHeight = 13
   inherited RLNFe: TRLReport
-    Top = -505
+    Top = -523
     Background.Arrange = baDistributed
     Background.Height = 96
     Background.Width = 175
@@ -6022,12 +6022,6 @@ inherited frlDANFeRLRetrato: TfrlDANFeRLRetrato
         Font.Name = 'Arial'
         Font.Style = []
         ParentFont = False
-      end
-      object RLLabel101: TRLLabel
-        Left = 680
-        Top = 16
-        Width = 72
-        Height = 16
       end
       object LinhaFimItens: TRLDraw
         Left = 0

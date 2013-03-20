@@ -449,7 +449,6 @@ type
     rllCabFatura2: TRLLabel;
     rllCabFatura3: TRLLabel;
     RLDraw69: TRLDraw;
-    RLLabel101: TRLLabel;
     rllISSQNValorServicos: TRLLabel;
     rllISSQNBaseCalculo: TRLLabel;
     rllISSQNValorISSQN: TRLLabel;

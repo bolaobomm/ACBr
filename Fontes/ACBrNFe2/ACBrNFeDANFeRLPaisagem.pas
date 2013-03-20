@@ -381,7 +381,6 @@ type
     rllCabFatura2: TRLLabel;
     rllCabFatura3: TRLLabel;
     RLDraw69: TRLDraw;
-    RLLabel101: TRLLabel;
     rllISSQNValorServicos: TRLLabel;
     rllISSQNBaseCalculo: TRLLabel;
     rllISSQNValorISSQN: TRLLabel;
@@ -554,6 +553,7 @@ type
     procedure rlbObsItemBeforePrint(Sender: TObject; var PrintIt: Boolean);
     procedure rlbEmitenteAfterPrint(Sender: TObject);
     procedure pnlDescricao1AfterPrint(Sender: TObject);
+    procedure rlbCabecalhoItensAfterPrint(Sender: TObject);
   private
     FRecebemoDe : string;
     procedure InitDados;
@@ -1929,7 +1929,9 @@ begin
   iItemAtual := iItemAtual + 1;
 
   if FProdutosPorPagina = 0 then
-    rlbItens.PageBreaking := pbNone
+    begin
+      rlbItens.PageBreaking := pbNone;
+    end
   else
     begin
       if iItemAtual = FProdutosPorPagina then
@@ -1946,18 +1948,25 @@ begin
             end;
         end
       else
-        rlbItens.PageBreaking := pbNone;
+        begin
+          rlbItens.PageBreaking := pbNone;
+        end;
     end;
 
-  // Faz o deslocamento dos itens para suprir
-  // a ausência do canhoto nas próximas páginas
+  {=====================================================================
+   - Faz o deslocamento dos itens para suprir a ausência do canhoto nas
+     próximas páginas. É necessário informar medidas absolutas.
+   - Nas versões 3.69 em diante do Fortes Report, a instrução abaixo é
+     aplicada somente a partir da segunda linha da segunda página.
+   - Para contornar esta dificuldade, a mesma instrução foi repetida no
+     evento "AfterPrint" de "rlbCabecalhoItens".
+   =====================================================================}
   if RLNFe.PageNumber > 1 then
     begin
-      iAumento := pnlCanhoto.Width + pnlDivisao.Width;
-      pnlDescricao1.Width := pnlDescricao1.Width + iAumento;
-      rlmDescricao.Width := rlmDescricao.Width + iAumento;
-      LinhaFimItens.Width := LinhaFimItens.Width + iAumento;
-      pnlDescricao2.Left := pnlDescricao2.Left + iAumento;
+      pnlDescricao1.Width := 472;
+      rlmDescricao.Width := 386;
+      LinhaFimItens.Width := 1070;
+      pnlDescricao2.Left := 472;
     end;
 end;
 
@@ -2018,6 +2027,24 @@ end;
 procedure TfrlDANFeRLPaisagem.pnlDescricao1AfterPrint(Sender: TObject);
 begin
   pnlDescricao2.Height := pnlDescricao1.Height;
+end;
+
+procedure TfrlDANFeRLPaisagem.rlbCabecalhoItensAfterPrint(Sender: TObject);
+begin
+  {=====================================================================
+   - Faz o deslocamento dos itens para suprir a ausência do canhoto nas
+     próximas páginas. É necessário informar medidas absolutas.
+   - Nas versões 3.69 em diante do Fortes Report, a instrução abaixo é
+     aplicada somente a partir da segunda linha da segunda página.
+   - Para contornar esta dificuldade, a instrução foi repetida aqui.
+   =====================================================================}
+  if RLNFe.PageNumber > 1 then
+    begin
+      pnlDescricao1.Width := 472;
+      rlmDescricao.Width := 386;
+      LinhaFimItens.Width := 1070;
+      pnlDescricao2.Left := 472;
+    end;
 end;
 
 end.

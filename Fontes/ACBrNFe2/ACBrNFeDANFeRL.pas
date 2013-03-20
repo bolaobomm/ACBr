@@ -106,7 +106,7 @@ uses
   Windows, Messages, Graphics, Controls, Forms, Dialogs, ExtCtrls,
   {$ENDIF}
   RLReport, pcnNFe, pcnConversao, ACBrNFe, RLFilters, MaskUtils, RLPrinters,
-  RLPDFFilter, DB, {$IFDEF BORLAND} DBClient{$ELSE} BufDataset{$ENDIF},RLConsts;
+  RLPDFFilter, DB, {$IFDEF BORLAND} DBClient{$ELSE} BufDataset{$ENDIF}, RLConsts;
     
 type
   TPosCanhoto = (pcCabecalho, pcRodape);
@@ -452,5 +452,8 @@ procedure TfrlDANFeRL.FormCreate(Sender: TObject);
 begin
   ConfigDataSet;
 end;
+
+{initialization
+RLConsts.SetVersion(3,71,'B');} 
 
 end.
