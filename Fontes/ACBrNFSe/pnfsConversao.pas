@@ -552,33 +552,52 @@ begin
   1302603, // Manaus/AM
   1500800, // Ananindeua/PA
   1505536, // Parauapebas/PA
+  1506807, // Santarem/PA
+  2304285, // Eusebio/PA
   2304400, // Fortaleza/CE
+  2307650, // Maracanau/CE
   2507507, // Joao Pessoa/PB
+  2513653, // Santarem/PB
   2604106, // Caruaru/PE
+  2700300, // Arapiraca/AL
   2704302, // Maceio/AL
+  2704708, // Marechal Deodoro/AL
   2910727, // Eunapolis/BA
+  2933307, // Vitoria da Conquista/BA
+  3101607, // Alfenas/MG
   3115300, // Cataguases/MG
+  3117504, // Conceicao do Mato Dentro/MG
+  3131307, // Ipatinga/MG
   3137601, // Lagoa Santa/MG
   3143906, // Muriae/MG
+  3145604, // Oliveira/MG
   3147105, // Para de Minas/MG
   3154606, // Ribeirao das Neves/MG
+  3156908, // Sacramento/MG
   3169901, // Uba/MG
   3170701, // Varginha/MG
   3300456, // Belford Roxo/RJ
   3301009, // Campos dos Goytacazes/RJ
+  3301900, // Itaborai/RJ
   3302700, // Marica/RJ
+  3304300, // Rio Bonito/RJ
   3503208, // Araraquara/SP
   3506359, // Bertioga/SP
+  3510401, // Capivari/SP
   3511300, // Cedral/SP
   3512001, // Colina/SP
   3513009, // Cotia/SP
   3513801, // Diadema/SP
+  3515509, // Fernandopolis/SP
   3516200, // Franca/SP
+  3518305, // Guararema/SP
   3518404, // Guaratinguetá/SP
+  3518701, // Guaruja/SP
   3518800, // Guarulhos/SP
   3519071, // Hortolandia/SP
   3523909, // Itu/SP
   3524709, // Jaguariuna/SP
+  3525102, // Jardinopolis/SP
   3525300, // Jau/SP
   3525904, // Jundiai/SP
   3529401, // Maua/SP
@@ -587,6 +606,7 @@ begin
   3536505, // Paulinia/SP
   3538006, // Pindamonhangaba/SP
   3542602, // Registro/SP
+  3543303, // Ribeirao Pires/SP
   3543402, // Ribeirao Preto/SP
   3543907, // Rio Claro/SP
   3545209, // Salto/SP
@@ -597,12 +617,16 @@ begin
   3548906, // Sao Carlos/SP
   3549805, // Sao Jose do Rio Preto/SP
   3549904, // Sao Jose dos Campos/SP
+  3550605, // Sao Roque/SP
+  3550704, // Sao Sebastiao
+  3552502, // Suzano/SP
   3554003, // Tatui/SP
   3557105, // Votuporanga/SP
   3704708, // Marechal Deodoro/AL
   4118204, // Paranagua/PR
   4125506, // Sao Jose dos Pinhais/PR
   4128104, // Umuarama/PR
+  4202404, // Blumenau/SC
   4309308, // Guaiba/RS
   4314407  // Pelotas/RS
          : Provedor := 'GINFES';
