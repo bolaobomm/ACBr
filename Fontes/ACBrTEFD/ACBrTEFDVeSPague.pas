@@ -1111,7 +1111,8 @@ begin
       ReqVS.AddParamString( 'transacao_opcao', TransacaoOpcao ) ;
 
    //---Adicionando o parametro CIELO PREMIA--------------
-   ReqVS.AddParamDouble( 'transacao_valor_ajuste',  00) ;
+   ReqVS.AddParamDouble( 'transacao_valor_ajuste',  01) ;
+
    //-----------------------------------------------------
 
    if ListaParams <> '' then

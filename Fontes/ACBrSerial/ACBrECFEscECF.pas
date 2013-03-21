@@ -158,6 +158,8 @@ TACBrECFEscECF = class( TACBrECFClass )
     procedure EnviaConsumidor(var Obs: String);
     function PreparaCmd(CmdExtBcd: AnsiString): AnsiString;
     Function TraduzErroMsg( CAT, Ocorrencia : Byte) : String;
+
+    Function GetValorTotalizador( N, I: Integer): Double;
  protected
     function VerificaFimLeitura(var Retorno: AnsiString;
       var TempoLimite: TDateTime): Boolean; override;
@@ -166,10 +168,9 @@ TACBrECFEscECF = class( TACBrECFClass )
     function GetDataHora: TDateTime; override ;
     function GetNumCupom: String; override ;
     function GetNumECF: String; override ;
-    //TODO: function GetNumLoja: String; override ;
+    //TODO (não encontrado): function GetNumLoja: String; override ;
     function GetNumCRO: String; override ;
     function GetNumSerie: String; override ;
-    //TODO: function GetNumSerieMFD: String; override ;
     function GetNumVersao: String; override ;
     function GetSubTotal: Double; override ;
     function GetTotalPago: Double; override ;
@@ -180,8 +181,8 @@ TACBrECFEscECF = class( TACBrECFClass )
     function GetIE: String; override ;
     function GetIM: String; override ;
     function GetCliche: AnsiString; override ;
-    //TODO: function GetUsuarioAtual: String; override ;
-    //TODO: function GetDataHoraSB: TDateTime; override ;
+    function GetUsuarioAtual: String; override ;
+    function GetDataHoraSB: TDateTime; override ;
     function GetSubModeloECF: String ; override ;
 
     function GetPAF: String; override ;
@@ -196,7 +197,6 @@ TACBrECFEscECF = class( TACBrECFClass )
     function GetNumCRZ: String; override ;
     function GetNumCFD: String; override ;
     function GetNumNCN: String; override ;
-    //TODO: function GetNumCCDC: String; override ;
     function GetVendaBruta: Double; override ;
     function GetTotalAcrescimos: Double; override ;
     function GetTotalCancelamentos: Double; override ;
@@ -205,37 +205,32 @@ TACBrECFEscECF = class( TACBrECFClass )
     function GetTotalSubstituicaoTributaria: Double; override ;
     function GetTotalNaoTributado: Double; override ;
     function GetTotalIsencao: Double; override ;
-    { TODO:
-    function GetTotalNaoFiscal: Double; override ;
     function GetTotalAcrescimosISSQN: Double; override ;
     function GetTotalCancelamentosISSQN: Double; override ;
     function GetTotalDescontosISSQN: Double; override ;
     function GetTotalIsencaoISSQN: Double; override ;
     function GetTotalNaoTributadoISSQN: Double; override ;
     function GetTotalSubstituicaoTributariaISSQN: Double; override ;
+    {TODO (não encontrado):
     function GetTotalAcrescimosOPNF: Double; override ;
     function GetTotalCancelamentosOPNF: Double; override ;
     function GetTotalDescontosOPNF: Double; override ;
     }
     function GetNumCOOInicial: String; override ;
 
-    { TODO:
-    function GetNumUltimoItem: Integer; override ;
+    { TODO (não encontrado): function GetNumUltimoItem: Integer; override ;}
 
     function GetDadosUltimaReducaoZ: AnsiString; override ;
-    }
 
     function GetEstado: TACBrECFEstado; override ;
     function GetGavetaAberta: Boolean; override ;
     function GetPoucoPapel : Boolean; override ;
     function GetHorarioVerao: Boolean; override ;
-    { TODO:
-      function GetChequePronto: Boolean; override ;
-      function GetParamDescontoISSQN: Boolean; override;
+    { TODO (não encontrado): function GetChequePronto: Boolean; override ;}
 
-      function GetTipoUltimoDocumento : TACBrECFTipoDocumento ; override ;
-    }
+    function GetParamDescontoISSQN: Boolean; override;
 
+    { TODO (não encontrado): function GetTipoUltimoDocumento : TACBrECFTipoDocumento ; override ; }
  public
     Constructor create( AOwner : TComponent  )  ;
     Destructor Destroy  ; override ;
@@ -487,9 +482,6 @@ procedure TACBrECFEscECFComando.AddParamString(AString: AnsiString);
 var
   Buf : AnsiString ;
 begin
-  { EscECF usa Pipe (|) como seprador, não permite o Pipe na String }
-  //AString := StringReplace(AString,'|',':',[rfReplaceAll]) ;
-
   { Convertendo caracteres de comando para Hexa para poder armazenar
     corretamente no TStringList }
   Buf := BinaryStringToString( AString );
@@ -705,7 +697,7 @@ begin
 end;
 
 
-Function TACBrECFEscECF.EnviaComando_ECF( cmd : AnsiString = '') : AnsiString ;
+function TACBrECFEscECF.EnviaComando_ECF(cmd : AnsiString) : AnsiString ;
 Var
   ErroMsg : String ;
   OldTimeOut : Integer ;
@@ -775,8 +767,8 @@ begin
   end ;
 end;
 
-Function TACBrECFEscECF.VerificaFimLeitura(var Retorno: AnsiString;
-   var TempoLimite: TDateTime) : Boolean ;
+function TACBrECFEscECF.VerificaFimLeitura(var Retorno : AnsiString ;
+  var TempoLimite : TDateTime) : Boolean ;
 var
   LenRet, TBR : Integer;
   Byte1  : AnsiChar;
@@ -1145,6 +1137,19 @@ begin
       Result := Result + sLineBreak + MsgOcorrencia;
 end;
 
+function TACBrECFEscECF.GetValorTotalizador(N, I : Integer) : Double ;
+var
+  StrValue: String;
+begin
+  Result := 0;
+  RetornaInfoECF( '6|'+IntToStr( N ) ) ;
+  if EscECFResposta.Params.Count >= I then
+  begin
+     StrValue := EscECFResposta.Params[ I ] ;
+     Result   := StrToInt( StrValue ) / 100;
+  end;
+end;
+
 function TACBrECFEscECF.RetornaInfoECF(Registrador: String): AnsiString;
 begin
   if Pos('|',Registrador) = 0 then
@@ -1285,7 +1290,12 @@ begin
   Result := UpperCase(RightStr( RetornaInfoECF( '9' ) ,1 )) =  'V' ;
 end;
 
-Procedure TACBrECFEscECF.LeituraX ;
+function TACBrECFEscECF.GetParamDescontoISSQN : Boolean ;
+begin
+  Result := True; // ESCEcf sempre permite Desconto de ISSQN
+end ;
+
+procedure TACBrECFEscECF.LeituraX ;
 begin
   RespostasComando.Clear;
   EscECFComando.CMD := 20;
@@ -1310,13 +1320,13 @@ begin
   Linhas.Text := Buffer;
 end;
 
-Procedure TACBrECFEscECF.AbreGaveta ;
+procedure TACBrECFEscECF.AbreGaveta ;
 begin
   EscECFComando.CMD := 6;
   EnviaComando;
 end;
 
-Procedure TACBrECFEscECF.ReducaoZ(DataHora: TDateTime) ;
+procedure TACBrECFEscECF.ReducaoZ(DataHora : TDateTime) ;
 begin
   RespostasComando.Clear;
   if DataHora = 0 then  { Aparentemente a DataHora é obrigatória na EscECF }
@@ -1426,7 +1436,7 @@ begin
   fsEmPagamento := false ;
 end;
 
-Procedure TACBrECFEscECF.MudaHorarioVerao ;
+procedure TACBrECFEscECF.MudaHorarioVerao ;
 begin
   MudaHorarioVerao( not HorarioVerao) ;
 end;
@@ -1756,7 +1766,7 @@ begin
      AddParamDouble( Valor );
      AddParamInteger( 1 );  // Parcelas ??
      AddParamString( LeftStr(Observacao, 84) );
-     AddParamInteger( 7 );  // Meios de pagamento ??
+     AddParamInteger( 7 );  // TODO: Meios de pagamento ??
      { 1-Dinheiro, 2-Cheque, 3-Cartão de Crédito, 4-Cartão de Débito,
        5-Cartão Refeição/Alimentação, 6-Vale Refeição/Alimentação (em papel),
        7-Outros }
@@ -2161,7 +2171,7 @@ end;
 
 function TACBrECFEscECF.GetGrandeTotal: Double;
 var
-   StrValue: String;
+  StrValue: String;
 begin
   RetornaInfoECF( '4|1' ) ;
   StrValue := EscECFResposta.Params[1] ;
@@ -2210,9 +2220,110 @@ begin
   Result := EscECFResposta.Params[2] ;
 end;
 
+function TACBrECFEscECF.GetDadosUltimaReducaoZ : AnsiString ;
+var
+  DataStr, ECFCRZ  : String ;
+  NAcuml, I, J: Integer;
+  AliqZ : TACBrECFAliquota ;
+
+  function AchaValorRegistrador(Registrador: String; Aliq: Double = 0): Double ;
+  var
+    I: Integer;
+  begin
+    I := 0 ; Result := 0;
+    while  (I+2 < EscECFResposta.Params.Count) do
+    begin
+      if (EscECFResposta[I] = Registrador) and
+         (StringToFloatDef(EscECFResposta[I+1],0) = Aliq) then
+      begin
+         Result := RoundTo( StrToFloatDef(EscECFResposta.Params[ I+2 ],0)/100, -2);
+         Break;
+      end ;
+
+      Inc( I ) ;
+    end ;
+  end ;
+begin
+  // Zerar variaveis e inicializa Dados do ECF //
+  InitDadosUltimaReducaoZ;
+
+  if not Assigned( fpAliquotas ) then
+    CarregaAliquotas ;
+
+  with TACBrECF(fpOwner) do
+  begin
+    ECFCRZ := Trim(NumCRZ);
+  end;
+
+  RetornaInfoECF( '17|'+ECFCRZ ) ;
+
+  // DEBUG
+  //WriteToTXT('C:\TEMP\REDZ.TXT', EscECFResposta.Params.Text);
+
+  { Alimenta a class com os dados atuais do ECF }
+  with fpDadosReducaoZClass do
+  begin
+    CRZ              := StrToIntDef( EscECFResposta.Params[0], 0) ;
+    DataStr          := EscECFResposta.Params[1];
+    DataDoMovimento  := EncodeDate( StrToInt(copy(DataStr,5,4)),   // Ano
+                                    StrToInt(copy(DataStr,3,2)),   // Mes
+                                    StrToInt(copy(DataStr,1,2)) ); // Dia
+    CRO              := StrToIntDef( EscECFResposta.Params[3], 0) ;
+    NumeroCOOInicial := EscECFResposta.Params[4];
+    COO              := StrToIntDef( EscECFResposta.Params[5], 0) ;
+    ValorVendaBruta  := RoundTo( StrToFloatDef(EscECFResposta.Params[07],0)/100, -2);
+    DescontoICMS     := RoundTo( StrToFloatDef(EscECFResposta.Params[08],0)/100, -2);
+    AcrescimoICMS    := RoundTo( StrToFloatDef(EscECFResposta.Params[09],0)/100, -2);
+    CancelamentoICMS := RoundTo( StrToFloatDef(EscECFResposta.Params[10],0)/100, -2);
+    DescontoISSQN    := RoundTo( StrToFloatDef(EscECFResposta.Params[11],0)/100, -2);
+    AcrescimoISSQN   := RoundTo( StrToFloatDef(EscECFResposta.Params[12],0)/100, -2);
+    CancelamentoISSQN:= RoundTo( StrToFloatDef(EscECFResposta.Params[13],0)/100, -2);
+    NAcuml           := StrToIntDef( EscECFResposta.Params[15], 0) ;
+
+    {Aliquotas}
+    {Percorrendo as aliquotas cadastradas no ECF para procurar por todas}
+    for I := 0 to Aliquotas.Count - 1 do
+    begin
+      AliqZ := TACBrECFAliquota.Create ;
+      AliqZ.Assign( fpAliquotas[I] );
+      {Procura pela aliquota no formato T/Snnnn na string}
+      AliqZ.Total := AchaValorRegistrador( AliqZ.Tipo, AliqZ.Aliquota ) ;
+
+      AdicionaAliquota( AliqZ );
+    end ;
+
+    SubstituicaoTributariaICMS := AchaValorRegistrador('F1') +
+                                  AchaValorRegistrador('F2') +
+                                  AchaValorRegistrador('F3') ;
+
+    NaoTributadoICMS           := AchaValorRegistrador('N1') +
+                                  AchaValorRegistrador('N2') +
+                                  AchaValorRegistrador('N3') ;
+
+    IsentoICMS                 := AchaValorRegistrador('I1') +
+                                  AchaValorRegistrador('I2') +
+                                  AchaValorRegistrador('I3') ;
+
+    SubstituicaoTributariaISSQN:= AchaValorRegistrador('FS1') +
+                                  AchaValorRegistrador('FS2') +
+                                  AchaValorRegistrador('FS3') ;
+
+    NaoTributadoISSQN          := AchaValorRegistrador('NS1') +
+                                  AchaValorRegistrador('NS2') +
+                                  AchaValorRegistrador('NS3') ;
+
+    IsentoISSQN                := AchaValorRegistrador('IS1') +
+                                  AchaValorRegistrador('IS2') +
+                                  AchaValorRegistrador('IS3') ;
+
+    CalculaValoresVirtuais;
+    Result := MontaDadosReducaoZ;
+  end;
+end ;
+
 function TACBrECFEscECF.GetVendaBruta: Double;
 var
-   StrValue: String;
+  StrValue: String;
 begin
   RetornaInfoECF( '4|2' ) ;
   StrValue := EscECFResposta.Params[1] ;
@@ -2314,7 +2425,7 @@ end;
 
 function TACBrECFEscECF.GetTotalAcrescimos: Double;
 var
-   StrValue: String;
+  StrValue: String;
 begin
   RetornaInfoECF( '4|8' ) ;
   StrValue := EscECFResposta.Params[1] ;
@@ -2323,7 +2434,7 @@ end;
 
 function TACBrECFEscECF.GetTotalCancelamentos: Double;
 var
-   StrValue: String;
+  StrValue: String;
 begin
   RetornaInfoECF( '4|3' ) ;
   StrValue := EscECFResposta.Params[1] ;
@@ -2332,7 +2443,7 @@ end;
 
 function TACBrECFEscECF.GetTotalDescontos: Double;
 var
-   StrValue: String;
+  StrValue: String;
 begin
   RetornaInfoECF( '4|4' ) ;
   StrValue := EscECFResposta.Params[1] ;
@@ -2341,7 +2452,7 @@ end;
 
 function TACBrECFEscECF.GetTotalTroco: Double;
 var
-   StrValue: String;
+  StrValue: String;
 begin
   RetornaInfoECF( '7|21' ) ;
   StrValue := EscECFResposta.Params[1] ;
@@ -2349,60 +2460,72 @@ begin
 end;
 
 function TACBrECFEscECF.GetTotalIsencao: Double;
-  Function GetTotalIsencaoN( Indice: Integer) : Double;
-  var
-     StrValue: String;
-  begin
-    Result := 0;
-    RetornaInfoECF( '6|'+IntToStr(Indice) ) ;
-    if EscECFResposta.Params.Count > 3 then
-    begin
-       StrValue := EscECFResposta.Params[3] ;
-       Result   := StrToInt( StrValue ) / 100;
-    end;
-  end;
 begin
-  Result := GetTotalIsencaoN( 1 ) +
-            GetTotalIsencaoN( 2 ) +
-            GetTotalIsencaoN( 3 ) ;
+  Result := GetValorTotalizador( 1, 3 ) +
+            GetValorTotalizador( 2, 3 ) +
+            GetValorTotalizador( 3, 3 ) ;
 end;
 
-function TACBrECFEscECF.GetTotalNaoTributado: Double;
-  Function GetTotalNaoTributadoN( Indice: Integer) : Double;
-  var
-     StrValue: String;
-  begin
-    Result := 0;
-    RetornaInfoECF( '6|'+IntToStr(Indice) ) ;
-    if EscECFResposta.Params.Count > 5 then
-    begin
-       StrValue := EscECFResposta.Params[5] ;
-       Result   := StrToInt( StrValue ) / 100;
-    end;
-  end;
+function TACBrECFEscECF.GetTotalAcrescimosISSQN : Double ;
+var
+  StrValue: String;
 begin
-  Result := GetTotalNaoTributadoN( 1 ) +
-            GetTotalNaoTributadoN( 2 ) +
-            GetTotalNaoTributadoN( 3 ) ;
+  RetornaInfoECF( '4|9' ) ;
+  StrValue := EscECFResposta.Params[1] ;
+  Result   := StrToInt( StrValue ) / 100;
+end ;
+
+function TACBrECFEscECF.GetTotalCancelamentosISSQN : Double ;
+var
+  StrValue: String;
+begin
+  RetornaInfoECF( '4|5' ) ;
+  StrValue := EscECFResposta.Params[1] ;
+  Result   := StrToInt( StrValue ) / 100;
+end ;
+
+function TACBrECFEscECF.GetTotalDescontosISSQN : Double ;
+var
+  StrValue: String;
+begin
+  RetornaInfoECF( '4|6' ) ;
+  StrValue := EscECFResposta.Params[1] ;
+  Result   := StrToInt( StrValue ) / 100;
+end ;
+
+function TACBrECFEscECF.GetTotalIsencaoISSQN : Double ;
+begin
+  Result := GetValorTotalizador( 1, 9 ) +
+            GetValorTotalizador( 2, 9 ) +
+            GetValorTotalizador( 3, 9 ) ;
+end ;
+
+function TACBrECFEscECF.GetTotalNaoTributadoISSQN : Double ;
+begin
+  Result := GetValorTotalizador( 1, 11 ) +
+            GetValorTotalizador( 2, 11 ) +
+            GetValorTotalizador( 3, 11 ) ;
+end ;
+
+function TACBrECFEscECF.GetTotalSubstituicaoTributariaISSQN : Double ;
+begin
+  Result := GetValorTotalizador( 1, 7 ) +
+            GetValorTotalizador( 2, 7 ) +
+            GetValorTotalizador( 3, 7 ) ;
+end ;
+
+function TACBrECFEscECF.GetTotalNaoTributado: Double;
+begin
+  Result := GetValorTotalizador( 1, 5 ) +
+            GetValorTotalizador( 2, 5 ) +
+            GetValorTotalizador( 3, 5 ) ;
 end;
 
 function TACBrECFEscECF.GetTotalSubstituicaoTributaria: Double;
-  Function GetTotalSubstituicaoTributariaN( Indice: Integer) : Double;
-  var
-     StrValue: String;
-  begin
-    Result := 0;
-    RetornaInfoECF( '6|'+IntToStr(Indice) ) ;
-    if EscECFResposta.Params.Count > 1 then
-    begin
-       StrValue := EscECFResposta.Params[1] ;
-       Result   := StrToInt( StrValue ) / 100;
-    end;
-  end;
 begin
-  Result := GetTotalSubstituicaoTributariaN( 1 ) +
-            GetTotalSubstituicaoTributariaN( 2 ) +
-            GetTotalSubstituicaoTributariaN( 3 ) ;
+  Result := GetValorTotalizador( 1, 1 ) +
+            GetValorTotalizador( 2, 1 ) +
+            GetValorTotalizador( 3, 1 ) ;
 end;
 
 function TACBrECFEscECF.GetCNPJ: String;
@@ -2427,6 +2550,41 @@ begin
             RetornaInfoECF( '15|17' ) ;               // Endereço
 end;
 
+function TACBrECFEscECF.GetUsuarioAtual : String ;
+begin
+  Result := '001' ; // No convênio 09/09 não é mais possível cadastrar outros usuários
+end ;
+
+function TACBrECFEscECF.GetDataHoraSB : TDateTime ;
+var
+   RetCmd: String;
+begin
+  EscECFComando.CMD := 140;
+  EscECFComando.AddParamString( fsNumECF ) ;
+  EnviaComando;
+
+  RetCmd := EscECFResposta.Params[0] ;
+
+  try
+    Result := EncodeDateTime( StrToInt(copy(RetCmd,82,4)),   // Ano
+                              StrToInt(copy(RetCmd,86,2)),   // Mes
+                              StrToInt(copy(RetCmd,88,2)),   // Dia
+                              StrToInt(copy(RetCmd,90,2)),   // Hora
+                              StrToInt(copy(RetCmd,92,2)),   // Min
+                              StrToInt(copy(RetCmd,94,2)),   // Seg
+                              0 ) ;
+  except
+     // Notei que o ECF de Bamatech retorna a Data no formato DDMMAAAA
+     Result := EncodeDateTime( StrToInt(copy(RetCmd,86,4)),   // Ano
+                               StrToInt(copy(RetCmd,84,2)),   // Mes
+                               StrToInt(copy(RetCmd,82,2)),   // Dia
+                               StrToInt(copy(RetCmd,90,2)),   // Hora
+                               StrToInt(copy(RetCmd,92,2)),   // Min
+                               StrToInt(copy(RetCmd,94,2)),   // Seg
+                               0 ) ;
+  end ;
+end ;
+
 function TACBrECFEscECF.GetSubModeloECF: String;
 begin
    Result := fsModeloECF;
@@ -2447,7 +2605,6 @@ begin
   Result := EncodeDate( StrToInt(copy(DataStr,5,4)),   // Ano
                         StrToInt(copy(DataStr,3,2)),   // Mes
                         StrToInt(copy(DataStr,1,2)) ); // Dia
-
 end;
 
 procedure TACBrECFEscECF.LerTotaisAliquota;
@@ -2491,4 +2648,14 @@ end;
 
 end.
 
+{ Observaçoes:
+
+- Registro E01 do comando 139 traz a Data de Sw.Basico no formato DDMMAAAA quando o correto é AAAAMMDD
+
+- Não encontrado:
+-- Num.Loja
+-- Total Acrescimos OPNF
+-- Total Cancelamentos OPNF
+-- Total Descontos OPNF
+}
 
