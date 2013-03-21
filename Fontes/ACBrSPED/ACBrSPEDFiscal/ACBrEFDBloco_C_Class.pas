@@ -1567,46 +1567,6 @@ begin
      begin
         with RegC100.RegistroC170.Items[intFor] do
         begin
-{
-          case CST_IPI of
-           ipiEntradaRecuperacaoCredito: strCST_IPI := '00';
-           ipiEntradaTributradaZero:     strCST_IPI := '01';
-           ipiEntradaIsenta:             strCST_IPI := '02';
-           ipiEntradaNaoTributada:       strCST_IPI := '03';
-           ipiEntradaImune:              strCST_IPI := '04';
-           ipiEntradaComSuspensao:       strCST_IPI := '05';
-           ipiOutrasEntradas:            strCST_IPI := '49';
-           ipiSaidaTributada:            strCST_IPI := '50';
-           ipiSaidaTributadaZero:        strCST_IPI := '51';
-           ipiSaidaIsenta:               strCST_IPI := '52';
-           ipiSaidaNaoTributada:         strCST_IPI := '53';
-           ipiSaidaImune:                strCST_IPI := '54';
-           ipiSaidaComSuspensao:         strCST_IPI := '55';
-           ipiOutrasSaidas:              strCST_IPI := '99';
-          end;
-          case CST_PIS of
-           pisValorAliquotaNormal:       strCST_PIS := '01';
-           pisValorAliquotaDiferenciada: strCST_PIS := '02';
-           pisQtdeAliquotaUnidade:       strCST_PIS := '03';
-           pisMonofaticaAliquotaZero:    strCST_PIS := '04';
-           pisAliquotaZero:              strCST_PIS := '06';
-           pisIsentaContribuicao:        strCST_PIS := '07';
-           pisSemIncidenciaContribuicao: strCST_PIS := '08';
-           pisSuspensaoContribuicao:     strCST_PIS := '09';
-           pisOutrasOperacoes:           strCST_PIS := '99';
-          end;
-          case CST_COFINS of
-           cofinsValorAliquotaNormal:       strCST_COFINS := '01';
-           cofinsValorAliquotaDiferenciada: strCST_COFINS := '02';
-           cofinsQtdeAliquotaUnidade:       strCST_COFINS := '03';
-           cofinsMonofaticaAliquotaZero:    strCST_COFINS := '04';
-           cofinsAliquotaZero:              strCST_COFINS := '06';
-           cofinsIsentaContribuicao:        strCST_COFINS := '07';
-           cofinsSemIncidenciaContribuicao: strCST_COFINS := '08';
-           cofinsSuspensaoContribuicao:     strCST_COFINS := '09';
-           cofinsOutrasOperacoes:           strCST_COFINS := '99';
-          end;
-}
           strLinha :=  LFill('C170') +
                        LFill( NUM_ITEM ) +
                        LFill( COD_ITEM ) +

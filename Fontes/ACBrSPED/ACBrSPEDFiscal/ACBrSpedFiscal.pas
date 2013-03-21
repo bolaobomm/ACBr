@@ -107,10 +107,10 @@ type
     function GetDT_FIN: TDateTime;
     function GetDT_INI: TDateTime;
     procedure InicializaBloco(Bloco: TACBrSPED);
-    procedure SetArquivo(const AValue: ansistring);
+    procedure SetArquivo(const Value: ansistring);
     procedure SetDelimitador(const Value: ansistring);
-    procedure SetLinhasBuffer(const AValue: Integer);
-    procedure SetPath(const AValue: ansistring);
+    procedure SetLinhasBuffer(const Value: Integer);
+    procedure SetPath(const Value: ansistring);
     procedure SetTrimString(const Value: boolean);
     procedure SetCurMascara(const Value: ansistring);
     procedure SetDT_FIN(const Value: TDateTime);
@@ -322,6 +322,9 @@ end;
 
 procedure TACBrSPEDFiscal.SetDelimitador(const Value: ansistring);
 begin
+  if Value = '' then
+     raise Exception.Create('Campo não pode ser vazio!');
+
   FDelimitador := Value;
 
   FBloco_0.Delimitador := Value;
@@ -334,14 +337,17 @@ begin
   FBloco_9.Delimitador := Value;
 end;
 
-procedure TACBrSPEDFiscal.SetLinhasBuffer(const AValue: Integer);
+procedure TACBrSPEDFiscal.SetLinhasBuffer(const Value: Integer);
 begin
-   FACBrTXT.LinhasBuffer := AValue ;
+   FACBrTXT.LinhasBuffer := Value ;
 end;
 
-procedure TACBrSPEDFiscal.SetPath(const AValue: ansistring);
+procedure TACBrSPEDFiscal.SetPath(const Value: ansistring);
 begin
-  FPath := PathWithDelim( AValue );
+  if Value = '' then
+     raise Exception.Create('Campo não pode ser vazio!');
+
+  FPath := PathWithDelim( Value );
 end;
 
 function TACBrSPEDFiscal.GetCurMascara: ansistring;
@@ -351,7 +357,10 @@ end;
 
 procedure TACBrSPEDFiscal.SetCurMascara(const Value: ansistring);
 begin
-  FCurMascara := Value;
+  if Value = '' then
+     raise Exception.Create('Campo não pode ser vazio! Para deixar sem mascara digite #');
+
+	 FCurMascara := Value;
 
   FBloco_0.CurMascara := Value;
   FBloco_1.CurMascara := Value;
@@ -447,15 +456,15 @@ begin
   FInicializado := True ;
 end;
 
-procedure TACBrSPEDFiscal.SetArquivo(const AValue: ansistring);
+procedure TACBrSPEDFiscal.SetArquivo(const Value: ansistring);
 var
   APath : AnsiString;
 begin
-  if FArquivo = AValue then
+  if FArquivo = Value then
      exit;
 
-  FArquivo := ExtractFileName( AValue );
-  APath    := ExtractFilePath( AValue );
+  FArquivo := ExtractFileName( Value );
+  APath    := ExtractFilePath( Value );
 
   if APath <> '' then
      Path := APath;
