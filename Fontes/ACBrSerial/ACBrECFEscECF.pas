@@ -2233,8 +2233,8 @@ var
     I := 0 ; Result := 0;
     while  (I+2 < EscECFResposta.Params.Count) do
     begin
-      if (EscECFResposta[I] = Registrador) and
-         (StringToFloatDef(EscECFResposta[I+1],0) = Aliq) then
+      if (EscECFResposta.Params[I] = Registrador) and
+         (StringToFloatDef(EscECFResposta.Params[I+1],0) = Aliq) then
       begin
          Result := RoundTo( StrToFloatDef(EscECFResposta.Params[ I+2 ],0)/100, -2);
          Break;
