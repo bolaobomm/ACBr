@@ -88,6 +88,12 @@ begin
    fpTamanhoMaximoNossoNum := 0;
    fpTamanhoAgencia := 5;
    fpTamanhoConta   := 8;
+
+   fpOrientacoesBanco.Clear;
+   fpOrientacoesBanco.Add(ACBrStr('SAC CAIXA: 0800 726 0101 (informações,reclamações e elogios) ' + sLineBreak+
+                          'Para pessoas com deficiência auditiva ou de fala: 0800 726 2492 ' + sLineBreak +
+                          'Ouvidoria: 0800 725 7474 (reclamações não solucionadas e denúncias)') + sLineBreak+
+                          '     caixa.gov.br      ');
 end;
 
 function TACBrCaixaEconomicaSICOB.CalcularDigitoVerificador(const ACBrTitulo: TACBrTitulo ): String;
@@ -357,7 +363,7 @@ begin
               ANossoNumero:= '82'+ padr(Copy(ANossoNumero,Length(ANossoNumero)-7,8),8);
           end
          else
-            ANossoNumero:= '9' + padR(Copy(ANossoNumero,Length(ANossoNumero)-8,9),9);
+            ANossoNumero:= '9' + padR(Copy(ANossoNumero,Length(ANossoNumero)-8,9),9,'0');
        end;
    end;
    Result := ANossoNumero;
