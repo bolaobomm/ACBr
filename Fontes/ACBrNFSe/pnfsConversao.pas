@@ -567,7 +567,6 @@ begin
   3101607, // Alfenas/MG
   3115300, // Cataguases/MG
   3117504, // Conceicao do Mato Dentro/MG
-  3131307, // Ipatinga/MG
   3137601, // Lagoa Santa/MG
   3143906, // Muriae/MG
   3145604, // Oliveira/MG

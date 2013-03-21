@@ -106,8 +106,8 @@ begin
   3131307: begin // Ipatinga/MG
             ConfigCidade.CodigoURLs := 1;
             if AAmbiente = 1
-             then ConfigCidade.NameSpaceEnvelope := 'https://ipatinga-mg.issintel.com.br/webservices/abrasf/api'
-             else ConfigCidade.NameSpaceEnvelope := 'https://ipatinga-mg.treino-issintel.com.br/webservices/abrasf/api';
+             then ConfigCidade.NameSpaceEnvelope := 'https://ipatinga-mg.issintel.com.br:442/webservices/abrasf/api'
+             else ConfigCidade.NameSpaceEnvelope := 'https://ipatinga-mg.treino-issintel.com.br:442/webservices/abrasf/api';
            end;
 //  3157807: begin // Santa Luzia/MG
 //            ConfigCidade.CodigoURLs := 2;
@@ -146,15 +146,20 @@ end;
 function TProvedorISSIntel.GetConfigURL(ACodCidade: Integer): TConfigURL;
 var
  ConfigURL: TConfigURL;
+ Porta: String;
 begin
  case ACodCidade of
   2925303: begin
             ConfigURL.HomNomeCidade := 'portoseguro-ba';
             ConfigURL.ProNomeCidade := 'portoseguro-ba';
+
+            Porta := '';
            end;
   3131307: begin
             ConfigURL.HomNomeCidade := 'ipatinga-mg';
             ConfigURL.ProNomeCidade := 'ipatinga-mg';
+
+            Porta := ':442';
            end;
 //  3157807: begin
 //            ConfigURL.HomNomeCidade := 'santaluzia-mg';
@@ -162,19 +167,19 @@ begin
 //           end;
  end;
 
- ConfigURL.HomRecepcaoLoteRPS    := 'https://' + ConfigURL.HomNomeCidade + '.treino-issintel.com.br:442/webservices/abrasf/api';
- ConfigURL.HomConsultaLoteRPS    := 'https://' + ConfigURL.HomNomeCidade + '.treino-issintel.com.br:442/webservices/abrasf/api';
- ConfigURL.HomConsultaNFSeRPS    := 'https://' + ConfigURL.HomNomeCidade + '.treino-issintel.com.br:442/webservices/abrasf/api';
- ConfigURL.HomConsultaSitLoteRPS := 'https://' + ConfigURL.HomNomeCidade + '.treino-issintel.com.br:442/webservices/abrasf/api';
- ConfigURL.HomConsultaNFSe       := 'https://' + ConfigURL.HomNomeCidade + '.treino-issintel.com.br:442/webservices/abrasf/api';
- ConfigURL.HomCancelaNFSe        := 'https://' + ConfigURL.HomNomeCidade + '.treino-issintel.com.br:442/webservices/abrasf/api';
+ ConfigURL.HomRecepcaoLoteRPS    := 'https://' + ConfigURL.HomNomeCidade + '.treino-issintel.com.br' + Porta + '/webservices/abrasf/api';
+ ConfigURL.HomConsultaLoteRPS    := 'https://' + ConfigURL.HomNomeCidade + '.treino-issintel.com.br' + Porta + '/webservices/abrasf/api';
+ ConfigURL.HomConsultaNFSeRPS    := 'https://' + ConfigURL.HomNomeCidade + '.treino-issintel.com.br' + Porta + '/webservices/abrasf/api';
+ ConfigURL.HomConsultaSitLoteRPS := 'https://' + ConfigURL.HomNomeCidade + '.treino-issintel.com.br' + Porta + '/webservices/abrasf/api';
+ ConfigURL.HomConsultaNFSe       := 'https://' + ConfigURL.HomNomeCidade + '.treino-issintel.com.br' + Porta + '/webservices/abrasf/api';
+ ConfigURL.HomCancelaNFSe        := 'https://' + ConfigURL.HomNomeCidade + '.treino-issintel.com.br' + Porta + '/webservices/abrasf/api';
 
- ConfigURL.ProRecepcaoLoteRPS    := 'https://' + ConfigURL.ProNomeCidade + '.issintel.com.br:442/webservices/abrasf/api';
- ConfigURL.ProConsultaLoteRPS    := 'https://' + ConfigURL.ProNomeCidade + '.issintel.com.br:442/webservices/abrasf/api';
- ConfigURL.ProConsultaNFSeRPS    := 'https://' + ConfigURL.ProNomeCidade + '.issintel.com.br:442/webservices/abrasf/api';
- ConfigURL.ProConsultaSitLoteRPS := 'https://' + ConfigURL.ProNomeCidade + '.issintel.com.br:442/webservices/abrasf/api';
- ConfigURL.ProConsultaNFSe       := 'https://' + ConfigURL.ProNomeCidade + '.issintel.com.br:442/webservices/abrasf/api';
- ConfigURL.ProCancelaNFSe        := 'https://' + ConfigURL.ProNomeCidade + '.issintel.com.br:442/webservices/abrasf/api';
+ ConfigURL.ProRecepcaoLoteRPS    := 'https://' + ConfigURL.ProNomeCidade + '.issintel.com.br' + Porta + '/webservices/abrasf/api';
+ ConfigURL.ProConsultaLoteRPS    := 'https://' + ConfigURL.ProNomeCidade + '.issintel.com.br' + Porta + '/webservices/abrasf/api';
+ ConfigURL.ProConsultaNFSeRPS    := 'https://' + ConfigURL.ProNomeCidade + '.issintel.com.br' + Porta + '/webservices/abrasf/api';
+ ConfigURL.ProConsultaSitLoteRPS := 'https://' + ConfigURL.ProNomeCidade + '.issintel.com.br' + Porta + '/webservices/abrasf/api';
+ ConfigURL.ProConsultaNFSe       := 'https://' + ConfigURL.ProNomeCidade + '.issintel.com.br' + Porta + '/webservices/abrasf/api';
+ ConfigURL.ProCancelaNFSe        := 'https://' + ConfigURL.ProNomeCidade + '.issintel.com.br' + Porta + '/webservices/abrasf/api';
 
  Result := ConfigURL;
 end;
@@ -579,14 +584,20 @@ begin
 end;
 
 function TProvedorISSIntel.GetSoapAction(Acao: TnfseAcao; NomeCidade: String): String;
+var
+ Porta: String;
 begin
+ if NomeCidade = 'ipatinga-mg'
+  then Porta := ':442'
+  else Porta := '';
+
  case Acao of
-   acRecepcionar: Result := 'https://' + NomeCidade + '.issintel.com.br/webservices/abrasf/api/RecepcionarLoteRps';
-   acConsSit:     Result := 'https://' + NomeCidade + '.issintel.com.br/webservices/abrasf/api/ConsultarSituacaoLoteRps';
-   acConsLote:    Result := 'https://' + NomeCidade + '.issintel.com.br/webservices/abrasf/api/ConsultarLoteRps';
-   acConsNFSeRps: Result := 'https://' + NomeCidade + '.issintel.com.br/webservices/abrasf/api/ConsultarNfsePorRps';
-   acConsNFSe:    Result := 'https://' + NomeCidade + '.issintel.com.br/webservices/abrasf/api/ConsultarNfse';
-   acCancelar:    Result := 'https://' + NomeCidade + '.issintel.com.br/webservices/abrasf/api/CancelarNfse';
+   acRecepcionar: Result := 'https://' + NomeCidade + '.issintel.com.br' + Porta + '/webservices/abrasf/api/RecepcionarLoteRps';
+   acConsSit:     Result := 'https://' + NomeCidade + '.issintel.com.br' + Porta + '/webservices/abrasf/api/ConsultarSituacaoLoteRps';
+   acConsLote:    Result := 'https://' + NomeCidade + '.issintel.com.br' + Porta + '/webservices/abrasf/api/ConsultarLoteRps';
+   acConsNFSeRps: Result := 'https://' + NomeCidade + '.issintel.com.br' + Porta + '/webservices/abrasf/api/ConsultarNfsePorRps';
+   acConsNFSe:    Result := 'https://' + NomeCidade + '.issintel.com.br' + Porta + '/webservices/abrasf/api/ConsultarNfse';
+   acCancelar:    Result := 'https://' + NomeCidade + '.issintel.com.br' + Porta + '/webservices/abrasf/api/CancelarNfse';
    acGerar:       Result := '';
  end;
 end;
