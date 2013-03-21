@@ -376,7 +376,7 @@ begin
     1: Ide.tpAmb := taHomologacao;
    end;
 
-   // TMDFeTpEmitente = ( teTransportadora, teNaoTransportadora );
+   // TMDFeTpEmitente = ( teTransportadora, teTranspCargaPropria );
    Ide.tpEmit  := teTransportadora;
    Ide.modelo  := '58';
    Ide.serie   := 1;
