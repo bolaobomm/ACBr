@@ -49,7 +49,9 @@ uses
 
 type
   TLayOutMDFe     = ( LayMDFeEnvio, LayMDFeConsulta );
-  TMDFeTpEmitente = ( teTransportadora, teNaoTransportadora );
+  // Alterado por Italo em 21/03/2013
+  // Conforme NT 2013/001
+  TMDFeTpEmitente = ( teTransportadora, teTranspCargaPropria );
   TMDFeModal      = ( moRodoviario, moAereo, moAquaviario, moFerroviario );
 
 const
@@ -112,14 +114,14 @@ function TpEmitenteToStr(const t: TMDFeTpEmitente):string;
 begin
   result := EnumeradoToStr(t,
                            ['1', '2'],
-                           [teTransportadora, teNaoTransportadora]);
+                           [teTransportadora, teTranspCargaPropria]);
 end;
 
 function StrToTpEmitente(var ok: boolean; const s: string):TMDFeTpEmitente;
 begin
   result := StrToEnumerado(ok, s,
                            ['1', '2'],
-                           [teTransportadora, teNaoTransportadora]);
+                           [teTransportadora, teTranspCargaPropria]);
 end;
 
 // Modal************************************************************************
