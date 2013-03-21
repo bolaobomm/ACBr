@@ -589,6 +589,7 @@ begin
   3542602, // Registro/SP
   3543402, // Ribeirao Preto/SP
   3543907, // Rio Claro/SP
+  3545209, // Salto/SP
   3547809, // Santo Andre/SP
   3548500, // Santos/SP
   3548708, // Sao Bernardo do Campos/SP
