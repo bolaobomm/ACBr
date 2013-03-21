@@ -1937,14 +1937,7 @@ begin
     if FConfiguracoes.Geral.Salvar
      then FConfiguracoes.Geral.Save(NumeroLote+'-rec.xml', FRetWS, FConfiguracoes.Arquivos.GetPathGer);
 
-    NFSeRetorno          := TretEnvLote.Create;
-    NFSeRetorno.Prefixo2 := FConfiguracoes.WebServices.Prefixo2;
-    NFSeRetorno.Prefixo3 := FConfiguracoes.WebServices.Prefixo3;
-
-    // Alterado por Rodrigo Cantelli
-    case FProvedor of
-     proBetha: NFSeRetorno.Prefixo3 := '';
-    end;
+    NFSeRetorno := TretEnvLote.Create;
 
     NFSeRetorno.Leitor.Arquivo := FRetWS;
     NFSeRetorno.LerXml;
@@ -2106,14 +2099,7 @@ begin
   if FConfiguracoes.Geral.Salvar
    then FConfiguracoes.Geral.Save(Protocolo + '-sit.xml', FRetWS, FConfiguracoes.Arquivos.GetPathGer);
 
-  NFSeRetorno          := TretSitLote.Create;
-  NFSeRetorno.Prefixo2 := FConfiguracoes.WebServices.Prefixo2;
-  NFSeRetorno.Prefixo3 := FConfiguracoes.WebServices.Prefixo3;
-
-  // Alterado por Rodrigo Cantelli
-  case FProvedor of
-   proBetha: NFSeRetorno.Prefixo3 := '';
-  end;
+  NFSeRetorno := TretSitLote.Create;
 
   NFSeRetorno.Leitor.Arquivo := FRetWS;
   NFSeRetorno.LerXml;
@@ -2301,21 +2287,14 @@ begin
    then FConfiguracoes.Geral.Save(Protocolo + '-lista-nfse.xml', NotaUtil.RetirarPrefixos(FRetWS), FConfiguracoes.Arquivos.GetPathGer);
   self.ArquivoRetorno := FRetWS;
 
-  NFSeRetorno          := TretLote.Create;
-  NFSeRetorno.Prefixo2 := FConfiguracoes.WebServices.Prefixo2;
-  NFSeRetorno.Prefixo3 := FConfiguracoes.WebServices.Prefixo3;
-  NFSeRetorno.Prefixo4 := FConfiguracoes.WebServices.Prefixo4;
+  NFSeRetorno := TretLote.Create;
 
-  Prefixo3             := FConfiguracoes.WebServices.Prefixo3;
-  Prefixo4             := FConfiguracoes.WebServices.Prefixo4;
+  Prefixo3 := FConfiguracoes.WebServices.Prefixo3;
+  Prefixo4 := FConfiguracoes.WebServices.Prefixo4;
 
   // Alterado por Rodrigo Cantelli
   case FProvedor of
-   proBetha: begin
-              NFSeRetorno.Prefixo3 := '';
-              Prefixo3             := '';
-             end;
-   proISSNET: NFSeRetorno.Prefixo4 := '';
+   proBetha: Prefixo3 := '';
   end;
 
 try
@@ -2529,21 +2508,14 @@ begin
   if FConfiguracoes.Geral.Salvar
    then FConfiguracoes.Geral.Save(Numero + Serie + '-comp-nfse.xml', FRetWS, FConfiguracoes.Arquivos.GetPathGer);
 
-  NFSeRetorno          := TretNfseRps.Create;
-  NFSeRetorno.Prefixo2 := FConfiguracoes.WebServices.Prefixo2;
-  NFSeRetorno.Prefixo3 := FConfiguracoes.WebServices.Prefixo3;
-  NFSeRetorno.Prefixo4 := FConfiguracoes.WebServices.Prefixo4;
+  NFSeRetorno := TretNfseRps.Create;
 
-  Prefixo3             := FConfiguracoes.WebServices.Prefixo3;
-  Prefixo4             := FConfiguracoes.WebServices.Prefixo4;
+  Prefixo3 := FConfiguracoes.WebServices.Prefixo3;
+  Prefixo4 := FConfiguracoes.WebServices.Prefixo4;
 
   // Alterado por Rodrigo Cantelli
   case FProvedor of
-   proBetha: begin
-              NFSeRetorno.Prefixo3 := '';
-              Prefixo3             := '';
-             end;
-   proISSNET: NFSeRetorno.Prefixo4 := '';
+   proBetha: Prefixo3 := '';
   end;
 
   NFSeRetorno.Leitor.Arquivo := FRetWS;
@@ -2732,21 +2704,14 @@ begin
    then FConfiguracoes.Geral.Save(FormatDateTime('yyyymmdd', DataInicial) +
                                   FormatDateTime('yyyymmdd', DataFinal) + '-lista-nfse.xml', NotaUtil.RetirarPrefixos(FRetWS), FConfiguracoes.Arquivos.GetPathGer);
 
-  NFSeRetorno          := TretNfse.Create;
-  NFSeRetorno.Prefixo2 := FConfiguracoes.WebServices.Prefixo2;
-  NFSeRetorno.Prefixo3 := FConfiguracoes.WebServices.Prefixo3;
-  NFSeRetorno.Prefixo4 := FConfiguracoes.WebServices.Prefixo4;
+  NFSeRetorno := TretNfse.Create;
 
-  Prefixo3             := FConfiguracoes.WebServices.Prefixo3;
-  Prefixo4             := FConfiguracoes.WebServices.Prefixo4;
+  Prefixo3 := FConfiguracoes.WebServices.Prefixo3;
+  Prefixo4 := FConfiguracoes.WebServices.Prefixo4;
 
   // Alterado por Rodrigo Cantelli
   case FProvedor of
-   proBetha: begin
-              NFSeRetorno.Prefixo3 := '';
-              Prefixo3             := '';
-             end;
-   proISSNET: NFSeRetorno.Prefixo4 := '';
+   proBetha: Prefixo3 := '';
   end;
 
   NFSeRetorno.Leitor.Arquivo := FRetWS;
@@ -2930,16 +2895,7 @@ begin
    then FConfiguracoes.Geral.Save(TNFSeCancelarNFse(Self).FNotasFiscais.Items[0].NFSe.Numero + '-can.xml', FRetWS, FConfiguracoes.Arquivos.GetPathCan);
   self.ArquivoRetorno := FRetWS;
 
-  NFSeRetorno          := TretCancNfse.Create;
-  NFSeRetorno.Prefixo2 := FConfiguracoes.WebServices.Prefixo2;
-  NFSeRetorno.Prefixo3 := FConfiguracoes.WebServices.Prefixo3;
-  NFSeRetorno.Prefixo4 := FConfiguracoes.WebServices.Prefixo4;
-
-  // Alterado por Rodrigo Cantelli
-  case FProvedor of
-   proBetha:  NFSeRetorno.Prefixo3 := '';
-   proISSNET: NFSeRetorno.Prefixo4 := '';
-  end;
+  NFSeRetorno := TretCancNfse.Create;
 
   NFSeRetorno.Leitor.Arquivo := FRetWS;
   NFSeRetorno.LerXml;
@@ -3080,21 +3036,14 @@ begin
   if FConfiguracoes.Geral.Salvar
    then FConfiguracoes.Geral.Save(IntToStr(NumeroRps) + '-lista-nfse.xml', NotaUtil.RetirarPrefixos(FRetWS), FConfiguracoes.Arquivos.GetPathGer);
 
-  NFSeRetorno          := TGerarretNfse.Create;
-  NFSeRetorno.Prefixo2 := FConfiguracoes.WebServices.Prefixo2;
-  NFSeRetorno.Prefixo3 := FConfiguracoes.WebServices.Prefixo3;
-  NFSeRetorno.Prefixo4 := FConfiguracoes.WebServices.Prefixo4;
+  NFSeRetorno := TGerarretNfse.Create;
 
-  Prefixo3             := FConfiguracoes.WebServices.Prefixo3;
-  Prefixo4             := FConfiguracoes.WebServices.Prefixo4;
+  Prefixo3 := FConfiguracoes.WebServices.Prefixo3;
+  Prefixo4 := FConfiguracoes.WebServices.Prefixo4;
 
   // Alterado por Rodrigo Cantelli
   case FProvedor of
-   proBetha: begin
-              NFSeRetorno.Prefixo3 := '';
-              Prefixo3             := '';
-             end;
-   proISSNET: NFSeRetorno.Prefixo4 := '';
+   proBetha: Prefixo3 := '';
   end;
 
   NFSeRetorno.Leitor.Arquivo := FRetWS;
@@ -3134,78 +3083,7 @@ begin
      end
      else FRetListaNfse:='';
    end;
-  (*
-  i := 0;
-  while FRetListaNfse <> '' do
-   begin
-    if FProvedor = proBetha
-     then j := Pos('</' + Prefixo3 + 'ComplNfse>', FRetListaNfse)
-     else j := Pos('</' + Prefixo3 + 'CompNfse>', FRetListaNfse);
 
-    p := Length(trim(Prefixo3));
-    if j > 0
-     then begin
-
-      // Alterado por Italo em 19/07/2012
-      for ii := 0 to NFSeRetorno.ListaNfse.CompNfse.Count -1 do
-       begin
-        if FNotasFiscais.Items[ii].NFSe.IdentificacaoRps.Numero = NFSeRetorno.ListaNfse.CompNfse.Items[i].Nfse.IdentificacaoRps.Numero
-         then begin
-          FNotasFiscais.Items[ii].NFSe.CodigoVerificacao := NFSeRetorno.ListaNfse.CompNfse.Items[i].Nfse.CodigoVerificacao;
-          FNotasFiscais.Items[ii].NFSe.Numero            := NFSeRetorno.ListaNfse.CompNfse.Items[i].Nfse.Numero;
-          FNotasFiscais.Items[ii].NFSe.Competencia       := NFSeRetorno.ListaNfse.CompNfse.Items[i].Nfse.Competencia;
-          FNotasFiscais.Items[ii].NFSe.NfseSubstituida   := NFSeRetorno.ListaNfse.CompNfse.Items[i].Nfse.NfseSubstituida;
-
-          FNotasFiscais.Items[ii].NFSe.Servico.xItemListaServico := NFSeRetorno.ListaNfse.CompNfse.Items[i].Nfse.Servico.xItemListaServico;
-
-          FNotasFiscais.Items[ii].NFSe.PrestadorServico.RazaoSocial  := NFSeRetorno.ListaNfse.CompNfse.Items[i].Nfse.PrestadorServico.RazaoSocial;
-          FNotasFiscais.Items[ii].NFSe.PrestadorServico.NomeFantasia := NFSeRetorno.ListaNfse.CompNfse.Items[i].Nfse.PrestadorServico.NomeFantasia;
-
-          FNotasFiscais.Items[ii].NFSe.PrestadorServico.IdentificacaoPrestador.Cnpj               := NFSeRetorno.ListaNfse.CompNfse.Items[i].Nfse.PrestadorServico.IdentificacaoPrestador.Cnpj;
-          FNotasFiscais.Items[ii].NFSe.PrestadorServico.IdentificacaoPrestador.InscricaoMunicipal := NFSeRetorno.ListaNfse.CompNfse.Items[i].Nfse.PrestadorServico.IdentificacaoPrestador.InscricaoMunicipal;
-
-          FNotasFiscais.Items[ii].NFSe.PrestadorServico.Endereco.Endereco        := NFSeRetorno.ListaNfse.CompNfse.Items[i].Nfse.PrestadorServico.Endereco.Endereco;
-          FNotasFiscais.Items[ii].NFSe.PrestadorServico.Endereco.Numero          := NFSeRetorno.ListaNfse.CompNfse.Items[i].Nfse.PrestadorServico.Endereco.Numero;
-          FNotasFiscais.Items[ii].NFSe.PrestadorServico.Endereco.Complemento     := NFSeRetorno.ListaNfse.CompNfse.Items[i].Nfse.PrestadorServico.Endereco.Complemento;
-          FNotasFiscais.Items[ii].NFSe.PrestadorServico.Endereco.Bairro          := NFSeRetorno.ListaNfse.CompNfse.Items[i].Nfse.PrestadorServico.Endereco.Bairro;
-          FNotasFiscais.Items[ii].NFSe.PrestadorServico.Endereco.CodigoMunicipio := NFSeRetorno.ListaNfse.CompNfse.Items[i].Nfse.PrestadorServico.Endereco.CodigoMunicipio;
-          FNotasFiscais.Items[ii].NFSe.PrestadorServico.Endereco.UF              := NFSeRetorno.ListaNfse.CompNfse.Items[i].Nfse.PrestadorServico.Endereco.UF;
-          FNotasFiscais.Items[ii].NFSe.PrestadorServico.Endereco.CEP             := NFSeRetorno.ListaNfse.CompNfse.Items[i].Nfse.PrestadorServico.Endereco.CEP;
-          FNotasFiscais.Items[ii].NFSe.PrestadorServico.Endereco.xMunicipio      := NFSeRetorno.ListaNfse.CompNfse.Items[i].Nfse.PrestadorServico.Endereco.xMunicipio;
-
-          FNotasFiscais.Items[ii].NFSe.PrestadorServico.Contato.Telefone := NFSeRetorno.ListaNfse.CompNfse.Items[i].Nfse.PrestadorServico.Contato.Telefone;
-          FNotasFiscais.Items[ii].NFSe.PrestadorServico.Contato.Email    := NFSeRetorno.ListaNfse.CompNfse.Items[i].Nfse.PrestadorServico.Contato.Email;
-
-          FNotasFiscais.Items[ii].NFSe.Tomador.Endereco.xMunicipio := NFSeRetorno.ListaNfse.CompNfse.Items[i].Nfse.Tomador.Endereco.xMunicipio;
-
-          FRetNfse := Copy(FRetListaNfse, 1, j - 1);
-          k :=  Pos('<' + Prefixo4 + 'Nfse', FRetNfse);
-          FRetNfse := Copy(FRetNfse, k, length(FRetNfse));
-
-          FRetNFSe := FProvedorClass.GeraRetornoNFSe(Prefixo3, FRetNFSe, FNomeCidade);
-
-          if FConfiguracoes.Geral.Salvar
-           then begin
-            PathSalvar := FConfiguracoes.Arquivos.GetPathNFSe(0);
-            FConfiguracoes.Geral.Save(NFSeRetorno.ListaNfse.CompNfse.Items[i].Nfse.Numero + '-nfse.xml',
-                                      NotaUtil.RetirarPrefixos(FRetNfse), PathSalvar);
-            if FNotasFiscais.Count>0
-             then FNotasFiscais.Items[ii].NomeArq := PathWithDelim(PathSalvar) + NFSeRetorno.ListaNfse.CompNfse.Items[i].Nfse.Numero + '-nfse.xml';
-           end;
-
-          FRetListaNfse := Copy(FRetListaNfse, j + 11 + p, length(FRetListaNfse));
-
-          FNotasFiscais.Items[ii].XML_NFSe := FRetNfse;
-
-          break;
-         end;
-       end;
-
-      inc(i);
-     end
-     else FRetListaNfse:='';
-   end;
-   *)
   TACBrNFSe( FACBrNFSe ).SetStatus( stNFSeIdle );
 
   // Lista de Mensagem de Retorno

@@ -81,9 +81,6 @@ type
     FPathArquivoTabServicos: string;
     FLeitor: TLeitor;
     FListaNfse: TGerarListaNfse;
-    FPrefixo2: String;
-    FPrefixo3: String;
-    FPrefixo4: String;
   public
     constructor Create;
     destructor Destroy; override;
@@ -93,9 +90,6 @@ type
     property PathArquivoTabServicos: string read FPathArquivoTabServicos write FPathArquivoTabServicos;
     property Leitor: TLeitor                read FLeitor                 write FLeitor;
     property ListaNfse: TGerarListaNfse     read FListaNfse              write FListaNfse;
-    property Prefixo2: String               read FPrefixo2               write FPrefixo2;
-    property Prefixo3: String               read FPrefixo3               write FPrefixo3;
-    property Prefixo4: String               read FPrefixo4               write FPrefixo4;
   end;
 
 implementation
@@ -236,8 +230,6 @@ begin
     VersaoXML := NotaUtil.VersaoXML(Leitor.Arquivo);
 
     k        := 0; //length(Prefixo4);
-    Prefixo3 := '';
-    Prefixo4 := '';
 
     Leitor.Grupo := Leitor.Arquivo;
     // Alterado por Cleiver em 26/02/2013
