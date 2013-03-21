@@ -2164,14 +2164,14 @@ end;
 function TNFeConsulta.Executar: Boolean;
 var
   NFeRetorno: TRetConsSitNFe;
-  aMsg: string;
+  aMsg, aEventos: WideString;
   AProcNFe: TProcNFe;
-  i,j : Integer;
+  i, j : Integer;
   Texto : String;
   Acao  : TStringList ;
   Stream: TMemoryStream;
   StrStream: TStringStream;
-  wAtualiza: boolean;
+  wAtualiza, NFCancelada: Boolean;
 
   {$IFDEF ACBrNFeOpenSSL}
      HTTP: THTTPSend;
@@ -2247,6 +2247,20 @@ begin
     NFeRetorno.Leitor.Arquivo := FRetWS;
     NFeRetorno.LerXML;
 
+    NFCancelada := False;
+
+    if NFeRetorno.procEventoNFe.Count > 0 then
+      aEventos := '=====================================================' +
+                  LineBreak +
+                  '================== Eventos da NF-e ==================' +
+                  LineBreak +
+                  '====================================================='+
+                  LineBreak + '' + LineBreak +
+                  'Quantidade total de eventos: ' +
+                  IntToStr(NFeRetorno.procEventoNFe.Count);
+
+    // <retConsSitNFe> - Retorno da consulta da situação da NF-e
+    // Este é o status oficial da NF-e
     FTpAmb      := NFeRetorno.TpAmb;
     FverAplic   := NFeRetorno.verAplic;
     FcStat      := NFeRetorno.cStat;
@@ -2254,28 +2268,40 @@ begin
     FcUF        := NFeRetorno.cUF;
     FNFeChave   := NFeRetorno.chNFe;
 
-    FprotNFe.Schema    := NFeRetorno.protNFe.Schema;
-    FprotNFe.PathNFe    := NFeRetorno.protNFe.PathNFe;
-    FprotNFe.PathRetConsReciNFe    := NFeRetorno.protNFe.PathRetConsReciNFe;
-    FprotNFe.PathRetConsSitNFe    := NFeRetorno.protNFe.PathRetConsSitNFe;
-    FprotNFe.PathRetConsSitNFe    := NFeRetorno.protNFe.PathRetConsSitNFe;
-    FprotNFe.tpAmb    := NFeRetorno.protNFe.tpAmb;
-    FprotNFe.verAplic    := NFeRetorno.protNFe.verAplic;
-    FprotNFe.chNFe    := NFeRetorno.protNFe.chNFe;
-    FprotNFe.dhRecbto    := NFeRetorno.protNFe.dhRecbto;
-    FprotNFe.nProt    := NFeRetorno.protNFe.nProt;
-    FprotNFe.digVal    := NFeRetorno.protNFe.digVal;
-    FprotNFe.cStat    := NFeRetorno.protNFe.cStat;
-    FprotNFe.xMotivo    := NFeRetorno.protNFe.xMotivo;
+    // Verifica se a nota fiscal está cancelada pelo método antigo. Se estiver,
+    // então NFCancelada será True e já atribui Protocolo, Data e Mensagem
+    if NFeRetorno.retCancNFe.cStat > 0 then
+      begin
+        FretCancNFe.tpAmb    := NFeRetorno.retCancNFe.tpAmb;
+        FretCancNFe.verAplic := NFeRetorno.retCancNFe.verAplic;
+        FretCancNFe.cStat    := NFeRetorno.retCancNFe.cStat;
+        FretCancNFe.xMotivo  := NFeRetorno.retCancNFe.xMotivo;
+        FretCancNFe.cUF      := NFeRetorno.retCancNFe.cUF;
+        FretCancNFe.chNFE    := NFeRetorno.retCancNFe.chNFE;
+        FretCancNFe.dhRecbto := NFeRetorno.retCancNFe.dhRecbto;
+        FretCancNFe.nProt    := NFeRetorno.retCancNFe.nProt;
 
-    FretCancNFe.tpAmb := NFeRetorno.retCancNFe.tpAmb;
-    FretCancNFe.verAplic := NFeRetorno.retCancNFe.verAplic;
-    FretCancNFe.cStat := NFeRetorno.retCancNFe.cStat;
-    FretCancNFe.xMotivo := NFeRetorno.retCancNFe.xMotivo;
-    FretCancNFe.cUF := NFeRetorno.retCancNFe.cUF;
-    FretCancNFe.chNFE := NFeRetorno.retCancNFe.chNFE;
-    FretCancNFe.dhRecbto := NFeRetorno.retCancNFe.dhRecbto;
-    FretCancNFe.nProt := NFeRetorno.retCancNFe.nProt;
+        NFCancelada := True;
+        FProtocolo  := NFeRetorno.retCancNFe.nProt;
+        FDhRecbto   := NFeRetorno.retCancNFe.dhRecbto;
+        FMsg        := NFeRetorno.xMotivo;
+      end;
+
+    // <protNFe> - Retorno dos dados do ENVIO da NF-e
+    // Considerá-los apenas se não existir nenhum evento de cancelamento (110111)
+    FprotNFe.Schema             := NFeRetorno.protNFe.Schema;
+    FprotNFe.PathNFe            := NFeRetorno.protNFe.PathNFe;
+    FprotNFe.PathRetConsReciNFe := NFeRetorno.protNFe.PathRetConsReciNFe;
+    FprotNFe.PathRetConsSitNFe  := NFeRetorno.protNFe.PathRetConsSitNFe;
+    FprotNFe.PathRetConsSitNFe  := NFeRetorno.protNFe.PathRetConsSitNFe;
+    FprotNFe.tpAmb              := NFeRetorno.protNFe.tpAmb;
+    FprotNFe.verAplic           := NFeRetorno.protNFe.verAplic;
+    FprotNFe.chNFe              := NFeRetorno.protNFe.chNFe;
+    FprotNFe.dhRecbto           := NFeRetorno.protNFe.dhRecbto;
+    FprotNFe.nProt              := NFeRetorno.protNFe.nProt;
+    FprotNFe.digVal             := NFeRetorno.protNFe.digVal;
+    FprotNFe.cStat              := NFeRetorno.protNFe.cStat;
+    FprotNFe.xMotivo            := NFeRetorno.protNFe.xMotivo;
 
     //{eventos_juaumkiko}
     FprocEventoNFe.Clear;
@@ -2319,25 +2345,54 @@ begin
         FprocEventoNFe.Items[I].RetEventoNFe.retEvento.Items[j].RetInfEvento.dhRegEvento := NFeRetorno.procEventoNFe.Items[I].RetEventoNFe.retEvento.Items[j].RetInfEvento.dhRegEvento;
         FprocEventoNFe.Items[I].RetEventoNFe.retEvento.Items[j].RetInfEvento.nProt := NFeRetorno.procEventoNFe.Items[I].RetEventoNFe.retEvento.Items[j].RetInfEvento.nProt;
         FprocEventoNFe.Items[I].RetEventoNFe.retEvento.Items[j].RetInfEvento.XML := NFeRetorno.procEventoNFe.Items[I].RetEventoNFe.retEvento.Items[j].RetInfEvento.XML;
+
+        aEventos := aEventos + LineBreak + '' + LineBreak +
+                    'Número de sequência: ' + IntToStr(NFeRetorno.procEventoNFe.Items[I].RetEventoNFe.InfEvento.nSeqEvento) + LineBreak +
+                    'Código do evento: ' + TpEventoToStr(NFeRetorno.procEventoNFe.Items[I].RetEventoNFe.InfEvento.TpEvento) + LineBreak +
+                    'Descrição do evento: ' + NFeRetorno.procEventoNFe.Items[I].RetEventoNFe.InfEvento.DescEvento + LineBreak +
+                    'Status do evento: ' + IntToStr(NFeRetorno.procEventoNFe.Items[I].RetEventoNFe.retEvento.Items[j].RetInfEvento.cStat) + LineBreak +
+                    'Descrição do status: ' + NFeRetorno.procEventoNFe.Items[I].RetEventoNFe.retEvento.Items[j].RetInfEvento.xMotivo + LineBreak +
+                    'Protocolo: ' + NFeRetorno.procEventoNFe.Items[I].RetEventoNFe.retEvento.Items[j].RetInfEvento.nProt + LineBreak +
+                    'Data / hora do registro: ' + DateTimeToStr(NFeRetorno.procEventoNFe.Items[I].RetEventoNFe.retEvento.Items[j].RetInfEvento.dhRegEvento);
+
+        if NFeRetorno.procEventoNFe.Items[I].RetEventoNFe.retEvento.Items[j].RetInfEvento.tpEvento = teCancelamento then
+          begin
+            NFCancelada := True;
+            FProtocolo  := NFeRetorno.procEventoNFe.Items[I].RetEventoNFe.retEvento.Items[j].RetInfEvento.nProt;
+            FDhRecbto   := NFeRetorno.procEventoNFe.Items[I].RetEventoNFe.retEvento.Items[j].RetInfEvento.dhRegEvento;
+            FMsg        := NFeRetorno.procEventoNFe.Items[I].RetEventoNFe.retEvento.Items[j].RetInfEvento.xMotivo;
+          end;
       end;
     end;
 
-    FProtocolo  := DFeUtil.SeSenao(DFeUtil.NaoEstaVazio(NFeRetorno.retCancNFe.nProt),NFeRetorno.retCancNFe.nProt,NFeRetorno.protNFe.nProt);
-    FDhRecbto   := DFeUtil.SeSenao(NFeRetorno.retCancNFe.dhRecbto <> 0,NFeRetorno.retCancNFe.dhRecbto,NFeRetorno.protNFe.dhRecbto);
-    FMsg        := NFeRetorno.XMotivo;
+    //FProtocolo  := DFeUtil.SeSenao(DFeUtil.NaoEstaVazio(NFeRetorno.retCancNFe.nProt),NFeRetorno.retCancNFe.nProt,NFeRetorno.protNFe.nProt);
+    //FDhRecbto   := DFeUtil.SeSenao(NFeRetorno.retCancNFe.dhRecbto <> 0,NFeRetorno.retCancNFe.dhRecbto,NFeRetorno.protNFe.dhRecbto);
+    //FMsg        := NFeRetorno.XMotivo;
+
+    if NFCancelada = False then
+      begin
+        FProtocolo := NFeRetorno.protNFe.nProt;
+        FDhRecbto  := NFeRetorno.protNFe.dhRecbto;
+        FMsg       := NFeRetorno.protNFe.xMotivo;
+      end;
 
     TACBrNFe( FACBrNFe ).SetStatus( stIdle );
+
     aMsg := //'Versão Leiaute : '+NFeRetorno.Versao+LineBreak+
-            'Identificador : '+NFeRetorno.protNFe.chNFe+LineBreak+
-            'Ambiente : '+TpAmbToStr(NFeRetorno.TpAmb)+LineBreak+
-            'Versão Aplicativo : '+NFeRetorno.verAplic+LineBreak+
-            'Status Código : '+IntToStr(NFeRetorno.CStat)+LineBreak+
-            'Status Descrição : '+NFeRetorno.xMotivo+LineBreak+
-            'UF : '+CodigoParaUF(NFeRetorno.cUF)+LineBreak+
-            'Chave Acesso : '+NFeRetorno.chNFe+LineBreak+
-            'Recebimento : '+DateTimeToStr(FDhRecbto)+LineBreak+
-            'Protocolo : '+FProtocolo+LineBreak+
-            'Digest Value : '+NFeRetorno.protNFe.digVal+LineBreak;
+            'Identificador : '     + FNFeChave + LineBreak +
+            'Ambiente : '          + TpAmbToStr(FTpAmb) + LineBreak +
+            'Versão Aplicativo : ' + FverAplic + LineBreak+
+            'Status Código : '     + IntToStr(FcStat) + LineBreak+
+            'Status Descrição : '  + FXMotivo + LineBreak +
+            'UF : '                + CodigoParaUF(FcUF) + LineBreak +
+            'Chave Acesso : '      + FNFeChave + LineBreak +
+            'Recebimento : '       + DateTimeToStr(FDhRecbto) + LineBreak +
+            'Protocolo : '         + FProtocolo + LineBreak +
+            'Digest Value : '      + NFeRetorno.protNFe.digVal + LineBreak;
+
+    if NFeRetorno.procEventoNFe.Count > 0 then
+      aMsg := aMsg + LineBreak + aEventos;
+
     if FConfiguracoes.WebServices.Visualizar then
       ShowMessage(aMsg);
 
@@ -2358,7 +2413,7 @@ begin
             TACBrNFe( FACBrNFe ).NotasFiscais.Items[i].Confirmada := (NFeRetorno.cStat in [100,150]);
             if wAtualiza then
             begin
-              TACBrNFe( FACBrNFe ).NotasFiscais.Items[i].Msg        := NFeRetorno.xMotivo;
+              TACBrNFe( FACBrNFe ).NotasFiscais.Items[i].Msg                  := NFeRetorno.xMotivo;
               TACBrNFe( FACBrNFe ).NotasFiscais.Items[i].NFe.procNFe.tpAmb    := NFeRetorno.tpAmb;
               TACBrNFe( FACBrNFe ).NotasFiscais.Items[i].NFe.procNFe.verAplic := NFeRetorno.verAplic;
               TACBrNFe( FACBrNFe ).NotasFiscais.Items[i].NFe.procNFe.chNFe    := NFeRetorno.chNfe;
@@ -3673,6 +3728,9 @@ begin
                          FEvento.Evento.Items[i].InfEvento.TipoEvento +
                          IntToStr(FEvento.Evento.Items[i].InfEvento.nSeqEvento) +
                          '-procEventoNFe.xml';
+
+           {   NomeArq := FEvento.Evento.Items[i].InfEvento.id +
+                         '-procEventoNFe.xml'; }
 
               if FConfiguracoes.Geral.Salvar then
                  FConfiguracoes.Geral.Save(NomeArq, wProc.Text);
