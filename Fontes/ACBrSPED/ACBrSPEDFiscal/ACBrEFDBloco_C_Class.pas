@@ -1571,7 +1571,7 @@ begin
                        LFill( NUM_ITEM ) +
                        LFill( COD_ITEM ) +
                        LFill( DESCR_COMPL ) +
-                       LFill( QTD, 0, 5 ) +
+                       LFILL(QTD, 0, 4, False, '0', '#0.00000') +
                        LFill( UNID ) +
                        LFill( VL_ITEM, 0, 2 ) +
                        LFill( VL_DESC, 0, 2 ) +
