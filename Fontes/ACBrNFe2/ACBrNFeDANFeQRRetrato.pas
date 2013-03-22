@@ -98,8 +98,11 @@ uses
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
   Dialogs, ExtCtrls, QuickRpt, QRCtrls,  XMLIntf, XMLDoc, 
   JPEG, ACBrNFeDANFeQR, ACBrNFeQRCodeBar, pcnConversao, DB,
-  DBClient, ACBrNFeDANFEClass, ACBrNFeDANFeQRClass, QRPDFFilt;
-
+  // Incluido por Italo em 06/02/2013
+  {$IFDEF QReport_PDF}
+     QRPDFFilt,
+  {$ENDIF}
+  DBClient, ACBrNFeDANFEClass, ACBrNFeDANFeQRClass;
 type
 
   TfqrDANFeQRRetrato = class(TfqrDANFeQR)

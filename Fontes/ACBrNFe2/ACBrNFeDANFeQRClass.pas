@@ -53,8 +53,9 @@ unit ACBrNFeDANFeQRClass;
 
 interface
 
-uses Forms, SysUtils, Classes,
-     ACBrNFeDANFEClass, pcnNFe;
+uses
+ Forms, SysUtils, Classes,
+ ACBrNFeDANFeQR, ACBrNFeDANFEClass, pcnNFe, pcnConversao;
 
 type
   TACBrNFeDANFEQR = class( TACBrNFeDANFEClass )
@@ -68,7 +69,9 @@ type
 
 implementation
 
-uses ACBrNFe, ACBrNFeUtil, ACBrUtil, StrUtils, Dialogs, ACBrNFeDANFeQRRetrato;
+uses
+ StrUtils, Dialogs,
+ ACBrNFe, ACBrNFeUtil, ACBrUtil, ACBrNFeDANFeQRRetrato, ACBrNFeDANFeQRNFCe;
 
 constructor TACBrNFeDANFEQR.Create(AOwner: TComponent);
 begin
@@ -84,13 +87,21 @@ end;
 procedure TACBrNFeDANFEQR.ImprimirDANFE(NFE : TNFe = nil);
 var
   i : Integer;
-  fqrDANFeQRRetrato : TfqrDANFeQRRetrato;
-  sProt     : String ;
+  fqrDANFeQRRetrato : TfqrDANFeQR; //TfqrDANFeQRRetrato;
+  sProt : String;
 begin
-  fqrDANFeQRRetrato := TfqrDANFeQRRetrato.Create(Self);
+  case TipoDANFe of
+    tiNFCe: begin
+           fqrDANFeQRRetrato := TfqrDANFeQRNFCe.Create(Self);
+          end;
+     else begin // tiRetrato
+           fqrDANFeQRRetrato := TfqrDANFeQRRetrato.Create(Self);
+          end;
+  end;
 
+//  fqrDANFeQRRetrato := TfqrDANFeQRRetrato.Create(Self);
   sProt := TACBrNFe(ACBrNFe).DANFE.ProtocoloNFe ;
-  fqrDANFeQRRetrato.ProtocoloNFE( sProt ) ;
+//  fqrDANFeQRRetrato.ProtocoloNFE( sProt ) ;
 
   if NFE = nil then
    begin
@@ -147,16 +158,25 @@ end;
 
 procedure TACBrNFeDANFEQR.ImprimirDANFEPDF(NFE : TNFe = nil);
 var
-    NomeArq : String;
-    i : Integer;
-    fqrDANFeQRRetrato : TfqrDANFeQRRetrato;
-    sProt     : String ;
+  NomeArq : String;
+  i : Integer;
+  fqrDANFeQRRetrato : TfqrDANFeQR; //TfqrDANFeQRRetrato;
+  sProt : String;
 begin
-    fqrDANFeQRRetrato := TfqrDANFeQRRetrato.Create(Self);
+  case TipoDANFe of
+    tiNFCe: begin
+           fqrDANFeQRRetrato := TfqrDANFeQRNFCe.Create(Self);
+          end;
+     else begin // tiRetrato
+           fqrDANFeQRRetrato := TfqrDANFeQRRetrato.Create(Self);
+          end;
+  end;
 
-    sProt := TACBrNFe(ACBrNFe).DANFE.ProtocoloNFe ;
-    fqrDANFeQRRetrato.ProtocoloNFE( sProt ) ;
-      if NFE = nil then
+//  fqrDANFeQRRetrato := TfqrDANFeQRRetrato.Create(Self);
+  sProt := TACBrNFe(ACBrNFe).DANFE.ProtocoloNFe ;
+//  fqrDANFeQRRetrato.ProtocoloNFE( sProt ) ;
+
+  if NFE = nil then
    begin
      for i:= 0 to TACBrNFe(ACBrNFe).NotasFiscais.Count-1 do
       begin
@@ -185,8 +205,8 @@ begin
                                     , LocalImpCanhoto ); //Incluido por Luis Fernando em  22/01/2013););
       end;
    end
-  else
-  begin
+   else
+   begin
      NomeArq := StringReplace(NFe.infNFe.ID,'NFe', '', [rfIgnoreCase]);
      NomeArq := PathWithDelim(Self.PathPDF)+NomeArq+'.pdf';
      fqrDANFeQRRetrato.SavePDF( NomeArq
@@ -209,11 +229,9 @@ begin
                                 , ExpandirLogoMarca
                                 , NFeCancelada  //Incluido por Luis Fernando em  22/01/2013
                                 , LocalImpCanhoto ); //Incluido por Luis Fernando em  22/01/2013););
-  end;
+   end;
 
   fqrDANFeQRRetrato.Free;
-
 end;
-
 
 end.
