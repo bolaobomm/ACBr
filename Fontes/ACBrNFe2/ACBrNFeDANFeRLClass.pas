@@ -88,6 +88,8 @@
 |*    http://sourceforge.net/projects/fortesreport/files/
 |* 14/03/2013: Peterson de Cerqueira Matos
 |*  - Início da impressão dos eventos em Fortes Report
+|* 22/03/2013: Peterson de Cerqueira Matos
+|*  - Impressão dos detalhamentos específicos e do desconto em percentual
 ******************************************************************************}
 {$I ACBr.inc}
 unit ACBrNFeDANFeRLClass;
@@ -114,6 +116,11 @@ type
     FFonteDANFE: TFonteDANFE;
     FTamanhoFonte_RazaoSocial: Integer;
     FExibirEAN: Boolean;
+    FTipoDANFE: TpcnTipoImpressao;
+    FDetVeiculos: TDetVeiculos;
+    FDetMedicamentos: TDetMedicamentos;
+    FDetArmamentos: TDetArmamentos;
+    FDetCombustiveis: TDetCombustiveis;
   public
     constructor Create(AOwner: TComponent); override;
     destructor Destroy; override;
@@ -122,7 +129,6 @@ type
     procedure ImprimirEVENTO(NFE : TNFe = nil); override ;
     procedure ImprimirEVENTOPDF(NFE : TNFe = nil); override ;
     procedure SetExibirEAN(Value: Boolean); virtual;
-    procedure SetTipoDANFE(Value: TpcnTipoImpressao); virtual;
   published
     property MarcadAgua : String read FMarcadagua write FMarcadagua ;
     property LarguraCodProd: Integer read FLarguraCodProd write FLarguraCodProd;
@@ -133,7 +139,14 @@ type
     property TamanhoFonte_RazaoSocial: Integer read FTamanhoFonte_RazaoSocial
                                               write FTamanhoFonte_RazaoSocial;
     property ExibirEAN: Boolean read FExibirEAN write SetExibirEAN;
-    property TipoDANFE: TpcnTipoImpressao read FTipoDANFE write SetTipoDANFE default tiRetrato;
+    property DetVeiculos: TDetVeiculos read FDetVeiculos write FDetVeiculos default
+                          [dv_chassi, dv_xCor, dv_nSerie, dv_tpComb, dv_nMotor, dv_anoMod, dv_anoFab];
+    property DetMedicamentos: TDetMedicamentos read FDetMedicamentos write FDetMedicamentos default
+                              [dm_nLote, dm_qLote, dm_dFab, dm_dVal, dm_vPMC];
+    property DetArmamentos: TDetArmamentos read FDetArmamentos write FDetArmamentos default
+                            [da_tpArma, da_nSerie, da_nCano, da_descr];
+    property DetCombustiveis: TDetCombustiveis read FDetCombustiveis write FDetCombustiveis default
+                            [dc_cProdANP, dc_CODIF, dc_qTemp, dc_UFCons, dc_CIDE, dc_qBCProd, dc_vAliqProd, dc_vCIDE];
   end;
 
 implementation
@@ -159,7 +172,11 @@ begin
   FProdutosPorPagina := 0;
   FTamanhoFonte_RazaoSocial := 8;
   FExibirEAN := False;
-  FTipoDANFE := tiRetrato;
+  FTipoDANFE := tiRetrato;  
+  FDetVeiculos := [dv_chassi, dv_xCor, dv_nSerie, dv_tpComb, dv_nMotor, dv_anoMod, dv_anoFab];
+  FDetMedicamentos := [dm_nLote, dm_qLote, dm_dFab, dm_dVal, dm_vPMC];
+  FDetArmamentos := [da_tpArma, da_nSerie, da_nCano, da_descr];
+  FDetCombustiveis := [dc_cProdANP, dc_CODIF, dc_qTemp, dc_UFCons, dc_CIDE, dc_qBCProd, dc_vAliqProd, dc_vCIDE];
 end;
 
 destructor TACBrNFeDANFeRL.Destroy;
@@ -185,7 +202,9 @@ begin
           MargemInferior, MargemEsquerda, MargemDireita, CasasDecimais._qCom,
           CasasDecimais._vUnCom, ProdutosPorPagina, Impressora,
           TamanhoFonte_RazaoSocial, ExibirEAN, ProtocoloNFe,
-          ExibirResumoCanhoto_Texto, NFeCancelada);
+          ExibirResumoCanhoto_Texto, NFeCancelada,
+          ImprimirDetalhamentoEspecifico, ImprimirDescPorc,
+          DetVeiculos, DetMedicamentos, DetArmamentos, DetCombustiveis);
         end;
     end
   else
@@ -197,7 +216,9 @@ begin
       MargemInferior, MargemEsquerda, MargemDireita, CasasDecimais._qCom,
       CasasDecimais._vUnCom, ProdutosPorPagina, Impressora,
       TamanhoFonte_RazaoSocial, ExibirEAN, ProtocoloNFe,
-      ExibirResumoCanhoto_Texto, NFeCancelada);
+      ExibirResumoCanhoto_Texto, NFeCancelada,
+      ImprimirDetalhamentoEspecifico, ImprimirDescPorc,
+      DetVeiculos, DetMedicamentos, DetArmamentos, DetCombustiveis);
     end;
 
   frlDANFeRL.Free;
@@ -206,7 +227,7 @@ end;
 procedure TACBrNFeDANFeRL.ImprimirDANFEPDF(NFE : TNFe = nil);
 var sFile: String;
 begin
-  case TipoDANFE of
+  case FTipoDANFE of
     tiRetrato:   frlDANFeRL := TfrlDANFeRLRetrato.Create(Self);
     tiPaisagem:  frlDANFeRL := TfrlDANFeRLPaisagem.Create(Self);
   end;
@@ -224,7 +245,9 @@ begin
           ExpandirLogoMarca, FonteDANFE, MargemSuperior,
           MargemInferior, MargemEsquerda, MargemDireita, CasasDecimais._qCom,
           CasasDecimais._vUnCom, ProdutosPorPagina, TamanhoFonte_RazaoSocial,
-          ExibirEAN, ProtocoloNFe, ExibirResumoCanhoto_Texto, NFeCancelada);
+          ExibirEAN, ProtocoloNFe, ExibirResumoCanhoto_Texto, NFeCancelada,
+          ImprimirDetalhamentoEspecifico, ImprimirDescPorc,
+          DetVeiculos, DetMedicamentos, DetArmamentos, DetCombustiveis);
         end;
     end
   else
@@ -236,7 +259,9 @@ begin
       MargemSuperior, MargemInferior, MargemEsquerda, MargemDireita,
       CasasDecimais._qCom, CasasDecimais._vUnCom, ProdutosPorPagina,
       TamanhoFonte_RazaoSocial, ExibirEAN, ProtocoloNFe,
-      ExibirResumoCanhoto_Texto, NFeCancelada);
+      ExibirResumoCanhoto_Texto, NFeCancelada,
+      ImprimirDetalhamentoEspecifico, ImprimirDescPorc,
+      DetVeiculos, DetMedicamentos, DetArmamentos, DetCombustiveis);
     end;
 
 
@@ -249,16 +274,6 @@ begin
     FExibirEAN := False
   else
     FExibirEAN := Value;
-end;
-
-procedure TACBrNFeDANFeRL.SetTipoDANFE(Value: TpcnTipoImpressao);
-begin
-  if Value = tiRetrato then
-    begin
-      FExibirEAN := False;
-    end;
-
-  FTipoDANFE := Value;
 end;
 
 procedure TACBrNFeDANFeRL.ImprimirEVENTO(NFE: TNFe);

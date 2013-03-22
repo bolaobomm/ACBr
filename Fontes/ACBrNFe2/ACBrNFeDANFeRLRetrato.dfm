@@ -3,13 +3,13 @@ inherited frlDANFeRLRetrato: TfrlDANFeRLRetrato
   Top = 116
   Width = 820
   Height = 655
-  VertScrollBar.Position = 523
+  VertScrollBar.Position = 513
   Caption = 'frlDANFeRLRetrato'
   OldCreateOrder = True
   PixelsPerInch = 96
   TextHeight = 13
   inherited RLNFe: TRLReport
-    Top = -523
+    Top = -513
     Background.Arrange = baDistributed
     Background.Height = 96
     Background.Width = 175
@@ -112,6 +112,7 @@ inherited frlDANFeRLRetrato: TfrlDANFeRLRetrato
       Background.Width = 175
       BandType = btColumnHeader
       PageBreaking = pbBeforePrint
+      BeforePrint = rlbCabecalhoItensBeforePrint
       object rlsRectProdutos: TRLDraw
         Left = 0
         Top = 12
@@ -591,7 +592,7 @@ inherited frlDANFeRLRetrato: TfrlDANFeRLRetrato
           'C'#211'DIGO DO PROD. / SERV.')
         ParentFont = False
       end
-      object RLLabel10: TRLLabel
+      object lblPercValorDesc: TRLLabel
         Tag = 10
         Left = 509
         Top = 14

@@ -46,7 +46,6 @@ inherited frlDANFeRLPaisagem: TfrlDANFeRLPaisagem
         Top = 24
         Width = 1018
         Height = 8
-        Behavior = [beSiteExpander]
         Borders.Style = bsClear
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
@@ -117,6 +116,7 @@ inherited frlDANFeRLPaisagem: TfrlDANFeRLPaisagem
       BandType = btColumnHeader
       PageBreaking = pbBeforePrint
       AfterPrint = rlbCabecalhoItensAfterPrint
+      BeforePrint = rlbCabecalhoItensBeforePrint
       object pnlCabecalho1: TRLPanel
         Left = 0
         Top = 0
@@ -164,7 +164,6 @@ inherited frlDANFeRLPaisagem: TfrlDANFeRLPaisagem
           Height = 14
           Alignment = taCenter
           AutoSize = False
-          Behavior = [beSiteExpander]
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
           Font.Height = -7
@@ -191,7 +190,6 @@ inherited frlDANFeRLPaisagem: TfrlDANFeRLPaisagem
           Height = 7
           Alignment = taCenter
           AutoSize = False
-          Behavior = [beSiteExpander]
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
           Font.Height = -7
@@ -485,7 +483,7 @@ inherited frlDANFeRLPaisagem: TfrlDANFeRLPaisagem
           HoldStyle = hsRelatively
           ParentFont = False
         end
-        object RLLabel10: TRLLabel
+        object lblPercValorDesc: TRLLabel
           Tag = 10
           Left = 269
           Top = 9
@@ -797,7 +795,6 @@ inherited frlDANFeRLPaisagem: TfrlDANFeRLPaisagem
         Width = 342
         Height = 22
         AutoSize = False
-        Behavior = [beSiteExpander]
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
         Font.Height = -11
@@ -1112,7 +1109,6 @@ inherited frlDANFeRLPaisagem: TfrlDANFeRLPaisagem
         Width = 342
         Height = 26
         AutoSize = False
-        Behavior = [beSiteExpander]
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
         Font.Height = -13
@@ -1127,7 +1123,6 @@ inherited frlDANFeRLPaisagem: TfrlDANFeRLPaisagem
         Width = 342
         Height = 24
         AutoSize = False
-        Behavior = [beSiteExpander]
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
         Font.Height = -11
@@ -1363,7 +1358,6 @@ inherited frlDANFeRLPaisagem: TfrlDANFeRLPaisagem
         Width = 706
         Height = 92
         AutoSize = False
-        Behavior = [beSiteExpander]
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
         Font.Height = -8
@@ -4019,7 +4013,6 @@ inherited frlDANFeRLPaisagem: TfrlDANFeRLPaisagem
           Top = 1
           Width = 241
           Height = 10
-          Behavior = [beSiteExpander]
           DataField = 'DESCRICAO'
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
@@ -4710,7 +4703,6 @@ inherited frlDANFeRLPaisagem: TfrlDANFeRLPaisagem
       Top = 704
       Width = 681
       Height = 12
-      Behavior = [beSiteExpander]
       Color = clSkyBlue
       Font.Charset = DEFAULT_CHARSET
       Font.Color = clBlack
@@ -4941,7 +4933,6 @@ inherited frlDANFeRLPaisagem: TfrlDANFeRLPaisagem
         Top = 1
         Width = 952
         Height = 8
-        Behavior = [beSiteExpander]
         Borders.Style = bsClear
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
