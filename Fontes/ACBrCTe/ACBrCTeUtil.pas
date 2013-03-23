@@ -141,8 +141,6 @@ type
     class function GetURL(const AUF, AAmbiente, FormaEmissao: Integer; ALayOut: TLayOut): WideString;
     class function Valida(const AXML: AnsiString; var AMsg: AnsiString; const APathSchemas: string = ''): Boolean;
 
-//    class function ValidaUFCidade(const UF, Cidade: Integer): Boolean; overload;
-//    class procedure ValidaUFCidade(const UF, Cidade: Integer; const AMensagem: string); overload;
     class function FormatarChaveAcesso(AValue : String; Mascara: Boolean = False ): String;
     class function FormatarNumCTe(const AValue: Integer): string;
     class function FormatarValor(mask: TpcteMask; const AValue: real): string;
@@ -157,8 +155,6 @@ type
     class function Assinar(const AXML: AnsiString; Certificado: ICertificate2; out AXMLAssinado, FMensagem: AnsiString): Boolean;
 {$ENDIF}
 
-//    class function PathAplication: String;
-//    class procedure ConfAmbiente;
     class function UFtoCUF(UF : String): Integer;
     // Incluido por Italo em 13/09/2012
     class function IdentificaTipoSchema(Const AXML: AnsiString; var I: Integer): integer;
@@ -487,7 +483,7 @@ end;
 // Incluido por Italo em 03/10/2012
 class function CTeUtil.GetURLPE(AAmbiente: Integer; ALayOut: TLayOut): WideString;
 begin
-//  Result := CTeUtil.GetURLSP(AAmbiente, ALayOut);
+//  Result := DFeUtil.GetURLSP(AAmbiente, ALayOut);
 
   case ALayOut of
    LayCTeCadastro: Result := DFeUtil.SeSenao(AAmbiente = 1, 'https://nfe.sefaz.pe.gov.br/nfe-service/services/CadConsultaCadastro2', '');
@@ -671,27 +667,6 @@ begin
   result := FormatFloat(TpMaskToStrText(mask), AValue);
 end;
 
-(*
-class procedure CTeUtil.ConfAmbiente;
-begin
-  DecimalSeparator := ',';
-end;
-*)
-
-(*
-class function CTeUtil.ValidaUFCidade(const UF, Cidade: Integer): Boolean;
-begin
-  Result := (Copy(IntToStr(UF), 1, 2) = Copy(IntToStr(Cidade), 1, 2));
-end;
-*)
-
-(*
-class procedure CTeUtil.ValidaUFCidade(const UF, Cidade: Integer; const AMensagem: string);
-begin
-  if not (ValidaUFCidade(UF, Cidade)) then
-    raise Exception.Create(AMensagem);
-end;
-*)
 class function CTeUtil.FormatarChaveAcesso(AValue: String; Mascara: Boolean = False ): String;
 begin
   AValue := DFeUtil.LimpaNumero(AValue);
@@ -714,12 +689,6 @@ begin
                   copy(AValue,41,4);
 end;
 
-(*
-class function CTeUtil.PathAplication: String;
-begin
-  Result := ExtractFilePath(Application.ExeName);
-end;
-*)
 {$IFDEF ACBrCTeOpenSSL}
 
 function ValidaLibXML(const AXML: AnsiString;
@@ -734,25 +703,8 @@ var
   Tipo, I           : Integer;
 begin
   Tipo := CTeUtil.IdentificaTipoSchema(AXML, I);
-  (*
-  I := pos('<infCte', AXML);
-  Tipo := 1;
-  if I = 0 then
-  begin
-    I := pos('<infCanc',AXML) ;
-    if I > 0 then
-       Tipo := 2
-    else
-     begin
-       I := pos('<infInut',AXML) ;
-       if I > 0 then
-          Tipo := 3
-       else
-          Tipo := 4;
-     end;
-  end;
-  *)
- if not DirectoryExists(DFeUtil.SeSenao(DFeUtil.EstaVazio(APathSchemas),
+
+  if not DirectoryExists(DFeUtil.SeSenao(DFeUtil.EstaVazio(APathSchemas),
                  PathWithDelim(ExtractFileDir(application.ExeName))+'Schemas',
                  PathWithDelim(APathSchemas))) then
     raise Exception.Create('Diretório de Schemas não encontrado'+sLineBreak+
@@ -842,7 +794,8 @@ begin
     exit;
   end;
 
-  schema_doc := xmlReadFile(PAnsiChar(schema_filename), nil, XML_DETECT_IDS);
+  schema_doc := xmlReadFile(Pansichar(AnsiToUtf8(schema_filename)), nil, XML_DETECT_IDS);
+
   //  the schema cannot be loaded or is not well-formed
   if (schema_doc = nil) then
   begin
@@ -909,24 +862,7 @@ var
   Tipo, I     : Integer;
 begin
   Tipo := CTeUtil.IdentificaTipoSchema(XML, I);
-  (*
-  I := pos('<infCte',XML) ;
-  Tipo := 1;
-  if I = 0  then
-   begin
-     I := pos('<infCanc',XML) ;
-     if I > 0 then
-        Tipo := 2
-     else
-      begin
-        I := pos('<infInut',XML) ;
-        if I > 0 then
-           Tipo := 3
-        else
-           Tipo := 4;
-      end;
-   end;
-  *)
+
   DOMDocument                  := CoDOMDocument50.Create;
   DOMDocument.async            := False;
   DOMDocument.resolveExternals := False;
@@ -1231,7 +1167,6 @@ begin
 {$IFDEF ACBrCTeOpenSSL}
   Result := ValidaLibXML(AXML, AMsg, APathSchemas);
 {$ELSE}
-  // Alterado por Italo em 31/03/2012
   // Alterado por Italo em 27/11/2012
   if (pos('<infCTeNorm>', AXML) <> 0) or (pos('<infEvento', AXML) <> 0)
    then Result := ValidaMSXML(AXML, AMsg, APathSchemas) and
@@ -1266,27 +1201,7 @@ begin
   //// Encontrando o URI ////
   // Alterado por Italo em 13/09/2012
   Tipo := CTeUtil.IdentificaTipoSchema(AStr, I);
-  (*
-  I := pos('<infCte', AStr);
-  Tipo := 1;
 
-  if I = 0  then
-   begin
-     I := pos('<infCanc',AStr) ;
-     if I > 0 then
-        Tipo := 2
-     else
-      begin
-        I := pos('<infInut',AStr) ;
-        if I > 0 then
-           Tipo := 3
-        else
-           Tipo := 4;
-      end;
-   end;
-  if I = 0 then
-    raise Exception.Create('Não encontrei inicio do URI: <infCte');
-  *)
   I := DFeUtil.PosEx('Id=', AStr, I + 6);
   if I = 0 then
     raise Exception.Create('Não encontrei inicio do URI: Id=');
@@ -1593,7 +1508,7 @@ var
   doc     : xmlDocPtr;
   node    : xmlNodePtr;
   dsigCtx : xmlSecDSigCtxPtr;
-  buffer  : PChar;
+  buffer  : PAnsiChar;
   bufSize : integer;
 label
   done;
