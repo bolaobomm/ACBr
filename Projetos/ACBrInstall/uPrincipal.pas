@@ -107,6 +107,9 @@ type
     ckbUtilizarOpenSSL: TCheckBox;
     rdgDLL: TRadioGroup;
     ckbCopiarTodasDll: TCheckBox;
+    Label8: TLabel;
+    ckbBCB: TCheckBox;
+    Label22: TLabel;
     procedure imgPropaganda1Click(Sender: TObject);
     procedure FormCreate(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
@@ -140,7 +143,7 @@ type
     sDirLibrary: string;
     sDirPackage: string;
     sDirBPLPath: string;
-    sDirDCPpath: string;
+    sDirDCPPath: string;
     sDestino   : TDestino;
     sPathBin   : String;
     procedure BeforeExecute(Sender: TJclBorlandCommandLineTool);
@@ -468,6 +471,7 @@ begin
     ckbUtilizarOpenSSL.Checked := ArqIni.ReadBool('CONFIG', 'UtilizarOpenSSL', False);
     rdgDLL.ItemIndex           := ArqIni.ReadInteger('CONFIG','DestinoDLL',0);
     ckbCopiarTodasDll.Checked  := ArqIni.ReadBool('CONFIG','CopiarTodasDLLs',False);
+    ckbBCB.Checked             := ArqIni.ReadBool('CONFIG','C++Builder',False);
 
     if Trim(edtDelphiVersion.Text) = '' then
       edtDelphiVersion.ItemIndex := 0;
@@ -498,6 +502,7 @@ begin
     ArqIni.WriteBool('CONFIG', 'UtilizarOpenSSL', ckbUtilizarOpenSSL.Checked);
     ArqIni.WriteInteger('CONFIG','DestinoDLL', rdgDLL.ItemIndex);
     ArqIni.WriteBool('CONFIG','CopiarTodasDLLs',ckbCopiarTodasDll.Checked);
+    ArqIni.WriteBool('CONFIG','C++Builder',ckbBCB.Checked);
 
     for I := 0 to frameDpk.Pacotes.Count - 1 do
       ArqIni.WriteBool('PACOTES', frameDpk.Pacotes[I].Caption, frameDpk.Pacotes[I].Checked);
@@ -584,8 +589,20 @@ begin
     AddToLibrarySearchPath(sDirRoot + '\Fontes\ACBrSPED\ACBrSPEDFiscal', tPlatform);
     AddToLibrarySearchPath(sDirRoot + '\Fontes\ACBrSPED\ACBrSPEDPisCofins', tPlatform);
 
+//    AddToDebugDCUPath(sDirLibrary, tPlatform);
     AddToLibraryBrowsingPath(sDirLibrary, tPlatform);
-    // AddToDebugDCUPath(sDirLibrary, tPlatform);
+  end;
+
+  //-- ************ C++ Builder *************** //
+  if ckbBCB.Checked then
+  begin
+//  if oACBr.Installations[iVersion] is TJclBDSInstallation then
+//  begin
+//     TJclBDSInstallation(oACBr.Installations[iVersion]).AddToCppSearchPath(sDirLibrary, tPlatform);
+//     TJclBDSInstallation(oACBr.Installations[iVersion]).AddToCppLibraryPath(sDirLibrary, tPlatform);
+//     TJclBDSInstallation(oACBr.Installations[iVersion]).AddToCppBrowsingPath(sDirLibrary, tPlatform);
+//     TJclBDSInstallation(oACBr.Installations[iVersion]).AddToCppIncludePath(sDirLibrary, tPlatform);
+//  end;
   end;
 end;
 
@@ -648,10 +665,23 @@ begin
   Sender.AddPathOption('R', oACBr.Installations[iVersion].LibrarySearchPath[tPlatform]);
   // -N0<path> = unit .dcu output directory
   Sender.AddPathOption('N0', sDirLibrary);
-
+  //
   Sender.AddPathOption('LE', sDirBPLPath);
   Sender.AddPathOption('LN', sDirDCPPath);
 
+  //-- ************ C++ Builder *************** //
+  if ckbBCB.Checked then
+  begin
+     // -JL compila c++ builder
+     Sender.AddPathOption('JL', sDirLibrary);
+     // -NO compila .dpi output directory c++ builder
+     Sender.AddPathOption('NO', sDirDCPPath);
+     // -NB compila .lib output directory c++ builder
+     Sender.AddPathOption('NB', sDirDCPPath);
+     // -NH compila .hpp output directory c++ builder
+     Sender.AddPathOption('NH', sDirLibrary);
+  end;
+  //
   with oACBr.Installations[iVersion] do
   begin
      // -- Path para instalar os pacotes do Rave no D7, nas demais versões
@@ -678,7 +708,7 @@ begin
   sDirLibrary := '';
   sDirPackage := '';
   sDirBPLPath := '';
-  sDirDCPpath := '';
+  sDirDCPPath := '';
 
   oACBr := TJclBorRADToolInstallations.Create;
 
@@ -745,7 +775,6 @@ var
   var
     Msg: String;
   begin
-
 
     if Trim(aErro) = EmptyStr then
     begin
@@ -1044,6 +1073,11 @@ begin
   edtPlatform.Enabled := oACBr.Installations[iVersion].VersionNumber >= 9;
   if oACBr.Installations[iVersion].VersionNumber < 9 then
     edtPlatform.ItemIndex := 0;
+
+  // C++ Builder a partir do D2006, versões anteriores tem IDE independentes.
+  ckbBCB.Enabled := MatchText(oACBr.Installations[iVersion].VersionNumberStr, ['d10','d11','d12','d14','d15','d16','d17','d18']);
+  if not ckbBCB.Enabled then
+     ckbBCB.Checked := False;
 end;
 
 // abrir o endereço do ACBrSAC quando clicar na propaganda
@@ -1063,15 +1097,15 @@ procedure TfrmPrincipal.wizPgInicioNextButtonClick(Sender: TObject;
   var Stop: Boolean);
 begin
   // Verificar se o delphi está aberto
-  if oACBr.AnyInstanceRunning then
-  begin
-    Stop := True;
-    Application.MessageBox(
-      'Feche a IDE do delphi antes de continuar.',
-      PWideChar(Application.Title),
-      MB_ICONERROR + MB_OK
-    );
-  end;
+//  if oACBr.AnyInstanceRunning then
+//  begin
+//    Stop := True;
+//    Application.MessageBox(
+//      'Feche a IDE do delphi antes de continuar.',
+//      PWideChar(Application.Title),
+//      MB_ICONERROR + MB_OK
+//    );
+//  end;
 
   // Verificar se o tortoise está instalado
   if not TSVN_Class.IsTortoiseInstalado then

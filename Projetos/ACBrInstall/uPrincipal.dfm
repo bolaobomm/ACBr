@@ -1,7 +1,7 @@
 object frmPrincipal: TfrmPrincipal
   Left = 359
   Top = 202
-  ActiveControl = wizPgInicio
+  ActiveControl = edtDirDestino
   BorderIcons = [biSystemMenu, biMinimize]
   BorderStyle = bsSingle
   Caption = 'Instalador ACBr'
@@ -24,7 +24,7 @@ object frmPrincipal: TfrmPrincipal
     Top = 0
     Width = 720
     Height = 553
-    ActivePage = wizPgInicio
+    ActivePage = wizPgConfiguracao
     ButtonBarHeight = 42
     ButtonStart.Caption = 'Para o in'#237'cio'
     ButtonStart.NumGlyphs = 1
@@ -85,10 +85,6 @@ object frmPrincipal: TfrmPrincipal
       WaterMark.Image.Alignment = iaCenter
       WaterMark.Image.Layout = ilTop
       WaterMark.Width = 80
-      ExplicitLeft = 0
-      ExplicitTop = 0
-      ExplicitWidth = 0
-      ExplicitHeight = 0
       object Label6: TLabel
         Left = 25
         Top = 34
@@ -267,10 +263,6 @@ object frmPrincipal: TfrmPrincipal
       Header.Subtitle.Font.Style = []
       Caption = 'Configura'#231#245'es'
       OnNextButtonClick = wizPgConfiguracaoNextButtonClick
-      ExplicitLeft = 0
-      ExplicitTop = 0
-      ExplicitWidth = 0
-      ExplicitHeight = 0
       object Label4: TLabel
         Left = 17
         Top = 68
@@ -323,6 +315,33 @@ object frmPrincipal: TfrmPrincipal
         ShowHint = True
         OnClick = btnSelecDirInstallClick
       end
+      object Label8: TLabel
+        Left = 33
+        Top = 125
+        Width = 355
+        Height = 13
+        Caption = 
+          'Experimental : A suite ACBr n'#227'o est'#225' 100% compativel com o C++ B' +
+          'uilder'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clRed
+        Font.Height = -11
+        Font.Name = 'Tahoma'
+        Font.Style = []
+        ParentFont = False
+      end
+      object Label22: TLabel
+        Left = 33
+        Top = 138
+        Width = 3
+        Height = 13
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clRed
+        Font.Height = -11
+        Font.Name = 'Tahoma'
+        Font.Style = []
+        ParentFont = False
+      end
       object edtDelphiVersion: TComboBox
         Left = 17
         Top = 84
@@ -374,7 +393,7 @@ object frmPrincipal: TfrmPrincipal
       end
       object ckbInstalarCapicom: TCheckBox
         Left = 17
-        Top = 150
+        Top = 186
         Width = 97
         Height = 17
         Caption = 'Instalar Capicom'
@@ -382,7 +401,7 @@ object frmPrincipal: TfrmPrincipal
       end
       object ckbInstalarOpenSSL: TCheckBox
         Left = 17
-        Top = 173
+        Top = 209
         Width = 97
         Height = 17
         Caption = 'Instalar OpenSSL'
@@ -390,7 +409,7 @@ object frmPrincipal: TfrmPrincipal
       end
       object ckbUtilizarOpenSSL: TCheckBox
         Left = 17
-        Top = 127
+        Top = 163
         Width = 304
         Height = 17
         Caption = 'Utilizar o OpenSSL ao inv'#233's da Capicom na NF-e e similares'
@@ -399,7 +418,7 @@ object frmPrincipal: TfrmPrincipal
       end
       object rdgDLL: TRadioGroup
         Left = 41
-        Top = 244
+        Top = 280
         Width = 350
         Height = 107
         Caption = 'Local para onde ser'#227'o copiadas as DLL'#39's'
@@ -413,12 +432,20 @@ object frmPrincipal: TfrmPrincipal
       end
       object ckbCopiarTodasDll: TCheckBox
         Left = 17
-        Top = 216
+        Top = 252
         Width = 305
         Height = 17
         Hint = 'Copia todas as DLL'#180's "Extras" para o destino selecionado'
         Caption = 'Copiar Todas as DLL'#39's (CLX, Diversos, MSVCR, XMLSec)'
         TabOrder = 6
+      end
+      object ckbBCB: TCheckBox
+        Left = 17
+        Top = 109
+        Width = 278
+        Height = 17
+        Caption = 'Generate all C++Builder files (including package libs) '
+        TabOrder = 8
       end
     end
     object wizPgPacotes: TJvWizardInteriorPage
@@ -441,10 +468,6 @@ object frmPrincipal: TfrmPrincipal
       Header.Subtitle.Font.Name = 'Tahoma'
       Header.Subtitle.Font.Style = []
       Caption = 'Pacotes'
-      ExplicitLeft = 0
-      ExplicitTop = 0
-      ExplicitWidth = 0
-      ExplicitHeight = 0
       inline frameDpk: TframePacotes
         Left = 0
         Top = 0
@@ -497,10 +520,6 @@ object frmPrincipal: TfrmPrincipal
       Caption = 'Reposit'#243'rio'
       OnEnterPage = wizPgObterFontesEnterPage
       OnNextButtonClick = wizPgObterFontesNextButtonClick
-      ExplicitLeft = 0
-      ExplicitTop = 0
-      ExplicitWidth = 0
-      ExplicitHeight = 0
       object Label1: TLabel
         Left = 77
         Top = 177
@@ -585,10 +604,6 @@ object frmPrincipal: TfrmPrincipal
       Caption = 'Instala'#231#227'o'
       OnEnterPage = wizPgInstalacaoEnterPage
       OnNextButtonClick = wizPgInstalacaoNextButtonClick
-      ExplicitLeft = 0
-      ExplicitTop = 0
-      ExplicitWidth = 0
-      ExplicitHeight = 0
       object btnInstalarACBr: TSpeedButton
         Left = 430
         Top = 395
@@ -666,10 +681,6 @@ object frmPrincipal: TfrmPrincipal
       VisibleButtons = [bkFinish]
       Color = clWhite
       Caption = 'Fim'
-      ExplicitLeft = 0
-      ExplicitTop = 0
-      ExplicitWidth = 0
-      ExplicitHeight = 0
       object Label3: TLabel
         Left = 39
         Top = 58
@@ -824,6 +835,7 @@ object frmPrincipal: TfrmPrincipal
         Cursor = crHandPoint
         Animate = True
         Center = True
+        FrameIndex = 1
         Image.Data = {
           688B00004749463839613F012800F70000FFFFFFFFFFE5FFFFCCF7FAFDFFFF99
           FFF7B9FFF9A9FFFA84EAFA9EFFF573FFF74AFFFF00FFF268F2F478FFF456E9F5
