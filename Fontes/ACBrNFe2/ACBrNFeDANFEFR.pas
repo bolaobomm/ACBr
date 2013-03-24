@@ -66,6 +66,7 @@ type
     FFastFile: String;
     FEspessuraBorda: Integer;
     FFastFileEvento: String;
+    FShowDialog: Boolean;
     function GetPreparedReport: TfrxReport;
     function GetPreparedReportEvento: TfrxReport;
     function PrepareReport(NFE: TNFe = nil): Boolean;
@@ -84,6 +85,7 @@ type
     property EspessuraBorda: Integer read FEspessuraBorda write FEspessuraBorda;
     property PreparedReport: TfrxReport read GetPreparedReport;
     property PreparedReportEvento: TfrxReport read GetPreparedReportEvento;
+    property ShowDialog: Boolean read FShowDialog write FShowDialog default false; // Isaque Pinheiro
   end;
 
 implementation
@@ -146,17 +148,14 @@ begin
   else
     raise EACBrNFeDANFEFR.Create('Caminho do arquivo de impressão do DANFE não assinalado.');
 
-  dmDanfe.frxReport.PrintOptions.Copies := NumCopias;
-  dmDanfe.frxReport.PrintOptions.ShowDialog := MostrarPreview;
-  dmDanfe.frxReport.ShowProgress := Self.MostrarStatus;
+  dmDanfe.frxReport.PrintOptions.Copies := FNumCopias;
+  dmDanfe.frxReport.PrintOptions.ShowDialog := FShowDialog;
+  dmDanfe.frxReport.ShowProgress := FMostrarStatus;
 
   // Incluído por Luciano Enzweiler em 23/01/2013
   // Define a impressora
-  if Impressora > '' then
-  begin
-    dmDanfe.frxReport.PrintOptions.ShowDialog := False;
-    dmDanfe.frxReport.PrintOptions.Printer := Impressora;
-  end;
+  if Length(Impressora) > 0 then
+    dmDanfe.frxReport.PrintOptions.Printer := FImpressora;
 
   // preparar relatorio
   if Assigned(NFE) then

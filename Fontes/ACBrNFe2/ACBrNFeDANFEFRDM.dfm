@@ -11,6 +11,7 @@ object dmACBrNFeFR: TdmACBrNFeFR
     Outline = False
     Background = True
     HTMLTags = True
+    Quality = 95
     Author = 'FastReport'
     Subject = 'Exportando DANFE para PDF'
     ProtectionFlags = [ePrint, eModify, eCopy, eAnnot]
@@ -971,7 +972,7 @@ object dmACBrNFeFR: TdmACBrNFeFR
     Top = 148
   end
   object frxReport: TfrxReport
-    Version = '4.12.1'
+    Version = '4.13.1'
     DotMatrixReport = False
     IniFile = '\Software\Fast Reports'
     PreviewOptions.AllowEdit = False
