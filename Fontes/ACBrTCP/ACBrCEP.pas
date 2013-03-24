@@ -52,7 +52,7 @@ uses
 
 type
 
-  TACBrCEPWebService = ( wsNenhum, wsBuscarCep, wsCepLivre, wsRepublicaVirtual, wsBases4you, wsRNSolucoes, wsKingHost ) ;
+  TACBrCEPWebService = ( wsNenhum, wsBuscarCep, wsCepLivre, wsRepublicaVirtual, wsBases4you, wsRNSolucoes, wsKingHost, wsByJG ) ;
 
   EACBrCEPException = class ( Exception );
 
@@ -112,6 +112,8 @@ type
       fEnderecos : TACBrCEPEnderecos ;
       fOnBuscaEfetuada : TNotifyEvent ;
       fChaveAcesso: String;
+      fUsuario : String;
+      fSenha : String;
       function GetURL : String ;
       procedure SetWebService(const AValue : TACBrCEPWebService) ;
     public
@@ -128,6 +130,8 @@ type
       property WebService : TACBrCEPWebService read fWebService write SetWebService default wsNenhum ;
       property URL : String read GetURL ;
       property ChaveAcesso: String read fChaveAcesso write fChaveAcesso ;
+      property Usuario: String read fUsuario write fUsuario ;
+      property Senha: String read fSenha write fSenha ;
 
       property OnBuscaEfetuada : TNotifyEvent read fOnBuscaEfetuada
          write fOnBuscaEfetuada ;
@@ -143,6 +147,7 @@ type
       procedure ErrorAbstract ;
     protected
       procedure TestarChave;
+      procedure TestarUsuario;
     public
       constructor Create( AOwner : TACBrCEP ) ; virtual ;
 
@@ -214,7 +219,7 @@ type
        AUF, ABairro : String ) ; override ;
   end;
 
-    TACBrWSKingHost = class(TACBrCEPWSClass)
+TACBrWSKingHost = class(TACBrCEPWSClass)
     private
       FCepBusca: String;
       procedure ProcessaResposta ;
@@ -224,7 +229,24 @@ type
       Procedure BuscarPorCEP( ACEP : String ) ; override ;
       Procedure BuscarPorLogradouro( AMunicipio, ATipo_Logradouro, ALogradouro,
          AUF, ABairro : String ) ; override ;
-  end ;
+end ;
+
+{ TACBrWSByJG }
+
+TACBrWSByJG = class(TACBrCEPWSClass)
+    private
+      FCepBusca: String;
+      FTipoBusca: Integer;
+      procedure ProcessaCEP;
+      procedure ProcessaLogradouro;
+      procedure ProcessaResposta ;
+    public
+      constructor Create( AOwner : TACBrCEP ) ; override ;
+
+      Procedure BuscarPorCEP( ACEP : String ) ; override ;
+      Procedure BuscarPorLogradouro( AMunicipio, ATipo_Logradouro, ALogradouro,
+         AUF, ABairro : String ) ; override ;
+end ;
 
 implementation
 
@@ -312,6 +334,7 @@ begin
     wsBases4you : fACBrCEPWS := TACBrWSBases4you.Create(Self);
     wsRNSolucoes: fACBrCEPWS := TACBrWSRNSolucoes.Create(Self);
     wsKingHost: fACBrCEPWS := TACBrWSKingHost.Create(Self);
+    wsByJG: fACBrCEPWS := TACBrWSByJG.Create(Self);
   else
      fACBrCEPWS := TACBrCEPWSClass.Create( Self ) ;
   end ;
@@ -358,6 +381,14 @@ procedure TACBrCEPWSClass.TestarChave;
 begin
   if fOwner.ChaveAcesso = EmptyStr then
     raise EACBrCEPException.Create( ACBrStr('Chave de acesso não informada.') );
+end;
+
+procedure TACBrCEPWSClass.TestarUsuario;
+begin
+  if fOwner.Usuario = EmptyStr then
+    raise EACBrCEPException.Create( ACBrStr('Usuario não informado.') )
+  else if fOwner.Senha = EmptyStr then
+    raise EACBrCEPException.Create( ACBrStr('Senha não informada.') );
 end;
 
 constructor TACBrCEPWSClass.Create( AOwner : TACBrCEP) ;
@@ -851,5 +882,155 @@ begin
   if Assigned( fOwner.OnBuscaEfetuada ) then
     fOwner.OnBuscaEfetuada( Self );
 end ;
+
+{ TACBrWSByJG  http://www.byjg.com.br/ ************************************}
+
+constructor TACBrWSByJG.Create(AOwner: TACBrCEP);
+begin
+  inherited Create(AOwner);
+  fpURL := 'http://www.byjg.com.br/site/webservice.php/ws/cep' ;
+end;
+
+procedure TACBrWSByJG.BuscarPorCEP(ACEP: String);
+begin
+  TestarUsuario;
+  FCepBusca := ACEP;
+  ACEP := OnlyNumber( AnsiString( ACEP ) );
+  FTipoBusca := 1;
+  fOwner.HTTPGet( fpURL + '?httpmethod=obterlogradouroauth&cep='+ACEP+
+  '&usuario='+fOwner.Usuario+'&senha='+fOwner.Senha) ;
+  ProcessaResposta ;
+end;
+
+procedure TACBrWSByJG.BuscarPorLogradouro(AMunicipio,
+  ATipo_Logradouro, ALogradouro, AUF, ABairro: String);
+var
+  Endereco : String;
+begin
+  TestarUsuario;
+  FTipoBusca := 2;
+  Endereco := ATipo_Logradouro+' '+ALogradouro;
+  fOwner.HTTPGet( fpURL+'?httpmethod=obterCEPAuth&logradouro='+Endereco+
+ '&localidade='+AMunicipio+'&UF='+AUF+'&usuario='+fOwner.Usuario+'&senha='+fOwner.Senha ) ;
+  ProcessaResposta ;
+end;
+
+procedure TACBrWSByJG.ProcessaResposta;
+begin
+
+  if FTipoBusca = 1 then
+      ProcessaCEP
+  else if FTipoBusca = 2 then
+      ProcessaLogradouro;
+end;
+
+procedure TACBrWSByJG.ProcessaCEP;
+var
+   Buffer, Resp, TLog: TStringList;
+   TipoLogradouro, Logradouro, Complemento: String;
+   i, k : Integer;
+begin
+
+  try
+  Buffer := TStringList.Create;
+  ExtractStrings(['|'],[], PChar(fOwner.RespHTTP.Text), Buffer);
+
+  i := CompareText(Buffer[1], ACBrStr('Cep '+FCepBusca+' não encontrado'));
+  k := CompareText(Buffer[1], ACBrStr('CEP não está no formato 00000-000 ou 00000000'));
+
+  if (i <> 0) and (k <> 0) then
+  begin
+    Resp := TStringList.Create;
+    TLog := TStringList.Create;
+    ExtractStrings([','],[], PChar(Buffer[1]), Resp);
+    ExtractStrings([' '],[], PChar(Resp[0]), TLog);
+    TipoLogradouro := TLog[0];
+    TLog.Clear;
+    ExtractStrings(['-'],[], PChar(Resp[0]), TLog);
+    Logradouro := TLog[0];
+    if(TLog.Count > 1) then
+      Complemento := TLog[1];
+    Delete(Logradouro, 1, Length(TipoLogradouro)+1);
+
+    with fOwner.Enderecos.New do
+    begin
+      CEP             := FCepBusca;
+      Tipo_Logradouro := TipoLogradouro;
+      Logradouro      := Logradouro;
+      Complemento     := Complemento;
+      Bairro          := Resp[1];
+      Municipio       := Resp[2];
+      UF              := Resp[3];
+      IBGE_Municipio  := Resp[4];
+    end ;
+
+    Resp.Free;
+    TLog.Free;
+  end ;
+  finally
+    Buffer.Free;
+  end;
+
+  if Assigned( fOwner.OnBuscaEfetuada ) then
+    fOwner.OnBuscaEfetuada( Self );
+end ;
+
+procedure TACBrWSByJG.ProcessaLogradouro;
+var
+   Buffer, Resp, TLog: TStringList;
+   Qtd, i, k : Integer;
+   TipoLogradouro, Logradouro, Complemento: String;
+begin
+
+  try
+  Buffer := TStringList.Create;
+  ExtractStrings(['|'],[], PChar(fOwner.RespHTTP.Text), Buffer);
+  Qtd := StrToInt(Buffer[1]);
+  i := CompareText(Buffer[2], ACBrStr('Logradouro não encontrado'));
+  k := 2;
+
+  if i <> 0 then
+  begin
+
+    for i := 1  to Qtd do
+    begin
+
+    Resp := TStringList.Create;
+    TLog := TStringList.Create;
+    ExtractStrings([','],[], PChar(Buffer[k]), Resp);
+    ExtractStrings([' '],[], PChar(Resp[0]), TLog);
+    TipoLogradouro := TLog[0];
+    TLog.Clear;
+    ExtractStrings(['-'],[], PChar(Resp[0]), TLog);
+    Logradouro := TLog[0];
+    if(TLog.Count > 1) then
+      Complemento := TLog[1];
+    Delete(Logradouro, 1, Length(TipoLogradouro)+1);
+
+    with fOwner.Enderecos.New do
+    begin
+      CEP             := Resp[0];
+      Tipo_Logradouro := TipoLogradouro;
+      Logradouro      := Logradouro;
+      Complemento     := Complemento;
+      Bairro          := Resp[2];
+      Municipio       := Resp[3];
+      UF              := Resp[4];
+      IBGE_Municipio  := Resp[5];
+    end;
+
+    Resp.Free;
+    TLog.Free;
+    Inc(k);
+    end;
+  end;
+
+  if Assigned( fOwner.OnBuscaEfetuada ) then
+    fOwner.OnBuscaEfetuada( Self );
+
+  finally
+    Buffer.Free;
+  end;
+end;
 
 end.

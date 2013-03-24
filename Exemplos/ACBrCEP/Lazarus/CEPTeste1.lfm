@@ -1,13 +1,13 @@
 object Form1: TForm1
-  Left = 451
+  Left = 352
   Height = 320
-  Top = 163
+  Top = 187
   Width = 588
   ActiveControl = PageControl1
   Caption = 'Form1'
   ClientHeight = 320
   ClientWidth = 588
-  LCLVersion = '1.1'
+  LCLVersion = '1.0.6.0'
   object Memo1: TMemo
     Left = 0
     Height = 184
@@ -27,9 +27,9 @@ object Form1: TForm1
     Height = 136
     Top = 0
     Width = 588
-    ActivePage = TabSheet1
+    ActivePage = TabSheet2
     Align = alTop
-    TabIndex = 0
+    TabIndex = 1
     TabOrder = 1
     object TabSheet1: TTabSheet
       Caption = 'Configuração'
@@ -39,17 +39,17 @@ object Form1: TForm1
         Left = 0
         Height = 108
         Top = 0
-        Width = 180
+        Width = 292
         Align = alLeft
         Caption = 'WebService'
         ClientHeight = 90
-        ClientWidth = 176
+        ClientWidth = 288
         TabOrder = 0
         object cbxWS: TComboBox
           Left = 7
           Height = 23
           Top = 8
-          Width = 156
+          Width = 140
           ItemHeight = 15
           ItemIndex = 1
           Items.Strings = (
@@ -57,6 +57,10 @@ object Form1: TForm1
             'BuscarCEP'
             'CEPLivre'
             'RepublicaVirtual'
+            'Bases4you'
+            'RNSolucoes'
+            'KingHost'
+            'ByJG'
           )
           OnChange = cbxWSChange
           Style = csDropDownList
@@ -67,33 +71,63 @@ object Form1: TForm1
           Left = 7
           Height = 23
           Top = 56
-          Width = 156
+          Width = 140
           TabOrder = 1
         end
         object Label9: TLabel
           Left = 7
-          Height = 15
+          Height = 16
           Top = 41
-          Width = 36
+          Width = 37
           Caption = 'Chave:'
+          ParentColor = False
+        end
+        object edPass: TEdit
+          Left = 170
+          Height = 23
+          Top = 56
+          Width = 105
+          TabOrder = 2
+        end
+        object edUser: TEdit
+          Left = 170
+          Height = 23
+          Top = 15
+          Width = 105
+          TabOrder = 3
+        end
+        object Label11: TLabel
+          Left = 170
+          Height = 16
+          Top = 0
+          Width = 41
+          Caption = 'Usuário'
+          ParentColor = False
+        end
+        object Label12: TLabel
+          Left = 170
+          Height = 16
+          Top = 41
+          Width = 33
+          Caption = 'Senha'
           ParentColor = False
         end
       end
       object GroupBox1: TGroupBox
-        Left = 180
+        Left = 292
         Height = 108
         Top = 0
-        Width = 400
+        Width = 288
         Align = alClient
         Caption = 'Proxy'
         ClientHeight = 90
-        ClientWidth = 396
+        ClientWidth = 284
         TabOrder = 1
         object Label2: TLabel
           Left = 22
-          Height = 15
+          Height = 16
           Top = 0
-          Width = 25
+          Width = 26
           Caption = 'Host'
           ParentColor = False
         end
@@ -106,9 +140,9 @@ object Form1: TForm1
         end
         object Label3: TLabel
           Left = 191
-          Height = 15
+          Height = 16
           Top = 0
-          Width = 28
+          Width = 29
           Caption = 'Porta'
           ParentColor = False
         end
@@ -121,9 +155,9 @@ object Form1: TForm1
         end
         object Label4: TLabel
           Left = 22
-          Height = 15
+          Height = 16
           Top = 41
-          Width = 40
+          Width = 41
           Caption = 'Usuário'
           ParentColor = False
         end
@@ -136,9 +170,9 @@ object Form1: TForm1
         end
         object Label5: TLabel
           Left = 142
-          Height = 15
+          Height = 16
           Top = 41
-          Width = 32
+          Width = 33
           Caption = 'Senha'
           ParentColor = False
         end
@@ -212,17 +246,17 @@ object Form1: TForm1
         end
         object Label1: TLabel
           Left = 70
-          Height = 15
+          Height = 16
           Top = 1
-          Width = 65
+          Width = 66
           Caption = 'Logradouro:'
           ParentColor = False
         end
         object Label6: TLabel
           Left = 14
-          Height = 15
+          Height = 16
           Top = 44
-          Width = 40
+          Width = 41
           Caption = 'Cidade:'
           ParentColor = False
         end
@@ -244,17 +278,17 @@ object Form1: TForm1
         end
         object Label7: TLabel
           Left = 159
-          Height = 15
+          Height = 16
           Top = 44
-          Width = 17
+          Width = 18
           Caption = 'UF:'
           ParentColor = False
         end
         object Label8: TLabel
           Left = 198
-          Height = 15
+          Height = 16
           Top = 44
-          Width = 88
+          Width = 89
           Caption = 'Bairro (opcional)'
           ParentColor = False
         end
@@ -275,9 +309,9 @@ object Form1: TForm1
         end
         object Label10: TLabel
           Left = 14
-          Height = 15
+          Height = 16
           Top = 1
-          Width = 27
+          Width = 28
           Caption = 'Tipo:'
           ParentColor = False
         end
@@ -350,6 +384,8 @@ object Form1: TForm1
     ProxyPort = '8080'
     OnAntesAbrirHTTP = ACBrCEP1AntesAbrirHTTP
     WebService = wsRepublicaVirtual
+    Usuario = 'rftd'
+    Senha = '29048519'
     OnBuscaEfetuada = ACBrCEP1BuscaEfetuada
     left = 248
     top = 160

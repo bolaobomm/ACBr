@@ -703,7 +703,8 @@ begin
                   // Caso não seja um valor fracionário; retira os decimais.
                   if FOpcoes.FSuprimirDecimais then
                     if int(Valor) = Valor then
-                        ConteudoProcessado := IntToStr(Round(valor));
+                     ConteudoProcessado := IntToStr(Round(Integer(valor)));
+
               end;
       tcEsp : begin
                   // Tipo String - somente numeros

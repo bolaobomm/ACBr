@@ -25,6 +25,8 @@ type
     edIBGENome : TEdit ;
     edLogradouro : TEdit ;
     edCidade : TEdit ;
+    edPass: TEdit;
+    edUser: TEdit;
     edTipo_Logradouro : TEdit ;
     edUF : TEdit ;
     edBairro : TEdit ;
@@ -41,6 +43,8 @@ type
     GroupBox6 : TGroupBox ;
     Label1 : TLabel ;
     Label10 : TLabel ;
+    Label11: TLabel;
+    Label12: TLabel;
     Label2 : TLabel ;
     Label3 : TLabel ;
     Label4 : TLabel ;
@@ -89,6 +93,8 @@ begin
   cbxWSChange(Self);
 
   ACBrCEP1.ChaveAcesso := edChaveWS.Text;
+  ACBrCEP1.Usuario     := edUser.Text;
+  ACBrCEP1.Senha       := edPass.Text;
 
   ACBrCEP1.ProxyHost := edProxyHost.Text ;
   ACBrCEP1.ProxyPort := edProxyPort.Text ;
@@ -118,7 +124,7 @@ begin
        begin
           Memo1.Lines.Add('CEP: '+CEP );
           Memo1.Lines.Add('Logradouro: '+Tipo_Logradouro+ ' ' +Logradouro );
-          Memo1.Lines.Add('Complemento: '+Complemento );
+          Memo1.Lines.Add('Complemento: '+Complemento);
           Memo1.Lines.Add('Bairro: '+Bairro );
           Memo1.Lines.Add('Municipio: '+Municipio + ' - IBGE: '+IBGE_Municipio);
           edCidade.Text := Municipio;

@@ -37,6 +37,9 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+23/03/2013
+-- ACBrCEP --
+[+] Adicionado suporte ao provedor ByJG (por: Rafael Dias)
 
 28/01/2013
 -- ACBrNFPws --
