@@ -93,7 +93,7 @@ function TACBrBancoSicredi.CalcularDigitoVerificador(const ACBrTitulo: TACBrTitu
 begin
    Modulo.CalculoPadrao;
    Modulo.Documento := ACBrTitulo.ACBrBoleto.Cedente.Agencia +
-                       ACBrTitulo.ACBrBoleto.Cedente.AgenciaDigito +
+                       padR(ACBrTitulo.ACBrBoleto.Cedente.AgenciaDigito,2,'0')+
                        ACBrTitulo.ACBrBoleto.Cedente.CodigoCedente +
                        ACBrTitulo.NossoNumero;
    Modulo.Calcular;
@@ -164,7 +164,7 @@ function TACBrBancoSicredi.MontarCampoCodigoCedente (const ACBrTitulo: TACBrTitu
 begin
    ACBrTitulo.ACBrBoleto.Cedente.Conta:= IntToStrZero(StrToInt64(ACBrTitulo.ACBrBoleto.Cedente.Conta), fpTamanhoConta );
    Result := ACBrTitulo.ACBrBoleto.Cedente.Agencia+'.'+
-             ACBrTitulo.ACBrBoleto.Cedente.AgenciaDigito+'.'+
+             padR(ACBrTitulo.ACBrBoleto.Cedente.AgenciaDigito,2,'0')+'.'+
              ACBrTitulo.ACBrBoleto.Cedente.Conta;
 end;
 
@@ -282,6 +282,9 @@ begin
       {Pegando Tipo de Impressão}
       //Tipo de Impressão -- Usando como variavel auxiliar EspecieMod, pois no componente não tem previsto tipo de impressao (Carne, Padrão) no titulo somente no componente da impressao,
       //Com esse controle é possivel ter apenas um cedente para gerar remessa de bloquetos de impressao padrão e/ou carne na mesma remessa
+      if EspecieMod='' then
+         EspecieMod:='1';
+
       case (StrToInt(Copy(EspecieMod,1,1))) of
         1 : TipoImpressao := 'A';
         2 : TipoImpressao := 'B';

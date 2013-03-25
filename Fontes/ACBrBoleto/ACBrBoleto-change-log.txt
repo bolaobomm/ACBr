@@ -47,6 +47,20 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+Data: 25/03/2013
+-- ACBrBoleto ver. 0.0.65 --
+[-] Corrigido problema no envio de boletos por email.(CarlosFilho)
+http://www.projetoacbr.com.br/forum/index.php?/topic/8044-envio-de-boletos-por-email/page-2
+
+-- ACBrBancoSicredi --
+[*] Alterado unit para que caso o DV da agência seja informado com apenas um digito, o próprio
+    componente preecha com 2(conforme manual do banco o DV da agência possui 2 dígitos.
+    Adicionado valor defalt para a propriedade EspecieMOD caso nenhum valor seja informado.
+    (CarlosFilho) 
+
+-- ACBrCaixaEconomicaSicob --
+[-] Corrigido impressão da agência para imprimir apenas 4 digitos.(Juliana Tamizou) 
+
 Data: 05/03/13
 -- ACBrBoletoFC_Fortes ver. 0.0.19a --
 [-] Adicionado impressão do bairro do sacado nos dados do endereço. (por: Juliana Tamizou)
@@ -56,7 +70,7 @@ http://www.projetoacbr.com.br/forum/index.php?/topic/9256-campo-bairro-n%C3%A3o-
     informados para o titulo, caso nada seja informado continuam sendo impressas as informações padrão.
     (por: Juliana Tamizou)
 
--- ACBrBoleto ver. 0.0.65a --
+-- ACBrBoleto ver. 0.0.64 --
 -- ACBrBancoHSBC --
 [*] Corrigido campo utilizado para cálculo do NossoNúmero(Antes estava sendo utilizado o 
      Número do Documento). (por: Marco Tema)

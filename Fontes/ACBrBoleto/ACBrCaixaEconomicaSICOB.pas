@@ -149,7 +149,7 @@ var
   Num, Res: string;
 begin
   if UsaAgencia then
-     Num:=  padR(ACBrTitulo.ACBrBoleto.Cedente.Agencia,4) +
+     Num:=  RightStr(ACBrTitulo.ACBrBoleto.Cedente.Agencia,4) +
             Copy(ACBrTitulo.ACBrBoleto.Cedente.CodigoCedente,
                  Length(ACBrTitulo.ACBrBoleto.Cedente.CodigoCedente)-10,11)
   else
@@ -382,7 +382,7 @@ begin
 
    {Montando Campo Livre}
    CampoLivre := ANossoNumero +
-                 Copy(ACBrTitulo.ACBrBoleto.Cedente.Agencia, 2, 4) +
+                 RightStr(ACBrTitulo.ACBrBoleto.Cedente.Agencia, 4) +
                  aCodCedente;
 
    {Codigo de Barras}
@@ -468,7 +468,7 @@ begin
 
   with ACBrTitulo.ACBrBoleto do
   begin
-     Result := Cedente.Agencia + '.'+
+     Result := RightStr(Cedente.Agencia,4) + '.'+
                Copy(Cedente.CodigoCedente, Length(Cedente.CodigoCedente)-10,3) +
                '.'+ Copy(Cedente.CodigoCedente, Length(Cedente.CodigoCedente)-7,8) +
                '-' +CalcularDVCedente(ACBrTitulo,true);
