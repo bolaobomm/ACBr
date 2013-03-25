@@ -960,8 +960,8 @@ begin
       Complemento     := Complemento;
       Bairro          := Resp[1];
       Municipio       := Resp[2];
-      UF              := Resp[3];
-      IBGE_Municipio  := Resp[4];
+      UF              := Trim(Resp[3]);
+      IBGE_Municipio  := Trim(Resp[4]);
     end ;
 
     Resp.Free;
@@ -1015,8 +1015,8 @@ begin
       Complemento     := Complemento;
       Bairro          := Resp[2];
       Municipio       := Resp[3];
-      UF              := Resp[4];
-      IBGE_Municipio  := Resp[5];
+      UF              := Trim(Resp[4]);
+      IBGE_Municipio  := Trim(Resp[5]);
     end;
 
     Resp.Free;
