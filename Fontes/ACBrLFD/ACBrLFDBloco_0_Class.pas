@@ -492,11 +492,11 @@ begin
    begin
       with Reg0001.Registro0025.Items[intFor] do
       begin
-         Check((Integer(CODBF_ICMS) > 1) and (Registro0000.UF <> 'DF'),
-               '(0-0025) BENEFICIO FISCAL, o Código do Benefício Fiscal de ICMS "%s"  é inválido para esta UF %s!', [CODBF_ICMS, Registro0000.UF] );
+         //Check((Integer(CODBF_ICMS) > 1) and (Registro0000.UF <> 'DF'),
+         //      '(0-0025) BENEFICIO FISCAL, o Código do Benefício Fiscal de ICMS "%s"  é inválido para esta UF %s!', [CODBF_ICMS, Registro0000.UF] );
 
-         Check((Integer(CODBF_ICMS) = 1) and (Registro0000.UF <> 'DF'),
-               '(0-0025) BENEFICIO FISCAL, o Código do Benefício Fiscal de ICMS "%s"  é inválido para esta UF %s!', [CODBF_ICMS, Registro0000.UF] );
+         //Check((Integer(CODBF_ICMS) = 1) and (Registro0000.UF <> 'DF'),
+         //      '(0-0025) BENEFICIO FISCAL, o Código do Benefício Fiscal de ICMS "%s"  é inválido para esta UF %s!', [CODBF_ICMS, Registro0000.UF] );
 
          case CODBF_ICMS of
            bDF001: strCODBF_ICMS := 'DF001';
