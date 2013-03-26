@@ -565,32 +565,46 @@ end;
 
 // adicionar o paths ao library path do delphi
 procedure TfrmPrincipal.AddLibrarySearchPath;
+
+   procedure FindDirs(ADirRoot: String);
+   var
+    oDirList: TSearchRec;
+    iRet: Integer;
+   begin
+      ADirRoot := IncludeTrailingPathDelimiter(ADirRoot);
+
+      iRet := FindFirst(ADirRoot + '*.*', faDirectory, oDirList);
+      if iRet = 0 then
+      begin
+         try
+           repeat
+              if ((oDirList.Attr and faDirectory) <> 0) and
+                  (oDirList.Name <> '.')                and
+                  (oDirList.Name <> '..')               and
+                  (oDirList.Name <> '__history')        then
+              begin
+                 with oACBr.Installations[iVersion] do
+                 begin
+                   AddToLibrarySearchPath(ADirRoot + oDirList.Name, tPlatform);
+                 end;
+                 //-- Procura subpastas
+                 FindDirs(ADirRoot + oDirList.Name);
+              end;
+              iRet := FindNext(oDirList);
+           until iRet <> 0;
+         finally
+           SysUtils.FindClose(oDirList)
+         end;
+      end;
+   end;
+
 begin
   // -- Adiciona todos os paths dos fontes na versão do delphi selecionada
   // -- se os paths já existirem não serão duplicados.
+  FindDirs(IncludeTrailingPathDelimiter(sDirRoot) + 'Fontes');
+  // --
   with oACBr.Installations[iVersion] do
   begin
-    AddToLibrarySearchPath(sDirRoot + '\Fontes\synalist', tPlatform);
-    AddToLibrarySearchPath(sDirRoot + '\Fontes\PCN2', tPlatform);
-    AddToLibrarySearchPath(sDirRoot + '\Fontes\ACBrComum', tPlatform);
-    AddToLibrarySearchPath(sDirRoot + '\Fontes\ACBrDiversos', tPlatform);
-    AddToLibrarySearchPath(sDirRoot + '\Fontes\ACBrSerial', tPlatform);
-    AddToLibrarySearchPath(sDirRoot + '\Fontes\ACBrTCP', tPlatform);
-    AddToLibrarySearchPath(sDirRoot + '\Fontes\ACBrTEFD', tPlatform);
-    AddToLibrarySearchPath(sDirRoot + '\Fontes\ACBrCapicom', tPlatform);
-    AddToLibrarySearchPath(sDirRoot + '\Fontes\ACBrBoleto', tPlatform);
-    AddToLibrarySearchPath(sDirRoot + '\Fontes\ACBrPAF', tPlatform);
-    AddToLibrarySearchPath(sDirRoot + '\Fontes\ACBrCTe', tPlatform);
-    AddToLibrarySearchPath(sDirRoot + '\Fontes\ACBrNFe2', tPlatform);
-    AddToLibrarySearchPath(sDirRoot + '\Fontes\ACBrNFSe', tPlatform);
-    AddToLibrarySearchPath(sDirRoot + '\Fontes\ACBrMDFe', tPlatform);
-    AddToLibrarySearchPath(sDirRoot + '\Fontes\ACBrSintegra', tPlatform);
-    AddToLibrarySearchPath(sDirRoot + '\Fontes\ACBrSPED', tPlatform);
-    AddToLibrarySearchPath(sDirRoot + '\Fontes\ACBrSPED\ACBrSPEDContabil', tPlatform);
-    AddToLibrarySearchPath(sDirRoot + '\Fontes\ACBrSPED\ACBrSPEDFCont', tPlatform);
-    AddToLibrarySearchPath(sDirRoot + '\Fontes\ACBrSPED\ACBrSPEDFiscal', tPlatform);
-    AddToLibrarySearchPath(sDirRoot + '\Fontes\ACBrSPED\ACBrSPEDPisCofins', tPlatform);
-
 //    AddToDebugDCUPath(sDirLibrary, tPlatform);
     AddToLibraryBrowsingPath(sDirLibrary, tPlatform);
   end;
@@ -1099,15 +1113,15 @@ procedure TfrmPrincipal.wizPgInicioNextButtonClick(Sender: TObject;
   var Stop: Boolean);
 begin
   // Verificar se o delphi está aberto
-//  if oACBr.AnyInstanceRunning then
-//  begin
-//    Stop := True;
-//    Application.MessageBox(
-//      'Feche a IDE do delphi antes de continuar.',
-//      PWideChar(Application.Title),
-//      MB_ICONERROR + MB_OK
-//    );
-//  end;
+  if oACBr.AnyInstanceRunning then
+  begin
+    Stop := True;
+    Application.MessageBox(
+      'Feche a IDE do delphi antes de continuar.',
+      PWideChar(Application.Title),
+      MB_ICONERROR + MB_OK
+    );
+  end;
 
   // Verificar se o tortoise está instalado
   if not TSVN_Class.IsTortoiseInstalado then
