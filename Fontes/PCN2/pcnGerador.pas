@@ -417,16 +417,11 @@ const
   DSC_VFOR = 'Valor dos Fornecimentos';
   DSC_VTOTDED = 'Valor Total da Dedução';
   DSC_VLIQFOR = 'Valor Líquido dos Fornecimentos';
-  // Incluido por Italo em 17/07/2012
   DSC_INDNFE = 'Indicador de NF-e consultada';
   DSC_INDEMI = 'Indicador do Emissor da NF-e';
   DSC_ULTNSU = 'Último NSU recebido pela Empresa';
-  //Incluido po Peterson em 16/03/2013
-//  DSC_COFINSST = 'Alíquota do imposto do COFINS ST';
-//  DSC_VBCISS = 'Valor da BC do ISS';
 
   // CTE //
-
   DSC_CHCTE    = 'Chave do CTe';
   DSC_TPCTe    = 'Tipo do Conhecimento';
   DSC_REFCTE   = 'Chave de acesso do CT-e referenciado';
