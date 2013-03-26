@@ -61,6 +61,9 @@ http://www.projetoacbr.com.br/forum/index.php?/topic/8044-envio-de-boletos-por-e
 -- ACBrCaixaEconomicaSicob --
 [-] Corrigido impressão da agência para imprimir apenas 4 digitos.(Juliana Tamizou) 
 
+[-] Corrigido geração do arquivo remessa CNAB240.(emerson1829)
+http://www.projetoacbr.com.br/forum/index.php?/topic/9551-altera%C3%A7%C3%B5es-na-unit-acbrcaixaeconomicasicobpas/
+
 Data: 05/03/13
 -- ACBrBoletoFC_Fortes ver. 0.0.19a --
 [-] Adicionado impressão do bairro do sacado nos dados do endereço. (por: Juliana Tamizou)

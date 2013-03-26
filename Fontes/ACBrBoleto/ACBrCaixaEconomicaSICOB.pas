@@ -54,7 +54,7 @@ type
    protected
    private
     function FormataNossoNumero(const ACBrTitulo :TACBrTitulo): String;
-    function CalcularDVAgCD: string;
+    function CalcularDVAgCD(Header: Boolean = False): string;
    public
     Constructor create(AOwner: TACBrBanco);
     function CalcularDigitoVerificador(const ACBrTitulo: TACBrTitulo ): String; override;
@@ -116,7 +116,7 @@ begin
       Result := Res[1];
 end;
 
-function TACBrCaixaEconomicaSICOB.CalcularDVAgCD: string;
+function TACBrCaixaEconomicaSICOB.CalcularDVAgCD(Header: Boolean): string;
 var
   Num, ACedente, Res :String;
 begin
@@ -126,9 +126,12 @@ begin
     // Retirar o código da operácão do'código do cedetnet,
     // sempre com 3 digitos, ex: 870
     // Sem o DV
-    ACedente := padL(RightStr(CodigoCedente,8), 8, '0');
-    Num := Agencia + ACedente;
+    if Header then
+      ACedente := padR(RightStr(CodigoCedente,8), 8, '0')
+    else
+      ACedente := padR(RightStr(CodigoCedente,8), 12, '0');
 
+    Num := Agencia + ACedente;
     Modulo.CalculoPadrao;
     Modulo.MultiplicadorFinal   := 9;
     Modulo.MultiplicadorInicial := 2;
@@ -515,7 +518,7 @@ begin
                padR(AgenciaDigito,1,'0')                    +
                padR(aCodCedente,12, '0')                    + //  59 a  70 - Código do Cedente + DV Código Cedente
                ACodCedenteDV                                + //  71 a  71 - DV Codigo Cedente
-               CalcularDVAgCD                               + //  72 a  72 - Dig. Verif. Ag + Ced.
+               CalcularDVAgCD(True)                         + //  72 a  72 - Dig. Verif. Ag + Ced.
                padL(Nome, 30, ' ')                          + //  73 a 102 - Nome da Empresa
                padL('CAIXA ECONOMICA FEDERAL', 40, ' ')     + // 133 a 142 - Uso exclusivo FEBRABAN/CNAB
                '1'                                          + // 143 a 143 - Código de Remessa (1) / Retorno (2)
@@ -536,7 +539,6 @@ begin
                '1'                                      + //   8 a   8 - Tipo de registro - Registro header de arquivo
                'R'                                      + //   9 a   9 - Tipo de operação: R (Remessa) ou T (Retorno)
                '01'                                     + //  10 a  11 - Tipo de serviço: 01 (Cobrança)
-               //Space(2)                                 + //  12 a  13 - Uso Exclusivo FEBRABAN/CNAB
                '00'                                     + //  12 a  13 - Forma de lançamento
                '020'                                    + //  14 a  16 - Número da versão do layout do lote
                Space(1)                                 + //  17 a  17 - Uso exclusivo FEBRABAN/CNAB
@@ -548,7 +550,7 @@ begin
                padR(AgenciaDigito, 1 , '0')             + //  59 a  59 - Dígito Verificador da Agência
                padR(aCodCedente,12, '0')                + //  60 a  71 - Cód. Cedente + Dígito Verificador do Cedente
                ACodCedenteDV                            + //  72 a  72 - DV Codigo Cedente
-               CalcularDVAgCD                           + //  73 a  73 - Dig. Verif. Ag + Ced.
+               CalcularDVAgCD(True)                     + //  73 a  73 - Dig. Verif. Ag + Ced.
                padL(Nome, 30, ' ')                      + //  74 a 103 - Nome da Empresa
                space(40)                                + // 104 a 143 - Mensagem 1 para todos os boletos do lote
                space(40)                                + // 144 a 183 - Mensagem 2 para todos os boletos do lote
@@ -753,7 +755,7 @@ begin
                padL(Sacado.Cidade, 15, ' ')                               + // 137 a 151 - cidade sacado
                padL(Sacado.UF, 2, ' ')                                    + // 152 a 153 - UF sacado
                {Dados do sacador/avalista}
-               '0'                                                        + // 154 a 154  - Tipo de inscrição: Não informado
+               ATipoInscricao                                             + // 154 a 154  - Tipo de inscrição: Não informado {campo obrigatorio segunto manual da caixa}
                '000000000000000'                                          + // 155 a 169 - Número de inscrição
                space(40)                                                  + // 170 a 209 - Nome do sacador/avalista
                space(3)                                                   + // 210 a 212 - Uso exclusivo FEBRABAN/CNAB
@@ -774,14 +776,14 @@ begin
             padR('', 6, '0')                                           + //   24 a  29 - Quantidade títulos em cobrança (Somente retorno)
             padR('',17, '0')                                           + //   30 a  46 - Valor dos títulos em carteiras (Somente retorno)
             // CNAB
-            padR('', 6, '0')                                           + //   47 a  52 - Uso Exclusivo FEBRABAN/CNAB
-            padR('',17, '0')                                           + //   53 a  69 - Uso Exclusivo FEBRABAN/CNAB
+            Space(6)                                                   + //   47 a  52 - Uso Exclusivo FEBRABAN/CNAB
+            space(17)                                                  + //   53 a  69 - Uso Exclusivo FEBRABAN/CNAB
             // Totalização Cobrança Caucionada
             padR('', 6, '0')                                           + //   70 a  75 - Quantidade títulos em cobrança (Somente retorno)
             padR('',17, '0')                                           + //   76 a  92 - Valor dos títulos em carteiras (Somente retorno)
             // Totalização Cobrança Descontada
-            padR('', 6, '0')                                           + //   93 a  98 - Quantidade títulos em cobrança (Somente retorno)
-            padR('',17, '0')                                           + //   99 a 115 - Valor dos títulos em carteiras (Somente retorno)
+            space(6)                                                   + //   93 a  98 - Quantidade títulos em cobrança (Somente retorno)
+            space(17)                                                  + //   99 a 115 - Valor dos títulos em carteiras (Somente retorno)
             space(8)                                                   + //  116 a 123 - Uso exclusivo FEBRABAN/CNAB
             space(117);                                                  //  124 a 240 - Uso exclusivo FEBRABAN/CNAB
 
