@@ -1117,7 +1117,6 @@ var
   m:TMimemess;
   p: TMimepart;
   StreamNFe : TStringStream;
-  NomeArq : String;
   i: Integer;
 begin
   m:=TMimemess.create;
@@ -1134,14 +1133,14 @@ begin
        if ACBrBoletoFC.NomeArquivo = '' then
           ACBrBoletoFC.NomeArquivo := 'boleto.pdf';;
        GerarPDF;
-       m.AddPartBinaryFromFile(NomeArq, p);
+       m.AddPartBinaryFromFile(ACBrBoletoFC.NomeArquivo, p);
      end
     else
      begin
        if ACBrBoletoFC.NomeArquivo = '' then
           ACBrBoletoFC.NomeArquivo := 'boleto.html';;
        GerarHTML;
-       m.AddPartBinaryFromFile(NomeArq, p);
+       m.AddPartBinaryFromFile(ACBrBoletoFC.NomeArquivo, p);
      end;
 
 
