@@ -898,7 +898,7 @@ begin
   ACEP := OnlyNumber( AnsiString( ACEP ) );
   FTipoBusca := 1;
   fOwner.HTTPGet( fpURL + '?httpmethod=obterlogradouroauth&cep='+ACEP+
-  '&usuario='+fOwner.Usuario+'&senha='+fOwner.Senha) ;
+  '&usuario='+Trim(fOwner.Usuario)+'&senha='+Trim(fOwner.Senha)) ;
   ProcessaResposta ;
 end;
 
@@ -908,10 +908,18 @@ var
   Endereco : String;
 begin
   TestarUsuario;
+
+  AMunicipio       := fOwner.AjustaParam( AMunicipio ) ;
+  Endereco         := fOwner.AjustaParam(ATipo_Logradouro+' '+ALogradouro);
+  AUF              := fOwner.AjustaParam( AUF );
+
+  if (AMunicipio = '') or (Endereco = '') or (AUF = '') then
+     raise EACBrCEPException.Create('UF, Cidade e Logradouro devem ser informados');
+
   FTipoBusca := 2;
-  Endereco := ATipo_Logradouro+' '+ALogradouro;
+
   fOwner.HTTPGet( fpURL+'?httpmethod=obterCEPAuth&logradouro='+Endereco+
- '&localidade='+AMunicipio+'&UF='+AUF+'&usuario='+fOwner.Usuario+'&senha='+fOwner.Senha ) ;
+ '&localidade='+AMunicipio+'&UF='+AUF+'&usuario='+Trim(fOwner.Usuario)+'&senha='+Trim(fOwner.Senha)) ;
   ProcessaResposta ;
 end;
 
@@ -927,7 +935,7 @@ end;
 procedure TACBrWSByJG.ProcessaCEP;
 var
    Buffer, Resp, TLog: TStringList;
-   TipoLogradouro, Logradouro, Complemento: String;
+   TipoLogradouro, Logra, Comp: String;
    i, k : Integer;
 begin
 
@@ -942,27 +950,29 @@ begin
   begin
     Resp := TStringList.Create;
     TLog := TStringList.Create;
+    Logra := '';
+    Comp := '';
     ExtractStrings([','],[], PChar(Buffer[1]), Resp);
     ExtractStrings([' '],[], PChar(Resp[0]), TLog);
-    TipoLogradouro := TLog[0];
+    TipoLogradouro := Trim(TLog[0]);
     TLog.Clear;
     ExtractStrings(['-'],[], PChar(Resp[0]), TLog);
-    Logradouro := TLog[0];
+    Logra := Trim(TLog[0]);
     if(TLog.Count > 1) then
-      Complemento := TLog[1];
-    Delete(Logradouro, 1, Length(TipoLogradouro)+1);
+      Comp := Trim(TLog[1]);
+    Delete(Logra, 1, Length(TipoLogradouro));
 
     with fOwner.Enderecos.New do
     begin
-      CEP             := FCepBusca;
-      Tipo_Logradouro := TipoLogradouro;
-      Logradouro      := Logradouro;
-      Complemento     := Complemento;
-      Bairro          := Resp[1];
-      Municipio       := Resp[2];
+      CEP             := Trim(FCepBusca);
+      Tipo_Logradouro := Trim(TipoLogradouro);
+      Logradouro      := Trim(Logra);
+      Complemento     := Trim(Comp);
+      Bairro          := Trim(Resp[1]);
+      Municipio       := Trim(Resp[2]);
       UF              := Trim(Resp[3]);
       IBGE_Municipio  := Trim(Resp[4]);
-    end ;
+    end;
 
     Resp.Free;
     TLog.Free;
@@ -979,7 +989,7 @@ procedure TACBrWSByJG.ProcessaLogradouro;
 var
    Buffer, Resp, TLog: TStringList;
    Qtd, i, k : Integer;
-   TipoLogradouro, Logradouro, Complemento: String;
+   TipoLogradouro, Logra, Comp: String;
 begin
 
   try
@@ -991,38 +1001,46 @@ begin
 
   if i <> 0 then
   begin
-
-    for i := 1  to Qtd do
-    begin
-
     Resp := TStringList.Create;
     TLog := TStringList.Create;
+
+    for i := 1 to Qtd do
+    begin
+    Logra := '';
+    Comp := '';
+
     ExtractStrings([','],[], PChar(Buffer[k]), Resp);
-    ExtractStrings([' '],[], PChar(Resp[0]), TLog);
-    TipoLogradouro := TLog[0];
+
+    if CompareText(Resp[0], ACBrStr('00000000')) = 0 then Break;
+
+    ExtractStrings([' '],[], PChar(Resp[1]), TLog);
+    TipoLogradouro := Trim(TLog[0]);
     TLog.Clear;
-    ExtractStrings(['-'],[], PChar(Resp[0]), TLog);
-    Logradouro := TLog[0];
+    ExtractStrings(['-'],[], PChar(Resp[1]), TLog);
+    Logra := Trim(TLog[0]);
     if(TLog.Count > 1) then
-      Complemento := TLog[1];
-    Delete(Logradouro, 1, Length(TipoLogradouro)+1);
+      Comp := Trim(TLog[1]);
+    Delete(Logra, 1, Length(TipoLogradouro));
 
     with fOwner.Enderecos.New do
     begin
-      CEP             := Resp[0];
-      Tipo_Logradouro := TipoLogradouro;
-      Logradouro      := Logradouro;
-      Complemento     := Complemento;
-      Bairro          := Resp[2];
-      Municipio       := Resp[3];
+      CEP             := Trim(Resp[0]);
+      Tipo_Logradouro := Trim(TipoLogradouro);
+      Logradouro      := Trim(Logra);
+      Complemento     := Trim(Comp);
+      Bairro          := Trim(Resp[2]);
+      Municipio       := Trim(Resp[3]);
       UF              := Trim(Resp[4]);
       IBGE_Municipio  := Trim(Resp[5]);
     end;
 
-    Resp.Free;
-    TLog.Free;
+    Resp.Clear;
+    TLog.Clear;
     Inc(k);
     end;
+
+    Resp.Free;
+    TLog.Free;
   end;
 
   if Assigned( fOwner.OnBuscaEfetuada ) then
