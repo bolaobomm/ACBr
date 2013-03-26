@@ -582,6 +582,8 @@ begin
     AddToLibrarySearchPath(sDirRoot + '\Fontes\ACBrPAF', tPlatform);
     AddToLibrarySearchPath(sDirRoot + '\Fontes\ACBrCTe', tPlatform);
     AddToLibrarySearchPath(sDirRoot + '\Fontes\ACBrNFe2', tPlatform);
+    AddToLibrarySearchPath(sDirRoot + '\Fontes\ACBrNFSe', tPlatform);
+    AddToLibrarySearchPath(sDirRoot + '\Fontes\ACBrMDFe', tPlatform);
     AddToLibrarySearchPath(sDirRoot + '\Fontes\ACBrSintegra', tPlatform);
     AddToLibrarySearchPath(sDirRoot + '\Fontes\ACBrSPED', tPlatform);
     AddToLibrarySearchPath(sDirRoot + '\Fontes\ACBrSPED\ACBrSPEDContabil', tPlatform);
