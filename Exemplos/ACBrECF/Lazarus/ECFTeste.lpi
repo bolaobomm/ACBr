@@ -26,7 +26,7 @@
       <CharSet Value="04B0"/>
       <StringTable ProductVersion=""/>
     </VersionInfo>
-    <BuildModes Count="3" Active="Release">
+    <BuildModes Count="3" Active="Debug">
       <Item1 Name="Debug" Default="True"/>
       <Item2 Name="Release">
         <CompilerOptions>
@@ -160,8 +160,8 @@
         <UnitName Value="ECFTeste1"/>
         <EditorIndex Value="0"/>
         <WindowIndex Value="0"/>
-        <TopLine Value="16"/>
-        <CursorPos X="5" Y="28"/>
+        <TopLine Value="1"/>
+        <CursorPos X="8" Y="8"/>
         <UsageCount Value="201"/>
         <Loaded Value="True"/>
         <LoadedDesigner Value="True"/>
@@ -279,13 +279,22 @@
     </Other>
   </CompilerOptions>
   <Debugging>
+    <BreakPoints Count="1">
+      <Item1>
+        <Kind Value="bpkSource"/>
+        <WatchScope Value="wpsLocal"/>
+        <WatchKind Value="wpkWrite"/>
+        <Source Value="..\..\..\Fontes\ACBrSerial\ACBrECFEscECF.pas"/>
+        <Line Value="2562"/>
+      </Item1>
+    </BreakPoints>
     <Watches Count="1">
       <Item1>
         <Expression Value="R"/>
         <DisplayStyle Value="wdfString"/>
       </Item1>
     </Watches>
-    <Exceptions Count="9">
+    <Exceptions Count="10">
       <Item1>
         <Name Value="EACBrECFSemResposta"/>
       </Item1>
@@ -313,6 +322,9 @@
       <Item9>
         <Name Value="EACBrECFCMDInvalido"/>
       </Item9>
+      <Item10>
+        <Name Value="EConvertError"/>
+      </Item10>
     </Exceptions>
   </Debugging>
   <EditorMacros Count="0"/>

@@ -54,12 +54,12 @@ uses
     {$ENDIF}
   {$ENDIF} ;
 
-{$IFDEF FRAMEWORK}
+{$IFDEF CONSOLE}
 type TModalResult = (mrNone = 0, mrYes = 6, mrNo = 7, mrOK = 1, mrCancel = 2, mrAbort = 3, mrRetry = 4, mrIgnore = 5, mrAll = 8, mrNoToAll = 9, mrYesToAll = 10);
 {$ENDIF}
 
 const
-   CACBrTEFD_Versao      = '4.3.3' ;
+   CACBrTEFD_Versao      = '4.3.4' ;
    CACBrTEFD_EsperaSTS   = 7 ;
    CACBrTEFD_EsperaSleep = 250 ;
    CACBrTEFD_NumVias     = 2 ;
@@ -2353,7 +2353,7 @@ begin
                        while SecondsBetween(now,TempoInicio) < 5 do
                        begin
                           Sleep(EsperaSleep);
-                          {$IFNDEF FRAMEWORK}
+                          {$IFNDEF CONSOLE}
                           Application.ProcessMessages;
                           {$ENDIF}
                        end;

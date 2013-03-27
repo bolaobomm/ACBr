@@ -937,7 +937,7 @@ begin
                           while SecondsBetween(now,TempoInicio) < 5 do
                           begin
                              Sleep(EsperaSTS) ;
-                             {$IFNDEF FRAMEWORK}
+                             {$IFNDEF CONSOLE}
                              Application.ProcessMessages;
                              {$ENDIF}
                           end;
@@ -1065,7 +1065,7 @@ begin
                              while SecondsBetween(now,TempoInicio) < 5 do
                              begin
                                 Sleep(EsperaSTS);
-                                {$IFNDEF FRAMEWORK}
+                                {$IFNDEF CONSOLE}
                                 Application.ProcessMessages;
                                 {$ENDIF}
                              end;
@@ -1808,7 +1808,7 @@ end;
  procedure TACBrTEFD.LimparTeclado;
  Var
    Tratado : Boolean ;
-   {$IFNDEF Framework}
+   {$IFNDEF CONSOLE}
      {$IFDEF MSWINDOWS}
      Msg: TMsg;
      {$ENDIF}
@@ -1819,7 +1819,7 @@ end;
    if Assigned( fOnLimpaTeclado ) then
       fOnLimpaTeclado( Tratado ) ;
 
-   {$IFNDEF Framework}
+   {$IFNDEF CONSOLE}
    {$IFDEF MSWINDOWS}
     if not Tratado then
     begin
@@ -1841,7 +1841,7 @@ end;
    if Assigned( fOnRestauraFocoAplicacao ) then
       fOnRestauraFocoAplicacao( Tratado ) ;
 
-   {$IFNDEF FRAMEWORK}
+   {$IFNDEF CONSOLE}
    if not Tratado then
    begin
       Application.BringToFront ;
@@ -1861,7 +1861,7 @@ end;
  end;
 
 {$ifdef FPC}
-{$IFNDEF FRAMEWORK}
+{$IFNDEF CONSOLE}
 initialization
    {$I ACBrTEFD.lrs}
 {$endif}

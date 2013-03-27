@@ -97,6 +97,7 @@
 unit ACBrUtil;
 
 interface
+
 Uses SysUtils, Math, Classes, ACBrConsts
     {$IFDEF COMPILER6_UP} ,StrUtils, DateUtils {$ELSE} ,ACBrD5, FileCtrl {$ENDIF}
     {$IFDEF FPC}
@@ -113,6 +114,13 @@ Uses SysUtils, Math, Classes, ACBrConsts
         ,unix, BaseUnix
       {$endif}
     {$endif} ;
+
+const
+{$IFDEF CPU64}
+  CINPOUTDLL = 'inpout64.dll';
+{$ELSE}
+  CINPOUTDLL = 'inpout32.dll';
+{$ENDIF}
 
 function ParseText( Texto : AnsiString; Decode : Boolean = True;
    IsUTF8: Boolean = True) : AnsiString;
@@ -1506,14 +1514,6 @@ begin
 {$IFDEF MSWINDOWS}
   if Assigned( xInp32 ) then
      Result := xInp32(PortAddr)
-  {$IFNDEF x64}
-  else
-    asm
-        mov dx,PortAddr ;
-        in al,dx
-        mov Result,al
-     end;
-{$ENDIF}
 {$ELSE}
   FDevice := '/dev/port' ;
   Buffer  := @Result ;
@@ -1557,14 +1557,6 @@ begin
 {$IFDEF MSWINDOWS}
   if Assigned( xOut32 ) then
      xOut32(PortAddr, Databyte)
-  {$IFNDEF x64}
-  else
-     asm
-        mov al, Databyte
-        mov dx,PortAddr
-        out dx,al
-     end;
-  {$ENDIF}
 {$ELSE}
   Buffer := @Databyte ;
   FDevice := '/dev/port' ;
@@ -2487,19 +2479,11 @@ end ;
 
 initialization
 {$IFDEF MSWINDOWS}
-  {$IFNDEF x64}
-  if not FunctionDetect('inpout32.dll','Inp32',@xInp32) then
-     xInp32 := NIL ;
+  if not FunctionDetect(CINPOUTDLL,'Inp32',@xInp32) then
+    xInp32 := NIL ;
 
-  if not FunctionDetect('inpout32.dll','Out32',@xOut32) then
-     xOut32 := NIL ;
-  {$ELSE}
-  if not FunctionDetect('inpoutx64.dll','Inp32',@xInp32) then
-     xInp32 := NIL ;
-
-  if not FunctionDetect('inpoutx64.dll','Out32',@xOut32) then
-     xOut32 := NIL ;
-  {$ENDIF}
+  if not FunctionDetect(CINPOUTDLL,'Out32',@xOut32) then
+    xOut32 := NIL ;
 
   if not FunctionDetect('USER32.DLL', 'BlockInput', @xBlockInput) then
   	 xBlockInput := NIL ;

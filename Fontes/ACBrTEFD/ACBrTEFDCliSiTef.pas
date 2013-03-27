@@ -933,7 +933,7 @@ begin
          BloquearMouseTeclado( True );
 
          repeat
-            GravaLog( 'ContinuaFuncaoSiTefInterativo, Chamando: Contina = '+
+            GravaLog( 'ContinuaFuncaoSiTefInterativo, Chamando: Continua = '+
                       IntToStr(Continua)+' Buffer = '+Resposta ) ;
 
             Result := xContinuaFuncaoSiTefInterativo( ProximoComando,

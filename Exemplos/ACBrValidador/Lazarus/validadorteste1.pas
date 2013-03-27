@@ -14,6 +14,7 @@ type
 
   TfrValidador = class(TForm)
     ACBrValidador1: TACBrValidador;
+    Button1 : TButton ;
     edDocto: TEdit;
     Label1: TLabel;
     cbTipoDocto: TComboBox;
@@ -30,6 +31,7 @@ type
     cbException: TCheckBox;
     edIgnorar: TEdit;
     cbExibeDigCorreto: TCheckBox;
+    procedure Button1Click(Sender : TObject) ;
     procedure FormCreate(Sender: TObject);
     procedure ACBrValidador1MsgErro(Mensagem: String);
     procedure bValidarClick(Sender: TObject);
@@ -58,6 +60,11 @@ begin
   cbException.Checked    := ACBrValidador1.RaiseExcept ;
   cbAjustarTam.Checked   := ACBrValidador1.AjustarTamanho ;
   cbTipoDocto.ItemIndex  := Integer( ACBrValidador1.TipoDocto ) ;
+end;
+
+procedure TfrValidador.Button1Click(Sender : TObject) ;
+begin
+  mMsgErro.Lines.Add( FormatarFone( edDocto.Text, edComple.Text ) );
 end;
 
 procedure TfrValidador.ACBrValidador1MsgErro(Mensagem: String);

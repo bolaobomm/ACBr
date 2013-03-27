@@ -15,44 +15,44 @@ object frValidador: TfrValidador
   Font.Name = 'MS Sans Serif'
   OnCreate = FormCreate
   Position = poScreenCenter
-  LCLVersion = '0.9.31'
+  LCLVersion = '1.1'
   object Label1: TLabel
     Left = 8
-    Height = 14
+    Height = 13
     Top = 8
-    Width = 56
+    Width = 55
     Caption = 'Documento'
     ParentColor = False
   end
   object Label2: TLabel
     Left = 232
-    Height = 14
+    Height = 13
     Top = 8
-    Width = 22
+    Width = 21
     Caption = 'Tipo'
     ParentColor = False
   end
   object Label3: TLabel
     Left = 8
-    Height = 14
+    Height = 13
     Top = 144
-    Width = 90
+    Width = 89
     Caption = 'Mensagem de Erro'
     ParentColor = False
   end
   object Label4: TLabel
     Left = 144
-    Height = 14
+    Height = 13
     Top = 8
-    Width = 65
+    Width = 64
     Caption = 'Complemento'
     ParentColor = False
   end
   object Label5: TLabel
     Left = 8
-    Height = 14
+    Height = 13
     Top = 56
-    Width = 59
+    Width = 58
     Caption = 'Ignorar Char'
     ParentColor = False
   end
@@ -94,7 +94,7 @@ object frValidador: TfrValidador
     TabOrder = 8
   end
   object bValidar: TButton
-    Left = 72
+    Left = 22
     Height = 25
     Top = 218
     Width = 75
@@ -139,7 +139,7 @@ object frValidador: TfrValidador
     TabOrder = 5
   end
   object bFormatar: TButton
-    Left = 192
+    Left = 128
     Height = 25
     Top = 218
     Width = 75
@@ -165,6 +165,15 @@ object frValidador: TfrValidador
     Caption = 'Exibe Digito Calculado'
     OnClick = cbExibeDigCorretoClick
     TabOrder = 6
+  end
+  object Button1: TButton
+    Left = 240
+    Height = 25
+    Top = 218
+    Width = 80
+    Caption = 'Formatar Fone'
+    OnClick = Button1Click
+    TabOrder = 11
   end
   object ACBrValidador1: TACBrValidador
     IgnorarChar = './-'

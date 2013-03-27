@@ -47,6 +47,10 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+Data:  27/03/2013 - 4.3.4
+-- ACBrTEFD* --
+[*] Ajustes para compilação em modo CONSOLE  (Por: Juliana Tamizou e DSA)
+
 Data:  15/03/2013 - 4.3.3
 -- ACBrTEFDClass --
 [*] Removida verificação se limita a transação no mesmo valor do Saldo Restante

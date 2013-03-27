@@ -799,7 +799,7 @@ begin
               while SecondsBetween(now,TempoInicio) < 5 do
               begin
                 Sleep(EsperaSleep);
-                {$IFNDEF FRAMEWORK}
+                {$IFNDEF CONSOLE}
                 Application.ProcessMessages;
                 {$ENDIF}
               end;

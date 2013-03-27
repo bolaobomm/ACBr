@@ -93,6 +93,17 @@ type
       fOnExibeMenu : TACBrTEFDCliDTEFExibeMenu;
       fOnObtemInformacao : TACBrTEFDCliDTEFObtemInformacao;
 
+      xIdentificacaoAutomacaoComercial : function (
+              pFabricanteAutomacao,
+              pVersaoAutomacao,
+              pReservado: PAnsiChar): Integer;
+              {$IFDEF LINUX} cdecl {$ELSE} stdcall {$ENDIF} ;
+
+     xTransacaoResgatePremio : function (
+              pNumeroCupom,
+              pNumeroControle: PAnsiChar): Integer;
+              {$IFDEF LINUX} cdecl {$ELSE} stdcall {$ENDIF} ;
+
       xTransacaoCheque : function (
               pValorTransacao,
               pNumeroCupomVenda,
@@ -235,10 +246,7 @@ type
 
 implementation
 
-Uses ACBrUtil, dateutils, ACBrTEFD, Math, strutils
-{$IFNDEF CONSOLE}
-, Dialogs
-{$ENDIF};
+Uses ACBrUtil, dateutils, ACBrTEFD, Math, strutils;
 
 { TACBrTEFDRespCliDTEF }
 
@@ -283,13 +291,18 @@ begin
        131 : fpInstituicao                 := LinStr;
        133 : fpCodigoAutorizacaoTransacao  := Linha.Informacao.AsInteger;
        134 : fpNSU                         := Linha.Informacao.AsString;
-       //156 : fpRede                        := LinStr;
+
+       135 :
+        begin
+         fpDesconto   := Linha.Informacao.AsFloat;
+         fpValorTotal := fpValorTotal - fpDesconto ;
+        end;
+
+       //156 : fpRede                      := LinStr;
        501 : fpTipoPessoa                  := AnsiChar(IfThen(Linha.Informacao.AsInteger = 0,'J','F')[1]);
        502 : fpDocumentoPessoa             := LinStr ;
        505 : fpQtdParcelas                 := Linha.Informacao.AsInteger ;
        506 : fpDataPreDatado               := Linha.Informacao.AsDate;
-
-       //incluido por Evandro
        627 : fpAgencia                     := LinStr;
        628 : fpAgenciaDC                   := LinStr;
        120 : fpAutenticacao                := LinStr;
@@ -359,6 +372,7 @@ begin
   fParametrosAdicionais := TStringList.Create;
   fRespostas            := TStringList.Create;
 
+  xIdentificacaoAutomacaoComercial := nil;
   xTransacaoCheque := nil;
   xTransacaoCartaoCredito := nil;
   xConfirmaCartaoCredito := nil;
@@ -378,6 +392,7 @@ begin
   xObtemLogUltimaTransacao := nil;
   xInicializaDPOS := nil;
   xFinalizaDPOS := nil;
+  xTransacaoResgatePremio := nil;
 
   if Assigned( fpResp ) then
      fpResp.Free ;
@@ -408,6 +423,8 @@ procedure TACBrTEFDCliDTEF.LoadDLLFunctions ;
    end ;
  end ;
 begin
+   CliDTEFFunctionDetect('IdentificacaoAutomacaoComercial', @xIdentificacaoAutomacaoComercial);
+   CliDTEFFunctionDetect('TransacaoResgatePremio', @xTransacaoResgatePremio);
    CliDTEFFunctionDetect('TransacaoCheque', @xTransacaoCheque);
    CliDTEFFunctionDetect('TransacaoCartaoCredito', @xTransacaoCartaoCredito);
    CliDTEFFunctionDetect('ConfirmaCartaoCredito', @xConfirmaCartaoCredito);
@@ -437,6 +454,7 @@ end;
 procedure TACBrTEFDCliDTEF.Inicializar;
 Var
   Est  : AnsiChar;
+  pFabricanteAutomacao, pVersaoAutomacao, pReservado: AnsiString;
 begin
   if Inicializado then exit ;
 
@@ -450,6 +468,14 @@ begin
 
   xInicializaDPOS;
 
+  pFabricanteAutomacao := TACBrTEFD(Owner).Identificacao.NomeAplicacao;
+  pVersaoAutomacao := TACBrTEFD(Owner).Identificacao.VersaoAplicacao;
+  pReservado := '10';
+
+  xIdentificacaoAutomacaoComercial( PAnsiChar( pFabricanteAutomacao ),
+                           PAnsiChar( pVersaoAutomacao ),
+                           PAnsiChar( pReservado ));
+
   fpInicializado := True ;
   GravaLog( Name +' Inicializado CliDTEF' );
 
@@ -459,8 +485,8 @@ begin
      Est := 'O' ;
   end ;
 
-  if (Est in ['V','P','O']) then                // Cupom Ficou aberto ?? //
-     CancelarTransacoesPendentesClass           // SIM, Cancele tudo... //
+  if (Est in ['V','P','O']) then        // Cupom Ficou aberto ?? //
+     CancelarTransacoesPendentesClass   // SIM, Cancele tudo... //
   else
      ConfirmarEReimprimirTransacoesPendentes ;  // NAO, Cupom Fechado, basta re-imprimir //
 end;
@@ -513,8 +539,7 @@ begin
         try
            if pos(Resp.DocumentoVinculado, fDocumentosProcessados) = 0 then
               //Caso não seja a ultima transação, não deve finalizar a transação(DLL) enviando I = Intermediário.
-              CNF(Resp.Rede, Resp.NSU, IfThen(ArquivosVerficar.Count = 0, '', 'I'), '');   {Confirma}
-
+              CNF(Resp.Rede, Resp.NSU, IfThen(ArquivosVerficar.Count <= 1, '', 'I'), '');   {Confirma}
            if Resp.NSU <> '' then
               NSUs := NSUs + sLineBreak + 'NSU: '+Resp.NSU ;
 
@@ -641,10 +666,13 @@ begin
         SL.Add('Consulta de Parcelas');
         SL.Add('Reimpressão');
         SL.Add('Resumo das Vendas');
+        SL.Add('Resgate de Prêmios');
 
         Parar := False;
         while not Parar do
         begin
+           if ItemSelecionado = 30 then Exit;
+
            Voltar := False;
            ItemSelecionado := -1;
            OnExibeMenu( 'Selecione a operação desejada', SL, ItemSelecionado, Voltar ) ;
@@ -658,6 +686,7 @@ begin
                    1: Funcao := 9;
                    2: Funcao := 7;
                    3: Funcao := 8;
+                   4: Funcao := 11;
                  end;
 
                  Parar := True;
@@ -718,7 +747,10 @@ begin
    end;
 
    if Funcao = 6 then
+   begin
+      pNumeroControle := '      ';
       Result := xTransacaoCancelamentoPagamento( PAnsiChar( pNumeroControle ) );
+   end;
 
    if Funcao = 7 then
       Result := xTransacaoReimpressaoCupom;
@@ -733,10 +765,14 @@ begin
       Result := xTransacaoCartaoFrota( PAnsiChar( pValorTransacao ),
                                        PAnsiChar( pNumeroCupomVenda ),
                                        PAnsiChar( pNumeroControle ) );
+   if Funcao = 11 then
+      Result := xTransacaoResgatePremio( PAnsiChar( pNumeroCupomVenda),
+                                       PAnsiChar( pNumeroControle ) );
 
    if Result <> 0 then
       raise EACBrTEFDErro.Create( ACBrStr( 'Retorno DTEF -> ' + IntToStr(Result) ) )
    else
+   if Funcao <> 11 then
     begin
       Resp.Clear;
 
@@ -748,18 +784,31 @@ begin
 
          ArquivoResposta := TStringList.Create;
          try
-           if ((Funcao = 7) or (Funcao = 8) or (Funcao = 9)) then
+           if ((Funcao = 7) or (Funcao = 9)) then
             begin
               ArquivoResposta.LoadFromFile(ArqResp + 'ULTIMO.PRN');
               DeleteFile(ArqResp + 'ULTIMO.PRN');
               ImprimirComprovantes(ArquivoResposta);
+              ApagaEVerifica( ArqBackup );
             end
            else
             begin
               ArquivoResposta.LoadFromFile(ArqResp + pNumeroControle + '.' + NumeroTerminal);
 
+              if Funcao = 8 then
+              begin
+                 ImprimirComprovantes(ArquivoResposta);
+                 ApagaEVerifica( ArqResp + pNumeroControle + '.' + NumeroTerminal );
+              end;
+
               if Funcao = 6 then
-                 ImprimirComprovantes(ArquivoResposta)
+              begin
+                 ImprimirComprovantes(ArquivoResposta);
+                 ApagaEVerifica( ArqResp + pNumeroControle + '.' + NumeroTerminal );
+                 ApagaEVerifica( ArqBackup );
+                 xConfirmaCartaoCredito( PAnsiChar( pNumeroControle ) );
+                 xFinalizaTransacao;
+              end
               else
                begin
                  MontaArquivoResposta(pNumeroControle, ArquivoResposta);
@@ -792,13 +841,14 @@ begin
 
   ItemSelecionado := 0 ;
   fOnObtemInformacao( ItemSelecionado ) ;
+
   if ItemSelecionado >= 0 then
      TipoTransacao := ItemSelecionado
   else
      TipoTransacao := -1;
-    
-  if pos(DocumentoVinculado, fDocumentosProcessados) > 0 then
-     exit ;
+
+ { if pos(DocumentoVinculado, fDocumentosProcessados) > 0 then
+     exit ;   }
 
   fDocumentosProcessados := fDocumentosProcessados + DocumentoVinculado + '|' ;
 
@@ -809,6 +859,9 @@ begin
             ' Documento: ' +DocumentoVinculado+
             ' Data: '      +DataStr+
             ' Hora: '      +HoraStr ) ;
+
+  if Operacao = '0' then
+   exit;
 
   case TipoTransacao of
     -1 : nStatus := xFinalizaTransacao;
@@ -834,9 +887,9 @@ begin
      NCN(Operacao, NSU, '');
   end;
 
-  if not Confirma then
-     TACBrTEFD(Owner).DoExibeMsg( opmOK, 'Transação não efetuada.'+sLineBreak+
-                                         'Favor reter o Cupom' );
+{  if not Confirma then
+     TACBrTEFD(Owner).DoExibeMsg( opmOK, 'Transação TEF não efetuada.'+sLineBreak+
+                                         'Favor reter o Cupom' );       }
 end;
 
 Function TACBrTEFDCliDTEF.ProcessarRespostaPagamento(
@@ -906,9 +959,11 @@ end;
 
 procedure TACBrTEFDCliDTEF.MontaArquivoResposta(aNSU: String; aRetorno:TStringList);
 var pDados : array [0..257] of AnsiChar;
-    sDados, TipoTransacao, TipoOperacao, txt : String;
+    cDadosEstendido : array [0..257] of AnsiChar;
+    sDados, sDadosEstendido, TipoTransacao, TipoOperacao, txt : String;
     aResposta, imgCupom : TStringList;
     i : Integer;
+    ValSaque, ValorTemp: Double;
 begin
   aResposta := TStringList.Create;
   imgCupom := TStringList.Create;
@@ -918,8 +973,12 @@ begin
        imgCupom.Add(aRetorno[i]);
     end;
 
-    xObtemLogUltimaTransacao( pDados );
+    xObtemLogUltimaTransacao(pDados);
     sDados := TrimRight( pDados );
+
+    strcopy(cDadosEstendido, 'LOGESTENDIDO');
+    xObtemLogUltimaTransacao(cDadosEstendido);
+    sDadosEstendido := TrimRight( cDadosEstendido );
 
     TipoTransacao := '99';
     txt := 'Outros Cartões';
@@ -963,6 +1022,19 @@ begin
     aResposta.Add('102-000 = T.E.F.');
     aResposta.Add('105-000 = ' + copy(sDados,18,4) + copy(sDados,16,2) + copy(sDados,14,2) + copy(sDados,22,6));
     aResposta.Add('121-000 = ' +  BinaryStringToString(imgCupom.Text));
+    //aResposta.Add('122-000 = ' +  BinaryStringToString(imgCupom.Text));
+
+    //Debito - Saque
+    if TipoTransacao = '01' then
+    begin
+       ValSaque := StrToFloat(copy(sDados,215,12));
+       aResposta.Add('130-000 = ' + FloatToStr(ValSaque));
+    end;
+
+    //Cielo Premia - Desconto
+    ValorTemp := StrToFloat(copy(sDadosEstendido,51,12));
+    if ValorTemp > 0 then
+    aResposta.Add('135-000 = ' + FloatToStr(ValorTemp));
 
     aRetorno.Text := aResposta.Text;
   finally
@@ -1032,6 +1104,7 @@ begin
                ComandarECF( opeFechaGerencial );
                GerencialAberto := False;
             end;
+
           finally
             { Verifica se Mensagem Ficou pelo menos por 5 segundos }
             if ImpressaoOk then
@@ -1039,7 +1112,7 @@ begin
               while SecondsBetween(now,TempoInicio) < 5 do
               begin
                 Sleep(EsperaSleep) ;
-                {$IFNDEF FRAMEWORK}
+                {$IFNDEF CONSOLE}
                 Application.ProcessMessages;
                 {$ENDIF}
               end;

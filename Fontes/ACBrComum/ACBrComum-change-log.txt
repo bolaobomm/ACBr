@@ -38,6 +38,10 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+Data: 27/03/2013
+-- ACBrUtil --
+[*] Ajustes para compilação em 64 bits (por: DSA)
+
 Data: 17/03/2013
 -- ACBr.inc --
 [*] Ajuste para compilar corretamente nas últimas versões do Lazarus e
