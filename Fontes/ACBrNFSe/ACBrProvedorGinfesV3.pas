@@ -103,9 +103,18 @@ begin
  ConfigCidade.Prefixo4      := 'ns4:';
  ConfigCidade.Identificador := 'Id';
 
- if AAmbiente = 1
-  then ConfigCidade.NameSpaceEnvelope := 'http://producao.ginfes.com.br'
-  else ConfigCidade.NameSpaceEnvelope := 'http://homologacao.ginfes.com.br';
+ case ACodCidade of
+  2304400: begin // Fortaleza/CE
+            if AAmbiente = 1
+             then ConfigCidade.NameSpaceEnvelope := 'http://producao.issfortaleza.com.br'
+             else ConfigCidade.NameSpaceEnvelope := 'http://homologacao.issfortaleza.com.br';
+           end;
+  else     begin // Demais cidades
+            if AAmbiente = 1
+             then ConfigCidade.NameSpaceEnvelope := 'http://producao.ginfes.com.br'
+             else ConfigCidade.NameSpaceEnvelope := 'http://homologacao.ginfes.com.br';
+           end;
+ end;
 
  ConfigCidade.AssinaRPS  := False;
  ConfigCidade.AssinaLote := True;
@@ -128,9 +137,10 @@ begin
  ConfigSchema.ServicoConRps   := 'servico_consultar_nfse_rps_envio_v03.xsd';
  ConfigSchema.ServicoConNfse  := 'servico_consultar_nfse_envio_v03.xsd';
 
- if ACodCidade = 3300456
-  then ConfigSchema.ServicoCancelar := 'servico_cancelar_nfse_envio_v03.xsd' // Schema usado por Belford Roxo/RJ
+ case ACodCidade of
+  3300456: ConfigSchema.ServicoCancelar := 'servico_cancelar_nfse_envio_v03.xsd' // Schema usado por Belford Roxo/RJ
   else ConfigSchema.ServicoCancelar := 'servico_cancelar_nfse_envio_v02.xsd';
+ end;
 
  ConfigSchema.DefTipos        := 'tipos_v03.xsd';
 
