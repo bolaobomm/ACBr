@@ -99,6 +99,7 @@ type
     Label17: TLabel;
     Label18: TLabel;
     ACBr_MDFe_dpk: TCheckBox;
+    ACBr_LFD_dpk: TCheckBox;
     procedure btnPacotesMarcarTodosClick(Sender: TObject);
     procedure btnPacotesDesmarcarTodosClick(Sender: TObject);
     procedure VerificarCheckboxes(Sender: TObject);
