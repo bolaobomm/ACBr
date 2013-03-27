@@ -76,7 +76,7 @@ type
   EACBrCTeException = class(Exception);
 
   { Evento para gerar log das mensagens do Componente }
-  TACBrCTeLog = procedure(const Mensagem : String) of object ;
+  TACBrCTeLog = procedure(const Mensagem : String) of object;
 
   TACBrCTe = class(TComponent)
   private
@@ -135,18 +135,18 @@ type
   published
     property Configuracoes: TConfiguracoes read FConfiguracoes write FConfiguracoes;
     property OnStatusChange: TNotifyEvent read FOnStatusChange write FOnStatusChange;
-  	property DACTe: TACBrCTeDACTeClass read FDACTe write SetDACTe ;
+  	property DACTe: TACBrCTeDACTeClass read FDACTe write SetDACTe;
     property AboutACBrCTe : TACBrCTeAboutInfo read fsAbout write fsAbout
-                          stored false ;
-    property OnGerarLog : TACBrCTeLog read FOnGerarLog write FOnGerarLog ;
+                          stored false;
+    property OnGerarLog : TACBrCTeLog read FOnGerarLog write FOnGerarLog;
   end;
 
-procedure ACBrAboutDialog ;
+procedure ACBrAboutDialog;
 
 implementation
 
-procedure ACBrAboutDialog ;
-var Msg : String ;
+procedure ACBrAboutDialog;
+var Msg : String;
 begin
     Msg := 'Componente ACBrCTe'+#10+
            'Versão: '+ACBRCTe_VERSAO+#10+#10+
@@ -155,7 +155,7 @@ begin
            'Projeto Cooperar - PCN'+#10+#10+
            'http://www.projetocooperar.org/pcn/';
 
-     MessageDlg(Msg ,mtInformation ,[mbOk],0) ;
+     MessageDlg(Msg ,mtInformation ,[mbOk],0);
 end;
 
 { TACBrCTe }
@@ -165,7 +165,7 @@ begin
   inherited Create(AOwner);
 
   FConfiguracoes     := TConfiguracoes.Create( self );
-  FConfiguracoes.Name:= 'Configuracoes' ;
+  FConfiguracoes.Name:= 'Configuracoes';
   {$IFDEF COMPILER6_UP}
    FConfiguracoes.SetSubComponent( true );{ para gravar no DFM/XFM }
   {$ENDIF}
@@ -177,10 +177,11 @@ begin
 
   if FConfiguracoes.WebServices.Tentativas <= 0 then
      FConfiguracoes.WebServices.Tentativas := 5;
-  {$IFDEF ACBrCTeOpenSSL}
-     CteUtil.InitXmlSec ;
-  {$ENDIF}
-  FOnGerarLog := nil ;
+{$IFDEF ACBrCTeOpenSSL}
+  if FConfiguracoes.Geral.IniFinXMLSECAutomatico then
+   CteUtil.InitXmlSec;
+{$ENDIF}
+  FOnGerarLog := nil;
 end;
 
 destructor TACBrCTe.Destroy;
@@ -189,9 +190,10 @@ begin
   FConhecimentos.Free;
   FEventoCTe.Free;
   FWebServices.Free;
-  {$IFDEF ACBrCTeOpenSSL}
-     CteUtil.ShutDownXmlSec ;
-  {$ENDIF}
+{$IFDEF ACBrCTeOpenSSL}
+  if FConfiguracoes.Geral.IniFinXMLSECAutomatico then
+   CteUtil.ShutDownXmlSec;
+{$ENDIF}
   inherited;
 end;
 
@@ -200,30 +202,30 @@ begin
   inherited Notification(AComponent, Operation);
 
   if (Operation = opRemove) and (FDACTe <> nil) and (AComponent is TACBrCTeDACTeClass) then
-     FDACTe := nil ;
+     FDACTe := nil;
 end;
 
 procedure TACBrCTe.SetDACTe(const Value: TACBrCTeDACTeClass);
- Var OldValue: TACBrCTeDACTeClass ;
+ Var OldValue: TACBrCTeDACTeClass;
 begin
   if Value <> FDACTe then
   begin
      if Assigned(FDACTe) then
         FDACTe.RemoveFreeNotification(Self);
 
-     OldValue  := FDACTe ;   // Usa outra variavel para evitar Loop Infinito
+     OldValue  := FDACTe;   // Usa outra variavel para evitar Loop Infinito
      FDACTe    := Value;    // na remoção da associação dos componentes
 
      if Assigned(OldValue) then
         if Assigned(OldValue.ACBrCTe) then
-           OldValue.ACBrCTe := nil ;
+           OldValue.ACBrCTe := nil;
 
      if Value <> nil then
      begin
         Value.FreeNotification(self);
-        Value.ACBrCTe := self ;
-     end ;
-  end ;
+        Value.ACBrCTe := self;
+     end;
+  end;
 end;
 
 procedure TACBrCTe.SetStatus( const stNewStatus : TStatusACBrCTe );
@@ -330,7 +332,7 @@ var
 begin
  m:=TMimemess.create;
 
- ThreadSMTP := TSendMailThread.Create;  // Não Libera, pois usa FreeOnTerminate := True ;
+ ThreadSMTP := TSendMailThread.Create;  // Não Libera, pois usa FreeOnTerminate := True;
  try
     p := m.AddPartMultipart('mixed', nil);
     if sMensagem <> nil then

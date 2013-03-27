@@ -133,6 +133,9 @@ type
     FAtualizarXMLCancelado: Boolean;
     FPathSalvar: String;
     FPathSchemas: String;
+  {$IFDEF ACBrCTeOpenSSL}
+    FIniFinXMLSECAutomatico: boolean;
+  {$ENDIF}
     procedure SetFormaEmissao(AValue: TpcnTipoEmissao);
     function GetPathSalvar: String;
   public
@@ -146,6 +149,9 @@ type
     property AtualizarXMLCancelado: Boolean read FAtualizarXMLCancelado write FAtualizarXMLCancelado default True ;
     property PathSalvar: String read GetPathSalvar write FPathSalvar;
     property PathSchemas: String read FPathSchemas write FPathSchemas;
+  {$IFDEF ACBrCTeOpenSSL}
+    property IniFinXMLSECAutomatico: Boolean read FIniFinXMLSECAutomatico write FIniFinXMLSECAutomatico;
+  {$ENDIF}
   end;
 
   TArquivosConf = class(TComponent)
@@ -250,6 +256,9 @@ begin
   FAtualizarXMLCancelado := True;
   FPathSalvar            := '' ;
   FPathSchemas           := '' ;
+{$IFDEF ACBrCTeOpenSSL}
+  FIniFinXMLSECAutomatico:=True;
+{$ENDIF}
 end;
 
 function TGeralConf.GetPathSalvar: String;
