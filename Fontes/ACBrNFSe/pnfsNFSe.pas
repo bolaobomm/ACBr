@@ -186,9 +186,16 @@ type
   private
     FCnpj: string;
     FInscricaoMunicipal: string;
+    FSenha: string;
+    FFraseSecreta: string;
+    FcUF: integer;
   published
     property Cnpj: string read FCnpj write FCnpj;
     property InscricaoMunicipal: string read FInscricaoMunicipal write FInscricaoMunicipal;
+    // As propriedades abaixo são Utilizadas pelo provedor ISSDigital
+    property Senha: string read FSenha write FSenha;
+    property FraseSecreta: string read FFraseSecreta write FFraseSecreta;
+    property cUF: integer read FcUF write FcUF;
   end;
 
  TEndereco = class(TPersistent)

@@ -90,7 +90,7 @@ type
 implementation
 
 uses
- ACBrUtil, ACBrNFSe;
+ ACBrUtil, ACBrNFSe, ACBrNFSeUtil;
 
 { TNFSeW }
 
@@ -142,6 +142,9 @@ begin
   then Atributo := ' xmlns:' + stringReplace(Prefixo4, ':', '', []) + '="' + FURL + FDefTipos + '"'
   else Atributo := ' xmlns="' + FURL + FDefTipos + '"';
 
+ if FProvedor = proISSDigital
+  then Atributo := '';
+
  // Alterado Por Cleiver em 01/02/2013
  if (FProvedor = proGoiania)
   then begin
@@ -150,7 +153,16 @@ begin
   end
 	else Gerador.wGrupo('Rps' + Atributo);
 
- FNFSe.InfID.ID := SomenteNumeros(FNFSe.IdentificacaoRps.Numero) + FNFSe.IdentificacaoRps.Serie;
+ case FProvedor of
+  proISSDigital: FNFSe.InfID.ID := NotaUtil.ChaveAcesso(FNFSe.Prestador.cUF,
+                         FNFSe.DataEmissao,
+                         FNFSe.Prestador.Cnpj,
+                         0, // Serie
+                         StrToInt(SomenteNumeros(FNFSe.IdentificacaoRps.Numero)),
+                         StrToInt(SomenteNumeros(FNFSe.IdentificacaoRps.Numero)));
+
+  else FNFSe.InfID.ID := SomenteNumeros(FNFSe.IdentificacaoRps.Numero) + FNFSe.IdentificacaoRps.Serie;
+ end;
 
  case FProvedor of
   profintelISS:  GerarXML_Provedor_fintelISS;
@@ -432,7 +444,7 @@ begin
          then Gerador.wCampoNFSe(tcStr, '#33', 'MunicipioPrestacaoServico', 01, 0007, 1, SomenteNumeros(NFSe.Servico.CodigoMunicipio), '')
          else Gerador.wCampoNFSe(tcStr, '#33', 'CodigoMunicipio          ', 01, 0007, 1, SomenteNumeros(NFSe.Servico.CodigoMunicipio), '');
 
-        if Provedor = proSimplISS
+        if FProvedor = proSimplISS
          then begin
           for i := 0 to NFSe.Servico.ItemServico.Count - 1 do
            begin
@@ -468,12 +480,19 @@ begin
   else Gerador.wCampoNFSe(tcStr, '#34', 'Cnpj', 14, 14, 1, SomenteNumeros(NFSe.Prestador.Cnpj), '');
 
  Gerador.wCampoNFSe(tcStr, '#35', 'InscricaoMunicipal', 01, 15, 0, NFSe.Prestador.InscricaoMunicipal, '');
+
+ if FProvedor = proISSDigital
+  then begin
+   Gerador.wCampoNFSe(tcStr, '#36', 'Senha       ', 01, 255, 1, NFSe.Prestador.Senha, '');
+   Gerador.wCampoNFSe(tcStr, '#36', 'FraseSecreta', 01, 255, 1, NFSe.Prestador.FraseSecreta, '');
+  end;
+
  Gerador.wGrupoNFSe('/Prestador');
 end;
 
 procedure TNFSeW.GerarTomador;
 begin
- if Provedor = profintelISS
+ if FProvedor = profintelISS
   then Gerador.wGrupoNFSe('TomadorServico')
   else Gerador.wGrupoNFSe('Tomador');
 
@@ -499,7 +518,7 @@ begin
  Gerador.wCampoNFSe(tcStr, '#41', 'Complemento', 001, 060, 0, NFSe.Tomador.Endereco.Complemento, '');
  Gerador.wCampoNFSe(tcStr, '#42', 'Bairro     ', 001, 060, 0, NFSe.Tomador.Endereco.Bairro, '');
 
- case Provedor of
+ case FProvedor of
   profintelISS,
   proISSIntel,
   proGinfes,
@@ -536,7 +555,7 @@ begin
  Gerador.wCampoNFSe(tcStr, '#47', 'Email   ', 01, 80, 0, NFSe.Tomador.Contato.Email, '');
  Gerador.wGrupoNFSe('/Contato');
 
- if Provedor = profintelISS
+ if FProvedor = profintelISS
   then Gerador.wGrupoNFSe('/TomadorServico')
   else Gerador.wGrupoNFSe('/Tomador');
 end;
@@ -757,10 +776,9 @@ end;
 
 procedure TNFSeW.GerarXML_Provedor_ISSDigital;
 begin
- Gerador.wGrupoNFSe('InfDeclaracaoPrestacaoServico');
- if FIdentificador = ''
-  then Gerador.wGrupoNFSe('Rps')
-  else Gerador.wGrupoNFSe('Rps ' + FIdentificador + '="rps' + NFSe.InfID.ID + '"');
+ Gerador.wGrupoNFSe('InfDeclaracaoPrestacaoServico xmlns="http://www.abrasf.org.br/nfse.xsd" ' +
+                                FIdentificador + '="NSe' + NFSe.InfID.ID + '"');
+ Gerador.wGrupoNFSe('Rps ' + FIdentificador + '="NSe' + NFSe.InfID.ID + '"');
 
  GerarIdentificacaoRPS;
 

@@ -95,6 +95,8 @@ type
 
     class function PathWithDelim( const APath : String ) : String;
     class function RetornarConteudoEntre(const Frase, Inicio, Fim: string): string;
+    class function ChaveAcesso(AUF:Integer; ADataEmissao:TDateTime; ACNPJ:String; ASerie:Integer;
+                               ANumero,ACodigo: Integer; AModelo:Integer=56): String;
 
   published
 
@@ -1457,6 +1459,23 @@ begin
     exit;
   s      := Copy(Frase, i + length(Inicio), maxInt);
   result := Copy(s, 1, pos(Fim, s) - 1);
+end;
+
+class function NotaUtil.ChaveAcesso(AUF: Integer; ADataEmissao: TDateTime;
+  ACNPJ: String; ASerie, ANumero, ACodigo: Integer; AModelo: Integer): String;
+var
+  vUF, vDataEmissao, vSerie, vNumero,
+  vCodigo, vModelo: String;
+begin
+  vUF          := DFeUtil.Poem_Zeros(AUF, 2);
+  vDataEmissao := FormatDateTime('YYMM', ADataEmissao);
+  vModelo      := DFeUtil.Poem_Zeros(AModelo, 2);
+  vSerie       := DFeUtil.Poem_Zeros(ASerie, 3);
+  vNumero      := DFeUtil.Poem_Zeros(ANumero, 9);
+  vCodigo      := DFeUtil.Poem_Zeros(ACodigo, 9);
+
+  Result := vUF+vDataEmissao+ACNPJ+vModelo+vSerie+vNumero+vCodigo;
+//  Result := Result+NotaUtil.Modulo11(Result);
 end;
 
 end.
