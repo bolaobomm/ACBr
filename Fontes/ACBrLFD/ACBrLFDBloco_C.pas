@@ -129,8 +129,8 @@ type
     FSER: String; // Série do documento fiscal
     FNUM_DOC: Integer; // Número do documento fiscal
     FCHV_NFE: String; // Chave de acesso da Nota Fiscal Eletrônica
-    FDT_EMIS: TDate; // Data da emissão do documento fiscal
-    FDT_DOC: TDate; // Data da entrada ou da saída
+    FDT_EMIS: TDateTime; // Data da emissão do documento fiscal
+    FDT_DOC: TDateTime; // Data da entrada ou da saída
     FCOD_NAT: String; // Código da natureza da operação ou prestação
     FIND_PGTO: TACBrlTipoPagamento; // Indicador do pagamento
     FVL_DOC: Currency; // Valor do documento fiscal
@@ -168,8 +168,8 @@ type
     property SER: String read FSER write FSER;
     property NUM_DOC: Integer read FNUM_DOC write FNUM_DOC;
     property CHV_NFE: String read FCHV_NFE write FCHV_NFE;
-    property DT_EMIS: TDate read FDT_EMIS write FDT_EMIS;
-    property DT_DOC: TDate read FDT_DOC write FDT_DOC;
+    property DT_EMIS: TDateTime read FDT_EMIS write FDT_EMIS;
+    property DT_DOC: TDateTime read FDT_DOC write FDT_DOC;
     property COD_NAT: String read FCOD_NAT write FCOD_NAT;
     property IND_PGTO: TACBrlTipoPagamento read FIND_PGTO write FIND_PGTO;
     property VL_DOC: Currency read FVL_DOC write FVL_DOC;
@@ -220,7 +220,7 @@ type
     FIND_TIT: TACBrTipoTitulo;
     FDESCR_TIT: String;
     FNUM_TIT: String;
-    FDT_TIT: TDate;
+    FDT_TIT: TDateTime;
     FVL_TIT: Currency;
     FQTD_PARC: Integer;
 
@@ -232,7 +232,7 @@ type
     property IND_TIT: TACBrTipoTitulo read FIND_TIT write FIND_TIT;
     property DESCR_TIT: String read FDESCR_TIT write FDESCR_TIT;
     property NUM_TIT: String read FNUM_TIT write FNUM_TIT;
-    property DT_TIT: TDate read FDT_TIT write FDT_TIT;
+    property DT_TIT: TDateTime read FDT_TIT write FDT_TIT;
     property VL_TIT: Currency read FVL_TIT write FVL_TIT;
     property QTD_PARC: Integer read FQTD_PARC write FQTD_PARC;
 
@@ -259,13 +259,13 @@ type
   TRegistroC035 = class
   private
     FNUM_PARC: Integer;
-    FDT_VCTO: TDate;
+    FDT_VCTO: TDateTime;
     FVL_PARC: Currency;
   public
     constructor Create(AOwner: TRegistroC030); virtual; /// Create
 
     property NUM_PARC: Integer read FNUM_PARC write FNUM_PARC;
-    property DT_VCTO: TDate read FDT_VCTO write FDT_VCTO;
+    property DT_VCTO: TDateTime read FDT_VCTO write FDT_VCTO;
     property VL_PARC: Currency read FVL_PARC write FVL_PARC;
   end;
 
@@ -337,9 +337,9 @@ type
     fVL_COFINS: Currency;
     fVL_BC_IMP_IPI: Currency;
     fVL_ADU: Currency;
-    fDT_REG: TDate;
+    fDT_REG: TDateTime;
     fVL_IPI: Currency;
-    fDT_DES: TDate;
+    fDT_DES: TDateTime;
     fVL_BC_IMP_ICMS: Currency;
     fVL_II: Currency;
     fVL_ICMS: Currency;
@@ -347,8 +347,8 @@ type
     constructor Create(AOwner: TRegistroC020); virtual; /// Create
 
     property NUM_DI_DSI: Integer read fNUM_DI_DSI write fNUM_DI_DSI;
-    property DT_REG: TDate read fDT_REG write fDT_REG;
-    property DT_DES: TDate read fDT_DES write fDT_DES;
+    property DT_REG: TDateTime read fDT_REG write fDT_REG;
+    property DT_DES: TDateTime read fDT_DES write fDT_DES;
     property VL_MERC: Currency read fVL_MERC write fVL_MERC;
     property VL_PIS: Currency read fVL_PIS write fVL_PIS;
     property VL_COFINS: Currency read fVL_COFINS write fVL_COFINS;
@@ -623,8 +623,8 @@ type
     FIND_MED: TACBrTipoProduto; /// Indicador de medicamento
     FLOTE: String; /// Número do lote de fabricação do medicamento
     FQTD: Double; /// Quantidade de itens do lote
-    FDT_FAB: TDate; /// Data de fabricação do medicamento
-    FDT_VAL: TDate; /// Data de expiração da validade do medicamento
+    FDT_FAB: TDateTime; /// Data de fabricação do medicamento
+    FDT_VAL: TDateTime; /// Data de expiração da validade do medicamento
     FIND_BC: TACBrTipoBaseMedicamento; /// Indicador de referência da base de cálculo do medicamento
     FVL_TAB_MAX: Currency; /// Valor do preço tabelado ou valor do preço máximo
   public
@@ -633,8 +633,8 @@ type
     property IND_MED: TACBrTipoProduto read FIND_MED write FIND_MED;
     property LOTE: String read FLOTE write FLOTE;
     property QTD: Double read FQTD write FQTD;
-    property DT_FAB: TDate read FDT_FAB write FDT_FAB;
-    property DT_VAL: TDate read FDT_VAL write FDT_VAL;
+    property DT_FAB: TDateTime read FDT_FAB write FDT_FAB;
+    property DT_VAL: TDateTime read FDT_VAL write FDT_VAL;
     property IND_BC: TACBrTipoBaseMedicamento read FIND_BC write FIND_BC;
     property VL_TAB_MAX: Currency read FVL_TAB_MAX write FVL_TAB_MAX;
   end;
@@ -734,7 +734,7 @@ type
     FSER: String; /// Série do documento fiscal
     FSUB: String; /// Subsérie do documento fiscal
     FNUM_DOC: Integer; /// Número do documento fiscal
-    FDT_DOC: TDate; /// Data da emissão do documento fiscal
+    FDT_DOC: TDateTime; /// Data da emissão do documento fiscal
     FCOP: String; // Código da classe da operação
     FVL_DOC: Currency; /// Valor total do documento fiscal
     FVL_DESC: Currency; /// Valor total do desconto
@@ -756,7 +756,7 @@ type
     property SER: String read FSER write FSER;
     property SUB: String read FSUB write FSUB;
     property NUM_DOC: Integer read FNUM_DOC write FNUM_DOC;
-    property DT_DOC: TDate read FDT_DOC write FDT_DOC;
+    property DT_DOC: TDateTime read FDT_DOC write FDT_DOC;
     property COP: String read FCOP write FCOP;
     property VL_DOC: Currency read FVL_DOC write FVL_DOC;
     property VL_DESC: Currency read FVL_DESC write FVL_DESC;
@@ -894,7 +894,7 @@ type
     FSUB: String; /// Subsérie do documento fiscal
     FNUM_DOC_INI: Integer; /// Número do primeiro documento fiscal emitido
     FNUM_DOC_FIN: Integer; /// Número do último documento fiscal emitido
-    FDT_DOC: TDate; /// Data da emissão dos documentos fiscais
+    FDT_DOC: TDateTime; /// Data da emissão dos documentos fiscais
     FCOP: String; /// Código da classe da operação
     FVL_DOC: Currency; /// Valor total acumulado
     FVL_MERC: Currency; /// Valor total das mercadorias
@@ -912,7 +912,7 @@ type
     property NUM_DOC_INI: Integer read FNUM_DOC_INI write FNUM_DOC_INI;
     property NUM_DOC_FIN: Integer read FNUM_DOC_FIN write FNUM_DOC_FIN;
     property QTD_CANC: Integer read FQTD_CANC write FQTD_CANC;
-    property DT_DOC: TDate read FDT_DOC write FDT_DOC;
+    property DT_DOC: TDateTime read FDT_DOC write FDT_DOC;
     property VL_DOC: Currency read FVL_DOC write FVL_DOC;
     property VL_BC_ICMS: Currency read FVL_BC_ICMS write FVL_BC_ICMS;
     property VL_ICMS: Currency read FVL_ICMS write FVL_ICMS;
@@ -1032,7 +1032,7 @@ type
     fCRO: Integer; /// Posição do Contador de Reinício de Operação
     fCRZ: Integer; /// Posição do Contador de Redução Z
     fNUM_DOC: Integer; /// Número do documento fiscal
-    fDT_DOC: TDate; /// Data da emissão do documento fiscal
+    fDT_DOC: TDateTime; /// Data da emissão do documento fiscal
     FCOP: String; /// Código da classe da operação
     FVL_ACMO_ISS: Currency;
     FVL_CANC_ISS: Currency;
@@ -1064,7 +1064,7 @@ type
     property CRO: Integer read FCRO write FCRO;
     property CRZ: Integer read FCRZ write FCRZ;
     property NUM_DOC: Integer read FNUM_DOC write FNUM_DOC;
-    property DT_DOC: TDate read FDT_DOC write FDT_DOC;
+    property DT_DOC: TDateTime read FDT_DOC write FDT_DOC;
     property COP: String read FCOP write FCOP;
     property VL_DOC: Currency read FVL_DOC write FVL_DOC;
     property VL_CANC_ICMS: Currency read FVL_CANC_ICMS write FVL_CANC_ICMS;
@@ -1264,7 +1264,7 @@ type
     FCRZ: Integer; /// Posição do Contador de Redução Z
     FNUM_DOC_INI: Integer; /// Número do primeiro documento fiscal
     FNUM_DOC_FIN: Integer; /// Número do último documento fiscal
-    FDT_DOC: TDate; /// Data da emissão dos documentos fiscais
+    FDT_DOC: TDateTime; /// Data da emissão dos documentos fiscais
     FCOP: String; /// Código da classe da operação
     FVL_DOC: Currency; /// Valor acumulado dos documentos fiscais
     FVL_CANC_ISS: Currency; /// Valor total dos cancelamentos referentes ao ISS
@@ -1297,7 +1297,7 @@ type
     property CRZ: Integer read FCRZ write FCRZ;
     property NUM_DOC_INI: Integer read FNUM_DOC_INI write FNUM_DOC_INI;
     property NUM_DOC_FIN: Integer read FNUM_DOC_FIN write FNUM_DOC_FIN;
-    property DT_DOC: TDate read FDT_DOC write FDT_DOC;
+    property DT_DOC: TDateTime read FDT_DOC write FDT_DOC;
     property COP: String read FCOP write FCOP;
     property VL_DOC: Currency read FVL_DOC write FVL_DOC;
     property VL_CANC_ISS: Currency read FVL_CANC_ISS write FVL_CANC_ISS;
@@ -1460,8 +1460,8 @@ type
     FSUB: String; /// Subsérie do documento fiscal
     FCOD_ASS: Integer; /// Código do tipo de consumidor ou assinante
     FNUM_DOC: Integer; /// Número do documento fiscal
-    FDT_EMIS: TDate; /// Data da emissão do documento fiscal
-    FDT_DOC: TDate; /// Data da entrada ou da saída
+    FDT_EMIS: TDateTime; /// Data da emissão do documento fiscal
+    FDT_DOC: TDateTime; /// Data da entrada ou da saída
     FCOD_NAT: String; /// Código da natureza da operação
     FVL_DOC: Currency; /// Valor total do documento fiscal
     FVL_TERC: Currency; /// Valor cobrado em nome de terceiros
@@ -1490,8 +1490,8 @@ type
     property SUB: String read FSUB write FSUB;
     property COD_ASS: Integer read FCOD_ASS write FCOD_ASS;
     property NUM_DOC: Integer read FNUM_DOC write FNUM_DOC;
-    property DT_EMIS: TDate read FDT_EMIS write FDT_EMIS;
-    property DT_DOC: TDate read FDT_DOC write FDT_DOC;
+    property DT_EMIS: TDateTime read FDT_EMIS write FDT_EMIS;
+    property DT_DOC: TDateTime read FDT_DOC write FDT_DOC;
     property COD_NAT: String read FCOD_NAT write FCOD_NAT;
     property VL_DOC: Currency read FVL_DOC write FVL_DOC;
     property VL_TERC: Currency read FVL_TERC write FVL_TERC;
@@ -1532,8 +1532,8 @@ type
     FCONTA: String; /// Número da conta de consumo
     FIND_LIG: TACBrTipoLigacao; /// Indicador do tipo de ligação
     FIND_KV: TACBrGrupoTensao; /// Indicador de grupo de tensão
-    FDT_INI: TDate; /// Data em que iniciou o consumo de energia
-    FDT_FIN: TDate; /// Data em que encerrou o consumo de energia
+    FDT_INI: TDateTime; /// Data em que iniciou o consumo de energia
+    FDT_FIN: TDateTime; /// Data em que encerrou o consumo de energia
     FDEM: Double; /// Demanda, em kW
     FCONS: Double; /// Consumo total em kWh
     FHASH_DOC: Double; /// Código de autenticação do documento fiscal
@@ -1544,8 +1544,8 @@ type
     property CONTA: String read FCONTA write FCONTA;
     property IND_LIG: TACBrTipoLigacao read FIND_LIG write FIND_LIG;
     property IND_KV: TACBrGrupoTensao read FIND_KV write FIND_KV;
-    property DT_INI: TDate read FDT_INI write FDT_INI;
-    property DT_FIN: TDate read FDT_FIN write FDT_FIN;
+    property DT_INI: TDateTime read FDT_INI write FDT_INI;
+    property DT_FIN: TDatetime read FDT_FIN write FDT_FIN;
     property DEM: Double read FDEM write FDEM;
     property CONS: Double read FCONS write FCONS;
     property HASH_DOC: Double read FHASH_DOC write FHASH_DOC;
@@ -1560,8 +1560,8 @@ type
     FID_ASS: String; /// Identificação do consumidor ou assinante
     FCONTA: String; /// Número da conta de consumo/fatura
     FMED: String; /// Número de identificação do medidor
-    FDT_INI: TDate; /// Data inicial do período de fornecimento
-    FDT_FIN: TDate; /// Data final do período de fornecimento
+    FDT_INI: TDateTime; /// Data inicial do período de fornecimento
+    FDT_FIN: TDateTime; /// Data final do período de fornecimento
     FCONS: Double; /// Consumo, em metros cúbicos
     FVL_BC_ST: Currency; /// Valor da base de cálculo do ICMS substituição tributária
     FVL_ICMS_ST: Currency; /// Valor do ICMS da substituição tributáia
@@ -1571,8 +1571,8 @@ type
     property ID_ASS: String read FID_ASS write FID_ASS;
     property CONTA: String read FCONTA write FCONTA;
     property MED: String read FMED write FMED;
-    property DT_INI: TDate read FDT_INI write FDT_INI;
-    property DT_FIN: TDate read FDT_FIN write FDT_FIN;
+    property DT_INI: TDateTime read FDT_INI write FDT_INI;
+    property DT_FIN: TDateTime read FDT_FIN write FDT_FIN;
     property CONS: Double read FCONS write FCONS;
     property VL_BC_ST: Currency read FVL_BC_ST write FVL_BC_ST;
     property VL_ICMS_ST: Currency read FVL_ICMS_ST write FVL_ICMS_ST;
@@ -1587,7 +1587,7 @@ type
     FIND_TIT: TACBrTipoTitulo; /// Indicador de título de crédito
     FDESCR_TIT: String; /// Descrição complementar do título de crédito
     FNUM_TIT: String; /// Número ou código identificador do título de crédito
-    FDT_TIT: TDate; /// Data de emissão do título de crédito
+    FDT_TIT: TDateTime; /// Data de emissão do título de crédito
     FVL_TIT: Currency; /// Valor original do título de crédito
     FQTD_PARC: Integer; /// Quantidade de parcelas a pagar
 
@@ -1598,7 +1598,7 @@ type
     property IND_TIT: TACBrTipoTitulo read FIND_TIT write FIND_TIT;
     property DESCR_TIT: String read FDESCR_TIT write FDESCR_TIT;
     property NUM_TIT: String read FNUM_TIT write FNUM_TIT;
-    property DT_TIT: TDate read FDT_TIT write FDT_TIT;
+    property DT_TIT: TDateTime read FDT_TIT write FDT_TIT;
     property VL_TIT: Currency read FVL_TIT write FVL_TIT;
     property QTD_PARC: Integer read FQTD_PARC write FQTD_PARC;
 
@@ -1612,13 +1612,13 @@ type
   TRegistroC720 = class
   private
     FNUM_PARC: Integer; /// Número da parcela
-    FDT_VCTO: TDate; /// Data de vencimento da parcela
+    FDT_VCTO: TDateTime; /// Data de vencimento da parcela
     FVL_PARC: Currency; /// Valor da parcela
   public
     constructor Create(AOwner: TRegistroC715); virtual; /// Create
 
     property NUM_PARC: Integer read FNUM_PARC write FNUM_PARC;
-    property DT_VCTO: TDate read FDT_VCTO write FDT_VCTO;
+    property DT_VCTO: TDateTime read FDT_VCTO write FDT_VCTO;
     property VL_PARC: Currency read FVL_PARC write FVL_PARC;
   end;
 
@@ -1759,7 +1759,7 @@ type
     FSUB: String; /// Subsérie dos documentos consolidados
     FCOD_CONS: TACBrClasseConsumo; /// Código de classe de consumo
     FQTD_DOC: Double; /// Quantidade de documentos consolidados neste registro
-    FDT_DOC: TDate; /// Data dos documentos consolidados
+    FDT_DOC: TDateTime; /// Data dos documentos consolidados
     FCOD_NAT: String; /// Código da natureza da operação
     FVL_DOC: Currency; /// Valor acumulado dos documentos consolidados
     FVL_OP_ISS: Currency; /// Valor total das operações tributadas pelo ISS
@@ -1785,7 +1785,7 @@ type
     property SUB: String read FSUB write FSUB;
     property COD_CONS: TACBrClasseConsumo read FCOD_CONS write FCOD_CONS;
     property QTD_DOC: Double read FQTD_DOC write FQTD_DOC;
-    property DT_DOC: TDate read FDT_DOC write FDT_DOC;
+    property DT_DOC: TDateTime read FDT_DOC write FDT_DOC;
     property COD_NAT: String read FCOD_NAT write FCOD_NAT;
     property VL_DOC: Currency read FVL_DOC write FVL_DOC;
     property VL_OP_ISS: Currency read FVL_OP_ISS write FVL_OP_ISS;

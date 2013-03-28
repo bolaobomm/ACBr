@@ -74,8 +74,8 @@ type
   TRegistro8020 = class
   private
     FIND_DAD: TACBrLIndicadorMovimento; // Indicador de conteúdo
-    FDT_INI: TDate; /// Data inicial a que o mapa se refere
-    FDT_FIN: TDate; /// Data final a que o mapa se refere
+    FDT_INI: TDateTime; /// Data inicial a que o mapa se refere
+    FDT_FIN: TDateTime; /// Data final a que o mapa se refere
     FCOMB: Integer; /// Tipo de combustível
 
     FRegistro8025: TRegistro8025List;
@@ -84,8 +84,8 @@ type
     destructor Destroy; override; /// Destroy
 
     property IND_DAD: TACBrLIndicadorMovimento read FIND_DAD write FIND_DAD;
-    property DT_INI: TDate read FDT_INI write FDT_INI;
-    property DT_FIN: TDate read FDT_FIN write FDT_FIN;
+    property DT_INI: TDateTime read FDT_INI write FDT_INI;
+    property DT_FIN: TDateTime read FDT_FIN write FDT_FIN;
     property COMB: Integer read FCOMB write FCOMB;
 
     property Registro8025: TRegistro8025List read FRegistro8025 write FRegistro8025;

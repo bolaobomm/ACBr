@@ -252,8 +252,8 @@ type
   private
     fALIQ_RT : Currency;             // Alíquota de retenção conforme previsto no art. 21 da LC 123/06 para a faixa de receita bruta a que a ME/EPP esteve sujeita no mês anterior ao da prestação
     fANEXO_RT: TACBrAnexoRT;         // Indicador do anexo da LC 123/06 referente à receita bruta
-    fDTFIM_RT: TDate;                // Data final de utilização da alíquota
-    fDTINI_RT: TDate;                // Data inicial de utilização da alíquota
+    fDTFIM_RT: TDateTime;                // Data final de utilização da alíquota
+    fDTINI_RT: TDateTime;                // Data inicial de utilização da alíquota
     fIND_RT  : TACBrTipoTributacao;  // Indicador da tributação
   public
     constructor Create(AOwner: TRegistro0030); virtual; /// Create
@@ -261,8 +261,8 @@ type
     property IND_RT: TACBrTipoTributacao read fIND_RT write fIND_RT;
     property ANEXO_RT: TACBrAnexoRT  read fANEXO_RT write fANEXO_RT;
     property ALIQ_RT : Currency read fALIQ_RT write fALIQ_RT;
-    property DTINI_RT: TDate  read fDTINI_RT write fDTINI_RT;
-    property DTFIM_RT: TDate  read fDTFIM_RT write fDTFIM_RT;
+    property DTINI_RT: TDateTime  read fDTINI_RT write fDTINI_RT;
+    property DTFIM_RT: TDateTime  read fDTFIM_RT write fDTFIM_RT;
   end;
 
   /// Registro 0040 - CRÉDITO SIMPLIFICADO
@@ -273,8 +273,8 @@ type
   private
     fALIQ_CRD : Currency;       // Alíquota prevista no art. 23 da LC 123/06 para a faixa de receita bruta a que a ME/EPP esteve sujeita no mês anterior ao da operação
     fANEXO_CRD: TACBrAnexoCRD;  // Indicador do anexo da LC 123/06 referente à receita bruta
-    fDTFIM_CRD: TDate;          // Data final de utilização da alíquota
-    fDTINI_CRD: TDate;          // Data inicial de utilização da alíquota
+    fDTFIM_CRD: TDateTime;          // Data final de utilização da alíquota
+    fDTINI_CRD: TDateTime;          // Data inicial de utilização da alíquota
     fIND_CRD  : Boolean;        // Indicador de geração do crédito simplificado
   public
     constructor Create(AOwner: TRegistro0030); virtual; /// Create
@@ -282,8 +282,8 @@ type
     property IND_CRD  : Boolean read fIND_CRD write fIND_CRD;
     property ANEXO_CRD: TACBrAnexoCRD  read fANEXO_CRD write fANEXO_CRD;
     property ALIQ_CRD : Currency read fALIQ_CRD write fALIQ_CRD;
-    property DTINI_CRD: TDate  read fDTINI_CRD write fDTINI_CRD;
-    property DTFIM_CRD: TDate  read fDTFIM_CRD write fDTFIM_CRD;
+    property DTINI_CRD: TDateTime  read fDTINI_CRD write fDTINI_CRD;
+    property DTFIM_CRD: TDateTime  read fDTFIM_CRD write fDTFIM_CRD;
   end;
 
   /// Registro 0045 -SUBSTITUIÇÃO SIMPLIFICADA
@@ -293,14 +293,14 @@ type
   TRegistro0045 = class
   private
     fALIQ_STS : Currency;        // Valor da alíquota interna ou interestadual sobre o valor da operação ou prestação própria do substituto tributário
-    fDTFIM_STS: TDate;           // Data inicial de utilização da alíquota
-    fDTINI_STS: TDate;           // Data final de utilização da alíquota
+    fDTFIM_STS: TDateTime;           // Data inicial de utilização da alíquota
+    fDTINI_STS: TDateTime;           // Data final de utilização da alíquota
   public
     constructor Create(AOwner: TRegistro0030); virtual; /// Create
 
     property ALIQ_STS : Currency read fALIQ_STS write fALIQ_STS;
-    property DTINI_STS: TDate  read fDTINI_STS write fDTINI_STS;
-    property DTFIM_STS: TDate  read fDTFIM_STS write fDTFIM_STS;
+    property DTINI_STS: TDateTime  read fDTINI_STS write fDTINI_STS;
+    property DTFIM_STS: TDateTime  read fDTFIM_STS write fDTFIM_STS;
   end;
 
 
@@ -575,8 +575,8 @@ type
   TRegistro0210 = class
   private
     FCOD_ITEM_COMP: String;      // Código do item componente
-    FDT_FIN_COMP: TDate;         // Data de término de vigência da fórmula de composição
-    FDT_INI_COMP: TDate;         // Data de início de vigência da fórmula de composição
+    FDT_FIN_COMP: TDateTime;         // Data de término de vigência da fórmula de composição
+    FDT_INI_COMP: TDateTime;         // Data de início de vigência da fórmula de composição
     FIND_ALT: TACBrIndAlteracao; // Indicador de alteração
     FUNID_COMP: String;          // Unidade do item composto/produto
     FUNID_ITEM: String;          // Unidade do item componente
@@ -590,8 +590,8 @@ type
     property QTD_COMP: Double read FQTD_COMP write FQTD_COMP;
     property UNID_COMP: String read FUNID_COMP write FUNID_COMP;
     property PERDA_COMP: Double read FPERDA_COMP write FPERDA_COMP;
-    property DT_INI_COMP: TDate read FDT_INI_COMP write FDT_INI_COMP;
-    property DT_FIN_COMP: TDate read FDT_FIN_COMP write FDT_FIN_COMP;
+    property DT_INI_COMP: TDateTime read FDT_INI_COMP write FDT_INI_COMP;
+    property DT_FIN_COMP: TDateTime read FDT_FIN_COMP write FDT_FIN_COMP;
     property IND_ALT: TACBrIndAlteracao read FIND_ALT write FIND_ALT;
 
   end;
@@ -616,13 +616,13 @@ type
   TRegistro0215 = class
   private
     FCODITEM_ANP: String; // Código de correlação do item com a tabela de produtos da Agência Nacional do Petróleo
-    FDT_FIN: TDate;      // Data inicial de utilização do código
-    FDT_INI: TDate;      // Data final de utilização do código
+    FDT_FIN: TDateTime;      // Data inicial de utilização do código
+    FDT_INI: TDateTime;      // Data final de utilização do código
   public
     constructor Create(AOwner: TRegistro0200); virtual; /// Create
     property CODITEM_ANP : String read FCODITEM_ANP write FCODITEM_ANP;
-    property DT_INI: TDate read FDT_INI write FDT_INI;
-    property DT_FIN: TDate read FDT_FIN write FDT_FIN;
+    property DT_INI: TDateTime read FDT_INI write FDT_INI;
+    property DT_FIN: TDateTime read FDT_FIN write FDT_FIN;
   end;
 
   /// Registro 0215 - Lista
@@ -732,10 +732,10 @@ type
   TRegistro0460 = class
   private
     FCOD_DA: String;   // Código do modelo do documento de arrecadação
-    FDT_FIM: TDate;    // Data final do período de referência
-    FDT_INI: TDate;    // Data inicial do período de referência
-    FDT_PAGTO: TDate;  // Data de pagamento do documento de arrecadação
-    FDT_VENC: TDate;   // Data de vencimento do documento de arrecadação
+    FDT_FIM: TDateTime;    // Data final do período de referência
+    FDT_INI: TDateTime;    // Data inicial do período de referência
+    FDT_PAGTO: TDateTime;  // Data de pagamento do documento de arrecadação
+    FDT_VENC: TDateTime;   // Data de vencimento do documento de arrecadação
     FNUM_DA: String;
     FVALOR_DA: Double;
   public
@@ -744,10 +744,10 @@ type
     property COD_DA: String read FCOD_DA write FCOD_DA;
     property NUM_DA: String read FNUM_DA write FNUM_DA;
     property VALOR_DA: Double read FVALOR_DA write FVALOR_DA;
-    property DT_INI: TDate read FDT_INI write FDT_INI;
-    property DT_FIM: TDate read FDT_FIM write FDT_FIM;
-    property DT_VENC: TDate read FDT_VENC write FDT_VENC;
-    property DT_PAGTO: TDate read FDT_PAGTO write FDT_PAGTO;
+    property DT_INI: TDateTime read FDT_INI write FDT_INI;
+    property DT_FIM: TDateTime read FDT_FIM write FDT_FIM;
+    property DT_VENC: TDateTime read FDT_VENC write FDT_VENC;
+    property DT_PAGTO: TDateTime read FDT_PAGTO write FDT_PAGTO;
   end;
 
   /// Registro 0460 - Lista
@@ -773,7 +773,7 @@ type
     FCOD_MOD: String;              // Código do documento fiscal
     FCOD_SIT: String;              // Código da situação do documento fiscal,
     FCPF: String;                  // CPF do participante
-    FDT_EMISSAO: TDate;            // Data da emissão, da entrada ou do lançamento
+    FDT_EMISSAO: TDateTime;            // Data da emissão, da entrada ou do lançamento
     FIE: String;                   // Inscrição Estadual do participante
     FIM: String;                   // Inscrição Municipal do participante
     FIND_EMIT: TACBrlEmitente;      // Indicador do emitente do título
@@ -804,7 +804,7 @@ type
     property SERIE: String read FSERIE write FSERIE;
     property SUBSERIE: Integer read FSUBSERIE write FSUBSERIE;
     property NUMDOCTO: Integer read FNUMDOCTO write FNUMDOCTO;
-    property DT_EMISSAO: TDate read FDT_EMISSAO write FDT_EMISSAO;
+    property DT_EMISSAO: TDateTime read FDT_EMISSAO write FDT_EMISSAO;
     property VALOR_DOC: Double read FVALOR_DOC write FVALOR_DOC;
     property VALOR_ISS: Double read FVALOR_ISS write FVALOR_ISS;
     property VALOR_RT: Double read FVALOR_RT write FVALOR_RT;
@@ -833,7 +833,7 @@ type
   TRegistro0470 = class
   private
     FCOD_MOD: String;              // Código do documento fiscal
-    FDT_EMISSAO: TDate;            // Data da emissão, da entrada ou do lançamento
+    FDT_EMISSAO: TDateTime;            // Data da emissão, da entrada ou do lançamento
     FECF_CRO: Integer;             // Posição do Contador de Reinício de OperaçãO
     FECF_CRZ: Integer;             // Posição do Contador de Redução Z
     FECF_CX: String;               // Número do caixa atribuído ao ECF
@@ -851,7 +851,7 @@ type
     property ECF_CRO: Integer read FECF_CRO write FECF_CRO;
     property ECF_CRZ: Integer read FECF_CRZ write FECF_CRZ;
     property NUMDOCTO: Integer read FNUMDOCTO write FNUMDOCTO;
-    property DT_EMISSAO: TDate read FDT_EMISSAO write FDT_EMISSAO;
+    property DT_EMISSAO: TDateTime read FDT_EMISSAO write FDT_EMISSAO;
     property VALOR_DOC: Double read FVALOR_DOC write FVALOR_DOC;
     property VALOR_ISS: Double read FVALOR_ISS write FVALOR_ISS;
     property VALOR_ICMS: Double read FVALOR_ICMS write FVALOR_ICMS;

@@ -73,13 +73,13 @@ type
 
   TRegistroH020 = class
   private
-    FDT_INV: TDate;
+    FDT_INV: TDateTime;
     FVL_ESTQ: Currency;
   public
     constructor Create(AOwner: TRegistroH001); virtual; /// Create
     destructor Destroy; override; /// Destroy
 
-    property DT_INV: TDate read FDT_INV write FDT_INV;
+    property DT_INV: TDatetime read FDT_INV write FDT_INV;
     property VL_ESTQ: Currency read FVL_ESTQ write FVL_ESTQ;
   end;
 

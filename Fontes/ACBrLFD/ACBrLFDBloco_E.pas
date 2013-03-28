@@ -121,8 +121,8 @@ type
     FCOD_PART: String;
     FCOD_SIT: TACBrlSituacaoDocto;
     FCOP: String;
-    FDT_EMISSAO: TDate;
-    FDT_ES: TDate;
+    FDT_EMISSAO: TDateTime;
+    FDT_ES: TDateTime;
     FIND_COMPL: TACBrIndCompICMS;
     FIND_EMIT: TACBrlEmitente;
     FIND_OPER: TACBrLTipoOperacao;
@@ -157,9 +157,9 @@ type
     property COD_SIT: TACBrlSituacaoDocto read FCOD_SIT write FCOD_SIT;
     property SERIE: String read FSERIE write FSERIE;
     property NUMDOCTO: Integer read FNUMDOCTO write FNUMDOCTO;
-    property DT_EMISSAO: TDate read FDT_EMISSAO write FDT_EMISSAO;
+    property DT_EMISSAO: TDateTime read FDT_EMISSAO write FDT_EMISSAO;
     property NUM_LCTO: String read FNUM_LCTO write FNUM_LCTO;
-    property DT_ES: TDate read FDT_ES write FDT_ES;
+    property DT_ES: TDateTime read FDT_ES write FDT_ES;
     property VALOR_DOC: Double read FVALOR_DOC write FVALOR_DOC;
     property VALOR_BC_ICMS: Double read FVALOR_BC_ICMS write FVALOR_BC_ICMS;
     property VALOR_ICMS: Double read FVALOR_ICMS write FVALOR_ICMS;
@@ -248,16 +248,16 @@ type
 
   TRegistroE300 = class
   private
-    FDT_FIM: TDate;
-    FDT_INI: TDate;
+    FDT_FIM: TDateTime;
+    FDT_INI: TDatetime;
     FRegistroE310: TRegistroE310List;
     FRegistroE360: TRegistroE360;
   public
     constructor Create(AOwner: TRegistroE001); virtual; /// Create
     destructor Destroy; override; /// Destroy
 
-    property DT_INI: TDate read FDT_INI write FDT_INI;
-    property DT_FIM: TDate read FDT_FIM write FDT_FIM;
+    property DT_INI: TDateTime read FDT_INI write FDT_INI;
+    property DT_FIM: TDateTime read FDT_FIM write FDT_FIM;
 
     property RegistroE310: TRegistroE310List read FRegistroE310 write FRegistroE310;
     property RegistroE360: TRegistroE360 read FRegistroE360 write FRegistroE360;
@@ -381,14 +381,14 @@ type
 
   TRegistroE500 = class
   private
-    FDT_FIM: TDate;
-    FDT_INI: TDate;
+    FDT_FIM: TDatetime;
+    FDT_INI: TDateTime;
     FRegistroE530: TRegistroE530;
   public
     constructor Create(AOwner: TRegistroE001); virtual; /// Create
     destructor Destroy; override; /// Destroy
-    property DT_INI: TDate read FDT_INI write FDT_INI;
-    property DT_FIM: TDate read FDT_FIM write FDT_FIM;
+    property DT_INI: TDatetime read FDT_INI write FDT_INI;
+    property DT_FIM: TDateTime read FDT_FIM write FDT_FIM;
 
     property RegistroE530: TRegistroE530 read FRegistroE530 write FRegistroE530;
   end;

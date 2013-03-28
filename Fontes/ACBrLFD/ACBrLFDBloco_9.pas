@@ -66,8 +66,8 @@ type
   TRegistro9020 = class
   private
     FLEIAUTE: String; /// Texto fixo contendo “LFPD” ou “LECD”
-    FARQ_DT_INI: TDate; /// Data inicial das informações do arquivo associado
-    FARQ_DT_FIN: TDate; /// Data final das informações do arquivo associado
+    FARQ_DT_INI: TDateTime; /// Data inicial das informações do arquivo associado
+    FARQ_DT_FIN: TDateTime; /// Data final das informações do arquivo associado
     FARQ_NOME_EMPR: String; /// Nome empresarial do contribuinte do arquivo associado
     FARQ_CNPJ: String; /// CNPJ do contribuinte do arquivo associado
     FARQ_UF: String; /// Sigla da unidade da Federação do arquivo associado
@@ -93,8 +93,8 @@ type
     destructor Destroy; override; /// Create
 
     property LEIAUTE: String read FLEIAUTE write FLEIAUTE;
-    property ARQ_DT_INI: TDate read FARQ_DT_INI write FARQ_DT_INI;
-    property ARQ_DT_FIN: TDate read FARQ_DT_FIN write FARQ_DT_FIN;
+    property ARQ_DT_INI: TDateTime read FARQ_DT_INI write FARQ_DT_INI;
+    property ARQ_DT_FIN: TDateTime read FARQ_DT_FIN write FARQ_DT_FIN;
     property ARQ_NOME_EMPR: String read FARQ_NOME_EMPR write FARQ_NOME_EMPR;
     property ARQ_CNPJ: String read FARQ_CNPJ write FARQ_CNPJ;
     property ARQ_UF: String read FARQ_UF write FARQ_UF;
@@ -164,11 +164,11 @@ type
   private
     FARQ_CERT_AC: String; /// Nome da Autoridade Certificadora emissora do certificado digital
     FARQ_CERT_SER: String; /// Número de série do certificado
-    FARQ_CERT_EXP_DT: TDate; /// Data de expiração do certificado
-    FARQ_CERT_EXP_HR: TTime; /// Hora de expiração do certificado
+    FARQ_CERT_EXP_DT: TDateTime; /// Data de expiração do certificado
+    FARQ_CERT_EXP_HR: TdateTime; /// Hora de expiração do certificado
     FARQ_ALG: String; /// OId do algoritmo de assinatura
-    FARQ_DT: TDate; /// Data em que o arquivo foi assinado
-    FARQ_HR: TTime; /// Hora em que o arquivo foi assinado
+    FARQ_DT: TDatetime; /// Data em que o arquivo foi assinado
+    FARQ_HR: Tdatetime; /// Hora em que o arquivo foi assinado
     FARQ_SIGN: String; /// Nome do assinante
     FCOD_ASS: String; /// Código de qualificação do assinante
     FARQ_CERT: String; /// Certificado do assinante (codificação DER no formato Base64, retirados os caracteres de fim de linha)
@@ -178,11 +178,11 @@ type
 
     property ARQ_CERT_AC: String read FARQ_CERT_AC write FARQ_CERT_AC;
     property ARQ_CERT_SER: String read FARQ_CERT_SER write FARQ_CERT_SER;
-    property ARQ_CERT_EXP_DT: TDate read FARQ_CERT_EXP_DT write FARQ_CERT_EXP_DT;
-    property ARQ_CERT_EXP_HR: TTime read FARQ_CERT_EXP_HR write FARQ_CERT_EXP_HR;
+    property ARQ_CERT_EXP_DT: TDatetime read FARQ_CERT_EXP_DT write FARQ_CERT_EXP_DT;
+    property ARQ_CERT_EXP_HR: TdateTime read FARQ_CERT_EXP_HR write FARQ_CERT_EXP_HR;
     property ARQ_ALG: String read FARQ_ALG write FARQ_ALG;
-    property ARQ_DT: TDate read FARQ_DT write FARQ_DT;
-    property ARQ_HR: TTime read FARQ_HR write FARQ_HR;
+    property ARQ_DT: TDatetime read FARQ_DT write FARQ_DT;
+    property ARQ_HR: TdateTime read FARQ_HR write FARQ_HR;
     property ARQ_SIGN: String read FARQ_SIGN write FARQ_SIGN;
     property COD_ASS: String read FCOD_ASS write FCOD_ASS;
     property ARQ_CERT: String read FARQ_CERT write FARQ_CERT;

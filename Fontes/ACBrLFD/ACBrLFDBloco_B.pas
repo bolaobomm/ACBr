@@ -117,7 +117,7 @@ type
     FSER: String; /// Série do documento fiscal
     FSUB: String; /// Subsérie do documento fiscal
     FNUM_DOC: Integer; /// Número do documento fiscal
-    FDT_DOC: TDate; /// Data de emissão do documento fiscal ou data de pagamento no caso de substituição tributária
+    FDT_DOC: TDateTime; /// Data de emissão do documento fiscal ou data de pagamento no caso de substituição tributária
     FCFPS: String; /// Código Fiscal de Prestações de Serviços
     FNUM_LCTO: String; /// Número ou código de identificação do lançamento contábil
     FCOD_MUN_SERV: Integer; /// Código do município onde o serviço foi prestado
@@ -145,7 +145,7 @@ type
     property SER: String read FSER write FSER;
     property SUB: String read FSUB write FSUB;
     property NUM_DOC: Integer read FNUM_DOC write FNUM_DOC;
-    property DT_DOC: TDate read FDT_DOC write FDT_DOC;
+    property DT_DOC: TDateTime read FDT_DOC write FDT_DOC;
     property CFPS: String read FCFPS write FCFPS;
     property NUM_LCTO: String read FNUM_LCTO write FNUM_LCTO;
     property COD_MUN_SERV: Integer read FCOD_MUN_SERV write FCOD_MUN_SERV;
@@ -221,7 +221,7 @@ type
     FSUB: String; /// Subsérie do documento fiscal
     FNUM_DOC_INI: Integer; /// Número do primeiro documento fiscal emitido no dia
     FNUM_DOC_FIN: Integer; /// Número do último documento fiscal emitido no dia
-    FDT_DOC: TDate; /// Data da emissão dos documentos fiscais
+    FDT_DOC: TDateTime; /// Data da emissão dos documentos fiscais
     FCFPS: String; /// Código Fiscal de Prestações de Serviços
     FNUM_LCTO: Integer; /// Número ou código de identificação do lançamento contábil
     FQTD_CANC: Double; /// Quantidade de documentos cancelados
@@ -241,7 +241,7 @@ type
     property SUB: String read FSUB write FSUB;
     property NUM_DOC_INI: Integer read FNUM_DOC_INI write FNUM_DOC_INI;
     property NUM_DOC_FIN: Integer read FNUM_DOC_FIN write FNUM_DOC_FIN;
-    property DT_DOC: TDate read FDT_DOC write FDT_DOC;
+    property DT_DOC: TDateTime read FDT_DOC write FDT_DOC;
     property CFPS: String read FCFPS write FCFPS;
     property NUM_LCTO: Integer read FNUM_LCTO write FNUM_LCTO;
     property QTD_CANC: Double read FQTD_CANC write FQTD_CANC;
@@ -314,7 +314,7 @@ type
     FCRZ: Integer; /// Posição do Contador de Redução Z
     FNUM_DOC_INI: Integer; /// Número do primeiro documento fiscal emitido no dia
     FNUM_DOC_FIN: Integer; /// Número do último documento fiscal emitido no dia
-    FDT_DOC: TDate; /// Data da Redução Z
+    FDT_DOC: TDateTime; /// Data da Redução Z
     FGT_INI: Currency; /// Valor do Grande Total inicial
     FGT_FIN: Currency; /// Valor do Grande Total final
     FVL_BRT: Currency; /// Valor da venda bruta
@@ -347,7 +347,7 @@ type
     property CRZ: Integer read FCRZ write FCRZ;
     property NUM_DOC_INI: Integer read FNUM_DOC_INI write FNUM_DOC_INI;
     property NUM_DOC_FIN: Integer read FNUM_DOC_FIN write FNUM_DOC_FIN;
-    property DT_DOC: TDate read FDT_DOC write FDT_DOC;
+    property DT_DOC: TDateTime read FDT_DOC write FDT_DOC;
     property GT_INI: Currency read FGT_INI write FGT_INI;
     property GT_FIN: Currency read FGT_FIN write FGT_FIN;
     property VL_BRT: Currency read FVL_BRT write FVL_BRT;
@@ -440,7 +440,7 @@ type
   private
     FIND_MR: TACBrTipoTotalECF; /// Indicador do tipo de totalização
     FNUM_MR_ECF: Integer; /// Número do Mapa-Resumo ECF utilizado no dia
-    FDT_MR_ECF: TDate; /// Data do movimento do Mapa-Resumo ECF
+    FDT_MR_ECF: TDateTime; /// Data do movimento do Mapa-Resumo ECF
     FCFPS: Integer; /// Código Fiscal de Prestações de Serviços preponderante, conforme a tabela indicada no item
     FNUM_LCTO: Integer; /// Número ou código de identificação do lançamento contábil
     FVL_BRT: Currency; /// Valor da venda bruta
@@ -468,7 +468,7 @@ type
 
     property IND_MR: TACBrTipoTotalECF read FIND_MR write FIND_MR;
     property NUM_MR_ECF: Integer read FNUM_MR_ECF write FNUM_MR_ECF;
-    property DT_MR_ECF: TDate read FDT_MR_ECF write FDT_MR_ECF;
+    property DT_MR_ECF: TDateTime read FDT_MR_ECF write FDT_MR_ECF;
     property CFPS: Integer read FCFPS write FCFPS;
     property NUM_LCTO: Integer read FNUM_LCTO write FNUM_LCTO;
     property VL_BRT: Currency read FVL_BRT write FVL_BRT;
@@ -561,7 +561,7 @@ type
 
   TRegistroB350 = class
   private
-    FPERIODO: TDate; /// Período dos lançamentos relativos aos serviços prestados
+    FPERIODO: TDateTime; /// Período dos lançamentos relativos aos serviços prestados
     FCOD_CTA: String; /// Código da conta do plano de contas
     FCTA_ISS: String; /// Nome da conta analítica que recepciona os lançamentos do ISS
     FCOD_CTA_COSIF: String; ///Código da conta de acordo com o plano de contas referencial da COSIF, a qual está subordinada a conta informada
@@ -575,7 +575,7 @@ type
   public
     constructor Create(AOwner: TRegistroB001); virtual; /// Create
 
-    property PERIODO: TDate read FPERIODO write FPERIODO;
+    property PERIODO: TDateTime read FPERIODO write FPERIODO;
     property COD_CTA: String read FCOD_CTA write FCOD_CTA;
     property CTA_ISS: String read FCTA_ISS write FCTA_ISS;
     property COD_CTA_COSIF: String read FCOD_CTA_COSIF write FCOD_CTA_COSIF;
@@ -607,8 +607,8 @@ type
 
   TRegistroB400 = class
   private
-    FDT_INI: TDate; /// Data inicial a que a apuração se refere
-    FDT_FIN: TDate; /// Data final a que a apuração se refere
+    FDT_INI: TDateTime; /// Data inicial a que a apuração se refere
+    FDT_FIN: TDateTime; /// Data final a que a apuração se refere
     FIND_DAD: TACBrLIndicadorMovimento;  /// Indicador de conteúdo
 
     FRegistroB410: TRegistroB410List;
@@ -626,8 +626,8 @@ type
     constructor Create(AOwner: TRegistroB001); virtual; /// Create
     destructor Destroy; override; /// Destroy
 
-    property DT_INI: TDate read FDT_INI write FDT_INI;
-    property DT_FIN: TDate read FDT_FIN write FDT_FIN;
+    property DT_INI: TDateTime read FDT_INI write FDT_INI;
+    property DT_FIN: TDateTime read FDT_FIN write FDT_FIN;
     property IND_DAD: TACBrLIndicadorMovimento read FIND_DAD write FIND_DAD;
 
     property RegistroB410: TRegistroB410List read FRegistroB410 write FRegistroB410;
@@ -902,7 +902,7 @@ type
     FIND_COMP: TACBrTipoCompensacaoISS; /// Indicador do tipo de compensação do ISS
     FVL_CRED: Currency; /// Valor do crédito (passível de compensação)
     FVL_COMP: Currency; /// Valor da compensação (compensado)
-    FPER_FISCAL: TDate; /// Período fiscal da prestação do serviço
+    FPER_FISCAL: TDateTime; /// Período fiscal da prestação do serviço
     FVL_RES: Currency; /// Valor da resultante (não compensado)
     FCOMENT: String; /// Comentários e observações
   public
@@ -911,7 +911,7 @@ type
     property IND_COMP: TACBrTipoCompensacaoISS read FIND_COMP write FIND_COMP;
     property VL_CRED: Currency read FVL_CRED write FVL_CRED;
     property VL_COMP: Currency read FVL_COMP write FVL_COMP;
-    property PER_FISCAL: TDate read FPER_FISCAL write FPER_FISCAL;
+    property PER_FISCAL: TDateTime read FPER_FISCAL write FPER_FISCAL;
     property VL_RES: Currency read FVL_RES write FVL_RES;
     property COMENT: String read FCOMENT write FCOMENT;
   end;
@@ -1058,7 +1058,7 @@ type
   private
     FCOD_OR: Integer; /// Código da obrigação a recolher
     FVL_OR: Currency; /// Valor da obrigação a recolher
-    FDT_VCTO: TDate; /// Data de vencimento da obrigação
+    FDT_VCTO: TDateTime; /// Data de vencimento da obrigação
     FCOD_REC: String; /// Código de receita referente à obrigação
     FCOD_MUN_SERV: Integer; /// Código do município a que se destina a obrigação, conforme a tabela indicada no item 3.3.1
     FNUM_PROC: String; /// Número do processo ao qual a obrigação está vinculada
@@ -1070,7 +1070,7 @@ type
 
     property COD_OR: Integer read FCOD_OR write FCOD_OR;
     property VL_OR: Currency read FVL_OR write FVL_OR;
-    property DT_VCTO: TDate read FDT_VCTO write FDT_VCTO;
+    property DT_VCTO: TDateTime read FDT_VCTO write FDT_VCTO;
     property COD_REC: String read FCOD_REC write FCOD_REC;
     property COD_MUN_SERV: Integer read FCOD_MUN_SERV write FCOD_MUN_SERV;
     property NUM_PROC: String read FNUM_PROC write FNUM_PROC;
@@ -1213,10 +1213,10 @@ type
     FCOMPL: String; /// Dados complementares do endereço
     FBAIRRO: String; /// Bairro em que a obra está situada
     FCTRT: String; /// Espécie do contrato
-    FDT_CTRT: TDate; /// Data da contratação
+    FDT_CTRT: TDateTime; /// Data da contratação
     FCART_REG: String; /// Registro da obra no cartório (nome do cartório, livro e folha)
-    FDT_OBR_INI: TDate; /// Data de início da obra
-    FDT_ENC_OB: TDate; /// Data de encerramento da obra
+    FDT_OBR_INI: TDateTime; /// Data de início da obra
+    FDT_ENC_OB: TDateTime; /// Data de encerramento da obra
     FVL_OR_MUN: Currency; /// Valor total da obra
     FCOMENT: String; /// Comentários e observações
   public
@@ -1230,10 +1230,10 @@ type
     property COMPL: String read FCOMPL write FCOMPL;
     property BAIRRO: String read FBAIRRO write FBAIRRO;
     property CTRT: String read FCTRT write FCTRT;
-    property DT_CTRT: TDate read FDT_CTRT write FDT_CTRT;
+    property DT_CTRT: TDateTime read FDT_CTRT write FDT_CTRT;
     property CART_REG: String read FCART_REG write FCART_REG;
-    property DT_OBR_INI: TDate read FDT_OBR_INI write FDT_OBR_INI;
-    property DT_ENC_OB: TDate read FDT_ENC_OB write FDT_ENC_OB;
+    property DT_OBR_INI: TDateTime read FDT_OBR_INI write FDT_OBR_INI;
+    property DT_ENC_OB: TDateTime read FDT_ENC_OB write FDT_ENC_OB;
     property VL_OR_MUN: Currency read FVL_OR_MUN write FVL_OR_MUN;
     property COMENT: String read FCOMENT write FCOMENT;
   end;
