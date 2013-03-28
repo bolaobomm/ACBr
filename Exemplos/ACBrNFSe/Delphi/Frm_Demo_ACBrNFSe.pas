@@ -540,6 +540,11 @@ begin
      Prestador.Cnpj               := edtEmitCNPJ.Text;
      Prestador.InscricaoMunicipal := edtEmitIM.Text;
 
+     // Para o provedor ISSDigital deve-se informar também:
+     Prestador.Senha        := 'senha';
+     Prestador.FraseSecreta := 'frase secreta';
+     Prestador.cUF          := 33;
+
      Tomador.IdentificacaoTomador.CpfCnpj            := '99999999000191';
      Tomador.IdentificacaoTomador.InscricaoMunicipal := '1733160024';
 
