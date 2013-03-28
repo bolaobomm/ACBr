@@ -713,6 +713,7 @@ begin
   4202305, // Biguaçu/SC
   4202453, // Bombinhas/SC
   4203600, // Campos Novos/SC
+  4203808, // Canoinhas/SC
   4204202, // Chapecó/SC
   4204350, // Cordilheira Alta/SC
   4204509, // Corupá/SC
