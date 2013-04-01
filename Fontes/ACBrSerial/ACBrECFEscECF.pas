@@ -154,12 +154,18 @@ TACBrECFEscECF = class( TACBrECFClass )
     fsMarcaECF       : String ;
     fsModeloECF      : String ;
     fsEmPagamento    : Boolean ;
+    fsNomeArqMemoria : String ;
+    fsArqMemoria     : String ;
 
     procedure EnviaConsumidor(var Obs: String);
     function PreparaCmd(CmdExtBcd: AnsiString): AnsiString;
     Function TraduzErroMsg( CAT, Ocorrencia : Byte) : String;
 
     Function GetValorTotalizador( N, I: Integer): Double;
+
+    Procedure SalvaRespostasMemoria( AtualizaVB: Boolean = True );
+    Procedure LeRespostasMemoria;
+
  protected
     function VerificaFimLeitura(var Retorno: AnsiString;
       var TempoLimite: TDateTime): Boolean; override;
@@ -236,6 +242,8 @@ TACBrECFEscECF = class( TACBrECFClass )
     Destructor Destroy  ; override ;
 
     procedure Ativar ; override ;
+
+    property NomeArqMemoria : String read fsNomeArqMemoria write fsNomeArqMemoria;
 
     property EscECFComando  : TACBrECFEscECFComando  read fsEscECFComando ;
     property EscECFResposta : TACBrECFEscECFResposta read fsEscECFResposta ;
@@ -624,6 +632,7 @@ begin
 
   fpDevice.HandShake := hsDTR_DSR ;
   fpPaginaDeCodigo   := 1252;
+  fsArqMemoria       := '';
 
   fpModeloStr := 'EscECF' ;
   fpColunas   := 57 ;
@@ -690,6 +699,14 @@ begin
      fpDecimaisQtd   := min( StrToIntDef( EscECFResposta.Params[12], 3), 3);
      fsNumVersao     := EscECFResposta.Params[13];
      fsVersaoEscECF  := EscECFResposta.Params[19];
+
+     if NomeArqMemoria <> '' then
+       fsArqMemoria := NomeArqMemoria
+     else
+       fsArqMemoria := ExtractFilePath( ParamStr(0) )+'ACBrECFEscECF'+
+                       Poem_Zeros( fsNumECF, 3 )+'.txt';
+
+     LeRespostasMemoria;
   except
      Desativar ;
      raise ;
@@ -821,7 +838,7 @@ begin
            raise EACBrECFCMDInvalido.Create(
               'Sequencia de Resposta ('+IntToStr(EscECFResposta.SEQ)+')'+
               'diferente da enviada ('+IntToStr(EscECFComando.SEQ)+
-              '). Bloco Desprezado: '+Retorno ) ;
+              '). Bloco Desprezado' ) ;
         end;
      except
         on E : EACBrECFCMDInvalido do
@@ -840,7 +857,7 @@ begin
      if (Byte1 = WAK) then // Ocupado, aguarde e solicite novo Status
       begin
         GravaLog('                RX <- '+Retorno, True);
-        Sleep( 150 );
+        Sleep( 100 );
         PedeStatus;
         Result := False;
       end
@@ -855,7 +872,6 @@ begin
         end;
       end;
   end;
-
 end;
 
 function TACBrECFEscECF.GetModeloStr: String;
@@ -1150,6 +1166,46 @@ begin
   end;
 end;
 
+procedure TACBrECFEscECF.SalvaRespostasMemoria(AtualizaVB : Boolean) ;
+Var
+  ValVB : Double;
+begin
+  try
+     ValVB := RespostasComando.FieldByName('VendaBruta').AsFloat;
+  except
+     AtualizaVB := True;
+  end ;
+
+  if AtualizaVB then
+  begin
+    ValVB := GetVendaBruta;
+    RespostasComando.AddField( 'VendaBruta', IntToStr(Trunc(SimpleRoundTo( ValVB * 100 ,0))) );
+    RespostasComando.AddField( 'EmPagamento', ifthen( fsEmPagamento,'1','0') );
+  end ;
+
+  RespostasComando.SaveToFile( fsArqMemoria );
+end ;
+
+procedure TACBrECFEscECF.LeRespostasMemoria ;
+Var
+  ValVB : Double;
+begin
+  if not FileExists( fsArqMemoria ) then
+    exit ;
+
+  RespostasComando.LoadFromFile( fsArqMemoria );
+
+  try
+     ValVB := RespostasComando.FieldByName('VendaBruta').AsFloat;
+     if ValVB <> GetVendaBruta then
+        RespostasComando.Clear;    // Arquivo invalido
+
+     fsEmPagamento := (RespostasComando.FieldByName( 'EmPagamento' ).AsInteger = 1);
+  except
+     RespostasComando.Clear;       // Arquivo invalido
+  end;
+end ;
+
 function TACBrECFEscECF.RetornaInfoECF(Registrador: String): AnsiString;
 begin
   if Pos('|',Registrador) = 0 then
@@ -1212,8 +1268,20 @@ begin
 end;
 
 function TACBrECFEscECF.GetTotalPago: Double;
+var
+  APagar : Double ;
 begin
-  Result := 0 ;   // TODO: Como fazer para Ler o SubTotal ?
+  // Obs: Não há comando que retorne o TotalPago...
+  try
+     APagar := RespostasComando.FieldByName('TotalAPagar').AsFloat;
+  except
+     APagar := 0;
+  end;
+
+  if APagar > 0 then
+    Result := (GetSubTotal - APagar)
+  else
+    Result := 0;
 end;
 
 function TACBrECFEscECF.GetNumReducoesZRestantes: String;
@@ -1224,7 +1292,7 @@ end;
 
 function TACBrECFEscECF.GetSubTotal: Double;
 begin
-  // TODO: Como fazer para Ler o SubTotal ?
+  // Obs: Não há comando que retorne o SubTotal...
   try
      Result := RespostasComando.FieldByName('SubTotal').AsFloat;
   except
@@ -1297,7 +1365,6 @@ end ;
 
 procedure TACBrECFEscECF.LeituraX ;
 begin
-  RespostasComando.Clear;
   EscECFComando.CMD := 20;
   EscECFComando.AddParamInteger(0); // Imprime no ECF
   EnviaComando;
@@ -1328,7 +1395,6 @@ end;
 
 procedure TACBrECFEscECF.ReducaoZ(DataHora : TDateTime) ;
 begin
-  RespostasComando.Clear;
   if DataHora = 0 then  { Aparentemente a DataHora é obrigatória na EscECF }
      DataHora := now ;
 
@@ -1339,6 +1405,8 @@ begin
 
   try
      EnviaComando ;
+     RespostasComando.Clear;
+     SalvaRespostasMemoria(True);
   except
      on E : Exception do
      begin
@@ -1371,6 +1439,7 @@ begin
   RespostasComando.AddField( 'DataHora',   EscECFResposta.Params[1] );
   RespostasComando.AddField( 'VendaBruta', EscECFResposta.Params[2] );
   RespostasComando.AddField( 'NumSerie',   EscECFResposta.Params[3] );
+  SalvaRespostasMemoria(False);
 end;
 
 procedure TACBrECFEscECF.LinhaRelatorioGerencial(Linha: AnsiString;
@@ -1434,6 +1503,8 @@ begin
 
   Consumidor.Enviado := True ;
   fsEmPagamento := false ;
+
+  SalvaRespostasMemoria(False);
 end;
 
 procedure TACBrECFEscECF.MudaHorarioVerao ;
@@ -1527,12 +1598,16 @@ end;
 
 procedure TACBrECFEscECF.LeituraMFDSerial(DataInicial, DataFinal: TDateTime;
    Linhas: TStringList; Documentos: TACBrECFTipoDocumentoSet);
-var
+{var
    Buffer: AnsiString;
-   I: Integer;
+   I: Integer;}
 begin
-  EscECFComando.CMD := 100;
   // TODO:  Não há como retornar o espelho pela Serial ??
+
+  Inherited LeituraMFDSerial(DataFinal, DataFinal, Linhas, Documentos);
+
+  {
+  EscECFComando.CMD := 100;
   EscECFComando.AddParamInteger( 1 );   // Por Data
   EscECFComando.AddParamDateTime( DataInicial );
   EscECFComando.AddParamDateTime( DataFinal );
@@ -1545,16 +1620,21 @@ begin
 
   Linhas.Clear;
   Linhas.Text := Buffer;
+  }
 end;
 
 procedure TACBrECFEscECF.LeituraMFDSerial(COOInicial, COOFinal: Integer;
    Linhas: TStringList; Documentos: TACBrECFTipoDocumentoSet);
-var
+{var
    Buffer: AnsiString;
-   I: Integer;
+   I: Integer;}
 begin
-  EscECFComando.CMD := 100;
   // TODO:  Não há como retornar o espelho pela Serial ??
+
+  Inherited LeituraMFDSerial(COOInicial, COOFinal, Linhas, Documentos);
+
+  {
+  EscECFComando.CMD := 100;
   EscECFComando.AddParamInteger( 2 );   // Por COO
   EscECFComando.AddParamDateTime( COOInicial );
   EscECFComando.AddParamDateTime( COOFinal );
@@ -1567,6 +1647,7 @@ begin
 
   Linhas.Clear;
   Linhas.Text := Buffer;
+  }
 end;
 
 procedure TACBrECFEscECF.IdentificaOperador(Nome: String);
@@ -1600,6 +1681,8 @@ begin
 
   Consumidor.Enviado := True ;
   fsEmPagamento := false ;
+
+  SalvaRespostasMemoria(False);
 end;
 
 procedure TACBrECFEscECF.VendeItem(Codigo, Descricao: String;
@@ -1629,6 +1712,8 @@ begin
   RespostasComando.AddField( 'SubTotal',   EscECFResposta.Params[2] );
   fsEmPagamento := false ;
 
+  SalvaRespostasMemoria(True);
+
   { Se o desconto é maior que zero dá o comando de desconto de item }
   if ValorDescontoAcrescimo > 0 then
      DescontoAcrescimoItemAnterior( ValorDescontoAcrescimo, DescontoAcrescimo,
@@ -1654,6 +1739,7 @@ begin
 
   RespostasComando.AddField( 'TotalItem',  EscECFResposta.Params[0] );
   RespostasComando.AddField( 'SubTotal',   EscECFResposta.Params[1] );
+  SalvaRespostasMemoria(False);
 end;
 
 procedure TACBrECFEscECF.CancelaCupom;
@@ -1682,6 +1768,7 @@ begin
   end;
 
   fsEmPagamento := false ;
+  SalvaRespostasMemoria(False);
 end;
 
 procedure TACBrECFEscECF.CancelaItemVendido(NumItem: Integer);
@@ -1691,6 +1778,7 @@ begin
   EnviaComando;
 
   RespostasComando.AddField( 'SubTotal',   EscECFResposta.Params[0] );
+  SalvaRespostasMemoria(False);
 end;
 
 procedure TACBrECFEscECF.CancelaItemVendidoParcial(NumItem: Integer;
@@ -1707,6 +1795,7 @@ begin
 
   RespostasComando.AddField( 'TotalItem',  EscECFResposta.Params[0] );
   RespostasComando.AddField( 'SubTotal',   EscECFResposta.Params[1] );
+  SalvaRespostasMemoria(False);
 end;
 
 procedure TACBrECFEscECF.CancelaDescontoAcrescimoItem(NumItem: Integer);
@@ -1722,6 +1811,7 @@ begin
 
   RespostasComando.AddField( 'TotalItem',  EscECFResposta.Params[0] );
   RespostasComando.AddField( 'SubTotal',   EscECFResposta.Params[1] );
+  SalvaRespostasMemoria(False);
 end;
 
 procedure TACBrECFEscECF.AbreNaoFiscal(CPF_CNPJ: String; Nome: String;
@@ -1741,6 +1831,7 @@ begin
 
   Consumidor.Enviado := True ;
   fsEmPagamento := false ;
+  SalvaRespostasMemoria(False);
 end;
 
 procedure TACBrECFEscECF.RegistraItemNaoFiscal(CodCNF: String; Valor: Double;
@@ -1754,6 +1845,7 @@ begin
   RespostasComando.AddField( 'NumUltItem', EscECFResposta.Params[0] );
   RespostasComando.AddField( 'SubTotal',   EscECFResposta.Params[2] );
   fsEmPagamento := false ;
+  SalvaRespostasMemoria(True);
 end;
 
 procedure TACBrECFEscECF.EfetuaPagamento(CodFormaPagto: String;
@@ -1775,6 +1867,7 @@ begin
   EnviaComando ;
 
   RespostasComando.AddField( 'TotalAPagar', EscECFResposta.Params[0] );
+  SalvaRespostasMemoria(False);
 end;
 
 procedure TACBrECFEscECF.EstornaPagamento(const CodFormaPagtoEstornar,
@@ -1796,6 +1889,7 @@ begin
   RespostasComando.AddField( 'DataHora',   EscECFResposta.Params[1] );
   RespostasComando.AddField( 'VendaBruta', EscECFResposta.Params[2] );
   RespostasComando.AddField( 'NumSerie',   EscECFResposta.Params[3] );
+  SalvaRespostasMemoria(False);
 end;
 
 procedure TACBrECFEscECF.FechaCupom(Observacao: AnsiString; IndiceBMP: Integer);
@@ -1820,6 +1914,8 @@ begin
   RespostasComando.AddField( 'DataHora',   EscECFResposta.Params[1] );
   RespostasComando.AddField( 'VendaBruta', EscECFResposta.Params[2] );
   fsEmPagamento := false ;
+
+  SalvaRespostasMemoria(False);
 end;
 
 procedure TACBrECFEscECF.SubtotalizaCupom(DescontoAcrescimo: Double;
@@ -1838,6 +1934,7 @@ begin
   EnviaComando ;
 
   RespostasComando.AddField( 'SubTotal', EscECFResposta.Params[0] );
+  SalvaRespostasMemoria(False);
 end;
 
 procedure TACBrECFEscECF.CancelaDescontoAcrescimoSubTotal(
@@ -1851,6 +1948,7 @@ begin
   EnviaComando ;
 
   RespostasComando.AddField( 'SubTotal', EscECFResposta.Params[0] );
+  SalvaRespostasMemoria(False);
 end;
 
 
@@ -2143,6 +2241,7 @@ begin
   RespostasComando.AddField( 'DataHora',   EscECFResposta.Params[1] );
   RespostasComando.AddField( 'VendaBruta', EscECFResposta.Params[2] );
   fsEmPagamento := false ;
+  SalvaRespostasMemoria(False);
 end;
 
 procedure TACBrECFEscECF.CortaPapel(const CorteParcial: Boolean);
@@ -2223,7 +2322,7 @@ end;
 function TACBrECFEscECF.GetDadosUltimaReducaoZ : AnsiString ;
 var
   DataStr, ECFCRZ  : String ;
-  NAcuml, I, J: Integer;
+  I: Integer;
   AliqZ : TACBrECFAliquota ;
 
   function AchaValorRegistrador(Registrador: String; Aliq: Double = 0): Double ;
@@ -2278,7 +2377,6 @@ begin
     DescontoISSQN    := RoundTo( StrToFloatDef(EscECFResposta.Params[11],0)/100, -2);
     AcrescimoISSQN   := RoundTo( StrToFloatDef(EscECFResposta.Params[12],0)/100, -2);
     CancelamentoISSQN:= RoundTo( StrToFloatDef(EscECFResposta.Params[13],0)/100, -2);
-    NAcuml           := StrToIntDef( EscECFResposta.Params[15], 0) ;
 
     {Aliquotas}
     {Percorrendo as aliquotas cadastradas no ECF para procurar por todas}
@@ -2352,6 +2450,7 @@ begin
   RespostasComando.AddField( 'DataHora',   EscECFResposta.Params[1] );
   RespostasComando.AddField( 'VendaBruta', EscECFResposta.Params[2] );
   fsEmPagamento := false ;
+  SalvaRespostasMemoria(False);
 end;
 
 procedure TACBrECFEscECF.CancelaItemNaoFiscal(const AItem: Integer);
@@ -2373,6 +2472,7 @@ begin
   RespostasComando.AddField( 'DataHora',   EscECFResposta.Params[1] );
   RespostasComando.AddField( 'VendaBruta', EscECFResposta.Params[2] );
   RespostasComando.AddField( 'NumSerie',   EscECFResposta.Params[3] );
+  SalvaRespostasMemoria(False);
 end;
 
 procedure TACBrECFEscECF.Suprimento(const Valor: Double; Obs: AnsiString;
@@ -2389,6 +2489,7 @@ begin
   RespostasComando.AddField( 'DataHora',   EscECFResposta.Params[1] );
   RespostasComando.AddField( 'VendaBruta', EscECFResposta.Params[2] );
   RespostasComando.AddField( 'NumSerie',   EscECFResposta.Params[3] );
+  SalvaRespostasMemoria(False);
 end;
 
 function TACBrECFEscECF.EstornaCCD(const Todos: Boolean): Integer;

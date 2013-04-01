@@ -1859,7 +1859,8 @@ begin
      SubTot := ACBrECF1.Subtotal;
      TotalEsperado := 2424.78 ;
      if SubTot <> TotalEsperado then
-        mResp.Lines.Add('SubTotal diferente do esperado!')
+        mResp.Lines.Add('SubTotal do ECF: ('+FormatFloat('0.00',SubTot)+
+                        ') diferente do esperado ('+FormatFloat('0.00',TotalEsperado)+')!')
      else
       begin
         mResp.Lines.Add('O SubTotal está correto.  Verifique a Bobina da Tela...') ;

@@ -991,60 +991,63 @@ var
    Qtd, i, k : Integer;
    TipoLogradouro, Logra, Comp: String;
 begin
-
-  try
   Buffer := TStringList.Create;
-  ExtractStrings(['|'],[], PChar(fOwner.RespHTTP.Text), Buffer);
-  Qtd := StrToInt(Buffer[1]);
-  i := CompareText(Buffer[2], ACBrStr('Logradouro não encontrado'));
-  k := 2;
+  try
+    ExtractStrings(['|'],[], PChar(fOwner.RespHTTP.Text), Buffer);
+    Qtd := StrToInt(Buffer[1]);
+    i := CompareText(Buffer[2], ACBrStr('Logradouro não encontrado'));
+    k := 2;
 
-  if i <> 0 then
-  begin
-    Resp := TStringList.Create;
-    TLog := TStringList.Create;
-
-    for i := 1 to Qtd do
+    if i <> 0 then
     begin
-    Logra := '';
-    Comp := '';
+      Resp := TStringList.Create;
+      TLog := TStringList.Create;
 
-    ExtractStrings([','],[], PChar(Buffer[k]), Resp);
+      try
+        for i := 1 to Qtd do
+        begin
+          Logra := '';
+          Comp := '';
 
-    if CompareText(Resp[0], ACBrStr('00000000')) = 0 then Break;
+          ExtractStrings([','],[], PChar(Buffer[k]), Resp);
 
-    ExtractStrings([' '],[], PChar(Resp[1]), TLog);
-    TipoLogradouro := Trim(TLog[0]);
-    TLog.Clear;
-    ExtractStrings(['-'],[], PChar(Resp[1]), TLog);
-    Logra := Trim(TLog[0]);
-    if(TLog.Count > 1) then
-      Comp := Trim(TLog[1]);
-    Delete(Logra, 1, Length(TipoLogradouro));
+          if CompareText(Resp[0], ACBrStr('00000000')) = 0 then
+            Break;
 
-    with fOwner.Enderecos.New do
-    begin
-      CEP             := Trim(Resp[0]);
-      Tipo_Logradouro := Trim(TipoLogradouro);
-      Logradouro      := Trim(Logra);
-      Complemento     := Trim(Comp);
-      Bairro          := Trim(Resp[2]);
-      Municipio       := Trim(Resp[3]);
-      UF              := Trim(Resp[4]);
-      IBGE_Municipio  := Trim(Resp[5]);
+          ExtractStrings([' '],[], PChar(Resp[1]), TLog);
+          TipoLogradouro := Trim(TLog[0]);
+          TLog.Clear;
+          ExtractStrings(['-'],[], PChar(Resp[1]), TLog);
+          Logra := Trim(TLog[0]);
+          if(TLog.Count > 1) then
+            Comp := Trim(TLog[1]);
+          Delete(Logra, 1, Length(TipoLogradouro));
+
+          with fOwner.Enderecos.New do
+          begin
+            CEP             := Trim(Resp[0]);
+            Tipo_Logradouro := Trim(TipoLogradouro);
+            Logradouro      := Trim(Logra);
+            Complemento     := Trim(Comp);
+            Bairro          := Trim(Resp[2]);
+            Municipio       := Trim(Resp[3]);
+            UF              := Trim(Resp[4]);
+            IBGE_Municipio  := Trim(Resp[5]);
+          end;
+
+          Resp.Clear;
+          TLog.Clear;
+
+          Inc(k);
+        end;
+      finally
+        Resp.Free;
+        TLog.Free;
+      end ;
     end;
 
-    Resp.Clear;
-    TLog.Clear;
-    Inc(k);
-    end;
-
-    Resp.Free;
-    TLog.Free;
-  end;
-
-  if Assigned( fOwner.OnBuscaEfetuada ) then
-    fOwner.OnBuscaEfetuada( Self );
+    if Assigned( fOwner.OnBuscaEfetuada ) then
+      fOwner.OnBuscaEfetuada( Self );
 
   finally
     Buffer.Free;

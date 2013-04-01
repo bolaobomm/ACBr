@@ -155,6 +155,8 @@ de campos quando necessário}
     property AsFloat    : Double     read GetAsFloat     write SetAsFloat ;
   end ;
 
+  { TACBrInformacoes }
+
   TACBrInformacoes = class(TObjectList)
   private
     function GetItem(Index: Integer): TACBrInformacao;
@@ -164,6 +166,9 @@ de campos quando necessário}
     function Add: TACBrInformacao;
     function AddField(const ANome, AValor: String): TACBrInformacao;
     function FieldByName(const AName: String): TACBrInformacao;
+
+    procedure SaveToFile( AFileName: String) ;
+    procedure LoadFromFile( AFileName: String) ;
 
     property Items[Index: Integer]: TACBrInformacao read GetItem write SetItem;
     property Fields[Index: String]: TAcbrInformacao read GetFields; default;
@@ -452,6 +457,39 @@ begin
   if Result = nil then
     raise Exception.CreateFmt('Resposta "%s" não encontrada.', [AName]);
 end;
+
+procedure TACBrInformacoes.SaveToFile(AFileName : String) ;
+var
+  I  : Integer ;
+  SL : TStringList ;
+begin
+  SL := TStringList.Create;
+  try
+    For I := 0 to Count-1 do
+       SL.Values[ Items[I].Nome ] := Items[I].AsString;
+
+    SL.SaveToFile( AFileName );
+  finally
+    SL.Free;
+  end ;
+end ;
+
+procedure TACBrInformacoes.LoadFromFile(AFileName : String) ;
+var
+  I  : Integer ;
+  SL : TStringList ;
+begin
+  SL := TStringList.Create;
+  try
+    Clear;
+
+    SL.LoadFromFile( AFileName );
+    For I := 0 to SL.Count-1 do
+       AddField( SL.Names[ I ], SL.ValueFromIndex[ I ] );
+  finally
+    SL.Free;
+  end ;
+end ;
 
 function TACBrInformacoes.GetFields(Index: String): TAcbrInformacao;
 begin

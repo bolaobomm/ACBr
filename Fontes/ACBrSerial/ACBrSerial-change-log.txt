@@ -97,6 +97,15 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+Data: 01/04/2013
+-- ACBrECFEscECF --
+[+] Criado mecanismo de memória temporária em disco, para manter o valor das
+    propriedades que não podem ser retornadas pelo protocolo como SubTotal,
+    TotalPago, TotalAPagar, etc.  Isso permite perssitir em arquivo os valores
+    de propriedades que seriam perdidos com o re-inicio do programa. (por: DSA)
+
+[-] Correção no retorno de GetTotalPago   (por: DSA)
+
 Data: 17/03/2013
 -- ACBrECF --
 [+] Adicionada funcionalidade de Impressão de Rodapé de Bar e Restaurantes
