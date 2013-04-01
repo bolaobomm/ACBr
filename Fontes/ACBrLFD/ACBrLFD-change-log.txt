@@ -47,6 +47,15 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
-Data 24/01/2012
+Data 01/04/2013
+[-] Alterado propriedades do tipo  TDate para TDatetime para que o componente possa
+    ser compilado corretamente no Delphi7. (Isaque Pinheiro)
+
+
+Data 15/02/2013
+[+] COmponente comcluído e gerando arquivo válidado pelo aplicativo Validador do
+    Sefaz DF. (Juliana Tamizou)
+
+Data 24/01/2013
 [+] Desenvolvidas rotinas para geração dos registros do Bloco 0.(Juliana Tamizou)
 
