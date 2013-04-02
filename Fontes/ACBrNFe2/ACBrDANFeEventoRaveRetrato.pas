@@ -200,7 +200,7 @@ begin
            Box([],XPos,YPos, 22,aHeigthPadrao,'CEP', NotaUtil.FormatarCEP(DFeUtil.Poem_Zeros(EventoRave.ACBrNFe.NotasFiscais.Items[0].NFe.Emit.EnderEmit.CEP,8)),taRightJustify);
            PosY := YPos + aHeigthPadrao;
            Box([],PosX,PosY, 88,aHeigthPadrao,'MUNICÍPIO', EventoRave.ACBrNFe.NotasFiscais.Items[0].NFe.Emit.EnderEmit.xMun,taLeftJustify);
-           Box([],XPos,YPos, 49,aHeigthPadrao,'FONE/FAX', EventoRave.ACBrNFe.NotasFiscais.Items[0].NFe.Emit.EnderEmit.xBairro,taLeftJustify);
+           Box([],XPos,YPos, 49,aHeigthPadrao,'FONE/FAX', DFeUtil.FormatarFone(EventoRave.ACBrNFe.NotasFiscais.Items[0].NFe.Emit.EnderEmit.fone),taLeftJustify);
            Box([],XPos,YPos, 11,aHeigthPadrao,'ESTADO', EventoRave.ACBrNFe.NotasFiscais.Items[0].NFe.Emit.EnderEmit.UF,taLeftJustify);
            Box([],XPos,YPos, 42,aHeigthPadrao,'INSCRIÇÃO ESTADUAL', EventoRave.ACBrNFe.NotasFiscais.Items[0].NFe.Emit.IE,taLeftJustify);
          end;
@@ -229,7 +229,7 @@ begin
            Box([],XPos,YPos, 22,aHeigthPadrao,'CEP', NotaUtil.FormatarCEP(DFeUtil.Poem_Zeros(EventoRave.ACBrNFe.NotasFiscais.Items[0].NFe.Dest.EnderDest.CEP,8)),taRightJustify);
            PosY := YPos + aHeigthPadrao;
            Box([],PosX,PosY, 88,aHeigthPadrao,'MUNICÍPIO', EventoRave.ACBrNFe.NotasFiscais.Items[0].NFe.Dest.EnderDest.xMun,taLeftJustify);
-           Box([],XPos,YPos, 49,aHeigthPadrao,'FONE/FAX', EventoRave.ACBrNFe.NotasFiscais.Items[0].NFe.Dest.EnderDest.xBairro,taLeftJustify);
+           Box([],XPos,YPos, 49,aHeigthPadrao,'FONE/FAX', DFeUtil.FormatarFone(EventoRave.ACBrNFe.NotasFiscais.Items[0].NFe.Dest.EnderDest.fone),taLeftJustify);
            Box([],XPos,YPos, 11,aHeigthPadrao,'ESTADO', EventoRave.ACBrNFe.NotasFiscais.Items[0].NFe.Dest.EnderDest.UF,taLeftJustify);
            Box([],XPos,YPos, 42,aHeigthPadrao,'INSCRIÇÃO ESTADUAL', EventoRave.ACBrNFe.NotasFiscais.Items[0].NFe.Dest.IE,taLeftJustify);
          end;
