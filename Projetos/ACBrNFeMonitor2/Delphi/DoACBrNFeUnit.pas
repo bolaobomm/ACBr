@@ -65,7 +65,7 @@ Uses IniFiles, StrUtils, DateUtils,
   pcnRetEnvNFe, pcnConsReciNFe, pcnAuxiliar,
   pcnNFeRTXT, ACBrNFeNotasFiscais, pcnRetConsCad, StdCtrls, pcnProcNFe,
   pcnRetCCeNFe, pcnNFeR, pcnEventoNFe, pcnRetConsNFeDest,
-  pcnRetDownloadNFe, pcnRetEnvEventoNFe;
+  pcnRetDownloadNFe, pcnRetEnvEventoNFe, pcnEnvEventoNFe;
 
 Procedure DoACBrNFe( Cmd : TACBrNFeCTeCmd ) ;
 var
@@ -206,6 +206,7 @@ begin
                       raise Exception.Create('CNPJ '+Cmd.Params(2)+' inválido.')
                   end;
 
+                 infEvento.cOrgao := StrToIntDef(copy(DFeUtil.LimpaNumero(ACBrNFe1.WebServices.Consulta.NFeChave),1,2),0);
                  infEvento.dhEvento := now;
                  infEvento.tpEvento := teCancelamento;
                  infEvento.chNFe := ACBrNFe1.WebServices.Consulta.NFeChave;
