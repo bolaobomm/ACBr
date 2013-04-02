@@ -1,15 +1,13 @@
 inherited frlDANFeRLPaisagem: TfrlDANFeRLPaisagem
-  Left = 215
+  Left = 191
   Top = 113
   Width = 1149
   Height = 732
-  VertScrollBar.Position = 117
   Caption = 'frlDANFeRLPaisagem'
   OldCreateOrder = True
   PixelsPerInch = 96
   TextHeight = 13
   inherited RLNFe: TRLReport
-    Top = -117
     Width = 1123
     Height = 794
     Background.Arrange = baDistributed
@@ -115,7 +113,6 @@ inherited frlDANFeRLPaisagem: TfrlDANFeRLPaisagem
       Background.Width = 175
       BandType = btColumnHeader
       PageBreaking = pbBeforePrint
-      AfterPrint = rlbCabecalhoItensAfterPrint
       BeforePrint = rlbCabecalhoItensBeforePrint
       object pnlCabecalho1: TRLPanel
         Left = 0
@@ -3962,6 +3959,7 @@ inherited frlDANFeRLPaisagem: TfrlDANFeRLPaisagem
       Height = 13
       Background.Height = 487
       Background.Width = 865
+      Options = [boOptimisticPageBreak]
       AfterPrint = rlbItensAfterPrint
       BeforePrint = rlbItensBeforePrint
       object pnlDescricao1: TRLPanel
@@ -4835,13 +4833,13 @@ inherited frlDANFeRLPaisagem: TfrlDANFeRLPaisagem
       object rllRecebemosDe: TRLAngleLabel
         Tag = 1
         Left = 4
-        Top = 428
+        Top = 385
         Width = 7
-        Height = 307
+        Height = 350
         Angle = 90.000000000000000000
         Caption = 
-          'RECEBEMOS DE %s OS PRODUTOS CONSTANTES DA NOTA FISCAL INDICADO A' +
-          'O LADO'
+          'RECEBEMOS DE %s OS PRODUTOS / SERVI'#199'OS CONSTANTES DA NOTA FISCAL' +
+          ' INDICADO AO LADO'
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
         Font.Height = -7

@@ -116,7 +116,6 @@ type
     FFonteDANFE: TFonteDANFE;
     FTamanhoFonte_RazaoSocial: Integer;
     FExibirEAN: Boolean;
-    FTipoDANFE: TpcnTipoImpressao;
     FDetVeiculos: TDetVeiculos;
     FDetMedicamentos: TDetMedicamentos;
     FDetArmamentos: TDetArmamentos;
@@ -186,7 +185,7 @@ end;
 
 procedure TACBrNFeDANFeRL.ImprimirDANFE(NFE : TNFe = nil);
 begin
-  case TipoDANFE of
+  case FTipoDANFE of
     tiRetrato:   frlDANFeRL := TfrlDANFeRLRetrato.Create(Self);
     tiPaisagem:  frlDANFeRL := TfrlDANFeRLPaisagem.Create(Self);
   end;

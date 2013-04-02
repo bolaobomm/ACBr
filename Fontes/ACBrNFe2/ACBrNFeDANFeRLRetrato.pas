@@ -1440,7 +1440,7 @@ begin
     begin
       case modFrete of
         mfContaEmitente: rllTransModFrete.Caption := '0 - EMITENTE';
-        mfContaDestinatario: rllTransModFrete.Caption := '1 - DESTINATÁRIO';
+        mfContaDestinatario: rllTransModFrete.Caption := '1 - DEST/REM';
         mfContaTerceiros: rllTransModFrete.Caption := '2 - TERCEIROS';
         mfSemFrete: rllTransModFrete.Caption := '9 - SEM FRETE';
       end;
@@ -1917,9 +1917,20 @@ begin
                                     sDetalhamentoEspecifico := sDetalhamentoEspecifico + 'DATA DE VALIDADE: ' + DateToStr(Prod.med.Items[i].dVal) + #13#10;
 
                                   if dm_vPMC in FDetMedicamentos then
-                                    sDetalhamentoEspecifico := sDetalhamentoEspecifico + 'PREÇO MÁX. CONSUMIDOR: R$ ' + FormatFloat('###,##0.00', Prod.med.Items[i].vPMC);
+                                    sDetalhamentoEspecifico := sDetalhamentoEspecifico + 'PREÇO MÁX. CONSUMIDOR: R$ ' + FormatFloat('###,##0.00', Prod.med.Items[i].vPMC) + #13#10;
+
+                                  if (sDetalhamentoEspecifico > '') and (sDetalhamentoEspecifico <> #13#10) then
+                                    begin
+                                      if i = Prod.med.Count - 1 then
+                                        sDetalhamentoEspecifico := sDetalhamentoEspecifico
+                                      else
+                                        sDetalhamentoEspecifico := sDetalhamentoEspecifico + #13#10;
+                                    end;
+
                                 end;  // for i := 0 to Prod.med.Count - 1
-                            end // Prod.med.Count > 0
+
+                              cdsItens.FieldByName('DESCRICAO').AsString := xProd + sDetalhamentoEspecifico;
+                            end // if Prod.med.Count > 0
                           else
                             begin
                               if Prod.arma.Count > 0 then
@@ -1942,8 +1953,19 @@ begin
                                         sDetalhamentoEspecifico := sDetalhamentoEspecifico + 'No. SÉRIE CANO: ' + Prod.arma.Items[i].nCano + #13#10;
 
                                       if da_descr in FDetArmamentos then
-                                        sDetalhamentoEspecifico := sDetalhamentoEspecifico + 'DESCRIÇÃO ARMA: ' + Prod.arma.Items[i].descr;
+                                        sDetalhamentoEspecifico := sDetalhamentoEspecifico + 'DESCRIÇÃO ARMA: ' + Prod.arma.Items[i].descr + #13#10;
+
+                                      if (sDetalhamentoEspecifico > '') and (sDetalhamentoEspecifico <> #13#10) then
+                                        begin
+                                          if i = Prod.arma.Count - 1 then
+                                            sDetalhamentoEspecifico := sDetalhamentoEspecifico
+                                          else
+                                            sDetalhamentoEspecifico := sDetalhamentoEspecifico + #13#10;
+                                        end;
+
                                     end;  // for i := 0 to Prod.arma.Count - 1
+
+                                  cdsItens.FieldByName('DESCRICAO').AsString := xProd + sDetalhamentoEspecifico;
                                 end  // if Prod.arma.Count > 0
                               else
                                 begin
@@ -1974,6 +1996,8 @@ begin
                                           if dc_vCIDE in FDetCombustiveis then
                                             sDetalhamentoEspecifico := sDetalhamentoEspecifico + 'VALOR CIDE: ' + FormatFloat('###,##0.00', Prod.comb.CIDE.vCIDE);
                                         end;  // if Prod.comb.CIDE.qBCProd > 0
+
+                                      cdsItens.FieldByName('DESCRICAO').AsString := xProd + sDetalhamentoEspecifico;
                                     end  // if Prod.comb.cProdANP > 0
                                   else
                                     cdsItens.FieldByName('DESCRICAO').AsString := XProd;

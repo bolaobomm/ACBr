@@ -555,7 +555,6 @@ type
     procedure rlbObsItemBeforePrint(Sender: TObject; var PrintIt: Boolean);
     procedure rlbEmitenteAfterPrint(Sender: TObject);
     procedure pnlDescricao1AfterPrint(Sender: TObject);
-    procedure rlbCabecalhoItensAfterPrint(Sender: TObject);
     procedure rlbCabecalhoItensBeforePrint(Sender: TObject;
       var PrintIt: Boolean);
   private
@@ -745,7 +744,7 @@ begin
       else
         rlbCabecalhoItens.Visible := False;
 
-    end;
+    end;                                                             
 end;
 
 procedure TfrlDANFeRLPaisagem.InitDados;
@@ -1381,7 +1380,7 @@ begin
     begin
       case modFrete of
         mfContaEmitente: rllTransModFrete.Caption := '0 - EMITENTE';
-        mfContaDestinatario: rllTransModFrete.Caption := '1 - DESTINATÁRIO';
+        mfContaDestinatario: rllTransModFrete.Caption := '1 - DEST/REM';
         mfContaTerceiros: rllTransModFrete.Caption := '2 - TERCEIROS';
         mfSemFrete: rllTransModFrete.Caption := '9 - SEM FRETE';
       end;
@@ -1858,9 +1857,20 @@ begin
                                     sDetalhamentoEspecifico := sDetalhamentoEspecifico + 'DATA DE VALIDADE: ' + DateToStr(Prod.med.Items[i].dVal) + #13#10;
 
                                   if dm_vPMC in FDetMedicamentos then
-                                    sDetalhamentoEspecifico := sDetalhamentoEspecifico + 'PREÇO MÁX. CONSUMIDOR: R$ ' + FormatFloat('###,##0.00', Prod.med.Items[i].vPMC);
+                                    sDetalhamentoEspecifico := sDetalhamentoEspecifico + 'PREÇO MÁX. CONSUMIDOR: R$ ' + FormatFloat('###,##0.00', Prod.med.Items[i].vPMC) + #13#10;
+
+                                  if (sDetalhamentoEspecifico > '') and (sDetalhamentoEspecifico <> #13#10) then
+                                    begin
+                                      if i = Prod.med.Count - 1 then
+                                        sDetalhamentoEspecifico := sDetalhamentoEspecifico
+                                      else
+                                        sDetalhamentoEspecifico := sDetalhamentoEspecifico + #13#10;
+                                    end;
+
                                 end;  // for i := 0 to Prod.med.Count - 1
-                            end // Prod.med.Count > 0
+
+                              cdsItens.FieldByName('DESCRICAO').AsString := xProd + sDetalhamentoEspecifico;
+                            end // if Prod.med.Count > 0
                           else
                             begin
                               if Prod.arma.Count > 0 then
@@ -1883,8 +1893,19 @@ begin
                                         sDetalhamentoEspecifico := sDetalhamentoEspecifico + 'No. SÉRIE CANO: ' + Prod.arma.Items[i].nCano + #13#10;
 
                                       if da_descr in FDetArmamentos then
-                                        sDetalhamentoEspecifico := sDetalhamentoEspecifico + 'DESCRIÇÃO ARMA: ' + Prod.arma.Items[i].descr;
+                                        sDetalhamentoEspecifico := sDetalhamentoEspecifico + 'DESCRIÇÃO ARMA: ' + Prod.arma.Items[i].descr + #13#10;
+
+                                      if (sDetalhamentoEspecifico > '') and (sDetalhamentoEspecifico <> #13#10) then
+                                        begin
+                                          if i = Prod.arma.Count - 1 then
+                                            sDetalhamentoEspecifico := sDetalhamentoEspecifico
+                                          else
+                                            sDetalhamentoEspecifico := sDetalhamentoEspecifico + #13#10;
+                                        end;
+
                                     end;  // for i := 0 to Prod.arma.Count - 1
+
+                                  cdsItens.FieldByName('DESCRICAO').AsString := xProd + sDetalhamentoEspecifico;
                                 end  // if Prod.arma.Count > 0
                               else
                                 begin
@@ -1915,6 +1936,8 @@ begin
                                           if dc_vCIDE in FDetCombustiveis then
                                             sDetalhamentoEspecifico := sDetalhamentoEspecifico + 'VALOR CIDE: ' + FormatFloat('###,##0.00', Prod.comb.CIDE.vCIDE);
                                         end;  // if Prod.comb.CIDE.qBCProd > 0
+
+                                      cdsItens.FieldByName('DESCRICAO').AsString := XProd + sDetalhamentoEspecifico;
                                     end  // if Prod.comb.cProdANP > 0
                                   else
                                     cdsItens.FieldByName('DESCRICAO').AsString := XProd;
@@ -2197,7 +2220,6 @@ begin
     end
   else
     rlbObsItem.Visible := False;
-
 end;
 
 procedure TfrlDANFeRLPaisagem.rlbDadosAdicionaisBeforePrint(Sender: TObject;
@@ -2225,6 +2247,11 @@ begin
   rllCinza1.Width := rllCinza1.Width + iAumento;
   rlmDescricaoProduto.Width := rlmDescricaoProduto.Width + iAumento;
   pnlCabecalho2.Left := pnlCabecalho2.Left + iAumento;
+
+      pnlDescricao1.Width := 472;
+      rlmDescricao.Width := 386;
+      LinhaFimItens.Width := 1070;
+      pnlDescricao2.Left := 472;
 end;
 
 procedure TfrlDANFeRLPaisagem.rlbItensBeforePrint(Sender: TObject;
@@ -2293,6 +2320,11 @@ var iAumento: Integer;
 begin
   if RLNFe.PageNumber > 1 then
     begin
+      pnlDescricao1.Width := 472;
+      rlmDescricao.Width := 386;
+      LinhaFimItens.Width := 1070;
+      pnlDescricao2.Left := 472;
+
       iAumento := pnlCanhoto.Width + pnlDivisao.Width;
       rlbObsItem.Width := rlbObsItem.Width + iAumento;
       LinhaObsItemDireita.Left := LinhaObsItemDireita.Left + iAumento;
@@ -2335,27 +2367,9 @@ begin
   pnlDescricao2.Height := pnlDescricao1.Height;
 end;
 
-procedure TfrlDANFeRLPaisagem.rlbCabecalhoItensAfterPrint(Sender: TObject);
-begin
-  {=====================================================================
-   - Faz o deslocamento dos itens para suprir a ausência do canhoto nas
-     próximas páginas. É necessário informar medidas absolutas.
-   - Nas versões 3.69 em diante do Fortes Report, a instrução abaixo é
-     aplicada somente a partir da segunda linha da segunda página.
-   - Para contornar esta dificuldade, a instrução foi repetida aqui.
-   =====================================================================}
-  if RLNFe.PageNumber > 1 then
-    begin
-      pnlDescricao1.Width := 472;
-      rlmDescricao.Width := 386;
-      LinhaFimItens.Width := 1070;
-      pnlDescricao2.Left := 472;
-    end;
-end;
-
 procedure TfrlDANFeRLPaisagem.rlbCabecalhoItensBeforePrint(Sender: TObject;
   var PrintIt: Boolean);
-begin
+begin   
   if FImprimirDescPorc = True then
     lblPercValorDesc.Caption := 'PERC.(%)'
   else

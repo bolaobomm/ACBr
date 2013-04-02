@@ -3,13 +3,11 @@ inherited frlDANFeRLRetrato: TfrlDANFeRLRetrato
   Top = 116
   Width = 820
   Height = 655
-  VertScrollBar.Position = 513
   Caption = 'frlDANFeRLRetrato'
   OldCreateOrder = True
   PixelsPerInch = 96
   TextHeight = 13
   inherited RLNFe: TRLReport
-    Top = -513
     Background.Arrange = baDistributed
     Background.Height = 96
     Background.Width = 175
@@ -6390,11 +6388,11 @@ inherited frlDANFeRLRetrato: TfrlDANFeRLRetrato
         Tag = 1
         Left = 4
         Top = 4
-        Width = 307
+        Width = 350
         Height = 7
         Caption = 
-          'RECEBEMOS DE %s OS PRODUTOS CONSTANTES DA NOTA FISCAL INDICADO A' +
-          'O LADO'
+          'RECEBEMOS DE %s OS PRODUTOS / SERVI'#199'OS CONSTANTES DA NOTA FISCAL' +
+          ' INDICADO AO LADO'
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
         Font.Height = -7
