@@ -23,8 +23,8 @@ object frPagamento: TfrPagamento
   object PgPagamento: TPageControl
     Left = 0
     Top = 0
-    Width = 405
-    Height = 290
+    Width = 415
+    Height = 298
     ActivePage = TabSheetPagamento
     Align = alClient
     TabOrder = 0

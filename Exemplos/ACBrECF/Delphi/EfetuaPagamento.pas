@@ -66,7 +66,7 @@ var
 
 implementation
 
-uses ECFTeste1, ACBrECFClass, ACBrUtil;
+uses ECFTeste1, ACBrECFClass, ACBrUtil, ACBrConsts;
 
 {$R *.dfm}
 
