@@ -34,6 +34,7 @@
 unit DoACBrNFeUnit ;
 
 interface
+
 Uses Classes, TypInfo, SysUtils, CmdUnitNFe, Types,
      smtpsend, ssl_openssl, mimemess, mimepart,
      ACBrNFeUtil, ACBrDFeUtil, RpDevice,
@@ -1333,6 +1334,9 @@ begin
 
         else if Cmd.Metodo = 'ativo' then
            Cmd.Resposta := 'Ativo'
+
+        else if Cmd.Metodo = 'versao' then
+           Cmd.Resposta := Versao
 
         else if pos('|'+Cmd.Metodo+'|', '|exit|bye|fim|sair|') > 0 then {fecha conexao}
          begin
