@@ -386,9 +386,9 @@ begin
   FDadosMsg := ConsSitMDFe.Gerador.ArquivoFormatoXML;
   ConsSitMDFe.Free;
 
-//  FDadosMsg := StringReplace( FDadosMsg, '<'+ENCODING_UTF8_STD+'>', '', [rfReplaceAll] ) ;
-//  FDadosMsg := StringReplace( FDadosMsg, '<'+ENCODING_UTF8+'>', '', [rfReplaceAll] ) ;
-//  FDadosMsg := StringReplace( FDadosMsg, '<?xml version="1.0"?>', '', [rfReplaceAll] ) ;
+//  FDadosMsg := StringReplace( FDadosMsg, '<'+ENCODING_UTF8_STD+'>', '', [rfReplaceAll] );
+//  FDadosMsg := StringReplace( FDadosMsg, '<'+ENCODING_UTF8+'>', '', [rfReplaceAll] );
+//  FDadosMsg := StringReplace( FDadosMsg, '<?xml version="1.0"?>', '', [rfReplaceAll] );
 end;
 
 procedure TWebServicesBase.DoMDFeRecepcao;
@@ -428,9 +428,9 @@ begin
   FDadosMsg := ConsReciMDFe.Gerador.ArquivoFormatoXML;
   ConsReciMDFe.Free;
 
-//  FDadosMsg := StringReplace( FDadosMsg, '<'+ENCODING_UTF8_STD+'>', '', [rfReplaceAll] ) ;
-//  FDadosMsg := StringReplace( FDadosMsg, '<'+ENCODING_UTF8+'>', '', [rfReplaceAll] ) ;
-//  FDadosMsg := StringReplace( FDadosMsg, '<?xml version="1.0"?>', '', [rfReplaceAll] ) ;
+//  FDadosMsg := StringReplace( FDadosMsg, '<'+ENCODING_UTF8_STD+'>', '', [rfReplaceAll] );
+//  FDadosMsg := StringReplace( FDadosMsg, '<'+ENCODING_UTF8+'>', '', [rfReplaceAll] );
+//  FDadosMsg := StringReplace( FDadosMsg, '<?xml version="1.0"?>', '', [rfReplaceAll] );
 end;
 
 procedure TWebServicesBase.DoMDFeRecibo;
@@ -470,9 +470,9 @@ begin
   FDadosMsg := ConsStatServ.Gerador.ArquivoFormatoXML;
   ConsStatServ.Free;
 
-//  FDadosMsg := StringReplace( FDadosMsg, '<'+ENCODING_UTF8_STD+'>', '', [rfReplaceAll] ) ;
-//  FDadosMsg := StringReplace( FDadosMsg, '<'+ENCODING_UTF8+'>', '', [rfReplaceAll] ) ;
-//  FDadosMsg := StringReplace( FDadosMsg, '<?xml version="1.0"?>', '', [rfReplaceAll] ) ;
+//  FDadosMsg := StringReplace( FDadosMsg, '<'+ENCODING_UTF8_STD+'>', '', [rfReplaceAll] );
+//  FDadosMsg := StringReplace( FDadosMsg, '<'+ENCODING_UTF8+'>', '', [rfReplaceAll] );
+//  FDadosMsg := StringReplace( FDadosMsg, '<?xml version="1.0"?>', '', [rfReplaceAll] );
 end;
 
 procedure TWebServicesBase.DoMDFeEnvEvento;
@@ -542,9 +542,9 @@ begin
    end;
   EventoMDFe.Free;
 
-  FDadosMsg := StringReplace( FDadosMsg, '<'+ENCODING_UTF8_STD+'>', '', [rfReplaceAll] ) ;
-  FDadosMsg := StringReplace( FDadosMsg, '<'+ENCODING_UTF8+'>', '', [rfReplaceAll] ) ;
-  FDadosMsg := StringReplace( FDadosMsg, '<?xml version="1.0"?>', '', [rfReplaceAll] ) ;
+  FDadosMsg := StringReplace( FDadosMsg, '<'+ENCODING_UTF8_STD+'>', '', [rfReplaceAll] );
+  FDadosMsg := StringReplace( FDadosMsg, '<'+ENCODING_UTF8+'>', '', [rfReplaceAll] );
+  FDadosMsg := StringReplace( FDadosMsg, '<?xml version="1.0"?>', '', [rfReplaceAll] );
 end;
 
 function TWebServicesBase.Executar: Boolean;
@@ -634,7 +634,7 @@ var
   MDFeRetorno: TRetConsStatServ;
   aMsg  : string;
   Texto : String;
-  Acao  : TStringList ;
+  Acao  : TStringList;
   Stream: TMemoryStream;
   StrStream: TStringStream;
 
@@ -781,7 +781,7 @@ var
   MDFeRetorno: TretEnvMDFe;
   aMsg  : string;
   Texto : String;
-  Acao  : TStringList ;
+  Acao  : TStringList;
   Stream: TMemoryStream;
   StrStream: TStringStream;
 
@@ -1016,7 +1016,7 @@ function TMDFeRetRecepcao.Executar: Boolean;
  var
     aMsg  : string;
     Texto : String;
-    Acao  : TStringList ;
+    Acao  : TStringList;
     Stream: TMemoryStream;
     StrStream: TStringStream;
     {$IFDEF ACBrMDFeOpenSSL}
@@ -1179,7 +1179,7 @@ function TMDFeRecibo.Executar: Boolean;
 var
  aMsg  : string;
  Texto : String;
- Acao  : TStringList ;
+ Acao  : TStringList;
  Stream: TMemoryStream;
  StrStream: TStringStream;
 // MotivoAux : String;
@@ -1323,7 +1323,7 @@ var
   AProcMDFe: TProcMDFe;
   i: Integer;
   Texto : String;
-  Acao  : TStringList ;
+  Acao  : TStringList;
   Stream: TMemoryStream;
   StrStream: TStringStream;
   wAtualiza: boolean;
@@ -1563,10 +1563,10 @@ function TMDFeEnvEvento.Executar: Boolean;
 var
   aMsg, NomeArq: string;
   Texto : String;
-  Acao  : TStringList ;
+  Acao  : TStringList;
   Stream: TMemoryStream;
   StrStream: TStringStream;
-  wProc  : TStringList ;
+//  wProc  : TStringList;
   i,j : integer;
   Leitor : TLeitor;
   {$IFDEF ACBrMDFeOpenSSL}
@@ -1695,7 +1695,35 @@ begin
               FEvento.Evento.Items[i].RetInfEvento.cStat       := EventoRetorno.retEvento.Items[j].RetInfEvento.cStat;
               FEvento.Evento.Items[i].RetInfEvento.chMDFe      := EventoRetorno.retEvento.Items[j].RetInfEvento.chMDFe;
 
-              wProc := TStringList.Create;
+//              wProc := TStringList.Create;
+
+              // Alterado por Italo em 03/04/2013
+              Texto := '<?xml version="1.0" encoding="UTF-8" ?>';
+              Texto := Texto + '<procEventoMDFe versao="' + MDFeEventoMDFe + '" xmlns="http://www.portalfiscal.inf.br/mdfe">';
+              Texto := Texto + '<eventoMDFe versao="' + MDFeEventoMDFe + '">';
+              Leitor.Arquivo := FDadosMSG;
+              Texto := Texto + UTF8Encode(Leitor.rExtrai(1, 'infEvento', '', i + 1));
+              Texto := Texto + '</infEvento>';
+              Texto := Texto + '<Signature xmlns="http://www.w3.org/2000/09/xmldsig#">';
+              Leitor.Arquivo := FDadosMSG;
+              Texto := Texto + UTF8Encode(Leitor.rExtrai(1, 'SignedInfo', '', i + 1));
+              Texto := Texto + '</SignedInfo>';
+              Leitor.Arquivo := FDadosMSG;
+              Texto := Texto + UTF8Encode(Leitor.rExtrai(1, 'SignatureValue', '', i + 1));
+              Texto := Texto + '</SignatureValue>';
+              Leitor.Arquivo := FDadosMSG;
+              Texto := Texto + UTF8Encode(Leitor.rExtrai(1, 'KeyInfo', '', i + 1));
+              Texto := Texto + '</KeyInfo>';
+              Texto := Texto + '</Signature>';
+              Texto := Texto + '</eventoMDFe>';
+              Texto := Texto + '<retEventoMDFe versao="' + MDFeEventoMDFe + '">';
+              Leitor.Arquivo := FRetWS;
+              Texto := Texto + UTF8Encode(Leitor.rExtrai(1, 'infEvento', '', j + 1));
+              Texto := Texto + '</infEvento>';
+              Texto := Texto + '</retEventoMDFe>';
+              Texto := Texto + '</procEventoMDFe>';
+
+              (*
               wProc.Add('<?xml version="1.0" encoding="UTF-8" ?>');
               wProc.Add('<procEventoMDFe versao="' + MDFeEventoMDFe + '" xmlns="http://www.portalfiscal.inf.br/mdfe">');
 
@@ -1725,10 +1753,10 @@ begin
               wProc.Add('</retEventoMDFe>');
 
               wProc.Add('</procEventoMDFe>');
+              *)
+              EventoRetorno.retEvento.Items[j].RetInfEvento.XML := Texto; //wProc.Text;
 
-              EventoRetorno.retEvento.Items[j].RetInfEvento.XML := wProc.Text;
-
-              FEvento.Evento.Items[i].RetInfEvento.XML := wProc.Text;
+              FEvento.Evento.Items[i].RetInfEvento.XML := Texto; //wProc.Text;
 
               NomeArq := FEvento.Evento.Items[i].InfEvento.chMDFe +
                          FEvento.Evento.Items[i].InfEvento.TipoEvento +
@@ -1736,12 +1764,12 @@ begin
                          '-procEventoMDFe.xml';
 
               if FConfiguracoes.Geral.Salvar then
-                 FConfiguracoes.Geral.Save(NomeArq, wProc.Text);
+                 FConfiguracoes.Geral.Save(NomeArq, Texto {wProc.Text});
 
               if FConfiguracoes.Arquivos.Salvar then
-                 FConfiguracoes.Geral.Save(NomeArq, wProc.Text, FConfiguracoes.Arquivos.GetPathMDFe);
+                 FConfiguracoes.Geral.Save(NomeArq, Texto {wProc.Text}, FConfiguracoes.Arquivos.GetPathMDFe);
 
-              wProc.Free;
+//              wProc.Free;
               break;
             end;
          end;
