@@ -263,7 +263,7 @@ begin
          end
         else if Cmd.Metodo = 'imprimirdanfe' then
          begin
-           if ACBrNFe1.DANFE.MostrarPreview then
+           if ACBrNFe1.DANFE.MostrarPreview or (Cmd.Params(4) = '1') then
             begin
               Restaurar1.Click;
               Application.BringToFront;
@@ -302,7 +302,7 @@ begin
 
            ACBrNFe1.NotasFiscais.Imprimir;
            Cmd.Resposta := 'Danfe Impresso com sucesso';
-           if ACBrNFe1.DANFE.MostrarPreview then
+           if ACBrNFe1.DANFE.MostrarPreview or (Cmd.Params(4) = '1') then
               Ocultar1.Click;
          end
 
