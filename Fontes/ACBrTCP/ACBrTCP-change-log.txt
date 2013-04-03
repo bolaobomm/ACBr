@@ -37,6 +37,10 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+01/04/2013
+-- ACBrCEP --
+[*] Reformatação de Fontes na classe do provedor ByJG (por: DSA)
+
 23/03/2013
 -- ACBrCEP --
 [+] Adicionado suporte ao provedor ByJG (por: Rafael Dias)
