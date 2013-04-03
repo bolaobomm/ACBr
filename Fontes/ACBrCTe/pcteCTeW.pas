@@ -1049,6 +1049,7 @@ procedure TCTeW.GerarImp;
 begin
   Gerador.wGrupo('imp', '#239');
   (**)GerarICMS;
+  Gerador.wCampo(tcDe2, '#275', 'vTotImp    ', 01, 15, 0, CTe.Imp.vTotImp, DSC_VCOMP);
   Gerador.wCampo(tcStr, '#275', 'infAdFisco ', 01, 2000, 0, CTe.Imp.InfAdFisco, DSC_INFADFISCO);
   Gerador.wGrupo('/imp');
 end;
@@ -1569,7 +1570,7 @@ begin
   begin
     Gerador.wGrupo('veic', '#20');
     Gerador.wCampo(tcStr, '#21', 'cInt    ', 01, 10, 0, CTe.Rodo.veic[i].cInt, '');
-    Gerador.wCampo(tcStr, '#22', 'RENAVAM ', 09, 09, 1, CTe.Rodo.veic[i].RENAVAM, '');
+    Gerador.wCampo(tcStr, '#22', 'RENAVAM ', 11, 11, 1, CTe.Rodo.veic[i].RENAVAM, '');
     Gerador.wCampo(tcStr, '#23', 'placa   ', 01, 07, 1, CTe.Rodo.veic[i].placa, '');
     Gerador.wCampo(tcInt, '#24', 'tara    ', 01, 06, 1, CTe.Rodo.veic[i].tara, '');
     Gerador.wCampo(tcInt, '#25', 'capKG   ', 01, 06, 1, CTe.Rodo.veic[i].capKG, '');
@@ -2237,6 +2238,7 @@ procedure TCTeW.GerarImpComp(i: Integer);
 begin
   Gerador.wGrupo('impComp', '#362');
   (**)GerarICMSComp(i);
+  Gerador.wCampo(tcDe2, '#398', 'vTotImp    ', 01, 15, 0, CTe.InfCTeComp[i].impComp.vTotImp, DSC_VCOMP);
   Gerador.wCampo(tcStr, '#398', 'infAdFisco ', 01, 1000, 0, CTe.InfCTeComp[i].impComp.InfAdFisco, DSC_INFADFISCO);
   Gerador.wGrupo('/impComp');
 end;
