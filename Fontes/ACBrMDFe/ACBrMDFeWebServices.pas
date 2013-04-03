@@ -1561,7 +1561,7 @@ end;
 
 function TMDFeEnvEvento.Executar: Boolean;
 var
-  aMsg: string;
+  aMsg, NomeArq: string;
   Texto : String;
   Acao  : TStringList ;
   Stream: TMemoryStream;
@@ -1690,6 +1690,11 @@ begin
          begin
            if FEvento.Evento.Items[i].InfEvento.chMDFe = EventoRetorno.retEvento.Items[j].RetInfEvento.chMDFe then
             begin
+              FEvento.Evento.Items[i].RetInfEvento.nProt       := EventoRetorno.retEvento.Items[j].RetInfEvento.nProt;
+              FEvento.Evento.Items[i].RetInfEvento.dhRegEvento := EventoRetorno.retEvento.Items[j].RetInfEvento.dhRegEvento;
+              FEvento.Evento.Items[i].RetInfEvento.cStat       := EventoRetorno.retEvento.Items[j].RetInfEvento.cStat;
+              FEvento.Evento.Items[i].RetInfEvento.chMDFe      := EventoRetorno.retEvento.Items[j].RetInfEvento.chMDFe;
+
               wProc := TStringList.Create;
               wProc.Add('<?xml version="1.0" encoding="UTF-8" ?>');
               wProc.Add('<procEventoMDFe versao="' + MDFeEventoMDFe + '" xmlns="http://www.portalfiscal.inf.br/mdfe">');
@@ -1723,10 +1728,19 @@ begin
 
               EventoRetorno.retEvento.Items[j].RetInfEvento.XML := wProc.Text;
 
+              FEvento.Evento.Items[i].RetInfEvento.XML := wProc.Text;
+
+              NomeArq := FEvento.Evento.Items[i].InfEvento.chMDFe +
+                         FEvento.Evento.Items[i].InfEvento.TipoEvento +
+                         IntToStr(FEvento.Evento.Items[i].InfEvento.nSeqEvento) +
+                         '-procEventoMDFe.xml';
+
               if FConfiguracoes.Geral.Salvar then
-                 FConfiguracoes.Geral.Save(FEvento.Evento.Items[i].InfEvento.chMDFe + '-ProcEventoMDFe.xml', wProc.Text);
+                 FConfiguracoes.Geral.Save(NomeArq, wProc.Text);
+
               if FConfiguracoes.Arquivos.Salvar then
-                 FConfiguracoes.Geral.Save(FEvento.Evento.Items[i].InfEvento.chMDFe + '-ProcEventoMDFe.xml', wProc.Text, FConfiguracoes.Arquivos.GetPathMDFe);
+                 FConfiguracoes.Geral.Save(NomeArq, wProc.Text, FConfiguracoes.Arquivos.GetPathMDFe);
+
               wProc.Free;
               break;
             end;
