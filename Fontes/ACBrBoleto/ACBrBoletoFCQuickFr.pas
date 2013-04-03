@@ -50,7 +50,7 @@ uses
   //QRWebFilt ;
 
 const
-  CACBrBoletoFCQuick_Versao = '0.0.13a' ;
+  CACBrBoletoFCQuick_Versao = '0.0.14a' ;
 
 type
 
@@ -662,7 +662,7 @@ begin
       txtNossoNumero2.Caption         := NossoNum;
       txtUsoBanco2.Caption            := Titulo.UsoBanco;
       txtCarteira2.Caption            := Titulo.Carteira;
-      txtEspecie2.Caption             := 'R$';
+      txtEspecie2.Caption             := IfThen(Titulo.EspecieMod = '', 'R$', Titulo.EspecieMod);
       txtValorDocumento2.Caption      := FormatFloat('###,###,##0.00',Titulo.ValorDocumento);
       txtNomeSacado2.Caption          := Titulo.Sacado.NomeSacado;
       txtEnderecoSacado2.Caption      := Titulo.Sacado.Logradouro + ' '+

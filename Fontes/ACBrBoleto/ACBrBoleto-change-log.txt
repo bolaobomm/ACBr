@@ -53,6 +53,10 @@ Data: 02/04/2013
 [*] Adicionado leitura do arquivo retorno CNAB240.(Alberto)
     (CarlosFilho) 
 
+-- ACBrBoletoFC_Quick ver. 0.0.14a --
+[*] Alterado rotina de impressão do boleto para considerar o valor informado na propriedade
+    EspecieMod ao imprimir esta informação.
+
 
 Data: 25/03/2013
 -- ACBrBoleto ver. 0.0.65 --
