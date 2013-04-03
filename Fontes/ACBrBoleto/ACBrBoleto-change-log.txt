@@ -47,6 +47,13 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+Data: 02/04/2013
+-- ACBrBoleto ver. 0.0.66 --
+-- ACBrBancoItau --
+[*] Adicionado leitura do arquivo retorno CNAB240.(Alberto)
+    (CarlosFilho) 
+
+
 Data: 25/03/2013
 -- ACBrBoleto ver. 0.0.65 --
 [-] Corrigido problema no envio de boletos por email.(CarlosFilho)
