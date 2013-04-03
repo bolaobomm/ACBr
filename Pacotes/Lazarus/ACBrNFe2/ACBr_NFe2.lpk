@@ -51,7 +51,7 @@
     <Type Value="RunAndDesignTime"/>
     <RequiredPkgs Count="5">
       <Item1>
-        <PackageName Value="lr_codereport_pkg"/>
+        <PackageName Value="ACBrOpenSSL"/>
       </Item1>
       <Item2>
         <PackageName Value="synapse"/>

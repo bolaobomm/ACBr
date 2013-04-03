@@ -7,7 +7,7 @@
       <Version Value="11"/>
       <PathDelim Value="\"/>
       <SearchPaths>
-        <OtherUnitFiles Value="..\..\..\Fontes\ACBrCTe;..\..\..\Fontes\ACBrNFe2"/>
+        <OtherUnitFiles Value="..\..\..\Fontes\ACBrCTe"/>
         <UnitOutputDirectory Value="..\..\..\Fontes\ACBrCTe\lib\$(TargetCPU)-$(TargetOS)"/>
       </SearchPaths>
       <Other>
@@ -119,7 +119,7 @@
     <Type Value="RunAndDesignTime"/>
     <RequiredPkgs Count="5">
       <Item1>
-        <PackageName Value="lr_codereport_pkg"/>
+        <PackageName Value="ACBrOpenSSL"/>
       </Item1>
       <Item2>
         <PackageName Value="PCN2"/>
