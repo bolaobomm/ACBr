@@ -129,6 +129,7 @@
 											<xs:restriction base="xs:string">
 												<xs:whiteSpace value="preserve"/>
 												<xs:enumeration value="1"/>
+												<xs:enumeration value="4"/>
 												<xs:enumeration value="5"/>
 												<xs:enumeration value="7"/>
 												<xs:enumeration value="8"/>
@@ -1476,6 +1477,11 @@ REENTREGA; DEVOLUÇÃO; REFATURAMENTO; etc</xs:documentation>
 											<xs:documentation/>
 										</xs:annotation>
 									</xs:element>
+									<xs:element name="vTotImp" type="TDec_1302" minOccurs="0">
+										<xs:annotation>
+											<xs:documentation>Valor Total dos Impostos</xs:documentation>
+										</xs:annotation>
+									</xs:element>
 									<xs:element name="infAdFisco" minOccurs="0">
 										<xs:annotation>
 											<xs:documentation>Informações adicionais de interesse do Fisco</xs:documentation>
@@ -2300,6 +2306,11 @@ Onde v9.99 é a a designação genérica para a versão do arquivo. Por exemplo,
 											<xs:complexType>
 												<xs:sequence>
 													<xs:element name="ICMSComp" type="TImp"/>
+													<xs:element name="vTotImp" type="TDec_1302" minOccurs="0">
+														<xs:annotation>
+															<xs:documentation>Valor Total dos Impostos</xs:documentation>
+														</xs:annotation>
+													</xs:element>
 													<xs:element name="infAdFisco" minOccurs="0">
 														<xs:annotation>
 															<xs:documentation>Informações adicionais de interesse do Fisco</xs:documentation>
