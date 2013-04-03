@@ -553,8 +553,8 @@ begin
 
   CancCTe.Free;
 
-//  FDadosMsg := StringReplace( FDadosMsg, '<'+ENCODING_UTF8_STD+'>', '', [rfReplaceAll] ) ;
-//  FDadosMsg := StringReplace( FDadosMsg, '<'+ENCODING_UTF8+'>', '', [rfReplaceAll] ) ;
+//  FDadosMsg := StringReplace( FDadosMsg, '<'+ENCODING_UTF8_STD+'>', '', [rfReplaceAll] );
+//  FDadosMsg := StringReplace( FDadosMsg, '<'+ENCODING_UTF8+'>', '', [rfReplaceAll] );
 {$IFDEF ACBrCTeOpenSSL}
   FDadosMsg := StringReplace( FDadosMsg, '<?xml version="1.0"?>', '', [rfReplaceAll] );
 {$ENDIF}
@@ -573,9 +573,9 @@ begin
   FDadosMsg := ConsSitCTe.Gerador.ArquivoFormatoXML;
   ConsSitCTe.Free;
 
-//  FDadosMsg := StringReplace( FDadosMsg, '<'+ENCODING_UTF8_STD+'>', '', [rfReplaceAll] ) ;
-//  FDadosMsg := StringReplace( FDadosMsg, '<'+ENCODING_UTF8+'>', '', [rfReplaceAll] ) ;
-//  FDadosMsg := StringReplace( FDadosMsg, '<?xml version="1.0"?>', '', [rfReplaceAll] ) ;
+//  FDadosMsg := StringReplace( FDadosMsg, '<'+ENCODING_UTF8_STD+'>', '', [rfReplaceAll] );
+//  FDadosMsg := StringReplace( FDadosMsg, '<'+ENCODING_UTF8+'>', '', [rfReplaceAll] );
+//  FDadosMsg := StringReplace( FDadosMsg, '<?xml version="1.0"?>', '', [rfReplaceAll] );
 end;
 
 procedure TWebServicesBase.DoCTeInutilizacao;
@@ -615,9 +615,9 @@ begin
 
   InutCTe.Free;
 
-//  FDadosMsg := StringReplace( FDadosMsg, '<'+ENCODING_UTF8_STD+'>', '', [rfReplaceAll] ) ;
-//  FDadosMsg := StringReplace( FDadosMsg, '<'+ENCODING_UTF8+'>', '', [rfReplaceAll] ) ;
-//  FDadosMsg := StringReplace( FDadosMsg, '<?xml version="1.0"?>', '', [rfReplaceAll] ) ;
+//  FDadosMsg := StringReplace( FDadosMsg, '<'+ENCODING_UTF8_STD+'>', '', [rfReplaceAll] );
+//  FDadosMsg := StringReplace( FDadosMsg, '<'+ENCODING_UTF8+'>', '', [rfReplaceAll] );
+//  FDadosMsg := StringReplace( FDadosMsg, '<?xml version="1.0"?>', '', [rfReplaceAll] );
 end;
 
 procedure TWebServicesBase.DoCTeConsultaCadastro;
@@ -634,9 +634,9 @@ begin
   FCabMsg := Cabecalho.Gerador.ArquivoFormatoXML;
   Cabecalho.Free;
 
-  FCabMsg := StringReplace( FCabMsg, '<'+ENCODING_UTF8_STD+'>', '', [rfReplaceAll] ) ;
-  FCabMsg := StringReplace( FCabMsg, '<'+ENCODING_UTF8+'>', '', [rfReplaceAll] ) ;
-  FCabMsg := StringReplace( FCabMsg, '<?xml version="1.0"?>', '', [rfReplaceAll] ) ;
+  FCabMsg := StringReplace( FCabMsg, '<'+ENCODING_UTF8_STD+'>', '', [rfReplaceAll] );
+  FCabMsg := StringReplace( FCabMsg, '<'+ENCODING_UTF8+'>', '', [rfReplaceAll] );
+  FCabMsg := StringReplace( FCabMsg, '<?xml version="1.0"?>', '', [rfReplaceAll] );
 
   ConCadCTe        := TConsCad.Create;
   ConCadCTe.UF     := TCTeConsultaCadastro(Self).UF;
@@ -650,9 +650,9 @@ begin
 
   ConCadCTe.Free;
 
-  FDadosMsg := StringReplace( FDadosMsg, '<'+ENCODING_UTF8_STD+'>', '', [rfReplaceAll] ) ;
-  FDadosMsg := StringReplace( FDadosMsg, '<'+ENCODING_UTF8+'>', '', [rfReplaceAll] ) ;
-  FDadosMsg := StringReplace( FDadosMsg, '<?xml version="1.0"?>', '', [rfReplaceAll] ) ;
+  FDadosMsg := StringReplace( FDadosMsg, '<'+ENCODING_UTF8_STD+'>', '', [rfReplaceAll] );
+  FDadosMsg := StringReplace( FDadosMsg, '<'+ENCODING_UTF8+'>', '', [rfReplaceAll] );
+  FDadosMsg := StringReplace( FDadosMsg, '<?xml version="1.0"?>', '', [rfReplaceAll] );
 end;
 
 procedure TWebServicesBase.DoCTeRecepcao;
@@ -692,9 +692,9 @@ begin
   FDadosMsg := ConsReciCTe.Gerador.ArquivoFormatoXML;
   ConsReciCTe.Free;
 
-//  FDadosMsg := StringReplace( FDadosMsg, '<'+ENCODING_UTF8_STD+'>', '', [rfReplaceAll] ) ;
-//  FDadosMsg := StringReplace( FDadosMsg, '<'+ENCODING_UTF8+'>', '', [rfReplaceAll] ) ;
-//  FDadosMsg := StringReplace( FDadosMsg, '<?xml version="1.0"?>', '', [rfReplaceAll] ) ;
+//  FDadosMsg := StringReplace( FDadosMsg, '<'+ENCODING_UTF8_STD+'>', '', [rfReplaceAll] );
+//  FDadosMsg := StringReplace( FDadosMsg, '<'+ENCODING_UTF8+'>', '', [rfReplaceAll] );
+//  FDadosMsg := StringReplace( FDadosMsg, '<?xml version="1.0"?>', '', [rfReplaceAll] );
 end;
 
 procedure TWebServicesBase.DoCTeRecibo;
@@ -734,9 +734,9 @@ begin
   FDadosMsg := ConsStatServ.Gerador.ArquivoFormatoXML;
   ConsStatServ.Free;
 
-//  FDadosMsg := StringReplace( FDadosMsg, '<'+ENCODING_UTF8_STD+'>', '', [rfReplaceAll] ) ;
-//  FDadosMsg := StringReplace( FDadosMsg, '<'+ENCODING_UTF8+'>', '', [rfReplaceAll] ) ;
-//  FDadosMsg := StringReplace( FDadosMsg, '<?xml version="1.0"?>', '', [rfReplaceAll] ) ;
+//  FDadosMsg := StringReplace( FDadosMsg, '<'+ENCODING_UTF8_STD+'>', '', [rfReplaceAll] );
+//  FDadosMsg := StringReplace( FDadosMsg, '<'+ENCODING_UTF8+'>', '', [rfReplaceAll] );
+//  FDadosMsg := StringReplace( FDadosMsg, '<?xml version="1.0"?>', '', [rfReplaceAll] );
 end;
 
 function TWebServicesBase.Executar: Boolean;
@@ -857,9 +857,9 @@ begin
    end;
   EventoCTe.Free;
 
-  FDadosMsg := StringReplace( FDadosMsg, '<'+ENCODING_UTF8_STD+'>', '', [rfReplaceAll] ) ;
-  FDadosMsg := StringReplace( FDadosMsg, '<'+ENCODING_UTF8+'>', '', [rfReplaceAll] ) ;
-  FDadosMsg := StringReplace( FDadosMsg, '<?xml version="1.0"?>', '', [rfReplaceAll] ) ;
+  FDadosMsg := StringReplace( FDadosMsg, '<'+ENCODING_UTF8_STD+'>', '', [rfReplaceAll] );
+  FDadosMsg := StringReplace( FDadosMsg, '<'+ENCODING_UTF8+'>', '', [rfReplaceAll] );
+  FDadosMsg := StringReplace( FDadosMsg, '<?xml version="1.0"?>', '', [rfReplaceAll] );
 end;
 
 { TWebServices }
@@ -992,7 +992,7 @@ var
   CTeRetorno: TRetConsStatServ;
   aMsg  : string;
   Texto : String;
-  Acao  : TStringList ;
+  Acao  : TStringList;
   Stream: TMemoryStream;
   StrStream: TStringStream;
 
@@ -1140,7 +1140,7 @@ var
   CTeRetorno: TretEnvCTe;
   aMsg  : string;
   Texto : String; //  Texto : WideString;
-  Acao  : TStringList ;
+  Acao  : TStringList;
   Stream: TMemoryStream;
   StrStream: TStringStream;
 
@@ -1406,7 +1406,7 @@ function TCteRetRecepcao.Executar: Boolean;
  var
     aMsg  : string;
     Texto : String;
-    Acao  : TStringList ;
+    Acao  : TStringList;
     Stream: TMemoryStream;
     StrStream: TStringStream;
     {$IFDEF ACBrCTeOpenSSL}
@@ -1582,7 +1582,7 @@ function TCteRecibo.Executar: Boolean;
 var
  aMsg  : string;
  Texto : String;
- Acao  : TStringList ;
+ Acao  : TStringList;
  Stream: TMemoryStream;
  StrStream: TStringStream;
 // MotivoAux : String;
@@ -1738,7 +1738,7 @@ var
   AProcCTe: TProcCTe;
   i: Integer;
   Texto : String;
-  Acao  : TStringList ;
+  Acao  : TStringList;
   Stream: TMemoryStream;
   StrStream: TStringStream;
   wAtualiza: boolean;
@@ -1974,10 +1974,10 @@ var
   aMsg: string;
   i : Integer;
   Texto : String;
-  Acao  : TStringList ;
+  Acao  : TStringList;
   Stream: TMemoryStream;
   StrStream: TStringStream;
-  wPROC: TStringList;
+//  wPROC: TStringList;
   {$IFDEF ACBrCTeOpenSSL}
      HTTP: THTTPSend;
   {$ELSE}
@@ -2126,7 +2126,21 @@ begin
     //gerar arquivo proc de cancelamento
     if CTeRetorno.cStat=101 then
     begin
-      wProc := TStringList.Create;
+//      wProc := TStringList.Create;
+
+      // Alterado por Italo em 03/04/2013
+      Texto := '<?xml version="1.0" encoding="UTF-8" ?>';
+ {$IFDEF PL_103}
+      Texto := Texto + '<procCancCTe versao="1.03" xmlns="http://www.portalfiscal.inf.br/cte">';
+ {$ENDIF}
+ {$IFDEF PL_104}
+      Texto := Texto + '<procCancCTe versao="1.04" xmlns="http://www.portalfiscal.inf.br/cte">';
+ {$ENDIF}
+      Texto := Texto + FDadosMSG;
+      Texto := Texto + FRetWS;
+      Texto := Texto + '</procCancCTe>';
+
+      (*
       wProc.Add('<?xml version="1.0" encoding="UTF-8" ?>');
  {$IFDEF PL_103}
       wProc.Add('<procCancCTe versao="1.03" xmlns="http://www.portalfiscal.inf.br/cte">');
@@ -2137,8 +2151,10 @@ begin
       wProc.Add(FDadosMSG);
       wProc.Add(FRetWS);
       wProc.Add('</procCancCTe>');
-      FXML_ProcCancCTe := wProc.Text;
-      wProc.Free;
+      *)
+
+      FXML_ProcCancCTe := Texto; //wProc.Text;
+//      wProc.Free;
       if FConfiguracoes.Geral.Salvar then
          FConfiguracoes.Geral.Save(FCTeChave+'-ProcCancCTe.xml', FXML_ProcCancCTe);
 
@@ -2198,10 +2214,10 @@ var
   CTeRetorno: TRetInutCTe;
   aMsg  : string;
   Texto : String;
-  Acao  : TStringList ;
+  Acao  : TStringList;
   Stream: TMemoryStream;
   StrStream: TStringStream;
-  wProc  : TStringList ;
+//  wProc  : TStringList;
   {$IFDEF ACBrCTeOpenSSL}
      HTTP: THTTPSend;
   {$ELSE}
@@ -2292,7 +2308,7 @@ begin
     FverAplic  := CTeRetorno.verAplic;
     FcStat     := CTeRetorno.cStat;
     FxMotivo   := CTeRetorno.xMotivo;
-    FcUF       := CTeRetorno.cUF ;
+    FcUF       := CTeRetorno.cUF;
     FdhRecbto  := CTeRetorno.dhRecbto;
     Fprotocolo := CTeRetorno.nProt;
     FMsg       := CTeRetorno.XMotivo;
@@ -2310,7 +2326,21 @@ begin
     //gerar arquivo proc de inutilizacao
     if CTeRetorno.cStat=102 then
     begin
-      wProc := TStringList.Create;
+//      wProc := TStringList.Create;
+
+      // Alterado por Italo em 03/04/2013
+      Texto := '<?xml version="1.0" encoding="UTF-8" ?>';
+ {$IFDEF PL_103}
+      Texto := Texto + '<ProcInutCTe versao="1.03" xmlns="http://www.portalfiscal.inf.br/cte">';
+ {$ENDIF}
+ {$IFDEF PL_104}
+      Texto := Texto + '<ProcInutCTe versao="1.04" xmlns="http://www.portalfiscal.inf.br/cte">';
+ {$ENDIF}
+      Texto := Texto + FDadosMSG;
+      Texto := Texto + FRetWS;
+      Texto := Texto + '</ProcInutCTe>';
+
+      (*
       wProc.Add('<?xml version="1.0" encoding="UTF-8" ?>');
  {$IFDEF PL_103}
       wProc.Add('<ProcInutCTe versao="1.03" xmlns="http://www.portalfiscal.inf.br/cte">');
@@ -2321,8 +2351,12 @@ begin
       wProc.Add(FDadosMSG);
       wProc.Add(FRetWS);
       wProc.Add('</ProcInutCTe>');
-      FXML_ProcInutCTe := wProc.Text;
-      wProc.Free;
+      *)
+
+      FXML_ProcInutCTe := Texto; //wProc.Text;
+
+//      wProc.Free;
+
       if FConfiguracoes.Geral.Salvar then
          FConfiguracoes.Geral.Save(FormatDateTime('yyyymmddhhnnss',Now)+FCTeChave+'-ProcInutCTe.xml', FXML_ProcInutCTe);
       if FConfiguracoes.Arquivos.Salvar then
@@ -2387,7 +2421,7 @@ function TCTeConsultaCadastro.Executar: Boolean;
 var
   aMsg  : String;
   Texto : String;
-  Acao  : TStringList ;
+  Acao  : TStringList;
   Stream: TMemoryStream;
   StrStream: TStringStream;
   {$IFDEF ACBrCTeOpenSSL}
@@ -2431,7 +2465,7 @@ begin
      ConfiguraReqResp( ReqResp );
      ReqResp.URL := Trim(FURL);
      ReqResp.UseUTF8InHeader := True;
-     ReqResp.SoapAction := 'http://www.portalfiscal.inf.br/nfe/wsdl/CadConsultaCadastro2' ;
+     ReqResp.SoapAction := 'http://www.portalfiscal.inf.br/nfe/wsdl/CadConsultaCadastro2';
   {$ENDIF}
   try
     TACBrCTe( FACBrCTe ).SetStatus( stCTeCadastro );
@@ -2478,15 +2512,15 @@ begin
     FcStat    := FRetConsCad.cStat;
     FxMotivo  := FRetConsCad.xMotivo;
     FdhCons   := FRetConsCad.dhCons;
-    FcUF      := FRetConsCad.cUF ;
+    FcUF      := FRetConsCad.cUF;
     FMsg      := FRetConsCad.XMotivo;
 
     if FRetConsCad.cStat = 111 then
      begin
-       FUF   := FRetConsCad.UF ;
-       FIE   := FRetConsCad.IE ;
-       FCNPJ := FRetConsCad.CNPJ ;
-       FCPF  := FRetConsCad.CPF ;
+       FUF   := FRetConsCad.UF;
+       FIE   := FRetConsCad.IE;
+       FCNPJ := FRetConsCad.CNPJ;
+       FCPF  := FRetConsCad.CPF;
      end;
 
    Result := (FRetConsCad.cStat in [111, 112]);
@@ -2565,10 +2599,10 @@ function TCTeEnvEvento.Executar: Boolean;
 var
   aMsg, NomeArq: string;
   Texto : String;
-  Acao  : TStringList ;
+  Acao  : TStringList;
   Stream: TMemoryStream;
   StrStream: TStringStream;
-  wProc  : TStringList ;
+//  wProc  : TStringList;
   i,j : integer;
   Leitor : TLeitor;
   {$IFDEF ACBrCTeOpenSSL}
@@ -2695,7 +2729,35 @@ begin
               FEvento.Evento.Items[i].RetInfEvento.cStat       := EventoRetorno.retEvento.Items[j].RetInfEvento.cStat;
               FEvento.Evento.Items[i].RetInfEvento.chCTe       := EventoRetorno.retEvento.Items[j].RetInfEvento.chCTe;
 
-              wProc := TStringList.Create;
+//              wProc := TStringList.Create;
+
+              // Alterado por Italo em 03/04/2013
+              Texto := '<?xml version="1.0" encoding="UTF-8" ?>';
+              Texto := Texto + '<procEventoCTe versao="' + CTeEventoCTe + '" xmlns="http://www.portalfiscal.inf.br/cte">';
+              Texto := Texto + '<eventoCTe versao="' + CTeEventoCTe + '">';
+              Leitor.Arquivo := FDadosMSG;
+              Texto := Texto + UTF8Encode(Leitor.rExtrai(1, 'infEvento', '', i + 1));
+              Texto := Texto + '</infEvento>';
+              Texto := Texto + '<Signature xmlns="http://www.w3.org/2000/09/xmldsig#">';
+              Leitor.Arquivo := FDadosMSG;
+              Texto := Texto + UTF8Encode(Leitor.rExtrai(1, 'SignedInfo', '', i + 1));
+              Texto := Texto + '</SignedInfo>';
+              Leitor.Arquivo := FDadosMSG;
+              Texto := Texto + UTF8Encode(Leitor.rExtrai(1, 'SignatureValue', '', i + 1));
+              Texto := Texto + '</SignatureValue>';
+              Leitor.Arquivo := FDadosMSG;
+              Texto := Texto + UTF8Encode(Leitor.rExtrai(1, 'KeyInfo', '', i + 1));
+              Texto := Texto + '</KeyInfo>';
+              Texto := Texto + '</Signature>';
+              Texto := Texto + '</eventoCTe>';
+              Texto := Texto + '<retEventoCTe versao="' + CTeEventoCTe + '">';
+              Leitor.Arquivo := FRetWS;
+              Texto := Texto + UTF8Encode(Leitor.rExtrai(1, 'infEvento', '', j + 1));
+              Texto := Texto + '</infEvento>';
+              Texto := Texto + '</retEventoCTe>';
+              Texto := Texto + '</procEventoCTe>';
+
+              (*
               wProc.Add('<?xml version="1.0" encoding="UTF-8" ?>');
               wProc.Add('<procEventoCTe versao="' + CTeEventoCTe + '" xmlns="http://www.portalfiscal.inf.br/cte">');
 
@@ -2725,10 +2787,10 @@ begin
               wProc.Add('</retEventoCTe>');
 
               wProc.Add('</procEventoCTe>');
+              *)
+              EventoRetorno.retEvento.Items[j].RetInfEvento.XML := Texto; //wProc.Text;
 
-              EventoRetorno.retEvento.Items[j].RetInfEvento.XML := wProc.Text;
-
-              FEvento.Evento.Items[i].RetInfEvento.XML := wProc.Text;
+              FEvento.Evento.Items[i].RetInfEvento.XML := Texto; //wProc.Text;
 
               NomeArq := FEvento.Evento.Items[i].InfEvento.chCTe +
                          FEvento.Evento.Items[i].InfEvento.TipoEvento +
@@ -2736,11 +2798,12 @@ begin
                          '-procEventoCTe.xml';
 
               if FConfiguracoes.Geral.Salvar then
-                 FConfiguracoes.Geral.Save(NomeArq, wProc.Text);
+                 FConfiguracoes.Geral.Save(NomeArq, Texto {wProc.Text});
 
               if FConfiguracoes.Arquivos.Salvar then
-                 FConfiguracoes.Geral.Save(NomeArq, wProc.Text, FConfiguracoes.Arquivos.GetPathCTe);
-              wProc.Free;
+                 FConfiguracoes.Geral.Save(NomeArq, Texto {wProc.Text}, FConfiguracoes.Arquivos.GetPathCTe);
+
+//              wProc.Free;
               break;
             end;
          end;
