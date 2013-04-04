@@ -119,13 +119,13 @@ begin
           Bold:=True;
           GotoXY(PosX+FontHeight+0.5,FLastY-2);
           //GotoXY(PosX+LineHeight,FLastY-2);
-          vEnd:='Recebemos de '+Emit.XNome+' os produtos constantes da Nota Fiscal indicada ao lado';
+          vEnd:='Recebemos de '+Emit.XNome+' os produtos / serviços constantes da Nota Fiscal indicada ao lado';
           if Length(vEnd)>110 then
           begin
              vEnd:='Recebemos de '+Emit.XNome;
              Print(vEnd);
              GotoXY(PosX+FontHeight+FontHeight+0.5,FLastY-2);
-             vEnd:='os produtos constantes da Nota Fiscal indicada ao lado';
+             vEnd:='os produtos / serviços constantes da Nota Fiscal indicada ao lado';
              Print(vEnd);
           end
           else

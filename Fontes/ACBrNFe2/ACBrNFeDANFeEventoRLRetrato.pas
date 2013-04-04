@@ -55,7 +55,7 @@ uses
   Windows, Messages, Graphics, Controls, Forms, Dialogs, ExtCtrls, MaskUtils, StdCtrls,
   {$ENDIF}
   RLReport, RLFilters, RLPDFFilter, {$IFDEF BORLAND} XMLIntf, XMLDoc, jpeg, {$ENDIF}
-  ACBrNFeDANFeEventoRL, pcnConversao, RLBarcode, DB, StrUtils, ACBrNFeDANFeRL;
+  pcnConversao, RLBarcode, StrUtils, ACBrNFeDANFeRL, ACBrNFeDANFeEventoRL;
 
 type
   TfrlDANFeEventoRLRetrato = class(TfrlDANFeEventoRL)
@@ -134,6 +134,64 @@ type
     RLLabel1: TRLLabel;
     RLDraw8: TRLDraw;
     rllNumNF: TRLLabel;
+    rlbDestinatario: TRLBand;
+    RLDraw9: TRLDraw;
+    RLLabel18: TRLLabel;
+    RLLabel2: TRLLabel;
+    rllDestNome: TRLLabel;
+    RLLabel7: TRLLabel;
+    rllDestEndereco: TRLLabel;
+    RLLabel8: TRLLabel;
+    rllDestCidade: TRLLabel;
+    RLLabel9: TRLLabel;
+    rllDestFone: TRLLabel;
+    RLLabel10: TRLLabel;
+    rllDestBairro: TRLLabel;
+    RLLabel41: TRLLabel;
+    rllDestUF: TRLLabel;
+    RLLabel11: TRLLabel;
+    rllDestCNPJ: TRLLabel;
+    RLLabel12: TRLLabel;
+    rllDestCEP: TRLLabel;
+    RLLabel13: TRLLabel;
+    rllDestIE: TRLLabel;
+    RLDraw10: TRLDraw;
+    RLDraw11: TRLDraw;
+    RLDraw12: TRLDraw;
+    RLDraw23: TRLDraw;
+    RLDraw13: TRLDraw;
+    RLDraw14: TRLDraw;
+    RLDraw18: TRLDraw;
+    RLDraw25: TRLDraw;
+    rlbEmitente: TRLBand;
+    RLDraw26: TRLDraw;
+    RLLabel14: TRLLabel;
+    RLLabel15: TRLLabel;
+    rllEmitNome: TRLLabel;
+    RLLabel17: TRLLabel;
+    rllEmitEndereco: TRLLabel;
+    RLLabel22: TRLLabel;
+    rllEmitCidade: TRLLabel;
+    RLLabel24: TRLLabel;
+    rllEmitFone: TRLLabel;
+    RLLabel26: TRLLabel;
+    rllEmitBairro: TRLLabel;
+    RLLabel28: TRLLabel;
+    rllEmitUF: TRLLabel;
+    RLLabel30: TRLLabel;
+    rllEmitCNPJ: TRLLabel;
+    RLLabel34: TRLLabel;
+    rllEmitCEP: TRLLabel;
+    RLLabel47: TRLLabel;
+    rllEmitIE: TRLLabel;
+    RLDraw27: TRLDraw;
+    RLDraw28: TRLDraw;
+    RLDraw33: TRLDraw;
+    RLDraw34: TRLDraw;
+    RLDraw35: TRLDraw;
+    RLDraw36: TRLDraw;
+    RLDraw38: TRLDraw;
+    RLDraw39: TRLDraw;
     procedure RLEventoBeforePrint(Sender: TObject; var PrintIt: Boolean);
   private
     procedure InitDados;
@@ -149,7 +207,6 @@ uses ACBrNFeUtil, ACBrDFeUtil, pcnEnvEventoNFe, Math;
 {$R *.dfm}
 
 procedure TfrlDANFeEventoRLRetrato.InitDados;
-var i, b, h: Integer;
 begin
   // Carrega logomarca
   if (FLogo <> '') and FileExists (FLogo) then
@@ -161,7 +218,7 @@ begin
       rliMarcaDagua1.Picture.LoadFromFile(FMarcaDagua);
     end;
 
-  with FEventoNFe.Evento.Items[FItemAtual] do
+  with FEventoNFe do
     begin
       // Preeche os campos - Quadro NF-e
       rllModeloNF.Caption := Copy(InfEvento.chNFe, 21, 2);
@@ -189,6 +246,42 @@ begin
                                           RetInfEvento.xMotivo;
       rllProtocoloEvento.Caption := RetInfEvento.nProt;
       rllDataHoraRegistro.Caption := DateTimeToStr(RetInfEvento.dhRegEvento);
+
+      // Se o XML da NF-e foi carregado, preenche os campos
+      // do Emitente e do Destinatário
+      if FNFe <> nil then
+        begin
+          with FNFe do
+            begin
+            // 1.) Preenche os campos do Emitente
+              rllEmitNome.Caption := Emit.xNome;
+              rllEmitCNPJ.Caption := DFeUtil.FormatarCNPJ(Emit.CNPJCPF);
+              if Emit.EnderEmit.xCpl > '' then
+                rllEmitEndereco.Caption := Emit.EnderEmit.xLgr + ', ' + Emit.EnderEmit.nro + ' ' + Emit.EnderEmit.xCpl
+              else
+                rllEmitEndereco.Caption := Emit.EnderEmit.xLgr + ', ' + Emit.EnderEmit.nro;
+              rllEmitBairro.Caption := Emit.EnderEmit.xBairro;
+              rllEmitCEP.Caption := FormatarCEP(IntToStr(Emit.EnderEmit.CEP));
+              rllEmitCidade.Caption := Emit.EnderEmit.xMun;
+              rllEmitFone.Caption := FormatarFone(Emit.EnderEmit.fone);
+              rllEmitUF.Caption := Emit.EnderEmit.UF;
+              rllEmitIE.Caption := Emit.IE;
+
+              // 2.) Preenche os campos do Destinatário
+              rllDestNome.Caption := Dest.xNome;
+              rllDestCNPJ.Caption := DFeUtil.FormatarCNPJ(Dest.CNPJCPF);
+              if Dest.EnderDest.xCpl > '' then
+                rllDestEndereco.Caption := Dest.EnderDest.xLgr + ', ' + Dest.EnderDest.nro + ' ' + Dest.EnderDest.xCpl
+              else
+                rllDestEndereco.Caption := Dest.EnderDest.xLgr + ', ' + Dest.EnderDest.nro;
+              rllDestBairro.Caption := Dest.EnderDest.xBairro;
+              rllDestCEP.Caption := FormatarCEP(IntToStr(Dest.EnderDest.CEP));
+              rllDestCidade.Caption := Dest.EnderDest.xMun;
+              rllDestFone.Caption := FormatarFone(Dest.EnderDest.fone);
+              rllDestUF.Caption := Dest.EnderDest.UF;
+              rllDestIE.Caption := Dest.IE;
+            end; // with NFe
+        end; // if FNFe <> nil
 
       // Preenche os campos espcíficos de acordo com o evento
       case InfEvento.tpEvento of
@@ -252,7 +345,7 @@ begin
     end;
 
   // Ajuste da fone
-  case FFonteDANFEEvento of
+  case FFonteDANFE of
     fdArial:
       for b := 0 to (RLEvento.ControlCount - 1) do
         for i := 0 to ((TRLBand(RLEvento.Controls[b]).ControlCount) - 1) do
@@ -305,10 +398,22 @@ begin
       rllCabecalhoLinha2.Width := 730;
     end;
 
+  // Se o XML da NF-e foi carregado também, exibe os quadros
+  // "Emitente" e "Destinatário"
+  if FNFe <> nil then
+    begin
+      rlbEmitente.Visible := True;
+      rlbDestinatario.Visible := True;
+    end
+  else
+    begin
+      rlbEmitente.Visible := False;
+      rlbDestinatario.Visible := False;
+    end;
+
   // Exibe os itens específicos de cada evento e ajusta a posição
   // da marca dágua, de acordo com o evento
-
-  case FEventoNFe.Evento.Items[FItemAtual].InfEvento.tpEvento of
+  case FEventoNFe.InfEvento.tpEvento of
     teCCe:
       begin
         rlbJustificativa.Visible := False;

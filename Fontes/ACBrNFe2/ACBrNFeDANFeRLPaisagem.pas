@@ -553,10 +553,10 @@ type
     procedure rlbItensBeforePrint(Sender: TObject; var PrintIt: Boolean);
     procedure rlbDadosAdicionaisAfterPrint(Sender: TObject);
     procedure rlbObsItemBeforePrint(Sender: TObject; var PrintIt: Boolean);
-    procedure rlbEmitenteAfterPrint(Sender: TObject);
     procedure pnlDescricao1AfterPrint(Sender: TObject);
     procedure rlbCabecalhoItensBeforePrint(Sender: TObject;
       var PrintIt: Boolean);
+    procedure FormCreate(Sender: TObject);
   private
     FRecebemoDe : string;
     procedure InitDados;
@@ -572,10 +572,6 @@ type
     procedure Itens;
     procedure ISSQN;
     procedure AddFatura;
-    function BuscaDireita(Busca, Text: String): Integer;
-    function FormatarCEP(AValue: String): String;
-    function FormatarFone(AValue: String): String;
-    procedure InsereLinhas(sTexto: String; iLimCaracteres: Integer; rMemo: TRLMemo);
     procedure ConfigureDataSource;
   public
 
@@ -585,122 +581,11 @@ implementation
 
 uses ACBrNFeUtil, ACBrDFeUtil, pcnNFe;
 
-var iLimiteLinhas: Integer = 12;
-iLinhasUtilizadas: Integer = 0;
-iLimiteCaracteresLinha: Integer = 142;
-iLimiteCaracteresContinuacao: Integer = 204;
+var
 q, iQuantItens, iItemAtual: Integer;
 sRetirada, sEntrega: WideString;
 
 {$R *.dfm}
-
-function TfrlDANFeRLPaisagem.BuscaDireita(Busca, Text: String): Integer;
-{Pesquisa um caractere à direita da string, retornando sua posição}
-var n, retorno: integer;
-begin
-  retorno := 0;
-    for n := length(Text) downto 1 do
-      begin
-        if Copy(Text, n, 1) = Busca then
-          begin
-            retorno := n;
-            break;
-         end;
-      end;
-  Result := retorno;
-end;
-
-{Função original de ACBrNFeUtil modificada para exibir em outro formato}
-function TfrlDANFeRLPaisagem.FormatarCEP(AValue: String): String;
-var i, iZeros: Integer;
-sCep: String;
-begin
-  if Length(AValue) <= 8 then
-    begin
-      iZeros := 8 - Length(AValue);
-      sCep := AValue;
-      For i := 1 to iZeros do
-        begin
-          sCep := '0' + sCep;
-        end;
-      Result := copy(sCep,1,5) + '-' + copy(sCep,6,3);
-    end
-  else
-    Result := copy(AValue,1,5) + '-' + copy(AValue,6,3);
-end;
-
-{Função original de ACBrNFeUtil modificada para exibir em outro formato}
-function TfrlDANFeRLPaisagem.FormatarFone(AValue: String): String;
-begin
-  Result := AValue;
-  if DFeUtil.NaoEstaVazio(AValue) then
-  begin
-    if Length(DFeUtil.LimpaNumero(AValue)) > 10 then AValue := copy(DFeUtil.LimpaNumero(AValue),2,10); //Casos em que o DDD vem com ZERO antes somando 3 digitos
-
-    AValue := DFeUtil.Poem_Zeros(DFeUtil.LimpaNumero(AValue), 10);
-    Result := '('+copy(AValue,1,2) + ') ' + copy(AValue,3,4) + '-' + copy(AValue,7,4);
-  end;
-end;
-
-procedure TfrlDANFeRLPaisagem.InsereLinhas(sTexto: String; iLimCaracteres: Integer;
-                                                                 rMemo: TRLMemo);
-var iTotalLinhas, iUltimoEspacoLinha, iPosAtual, iQuantCaracteres, i: Integer;
-    sLinhaProvisoria, sLinha: String;
-begin
-  iPosAtual := 1;
-  iQuantCaracteres := Length(sTexto);
-  if iQuantCaracteres <= iLimiteLinhas then
-    iTotalLinhas := 1
-  else
-    begin
-      if (iQuantCaracteres mod iLimCaracteres) > 0 then
-        iTotalLinhas := (iQuantCaracteres div iLimCaracteres) + 1
-      else
-        iTotalLinhas := iQuantCaracteres div iLimCaracteres;
-    end;
-
-  for i := 1 to (iTotalLinhas + 10) do
-    begin
-      sLinhaProvisoria := Copy(sTexto, iPosAtual, iLimCaracteres);
-      iUltimoEspacoLinha := BuscaDireita(' ', sLinhaProvisoria);
-
-      if iUltimoEspacoLinha = 0 then
-        iUltimoEspacoLinha := iQuantCaracteres;
-
-      if Pos(';', sLinhaProvisoria) = 0 then
-        begin
-          if (BuscaDireita(' ', sLinhaProvisoria) = iLimCaracteres)  or
-             (BuscaDireita(' ', sLinhaProvisoria) = (iLimCaracteres + 1)) then
-            sLinha := sLinhaProvisoria
-          else
-            begin
-              if (iQuantCaracteres - iPosAtual) > iLimCaracteres then
-                sLinha := Copy(sLinhaProvisoria, 1, iUltimoEspacoLinha)
-              else
-                begin
-                  sLinha := sLinhaProvisoria;
-                end;
-            end;
-          iPosAtual := iPosAtual + Length(sLinha);
-        end // if Pos(';', sLinhaProvisoria) = 0
-      else
-        begin
-          sLinha := Copy(sLinhaProvisoria, 1, Pos(';', sLinhaProvisoria));
-          iPosAtual := iPosAtual + (Length(sLinha));
-        end;
-
-      if sLinha > '' then
-        begin
-          if LeftStr(sLinha, 1) = ' ' then
-            sLinha := Copy(sLinha, 2, (Length(sLinha) - 1))
-          else
-            sLinha := sLinha;
-
-          rMemo.Lines.Add(sLinha);
-        end;
-
-    end;
-end;
 
 procedure TfrlDANFeRLPaisagem.RLNFeBeforePrint(Sender: TObject;
   var PrintIt: Boolean);
@@ -729,6 +614,8 @@ end;
 procedure TfrlDANFeRLPaisagem.rlbEmitenteBeforePrint(Sender: TObject;
   var PrintIt: Boolean);
 begin
+  iItemAtual := 0;
+  
   rlbCodigoBarras.BringToFront;
   if RLNFe.PageNumber > 1 then
     begin
@@ -1989,7 +1876,7 @@ begin
 
                       lblCST.Caption := 'CST';
                       lblCST.Font.Size := 5;
-                      lblCST.Top := 18;
+                      lblCST.Top := 13;
                       txtCST.DataField := 'CST';
                     end; //FNFe.Emit.CRT = crtRegimeNormal
 
@@ -2247,11 +2134,6 @@ begin
   rllCinza1.Width := rllCinza1.Width + iAumento;
   rlmDescricaoProduto.Width := rlmDescricaoProduto.Width + iAumento;
   pnlCabecalho2.Left := pnlCabecalho2.Left + iAumento;
-
-      pnlDescricao1.Width := 472;
-      rlmDescricao.Width := 386;
-      LinhaFimItens.Width := 1070;
-      pnlDescricao2.Left := 472;
 end;
 
 procedure TfrlDANFeRLPaisagem.rlbItensBeforePrint(Sender: TObject;
@@ -2334,11 +2216,6 @@ begin
     end;
 end;
 
-procedure TfrlDANFeRLPaisagem.rlbEmitenteAfterPrint(Sender: TObject);
-begin
-  iItemAtual := 0;
-end;
-
 procedure TfrlDANFeRLPaisagem.ConfigureDataSource;
 begin
   self.rlmDescricao.DataSource := DataSource1;
@@ -2374,6 +2251,25 @@ begin
     lblPercValorDesc.Caption := 'PERC.(%)'
   else
     lblPercValorDesc.Caption := 'VALOR';
+
+  if RLNFe.PageNumber > 1 then
+    begin
+      pnlDescricao1.Width := 472;
+      rlmDescricao.Width := 386;
+      LinhaFimItens.Width := 1070;
+      pnlDescricao2.Left := 472;
+    end;
+end;
+
+procedure TfrlDANFeRLPaisagem.FormCreate(Sender: TObject);
+begin
+  inherited;
+
+  iItemAtual := 0;
+  iLimiteLinhas := 12;
+  iLinhasUtilizadas := 0;
+  iLimiteCaracteresLinha := 142;
+  iLimiteCaracteresContinuacao := 204;
 end;
 
 end.

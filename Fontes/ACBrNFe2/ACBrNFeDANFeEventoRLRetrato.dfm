@@ -1,13 +1,15 @@
 inherited frlDANFeEventoRLRetrato: TfrlDANFeEventoRLRetrato
   Left = 266
   Top = 127
-  Width = 816
+  Width = 885
   Height = 655
+  VertScrollBar.Position = 118
   Caption = 'frlDANFeEventoRLRetrato'
   OldCreateOrder = True
   PixelsPerInch = 96
   TextHeight = 13
   inherited RLEvento: TRLReport
+    Top = -118
     Background.Arrange = baDistributed
     Background.Height = 96
     Background.Width = 175
@@ -30,7 +32,7 @@ inherited frlDANFeEventoRLRetrato: TfrlDANFeEventoRLRetrato
     end
     object rlbUsuario: TRLBand
       Left = 26
-      Top = 817
+      Top = 1071
       Width = 742
       Height = 12
       AlignToBottom = True
@@ -681,7 +683,7 @@ inherited frlDANFeEventoRLRetrato: TfrlDANFeEventoRLRetrato
     end
     object rlbCondUso: TRLBand
       Left = 26
-      Top = 364
+      Top = 618
       Width = 742
       Height = 213
       BandType = btTitle
@@ -857,7 +859,7 @@ inherited frlDANFeEventoRLRetrato: TfrlDANFeEventoRLRetrato
     end
     object rlbCorrecao: TRLBand
       Left = 26
-      Top = 577
+      Top = 831
       Width = 742
       Height = 240
       BandType = btTitle
@@ -895,6 +897,716 @@ inherited frlDANFeEventoRLRetrato: TfrlDANFeEventoRLRetrato
         Font.Style = [fsBold]
         IntegralHeight = True
         ParentFont = False
+      end
+    end
+    object rlbDestinatario: TRLBand
+      Left = 26
+      Top = 491
+      Width = 742
+      Height = 127
+      BandType = btTitle
+      object RLDraw9: TRLDraw
+        Left = 0
+        Top = 36
+        Width = 740
+        Height = 91
+      end
+      object RLLabel18: TRLLabel
+        Tag = 30
+        Left = 0
+        Top = 17
+        Width = 189
+        Height = 16
+        Caption = 'DESTINAT'#193'RIO / REMETENTE'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clBlack
+        Font.Height = -13
+        Font.Name = 'Arial'
+        Font.Style = [fsBold]
+        HoldStyle = hsRelatively
+        ParentFont = False
+      end
+      object RLLabel2: TRLLabel
+        Tag = 10
+        Left = 3
+        Top = 39
+        Width = 89
+        Height = 10
+        Caption = 'NOME / RAZ'#195'O SOCIAL'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clBlack
+        Font.Height = -8
+        Font.Name = 'Arial'
+        Font.Style = []
+        Holder = RLDraw9
+        HoldStyle = hsRelatively
+        ParentFont = False
+      end
+      object rllDestNome: TRLLabel
+        Left = 7
+        Top = 49
+        Width = 578
+        Height = 14
+        AutoSize = False
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clBlack
+        Font.Height = -12
+        Font.Name = 'Arial'
+        Font.Style = [fsBold]
+        ParentFont = False
+      end
+      object RLLabel7: TRLLabel
+        Tag = 10
+        Left = 3
+        Top = 69
+        Width = 47
+        Height = 10
+        Caption = 'ENDERE'#199'O'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clBlack
+        Font.Height = -8
+        Font.Name = 'Arial'
+        Font.Style = []
+        Holder = RLDraw9
+        HoldStyle = hsRelatively
+        ParentFont = False
+      end
+      object rllDestEndereco: TRLLabel
+        Left = 7
+        Top = 79
+        Width = 434
+        Height = 14
+        AutoSize = False
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clBlack
+        Font.Height = -12
+        Font.Name = 'Arial'
+        Font.Style = [fsBold]
+        ParentFont = False
+      end
+      object RLLabel8: TRLLabel
+        Tag = 10
+        Left = 3
+        Top = 99
+        Width = 44
+        Height = 10
+        Caption = 'MUNIC'#205'PIO'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clBlack
+        Font.Height = -8
+        Font.Name = 'Arial'
+        Font.Style = []
+        Holder = RLDraw9
+        HoldStyle = hsRelatively
+        ParentFont = False
+      end
+      object rllDestCidade: TRLLabel
+        Left = 7
+        Top = 109
+        Width = 362
+        Height = 14
+        AutoSize = False
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clBlack
+        Font.Height = -12
+        Font.Name = 'Arial'
+        Font.Style = [fsBold]
+        ParentFont = False
+      end
+      object RLLabel9: TRLLabel
+        Tag = 10
+        Left = 383
+        Top = 99
+        Width = 45
+        Height = 10
+        Caption = 'FONE / FAX'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clBlack
+        Font.Height = -8
+        Font.Name = 'Arial'
+        Font.Style = []
+        HoldStyle = hsRelatively
+        ParentFont = False
+      end
+      object rllDestFone: TRLLabel
+        Left = 387
+        Top = 109
+        Width = 146
+        Height = 14
+        AutoSize = False
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clBlack
+        Font.Height = -12
+        Font.Name = 'Arial'
+        Font.Style = [fsBold]
+        ParentFont = False
+      end
+      object RLLabel10: TRLLabel
+        Tag = 10
+        Left = 453
+        Top = 69
+        Width = 75
+        Height = 10
+        Caption = 'BAIRRO / DISTRITO'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clBlack
+        Font.Height = -8
+        Font.Name = 'Arial'
+        Font.Style = []
+        HoldStyle = hsRelatively
+        ParentFont = False
+      end
+      object rllDestBairro: TRLLabel
+        Left = 457
+        Top = 79
+        Width = 184
+        Height = 14
+        AutoSize = False
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clBlack
+        Font.Height = -12
+        Font.Name = 'Arial'
+        Font.Style = [fsBold]
+        ParentFont = False
+      end
+      object RLLabel41: TRLLabel
+        Tag = 10
+        Left = 548
+        Top = 99
+        Width = 13
+        Height = 10
+        Caption = 'UF'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clBlack
+        Font.Height = -8
+        Font.Name = 'Arial'
+        Font.Style = []
+        HoldStyle = hsRelatively
+        ParentFont = False
+      end
+      object rllDestUF: TRLLabel
+        Left = 552
+        Top = 109
+        Width = 38
+        Height = 14
+        AutoSize = False
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clBlack
+        Font.Height = -12
+        Font.Name = 'Arial'
+        Font.Style = [fsBold]
+        ParentFont = False
+      end
+      object RLLabel11: TRLLabel
+        Tag = 10
+        Left = 597
+        Top = 39
+        Width = 45
+        Height = 10
+        Caption = 'CNPJ / CPF'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clBlack
+        Font.Height = -8
+        Font.Name = 'Arial'
+        Font.Style = []
+        HoldStyle = hsRelatively
+        ParentFont = False
+      end
+      object rllDestCNPJ: TRLLabel
+        Left = 601
+        Top = 49
+        Width = 128
+        Height = 14
+        AutoSize = False
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clBlack
+        Font.Height = -12
+        Font.Name = 'Arial'
+        Font.Style = [fsBold]
+        ParentFont = False
+      end
+      object RLLabel12: TRLLabel
+        Tag = 10
+        Left = 649
+        Top = 69
+        Width = 18
+        Height = 10
+        Caption = 'CEP'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clBlack
+        Font.Height = -8
+        Font.Name = 'Arial'
+        Font.Style = []
+        HoldStyle = hsRelatively
+        ParentFont = False
+      end
+      object rllDestCEP: TRLLabel
+        Left = 653
+        Top = 79
+        Width = 76
+        Height = 14
+        AutoSize = False
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clBlack
+        Font.Height = -12
+        Font.Name = 'Arial'
+        Font.Style = [fsBold]
+        ParentFont = False
+      end
+      object RLLabel13: TRLLabel
+        Tag = 10
+        Left = 597
+        Top = 99
+        Width = 89
+        Height = 10
+        Caption = 'INSCRI'#199#195'O ESTADUAL'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clBlack
+        Font.Height = -8
+        Font.Name = 'Arial'
+        Font.Style = []
+        HoldStyle = hsRelatively
+        ParentFont = False
+      end
+      object rllDestIE: TRLLabel
+        Left = 601
+        Top = 109
+        Width = 128
+        Height = 14
+        AutoSize = False
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clBlack
+        Font.Height = -12
+        Font.Name = 'Arial'
+        Font.Style = [fsBold]
+        ParentFont = False
+      end
+      object RLDraw10: TRLDraw
+        Left = 0
+        Top = 66
+        Width = 740
+        Height = 1
+        DrawKind = dkLine
+        Holder = RLDraw9
+        HoldStyle = hsRelatively
+      end
+      object RLDraw11: TRLDraw
+        Left = 0
+        Top = 96
+        Width = 740
+        Height = 1
+        DrawKind = dkLine
+        Holder = RLDraw9
+        HoldStyle = hsRelatively
+      end
+      object RLDraw12: TRLDraw
+        Left = 380
+        Top = 96
+        Width = 1
+        Height = 31
+        Angle = 90.000000000000000000
+        DrawKind = dkLine
+        HoldStyle = hsRelatively
+      end
+      object RLDraw23: TRLDraw
+        Left = 545
+        Top = 96
+        Width = 1
+        Height = 31
+        Angle = 90.000000000000000000
+        DrawKind = dkLine
+        HoldStyle = hsRelatively
+      end
+      object RLDraw13: TRLDraw
+        Left = 450
+        Top = 66
+        Width = 1
+        Height = 31
+        Angle = 90.000000000000000000
+        DrawKind = dkLine
+        HoldStyle = hsRelatively
+      end
+      object RLDraw14: TRLDraw
+        Left = 594
+        Top = 36
+        Width = 1
+        Height = 31
+        Angle = 90.000000000000000000
+        DrawKind = dkLine
+        HoldStyle = hsRelatively
+      end
+      object RLDraw18: TRLDraw
+        Left = 594
+        Top = 96
+        Width = 1
+        Height = 31
+        Angle = 90.000000000000000000
+        DrawKind = dkLine
+        HoldStyle = hsRelatively
+      end
+      object RLDraw25: TRLDraw
+        Left = 646
+        Top = 66
+        Width = 1
+        Height = 31
+        Angle = 90.000000000000000000
+        DrawKind = dkLine
+        HoldStyle = hsRelatively
+      end
+    end
+    object rlbEmitente: TRLBand
+      Left = 26
+      Top = 364
+      Width = 742
+      Height = 127
+      BandType = btTitle
+      object RLDraw26: TRLDraw
+        Left = 0
+        Top = 36
+        Width = 740
+        Height = 91
+      end
+      object RLLabel14: TRLLabel
+        Tag = 30
+        Left = 0
+        Top = 17
+        Width = 68
+        Height = 16
+        Caption = 'EMITENTE'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clBlack
+        Font.Height = -13
+        Font.Name = 'Arial'
+        Font.Style = [fsBold]
+        HoldStyle = hsRelatively
+        ParentFont = False
+      end
+      object RLLabel15: TRLLabel
+        Tag = 10
+        Left = 3
+        Top = 39
+        Width = 89
+        Height = 10
+        Caption = 'NOME / RAZ'#195'O SOCIAL'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clBlack
+        Font.Height = -8
+        Font.Name = 'Arial'
+        Font.Style = []
+        Holder = RLDraw26
+        HoldStyle = hsRelatively
+        ParentFont = False
+      end
+      object rllEmitNome: TRLLabel
+        Left = 7
+        Top = 49
+        Width = 578
+        Height = 14
+        AutoSize = False
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clBlack
+        Font.Height = -12
+        Font.Name = 'Arial'
+        Font.Style = [fsBold]
+        ParentFont = False
+      end
+      object RLLabel17: TRLLabel
+        Tag = 10
+        Left = 3
+        Top = 69
+        Width = 47
+        Height = 10
+        Caption = 'ENDERE'#199'O'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clBlack
+        Font.Height = -8
+        Font.Name = 'Arial'
+        Font.Style = []
+        Holder = RLDraw26
+        HoldStyle = hsRelatively
+        ParentFont = False
+      end
+      object rllEmitEndereco: TRLLabel
+        Left = 7
+        Top = 79
+        Width = 434
+        Height = 14
+        AutoSize = False
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clBlack
+        Font.Height = -12
+        Font.Name = 'Arial'
+        Font.Style = [fsBold]
+        ParentFont = False
+      end
+      object RLLabel22: TRLLabel
+        Tag = 10
+        Left = 3
+        Top = 99
+        Width = 44
+        Height = 10
+        Caption = 'MUNIC'#205'PIO'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clBlack
+        Font.Height = -8
+        Font.Name = 'Arial'
+        Font.Style = []
+        Holder = RLDraw26
+        HoldStyle = hsRelatively
+        ParentFont = False
+      end
+      object rllEmitCidade: TRLLabel
+        Left = 7
+        Top = 109
+        Width = 362
+        Height = 14
+        AutoSize = False
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clBlack
+        Font.Height = -12
+        Font.Name = 'Arial'
+        Font.Style = [fsBold]
+        ParentFont = False
+      end
+      object RLLabel24: TRLLabel
+        Tag = 10
+        Left = 383
+        Top = 99
+        Width = 45
+        Height = 10
+        Caption = 'FONE / FAX'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clBlack
+        Font.Height = -8
+        Font.Name = 'Arial'
+        Font.Style = []
+        HoldStyle = hsRelatively
+        ParentFont = False
+      end
+      object rllEmitFone: TRLLabel
+        Left = 387
+        Top = 109
+        Width = 146
+        Height = 14
+        AutoSize = False
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clBlack
+        Font.Height = -12
+        Font.Name = 'Arial'
+        Font.Style = [fsBold]
+        ParentFont = False
+      end
+      object RLLabel26: TRLLabel
+        Tag = 10
+        Left = 453
+        Top = 69
+        Width = 75
+        Height = 10
+        Caption = 'BAIRRO / DISTRITO'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clBlack
+        Font.Height = -8
+        Font.Name = 'Arial'
+        Font.Style = []
+        HoldStyle = hsRelatively
+        ParentFont = False
+      end
+      object rllEmitBairro: TRLLabel
+        Left = 457
+        Top = 79
+        Width = 184
+        Height = 14
+        AutoSize = False
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clBlack
+        Font.Height = -12
+        Font.Name = 'Arial'
+        Font.Style = [fsBold]
+        ParentFont = False
+      end
+      object RLLabel28: TRLLabel
+        Tag = 10
+        Left = 548
+        Top = 99
+        Width = 13
+        Height = 10
+        Caption = 'UF'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clBlack
+        Font.Height = -8
+        Font.Name = 'Arial'
+        Font.Style = []
+        HoldStyle = hsRelatively
+        ParentFont = False
+      end
+      object rllEmitUF: TRLLabel
+        Left = 552
+        Top = 109
+        Width = 38
+        Height = 14
+        AutoSize = False
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clBlack
+        Font.Height = -12
+        Font.Name = 'Arial'
+        Font.Style = [fsBold]
+        ParentFont = False
+      end
+      object RLLabel30: TRLLabel
+        Tag = 10
+        Left = 597
+        Top = 39
+        Width = 45
+        Height = 10
+        Caption = 'CNPJ / CPF'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clBlack
+        Font.Height = -8
+        Font.Name = 'Arial'
+        Font.Style = []
+        HoldStyle = hsRelatively
+        ParentFont = False
+      end
+      object rllEmitCNPJ: TRLLabel
+        Left = 601
+        Top = 49
+        Width = 128
+        Height = 14
+        AutoSize = False
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clBlack
+        Font.Height = -12
+        Font.Name = 'Arial'
+        Font.Style = [fsBold]
+        ParentFont = False
+      end
+      object RLLabel34: TRLLabel
+        Tag = 10
+        Left = 649
+        Top = 69
+        Width = 18
+        Height = 10
+        Caption = 'CEP'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clBlack
+        Font.Height = -8
+        Font.Name = 'Arial'
+        Font.Style = []
+        HoldStyle = hsRelatively
+        ParentFont = False
+      end
+      object rllEmitCEP: TRLLabel
+        Left = 653
+        Top = 79
+        Width = 76
+        Height = 14
+        AutoSize = False
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clBlack
+        Font.Height = -12
+        Font.Name = 'Arial'
+        Font.Style = [fsBold]
+        ParentFont = False
+      end
+      object RLLabel47: TRLLabel
+        Tag = 10
+        Left = 597
+        Top = 99
+        Width = 89
+        Height = 10
+        Caption = 'INSCRI'#199#195'O ESTADUAL'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clBlack
+        Font.Height = -8
+        Font.Name = 'Arial'
+        Font.Style = []
+        HoldStyle = hsRelatively
+        ParentFont = False
+      end
+      object rllEmitIE: TRLLabel
+        Left = 601
+        Top = 109
+        Width = 128
+        Height = 14
+        AutoSize = False
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clBlack
+        Font.Height = -12
+        Font.Name = 'Arial'
+        Font.Style = [fsBold]
+        ParentFont = False
+      end
+      object RLDraw27: TRLDraw
+        Left = 0
+        Top = 66
+        Width = 740
+        Height = 1
+        DrawKind = dkLine
+        Holder = RLDraw26
+        HoldStyle = hsRelatively
+      end
+      object RLDraw28: TRLDraw
+        Left = 0
+        Top = 96
+        Width = 740
+        Height = 1
+        DrawKind = dkLine
+        Holder = RLDraw26
+        HoldStyle = hsRelatively
+      end
+      object RLDraw33: TRLDraw
+        Left = 380
+        Top = 96
+        Width = 1
+        Height = 31
+        Angle = 90.000000000000000000
+        DrawKind = dkLine
+        HoldStyle = hsRelatively
+      end
+      object RLDraw34: TRLDraw
+        Left = 545
+        Top = 96
+        Width = 1
+        Height = 31
+        Angle = 90.000000000000000000
+        DrawKind = dkLine
+        HoldStyle = hsRelatively
+      end
+      object RLDraw35: TRLDraw
+        Left = 450
+        Top = 66
+        Width = 1
+        Height = 31
+        Angle = 90.000000000000000000
+        DrawKind = dkLine
+        HoldStyle = hsRelatively
+      end
+      object RLDraw36: TRLDraw
+        Left = 594
+        Top = 36
+        Width = 1
+        Height = 31
+        Angle = 90.000000000000000000
+        DrawKind = dkLine
+        HoldStyle = hsRelatively
+      end
+      object RLDraw38: TRLDraw
+        Left = 594
+        Top = 96
+        Width = 1
+        Height = 31
+        Angle = 90.000000000000000000
+        DrawKind = dkLine
+        HoldStyle = hsRelatively
+      end
+      object RLDraw39: TRLDraw
+        Left = 646
+        Top = 66
+        Width = 1
+        Height = 31
+        Angle = 90.000000000000000000
+        DrawKind = dkLine
+        HoldStyle = hsRelatively
       end
     end
   end

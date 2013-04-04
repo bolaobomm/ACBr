@@ -654,6 +654,7 @@ type
     procedure rlbEmitenteAfterPrint(Sender: TObject);
     procedure rlbCabecalhoItensBeforePrint(Sender: TObject;
       var PrintIt: Boolean);
+    procedure FormCreate(Sender: TObject);
   private
     FRecebemoDe : string;
     procedure InitDados;
@@ -669,12 +670,7 @@ type
     procedure Itens;
     procedure ISSQN;
     procedure AddFatura;
-    function BuscaDireita(Busca, Text: String): Integer;
-    function FormatarCEP(AValue: String): String;
-    function FormatarFone(AValue: String): String;
-    procedure InsereLinhas(sTexto: String; iLimCaracteres: Integer; rMemo: TRLMemo);
     procedure ConfigureDataSource;
-    procedure GeraDetalhamentoEspecifico;
   public
 
   end;
@@ -683,123 +679,12 @@ implementation
 
 uses ACBrNFeUtil, ACBrDFeUtil, pcnNFe, Math;
 
-var iLimiteLinhas: Integer = 10;
-iLinhasUtilizadas: Integer = 0;
-iLimiteCaracteresLinha: Integer = 81;
-iLimiteCaracteresContinuacao: Integer = 129;
+var
 q, iQuantItens, iItemAtual: Integer;
 sRetirada, sEntrega: WideString;
 
 
 {$R *.dfm}
-
-function TfrlDANFeRLRetrato.BuscaDireita(Busca, Text: String): Integer;
-{Pesquisa um caractere à direita da string, retornando sua posição}
-var n, retorno: integer;
-begin
-  retorno := 0;
-    for n := length(Text) downto 1 do
-      begin
-        if Copy(Text, n, 1) = Busca then
-          begin
-            retorno := n;
-            break;
-         end;
-      end;
-  Result := retorno;
-end;
-
-{Função original de ACBrNFeUtil modificada para exibir em outro formato}
-function TfrlDANFeRLRetrato.FormatarCEP(AValue: String): String;
-var i, iZeros: Integer;
-sCep: String;
-begin
-  if Length(AValue) <= 8 then
-    begin
-      iZeros := 8 - Length(AValue);
-      sCep := AValue;
-      For i := 1 to iZeros do
-        begin
-          sCep := '0' + sCep;
-        end;
-      Result := copy(sCep,1,5) + '-' + copy(sCep,6,3);
-    end
-  else
-    Result := copy(AValue,1,5) + '-' + copy(AValue,6,3);
-end;
-
-{Função original de ACBrNFeUtil modificada para exibir em outro formato}
-function TfrlDANFeRLRetrato.FormatarFone(AValue: String): String;
-begin
-  Result := AValue;
-  if DFeUtil.NaoEstaVazio(AValue) then
-  begin
-    if Length(DFeUtil.LimpaNumero(AValue)) > 10 then AValue := copy(DFeUtil.LimpaNumero(AValue),2,10); //Casos em que o DDD vem com ZERO antes somando 3 digitos
-
-    AValue := DFeUtil.Poem_Zeros(DFeUtil.LimpaNumero(AValue), 10);
-    Result := '('+copy(AValue,1,2) + ') ' + copy(AValue,3,4) + '-' + copy(AValue,7,4);
-  end;
-end;
-
-procedure TfrlDANFeRLRetrato.InsereLinhas(sTexto: String; iLimCaracteres: Integer;
-                                                                 rMemo: TRLMemo);
-var iTotalLinhas, iUltimoEspacoLinha, iPosAtual, iQuantCaracteres, i: Integer;
-    sLinhaProvisoria, sLinha: String;
-begin
-  iPosAtual := 1;
-  iQuantCaracteres := Length(sTexto);
-  if iQuantCaracteres <= iLimiteLinhas then
-    iTotalLinhas := 1
-  else
-    begin
-      if (iQuantCaracteres mod iLimCaracteres) > 0 then
-        iTotalLinhas := (iQuantCaracteres div iLimCaracteres) + 1
-      else
-        iTotalLinhas := iQuantCaracteres div iLimCaracteres;
-    end;
-
-  for i := 1 to (iTotalLinhas + 10) do
-    begin
-      sLinhaProvisoria := Copy(sTexto, iPosAtual, iLimCaracteres);
-      iUltimoEspacoLinha := BuscaDireita(' ', sLinhaProvisoria);
-
-      if iUltimoEspacoLinha = 0 then
-        iUltimoEspacoLinha := iQuantCaracteres;
-
-      if Pos(';', sLinhaProvisoria) = 0 then
-        begin
-          if (BuscaDireita(' ', sLinhaProvisoria) = iLimCaracteres)  or
-             (BuscaDireita(' ', sLinhaProvisoria) = (iLimCaracteres + 1)) then
-            sLinha := sLinhaProvisoria
-          else
-            begin
-              if (iQuantCaracteres - iPosAtual) > iLimCaracteres then
-                sLinha := Copy(sLinhaProvisoria, 1, iUltimoEspacoLinha)
-              else
-                begin
-                  sLinha := sLinhaProvisoria;
-                end;
-            end;
-          iPosAtual := iPosAtual + Length(sLinha);
-        end // if Pos(';', sLinhaProvisoria) = 0
-      else
-        begin
-          sLinha := Copy(sLinhaProvisoria, 1, Pos(';', sLinhaProvisoria));
-          iPosAtual := iPosAtual + (Length(sLinha));
-        end;
-
-      if sLinha > '' then
-        begin
-          if LeftStr(sLinha, 1) = ' ' then
-            sLinha := Copy(sLinha, 2, (Length(sLinha) - 1))
-          else
-            sLinha := sLinha;
-
-          rMemo.Lines.Add(sLinha);
-        end;
-
-    end;
-end;
 
 procedure TfrlDANFeRLRetrato.RLNFeBeforePrint(Sender: TObject;
   var PrintIt: Boolean);
@@ -2333,11 +2218,6 @@ begin
   self.txtValorDesconto.DataSource := DataSource1;
 end;
 
-procedure TfrlDANFeRLRetrato.GeraDetalhamentoEspecifico;
-begin
-
-end;
-
 procedure TfrlDANFeRLRetrato.rlbCabecalhoItensBeforePrint(Sender: TObject;
   var PrintIt: Boolean);
 begin
@@ -2345,6 +2225,16 @@ begin
     lblPercValorDesc.Caption := 'PERC.(%)'
   else
     lblPercValorDesc.Caption := 'VALOR';
+end;
+
+procedure TfrlDANFeRLRetrato.FormCreate(Sender: TObject);
+begin
+  inherited;
+
+  iLimiteLinhas := 10;
+  iLinhasUtilizadas := 0;
+  iLimiteCaracteresLinha := 81;
+  iLimiteCaracteresContinuacao := 129;
 end;
 
 end.

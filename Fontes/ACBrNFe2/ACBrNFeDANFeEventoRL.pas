@@ -52,57 +52,57 @@ uses
   {$ELSE}
   Windows, Messages, Graphics, Controls, Forms, Dialogs, ExtCtrls,
   {$ENDIF}
-  RLReport, RLPDFFilter, RLConsts,
-  pcnEnvEventoNFe, pcnConversao,
-  ACBrNFe, ACBrNFeDANFeRL, RLFilters, RLPrinters,
-  DB, MaskUtils, {$IFDEF BORLAND} DBClient{$ELSE} BufDataset{$ENDIF};
+  pcnEnvEventoNFe, pcnConversao, pcnNFe, ACBrNFeDANFeRL, ACBrDFeUtil,
+  RLReport, RLPDFFilter, RLConsts, RLFilters, RLPrinters;
 
 type
   TfrlDANFeEventoRL = class(TForm)
     RLEvento: TRLReport;
     RLPDFFilter1: TRLPDFFilter;
+    function FormatarCEP(AValue: String): String;
+    function FormatarFone(AValue: String): String;
+
   private
     { Private declarations }
   protected
-    FACBrNFe: TACBrNFe;
-    FEventoNFe: TEventoNFe;
+    FNFe: TNFe;
+    FEventoNFe: TInfEventoCollectionItem;
     FLogo: String;
     FMarcaDagua: String;
     FNumCopias: Integer;
     FSsitema: String;
     FUsuario: String;
     FMostrarPreview: Boolean;
-    FFonteDANFEEvento: TFonteDANFE;
+    FFonteDANFE: TFonteDANFE;
     FMargemSuperior: Double;
     FMargemInferior: Double;
     FMargemEsquerda: Double;
     FMargemDireita: Double;
     FImpressora: String;
-    FItemAtual: Integer;
 
   public
     { Public declarations }
-    class procedure Imprimir(AEventoNFe: TEventoNFe; ALogo: String = '';
+    class procedure Imprimir(AEventoNFe: TInfEventoCollectionItem; ALogo: String = '';
                     AMarcaDagua: String = ''; ANumCopias: Integer = 1;
                     ASistema: String = ''; AUsuario: String = '';
                     AMostrarPreview: Boolean = True;
-                    AFonteDANFEEvento: TFonteDANFE = fdTimesNewRoman;
+                    AFonteDANFE: TFonteDANFE = fdTimesNewRoman;
                     AMargemSuperior: Double = 0.7;
                     AMargemInferior: Double = 0.7;
                     AMargemEsquerda: Double = 0.7;
                     AMargemDireita: Double = 0.7;
                     AImpressora: String = '';
-                    AItemAtual: Integer = 0);
+                    ANFe: TNFe = nil);
 
-    class procedure SavePDF(AEventoNFe: TEventoNFe; ALogo: String = '';
+    class procedure SavePDF(AEventoNFe: TInfEventoCollectionItem; ALogo: String = '';
                     AMarcaDagua: String = ''; AFile: String = '';
                     ASistema: String = ''; AUsuario: String = '';
-                    AFonteDANFEEvento: TFonteDANFE = fdTimesNewRoman;
+                    AFonteDANFE: TFonteDANFE = fdTimesNewRoman;
                     AMargemSuperior: Double = 0.7;
                     AMargemInferior: Double = 0.7;
                     AMargemEsquerda: Double = 0.7;
                     AMargemDireita: Double = 0.7;
-                    AItemAtual: Integer = 0);
+                    ANFe: TNFe = nil);
   end;
 
 implementation
@@ -110,17 +110,17 @@ implementation
 
 {$R *.dfm}
 
-class procedure TfrlDANFeEventoRL.Imprimir(AEventoNFe: TEventoNFe; ALogo: String = '';
+class procedure TfrlDANFeEventoRL.Imprimir(AEventoNFe: TInfEventoCollectionItem; ALogo: String = '';
                     AMarcaDagua: String = ''; ANumCopias: Integer = 1;
                     ASistema: String = ''; AUsuario: String = '';
                     AMostrarPreview: Boolean = True;
-                    AFonteDANFEEvento: TFonteDANFE = fdTimesNewRoman;
+                    AFonteDANFE: TFonteDANFE = fdTimesNewRoman;
                     AMargemSuperior: Double = 0.7;
                     AMargemInferior: Double = 0.7;
                     AMargemEsquerda: Double = 0.7;
                     AMargemDireita: Double = 0.7;
                     AImpressora: String = '';
-                    AItemAtual: Integer = 0);
+                    ANFe: TNFe = nil);
 
 begin
   with Create ( nil ) do
@@ -132,13 +132,15 @@ begin
       FSsitema := ASistema;
       FUsuario := AUsuario;
       FMostrarPreview := AMostrarPreview;
-      FFonteDANFEEvento := AFonteDANFEEvento;
+      FFonteDANFE := AFonteDANFE;
       FMargemSuperior := AMargemSuperior;
       FMargemInferior := AMargemInferior;
       FMargemEsquerda := AMargemEsquerda;
       FMargemDireita := AMargemDireita;
       FImpressora := AImpressora;
-      FItemAtual := AItemAtual;
+
+      if ANFe <> nil then
+        FNFe := ANFe;
 
       if FImpressora > '' then
         RLPrinter.PrinterName := FImpressora;
@@ -158,15 +160,15 @@ begin
     end ;
 end;
 
-class procedure TfrlDANFeEventoRL.SavePDF(AEventoNFe: TEventoNFe; ALogo: String = '';
+class procedure TfrlDANFeEventoRL.SavePDF(AEventoNFe: TInfEventoCollectionItem; ALogo: String = '';
                     AMarcaDagua: String = ''; AFile: String = '';
                     ASistema: String = ''; AUsuario: String = '';
-                    AFonteDANFEEvento: TFonteDANFE = fdTimesNewRoman;
+                    AFonteDANFE: TFonteDANFE = fdTimesNewRoman;
                     AMargemSuperior: Double = 0.7;
                     AMargemInferior: Double = 0.7;
                     AMargemEsquerda: Double = 0.7;
                     AMargemDireita: Double = 0.7;
-                    AItemAtual: Integer = 0);
+                    ANFe: TNFe = nil);
 
 begin
   with Create ( nil ) do
@@ -176,18 +178,52 @@ begin
       FMarcaDagua := AMarcaDagua;
       FSsitema := ASistema;
       FUsuario := AUsuario;
-      FFonteDANFEEvento := AFonteDANFEEvento;
+      FFonteDANFE := AFonteDANFE;
       FMargemSuperior := AMargemSuperior;
       FMargemInferior := AMargemInferior;
       FMargemEsquerda := AMargemEsquerda;
       FMargemDireita := AMargemDireita;
-      FItemAtual := AItemAtual;
+
+      if ANFe <> nil then
+        FNFe := ANFe;
 
       RLEvento.SaveToFile(AFile);
 
     finally
       Free ;
     end ;
+end;
+
+{Função original de ACBrNFeUtil modificada para exibir em outro formato}
+function TfrlDANFeEventoRL.FormatarCEP(AValue: String): String;
+var i, iZeros: Integer;
+sCep: String;
+begin
+  if Length(AValue) <= 8 then
+    begin
+      iZeros := 8 - Length(AValue);
+      sCep := AValue;
+      For i := 1 to iZeros do
+        begin
+          sCep := '0' + sCep;
+        end;
+      Result := copy(sCep,1,5) + '-' + copy(sCep,6,3);
+    end
+  else
+    Result := copy(AValue,1,5) + '-' + copy(AValue,6,3);
+end;
+
+{Função original de ACBrNFeUtil modificada para exibir em outro formato}
+function TfrlDANFeEventoRL.FormatarFone(AValue: String): String;
+begin
+  Result := AValue;
+  if DFeUtil.NaoEstaVazio(AValue) then
+  begin
+    if Length(DFeUtil.LimpaNumero(AValue)) > 10 then AValue := copy(DFeUtil.LimpaNumero(AValue),2,10); //Casos em que o DDD vem com ZERO antes somando 3 digitos
+
+    AValue := DFeUtil.Poem_Zeros(DFeUtil.LimpaNumero(AValue), 10);
+    Result := '('+copy(AValue,1,2) + ') ' + copy(AValue,3,4) + '-' + copy(AValue,7,4);
+  end;
 end;
 
 end.

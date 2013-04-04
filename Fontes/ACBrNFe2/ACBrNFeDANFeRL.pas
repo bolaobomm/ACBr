@@ -101,15 +101,16 @@ unit ACBrNFeDANFeRL;
 interface
 
 uses
-  SysUtils, Variants, Classes,
+  SysUtils, Variants, Classes, StrUtils,
   {$IFDEF CLX}
   QGraphics, QControls, QForms, QDialogs, QExtCtrls, Qt,
   {$ELSE}
   Windows, Messages, Graphics, Controls, Forms, Dialogs, ExtCtrls,
   {$ENDIF}
-  RLReport, pcnNFe, pcnConversao, ACBrNFe, RLFilters, MaskUtils, RLPrinters,
-  RLPDFFilter, DB, {$IFDEF BORLAND} DBClient{$ELSE} BufDataset{$ENDIF}, RLConsts;
-    
+  MaskUtils, pcnNFe, pcnConversao, ACBrNFe, ACBrDFeUtil,
+  RLReport, RLFilters, RLPrinters, RLPDFFilter, RLConsts,
+  {$IFDEF BORLAND} DBClient, {$ELSE} BufDataset, {$ENDIF} DB;
+
 type
   TPosCanhoto = (pcCabecalho, pcRodape);
   TFonteDANFE = (fdTimesNewRoman, fdCourierNew, fdArial);
@@ -134,6 +135,11 @@ type
     DataSource1: TDataSource;
     procedure FormDestroy(Sender: TObject);
     procedure FormCreate(Sender: TObject);
+    function BuscaDireita(Busca, Text: String): Integer;
+    function FormatarCEP(AValue: String): String;
+    function FormatarFone(AValue: String): String;
+    procedure InsereLinhas(sTexto: String; iLimCaracteres: Integer; rMemo: TRLMemo);
+
   private
 
     { Private declarations }
@@ -244,8 +250,11 @@ type
    const
     sDisplayFormat = '###,###,###,##0.%.*d';
 
-implementation
+var
+  iLimiteLinhas, iLinhasUtilizadas, iLimiteCaracteresLinha,
+  iLimiteCaracteresContinuacao: Integer;
 
+implementation
 
 {$R *.dfm}
 
@@ -514,6 +523,117 @@ procedure TfrlDANFeRL.FormCreate(Sender: TObject);
 begin
   ConfigDataSet;
 end;
+
+function TfrlDANFeRL.BuscaDireita(Busca, Text: String): Integer;
+{Pesquisa um caractere à direita da string, retornando sua posição}
+var n, retorno: integer;
+begin
+  retorno := 0;
+    for n := length(Text) downto 1 do
+      begin
+        if Copy(Text, n, 1) = Busca then
+          begin
+            retorno := n;
+            break;
+         end;
+      end;
+  Result := retorno;
+end;
+
+{Função original de ACBrNFeUtil modificada para exibir em outro formato}
+function TfrlDANFeRL.FormatarCEP(AValue: String): String;
+var i, iZeros: Integer;
+sCep: String;
+begin
+  if Length(AValue) <= 8 then
+    begin
+      iZeros := 8 - Length(AValue);
+      sCep := AValue;
+      For i := 1 to iZeros do
+        begin
+          sCep := '0' + sCep;
+        end;
+      Result := copy(sCep,1,5) + '-' + copy(sCep,6,3);
+    end
+  else
+    Result := copy(AValue,1,5) + '-' + copy(AValue,6,3);
+end;
+
+{Função original de ACBrNFeUtil modificada para exibir em outro formato}
+function TfrlDANFeRL.FormatarFone(AValue: String): String;
+begin
+  Result := AValue;
+  if DFeUtil.NaoEstaVazio(AValue) then
+  begin
+    if Length(DFeUtil.LimpaNumero(AValue)) > 10 then AValue := copy(DFeUtil.LimpaNumero(AValue),2,10); //Casos em que o DDD vem com ZERO antes somando 3 digitos
+
+    AValue := DFeUtil.Poem_Zeros(DFeUtil.LimpaNumero(AValue), 10);
+    Result := '('+copy(AValue,1,2) + ') ' + copy(AValue,3,4) + '-' + copy(AValue,7,4);
+  end;
+end;
+
+procedure TfrlDANFeRL.InsereLinhas(sTexto: String; iLimCaracteres: Integer;
+                                                                 rMemo: TRLMemo);
+var iTotalLinhas, iUltimoEspacoLinha, iPosAtual, iQuantCaracteres, i: Integer;
+    sLinhaProvisoria, sLinha: String;
+begin
+  iPosAtual := 1;
+  iQuantCaracteres := Length(sTexto);
+  if iQuantCaracteres <= iLimiteLinhas then
+    iTotalLinhas := 1
+  else
+    begin
+      if (iQuantCaracteres mod iLimCaracteres) > 0 then
+        iTotalLinhas := (iQuantCaracteres div iLimCaracteres) + 1
+      else
+        iTotalLinhas := iQuantCaracteres div iLimCaracteres;
+    end;
+
+  for i := 1 to (iTotalLinhas + 10) do
+    begin
+      sLinhaProvisoria := Copy(sTexto, iPosAtual, iLimCaracteres);
+      iUltimoEspacoLinha := BuscaDireita(' ', sLinhaProvisoria);
+
+      if iUltimoEspacoLinha = 0 then
+        iUltimoEspacoLinha := iQuantCaracteres;
+
+      if Pos(';', sLinhaProvisoria) = 0 then
+        begin
+          if (BuscaDireita(' ', sLinhaProvisoria) = iLimCaracteres)  or
+             (BuscaDireita(' ', sLinhaProvisoria) = (iLimCaracteres + 1)) then
+            sLinha := sLinhaProvisoria
+          else
+            begin
+              if (iQuantCaracteres - iPosAtual) > iLimCaracteres then
+                sLinha := Copy(sLinhaProvisoria, 1, iUltimoEspacoLinha)
+              else
+                begin
+                  sLinha := sLinhaProvisoria;
+                end;
+            end;
+          iPosAtual := iPosAtual + Length(sLinha);
+        end // if Pos(';', sLinhaProvisoria) = 0
+      else
+        begin
+          sLinha := Copy(sLinhaProvisoria, 1, Pos(';', sLinhaProvisoria));
+          iPosAtual := iPosAtual + (Length(sLinha));
+        end;
+
+      if sLinha > '' then
+        begin
+          if LeftStr(sLinha, 1) = ' ' then
+            sLinha := Copy(sLinha, 2, (Length(sLinha) - 1))
+          else
+            sLinha := sLinha;
+
+          rMemo.Lines.Add(sLinha);
+        end;
+
+    end;
+end;
+
+// Descomentar este comando quando aparecer a mensagem do Fortes sobre
+// versão diferente
 
 {initialization
 RLConsts.SetVersion(3,71,'B');}

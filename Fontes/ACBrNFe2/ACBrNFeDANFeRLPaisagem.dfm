@@ -1,6 +1,6 @@
 inherited frlDANFeRLPaisagem: TfrlDANFeRLPaisagem
-  Left = 191
-  Top = 113
+  Left = 205
+  Top = 114
   Width = 1149
   Height = 732
   Caption = 'frlDANFeRLPaisagem'
@@ -777,7 +777,6 @@ inherited frlDANFeRLPaisagem: TfrlDANFeRLPaisagem
       Height = 158
       AutoExpand = False
       BandType = btHeader
-      AfterPrint = rlbEmitenteAfterPrint
       BeforePrint = rlbEmitenteBeforePrint
       object rliEmitente: TRLDraw
         Left = 0
@@ -3959,7 +3958,6 @@ inherited frlDANFeRLPaisagem: TfrlDANFeRLPaisagem
       Height = 13
       Background.Height = 487
       Background.Width = 865
-      Options = [boOptimisticPageBreak]
       AfterPrint = rlbItensAfterPrint
       BeforePrint = rlbItensBeforePrint
       object pnlDescricao1: TRLPanel
@@ -3968,6 +3966,9 @@ inherited frlDANFeRLPaisagem: TfrlDANFeRLPaisagem
         Width = 399
         Height = 13
         Align = faLeftMost
+        Color = clWhite
+        ParentColor = False
+        Transparent = False
         AfterPrint = pnlDescricao1AfterPrint
         object txtCodigo: TRLDBText
           Left = 2
@@ -4697,7 +4698,7 @@ inherited frlDANFeRLPaisagem: TfrlDANFeRLPaisagem
       end
     end
     object rlmDadosAdicionaisAuxiliar: TRLMemo
-      Left = 64
+      Left = 136
       Top = 704
       Width = 681
       Height = 12
@@ -4943,10 +4944,10 @@ inherited frlDANFeRLPaisagem: TfrlDANFeRLPaisagem
   end
   inherited RLPDFFilter1: TRLPDFFilter
     Left = 1024
-    Top = 37
+    Top = 34
   end
   inherited DataSource1: TDataSource
     Left = 1056
-    Top = 37
+    Top = 34
   end
 end
