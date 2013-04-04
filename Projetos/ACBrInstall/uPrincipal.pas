@@ -1182,7 +1182,7 @@ end;
 procedure TfrmPrincipal.wizPgConfiguracaoNextButtonClick(Sender: TObject;
   var Stop: Boolean);
 begin
-  if Pos(oACBr.Installations[iVersion].VersionNumberStr, 'd3, d4, d5, d6') > 0 then
+  if Pos(oACBr.Installations[iVersion].VersionNumberStr, 'd3, d4, d5') > 0 then
   begin
     Stop := True;
     edtDelphiVersion.SetFocus;
