@@ -296,6 +296,7 @@ begin
                   FFonteDANFE, FMargemSuperior, FMargemInferior, FMargemEsquerda,
                   FMargemDireita, FImpressora,
                   TACBrNFe(ACBrNFe).NotasFiscais.Items[j].NFe);
+                  Break;
                 end
               else
                 begin
@@ -303,6 +304,7 @@ begin
                   FLogo, FMarcadagua, FNumCopias, FSistema, FUsuario, FMostrarPreview,
                   FFonteDANFE, FMargemSuperior, FMargemInferior, FMargemEsquerda,
                   FMargemDireita, FImpressora);
+                  Break;
                 end;
             end;
         end;
