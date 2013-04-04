@@ -334,7 +334,7 @@ begin
       for i := 0 to (TACBrNFe(ACBrNFe).EventoNFe.Evento.Count - 1) do
         begin
           sFile := TACBrNFe(ACBrNFe).DANFE.PathPDF +
-          Copy(TACBrNFe(ACBrNFe).EventoNFe.Evento.Items[i].InfEvento.id, 3, 52) + '.pdf';
+          Copy(TACBrNFe(ACBrNFe).EventoNFe.Evento.Items[i].InfEvento.id, 3, 52) + 'evento.pdf';
 
           for j := 0 to (TACBrNFe(ACBrNFe).NotasFiscais.Count - 1) do
             begin
@@ -359,7 +359,7 @@ begin
       for i := 0 to (TACBrNFe(ACBrNFe).EventoNFe.Evento.Count - 1) do
         begin
           sFile := TACBrNFe(ACBrNFe).DANFE.PathPDF +
-          Copy(TACBrNFe(ACBrNFe).EventoNFe.Evento.Items[i].InfEvento.id, 3, 52) + '.pdf';
+          Copy(TACBrNFe(ACBrNFe).EventoNFe.Evento.Items[i].InfEvento.id, 3, 52) + 'evento.pdf';
 
           frlDANFeEventoRL.SavePDF(TACBrNFe(ACBrNFe).EventoNFe.Evento.Items[i],
           FLogo, FMarcadagua, sFile, FSistema, FUsuario, FFonteDANFE,
