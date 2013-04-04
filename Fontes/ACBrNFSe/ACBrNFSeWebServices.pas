@@ -10,7 +10,7 @@ uses
   {$ELSE}
     StrUtils,
   {$ENDIF}
-    Classes, SysUtils, strutils,
+    Classes, SysUtils, 
   {$IFDEF CLX}
     QDialogs,
   {$ELSE}
