@@ -277,7 +277,7 @@ begin
      intP := intP * 10;
   end;
 
-  if strCurMascara <> '#' then
+  if (strCurMascara <> '#') and (strCurMascara <> '') then
      Result := FDelimitador + FormatCurr(strCurMascara, Value)
   else
      Result := LFill(Trunc(Value * intP), Size, Nulo, Caracter);
