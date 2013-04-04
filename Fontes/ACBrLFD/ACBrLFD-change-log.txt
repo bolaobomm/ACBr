@@ -47,6 +47,10 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+Data 04/04/2013
+[+] Alterado o ACBrLFD.pas para inserir a imagem ao componente no lazarus
+	(Juliomar Marchetti)
+
 Data 01/04/2013
 [-] Alterado propriedades do tipo  TDate para TDatetime para que o componente possa
     ser compilado corretamente no Delphi7. (Isaque Pinheiro)

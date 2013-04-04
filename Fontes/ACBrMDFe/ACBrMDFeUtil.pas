@@ -383,23 +383,23 @@ var
 begin
  Tipo := MDFeUtil.IdentificaTipoSchema(AXML, I);
 
- if not DirectoryExists(MDFeUtil.SeSenao(MDFeUtil.EstaVazio(APathSchemas),
+ if not DirectoryExists(DFeUtil.SeSenao(DFeUtil.EstaVazio(APathSchemas),
                  PathWithDelim(ExtractFileDir(application.ExeName))+'Schemas',
                  PathWithDelim(APathSchemas))) then
     raise Exception.Create('Diretório de Schemas não encontrado'+sLineBreak+
-                           MDFeUtil.SeSenao(MDFeUtil.EstaVazio(APathSchemas),
+                           DFeUtil.SeSenao(DFeUtil.EstaVazio(APathSchemas),
                            PathWithDelim(ExtractFileDir(application.ExeName))+
                            'Schemas',PathWithDelim(APathSchemas)));
 
  case Tipo of
   1: begin
-      if MDFeUtil.EstaVazio(APathSchemas)
+      if DFeUtil.EstaVazio(APathSchemas)
        then schema_filename := pchar(PathWithDelim(ExtractFileDir(application.ExeName))+'Schemas\MDFe_v' + MDFeEnviMDFe + '.xsd')
        else schema_filename := pchar(PathWithDelim(APathSchemas)+'MDFe_v' + MDFeEnviMDFe + '.xsd');
      end;
   2,3:
      begin
-      if MDFeUtil.EstaVazio(APathSchemas) then
+      if DFeUtil.EstaVazio(APathSchemas) then
         schema_filename := pchar(PathWithDelim(ExtractFileDir(application.ExeName))+'Schemas\eventoMDFe_v' + MDFeEventoMDFe + '.xsd')
        else
         schema_filename := pchar(PathWithDelim(APathSchemas)+'eventoMDFe_v' + MDFeEventoMDFe + '.xsd');
@@ -763,13 +763,13 @@ begin
 
   if I = 0 then
     raise Exception.Create('Não encontrei inicio do URI: <infMDFe');
-  I := MDFeUtil.PosEx('Id=', AStr, I + 6);
+  I := DFeUtil.PosEx('Id=', AStr, I + 6);
   if I = 0 then
     raise Exception.Create('Não encontrei inicio do URI: Id=');
-  I := MDFeUtil.PosEx('"', AStr, I + 2);
+  I := DFeUtil.PosEx('"', AStr, I + 2);
   if I = 0 then
     raise Exception.Create('Não encontrei inicio do URI: aspas inicial');
-  J := MDFeUtil.PosEx('"', AStr, I + 1);
+  J := DFeUtil.PosEx('"', AStr, I + 1);
   if J = 0 then
     raise Exception.Create('Não encontrei inicio do URI: aspas final');
 
@@ -779,10 +779,10 @@ begin
   I := pos('?>', AStr);
 
   case Tipo of
-    1: AStr := Copy(AStr,1,StrToInt(VarToStr(NotaUtil.SeSenao(I>0,I+1,I)))) + cDTD +
-               Copy(AStr,StrToInt(VarToStr(NotaUtil.SeSenao(I>0,I+2,I))),Length(AStr));
-    2,3: AStr := Copy(AStr,1,StrToInt(VarToStr(NotaUtil.SeSenao(I>0,I+1,I)))) + cDTDEven +
-                 Copy(AStr,StrToInt(VarToStr(NotaUtil.SeSenao(I>0,I+2,I))),Length(AStr));
+    1: AStr := Copy(AStr,1,StrToInt(VarToStr(DFeUtil.SeSenao(I>0,I+1,I)))) + cDTD +
+               Copy(AStr,StrToInt(VarToStr(DFeUtil.SeSenao(I>0,I+2,I))),Length(AStr));
+    2,3: AStr := Copy(AStr,1,StrToInt(VarToStr(DFeUtil.SeSenao(I>0,I+1,I)))) + cDTDEven +
+                 Copy(AStr,StrToInt(VarToStr(DFeUtil.SeSenao(I>0,I+2,I))),Length(AStr));
     else AStr := '';
   end;
 
@@ -849,7 +849,7 @@ begin
   end;
 
   PosIni := Pos('<X509Certificate>', XmlAss) - 1;
-  PosFim := MDFeUtil.PosLast('<X509Certificate>', XmlAss);
+  PosFim := DFeUtil.PosLast('<X509Certificate>', XmlAss);
 
   XmlAss := copy(XmlAss, 1, PosIni) + copy(XmlAss, PosFim, length(XmlAss));
 

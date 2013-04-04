@@ -6,11 +6,11 @@ interface
 
 uses
   {$IFDEF FPC}
-    LResources, Controls, Graphics, Dialogs,
+    LResources, Controls, Graphics,
   {$ELSE}
     StrUtils,
   {$ENDIF}
-    Classes, SysUtils,
+    Classes, SysUtils, strutils,
   {$IFDEF CLX}
     QDialogs,
   {$ELSE}

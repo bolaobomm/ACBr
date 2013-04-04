@@ -186,7 +186,7 @@ end;
 initialization
 
 {$IFDEF FPC}
-//   {$i acbrMDFepcn_lcl.lrs}
+   {$I ACBrMDFe.lrs}
 {$ENDIF}
 
 end.

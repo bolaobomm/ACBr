@@ -43,11 +43,11 @@ interface
 uses
   Classes, Sysutils, Dialogs, Forms,
   ACBrMDFeUtil, ACBrMDFeConfiguracoes,
-  {$IFDEF FPC}
-     ACBrMDFeDMLaz,
-  {$ELSE}
+  //{$IFDEF FPC}
+     //ACBrMDFeDMLaz,
+  //{$ELSE}
      ACBrMDFeDAMDFeClass,
-  {$ENDIF}
+  //{$ENDIF}
   smtpsend, ssl_openssl, mimemess, mimepart, // units para enviar email
   pcnConversao, pcnAuxiliar, pcnLeitor,
   pmdfeMDFe, pmdfeMDFeR, pmdfeMDFeW;
@@ -147,7 +147,7 @@ type
 implementation
 
 uses
-  ACBrMDFe, ACBrUtil, ACBrDFeUtil, pcnGerador;
+   ACBrUtil, ACBrDFeUtil, pcnGerador,ACBrMDFe;
 
 { Manifesto }
 
@@ -372,7 +372,7 @@ begin
 {$IFDEF ACBrMDFeOpenSSL}
         if not(MDFeUtil.Assinar(LocMDFeW.Gerador.ArquivoFormatoXML, FConfiguracoes.Certificados.Certificado , FConfiguracoes.Certificados.Senha, vAssinada, FMsg)) then
            raise Exception.Create('Falha ao assinar Manifesto Eletrônico de Documentos Fiscais '+
-                                   IntToStr(Self.Items[i].MDFe.Ide.cCT)+FMsg);
+                                   IntToStr(Self.Items[i].MDFe.Ide.cMDF)+FMsg);
 {$ELSE}
         if not(MDFeUtil.Assinar(LocMDFeW.Gerador.ArquivoFormatoXML, FConfiguracoes.Certificados.GetCertificado , vAssinada, FMsg)) then
            raise Exception.Create('Falha ao assinar Manifesto Eletrônico de Documentos Fiscais '+

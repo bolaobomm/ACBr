@@ -2670,7 +2670,7 @@ end;
 {$IFNDEF Framework}
 {$IFDEF FPC}
 initialization
-  // {$I ACBrLFD.lrs}
+   {$I ACBrLFD.lrs}
 {$ENDIF}
 {$ENDIF}
 

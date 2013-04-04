@@ -514,7 +514,7 @@ begin
   EventoMDFe.GerarXML;
 
   {$IFDEF ACBrMDFeOpenSSL}
-  if not(NotaUtil.Assinar(EventoMDFe.Gerador.ArquivoFormatoXML, TConfiguracoes(FConfiguracoes).Certificados.Certificado , TConfiguracoes(FConfiguracoes).Certificados.Senha, FDadosMsg, FMsg)) then
+  if not(MDFeUtil.Assinar(EventoMDFe.Gerador.ArquivoFormatoXML, TConfiguracoes(FConfiguracoes).Certificados.Certificado , TConfiguracoes(FConfiguracoes).Certificados.Senha, FDadosMsg, FMsg)) then
      begin
        if Assigned(TACBrMDFe( FACBrMDFe ).OnGerarLog) then
           TACBrMDFe( FACBrMDFe ).OnGerarLog('Falha ao assinar o Envio de Evento '+LineBreak+FMsg);
