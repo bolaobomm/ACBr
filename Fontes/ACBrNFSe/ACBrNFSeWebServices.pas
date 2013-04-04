@@ -7,9 +7,8 @@ interface
 uses
   {$IFDEF FPC}
     LResources, Controls, Graphics,
-  {$ELSE}
-    StrUtils,
   {$ENDIF}
+    StrUtils,
     Classes, SysUtils, 
   {$IFDEF CLX}
     QDialogs,
