@@ -485,7 +485,11 @@ begin
 
     SL.LoadFromFile( AFileName );
     For I := 0 to SL.Count-1 do
+{$IFDEF COMPILER7_UP}
        AddField( SL.Names[ I ], SL.ValueFromIndex[ I ] );
+{$ELSE}
+       AddField( SL.Names[ I ], SL.Values[ SL.Names[ I ] ] );
+{$ENDIF}
   finally
     SL.Free;
   end ;
