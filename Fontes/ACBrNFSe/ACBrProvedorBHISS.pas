@@ -135,7 +135,7 @@ var
  ConfigURL: TConfigURL;
 begin
  case ACodCidade of
-  3106200: begin
+  3106200: begin  // Belo Horizonte/MG
             ConfigURL.HomNomeCidade         := '';
             ConfigURL.HomRecepcaoLoteRPS    := 'https://bhisshomologa.pbh.gov.br/bhiss-ws/nfse';
             ConfigURL.HomConsultaLoteRPS    := 'https://bhisshomologa.pbh.gov.br/bhiss-ws/nfse';
@@ -152,7 +152,7 @@ begin
             ConfigURL.ProConsultaNFSe       := 'https://bhissdigital.pbh.gov.br/bhiss-ws/nfse';
             ConfigURL.ProCancelaNFSe        := 'https://bhissdigital.pbh.gov.br/bhiss-ws/nfse';
            end;
-  3136702: begin
+  3136702: begin // Juiz de Fora/MG
             ConfigURL.HomNomeCidade         := '';
             ConfigURL.HomRecepcaoLoteRPS    := 'https://nfsejuizdefora-teste.pbh.gov.br/bhiss-ws/nfse';
             ConfigURL.HomConsultaLoteRPS    := 'https://nfsejuizdefora-teste.pbh.gov.br/bhiss-ws/nfse';
