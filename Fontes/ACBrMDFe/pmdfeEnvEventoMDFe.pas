@@ -48,10 +48,10 @@ uses
   pcnAuxiliar, pcnConversao, pcnGerador, pcnLeitor, pmdfeEventoMDFe;
 
 type
-  TInfEventoCollection  = class;
+  TInfEventoCollection     = class;
   TInfEventoCollectionItem = class;
-  TEventoMDFe = class;
-  EventoException = class(Exception);
+  TEventoMDFe              = class;
+  EventoException          = class(Exception);
 
   TInfEventoCollection = class(TCollection)
   private
@@ -85,7 +85,8 @@ type
     constructor Create;
     destructor Destroy; override;
     function GerarXML: boolean;
-    function LerXML(CaminhoArquivo: string): boolean;
+    function LerXML(const CaminhoArquivo: string): boolean;
+    function LerXMLFromString(const AXML: String): boolean;
     function ObterNomeArquivo(tpEvento: TpcnTpEvento): string;
   published
     property Gerador: TGerador             read FGerador write FGerador;
@@ -200,18 +201,27 @@ begin
   FEvento.Assign(Value);
 end;
 
-function TEventoMDFe.LerXML(CaminhoArquivo: string): boolean;
+function TEventoMDFe.LerXML(const CaminhoArquivo: string): boolean;
 var
   ArqEvento    : TStringList;
-  RetEventoMDFe : TRetEventoMDFe;
 begin
   ArqEvento := TStringList.Create;
-  RetEventoMDFe := TRetEventoMDFe.Create;
-  Result := False;
   try
      ArqEvento.LoadFromFile(CaminhoArquivo);
-     RetEventoMDFe.Leitor.Arquivo := ArqEvento.Text;
-     RetEventoMDFe.LerXml;
+     Result := LerXMLFromString(ArqEvento.Text);
+  finally
+     ArqEvento.Free;
+  end;
+end;
+
+function TEventoMDFe.LerXMLFromString(const AXML: String): boolean;
+var
+  RetEventoMDFe : TRetEventoMDFe;
+begin
+  RetEventoMDFe := TRetEventoMDFe.Create;
+  try
+     RetEventoMDFe.Leitor.Arquivo := AXML;
+     Result := RetEventoMDFe.LerXml;
      with FEvento.Add do
       begin
          infEvento.ID         := RetEventoMDFe.InfEvento.id;
@@ -249,9 +259,7 @@ begin
            FRetInfEvento.nProt       := RetEventoMDFe.retEvento.Items[0].RetInfEvento.nProt;
          end;
       end;
-     Result := True;
   finally
-     ArqEvento.Free;
      RetEventoMDFe.Free;
   end;
 end;

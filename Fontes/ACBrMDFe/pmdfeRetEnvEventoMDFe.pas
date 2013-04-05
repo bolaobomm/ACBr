@@ -48,9 +48,9 @@ uses
   pcnAuxiliar, pcnConversao, pcnLeitor, pmdfeEventoMDFe;
 
 type
-  TRetInfEventoCollection     = class ;
-  TRetInfEventoCollectionItem = class ;
-  TRetEventoMDFe              = class ;
+  TRetInfEventoCollection     = class;
+  TRetInfEventoCollectionItem = class;
+  TRetEventoMDFe              = class;
 
   TRetInfEventoCollection = class(TCollection)
   private
@@ -103,7 +103,7 @@ implementation
 
 { TRetInfEventoCollection }
 
-function TRetInfEventoCollection. Add: TRetInfEventoCollectionItem;
+function TRetInfEventoCollection.Add: TRetInfEventoCollectionItem;
 begin
   Result := TRetInfEventoCollectionItem(inherited Add);
   Result.create;
