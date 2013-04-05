@@ -90,13 +90,6 @@ var
  ConfigCidade: TConfigCidade;
 begin
  ConfigCidade.VersaoSoap    := '1.1';
- ConfigCidade.CodigoSchemas := 1;
-
- case ACodCidade of
-  4304606: ConfigCidade.CodigoURLs := 1; // Canoas/RS
-  5107602: ConfigCidade.CodigoURLs := 2; // Rondonopolis/MT
- end;
-
  ConfigCidade.Prefixo2      := '';
  ConfigCidade.Prefixo3      := '';
  ConfigCidade.Prefixo4      := '';
@@ -135,11 +128,11 @@ var
  ConfigURL: TConfigURL;
 begin
  case ACodCidade of
-  4304606: begin
+  4304606: begin // Canoas/RS
             ConfigURL.HomNomeCidade := 'canoas';
             ConfigURL.ProNomeCidade := 'canoas';
            end;
-  5107602: begin
+  5107602: begin // Rondonopolis/MT
             ConfigURL.HomNomeCidade := 'roo';
             ConfigURL.ProNomeCidade := 'roo';
            end;

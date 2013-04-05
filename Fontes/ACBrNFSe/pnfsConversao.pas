@@ -769,6 +769,7 @@ begin
   4308508  // Frederico Westphalen/RS
          : Provedor := 'Digifred';
 
+  4303103, // Cachoeirinha/RS'
   4318705  // Sao Leopoldo/RS
          : Provedor := 'Thema';
 

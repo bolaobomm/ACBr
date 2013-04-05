@@ -21,8 +21,6 @@ type
 
  TConfigCidade = record
     VersaoSoap: String;
-    CodigoSchemas: Integer;
-    CodigoURLs: Integer;
     Prefixo2: String;
     Prefixo3: String;
     Prefixo4: String;
@@ -121,9 +119,6 @@ type
     FProvedor: TnfseProvedor;
     FxProvedor: String;
     FVersaoSoap: String;
-    FCodigoSchemas: Integer;
-    FCodigoURLs: Integer;
-
     FIdentificador: String;
     FNameSpace: String;
     FSenhaWeb: AnsiString;
@@ -189,10 +184,6 @@ type
     property Provedor: TnfseProvedor read FProvedor;
     property xProvedor: String read FxProvedor;
     property VersaoSoap: String read FVersaoSoap;
-
-    property CodigoSchemas: Integer read FCodigoSchemas;
-    property CodigoURLs: Integer read FCodigoURLs;
-
     property Identificador: String read FIdentificador;
     property NameSpace: String read FNameSpace;
     property SenhaWeb: AnsiString read FSenhaWeb write FSenhaWeb;
@@ -692,12 +683,6 @@ begin
  ConfigCidade   := FProvedorClass.GetConfigCidade(FCodigoMunicipio, FAmbienteCodigo);
 
  FVersaoSoap    := ConfigCidade.VersaoSoap;
-
- FCodigoSchemas := FCodigoMunicipio;
- FCodigoURLs    := FCodigoMunicipio;
-
-// FCodigoSchemas := ConfigCidade.CodigoSchemas;
-// FCodigoURLs    := ConfigCidade.CodigoURLs;
  FPrefixo2      := ConfigCidade.Prefixo2;
  FPrefixo3      := ConfigCidade.Prefixo3;
  FPrefixo4      := ConfigCidade.Prefixo4;
@@ -707,7 +692,7 @@ begin
  TConfiguracoes( Self.Owner ).Certificados.FAssinaRPS  := ConfigCidade.AssinaRPS;
  TConfiguracoes( Self.Owner ).Certificados.FAssinaLote := ConfigCidade.AssinaLote;
 
- ConfigSchema := FProvedorClass.GetConfigSchema(FCodigoMunicipio {FCodigoSchemas});
+ ConfigSchema := FProvedorClass.GetConfigSchema(FCodigoMunicipio);
 
  FVersaoCabecalho := ConfigSchema.VersaoCabecalho;
  FVersaoDados     := ConfigSchema.VersaoDados;
@@ -723,7 +708,7 @@ begin
  FServicoGerar    := ConfigSchema.ServicoGerar;
  FDefTipos        := ConfigSchema.DefTipos;
 
- ConfigURL := FProvedorClass.GetConfigURL(FCodigoMunicipio {FCodigoURLs});
+ ConfigURL := FProvedorClass.GetConfigURL(FCodigoMunicipio);
 
  FHomNomeCidade         := ConfigURL.HomNomeCidade;
  FHomRecepcaoLoteRPS    := ConfigURL.HomRecepcaoLoteRPS;

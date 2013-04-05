@@ -90,11 +90,6 @@ var
  ConfigCidade: TConfigCidade;
 begin
  ConfigCidade.VersaoSoap    := '1.1';
- ConfigCidade.CodigoSchemas := 1;
- case ACodCidade of
-  1400100: ConfigCidade.CodigoURLs := 1; // Boa Vista/RR
- end;
- ConfigCidade.CodigoURLs    := 1;
  ConfigCidade.Prefixo2      := '';
  ConfigCidade.Prefixo3      := '';
  ConfigCidade.Prefixo4      := '';
@@ -136,14 +131,12 @@ var
  ConfigURL: TConfigURL;
 begin
  case ACodCidade of
-  1400100: begin
+  1400100: begin // Boa Vista/RR
             ConfigURL.HomNomeCidade         := 'boavista';
-
             ConfigURL.ProNomeCidade         := 'boavista';
            end;
   2903201: begin
             ConfigURL.HomNomeCidade         := 'barreiras';
-
             ConfigURL.ProNomeCidade         := 'barreiras';
            end;
  end;

@@ -89,8 +89,6 @@ var
  ConfigCidade: TConfigCidade;
 begin
  ConfigCidade.VersaoSoap    := '1.2';
- ConfigCidade.CodigoSchemas := 1;
- ConfigCidade.CodigoURLs    := 1;
  ConfigCidade.Prefixo2      := '';
  ConfigCidade.Prefixo3      := '';
  ConfigCidade.Prefixo4      := '';

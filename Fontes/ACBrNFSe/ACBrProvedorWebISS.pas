@@ -90,21 +90,6 @@ var
  ConfigCidade: TConfigCidade;
 begin
  ConfigCidade.VersaoSoap    := '1.1';
- ConfigCidade.CodigoSchemas := 1;
- case ACodCidade of
-  2910800: ConfigCidade.CodigoURLs := 01; // Feira de Santana/BA
-  3104205: ConfigCidade.CodigoURLs := 02; // Arcos/MG
-  3126109: ConfigCidade.CodigoURLs := 03; // Formiga/MG
-  3170107: ConfigCidade.CodigoURLs := 04; // Uberaba/MG
-  3303302: ConfigCidade.CodigoURLs := 05; // Niteroi/RJ
-  5107909: ConfigCidade.CodigoURLs := 06; // Sinop/MT
-  3105608: ConfigCidade.CodigoURLs := 07; // Barbacena/MG
-  3105905: ConfigCidade.CodigoURLs := 08; // Barroso/MG
-  4301602: begin
-            ConfigCidade.CodigoURLs := 09; // Bage/RS
-            ConfigCidade.CodigoSchemas := 2;
-           end;
- end;
  ConfigCidade.Prefixo2      := '';
  ConfigCidade.Prefixo3      := '';
  ConfigCidade.Prefixo4      := '';
@@ -165,39 +150,39 @@ var
  ConfigURL: TConfigURL;
 begin
  case ACodCidade of
-  2910800: begin
+  2910800: begin // Feira de Santana/BA
             ConfigURL.HomNomeCidade := 'feiradesantanaba';
             ConfigURL.ProNomeCidade := 'feiradesantanaba';
            end;
-  3104205: begin
+  3104205: begin // Arcos/MG
             ConfigURL.HomNomeCidade := 'arcosmg';
             ConfigURL.ProNomeCidade := 'arcosmg';
            end;
-  3126109: begin
+  3126109: begin // Formiga/MG
             ConfigURL.HomNomeCidade := 'formigamg';
             ConfigURL.ProNomeCidade := 'formigamg';
            end;
-  3170107: begin
+  3170107: begin // Uberaba/MG
             ConfigURL.HomNomeCidade := 'Uberaba';
             ConfigURL.ProNomeCidade := 'Uberaba';
            end;
-  3303302: begin
+  3303302: begin // Niteroi/RJ
             ConfigURL.HomNomeCidade := 'rjniteroi';
             ConfigURL.ProNomeCidade := 'rjniteroi';
            end;
-  5107909: begin
+  5107909: begin // Sinop/MT
             ConfigURL.HomNomeCidade := 'sinop';
             ConfigURL.ProNomeCidade := 'sinop';
            end;
-  3105608: begin
+  3105608: begin // Barbacena/MG
             ConfigURL.HomNomeCidade := 'mgbarbacena';
             ConfigURL.ProNomeCidade := 'mgbarbacena';
            end;
-  3105905: begin
+  3105905: begin // Barroso/MG
             ConfigURL.HomNomeCidade := 'barrosomg';
             ConfigURL.ProNomeCidade := 'barrosomg';
            end;
-  4301602: begin
+  4301602: begin // Bage/RS
             ConfigURL.HomNomeCidade := 'bagers';
             ConfigURL.ProNomeCidade := 'bagers';
            end;

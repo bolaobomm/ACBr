@@ -90,11 +90,6 @@ var
  ConfigCidade: TConfigCidade;
 begin
  ConfigCidade.VersaoSoap    := '1.1';
- ConfigCidade.CodigoSchemas := 1;
- case ACodCidade of
-  3106200: ConfigCidade.CodigoURLs := 1; // Belo Horizonte/MG
-  3136702: ConfigCidade.CodigoURLs := 2; // Juiz de Fora/MG
- end;
  ConfigCidade.Prefixo2      := '';
  ConfigCidade.Prefixo3      := '';
  ConfigCidade.Prefixo4      := '';

@@ -90,7 +90,6 @@ var
  ConfigCidade: TConfigCidade;
 begin
  ConfigCidade.VersaoSoap    := '1.1';
- ConfigCidade.CodigoSchemas := 1;
  ConfigCidade.Prefixo2      := '';
  ConfigCidade.Prefixo3      := '';
  ConfigCidade.Prefixo4      := '';
@@ -98,13 +97,11 @@ begin
 
  case ACodCidade of
   2925303: begin // Porto Seguro/BA
-            ConfigCidade.CodigoURLs := 1;
             if AAmbiente = 1
              then ConfigCidade.NameSpaceEnvelope := 'https://portoseguro-ba.issintel.com.br/webservices/abrasf/api'
              else ConfigCidade.NameSpaceEnvelope := 'https://portoseguro-ba.treino-issintel.com.br/webservices/abrasf/api';
            end;
   3131307: begin // Ipatinga/MG
-            ConfigCidade.CodigoURLs := 1;
             if AAmbiente = 1
              then ConfigCidade.NameSpaceEnvelope := 'https://ipatinga-mg.issintel.com.br:442/webservices/abrasf/api'
              else ConfigCidade.NameSpaceEnvelope := 'https://ipatinga-mg.treino-issintel.com.br:442/webservices/abrasf/api';

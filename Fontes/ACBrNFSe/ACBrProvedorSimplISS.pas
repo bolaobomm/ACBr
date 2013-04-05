@@ -90,12 +90,6 @@ var
  ConfigCidade: TConfigCidade;
 begin
  ConfigCidade.VersaoSoap    := '1.1';
- ConfigCidade.CodigoSchemas := 6;
- case ACodCidade of
-  3148103: ConfigCidade.CodigoURLs := 1; // Patrocinio/MG
-  3503307: ConfigCidade.CodigoURLs := 2; // Araras/SP
-  3541406: ConfigCidade.CodigoURLs := 3; // Presidente Prudente/SP
- end;
  ConfigCidade.Prefixo2      := '';
  ConfigCidade.Prefixo3      := '';
  ConfigCidade.Prefixo4      := '';
@@ -156,7 +150,7 @@ begin
   end;
 
  case ACodCidade of
-  3148103: begin
+  3148103: begin // Patrocinio/MG
             ConfigURL.ProNomeCidade := 'patrocinio';
             ConfigURL.ProRecepcaoLoteRPS    := 'http://187.45.245.217/ws_' + ConfigURL.ProNomeCidade + '/nfseservice.svc';
             ConfigURL.ProConsultaLoteRPS    := 'http://187.45.245.217/ws_' + ConfigURL.ProNomeCidade + '/nfseservice.svc';
@@ -165,7 +159,7 @@ begin
             ConfigURL.ProConsultaNFSe       := 'http://187.45.245.217/ws_' + ConfigURL.ProNomeCidade + '/nfseservice.svc';
             ConfigURL.ProCancelaNFSe        := 'http://187.45.245.217/ws_' + ConfigURL.ProNomeCidade + '/nfseservice.svc';
            end;
-  3503307: begin
+  3503307: begin // Araras/SP
             ConfigURL.ProNomeCidade := 'araras';
             ConfigURL.ProRecepcaoLoteRPS    := 'http://200.144.16.82:8080/ws_' + ConfigURL.ProNomeCidade + '/nfseservice.svc';
             ConfigURL.ProConsultaLoteRPS    := 'http://200.144.16.82:8080/ws_' + ConfigURL.ProNomeCidade + '/nfseservice.svc';
@@ -174,7 +168,7 @@ begin
             ConfigURL.ProConsultaNFSe       := 'http://200.144.16.82:8080/ws_' + ConfigURL.ProNomeCidade + '/nfseservice.svc';
             ConfigURL.ProCancelaNFSe        := 'http://200.144.16.82:8080/ws_' + ConfigURL.ProNomeCidade + '/nfseservice.svc';
            end;
-  3541406: begin
+  3541406: begin // Presidente Prudente/SP
             ConfigURL.ProNomeCidade := 'presidente_prudente';
             ConfigURL.ProRecepcaoLoteRPS    := 'http://187.45.245.217/ws_nfse_' + ConfigURL.ProNomeCidade + '/nfseservice.svc';
             ConfigURL.ProConsultaLoteRPS    := 'http://187.45.245.217/ws_nfse_' + ConfigURL.ProNomeCidade + '/nfseservice.svc';

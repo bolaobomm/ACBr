@@ -90,20 +90,19 @@ var
  ConfigCidade: TConfigCidade;
 begin
  ConfigCidade.VersaoSoap    := '1.2';
- ConfigCidade.CodigoSchemas := 1;
  ConfigCidade.Prefixo2      := '';
  ConfigCidade.Prefixo3      := '';
  ConfigCidade.Prefixo4      := '';
  ConfigCidade.Identificador := 'Id';
 
  case ACodCidade of
-  5107958: begin // Tangara da Serra/MT
-            ConfigCidade.CodigoURLs    := 1;
+  5107958: begin
             if AAmbiente = 1
              then ConfigCidade.NameSpaceEnvelope := 'https://demo.fisslex.com.br'
              else ConfigCidade.NameSpaceEnvelope := 'https://tangara.fisslex.com.br';
            end;
  end;
+
  ConfigCidade.AssinaRPS  := False;
  ConfigCidade.AssinaLote := True;
 
@@ -135,7 +134,7 @@ var
  ConfigURL: TConfigURL;
 begin
  case ACodCidade of
-  5107958: begin
+  5107958: begin // Tangara da Serra/MT
             ConfigURL.HomNomeCidade := 'tangara';
             ConfigURL.ProNomeCidade := 'tangara';
            end;

@@ -90,14 +90,6 @@ var
  ConfigCidade: TConfigCidade;
 begin
  ConfigCidade.VersaoSoap := '1.2';
- case ACodCidade of
-  3300456: ConfigCidade.CodigoSchemas := 10; // Belford Roxo/RJ
-  else     ConfigCidade.CodigoSchemas := 01; // Demais cidades
- end;
- case ACodCidade of
-  2304400: ConfigCidade.CodigoURLs := 2; // Fortaleza/CE
-  else     ConfigCidade.CodigoURLs := 1; // Demais cidades
- end;
  ConfigCidade.Prefixo2      := 'ns2:';
  ConfigCidade.Prefixo3      := 'ns3:';
  ConfigCidade.Prefixo4      := 'ns4:';

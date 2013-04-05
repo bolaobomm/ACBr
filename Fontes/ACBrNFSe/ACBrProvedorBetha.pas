@@ -92,8 +92,6 @@ begin
  // Alterado por Rodrigo Cantelli
 
  ConfigCidade.VersaoSoap    := '1.1';
- ConfigCidade.CodigoSchemas := 12;
- ConfigCidade.CodigoURLs    := 24;
  ConfigCidade.Prefixo2      := '';
  ConfigCidade.Prefixo3      := 'ns3:';
  ConfigCidade.Prefixo4      := '';
