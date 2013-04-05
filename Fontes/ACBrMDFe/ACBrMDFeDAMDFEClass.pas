@@ -48,7 +48,7 @@ type
   TACBrMDFeDAMDFeClass = class( TComponent )
    private
     procedure SetMDFe(const Value: TComponent);
-    procedure ErroAbstract( NomeProcedure : String ) ;
+    procedure ErroAbstract( NomeProcedure : String );
     function GetPathArquivos: String;
   protected
     FACBrMDFe : TComponent;
@@ -82,30 +82,30 @@ type
     procedure ImprimirDAMDFe(MDFe : TMDFe = nil); virtual;
     procedure ImprimirDAMDFePDF(MDFe : TMDFe = nil); virtual;
   published
-    property ACBrMDFe : TComponent  read FACBrMDFe write SetMDFe ;
-    property Logo: String read FLogo write FLogo ;
-    property Sistema: String read FSistema write FSistema ;
-    property Usuario: String read FUsuario write FUsuario ;
-    property PathPDF: String read GetPathArquivos write FPathArquivos ;
-    property Impressora: String read FImpressora write FImpressora ;
-    property ImprimirHoraSaida: Boolean read FImprimirHoraSaida write FImprimirHoraSaida ;
-    property ImprimirHoraSaida_Hora: string read FImprimirHoraSaida_Hora write FImprimirHoraSaida_Hora ;
-    property MostrarPreview: Boolean read FMostrarPreview write FMostrarPreview ;
-    property MostrarStatus: Boolean read FMostrarStatus write FMostrarStatus ;
-    property TipoDAMDFe: TpcnTipoImpressao read FTipoDAMDFe write FTipoDAMDFe ;
-    property TamanhoPapel: TpcnTamanhoPapel read FTamanhoPapel write FTamanhoPapel ;
-    property NumCopias: Integer read FNumCopias write FNumCopias ;
-    property Fax  : String read FFax   write FFax ;
-    property Site : String read FSite  write FSite ;
-    property Email: String read FEmail write FEmail ;
-    property ImprimirDescPorc: Boolean read FImprimeDescPorc write FImprimeDescPorc ;
-    property ProtocoloMDFe: String read FProtocoloMDFe write FProtocoloMDFe ;
-    property MargemInferior: Double read FMargemInferior write FMargemInferior ;
-    property MargemSuperior: Double read FMargemSuperior write FMargemSuperior ;
-    property MargemEsquerda: Double read FMargemEsquerda write FMargemEsquerda ;
-    property MargemDireita: Double read FMargemDireita write FMargemDireita ;
-    property ExpandirLogoMarca: Boolean read FExpandirLogoMarca write FExpandirLogoMarca default false ;
-    property MDFeCancelada: Boolean read FMDFeCancelada write FMDFeCancelada ;
+    property ACBrMDFe : TComponent  read FACBrMDFe write SetMDFe;
+    property Logo: String read FLogo write FLogo;
+    property Sistema: String read FSistema write FSistema;
+    property Usuario: String read FUsuario write FUsuario;
+    property PathPDF: String read GetPathArquivos write FPathArquivos;
+    property Impressora: String read FImpressora write FImpressora;
+    property ImprimirHoraSaida: Boolean read FImprimirHoraSaida write FImprimirHoraSaida;
+    property ImprimirHoraSaida_Hora: string read FImprimirHoraSaida_Hora write FImprimirHoraSaida_Hora;
+    property MostrarPreview: Boolean read FMostrarPreview write FMostrarPreview;
+    property MostrarStatus: Boolean read FMostrarStatus write FMostrarStatus;
+    property TipoDAMDFe: TpcnTipoImpressao read FTipoDAMDFe write FTipoDAMDFe;
+    property TamanhoPapel: TpcnTamanhoPapel read FTamanhoPapel write FTamanhoPapel;
+    property NumCopias: Integer read FNumCopias write FNumCopias;
+    property Fax  : String read FFax   write FFax;
+    property Site : String read FSite  write FSite;
+    property Email: String read FEmail write FEmail;
+    property ImprimirDescPorc: Boolean read FImprimeDescPorc write FImprimeDescPorc;
+    property ProtocoloMDFe: String read FProtocoloMDFe write FProtocoloMDFe;
+    property MargemInferior: Double read FMargemInferior write FMargemInferior;
+    property MargemSuperior: Double read FMargemSuperior write FMargemSuperior;
+    property MargemEsquerda: Double read FMargemEsquerda write FMargemEsquerda;
+    property MargemDireita: Double read FMargemDireita write FMargemDireita;
+    property ExpandirLogoMarca: Boolean read FExpandirLogoMarca write FExpandirLogoMarca default false;
+    property MDFeCancelada: Boolean read FMDFeCancelada write FMDFeCancelada;
   end;
 
 implementation
@@ -117,12 +117,12 @@ constructor TACBrMDFeDAMDFeClass.Create(AOwner: TComponent);
 begin
   inherited create( AOwner );
 
-  FACBrMDFe     := nil ;
-  FLogo         := '' ;
-  FSistema      := '' ;
-  FUsuario      := '' ;
-  FPathArquivos := '' ;
-  FImpressora   := '' ;
+  FACBrMDFe     := nil;
+  FLogo         := '';
+  FSistema      := '';
+  FUsuario      := '';
+  FPathArquivos := '';
+  FImpressora   := '';
 
   FImprimirHoraSaida      := False;
   FImprimirHoraSaida_Hora := '';
@@ -131,9 +131,9 @@ begin
   FMostrarStatus  := True;
   FNumCopias      := 1;
 
-  FFax   := '' ;
-  FSite  := '' ;
-  FEmail := '' ;
+  FFax   := '';
+  FSite  := '';
+  FEmail := '';
 
   FImprimeDescPorc := False;
   FProtocoloMDFe    := '';
@@ -148,15 +148,15 @@ end;
 destructor TACBrMDFeDAMDFeClass.Destroy;
 begin
 
-  inherited Destroy ;
+  inherited Destroy;
 end;
 
-procedure TACBrMDFeDAMDFeClass.ImprimirDAMDFe(MDFe : TMDFe = nil) ;
+procedure TACBrMDFeDAMDFeClass.ImprimirDAMDFe(MDFe : TMDFe = nil);
 begin
   ErroAbstract('Imprimir');
 end;
 
-procedure TACBrMDFeDAMDFeClass.ImprimirDAMDFePDF(MDFe : TMDFe = nil) ;
+procedure TACBrMDFeDAMDFeClass.ImprimirDAMDFePDF(MDFe : TMDFe = nil);
 begin
   ErroAbstract('ImprimirPDF');
 end;
@@ -167,39 +167,39 @@ begin
   inherited Notification(AComponent, Operation);
 
   if (Operation = opRemove) and (FACBrMDFe <> nil) and (AComponent is TACBrMDFe) then
-     FACBrMDFe := nil ;
+     FACBrMDFe := nil;
 end;
 
 procedure TACBrMDFeDAMDFeClass.SetMDFe(const Value: TComponent);
-  Var OldValue : TACBrMDFe ;
+  Var OldValue : TACBrMDFe;
 begin
   if Value <> FACBrMDFe then
   begin
      if Value <> nil then
         if not (Value is TACBrMDFe) then
-           raise Exception.Create('ACBrDAMDFe.MDFe deve ser do tipo TACBrMDFe') ;
+           raise Exception.Create('ACBrDAMDFe.MDFe deve ser do tipo TACBrMDFe');
 
      if Assigned(FACBrMDFe) then
         FACBrMDFe.RemoveFreeNotification(Self);
 
-     OldValue := TACBrMDFe(FACBrMDFe) ;   // Usa outra variavel para evitar Loop Infinito
+     OldValue := TACBrMDFe(FACBrMDFe);   // Usa outra variavel para evitar Loop Infinito
      FACBrMDFe := Value;                 // na remoção da associação dos componentes
 
      if Assigned(OldValue) then
         if Assigned(OldValue.DAMDFe) then
-           OldValue.DAMDFe := nil ;
+           OldValue.DAMDFe := nil;
 
      if Value <> nil then
      begin
         Value.FreeNotification(self);
-        TACBrMDFe(Value).DAMDFe := self ;
-     end ;
-  end ;
+        TACBrMDFe(Value).DAMDFe := self;
+     end;
+  end;
 end;
 
 procedure TACBrMDFeDAMDFeClass.ErroAbstract(NomeProcedure: String);
 begin
-  raise Exception.Create( NomeProcedure ) ;
+  raise Exception.Create( NomeProcedure );
 end;
 
 function TACBrMDFeDAMDFeClass.GetPathArquivos: String;

@@ -50,10 +50,10 @@ uses
      {SoapHTTPClient, }SOAPConst,{ JwaWinCrypt,}
   {$ENDIF}
   pcnAuxiliar, pcnConversao,
-  ACBrMDFeConfiguracoes, ACBrMDFeManifestos,
-  pmdfeRetConsReciMDFe, pmdfeProcMDFe, pmdfeConsReciMDFe,
-  pmdfeEnvEventoMDFe, pmdfeRetEnvEventoMDFe,
-  pmdfeRetEnvMDFe, ActiveX;
+  ACBrMDFeConfiguracoes, ACBrMDFeManifestos, pmdfeRetConsReciMDFe,
+  pmdfeProcMDFe, pmdfeConsReciMDFe, pmdfeEnvEventoMDFe, pmdfeRetEnvEventoMDFe,
+  pmdfeRetEnvMDFe, pmdfeConsStatServ, pmdfeRetConsStatServ, pmdfeConsSitMDFe,
+  pmdfeRetConsSitMDFe, ActiveX;
 
 type
 
@@ -218,6 +218,7 @@ type
     FcUF : Integer;
     FdigVal : String;
     FprotMDFe: TProcMDFe;
+    FprocEventoMDFe: TRetEventoMDFeCollection;
   public
     constructor Create(AOwner : TComponent); reintroduce;
     destructor Destroy; override;
@@ -233,6 +234,7 @@ type
     property cUF: Integer read FcUF;
     property digVal: String read FdigVal;
     property protMDFe: TProcMDFe read FprotMDFe write FprotMDFe;
+    property procEventoMDFe: TRetEventoMDFeCollection read FprocEventoMDFe write FprocEventoMDFe;
   end;
 
   TMDFeEnvEvento = Class(TWebServicesBase)
@@ -287,9 +289,7 @@ uses
   ssl_openssl,
 {$ENDIF}
   ACBrUtil, ACBrDFeUtil, ACBrMDFeUtil, ACBrMDFe,
-  pcnGerador, pcnCabecalho, pcnLeitor,
-  pmdfeConsStatServ, pmdfeRetConsStatServ,
-  pmdfeConsSitMDFe, pmdfeRetConsSitMDFe;
+  pcnGerador, pcnCabecalho, pcnLeitor;
 
 {$IFNDEF ACBrMDFeOpenSSL}
 const
@@ -1307,26 +1307,27 @@ begin
   FACBrMDFe      := TACBrMDFe( AOwner );
 
   FprotMDFe := TProcMDFe.Create;
-//  FretCancMDFe := TRetCancMDFe.Create;
+  FprocEventoMDFe := TRetEventoMDFeCollection.Create(AOwner);
 end;
 
 destructor TMDFeConsulta.Destroy;
 begin
   FprotMDFe.Free;
-//  FretCancMDFe.Free;
+  if Assigned(FprocEventoMDFe) then
+    FprocEventoMDFe.Free;
 end;
 
 function TMDFeConsulta.Executar: Boolean;
 var
   MDFeRetorno: TRetConsSitMDFe;
-  aMsg : String;
+  aMsg, aEventos : String;
   AProcMDFe: TProcMDFe;
-  i: Integer;
+  i, j: Integer;
   Texto : String;
   Acao  : TStringList;
   Stream: TMemoryStream;
   StrStream: TStringStream;
-  wAtualiza: boolean;
+  wAtualiza, MDFeCancelada: boolean;
 
   {$IFDEF ACBrMDFeOpenSSL}
      HTTP: THTTPSend;
@@ -1391,9 +1392,26 @@ begin
        StrStream.Free;
     {$ENDIF}
 
+    if FConfiguracoes.Geral.Salvar  then
+      FConfiguracoes.Geral.Save(FMDFeChave+'-sit.xml', FRetWS);
+
     MDFeRetorno.Leitor.Arquivo := FRetWS;
     MDFeRetorno.LerXML;
 
+    MDFeCancelada := False;
+
+    if MDFeRetorno.procEventoMDFe.Count > 0 then
+      aEventos := '=====================================================' +
+                  LineBreak +
+                  '================== Eventos do MDF-e =================' +
+                  LineBreak +
+                  '====================================================='+
+                  LineBreak + '' + LineBreak +
+                  'Quantidade total de eventos: ' +
+                  IntToStr(MDFeRetorno.procEventoMDFe.Count);
+
+    // <retConsSitMDFe> - Retorno da consulta da situação do MDF-e
+    // Este é o status oficial do MDF-e
     FTpAmb     := MDFeRetorno.TpAmb;
     FverAplic  := MDFeRetorno.verAplic;
     FcStat     := MDFeRetorno.cStat;
@@ -1402,6 +1420,8 @@ begin
     FMDFeChave := MDFeRetorno.chMDFe;
     FMsg       := MDFeRetorno.XMotivo;
 
+    // <protMDFe> - Retorno dos dados do ENVIO do MDF-e
+    // Considerá-los apenas se não existir nenhum evento de cancelamento (110111)
     FprotMDFe.PathMDFe            := MDFeRetorno.protMDFe.PathMDFe;
     FprotMDFe.PathRetConsReciMDFe := MDFeRetorno.protMDFe.PathRetConsReciMDFe;
     FprotMDFe.PathRetConsSitMDFe  := MDFeRetorno.protMDFe.PathRetConsSitMDFe;
@@ -1414,18 +1434,80 @@ begin
     FprotMDFe.digVal              := MDFeRetorno.protMDFe.digVal;
     FprotMDFe.cStat               := MDFeRetorno.protMDFe.cStat;
     FprotMDFe.xMotivo             := MDFeRetorno.protMDFe.xMotivo;
-    (*
-    FretCancMDFe.tpAmb    := MDFeRetorno.retCancMDFe.tpAmb;
-    FretCancMDFe.verAplic := MDFeRetorno.retCancMDFe.verAplic;
-    FretCancMDFe.cStat    := MDFeRetorno.retCancMDFe.cStat;
-    FretCancMDFe.xMotivo  := MDFeRetorno.retCancMDFe.xMotivo;
-    FretCancMDFe.cUF      := MDFeRetorno.retCancMDFe.cUF;
-    FretCancMDFe.chMDFe   := MDFeRetorno.retCancMDFe.chMDFe;
-    FretCancMDFe.dhRecbto := MDFeRetorno.retCancMDFe.dhRecbto;
-    FretCancMDFe.nProt    := MDFeRetorno.retCancMDFe.nProt;
-    *)
-    FProtocolo := FprotMDFe.nProt; // MDFeUtil.SeSenao(MDFeUtil.NaoEstaVazio(MDFeRetorno.retCancMDFe.nProt),MDFeRetorno.retCancMDFe.nProt,MDFeRetorno.protMDFe.nProt);
-    FDhRecbto  := FprotMDFe.dhRecbto; // MDFeUtil.SeSenao(MDFeRetorno.retCancMDFe.dhRecbto <> 0,MDFeRetorno.retCancMDFe.dhRecbto,MDFeRetorno.protMDFe.dhRecbto);
+
+    FprocEventoMDFe.Clear;
+    for I := 0 to MDFeRetorno.procEventoMDFe.Count -1 do
+    begin
+      FprocEventoMDFe.Add;
+      FprocEventoMDFe.Items[I].RetEventoMDFe.idLote   := MDFeRetorno.procEventoMDFe.Items[I].RetEventoMDFe.idLote;
+      FprocEventoMDFe.Items[I].RetEventoMDFe.tpAmb    := MDFeRetorno.procEventoMDFe.Items[I].RetEventoMDFe.tpAmb;
+      FprocEventoMDFe.Items[I].RetEventoMDFe.verAplic := MDFeRetorno.procEventoMDFe.Items[I].RetEventoMDFe.verAplic;
+      FprocEventoMDFe.Items[I].RetEventoMDFe.cOrgao   := MDFeRetorno.procEventoMDFe.Items[I].RetEventoMDFe.cOrgao;
+      FprocEventoMDFe.Items[I].RetEventoMDFe.cStat    := MDFeRetorno.procEventoMDFe.Items[I].RetEventoMDFe.cStat;
+      FprocEventoMDFe.Items[I].RetEventoMDFe.xMotivo  := MDFeRetorno.procEventoMDFe.Items[I].RetEventoMDFe.xMotivo;
+
+      FprocEventoMDFe.Items[I].RetEventoMDFe.InfEvento.ID           := MDFeRetorno.procEventoMDFe.Items[I].RetEventoMDFe.InfEvento.ID;
+      FprocEventoMDFe.Items[I].RetEventoMDFe.InfEvento.tpAmb        := MDFeRetorno.procEventoMDFe.Items[I].RetEventoMDFe.InfEvento.tpAmb;
+      FprocEventoMDFe.Items[I].RetEventoMDFe.InfEvento.CNPJ         := MDFeRetorno.procEventoMDFe.Items[I].RetEventoMDFe.InfEvento.CNPJ;
+      FprocEventoMDFe.Items[I].RetEventoMDFe.InfEvento.chMDFe       := MDFeRetorno.procEventoMDFe.Items[I].RetEventoMDFe.InfEvento.chMDFe;
+      FprocEventoMDFe.Items[I].RetEventoMDFe.InfEvento.dhEvento     := MDFeRetorno.procEventoMDFe.Items[I].RetEventoMDFe.InfEvento.dhEvento;
+      FprocEventoMDFe.Items[I].RetEventoMDFe.InfEvento.TpEvento     := MDFeRetorno.procEventoMDFe.Items[I].RetEventoMDFe.InfEvento.TpEvento;
+      FprocEventoMDFe.Items[I].RetEventoMDFe.InfEvento.nSeqEvento   := MDFeRetorno.procEventoMDFe.Items[I].RetEventoMDFe.InfEvento.nSeqEvento;
+      FprocEventoMDFe.Items[I].RetEventoMDFe.InfEvento.VersaoEvento := MDFeRetorno.procEventoMDFe.Items[I].RetEventoMDFe.InfEvento.VersaoEvento;
+
+//      FprocEventoMDFe.Items[I].RetEventoMDFe.InfEvento.DetEvento.xCorrecao := MDFeRetorno.procEventoMDFe.Items[I].RetEventoMDFe.InfEvento.DetEvento.xCorrecao;
+//      FprocEventoMDFe.Items[I].RetEventoMDFe.InfEvento.DetEvento.xCondUso  := MDFeRetorno.procEventoMDFe.Items[I].RetEventoMDFe.InfEvento.DetEvento.xCondUso;
+      FprocEventoMDFe.Items[I].RetEventoMDFe.InfEvento.DetEvento.nProt     := MDFeRetorno.procEventoMDFe.Items[I].RetEventoMDFe.InfEvento.DetEvento.nProt;
+      FprocEventoMDFe.Items[I].RetEventoMDFe.InfEvento.DetEvento.xJust     := MDFeRetorno.procEventoMDFe.Items[I].RetEventoMDFe.InfEvento.DetEvento.xJust;
+
+      FprocEventoMDFe.Items[I].RetEventoMDFe.retEvento.Clear;
+      for j := 0 to MDFeRetorno.procEventoMDFe.Items[I].RetEventoMDFe.retEvento.Count-1 do
+      begin
+        FprocEventoMDFe.Items[I].RetEventoMDFe.retEvento.Add;
+        FprocEventoMDFe.Items[I].RetEventoMDFe.retEvento.Items[j].RetInfEvento.Id          := MDFeRetorno.procEventoMDFe.Items[I].RetEventoMDFe.retEvento.Items[j].RetInfEvento.Id;
+        FprocEventoMDFe.Items[I].RetEventoMDFe.retEvento.Items[j].RetInfEvento.tpAmb       := MDFeRetorno.procEventoMDFe.Items[I].RetEventoMDFe.retEvento.Items[j].RetInfEvento.tpAmb;
+        FprocEventoMDFe.Items[I].RetEventoMDFe.retEvento.Items[j].RetInfEvento.verAplic    := MDFeRetorno.procEventoMDFe.Items[I].RetEventoMDFe.retEvento.Items[j].RetInfEvento.verAplic;
+        FprocEventoMDFe.Items[I].RetEventoMDFe.retEvento.Items[j].RetInfEvento.cOrgao      := MDFeRetorno.procEventoMDFe.Items[I].RetEventoMDFe.retEvento.Items[j].RetInfEvento.cOrgao;
+        FprocEventoMDFe.Items[I].RetEventoMDFe.retEvento.Items[j].RetInfEvento.cStat       := MDFeRetorno.procEventoMDFe.Items[I].RetEventoMDFe.retEvento.Items[j].RetInfEvento.cStat;
+        FprocEventoMDFe.Items[I].RetEventoMDFe.retEvento.Items[j].RetInfEvento.xMotivo     := MDFeRetorno.procEventoMDFe.Items[I].RetEventoMDFe.retEvento.Items[j].RetInfEvento.xMotivo;
+        FprocEventoMDFe.Items[I].RetEventoMDFe.retEvento.Items[j].RetInfEvento.chMDFe      := MDFeRetorno.procEventoMDFe.Items[I].RetEventoMDFe.retEvento.Items[j].RetInfEvento.chMDFe;
+        FprocEventoMDFe.Items[I].RetEventoMDFe.retEvento.Items[j].RetInfEvento.tpEvento    := MDFeRetorno.procEventoMDFe.Items[I].RetEventoMDFe.retEvento.Items[j].RetInfEvento.tpEvento;
+        FprocEventoMDFe.Items[I].RetEventoMDFe.retEvento.Items[j].RetInfEvento.xEvento     := MDFeRetorno.procEventoMDFe.Items[I].RetEventoMDFe.retEvento.Items[j].RetInfEvento.xEvento;
+        FprocEventoMDFe.Items[I].RetEventoMDFe.retEvento.Items[j].RetInfEvento.nSeqEvento  := MDFeRetorno.procEventoMDFe.Items[I].RetEventoMDFe.retEvento.Items[j].RetInfEvento.nSeqEvento;
+        FprocEventoMDFe.Items[I].RetEventoMDFe.retEvento.Items[j].RetInfEvento.CNPJDest    := MDFeRetorno.procEventoMDFe.Items[I].RetEventoMDFe.retEvento.Items[j].RetInfEvento.CNPJDest;
+        FprocEventoMDFe.Items[I].RetEventoMDFe.retEvento.Items[j].RetInfEvento.emailDest   := MDFeRetorno.procEventoMDFe.Items[I].RetEventoMDFe.retEvento.Items[j].RetInfEvento.emailDest;
+        FprocEventoMDFe.Items[I].RetEventoMDFe.retEvento.Items[j].RetInfEvento.dhRegEvento := MDFeRetorno.procEventoMDFe.Items[I].RetEventoMDFe.retEvento.Items[j].RetInfEvento.dhRegEvento;
+        FprocEventoMDFe.Items[I].RetEventoMDFe.retEvento.Items[j].RetInfEvento.nProt       := MDFeRetorno.procEventoMDFe.Items[I].RetEventoMDFe.retEvento.Items[j].RetInfEvento.nProt;
+        FprocEventoMDFe.Items[I].RetEventoMDFe.retEvento.Items[j].RetInfEvento.XML         := MDFeRetorno.procEventoMDFe.Items[I].RetEventoMDFe.retEvento.Items[j].RetInfEvento.XML;
+
+        aEventos := aEventos + LineBreak + '' + LineBreak +
+                    'Número de sequência: ' + IntToStr(MDFeRetorno.procEventoMDFe.Items[I].RetEventoMDFe.InfEvento.nSeqEvento) + LineBreak +
+                    'Código do evento: ' + TpEventoToStr(MDFeRetorno.procEventoMDFe.Items[I].RetEventoMDFe.InfEvento.TpEvento) + LineBreak +
+                    'Descrição do evento: ' + MDFeRetorno.procEventoMDFe.Items[I].RetEventoMDFe.InfEvento.DescEvento + LineBreak +
+                    'Status do evento: ' + IntToStr(MDFeRetorno.procEventoMDFe.Items[I].RetEventoMDFe.retEvento.Items[j].RetInfEvento.cStat) + LineBreak +
+                    'Descrição do status: ' + MDFeRetorno.procEventoMDFe.Items[I].RetEventoMDFe.retEvento.Items[j].RetInfEvento.xMotivo + LineBreak +
+                    'Protocolo: ' + MDFeRetorno.procEventoMDFe.Items[I].RetEventoMDFe.retEvento.Items[j].RetInfEvento.nProt + LineBreak +
+                    'Data / hora do registro: ' + DateTimeToStr(MDFeRetorno.procEventoMDFe.Items[I].RetEventoMDFe.retEvento.Items[j].RetInfEvento.dhRegEvento);
+
+        if MDFeRetorno.procEventoMDFe.Items[I].RetEventoMDFe.retEvento.Items[j].RetInfEvento.tpEvento = teCancelamento then
+          begin
+            MDFeCancelada := True;
+            FProtocolo  := MDFeRetorno.procEventoMDFe.Items[I].RetEventoMDFe.retEvento.Items[j].RetInfEvento.nProt;
+            FDhRecbto   := MDFeRetorno.procEventoMDFe.Items[I].RetEventoMDFe.retEvento.Items[j].RetInfEvento.dhRegEvento;
+            FMsg        := MDFeRetorno.procEventoMDFe.Items[I].RetEventoMDFe.retEvento.Items[j].RetInfEvento.xMotivo;
+          end;
+      end;
+    end;
+
+    if MDFeCancelada = False then
+      begin
+        FProtocolo := MDFeRetorno.protMDFe.nProt;
+        FDhRecbto  := MDFeRetorno.protMDFe.dhRecbto;
+        FMsg       := MDFeRetorno.protMDFe.xMotivo;
+      end;
+
+//    FProtocolo := FprotMDFe.nProt; // MDFeUtil.SeSenao(MDFeUtil.NaoEstaVazio(MDFeRetorno.retCancMDFe.nProt),MDFeRetorno.retCancMDFe.nProt,MDFeRetorno.protMDFe.nProt);
+//    FDhRecbto  := FprotMDFe.dhRecbto; // MDFeUtil.SeSenao(MDFeRetorno.retCancMDFe.dhRecbto <> 0,MDFeRetorno.retCancMDFe.dhRecbto,MDFeRetorno.protMDFe.dhRecbto);
 
     TACBrMDFe( FACBrMDFe ).SetStatus( stMDFeIdle );
     
@@ -1440,6 +1522,9 @@ begin
             'Protocolo : ' + FProtocolo + LineBreak +
             'Digest Value : ' + MDFeRetorno.protMDFe.digVal + LineBreak;
 
+    if MDFeRetorno.procEventoMDFe.Count > 0 then
+      aMsg := aMsg + LineBreak + aEventos;
+
     if FConfiguracoes.WebServices.Visualizar then
       ShowMessage(aMsg);
 
@@ -1451,9 +1536,6 @@ begin
     // 101 = Cancelamento Homologado
     // 110 = Uso Denegado
     // 132 = Encerrado
-
-    if FConfiguracoes.Geral.Salvar  then
-      FConfiguracoes.Geral.Save(FMDFeChave+'-sit.xml', FRetWS);
 
     for i := 0 to TACBrMDFe( FACBrMDFe ).Manifestos.Count-1 do
      begin
@@ -1656,9 +1738,12 @@ begin
     aMsg := 'Ambiente : '+TpAmbToStr(EventoRetorno.retEvento.Items[0].RetInfEvento.tpAmb)+LineBreak+
             'Versão Aplicativo : '+EventoRetorno.retEvento.Items[0].RetInfEvento.verAplic+LineBreak+
             'Status Código : '+IntToStr(EventoRetorno.retEvento.Items[0].RetInfEvento.cStat)+LineBreak+
-            'Status Descrição : '+EventoRetorno.retEvento.Items[0].RetInfEvento.xMotivo+LineBreak+
-            'Recebimento : '+DFeUtil.SeSenao(EventoRetorno.retEvento.Items[0].RetInfEvento.dhRegEvento = 0, '',
-                                              DateTimeToStr(EventoRetorno.retEvento.Items[0].RetInfEvento.dhRegEvento));
+            'Status Descrição : '+EventoRetorno.retEvento.Items[0].RetInfEvento.xMotivo+LineBreak;
+
+    if (EventoRetorno.retEvento.Count > 0) then
+      aMsg := aMsg + 'Recebimento : '+DFeUtil.SeSenao(EventoRetorno.retEvento.Items[0].RetInfEvento.dhRegEvento = 0,
+                                                      '',
+                                                      DateTimeToStr(EventoRetorno.retEvento.Items[0].RetInfEvento.dhRegEvento));
 
     if FConfiguracoes.WebServices.Visualizar then
       ShowMessage(aMsg);

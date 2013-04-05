@@ -99,14 +99,14 @@ type
     procedure SetTentativas(const Value: Integer);
     procedure SetIntervaloTentativas(const Value: Cardinal);
   public
-    constructor Create(AOwner: TComponent); override ;
+    constructor Create(AOwner: TComponent); override;
   published
     property Visualizar: Boolean read FVisualizar write FVisualizar
-      default False ;
+      default False;
     property UF: String read FUF write SetUF;
     property UFCodigo: Integer read FUFCodigo;
     property Ambiente: TpcnTipoAmbiente read FAmbiente write SetAmbiente
-      default taHomologacao ;
+      default taHomologacao;
     property AmbienteCodigo: Integer read FAmbienteCodigo;
     property ProxyHost: String read FProxyHost write FProxyHost;
     property ProxyPort: String read FProxyPort write FProxyPort;
@@ -129,14 +129,14 @@ type
     procedure SetFormaEmissao(AValue: TpcnTipoEmissao);
     function GetPathSalvar: String;
   public
-    constructor Create(AOwner: TComponent); override ;
+    constructor Create(AOwner: TComponent); override;
     function Save(AXMLName: String; AXMLFile: WideString; aPath: String = ''): Boolean;
   published
     property FormaEmissao: TpcnTipoEmissao read FFormaEmissao
-      write SetFormaEmissao default teNormal ;
+      write SetFormaEmissao default teNormal;
     property FormaEmissaoCodigo: Integer read FFormaEmissaoCodigo;
     property Salvar: Boolean read FSalvar write FSalvar default False;
-    property AtualizarXMLCancelado: Boolean read FAtualizarXMLCancelado write FAtualizarXMLCancelado default True ;
+    property AtualizarXMLCancelado: Boolean read FAtualizarXMLCancelado write FAtualizarXMLCancelado default True;
     property PathSalvar: String read GetPathSalvar write FPathSalvar;
     property PathSchemas: String read FPathSchemas write FPathSchemas;
   end;
@@ -149,13 +149,13 @@ type
     FEmissaoPathMDFe  : Boolean;
     FPathMDFe : String;
   public
-    constructor Create(AOwner: TComponent); override ;
+    constructor Create(AOwner: TComponent); override;
     function GetPathMDFe(Data : TDateTime = 0): String;
   published
-    property Salvar     : Boolean read FSalvar  write FSalvar  default False ;
-    property PastaMensal: Boolean read FMensal  write FMensal  default False ;
-    property AdicionarLiteral: Boolean read FLiteral write FLiteral default False ;
-    property EmissaoPathMDFe: Boolean read FEmissaoPathMDFe write FEmissaoPathMDFe default False ;
+    property Salvar     : Boolean read FSalvar  write FSalvar  default False;
+    property PastaMensal: Boolean read FMensal  write FMensal  default False;
+    property AdicionarLiteral: Boolean read FLiteral write FLiteral default False;
+    property EmissaoPathMDFe: Boolean read FEmissaoPathMDFe write FEmissaoPathMDFe default False;
     property PathMDFe : String read FPathMDFe  write FPathMDFe;
   end;
 
@@ -169,10 +169,10 @@ type
     constructor Create(AOwner: TComponent); override;
     destructor Destroy; override;
   published
-    property Geral: TGeralConf read FGeral ;
-    property WebServices: TWebServicesConf read FWebServices ;
-    property Certificados: TCertificadosConf read FCertificados ;
-    property Arquivos: TArquivosConf read FArquivos ;
+    property Geral: TGeralConf read FGeral;
+    property WebServices: TWebServicesConf read FWebServices;
+    property Certificados: TCertificadosConf read FCertificados;
+    property Arquivos: TArquivosConf read FArquivos;
   end;
 
 implementation
@@ -185,28 +185,28 @@ uses
 
 constructor TConfiguracoes.Create(AOwner: TComponent);
 begin
-  inherited Create( AOwner ) ;
+  inherited Create( AOwner );
 
   FGeral      := TGeralConf.Create(Self);
-  FGeral.Name := 'GeralConf' ;
+  FGeral.Name := 'GeralConf';
   {$IFDEF COMPILER6_UP}
    FGeral.SetSubComponent( true );{ para gravar no DFM/XFM }
   {$ENDIF}
 
   FWebServices      := TWebServicesConf.Create(self);
-  FWebServices.Name := 'WebServicesConf' ;
+  FWebServices.Name := 'WebServicesConf';
   {$IFDEF COMPILER6_UP}
    FWebServices.SetSubComponent( true );{ para gravar no DFM/XFM }
   {$ENDIF}
 
   FCertificados      := TCertificadosConf.Create(self);
-  FCertificados.Name := 'CertificadosConf' ;
+  FCertificados.Name := 'CertificadosConf';
   {$IFDEF COMPILER6_UP}
    FCertificados.SetSubComponent( true );{ para gravar no DFM/XFM }
   {$ENDIF}
 
   FArquivos      := TArquivosConf.Create(self);
-  FArquivos.Name := 'ArquivosConf' ;
+  FArquivos.Name := 'ArquivosConf';
   {$IFDEF COMPILER6_UP}
    FArquivos.SetSubComponent( true );{ para gravar no DFM/XFM }
   {$ENDIF}
@@ -231,8 +231,8 @@ begin
   FFormaEmissaoCodigo    := StrToInt(TpEmisToStr(FFormaEmissao));
   FSalvar                := False;
   FAtualizarXMLCancelado := True;
-  FPathSalvar            := '' ;
-  FPathSchemas           := '' ;
+  FPathSalvar            := '';
+  FPathSchemas           := '';
 end;
 
 function TGeralConf.GetPathSalvar: String;
@@ -242,7 +242,7 @@ begin
   else
     Result := FPathSalvar;
 
-  Result := PathWithDelim( Trim(Result) ) ;
+  Result := PathWithDelim( Trim(Result) );
 end;
 
 function TGeralConf.Save(AXMLName: String; AXMLFile: WideString; aPath: String = ''): Boolean;
@@ -295,7 +295,7 @@ begin
   FUF             := NFeUF[24];
   FUFCodigo       := NFeUFCodigo[24];
   FAmbiente       := taHomologacao;
-  FVisualizar     := False ;
+  FVisualizar     := False;
   FAmbienteCodigo := StrToInt(TpAmbToStr(FAmbiente));
 end;
 
@@ -325,7 +325,7 @@ procedure TWebServicesConf.SetUF(AValue: String);
 var
   Codigo, i: Integer;
 begin
-  Codigo := -1 ;
+  Codigo := -1;
   for i:= 0 to High(NFeUF) do
   begin
     if NFeUF[I] = AValue then

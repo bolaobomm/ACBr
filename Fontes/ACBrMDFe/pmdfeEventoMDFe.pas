@@ -47,9 +47,9 @@ uses SysUtils, Classes,
      pcnAuxiliar, pcnConversao;
 
 type
-  TInfEvento = class ;
-  TDetEvento = class ;
-  TRetInfEvento = class ;
+  TInfEvento = class;
+  TDetEvento = class;
+  TRetInfEvento = class;
   EventoException = class(Exception);
 
   TInfEvento = class

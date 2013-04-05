@@ -59,7 +59,7 @@ type
     FMDFe: TMDFe;
     FXML: AnsiString;
     FConfirmada : Boolean;
-    FMsg : AnsiString ;
+    FMsg : AnsiString;
     FAlertas: AnsiString;
     FNomeArq: String;
     function GetMDFeXML: AnsiString;
@@ -97,7 +97,7 @@ type
   TManifestos = class(TOwnedCollection)
   private
     FConfiguracoes : TConfiguracoes;
-    FACBrMDFe : TComponent ;
+    FACBrMDFe : TComponent;
 
     function GetItem(Index: Integer): Manifesto;
     procedure SetItem(Index: Integer; const Value: Manifesto);
@@ -115,12 +115,12 @@ type
     property Items[Index: Integer]: Manifesto read GetItem  write SetItem;
     property Configuracoes: TConfiguracoes read FConfiguracoes  write FConfiguracoes;
 
-    function GetNamePath: string; override ;
+    function GetNamePath: string; override;
     function LoadFromFile(CaminhoArquivo: string): boolean;
     function LoadFromStream(Stream: TStringStream): boolean;
     function SaveToFile(PathArquivo: string = ''): boolean;
 
-    property ACBrMDFe : TComponent read FACBrMDFe ;
+    property ACBrMDFe : TComponent read FACBrMDFe;
   end;
 
   TSendMailThread = class(TThread)
@@ -137,7 +137,7 @@ type
     sCC : TStrings;
     slmsg_Lines : TStrings;
     constructor Create(AOwner: Manifesto);
-    destructor Destroy ; override ;
+    destructor Destroy; override;
   protected
     procedure Execute; override;
     procedure HandleException;
@@ -252,13 +252,13 @@ var
  i          : Integer;
 begin
  m:=TMimemess.create;
- ThreadSMTP := TSendMailThread.Create(Self);  // Não Libera, pois usa FreeOnTerminate := True ;
+ ThreadSMTP := TSendMailThread.Create(Self);  // Não Libera, pois usa FreeOnTerminate := True;
  StreamMDFe  := TStringStream.Create('');
  try
     p := m.AddPartMultipart('mixed', nil);
     if sMensagem <> nil then
        m.AddPartText(sMensagem, p);
-    SaveToStream(StreamMDFe) ;
+    SaveToStream(StreamMDFe);
     m.AddPartBinary(StreamMDFe,copy(MDFe.infMDFe.ID, (length(MDFe.infMDFe.ID)-44)+1, 44)+'-mdfe.xml', p);
     if (EnviaPDF) then
     begin
@@ -318,7 +318,7 @@ begin
 
  finally
     m.free;
-    StreamMDFe.Free ;
+    StreamMDFe.Free;
  end;
 end;
 
@@ -340,11 +340,11 @@ constructor TManifestos.Create(AOwner: TPersistent;
   ItemClass: TCollectionItemClass);
 begin
   if not (AOwner is TACBrMDFe ) then
-     raise Exception.Create( 'AOwner deve ser do tipo TACBrMDFe') ;
+     raise Exception.Create( 'AOwner deve ser do tipo TACBrMDFe');
 
   inherited;
 
-  FACBrMDFe := TACBrMDFe( AOwner ) ;
+  FACBrMDFe := TACBrMDFe( AOwner );
 end;
 
 
@@ -352,7 +352,7 @@ function TManifestos.Add: Manifesto;
 begin
   Result := Manifesto(inherited Add);
 
-  Result.MDFe.Ide.tpAmb := Configuracoes.WebServices.Ambiente ;
+  Result.MDFe.Ide.tpAmb := Configuracoes.WebServices.Ambiente;
 end;
 
 procedure TManifestos.Assinar;
@@ -378,8 +378,8 @@ begin
            raise Exception.Create('Falha ao assinar Manifesto Eletrônico de Documentos Fiscais '+
                                    IntToStr(Self.Items[i].MDFe.Ide.cMDF)+FMsg);
 {$ENDIF}
-        vAssinada := StringReplace( vAssinada, '<'+ENCODING_UTF8_STD+'>', '', [rfReplaceAll] ) ;
-        vAssinada := StringReplace( vAssinada, '<?xml version="1.0"?>', '', [rfReplaceAll] ) ;
+        vAssinada := StringReplace( vAssinada, '<'+ENCODING_UTF8_STD+'>', '', [rfReplaceAll] );
+        vAssinada := StringReplace( vAssinada, '<?xml version="1.0"?>', '', [rfReplaceAll] );
         Self.Items[i].XML := vAssinada;
 
         Leitor := TLeitor.Create;
@@ -647,7 +647,7 @@ begin
       try
         smtp.Sock.CloseSocket;
       except
-      end ;
+      end;
       Terminado := True;
     end;
   except

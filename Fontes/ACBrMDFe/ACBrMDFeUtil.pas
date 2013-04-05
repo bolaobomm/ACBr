@@ -789,19 +789,19 @@ begin
   case Tipo of
     1:
     begin
-      I := pos('</MDFe>',AStr) ;
+      I := pos('</MDFe>',AStr);
       if I = 0 then
-        raise Exception.Create('Não encontrei final do XML: </MDFe>') ;
+        raise Exception.Create('Não encontrei final do XML: </MDFe>');
     end;
     2,3:
     begin
       // Alterado por Italo em 02/10/2012
-      I := pos('</eventoMDFe>',AStr) ;
+      I := pos('</eventoMDFe>',AStr);
       if I = 0 then
-        raise Exception.Create('Não encontrei final do XML: </eventoMDFe>') ;
+        raise Exception.Create('Não encontrei final do XML: </eventoMDFe>');
     end;
     else
-      raise Exception.Create('Template de Tipo não implementado.') ;
+      raise Exception.Create('Template de Tipo não implementado.');
   end;
 
   if pos('<Signature', AStr) > 0 then
@@ -1087,7 +1087,7 @@ class function MDFeUtil.UFtoCUF(UF : String): Integer;
 var
   Codigo, i: Integer;
 begin
-  Codigo := -1 ;
+  Codigo := -1;
   for i:= 0 to High(NFeUF) do
   begin
     if NFeUF[I] = UF then
@@ -1184,18 +1184,18 @@ begin
             copy(AValue,9,4)  + ' ' + copy(AValue,13,4) + ' ' +
             copy(AValue,17,4) + ' ' + copy(AValue,21,4) + ' ' +
             copy(AValue,25,4) + ' ' + copy(AValue,29,4) + ' ' +
-            copy(AValue,33,4) ;
+            copy(AValue,33,4);
 end;
 
 class function MDFeUtil.IdentificaTipoSchema(const AXML: AnsiString; var I: integer): integer;
 var
  lTipoEvento: String;
 begin
-  I := pos('<infMDFe',AXML) ;
+  I := pos('<infMDFe',AXML);
   Result := 1;
   if I = 0  then
    begin
-     I := pos('<infEvento',AXML) ;
+     I := pos('<infEvento',AXML);
      if I > 0 then
       begin
        lTipoEvento := Trim(RetornarConteudoEntre(AXML,'<tpEvento>','</tpEvento>'));
