@@ -373,30 +373,9 @@ TACBrECFEscECF = class( TACBrECFClass )
     Function RetornaInfoECF( Registrador: String) : AnsiString; override ;
  end ;
 
-Function TB2Int( ATB: AnsiString ) : Integer ;
-Function Int2TB( AInteger : Integer ) : AnsiString ;
-
 implementation
 Uses SysUtils, Math, ACBrECF,
     {$IFDEF COMPILER6_UP} DateUtils, StrUtils {$ELSE} ACBrD5, Windows{$ENDIF} ;
-
-function TB2Int(ATB: AnsiString): Integer;
-var
-   AHexStr: String;
-begin
-  AHexStr := '$' + IntToHex(ord(ATB[2]),2) + IntToHex(ord(ATB[1]),2) ;
-  Result := StrToInt( AHexStr );
-end;
-
-function Int2TB(AInteger: Integer): AnsiString;
-var
-   AHexStr: String;
-begin
-  AHexStr := IntToHex(AInteger,4);
-  Result  := AnsiChar(chr( StrToInt('$'+copy(AHexStr,3,2) ) )) +
-             AnsiChar(chr( StrToInt('$'+copy(AHexStr,1,2) ) )) ;
-end;
-
 
 { TACBrECFEscECFRET }
 
@@ -475,7 +454,7 @@ begin
   TBC := Length( BCD ) ;
 
   Buffer := AnsiChar(chr(fsSEQ)) + AnsiChar(chr(fsCMD)) + AnsiChar(chr(fsEXT)) +
-            Int2TB(TBC) + BCD ;
+            IntToLEStr(TBC) + BCD ;
 
   Soma := 0 ;
   LenCmd := Length( Buffer ) ;
@@ -591,7 +570,7 @@ begin
   fsEXT      := ord( Value[4] ) ;
   fsCAT      := ord( Value[5] ) ;
   fsRET.RET  := Copy( Value, 6, 4 );
-  fsTBR      := TB2Int( copy(Value,10,2) );
+  fsTBR      := LEStrToInt( copy(Value,10,2) );
   fsBRS      := copy( Value, 12, fsTBR ) ;
   fsCHK      := ord( Value[ 12 + fsTBR ] ) ;
 
@@ -811,7 +790,7 @@ begin
        begin
           if LenRet >= 11 then
           begin
-             TBR    := TB2Int( copy(Retorno,10,2) ) ;
+             TBR    := LEStrToInt( copy(Retorno,10,2) ) ;
              Result := ( LenRet >=  (11 + TBR + 1) ) ;
           end ;
        end;

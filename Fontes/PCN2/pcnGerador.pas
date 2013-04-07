@@ -474,6 +474,7 @@ const
   DSC_VPISST = 'Valor do PIS ST';
   DSC_VCOFINSST = 'Valor do COFINS ST';
   DSC_VCFE = 'Valor Total do CF-e';
+  DSC_VCFELEI12741 = 'Valor aproximado dos tributos do CFe-SAT – Lei 12741/12.';
   DSC_VDEDUCISS = 'Valor das deduções para ISSQN';
   DSC_CSERVTRIBMUN = 'Codigo de tributação pelo ISSQN do municipio';
   DSC_CNATOP = 'Natureza da Operação de ISSQN';
@@ -494,6 +495,7 @@ const
   DSC_VITEM = 'Valor líquido do Item';
   DSC_VRATDESC = 'Rateio do desconto sobre subtotal';
   DSC_VRATACR = 'Rateio do acréscimo sobre subtotal';
+  DSC_NUMEROCAIXA = 'Número do Caixa ao qual o SAT está conectado';
 
 implementation
 

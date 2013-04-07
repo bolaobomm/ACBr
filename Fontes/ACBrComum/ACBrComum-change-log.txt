@@ -38,6 +38,13 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+Data: 05/04/2013
+-- ACBrUtil --
+[+] Adicionado os metodos para conversão de Inteiros em Strings binárias no
+    formato Little Endian   (por: DSA)
+    function IntToLEStr(AInteger: Integer; BytesStr: Integer = 2): AnsiString;
+    function LEStrToInt(ALEStr: AnsiString): Integer;
+
 Data: 04/04/2013
 -- ACBrBase --
 [+] Tratamento para compilar no D6

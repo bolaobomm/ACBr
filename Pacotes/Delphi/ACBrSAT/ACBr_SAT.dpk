@@ -1,0 +1,45 @@
+package ACBr_SAT;
+
+{$R *.res}
+{$IFDEF IMPLICITBUILDING This IFDEF should not be used by users}
+{$ALIGN 8}
+{$ASSERTIONS ON}
+{$BOOLEVAL OFF}
+{$DEBUGINFO ON}
+{$EXTENDEDSYNTAX ON}
+{$IMPORTEDDATA ON}
+{$IOCHECKS ON}
+{$LOCALSYMBOLS ON}
+{$LONGSTRINGS ON}
+{$OPENSTRINGS ON}
+{$OPTIMIZATION OFF}
+{$OVERFLOWCHECKS OFF}
+{$RANGECHECKS OFF}
+{$REFERENCEINFO OFF}
+{$SAFEDIVIDE OFF}
+{$STACKFRAMES ON}
+{$TYPEDADDRESS OFF}
+{$VARSTRINGCHECKS ON}
+{$WRITEABLECONST OFF}
+{$MINENUMSIZE 1}
+{$IMAGEBASE $400000}
+{$DEFINE DEBUG}
+{$ENDIF IMPLICITBUILDING}
+{$DESCRIPTION 'Componente para comunicação com equipamentos SAT http://www.fazenda.sp.gov.br/sat/'}
+{$IMPLICITBUILD ON}
+
+requires
+  rtl,
+  ACBrComum,
+  PCN2,
+  designide;
+
+contains
+  ACBrSAT in '..\..\..\Fontes\ACBrSAT\ACBrSAT.pas',
+  ACBrSATClass in '..\..\..\Fontes\ACBrSAT\ACBrSATClass.pas',
+  ACBrSATEmuladorSP in '..\..\..\Fontes\ACBrSAT\ACBrSATEmuladorSP.pas',
+  pcnCFe in '..\..\..\Fontes\ACBrSAT\pcnCFe.pas',
+  pcnCFeR in '..\..\..\Fontes\ACBrSAT\pcnCFeR.pas',
+  pcnCFeW in '..\..\..\Fontes\ACBrSAT\pcnCFeW.pas';
+
+end.

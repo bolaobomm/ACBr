@@ -140,6 +140,9 @@ function BinToInt(Value: String): LongInt;
 Function BcdToAsc( const StrBCD : AnsiString) : AnsiString ;
 Function AscToBcd( const ANumStr: AnsiString ; const TamanhoBCD : Byte) : AnsiString ;
 
+function IntToLEStr(AInteger: Integer; BytesStr: Integer = 2): AnsiString;
+function LEStrToInt(ALEStr: AnsiString): Integer;
+
 Function HexToAscii(const HexStr : AnsiString) : AnsiString ;
 Function AsciiToHex(const ABinaryString: AnsiString): String;
 
@@ -467,6 +470,54 @@ begin
   For I := 1 to TamanhoBCD do
      Result := Result + AnsiChar( chr( StrToInt( copy(String(StrBCD), (I*2)-1, 2) ) ) ) ;
 end ;
+
+
+{-----------------------------------------------------------------------------
+  Converte um "AInteger" em uma String binária codificada como Little Endian,
+  no tamanho máximo de "BytesStr"
+  Exemplos: IntToLEStr( 106 ) = chr(106) + chr(0)
+ ---------------------------------------------------------------------------- }
+function IntToLEStr(AInteger: Integer; BytesStr: Integer = 2): AnsiString;
+var
+   AHexStr: String;
+   LenHex, P : Integer ;
+begin
+  LenHex  := BytesStr * 2 ;
+  AHexStr := IntToHex(AInteger,LenHex);
+  Result  := '' ;
+
+  P := 1;
+  while P < LenHex do
+  begin
+    Result := AnsiChar(chr( StrToInt('$'+copy(AHexStr,P,2) ) )) + Result;
+    P := P + 2 ;
+  end ;
+end;
+
+{-----------------------------------------------------------------------------
+  converte uma String binária codificada como Little Endian em Inteiro
+  Veja exemplos na function acima
+ ---------------------------------------------------------------------------- }
+function LEStrToInt(ALEStr: AnsiString): Integer;
+var
+   AHexStr: String;
+   LenLE, P : Integer ;
+begin
+  LenLE   := Length(ALEStr);
+  AHexStr := '';
+
+  P := 1;
+  while P <= LenLE do
+  begin
+    AHexStr := IntToHex(ord(ALEStr[P]),2) + AHexStr;
+    Inc( P ) ;
+  end ;
+
+  if AHexStr <> '' then
+    Result := StrToInt( '$'+AHexStr )
+  else
+    Result := 0;
+end;
 
 
 {-----------------------------------------------------------------------------

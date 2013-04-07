@@ -152,6 +152,15 @@ echo "* Arquivo   ACBrSintegra.lrs   gerado  *"
 echo "****************************************"
 echo.
 
+:SAT
+%1\tools\lazres.exe ACBrSAT.lrs TACBrSAT.bmp
+move ACBrSAT.lrs ..\ACBrSAT
+echo.
+echo "****************************************"
+echo "*   Arquivo   ACBrSAT.lrs   gerado     *"
+echo "****************************************"
+echo.
+
 
 GOTO fim
 
