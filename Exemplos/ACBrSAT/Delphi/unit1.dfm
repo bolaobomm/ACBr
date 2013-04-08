@@ -1,9 +1,9 @@
 object Form1: TForm1
   Left = 406
   Top = 154
+  Width = 698
+  Height = 460
   Caption = 'SAT Teste - Projeto ACBr'
-  ClientHeight = 402
-  ClientWidth = 665
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -18,7 +18,7 @@ object Form1: TForm1
   object Splitter1: TSplitter
     Left = 0
     Top = 184
-    Width = 665
+    Width = 682
     Height = 5
     Cursor = crVSplit
     Align = alTop
@@ -26,7 +26,7 @@ object Form1: TForm1
   object PageControl1: TPageControl
     Left = 0
     Top = 189
-    Width = 665
+    Width = 682
     Height = 213
     ActivePage = tsRecebido
     Align = alClient
@@ -60,7 +60,7 @@ object Form1: TForm1
       object mCupom: TMemo
         Left = 0
         Top = 20
-        Width = 657
+        Width = 674
         Height = 165
         Align = alBottom
         Anchors = [akLeft, akTop, akRight, akBottom]
@@ -71,7 +71,7 @@ object Form1: TForm1
   object Panel1: TPanel
     Left = 0
     Top = 0
-    Width = 665
+    Width = 682
     Height = 184
     Align = alTop
     TabOrder = 0
@@ -98,6 +98,7 @@ object Form1: TForm1
         Width = 105
         Height = 21
         Style = csDropDownList
+        ItemHeight = 13
         TabOrder = 1
         OnChange = cbxModeloChange
       end
@@ -123,7 +124,7 @@ object Form1: TForm1
     object GroupBox1: TGroupBox
       Left = 146
       Top = 1
-      Width = 518
+      Width = 535
       Height = 182
       Align = alClient
       Caption = 'Configura'#231#227'o'
@@ -131,15 +132,15 @@ object Form1: TForm1
       object PageControl2: TPageControl
         Left = 2
         Top = 15
-        Width = 514
+        Width = 531
         Height = 165
-        ActivePage = tsDadosSwHouse
+        ActivePage = tsDadosEmit
         Align = alClient
         TabOrder = 0
         object tsDadosSAT: TTabSheet
           Caption = 'Dados do SAT CFe'
           DesignSize = (
-            506
+            523
             137)
           object Label9: TLabel
             Left = 26
@@ -252,6 +253,7 @@ object Form1: TForm1
             Width = 132
             Height = 21
             Style = csDropDownList
+            ItemHeight = 13
             TabOrder = 5
           end
         end
@@ -332,6 +334,7 @@ object Form1: TForm1
             Width = 166
             Height = 21
             Style = csDropDownList
+            ItemHeight = 13
             TabOrder = 3
           end
           object cbxIndRatISSQN: TComboBox
@@ -340,13 +343,14 @@ object Form1: TForm1
             Width = 134
             Height = 21
             Style = csDropDownList
+            ItemHeight = 13
             TabOrder = 4
           end
         end
         object tsDadosSwHouse: TTabSheet
           Caption = 'Dados Sw.House'
           DesignSize = (
-            506
+            523
             137)
           object Label2: TLabel
             Left = 10
@@ -432,9 +436,19 @@ object Form1: TForm1
         Caption = 'Enviar Venda'
         OnClick = mEnviarVendaClick
       end
+      object ImprimirExtratoVenda1: TMenuItem
+        Caption = 'Imprimir Extrato Venda'
+        OnClick = ImprimirExtratoVenda1Click
+      end
+      object N1: TMenuItem
+        Caption = '-'
+      end
       object mCancelarUltimaVenda: TMenuItem
         Caption = 'Cancelar '#218'ltima Venda'
         OnClick = mCancelarUltimaVendaClick
+      end
+      object ImprimirExtratoCancelamento1: TMenuItem
+        Caption = 'Imprimir Extrato Cancelamento'
       end
     end
     object MenuItem6: TMenuItem
@@ -487,6 +501,7 @@ object Form1: TForm1
   end
   object ACBrSAT1: TACBrSAT
     Modelo = satEmuladorSP
+    Extrato = ACBrSATExtratoESCPOS1
     OnLog = ACBrSAT1Log
     Config.infCFe_versaoDadosEnt = 0.030000000000000000
     Config.ide_numeroCaixa = 0
@@ -497,5 +512,10 @@ object Form1: TForm1
     OnGetsignAC = ACBrSAT1GetsignAC
     Left = 24
     Top = 330
+  end
+  object ACBrSATExtratoESCPOS1: TACBrSATExtratoESCPOS
+    ACBrSAT = ACBrSAT1
+    Left = 140
+    Top = 333
   end
 end

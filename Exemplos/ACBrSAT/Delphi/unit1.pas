@@ -6,7 +6,8 @@ interface
 
 uses
   Classes, SysUtils, Forms, Controls, Graphics, Dialogs, StdCtrls,
-  ActnList, Menus, ExtCtrls, Buttons, ComCtrls, Spin, ACBrSAT , ACBrSATClass;
+  ActnList, Menus, ExtCtrls, Buttons, ComCtrls, Spin, ACBrSAT , ACBrSATClass,
+  ACBrSATExtratoClass, ACBrSATExtratoESCPOS;
 
 {function ConsultarStatusOperacional( numeroSessao : Longint; codigoDeAtivacao : PChar ) : PChar ; cdecl;
   External 'C:\SAT\SAT.DLL';
@@ -98,6 +99,10 @@ type
     tsRecebido : TTabSheet ;
     tsLog : TTabSheet ;
     tsGerado : TTabSheet ;
+    N1: TMenuItem;
+    ImprimirExtratoVenda1: TMenuItem;
+    ImprimirExtratoCancelamento1: TMenuItem;
+    ACBrSATExtratoESCPOS1: TACBrSATExtratoESCPOS;
     procedure ACBrSAT1GetcodigoDeAtivacao(var Chave : String) ;
     procedure ACBrSAT1GetsignAC(var Chave : String) ;
     procedure ACBrSAT1Log(const AString : String) ;
@@ -123,6 +128,7 @@ type
     procedure mExtrairLogsClick(Sender : TObject) ;
     procedure mGerarVendaClick(Sender : TObject) ;
     procedure SbArqLogClick(Sender : TObject) ;
+    procedure ImprimirExtratoVenda1Click(Sender: TObject);
   private
     procedure TrataErros(Sender : TObject ; E : Exception) ;
     procedure AjustaACBrSAT ;
@@ -136,7 +142,7 @@ var
 
 implementation
 
-Uses typinfo, ACBrUtil, pcnConversao, synacode, IniFiles;
+Uses typinfo, ACBrUtil, pcnConversao, synacode, IniFiles, pcnCFe, pcnCFeR;
 
 {$R *.dfm}
 
@@ -222,6 +228,10 @@ end;
 procedure TForm1.ACBrSAT1GetsignAC(var Chave : String) ;
 begin
   Chave := edtSwHAssinatura.Text;
+
+ // Chave := 'akjdshkjashdkjashkdjhaskjdhasjkdhaskjhdakjshdkjashdkjashdkjashdkjashdkshakjdhaskjdhskjadhkjashdkjashdkjashdkjashdkjhasdkjahsdkjhaskjdhaskhd';
+ // Chave := Chave + 'askjhdakjshdkjashdkjashdkashdkajshdkjasdhkjashdkjashdkjashdkjashdkjashdkjashdkjahkjashdkjashdkjashdkjhsakjdhkjashdkjashdkjashdkjsahdkjashdkjashdkjashkdjashdkjashdkjashdksjahdkjashdkjsahdkjashkjdhaskjdhaskj';
+
 end;
 
 procedure TForm1.bInicializarClick(Sender : TObject) ;
@@ -475,6 +485,8 @@ begin
   begin
     ide.numeroCaixa := 1;
 
+    Emit.cRegTrib := RTRegimeNormal;
+
     Dest.CNPJCPF := '05481336000137';
     Dest.xNome := 'D.J. SYSTEM';
 
@@ -492,7 +504,7 @@ begin
       Prod.vItem := 1.5;
 
       Imposto.ICMS.orig := oeEstrangeiraImportacaoDireta;
-      Imposto.ICMS.CST :=cst41;
+      Imposto.ICMS.CST := cst41;
 
       Imposto.PIS.CST := pis99;
       Imposto.PIS.vBC := 0;
@@ -539,6 +551,23 @@ end;
 procedure TForm1.SbArqLogClick(Sender : TObject) ;
 begin
   OpenURL( ExtractFilePath( Application.ExeName ) + edLog.Text);
+end;
+
+procedure TForm1.ImprimirExtratoVenda1Click(Sender: TObject);
+var
+  CFeR : TCFeR;
+begin
+  ACBrSATExtratoESCPOS1.Device.Porta := 'COM7';
+  ACBrSATExtratoESCPOS1.Device.Ativar;
+  ACBrSATExtratoESCPOS1.Device.Serial.Purge;
+  CFeR := TCFeR.Create(ACBrSAT1.CFe);
+  try
+    CFeR.Leitor.Arquivo := mCupom.Lines.Text;
+    CFeR.LerXml;
+    ACBrSATExtratoESCPOS1.ImprimirExtrato(ACBrSAT1.CFe);
+  finally
+    CFeR.free;
+  end;
 end;
 
 end.
