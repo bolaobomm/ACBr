@@ -72,8 +72,12 @@ type
   private
     FACBrSAT : TComponent;
     FCasasDecimais: TCasasDecimais;
+
     procedure SetSAT(const Value: TComponent);
   protected
+    FpImprimeQRCode: Boolean;
+    FpCFe: TCFe;
+    
     procedure Notification(AComponent: TComponent; Operation: TOperation); override;  
   public
     constructor Create(AOwner: TComponent); override;
@@ -84,6 +88,7 @@ type
   published
     property ACBrSAT : TComponent  read FACBrSAT write SetSAT ;
     property CasasDecimais: TCasasDecimais read FCasasDecimais ;
+    property ImprimeQRCode: Boolean read FpImprimeQRCode write FpImprimeQRCode default True ;
   end ;
 
 implementation
