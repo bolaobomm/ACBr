@@ -1,7 +1,6 @@
 package ACBr_SAT;
 
 {$R *.res}
-{$IFDEF IMPLICITBUILDING This IFDEF should not be used by users}
 {$ALIGN 8}
 {$ASSERTIONS ON}
 {$BOOLEVAL OFF}
@@ -23,16 +22,20 @@ package ACBr_SAT;
 {$WRITEABLECONST OFF}
 {$MINENUMSIZE 1}
 {$IMAGEBASE $400000}
-{$DEFINE DEBUG}
-{$ENDIF IMPLICITBUILDING}
 {$DESCRIPTION 'Componente para comunicação com equipamentos SAT http://www.fazenda.sp.gov.br/sat/'}
 {$IMPLICITBUILD ON}
+{$DEFINE DEBUG}
 
 requires
   rtl,
   ACBrComum,
   PCN2,
-  designide;
+  designide,
+  synapse,
+  vclactnband,
+  vclx,
+  vcl,
+  ACBrSerial;
 
 contains
   ACBrSAT in '..\..\..\Fontes\ACBrSAT\ACBrSAT.pas',
@@ -40,6 +43,8 @@ contains
   ACBrSATEmuladorSP in '..\..\..\Fontes\ACBrSAT\ACBrSATEmuladorSP.pas',
   pcnCFe in '..\..\..\Fontes\ACBrSAT\pcnCFe.pas',
   pcnCFeR in '..\..\..\Fontes\ACBrSAT\pcnCFeR.pas',
-  pcnCFeW in '..\..\..\Fontes\ACBrSAT\pcnCFeW.pas';
+  pcnCFeW in '..\..\..\Fontes\ACBrSAT\pcnCFeW.pas',
+  ACBrSATEmuladorSPstatic in '..\..\..\Fontes\ACBrSAT\ACBrSATEmuladorSPstatic.pas',
+  ACBrSATExtratoClass in '..\..\..\Fontes\ACBrSAT\ACBrSATExtratoClass.pas';
 
 end.
