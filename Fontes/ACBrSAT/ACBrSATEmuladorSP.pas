@@ -38,15 +38,14 @@ unit ACBrSATEmuladorSP ;
 interface
 
 uses
-  Classes, SysUtils, ACBrSATClass;
+  Classes, SysUtils, ACBrSATClass, ACBrSATEmuladorSPstatic;
 
 type
 
-  { TACBrSATEmuladorSP }
+   { TACBrSATEmuladorSP }
 
    TACBrSATEmuladorSP = class( TACBrSATClass )
    private
-
      xSAT_AssociarAssinatura : function ( numeroSessao : LongInt;
         codigoDeAtivacao, CNPJvalue, assinaturaCNPJs : PAnsiChar ) : PAnsiChar ;
         stdcall;
@@ -137,7 +136,9 @@ function TACBrSATEmuladorSP.AtivarSAT(subComando : Integer ;
 Var
   Resp : PAnsiChar;
 begin
-  Resp := xSAT_AtivarSAT( numeroSessao, subComando,
+  {Resp := xSAT_AtivarSAT( numeroSessao, subComando,
+                          PAnsiChar(codigoDeAtivacao), PAnsiChar(CNPJ), cUF);}
+  Resp := ACBrSATEmuladorSPstatic.AtivarSAT( numeroSessao, subComando,
                           PAnsiChar(codigoDeAtivacao), PAnsiChar(CNPJ), cUF);
   Result := ACBrStr( String( Resp ) );
 end ;
@@ -210,7 +211,9 @@ function TACBrSATEmuladorSP.ConsultarStatusOperacional : String ;
 Var
   Resp : PAnsiChar;
 begin
-  Resp := xSAT_ConsultarStatusOperacional( numeroSessao, PAnsiChar(codigoDeAtivacao) ) ;
+  //Resp := xSAT_ConsultarStatusOperacional( numeroSessao, PAnsiChar(codigoDeAtivacao) ) ;
+  Resp := ACBrSATEmuladorSPstatic.ConsultarStatusOperacional( numeroSessao, PAnsiChar(codigoDeAtivacao) ) ;
+
   Result := ACBrStr( String( Resp ) );
 end ;
 
@@ -234,7 +237,9 @@ function TACBrSATEmuladorSP.EnviarDadosVenda(dadosVenda : AnsiString) : String ;
 Var
   Resp : PAnsiChar;
 begin
-  Resp := xSAT_EnviarDadosVenda( numeroSessao, PAnsiChar(codigoDeAtivacao),
+  {Resp := xSAT_EnviarDadosVenda( numeroSessao, PAnsiChar(codigoDeAtivacao),
+                                   PAnsiChar(dadosVenda) ) ;}
+  Resp := ACBrSATEmuladorSPstatic.EnviarDadosVenda( numeroSessao, PAnsiChar(codigoDeAtivacao),
                                    PAnsiChar(dadosVenda) ) ;
   Result := ACBrStr( String( Resp ) );
 end ;
@@ -251,7 +256,9 @@ function TACBrSATEmuladorSP.TesteFimAFim(dadosVenda : AnsiString) : String ;
 Var
   Resp : PAnsiChar;
 begin
-  Resp := xSAT_TesteFimAFim( numeroSessao, PAnsiChar(codigoDeAtivacao),
+  { Resp := xSAT_TesteFimAFim( numeroSessao, PAnsiChar(codigoDeAtivacao),
+                               PAnsiChar(dadosVenda) ); }
+  Resp := ACBrSATEmuladorSPstatic.TesteFimAFim( numeroSessao, PAnsiChar(codigoDeAtivacao),
                                PAnsiChar(dadosVenda) );
   Result := ACBrStr( String( Resp ) );
 end ;

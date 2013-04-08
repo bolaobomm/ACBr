@@ -8,7 +8,7 @@ interface
 
 uses
   ACBrSAT, ACBrSATClass, pcnCFe, pcnCFeR, pcnCFeW, ACBrSATEmuladorSP, 
-  LazarusPackageIntf;
+  ACBrSATEmuladorSPstatic, LazarusPackageIntf;
 
 implementation
 
