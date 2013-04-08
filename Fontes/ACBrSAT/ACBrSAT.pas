@@ -38,7 +38,7 @@ unit ACBrSAT;
 interface
 
 uses
-  Classes, SysUtils, pcnCFe, ACBrSATClass, ACBrSATExtratoClass
+  Classes, SysUtils, pcnCFe, pcnCFeR, pcnCFeCanc, ACBrSATClass, ACBrSATExtratoClass, synacode
   {$IFNDEF CONSOLE}
     {$IFDEF FPC}
       ,LResources
@@ -136,6 +136,10 @@ type
      function TrocarCodigoDeAtivacao( opcao : Integer; novoCodigo,
         confNovoCodigo : String ) : String ;
 
+    procedure ImprimirExtrato;
+    procedure ImprimirExtratoResumido;
+    procedure ImprimirExtratoCancelamento;
+
    published
      property Modelo : TACBrSATModelo read fsModelo write SetModelo
                  default satNenhum ;
@@ -160,7 +164,7 @@ procedure Register;
 
 implementation
 
-Uses ACBrUtil, ACBrSATEmuladorSP, pcnCFeW, ACBrSATExtratoESCPOS;
+Uses ACBrUtil, ACBrSATEmuladorSP, pcnCFeW, pcnCFeCancW, ACBrSATExtratoESCPOS;
 
 {$IFNDEF FPC}
    {$R ACBrSAT.dcr}
@@ -438,12 +442,26 @@ begin
 end ;
 
 function TACBrSAT.EnviarDadosVenda(dadosVenda : AnsiString) : String ;
+var
+  LocCFeR : TCFeR;
 begin
   fsComandoLog := 'EnviarDadosVenda( '+dadosVenda+' )';
   IniciaComando;
   Result := fsSATClass.EnviarDadosVenda( dadosVenda ) ;
   fsRespostaComando := Result;
   FinalizaComando ;
+
+  if fsResposta.codigoDeRetorno = 6000 then
+   begin
+     CFe.Clear;
+     LocCFeR := TCFeR.Create(CFe);
+     try
+       LocCFeR.Leitor.Arquivo := DecodeBase64(fsResposta.RetornoLst[6]);
+       LocCFeR.LerXml;
+     finally
+       LocCFeR.Free;
+     end;
+   end;
 end ;
 
 function TACBrSAT.ExtrairLogs : String ;
@@ -591,6 +609,30 @@ begin
   if (Operation = opRemove) and (fsExtrato <> nil) and (AComponent is TACBrSATExtratoClass) then
      fsExtrato := nil ;
 end ;
+
+procedure TACBrSAT.ImprimirExtrato;
+begin
+   if not Assigned(Extrato) then
+      raise Exception.Create( ACBrStr('Nenhum componente "ACBrSATExtrato" associado' ) ) ;
+
+   Extrato.ImprimirExtrato;
+end;
+
+procedure TACBrSAT.ImprimirExtratoCancelamento;
+begin
+   if not Assigned(Extrato) then
+      raise Exception.Create( ACBrStr('Nenhum componente "ACBrSATExtrato" associado' ) ) ;
+
+   Extrato.ImprimirExtratoCancelamento;
+end;
+
+procedure TACBrSAT.ImprimirExtratoResumido;
+begin
+   if not Assigned(Extrato) then
+      raise Exception.Create( ACBrStr('Nenhum componente "ACBrSATExtrato" associado' ) ) ;
+
+   Extrato.ImprimirExtratoResumido;
+end;
 
 {$ifdef FPC}
 {$IFNDEF CONSOLE}

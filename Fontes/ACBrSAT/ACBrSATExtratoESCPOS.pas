@@ -172,7 +172,7 @@ begin
      FBuffer.Add(FLinhaCmd);
    end;
   FBuffer.Add('------------------------------------------------');
-  FBuffer.Add('CPF/CNPJ do Consumidor: '+DFeUtil.FormatarCNPJ(FpCFe.Dest.CNPJCPF));
+  FBuffer.Add(cCmdAlinhadoEsquerda+'CPF/CNPJ do Consumidor: '+DFeUtil.FormatarCNPJ(FpCFe.Dest.CNPJCPF));
 end;
 
 procedure TACBrSATExtratoESCPOS.GerarItens;
@@ -249,7 +249,7 @@ begin
      FBuffer.Add(padS(CodigoMPToDescricao(FpCFe.Pagto.Items[i].cMP)+'|'+FormatFloat('#,###,##0.00',FpCFe.Pagto.Items[i].vMP),48, '|'));
    end;
   if FpCFe.Pagto.vTroco > 0 then
-     FBuffer.Add(padS('Troco R$|'+FormatFloat('+#,###,##0.00',FpCFe.Pagto.vTroco),48, '|'));
+     FBuffer.Add(padS('Troco R$|'+FormatFloat('#,###,##0.00',FpCFe.Pagto.vTroco),48, '|'));
   FBuffer.Add('');
 end;
 
@@ -316,10 +316,9 @@ begin
                cCmdImpNegrito+IntToStr(FpCFe.ide.nserieSAT)+cCmdImpFimNegrito;
   FBuffer.Add(FLinhaCmd);
   FBuffer.Add(DFeUtil.FormatDate(DateToStr(FpCFe.ide.dEmi))+' '+TimeToStr(FpCFe.ide.hEmi));
+  FBuffer.Add('');
   FLinhaCmd :=  cCmdFontePequena+DFeUtil.FormatarChaveAcesso((FpCFe.infCFe.ID))+cCmdFonteNormal;
   FBuffer.Add(FLinhaCmd);
-  FBuffer.Add('');
-
 
   FLinhaCmd := chr(29)+'h'+chr(100)+
                chr(29)+'w'+chr(2)+
@@ -357,11 +356,15 @@ end;
 
 procedure TACBrSATExtratoESCPOS.ImprimirExtrato(CFe: TCFe);
 begin
-  if not Assigned(ACBrSAT) then
-     raise Exception.Create('Componente ACBrSAT não atribuído');
+  if CFe = nil then
+   begin
+     if not Assigned(ACBrSAT) then
+        raise Exception.Create('Componente ACBrSAT não atribuído');
 
-  FpCFe := CFe;
-//  := TACBrSAT(ACBrSAT).CFe;
+     FpCFe := TACBrSAT(ACBrSAT).CFe;
+   end
+  else
+    FpCFe := CFe; 
 
   GerarCabecalho;
   GerarItens;
@@ -382,11 +385,15 @@ end;
 
 procedure TACBrSATExtratoESCPOS.ImprimirExtratoResumido(CFe: TCFe);
 begin
-  if not Assigned(ACBrSAT) then
-     raise Exception.Create('Componente ACBrSAT não atribuído');
+  if CFe = nil then
+   begin
+     if not Assigned(ACBrSAT) then
+        raise Exception.Create('Componente ACBrSAT não atribuído');
 
-  FpCFe := CFe;
-//  := TACBrSAT(ACBrSAT).CFe;
+     FpCFe := TACBrSAT(ACBrSAT).CFe;
+   end
+  else
+    FpCFe := CFe; 
 
   GerarCabecalho;
   GerarTotais(True);
