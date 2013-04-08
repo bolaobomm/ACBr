@@ -202,7 +202,7 @@ type
   TpcnRegTribISSQN = (RTISSMicroempresaMunicipal, RTISSEstimativa, RTISSSociedadeProfissionais, RTISSCooperativa, RTISSMEI);
   TpcnindRatISSQN = (irSim, irNao);
   TpcnindRegra = (irArredondamento, irTruncamento);
-  TpcnCodigoMP = (MPDinheiro, MPCheque, MPCartaodeCredito, MPCartaodeDebito, MPCreditoLoja, MPValeAlimentacao, MPValeRefeicao, MPValePresente, MPValeCombustivel, MPOutros);
+  TpcnCodigoMP = (mpDinheiro, mpCheque, mpCartaodeCredito, mpCartaodeDebito, mpCreditoLoja, mpValeAlimentacao, mpValeRefeicao, mpValePresente, mpValeCombustivel, mpOutros);
 const
   TpcnTpEventoString : array[0..7] of String =( '110110',
                                                 '110111',

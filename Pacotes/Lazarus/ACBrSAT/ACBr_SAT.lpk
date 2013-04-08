@@ -22,7 +22,7 @@
     <Description Value="Componente para comunicação com equipamentos SAT
 http://www.fazenda.sp.gov.br/sat/"/>
     <Version Minor="1"/>
-    <Files Count="7">
+    <Files Count="9">
       <Item1>
         <Filename Value="..\..\..\Fontes\ACBrSAT\ACBrSAT.pas"/>
         <HasRegisterProc Value="True"/>
@@ -52,14 +52,22 @@ http://www.fazenda.sp.gov.br/sat/"/>
         <Filename Value="..\..\..\Fontes\ACBrSAT\ACBrSATEmuladorSPstatic.pas"/>
         <UnitName Value="ACBrSATEmuladorSPstatic"/>
       </Item7>
+      <Item8>
+        <Filename Value="..\..\..\Fontes\ACBrSAT\ACBrSATExtratoClass.pas"/>
+        <UnitName Value="ACBrSATExtratoClass"/>
+      </Item8>
+      <Item9>
+        <Filename Value="..\..\..\Fontes\ACBrSAT\ACBrSATExtratoESCPOS.pas"/>
+        <UnitName Value="ACBrSATExtratoESCPOS"/>
+      </Item9>
     </Files>
     <Type Value="RunAndDesignTime"/>
     <RequiredPkgs Count="3">
       <Item1>
-        <PackageName Value="PCN2"/>
+        <PackageName Value="ACBrSerial"/>
       </Item1>
       <Item2>
-        <PackageName Value="ACBrComum"/>
+        <PackageName Value="PCN2"/>
       </Item2>
       <Item3>
         <PackageName Value="FCL"/>

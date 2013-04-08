@@ -81,6 +81,7 @@ type
   TACBrSATConfig = Class(TPersistent)
   private
     fsemit_CNPJ : String ;
+    fsemit_cRegTrib : TpcnRegTrib ;
     fsemit_cRegTribISSQN : TpcnRegTribISSQN ;
     fsemit_IE : String ;
     fsemit_IM : String ;
@@ -105,11 +106,33 @@ type
     property emit_CNPJ : String read fsemit_CNPJ write fsemit_CNPJ;
     property emit_IE   : String read fsemit_IE   write fsemit_IE;
     property emit_IM   : String read fsemit_IM   write fsemit_IM;
+    property emit_cRegTrib: TpcnRegTrib read fsemit_cRegTrib
+       write fsemit_cRegTrib ;
     property emit_cRegTribISSQN: TpcnRegTribISSQN read fsemit_cRegTribISSQN
        write fsemit_cRegTribISSQN ;
     property emit_indRatISSQN: TpcnindRatISSQN read fsemit_indRatISSQN
        write fsemit_indRatISSQN;
   end;
+
+  { TACBrSATRespostaClass }
+
+  TACBrSATResposta = class
+  private
+    fcodigoDeRetorno : Integer ;
+    fnumeroSessao : Integer ;
+    fRetornoLst : TStringList ;
+    fRetornoStr : String ;
+    procedure SetRetornoStr(AValue : String) ;
+  public
+    constructor Create ;
+    Destructor Destroy ;
+    procedure Clear ;
+
+    property numeroSessao : Integer read fnumeroSessao ;
+    property codigoDeRetorno : Integer read  fcodigoDeRetorno;
+    property RetornoLst : TStringList read fRetornoLst ;
+    property RetornoStr : String read fRetornoStr write SetRetornoStr ;
+  end ;
 
   { TACBrSATClass }
 
@@ -179,6 +202,42 @@ implementation
 
 Uses ACBrSAT, ACBrUtil ;
 
+{ TACBrSATRespostaClass }
+
+procedure TACBrSATResposta.SetRetornoStr(AValue : String) ;
+begin
+  Clear;
+  fRetornoLst.Text := StringReplace( AValue, '|', sLineBreak, [rfReplaceAll] );
+  fRetornoStr      := AValue;
+
+  if fRetornoLst.Count > 1 then
+  begin
+    fnumeroSessao    := StrToIntDef( fRetornoLst[0], 0);
+    fcodigoDeRetorno := StrToIntDef( fRetornoLst[1], 0);
+  end ;
+end;
+
+constructor TACBrSATResposta.Create ;
+begin
+  inherited Create;
+  fRetornoLst := TStringList.Create;
+  Clear;
+end ;
+
+destructor TACBrSATResposta.Destroy ;
+begin
+  fRetornoLst.Free;
+  inherited Destroy;
+end ;
+
+procedure TACBrSATResposta.Clear ;
+begin
+  fRetornoLst.Clear;
+  fRetornoStr      := '';
+  fnumeroSessao    := 0;
+  fcodigoDeRetorno := 0;
+end ;
+
 { TACBrSATConfig }
 
 constructor TACBrSATConfig.Create ;
@@ -195,6 +254,7 @@ end ;
 procedure TACBrSATConfig.Clear ;
 begin
   fsemit_CNPJ             := '' ;
+  fsemit_cRegTrib         := RTSimplesNacional;
   fsemit_cRegTribISSQN    := RTISSMicroempresaMunicipal;
   fsemit_IE               := '' ;
   fsemit_IM               := '' ;

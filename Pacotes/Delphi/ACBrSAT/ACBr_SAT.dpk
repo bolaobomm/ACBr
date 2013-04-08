@@ -28,13 +28,8 @@ package ACBr_SAT;
 
 requires
   rtl,
-  ACBrComum,
   PCN2,
   designide,
-  synapse,
-  vclactnband,
-  vclx,
-  vcl,
   ACBrSerial;
 
 contains
@@ -45,6 +40,7 @@ contains
   pcnCFeR in '..\..\..\Fontes\ACBrSAT\pcnCFeR.pas',
   pcnCFeW in '..\..\..\Fontes\ACBrSAT\pcnCFeW.pas',
   ACBrSATEmuladorSPstatic in '..\..\..\Fontes\ACBrSAT\ACBrSATEmuladorSPstatic.pas',
-  ACBrSATExtratoClass in '..\..\..\Fontes\ACBrSAT\ACBrSATExtratoClass.pas';
+  ACBrSATExtratoClass in '..\..\..\Fontes\ACBrSAT\ACBrSATExtratoClass.pas',
+  ACBrSATExtratoESCPOS in '..\..\..\Fontes\ACBrSAT\ACBrSATExtratoESCPOS.pas';
 
 end.

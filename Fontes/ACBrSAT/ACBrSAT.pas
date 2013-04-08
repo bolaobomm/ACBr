@@ -56,6 +56,7 @@ type
      fsOnGetsignAC : TACBrSATGetChave ;
      fsOnLog : TACBrSATDoLog ;
      fsPathDLL : string ;
+     fsResposta : TACBrSATResposta ;
      fsRespostaComando : String ;
      fsSATClass : TACBrSATClass ;
      fsExtrato : TACBrSATExtratoClass;
@@ -82,6 +83,8 @@ type
 
      procedure GravaLog(AString : AnsiString ) ;
      procedure SetExtrato(const Value: TACBrSATExtratoClass);
+   protected
+     procedure Notification(AComponent: TComponent; Operation: TOperation); override;
    public
      property SAT : TACBrSATClass read fsSATClass ;
 
@@ -104,6 +107,8 @@ type
      property RespostaComando: String read fsRespostaComando ;
 
      property CFe : TCFe read fsCFe ;
+     property Resposta : TACBrSATResposta read fsResposta;
+
      procedure InicializaCFe( ACFe : TCFe = nil );
      function GerarXML : AnsiString ;
 
@@ -155,7 +160,7 @@ procedure Register;
 
 implementation
 
-Uses ACBrUtil, ACBrSATEmuladorSP, pcnCFeW;
+Uses ACBrUtil, ACBrSATEmuladorSP, pcnCFeW, ACBrSATExtratoESCPOS;
 
 {$IFNDEF FPC}
    {$R ACBrSAT.dcr}
@@ -163,7 +168,7 @@ Uses ACBrUtil, ACBrSATEmuladorSP, pcnCFeW;
 
 procedure Register;
 begin
-  RegisterComponents('ACBr', [TACBrSAT]);
+  RegisterComponents('ACBr', [TACBrSAT,TACBrSATExtratoESCPOS]);
 end;
 
 { TACBrSAT }
@@ -182,14 +187,16 @@ begin
   fsOnGetsignAC           := nil;
   fsOnLog                 := nil;
 
-  fsConfig := TACBrSATConfig.Create;
-  fsCFe    := TCFe.Create;
+  fsConfig  := TACBrSATConfig.Create;
+  fsCFe     := TCFe.Create;
+  fsResposta:= TACBrSATResposta.Create;
 end ;
 
 destructor TACBrSAT.Destroy ;
 begin
   fsConfig.Free;
   fsCFe.Free;
+  fsResposta.Free;
 
   inherited Destroy ;
 end ;
@@ -249,6 +256,8 @@ begin
           ' - numeroSessao: '+IntToStr(numeroSessao) ;
   if fsRespostaComando <> '' then
      AStr := AStr + ' - Resposta:'+fsRespostaComando;
+
+  Resposta.RetornoStr := fsRespostaComando;
 
   DoLog( AStr );
 end ;
@@ -551,7 +560,8 @@ begin
 end ;
 
 procedure TACBrSAT.SetExtrato(const Value: TACBrSATExtratoClass);
- Var OldValue: TACBrSATExtratoClass ;
+Var
+  OldValue: TACBrSATExtratoClass ;
 begin
   if Value <> fsExtrato then
   begin
@@ -559,7 +569,7 @@ begin
         fsExtrato.RemoveFreeNotification(Self);
 
      OldValue  := fsExtrato ;   // Usa outra variavel para evitar Loop Infinito
-     fsExtrato    := Value;    // na remoção da associação dos componentes
+     fsExtrato := Value;    // na remoção da associação dos componentes
 
      if Assigned(OldValue) then
         if Assigned(OldValue.ACBrSAT) then
@@ -572,6 +582,15 @@ begin
      end ;
   end ;
 end;
+
+procedure TACBrSAT.Notification(AComponent : TComponent ; Operation : TOperation
+  ) ;
+begin
+  inherited Notification(AComponent, Operation) ;
+
+  if (Operation = opRemove) and (fsExtrato <> nil) and (AComponent is TACBrSATExtratoClass) then
+     fsExtrato := nil ;
+end ;
 
 {$ifdef FPC}
 {$IFNDEF CONSOLE}

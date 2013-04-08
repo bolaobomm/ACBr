@@ -1058,6 +1058,7 @@ end;
 
 procedure TImposto.Clear ;
 begin
+  FvItem12741 := 0;
   FICMS.Clear;
   FPIS.Clear;
   FPISST.Clear;

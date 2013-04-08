@@ -153,7 +153,7 @@ echo "****************************************"
 echo.
 
 :SAT
-%1\tools\lazres.exe ACBrSAT.lrs TACBrSAT.bmp
+%1\tools\lazres.exe ACBrSAT.lrs TACBrSAT.bmp TACBrSATExtratoESCPOS.bmp
 move ACBrSAT.lrs ..\ACBrSAT
 echo.
 echo "****************************************"

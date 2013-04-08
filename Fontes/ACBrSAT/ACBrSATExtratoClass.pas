@@ -68,11 +68,14 @@ type
     property _Mask_vUnCom: String read FMask_vUnCom write FMask_vUnCom;
   end;
 
+  { TACBrSATExtratoClass }
+
   TACBrSATExtratoClass = class( TComponent )
   private
     FACBrSAT : TComponent;
     FCasasDecimais: TCasasDecimais;
 
+    procedure ErroAbstract(NomeProcedure : String) ;
     procedure SetSAT(const Value: TComponent);
   protected
     FpImprimeQRCode: Boolean;
@@ -93,7 +96,7 @@ type
 
 implementation
 
-uses ACBrSAT;
+uses ACBrSAT, ACBrSATClass;
 
 { TCasasDecimais }
 
@@ -151,17 +154,17 @@ end;
 
 procedure TACBrSATExtratoClass.ImprimirExtrato(CFe: TCFe);
 begin
-  raise Exception.Create( 'ImprimirExtrato' ) ;
+  ErroAbstract('ImprimirExtrato' ) ;
 end;
 
 procedure TACBrSATExtratoClass.ImprimirExtratoCancelamento(CFe: TCFe);
 begin
-  raise Exception.Create( 'ImprimirExtratoCancelamento' ) ;
+  ErroAbstract('ImprimirExtratoCancelamento' ) ;
 end;
 
 procedure TACBrSATExtratoClass.ImprimirExtratoResumido(CFe: TCFe);
 begin
-  raise Exception.Create( 'ImprimirExtratoResumido' ) ;
+  ErroAbstract('ImprimirExtratoResumido' ) ;
 end;
 
 procedure TACBrSATExtratoClass.Notification(AComponent: TComponent;
@@ -172,6 +175,13 @@ begin
   if (Operation = opRemove) and (FACBrSAT <> nil) and (AComponent is TACBrSAT) then
      FACBrSAT := nil ;
 end;
+
+procedure TACBrSATExtratoClass.ErroAbstract(NomeProcedure : String) ;
+begin
+  raise EACBrSATErro.create( Format( 'Procedure: %s '+ sLineBreak +
+                                     ' não implementada para o Extrato: %s' ,
+                                     [NomeProcedure, ClassName] )) ;
+end ;
 
 procedure TACBrSATExtratoClass.SetSAT(const Value: TComponent);
 var

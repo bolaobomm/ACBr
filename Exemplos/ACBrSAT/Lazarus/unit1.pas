@@ -6,17 +6,27 @@ interface
 
 uses
   Classes, SysUtils, FileUtil, Forms, Controls, Graphics, Dialogs, StdCtrls,
-  ActnList, Menus, ExtCtrls, Buttons, ComCtrls, Spin, ACBrSAT , ACBrSATClass;
+  ActnList, Menus, ExtCtrls, Buttons, ComCtrls, Spin, ACBrSAT, ACBrSATClass,
+  ACBrSATExtratoESCPOS;
 
 {function ConsultarStatusOperacional( numeroSessao : Longint; codigoDeAtivacao : PChar ) : PChar ; cdecl;
   External 'C:\SAT\SAT.DLL';
 }
+
+const
+  cAssinatura = '9d4c4eef8c515e2c1269c2e4fff0719d526c5096422bf1defa20df50ba06469'+
+                'a28adb25ba0447befbced7c0f805a5cc58496b7b23497af9a04f69c77f17c0c'+
+                'e68161f8e4ca7e3a94c827b6c563ca6f47aea05fa90a8ce3e4327853bb2d664'+
+                'ba226728fff1e2c6275ecc9b20129e1c1d2671a837aa1d265b36809501b519d'+
+                'bc08129e1c1d2671a837aa1d265b36809501b519dbc08129e1c1d2671a837aa'+
+                '1d265b36809501b519dbc08129e1c' ;
 type
 
   { TForm1 }
 
   TForm1 = class(TForm)
     ACBrSAT1 : TACBrSAT ;
+    ACBrSATExtratoESCPOS1 : TACBrSATExtratoESCPOS ;
     bInicializar : TButton ;
     btSalvarParams : TButton ;
     btLerParams : TButton ;
@@ -25,6 +35,9 @@ type
     cbxIndRatISSQN : TComboBox ;
     cbxRegTribISSQN : TComboBox ;
     edLog : TEdit ;
+    MenuItem10 : TMenuItem ;
+    mImprimirExtratoCancelamento : TMenuItem ;
+    mImprimirExtratoVenda : TMenuItem ;
     seNumeroCaixa : TSpinEdit ;
     edPathDLL : TEdit ;
     edtEmitCNPJ : TEdit ;
@@ -84,6 +97,7 @@ type
     Panel1 : TPanel ;
     SbArqLog : TSpeedButton ;
     Splitter1 : TSplitter ;
+    StatusBar1 : TStatusBar ;
     tsDadosEmit : TTabSheet ;
     tsDadosSAT : TTabSheet ;
     tsDadosSwHouse : TTabSheet ;
@@ -204,6 +218,8 @@ end ;
 procedure TForm1.ACBrSAT1Log(const AString : AnsiString) ;
 begin
   mResposta.Lines.Add(AString);
+  StatusBar1.Panels[0].Text := IntToStr( ACBrSAT1.Resposta.numeroSessao );
+  StatusBar1.Panels[1].Text := IntToStr( ACBrSAT1.Resposta.codigoDeRetorno );
 end;
 
 procedure TForm1.ACBrSAT1GetcodigoDeAtivacao(var Chave : String) ;
@@ -252,7 +268,7 @@ begin
     cbxIndRatISSQN.ItemIndex  := INI.ReadInteger('Emit','IndRatISSQN',0);
 
     edtSwHCNPJ.Text       := INI.ReadString('SwH','CNPJ','11111111111111');
-    edtSwHAssinatura.Text := INI.ReadString('SwH','Assinatura','9d4c4eef8c515e2c1269c2e4fff0719d526c5096422bf1defa20df50ba06469a28adb25ba0447befbced7c0f805a5cc58496b7b23497af9a04f69c77f17c0ce68161f8e4ca7e3a94c827b6c563ca6f47aea05fa90a8ce3e4327853bb2d664ba226728fff1e2c6275ecc9b20129e1c1d2671a837aa1d265b36809501b519dbc08129e1c1d2671a837aa1d265b36809501b519dbc08129e1c1d2671a837aa1d265b36809501b519dbc08129e1c');
+    edtSwHAssinatura.Text := INI.ReadString('SwH','Assinatura',cAssinatura);
   finally
      INI.Free ;
   end ;
@@ -484,7 +500,7 @@ begin
       Prod.vItem := 1.5;
 
       Imposto.ICMS.orig := oeEstrangeiraImportacaoDireta;
-      Imposto.ICMS.CST :=cst41;
+      Imposto.ICMS.CST := cst41;
 
       Imposto.PIS.CST := pis99;
       Imposto.PIS.vBC := 0;
@@ -519,7 +535,7 @@ begin
 
     with Pagto.Add do
     begin
-      cMP := 1;
+      cMP := mpDinheiro;
       vMP := 1.5;
     end;
   end;
@@ -532,6 +548,7 @@ procedure TForm1.SbArqLogClick(Sender : TObject) ;
 begin
   OpenURL( ExtractFilePath( Application.ExeName ) + edLog.Text);
 end;
+
 
 end.
 
