@@ -38,7 +38,7 @@ unit ACBrSAT;
 interface
 
 uses
-  Classes, SysUtils, pcnCFe, pcnCFeR, pcnCFeCanc, ACBrSATClass, ACBrSATExtratoClass, synacode
+  Classes, SysUtils, pcnCFe, pcnCFeR, pcnCFeCanc, pcnCFeCancR, ACBrSATClass, ACBrSATExtratoClass, synacode
   {$IFNDEF CONSOLE}
     {$IFDEF FPC}
       ,LResources

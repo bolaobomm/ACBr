@@ -71,7 +71,7 @@ type
     procedure GerarPagamentos;
     procedure GerarObsFisco;
     procedure GerarDadosEntrega;
-    procedure GerarObsContribuinte;
+    procedure GerarObsContribuinte(Resumido : Boolean = False );
     procedure GerarRodape;
   public
     constructor Create(AOwner: TComponent); override;
@@ -218,11 +218,11 @@ begin
         FBuffer.Add(padS('base de cálculo ISSQN|'+FormatFloat('#,###,##0.00',FpCFe.Det.Items[i].Imposto.ISSQN.vBC),64, '|'));
       end;
    end;
+  FBuffer.Add(cCmdAlinhadoEsquerda+cCmdFonteNormal);   
 end;
 
 procedure TACBrSATExtratoESCPOS.GerarTotais(Resumido: Boolean);
 begin
-  FBuffer.Add(cCmdAlinhadoEsquerda+cCmdFonteNormal);
   if not Resumido then
    begin
      if (FpCFe.Total.ICMSTot.vDesc > 0) or (FpCFe.Total.ICMSTot.vOutro > 0) then
@@ -237,7 +237,6 @@ begin
                padS('TOTAL R$|'+FormatFloat('#,###,##0.00',FpCFe.Total.vCFe),48, '|')+
                cCmdImpFimNegrito;
   FBuffer.Add(FLinhaCmd);
-  FBuffer.Add('');
 end;
 
 procedure TACBrSATExtratoESCPOS.GerarPagamentos;
@@ -250,15 +249,19 @@ begin
    end;
   if FpCFe.Pagto.vTroco > 0 then
      FBuffer.Add(padS('Troco R$|'+FormatFloat('#,###,##0.00',FpCFe.Pagto.vTroco),48, '|'));
-  FBuffer.Add('');
 end;
 
 procedure TACBrSATExtratoESCPOS.GerarObsFisco;
 var
   i : integer;
 begin
+  if (FpCFe.InfAdic.obsFisco.Count > 0) or
+     (FpCFe.Emit.cRegTrib = RTSimplesNacional) then
+     FBuffer.Add('');
+
   if FpCFe.Emit.cRegTrib = RTSimplesNacional then
      FBuffer.Add('ICMS a ser recolhido conforme LC 123/2006 - Simples Nacional');
+
 
   for i:=0 to FpCFe.InfAdic.obsFisco.Count - 1 do
    begin
@@ -285,25 +288,32 @@ begin
    end;
 end;
 
-procedure TACBrSATExtratoESCPOS.GerarObsContribuinte;
+procedure TACBrSATExtratoESCPOS.GerarObsContribuinte(Resumido : Boolean = False );
 begin
   if Trim(FpCFe.InfAdic.infCpl) <> '' then
    begin
      FBuffer.Add('------------------------------------------------');
+     FBuffer.Add('OBSERVAÇÕES DO CONTRIBUINTE');
      FBuffer.Add(StringReplace(Trim(FpCFe.InfAdic.infCpl),';',sLineBreak,[rfReplaceAll]));
    end;
 
   if FpCFe.Total.vCFeLei12741 > 0 then
    begin
      if Trim(FpCFe.InfAdic.infCpl) = '' then
-       FBuffer.Add('------------------------------------------------')
+      begin
+       FBuffer.Add('------------------------------------------------');
+       FBuffer.Add('OBSERVAÇÕES DO CONTRIBUINTE');
+      end  
      else
        FBuffer.Add('');
 
-     FBuffer.Add(padS('Valor aproximado dos tributos do deste cupom R$|'+FormatFloat('+#,###,##0.00',FpCFe.Total.vCFeLei12741),48, '|'));
-     FBuffer.Add('(conforme Lei Fed. 12.741/2012');
-     FBuffer.Add('');
-     FBuffer.Add('*Valor aproximado dos tributos do item');
+     FBuffer.Add(cCmdFontePequena+padS('Valor aproximado dos tributos do deste cupom R$ |'+cCmdImpNegrito+FormatFloat('#,###,##0.00',FpCFe.Total.vCFeLei12741),64, '|'));
+     FBuffer.Add(cCmdImpFimNegrito+'(conforme Lei Fed. 12.741/2012)'+cCmdFonteNormal);
+     if not Resumido then
+      begin
+        FBuffer.Add('');
+        FBuffer.Add('*Valor aproximado dos tributos do item');
+      end;  
    end;
 end;
 
@@ -400,7 +410,7 @@ begin
   GerarPagamentos;
   GerarObsFisco;
   GerarDadosEntrega;
-  GerarObsContribuinte;
+  GerarObsContribuinte(True);
   GerarRodape;
 
   ImprimePorta(FBuffer.Text);

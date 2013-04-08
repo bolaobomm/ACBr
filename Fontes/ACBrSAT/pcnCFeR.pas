@@ -294,6 +294,7 @@ begin
   if Leitor.rExtrai(1, 'total') <> '' then
   begin
     (*W11*)CFe.Total.vCFe := Leitor.rCampo(tcDe2, 'vCFe');
+    (*W22*)CFe.Total.vCFeLei12741 := Leitor.rCampo(tcDe2, 'vCFeLei12741');    
     if Leitor.rExtrai(2, 'ICMSTot') <> '' then
     begin
       (*W03*)CFe.Total.ICMSTot.vICMS := Leitor.rCampo(tcDe2, 'vICMS');
@@ -319,7 +320,6 @@ begin
       (*W20*)CFe.Total.DescAcrEntr.vDescSubtot := Leitor.rCampo(tcDe2, 'vDescSubtot');
       (*W21*)CFe.Total.DescAcrEntr.vAcresSubtot := Leitor.rCampo(tcDe2, 'vAcresSubtot');
     end;
-    (*W22*)CFe.Total.vCFeLei12741 := Leitor.rCampo(tcDe2, 'vCFeLei12741');
   end;
 
   (* Grupo da TAG <total> *****************************************************)
