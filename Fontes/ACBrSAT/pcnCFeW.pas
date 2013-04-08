@@ -286,7 +286,7 @@ end;
 procedure TCFeW.GerarDetImposto(const i: integer);
 begin
   Gerador.wGrupo('imposto', 'M01');
-
+  Gerador.wCampo(tcDe2, 'M02', 'vItem12741', 03, 15, 0, CFe.Det[i].Imposto.vItem12741, DSC_VITEM12741);
   if CFe.Det[i].Imposto.ISSQN.cNatOp > 0 then
     (**)GerarDetImpostoISSQN(i)
   else
@@ -621,7 +621,7 @@ begin
   for i := 0 to CFe.Pagto.Count - 1 do
   begin
     Gerador.wGrupo('MP', 'WA02');
-    Gerador.wCampo(tcInt, 'WA03', 'cMP ', 02, 02, 0, CFe.Pagto[i].cMP, DSC_CMP);
+    Gerador.wCampo(tcStr, 'WA03', 'cMP ', 02, 02, 0, CodigoMPToStr(CFe.Pagto[i].cMP), DSC_CMP);
     Gerador.wCampo(tcDe2, 'WA04', 'vMP ', 01, 15, 1, CFe.Pagto[i].vMP, DSC_VMP);
     Gerador.wCampo(tcInt, 'WA05', 'cAdmC', 03, 03, 0, CFe.Pagto[i].cAdmC, DSC_CADMC);
     Gerador.wGrupo('/MP');

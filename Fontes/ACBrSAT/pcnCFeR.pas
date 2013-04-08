@@ -226,6 +226,8 @@ begin
 
     (* Grupo da TAG <det><imposto> ********************************************)
     Leitor.rExtrai(2, 'imposto');
+    (*M02*)CFe.Det[i].Imposto.vItem12741 := Leitor.rCampo(tcDe2, 'vItem12741');
+    
     if Leitor.rExtrai(3, 'ICMS') <> '' then
     begin
       (*N06*)CFe.Det[i].Imposto.ICMS.orig         := StrToOrig(ok, Leitor.rCampo(tcStr, 'Orig'));
@@ -328,7 +330,7 @@ begin
     while Leitor.rExtrai(1, 'MP', '', i + 1) <> '' do
     begin
       CFe.Pagto.Add;
-      (*WA03*)CFe.Pagto[i].cMP := Leitor.rCampo(tcInt, 'cMP');
+      (*WA03*)CFe.Pagto[i].cMP := StrToCodigoMP(ok, Leitor.rCampo(tcStr, 'cMP'));
       (*WA04*)CFe.Pagto[i].vMP := Leitor.rCampo(tcDe2, 'vMP');
       (*WA05*)CFe.Pagto[i].cAdmC := Leitor.rCampo(tcInt, 'cAdmC');
       inc(i);

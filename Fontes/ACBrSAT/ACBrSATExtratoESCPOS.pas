@@ -140,6 +140,7 @@ begin
                  ' IE:'+Trim(CFe.Emit.IE)+
                  ' IM:'+Trim(CFe.Emit.IM);
      Buffer.Add(LinhaCmd);
+     Buffer.Add(cCmdAlinhadoEsquerda+cCmdFonteNormal+'------------------------------------------------');
 
       //Corpo do Extrato
      LinhaCmd := cCmdFonteNormal+cCmdAlinhadoCentro+cCmdImpNegrito+
@@ -150,45 +151,115 @@ begin
      Buffer.Add('------------------------------------------------');
      Buffer.Add('CPF/CNPJ do Consumidor: '+DFeUtil.FormatarCNPJ(CFe.Dest.CNPJCPF));
      Buffer.Add('------------------------------------------------');
-     Buffer.Add('#|COD|DESC|QTD|UN|VL UNIT R$|ST|ALIQ|VL ITEM R$');
+     Buffer.Add('#|COD|DESC|QTD|UN|VL UN R$|(VLTR R$)*|VL ITEM R$');
      Buffer.Add('------------------------------------------------');
 
      for i:=0 to CFe.Det.Count - 1 do
       begin
-        LinhaCmd := cCmdAlinhadoEsquerda+cCmdFontePequena+
-                    IntToStrZero(CFe.Det.Items[i].nItem,3)+' '+
+        LinhaCmd := IntToStrZero(CFe.Det.Items[i].nItem,3)+' '+
                     Trim(CFe.Det.Items[i].Prod.cProd)+' '+
                     Trim(CFe.Det.Items[i].Prod.xProd)+' '+
                     DFeUtil.FormatFloat(CFe.Det.Items[i].Prod.qCom,'0.0000')+' '+
-                    Trim(CFe.Det.Items[i].Prod.uCom)+' '+
-                    DFeUtil.FormatFloat(CFe.Det.Items[i].Prod.vUnCom,'0.000')+' '+
-                    DFeUtil.FormatFloat(CFe.Det.Items[i].Prod.vProd,'0.00')+' ';
-        Buffer.Add(LinhaCmd);
+                    Trim(CFe.Det.Items[i].Prod.uCom)+' X '+
+                    DFeUtil.FormatFloat(CFe.Det.Items[i].Prod.vUnCom,'0.000')+' ';
+        if CFe.Det.Items[i].Imposto.vItem12741 > 0 then
+           LinhaCmd := LinhaCmd + DFeUtil.FormatFloat(CFe.Det.Items[i].Imposto.vItem12741,'0.00')+'* ';
+
+        LinhaCmd := LinhaCmd + '|' + FormatFloat('#,###,##0.00',CFe.Det.Items[i].Prod.vProd)+' ';
+
+        LinhaCmd := padS(LinhaCmd,64, '|');
+
+        Buffer.Add(cCmdAlinhadoEsquerda+cCmdFontePequena+LinhaCmd);
+
+        if CFe.Det.Items[i].Prod.vDesc > 0 then
+         begin
+           Buffer.Add(padS('desconto|'+FormatFloat('-#,###,##0.00',CFe.Det.Items[i].Prod.vDesc),64, '|'));
+           Buffer.Add(padS('valor líquido|'+FormatFloat('#,###,##0.00',(CFe.Det.Items[i].Prod.qCom*CFe.Det.Items[i].Prod.vUnCom)-CFe.Det.Items[i].Prod.vDesc),64, '|'));
+         end;
+
+        if CFe.Det.Items[i].Prod.vOutro > 0 then
+         begin
+           Buffer.Add(padS('desconto|'+FormatFloat('-#,###,##0.00',CFe.Det.Items[i].Prod.vOutro),64, '|'));
+           Buffer.Add(padS('valor líquido|'+FormatFloat('#,###,##0.00',(CFe.Det.Items[i].Prod.qCom*CFe.Det.Items[i].Prod.vUnCom)+CFe.Det.Items[i].Prod.vOutro),64, '|'));
+         end;
+
+        if CFe.Det.Items[i].Imposto.ISSQN.vDeducISSQN > 0 then
+         begin
+           Buffer.Add(padS('dedução para ISSQN|'+FormatFloat('-#,###,##0.00',CFe.Det.Items[i].Imposto.ISSQN.vDeducISSQN),64, '|'));
+           Buffer.Add(padS('base de cálculo ISSQN|'+FormatFloat('#,###,##0.00',CFe.Det.Items[i].Imposto.ISSQN.vBC),64, '|'));
+         end;
       end;
 
-
-     //Totais
-     Buffer.Add(cCmdAlinhadoEsquerda+cCmdFonteNormal+padS('Subtotal|'+FormatFloat('#,###,##0.00',CFe.Total.ICMSTot.vProd),48, '|'));
-     Buffer.Add(padS('Descontos|'+FormatFloat('-#,###,##0.00',CFe.Total.ICMSTot.vDesc),48, '|'));
-     Buffer.Add(padS('Acréscimos|'+FormatFloat('+#,###,##0.00',CFe.Total.ICMSTot.vOutro),48, '|'));
+      //Totais
+     Buffer.Add(cCmdAlinhadoEsquerda+cCmdFonteNormal);
+     if (CFe.Total.ICMSTot.vDesc > 0) or (CFe.Total.ICMSTot.vOutro > 0) then
+        Buffer.Add(padS('Subtotal|'+FormatFloat('#,###,##0.00',CFe.Total.ICMSTot.vProd),48, '|'));
+     if CFe.Total.ICMSTot.vDesc > 0 then
+        Buffer.Add(padS('Descontos|'+FormatFloat('-#,###,##0.00',CFe.Total.ICMSTot.vDesc),48, '|'));
+     if CFe.Total.ICMSTot.vOutro > 0 then
+        Buffer.Add(padS('Acréscimos|'+FormatFloat('+#,###,##0.00',CFe.Total.ICMSTot.vOutro),48, '|'));
      LinhaCmd := cCmdAlinhadoEsquerda+cCmdImpNegrito+
                  padS('TOTAL R$|'+FormatFloat('#,###,##0.00',CFe.Total.vCFe),48, '|')+
                  cCmdImpFimNegrito;
      Buffer.Add(LinhaCmd);
+     Buffer.Add('');
 
      //Pagamentos
+     for i:=0 to CFe.Pagto.Count - 1 do
+      begin
+         Buffer.Add(padS(CodigoMPToDescricao(CFe.Pagto.Items[i].cMP)+'|'+FormatFloat('#,###,##0.00',CFe.Pagto.Items[i].vMP),48, '|'));
+      end;
+     if CFe.Pagto.vTroco > 0 then
+        Buffer.Add(padS('Troco R$|'+FormatFloat('+#,###,##0.00',CFe.Pagto.vTroco),48, '|'));
+     Buffer.Add('');
 
-     //Destinatário
-     Buffer.Add('------------------------------------------------');
-     Buffer.Add('DEST');
-     Buffer.Add(CFe.Dest.xNome);
-     Buffer.Add(Trim(CFe.Entrega.xLgr)+' '+
-                       Trim(CFe.Entrega.nro)+' '+
-                       Trim(CFe.Entrega.xCpl)+' '+
-                       Trim(CFe.Entrega.xBairro)+' '+
-                       Trim(CFe.Entrega.xMun));
+     //Observações do Fisco
+     if CFe.Emit.cRegTrib = RTSimplesNacional then
+        Buffer.Add('ICMS a ser recolhido conforme LC 123/2006 - Simples Nacional');
 
-      //Rodapé
+     for i:=0 to CFe.InfAdic.obsFisco.Count - 1 do
+      begin
+         Buffer.Add(CFe.InfAdic.obsFisco.Items[i].xCampo+'-'+CFe.InfAdic.obsFisco.Items[i].xTexto);
+      end;
+
+     //Dados para entrega
+     if Trim(CFe.Entrega.xLgr)+
+        Trim(CFe.Entrega.nro)+
+        Trim(CFe.Entrega.xCpl)+
+        Trim(CFe.Entrega.xBairro)+
+        Trim(CFe.Entrega.xMun) <> '' then
+      begin
+        Buffer.Add('------------------------------------------------');
+        Buffer.Add('DADOS PARA ENTREGA');
+        Buffer.Add(Trim(CFe.Entrega.xLgr)+' '+
+                          Trim(CFe.Entrega.nro)+' '+
+                          Trim(CFe.Entrega.xCpl)+' '+
+                          Trim(CFe.Entrega.xBairro)+' '+
+                          Trim(CFe.Entrega.xMun));
+        Buffer.Add(CFe.Dest.xNome);                          
+      end;
+
+     //Observações do Contribuinte
+     if Trim(CFe.InfAdic.infCpl) <> '' then
+      begin
+         Buffer.Add('------------------------------------------------');
+         Buffer.Add(StringReplace(Trim(CFe.InfAdic.infCpl),';',sLineBreak,[rfReplaceAll]));
+      end;
+
+     if CFe.Total.vCFeLei12741 > 0 then
+      begin
+        if Trim(CFe.InfAdic.infCpl) = '' then
+          Buffer.Add('------------------------------------------------')
+        else
+          Buffer.Add('');
+
+        Buffer.Add(padS('Valor aproximado dos tributos do deste cupom R$|'+FormatFloat('+#,###,##0.00',CFe.Total.vCFeLei12741),48, '|'));
+        Buffer.Add('(conforme Lei Fed. 12.741/2012');
+        Buffer.Add('');
+        Buffer.Add('*Valor aproximado dos tributos do item');
+      end;
+
+     //Rodapé
      Buffer.Add('------------------------------------------------');
      LinhaCmd := cCmdAlinhadoCentro+'SAT No. '+
                  cCmdImpNegrito+IntToStr(CFe.ide.nserieSAT)+cCmdImpFimNegrito;

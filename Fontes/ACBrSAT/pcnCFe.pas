@@ -361,6 +361,7 @@ type
 
   TImposto = class
   private
+    FvItem12741: currency;
     FICMS: TICMS;
     FPIS: TPIS;
     FPISST: TPISST;
@@ -372,6 +373,7 @@ type
     destructor Destroy; override;
     procedure Clear;
   published
+    property vItem12741: currency read FvItem12741 write FvItem12741;
     property ICMS: TICMS read FICMS write FICMS;
     property PIS: TPIS read FPIS write FPIS;
     property PISST: TPISST read FPISST write FPISST;
@@ -614,11 +616,11 @@ type
 
   TMPCollectionItem = class(TCollectionItem)
   private
-    FcMP: integer;
+    FcMP: TpcnCodigoMP;
     FvMP: currency;
     FcAdmC: integer;
   published
-    property cMP: integer read FcMP write FcMP;
+    property cMP: TpcnCodigoMP read FcMP write FcMP;
     property vMP: currency read FvMP write FvMP;
     property cAdmC: integer read FcAdmC write FcAdmC;
   end;
