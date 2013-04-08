@@ -103,6 +103,7 @@ type
     ImprimirExtratoVenda1: TMenuItem;
     ImprimirExtratoCancelamento1: TMenuItem;
     ACBrSATExtratoESCPOS1: TACBrSATExtratoESCPOS;
+    ImprimirExtratoVendaResumido1: TMenuItem;
     procedure ACBrSAT1GetcodigoDeAtivacao(var Chave : String) ;
     procedure ACBrSAT1GetsignAC(var Chave : String) ;
     procedure ACBrSAT1Log(const AString : String) ;
@@ -129,6 +130,7 @@ type
     procedure mGerarVendaClick(Sender : TObject) ;
     procedure SbArqLogClick(Sender : TObject) ;
     procedure ImprimirExtratoVenda1Click(Sender: TObject);
+    procedure ImprimirExtratoVendaResumido1Click(Sender: TObject);
   private
     procedure TrataErros(Sender : TObject ; E : Exception) ;
     procedure AjustaACBrSAT ;
@@ -493,15 +495,14 @@ begin
     with Det.Add do
     begin
       nItem := 1;
-      Prod.cProd := '05';
-      Prod.xProd := 'Produto com imposto errado';
-      Prod.CFOP := '0001';
-      Prod.uCom := 'l';
+      Prod.cProd := '01';
+      Prod.xProd := 'Teste de produto ACBrSAT';
+      Prod.CFOP := '5102';
+      Prod.uCom := 'UNID';
       Prod.qCom := 1;
       Prod.vUnCom := 1.5;
       Prod.vProd := 1.5;
       Prod.indRegra := irArredondamento;
-      Prod.vItem := 1.5;
 
       Imposto.ICMS.orig := oeEstrangeiraImportacaoDireta;
       Imposto.ICMS.CST := cst41;
@@ -529,19 +530,143 @@ begin
       Imposto.COFINSST.vCOFINS := 1;}
     end;
 
-    Total.ICMSTot.vProd := 1.5;
-    Total.ICMSTot.vPIS := 0.02;
+    with Det.Add do
+    begin
+      nItem := 2;
+      Prod.cProd := '02';
+      Prod.xProd := 'Produto numero 2 ACBrSAT';
+      Prod.CFOP := '5102';
+      Prod.uCom := 'UNID';
+      Prod.qCom := 1;
+      Prod.vUnCom := 2;
+      Prod.vProd := 2;
+      Prod.indRegra := irArredondamento;
+
+      Imposto.ICMS.orig := oeEstrangeiraImportacaoDireta;
+      Imposto.ICMS.CST := cst41;
+
+      Imposto.PIS.CST := pis99;
+      Imposto.PIS.vBC := 0;
+      Imposto.PIS.pPIS := 0;
+      Imposto.PIS.vPIS := 0;
+
+{     Imposto.PISST.vBC := 1;
+      Imposto.PISST.pPIS := 1;
+      Imposto.PISST.qBCProd := 1;
+      Imposto.PISST.vAliqProd := 1;
+      Imposto.PISST.vPIS := 1;}
+
+      Imposto.COFINS.CST := cof04;
+      Imposto.COFINS.vBC := 2;
+      Imposto.COFINS.pCOFINS := 10;
+      Imposto.COFINS.vCOFINS := 0.20;
+
+{     Imposto.COFINSST.vBC := 1;
+      Imposto.COFINSST.pCOFINS := 1;
+      Imposto.COFINSST.qBCProd := 1;
+      Imposto.COFINSST.vAliqProd := 1;
+      Imposto.COFINSST.vCOFINS := 1;}
+    end;
+
+    with Det.Add do
+    begin
+      nItem := 3;
+      Prod.cProd := '03';
+      Prod.xProd := 'Produto ACBrSAT com desconto';
+      Prod.CFOP := '5102';
+      Prod.uCom := 'UNID';
+      Prod.qCom := 2;
+      Prod.vUnCom := 3;
+      Prod.vProd := 6;
+      Prod.vDesc := 1;
+      Prod.indRegra := irArredondamento;
+
+      Imposto.ICMS.orig := oeEstrangeiraImportacaoDireta;
+      Imposto.ICMS.CST := cst41;
+
+      Imposto.PIS.CST := pis99;
+      Imposto.PIS.vBC := 0;
+      Imposto.PIS.pPIS := 0;
+      Imposto.PIS.vPIS := 0;
+
+{     Imposto.PISST.vBC := 1;
+      Imposto.PISST.pPIS := 1;
+      Imposto.PISST.qBCProd := 1;
+      Imposto.PISST.vAliqProd := 1;
+      Imposto.PISST.vPIS := 1;}
+
+      Imposto.COFINS.CST := cof04;
+      Imposto.COFINS.vBC := 5;
+      Imposto.COFINS.pCOFINS := 10;
+      Imposto.COFINS.vCOFINS := 0.5;
+
+{     Imposto.COFINSST.vBC := 1;
+      Imposto.COFINSST.pCOFINS := 1;
+      Imposto.COFINSST.qBCProd := 1;
+      Imposto.COFINSST.vAliqProd := 1;
+      Imposto.COFINSST.vCOFINS := 1;}
+    end;
+
+    with Det.Add do
+    begin
+      nItem := 4;
+      Prod.cProd := '04';
+      Prod.xProd := 'Produto 4 ACBrSAT';
+      Prod.CFOP := '5102';
+      Prod.uCom := 'UNID';
+      Prod.qCom := 4;
+      Prod.vUnCom := 2;
+      Prod.vProd := 8;
+      Prod.indRegra := irArredondamento;
+
+      Imposto.ICMS.orig := oeEstrangeiraImportacaoDireta;
+      Imposto.ICMS.CST := cst41;
+
+      Imposto.PIS.CST := pis99;
+      Imposto.PIS.vBC := 0;
+      Imposto.PIS.pPIS := 0;
+      Imposto.PIS.vPIS := 0;
+
+{     Imposto.PISST.vBC := 1;
+      Imposto.PISST.pPIS := 1;
+      Imposto.PISST.qBCProd := 1;
+      Imposto.PISST.vAliqProd := 1;
+      Imposto.PISST.vPIS := 1;}
+
+      Imposto.COFINS.CST := cof04;
+      Imposto.COFINS.vBC := 8;
+      Imposto.COFINS.pCOFINS := 10;
+      Imposto.COFINS.vCOFINS := 0.8;
+
+{     Imposto.COFINSST.vBC := 1;
+      Imposto.COFINSST.pCOFINS := 1;
+      Imposto.COFINSST.qBCProd := 1;
+      Imposto.COFINSST.vAliqProd := 1;
+      Imposto.COFINSST.vCOFINS := 1;}
+    end;
+
+    Total.ICMSTot.vProd := 16.5;
+    Total.ICMSTot.vPIS := 0.00;
     Total.ICMSTot.vPISST := 0;
-    Total.ICMSTot.vCOFINS := 0.02;
+    Total.ICMSTot.vCOFINS := 1.65;
     Total.ICMSTot.vCOFINSST := 0;
-    Total.vCFe := 1.5;
-    Total.vCFeLei12741 := 0.15;
+    Total.vCFe := 16.5;
+    Total.vCFeLei12741 := 2.15;
 
     with Pagto.Add do
     begin
-      cMP := 1;
-      vMP := 1.5;
+      cMP := MPDinheiro;
+      vMP := 10;
     end;
+
+    with Pagto.Add do
+    begin
+      cMP := MPCartaodeCredito;
+      vMP := 10;
+    end;
+
+    InfAdic.infCpl := 'Acesse www.projetoacbr.com.br para obter mais   informações sobre o componente ACBrSAT;'+
+                      'Precisa de um PAF-ECF homologado?;Conheça o DJPDV - www.djpdv.com.br'
   end;
 
   mVenda.Lines.Text := ACBrSAT1.GerarXML;
@@ -555,18 +680,43 @@ end;
 
 procedure TForm1.ImprimirExtratoVenda1Click(Sender: TObject);
 var
+  CFe : TCFe;
   CFeR : TCFeR;
 begin
   ACBrSATExtratoESCPOS1.Device.Porta := 'COM7';
   ACBrSATExtratoESCPOS1.Device.Ativar;
   ACBrSATExtratoESCPOS1.Device.Serial.Purge;
-  CFeR := TCFeR.Create(ACBrSAT1.CFe);
+  ACBrSATExtratoESCPOS1.ImprimeQRCode := True;
+  CFe := TCFe.Create;
+  CFeR := TCFeR.Create(CFe);
   try
     CFeR.Leitor.Arquivo := mCupom.Lines.Text;
     CFeR.LerXml;
-    ACBrSATExtratoESCPOS1.ImprimirExtrato(ACBrSAT1.CFe);
+    ACBrSATExtratoESCPOS1.ImprimirExtrato(CFe);
   finally
-    CFeR.free;
+    CFeR.Free;
+    CFe.Free;
+  end;
+end;
+
+procedure TForm1.ImprimirExtratoVendaResumido1Click(Sender: TObject);
+var
+  CFe : TCFe;
+  CFeR : TCFeR;
+begin
+  ACBrSATExtratoESCPOS1.Device.Porta := 'COM7';
+  ACBrSATExtratoESCPOS1.Device.Ativar;
+  ACBrSATExtratoESCPOS1.Device.Serial.Purge;
+  ACBrSATExtratoESCPOS1.ImprimeQRCode := True;  
+  CFe := TCFe.Create;
+  CFeR := TCFeR.Create(CFe);
+  try
+    CFeR.Leitor.Arquivo := mCupom.Lines.Text;
+    CFeR.LerXml;
+    ACBrSATExtratoESCPOS1.ImprimirExtratoResumido(CFe);
+  finally
+    CFeR.Free;
+    CFe.Free;
   end;
 end;
 

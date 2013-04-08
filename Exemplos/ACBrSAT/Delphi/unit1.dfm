@@ -440,6 +440,10 @@ object Form1: TForm1
         Caption = 'Imprimir Extrato Venda'
         OnClick = ImprimirExtratoVenda1Click
       end
+      object ImprimirExtratoVendaResumido1: TMenuItem
+        Caption = 'Imprimir Extrato Venda Resumido'
+        OnClick = ImprimirExtratoVendaResumido1Click
+      end
       object N1: TMenuItem
         Caption = '-'
       end
