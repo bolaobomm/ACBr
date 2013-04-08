@@ -104,6 +104,7 @@ type
      class function FormatarCEP(AValue : String ): String;
      class function FormatarFone(AValue : String ): String;
      class function FormatarNumeroDocumentoFiscal(AValue : String ): String;
+     class function FormatarChaveAcesso(AValue : String ): String;
      class function StringToFloat(AValue : String ) : Double;
      class function StringToFloatDef(const AValue: String; const DefaultValue: Double): Double;
      // Incluido por Italo em 29/11/2012
@@ -689,5 +690,17 @@ class function DFeUtil.FormatarPlaca(AValue: string): string;
 begin
  Result := Copy(AValue, 1, 3) + '-' + Copy(AValue, 4, 4);
 end;
+
+class function DFeUtil.FormatarChaveAcesso(AValue: String): String;
+begin
+  AValue := DFeUtil.LimpaNumero(AValue);
+  Result := copy(AValue,1,4)  + ' ' + copy(AValue,5,4)  + ' ' +
+            copy(AValue,9,4)  + ' ' + copy(AValue,13,4) + ' ' +
+            copy(AValue,17,4) + ' ' + copy(AValue,21,4) + ' ' +
+            copy(AValue,25,4) + ' ' + copy(AValue,29,4) + ' ' +
+            copy(AValue,33,4) + ' ' + copy(AValue,37,4) + ' ' +
+            copy(AValue,41,4) ;
+end;
+
 
 end.
