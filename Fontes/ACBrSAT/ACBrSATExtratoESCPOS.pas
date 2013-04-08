@@ -68,7 +68,7 @@ type
     procedure GerarCabecalho;
     procedure GerarItens;
     procedure GerarTotais(Resumido : Boolean = False );
-    procedure GerarPagamentos;
+    procedure GerarPagamentos(Resumido : Boolean = False );
     procedure GerarObsFisco;
     procedure GerarDadosEntrega;
     procedure GerarObsContribuinte(Resumido : Boolean = False );
@@ -239,10 +239,12 @@ begin
   FBuffer.Add(FLinhaCmd);
 end;
 
-procedure TACBrSATExtratoESCPOS.GerarPagamentos;
+procedure TACBrSATExtratoESCPOS.GerarPagamentos(Resumido : Boolean = False );
 var
   i : integer;
 begin
+  if not Resumido then
+    FBuffer.Add('');
   for i:=0 to FpCFe.Pagto.Count - 1 do
    begin
      FBuffer.Add(padS(CodigoMPToDescricao(FpCFe.Pagto.Items[i].cMP)+'|'+FormatFloat('#,###,##0.00',FpCFe.Pagto.Items[i].vMP),48, '|'));
@@ -378,7 +380,7 @@ begin
 
   GerarCabecalho;
   GerarItens;
-  GerarTotais(False);
+  GerarTotais;
   GerarPagamentos;
   GerarObsFisco;
   GerarDadosEntrega;
@@ -407,7 +409,7 @@ begin
 
   GerarCabecalho;
   GerarTotais(True);
-  GerarPagamentos;
+  GerarPagamentos(True);
   GerarObsFisco;
   GerarDadosEntrega;
   GerarObsContribuinte(True);
