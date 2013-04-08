@@ -38,7 +38,7 @@ unit ACBrSAT;
 interface
 
 uses
-  Classes, SysUtils, pcnCFe, ACBrSATClass
+  Classes, SysUtils, pcnCFe, ACBrSATClass, ACBrSATExtratoClass
   {$IFNDEF CONSOLE}
     {$IFDEF FPC}
       ,LResources
@@ -58,6 +58,7 @@ type
      fsPathDLL : string ;
      fsRespostaComando : String ;
      fsSATClass : TACBrSATClass ;
+     fsExtrato : TACBrSATExtratoClass;
 
      fsArqLOG: string;
      fsComandoLog: String;
@@ -80,6 +81,7 @@ type
      procedure FinalizaComando ;
 
      procedure GravaLog(AString : AnsiString ) ;
+     procedure SetExtrato(const Value: TACBrSATExtratoClass);
    public
      property SAT : TACBrSATClass read fsSATClass ;
 
@@ -132,6 +134,8 @@ type
    published
      property Modelo : TACBrSATModelo read fsModelo write SetModelo
                  default satNenhum ;
+
+     property Extrato: TACBrSATExtratoClass read fsExtrato write SetExtrato ;
 
      property PathDLL: string read fsPathDLL write SetPathDLL;
 
@@ -546,8 +550,32 @@ begin
   fsPathDLL := PathWithDelim( Trim(AValue) ) ;
 end ;
 
+procedure TACBrSAT.SetExtrato(const Value: TACBrSATExtratoClass);
+ Var OldValue: TACBrSATExtratoClass ;
+begin
+  if Value <> fsExtrato then
+  begin
+     if Assigned(fsExtrato) then
+        fsExtrato.RemoveFreeNotification(Self);
+
+     OldValue  := fsExtrato ;   // Usa outra variavel para evitar Loop Infinito
+     fsExtrato    := Value;    // na remoção da associação dos componentes
+
+     if Assigned(OldValue) then
+        if Assigned(OldValue.ACBrSAT) then
+           OldValue.ACBrSAT := nil ;
+
+     if Value <> nil then
+     begin
+        Value.FreeNotification(self);
+        Value.ACBrSAT := self ;
+     end ;
+  end ;
+end;
+
 {$ifdef FPC}
 {$IFNDEF CONSOLE}
+
 initialization
    {$I ACBrSAT.lrs}
 {$endif}

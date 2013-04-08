@@ -49,7 +49,7 @@ uses
 
 const
   cACBrSAT_Versao      = '0.1.0' ;
-  cLIBSAT              = 'SAT.DLL';
+  cLIBSAT              = 'c:\SAT\SAT.DLL';
   cversaoDadosEnt      = 0.03;
 
   cACBrSATClassCreateException = 'Essa Classe deve ser instanciada por TACBrSAT' ;
@@ -397,7 +397,7 @@ var
 begin
   if not Assigned( LibPointer )  then
   begin
-    sLibName := PathDLL + NomeDLL;
+    sLibName := NomeDLL;
 
     if not FunctionDetect( sLibName, FuncName, LibPointer) then
     begin
