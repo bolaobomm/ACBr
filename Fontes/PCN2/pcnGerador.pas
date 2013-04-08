@@ -496,6 +496,7 @@ const
   DSC_VRATDESC = 'Rateio do desconto sobre subtotal';
   DSC_VRATACR = 'Rateio do acréscimo sobre subtotal';
   DSC_NUMEROCAIXA = 'Número do Caixa ao qual o SAT está conectado';
+  DSC_VITEM12741 = 'Valor aproximado dos tributos do Produto ou serviço – Lei 12741/12';
 
 implementation
 

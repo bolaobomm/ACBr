@@ -202,6 +202,7 @@ type
   TpcnRegTribISSQN = (RTISSMicroempresaMunicipal, RTISSEstimativa, RTISSSociedadeProfissionais, RTISSCooperativa, RTISSMEI);
   TpcnindRatISSQN = (irSim, irNao);
   TpcnindRegra = (irArredondamento, irTruncamento);
+  TpcnCodigoMP = (MPDinheiro, MPCheque, MPCartaodeCredito, MPCartaodeDebito, MPCreditoLoja, MPValeAlimentacao, MPValeRefeicao, MPValePresente, MPValeCombustivel, MPOutros);
 const
   TpcnTpEventoString : array[0..7] of String =( '110110',
                                                 '110111',
@@ -468,6 +469,10 @@ function indRatISSQNToStr(const t: TpcnindRatISSQN ): string;
 function StrToindRatISSQN(var ok: boolean; const s: string): TpcnindRatISSQN ;
 function indRegraToStr(const t: TpcnindRegra ): string;
 function StrToindRegra(var ok: boolean; const s: string): TpcnindRegra ;
+function CodigoMPToStr(const t: TpcnCodigoMP ): string;
+function StrToCodigoMP(var ok: boolean; const s: string): TpcnCodigoMP ;
+function CodigoMPToDescricao(const t: TpcnCodigoMP ): string;
+
 implementation
 
 function StrToEnumerado(var ok: boolean; const s: string; const AString:
@@ -1491,5 +1496,21 @@ function StrToindRegra(var ok: boolean; const s: string): TpcnindRegra  ;
 begin
   result := StrToEnumerado(ok, s, ['A', 'T'],[irArredondamento, irTruncamento]);
 end;
+
+function CodigoMPToStr(const t: TpcnCodigoMP ): string;
+begin
+  result := EnumeradoToStr(t, ['01', '02', '03', '04', '05', '10', '11', '12', '13', '99'], [MPDinheiro, MPCheque, MPCartaodeCredito, MPCartaodeDebito, MPCreditoLoja, MPValeAlimentacao, MPValeRefeicao, MPValePresente, MPValeCombustivel, MPOutros]);
+end;
+
+function StrToCodigoMP(var ok: boolean; const s: string): TpcnCodigoMP ;
+begin
+  result := StrToEnumerado(ok, s, ['01', '02', '03', '04', '05', '10', '11', '12', '13', '99'],[MPDinheiro, MPCheque, MPCartaodeCredito, MPCartaodeDebito, MPCreditoLoja, MPValeAlimentacao, MPValeRefeicao, MPValePresente, MPValeCombustivel, MPOutros]);
+end;
+
+function CodigoMPToDescricao(const t: TpcnCodigoMP ): string;
+begin
+  result := EnumeradoToStr(t, ['Dinheiro', 'Cheque', 'Cartão de Crédito', 'Cartão de Débito', 'Crédito Loja', 'Vale Alimentação', 'Vale Refeição', 'Vale Presente', 'Vale Combustível', 'Outros'], [MPDinheiro, MPCheque, MPCartaodeCredito, MPCartaodeDebito, MPCreditoLoja, MPValeAlimentacao, MPValeRefeicao, MPValePresente, MPValeCombustivel, MPOutros]);
+end;
+
 
 end.
