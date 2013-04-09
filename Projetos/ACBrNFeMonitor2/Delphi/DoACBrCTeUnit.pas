@@ -917,7 +917,9 @@ begin
           Ide.dhCont     := DFeUtil.StringToDate(INIRec.ReadString( 'ide','dhCont'  ,'0'));
           Ide.xJust      := INIRec.ReadString(  'ide','xJust' ,'' );
 
-          compl.xEmi := INIRec.ReadString('compl','xEmi','');
+          compl.xEmi     := INIRec.ReadString('compl','xEmi','');
+          compl.xCaracAd := INIRec.ReadString('compl','xCaracAd', '' );
+          compl.xCaracSer:= INIRec.ReadString('compl','xCaracSer',''  );
 
           compl.Entrega.TipoData := StrToTpDataPeriodo(ok,INIRec.ReadString('compl','tpPer','0'));
           compl.Entrega.TipoHora := StrToTpHorarioIntervalo(ok,INIRec.ReadString('compl','tpHor','0'));
@@ -1259,6 +1261,8 @@ begin
           INIRec.WriteString( 'ide','dhCont'  ,DateToStr( Ide.dhCont      ));
           INIRec.WriteString(  'ide','xJust' ,Ide.xJust      );
 
+          INIRec.WriteString('compl','xCaracAd',compl.xCaracAd  );
+          INIRec.WriteString('compl','xCaracSer',compl.xCaracSer  );
           INIRec.WriteString('compl','xEmi',compl.xEmi  );
 
           INIRec.WriteString('compl','tpPer', TpDataPeriodoToStr(  compl.Entrega.TipoData ));
@@ -1268,7 +1272,7 @@ begin
           {...}
           INIRec.WriteString('compl','origCalc',compl.origCalc  );
           INIRec.WriteString('compl','destCalc',compl.destCalc  );
-          INIRec.WriteString('compl','xObx',compl.xObs      );
+          INIRec.WriteString('compl','xObx',compl.xObs  );
 
           INIRec.WriteString('emit','CNPJ',Emit.CNPJ   );
           INIRec.WriteString('emit','IE',Emit.IE      );
