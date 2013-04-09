@@ -2,7 +2,7 @@ inherited frmDACTeQRRetrato: TfrmDACTeQRRetrato
   Left = 198
   Top = 121
   Width = 835
-  Height = 784
+  Height = 810
   Caption = 'DACTe - Retrato'
   Font.Height = -8
   Font.Name = 'Arial'
@@ -1441,7 +1441,7 @@ inherited frmDACTeQRRetrato: TfrmDACTeQRRetrato
       ForceNewColumn = False
       ForceNewPage = False
       Size.Values = (
-        537.104166666666700000
+        537.104166666666800000
         1960.562500000000000000)
       PreCaluculateBandHeight = False
       KeepOnOnePage = False
@@ -2076,7 +2076,7 @@ inherited frmDACTeQRRetrato: TfrmDACTeQRRetrato
         Frame.DrawRight = False
         Size.Values = (
           23.812500000000000000
-          973.666666666666800000
+          973.666666666666900000
           92.604166666666680000
           52.916666666666670000)
         XLColumn = 0
@@ -6441,7 +6441,7 @@ inherited frmDACTeQRRetrato: TfrmDACTeQRRetrato
           23.812500000000000000
           989.541666666666800000
           449.791666666666700000
-          97.895833333333320000)
+          97.895833333333340000)
         XLColumn = 0
         Alignment = taLeftJustify
         AlignToBand = False
@@ -6472,7 +6472,7 @@ inherited frmDACTeQRRetrato: TfrmDACTeQRRetrato
         Frame.DrawRight = False
         Size.Values = (
           23.812500000000000000
-          693.208333333333200000
+          693.208333333333400000
           254.000000000000000000
           50.270833333333330000)
         XLColumn = 0
@@ -6639,7 +6639,7 @@ inherited frmDACTeQRRetrato: TfrmDACTeQRRetrato
           23.812500000000000000
           10.583333333333330000
           357.187500000000000000
-          97.895833333333320000)
+          97.895833333333340000)
         XLColumn = 0
         Alignment = taLeftJustify
         AlignToBand = False
@@ -6903,7 +6903,7 @@ inherited frmDACTeQRRetrato: TfrmDACTeQRRetrato
           23.812500000000000000
           989.541666666666800000
           206.375000000000000000
-          97.895833333333320000)
+          97.895833333333340000)
         XLColumn = 0
         Alignment = taLeftJustify
         AlignToBand = False
@@ -7101,7 +7101,7 @@ inherited frmDACTeQRRetrato: TfrmDACTeQRRetrato
           23.812500000000000000
           10.583333333333330000
           206.375000000000000000
-          97.895833333333320000)
+          97.895833333333340000)
         XLColumn = 0
         Alignment = taLeftJustify
         AlignToBand = False
@@ -7594,7 +7594,7 @@ inherited frmDACTeQRRetrato: TfrmDACTeQRRetrato
         Frame.DrawRight = False
         Size.Values = (
           23.812500000000000000
-          693.208333333333200000
+          693.208333333333400000
           404.812500000000000000
           50.270833333333330000)
         XLColumn = 0
@@ -7728,7 +7728,7 @@ inherited frmDACTeQRRetrato: TfrmDACTeQRRetrato
           23.812500000000000000
           989.541666666666800000
           357.187500000000000000
-          97.895833333333320000)
+          97.895833333333340000)
         XLColumn = 0
         Alignment = taLeftJustify
         AlignToBand = False
@@ -12358,7 +12358,7 @@ inherited frmDACTeQRRetrato: TfrmDACTeQRRetrato
       object QRLabel160: TQRLabel
         Left = 6
         Top = 64
-        Width = 115
+        Width = 107
         Height = 9
         Frame.Color = clBlack
         Frame.DrawTop = False
@@ -12369,13 +12369,13 @@ inherited frmDACTeQRRetrato: TfrmDACTeQRRetrato
           23.812500000000000000
           15.875000000000000000
           169.333333333333300000
-          304.270833333333400000)
+          283.104166666666700000)
         XLColumn = 0
         Alignment = taLeftJustify
         AlignToBand = False
         AutoSize = True
         AutoStretch = False
-        Caption = 'IDENTIFICA'#199#195'O DOS CONTEINERS'
+        Caption = 'IDENTIFICA'#199#195'O DA(S) BALSA(S)'
         Color = clWhite
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clWindowText
@@ -12389,7 +12389,7 @@ inherited frmDACTeQRRetrato: TfrmDACTeQRRetrato
         FontSize = 5
       end
       object qrlIndConteiners: TQRLabel
-        Left = 6
+        Left = 406
         Top = 73
         Width = 67
         Height = 13
@@ -12400,7 +12400,7 @@ inherited frmDACTeQRRetrato: TfrmDACTeQRRetrato
         Frame.DrawRight = False
         Size.Values = (
           34.395833333333340000
-          15.875000000000000000
+          1074.208333333333000000
           193.145833333333300000
           177.270833333333300000)
         XLColumn = 0
@@ -12425,14 +12425,14 @@ inherited frmDACTeQRRetrato: TfrmDACTeQRRetrato
         Left = 402
         Top = 15
         Width = 1
-        Height = 48
+        Height = 73
         Frame.Color = clBlack
         Frame.DrawTop = False
         Frame.DrawBottom = False
         Frame.DrawLeft = False
         Frame.DrawRight = False
         Size.Values = (
-          127.000000000000000000
+          193.145833333333300000
           1063.625000000000000000
           39.687500000000000000
           2.645833333333333000)
@@ -12764,6 +12764,72 @@ inherited frmDACTeQRRetrato: TfrmDACTeQRRetrato
         Brush.Style = bsClear
         Shape = qrsRectangle
         VertAdjust = 0
+      end
+      object QRLabel178: TQRLabel
+        Left = 406
+        Top = 64
+        Width = 115
+        Height = 9
+        Frame.Color = clBlack
+        Frame.DrawTop = False
+        Frame.DrawBottom = False
+        Frame.DrawLeft = False
+        Frame.DrawRight = False
+        Size.Values = (
+          23.812500000000000000
+          1074.208333333333000000
+          169.333333333333300000
+          304.270833333333400000)
+        XLColumn = 0
+        Alignment = taLeftJustify
+        AlignToBand = False
+        AutoSize = True
+        AutoStretch = False
+        Caption = 'IDENTIFICA'#199#195'O DOS CONTEINERS'
+        Color = clWhite
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWindowText
+        Font.Height = -7
+        Font.Name = 'Times New Roman'
+        Font.Style = []
+        ParentFont = False
+        Transparent = False
+        WordWrap = True
+        ExportAs = exptText
+        FontSize = 5
+      end
+      object qrlIndBalsas: TQRLabel
+        Left = 6
+        Top = 73
+        Width = 50
+        Height = 13
+        Frame.Color = clBlack
+        Frame.DrawTop = False
+        Frame.DrawBottom = False
+        Frame.DrawLeft = False
+        Frame.DrawRight = False
+        Size.Values = (
+          34.395833333333340000
+          15.875000000000000000
+          193.145833333333300000
+          132.291666666666700000)
+        XLColumn = 0
+        Alignment = taLeftJustify
+        AlignToBand = False
+        AutoSize = True
+        AutoStretch = False
+        Caption = 'qrlIndBalsas'
+        Color = clWhite
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWindowText
+        Font.Height = -9
+        Font.Name = 'Times New Roman'
+        Font.Style = []
+        ParentFont = False
+        Transparent = True
+        WordWrap = True
+        ExportAs = exptText
+        FontSize = 7
       end
     end
     object qrb_14_ModFerroviario: TQRChildBand

@@ -563,6 +563,8 @@ type
     QRShape100: TQRShape;
     qrsQuadro03: TQRShape;
     QRShape101: TQRShape;
+    QRLabel178: TQRLabel;
+    qrlIndBalsas: TQRLabel;
     procedure QRCTeBeforePrint(Sender: TCustomQuickRep; var PrintReport: Boolean);
     procedure qrb_01_ReciboBeforePrint(Sender: TQRCustomBand; var PrintBand: Boolean);
     procedure qrb_02_CabecalhoBeforePrint(Sender: TQRCustomBand; var PrintBand: Boolean);
@@ -1907,27 +1909,19 @@ end;
 
 procedure TfrmDACTeQRRetrato.qrb_13_ModAquaviarioBeforePrint(
   Sender: TQRCustomBand; var PrintBand: Boolean);
-begin
-  inherited;
-  PrintBand := QRCTe.PageNumber = 1;
-  qrb_13_ModAquaviario.Enabled := (FCTe.Ide.tpCTe = tcNormal) and (FCTe.Ide.modal = mdAquaviario);
-end;
-
-procedure TfrmDACTeQRRetrato.qrb_14_ModFerroviarioBeforePrint(
-  Sender: TQRCustomBand; var PrintBand: Boolean);
 var
  i: Integer;
 begin
   inherited;
   PrintBand := QRCTe.PageNumber = 1;
-  qrb_14_ModFerroviario.Enabled := (FCTe.Ide.tpCTe = tcNormal) and (FCTe.Ide.modal = mdFerroviario);
+  qrb_13_ModAquaviario.Enabled := (FCTe.Ide.tpCTe = tcNormal) and (FCTe.Ide.modal = mdAquaviario);
+
+  qrlBCAFRMM.Caption    := FormatCurr('###,###,##0.00', FCTe.Aquav.vPrest);
+  qrlValorAFRMM.Caption := FormatCurr('###,###,##0.00', FCTe.Aquav.vAFRMM);
 
   qrlPortoEmbarque.Caption     := FCTe.Aquav.prtEmb;
   qrlPortoDestino.Caption      := FCTe.Aquav.prtDest;
   qrlIndNavioRebocador.Caption := FCTe.Aquav.xNavio;
-
-  qrlBCAFRMM.Caption    := FormatCurr('###,###,##0.00', FCTe.Aquav.vPrest);
-  qrlValorAFRMM.Caption := FormatCurr('###,###,##0.00', FCTe.Aquav.vAFRMM);
 
   case FCTe.Aquav.tpNav of
    tnInterior:  qrlTipoNav.Caption := 'INTERIOR';
@@ -1941,6 +1935,15 @@ begin
    drOeste: qrlDirecao.Caption := 'OESTE';
   end;
 
+  // Incluido por Fabio
+  qrlIndBalsas.Caption:='';
+  for i := 0 to FCTe.Aquav.balsa.Count - 1 do
+   begin
+    if i = 0
+     then qrlIndBalsas.Caption := FCTe.Aquav.balsa.Items[i].xBalsa
+     else qrlIndBalsas.Caption := qrlIndBalsas.Caption + '/' + FCTe.Aquav.balsa.Items[i].xBalsa;
+   end;
+
   qrlIndConteiners.Caption := '';
   for i := 0 to FCTe.Aquav.Lacre.Count - 1 do
    begin
@@ -1948,6 +1951,15 @@ begin
      then qrlIndConteiners.Caption := FCTe.Aquav.Lacre.Items[i].nLacre
      else qrlIndConteiners.Caption := qrlIndConteiners.Caption + '/' + FCTe.Aquav.Lacre.Items[i].nLacre;
    end;
+end;
+
+procedure TfrmDACTeQRRetrato.qrb_14_ModFerroviarioBeforePrint(
+  Sender: TQRCustomBand; var PrintBand: Boolean);
+begin
+  inherited;
+  PrintBand := QRCTe.PageNumber = 1;
+  qrb_14_ModFerroviario.Enabled := (FCTe.Ide.tpCTe = tcNormal) and (FCTe.Ide.modal = mdFerroviario);
+
 end;
 
 procedure TfrmDACTeQRRetrato.qrb_15_ModDutoviarioBeforePrint(
