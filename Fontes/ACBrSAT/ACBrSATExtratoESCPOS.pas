@@ -298,16 +298,16 @@ begin
    begin
      FBuffer.Add('------------------------------------------------');
      FBuffer.Add('OBSERVAÇÕES DO CONTRIBUINTE');
-     FBuffer.Add(StringReplace(Trim(FpCFe.InfAdic.infCpl),';',sLineBreak,[rfReplaceAll]));
+     FBuffer.Add(cCmdFontePequena+StringReplace(Trim(FpCFe.InfAdic.infCpl),';',sLineBreak,[rfReplaceAll]));
    end;
 
   if FpCFe.Total.vCFeLei12741 > 0 then
    begin
      if Trim(FpCFe.InfAdic.infCpl) = '' then
       begin
-       FBuffer.Add('------------------------------------------------');
+       FBuffer.Add(cCmdFonteNormal+'------------------------------------------------');
        FBuffer.Add('OBSERVAÇÕES DO CONTRIBUINTE');
-      end  
+      end
      else
        FBuffer.Add('');
 
@@ -351,7 +351,7 @@ begin
      qrcode := qrcode + Trim(FpCFe.Dest.CNPJCPF) + '|';
      qrcode := qrcode + FpCFe.ide.assinaturaQRCODE;
      FLinhaCmd := chr(29)+'(k'+chr(4)+chr(0)+'1A2'+chr(0)+
-                  chr(29)+'(k'+chr(3)+chr(0)+'1C'+chr(6)+
+                  chr(29)+'(k'+chr(3)+chr(0)+'1C'+chr(4)+
                   chr(29)+'(k'+chr(3)+chr(0)+'1E0'+
                   chr(29)+'(k'+Int2TB(length(qrcode)+3)+'1P0'+qrcode+
                   chr(29)+'(k'+chr(3)+chr(0)+'1Q0';
