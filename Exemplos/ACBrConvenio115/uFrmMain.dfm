@@ -2,8 +2,8 @@ object Form3: TForm3
   Left = 0
   Top = 0
   Caption = 'Form3'
-  ClientHeight = 156
-  ClientWidth = 261
+  ClientHeight = 114
+  ClientWidth = 165
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -17,17 +17,26 @@ object Form3: TForm3
   object Button1: TButton
     Left = 8
     Top = 12
-    Width = 245
-    Height = 136
+    Width = 145
+    Height = 45
     Caption = 'Gerar Conv'#234'nio 115'
     TabOrder = 0
     OnClick = Button1Click
+  end
+  object Button2: TButton
+    Left = 8
+    Top = 60
+    Width = 145
+    Height = 45
+    Caption = 'Imprimir Nota Fiscal'
+    TabOrder = 1
+    OnClick = Button2Click
   end
   object ACBrConvenio115: TACBrConvenio115
     Ano = 0
     Mes = 0
     Status = scv115Normal
-    Left = 64
-    Top = 72
+    Left = 32
+    Top = 12
   end
 end
