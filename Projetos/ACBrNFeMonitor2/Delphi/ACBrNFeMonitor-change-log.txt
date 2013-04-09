@@ -50,6 +50,7 @@ Símbolo : Significado
 
 09/04/2013
 [*]	: Alterado no CT-e para ler as tag xCaracAd e xCaracSer do compl
+[*]	: Alterado a unit DoACBrNFeUnit.pas com a function SubstituirVariaveis(const ATexto: String): String para atender o Ct-e
 
 15/03/2013
 [+]	: Adicionado na aba "WebService" a opção de escolher se o cancelamento será feito por evento ou do modo antigo(Por padrão será adota Evento, exceto para os estados PR|ES|MA|PA|PI|RN)
