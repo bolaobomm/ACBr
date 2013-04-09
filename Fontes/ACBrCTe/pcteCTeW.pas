@@ -2228,9 +2228,9 @@ begin
 
       Gerador.wGrupo('/infCteComp');
     end;
-    if CTe.InfCTeComp.Count > 10 then
-      Gerador.wAlerta('#355', 'infCteComp', '', ERR_MSG_MAIOR_MAXIMO + '10');
-
+    // Alterado de 10 para 1 conforme NT 2013/002
+    if CTe.InfCTeComp.Count > 1 then
+      Gerador.wAlerta('#355', 'infCteComp', '', ERR_MSG_MAIOR_MAXIMO + '1');
   end;
 end;
 
