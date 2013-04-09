@@ -789,6 +789,7 @@ begin
   5107602  // Rondonopolis/MT
          : Provedor := 'Abaco';
 
+    25300, // Goiânia/GO
   5208707  // Goiania/GO
          : Provedor := 'Goiania';
 
