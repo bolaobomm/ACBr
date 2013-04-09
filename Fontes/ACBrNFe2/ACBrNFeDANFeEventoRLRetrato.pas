@@ -103,7 +103,6 @@ type
     RLDraw37: TRLDraw;
     rlbCondUso: TRLBand;
     RLLabel21: TRLLabel;
-    rliMarcaDagua1: TRLImage;
     rlbCabecalho: TRLBand;
     RLDraw3: TRLDraw;
     rliLogo: TRLImage;
@@ -192,6 +191,7 @@ type
     RLDraw36: TRLDraw;
     RLDraw38: TRLDraw;
     RLDraw39: TRLDraw;
+    rliMarcaDagua1: TRLImage;
     procedure RLEventoBeforePrint(Sender: TObject; var PrintIt: Boolean);
   private
     procedure InitDados;
@@ -419,7 +419,7 @@ begin
         rlbJustificativa.Visible := False;
         rlbCondUso.Visible := True;
         rlbCorrecao.Visible := True;
-        rliMarcaDagua1.Top := 300;
+        rliMarcaDagua1.Top := ((rlbCorrecao.Top + rlbCorrecao.Height) div 2) - (rliMarcaDagua1.Height div 2);
       end;
 
     teCancelamento:
@@ -427,9 +427,11 @@ begin
         rlbJustificativa.Visible := True;
         rlbCondUso.Visible := False;
         rlbCorrecao.Visible := False;
-        rliMarcaDagua1.Top := 70;
+        rliMarcaDagua1.Top := ((rlbDestinatario.Top + rlbDestinatario.Height) div 2) - (rliMarcaDagua1.Height div 2);
       end;
   end; // case FEventoNFe.Evento.Items[0].InfEvento.tpEvento
+
+  rliMarcaDagua1.Left := (RLEvento.Width div 2) - (rliMarcaDagua1.Width div 2);
 end;
 
 procedure TfrlDANFeEventoRLRetrato.RLEventoBeforePrint(Sender: TObject;
