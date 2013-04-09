@@ -233,7 +233,7 @@ type
     QRLabel18: TQRLabel;
     txtDataDocumento4: TQRLabel;
     QRLabel20: TQRLabel;
-    txtEspecie4: TQRLabel;
+    txtEspecieDoc: TQRLabel;
     QRLabel22: TQRLabel;
     txtDataProcessamento4: TQRLabel;
     QRLabel24: TQRLabel;
@@ -244,7 +244,7 @@ type
     QRLabel29: TQRLabel;
     QRLabel30: TQRLabel;
     QRLabel31: TQRLabel;
-    txtEspecieDoc4: TQRLabel;
+    txtEspecieMod: TQRLabel;
     QRLabel33: TQRLabel;
     txtCarteira4: TQRLabel;
     QRLabel35: TQRLabel;
@@ -758,13 +758,13 @@ begin
     txtCodigoCedente4.Caption       := CodCedente;
     txtDataDocumento4.Caption       := FormatDateTime('dd/mm/yyyy', Titulo.DataDocumento);
     txtNumeroDocumento4.Caption     := Titulo.NumeroDocumento;
-    txtEspecieDoc4.Caption          := Titulo.EspecieDoc;
+    txtEspecieDoc.Caption           := Titulo.EspecieDoc;
     txtAceite4.Caption              := ifThen(Titulo.Aceite = atSim,'S','N');
     txtDataProcessamento4.Caption   := FormatDateTime('dd/mm/yyyy',Now);
     txtNossoNumero4.Caption         := NossoNum;
     txtUsoBanco4.Caption            := Titulo.UsoBanco;
     txtCarteira4.Caption            := Titulo.Carteira;
-    txtEspecie4.Caption             := 'R$';
+    txtEspecieMod.Caption           := IfThen(Titulo.EspecieMod = '', 'R$', Titulo.EspecieMod);
     txtValorDocumento4.Caption      := FormatFloat('###,###,##0.00',Titulo.ValorDocumento);
     txtNomeSacado4.Caption          := Titulo.Sacado.NomeSacado;
     txtEnderecoSacado4.Caption      := Titulo.Sacado.Logradouro + ' '+
@@ -878,7 +878,7 @@ begin
       txtNossoNumero6_1.Caption         := txtNossoNumero6_0.Caption;
       txtUsoBanco6_1.Caption            := Titulo.UsoBanco;
       txtCarteira6_1.Caption            := Titulo.Carteira;
-      txtEspecie6_1.Caption             := 'R$';
+      txtEspecie6_1.Caption             := IfThen(Titulo.EspecieMod = '', 'R$', Titulo.EspecieMod);
       txtValorDocumento6_1.Caption      := txtValorDocumento6_0.Caption;
       txtNomeSacado6_1.Caption          := txtNomeSacado6_0.Caption;
       txtEnderecoSacado6_1.Caption      := txtEnderecoSacado6_0.Caption;

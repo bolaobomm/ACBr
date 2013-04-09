@@ -2,8 +2,7 @@ object ACBRBoletoFCQuickFr: TACBRBoletoFCQuickFr
   Left = 197
   Top = 152
   Width = 1309
-  Height = 812
-  VertScrollBar.Position = 332
+  Height = 784
   Caption = 'ACBRBoletoFCQuickFr'
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
@@ -18,7 +17,7 @@ object ACBRBoletoFCQuickFr: TACBRBoletoFCQuickFr
   TextHeight = 13
   object ACBrBarCode1: TACBrBarCode
     Left = 480
-    Top = 12
+    Top = 344
     Width = 200
     Height = 50
     Modul = 2
@@ -31,8 +30,8 @@ object ACBRBoletoFCQuickFr: TACBRBoletoFCQuickFr
     ShowTextFont.Style = []
   end
   object BoletoCarne: TQuickRep
-    Left = 3
-    Top = -329
+    Left = 8
+    Top = 3
     Width = 794
     Height = 1123
     Frame.Color = clBlack
@@ -1092,7 +1091,7 @@ object ACBRBoletoFCQuickFr: TACBRBoletoFCQuickFr
         WordWrap = True
         FontSize = 6
       end
-      object txtEspecie4: TQRLabel
+      object txtEspecieDoc: TQRLabel
         Left = 385
         Top = 109
         Width = 46
@@ -1433,7 +1432,7 @@ object ACBRBoletoFCQuickFr: TACBRBoletoFCQuickFr
         WordWrap = True
         FontSize = 6
       end
-      object txtEspecieDoc4: TQRLabel
+      object txtEspecieMod: TQRLabel
         Left = 322
         Top = 136
         Width = 50
@@ -2801,8 +2800,8 @@ object ACBRBoletoFCQuickFr: TACBRBoletoFCQuickFr
     end
   end
   object LayoutBoleto: TQuickRep
-    Left = 19
-    Top = 39
+    Left = 131
+    Top = 323
     Width = 794
     Height = 1123
     Frame.Color = clBlack
@@ -6585,8 +6584,8 @@ object ACBRBoletoFCQuickFr: TACBRBoletoFCQuickFr
     end
   end
   object LayOutPadraoEntrega: TQuickRep
-    Left = 771
-    Top = 23
+    Left = 843
+    Top = 11
     Width = 794
     Height = 1123
     Frame.Color = clBlack
