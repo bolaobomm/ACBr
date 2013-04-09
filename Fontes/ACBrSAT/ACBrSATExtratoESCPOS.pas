@@ -43,7 +43,7 @@ interface
 
 uses Classes, SysUtils,
      ACBrSATExtratoClass, ACBrDevice, ACBrUtil,
-     pcnCFe, pcnConversao, ACBrDFeUtil;
+     pcnCFe, pcnCFeCanc, pcnConversao, ACBrDFeUtil;
 
 const
       cCmdImpZera = #27+'@' ;
@@ -55,6 +55,7 @@ const
       cCmdAlinhadoEsquerda = #27+'a0';
       cCmdAlinhadoCentro = #27+'a1';
       cCmdAlinhadoDireita = #27+'a2';
+      cCmdCortaPapel = #29+'V1';      
 
 type
   TACBrSATExtratoESCPOS = class( TACBrSATExtratoClass )
@@ -67,18 +68,19 @@ type
   protected
     procedure GerarCabecalho;
     procedure GerarItens;
-    procedure GerarTotais(Resumido : Boolean = False );
+    procedure GerarTotais(Resumido : Boolean = False);
     procedure GerarPagamentos(Resumido : Boolean = False );
     procedure GerarObsFisco;
     procedure GerarDadosEntrega;
     procedure GerarObsContribuinte(Resumido : Boolean = False );
-    procedure GerarRodape;
+    procedure GerarRodape(CortaPapel: Boolean = True; Cancelamento: Boolean = False);
+    procedure GerarDadosCancelamento;
   public
     constructor Create(AOwner: TComponent); override;
     destructor Destroy; override;
     procedure ImprimirExtrato(CFe : TCFe = nil); override;
     procedure ImprimirExtratoResumido(CFe : TCFe = nil); override;
-    procedure ImprimirExtratoCancelamento(CFe : TCFe = nil); override;
+    procedure ImprimirExtratoCancelamento(CFe : TCFe = nil; CFeCanc: TCFeCanc = nil); override;
   published
     property Device : TACBrDevice read FDevice ;
   end ;
@@ -218,7 +220,7 @@ begin
         FBuffer.Add(padS('base de cálculo ISSQN|'+FormatFloat('#,###,##0.00',FpCFe.Det.Items[i].Imposto.ISSQN.vBC),64, '|'));
       end;
    end;
-  FBuffer.Add(cCmdAlinhadoEsquerda+cCmdFonteNormal);   
+  FBuffer.Add(cCmdAlinhadoEsquerda+cCmdFonteNormal);
 end;
 
 procedure TACBrSATExtratoESCPOS.GerarTotais(Resumido: Boolean);
@@ -315,15 +317,17 @@ begin
       begin
         FBuffer.Add('');
         FBuffer.Add('*Valor aproximado dos tributos do item');
-      end;  
+      end;
    end;
 end;
 
-procedure TACBrSATExtratoESCPOS.GerarRodape;
+procedure TACBrSATExtratoESCPOS.GerarRodape(CortaPapel: Boolean = True; Cancelamento: Boolean = False);
 var
   qrcode : string;
 begin
   FBuffer.Add('------------------------------------------------');
+  if Cancelamento then
+     FBuffer.Add(cCmdImpNegrito+'DADOS DO CUPOM FISCAL ELETRÔNICO CANCELADO'+cCmdImpFimNegrito);
   FLinhaCmd := cCmdAlinhadoCentro+'SAT No. '+
                cCmdImpNegrito+IntToStr(FpCFe.ide.nserieSAT)+cCmdImpFimNegrito;
   FBuffer.Add(FLinhaCmd);
@@ -358,8 +362,53 @@ begin
   FBuffer.Add('');
   FBuffer.Add('');
 
-  FBuffer.Add(chr(29)+'V1');  //Corte de Papel   }
+  if CortaPapel then
+     FBuffer.Add(cCmdCortaPapel);
 end;
+
+procedure TACBrSATExtratoESCPOS.GerarDadosCancelamento;
+var
+  qrcode : string;
+begin
+  FBuffer.Add('------------------------------------------------');
+  FBuffer.Add(cCmdImpNegrito+'DADOS DO CUPOM FISCAL ELETRÔNICO DE CANCELAMENTO'+cCmdImpFimNegrito);
+  FLinhaCmd := cCmdAlinhadoCentro+'SAT No. '+
+               cCmdImpNegrito+IntToStr(FpCFe.ide.nserieSAT)+cCmdImpFimNegrito;
+  FBuffer.Add(FLinhaCmd);
+  FBuffer.Add(DFeUtil.FormatDate(DateToStr(FpCFeCanc.ide.dEmi))+' '+TimeToStr(FpCFeCanc.ide.hEmi));
+  FBuffer.Add('');
+  FLinhaCmd :=  cCmdFontePequena+DFeUtil.FormatarChaveAcesso((FpCFeCanc.infCFe.ID))+cCmdFonteNormal;
+  FBuffer.Add(FLinhaCmd);
+
+  FLinhaCmd := chr(29)+'h'+chr(100)+
+               chr(29)+'w'+chr(2)+
+               chr(29)+'H0'+
+               chr(29)+'kI'+chr(24)+'{C'+AscToBcd(FpCFeCanc.infCFe.ID,22);
+  FBuffer.Add(FLinhaCmd);
+  FBuffer.Add('');
+
+  if ImprimeQRCode then
+   begin
+     qrcode := FpCFe.infCFe.ID + '|';
+     qrcode := qrcode + FormatDateTime('yyyymmddhhmmss',FpCFeCanc.ide.dEmi+FpCFeCanc.ide.hEmi) + '|';
+     qrcode := qrcode + DFeUtil.FormatFloat(FpCFeCanc.Total.vCFe,'0.00') + '|';
+     qrcode := qrcode + Trim(FpCFeCanc.Dest.CNPJCPF) + '|';
+     qrcode := qrcode + FpCFeCanc.ide.assinaturaQRCODE;
+     FLinhaCmd := chr(29)+'(k'+chr(4)+chr(0)+'1A2'+chr(0)+
+                  chr(29)+'(k'+chr(3)+chr(0)+'1C'+chr(6)+
+                  chr(29)+'(k'+chr(3)+chr(0)+'1E0'+
+                  chr(29)+'(k'+Int2TB(length(qrcode)+3)+'1P0'+qrcode+
+                  chr(29)+'(k'+chr(3)+chr(0)+'1Q0';
+     FBuffer.Add(FLinhaCmd);
+   end;
+  FBuffer.Add('');
+  FBuffer.Add('');
+  FBuffer.Add('');
+  FBuffer.Add('');
+
+  FBuffer.Add(cCmdCortaPapel);
+end;
+
 
 procedure TACBrSATExtratoESCPOS.ImprimePorta(AString: AnsiString);
 begin
@@ -390,9 +439,26 @@ begin
   ImprimePorta(FBuffer.Text);
 end;
 
-procedure TACBrSATExtratoESCPOS.ImprimirExtratoCancelamento(CFe: TCFe);
+procedure TACBrSATExtratoESCPOS.ImprimirExtratoCancelamento(CFe: TCFe; CFeCanc: TCFeCanc);
 begin
+  if CFe = nil then
+   begin
+     if not Assigned(ACBrSAT) then
+        raise Exception.Create('Componente ACBrSAT não atribuído');
 
+     FpCFe := TACBrSAT(ACBrSAT).CFe;
+     FpCFeCanc := TACBrSAT(ACBrSAT).CFeCanc;
+   end
+  else
+   begin
+     FpCFe := CFe;
+     FpCFeCanc := CFeCanc;
+   end;
+
+  GerarCabecalho;
+  GerarTotais(True);
+  GerarRodape(False);
+  GerarDadosCancelamento;
 end;
 
 procedure TACBrSATExtratoESCPOS.ImprimirExtratoResumido(CFe: TCFe);
@@ -405,7 +471,7 @@ begin
      FpCFe := TACBrSAT(ACBrSAT).CFe;
    end
   else
-    FpCFe := CFe; 
+    FpCFe := CFe;
 
   GerarCabecalho;
   GerarTotais(True);

@@ -45,7 +45,7 @@ interface
 uses SysUtils,
      Classes,
      ACBrDevice,
-     pcnCFe;
+     pcnCFe, pcnCFeCanc;
 
 type
 
@@ -80,14 +80,15 @@ type
   protected
     FpImprimeQRCode: Boolean;
     FpCFe: TCFe;
-    
-    procedure Notification(AComponent: TComponent; Operation: TOperation); override;  
+    FpCFeCanc: TCFeCanc;
+
+    procedure Notification(AComponent: TComponent; Operation: TOperation); override;
   public
     constructor Create(AOwner: TComponent); override;
     destructor Destroy; override;
     procedure ImprimirExtrato(CFe : TCFe = nil); virtual;
     procedure ImprimirExtratoResumido(CFe : TCFe = nil); virtual;
-    procedure ImprimirExtratoCancelamento(CFe : TCFe = nil); virtual;
+    procedure ImprimirExtratoCancelamento(CFe : TCFe = nil; CFeCanc: TCFeCanc = nil); virtual;
   published
     property ACBrSAT : TComponent  read FACBrSAT write SetSAT ;
     property CasasDecimais: TCasasDecimais read FCasasDecimais ;
@@ -157,7 +158,7 @@ begin
   ErroAbstract('ImprimirExtrato' ) ;
 end;
 
-procedure TACBrSATExtratoClass.ImprimirExtratoCancelamento(CFe: TCFe);
+procedure TACBrSATExtratoClass.ImprimirExtratoCancelamento(CFe: TCFe; CFeCanc: TCFeCanc);
 begin
   ErroAbstract('ImprimirExtratoCancelamento' ) ;
 end;

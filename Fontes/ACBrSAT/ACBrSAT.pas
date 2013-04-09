@@ -51,6 +51,7 @@ type
    TACBrSAT = class( TComponent )
    private
      fsCFe : TCFe ;
+     fsCFeCanc : TCFeCanc ;
      fsnumeroSessao : Integer ;
      fsOnGetcodigoDeAtivacao : TACBrSATGetChave ;
      fsOnGetsignAC : TACBrSATGetChave ;
@@ -107,10 +108,14 @@ type
      property RespostaComando: String read fsRespostaComando ;
 
      property CFe : TCFe read fsCFe ;
+     property CFeCanc : TCFeCanc read fsCFeCanc ;
      property Resposta : TACBrSATResposta read fsResposta;
 
      procedure InicializaCFe( ACFe : TCFe = nil );
      function GerarXML : AnsiString ;
+     function GerarXMLCancelamento : AnsiString ;
+     function LoadFromFile(CaminhoArquivo: string): boolean;
+     function LoadFromString(AString: String): boolean;
 
      procedure DoLog(AString : AnsiString ) ;
 
@@ -119,8 +124,9 @@ type
        ) : String ;
      function AtualizarSoftwareSAT : String ;
      function BloquearSAT : String ;
+     function CancelarUltimaVenda :String ; overload;
      function CancelarUltimaVenda( chave, dadosCancelamento : String ) :
-       String ;
+       String ; overload;
      function ComunicarCertificadoICPBRASIL( certificado : AnsiString ) :
        String ;
      function ConfigurarInterfaceDeRede( dadosConfiguracao : AnsiString ) :
@@ -193,6 +199,7 @@ begin
 
   fsConfig  := TACBrSATConfig.Create;
   fsCFe     := TCFe.Create;
+  fsCFeCanc := TCFeCanc.Create;
   fsResposta:= TACBrSATResposta.Create;
 end ;
 
@@ -200,6 +207,7 @@ destructor TACBrSAT.Destroy ;
 begin
   fsConfig.Free;
   fsCFe.Free;
+  fsCFeCanc.Free;
   fsResposta.Free;
 
   inherited Destroy ;
@@ -364,6 +372,27 @@ begin
   fsRespostaComando := Result;
   FinalizaComando ;
 end ;
+
+function TACBrSAT.CancelarUltimaVenda: String ;
+var
+  dadosCancelamento : string;
+begin
+  CFeCanc.Clear;
+  CFeCanc.infCFe.chCanc := CFe.infCFe.ID;
+  CFeCanc.infCFe.dEmi := CFe.ide.dEmi;
+  CFeCanc.infCFe.hEmi := CFe.ide.hEmi;
+
+  CFeCanc.ide.CNPJ      := CFe.ide.CNPJ;
+  CFeCanc.ide.signAC    := CFe.ide.signAC;
+  CFeCanc.ide.numeroCaixa := CFe.ide.numeroCaixa;
+
+  CFeCanc.Dest.CNPJCPF := CFe.Dest.CNPJCPF;
+
+  dadosCancelamento := GerarXMLCancelamento;
+
+  Result := CancelarUltimaVenda(CFe.infCFe.ID, dadosCancelamento);
+end ;
+
 
 function TACBrSAT.CancelarUltimaVenda(chave, dadosCancelamento : String
   ) : String ;
@@ -633,6 +662,52 @@ begin
 
    Extrato.ImprimirExtratoResumido;
 end;
+
+function TACBrSAT.LoadFromFile(CaminhoArquivo: string): boolean;
+var
+ ArquivoXML: TStringList;
+begin
+ try
+    ArquivoXML := TStringList.Create;
+    ArquivoXML.LoadFromFile(CaminhoArquivo);
+    Result := LoadFromString(ArquivoXML.Text);
+    ArquivoXML.Free;
+ except
+    raise;
+    Result := False;
+ end;
+end;
+
+function TACBrSAT.LoadFromString(AString: String): boolean;
+var
+ LocCFeR : TCFeR;
+begin
+  try
+    Result := True;
+    LocCFeR := TCFeR.Create(fsCFe);
+    try
+       LocCFeR.Leitor.Arquivo := AString;
+       LocCFeR.LerXml;
+    finally
+       LocCFeR.Free
+    end;
+  except
+    Result := False;
+  end;
+end;
+
+function TACBrSAT.GerarXMLCancelamento: AnsiString;
+var
+  LocCFeCancW : TCFeCancW ;
+begin
+  LocCFeCancW := TCFeCancW.Create(fsCFeCanc);
+  try
+    LocCFeCancW.GerarXml;
+    Result := LocCFeCancW.Gerador.ArquivoFormatoXML;
+  finally
+    LocCFeCancW.Free;
+  end ;
+end ;
 
 {$ifdef FPC}
 {$IFNDEF CONSOLE}
