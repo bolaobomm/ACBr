@@ -131,6 +131,7 @@ type
     procedure SbArqLogClick(Sender : TObject) ;
     procedure ImprimirExtratoVenda1Click(Sender: TObject);
     procedure ImprimirExtratoVendaResumido1Click(Sender: TObject);
+    procedure ImprimirExtratoCancelamento1Click(Sender: TObject);
   private
     procedure TrataErros(Sender : TObject ; E : Exception) ;
     procedure AjustaACBrSAT ;
@@ -330,24 +331,13 @@ end;
 
 procedure TForm1.mCancelarUltimaVendaClick(Sender : TObject) ;
 var
-  sChave : string;
   SL : TStringList;
 begin
-  sChave := '';
-  if not(InputQuery('SAT', 'Chave de acesso do CF-e-SAT', sChave)) then
-     exit;
-
   OpenDialog1.Filter := 'Arquivo XML|*.xml';
   if OpenDialog1.Execute then
   begin
-    SL := TStringList.Create;
-    try
-      SL.LoadFromFile( OpenDialog1.FileName );
-
-      ACBrSAT1.CancelarUltimaVenda(sChave, SL.Text );
-    finally
-      SL.Free;
-    end ;
+    ACBrSAT1.LoadFromFile( OpenDialog1.FileName );
+    ACBrSAT1.CancelarUltimaVenda;
   end ;
 end;
 
@@ -450,21 +440,17 @@ begin
 end;
 
 procedure TForm1.mEnviarVendaClick(Sender : TObject) ;
-var
-  Resp, CupomSAT : AnsiString;
 begin
  if mVenda.Text = '' then
    mGerarVenda.Click;
 
  PageControl1.ActivePage := tsLog;
 
- Resp := ACBrSAT1.EnviarDadosVenda( mVenda.Text );
+ ACBrSAT1.EnviarDadosVenda( mVenda.Text );
 
- if Pos('Emitido com sucesso',Resp) > 0 then
- begin
-    CupomSAT := copy(Resp,54,length(Resp));
-    CupomSAT := copy(CupomSAT,1,Pos('|',CupomSAT) );
-    mCupom.Text := DecodeBase64(CupomSAT) ;
+ if ACBrSAT1.Resposta.codigoDeRetorno = 6000 then
+  begin
+    mCupom.Text := DecodeBase64(ACBrSAT1.Resposta.RetornoLst[6]) ;
     PageControl1.ActivePage := tsRecebido;
   end;
 end;
@@ -665,7 +651,7 @@ begin
       vMP := 10;
     end;
 
-    InfAdic.infCpl := 'Acesse www.projetoacbr.com.br para obter mais   informações sobre o componente ACBrSAT;'+
+    InfAdic.infCpl := 'Acesse www.projetoacbr.com.br para obter mais;informações sobre o componente ACBrSAT;'+
                       'Precisa de um PAF-ECF homologado?;Conheça o DJPDV - www.djpdv.com.br'
   end;
 
@@ -679,45 +665,33 @@ begin
 end;
 
 procedure TForm1.ImprimirExtratoVenda1Click(Sender: TObject);
-var
-  CFe : TCFe;
-  CFeR : TCFeR;
 begin
   ACBrSATExtratoESCPOS1.Device.Porta := 'COM7';
   ACBrSATExtratoESCPOS1.Device.Ativar;
   ACBrSATExtratoESCPOS1.Device.Serial.Purge;
   ACBrSATExtratoESCPOS1.ImprimeQRCode := True;
-  CFe := TCFe.Create;
-  CFeR := TCFeR.Create(CFe);
-  try
-    CFeR.Leitor.Arquivo := mCupom.Lines.Text;
-    CFeR.LerXml;
-    ACBrSATExtratoESCPOS1.ImprimirExtrato(CFe);
-  finally
-    CFeR.Free;
-    CFe.Free;
-  end;
+
+  ACBrSAT1.ImprimirExtrato;
 end;
 
 procedure TForm1.ImprimirExtratoVendaResumido1Click(Sender: TObject);
-var
-  CFe : TCFe;
-  CFeR : TCFeR;
 begin
   ACBrSATExtratoESCPOS1.Device.Porta := 'COM7';
   ACBrSATExtratoESCPOS1.Device.Ativar;
   ACBrSATExtratoESCPOS1.Device.Serial.Purge;
   ACBrSATExtratoESCPOS1.ImprimeQRCode := True;  
-  CFe := TCFe.Create;
-  CFeR := TCFeR.Create(CFe);
-  try
-    CFeR.Leitor.Arquivo := mCupom.Lines.Text;
-    CFeR.LerXml;
-    ACBrSATExtratoESCPOS1.ImprimirExtratoResumido(CFe);
-  finally
-    CFeR.Free;
-    CFe.Free;
-  end;
+
+  ACBrSAT1.ImprimirExtratoResumido;
+end;
+
+procedure TForm1.ImprimirExtratoCancelamento1Click(Sender: TObject);
+begin
+  ACBrSATExtratoESCPOS1.Device.Porta := 'COM7';
+  ACBrSATExtratoESCPOS1.Device.Ativar;
+  ACBrSATExtratoESCPOS1.Device.Serial.Purge;
+  ACBrSATExtratoESCPOS1.ImprimeQRCode := True;  
+
+  ACBrSAT1.ImprimirExtratoCancelamento;
 end;
 
 end.

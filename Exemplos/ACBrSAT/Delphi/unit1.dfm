@@ -134,7 +134,7 @@ object Form1: TForm1
         Top = 15
         Width = 531
         Height = 165
-        ActivePage = tsDadosEmit
+        ActivePage = tsDadosSAT
         Align = alClient
         TabOrder = 0
         object tsDadosSAT: TTabSheet
@@ -453,6 +453,7 @@ object Form1: TForm1
       end
       object ImprimirExtratoCancelamento1: TMenuItem
         Caption = 'Imprimir Extrato Cancelamento'
+        OnClick = ImprimirExtratoCancelamento1Click
       end
     end
     object MenuItem6: TMenuItem
@@ -510,6 +511,7 @@ object Form1: TForm1
     Config.infCFe_versaoDadosEnt = 0.030000000000000000
     Config.ide_numeroCaixa = 0
     Config.ide_tpAmb = taHomologacao
+    Config.emit_cRegTrib = RTSimplesNacional
     Config.emit_cRegTribISSQN = RTISSMicroempresaMunicipal
     Config.emit_indRatISSQN = irSim
     OnGetcodigoDeAtivacao = ACBrSAT1GetcodigoDeAtivacao
@@ -519,7 +521,8 @@ object Form1: TForm1
   end
   object ACBrSATExtratoESCPOS1: TACBrSATExtratoESCPOS
     ACBrSAT = ACBrSAT1
+    ImprimeQRCode = False
     Left = 140
-    Top = 333
+    Top = 325
   end
 end
