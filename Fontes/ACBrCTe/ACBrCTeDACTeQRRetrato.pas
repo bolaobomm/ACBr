@@ -896,7 +896,7 @@ begin
              qrb_12_ModAereo.Height := 97;
             end;
    mdAquaviario: begin
-                  qrb_13_ModAquaviario.Height    := 0;
+                  qrb_13_ModAquaviario.Height    := 90;
                  end;
    mdFerroviario: begin
                    qrb_14_ModFerroviario.Height   := 0;
