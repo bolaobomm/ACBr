@@ -126,7 +126,8 @@ type
   TpcnTipoEmissao = (teNormal, teContingencia, teSCAN, teDPEC, teFSDA, teSVCAN, teSVCRS, teSVCSP, teOffLine);
   TpcnTipoAmbiente = (taProducao, taHomologacao);
   TpcnSituacaoEmissor = (seHomologacao, seProducao);
-  TpcnFinalidadeNFe = (fnNormal, fnComplementar, fnAjuste, fnResumo);
+  // Alterado por Italo em 09/04/2013 removido o valor fnResumo
+  TpcnFinalidadeNFe = (fnNormal, fnComplementar, fnAjuste);
   TpcnProcessoEmissao = (peAplicativoContribuinte, peAvulsaFisco, peAvulsaContribuinte, peContribuinteAplicativoFisco);
   TpcnTipoOperacao = (toVendaConcessionaria, toFaturamentoDireto, toVendaDireta, toOutros);
   TpcnCondicaoVeiculo = (cvAcabado, cvInacabado, cvSemiAcabado);
@@ -642,14 +643,14 @@ end;
 // B25 - Finalidade de emissão da NF-e *****************************************
 function FinNFeToStr(const t: TpcnFinalidadeNFe): string;
 begin
-  result := EnumeradoToStr(t, ['1', '2', '3', '4'],
-                              [fnNormal, fnComplementar, fnAjuste, fnResumo]);
+  result := EnumeradoToStr(t, ['1', '2', '3'],
+                              [fnNormal, fnComplementar, fnAjuste]);
 end;
 
 function StrToFinNFe(var ok: boolean; const s: string): TpcnFinalidadeNFe;
 begin
-  result := StrToEnumerado(ok, s, ['1', '2', '3', '4'],
-                                  [fnNormal, fnComplementar, fnAjuste, fnResumo]);
+  result := StrToEnumerado(ok, s, ['1', '2', '3'],
+                                  [fnNormal, fnComplementar, fnAjuste]);
 end;
 
 // B26 - Processo de emissão da NF-e *******************************************
