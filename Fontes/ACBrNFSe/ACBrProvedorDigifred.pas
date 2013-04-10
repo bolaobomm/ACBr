@@ -445,8 +445,6 @@ end;
 function TProvedorDigifred.Gera_DadosMsgGerarNFSe(Prefixo3, Prefixo4,
   Identificador, NameSpaceDad, VersaoDados, VersaoXML, NumeroLote, CNPJ,
   IM, QtdeNotas: String; Notas, TagI, TagF: AnsiString): AnsiString;
-var
- DadosMsg: AnsiString;
 begin
  Result := Notas;
 end;

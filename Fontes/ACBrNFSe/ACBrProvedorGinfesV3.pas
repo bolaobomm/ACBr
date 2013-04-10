@@ -225,10 +225,16 @@ end;
 
 function TProvedorGinfesV3.Gera_CabMsg(Prefixo2, VersaoLayOut, VersaoDados,
   NameSpaceCab: String): AnsiString;
+var
+ Tag: String;
 begin
- Result := '<' + Prefixo2 + 'cabecalho versao="'  + VersaoLayOut + '"' + NameSpaceCab +
+ if Pos('issfortaleza', NameSpaceCab) > 0
+  then Tag := 'Cabecalho'
+  else Tag := 'cabecalho';
+
+ Result := '<' + Prefixo2 + Tag + ' versao="'  + VersaoLayOut + '"' + NameSpaceCab +
             '<versaoDados>' + VersaoDados + '</versaoDados>'+
-           '</' + Prefixo2 + 'cabecalho>';
+           '</' + Prefixo2 + Tag + '>';
 end;
 
 function TProvedorGinfesV3.Gera_DadosSenha(CNPJ, Senha: String): AnsiString;
