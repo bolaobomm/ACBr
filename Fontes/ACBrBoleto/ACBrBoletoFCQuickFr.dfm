@@ -1,6 +1,6 @@
 object ACBRBoletoFCQuickFr: TACBRBoletoFCQuickFr
-  Left = 197
-  Top = 152
+  Left = 59
+  Top = 136
   Width = 1309
   Height = 784
   Caption = 'ACBRBoletoFCQuickFr'
@@ -30,8 +30,8 @@ object ACBRBoletoFCQuickFr: TACBRBoletoFCQuickFr
     ShowTextFont.Style = []
   end
   object BoletoCarne: TQuickRep
-    Left = 8
-    Top = 3
+    Left = -72
+    Top = 51
     Width = 794
     Height = 1123
     Frame.Color = clBlack
@@ -2800,8 +2800,8 @@ object ACBRBoletoFCQuickFr: TACBRBoletoFCQuickFr
     end
   end
   object LayoutBoleto: TQuickRep
-    Left = 131
-    Top = 323
+    Left = 179
+    Top = 427
     Width = 794
     Height = 1123
     Frame.Color = clBlack
@@ -6584,8 +6584,8 @@ object ACBRBoletoFCQuickFr: TACBRBoletoFCQuickFr
     end
   end
   object LayOutPadraoEntrega: TQuickRep
-    Left = 843
-    Top = 11
+    Left = 611
+    Top = -141
     Width = 794
     Height = 1123
     Frame.Color = clBlack

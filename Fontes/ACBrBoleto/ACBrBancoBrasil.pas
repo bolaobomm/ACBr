@@ -810,7 +810,7 @@ begin
                   padL( trim(Sacado.Cidade), 15)                          + // Cidade do sacado
                   padL( Sacado.UF, 2 )                                    + // UF da cidade do sacado
                   padL( AMensagem, 40)                                    + // Observações
-                  DiasProtesto + ' '                                      + // Número de dias para protesto + Branco
+                  padR(DiasProtesto,2,'0')+ ' '                           + // Número de dias para protesto + Branco
                   IntToStrZero( aRemessa.Count + 1, 6 );
 
 

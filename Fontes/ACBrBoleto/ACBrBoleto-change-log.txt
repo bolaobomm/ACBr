@@ -47,11 +47,25 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+Data: 10/04/2013
+
+-- ACBrBoleto ver. 0.0.67 --
+-- ACBrBancoBradesco --
+[-] Corrigida impressão do número da conta para as quais são utilizados 7 dígitos.
+    (Juliana Tamizou) 
+
+[-] Alterado geração do arquivo remessa CNAB400 para formatar corretamente o campo
+    Dias Protesto.(AndersonH) 
+
+-- ACBrBoletoFCFortesFR ver. 0.0.20a --
+[*] Alterado impressão do boleto em carnê para imprimir as mensagens.(AndersonH) 
+
+
+
 Data: 02/04/2013
 -- ACBrBoleto ver. 0.0.66 --
 -- ACBrBancoItau --
 [*] Adicionado leitura do arquivo retorno CNAB240.(Alberto)
-    (CarlosFilho) 
 
 -- ACBrBoletoFC_Quick ver. 0.0.14a --
 [*] Alterado rotina de impressão do boleto para considerar o valor informado na propriedade

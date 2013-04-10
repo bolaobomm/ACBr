@@ -779,7 +779,7 @@ begin
     txtCodigoCedente5.Caption       := txtCodigoCedente4.Caption;
     txtNumeroDocumento5.Caption     := txtNumeroDocumento4.Caption;
     txtNossoNumero5.Caption         := txtNossoNumero4.Caption;
-    txtEspecie5.Caption             := txtEspecie4.Caption;
+    txtEspecie5.Caption             := txtEspecieMod.Caption;
     txtValorDocumento5.Caption      := txtValorDocumento4.Caption;
     txtNomeSacado5.Caption          := txtNomeSacado4.Caption;
     txtParcela.Caption              := viPar + ' / ' + viPla;

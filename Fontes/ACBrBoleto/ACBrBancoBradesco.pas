@@ -79,7 +79,7 @@ begin
    fpNumero := 237;
    fpTamanhoMaximoNossoNum := 11;
    fpTamanhoAgencia := 4;
-   fpTamanhoConta   := 6;
+   fpTamanhoConta   := 7;
    fpTamanhoCarteira:= 2;
 end;
 
@@ -109,8 +109,7 @@ begin
                       padR(OnlyNumber(Cedente.Agencia),4,'0') +
                       ACBrTitulo.Carteira +
                       ACBrTitulo.NossoNumero +
-
-                      padR(copy(Cedente.Conta, Length(Cedente.Conta) - 6, Length(Cedente.Conta)),7,'0') + '0';
+                      padR(RightBStr(Cedente.Conta,7),7,'0') + '0';
 
       DigitoCodBarras := CalcularDigitoCodigoBarras(CodigoBarras);
    end;
