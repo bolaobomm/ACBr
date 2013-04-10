@@ -46,10 +46,13 @@ uses Classes, SysUtils,
      pcnCFe, pcnCFeCanc, pcnConversao, ACBrDFeUtil;
 
 const
-      cCmdImpZera = #27+'@' ;
+      cCmdImpZera = #27+'@';
+      cCmdEspacoLinha = #27+'3'+#14;
       cCmdPagCod = #27+'t'+#39;
-      cCmdImpNegrito = #27+'E1' ;
+      cCmdImpNegrito = #27+'E1';
       cCmdImpFimNegrito = #27+'E2';
+      cCmdImpExpandido = #29+'!'+#16;
+      cCmdImpFimExpandido = #29+'!'+#0;
       cCmdFonteNormal = #27+'M0';
       cCmdFontePequena = #27+'M1';
       cCmdAlinhadoEsquerda = #27+'a0';
@@ -128,15 +131,14 @@ end;
 
 procedure TACBrSATExtratoESCPOS.GerarCabecalho;
 begin
-  FLinhaCmd := cCmdImpZera+cCmdPagCod+cCmdFonteNormal+cCmdAlinhadoCentro;
+  FLinhaCmd := cCmdImpZera+cCmdEspacoLinha+cCmdPagCod+cCmdFonteNormal+cCmdAlinhadoCentro;
   FBuffer.clear;
-  FBuffer.Add(FLinhaCmd);  // Comando de Inicialização da Impressora
-  FBuffer.Add(chr(29)+'(L'+chr(6)+chr(0)+'0E  '+chr(1)+chr(1)); // Imprimindo logo já gravado na memória
+  FBuffer.Add(FLinhaCmd+chr(29)+'(L'+chr(6)+chr(0)+'0E  '+chr(1)+chr(1)); // Imprimindo logo já gravado na memória
 
   FLinhaCmd := cCmdAlinhadoCentro+cCmdImpNegrito+FpCFe.Emit.xFant+cCmdImpFimNegrito;
   FBuffer.Add(FLinhaCmd);
-  FBuffer.Add(FpCFe.Emit.xNome);
-  FBuffer.Add(Trim(FpCFe.Emit.EnderEmit.xLgr)+' '+
+  FBuffer.Add(cCmdFontePequena+FpCFe.Emit.xNome);
+  FBuffer.Add(cCmdFontePequena+Trim(FpCFe.Emit.EnderEmit.xLgr)+' '+
               Trim(FpCFe.Emit.EnderEmit.nro)+' '+
               Trim(FpCFe.Emit.EnderEmit.xCpl)+' '+
               Trim(FpCFe.Emit.EnderEmit.xBairro)+'-'+
@@ -158,9 +160,9 @@ begin
      FBuffer.Add(FLinhaCmd);
      FLinhaCmd := 'CUPOM FISCAL ELETRÔNICO - SAT'+cCmdImpFimNegrito;
      FBuffer.Add(FLinhaCmd);
-     FBuffer.Add('');
+     FBuffer.Add(' ');
      FBuffer.Add(padC(' = T E S T E =',48));
-     FBuffer.Add('');
+     FBuffer.Add(' ');
      FBuffer.Add(padC('>',48,'>'));
      FBuffer.Add(padC('>',48,'>'));
      FBuffer.Add(padC('>',48,'>'));
@@ -174,14 +176,14 @@ begin
      FBuffer.Add(FLinhaCmd);
    end;
   FBuffer.Add('------------------------------------------------');
-  FBuffer.Add(cCmdAlinhadoEsquerda+'CPF/CNPJ do Consumidor: '+DFeUtil.FormatarCNPJ(FpCFe.Dest.CNPJCPF));
+  FBuffer.Add(cCmdAlinhadoEsquerda+cCmdFontePequena+'CPF/CNPJ do Consumidor: '+DFeUtil.FormatarCNPJ(FpCFe.Dest.CNPJCPF));
 end;
 
 procedure TACBrSATExtratoESCPOS.GerarItens;
 var
   i : integer;
 begin
-  FBuffer.Add('------------------------------------------------');
+  FBuffer.Add(cCmdFonteNormal+'------------------------------------------------');
   FBuffer.Add('#|COD|DESC|QTD|UN|VL UN R$|(VLTR R$)*|VL ITEM R$');
   FBuffer.Add('------------------------------------------------');
 
@@ -228,16 +230,16 @@ begin
   if not Resumido then
    begin
      if (FpCFe.Total.ICMSTot.vDesc > 0) or (FpCFe.Total.ICMSTot.vOutro > 0) then
-        FBuffer.Add(padS('Subtotal|'+FormatFloat('#,###,##0.00',FpCFe.Total.ICMSTot.vProd),48, '|'));
+        FBuffer.Add(cCmdFontePequena+padS('Subtotal|'+FormatFloat('#,###,##0.00',FpCFe.Total.ICMSTot.vProd),64, '|'));
      if FpCFe.Total.ICMSTot.vDesc > 0 then
-        FBuffer.Add(padS('Descontos|'+FormatFloat('-#,###,##0.00',FpCFe.Total.ICMSTot.vDesc),48, '|'));
+        FBuffer.Add(cCmdFontePequena+padS('Descontos|'+FormatFloat('-#,###,##0.00',FpCFe.Total.ICMSTot.vDesc),64, '|'));
      if FpCFe.Total.ICMSTot.vOutro > 0 then
-        FBuffer.Add(padS('Acréscimos|'+FormatFloat('+#,###,##0.00',FpCFe.Total.ICMSTot.vOutro),48, '|'));
+        FBuffer.Add(cCmdFontePequena+padS('Acréscimos|'+FormatFloat('+#,###,##0.00',FpCFe.Total.ICMSTot.vOutro),64, '|'));
    end;
 
-  FLinhaCmd := cCmdAlinhadoEsquerda+cCmdImpNegrito+
-               padS('TOTAL R$|'+FormatFloat('#,###,##0.00',FpCFe.Total.vCFe),48, '|')+
-               cCmdImpFimNegrito;
+  FLinhaCmd := cCmdAlinhadoEsquerda+cCmdImpExpandido+
+               padS('TOTAL R$|'+FormatFloat('#,###,##0.00',FpCFe.Total.vCFe),32, '|')+
+               cCmdImpFimExpandido;
   FBuffer.Add(FLinhaCmd);
 end;
 
@@ -249,10 +251,10 @@ begin
     FBuffer.Add('');
   for i:=0 to FpCFe.Pagto.Count - 1 do
    begin
-     FBuffer.Add(padS(CodigoMPToDescricao(FpCFe.Pagto.Items[i].cMP)+'|'+FormatFloat('#,###,##0.00',FpCFe.Pagto.Items[i].vMP),48, '|'));
+     FBuffer.Add(cCmdFontePequena+padS(CodigoMPToDescricao(FpCFe.Pagto.Items[i].cMP)+'|'+FormatFloat('#,###,##0.00',FpCFe.Pagto.Items[i].vMP),64, '|'));
    end;
   if FpCFe.Pagto.vTroco > 0 then
-     FBuffer.Add(padS('Troco R$|'+FormatFloat('#,###,##0.00',FpCFe.Pagto.vTroco),48, '|'));
+     FBuffer.Add(cCmdFontePequena+padS('Troco R$|'+FormatFloat('#,###,##0.00',FpCFe.Pagto.vTroco),64, '|'));
 end;
 
 procedure TACBrSATExtratoESCPOS.GerarObsFisco;
@@ -264,12 +266,12 @@ begin
      FBuffer.Add('');
 
   if FpCFe.Emit.cRegTrib = RTSimplesNacional then
-     FBuffer.Add('ICMS a ser recolhido conforme LC 123/2006 - Simples Nacional');
+     FBuffer.Add(cCmdFontePequena+'ICMS a ser recolhido conforme LC 123/2006 - Simples Nacional');
 
 
   for i:=0 to FpCFe.InfAdic.obsFisco.Count - 1 do
    begin
-      FBuffer.Add(FpCFe.InfAdic.obsFisco.Items[i].xCampo+'-'+FpCFe.InfAdic.obsFisco.Items[i].xTexto);
+      FBuffer.Add(cCmdFontePequena+FpCFe.InfAdic.obsFisco.Items[i].xCampo+'-'+FpCFe.InfAdic.obsFisco.Items[i].xTexto);
    end;
 end;
 
@@ -281,9 +283,9 @@ begin
      Trim(FpCFe.Entrega.xBairro)+
      Trim(FpCFe.Entrega.xMun) <> '' then
    begin
-     FBuffer.Add('------------------------------------------------');
+     FBuffer.Add(cCmdFonteNormal+'------------------------------------------------');
      FBuffer.Add('DADOS PARA ENTREGA');
-     FBuffer.Add(Trim(FpCFe.Entrega.xLgr)+' '+
+     FBuffer.Add(cCmdFontePequena+Trim(FpCFe.Entrega.xLgr)+' '+
                  Trim(FpCFe.Entrega.nro)+' '+
                  Trim(FpCFe.Entrega.xCpl)+' '+
                  Trim(FpCFe.Entrega.xBairro)+' '+
@@ -296,7 +298,7 @@ procedure TACBrSATExtratoESCPOS.GerarObsContribuinte(Resumido : Boolean = False 
 begin
   if Trim(FpCFe.InfAdic.infCpl) <> '' then
    begin
-     FBuffer.Add('------------------------------------------------');
+     FBuffer.Add(cCmdFonteNormal+'------------------------------------------------');
      FBuffer.Add('OBSERVAÇÕES DO CONTRIBUINTE');
      FBuffer.Add(cCmdFontePequena+StringReplace(Trim(FpCFe.InfAdic.infCpl),';',sLineBreak,[rfReplaceAll]));
    end;
@@ -309,13 +311,13 @@ begin
        FBuffer.Add('OBSERVAÇÕES DO CONTRIBUINTE');
       end
      else
-       FBuffer.Add('');
+       FBuffer.Add(' ');
 
-     FBuffer.Add(cCmdFontePequena+padS('Valor aproximado dos tributos do deste cupom R$ |'+cCmdImpNegrito+FormatFloat('#,###,##0.00',FpCFe.Total.vCFeLei12741),64, '|'));
-     FBuffer.Add(cCmdImpFimNegrito+'(conforme Lei Fed. 12.741/2012)'+cCmdFonteNormal);
+     FBuffer.Add(cCmdFontePequena+padS('Valor aproximado dos tributos do deste cupom R$ |'+cCmdImpNegrito+FormatFloat('#,###,##0.00',FpCFe.Total.vCFeLei12741),66, '|'));
+     FBuffer.Add(cCmdImpFimNegrito+'(conforme Lei Fed. 12.741/2012)');
      if not Resumido then
       begin
-        FBuffer.Add('');
+        FBuffer.Add(' ');
         FBuffer.Add('*Valor aproximado dos tributos do item');
       end;
    end;
@@ -325,23 +327,24 @@ procedure TACBrSATExtratoESCPOS.GerarRodape(CortaPapel: Boolean = True; Cancelam
 var
   qrcode : string;
 begin
-  FBuffer.Add('------------------------------------------------');
+  FBuffer.Add(cCmdFonteNormal+'------------------------------------------------');
   if Cancelamento then
      FBuffer.Add(cCmdImpNegrito+'DADOS DO CUPOM FISCAL ELETRÔNICO CANCELADO'+cCmdImpFimNegrito);
   FLinhaCmd := cCmdAlinhadoCentro+'SAT No. '+
                cCmdImpNegrito+IntToStr(FpCFe.ide.nserieSAT)+cCmdImpFimNegrito;
   FBuffer.Add(FLinhaCmd);
   FBuffer.Add(DFeUtil.FormatDate(DateToStr(FpCFe.ide.dEmi))+' '+TimeToStr(FpCFe.ide.hEmi));
-  FBuffer.Add('');
+  FBuffer.Add(' ');
   FLinhaCmd :=  cCmdFontePequena+DFeUtil.FormatarChaveAcesso((FpCFe.infCFe.ID))+cCmdFonteNormal;
   FBuffer.Add(FLinhaCmd);
+  FBuffer.Add(' ');
 
-  FLinhaCmd := chr(29)+'h'+chr(100)+
+  FLinhaCmd := chr(29)+'h'+chr(50)+
                chr(29)+'w'+chr(2)+
                chr(29)+'H0'+
                chr(29)+'kI'+chr(24)+'{C'+AscToBcd(FpCFe.infCFe.ID,22);
   FBuffer.Add(FLinhaCmd);
-  FBuffer.Add('');
+  FBuffer.Add(' ');
 
   if ImprimeQRCode then
    begin
@@ -361,6 +364,18 @@ begin
   FBuffer.Add('');
   FBuffer.Add('');
   FBuffer.Add('');
+  FBuffer.Add('');
+  FBuffer.Add('');
+  FBuffer.Add('');
+  FBuffer.Add('');
+  FBuffer.Add('');
+  FBuffer.Add('');
+  FBuffer.Add('');
+  FBuffer.Add('');
+  FBuffer.Add('');
+  FBuffer.Add('');
+  FBuffer.Add('');
+  FBuffer.Add('');
 
   if CortaPapel then
      FBuffer.Add(cCmdCortaPapel);
@@ -370,7 +385,7 @@ procedure TACBrSATExtratoESCPOS.GerarDadosCancelamento;
 var
   qrcode : string;
 begin
-  FBuffer.Add('------------------------------------------------');
+  FBuffer.Add(cCmdFonteNormal+'------------------------------------------------');
   FBuffer.Add(cCmdImpNegrito+'DADOS DO CUPOM FISCAL ELETRÔNICO DE CANCELAMENTO'+cCmdImpFimNegrito);
   FLinhaCmd := cCmdAlinhadoCentro+'SAT No. '+
                cCmdImpNegrito+IntToStr(FpCFe.ide.nserieSAT)+cCmdImpFimNegrito;
@@ -379,13 +394,14 @@ begin
   FBuffer.Add('');
   FLinhaCmd :=  cCmdFontePequena+DFeUtil.FormatarChaveAcesso((FpCFeCanc.infCFe.ID))+cCmdFonteNormal;
   FBuffer.Add(FLinhaCmd);
+  FBuffer.Add(' ');
 
   FLinhaCmd := chr(29)+'h'+chr(100)+
                chr(29)+'w'+chr(2)+
                chr(29)+'H0'+
                chr(29)+'kI'+chr(24)+'{C'+AscToBcd(FpCFeCanc.infCFe.ID,22);
   FBuffer.Add(FLinhaCmd);
-  FBuffer.Add('');
+  FBuffer.Add(' ');
 
   if ImprimeQRCode then
    begin
@@ -401,6 +417,18 @@ begin
                   chr(29)+'(k'+chr(3)+chr(0)+'1Q0';
      FBuffer.Add(FLinhaCmd);
    end;
+  FBuffer.Add('');
+  FBuffer.Add('');
+  FBuffer.Add('');
+  FBuffer.Add('');
+  FBuffer.Add('');
+  FBuffer.Add('');
+  FBuffer.Add('');
+  FBuffer.Add('');
+  FBuffer.Add('');
+  FBuffer.Add('');
+  FBuffer.Add('');
+  FBuffer.Add('');
   FBuffer.Add('');
   FBuffer.Add('');
   FBuffer.Add('');
