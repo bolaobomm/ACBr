@@ -36,10 +36,11 @@ object Form1: TForm1
       object mResposta: TMemo
         Left = 0
         Top = 29
-        Width = 657
+        Width = 674
         Height = 156
         Align = alBottom
         Anchors = [akLeft, akTop, akRight, akBottom]
+        ScrollBars = ssVertical
         TabOrder = 0
       end
     end
@@ -47,24 +48,52 @@ object Form1: TForm1
       Caption = 'XML Gerado'
       object mVenda: TMemo
         Left = 0
-        Top = 13
-        Width = 657
-        Height = 172
+        Top = 160
+        Width = 674
+        Height = 25
         Align = alBottom
-        Anchors = [akLeft, akTop, akRight, akBottom]
+        ScrollBars = ssVertical
         TabOrder = 0
+      end
+      object wbVenda: TWebBrowser
+        Left = 0
+        Top = 0
+        Width = 674
+        Height = 160
+        Align = alClient
+        TabOrder = 1
+        ControlData = {
+          4C000000A9450000891000000000000000000000000000000000000000000000
+          000000004C000000000000000000000001000000E0D057007335CF11AE690800
+          2B2E126208000000000000004C0000000114020000000000C000000000000046
+          8000000000000000000000000000000000000000000000000000000000000000
+          00000000000000000100000000000000000000000000000000000000}
       end
     end
     object tsRecebido: TTabSheet
       Caption = 'XML Recebido'
       object mCupom: TMemo
         Left = 0
-        Top = 20
+        Top = 160
         Width = 674
-        Height = 165
+        Height = 25
         Align = alBottom
-        Anchors = [akLeft, akTop, akRight, akBottom]
+        ScrollBars = ssVertical
         TabOrder = 0
+      end
+      object wbCupom: TWebBrowser
+        Left = 0
+        Top = 0
+        Width = 674
+        Height = 160
+        Align = alClient
+        TabOrder = 1
+        ControlData = {
+          4C000000A9450000891000000000000000000000000000000000000000000000
+          000000004C000000000000000000000001000000E0D057007335CF11AE690800
+          2B2E126208000000000000004C0000000114020000000000C000000000000046
+          8000000000000000000000000000000000000000000000000000000000000000
+          00000000000000000100000000000000000000000000000000000000}
       end
     end
   end
@@ -498,6 +527,10 @@ object Form1: TForm1
         Caption = 'Desligar SAT'
         OnClick = mDesligarSATClick
       end
+    end
+    object Limpar1: TMenuItem
+      Caption = 'Limpar'
+      OnClick = Limpar1Click
     end
   end
   object OpenDialog1: TOpenDialog

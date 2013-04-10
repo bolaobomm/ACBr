@@ -7,7 +7,7 @@ interface
 uses
   Classes, SysUtils, Forms, Controls, Graphics, Dialogs, StdCtrls,
   ActnList, Menus, ExtCtrls, Buttons, ComCtrls, Spin, ACBrSAT , ACBrSATClass,
-  ACBrSATExtratoClass, ACBrSATExtratoESCPOS;
+  ACBrSATExtratoClass, ACBrSATExtratoESCPOS, OleCtrls, SHDocVw;
 
 {function ConsultarStatusOperacional( numeroSessao : Longint; codigoDeAtivacao : PChar ) : PChar ; cdecl;
   External 'C:\SAT\SAT.DLL';
@@ -104,6 +104,9 @@ type
     ImprimirExtratoCancelamento1: TMenuItem;
     ACBrSATExtratoESCPOS1: TACBrSATExtratoESCPOS;
     ImprimirExtratoVendaResumido1: TMenuItem;
+    Limpar1: TMenuItem;
+    wbVenda: TWebBrowser;
+    wbCupom: TWebBrowser;
     procedure ACBrSAT1GetcodigoDeAtivacao(var Chave : String) ;
     procedure ACBrSAT1GetsignAC(var Chave : String) ;
     procedure ACBrSAT1Log(const AString : String) ;
@@ -132,9 +135,11 @@ type
     procedure ImprimirExtratoVenda1Click(Sender: TObject);
     procedure ImprimirExtratoVendaResumido1Click(Sender: TObject);
     procedure ImprimirExtratoCancelamento1Click(Sender: TObject);
+    procedure Limpar1Click(Sender: TObject);
   private
     procedure TrataErros(Sender : TObject ; E : Exception) ;
     procedure AjustaACBrSAT ;
+    procedure LoadXML(MyMemo: TMemo; MyWebBrowser: TWebBrowser);
     { private declarations }
   public
     { public declarations }
@@ -330,8 +335,6 @@ begin
 end;
 
 procedure TForm1.mCancelarUltimaVendaClick(Sender : TObject) ;
-var
-  SL : TStringList;
 begin
   OpenDialog1.Filter := 'Arquivo XML|*.xml';
   if OpenDialog1.Execute then
@@ -451,6 +454,7 @@ begin
  if ACBrSAT1.Resposta.codigoDeRetorno = 6000 then
   begin
     mCupom.Text := DecodeBase64(ACBrSAT1.Resposta.RetornoLst[6]) ;
+    LoadXML(mCupom, wbCupom);    
     PageControl1.ActivePage := tsRecebido;
   end;
 end;
@@ -656,6 +660,7 @@ begin
   end;
 
   mVenda.Lines.Text := ACBrSAT1.GerarXML;
+  LoadXML(mVenda, wbVenda);
   mResposta.Lines.Add('Venda Gerada');
 end;
 
@@ -692,6 +697,18 @@ begin
   ACBrSATExtratoESCPOS1.ImprimeQRCode := True;  
 
   ACBrSAT1.ImprimirExtratoCancelamento;
+end;
+
+procedure TForm1.Limpar1Click(Sender: TObject);
+begin
+  mVenda.Clear;
+  mCupom.Clear;
+end;
+
+procedure TForm1.LoadXML(MyMemo: TMemo; MyWebBrowser: TWebBrowser);
+begin
+  MyMemo.Lines.SaveToFile(PathWithDelim(ExtractFileDir(application.ExeName))+'temp.xml');
+  MyWebBrowser.Navigate(PathWithDelim(ExtractFileDir(application.ExeName))+'temp.xml');
 end;
 
 end.
