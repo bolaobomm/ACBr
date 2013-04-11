@@ -567,7 +567,9 @@ begin
                 padL(NumeroDocumento, 15) +
                 DupeString(' ', 10) +
                 DiasProt +
-                '110009' +
+                IfThen(RightStr(trim(Instrucao1),1) = '', '1', Instrucao1)  +
+                padR(trim(Instrucao2),3,'0') +
+                '09' +
                 DupeString('0', 10) +' ';
 
       Result := Result + #13#10 +
