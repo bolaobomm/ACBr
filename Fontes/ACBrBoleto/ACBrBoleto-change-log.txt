@@ -47,8 +47,17 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
-Data: 10/04/2013
 
+Data: 11/04/2013
+-- ACBrBoleto ver. 0.0.68 --
+-- ACBrBancoBanrisul --
+[-] Corrigida geração da remessa CNAB240 para utilizar os campos Instrução1 e Instrução2 
+    para determinar os dias para Baixa/Devolucao de Boletos em atraso. (Juliana Tamizou) 
+
+[-] Alterado geração do arquivo remessa CNAB400 para formatar corretamente o campo
+    Dias Protesto.(AndersonH) 
+
+Data: 10/04/2013
 -- ACBrBoleto ver. 0.0.67 --
 -- ACBrBancoBradesco --
 [-] Corrigida impressão do número da conta para as quais são utilizados 7 dígitos.
