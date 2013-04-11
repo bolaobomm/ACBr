@@ -297,7 +297,7 @@ type
    function GetValidarLote: Boolean; Virtual; Abstract;
 
    function Gera_TagI(Acao: TnfseAcao; Prefixo3, Prefixo4, NameSpaceDad, Identificador, URI: String): AnsiString; Virtual; Abstract;
-   function Gera_CabMsg(Prefixo2, VersaoLayOut, VersaoDados, NameSpaceCab: String): AnsiString; Virtual; Abstract;
+   function Gera_CabMsg(Prefixo2, VersaoLayOut, VersaoDados, NameSpaceCab: String; ACodCidade: Integer): AnsiString; Virtual; Abstract;
    function Gera_DadosSenha(CNPJ, Senha: String): AnsiString; Virtual; Abstract;
    function Gera_TagF(Acao: TnfseAcao; Prefixo3: String): AnsiString; Virtual; Abstract;
 

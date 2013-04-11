@@ -31,7 +31,7 @@ type
    function GetValidarLote: Boolean; OverRide;
 
    function Gera_TagI(Acao: TnfseAcao; Prefixo3, Prefixo4, NameSpaceDad, Identificador, URI: String): AnsiString; OverRide;
-   function Gera_CabMsg(Prefixo2, VersaoLayOut, VersaoDados, NameSpaceCab: String): AnsiString; OverRide;
+   function Gera_CabMsg(Prefixo2, VersaoLayOut, VersaoDados, NameSpaceCab: String; ACodCidade: Integer): AnsiString; OverRide;
    function Gera_DadosSenha(CNPJ, Senha: String): AnsiString; OverRide;
    function Gera_TagF(Acao: TnfseAcao; Prefixo3: String): AnsiString; OverRide;
 
@@ -224,13 +224,14 @@ begin
 end;
 
 function TProvedorGinfesV3.Gera_CabMsg(Prefixo2, VersaoLayOut, VersaoDados,
-  NameSpaceCab: String): AnsiString;
+  NameSpaceCab: String; ACodCidade: Integer): AnsiString;
 var
  Tag: String;
 begin
- if Pos('issfortaleza', NameSpaceCab) > 0
-  then Tag := 'Cabecalho'
-  else Tag := 'cabecalho';
+ case ACodCidade of
+  2304400: Tag := 'Cabecalho'; // Fortaleza/CE
+  else     Tag := 'cabecalho'; // Demais cidades
+ end;
 
  Result := '<' + Prefixo2 + Tag + ' versao="'  + VersaoLayOut + '"' + NameSpaceCab +
             '<versaoDados>' + VersaoDados + '</versaoDados>'+

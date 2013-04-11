@@ -30,7 +30,7 @@ type
    function GetValidarLote: Boolean; OverRide;
 
    function Gera_TagI(Acao: TnfseAcao; Prefixo3, Prefixo4, NameSpaceDad, Identificador, URI: String): AnsiString; OverRide;
-   function Gera_CabMsg(Prefixo2, VersaoLayOut, VersaoDados, NameSpaceCab: String): AnsiString; OverRide;
+   function Gera_CabMsg(Prefixo2, VersaoLayOut, VersaoDados, NameSpaceCab: String; ACodCidade: Integer): AnsiString; OverRide;
    function Gera_DadosSenha(CNPJ, Senha: String): AnsiString; OverRide;
    function Gera_TagF(Acao: TnfseAcao; Prefixo3: String): AnsiString; OverRide;
 
@@ -196,7 +196,7 @@ begin
 end;
 
 function TProvedorGoiania.Gera_CabMsg(Prefixo2, VersaoLayOut, VersaoDados,
-  NameSpaceCab: String): AnsiString;
+  NameSpaceCab: String; ACodCidade: Integer): AnsiString;
 begin
  Result := '<' + Prefixo2 + 'cabecalho versao="'  + VersaoLayOut + '"' + NameSpaceCab +
             '<versaoDados>' + VersaoDados + '</versaoDados>'+

@@ -591,7 +591,7 @@ begin
     end;
   end;
 
- FCabMsg := FProvedorClass.Gera_CabMsg(Prefixo2, FVersaoLayOut, FVersaoDados, NameSpaceCab);
+ FCabMsg := FProvedorClass.Gera_CabMsg(Prefixo2, FVersaoLayOut, FVersaoDados, NameSpaceCab, FConfiguracoes.WebServices.CodigoMunicipio);
 
  URI := '';
 
@@ -686,7 +686,7 @@ begin
   then FNameSpaceDad := '>'
   else FNameSpaceDad := ' ' + FNameSpaceDad;
 
- FCabMsg := FProvedorClass.Gera_CabMsg(Prefixo2, FVersaoLayOut, FVersaoDados, NameSpaceCab);
+ FCabMsg := FProvedorClass.Gera_CabMsg(Prefixo2, FVersaoLayOut, FVersaoDados, NameSpaceCab, FConfiguracoes.WebServices.CodigoMunicipio);
 
  URISig := '';
  URIRef := '';
@@ -777,7 +777,7 @@ begin
   then FNameSpaceDad := '>'
   else FNameSpaceDad := ' ' + FNameSpaceDad;
 
- FCabMsg := FProvedorClass.Gera_CabMsg(Prefixo2, FVersaoLayOut, FVersaoDados, NameSpaceCab);
+ FCabMsg := FProvedorClass.Gera_CabMsg(Prefixo2, FVersaoLayOut, FVersaoDados, NameSpaceCab, FConfiguracoes.WebServices.CodigoMunicipio);
 
  URISig := '';
  URIRef := '';
@@ -874,7 +874,7 @@ begin
   then FNameSpaceDad := '>'
   else FNameSpaceDad := ' ' + FNameSpaceDad;
 
- FCabMsg := FProvedorClass.Gera_CabMsg(Prefixo2, FVersaoLayOut, FVersaoDados, NameSpaceCab);
+ FCabMsg := FProvedorClass.Gera_CabMsg(Prefixo2, FVersaoLayOut, FVersaoDados, NameSpaceCab, FConfiguracoes.WebServices.CodigoMunicipio);
 
  URISig := '';
  URIRef := '';
@@ -968,7 +968,7 @@ begin
   then FNameSpaceDad := '>'
   else FNameSpaceDad := ' ' + FNameSpaceDad;
 
- FCabMsg := FProvedorClass.Gera_CabMsg(Prefixo2, FVersaoLayOut, FVersaoDados, NameSpaceCab);
+ FCabMsg := FProvedorClass.Gera_CabMsg(Prefixo2, FVersaoLayOut, FVersaoDados, NameSpaceCab, FConfiguracoes.WebServices.CodigoMunicipio);
 
  URISig := '';
  URIRef := '';
@@ -1082,7 +1082,7 @@ begin
  FDadosSenha := FProvedorClass.Gera_DadosSenha(FConfiguracoes.WebServices.UserWeb,
                                                FConfiguracoes.WebServices.SenhaWeb);
 
- FCabMsg := FProvedorClass.Gera_CabMsg(Prefixo2, FVersaoLayOut, FVersaoDados, NameSpaceCab);
+ FCabMsg := FProvedorClass.Gera_CabMsg(Prefixo2, FVersaoLayOut, FVersaoDados, NameSpaceCab, FConfiguracoes.WebServices.CodigoMunicipio);
 
  case FProvedor of
   proSaatri: URISig := 'Cancelamento_' + TNFSeCancelarNfse(Self).FCnpj;
@@ -1371,7 +1371,7 @@ begin
     end;
   end;
 
- FCabMsg := FProvedorClass.Gera_CabMsg(Prefixo2, FVersaoLayOut, FVersaoDados, NameSpaceCab);
+ FCabMsg := FProvedorClass.Gera_CabMsg(Prefixo2, FVersaoLayOut, FVersaoDados, NameSpaceCab, FConfiguracoes.WebServices.CodigoMunicipio);
 
  URI := '';
 
@@ -1528,7 +1528,7 @@ begin
     end;
   end;
 
- FCabMsg := FProvedorClass.Gera_CabMsg(Prefixo2, FVersaoLayOut, FVersaoDados, NameSpaceCab);
+ FCabMsg := FProvedorClass.Gera_CabMsg(Prefixo2, FVersaoLayOut, FVersaoDados, NameSpaceCab, FConfiguracoes.WebServices.CodigoMunicipio);
 
  URI := '';
 
