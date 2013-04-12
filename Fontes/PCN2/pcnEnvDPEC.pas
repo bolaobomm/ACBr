@@ -71,6 +71,7 @@ type
     FOpcoes: TGeradorOpcoes;
     FinfDPEC: TinfDPEC;
     FSignature: TSignature;
+    FVersao: String;
   public
     constructor Create;
     destructor Destroy; override;
@@ -81,6 +82,7 @@ type
     property Opcoes: TGeradorOpcoes read FOpcoes write FOpcoes;
     property infDPEC: TinfDPEC read FinfDPEC write FinfDPEC;
     property signature: Tsignature read Fsignature write Fsignature;
+    property Versao: String read FVersao write FVersao;
   end;
 
   TGeradorOpcoes = class(TPersistent)
@@ -221,14 +223,17 @@ var
   Gerar: boolean;
 begin
   Result := False;
-  if retornarVersaoLayout(Fschema, tlEnvDPEC) = '1.01' then
-  begin
+
+//  if retornarVersaoLayout(Fschema, tlEnvDPEC) = '1.01' then
+//  begin
+
     Self.infDPEC.IdeDec.CNPJ := SomenteNumeros(Self.infDPEC.IdeDec.CNPJ);
     Self.infDPEC.IdeDec.IE := SomenteNumeros(Self.infDPEC.IdeDec.IE);
     //
     Gerador.ArquivoFormatoXML := '';
     Gerador.wGrupo(ENCODING_UTF8, '', False);
-    Gerador.wGrupo('envDPEC '+  V1_01 + ' ' + NAME_SPACE );
+//    Gerador.wGrupo('envDPEC '+  V1_01 + ' ' + NAME_SPACE );
+    Gerador.wGrupo('envDPEC versao="'+  Versao + '" ' + NAME_SPACE );
     Gerador.wGrupo('infDPEC Id="DPEC' + SomenteNumeros( Self.infDPEC.Id) + '"');
     Gerador.wGrupo('ideDec');
     Gerador.wCampo(tcInt, 'AP06', 'cUF    ', 02, 02, 1, Self.infDPEC.IdeDec.cUF, DSC_CUF);
@@ -276,7 +281,8 @@ begin
     //
     Gerador.wGrupo('/envDPEC');
     Result := (Gerador.ListaDeAlertas.Count = 0);
-  end;
+
+//  end;
 end;
 
 end.

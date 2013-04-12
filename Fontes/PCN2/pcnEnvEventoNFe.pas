@@ -87,6 +87,7 @@ type
     FSchema: TpcnSchema;
     FidLote: Integer;
     FEvento: TInfEventoCollection;
+    FVersao: String;
     procedure SetEvento(const Value: TInfEventoCollection);
   public
     constructor Create;
@@ -100,6 +101,7 @@ type
     property schema: TpcnSchema read Fschema write Fschema;
     property idLote: Integer               read FidLote      write FidLote;
     property Evento: TInfEventoCollection  read FEvento      write SetEvento;
+    property Versao: String                read FVersao      write FVersao;
   end;
 
 implementation
@@ -141,10 +143,13 @@ var
   sDoc  : String;
 begin
   Result := False;
-  if RetornarVersaoLayout(FSchema, tlCCeNFe) = '2.00' then
-  begin
+
+//  if RetornarVersaoLayout(FSchema, tlCCeNFe) = '2.00' then
+//  begin
+
     Gerador.ArquivoFormatoXML := '';
-    Gerador.wGrupo('envEvento ' + NAME_SPACE + ' ' + V1_00);
+//    Gerador.wGrupo('envEvento ' + NAME_SPACE + ' ' + V1_00);
+    Gerador.wGrupo('envEvento ' + NAME_SPACE + ' versao="' + Versao + '"');
     Gerador.wCampo(tcInt, 'HP03', 'idLote', 001, 015, 1, FidLote, DSC_IDLOTE);
     for i:= 0 to Evento.Count - 1 do
     begin
@@ -153,7 +158,8 @@ begin
                                         SomenteNumeros(Evento.Items[i].InfEvento.chNFe) +
                                         Format('%.2d', [Evento.Items[i].InfEvento.nSeqEvento]);
 
-      Gerador.wGrupo('evento ' + NAME_SPACE + ' ' + V1_00);
+//      Gerador.wGrupo('evento ' + NAME_SPACE + ' ' + V1_00);
+      Gerador.wGrupo('evento ' + NAME_SPACE + ' versao="' + Versao + '"');
       Gerador.wGrupo('infEvento Id="' + Evento.Items[i].InfEvento.id + '"');
       if Length(Evento.Items[i].InfEvento.id) < 54 then
           Gerador.wAlerta('HP07', 'ID', '', 'ID de Evento inválido');
@@ -181,7 +187,7 @@ begin
       Gerador.wCampo(tcInt,    'HP14', 'tpEvento', 006, 006,   1, Evento.Items[i].InfEvento.TipoEvento);
       Gerador.wCampo(tcInt,    'HP15', 'nSeqEvento', 001, 002, 1, Evento.Items[i].InfEvento.nSeqEvento);
       Gerador.wCampo(tcStr,    'HP16', 'verEvento', 001, 004,  1, Evento.Items[i].InfEvento.versaoEvento);
-      Gerador.wGrupo('detEvento ' +  V1_00);
+      Gerador.wGrupo('detEvento versao="' +  Versao + '"');
       Gerador.wCampo(tcStr,    'HP19', 'descEvento', 005, 060, 1,  Evento.Items[i].InfEvento.DescEvento);
       case Evento.Items[i].InfEvento.tpEvento of
         teCCe:
@@ -206,7 +212,8 @@ begin
     Gerador.wGrupo('/envEvento');
 
     Result := (Gerador.ListaDeAlertas.Count = 0);
-  end;
+
+//  end;
 end;
 
 procedure TEventoNFe.SetEvento(const Value: TInfEventoCollection);

@@ -1016,18 +1016,17 @@ begin
 
   anoInicio := ano;
   anoFim := ano;
-  if mes < 10 then begin
-    anoInicio := ano - 1;
-  end else begin
+  if mes < 10 then
+    anoInicio := ano - 1
+  else
     anoFim := ano + 1;
-  end;
 
   Result := False;
   if (GetInicioDoHorarioDeVerao(anoInicio) <= dataHora) and
      (GetFimDoHorarioDeVerao(anoFim) >= dataHora) and
-     (AnsiPos(UF, UFHV) > 0) then begin
+     (AnsiPos(UF, UFHV) > 0) then
     Result := True;
-  end;
+  
 end;
 
 function GetInicioDoHorarioDeVerao(const ano: Integer): TDateTime;
@@ -1044,10 +1043,11 @@ begin
    Achado o primeiro domingo, é somado a ele 14 dias para encontrar o terceiro domingo.}
   result := 0;
   for i := 1 to 7 do begin
-    if DayOfWeek(EncodeDate(ano, mes, i)) = 1 then begin
-      result := EncodeDate(ano, mes, i + 14);
-      break;
-    end;
+    if DayOfWeek(EncodeDate(ano, mes, i)) = 1 then
+     begin
+       result := EncodeDate(ano, mes, i + 14);
+       break;
+     end;
   end;
 end;
 
@@ -1058,11 +1058,10 @@ var
 begin
   domingoCarnaval := getDataDoCarnaval(ano) - 2; //Carnaval é na terça - 2 = Domingo
   terceiroDomingoFevereiro := getTerceiroDomingoDoMes(ano, 2);
-  if domingoCarnaval <> terceiroDomingoFevereiro then begin
-    result := terceiroDomingoFevereiro;
-  end else begin
+  if domingoCarnaval <> terceiroDomingoFevereiro then
+    result := terceiroDomingoFevereiro
+  else
     result := IncDay(terceiroDomingoFevereiro, 7);
-  end;
 end;
 
 function GetDataDoCarnaval(const ano: Integer): TDateTime;
@@ -1092,15 +1091,17 @@ begin
   c := ano MOD 7;
   d := (19 * a + x) MOD 30;
   e := (2 * b + 4 * c + 6 * d + y) MOD 7;
-  if (d + e) > 9 then begin
+  if (d + e) > 9 then
+   begin
     dia := (d + e - 9);
     mes := 4;
-  end else begin
+   end
+  else
+   begin
     dia := (d + e + 22);
     mes := 3;
-  end;
+   end;
   result :=  EncodeDate(ano, mes, dia);
 end;
-
 
 end.

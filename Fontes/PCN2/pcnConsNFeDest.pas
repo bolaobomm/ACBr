@@ -65,6 +65,7 @@ type
     FindNFe: TpcnIndicadorNFe;
     FindEmi: TpcnIndicadorEmissor;
     FultNSU: String;
+    FVersao: String;
   public
     constructor Create;
     destructor Destroy; override;
@@ -78,6 +79,7 @@ type
     property indNFe: TpcnIndicadorNFe read FindNFe write FindNFe;
     property indEmi: TpcnIndicadorEmissor read FindEmi write FindEmi;
     property ultNSU: String read FultNSU write FultNSU;
+    property Versao: String read FVersao write FVersao;
   end;
 
 implementation
@@ -115,10 +117,12 @@ var
 begin
   Result := False;
 
-  if retornarVersaoLayout(Fschema, tlConsNFeDest) = '2.00' then
-  begin
+//  if retornarVersaoLayout(Fschema, tlConsNFeDest) = '2.00' then
+//  begin
+
     Gerador.ArquivoFormatoXML := '';
-    Gerador.wGrupo('consNFeDest ' + NAME_SPACE + ' ' + V1_01);
+//    Gerador.wGrupo('consNFeDest ' + NAME_SPACE + ' ' + V1_01);
+    Gerador.wGrupo('consNFeDest ' + NAME_SPACE + ' versao="' + Versao + '"');
     Gerador.wCampo(tcStr, 'IP03', 'tpAmb', 001, 001, 1, tpAmbToStr(FtpAmb), DSC_TPAMB);
     Gerador.wCampo(tcStr, 'IP04', 'xServ', 018, 018, 1, 'CONSULTAR NFE DEST', DSC_XSERV);
 
@@ -134,7 +138,8 @@ begin
     Gerador.wCampo(tcStr, 'IP08', 'ultNSU', 001, 015, 1, sNSU, DSC_ULTNSU);
     Gerador.wGrupo('/consNFeDest');
     Result := (Gerador.ListaDeAlertas.Count = 0);
-  end;
+
+//  end;
 
 end;
 

@@ -120,13 +120,11 @@ type
 
   TpcnIndicadorPagamento = (ipVista, ipPrazo, ipOutras);
   TpcnTipoNFe = (tnEntrada, tnSaida);
-  // Alterado por Italo em 25/02/2013 removido o valor tiResumido
   TpcnTipoImpressao = (tiSemGeracao, tiRetrato, tiPaisagem, tiSimplificado, tiNFCe, tiMsgEletronica);
 
   TpcnTipoEmissao = (teNormal, teContingencia, teSCAN, teDPEC, teFSDA, teSVCAN, teSVCRS, teSVCSP, teOffLine);
   TpcnTipoAmbiente = (taProducao, taHomologacao);
   TpcnSituacaoEmissor = (seHomologacao, seProducao);
-  // Alterado por Italo em 09/04/2013 removido o valor fnResumo
   TpcnFinalidadeNFe = (fnNormal, fnComplementar, fnAjuste);
   TpcnProcessoEmissao = (peAplicativoContribuinte, peAvulsaFisco, peAvulsaContribuinte, peContribuinteAplicativoFisco);
   TpcnTipoOperacao = (toVendaConcessionaria, toFaturamentoDireto, toVendaDireta, toOutros);

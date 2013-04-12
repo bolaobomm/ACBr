@@ -43,6 +43,13 @@
 //                                                                            //
 ////////////////////////////////////////////////////////////////////////////////
 
+{******************************************************************************
+|* Historico
+|*
+|* 24/09/2012: Italo Jurisato Junior
+|*  - Alterações para funcionamento com NFC-e
+******************************************************************************}
+
 unit pcnNFeR;
 
 interface uses
@@ -86,7 +93,7 @@ end;
 
 destructor TNFeR.Destroy;
 begin
-  Fleitor.Free;
+  FLeitor.Free;
   inherited Destroy;
 end;
 
@@ -147,16 +154,29 @@ begin
     (*B02*) NFe.ide.cUF := Leitor.rCampo(tcInt, 'cUF');
     (*B03*) NFe.ide.cNF := Leitor.rCampo(tcInt, 'cNF');
     if NFe.ide.cNF = 0 then
-       NFe.ide.cNF := -2; 
+       NFe.ide.cNF := -2;
     (*B04*) NFe.ide.natOp := Leitor.rCampo(tcStr, 'natOp');
     (*B05*) NFe.ide.indPag := StrToIndpag(ok, Leitor.rCampo(tcStr, 'indPag'));
     (*B06*) NFe.ide.modelo := Leitor.rCampo(tcInt, 'mod');
     (*B07*) NFe.ide.serie := Leitor.rCampo(tcInt, 'serie');
     (*B08*) NFe.ide.nNF := Leitor.rCampo(tcInt, 'nNF');
-    (*B09*) NFe.ide.dEmi := Leitor.rCampo(tcDat, 'dEmi');
-    (*B10*) NFe.ide.dSaiEnt := Leitor.rCampo(tcDat, 'dSaiEnt');
-    (*B10a*)NFe.ide.hSaiEnt := Leitor.rCampo(tcHor, 'hSaiEnt');
+
+    if NFe.infNFe.Versao >= 3 then
+     begin
+      (*B09*) NFe.ide.dEmi := Leitor.rCampo(tcDat, 'dhEmi');
+      (*B10*) NFe.ide.dSaiEnt := Leitor.rCampo(tcDatHor, 'dhSaiEnt');
+     end
+    else
+     begin
+      (*B09*) NFe.ide.dEmi := Leitor.rCampo(tcDat, 'dEmi');
+      (*B10*) NFe.ide.dSaiEnt := Leitor.rCampo(tcDat, 'dSaiEnt');
+      (*B10a*)NFe.ide.hSaiEnt := Leitor.rCampo(tcHor, 'hSaiEnt');
+     end;
     (*B11*) NFe.ide.tpNF := StrToTpNF(ok, Leitor.rCampo(tcStr, 'tpNF'));
+
+    if NFe.infNFe.Versao >= 3 then
+     (*B11a*)NFe.ide.idDest := StrToDestinoOperacao(ok, Leitor.rCampo(tcStr, 'idDest'));
+
     (*B12*) NFe.ide.cMunFG := Leitor.rCampo(tcInt, 'cMunFG');
 
     (*B21*) NFe.Ide.tpImp := StrToTpImp(ok, Leitor.rCampo(tcStr, 'tpImp'));
@@ -164,6 +184,13 @@ begin
     (*B23*) NFe.Ide.cDV := Leitor.rCampo(tcInt, 'cDV');
     (*B24*) NFe.Ide.tpAmb := StrToTpAmb(ok, Leitor.rCampo(tcStr, 'tpAmb'));
     (*B25*) NFe.Ide.finNFe := StrToFinNFe(ok, Leitor.rCampo(tcStr, 'finNFe'));
+
+    if NFe.infNFe.Versao >= 3 then
+     begin
+      (*B25a*)NFe.ide.indFinal := StrToConsumidorFinal(ok, Leitor.rCampo(tcStr, 'indFinal'));
+      (*B25b*)NFe.ide.indPres := StrToPresencaComprador(ok, Leitor.rCampo(tcStr, 'indPres'));
+     end;
+
     (*B26*) NFe.Ide.procEmi := StrToProcEmi(ok, Leitor.rCampo(tcStr, 'procEmi'));
     (*B27*) NFe.Ide.verProc := Leitor.rCampo(tcStr, 'verProc');
     (*B28*) NFe.Ide.dhCont := Leitor.rCampo(tcDatHor, 'dhCont');
@@ -262,6 +289,10 @@ begin
   if Leitor.rExtrai(1, 'dest') <> '' then
   begin
     (*E02/E03*)NFe.Dest.CNPJCPF := Leitor.rCampoCNPJCPF;
+
+    if NFe.infNFe.Versao >= 3 then
+     (*E03a*)NFe.Dest.idEstrangeiro := Leitor.rCampo(tcStr, 'idEstrangeiro');
+
     (*E04*)NFe.Dest.xNome := Leitor.rCampo(tcStr, 'xNome');
     (*E17*)NFe.Dest.IE := Leitor.rCampo(tcStr, 'IE');
     (*E18*)NFe.Dest.ISUF := Leitor.rCampo(tcStr, 'ISUF');
@@ -321,7 +352,7 @@ begin
     Arquivo,
     Pos('<det nItem=', Arquivo),
     Pos('<total', Arquivo) - Pos('<det nItem=',Arquivo)
-    //Leitor.PosLast('<total>',Arquivo) - Pos('<det nItem=',Arquivo)
+
   );
 
   ItensTemp := copy(
@@ -730,6 +761,25 @@ begin
       inc(i);
     end;
   end;
+
+  if NFe.infNFe.Versao >= 3 then
+   begin
+    (* Grupo da TAG <pag> ******************************************************)
+    i := 0;
+    while Leitor.rExtrai(1, 'pag', '', i + 1) <> '' do
+     begin
+       NFe.pag.Add;
+      (*YA02*)NFe.pag[i].tPag := StrToFormaPagamento(ok, Leitor.rCampo(tcStr, 'tPag'));
+      (*YA03*)NFe.pag[i].vPag := Leitor.rCampo(tcDe2, 'vPag');
+      if Leitor.rExtrai(2, 'card') <> '' then
+       begin
+        (*YA05*)NFe.pag[i].CNPJ := Leitor.rCampo(tcStr, 'CNPJ');
+        (*YA06*)NFe.pag[i].tBand := StrToBandeiraCartao(ok, Leitor.rCampo(tcStr, 'tBand'));
+        (*YA07*)NFe.pag[i].cAut := Leitor.rCampo(tcStr, 'cAut');
+       end;
+      inc(i);
+    end;
+   end;
 
   (* Grupo da TAG <InfAdic> ***************************************************)
 

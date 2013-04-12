@@ -43,6 +43,12 @@
 //                                                                            //
 ////////////////////////////////////////////////////////////////////////////////
 
+{******************************************************************************
+|* Historico
+|*
+|* 24/09/2012: Italo Jurisato Junior
+|*  - Alterações para funcionamento com NFC-e
+******************************************************************************}
 {$I ACBr.inc}
 
 unit pcnNFe;
@@ -136,6 +142,8 @@ type
   TForDiaCollectionItem = class;
   TDeducCollection = class;
   TDeducCollectionItem = class;
+  TpagCollection = class;
+  TpagCollectionItem = class;
 
   TNFe = class(TPersistent)
   private
@@ -151,6 +159,7 @@ type
     FTotal: TTotal;
     FTransp: TTransp;
     FCobr: TCobr;
+    Fpag: TpagCollection;
     FInfAdic: TInfAdic;
     Fexporta: Texporta;
     Fcompra: Tcompra;
@@ -158,6 +167,7 @@ type
     FSignature: TSignature;
     FProcNFe: TProcNFe;
     procedure SetDet(Value: TDetCollection);
+    procedure Setpag(Value: TpagCollection);
   public
     constructor Create;
     destructor Destroy; override;
@@ -175,6 +185,7 @@ type
     property Total: TTotal read FTotal write FTotal;
     property Transp: TTransp read FTransp write FTransp;
     property Cobr: TCobr read FCobr write FCobr;
+    property pag: TpagCollection read Fpag write Setpag;
     property InfAdic: TInfAdic read FInfAdic write FInfAdic;
     property exporta: Texporta read Fexporta write Fexporta;
     property compra: Tcompra read Fcompra write Fcompra;
@@ -208,6 +219,7 @@ type
     FdSaiEnt: TDateTime;
     FhSaiEnt: TDateTime;
     FtpNF: TpcnTipoNFe;
+    FidDest: TpcnDestinoOperacao;
     FcMunFG: integer;
     FNFref: TNFrefCollection;
     FrefNFP: TRefNFP;    
@@ -216,6 +228,8 @@ type
     FcDV: integer;
     FtpAmb: TpcnTipoAmbiente;
     FfinNFe : TpcnFinalidadeNFe;
+    FindFinal: TpcnConsumidorFinal;
+    FindPres: TpcnPresencaComprador;
     FprocEmi: TpcnProcessoEmissao;
     FverProc: string;
     FdhCont : TDateTime;
@@ -236,6 +250,7 @@ type
     property dSaiEnt: TDateTime read FdSaiEnt write FdSaiEnt;
     property hSaiEnt: TDateTime read FhSaiEnt write FhSaiEnt;
     property tpNF: TpcnTipoNFe read FtpNF write FtpNF default tnSaida;
+    property idDest: TpcnDestinoOperacao read FidDest write FidDest;
     property cMunFG: integer read FcMunFG write FcMunFG;
     property NFref: TNFrefCollection read FNFref write SetNFref;
     property refNFP: TRefNFP read FrefNFP write FrefNFP;
@@ -244,6 +259,8 @@ type
     property cDV: integer read FcDV write FcDV;
     property tpAmb: TpcnTipoAmbiente read FtpAmb write FtpAmb default taHomologacao;
     property finNFe: TpcnFinalidadeNFe read FfinNFe write FfinNFe default fnNormal;
+    property indFinal: TpcnConsumidorFinal read FindFinal write FindFinal;
+    property indPres: TpcnPresencaComprador read FindPres write FindPres;
     property procEmi: TpcnProcessoEmissao read FprocEmi write FprocEmi default peAplicativoContribuinte;
     property verProc: string read FverProc write FverProc;
     property dhCont: TDateTime read FdhCont write FdhCont;
@@ -315,17 +332,7 @@ type
   end;
 
   TRefECF = class(TPersistent)
-{  private
-    Fmodelo: String;
-    FnECF  : string;
-    FnCOO  : string;
-  published
-    property modelo: string read FModelo write Fmodelo;
-    property nECF: string read FnECF write FnECF;
-    property nCOO: string read FnCOO write FnCOO;
-  end; }
-
- private
+  private
     Fmodelo: TpcnECFModRef;
     FnECF  : string;
     FnCOO  : string;
@@ -419,6 +426,7 @@ type
   TDest = class(TPersistent)
   private
     FCNPJCPF: string;
+    FidEstrangeiro: string;
     FxNome: string;
     FEnderDest: TEnderDest;
     FIE: string;
@@ -429,6 +437,7 @@ type
     destructor Destroy; override;
   published
     property CNPJCPF: string read FCNPJCPF write FCNPJCPF;
+    property idEstrangeiro: string read FidEstrangeiro write FidEstrangeiro;
     property xNome: string read FxNome write FxNome;
     property EnderDest: TEnderDest read FEnderDest write FEnderDest;
     property IE: string read FIE write FIE;
@@ -1301,6 +1310,31 @@ type
     property vDup: currency read FvDup write FvDup;
   end;
 
+  TpagCollection = class(TCollection)
+  private
+    function GetItem(Index: Integer): TpagCollectionItem;
+    procedure SetItem(Index: Integer; Value: TpagCollectionItem);
+  public
+    constructor Create(AOwner: TNFe);
+    function Add: TpagCollectionItem;
+    property Items[Index: Integer]: TpagCollectionItem read GetItem write SetItem; default;
+  end;
+
+  TpagCollectionItem = class(TCollectionItem)
+  private
+    FtPag: TpcnFormaPagamento;
+    FvPag: currency;
+    FCNPJ: string;
+    FtBand: TpcnBandeiraCartao;
+    FcAut: string;
+  published
+    property tPag: TpcnFormaPagamento read FtPag write FtPag;
+    property vPag: Currency read FvPag write FvPag;
+    property CNPJ: string read FCNPJ write FCNPJ;
+    property tBand: TpcnBandeiraCartao read FtBand write FtBand;
+    property cAut: string read FcAut write FcAut;
+  end;
+
   TInfAdic = class(TPersistent)
   private
     FinfAdFisco: string;
@@ -1489,6 +1523,7 @@ begin
   FDet     := TDetCollection.Create(Self);
   FTotal   := TTotal.Create(self);
   FCobr    := TCobr.Create(Self);
+  Fpag     := TpagCollection.Create(Self);
   FTransp  := TTransp.Create(Self);
   FinfAdic := TinfAdic.Create(self);
   FExporta := TExporta.Create;
@@ -1520,6 +1555,7 @@ begin
   FDet.Free;
   FTotal.Free;
   FCobr.Free;
+  Fpag.Free;
   FTransp.Free;
   FinfAdic.Free;
   FExporta.Free;
@@ -1533,6 +1569,11 @@ end;
 procedure TNFe.SetDet(Value: TDetCollection);
 begin
   FDet.Assign(Value);
+end;
+
+procedure TNFe.Setpag(Value: TpagCollection);
+begin
+  Fpag.Assign(Value);
 end;
 
 { TDetCollection }
@@ -2293,6 +2334,29 @@ begin
     else
       Result:=FtpComb;
   end;
+end;
+
+{ TpagCollection }
+
+function TpagCollection.Add: TpagCollectionItem;
+begin
+  Result := TpagCollectionItem(inherited Add);
+end;
+
+constructor TpagCollection.Create(AOwner: TNFe);
+begin
+  inherited Create(TpagCollectionItem);
+end;
+
+function TpagCollection.GetItem(Index: Integer): TpagCollectionItem;
+begin
+  Result := TpagCollectionItem(inherited GetItem(Index));
+end;
+
+procedure TpagCollection.SetItem(Index: Integer;
+  Value: TpagCollectionItem);
+begin
+  inherited SetItem(Index, Value);
 end;
 
 end.

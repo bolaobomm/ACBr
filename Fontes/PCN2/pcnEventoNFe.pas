@@ -171,12 +171,10 @@ begin
   if FcOrgao <> 0 then
     Result := FcOrgao
   else
-  begin
-     Result := StrToInt(copy(FChave,1,2));
-     {Estados que utilizam a SVAN: ES, MA, PA, PI, RN => Devem utilizar 91}
-     if Result in [32,21,15,22,24] then
-       Result := 91;
-  end;
+     Result := StrToIntDef(copy(FChave,1,2),0);
+
+  if Result = 0 then
+    raise EventoException.Create('Campo cOrgao não informado');
 end;
 
 function TInfEvento.getDescEvento: string;

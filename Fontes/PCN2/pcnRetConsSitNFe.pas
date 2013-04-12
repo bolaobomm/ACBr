@@ -92,10 +92,11 @@ type
     FcStat: Integer;
     FxMotivo: string;
     FcUF: integer;
+    FdhRecbto: TDateTime;
     FchNFe: string;
     FprotNFe: TProcNFe;
     FretCancNFe: TRetCancNFe;
-    FprocEventoNFe: TRetEventoNFeCollection;   {eventos_juaumkiko}
+    FprocEventoNFe: TRetEventoNFeCollection;
   public
     constructor Create;
     destructor Destroy; override;
@@ -107,6 +108,7 @@ type
     property cStat: Integer read FcStat write FcStat;
     property xMotivo: string read FxMotivo write FxMotivo;
     property cUF: integer read FcUF write FcUF;
+    property dhRecbto: TDateTime read FdhRecbto write FdhRecbto;
     property chNfe: string read FchNfe write FchNfe;
     property protNFe: TProcNFe read FprotNFe write FprotNFe;
     property retCancNFe: TRetCancNFe read FretCancNFe write FretCancNFe;
@@ -148,8 +150,9 @@ begin
       (*ER05 *)FcStat     := leitor.rCampo(tcInt, 'cStat');
       (*ER06 *)FxMotivo   := leitor.rCampo(tcStr, 'xMotivo');
       (*ER07 *)FcUF       := leitor.rCampo(tcInt, 'cUF');
-      (*EP07a*)FchNFe     := leitor.rCampo(tcStr, 'chNFe');
-      case FcStat of 100,101,110,150,151,155,301,302:
+      (*ER07a*)FdhRecbto  := leitor.rCampo(tcDatHor, 'dhRecbto');
+      (*ER07b*)FchNFe     := leitor.rCampo(tcStr, 'chNFe');
+      case FcStat of 100,101,104,110,150,151,155,301,302:
         begin
           if ((Leitor.rExtrai(1, 'protNFe') <> '') or (Leitor.rExtrai(1, 'infProt') <> '')) then
           begin

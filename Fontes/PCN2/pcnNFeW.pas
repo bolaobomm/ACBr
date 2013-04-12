@@ -43,6 +43,12 @@
 //                                                                            //
 ////////////////////////////////////////////////////////////////////////////////
 
+{******************************************************************************
+|* Historico
+|*
+|* 24/09/2012: Italo Jurisato Junior
+|*  - Alterações para funcionamento com NFC-e
+******************************************************************************}
 unit pcnNFeW;
 
 interface uses
@@ -103,6 +109,7 @@ type
     procedure GerarCobr;
     procedure GerarCobrFat;
     procedure GerarCobrDup;
+    procedure Gerarpag;
     procedure GerarTransp;
     procedure GerarTranspTransporta;
     procedure GerarTranspRetTransp;
@@ -234,7 +241,8 @@ begin
   if nfe.procNFe.nProt <> '' then
    begin
       Gerador.wGrupo(ENCODING_UTF8, '', False);
-      Gerador.wGrupo('nfeProc ' + V2_00 + ' ' + NAME_SPACE, '');
+      Gerador.wGrupo('nfeProc versao="' + NFe.infNFe.VersaoStr  + '" ' + NAME_SPACE, '');
+//      Gerador.wGrupo('nfeProc ' + V2_00 + ' ' + NAME_SPACE, '');
    end;
   Gerador.wGrupo('NFe ' + NAME_SPACE);
   Gerador.wGrupo('infNFe ' + NFe.infNFe.VersaoStr + ' Id="' + nfe.infNFe.ID + '"');
@@ -261,7 +269,8 @@ begin
   if nfe.procNFe.nProt <> '' then
    begin
      xProtNFe :=
-       (**)'<protNFe versao="2.00">' +
+//       (**)'<protNFe versao="2.00">' +
+       (**)'<protNFe ' + NFe.infNFe.VersaoStr + '>' +
      (******)'<infProt>'+
      (*********)'<tpAmb>'+TpAmbToStr(nfe.procNFe.tpAmb)+'</tpAmb>'+
      (*********)'<verAplic>'+nfe.procNFe.verAplic+'</verAplic>'+
@@ -286,13 +295,20 @@ begin
   GerarIde;
   GerarEmit;
   GerarAvulsa;
-  GerarDest;
+
+  if (nfe.Dest.CNPJCPF <> '') or (nfe.Dest.idEstrangeiro <> '') then 
+     GerarDest;
+
   GerarRetirada;
   GerarEntrega;
   GerarDet;
   GerarTotal;
   GerarTransp;
   GerarCobr;
+
+  if (nfe.infNFe.Versao >= 3) and (nfe.Ide.modelo = 65) then 
+     Gerarpag;
+
   GerarInfAdic;
   GerarExporta;
   GerarCompra;
@@ -313,11 +329,31 @@ begin
   Gerador.wCampo(tcInt, 'B06', 'mod    ', 02, 02, 1, nfe.ide.modelo, DSC_MOD);
   Gerador.wCampo(tcInt, 'B07', 'serie  ', 01, 03, 1, nfe.ide.serie, DSC_SERIE);
   Gerador.wCampo(tcInt, 'B08', 'nNF    ', 01, 09, 1, nfe.ide.nNF, DSC_NNF);
-  Gerador.wCampo(tcDat, 'B09', 'dEmi   ', 10, 10, 1, nfe.ide.dEmi, DSC_DEMI);
-  Gerador.wCampo(tcDat, 'B10', 'dSaiEnt', 10, 10, 0, nfe.ide.dSaiEnt, DSC_DSAIENT);
-  if nfe.Ide.dSaiEnt>0
-   then Gerador.wCampo(tcHor, 'B10a','hSaiEnt', 08, 08, 0, nfe.ide.hSaiEnt, DSC_HSAIENT);
+
+  if nfe.infNFe.Versao >= 3 then
+   begin
+     Gerador.wCampo(tcStr, 'B09', 'dhEmi   ', 10, 10, 1, DateTimeTodh(nfe.ide.dEmi) + GetUTC(CodigoParaUF(nfe.ide.cUF), nfe.ide.dEmi), DSC_DEMI);
+     if nfe.ide.modelo = 55 then
+       Gerador.wCampo(tcStr, 'B10', 'dhSaiEnt', 10, 10, 0, DateTimeTodh(nfe.ide.dSaiEnt) + GetUTC(CodigoParaUF(nfe.ide.cUF), nfe.ide.dSaiEnt), DSC_DSAIENT);
+   end
+  else
+   begin
+     Gerador.wCampo(tcDat, 'B09', 'dEmi   ', 10, 10, 1, nfe.ide.dEmi, DSC_DEMI);
+     Gerador.wCampo(tcDat, 'B10', 'dSaiEnt', 10, 10, 0, nfe.ide.dSaiEnt, DSC_DSAIENT);
+     if nfe.Ide.dSaiEnt>0 then
+       Gerador.wCampo(tcHor, 'B10a','hSaiEnt', 08, 08, 0, nfe.ide.hSaiEnt, DSC_HSAIENT);
+   end;
+
   Gerador.wCampo(tcStr, 'B11', 'tpNF   ', 01, 01, 1, tpNFToStr(nfe.ide.tpNF), DSC_TPNF);
+
+  if nfe.infNFe.Versao >= 3 then  //Verificar
+   begin
+    if nfe.ide.modelo = 55 then 
+       Gerador.wCampo(tcStr, 'B11a', 'idDest', 01, 01, 1, DestinoOperacaoToStr(nfe.Ide.idDest), 'erro')
+    else 
+       Gerador.wCampo(tcStr, 'B11a', 'idDest', 01, 01, 1, '1', 'erro');
+   end;
+
   Gerador.wCampo(tcInt, 'B12', 'cMunFG ', 07, 07, 1, nfe.ide.cMunFG, DSC_CMUNFG);
   if not ValidarMunicipio(nfe.ide.cMunFG) then Gerador.wAlerta('B12', 'cMunFG', DSC_CMUNFG, ERR_MSG_INVALIDO);
   (**)GerarIdeNFref;
@@ -327,9 +363,24 @@ begin
   Gerador.wCampo(tcInt, 'B23', 'cDV    ', 01, 01, 1, nfe.Ide.cDV, DSC_CDV);
   Gerador.wCampo(tcStr, 'B24', 'tpAmb  ', 01, 01, 1, tpAmbToStr(nfe.Ide.tpAmb), DSC_TPAMB);
   Gerador.wCampo(tcStr, 'B25', 'finNFe ', 01, 01, 1, finNFeToStr(nfe.Ide.finNFe), DSC_FINNFE);
+
+  if nfe.infNFe.Versao >= 3 then
+   begin
+    Gerador.wCampo(tcStr, 'B25a', 'indFinal', 01, 01, 1, ConsumidorFinalToStr(nfe.Ide.indFinal), 'erro');
+    Gerador.wCampo(tcStr, 'B25b', 'indPres ', 01, 01, 1, PresencaCompradorToStr(nfe.Ide.indPres), 'erro');
+   end;
+
   Gerador.wCampo(tcStr, 'B26', 'procEmi', 01, 01, 1, procEmiToStr(nfe.Ide.procEmi), DSC_PROCEMI);
   Gerador.wCampo(tcStr, 'B27', 'verProc', 01, 20, 1, nfe.Ide.verProc, DSC_VERPROC);
-  if nfe.Ide.dhCont > 0 then  Gerador.wCampo(tcStr, 'B28', 'dhCont ', 19, 19, 0, FormatDateTime('yyyy-mm-dd"T"hh:nn:ss',nfe.Ide.dhCont), DSC_DHCONT);
+
+  if nfe.Ide.dhCont > 0 then 
+   begin
+    if nfe.infNFe.Versao >= 3 then 
+       Gerador.wCampo(tcStr, 'B28', 'dhCont ', 19, 19, 0, DateTimeTodh(nfe.ide.dhCont) + GetUTC(CodigoParaUF(nfe.ide.cUF), nfe.ide.dhCont), DSC_DHCONT)
+    else 
+       Gerador.wCampo(tcStr, 'B28', 'dhCont ', 19, 19, 0, DateTimeTodh(nfe.Ide.dhCont), DSC_DHCONT);
+   end;
+
   Gerador.wCampo(tcStr, 'B29', 'xJust  ', 01,256, 0, nfe.ide.xJust, DSC_XJUSTCONT);
   Gerador.wGrupo('/ide');
 end;
@@ -487,7 +538,17 @@ const
 begin
   UF := '';
   Gerador.wGrupo('dest', 'E01');
-  Gerador.wCampoCNPJCPF('E02', 'E03', nfe.Dest.CNPJCPF, nfe.Dest.enderDest.cPais);
+//  Gerador.wCampoCNPJCPF('E02', 'E03', nfe.Dest.CNPJCPF, nfe.Dest.enderDest.cPais);
+
+    if nfe.infNFe.Versao >= 3 then 
+     begin
+      if nfe.Dest.idEstrangeiro <> '' then 
+         Gerador.wCampo(tcStr, 'E03a', 'idEstrangeiro', 01, 20, 1, nfe.Dest.idEstrangeiro, 'erro')
+      else 
+         Gerador.wCampoCNPJCPF('E02', 'E03', nfe.Dest.CNPJCPF, nfe.Dest.enderDest.cPais);
+     end
+    else 
+       Gerador.wCampoCNPJCPF('E02', 'E03', nfe.Dest.CNPJCPF, nfe.Dest.enderDest.cPais);
   if nfe.Ide.tpAmb = taProducao then
     Gerador.wCampo(tcStr, 'E04', 'xNome  ', 02, 60, 1, nfe.Dest.xNome, DSC_XNOME)
   else
@@ -498,7 +559,7 @@ begin
   // Inscrição Estadual
   if nfe.Dest.IE = 'ISENTO' then
     Gerador.wCampo(tcStr, 'E17', 'IE ', 00, 14, 1, nfe.Dest.IE, DSC_IE)
-  else
+  else if trim(nfe.Dest.IE) <> '' then
     Gerador.wCampo(tcStr, 'E17', 'IE     ', 00, 14, 1, SomenteNumeros(nfe.Dest.IE), DSC_IE);
 
 //  if (length(nfe.Dest.CNPJCPF) = 11) and (SomenteNumeros(nfe.Dest.IE) <> '') then
@@ -1853,6 +1914,29 @@ begin
   end;
   if result = '' then
     result := xMun;
+end;
+
+procedure TNFeW.Gerarpag;
+var
+  i: integer;
+begin
+  for i := 0 to nfe.pag.Count - 1 do
+  begin
+    Gerador.wGrupo('pag', 'YA01');
+    Gerador.wCampo(tcStr, 'YA02', 'tPag', 02, 02, 1, FormaPagamentoToStr(nfe.pag[i].tPag), 'erro');
+    Gerador.wCampo(tcDe2, 'YA03', 'vPag', 01, 15, 1, nfe.pag[i].vPag, 'erro');
+    if nfe.pag[i].CNPJ <> '' then
+     begin
+       Gerador.wGrupo('card', 'YA04');
+       Gerador.wCampo(tcStr, 'YA05', 'CNPJ ', 14, 14, 1, nfe.pag[i].CNPJ, DSC_CNPJ);
+       Gerador.wCampo(tcStr, 'YA06', 'tBand', 02, 02, 1, BandeiraCartaoToStr(nfe.pag[i].tBand), 'erro');
+       Gerador.wCampo(tcStr, 'YA07', 'cAut ', 01, 20, 1, nfe.pag[i].cAut, 'erro');
+       Gerador.wGrupo('/card');
+     end;
+    Gerador.wGrupo('/pag');
+  end;
+  if nfe.pag.Count > 100 then
+    Gerador.wAlerta('YA01', 'pag', '', ERR_MSG_MAIOR_MAXIMO + '100');
 end;
 
 end.

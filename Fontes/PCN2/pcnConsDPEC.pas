@@ -64,6 +64,7 @@ type
     FverAplic: string;
     FchNFe: string;
     FnRegDPEC: string;
+    FVersao: String;
   public
     constructor Create;
     destructor Destroy; override;
@@ -76,6 +77,7 @@ type
     property verAplic: string read FverAplic write FverAplic;
     property chNFe: string read FchNFe write FchNFe;
     property nRegDPEC: string read FnRegDPEC write FnRegDPEC;
+    property Versao: String read FVersao write FVersao;
   end;
 
 implementation
@@ -101,11 +103,14 @@ end;
 function TConsDPEC.GerarXML: boolean;
 begin
   Result := False;
-  if retornarVersaoLayout(Fschema, tlConsDPEC) = '1.01' then
-  begin
+
+//  if retornarVersaoLayout(Fschema, tlConsDPEC) = '1.01' then
+//  begin
+
     Gerador.ArquivoFormatoXML := '';
     Gerador.wGrupo(ENCODING_UTF8, '', False);
-    Gerador.wGrupo('consDPEC '+  V1_01 + ' ' + NAME_SPACE );
+//    Gerador.wGrupo('consDPEC '+  V1_01 + ' ' + NAME_SPACE );
+    Gerador.wGrupo('consDPEC versao="'+  Versao + '" ' + NAME_SPACE );
     Gerador.wCampo(tcStr, 'BP03', 'tpAmb', 001, 001, 1, tpAmbToStr(FtpAmb), DSC_TPAMB);
     Gerador.wCampo(tcStr, 'BP04', 'verAplic', 001, 020, 1, FverAplic, DSC_VERAPLIC);
     if trim(FchNFe) <> '' then
@@ -116,7 +121,8 @@ begin
     if (trim(FchNFe) <> '') and (trim(FnRegDPEC) <> '') then
       Gerador.wAlerta('BP05/BP06', 'chNFe/nRegDPEC', DSC_CHNFe + '/' + DSC_nRegDPEC, ERR_MSG_SOMENTE_UM);
     Result := (Gerador.ListaDeAlertas.Count = 0);
-  end;
+
+//  end;
 end;
 
 end.

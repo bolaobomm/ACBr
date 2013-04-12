@@ -82,6 +82,7 @@ type
     FtpAmb: TpcnTipoAmbiente;
     FCNPJ: String;
     FChaves: TChavesCollection;
+    FVersao: String;
     procedure SetChaves(const Value: TChavesCollection);
   public
     constructor Create;
@@ -94,6 +95,7 @@ type
     property tpAmb: TpcnTipoAmbiente    read FtpAmb   write FtpAmb;
     property CNPJ: String               read FCNPJ    write FCNPJ;
     property Chaves: TChavesCollection  read FChaves  write SetChaves;
+    property Versao: String             read FVersao  write FVersao;
   end;
 
 implementation
@@ -161,10 +163,13 @@ var
  sDoc: String;
 begin
   Result := False;
-  if RetornarVersaoLayout(FSchema, tlDownloadNFe) = '2.00' then
-   begin
+
+//  if RetornarVersaoLayout(FSchema, tlDownloadNFe) = '2.00' then
+//   begin
+
      Gerador.ArquivoFormatoXML := '';
-     Gerador.wGrupo('downloadNFe ' + NAME_SPACE + ' ' + V1_00);
+//     Gerador.wGrupo('downloadNFe ' + NAME_SPACE + ' ' + V1_00);
+     Gerador.wGrupo('downloadNFe ' + NAME_SPACE + ' versao="' + Versao + '"');
      Gerador.wCampo(tcStr, 'JP03', 'tpAmb', 001, 001, 1, tpAmbToStr(FtpAmb), DSC_TPAMB);
      Gerador.wCampo(tcStr, 'JP04', 'xServ', 012, 012, 1, 'DOWNLOAD NFE', DSC_XSERV);
 
@@ -184,7 +189,8 @@ begin
      Gerador.wGrupo('/downloadNFe');
 
      Result := (Gerador.ListaDeAlertas.Count = 0);
-   end
+
+//   end
 end;
 
 end.
