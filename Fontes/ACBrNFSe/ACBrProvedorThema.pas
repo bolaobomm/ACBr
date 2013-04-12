@@ -18,6 +18,7 @@ type
    { protected }
   private
    { private }
+   FMetodoRecepcionar: String;
   public
    { public }
    Constructor Create;
@@ -77,11 +78,14 @@ type
 
 implementation
 
+uses
+  pcnLeitor, pcnConversao;
+
 { TProvedorThema }
 
 constructor TProvedorThema.Create;
 begin
- {----}
+ FMetodoRecepcionar := 'recepcionarLoteRps';
 end;
 
 function TProvedorThema.GetConfigCidade(ACodCidade,
@@ -147,12 +151,12 @@ begin
  ConfigURL.HomConsultaNFSe       := 'http://'+ ConfigURL.HomNomeCidade +'nfse/services/NFSEconsulta';
  ConfigURL.HomCancelaNFSe        := 'http://'+ ConfigURL.HomNomeCidade +'nfse/services/NFSEcancelamento';
 
- ConfigURL.ProRecepcaoLoteRPS    := 'https://'+ ConfigURL.HomNomeCidade +'nfse/services/NFSEremessa';
- ConfigURL.ProConsultaLoteRPS    := 'https://'+ ConfigURL.HomNomeCidade +'nfse/services/NFSEconsulta';
- ConfigURL.ProConsultaNFSeRPS    := 'https://'+ ConfigURL.HomNomeCidade +'nfse/services/NFSEconsulta';
- ConfigURL.ProConsultaSitLoteRPS := 'https://'+ ConfigURL.HomNomeCidade +'nfse/services/NFSEconsulta';
- ConfigURL.ProConsultaNFSe       := 'https://'+ ConfigURL.HomNomeCidade +'nfse/services/NFSEconsulta';
- ConfigURL.ProCancelaNFSe        := 'https://'+ ConfigURL.HomNomeCidade +'nfse/services/NFSEcancelamento';
+ ConfigURL.ProRecepcaoLoteRPS    := 'https://'+ ConfigURL.ProNomeCidade +'nfse/services/NFSEremessa';
+ ConfigURL.ProConsultaLoteRPS    := 'https://'+ ConfigURL.ProNomeCidade +'nfse/services/NFSEconsulta';
+ ConfigURL.ProConsultaNFSeRPS    := 'https://'+ ConfigURL.ProNomeCidade +'nfse/services/NFSEconsulta';
+ ConfigURL.ProConsultaSitLoteRPS := 'https://'+ ConfigURL.ProNomeCidade +'nfse/services/NFSEconsulta';
+ ConfigURL.ProConsultaNFSe       := 'https://'+ ConfigURL.ProNomeCidade +'nfse/services/NFSEconsulta';
+ ConfigURL.ProCancelaNFSe        := 'https://'+ ConfigURL.ProNomeCidade +'nfse/services/NFSEcancelamento';
 
  Result := ConfigURL;
 end;
@@ -192,8 +196,7 @@ begin
    acConsNFSe:    Result := '<' + Prefixo3 + 'ConsultarNfseEnvio' + NameSpaceDad;
    acCancelar:    Result := '<' + Prefixo3 + 'CancelarNfseEnvio' + NameSpaceDad +
                              '<' + Prefixo3 + 'Pedido>' +
-                              '<' + Prefixo4 + 'InfPedidoCancelamento' +
-                                 DFeUtil.SeSenao(Identificador <> '', ' ' + Identificador + '="' + URI + '"', '') + '>';
+                              '<' + Prefixo4 + 'InfPedidoCancelamento Id' + '="' + URI + '">';
    acGerar:       Result := '';
  end;
 end;
@@ -439,7 +442,8 @@ begin
               '</' + Prefixo4 + 'CodigoCancelamento>' +
              '</' + Prefixo4 + 'InfPedidoCancelamento>';
 
- Result := TagI + DadosMsg + TagF;
+// Result := TagI + DadosMsg + TagF;
+ Result := DadosMsg;
 end;
 
 function TProvedorThema.Gera_DadosMsgGerarNFSe(Prefixo3, Prefixo4,
@@ -451,18 +455,46 @@ end;
 
 function TProvedorThema.GeraEnvelopeRecepcionarLoteRPS(URLNS: String;
   CabMsg, DadosMsg, DadosSenha: AnsiString): AnsiString;
+var
+   LoteRps      : string;
+   Leitor       : TLeitor;
+   QuantidadeRps: Integer;
 begin
+{ - Incluído por Márcio Teixeira em 05/03/2013 -
+    O provedor permite o envio de até 3 rps por
+    lote no modo síncrono, então verifico a
+    quantidade de Rps no lote e valido qual
+    médoto posso utilizar. Coloco numa variável
+    privada porque na ação ele também deve ir
+    o mesmo nome.
+  }
+Leitor := TLeitor.Create;
+
+try
+ Leitor.Arquivo := DadosMsg;
+ Leitor.Grupo   := Leitor.Arquivo;
+ LoteRps        := Leitor.rExtrai(1, 'LoteRps');
+ QuantidadeRps  := Leitor.rCampo(tcInt, 'QuantidadeRps');
+
+ if QuantidadeRps <= 3 then
+  FMetodoRecepcionar := 'recepcionarLoteRpsLimitado'
+ else
+  FMetodoRecepcionar := 'recepcionarLoteRps';
+finally
+ FreeAndNil(Leitor);
+end;
+
  result := '<?xml version="1.0" encoding="UTF-8"?>' +
            '<S:Envelope xmlns:S="http://schemas.xmlsoap.org/soap/envelope/" ' +
                        'xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" ' +
                        'xmlns:xsd="http://www.w3.org/2001/XMLSchema">' +
             '<S:Body>' +
-             '<recepcionarLoteRps xmlns="' + URLNS + '">' +
+             '<' + FMetodoRecepcionar + ' xmlns="' + URLNS + '">' +
               '<xml>' +
                 '&lt;?xml version="1.0" encoding="UTF-8"?&gt;' +
                 StringReplace(StringReplace(DadosMsg, '<', '&lt;', [rfReplaceAll]), '>', '&gt;', [rfReplaceAll]) +
               '</xml>' +
-             '</recepcionarLoteRps>' +
+             '</' + FMetodoRecepcionar + '>' +
             '</S:Body>' +
            '</S:Envelope>';
 end;
@@ -568,7 +600,7 @@ function TProvedorThema.GetSoapAction(Acao: TnfseAcao; NomeCidade: String): Stri
 begin
  // Alterado por Rafael Müller
  case Acao of
-   acRecepcionar: Result := 'urn:recepcionarLoteRps';
+   acRecepcionar: Result := 'urn:' + FMetodoRecepcionar;
    acConsSit:     Result := 'urn:consultarSituacaoLoteRps';
    acConsLote:    Result := 'urn:consultarLoteRps';
    acConsNFSeRps: Result := 'urn:consultarNfsePorRps';
