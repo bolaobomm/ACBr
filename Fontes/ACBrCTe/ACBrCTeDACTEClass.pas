@@ -56,7 +56,7 @@ type
   TACBrCteDACTEClass = class( TComponent )
    private
     procedure SetCTE(const Value: TComponent);
-    procedure ErroAbstract( NomeProcedure : String ) ;
+    procedure ErroAbstract( NomeProcedure : String );
     function GetPathArquivos: String;
   protected
     FACBrCTE : TComponent;
@@ -90,46 +90,46 @@ type
     procedure ImprimirDACTE(CTE : TCTE = nil); virtual;
     procedure ImprimirDACTEPDF(CTE : TCTE = nil); virtual;
   published
-    property ACBrCTE : TComponent  read FACBrCTE write SetCTE ;
-    property Logo: String read FLogo write FLogo ;
-    property Sistema: String read FSistema write FSistema ;
-    property Usuario: String read FUsuario write FUsuario ;
-    property PathPDF: String read GetPathArquivos write FPathArquivos ;
-    property Impressora: String read FImpressora write FImpressora ;
-    property ImprimirHoraSaida: Boolean read FImprimirHoraSaida write FImprimirHoraSaida ;
-    property ImprimirHoraSaida_Hora: string read FImprimirHoraSaida_Hora write FImprimirHoraSaida_Hora ;
-    property MostrarPreview: Boolean read FMostrarPreview write FMostrarPreview ;
-    property MostrarStatus: Boolean read FMostrarStatus write FMostrarStatus ;
-    property TipoDACTE: TpcnTipoImpressao read FTipoDACTE write FTipoDACTE ;
-    property TamanhoPapel: TpcnTamanhoPapel read FTamanhoPapel write FTamanhoPapel ;
-    property NumCopias: Integer read FNumCopias write FNumCopias ;
-    property Fax  : String read FFax   write FFax ;
-    property Site : String read FSite  write FSite ;
-    property Email: String read FEmail write FEmail ;
-    property ImprimirDescPorc: Boolean read FImprimeDescPorc write FImprimeDescPorc ;
-    property ProtocoloCTE: String read FProtocoloCTE write FProtocoloCTE ;
-    property MargemInferior: Double read FMargemInferior write FMargemInferior ;
-    property MargemSuperior: Double read FMargemSuperior write FMargemSuperior ;
-    property MargemEsquerda: Double read FMargemEsquerda write FMargemEsquerda ;
-    property MargemDireita: Double read FMargemDireita write FMargemDireita ;
-    property ExpandirLogoMarca: Boolean read FExpandirLogoMarca write FExpandirLogoMarca default false ;
-    property CTeCancelada: Boolean read FCTeCancelada write FCTeCancelada ;
+    property ACBrCTE : TComponent  read FACBrCTE write SetCTE;
+    property Logo: String read FLogo write FLogo;
+    property Sistema: String read FSistema write FSistema;
+    property Usuario: String read FUsuario write FUsuario;
+    property PathPDF: String read GetPathArquivos write FPathArquivos;
+    property Impressora: String read FImpressora write FImpressora;
+    property ImprimirHoraSaida: Boolean read FImprimirHoraSaida write FImprimirHoraSaida;
+    property ImprimirHoraSaida_Hora: string read FImprimirHoraSaida_Hora write FImprimirHoraSaida_Hora;
+    property MostrarPreview: Boolean read FMostrarPreview write FMostrarPreview;
+    property MostrarStatus: Boolean read FMostrarStatus write FMostrarStatus;
+    property TipoDACTE: TpcnTipoImpressao read FTipoDACTE write FTipoDACTE;
+    property TamanhoPapel: TpcnTamanhoPapel read FTamanhoPapel write FTamanhoPapel;
+    property NumCopias: Integer read FNumCopias write FNumCopias;
+    property Fax  : String read FFax   write FFax;
+    property Site : String read FSite  write FSite;
+    property Email: String read FEmail write FEmail;
+    property ImprimirDescPorc: Boolean read FImprimeDescPorc write FImprimeDescPorc;
+    property ProtocoloCTE: String read FProtocoloCTE write FProtocoloCTE;
+    property MargemInferior: Double read FMargemInferior write FMargemInferior;
+    property MargemSuperior: Double read FMargemSuperior write FMargemSuperior;
+    property MargemEsquerda: Double read FMargemEsquerda write FMargemEsquerda;
+    property MargemDireita: Double read FMargemDireita write FMargemDireita;
+    property ExpandirLogoMarca: Boolean read FExpandirLogoMarca write FExpandirLogoMarca default false;
+    property CTeCancelada: Boolean read FCTeCancelada write FCTeCancelada;
   end;
 
 implementation
 
-uses ACBrCTE, ACBrCteUtil, ACBrUtil, ACBrDFeUtil ;
+uses ACBrCTE, ACBrCteUtil, ACBrUtil, ACBrDFeUtil;
 
 constructor TACBrCteDACTEClass.Create(AOwner: TComponent);
 begin
   inherited create( AOwner );
 
-  FACBrCTE      := nil ;
-  FLogo         := '' ;
-  FSistema      := '' ;
-  FUsuario      := '' ;
-  FPathArquivos := '' ;
-  FImpressora   := '' ;
+  FACBrCTE      := nil;
+  FLogo         := '';
+  FSistema      := '';
+  FUsuario      := '';
+  FPathArquivos := '';
+  FImpressora   := '';
 
   FImprimirHoraSaida      := False;
   FImprimirHoraSaida_Hora := '';
@@ -138,9 +138,9 @@ begin
   FMostrarStatus  := True;
   FNumCopias      := 1;
 
-  FFax   := '' ;
-  FSite  := '' ;
-  FEmail := '' ;
+  FFax   := '';
+  FSite  := '';
+  FEmail := '';
 
   FImprimeDescPorc := False;
   FProtocoloCTE    := '';
@@ -155,15 +155,15 @@ end;
 destructor TACBrCteDACTEClass.Destroy;
 begin
 
-  inherited Destroy ;
+  inherited Destroy;
 end;
 
-procedure TACBrCteDACTEClass.ImprimirDACTE(CTE : TCTE = nil) ;
+procedure TACBrCteDACTEClass.ImprimirDACTE(CTE : TCTE = nil);
 begin
   ErroAbstract('Imprimir');
 end;
 
-procedure TACBrCteDACTEClass.ImprimirDACTEPDF(CTE : TCTE = nil) ;
+procedure TACBrCteDACTEClass.ImprimirDACTEPDF(CTE : TCTE = nil);
 begin
   ErroAbstract('ImprimirPDF');
 end;
@@ -174,39 +174,39 @@ begin
   inherited Notification(AComponent, Operation);
 
   if (Operation = opRemove) and (FACBrCTE <> nil) and (AComponent is TACBrCTE) then
-     FACBrCTE := nil ;
+     FACBrCTE := nil;
 end;
 
 procedure TACBrCteDACTEClass.SetCTE(const Value: TComponent);
-  Var OldValue : TACBrCTE ;
+  Var OldValue : TACBrCTE;
 begin
   if Value <> FACBrCTE then
   begin
      if Value <> nil then
         if not (Value is TACBrCTE) then
-           raise Exception.Create('ACBrDACTE.CTE deve ser do tipo TACBrCTE') ;
+           raise Exception.Create('ACBrDACTE.CTE deve ser do tipo TACBrCTE');
 
      if Assigned(FACBrCTE) then
         FACBrCTE.RemoveFreeNotification(Self);
 
-     OldValue := TACBrCTE(FACBrCTE) ;   // Usa outra variavel para evitar Loop Infinito
+     OldValue := TACBrCTE(FACBrCTE);   // Usa outra variavel para evitar Loop Infinito
      FACBrCTE := Value;                 // na remoção da associação dos componentes
 
      if Assigned(OldValue) then
         if Assigned(OldValue.DACTE) then
-           OldValue.DACTE := nil ;
+           OldValue.DACTE := nil;
 
      if Value <> nil then
      begin
         Value.FreeNotification(self);
-        TACBrCTE(Value).DACTE := self ;
-     end ;
-  end ;
+        TACBrCTE(Value).DACTE := self;
+     end;
+  end;
 end;
 
 procedure TACBrCteDACTEClass.ErroAbstract(NomeProcedure: String);
 begin
-  raise Exception.Create( NomeProcedure ) ;
+  raise Exception.Create( NomeProcedure );
 end;
 
 function TACBrCTeDACTEClass.GetPathArquivos: String;

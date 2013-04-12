@@ -1667,7 +1667,8 @@ begin
    begin
     if FCTe.procCTe.cStat > 0 then
      begin
-      if FCTe.procCTe.cStat = 101 then
+      // Alterado por Italo em 12/04/2013
+      if (FCTe.procCTe.cStat = 101)  or (FCTeCancelada) then
        begin
         qrlMsgTeste.Caption := 'CT-e CANCELADO';
         qrlMsgTeste.Visible := True;

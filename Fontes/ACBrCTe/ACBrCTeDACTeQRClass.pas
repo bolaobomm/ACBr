@@ -135,7 +135,8 @@ begin
                                     , MargemEsquerda
                                     , MargemDireita
                                     , Impressora
-                                    , PosRecibo);
+                                    , PosRecibo
+                                    , CTeCancelada); // Incluido por Italo em 12/04/2013
   end
   else
     frmDACTeQRRetrato.Imprimir(CTe
@@ -156,7 +157,8 @@ begin
                                 , MargemEsquerda
                                 , MargemDireita
                                 , Impressora
-                                , PosRecibo);
+                                , PosRecibo
+                                , CTeCancelada); // Incluido por Italo em 12/04/2013
 
   frmDACTeQRRetrato.Free;
 end;
@@ -216,7 +218,8 @@ begin
                                     , MargemInferior
                                     , MargemEsquerda
                                     , MargemDireita
-                                    , PosRecibo);
+                                    , PosRecibo
+                                    , CTeCancelada); // Incluido por Italo em 12/04/2013
       end;
    end
   else
@@ -240,7 +243,8 @@ begin
                                 , MargemInferior
                                 , MargemEsquerda
                                 , MargemDireita
-                                , PosRecibo);
+                                , PosRecibo
+                                , CTeCancelada); // Incluido por Italo em 12/04/2013
   end;
 
   frmDACTeQRRetrato.Free;

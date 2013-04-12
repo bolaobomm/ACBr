@@ -95,6 +95,7 @@ type
     FMargemDireita      : double;
     FImpressora         : String;
     FPosRecibo          : TPosRecibo;
+    FCTeCancelada       : Boolean; //Incluido por Italo em  12/04/2013
 
     procedure qrlSemValorFiscalPrint(sender: TObject; var Value: string);
     procedure SetBarCodeImage(ACode: string; QRImage: TQRImage);
@@ -117,7 +118,8 @@ type
                              AMargemEsquerda     : Double    = 0.6;
                              AMargemDireita      : Double    = 0.51;
                              AImpressora         : String    = '';
-                             APosRecibo          : TPosRecibo = prCabecalho);
+                             APosRecibo          : TPosRecibo = prCabecalho;
+                             ACTeCancelada       : Boolean   = False);
 
     class procedure SavePDF(AFile: String;
                             ACTe                : TCTe;
@@ -136,7 +138,8 @@ type
                             AMargemInferior     : Double    = 0.8;
                             AMargemEsquerda     : Double    = 0.6;
                             AMargemDireita      : Double    = 0.51;
-                            APosRecibo          : TPosRecibo = prCabecalho);
+                            APosRecibo          : TPosRecibo = prCabecalho;
+                            ACTeCancelada       : Boolean   = False);
 
   end;
 
@@ -167,7 +170,8 @@ class procedure TfrmDACTeQR.Imprimir(ACTe               : TCTe;
                                     AMargemEsquerda     : Double    = 0.6;
                                     AMargemDireita      : Double    = 0.51;
                                     AImpressora         : String    = '';
-                                    APosRecibo          : TPosRecibo = prCabecalho);
+                                    APosRecibo          : TPosRecibo = prCabecalho;
+                                    ACTeCancelada       : Boolean   = False);
 begin
   with Create ( nil ) do
      try
@@ -189,6 +193,7 @@ begin
         FMargemDireita      := AMargemDireita;
         FImpressora         := AImpressora;
         FPosRecibo          := APosRecibo;
+        FCTeCancelada       := ACTeCancelada;
 
         Printer := TPrinter.Create;
 
@@ -249,7 +254,8 @@ class procedure TfrmDACTeQR.SavePDF(AFile               : String;
                                     AMargemInferior     : Double    = 0.8;
                                     AMargemEsquerda     : Double    = 0.6;
                                     AMargemDireita      : Double    = 0.51;
-                                    APosRecibo          : TPosRecibo = prCabecalho);
+                                    APosRecibo          : TPosRecibo = prCabecalho;
+                                    ACTeCancelada       : Boolean   = False);
 {$IFDEF QReport_PDF}
  var
   qf : TQRPDFDocumentFilter;
@@ -276,6 +282,7 @@ begin
         FMargemDireita      := AMargemDireita;
         FExpandirLogoMarca  := AExpandirLogoMarca;
         FPosRecibo          := APosRecibo;
+        FCTeCancelada       := ACTeCancelada;
 
         for i := 0 to ComponentCount -1 do
           begin
