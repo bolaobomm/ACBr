@@ -9,7 +9,7 @@ interface
 uses
   ACBrSAT, ACBrSATClass, pcnCFe, pcnCFeR, pcnCFeW, ACBrSATEmuladorSP, 
   ACBrSATEmuladorSPstatic, ACBrSATExtratoClass, ACBrSATExtratoESCPOS, 
-  LazarusPackageIntf;
+  pcnCFeCanc, pcnCFeCancR, pcnCFeCancW, LazarusPackageIntf;
 
 implementation
 

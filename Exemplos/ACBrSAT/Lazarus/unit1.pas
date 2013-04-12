@@ -540,7 +540,7 @@ begin
     end;
   end;
 
-  mVenda.Lines.Text := ACBrSAT1.GerarXML;
+  mVenda.Lines.Text := ACBrSAT1.CFe.AsXMLString;
   mResposta.Lines.Add('Venda Gerada');
 end;
 

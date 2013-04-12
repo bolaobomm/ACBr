@@ -190,7 +190,7 @@ object Form1: TForm1
             OnClick = SbArqLogClick
           end
           object Label10: TLabel
-            Left = 266
+            Left = 233
             Top = 15
             Width = 46
             Height = 13
@@ -227,13 +227,20 @@ object Form1: TForm1
             ParentColor = False
           end
           object Label6: TLabel
-            Left = 339
+            Left = 357
             Top = 64
             Width = 45
             Height = 13
             Caption = 'Ambiente'
             Color = clBtnFace
             ParentColor = False
+          end
+          object Label7: TLabel
+            Left = 357
+            Top = 16
+            Width = 26
+            Height = 13
+            Caption = 'Porta'
           end
           object edLog: TEdit
             Left = 24
@@ -244,9 +251,9 @@ object Form1: TForm1
             TabOrder = 0
           end
           object edPathDLL: TEdit
-            Left = 262
+            Left = 230
             Top = 32
-            Width = 225
+            Width = 115
             Height = 21
             Cursor = crIBeam
             Anchors = [akLeft, akTop, akRight]
@@ -277,13 +284,21 @@ object Form1: TForm1
             Value = 1
           end
           object cbxAmbiente: TComboBox
-            Left = 339
+            Left = 357
             Top = 80
             Width = 132
             Height = 21
             Style = csDropDownList
             ItemHeight = 13
             TabOrder = 5
+          end
+          object edtPorta: TEdit
+            Left = 357
+            Top = 32
+            Width = 132
+            Height = 21
+            TabOrder = 6
+            Text = 'COM7'
           end
         end
         object tsDadosEmit: TTabSheet

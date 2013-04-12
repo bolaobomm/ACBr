@@ -67,6 +67,8 @@ type
 
   { TCFeTCFeCanc }
 
+  { TCFeCanc }
+
   TCFeCanc = class
   private
     FinfCFe: TinfCFe;
@@ -76,11 +78,18 @@ type
     FTotal: TTotal;
     FInfAdic: TInfAdic;
     FSignature: TSignature;
+    function GetAsXMLString : String ;
+    procedure SetAsXMLString(AValue : String) ;
   public
     constructor Create;
     destructor Destroy; override;
     procedure Clear ;
     procedure ClearSessao ;
+
+    function LoadFromFile(AFileName : String): boolean;
+    function SaveToFile(AFileName : String): boolean;
+
+    property AsXMLString : String read GetAsXMLString write SetAsXMLString ;
   published
     property infCFe: TinfCFe read FinfCFe write FinfCFe;
     property ide: Tide read Fide write Fide;
@@ -93,7 +102,7 @@ type
 
   { TinfCFe }
 
-  TinfCFe = class(TPersistent)
+  TinfCFe = class
   private
     Fversao : Real;
     FID: string;
@@ -154,7 +163,7 @@ type
 
   { TEmit }
 
-  TEmit = class(TPersistent)
+  TEmit = class
   private
     FCNPJCPF: string;
     FxNome: string;
@@ -166,7 +175,6 @@ type
     constructor Create;
     destructor Destroy; override;
     procedure Clear;
-    procedure Assign(ASource: TPersistent); override;
   published
     property CNPJCPF: string read FCNPJCPF write FCNPJCPF;
     property xNome: string read FxNome write FxNome;
@@ -178,7 +186,7 @@ type
 
   { TenderEmit }
 
-  TenderEmit = class(TPersistent)
+  TenderEmit = class
   private
     FxLgr: string;
     Fnro: string;
@@ -189,7 +197,6 @@ type
   public
     constructor Create;
     procedure Clear;
-    procedure Assign(ASource: TPersistent); override;
   published
     property xLgr: string read FxLgr write FxLgr;
     property nro: string read Fnro write Fnro;
@@ -201,7 +208,7 @@ type
 
   { TDest }
 
-  TDest = class(TPersistent)
+  TDest = class
   private
     FCNPJCPF: string;
   public
@@ -260,7 +267,7 @@ type
 
 implementation
 
-Uses dateutils ;
+Uses dateutils, pcnCFeCancR, pcnCFeCancW ;
 
 { TDest }
 
@@ -291,19 +298,6 @@ begin
   FxBairro:= '';
   FxMun   := '';
   FCEP    := 0 ;
-end ;
-
-procedure TenderEmit.Assign(ASource : TPersistent) ;
-begin
-  with TenderEmit(ASource) do
-  begin
-    FxLgr   := xLgr;
-    Fnro    := nro;
-    fxCpl   := xCpl;
-    FxBairro:= xBairro;
-    FxMun   := xMun;
-    FCEP    := CEP;
-  end ;
 end ;
 
 { Tide }
@@ -479,21 +473,34 @@ begin
   FenderEmit.Clear;
 end ;
 
-procedure TEmit.Assign(ASource : TPersistent) ;
-begin
-  with TEmit(ASource) do
-  begin
-    FCNPJCPF       := CNPJCPF;
-    FxNome         := xNome;
-    FxFant         := xFant;
-    FIE            := IE ;
-    FIM            := IM ;
-
-    FEnderEmit.Assign( EnderEmit ) ;
-  end ;
-end ;
-
 { TCFeTCFeCanc }
+
+function TCFeCanc.GetAsXMLString : String ;
+var
+  LocCFeCancW : TCFeCancW ;
+begin
+  Result  := '';
+  LocCFeCancW := TCFeCancW.Create(Self);
+  try
+    LocCFeCancW.GerarXml;
+    Result := LocCFeCancW.Gerador.ArquivoFormatoXML;
+  finally
+    LocCFeCancW.Free;
+  end ;
+end;
+
+procedure TCFeCanc.SetAsXMLString(AValue : String) ;
+var
+ LocCFeCancR : TCFeCancR;
+begin
+  LocCFeCancR := TCFeCancR.Create(Self);
+  try
+    LocCFeCancR.Leitor.Arquivo := AValue;
+    LocCFeCancR.LerXml;
+  finally
+    LocCFeCancR.Free
+  end;
+end;
 
 constructor TCFeCanc.Create;
 begin
@@ -535,6 +542,36 @@ begin
   FTotal.Clear;
   FInfAdic.Clear;
   //FSignature.Clear;
+end ;
+
+function TCFeCanc.LoadFromFile(AFileName : String) : boolean ;
+var
+  SL : TStringList;
+begin
+  Result := False;
+  try
+    SL := TStringList.Create;
+    SL.LoadFromFile( AFileName );
+    AsXMLString := SL.Text;
+    Result      := True;
+  finally
+    SL.Free;
+  end;
+end ;
+
+function TCFeCanc.SaveToFile(AFileName : String) : boolean ;
+var
+  SL : TStringList;
+begin
+  Result := False;
+  SL := TStringList.Create;
+  try
+    SL.Text := AsXMLString;
+    SL.SaveToFile( AFileName );
+    Result := True;
+  finally
+    SL.Free;
+  end;
 end ;
 
 end.

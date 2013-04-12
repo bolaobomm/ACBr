@@ -339,7 +339,7 @@ begin
   OpenDialog1.Filter := 'Arquivo XML|*.xml';
   if OpenDialog1.Execute then
   begin
-    ACBrSAT1.LoadFromFile( OpenDialog1.FileName );
+    ACBrSAT1.CFe.LoadFromFile( OpenDialog1.FileName );
     ACBrSAT1.CancelarUltimaVenda;
   end ;
 end;
@@ -659,7 +659,8 @@ begin
                       'Precisa de um PAF-ECF homologado?;Conheça o DJPDV - www.djpdv.com.br'
   end;
 
-  mVenda.Lines.Text := ACBrSAT1.GerarXML;
+  mVenda.Lines.Text := ACBrSAT1.CFe.AsXMLString;
+  
   LoadXML(mVenda, wbVenda);
   mResposta.Lines.Add('Venda Gerada');
 end;

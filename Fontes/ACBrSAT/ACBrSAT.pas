@@ -112,10 +112,6 @@ type
      property Resposta : TACBrSATResposta read fsResposta;
 
      procedure InicializaCFe( ACFe : TCFe = nil );
-     function GerarXML : AnsiString ;
-     function GerarXMLCancelamento : AnsiString ;
-     function LoadFromFile(CaminhoArquivo: string): boolean;
-     function LoadFromString(AString: String): boolean;
 
      procedure DoLog(AString : AnsiString ) ;
 
@@ -321,20 +317,6 @@ begin
   end ;
 end ;
 
-function TACBrSAT.GerarXML : AnsiString ;
-var
-  LocCFeW : TCFeW ;
-begin
-  LocCFeW := TCFeW.Create(fsCFe);
-  try
-    LocCFeW.GerarXml;
-    Result := LocCFeW.Gerador.ArquivoFormatoXML;
-  finally
-    LocCFeW.Free;
-  end ;
-end ;
-
-
 function TACBrSAT.AssociarAssinatura(CNPJvalue, assinaturaCNPJs : String
   ) : String ;
 begin
@@ -378,17 +360,15 @@ var
   dadosCancelamento : string;
 begin
   CFeCanc.Clear;
-  CFeCanc.infCFe.chCanc := CFe.infCFe.ID;
-  CFeCanc.infCFe.dEmi := CFe.ide.dEmi;
-  CFeCanc.infCFe.hEmi := CFe.ide.hEmi;
-
-  CFeCanc.ide.CNPJ      := CFe.ide.CNPJ;
-  CFeCanc.ide.signAC    := CFe.ide.signAC;
+  CFeCanc.infCFe.chCanc   := CFe.infCFe.ID;
+  CFeCanc.infCFe.dEmi     := CFe.ide.dEmi;
+  CFeCanc.infCFe.hEmi     := CFe.ide.hEmi;
+  CFeCanc.ide.CNPJ        := CFe.ide.CNPJ;
+  CFeCanc.ide.signAC      := CFe.ide.signAC;
   CFeCanc.ide.numeroCaixa := CFe.ide.numeroCaixa;
+  CFeCanc.Dest.CNPJCPF    := CFe.Dest.CNPJCPF;
 
-  CFeCanc.Dest.CNPJCPF := CFe.Dest.CNPJCPF;
-
-  dadosCancelamento := GerarXMLCancelamento;
+  dadosCancelamento := CFeCanc.AsXMLString;
 
   Result := CancelarUltimaVenda(CFe.infCFe.ID, dadosCancelamento);
 end ;
@@ -662,52 +642,6 @@ begin
 
    Extrato.ImprimirExtratoResumido;
 end;
-
-function TACBrSAT.LoadFromFile(CaminhoArquivo: string): boolean;
-var
- ArquivoXML: TStringList;
-begin
- try
-    ArquivoXML := TStringList.Create;
-    ArquivoXML.LoadFromFile(CaminhoArquivo);
-    Result := LoadFromString(ArquivoXML.Text);
-    ArquivoXML.Free;
- except
-    raise;
-    Result := False;
- end;
-end;
-
-function TACBrSAT.LoadFromString(AString: String): boolean;
-var
- LocCFeR : TCFeR;
-begin
-  try
-    Result := True;
-    LocCFeR := TCFeR.Create(fsCFe);
-    try
-       LocCFeR.Leitor.Arquivo := AString;
-       LocCFeR.LerXml;
-    finally
-       LocCFeR.Free
-    end;
-  except
-    Result := False;
-  end;
-end;
-
-function TACBrSAT.GerarXMLCancelamento: AnsiString;
-var
-  LocCFeCancW : TCFeCancW ;
-begin
-  LocCFeCancW := TCFeCancW.Create(fsCFeCanc);
-  try
-    LocCFeCancW.GerarXml;
-    Result := LocCFeCancW.Gerador.ArquivoFormatoXML;
-  finally
-    LocCFeCancW.Free;
-  end ;
-end ;
 
 {$ifdef FPC}
 {$IFNDEF CONSOLE}
