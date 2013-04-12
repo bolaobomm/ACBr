@@ -44,6 +44,8 @@
 |* 18/02/2009: André Ferreira de Moraes
 |*  - Criado Assinatura baseado em código passado por Daniel Simões
 |*  - Criado Validação do XML da NFE baseado em código passado por Daniel Simões
+|* 24/09/2012: Italo Jurisato Junior
+|*  - Alterações para funcionamento com NFC-e
 ******************************************************************************}
 {$I ACBr.inc}
 
@@ -90,19 +92,20 @@ type
 //AC,AL,AP,MA,PA,PB,PI,RJ,RN,RR,SC,SE,TO - Estados sem WebServices próprios
 //Estados Emissores pela Sefaz Virtual RS (Rio Grande do Sul): AC, AL, AM, AP, MS, PB, RJ, RR, SC, SE e TO.
 //Estados Emissores pela Sefaz Virtual AN (Ambiente Nacional): ES, MA, PA, PI e RN.
-    class function GetURLSVRS(AAmbiente: Integer; ALayOut: TLayOut): WideString; //atualizado 2.0 Homologação e Produção
-    class function GetURLSVAN(AAmbiente: Integer; ALayOut: TLayOut): WideString; //atualizado 2.0 Homologação e Produção
-    class function GetURLAM(AAmbiente: Integer; ALayOut: TLayOut): WideString;   //atualizado 2.0 Homologação e Produção
-    class function GetURLBA(AAmbiente: Integer; ALayOut: TLayOut): WideString;   //atualizado 2.0 Homologação e Produção
-    class function GetURLCE(AAmbiente: Integer; ALayOut: TLayOut): WideString;   //atualizado 2.0 Homologação e Produção
-    class function GetURLGO(AAmbiente: Integer; ALayOut: TLayOut): WideString;   //atualizado 2.0 Homologação e Produção
-    class function GetURLMT(AAmbiente: Integer; ALayOut: TLayOut): WideString;   //atualizado 2.0 Homologação e Produção
-    class function GetURLMS(AAmbiente: Integer; ALayOut: TLayOut): WideString;   //atualizado 2.0 Homologação e Produção
-    class function GetURLMG(AAmbiente: Integer; ALayOut: TLayOut): WideString;   //atualizado 2.0 Homologação e Produção
-    class function GetURLPR(AAmbiente: Integer; ALayOut: TLayOut): WideString;   //atualizado 2.0 Homologação e Produção
-    class function GetURLPE(AAmbiente: Integer; ALayOut: TLayOut): WideString;   //atualizado 2.0 Homologação e Produção
-    class function GetURLRS(AAmbiente: Integer; ALayOut: TLayOut): WideString;   //atualizado 2.0 Homologação e Produção
-    class function GetURLSP(AAmbiente: Integer; ALayOut: TLayOut): WideString;   //atualizado 2.0 Homologação e Produção
+
+    class function GetURLSVRS(AAmbiente: Integer; ALayOut: TLayOut; AModeloDF: TpcnModeloDF = moNFe): WideString; //atualizado 2.0 Homologação e Produção
+    class function GetURLSVAN(AAmbiente: Integer; ALayOut: TLayOut; AModeloDF: TpcnModeloDF = moNFe): WideString; //atualizado 2.0 Homologação e Produção
+    class function GetURLAM(AAmbiente: Integer; ALayOut: TLayOut; AModeloDF: TpcnModeloDF = moNFe): WideString;   //atualizado 2.0 Homologação e Produção
+    class function GetURLBA(AAmbiente: Integer; ALayOut: TLayOut; AModeloDF: TpcnModeloDF = moNFe): WideString;   //atualizado 2.0 Homologação e Produção
+    class function GetURLCE(AAmbiente: Integer; ALayOut: TLayOut; AModeloDF: TpcnModeloDF = moNFe): WideString;   //atualizado 2.0 Homologação e Produção
+    class function GetURLGO(AAmbiente: Integer; ALayOut: TLayOut; AModeloDF: TpcnModeloDF = moNFe): WideString;   //atualizado 2.0 Homologação e Produção
+    class function GetURLMT(AAmbiente: Integer; ALayOut: TLayOut; AModeloDF: TpcnModeloDF = moNFe): WideString;   //atualizado 2.0 Homologação e Produção
+    class function GetURLMS(AAmbiente: Integer; ALayOut: TLayOut; AModeloDF: TpcnModeloDF = moNFe): WideString;   //atualizado 2.0 Homologação e Produção
+    class function GetURLMG(AAmbiente: Integer; ALayOut: TLayOut; AModeloDF: TpcnModeloDF = moNFe): WideString;   //atualizado 2.0 Homologação e Produção
+    class function GetURLPR(AAmbiente: Integer; ALayOut: TLayOut; AModeloDF: TpcnModeloDF = moNFe): WideString;   //atualizado 2.0 Homologação e Produção
+    class function GetURLPE(AAmbiente: Integer; ALayOut: TLayOut; AModeloDF: TpcnModeloDF = moNFe): WideString;   //atualizado 2.0 Homologação e Produção
+    class function GetURLRS(AAmbiente: Integer; ALayOut: TLayOut; AModeloDF: TpcnModeloDF = moNFe): WideString;   //atualizado 2.0 Homologação e Produção
+    class function GetURLSP(AAmbiente: Integer; ALayOut: TLayOut; AModeloDF: TpcnModeloDF = moNFe): WideString;   //atualizado 2.0 Homologação e Produção
   protected
 
   public
@@ -155,9 +158,9 @@ type
     class function FormatarFone(AValue : String ): String;
 //    class function FormatarNumeroDocumentoFiscal(AValue : String ): String;
     class function FormatarChaveAcesso(AValue : String ): String;
-    class function GetURL(Const AUF, AAmbiente, FormaEmissao: Integer; ALayOut: TLayOut): WideString;
+    class function GetURL(Const AUF, AAmbiente, FormaEmissao: Integer; ALayOut: TLayOut; AModeloDF: TpcnModeloDF = moNFe): WideString;
     class function IdentificaTipoSchema(Const AXML: AnsiString; var I: Integer): integer; {eventos_juaumkiko}
-    class function Valida(Const AXML: AnsiString; var AMsg: AnsiString; const APathSchemas: string = ''): Boolean;
+    class function Valida(Const AXML: AnsiString; var AMsg: AnsiString; const APathSchemas: string = ''; AModeloDF: TpcnModeloDF = moNFe): Boolean;
     class function ValidaAssinatura(const AXML: AnsiString;  var AMsg: AnsiString): Boolean;
 {$IFDEF ACBrNFeOpenSSL}
     class function Assinar(const AXML, ArqPFX, PFXSenha: AnsiString; out AXMLAssinado, FMensagem: AnsiString): Boolean;
@@ -863,25 +866,17 @@ end;
 class function NotaUtil.FormatarChaveAcesso(AValue: String): String;
 begin
   AValue := DFeUtil.LimpaNumero(AValue);
-{  Result := copy(AValue,1,2)  + '-' + copy(AValue,3,2) + '/' +
-            copy(AValue,5,2)  + '-' + copy(AValue,7,2) + '.' +
-            copy(AValue,9,3)  + '.' + copy(AValue,12,3)+ '/' +
-            copy(AValue,15,4) + '-' + copy(AValue,19,2)+ '-' +
-            copy(AValue,21,2) + '-' + copy(AValue,23,3)+ '-' +
-            copy(AValue,26,3) + '.' + copy(AValue,29,3)+ '.' +
-            copy(AValue,32,3) + '-' + copy(AValue,35,3)+ '.' +
-            copy(AValue,38,3) + '.' + copy(AValue,41,3)+ '-' +
-            copy(AValue,44,2);}
+
   Result := copy(AValue,1,4)  + ' ' + copy(AValue,5,4)  + ' ' +
             copy(AValue,9,4)  + ' ' + copy(AValue,13,4) + ' ' +
             copy(AValue,17,4) + ' ' + copy(AValue,21,4) + ' ' +
             copy(AValue,25,4) + ' ' + copy(AValue,29,4) + ' ' +
             copy(AValue,33,4) + ' ' + copy(AValue,37,4) + ' ' +
             copy(AValue,41,4) ;
-end;
+end;       
 
 class function NotaUtil.GetURL(const AUF, AAmbiente, FormaEmissao : Integer;
-  ALayOut: TLayOut): WideString;
+  ALayOut: TLayOut; AModeloDF: TpcnModeloDF = moNFe): WideString;
 begin
 //  (AC,AL,AP,AM,BA,CE,DF,ES,GO,MA,MT,MS,MG,PA,PB,PR,PE,PI,RJ,RN,RS,RO,RR,SC,SP,SE,TO);
 //  (12,27,16,13,29,23,53,32,52,21,51,50,31,15,25,41,26,22,33,24,43,11,14,42,35,28,17);
@@ -896,35 +891,35 @@ case FormaEmissao of
          LayNfeDownloadNFe  : Result := DFeUtil.SeSenao(AAmbiente=1, 'https://www.nfe.fazenda.gov.br/NfeDownloadNF/NfeDownloadNF.asmx', 'https://hom.nfe.fazenda.gov.br/NfeDownloadNF/NfeDownloadNF.asmx');
        end;
        case AUF of
-         12: Result := NotaUtil.GetURLSVRS(AAmbiente,ALayOut); //AC
-         27: Result := NotaUtil.GetURLSVRS(AAmbiente,ALayOut); //AL
-         16: Result := NotaUtil.GetURLSVRS(AAmbiente,ALayOut); //AP
-         13: Result := NotaUtil.GetURLAM(AAmbiente,ALayOut); //AM
-         29: Result := NotaUtil.GetURLBA(AAmbiente,ALayOut); //BA
-         23: Result := NotaUtil.GetURLCE(AAmbiente,ALayOut); //CE
-//         53: Result := NotaUtil.GetURLDF(AAmbiente,ALayOut); //DF  A partir do dia 04/10/2009 todos os contribuintes do DF deverão modificar seus sistemas para utilizarem os serviços da SEFAZ Virtual do Rio Grande do Sul (SVRS).
-         53: Result := NotaUtil.GetURLSVRS(AAmbiente,ALayOut); //DF
-         32: Result := NotaUtil.GetURLSVAN(AAmbiente,ALayOut); //ES
-         52: Result := NotaUtil.GetURLGO(AAmbiente,ALayOut); //GO
-         21: Result := NotaUtil.GetURLSVAN(AAmbiente,ALayOut); //MA
-         51: Result := NotaUtil.GetURLMT(AAmbiente,ALayOut); //MT
-         50: Result := NotaUtil.GetURLMS(AAmbiente,ALayOut); //MS
-         31: Result := NotaUtil.GetURLMG(AAmbiente,ALayOut); //MG
-         15: Result := NotaUtil.GetURLSVAN(AAmbiente,ALayOut); //PA
-         25: Result := NotaUtil.GetURLSVRS(AAmbiente,ALayOut); //PB
-         41: Result := NotaUtil.GetURLPR(AAmbiente,ALayOut); //PR
-         26: Result := NotaUtil.GetURLPE(AAmbiente,ALayOut); //PE
-         22: Result := NotaUtil.GetURLSVAN(AAmbiente,ALayOut); //PI
-         33: Result := NotaUtil.GetURLSVRS(AAmbiente,ALayOut); //RJ
-         24: Result := NotaUtil.GetURLSVAN(AAmbiente,ALayOut); //RN
-         43: Result := NotaUtil.GetURLRS(AAmbiente,ALayOut); //RS
-//         11: Result := NotaUtil.GetURLRO(AAmbiente,ALayOut); //RO
-         11: Result := NotaUtil.GetURLSVRS(AAmbiente,ALayOut); //RO  A partir do dia 03/09/2009 todos os contribuintes de RONDÔNIA deverão modificar seus sistemas para utilizarem os serviços da SEFAZ Virtual do Rio Grande do Sul (SVRS).
-         14: Result := NotaUtil.GetURLSVRS(AAmbiente,ALayOut); //RR
-         42: Result := NotaUtil.GetURLSVRS(AAmbiente,ALayOut); //SC
-         35: Result := NotaUtil.GetURLSP(AAmbiente,ALayOut); //SP
-         28: Result := NotaUtil.GetURLSVRS(AAmbiente,ALayOut); //SE
-         17: Result := NotaUtil.GetURLSVRS(AAmbiente,ALayOut); //TO
+         12: Result := NotaUtil.GetURLSVRS(AAmbiente,ALayOut, AModeloDF); //AC
+         27: Result := NotaUtil.GetURLSVRS(AAmbiente,ALayOut, AModeloDF); //AL
+         16: Result := NotaUtil.GetURLSVRS(AAmbiente,ALayOut, AModeloDF); //AP
+         13: Result := NotaUtil.GetURLAM(AAmbiente,ALayOut, AModeloDF); //AM
+         29: Result := NotaUtil.GetURLBA(AAmbiente,ALayOut, AModeloDF); //BA
+         23: Result := NotaUtil.GetURLCE(AAmbiente,ALayOut, AModeloDF); //CE
+//         53: Result := NotaUtil.GetURLDF(AAmbiente,ALayOut, AModeloDF); //DF  A partir do dia 04/10/2009 todos os contribuintes do DF deverão modificar seus sistemas para utilizarem os serviços da SEFAZ Virtual do Rio Grande do Sul (SVRS).
+         53: Result := NotaUtil.GetURLSVRS(AAmbiente,ALayOut, AModeloDF); //DF
+         32: Result := NotaUtil.GetURLSVAN(AAmbiente,ALayOut, AModeloDF); //ES
+         52: Result := NotaUtil.GetURLGO(AAmbiente,ALayOut, AModeloDF); //GO
+         21: Result := NotaUtil.GetURLSVAN(AAmbiente,ALayOut, AModeloDF); //MA
+         51: Result := NotaUtil.GetURLMT(AAmbiente,ALayOut, AModeloDF); //MT
+         50: Result := NotaUtil.GetURLMS(AAmbiente,ALayOut, AModeloDF); //MS
+         31: Result := NotaUtil.GetURLMG(AAmbiente,ALayOut, AModeloDF); //MG
+         15: Result := NotaUtil.GetURLSVAN(AAmbiente,ALayOut, AModeloDF); //PA
+         25: Result := NotaUtil.GetURLSVRS(AAmbiente,ALayOut, AModeloDF); //PB
+         41: Result := NotaUtil.GetURLPR(AAmbiente,ALayOut, AModeloDF); //PR
+         26: Result := NotaUtil.GetURLPE(AAmbiente,ALayOut, AModeloDF); //PE
+         22: Result := NotaUtil.GetURLSVAN(AAmbiente,ALayOut, AModeloDF); //PI
+         33: Result := NotaUtil.GetURLSVRS(AAmbiente,ALayOut, AModeloDF); //RJ
+         24: Result := NotaUtil.GetURLSVAN(AAmbiente,ALayOut, AModeloDF); //RN
+         43: Result := NotaUtil.GetURLRS(AAmbiente,ALayOut, AModeloDF); //RS
+//         11: Result := NotaUtil.GetURLRO(AAmbiente,ALayOut, AModeloDF); //RO
+         11: Result := NotaUtil.GetURLSVRS(AAmbiente,ALayOut, AModeloDF); //RO  A partir do dia 03/09/2009 todos os contribuintes de RONDÔNIA deverão modificar seus sistemas para utilizarem os serviços da SEFAZ Virtual do Rio Grande do Sul (SVRS).
+         14: Result := NotaUtil.GetURLSVRS(AAmbiente,ALayOut, AModeloDF); //RR
+         42: Result := NotaUtil.GetURLSVRS(AAmbiente,ALayOut, AModeloDF); //SC
+         35: Result := NotaUtil.GetURLSP(AAmbiente,ALayOut, AModeloDF); //SP
+         28: Result := NotaUtil.GetURLSVRS(AAmbiente,ALayOut, AModeloDF); //SE
+         17: Result := NotaUtil.GetURLSVRS(AAmbiente,ALayOut, AModeloDF); //TO
       end;
      end;
   3 : begin
@@ -948,203 +943,411 @@ end;
 //Estados Emissores pela Sefaz Virtual AN (Ambiente Nacional): ES, MA, PA, PI, PR e RN.
 
 class function NotaUtil.GetURLSVRS(AAmbiente: Integer;
-  ALayOut: TLayOut): WideString;
+  ALayOut: TLayOut; AModeloDF: TpcnModeloDF = moNFe): WideString;
 begin
-  case ALayOut of
-    LayNfeRecepcao         : Result := DFeUtil.SeSenao(AAmbiente=1, 'https://nfe.sefazvirtual.rs.gov.br/ws/Nferecepcao/NFeRecepcao2.asmx', 'https://homologacao.nfe.sefazvirtual.rs.gov.br/ws/Nferecepcao/NFeRecepcao2.asmx');
-    LayNfeRetRecepcao      : Result := DFeUtil.SeSenao(AAmbiente=1, 'https://nfe.sefazvirtual.rs.gov.br/ws/NfeRetRecepcao/NfeRetRecepcao2.asmx', 'https://homologacao.nfe.sefazvirtual.rs.gov.br/ws/NfeRetRecepcao/NfeRetRecepcao2.asmx');
-    LayNfeCancelamento     : Result := DFeUtil.SeSenao(AAmbiente=1, 'https://nfe.sefazvirtual.rs.gov.br/ws/NfeCancelamento/NfeCancelamento2.asmx', 'https://homologacao.nfe.sefazvirtual.rs.gov.br/ws/NfeCancelamento/NfeCancelamento2.asmx');
-    LayNfeInutilizacao     : Result := DFeUtil.SeSenao(AAmbiente=1, 'https://nfe.sefazvirtual.rs.gov.br/ws/nfeinutilizacao/nfeinutilizacao2.asmx', 'https://homologacao.nfe.sefazvirtual.rs.gov.br/ws/nfeinutilizacao/nfeinutilizacao2.asmx');
-    LayNfeConsulta         : Result := DFeUtil.SeSenao(AAmbiente=1, 'https://nfe.sefazvirtual.rs.gov.br/ws/NfeConsulta/NfeConsulta2.asmx', 'https://homologacao.nfe.sefazvirtual.rs.gov.br/ws/NfeConsulta/NfeConsulta2.asmx');
-    LayNfeStatusServico    : Result := DFeUtil.SeSenao(AAmbiente=1, 'https://nfe.sefazvirtual.rs.gov.br/ws/NfeStatusServico/NfeStatusServico2.asmx', 'https://homologacao.nfe.sefazvirtual.rs.gov.br/ws/NfeStatusServico/NfeStatusServico2.asmx');
+  if AModeloDF = moNFe then 
+   begin
+    case ALayOut of
+      LayNfeRecepcao         : Result := DFeUtil.SeSenao(AAmbiente=1, 'https://nfe.sefazvirtual.rs.gov.br/ws/Nferecepcao/NFeRecepcao2.asmx', 'https://homologacao.nfe.sefazvirtual.rs.gov.br/ws/Nferecepcao/NFeRecepcao2.asmx');
+      LayNfeRetRecepcao      : Result := DFeUtil.SeSenao(AAmbiente=1, 'https://nfe.sefazvirtual.rs.gov.br/ws/NfeRetRecepcao/NfeRetRecepcao2.asmx', 'https://homologacao.nfe.sefazvirtual.rs.gov.br/ws/NfeRetRecepcao/NfeRetRecepcao2.asmx');
+      LayNfeCancelamento     : Result := DFeUtil.SeSenao(AAmbiente=1, 'https://nfe.sefazvirtual.rs.gov.br/ws/NfeCancelamento/NfeCancelamento2.asmx', 'https://homologacao.nfe.sefazvirtual.rs.gov.br/ws/NfeCancelamento/NfeCancelamento2.asmx');
+      LayNfeInutilizacao     : Result := DFeUtil.SeSenao(AAmbiente=1, 'https://nfe.sefazvirtual.rs.gov.br/ws/nfeinutilizacao/nfeinutilizacao2.asmx', 'https://homologacao.nfe.sefazvirtual.rs.gov.br/ws/nfeinutilizacao/nfeinutilizacao2.asmx');
+      LayNfeConsulta         : Result := DFeUtil.SeSenao(AAmbiente=1, 'https://nfe.sefazvirtual.rs.gov.br/ws/NfeConsulta/NfeConsulta2.asmx', 'https://homologacao.nfe.sefazvirtual.rs.gov.br/ws/NfeConsulta/NfeConsulta2.asmx');
+      LayNfeStatusServico    : Result := DFeUtil.SeSenao(AAmbiente=1, 'https://nfe.sefazvirtual.rs.gov.br/ws/NfeStatusServico/NfeStatusServico2.asmx', 'https://homologacao.nfe.sefazvirtual.rs.gov.br/ws/NfeStatusServico/NfeStatusServico2.asmx');
 //    LayNfeCadastro         : Result := NotaUtil.SeSenao(AAmbiente=1, '', '');
-    LayNFeCCe,LayNFeEvento : Result := DFeUtil.SeSenao(AAmbiente=1, 'https://nfe.sefazvirtual.rs.gov.br/ws/recepcaoevento/recepcaoevento.asmx', 'https://homologacao.nfe.sefazvirtual.rs.gov.br/ws/recepcaoevento/recepcaoevento.asmx');
-  end;
+      LayNFeCCe,
+      LayNFeEvento           : Result := DFeUtil.SeSenao(AAmbiente=1, 'https://nfe.sefazvirtual.rs.gov.br/ws/recepcaoevento/recepcaoevento.asmx', 'https://homologacao.nfe.sefazvirtual.rs.gov.br/ws/recepcaoevento/recepcaoevento.asmx');
+    end;
+   end
+  else 
+   begin
+    case ALayOut of
+      LayNfeRecepcao      : Result := DFeUtil.SeSenao(AAmbiente=1, 'https://nfe.sefazvirtual.rs.gov.br/ws/Nfeautorizacao/NFeautorizacao.asmx', 'https://homologacao.nfe.sefazvirtual.rs.gov.br/ws/Nfeautorizacao/NFeautorizacao.asmx');
+      LayNfeRetRecepcao   : Result := DFeUtil.SeSenao(AAmbiente=1, 'https://nfe.sefazvirtual.rs.gov.br/ws/NferetAutorizacao/NFeretAutorizacao.asmx', 'https://homologacao.nfe.sefazvirtual.rs.gov.br/ws/NferetAutorizacao/NFeretAutorizacao.asmx');
+      LayNfeInutilizacao  : Result := DFeUtil.SeSenao(AAmbiente=1, '', '');
+      LayNfeConsulta      : Result := DFeUtil.SeSenao(AAmbiente=1, '', '');
+      LayNfeStatusServico : Result := DFeUtil.SeSenao(AAmbiente=1, '', '');
+      LayNFeCCe,
+      LayNFeEvento        : Result := DFeUtil.SeSenao(AAmbiente=1, '', '');
+    end;
+   end;
 end;
 
 class function NotaUtil.GetURLSVAN(AAmbiente: Integer;
-  ALayOut: TLayOut): WideString;
+  ALayOut: TLayOut; AModeloDF: TpcnModeloDF = moNFe): WideString;
 begin
-  case ALayOut of
-    LayNfeRecepcao         : Result := DFeUtil.SeSenao(AAmbiente=1, 'https://www.sefazvirtual.fazenda.gov.br/NfeRecepcao2/NfeRecepcao2.asmx', 'https://hom.sefazvirtual.fazenda.gov.br/NfeRecepcao2/NfeRecepcao2.asmx');
-    LayNfeRetRecepcao      : Result := DFeUtil.SeSenao(AAmbiente=1, 'https://www.sefazvirtual.fazenda.gov.br/NFeRetRecepcao2/NFeRetRecepcao2.asmx', 'https://hom.sefazvirtual.fazenda.gov.br/NfeRetRecepcao2/NfeRetRecepcao2.asmx');
-    LayNfeCancelamento     : Result := DFeUtil.SeSenao(AAmbiente=1, 'https://www.sefazvirtual.fazenda.gov.br/NFeCancelamento2/NFeCancelamento2.asmx', 'https://hom.sefazvirtual.fazenda.gov.br/NfeCancelamento2/NfeCancelamento2.asmx');
-    LayNfeInutilizacao     : Result := DFeUtil.SeSenao(AAmbiente=1, 'https://www.sefazvirtual.fazenda.gov.br/NFeInutilizacao2/NFeInutilizacao2.asmx', 'https://hom.sefazvirtual.fazenda.gov.br/NfeInutilizacao2/NfeInutilizacao2.asmx');
-    LayNfeConsulta         : Result := DFeUtil.SeSenao(AAmbiente=1, 'https://www.sefazvirtual.fazenda.gov.br/nfeconsulta2/nfeconsulta2.asmx', 'https://hom.sefazvirtual.fazenda.gov.br/NfeConsulta2/NfeConsulta2.asmx');
-    LayNfeStatusServico    : Result := DFeUtil.SeSenao(AAmbiente=1, 'https://www.sefazvirtual.fazenda.gov.br/NFeStatusServico2/NFeStatusServico2.asmx', 'https://hom.sefazvirtual.fazenda.gov.br/NfeStatusServico2/NfeStatusServico2.asmx');
-//    LayNfeCadastro        : Result := NotaUtil.SeSenao(AAmbiente=1, '', '');
-    LayNFeCCe,LayNFeEvento : Result := DFeUtil.SeSenao(AAmbiente=1, 'https://www.sefazvirtual.fazenda.gov.br/RecepcaoEvento/RecepcaoEvento.asmx', 'https://hom.sefazvirtual.fazenda.gov.br/RecepcaoEvento/RecepcaoEvento.asmx');
-  end;
+  if AModeloDF = moNFe then 
+   begin
+    case ALayOut of
+      LayNfeRecepcao         : Result := DFeUtil.SeSenao(AAmbiente=1, 'https://www.sefazvirtual.fazenda.gov.br/NfeRecepcao2/NfeRecepcao2.asmx', 'https://hom.sefazvirtual.fazenda.gov.br/NfeRecepcao2/NfeRecepcao2.asmx');
+      LayNfeRetRecepcao      : Result := DFeUtil.SeSenao(AAmbiente=1, 'https://www.sefazvirtual.fazenda.gov.br/NFeRetRecepcao2/NFeRetRecepcao2.asmx', 'https://hom.sefazvirtual.fazenda.gov.br/NfeRetRecepcao2/NfeRetRecepcao2.asmx');
+      LayNfeCancelamento     : Result := DFeUtil.SeSenao(AAmbiente=1, 'https://www.sefazvirtual.fazenda.gov.br/NFeCancelamento2/NFeCancelamento2.asmx', 'https://hom.sefazvirtual.fazenda.gov.br/NfeCancelamento2/NfeCancelamento2.asmx');
+      LayNfeInutilizacao     : Result := DFeUtil.SeSenao(AAmbiente=1, 'https://www.sefazvirtual.fazenda.gov.br/NFeInutilizacao2/NFeInutilizacao2.asmx', 'https://hom.sefazvirtual.fazenda.gov.br/NfeInutilizacao2/NfeInutilizacao2.asmx');
+      LayNfeConsulta         : Result := DFeUtil.SeSenao(AAmbiente=1, 'https://www.sefazvirtual.fazenda.gov.br/nfeconsulta2/nfeconsulta2.asmx', 'https://hom.sefazvirtual.fazenda.gov.br/NfeConsulta2/NfeConsulta2.asmx');
+      LayNfeStatusServico    : Result := DFeUtil.SeSenao(AAmbiente=1, 'https://www.sefazvirtual.fazenda.gov.br/NFeStatusServico2/NFeStatusServico2.asmx', 'https://hom.sefazvirtual.fazenda.gov.br/NfeStatusServico2/NfeStatusServico2.asmx');
+//    LayNfeCadastro         : Result := NotaUtil.SeSenao(AAmbiente=1, '', '');
+      LayNFeCCe,
+      LayNFeEvento           : Result := DFeUtil.SeSenao(AAmbiente=1, 'https://www.sefazvirtual.fazenda.gov.br/RecepcaoEvento/RecepcaoEvento.asmx', 'https://hom.sefazvirtual.fazenda.gov.br/RecepcaoEvento/RecepcaoEvento.asmx');
+    end;
+   end
+  else 
+   begin
+    case ALayOut of
+      LayNfeRecepcao      : Result := DFeUtil.SeSenao(AAmbiente=1, '', '');
+      LayNfeRetRecepcao   : Result := DFeUtil.SeSenao(AAmbiente=1, '', '');
+      LayNfeInutilizacao  : Result := DFeUtil.SeSenao(AAmbiente=1, '', '');
+      LayNfeConsulta      : Result := DFeUtil.SeSenao(AAmbiente=1, '', '');
+      LayNfeStatusServico : Result := DFeUtil.SeSenao(AAmbiente=1, '', '');
+      LayNFeCCe,
+      LayNFeEvento        : Result := DFeUtil.SeSenao(AAmbiente=1, '', '');
+    end;
+   end;
 end;
 
 class function NotaUtil.GetURLAM(AAmbiente: Integer;
-  ALayOut: TLayOut): WideString;
+  ALayOut: TLayOut; AModeloDF: TpcnModeloDF = moNFe): WideString;
 begin
-  case ALayOut of
-    LayNfeRecepcao      : Result := DFeUtil.SeSenao(AAmbiente=1, 'https://nfe.sefaz.am.gov.br/services2/services/NfeRecepcao2', 'https://homnfe.sefaz.am.gov.br/services2/services/NfeRecepcao2');
-    LayNfeRetRecepcao   : Result := DFeUtil.SeSenao(AAmbiente=1, 'https://nfe.sefaz.am.gov.br/services2/services/NfeRetRecepcao2', 'https://homnfe.sefaz.am.gov.br/services2/services/NfeRetRecepcao2');
-    LayNfeCancelamento  : Result := DFeUtil.SeSenao(AAmbiente=1, 'https://nfe.sefaz.am.gov.br/services2/services/NfeCancelamento2', 'https://homnfe.sefaz.am.gov.br/services2/services/NfeCancelamento2');
-    LayNfeInutilizacao  : Result := DFeUtil.SeSenao(AAmbiente=1, 'https://nfe.sefaz.am.gov.br/services2/services/NfeInutilizacao2', 'https://homnfe.sefaz.am.gov.br/services2/services/NfeInutilizacao2');
-    LayNfeConsulta      : Result := DFeUtil.SeSenao(AAmbiente=1, 'https://nfe.sefaz.am.gov.br/services2/services/NfeConsulta2', 'https://homnfe.sefaz.am.gov.br/services2/services/NfeConsulta2');
-    LayNfeStatusServico : Result := DFeUtil.SeSenao(AAmbiente=1, 'https://nfe.sefaz.am.gov.br/services2/services/NfeStatusServico2', 'https://homnfe.sefaz.am.gov.br/services2/services/NfeStatusServico2');
-    LayNfeCadastro      : Result := DFeUtil.SeSenao(AAmbiente=1, 'https://nfe.sefaz.am.gov.br/services2/services/cadconsultacadastro2', 'https://homnfe.sefaz.am.gov.br/services2/services/cadconsultacadastro2');
-    LayNFeCCe,LayNFeEvento: Result := DFeUtil.SeSenao(AAmbiente=1, 'https://nfe.sefaz.am.gov.br/services2/services/RecepcaoEvento', 'https://homnfe.sefaz.am.gov.br/services2/services/RecepcaoEvento');
-  end;
+  if AModeloDF = moNFe then 
+   begin
+    case ALayOut of
+      LayNfeRecepcao      : Result := DFeUtil.SeSenao(AAmbiente=1, 'https://nfe.sefaz.am.gov.br/services2/services/NfeRecepcao2', 'https://homnfe.sefaz.am.gov.br/services2/services/NfeRecepcao2');
+      LayNfeRetRecepcao   : Result := DFeUtil.SeSenao(AAmbiente=1, 'https://nfe.sefaz.am.gov.br/services2/services/NfeRetRecepcao2', 'https://homnfe.sefaz.am.gov.br/services2/services/NfeRetRecepcao2');
+      LayNfeCancelamento  : Result := DFeUtil.SeSenao(AAmbiente=1, 'https://nfe.sefaz.am.gov.br/services2/services/NfeCancelamento2', 'https://homnfe.sefaz.am.gov.br/services2/services/NfeCancelamento2');
+      LayNfeInutilizacao  : Result := DFeUtil.SeSenao(AAmbiente=1, 'https://nfe.sefaz.am.gov.br/services2/services/NfeInutilizacao2', 'https://homnfe.sefaz.am.gov.br/services2/services/NfeInutilizacao2');
+      LayNfeConsulta      : Result := DFeUtil.SeSenao(AAmbiente=1, 'https://nfe.sefaz.am.gov.br/services2/services/NfeConsulta2', 'https://homnfe.sefaz.am.gov.br/services2/services/NfeConsulta2');
+      LayNfeStatusServico : Result := DFeUtil.SeSenao(AAmbiente=1, 'https://nfe.sefaz.am.gov.br/services2/services/NfeStatusServico2', 'https://homnfe.sefaz.am.gov.br/services2/services/NfeStatusServico2');
+      LayNfeCadastro      : Result := DFeUtil.SeSenao(AAmbiente=1, 'https://nfe.sefaz.am.gov.br/services2/services/cadconsultacadastro2', 'https://homnfe.sefaz.am.gov.br/services2/services/cadconsultacadastro2');
+      LayNFeCCe,
+      LayNFeEvento        : Result := DFeUtil.SeSenao(AAmbiente=1, 'https://nfe.sefaz.am.gov.br/services2/services/RecepcaoEvento', 'https://homnfe.sefaz.am.gov.br/services2/services/RecepcaoEvento');
+    end;
+   end
+  else 
+   begin
+    case ALayOut of
+      LayNfeRecepcao      : Result := DFeUtil.SeSenao(AAmbiente=1, 'https://nfe.sefaz.am.gov.br/nfce-services/services/NfeRecepcao2', 'https://homnfe.sefaz.am.gov.br/nfce-services/services/NfeRecepcao2');
+      LayNfeRetRecepcao   : Result := DFeUtil.SeSenao(AAmbiente=1, 'https://nfe.sefaz.am.gov.br/nfce-services/services/NfeRetRecepcao2', 'https://homnfe.sefaz.am.gov.br/nfce-services/services/NfeRetRecepcao2');
+      LayNfeInutilizacao  : Result := DFeUtil.SeSenao(AAmbiente=1, 'https://nfe.sefaz.am.gov.br/nfce-services/services/NfeInutilizacao2', 'https://homnfe.sefaz.am.gov.br/nfce-services/services/NfeInutilizacao2');
+      LayNfeConsulta      : Result := DFeUtil.SeSenao(AAmbiente=1, 'https://nfe.sefaz.am.gov.br/nfce-services/services/NfeConsulta2', 'https://homnfe.sefaz.am.gov.br/nfce-services/services/NfeConsulta2');
+      LayNfeStatusServico : Result := DFeUtil.SeSenao(AAmbiente=1, 'https://nfe.sefaz.am.gov.br/nfce-services/services/NfeStatusServico2', 'https://homnfe.sefaz.am.gov.br/nfce-services/services/NfeStatusServico2');
+      LayNFeCCe,
+      LayNFeEvento        : Result := DFeUtil.SeSenao(AAmbiente=1, 'https://nfe.sefaz.am.gov.br/nfce-services/services/RecepcaoEvento', 'https://homnfe.sefaz.am.gov.br/nfce-services/services/RecepcaoEvento');
+    end;
+   end;
 end;
 
 class function NotaUtil.GetURLBA(AAmbiente: Integer;
-  ALayOut: TLayOut): WideString;
+  ALayOut: TLayOut; AModeloDF: TpcnModeloDF = moNFe): WideString;
 begin
-  case ALayOut of
-    LayNfeRecepcao      : Result := DFeUtil.SeSenao(AAmbiente=1, 'https://nfe.sefaz.ba.gov.br/webservices/nfenw/NfeRecepcao2.asmx', 'https://hnfe.sefaz.ba.gov.br/webservices/nfenw/NfeRecepcao2.asmx');
-    LayNfeRetRecepcao   : Result := DFeUtil.SeSenao(AAmbiente=1, 'https://nfe.sefaz.ba.gov.br/webservices/nfenw/NfeRetRecepcao2.asmx', 'https://hnfe.sefaz.ba.gov.br/webservices/nfenw/NfeRetRecepcao2.asmx');
-    LayNfeCancelamento  : Result := DFeUtil.SeSenao(AAmbiente=1, 'https://nfe.sefaz.ba.gov.br/webservices/nfenw/NfeCancelamento2.asmx', 'https://hnfe.sefaz.ba.gov.br/webservices/nfenw/NfeCancelamento2.asmx');
-    LayNfeInutilizacao  : Result := DFeUtil.SeSenao(AAmbiente=1, 'https://nfe.sefaz.ba.gov.br/webservices/nfenw/NfeInutilizacao2.asmx', 'https://hnfe.sefaz.ba.gov.br/webservices/nfenw/NfeInutilizacao2.asmx');
-    LayNfeConsulta      : Result := DFeUtil.SeSenao(AAmbiente=1, 'https://nfe.sefaz.ba.gov.br/webservices/nfenw/NfeConsulta2.asmx', 'https://hnfe.sefaz.ba.gov.br/webservices/nfenw/NfeConsulta2.asmx');
-    LayNfeStatusServico : Result := DFeUtil.SeSenao(AAmbiente=1, 'https://nfe.sefaz.ba.gov.br/webservices/nfenw/NfeStatusServico2.asmx', 'https://hnfe.sefaz.ba.gov.br/webservices/nfenw/NfeStatusServico2.asmx');
-    LayNfeCadastro      : Result := DFeUtil.SeSenao(AAmbiente=1, 'https://nfe.sefaz.ba.gov.br/webservices/nfenw/CadConsultaCadastro2.asmx', 'https://hnfe.sefaz.ba.gov.br/webservices/nfenw/CadConsultaCadastro2.asmx');
-    LayNFeCCe,LayNFeEvento: Result := DFeUtil.SeSenao(AAmbiente=1, 'https://nfe.sefaz.ba.gov.br/webservices/sre/RecepcaoEvento.asmx', 'https://hnfe.sefaz.ba.gov.br/webservices/sre/RecepcaoEvento.asmx');
-  end;
+  if AModeloDF = moNFe then 
+   begin
+    case ALayOut of
+      LayNfeRecepcao      : Result := DFeUtil.SeSenao(AAmbiente=1, 'https://nfe.sefaz.ba.gov.br/webservices/nfenw/NfeRecepcao2.asmx', 'https://hnfe.sefaz.ba.gov.br/webservices/nfenw/NfeRecepcao2.asmx');
+      LayNfeRetRecepcao   : Result := DFeUtil.SeSenao(AAmbiente=1, 'https://nfe.sefaz.ba.gov.br/webservices/nfenw/NfeRetRecepcao2.asmx', 'https://hnfe.sefaz.ba.gov.br/webservices/nfenw/NfeRetRecepcao2.asmx');
+      LayNfeCancelamento  : Result := DFeUtil.SeSenao(AAmbiente=1, 'https://nfe.sefaz.ba.gov.br/webservices/nfenw/NfeCancelamento2.asmx', 'https://hnfe.sefaz.ba.gov.br/webservices/nfenw/NfeCancelamento2.asmx');
+      LayNfeInutilizacao  : Result := DFeUtil.SeSenao(AAmbiente=1, 'https://nfe.sefaz.ba.gov.br/webservices/nfenw/NfeInutilizacao2.asmx', 'https://hnfe.sefaz.ba.gov.br/webservices/nfenw/NfeInutilizacao2.asmx');
+      LayNfeConsulta      : Result := DFeUtil.SeSenao(AAmbiente=1, 'https://nfe.sefaz.ba.gov.br/webservices/nfenw/NfeConsulta2.asmx', 'https://hnfe.sefaz.ba.gov.br/webservices/nfenw/NfeConsulta2.asmx');
+      LayNfeStatusServico : Result := DFeUtil.SeSenao(AAmbiente=1, 'https://nfe.sefaz.ba.gov.br/webservices/nfenw/NfeStatusServico2.asmx', 'https://hnfe.sefaz.ba.gov.br/webservices/nfenw/NfeStatusServico2.asmx');
+      LayNfeCadastro      : Result := DFeUtil.SeSenao(AAmbiente=1, 'https://nfe.sefaz.ba.gov.br/webservices/nfenw/CadConsultaCadastro2.asmx', 'https://hnfe.sefaz.ba.gov.br/webservices/nfenw/CadConsultaCadastro2.asmx');
+      LayNFeCCe,
+      LayNFeEvento        : Result := DFeUtil.SeSenao(AAmbiente=1, 'https://nfe.sefaz.ba.gov.br/webservices/sre/RecepcaoEvento.asmx', 'https://hnfe.sefaz.ba.gov.br/webservices/sre/RecepcaoEvento.asmx');
+    end;
+   end
+  else 
+   begin
+    case ALayOut of
+      LayNfeRecepcao      : Result := DFeUtil.SeSenao(AAmbiente=1, '', '');
+      LayNfeRetRecepcao   : Result := DFeUtil.SeSenao(AAmbiente=1, '', '');
+      LayNfeInutilizacao  : Result := DFeUtil.SeSenao(AAmbiente=1, '', '');
+      LayNfeConsulta      : Result := DFeUtil.SeSenao(AAmbiente=1, '', '');
+      LayNfeStatusServico : Result := DFeUtil.SeSenao(AAmbiente=1, '', '');
+      LayNFeCCe,
+      LayNFeEvento        : Result := DFeUtil.SeSenao(AAmbiente=1, '', '');
+    end;
+   end;
 end;
 
 class function NotaUtil.GetURLCE(AAmbiente: Integer;
-  ALayOut: TLayOut): WideString;
+  ALayOut: TLayOut; AModeloDF: TpcnModeloDF = moNFe): WideString;
 begin
-  case ALayOut of
-    LayNfeRecepcao      : Result := DFeUtil.SeSenao(AAmbiente=1, 'https://nfe.sefaz.ce.gov.br/nfe2/services/NfeRecepcao2', 'https://nfeh.sefaz.ce.gov.br/nfe2/services/NfeRecepcao2');
-    LayNfeRetRecepcao   : Result := DFeUtil.SeSenao(AAmbiente=1, 'https://nfe.sefaz.ce.gov.br/nfe2/services/NfeRetRecepcao2', 'https://nfeh.sefaz.ce.gov.br/nfe2/services/NfeRetRecepcao2');
-    LayNfeCancelamento  : Result := DFeUtil.SeSenao(AAmbiente=1, 'https://nfe.sefaz.ce.gov.br/nfe2/services/NfeCancelamento2', 'https://nfeh.sefaz.ce.gov.br/nfe2/services/NfeCancelamento2');
-    LayNfeInutilizacao  : Result := DFeUtil.SeSenao(AAmbiente=1, 'https://nfe.sefaz.ce.gov.br/nfe2/services/NfeInutilizacao2', 'https://nfeh.sefaz.ce.gov.br/nfe2/services/NfeInutilizacao2');
-    LayNfeConsulta      : Result := DFeUtil.SeSenao(AAmbiente=1, 'https://nfe.sefaz.ce.gov.br/nfe2/services/NfeConsulta2', 'https://nfeh.sefaz.ce.gov.br/nfe2/services/NfeConsulta2');
-    LayNfeStatusServico : Result := DFeUtil.SeSenao(AAmbiente=1, 'https://nfe.sefaz.ce.gov.br/nfe2/services/NfeStatusServico2', 'https://nfeh.sefaz.ce.gov.br/nfe2/services/NfeStatusServico2');
-    LayNfeCadastro      : Result := DFeUtil.SeSenao(AAmbiente=1, 'https://nfe.sefaz.ce.gov.br/nfe2/services/CadConsultaCadastro2', 'https://nfeh.sefaz.ce.gov.br/nfe2/services/CadConsultaCadastro2');
-    LayNFeCCe,LayNFeEvento: Result := DFeUtil.SeSenao(AAmbiente=1, 'https://nfe.sefaz.ce.gov.br/nfe2/services/RecepcaoEvento',       'https://nfeh.sefaz.ce.gov.br/nfe2/services/RecepcaoEvento');
-  end;
+  if AModeloDF = moNFe then 
+   begin
+    case ALayOut of
+      LayNfeRecepcao      : Result := DFeUtil.SeSenao(AAmbiente=1, 'https://nfe.sefaz.ce.gov.br/nfe2/services/NfeRecepcao2', 'https://nfeh.sefaz.ce.gov.br/nfe2/services/NfeRecepcao2');
+      LayNfeRetRecepcao   : Result := DFeUtil.SeSenao(AAmbiente=1, 'https://nfe.sefaz.ce.gov.br/nfe2/services/NfeRetRecepcao2', 'https://nfeh.sefaz.ce.gov.br/nfe2/services/NfeRetRecepcao2');
+      LayNfeCancelamento  : Result := DFeUtil.SeSenao(AAmbiente=1, 'https://nfe.sefaz.ce.gov.br/nfe2/services/NfeCancelamento2', 'https://nfeh.sefaz.ce.gov.br/nfe2/services/NfeCancelamento2');
+      LayNfeInutilizacao  : Result := DFeUtil.SeSenao(AAmbiente=1, 'https://nfe.sefaz.ce.gov.br/nfe2/services/NfeInutilizacao2', 'https://nfeh.sefaz.ce.gov.br/nfe2/services/NfeInutilizacao2');
+      LayNfeConsulta      : Result := DFeUtil.SeSenao(AAmbiente=1, 'https://nfe.sefaz.ce.gov.br/nfe2/services/NfeConsulta2', 'https://nfeh.sefaz.ce.gov.br/nfe2/services/NfeConsulta2');
+      LayNfeStatusServico : Result := DFeUtil.SeSenao(AAmbiente=1, 'https://nfe.sefaz.ce.gov.br/nfe2/services/NfeStatusServico2', 'https://nfeh.sefaz.ce.gov.br/nfe2/services/NfeStatusServico2');
+      LayNfeCadastro      : Result := DFeUtil.SeSenao(AAmbiente=1, 'https://nfe.sefaz.ce.gov.br/nfe2/services/CadConsultaCadastro2', 'https://nfeh.sefaz.ce.gov.br/nfe2/services/CadConsultaCadastro2');
+      LayNFeCCe,
+      LayNFeEvento        : Result := DFeUtil.SeSenao(AAmbiente=1, 'https://nfe.sefaz.ce.gov.br/nfe2/services/RecepcaoEvento',       'https://nfeh.sefaz.ce.gov.br/nfe2/services/RecepcaoEvento');
+    end;
+   end
+  else 
+   begin
+    case ALayOut of
+      LayNfeRecepcao      : Result := DFeUtil.SeSenao(AAmbiente=1, '', '');
+      LayNfeRetRecepcao   : Result := DFeUtil.SeSenao(AAmbiente=1, '', '');
+      LayNfeInutilizacao  : Result := DFeUtil.SeSenao(AAmbiente=1, '', '');
+      LayNfeConsulta      : Result := DFeUtil.SeSenao(AAmbiente=1, '', '');
+      LayNfeStatusServico : Result := DFeUtil.SeSenao(AAmbiente=1, '', '');
+      LayNFeCCe,
+      LayNFeEvento        : Result := DFeUtil.SeSenao(AAmbiente=1, '', '');
+    end;
+   end;
 end;
 
 class function NotaUtil.GetURLGO(AAmbiente: Integer;
-  ALayOut: TLayOut): WideString;
+  ALayOut: TLayOut; AModeloDF: TpcnModeloDF = moNFe): WideString;
 begin
-  case ALayOut of
-    LayNfeRecepcao      : Result := DFeUtil.SeSenao(AAmbiente=1, 'https://nfe.sefaz.go.gov.br/nfe/services/v2/NfeRecepcao2', 'https://homolog.sefaz.go.gov.br/nfe/services/v2/NfeRecepcao2');
-    LayNfeRetRecepcao   : Result := DFeUtil.SeSenao(AAmbiente=1, 'https://nfe.sefaz.go.gov.br/nfe/services/v2/NfeRetRecepcao2', 'https://homolog.sefaz.go.gov.br/nfe/services/v2/NfeRetRecepcao2');
-    LayNfeCancelamento  : Result := DFeUtil.SeSenao(AAmbiente=1, 'https://nfe.sefaz.go.gov.br/nfe/services/v2/NfeCancelamento2', 'https://homolog.sefaz.go.gov.br/nfe/services/v2/NfeCancelamento2');
-    LayNfeInutilizacao  : Result := DFeUtil.SeSenao(AAmbiente=1, 'https://nfe.sefaz.go.gov.br/nfe/services/v2/NfeInutilizacao2', 'https://homolog.sefaz.go.gov.br/nfe/services/v2/NfeInutilizacao2');
-    LayNfeConsulta      : Result := DFeUtil.SeSenao(AAmbiente=1, 'https://nfe.sefaz.go.gov.br/nfe/services/v2/NfeConsulta2', 'https://homolog.sefaz.go.gov.br/nfe/services/v2/NfeConsulta2');
-    LayNfeStatusServico : Result := DFeUtil.SeSenao(AAmbiente=1, 'https://nfe.sefaz.go.gov.br/nfe/services/v2/NfeStatusServico2', 'https://homolog.sefaz.go.gov.br/nfe/services/v2/NfeStatusServico2');
-    LayNfeCadastro      : Result := DFeUtil.SeSenao(AAmbiente=1, 'https://nfe.sefaz.go.gov.br/nfe/services/v2/CadConsultaCadastro2', 'https://homolog.sefaz.go.gov.br/nfe/services/v2/CadConsultaCadastro2');
-    LayNFeCCe,LayNFeEvento: Result := DFeUtil.SeSenao(AAmbiente=1, 'https://nfe.sefaz.go.gov.br/nfe/services/v2/NfeRecepcaoEvento', 'https://homolog.sefaz.go.gov.br/nfe/services/v2/NfeRecepcaoEvento');
-  end;
+  if AModeloDF = moNFe then 
+   begin
+    case ALayOut of
+      LayNfeRecepcao      : Result := DFeUtil.SeSenao(AAmbiente=1, 'https://nfe.sefaz.go.gov.br/nfe/services/v2/NfeRecepcao2', 'https://homolog.sefaz.go.gov.br/nfe/services/v2/NfeRecepcao2');
+      LayNfeRetRecepcao   : Result := DFeUtil.SeSenao(AAmbiente=1, 'https://nfe.sefaz.go.gov.br/nfe/services/v2/NfeRetRecepcao2', 'https://homolog.sefaz.go.gov.br/nfe/services/v2/NfeRetRecepcao2');
+      LayNfeCancelamento  : Result := DFeUtil.SeSenao(AAmbiente=1, 'https://nfe.sefaz.go.gov.br/nfe/services/v2/NfeCancelamento2', 'https://homolog.sefaz.go.gov.br/nfe/services/v2/NfeCancelamento2');
+      LayNfeInutilizacao  : Result := DFeUtil.SeSenao(AAmbiente=1, 'https://nfe.sefaz.go.gov.br/nfe/services/v2/NfeInutilizacao2', 'https://homolog.sefaz.go.gov.br/nfe/services/v2/NfeInutilizacao2');
+      LayNfeConsulta      : Result := DFeUtil.SeSenao(AAmbiente=1, 'https://nfe.sefaz.go.gov.br/nfe/services/v2/NfeConsulta2', 'https://homolog.sefaz.go.gov.br/nfe/services/v2/NfeConsulta2');
+      LayNfeStatusServico : Result := DFeUtil.SeSenao(AAmbiente=1, 'https://nfe.sefaz.go.gov.br/nfe/services/v2/NfeStatusServico2', 'https://homolog.sefaz.go.gov.br/nfe/services/v2/NfeStatusServico2');
+      LayNfeCadastro      : Result := DFeUtil.SeSenao(AAmbiente=1, 'https://nfe.sefaz.go.gov.br/nfe/services/v2/CadConsultaCadastro2', 'https://homolog.sefaz.go.gov.br/nfe/services/v2/CadConsultaCadastro2');
+      LayNFeCCe,
+      LayNFeEvento        : Result := DFeUtil.SeSenao(AAmbiente=1, 'https://nfe.sefaz.go.gov.br/nfe/services/v2/NfeRecepcaoEvento', 'https://homolog.sefaz.go.gov.br/nfe/services/v2/NfeRecepcaoEvento');
+    end;
+   end
+  else 
+   begin
+    case ALayOut of
+      LayNfeRecepcao      : Result := DFeUtil.SeSenao(AAmbiente=1, '', '');
+      LayNfeRetRecepcao   : Result := DFeUtil.SeSenao(AAmbiente=1, '', '');
+      LayNfeInutilizacao  : Result := DFeUtil.SeSenao(AAmbiente=1, '', '');
+      LayNfeConsulta      : Result := DFeUtil.SeSenao(AAmbiente=1, '', '');
+      LayNfeStatusServico : Result := DFeUtil.SeSenao(AAmbiente=1, '', '');
+      LayNFeCCe,
+      LayNFeEvento        : Result := DFeUtil.SeSenao(AAmbiente=1, '', '');
+    end;
+   end;
 end;
 
 class function NotaUtil.GetURLMT(AAmbiente: Integer;
-  ALayOut: TLayOut): WideString;
+  ALayOut: TLayOut; AModeloDF: TpcnModeloDF = moNFe): WideString;
 begin
-  case ALayOut of
-    LayNfeRecepcao      : Result := DFeUtil.SeSenao(AAmbiente=1, 'https://nfe.sefaz.mt.gov.br/nfews/v2/services/NfeRecepcao2', 'https://homologacao.sefaz.mt.gov.br/nfews/v2/services/NfeRecepcao2');
-    LayNfeRetRecepcao   : Result := DFeUtil.SeSenao(AAmbiente=1, 'https://nfe.sefaz.mt.gov.br/nfews/v2/services/NfeRetRecepcao2', 'https://homologacao.sefaz.mt.gov.br/nfews/v2/services/NfeRetRecepcao2');
-    LayNfeCancelamento  : Result := DFeUtil.SeSenao(AAmbiente=1, 'https://nfe.sefaz.mt.gov.br/nfews/v2/services/NfeCancelamento2', 'https://homologacao.sefaz.mt.gov.br/nfews/v2/services/NfeCancelamento2');
-    LayNfeInutilizacao  : Result := DFeUtil.SeSenao(AAmbiente=1, 'https://nfe.sefaz.mt.gov.br/nfews/v2/services/NfeInutilizacao2', 'https://homologacao.sefaz.mt.gov.br/nfews/v2/services/NfeInutilizacao2');
-    LayNfeConsulta      : Result := DFeUtil.SeSenao(AAmbiente=1, 'https://nfe.sefaz.mt.gov.br/nfews/v2/services/NfeConsulta2', 'https://homologacao.sefaz.mt.gov.br/nfews/v2/services/NfeConsulta2');
-    LayNfeStatusServico : Result := DFeUtil.SeSenao(AAmbiente=1, 'https://nfe.sefaz.mt.gov.br/nfews/v2/services/NfeStatusServico2', 'https://homologacao.sefaz.mt.gov.br/nfews/v2/services/NfeStatusServico2');
-    LayNfeCadastro      : Result := DFeUtil.SeSenao(AAmbiente=1, 'https://nfe.sefaz.mt.gov.br/nfews/v2/services/CadConsultaCadastro2', 'https://homologacao.sefaz.mt.gov.br/nfews/v2/services/CadConsultaCadastro2');
-    LayNFeCCe,LayNFeEvento: Result := DFeUtil.SeSenao(AAmbiente=1, 'https://nfe.sefaz.mt.gov.br/nfews/v2/services/RecepcaoEvento', 'https://homologacao.sefaz.mt.gov.br/nfews/v2/services/RecepcaoEvento');
-  end;
+  if AModeloDF = moNFe then 
+   begin
+    case ALayOut of
+      LayNfeRecepcao      : Result := DFeUtil.SeSenao(AAmbiente=1, 'https://nfe.sefaz.mt.gov.br/nfews/v2/services/NfeRecepcao2', 'https://homologacao.sefaz.mt.gov.br/nfews/v2/services/NfeRecepcao2');
+      LayNfeRetRecepcao   : Result := DFeUtil.SeSenao(AAmbiente=1, 'https://nfe.sefaz.mt.gov.br/nfews/v2/services/NfeRetRecepcao2', 'https://homologacao.sefaz.mt.gov.br/nfews/v2/services/NfeRetRecepcao2');
+      LayNfeCancelamento  : Result := DFeUtil.SeSenao(AAmbiente=1, 'https://nfe.sefaz.mt.gov.br/nfews/v2/services/NfeCancelamento2', 'https://homologacao.sefaz.mt.gov.br/nfews/v2/services/NfeCancelamento2');
+      LayNfeInutilizacao  : Result := DFeUtil.SeSenao(AAmbiente=1, 'https://nfe.sefaz.mt.gov.br/nfews/v2/services/NfeInutilizacao2', 'https://homologacao.sefaz.mt.gov.br/nfews/v2/services/NfeInutilizacao2');
+      LayNfeConsulta      : Result := DFeUtil.SeSenao(AAmbiente=1, 'https://nfe.sefaz.mt.gov.br/nfews/v2/services/NfeConsulta2', 'https://homologacao.sefaz.mt.gov.br/nfews/v2/services/NfeConsulta2');
+      LayNfeStatusServico : Result := DFeUtil.SeSenao(AAmbiente=1, 'https://nfe.sefaz.mt.gov.br/nfews/v2/services/NfeStatusServico2', 'https://homologacao.sefaz.mt.gov.br/nfews/v2/services/NfeStatusServico2');
+      LayNfeCadastro      : Result := DFeUtil.SeSenao(AAmbiente=1, 'https://nfe.sefaz.mt.gov.br/nfews/v2/services/CadConsultaCadastro2', 'https://homologacao.sefaz.mt.gov.br/nfews/v2/services/CadConsultaCadastro2');
+      LayNFeCCe,
+      LayNFeEvento        : Result := DFeUtil.SeSenao(AAmbiente=1, 'https://nfe.sefaz.mt.gov.br/nfews/v2/services/RecepcaoEvento', 'https://homologacao.sefaz.mt.gov.br/nfews/v2/services/RecepcaoEvento');
+    end;
+   end
+  else 
+   begin
+    case ALayOut of
+      LayNfeRecepcao      : Result := DFeUtil.SeSenao(AAmbiente=1, '', '');
+      LayNfeRetRecepcao   : Result := DFeUtil.SeSenao(AAmbiente=1, '', '');
+      LayNfeInutilizacao  : Result := DFeUtil.SeSenao(AAmbiente=1, '', '');
+      LayNfeConsulta      : Result := DFeUtil.SeSenao(AAmbiente=1, '', '');
+      LayNfeStatusServico : Result := DFeUtil.SeSenao(AAmbiente=1, '', '');
+      LayNFeCCe,
+      LayNFeEvento        : Result := DFeUtil.SeSenao(AAmbiente=1, '', '');
+    end;
+   end;
 end;
 
 class function NotaUtil.GetURLMS(AAmbiente: Integer;
-  ALayOut: TLayOut): WideString;
+  ALayOut: TLayOut; AModeloDF: TpcnModeloDF = moNFe): WideString;
 begin
-  case ALayOut of
-    LayNfeRecepcao      : Result := DFeUtil.SeSenao(AAmbiente=1, 'https://nfe.fazenda.ms.gov.br/producao/services2/NfeRecepcao2', 'https://homologacao.nfe.ms.gov.br/homologacao/services2/NfeRecepcao2');
-    LayNfeRetRecepcao   : Result := DFeUtil.SeSenao(AAmbiente=1, 'https://nfe.fazenda.ms.gov.br/producao/services2/NfeRetRecepcao2', 'https://homologacao.nfe.ms.gov.br/homologacao/services2/NfeRetRecepcao2');
-    LayNfeCancelamento  : Result := DFeUtil.SeSenao(AAmbiente=1, 'https://nfe.fazenda.ms.gov.br/producao/services2/NfeCancelamento2', 'https://homologacao.nfe.ms.gov.br/homologacao/services2/NfeCancelamento2');
-    LayNfeInutilizacao  : Result := DFeUtil.SeSenao(AAmbiente=1, 'https://nfe.fazenda.ms.gov.br/producao/services2/NfeInutilizacao2', 'https://homologacao.nfe.ms.gov.br/homologacao/services2/NfeInutilizacao2');
-    LayNfeConsulta      : Result := DFeUtil.SeSenao(AAmbiente=1, 'https://nfe.fazenda.ms.gov.br/producao/services2/NfeConsulta2', 'https://homologacao.nfe.ms.gov.br/homologacao/services2/NfeConsulta2');
-    LayNfeStatusServico : Result := DFeUtil.SeSenao(AAmbiente=1, 'https://nfe.fazenda.ms.gov.br/producao/services2/NfeStatusServico2', 'https://homologacao.nfe.ms.gov.br/homologacao/services2/NfeStatusServico2');
-    LayNfeCadastro      : Result := DFeUtil.SeSenao(AAmbiente=1, 'https://nfe.fazenda.ms.gov.br/producao/services2/CadConsultaCadastro2', 'https://homologacao.nfe.ms.gov.br/homologacao/services2/CadConsultaCadastro2');
-    LayNFeCCe,LayNFeEvento: Result := DFeUtil.SeSenao(AAmbiente=1, 'https://nfe.fazenda.ms.gov.br/producao/services2/RecepcaoEvento', 'https://homologacao.nfe.ms.gov.br/homologacao/services2/RecepcaoEvento');
-  end;
+  if AModeloDF = moNFe then 
+   begin
+    case ALayOut of
+      LayNfeRecepcao      : Result := DFeUtil.SeSenao(AAmbiente=1, 'https://nfe.fazenda.ms.gov.br/producao/services2/NfeRecepcao2', 'https://homologacao.nfe.ms.gov.br/homologacao/services2/NfeRecepcao2');
+      LayNfeRetRecepcao   : Result := DFeUtil.SeSenao(AAmbiente=1, 'https://nfe.fazenda.ms.gov.br/producao/services2/NfeRetRecepcao2', 'https://homologacao.nfe.ms.gov.br/homologacao/services2/NfeRetRecepcao2');
+      LayNfeCancelamento  : Result := DFeUtil.SeSenao(AAmbiente=1, 'https://nfe.fazenda.ms.gov.br/producao/services2/NfeCancelamento2', 'https://homologacao.nfe.ms.gov.br/homologacao/services2/NfeCancelamento2');
+      LayNfeInutilizacao  : Result := DFeUtil.SeSenao(AAmbiente=1, 'https://nfe.fazenda.ms.gov.br/producao/services2/NfeInutilizacao2', 'https://homologacao.nfe.ms.gov.br/homologacao/services2/NfeInutilizacao2');
+      LayNfeConsulta      : Result := DFeUtil.SeSenao(AAmbiente=1, 'https://nfe.fazenda.ms.gov.br/producao/services2/NfeConsulta2', 'https://homologacao.nfe.ms.gov.br/homologacao/services2/NfeConsulta2');
+      LayNfeStatusServico : Result := DFeUtil.SeSenao(AAmbiente=1, 'https://nfe.fazenda.ms.gov.br/producao/services2/NfeStatusServico2', 'https://homologacao.nfe.ms.gov.br/homologacao/services2/NfeStatusServico2');
+      LayNfeCadastro      : Result := DFeUtil.SeSenao(AAmbiente=1, 'https://nfe.fazenda.ms.gov.br/producao/services2/CadConsultaCadastro2', 'https://homologacao.nfe.ms.gov.br/homologacao/services2/CadConsultaCadastro2');
+      LayNFeCCe,
+      LayNFeEvento        : Result := DFeUtil.SeSenao(AAmbiente=1, 'https://nfe.fazenda.ms.gov.br/producao/services2/RecepcaoEvento', 'https://homologacao.nfe.ms.gov.br/homologacao/services2/RecepcaoEvento');
+    end;
+   end
+  else 
+   begin
+    case ALayOut of
+      LayNfeRecepcao      : Result := DFeUtil.SeSenao(AAmbiente=1, '', '');
+      LayNfeRetRecepcao   : Result := DFeUtil.SeSenao(AAmbiente=1, '', '');
+      LayNfeInutilizacao  : Result := DFeUtil.SeSenao(AAmbiente=1, '', '');
+      LayNfeConsulta      : Result := DFeUtil.SeSenao(AAmbiente=1, '', '');
+      LayNfeStatusServico : Result := DFeUtil.SeSenao(AAmbiente=1, '', '');
+      LayNFeCCe,
+      LayNFeEvento        : Result := DFeUtil.SeSenao(AAmbiente=1, '', '');
+    end;
+   end;
 end;
 
 class function NotaUtil.GetURLMG(AAmbiente: Integer;
-  ALayOut: TLayOut): WideString;
+  ALayOut: TLayOut; AModeloDF: TpcnModeloDF = moNFe): WideString;
 begin
-  case ALayOut of
-    LayNfeRecepcao      : Result := DFeUtil.SeSenao(AAmbiente=1, 'https://nfe.fazenda.mg.gov.br/nfe2/services/NfeRecepcao2', 'https://hnfe.fazenda.mg.gov.br/nfe2/services/NfeRecepcao2');
-    LayNfeRetRecepcao   : Result := DFeUtil.SeSenao(AAmbiente=1, 'https://nfe.fazenda.mg.gov.br/nfe2/services/NfeRetRecepcao2', 'https://hnfe.fazenda.mg.gov.br/nfe2/services/NfeRetRecepcao2');
-    LayNfeCancelamento  : Result := DFeUtil.SeSenao(AAmbiente=1, 'https://nfe.fazenda.mg.gov.br/nfe2/services/NfeCancelamento2', 'https://hnfe.fazenda.mg.gov.br/nfe2/services/NfeCancelamento2');
-    LayNfeInutilizacao  : Result := DFeUtil.SeSenao(AAmbiente=1, 'https://nfe.fazenda.mg.gov.br/nfe2/services/NfeInutilizacao2', 'https://hnfe.fazenda.mg.gov.br/nfe2/services/NfeInutilizacao2');
-    LayNfeConsulta      : Result := DFeUtil.SeSenao(AAmbiente=1, 'https://nfe.fazenda.mg.gov.br/nfe2/services/NfeConsulta2', 'https://hnfe.fazenda.mg.gov.br/nfe2/services/NfeConsulta2');
-    LayNfeStatusServico : Result := DFeUtil.SeSenao(AAmbiente=1, 'https://nfe.fazenda.mg.gov.br/nfe2/services/NfeStatus2', 'https://hnfe.fazenda.mg.gov.br/nfe2/services/NfeStatus2');
-    LayNfeCadastro      : Result := DFeUtil.SeSenao(AAmbiente=1, 'https://nfe.fazenda.mg.gov.br/nfe2/services/cadconsultacadastro2', 'https://hnfe.fazenda.mg.gov.br/nfe2/services/cadconsultacadastro2');
-    LayNFeCCe,LayNFeEvento: Result := DFeUtil.SeSenao(AAmbiente=1, 'https://nfe.fazenda.mg.gov.br/nfe2/services/RecepcaoEvento', 'https://hnfe.fazenda.mg.gov.br/nfe2/services/RecepcaoEvento');
-  end;
+  if AModeloDF = moNFe then 
+   begin
+    case ALayOut of
+      LayNfeRecepcao      : Result := DFeUtil.SeSenao(AAmbiente=1, 'https://nfe.fazenda.mg.gov.br/nfe2/services/NfeRecepcao2', 'https://hnfe.fazenda.mg.gov.br/nfe2/services/NfeRecepcao2');
+      LayNfeRetRecepcao   : Result := DFeUtil.SeSenao(AAmbiente=1, 'https://nfe.fazenda.mg.gov.br/nfe2/services/NfeRetRecepcao2', 'https://hnfe.fazenda.mg.gov.br/nfe2/services/NfeRetRecepcao2');
+      LayNfeCancelamento  : Result := DFeUtil.SeSenao(AAmbiente=1, 'https://nfe.fazenda.mg.gov.br/nfe2/services/NfeCancelamento2', 'https://hnfe.fazenda.mg.gov.br/nfe2/services/NfeCancelamento2');
+      LayNfeInutilizacao  : Result := DFeUtil.SeSenao(AAmbiente=1, 'https://nfe.fazenda.mg.gov.br/nfe2/services/NfeInutilizacao2', 'https://hnfe.fazenda.mg.gov.br/nfe2/services/NfeInutilizacao2');
+      LayNfeConsulta      : Result := DFeUtil.SeSenao(AAmbiente=1, 'https://nfe.fazenda.mg.gov.br/nfe2/services/NfeConsulta2', 'https://hnfe.fazenda.mg.gov.br/nfe2/services/NfeConsulta2');
+      LayNfeStatusServico : Result := DFeUtil.SeSenao(AAmbiente=1, 'https://nfe.fazenda.mg.gov.br/nfe2/services/NfeStatus2', 'https://hnfe.fazenda.mg.gov.br/nfe2/services/NfeStatus2');
+      LayNfeCadastro      : Result := DFeUtil.SeSenao(AAmbiente=1, 'https://nfe.fazenda.mg.gov.br/nfe2/services/cadconsultacadastro2', 'https://hnfe.fazenda.mg.gov.br/nfe2/services/cadconsultacadastro2');
+      LayNFeCCe,
+      LayNFeEvento        : Result := DFeUtil.SeSenao(AAmbiente=1, 'https://nfe.fazenda.mg.gov.br/nfe2/services/RecepcaoEvento', 'https://hnfe.fazenda.mg.gov.br/nfe2/services/RecepcaoEvento');
+    end;
+   end
+  else 
+   begin
+    case ALayOut of
+      LayNfeRecepcao      : Result := DFeUtil.SeSenao(AAmbiente=1, '', '');
+      LayNfeRetRecepcao   : Result := DFeUtil.SeSenao(AAmbiente=1, '', '');
+      LayNfeInutilizacao  : Result := DFeUtil.SeSenao(AAmbiente=1, '', '');
+      LayNfeConsulta      : Result := DFeUtil.SeSenao(AAmbiente=1, '', '');
+      LayNfeStatusServico : Result := DFeUtil.SeSenao(AAmbiente=1, '', '');
+      LayNFeCCe,
+      LayNFeEvento        : Result := DFeUtil.SeSenao(AAmbiente=1, '', '');
+    end;
+   end;
 end;
 
 class function NotaUtil.GetURLPR(AAmbiente: Integer;
-  ALayOut: TLayOut): WideString;
+  ALayOut: TLayOut; AModeloDF: TpcnModeloDF = moNFe): WideString;
 begin
-  case ALayOut of
-    LayNfeRecepcao      : Result := DFeUtil.SeSenao(AAmbiente=1, 'https://nfe2.fazenda.pr.gov.br/nfe/NFeRecepcao2', 'https://homologacao.nfe2.fazenda.pr.gov.br/nfe/NFeRecepcao2');
-    LayNfeRetRecepcao   : Result := DFeUtil.SeSenao(AAmbiente=1, 'https://nfe2.fazenda.pr.gov.br/nfe/NFeRetRecepcao2', 'https://homologacao.nfe2.fazenda.pr.gov.br/nfe/NFeRetRecepcao2');
-    LayNfeCancelamento  : Result := DFeUtil.SeSenao(AAmbiente=1, 'https://nfe2.fazenda.pr.gov.br/nfe/NFeCancelamento2', 'https://homologacao.nfe2.fazenda.pr.gov.br/nfe/NFeCancelamento2');
-    LayNfeInutilizacao  : Result := DFeUtil.SeSenao(AAmbiente=1, 'https://nfe2.fazenda.pr.gov.br/nfe/NFeInutilizacao2', 'https://homologacao.nfe2.fazenda.pr.gov.br/nfe/NFeInutilizacao2');
-    LayNfeConsulta      : Result := DFeUtil.SeSenao(AAmbiente=1, 'https://nfe2.fazenda.pr.gov.br/nfe/NFeConsulta2', 'https://homologacao.nfe2.fazenda.pr.gov.br/nfe/NFeConsulta2');
-    LayNfeStatusServico : Result := DFeUtil.SeSenao(AAmbiente=1, 'https://nfe2.fazenda.pr.gov.br/nfe/NFeStatusServico2', 'https://homologacao.nfe2.fazenda.pr.gov.br/nfe/NFeStatusServico2');
-    LayNfeCadastro      : Result := DFeUtil.SeSenao(AAmbiente=1, 'https://nfe2.fazenda.pr.gov.br/nfe/CadConsultaCadastro2', 'https://homologacao.nfe2.fazenda.pr.gov.br/nfe/CadConsultaCadastro2');
-    LayNFeCCe,LayNFeEvento: Result := DFeUtil.SeSenao(AAmbiente=1, 'https://nfe2.fazenda.pr.gov.br/nfe-evento/NFeRecepcaoEvento', 'https://homologacao.nfe2.fazenda.pr.gov.br/nfe-evento/NFeRecepcaoEvento');
-  end;
+  if AModeloDF = moNFe then 
+   begin
+    case ALayOut of
+      LayNfeRecepcao      : Result := DFeUtil.SeSenao(AAmbiente=1, 'https://nfe2.fazenda.pr.gov.br/nfe/NFeRecepcao2', 'https://homologacao.nfe2.fazenda.pr.gov.br/nfe/NFeRecepcao2');
+      LayNfeRetRecepcao   : Result := DFeUtil.SeSenao(AAmbiente=1, 'https://nfe2.fazenda.pr.gov.br/nfe/NFeRetRecepcao2', 'https://homologacao.nfe2.fazenda.pr.gov.br/nfe/NFeRetRecepcao2');
+      LayNfeCancelamento  : Result := DFeUtil.SeSenao(AAmbiente=1, 'https://nfe2.fazenda.pr.gov.br/nfe/NFeCancelamento2', 'https://homologacao.nfe2.fazenda.pr.gov.br/nfe/NFeCancelamento2');
+      LayNfeInutilizacao  : Result := DFeUtil.SeSenao(AAmbiente=1, 'https://nfe2.fazenda.pr.gov.br/nfe/NFeInutilizacao2', 'https://homologacao.nfe2.fazenda.pr.gov.br/nfe/NFeInutilizacao2');
+      LayNfeConsulta      : Result := DFeUtil.SeSenao(AAmbiente=1, 'https://nfe2.fazenda.pr.gov.br/nfe/NFeConsulta2', 'https://homologacao.nfe2.fazenda.pr.gov.br/nfe/NFeConsulta2');
+      LayNfeStatusServico : Result := DFeUtil.SeSenao(AAmbiente=1, 'https://nfe2.fazenda.pr.gov.br/nfe/NFeStatusServico2', 'https://homologacao.nfe2.fazenda.pr.gov.br/nfe/NFeStatusServico2');
+      LayNfeCadastro      : Result := DFeUtil.SeSenao(AAmbiente=1, 'https://nfe2.fazenda.pr.gov.br/nfe/CadConsultaCadastro2', 'https://homologacao.nfe2.fazenda.pr.gov.br/nfe/CadConsultaCadastro2');
+      LayNFeCCe,
+      LayNFeEvento        : Result := DFeUtil.SeSenao(AAmbiente=1, 'https://nfe2.fazenda.pr.gov.br/nfe-evento/NFeRecepcaoEvento', 'https://homologacao.nfe2.fazenda.pr.gov.br/nfe-evento/NFeRecepcaoEvento');
+    end;
+   end
+  else 
+   begin
+    case ALayOut of
+      LayNfeRecepcao      : Result := DFeUtil.SeSenao(AAmbiente=1, '', '');
+      LayNfeRetRecepcao   : Result := DFeUtil.SeSenao(AAmbiente=1, '', '');
+      LayNfeInutilizacao  : Result := DFeUtil.SeSenao(AAmbiente=1, '', '');
+      LayNfeConsulta      : Result := DFeUtil.SeSenao(AAmbiente=1, '', '');
+      LayNfeStatusServico : Result := DFeUtil.SeSenao(AAmbiente=1, '', '');
+      LayNFeCCe,
+      LayNFeEvento        : Result := DFeUtil.SeSenao(AAmbiente=1, '', '');
+    end;
+   end;
 end;
 
 class function NotaUtil.GetURLPE(AAmbiente: Integer;
-  ALayOut: TLayOut): WideString;
+  ALayOut: TLayOut; AModeloDF: TpcnModeloDF = moNFe): WideString;
 begin
-  case ALayOut of
-    LayNfeRecepcao      : Result := DFeUtil.SeSenao(AAmbiente=1, 'https://nfe.sefaz.pe.gov.br/nfe-service/services/NfeRecepcao2', 'https://nfehomolog.sefaz.pe.gov.br/nfe-service/services/NfeRecepcao2');
-    LayNfeRetRecepcao   : Result := DFeUtil.SeSenao(AAmbiente=1, 'https://nfe.sefaz.pe.gov.br/nfe-service/services/NfeRetRecepcao2', 'https://nfehomolog.sefaz.pe.gov.br/nfe-service/services/NfeRetRecepcao2');
-    LayNfeCancelamento  : Result := DFeUtil.SeSenao(AAmbiente=1, 'https://nfe.sefaz.pe.gov.br/nfe-service/services/NfeCancelamento2', 'https://nfehomolog.sefaz.pe.gov.br/nfe-service/services/NfeCancelamento2');
-    LayNfeInutilizacao  : Result := DFeUtil.SeSenao(AAmbiente=1, 'https://nfe.sefaz.pe.gov.br/nfe-service/services/NfeInutilizacao2', 'https://nfehomolog.sefaz.pe.gov.br/nfe-service/services/NfeInutilizacao2');
-    LayNfeConsulta      : Result := DFeUtil.SeSenao(AAmbiente=1, 'https://nfe.sefaz.pe.gov.br/nfe-service/services/NfeConsulta2', 'https://nfehomolog.sefaz.pe.gov.br/nfe-service/services/NfeConsulta2');
-    LayNfeStatusServico : Result := DFeUtil.SeSenao(AAmbiente=1, 'https://nfe.sefaz.pe.gov.br/nfe-service/services/NfeStatusServico2', 'https://nfehomolog.sefaz.pe.gov.br/nfe-service/services/NfeStatusServico2');
-    LayNfeCadastro      : Result := DFeUtil.SeSenao(AAmbiente=1, 'https://nfe.sefaz.pe.gov.br/nfe-service/services/CadConsultaCadastro2', 'https://nfehomolog.sefaz.pe.gov.br/nfe-service/services/CadConsultaCadastro2');
-    LayNFeCCe,LayNFeEvento: Result := DFeUtil.SeSenao(AAmbiente=1, 'https://nfe.sefaz.pe.gov.br/nfe-service/services/RecepcaoEvento?wsdl', 'https://nfehomolog.sefaz.pe.gov.br/nfe-service/services/RecepcaoEvento?wsdl');
-  end;
+  if AModeloDF = moNFe then 
+   begin
+    case ALayOut of
+      LayNfeRecepcao      : Result := DFeUtil.SeSenao(AAmbiente=1, 'https://nfe.sefaz.pe.gov.br/nfe-service/services/NfeRecepcao2', 'https://nfehomolog.sefaz.pe.gov.br/nfe-service/services/NfeRecepcao2');
+      LayNfeRetRecepcao   : Result := DFeUtil.SeSenao(AAmbiente=1, 'https://nfe.sefaz.pe.gov.br/nfe-service/services/NfeRetRecepcao2', 'https://nfehomolog.sefaz.pe.gov.br/nfe-service/services/NfeRetRecepcao2');
+      LayNfeCancelamento  : Result := DFeUtil.SeSenao(AAmbiente=1, 'https://nfe.sefaz.pe.gov.br/nfe-service/services/NfeCancelamento2', 'https://nfehomolog.sefaz.pe.gov.br/nfe-service/services/NfeCancelamento2');
+      LayNfeInutilizacao  : Result := DFeUtil.SeSenao(AAmbiente=1, 'https://nfe.sefaz.pe.gov.br/nfe-service/services/NfeInutilizacao2', 'https://nfehomolog.sefaz.pe.gov.br/nfe-service/services/NfeInutilizacao2');
+      LayNfeConsulta      : Result := DFeUtil.SeSenao(AAmbiente=1, 'https://nfe.sefaz.pe.gov.br/nfe-service/services/NfeConsulta2', 'https://nfehomolog.sefaz.pe.gov.br/nfe-service/services/NfeConsulta2');
+      LayNfeStatusServico : Result := DFeUtil.SeSenao(AAmbiente=1, 'https://nfe.sefaz.pe.gov.br/nfe-service/services/NfeStatusServico2', 'https://nfehomolog.sefaz.pe.gov.br/nfe-service/services/NfeStatusServico2');
+      LayNfeCadastro      : Result := DFeUtil.SeSenao(AAmbiente=1, 'https://nfe.sefaz.pe.gov.br/nfe-service/services/CadConsultaCadastro2', 'https://nfehomolog.sefaz.pe.gov.br/nfe-service/services/CadConsultaCadastro2');
+      LayNFeCCe,
+      LayNFeEvento        : Result := DFeUtil.SeSenao(AAmbiente=1, 'https://nfe.sefaz.pe.gov.br/nfe-service/services/RecepcaoEvento?wsdl', 'https://nfehomolog.sefaz.pe.gov.br/nfe-service/services/RecepcaoEvento?wsdl');
+    end;
+   end
+  else 
+   begin
+    case ALayOut of
+      LayNfeRecepcao      : Result := DFeUtil.SeSenao(AAmbiente=1, '', '');
+      LayNfeRetRecepcao   : Result := DFeUtil.SeSenao(AAmbiente=1, '', '');
+      LayNfeInutilizacao  : Result := DFeUtil.SeSenao(AAmbiente=1, '', '');
+      LayNfeConsulta      : Result := DFeUtil.SeSenao(AAmbiente=1, '', '');
+      LayNfeStatusServico : Result := DFeUtil.SeSenao(AAmbiente=1, '', '');
+      LayNFeCCe,
+      LayNFeEvento        : Result := DFeUtil.SeSenao(AAmbiente=1, '', '');
+    end;
+   end;
 end;
 
 class function NotaUtil.GetURLRS(AAmbiente: Integer;
-  ALayOut: TLayOut): WideString;
+  ALayOut: TLayOut; AModeloDF: TpcnModeloDF = moNFe): WideString;
 begin
-  case ALayOut of
-    LayNfeRecepcao      : Result := DFeUtil.SeSenao(AAmbiente=1, 'https://nfe.sefaz.rs.gov.br/ws/Nferecepcao/NFeRecepcao2.asmx', 'https://homologacao.nfe.sefaz.rs.gov.br/ws/Nferecepcao/NFeRecepcao2.asmx');
-    LayNfeRetRecepcao   : Result := DFeUtil.SeSenao(AAmbiente=1, 'https://nfe.sefaz.rs.gov.br/ws/NfeRetRecepcao/NfeRetRecepcao2.asmx', 'https://homologacao.nfe.sefaz.rs.gov.br/ws/NfeRetRecepcao/NfeRetRecepcao2.asmx');
-    LayNfeCancelamento  : Result := DFeUtil.SeSenao(AAmbiente=1, 'https://nfe.sefaz.rs.gov.br/ws/NfeCancelamento/NfeCancelamento2.asmx', 'https://homologacao.nfe.sefaz.rs.gov.br/ws/NfeCancelamento/NfeCancelamento2.asmx');
-    LayNfeInutilizacao  : Result := DFeUtil.SeSenao(AAmbiente=1, 'https://nfe.sefaz.rs.gov.br/ws/nfeinutilizacao/nfeinutilizacao2.asmx', 'https://homologacao.nfe.sefaz.rs.gov.br/ws/nfeinutilizacao/nfeinutilizacao2.asmx');
-    LayNfeConsulta      : Result := DFeUtil.SeSenao(AAmbiente=1, 'https://nfe.sefaz.rs.gov.br/ws/NfeConsulta/NfeConsulta2.asmx', 'https://homologacao.nfe.sefaz.rs.gov.br/ws/NfeConsulta/NfeConsulta2.asmx');
-    LayNfeStatusServico : Result := DFeUtil.SeSenao(AAmbiente=1, 'https://nfe.sefaz.rs.gov.br/ws/NfeStatusServico/NfeStatusServico2.asmx', 'https://homologacao.nfe.sefaz.rs.gov.br/ws/NfeStatusServico/NfeStatusServico2.asmx');
-    LayNfeCadastro      : Result := DFeUtil.SeSenao(AAmbiente=1, 'https://sef.sefaz.rs.gov.br/ws/cadconsultacadastro/cadconsultacadastro2.asmx', 'https://sef.sefaz.rs.gov.br/ws/cadconsultacadastro/cadconsultacadastro2.asmx');
-    LayNFeCCe,LayNFeEvento: Result := DFeUtil.SeSenao(AAmbiente=1, 'https://nfe.sefaz.rs.gov.br/ws/recepcaoevento/recepcaoevento.asmx', 'https://homologacao.nfe.sefaz.rs.gov.br/ws/recepcaoevento/recepcaoevento.asmx');
-  end;
+  if AModeloDF = moNFe then 
+   begin
+    case ALayOut of
+      LayNfeRecepcao      : Result := DFeUtil.SeSenao(AAmbiente=1, 'https://nfe.sefaz.rs.gov.br/ws/Nferecepcao/NFeRecepcao2.asmx', 'https://homologacao.nfe.sefaz.rs.gov.br/ws/Nferecepcao/NFeRecepcao2.asmx');
+      LayNfeRetRecepcao   : Result := DFeUtil.SeSenao(AAmbiente=1, 'https://nfe.sefaz.rs.gov.br/ws/NfeRetRecepcao/NfeRetRecepcao2.asmx', 'https://homologacao.nfe.sefaz.rs.gov.br/ws/NfeRetRecepcao/NfeRetRecepcao2.asmx');
+      LayNfeCancelamento  : Result := DFeUtil.SeSenao(AAmbiente=1, 'https://nfe.sefaz.rs.gov.br/ws/NfeCancelamento/NfeCancelamento2.asmx', 'https://homologacao.nfe.sefaz.rs.gov.br/ws/NfeCancelamento/NfeCancelamento2.asmx');
+      LayNfeInutilizacao  : Result := DFeUtil.SeSenao(AAmbiente=1, 'https://nfe.sefaz.rs.gov.br/ws/nfeinutilizacao/nfeinutilizacao2.asmx', 'https://homologacao.nfe.sefaz.rs.gov.br/ws/nfeinutilizacao/nfeinutilizacao2.asmx');
+      LayNfeConsulta      : Result := DFeUtil.SeSenao(AAmbiente=1, 'https://nfe.sefaz.rs.gov.br/ws/NfeConsulta/NfeConsulta2.asmx', 'https://homologacao.nfe.sefaz.rs.gov.br/ws/NfeConsulta/NfeConsulta2.asmx');
+      LayNfeStatusServico : Result := DFeUtil.SeSenao(AAmbiente=1, 'https://nfe.sefaz.rs.gov.br/ws/NfeStatusServico/NfeStatusServico2.asmx', 'https://homologacao.nfe.sefaz.rs.gov.br/ws/NfeStatusServico/NfeStatusServico2.asmx');
+      LayNfeCadastro      : Result := DFeUtil.SeSenao(AAmbiente=1, 'https://sef.sefaz.rs.gov.br/ws/cadconsultacadastro/cadconsultacadastro2.asmx', 'https://sef.sefaz.rs.gov.br/ws/cadconsultacadastro/cadconsultacadastro2.asmx');
+      LayNFeCCe,
+      LayNFeEvento        : Result := DFeUtil.SeSenao(AAmbiente=1, 'https://nfe.sefaz.rs.gov.br/ws/recepcaoevento/recepcaoevento.asmx', 'https://homologacao.nfe.sefaz.rs.gov.br/ws/recepcaoevento/recepcaoevento.asmx');
+    end;
+   end
+  else 
+   begin
+    case ALayOut of
+      LayNfeRecepcao      : Result := DFeUtil.SeSenao(AAmbiente=1, 'https://nfe.sefaz.rs.gov.br/ws/Nfeautorizacao/NFeautorizacao.asmx', 'https://homologacao.nfe.sefaz.rs.gov.br/ws/Nfeautorizacao/NFeautorizacao.asmx');
+      LayNfeRetRecepcao   : Result := DFeUtil.SeSenao(AAmbiente=1, 'https://nfe.sefaz.rs.gov.br/ws/NferetAutorizacao/NFeretAutorizacao.asmx', 'https://homologacao.nfe.sefaz.rs.gov.br/ws/NferetAutorizacao/NFeretAutorizacao.asmx');
+      LayNfeInutilizacao  : Result := DFeUtil.SeSenao(AAmbiente=1, '', '');
+      LayNfeConsulta      : Result := DFeUtil.SeSenao(AAmbiente=1, '', '');
+      LayNfeStatusServico : Result := DFeUtil.SeSenao(AAmbiente=1, '', '');
+      LayNFeCCe,
+      LayNFeEvento        : Result := DFeUtil.SeSenao(AAmbiente=1, '', '');
+    end;
+   end;
 end;
 
 class function NotaUtil.GetURLSP(AAmbiente: Integer;
-  ALayOut: TLayOut): WideString;
+  ALayOut: TLayOut; AModeloDF: TpcnModeloDF = moNFe): WideString;
 begin
-  case ALayOut of
-    LayNfeRecepcao      : Result := DFeUtil.SeSenao(AAmbiente=1, 'https://nfe.fazenda.sp.gov.br/nfeweb/services/nferecepcao2.asmx', 'https://homologacao.nfe.fazenda.sp.gov.br/nfeweb/services/NfeRecepcao2.asmx');
-    LayNfeRetRecepcao   : Result := DFeUtil.SeSenao(AAmbiente=1, 'https://nfe.fazenda.sp.gov.br/nfeweb/services/nferetrecepcao2.asmx', 'https://homologacao.nfe.fazenda.sp.gov.br/nfeweb/services/NfeRetRecepcao2.asmx');
-    LayNfeCancelamento  : Result := DFeUtil.SeSenao(AAmbiente=1, 'https://nfe.fazenda.sp.gov.br/nfeweb/services/nfecancelamento2.asmx', 'https://homologacao.nfe.fazenda.sp.gov.br/nfeweb/services/NfeCancelamento2.asmx');
-    LayNfeInutilizacao  : Result := DFeUtil.SeSenao(AAmbiente=1, 'https://nfe.fazenda.sp.gov.br/nfeweb/services/nfeinutilizacao2.asmx', 'https://homologacao.nfe.fazenda.sp.gov.br/nfeweb/services/NfeInutilizacao2.asmx');
-    LayNfeConsulta      : Result := DFeUtil.SeSenao(AAmbiente=1, 'https://nfe.fazenda.sp.gov.br/nfeweb/services/nfeconsulta2.asmx', 'https://homologacao.nfe.fazenda.sp.gov.br/nfeweb/services/NfeConsulta2.asmx');
-    LayNfeStatusServico : Result := DFeUtil.SeSenao(AAmbiente=1, 'https://nfe.fazenda.sp.gov.br/nfeweb/services/nfestatusservico2.asmx', 'https://homologacao.nfe.fazenda.sp.gov.br/nfeweb/services/NfeStatusServico2.asmx');
-    LayNfeCadastro      : Result := DFeUtil.SeSenao(AAmbiente=1, 'https://nfe.fazenda.sp.gov.br/nfeweb/services/cadconsultacadastro2.asmx', 'https://homologacao.nfe.fazenda.sp.gov.br/nfeWEB/services/cadconsultacadastro2.asmx');
-    LayNFeCCe,LayNFeEvento : Result := DFeUtil.SeSenao(AAmbiente=1, 'https://nfe.fazenda.sp.gov.br/eventosWEB/services/RecepcaoEvento.asmx', 'https://homologacao.nfe.fazenda.sp.gov.br/eventosWEB/services/RecepcaoEvento.asmx');
-  end;
+  if AModeloDF = moNFe then 
+   begin
+    case ALayOut of
+      LayNfeRecepcao      : Result := DFeUtil.SeSenao(AAmbiente=1, 'https://nfe.fazenda.sp.gov.br/nfeweb/services/nferecepcao2.asmx', 'https://homologacao.nfe.fazenda.sp.gov.br/nfeweb/services/NfeRecepcao2.asmx');
+      LayNfeRetRecepcao   : Result := DFeUtil.SeSenao(AAmbiente=1, 'https://nfe.fazenda.sp.gov.br/nfeweb/services/nferetrecepcao2.asmx', 'https://homologacao.nfe.fazenda.sp.gov.br/nfeweb/services/NfeRetRecepcao2.asmx');
+      LayNfeCancelamento  : Result := DFeUtil.SeSenao(AAmbiente=1, 'https://nfe.fazenda.sp.gov.br/nfeweb/services/nfecancelamento2.asmx', 'https://homologacao.nfe.fazenda.sp.gov.br/nfeweb/services/NfeCancelamento2.asmx');
+      LayNfeInutilizacao  : Result := DFeUtil.SeSenao(AAmbiente=1, 'https://nfe.fazenda.sp.gov.br/nfeweb/services/nfeinutilizacao2.asmx', 'https://homologacao.nfe.fazenda.sp.gov.br/nfeweb/services/NfeInutilizacao2.asmx');
+      LayNfeConsulta      : Result := DFeUtil.SeSenao(AAmbiente=1, 'https://nfe.fazenda.sp.gov.br/nfeweb/services/nfeconsulta2.asmx', 'https://homologacao.nfe.fazenda.sp.gov.br/nfeweb/services/NfeConsulta2.asmx');
+      LayNfeStatusServico : Result := DFeUtil.SeSenao(AAmbiente=1, 'https://nfe.fazenda.sp.gov.br/nfeweb/services/nfestatusservico2.asmx', 'https://homologacao.nfe.fazenda.sp.gov.br/nfeweb/services/NfeStatusServico2.asmx');
+      LayNfeCadastro      : Result := DFeUtil.SeSenao(AAmbiente=1, 'https://nfe.fazenda.sp.gov.br/nfeweb/services/cadconsultacadastro2.asmx', 'https://homologacao.nfe.fazenda.sp.gov.br/nfeWEB/services/cadconsultacadastro2.asmx');
+      LayNFeCCe,
+      LayNFeEvento        : Result := DFeUtil.SeSenao(AAmbiente=1, 'https://nfe.fazenda.sp.gov.br/eventosWEB/services/RecepcaoEvento.asmx', 'https://homologacao.nfe.fazenda.sp.gov.br/eventosWEB/services/RecepcaoEvento.asmx');
+    end;
+   end
+  else 
+   begin
+    case ALayOut of
+      LayNfeRecepcao      : Result := DFeUtil.SeSenao(AAmbiente=1, '', '');
+      LayNfeRetRecepcao   : Result := DFeUtil.SeSenao(AAmbiente=1, '', '');
+      LayNfeInutilizacao  : Result := DFeUtil.SeSenao(AAmbiente=1, '', '');
+      LayNfeConsulta      : Result := DFeUtil.SeSenao(AAmbiente=1, '', '');
+      LayNfeStatusServico : Result := DFeUtil.SeSenao(AAmbiente=1, '', '');
+      LayNFeCCe,
+      LayNFeEvento        : Result := DFeUtil.SeSenao(AAmbiente=1, '', '');
+    end;
+   end;
 end;
 
 {$IFDEF ACBrNFeOpenSSL}
 function ValidaLibXML(const AXML: AnsiString;
-  var AMsg: AnsiString; const APathSchemas: string = ''): Boolean;
+  var AMsg: AnsiString; const APathSchemas: string = ''; AModeloDF: TpcnModeloDF = moNFe): Boolean;
 var
  doc, schema_doc : xmlDocPtr;
  parser_ctxt : xmlSchemaParserCtxtPtr;
@@ -1161,6 +1364,47 @@ begin
     raise EACBrNFeException.Create('Diretório de Schemas não encontrado'+sLineBreak+
                            DFeUtil.SeSenao(DFeUtil.EstaVazio(APathSchemas),PathWithDelim(ExtractFileDir(application.ExeName))+'Schemas',PathWithDelim(APathSchemas)));
 
+  if AModeloDF = moNFe then 
+   begin
+    case Tipo of
+      1: schema_filename := NotaUtil.SeSenao(NotaUtil.EstaVazio(APathSchemas),PathWithDelim(ExtractFileDir(application.ExeName))+
+                                             'Schemas\',PathWithDelim(APathSchemas))+'nfe_v' + NFenviNFe + '.xsd';
+      2: schema_filename := NotaUtil.SeSenao(NotaUtil.EstaVazio(APathSchemas),PathWithDelim(ExtractFileDir(application.ExeName))+
+                                             'Schemas\',PathWithDelim(APathSchemas))+'cancNFe_v' + NFecancNFe + '.xsd';
+      3: schema_filename := NotaUtil.SeSenao(NotaUtil.EstaVazio(APathSchemas),PathWithDelim(ExtractFileDir(application.ExeName))+
+                                             'Schemas\',PathWithDelim(APathSchemas))+'inutNFe_v' + NFeinutNFe + '.xsd';
+      4: schema_filename := NotaUtil.SeSenao(NotaUtil.EstaVazio(APathSchemas),PathWithDelim(ExtractFileDir(application.ExeName))+
+                                             'Schemas\',PathWithDelim(APathSchemas))+'envDPEC_v' + NFeEnvDPEC + '.xsd';
+      5: schema_filename := NotaUtil.SeSenao(NotaUtil.EstaVazio(APathSchemas),PathWithDelim(ExtractFileDir(application.ExeName))+
+                                             'Schemas\',PathWithDelim(APathSchemas))+'envCCe_v' + NFeCCeNFe + '.xsd';
+      6: schema_filename := NotaUtil.SeSenao(NotaUtil.EstaVazio(APathSchemas),PathWithDelim(ExtractFileDir(application.ExeName))+
+                                             'Schemas\',PathWithDelim(APathSchemas))+'envEventoCancNFe_v' + NFeEventoNFe + '.xsd';
+      7..10: schema_filename := NotaUtil.SeSenao(NotaUtil.EstaVazio(APathSchemas),PathWithDelim(ExtractFileDir(application.ExeName))+
+                                                 'Schemas\',PathWithDelim(APathSchemas))+'envConfRecebto_v' + NFeEventoNFe + '.xsd';
+      else schema_filename := '';
+    end;
+   end
+  else 
+   begin
+    case Tipo of
+      1: schema_filename := NotaUtil.SeSenao(NotaUtil.EstaVazio(APathSchemas),PathWithDelim(ExtractFileDir(application.ExeName))+
+                                             'Schemas\',PathWithDelim(APathSchemas))+'nfe_v' + NFCeEnvi + '.xsd';
+      2: schema_filename := NotaUtil.SeSenao(NotaUtil.EstaVazio(APathSchemas),PathWithDelim(ExtractFileDir(application.ExeName))+
+                                             'Schemas\',PathWithDelim(APathSchemas))+'cancNFe_v' + NFCeCanc + '.xsd';
+      3: schema_filename := NotaUtil.SeSenao(NotaUtil.EstaVazio(APathSchemas),PathWithDelim(ExtractFileDir(application.ExeName))+
+                                             'Schemas\',PathWithDelim(APathSchemas))+'inutNFe_v' + NFCeInut + '.xsd';
+      4: schema_filename := NotaUtil.SeSenao(NotaUtil.EstaVazio(APathSchemas),PathWithDelim(ExtractFileDir(application.ExeName))+
+                                             'Schemas\',PathWithDelim(APathSchemas))+'envDPEC_v' + NFCeEnvDPEC + '.xsd';
+      5: schema_filename := NotaUtil.SeSenao(NotaUtil.EstaVazio(APathSchemas),PathWithDelim(ExtractFileDir(application.ExeName))+
+                                             'Schemas\',PathWithDelim(APathSchemas))+'envCCe_v' + NFCeCCe + '.xsd';
+      6: schema_filename := NotaUtil.SeSenao(NotaUtil.EstaVazio(APathSchemas),PathWithDelim(ExtractFileDir(application.ExeName))+
+                                             'Schemas\',PathWithDelim(APathSchemas))+'envEventoCancNFe_v' + NFCeEvento + '.xsd';
+      7..10: schema_filename := NotaUtil.SeSenao(NotaUtil.EstaVazio(APathSchemas),PathWithDelim(ExtractFileDir(application.ExeName))+
+                                                 'Schemas\',PathWithDelim(APathSchemas))+'envConfRecebto_v' + NFCeEvento + '.xsd';
+      else schema_filename := '';
+    end;
+   end;
+  (*
   case Tipo of
     1:
     begin
@@ -1214,7 +1458,8 @@ begin
     else
       schema_filename := '';
   end;
-
+  *)
+  
   if not FilesExists(schema_filename) then
     raise EACBrNFeException.Create('Arquivo '+schema_filename+' não encontrado');
 
@@ -1346,7 +1591,7 @@ begin
   xmlFreeDoc(doc);}
 end;
 {$ELSE}
-function ValidaMSXML(XML: AnsiString; out Msg: AnsiString; const APathSchemas: string = ''): Boolean;
+function ValidaMSXML(XML: AnsiString; out Msg: AnsiString; const APathSchemas: string = ''; AModeloDF: TpcnModeloDF = moNFe): Boolean;
 var
   DOMDocument: IXMLDOMDocument2;
   ParseError: IXMLDOMParseError;
@@ -1364,9 +1609,52 @@ begin
 
   Schema := CoXMLSchemaCache50.Create;
 
- if not DirectoryExists(DFeUtil.SeSenao(DFeUtil.EstaVazio(APathSchemas),PathWithDelim(ExtractFileDir(application.ExeName))+'Schemas',PathWithDelim(APathSchemas))) then
-    raise EACBrNFeException.Create('Diretório de Schemas não encontrado'+sLineBreak+
+  if not DirectoryExists(DFeUtil.SeSenao(DFeUtil.EstaVazio(APathSchemas),PathWithDelim(ExtractFileDir(application.ExeName))+'Schemas',PathWithDelim(APathSchemas))) then
+     raise EACBrNFeException.Create('Diretório de Schemas não encontrado'+sLineBreak+
                            DFeUtil.SeSenao(DFeUtil.EstaVazio(APathSchemas),PathWithDelim(ExtractFileDir(application.ExeName))+'Schemas',PathWithDelim(APathSchemas)));
+
+  if AModeloDF = moNFe then 
+   begin
+    case Tipo of
+      1: schema_filename := DFeUtil.SeSenao(DFeUtil.EstaVazio(APathSchemas),PathWithDelim(ExtractFileDir(application.ExeName))+
+                                             'Schemas\',PathWithDelim(APathSchemas))+'nfe_v' + NFenviNFe + '.xsd';
+      2: schema_filename := DFeUtil.SeSenao(DFeUtil.EstaVazio(APathSchemas),PathWithDelim(ExtractFileDir(application.ExeName))+
+                                             'Schemas\',PathWithDelim(APathSchemas))+'cancNFe_v' + NFecancNFe + '.xsd';
+      3: schema_filename := DFeUtil.SeSenao(DFeUtil.EstaVazio(APathSchemas),PathWithDelim(ExtractFileDir(application.ExeName))+
+                                             'Schemas\',PathWithDelim(APathSchemas))+'inutNFe_v' + NFeinutNFe + '.xsd';
+      4: schema_filename := DFeUtil.SeSenao(DFeUtil.EstaVazio(APathSchemas),PathWithDelim(ExtractFileDir(application.ExeName))+
+                                             'Schemas\',PathWithDelim(APathSchemas))+'envDPEC_v' + NFeEnvDPEC + '.xsd';
+      5: schema_filename := DFeUtil.SeSenao(DFeUtil.EstaVazio(APathSchemas),PathWithDelim(ExtractFileDir(application.ExeName))+
+                                             'Schemas\',PathWithDelim(APathSchemas))+'envCCe_v' + NFeCCeNFe + '.xsd';
+      6: schema_filename := DFeUtil.SeSenao(DFeUtil.EstaVazio(APathSchemas),PathWithDelim(ExtractFileDir(application.ExeName))+
+                                             'Schemas\',PathWithDelim(APathSchemas))+'envEventoCancNFe_v' + NFeEventoNFe + '.xsd';
+      7..10: schema_filename := DFeUtil.SeSenao(DFeUtil.EstaVazio(APathSchemas),PathWithDelim(ExtractFileDir(application.ExeName))+
+                                                 'Schemas\',PathWithDelim(APathSchemas))+'envConfRecebto_v' + NFeEventoNFe + '.xsd';
+      else schema_filename := '';
+    end;
+   end
+  else 
+   begin
+    case Tipo of
+      1: schema_filename := DFeUtil.SeSenao(DFeUtil.EstaVazio(APathSchemas),PathWithDelim(ExtractFileDir(application.ExeName))+
+                                             'Schemas\',PathWithDelim(APathSchemas))+'nfe_v' + NFCeEnvi + '.xsd';
+      2: schema_filename := DFeUtil.SeSenao(DFeUtil.EstaVazio(APathSchemas),PathWithDelim(ExtractFileDir(application.ExeName))+
+                                             'Schemas\',PathWithDelim(APathSchemas))+'cancNFe_v' + NFCeCanc + '.xsd';
+      3: schema_filename := DFeUtil.SeSenao(DFeUtil.EstaVazio(APathSchemas),PathWithDelim(ExtractFileDir(application.ExeName))+
+                                             'Schemas\',PathWithDelim(APathSchemas))+'inutNFe_v' + NFCeInut + '.xsd';
+      4: schema_filename := DFeUtil.SeSenao(DFeUtil.EstaVazio(APathSchemas),PathWithDelim(ExtractFileDir(application.ExeName))+
+                                             'Schemas\',PathWithDelim(APathSchemas))+'envDPEC_v' + NFCeEnvDPEC + '.xsd';
+      5: schema_filename := DFeUtil.SeSenao(DFeUtil.EstaVazio(APathSchemas),PathWithDelim(ExtractFileDir(application.ExeName))+
+                                             'Schemas\',PathWithDelim(APathSchemas))+'envCCe_v' + NFCeCCe + '.xsd';
+      6: schema_filename := DFeUtil.SeSenao(DFeUtil.EstaVazio(APathSchemas),PathWithDelim(ExtractFileDir(application.ExeName))+
+                                             'Schemas\',PathWithDelim(APathSchemas))+'envEventoCancNFe_v' + NFCeEvento + '.xsd';
+      7..10: schema_filename := DFeUtil.SeSenao(DFeUtil.EstaVazio(APathSchemas),PathWithDelim(ExtractFileDir(application.ExeName))+
+                                                 'Schemas\',PathWithDelim(APathSchemas))+'envConfRecebto_v' + NFCeEvento + '.xsd';
+      else schema_filename := '';
+    end;
+   end;
+
+ (*
   case Tipo of
     1: schema_filename := DFeUtil.SeSenao(DFeUtil.EstaVazio(APathSchemas),PathWithDelim(ExtractFileDir(application.ExeName))+'Schemas\',PathWithDelim(APathSchemas))+'nfe_v2.00.xsd';
     2: schema_filename := DFeUtil.SeSenao(DFeUtil.EstaVazio(APathSchemas),PathWithDelim(ExtractFileDir(application.ExeName))+'Schemas\',PathWithDelim(APathSchemas))+'cancNFe_v2.00.xsd';
@@ -1377,9 +1665,9 @@ begin
     7..10: schema_filename := DFeUtil.SeSenao(DFeUtil.EstaVazio(APathSchemas),PathWithDelim(ExtractFileDir(application.ExeName))+'Schemas\',PathWithDelim(APathSchemas))+'envConfRecebto_v1.00.xsd';
     else schema_filename := '';
   end;
-
- if not FilesExists(schema_filename) then
-    raise EACBrNFeException.Create('Arquivo '+schema_filename+' não encontrado');
+ *)
+  if not FilesExists(schema_filename) then
+     raise EACBrNFeException.Create('Arquivo '+schema_filename+' não encontrado');
 
   Schema.add( 'http://www.portalfiscal.inf.br/nfe', schema_filename );
 
@@ -1483,12 +1771,12 @@ begin
 end;
 
 class function NotaUtil.Valida(const AXML: AnsiString;
-  var AMsg: AnsiString; const APathSchemas: string = ''): Boolean;
+  var AMsg: AnsiString; const APathSchemas: string = ''; AModeloDF: TpcnModeloDF = moNFe): Boolean;
 begin
 {$IFDEF ACBrNFeOpenSSL}
-  Result := ValidaLibXML(AXML,AMsg,APathSchemas);
+  Result := ValidaLibXML(AXML,AMsg,APathSchemas, AModeloDF);
 {$ELSE}
-  Result := ValidaMSXML(AXML,AMsg,APathSchemas);
+  Result := ValidaMSXML(AXML,AMsg,APathSchemas, AModeloDF);
 {$ENDIF}
 end;
 

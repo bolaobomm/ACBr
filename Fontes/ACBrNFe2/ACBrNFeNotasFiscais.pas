@@ -41,6 +41,8 @@
 |*  - Doação do componente para o Projeto ACBr
 |* 25/07/2009: Gilson Carmo
 |*  - Envio do e-mail utilizando Thread
+|* 24/09/2012: Italo Jurisato Junior
+|*  - Alterações para funcionamento com NFC-e
 ******************************************************************************}
 {$I ACBr.inc}
 
@@ -182,6 +184,12 @@ begin
   FNFe.Dest.EnderDest.cPais := 1058;
   FNFe.Dest.EnderDest.nro   := 'SEM NUMERO';
 
+  if (TACBrNFe( TNotasFiscais( Collection ).ACBrNFe ).Configuracoes.Geral.ModeloDF = moNFCe)
+   then begin
+    FNFe.infNFe.Versao := 3;
+    FNFe.Ide.modelo    := 65;
+   end;
+
 end;
 
 destructor NotaFiscal.Destroy;
@@ -216,6 +224,12 @@ begin
      try
         LocNFeW.schema := TsPL005c;
         LocNFeW.Opcoes.GerarTXTSimultaneamente := SalvaTXT;
+
+       { if (TACBrNFe( TNotasFiscais( Collection ).ACBrNFe ).Configuracoes.Geral.ModeloDF = moNFCe) then
+           LocNFeW.Versao := NFCeEnvi
+        else
+           LocNFeW.Versao := NFenviNFe;  }
+
         LocNFeW.GerarXml;
         if DFeUtil.EstaVazio(CaminhoArquivo) then
            CaminhoArquivo := PathWithDelim(TACBrNFe( TNotasFiscais( Collection ).ACBrNFe ).Configuracoes.Geral.PathSalvar)+copy(NFe.infNFe.ID, (length(NFe.infNFe.ID)-44)+1, 44)+'-NFe.xml';
@@ -245,6 +259,13 @@ begin
      LocNFeW := TNFeW.Create(NFe);
      try
         LocNFeW.schema := TsPL005c;
+
+        
+{        if (TACBrNFe( TNotasFiscais( Collection ).ACBrNFe ).Configuracoes.Geral.ModeloDF = moNFCe) then
+           LocNFeW.Versao := NFCeEnvi
+        else
+           LocNFeW.Versao := NFenviNFe;  }
+
         LocNFeW.GerarXml;
         Stream.WriteString(LocNFeW.Gerador.ArquivoFormatoXML);
      finally
@@ -333,6 +354,12 @@ begin
  LocNFeW := TNFeW.Create(Self.NFe);
  try
     LocNFeW.schema := TsPL005c;
+
+{    if (TACBrNFe( TNotasFiscais( Collection ).ACBrNFe ).Configuracoes.Geral.ModeloDF = moNFCe) then 
+       LocNFeW.Versao := NFCeEnvi
+    else
+       LocNFeW.Versao := NFenviNFe;   }
+
     LocNFeW.GerarXml;
     Result := LocNFeW.Gerador.ArquivoFormatoXML;
  finally
@@ -372,6 +399,12 @@ begin
      LocNFeW := TNFeW.Create(Self.Items[i].NFe);
      try
         LocNFeW.schema := TsPL005c;
+
+{        if (FConfiguracoes.Geral.ModeloDF = moNFCe) then 
+           LocNFeW.Versao := NFCeEnvi
+        else
+           LocNFeW.Versao := NFenviNFe;    }
+
         LocNFeW.GerarXml;
         Self.Items[i].Alertas := LocNFeW.Gerador.ListaDeAlertas.Text;
 {$IFDEF ACBrNFeOpenSSL}
@@ -418,6 +451,12 @@ begin
     LocNFeW := TNFeW.Create(Self.Items[i].NFe);
     try
        LocNFeW.schema := TsPL006;
+
+{       if (FConfiguracoes.Geral.ModeloDF = moNFCe) then 
+          LocNFeW.Versao := NFCeEnvi
+       else
+          LocNFeW.Versao := NFenviNFe;   }
+
        LocNFeW.GerarXml;
        Self.Items[i].XML := LocNFeW.Gerador.ArquivoFormatoXML;
        Self.Items[i].Alertas := LocNFeW.Gerador.ListaDeAlertas.Text;
@@ -472,8 +511,9 @@ begin
    begin
      if pos('<Signature',Self.Items[i].XML) = 0 then
         Assinar;
-     if not(NotaUtil.Valida(('<NFe xmlns' + RetornarConteudoEntre(Self.Items[i].XML, '<NFe xmlns', '</NFe>')+ '</NFe>'), FMsg,Self.FConfiguracoes.Geral.PathSchemas)) then
-       raise EACBrNFeException.Create('Falha na validação dos dados da nota '+
+     if not(NotaUtil.Valida(('<NFe xmlns' + RetornarConteudoEntre(Self.Items[i].XML, '<NFe xmlns', '</NFe>')+ '</NFe>'),
+                            FMsg, Self.FConfiguracoes.Geral.PathSchemas, Self.FConfiguracoes.Geral.ModeloDF)) then
+        raise EACBrNFeException.Create('Falha na validação dos dados da nota '+
                                IntToStr(Self.Items[i].NFe.Ide.nNF)+sLineBreak+Self.Items[i].Alertas+FMsg);
   end;
 end;
@@ -562,7 +602,9 @@ var
   XMLNFe: TStringStream;
 begin
   try
-    XMLNFe := TStringStream.Create('');
+    Result := True;
+
+    XMLNFe := TStringStream.Create(AString);
     try
       XMLNFe.WriteString(AString);
       Result := LoadFromStream(XMLNFe);
@@ -611,6 +653,12 @@ begin
       try
         loNFeW.schema := TsPL006;
         loNFeW.Opcoes.GerarTXTSimultaneamente:=true;
+
+{        if (FConfiguracoes.Geral.ModeloDF= moNFCe) then
+           LoNFeW.Versao := NFCeEnvi
+        else
+           LoNFeW.Versao := NFenviNFe;  }
+
         loNFeW.GerarXml;
         loSTR.Text := loSTR.Text +
                       copy(loNFeW.Gerador.ArquivoFormatoTXT,14,length(loNFeW.Gerador.ArquivoFormatoTXT));

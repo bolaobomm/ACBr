@@ -132,8 +132,11 @@ type
     {$IFDEF ACBrNFeOpenSSL}
        FIniFinXMLSECAutomatico: boolean;
     {$ENDIF}
+    FModeloDF: TpcnModeloDF;
+    FModeloDFCodigo: Integer; //Verificar
     procedure SetFormaEmissao(AValue: TpcnTipoEmissao);
     function GetPathSalvar: String;
+    procedure SetModeloDF(AValue: TpcnModeloDF);
   public
     constructor Create(AOwner: TComponent); override ;
     function Save(AXMLName: String; AXMLFile: WideString; aPath: String = ''): Boolean;
@@ -148,6 +151,8 @@ type
     {$IFDEF ACBrNFeOpenSSL}
        property IniFinXMLSECAutomatico: Boolean read FIniFinXMLSECAutomatico write FIniFinXMLSECAutomatico;
     {$ENDIF}
+    property ModeloDF: TpcnModeloDF read FModeloDF write SetModeloDF default moNFe;
+    property ModeloDFCodigo: Integer read FModeloDFCodigo;
   end;
 
   TArquivosConf = class(TComponent)
@@ -263,6 +268,7 @@ begin
   {$IFDEF ACBrNFeOpenSSL}
      FIniFinXMLSECAutomatico:=True;
   {$ENDIF}
+  FModeloDF           := moNFe;
 end;
 
 function TGeralConf.GetPathSalvar: String;
@@ -314,6 +320,12 @@ procedure TGeralConf.SetFormaEmissao(AValue: TpcnTipoEmissao);
 begin
   FFormaEmissao := AValue;
   FFormaEmissaoCodigo := StrToInt(TpEmisToStr(FFormaEmissao));
+end;
+
+procedure TGeralConf.SetModeloDF(AValue: TpcnModeloDF);
+begin
+  FModeloDF := AValue;
+  FModeloDFCodigo := StrToInt(ModeloDFToStr(FModeloDF));
 end;
 
 { TWebServicesConf }
@@ -387,6 +399,7 @@ var
   hCryptProvider : HCRYPTPROV;
   XML : String;
 begin
+//  CoInitialize(nil); // PERMITE O USO DE THREAD
   if DFeUtil.EstaVazio( FNumeroSerie ) then
     raise EACBrNFeException.Create('Número de Série do Certificado Digital não especificado !');
 

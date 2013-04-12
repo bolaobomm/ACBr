@@ -39,6 +39,8 @@
 |*
 |* 16/12/2008: Wemerson Souto
 |*  - Doação do componente para o Projeto ACBr
+|* 24/09/2012: Italo Jurisato Junior
+|*  - Alterações para funcionamento com NFC-e
 ******************************************************************************}
 {$I ACBr.inc}
 
@@ -120,8 +122,8 @@ type
   public
     constructor Create(AOwner: TComponent); override;
     destructor Destroy; override;
-    function Enviar(ALote: Integer; Imprimir:Boolean = True): Boolean; overload;
-    function Enviar(ALote: String; Imprimir:Boolean = True): Boolean; overload;
+    function Enviar(ALote: Integer; Imprimir: Boolean = True; Sincrono: Boolean = False): Boolean; overload;
+    function Enviar(ALote: String; Imprimir: Boolean = True; Sincrono: Boolean = False): Boolean; overload;
     function Cancelamento(AJustificativa:WideString): Boolean;
     function Consultar: Boolean;
     function EnviarCartaCorrecao(idLote : Integer): Boolean;
@@ -328,12 +330,12 @@ begin
 
 end;
 
-function TACBrNFe.Enviar(ALote: Integer; Imprimir:Boolean = True): Boolean;
+function TACBrNFe.Enviar(ALote: Integer; Imprimir: Boolean = True; Sincrono: Boolean = False): Boolean;
 begin
-  Result := Enviar(IntToStr(ALote),Imprimir);
+  Result := Enviar(IntToStr(ALote),Imprimir, Sincrono);
 end;
 
-function TACBrNFe.Enviar(ALote: String; Imprimir: Boolean): Boolean;
+function TACBrNFe.Enviar(ALote: String; Imprimir: Boolean; Sincrono: Boolean): Boolean;
 var
   i: Integer;
 begin
@@ -355,7 +357,7 @@ begin
   NotasFiscais.Assinar;
   NotasFiscais.Valida;
 
-  Result := WebServices.Envia(ALote);
+  Result := WebServices.Envia(ALote, Sincrono);
 
   if DANFE <> nil then
   begin
@@ -428,15 +430,27 @@ begin
     try
       if EventoNFe.Evento.Items[i].InfEvento.nSeqEvento = 0 then
         EventoNFe.Evento.Items[i].infEvento.nSeqEvento := 1;
-      if trim(EventoNFe.Evento.Items[i].InfEvento.CNPJ) = '' then
-        EventoNFe.Evento.Items[i].InfEvento.CNPJ := self.NotasFiscais.Items[i].NFe.Emit.CNPJCPF;
-      if trim(EventoNFe.Evento.Items[i].InfEvento.chNfe) = '' then
-        EventoNFe.Evento.Items[i].InfEvento.chNfe := copy(self.NotasFiscais.Items[i].NFe.infNFe.ID, (length(self.NotasFiscais.Items[i].NFe.infNFe.ID)-44)+1, 44);
-      if trim(EventoNFe.Evento.Items[i].infEvento.detEvento.nProt) = '' then
-      begin
-        if EventoNFe.Evento.Items[i].infEvento.tpEvento = teCancelamento then
-          EventoNFe.Evento.Items[i].infEvento.detEvento.nProt := self.NotasFiscais.Items[i].NFe.procNFe.nProt;
-      end;
+      if self.NotasFiscais.Count > 0 then
+       begin
+         if trim(EventoNFe.Evento.Items[i].InfEvento.CNPJ) = '' then
+           EventoNFe.Evento.Items[i].InfEvento.CNPJ := self.NotasFiscais.Items[i].NFe.Emit.CNPJCPF;
+         if trim(EventoNFe.Evento.Items[i].InfEvento.chNfe) = '' then
+           EventoNFe.Evento.Items[i].InfEvento.chNfe := copy(self.NotasFiscais.Items[i].NFe.infNFe.ID, (length(self.NotasFiscais.Items[i].NFe.infNFe.ID)-44)+1, 44);
+         if trim(EventoNFe.Evento.Items[i].infEvento.detEvento.nProt) = '' then
+         begin
+           if EventoNFe.Evento.Items[i].infEvento.tpEvento = teCancelamento then
+            begin
+              EventoNFe.Evento.Items[i].infEvento.detEvento.nProt := self.NotasFiscais.Items[i].NFe.procNFe.nProt;
+              if trim(EventoNFe.Evento.Items[i].infEvento.detEvento.nProt) = '' then
+               begin
+                  WebServices.Consulta.NFeChave := EventoNFe.Evento.Items[i].InfEvento.chNfe;
+                  if not WebServices.Consulta.Executar then
+                    raise Exception.Create(WebServices.Consulta.Msg);
+                  EventoNFe.Evento.Items[i].infEvento.detEvento.nProt := WebServices.Consulta.Protocolo;
+               end; 
+            end;
+         end;
+       end;
     except
     end;
   end;
