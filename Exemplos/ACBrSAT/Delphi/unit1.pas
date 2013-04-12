@@ -34,6 +34,7 @@ type
     cbxIndRatISSQN : TComboBox ;
     cbxRegTribISSQN : TComboBox ;
     edLog : TEdit ;
+    edtPorta : TEdit ;
     seNumeroCaixa : TSpinEdit ;
     edPathDLL : TEdit ;
     edtEmitCNPJ : TEdit ;
@@ -107,6 +108,8 @@ type
     Limpar1: TMenuItem;
     wbVenda: TWebBrowser;
     wbCupom: TWebBrowser;
+    Label17: TLabel;
+    cbxRegTributario: TComboBox;
     procedure ACBrSAT1GetcodigoDeAtivacao(var Chave : String) ;
     procedure ACBrSAT1GetsignAC(var Chave : String) ;
     procedure ACBrSAT1Log(const AString : String) ;
@@ -162,6 +165,7 @@ var
   J : TpcnTipoAmbiente ;
   K : TpcnRegTribISSQN ;
   L : TpcnindRatISSQN ;
+  M : TpcnRegTrib ;
 begin
   cbxModelo.Items.Clear ;
   For I := Low(TACBrSATModelo) to High(TACBrSATModelo) do
@@ -178,6 +182,10 @@ begin
   cbxIndRatISSQN.Items.Clear ;
   For L := Low(TpcnindRatISSQN) to High(TpcnindRatISSQN) do
      cbxIndRatISSQN.Items.Add( GetEnumName(TypeInfo(TpcnindRatISSQN), integer(L) ) ) ;
+
+  cbxRegTributario.Items.Clear ;
+  For M := Low(TpcnRegTrib) to High(TpcnRegTrib) do
+     cbxRegTributario.Items.Add( GetEnumName(TypeInfo(TpcnRegTrib), integer(M) ) ) ;
 
   Application.OnException := TrataErros ;
 
@@ -218,6 +226,7 @@ begin
     Config.emit_CNPJ       := edtEmitCNPJ.Text;
     Config.emit_IE         := edtEmitIE.Text;
     Config.emit_IM         := edtEmitIM.Text;
+    Config.emit_cRegTrib      := TpcnRegTrib( cbxRegTributario.ItemIndex ) ;
     Config.emit_cRegTribISSQN := TpcnRegTribISSQN( cbxRegTribISSQN.ItemIndex ) ;
     Config.emit_indRatISSQN   := TpcnindRatISSQN( cbxIndRatISSQN.ItemIndex ) ;
   end
@@ -274,6 +283,7 @@ begin
     edtEmitCNPJ.Text := INI.ReadString('Emit','CNPJ','');
     edtEmitIE.Text   := INI.ReadString('Emit','IE','');
     edtEmitIM.Text   := INI.ReadString('Emit','IM','');
+    cbxRegTributario.ItemIndex := INI.ReadInteger('Emit','RegTributario',0);
     cbxRegTribISSQN.ItemIndex := INI.ReadInteger('Emit','RegTribISSQN',0);
     cbxIndRatISSQN.ItemIndex  := INI.ReadInteger('Emit','IndRatISSQN',0);
 
@@ -304,6 +314,7 @@ begin
     INI.WriteString('Emit','CNPJ',edtEmitCNPJ.Text);
     INI.WriteString('Emit','IE',edtEmitIE.Text);
     INI.WriteString('Emit','IM',edtEmitIM.Text);
+    INI.WriteInteger('Emit','RegTributario',cbxRegTributario.ItemIndex);
     INI.WriteInteger('Emit','RegTribISSQN',cbxRegTribISSQN.ItemIndex);
     INI.WriteInteger('Emit','IndRatISSQN',cbxIndRatISSQN.ItemIndex);
 
@@ -422,7 +433,6 @@ end;
 procedure TForm1.MenuItem5Click(Sender : TObject) ;
 Var
   strCod: String ;
-  Resp : String ;
 begin
   strCod := '';
   if not InputQuery('Trocar Código de Ativação',
@@ -433,9 +443,9 @@ begin
     1 – Código de Ativação
     2 – Código de Ativação de Emergência
   }
-  Resp := ACBrSAT1.TrocarCodigoDeAtivacao(1,strCod,strCod);
+  ACBrSAT1.TrocarCodigoDeAtivacao(1,strCod,strCod);
 
-  if pos( '18000', Resp ) > 0 then
+  if ACBrSAT1.Resposta.codigoDeRetorno = 1800 then
   begin
     edtCodigoAtivacao.Text := strCod;
     mResposta.Lines.Add('Código de Ativação trocado com sucesso');
@@ -476,8 +486,6 @@ begin
   with ACBrSAT1.CFe do
   begin
     ide.numeroCaixa := 1;
-
-    Emit.cRegTrib := RTRegimeNormal;
 
     Dest.CNPJCPF := '05481336000137';
     Dest.xNome := 'D.J. SYSTEM';
@@ -672,7 +680,7 @@ end;
 
 procedure TForm1.ImprimirExtratoVenda1Click(Sender: TObject);
 begin
-  ACBrSATExtratoESCPOS1.Device.Porta := 'COM7';
+  ACBrSATExtratoESCPOS1.Device.Porta := edtPorta.Text;
   ACBrSATExtratoESCPOS1.Device.Ativar;
   ACBrSATExtratoESCPOS1.Device.Serial.Purge;
   ACBrSATExtratoESCPOS1.ImprimeQRCode := True;
@@ -682,17 +690,17 @@ end;
 
 procedure TForm1.ImprimirExtratoVendaResumido1Click(Sender: TObject);
 begin
-  ACBrSATExtratoESCPOS1.Device.Porta := 'COM7';
+  ACBrSATExtratoESCPOS1.Device.Porta := edtPorta.Text;
   ACBrSATExtratoESCPOS1.Device.Ativar;
   ACBrSATExtratoESCPOS1.Device.Serial.Purge;
-  ACBrSATExtratoESCPOS1.ImprimeQRCode := True;  
+  ACBrSATExtratoESCPOS1.ImprimeQRCode := True;
 
   ACBrSAT1.ImprimirExtratoResumido;
 end;
 
 procedure TForm1.ImprimirExtratoCancelamento1Click(Sender: TObject);
 begin
-  ACBrSATExtratoESCPOS1.Device.Porta := 'COM7';
+  ACBrSATExtratoESCPOS1.Device.Porta := edtPorta.Text;
   ACBrSATExtratoESCPOS1.Device.Ativar;
   ACBrSATExtratoESCPOS1.Device.Serial.Purge;
   ACBrSATExtratoESCPOS1.ImprimeQRCode := True;  

@@ -2,10 +2,10 @@ object Form1: TForm1
   Left = 447
   Height = 413
   Top = 157
-  Width = 648
+  Width = 675
   Caption = 'SAT Teste - Projeto ACBr'
   ClientHeight = 393
-  ClientWidth = 648
+  ClientWidth = 675
   Menu = MainMenu1
   OnCreate = FormCreate
   LCLVersion = '1.1'
@@ -14,7 +14,7 @@ object Form1: TForm1
     Left = 0
     Height = 5
     Top = 184
-    Width = 648
+    Width = 675
     Align = alTop
     ResizeAnchor = akTop
   end
@@ -76,10 +76,10 @@ object Form1: TForm1
     Left = 0
     Height = 184
     Top = 0
-    Width = 648
+    Width = 675
     Align = alTop
     ClientHeight = 184
-    ClientWidth = 648
+    ClientWidth = 675
     TabOrder = 2
     object gpOperacao: TGroupBox
       Left = 1
@@ -147,25 +147,25 @@ object Form1: TForm1
       Left = 146
       Height = 182
       Top = 1
-      Width = 501
+      Width = 528
       Align = alClient
       Caption = 'Configuração'
       ClientHeight = 164
-      ClientWidth = 497
+      ClientWidth = 524
       TabOrder = 1
       object PageControl2: TPageControl
         Left = 0
         Height = 164
         Top = 0
-        Width = 497
-        ActivePage = tsDadosSwHouse
+        Width = 524
+        ActivePage = tsDadosEmit
         Align = alClient
-        TabIndex = 2
+        TabIndex = 1
         TabOrder = 0
         object tsDadosSAT: TTabSheet
           Caption = 'Dados do SAT CFe'
           ClientHeight = 136
-          ClientWidth = 489
+          ClientWidth = 516
           object Label9: TLabel
             Left = 23
             Height = 15
@@ -192,7 +192,7 @@ object Form1: TForm1
             OnClick = SbArqLogClick
           end
           object Label10: TLabel
-            Left = 262
+            Left = 224
             Height = 15
             Top = 15
             Width = 50
@@ -202,10 +202,10 @@ object Form1: TForm1
           end
           object edPathDLL: TEdit
             Cursor = crIBeam
-            Left = 262
+            Left = 224
             Height = 23
             Top = 32
-            Width = 208
+            Width = 131
             Anchors = [akTop, akLeft, akRight]
             TabOrder = 1
           end
@@ -258,7 +258,7 @@ object Form1: TForm1
             Value = 1
           end
           object cbxAmbiente: TComboBox
-            Left = 339
+            Left = 368
             Height = 23
             Top = 80
             Width = 132
@@ -267,18 +267,34 @@ object Form1: TForm1
             TabOrder = 5
           end
           object Label6: TLabel
-            Left = 339
+            Left = 368
             Height = 15
             Top = 64
             Width = 52
             Caption = 'Ambiente'
             ParentColor = False
           end
+          object Label7: TLabel
+            Left = 368
+            Height = 15
+            Top = 16
+            Width = 28
+            Caption = 'Porta'
+            ParentColor = False
+          end
+          object edtPorta: TEdit
+            Left = 368
+            Height = 23
+            Top = 32
+            Width = 132
+            TabOrder = 6
+            Text = 'COM7'
+          end
         end
         object tsDadosEmit: TTabSheet
           Caption = 'Dados Emitente'
           ClientHeight = 136
-          ClientWidth = 489
+          ClientWidth = 516
           object Label11: TLabel
             Left = 12
             Height = 15
@@ -328,16 +344,16 @@ object Form1: TForm1
             TabOrder = 2
           end
           object cbxRegTribISSQN: TComboBox
-            Left = 12
+            Left = 192
             Height = 23
             Top = 87
-            Width = 166
+            Width = 130
             ItemHeight = 15
             Style = csDropDownList
-            TabOrder = 3
+            TabOrder = 4
           end
           object Label15: TLabel
-            Left = 12
+            Left = 192
             Height = 15
             Top = 71
             Width = 103
@@ -345,21 +361,38 @@ object Form1: TForm1
             ParentColor = False
           end
           object cbxIndRatISSQN: TComboBox
-            Left = 192
+            Left = 336
             Height = 23
             Top = 87
             Width = 134
             ItemHeight = 15
             Style = csDropDownList
-            TabOrder = 4
+            TabOrder = 5
           end
           object Label16: TLabel
-            Left = 192
+            Left = 336
             Height = 15
             Top = 71
             Width = 73
             Caption = 'Ind.Rat.ISSQN'
             ParentColor = False
+          end
+          object Label17: TLabel
+            Left = 12
+            Height = 15
+            Top = 73
+            Width = 95
+            Caption = 'Regime Tributario'
+            ParentColor = False
+          end
+          object cbxRegTributario: TComboBox
+            Left = 12
+            Height = 23
+            Top = 87
+            Width = 166
+            ItemHeight = 15
+            Style = csDropDownList
+            TabOrder = 3
           end
         end
         object tsDadosSwHouse: TTabSheet
@@ -406,7 +439,7 @@ object Form1: TForm1
     Left = 0
     Height = 23
     Top = 370
-    Width = 648
+    Width = 675
     Panels = <    
       item
         Width = 200
@@ -464,6 +497,11 @@ object Form1: TForm1
       end
       object mImprimirExtratoVenda: TMenuItem
         Caption = 'Imprimir Extrato Venda'
+        OnClick = mImprimirExtratoVendaClick
+      end
+      object mImprimirExtratoVendaResumido: TMenuItem
+        Caption = 'Imprimir Extrato Venda Resumido'
+        OnClick = mImprimirExtratoVendaResumidoClick
       end
       object MenuItem10: TMenuItem
         Caption = '-'
@@ -474,6 +512,7 @@ object Form1: TForm1
       end
       object mImprimirExtratoCancelamento: TMenuItem
         Caption = 'Imprimir Extrato Cancelamento'
+        OnClick = mImprimirExtratoCancelamentoClick
       end
     end
     object MenuItem6: TMenuItem
@@ -518,6 +557,10 @@ object Form1: TForm1
         Caption = 'Desligar SAT'
         OnClick = mDesligarSATClick
       end
+    end
+    object mLimpar: TMenuItem
+      Caption = 'Limpar'
+      OnClick = mLimparClick
     end
   end
   object OpenDialog1: TOpenDialog

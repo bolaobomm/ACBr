@@ -331,8 +331,8 @@ object Form1: TForm1
             ParentColor = False
           end
           object Label15: TLabel
-            Left = 12
-            Top = 71
+            Left = 192
+            Top = 79
             Width = 94
             Height = 13
             Caption = 'Regime Trib. ISSQN'
@@ -340,11 +340,20 @@ object Form1: TForm1
             ParentColor = False
           end
           object Label16: TLabel
-            Left = 192
-            Top = 71
+            Left = 336
+            Top = 79
             Width = 72
             Height = 13
             Caption = 'Ind.Rat.ISSQN'
+            Color = clBtnFace
+            ParentColor = False
+          end
+          object Label17: TLabel
+            Left = 12
+            Top = 81
+            Width = 84
+            Height = 13
+            Caption = 'Regime Tributario'
             Color = clBtnFace
             ParentColor = False
           end
@@ -373,22 +382,31 @@ object Form1: TForm1
             TabOrder = 2
           end
           object cbxRegTribISSQN: TComboBox
-            Left = 12
-            Top = 87
-            Width = 166
-            Height = 21
-            Style = csDropDownList
-            ItemHeight = 13
-            TabOrder = 3
-          end
-          object cbxIndRatISSQN: TComboBox
             Left = 192
-            Top = 87
+            Top = 95
             Width = 134
             Height = 21
             Style = csDropDownList
             ItemHeight = 13
             TabOrder = 4
+          end
+          object cbxIndRatISSQN: TComboBox
+            Left = 336
+            Top = 95
+            Width = 134
+            Height = 21
+            Style = csDropDownList
+            ItemHeight = 13
+            TabOrder = 5
+          end
+          object cbxRegTributario: TComboBox
+            Left = 12
+            Top = 95
+            Width = 166
+            Height = 21
+            Style = csDropDownList
+            ItemHeight = 13
+            TabOrder = 3
           end
         end
         object tsDadosSwHouse: TTabSheet
@@ -511,7 +529,7 @@ object Form1: TForm1
         OnClick = mConsultarSATClick
       end
       object mConsultarNumeroSessao: TMenuItem
-        Caption = 'Consultar Numero Sess'#195#163'o'
+        Caption = 'Consultar Numero Sess'#227'o'
         OnClick = mConsultarNumeroSessaoClick
       end
     end

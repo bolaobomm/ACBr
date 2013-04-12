@@ -34,8 +34,14 @@ type
     cbxAmbiente : TComboBox ;
     cbxIndRatISSQN : TComboBox ;
     cbxRegTribISSQN : TComboBox ;
+    cbxRegTributario : TComboBox ;
     edLog : TEdit ;
+    edtPorta : TEdit ;
+    Label17 : TLabel ;
+    Label7 : TLabel ;
     MenuItem10 : TMenuItem ;
+    mLimpar : TMenuItem ;
+    mImprimirExtratoVendaResumido : TMenuItem ;
     mImprimirExtratoCancelamento : TMenuItem ;
     mImprimirExtratoVenda : TMenuItem ;
     seNumeroCaixa : TSpinEdit ;
@@ -128,6 +134,10 @@ type
     procedure mEnviarVendaClick(Sender : TObject) ;
     procedure mExtrairLogsClick(Sender : TObject) ;
     procedure mGerarVendaClick(Sender : TObject) ;
+    procedure mImprimirExtratoCancelamentoClick(Sender : TObject) ;
+    procedure mImprimirExtratoVendaClick(Sender : TObject) ;
+    procedure mImprimirExtratoVendaResumidoClick(Sender : TObject) ;
+    procedure mLimparClick(Sender : TObject) ;
     procedure SbArqLogClick(Sender : TObject) ;
   private
     procedure TrataErros(Sender : TObject ; E : Exception) ;
@@ -154,6 +164,7 @@ var
   J : TpcnTipoAmbiente ;
   K : TpcnRegTribISSQN ;
   L : TpcnindRatISSQN ;
+  M : TpcnRegTrib ;
 begin
   cbxModelo.Items.Clear ;
   For I := Low(TACBrSATModelo) to High(TACBrSATModelo) do
@@ -170,6 +181,10 @@ begin
   cbxIndRatISSQN.Items.Clear ;
   For L := Low(TpcnindRatISSQN) to High(TpcnindRatISSQN) do
      cbxIndRatISSQN.Items.Add( GetEnumName(TypeInfo(TpcnindRatISSQN), integer(L) ) ) ;
+
+  cbxRegTributario.Items.Clear ;
+  For M := Low(TpcnRegTrib) to High(TpcnRegTrib) do
+     cbxRegTributario.Items.Add( GetEnumName(TypeInfo(TpcnRegTrib), integer(M) ) ) ;
 
   Application.OnException := @TrataErros ;
 
@@ -210,6 +225,7 @@ begin
     Config.emit_CNPJ       := edtEmitCNPJ.Text;
     Config.emit_IE         := edtEmitIE.Text;
     Config.emit_IM         := edtEmitIM.Text;
+    Config.emit_cRegTrib      := TpcnRegTrib( cbxRegTributario.ItemIndex ) ;
     Config.emit_cRegTribISSQN := TpcnRegTribISSQN( cbxRegTribISSQN.ItemIndex ) ;
     Config.emit_indRatISSQN   := TpcnindRatISSQN( cbxIndRatISSQN.ItemIndex ) ;
   end
@@ -264,8 +280,9 @@ begin
     edtEmitCNPJ.Text := INI.ReadString('Emit','CNPJ','');
     edtEmitIE.Text   := INI.ReadString('Emit','IE','');
     edtEmitIM.Text   := INI.ReadString('Emit','IM','');
-    cbxRegTribISSQN.ItemIndex := INI.ReadInteger('Emit','RegTribISSQN',0);
-    cbxIndRatISSQN.ItemIndex  := INI.ReadInteger('Emit','IndRatISSQN',0);
+    cbxRegTributario.ItemIndex := INI.ReadInteger('Emit','RegTributario',0);
+    cbxRegTribISSQN.ItemIndex  := INI.ReadInteger('Emit','RegTribISSQN',0);
+    cbxIndRatISSQN.ItemIndex   := INI.ReadInteger('Emit','IndRatISSQN',0);
 
     edtSwHCNPJ.Text       := INI.ReadString('SwH','CNPJ','11111111111111');
     edtSwHAssinatura.Text := INI.ReadString('SwH','Assinatura',cAssinatura);
@@ -294,6 +311,7 @@ begin
     INI.WriteString('Emit','CNPJ',edtEmitCNPJ.Text);
     INI.WriteString('Emit','IE',edtEmitIE.Text);
     INI.WriteString('Emit','IM',edtEmitIM.Text);
+    INI.WriteInteger('Emit','RegTributario',cbxRegTributario.ItemIndex);
     INI.WriteInteger('Emit','RegTribISSQN',cbxRegTribISSQN.ItemIndex);
     INI.WriteInteger('Emit','IndRatISSQN',cbxIndRatISSQN.ItemIndex);
 
@@ -325,25 +343,12 @@ begin
 end;
 
 procedure TForm1.mCancelarUltimaVendaClick(Sender : TObject) ;
-var
-  sChave : string;
-  SL : TStringList;
 begin
-  sChave := '';
-  if not(InputQuery('SAT', 'Chave de acesso do CF-e-SAT', sChave)) then
-     exit;
-
   OpenDialog1.Filter := 'Arquivo XML|*.xml';
   if OpenDialog1.Execute then
   begin
-    SL := TStringList.Create;
-    try
-      SL.LoadFromFile( OpenDialog1.FileName );
-
-      ACBrSAT1.CancelarUltimaVenda(sChave, SL.Text );
-    finally
-      SL.Free;
-    end ;
+    ACBrSAT1.CFe.LoadFromFile( OpenDialog1.FileName );
+    ACBrSAT1.CancelarUltimaVenda;
   end ;
 end;
 
@@ -425,7 +430,6 @@ end;
 procedure TForm1.MenuItem5Click(Sender : TObject) ;
 Var
   strCod: String ;
-  Resp : String ;
 begin
   strCod := '';
   if not InputQuery('Trocar Código de Ativação',
@@ -436,9 +440,9 @@ begin
     1 – Código de Ativação
     2 – Código de Ativação de Emergência
   }
-  Resp := ACBrSAT1.TrocarCodigoDeAtivacao(1,strCod,strCod);
+  ACBrSAT1.TrocarCodigoDeAtivacao(1,strCod,strCod);
 
-  if pos( '18000', Resp ) > 0 then
+  if ACBrSAT1.Resposta.codigoDeRetorno = 1800 then
   begin
     edtCodigoAtivacao.Text := strCod;
     mResposta.Lines.Add('Código de Ativação trocado com sucesso');
@@ -446,23 +450,20 @@ begin
 end;
 
 procedure TForm1.mEnviarVendaClick(Sender : TObject) ;
-var
-  Resp, CupomSAT : AnsiString;
 begin
- if mVenda.Text = '' then
-   mGerarVenda.Click;
+  if mVenda.Text = '' then
+    mGerarVenda.Click;
 
- PageControl1.ActivePage := tsLog;
+  PageControl1.ActivePage := tsLog;
 
- Resp := ACBrSAT1.EnviarDadosVenda( mVenda.Text );
+  ACBrSAT1.EnviarDadosVenda( mVenda.Text );
 
- if Pos('Emitido com sucesso',Resp) > 0 then
- begin
-    CupomSAT := copy(Resp,54,length(Resp));
-    CupomSAT := copy(CupomSAT,1,Pos('|',CupomSAT) );
-    mCupom.Text := DecodeBase64(CupomSAT) ;
-    PageControl1.ActivePage := tsRecebido;
-  end;
+  if ACBrSAT1.Resposta.codigoDeRetorno = 6000 then
+   begin
+     mCupom.Text := DecodeBase64(ACBrSAT1.Resposta.RetornoLst[6]) ;
+     //LoadXML(mCupom, wbCupom);
+     PageControl1.ActivePage := tsRecebido;
+   end;
 end;
 
 procedure TForm1.mExtrairLogsClick(Sender : TObject) ;
@@ -489,15 +490,14 @@ begin
     with Det.Add do
     begin
       nItem := 1;
-      Prod.cProd := '05';
-      Prod.xProd := 'Produto com imposto errado';
-      Prod.CFOP := '0001';
-      Prod.uCom := 'l';
+      Prod.cProd := '01';
+      Prod.xProd := 'Teste de produto ACBrSAT';
+      Prod.CFOP := '5102';
+      Prod.uCom := 'UNID';
       Prod.qCom := 1;
       Prod.vUnCom := 1.5;
       Prod.vProd := 1.5;
       Prod.indRegra := irArredondamento;
-      Prod.vItem := 1.5;
 
       Imposto.ICMS.orig := oeEstrangeiraImportacaoDireta;
       Imposto.ICMS.CST := cst41;
@@ -525,23 +525,185 @@ begin
       Imposto.COFINSST.vCOFINS := 1;}
     end;
 
-    Total.ICMSTot.vProd := 1.5;
-    Total.ICMSTot.vPIS := 0.02;
+    with Det.Add do
+    begin
+      nItem := 2;
+      Prod.cProd := '02';
+      Prod.xProd := 'Produto numero 2 ACBrSAT';
+      Prod.CFOP := '5102';
+      Prod.uCom := 'UNID';
+      Prod.qCom := 1;
+      Prod.vUnCom := 2;
+      Prod.vProd := 2;
+      Prod.indRegra := irArredondamento;
+
+      Imposto.ICMS.orig := oeEstrangeiraImportacaoDireta;
+      Imposto.ICMS.CST := cst41;
+
+      Imposto.PIS.CST := pis99;
+      Imposto.PIS.vBC := 0;
+      Imposto.PIS.pPIS := 0;
+      Imposto.PIS.vPIS := 0;
+
+{     Imposto.PISST.vBC := 1;
+      Imposto.PISST.pPIS := 1;
+      Imposto.PISST.qBCProd := 1;
+      Imposto.PISST.vAliqProd := 1;
+      Imposto.PISST.vPIS := 1;}
+
+      Imposto.COFINS.CST := cof04;
+      Imposto.COFINS.vBC := 2;
+      Imposto.COFINS.pCOFINS := 10;
+      Imposto.COFINS.vCOFINS := 0.20;
+
+{     Imposto.COFINSST.vBC := 1;
+      Imposto.COFINSST.pCOFINS := 1;
+      Imposto.COFINSST.qBCProd := 1;
+      Imposto.COFINSST.vAliqProd := 1;
+      Imposto.COFINSST.vCOFINS := 1;}
+    end;
+
+    with Det.Add do
+    begin
+      nItem := 3;
+      Prod.cProd := '03';
+      Prod.xProd := 'Produto ACBrSAT com desconto';
+      Prod.CFOP := '5102';
+      Prod.uCom := 'UNID';
+      Prod.qCom := 2;
+      Prod.vUnCom := 3;
+      Prod.vProd := 6;
+      Prod.vDesc := 1;
+      Prod.indRegra := irArredondamento;
+
+      Imposto.ICMS.orig := oeEstrangeiraImportacaoDireta;
+      Imposto.ICMS.CST := cst41;
+
+      Imposto.PIS.CST := pis99;
+      Imposto.PIS.vBC := 0;
+      Imposto.PIS.pPIS := 0;
+      Imposto.PIS.vPIS := 0;
+
+{     Imposto.PISST.vBC := 1;
+      Imposto.PISST.pPIS := 1;
+      Imposto.PISST.qBCProd := 1;
+      Imposto.PISST.vAliqProd := 1;
+      Imposto.PISST.vPIS := 1;}
+
+      Imposto.COFINS.CST := cof04;
+      Imposto.COFINS.vBC := 5;
+      Imposto.COFINS.pCOFINS := 10;
+      Imposto.COFINS.vCOFINS := 0.5;
+
+{     Imposto.COFINSST.vBC := 1;
+      Imposto.COFINSST.pCOFINS := 1;
+      Imposto.COFINSST.qBCProd := 1;
+      Imposto.COFINSST.vAliqProd := 1;
+      Imposto.COFINSST.vCOFINS := 1;}
+    end;
+
+    with Det.Add do
+    begin
+      nItem := 4;
+      Prod.cProd := '04';
+      Prod.xProd := 'Produto 4 ACBrSAT';
+      Prod.CFOP := '5102';
+      Prod.uCom := 'UNID';
+      Prod.qCom := 4;
+      Prod.vUnCom := 2;
+      Prod.vProd := 8;
+      Prod.indRegra := irArredondamento;
+
+      Imposto.ICMS.orig := oeEstrangeiraImportacaoDireta;
+      Imposto.ICMS.CST := cst41;
+
+      Imposto.PIS.CST := pis99;
+      Imposto.PIS.vBC := 0;
+      Imposto.PIS.pPIS := 0;
+      Imposto.PIS.vPIS := 0;
+
+{     Imposto.PISST.vBC := 1;
+      Imposto.PISST.pPIS := 1;
+      Imposto.PISST.qBCProd := 1;
+      Imposto.PISST.vAliqProd := 1;
+      Imposto.PISST.vPIS := 1;}
+
+      Imposto.COFINS.CST := cof04;
+      Imposto.COFINS.vBC := 8;
+      Imposto.COFINS.pCOFINS := 10;
+      Imposto.COFINS.vCOFINS := 0.8;
+
+{     Imposto.COFINSST.vBC := 1;
+      Imposto.COFINSST.pCOFINS := 1;
+      Imposto.COFINSST.qBCProd := 1;
+      Imposto.COFINSST.vAliqProd := 1;
+      Imposto.COFINSST.vCOFINS := 1;}
+    end;
+
+    Total.ICMSTot.vProd := 16.5;
+    Total.ICMSTot.vPIS := 0.00;
     Total.ICMSTot.vPISST := 0;
-    Total.ICMSTot.vCOFINS := 0.02;
+    Total.ICMSTot.vCOFINS := 1.65;
     Total.ICMSTot.vCOFINSST := 0;
-    Total.vCFe := 1.5;
-    Total.vCFeLei12741 := 0.15;
+    Total.vCFe := 16.5;
+    Total.vCFeLei12741 := 2.15;
 
     with Pagto.Add do
     begin
-      cMP := mpDinheiro;
-      vMP := 1.5;
+      cMP := MPDinheiro;
+      vMP := 10;
     end;
+
+    with Pagto.Add do
+    begin
+      cMP := MPCartaodeCredito;
+      vMP := 10;
+    end;
+
+    InfAdic.infCpl := 'Acesse www.projetoacbr.com.br para obter mais;informações sobre o componente ACBrSAT;'+
+                      'Precisa de um PAF-ECF homologado?;Conheça o DJPDV - www.djpdv.com.br'
   end;
 
   mVenda.Lines.Text := ACBrSAT1.CFe.AsXMLString;
+
+  //LoadXML(mVenda, wbVenda);
   mResposta.Lines.Add('Venda Gerada');
+end;
+
+procedure TForm1.mImprimirExtratoCancelamentoClick(Sender : TObject) ;
+begin
+  ACBrSATExtratoESCPOS1.Device.Porta := edtPorta.Text;
+  ACBrSATExtratoESCPOS1.Device.Ativar;
+  ACBrSATExtratoESCPOS1.Device.Serial.Purge;
+  ACBrSATExtratoESCPOS1.ImprimeQRCode := True;
+
+  ACBrSAT1.ImprimirExtratoCancelamento;
+end;
+
+procedure TForm1.mImprimirExtratoVendaClick(Sender : TObject) ;
+begin
+  ACBrSATExtratoESCPOS1.Device.Porta := edtPorta.Text;
+  ACBrSATExtratoESCPOS1.Device.Ativar;
+  ACBrSATExtratoESCPOS1.Device.Serial.Purge;
+  ACBrSATExtratoESCPOS1.ImprimeQRCode := True;
+
+  ACBrSAT1.ImprimirExtrato;
+end;
+
+procedure TForm1.mImprimirExtratoVendaResumidoClick(Sender : TObject) ;
+begin
+  ACBrSATExtratoESCPOS1.Device.Porta := edtPorta.Text;
+  ACBrSATExtratoESCPOS1.Device.Ativar;
+  ACBrSATExtratoESCPOS1.Device.Serial.Purge;
+  ACBrSATExtratoESCPOS1.ImprimeQRCode := True;
+
+  ACBrSAT1.ImprimirExtratoResumido;
+end;
+
+procedure TForm1.mLimparClick(Sender : TObject) ;
+begin
+  mVenda.Clear;
+  mCupom.Clear;
 end;
 
 procedure TForm1.SbArqLogClick(Sender : TObject) ;
