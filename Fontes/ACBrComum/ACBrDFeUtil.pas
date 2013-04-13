@@ -590,7 +590,7 @@ end;
 
 class function DFeUtil.PathAplication: String;
 begin
-  Result := ExtractFilePath(Application.ExeName);
+  Result := ExtractFilePath({$IFNDEF Framework}Application.ExeName{$ELSE}ParamStr(0){$ENDIF});
 end;
 
 class function DFeUtil.CollateBr(Str: String): String;

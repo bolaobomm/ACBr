@@ -1800,7 +1800,7 @@ begin
        StrStream.CopyFrom(HTTP.Document, 0);
        FRetornoWS := TiraAcentos(ParseText(StrStream.DataString, True));
        if nfeAutorizacaoLote then
-          FRetWS := SeparaDados( FRetornoWS,'nfeAutorizacaoLoteResult');
+          FRetWS := SeparaDados( FRetornoWS,'nfeAutorizacaoLoteResult')
        else
           FRetWS := SeparaDados( FRetornoWS,'nfeRecepcaoLote2Result');
        StrStream.Free;

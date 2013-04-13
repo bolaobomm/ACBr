@@ -1360,26 +1360,26 @@ var
 begin
   Tipo := NotaUtil.IdentificaTipoSchema(AXML,I) ;
 
- if not DirectoryExists(DFeUtil.SeSenao(DFeUtil.EstaVazio(APathSchemas),PathWithDelim(ExtractFileDir(application.ExeName))+'Schemas',PathWithDelim(APathSchemas))) then
+ if not DirectoryExists(DFeUtil.SeSenao(DFeUtil.EstaVazio(APathSchemas),PathWithDelim(ExtractFileDir(DFeUtil.PathAplication))+'Schemas',PathWithDelim(APathSchemas))) then
     raise EACBrNFeException.Create('Diretório de Schemas não encontrado'+sLineBreak+
-                           DFeUtil.SeSenao(DFeUtil.EstaVazio(APathSchemas),PathWithDelim(ExtractFileDir(application.ExeName))+'Schemas',PathWithDelim(APathSchemas)));
+                           DFeUtil.SeSenao(DFeUtil.EstaVazio(APathSchemas),PathWithDelim(ExtractFileDir(DFeUtil.PathAplication))+'Schemas',PathWithDelim(APathSchemas)));
 
   if AModeloDF = moNFe then 
    begin
     case Tipo of
-      1: schema_filename := NotaUtil.SeSenao(NotaUtil.EstaVazio(APathSchemas),PathWithDelim(ExtractFileDir(application.ExeName))+
+      1: schema_filename := DFeUtil.SeSenao(DFeUtil.EstaVazio(APathSchemas),PathWithDelim(ExtractFileDir(DFeUtil.PathAplication))+
                                              'Schemas\',PathWithDelim(APathSchemas))+'nfe_v' + NFenviNFe + '.xsd';
-      2: schema_filename := NotaUtil.SeSenao(NotaUtil.EstaVazio(APathSchemas),PathWithDelim(ExtractFileDir(application.ExeName))+
+      2: schema_filename := DFeUtil.SeSenao(DFeUtil.EstaVazio(APathSchemas),PathWithDelim(ExtractFileDir(DFeUtil.PathAplication))+
                                              'Schemas\',PathWithDelim(APathSchemas))+'cancNFe_v' + NFecancNFe + '.xsd';
-      3: schema_filename := NotaUtil.SeSenao(NotaUtil.EstaVazio(APathSchemas),PathWithDelim(ExtractFileDir(application.ExeName))+
+      3: schema_filename := DFeUtil.SeSenao(DFeUtil.EstaVazio(APathSchemas),PathWithDelim(ExtractFileDir(DFeUtil.PathAplication))+
                                              'Schemas\',PathWithDelim(APathSchemas))+'inutNFe_v' + NFeinutNFe + '.xsd';
-      4: schema_filename := NotaUtil.SeSenao(NotaUtil.EstaVazio(APathSchemas),PathWithDelim(ExtractFileDir(application.ExeName))+
+      4: schema_filename := DFeUtil.SeSenao(DFeUtil.EstaVazio(APathSchemas),PathWithDelim(ExtractFileDir(DFeUtil.PathAplication))+
                                              'Schemas\',PathWithDelim(APathSchemas))+'envDPEC_v' + NFeEnvDPEC + '.xsd';
-      5: schema_filename := NotaUtil.SeSenao(NotaUtil.EstaVazio(APathSchemas),PathWithDelim(ExtractFileDir(application.ExeName))+
+      5: schema_filename := DFeUtil.SeSenao(DFeUtil.EstaVazio(APathSchemas),PathWithDelim(ExtractFileDir(DFeUtil.PathAplication))+
                                              'Schemas\',PathWithDelim(APathSchemas))+'envCCe_v' + NFeCCeNFe + '.xsd';
-      6: schema_filename := NotaUtil.SeSenao(NotaUtil.EstaVazio(APathSchemas),PathWithDelim(ExtractFileDir(application.ExeName))+
+      6: schema_filename := DFeUtil.SeSenao(DFeUtil.EstaVazio(APathSchemas),PathWithDelim(ExtractFileDir(DFeUtil.PathAplication))+
                                              'Schemas\',PathWithDelim(APathSchemas))+'envEventoCancNFe_v' + NFeEventoNFe + '.xsd';
-      7..10: schema_filename := NotaUtil.SeSenao(NotaUtil.EstaVazio(APathSchemas),PathWithDelim(ExtractFileDir(application.ExeName))+
+      7..10: schema_filename := DFeUtil.SeSenao(DFeUtil.EstaVazio(APathSchemas),PathWithDelim(ExtractFileDir(DFeUtil.PathAplication))+
                                                  'Schemas\',PathWithDelim(APathSchemas))+'envConfRecebto_v' + NFeEventoNFe + '.xsd';
       else schema_filename := '';
     end;
@@ -1387,19 +1387,19 @@ begin
   else 
    begin
     case Tipo of
-      1: schema_filename := NotaUtil.SeSenao(NotaUtil.EstaVazio(APathSchemas),PathWithDelim(ExtractFileDir(application.ExeName))+
+      1: schema_filename := DFeUtil.SeSenao(DFeUtil.EstaVazio(APathSchemas),PathWithDelim(ExtractFileDir(DFeUtil.PathAplication))+
                                              'Schemas\',PathWithDelim(APathSchemas))+'nfe_v' + NFCeEnvi + '.xsd';
-      2: schema_filename := NotaUtil.SeSenao(NotaUtil.EstaVazio(APathSchemas),PathWithDelim(ExtractFileDir(application.ExeName))+
+      2: schema_filename := DFeUtil.SeSenao(DFeUtil.EstaVazio(APathSchemas),PathWithDelim(ExtractFileDir(DFeUtil.PathAplication))+
                                              'Schemas\',PathWithDelim(APathSchemas))+'cancNFe_v' + NFCeCanc + '.xsd';
-      3: schema_filename := NotaUtil.SeSenao(NotaUtil.EstaVazio(APathSchemas),PathWithDelim(ExtractFileDir(application.ExeName))+
+      3: schema_filename := DFeUtil.SeSenao(DFeUtil.EstaVazio(APathSchemas),PathWithDelim(ExtractFileDir(DFeUtil.PathAplication))+
                                              'Schemas\',PathWithDelim(APathSchemas))+'inutNFe_v' + NFCeInut + '.xsd';
-      4: schema_filename := NotaUtil.SeSenao(NotaUtil.EstaVazio(APathSchemas),PathWithDelim(ExtractFileDir(application.ExeName))+
+      4: schema_filename := DFeUtil.SeSenao(DFeUtil.EstaVazio(APathSchemas),PathWithDelim(ExtractFileDir(DFeUtil.PathAplication))+
                                              'Schemas\',PathWithDelim(APathSchemas))+'envDPEC_v' + NFCeEnvDPEC + '.xsd';
-      5: schema_filename := NotaUtil.SeSenao(NotaUtil.EstaVazio(APathSchemas),PathWithDelim(ExtractFileDir(application.ExeName))+
+      5: schema_filename := DFeUtil.SeSenao(DFeUtil.EstaVazio(APathSchemas),PathWithDelim(ExtractFileDir(DFeUtil.PathAplication))+
                                              'Schemas\',PathWithDelim(APathSchemas))+'envCCe_v' + NFCeCCe + '.xsd';
-      6: schema_filename := NotaUtil.SeSenao(NotaUtil.EstaVazio(APathSchemas),PathWithDelim(ExtractFileDir(application.ExeName))+
+      6: schema_filename := DFeUtil.SeSenao(DFeUtil.EstaVazio(APathSchemas),PathWithDelim(ExtractFileDir(DFeUtil.PathAplication))+
                                              'Schemas\',PathWithDelim(APathSchemas))+'envEventoCancNFe_v' + NFCeEvento + '.xsd';
-      7..10: schema_filename := NotaUtil.SeSenao(NotaUtil.EstaVazio(APathSchemas),PathWithDelim(ExtractFileDir(application.ExeName))+
+      7..10: schema_filename := DFeUtil.SeSenao(DFeUtil.EstaVazio(APathSchemas),PathWithDelim(ExtractFileDir(DFeUtil.PathAplication))+
                                                  'Schemas\',PathWithDelim(APathSchemas))+'envConfRecebto_v' + NFCeEvento + '.xsd';
       else schema_filename := '';
     end;
