@@ -46,12 +46,8 @@ interface
 
 uses
   Classes, SysUtils, ACBrTEFDClass
-  {$IFNDEF CONSOLE}
-  {$IFDEF VisualCLX}
-     ,QControls
-  {$ELSE}
-     ,Controls
-  {$ENDIF}
+  {$IFNDEF NOGUI}
+   {$IFDEF VisualCLX} ,QControls {$ELSE} ,Controls {$ENDIF}
   {$ENDIF};
 
 
@@ -166,10 +162,7 @@ type
 
 implementation
 
-Uses ACBrUtil, dateutils, ACBrTEFD, Math, strutils
-{$IFNDEF CONSOLE}
-, Dialogs
-{$ENDIF};
+Uses ACBrUtil, dateutils, ACBrTEFD, Math, strutils;
 
 { TACBrTEFDRespTicketCar }
 

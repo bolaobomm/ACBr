@@ -2006,9 +2006,7 @@ function TACBrBoletoFCClass.GetDirLogo: String;
 begin
   if fDirLogo = '' then
      if not (csDesigning in Self.ComponentState) then
-        fDirLogo := ExtractFilePath(
-        {$IFNDEF CONSOLE} Application.ExeName {$ELSE} ParamStr(0) {$ENDIF}
-                                      ) + 'Logos' ;
+        fDirLogo := ExtractFilePath( ParamStr(0) ) + 'Logos' ;
 
   Result := fDirLogo ;
 end;
@@ -2022,9 +2020,7 @@ begin
 
    if wPath = '' then
       if not (csDesigning in Self.ComponentState) then
-         Result := ExtractFilePath(
-         {$IFNDEF CONSOLE} Application.ExeName {$ELSE} ParamStr(0) {$ENDIF}
-                                      ) ;
+         Result := ExtractFilePath(ParamStr(0)) ;
 
    Result := trim(Result + fNomeArquivo);
 end;

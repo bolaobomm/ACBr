@@ -94,11 +94,7 @@ unit ACBrECFDataRegis ;
 
 interface
 uses ACBrECFClass, ACBrDevice, ACBrUtil, ACBrConsts,
-     Classes
-     {$IFNDEF CONSOLE}
-       {$IFDEF VisualCLX}, QDialogs, QControls, QForms {$ENDIF}
-       {$IFDEF VCL}, Dialogs, Controls, Forms {$ENDIF}
-     {$ENDIF} ;
+     Classes;
 
       //CONFORME MANUAL PARA VERSOES X.03
 const
@@ -348,12 +344,7 @@ begin
   fsNumSerie  := '' ;
   fsNumECF    := '' ;
   fsArqINI    := '' ;
-
-  {$IFNDEF CONSOLE}
-    fsEXEName := Application.ExeName ;
-  {$ELSE}
-    fsEXEName := ParamStr(0) ;
-  {$ENDIF}
+  fsEXEName   := ParamStr(0) ;
 
   {Coloquei espaco para fsMensagem para que caso a primeira mensagem seja um
    espaco em branco ocorra a programacao da impressora (Anderson) }
@@ -1837,11 +1828,8 @@ begin
   begin
      Msg := ACBrStr( 'Arquivo '+fsArqPrgBcoTXT+' não encontrado. '+
                      'Valores padrões serão utilizados.' ) ;
-     {$IFNDEF CONSOLE}
-       MessageDlg(Msg,mtWarning,[mbOk],0);
-     {$ELSE}
-       writeln(Msg);
-     {$ENDIF}
+     raise EACBrECFErro.Create( Msg );
+
      fsArqPrgBcoTXT := '' ;
   end ;
 

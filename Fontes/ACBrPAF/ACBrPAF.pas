@@ -48,11 +48,9 @@ interface
 
 uses
    SysUtils, Classes, DateUtils,
-   {$IFNDEF CONSOLE}
-   {$IFDEF FPC}
-      LResources,
-   {$ENDIF}
-   {$IFDEF CLX}QForms, {$ELSE} Forms, {$ENDIF}
+   {$IFNDEF NOGUI}
+    {$IFDEF FPC} LResources,{$ENDIF}
+    {$IFDEF CLX} QForms, {$ELSE} Forms, {$ENDIF}
    {$ENDIF}
    ACBrTXTClass, ACBrUtil, ACBrEAD, ACBrAAC,
    ACBrPAF_B, ACBrPAF_B_Class,
@@ -839,11 +837,11 @@ begin
   Result := True;
 end;
 
-{$IFNDEF CONSOLE}
-{$ifdef FPC}
+{$IFNDEF NOGUI}
+{$IFDEF FPC}
 initialization
    {$I ACBrPAF.lrs}
-{$endif}
-{$endif}
+{$ENDIF}
+{$ENDIF}
 
 end.

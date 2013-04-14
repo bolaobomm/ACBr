@@ -57,10 +57,7 @@ uses ACBrBase, ACBrConsts,
          ,BaseUnix
        {$endif}
      {$ENDIF}
-     {$IFNDEF COMPILER6_UP} ,ACBrD5, Windows {$ENDIF} 
-     {$IFNDEF CONSOLE}
-       {$IFDEF VisualCLX} ,QForms {$ELSE} ,Forms {$ENDIF}
-     {$ENDIF} ;
+     {$IFNDEF COMPILER6_UP} ,ACBrD5, Windows {$ENDIF};
 
 const
    cRFDAtoCotepe  = 'PC5207 01.00.00' ;
@@ -1226,9 +1223,7 @@ function TACBrRFD.GetDirRFD: String;
 begin
   if fsDirRFD = '' then
      if not (csDesigning in Self.ComponentState) then
-        fsDirRFD := ExtractFilePath(
-        {$IFNDEF CONSOLE} Application.ExeName {$ELSE} ParamStr(0) {$ENDIF}
-                                      ) + 'RFD' ;
+        fsDirRFD := ExtractFilePath( ParamStr(0) ) + 'RFD' ;
 
   Result := fsDirRFD ;
 end;

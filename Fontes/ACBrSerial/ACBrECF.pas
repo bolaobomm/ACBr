@@ -41,12 +41,12 @@ Unit ACBrECF ;
 interface
 uses ACBrBase, ACBrDevice, ACBrECFClass, ACBrPAFClass, ACBrRFD, ACBrAAC, ACBrEAD,{Units da ACBr}
      SysUtils , ACBrConsts, Classes
-     {$IFNDEF CONSOLE}
+     {$IFNDEF NOGUI}
         {$IFDEF VisualCLX}, QControls, QForms, QDialogs, QGraphics, QStdCtrls{$ENDIF}
         {$IFDEF VCL}, Controls, Forms, Dialogs, Graphics, StdCtrls {$ENDIF}
      {$ENDIF} ;
 {$IFDEF FRAMEWORK}
-{$UNDEF CONSOLE}
+{$UNDEF NOGUI}
 {$ENDIF}
 const
    CACBrECF_Versao = '1.0.0' ;
@@ -114,7 +114,7 @@ TACBrECF = class( TACBrComponent )
     fsRegistrouRFDCNF : Boolean ;
     fsSubTotalPagto :Double;
     fsIndiceGerencial : Integer ;
-    {$IFNDEF CONSOLE}
+    {$IFNDEF NOGUI}
       {$IFNDEF FRAMEWORK}
       fsFormMsgColor : TColor ;
       fsFormMsgFont  : TFont ;
@@ -286,7 +286,7 @@ TACBrECF = class( TACBrComponent )
     procedure SetLinhasEntreCupons(const AValue: Integer);
     function GetMaxLinhasBuffer: Integer;
     procedure SetMaxLinhasBuffer(const AValue: Integer);
-    {$IFNDEF CONSOLE}
+    {$IFNDEF NOGUI}
       {$IFNDEF FRAMEWORK}
       procedure SetFormMsgFonte(const AValue: TFont);
       procedure SetMemoBobina(const AValue: TMemo);
@@ -722,7 +722,7 @@ TACBrECF = class( TACBrComponent )
      //--- False se não coicidem
     function DecodificaTexto(Operacao: Char; Texto: String; var Resposta: String): Boolean;
 
-    {$IFNDEF CONSOLE}
+    {$IFNDEF NOGUI}
      Procedure MemoLeParams ;
      Property MemoItens : Integer read fsMemoItens write fsMemoItens ;
     {$ENDIF}
@@ -846,7 +846,7 @@ TACBrECF = class( TACBrComponent )
      property PaginaDeCodigo : Word read GetPaginaDeCodigoClass
                  write SetPaginaDeCodigoClass;
 
-    {$IFNDEF CONSOLE}
+    {$IFNDEF NOGUI}
     {$IFNDEF FRAMEWORK}
        property FormMsgFonte : TFont read  fsFormMsgFont  write SetFormMsgFonte ;
        property FormMsgColor: TColor read  fsFormMsgColor write fsFormMsgColor ;
@@ -1000,7 +1000,7 @@ TACBrECF = class( TACBrComponent )
      property DecimaisQtd : Integer read GetDecimaisQtd
         write SetDecimaisQtd default 3 ;
 
-    {$IFNDEF CONSOLE}
+    {$IFNDEF NOGUI}
     {$IFNDEF FRAMEWORK}
        property MemoBobina : TMemo    read fsMemoBobina write SetMemoBobina ;
      {$ENDIF}
@@ -1062,7 +1062,7 @@ begin
   {$ENDIF}
   fsDevice.Porta := 'COM1';
 
-  {$IFNDEF CONSOLE}
+  {$IFNDEF NOGUI}
   {$IFNDEF FRAMEWORK}
     fsFormMsgFont  := TFont.create ;
     fsFormMsgColor :=  {$IFDEF VisualCLX} clNormalHighlight {$ELSE}
@@ -1140,7 +1140,7 @@ begin
 
   FreeAndNil( fsDevice ) ;
 
-  {$IFNDEF CONSOLE}
+  {$IFNDEF NOGUI}
   {$IFNDEF FRAMEWORK}
     fsFormMsgFont.Free ;
   {$ENDIF}
@@ -1333,13 +1333,13 @@ begin
   //Se o ecf foi desligado durante o cupom, continua do ultimo
   if (Estado in [estVenda, estPagamento]) then
   begin
-     {$IFNDEF CONSOLE}
+     {$IFNDEF NOGUI}
      fsMemoItens     := NumUltItem;
      {$ENDIF}
      fsSubTotalPagto := Subtotal;
   end;
 
-  {$IFNDEF CONSOLE}
+  {$IFNDEF NOGUI}
    if MemoAssigned then
    begin
       MemoLeParams ;
@@ -1678,7 +1678,7 @@ begin
   fsECF.DescricaoGrande := AValue ;
 end;
 
-{$IFNDEF CONSOLE}
+{$IFNDEF NOGUI}
 {$IFNDEF FRAMEWORK}
   procedure TACBrECF.SetFormMsgFonte(const AValue: TFont);
   begin
@@ -1762,7 +1762,7 @@ begin
             'Data / Hora: '+wStrDate ;
 
      Msg := ACBrStr(Msg);
-     {$IFNDEF CONSOLE}
+     {$IFNDEF NOGUI}
      {$IFNDEF FRAMEWORK}
        MessageDlg(Msg, mtInformation ,[mbOk],0) ;
      {$ELSE}
@@ -2260,7 +2260,7 @@ begin
         raise;
   end;
 
-  {$IFNDEF CONSOLE}
+  {$IFNDEF NOGUI}
    if MemoAssigned then
    begin
       fsMemoOperacao := 'abrecupom' ;
@@ -2318,7 +2318,7 @@ begin
   SubTot    := 0 ;
   Docto     := '' ;
 
-  if RFDAtivo {$IFNDEF CONSOLE}or MemoAssigned {$ENDIF} then
+  if RFDAtivo {$IFNDEF NOGUI}or MemoAssigned {$ENDIF} then
   begin
      OldEstado := Estado ;
      SubTot    := Subtotal ;
@@ -2347,7 +2347,7 @@ begin
   fsMensagemRodape := '' ;
   Consumidor.Zera ;
 
-  {$IFNDEF CONSOLE}
+  {$IFNDEF NOGUI}
    if MemoAssigned then
    begin
       fsMemoOperacao := 'cancelacupom' ;
@@ -2408,7 +2408,7 @@ Var
   AliquotaECF : String ;
   Aliquota    : TACBrECFAliquota ;
   Tratado     : Boolean;
-{$IFNDEF CONSOLE}
+{$IFNDEF NOGUI}
   Linha, Buffer, StrQtd, StrPreco, StrDescAcre : String ;
   Total, PorcDesc, ValDesc : Double ;
 {$ENDIF}
@@ -2496,7 +2496,7 @@ begin
 
   DoAtualizarValorGT;
 
-  {$IFNDEF CONSOLE}
+  {$IFNDEF NOGUI}
    if MemoAssigned then
    begin
       fsMemoOperacao := 'vendeitem' ;
@@ -2610,7 +2610,7 @@ end;
 
 procedure TACBrECF.DescontoAcrescimoItemAnterior( ValorDescontoAcrescimo: Double;
   DescontoAcrescimo: String; TipoDescontoAcrescimo : String; NumItem : Integer);
-{$IFNDEF CONSOLE}
+{$IFNDEF NOGUI}
 Var
   StrDescAcre : String ;
 {$ENDIF}
@@ -2645,7 +2645,7 @@ begin
   if DescontoAcrescimo <> 'D' then
      DoAtualizarValorGT ;
 
-  {$IFNDEF CONSOLE}
+  {$IFNDEF NOGUI}
    if MemoAssigned then
    begin
       fsMemoOperacao := 'descontoacrescimoitemanterior' ;
@@ -2705,7 +2705,7 @@ begin
         raise;
   end;
 
-  {$IFNDEF CONSOLE}
+  {$IFNDEF NOGUI}
    if MemoAssigned then
    begin
       fsMemoOperacao := 'cancelaitemvendido' ;
@@ -2799,7 +2799,7 @@ begin
 
   fsECF.CancelaItemVendidoParcial(NumItem,Quantidade);
 
-  {$IFNDEF CONSOLE}
+  {$IFNDEF NOGUI}
    if MemoAssigned then
    begin
       fsMemoOperacao := 'cancelaitemvendidoparcial' ;
@@ -2849,7 +2849,7 @@ begin
         raise;
   end;
 
-  {$IFNDEF CONSOLE}
+  {$IFNDEF NOGUI}
    if MemoAssigned then
       MemoEfetuaPagamento(FPG.Descricao, Valor, Observacao);
   {$ENDIF}
@@ -2932,7 +2932,7 @@ begin
         raise;
   end;
 
-  {$IFNDEF CONSOLE}
+  {$IFNDEF NOGUI}
    if MemoAssigned then
    begin
       fsMemoOperacao := 'fechacupom' ;
@@ -3183,7 +3183,7 @@ begin
   Docto  := -1 ;
   Result := 0;
 
-  {$IFNDEF CONSOLE}
+  {$IFNDEF NOGUI}
    if MemoAssigned  then
    begin
       Docto := StrToInt(NumCupom) ;
@@ -3204,7 +3204,7 @@ begin
         raise;
   end;
 
-  {$IFNDEF CONSOLE}
+  {$IFNDEF NOGUI}
    if MemoAssigned then
    begin
       fsMemoOperacao := 'EstornaCCD' ;
@@ -3278,7 +3278,7 @@ begin
         raise;
   end;
 
-  {$IFNDEF CONSOLE}
+  {$IFNDEF NOGUI}
    if MemoAssigned then
    begin
       fsMemoOperacao := 'abrenaofiscal' ;
@@ -3329,7 +3329,7 @@ begin
 
   DoAtualizarValorGT ;
 
-  {$IFNDEF CONSOLE}
+  {$IFNDEF NOGUI}
    if MemoAssigned then
    begin
       Inc( fsMemoItens ) ;
@@ -3359,7 +3359,7 @@ begin
   SubTot    := 0 ;
   Docto     := '' ;
 
-  {$IFNDEF CONSOLE}
+  {$IFNDEF NOGUI}
   if MemoAssigned  then
   begin
      OldEstado := Estado ;
@@ -3382,7 +3382,7 @@ begin
         raise;
   end;
 
-  {$IFNDEF CONSOLE}
+  {$IFNDEF NOGUI}
    if MemoAssigned then
    begin
       fsMemoOperacao := 'CancelaNaoFiscal' ;
@@ -3445,7 +3445,7 @@ begin
       raise;
   end;
 
-  {$IFNDEF CONSOLE}
+  {$IFNDEF NOGUI}
    if MemoAssigned then
    begin
      fsMemoOperacao := 'CancelaItemNaoFiscal' ;
@@ -3498,7 +3498,7 @@ begin
         raise;
   end;
 
-  {$IFNDEF CONSOLE}
+  {$IFNDEF NOGUI}
    if MemoAssigned then
       MemoEfetuaPagamento(FPG.Descricao, Valor, Observacao);
   {$ENDIF}
@@ -3548,7 +3548,7 @@ begin
   if DescontoAcrescimo > 0 then
      DoAtualizarValorGT ;
 
-  {$IFNDEF CONSOLE}
+  {$IFNDEF NOGUI}
    if MemoAssigned then
       MemoSubtotaliza( DescontoAcrescimo );
   {$ENDIF}
@@ -3589,7 +3589,7 @@ begin
   fsMensagemRodape := '' ;
   Consumidor.Zera ;
 
-  {$IFNDEF CONSOLE}
+  {$IFNDEF NOGUI}
    if MemoAssigned then
    begin
       fsMemoOperacao := 'fechanaofiscal' ;
@@ -3623,7 +3623,7 @@ begin
 end;
 
 procedure TACBrECF.FechaRelatorio;
-{$IFNDEF CONSOLE}
+{$IFNDEF NOGUI}
  Var OldEstado : TACBrECFEstado ;
 {$ENDIF}
 Var
@@ -3631,7 +3631,7 @@ Var
 begin
   ComandoLOG := 'FechaRelatorio' ;
 
-  {$IFNDEF CONSOLE}
+  {$IFNDEF NOGUI}
   OldEstado := estDesconhecido ;
    if MemoAssigned then
       OldEstado := Estado ;
@@ -3651,7 +3651,7 @@ begin
         raise;
   end;
 
-  {$IFNDEF CONSOLE}
+  {$IFNDEF NOGUI}
    if MemoAssigned then
    begin
       if OldEstado <> Estado then
@@ -3672,7 +3672,7 @@ begin
   ComandoLOG := 'PulaLinhas( '+IntToStr(NumLinhas)+' ) ';
   fsECF.PulaLinhas( NumLinhas );
 
-  {$IFNDEF CONSOLE}
+  {$IFNDEF NOGUI}
    if MemoAssigned then
    begin
       fsMemoOperacao := 'pulalinhas' ;
@@ -3971,7 +3971,7 @@ begin
         raise;
   end;
 
-  {$IFNDEF CONSOLE}
+  {$IFNDEF NOGUI}
    if MemoAssigned then
    begin
       fsMemoOperacao := 'leiturax' ;
@@ -4073,7 +4073,7 @@ begin
   finally
       if Est <> Estado then
       begin
-        {$IFNDEF CONSOLE}
+        {$IFNDEF NOGUI}
          if MemoAssigned then
          begin
             fsMemoOperacao := 'reducaoz' ;
@@ -4381,7 +4381,7 @@ begin
         raise;
   end;
 
-  {$IFNDEF CONSOLE}
+  {$IFNDEF NOGUI}
    if MemoAssigned then
    begin
       fsMemoOperacao := 'abrerelatoriogerencial' ;
@@ -4626,7 +4626,7 @@ begin
      end ;
    end ;
 
-  {$IFNDEF CONSOLE}
+  {$IFNDEF NOGUI}
    if MemoAssigned then
    begin
       fsMemoOperacao := 'linharelatoriogerencial' ;
@@ -4703,7 +4703,7 @@ begin
         raise;
   end;
 
-  {$IFNDEF CONSOLE}
+  {$IFNDEF NOGUI}
    if MemoAssigned then
    begin
       fsMemoOperacao := 'abrecupomvinculado' ;
@@ -4731,7 +4731,7 @@ begin
                     CodComprovanteNaoFiscal+' , '+FloatToStr(Valor)+' )';
   fsECF.AbreCupomVinculado( COO, CodFormaPagto, CodComprovanteNaoFiscal, Valor);
 
-  {$IFNDEF CONSOLE}
+  {$IFNDEF NOGUI}
    if MemoAssigned then
    begin
       fsMemoOperacao := 'abrecupomvinculado' ;
@@ -4785,7 +4785,7 @@ begin
      end ;
    end ;
 
-  {$IFNDEF CONSOLE}
+  {$IFNDEF NOGUI}
    if MemoAssigned then
    begin
       fsMemoOperacao := 'linhacupomvinculado' ;
@@ -4869,7 +4869,7 @@ begin
      if ATimeOut <> 0 then
         TimeOut := ATimeOut ;
 
-     {$IFNDEF CONSOLE}
+     {$IFNDEF NOGUI}
      {$IFNDEF FRAMEWORK}
        fsECF.FormMsgControla := False ;
        fsECF.FormMsgDoProcedure( DoAcharPorta, ord('C') ) ;
@@ -4888,7 +4888,7 @@ begin
 
      Result := (Porta <> '') ;
   finally
-     {$IFNDEF CONSOLE}
+     {$IFNDEF NOGUI}
      {$IFNDEF FRAMEWORK}
        fsECF.FormMsgControla := True ;
      {$ENDIF}
@@ -4922,7 +4922,7 @@ procedure TACBrECF.DoAcharPorta ;
            Msg := Msg {$IFDEF VisualCLX}+sLineBreak{$ENDIF} +
                   ' Pressione <C> para cancelar' ;
 
-        {$IFNDEF CONSOLE}
+        {$IFNDEF NOGUI}
         {$IFNDEF FRAMEWORK}
           fsECF.FormMsgPinta( Msg ) ;
           if not (fsECF.FormMsgEstado = fmsProcessando) then
@@ -4950,7 +4950,7 @@ begin
 
         I := 0 ;
         while (I < SL.Count) and (not Achou)
-          {$IFNDEF CONSOLE}{$IFNDEF FRAMEWORK} and (fsECF.FormMsgEstado = fmsProcessando) {$ENDIF}{$ENDIF} do
+          {$IFNDEF NOGUI}{$IFNDEF FRAMEWORK} and (fsECF.FormMsgEstado = fmsProcessando) {$ENDIF}{$ENDIF} do
         begin
            Porta := SL[I] ;
            Achou := AtivarECF ;
@@ -4966,7 +4966,7 @@ begin
   if not Achou then
   begin
      sleep(200) ;
-     {$IFNDEF CONSOLE}
+     {$IFNDEF NOGUI}
      {$IFNDEF FRAMEWORK}
        if fsECF.FormMsgEstado = fmsAbortado then
           Porta := 'abortado'
@@ -4977,7 +4977,7 @@ begin
   end ;
 end;
 
-{$IFNDEF CONSOLE}
+{$IFNDEF NOGUI}
 {$IFNDEF FRAMEWORK}
  procedure TACBrECF.SetMemoBobina(const AValue: TMemo);
  begin
@@ -5298,7 +5298,7 @@ procedure TACBrECF.Notification(AComponent: TComponent; Operation: TOperation);
 begin
   inherited Notification(AComponent, Operation);
 
-  {$IFNDEF CONSOLE}
+  {$IFNDEF NOGUI}
   {$IFNDEF FRAMEWORK}
    if (Operation = opRemove) and (fsMemoBobina <> nil) and (AComponent is TMemo) then
    begin
@@ -6442,7 +6442,7 @@ begin
 end;
 
 {$IFDEF FRAMEWORK}
-{$DEFINE CONSOLE}
+{$DEFINE NOGUI}
 {$ENDIF}
 end.
 

@@ -756,7 +756,7 @@ begin
                  end ;
               end ;
 
-              {$IFNDEF CONSOLE}
+              {$IFNDEF NOGUI}
                Application.ProcessMessages ;
               {$ENDIF}
               sleep(100) ;

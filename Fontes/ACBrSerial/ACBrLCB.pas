@@ -55,7 +55,7 @@ unit ACBrLCB;
 
 interface
 uses ACBrBase, ACBrDevice  {Units da ACBr}
-     {$IFNDEF CONSOLE}
+     {$IFNDEF NOGUI}
        {$IFDEF VisualCLX}, QExtCtrls {$ELSE}, ExtCtrls {$ENDIF}
      {$ENDIF}
      ,SysUtils, Classes ;
@@ -66,7 +66,7 @@ type
 TACBrLCB = class( TACBrComponent )
   private
     fsDevice  : TACBrDevice ;   { SubComponente ACBrDevice }
-    {$IFNDEF CONSOLE}
+    {$IFNDEF NOGUI}
       fsTimer: TTimer;
     {$ELSE}
       fsTimer: TACBrThreadTimer;
@@ -180,7 +180,7 @@ begin
   fsDevice.Serial.DeadlockTimeout := 1000 ;
 
   { Timer para monitorar a Porta Serial }
-  {$IFNDEF CONSOLE}
+  {$IFNDEF NOGUI}
     fsTimer := TTimer.Create(self) ;
   {$ELSE}
     fsTimer := TACBrThreadTimer.Create ;   

@@ -37,10 +37,7 @@ unit ACBrECFFiscNET ;
 
 interface
 uses ACBrECFClass, ACBrDevice, ACBrUtil,
-     Classes
-     {$IFNDEF CONSOLE}
-       {$IFDEF VisualCLX}, QForms {$ELSE}, Forms {$ENDIF}
-     {$ENDIF};
+     Classes;
 type
 
 TACBrECFFiscNETComando = class
@@ -2655,9 +2652,7 @@ begin
      }
      if (Resp = -4) or (Resp = -5) then
      begin
-        IniFile := ExtractFilePath(
-             {$IFNDEF CONSOLE} Application.ExeName {$ELSE} ParamStr(0) {$ENDIF}
-                                       )+'ELGIN.ini' ;
+        IniFile := ExtractFilePath( ParamStr(0) )+'ELGIN.ini' ;
         Ini := TIniFile.Create( IniFile );
         try
            Ini.WriteString('Sistema','Porta',Porta ) ;

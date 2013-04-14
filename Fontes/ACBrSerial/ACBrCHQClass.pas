@@ -46,11 +46,7 @@ interface
 uses ACBrDevice, ACBrECF,
      Classes,
      {$IFDEF COMPILER6_UP} Types, {$ELSE} ACBrD5, Windows, {$ENDIF}
-     Contnrs
-     {$IFNDEF CONSOLE}
-       {$IFDEF VisualCLX}, QForms, QDialogs {$ENDIF}
-       {$IFDEF VCL}, Forms, Dialogs {$ENDIF}
-     {$ENDIF};
+     Contnrs;
 
 { Classe para Modelo de Cheque, com definicao para o posicionamento dos campos}
 type
@@ -396,9 +392,7 @@ begin
      end ;
 
      if fsArquivoBemaFiINI = '' then
-        ArqTemp := ExtractFilePath(
-             {$IFNDEF CONSOLE} Application.ExeName {$ELSE} ParamStr(0) {$ENDIF}
-                                    )+'BemaFi32.ini'
+        ArqTemp := ExtractFilePath( ParamStr(0) )+'BemaFi32.ini'
      else
         ArqTemp := fsArquivoBemaFiINI ;
 

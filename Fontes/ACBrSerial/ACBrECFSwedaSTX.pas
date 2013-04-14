@@ -36,11 +36,7 @@
 unit ACBrECFSwedaSTX ;
 
 interface
-uses ACBrECFClass, ACBrDevice, ACBrUtil, Classes, Contnrs
-     {$IFNDEF CONSOLE}
-     {$IFDEF VCL}, Dialogs , Controls , Forms {$ENDIF}
-     {$IFDEF VisualCLX}, QDialogs, QControls, QForms {$ENDIF}
-     {$ENDIF};
+uses ACBrECFClass, ACBrDevice, ACBrUtil, Classes, Contnrs;
 
 const
    CFALHAS = 3 ;

@@ -191,11 +191,23 @@
 //{$DEFINE PL_103}
 {$DEFINE PL_104}
 
-{$IFDEF LCL}
- {$UNDEF CONSOLE}
+// Verificando se a compilação deve sem em modo texto "NOGUI"
+// Nota: FPC no Linux sempre liga a diretiva "CONSOLE", por isso criamos a NOGUI
+{$IFDEF FRAMEWORK}
+  {$DEFINE NOGUI}
 {$ENDIF}
 
-{$IFDEF FRAMEWORK}
- {$DEFINE CONSOLE}
+{$IFDEF FPC}
+  {$IFDEF LCL}
+    {$UNDEF NOGUI}
+  {$ENDIF}
+{$ELSE}
+  {$IFDEF CONSOLE}
+    {$DEFINE NOGUI}
+  {$ENDIF}
+{$ENDIF}
+
+{$IFDEF NOGUI}
+  {$DEFINE CONSOLE}
 {$ENDIF}
 

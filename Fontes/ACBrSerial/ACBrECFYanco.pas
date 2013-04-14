@@ -66,11 +66,7 @@
 unit ACBrECFYanco ;
 
 interface
-uses ACBrECFClass, ACBrDevice, ACBrUtil, Classes, IniFiles
-      {$IFNDEF CONSOLE}
-        {$IFDEF VisualCLX}, QForms {$ENDIF}
-        {$IFDEF VCL}, Forms {$ENDIF}
-      {$ENDIF};
+uses ACBrECFClass, ACBrDevice, ACBrUtil, Classes, IniFiles;
 
 type
 
@@ -209,13 +205,8 @@ begin
 
   fpModeloStr := 'Yanco' ;
   fpRFDID     := 'YA' ;
-
-  {$IFNDEF CONSOLE}
-    fsEXEName := Application.ExeName ;
-  {$ELSE}
-    fsEXEName := ParamStr(0) ;
-  {$ENDIF}
-  fsININame := ExtractFilePath(fsEXEName) + 'ACBrECFYanco.ini';
+  fsEXEName   := ParamStr(0) ;
+  fsININame   := ExtractFilePath(fsEXEName) + 'ACBrECFYanco.ini';
   Ini := TIniFile.Create(fsININame);
   try
     fsTotalPago := Ini.ReadFloat('Variaveis', 'TotalPago', 0);

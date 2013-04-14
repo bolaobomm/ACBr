@@ -46,12 +46,8 @@ interface
 
 uses
   Classes, SysUtils, ACBrTEFDClass, ACBrConsts
-  {$IFNDEF CONSOLE}
-  {$IFDEF VisualCLX}
-     ,QControls, QDialogs
-  {$ELSE}
-     ,Controls, Dialogs
-  {$ENDIF}
+  {$IFNDEF NOGUI}
+   {$IFDEF VisualCLX} ,QControls {$ELSE} ,Controls {$ENDIF}
   {$ENDIF};
 
 Const

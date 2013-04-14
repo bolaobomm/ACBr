@@ -46,7 +46,7 @@ interface
 
 uses
   Classes, SysUtils, Contnrs, ACBrBase
-  {$IFNDEF CONSOLE}
+  {$IFNDEF NOGUI}
     {$IFDEF VisualCLX}
        ,QForms, QDialogs, QControls
     {$ELSE}
@@ -54,7 +54,7 @@ uses
     {$ENDIF}
   {$ENDIF} ;
 
-{$IFDEF CONSOLE}
+{$IFDEF NOGUI}
 type TModalResult = (mrNone = 0, mrYes = 6, mrNo = 7, mrOK = 1, mrCancel = 2, mrAbort = 3, mrRetry = 4, mrIgnore = 5, mrAll = 8, mrNoToAll = 9, mrYesToAll = 10);
 {$ENDIF}
 
@@ -2353,7 +2353,7 @@ begin
                        while SecondsBetween(now,TempoInicio) < 5 do
                        begin
                           Sleep(EsperaSleep);
-                          {$IFNDEF CONSOLE}
+                          {$IFNDEF NOGUI}
                           Application.ProcessMessages;
                           {$ENDIF}
                        end;

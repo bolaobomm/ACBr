@@ -42,7 +42,7 @@ uses ACBrDevice,
      ACBrConsts,
      ACBrBase,
      Contnrs
-     {$IFNDEF CONSOLE}
+     {$IFNDEF NOGUI}
        {$IFDEF VisualCLX},
          {$IFDEF QT3CLX} QtLibrary, QtSignalHooks {$ELSE} Qt {$ENDIF},
           QControls, QForms, QGraphics, QDialogs, QExtCtrls
@@ -503,7 +503,7 @@ TACBrECFClass = class
     fsBytesRec : Integer ;
     fsAguardaImpressao: Boolean;
 
-    {$IFNDEF CONSOLE}
+    {$IFNDEF NOGUI}
       fsFormMsg: TForm ;           { Form para exibir Msgs de Aguarde... }
       fsFormMsgFont  : TFont ;
       fsFormMsgColor : TColor ;
@@ -536,7 +536,7 @@ TACBrECFClass = class
     function GetUnidadesMedida: TACBrECFUnidadesMedida;
     function GetRelatoriosGerenciais: TACBrECFRelatoriosGerenciais;
 
-    {$IFNDEF CONSOLE}
+    {$IFNDEF NOGUI}
       procedure FormMsgTimer(Sender: TObject);
       procedure FormMsgCloseQuery(Sender: TObject; var CanClose: Boolean);
       procedure FormMsgKeyPress(Sender: TObject; var Key: Char);
@@ -730,7 +730,7 @@ TACBrECFClass = class
     property AguardaImpressao : Boolean read fsAguardaImpressao
        write fsAguardaImpressao ;
 
-    {$IFNDEF CONSOLE}
+    {$IFNDEF NOGUI}
       function FormMsgDoProcedure( AProcedure : TACBrFormMsgProcedure;
          TeclaParaFechar : Word) : Boolean ;
       procedure FormMsgPinta( Texto : String ) ;
@@ -1411,7 +1411,7 @@ begin
   fpDevice.SetDefaultValues ;
 
   { Criando ponteiro para as propriedade de FormMsg ficarem visiveis nessa Unit }
-  {$IFNDEF CONSOLE}
+  {$IFNDEF NOGUI}
     with (AOwner as TACBrECF) do
     begin
        fsFormMsgFont  := FormMsgFonte ;
@@ -1444,7 +1444,7 @@ begin
   fsOnMsgErro                  := nil ;
   fsOnMsgAguarde               := nil ;
   fsOnMsgRetentar              := nil ;
-  {$IFNDEF CONSOLE}
+  {$IFNDEF NOGUI}
    fsUsandoBlockInput          := False ;
   {$ENDIF}
   
@@ -1480,7 +1480,7 @@ begin
   fpInfoRodapeCupom       := TACBrECFRodape.Create;
   fpRespostasComando      := TACBrInformacoes.Create;
 
-  {$IFNDEF CONSOLE}
+  {$IFNDEF NOGUI}
     fsFormMsg                   := nil ;
     fsFormMsgProcedureAExecutar := nil ;
     fsFormMsgTeclaParaFechar    := 0 ;
@@ -1514,7 +1514,7 @@ begin
   fpInfoRodapeCupom.Free ;
   fpRespostasComando.Free ;
 
-  {$IFNDEF CONSOLE}
+  {$IFNDEF NOGUI}
     if Assigned( fsFormMsg ) then
        FreeAndNil( fsFormMsg ) ;
   {$ENDIF}
@@ -1696,7 +1696,7 @@ end;
 
 procedure TACBrECFClass.LeResposta;
 begin
-  {$IFNDEF CONSOLE}
+  {$IFNDEF NOGUI}
     if FormMsgExibe then
      begin
        {$IFDEF MSWINDOWS}
@@ -1733,7 +1733,7 @@ Var Fim : Boolean ;
 begin
   try
      fpRespostaComando := '' ;
-     {$IFNDEF CONSOLE}
+     {$IFNDEF NOGUI}
        ProcessaFormMsg := (Assigned( fsFormMsg ) and fsFormMsgControla) ;
      {$ENDIF}
      
@@ -1750,7 +1750,7 @@ begin
          antes do termino da impressao (Sweda, Bematech, Daruma) }
      repeat
         { Atualizando a Msg no Form }
-        {$IFNDEF CONSOLE}
+        {$IFNDEF NOGUI}
           if ProcessaFormMsg and (now >= TempoInicio) then
           begin
              TempoRestante := SecondsBetween( now, TempoLimite) ;
@@ -1772,7 +1772,7 @@ begin
 
         if now > TempoLimite then       { TimeOut }
         begin
-           {$IFNDEF CONSOLE}
+           {$IFNDEF NOGUI}
              if Retentar then
              begin
                 if ProcessaFormMsg then
@@ -1825,7 +1825,7 @@ begin
                  sleep(200) ;
            end ;
 
-        {$IFNDEF CONSOLE}
+        {$IFNDEF NOGUI}
           if fpDevice.ProcessMessages then
 	     Application.ProcessMessages;
         {$ENDIF}
@@ -1885,7 +1885,7 @@ Procedure TACBrECFClass.VerificaEmLinha( TimeOut : Integer = 3) ;
 begin
   while not EmLinha( TimeOut ) do  { Impressora está em-linha ? }
   begin
-     {$IFNDEF CONSOLE}
+     {$IFNDEF NOGUI}
        if Retentar and
           DoOnMsgRetentar(Format(cACBrECFVerificaEmLinhaMsgRetentar,
                            [ ModeloStr ]), 'VerEmLinha') then
@@ -2878,7 +2878,7 @@ begin
            Mensagem := cACBrECFDoOnMsgPoucoPapel;
 
         Mensagem := ACBrStr( Mensagem ) ;
-        {$IFNDEF CONSOLE}
+        {$IFNDEF NOGUI}
           MessageDlg( Mensagem ,mtError,[mbOk],0)  ;
         {$ELSE}
           writeln( Mensagem ) ;
@@ -2915,7 +2915,7 @@ function TACBrECFClass.DoOnMsgRetentar( const Mensagem : String;
 begin
   Result := False ;
 
-  {$IFNDEF CONSOLE}
+  {$IFNDEF NOGUI}
     {$IFDEF MSWINDOWS}
       UsandoBlockInput := False ;
 
@@ -2931,7 +2931,7 @@ begin
      fsOnMsgRetentar( ACBrStr(Mensagem), Situacao, Result )
   else
    begin
-     {$IFNDEF CONSOLE}
+     {$IFNDEF NOGUI}
       if Retentar and
         (MessageDlg( ACBrStr( Mensagem+sLineBreak+sLineBreak + cACBrECFDoOnMsgRetentar ),
                      mtConfirmation,[mbYes,mbNo],0) = mrYes) then
@@ -2939,7 +2939,7 @@ begin
      {$ENDIF}
    end ;
 
-  {$IFNDEF CONSOLE}
+  {$IFNDEF NOGUI}
     {$IFDEF MSWINDOWS}
       if UsandoBlockInput then
          BlockInput(True,False);
@@ -3481,7 +3481,7 @@ begin
      fsVias      := Vias ;
      fsRelatorio := Relatorio ;
 
-     {$IFNDEF CONSOLE}
+     {$IFNDEF NOGUI}
        if not ExibeMensagem  then
           DoCupomVinculado
        else
@@ -3494,7 +3494,7 @@ begin
        DoCupomVinculado
      {$ENDIF}
   finally
-     {$IFNDEF CONSOLE}
+     {$IFNDEF NOGUI}
        fsFormMsgControla := true ;
      {$ENDIF}
      Retentar := wRetentar ;
@@ -3537,7 +3537,7 @@ begin
 
   while Imp < Vias do
   begin
-     {$IFNDEF CONSOLE}
+     {$IFNDEF NOGUI}
        try
           Texto := Format(MsgRelatorio,['Cupom Vinculado',Imp+1 ]) ;
        except
@@ -3558,7 +3558,7 @@ begin
      end ;
   end ;
 
-  {$IFNDEF CONSOLE}
+  {$IFNDEF NOGUI}
     FormMsgPinta( 'Fechando Cupom Vinculado' );
   {$ENDIF}
   TACBrECF(fpOwner).FechaRelatorio ;
@@ -3590,7 +3590,7 @@ begin
      fsRelatorio := Relatorio ;
      fsIndiceRG  := Indice;
 
-     {$IFNDEF CONSOLE}
+     {$IFNDEF NOGUI}
        if not ExibeMensagem  then
          DoRelatorioGerencial
        else
@@ -3603,7 +3603,7 @@ begin
        DoRelatorioGerencial ;
      {$ENDIF}
   finally
-     {$IFNDEF CONSOLE}
+     {$IFNDEF NOGUI}
        fsFormMsgControla := true ;
      {$ENDIF}
      Retentar := wRetentar ;
@@ -3648,7 +3648,7 @@ begin
       Texto := MsgRelatorio ;
     end ;
 
-    {$IFNDEF CONSOLE}
+    {$IFNDEF NOGUI}
       FormMsgPinta( Texto );
     {$ENDIF}
 
@@ -3666,7 +3666,7 @@ begin
     end ;
   end ;
 
-  {$IFNDEF CONSOLE}
+  {$IFNDEF NOGUI}
     FormMsgPinta( cACBrECFFechandoRelatorioGerencial );
   {$ENDIF}
 
@@ -3684,13 +3684,13 @@ begin
   Try
      FimPausa := IncSecond( now, PausaRelatorio ) ;
      SecAnt := 0 ;
-     {$IFNDEF CONSOLE}
+     {$IFNDEF NOGUI}
        fsFormMsgTeclaParaFechar := 13 ;
      {$ENDIF}
 
      while (now < FimPausa) do
      begin
-       {$IFNDEF CONSOLE}
+       {$IFNDEF NOGUI}
          if not (fsFormMsgEstado = fmsProcessando) then
             Break ;
 
@@ -3715,7 +3715,7 @@ begin
        {$ENDIF}
      end ;
   finally
-     {$IFNDEF CONSOLE}
+     {$IFNDEF NOGUI}
        fsFormMsgTeclaParaFechar := 0 ;
        fsFormMsgEstado := fmsProcessando ;
      {$ENDIF}
@@ -3726,7 +3726,7 @@ end;
 
 
 
-{$IFNDEF CONSOLE}
+{$IFNDEF NOGUI}
   {$IFDEF MSWINDOWS}
     procedure TACBrECFClass.BlockInput( const Block, ClearTypeAhead : Boolean ) ;
     var

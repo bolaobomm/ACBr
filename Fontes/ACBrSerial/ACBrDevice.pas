@@ -71,7 +71,7 @@ uses synaser, {Unit da SynaSer (comunicação serial) }
      {$ELSE}
         Windows, ACBrD5,
      {$ENDIF}
-     {$IFNDEF CONSOLE}
+     {$IFNDEF NOGUI}
        {$IFDEF VisualCLX}
           QForms, QPrinters,
        {$ELSE}
@@ -587,7 +587,7 @@ begin
 
      if not result then
      begin
-        {$IFNDEF CONSOLE}
+        {$IFNDEF NOGUI}
           if fProcessMessages then
              Application.ProcessMessages ;  { para redesenhar a tela do programa }
         {$ENDIF}
@@ -944,7 +944,7 @@ begin
            UltimoBytesSent := ThreadEnviaLPT.BytesSent ;
         end ;
 
-        {$IFNDEF CONSOLE}
+        {$IFNDEF NOGUI}
           if fProcessMessages then
              Application.ProcessMessages ;
         {$ENDIF}

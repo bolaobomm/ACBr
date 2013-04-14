@@ -86,7 +86,7 @@
 {$I ACBr.inc}
 
 {$IFDEF FPC}
- {$IFNDEF CONSOLE}
+ {$IFNDEF NOGUI}
   {$DEFINE USE_LCLIntf}
  {$ENDIF}
  {$IFDEF LINUX}

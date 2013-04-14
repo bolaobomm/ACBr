@@ -44,11 +44,7 @@
 unit ACBrETQZplII;
 
 interface
-uses ACBrETQClass, ACBrUtil, ACBrDevice, Dialogs
-     {$IFNDEF CONSOLE}
-      {$IFDEF VisualCLX}, QGraphics {$ELSE}, Graphics {$ENDIF}
-     {$ENDIF}
-     ,Classes ;
+uses ACBrETQClass, ACBrUtil, ACBrDevice, Dialogs, Classes ;
 
 type
   TACBrETQZplII = class( TACBrETQClass )

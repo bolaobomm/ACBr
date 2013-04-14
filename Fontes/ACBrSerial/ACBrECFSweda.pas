@@ -150,7 +150,7 @@ unit ACBrECFSweda ;
 interface
 uses ACBrECFClass, ACBrDevice, ACBrUtil,
      Classes
-     {$IFNDEF CONSOLE}
+     {$IFNDEF NOGUI}
        {$IFDEF VCL}, Dialogs , Controls , Forms {$ENDIF}
        {$IFDEF VisualCLX}, QDialogs, QControls, QForms {$ENDIF}
      {$ENDIF};
@@ -2406,7 +2406,7 @@ fazer Pausa entre as vias a Mensagem enviada ao usuário também foi modificada *)
           Texto := MsgRelatorio ;
        end ;
 
-     {$IFNDEF CONSOLE}
+     {$IFNDEF NOGUI}
        FormMsgPinta( Texto );
      {$ENDIF}
 
@@ -2416,7 +2416,7 @@ fazer Pausa entre as vias a Mensagem enviada ao usuário também foi modificada *)
         TACBrECF(fpOwner).LinhaRelatorioGerencial( LeftStr( Relatorio[ Linha ], fpColunas) ) ;
         Linha := Linha + 1 ;
 
-        {$IFNDEF CONSOLE}
+        {$IFNDEF NOGUI}
           if fpDevice.ProcessMessages then
              Application.ProcessMessages ;
         {$ENDIF}
@@ -2433,7 +2433,7 @@ fazer Pausa entre as vias a Mensagem enviada ao usuário também foi modificada *)
      end ;
   end ;
 
-  {$IFNDEF CONSOLE}
+  {$IFNDEF NOGUI}
     if Bufferiza then
        FormMsgPinta( 'Imprimindo Relatório Gerencial' )
     else
@@ -2461,7 +2461,7 @@ fazer Pausa entre as vias a Mensagem enviada ao usuário também foi modificada *)
      while Imp < Vias do
      begin
         Texto :=  Format('Enviando %s  %dª Via ',['Cupom Vinculado',Imp+1 ]) ;
-        {$IFNDEF CONSOLE}
+        {$IFNDEF NOGUI}
           FormMsgPinta( Texto );
         {$ENDIF}
 
@@ -2471,7 +2471,7 @@ fazer Pausa entre as vias a Mensagem enviada ao usuário também foi modificada *)
            LinhaCupomVinculado( LeftStr( Relatorio[ Linha ], fpColunas) ) ;
            Linha := Linha + 1 ;
 
-           {$IFNDEF CONSOLE}
+           {$IFNDEF NOGUI}
              if fpDevice.ProcessMessages then
                 Application.ProcessMessages ;
            {$ENDIF}
@@ -2694,7 +2694,7 @@ begin
         end ;
 
         if ComPapel then
-           {$IFNDEF CONSOLE}
+           {$IFNDEF NOGUI}
               if (MessageDlg( ACBrStr('Favor remover o cheque e pressionar OK'),
                              mtConfirmation,[mbOk,mbCancel],0) = mrCancel) then
                  break ;

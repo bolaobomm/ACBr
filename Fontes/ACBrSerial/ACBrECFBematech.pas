@@ -37,10 +37,7 @@ unit ACBrECFBematech ;
 
 interface
 uses ACBrECFClass, ACBrDevice, ACBrUtil, ACBrCHQClass,
-     Classes
-     {$IFNDEF CONSOLE}
-       {$IFDEF VisualCLX}, QForms {$ELSE}, {$IFNDEF FPC}Windows,{$ENDIF} Forms {$ENDIF}
-     {$ENDIF};
+     Classes;
 
 const ErrosST1 : array[0..7] of string =
       ('Número de parâmetros de CMD inválido',

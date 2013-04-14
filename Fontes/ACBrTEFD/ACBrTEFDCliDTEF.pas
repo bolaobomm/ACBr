@@ -46,7 +46,7 @@ interface
 
 uses
   Classes, SysUtils, ACBrTEFDClass
-  {$IFNDEF CONSOLE}
+  {$IFNDEF NOGUI}
   {$IFDEF VisualCLX}
      ,QForms, QControls
   {$ELSE}
@@ -1112,7 +1112,7 @@ begin
               while SecondsBetween(now,TempoInicio) < 5 do
               begin
                 Sleep(EsperaSleep) ;
-                {$IFNDEF CONSOLE}
+                {$IFNDEF NOGUI}
                 Application.ProcessMessages;
                 {$ENDIF}
               end;

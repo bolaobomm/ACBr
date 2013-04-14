@@ -83,7 +83,7 @@ uses Classes, SysUtils, Contnrs, ACBrConsts,
      {$ELSE}
         Windows, ACBrD5
      {$ENDIF}
-     {$IFNDEF CONSOLE}
+     {$IFNDEF NOGUI}
        {$IFDEF VisualCLX}
           ,QDialogs
        {$ELSE}
@@ -104,7 +104,7 @@ TACBrComponent = class( TComponent )
   end ;
 
 { Essa classe emula um TTimer, porem em uma Thread, evitando sobrecarregar
-  o Application. Usada por ACBrLCB e ACBrDIS quando em modo CONSOLE }
+  o Application. Usada por ACBrLCB e ACBrDIS quando em modo CONSOLE, ou NOGUI }
 TACBrThreadTimer = class(TThread)
   private
     fsOnTimer : TNotifyEvent;
@@ -184,7 +184,7 @@ Uses
 procedure ACBrAboutDialog ;
   var Msg : String ;
 begin
-  {$IFDEF CONSOLE}
+  {$IFDEF NOGUI}
       Msg := 'Componentes ACBr CONSOLE'+sLineBreak+
              'Automação Comercial Brasil'+sLineBreak+
              'http://acbr.sourceforge.net' ;
@@ -225,7 +225,7 @@ begin
      Sleep( fsInterval );
 
      if fsEnabled and Assigned( fsOntimer ) then
-      {$IFNDEF CONSOLE}
+      {$IFNDEF NOGUI}
         Synchronize( ChamarEvento ) 
       {$ELSE}
         fsOnTimer( self )
@@ -256,7 +256,7 @@ begin
   end
   else
   begin
-    {$IFNDEF CONSOLE}
+    {$IFNDEF NOGUI}
       {$IFDEF DELPHI12_UP}
         if not Suspended then Terminate ;
       {$ELSE}

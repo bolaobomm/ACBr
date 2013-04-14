@@ -50,7 +50,7 @@ uses
   ACBrTEFDVeSPague, ACBrTEFDBanese, ACBrTEFDGoodCard, ACBrTEFDFoxWin,
   ACBrTEFDCliDTEF, ACBrTEFDPetroCard, ACBrTEFDCrediShop, ACBrTEFDTicketCar,
   ACBrTEFDConvCard
-  {$IFNDEF CONSOLE}
+  {$IFNDEF NOGUI}
     {$IFDEF FPC}
       ,LResources
     {$ENDIF}
@@ -937,7 +937,7 @@ begin
                           while SecondsBetween(now,TempoInicio) < 5 do
                           begin
                              Sleep(EsperaSTS) ;
-                             {$IFNDEF CONSOLE}
+                             {$IFNDEF NOGUI}
                              Application.ProcessMessages;
                              {$ENDIF}
                           end;
@@ -1065,7 +1065,7 @@ begin
                              while SecondsBetween(now,TempoInicio) < 5 do
                              begin
                                 Sleep(EsperaSTS);
-                                {$IFNDEF CONSOLE}
+                                {$IFNDEF NOGUI}
                                 Application.ProcessMessages;
                                 {$ENDIF}
                              end;
@@ -1641,9 +1641,7 @@ function TACBrTEFD.GetPathBackup : String;
 begin
   if fPathBackup = '' then
      if not (csDesigning in Self.ComponentState) then
-        fPathBackup := ExtractFilePath(
-        {$IFNDEF CONSOLE} Application.ExeName {$ELSE} ParamStr(0) {$ENDIF}
-                                      ) + 'TEF' ;
+        fPathBackup := ExtractFilePath( ParamStr(0) ) + 'TEF' ;
 
   Result := fPathBackup ;
 end;
@@ -1808,7 +1806,7 @@ end;
  procedure TACBrTEFD.LimparTeclado;
  Var
    Tratado : Boolean ;
-   {$IFNDEF CONSOLE}
+   {$IFNDEF NOGUI}
      {$IFDEF MSWINDOWS}
      Msg: TMsg;
      {$ENDIF}
@@ -1819,7 +1817,7 @@ end;
    if Assigned( fOnLimpaTeclado ) then
       fOnLimpaTeclado( Tratado ) ;
 
-   {$IFNDEF CONSOLE}
+   {$IFNDEF NOGUI}
    {$IFDEF MSWINDOWS}
     if not Tratado then
     begin
@@ -1841,7 +1839,7 @@ end;
    if Assigned( fOnRestauraFocoAplicacao ) then
       fOnRestauraFocoAplicacao( Tratado ) ;
 
-   {$IFNDEF CONSOLE}
+   {$IFNDEF NOGUI}
    if not Tratado then
    begin
       Application.BringToFront ;
@@ -1861,7 +1859,7 @@ end;
  end;
 
 {$ifdef FPC}
-{$IFNDEF CONSOLE}
+{$IFNDEF NOGUI}
 initialization
    {$I ACBrTEFD.lrs}
 {$endif}

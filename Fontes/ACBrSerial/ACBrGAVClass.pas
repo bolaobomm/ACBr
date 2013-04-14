@@ -45,7 +45,7 @@ unit ACBrGAVClass;
 interface
 uses ACBrDevice, ACBrECF,
      Classes
-     {$IFNDEF CONSOLE}
+     {$IFNDEF NOGUI}
        {$IFDEF VisualCLX}, QForms {$ENDIF}
        {$IFDEF VCL}, Forms {$ENDIF}
      {$ENDIF} ;
@@ -172,7 +172,7 @@ begin
 
         aaAguardar  :
            while now < fpProximaAbertura do begin
-              {$IFNDEF CONSOLE}
+              {$IFNDEF NOGUI}
                if fpDevice.ProcessMessages then
                   Application.ProcessMessages ;
               {$ENDIF}

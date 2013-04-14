@@ -213,7 +213,7 @@ end ;
 
 implementation
 
-Uses ACBrUtil, synacode {$IFNDEF CONSOLE},Controls, Forms {$ENDIF} ;
+Uses ACBrUtil, synacode {$IFNDEF NOGUI},Controls, Forms {$ENDIF} ;
 
 { TACBrTCPServerDaemon }
 
@@ -285,7 +285,7 @@ begin
         fsStrToSend := '' ;
         fsErro      := 0 ;
 
-        {$IFNDEF CONSOLE}
+        {$IFNDEF NOGUI}
          Synchronize( CallOnConecta );
         {$ELSE}
          CallOnConecta ;
@@ -333,7 +333,7 @@ begin
               break;
 
            if Assigned( fsACBrTCPServerDaemon.ACBrTCPServer.OnRecebeDados ) then
-              {$IFNDEF CONSOLE}
+              {$IFNDEF NOGUI}
                Synchronize( CallOnRecebeDados );
               {$ELSE}
                CallOnRecebeDados ;
@@ -347,7 +347,7 @@ begin
         end;
 
         // Chama o evento de Desconexão...
-        {$IFNDEF CONSOLE}
+        {$IFNDEF NOGUI}
          Synchronize( CallOnDesConecta );
         {$ELSE}
          CallOnDesConecta ;
@@ -619,12 +619,12 @@ end ;
 procedure TACBrHTTP.HTTPMethod(Method, AURL: String);
 var
   OK : Boolean ;
-  {$IFNDEF CONSOLE}
+  {$IFNDEF NOGUI}
    OldCursor : TCursor ;
   {$ENDIF}
    CT : String ;
 begin
-  {$IFNDEF CONSOLE}
+  {$IFNDEF NOGUI}
    OldCursor := Screen.Cursor ;
    Screen.Cursor := crHourGlass;
   {$ENDIF}
@@ -663,7 +663,7 @@ begin
                                      'Resposta HTTP:' + sLineBreak +
                                      String(AjustaLinhas( AnsiString(RespHTTP.Text), 80, 20) )) ;
   finally
-    {$IFNDEF CONSOLE}
+    {$IFNDEF NOGUI}
      Screen.Cursor := OldCursor;
     {$ENDIF}
   end;

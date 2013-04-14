@@ -74,7 +74,7 @@ unit ACBrECFSchalter ;
 interface
 uses ACBrECFClass, ACBrDevice, ACBrUtil, ACBrConsts,
      Classes
-     {$IFNDEF CONSOLE}
+     {$IFNDEF NOGUI}
        {$IFDEF VisualCLX}, QDialogs, QControls {$ENDIF}
        {$IFDEF VCL}, Dialogs, Controls {$ENDIF}
      {$ENDIF} ;
@@ -1339,7 +1339,7 @@ begin
   if ProxIndice > 19 then
      raise EACBrECFERRO.create(ACBrStr('Não há espaço para programar novos Comprovantes'+
                             ' não Fiscais'));
-  {$IFNDEF CONSOLE}
+  {$IFNDEF NOGUI}
     if (IndiceFPG > 0) and (IndiceFPG <> 99) then
     begin
        if MessageDlg( ACBrStr( 'Atenção. Você irá criar um vinculo entre:'+sLineBreak+

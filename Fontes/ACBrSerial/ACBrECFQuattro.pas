@@ -51,11 +51,7 @@ unit ACBrECFQuattro ;
 
 interface
 uses ACBrECFClass, ACBrDevice, ACBrUtil,
-     Classes
-     {$IFNDEF CONSOLE}
-       {$IFDEF VCL}, Dialogs , Controls , Forms {$ENDIF}
-       {$IFDEF VisualCLX}, QDialogs, QControls, QForms {$ENDIF}
-     {$ENDIF} ;
+     Classes;
 
 type
 { Classe filha de TACBrECFClass com implementaçao para Quattro }
@@ -1489,19 +1485,13 @@ begin
   begin
      Msg := ACBrStr( 'Arquivo '+fsArqFormato_ChequeTXT+' não encontrado. '+
                      'Valores padrões serão utilizados.' ) ;
-     {$IFNDEF CONSOLE}
-       MessageDlg(Msg,mtWarning,[mbOk],0);
-     {$ELSE}
-       writeln(Msg);
-     {$ENDIF}
+     raise EACBrECFErro.Create( Msg );
 
      fsArqFormato_ChequeTXT := '' ;
   end ;
 
   if fsArqFormato_ChequeTXT = '' then
-     ArqTemp := ExtractFilePath(
-         {$IFNDEF CONSOLE} Application.ExeName {$ELSE} ParamStr(0) {$ENDIF}
-                                 )+'Formato_cheque.txt'
+     ArqTemp := ExtractFilePath( ParamStr(0) )+'Formato_cheque.txt'
   else
      ArqTemp := fsArqFormato_ChequeTXT ;
 

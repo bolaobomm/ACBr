@@ -89,7 +89,7 @@ interface
 uses ACBrECFClass, ACBrDevice, ACBrUtil, ACBrConsts,
      Classes, Contnrs, Math, SysUtils, IniFiles,
      {$IFDEF COMPILER6_UP} DateUtils, StrUtils {$ELSE} ACBrD5, Windows{$ENDIF}
-     {$IFNDEF CONSOLE}
+     {$IFNDEF NOGUI}
        {$IFDEF VisualCLX}, QControls, QForms, QDialogs {$ENDIF}
        {$IFDEF VCL}, Controls, Forms, Dialogs {$ENDIF}
      {$ENDIF} ;
@@ -487,12 +487,7 @@ begin
   fsCRO       := 1 ;
   fpModeloStr := 'NaoFiscal' ;
   fsBuffer    := TStringList.create ;
-
-  {$IFNDEF CONSOLE}
-    fsEXEName := Application.ExeName ;
-  {$ELSE}
-    fsEXEName := ParamStr(0) ;
-  {$ENDIF}
+  fsEXEName   := ParamStr(0) ;
 
   fsCabecalho := TStringList.create ;
   fsCabecalho.add('Nome da Empresa') ;
@@ -2197,7 +2192,7 @@ end;
 
 Procedure TACBrECFNaoFiscal.AvisoLegal ;
 begin
-  {$IFNDEF CONSOLE}
+  {$IFNDEF NOGUI}
     if MessageDlg(ACBrStr( 'Este Emulador destina-se EXCLUSIVAMENTE para auxiliar no '+
                   'desenvolvimento de aplicativos para as impressoras fiscais. '+
                   sLineBreak + sLineBreak +

@@ -39,10 +39,8 @@ interface
 
 uses
   Classes, SysUtils, pcnCFe, pcnCFeR, pcnCFeCanc, pcnCFeCancR, ACBrSATClass, ACBrSATExtratoClass, synacode
-  {$IFNDEF CONSOLE}
-    {$IFDEF FPC}
-      ,LResources
-    {$ENDIF}
+  {$IFNDEF NOGUI}
+    {$IFDEF FPC} ,LResources {$ENDIF}
   {$ENDIF};
 
 type
@@ -643,13 +641,12 @@ begin
    Extrato.ImprimirExtratoResumido;
 end;
 
-{$ifdef FPC}
-{$IFNDEF CONSOLE}
-
+{$IFDEF FPC}
+{$IFNDEF NOGUI}
 initialization
    {$I ACBrSAT.lrs}
-{$endif}
-{$endif}
+{$ENDIF}
+{$ENDIF}
 
 end.
 

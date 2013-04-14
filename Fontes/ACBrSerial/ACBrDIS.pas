@@ -53,7 +53,7 @@ unit ACBrDIS;
 interface
 uses ACBrBase, ACBrDevice, ACBrDISClass,  {Units da ACBr}
      SysUtils
-     {$IFNDEF CONSOLE}
+     {$IFNDEF NOGUI}
        {$IFDEF VisualCLX}, QExtCtrls {$ELSE}, ExtCtrls {$ENDIF}
      {$ENDIF}
      {$IFDEF COMPILER6_UP}, Types {$ELSE}, Windows {$ENDIF}
@@ -140,7 +140,7 @@ TACBrDIS = class( TACBrComponent )
     fsDIS    : TACBrDISClass ;
 
     fsAlinhamento: TACBrDISAlinhamento;
-    {$IFNDEF CONSOLE}
+    {$IFNDEF NOGUI}
       fsTimer: TTimer;
     {$ELSE}
       fsTimer: TACBrThreadTimer;
@@ -340,7 +340,7 @@ begin
   fsDevice.Serial.DeadlockTimeout := 1000 ;
 
   { Timer para animações }
-  {$IFNDEF CONSOLE}
+  {$IFNDEF NOGUI}
     fsTimer := TTimer.Create(self) ;
   {$ELSE}
     fsTimer := TACBrThreadTimer.Create ;

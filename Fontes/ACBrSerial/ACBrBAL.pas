@@ -49,7 +49,7 @@ unit ACBrBAL;
 interface
 uses ACBrDevice, ACBrBase, ACBrBALClass,  {Units da ACBr}
      SysUtils
-     {$IFNDEF CONSOLE}
+     {$IFNDEF NOGUI}
        {$IFDEF VisualCLX}, QExtCtrls {$ELSE}, ExtCtrls {$ENDIF}
      {$ENDIF}
      {$IFDEF COMPILER6_UP}, Types {$ELSE}, Windows {$ENDIF}
@@ -64,7 +64,7 @@ TACBrBALLePeso = procedure(Peso : Double; Resposta : AnsiString) of object ;
 TACBrBAL = class( TACBrComponent )
   private
     fsDevice  : TACBrDevice ;   { SubComponente ACBrDevice }
-    {$IFNDEF CONSOLE}
+    {$IFNDEF NOGUI}
       fsTimer: TTimer;
     {$ELSE}
       fsTimer: TACBrThreadTimer;
@@ -143,7 +143,7 @@ begin
   fsDevice.Serial.DeadlockTimeout := 1000 ;
 
   { Timer para monitorar o envio de dados pela Balança }
-  {$IFNDEF CONSOLE}
+  {$IFNDEF NOGUI}
     fsTimer := TTimer.Create(self) ;
   {$ELSE}
     fsTimer := TACBrThreadTimer.Create ;
