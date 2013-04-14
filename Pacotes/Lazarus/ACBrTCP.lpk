@@ -24,7 +24,7 @@
         <CompilerPath Value="$(CompPath)"/>
       </Other>
     </CompilerOptions>
-    <Description Value="Componentes para facilitar o uso das Calsses do Projeto Synapse"/>
+    <Description Value="Componentes para facilitar o uso das Classes do Projeto Synapse"/>
     <License Value="LGPL
 "/>
     <Version Minor="10"/>
@@ -73,7 +73,7 @@
         <PackageName Value="ACBrDiversos"/>
       </Item1>
       <Item2>
-        <PackageName Value="synapse"/>
+        <PackageName Value="laz_synapse"/>
       </Item2>
       <Item3>
         <PackageName Value="FCL"/>

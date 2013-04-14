@@ -51,7 +51,7 @@ interface
 
 uses
    Classes, SysUtils, strutils, ACBrConsts,
-   ACBrUtil, {$IFDEF USE_libeay32}libeay32{$ELSE} OpenSSL{$ENDIF};
+   ACBrUtil, {$IFDEF USE_libeay32}libeay32{$ELSE} OpenSSLExt{$ENDIF};
 
 const
    CACBrEAD_Versao = '0.3.0' ;
