@@ -1570,7 +1570,7 @@ begin
   begin
     Gerador.wGrupo('veic', '#20');
     Gerador.wCampo(tcStr, '#21', 'cInt    ', 01, 10, 0, CTe.Rodo.veic[i].cInt, '');
-    Gerador.wCampo(tcStr, '#22', 'RENAVAM ', 11, 11, 1, CTe.Rodo.veic[i].RENAVAM, '');
+    Gerador.wCampo(tcStr, '#22', 'RENAVAM ', 09, 11, 1, CTe.Rodo.veic[i].RENAVAM, '');
     Gerador.wCampo(tcStr, '#23', 'placa   ', 01, 07, 1, CTe.Rodo.veic[i].placa, '');
     Gerador.wCampo(tcInt, '#24', 'tara    ', 01, 06, 1, CTe.Rodo.veic[i].tara, '');
     Gerador.wCampo(tcInt, '#25', 'capKG   ', 01, 06, 1, CTe.Rodo.veic[i].capKG, '');
