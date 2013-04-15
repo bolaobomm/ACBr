@@ -60,7 +60,7 @@ uses {$IFNDEF ACBrNFeOpenSSL}ACBrCAPICOM_TLB, ACBrMSXML2_TLB, JwaWinCrypt, {$END
   {$ELSE}
      StrUtils,
   {$ENDIF}
-  ACBrNFeConfiguracoes, pcnConversao, pcnNFe, ACBrDFeUtil, Windows;
+  ACBrNFeConfiguracoes, pcnConversao, pcnNFe, ACBrDFeUtil;
 
 
 {$IFDEF ACBrNFeOpenSSL}
@@ -2357,4 +2357,4 @@ begin
      Result := Codigo;
 end;
 
-end.
+end.

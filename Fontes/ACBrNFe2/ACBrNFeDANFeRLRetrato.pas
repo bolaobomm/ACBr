@@ -137,7 +137,7 @@ uses
   {$IFDEF CLX}
   QGraphics, QControls, QForms, QDialogs, QExtCtrls, Qt, QStdCtrls,
   {$ELSE}
-  Windows, Messages, Graphics, Controls, Forms, Dialogs, ExtCtrls, MaskUtils, StdCtrls,
+    {$IFDEF MSWINDOWS}Windows, Messages, {$ENDIF} Graphics, Controls, Forms, Dialogs, ExtCtrls, MaskUtils, StdCtrls,
   {$ENDIF}
   RLReport, RLFilters, RLPDFFilter,
   {$IFDEF BORLAND}
@@ -2237,4 +2237,4 @@ begin
   iLimiteCaracteresContinuacao := 129;
 end;
 
-end.
+end.

@@ -105,7 +105,7 @@ uses
   {$IFDEF CLX}
   QGraphics, QControls, QForms, QDialogs, QExtCtrls, Qt,
   {$ELSE}
-  Windows, Messages, Graphics, Controls, Forms, Dialogs, ExtCtrls,
+   {$IFDEF MSWINDOWS}Windows, Messages, {$ENDIF} Graphics, Controls, Forms, Dialogs, ExtCtrls,
   {$ENDIF}
   MaskUtils, pcnNFe, pcnConversao, ACBrNFe, ACBrDFeUtil,
   RLReport, RLFilters, RLPrinters, RLPDFFilter, RLConsts,
@@ -638,4 +638,4 @@ end;
 {initialization
 RLConsts.SetVersion(3,71,'B');}
 
-end.
+end.

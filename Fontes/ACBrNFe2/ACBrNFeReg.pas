@@ -194,7 +194,7 @@ end;
 
 {$ifdef FPC}
 initialization
-   {$i ACBrNFE.lrs}
+   {$i ACBrNFe.lrs}
 {$endif}
 
-end.
+end.
