@@ -610,16 +610,16 @@ begin
      if Length(Trim(Dest.CNPJCPF)) > 11 then
      begin
        if FormularioContinuo then
-          Box([fsLeft],XPos,YPos,38,aWidthTituloBloco,'CNPJ / CPF',DFeUtil.FormatarCNPJ(Dest.CNPJCPF),taCenter)
+          Box([fsLeft],XPos,YPos,41,aWidthTituloBloco,'CNPJ / CPF',DFeUtil.FormatarCNPJ(Dest.CNPJCPF),taCenter)
        else
-          Box([fsTop,fsLeft],XPos,YPos,38,aWidthTituloBloco,'CNPJ / CPF',DFeUtil.FormatarCNPJ(Dest.CNPJCPF),taCenter);
+          Box([fsTop,fsLeft],XPos,YPos,41,aWidthTituloBloco,'CNPJ / CPF',DFeUtil.FormatarCNPJ(Dest.CNPJCPF),taCenter);
      end
      else
      begin
        if FormularioContinuo then
-          Box([fsLeft],XPos,YPos,38,aWidthTituloBloco,'CNPJ / CPF',DFeUtil.FormatarCPF(Dest.CNPJCPF),taCenter)
+          Box([fsLeft],XPos,YPos,41,aWidthTituloBloco,'CNPJ / CPF',DFeUtil.FormatarCPF(Dest.CNPJCPF),taCenter)
        else
-          Box([fsTop,fsLeft],XPos,YPos,38,aWidthTituloBloco,'CNPJ / CPF',DFeUtil.FormatarCPF(Dest.CNPJCPF),taCenter);
+          Box([fsTop,fsLeft],XPos,YPos,41,aWidthTituloBloco,'CNPJ / CPF',DFeUtil.FormatarCPF(Dest.CNPJCPF),taCenter);
      end;
      if FormularioContinuo then
         Box([fsLeft],XPos,YPos,21,aWidthTituloBloco,'Data de Emissão',DFeUtil.FormatDate(DateToStr(Ide.DEmi)),taCenter,True)
