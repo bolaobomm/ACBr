@@ -126,11 +126,7 @@ end;
 function TProvedor4R.GetConfigURL(ACodCidade: Integer): TConfigURL;
 var
  	ConfigURL: TConfigURL;
-  sCidade: String;
 begin
-  if (ACodCidade = 3523503) then
-    sCidade := 'itatinga';
-
  	ConfigURL.HomNomeCidade         := '';
  	ConfigURL.HomRecepcaoLoteRPS    := 'http://abrasf.sistemas4r.com.br/arecepcionarloterpssincrono.aspx?wsdl';
  	ConfigURL.HomConsultaLoteRPS    := '';
@@ -140,14 +136,18 @@ begin
  	ConfigURL.HomCancelaNFSe        := 'http://abrasf.sistemas4r.com.br/acancelarnfse.aspx';
  	ConfigURL.HomGerarNFSe          := 'http://abrasf.sistemas4r.com.br/agerarnfse';
 
- 	ConfigURL.ProNomeCidade         := '';
- 	ConfigURL.ProRecepcaoLoteRPS    := 'http://' + sCidade + '.sistemas4r.com.br/abrasf/arecepcionarloterpssincrono.aspx?wsdl';
+  case ACodCidade of
+   3510203: ConfigURL.ProNomeCidade  := 'capaobonito';
+   3523503: ConfigURL.ProNomeCidade  := 'itatinga';
+  end;
+
+ 	ConfigURL.ProRecepcaoLoteRPS    := 'http://' + ConfigURL.ProNomeCidade + '.sistemas4r.com.br/abrasf/arecepcionarloterpssincrono.aspx?wsdl';
  	ConfigURL.ProConsultaLoteRPS    := '';
- 	ConfigURL.ProConsultaNFSeRPS    := 'http://' + sCidade + '.sistemas4r.com.br/abrasf/aconsultarnfseporrps.aspx?wsdl';
+ 	ConfigURL.ProConsultaNFSeRPS    := 'http://' + ConfigURL.ProNomeCidade + '.sistemas4r.com.br/abrasf/aconsultarnfseporrps.aspx?wsdl';
  	ConfigURL.ProConsultaSitLoteRPS := '';
  	ConfigURL.ProConsultaNFSe       := '';
- 	ConfigURL.ProCancelaNFSe        := 'http://' + sCidade + '.sistemas4r.com.br/abrasf/acancelarnfse.aspx';
-  ConfigURL.ProGerarNFSe          := 'http://' + sCidade + '.sistemas4r.com.br/abrasf/agerarnfse.aspx';
+ 	ConfigURL.ProCancelaNFSe        := 'http://' + ConfigURL.ProNomeCidade + '.sistemas4r.com.br/abrasf/acancelarnfse.aspx';
+  ConfigURL.ProGerarNFSe          := 'http://' + ConfigURL.ProNomeCidade + '.sistemas4r.com.br/abrasf/agerarnfse.aspx';
 
  	Result := ConfigURL;
 end;

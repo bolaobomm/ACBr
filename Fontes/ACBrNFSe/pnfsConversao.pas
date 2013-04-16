@@ -807,7 +807,9 @@ begin
 
   4115200  // Maringa/PR
          : Provedor := 'ISSe';
-  3523503 // Itatinga/SP
+
+  3510203, // Capão Bonito/SP
+  3523503  // Itatinga/SP
          : Provedor := '4R';
 
  end;
