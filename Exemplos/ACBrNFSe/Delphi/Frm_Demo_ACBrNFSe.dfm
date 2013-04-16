@@ -351,6 +351,7 @@ object frmDemo_ACBrNFSe: TfrmDemo_ACBrNFSe
               'Ipatinga/3131307/MG'
               'Itajai/4208203/SC'
               'Itapema/4208302/SC'
+              'Itatinga/3523503/SP'
               'Itu/3523909/SP'
               'Ituporanga/4208500/SC'
               'Jaguariuna/3524709/SP'
