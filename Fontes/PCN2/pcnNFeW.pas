@@ -241,7 +241,8 @@ begin
   if nfe.procNFe.nProt <> '' then
    begin
       Gerador.wGrupo(ENCODING_UTF8, '', False);
-      Gerador.wGrupo('nfeProc versao="' + NFe.infNFe.VersaoStr  + '" ' + NAME_SPACE, '');
+//      Gerador.wGrupo('nfeProc versao="' + NFe.infNFe.VersaoStr  + '" ' + NAME_SPACE, '');
+      Gerador.wGrupo('nfeProc ' + NFe.infNFe.VersaoStr + ' ' + NAME_SPACE, '');
 //      Gerador.wGrupo('nfeProc ' + V2_00 + ' ' + NAME_SPACE, '');
    end;
   Gerador.wGrupo('NFe ' + NAME_SPACE);
