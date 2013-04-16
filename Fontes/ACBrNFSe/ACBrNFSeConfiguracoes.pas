@@ -354,7 +354,7 @@ uses
  ACBrProvedorBetha, ACBrProvedorBetim, ACBrProvedorSaatri,
  ACBrProvedorAbaco, ACBrProvedorGoiania, ACBrProvedorIssCuritiba,
  ACBrProvedorBHISS, ACBrProvedorNatal, ACBrProvedorISSDigital,
- ACBrProvedorISSe;
+ ACBrProvedorISSe, ACBrProvedor4R;
 
 { TConfiguracoes }
 
@@ -678,6 +678,7 @@ begin
   proNatal:       FProvedorClass := TProvedorNatal.Create;
   proISSDigital:  FProvedorClass := TProvedorISSDigital.Create;
   proISSe:        FProvedorClass := TProvedorISSe.Create;
+  pro4R:          FProvedorClass := TProvedor4R.Create;
  end;
 
  ConfigCidade   := FProvedorClass.GetConfigCidade(FCodigoMunicipio, FAmbienteCodigo);

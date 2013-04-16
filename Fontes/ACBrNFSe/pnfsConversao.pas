@@ -40,7 +40,7 @@ type
   TnfseProvedor = ( proNenhum, proTiplan, proISSNET, proWebISS, proGINFES, proDSF, proProdemge, proAbaco, proBetha,
                     proEquiplano, proISSIntel, proProdam, proGovBR, proRecife, proSimplISS, proThema, proRJ,
                     proPublica, profintelISS, proDigifred, proBetim, proSaatri, proFISSLEX,
-                    proGoiania, proIssCuritiba, proBHISS, proNatal, proISSDigital, proISSe );
+                    proGoiania, proIssCuritiba, proBHISS, proNatal, proISSDigital, proISSe, pro4R );
 
   TnfseAcao = ( acRecepcionar, acConsSit, acConsLote, acConsNFSeRps, acConsNFSe, acCancelar, acGerar );
 
@@ -287,12 +287,13 @@ begin
                            ['Nenhum', 'Tiplan', 'ISS.NET', 'WebISS', 'GINFES', 'DSF', 'Prodemge', 'Abaco',
                             'Betha', 'Equiplano', 'ISSIntel', 'Prodam', 'GovBR', 'Recife',
                             'SimplISS', 'Thema', 'RJ', 'Publica', 'fintelISS', 'Digifred', 'Betim', 'Saatri',
-                            'FISSLEX', 'Goiania', 'IssCuritiba', 'BHISS', 'Natal', 'ISSDigital', 'ISSe'],
+                            'FISSLEX', 'Goiania', 'IssCuritiba', 'BHISS', 'Natal', 'ISSDigital', 'ISSe',
+                            '4R'],
                            [proNenhum, proTiplan, proISSNET, proWebISS, proGINFES, proDSF, proProdemge, proAbaco,
                             proBetha, proEquiplano, proISSIntel, proProdam, proGovBR, proRecife,
                             proSimplISS, proThema, proRJ, proPublica, profintelISS, proDigifred, proBetim,
                             proSaatri, proFISSLEX, proGoiania, proIssCuritiba, proBHISS, proNatal,
-                            proISSDigital, proISSe]);
+                            proISSDigital, proISSe, pro4R]);
 end;
 
 function StrToProvedor(var ok: boolean; const s: string):TnfseProvedor;
@@ -301,12 +302,13 @@ begin
                            ['Nenhum', 'Tiplan', 'ISS.NET', 'WebISS', 'GINFES', 'DSF', 'Prodemge', 'Abaco',
                             'Betha', 'Equiplano', 'ISSIntel', 'Prodam', 'GovBR', 'Recife',
                             'SimplISS', 'Thema', 'RJ', 'Publica', 'fintelISS', 'Digifred', 'Betim', 'Saatri',
-                            'FISSLEX', 'Goiania', 'IssCuritiba', 'BHISS', 'Natal', 'ISSDigital', 'ISSe'],
+                            'FISSLEX', 'Goiania', 'IssCuritiba', 'BHISS', 'Natal', 'ISSDigital', 'ISSe',
+                            '4R'],
                            [proNenhum, proTiplan, proISSNET, proWebISS, proGINFES, proDSF, proProdemge, proAbaco,
                             proBetha, proEquiplano, proISSIntel, proProdam, proGovBR, proRecife,
                             proSimplISS, proThema, proRJ, proPublica, profintelISS, proDigifred, proBetim,
                             proSaatri, proFISSLEX, proGoiania, proIssCuritiba, proBHISS, proNatal,
-                            proISSDigital, proISSe]);
+                            proISSDigital, proISSe, pro4R]);
 end;
 
 // Descrição do Serviço ********************************************************
@@ -769,7 +771,8 @@ begin
   4308508  // Frederico Westphalen/RS
          : Provedor := 'Digifred';
 
-  4303103, // Cachoeirinha/RS'
+  4303103, // Cachoeirinha/RS
+  4314100, // Passo Fundo/RS
   4318705  // Sao Leopoldo/RS
          : Provedor := 'Thema';
 
@@ -804,6 +807,9 @@ begin
 
   4115200  // Maringa/PR
          : Provedor := 'ISSe';
+  3523503 // Itatinga/SP
+         : Provedor := '4R';
+
  end;
  Result := Provedor;
 end;
