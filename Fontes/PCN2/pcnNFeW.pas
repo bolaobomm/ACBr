@@ -559,7 +559,7 @@ begin
   // Inscrição Estadual
   if nfe.Dest.IE = 'ISENTO' then
     Gerador.wCampo(tcStr, 'E17', 'IE ', 00, 14, 1, nfe.Dest.IE, DSC_IE)
-  else if trim(nfe.Dest.IE) <> '' then
+  else if (trim(nfe.Dest.IE) <> '') or (nfe.Ide.modelo <> 65)  then
     Gerador.wCampo(tcStr, 'E17', 'IE     ', 00, 14, 1, SomenteNumeros(nfe.Dest.IE), DSC_IE);
 
 //  if (length(nfe.Dest.CNPJCPF) = 11) and (SomenteNumeros(nfe.Dest.IE) <> '') then
