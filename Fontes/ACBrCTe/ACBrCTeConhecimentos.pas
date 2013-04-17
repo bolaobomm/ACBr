@@ -565,32 +565,35 @@ var
 begin
  try
     ArquivoXML := TStringList.Create;
-    ArquivoXML.LoadFromFile(CaminhoArquivo);
-    Result := True;
-    while pos('</CTe>',ArquivoXML.Text) > 0 do
-     begin
-       if pos('</cteProc>',ArquivoXML.Text) > 0  then
-        begin
-          XML := copy(ArquivoXML.Text,1,pos('</cteProc>',ArquivoXML.Text)+5);
-          ArquivoXML.Text := Trim(copy(ArquivoXML.Text,pos('</cteProc>',ArquivoXML.Text)+10,length(ArquivoXML.Text)));
-        end
-       else
-        begin
-          XML := copy(ArquivoXML.Text,1,pos('</CTe>',ArquivoXML.Text)+5);
-          ArquivoXML.Text := Trim(copy(ArquivoXML.Text,pos('</CTe>',ArquivoXML.Text)+6,length(ArquivoXML.Text)));
-        end;
-       LocCTeR := TCTeR.Create(Self.Add.CTe);
-       try
-          LocCTeR.Leitor.Arquivo := XML;
-          LocCTeR.LerXml;
-          Items[Self.Count-1].XML := LocCTeR.Leitor.Arquivo;
-          Items[Self.Count-1].NomeArq := CaminhoArquivo;
-          if AGerarCTe then GerarCTe;
-       finally
-          LocCTeR.Free;
+    try
+      ArquivoXML.LoadFromFile(CaminhoArquivo);
+      Result := True;
+      while pos('</CTe>',ArquivoXML.Text) > 0 do
+       begin
+         if pos('</cteProc>',ArquivoXML.Text) > 0  then
+          begin
+            XML := copy(ArquivoXML.Text,1,pos('</cteProc>',ArquivoXML.Text)+5);
+            ArquivoXML.Text := Trim(copy(ArquivoXML.Text,pos('</cteProc>',ArquivoXML.Text)+10,length(ArquivoXML.Text)));
+          end
+         else
+          begin
+            XML := copy(ArquivoXML.Text,1,pos('</CTe>',ArquivoXML.Text)+5);
+            ArquivoXML.Text := Trim(copy(ArquivoXML.Text,pos('</CTe>',ArquivoXML.Text)+6,length(ArquivoXML.Text)));
+          end;
+         LocCTeR := TCTeR.Create(Self.Add.CTe);
+         try
+            LocCTeR.Leitor.Arquivo := XML;
+            LocCTeR.LerXml;
+            Items[Self.Count-1].XML := LocCTeR.Leitor.Arquivo;
+            Items[Self.Count-1].NomeArq := CaminhoArquivo;
+            if AGerarCTe then GerarCTe;
+         finally
+            LocCTeR.Free;
+         end;
        end;
-     end;
-    ArquivoXML.Free;
+    finally
+      ArquivoXML.Free;
+    end;
  except
     raise;
     Result := False;
