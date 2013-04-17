@@ -545,32 +545,35 @@ var
 begin
  try
     ArquivoXML := TStringList.Create;
-    ArquivoXML.LoadFromFile(CaminhoArquivo);
-    Result := True;
-    while pos('</NFe>',ArquivoXML.Text) > 0 do
-     begin
-       if pos('</nfeProc>',ArquivoXML.Text) > 0  then
-        begin
-          XML := copy(ArquivoXML.Text,1,pos('</nfeProc>',ArquivoXML.Text)+5);
-          ArquivoXML.Text := Trim(copy(ArquivoXML.Text,pos('</nfeProc>',ArquivoXML.Text)+10,length(ArquivoXML.Text)));
-        end
-       else
-        begin
-          XML := copy(ArquivoXML.Text,1,pos('</NFe>',ArquivoXML.Text)+5);
-          ArquivoXML.Text := Trim(copy(ArquivoXML.Text,pos('</NFe>',ArquivoXML.Text)+6,length(ArquivoXML.Text)));
-        end;
-       LocNFeR := TNFeR.Create(Self.Add.NFe);
-       try
-          LocNFeR.Leitor.Arquivo := XML;
-          LocNFeR.LerXml;
-          Items[Self.Count-1].XML := LocNFeR.Leitor.Arquivo;
-          Items[Self.Count-1].NomeArq := CaminhoArquivo;
-          GerarNFe;
-       finally
-          LocNFeR.Free;
+    try
+      ArquivoXML.LoadFromFile(CaminhoArquivo);
+      Result := True;
+      while pos('</NFe>',ArquivoXML.Text) > 0 do
+       begin
+         if pos('</nfeProc>',ArquivoXML.Text) > 0  then
+          begin
+            XML := copy(ArquivoXML.Text,1,pos('</nfeProc>',ArquivoXML.Text)+5);
+            ArquivoXML.Text := Trim(copy(ArquivoXML.Text,pos('</nfeProc>',ArquivoXML.Text)+10,length(ArquivoXML.Text)));
+          end
+         else
+          begin
+            XML := copy(ArquivoXML.Text,1,pos('</NFe>',ArquivoXML.Text)+5);
+            ArquivoXML.Text := Trim(copy(ArquivoXML.Text,pos('</NFe>',ArquivoXML.Text)+6,length(ArquivoXML.Text)));
+          end;
+         LocNFeR := TNFeR.Create(Self.Add.NFe);
+         try
+            LocNFeR.Leitor.Arquivo := XML;
+            LocNFeR.LerXml;
+            Items[Self.Count-1].XML := LocNFeR.Leitor.Arquivo;
+            Items[Self.Count-1].NomeArq := CaminhoArquivo;
+            GerarNFe;
+         finally
+            LocNFeR.Free;
+         end;
        end;
-     end;
-    ArquivoXML.Free;
+    finally
+      ArquivoXML.Free;
+    end;
  except
     raise;
     Result := False;    
