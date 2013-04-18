@@ -715,6 +715,7 @@ begin
   4202131, // Bela Vista do Toldo/SC
   4202305, // Biguaçu/SC
   4202453, // Bombinhas/SC
+  4202800, // Braço do Norte/SC
   4203600, // Campos Novos/SC
   4203808, // Canoinhas/SC
   4204202, // Chapecó/SC
@@ -723,6 +724,7 @@ begin
   4204608, // Criciúma/SC
   4205555, // Frei Rogério/SC
   4205704, // Garopaba/SC
+  4206207, // Gravatal/SC
   4206405, // Guaraciaba/SC
   4206900, // Ibirama/SC
   4207304, // Imbituba/SC
