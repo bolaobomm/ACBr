@@ -78,8 +78,8 @@ requires
   synapse,
   ACBrCapicom,
   soaprtl,
-  vclimg,
-  RLibWinD2010;
+  // vclimg,
+  RLibWinD7vcl;
 
 contains
   ACBrNFeDANFeRL in '..\..\..\Fontes\ACBrNFe2\ACBrNFeDANFeRL.pas' {frlDANFeRL},
