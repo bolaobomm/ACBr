@@ -137,7 +137,8 @@ uses
   {$IFDEF CLX}
   QGraphics, QControls, QForms, QDialogs, QExtCtrls, Qt, QStdCtrls,
   {$ELSE}
-    {$IFDEF MSWINDOWS}Windows, Messages, {$ENDIF} Graphics, Controls, Forms, Dialogs, ExtCtrls, MaskUtils, StdCtrls,
+    {$IFDEF MSWINDOWS}Windows, Messages, {$ENDIF}
+    Graphics, Controls, Forms, Dialogs, ExtCtrls, MaskUtils, StdCtrls,
   {$ENDIF}
   RLReport, RLFilters, RLPDFFilter,
   {$IFDEF BORLAND}
@@ -677,7 +678,7 @@ type
 
 implementation
 
-uses ACBrNFeUtil, ACBrDFeUtil, pcnNFe, Math;
+uses ACBrNFeUtil, ACBrDFeUtil, pcnNFe, ACBrNFeDANFeRLClass;
 
 var
 q, iQuantItens, iItemAtual: Integer;
@@ -989,9 +990,9 @@ begin
   AddFatura;
   Observacoes;
 
-  // Altera a fonde do DANFE
-  case FFonteDANFE of
-    fdArial:
+  // Altera a fonte do DANFE
+  case FNomeFonte of
+    nfArial:
       for b := 0 to (RLNFe.ControlCount - 1) do
         for i := 0 to ((TRLBand(RLNFe.Controls[b]).ControlCount) - 1) do
           begin
@@ -1004,7 +1005,7 @@ begin
                (TRLLabel((TRLBand(RLNFe.Controls[b])).Controls[i]).Font.Size) - 1;
           end;
 
-    fdCourierNew:
+    nfCourierNew:
       begin
         for b := 0 to (RLNFe.ControlCount - 1) do
           for i := 0 to ((TRLBand(RLNFe.Controls[b]).ControlCount) - 1) do
@@ -1012,11 +1013,13 @@ begin
               TRLLabel((TRLBand(RLNFe.Controls[b])).Controls[i]).Font.Name :=
                                                                 'Courier New';
               if (TRLLabel((TRLBand(RLNFe.Controls[b])).Controls[i]).Tag = 0) or
-                (TRLLabel((TRLBand(RLNFe.Controls[b])).Controls[i]).Tag = 3) then
+                (TRLLabel((TRLBand(RLNFe.Controls[b])).Controls[i]).Tag = 703) or
+                (TRLLabel((TRLBand(RLNFe.Controls[b])).Controls[i]).Tag = 704) or
+                (TRLLabel((TRLBand(RLNFe.Controls[b])).Controls[i]).Tag = 705) then
                 TRLLabel((TRLBand(RLNFe.Controls[b])).Controls[i]).Font.Size :=
                (TRLLabel((TRLBand(RLNFe.Controls[b])).Controls[i]).Font.Size) - 1;
 
-              if TRLLabel((TRLBand(RLNFe.Controls[b])).Controls[i]).Tag = 40 then
+              if TRLLabel((TRLBand(RLNFe.Controls[b])).Controls[i]).Tag = 705 then
                 TRLLabel((TRLBand(RLNFe.Controls[b])).Controls[i]).Top :=
                 (TRLLabel((TRLBand(RLNFe.Controls[b])).Controls[i]).Top) - 1;
             end;
@@ -1027,7 +1030,7 @@ begin
         rllFone.Font.Size := rllFone.Font.Size - 1;
       end;
 
-    fdTimesNewRoman:
+    nfTimesNewRoman:
       for b := 0 to (RLNFe.ControlCount - 1) do
         for i := 0 to ((TRLBand(RLNFe.Controls[b]).ControlCount) - 1) do
           begin
@@ -1040,6 +1043,26 @@ begin
                (TRLLabel((TRLBand(RLNFe.Controls[b])).Controls[i]).Font.Size) - 1;
           end;
   end;
+
+  // Dados em negrito
+  if FNegrito then
+    begin
+      for b := 0 to (RLNFe.ControlCount - 1) do
+        for i := 0 to ((TRLBand(RLNFe.Controls[b]).ControlCount) - 1) do
+          begin
+            if TRLLabel((TRLBand(RLNFe.Controls[b])).Controls[i]).Tag = 703 then
+              TRLLabel((TRLBand(RLNFe.Controls[b])).Controls[i]).Font.Style := [fsBold];
+          end;
+    end
+  else
+    begin
+      for b := 0 to (RLNFe.ControlCount - 1) do
+        for i := 0 to ((TRLBand(RLNFe.Controls[b]).ControlCount) - 1) do
+          begin
+            if TRLLabel((TRLBand(RLNFe.Controls[b])).Controls[i]).Tag = 703 then
+              TRLLabel((TRLBand(RLNFe.Controls[b])).Controls[i]).Font.Style := [];
+          end;
+    end;
 
   // Altera a fonte da Razão Social do Emitente
   rlmEmitente.Font.Size := FTamanhoFonte_RazaoSocial;
@@ -1388,8 +1411,8 @@ end;
 procedure TfrlDANFeRLRetrato.DadosAdicionais;
 var sInfCompl, sInfAdFisco, sInfContr, sObsFisco, sObsProcRef, sInfInteira,
     sProtocolo, sSuframa : WideString;
-    sLinha, sIndProc: String;
-iTotalCaracteres, iTotalLinhas, iUltimoEspacoLinha, i: Integer;
+    sIndProc: String;
+    i: Integer;
 begin
   rlmDadosAdicionaisAuxiliar.Lines.BeginUpdate;
   rlmDadosAdicionaisAuxiliar.Lines.Clear;
@@ -2237,4 +2260,4 @@ begin
   iLimiteCaracteresContinuacao := 129;
 end;
 
-end.
+end.

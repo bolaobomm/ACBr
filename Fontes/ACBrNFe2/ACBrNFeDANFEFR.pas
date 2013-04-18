@@ -290,10 +290,13 @@ begin
     NomeArq := NomeArq + '-' + TACBrNFe(ACBrNFe).EventoNFe.Evento[0].InfEvento.TipoEvento;
     NomeArq := NomeArq + '-' + IntToStr(TACBrNFe(ACBrNFe).EventoNFe.Evento[0].InfEvento.nSeqEvento);
     }
-
+    {
     NomeArq := TACBrNFe(ACBrNFe).EventoNFe.Evento[0].InfEvento.TipoEvento;
     NomeArq := NomeArq + TACBrNFe(ACBrNFe).EventoNFe.Evento[0].InfEvento.chNFe;
+    }
 
+    NomeArq := Copy(TACBrNFe(ACBrNFe).EventoNFe.Evento.Items[0].InfEvento.id, 3, 52);
+    
     dmDanfe.frxPDFExport.FileName := PathWithDelim(Self.PathPDF) + NomeArq + 'evento.pdf';
     dmDanfe.frxReport.Export(dmDanfe.frxPDFExport);
   end;

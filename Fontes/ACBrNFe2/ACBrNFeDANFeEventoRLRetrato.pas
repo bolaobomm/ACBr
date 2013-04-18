@@ -52,10 +52,11 @@ uses
   {$IFDEF CLX}
   QGraphics, QControls, QForms, QDialogs, QExtCtrls, Qt, QStdCtrls,
   {$ELSE}
-    {$IFDEF MSWINDOWS}Windows, Messages, Graphics,{$ENDIF}  Controls, Forms, Dialogs, ExtCtrls, MaskUtils, StdCtrls,
+    {$IFDEF MSWINDOWS}Windows, Messages, Graphics,{$ENDIF}
+    Controls, Forms, Dialogs, ExtCtrls, MaskUtils, StdCtrls,
   {$ENDIF}
   RLReport, RLFilters, RLPDFFilter, {$IFDEF BORLAND} XMLIntf, XMLDoc, jpeg, {$ENDIF}
-  pcnConversao, RLBarcode, StrUtils, ACBrNFeDANFeRL, ACBrNFeDANFeEventoRL;
+  pcnConversao, RLBarcode, StrUtils, ACBrNFeDANFeEventoRL;
 
 type
   TfrlDANFeEventoRLRetrato = class(TfrlDANFeEventoRL)
@@ -202,7 +203,7 @@ type
 
 implementation
 
-uses ACBrNFeUtil, ACBrDFeUtil, pcnEnvEventoNFe, Math;
+uses ACBrNFeUtil, ACBrDFeUtil, pcnEnvEventoNFe, ACBrNFeDANFeRLClass;
 
 {$R *.dfm}
 
@@ -253,7 +254,7 @@ begin
         begin
           with FNFe do
             begin
-            // 1.) Preenche os campos do Emitente
+              // 1.) Preenche os campos do Emitente
               rllEmitNome.Caption := Emit.xNome;
               rllEmitCNPJ.Caption := DFeUtil.FormatarCNPJ(Emit.CNPJCPF);
               if Emit.EnderEmit.xCpl > '' then
@@ -283,7 +284,7 @@ begin
             end; // with NFe
         end; // if FNFe <> nil
 
-      // Preenche os campos espcíficos de acordo com o evento
+      // Preenche os campos específicos de acordo com o evento
       case InfEvento.tpEvento of
         teCCe:
           begin
@@ -344,9 +345,9 @@ begin
       RightMargin := FMargemDireita * 10;
     end;
 
-  // Ajuste da fone
-  case FFonteDANFE of
-    fdArial:
+  // Ajuste da fonte
+  case FNomeFonte of
+    nfArial:
       for b := 0 to (RLEvento.ControlCount - 1) do
         for i := 0 to ((TRLBand(RLEvento.Controls[b]).ControlCount) - 1) do
           begin
@@ -354,7 +355,7 @@ begin
                                                                       'Arial';
           end;
 
-    fdCourierNew:
+    nfCourierNew:
       begin
         for b := 0 to (RLEvento.ControlCount - 1) do
           for i := 0 to ((TRLBand(RLEvento.Controls[b]).ControlCount) - 1) do
@@ -367,7 +368,7 @@ begin
             end;
       end;
 
-    fdTimesNewRoman:
+    nfTimesNewRoman:
       for b := 0 to (RLEvento.ControlCount - 1) do
         for i := 0 to ((TRLBand(RLEvento.Controls[b]).ControlCount) - 1) do
           begin
@@ -375,6 +376,26 @@ begin
                                                              'Times New Roman';
           end;
   end;
+
+  // Dados em negrito
+  if FNegrito then
+    begin
+      for b := 0 to (RLEvento.ControlCount - 1) do
+        for i := 0 to ((TRLBand(RLEvento.Controls[b]).ControlCount) - 1) do
+          begin
+            if TRLLabel((TRLBand(RLEvento.Controls[b])).Controls[i]).Tag = 70 then
+              TRLLabel((TRLBand(RLEvento.Controls[b])).Controls[i]).Font.Style := [fsBold];
+          end;
+    end
+  else
+    begin
+      for b := 0 to (RLEvento.ControlCount - 1) do
+        for i := 0 to ((TRLBand(RLEvento.Controls[b]).ControlCount) - 1) do
+          begin
+            if TRLLabel((TRLBand(RLEvento.Controls[b])).Controls[i]).Tag = 70 then
+              TRLLabel((TRLBand(RLEvento.Controls[b])).Controls[i]).Font.Style := [];
+          end;
+    end;
 
   // Centraliza as linhas do cabeçalho caso o logo não seja informado
   if (FLogo <> '') and FileExists (FLogo) then
@@ -441,4 +462,4 @@ begin
   InitDados;
 end;
 
-end.
+end.

@@ -33,7 +33,7 @@ object frlDANFeEventoRL: TfrlDANFeEventoRL
     DocumentInfo.Author = 'FortesReport 3.23 - Copyright '#169' 1999-2009 Fortes Inform'#225'tica'
     DocumentInfo.Creator = 'Projeto ACBr (Componente NF-e)'
     DisplayName = 'Documento PDF'
-    Left = 368
-    Top = 152
+    Left = 416
+    Top = 104
   end
 end

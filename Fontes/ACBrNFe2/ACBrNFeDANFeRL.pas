@@ -105,28 +105,12 @@ uses
   {$IFDEF CLX}
   QGraphics, QControls, QForms, QDialogs, QExtCtrls, Qt,
   {$ELSE}
-   {$IFDEF MSWINDOWS}Windows, Messages, {$ENDIF} Graphics, Controls, Forms, Dialogs, ExtCtrls,
+    {$IFDEF MSWINDOWS}Windows, Messages, {$ENDIF}
+      Graphics, Controls, Forms, Dialogs, ExtCtrls,
   {$ENDIF}
-  MaskUtils, pcnNFe, pcnConversao, ACBrNFe, ACBrDFeUtil,
+  MaskUtils, pcnNFe, pcnConversao, ACBrNFe, ACBrDFeUtil, ACBrNFeDANFeRLClass,
   RLReport, RLFilters, RLPrinters, RLPDFFilter, RLConsts,
   {$IFDEF BORLAND} DBClient, {$ELSE} BufDataset, {$ENDIF} DB;
-
-type
-  TPosCanhoto = (pcCabecalho, pcRodape);
-  TFonteDANFE = (fdTimesNewRoman, fdCourierNew, fdArial);
-  TDetVeiculo = (dv_tpOp, dv_chassi, dv_cCor, dv_xCor, dv_pot, dv_cilin,
-                 dv_pesoL, dv_pesoB, dv_nSerie, dv_tpComb, dv_nMotor, dv_CMT,
-                 dv_dist, dv_anoMod, dv_anoFab, dv_tpPint, dv_tpVeic,
-                 dv_espVeic, dv_VIN, dv_condVeic, dv_cMod, dv_cCorDENATRAN,
-                 dv_lota, dv_tpRest);
-  TDetMedicamento = (dm_nLote, dm_qLote, dm_dFab, dm_dVal, dm_vPMC);
-  TDetArmamento = (da_tpArma, da_nSerie, da_nCano, da_descr);
-  TDetCombustivel = (dc_cProdANP, dc_CODIF, dc_qTemp, dc_UFCons, dc_CIDE,
-                     dc_qBCProd, dc_vAliqProd, dc_vCIDE);
-  TDetVeiculos = set of TDetVeiculo;
-  TDetMedicamentos = set of TDetMedicamento;
-  TDetArmamentos = set of TDetArmamento;
-  TDetCombustiveis = set of TDetCombustivel;
 
 type
   TfrlDANFeRL = class(TForm)
@@ -160,7 +144,8 @@ type
     FFormularioContinuo: Boolean;
     FExpandirLogoMarca: Boolean;
     FMostrarPreview: Boolean;
-    FFonteDANFE: TFonteDANFE;
+    FNomeFonte: TNomeFonte;
+    FNegrito: Boolean;
     FMargemSuperior: Double;
     FMargemInferior: Double;
     FMargemEsquerda: Double;
@@ -195,7 +180,8 @@ type
                     AFormularioContinuo: Boolean = False;
                     AExpandirLogoMarca: Boolean = False;
                     AMostrarPreview: Boolean = True;
-                    AFonteDANFE: TFonteDANFE = fdTimesNewRoman;
+                    ANomeFonte: TNomeFonte = nfTimesNewRoman;
+                    ANegrito: Boolean = True;
                     AMargemSuperior: Double = 0.7;
                     AMargemInferior: Double = 0.7;
                     AMargemEsquerda: Double = 0.7;
@@ -225,7 +211,8 @@ type
                     APosCanhoto: TPosCanhoto = pcCabecalho;
                     AFormularioContinuo: Boolean = False;
                     AExpandirLogoMarca: Boolean = False;
-                    AFonteDANFE: TFonteDANFE = fdTimesNewRoman;
+                    ANomeFonte: TNomeFonte = nfTimesNewRoman;
+                    ANegrito: Boolean = True;
                     AMargemSuperior: Double = 0.7;
                     AMargemInferior: Double = 0.7;
                     AMargemEsquerda: Double = 0.7;
@@ -353,7 +340,8 @@ class procedure TfrlDANFeRL.Imprimir(ANFe: TNFe; ALogo: String = '';
                 AFormularioContinuo: Boolean = False;
                 AExpandirLogoMarca: Boolean = False;
                 AMostrarPreview: Boolean = True;
-                AFonteDANFE: TFonteDANFE = fdTimesNewRoman;
+                ANomeFonte: TNomeFonte = nfTimesNewRoman;
+                ANegrito: Boolean = True;
                 AMargemSuperior: Double = 0.7;
                 AMargemInferior: Double = 0.7;
                 AMargemEsquerda: Double = 0.7;
@@ -392,7 +380,8 @@ begin
       FFormularioContinuo := AFormularioContinuo;
       FExpandirLogoMarca := AExpandirLogoMarca;
       FMostrarPreview := AMostrarPreview;
-      FFonteDANFE := AFonteDANFE;
+      FNomeFonte := ANomeFonte;
+      FNegrito := ANegrito;
       FMargemSuperior := AMargemSuperior;
       FMargemInferior := AMargemInferior;
       FMargemEsquerda := AMargemEsquerda;
@@ -440,7 +429,8 @@ class procedure TfrlDANFeRL.SavePDF(ANFe: TNFe; ALogo: String = '';
                     APosCanhoto: TPosCanhoto = pcCabecalho;
                     AFormularioContinuo: Boolean = False;
                     AExpandirLogoMarca: Boolean = False;
-                    AFonteDANFE: TFonteDANFE = fdTimesNewRoman;
+                    ANomeFonte: TNomeFonte = nfTimesNewRoman;
+                    ANegrito: Boolean = True;
                     AMargemSuperior: Double = 0.7;
                     AMargemInferior: Double = 0.7;
                     AMargemEsquerda: Double = 0.7;
@@ -477,7 +467,8 @@ begin
       FPosCanhoto := APosCanhoto;
       FFormularioContinuo := AFormularioContinuo;
       FExpandirLogoMarca := AExpandirLogoMarca;
-      FFonteDANFE := AFonteDANFE;
+      FNomeFonte := ANomeFonte;
+      FNegrito := ANegrito;
       FMargemSuperior := AMargemSuperior;
       FMargemInferior := AMargemInferior;
       FMargemEsquerda := AMargemEsquerda;
@@ -638,4 +629,4 @@ end;
 {initialization
 RLConsts.SetVersion(3,71,'B');}
 
-end.
+end.

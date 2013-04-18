@@ -2,7 +2,7 @@ inherited frlDANFeEventoRLRetrato: TfrlDANFeEventoRLRetrato
   Left = 200
   Top = 114
   Width = 827
-  Height = 655
+  Height = 623
   Caption = 'frlDANFeEventoRLRetrato'
   OldCreateOrder = True
   PixelsPerInch = 96
@@ -74,6 +74,7 @@ inherited frlDANFeEventoRLRetrato: TfrlDANFeEventoRLRetrato
         ParentFont = False
       end
       object rllModeloNF: TRLLabel
+        Tag = 70
         Left = 6
         Top = 33
         Width = 81
@@ -103,6 +104,7 @@ inherited frlDANFeEventoRLRetrato: TfrlDANFeEventoRLRetrato
         ParentFont = False
       end
       object rllSerieNF: TRLLabel
+        Tag = 70
         Left = 104
         Top = 33
         Width = 57
@@ -131,6 +133,7 @@ inherited frlDANFeEventoRLRetrato: TfrlDANFeEventoRLRetrato
         ParentFont = False
       end
       object rllMesAnoEmissaoNF: TRLLabel
+        Tag = 70
         Left = 306
         Top = 33
         Width = 119
@@ -190,6 +193,7 @@ inherited frlDANFeEventoRLRetrato: TfrlDANFeEventoRLRetrato
         Margins.RightMargin = 1.000000000000000000
       end
       object rllChaveNFe: TRLLabel
+        Tag = 70
         Left = 6
         Top = 63
         Width = 419
@@ -243,6 +247,7 @@ inherited frlDANFeEventoRLRetrato: TfrlDANFeEventoRLRetrato
         HoldStyle = hsRelatively
       end
       object rllNumNF: TRLLabel
+        Tag = 70
         Left = 176
         Top = 33
         Width = 113
@@ -300,6 +305,7 @@ inherited frlDANFeEventoRLRetrato: TfrlDANFeEventoRLRetrato
         ParentFont = False
       end
       object rllOrgao: TRLLabel
+        Tag = 70
         Left = 7
         Top = 33
         Width = 90
@@ -328,6 +334,7 @@ inherited frlDANFeEventoRLRetrato: TfrlDANFeEventoRLRetrato
         ParentFont = False
       end
       object rllEvento: TRLLabel
+        Tag = 70
         Left = 7
         Top = 63
         Width = 114
@@ -356,6 +363,7 @@ inherited frlDANFeEventoRLRetrato: TfrlDANFeEventoRLRetrato
         ParentFont = False
       end
       object rllStatusEvento: TRLLabel
+        Tag = 70
         Left = 7
         Top = 93
         Width = 370
@@ -384,6 +392,7 @@ inherited frlDANFeEventoRLRetrato: TfrlDANFeEventoRLRetrato
         ParentFont = False
       end
       object rllProtocoloEvento: TRLLabel
+        Tag = 70
         Left = 387
         Top = 93
         Width = 158
@@ -412,6 +421,7 @@ inherited frlDANFeEventoRLRetrato: TfrlDANFeEventoRLRetrato
         ParentFont = False
       end
       object rllDescrEvento: TRLLabel
+        Tag = 70
         Left = 137
         Top = 63
         Width = 328
@@ -440,6 +450,7 @@ inherited frlDANFeEventoRLRetrato: TfrlDANFeEventoRLRetrato
         ParentFont = False
       end
       object rllAmbiente: TRLLabel
+        Tag = 70
         Left = 113
         Top = 33
         Width = 432
@@ -468,6 +479,7 @@ inherited frlDANFeEventoRLRetrato: TfrlDANFeEventoRLRetrato
         ParentFont = False
       end
       object rllSeqEvento: TRLLabel
+        Tag = 70
         Left = 477
         Top = 63
         Width = 140
@@ -496,6 +508,7 @@ inherited frlDANFeEventoRLRetrato: TfrlDANFeEventoRLRetrato
         ParentFont = False
       end
       object rllDataHoraRegistro: TRLLabel
+        Tag = 70
         Left = 557
         Top = 93
         Width = 180
@@ -524,6 +537,7 @@ inherited frlDANFeEventoRLRetrato: TfrlDANFeEventoRLRetrato
         ParentFont = False
       end
       object rllVersaoEvento: TRLLabel
+        Tag = 70
         Left = 630
         Top = 63
         Width = 99
@@ -607,6 +621,7 @@ inherited frlDANFeEventoRLRetrato: TfrlDANFeEventoRLRetrato
         HoldStyle = hsRelatively
       end
       object rllDataHoraEvento: TRLLabel
+        Tag = 70
         Left = 557
         Top = 33
         Width = 180
@@ -666,6 +681,7 @@ inherited frlDANFeEventoRLRetrato: TfrlDANFeEventoRLRetrato
         ParentFont = False
       end
       object rllJustificativa: TRLLabel
+        Tag = 70
         Left = 7
         Top = 13
         Width = 722
@@ -750,6 +766,7 @@ inherited frlDANFeEventoRLRetrato: TfrlDANFeEventoRLRetrato
         ParentFont = False
       end
       object rllDestNome: TRLLabel
+        Tag = 70
         Left = 7
         Top = 49
         Width = 578
@@ -779,6 +796,7 @@ inherited frlDANFeEventoRLRetrato: TfrlDANFeEventoRLRetrato
         ParentFont = False
       end
       object rllDestEndereco: TRLLabel
+        Tag = 70
         Left = 7
         Top = 79
         Width = 434
@@ -808,6 +826,7 @@ inherited frlDANFeEventoRLRetrato: TfrlDANFeEventoRLRetrato
         ParentFont = False
       end
       object rllDestCidade: TRLLabel
+        Tag = 70
         Left = 7
         Top = 109
         Width = 362
@@ -836,6 +855,7 @@ inherited frlDANFeEventoRLRetrato: TfrlDANFeEventoRLRetrato
         ParentFont = False
       end
       object rllDestFone: TRLLabel
+        Tag = 70
         Left = 387
         Top = 109
         Width = 146
@@ -864,6 +884,7 @@ inherited frlDANFeEventoRLRetrato: TfrlDANFeEventoRLRetrato
         ParentFont = False
       end
       object rllDestBairro: TRLLabel
+        Tag = 70
         Left = 457
         Top = 79
         Width = 184
@@ -892,6 +913,7 @@ inherited frlDANFeEventoRLRetrato: TfrlDANFeEventoRLRetrato
         ParentFont = False
       end
       object rllDestUF: TRLLabel
+        Tag = 70
         Left = 552
         Top = 109
         Width = 38
@@ -920,6 +942,7 @@ inherited frlDANFeEventoRLRetrato: TfrlDANFeEventoRLRetrato
         ParentFont = False
       end
       object rllDestCNPJ: TRLLabel
+        Tag = 70
         Left = 601
         Top = 49
         Width = 128
@@ -948,6 +971,7 @@ inherited frlDANFeEventoRLRetrato: TfrlDANFeEventoRLRetrato
         ParentFont = False
       end
       object rllDestCEP: TRLLabel
+        Tag = 70
         Left = 653
         Top = 79
         Width = 76
@@ -976,6 +1000,7 @@ inherited frlDANFeEventoRLRetrato: TfrlDANFeEventoRLRetrato
         ParentFont = False
       end
       object rllDestIE: TRLLabel
+        Tag = 70
         Left = 601
         Top = 109
         Width = 128
@@ -1178,6 +1203,7 @@ inherited frlDANFeEventoRLRetrato: TfrlDANFeEventoRLRetrato
         ParentFont = False
       end
       object rllEmitNome: TRLLabel
+        Tag = 70
         Left = 7
         Top = 49
         Width = 578
@@ -1206,6 +1232,7 @@ inherited frlDANFeEventoRLRetrato: TfrlDANFeEventoRLRetrato
         ParentFont = False
       end
       object rllEmitCNPJ: TRLLabel
+        Tag = 70
         Left = 601
         Top = 49
         Width = 128
@@ -1235,6 +1262,7 @@ inherited frlDANFeEventoRLRetrato: TfrlDANFeEventoRLRetrato
         ParentFont = False
       end
       object rllEmitEndereco: TRLLabel
+        Tag = 70
         Left = 7
         Top = 79
         Width = 434
@@ -1263,6 +1291,7 @@ inherited frlDANFeEventoRLRetrato: TfrlDANFeEventoRLRetrato
         ParentFont = False
       end
       object rllEmitBairro: TRLLabel
+        Tag = 70
         Left = 457
         Top = 79
         Width = 184
@@ -1291,6 +1320,7 @@ inherited frlDANFeEventoRLRetrato: TfrlDANFeEventoRLRetrato
         ParentFont = False
       end
       object rllEmitCEP: TRLLabel
+        Tag = 70
         Left = 653
         Top = 79
         Width = 76
@@ -1320,6 +1350,7 @@ inherited frlDANFeEventoRLRetrato: TfrlDANFeEventoRLRetrato
         ParentFont = False
       end
       object rllEmitCidade: TRLLabel
+        Tag = 70
         Left = 7
         Top = 109
         Width = 362
@@ -1348,6 +1379,7 @@ inherited frlDANFeEventoRLRetrato: TfrlDANFeEventoRLRetrato
         ParentFont = False
       end
       object rllEmitFone: TRLLabel
+        Tag = 70
         Left = 387
         Top = 109
         Width = 146
@@ -1376,6 +1408,7 @@ inherited frlDANFeEventoRLRetrato: TfrlDANFeEventoRLRetrato
         ParentFont = False
       end
       object rllEmitUF: TRLLabel
+        Tag = 70
         Left = 552
         Top = 109
         Width = 38
@@ -1404,6 +1437,7 @@ inherited frlDANFeEventoRLRetrato: TfrlDANFeEventoRLRetrato
         ParentFont = False
       end
       object rllEmitIE: TRLLabel
+        Tag = 70
         Left = 601
         Top = 109
         Width = 128
@@ -1419,7 +1453,7 @@ inherited frlDANFeEventoRLRetrato: TfrlDANFeEventoRLRetrato
     end
     object rlbUsuario: TRLBand
       Left = 26
-      Top = 1064
+      Top = 1116
       Width = 742
       Height = 12
       AlignToBottom = True
@@ -1484,6 +1518,7 @@ inherited frlDANFeEventoRLRetrato: TfrlDANFeEventoRLRetrato
         Brush.Style = bsClear
       end
       object rlmCondUso: TRLMemo
+        Tag = 70
         Left = 8
         Top = 42
         Width = 721
@@ -1508,9 +1543,8 @@ inherited frlDANFeEventoRLRetrato: TfrlDANFeEventoRLRetrato
       object RLDraw3: TRLDraw
         Left = 0
         Top = 0
-        Width = 742
+        Width = 740
         Height = 81
-        Align = faTop
       end
       object rliLogo: TRLImage
         Left = 8
@@ -1575,7 +1609,7 @@ inherited frlDANFeEventoRLRetrato: TfrlDANFeEventoRLRetrato
       Left = 26
       Top = 824
       Width = 742
-      Height = 240
+      Height = 292
       BandType = btTitle
       object RLLabel6: TRLLabel
         Tag = 30
@@ -1596,14 +1630,15 @@ inherited frlDANFeEventoRLRetrato: TfrlDANFeEventoRLRetrato
         Left = 0
         Top = 20
         Width = 740
-        Height = 218
+        Height = 269
         Brush.Style = bsClear
       end
       object rlmCorrecao: TRLMemo
+        Tag = 70
         Left = 8
         Top = 27
         Width = 721
-        Height = 205
+        Height = 254
         AutoSize = False
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
@@ -1616,7 +1651,7 @@ inherited frlDANFeEventoRLRetrato: TfrlDANFeEventoRLRetrato
     end
   end
   inherited RLPDFFilter1: TRLPDFFilter
-    Left = 712
-    Top = 37
+    Left = 720
+    Top = 55
   end
 end

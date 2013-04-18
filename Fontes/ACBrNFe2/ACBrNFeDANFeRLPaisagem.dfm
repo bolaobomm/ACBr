@@ -1149,6 +1149,7 @@ inherited frlDANFeRLPaisagem: TfrlDANFeRLPaisagem
         Scaled = True
       end
       object rllNatOperacao: TRLLabel
+        Tag = 70
         Left = 7
         Top = 115
         Width = 602
@@ -1162,6 +1163,7 @@ inherited frlDANFeRLPaisagem: TfrlDANFeRLPaisagem
         ParentFont = False
       end
       object rllDadosVariaveis3: TRLLabel
+        Tag = 70
         Left = 643
         Top = 115
         Width = 350
@@ -1175,6 +1177,7 @@ inherited frlDANFeRLPaisagem: TfrlDANFeRLPaisagem
         ParentFont = False
       end
       object rllInscricaoEstadual: TRLLabel
+        Tag = 70
         Left = 7
         Top = 141
         Width = 314
@@ -1188,6 +1191,7 @@ inherited frlDANFeRLPaisagem: TfrlDANFeRLPaisagem
         ParentFont = False
       end
       object rllInscrEstSubst: TRLLabel
+        Tag = 70
         Left = 339
         Top = 141
         Width = 318
@@ -1201,6 +1205,7 @@ inherited frlDANFeRLPaisagem: TfrlDANFeRLPaisagem
         ParentFont = False
       end
       object rllCNPJ: TRLLabel
+        Tag = 70
         Left = 671
         Top = 141
         Width = 314
@@ -1214,6 +1219,7 @@ inherited frlDANFeRLPaisagem: TfrlDANFeRLPaisagem
         ParentFont = False
       end
       object rllChave: TRLLabel
+        Tag = 70
         Left = 643
         Top = 51
         Width = 334
@@ -1468,6 +1474,7 @@ inherited frlDANFeRLPaisagem: TfrlDANFeRLPaisagem
         ParentFont = False
       end
       object rllDestNome: TRLLabel
+        Tag = 70
         Left = 40
         Top = 11
         Width = 689
@@ -1496,6 +1503,7 @@ inherited frlDANFeRLPaisagem: TfrlDANFeRLPaisagem
         ParentFont = False
       end
       object rllDestEndereco: TRLLabel
+        Tag = 70
         Left = 40
         Top = 37
         Width = 537
@@ -1524,6 +1532,7 @@ inherited frlDANFeRLPaisagem: TfrlDANFeRLPaisagem
         ParentFont = False
       end
       object rllDestCidade: TRLLabel
+        Tag = 70
         Left = 40
         Top = 63
         Width = 457
@@ -1552,6 +1561,7 @@ inherited frlDANFeRLPaisagem: TfrlDANFeRLPaisagem
         ParentFont = False
       end
       object rllDestFone: TRLLabel
+        Tag = 70
         Left = 507
         Top = 63
         Width = 146
@@ -1580,6 +1590,7 @@ inherited frlDANFeRLPaisagem: TfrlDANFeRLPaisagem
         ParentFont = False
       end
       object rllDestBairro: TRLLabel
+        Tag = 70
         Left = 593
         Top = 37
         Width = 192
@@ -1608,6 +1619,7 @@ inherited frlDANFeRLPaisagem: TfrlDANFeRLPaisagem
         ParentFont = False
       end
       object rllDestUF: TRLLabel
+        Tag = 70
         Left = 688
         Top = 63
         Width = 38
@@ -1636,6 +1648,7 @@ inherited frlDANFeRLPaisagem: TfrlDANFeRLPaisagem
         ParentFont = False
       end
       object rllDestCNPJ: TRLLabel
+        Tag = 70
         Left = 745
         Top = 11
         Width = 112
@@ -1664,6 +1677,7 @@ inherited frlDANFeRLPaisagem: TfrlDANFeRLPaisagem
         ParentFont = False
       end
       object rllDestCEP: TRLLabel
+        Tag = 70
         Left = 797
         Top = 37
         Width = 60
@@ -1692,6 +1706,7 @@ inherited frlDANFeRLPaisagem: TfrlDANFeRLPaisagem
         ParentFont = False
       end
       object rllDestIE: TRLLabel
+        Tag = 70
         Left = 745
         Top = 63
         Width = 112
@@ -1720,6 +1735,7 @@ inherited frlDANFeRLPaisagem: TfrlDANFeRLPaisagem
         ParentFont = False
       end
       object rllEmissao: TRLLabel
+        Tag = 70
         Left = 886
         Top = 11
         Width = 80
@@ -1748,6 +1764,7 @@ inherited frlDANFeRLPaisagem: TfrlDANFeRLPaisagem
         ParentFont = False
       end
       object rllSaida: TRLLabel
+        Tag = 70
         Left = 886
         Top = 37
         Width = 80
@@ -1776,6 +1793,7 @@ inherited frlDANFeRLPaisagem: TfrlDANFeRLPaisagem
         ParentFont = False
       end
       object rllHoraSaida: TRLLabel
+        Tag = 70
         Left = 886
         Top = 63
         Width = 80
@@ -2925,6 +2943,7 @@ inherited frlDANFeRLPaisagem: TfrlDANFeRLPaisagem
         ParentFont = False
       end
       object rllBaseICMS: TRLLabel
+        Tag = 70
         Left = 39
         Top = 11
         Width = 186
@@ -2954,6 +2973,7 @@ inherited frlDANFeRLPaisagem: TfrlDANFeRLPaisagem
         ParentFont = False
       end
       object rllValorFrete: TRLLabel
+        Tag = 70
         Left = 39
         Top = 39
         Width = 136
@@ -2983,6 +3003,7 @@ inherited frlDANFeRLPaisagem: TfrlDANFeRLPaisagem
         ParentFont = False
       end
       object rllValorICMS: TRLLabel
+        Tag = 70
         Left = 237
         Top = 11
         Width = 186
@@ -3012,6 +3033,7 @@ inherited frlDANFeRLPaisagem: TfrlDANFeRLPaisagem
         ParentFont = False
       end
       object rllValorSeguro: TRLLabel
+        Tag = 70
         Left = 188
         Top = 39
         Width = 136
@@ -3041,6 +3063,7 @@ inherited frlDANFeRLPaisagem: TfrlDANFeRLPaisagem
         ParentFont = False
       end
       object rllDescontos: TRLLabel
+        Tag = 70
         Left = 337
         Top = 39
         Width = 136
@@ -3070,6 +3093,7 @@ inherited frlDANFeRLPaisagem: TfrlDANFeRLPaisagem
         ParentFont = False
       end
       object rllBaseICMSST: TRLLabel
+        Tag = 70
         Left = 436
         Top = 11
         Width = 186
@@ -3099,6 +3123,7 @@ inherited frlDANFeRLPaisagem: TfrlDANFeRLPaisagem
         ParentFont = False
       end
       object rllAcessorias: TRLLabel
+        Tag = 70
         Left = 486
         Top = 39
         Width = 136
@@ -3128,6 +3153,7 @@ inherited frlDANFeRLPaisagem: TfrlDANFeRLPaisagem
         ParentFont = False
       end
       object rllValorICMSST: TRLLabel
+        Tag = 70
         Left = 635
         Top = 11
         Width = 148
@@ -3157,6 +3183,7 @@ inherited frlDANFeRLPaisagem: TfrlDANFeRLPaisagem
         ParentFont = False
       end
       object rllValorIPI: TRLLabel
+        Tag = 70
         Left = 635
         Top = 39
         Width = 148
@@ -3186,6 +3213,7 @@ inherited frlDANFeRLPaisagem: TfrlDANFeRLPaisagem
         ParentFont = False
       end
       object rllTotalProdutos: TRLLabel
+        Tag = 70
         Left = 796
         Top = 11
         Width = 194
@@ -3286,6 +3314,7 @@ inherited frlDANFeRLPaisagem: TfrlDANFeRLPaisagem
         ParentFont = False
       end
       object rllTotalNF: TRLLabel
+        Tag = 70
         Left = 796
         Top = 39
         Width = 194
@@ -3369,6 +3398,7 @@ inherited frlDANFeRLPaisagem: TfrlDANFeRLPaisagem
         ParentFont = False
       end
       object rllTransNome: TRLLabel
+        Tag = 70
         Left = 39
         Top = 11
         Width = 458
@@ -3397,6 +3427,7 @@ inherited frlDANFeRLPaisagem: TfrlDANFeRLPaisagem
         ParentFont = False
       end
       object rllTransEndereco: TRLLabel
+        Tag = 70
         Left = 39
         Top = 37
         Width = 458
@@ -3425,6 +3456,7 @@ inherited frlDANFeRLPaisagem: TfrlDANFeRLPaisagem
         ParentFont = False
       end
       object rllTransQTDE: TRLLabel
+        Tag = 70
         Left = 39
         Top = 63
         Width = 79
@@ -3454,6 +3486,7 @@ inherited frlDANFeRLPaisagem: TfrlDANFeRLPaisagem
         ParentFont = False
       end
       object rllTransEspecie: TRLLabel
+        Tag = 70
         Left = 130
         Top = 63
         Width = 151
@@ -3482,6 +3515,7 @@ inherited frlDANFeRLPaisagem: TfrlDANFeRLPaisagem
         ParentFont = False
       end
       object rllTransMarca: TRLLabel
+        Tag = 70
         Left = 297
         Top = 63
         Width = 200
@@ -3525,6 +3559,7 @@ inherited frlDANFeRLPaisagem: TfrlDANFeRLPaisagem
         ParentFont = False
       end
       object rllTransCidade: TRLLabel
+        Tag = 70
         Left = 507
         Top = 37
         Width = 262
@@ -3553,6 +3588,7 @@ inherited frlDANFeRLPaisagem: TfrlDANFeRLPaisagem
         ParentFont = False
       end
       object rllTransNumeracao: TRLLabel
+        Tag = 70
         Left = 507
         Top = 63
         Width = 102
@@ -3581,6 +3617,7 @@ inherited frlDANFeRLPaisagem: TfrlDANFeRLPaisagem
         ParentFont = False
       end
       object rllTransCodigoANTT: TRLLabel
+        Tag = 70
         Left = 623
         Top = 11
         Width = 66
@@ -3609,6 +3646,7 @@ inherited frlDANFeRLPaisagem: TfrlDANFeRLPaisagem
         ParentFont = False
       end
       object rllTransPlaca: TRLLabel
+        Tag = 70
         Left = 700
         Top = 11
         Width = 66
@@ -3637,6 +3675,7 @@ inherited frlDANFeRLPaisagem: TfrlDANFeRLPaisagem
         ParentFont = False
       end
       object rllTransPesoBruto: TRLLabel
+        Tag = 70
         Left = 623
         Top = 63
         Width = 178
@@ -3666,6 +3705,7 @@ inherited frlDANFeRLPaisagem: TfrlDANFeRLPaisagem
         ParentFont = False
       end
       object rllTransUFPlaca: TRLLabel
+        Tag = 70
         Left = 780
         Top = 11
         Width = 21
@@ -3694,6 +3734,7 @@ inherited frlDANFeRLPaisagem: TfrlDANFeRLPaisagem
         ParentFont = False
       end
       object rllTransUF: TRLLabel
+        Tag = 70
         Left = 780
         Top = 37
         Width = 21
@@ -3722,6 +3763,7 @@ inherited frlDANFeRLPaisagem: TfrlDANFeRLPaisagem
         ParentFont = False
       end
       object rllTransCNPJ: TRLLabel
+        Tag = 70
         Left = 813
         Top = 11
         Width = 180
@@ -3750,6 +3792,7 @@ inherited frlDANFeRLPaisagem: TfrlDANFeRLPaisagem
         ParentFont = False
       end
       object rllTransIE: TRLLabel
+        Tag = 70
         Left = 813
         Top = 37
         Width = 180
@@ -3851,6 +3894,7 @@ inherited frlDANFeRLPaisagem: TfrlDANFeRLPaisagem
         HoldStyle = hsRelatively
       end
       object rllTransModFrete: TRLLabel
+        Tag = 70
         Left = 507
         Top = 11
         Width = 106
@@ -3879,6 +3923,7 @@ inherited frlDANFeRLPaisagem: TfrlDANFeRLPaisagem
         ParentFont = False
       end
       object rllTransPesoLiq: TRLLabel
+        Tag = 70
         Left = 813
         Top = 63
         Width = 178
@@ -4578,6 +4623,7 @@ inherited frlDANFeRLPaisagem: TfrlDANFeRLPaisagem
         HoldStyle = hsRelatively
       end
       object rllISSQNValorServicos: TRLLabel
+        Tag = 70
         Left = 279
         Top = 11
         Width = 226
@@ -4592,6 +4638,7 @@ inherited frlDANFeRLPaisagem: TfrlDANFeRLPaisagem
         ParentFont = False
       end
       object rllISSQNBaseCalculo: TRLLabel
+        Tag = 70
         Left = 521
         Top = 11
         Width = 224
@@ -4606,6 +4653,7 @@ inherited frlDANFeRLPaisagem: TfrlDANFeRLPaisagem
         ParentFont = False
       end
       object rllISSQNValorISSQN: TRLLabel
+        Tag = 70
         Left = 763
         Top = 11
         Width = 222
@@ -4620,6 +4668,7 @@ inherited frlDANFeRLPaisagem: TfrlDANFeRLPaisagem
         ParentFont = False
       end
       object rllISSQNInscricao: TRLLabel
+        Tag = 70
         Left = 39
         Top = 11
         Width = 226
@@ -4944,10 +4993,10 @@ inherited frlDANFeRLPaisagem: TfrlDANFeRLPaisagem
   end
   inherited RLPDFFilter1: TRLPDFFilter
     Left = 1024
-    Top = 34
+    Top = 31
   end
   inherited DataSource1: TDataSource
     Left = 1056
-    Top = 34
+    Top = 31
   end
 end

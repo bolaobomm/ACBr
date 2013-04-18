@@ -141,7 +141,8 @@ uses
   {$IFDEF CLX}
   QGraphics, QControls, QForms, QDialogs, QExtCtrls, Qt, QStdCtrls,
   {$ELSE}
-    {$IFDEF MSWINDOWS}Windows, Messages, Graphics, {$ENDIF} Controls, Forms, Dialogs, ExtCtrls, MaskUtils, StdCtrls,
+    {$IFDEF MSWINDOWS}Windows, Messages, Graphics, {$ENDIF}
+    Controls, Forms, Dialogs, ExtCtrls, MaskUtils, StdCtrls,
   {$ENDIF}
   RLReport, RLFilters, RLPDFFilter,
     {$IFDEF BORLAND}
@@ -579,7 +580,7 @@ type
 
 implementation
 
-uses ACBrNFeUtil, ACBrDFeUtil, pcnNFe;
+uses ACBrNFeUtil, ACBrDFeUtil, pcnNFe, ACBrNFeDANFeRLClass;
 
 var
 q, iQuantItens, iItemAtual: Integer;
@@ -917,8 +918,8 @@ begin
   Observacoes;
 
   // Altera a fonde do DANFE
-  case FFonteDANFE of
-    fdArial:
+  case FNomeFonte of
+    nfArial:
       for b := 0 to (RLNFe.ControlCount - 1) do
         for i := 0 to ((TRLBand(RLNFe.Controls[b]).ControlCount) - 1) do
           begin
@@ -936,7 +937,7 @@ begin
               (TRLLabel((TRLBand(RLNFe.Controls[b])).Controls[i]).Font.Size) - 1;
           end;
 
-    fdCourierNew:
+    nfCourierNew:
       begin
         for b := 0 to (RLNFe.ControlCount - 1) do
           for i := 0 to ((TRLBand(RLNFe.Controls[b]).ControlCount) - 1) do
@@ -969,7 +970,7 @@ begin
         rllNumNF1.Top := rllNumNF1.Top + 1;
       end;
 
-    fdTimesNewRoman:
+    nfTimesNewRoman:
       for b := 0 to (RLNFe.ControlCount - 1) do
         for i := 0 to ((TRLBand(RLNFe.Controls[b]).ControlCount) - 1) do
           begin
@@ -987,6 +988,26 @@ begin
               (TRLLabel((TRLBand(RLNFe.Controls[b])).Controls[i]).Font.Size) - 1;
           end;
   end;
+
+  // Dados em negrito
+  if FNegrito then
+    begin
+      for b := 0 to (RLNFe.ControlCount - 1) do
+        for i := 0 to ((TRLBand(RLNFe.Controls[b]).ControlCount) - 1) do
+          begin
+            if TRLLabel((TRLBand(RLNFe.Controls[b])).Controls[i]).Tag = 70 then
+              TRLLabel((TRLBand(RLNFe.Controls[b])).Controls[i]).Font.Style := [fsBold];
+          end;
+    end
+  else
+    begin
+      for b := 0 to (RLNFe.ControlCount - 1) do
+        for i := 0 to ((TRLBand(RLNFe.Controls[b]).ControlCount) - 1) do
+          begin
+            if TRLLabel((TRLBand(RLNFe.Controls[b])).Controls[i]).Tag = 70 then
+              TRLLabel((TRLBand(RLNFe.Controls[b])).Controls[i]).Font.Style := [];
+          end;
+    end;
 
   // Altera a fonte da Razão Social do Emitente
   rlmEmitente.Font.Size := FTamanhoFonte_RazaoSocial;
@@ -1330,8 +1351,8 @@ end;
 procedure TfrlDANFeRLPaisagem.DadosAdicionais;
 var sInfCompl, sInfAdFisco, sInfContr, sObsFisco, sObsProcRef, sInfInteira,
     sProtocolo, sSuframa : WideString;
-    sLinhaProvisoria, sLinha, sIndProc: String;
-iTotalCaracteres, iTotalLinhas, iUltimoEspacoLinha, i: Integer;
+    sIndProc: String;
+    i: Integer;
 begin
   rlmDadosAdicionaisAuxiliar.Lines.BeginUpdate;
   rlmDadosAdicionaisAuxiliar.Lines.Clear;
@@ -2138,7 +2159,6 @@ end;
 
 procedure TfrlDANFeRLPaisagem.rlbItensBeforePrint(Sender: TObject;
   var PrintIt: Boolean);
-var iAumento: Integer;
 begin
   // Controla os itens por página
   iItemAtual := iItemAtual + 1;
@@ -2272,4 +2292,4 @@ begin
   iLimiteCaracteresContinuacao := 204;
 end;
 
-end.
+end.

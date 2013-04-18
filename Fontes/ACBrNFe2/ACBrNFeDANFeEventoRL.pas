@@ -41,7 +41,7 @@
 |*  - Início da impressão dos eventos em Fortes Report
 ******************************************************************************}
 {$I ACBr.inc}
-unit ACBrNFeDANFeEventoRL;
+unit ACBrNFeDANFeEventoRL2;
 
 interface
 
@@ -50,9 +50,10 @@ uses
   {$IFDEF CLX}
   QGraphics, QControls, QForms, QDialogs, QExtCtrls, Qt,
   {$ELSE}
-   {$IFDEF MSWINDOWS}Windows, Messages, {$ENDIF} Graphics, Controls, Forms, Dialogs, ExtCtrls,
+    {$IFDEF MSWINDOWS}Windows, Messages, {$ENDIF}
+    Graphics, Controls, Forms, Dialogs, ExtCtrls,
   {$ENDIF}
-  pcnEnvEventoNFe, pcnConversao, pcnNFe, ACBrNFeDANFeRL, ACBrDFeUtil,
+  pcnEnvEventoNFe, pcnConversao, pcnNFe, ACBrNFeDANFeRLClass, ACBrDFeUtil,
   RLReport, RLPDFFilter, RLConsts, RLFilters, RLPrinters;
 
 type
@@ -73,7 +74,8 @@ type
     FSsitema: String;
     FUsuario: String;
     FMostrarPreview: Boolean;
-    FFonteDANFE: TFonteDANFE;
+    FNomeFonte: TNomeFonte;
+    FNegrito: Boolean;
     FMargemSuperior: Double;
     FMargemInferior: Double;
     FMargemEsquerda: Double;
@@ -86,7 +88,8 @@ type
                     AMarcaDagua: String = ''; ANumCopias: Integer = 1;
                     ASistema: String = ''; AUsuario: String = '';
                     AMostrarPreview: Boolean = True;
-                    AFonteDANFE: TFonteDANFE = fdTimesNewRoman;
+                    ANomeFonte: TNomeFonte = nfTimesNewRoman;
+                    ANegrito: Boolean = True;
                     AMargemSuperior: Double = 0.7;
                     AMargemInferior: Double = 0.7;
                     AMargemEsquerda: Double = 0.7;
@@ -97,7 +100,8 @@ type
     class procedure SavePDF(AEventoNFe: TInfEventoCollectionItem; ALogo: String = '';
                     AMarcaDagua: String = ''; AFile: String = '';
                     ASistema: String = ''; AUsuario: String = '';
-                    AFonteDANFE: TFonteDANFE = fdTimesNewRoman;
+                    ANomeFonte: TNomeFonte = nfTimesNewRoman;
+                    ANegrito: Boolean = True;
                     AMargemSuperior: Double = 0.7;
                     AMargemInferior: Double = 0.7;
                     AMargemEsquerda: Double = 0.7;
@@ -114,7 +118,8 @@ class procedure TfrlDANFeEventoRL.Imprimir(AEventoNFe: TInfEventoCollectionItem;
                     AMarcaDagua: String = ''; ANumCopias: Integer = 1;
                     ASistema: String = ''; AUsuario: String = '';
                     AMostrarPreview: Boolean = True;
-                    AFonteDANFE: TFonteDANFE = fdTimesNewRoman;
+                    ANomeFonte: TNomeFonte = nfTimesNewRoman;
+                    ANegrito: Boolean = True;
                     AMargemSuperior: Double = 0.7;
                     AMargemInferior: Double = 0.7;
                     AMargemEsquerda: Double = 0.7;
@@ -132,7 +137,8 @@ begin
       FSsitema := ASistema;
       FUsuario := AUsuario;
       FMostrarPreview := AMostrarPreview;
-      FFonteDANFE := AFonteDANFE;
+      FNomeFonte := ANomeFonte;
+      FNegrito := ANegrito;
       FMargemSuperior := AMargemSuperior;
       FMargemInferior := AMargemInferior;
       FMargemEsquerda := AMargemEsquerda;
@@ -163,7 +169,8 @@ end;
 class procedure TfrlDANFeEventoRL.SavePDF(AEventoNFe: TInfEventoCollectionItem; ALogo: String = '';
                     AMarcaDagua: String = ''; AFile: String = '';
                     ASistema: String = ''; AUsuario: String = '';
-                    AFonteDANFE: TFonteDANFE = fdTimesNewRoman;
+                    ANomeFonte: TNomeFonte = nfTimesNewRoman;
+                    ANegrito: Boolean = True;
                     AMargemSuperior: Double = 0.7;
                     AMargemInferior: Double = 0.7;
                     AMargemEsquerda: Double = 0.7;
@@ -178,7 +185,8 @@ begin
       FMarcaDagua := AMarcaDagua;
       FSsitema := ASistema;
       FUsuario := AUsuario;
-      FFonteDANFE := AFonteDANFE;
+      FNomeFonte := ANomeFonte;
+      FNegrito := ANegrito;
       FMargemSuperior := AMargemSuperior;
       FMargemInferior := AMargemInferior;
       FMargemEsquerda := AMargemEsquerda;
@@ -226,4 +234,4 @@ begin
   end;
 end;
 
-end.
+end.

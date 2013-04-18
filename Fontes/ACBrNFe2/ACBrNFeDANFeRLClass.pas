@@ -102,19 +102,49 @@ uses SysUtils, Classes,
   {$ELSE}
   Forms, Dialogs,
   {$ENDIF}
-  ACBrNFeDANFEClass, RLConsts,
-  ACBrNFeDANFeRL, ACBrNFeDANFeRLRetrato, ACBrNFeDANFeRLPaisagem,
-  ACBrNFeDANFeEventoRL, ACBrNFeDANFeEventoRLRetrato,
-  pcnNFe, pcnConversao, StrUtils;
+  RLConsts, pcnNFe, pcnConversao, StrUtils, ACBrNFeDANFEClass;
 
 type
+  TNomeFonte = (nfTimesNewRoman, nfCourierNew, nfArial);
+  TPosCanhoto = (pcCabecalho, pcRodape);
+  TDetVeiculo = (dv_tpOp, dv_chassi, dv_cCor, dv_xCor, dv_pot, dv_cilin,
+                 dv_pesoL, dv_pesoB, dv_nSerie, dv_tpComb, dv_nMotor, dv_CMT,
+                 dv_dist, dv_anoMod, dv_anoFab, dv_tpPint, dv_tpVeic,
+                 dv_espVeic, dv_VIN, dv_condVeic, dv_cMod, dv_cCorDENATRAN,
+                 dv_lota, dv_tpRest);
+  TDetMedicamento = (dm_nLote, dm_qLote, dm_dFab, dm_dVal, dm_vPMC);
+  TDetArmamento = (da_tpArma, da_nSerie, da_nCano, da_descr);
+  TDetCombustivel = (dc_cProdANP, dc_CODIF, dc_qTemp, dc_UFCons, dc_CIDE,
+                     dc_qBCProd, dc_vAliqProd, dc_vCIDE);
+  TDetVeiculos = set of TDetVeiculo;
+  TDetMedicamentos = set of TDetMedicamento;
+  TDetArmamentos = set of TDetArmamento;
+  TDetCombustiveis = set of TDetCombustivel;
+
+  TFonte = class(TComponent)
+  protected
+    FNome: TNomeFonte;
+    FNegrito: Boolean;
+    FTamanhoFonte_RazaoSocial: Integer;
+
+  public
+    constructor Create(AOwner: TComponent); override ;
+    destructor Destroy; override;
+
+  published
+    property Nome: TNomeFonte read FNome write FNome default nfTimesNewRoman;
+    property Negrito: Boolean read FNegrito write FNegrito default False;
+    property TamanhoFonte_RazaoSocial: Integer read FTamanhoFonte_RazaoSocial
+                                              write FTamanhoFonte_RazaoSocial
+                                              default 8;
+  end;
+
   TACBrNFeDANFeRL = class( TACBrNFeDANFEClass )
   private
     FMarcadagua: string;
     FLarguraCodProd: Integer;
     FPosCanhoto: TPosCanhoto;
-    FFonteDANFE: TFonteDANFE;
-    FTamanhoFonte_RazaoSocial: Integer;
+    FFonte: TFonte;
     FExibirEAN: Boolean;
     FDetVeiculos: TDetVeiculos;
     FDetMedicamentos: TDetMedicamentos;
@@ -133,10 +163,7 @@ type
     property LarguraCodProd: Integer read FLarguraCodProd write FLarguraCodProd;
     property PosCanhoto: TPosCanhoto read FPosCanhoto write FPosCanhoto
                                                           default pcCabecalho;
-    property FonteDANFE: TFonteDANFE read FFonteDANFE write FFonteDANFE
-                                                      default fdTimesNewRoman;
-    property TamanhoFonte_RazaoSocial: Integer read FTamanhoFonte_RazaoSocial
-                                              write FTamanhoFonte_RazaoSocial;
+    property Fonte: TFonte read FFonte;
     property ExibirEAN: Boolean read FExibirEAN write SetExibirEAN;
     property DetVeiculos: TDetVeiculos read FDetVeiculos write FDetVeiculos default
                           [dv_chassi, dv_xCor, dv_nSerie, dv_tpComb, dv_nMotor, dv_anoMod, dv_anoFab];
@@ -150,17 +177,35 @@ type
 
 implementation
 
-uses ACBrNFe, ACBrNFeUtil, ACBrUtil;
+uses ACBrNFe, ACBrNFeUtil, ACBrUtil,
+     ACBrNFeDANFeRL, ACBrNFeDANFeEventoRL,
+     ACBrNFeDANFeRLRetrato, ACBrNFeDANFeRLPaisagem,
+     ACBrNFeDANFeEventoRLRetrato;
 
 var
   i, j: Integer;
   frlDANFeRL: TfrlDANFeRL;
   frlDANFeEventoRL: TfrlDANFeEventoRL;
 
+constructor TFonte.Create(AOwner: TComponent);
+begin
+  inherited create( AOwner );
+  FNome := nfTimesNewRoman;
+  FNegrito := False;
+  FTamanhoFonte_RazaoSocial := 8;
+end;
+
+destructor TFonte.Destroy;
+begin
+  inherited Destroy;
+end;
+
 constructor TACBrNFeDANFeRL.Create(AOwner: TComponent);
 begin
   //SetVersion(CommercialVersion,ReleaseVersion,CommentVersion);
   inherited create( AOwner );
+  FFonte := TFonte.Create(self);
+  FFonte.Name := 'Fonte';
   FLarguraCodProd := 54;
   FMargemSuperior := 0.70;
   FMargemInferior := 0.70;
@@ -169,10 +214,8 @@ begin
   FCasasDecimais._qCom := 4;
   FCasasDecimais._vUnCom := 4;
   FProdutosPorPagina := 0;
-  FTamanhoFonte_RazaoSocial := 8;
   FExibirEAN := False;
   FTipoDANFE := tiRetrato;
-  FFonteDANFE := fdTimesNewRoman;
   FPosCanhoto := pcCabecalho;
   FDetVeiculos := [dv_chassi, dv_xCor, dv_nSerie, dv_tpComb, dv_nMotor, dv_anoMod, dv_anoFab];
   FDetMedicamentos := [dm_nLote, dm_qLote, dm_dFab, dm_dVal, dm_vPMC];
@@ -182,10 +225,11 @@ end;
 
 destructor TACBrNFeDANFeRL.Destroy;
 begin
+  FFonte.Destroy;
   inherited Destroy ;
 end;
 
-procedure TACBrNFeDANFeRL.ImprimirDANFE(NFE : TNFe = nil);
+procedure TACBrNFeDANFeRL.ImprimirDANFE(NFE: TNFe = nil);
 begin
   case FTipoDANFE of
     tiRetrato:   frlDANFeRL := TfrlDANFeRLRetrato.Create(Self);
@@ -199,29 +243,29 @@ begin
       for i:= 0 to TACBrNFe(ACBrNFe).NotasFiscais.Count - 1 do
         begin
           frlDANFeRL.Imprimir(TACBrNFe(ACBrNFe).NotasFiscais.Items[i].NFe,
-          Logo, MarcaDagua, LarguraCodProd, Email, ExibirResumoCanhoto, Fax,
-          NumCopias, Sistema, Site, Usuario, PosCanhoto, FormularioContinuo,
-          ExpandirLogoMarca, MostrarPreview, FonteDANFE, MargemSuperior,
-          MargemInferior, MargemEsquerda, MargemDireita, CasasDecimais._qCom,
-          CasasDecimais._vUnCom, ProdutosPorPagina, Impressora,
-          TamanhoFonte_RazaoSocial, ExibirEAN, ProtocoloNFe,
-          ExibirResumoCanhoto_Texto, NFeCancelada,
-          ImprimirDetalhamentoEspecifico, ImprimirDescPorc,
-          DetVeiculos, DetMedicamentos, DetArmamentos, DetCombustiveis);
+          FLogo, FMarcaDagua, FLarguraCodProd, FEmail, FExibeResumoCanhoto, FFax,
+          FNumCopias, FSistema, FSite, FUsuario, FPosCanhoto, FFormularioContinuo,
+          FExpandirLogoMarca, FMostrarPreview, FFonte.FNome, FFonte.FNegrito, FMargemSuperior,
+          FMargemInferior, FMargemEsquerda, FMargemDireita, FCasasDecimais._qCom,
+          FCasasDecimais._vUnCom, FProdutosPorPagina, FImpressora,
+          FFonte.FTamanhoFonte_RazaoSocial, FExibirEAN, FProtocoloNFe,
+          FExibeResumoCanhoto_Texto, FNFeCancelada,
+          FImprimirDetalhamentoEspecifico, FImprimeDescPorc,
+          FDetVeiculos, FDetMedicamentos, FDetArmamentos, FDetCombustiveis);
         end;
     end
   else
     begin
       frlDANFeRL.Imprimir(NFE,
-      Logo, MarcaDagua, LarguraCodProd, Email, ExibirResumoCanhoto, Fax,
-      NumCopias, Sistema, Site, Usuario, PosCanhoto, FormularioContinuo,
-      ExpandirLogoMarca, MostrarPreview, FonteDANFE, MargemSuperior,
-      MargemInferior, MargemEsquerda, MargemDireita, CasasDecimais._qCom,
-      CasasDecimais._vUnCom, ProdutosPorPagina, Impressora,
-      TamanhoFonte_RazaoSocial, ExibirEAN, ProtocoloNFe,
-      ExibirResumoCanhoto_Texto, NFeCancelada,
-      ImprimirDetalhamentoEspecifico, ImprimirDescPorc,
-      DetVeiculos, DetMedicamentos, DetArmamentos, DetCombustiveis);
+      FLogo, FMarcaDagua, FLarguraCodProd, FEmail, FExibeResumoCanhoto, FFax,
+      FNumCopias, FSistema, FSite, FUsuario, FPosCanhoto, FFormularioContinuo,
+      FExpandirLogoMarca, FMostrarPreview, FFonte.FNome, FFonte.FNegrito, FMargemSuperior,
+      FMargemInferior, FMargemEsquerda, FMargemDireita, FCasasDecimais._qCom,
+      FCasasDecimais._vUnCom, FProdutosPorPagina, FImpressora,
+      FFonte.FTamanhoFonte_RazaoSocial, FExibirEAN, FProtocoloNFe,
+      FExibeResumoCanhoto_Texto, FNFeCancelada,
+      FImprimirDetalhamentoEspecifico, FImprimeDescPorc,
+      FDetVeiculos, FDetMedicamentos, FDetArmamentos, FDetCombustiveis);
     end;
 
   FreeAndNil(frlDANFeRL);
@@ -245,28 +289,30 @@ begin
                    Copy(TACBrNFe(ACBrNFe).NotasFiscais.Items[i].NFe.infNFe.ID,
                    4, 44) + '.pdf';
           frlDANFeRL.SavePDF(TACBrNFe(ACBrNFe).NotasFiscais.Items[i].NFe,
-          Logo, MarcaDagua, LarguraCodProd, Email, ExibirResumoCanhoto, Fax,
-          NumCopias, Sistema, Site, Usuario, sFile, PosCanhoto, FormularioContinuo,
-          ExpandirLogoMarca, FonteDANFE, MargemSuperior,
-          MargemInferior, MargemEsquerda, MargemDireita, CasasDecimais._qCom,
-          CasasDecimais._vUnCom, ProdutosPorPagina, TamanhoFonte_RazaoSocial,
-          ExibirEAN, ProtocoloNFe, ExibirResumoCanhoto_Texto, NFeCancelada,
-          ImprimirDetalhamentoEspecifico, ImprimirDescPorc,
-          DetVeiculos, DetMedicamentos, DetArmamentos, DetCombustiveis);
+          FLogo, FMarcaDagua, FLarguraCodProd, FEmail, FExibeResumoCanhoto, FFax,
+          FNumCopias, FSistema, FSite, FUsuario, sFile, FPosCanhoto, FFormularioContinuo,
+          FExpandirLogoMarca, FFonte.FNome, FFonte.FNegrito, FMargemSuperior,
+          FMargemInferior, FMargemEsquerda, FMargemDireita, FCasasDecimais._qCom,
+          FCasasDecimais._vUnCom, FProdutosPorPagina,
+          FFonte.FTamanhoFonte_RazaoSocial, FExibirEAN, FProtocoloNFe,
+          FExibeResumoCanhoto_Texto, FNFeCancelada,
+          FImprimirDetalhamentoEspecifico, FImprimeDescPorc,
+          FDetVeiculos, FDetMedicamentos, FDetArmamentos, FDetCombustiveis);
         end;
     end
   else
     begin
       sFile := Self.PathPDF + Copy(NFe.infNFe.ID, 4, 44) + '.pdf';
-      frlDANFeRL.SavePDF(NFe, Logo, MarcaDagua, LarguraCodProd, Email,
-      ExibirResumoCanhoto, Fax, NumCopias, Sistema, Site, Usuario, sFile,
-      PosCanhoto, FormularioContinuo, ExpandirLogoMarca, FonteDANFE,
-      MargemSuperior, MargemInferior, MargemEsquerda, MargemDireita,
-      CasasDecimais._qCom, CasasDecimais._vUnCom, ProdutosPorPagina,
-      TamanhoFonte_RazaoSocial, ExibirEAN, ProtocoloNFe,
-      ExibirResumoCanhoto_Texto, NFeCancelada,
-      ImprimirDetalhamentoEspecifico, ImprimirDescPorc,
-      DetVeiculos, DetMedicamentos, DetArmamentos, DetCombustiveis);
+      frlDANFeRL.SavePDF(NFe,
+      FLogo, FMarcaDagua, FLarguraCodProd, FEmail, FExibeResumoCanhoto, FFax,
+      FNumCopias, FSistema, FSite, FUsuario, sFile, FPosCanhoto, FFormularioContinuo,
+      FExpandirLogoMarca, FFonte.FNome, FFonte.FNegrito, FMargemSuperior,
+      FMargemInferior, FMargemEsquerda, FMargemDireita, FCasasDecimais._qCom,
+      FCasasDecimais._vUnCom, FProdutosPorPagina,
+      FFonte.FTamanhoFonte_RazaoSocial, FExibirEAN, FProtocoloNFe,
+      FExibeResumoCanhoto_Texto, FNFeCancelada,
+      FImprimirDetalhamentoEspecifico, FImprimeDescPorc,
+      FDetVeiculos, FDetMedicamentos, FDetArmamentos, FDetCombustiveis);
     end;
 
   FreeAndNil(frlDANFeRL);
@@ -287,7 +333,7 @@ begin
     tiRetrato,
     tiPaisagem: frlDANFeEventoRL := TfrlDANFeEventoRLRetrato.Create(Self);
   else
-    frlDANFeEventoRL := TfrlDANFeEventoRLRetrato.Create(Self);  
+    frlDANFeEventoRL := TfrlDANFeEventoRLRetrato.Create(Self);
   end;
 
   if TACBrNFe(ACBrNFe).NotasFiscais.Count > 0 then
@@ -301,8 +347,8 @@ begin
                 begin
                   frlDANFeEventoRL.Imprimir(TACBrNFe(ACBrNFe).EventoNFe.Evento.Items[i],
                   FLogo, FMarcadagua, FNumCopias, FSistema, FUsuario, FMostrarPreview,
-                  FFonteDANFE, FMargemSuperior, FMargemInferior, FMargemEsquerda,
-                  FMargemDireita, FImpressora,
+                  FFonte.FNome, FFonte.FNegrito, FMargemSuperior, FMargemInferior,
+                  FMargemEsquerda, FMargemDireita, FImpressora,
                   TACBrNFe(ACBrNFe).NotasFiscais.Items[j].NFe);
                   Impresso := True;
                   Break;
@@ -313,8 +359,8 @@ begin
             begin
               frlDANFeEventoRL.Imprimir(TACBrNFe(ACBrNFe).EventoNFe.Evento.Items[i],
               FLogo, FMarcadagua, FNumCopias, FSistema, FUsuario, FMostrarPreview,
-              FFonteDANFE, FMargemSuperior, FMargemInferior, FMargemEsquerda,
-              FMargemDireita, FImpressora);
+              FFonte.FNome, FFonte.FNegrito, FMargemSuperior, FMargemInferior,
+              FMargemEsquerda, FMargemDireita, FImpressora);
             end;
         end; // for i := 0 to (TACBrNFe(ACBrNFe).EventoNFe.Evento.Count - 1)
     end // if TACBrNFe(ACBrNFe).NotasFiscais.Count > 0
@@ -324,8 +370,8 @@ begin
         begin
           frlDANFeEventoRL.Imprimir(TACBrNFe(ACBrNFe).EventoNFe.Evento.Items[i],
           FLogo, FMarcadagua, FNumCopias, FSistema, FUsuario, FMostrarPreview,
-          FFonteDANFE, FMargemSuperior, FMargemInferior, FMargemEsquerda,
-          FMargemDireita, FImpressora);
+          FFonte.FNome, FFonte.FNegrito, FMargemSuperior, FMargemInferior,
+          FMargemEsquerda, FMargemDireita, FImpressora);
         end;
     end;
 
@@ -356,7 +402,7 @@ begin
               if Copy(TACBrNFe(ACBrNFe).NotasFiscais.Items[j].NFe.infNFe.ID, 4, 44) = TACBrNFe(ACBrNFe).EventoNFe.Evento.Items[i].InfEvento.chNFe then
                 begin
                   frlDANFeEventoRL.SavePDF(TACBrNFe(ACBrNFe).EventoNFe.Evento.Items[i],
-                  FLogo, FMarcadagua, sFile, FSistema, FUsuario, FFonteDANFE,
+                  FLogo, FMarcadagua, sFile, FSistema, FUsuario, FFonte.FNome, FFonte.FNegrito,
                   FMargemSuperior, FMargemInferior, FMargemEsquerda, FMargemDireita,
                   TACBrNFe(ACBrNFe).NotasFiscais.Items[j].NFe);
                   Impresso := True;
@@ -367,7 +413,7 @@ begin
           if Impresso = False then
             begin
               frlDANFeEventoRL.SavePDF(TACBrNFe(ACBrNFe).EventoNFe.Evento.Items[i],
-              FLogo, FMarcadagua, sFile, FSistema, FUsuario, FFonteDANFE,
+              FLogo, FMarcadagua, sFile, FSistema, FUsuario, FFonte.FNome, FFonte.FNegrito,
               FMargemSuperior, FMargemInferior, FMargemEsquerda, FMargemDireita);
             end;
         end; // for i := 0 to (TACBrNFe(ACBrNFe).EventoNFe.Evento.Count - 1)
@@ -380,7 +426,7 @@ begin
           Copy(TACBrNFe(ACBrNFe).EventoNFe.Evento.Items[i].InfEvento.id, 3, 52) + 'evento.pdf';
 
           frlDANFeEventoRL.SavePDF(TACBrNFe(ACBrNFe).EventoNFe.Evento.Items[i],
-          FLogo, FMarcadagua, sFile, FSistema, FUsuario, FFonteDANFE,
+          FLogo, FMarcadagua, sFile, FSistema, FUsuario, FFonte.FNome, FFonte.FNegrito,
           FMargemSuperior, FMargemInferior, FMargemEsquerda, FMargemDireita);
         end;
     end;
