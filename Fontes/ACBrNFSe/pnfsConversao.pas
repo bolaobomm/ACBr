@@ -40,7 +40,8 @@ type
   TnfseProvedor = ( proNenhum, proTiplan, proISSNET, proWebISS, proGINFES, proDSF, proProdemge, proAbaco, proBetha,
                     proEquiplano, proISSIntel, proProdam, proGovBR, proRecife, proSimplISS, proThema, proRJ,
                     proPublica, profintelISS, proDigifred, proBetim, proSaatri, proFISSLEX,
-                    proGoiania, proIssCuritiba, proBHISS, proNatal, proISSDigital, proISSe, pro4R );
+                    proGoiania, proIssCuritiba, proBHISS, proNatal, proISSDigital, proISSe, pro4R,
+                    proGovDigital );
 
   TnfseAcao = ( acRecepcionar, acConsSit, acConsLote, acConsNFSeRps, acConsNFSe, acCancelar, acGerar );
 
@@ -288,12 +289,12 @@ begin
                             'Betha', 'Equiplano', 'ISSIntel', 'Prodam', 'GovBR', 'Recife',
                             'SimplISS', 'Thema', 'RJ', 'Publica', 'fintelISS', 'Digifred', 'Betim', 'Saatri',
                             'FISSLEX', 'Goiania', 'IssCuritiba', 'BHISS', 'Natal', 'ISSDigital', 'ISSe',
-                            '4R'],
+                            '4R', 'GovDigital'],
                            [proNenhum, proTiplan, proISSNET, proWebISS, proGINFES, proDSF, proProdemge, proAbaco,
                             proBetha, proEquiplano, proISSIntel, proProdam, proGovBR, proRecife,
                             proSimplISS, proThema, proRJ, proPublica, profintelISS, proDigifred, proBetim,
                             proSaatri, proFISSLEX, proGoiania, proIssCuritiba, proBHISS, proNatal,
-                            proISSDigital, proISSe, pro4R]);
+                            proISSDigital, proISSe, pro4R, proGovDigital]);
 end;
 
 function StrToProvedor(var ok: boolean; const s: string):TnfseProvedor;
@@ -303,12 +304,12 @@ begin
                             'Betha', 'Equiplano', 'ISSIntel', 'Prodam', 'GovBR', 'Recife',
                             'SimplISS', 'Thema', 'RJ', 'Publica', 'fintelISS', 'Digifred', 'Betim', 'Saatri',
                             'FISSLEX', 'Goiania', 'IssCuritiba', 'BHISS', 'Natal', 'ISSDigital', 'ISSe',
-                            '4R'],
+                            '4R', 'GovDigital'],
                            [proNenhum, proTiplan, proISSNET, proWebISS, proGINFES, proDSF, proProdemge, proAbaco,
                             proBetha, proEquiplano, proISSIntel, proProdam, proGovBR, proRecife,
                             proSimplISS, proThema, proRJ, proPublica, profintelISS, proDigifred, proBetim,
                             proSaatri, proFISSLEX, proGoiania, proIssCuritiba, proBHISS, proNatal,
-                            proISSDigital, proISSe, pro4R]);
+                            proISSDigital, proISSe, pro4R, proGovDigital]);
 end;
 
 // Descrição do Serviço ********************************************************
@@ -738,6 +739,7 @@ begin
   4212908, // Pinhalzinho/SC
   4213104, // Piratuba/SC
   4213153, // Planalto Alegre/SC
+  4213609, // Porto União/SC
   4213708, // Pouso Redondo/SC
   4214805, // Rio do Sul/SC
   4215000, // Rio Negrinho/SC
@@ -812,6 +814,9 @@ begin
   3523503  // Itatinga/SP
          : Provedor := '4R';
 
+  3132404, // Itajubá/MG
+  3151800  // Poços de Caldas/MG
+         : Provedor := 'GovDigital';
  end;
  Result := Provedor;
 end;

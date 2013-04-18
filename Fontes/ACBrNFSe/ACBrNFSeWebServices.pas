@@ -36,7 +36,7 @@ uses
     ACBrProvedorBetha, ACBrProvedorBetim, ACBrProvedorSaatri,
     ACBrProvedorAbaco, ACBrProvedorGoiania, ACBrProvedorIssCuritiba,
     ACBrProvedorBHISS, ACBrProvedorNatal, ACBrProvedorISSDigital,
-    ACBrProvedorISSe, ACBrProvedor4R;
+    ACBrProvedorISSe, ACBrProvedor4R, ACBrProvedorGovDigital;
 
 type
 
@@ -1175,6 +1175,7 @@ begin
   proISSDigital:  FProvedorClass := TProvedorISSDigital.Create;
   proISSe:        FProvedorClass := TProvedorISSe.Create;
   pro4R:          FProvedorClass := TProvedor4R.Create;
+  proGovDigital:  FProvedorClass := TProvedorGovDigital.Create;
  end;
 
  FPrefixo2     := FConfiguracoes.WebServices.Prefixo2;
