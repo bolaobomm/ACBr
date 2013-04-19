@@ -523,8 +523,8 @@ type
   public
     constructor Create(AFNotaFiscalEletronica: TComponent);reintroduce;
     destructor Destroy; override;
-    function Envia(ALote: Integer; ASincrono: Boolean): Boolean; overload;
-    function Envia(ALote: String; ASincrono: Boolean): Boolean; overload;
+    function Envia(ALote: Integer; const ASincrono: Boolean = False): Boolean; overload;
+    function Envia(ALote: String; const ASincrono: Boolean = False): Boolean; overload;
     procedure Cancela(AJustificativa: String);
     procedure Inutiliza(CNPJ, AJustificativa: String; Ano, Modelo, Serie, NumeroInicial, NumeroFinal : Integer);
   //published
@@ -1510,12 +1510,12 @@ begin
   inherited;
 end;
 
-function TWebServices.Envia(ALote: Integer; ASincrono: Boolean): Boolean;
+function TWebServices.Envia(ALote: Integer; const ASincrono: Boolean): Boolean;
 begin
   Result := Envia(IntToStr(ALote), ASincrono);
 end;
 
-function TWebServices.Envia(ALote: String; ASincrono: Boolean): Boolean;
+function TWebServices.Envia(ALote: String; const ASincrono: Boolean): Boolean;
 begin
 //retirado por recomendação do documento disponível em http://www.nfe.fazenda.gov.br/PORTAL/docs/Consumo_Indevido_Aplicacao_Cliente_v1.00.pdf
 {  if not(Self.StatusServico.Executar) then
