@@ -51,6 +51,7 @@ type
     procedure DoNFSeGerarNFSe;
     procedure DoNFSeLinkNFSe;
     procedure DoNFSeGerarLote;
+    procedure DoNFSeEnviarSincrono;
 
     {$IFDEF ACBrNFSeOpenSSL}
       procedure ConfiguraHTTP( HTTP : THTTPSend; Action : AnsiString);
@@ -94,6 +95,7 @@ type
     FServicoConNfse: String;
     FServicoCancelar: String;
     FServicoGerar: String;
+    FServicoEnviarSincrono: String;
     FDefTipos: String;
 
     FNomeCidade: String;
@@ -106,6 +108,7 @@ type
     FGerarNFSe: String;
     FLinkNFSe: String;
     FGerarLoteRps: String;
+    FRecepcaoSincrono: String;
 
     procedure LoadMsgEntrada;
     procedure LoadURL;
@@ -141,6 +144,7 @@ type
     property ServicoConNfse: String read FServicoConNfse;
     property ServicoCancelar: String read FServicoCancelar;
     property ServicoGerar: String read FServicoGerar;
+    property ServicoEnviarSincrono: String read FServicoEnviarSincrono;
     property DefTipos: String read FDefTipos;
 
     property NomeCidade: String read FNomeCidade;
@@ -153,6 +157,7 @@ type
     property GerarNFSe: String read FGerarNFSe;
     property LinkNFSe: String read FLinkNFSe;
     property GerarLoteRps: String read FGerarLoteRps;
+    property RecepcaoSincrono: String read FRecepcaoSincrono;
   end;
 
   TNFSeEnviarLoteRPS = Class(TWebServicesBase)
@@ -287,6 +292,19 @@ type
     property NFSeRetorno: TGerarretNfse read FNFSeRetorno write FNFSeRetorno;
   end;
 
+  TNFSeEnviarSincrono = Class(TWebServicesBase)
+  private
+    FNumeroLote: String;
+    FNFSeRetorno : TGerarretNfse;
+    FNotasFiscais : TNotasFiscais;
+  public
+    function Executar: Boolean; override;
+    constructor Create(AOwner : TComponent; ANotasFiscais : TNotasFiscais); reintroduce;
+
+    property NumeroLote: String read FNumeroLote;
+    property NFSeRetorno: TGerarretNfse read FNFSeRetorno write FNFSeRetorno;
+  end;
+
   TNFSeLinkNFSe = Class(TWebServicesBase)
   private
     FNotasFiscais : TNotasFiscais;
@@ -324,6 +342,7 @@ type
     FGerarNfse: TNFSeGerarNfse;
     FLinkNfse: TNFSeLinkNfse;
     FGerarLoteRPS: TNFSeGerarLoteRPS;
+    FEnviarSincrono: TNFSeEnviarSincrono;
   public
     constructor Create(AFNotaFiscalEletronica: TComponent); reintroduce;
     destructor Destroy; override;
@@ -344,6 +363,8 @@ type
     function LinkNFSeGerada(ANumeroNFSe: Integer; ACodVerificacao: String): String;
     function GeraLote(ALote:Integer): Boolean; overload;
     function GeraLote(ALote:String): Boolean; overload;
+    function EnviaSincrono(ALote:Integer): Boolean; overload;
+    function EnviaSincrono(ALote:String): Boolean; overload;
   published
     property ACBrNFSe: TComponent read FACBrNFSe write FACBrNFSe;
     property Enviar: TNFSeEnviarLoteRPS read FEnviar write FEnviar;
@@ -355,6 +376,7 @@ type
     property GerarNfse: TNFSeGerarNfse read FGerarNfse write FGerarNfse;
     property LinkNfse: TNFSeLinkNfse read FLinkNfse write FLinkNfse;
     property GerarLoteRPS: TNFSeGerarLoteRPS read FGerarLoteRPS write FGerarLoteRPS;
+    property EnviarSincrono: TNFSeEnviarSincrono read FEnviarSincrono write FEnviarSincrono;
   end;
 
 implementation
@@ -473,6 +495,136 @@ begin
   HTTPReqResp.CheckContentType;
 end;
 {$ENDIF}
+
+function TWebServicesBase.Executar: Boolean;
+begin
+ Result := False;
+ LoadMsgEntrada;
+ LoadURL;
+end;
+
+procedure TWebServicesBase.LoadMsgEntrada;
+begin
+ FxProvedor := FConfiguracoes.WebServices.xProvedor;
+ FProvedor  := FConfiguracoes.WebServices.Provedor;
+
+ FProvedorClass.Free;
+
+ case FProvedor of
+  proGINFES:      FProvedorClass := TProvedorGinfesV3.Create;
+  proPublica:     FProvedorClass := TProvedorPublica.Create;
+  proRJ:          FProvedorClass := TProvedorRJ.Create;
+  proTiplan:      FProvedorClass := TProvedorTiplan.Create;
+  proISSNet:      FProvedorClass := TProvedorISSNet.Create;
+  proWebISS:      FProvedorClass := TProvedorWebISS.Create;
+  proProdemge:    FProvedorClass := TProvedorProdemge.Create;
+  proISSIntel:    FProvedorClass := TProvedorISSIntel.Create;
+  proGovBR:       FProvedorClass := TProvedorGovBR.Create;
+  proRecife:      FProvedorClass := TProvedorRecife.Create;
+  proSimplISS:    FProvedorClass := TProvedorSimplISS.Create;
+  proThema:       FProvedorClass := TProvedorThema.Create;
+  proEquiplano:   FProvedorClass := TProvedorEquiplano.Create;
+  profintelISS:   FProvedorClass := TProvedorfintelISS.Create;
+  proDigifred:    FProvedorClass := TProvedorDigifred.Create;
+  proBetha:       FProvedorClass := TProvedorBetha.Create;
+  proBetim:       FProvedorClass := TProvedorBetim.Create;
+  proSaatri:      FProvedorClass := TProvedorSaatri.Create;
+  proAbaco:       FProvedorClass := TProvedorAbaco.Create;
+  proGoiania:     FProvedorClass := TProvedorGoiania.Create;
+  proIssCuritiba: FProvedorClass := TProvedorIssCuritiba.Create;
+  proBHISS:       FProvedorClass := TProvedorBHISS.Create;
+  proNatal:       FProvedorClass := TProvedorNatal.Create;
+  proISSDigital:  FProvedorClass := TProvedorISSDigital.Create;
+  proISSe:        FProvedorClass := TProvedorISSe.Create;
+  pro4R:          FProvedorClass := TProvedor4R.Create;
+  proGovDigital:  FProvedorClass := TProvedorGovDigital.Create;
+ end;
+
+ FPrefixo2     := FConfiguracoes.WebServices.Prefixo2;
+ FPrefixo3     := FConfiguracoes.WebServices.Prefixo3;
+ FPrefixo4     := FConfiguracoes.WebServices.Prefixo4;
+ FURLNS1       := FConfiguracoes.WebServices.NameSpace;
+
+ FVersaoLayOut          := FConfiguracoes.WebServices.VersaoCabecalho;
+ FVersaoDados           := FConfiguracoes.WebServices.VersaoDados;
+ FVersaoXML             := FConfiguracoes.WebServices.VersaoXML;
+ FHTTP_AG               := FConfiguracoes.WebServices.URL;
+ FCabecalho             := FConfiguracoes.WebServices.Cabecalho;
+ FServicoEnviar         := FConfiguracoes.WebServices.ServicoEnviar;
+ FServicoConSit         := FConfiguracoes.WebServices.ServicoConSit;
+ FServicoConLot         := FConfiguracoes.WebServices.ServicoConLot;
+ FServicoConRps         := FConfiguracoes.WebServices.ServicoConRps;
+ FServicoConNfse        := FConfiguracoes.WebServices.ServicoConNfse;
+ FServicoCancelar       := FConfiguracoes.WebServices.ServicoCancelar;
+ FServicoGerar          := FConfiguracoes.WebServices.ServicoGerar;
+ FServicoEnviarSincrono := FConfiguracoes.WebServices.ServicoEnviarSincrono;
+ FDefTipos              := FConfiguracoes.WebServices.DefTipos;
+
+ if self is TNFSeEnviarLoteRps
+  then DoNFSeEnviarLoteRps
+  else if self is TNFSeConsultarSituacaoLoteRps
+  then DoNFSeConsultarSituacaoLoteRps
+  else if self is TNFSeConsultarLoteRps
+  then DoNFSeConsultarLoteRps
+  else if self is TNFSeConsultarNfseRps
+  then DoNFSeConsultarNfseporRps
+  else if self is TNFSeConsultarNfse
+  then DoNFSeConsultarNfse
+  else if self is TNFSeCancelarNfse
+  then DoNFSeCancelarNfse
+  else if self is TNFSeGerarNfse
+  then DoNFSeGerarNfse
+  else if self is TNFSeLinkNfse
+  then DoNFSeLinkNfse
+  else if self is TNFSeGerarLoteRPS
+  then DoNFSeGerarLote
+  else if self is TNFSeEnviarSincrono
+  then DoNFSeEnviarSincrono
+end;
+
+procedure TWebServicesBase.LoadURL;
+begin
+ if FConfiguracoes.WebServices.AmbienteCodigo = 1
+  then begin
+   FNomeCidade         := FConfiguracoes.WebServices.ProNomeCidade;
+   FRecepcaoLoteRps    := FConfiguracoes.WebServices.ProRecepcaoLoteRPS;
+   FConsultaLoteRps    := FConfiguracoes.WebServices.ProConsultaLoteRPS;
+   FConsultaNFSeRps    := FConfiguracoes.WebServices.ProConsultaNFSeRPS;
+   FConsultaSitLoteRps := FConfiguracoes.WebServices.ProConsultaSitLoteRPS;
+   FConsultaNFSe       := FConfiguracoes.WebServices.ProConsultaNFSe;
+   FCancelaNFSe        := FConfiguracoes.WebServices.ProCancelaNFSe;
+   FGerarNFSe          := FConfiguracoes.WebServices.ProGerarNFSe;
+   FRecepcaoSincrono   := FConfiguracoes.WebServices.ProRecepcaoSincrono;
+  end
+  else begin
+   FNomeCidade         := FConfiguracoes.WebServices.HomNomeCidade;
+   FRecepcaoLoteRps    := FConfiguracoes.WebServices.HomRecepcaoLoteRPS;
+   FConsultaLoteRps    := FConfiguracoes.WebServices.HomConsultaLoteRPS;
+   FConsultaNFSeRps    := FConfiguracoes.WebServices.HomConsultaNFSeRPS;
+   FConsultaSitLoteRps := FConfiguracoes.WebServices.HomConsultaSitLoteRPS;
+   FConsultaNFSe       := FConfiguracoes.WebServices.HomConsultaNFSe;
+   FCancelaNFSe        := FConfiguracoes.WebServices.HomCancelaNFSe;
+   FGerarNFSe          := FConfiguracoes.WebServices.HomGerarNFSe;
+   FRecepcaoSincrono   := FConfiguracoes.WebServices.HomRecepcaoSincrono;
+  end;
+
+ if self is TNFSeEnviarLoteRps
+  then FURL := FRecepcaoLoteRps
+  else if self is TNFSeConsultarSituacaoLoteRps
+  then FURL := FConsultaSitLoteRps
+  else if self is TNFSeConsultarLoteRps
+  then FURL := FConsultaLoteRps
+  else if self is TNFSeConsultarNfseRps
+  then FURL := FConsultaNFSeRps
+  else if self is TNFSeConsultarNfse
+  then FURL := FConsultaNFSe
+  else if self is TNFSeCancelarNfse
+  then FURL := FCancelaNFSe
+  else if self is TNFSeGerarNfse
+  then FURL := FGerarNFSe
+  else if self is TNFSeEnviarSincrono
+  then FURL := FRecepcaoSincrono;
+end;
 
 procedure TWebServicesBase.DoNFSeEnviarLoteRPS;
 var
@@ -1134,129 +1286,6 @@ begin
   end;
 end;
 
-function TWebServicesBase.Executar: Boolean;
-begin
- Result := False;
- LoadMsgEntrada;
- LoadURL;
-end;
-
-procedure TWebServicesBase.LoadMsgEntrada;
-begin
- FxProvedor := FConfiguracoes.WebServices.xProvedor;
- FProvedor  := FConfiguracoes.WebServices.Provedor;
-
- FProvedorClass.Free;
-
- case FProvedor of
-  proGINFES:      FProvedorClass := TProvedorGinfesV3.Create;
-  proPublica:     FProvedorClass := TProvedorPublica.Create;
-  proRJ:          FProvedorClass := TProvedorRJ.Create;
-  proTiplan:      FProvedorClass := TProvedorTiplan.Create;
-  proISSNet:      FProvedorClass := TProvedorISSNet.Create;
-  proWebISS:      FProvedorClass := TProvedorWebISS.Create;
-  proProdemge:    FProvedorClass := TProvedorProdemge.Create;
-  proISSIntel:    FProvedorClass := TProvedorISSIntel.Create;
-  proGovBR:       FProvedorClass := TProvedorGovBR.Create;
-  proRecife:      FProvedorClass := TProvedorRecife.Create;
-  proSimplISS:    FProvedorClass := TProvedorSimplISS.Create;
-  proThema:       FProvedorClass := TProvedorThema.Create;
-  proEquiplano:   FProvedorClass := TProvedorEquiplano.Create;
-  profintelISS:   FProvedorClass := TProvedorfintelISS.Create;
-  proDigifred:    FProvedorClass := TProvedorDigifred.Create;
-  proBetha:       FProvedorClass := TProvedorBetha.Create;
-  proBetim:       FProvedorClass := TProvedorBetim.Create;
-  proSaatri:      FProvedorClass := TProvedorSaatri.Create;
-  proAbaco:       FProvedorClass := TProvedorAbaco.Create;
-  proGoiania:     FProvedorClass := TProvedorGoiania.Create;
-  proIssCuritiba: FProvedorClass := TProvedorIssCuritiba.Create;
-  proBHISS:       FProvedorClass := TProvedorBHISS.Create;
-  proNatal:       FProvedorClass := TProvedorNatal.Create;
-  proISSDigital:  FProvedorClass := TProvedorISSDigital.Create;
-  proISSe:        FProvedorClass := TProvedorISSe.Create;
-  pro4R:          FProvedorClass := TProvedor4R.Create;
-  proGovDigital:  FProvedorClass := TProvedorGovDigital.Create;
- end;
-
- FPrefixo2     := FConfiguracoes.WebServices.Prefixo2;
- FPrefixo3     := FConfiguracoes.WebServices.Prefixo3;
- FPrefixo4     := FConfiguracoes.WebServices.Prefixo4;
- FURLNS1       := FConfiguracoes.WebServices.NameSpace;
-
- FVersaoLayOut    := FConfiguracoes.WebServices.VersaoCabecalho;
- FVersaoDados     := FConfiguracoes.WebServices.VersaoDados;
- FVersaoXML       := FConfiguracoes.WebServices.VersaoXML;
- FHTTP_AG         := FConfiguracoes.WebServices.URL;
- FCabecalho       := FConfiguracoes.WebServices.Cabecalho;
- FServicoEnviar   := FConfiguracoes.WebServices.ServicoEnviar;
- FServicoConSit   := FConfiguracoes.WebServices.ServicoConSit;
- FServicoConLot   := FConfiguracoes.WebServices.ServicoConLot;
- FServicoConRps   := FConfiguracoes.WebServices.ServicoConRps;
- FServicoConNfse  := FConfiguracoes.WebServices.ServicoConNfse;
- FServicoCancelar := FConfiguracoes.WebServices.ServicoCancelar;
- FServicoGerar    := FConfiguracoes.WebServices.ServicoGerar;
- FDefTipos        := FConfiguracoes.WebServices.DefTipos;
-
- if self is TNFSeEnviarLoteRps
-  then DoNFSeEnviarLoteRps
-  else if self is TNFSeConsultarSituacaoLoteRps
-  then DoNFSeConsultarSituacaoLoteRps
-  else if self is TNFSeConsultarLoteRps
-  then DoNFSeConsultarLoteRps
-  else if self is TNFSeConsultarNfseRps
-  then DoNFSeConsultarNfseporRps
-  else if self is TNFSeConsultarNfse
-  then DoNFSeConsultarNfse
-  else if self is TNFSeCancelarNfse
-  then DoNFSeCancelarNfse
-  else if self is TNFSeGerarNfse
-  then DoNFSeGerarNfse
-  else if self is TNFSeLinkNfse
-  then DoNFSeLinkNfse
-  else if self is TNFSeGerarLoteRPS
-  then DoNFSeGerarLote
-end;
-
-procedure TWebServicesBase.LoadURL;
-begin
- if FConfiguracoes.WebServices.AmbienteCodigo = 1
-  then begin
-   FNomeCidade         := FConfiguracoes.WebServices.ProNomeCidade;
-   FRecepcaoLoteRps    := FConfiguracoes.WebServices.ProRecepcaoLoteRPS;
-   FConsultaLoteRps    := FConfiguracoes.WebServices.ProConsultaLoteRPS;
-   FConsultaNFSeRps    := FConfiguracoes.WebServices.ProConsultaNFSeRPS;
-   FConsultaSitLoteRps := FConfiguracoes.WebServices.ProConsultaSitLoteRPS;
-   FConsultaNFSe       := FConfiguracoes.WebServices.ProConsultaNFSe;
-   FCancelaNFSe        := FConfiguracoes.WebServices.ProCancelaNFSe;
-   FGerarNFSe          := FConfiguracoes.WebServices.ProGerarNFSe;
-  end
-  else begin
-   FNomeCidade         := FConfiguracoes.WebServices.HomNomeCidade;
-   FRecepcaoLoteRps    := FConfiguracoes.WebServices.HomRecepcaoLoteRPS;
-   FConsultaLoteRps    := FConfiguracoes.WebServices.HomConsultaLoteRPS;
-   FConsultaNFSeRps    := FConfiguracoes.WebServices.HomConsultaNFSeRPS;
-   FConsultaSitLoteRps := FConfiguracoes.WebServices.HomConsultaSitLoteRPS;
-   FConsultaNFSe       := FConfiguracoes.WebServices.HomConsultaNFSe;
-   FCancelaNFSe        := FConfiguracoes.WebServices.HomCancelaNFSe;
-   FGerarNFSe          := FConfiguracoes.WebServices.HomGerarNFSe;
-  end;
-
- if self is TNFSeEnviarLoteRps
-  then FURL := FRecepcaoLoteRps
-  else if self is TNFSeConsultarSituacaoLoteRps
-  then FURL := FConsultaSitLoteRps
-  else if self is TNFSeConsultarLoteRps
-  then FURL := FConsultaLoteRps
-  else if self is TNFSeConsultarNfseRps
-  then FURL := FConsultaNFSeRps
-  else if self is TNFSeConsultarNfse
-  then FURL := FConsultaNFSe
-  else if self is TNFSeCancelarNfse
-  then FURL := FCancelaNFSe
-  else if self is TNFSeGerarNfse
-  then FURL := FGerarNFSe;
-end;
-
 procedure TWebServicesBase.DoNFSeGerarNFSe;
 var
  i         : Integer;
@@ -1581,22 +1610,28 @@ begin
   end;
 end;
 
+procedure TWebServicesBase.DoNFSeEnviarSincrono;
+begin
+ {*********************}
+end;
+
 { TWebServices }
 
 constructor TWebServices.Create(AFNotaFiscalEletronica: TComponent);
 begin
  inherited Create( AFNotaFiscalEletronica );
 
- FACBrNFSe     := TACBrNFSe(AFNotaFiscalEletronica);
- FEnviar       := TNFSeEnviarLoteRPS.Create(AFNotaFiscalEletronica, TACBrNFSe(AFNotaFiscalEletronica).NotasFiscais);
- FConsSitLote  := TNFSeConsultarSituacaoLoteRPS.Create(AFNotaFiscalEletronica, TACBrNFSe(AFNotaFiscalEletronica).NotasFiscais);
- FConsLote     := TNFSeConsultarLoteRPS.Create(AFNotaFiscalEletronica, TACBrNFSe(AFNotaFiscalEletronica).NotasFiscais);
- FConsNfseRps  := TNFSeConsultarNfseRPS.Create(AFNotaFiscalEletronica, TACBrNFSe(AFNotaFiscalEletronica).NotasFiscais);
- FConsNfse     := TNFSeConsultarNfse.Create(AFNotaFiscalEletronica, TACBrNFSe(AFNotaFiscalEletronica).NotasFiscais);
- FCancNfse     := TNFSeCancelarNfse.Create(AFNotaFiscalEletronica, TACBrNFSe(AFNotaFiscalEletronica).NotasFiscais);
- FGerarNFSe    := TNFSeGerarNFSe.Create(AFNotaFiscalEletronica, TACBrNFSe(AFNotaFiscalEletronica).NotasFiscais);
- FLinkNfse     := TNFSeLinkNFSe.Create(AFNotaFiscalEletronica, TACBrNFSe(AFNotaFiscalEletronica).NotasFiscais);
- FGerarLoteRPS := TNFSeGerarLoteRPS.Create(AFNotaFiscalEletronica, TACBrNFSe(AFNotaFiscalEletronica).NotasFiscais);
+ FACBrNFSe       := TACBrNFSe(AFNotaFiscalEletronica);
+ FEnviar         := TNFSeEnviarLoteRPS.Create(AFNotaFiscalEletronica, TACBrNFSe(AFNotaFiscalEletronica).NotasFiscais);
+ FConsSitLote    := TNFSeConsultarSituacaoLoteRPS.Create(AFNotaFiscalEletronica, TACBrNFSe(AFNotaFiscalEletronica).NotasFiscais);
+ FConsLote       := TNFSeConsultarLoteRPS.Create(AFNotaFiscalEletronica, TACBrNFSe(AFNotaFiscalEletronica).NotasFiscais);
+ FConsNfseRps    := TNFSeConsultarNfseRPS.Create(AFNotaFiscalEletronica, TACBrNFSe(AFNotaFiscalEletronica).NotasFiscais);
+ FConsNfse       := TNFSeConsultarNfse.Create(AFNotaFiscalEletronica, TACBrNFSe(AFNotaFiscalEletronica).NotasFiscais);
+ FCancNfse       := TNFSeCancelarNfse.Create(AFNotaFiscalEletronica, TACBrNFSe(AFNotaFiscalEletronica).NotasFiscais);
+ FGerarNFSe      := TNFSeGerarNFSe.Create(AFNotaFiscalEletronica, TACBrNFSe(AFNotaFiscalEletronica).NotasFiscais);
+ FLinkNfse       := TNFSeLinkNFSe.Create(AFNotaFiscalEletronica, TACBrNFSe(AFNotaFiscalEletronica).NotasFiscais);
+ FGerarLoteRPS   := TNFSeGerarLoteRPS.Create(AFNotaFiscalEletronica, TACBrNFSe(AFNotaFiscalEletronica).NotasFiscais);
+ FEnviarSincrono := TNFSeEnviarSincrono.Create(AFNotaFiscalEletronica, TACBrNFSe(AFNotaFiscalEletronica).NotasFiscais);
 end;
 
 destructor TWebServices.Destroy;
@@ -1610,6 +1645,7 @@ begin
  FGerarNFSe.Free;
  FLinkNfse.Free;
  FGerarLoteRPS.Free;
+ FEnviarSincrono.Free;
 
  inherited;
 end;
@@ -1852,6 +1888,25 @@ begin
   end;
 
  Result := true;
+end;
+
+function TWebServices.EnviaSincrono(ALote: Integer): Boolean;
+begin
+  Result := EnviaSincrono(IntToStr(Alote));
+end;
+
+function TWebServices.EnviaSincrono(ALote: String): Boolean;
+begin
+ self.EnviarSincrono.FNumeroLote := ALote;
+
+ Result := Self.EnviarSincrono.Executar;
+
+ if not Result
+  then begin
+   if Assigned(TACBrNFSe( FACBrNFSe ).OnGerarLog)
+    then TACBrNFSe( FACBrNFSe ).OnGerarLog(Self.EnviarSincrono.Msg);
+   raise Exception.Create(Self.EnviarSincrono.Msg);
+  end;
 end;
 
 { TNFSeEnviarLoteRPS }
@@ -3165,6 +3220,21 @@ begin
  inherited Executar;
 
  Result := True;
+end;
+
+{ TNFSeEnviarSincrono }
+
+constructor TNFSeEnviarSincrono.Create(AOwner: TComponent;
+  ANotasFiscais: TNotasFiscais);
+begin
+ inherited Create(AOwner);
+
+ FNotasFiscais := ANotasFiscais;
+end;
+
+function TNFSeEnviarSincrono.Executar: Boolean;
+begin
+ {*************************}
 end;
 
 end.

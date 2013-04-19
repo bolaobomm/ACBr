@@ -55,7 +55,8 @@ type
                              ALote: Boolean = False;
                              APrefixo3: string = '';
                              APrefixo4: string = '';
-                             AProvedor: TnfseProvedor = proNenhum): Boolean;
+                             AProvedor: TnfseProvedor = proNenhum;
+                             ASincrono: Boolean = False): Boolean;
     {$ELSE}
       // Alterado por Italo em 12/07/2012
       class function Assinar(const AXML: AnsiString;
@@ -64,18 +65,21 @@ type
                              ALote: Boolean = False;
                              APrefixo3: string = '';
                              APrefixo4: string = '';
-                             AProvedor: TnfseProvedor = proNenhum): Boolean;
+                             AProvedor: TnfseProvedor = proNenhum;
+                             ASincrono: Boolean = False): Boolean;
     {$ENDIF}
 
     // Alterado por Italo em 29/10/2012
     {$IFDEF ACBrNFSeOpenSSL}
      class function AssinarXML(AXML, FURISig, FURIRef, FTagI, FTagF, ArqPFX, PFXSenha: AnsiString;
                                out AXMLAssinado, FMensagem: AnsiString;
-                               AProvedor: TnfseProvedor = proNenhum): Boolean;
+                               AProvedor: TnfseProvedor = proNenhum;
+                               ASincrono: Boolean = False): Boolean;
     {$ELSE}
      class function AssinarXML(AXML, FURISig, FURIRef, FTagI, FTagF: AnsiString; Certificado : ICertificate2;
                                out AXMLAssinado, FMensagem: AnsiString;
-                               AProvedor: TnfseProvedor = proNenhum): Boolean;
+                               AProvedor: TnfseProvedor = proNenhum;
+                               ASincrono: Boolean = False): Boolean;
     {$ENDIF}
 
     class function Valida(const AXML: AnsiString;
@@ -87,12 +91,6 @@ type
 
     class function RetirarPrefixos(AXML: String): String;
     class function VersaoXML(AXML: String): String;
-
-//    class procedure ConfAmbiente;
-//    class function PathAplication: String;
-//    class function CollateBr(Str: String): String;
-//    class function UpperCase2(Str: String): String;
-
     class function PathWithDelim( const APath : String ) : String;
     class function RetornarConteudoEntre(const Frase, Inicio, Fim: string): string;
     class function ChaveAcesso(AUF:Integer; ADataEmissao:TDateTime; ACNPJ:String; ASerie:Integer;
@@ -301,15 +299,20 @@ function AssinarLibXML(const AXML,
                        ALote: Boolean = False;
                        APrefixo3: string = '';
                        APrefixo4: string = '';
-                       AProvedor: TnfseProvedor = proNenhum): Boolean;
+                       AProvedor: TnfseProvedor = proNenhum;
+                       ASincrono: Boolean = False): Boolean;
 var
  I, J, PosIni, PosFim, PosIniAssLote : Integer;
- URI, AID, Identificador : String;
+ URI, AID, Identificador, EnviarLoteRps : String;
  AStr, XmlAss, Assinatura : AnsiString;
  Cert: TMemoryStream;
  Cert2: TStringStream;
 begin
  AStr := AXML;
+
+ if ASincrono
+  then EnviarLoteRps := 'EnviarLoteRpsSincronoEnvio'
+  else EnviarLoteRps := 'EnviarLoteRpsEnvio';
 
  if ALote
   then begin
@@ -338,7 +341,7 @@ begin
 
 //   if Identificador = 'id' then URI := '';
 
-   AStr := copy(AStr, 1, pos('</'+ APrefixo3 + 'EnviarLoteRpsEnvio>', AStr) - 1);
+   AStr := copy(AStr, 1, pos('</'+ APrefixo3 + EnviarLoteRps + '>', AStr) - 1);
 
    if (URI = '') {or (AProvedor = profintelISS)}
     then AID := '>'
@@ -373,7 +376,7 @@ begin
                  '</KeyInfo>'+
                 '</Signature>';
 
-   AStr := AStr + '</'+ APrefixo3 + 'EnviarLoteRpsEnvio>';
+   AStr := AStr + '</'+ APrefixo3 + EnviarLoteRps + '>';
 
   end
   else begin
@@ -507,10 +510,11 @@ function AssinarMSXML(XML : AnsiString;
                       ALote: Boolean = False;
                       APrefixo3: string = '';
                       APrefixo4: string = '';
-                      AProvedor: TnfseProvedor = proNenhum): Boolean;
+                      AProvedor: TnfseProvedor = proNenhum;
+                      ASincrono: Boolean = False): Boolean;
 var
  I, J, PosIni, PosFim, PosIniAssLote : Integer;
- URI, AID, Identificador, NameSpaceLote : String;
+ URI, AID, Identificador, NameSpaceLote, EnviarLoteRps : String;
  AXML, Assinatura, xmlHeaderAntes, xmlHeaderDepois : AnsiString;
  xmldoc    : IXMLDOMDocument3;
  xmldsig   : IXMLDigitalSignature;
@@ -519,9 +523,13 @@ var
 begin
  AXML := XML;
 
+ if ASincrono
+  then EnviarLoteRps := 'EnviarLoteRpsSincronoEnvio'
+  else EnviarLoteRps := 'EnviarLoteRpsEnvio';
+
  if ALote
   then begin
-   I := pos('EnviarLoteRpsEnvio xmlns=', AXML);
+   I := pos(EnviarLoteRps +' xmlns=', AXML);
    if I = 0
     then NameSpaceLote := ''
     else begin
@@ -553,7 +561,7 @@ begin
      URI := copy(AXML, I + 1, J - I - 1);
     end;
 
-   AXML := copy(AXML, 1, pos('</'+ APrefixo3 + 'EnviarLoteRpsEnvio>', AXML) - 1);
+   AXML := copy(AXML, 1, pos('</'+ APrefixo3 + EnviarLoteRps + '>', AXML) - 1);
 
    if (URI = '') or (AProvedor = proRecife)
     then AID := '>'
@@ -583,7 +591,7 @@ begin
                  '</KeyInfo>' +
                 '</Signature>';
 
-   AXML := AXML + '</'+ APrefixo3 + 'EnviarLoteRpsEnvio>';
+   AXML := AXML + '</'+ APrefixo3 + EnviarLoteRps + '>';
 
   end
   else begin
@@ -699,7 +707,7 @@ begin
    if (URI <> '') and (AProvedor <> proRecife)
     then xmldsig.signature := xmldoc.selectSingleNode('.//ds:Signature[@' + Identificador + '="AssLote_' + URI + '"]')
     else begin
-     xmldsig.signature := xmldoc.selectSingleNode('.//ds1:EnviarLoteRpsEnvio/ds:Signature');
+     xmldsig.signature := xmldoc.selectSingleNode('.//ds1:' + EnviarLoteRps + '/ds:Signature');
     end;
   end
   else xmldsig.signature := xmldoc.selectSingleNode('.//ds:Signature');
@@ -790,7 +798,7 @@ begin
                    AXML := AXML + '</LoteRps>';
                    I    := pos('</LoteRps>', XMLAssinado);
 
-                   XMLAssinado := copy(XMLAssinado, I, pos('</EnviarLoteRpsEnvio>', XMLAssinado) - I);
+                   XMLAssinado := copy(XMLAssinado, I, pos('</' + EnviarLoteRps + '>', XMLAssinado) - I);
                    XMLAssinado := StringReplace(XMLAssinado, '</LoteRps>', '', []);
                    I           := pos('>', XMLAssinado);
                    XMLAssinado := StringReplace(XMLAssinado, Copy(XMLAssinado, 54, I - 54), '', []);
@@ -800,7 +808,7 @@ begin
 //                   XMLAssinado := StringReplace(XMLAssinado, '</KeyInfo>', '', []);
 
                    AXML := AXML + XMLAssinado;
-                   AXML := AXML + '</EnviarLoteRpsEnvio>';
+                   AXML := AXML + '</' + EnviarLoteRps + '>';
 
                    XMLAssinado := AXML;
                   end;
@@ -892,7 +900,8 @@ class function NotaUtil.Assinar(const AXML, ArqPFX, PFXSenha: AnsiString;
                                 ALote: Boolean = False;
                                 APrefixo3: string = '';
                                 APrefixo4: string = '';
-                                AProvedor: TnfseProvedor = proNenhum): Boolean;
+                                AProvedor: TnfseProvedor = proNenhum;
+                                ASincrono: Boolean = False): Boolean;
 {$ELSE}
 // Alterado por Italo em 12/07/2012
 class function NotaUtil.Assinar(const AXML: AnsiString;
@@ -901,31 +910,39 @@ class function NotaUtil.Assinar(const AXML: AnsiString;
                                 ALote: Boolean = False;
                                 APrefixo3: string = '';
                                 APrefixo4: string = '';
-                                AProvedor: TnfseProvedor = proNenhum): Boolean;
+                                AProvedor: TnfseProvedor = proNenhum;
+                                ASincrono: Boolean = False): Boolean;
 {$ENDIF}
 begin
 {$IFDEF ACBrNFSeOpenSSL}
   Result := AssinarLibXML(AXML, ArqPFX, PFXSenha, AXMLAssinado, FMensagem,
-                          ALote, APrefixo3, APrefixo4, AProvedor);
+                          ALote, APrefixo3, APrefixo4, AProvedor, ASincrono);
 {$ELSE}
   // Alterado por Italo em 12/07/2012
   Result := AssinarMSXML(AXML, Certificado, AXMLAssinado,
-                         ALote, APrefixo3, APrefixo4, AProvedor);
+                         ALote, APrefixo3, APrefixo4, AProvedor, ASincrono);
 {$ENDIF}
 end;
 
 {$IFDEF ACBrNFSeOpenSSL}
 class function NotaUtil.AssinarXML(AXML, FURISig, FURIRef, FTagI, FTagF, ArqPFX, PFXSenha: AnsiString;
                              out AXMLAssinado, FMensagem: AnsiString;
-                             AProvedor: TnfseProvedor = proNenhum): Boolean;
+                             AProvedor: TnfseProvedor = proNenhum;
+                             ASincrono: Boolean = False): Boolean;
 var
  I, Tipo, PosIni, PosFim : Integer;
  XmlAss : AnsiString;
  Cert: TMemoryStream;
  Cert2: TStringStream;
+ EnviarLoteRps: String;
 begin
   Tipo := 1;
-  I    := pos( '<EnviarLoteRpsEnvio', AXML );
+
+ if ASincrono
+  then EnviarLoteRps := 'EnviarLoteRpsSincronoEnvio'
+  else EnviarLoteRps := 'EnviarLoteRpsEnvio';
+
+  I    := pos( '<' + EnviarLoteRps, AXML );
 
   if I = 0  then
    begin
@@ -1005,10 +1022,11 @@ end;
 {$ELSE}
 class function NotaUtil.AssinarXML(AXML, FURISig, FURIRef, FTagI, FTagF: AnsiString; Certificado : ICertificate2;
                                    out AXMLAssinado, FMensagem: AnsiString;
-                                   AProvedor: TnfseProvedor = proNenhum): Boolean;
+                                   AProvedor: TnfseProvedor = proNenhum;
+                                   ASincrono: Boolean = False): Boolean;
 var
  I, PosIni, PosFim : Integer;
- Numero: String;
+ Numero, EnviarLoteRps: String;
 
  xmlHeaderAntes, xmlHeaderDepois : AnsiString;
 
@@ -1017,6 +1035,10 @@ var
  dsigKey   : IXMLDSigKey;
  signedKey : IXMLDSigKey;
 begin
+   if ASincrono
+    then EnviarLoteRps := 'EnviarLoteRpsSincronoEnvio'
+    else EnviarLoteRps := 'EnviarLoteRpsEnvio';
+
    if Copy(FURIRef, 1, 4) = 'http'
     then Numero := ''
     else Numero := '#';
@@ -1334,114 +1356,6 @@ begin
   then result := '1'
   else result := '2';
 end;
-
-(*
-class procedure NotaUtil.ConfAmbiente;
-{$IFDEF VER140} //delphi6
-{$ELSE}
-var
-vFormatSettings: TFormatSettings;
-{$ENDIF}
-begin
-{$IFDEF VER140} //delphi6
-  DecimalSeparator := ',';
-{$ELSE}
-  vFormatSettings.DecimalSeparator := ',';
-{$ENDIF}
-end;
-*)
-
-(*
-class function NotaUtil.PathAplication: String;
-begin
-  Result := ExtractFilePath(Application.ExeName);
-end;
-*)
-
-(*
-class function NotaUtil.CollateBr(Str: String): String;
-var
-   i, wTamanho: integer;
-   wChar, wResultado: Char;
-begin
-   result   := '';
-   wtamanho := Length(Str);
-   i        := 1;
-   while (i <= wtamanho) do
-   begin
-      wChar := Str[i];
-      case wChar of
-         'á', 'â', 'ã', 'à', 'ä', 'å',
-         'Á', 'Â', 'Ã', 'À', 'Ä', 'Å': wResultado := 'A';
-         'é', 'ê', 'è', 'ë',
-         'É', 'Ê', 'È', 'Ë': wResultado := 'E';
-         'í', 'î', 'ì', 'ï',
-         'Í', 'Î', 'Ì', 'Ï': wResultado := 'I';
-         'ó', 'ô', 'õ', 'ò', 'ö',
-         'Ó', 'Ô', 'Õ', 'Ò', 'Ö': wResultado := 'O';
-         'ú', 'û', 'ù', 'ü',
-         'Ú', 'Û', 'Ù', 'Ü': wResultado := 'U';
-         'ç', 'Ç': wResultado := 'C';
-         'ñ', 'Ñ': wResultado := 'N';
-         'ý', 'ÿ', 'Ý', 'Y': wResultado := 'Y';
-      else
-         wResultado := wChar;
-      end;
-      i      := i + 1;
-      Result := Result + wResultado;
-   end;
-   Result := UpperCase(Result);
-end;
-*)
-
-(*
-class function NotaUtil.UpperCase2(Str: String): String;
-var
-   i, wTamanho: integer;
-   wChar, wResultado: Char;
-begin
-   result   := '';
-   wtamanho := Length(Str);
-   i        := 1;
-   while (i <= wtamanho) do
-   begin
-      wChar := Str[i];
-      case wChar of
-         'á','Á': wResultado := 'Á';
-         'ã','Ã': wResultado := 'Ã';
-         'à','À': wResultado := 'À';
-         'â','Â': wResultado := 'Â';
-         'ä','Ä': wResultado := 'Ä';
-         'å','Å': wResultado := 'Å';
-         'é','É': wResultado := 'É';
-         'è','È': wResultado := 'È';
-         'ê','Ê': wResultado := 'Ê';
-         'ë','Ë': wResultado := 'Ë';
-         'í','Í': wResultado := 'Í';
-         'ì','Ì': wResultado := 'Ì';
-         'î','Î': wResultado := 'Î';
-         'ï','Ï': wResultado := 'Ï';
-         'ó','Ó': wResultado := 'Ó';
-         'õ','Õ': wResultado := 'Õ';
-         'ò','Ò': wResultado := 'Ò';
-         'ô','Ô': wResultado := 'Ô';
-         'ö','Ö': wResultado := 'Ö';
-         'ú','Ú': wResultado := 'Ú';
-         'ù','Ù': wResultado := 'Ù';
-         'û','Û': wResultado := 'Û';
-         'ü','Ü': wResultado := 'Ü';
-         'ç', 'Ç': wResultado := 'Ç';
-         'ñ', 'Ñ': wResultado := 'Ñ';
-         'ý', 'ÿ', 'Ý', 'Y': wResultado := 'Y';
-      else
-         wResultado := wChar;
-      end;
-      i      := i + 1;
-      Result := Result + wResultado;
-   end;
-   Result := UpperCase(Result);
-end;
-*)
 
 class function NotaUtil.PathWithDelim( const APath : String ) : String;
 begin

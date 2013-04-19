@@ -43,6 +43,7 @@ type
     ServicoConNfse: String;
     ServicoCancelar: String;
     ServicoGerar: String;
+    ServicoEnviarSincrono: String;
     DefTipos: String;
   end;
 
@@ -55,6 +56,7 @@ type
     HomConsultaNFSe: String;
     HomCancelaNFSe: String;
     HomGerarNFSe: String;
+    HomRecepcaoSincrono: String;
     ProNomeCidade:String;
     ProRecepcaoLoteRPS: String;
     ProConsultaLoteRPS: String;
@@ -63,6 +65,7 @@ type
     ProConsultaNFSe: String;
     ProCancelaNFSe: String;
     ProGerarNFSe: String;
+    ProRecepcaoSincrono: String;
   end;
 
  TCertificadosConf = class(TComponent)
@@ -137,6 +140,7 @@ type
     FServicoConNfse: String;
     FServicoCancelar: String;
     FServicoGerar: String;
+    FServicoEnviarSincrono: String;
     FDefTipos: String;
 
     // URLs
@@ -148,6 +152,7 @@ type
     FHomConsultaNFSe: String;
     FHomCancelaNFSe: String;
     FHomGerarNFSe: String;
+    FHomRecepcaoSincrono: String;
     FProNomeCidade:String;
     FProRecepcaoLoteRPS: String;
     FProConsultaLoteRPS: String;
@@ -156,6 +161,7 @@ type
     FProConsultaNFSe: String;
     FProCancelaNFSe: String;
     FProGerarNFSe: String;
+    FProRecepcaoSincrono: String;
     FConsultaLoteAposEnvio: Boolean;
 
     procedure SetAmbiente(AValue: TpcnTipoAmbiente);
@@ -203,6 +209,7 @@ type
     property ServicoConNfse: String read FServicoConNfse;
     property ServicoCancelar: String read FServicoCancelar;
     property ServicoGerar: String read FServicoGerar;
+    property ServicoEnviarSincrono: String read FServicoEnviarSincrono;
     property DefTipos: String read FDefTipos;
 
     // URLs
@@ -214,6 +221,7 @@ type
     property HomConsultaNFSe: String read FHomConsultaNFSe;
     property HomCancelaNFSe: String read FHomCancelaNFSe;
     property HomGerarNFSe: String read FHomGerarNFSe;
+    property HomRecepcaoSincrono: String read FHomRecepcaoSincrono;
     property ProNomeCidade: String read FProNomeCidade;
     property ProRecepcaoLoteRPS: String read FProRecepcaoLoteRPS;
     property ProConsultaLoteRPS: String read FProConsultaLoteRPS;
@@ -222,6 +230,7 @@ type
     property ProConsultaNFSe: String read FProConsultaNFSe;
     property ProCancelaNFSe: String read FProCancelaNFSe;
     property ProGerarNFSe: String read FProGerarNFSe;
+    property ProRecepcaoSincrono: String read FProRecepcaoSincrono;
   end;
 
  TGeralConf = class(TComponent)
@@ -325,6 +334,10 @@ type
                                    NameSpaceDad, VersaoDados, VersaoXML,
                                    NumeroLote, CNPJ, IM, QtdeNotas: String;
                                    Notas, TagI, TagF: AnsiString): AnsiString; Virtual; Abstract;
+   function Gera_DadosMsgEnviarSincrono(Prefixo3, Prefixo4, Identificador,
+                                        NameSpaceDad, VersaoDados, VersaoXML,
+                                        NumeroLote, CNPJ, IM, QtdeNotas: String;
+                                        Notas, TagI, TagF: AnsiString): AnsiString; Virtual; Abstract;
 
    function GeraEnvelopeRecepcionarLoteRPS(URLNS: String; CabMsg, DadosMsg, DadosSenha: AnsiString): AnsiString; Virtual; Abstract;
    function GeraEnvelopeConsultarSituacaoLoteRPS(URLNS: String; CabMsg, DadosMsg, DadosSenha: AnsiString): AnsiString; Virtual; Abstract;
@@ -333,6 +346,7 @@ type
    function GeraEnvelopeConsultarNFSe(URLNS: String; CabMsg, DadosMsg, DadosSenha: AnsiString): AnsiString; Virtual; Abstract;
    function GeraEnvelopeCancelarNFSe(URLNS: String; CabMsg, DadosMsg, DadosSenha: AnsiString): AnsiString; Virtual; Abstract;
    function GeraEnvelopeGerarNFSe(URLNS: String; CabMsg, DadosMsg, DadosSenha: AnsiString): AnsiString; Virtual; Abstract;
+   function GeraEnvelopeRecepcionarSincrono(URLNS: String; CabMsg, DadosMsg, DadosSenha: AnsiString): AnsiString; Virtual; Abstract;
 
    function GetSoapAction(Acao: TnfseAcao; NomeCidade: String): String; Virtual; Abstract;
    function GetRetornoWS(Acao: TnfseAcao; RetornoWS: AnsiString): AnsiString; Virtual; Abstract;
@@ -696,19 +710,20 @@ begin
 
  ConfigSchema := FProvedorClass.GetConfigSchema(FCodigoMunicipio);
 
- FVersaoCabecalho := ConfigSchema.VersaoCabecalho;
- FVersaoDados     := ConfigSchema.VersaoDados;
- FVersaoXML       := ConfigSchema.VersaoXML;
- FURL             := ConfigSchema.NameSpaceXML;
- FCabecalho       := ConfigSchema.Cabecalho;
- FServicoEnviar   := ConfigSchema.ServicoEnviar;
- FServicoConSit   := ConfigSchema.ServicoConSit;
- FServicoConLot   := ConfigSchema.ServicoConLot;
- FServicoConRps   := ConfigSchema.ServicoConRps;
- FServicoConNfse  := ConfigSchema.ServicoConNfse;
- FServicoCancelar := ConfigSchema.ServicoCancelar;
- FServicoGerar    := ConfigSchema.ServicoGerar;
- FDefTipos        := ConfigSchema.DefTipos;
+ FVersaoCabecalho       := ConfigSchema.VersaoCabecalho;
+ FVersaoDados           := ConfigSchema.VersaoDados;
+ FVersaoXML             := ConfigSchema.VersaoXML;
+ FURL                   := ConfigSchema.NameSpaceXML;
+ FCabecalho             := ConfigSchema.Cabecalho;
+ FServicoEnviar         := ConfigSchema.ServicoEnviar;
+ FServicoConSit         := ConfigSchema.ServicoConSit;
+ FServicoConLot         := ConfigSchema.ServicoConLot;
+ FServicoConRps         := ConfigSchema.ServicoConRps;
+ FServicoConNfse        := ConfigSchema.ServicoConNfse;
+ FServicoCancelar       := ConfigSchema.ServicoCancelar;
+ FServicoGerar          := ConfigSchema.ServicoGerar;
+ FServicoEnviarSincrono := ConfigSchema.ServicoEnviarSincrono;
+ FDefTipos              := ConfigSchema.DefTipos;
 
  ConfigURL := FProvedorClass.GetConfigURL(FCodigoMunicipio);
 
@@ -720,6 +735,7 @@ begin
  FHomConsultaNFSe       := ConfigURL.HomConsultaNFSe;
  FHomCancelaNFSe        := ConfigURL.HomCancelaNFSe;
  FHomGerarNFSe          := ConfigURL.HomGerarNFSe;
+ FHomRecepcaoSincrono   := ConfigURL.HomRecepcaoSincrono;
 
  FProNomeCidade         := ConfigURL.ProNomeCidade;
  FProRecepcaoLoteRPS    := ConfigURL.ProRecepcaoLoteRPS;
@@ -729,6 +745,7 @@ begin
  FProConsultaNFSe       := ConfigURL.ProConsultaNFSe;
  FProCancelaNFSe        := ConfigURL.ProCancelaNFSe;
  FProGerarNFSe          := ConfigURL.ProGerarNFSe;
+ FProRecepcaoSincrono   := ConfigURL.ProRecepcaoSincrono;
 end;
 
 procedure TWebServicesConf.SetIntervaloTentativas(const Value: Cardinal);

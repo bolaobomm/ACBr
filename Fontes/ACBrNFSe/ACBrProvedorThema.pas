@@ -60,6 +60,10 @@ type
                                    NameSpaceDad, VersaoDados, VersaoXML,
                                    NumeroLote, CNPJ, IM, QtdeNotas: String;
                                    Notas, TagI, TagF: AnsiString): AnsiString; OverRide;
+   function Gera_DadosMsgEnviarSincrono(Prefixo3, Prefixo4, Identificador,
+                                        NameSpaceDad, VersaoDados, VersaoXML,
+                                        NumeroLote, CNPJ, IM, QtdeNotas: String;
+                                        Notas, TagI, TagF: AnsiString): AnsiString; OverRide;
 
    function GeraEnvelopeRecepcionarLoteRPS(URLNS: String; CabMsg, DadosMsg, DadosSenha: AnsiString): AnsiString; OverRide;
    function GeraEnvelopeConsultarSituacaoLoteRPS(URLNS: String; CabMsg, DadosMsg, DadosSenha: AnsiString): AnsiString; OverRide;
@@ -68,6 +72,7 @@ type
    function GeraEnvelopeConsultarNFSe(URLNS: String; CabMsg, DadosMsg, DadosSenha: AnsiString): AnsiString; OverRide;
    function GeraEnvelopeCancelarNFSe(URLNS: String; CabMsg, DadosMsg, DadosSenha: AnsiString): AnsiString; OverRide;
    function GeraEnvelopeGerarNFSe(URLNS: String; CabMsg, DadosMsg, DadosSenha: AnsiString): AnsiString; OverRide;
+   function GeraEnvelopeRecepcionarSincrono(URLNS: String; CabMsg, DadosMsg, DadosSenha: AnsiString): AnsiString; OverRide;
 
    function GetSoapAction(Acao: TnfseAcao; NomeCidade: String): String; OverRide;
    function GetRetornoWS(Acao: TnfseAcao; RetornoWS: AnsiString): AnsiString; OverRide;
@@ -650,6 +655,19 @@ end;
 
 function TProvedorThema.GetLinkNFSe(ACodMunicipio, ANumeroNFSe: Integer;
   ACodVerificacao: String; AAmbiente: Integer): String;
+begin
+ Result := '';
+end;
+
+function TProvedorThema.Gera_DadosMsgEnviarSincrono(Prefixo3, Prefixo4,
+  Identificador, NameSpaceDad, VersaoDados, VersaoXML, NumeroLote, CNPJ,
+  IM, QtdeNotas: String; Notas, TagI, TagF: AnsiString): AnsiString;
+begin
+ Result := '';
+end;
+
+function TProvedorThema.GeraEnvelopeRecepcionarSincrono(URLNS: String;
+  CabMsg, DadosMsg, DadosSenha: AnsiString): AnsiString;
 begin
  Result := '';
 end;

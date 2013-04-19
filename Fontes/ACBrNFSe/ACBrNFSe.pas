@@ -40,8 +40,8 @@ type
   public
     constructor Create(AOwner: TComponent); override;
     destructor Destroy; override;
-    function Enviar(ALote: Integer; Imprimir:Boolean = True): Boolean; overload;
-    function Enviar(ALote: String; Imprimir:Boolean = True): Boolean; overload;
+    function Enviar(ALote: Integer; Imprimir: Boolean = True): Boolean; overload;
+    function Enviar(ALote: String; Imprimir: Boolean = True): Boolean; overload;
     function ConsultarSituacao(ACnpj, AInscricaoMunicipal, AProtocolo: String): Boolean;
     function ConsultarLoteRps(ANumLote, AProtocolo: String): Boolean;
     function ConsultarNFSeporRps(ANumero, ASerie, ATipo, ACnpj, AInscricaoMunicipal: String): Boolean;
@@ -51,6 +51,8 @@ type
     function LinkNFSe(ANumeroNFSe: Integer; ACodVerificacao: String): String;
     function GerarLote(ALote: Integer): Boolean; overload;
     function GerarLote(ALote: String): Boolean; overload;
+    function EnviarSincrono(ALote: Integer; Imprimir: Boolean = True): Boolean; overload;
+    function EnviarSincrono(ALote: String; Imprimir: Boolean = True): Boolean; overload;
 
     property WebServices: TWebServices   read FWebServices  write FWebServices;
     property NotasFiscais: TNotasFiscais read FNotasFiscais write FNotasFiscais;
@@ -335,6 +337,36 @@ begin
 
  Result := WebServices.GeraLote(ALote);
 
+end;
+
+function TACBrNFSe.EnviarSincrono(ALote: Integer;
+  Imprimir: Boolean): Boolean;
+begin
+  Result := EnviarSincrono(IntToStr(ALote));
+end;
+
+function TACBrNFSe.EnviarSincrono(ALote: String;
+  Imprimir: Boolean): Boolean;
+begin
+ if NotasFiscais.Count <= 0
+  then begin
+   if Assigned(Self.OnGerarLog)
+    then Self.OnGerarLog('ERRO: Nenhum RPS adicionado ao Lote');
+   raise Exception.Create('ERRO: Nenhum RPS adicionado ao Lote');
+   exit;
+  end;
+
+ if NotasFiscais.Count > 50
+  then begin
+   if Assigned(Self.OnGerarLog)
+    then Self.OnGerarLog('ERRO: Conjunto de RPS transmitidos (máximo de 50) excedido. Quantidade atual: '+IntToStr(NotasFiscais.Count));
+   raise Exception.Create('ERRO: Conjunto de RPS transmitidos (máximo de 50) excedido. Quantidade atual: '+IntToStr(NotasFiscais.Count));
+   exit;
+  end;
+
+ NotasFiscais.Assinar; // Assina os Rps
+
+ Result := WebServices.EnviaSincrono(ALote);
 end;
 
 end.

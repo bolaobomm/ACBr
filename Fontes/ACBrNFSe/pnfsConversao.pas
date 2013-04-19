@@ -12,7 +12,7 @@ uses
 type
   TStatusACBrNFSe = ( stNFSeIdle, stNFSeRecepcao, stNFSeConsulta, stNFSeCancelamento, stNFSeEmail );
   TLayOut = (LayNfseRecepcaoLote, LayNfseConsultaLote, LayNfseConsultaNfseRps, LayNfseConsultaSitLoteRps,
-             LayNfseConsultaNfse, LayNfseCancelaNfse, LayNfseGerar );
+             LayNfseConsultaNfse, LayNfseCancelaNfse, LayNfseGerar, LayNfseRecepcaoLoteSincrono);
 
   TnfseTagAssinatura = ( taSempre, taNunca, taSomenteSeAssinada, taSomenteParaNaoAssinada );
   TnfsePadraoLayout = ( plABRASF );
@@ -43,7 +43,7 @@ type
                     proGoiania, proIssCuritiba, proBHISS, proNatal, proISSDigital, proISSe, pro4R,
                     proGovDigital );
 
-  TnfseAcao = ( acRecepcionar, acConsSit, acConsLote, acConsNFSeRps, acConsNFSe, acCancelar, acGerar );
+  TnfseAcao = ( acRecepcionar, acConsSit, acConsLote, acConsNFSeRps, acConsNFSe, acCancelar, acGerar, acRecSincrono );
 
   TnfseSituacaoTributaria = ( stRetencao, stNormal, stSubstituicao );
 
