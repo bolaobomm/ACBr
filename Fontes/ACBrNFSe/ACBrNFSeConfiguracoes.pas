@@ -76,9 +76,11 @@ type
     {$IFNDEF ACBrNFSeOpenSSL}
        FNumeroSerie: AnsiString;
        FDataVenc: TDateTime;
+       FInformacao: AnsiString;
        procedure SetNumeroSerie(const Value: AnsiString);
        function GetNumeroSerie: AnsiString;
        function GetDataVenc: TDateTime;
+       function GetInformacao: AnsiString;
     {$ELSE}
        FCertificado: AnsiString;
     {$ENDIF}
@@ -91,6 +93,7 @@ type
     {$IFNDEF ACBrNFSeOpenSSL}
        property NumeroSerie: AnsiString read GetNumeroSerie write SetNumeroSerie;
        property DataVenc: TDateTime     read GetDataVenc;
+       property Informacao: AnsiString  read GetInformacao;
     {$ELSE}
        property Certificado: AnsiString read FCertificado write FCertificado;
     {$ENDIF}
@@ -596,8 +599,9 @@ begin
        xmldoc  := nil;
       end;
 
-     Result    := Cert;
-     FDataVenc := Cert.ValidToDate;
+     Result      := Cert;
+     FDataVenc   := Cert.ValidToDate;
+     FInformacao := Cert.SubjectName;
      break;
     end;
   end;
@@ -634,6 +638,7 @@ begin
    Cert         := IInterface(Certs2.Item[1]) as ICertificate2;
    FNumeroSerie := Cert.SerialNumber;
    FDataVenc    := Cert.ValidToDate;
+   FInformacao  := Cert.SubjectName
   end;
 
  Result := FNumeroSerie;
@@ -648,6 +653,17 @@ begin
    Result := FDataVenc;
   end
  else Result := 0;
+end;
+
+function TCertificadosConf.GetInformacao: AnsiString;
+begin
+ if DFeUtil.NaoEstaVazio(FNumeroSerie)
+  then begin
+   if FInformacao = ''
+    then GetCertificado;
+    Result := UpperCase(FInformacao);
+  end
+ else Result := '';
 end;
 {$ENDIF}
 
