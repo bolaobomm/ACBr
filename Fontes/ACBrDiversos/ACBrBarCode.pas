@@ -102,7 +102,7 @@ type
     procedure DrawText(Canvas:TCanvas);
 
   published
-    property Text : String  read GetBarCodeText write SetBarCodeText;
+    property Text : String  read GetBarCodeText write SetBarCodeText stored False;
 
    { Width of the smallest line in a Barcode }
     property Modul  : Integer      read GetModul write SetModul;
