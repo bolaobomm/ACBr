@@ -135,7 +135,7 @@ function CreateAGif(const Name: string; var NonAnimated: boolean): TGifImage;
 implementation
 
 uses
-  {$ifdef Linux}
+  {$IFNDEF MSWINDOWS}
     {$IFNDEF FPC}
       Libc
     {$else}
@@ -332,7 +332,7 @@ if (FVisible) and (FNumFrames > 0) then
   end;
 end;
 
-{$ifdef Linux}
+{$IFNDEF MSWINDOWS}
 function timeGetTime: Int64;
 var
   tv: timeval;

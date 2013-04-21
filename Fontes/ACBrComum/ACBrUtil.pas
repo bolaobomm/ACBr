@@ -89,7 +89,7 @@
  {$IFNDEF NOGUI}
   {$DEFINE USE_LCLIntf}
  {$ENDIF}
- {$IFDEF LINUX}
+ {$IFNDEF MSWINDOWS}
   {$DEFINE USE_LConvEncoding}
  {$ENDIF}
 {$ENDIF}
@@ -1555,7 +1555,7 @@ end;
  ---------------------------------------------------------------------------- }
 {$WARNINGS OFF}
 function InPort(const PortAddr:word): byte;
-{$IFDEF LINUX}
+{$IFNDEF MSWINDOWS}
 var Buffer : Pointer ;
     FDevice : String ;
     N : Integer ;
@@ -1598,7 +1598,7 @@ end ;
           (use: su  ou  chmod u+s SeuPrograma ) 
  ---------------------------------------------------------------------------- }
 procedure OutPort(const PortAddr: word; const Databyte: byte);
-{$IFDEF LINUX}
+{$IFNDEF MSWINDOWS}
 var Buffer : Pointer ;
     FDevice : String ;
     N : Integer ;
@@ -1969,7 +1969,7 @@ end ;
  var
    hDrive: THandle;
  begin
-   hDrive := fpOpen(sFile, O_Creat or O_RDWR or O_SYNC);
+   hDrive := fpOpen(sFile, O_Creat or O_RDWR {$IFDEF LINUX}or O_SYNC{$ENDIF});
    Result := (fpfsync(hDrive) = 0);
    fpClose(hDrive);
  end ;
@@ -2040,7 +2040,7 @@ end ;
  var
    hDrive: THandle;
  begin
-   hDrive := fpOpen(sFile, O_Creat or O_RDWR or O_SYNC);
+   hDrive := fpOpen(sFile, O_Creat or O_RDWR {$IFDEF LINUX}or O_SYNC{$ENDIF});
    Result := (fpfsync(hDrive) = 0);
    fpClose(hDrive);
  end ;
