@@ -111,8 +111,8 @@ function TProvedor4R.GetConfigSchema(ACodCidade: Integer): TConfigSchema;
 var
  ConfigSchema: TConfigSchema;
 begin
- ConfigSchema.VersaoCabecalho := '2.0';
- ConfigSchema.VersaoDados     := '2.0';
+ ConfigSchema.VersaoCabecalho := '2.00';
+ ConfigSchema.VersaoDados     := '2.00';
  ConfigSchema.VersaoXML       := '1';
  ConfigSchema.NameSpaceXML    := 'http://www.abrasf.org.br/';
  ConfigSchema.Cabecalho       := 'nfse.xsd';
@@ -236,7 +236,8 @@ var
  DadosMsg: AnsiString;
 begin
  DadosMsg := '<' + Prefixo3 + 'LoteRps'+
-               DFeUtil.SeSenao(Identificador <> '', ' ' + Identificador + '="' + NumeroLote + '"', '') + '>' +
+               DFeUtil.SeSenao(Identificador <> '', ' ' + Identificador + '="' + NumeroLote + '"', '') +
+                'versao="' + VersaoDados +'">' +
               '<' + Prefixo4 + 'NumeroLote>' +
                 NumeroLote +
               '</' + Prefixo4 + 'NumeroLote>' +
