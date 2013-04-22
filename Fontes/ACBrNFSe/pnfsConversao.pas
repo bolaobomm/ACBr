@@ -817,7 +817,8 @@ begin
          : Provedor := '4R';
 
   3132404, // Itajubá/MG
-  3151800  // Poços de Caldas/MG
+  3151800, // Poços de Caldas/MG
+  3522307  // Itapetininga/SP
          : Provedor := 'GovDigital';
  end;
  Result := Provedor;

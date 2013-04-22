@@ -462,13 +462,12 @@ begin
                        'xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" ' +
                        'xmlns:xsd="http://www.w3.org/2001/XMLSchema">' +
             '<S:Body>' +
-             '<EnviarLoteRpsSincronoEnvio xmlns="' + URLNS + '">' +
+            // Incluido por João Paulo Delboni em 22/04/2013
+            '<RecepcionarLoteRpsSincrono.Execute xmlns="Abrasf2">' +
               '<Entrada>' +
-//              '<MensagemXML>' +
                 StringReplace(StringReplace(DadosMsg, '<', '&lt;', [rfReplaceAll]), '>', '&gt;', [rfReplaceAll]) +
               '</Entrada>' +
-//              '</MensagemXML>' +
-             '</EnviarLoteRpsSincronoEnvio>' +
+             '</RecepcionarLoteRpsSincrono.Execute>' +
             '</S:Body>' +
            '</S:Envelope>';
 end;
@@ -529,12 +528,10 @@ begin
                        'xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" ' +
                        'xmlns:xsd="http://www.w3.org/2001/XMLSchema">' +
             '<S:Body>' +
-             '<GerarNfse.Execute xmlns="' + URLNS + '">' +
+             '<GerarNfse.Execute xmlns="Abrasf2">' +
               '<Entrada>' +
-//              '<MensagemXML>' +
                 StringReplace(StringReplace(DadosMsg, '<', '&lt;', [rfReplaceAll]), '>', '&gt;', [rfReplaceAll]) +
               '</Entrada>' +
-//              '</MensagemXML>' +
              '</GerarNfse.Execute>' +
             '</S:Body>' +
            '</S:Envelope>';
@@ -547,7 +544,7 @@ begin
 //   acRecepcionar: Result := 'http://nfse.abrasf.org.br/RecepcionarLoteRpsSincrono';
    acConsSit:     Result := '';
    acConsLote:    Result := '';
-   acConsNFSeRps: Result := 'http://nfse.abrasf.org.br/ConsultarNfsePorRps';
+   acConsNFSeRps: Result := 'Abrasf2action/ACONSULTARNFSEPORRPS.Execute';
    acConsNFSe:    Result := '';
    acCancelar:    Result := 'http://nfse.abrasf.org.br/CancelarNfse';
    acGerar:       Result := 'http://tempuri.org/action/AGERARNFSE.Execute';
@@ -560,8 +557,8 @@ var
 begin
  case Acao of
    acRecepcionar: begin
-                   RetWS := SeparaDados( RetornoWS, 'EnviarLoteRpsResposta>' );
-                   RetWS := RetWS + '</EnviarLoteRpsResposta>';
+                   // Incluido por João Paulo Delboni em 22/04/2013
+                   RetWS := SeparaDados( RetornoWS, 'Resposta' );
                    Result := RetWS;
                   end;
    acConsSit:     Result := SeparaDados( RetornoWS, 'ConsultarSituacaoLoteRpsResposta' );

@@ -111,6 +111,11 @@ begin
               then ConfigCidade.NameSpaceEnvelope := 'https://www.govdigital.com.br/ws/pocos'
               else ConfigCidade.NameSpaceEnvelope := 'https://homolog.govdigital.com.br/ws/pocos';
             end;
+   3522307: begin // Itapetininga/SP
+             if AAmbiente = 1
+              then ConfigCidade.NameSpaceEnvelope := 'https://www.govdigital.com.br/ws/itapetininga'
+              else ConfigCidade.NameSpaceEnvelope := 'https://homolog.govdigital.com.br/ws/itapetininga';
+            end;
   end;
 
  	ConfigCidade.AssinaRPS  := True;
@@ -152,6 +157,10 @@ begin
    3151800: begin
              ConfigURL.HomNomeCidade := 'pocos';
              ConfigURL.ProNomeCidade := 'pocos';
+            end;
+   3522307: begin // Itapetininga/SP
+             ConfigURL.HomNomeCidade := 'itapetininga';
+             ConfigURL.ProNomeCidade := 'itapetininga';
             end;
   end;
 

@@ -149,7 +149,9 @@ begin
     Leitor.Arquivo := NotaUtil.RetirarPrefixos(Leitor.Arquivo);
     Leitor.Grupo   := Leitor.Arquivo;
 
-    if leitor.rExtrai(1, 'EnviarLoteRpsResposta') <> '' then
+    if (leitor.rExtrai(1, 'EnviarLoteRpsResposta') <> '') or
+       // Incluido por João Paulo Delboni em 22/04/2013 - Retorno do provedor 4R
+       (leitor.rExtrai(1, 'EnviarLoteRpsSincronoResposta') <> '') then
     begin
       infRec.FNumeroLote      := Leitor.rCampo(tcStr, 'NumeroLote');
       infRec.FDataRecebimento := Leitor.rCampo(tcDatHor, 'DataRecebimento');
