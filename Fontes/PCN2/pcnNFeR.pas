@@ -104,6 +104,8 @@ var
   ok: boolean;
   i, j, k, z, nItem: integer;
   Arquivo, Itens, ItensTemp, VersaoInfNFe, Temp_VersaoInfNFe, NumItem: AnsiString;
+  Aspas: String;
+
   Function VerificaParSt(const t: TpcnCSTIcms): TpcnCSTIcms;
   // 	Verifica se existe Partilha ou St
   begin
@@ -121,23 +123,30 @@ var
     end;
   end;
 begin
+  // Incluido por Italo em 22/04/2013
+  if Pos('Id="', Leitor.Arquivo) <> 0 then
+    Aspas := '"'
+   else
+    Aspas := '''';
 
   I := 0;
+
   I := RetornarPosEx('Id=', Leitor.Arquivo, I + 6);
   if I = 0 then
     raise Exception.Create('Não encontrei inicio do URI: Id=');
-  I := RetornarPosEx('"', Leitor.Arquivo, I + 2);
+  I := RetornarPosEx(Aspas, Leitor.Arquivo, I + 2);
   if I = 0 then
     raise Exception.Create('Não encontrei inicio do URI: aspas inicial');
-  J := RetornarPosEx('"', Leitor.Arquivo, I + 1);
+  J := RetornarPosEx(Aspas, Leitor.Arquivo, I + 1);
   if J = 0 then
     raise Exception.Create('Não encontrei inicio do URI: aspas final');
 
   z:=pos('infnfe', LowerCase(Leitor.Arquivo));
   VersaoInfNFe:=copy(LowerCase(Leitor.Arquivo),z,length(Leitor.Arquivo)-z);
-  z:=Pos('versao="',VersaoInfNFe)+8;
+  z:=Pos('versao='+Aspas,VersaoInfNFe)+8;
+
   VersaoInfNFe := copy(VersaoInfNFe,z,4);
-  VersaoInfNFe := StringReplace(Trim(VersaoInfNFe),'"','',[rfReplaceAll] ) ;
+  VersaoInfNFe := StringReplace(Trim(VersaoInfNFe),Aspas,'',[rfReplaceAll] ) ;
 
   if (DecimalSeparator = ',') then
       Temp_VersaoInfNFe := StringReplace(Trim(VersaoInfNFe),'.',',',[rfReplaceAll] )
@@ -365,13 +374,13 @@ begin
   begin
     Leitor.Arquivo := 'Item '+ItensTemp;
 
-    NumItem := copy(ItensTemp,Pos('nItem=',ItensTemp)+7,Pos('"',ItensTemp));
-    NumItem := copy(NumItem,1,Pos('"',NumItem)-1);
+    NumItem := copy(ItensTemp,Pos('nItem=',ItensTemp)+7,Pos(Aspas,ItensTemp));
+    NumItem := copy(NumItem,1,Pos(Aspas,NumItem)-1);
     nItem := StrToInt(NumItem);
     Itens     := StringReplace(Itens, ItensTemp, '',[]);
     ItensTemp := copy(Itens,Pos('<det nItem=',Itens),(Pos('</det>',Itens)+6)-Pos('<det nItem=',Itens));
 
-    Leitor.rExtrai(1, 'det nItem="' + IntToStr(nItem) + '"', 'det');
+    Leitor.rExtrai(1, 'det nItem=' + Aspas + IntToStr(nItem) + Aspas, 'det');
     NFe.Det.Add;
     (*   *)NFe.Det[i].prod.nItem := i + 1;
     (*V01*)NFe.Det[i].infAdProd := Leitor.rCampo(tcStr, 'infAdProd');
