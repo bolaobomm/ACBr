@@ -111,19 +111,20 @@ function TProvedor4R.GetConfigSchema(ACodCidade: Integer): TConfigSchema;
 var
  ConfigSchema: TConfigSchema;
 begin
- ConfigSchema.VersaoCabecalho := '2.00';
- ConfigSchema.VersaoDados     := '2.00';
- ConfigSchema.VersaoXML       := '1';
- ConfigSchema.NameSpaceXML    := 'http://www.abrasf.org.br/';
- ConfigSchema.Cabecalho       := 'nfse.xsd';
- ConfigSchema.ServicoEnviar   := 'nfse.xsd';
- ConfigSchema.ServicoConSit   := 'nfse.xsd';
- ConfigSchema.ServicoConLot   := 'nfse.xsd';
- ConfigSchema.ServicoConRps   := 'nfse.xsd';
- ConfigSchema.ServicoConNfse  := 'nfse.xsd';
- ConfigSchema.ServicoCancelar := 'nfse.xsd';
- ConfigSchema.ServicoGerar    := 'nfse.xsd';
- ConfigSchema.DefTipos        := '';
+ ConfigSchema.VersaoCabecalho       := '2.00';
+ ConfigSchema.VersaoDados           := '2.00';
+ ConfigSchema.VersaoXML             := '1';
+ ConfigSchema.NameSpaceXML          := 'http://www.abrasf.org.br/';
+ ConfigSchema.Cabecalho             := 'nfse.xsd';
+ ConfigSchema.ServicoEnviar         := 'nfse.xsd';
+ ConfigSchema.ServicoConSit         := 'nfse.xsd';
+ ConfigSchema.ServicoConLot         := 'nfse.xsd';
+ ConfigSchema.ServicoConRps         := 'nfse.xsd';
+ ConfigSchema.ServicoConNfse        := 'nfse.xsd';
+ ConfigSchema.ServicoCancelar       := 'nfse.xsd';
+ ConfigSchema.ServicoGerar          := 'nfse.xsd';
+ ConfigSchema.ServicoEnviarSincrono := 'nfse.xsd';
+ ConfigSchema.DefTipos              := '';
 
  Result := ConfigSchema;
 end;
@@ -133,26 +134,29 @@ var
  	ConfigURL: TConfigURL;
 begin
  	ConfigURL.HomNomeCidade         := '';
- 	ConfigURL.HomRecepcaoLoteRPS    := 'http://abrasf.sistemas4r.com.br/arecepcionarloterpssincrono.aspx?wsdl';
- 	ConfigURL.HomConsultaLoteRPS    := '';
+
+ 	ConfigURL.HomRecepcaoLoteRPS    := '';
+ 	ConfigURL.HomConsultaLoteRPS    := 'http://abrasf.sistemas4r.com.br/aconsultarloterps.aspx?wsdl';
  	ConfigURL.HomConsultaNFSeRPS    := 'http://abrasf.sistemas4r.com.br/aconsultarnfseporrps.aspx?wsdl';
- 	ConfigURL.HomConsultaSitLoteRPS := 'http://abrasf.sistemas4r.com.br/aconsultarloterps.aspx';
+ 	ConfigURL.HomConsultaSitLoteRPS := '';
  	ConfigURL.HomConsultaNFSe       := '';
  	ConfigURL.HomCancelaNFSe        := 'http://abrasf.sistemas4r.com.br/acancelarnfse.aspx';
- 	ConfigURL.HomGerarNFSe          := 'http://abrasf.sistemas4r.com.br/agerarnfse';
+ 	ConfigURL.HomGerarNFSe          := 'http://abrasf.sistemas4r.com.br/agerarnfse.aspx?wsdl';
+ 	ConfigURL.HomRecepcaoSincrono   := 'http://abrasf.sistemas4r.com.br/arecepcionarloterpssincrono.aspx?wsdl';
 
   case ACodCidade of
    3510203: ConfigURL.ProNomeCidade  := 'capaobonito';
    3523503: ConfigURL.ProNomeCidade  := 'itatinga';
   end;
 
- 	ConfigURL.ProRecepcaoLoteRPS    := 'http://' + ConfigURL.ProNomeCidade + '.sistemas4r.com.br/abrasf/arecepcionarloterpssincrono.aspx?wsdl';
- 	ConfigURL.ProConsultaLoteRPS    := '';
+ 	ConfigURL.ProRecepcaoLoteRPS    := '';
+ 	ConfigURL.ProConsultaLoteRPS    := 'http://' + ConfigURL.ProNomeCidade + '.sistemas4r.com.br/aconsultarloterps.aspx?wsdl';
  	ConfigURL.ProConsultaNFSeRPS    := 'http://' + ConfigURL.ProNomeCidade + '.sistemas4r.com.br/abrasf/aconsultarnfseporrps.aspx?wsdl';
- 	ConfigURL.ProConsultaSitLoteRPS := 'http://' + ConfigURL.ProNomeCidade + '.sistemas4r.com.br/aconsultarloterps.aspx';
+ 	ConfigURL.ProConsultaSitLoteRPS := '';
  	ConfigURL.ProConsultaNFSe       := '';
  	ConfigURL.ProCancelaNFSe        := 'http://' + ConfigURL.ProNomeCidade + '.sistemas4r.com.br/abrasf/acancelarnfse.aspx';
-  ConfigURL.ProGerarNFSe          := 'http://' + ConfigURL.ProNomeCidade + '.sistemas4r.com.br/abrasf/agerarnfse.aspx';
+  ConfigURL.ProGerarNFSe          := 'http://' + ConfigURL.ProNomeCidade + '.sistemas4r.com.br/abrasf/agerarnfse.aspx?wsdl';
+ 	ConfigURL.ProRecepcaoSincrono   := 'http://' + ConfigURL.ProNomeCidade + '.sistemas4r.com.br/abrasf/arecepcionarloterpssincrono.aspx?wsdl';
 
  	Result := ConfigURL;
 end;
@@ -172,7 +176,7 @@ begin
    acConsNFSe:    Result := False;
    acCancelar:    Result := False;
    acGerar:       Result := False;
-   else           Result := False;
+   acRecSincrono: Result := False;
  end;
 end;
 
@@ -199,6 +203,7 @@ begin
                               '<' + Prefixo4 + 'InfPedidoCancelamento' +
                                  DFeUtil.SeSenao(Identificador <> '', ' ' + Identificador + '="' + URI + '"', '') + '>';
    acGerar:       Result := '<' + Prefixo3 + 'GerarNfseEnvio' + NameSpaceDad;
+   acRecSincrono: Result := '<' + Prefixo3 + 'EnviarLoteRpsEnvio' + NameSpaceDad;
  end;
 end;
 
@@ -226,6 +231,7 @@ begin
    acCancelar:    Result := '</' + Prefixo3 + 'Pedido>' +
                             '</' + Prefixo3 + 'CancelarNfseEnvio>';
    acGerar:       Result := '</' + Prefixo3 + 'GerarNfseEnvio>';
+   acRecSincrono: Result := '</' + Prefixo3 + 'EnviarLoteRpsEnvio>';
  end;
 end;
 
@@ -457,19 +463,7 @@ end;
 function TProvedor4R.GeraEnvelopeRecepcionarLoteRPS(URLNS: String;
   CabMsg, DadosMsg, DadosSenha: AnsiString): AnsiString;
 begin
- result := '<?xml version="1.0" encoding="utf-8"?>' +
-           '<S:Envelope xmlns:S="http://schemas.xmlsoap.org/soap/envelope/" ' +
-                       'xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" ' +
-                       'xmlns:xsd="http://www.w3.org/2001/XMLSchema">' +
-            '<S:Body>' +
-             // Incluido por João Paulo Delboni em 22/04/2013
-             '<RecepcionarLoteRpsSincrono.Execute xmlns="Abrasf2">' +
-              '<Entrada>' +
-                StringReplace(StringReplace(DadosMsg, '<', '&lt;', [rfReplaceAll]), '>', '&gt;', [rfReplaceAll]) +
-              '</Entrada>' +
-             '</RecepcionarLoteRpsSincrono.Execute>' +
-            '</S:Body>' +
-           '</S:Envelope>';
+ result := '';
 end;
 
 function TProvedor4R.GeraEnvelopeConsultarSituacaoLoteRPS(
@@ -498,7 +492,18 @@ end;
 function TProvedor4R.GeraEnvelopeConsultarNFSeporRPS(URLNS: String;
   CabMsg, DadosMsg, DadosSenha: AnsiString): AnsiString;
 begin
- result := '';
+ result := '<?xml version="1.0" encoding="UTF-8"?>' +
+            '<S:Envelope xmlns:S="http://schemas.xmlsoap.org/soap/envelope/" ' +
+                        'xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" ' +
+                        'xmlns:xsd="http://www.w3.org/2001/XMLSchema">' +
+            '<S:Body>' +
+             '<ConsultarNfsePorRps.Execute xmlns="Abrasf2">' +
+              '<Entrada>' +
+                StringReplace(StringReplace(DadosMsg, '<', '&lt;', [rfReplaceAll]), '>', '&gt;', [rfReplaceAll]) +
+              '</Entrada>' +
+             '</ConsultarNfsePorRps.Execute>' +
+            '</S:Body>' +
+           '</S:Envelope>';
 end;
 
 function TProvedor4R.GeraEnvelopeConsultarNFSe(URLNS: String; CabMsg,
@@ -510,17 +515,18 @@ end;
 function TProvedor4R.GeraEnvelopeCancelarNFSe(URLNS: String; CabMsg,
   DadosMsg, DadosSenha: AnsiString): AnsiString;
 begin
- result := '<?xml version="1.0" encoding="UTF-8"?>' +
-           '<s:Envelope xmlns:s="http://schemas.xmlsoap.org/soap/envelope/">' +
-            '<s:Body>' +
-             '<ns1:CancelarNfse xmlns:ns1="' + URLNS + '">' +
-              '<arg0>' +
-               '&lt;?xml version="1.0" encoding="UTF-8"?&gt;' +
-               StringReplace(StringReplace(DadosMsg, '<', '&lt;', [rfReplaceAll]), '>', '&gt;', [rfReplaceAll]) +
-              '</arg0>' +
-             '</ns1:CancelarNfse>' +
-            '</s:Body>' +
-           '</s:Envelope>';
+ result := '<?xml version="1.0" encoding="utf-8"?>' +
+           '<S:Envelope xmlns:S="http://schemas.xmlsoap.org/soap/envelope/" ' +
+                       'xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" ' +
+                       'xmlns:xsd="http://www.w3.org/2001/XMLSchema">' +
+            '<S:Body>' +
+             '<CancelarNfse.Execute xmlns="Abrasf2">' +
+              '<Entrada>' +
+                StringReplace(StringReplace(DadosMsg, '<', '&lt;', [rfReplaceAll]), '>', '&gt;', [rfReplaceAll]) +
+              '</Entrada>' +
+             '</CancelarNfse.Execute>' +
+            '</S:Body>' +
+           '</S:Envelope>';
 end;
 
 function TProvedor4R.GeraEnvelopeGerarNFSe(URLNS: String; CabMsg,
@@ -531,7 +537,7 @@ begin
                        'xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" ' +
                        'xmlns:xsd="http://www.w3.org/2001/XMLSchema">' +
             '<S:Body>' +
-             '<GerarNfse.Execute xmlns="Abrasf2">' +
+             '<GerarNfse.Execute xmlns="http://tempuri.org/">' +
               '<Entrada>' +
                 StringReplace(StringReplace(DadosMsg, '<', '&lt;', [rfReplaceAll]), '>', '&gt;', [rfReplaceAll]) +
               '</Entrada>' +
@@ -543,14 +549,14 @@ end;
 function TProvedor4R.GetSoapAction(Acao: TnfseAcao; NomeCidade: String): String;
 begin
  case Acao of
-   acRecepcionar: Result := 'Abrasf2action/ARECEPCIONARLOTERPSSINCRONO.Execute';
-//   acRecepcionar: Result := 'http://nfse.abrasf.org.br/RecepcionarLoteRpsSincrono';
+   acRecepcionar: Result := '';
    acConsSit:     Result := '';
-   acConsLote:    Result := '';
+   acConsLote:    Result := 'http://tempuri.org/action/ACONSULTARLOTERPS.Execute';
    acConsNFSeRps: Result := 'Abrasf2action/ACONSULTARNFSEPORRPS.Execute';
    acConsNFSe:    Result := '';
-   acCancelar:    Result := 'http://nfse.abrasf.org.br/CancelarNfse';
+   acCancelar:    Result := 'Abrasf2action/ACANCELARNFSE.Execute';
    acGerar:       Result := 'http://tempuri.org/action/AGERARNFSE.Execute';
+   acRecSincrono: Result := 'Abrasf2action/ARECEPCIONARLOTERPSSINCRONO.Execute';
  end;
 end;
 
@@ -559,31 +565,28 @@ var
  RetWS: AnsiString;
 begin
  case Acao of
-   acRecepcionar: begin
-                   // Incluido por João Paulo Delboni em 22/04/2013
+   acRecepcionar: Result := RetornoWS;
+   acConsSit:     Result := RetornoWS;
+   acConsLote:    begin
                    RetWS := SeparaDados( RetornoWS, 'Resposta' );
                    Result := RetWS;
                   end;
-   acConsSit:     Result := SeparaDados( RetornoWS, 'ConsultarSituacaoLoteRpsResposta' );
-   acConsLote:    Result := SeparaDados( RetornoWS, 'ConsultarLoteRpsRpsResposta' );
    acConsNFSeRps: begin
-                   RetWS := SeparaDados( RetornoWS, 'ConsultarNfseRpsResult>' );
-                   RetWS := RetWS + '</ConsultarNfseRpsResult>';
+                   RetWS := SeparaDados( RetornoWS, 'Resposta' );
                    Result := RetWS;
                   end;
-   acConsNFSe:    begin
-                   RetWS := SeparaDados( RetornoWS, 'ConsultarNfseResposta>' );
-                   RetWS := RetWS + '</ConsultarNfseResposta>';
-                   Result := RetWS;
-                  end;
+   acConsNFSe:    Result := RetornoWS;
    acCancelar:    begin
-                   RetWS := SeparaDados( RetornoWS, 'CancelarNfseResposta>' );
-                   RetWS := RetWS + '</CancelarNfseResposta>';
+                   RetWS := SeparaDados( RetornoWS, 'Resposta' );
                    Result := RetWS;
                   end;
    acGerar:       begin
-                   RetWS := SeparaDados( RetornoWS, 'GerarNfse.ExecuteResponse' );
-                   RetWS := RetWS + '</GerarNfse.ExecuteResponse>';
+                   RetWS := SeparaDados( RetornoWS, 'Resposta' );
+                   Result := RetWS;
+                  end;
+   acRecSincrono: begin
+                   // Incluido por João Paulo Delboni em 22/04/2013
+                   RetWS := SeparaDados( RetornoWS, 'Resposta' );
                    Result := RetWS;
                   end;
  end;
@@ -608,13 +611,27 @@ function TProvedor4R.Gera_DadosMsgEnviarSincrono(Prefixo3, Prefixo4,
   Identificador, NameSpaceDad, VersaoDados, VersaoXML, NumeroLote, CNPJ,
   IM, QtdeNotas: String; Notas, TagI, TagF: AnsiString): AnsiString;
 begin
- Result := '';
+ Result := TProvedor4R.DadosMsgEnviarLote(Prefixo3, Prefixo4, Identificador, NameSpaceDad,
+                              VersaoDados, VersaoXML, NumeroLote, CNPJ, IM,
+                              QtdeNotas, Notas, TagI, TagF);
 end;
 
 function TProvedor4R.GeraEnvelopeRecepcionarSincrono(URLNS: String; CabMsg,
   DadosMsg, DadosSenha: AnsiString): AnsiString;
 begin
- Result := '';
+ result := '<?xml version="1.0" encoding="utf-8"?>' +
+           '<S:Envelope xmlns:S="http://schemas.xmlsoap.org/soap/envelope/" ' +
+                       'xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" ' +
+                       'xmlns:xsd="http://www.w3.org/2001/XMLSchema">' +
+            '<S:Body>' +
+             // Incluido por João Paulo Delboni em 22/04/2013
+             '<RecepcionarLoteRpsSincrono.Execute xmlns="Abrasf2">' +
+              '<Entrada>' +
+                StringReplace(StringReplace(DadosMsg, '<', '&lt;', [rfReplaceAll]), '>', '&gt;', [rfReplaceAll]) +
+              '</Entrada>' +
+             '</RecepcionarLoteRpsSincrono.Execute>' +
+            '</S:Body>' +
+           '</S:Envelope>';
 end;
 
 end.
