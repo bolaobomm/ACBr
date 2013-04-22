@@ -95,19 +95,24 @@ function TCTeR.LerXml: boolean;
 var
   ok: boolean;
   i, j, i01, i02, i03: integer;
-  sCST: String;
+  sCST, Aspas: String;
 begin
+  // Incluido por Italo em 22/04/2013
+  if Pos('Id="', Leitor.Arquivo) <> 0 then
+    Aspas := '"'
+   else
+    Aspas := '''';
 
   I := 0;
   I := RetornarPosEx('Id=', Leitor.Arquivo, I + 6);
   if I = 0 then
     raise Exception.Create('Não encontrei inicio do URI: Id=');
 
-  I := RetornarPosEx('"', Leitor.Arquivo, I + 2);
+  I := RetornarPosEx(Aspas, Leitor.Arquivo, I + 2);
   if I = 0 then
     raise Exception.Create('Não encontrei inicio do URI: aspas inicial');
 
-  J := RetornarPosEx('"', Leitor.Arquivo, I + 1);
+  J := RetornarPosEx(Aspas, Leitor.Arquivo, I + 1);
   if J = 0 then
     raise Exception.Create('Não encontrei inicio do URI: aspas final');
 
@@ -278,7 +283,7 @@ begin
     begin
 //      I := 0;
       I := RetornarPosEx('ObsCont xCampo=', Leitor.Arquivo, I + 1);
-      J := RetornarPosEx('"', Leitor.Arquivo, I + 16);
+      J := RetornarPosEx(Aspas, Leitor.Arquivo, I + 16);
       CTe.Compl.ObsCont.Add;
       CTe.Compl.ObsCont[i01].xCampo := copy(Leitor.Arquivo, I + 16, J - (I + 16));
       CTe.Compl.ObsCont[i01].xTexto := Leitor.rCampo(tcstr,'xTexto');
@@ -292,7 +297,7 @@ begin
     begin
 //      I := 0;
       I := RetornarPosEx('ObsFisco xCampo=', Leitor.Arquivo, I + 1);
-      J := RetornarPosEx('"', Leitor.Arquivo, I + 17);
+      J := RetornarPosEx(Aspas, Leitor.Arquivo, I + 17);
       CTe.Compl.ObsFisco.Add;
       CTe.Compl.ObsFisco[i01].xCampo := copy(Leitor.Arquivo, I + 17, J - (I + 17));
       CTe.Compl.ObsFisco[i01].xTexto := Leitor.rCampo(tcstr,'xTexto');
