@@ -102,7 +102,7 @@ begin
 	ConfigCidade.NameSpaceEnvelope   := 'http://www.abrasf.org.br';
 
  	ConfigCidade.AssinaRPS  := True;
- 	ConfigCidade.AssinaLote := False;
+ 	ConfigCidade.AssinaLote := True;
 
  	Result := ConfigCidade;
 end;
