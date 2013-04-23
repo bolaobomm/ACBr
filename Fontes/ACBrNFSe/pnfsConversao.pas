@@ -683,6 +683,7 @@ begin
 
   3148103, // Patrocinio/MG
   3503307, // Araras/SP
+  3538709, // Piracicaba/SP
   3541406, // Presidente Prudente/SP
   3549102, // São João da Boa Vista/SP
   3549706, // São José do Rio Pardo/SP

@@ -173,6 +173,12 @@ begin
             ConfigURL.ProConsultaNFSe       := 'http://200.144.16.82:8080/ws_' + ConfigURL.ProNomeCidade + '/nfseservice.svc';
             ConfigURL.ProCancelaNFSe        := 'http://200.144.16.82:8080/ws_' + ConfigURL.ProNomeCidade + '/nfseservice.svc';
            end;
+  3538709: begin // Piracicaba/SP
+            ConfigURL.ProNomeCidade := 'piracicaba';
+
+
+            
+           end;
   3541406: begin // Presidente Prudente/SP
             ConfigURL.ProNomeCidade := 'presidente_prudente';
             ConfigURL.ProRecepcaoLoteRPS    := 'http://187.45.245.217/ws_nfse_' + ConfigURL.ProNomeCidade + '/nfseservice.svc';

@@ -3422,10 +3422,10 @@ begin
   TACBrNFSe( FACBrNFSe ).SetStatus( stNFSeRecepcao );
 
   if FConfiguracoes.WebServices.Salvar
-   then FConfiguracoes.Geral.Save(IntToStr(NumeroRps)+'-env-loteS-c.xml', Texto, FConfiguracoes.Arquivos.GetPathGer);
+   then FConfiguracoes.Geral.Save(NumeroLote+'-env-lotS-c.xml', Texto, FConfiguracoes.Arquivos.GetPathGer);
 
   if FConfiguracoes.Geral.Salvar
-   then FConfiguracoes.Geral.Save(IntToStr(NumeroRps)+'-env-loteS.xml', FDadosMsg, FConfiguracoes.Arquivos.GetPathGer);
+   then FConfiguracoes.Geral.Save(NumeroLote+'-env-lotS.xml', FDadosMsg, FConfiguracoes.Arquivos.GetPathGer);
 
   {$IFDEF ACBrNFSeOpenSSL}
     HTTP.Document.LoadFromStream(Stream);
@@ -3451,10 +3451,10 @@ begin
   {$ENDIF}
 
   if FConfiguracoes.WebServices.Salvar
-   then FConfiguracoes.Geral.Save(IntToStr(NumeroRps) + '-lista-nfse-c.xml', FRetornoWS, FConfiguracoes.Arquivos.GetPathGer);
+   then FConfiguracoes.Geral.Save(NumeroLote + '-lista-nfse-c.xml', FRetornoWS, FConfiguracoes.Arquivos.GetPathGer);
 
   if FConfiguracoes.Geral.Salvar
-   then FConfiguracoes.Geral.Save(IntToStr(NumeroRps) + '-lista-nfse.xml', NotaUtil.RetirarPrefixos(FRetWS), FConfiguracoes.Arquivos.GetPathGer);
+   then FConfiguracoes.Geral.Save(NumeroLote + '-lista-nfse.xml', NotaUtil.RetirarPrefixos(FRetWS), FConfiguracoes.Arquivos.GetPathGer);
 
   NFSeRetorno := TGerarretNfse.Create;
 
