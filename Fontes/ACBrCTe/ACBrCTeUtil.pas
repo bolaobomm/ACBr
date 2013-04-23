@@ -329,7 +329,8 @@ begin
                                 35, // São Paulo
                                 50, // Mato Grosso do Sul
                                 51: // Mato Grosso
-                                    Result := DFeUtil.SeSenao(AAmbiente=1, 'https://cte.sefaz.rs.gov.br/ws/CTeRecepcao/CTeRecepcaoEvento.asmx', 'https://homologacao.cte.sefaz.rs.gov.br/ws/CTeRecepcao/CTeRecepcaoEvento.asmx');
+                                    // Alterado por Italo em 23/04/2013 conforme NT2013/003
+                                    Result := DFeUtil.SeSenao(AAmbiente=1, 'https://cte.sefaz.rs.gov.br/ws/CteRecepcaoEvento/CteRecepcaoEvento.asmx', 'https://homologacao.cte.sefaz.rs.gov.br/ws/CteRecepcaoEvento/CteRecepcaoEvento.asmx');
                                end;
                              end;
              end;
