@@ -1611,8 +1611,150 @@ begin
 end;
 
 procedure TWebServicesBase.DoNFSeEnviarSincrono;
+var
+ i         : Integer;
+ vNotas    : WideString;
+ URI       : String;
+ Separador : String;
 begin
- {*********************}
+ vNotas := '';
+
+ if RightStr(FHTTP_AG, 1) = '/'
+  then Separador := ''
+  else Separador := '/';
+
+ if FCabecalho <> ''
+  then begin
+   if Prefixo2 <> ''
+    then FNameSpaceCab := ' xmlns:' + stringReplace(Prefixo2, ':', '', []) + '="' + FHTTP_AG + Separador + FCabecalho +'">'
+    else FNameSpaceCab := ' xmlns="' + FHTTP_AG + Separador + FCabecalho +'">';
+  end
+  else FNameSpaceCab := '>';
+
+ if FServicoEnviarSincrono <> ''
+  then begin
+   if (RightStr(FHTTP_AG, 1) = '/')
+    then begin
+     if Prefixo3 <> ''
+      then FNameSpaceDad := 'xmlns:' + stringReplace(Prefixo3, ':', '', []) + '="' + FHTTP_AG + Separador + FServicoEnviarSincrono + '"'
+      else FNameSpaceDad := 'xmlns="' + FHTTP_AG + Separador + FServicoEnviarSincrono + '"';
+    end
+    else begin
+     if Prefixo3 <> ''
+      then FNameSpaceDad := 'xmlns:' + stringReplace(Prefixo3, ':', '', []) + '="' + FHTTP_AG + '"'
+      else FNameSpaceDad := 'xmlns="' + FHTTP_AG + '"';
+    end;
+  end
+  else FNameSpaceDad := '';
+
+ if (FDefTipos = '') and (FNameSpaceDad <> '')
+  then FNameSpaceDad := FNameSpaceDad + '>';
+
+ if FDefTipos <> ''
+  then begin
+   if Prefixo4 <> ''
+    then FNameSpaceDad := FNameSpaceDad +
+                        ' xmlns:' + stringReplace(Prefixo4, ':', '', []) + '="' + FHTTP_AG + Separador + FDefTipos + '">'
+    else FNameSpaceDad := FNameSpaceDad + ' xmlns="' + FHTTP_AG + Separador + FDefTipos + '">';
+  end;
+
+ if FNameSpaceDad = ''
+  then FNameSpaceDad := '>'
+  else FNameSpaceDad := ' ' + FNameSpaceDad;
+
+ if FConfiguracoes.Certificados.AssinaRPS
+  then begin
+   for i := 0 to TNFSeEnviarSincrono(Self).FNotasFiscais.Count-1 do
+    begin
+     case FProvedor of
+      profintelISS,
+      proSaatri,
+      proISSDigital,
+      proISSe,
+      pro4R,
+      proGoiania: vNotas := vNotas +
+                              '<' + Prefixo4 + 'Rps>' +
+                               '<' + Prefixo4 + 'InfDeclaracaoPrestacaoServico' +
+                                 RetornarConteudoEntre(TNFSeEnviarSincrono(Self).FNotasFiscais.Items[I].XML_Rps_Ass,
+                                   '<' + Prefixo4 + 'InfDeclaracaoPrestacaoServico', '</Signature>') +
+                               '</Signature>'+
+                              '</' + Prefixo4 + 'Rps>';
+      proDigifred: vNotas := vNotas +
+                              '<' + Prefixo4 + 'Rps ' +
+                                 RetornarConteudoEntre(TNFSeEnviarSincrono(Self).FNotasFiscais.Items[I].XML_Rps_Ass,
+                                   '<' + Prefixo4 + 'Rps', '</Signature>') +
+                               '</Signature>'+
+                              '</' + Prefixo4 + 'Rps>';
+      else vNotas := vNotas + '<' + Prefixo4 + 'Rps>' +
+                               '<' + Prefixo4 + 'InfRps' +
+                                 RetornarConteudoEntre(TNFSeEnviarSincrono(Self).FNotasFiscais.Items[I].XML_Rps_Ass,
+                                   '<' + Prefixo4 + 'InfRps', '</Rps>') +
+                              '</' + Prefixo4 + 'Rps>';
+     end;
+    end;
+  end
+  else begin
+   for i := 0 to TNFSeEnviarSincrono(Self).FNotasFiscais.Count-1 do
+    begin
+     if (FProvedor in [profintelISS, proSaatri, proGoiania, proISSDigital, proISSe, pro4R])
+      then vNotas := vNotas + '<' + Prefixo4 + 'Rps>' +
+                               '<' + Prefixo4 + 'InfDeclaracaoPrestacaoServico' +
+                                 RetornarConteudoEntre(TNFSeEnviarSincrono(Self).FNotasFiscais.Items[I].XML_Rps,
+                                   '<' + Prefixo4 + 'InfDeclaracaoPrestacaoServico', '</' + Prefixo4 + 'InfDeclaracaoPrestacaoServico>') +
+                               '</' + Prefixo4 + 'InfDeclaracaoPrestacaoServico>'+
+                              '</' + Prefixo4 + 'Rps>'
+      else vNotas := vNotas + '<' + Prefixo4 + 'Rps>' +
+                               '<' + Prefixo4 + 'InfRps' +
+                                 RetornarConteudoEntre(TNFSeEnviarSincrono(Self).FNotasFiscais.Items[I].XML_Rps,
+                                   '<' + Prefixo4 + 'InfRps', '</Rps>') +
+                              '</' + Prefixo4 + 'Rps>';
+    end;
+  end;
+
+ FCabMsg := FProvedorClass.Gera_CabMsg(Prefixo2, FVersaoLayOut, FVersaoDados, NameSpaceCab, FConfiguracoes.WebServices.CodigoMunicipio);
+
+ URI := '';
+
+ URI := FProvedorClass.GetURI(URI);
+
+ FTagI := FProvedorClass.Gera_TagI(acRecepcionar, Prefixo3, Prefixo4, NameSpaceDad, FConfiguracoes.WebServices.Identificador, URI);
+
+ FDadosSenha := FProvedorClass.Gera_DadosSenha(FConfiguracoes.WebServices.UserWeb,
+                                               FConfiguracoes.WebServices.SenhaWeb);
+ FTagF := FProvedorClass.Gera_TagF(acRecepcionar, Prefixo3);
+
+ FDadosMsg := FProvedorClass.Gera_DadosMsgEnviarSincrono(Prefixo3,
+                                                         Prefixo4,
+                                                         FConfiguracoes.WebServices.Identificador,
+                                                         NameSpaceDad,
+                                                         VersaoDados,
+                                                         FVersaoXML,
+                                                         TNFSeEnviarSincrono(Self).NumeroLote,
+                                                         SomenteNumeros(TNFSeEnviarSincrono(Self).FNotasFiscais.Items[0].NFSe.Prestador.Cnpj),
+                                                         TNFSeEnviarSincrono(Self).FNotasFiscais.Items[0].NFSe.Prestador.InscricaoMunicipal,
+                                                         IntToStr(TNFSeEnviarSincrono(Self).FNotasFiscais.Count),
+                                                         vNotas,
+                                                         FTagI,
+                                                         FTagF);
+
+ if FConfiguracoes.WebServices.Salvar
+  then FConfiguracoes.Geral.Save('-xxx1.xml', FDadosMsg);
+
+ FDadosMsg := TNFSeEnviarSincrono(Self).FNotasFiscais.AssinarLoteRps(TNFSeEnviarSincrono(Self).NumeroLote, FDadosMSg);
+
+ if FConfiguracoes.WebServices.Salvar
+  then FConfiguracoes.Geral.Save('-xxx2.xml', FDadosMsg);
+
+ if FProvedorClass.GetValidarLote
+  then begin
+   if not(NotaUtil.Valida(FDadosMsg, FMsg,
+                          FConfiguracoes.Geral.PathSchemas,
+                          FConfiguracoes.WebServices.URL,
+                          FConfiguracoes.WebServices.ServicoEnviar,
+                          FConfiguracoes.WebServices.Prefixo4))
+    then raise Exception.Create('Falha na validação do Lote ' +
+                   TNFSeEnviarLoteRps(Self).NumeroLote + sLineBreak + FMsg);
+  end;
 end;
 
 { TWebServices }
@@ -3233,8 +3375,172 @@ begin
 end;
 
 function TNFSeEnviarSincrono.Executar: Boolean;
+var
+ aMsg        : String;
+ Texto       : String;
+ Acao        : TStringList;
+ Stream      : TMemoryStream;
+ StrStream   : TStringStream;
+
+ {$IFDEF ACBrNFSeOpenSSL}
+   HTTP    : THTTPSend;
+ {$ELSE}
+   ReqResp : THTTPReqResp;
+ {$ENDIF}
+
+ Prefixo3      : String;
+ Prefixo4      : String;
+ FRetListaNfse : AnsiString;
+ FRetNfse      : AnsiString;
+ i, j, k, p    : Integer;
+ PathSalvar    : String;
 begin
- {*************************}
+ inherited Executar;
+
+ if Assigned(NFSeRetorno)
+  then NFSeRetorno.Free;
+
+ Texto := TiraAcentos(FProvedorClass.GeraEnvelopeRecepcionarSincrono(URLNS1, FCabMSg, FDadosMsg, FDadosSenha));
+
+ Acao      := TStringList.Create;
+ Stream    := TMemoryStream.Create;
+ Acao.Text := Texto;
+
+ {$IFDEF ACBrNFSeOpenSSL}
+   Acao.SaveToStream(Stream);
+   HTTP := THTTPSend.Create;
+ {$ELSE}
+   ReqResp := THTTPReqResp.Create(nil);
+   ConfiguraReqResp( ReqResp );
+   ReqResp.URL := FURL;
+   ReqResp.UseUTF8InHeader := True;
+
+   ReqResp.SoapAction := FProvedorClass.GetSoapAction(acRecSincrono, FNomeCidade);
+ {$ENDIF}
+
+ try
+  TACBrNFSe( FACBrNFSe ).SetStatus( stNFSeRecepcao );
+
+  if FConfiguracoes.WebServices.Salvar
+   then FConfiguracoes.Geral.Save(IntToStr(NumeroRps)+'-env-loteS-c.xml', Texto, FConfiguracoes.Arquivos.GetPathGer);
+
+  if FConfiguracoes.Geral.Salvar
+   then FConfiguracoes.Geral.Save(IntToStr(NumeroRps)+'-env-loteS.xml', FDadosMsg, FConfiguracoes.Arquivos.GetPathGer);
+
+  {$IFDEF ACBrNFSeOpenSSL}
+    HTTP.Document.LoadFromStream(Stream);
+    ConfiguraHTTP(HTTP, 'SOAPAction: "'+ FProvedorClass.GetSoapAction(acRecSincrono, FNomeCidade) +'"');
+    HTTP.HTTPMethod('POST', FURL);
+
+    StrStream := TStringStream.Create('');
+    StrStream.CopyFrom(HTTP.Document, 0);
+
+    FRetornoWS := TiraAcentos(ParseText(StrStream.DataString, True));
+    FRetWS     := FProvedorClass.GetRetornoWS(acRecSincrono, FRetornoWS);
+
+    StrStream.Free;
+  {$ELSE}
+    ReqResp.Execute(Acao.Text, Stream);
+    StrStream := TStringStream.Create('');
+    StrStream.CopyFrom(Stream, 0);
+
+    FRetornoWS := TiraAcentos(ParseText(StrStream.DataString, True));
+    FRetWS     := FProvedorClass.GetRetornoWS(acRecSincrono, FRetornoWS);
+
+    StrStream.Free;
+  {$ENDIF}
+
+  if FConfiguracoes.WebServices.Salvar
+   then FConfiguracoes.Geral.Save(IntToStr(NumeroRps) + '-lista-nfse-c.xml', FRetornoWS, FConfiguracoes.Arquivos.GetPathGer);
+
+  if FConfiguracoes.Geral.Salvar
+   then FConfiguracoes.Geral.Save(IntToStr(NumeroRps) + '-lista-nfse.xml', NotaUtil.RetirarPrefixos(FRetWS), FConfiguracoes.Arquivos.GetPathGer);
+
+  NFSeRetorno := TGerarretNfse.Create;
+
+  Prefixo3 := FConfiguracoes.WebServices.Prefixo3;
+  Prefixo4 := FConfiguracoes.WebServices.Prefixo4;
+
+  case FProvedor of
+   proBetha: Prefixo3 := '';
+  end;
+
+  NFSeRetorno.Leitor.Arquivo := FRetWS;
+  NFSeRetorno.LerXml;
+
+  TACBrNFSe( FACBrNFSe ).SetStatus( stNFSeIdle );
+
+  FRetListaNfse := SeparaDados(FRetWS, Prefixo3 + 'ListaNfse');
+  i := 0;
+  while FRetListaNfse <> '' do
+   begin
+    if FProvedor = proBetha
+     then j := Pos('</' + Prefixo3 + 'ComplNfse>', FRetListaNfse)
+     else j := Pos('</' + Prefixo3 + 'CompNfse>', FRetListaNfse);
+
+    p := Length(trim(Prefixo3));
+    if j > 0
+     then begin
+      FRetNfse := Copy(FRetListaNfse, 1, j - 1);
+      k :=  Pos('<' + Prefixo4 + 'Nfse', FRetNfse);
+      FRetNfse := Copy(FRetNfse, k, length(FRetNfse));
+
+      FRetNFSe := FProvedorClass.GeraRetornoNFSe(Prefixo3, FRetNFSe, FNomeCidade);
+
+      PathSalvar := FConfiguracoes.Arquivos.GetPathNFSe(0);
+      FConfiguracoes.Geral.Save(NFSeRetorno.ListaNfse.CompNfse.Items[i].Nfse.Numero + '-nfse.xml',
+                                NotaUtil.RetirarPrefixos(FRetNfse), PathSalvar);
+      if FNotasFiscais.Count>0
+       then FNotasFiscais.Items[i].NomeArq := PathWithDelim(PathSalvar) + NFSeRetorno.ListaNfse.CompNfse.Items[i].Nfse.Numero + '-nfse.xml';
+
+      FRetListaNfse := Copy(FRetListaNfse, j + 11 + p, length(FRetListaNfse));
+
+      inc(i);
+     end
+     else FRetListaNfse:='';
+   end;
+
+  TACBrNFSe( FACBrNFSe ).SetStatus( stNFSeIdle );
+
+  // Lista de Mensagem de Retorno
+  FMsg := '';
+  if NFSeRetorno.ListaNfse.MsgRetorno.Count>0
+   then begin
+    aMsg:='';
+    for i:=0 to NFSeRetorno.ListaNfse.MsgRetorno.Count - 1 do
+     begin
+      if NFSeRetorno.ListaNfse.MsgRetorno.Items[i].Codigo <> 'L000'
+       then begin
+        FMsg := FMsg + NFSeRetorno.ListaNfse.MsgRetorno.Items[i].Mensagem + IfThen(FMsg = '', '', ' / ');
+
+        aMsg := aMsg + 'Código Erro : ' + NFSeRetorno.ListaNfse.MsgRetorno.Items[i].Codigo + LineBreak +
+                       'Mensagem... : ' + NFSeRetorno.ListaNfse.MsgRetorno.Items[i].Mensagem + LineBreak+
+                       'Correção... : ' + NFSeRetorno.ListaNfse.MsgRetorno.Items[i].Correcao + LineBreak+
+                       'Provedor... : ' + FxProvedor + LineBreak;
+       end;
+     end;
+
+    if FConfiguracoes.WebServices.Visualizar
+     then ShowMessage(aMsg);
+   end;
+
+  if Assigned(TACBrNFSe( FACBrNFSe ).OnGerarLog)
+   then TACBrNFSe( FACBrNFSe ).OnGerarLog(aMsg);
+
+  Result := (FMsg = '');
+
+ finally
+  {$IFDEF ACBrNFSeOpenSSL}
+    HTTP.Free;
+  {$ELSE}
+    ReqResp.Free;
+  {$ENDIF}
+  Acao.Free;
+  Stream.Free;
+
+  DFeUtil.ConfAmbiente;
+  TACBrNFSe( FACBrNFSe ).SetStatus( stNFSeIdle );
+ end;
 end;
 
 end.
