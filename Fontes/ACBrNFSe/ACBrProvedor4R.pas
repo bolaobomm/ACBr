@@ -611,7 +611,7 @@ function TProvedor4R.Gera_DadosMsgEnviarSincrono(Prefixo3, Prefixo4,
   Identificador, NameSpaceDad, VersaoDados, VersaoXML, NumeroLote, CNPJ,
   IM, QtdeNotas: String; Notas, TagI, TagF: AnsiString): AnsiString;
 begin
- Result := TProvedor4R.DadosMsgEnviarLote(Prefixo3, Prefixo4, Identificador, NameSpaceDad,
+ Result := Gera_DadosMsgEnviarLote(Prefixo3, Prefixo4, Identificador, NameSpaceDad,
                               VersaoDados, VersaoXML, NumeroLote, CNPJ, IM,
                               QtdeNotas, Notas, TagI, TagF);
 end;
