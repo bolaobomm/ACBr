@@ -563,6 +563,7 @@ var
  LocNFSeR : TNFSeR;
  ArquivoXML: TStringList;
  XML : AnsiString;
+ Tipo: Integer;
 begin
  try
   ArquivoXML := TStringList.Create;
@@ -573,89 +574,107 @@ begin
   ArquivoXML.Text := NotaUtil.RetirarPrefixos(ArquivoXML.Text);
 
   if pos('</CompNfse>', ArquivoXML.Text) > 0
-   then begin
-    while pos('</CompNfse>', ArquivoXML.Text) > 0 do
-     begin
-      XML             := copy(ArquivoXML.Text, 1, pos('</CompNfse>', ArquivoXML.Text) + 10);
-      ArquivoXML.Text := Trim(copy(ArquivoXML.Text, pos('</CompNfse>', ArquivoXML.Text) + 11, length(ArquivoXML.Text)));
-      LocNFSeR        := TNFSeR.Create(Self.Add.NFSe);
-      try
-       LocNFSeR.Leitor.Arquivo := XML;
-       LocNFSeR.VersaoXML      := NotaUtil.VersaoXML(XML);
-//       LocNFSeR.Provedor       := FConfiguracoes.WebServices.Provedor;
-       LocNFSeR.LerXml;
-       Items[Self.Count-1].XML_NFSe := LocNFSeR.Leitor.Arquivo;
-//       Items[Self.Count-1].XML_Rps := LocNFSeR.Leitor.Arquivo;
-       Items[Self.Count-1].NomeArq := CaminhoArquivo;
-      finally
-       LocNFSeR.Free;
+   then Tipo := 1
+   else if pos('</ComplNfse>', ArquivoXML.Text) > 0
+         then Tipo := 2
+         else if pos('</Nfse>', ArquivoXML.Text) > 0
+               then Tipo := 3
+               else if pos('</ListaRps>', ArquivoXML.Text) > 0
+                    then Tipo := 4
+                    else if pos('</Rps>', ArquivoXML.Text) > 0
+                         then Tipo := 5
+                         else Tipo := 0;
+
+  case Tipo of
+   1: begin
+       while pos('</CompNfse>', ArquivoXML.Text) > 0 do
+        begin
+         XML             := copy(ArquivoXML.Text, 1, pos('</CompNfse>', ArquivoXML.Text) + 10);
+         ArquivoXML.Text := Trim(copy(ArquivoXML.Text, pos('</CompNfse>', ArquivoXML.Text) + 11, length(ArquivoXML.Text)));
+         LocNFSeR        := TNFSeR.Create(Self.Add.NFSe);
+         try
+          LocNFSeR.Leitor.Arquivo := XML;
+          LocNFSeR.VersaoXML      := NotaUtil.VersaoXML(XML);
+          LocNFSeR.LerXml;
+          Items[Self.Count-1].XML_NFSe := LocNFSeR.Leitor.Arquivo;
+          Items[Self.Count-1].NomeArq := CaminhoArquivo;
+         finally
+          LocNFSeR.Free;
+         end;
+        end;
       end;
-     end;
-   end
-   else begin
-    if pos('</ComplNfse>', ArquivoXML.Text) > 0
-     then begin
-      while pos('</ComplNfse>', ArquivoXML.Text) > 0 do
+   2: begin
+       while pos('</ComplNfse>', ArquivoXML.Text) > 0 do
+        begin
+         XML             := copy(ArquivoXML.Text, 1, pos('</ComplNfse>', ArquivoXML.Text) + 11);
+         ArquivoXML.Text := Trim(copy(ArquivoXML.Text, pos('</ComplNfse>', ArquivoXML.Text) + 12, length(ArquivoXML.Text)));
+         LocNFSeR        := TNFSeR.Create(Self.Add.NFSe);
+         try
+          LocNFSeR.Leitor.Arquivo := XML;
+          LocNFSeR.VersaoXML      := NotaUtil.VersaoXML(XML);
+          LocNFSeR.LerXml;
+          Items[Self.Count-1].XML_NFSe := LocNFSeR.Leitor.Arquivo;
+          Items[Self.Count-1].NomeArq := CaminhoArquivo;
+         finally
+          LocNFSeR.Free;
+         end;
+        end;
+      end;
+   3: begin
+      ArquivoXML.Text := '<CompNfse xmlns="http://www.abrasf.org.br/ABRASF/arquivos/">' +
+                           ArquivoXML.Text +
+                         '</CompNfse>';
+      while pos('</CompNfse>', ArquivoXML.Text) > 0 do
        begin
-        XML             := copy(ArquivoXML.Text, 1, pos('</ComplNfse>', ArquivoXML.Text) + 11);
-        ArquivoXML.Text := Trim(copy(ArquivoXML.Text, pos('</ComplNfse>', ArquivoXML.Text) + 12, length(ArquivoXML.Text)));
+        XML             := copy(ArquivoXML.Text, 1, pos('</CompNfse>', ArquivoXML.Text) + 10);
+        ArquivoXML.Text := Trim(copy(ArquivoXML.Text, pos('</CompNfse>', ArquivoXML.Text) + 11, length(ArquivoXML.Text)));
         LocNFSeR        := TNFSeR.Create(Self.Add.NFSe);
         try
          LocNFSeR.Leitor.Arquivo := XML;
          LocNFSeR.VersaoXML      := NotaUtil.VersaoXML(XML);
-//         LocNFSeR.Provedor       := FConfiguracoes.WebServices.Provedor;
          LocNFSeR.LerXml;
          Items[Self.Count-1].XML_NFSe := LocNFSeR.Leitor.Arquivo;
-//         Items[Self.Count-1].XML_Rps := LocNFSeR.Leitor.Arquivo;
          Items[Self.Count-1].NomeArq := CaminhoArquivo;
         finally
          LocNFSeR.Free;
         end;
        end;
-     end
-     else begin
-      if pos('</ListaRps>', ArquivoXML.Text) > 0
-       then begin
-        while pos('</Rps>',ArquivoXML.Text) > 0 do
-         begin
-          XML             := copy(ArquivoXML.Text, 1, pos('</Rps>', ArquivoXML.Text) + 5);
-          ArquivoXML.Text := Trim(copy(ArquivoXML.Text, pos('</Rps>', ArquivoXML.Text) + 6, length(ArquivoXML.Text)));
-          LocNFSeR        := TNFSeR.Create(Self.Add.NFSe);
-          try
-           LocNFSeR.Leitor.Arquivo := XML;
-           LocNFSeR.VersaoXML      := NotaUtil.VersaoXML(XML);
-//           LocNFSeR.Provedor       := FConfiguracoes.WebServices.Provedor;
-           LocNFSeR.LerXml;
-           Items[Self.Count-1].XML_Rps := LocNFSeR.Leitor.Arquivo;
-           Items[Self.Count-1].NomeArq := CaminhoArquivo;
-          finally
-           LocNFSeR.Free;
-          end;
+      end;
+   4: begin
+       while pos('</Rps>',ArquivoXML.Text) > 0 do
+        begin
+         XML             := copy(ArquivoXML.Text, 1, pos('</Rps>', ArquivoXML.Text) + 5);
+         ArquivoXML.Text := Trim(copy(ArquivoXML.Text, pos('</Rps>', ArquivoXML.Text) + 6, length(ArquivoXML.Text)));
+         LocNFSeR        := TNFSeR.Create(Self.Add.NFSe);
+         try
+          LocNFSeR.Leitor.Arquivo := XML;
+          LocNFSeR.VersaoXML      := NotaUtil.VersaoXML(XML);
+          LocNFSeR.LerXml;
+          Items[Self.Count-1].XML_Rps := LocNFSeR.Leitor.Arquivo;
+          Items[Self.Count-1].NomeArq := CaminhoArquivo;
+         finally
+          LocNFSeR.Free;
          end;
-       end
-       else begin
-        if pos('</Rps>', ArquivoXML.Text) > 0
-         then begin
-          while pos('</Rps>', ArquivoXML.Text) > 0 do
-           begin
-            XML             := copy(ArquivoXML.Text, 1, pos('</Rps>', ArquivoXML.Text) + 5);
-            ArquivoXML.Text := Trim(copy(ArquivoXML.Text, pos('</Rps>',ArquivoXML.Text) + 6, length(ArquivoXML.Text)));
-            LocNFSeR        := TNFSeR.Create(Self.Add.NFSe);
-            try
-             LocNFSeR.Leitor.Arquivo := XML;
-             LocNFSeR.VersaoXML      := NotaUtil.VersaoXML(XML);
-//             LocNFSeR.Provedor       := FConfiguracoes.WebServices.Provedor;
-             LocNFSeR.LerXml;
-             Items[Self.Count-1].XML_Rps := LocNFSeR.Leitor.Arquivo;
-             Items[Self.Count-1].NomeArq := CaminhoArquivo;
-            finally
-             LocNFSeR.Free;
-            end;
-           end;
+        end;
+      end;
+   5: begin
+       while pos('</Rps>', ArquivoXML.Text) > 0 do
+        begin
+         XML             := copy(ArquivoXML.Text, 1, pos('</Rps>', ArquivoXML.Text) + 5);
+         ArquivoXML.Text := Trim(copy(ArquivoXML.Text, pos('</Rps>',ArquivoXML.Text) + 6, length(ArquivoXML.Text)));
+         LocNFSeR        := TNFSeR.Create(Self.Add.NFSe);
+         try
+          LocNFSeR.Leitor.Arquivo := XML;
+          LocNFSeR.VersaoXML      := NotaUtil.VersaoXML(XML);
+          LocNFSeR.LerXml;
+          Items[Self.Count-1].XML_Rps := LocNFSeR.Leitor.Arquivo;
+          Items[Self.Count-1].NomeArq := CaminhoArquivo;
+         finally
+          LocNFSeR.Free;
          end;
-       end;
-     end;
-   end;
+        end;
+      end;
+  end;
 
   ArquivoXML.Free;
  except

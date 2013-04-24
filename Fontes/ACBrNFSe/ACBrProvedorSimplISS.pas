@@ -175,9 +175,12 @@ begin
            end;
   3538709: begin // Piracicaba/SP
             ConfigURL.ProNomeCidade := 'piracicaba';
-
-
-            
+            ConfigURL.ProRecepcaoLoteRPS    := 'http://www.sistemas.piracicaba.sp.gov.br/semfi/simpliss/ws_nfse/nfseservice.svc';
+            ConfigURL.ProConsultaLoteRPS    := 'http://www.sistemas.piracicaba.sp.gov.br/semfi/simpliss/ws_nfse/nfseservice.svc';
+            ConfigURL.ProConsultaNFSeRPS    := 'http://www.sistemas.piracicaba.sp.gov.br/semfi/simpliss/ws_nfse/nfseservice.svc';
+            ConfigURL.ProConsultaSitLoteRPS := 'http://www.sistemas.piracicaba.sp.gov.br/semfi/simpliss/ws_nfse/nfseservice.svc';
+            ConfigURL.ProConsultaNFSe       := 'http://www.sistemas.piracicaba.sp.gov.br/semfi/simpliss/ws_nfse/nfseservice.svc';
+            ConfigURL.ProCancelaNFSe        := 'http://www.sistemas.piracicaba.sp.gov.br/semfi/simpliss/ws_nfse/nfseservice.svc';
            end;
   3541406: begin // Presidente Prudente/SP
             ConfigURL.ProNomeCidade := 'presidente_prudente';
