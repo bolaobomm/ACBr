@@ -109,7 +109,7 @@ begin
                       padR(OnlyNumber(Cedente.Agencia),4,'0') +
                       ACBrTitulo.Carteira +
                       ACBrTitulo.NossoNumero +
-                      padR(RightBStr(Cedente.Conta,7),7,'0') + '0';
+                      padR(RightStr(Cedente.Conta,7),7,'0') + '0';
 
       DigitoCodBarras := CalcularDigitoCodigoBarras(CodigoBarras);
    end;
