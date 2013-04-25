@@ -1222,7 +1222,7 @@ begin
   // Incluido por Italo em 01/01/2012
   qrmQtdUnidMedida5.Lines.Clear;
 
-  for i := 0 to FCTe.InfCarga.InfQ.Count - 1 do
+  for i := 0 to (FCTe.InfCarga.InfQ.Count - 1) do
    begin
     // Alterado por Italo em 17/05/2012
     //UnidMed = (uM3,uKG, uTON, uUNIDADE, uLITROS, uMMBTU);
@@ -1300,7 +1300,7 @@ begin
   qrmCompValor2.Lines.Clear;
   qrmCompValor3.Lines.Clear;
 
-  for i := 0 to FCTe.vPrest.comp.Count - 1 do
+  for i := 0 to (FCTe.vPrest.comp.Count - 1) do
   begin
     case i of
       0,3,6,9:
@@ -1522,7 +1522,7 @@ begin
   qrmComplValor2.Lines.Clear;
   qrb_05_Complemento.Enabled:=(FCTe.Ide.tpCTe = tcComplemento);
 
-  for i := 0 to FCTe.InfCTeComp.Count - 1 do
+  for i := 0 to (FCTe.InfCTeComp.Count - 1) do
   begin
     case i of
       0..4:
@@ -1774,7 +1774,7 @@ begin
   qrmUF.Lines.Clear;
   qrmRNTRC.Lines.Clear;
 
-  for i:= 0 to FCTe.Rodo.veic.Count - 1 do
+  for i:= 0 to (FCTe.Rodo.veic.Count - 1) do
   begin
    // TpcteTipoVeiculo = (tvTracao, tvReboque);
    if FCTe.Rodo.veic.Items[i].tpVeic = tvTracao
@@ -1794,7 +1794,7 @@ begin
   qrmCodTransacao.Lines.Clear;
 
 {$IFDEF PL_103}
-  for i := 0 to FCTe.Rodo.valePed.disp.Count - 1 do
+  for i := 0 to (FCTe.Rodo.valePed.disp.Count - 1) do
   begin
    qrmEmpresas.Lines.Add(FCTe.Rodo.valePed.disp.Items[i].xEmp);
    qrmVigencias.Lines.Add(FormatDateTime('DD/MM/YYYY', FCTe.Rodo.valePed.disp.Items[i].dVig));
@@ -1812,7 +1812,7 @@ begin
     qrlCPFMotorista.Caption  := DFeUtil.FormatarCPF(FCTe.Rodo.moto.Items[0].CPF);
    end;
 
-  for i := 0 to FCTe.Rodo.Lacres.Count - 1 do
+  for i := 0 to (FCTe.Rodo.Lacres.Count - 1) do
   begin
    qrlLacres.Caption := qrlLacres.Caption + FCTe.Rodo.Lacres.Items[i].nLacre + '/';
   end;
@@ -1832,7 +1832,7 @@ begin
   qrmUF2.Lines.Clear;
   qrmRNTRC2.Lines.Clear;
 
-  for i:= 0 to FCTe.Rodo.veic.Count - 1 do
+  for i:= 0 to (FCTe.Rodo.veic.Count - 1) do
   begin
    // TpcteTipoVeiculo = (tvTracao, tvReboque);
    if FCTe.Rodo.veic.Items[i].tpVeic = tvTracao
@@ -1851,7 +1851,7 @@ begin
   qrmCNPJPg.Lines.Clear;
 
 {$IFDEF PL_104}
-  for i := 0 to FCTe.Rodo.valePed.Count -1 do
+  for i := 0 to (FCTe.Rodo.valePed.Count -1) do
   begin
    qrmCNPJForn.Lines.Add(DFeUtil.FormatarCNPJ(FCTe.Rodo.valePed.Items[i].CNPJForn));
    qrmNumCompra.Lines.Add(FCTe.Rodo.valePed.Items[i].nCompra);
@@ -1868,7 +1868,7 @@ begin
     qrlCPFMotorista2.Caption  := DFeUtil.FormatarCPF(FCTe.Rodo.moto.Items[0].CPF);
    end;
 
-  for i := 0 to FCTe.Rodo.Lacres.Count - 1 do
+  for i := 0 to (FCTe.Rodo.Lacres.Count - 1) do
   begin
    qrlLacres2.Caption := qrlLacres.Caption + FCTe.Rodo.Lacres.Items[i].nLacre + '/';
   end;
@@ -1938,15 +1938,17 @@ begin
 
   // Incluido por Fabio
   qrlIndBalsas.Caption:='';
-  for i := 0 to FCTe.Aquav.balsa.Count - 1 do
+{$IFDEF PL_104}
+  for i := 0 to (FCTe.Aquav.balsa.Count - 1) do
    begin
     if i = 0
      then qrlIndBalsas.Caption := FCTe.Aquav.balsa.Items[i].xBalsa
      else qrlIndBalsas.Caption := qrlIndBalsas.Caption + '/' + FCTe.Aquav.balsa.Items[i].xBalsa;
    end;
+{$ENDIF}
 
   qrlIndConteiners.Caption := '';
-  for i := 0 to FCTe.Aquav.Lacre.Count - 1 do
+  for i := 0 to (FCTe.Aquav.Lacre.Count - 1) do
    begin
     if i = 0
      then qrlIndConteiners.Caption := FCTe.Aquav.Lacre.Items[i].nLacre
@@ -1994,7 +1996,7 @@ begin
 *)
   if FCTe.Ide.modal <> mdAereo
    then begin
-    for i := 0 to FCTe.Compl.ObsCont.Count-1 do
+    for i := 0 to (FCTe.Compl.ObsCont.Count-1) do
      with FCTe.Compl.ObsCont.Items[i] do
       begin
        qrmObsExcEmitente.Lines.Add( StringReplace( xCampo, '&lt;BR&gt;', #13#10, [rfReplaceAll,rfIgnoreCase] )+': '+
@@ -2008,7 +2010,7 @@ begin
   // Incluido por Italo em 17/09/2012
   qrmObsFisco.Lines.Add( StringReplace( FCTe.Imp.infAdFisco , '&lt;BR&gt;', #13#10, [rfReplaceAll,rfIgnoreCase] ) );
 
-  for i := 0 to FCTe.Compl.ObsFisco.Count-1 do
+  for i := 0 to (FCTe.Compl.ObsFisco.Count-1) do
    with FCTe.Compl.ObsFisco.Items[i] do
     begin
      qrmObsFisco.Lines.Add( StringReplace( xCampo, '&lt;BR&gt;', #13#10, [rfReplaceAll,rfIgnoreCase] )+': '+
