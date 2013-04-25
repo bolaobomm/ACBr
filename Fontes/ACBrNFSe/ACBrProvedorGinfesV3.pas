@@ -234,7 +234,7 @@ var
  Tag: String;
 begin
  case ACodCidade of
-  2304400: Tag := 'Cabecalho'; // Fortaleza/CE
+  2304400: Tag := 'cabecalho'; // Fortaleza/CE
   else     Tag := 'cabecalho'; // Demais cidades
  end;
 
@@ -473,13 +473,25 @@ end;
 
 function TProvedorGinfesV3.GeraEnvelopeRecepcionarLoteRPS(URLNS: String;
   CabMsg, DadosMsg, DadosSenha: AnsiString): AnsiString;
+var
+ TagCab, TagDados: String;
 begin
+ if Pos('issfortaleza', URLNS) > 0
+  then begin
+   TagCab := 'Cabecalho';
+   TagCab := 'arg0';
+  end
+  else begin
+   TagDados := 'EnviarLoteRpsEnvio';
+   TagDados := 'arg1';
+  end;
+
  result := '<?xml version="1.0" encoding="UTF-8"?>' +
            '<s:Envelope xmlns:s="http://schemas.xmlsoap.org/soap/envelope/">' +
             '<s:Body>' +
              '<ns1:RecepcionarLoteRpsV3 xmlns:ns1="' + URLNS + '">' +
-              '<arg0>' + CabMsg + '</arg0>' +
-              '<arg1>' + DadosMsg + '</arg1>' +
+              '<' + TagCab + '>' + CabMsg + '</' + TagCab + '>' +
+              '<' + TagDados + '>' + DadosMsg + '</' + TagDados + '>' +
              '</ns1:RecepcionarLoteRpsV3>' +
             '</s:Body>' +
            '</s:Envelope>';
