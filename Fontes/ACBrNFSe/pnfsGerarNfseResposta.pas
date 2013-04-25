@@ -233,7 +233,8 @@ begin
 
     Leitor.Grupo := Leitor.Arquivo;
     // Alterado por Cleiver em 26/02/2013
-    if (leitor.rExtrai(1, 'GerarNfseResposta') <> '') or (leitor.rExtrai(1, 'GerarNfseResponse') <> '') then
+    if (leitor.rExtrai(1, 'GerarNfseResposta') <> '') or (leitor.rExtrai(1, 'GerarNfseResponse') <> '') or
+       (leitor.rExtrai(1, 'EnviarLoteRpsSincronoResposta') <> '') then
     begin
       // Ler a Lista de NFSe
       if leitor.rExtrai(2, 'ListaNfse') <> '' then
