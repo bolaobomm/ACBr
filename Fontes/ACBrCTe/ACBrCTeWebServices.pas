@@ -2624,13 +2624,13 @@ begin
   Texto := '<?xml version="1.0" encoding="utf-8"?>';
   Texto := Texto + '<soap12:Envelope xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap12="http://www.w3.org/2003/05/soap-envelope">';
   Texto := Texto +   '<soap12:Header>';
-  Texto := Texto +     '<cteCabecMsg xmlns="http://www.portalfiscal.inf.br/cte/wsdl/CTeRecepcaoEvento">';
+  Texto := Texto +     '<cteCabecMsg xmlns="http://www.portalfiscal.inf.br/cte/wsdl/CteRecepcaoEvento">';
   Texto := Texto +       '<cUF>'+IntToStr(FConfiguracoes.WebServices.UFCodigo)+'</cUF>';
   Texto := Texto +       '<versaoDados>'+CTeEventoCTe+'</versaoDados>';
   Texto := Texto +     '</cteCabecMsg>';
   Texto := Texto +   '</soap12:Header>';
   Texto := Texto +   '<soap12:Body>';
-  Texto := Texto +     '<cteDadosMsg xmlns="http://www.portalfiscal.inf.br/cte/wsdl/CTeRecepcaoEvento">';
+  Texto := Texto +     '<cteDadosMsg xmlns="http://www.portalfiscal.inf.br/cte/wsdl/CteRecepcaoEvento">';
   Texto := Texto +       FDadosMsg;
   Texto := Texto +     '</cteDadosMsg>';
   Texto := Texto +   '</soap12:Body>';
@@ -2646,7 +2646,7 @@ begin
      ConfiguraReqResp( ReqResp );
      ReqResp.URL := FURL;
      ReqResp.UseUTF8InHeader := True;
-     ReqResp.SoapAction := 'http://www.portalfiscal.inf.br/cte/wsdl/CTeRecepcaoEvento/cteRecepcaoEvento';
+     ReqResp.SoapAction := 'http://www.portalfiscal.inf.br/cte/wsdl/CteRecepcaoEvento/cteRecepcaoEvento';
   {$ENDIF}
 
   try
@@ -2660,7 +2660,7 @@ begin
 
     {$IFDEF ACBrCTeOpenSSL}
        HTTP.Document.LoadFromStream(Stream);
-       ConfiguraHTTP(HTTP,'SOAPAction: "http://www.portalfiscal.inf.br/cte/wsdl/CTeRecepcaoEvento/cteRecepcaoEvento"');
+       ConfiguraHTTP(HTTP,'SOAPAction: "http://www.portalfiscal.inf.br/cte/wsdl/CteRecepcaoEvento/cteRecepcaoEvento"');
        HTTP.HTTPMethod('POST', FURL);
 
        StrStream := TStringStream.Create('');
