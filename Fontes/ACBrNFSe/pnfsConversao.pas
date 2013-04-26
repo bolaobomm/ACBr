@@ -646,6 +646,7 @@ begin
   3105608, // Barbacena/MG
   3105905, // Barroso/MG
   3126109, // Formiga/MG
+  3127107, // Frutal/MG
   3170107, // Uberaba/MG
   3303302, // Niteroi/RJ
   4301602, // Bage/RS

@@ -163,9 +163,21 @@ begin
             ConfigURL.HomNomeCidade := 'arcosmg';
             ConfigURL.ProNomeCidade := 'arcosmg';
            end;
+  3105608: begin // Barbacena/MG
+            ConfigURL.HomNomeCidade := 'mgbarbacena';
+            ConfigURL.ProNomeCidade := 'mgbarbacena';
+           end;
+  3105905: begin // Barroso/MG
+            ConfigURL.HomNomeCidade := 'barrosomg';
+            ConfigURL.ProNomeCidade := 'barrosomg';
+           end;
   3126109: begin // Formiga/MG
             ConfigURL.HomNomeCidade := 'formigamg';
             ConfigURL.ProNomeCidade := 'formigamg';
+           end;
+  3127107: begin // Frutal/MG
+            ConfigURL.HomNomeCidade := 'mgfrutal';
+            ConfigURL.ProNomeCidade := 'mgfrutal';
            end;
   3170107: begin // Uberaba/MG
             ConfigURL.HomNomeCidade := 'Uberaba';
@@ -175,29 +187,21 @@ begin
             ConfigURL.HomNomeCidade := 'rjniteroi';
             ConfigURL.ProNomeCidade := 'rjniteroi';
            end;
-  5107909: begin // Sinop/MT
-            ConfigURL.HomNomeCidade := 'sinop';
-            ConfigURL.ProNomeCidade := 'sinop';
-           end;
-  3105608: begin // Barbacena/MG
-            ConfigURL.HomNomeCidade := 'mgbarbacena';
-            ConfigURL.ProNomeCidade := 'mgbarbacena';
-           end;
-  3105905: begin // Barroso/MG
-            ConfigURL.HomNomeCidade := 'barrosomg';
-            ConfigURL.ProNomeCidade := 'barrosomg';
-           end;
   4301602: begin // Bage/RS
             ConfigURL.HomNomeCidade := 'bagers';
             ConfigURL.ProNomeCidade := 'bagers';
+           end;
+  5107909: begin // Sinop/MT
+            ConfigURL.HomNomeCidade := 'sinop';
+            ConfigURL.ProNomeCidade := 'sinop';
            end;
  end;
 
  case ACodCidade of
   3104205,
+  3105905,
   3126109,
   3170107,
-  3105905,
   4301602: begin
             ConfigURL.HomRecepcaoLoteRPS    := 'https://www1.webiss.com.br/' + ConfigURL.HomNomeCidade + '_wsnfse_homolog/NfseServices.svc';
             ConfigURL.HomConsultaLoteRPS    := 'https://www1.webiss.com.br/' + ConfigURL.HomNomeCidade + '_wsnfse_homolog/NfseServices.svc';
@@ -215,6 +219,7 @@ begin
             ConfigURL.ProCancelaNFSe        := 'https://www1.webiss.com.br/' + ConfigURL.ProNomeCidade + '_wsnfse/NfseServices.svc';
             ConfigURL.ProGerarNFSe          := 'https://www1.webiss.com.br/' + ConfigURL.ProNomeCidade + '_wsnfse/NfseServices.svc';
            end;
+
   2910800,
   3303302: begin
             ConfigURL.HomRecepcaoLoteRPS    := 'https://www3.webiss.com.br/' + ConfigURL.HomNomeCidade + '_wsnfse_homolog/NfseServices.svc';
@@ -231,8 +236,10 @@ begin
             ConfigURL.ProConsultaNFSe       := 'https://www3.webiss.com.br/' + ConfigURL.ProNomeCidade + '_wsnfse/NfseServices.svc';
             ConfigURL.ProCancelaNFSe        := 'https://www3.webiss.com.br/' + ConfigURL.ProNomeCidade + '_wsnfse/NfseServices.svc';
            end;
-  5107909,
-  3105608: begin
+
+  3105608,
+  3127107,
+  5107909: begin
             ConfigURL.HomRecepcaoLoteRPS    := 'https://www.webiss.com.br/' + ConfigURL.HomNomeCidade + '_wsnfse_homolog/NfseServices.svc';
             ConfigURL.HomConsultaLoteRPS    := 'https://www.webiss.com.br/' + ConfigURL.HomNomeCidade + '_wsnfse_homolog/NfseServices.svc';
             ConfigURL.HomConsultaNFSeRPS    := 'https://www.webiss.com.br/' + ConfigURL.HomNomeCidade + '_wsnfse_homolog/NfseServices.svc';
