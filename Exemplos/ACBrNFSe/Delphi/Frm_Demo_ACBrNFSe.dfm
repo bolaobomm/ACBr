@@ -339,6 +339,7 @@ object frmDemo_ACBrNFSe: TfrmDemo_ACBrNFSe
               'Franca/3516200/SP'
               'Francisco Beltrao/4108403/PR'
               'Frederico Westphalen/4308508/RS'
+              'Frutal/3127107/MG'
               'Gaspar/4205902/SC'
               'Goiania/5208707/GO'
               'Guaiba/4309308/RS'
