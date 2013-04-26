@@ -35,7 +35,12 @@ requires
   PCN2,
   ACBrComum,
   vclimg,
-  RLibWinD2010;
+  {$IFDEF VER150} RLibWinD7vcl {$ENDIF} // D7
+  {$IFDEF VER210} RLibWinD2010 {$ENDIF} // D2010
+  {$IFDEF VER220} RLibWinDXE {$ENDIF // XE
+  {$IFDEF VER230} RLibWinDXE2 {$ENDIF //XE2
+  {$IFDEF VER240} RLibWinDXE3 {$ENDIF //XE3
+  ;
 
 contains
   ACBrNFSeDANFSeRLClass in '..\..\..\Fontes\ACBrNFSe\ACBrNFSeDANFSeRLClass.pas',
