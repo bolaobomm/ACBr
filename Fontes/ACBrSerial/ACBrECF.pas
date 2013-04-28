@@ -2763,7 +2763,7 @@ begin
   if DescontoAcrescimo > 0 then
      DoAtualizarValorGT ;
 
-  {$IFNDEF CONSOLE}
+  {$IFNDEF NOGUI}
    if MemoAssigned then
       MemoSubtotaliza(DescontoAcrescimo);
   {$ENDIF}
