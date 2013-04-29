@@ -145,6 +145,7 @@ begin
  	ConfigURL.HomRecepcaoSincrono   := 'http://abrasf.sistemas4r.com.br/arecepcionarloterpssincrono.aspx?wsdl';
 
   case ACodCidade of
+   3127701: ConfigURL.ProNomeCidade  := 'governadorvaladares';
    3510203: ConfigURL.ProNomeCidade  := 'capaobonito';
    3523503: ConfigURL.ProNomeCidade  := 'itatinga';
   end;
