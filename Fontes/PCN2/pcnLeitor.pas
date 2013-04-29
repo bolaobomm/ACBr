@@ -241,15 +241,16 @@ var
   ConteudoTag, Aspas: string;
   inicio, fim: integer;
 begin
-  // Incluido por Italo em 22/04/2013
-  if Pos('"', Atributo) <> 0 then
+  Atributo := Trim(Atributo);
+  inicio := pos(Atributo, FGrupo) + Length(Atributo);
+  ConteudoTag := trim(copy(FGrupo, inicio, maxInt));
+
+  // Alterado por Italo em 29/04/2013
+  if Pos('"', ConteudoTag) <> 0 then
     Aspas := '"'
    else
     Aspas := '''';
 
-  Atributo := Trim(Atributo);
-  inicio := pos(Atributo, FGrupo) + Length(Atributo);
-  ConteudoTag := trim(copy(FGrupo, inicio, maxInt));
   inicio := pos(Aspas, ConteudoTag) + 1;
   ConteudoTag := trim(copy(ConteudoTag, inicio, maxInt));
   fim := pos(Aspas, ConteudoTag) - 1;
