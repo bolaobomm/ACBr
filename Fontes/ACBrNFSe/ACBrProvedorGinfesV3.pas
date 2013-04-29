@@ -478,11 +478,11 @@ var
 begin
  if Pos('issfortaleza', URLNS) > 0
   then begin
-   TagCab := 'Cabecalho';
-   TagCab := 'arg0';
+   TagCab   := 'Cabecalho';
+   TagDados := 'EnviarLoteRpsEnvio';
   end
   else begin
-   TagDados := 'EnviarLoteRpsEnvio';
+   TagCab   := 'arg0';
    TagDados := 'arg1';
   end;
 
