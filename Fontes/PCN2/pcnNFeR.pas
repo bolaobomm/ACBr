@@ -363,12 +363,13 @@ begin
     Pos('<total', Arquivo) - Pos('<det nItem=',Arquivo)
 
   );
+  Itens := StringReplace(Itens, #$D#$A, '', [rfReplaceAll]);
 
   ItensTemp := copy(
     Itens,
     Pos('<det nItem=', Itens),
     (Pos('</det>', Itens) + 6) - Pos('<det nItem=', Itens)
-  );  
+  );
 
   while pos('<det nItem=',ItensTemp) <> 0 do
   begin
