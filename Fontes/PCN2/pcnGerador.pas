@@ -420,6 +420,9 @@ const
   DSC_INDNFE = 'Indicador de NF-e consultada';
   DSC_INDEMI = 'Indicador do Emissor da NF-e';
   DSC_ULTNSU = 'Último NSU recebido pela Empresa';
+  // Incluido por Italo em 29/04/2013 conforme NT 2013/003
+  DSC_QNF = 'Quantidade de Documento Fiscal';
+  DSC_VTOTTRIB = 'Valor Aproximado Total de Tributos';
 
   // CTE //
   DSC_CHCTE    = 'Chave do CTe';

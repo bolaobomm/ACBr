@@ -838,6 +838,8 @@ type
 
   TImposto = class(TPersistent)
   private
+    // Incluido por Italo em 29/04/2013 conforme NT 2013/003
+    FvTotTrib: currency;
     FICMS: TICMS;
     FIPI: TIPI;
     FII: TII;
@@ -850,6 +852,7 @@ type
     constructor Create(AOwner: TDetcollectionItem);
     destructor Destroy; override;
   published
+    property vTotTrib: currency read FvTotTrib write FvTotTrib;
     property ICMS: TICMS read FICMS write FICMS;
     property IPI: TIPI read FIPI write FIPI;
     property II: TII read FII write FII;
@@ -1032,6 +1035,8 @@ type
     FvCOFINS: Currency;
     FvOutro: Currency;
     FvNF: Currency;
+    // Incluido por Italo em 29/04/2013 conforme NT 2013/003
+    FvTotTrib: currency;
   published
     property vBC: Currency read FvBC write FvBC;
     property vICMS: Currency read FvICMS write FvICMS;
@@ -1047,6 +1052,7 @@ type
     property vCOFINS: Currency read FvCOFINS write FvCOFINS;
     property vOutro: Currency read FvOutro write FvOutro;
     property vNF: Currency read FvNF write FvNF;
+    property vTotTrib: currency read FvTotTrib write FvTotTrib;
   end;
 
   TISSQNtot = class(TPersistent)

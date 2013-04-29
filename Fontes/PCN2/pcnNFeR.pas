@@ -531,6 +531,8 @@ begin
 
     (* Grupo da TAG <det><imposto> ********************************************)
     Leitor.rExtrai(2, 'imposto');
+    (*M02*)NFe.Det[i].Imposto.vTotTrib := Leitor.rCampo(tcDe2, 'vTotTrib');
+
     if Leitor.rExtrai(3, 'ICMS') <> '' then
     begin
       (*N11*)NFe.Det[i].Imposto.ICMS.orig         := StrToOrig(ok, Leitor.rCampo(tcStr, 'orig'));
@@ -666,6 +668,7 @@ begin
       (*W14*)NFe.Total.ICMSTot.vCOFINS := Leitor.rCampo(tcDe2, 'vCOFINS');
       (*W15*)NFe.Total.ICMSTot.vOutro := Leitor.rCampo(tcDe2, 'vOutro');
       (*W16*)NFe.Total.ICMSTot.vNF := Leitor.rCampo(tcDe2, 'vNF');
+      (*W16a*)NFe.Total.ICMSTot.vTotTrib := Leitor.rCampo(tcDe2, 'vTotTrib');
     end;
     if Leitor.rExtrai(2, 'ISSQNtot') <> '' then
     begin
