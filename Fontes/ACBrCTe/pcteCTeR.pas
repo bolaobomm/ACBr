@@ -534,7 +534,7 @@ begin
     // Ronaldo RCLSoft detectou que estava faltando
     // Alterado por Italo em 17/09/2012
     {$IFDEF PL_104}
-      CTe.Imp.vTotImp    := Leitor.rCampo(tcDe2,'vTotImp');
+      CTe.Imp.vTotTrib   := Leitor.rCampo(tcDe2,'vTotTrib');
 //    if Leitor.rExtrai(2, 'infAdFisco') <> '' then
 //    begin
       // Informações adicionais de interesse do Fisco
@@ -1316,7 +1316,7 @@ begin
     if Leitor.rExtrai(2, 'impComp') <> '' then
     begin
 {$IFDEF PL_104}
-      CTe.InfCTeComp[i01].impComp.vTotImp    := Leitor.rCampo(tcDe2,'vTotImp');
+      CTe.InfCTeComp[i01].impComp.vTotTrib   := Leitor.rCampo(tcDe2,'vTotTrib');
       CTe.InfCTeComp[i01].impComp.InfAdFisco := Leitor.rCampo(tcStr,'infAdFisco');
 {$ENDIF}
 
