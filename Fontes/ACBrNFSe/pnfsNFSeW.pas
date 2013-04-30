@@ -48,8 +48,6 @@ type
 		procedure GerarXML_Provedor_ISSe;
 		procedure GerarXML_Provedor_4R;
 
-//    procedure AjustarMunicipioUF(var xUF: string; var xMun: string; var cMun: integer; cPais: integer; vxUF, vxMun: string; vcMun: integer);
-//    function ObterNomeMunicipio(const xMun, xUF: string; const cMun: integer): string;
   public
     constructor Create(AOwner: TNFSe);
     destructor Destroy; override;
@@ -291,7 +289,9 @@ begin
                   end;
                  Gerador.wGrupoNFSe('/ListaServicos');
                 end;
+
   pro4R,
+  proISSDigital,
   proSaatri:
                 begin
                  Gerador.wGrupoNFSe('Servico');
@@ -315,11 +315,15 @@ begin
                  Gerador.wCampoNFSe(tcStr, '#30', 'CodigoCnae               ', 01, 0007, 0, SomenteNumeros(NFSe.Servico.CodigoCnae), '');
                  Gerador.wCampoNFSe(tcStr, '#32', 'Discriminacao            ', 01, 2000, 1, NFSe.Servico.Discriminacao, '');
                  Gerador.wCampoNFSe(tcStr, '#33', 'CodigoMunicipio          ', 01, 0007, 1, SomenteNumeros(NFSe.Servico.CodigoMunicipio), '');
-                 Gerador.wCampoNFSe(tcInt, '#34', 'CodigoPais               ', 04, 04,   0, NFSe.Servico.CodigoPais, '');
+
+                 if FProvedor <> proISSDigital
+                  then Gerador.wCampoNFSe(tcInt, '#34', 'CodigoPais         ', 04, 04,   0, NFSe.Servico.CodigoPais, '');
+
                  Gerador.wCampoNFSe(tcStr, '#35', 'ExigibilidadeISS         ', 01, 01,   1, ExigibilidadeISSToStr(NFSe.Servico.ExigibilidadeISS), '');
                  Gerador.wCampoNFSe(tcInt, '#36', 'MunicipioIncidencia      ', 07, 07,   0, NFSe.Servico.MunicipioIncidencia, '');
                  Gerador.wGrupoNFSe('/Servico');
                 end;
+
   proGoiania:   begin
                  Gerador.wGrupoNFSe('Servico');
                  Gerador.wGrupoNFSe('Valores');
@@ -337,6 +341,7 @@ begin
                  Gerador.wCampoNFSe(tcStr, '#33', 'CodigoMunicipio          ', 01, 0007, 1, SomenteNumeros(NFSe.Servico.CodigoMunicipio), '');
                  Gerador.wGrupoNFSe('/Servico');
                 end;
+
 	// Alterado por Cleiver em 01/02/2013
   proRecife:    begin
                  Gerador.wGrupoNFSe('Servico');
@@ -430,9 +435,10 @@ begin
         Gerador.wCampoNFSe(tcDe2, '#28', 'DescontoCondicionado  ', 01, 15, 0, NFSe.Servico.Valores.DescontoCondicionado, '');
         Gerador.wGrupoNFSe('/Valores');
 
-        if FProvedor = proBetha
-         then Gerador.wCampoNFSe(tcStr, '#29', 'ItemListaServico', 01, 0005, 1, SomenteNumeros(NFSe.Servico.ItemListaServico), '')
-         else Gerador.wCampoNFSe(tcStr, '#29', 'ItemListaServico', 01, 0005, 1, NFSe.Servico.ItemListaServico, '');
+        case FProvedor of
+         proBetha:      Gerador.wCampoNFSe(tcStr, '#29', 'ItemListaServico', 01, 05, 1, SomenteNumeros(NFSe.Servico.ItemListaServico), '')
+         else           Gerador.wCampoNFSe(tcStr, '#29', 'ItemListaServico', 01, 05, 1, NFSe.Servico.ItemListaServico, '');
+        end;
 
         Gerador.wCampoNFSe(tcStr, '#30', 'CodigoCnae      ', 01, 0007, 0, SomenteNumeros(NFSe.Servico.CodigoCnae), '');
 
@@ -554,6 +560,9 @@ begin
        end;
  end;
 
+ if FProvedor = proISSDigital
+  then Gerador.wCampoNFSe(tcInt, '#34', 'CodigoPais ', 04, 04, 0, NFSe.Servico.CodigoPais, '');
+
  Gerador.wCampoNFSe(tcStr, '#45', 'Cep', 008, 008, 0, SomenteNumeros(NFSe.Tomador.Endereco.CEP), '');
  Gerador.wGrupoNFSe('/Endereco');
  Gerador.wGrupoNFSe('Contato');
@@ -614,50 +623,6 @@ begin
  Gerador.wGrupoNFSe('/ValoresServico');
 end;
 
-{
-procedure TNFSeW.AjustarMunicipioUF(var xUF, xMun: string;
-  var cMun: integer; cPais: integer; vxUF, vxMun: string; vcMun: integer);
-var
- PaisBrasil : boolean;
-begin
- PaisBrasil := cPais = CODIGO_BRASIL;
- cMun       := IIf(PaisBrasil, vcMun, CMUN_EXTERIOR);
- xMun       := IIf(PaisBrasil, vxMun, XMUN_EXTERIOR);
- xUF        := IIf(PaisBrasil, vxUF, UF_EXTERIOR);
- xMun       := ObterNomeMunicipio(xMun, xUF, cMun);
-end;
-
-function TNFSeW.ObterNomeMunicipio(const xMun, xUF: string;
-  const cMun: integer): string;
-var
- i            : integer;
- PathArquivo,
- Codigo       : string;
- List         : TstringList;
-begin
- result := '';
- if (FOpcoes.NormatizarMunicipios) and (cMun <> CMUN_EXTERIOR)
-  then begin
-   PathArquivo := FOpcoes.FPathArquivoMunicipios + 'MunIBGE-UF' + InttoStr(UFparaCodigo(xUF)) + '.txt';
-   if FileExists(PathArquivo)
-    then begin
-     List := TstringList.Create;
-     List.LoadFromFile(PathArquivo);
-     Codigo := IntToStr(cMun);
-     i      := 0;
-     while (i < list.count) and (result = '') do
-      begin
-       if pos(Codigo, List[i]) > 0
-        then result := Trim(stringReplace(list[i], codigo, '', []));
-       inc(i);
-     end;
-     List.free;
-    end;
-  end;
- if result = ''
-  then result := xMun;
-end;
-}
 procedure TNFSeW.GerarXML_Provedor_fintelISS;
 begin
  Gerador.wGrupoNFSe('InfDeclaracaoPrestacaoServico');
