@@ -80,6 +80,9 @@
 |     Regs60A, Regs60D, Regs60I.
 |* 20/02/2013: Juliana Tamizou
 |   - Corrigido memory leak no registro 60R
+|* 30/04/2013: Juliana Tamizou
+|  - Modificado inclusão do registro 74 para evitar duplicidade de registros
+|    para o mesmo produto.
 *******************************************************************************}
 
 {$I ACBr.inc}
@@ -570,11 +573,15 @@ type
   end;
 
   {Lista de objetos do tipo Registro74}
+
+  { TRegistros74 }
+
   TRegistros74 = class(TObjectList)
   protected
     procedure SetObject (Index: Integer; Item: TRegistro74);
     function GetObject (Index: Integer): TRegistro74;
     procedure Insert (Index: Integer; Obj: TRegistro74);
+    function GetRegistroExiste(FCodigo: string): Integer;
   public
     function Add (Obj: TRegistro74): Integer;
     property Objects [Index: Integer]: TRegistro74
@@ -3527,7 +3534,11 @@ end;
 
 function TRegistros74.Add(Obj: TRegistro74): Integer;
 begin
-  Result := inherited Add(Obj) ;
+  Result := GetRegistroExiste(Obj.Codigo) ;
+  if Result < 0 then
+     Result := inherited Add(Obj)
+  else
+     Obj.Free;
 end;
 
 function TRegistros74.GetObject(Index: Integer): TRegistro74;
@@ -3537,7 +3548,23 @@ end;
 
 procedure TRegistros74.Insert(Index: Integer; Obj: TRegistro74);
 begin
-  inherited Insert(Index, Obj);
+  if GetRegistroExiste(Obj.Codigo) < 0 then
+     inherited Insert(Index, Obj)
+  else
+     Obj.Free;
+end;
+
+function TRegistros74.GetRegistroExiste(FCodigo: string): Integer;
+var
+  i: Integer;
+begin
+  Result := -1 ;
+  I      := 0 ;
+  while (I < Self.Count) and (Self[I].Codigo <> FCodigo) do
+     Inc( I ) ;
+
+  if I < Self.Count then
+     Result := I;
 end;
 
 procedure TRegistros74.SetObject(Index: Integer; Item: TRegistro74);
