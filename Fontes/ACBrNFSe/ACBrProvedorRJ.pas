@@ -104,7 +104,7 @@ begin
   then ConfigCidade.NameSpaceEnvelope := 'http://notacarioca.rio.gov.br'
   else ConfigCidade.NameSpaceEnvelope := 'http://homologacao.notacarioca.rio.gov.br';
 
- ConfigCidade.AssinaRPS  := False;
+ ConfigCidade.AssinaRPS  := True;
  ConfigCidade.AssinaLote := False;
 
  Result := ConfigCidade;
@@ -166,7 +166,7 @@ begin
    acConsLote:    Result := False;
    acConsNFSeRps: Result := False;
    acConsNFSe:    Result := False;
-   acCancelar:    Result := False;
+   acCancelar:    Result := True;
    acGerar:       Result := False;
    else           Result := False;
  end;
