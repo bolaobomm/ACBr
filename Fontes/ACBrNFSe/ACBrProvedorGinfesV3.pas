@@ -230,17 +230,10 @@ end;
 
 function TProvedorGinfesV3.Gera_CabMsg(Prefixo2, VersaoLayOut, VersaoDados,
   NameSpaceCab: String; ACodCidade: Integer): AnsiString;
-var
- Tag: String;
 begin
- case ACodCidade of
-  2304400: Tag := 'cabecalho'; // Fortaleza/CE
-  else     Tag := 'cabecalho'; // Demais cidades
- end;
-
- Result := '<' + Prefixo2 + Tag + ' versao="'  + VersaoLayOut + '"' + NameSpaceCab +
+ Result := '<' + Prefixo2 + 'cabecalho versao="'  + VersaoLayOut + '"' + NameSpaceCab +
             '<versaoDados>' + VersaoDados + '</versaoDados>'+
-           '</' + Prefixo2 + Tag + '>';
+           '</' + Prefixo2 + 'cabecalho>';
 end;
 
 function TProvedorGinfesV3.Gera_DadosSenha(CNPJ, Senha: String): AnsiString;
@@ -499,13 +492,25 @@ end;
 
 function TProvedorGinfesV3.GeraEnvelopeConsultarSituacaoLoteRPS(
   URLNS: String; CabMsg, DadosMsg, DadosSenha: AnsiString): AnsiString;
+var
+ TagCab, TagDados: String;
 begin
+ if Pos('issfortaleza', URLNS) > 0
+  then begin
+   TagCab   := 'Cabecalho';
+   TagDados := 'ConsultarSituacaoLoteRpsEnvio';
+  end
+  else begin
+   TagCab   := 'arg0';
+   TagDados := 'arg1';
+  end;
+
  result := '<?xml version="1.0" encoding="UTF-8"?>' +
            '<s:Envelope xmlns:s="http://schemas.xmlsoap.org/soap/envelope/">' +
             '<s:Body>' +
              '<ns1:ConsultarSituacaoLoteRpsV3 xmlns:ns1="' + URLNS + '">' +
-              '<arg0>' + CabMsg + '</arg0>' +
-              '<arg1>' + DadosMsg + '</arg1>' +
+              '<' + TagCab + '>' + CabMsg + '</' + TagCab + '>' +
+              '<' + TagDados + '>' + DadosMsg + '</' + TagDados + '>' +
              '</ns1:ConsultarSituacaoLoteRpsV3>' +
             '</s:Body>' +
            '</s:Envelope>';
@@ -513,13 +518,25 @@ end;
 
 function TProvedorGinfesV3.GeraEnvelopeConsultarLoteRPS(URLNS: String;
   CabMsg, DadosMsg, DadosSenha: AnsiString): AnsiString;
+var
+ TagCab, TagDados: String;
 begin
+ if Pos('issfortaleza', URLNS) > 0
+  then begin
+   TagCab   := 'Cabecalho';
+   TagDados := 'ConsultarLoteRpsEnvio';
+  end
+  else begin
+   TagCab   := 'arg0';
+   TagDados := 'arg1';
+  end;
+
  result := '<?xml version="1.0" encoding="UTF-8"?>' +
            '<s:Envelope xmlns:s="http://schemas.xmlsoap.org/soap/envelope/">' +
             '<s:Body>' +
              '<ns1:ConsultarLoteRpsV3 xmlns:ns1="' + URLNS + '">' +
-              '<arg0>' + CabMsg + '</arg0>' +
-              '<arg1>' + DadosMsg + '</arg1>' +
+              '<' + TagCab + '>' + CabMsg + '</' + TagCab + '>' +
+              '<' + TagDados + '>' + DadosMsg + '</' + TagDados + '>' +
              '</ns1:ConsultarLoteRpsV3>' +
             '</s:Body>' +
            '</s:Envelope>';
@@ -527,13 +544,25 @@ end;
 
 function TProvedorGinfesV3.GeraEnvelopeConsultarNFSeporRPS(URLNS: String;
   CabMsg, DadosMsg, DadosSenha: AnsiString): AnsiString;
+var
+ TagCab, TagDados: String;
 begin
+ if Pos('issfortaleza', URLNS) > 0
+  then begin
+   TagCab   := 'Cabecalho';
+   TagDados := 'ConsultarNfseRpsEnvio';
+  end
+  else begin
+   TagCab   := 'arg0';
+   TagDados := 'arg1';
+  end;
+
  result := '<?xml version="1.0" encoding="UTF-8"?>' +
            '<s:Envelope xmlns:s="http://schemas.xmlsoap.org/soap/envelope/">' +
             '<s:Body>' +
              '<ns1:ConsultarNfsePorRpsV3 xmlns:ns1="' + URLNS + '">' +
-              '<arg0>' + CabMsg + '</arg0>' +
-              '<arg1>' + DadosMsg + '</arg1>' +
+              '<' + TagCab + '>' + CabMsg + '</' + TagCab + '>' +
+              '<' + TagDados + '>' + DadosMsg + '</' + TagDados + '>' +
              '</ns1:ConsultarNfsePorRpsV3>' +
             '</s:Body>' +
            '</s:Envelope>';
@@ -541,13 +570,25 @@ end;
 
 function TProvedorGinfesV3.GeraEnvelopeConsultarNFSe(URLNS: String; CabMsg,
   DadosMsg, DadosSenha: AnsiString): AnsiString;
+var
+ TagCab, TagDados: String;
 begin
+ if Pos('issfortaleza', URLNS) > 0
+  then begin
+   TagCab   := 'Cabecalho';
+   TagDados := 'ConsultarNfseEnvio';
+  end
+  else begin
+   TagCab   := 'arg0';
+   TagDados := 'arg1';
+  end;
+
  result := '<?xml version="1.0" encoding="UTF-8"?>' +
            '<s:Envelope xmlns:s="http://schemas.xmlsoap.org/soap/envelope/">' +
             '<s:Body>' +
              '<ns1:ConsultarNfseV3 xmlns:ns1="' + URLNS + '">' +
-              '<arg0>' + CabMsg + '</arg0>' +
-              '<arg1>' + DadosMsg + '</arg1>' +
+              '<' + TagCab + '>' + CabMsg + '</' + TagCab + '>' +
+              '<' + TagDados + '>' + DadosMsg + '</' + TagDados + '>' +
              '</ns1:ConsultarNfseV3>' +
             '</s:Body>' +
            '</s:Envelope>';
@@ -555,15 +596,21 @@ end;
 
 function TProvedorGinfesV3.GeraEnvelopeCancelarNFSe(URLNS: String; CabMsg,
   DadosMsg, DadosSenha: AnsiString): AnsiString;
+var
+ TagCab, TagDados: String;
 begin
+ if Pos('issfortaleza', URLNS) > 0
+  then TagDados := 'CancelarNfseEnvio'
+  else TagDados := 'arg0';
+
  result := '<?xml version="1.0" encoding="UTF-8"?>' +
            '<s:Envelope xmlns:s="http://schemas.xmlsoap.org/soap/envelope/">' +
             '<s:Body>' +
              '<ns1:CancelarNfse xmlns:ns1="' + URLNS + '">' +
-              '<arg0>' +
+              '<' + TagDados +'>' +
                '&lt;?xml version="1.0" encoding="UTF-8"?&gt;' +
                StringReplace(StringReplace(DadosMsg, '<', '&lt;', [rfReplaceAll]), '>', '&gt;', [rfReplaceAll]) +
-              '</arg0>' +
+              '</' + TagDados +'>' +
              '</ns1:CancelarNfse>' +
             '</s:Body>' +
            '</s:Envelope>';
