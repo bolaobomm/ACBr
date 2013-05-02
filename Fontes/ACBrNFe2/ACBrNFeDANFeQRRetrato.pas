@@ -460,6 +460,9 @@ type
     QRLabel33: TQRLabel;
     qrlResumoRodape: TQRLabel;
     QRLabel141: TQRLabel;
+    QRShape68: TQRShape;
+    QRLabel9: TQRLabel;
+    qrlValorTotTrib: TQRLabel;
     procedure QRNFeBeforePrint(Sender: TCustomQuickRep;
       var PrintReport: Boolean);
     procedure qrbReciboBeforePrint(Sender: TQRCustomBand;
@@ -692,7 +695,7 @@ begin
                                       FormatFloat('###,###,###,##0.00', vProd);
                   //==============================================================================
                   // Em contato com o pessoal da Receita Estadual, foi informado que Ambos os regimes
-                  // trabalham de mesma forma, deferenciando-se apensa em seus códigos
+                  // trabalham de mesma forma, deferenciando-se apenas em seus códigos
                   //==============================================================================
                   if FNFe.Emit.CRT in [crtRegimeNormal, crtSimplesExcessoReceita] then
                     begin
@@ -1151,6 +1154,8 @@ begin
       qrlAcessorias.Caption    := DFeUtil.FormatFloat( VOutro );
       qrlValorIPI.Caption      := DFeUtil.FormatFloat( VIPI );
       qrlTotalNF.Caption       := DFeUtil.FormatFloat( VNF );
+      // Incluido por Italo em 29/04/2013 conforme a NT 2013/003
+      qrlValorTotTrib.Caption  := DFeUtil.FormatFloat( vTotTrib );
    end;
 
    // Transporte
