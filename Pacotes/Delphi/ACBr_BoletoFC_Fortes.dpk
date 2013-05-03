@@ -30,16 +30,15 @@ package ACBr_BoletoFC_Fortes;
 
 requires
   rtl,
-  vcl,
-  vcljpg,
+  vcl,  
   dbrtl,
   vcldb,
-  {$IFDEF VER150} RLibWinD7vcl, {$ENDIF} // D7
-  {$IFDEF VER210} RLibWinD2010, {$ENDIF} // D2010
-  {$IFDEF VER220} RLibWinDXE,   {$ENDIF} // XE
-  {$IFDEF VER230} RLibWinDXE2,  {$ENDIF} // XE2
-  {$IFDEF VER240} RLibWinDXE3,  {$ENDIF} // XE3
-  ACBr_Boleto;
+  ACBr_Boleto,
+  {$IFDEF VER150} RLibWinD7vcl, vcljpg;{$ENDIF} // D7
+  {$IFDEF VER210} RLibWinD2010, vclimg;{$ENDIF} // D2010
+  {$IFDEF VER220} RLibWinDXE, vclimg;{$ENDIF} // XE
+  {$IFDEF VER230} RLibWinDXE2, vclimg;{$ENDIF} //XE2
+  {$IFDEF VER240} RLibWinDXE3, vclimg;{$ENDIF} //XE3
 
 contains
   ACBrBoletoFCFortesFr in '..\..\Fontes\ACBrBoleto\ACBrBoletoFCFortesFr.pas';
