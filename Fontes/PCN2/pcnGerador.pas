@@ -673,6 +673,7 @@ var
   alerta, ConteudoProcessado: string;
   wAno, wMes, wDia, wHor, wMin, wSeg, wMse: Word;
   EstaVazio: boolean;
+  VlrExt:Extended;
 begin
   ID                  := Trim(ID);
   Tag                 := Trim(TAG);
@@ -728,7 +729,8 @@ begin
                     tcDe6 : NumeroDecimais :=  6; // Incluido por Italo em 30/09/2010
                     tcDe10: NumeroDecimais := 10;
                   end;
-                  ConteudoProcessado  := FormatFloat('0.0000000000', valor);
+                  VlrExt := StrToFloat(valor);
+                  ConteudoProcessado  := FormatFloat('0.0000000000', VlrExt);
                   EstaVazio           := (valor = 0) and (ocorrencias = 0);
                   if StrToIntDef(Copy(ConteudoProcessado, pos(DecimalSeparator, ConteudoProcessado) + NumeroDecimais + 1, 10),0) > 0 then
                     walerta(ID, Tag, Descricao, ERR_MSG_MAXIMO_DECIMAIS + ' ' + IntToStr(NumeroDecimais));
