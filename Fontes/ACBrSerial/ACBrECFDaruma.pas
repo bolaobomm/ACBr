@@ -1403,17 +1403,17 @@ begin
         else if RetCmd = '010063' then
         begin
           fsModeloDaruma := fsMACH1 ;
-          fsSubModeloECF := 'FS-MACH1' ;
+          fsSubModeloECF := 'MACH1' ;
         end
         else if RetCmd = '010064' then
         begin
           fsModeloDaruma := fsMACH2 ;
-          fsSubModeloECF := 'FS-MACH2' ;
+          fsSubModeloECF := 'MACH2' ;
         end
         else if RetCmd = '010062' then
         begin
           fsModeloDaruma := fsMACH3;
-          fsSubModeloECF := 'FS-MACH3' ;
+          fsSubModeloECF := 'MACH3' ;
         end ;
 
         fpMFD       := True ;
