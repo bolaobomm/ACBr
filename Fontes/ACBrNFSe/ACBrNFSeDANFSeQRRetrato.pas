@@ -396,6 +396,7 @@ procedure TfqrDANFSeQRRetrato.qrb_6_ISSQNBeforePrint(Sender: TQRCustomBand;
   var PrintBand: Boolean);
 var
  MostrarObra: Boolean;
+ Municipio1, Municipio2: String;
 begin
   inherited;
 
@@ -443,6 +444,18 @@ begin
  qrlValorLiquido.Caption := DFeUtil.FormatFloat( FNFSe.Servico.Valores.ValorLiquidoNfse );
 
  // TnfseNaturezaOperacao = ( noTributacaoNoMunicipio, noTributacaoForaMunicipio, noIsencao, noImune, noSuspensaDecisaoJudicial, noSuspensaProcedimentoAdministrativo )
+
+ case StrToIntDef(FNFSe.PrestadorServico.Endereco.CodigoMunicipio, 0) of
+  4318705: begin  // São Leopoldo/RS
+            Municipio1 := 'em São Leopoldo';
+            Municipio2 := 'fora de São Leopoldo';
+           end;
+  else begin
+        Municipio1 := 'no município';
+        Municipio2 := 'fora do município';
+       end;
+ end;
+
  case FNFSe.NaturezaOperacao of
   noTributacaoNoMunicipio   : qrlNatOperacao.Caption := '1 - Tributação no município';
   noTributacaoForaMunicipio : qrlNatOperacao.Caption := '2 - Tributação fora do município';
@@ -452,14 +465,14 @@ begin
 
   noSuspensaProcedimentoAdministrativo : qrlNatOperacao.Caption := '6 - Exigibilidade susp. por proced. adm.';
 
-  noTributacaoNoMunicipio51         : qrlNatOperacao.Caption := '51- Imposto devido em São Leopoldo, com obrigação de retenção na fonte';     // alterado por Rafael Müller para o provedor thema
-  noTributacaoNoMunicipioSemISS52   : qrlNatOperacao.Caption := '52 - Imposto devido em São Leopoldo, sem obrigação de retenção na fonte';
+  noTributacaoNoMunicipio51         : qrlNatOperacao.Caption := '51- Imposto devido ' + Municipio1 + ', com obrigação de retenção na fonte';     // alterado por Rafael Müller para o provedor thema
+  noTributacaoNoMunicipioSemISS52   : qrlNatOperacao.Caption := '52 - Imposto devido ' + Municipio1 + ', sem obrigação de retenção na fonte';
   noNaoTributa58                    : qrlNatOperacao.Caption := '58 - Não tributável';
   noSimplesNacional59               : qrlNatOperacao.Caption := '59 - Imposto recolhido pelo regime único de arrecadação Simples Nacional';
-  noTributacaoNoMunicipio61         : qrlNatOperacao.Caption := '61 - Imposto devido em São Leopoldo, com obrigação de retenção na fonte';
-  noTributacaoNoMunicipioSemISS62   : qrlNatOperacao.Caption := '62 - Imposto devido em São Leopoldo, sem obrigação de retenção na fonte';
-  noTributacaoForaMunicipio63       : qrlNatOperacao.Caption := '63 - Imposto devido fora de São Leopoldo, com obrigação de retenção na fonte';
-  noTributacaoForaMunicipioSemISS64 : qrlNatOperacao.Caption := '64 - Imposto devido fora de São Leopoldo, sem obrigação de retenção na fonte';
+  noTributacaoNoMunicipio61         : qrlNatOperacao.Caption := '61 - Imposto devido ' + Municipio1 + ', com obrigação de retenção na fonte';
+  noTributacaoNoMunicipioSemISS62   : qrlNatOperacao.Caption := '62 - Imposto devido ' + Municipio1 + ', sem obrigação de retenção na fonte';
+  noTributacaoForaMunicipio63       : qrlNatOperacao.Caption := '63 - Imposto devido ' + Municipio2 + ', com obrigação de retenção na fonte';
+  noTributacaoForaMunicipioSemISS64 : qrlNatOperacao.Caption := '64 - Imposto devido ' + Municipio2 + ', sem obrigação de retenção na fonte';
   noNaoTributa68                    : qrlNatOperacao.Caption := '68 - Não tributável';
   noSimplesNacional69               : qrlNatOperacao.Caption := '69 - Imposto recolhido pelo regime único de arrecadação Simples Nacional';
   noNaoTributa78                    : qrlNatOperacao.Caption := '78 - Não tributável';
