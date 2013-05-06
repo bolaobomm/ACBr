@@ -252,9 +252,11 @@ type
   private
     FCpfCnpj: string;
     FInscricaoMunicipal: string;
+    FInscricaoEstadual: string;
   published
     property CpfCnpj: string read FCpfCnpj write FCpfCnpj;
     property InscricaoMunicipal: string read FInscricaoMunicipal write FInscricaoMunicipal;
+    property InscricaoEstadual: string read FInscricaoEstadual write FInscricaoEstadual;
   end;
 
  TDadosTomador = class(TPersistent)
