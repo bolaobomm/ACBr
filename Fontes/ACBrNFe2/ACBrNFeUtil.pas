@@ -911,7 +911,8 @@ case FormaEmissao of
          26: Result := NotaUtil.GetURLPE(AAmbiente,ALayOut, AModeloDF); //PE
          22: Result := NotaUtil.GetURLSVAN(AAmbiente,ALayOut, AModeloDF); //PI
          33: Result := NotaUtil.GetURLSVRS(AAmbiente,ALayOut, AModeloDF); //RJ
-         24: Result := NotaUtil.GetURLSVAN(AAmbiente,ALayOut, AModeloDF); //RN
+//         24: Result := NotaUtil.GetURLSVAN(AAmbiente,ALayOut, AModeloDF); //RN
+         24: Result := NotaUtil.GetURLSVRS(AAmbiente,ALayOut, AModeloDF); //RN A partir do dia 06/05/2013 todos os contribuintes do RIO GRANDO DO NORTE deverão modificar seus sistemas para utilizarem os serviços da SEFAZ Virtual do Rio Grande do Sul (SVRS).
          43: Result := NotaUtil.GetURLRS(AAmbiente,ALayOut, AModeloDF); //RS
 //         11: Result := NotaUtil.GetURLRO(AAmbiente,ALayOut, AModeloDF); //RO
          11: Result := NotaUtil.GetURLSVRS(AAmbiente,ALayOut, AModeloDF); //RO  A partir do dia 03/09/2009 todos os contribuintes de RONDÔNIA deverão modificar seus sistemas para utilizarem os serviços da SEFAZ Virtual do Rio Grande do Sul (SVRS).
