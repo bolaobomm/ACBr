@@ -155,6 +155,7 @@ type
     procedure SaveFileTXT;
 
     procedure IniciaGeracao;
+    procedure CancelaGeracao;
     procedure WriteBloco_0;
     procedure WriteBloco_C( FechaBloco: Boolean );
     procedure WriteBloco_D;
@@ -213,6 +214,12 @@ begin
 end;
 
 (* TACBrSPEDFiscal *)
+
+procedure TACBrSPEDFiscal.CancelaGeracao;
+begin
+  LimpaRegistros;
+  FInicializado := False;
+end;
 
 constructor TACBrSPEDFiscal.Create(AOwner: TComponent);
 begin
