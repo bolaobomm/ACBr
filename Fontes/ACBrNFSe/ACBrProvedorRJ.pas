@@ -100,9 +100,11 @@ begin
  ConfigCidade.Prefixo4      := '';
  ConfigCidade.Identificador := 'Id';
 
- if AAmbiente = 1
-  then ConfigCidade.NameSpaceEnvelope := 'http://notacarioca.rio.gov.br'
-  else ConfigCidade.NameSpaceEnvelope := 'http://homologacao.notacarioca.rio.gov.br';
+// if AAmbiente = 1
+//  then ConfigCidade.NameSpaceEnvelope := 'http://notacarioca.rio.gov.br'
+//  else ConfigCidade.NameSpaceEnvelope := 'http://homologacao.notacarioca.rio.gov.br';
+
+ ConfigCidade.NameSpaceEnvelope := 'http://notacarioca.rio.gov.br';
 
  ConfigCidade.AssinaRPS  := True;
  ConfigCidade.AssinaLote := False;
@@ -125,6 +127,7 @@ begin
  ConfigSchema.ServicoConRps   := 'nfse.xsd';
  ConfigSchema.ServicoConNfse  := 'nfse.xsd';
  ConfigSchema.ServicoCancelar := 'nfse.xsd';
+ ConfigSchema.ServicoGerar    := 'nfse.xsd';
  ConfigSchema.DefTipos        := '';
 
  Result := ConfigSchema;
@@ -141,6 +144,7 @@ begin
  ConfigURL.HomConsultaSitLoteRPS := 'https://homologacao.notacarioca.rio.gov.br/WSNacional/nfse.asmx';
  ConfigURL.HomConsultaNFSe       := 'https://homologacao.notacarioca.rio.gov.br/WSNacional/nfse.asmx';
  ConfigURL.HomCancelaNFSe        := 'https://homologacao.notacarioca.rio.gov.br/WSNacional/nfse.asmx';
+ ConfigURL.HomGerarNFSe          := 'https://homologacao.notacarioca.rio.gov.br/WSNacional/nfse.asmx';
 
  ConfigURL.ProNomeCidade         := '';
  ConfigURL.ProRecepcaoLoteRPS    := 'https://notacarioca.rio.gov.br/WSNacional/nfse.asmx';
@@ -149,6 +153,7 @@ begin
  ConfigURL.ProConsultaSitLoteRPS := 'https://notacarioca.rio.gov.br/WSNacional/nfse.asmx';
  ConfigURL.ProConsultaNFSe       := 'https://notacarioca.rio.gov.br/WSNacional/nfse.asmx';
  ConfigURL.ProCancelaNFSe        := 'https://notacarioca.rio.gov.br/WSNacional/nfse.asmx';
+ ConfigURL.ProGerarNFSe          := 'https://notacarioca.rio.gov.br/WSNacional/nfse.asmx';
 
  Result := ConfigURL;
 end;
@@ -190,7 +195,7 @@ begin
                              '<' + Prefixo3 + 'Pedido>' +
                               '<' + Prefixo4 + 'InfPedidoCancelamento' +
                                  DFeUtil.SeSenao(Identificador <> '', ' ' + Identificador + '="' + URI + '"', '') + '>';
-   acGerar:       Result := '';
+   acGerar:       Result := '<' + Prefixo3 + 'GerarNfseEnvio' + NameSpaceDad;
  end;
 end;
 
@@ -217,7 +222,7 @@ begin
    acConsNFSe:    Result := '</' + Prefixo3 + 'ConsultarNfseEnvio>';
    acCancelar:    Result := '</' + Prefixo3 + 'Pedido>' +
                             '</' + Prefixo3 + 'CancelarNfseEnvio>';
-   acGerar:       Result := '';
+   acGerar:       Result := '</' + Prefixo3 + 'GerarNfseEnvio>';
  end;
 end;
 
@@ -550,8 +555,18 @@ end;
 function TProvedorRJ.GeraEnvelopeGerarNFSe(URLNS: String; CabMsg, DadosMsg,
   DadosSenha: AnsiString): AnsiString;
 begin
- Result := '';
- raise Exception.Create( 'Opção não implementada para este provedor.' );
+ result := '<?xml version="1.0" encoding="UTF-8"?>' +
+           '<s:Envelope xmlns:s="http://schemas.xmlsoap.org/soap/envelope/" ' +
+                       'xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" ' +
+                       'xmlns:xsd="http://www.w3.org/2001/XMLSchema">' +
+            '<s:Body>' +
+             '<GerarNfseRequest xmlns="' + URLNS + '/">' +
+              '<inputXML>' +
+                StringReplace(StringReplace(DadosMsg, '<', '&lt;', [rfReplaceAll]), '>', '&gt;', [rfReplaceAll]) +
+              '</inputXML>' +
+             '</GerarNfseRequest>' +
+            '</s:Body>' +
+           '</s:Envelope>';
 end;
 
 function TProvedorRJ.GetSoapAction(Acao: TnfseAcao; NomeCidade: String): String;
@@ -563,7 +578,7 @@ begin
    acConsNFSeRps: Result := 'http://notacarioca.rio.gov.br/ConsultarNfsePorRps';
    acConsNFSe:    Result := 'http://notacarioca.rio.gov.br/ConsultarNfse';
    acCancelar:    Result := 'http://notacarioca.rio.gov.br/CancelarNfse';
-   acGerar:       Result := '';
+   acGerar:       Result := 'http://notacarioca.rio.gov.br/GerarNfse';
  end;
 end;
 
@@ -576,7 +591,7 @@ begin
    acConsNFSeRps: Result := SeparaDados( RetornoWS, 'outputXML' );
    acConsNFSe:    Result := SeparaDados( RetornoWS, 'outputXML' );
    acCancelar:    Result := SeparaDados( RetornoWS, 'outputXML' );
-   acGerar:       Result := '';
+   acGerar:       Result := SeparaDados( RetornoWS, 'outputXML' );
  end;
 end;
 
@@ -599,12 +614,14 @@ function TProvedorRJ.Gera_DadosMsgEnviarSincrono(Prefixo3, Prefixo4,
   Identificador, NameSpaceDad, VersaoDados, VersaoXML, NumeroLote, CNPJ,
   IM, QtdeNotas: String; Notas, TagI, TagF: AnsiString): AnsiString;
 begin
+ raise Exception.Create( 'Opção não implementada para este provedor.' );
  Result := '';
 end;
 
 function TProvedorRJ.GeraEnvelopeRecepcionarSincrono(URLNS: String; CabMsg,
   DadosMsg, DadosSenha: AnsiString): AnsiString;
 begin
+ raise Exception.Create( 'Opção não implementada para este provedor.' );
  Result := '';
 end;
 
