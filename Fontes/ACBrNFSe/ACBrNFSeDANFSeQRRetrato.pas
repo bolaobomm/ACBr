@@ -450,6 +450,10 @@ begin
             Municipio1 := 'em São Leopoldo';
             Municipio2 := 'fora de São Leopoldo';
            end;
+  4303103: begin  // Cachoeirinha/RS
+            Municipio1 := 'no Municipio de Cachoeirinha';
+            Municipio2 := 'fora do Municipio de Cachoeirinha';
+           end;
   else begin
         Municipio1 := 'no município';
         Municipio2 := 'fora do município';
