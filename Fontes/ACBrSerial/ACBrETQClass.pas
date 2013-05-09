@@ -67,6 +67,7 @@ TACBrETQClass = class
     procedure SetAtivo(const Value: Boolean);
     procedure SetTemperatura(const Value: Integer);
     procedure SetAvanco(const Value: Integer);
+    procedure SetAdicionarComandoP(const Value: Boolean);
   protected
     fpDevice  : TACBrDevice ;
     fpAtivo   : Boolean ;
@@ -74,6 +75,7 @@ TACBrETQClass = class
     fpListaCmd: TStringList;
     fpCmd: AnsiString;
     fpLimparMemoria : Boolean;
+    FpAdicionarComandoP: Boolean;
 
     procedure SetUnidade(const AValue: TACBrETQUnidade); virtual;
     procedure SetDPI(const AValue : TACBrETQDPI) ; virtual;
@@ -88,6 +90,7 @@ TACBrETQClass = class
     property Unidade: TACBrETQUnidade read FUnidade write SetUnidade;
     property DPI: TACBrETQDPI read FDPI write SetDPI;
     property LimparMemoria: Boolean read fpLimparMemoria write fpLimparMemoria ;
+    property AdicionarComandoP: Boolean read FpAdicionarComandoP write SetAdicionarComandoP;
 
     constructor Create(AOwner: TComponent);
     destructor Destroy  ; override;
@@ -312,6 +315,11 @@ procedure TACBrETQClass.CarregarImagem(AStream : TStream; NomeImagem: String;
    Flipped : Boolean; Tipo: String);
 begin
   raise Exception.Create(ACBrStr('Função CarregarImagem não implementada em: ') + ModeloStr);
+end;
+
+procedure TACBrETQClass.SetAdicionarComandoP(const Value: Boolean);
+begin
+  FpAdicionarComandoP := Value;
 end;
 
 end.

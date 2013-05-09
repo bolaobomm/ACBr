@@ -84,6 +84,8 @@ TACBrETQ = class( TACBrComponent )
     procedure SetUnidade(const AValue: TACBrETQUnidade);
     function GetDPI : TACBrETQDPI ;
     procedure SetDPI(const AValue : TACBrETQDPI) ;
+    function GetAdicionarComandoP: Boolean;
+    procedure SetAdicionarComandoP(const Value: Boolean);
   protected
 
   public
@@ -128,6 +130,9 @@ TACBrETQ = class( TACBrComponent )
       default 0 ;
     property LimparMemoria: Boolean read GetLimparMemoria write SetLimparMemoria
       default True ;
+
+   property AdicionarComandoP: Boolean read GetAdicionarComandoP write SetAdicionarComandoP
+     default False;
 
     { Instancia do Componente ACBrDevice, será passada para fsETQ.create }
     property Device : TACBrDevice read fsDevice ;
@@ -404,6 +409,16 @@ end;
 procedure TACBrETQ.SetDPI(const AValue : TACBrETQDPI) ;
 begin
   fsETQ.DPI := AValue;
+end;
+
+function TACBrETQ.GetAdicionarComandoP: Boolean;
+begin
+  Result := fsETQ.AdicionarComandoP
+end;
+
+procedure TACBrETQ.SetAdicionarComandoP(const Value: Boolean);
+begin
+ fsETQ.AdicionarComandoP := Value;
 end;
 
 end.

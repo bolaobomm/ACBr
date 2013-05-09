@@ -153,6 +153,12 @@ begin
          TipoVideo                                           + ',' +
          Texto ;
 
+  if AdicionarComandoP then
+  begin
+    Cmd := Cmd +SLineBreak+'P1';
+    Cmd := Cmd +SLineBreak+'N';
+  end;
+
   ListaCmd.Add(Cmd);
 end;
 
