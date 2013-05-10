@@ -563,7 +563,8 @@ begin
 
    AXML := copy(AXML, 1, pos('</'+ APrefixo3 + EnviarLoteRps + '>', AXML) - 1);
 
-   if (URI = '') or (AProvedor = proRecife)
+   // Alterado por Italo em 10/05/2013 - incluido na lista o proRJ
+   if (URI = '') or (AProvedor in [proRecife, proRJ])
     then AID := '>'
     else AID := ' ' + Identificador + '="AssLote_' + URI + '">';
 
@@ -624,7 +625,8 @@ begin
       end
       else URI := '';
 
-     if (URI = '') or (AProvedor in [profintelISS, proRecife, proNatal])
+     // Alterado por Italo em 10/05/2013 - incluido na lista o proRJ
+     if (URI = '') or (AProvedor in [profintelISS, proRecife, proNatal, proRJ])
       then AID := '>'
       else AID := ' ' + Identificador + '="Ass_' + URI + '">';
 
@@ -1340,7 +1342,7 @@ begin
  AXML := StringReplace( AXML, 'ns2:', '', [rfReplaceAll] );
  AXML := StringReplace( AXML, 'ns3:', '', [rfReplaceAll] );
  AXML := StringReplace( AXML, 'ns4:', '', [rfReplaceAll] );
- AXML := StringReplace( AXML, 'ns5:', '', [rfReplaceAll] );
+ AXML := StringReplace( AXML, 'ns5:', '', [rfReplaceAll] );  //Incluido por jrJunior82 09/05/2013
  AXML := StringReplace( AXML, 'tc:', '', [rfReplaceAll] );
  // Incluido por Ricardo Miranda em 14/03/2013
  AXML := StringReplace( AXML, 'ii:', '', [rfReplaceAll] );

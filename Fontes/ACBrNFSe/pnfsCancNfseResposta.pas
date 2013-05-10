@@ -16,6 +16,8 @@ type
   private
     FPedido: TPedidoCancelamento;
     FDataHora: TDateTime;
+    FSucesso: String;
+    FMsgCanc: String;
     FMsgRetorno : TMsgRetornoCancCollection;
     procedure SetMsgRetorno(Value: TMsgRetornoCancCollection);
   public
@@ -23,6 +25,8 @@ type
     destructor Destroy; override;
     property Pedido: TPedidocancelamento           read FPedido     write FPedido;
     property DataHora: TDateTime                   read FDataHora   write FDataHora;
+    property Sucesso: String                       read FSucesso    write FSucesso;
+    property MsgCanc: String                       read FMsgCanc    write FMsgCanc;
     property MsgRetorno: TMsgRetornoCancCollection read FMsgRetorno write SetMsgRetorno;
   end;
 
@@ -159,7 +163,11 @@ begin
     if (leitor.rExtrai(1, 'CancelarNfseResposta') <> '')
      then begin
       if AnsiLowerCase(Leitor.rCampo(tcStr, 'Sucesso')) = 'true'
-       then infCanc.DataHora := Leitor.rCampo(tcDatHor, 'DataHora')
+       then begin
+         infCanc.DataHora := Leitor.rCampo(tcDatHor, 'DataHora');
+         InfCanc.Sucesso  := Leitor.rCampo(tcStr,    'Sucesso');  //Incluido por jrJunior82 09/05/2013
+         InfCanc.MsgCanc  := Leitor.rCampo(tcStr,    'Mensagem'); //Incluido por jrJunior82 09/05/2013
+       end
        else infCanc.DataHora := 0;
 
       InfCanc.FPedido.InfID.ID           := '';
