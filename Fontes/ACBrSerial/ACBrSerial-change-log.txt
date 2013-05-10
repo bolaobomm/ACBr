@@ -97,6 +97,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+Data: 09/05/2013
+-- ACBrBal --
+[-] Alterado tempo de sleep após envio de comando de LePeso para corrigir AV.
+    http://www.projetoacbr.com.br/forum/index.php?/topic/10080-access-violation-ao-ler-peso-da-balança-urano-pop-z-us-202-pop-light
+
 Data: 01/04/2013
 -- ACBrECFEscECF --
 [+] Criado mecanismo de memória temporária em disco, para manter o valor das
