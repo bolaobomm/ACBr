@@ -63,15 +63,22 @@ Const
   ipiOutrasSaidas              = '99' ; // Outras saídas
 
   /// Código da Situação Tributária referente ao PIS.
-  pisValorAliquotaNormal        = '01' ; // Operação Tributável (base de cálculo = valor da operação alíquota normal (cumulativo/não cumulativo)).
-  pisValorAliquotaDiferenciada  = '02' ; // Operação Tributável (base de cálculo = valor da operação (alíquota diferenciada)).
-  pisQtdeAliquotaUnidade        = '03' ; // Operação Tributável (base de cálculo = quantidade vendida x alíquota por unidade de produto).
-  pisMonofaticaAliquotaZero     = '04' ; // Operação Tributável (tributação monofásica (alíquota zero)).
-  pisAliquotaZero               = '06' ; // Operação Tributável (alíquota zero).
-  pisIsentaContribuicao         = '07' ; // Operação Isenta da Contribuição.
-  pisSemIncidenciaContribuicao  = '08' ; // Operação Sem Incidência da Contribuição.
-  pisSuspensaoContribuicao      = '09' ; // Operação com Suspensão da Contribuição.
-  pisOutrasOperacoes            = '99' ; // Outras Operações,
+  pisValorAliquotaNormal                = '01' ; // Saída: Operação Tributável (base de cálculo = valor da operação alíquota normal (cumulativo/não cumulativo)).
+  pisValorAliquotaDiferenciada          = '02' ; // Operação Tributável (base de cálculo = valor da operação (alíquota diferenciada)).
+  pisQtdeAliquotaUnidade                = '03' ; // Operação Tributável (base de cálculo = quantidade vendida x alíquota por unidade de produto).
+  pisMonofaticaAliquotaZero             = '04' ; // Operação Tributável (tributação monofásica (alíquota zero)).
+  pisAliquotaZero                       = '06' ; // Operação Tributável (alíquota zero).
+  pisIsentaContribuicao                 = '07' ; // Operação Isenta da Contribuição.
+  pisSemIncidenciaContribuicao          = '08' ; // Operação Sem Incidência da Contribuição.
+  pisSuspensaoContribuicao              = '09' ; // Operação com Suspensão da Contribuição.
+  // 13/05/13 modificado: entradas
+  pisOperCredExcRecTribMercInt          = '50' ; // Entrada: Operação Tributável (base de cálculo = valor da operação alíquota normal (cumulativo/não cumulativo)).
+  pisCredPresAquiExcRecTribMercInt      = '60' ;
+  pisOperAquiComIsensao                 = '71' ; // Operação de Aquisição com Isenção
+  pisOperAquiComSuspensao               = '72' ; // Operação de Aquisição com Suspensão
+  pisOperAquiAliquotaZero               = '73' ; // Operação de Aquisição a Alíquota Zero
+  pisOperAqui_SemIncidenciaContribuicao = '74' ; // Operação de Aquisição sem Incidência da Contribuição
+  pisOutrasOperacoes                    = '99' ; // Outras Operações,
 
   /// Código da Situação Tributária referente ao COFINS.
   cofinsValorAliquotaNormal       = '01' ; // Operação Tributável (base de cálculo = valor da operação alíquota normal (cumulativo/não cumulativo)).
@@ -82,7 +89,16 @@ Const
   cofinsIsentaContribuicao        = '07' ; // Operação Isenta da Contribuição.
   cofinsSemIncidenciaContribuicao = '08' ; // Operação Sem Incidência da Contribuição.
   cofinsSuspensaoContribuicao     = '09' ; // Operação com Suspensão da Contribuição.
-  cofinsOutrasOperacoes           = '99' ; // Outras Operações,
+
+  // 13/05/13 modificado: entradas
+  cofinsOperCredExcRecTribMercInt          = '50' ; // Entrada: Operação Tributável (base de cálculo = valor da operação alíquota normal (cumulativo/não cumulativo)).
+  cofinsCredPresAquiExcRecTribMercInt      = '60' ;
+  cofinsOperAquiComIsensao                 = '71' ; // Operação de Aquisição com Isenção
+  cofinsOperAquiComSuspensao               = '72' ; // Operação de Aquisição com Suspensão
+  cofinsOperAquiAliquotaZero               = '73' ; // Operação de Aquisição a Alíquota Zero
+  cofinsOperAqui_SemIncidenciaContribuicao = '74' ; // Operação de Aquisição sem Incidência da Contribuição
+  cofinsOutrasOperacoes                    = '99' ; // Outras Operações,
+
 
 type
   /// Indicador de movimento - TOpenBlocos
