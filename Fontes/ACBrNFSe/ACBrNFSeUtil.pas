@@ -564,7 +564,7 @@ begin
    AXML := copy(AXML, 1, pos('</'+ APrefixo3 + EnviarLoteRps + '>', AXML) - 1);
 
    // Alterado por Italo em 10/05/2013 - incluido na lista o proRJ
-   if (URI = '') or (AProvedor in [proRecife, proRJ])
+   if (URI = '') or (AProvedor in [proRecife, proRJ, proAbaco])
     then AID := '>'
     else AID := ' ' + Identificador + '="AssLote_' + URI + '">';
 

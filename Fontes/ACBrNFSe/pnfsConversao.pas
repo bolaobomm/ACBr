@@ -794,6 +794,7 @@ begin
   5107958  // Tangara da Serra/MT
          : Provedor := 'FISSLEX';
 
+  3201209, // Cachoeiro De Itapemirim/ES
   4304606, // Canoas/RS
   5107602  // Rondonopolis/MT
          : Provedor := 'Abaco';

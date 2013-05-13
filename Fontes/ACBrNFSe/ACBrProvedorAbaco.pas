@@ -133,6 +133,10 @@ var
  ConfigURL: TConfigURL;
 begin
  case ACodCidade of
+  3201209: begin // Cachoeiro De Itapemirim/ES
+            ConfigURL.HomNomeCidade := 'cachoeiro';
+            ConfigURL.ProNomeCidade := 'cachoeiro';
+           end;
   4304606: begin // Canoas/RS
             ConfigURL.HomNomeCidade := 'canoas';
             ConfigURL.ProNomeCidade := 'canoas';
