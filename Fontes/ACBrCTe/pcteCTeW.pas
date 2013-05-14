@@ -574,7 +574,7 @@ begin
          end;
    thNoIntervalo: begin
        Gerador.wGrupo('noInter', '#084');
-       Gerador.wCampo(tcStr, '#085', 'tphor ', 01, 01, 1, TpHorarioIntervaloToStr(CTe.Compl.Entrega.noInter.tpHor), '');
+       Gerador.wCampo(tcStr, '#085', 'tpHor ', 01, 01, 1, TpHorarioIntervaloToStr(CTe.Compl.Entrega.noInter.tpHor), '');
        Gerador.wCampo(tcStr, '#086', 'hIni  ', 08, 08, 1, TimeToStr(CTe.Compl.Entrega.noInter.hIni), '');
        Gerador.wCampo(tcStr, '#087', 'hFim  ', 08, 08, 1, TimeToStr(CTe.Compl.Entrega.noInter.hFim), '');
        Gerador.wGrupo('/noInter');
