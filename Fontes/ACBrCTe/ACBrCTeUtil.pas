@@ -94,8 +94,7 @@ type
   CTeUtil = class
   private
     // Estados Emissores pela Sefaz Virtual RS (Rio Grande do Sul):
-    // AC, AL, AP, AM, BA, CE, DF, ES, GO, MA, PA, PB, PE, PI, RJ, RN,
-    // RO, RR, SC, SE, TO.
+    // AC, AL, AM, BA, CE, DF, ES, GO, MA, PA, PB, PI, RJ, RN, RO, SC, SE, TO.
     class function GetURLSVRS(AAmbiente: Integer; ALayOut: TLayOut): WideString;
 
     // Incluido por Italo em 03/10/2012
@@ -396,7 +395,7 @@ class function CTeUtil.GetURLAP(AAmbiente: Integer; ALayOut: TLayOut): WideStrin
 begin
   case ALayOut of
    LayCTeCadastro: Result := DFeUtil.SeSenao(AAmbiente = 1, '', '');
-   else Result := CTeUtil.GetURLSVRS(AAmbiente, ALayOut);
+   else Result := CTeUtil.GetURLSP(AAmbiente, ALayOut);
   end;
 end;
 
@@ -484,8 +483,6 @@ end;
 // Incluido por Italo em 03/10/2012
 class function CTeUtil.GetURLPE(AAmbiente: Integer; ALayOut: TLayOut): WideString;
 begin
-//  Result := DFeUtil.GetURLSP(AAmbiente, ALayOut);
-
   case ALayOut of
    LayCTeCadastro: Result := DFeUtil.SeSenao(AAmbiente = 1, 'https://nfe.sefaz.pe.gov.br/nfe-service/services/CadConsultaCadastro2', '');
    else Result := CTeUtil.GetURLSP(AAmbiente, ALayOut);
@@ -534,7 +531,7 @@ class function CTeUtil.GetURLRR(AAmbiente: Integer; ALayOut: TLayOut): WideStrin
 begin
   case ALayOut of
    LayCTeCadastro: Result := DFeUtil.SeSenao(AAmbiente = 1, '', '');
-   else Result := CTeUtil.GetURLSVRS(AAmbiente, ALayOut);
+   else Result := CTeUtil.GetURLSP(AAmbiente, ALayOut);
   end;
 end;
 
@@ -564,7 +561,6 @@ begin
    else Result := CTeUtil.GetURLSVRS(AAmbiente, ALayOut);
   end;
 end;
-
 
 class function CTeUtil.GetURLMG(AAmbiente: Integer;
   ALayOut: TLayOut): WideString;
