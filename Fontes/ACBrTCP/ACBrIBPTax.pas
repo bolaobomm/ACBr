@@ -171,7 +171,6 @@ begin
   Item := TStringList.Create;
   try
     Item.Delimiter := ';';
-    Item.StrictDelimiter := True;
 
     // primeira linha contem os cabecalhos de campo e versão do arquivo
     Item.DelimitedText := Arquivo.Strings[0];
