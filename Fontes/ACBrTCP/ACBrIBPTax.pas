@@ -204,40 +204,38 @@ Var
   I, PosInicial, PosFinal: Integer;
   HtmlRetorno: String;
 begin
+  Result := False;
+
+  StreamHTML := TMemoryStream.Create;
   try
-    StreamHTML := TMemoryStream.Create;
-    try
-      // descobrir primeiro o nome da tabela
-      HTTPGet('http://www.impostometro.com.br/lei12741/ibptax');
-      HtmlRetorno := '';
-      for I := 0 to RespHTTP.Count - 1 do
+    // descobrir primeiro o nome da tabela
+    HTTPGet('http://www.impostometro.com.br/lei12741/ibptax');
+    HtmlRetorno := '';
+    for I := 0 to RespHTTP.Count - 1 do
+    begin
+      if Pos('.csv', RespHTTP.Strings[I]) > 0 then
       begin
-        if Pos('.csv', RespHTTP.Strings[I]) > 0 then
-        begin
-          HtmlRetorno := RespHTTP.Strings[I];
-          Break;
-        end;
+        HtmlRetorno := RespHTTP.Strings[I];
+        Break;
       end;
-
-      Result := Trim(HtmlRetorno) <> '';
-      if Result then
-      begin
-        PosInicial   := Pos('http:', HtmlRetorno);
-        PosFinal     := (Pos('.csv', HtmlRetorno) + 4) - PosInicial;
-        FURLDownload := Copy(HtmlRetorno, PosInicial, PosFinal);
-
-        // baixar a tabela
-        HTTPGet( FURLDownload );
-        FArquivo.Text := RespHTTP.Text;
-        Result := True;
-
-        PopularItens;
-      end;
-    finally
-      StreamHTML.Free;
     end;
-  except
-    Result := False;
+
+    Result := Trim(HtmlRetorno) <> '';
+    if Result then
+    begin
+      PosInicial   := Pos('http:', HtmlRetorno);
+      PosFinal     := (Pos('.csv', HtmlRetorno) + 4) - PosInicial;
+      FURLDownload := Copy(HtmlRetorno, PosInicial, PosFinal);
+
+      // baixar a tabela
+      HTTPGet( FURLDownload );
+      FArquivo.Text := RespHTTP.Text;
+      Result := True;
+
+      PopularItens;
+    end;
+  finally
+    StreamHTML.Free;
   end;
 end;
 
