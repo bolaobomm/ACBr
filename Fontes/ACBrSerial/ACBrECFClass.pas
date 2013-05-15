@@ -69,6 +69,17 @@ type
 
 { TACBrECFRodape }
 
+TACBrECFRodapeImposto = class( TPersistent )
+  private
+    fsValorAproximado: Double;
+    fsFonte: String;
+    fsTexto: String;
+  published
+    property Texto: String read fsTexto write fsTexto;
+    property ValorAproximado: Double read fsValorAproximado write fsValorAproximado stored false;
+    property Fonte: String read fsFonte  write fsFonte  stored false;
+end;
+
 TACBrECFRodapeNotaLegalDF = class( TPersistent )
   private
     fsProgramaDeCredito: Boolean;
@@ -111,6 +122,7 @@ TACBrECFRodape = class( TPersistent )
     fsCupomMania: Boolean;
     fsNotaLegalDF: TACBrECFRodapeNotaLegalDF;
     fsParaibaLegal: Boolean;
+    fsImposto: TACBrECFRodapeImposto;
     procedure SetMD5(AValue : String) ;
   public
     constructor Create;
@@ -127,6 +139,7 @@ TACBrECFRodape = class( TPersistent )
     property MinasLegal  : Boolean read fsMinasLegal  write fsMinasLegal default False;
     property ParaibaLegal: Boolean read fsParaibaLegal write fsParaibaLegal default False;
     property NotaLegalDF : TACBrECFRodapeNotaLegalDF read fsNotaLegalDF write fsNotaLegalDF;
+    property Imposto     : TACBrECFRodapeImposto read fsImposto write fsImposto;
 end;
 
 { Definindo novo tipo para armazenar Aliquota de ICMS }
@@ -4509,6 +4522,8 @@ begin
   fsRestaurante := TACBrECFRodapeRestaurante.Create;
   fsRestaurante.Imprimir := False;
 
+  fsImposto := TACBrECFRodapeImposto.Create;
+
   Self.Clear;
 end;
 
@@ -4516,6 +4531,7 @@ destructor TACBrECFRodape.Destroy;
 begin
   FreeAndNil(fsNotaLegalDF);
   FreeAndNil(fsRestaurante);
+  FreeAndNil(fsImposto);
   inherited;
 end;
 
@@ -4533,6 +4549,9 @@ begin
   // restante dos dados do nota legal DF não deve limpar
   fsNotaLegalDF.fsValorICMS := 0.00;
   fsNotaLegalDF.fsValorISS  := 0.00;
+
+  fsImposto.ValorAproximado := 0.00;
+  fsImposto.Fonte := '';
 end;
 
 end.

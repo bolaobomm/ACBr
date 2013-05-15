@@ -386,6 +386,7 @@ TACBrECF = class( TACBrComponent )
     function GetRodape: String;
     function GetRodapeRestaurante: String;
     function GetRodapeUF: String;
+    function GetRodapeImposto: String;
     function GetOnChequeEstado: TACBrECFOnChequeEstado;
     procedure SetOnChequeEstado(const Value: TACBrECFOnChequeEstado);
   protected
@@ -2983,6 +2984,7 @@ begin
 
   Result := Trim(Result) + sLineBreak + Trim(GetRodapeRestaurante);
   Result := Trim(Result) + sLineBreak + Trim(GetRodapeUF);
+  Result := Trim(Result) + sLineBreak + Trim(GetRodapeImposto);
   Result := Trim(Result);
 end;
 
@@ -3095,6 +3097,38 @@ begin
   end;
 
   Result := ACBrStr( Rodape );
+end;
+
+function TACBrECF.GetRodapeImposto: String;
+var
+  VlImposto: Double;
+  VlPercentual: Double;
+begin
+  Result := '';
+  if InfoRodapeCupom.Imposto.ValorAproximado > 0 then
+  begin
+    // valor aproximado informado pelo usuário
+    VlImposto := InfoRodapeCupom.Imposto.ValorAproximado;
+
+    // valor aproximado percentual
+    VlPercentual := RoundTo(VlImposto / Subtotal, -2) * 100;
+
+    // impressão do texto
+    // se o usuário informou a propriedade Texto, utilizar
+    // se não imprimir como no IBPT
+    if Trim(InfoRodapeCupom.Imposto.Texto) <> '' then
+    begin
+      Result := Format(InfoRodapeCupom.Imposto.Texto, [VlImposto, VlPercentual]);
+    end
+    else
+    begin
+      Result :=
+        'Val.Aprox.Impostos R$' +
+        FormatFloat(',#0.00', VlImposto) +
+        FormatFloat('(,#0.00%)', VlPercentual) +
+        ' Fonte: ' + InfoRodapeCupom.Imposto.Fonte;
+    end;
+  end;
 end;
 
 procedure TACBrECF.Sangria(Valor: Double; Obs: AnsiString;

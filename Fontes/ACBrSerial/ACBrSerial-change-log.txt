@@ -111,6 +111,11 @@ Data: 01/04/2013
 
 [-] Correção no retorno de GetTotalPago   (por: DSA)
 
+Data: 15/05/2013
+-- ACBrECF --
+[+] Adicionado campos ao rodape para informar o valor dos impostos conforme 
+    lei de transparência dos impostos, vejam no demo do ACBrECF como utilizar
+
 Data: 17/03/2013
 -- ACBrECF --
 [+] Adicionada funcionalidade de Impressão de Rodapé de Bar e Restaurantes
