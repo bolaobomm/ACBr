@@ -37,6 +37,10 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+15/05/2013
+-- ACBrIBPTax --
+[+] Adicionado componente para baixar e manipular a tabela de impostos do IBPT
+
 01/04/2013
 -- ACBrCEP --
 [*] Reformatação de Fontes na classe do provedor ByJG (por: DSA)

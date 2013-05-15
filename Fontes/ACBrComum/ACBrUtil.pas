@@ -192,6 +192,8 @@ function CountStr(const AString, SubStr : AnsiString ) : Integer ;
 Function Poem_Zeros(const Texto : AnsiString; const Tamanho : Integer) : AnsiString;
 Function IntToStrZero(const NumInteiro : Int64; Tamanho : Integer) : AnsiString;
 
+function FloatToString(const AValue: Double): String;
+
 Function StringToFloat( NumString : String ) : Double ;
 Function StringToFloatDef( const NumString : String ;
    const DefaultValue : Double ) : Double ;
@@ -958,7 +960,7 @@ end ;
 Function StringToFloat( NumString : String ) : Double ;
 begin
   NumString := Trim( NumString ) ;
-  
+
   if DecimalSeparator <> '.' then
      NumString := StringReplace(NumString,'.',DecimalSeparator,[rfReplaceAll]) ;
 
@@ -967,6 +969,19 @@ begin
 
   Result := StrToFloat(NumString)
 end ;
+
+{-----------------------------------------------------------------------------
+  Converte um Double para string com o decimal separator sendo o .(ponto)
+ ---------------------------------------------------------------------------- }
+function FloatToString(const AValue: Double): String;
+begin
+  Result :=
+    StringReplace(
+      StringReplace(FloatToStr(AValue),
+        '.', '', [rfReplaceAll]),
+      ',', '.', [rfReplaceAll]
+    );
+end;
 
 {-----------------------------------------------------------------------------
   Converte uma <DateTimeString> para TDateTime, semelhante ao StrToDateTimeDef,
