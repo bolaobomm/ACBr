@@ -3111,7 +3111,7 @@ begin
     VlImposto := InfoRodapeCupom.Imposto.ValorAproximado;
 
     // valor aproximado percentual
-    VlPercentual := RoundTo(VlImposto / Subtotal, -2) * 100;
+    VlPercentual := VlImposto / Subtotal * 100;
 
     // impressão do texto
     // se o usuário informou a propriedade Texto, utilizar
