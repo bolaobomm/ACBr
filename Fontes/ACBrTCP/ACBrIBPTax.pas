@@ -105,7 +105,8 @@ type
     function AbrirTabela(const AFileName: TFileName): Boolean;
     procedure Exportar(const AArquivo: String; ATipo: TACBrIBPTaxExporta); overload;
     procedure Exportar(const AArquivo, ADelimitador: String); overload;
-    function Procurar(const ACodigoNCM: String): TACBrIBPTaxRegistro;
+    function Procurar(const ACodigo: String; var ex: String;
+      var tabela: Integer; var aliqNac, aliqImp: Double ): Boolean;
 
     property Itens: TACBrIBPTaxRegistros read FItens;
   published
@@ -114,10 +115,32 @@ type
     property Arquivo: TStringList read FArquivo write FArquivo;
   end;
 
+  function TabelaToString(const ATabela: TACBrIBPTaxTabela): String;
+  function StringToTabela(const ATabela: String): TACBrIBPTaxTabela;
+
 implementation
 
 uses
   Math, StrUtils;
+
+function TabelaToString(const ATabela: TACBrIBPTaxTabela): String;
+begin
+  case ATabela of
+    tabNCM: Result := '0';
+    tabNBS: Result := '1';
+  end;
+end;
+
+function StringToTabela(const ATabela: String): TACBrIBPTaxTabela;
+begin
+  if ATabela = '0' then
+    Result := tabNCM
+  else
+  if ATabela = '1' then
+    Result := tabNBS
+  else
+    raise EACBrIBPTax.CreateFmt('Tipo de tabela desconhecido "%s".', [ATabela]);
+end;
 
 { TACBrIBPTaxRegistros }
 
@@ -204,8 +227,6 @@ Var
   I, PosInicial, PosFinal: Integer;
   HtmlRetorno: String;
 begin
-  Result := False;
-
   StreamHTML := TMemoryStream.Create;
   try
     // descobrir primeiro o nome da tabela
@@ -255,9 +276,28 @@ begin
   Result := Itens.Count > 0;
 end;
 
-function TACBrIBPTax.Procurar(const ACodigoNCM: String): TACBrIBPTaxRegistro;
+function TACBrIBPTax.Procurar(const ACodigo: String; var ex: String;
+  var tabela: Integer; var aliqNac, aliqImp: Double ): Boolean;
+var
+  I: Integer;
 begin
+  if Itens.Count <= 0 then
+    EACBrIBPTax.Create('Tabela de itens ainda não foi aberta!');
 
+  Result := False;
+  for I := 0 to Itens.Count - 1 do
+  begin
+    if Trim(ACodigo) = Trim(Itens[I].NCM) Then
+     begin
+       ex      := Itens[I].Excecao ;
+       tabela  := Integer(Itens[I].Tabela) ;
+       aliqNac := Itens[I].AliqNacional ;
+       aliqImp := Itens[I].AliqImportado ;
+
+       Result := True;
+       Exit;
+     end;
+  end;
 end;
 
 procedure TACBrIBPTax.Exportar(const AArquivo: String; ATipo: TACBrIBPTaxExporta);

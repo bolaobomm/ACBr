@@ -62,6 +62,7 @@ object Form1: TForm1
       Height = 26
       Caption = 'Pesquisar...'
       TabOrder = 1
+      OnClick = btnPesquisarClick
     end
   end
   object rgTipoExportacao: TRadioGroup

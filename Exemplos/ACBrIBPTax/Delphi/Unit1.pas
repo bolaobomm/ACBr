@@ -46,6 +46,7 @@ type
     procedure btAbrirClick(Sender: TObject);
     procedure sbArquivoClick(Sender: TObject);
     procedure btProxyClick(Sender: TObject);
+    procedure btnPesquisarClick(Sender: TObject);
   private
 
   public
@@ -181,6 +182,26 @@ begin
     [mbOK],
     0
   );
+end;
+
+procedure TForm1.btnPesquisarClick(Sender: TObject);
+var
+  ex: String;
+  tabela: Integer;
+  aliqNac, aliqImp: Double;
+begin
+  if ACBrIBPTax1.Procurar(edNCM.Text, ex, tabela, aliqNac, aliqImp) then
+  begin
+    ShowMessage(
+      'Código: '   + edNCM.Text  + sLineBreak +
+      'Exceção: '  + ex + sLineBreak +
+      'Tabela: '   + IntToStr(tabela) + sLineBreak +
+      'Aliq Nac: ' + FloatToStr(aliqNac) + sLineBreak +
+      'Aliq Imp: ' + FloatToStr(aliqImp)
+    );
+  end
+  else
+    showmessage('Código não encontrado!');
 end;
 
 procedure TForm1.btProxyClick(Sender: TObject);
