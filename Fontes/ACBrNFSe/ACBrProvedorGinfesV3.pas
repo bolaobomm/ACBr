@@ -639,13 +639,39 @@ end;
 function TProvedorGinfesV3.GetRetornoWS(Acao: TnfseAcao; RetornoWS: AnsiString): AnsiString;
 begin
  case Acao of
-   acRecepcionar: Result := SeparaDados( RetornoWS, 'return' );
-   acConsSit:     Result := SeparaDados( RetornoWS, 'return' );
-   acConsLote:    Result := SeparaDados( RetornoWS, 'return' );
-   acConsNFSeRps: Result := SeparaDados( RetornoWS, 'return' );
-   acConsNFSe:    Result := SeparaDados( RetornoWS, 'return' );
-   acCancelar:    Result := SeparaDados( RetornoWS, 'return' );
-   acGerar:       Result := '';
+   acRecepcionar: begin
+                   Result := SeparaDados( RetornoWS, 'return' );
+                   if Result = ''
+                    then Result := SeparaDados( RetornoWS, 'EnviarLoteRpsResposta' );
+                  end;
+   acConsSit:     begin
+                   Result := SeparaDados( RetornoWS, 'return' );
+                   if Result = ''
+                    then Result := SeparaDados( RetornoWS, 'ConsultarSituacaoRpsResposta' );
+                  end;
+   acConsLote:    begin
+                   Result := SeparaDados( RetornoWS, 'return' );
+                   if Result = ''
+                    then Result := SeparaDados( RetornoWS, 'ConsultarLoteRpsResposta' );
+                  end;
+   acConsNFSeRps: begin
+                   Result := SeparaDados( RetornoWS, 'return' );
+                   if Result = ''
+                    then Result := SeparaDados( RetornoWS, 'ConsultarNfsePorRpsResposta' );
+                  end;
+   acConsNFSe:    begin
+                   Result := SeparaDados( RetornoWS, 'return' );
+                   if Result = ''
+                    then Result := SeparaDados( RetornoWS, 'ConsultarNfseResposta' );
+                  end;
+   acCancelar:    begin
+                   Result := SeparaDados( RetornoWS, 'return' );
+                   if Result = ''
+                    then Result := SeparaDados( RetornoWS, 'CancelarNfseResposta' );
+                  end;
+   acGerar:       begin
+                   Result := '';
+                  end;
  end;
 end;
 
