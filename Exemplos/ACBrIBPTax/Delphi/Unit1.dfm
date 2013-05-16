@@ -244,16 +244,18 @@ object Form1: TForm1
       86)
     object Label1: TLabel
       Left = 12
-      Top = 17
-      Width = 126
+      Top = 22
+      Width = 484
       Height = 13
-      Caption = 'Nome do Arquivo em disco'
+      Caption = 
+        'Nome do Arquivo em disco (Deixe em branco para baixar ou informe' +
+        ' o caminho do arquivo para abrir)'
       Color = clBtnFace
       ParentColor = False
     end
     object sbArquivo: TSpeedButton
       Left = 569
-      Top = 28
+      Top = 33
       Width = 32
       Height = 26
       Anchors = [akTop, akRight]
@@ -295,15 +297,15 @@ object Form1: TForm1
       OnClick = sbArquivoClick
     end
     object lVersao: TLabel
-      Left = 16
-      Top = 60
+      Left = 12
+      Top = 65
       Width = 37
       Height = 13
       Caption = 'Vers'#227'o:'
     end
     object edArquivo: TEdit
       Left = 12
-      Top = 33
+      Top = 38
       Width = 551
       Height = 21
       Anchors = [akLeft, akTop, akRight]
@@ -312,7 +314,7 @@ object Form1: TForm1
     end
     object btAbrir: TBitBtn
       Left = 607
-      Top = 28
+      Top = 33
       Width = 99
       Height = 26
       Anchors = [akTop, akRight]
@@ -357,7 +359,7 @@ object Form1: TForm1
     end
     object btDownload: TBitBtn
       Left = 712
-      Top = 28
+      Top = 33
       Width = 99
       Height = 26
       Anchors = [akTop, akRight]
