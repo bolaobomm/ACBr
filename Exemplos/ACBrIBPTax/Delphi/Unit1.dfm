@@ -17,9 +17,9 @@ object Form1: TForm1
   TextHeight = 13
   object DBGrid1: TDBGrid
     Left = 0
-    Top = 86
+    Top = 141
     Width = 822
-    Height = 308
+    Height = 253
     Align = alClient
     DataSource = dtsCadastro
     ReadOnly = True
@@ -236,16 +236,16 @@ object Form1: TForm1
     Left = 0
     Top = 0
     Width = 822
-    Height = 86
+    Height = 141
     Align = alTop
     Caption = 'Arquivo Tabela_CNIEE.bin'
     TabOrder = 4
     DesignSize = (
       822
-      86)
+      141)
     object Label1: TLabel
       Left = 12
-      Top = 22
+      Top = 67
       Width = 484
       Height = 13
       Caption = 
@@ -256,7 +256,7 @@ object Form1: TForm1
     end
     object sbArquivo: TSpeedButton
       Left = 569
-      Top = 33
+      Top = 78
       Width = 32
       Height = 26
       Anchors = [akTop, akRight]
@@ -299,14 +299,23 @@ object Form1: TForm1
     end
     object lVersao: TLabel
       Left = 12
-      Top = 65
+      Top = 110
       Width = 37
       Height = 13
       Caption = 'Vers'#227'o:'
     end
+    object Label2: TLabel
+      Left = 12
+      Top = 24
+      Width = 173
+      Height = 13
+      Caption = 'URL do arquivo .csv no padr'#227'o IBPT'
+      Color = clBtnFace
+      ParentColor = False
+    end
     object edArquivo: TEdit
       Left = 12
-      Top = 38
+      Top = 83
       Width = 551
       Height = 21
       Anchors = [akLeft, akTop, akRight]
@@ -314,8 +323,8 @@ object Form1: TForm1
       TabOrder = 1
     end
     object btAbrir: TBitBtn
-      Left = 607
-      Top = 33
+      Left = 569
+      Top = 38
       Width = 99
       Height = 26
       Anchors = [akTop, akRight]
@@ -359,8 +368,8 @@ object Form1: TForm1
       OnClick = btAbrirClick
     end
     object btDownload: TBitBtn
-      Left = 712
-      Top = 33
+      Left = 674
+      Top = 38
       Width = 99
       Height = 26
       Anchors = [akTop, akRight]
@@ -402,6 +411,15 @@ object Form1: TForm1
         21FF000000000000000000000000000000000000000000000000}
       TabOrder = 0
       OnClick = btDownloadClick
+    end
+    object edURL: TEdit
+      Left = 12
+      Top = 40
+      Width = 551
+      Height = 21
+      Anchors = [akLeft, akTop, akRight]
+      TabOrder = 3
+      Text = 'http://regys.com.br/arquivos/AcspDeOlhoNoImpostoIbptV.0.0.1.csv'
     end
   end
   object OpenDialog1: TOpenDialog

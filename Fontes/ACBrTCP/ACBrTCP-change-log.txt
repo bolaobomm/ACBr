@@ -37,9 +37,16 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+17/05/2013
+-- ACBrIBPTax --
+[+] Adicionada propriedade para informar o URL de onde o arquivo .csv vai ser 
+    baixado.
+    por: regys.silveira
+
 15/05/2013
 -- ACBrIBPTax --
 [+] Adicionado componente para baixar e manipular a tabela de impostos do IBPT
+    por: regys.silveira
 
 01/04/2013
 -- ACBrCEP --

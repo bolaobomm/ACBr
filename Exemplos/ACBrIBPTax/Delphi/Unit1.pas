@@ -38,6 +38,8 @@ type
     tmpCadastroAliqNacional: TFloatField;
     tmpCadastroAliqInternacional: TFloatField;
     ACBrIBPTax1: TACBrIBPTax;
+    Label2: TLabel;
+    edURL: TEdit;
     procedure FormCreate(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure btExportarClick(Sender: TObject);
@@ -67,6 +69,12 @@ procedure TForm1.btAbrirClick(Sender: TObject);
 var
   I: Integer;
 begin
+  // configurar a URL do arquivo para ser baixado
+  if Trim(edURL.Text) <> '' then
+    ACBrIBPTax1.URLDownload := Trim(edURL.Text);
+
+  // se o path do arquivo não for passado, então o componente vai tentar baixar
+  // a tabela no URL informado
   if ACBrIBPTax1.AbrirTabela(edArquivo.Text) then
   begin
     lVersao.Caption := 'Versão: ' + ACBrIBPTax1.VersaoArquivo;
@@ -95,6 +103,8 @@ end;
 procedure TForm1.btDownloadClick(Sender: TObject);
 begin
   tmpCadastro.Close;
+  ACBrIBPTax1.URLDownload := Trim(edURL.Text);
+
   if ACBrIBPTax1.DownloadTabela then
   begin
     MessageDlg('Download da tabela efetuado com sucesso.', mtInformation, [mbOK], 0);

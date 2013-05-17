@@ -2,6 +2,7 @@ program Project1;
 
 uses
   Forms,
+  MidasLib,
   Unit1 in 'Unit1.pas' {Form1},
   ProxyConfig in 'ProxyConfig.pas' {frProxyConfig};
 
