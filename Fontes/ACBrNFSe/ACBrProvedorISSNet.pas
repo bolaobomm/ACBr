@@ -159,6 +159,16 @@ begin
             ConfigURL.HomNomeCidade := 'aparecidadegoiania';
             ConfigURL.ProNomeCidade := 'aparecidadegoiania';
            end;
+  5003702: begin // Dourados/MS
+            ConfigURL.HomNomeCidade := 'dourados';//adicionado por ronnei
+            ConfigURL.ProNomeCidade := 'dourados';//adicionado por ronnei
+           end;
+
+  999: begin // Dourados/MS
+            ConfigURL.HomNomeCidade := 'dourados'; //adicionado por ronnei
+            ConfigURL.ProNomeCidade := 'dourados';//adicionado por ronnei
+           end;
+
  end;
 
  ConfigURL.HomRecepcaoLoteRPS    := 'http://www.issnetonline.com.br/webserviceabrasf/homologacao/servicos.asmx';

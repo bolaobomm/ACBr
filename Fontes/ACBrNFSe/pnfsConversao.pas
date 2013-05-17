@@ -638,7 +638,9 @@ begin
   5103403, // Cuiaba/MT
   5108402, // Várzea Grande/MT
   5201108, // Anapolis/GO
-  5201405  // Aparecida de Goiania/GO
+  5201405,  // Aparecida de Goiania/GO
+  5003702, //adicionado por Ronnei
+  999      //adicionado por ronnei, esse código é usado na homologação
          : Provedor := 'ISS.NET';
 
   2910800, // Feira de Santana/BA
@@ -794,7 +796,6 @@ begin
   5107958  // Tangara da Serra/MT
          : Provedor := 'FISSLEX';
 
-  3201209, // Cachoeiro De Itapemirim/ES
   4304606, // Canoas/RS
   5107602  // Rondonopolis/MT
          : Provedor := 'Abaco';
