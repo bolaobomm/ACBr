@@ -778,7 +778,10 @@ begin
                (CST = ipi50) or (CST = ipi99) then
             begin
                Connection.WriteFloatData('', DFeUtil.StringToFloatDef(floattostr(VIPI),0));
-               Connection.WriteFloatData('', DFeUtil.StringToFloatDef(floattostr(PIPI),0));
+               if(VIPI > 0) then
+                   Connection.WriteFloatData('', DFeUtil.StringToFloatDef(floattostr(PIPI),0))
+               else
+                   Connection.WriteFloatData('', 0);
             end
             else if (CST = ipi01) or (CST = ipi02) or (CST = ipi03) or
                     (CST = ipi04) or (CST = ipi51) or (CST = ipi52) or

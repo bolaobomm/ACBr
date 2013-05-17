@@ -648,6 +648,7 @@ begin
 
     ThreadSMTP.smtp.FullSSL := SSL;
     ThreadSMTP.smtp.AutoTLS := TLS;
+    ThreadSMTP.smtp.StartTLS;
 
     SetStatus( stNFeEmail );
     ThreadSMTP.Resume; // inicia a thread
