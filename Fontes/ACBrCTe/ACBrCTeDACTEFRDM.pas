@@ -294,10 +294,28 @@ begin
           FieldByName('pICMS').AsFloat := FCTe.Imp.ICMS.ICMS20.pICMS;
           FieldByName('vICMS').AsFloat := FCTe.Imp.ICMS.ICMS20.VICMS;
         end;
+      { Alterado por Jose Nilton Pace em 16/05/2013 }
+      cst40:
+        begin
+          FieldByName('TXTSITTRIB').AsString := CSTICMSToStr(cst40) + '-' + CSTICMSToStrTagPosText(cst40);
+        end;
+      { Alterado por Jose Nilton Pace em 16/05/2013 }
+      cst41:
+        begin
+          FieldByName('TXTSITTRIB').AsString := CSTICMSToStr(cst41) + '-' + CSTICMSToStrTagPosText(cst41);
+        end;
+
       cst45:
         begin
           FieldByName('TXTSITTRIB').AsString := CSTICMSToStr(cst45) + '-' + CSTICMSToStrTagPosText(cst45);
         end;
+
+      { Alterado por Jose Nilton Pace em 16/05/2013 }
+      cst51:
+        begin
+          FieldByName('TXTSITTRIB').AsString := CSTICMSToStr(cst51) + '-' + CSTICMSToStrTagPosText(cst51);
+        end;
+
       cst60:
         begin
           FieldByName('TXTSITTRIB').AsString := CSTICMSToStr(cst60) + '-' + CSTICMSToStrTagPosText(cst60);
@@ -367,8 +385,11 @@ begin
       Append;
       FieldByName('Nome').AsString := '';
       FieldByName('Valor').AsFloat := 0;
-      FieldByName('TotalServico').AsFloat := 0;
-      FieldByName('TotalReceber').AsFloat := 0;
+      { Alterado por Jose Nilton Pace em 16/05/2013 }
+//      FieldByName('TotalServico').AsFloat := 0;
+//      FieldByName('TotalReceber').AsFloat := 0;
+      FieldByName('TotalServico').AsFloat  := CTe.vPrest.vTPrest;
+      FieldByName('TotalReceber').AsFloat  := CTe.vPrest.vRec;
       Post;
     end;
   end;
@@ -429,8 +450,13 @@ begin
         FieldByName('Serie').AsString := serie;
         FieldByName('ChaveAcesso').AsString := '';
         FieldByName('NotaFiscal').AsString := nDoc;
+        { Alterado por Jose Nilton Pace em 16/05/2013 }
+        FieldByName('TextoImpressao').AsString := 'NF                  ' + DoctoRem + '                                        '+
+          serie+                                '  /  ' + FormatFloat('000000000', StrToInt(nDoc));
+(*
         FieldByName('TextoImpressao').AsString := 'NF                 ' + DoctoRem + '                                      ' +
           FormatFloat('000', StrToInt(serie)) + '  /  ' + FormatFloat('000000000', StrToInt(nDoc));
+*)
       end;
       Post;
     end;
@@ -445,10 +471,31 @@ begin
         FieldByName('Serie').AsString := '';
         FieldByName('ChaveAcesso').AsString := chave;
         FieldByName('NotaFiscal').AsString := '';
+        { Alterado por Jose Nilton Pace em 16/05/2013 }
+        FieldByName('TextoImpressao').AsString := 'NF-e                '+chave;
+(*
         FieldByName('TextoImpressao').AsString := 'NF-e            ' + chave;
+*)
       end;
       Post;
     end;
+
+    { Alterado por Jose Nilton Pace em 16/05/2013 }
+    for i := 0 to CTe.Rem.infOutros.Count - 1 do
+    begin
+      Append;
+      with FCTe.Rem.infOutros.Items[i] do
+      begin
+        FieldByName('tpDoc').AsString := 'Outros';
+        FieldByName('CNPJCPF').AsString := FCTe.Rem.CNPJCPF;
+        FieldByName('Serie').AsString := '';
+        FieldByName('ChaveAcesso').AsString := '';
+        FieldByName('NotaFiscal').AsString := '';
+        FieldByName('TextoImpressao').AsString := 'Outros              '+DoctoRem+'                                        '+nDoc;
+      end;
+      Post;
+    end;
+
     //
     cdsDadosNotasFiscais.RecordCount;
   end;
@@ -1251,7 +1298,11 @@ begin
           FieldByName('CEP').AsString := IntToStr(FCTe.Rem.EnderReme.CEP);
           FieldByName('CPais').AsString := IntToStr(FCTe.Rem.EnderReme.cPais);
           FieldByName('XPais').AsString := FCTe.Rem.EnderReme.xPais;
+          { Alterado por Jose Nilton Pace em 16/05/2013 }
+          FieldByName('Fone').AsString := FCTe.Rem.fone;
+(*
           FieldByName('Fone').AsString := '';
+*)
         end;
 
       tmDestinatario:
@@ -1269,7 +1320,11 @@ begin
           FieldByName('CEP').AsString := IntToStr(FCTe.Dest.EnderDest.CEP);
           FieldByName('CPais').AsString := IntToStr(FCTe.Dest.EnderDest.cPais);
           FieldByName('XPais').AsString := FCTe.Dest.EnderDest.xPais;
+          { Alterado por Jose Nilton Pace em 16/05/2013 }
+          FieldByName('Fone').AsString := FCTe.Dest.fone;
+(*
           FieldByName('Fone').AsString := '';
+*)
         end;
 
       tmExpedidor:
@@ -1287,7 +1342,11 @@ begin
           FieldByName('CEP').AsString := IntToStr(FCTe.Exped.EnderExped.CEP);
           FieldByName('CPais').AsString := IntToStr(FCTe.Exped.EnderExped.cPais);
           FieldByName('XPais').AsString := FCTe.Exped.EnderExped.xPais;
+          { Alterado por Jose Nilton Pace em 16/05/2013 }
+          FieldByName('Fone').AsString := FCTe.Exped.fone;
+(*
           FieldByName('Fone').AsString := '';
+*)
         end;
 
       tmRecebedor:
@@ -1305,7 +1364,11 @@ begin
           FieldByName('CEP').AsString := IntToStr(FCTe.Receb.EnderReceb.CEP);
           FieldByName('CPais').AsString := IntToStr(FCTe.Receb.EnderReceb.cPais);
           FieldByName('XPais').AsString := FCTe.Receb.EnderReceb.xPais;
+          { Alterado por Jose Nilton Pace em 16/05/2013 }
+          FieldByName('Fone').AsString := FCTe.Receb.fone;
+(*
           FieldByName('Fone').AsString := '';
+*)
         end;
     end;
 
@@ -1325,7 +1388,11 @@ begin
           FieldByName('CEP').AsString := IntToStr(FCTe.Ide.Toma4.EnderToma.CEP);
           FieldByName('CPais').AsString := IntToStr(FCTe.Ide.Toma4.EnderToma.cPais);
           FieldByName('XPais').AsString := FCTe.Ide.Toma4.EnderToma.xPais;
+          { Alterado por Jose Nilton Pace em 16/05/2013 }
+          FieldByName('Fone').AsString := FCTe.Ide.Toma4.fone;
+(*
           FieldByName('Fone').AsString := '';
+*)
         end;
     end;
     Post;
@@ -1392,19 +1459,29 @@ begin
           end;
       end;
     end;
-    for I := 0 to j - 1 do
-    begin
+   { Alterado por Jose Nilton Pace em 16/05/2013 }
+    if j = 0 then begin
       Append;
       FieldByName('Produto').AsString := ProdutoPred;
       FieldByName('CaracteristicaCarga').AsString := OutrasCaract;
       FieldByName('ValorServico').AsFloat := VlrServico;
       FieldByName('MCub').AsFloat := MCub;
       FieldByName('QVol').AsFloat := Volumes;
-      FieldByName('UnMedida').AsString := UnidMedida[i]; 
-      FieldByName('DescTipo').AsString := TipoMedida[i];
-      FieldByName('QMedida').AsFloat := QdtMedida[i];
       Post;
-    end;  
+    end else
+       for I := 0 to j - 1 do
+       begin
+         Append;
+         FieldByName('Produto').AsString := ProdutoPred;
+         FieldByName('CaracteristicaCarga').AsString := OutrasCaract;
+         FieldByName('ValorServico').AsFloat := VlrServico;
+         FieldByName('MCub').AsFloat := MCub;
+         FieldByName('QVol').AsFloat := Volumes;
+         FieldByName('UnMedida').AsString := UnidMedida[i];
+         FieldByName('DescTipo').AsString := TipoMedida[i];
+         FieldByName('QMedida').AsFloat := QdtMedida[i];
+         Post;
+       end;
   end;
 end;
 
