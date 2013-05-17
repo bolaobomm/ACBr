@@ -527,21 +527,13 @@ begin
   (* Grupo da TAG <imp> *******************************************************)
   if Leitor.rExtrai(1, 'imp') <> '' then
   begin
-    if Leitor.rExtrai(2, 'ICMS') <> '' then
-    begin
-
-    // Incluido por Italo em 31/03/2012
-    // Ronaldo RCLSoft detectou que estava faltando
-    // Alterado por Italo em 17/09/2012
     {$IFDEF PL_104}
       CTe.Imp.vTotTrib   := Leitor.rCampo(tcDe2,'vTotTrib');
-//    if Leitor.rExtrai(2, 'infAdFisco') <> '' then
-//    begin
-      // Informações adicionais de interesse do Fisco
       CTe.Imp.infAdFisco := Leitor.rCampo(tcStr,'infAdFisco');
-//    end;
     {$ENDIF}
 
+    if Leitor.rExtrai(2, 'ICMS') <> '' then
+    begin
     {$IFDEF PL_103}
       if Leitor.rExtrai(3, 'CST00') <> '' then
       begin
