@@ -419,7 +419,9 @@ object Form1: TForm1
       Height = 21
       Anchors = [akLeft, akTop, akRight]
       TabOrder = 3
-      Text = 'http://regys.com.br/arquivos/AcspDeOlhoNoImpostoIbptV.0.0.1.csv'
+      Text = 
+        'https://acbr.svn.sourceforge.net/svnroot/acbr/trunk/Exemplos/ACB' +
+        'rIBPTax/tabela/IBPT.csv'
     end
   end
   object OpenDialog1: TOpenDialog
