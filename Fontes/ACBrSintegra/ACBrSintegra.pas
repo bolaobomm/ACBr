@@ -2249,11 +2249,11 @@ begin
         wregistro:=wregistro+Padl(Registros85[i].NaturezaExportacao,1);
         wregistro:=wregistro+Padl(Registros85[i].RegistroExportacao,12);
         wregistro:= wregistro + FormatDateTime('yyyymmdd',Registros85[i].DataRegistro);
-        wregistro:=wregistro+TBStrZero(TiraPontos(Registros85[i].Conhecimento),16);
+        wregistro:=wregistro+padL((Registros85[i].Conhecimento),16);
         wregistro:= wregistro + FormatDateTime('yyyymmdd',Registros85[i].DataConhecimento);
         wregistro:=wregistro+TBStrZero(TiraPontos(Registros85[i].TipoConhecimento),2);
         wregistro:=wregistro+TBStrZero(TiraPontos(Registros85[i].Pais),4);
-        wregistro:= wregistro + padL('',8);
+        wregistro:= wregistro + padL('',8, '0');
         wregistro:= wregistro + FormatDateTime('yyyymmdd',Registros85[i].DataAverbacao);
         wregistro:=wregistro+TBStrZero(Registros85[i].NumeroNotaFiscal,6);
         wregistro:= wregistro + FormatDateTime('yyyymmdd',Registros85[i].DataNotaFiscal);
