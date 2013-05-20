@@ -421,7 +421,7 @@ object Form1: TForm1
       TabOrder = 3
       Text = 
         'https://acbr.svn.sourceforge.net/svnroot/acbr/trunk/Exemplos/ACB' +
-        'rIBPTax/tabela/IBPT.csv'
+        'rIBPTax/tabela/AcspDeOlhoNoImpostoIbptV.0.0.1.csv'
     end
   end
   object OpenDialog1: TOpenDialog
