@@ -67,6 +67,7 @@ type
     FEspessuraBorda: Integer;
     FFastFileEvento: String;
     FShowDialog: Boolean;
+    FExibirTotalTributosItem: Boolean;
     function GetPreparedReport: TfrxReport;
     function GetPreparedReportEvento: TfrxReport;
     function PrepareReport(NFE: TNFe = nil): Boolean;
@@ -86,6 +87,7 @@ type
     property PreparedReport: TfrxReport read GetPreparedReport;
     property PreparedReportEvento: TfrxReport read GetPreparedReportEvento;
     property ShowDialog: Boolean read FShowDialog write FShowDialog default false; // Isaque Pinheiro
+    property ExibirTotalTributosItem: Boolean read FExibirTotalTributosItem write FExibirTotalTributosItem;
   end;
 
 implementation
@@ -98,6 +100,7 @@ begin
   FdmDanfe := TdmACBrNFeFR.Create(Self);
   FFastFile := '' ;
   FEspessuraBorda := 1;
+  FExibirTotalTributosItem := False;
 end;
 
 destructor TACBrNFeDANFEFR.Destroy;
@@ -137,6 +140,8 @@ var
   I: Integer;
 begin
   Result := False;
+
+  dmDanfe.ExibirTotalTributosItem := FExibirTotalTributosItem;
 
   if Trim(FastFile) <> '' then
   begin

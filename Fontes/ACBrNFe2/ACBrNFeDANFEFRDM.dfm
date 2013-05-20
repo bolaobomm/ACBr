@@ -361,6 +361,9 @@ object dmACBrNFeFR: TdmACBrNFeFR
       FieldName = 'DescricaoProduto'
       Size = 1000
     end
+    object cdsDadosProdutosVTotTrib: TFloatField
+      FieldName = 'VTotTrib'
+    end
     object cdsDadosProdutosChaveNFe: TStringField
       FieldName = 'ChaveNFe'
       Size = 50
@@ -537,6 +540,9 @@ object dmACBrNFeFR: TdmACBrNFeFR
     end
     object cdsCalculoImpostoVNF: TFloatField
       FieldName = 'VNF'
+    end
+    object cdsCalculoImpostoVTotTrib: TFloatField
+      FieldName = 'VTotTrib'
     end
   end
   object cdsTransportador: TClientDataSet
@@ -980,7 +986,7 @@ object dmACBrNFeFR: TdmACBrNFeFR
     PrintOptions.Printer = 'Default'
     PrintOptions.PrintOnSheet = 0
     ReportOptions.CreateDate = 40401.475989294000000000
-    ReportOptions.LastChange = 41332.576115520830000000
+    ReportOptions.LastChange = 41414.442673923610000000
     ScriptLanguage = 'PascalScript'
     StoreInDFM = False
     Left = 48

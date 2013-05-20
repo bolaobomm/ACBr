@@ -174,7 +174,6 @@ type
     cdsDadosProdutosUCom: TStringField;
     cdsDadosProdutosQCom: TFloatField;
     cdsDadosProdutosVUnCom: TFloatField;
-    cdsDadosProdutosVProd: TFloatField;
     cdsDadosProdutoscEANTrib: TStringField;
     cdsDadosProdutosUTrib: TStringField;
     cdsDadosProdutosQTrib: TFloatField;
@@ -276,11 +275,15 @@ type
     cdsParametrosMask_qCom: TStringField;
     cdsParametrosMask_vUnCom: TStringField;
     cdsParametrosLogoCarregado: TBlobField;
+    cdsDadosProdutosVProd: TFloatField;
+    cdsCalculoImpostoVTotTrib: TFloatField;
+    cdsDadosProdutosVTotTrib: TFloatField;
     constructor Create(AOwner: TComponent); override;
   private
     FDANFEClassOwner: TACBrNFeDANFEClass;
     FNFe: TNFe;
     FEvento: TEventoNFe;
+    FExibirTotalTributosItem: Boolean;
     procedure CarregaIdentificacao;
     procedure CarregaEmitente;
     procedure CarregaDestinatario;
@@ -300,6 +303,7 @@ type
     property NFe: TNFe read FNFe write FNFe;
     property Evento: TEventoNFe read FEvento write FEvento;
     property DANFEClassOwner: TACBrNFeDANFEClass read FDANFEClassOwner;
+    property ExibirTotalTributosItem: Boolean read FExibirTotalTributosItem write FExibirTotalTributosItem default False;
     procedure CarregaDadosNFe;
     procedure CarregaDadosEventos;
   end;
@@ -453,6 +457,7 @@ begin
       FieldByName('VCOFINS').AsFloat := DFeUtil.StringToFloatDef(FloatToStr(VCOFINS), 0);
       FieldByName('VOutro').AsFloat := DFeUtil.StringToFloatDef(FloatToStr(VOutro), 0);
       FieldByName('VNF').AsFloat := DFeUtil.StringToFloatDef(FloatToStr(VNF), 0);
+      FieldByName('VTotTrib').AsFloat := DFeUtil.StringToFloatDef(FloatToStr(VTotTrib), 0);
     end;
 
     Post;
@@ -509,7 +514,23 @@ begin
         FieldByName('cEAN').AsString := cEAN;
         FieldByName('XProd').AsString := StringReplace(xProd, ';', #13, [rfReplaceAll]);
 
+        if FDANFEClassOwner.ImprimirTotalLiquido then
+          FieldByName('VProd').AsFloat := DFeUtil.StringToFloatDef(FloatToStr(VProd - vDesc), 0)
+        else
+          FieldByName('VProd').AsFloat := DFeUtil.StringToFloatDef(FloatToStr(VProd), 0);
+
         wInfAdProd := FNFe.Det.Items[i].infAdProd;
+
+        if Self.ExibirTotalTributosItem then
+          FieldByName('vTotTrib').AsFloat := DFeUtil.StringToFloatDef(FloatToStr(FNFe.Det.Items[i].Imposto.vTotTrib), 0)
+        else
+          FieldByName('vTotTrib').AsFloat := 0;
+        if FieldByName('vTotTrib').AsFloat <> 0 then
+        begin
+          wInfAdProd := wInfAdProd+#13+'Val Aprox Tributos: '+ FloatToStrF(FieldByName('vTotTrib').AsFloat,ffCurrency,15,2);
+          wInfAdProd := wInfAdProd+' ('+FloatToStrF(((FieldByName('vTotTrib').AsFloat*100)/FieldByName('VProd').AsFloat),ffNumber,15,2)+'%)';
+        end;
+
         vTemp2 := TStringList.Create;
         try
           if FDANFEClassOwner.ImprimirDetalhamentoEspecifico then
@@ -579,11 +600,6 @@ begin
         FieldByName('Ucom').AsString := UCom;
         FieldByName('QCom').AsFloat := DFeUtil.StringToFloatDef(FloatToStr(QCom), 0);
         FieldByName('VUnCom').AsFloat := DFeUtil.StringToFloatDef(FloatToStr(VUnCom), 0);
-
-        if FDANFEClassOwner.ImprimirTotalLiquido then
-          FieldByName('VProd').AsFloat := DFeUtil.StringToFloatDef(FloatToStr(VProd - vDesc), 0)
-        else
-          FieldByName('VProd').AsFloat := DFeUtil.StringToFloatDef(FloatToStr(VProd), 0);
 
         FieldByName('cEANTrib').AsString := cEANTrib;
         FieldByName('UTrib').AsString := uTrib;
