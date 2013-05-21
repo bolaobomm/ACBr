@@ -58,7 +58,7 @@ uses ACBrBase,  {Units da ACBr}
      Graphics, Contnrs, Classes;
 
 const
-  CACBrBoleto_Versao = '0.0.68a' ;
+  CACBrBoleto_Versao = '0.0.69a' ;
 
 type
   TACBrTipoCobranca =
@@ -494,6 +494,7 @@ type
     fPercentualMulta   : Double;
     fSeuNumero         : String;
     fTotalParcelas: Integer;
+    fValorDescontoAntDia: Currency;
     fVencimento        : TDateTime;
     fDataDocumento     : TDateTime;
     fNumeroDocumento   : String;
@@ -587,6 +588,7 @@ type
      property Versao               : String   read fVersao                write fVersao;
      property SeuNumero            : String   read fSeuNumero             write fSeuNumero;
      property PercentualMulta      : Double   read fPercentualMulta       write fPercentualMulta;
+     property ValorDescontoAntDia  : Currency read fValorDescontoAntDia  write  fValorDescontoAntDia;
 
      property TextoLivre : String read fTextoLivre write fTextoLivre;
 
@@ -662,7 +664,7 @@ type
 
     procedure AdicionarMensagensPadroes(Titulo : TACBrTitulo; AStringList: TStrings);
 
-    procedure GerarRemessa(NumeroRemessa : Integer);
+    function GerarRemessa(NumeroRemessa : Integer) : String;
     procedure LerRetorno();
 
   published
@@ -972,6 +974,7 @@ begin
    fValorOutrasDespesas  := 0;
    fValorOutrosCreditos  := 0;
    fValorRecebido        := 0;
+   fValorDescontoAntDia  := 0;
    fReferencia           := '';
    fVersao               := '';
 
@@ -1815,12 +1818,13 @@ begin
    Result := Campo1+' '+Campo2+' '+Campo3+' '+Campo4+' '+Campo5;
 end;
 
-procedure TACBrBoleto.GerarRemessa( NumeroRemessa : Integer );
+function TACBrBoleto.GerarRemessa( NumeroRemessa : Integer ) : String;
 var
    SLRemessa   : TStringList;
    ContTitulos : Integer;
    NomeArq     : String ;
 begin
+   Result:= '';
    if ListadeBoletos.Count < 1 then
       raise Exception.Create(ACBrStr('Lista de Boletos está vazia'));
 
@@ -1859,7 +1863,7 @@ begin
          SLRemessa.Add( Banco.GerarRegistroTrailler240( SLRemessa ) );
       end;
       SLRemessa.SaveToFile( NomeArq );
-
+      Result:= NomeArq;
    finally
       SLRemessa.Free;
    end;

@@ -369,164 +369,175 @@ end;
 procedure TACBrBancoSicredi.LerRetorno400(ARetorno: TStringList);
 var
   Titulo : TACBrTitulo;
-  ContLinha, CodOcorrencia, MotivoLinha, I: Integer;
+  ContLinha, CodOcorrencia, MotivoLinha, I, qtdMotivo: Integer;
   rAgencia, rDigitoAgencia, rConta, rDigitoConta  :String;
   Linha, rCedente, rCNPJCPF, rCodCedente, rEspDoc :String;
   CodMotivo_19,CodMotivo: String;
 begin
-   fpTamanhoMaximoNossoNum := 20;
-   ContLinha := 0;
+  fpTamanhoMaximoNossoNum := 20;
+  ContLinha := 0;
 
-   if StrToIntDef(copy(ARetorno[0],77,3),-1) <> Numero then
-      raise Exception.Create(ACBrStr(ACBrBanco.ACBrBoleto.NomeArqRetorno +
-                             'não é um arquivo de retorno do '+ Nome));
+  if StrToIntDef(copy(ARetorno[0],77,3),-1) <> Numero then
+    raise Exception.Create(ACBrStr(ACBrBanco.ACBrBoleto.NomeArqRetorno +
+                           'não é um arquivo de retorno do '+ Nome));
 
-   rCNPJCPF      := trim(Copy(ARetorno[0],32,14));
-   rCodCedente   := trim(Copy(ARetorno[0],27,5));
-   rCedente      := ''; // não existe essa info no arquivo de retorno do Sicredi;
-   rAgencia      := ''; // não existe essa info no arquivo de retorno do Sicredi;
-   rDigitoAgencia:= ''; // não existe essa info no arquivo de retorno do Sicredi;
-   rConta        := ''; // não existe essa info no arquivo de retorno do Sicredi;
-   rDigitoConta  := ''; // não existe essa info no arquivo de retorno do Sicredi;
+  rCNPJCPF      := trim(Copy(ARetorno[0],32,14));
+  rCodCedente   := trim(Copy(ARetorno[0],27,5));
+  rCedente      := ''; // não existe essa info no arquivo de retorno do Sicredi;
+  rAgencia      := ''; // não existe essa info no arquivo de retorno do Sicredi;
+  rDigitoAgencia:= ''; // não existe essa info no arquivo de retorno do Sicredi;
+  rConta        := ''; // não existe essa info no arquivo de retorno do Sicredi;
+  rDigitoConta  := ''; // não existe essa info no arquivo de retorno do Sicredi;
 
-   ACBrBanco.ACBrBoleto.NumeroArquivo := StrToIntDef(Copy(ARetorno[0],111,7),0);
+  ACBrBanco.ACBrBoleto.NumeroArquivo := StrToIntDef(Copy(ARetorno[0],111,7),0);
 
-   ACBrBanco.ACBrBoleto.DataArquivo   := StringToDateTimeDef(Copy(ARetorno[0],101,2)+'/'+
-                                                             Copy(ARetorno[0],99,2)+'/'+
-                                                             Copy(ARetorno[0],95,4),0, 'DD/MM/YYYY' );
+  ACBrBanco.ACBrBoleto.DataArquivo   := StringToDateTimeDef(Copy(ARetorno[0],101,2)+'/'+
+                                                           Copy(ARetorno[0],99,2)+'/'+
+                                                           Copy(ARetorno[0],95,4),0, 'DD/MM/YYYY' );
 
-   with ACBrBanco.ACBrBoleto do
-   begin
-      if (not LeCedenteRetorno) and (rCodCedente <> OnlyNumber(Cedente.CodigoCedente)) then
-         raise Exception.Create(ACBrStr('Agencia\Conta do arquivo inválido'));
+  with ACBrBanco.ACBrBoleto do
+  begin
+    if (not LeCedenteRetorno) and (rCodCedente <> OnlyNumber(Cedente.CodigoCedente)) then
+       raise Exception.Create(ACBrStr('Agencia\Conta do arquivo inválido'));
 
-      Cedente.Nome := rCedente;
+    Cedente.Nome := rCedente;
 
-      if Copy(rCNPJCPF,1,10) <> '0000000000' then 
-         Cedente.CNPJCPF      := rCNPJCPF;
+    if Copy(rCNPJCPF,1,10) <> '0000000000' then
+       Cedente.CNPJCPF      := rCNPJCPF;
 
-      Cedente.CodigoCedente:= rCodCedente;
-      Cedente.Agencia      := rAgencia;
-      Cedente.AgenciaDigito:= rDigitoAgencia;
-      Cedente.Conta        := rConta;
-      Cedente.ContaDigito  := rDigitoConta;
+    Cedente.CodigoCedente:= rCodCedente;
+    Cedente.Agencia      := rAgencia;
+    Cedente.AgenciaDigito:= rDigitoAgencia;
+    Cedente.Conta        := rConta;
+    Cedente.ContaDigito  := rDigitoConta;
 
-      Cedente.TipoInscricao:= pJuridica;
-      ACBrBanco.ACBrBoleto.ListadeBoletos.Clear;
-   end;
+    Cedente.TipoInscricao:= pJuridica;
+    ACBrBanco.ACBrBoleto.ListadeBoletos.Clear;
+  end;
 
-   ACBrBanco.TamanhoMaximoNossoNum := 9;
+  ACBrBanco.TamanhoMaximoNossoNum := 9;
 
-   for ContLinha := 1 to ARetorno.Count - 2 do
-   begin
-      Linha := ARetorno[ContLinha] ;
+  for ContLinha := 1 to ARetorno.Count - 2 do
+  begin
+    Linha := ARetorno[ContLinha] ;
 
-      if (Copy(Linha,1,1) <> '1') then 
-        Continue;
+    if (Copy(Linha,1,1) <> '1') then
+      Continue;
 
-      Titulo := ACBrBanco.ACBrBoleto.CriarTituloNaLista;
+    Titulo := ACBrBanco.ACBrBoleto.CriarTituloNaLista;
 
-      with Titulo do
+    with Titulo do
+    begin
+      Carteira             := Copy(Linha,14,1);
+      if Carteira='1' then //Cobrança com Registro
       begin
-         SeuNumero                   := copy(Linha,117,10);
-         NumeroDocumento             := copy(Linha,117,10);
-         Vencimento     := StringToDateTimeDef( Copy(Linha,147,2)+'/'+
-                                                Copy(Linha,149,2)+'/'+
-                                                Copy(Linha,151,2),0, 'DD/MM/YY' );
+        NossoNumero          := Copy(Linha,48,15);
+        Vencimento     := StringToDateTimeDef(Copy(Linha,147,2)+'/'+
+                                              Copy(Linha,149,2)+'/'+
+                                              Copy(Linha,151,2),0, 'DD/MM/YY' );
 
-         ValorDocumento       := StrToFloatDef(Copy(Linha,153,13),0)/100;
-         ValorDespesaCobranca := StrToFloatDef(Copy(Linha,176,13),0)/100;
-         ValorOutrasDespesas  := StrToFloatDef(Copy(Linha,189,13),0)/100;
-         ValorAbatimento      := StrToFloatDef(Copy(Linha,228,13),0)/100;
-         ValorDesconto        := StrToFloatDef(Copy(Linha,241,13),0)/100;
-         ValorRecebido        := StrToFloatDef(Copy(Linha,254,13),0)/100;
-         ValorMoraJuros       := StrToFloatDef(Copy(Linha,267,13),0)/100;
-         ValorOutrosCreditos  := StrToFloatDef(Copy(Linha,280,13),0)/100;    //Multa estava faltando
-         NossoNumero          := Copy(Linha,48,15);
-         Carteira             := Copy(Linha,14,1);
-         if StrToIntDef(Copy(Linha,329,8),0) <> 0 then
-           DataCredito:= StringToDateTimeDef( Copy(Linha,335,2)+'/'+
-                                              Copy(Linha,333,2)+'/'+
-                                              Copy(Linha,329,4),0, 'DD/MM/YYYY' );
+        rEspDoc := trim(Copy(Linha,175,1));
+        if (rEspDoc = '') or (rEspDoc = 'K') then
+          EspecieDoc := 'OS'
+        else if (rEspDoc = 'A') then
+          EspecieDoc := 'DMI'
+        else if (rEspDoc = 'B') then
+          EspecieDoc := 'DR'
+        else if (rEspDoc = 'C') then
+          EspecieDoc := 'NP'
+        else if (rEspDoc = 'D') then
+          EspecieDoc := 'NR'
+        else if (rEspDoc = 'E') then
+          EspecieDoc := 'NS'
+        else if (rEspDoc = 'G') then
+          EspecieDoc := 'RC'
+        else if (rEspDoc = 'H') then
+          EspecieDoc := 'LC'
+        else if (rEspDoc = 'I') then
+          EspecieDoc := 'ND'
+        else if (rEspDoc = 'J') then
+          EspecieDoc := 'DSI';
 
-         rEspDoc := trim(Copy(Linha,175,1));
-         if (rEspDoc = '') or (rEspDoc = 'K') then
-           EspecieDoc := 'OS'
-         else if (rEspDoc = 'A') then
-           EspecieDoc := 'DMI'
-         else if (rEspDoc = 'B') then
-           EspecieDoc := 'DR'
-         else if (rEspDoc = 'C') then
-           EspecieDoc := 'NP'
-         else if (rEspDoc = 'D') then
-           EspecieDoc := 'NR'
-         else if (rEspDoc = 'E') then
-           EspecieDoc := 'NS'
-         else if (rEspDoc = 'G') then
-           EspecieDoc := 'RC'
-         else if (rEspDoc = 'H') then
-           EspecieDoc := 'LC'
-         else if (rEspDoc = 'I') then
-           EspecieDoc := 'ND'
-         else if (rEspDoc = 'J') then
-           EspecieDoc := 'DSI';
+        ValorDespesaCobranca := StrToFloatDef(Copy(Linha,176,13),0)/100;
+        ValorOutrasDespesas  := StrToFloatDef(Copy(Linha,189,13),0)/100;
+        qtdMotivo:=5;
+      end
+      else                 //Cobrança sem Registro
+      begin
+        NossoNumero          := Copy(Linha,48,09);
+        qtdMotivo:=1;
+      end;
+      SeuNumero                   := copy(Linha,117,10);
+      NumeroDocumento             := copy(Linha,117,10);
+
+      ValorDocumento       := StrToFloatDef(Copy(Linha,153,13),0)/100;
+      ValorAbatimento      := StrToFloatDef(Copy(Linha,228,13),0)/100;
+      ValorDesconto        := StrToFloatDef(Copy(Linha,241,13),0)/100;
+      ValorRecebido        := StrToFloatDef(Copy(Linha,254,13),0)/100;
+      ValorMoraJuros       := StrToFloatDef(Copy(Linha,267,13),0)/100;
+      ValorOutrosCreditos  := StrToFloatDef(Copy(Linha,280,13),0)/100;    //Multa estava faltando
+      if StrToIntDef(Copy(Linha,329,8),0) <> 0 then
+        DataCredito:= StringToDateTimeDef( Copy(Linha,335,2)+'/'+
+                                          Copy(Linha,333,2)+'/'+
+                                          Copy(Linha,329,4),0, 'DD/MM/YYYY' );
 
 
-         OcorrenciaOriginal.Tipo     := CodOcorrenciaToTipo(StrToIntDef(
-                                        copy(Linha,109,2),0));
-         CodOcorrencia := StrToInt(IfThen(copy(Linha,109,2) = '00','00',copy(Linha,109,2)));
-         DataOcorrencia := StringToDateTimeDef( Copy(Linha,111,2)+'/'+
-                                                Copy(Linha,113,2)+'/'+
-                                                Copy(Linha,115,2),0, 'DD/MM/YY' );
 
-        //-|Se a ocorrência for igual a  19 - Confirmação de Receb. de Protesto
-        //-|Verifica o motivo na posição 295 - A = Aceite , D = Desprezado
-        if(CodOcorrencia = 19)then
+      OcorrenciaOriginal.Tipo     := CodOcorrenciaToTipo(StrToIntDef(
+                                    copy(Linha,109,2),0));
+      CodOcorrencia := StrToInt(IfThen(copy(Linha,109,2) = '00','00',copy(Linha,109,2)));
+      DataOcorrencia := StringToDateTimeDef( Copy(Linha,111,2)+'/'+
+                                            Copy(Linha,113,2)+'/'+
+                                            Copy(Linha,115,2),0, 'DD/MM/YY' );
+
+      //-|Se a ocorrência for igual a  19 - Confirmação de Receb. de Protesto
+      //-|Verifica o motivo na posição 295 - A = Aceite , D = Desprezado
+      if(CodOcorrencia = 19)then
+      begin
+        CodMotivo_19:= Copy(Linha,295,1);
+        if(CodMotivo_19 = 'A')then
         begin
-          CodMotivo_19:= Copy(Linha,295,1);
-          if(CodMotivo_19 = 'A')then
-          begin
-            MotivoRejeicaoComando.Add(Copy(Linha,295,1));
-            DescricaoMotivoRejeicaoComando.Add('A - Aceito');
-          end
-          else
-          begin
-            MotivoRejeicaoComando.Add(Copy(Linha,295,1));
-            DescricaoMotivoRejeicaoComando.Add('D - Desprezado');
-          end;
+          MotivoRejeicaoComando.Add(Copy(Linha,295,1));
+          DescricaoMotivoRejeicaoComando.Add('A - Aceito');
         end
         else
         begin
-          MotivoLinha := 319;  //Motivos da ocorrência
-          for i := 0 to 4 do
+          MotivoRejeicaoComando.Add(Copy(Linha,295,1));
+          DescricaoMotivoRejeicaoComando.Add('D - Desprezado');
+        end;
+      end
+      else
+      begin
+        MotivoLinha := 319;  //Motivos da ocorrência
+        for i := 0 to qtdMotivo-1 do
+        begin
+          CodMotivo := IfThen(Copy(Linha,MotivoLinha,2) = '00',
+                              '00',
+                              Copy(Linha,MotivoLinha,2));
+          //Se for o 1º motivo
+          if(i = 0)then
           begin
-            CodMotivo := IfThen(Copy(Linha,MotivoLinha,2) = '00',
-                                '00',
-                                Copy(Linha,MotivoLinha,2));
-            //Se for o 1º motivo
-            if(i = 0)then
+            MotivoRejeicaoComando.Add(IfThen(Copy(Linha,MotivoLinha,2) = '00',
+                                             '00',
+                                             Copy(Linha,MotivoLinha,2)));
+            DescricaoMotivoRejeicaoComando.Add(CodMotivoRejeicaoToDescricao(OcorrenciaOriginal.Tipo,CodMotivo));
+          end
+          else
+          begin
+            if CodMotivo <> '00' then     //Após o 1º motivo os 00 significam que não existe mais motivo
             begin
               MotivoRejeicaoComando.Add(IfThen(Copy(Linha,MotivoLinha,2) = '00',
                                                '00',
                                                Copy(Linha,MotivoLinha,2)));
               DescricaoMotivoRejeicaoComando.Add(CodMotivoRejeicaoToDescricao(OcorrenciaOriginal.Tipo,CodMotivo));
-            end
-            else
-            begin
-              if CodMotivo <> '00' then     //Após o 1º motivo os 00 significam que não existe mais motivo
-              begin
-                MotivoRejeicaoComando.Add(IfThen(Copy(Linha,MotivoLinha,2) = '00',
-                                                 '00',
-                                                 Copy(Linha,MotivoLinha,2)));
-                DescricaoMotivoRejeicaoComando.Add(CodMotivoRejeicaoToDescricao(OcorrenciaOriginal.Tipo,CodMotivo));
-              end;
             end;
-            MotivoLinha := MotivoLinha + 2; //Incrementa a coluna dos motivos
           end;
+          MotivoLinha := MotivoLinha + 2; //Incrementa a coluna dos motivos
         end;
       end;
-   end;
-   fpTamanhoMaximoNossoNum := 9;
+    end;
+  end;
+  fpTamanhoMaximoNossoNum := 9;
 end;
 
 function TACBrBancoSicredi.CodMotivoRejeicaoToDescricao(

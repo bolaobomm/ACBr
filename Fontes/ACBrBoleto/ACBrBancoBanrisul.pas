@@ -85,7 +85,7 @@ begin
 
   fpTamanhoAgencia:= 4;
   fpTamanhoConta  := 7;
-  fpTamanhoCarteira:= 2;
+  fpTamanhoCarteira:= 1;
 end;
 
 function Modulo11(Valor: string; Base: Integer=9; Resto: boolean=false): string;
@@ -534,7 +534,7 @@ begin
       end;
 
       case OcorrenciaOriginal.Tipo of
-         toRemessaBaixar:          Ocorrencia := '02'; {Pedido de Baixa}
+         toRemessaBaixar:             Ocorrencia := '02'; {Pedido de Baixa}
          toRemessaConcederAbatimento: Ocorrencia := '04'; {Concessão de Abatimento}
          toRemessaCancelarAbatimento: Ocorrencia := '05'; {Cancelamento de Abatimento concedido}
          toRemessaAlterarVencimento:  Ocorrencia := '06'; {Alteração de vencimento}

@@ -504,7 +504,7 @@ begin
                ' '                                                                     + // 15 - 15 Uso exclusivo FEBRABAN/CNAB: Branco
                ATipoOcorrencia                                                         + // 16 - 17 Tipo Ocorrencia
                padR('', 48, '0')                                                       + // 18 - 65 Brancos (Não definido pelo FEBRAN)
-               IfThen((PercentualMulta <> null) and (PercentualMulta > 0), '1', '0')   + // 66 - 66 1-Cobrar Multa / 0-Não cobrar multa
+               IfThen((PercentualMulta <> null) and (PercentualMulta > 0), '2', '0')   + // 66 - 66 1-Cobrar Multa / 0-Não cobrar multa
                IfThen((PercentualMulta <> null) and (PercentualMulta > 0),
                   FormatDateTime('ddmmyyyy', DataMoraJuros), '00000000')               + // 67 - 74 Se cobrar informe a data para iniciar a cobrança ou informe zeros se não cobrar
                IfThen(PercentualMulta > 0, IntToStrZero(round(PercentualMulta * 100), 15),

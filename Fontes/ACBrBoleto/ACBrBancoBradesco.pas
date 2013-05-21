@@ -289,7 +289,7 @@ begin
                   IfThen( PercentualMulta > 0, '2', '0')                  +  // Indica se exite Multa ou não
                   IntToStrZero( round( PercentualMulta * 100 ), 4)        +  // Percentual de Multa formatado com 2 casas decimais
                   NossoNumero + DigitoNossoNumero                         +
-                  IntToStrZero( round( ValorDesconto * 100), 10)          +
+                  IntToStrZero( round( ValorDescontoAntDia * 100), 10)    +
                   TipoBoleto + 'N' + Space(10)                            +  // Tipo Boleto(Quem emite) + 'N'= Nao registrar p/ Débito automático
                   ' ' + '0' + '  ' + Ocorrencia                           +  // Ind. Rateio de Credito + Aviso de Debito Aut. + Ocorrência
                   padL( NumeroDocumento,  10)                             +

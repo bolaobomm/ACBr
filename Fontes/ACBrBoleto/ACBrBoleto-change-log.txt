@@ -48,6 +48,28 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 
+Data: 21/05/2013
+-- ACBrBoleto ver. 0.0.69 --
+-- ACBrBoleto --
+[+] Transformado procedure GerarRemessa em function para que a mesma devolva o nome do
+    arquivo que foi criado. (Juliana Tamizou)
+
+[*] Criado propriedade ValorDescontoAntDia para informar o desconto por dia para 
+    pagamento antecipado (Atualmente utilizada somente pelo Bradesco). 
+    (Juliana Tamizou)
+
+-- ACBrBancoBancoob --
+[-] Corrigido leitura do arquivo retorno CNAB400, campo ValorOutrasDespesas.
+    (Juliana Tamizou)
+
+--ACBrBancoBrasil --
+[-]Corrigida campo CódigoMulta na remessa CNAB240. (Juliana Tamizou)
+
+--ACBrBancoSicred --
+[*] Adicionado tratamento correto para leitura do arquivo retorno de cobrança
+    sem registro. (AndersonH)
+
+
 Data: 11/04/2013
 -- ACBrBoleto ver. 0.0.68 --
 -- ACBrBancoBanrisul --
