@@ -355,7 +355,11 @@ begin
            NewLine;
            if vDuasLinhas then
            begin
-              vEnd:=SiteDoEmitente+' - '+EmailDoEmitente;
+              vEnd:='';
+              if (SiteDoEmitente <> '') and (EmailDoEmitente <> '') then
+                 vEnd := SiteDoEmitente+' - '+EmailDoEmitente;
+              if (SiteDoEmitente = '') and (EmailDoEmitente <> '') then
+                 vEnd := EmailDoEmitente;
               PrintCenter(vEnd,CenterX);
            end
            else
@@ -759,7 +763,9 @@ begin
      begin
         wtemp_FontSizeText:=FontSizeText;
         if FontNameUsed = 'Courier New' then
-           FontSizeText:=8;
+           FontSizeText:=8
+        else
+           FontSizeText:=7;
 
         ClearAllTabs;
         for i:=1 to 3 do
@@ -804,7 +810,7 @@ begin
         Box([fsLeft],XPos,YY,67,aHeight);
         Box([fsLeft],XPos,YY,67,aHeight,'','',taLeftJustify,True);
 
-        if FontNameUsed = 'Courier New' then
+        //if FontNameUsed = 'Courier New' then
            FontSizeText:=wtemp_FontSizeText;
      end;
      Result:=YPos;
