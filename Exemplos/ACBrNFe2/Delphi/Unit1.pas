@@ -2027,6 +2027,9 @@ begin
 
  {        with Imposto do
           begin
+            // lei da transparencia nos impostos
+            vTotTrib := 0;
+
             with ICMS do
              begin
                CST          := cst00;
@@ -2175,6 +2178,9 @@ begin
       Total.ICMSTot.vCOFINS := 0;
       Total.ICMSTot.vOutro  := 0;
       Total.ICMSTot.vNF     := 100;
+
+      // lei da transparencia de impostos
+      Total.ICMSTot.vTotTrib := 0;
 
       Total.ISSQNtot.vServ   := 100;
       Total.ISSQNTot.vBC     := 100;
@@ -2395,6 +2401,9 @@ begin
 
          with Imposto do
           begin
+            // lei da transparencia nos impostos
+            vTotTrib := 0;
+
             with ICMS do
              begin
                CST          := cst00;
