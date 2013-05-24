@@ -151,7 +151,8 @@ type
 
   TpcteFormaPagamento = (fpPago, fpAPagar, fpOutros);
   TpcteTipoCTe = (tcNormal, tcComplemento, tcAnulacao, tcSubstituto);
-  TpcteModal = (mdRodoviario, mdAereo, mdAquaviario, mdFerroviario, mdDutoviario);
+  // Alterado por Italo em 20/05/2013
+  TpcteModal = (mdRodoviario, mdAereo, mdAquaviario, mdFerroviario, mdDutoviario, mdMultimodal);
   TpcteTipoServico = (tsNormal, tsSubcontratacao, tsRedespacho, tsIntermediario);
   TpcteRetira = (rtSim, rtNao);
   TpcteTomador = ( tmRemetente, tmExpedidor, tmRecebedor, tmDestinatario, tmOutros);
@@ -178,9 +179,10 @@ type
   TPosRecibo = (prCabecalho, prRodape);
   TpcteModeloNF = (moNF011AAvulsa, moNFProdutor);
   TpcteTrafegoMutuo = (tmOrigem, tmDestino);
+  // Alterado por Italo em 20/05/2013
   TpcnTpEvento = (teCCe, teCancelamento, teManifDestConfirmacao, teManifDestCiencia,
                   teManifDestDesconhecimento, teManifDestOperNaoRealizada,
-                  teEncerramento, teEPEC);
+                  teEncerramento, teEPEC, teMultiModal);
   TpcnIndicadorNFe = (inTodas, inSemManifestacaoComCiencia, inSemManifestacaoSemCiencia);
   TpcnIndicadorEmissor = (ieTodos, ieRaizCNPJDiferente);
   TpcnIndicadorContinuacao = (icNaoPossuiMaisDocumentos, icPossuiMaisDocumentos);
@@ -202,15 +204,21 @@ type
   TpcnindRatISSQN = (irSim, irNao);
   TpcnindRegra = (irArredondamento, irTruncamento);
   TpcnCodigoMP = (mpDinheiro, mpCheque, mpCartaodeCredito, mpCartaodeDebito, mpCreditoLoja, mpValeAlimentacao, mpValeRefeicao, mpValePresente, mpValeCombustivel, mpOutros);
+  // Incluido por Italo em 20/05/2013
+  TpcnUnidTransp = ( utRodoTracao, utRodoReboque, utNavio, utBalsa, utAeronave, utVagao, utOutros );
+  TpcnUnidCarga  = ( ucContainer, ucULD, ucPallet, ucOutros );
+  TpcnindNegociavel = (inNaoNegociavel, inNegociavel);
+
 const
-  TpcnTpEventoString : array[0..7] of String =( '110110',
+  TpcnTpEventoString : array[0..8] of String =( '110110',
                                                 '110111',
                                                 '210200',
                                                 '210210',
                                                 '210220',
                                                 '210240',
                                                 '110112',
-                                                '110113' );
+                                                '110113',
+                                                '110160' );
 
   NFeUF: array[0..26] of String =
   ('AC','AL','AP','AM','BA','CE','DF','ES','GO','MA','MT','MS','MG','PA',
@@ -271,6 +279,7 @@ const
   CTecancCTe      = '1.03';
   CTeinutCTe      = '1.03';
   CTeconsCad      = '2.00';
+  CTeEventoCTe    = '0.00';  // Incluido por Italo em 20/05/2013
 {$ENDIF}
 
 {$IFDEF PL_104}
@@ -283,7 +292,6 @@ const
   CTeinutCTe      = '1.04';
   CTeconsCad      = '2.00';
   CTeEventoCTe    = '1.04';  // Incluido por Italo em 26/11/2012
-{$ENDIF}
 
   // Incluido por Italo em 25/10/2012
   CTeModalRodo    = '1.04';
@@ -291,6 +299,28 @@ const
   CTeModalAqua    = '1.04';
   CTeModalFerro   = '1.04';
   CTeModalDuto    = '1.04';
+  CTeMultiModal   = '0.00';
+{$ENDIF}
+
+// Incluido por Italo em 20/05/2013
+{$IFDEF PL_200}
+  CTecabMsg       = '2.00';
+  CTeconsStatServ = '2.00';
+  CTeenviCTe      = '2.00';
+  CTeconsReciCTe  = '2.00';
+  CTeconsSitCTe   = '2.00';
+  CTecancCTe      = '1.04';
+  CTeinutCTe      = '2.00';
+  CTeconsCad      = '2.00';
+  CTeEventoCTe    = '2.00';
+
+  CTeModalRodo    = '2.00';
+  CTeModalAereo   = '2.00';
+  CTeModalAqua    = '2.00';
+  CTeModalFerro   = '2.00';
+  CTeModalDuto    = '2.00';
+  CTeMultiModal   = '2.00';
+{$ENDIF}
 
   LineBreak = #13#10;
 
@@ -298,7 +328,6 @@ function StrToEnumerado(var ok: boolean; const s: string; const AString: array o
   const AEnumerados: array of variant): variant;
 function EnumeradoToStr(const t: variant; const AString:
   array of string; const AEnumerados: array of variant): variant;
-
 
 function StrToEnumerado2(var ok: boolean;  const s: string; Const AString: array of string ): variant;
 function EnumeradoToStr2(const t: variant; const AString: array of string ): variant;
@@ -395,7 +424,6 @@ function StrToTpMask(var ok: boolean; const s: string): TpcteMask;
 function ECFModRefToStr(const t:  TpcnECFModRef ): string;
 function StrToECFModRef(var ok: boolean; const s: string): TpcnECFModRef;
 
-
 function ISSQNcSitTribToStr(const t: TpcnISSQNcSitTrib ): string;
 function StrToISSQNcSitTrib(var ok: boolean; const s: string) : TpcnISSQNcSitTrib;
 
@@ -472,6 +500,13 @@ function CodigoMPToStr(const t: TpcnCodigoMP ): string;
 function StrToCodigoMP(var ok: boolean; const s: string): TpcnCodigoMP ;
 function CodigoMPToDescricao(const t: TpcnCodigoMP ): string;
 
+function UnidTranspToStr(const t: TpcnUnidTransp):string;
+function StrToUnidTransp(var ok: boolean; const s: string): TpcnUnidTransp;
+function UnidCargaToStr(const t: TpcnUnidCarga):string;
+function StrToUnidCarga(var ok: boolean; const s: string):TpcnUnidCarga;
+function indNegociavelToStr(const t: TpcnindNegociavel ): string;
+function StrToindNegociavel(var ok: boolean; const s: string): TpcnindNegociavel;
+
 implementation
 
 function StrToEnumerado(var ok: boolean; const s: string; const AString:
@@ -497,7 +532,6 @@ begin
   for i := Low(AEnumerados) to High(AEnumerados) do
     if t = AEnumerados[i] then
       result := AString[i];
-
 end;
 
 // Tipo de Schema **************************************************************
@@ -883,7 +917,6 @@ begin
     [mdiTaxi, mdiDeficienteFisico, mdiProdutorAgropecuario, mdiFrotistaLocadora, mdiDiplomaticoConsular, mdiAmazoniaLivreComercio, mdiSuframa, mdiVendaOrgaosPublicos, mdiOutros]);
 end;
 
-
 // CST IPI *********************************************************************
 function CSTIPIToStr(const t: TpcnCstIpi): string;
 begin
@@ -994,17 +1027,20 @@ end;
 
 function TpModalToStr(const t: TpcteModal): string;
 begin
-  result := EnumeradoToStr(t, ['01','02', '03', '04', '05'], [mdRodoviario, mdAereo, mdAquaviario, mdFerroviario, mdDutoviario]);
+  result := EnumeradoToStr(t, ['01','02', '03', '04', '05', '06'],
+                              [mdRodoviario, mdAereo, mdAquaviario, mdFerroviario, mdDutoviario, mdMultimodal]);
 end;
 
 function TpModalToStrText(const t: TpcteModal): string;
 begin
-  result := EnumeradoToStr(t, ['RODOVIÁRIO','AÉREO', 'AQUAVIÁRIO', 'FERROVIÁRIO', 'DUTOVIÁRIO'], [mdRodoviario, mdAereo, mdAquaviario, mdFerroviario, mdDutoviario]);
+  result := EnumeradoToStr(t, ['RODOVIÁRIO','AÉREO', 'AQUAVIÁRIO', 'FERROVIÁRIO', 'DUTOVIÁRIO', 'MULTIMODAL'],
+                              [mdRodoviario, mdAereo, mdAquaviario, mdFerroviario, mdDutoviario, mdMultimodal]);
 end;
 
 function StrToTpModal(var ok: boolean; const s: string): TpcteModal;
 begin
-  result := StrToEnumerado(ok, s, ['01', '02', '03', '04', '05'], [mdRodoviario, mdAereo, mdAquaviario, mdFerroviario, mdDutoviario]);
+  result := StrToEnumerado(ok, s, ['01', '02', '03', '04', '05', '06'],
+                                  [mdRodoviario, mdAereo, mdAquaviario, mdFerroviario, mdDutoviario, mdMultimodal]);
 end;
 
 function TpServPagToStr(const t: TpcteTipoServico): string;
@@ -1511,5 +1547,49 @@ begin
   result := EnumeradoToStr(t, ['Dinheiro', 'Cheque', 'Cartão de Crédito', 'Cartão de Débito', 'Crédito Loja', 'Vale Alimentação', 'Vale Refeição', 'Vale Presente', 'Vale Combustível', 'Outros'], [MPDinheiro, MPCheque, MPCartaodeCredito, MPCartaodeDebito, MPCreditoLoja, MPValeAlimentacao, MPValeRefeicao, MPValePresente, MPValeCombustivel, MPOutros]);
 end;
 
+// Incluido por Italo em 20/05/2013
+// Tipo da Unidade de Transporte ***********************************************
+
+function UnidTranspToStr(const t: TpcnUnidTransp):string;
+begin
+  result := EnumeradoToStr(t,
+                           ['1', '2', '3', '4', '5', '6', '7'],
+                           [utRodoTracao, utRodoReboque, utNavio, utBalsa,
+                            utAeronave, utVagao, utOutros]);
+end;
+
+function StrToUnidTransp(var ok: boolean; const s: string): TpcnUnidTransp;
+begin
+  result := StrToEnumerado(ok, s,
+                           ['1', '2', '3', '4', '5', '6', '7'],
+                           [utRodoTracao, utRodoReboque, utNavio, utBalsa,
+                            utAeronave, utVagao, utOutros]);
+end;
+
+// Tipo da Unidade de Carga ****************************************************
+
+function UnidCargaToStr(const t: TpcnUnidCarga):string;
+begin
+  result := EnumeradoToStr(t,
+                           ['1', '2', '3', '4'],
+                           [ucContainer, ucULD, ucPallet, ucOutros]);
+end;
+
+function StrToUnidCarga(var ok: boolean; const s: string): TpcnUnidCarga;
+begin
+  result := StrToEnumerado(ok, s,
+                           ['1', '2', '3', '4'],
+                           [ucContainer, ucULD, ucPallet, ucOutros]);
+end;
+
+function indNegociavelToStr(const t: TpcnindNegociavel ): string;
+begin
+  result := EnumeradoToStr(t, ['0', '1'], [inNaoNegociavel, inNegociavel]);
+end;
+
+function StrToindNegociavel(var ok: boolean; const s: string): TpcnindNegociavel;
+begin
+  result := StrToEnumerado(ok, s, ['0', '1'], [inNaoNegociavel, inNegociavel]);
+end;
 
 end.
