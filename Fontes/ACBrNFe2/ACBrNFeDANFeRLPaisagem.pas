@@ -308,10 +308,8 @@ type
     RLDraw33: TRLDraw;
     RLDraw34: TRLDraw;
     RLDraw35: TRLDraw;
-    RLDraw36: TRLDraw;
     RLDraw31: TRLDraw;
     RLDraw29: TRLDraw;
-    RLDraw37: TRLDraw;
     rlbTransportadora: TRLBand;
     RLLabel55: TRLLabel;
     rllTransNome: TRLLabel;
@@ -545,6 +543,13 @@ type
     txtValorICMSST: TRLDBText;
     RLLabel3: TRLLabel;
     RLLabel4: TRLLabel;
+    RLDraw6: TRLDraw;
+    RLDraw7: TRLDraw;
+    RLDraw8: TRLDraw;
+    RLDraw11: TRLDraw;
+    RLDraw12: TRLDraw;
+    RLLabel5: TRLLabel;
+    rllTotalTributos: TRLLabel;
     procedure RLNFeBeforePrint(Sender: TObject; var PrintIt: Boolean);
     procedure rlbEmitenteBeforePrint(Sender: TObject;
       var PrintIt: Boolean);
@@ -1279,6 +1284,7 @@ begin
     rllAcessorias.Caption     := DFeUtil.FormatFloat(VOutro, '###,###,###,##0.00');
     rllValorIPI.Caption       := DFeUtil.FormatFloat(VIPI, '###,###,###,##0.00');
     rllTotalNF.Caption        := DFeUtil.FormatFloat(VNF, '###,###,###,##0.00');
+    rllTotalTributos.Caption := DFeUtil.FormatFloat(vTotTrib, '###,###,###,##0.00');    
   end;
 end;
 

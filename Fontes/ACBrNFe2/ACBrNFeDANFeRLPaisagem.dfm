@@ -2946,7 +2946,7 @@ inherited frlDANFeRLPaisagem: TfrlDANFeRLPaisagem
         Tag = 70
         Left = 39
         Top = 11
-        Width = 186
+        Width = 138
         Height = 14
         Alignment = taRightJustify
         AutoSize = False
@@ -2989,7 +2989,7 @@ inherited frlDANFeRLPaisagem: TfrlDANFeRLPaisagem
       end
       object RLLabel45: TRLLabel
         Tag = 10
-        Left = 233
+        Left = 186
         Top = 3
         Width = 57
         Height = 7
@@ -3004,9 +3004,9 @@ inherited frlDANFeRLPaisagem: TfrlDANFeRLPaisagem
       end
       object rllValorICMS: TRLLabel
         Tag = 70
-        Left = 237
+        Left = 192
         Top = 11
-        Width = 186
+        Width = 138
         Height = 14
         Alignment = taRightJustify
         AutoSize = False
@@ -3079,7 +3079,7 @@ inherited frlDANFeRLPaisagem: TfrlDANFeRLPaisagem
       end
       object RLLabel46: TRLLabel
         Tag = 10
-        Left = 432
+        Left = 338
         Top = 3
         Width = 120
         Height = 7
@@ -3094,9 +3094,9 @@ inherited frlDANFeRLPaisagem: TfrlDANFeRLPaisagem
       end
       object rllBaseICMSST: TRLLabel
         Tag = 70
-        Left = 436
+        Left = 343
         Top = 11
-        Width = 186
+        Width = 138
         Height = 14
         Alignment = taRightJustify
         AutoSize = False
@@ -3139,7 +3139,7 @@ inherited frlDANFeRLPaisagem: TfrlDANFeRLPaisagem
       end
       object RLLabel47: TRLLabel
         Tag = 10
-        Left = 631
+        Left = 489
         Top = 3
         Width = 113
         Height = 7
@@ -3154,9 +3154,9 @@ inherited frlDANFeRLPaisagem: TfrlDANFeRLPaisagem
       end
       object rllValorICMSST: TRLLabel
         Tag = 70
-        Left = 635
+        Left = 495
         Top = 11
-        Width = 148
+        Width = 138
         Height = 14
         Alignment = taRightJustify
         AutoSize = False
@@ -3236,7 +3236,7 @@ inherited frlDANFeRLPaisagem: TfrlDANFeRLPaisagem
         HoldStyle = hsRelatively
       end
       object RLDraw32: TRLDraw
-        Left = 230
+        Left = 183
         Top = 0
         Width = 1
         Height = 29
@@ -3271,29 +3271,11 @@ inherited frlDANFeRLPaisagem: TfrlDANFeRLPaisagem
         DrawKind = dkLine
         HoldStyle = hsRelatively
       end
-      object RLDraw36: TRLDraw
-        Left = 628
-        Top = 0
-        Width = 1
-        Height = 57
-        Angle = 90.000000000000000000
-        DrawKind = dkLine
-        HoldStyle = hsRelatively
-      end
       object RLDraw31: TRLDraw
-        Left = 429
+        Left = 335
         Top = 0
         Width = 1
         Height = 29
-        Angle = 90.000000000000000000
-        DrawKind = dkLine
-        HoldStyle = hsRelatively
-      end
-      object RLDraw37: TRLDraw
-        Left = 789
-        Top = 0
-        Width = 1
-        Height = 57
         Angle = 90.000000000000000000
         DrawKind = dkLine
         HoldStyle = hsRelatively
@@ -3366,6 +3348,81 @@ inherited frlDANFeRLPaisagem: TfrlDANFeRLPaisagem
         Font.Name = 'Arial'
         Font.Style = [fsBold]
         Layout = tlCenter
+        ParentFont = False
+      end
+      object RLDraw6: TRLDraw
+        Left = 628
+        Top = 28
+        Width = 1
+        Height = 29
+        Angle = 90.000000000000000000
+        DrawKind = dkLine
+        HoldStyle = hsRelatively
+      end
+      object RLDraw7: TRLDraw
+        Left = 486
+        Top = 0
+        Width = 1
+        Height = 29
+        Angle = 90.000000000000000000
+        DrawKind = dkLine
+        HoldStyle = hsRelatively
+      end
+      object RLDraw8: TRLDraw
+        Left = 638
+        Top = 0
+        Width = 1
+        Height = 29
+        Angle = 90.000000000000000000
+        DrawKind = dkLine
+        HoldStyle = hsRelatively
+      end
+      object RLDraw11: TRLDraw
+        Left = 789
+        Top = 0
+        Width = 1
+        Height = 29
+        Angle = 90.000000000000000000
+        DrawKind = dkLine
+        HoldStyle = hsRelatively
+      end
+      object RLDraw12: TRLDraw
+        Left = 789
+        Top = 28
+        Width = 1
+        Height = 29
+        Angle = 90.000000000000000000
+        DrawKind = dkLine
+        HoldStyle = hsRelatively
+      end
+      object RLLabel5: TRLLabel
+        Tag = 10
+        Left = 641
+        Top = 3
+        Width = 131
+        Height = 7
+        Caption = 'VALOR APROXIMADO DOS TRIBUTOS'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clBlack
+        Font.Height = -7
+        Font.Name = 'Arial'
+        Font.Style = []
+        HoldStyle = hsRelatively
+        ParentFont = False
+      end
+      object rllTotalTributos: TRLLabel
+        Tag = 70
+        Left = 647
+        Top = 11
+        Width = 138
+        Height = 14
+        Alignment = taRightJustify
+        AutoSize = False
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clBlack
+        Font.Height = -9
+        Font.Name = 'Arial'
+        Font.Style = [fsBold]
         ParentFont = False
       end
     end

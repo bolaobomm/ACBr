@@ -343,10 +343,8 @@ type
     RLDraw33: TRLDraw;
     RLDraw34: TRLDraw;
     RLDraw35: TRLDraw;
-    RLDraw36: TRLDraw;
     RLDraw31: TRLDraw;
     RLDraw29: TRLDraw;
-    RLDraw37: TRLDraw;
     rlbTransportadora: TRLBand;
     RLLabel21: TRLLabel;
     RLLabel55: TRLLabel;
@@ -645,6 +643,13 @@ type
     rllFatData60: TRLLabel;
     rllFatValor60: TRLLabel;
     RLLabel12: TRLLabel;
+    RLDraw3: TRLDraw;
+    RLDraw5: TRLDraw;
+    RLDraw7: TRLDraw;
+    RLDraw12: TRLDraw;
+    RLDraw13: TRLDraw;
+    RLLabel1: TRLLabel;
+    rllTotalTributos: TRLLabel;
     procedure RLNFeBeforePrint(Sender: TObject; var PrintIt: Boolean);
     procedure rlbEmitenteBeforePrint(Sender: TObject;
       var PrintIt: Boolean);
@@ -1330,8 +1335,8 @@ begin
   begin
     rllBaseICMS.Caption      := DFeUtil.FormatFloat(VBC, '###,###,###,##0.00');
     rllValorICMS.Caption     := DFeUtil.FormatFloat(VICMS, '###,###,###,##0.00');
-    rllBaseICMSST.Caption     := DFeUtil.FormatFloat(VBCST, '###,###,###,##0.00');
-    rllValorICMSST.Caption    := DFeUtil.FormatFloat(VST, '###,###,###,##0.00');
+    rllBaseICMSST.Caption    := DFeUtil.FormatFloat(VBCST, '###,###,###,##0.00');
+    rllValorICMSST.Caption   := DFeUtil.FormatFloat(VST, '###,###,###,##0.00');
     rllTotalProdutos.Caption := DFeUtil.FormatFloat(VProd, '###,###,###,##0.00');
     rllValorFrete.Caption    := DFeUtil.FormatFloat(VFrete, '###,###,###,##0.00');
     rllValorSeguro.Caption   := DFeUtil.FormatFloat(VSeg, '###,###,###,##0.00');
@@ -1339,6 +1344,7 @@ begin
     rllAcessorias.Caption    := DFeUtil.FormatFloat(VOutro, '###,###,###,##0.00');
     rllValorIPI.Caption      := DFeUtil.FormatFloat(VIPI, '###,###,###,##0.00');
     rllTotalNF.Caption       := DFeUtil.FormatFloat(VNF, '###,###,###,##0.00');
+    rllTotalTributos.Caption := DFeUtil.FormatFloat(vTotTrib, '###,###,###,##0.00');
   end;
 end;
 
