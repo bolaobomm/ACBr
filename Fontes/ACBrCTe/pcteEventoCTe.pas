@@ -61,6 +61,9 @@ type
   TRetInfEvento   = class;
   EventoException = class(Exception);
 
+  TInfCorrecaoCollection  = class;
+  TInfCorrecaoCollectionItem = class;
+
   TInfEvento = class
   private
     FID: String;
@@ -97,7 +100,7 @@ type
     property TipoEvento: string      read getTipoEvento;
   end;
 
-  TDetEvento = class
+  TDetEvento = class(TPersistent)
   private
     FdescEvento: String;
     FnProt: string;
@@ -114,7 +117,16 @@ type
     Fmodal: TpcteModal;
     FUFIni: String;
     FUFFim: String;
+
+    FxRegistro: String; // MultiModal
+    FnDoc: String;
+
+    FinfCorrecao: TInfCorrecaoCollection;
+    procedure SetCorrecao(const Value: TInfCorrecaoCollection);
   public
+    constructor Create;
+    destructor Destroy; override;
+
     property descEvento: String read FdescEvento write FdescEvento;
     property nProt: String      read FnProt      write FnProt;
 
@@ -130,6 +142,41 @@ type
     property modal: TpcteModal  read Fmodal      write Fmodal;
     property UFIni: String      read FUFIni      write FUFIni;
     property UFFim: String      read FUFFim      write FUFFim;
+
+    property xRegistro: String  read FxRegistro  write FxRegistro;
+    property nDoc: String       read FnDoc       write FnDoc;
+
+    property infCorrecao: TInfCorrecaoCollection read FinfCorrecao write SetCorrecao;
+  end;
+
+  TInfCorrecaoCollection = class(TCollection)
+  private
+    function GetItem(Index: Integer): TInfCorrecaoCollectionItem;
+    procedure SetItem(Index: Integer; Value: TInfCorrecaoCollectionItem);
+  public
+    constructor Create(AOwner: TPersistent);
+    function Add: TInfCorrecaoCollectionItem;
+    property Items[Index: Integer]: TInfCorrecaoCollectionItem read GetItem write SetItem; default;
+  end;
+
+  TInfCorrecaoCollectionItem = class(TCollectionItem)
+  private
+    FgrupoAlterado: String;
+    FcampoAlterado: String;
+    FvalorAlterado: String;
+    FnroItemAlterado: Integer;
+    FCondUso: String;
+
+    procedure setCondUso(const Value: String);
+  public
+    constructor Create; reintroduce;
+    destructor Destroy; override;
+  published
+    property grupoAlterado: String    read FgrupoAlterado   write FgrupoAlterado;
+    property campoAlterado: String    read FcampoAlterado   write FcampoAlterado;
+    property valorAlterado: String    read FvalorAlterado   write FvalorAlterado;
+    property nroItemAlterado: Integer read FnroItemAlterado write FnroItemAlterado;
+    property xCondUso: String         read FCondUso         write setCondUso;
   end;
 
   TRetInfEvento = class
@@ -203,6 +250,7 @@ begin
     teCCe         : Result := 'Carta de Correcao';
     teCancelamento: Result := 'Cancelamento';
     teEPEC        : Result := 'EPEC';
+    teMultiModal  : Result := 'Registro Multimodal';
   else
     raise EventoException.Create('Descrição do Evento não Implementado!');
   end;
@@ -211,9 +259,10 @@ end;
 function TInfEvento.getTipoEvento: string;
 begin
   case FTpEvento of
-//    teCCe         : Result := '110110'; //Ainda não foi implementado pela SEFAZ
-//    teCancelamento: Result := '110111'; //Ainda não foi implementado pela SEFAZ
+    teCCe         : Result := '110110'; // Somete para a versão 2.0
+    teCancelamento: Result := '110111'; // Somete para a versão 2.0
     teEPEC        : Result := '110113';
+    teMultiModal  : Result := '110160'; // Somete para a versão 2.0
   else
     raise EventoException.Create('Tipo do Evento não Implementado!');
   end;
@@ -230,9 +279,83 @@ begin
     teCCe         : Result := 'CARTA DE CORREÇÃO ELETRÔNICA';
     teCancelamento: Result := 'CANCELAMENTO DO CT-e';
     teEPEC        : Result := 'EPEC';
+    teMultiModal  : Result := 'REGISTRO MULTIMODAL';
   else
     Result := 'Não Definido';
   end;
+end;
+
+{ TInfCorrecaoCollection }
+
+function TInfCorrecaoCollection.Add: TInfCorrecaoCollectionItem;
+begin
+  Result := TInfCorrecaoCollectionItem(inherited Add);
+  Result.create;
+end;
+
+constructor TInfCorrecaoCollection.Create(AOwner: TPersistent);
+begin
+  inherited Create(TInfCorrecaoCollectionItem);
+end;
+
+function TInfCorrecaoCollection.GetItem(
+  Index: Integer): TInfCorrecaoCollectionItem;
+begin
+  Result := TInfCorrecaoCollectionItem(inherited GetItem(Index));
+end;
+
+procedure TInfCorrecaoCollection.SetItem(Index: Integer;
+  Value: TInfCorrecaoCollectionItem);
+begin
+  inherited SetItem(Index, Value);
+end;
+
+{ TInfCorrecaoCollectionItem }
+
+constructor TInfCorrecaoCollectionItem.Create;
+begin
+
+end;
+
+destructor TInfCorrecaoCollectionItem.Destroy;
+begin
+
+  inherited;
+end;
+
+procedure TInfCorrecaoCollectionItem.setCondUso(const Value: String);
+begin
+  FCondUso := Value;
+
+  if FCondUso = '' then
+    FCondUso := 'A Carta de Correcao e disciplinada pelo Art. 58-B do CONVENIO/' +
+                'SINIEF 06/89: Fica permitida a utilizacao de carta de correcao,' +
+                ' para regularizacao de erro ocorrido na emissao de documentos' +
+                ' fiscais relativos a prestacao de servico de transporte, desde' +
+                ' que o erro nao esteja  relacionado com: I - as variaveis que' +
+                ' determinam o valor do imposto tais como: base de calculo,' +
+                ' aliquota, diferenca de preco, quantidade, valor da prestacao;' +
+                ' II - a correcao de dados cadastrais que implique mudanca do' +
+                ' emitente, tomador, remetente ou do destinatario; III - a data' +
+                ' de emissao ou de saida.';
+end;
+
+{ TDetEvento }
+
+constructor TDetEvento.Create;
+begin
+  FinfCorrecao := TInfCorrecaoCollection.Create(Self);
+end;
+
+destructor TDetEvento.Destroy;
+begin
+  FInfCorrecao.Free;
+  inherited;
+end;
+
+procedure TDetEvento.SetCorrecao(const Value: TInfCorrecaoCollection);
+begin
+  FInfCorrecao.Assign(Value);
 end;
 
 end.

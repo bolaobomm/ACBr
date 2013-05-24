@@ -136,6 +136,7 @@ end;
 function TEventoCTe.GerarXML: boolean;
 var
   sDoc : String;
+  i: Integer;
 begin
   Gerador.ArquivoFormatoXML := '';
   Gerador.wGrupo('eventoCTe ' + NAME_SPACE_CTE + ' versao="' + CTeEventoCTe + '"');
@@ -180,6 +181,24 @@ begin
 
   Gerador.wGrupo('detEvento versaoEvento="' + CTeEventoCTe + '"');
   case Evento.Items[0].InfEvento.tpEvento of
+   teCCe:
+     begin
+       Gerador.wGrupo('evCCeCTe');
+       Gerador.wCampo(tcStr, 'EP02', 'descEvento', 005, 012, 1, Evento.Items[0].InfEvento.DescEvento);
+
+       for i:= 0 to Evento.Items[0].FInfEvento.detEvento.infCorrecao.Count  - 1 do
+        begin
+         Gerador.wGrupo('infCorrecao');
+         Gerador.wCampo(tcStr, 'EP04', 'grupoAlterado  ', 001, 0020, 1, Evento.Items[0].InfEvento.detEvento.infCorrecao.Items[i].grupoAlterado);
+         Gerador.wCampo(tcStr, 'EP05', 'campoAlterado  ', 001, 0020, 1, Evento.Items[0].InfEvento.detEvento.infCorrecao.Items[i].campoAlterado);
+         Gerador.wCampo(tcStr, 'EP06', 'valorAlterado  ', 001, 0500, 1, Evento.Items[0].InfEvento.detEvento.infCorrecao.Items[i].valorAlterado);
+         Gerador.wCampo(tcInt, 'EP07', 'nroItemAlterado', 002, 0002, 0, Evento.Items[0].InfEvento.detEvento.infCorrecao.Items[i].nroItemAlterado);
+         Gerador.wCampo(tcStr, 'EP08', 'xCondUso       ', 001, 5000, 1, Evento.Items[0].InfEvento.detEvento.infCorrecao.Items[i].xCondUso);
+         Gerador.wGrupo('/infCorrecao');
+        end;
+
+       Gerador.wGrupo('/evCCeCTe');
+     end;
    teCancelamento:
      begin
        Gerador.wGrupo('evCancCTe');
@@ -212,6 +231,14 @@ begin
        if not ValidarUF(Evento.Items[0].InfEvento.detEvento.UFFim) then
         Gerador.wAlerta('EP16', 'UFFim', DSC_UF, ERR_MSG_INVALIDO);
        Gerador.wGrupo('/evEPECCTe');
+     end;
+   teMultiModal:
+     begin
+       Gerador.wGrupo('evRegMultimodal');
+       Gerador.wCampo(tcStr, 'EP02', 'descEvento', 005, 0012, 1, Evento.Items[0].InfEvento.DescEvento);
+       Gerador.wCampo(tcStr, 'EP03', 'xRegistro ', 015, 1000, 1, Evento.Items[0].InfEvento.detEvento.xRegistro);
+       Gerador.wCampo(tcStr, 'EP04', 'nDoc      ', 043, 0043, 0, Evento.Items[0].InfEvento.detEvento.nDoc);
+       Gerador.wGrupo('/evRegMultimodal');
      end;
   end;
   Gerador.wGrupo('/detEvento');

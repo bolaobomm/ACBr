@@ -97,6 +97,7 @@ type
 
   TProtCTeCollectionItem = class(TCollectionItem)
   private
+    FId: string;
     FtpAmb: TpcnTipoAmbiente;
     FverAplic: string;
     FchCTe: string;
@@ -106,6 +107,7 @@ type
     FcStat: integer;
     FxMotivo: string;
   published
+    property Id: string read FId write FId;
     property tpAmb: TpcnTipoAmbiente read FtpAmb write FtpAmb;
     property verAplic: string read FverAplic write FverAplic;
     property chCTe: string read FchCTe write FchCTe;
@@ -185,6 +187,7 @@ begin
       begin
         ProtCTe.Add;
 
+        (*PR04*)ProtCTe[i].FId       := Leitor.rAtributo('Id='); // Incluido por Italo em 20/05/2013
         (*PR05*)ProtCTe[i].FtpAmb    := StrToTpAmb(ok, Leitor.rCampo(tcStr, 'tpAmb'));
         (*PR06*)ProtCTe[i].FverAplic := Leitor.rCampo(tcStr, 'verAplic');
         (*PR07*)ProtCTe[i].FchCTe    := Leitor.rCampo(tcStr, 'chCTe');

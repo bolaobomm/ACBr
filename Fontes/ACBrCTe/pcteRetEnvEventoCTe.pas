@@ -177,7 +177,7 @@ begin
     begin
       if Leitor.rExtrai(2, 'infEvento', '', i + 1) <> '' then
        begin
-         infEvento.ID         := Leitor.rCampo(tcStr, 'Id');
+         infEvento.ID         := Leitor.rAtributo('Id='); // Alterado por Italo em 20/05/2013
          infEvento.cOrgao     := Leitor.rCampo(tcInt, 'cOrgao');
          infEvento.tpAmb      := StrToTpAmb(ok, Leitor.rCampo(tcStr, 'tpAmb'));
          infEvento.CNPJ       := Leitor.rCampo(tcStr, 'CNPJ');
@@ -207,7 +207,8 @@ begin
     end;
 
     if (Leitor.rExtrai(1, 'retEnvEvento') <> '') or
-       (Leitor.rExtrai(1, 'retEventoCTe') <> '') then
+       (Leitor.rExtrai(1, 'retEventoCTe') <> '') or
+       (Leitor.rExtrai(1, 'retEvento') <> '') then
     begin
       (*
       FidLote   := Leitor.rCampo(tcInt, 'idLote');
