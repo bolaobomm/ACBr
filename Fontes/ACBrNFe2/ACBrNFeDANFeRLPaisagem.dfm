@@ -3,11 +3,13 @@ inherited frlDANFeRLPaisagem: TfrlDANFeRLPaisagem
   Top = 114
   Width = 1149
   Height = 732
+  VertScrollBar.Position = 107
   Caption = 'frlDANFeRLPaisagem'
   OldCreateOrder = True
   PixelsPerInch = 96
   TextHeight = 13
   inherited RLNFe: TRLReport
+    Top = -107
     Width = 1123
     Height = 794
     Background.Arrange = baDistributed
@@ -1475,7 +1477,7 @@ inherited frlDANFeRLPaisagem: TfrlDANFeRLPaisagem
       end
       object rllDestNome: TRLLabel
         Tag = 70
-        Left = 40
+        Left = 39
         Top = 11
         Width = 689
         Height = 14
@@ -1504,7 +1506,7 @@ inherited frlDANFeRLPaisagem: TfrlDANFeRLPaisagem
       end
       object rllDestEndereco: TRLLabel
         Tag = 70
-        Left = 40
+        Left = 39
         Top = 37
         Width = 537
         Height = 14
@@ -1533,7 +1535,7 @@ inherited frlDANFeRLPaisagem: TfrlDANFeRLPaisagem
       end
       object rllDestCidade: TRLLabel
         Tag = 70
-        Left = 40
+        Left = 39
         Top = 63
         Width = 457
         Height = 14
@@ -2927,7 +2929,7 @@ inherited frlDANFeRLPaisagem: TfrlDANFeRLPaisagem
         ParentColor = False
         Transparent = False
       end
-      object RLLabel44: TRLLabel
+      object rllTituloBaseICMS: TRLLabel
         Tag = 10
         Left = 35
         Top = 3
@@ -2976,7 +2978,7 @@ inherited frlDANFeRLPaisagem: TfrlDANFeRLPaisagem
         Tag = 70
         Left = 39
         Top = 39
-        Width = 136
+        Width = 138
         Height = 14
         Alignment = taRightJustify
         AutoSize = False
@@ -2987,7 +2989,7 @@ inherited frlDANFeRLPaisagem: TfrlDANFeRLPaisagem
         Font.Style = [fsBold]
         ParentFont = False
       end
-      object RLLabel45: TRLLabel
+      object rllTituloValorICMS: TRLLabel
         Tag = 10
         Left = 186
         Top = 3
@@ -3004,7 +3006,7 @@ inherited frlDANFeRLPaisagem: TfrlDANFeRLPaisagem
       end
       object rllValorICMS: TRLLabel
         Tag = 70
-        Left = 192
+        Left = 191
         Top = 11
         Width = 138
         Height = 14
@@ -3019,7 +3021,7 @@ inherited frlDANFeRLPaisagem: TfrlDANFeRLPaisagem
       end
       object RLLabel50: TRLLabel
         Tag = 10
-        Left = 184
+        Left = 187
         Top = 31
         Width = 70
         Height = 7
@@ -3034,9 +3036,9 @@ inherited frlDANFeRLPaisagem: TfrlDANFeRLPaisagem
       end
       object rllValorSeguro: TRLLabel
         Tag = 70
-        Left = 188
+        Left = 191
         Top = 39
-        Width = 136
+        Width = 137
         Height = 14
         Alignment = taRightJustify
         AutoSize = False
@@ -3049,7 +3051,7 @@ inherited frlDANFeRLPaisagem: TfrlDANFeRLPaisagem
       end
       object RLLabel51: TRLLabel
         Tag = 10
-        Left = 333
+        Left = 342
         Top = 31
         Width = 42
         Height = 7
@@ -3064,7 +3066,7 @@ inherited frlDANFeRLPaisagem: TfrlDANFeRLPaisagem
       end
       object rllDescontos: TRLLabel
         Tag = 70
-        Left = 337
+        Left = 345
         Top = 39
         Width = 136
         Height = 14
@@ -3077,7 +3079,7 @@ inherited frlDANFeRLPaisagem: TfrlDANFeRLPaisagem
         Font.Style = [fsBold]
         ParentFont = False
       end
-      object RLLabel46: TRLLabel
+      object rllTituloBaseICMSST: TRLLabel
         Tag = 10
         Left = 338
         Top = 3
@@ -3109,7 +3111,7 @@ inherited frlDANFeRLPaisagem: TfrlDANFeRLPaisagem
       end
       object RLLabel52: TRLLabel
         Tag = 10
-        Left = 482
+        Left = 490
         Top = 31
         Width = 123
         Height = 7
@@ -3124,9 +3126,9 @@ inherited frlDANFeRLPaisagem: TfrlDANFeRLPaisagem
       end
       object rllAcessorias: TRLLabel
         Tag = 70
-        Left = 486
+        Left = 494
         Top = 39
-        Width = 136
+        Width = 140
         Height = 14
         Alignment = taRightJustify
         AutoSize = False
@@ -3137,7 +3139,7 @@ inherited frlDANFeRLPaisagem: TfrlDANFeRLPaisagem
         Font.Style = [fsBold]
         ParentFont = False
       end
-      object RLLabel47: TRLLabel
+      object rllTituloValorICMSST: TRLLabel
         Tag = 10
         Left = 489
         Top = 3
@@ -3154,7 +3156,7 @@ inherited frlDANFeRLPaisagem: TfrlDANFeRLPaisagem
       end
       object rllValorICMSST: TRLLabel
         Tag = 70
-        Left = 495
+        Left = 494
         Top = 11
         Width = 138
         Height = 14
@@ -3169,7 +3171,7 @@ inherited frlDANFeRLPaisagem: TfrlDANFeRLPaisagem
       end
       object RLLabel53: TRLLabel
         Tag = 10
-        Left = 631
+        Left = 641
         Top = 31
         Width = 49
         Height = 7
@@ -3184,9 +3186,9 @@ inherited frlDANFeRLPaisagem: TfrlDANFeRLPaisagem
       end
       object rllValorIPI: TRLLabel
         Tag = 70
-        Left = 635
+        Left = 646
         Top = 39
-        Width = 148
+        Width = 141
         Height = 14
         Alignment = taRightJustify
         AutoSize = False
@@ -3235,7 +3237,7 @@ inherited frlDANFeRLPaisagem: TfrlDANFeRLPaisagem
         DrawKind = dkLine
         HoldStyle = hsRelatively
       end
-      object RLDraw32: TRLDraw
+      object rliDivImposto1: TRLDraw
         Left = 183
         Top = 0
         Width = 1
@@ -3245,7 +3247,7 @@ inherited frlDANFeRLPaisagem: TfrlDANFeRLPaisagem
         HoldStyle = hsRelatively
       end
       object RLDraw33: TRLDraw
-        Left = 181
+        Left = 182
         Top = 28
         Width = 1
         Height = 29
@@ -3254,7 +3256,7 @@ inherited frlDANFeRLPaisagem: TfrlDANFeRLPaisagem
         HoldStyle = hsRelatively
       end
       object RLDraw34: TRLDraw
-        Left = 330
+        Left = 334
         Top = 28
         Width = 1
         Height = 29
@@ -3263,7 +3265,7 @@ inherited frlDANFeRLPaisagem: TfrlDANFeRLPaisagem
         HoldStyle = hsRelatively
       end
       object RLDraw35: TRLDraw
-        Left = 479
+        Left = 486
         Top = 28
         Width = 1
         Height = 29
@@ -3271,7 +3273,7 @@ inherited frlDANFeRLPaisagem: TfrlDANFeRLPaisagem
         DrawKind = dkLine
         HoldStyle = hsRelatively
       end
-      object RLDraw31: TRLDraw
+      object rliDivImposto2: TRLDraw
         Left = 335
         Top = 0
         Width = 1
@@ -3310,7 +3312,7 @@ inherited frlDANFeRLPaisagem: TfrlDANFeRLPaisagem
         Font.Style = [fsBold]
         ParentFont = False
       end
-      object RLDraw53: TRLDraw
+      object rliDivImposto0: TRLDraw
         Left = 32
         Top = 0
         Width = 1
@@ -3351,7 +3353,7 @@ inherited frlDANFeRLPaisagem: TfrlDANFeRLPaisagem
         ParentFont = False
       end
       object RLDraw6: TRLDraw
-        Left = 628
+        Left = 638
         Top = 28
         Width = 1
         Height = 29
@@ -3359,7 +3361,7 @@ inherited frlDANFeRLPaisagem: TfrlDANFeRLPaisagem
         DrawKind = dkLine
         HoldStyle = hsRelatively
       end
-      object RLDraw7: TRLDraw
+      object rliDivImposto3: TRLDraw
         Left = 486
         Top = 0
         Width = 1
@@ -3368,7 +3370,7 @@ inherited frlDANFeRLPaisagem: TfrlDANFeRLPaisagem
         DrawKind = dkLine
         HoldStyle = hsRelatively
       end
-      object RLDraw8: TRLDraw
+      object rliDivImposto4: TRLDraw
         Left = 638
         Top = 0
         Width = 1
@@ -3377,7 +3379,7 @@ inherited frlDANFeRLPaisagem: TfrlDANFeRLPaisagem
         DrawKind = dkLine
         HoldStyle = hsRelatively
       end
-      object RLDraw11: TRLDraw
+      object rliDivImposto5: TRLDraw
         Left = 789
         Top = 0
         Width = 1
@@ -3395,7 +3397,7 @@ inherited frlDANFeRLPaisagem: TfrlDANFeRLPaisagem
         DrawKind = dkLine
         HoldStyle = hsRelatively
       end
-      object RLLabel5: TRLLabel
+      object rllTituloTotalTributos: TRLLabel
         Tag = 10
         Left = 641
         Top = 3
@@ -3412,7 +3414,7 @@ inherited frlDANFeRLPaisagem: TfrlDANFeRLPaisagem
       end
       object rllTotalTributos: TRLLabel
         Tag = 70
-        Left = 647
+        Left = 646
         Top = 11
         Width = 138
         Height = 14

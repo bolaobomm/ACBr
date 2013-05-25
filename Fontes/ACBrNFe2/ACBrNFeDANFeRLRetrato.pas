@@ -316,21 +316,21 @@ type
     rliFatura: TRLDraw;
     rlbImposto: TRLBand;
     RLLabel20: TRLLabel;
-    RLLabel44: TRLLabel;
+    rllTituloBaseICMS: TRLLabel;
     rllBaseICMS: TRLLabel;
     RLLabel49: TRLLabel;
     rllValorFrete: TRLLabel;
-    RLLabel45: TRLLabel;
+    rllTituloValorICMS: TRLLabel;
     rllValorICMS: TRLLabel;
     RLLabel50: TRLLabel;
     rllValorSeguro: TRLLabel;
     RLLabel51: TRLLabel;
     rllDescontos: TRLLabel;
-    RLLabel46: TRLLabel;
+    rllTituloBaseICMSST: TRLLabel;
     rllBaseICMSST: TRLLabel;
     RLLabel52: TRLLabel;
     rllAcessorias: TRLLabel;
-    RLLabel47: TRLLabel;
+    rllTituloValorICMSST: TRLLabel;
     rllValorICMSST: TRLLabel;
     RLLabel53: TRLLabel;
     rllValorIPI: TRLLabel;
@@ -339,11 +339,11 @@ type
     RLLabel54: TRLLabel;
     rllTotalNF: TRLLabel;
     RLDraw30: TRLDraw;
-    RLDraw32: TRLDraw;
+    rliDivImposto1: TRLDraw;
     RLDraw33: TRLDraw;
     RLDraw34: TRLDraw;
     RLDraw35: TRLDraw;
-    RLDraw31: TRLDraw;
+    rliDivImposto2: TRLDraw;
     RLDraw29: TRLDraw;
     rlbTransportadora: TRLBand;
     RLLabel21: TRLLabel;
@@ -645,10 +645,10 @@ type
     RLLabel12: TRLLabel;
     RLDraw3: TRLDraw;
     RLDraw5: TRLDraw;
-    RLDraw7: TRLDraw;
-    RLDraw12: TRLDraw;
-    RLDraw13: TRLDraw;
-    RLLabel1: TRLLabel;
+    rliDivImposto3: TRLDraw;
+    rliDivImposto4: TRLDraw;
+    rliDivImposto5: TRLDraw;
+    rllTituloTotalTributos: TRLLabel;
     rllTotalTributos: TRLLabel;
     procedure RLNFeBeforePrint(Sender: TObject; var PrintIt: Boolean);
     procedure rlbEmitenteBeforePrint(Sender: TObject;
@@ -1330,6 +1330,7 @@ begin
 end;
 
 procedure TfrlDANFeRLRetrato.Imposto;
+var LarguraCampo: Integer;
 begin
   with FNFe.Total.ICMSTot do
   begin
@@ -1344,7 +1345,54 @@ begin
     rllAcessorias.Caption    := DFeUtil.FormatFloat(VOutro, '###,###,###,##0.00');
     rllValorIPI.Caption      := DFeUtil.FormatFloat(VIPI, '###,###,###,##0.00');
     rllTotalNF.Caption       := DFeUtil.FormatFloat(VNF, '###,###,###,##0.00');
-    rllTotalTributos.Caption := DFeUtil.FormatFloat(vTotTrib, '###,###,###,##0.00');
+
+//115 460 143
+    // Exibe o Valor total dos tributos se vTotTrib for informado
+    // e ajusta a posição dos outros campos para "abrir espaço" para ele.
+    if vTotTrib > 0 then
+      begin
+        rllTotalTributos.Caption := DFeUtil.FormatFloat(vTotTrib, '###,###,###,##0.00');
+        rliDivImposto4.Visible := True;
+        rllTituloTotalTributos.Visible := True;
+        rllTotalTributos.Visible := True;
+
+        rliDivImposto4.Left := 460;
+        rllTituloTotalTributos.Left := rliDivImposto4.Left + 3;
+        rllTotalTributos.Left := rliDivImposto4.Left + 7;
+        rllTotalTributos.Width := (rliDivImposto5.Left - 7) - (rliDivImposto4.Left + 3);
+
+        LarguraCampo := 115;
+
+        rliDivImposto3.Left := rliDivImposto4.Left - LarguraCampo - 1;
+        rllTituloValorICMSST.Left := rliDivImposto3.Left + 3;
+        rllValorICMSST.Left := rliDivImposto3.Left + 7;
+        rllValorICMSST.Width := (rliDivImposto4.Left - 7) - (rliDivImposto3.Left + 3);
+      end
+    else
+      begin
+        rliDivImposto4.Visible := False;
+        rllTituloTotalTributos.Visible := False;
+        rllTotalTributos.Visible := False;
+
+        LarguraCampo := 143;
+
+        rliDivImposto3.Left := rliDivImposto5.Left - LarguraCampo - 1;
+        rllTituloValorICMSST.Left := rliDivImposto3.Left + 3;
+        rllValorICMSST.Left := rliDivImposto3.Left + 7;
+        rllValorICMSST.Width := (rliDivImposto5.Left - 7) - (rliDivImposto3.Left + 3);
+      end;
+
+    rliDivImposto2.Left := rliDivImposto3.Left - LarguraCampo - 1;
+    rllTituloBaseICMSST.Left := rliDivImposto2.Left + 3;
+    rllBaseICMSST.Left := rliDivImposto2.Left + 7;
+    rllBaseICMSST.Width := (rliDivImposto3.Left - 7) - (rliDivImposto2.Left + 3);
+
+    rliDivImposto1.Left := rliDivImposto2.Left - LarguraCampo - 1;
+    rllTituloValorICMS.Left := rliDivImposto1.Left + 3;
+    rllValorICMS.Left := rliDivImposto1.Left + 7;
+    rllValorICMS.Width := (rliDivImposto2.Left - 7) - (rliDivImposto1.Left + 3);
+
+    rllBaseICMS.Width := (rliDivImposto1.Left - 10);
   end;
 end;
 
