@@ -582,6 +582,13 @@ begin
     (*L120*)NFe.Det[i].Prod.comb.ICMSCons.UFcons := LerCampo(tcStr, 'UFcons');
   end;
 
+  if (ID = 'M') then (* Grupo da TAG <det><imposto> ********************)
+  begin
+    i := NFe.Det.Count - 1;
+    (*M02*)NFe.Det[i].Imposto.vTotTrib:= LerCampo(tcDe2, 'vTotTrib');
+  end;
+
+
   if (ID = 'N02') or (ID = 'N03') or (ID = 'N04') or (ID = 'N05') or
      (ID = 'N06') or (ID = 'N07') or (ID = 'N08') or (ID = 'N09') or
      (ID = 'N10') or (ID = 'N10A') or (ID = 'N10B') or (ID = 'N10C') or
@@ -818,6 +825,7 @@ begin
     (*W14*)NFe.Total.ICMSTot.vCOFINS := LerCampo(tcDe2, 'vCOFINS');
     (*W15*)NFe.Total.ICMSTot.vOutro := LerCampo(tcDe2, 'vOutro');
     (*W16*)NFe.Total.ICMSTot.vNF := LerCampo(tcDe2, 'vNF');
+    (*W16a*)NFe.Total.ICMSTot.vTotTrib := LerCampo(tcDe2, 'vTotTrib');    
   end;
 
   if ID = 'W17' then (* Grupo da TAG <total><ISSQNtot> ************************)

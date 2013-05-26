@@ -94,7 +94,7 @@ begin
     LoadLayout('<L109> L109|VBCICMS¨|VICMS¨|VBCICMSST¨|VICMSST¨'); //ok
     LoadLayout('<L114> L114|VBCICMSSTDest¨|VICMSSTDest¨'); //ok
     LoadLayout('<L117> L117|VBCICMSSTCons¨|VICMSSTCons¨|UFCons¨'); //ok
-    LoadLayout('<M01>     M'); //ok
+    LoadLayout('<M01>     M|VTotTrib¨'); //ok
     LoadLayout('<N01>     N'); //ok
     LoadLayout('<N02>   N02|Orig¨|CST¨|ModBC¨|VBC¨|PICMS¨|VICMS¨'); //ok
     LoadLayout('<N03>   N03|Orig¨|CST¨|ModBC¨|VBC¨|PICMS¨|VICMS¨|ModBCST¨|PMVAST¨|PRedBCST¨|VBCST¨|PICMSST¨|VICMSST¨'); //ok
@@ -133,7 +133,7 @@ begin
     LoadLayout('<T01>   T04|QBCProd¨|VAliqProd¨'); //ok
     LoadLayout('<U01>     U|VBC¨|VAliq¨|VISSQN¨|CMunFG¨|CListServ¨'); //ok
     LoadLayout('<W01>     W'); //ok
-    LoadLayout('<W02>   W02|VBC¨|VICMS¨|VBCST¨|VST¨|VProd¨|VFrete¨|VSeg¨|VDesc¨|VII¨|VIPI¨|VPIS¨|VCOFINS¨|VOutro¨|VNF¨'); //ok
+    LoadLayout('<W02>   W02|VBC¨|VICMS¨|VBCST¨|VST¨|VProd¨|VFrete¨|VSeg¨|VDesc¨|VII¨|VIPI¨|VPIS¨|VCOFINS¨|VOutro¨|VNF¨|VTotTrib¨'); //ok
     LoadLayout('<W17>   W17|VServ¨|VBC¨|VISS¨|VPIS¨|VCOFINS¨'); //ok
     LoadLayout('<W23>   W23|VRetPIS¨|VRetCOFINS¨|VRetCSLL¨|VBCIRRF¨|VIRRF¨|VBCRetPrev¨|VRetPrev¨'); //ok
     LoadLayout('<X01>     X|ModFrete¨'); //ok
@@ -195,7 +195,7 @@ begin
     LoadLayout('<L109> L109|VBCICMS¨|VICMS¨|VBCICMSST¨|VICMSST¨'); //ok
     LoadLayout('<L114> L114|VBCICMSSTDest¨|VICMSSTDest¨'); //ok
     LoadLayout('<L117> L117|VBCICMSSTCons¨|VICMSSTCons¨|UFCons¨'); //ok
-    LoadLayout('<M01>     M'); //ok
+    LoadLayout('<M01>     M|VTotTrib¨'); //ok
     LoadLayout('<N01>     N'); //ok
     LoadLayout('<N02>   N02|Orig¨|CST¨|ModBC¨|VBC¨|PICMS¨|VICMS¨'); //ok
     LoadLayout('<N03>   N03|Orig¨|CST¨|ModBC¨|VBC¨|PICMS¨|VICMS¨|ModBCST¨|PMVAST¨|PRedBCST¨|VBCST¨|PICMSST¨|VICMSST¨'); //ok
@@ -242,7 +242,7 @@ begin
     LoadLayout('<T01>   T04|QBCProd¨|VAliqProd¨'); //ok
     LoadLayout('<U01>     U|VBC¨|VAliq¨|VISSQN¨|CMunFG¨|CListServ¨|CSitTrib¨'); //ok
     LoadLayout('<W01>     W'); //ok
-    LoadLayout('<W02>   W02|VBC¨|VICMS¨|VBCST¨|VST¨|VProd¨|VFrete¨|VSeg¨|VDesc¨|VII¨|VIPI¨|VPIS¨|VCOFINS¨|VOutro¨|VNF¨'); //ok
+    LoadLayout('<W02>   W02|VBC¨|VICMS¨|VBCST¨|VST¨|VProd¨|VFrete¨|VSeg¨|VDesc¨|VII¨|VIPI¨|VPIS¨|VCOFINS¨|VOutro¨|VNF¨|VTotTrib¨'); //ok
     LoadLayout('<W17>   W17|VServ¨|VBC¨|VISS¨|VPIS¨|VCOFINS¨'); //ok
     LoadLayout('<W23>   W23|VRetPIS¨|VRetCOFINS¨|VRetCSLL¨|VBCIRRF¨|VIRRF¨|VBCRetPrev¨|VRetPrev¨'); //ok
     LoadLayout('<X01>     X|ModFrete¨'); //ok

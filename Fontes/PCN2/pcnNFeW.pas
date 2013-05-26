@@ -48,6 +48,8 @@
 |*
 |* 24/09/2012: Italo Jurisato Junior
 |*  - Alterações para funcionamento com NFC-e
+|* 29/04/2013: Italo Jurisato Junior
+|*  - Alterações para atender NT 2013/003 
 ******************************************************************************}
 unit pcnNFeW;
 
@@ -403,7 +405,7 @@ begin
     if nfe.ide.NFref[i].RefECF.nCOO <> '' then (**)GerarRefECF(i);
     Gerador.wGrupo('/NFref');
   end;
-  // Incluido por Italo em 29/04/2013 conforme NT 2013/003
+
   if nfe.ide.NFref.Count > 500 then
     Gerador.wAlerta('B12a', 'NFref', DSC_QNF, ERR_MSG_MAIOR_MAXIMO + '500');
 end;
@@ -920,8 +922,6 @@ end;
 procedure TNFeW.GerarDetImposto(const i: integer);
 begin
   Gerador.wGrupo('imposto', 'M01');
-
-  // Incluido por Italo em 29/04/2013 conforme NT 2013/003
   Gerador.wCampo(tcDe2, 'M02', 'vTotTrib ', 01, 15, 0, nfe.Det[i].Imposto.vTotTrib, DSC_VTOTTRIB);
 
   if nfe.Det[i].Imposto.ISSQN.cSitTrib <> ISSQNcSitTribVazio then
@@ -1515,7 +1515,6 @@ begin
   Gerador.wCampo(tcDe2, 'W14', 'vCOFINS   ', 01, 15, 1, nfe.Total.ICMSTot.vCOFINS, DSC_VCOFINS);
   Gerador.wCampo(tcDe2, 'W15', 'vOutro    ', 01, 15, 1, nfe.Total.ICMSTot.vOutro, DSC_VOUTRO);
   Gerador.wCampo(tcDe2, 'W16', 'vNF       ', 01, 15, 1, nfe.Total.ICMSTot.vNF, DSC_VNF);
-  // Incluido por Italo em 29/04/2013 conforme NT 2013/003
   Gerador.wCampo(tcDe2, 'W16a', 'vTotTrib ', 01, 15, 0, nfe.Total.ICMSTot.vTotTrib, DSC_VTOTTRIB);
   Gerador.wGrupo('/ICMSTot');
 end;
