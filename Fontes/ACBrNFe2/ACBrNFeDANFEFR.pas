@@ -68,6 +68,7 @@ type
     FFastFileEvento: String;
     FShowDialog: Boolean;
     FExibirTotalTributosItem: Boolean;
+    FExibeCampoFatura: Boolean;  //Incluido em 22/05/2013 - Fábio Gabriel
     function GetPreparedReport: TfrxReport;
     function GetPreparedReportEvento: TfrxReport;
     function PrepareReport(NFE: TNFe = nil): Boolean;
@@ -88,6 +89,7 @@ type
     property PreparedReportEvento: TfrxReport read GetPreparedReportEvento;
     property ShowDialog: Boolean read FShowDialog write FShowDialog default false; // Isaque Pinheiro
     property ExibirTotalTributosItem: Boolean read FExibirTotalTributosItem write FExibirTotalTributosItem;
+    property ExibeCampoFatura: Boolean read FExibeCampoFatura write FExibeCampoFatura;  //Incluido em 22/05/2013 - Fábio Gabriel
   end;
 
 implementation
@@ -101,6 +103,7 @@ begin
   FFastFile := '' ;
   FEspessuraBorda := 1;
   FExibirTotalTributosItem := False;
+  FExibeCampoFatura := True;  //Incluido em 22/05/2013 - Fábio Gabriel - Setado por padrão True
 end;
 
 destructor TACBrNFeDANFEFR.Destroy;
@@ -142,6 +145,7 @@ begin
   Result := False;
 
   dmDanfe.ExibirTotalTributosItem := FExibirTotalTributosItem;
+  dmDanfe.ExibeCampoFatura :=  FExibeCampoFatura;
 
   if Trim(FastFile) <> '' then
   begin

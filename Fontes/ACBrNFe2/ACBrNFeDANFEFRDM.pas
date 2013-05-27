@@ -284,6 +284,7 @@ type
     FNFe: TNFe;
     FEvento: TEventoNFe;
     FExibirTotalTributosItem: Boolean;
+    FExibeCampoFatura: Boolean;
     procedure CarregaIdentificacao;
     procedure CarregaEmitente;
     procedure CarregaDestinatario;
@@ -304,6 +305,7 @@ type
     property Evento: TEventoNFe read FEvento write FEvento;
     property DANFEClassOwner: TACBrNFeDANFEClass read FDANFEClassOwner;
     property ExibirTotalTributosItem: Boolean read FExibirTotalTributosItem write FExibirTotalTributosItem default False;
+    property ExibeCampoFatura: Boolean read FExibeCampoFatura write FExibeCampoFatura default True;
     procedure CarregaDadosNFe;
     procedure CarregaDadosEventos;
   end;
@@ -876,31 +878,29 @@ begin
     Close;
     CreateDataSet;
 
-    if DFeUtil.NaoEstaVazio(FNFe.Cobr.Fat.nFat) then
+    if Self.ExibeCampoFatura then   //Incluido por Fábio Gabriel - 22/05/2013
     begin
-      Append;
-
-      if FNFe.Cobr.Dup.Count = 0 then
+      if DFeUtil.NaoEstaVazio(FNFe.Cobr.Fat.nFat) then
       begin
+        Append;
+
         if FNFe.Ide.indPag = ipVista then
           FieldByName('Pagamento').AsString := 'PAGAMENTO À VISTA'
         else if FNFe.Ide.indPag = ipPrazo then
           FieldByName('Pagamento').AsString := 'PAGAMENTO A PRAZO'
         else
-          FieldByName('Pagamento').AsString := ''
-      end
-      else
-        FieldByName('Pagamento').AsString := '';
+          FieldByName('Pagamento').AsString := '';
 
-      with FNFe.Cobr.Fat do
-      begin
-        FieldByName('nfat').AsString := nFat;
-        FieldByName('vOrig').AsFloat := DFeUtil.StringToFloatDef(FloatToStr(vOrig), 0);
-        FieldByName('vDesc').AsFloat := DFeUtil.StringToFloatDef(FloatToStr(vDesc), 0);
-        FieldByName('vLiq').AsFloat := DFeUtil.StringToFloatDef(FloatToStr(vLiq), 0);
+        with FNFe.Cobr.Fat do
+        begin
+          FieldByName('nfat').AsString := nFat;
+          FieldByName('vOrig').AsFloat := DFeUtil.StringToFloatDef(FloatToStr(vOrig), 0);
+          FieldByName('vDesc').AsFloat := DFeUtil.StringToFloatDef(FloatToStr(vDesc), 0);
+          FieldByName('vLiq').AsFloat := DFeUtil.StringToFloatDef(FloatToStr(vLiq), 0);
+        end;
+
+        Post;
       end;
-
-      Post;
     end;
   end;
 end;
@@ -1148,6 +1148,7 @@ begin
     CreateDataSet;
     Append;
 
+    //Carregar Resumo Canhoto
     vResumo := '';
     if DANFEClassOwner.ExibirResumoCanhoto then
     begin
@@ -1159,26 +1160,34 @@ begin
     FieldByName('ResumoCanhoto').AsString := vResumo;
 
     if (FNFe.Ide.TpAmb = taHomologacao) then
-      FieldByName('Mensagem0').AsString := 'NFe sem Valor Fiscal - HOMOLOGAÇÃO'
+    begin
+      //Modificado em 22/05/2013 - Fábio Gabriel
+      if (FNFe.Ide.tpEmis in [teContingencia, teFSDA, teSCAN, teDPEC]) then
+      begin
+        if (FNFe.procNFe.cStat in [101, 151, 155]) then
+          FieldByName('Mensagem0').AsString := 'NFe sem Valor Fiscal - HOMOLOGAÇÃO'+
+            #10#13+'NFe em Contingência - CANCELADA'
+        else
+          FieldByName('Mensagem0').AsString := 'NFe sem Valor Fiscal - HOMOLOGAÇÃO'+
+            #10#13+'NFe em Contingência';
+      end
+      else
+        FieldByName('Mensagem0').AsString := 'NFe sem Valor Fiscal - HOMOLOGAÇÃO'
+    end
     else
     begin
       if not (FNFe.Ide.tpEmis in [teContingencia, teFSDA]) then
       begin
-        if ((DFeUtil.EstaVazio(FDANFEClassOwner.ProtocoloNFe)) and
-            (DFeUtil.EstaVazio(FNFe.procNFe.nProt))) then
+        //prioridade para opção NFeCancelada
+        if (FDANFEClassOwner.NFeCancelada) or
+           ((DFeUtil.NaoEstaVazio(FNFe.procNFe.nProt)) and
+            (FNFe.procNFe.cStat in [101,151,155])) then
+          FieldByName('Mensagem0').AsString := 'NFe Cancelada'
+        else if ((DFeUtil.EstaVazio(FDANFEClassOwner.ProtocoloNFe)) and
+                 (DFeUtil.EstaVazio(FNFe.procNFe.nProt))) then
           FieldByName('Mensagem0').AsString := 'NFe sem Autorização de Uso da SEFAZ'
         else
-        if (not ((DFeUtil.EstaVazio(FDANFEClassOwner.ProtocoloNFe)) and
-           (DFeUtil.EstaVazio(FNFe.procNFe.nProt)))) and
-           (FNFe.procNFe.cStat in [101,151,155]) then
-          FieldByName('Mensagem0').AsString := 'NFe Cancelada'
-        else
-        begin
-          if FDANFEClassOwner.NFeCancelada then
-            FieldByName('Mensagem0').AsString := 'NFe Cancelada'
-          else
-            FieldByName('Mensagem0').AsString := '';
-        end;
+          FieldByName('Mensagem0').AsString := '';
       end
       else
         FieldByName('Mensagem0').AsString := '';
@@ -1278,15 +1287,22 @@ begin
         FieldByName('ConsultaAutenticidade').AsString := '';
       end
       else
+      //Modificado em 22/05/2013 - Fábio Gabriel
       if (FNFe.Ide.tpEmis = teDPEC) then
       begin
         FieldByName('Contingencia_Descricao').AsString := 'NÚMERO DE REGISTRO DPEC';
-
-        //precisa testar
-        if DFeUtil.EstaVazio(FDANFEClassOwner.ProtocoloNFe) then
-          raise EACBrNFeException.Create('Protocolo de Registro no DPEC não informado.')
+        //prioridade para ProtocoloNFe informado
+        if DFeUtil.NaoEstaVazio(FDANFEClassOwner.ProtocoloNFe) then
+          FieldByName('Contingencia_Valor').AsString := FDANFEClassOwner.ProtocoloNFe
         else
-          FieldByName('Contingencia_Valor').AsString := FDANFEClassOwner.ProtocoloNFe;
+        begin
+          try
+            FieldByName('Contingencia_Valor').AsString := FNFe.procNFe.nProt + ' ' + DFeUtil.SeSenao(FNFe.procNFe.dhRecbto <> 0, DateTimeToStr(FNFe.procNFe.dhRecbto), '');
+            FieldByName('Contingencia_Descricao').AsString := 'PROTOCOLO DE AUTORIZAÇÃO DE USO';
+          except
+            raise EACBrNFeException.Create('Protocolo de Registro no DPEC não informado.')
+          end;
+        end;
       end;
     end;
 

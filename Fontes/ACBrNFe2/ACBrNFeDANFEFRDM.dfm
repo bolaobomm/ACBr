@@ -256,8 +256,9 @@ object dmACBrNFeFR: TdmACBrNFeFR
       Size = 15
     end
     object cdsDestinatarioIE: TStringField
+      DisplayWidth = 18
       FieldName = 'IE'
-      Size = 14
+      Size = 18
     end
   end
   object cdsDadosProdutos: TClientDataSet
@@ -986,9 +987,10 @@ object dmACBrNFeFR: TdmACBrNFeFR
     PrintOptions.Printer = 'Default'
     PrintOptions.PrintOnSheet = 0
     ReportOptions.CreateDate = 40401.475989294000000000
-    ReportOptions.LastChange = 41414.442673923610000000
+    ReportOptions.LastChange = 41420.196894467600000000
     ScriptLanguage = 'PascalScript'
     StoreInDFM = False
+    OnReportPrint = 'frxReportOnReportPrint'
     Left = 48
     Top = 36
   end

@@ -47,6 +47,25 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+
+27/05/2013 {por Fabio Gabriel e João Henrique}
+----------
+[+] - {ACBrNFeDANFEFR.pas} Inclusão da propriedade "ExibeCampoFatura", opção para cancelar a impressão do campo FATURA (Somente em FastReport)
+	Ps: Definido por padrão para True. 
+[*] - {ACBrNFeDANFEFRDM.dfm} Modificado no cdsDestinatarioIE (Inscr.Estadual) o campo de 14 para 18 caracteres	devido a utilização na formatação para 	alguns estados.
+[+] - {ACBrNFeDANFEFRDM.pas} CarregaFatura foi incluso a opção da impressão do campo (ExibeCampoFatura);  
+[*] - {ACBrNFeDANFEFRDM.pas} CarregaFatura, Indicação de pagamente será sempre de acordo com o a tag indPag (juaumkiko)
+[-] - {ACBrNFeDANFEFRDM.pas} CarregaParametros, modificado em vários locais:
+	  	TpAmb = taHomologação: (Várias opções para teste)
+		TpAmb = taProdução: (Várias opções para teste)
+		TpEmis = teDPEC: (Correção conforme relatado em: http://www.projetoacbr.com.br/forum/index.php?/topic/9203-normalização-danfe-em-fast-report/page-4#entry62155
+      		PS: Todos os testes precisam verificar primeiro a especificação do ProtocoloNfe e opção NFeCancelada diretamente pelo componente. (juaumkiko)
+[*] - {DANFeRetrato.fr3} No Canhoto foi incluso mais uma linha, para ficar padrão como a anterior (DANFE.FR3).  Isto se faz necessário, porque várias Empresas necessita de informações mas detalhadas, devido a despacho por transportadoras, entre outras, e o tamanho fica restrito.
+[*] - {DANFeRetrato.fr3} Na Fatura foi redimencionado o tamanho e incluso a opção de impressão (ExibeCampoFatura), ganhando mais espaço no produtos/serviços (obedecendo o manual).
+[+] - {DANFeRetrato.fr3} Incluso um ColumnFooter para ISSQN, assim podemos usar o recurso de exibição ou não, ganhando mais espaço com os produtos/serviços.
+[*] - {DANFeRetrato.fr3} Redimensionamento dos Dados Adicionais (obedecendo o manual)
+
+
 04/03/2013
 ----------
 [-] Acerto no envio de e-mail normal, não estava anexando o XML
