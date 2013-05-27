@@ -572,7 +572,7 @@ begin
         begin
           Add( LFill('1210') +
                LFill( CNPJ ) +
-               LFill( CST_PIS ) +
+               LFill( CstPisToStr(CST_PIS) ) +
                LFill( COD_PART ) +
                LFill( DT_OPER ) +
                LFill( VL_OPER,0,2 ) +
@@ -786,7 +786,7 @@ begin
         begin
           Add( LFill('1610') +
                LFill( CNPJ ) +
-               LFill( CST_COFINS ) +
+               LFill( CstCofinsToStr(CST_COFINS) ) +
                LFill( COD_PART ) +
                LFill( DT_OPER ) +
                LFill( VL_OPER,0,2 ) +

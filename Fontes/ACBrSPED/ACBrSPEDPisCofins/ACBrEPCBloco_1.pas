@@ -328,7 +328,7 @@ type
   TRegistro1210 = class
   private
     fCNPJ: string;	              //02	CNPJ	Número de inscrição do estabelecimento no CNPJ (Campo 04 do Registro 0140).	N	014*	-
-    fCST_PIS: Integer;	          //03	CST_PIS	Código da Situação Tributária referente ao PIS/PASEP, conforme a Tabela indicada no item 4.3.3.	N	002*	-
+    fCST_PIS: TACBrCstPis;	          //03	CST_PIS	Código da Situação Tributária referente ao PIS/PASEP, conforme a Tabela indicada no item 4.3.3.	N	002*	-
     fCOD_PART: string;	          //04	COD_PART	Código do participante (Campo 02 do Registro 0150)	C	060	-
     fDT_OPER: TDateTime;	        //05	DT_OPER	Data da Operação (ddmmaaaa)	N	008*	-
     fVL_OPER: Currency;	          //06	VL_OPER	Valor da Operação	N	-	02
@@ -339,7 +339,7 @@ type
     fDESC_COMPL: string;          //11	DESC_COMPL	Descrição complementar do Documento/Operação	C	-	-
   public
     property CNPJ: string read FCNPJ write FCNPJ;
-    property CST_PIS: Integer read FCST_PIS write FCST_PIS;
+    property CST_PIS: TACBrCstPis read FCST_PIS write FCST_PIS;
     property COD_PART: string read FCOD_PART write FCOD_PART;
     property DT_OPER: TDateTime read FDT_OPER write FDT_OPER;
     property VL_OPER: Currency read FVL_OPER write FVL_OPER;
@@ -597,18 +597,18 @@ type
   TRegistro1610 = class
   private
     fCNPJ: string;	                //02	CNPJ	Número de inscrição do estabelecimento no CNPJ (Campo 04 do Registro 0140).	N	014*	-
-    fCST_COFINS: Integer;	          //03	CST_COFINS	Código da Situação Tributária referente a COFINS, conforme a Tabela indicada no item 4.3.4.	N	002*	-
-    fCOD_PART: string;	            //04	COD_PART	Código do participante (Campo 02 do Registro 0150)	C	060	-
+    fCST_COFINS: TACBrCstCofins;	    //03	CST_COFINS	Código da Situação Tributária referente a COFINS, conforme a Tabela indicada no item 4.3.4.	N	002*	-
+    fCOD_PART: string;	             //04	COD_PART	Código do participante (Campo 02 do Registro 0150)	C	060	-
     fDT_OPER: TDateTime;	          //05	DT_OPER	Data da Operação (ddmmaaaa)	N	008*	-
-    fVL_OPER: Currency;	            //06	VL_OPER	Valor da Operação	N	-	02
-    fVL_BC_COFINS: Currency;        //07	VL_BC_COFINS	Base de cálculo da COFINS (em valor ou em quantidade)	N	-	03
-    fALIQ_COFINS: Currency;	        //08	ALIQ_COFINS	Alíquota da COFINS (em percentual ou em reais)	N	-	04
+    fVL_OPER: Currency;	             //06	VL_OPER	Valor da Operação	N	-	02
+    fVL_BC_COFINS: Currency;         //07	VL_BC_COFINS	Base de cálculo da COFINS (em valor ou em quantidade)	N	-	03
+    fALIQ_COFINS: Currency;	       //08	ALIQ_COFINS	Alíquota da COFINS (em percentual ou em reais)	N	-	04
     fVL_COFINS: Currency;	          //09	VL_COFINS	Valor da COFINS	N	-	02
-    fCOD_CTA: string;	              //10	COD_CTA	Código da conta analítica contábil debitada/creditada	C	060	-
+    fCOD_CTA: string;	             //10	COD_CTA	Código da conta analítica contábil debitada/creditada	C	060	-
     fDESC_COMPL: string;	          //11	DESC_COMPL	Descrição complementar do Documento/Operação	C	-	-
   public
     property CNPJ: string read FCNPJ write FCNPJ;
-    property CST_COFINS: Integer read FCST_COFINS write FCST_COFINS;
+    property CST_COFINS: TACBrCstCofins read FCST_COFINS write FCST_COFINS;
     property COD_PART: string read FCOD_PART write FCOD_PART;
     property DT_OPER: TDateTime read FDT_OPER write FDT_OPER;
     property VL_OPER: Currency read FVL_OPER write FVL_OPER;
