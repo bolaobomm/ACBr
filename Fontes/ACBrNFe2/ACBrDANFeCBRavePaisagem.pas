@@ -841,26 +841,39 @@ begin
 end;
 
 function ImprimirCalculoImposto(PosX, PosY: Double): Double;
+var
+  x: double;
+  lVTotTrib: string;
 begin
   with DANFeRave, DANFeRave.ACBrNFe.NotasFiscais.Items[DANFeRave.FNFIndex].NFe, DANFeRave.BaseReport do
-   begin
-     PosX:=PosX+aWidthTituloBloco;
-     Box([fsTop],PosX,PosY,50,aHeigthPadrao,'Base de Cálculo do ICMS',DFeUtil.FormatFloat(Total.ICMSTot.VBC),taRightJustify);
-     Box([fsTop,fsLeft],XPos,YPos,50,aHeigthPadrao,'Valor do ICMS',DFeUtil.FormatFloat(Total.ICMSTot.VICMS),taRightJustify);
-     Box([fsTop,fsLeft],XPos,YPos,50,aHeigthPadrao,'Base de Cálculo do ICMS Substituição',DFeUtil.FormatFloat(Total.ICMSTot.vBCST),taRightJustify);
-     Box([fsTop,fsLeft],XPos,YPos,50,aHeigthPadrao,'Valor do ICMS Substituição',DFeUtil.FormatFloat(Total.ICMSTot.vST),taRightJustify);
-     Box([fsTop,fsLeft],XPos,YPos,51,aHeigthPadrao,'Valor Total dos Produtos',DFeUtil.FormatFloat(Total.ICMSTot.VProd),taRightJustify,True);
+  begin
+    x:=0;
+    if Total.ICMSTot.vTotTrib <> 0 then
+      x := 10;
 
-     Box([fsTop],PosX,YPos,40,aHeigthPadrao,'Valor do Frete',DFeUtil.FormatFloat(Total.ICMSTot.VFrete),taRightJustify);
-     Box([fsTop,fsLeft],XPos,YPos,40,aHeigthPadrao,'Valor do Seguro',DFeUtil.FormatFloat(Total.ICMSTot.VSeg),taRightJustify);
-     Box([fsTop,fsLeft],XPos,YPos,39,aHeigthPadrao,'Desconto',DFeUtil.FormatFloat(Total.ICMSTot.VDesc),taRightJustify);
-     Box([fsTop,fsLeft],XPos,YPos,40,aHeigthPadrao,'Outras Despesas Acessórias',DFeUtil.FormatFloat(Total.ICMSTot.VOutro),taRightJustify);
-     Box([fsTop,fsLeft],XPos,YPos,41,aHeigthPadrao,'Valor do IPI',DFeUtil.FormatFloat(Total.ICMSTot.VIPI),taRightJustify);
-     Box([fsTop,fsLeft],XPos,YPos,51,aHeigthPadrao,'VALOR TOTAL DA NOTA FISCAL',DFeUtil.FormatFloat(Total.ICMSTot.VNF),taRightJustify,True,false);
+    PosX:=PosX+aWidthTituloBloco;
+    Box([fsTop],PosX,PosY,50-x,aHeigthPadrao,'Base de Cálculo do ICMS',DFeUtil.FormatFloat(Total.ICMSTot.VBC),taRightJustify);
+    Box([fsTop,fsLeft],XPos,YPos,50-x,aHeigthPadrao,'Valor do ICMS',DFeUtil.FormatFloat(Total.ICMSTot.VICMS),taRightJustify);
+    Box([fsTop,fsLeft],XPos,YPos,50-x,aHeigthPadrao,'Base de Cálculo do ICMS Subst.',DFeUtil.FormatFloat(Total.ICMSTot.vBCST),taRightJustify);
+    Box([fsTop,fsLeft],XPos,YPos,50-x,aHeigthPadrao,'Valor do ICMS Substituição',DFeUtil.FormatFloat(Total.ICMSTot.vST),taRightJustify);
+    if Total.ICMSTot.vTotTrib <> 0 then
+    begin
+      lVTotTrib :=DFeUtil.FormatFloat(Total.ICMSTot.vTotTrib);
+      lVTotTrib :=lVTotTrib + '('+DFeUtil.FormatFloat((Total.ICMSTot.vTotTrib*100)/Total.ICMSTot.VProd)+'%)';
+      Box([fsLeft],XPos,YPos,(x*4),aHeigthPadrao,'Val. Aprox. Tributos',lVTotTrib,taRightJustify);
+    end;
+    Box([fsTop,fsLeft],XPos,YPos,51,aHeigthPadrao,'Valor Total dos Produtos',DFeUtil.FormatFloat(Total.ICMSTot.VProd),taRightJustify,True);
 
-     Result:=YPos;
-     TituloDoBloco([fsTop],PosY,PosX,YPos,'CALCULO','IMPOSTO');
-   end;
+    Box([fsTop],PosX,YPos,40,aHeigthPadrao,'Valor do Frete',DFeUtil.FormatFloat(Total.ICMSTot.VFrete),taRightJustify);
+    Box([fsTop,fsLeft],XPos,YPos,40,aHeigthPadrao,'Valor do Seguro',DFeUtil.FormatFloat(Total.ICMSTot.VSeg),taRightJustify);
+    Box([fsTop,fsLeft],XPos,YPos,39,aHeigthPadrao,'Desconto',DFeUtil.FormatFloat(Total.ICMSTot.VDesc),taRightJustify);
+    Box([fsTop,fsLeft],XPos,YPos,40,aHeigthPadrao,'Outras Despesas Acessórias',DFeUtil.FormatFloat(Total.ICMSTot.VOutro),taRightJustify);
+    Box([fsTop,fsLeft],XPos,YPos,41,aHeigthPadrao,'Valor do IPI',DFeUtil.FormatFloat(Total.ICMSTot.VIPI),taRightJustify);
+    Box([fsTop,fsLeft],XPos,YPos,51,aHeigthPadrao,'VALOR TOTAL DA NOTA FISCAL',DFeUtil.FormatFloat(Total.ICMSTot.VNF),taRightJustify,True,false);
+
+    Result:=YPos;
+    TituloDoBloco([fsTop],PosY,PosX,YPos,'CALCULO','IMPOSTO');
+    end;
 end;
 
 function ImprimirTransportadorVolumes(PosX,

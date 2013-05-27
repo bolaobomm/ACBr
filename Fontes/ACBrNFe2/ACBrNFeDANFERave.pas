@@ -126,6 +126,7 @@ procedure TACBrNFeDANFERave.ExecutaReport;
    end;
 var
    i,j: integer;
+   k: double;
 
    wReport: TRaveReport;
    wRegion: array [1..2] of TRaveRegion;
@@ -139,7 +140,7 @@ var
    wVLine: array[1..32] of TRaveVLine;
    wRectangle: array[1..7] of TRaveRectangle;
    wSquare: array[1..1] of TRaveSquare;
-   wText: array[1..13] of TRaveText;
+   wText: array[1..17] of TRaveText;
    wDataText: array[1..21] of TRaveDataText;
    wFloatField: array[1..2] of TRaveFloatField;
    wDataMemo: array[1..1] of TRaveDataMemo;
@@ -251,6 +252,49 @@ begin
                      wDataText[i].Font.Height:=FTamanhoFonte_DemaisCampos;
                end;
                i:=i-1;
+            end;
+            //vTotTrib
+            if dmDanfe.NFe.Total.ICMSTot.vTotTrib = 0 then
+            begin
+              wText[7] := FindRaveComponent('Text7',wPage[1]) as TRaveText;
+              wDataText[7] := FindRaveComponent('DataText7',wPage[1]) as TRaveDataText;
+              wVLine[10] := FindRaveComponent('VLine10',wPage[1]) as TRaveVLine;
+              if ((wDataText[7] <> nil) and (wText[7] <> nil) and (wVLine[10] <> nil)) then
+              begin
+                wText[7].Visible := False;
+                wDataText[7].Visible := False;
+                wVLine[10].Visible := False;
+
+                wVLine[6] := FindRaveComponent('VLine6',wPage[1]) as TRaveVLine;
+                k := wVLine[6].Left-wVLine[10].Left;
+
+                //move quadros
+                wText[17] := FindRaveComponent('Text17',wPage[1]) as TRaveText;
+                wText[17].Left := wText[17].Left + k;
+                wDataText[15] := FindRaveComponent('DataText15',wPage[1]) as TRaveDataText;
+                wDataText[15].Left := wDataText[15].Left + k;
+                wVLine[7] := FindRaveComponent('VLine7',wPage[1]) as TRaveVLine;
+                wVLine[7].Left := wVLine[7].Left + k;
+
+                wText[11] := FindRaveComponent('Text11',wPage[1]) as TRaveText;
+                wText[11].Left := wText[11].Left + k;
+                wDataText[9] := FindRaveComponent('DataText9',wPage[1]) as TRaveDataText;
+                wDataText[9].Left := wDataText[9].Left + k;
+                wVLine[4] := FindRaveComponent('VLine4',wPage[1]) as TRaveVLine;
+                wVLine[4].Left := wVLine[4].Left + k;
+
+                wText[10] := FindRaveComponent('Text10',wPage[1]) as TRaveText;
+                wText[10].Left := wText[10].Left + (k/2);
+                wDataText[8] := FindRaveComponent('DataText8',wPage[1]) as TRaveDataText;
+                wDataText[8].Left := wDataText[8].Left + (k/2);
+                wDataText[8].width := wDataText[8].width + (k/2);
+                wVLine[3] := FindRaveComponent('VLine3',wPage[1]) as TRaveVLine;
+                wVLine[3].Left := wVLine[3].Left + (k/2);
+
+                wDataText[14] := FindRaveComponent('DataText14',wPage[1]) as TRaveDataText;
+                wDataText[14].width := wDataText[14].width + (k/2);
+
+              end;
             end;
 
             wPage[1] := FindRaveComponent('GlobalTransportador',nil) as TRavePage;

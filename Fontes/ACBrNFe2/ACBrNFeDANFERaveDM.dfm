@@ -31,7 +31,6 @@ object dmACBrNFeRave: TdmACBrNFeRave
   end
   object RvProject: TRvProject
     Engine = RvSystem1
-    ProjectFile = '.\Report\NotaFiscalEletronica.rav'
     Left = 40
     Top = 80
   end

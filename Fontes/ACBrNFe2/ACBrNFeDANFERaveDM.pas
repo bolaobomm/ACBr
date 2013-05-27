@@ -425,10 +425,15 @@ begin
   Connection.WriteField('VCOFINS', dtFloat, 15, '', '');
   Connection.WriteField('VOutro', dtFloat, 15, '', '');
   Connection.WriteField('VNF', dtFloat, 15, '', '');
+  Connection.WriteField('VTotTrib', dtFloat, 15, '', '');
+  Connection.WriteField('VTotTribText', dtString, 100, '', '');
+
 end;
 
 procedure TdmACBrNFeRave.CustomCalculoImpostoCXNGetRow(
   Connection: TRvCustomConnection);
+var
+  lVTotTrib: string;
 begin
   with FNFe.Total.ICMSTot do
   begin
@@ -446,6 +451,15 @@ begin
     Connection.WriteFloatData('', DFeUtil.StringToFloatDef(floattostr(VCOFINS),0));
     Connection.WriteFloatData('', DFeUtil.StringToFloatDef(floattostr(VOutro),0));
     Connection.WriteFloatData('', DFeUtil.StringToFloatDef(floattostr(VNF),0));
+    Connection.WriteFloatData('', DFeUtil.StringToFloatDef(floattostr(VTotTrib),0));
+    if VTotTrib <> 0 then
+    begin
+      lVTotTrib :=DFeUtil.FormatFloat(vTotTrib);
+      lVTotTrib :=lVTotTrib + '('+DFeUtil.FormatFloat((vTotTrib*100)/VProd)+'%)';
+    end
+    else
+      lVTotTrib := '';
+    Connection.WriteStrData('', lVTotTrib);
   end;
 end;
 
@@ -484,6 +498,7 @@ begin
   Connection.WriteField('VICMS', dtFloat, 15, '', ''); //Valor
   Connection.WriteField('VIPI', dtFloat, 15, '', ''); //Valor IPI
   Connection.WriteField('PIPI', dtFloat, 5, '', ''); //Aliquota IPI
+  Connection.WriteField('VTotTrib', dtFloat, 5, '', ''); //Total Tributos
 end;
 
 procedure TdmACBrNFeRave.CustomDadosProdutosCXNOpen(
@@ -796,6 +811,8 @@ begin
                Connection.WriteFloatData('', 0);
             end;
          end;
+
+         Connection.WriteFloatData('', DFeUtil.StringToFloatDef(floattostr(Imposto.vTotTrib),0));
       end;
    end;
 end;
