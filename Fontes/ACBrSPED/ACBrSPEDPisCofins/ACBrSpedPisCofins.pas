@@ -525,7 +525,7 @@ begin
 
     WriteBloco_0;
     if FBloco_A.RegistroA001.IND_MOV = imComDados then WriteBloco_A( True );
-    if FBloco_C.RegistroC001.IND_MOV = imComDados then WriteBloco_C( True );    // True = Fecha o Bloco
+    if FBloco_C.RegistroC001.IND_MOV = imComDados then WriteBloco_C( True );
     if FBloco_D.RegistroD001.IND_MOV = imComDados then WriteBloco_D;
     if FBloco_F.RegistroF001.IND_MOV = imComDados then WriteBloco_F;
     if FBloco_M.RegistroM001.IND_MOV = imComDados then WriteBloco_M;
