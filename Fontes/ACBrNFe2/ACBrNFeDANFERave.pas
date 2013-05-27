@@ -261,10 +261,6 @@ begin
               wVLine[10] := FindRaveComponent('VLine10',wPage[1]) as TRaveVLine;
               if ((wDataText[7] <> nil) and (wText[7] <> nil) and (wVLine[10] <> nil)) then
               begin
-                wText[7].Visible := False;
-                wDataText[7].Visible := False;
-                wVLine[10].Visible := False;
-
                 wVLine[6] := FindRaveComponent('VLine6',wPage[1]) as TRaveVLine;
                 k := wVLine[6].Left-wVLine[10].Left;
 
@@ -294,6 +290,9 @@ begin
                 wDataText[14] := FindRaveComponent('DataText14',wPage[1]) as TRaveDataText;
                 wDataText[14].width := wDataText[14].width + (k/2);
 
+                wText[7].Left := 30;
+                wDataText[7].Left := 30;
+                wVLine[10].Left := 30;
               end;
             end;
 

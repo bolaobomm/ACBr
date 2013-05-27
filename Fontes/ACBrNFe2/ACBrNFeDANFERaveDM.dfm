@@ -1,5 +1,7 @@
 object dmACBrNFeRave: TdmACBrNFeRave
   OldCreateOrder = False
+  Left = 694
+  Top = 349
   Height = 444
   Width = 627
   object CustomDestinatarioCXN: TRvCustomConnection
@@ -125,6 +127,10 @@ object dmACBrNFeRave: TdmACBrNFeRave
   object RvRenderPDF1: TRvRenderPDF
     DisplayName = 'Adobe Acrobat (PDF)'
     FileExtension = '*.pdf'
+    EmbedFonts = False
+    ImageQuality = 90
+    MetafileDPI = 300
+    FontEncoding = feWinAnsiEncoding
     DocInfo.Creator = 'Rave (http://www.nevrona.com/rave)'
     DocInfo.Producer = 'Nevrona Designs'
     Left = 40
