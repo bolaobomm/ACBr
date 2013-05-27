@@ -96,7 +96,7 @@ begin
           Bold:=True;
           GotoXY(0,PosY+GetFontHeigh);
           //NewLine;
-          vEnd:='Recebemos de '+Emit.XNome+' os produtos / serviços constantes da Nota Fiscal indicada ao lado';
+          vEnd:='Recebemos de '+Emit.XNome+' os produtos/serviços constantes da NFe indicada ao lado';
           if FontNameUsed = 'Courier New' then
           begin
              if Length(vEnd)>96 then
@@ -104,7 +104,7 @@ begin
                 vEnd:='Recebemos de '+Emit.XNome;
                 PrintCenter(vEnd,PosX+(aWidthOutros/2));
                 NewLine;
-                vEnd:='os produtos / serviços constantes da Nota Fiscal indicada ao lado';
+                vEnd:='os produtos/serviços constantes da NFe indicada ao lado';
                 PrintCenter(vEnd,PosX+(aWidthOutros/2));
              end
              else
@@ -127,7 +127,7 @@ begin
                 vEnd:='Recebemos de '+Emit.XNome;
                 PrintCenter(vEnd,PosX+(aWidthOutros/2));
                 NewLine;
-                vEnd:='os produtos / serviços constantes da Nota Fiscal indicada ao lado';
+                vEnd:='os produtos/serviços constantes da NFe indicada ao lado';
                 PrintCenter(vEnd,PosX+(aWidthOutros/2));
              end
              else
@@ -135,7 +135,12 @@ begin
                 PrintCenter(vEnd,PosX+(aWidthOutros/2));
                 NewLine;
                 if ExibirResumoCanhoto then
-                   PrintCenter('Emissão: '+DFeUtil.FormatDate(DateToStr(Ide.DEmi))+'  Dest/Reme: '+Dest.XNome+'  Valor Total: '+DFeUtil.FormatFloat(Total.ICMSTot.VNF),PosX+(aWidthOutros/2));
+                begin
+                   if DFeUtil.EstaVazio(ExibirResumoCanhoto_Texto) then
+                      PrintCenter('Emissão: '+DFeUtil.FormatDate(DateToStr(Ide.DEmi))+'  Dest/Reme: '+Dest.XNome+'  Valor Total: '+DFeUtil.FormatFloat(Total.ICMSTot.VNF),PosX+(aWidthOutros/2))
+                   else
+                      PrintCenter(ExibirResumoCanhoto_Texto,PosX+(aWidthOutros/2));
+                end;
              end;
           end;
         end;
