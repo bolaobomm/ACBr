@@ -2065,7 +2065,7 @@ end;
 
 procedure TfrmAcbrNfeMonitor.cbMonitorarPastaClick(Sender: TObject);
 begin
-  if not cbMonitorarPasta.Checked then
+  if cbMonitorarPasta.Checked then
    begin
      if MessageDlg('Ao ativar esta opção, todos os arquivos do diretório serão lidos e apagados.'+sLineBreak+
                    'Deseja realmente continuar?',
