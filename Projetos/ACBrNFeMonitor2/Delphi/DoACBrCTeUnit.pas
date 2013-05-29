@@ -833,8 +833,8 @@ end;
 
 procedure GerarIniCTe( AStr: WideString ) ;
 var
-  I, J, K : Integer;
-  sSecao, sFim, sCodPro, sNumeroDI, sNumeroADI, sQtdVol, sNumDup, sCampoAdic, sTipo, sDia, sDeduc : String;
+  I : Integer;
+  sSecao, sCodPro : String;
   INIRec : TMemIniFile ;
   SL     : TStringList;
   OK     : boolean;
@@ -1174,7 +1174,7 @@ end;
 
 function GerarCTeIni( XML : WideString ) : WideString;
 var
-  I, J, K : Integer;
+  I : Integer;
   sSecao,
   sCodPro : String;
   INIRec : TMemIniFile ;
