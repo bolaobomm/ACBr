@@ -312,6 +312,7 @@ type
     FNumeroNFSe: integer;
     FCodVerif: String;
     FLink: String;
+    FIM: string;
   public
     function Executar: Boolean; override;
     constructor Create(AOwner : TComponent; ANotasFiscais : TNotasFiscais); reintroduce;
@@ -319,6 +320,7 @@ type
     property NumeroNFSe: integer read FNumeroNFSe;
     property CodVerif: String read FCodVerif;
     property Link: String read FLink;
+    property IM: string read FIM;
   end;
 
   TNFSeGerarLoteRPS = Class(TWebServicesBase)
@@ -361,7 +363,7 @@ type
     function CancelaNFSe(ACodigoCancelamento, ANumeroRPS, ACNPJ, AInscricaoMunicipal,
                          ACodigoMunicipio: string): Boolean; overload;
     function Gera(ARps:Integer): Boolean;
-    function LinkNFSeGerada(ANumeroNFSe: Integer; ACodVerificacao: String): String;
+    function LinkNFSeGerada(ANumeroNFSe: Integer; ACodVerificacao, AInscricaoM: String): String;
     function GeraLote(ALote:Integer): Boolean; overload;
     function GeraLote(ALote:String): Boolean; overload;
     function EnviaSincrono(ALote:Integer): Boolean; overload;
@@ -1459,6 +1461,7 @@ begin
  TNFSeLinkNFSe(Self).FLink := FProvedorClass.GetLinkNFSe(FConfiguracoes.WebServices.CodigoMunicipio,
                                       TNFSeLinkNFSe(Self).FNumeroNFSe,
                                       TNFSeLinkNFSe(Self).FCodVerif,
+                                      TNFSeLinkNFSe(Self).FIM,
                                       FConfiguracoes.WebServices.AmbienteCodigo);
 end;
 
@@ -2000,10 +2003,11 @@ begin
 end;
 
 function TWebServices.LinkNFSeGerada(ANumeroNFSe: Integer;
-  ACodVerificacao: String): String;
+  ACodVerificacao, AInscricaoM: String): String;
 begin
  self.LinkNfse.FNumeroNFSe := ANumeroNFSe;
  self.LinkNFSe.FCodVerif   := ACodVerificacao;
+ self.LinkNfse.FIM         := AInscricaoM;
 
  if not (Self.LinkNfse.Executar)
   then begin

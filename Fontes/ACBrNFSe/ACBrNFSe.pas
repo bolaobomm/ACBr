@@ -48,7 +48,7 @@ type
     function ConsultarNFSe(ACnpj, AInscricaoMunicipal: String; ADataInicial, ADataFinal: TDateTime; NumeroNFSe: string = ''): Boolean;
     function CancelarNFSe(ACodigoCancelamento: String): Boolean;
     function Gerar(ARps: Integer): Boolean;
-    function LinkNFSe(ANumeroNFSe: Integer; ACodVerificacao: String): String;
+    function LinkNFSe(ANumeroNFSe: Integer; ACodVerificacao, AInscricaoM: String): String;
     function GerarLote(ALote: Integer): Boolean; overload;
     function GerarLote(ALote: String): Boolean; overload;
     function EnviarSincrono(ALote: Integer; Imprimir: Boolean = True): Boolean; overload;
@@ -303,9 +303,9 @@ begin
 end;
 
 function TACBrNFSe.LinkNFSe(ANumeroNFSe: Integer;
-  ACodVerificacao: String): String;
+  ACodVerificacao, AInscricaoM: String): String;
 begin
- Result := WebServices.LinkNFSeGerada(ANumeroNFSe, ACodVerificacao);
+ Result := WebServices.LinkNFSeGerada(ANumeroNFSe, ACodVerificacao, AInscricaoM);
 end;
 
 function TACBrNFSe.GerarLote(ALote: Integer): Boolean;

@@ -77,7 +77,7 @@ type
    function GetRetornoWS(Acao: TnfseAcao; RetornoWS: AnsiString): AnsiString; OverRide;
 
    function GeraRetornoNFSe(Prefixo: String; RetNFSe: AnsiString; NomeCidade: String): AnsiString; OverRide;
-   function GetLinkNFSe(ACodMunicipio, ANumeroNFSe: Integer; ACodVerificacao: String; AAmbiente: Integer): String; OverRide;
+   function GetLinkNFSe(ACodMunicipio, ANumeroNFSe: Integer; ACodVerificacao, AInscricaoM: String; AAmbiente: Integer): String; OverRide;
   end;
 
 implementation
@@ -608,7 +608,7 @@ begin
 end;
 
 function TProvedorRecife.GetLinkNFSe(ACodMunicipio, ANumeroNFSe: Integer;
-  ACodVerificacao: String; AAmbiente: Integer): String;
+  ACodVerificacao, AInscricaoM: String; AAmbiente: Integer): String;
 begin
  Result := '';
 end;

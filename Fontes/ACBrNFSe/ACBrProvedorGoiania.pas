@@ -76,7 +76,7 @@ type
    function GetRetornoWS(Acao: TnfseAcao; RetornoWS: AnsiString): AnsiString; OverRide;
 
    function GeraRetornoNFSe(Prefixo: String; RetNFSe: AnsiString; NomeCidade: String): AnsiString; OverRide;
-   function GetLinkNFSe(ACodMunicipio, ANumeroNFSe: Integer; ACodVerificacao: String; AAmbiente: Integer): String; OverRide;
+   function GetLinkNFSe(ACodMunicipio, ANumeroNFSe: Integer; ACodVerificacao, AInscricaoM: String; AAmbiente: Integer): String; OverRide;
   end;
 
 implementation
@@ -580,9 +580,13 @@ begin
 end;
 
 function TProvedorGoiania.GetLinkNFSe(ACodMunicipio, ANumeroNFSe: Integer;
-  ACodVerificacao: String; AAmbiente: Integer): String;
+  ACodVerificacao, AInscricaoM: String; AAmbiente: Integer): String;
+Var
+   vUrlNota : string;
 begin
-  Result := 'https://nfse.goiania.go.gov.br/ws/nfse.asmx?wsdl';
+  vUrlNota := 'http://www2.goiania.go.gov.br/sistemas/snfse/asp/snfse00200w0.asp?inscricao=' + AInscricaoM;
+  vUrlNota := vUrlNota + '&nota=' + IntToStr(ANumeroNFSe) + '&verificador=' + ACodVerificacao;
+  Result   := vUrlNota;
 end;
 
 function TProvedorGoiania.Gera_DadosMsgEnviarSincrono(Prefixo3, Prefixo4,
