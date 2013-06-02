@@ -285,7 +285,7 @@ end;
 function ProvedorToStr(const t: TnfseProvedor):string;
 begin
   result := EnumeradoToStr(t,
-                           ['Nenhum', 'Tiplan', 'ISS.NET', 'WebISS', 'GINFES', 'DSF', 'Prodemge', 'Abaco',
+                           ['Nenhum', 'Tiplan', 'ISSNET', 'WebISS', 'GINFES', 'DSF', 'Prodemge', 'Abaco',
                             'Betha', 'Equiplano', 'ISSIntel', 'Prodam', 'GovBR', 'Recife',
                             'SimplISS', 'Thema', 'RJ', 'Publica', 'fintelISS', 'Digifred', 'Betim', 'Saatri',
                             'FISSLEX', 'Goiania', 'IssCuritiba', 'BHISS', 'Natal', 'ISSDigital', 'ISSe',
@@ -300,7 +300,7 @@ end;
 function StrToProvedor(var ok: boolean; const s: string):TnfseProvedor;
 begin
   result := StrToEnumerado(ok, s,
-                           ['Nenhum', 'Tiplan', 'ISS.NET', 'WebISS', 'GINFES', 'DSF', 'Prodemge', 'Abaco',
+                           ['Nenhum', 'Tiplan', 'ISSNET', 'WebISS', 'GINFES', 'DSF', 'Prodemge', 'Abaco',
                             'Betha', 'Equiplano', 'ISSIntel', 'Prodam', 'GovBR', 'Recife',
                             'SimplISS', 'Thema', 'RJ', 'Publica', 'fintelISS', 'Digifred', 'Betim', 'Saatri',
                             'FISSLEX', 'Goiania', 'IssCuritiba', 'BHISS', 'Natal', 'ISSDigital', 'ISSe',
@@ -641,7 +641,7 @@ begin
   5201405,  // Aparecida de Goiania/GO
   5003702, //adicionado por Ronnei
   999      //adicionado por ronnei, esse código é usado na homologação
-         : Provedor := 'ISS.NET';
+         : Provedor := 'ISSNET';
 
   2910800, // Feira de Santana/BA
   3104205, // Arcos/MG
