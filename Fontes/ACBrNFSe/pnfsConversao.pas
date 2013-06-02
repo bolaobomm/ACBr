@@ -41,7 +41,7 @@ type
                     proEquiplano, proISSIntel, proProdam, proGovBR, proRecife, proSimplISS, proThema, proRJ,
                     proPublica, profintelISS, proDigifred, proBetim, proSaatri, proFISSLEX,
                     proGoiania, proIssCuritiba, proBHISS, proNatal, proISSDigital, proISSe, pro4R,
-                    proGovDigital );
+                    proGovDigital, proFiorilli );
 
   TnfseAcao = ( acRecepcionar, acConsSit, acConsLote, acConsNFSeRps, acConsNFSe, acCancelar, acGerar, acRecSincrono );
 
@@ -289,12 +289,12 @@ begin
                             'Betha', 'Equiplano', 'ISSIntel', 'Prodam', 'GovBR', 'Recife',
                             'SimplISS', 'Thema', 'RJ', 'Publica', 'fintelISS', 'Digifred', 'Betim', 'Saatri',
                             'FISSLEX', 'Goiania', 'IssCuritiba', 'BHISS', 'Natal', 'ISSDigital', 'ISSe',
-                            '4R', 'GovDigital'],
+                            '4R', 'GovDigital', 'Fiorilli'],
                            [proNenhum, proTiplan, proISSNET, proWebISS, proGINFES, proDSF, proProdemge, proAbaco,
                             proBetha, proEquiplano, proISSIntel, proProdam, proGovBR, proRecife,
                             proSimplISS, proThema, proRJ, proPublica, profintelISS, proDigifred, proBetim,
                             proSaatri, proFISSLEX, proGoiania, proIssCuritiba, proBHISS, proNatal,
-                            proISSDigital, proISSe, pro4R, proGovDigital]);
+                            proISSDigital, proISSe, pro4R, proGovDigital, proFiorilli]);
 end;
 
 function StrToProvedor(var ok: boolean; const s: string):TnfseProvedor;
@@ -304,12 +304,12 @@ begin
                             'Betha', 'Equiplano', 'ISSIntel', 'Prodam', 'GovBR', 'Recife',
                             'SimplISS', 'Thema', 'RJ', 'Publica', 'fintelISS', 'Digifred', 'Betim', 'Saatri',
                             'FISSLEX', 'Goiania', 'IssCuritiba', 'BHISS', 'Natal', 'ISSDigital', 'ISSe',
-                            '4R', 'GovDigital'],
+                            '4R', 'GovDigital', 'Fiorilli'],
                            [proNenhum, proTiplan, proISSNET, proWebISS, proGINFES, proDSF, proProdemge, proAbaco,
                             proBetha, proEquiplano, proISSIntel, proProdam, proGovBR, proRecife,
                             proSimplISS, proThema, proRJ, proPublica, profintelISS, proDigifred, proBetim,
                             proSaatri, proFISSLEX, proGoiania, proIssCuritiba, proBHISS, proNatal,
-                            proISSDigital, proISSe, pro4R, proGovDigital]);
+                            proISSDigital, proISSe, pro4R, proGovDigital, proFiorilli]);
 end;
 
 // Descrição do Serviço ********************************************************
@@ -825,6 +825,9 @@ begin
   3151800, // Poços de Caldas/MG
   3522307  // Itapetininga/SP
          : Provedor := 'GovDigital';
+
+  2103000  // Caxias/MA
+         : Provedor := 'Fiorilli';
  end;
  Result := Provedor;
 end;
