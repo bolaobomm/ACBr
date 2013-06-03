@@ -140,7 +140,8 @@ TACBrCNIEE = class(TACBrHTTP)
     function AbrirTabela: Boolean;
     procedure Exportar(const AArquivo: String; ATipo: TACBrCNIEEExporta); overload;
     procedure Exportar(const AArquivo, ADelimitador: String); overload;
-    function BuscarECF(const AMarca, AModelo, AVersaoSB: String): TACBrCNIEERegistro;
+    function BuscarECF(const AMarca, AModelo, AVersaoSB: String;
+      const RemoveEspacos: Boolean = False): TACBrCNIEERegistro;
 
     property Cadastros: TACBrCNIEERegistros read FCadastros;
 
@@ -290,8 +291,8 @@ begin
   end;
 end;
 
-function TACBrCNIEE.BuscarECF(const AMarca,
-  AModelo, AVersaoSB: String): TACBrCNIEERegistro;
+function TACBrCNIEE.BuscarECF(const AMarca, AModelo, AVersaoSB: String;
+  const RemoveEspacos: Boolean): TACBrCNIEERegistro;
 var
   I: Integer;
   Marca, Modelo, VersaoSB: String;
@@ -314,6 +315,13 @@ begin
     MarcaAtual  := AnsiUpperCase(Cadastros[I].DescrMarca);
     ModeloAtual := AnsiUpperCase(Cadastros[I].DescrModelo);
     VersaoAtual := AnsiUpperCase(ACBrUtil.OnlyNumber(Cadastros[I].Versao));
+
+    if RemoveEspacos then
+    begin
+      MarcaAtual  := StringReplace(MarcaAtual,  ' ', '', [rfReplaceAll]);
+      ModeloAtual := StringReplace(ModeloAtual, ' ', '', [rfReplaceAll]);
+      VersaoAtual := StringReplace(VersaoAtual, ' ', '', [rfReplaceAll]);
+    end;
 
     if (MarcaAtual = Marca) and (ModeloAtual = Modelo) and (VersaoAtual = VersaoSB) then
     begin
