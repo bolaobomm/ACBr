@@ -318,7 +318,7 @@ end;
 procedure TdmACBrNFeRave.CustomEmitenteCXNOpen(
   Connection: TRvCustomConnection);
 begin
-  Connection.DataRows := 1;
+  Connection.DataRows := 1;                  
 end;
 
 procedure TdmACBrNFeRave.CustomFaturaCXNGetCols(
