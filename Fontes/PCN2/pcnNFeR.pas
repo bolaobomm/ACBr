@@ -172,7 +172,7 @@ begin
 
     if NFe.infNFe.Versao >= 3 then
      begin
-      (*B09*) NFe.ide.dEmi := Leitor.rCampo(tcDat, 'dhEmi');
+      (*B09*) NFe.ide.dEmi := Leitor.rCampo(tcDatHor, 'dhEmi');
       (*B10*) NFe.ide.dSaiEnt := Leitor.rCampo(tcDatHor, 'dhSaiEnt');
      end
     else
