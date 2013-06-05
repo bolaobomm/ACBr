@@ -59,7 +59,7 @@ type TModalResult = (mrNone = 0, mrYes = 6, mrNo = 7, mrOK = 1, mrCancel = 2, mr
 {$ENDIF}
 
 const
-   CACBrTEFD_Versao      = '4.3.4' ;
+   CACBrTEFD_Versao      = '4.3.5' ;
    CACBrTEFD_EsperaSTS   = 7 ;
    CACBrTEFD_EsperaSleep = 250 ;
    CACBrTEFD_NumVias     = 2 ;
@@ -668,6 +668,7 @@ type
 
      Property Habilitado: Boolean read fHabilitado write fHabilitado
        default False ;
+
    end;
 
    { Lista de Objetos do tipo TACBrTEFDClass }
@@ -1938,11 +1939,18 @@ begin
         TemIdentificacao := True;
      end;
 
-     Operacoes := '1';      // 1 = Suporta Saque, 2 = Suporta Desconto
-     if Assigned( OnComandaECFSubtotaliza ) and (not AutoEfetuarPagamento) then
-        Operacoes := '3';   // 1 + 2 = Suporta Saque e Desconto
+     Operacoes := EmptyStr;
+     if SuportaSaque and not SuportaDesconto then
+        Operacoes := '1'
+     else
+     if SuportaDesconto and not SuportaSaque then
+        Operacoes := '2';
 
-     if TemIdentificacao then
+     if SuportaSaque and SuportaDesconto
+        and (not AutoEfetuarPagamento) then
+        Operacoes := '3';
+
+     if TemIdentificacao and (Operacoes <> EmptyStr) then
         Req.Conteudo.GravaInformacao(706,000, Operacoes ) ;
   end;
 end;

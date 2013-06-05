@@ -123,6 +123,8 @@ type
      fPathBackup   : String;
      fGPAtual      : TACBrTEFDTipo;
      fTecladoBloqueado : Boolean;
+     fSuportaDesconto : Boolean;
+     fSuportaSaque : Boolean;
 
      fTefClass     : TACBrTEFDClass ;
      fTefDial      : TACBrTEFDDial ;
@@ -274,6 +276,10 @@ type
      property CHQEmGerencial : Boolean read fCHQEmGerencial
         write fCHQEmGerencial default False ;
      property TrocoMaximo : Double read fTrocoMaximo write fTrocoMaximo ;
+     Property SuportaSaque : Boolean read fSuportaSaque write fSuportaSaque
+       default True;
+     Property SuportaDesconto : Boolean read fSuportaDesconto write fSuportaDesconto
+       default True;
 
      property TEFDial    : TACBrTEFDDial     read fTefDial ;
      property TEFDisc    : TACBrTEFDDisc     read fTefDisc ;
@@ -400,6 +406,8 @@ begin
   fArqLOG               := '' ;
   fCHQEmGerencial       := False;
   fTrocoMaximo          := 0;
+  fSuportaDesconto      := True;
+  fSuportaSaque         := True;
 
   fOnAguardaResp              := nil ;
   fOnAntesFinalizarRequisicao := nil ;

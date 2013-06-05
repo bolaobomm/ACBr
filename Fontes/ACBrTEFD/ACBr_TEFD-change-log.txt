@@ -47,6 +47,13 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+Data:  05/06/2013 - 4.3.5
+-- ACBrTEFD* --
+-- ACBrTEFDClass --
+[*] Adicionando as propriedades SuportaDesconto e SuportaSaque e 
+	alterado no metodo para verificar se existe o evento programado
+	para utilizar as propriedades (Por: Juliomar Marchetti e DSA)
+
 Data:  27/03/2013 - 4.3.4
 -- ACBrTEFD* --
 [*] Ajustes para compilação em modo CONSOLE  (Por: Juliana Tamizou e DSA)
