@@ -200,7 +200,7 @@ begin
         begin
           if (FBloco_0.Registro0000.COD_VER  >= vlVersao104) then
           begin
-              if DT_INI >= EncodeDate(2012,07,01) then
+              if DT_FIN >= EncodeDate(2012,07,01) then
               begin
                 case MOT_INV of
                   miFinalPeriodo:       strMotInv := '01';
