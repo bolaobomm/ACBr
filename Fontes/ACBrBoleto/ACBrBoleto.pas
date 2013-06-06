@@ -58,7 +58,7 @@ uses ACBrBase,  {Units da ACBr}
      Graphics, Contnrs, Classes;
 
 const
-  CACBrBoleto_Versao = '0.0.69a' ;
+  CACBrBoleto_Versao = '0.0.70a' ;
 
 type
   TACBrTipoCobranca =
@@ -393,8 +393,10 @@ type
   TACBrPessoaCedente = pFisica..pJuridica;
 
   {Aceite do titulo}
-  TACBrAceiteTitulo = (atSim, atNao);   
+  TACBrAceiteTitulo = (atSim, atNao);
 
+  {TipoDiasIntrucao}
+  TACBrTipoDiasIntrucao = (diCorridos, diUteis);
   { TACBrCedente }
 
   TACBrCedente = class(TComponent)
@@ -493,6 +495,7 @@ type
     fParcela           : Integer;
     fPercentualMulta   : Double;
     fSeuNumero         : String;
+    fTipoDiasProtesto: TACBrTipoDiasIntrucao;
     fTotalParcelas: Integer;
     fValorDescontoAntDia: Currency;
     fVencimento        : TDateTime;
@@ -589,10 +592,9 @@ type
      property SeuNumero            : String   read fSeuNumero             write fSeuNumero;
      property PercentualMulta      : Double   read fPercentualMulta       write fPercentualMulta;
      property ValorDescontoAntDia  : Currency read fValorDescontoAntDia  write  fValorDescontoAntDia;
-
      property TextoLivre : String read fTextoLivre write fTextoLivre;
-
      property CodigoMora : String read fCodigoMora write fCodigoMora;
+     property TipoDiasProtesto     : TACBrTipoDiasIntrucao read fTipoDiasProtesto write fTipoDiasProtesto;
    end;
 
   { TListadeBoletos }
@@ -769,7 +771,7 @@ implementation
 Uses ACBrUtil, ACBrBancoBradesco, ACBrBancoBrasil, ACBrBanestes, ACBrBancoItau, ACBrBancoSicredi,
      ACBrBancoMercantil, ACBrCaixaEconomica, ACBrBancoBanrisul, ACBrBancoSantander,
      ACBrBancoob, ACBrCaixaEconomicaSICOB ,ACBrBancoHSBC,ACBrBancoNordeste , ACBrBancoBRB,Forms,
-     {$IFDEF COMPILER6_UP} StrUtils {$ELSE} ACBrD5 {$ENDIF}, Math;
+     {$IFDEF COMPILER6_UP} StrUtils {$ELSE} ACBrD5 {$ENDIF}, Math, dateutils;
 
 {$IFNDEF FPC}
    {$R ACBrBoleto.dcr}
@@ -1300,6 +1302,8 @@ begin
 end;
 
 Procedure TACBrBoleto.AdicionarMensagensPadroes( Titulo : TACBrTitulo; AStringList: TStrings );
+var
+  wMsgProtesto: String;
 begin
    if not ImprimirMensagemPadrao  then
       exit;
@@ -1307,7 +1311,14 @@ begin
    with Titulo do
    begin
       if DataProtesto <> 0 then
-         AStringList.Add(ACBrStr('Protestar em ' + FormatDateTime('dd/mm/yyyy',DataProtesto)));
+      begin
+         if TipoDiasProtesto = diCorridos then
+            wMsgProtesto:= ' dias corridos'
+         else
+            wMsgProtesto:= ' dias uteis';
+
+         AStringList.Add(ACBrStr('Protestar em ' + IntToStr(DaysBetween(Vencimento, DataProtesto))+ wMsgProtesto));
+      end;
 
       if ValorAbatimento <> 0 then
       begin
@@ -1340,7 +1351,8 @@ begin
             AStringList.Add(ACBrStr('Cobrar juros de '                               +
                              FormatCurr('R$ #,##0.00',ValorMoraJuros)         +
                              ' por dia de atraso para pagamento a partir de ' +
-                             FormatDateTime('dd/mm/yyyy',DataMoraJuros)))
+                             FormatDateTime('dd/mm/yyyy',ifthen(Vencimento = DataMoraJuros,
+                                                                IncDay(DataMoraJuros,1),DataMoraJuros))))
          else
             AStringList.Add(ACBrStr('Cobrar juros de '                       +
                              FormatCurr('R$ #,##0.00',ValorMoraJuros) +

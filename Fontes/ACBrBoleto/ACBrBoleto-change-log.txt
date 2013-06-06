@@ -48,6 +48,22 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 
+Data: 05/06/2013
+-- ACBrBoleto ver. 0.0.70 --
+-- ACBrBoleto --
+[*] Criado nova propriedade para o titulo TipoDiasProtesto para informar se o mesmo
+    é em dias corridos ou dias uteis, essa informação é usada nas mensagens impressas
+    no boleto. (Juliana Tamizou)
+[*] Adicionado verificação se a DataMoraJuros é igual ao Vencimento, neste caso a 
+    mensagem impressa no boleto terá o dia adicionado na data, pois boletos pagos
+    no vencimento não tem juros. (Juliana Tamizou)
+
+--ACBrBancoBradesco --
+[-] Corrigido leitura do Número da Conta na leitura do arquivo retorno CNAB400.
+   (Juliana Tamizou)
+
+
+
 Data: 21/05/2013
 -- ACBrBoleto ver. 0.0.69 --
 -- ACBrBoleto --
