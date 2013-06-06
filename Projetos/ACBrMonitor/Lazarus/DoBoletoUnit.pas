@@ -42,6 +42,7 @@ uses
 procedure DoBoleto(Cmd: TACBrCmd);
 procedure LerIniBoletos(aStr: AnsiString);
 procedure IncluirTitulo(aIni: TMemIniFile; Sessao: String);
+procedure GravarIniRetorno(DirIniRetorno: String);
 function ListaBancos() : String;
 
 implementation
@@ -82,6 +83,7 @@ begin
          DirArqRetorno  := Cmd.Params(0);
          NomeArqRetorno := cmd.Params(1);
          LerRetorno();
+         GravarIniRetorno(DirArqRetorno);
        end
 
       else if cmd.Metodo = 'incluirtitulos' then
@@ -348,6 +350,75 @@ begin
          PercentualMulta     := aIni.ReadFloat(Sessao,'PercentualMulta',PercentualMulta);
       end;
    end;
+end;
+
+procedure GravarIniRetorno(DirIniRetorno: String);
+var
+  IniRetorno: TIniFile;
+  wSessao: String;
+  I: Integer;
+  J: Integer;
+begin
+  if Pos(PathDelim,DirIniRetorno) <> Length(DirIniRetorno) then
+     DirIniRetorno:= DirIniRetorno + PathDelim;
+
+  IniRetorno:= TMemIniFile.Create(DirIniRetorno + 'Retorno.ini');
+  try
+    with FrmACBrMonitor.ACBrBoleto1 do
+    begin
+       IniRetorno.WriteString('CEDENTE','Nome',Cedente.Nome);
+       IniRetorno.WriteString('CEDENTE','CNPJCPF',Cedente.CNPJCPF);
+       IniRetorno.WriteString('CEDENTE','CodigoCedente',Cedente. CodigoCedente);
+       IniRetorno.WriteString('CEDENTE','MODALIDADE',Cedente.Modalidade);
+       IniRetorno.WriteString('CEDENTE','CODTRANSMISSAO',Cedente.CodigoTransmissao);
+       IniRetorno.WriteString('CEDENTE','CONVENIO',Cedente.Convenio);
+
+       IniRetorno.WriteInteger('BANCO','Numero',Banco.Numero);
+       IniRetorno.WriteInteger('BANCO','IndiceACBr',Integer(Banco.TipoCobranca));
+
+       IniRetorno.WriteString('CONTA','Conta',Cedente.Conta);
+       IniRetorno.WriteString('CONTA','DigitoConta',Cedente.ContaDigito);
+       IniRetorno.WriteString('CONTA','Agencia',Cedente.Agencia);
+       IniRetorno.WriteString('CONTA','DigitoAgencia',Cedente.AgenciaDigito);
+
+       for I:= 0 to ListadeBoletos.Count - 1 do
+       begin
+         wSessao:= 'Titulo'+ IntToStr(I+1);
+         IniRetorno.WriteString(wSessao,'Sacado.Nome', ListadeBoletos[I].Sacado.NomeSacado);
+         IniRetorno.WriteString(wSessao,'Sacado.CNPJCPF', ListadeBoletos[I].Sacado.CNPJCPF);
+         IniRetorno.WriteString(wSessao,'Vencimento',DateToStr(ListadeBoletos[I].Vencimento));
+         IniRetorno.WriteString(wSessao,'DataDocumento',DateToStr(ListadeBoletos[I].DataDocumento));
+         IniRetorno.WriteString(wSessao,'NumeroDocumento',ListadeBoletos[I].NumeroDocumento);
+         IniRetorno.WriteString(wSessao,'DataProcessamento',DateToStr(ListadeBoletos[I].DataProcessamento));
+         IniRetorno.WriteString(wSessao,'NossoNumero',ListadeBoletos[I].NossoNumero);
+         IniRetorno.WriteString(wSessao,'Carteira',ListadeBoletos[I].Carteira);
+         IniRetorno.WriteFloat(wSessao,'ValorDocumento',ListadeBoletos[I].ValorDocumento);
+         IniRetorno.WriteString(wSessao,'DataOcorrencia',DateToStr(ListadeBoletos[I].DataOcorrencia));
+         IniRetorno.WriteString(wSessao,'DataCredito',DateToStr(ListadeBoletos[I].DataCredito));
+         IniRetorno.WriteString(wSessao,'DataBaixa',DateToStr(ListadeBoletos[I].DataBaixa));
+         IniRetorno.WriteFloat(wSessao,'ValorDespesaCobranca',ListadeBoletos[I].ValorDespesaCobranca);
+         IniRetorno.WriteFloat(wSessao,'ValorAbatimento',ListadeBoletos[I].ValorAbatimento);
+         IniRetorno.WriteFloat(wSessao,'ValorDesconto',ListadeBoletos[I].ValorDesconto);
+         IniRetorno.WriteFloat(wSessao,'ValorMoraJuros',ListadeBoletos[I].ValorMoraJuros);
+         IniRetorno.WriteFloat(wSessao,'ValorIOF',ListadeBoletos[I].ValorIOF);
+         IniRetorno.WriteFloat(wSessao,'ValorOutrasDespesas',ListadeBoletos[I].ValorOutrasDespesas);
+         IniRetorno.WriteFloat(wSessao,'ValorOutrosCreditos',ListadeBoletos[I].ValorOutrosCreditos);
+         IniRetorno.WriteFloat(wSessao,'ValorRecebido',ListadeBoletos[I].ValorRecebido);
+         IniRetorno.WriteString(wSessao,'SeuNumero',ListadeBoletos[I].SeuNumero);
+         IniRetorno.WriteString(wSessao,'CodTipoOcorrencia',
+                                GetEnumName( TypeInfo(TACBrTipoOcorrencia),
+                                             Integer(ListadeBoletos[I].OcorrenciaOriginal.Tipo)));
+         IniRetorno.WriteString(wSessao,'DescricaoTipoOcorrencia',ListadeBoletos[I].OcorrenciaOriginal.Descricao);
+
+
+         for J:= 0 to ListadeBoletos[I].DescricaoMotivoRejeicaoComando.Count-1 do
+            IniRetorno.WriteString(wSessao,'MotivoRejeicao' + IntToStr(I+1),
+                                   ListadeBoletos[I].DescricaoMotivoRejeicaoComando[J]);
+       end;
+    end;
+  finally
+    IniRetorno.Free;
+  end;
 end;
 
 function ListaBancos() : String;

@@ -1042,10 +1042,10 @@ object FrmACBrMonitor: TFrmACBrMonitor
       Height = 265
       Top = 9
       Width = 598
-      ActivePage = tsCadastro
+      ActivePage = tsMonitor
       Align = alBottom
       Images = ImageList1
-      TabIndex = 1
+      TabIndex = 0
       TabOrder = 0
       object tsMonitor: TTabSheet
         Caption = '&Monitor'
@@ -5192,13 +5192,6 @@ object FrmACBrMonitor: TFrmACBrMonitor
     ConfigBarras.MostrarCodigo = True
     ConfigBarras.LarguraLinha = 3
     ConfigBarras.Altura = 10
-    InfoRodapeCupom.CupomMania = False
-    InfoRodapeCupom.MinasLegal = False
-    InfoRodapeCupom.ParaibaLegal = False
-    InfoRodapeCupom.NotaLegalDF.Imprimir = False
-    InfoRodapeCupom.NotaLegalDF.ProgramaDeCredito = False
-    InfoRodapeCupom.NotaLegalDF.ValorICMS = 0
-    InfoRodapeCupom.NotaLegalDF.ValorISS = 0
     left = 281
     top = 24
   end
