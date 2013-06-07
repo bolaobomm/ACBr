@@ -144,23 +144,23 @@ begin
            end;
  end;
 
- ConfigURL.HomRecepcaoLoteRPS    := 'https://isseteste.' + ConfigURL.HomNomeCidade + '.gov.br/ws';
- ConfigURL.HomConsultaLoteRPS    := 'https://isseteste.' + ConfigURL.HomNomeCidade + '.gov.br/ws';
- ConfigURL.HomConsultaNFSeRPS    := 'https://isseteste.' + ConfigURL.HomNomeCidade + '.gov.br/ws';
- ConfigURL.HomConsultaSitLoteRPS := 'https://isseteste.' + ConfigURL.HomNomeCidade + '.gov.br/ws';
- ConfigURL.HomConsultaNFSe       := 'https://isseteste.' + ConfigURL.HomNomeCidade + '.gov.br/ws';
- ConfigURL.HomCancelaNFSe        := 'https://isseteste.' + ConfigURL.HomNomeCidade + '.gov.br/ws';
- ConfigURL.HomGerarNFSe          := 'https://isseteste.' + ConfigURL.HomNomeCidade + '.gov.br/ws';
- ConfigURL.HomRecepcaoSincrono   := 'https://isseteste.' + ConfigURL.HomNomeCidade + '.gov.br/ws';
+ ConfigURL.HomRecepcaoLoteRPS    := 'https://isseteste.' + ConfigURL.HomNomeCidade + '.gov.br/ws/';
+ ConfigURL.HomConsultaLoteRPS    := 'https://isseteste.' + ConfigURL.HomNomeCidade + '.gov.br/ws/';
+ ConfigURL.HomConsultaNFSeRPS    := 'https://isseteste.' + ConfigURL.HomNomeCidade + '.gov.br/ws/';
+ ConfigURL.HomConsultaSitLoteRPS := 'https://isseteste.' + ConfigURL.HomNomeCidade + '.gov.br/ws/';
+ ConfigURL.HomConsultaNFSe       := 'https://isseteste.' + ConfigURL.HomNomeCidade + '.gov.br/ws/';
+ ConfigURL.HomCancelaNFSe        := 'https://isseteste.' + ConfigURL.HomNomeCidade + '.gov.br/ws/';
+ ConfigURL.HomGerarNFSe          := 'https://isseteste.' + ConfigURL.HomNomeCidade + '.gov.br/ws/';
+ ConfigURL.HomRecepcaoSincrono   := 'https://isseteste.' + ConfigURL.HomNomeCidade + '.gov.br/ws/';
 
- ConfigURL.ProRecepcaoLoteRPS    := 'https://isse.' + ConfigURL.ProNomeCidade + '.gov.br/ws';
- ConfigURL.ProConsultaLoteRPS    := 'https://isse.' + ConfigURL.ProNomeCidade + '.gov.br/ws';
- ConfigURL.ProConsultaNFSeRPS    := 'https://isse.' + ConfigURL.ProNomeCidade + '.gov.br/ws';
- ConfigURL.ProConsultaSitLoteRPS := 'https://isse.' + ConfigURL.ProNomeCidade + '.gov.br/ws';
- ConfigURL.ProConsultaNFSe       := 'https://isse.' + ConfigURL.ProNomeCidade + '.gov.br/ws';
- ConfigURL.ProCancelaNFSe        := 'https://isse.' + ConfigURL.ProNomeCidade + '.gov.br/ws';
- ConfigURL.ProGerarNFSe          := 'https://isse.' + ConfigURL.ProNomeCidade + '.gov.br/ws';
- ConfigURL.ProRecepcaoSincrono   := 'https://isse.' + ConfigURL.ProNomeCidade + '.gov.br/ws';
+ ConfigURL.ProRecepcaoLoteRPS    := 'https://isse.' + ConfigURL.ProNomeCidade + '.gov.br/ws/';
+ ConfigURL.ProConsultaLoteRPS    := 'https://isse.' + ConfigURL.ProNomeCidade + '.gov.br/ws/';
+ ConfigURL.ProConsultaNFSeRPS    := 'https://isse.' + ConfigURL.ProNomeCidade + '.gov.br/ws/';
+ ConfigURL.ProConsultaSitLoteRPS := 'https://isse.' + ConfigURL.ProNomeCidade + '.gov.br/ws/';
+ ConfigURL.ProConsultaNFSe       := 'https://isse.' + ConfigURL.ProNomeCidade + '.gov.br/ws/';
+ ConfigURL.ProCancelaNFSe        := 'https://isse.' + ConfigURL.ProNomeCidade + '.gov.br/ws/';
+ ConfigURL.ProGerarNFSe          := 'https://isse.' + ConfigURL.ProNomeCidade + '.gov.br/ws/';
+ ConfigURL.ProRecepcaoSincrono   := 'https://isse.' + ConfigURL.ProNomeCidade + '.gov.br/ws/';
 
  Result := ConfigURL;
 end;
