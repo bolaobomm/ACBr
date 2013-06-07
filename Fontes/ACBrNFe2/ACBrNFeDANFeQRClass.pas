@@ -71,7 +71,7 @@ implementation
 
 uses
  StrUtils, Dialogs,
- ACBrNFe, ACBrNFeUtil, ACBrUtil, ACBrNFeDANFeQRRetrato, ACBrNFeDANFeQRNFCe;
+ ACBrNFe, ACBrNFeUtil, ACBrUtil, ACBrNFeDANFeQRRetrato{, ACBrNFeDANFeQRNFCe};
 
 constructor TACBrNFeDANFEQR.Create(AOwner: TComponent);
 begin
@@ -90,14 +90,14 @@ var
   fqrDANFeQRRetrato : TfqrDANFeQR; //TfqrDANFeQRRetrato;
   sProt : String;
 begin
-  case TipoDANFe of
-    tiNFCe: begin
-           fqrDANFeQRRetrato := TfqrDANFeQRNFCe.Create(Self);
-          end;
-     else begin // tiRetrato
+//  case TipoDANFe of
+//    tiNFCe: begin
+//           fqrDANFeQRRetrato := TfqrDANFeQRNFCe.Create(Self);
+//          end;
+//     else begin // tiRetrato
            fqrDANFeQRRetrato := TfqrDANFeQRRetrato.Create(Self);
-          end;
-  end;
+//          end;
+//  end;
 
 //  fqrDANFeQRRetrato := TfqrDANFeQRRetrato.Create(Self);
   sProt := TACBrNFe(ACBrNFe).DANFE.ProtocoloNFe ;
@@ -163,14 +163,14 @@ var
   fqrDANFeQRRetrato : TfqrDANFeQR; //TfqrDANFeQRRetrato;
   sProt : String;
 begin
-  case TipoDANFe of
-    tiNFCe: begin
-           fqrDANFeQRRetrato := TfqrDANFeQRNFCe.Create(Self);
-          end;
-     else begin // tiRetrato
+//  case TipoDANFe of
+//    tiNFCe: begin
+//           fqrDANFeQRRetrato := TfqrDANFeQRNFCe.Create(Self);
+//          end;
+//     else begin // tiRetrato
            fqrDANFeQRRetrato := TfqrDANFeQRRetrato.Create(Self);
-          end;
-  end;
+//          end;
+//  end;
 
 //  fqrDANFeQRRetrato := TfqrDANFeQRRetrato.Create(Self);
   sProt := TACBrNFe(ACBrNFe).DANFE.ProtocoloNFe ;
