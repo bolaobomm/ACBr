@@ -312,7 +312,7 @@ type
    function Gera_CabMsg(Prefixo2, VersaoLayOut, VersaoDados, NameSpaceCab: String; ACodCidade: Integer): AnsiString; Virtual; Abstract;
    function Gera_DadosSenha(CNPJ, Senha: String): AnsiString; Virtual; Abstract;
    function Gera_TagF(Acao: TnfseAcao; Prefixo3: String): AnsiString; Virtual; Abstract;
-
+   (*
    function Gera_DadosMsgEnviarLote(Prefixo3, Prefixo4, Identificador,
                                     NameSpaceDad, VersaoDados, VersaoXML,
                                     NumeroLote, CNPJ, IM, QtdeNotas: String;
@@ -341,7 +341,7 @@ type
                                         NameSpaceDad, VersaoDados, VersaoXML,
                                         NumeroLote, CNPJ, IM, QtdeNotas: String;
                                         Notas, TagI, TagF: AnsiString): AnsiString; Virtual; Abstract;
-
+   *)
    function GeraEnvelopeRecepcionarLoteRPS(URLNS: String; CabMsg, DadosMsg, DadosSenha: AnsiString): AnsiString; Virtual; Abstract;
    function GeraEnvelopeConsultarSituacaoLoteRPS(URLNS: String; CabMsg, DadosMsg, DadosSenha: AnsiString): AnsiString; Virtual; Abstract;
    function GeraEnvelopeConsultarLoteRPS(URLNS: String; CabMsg, DadosMsg, DadosSenha: AnsiString): AnsiString; Virtual; Abstract;

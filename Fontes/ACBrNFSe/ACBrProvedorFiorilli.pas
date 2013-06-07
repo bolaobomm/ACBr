@@ -34,7 +34,7 @@ type
    function Gera_CabMsg(Prefixo2, VersaoLayOut, VersaoDados, NameSpaceCab: String; ACodCidade: Integer): AnsiString; OverRide;
    function Gera_DadosSenha(CNPJ, Senha: String): AnsiString; OverRide;
    function Gera_TagF(Acao: TnfseAcao; Prefixo3: String): AnsiString; OverRide;
-
+   (*
    function Gera_DadosMsgEnviarLote(Prefixo3, Prefixo4, Identificador,
                                     NameSpaceDad, VersaoDados, VersaoXML,
                                     NumeroLote, CNPJ, IM, QtdeNotas: String;
@@ -63,7 +63,7 @@ type
                                         NameSpaceDad, VersaoDados, VersaoXML,
                                         NumeroLote, CNPJ, IM, QtdeNotas: String;
                                         Notas, TagI, TagF: AnsiString): AnsiString; OverRide;
-
+   *)
    function GeraEnvelopeRecepcionarLoteRPS(URLNS: String; CabMsg, DadosMsg, DadosSenha: AnsiString): AnsiString; OverRide;
    function GeraEnvelopeConsultarSituacaoLoteRPS(URLNS: String; CabMsg, DadosMsg, DadosSenha: AnsiString): AnsiString; OverRide;
    function GeraEnvelopeConsultarLoteRPS(URLNS: String; CabMsg, DadosMsg, DadosSenha: AnsiString): AnsiString; OverRide;
@@ -233,7 +233,7 @@ begin
    acRecSincrono: Result := '</' + Prefixo3 + 'EnviarLoteRpsSincronoEnvio>';
  end;
 end;
-
+(*
 function TProvedorFiorilli.Gera_DadosMsgEnviarLote(Prefixo3, Prefixo4,
   Identificador, NameSpaceDad, VersaoDados, VersaoXML, NumeroLote, CNPJ,
   IM, QtdeNotas: String; Notas, TagI, TagF: AnsiString): AnsiString;
@@ -461,7 +461,7 @@ function TProvedorFiorilli.Gera_DadosMsgGerarNFSe(Prefixo3, Prefixo4,
 begin
  Result := '';
 end;
-
+*)
 function TProvedorFiorilli.GeraEnvelopeRecepcionarLoteRPS(URLNS: String;
   CabMsg, DadosMsg, DadosSenha: AnsiString): AnsiString;
 begin
@@ -589,7 +589,7 @@ function TProvedorFiorilli.GetLinkNFSe(ACodMunicipio, ANumeroNFSe: Integer;
 begin
  Result := '';
 end;
-
+(*
 function TProvedorFiorilli.Gera_DadosMsgEnviarSincrono(Prefixo3, Prefixo4,
   Identificador, NameSpaceDad, VersaoDados, VersaoXML, NumeroLote, CNPJ,
   IM, QtdeNotas: String; Notas, TagI, TagF: AnsiString): AnsiString;
@@ -598,7 +598,7 @@ begin
                               VersaoDados, VersaoXML, NumeroLote, CNPJ, IM,
                               QtdeNotas, Notas, TagI, TagF);
 end;
-
+*)
 function TProvedorFiorilli.GeraEnvelopeRecepcionarSincrono(URLNS: String;
   CabMsg, DadosMsg, DadosSenha: AnsiString): AnsiString;
 begin

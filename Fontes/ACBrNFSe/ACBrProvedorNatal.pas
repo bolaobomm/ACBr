@@ -34,7 +34,7 @@ type
    function Gera_CabMsg(Prefixo2, VersaoLayOut, VersaoDados, NameSpaceCab: String; ACodCidade: Integer): AnsiString; OverRide;
    function Gera_DadosSenha(CNPJ, Senha: String): AnsiString; OverRide;
    function Gera_TagF(Acao: TnfseAcao; Prefixo3: String): AnsiString; OverRide;
-
+   (*
    function Gera_DadosMsgEnviarLote(Prefixo3, Prefixo4, Identificador,
                                     NameSpaceDad, VersaoDados, VersaoXML,
                                     NumeroLote, CNPJ, IM, QtdeNotas: String;
@@ -63,7 +63,7 @@ type
                                         NameSpaceDad, VersaoDados, VersaoXML,
                                         NumeroLote, CNPJ, IM, QtdeNotas: String;
                                         Notas, TagI, TagF: AnsiString): AnsiString; OverRide;
-
+   *)
    function GeraEnvelopeRecepcionarLoteRPS(URLNS: String; CabMsg, DadosMsg, DadosSenha: AnsiString): AnsiString; OverRide;
    function GeraEnvelopeConsultarSituacaoLoteRPS(URLNS: String; CabMsg, DadosMsg, DadosSenha: AnsiString): AnsiString; OverRide;
    function GeraEnvelopeConsultarLoteRPS(URLNS: String; CabMsg, DadosMsg, DadosSenha: AnsiString): AnsiString; OverRide;
@@ -220,7 +220,7 @@ begin
    acGerar:       Result := '';
  end;
 end;
-
+(*
 function TProvedorNatal.Gera_DadosMsgEnviarLote(Prefixo3, Prefixo4,
   Identificador, NameSpaceDad, VersaoDados, VersaoXML, NumeroLote, CNPJ,
   IM, QtdeNotas: String; Notas, TagI, TagF: AnsiString): AnsiString;
@@ -444,13 +444,13 @@ function TProvedorNatal.Gera_DadosMsgGerarNFSe(Prefixo3, Prefixo4,
 begin
  Result := '';
 end;
-
+*)
 function TProvedorNatal.GeraEnvelopeRecepcionarLoteRPS(URLNS: String;
   CabMsg, DadosMsg, DadosSenha: AnsiString): AnsiString;
 begin
  Result := '';
  raise Exception.Create( 'Opção não implementada para este provedor.' );
-(*
+{
  result := '<?xml version="1.0" encoding="UTF-8"?>' +
            '<S:Envelope xmlns:S="http://schemas.xmlsoap.org/soap/envelope/" ' +
                        'xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" ' +
@@ -463,7 +463,7 @@ begin
              '</EnviarLoteRpsEnvio>' +
             '</S:Body>' +
            '</S:Envelope>';
-*)           
+}
 end;
 
 function TProvedorNatal.GeraEnvelopeConsultarSituacaoLoteRPS(
@@ -636,14 +636,14 @@ function TProvedorNatal.GetLinkNFSe(ACodMunicipio, ANumeroNFSe: Integer;
 begin
  Result := '';
 end;
-
+(*
 function TProvedorNatal.Gera_DadosMsgEnviarSincrono(Prefixo3, Prefixo4,
   Identificador, NameSpaceDad, VersaoDados, VersaoXML, NumeroLote, CNPJ,
   IM, QtdeNotas: String; Notas, TagI, TagF: AnsiString): AnsiString;
 begin
  Result := '';
 end;
-
+*)
 function TProvedorNatal.GeraEnvelopeRecepcionarSincrono(URLNS: String;
   CabMsg, DadosMsg, DadosSenha: AnsiString): AnsiString;
 begin

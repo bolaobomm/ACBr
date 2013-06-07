@@ -34,7 +34,7 @@ type
    function Gera_CabMsg(Prefixo2, VersaoLayOut, VersaoDados, NameSpaceCab: String; ACodCidade: Integer): AnsiString; OverRide;
    function Gera_DadosSenha(CNPJ, Senha: String): AnsiString; OverRide;
    function Gera_TagF(Acao: TnfseAcao; Prefixo3: String): AnsiString; OverRide;
-
+   (*
    function Gera_DadosMsgEnviarLote(Prefixo3, Prefixo4, Identificador,
                                     NameSpaceDad, VersaoDados, VersaoXML,
                                     NumeroLote, CNPJ, IM, QtdeNotas: String;
@@ -63,7 +63,7 @@ type
                                         NameSpaceDad, VersaoDados, VersaoXML,
                                         NumeroLote, CNPJ, IM, QtdeNotas: String;
                                         Notas, TagI, TagF: AnsiString): AnsiString; OverRide;
-
+   *)
    function GeraEnvelopeRecepcionarLoteRPS(URLNS: String; CabMsg, DadosMsg, DadosSenha: AnsiString): AnsiString; OverRide;
    function GeraEnvelopeConsultarSituacaoLoteRPS(URLNS: String; CabMsg, DadosMsg, DadosSenha: AnsiString): AnsiString; OverRide;
    function GeraEnvelopeConsultarLoteRPS(URLNS: String; CabMsg, DadosMsg, DadosSenha: AnsiString): AnsiString; OverRide;
@@ -229,7 +229,6 @@ end;
 function TProvedorISSe.Gera_DadosSenha(CNPJ, Senha: String): AnsiString;
 begin
  Result := '';
-
 end;
 
 function TProvedorISSe.Gera_TagF(Acao: TnfseAcao; Prefixo3: String): AnsiString;
@@ -246,7 +245,7 @@ begin
    acRecSincrono: Result := '</' + Prefixo3 + 'EnviarLoteRpsSincronoEnvio>';
  end;
 end;
-
+(*
 function TProvedorISSe.Gera_DadosMsgEnviarLote(Prefixo3, Prefixo4,
   Identificador, NameSpaceDad, VersaoDados, VersaoXML, NumeroLote, CNPJ,
   IM, QtdeNotas: String; Notas, TagI, TagF: AnsiString): AnsiString;
@@ -484,7 +483,7 @@ function TProvedorISSe.Gera_DadosMsgGerarNFSe(Prefixo3, Prefixo4,
 begin
  Result := TagI + Notas + TagF;
 end;
-
+*)
 function TProvedorISSe.GeraEnvelopeRecepcionarLoteRPS(URLNS: String;
   CabMsg, DadosMsg, DadosSenha: AnsiString): AnsiString;
 begin
@@ -684,7 +683,7 @@ begin
   end
   else Result := '';
 end;
-
+(*
 function TProvedorISSe.Gera_DadosMsgEnviarSincrono(Prefixo3, Prefixo4,
   Identificador, NameSpaceDad, VersaoDados, VersaoXML, NumeroLote, CNPJ,
   IM, QtdeNotas: String; Notas, TagI, TagF: AnsiString): AnsiString;
@@ -693,7 +692,7 @@ begin
                               VersaoDados, VersaoXML, NumeroLote, CNPJ, IM,
                               QtdeNotas, Notas, TagI, TagF);
 end;
-
+*)
 function TProvedorISSe.GeraEnvelopeRecepcionarSincrono(URLNS: String;
   CabMsg, DadosMsg, DadosSenha: AnsiString): AnsiString;
 begin

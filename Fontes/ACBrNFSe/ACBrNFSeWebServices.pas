@@ -22,7 +22,7 @@ uses
     JwaWinCrypt, JwaWinType, WinInet,
     ACBrCAPICOM_TLB, ACBrMSXML2_TLB,
   {$ENDIF}
-    pcnGerador, pcnConversao, pcnAuxiliar, pnfsNFSe, pnfsConversao,
+    pcnGerador, pcnConversao, pcnAuxiliar, pnfsNFSe, pnfsNFSeG, pnfsConversao,
     pnfsEnvLoteRpsResposta, pnfsConsSitLoteRpsResposta,
     pnfsConsLoteRpsResposta, pnfsConsNfseporRpsResposta,
     pnfsConsNfseResposta, pnfsCancNfseResposta,
@@ -760,19 +760,15 @@ begin
                                                FConfiguracoes.WebServices.SenhaWeb);
  FTagF := FProvedorClass.Gera_TagF(acRecepcionar, Prefixo3);
 
- FDadosMsg := FProvedorClass.Gera_DadosMsgEnviarLote(Prefixo3,
-                                                     Prefixo4,
-                                                     FConfiguracoes.WebServices.Identificador,
-                                                     NameSpaceDad,
-                                                     VersaoDados,
-                                                     FVersaoXML,
-                                                     TNFSeEnviarLoteRps(Self).NumeroLote,
-                                                     SomenteNumeros(TNFSeEnviarLoteRPS(Self).FNotasFiscais.Items[0].NFSe.Prestador.Cnpj),
-                                                     TNFSeEnviarLoteRPS(Self).FNotasFiscais.Items[0].NFSe.Prestador.InscricaoMunicipal,
-                                                     IntToStr(TNFSeEnviarLoteRps(Self).FNotasFiscais.Count),
-                                                     vNotas,
-                                                     FTagI,
-                                                     FTagF);
+ FDadosMsg := TNFSeG.Gera_DadosMsgEnviarLote(Prefixo3, Prefixo4,
+                                             FConfiguracoes.WebServices.Identificador,
+                                             NameSpaceDad, VersaoDados, FVersaoXML,
+                                             TNFSeEnviarLoteRps(Self).NumeroLote,
+                                             SomenteNumeros(TNFSeEnviarLoteRPS(Self).FNotasFiscais.Items[0].NFSe.Prestador.Cnpj),
+                                             TNFSeEnviarLoteRPS(Self).FNotasFiscais.Items[0].NFSe.Prestador.InscricaoMunicipal,
+                                             IntToStr(TNFSeEnviarLoteRps(Self).FNotasFiscais.Count),
+                                             vNotas,
+                                             FTagI, FTagF);
 
  if FConfiguracoes.WebServices.Salvar
   then FConfiguracoes.Geral.Save('-xxx1.xml', FDadosMsg);
@@ -858,18 +854,14 @@ begin
 
  FTagF := FProvedorClass.Gera_TagF(acConsSit, Prefixo3);
 
- FDadosMsg := FProvedorClass.Gera_DadosMsgConsSitLote(Prefixo3,
-                                                      Prefixo4,
-                                                      NameSpaceDad,
-                                                      FVersaoXML,
-                                                      TNFSeConsultarSituacaoLoteRPS(Self).Protocolo,
-                                                      SomenteNumeros(TNFSeConsultarSituacaoLoteRPS(Self).Cnpj),
-                                                      TNFSeConsultarSituacaoLoteRPS(Self).InscricaoMunicipal,
-                                                      FTagI,
-                                                      FTagF);
-
  if FProvedorClass.GetAssinarXML(acConsSit)
   then begin
+   FDadosMsg := TNFSeG.Gera_DadosMsgConsSitLote(Prefixo3, Prefixo4,
+                                                NameSpaceDad, FVersaoXML,
+                                                TNFSeConsultarSituacaoLoteRPS(Self).Protocolo,
+                                                SomenteNumeros(TNFSeConsultarSituacaoLoteRPS(Self).Cnpj),
+                                                TNFSeConsultarSituacaoLoteRPS(Self).InscricaoMunicipal,
+                                                '', '');
   {$IFDEF ACBrNFSeOpenSSL}
    if not(NotaUtil.AssinarXML(FDadosMsg, URISig, URIRef, FTagI, FTagF,
                    FConfiguracoes.Certificados.Certificado,
@@ -883,7 +875,13 @@ begin
     then raise Exception.Create('Falha ao assinar o XML ' + FMsg)
     else FDadosMsg := FvAssinada;
   {$ENDIF}
-  end;
+  end
+  else FDadosMsg := TNFSeG.Gera_DadosMsgConsSitLote(Prefixo3, Prefixo4,
+                                                    NameSpaceDad, FVersaoXML,
+                                                    TNFSeConsultarSituacaoLoteRPS(Self).Protocolo,
+                                                    SomenteNumeros(TNFSeConsultarSituacaoLoteRPS(Self).Cnpj),
+                                                    TNFSeConsultarSituacaoLoteRPS(Self).InscricaoMunicipal,
+                                                    FTagI, FTagF);
 end;
 
 procedure TWebServicesBase.DoNFSeConsultarLoteRPS;
@@ -954,19 +952,14 @@ begin
 
  FTagF := FProvedorClass.Gera_TagF(acConsLote, Prefixo3);
 
- FDadosMsg := FProvedorClass.Gera_DadosMsgConsLote(Prefixo3,
-                                                   Prefixo4,
-                                                   NameSpaceDad,
-                                                   FVersaoXML,
-                                                   // Alterado por Rodrigo Cantelli
-                                                   TNFSeConsultarLoteRPS(Self).Protocolo,
-                                                   TNFSeConsultarLoteRPS(Self).FCNPJ,
-                                                   TNFSeConsultarLoteRPS(Self).FIM,
-                                                   FTagI,
-                                                   FTagF);
-
  if FProvedorClass.GetAssinarXML(acConsLote)
   then begin
+   FDadosMsg := TNFSeG.Gera_DadosMsgConsLote(Prefixo3, Prefixo4,
+                                             NameSpaceDad, FVersaoXML,
+                                             TNFSeConsultarLoteRPS(Self).Protocolo,
+                                             TNFSeConsultarLoteRPS(Self).FCNPJ,
+                                             TNFSeConsultarLoteRPS(Self).FIM,
+                                             '', '');
   {$IFDEF ACBrNFSeOpenSSL}
    if not(NotaUtil.AssinarXML(FDadosMsg, URISig, URIRef, FTagI, FTagF,
                    FConfiguracoes.Certificados.Certificado,
@@ -980,7 +973,13 @@ begin
     then raise Exception.Create('Falha ao assinar o XML ' + FMsg)
     else FDadosMsg := FvAssinada;
   {$ENDIF}
-  end;
+  end
+  else FDadosMsg := TNFSeG.Gera_DadosMsgConsLote(Prefixo3, Prefixo4,
+                                                 NameSpaceDad, FVersaoXML,
+                                                 TNFSeConsultarLoteRPS(Self).Protocolo,
+                                                 TNFSeConsultarLoteRPS(Self).FCNPJ,
+                                                 TNFSeConsultarLoteRPS(Self).FIM,
+                                                 FTagI, FTagF);
 end;
 
 procedure TWebServicesBase.DoNFSeConsultarNFSeporRPS;
@@ -1046,20 +1045,16 @@ begin
 
  FTagF := FProvedorClass.Gera_TagF(acConsNFSeRps, Prefixo3);
 
- FDadosMsg := FProvedorClass.Gera_DadosMsgConsNFSeRPS(Prefixo3,
-                                                      Prefixo4,
-                                                      NameSpaceDad, 
-                                                      FVersaoXML,
-                                                      TNFSeConsultarNfseRPS(Self).Numero,
-                                                      TNFSeConsultarNfseRPS(Self).Serie,
-                                                      TNFSeConsultarNfseRPS(Self).Tipo,
-                                                      SomenteNumeros(TNFSeConsultarNfseRPS(Self).Cnpj),
-                                                      TNFSeConsultarNfseRPS(Self).InscricaoMunicipal,
-                                                      FTagI,
-                                                      FTagF);
-
  if FProvedorClass.GetAssinarXML(acConsNFSeRps)
   then begin
+   FDadosMsg := TNFSeG.Gera_DadosMsgConsNFSeRPS(Prefixo3, Prefixo4,
+                                                NameSpaceDad, FVersaoXML,
+                                                TNFSeConsultarNfseRPS(Self).Numero,
+                                                TNFSeConsultarNfseRPS(Self).Serie,
+                                                TNFSeConsultarNfseRPS(Self).Tipo,
+                                                SomenteNumeros(TNFSeConsultarNfseRPS(Self).Cnpj),
+                                                TNFSeConsultarNfseRPS(Self).InscricaoMunicipal,
+                                                '', '');
   {$IFDEF ACBrNFSeOpenSSL}
    if not(NotaUtil.AssinarXML(FDadosMsg, URISig, URIRef, FTagI, FTagF,
                    FConfiguracoes.Certificados.Certificado,
@@ -1073,8 +1068,15 @@ begin
     then raise Exception.Create('Falha ao assinar o XML ' + FMsg)
     else FDadosMsg := FvAssinada;
   {$ENDIF}
-  end;
-
+  end
+  else FDadosMsg := TNFSeG.Gera_DadosMsgConsNFSeRPS(Prefixo3, Prefixo4,
+                                                    NameSpaceDad, FVersaoXML,
+                                                    TNFSeConsultarNfseRPS(Self).Numero,
+                                                    TNFSeConsultarNfseRPS(Self).Serie,
+                                                    TNFSeConsultarNfseRPS(Self).Tipo,
+                                                    SomenteNumeros(TNFSeConsultarNfseRPS(Self).Cnpj),
+                                                    TNFSeConsultarNfseRPS(Self).InscricaoMunicipal,
+                                                    FTagI, FTagF);
 end;
 
 procedure TWebServicesBase.DoNFSeConsultarNFSe;
@@ -1140,20 +1142,16 @@ begin
 
  FTagF := FProvedorClass.Gera_TagF(acConsNFSe, Prefixo3);
 
- FDadosMsg := FProvedorClass.Gera_DadosMsgConsNFSe(Prefixo3,
-                                                   Prefixo4,
-                                                   NameSpaceDad,
-                                                   FVersaoXML,
-                                                   SomenteNumeros(TNFSeConsultarNfse(Self).Cnpj),
-                                                   TNFSeConsultarNfse(Self).InscricaoMunicipal,
-                                                   TNFSeConsultarNfse(Self).DataInicial,
-                                                   TNFSeConsultarNfse(Self).DataFinal,
-                                                   FTagI,
-                                                   FTagF,
-                                                   TNFSeConsultarNfse(Self).FNumeroNFSe);
-
  if FProvedorClass.GetAssinarXML(acConsNFSe)
   then begin
+   FDadosMsg := TNFSeG.Gera_DadosMsgConsNFSe(Prefixo3, Prefixo4,
+                                             NameSpaceDad, FVersaoXML,
+                                             SomenteNumeros(TNFSeConsultarNfse(Self).Cnpj),
+                                             TNFSeConsultarNfse(Self).InscricaoMunicipal,
+                                             TNFSeConsultarNfse(Self).DataInicial,
+                                             TNFSeConsultarNfse(Self).DataFinal,
+                                             '', '',
+                                             TNFSeConsultarNfse(Self).FNumeroNFSe);
   {$IFDEF ACBrNFSeOpenSSL}
    if not(NotaUtil.AssinarXML(FDadosMsg, URISig, URIRef, FTagI, FTagF,
                    FConfiguracoes.Certificados.Certificado,
@@ -1167,8 +1165,15 @@ begin
     then raise Exception.Create('Falha ao assinar o XML ' + FMsg)
     else FDadosMsg := FvAssinada;
   {$ENDIF}
-  end;                                               
-
+  end
+  else FDadosMsg := TNFSeG.Gera_DadosMsgConsNFSe(Prefixo3, Prefixo4,
+                                                 NameSpaceDad, FVersaoXML,
+                                                 SomenteNumeros(TNFSeConsultarNfse(Self).Cnpj),
+                                                 TNFSeConsultarNfse(Self).InscricaoMunicipal,
+                                                 TNFSeConsultarNfse(Self).DataInicial,
+                                                 TNFSeConsultarNfse(Self).DataFinal,
+                                                 FTagI, FTagF,
+                                                 TNFSeConsultarNfse(Self).FNumeroNFSe);
 end;
 
 procedure TWebServicesBase.DoNFSeCancelarNFSe;
@@ -1262,18 +1267,16 @@ begin
 
  FTagF := FProvedorClass.Gera_TagF(acCancelar, Prefixo3);
 
- FDadosMsg := FProvedorClass.Gera_DadosMsgCancelarNFSe(Prefixo4,
-                                                       NameSpaceDad, 
-                                                       TNFSeCancelarNfse(Self).FNumeroRPS,
-                                                       TNFSeCancelarNfse(Self).FCnpj,
-                                                       TNFSeCancelarNfse(Self).FIM,
-                                                       TNFSeCancelarNfse(Self).FCodigoMunicipio,
-                                                       TNFSeCancelarNfse(Self).FCodigoCancelamento,
-                                                       FTagI,
-                                                       FTagF);
-
  if FProvedorClass.GetAssinarXML(acCancelar)
   then begin
+   FDadosMsg := TNFSeG.Gera_DadosMsgCancelarNFSe(Prefixo4,
+                                                 NameSpaceDad,
+                                                 TNFSeCancelarNfse(Self).FNumeroRPS,
+                                                 TNFSeCancelarNfse(Self).FCnpj,
+                                                 TNFSeCancelarNfse(Self).FIM,
+                                                 TNFSeCancelarNfse(Self).FCodigoMunicipio,
+                                                 TNFSeCancelarNfse(Self).FCodigoCancelamento,
+                                                 '', '');
   {$IFDEF ACBrNFSeOpenSSL}
    if not(NotaUtil.AssinarXML(FDadosMsg, URISig, URIRef, FTagI, FTagF,
                    FConfiguracoes.Certificados.Certificado,
@@ -1287,7 +1290,15 @@ begin
     then raise Exception.Create('Falha ao assinar o XML ' + FMsg)
     else FDadosMsg := FvAssinada;
   {$ENDIF}
-  end;
+  end
+  else FDadosMsg := TNFSeG.Gera_DadosMsgCancelarNFSe(Prefixo4,
+                                                     NameSpaceDad,
+                                                     TNFSeCancelarNfse(Self).FNumeroRPS,
+                                                     TNFSeCancelarNfse(Self).FCnpj,
+                                                     TNFSeCancelarNfse(Self).FIM,
+                                                     TNFSeCancelarNfse(Self).FCodigoMunicipio,
+                                                     TNFSeCancelarNfse(Self).FCodigoCancelamento,
+                                                     FTagI, FTagF);
 end;
 
 procedure TWebServicesBase.DoNFSeGerarNFSe;
@@ -1421,19 +1432,15 @@ begin
 
  FTagF := FProvedorClass.Gera_TagF(acGerar, Prefixo3);
 
- FDadosMsg := FProvedorClass.Gera_DadosMsgGerarNFSe(Prefixo3,
-                                                     Prefixo4,
-                                                     FConfiguracoes.WebServices.Identificador,
-                                                     NameSpaceDad,
-                                                     VersaoDados,
-                                                     FVersaoXML,
-                                                     IntToStr(TNFSeGerarNFSe(Self).NumeroRps),
-                                                     SomenteNumeros(TNFSeGerarNFSe(Self).FNotasFiscais.Items[0].NFSe.Prestador.Cnpj),
-                                                     TNFSeGerarNFSe(Self).FNotasFiscais.Items[0].NFSe.Prestador.InscricaoMunicipal,
-                                                     IntToStr(TNFSeGerarNFSe(Self).FNotasFiscais.Count),
-                                                     vNotas,
-                                                     FTagI,
-                                                     FTagF);
+ FDadosMsg := TNFSeG.Gera_DadosMsgGerarNFSe(Prefixo3, Prefixo4,
+                                            FConfiguracoes.WebServices.Identificador,
+                                            NameSpaceDad, VersaoDados, FVersaoXML,
+                                            IntToStr(TNFSeGerarNFSe(Self).NumeroRps),
+                                            SomenteNumeros(TNFSeGerarNFSe(Self).FNotasFiscais.Items[0].NFSe.Prestador.Cnpj),
+                                            TNFSeGerarNFSe(Self).FNotasFiscais.Items[0].NFSe.Prestador.InscricaoMunicipal,
+                                            IntToStr(TNFSeGerarNFSe(Self).FNotasFiscais.Count),
+                                            vNotas,
+                                            FTagI, FTagF);
 
  if FConfiguracoes.WebServices.Salvar
   then FConfiguracoes.Geral.Save('-xxx1.xml', FDadosMsg);
@@ -1579,19 +1586,15 @@ begin
                                                FConfiguracoes.WebServices.SenhaWeb);
  FTagF := FProvedorClass.Gera_TagF(acRecepcionar, Prefixo3);
 
- FDadosMsg := FProvedorClass.Gera_DadosMsgEnviarLote(Prefixo3,
-                                                     Prefixo4,
-                                                     FConfiguracoes.WebServices.Identificador,
-                                                     NameSpaceDad,
-                                                     VersaoDados,
-                                                     FVersaoXML,
-                                                     TNFSeGerarLoteRps(Self).NumeroLote,
-                                                     SomenteNumeros(TNFSeGerarLoteRPS(Self).FNotasFiscais.Items[0].NFSe.Prestador.Cnpj),
-                                                     TNFSeGerarLoteRPS(Self).FNotasFiscais.Items[0].NFSe.Prestador.InscricaoMunicipal,
-                                                     IntToStr(TNFSeGerarLoteRps(Self).FNotasFiscais.Count),
-                                                     vNotas,
-                                                     FTagI,
-                                                     FTagF);
+ FDadosMsg := TNFSeG.Gera_DadosMsgEnviarLote(Prefixo3, Prefixo4,
+                                             FConfiguracoes.WebServices.Identificador,
+                                             NameSpaceDad, VersaoDados, FVersaoXML,
+                                             TNFSeGerarLoteRps(Self).NumeroLote,
+                                             SomenteNumeros(TNFSeGerarLoteRPS(Self).FNotasFiscais.Items[0].NFSe.Prestador.Cnpj),
+                                             TNFSeGerarLoteRPS(Self).FNotasFiscais.Items[0].NFSe.Prestador.InscricaoMunicipal,
+                                             IntToStr(TNFSeGerarLoteRps(Self).FNotasFiscais.Count),
+                                             vNotas,
+                                             FTagI, FTagF);
 
  FDadosMsg := TNFSeGerarLoteRPS(Self).FNotasFiscais.AssinarLoteRps(TNFSeGerarLoteRps(Self).NumeroLote, FDadosMSg);
 
@@ -1728,19 +1731,15 @@ begin
                                                FConfiguracoes.WebServices.SenhaWeb);
  FTagF := FProvedorClass.Gera_TagF(acRecepcionar, Prefixo3);
 
- FDadosMsg := FProvedorClass.Gera_DadosMsgEnviarSincrono(Prefixo3,
-                                                         Prefixo4,
-                                                         FConfiguracoes.WebServices.Identificador,
-                                                         NameSpaceDad,
-                                                         VersaoDados,
-                                                         FVersaoXML,
-                                                         TNFSeEnviarSincrono(Self).NumeroLote,
-                                                         SomenteNumeros(TNFSeEnviarSincrono(Self).FNotasFiscais.Items[0].NFSe.Prestador.Cnpj),
-                                                         TNFSeEnviarSincrono(Self).FNotasFiscais.Items[0].NFSe.Prestador.InscricaoMunicipal,
-                                                         IntToStr(TNFSeEnviarSincrono(Self).FNotasFiscais.Count),
-                                                         vNotas,
-                                                         FTagI,
-                                                         FTagF);
+ FDadosMsg := TNFSeG.Gera_DadosMsgEnviarSincrono(Prefixo3, Prefixo4,
+                                                 FConfiguracoes.WebServices.Identificador,
+                                                 NameSpaceDad, VersaoDados, FVersaoXML,
+                                                 TNFSeEnviarSincrono(Self).NumeroLote,
+                                                 SomenteNumeros(TNFSeEnviarSincrono(Self).FNotasFiscais.Items[0].NFSe.Prestador.Cnpj),
+                                                 TNFSeEnviarSincrono(Self).FNotasFiscais.Items[0].NFSe.Prestador.InscricaoMunicipal,
+                                                 IntToStr(TNFSeEnviarSincrono(Self).FNotasFiscais.Count),
+                                                 vNotas,
+                                                 FTagI, FTagF);
 
  if FConfiguracoes.WebServices.Salvar
   then FConfiguracoes.Geral.Save('-xxx1.xml', FDadosMsg);
