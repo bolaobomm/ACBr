@@ -71,7 +71,7 @@ implementation
 
 uses
  StrUtils, Dialogs,
- ACBrNFe, ACBrNFeUtil, ACBrUtil, ACBrNFeDANFeQRRetrato{, ACBrNFeDANFeQRNFCe};
+ ACBrNFe, ACBrNFeUtil, ACBrUtil, ACBrNFeDANFeQRRetrato, ACBrNFeDANFeQRNFCe;
 
 constructor TACBrNFeDANFEQR.Create(AOwner: TComponent);
 begin
@@ -92,7 +92,7 @@ var
 begin
   case TipoDANFe of
     tiNFCe: begin
-//           fqrDANFeQRRetrato := TfqrDANFeQRNFCe.Create(Self);
+           fqrDANFeQRRetrato := TfqrDANFeQRNFCe.Create(Self);
           end;
      else begin // tiRetrato
            fqrDANFeQRRetrato := TfqrDANFeQRRetrato.Create(Self);
@@ -165,7 +165,7 @@ var
 begin
   case TipoDANFe of
     tiNFCe: begin
-//           fqrDANFeQRRetrato := TfqrDANFeQRNFCe.Create(Self);
+           fqrDANFeQRRetrato := TfqrDANFeQRNFCe.Create(Self);
           end;
      else begin // tiRetrato
            fqrDANFeQRRetrato := TfqrDANFeQRRetrato.Create(Self);
