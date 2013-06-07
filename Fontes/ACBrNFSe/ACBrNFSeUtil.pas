@@ -143,7 +143,7 @@ begin
        // create signature context, we don't need keys manager in this example
        dsigCtx := xmlSecDSigCtxCreate(nil);
        if (dsigCtx = nil) then
-         raise Exception.Create('Error :failed to create signature context');
+         raise Exception.Create('Error: failed to create signature context');
 
        //  load private key
        dsigCtx^.signKey := xmlSecCryptoAppKeyLoad(key_file, xmlSecKeyDataFormatPkcs12, senha, nil, nil);
@@ -205,7 +205,7 @@ begin
        // create signature context, we don't need keys manager in this example
        dsigCtx := xmlSecDSigCtxCreate(nil);
        if (dsigCtx = nil) then
-         raise Exception.Create('Error :failed to create signature context');
+         raise Exception.Create('Error: failed to create signature context');
 
        //  load private key, assuming that there is not password
        dsigCtx^.signKey := xmlSecCryptoAppKeyLoadMemory(Ponteiro, size, xmlSecKeyDataFormatPkcs12, senha, nil, nil);
@@ -303,7 +303,7 @@ function AssinarLibXML(const AXML,
                        ASincrono: Boolean = False): Boolean;
 var
  I, J, PosIni, PosFim, PosIniAssLote : Integer;
- URI, AID, Identificador, EnviarLoteRps : String;
+ URI, AID, Identificador, NameSpaceLote, EnviarLoteRps : String;
  AStr, XmlAss, Assinatura : AnsiString;
  Cert: TMemoryStream;
  Cert2: TStringStream;
@@ -316,6 +316,15 @@ begin
 
  if ALote
   then begin
+   I := pos(EnviarLoteRps +' xmlns=', AStr);
+   if I = 0
+    then NameSpaceLote := ''
+    else begin
+     I := I + 25;
+     J := pos('>', AStr);
+     NameSpaceLote := ' xmlns:ds1=' + Copy(AStr, I, J - I);
+    end;
+
    Identificador := 'Id';
    I             := pos('LoteRps Id=', AStr);
    if I = 0
@@ -339,29 +348,28 @@ begin
      URI := copy(AStr, I + 1, J - I - 1);
     end;
 
-//   if Identificador = 'id' then URI := '';
-
    AStr := copy(AStr, 1, pos('</'+ APrefixo3 + EnviarLoteRps + '>', AStr) - 1);
 
-   if (URI = '') {or (AProvedor = profintelISS)}
+   if (URI = '') or (AProvedor in [proRecife, proRJ, proAbaco])
     then AID := '>'
-    else AID := ' '+Identificador+'="AssLote_'+ URI +'">';
+    else AID := ' ' + Identificador + '="AssLote_' + URI + '">';
 
    //// Adicionando Cabeçalho DTD, necessário para xmlsec encontrar o ID ////
    I    := pos('?>', AStr);
-   AStr := copy(AStr, 1, StrToInt(VarToStr(DFeUtil.SeSenao(I>0, I+1, I)))) +
+   AStr := copy(AStr, 1, StrToInt(VarToStr(DFeUtil.SeSenao(I > 0, I + 1, I)))) +
            cDTDLote +
-           copy(AStr, StrToInt(VarToStr(DFeUtil.SeSenao(I>0, I+2, I))), Length(AStr));
+           copy(AStr, StrToInt(VarToStr(DFeUtil.SeSenao(I > 0, I + 2, I))), Length(AStr));
 
    AStr := AStr + '<Signature xmlns="http://www.w3.org/2000/09/xmldsig#"'+ AID +
-//                  DFeUtil.SeSenao(URI = '', '>', ' '+Identificador+'="AssLote_'+ URI +'">') +
                  '<SignedInfo>'+
-                  '<CanonicalizationMethod Algorithm="http://www.w3.org/TR/2001/REC-xml-c14n-20010315"/>'+
+                   DFeUtil.SeSenao((AProvedor = proNatal),
+                    '<CanonicalizationMethod Algorithm="http://www.w3.org/TR/2001/REC-xml-c14n-20010315#WithComments" />',
+                    '<CanonicalizationMethod Algorithm="http://www.w3.org/TR/2001/REC-xml-c14n-20010315" />') +
                   '<SignatureMethod Algorithm="http://www.w3.org/2000/09/xmldsig#rsa-sha1" />'+
                   '<Reference URI="' + DFeUtil.SeSenao(URI = '', '">', '#' + URI + '">') +
                    '<Transforms>'+
                     '<Transform Algorithm="http://www.w3.org/2000/09/xmldsig#enveloped-signature" />'+
-                   DFeUtil.SeSenao(AProvedor = profintelISS, '',
+                      DFeUtil.SeSenao((AProvedor in [profintelISS, proGovBr, proISSNet, proNatal]), '',
                     '<Transform Algorithm="http://www.w3.org/TR/2001/REC-xml-c14n-20010315" />') +
                    '</Transforms>'+
                    '<DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" />'+
@@ -409,9 +417,9 @@ begin
       end
       else URI := '';
 
-     if (URI = '') or (AProvedor = profintelISS)
+     if (URI = '') or (AProvedor in [profintelISS, proRecife, proNatal, proRJ])
       then AID := '>'
-      else AID := ' '+Identificador+'="Ass_'+ URI +'">';
+      else AID := ' ' + Identificador + '="Ass_' + URI + '">';
 
      //// Adicionando Cabeçalho DTD, necessário para xmlsec encontrar o ID ////
      I    := pos('?>', AStr);
@@ -420,14 +428,15 @@ begin
              copy(AStr, StrToInt(VarToStr(DFeUtil.SeSenao(I>0, I+2, I))), Length(AStr));
 
      Assinatura := '<Signature xmlns="http://www.w3.org/2000/09/xmldsig#"' + AID +
-//                        DFeUtil.SeSenao(URI = '', '>', ' ' + Identificador + '="Ass_' + URI + '">') +
                     '<SignedInfo>' +
-                    '<CanonicalizationMethod Algorithm="http://www.w3.org/TR/2001/REC-xml-c14n-20010315"/>' +
+                      DFeUtil.SeSenao((AProvedor = proNatal),
+                       '<CanonicalizationMethod Algorithm="http://www.w3.org/TR/2001/REC-xml-c14n-20010315#WithComments" />',
+                       '<CanonicalizationMethod Algorithm="http://www.w3.org/TR/2001/REC-xml-c14n-20010315" />') +
                      '<SignatureMethod Algorithm="http://www.w3.org/2000/09/xmldsig#rsa-sha1" />' +
                      '<Reference URI="' + DFeUtil.SeSenao(URI = '', '">', '#' + URI + '">') +
                       '<Transforms>' +
                        '<Transform Algorithm="http://www.w3.org/2000/09/xmldsig#enveloped-signature" />' +
-                       DFeUtil.SeSenao(AProvedor = profintelISS, '',
+                       DFeUtil.SeSenao((AProvedor in [profintelISS, proGovBr, proISSNet, proNatal]), '',
                        '<Transform Algorithm="http://www.w3.org/TR/2001/REC-xml-c14n-20010315" />') +
                       '</Transforms>' +
                       '<DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" />' +
