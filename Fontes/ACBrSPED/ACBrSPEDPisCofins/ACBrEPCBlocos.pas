@@ -626,6 +626,62 @@ type
                    sticmsEstrangeiraAdqMercIntCobradoAnteriormentePorST      , // '260' // Estrangeira - Adquirida no mercado interno - ICMS cobrado anteriormente por substituição tributária
                    sticmsEstrangeiraAdqMercIntComReducaoPorST                , // '270' // Estrangeira - Adquirida no mercado interno - Com redução de base de cálculo e cobrança do ICMS por substituição tributária
                    sticmsEstrangeiraAdqMercIntOutros                         , // '290' // Estrangeira - Adquirida no mercado interno - Outras
+                   csticms300, // '300' // Estrangeira - Adquirida no mercado interno - Tributada integralmente
+                   csticms310, // '310' // Estrangeira - Adquirida no mercado interno - Tributada e com cobrança do ICMS por substituição tributária
+                   csticms320, // '320' // Estrangeira - Adquirida no mercado interno - Com redução de base de cálculo
+                   csticms330, // '330' // Estrangeira - Adquirida no mercado interno - Isenta ou não tributada e com cobrança do ICMS por substituição tributária
+                   csticms340, // '340' // Estrangeira - Adquirida no mercado interno - Isenta
+                   csticms341, // '341' // Estrangeira - Adquirida no mercado interno - Não tributada
+                   csticms350, // '350' // Estrangeira - Adquirida no mercado interno - Suspensão
+                   csticms351, // '351' // Estrangeira - Adquirida no mercado interno - Diferimento
+                   csticms360, // '360' // Estrangeira - Adquirida no mercado interno - ICMS cobrado anteriormente por substituição tributária
+                   csticms370, // '370' // Estrangeira - Adquirida no mercado interno - Com redução de base de cálculo e cobrança do ICMS por substituição tributária
+                   csticms390, // '390' // Estrangeira - Adquirida no mercado interno - Outras
+                   csticms400, // '400' // Estrangeira - Adquirida no mercado interno - Tributada integralmente
+                   csticms410, // '410' // Estrangeira - Adquirida no mercado interno - Tributada e com cobrança do ICMS por substituição tributária
+                   csticms420, // '420' // Estrangeira - Adquirida no mercado interno - Com redução de base de cálculo
+                   csticms430, // '430' // Estrangeira - Adquirida no mercado interno - Isenta ou não tributada e com cobrança do ICMS por substituição tributária
+                   csticms440, // '440' // Estrangeira - Adquirida no mercado interno - Isenta
+                   csticms441, // '441' // Estrangeira - Adquirida no mercado interno - Não tributada
+                   csticms450, // '450' // Estrangeira - Adquirida no mercado interno - Suspensão
+                   csticms451, // '451' // Estrangeira - Adquirida no mercado interno - Diferimento
+                   csticms460, // '460' // Estrangeira - Adquirida no mercado interno - ICMS cobrado anteriormente por substituição tributária
+                   csticms470, // '470' // Estrangeira - Adquirida no mercado interno - Com redução de base de cálculo e cobrança do ICMS por substituição tributária
+                   csticms490, // '490' // Estrangeira - Adquirida no mercado interno - Outras
+                   csticms500, // '500' // Estrangeira - Adquirida no mercado interno - Tributada integralmente
+                   csticms510, // '510' // Estrangeira - Adquirida no mercado interno - Tributada e com cobrança do ICMS por substituição tributária
+                   csticms520, // '520' // Estrangeira - Adquirida no mercado interno - Com redução de base de cálculo
+                   csticms530, // '530' // Estrangeira - Adquirida no mercado interno - Isenta ou não tributada e com cobrança do ICMS por substituição tributária
+                   csticms540, // '540' // Estrangeira - Adquirida no mercado interno - Isenta
+                   csticms541, // '541' // Estrangeira - Adquirida no mercado interno - Não tributada
+                   csticms550, // '550' // Estrangeira - Adquirida no mercado interno - Suspensão
+                   csticms551, // '551' // Estrangeira - Adquirida no mercado interno - Diferimento
+                   csticms560, // '560' // Estrangeira - Adquirida no mercado interno - ICMS cobrado anteriormente por substituição tributária
+                   csticms570, // '570' // Estrangeira - Adquirida no mercado interno - Com redução de base de cálculo e cobrança do ICMS por substituição tributária
+                   csticms590, // '590' // Estrangeira - Adquirida no mercado interno - Outras
+                   csticms600, // '600' // Estrangeira - Adquirida no mercado interno - Tributada integralmente
+                   csticms610, // '610' // Estrangeira - Adquirida no mercado interno - Tributada e com cobrança do ICMS por substituição tributária
+                   csticms620, // '620' // Estrangeira - Adquirida no mercado interno - Com redução de base de cálculo
+                   csticms630, // '630' // Estrangeira - Adquirida no mercado interno - Isenta ou não tributada e com cobrança do ICMS por substituição tributária
+                   csticms640, // '640' // Estrangeira - Adquirida no mercado interno - Isenta
+                   csticms641, // '641' // Estrangeira - Adquirida no mercado interno - Não tributada
+                   csticms650, // '650' // Estrangeira - Adquirida no mercado interno - Suspensão
+                   csticms651, // '651' // Estrangeira - Adquirida no mercado interno - Diferimento
+                   csticms660, // '660' // Estrangeira - Adquirida no mercado interno - ICMS cobrado anteriormente por substituição tributária
+                   csticms670, // '670' // Estrangeira - Adquirida no mercado interno - Com redução de base de cálculo e cobrança do ICMS por substituição tributária
+                   csticms690, // '690' // Estrangeira - Adquirida no mercado interno - Outras
+                   csticms700, // '700' // Estrangeira - Adquirida no mercado interno - Tributada integralmente
+                   csticms710, // '710' // Estrangeira - Adquirida no mercado interno - Tributada e com cobrança do ICMS por substituição tributária
+                   csticms720, // '720' // Estrangeira - Adquirida no mercado interno - Com redução de base de cálculo
+                   csticms730, // '730' // Estrangeira - Adquirida no mercado interno - Isenta ou não tributada e com cobrança do ICMS por substituição tributária
+                   csticms740, // '740' // Estrangeira - Adquirida no mercado interno - Isenta
+                   csticms741, // '741' // Estrangeira - Adquirida no mercado interno - Não tributada
+                   csticms750, // '750' // Estrangeira - Adquirida no mercado interno - Suspensão
+                   csticms751, // '751' // Estrangeira - Adquirida no mercado interno - Diferimento
+                   csticms760, // '760' // Estrangeira - Adquirida no mercado interno - ICMS cobrado anteriormente por substituição tributária
+                   csticms770, // '770' // Estrangeira - Adquirida no mercado interno - Com redução de base de cálculo e cobrança do ICMS por substituição tributária
+                   csticms790, // '790' // Estrangeira - Adquirida no mercado interno - Outras
+
                    sticmsSimplesNacionalTributadaComPermissaoCredito         , // '101' // Simples Nacional - Tributada pelo Simples Nacional com permissão de crédito
                    sticmsSimplesNacionalTributadaSemPermissaoCredito         , // '102' // Simples Nacional - Tributada pelo Simples Nacional sem permissão de crédito
                    sticmsSimplesNacionalIsencaoPorFaixaReceitaBruta          , // '103' // Simples Nacional - Isenção do ICMS no Simples Nacional para faixa de receita bruta
@@ -1036,16 +1092,17 @@ csticms251 = sticmsEstrangeiraAdqMercIntDiferimento;
 csticms260 = sticmsEstrangeiraAdqMercIntCobradoAnteriormentePorST;
 csticms270 = sticmsEstrangeiraAdqMercIntComReducaoPorST;
 csticms290 = sticmsEstrangeiraAdqMercIntOutros;
-csticms101 = sticmsSimplesNacionalTributadaComPermissaoCredito;
-csticms102 = sticmsSimplesNacionalTributadaSemPermissaoCredito;
-csticms103 = sticmsSimplesNacionalIsencaoPorFaixaReceitaBruta;
-csticms201 = sticmsSimplesNacionalTributadaComPermissaoCreditoComST;
-csticms202 = sticmsSimplesNacionalTributadaSemPermissaoCreditoComST;
-csticms203 = sticmsSimplesNacionalIsencaoPorFaixaReceitaBrutaComST;
-csticms300 = sticmsSimplesNacionalImune;
-csticms400 = sticmsSimplesNacionalNaoTributada;
-csticms500 = sticmsSimplesNacionalCobradoAnteriormentePorST;
-csticms900 = sticmsSimplesNacionalOutros;
+
+csosnicms101 = sticmsSimplesNacionalTributadaComPermissaoCredito;
+csosnicms102 = sticmsSimplesNacionalTributadaSemPermissaoCredito;
+csosnicms103 = sticmsSimplesNacionalIsencaoPorFaixaReceitaBruta;
+csosnicms201 = sticmsSimplesNacionalTributadaComPermissaoCreditoComST;
+csosnicms202 = sticmsSimplesNacionalTributadaSemPermissaoCreditoComST;
+csosnicms203 = sticmsSimplesNacionalIsencaoPorFaixaReceitaBrutaComST;
+csosnicms300 = sticmsSimplesNacionalImune;
+csosnicms400 = sticmsSimplesNacionalNaoTributada;
+csosnicms500 = sticmsSimplesNacionalCobradoAnteriormentePorST;
+csosnicms900 = sticmsSimplesNacionalOutros;
 
 cstipi00 = stipiEntradaRecuperacaoCredito;
 cstipi01 = stipiEntradaTributradaZero;
