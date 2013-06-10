@@ -53,7 +53,6 @@ object Form1: TForm1
       Width = 174
       Height = 21
       TabOrder = 0
-      Text = 'edNCM'
     end
     object btnPesquisar: TBitBtn
       Left = 307
@@ -429,7 +428,7 @@ object Form1: TForm1
       TabOrder = 3
       Text = 
         'https://acbr.svn.sourceforge.net/svnroot/acbr/trunk/Exemplos/ACB' +
-        'rIBPTax/tabela/AcspDeOlhoNoImpostoIbptV.0.0.1.csv'
+        'rIBPTax/tabela/AcspDeOlhoNoImpostoIbptV.0.0.2.csv'
     end
   end
   object OpenDialog1: TOpenDialog
@@ -460,6 +459,10 @@ object Form1: TForm1
     end
     object tmpCadastroAliqInternacional: TFloatField
       FieldName = 'AliqInternacional'
+    end
+    object tmpCadastroDescricao: TStringField
+      FieldName = 'Descricao'
+      Size = 250
     end
   end
   object dtsCadastro: TDataSource

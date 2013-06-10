@@ -66,8 +66,10 @@ type
     FNCM: string;
     FAliqNacional: Double;
     FAliqImportado: Double;
+    FDescricao: string;
   public
     property NCM: string read FNCM write FNCM;
+    property Descricao: string read FDescricao write FDescricao;
     property Excecao: String read FExcecao write FExcecao;
     property Tabela: TACBrIBPTaxTabela read FTabela write FTabela;
     property AliqNacional: Double read FAliqNacional write FAliqNacional;
@@ -198,22 +200,24 @@ begin
 
     // primeira linha contem os cabecalhos de campo e versão do arquivo
     Item.DelimitedText := Arquivo.Strings[0];
-    if Item.Count = 6 then
-      FVersaoArquivo := Item.Strings[5];
+    if Item.Count = 7 then
+      FVersaoArquivo := Item.Strings[6];
 
     // proximas linhas contem os registros
     for I := 1 to Arquivo.Count - 1 do
     begin
       Item.DelimitedText := Arquivo.Strings[I];
-      if Item.Count = 6 then
+      if Item.Count = 7 then
       begin
+        // codigo;ex;tabela;descricao;aliqNac;aliqImp;0.0.2
         with Itens.New do
         begin
           NCM           := Item.Strings[0];
           Excecao       := Item.Strings[1];
-          AliqNacional  := StringToFloatDef(Item.Strings[3], 0.00);
-          AliqImportado := StringToFloatDef(Item.Strings[4], 0.00);
           Tabela        := TACBrIBPTaxTabela(StrToInt(Trim(Item.Strings[2])));
+          Descricao     := Item.Strings[3];
+          AliqNacional  := StringToFloatDef(Item.Strings[4], 0.00);
+          AliqImportado := StringToFloatDef(Item.Strings[5], 0.00);
         end;
       end;
     end;

@@ -41,6 +41,7 @@ type
     Label2: TLabel;
     edURL: TEdit;
     ckbBuscaNCMParcial: TCheckBox;
+    tmpCadastroDescricao: TStringField;
     procedure FormCreate(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure btExportarClick(Sender: TObject);
@@ -88,6 +89,7 @@ begin
       begin
         tmpCadastro.Append;
         tmpCadastroNCM.AsString              := ACBrIBPTax1.Itens[I].NCM;
+        tmpCadastroDescricao.AsString        := ACBrIBPTax1.Itens[I].Descricao;
         tmpCadastroEx.AsString               := ACBrIBPTax1.Itens[I].Excecao;
         tmpCadastroTabela.AsInteger          := Integer(ACBrIBPTax1.Itens[I].Tabela);
         tmpCadastroAliqNacional.AsFloat      := ACBrIBPTax1.Itens[I].AliqNacional;
