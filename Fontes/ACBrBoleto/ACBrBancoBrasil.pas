@@ -322,6 +322,8 @@ var
    ATipoAceite, aAgencia, aConta, aDV          : String;
    wTamConvenio,wTamNossoNum: Integer;
    ACaracTitulo: Char;
+   wCarteira: Integer;
+   wTipoCarteira: Char;
 begin
    with ACBrTitulo do
    begin
@@ -394,6 +396,22 @@ begin
         tcDescontada  : ACaracTitulo  := '4';
         tcVendor      : ACaracTitulo  := '5';
       end;
+
+      wCarteira:= StrToIntDef(Carteira,0);
+
+      if ((wCarteira = 11) or (wCarteira = 12)) and (ACaracTitulo = '1') then
+         wTipoCarteira := '1'
+      else if (((wCarteira = 11) or (wCarteira = 17)) and
+               ((ACaracTitulo = '2') or (ACaracTitulo = '3'))) or (wCarteira = 31) then
+         wTipoCarteira:= ACaracTitulo
+      else if (((wCarteira = 11) or (wCarteira = 17)) and (ACaracTitulo = '4')) or (wCarteira = 51) then
+         wTipoCarteira:= ACaracTitulo
+      else if (wCarteira = 17) and (ACaracTitulo = '1') then
+         wTipoCarteira:= '1'
+      else
+         wTipoCarteira:= '7';
+
+
   
       {Mora Juros}
       if (ValorMoraJuros > 0) then
@@ -431,7 +449,7 @@ begin
                padL(ACBrBoleto.Cedente.ContaDigito, 1, '0')                              + //36 - Dígito verificador da conta
                ' '                                                                       + //37 - Dígito verificador da agência / conta
                padL(ANossoNumero+aDV, 20, ' ')                                           + //38 a 57 - Nosso número - identificação do título no banco
-               IfThen(StrToIntDef(Carteira,0) = 17,'7','1')                              + //58 - Cobrança Simples
+               wTipoCarteira                                                             + //58 - Cobrança Simples
                '1'                                                                       + //59 - Forma de cadastramento do título no banco: com cadastramento
                ACaracTitulo                                                              + //60 - Tipo de documento: Tradicional
                ATipoBoleto                                                               + //61 a 62 - Quem emite e quem distribui o boleto?

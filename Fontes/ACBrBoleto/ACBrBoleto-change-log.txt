@@ -48,6 +48,13 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 
+Data: 10/06/2013
+-- ACBrBoleto ver. 0.0.71 --
+-- ACBrBancoBrasil --
+[-] Modificado geração do arquivo CNAB240 para informar corretamente o campo 58 do
+    registro P para todos os tipos de carteira. (Juliana Tamizou)
+
+
 Data: 05/06/2013
 -- ACBrBoleto ver. 0.0.70 --
 -- ACBrBoleto --
