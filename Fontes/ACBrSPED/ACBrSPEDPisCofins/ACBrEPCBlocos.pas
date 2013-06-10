@@ -1175,6 +1175,7 @@ function IndMovFisicaToStr(AValue: TACBrIndMovFisica): string;
 function StrToIndMovFisica(AValue: string): TACBrIndMovFisica;
 function IndFrtToStr(AValue: TACBrIndFrt): string;
 function StrToIndFrt(AValue: string): TACBrIndFrt;
+function StrToIndSitEsp(AValue: string): TACBrIndSitEsp;
 
 implementation
 
