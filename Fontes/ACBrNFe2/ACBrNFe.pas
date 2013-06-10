@@ -559,7 +559,11 @@ begin
      smtp.TargetPort := sSmtpPort;
 
      smtp.FullSSL := SSL;
-     smtp.AutoTLS := SSL;
+     // smtp.AutoTLS := SSL; ?
+     smtp.AutoTLS := TLS;
+
+     if(TLS) then
+       smtp.StartTLS;
 
      if not smtp.Login then
        raise Exception.Create('SMTP ERROR: Login: ' + smtp.EnhCodeString+sLineBreak+smtp.FullResult.Text);
@@ -654,7 +658,11 @@ begin
 
     ThreadSMTP.smtp.FullSSL := SSL;
     ThreadSMTP.smtp.AutoTLS := TLS;
-    ThreadSMTP.smtp.StartTLS;
+
+    // ThreadSMTP.smtp.StartTLS; ?
+
+    if(TLS) then
+      ThreadSMTP.smtp.StartTLS;
 
     SetStatus( stNFeEmail );
     ThreadSMTP.Resume; // inicia a thread
