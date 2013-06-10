@@ -111,7 +111,7 @@ type
       sSmtpPasswd, sFrom, sTo, sAssunto: String; sMensagem: TStrings;
       SSL: Boolean; sCC, Anexos: TStrings; PedeConfirma, AguardarEnvio: Boolean;
       NomeRemetente: String; TLS: Boolean; StreamNFe: TStringStream;
-      NomeArq: String);
+      NomeArq: String;HTML:Boolean=false);
     procedure EnviarEmailNormal(const sSmtpHost, sSmtpPort, sSmtpUser,
       sSmtpPasswd, sFrom, sTo, sAssunto: String; sMensagem: TStrings;
       SSL: Boolean; sCC, Anexos: TStrings; PedeConfirma, AguardarEnvio: Boolean;
@@ -177,7 +177,8 @@ type
                                   TLS : Boolean = True;
                                   StreamNFe : TStringStream = nil;
                                   NomeArq : String = '';
-                                  UsarThread: Boolean = True);
+                                  UsarThread: Boolean = True;
+                                  HTML: Boolean = False);
 
   published
     property Configuracoes: TConfiguracoes read FConfiguracoes write FConfiguracoes;
@@ -596,7 +597,7 @@ procedure TACBrNFe.EnviaEmailThread(const sSmtpHost, sSmtpPort, sSmtpUser,
   sSmtpPasswd, sFrom, sTo, sAssunto: String; sMensagem: TStrings;
   SSL: Boolean; sCC, Anexos: TStrings; PedeConfirma,
   AguardarEnvio: Boolean; NomeRemetente: String; TLS: Boolean;
-  StreamNFe : TStringStream; NomeArq : String);
+  StreamNFe : TStringStream; NomeArq : String;HTML:Boolean=false);
 var
  ThreadSMTP : TSendMailThread;
  m:TMimemess;
@@ -609,7 +610,12 @@ begin
  try
     p := m.AddPartMultipart('mixed', nil);
     if sMensagem <> nil then
-       m.AddPartText(sMensagem, p);
+    begin
+       if HTML = true then
+          m.AddPartHTML(sMensagem, p)
+       else
+          m.AddPartText(sMensagem, p);
+    end;
 
     if StreamNFe <> nil then
       m.AddPartBinary(StreamNFe,NomeArq, p);
@@ -669,7 +675,7 @@ procedure TACBrNFe.EnviaEmail(const sSmtpHost, sSmtpPort, sSmtpUser,
   sSmtpPasswd, sFrom, sTo, sAssunto: String; sMensagem: TStrings;
   SSL: Boolean; sCC, Anexos: TStrings; PedeConfirma,
   AguardarEnvio: Boolean; NomeRemetente: String; TLS: Boolean;
-  StreamNFe : TStringStream; NomeArq : String; UsarThread: Boolean);
+  StreamNFe : TStringStream; NomeArq : String; UsarThread: Boolean;HTML:Boolean);
 begin
   if UsarThread then
   begin
@@ -690,7 +696,8 @@ begin
       NomeRemetente,
       TLS,
       StreamNFe,
-      NomeArq
+      NomeArq,
+      HTML
     );
   end
   else
