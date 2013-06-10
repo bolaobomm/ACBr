@@ -350,7 +350,7 @@ begin
 
    AStr := copy(AStr, 1, pos('</'+ APrefixo3 + EnviarLoteRps + '>', AStr) - 1);
 
-   if (URI = '') or (AProvedor in [proRecife, proRJ, proAbaco])
+   if (URI = '') or (AProvedor in [proRecife, {proRJ,} proAbaco])
     then AID := '>'
     else AID := ' ' + Identificador + '="AssLote_' + URI + '">';
 
@@ -417,7 +417,7 @@ begin
       end
       else URI := '';
 
-     if (URI = '') or (AProvedor in [profintelISS, proRecife, proNatal, proRJ])
+     if (URI = '') or (AProvedor in [profintelISS, proRecife, proNatal{, proRJ}])
       then AID := '>'
       else AID := ' ' + Identificador + '="Ass_' + URI + '">';
 
