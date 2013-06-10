@@ -106,7 +106,8 @@ type
     procedure Exportar(const AArquivo: String; ATipo: TACBrIBPTaxExporta); overload;
     procedure Exportar(const AArquivo, ADelimitador: String); overload;
     function Procurar(const ACodigo: String; var ex: String;
-      var tabela: Integer; var aliqNac, aliqImp: Double ): Boolean;
+      var tabela: Integer; var aliqNac, aliqImp: Double ;
+      const BuscaParcial: Boolean = False): Boolean;
 
     property Itens: TACBrIBPTaxRegistros read FItens;
   published
@@ -286,9 +287,11 @@ begin
 end;
 
 function TACBrIBPTax.Procurar(const ACodigo: String; var ex: String;
-  var tabela: Integer; var aliqNac, aliqImp: Double ): Boolean;
+  var tabela: Integer; var aliqNac, aliqImp: Double ;
+  const BuscaParcial: Boolean): Boolean;
 var
   I: Integer;
+  Igual: Boolean;
 begin
   if Itens.Count <= 0 then
     EACBrIBPTax.Create('Tabela de itens ainda não foi aberta!');
@@ -296,7 +299,12 @@ begin
   Result := False;
   for I := 0 to Itens.Count - 1 do
   begin
-    if Trim(ACodigo) = Trim(Itens[I].NCM) Then
+    if BuscaParcial then
+      Igual := Pos(Trim(ACodigo), Trim(Itens[I].NCM)) > 0 //CompareText(Trim(ACodigo), Trim(Itens[I].NCM)) < 0
+    else
+      Igual := SameText(Trim(ACodigo), Trim(Itens[I].NCM));
+
+    if Igual Then
      begin
        ex      := Itens[I].Excecao ;
        tabela  := Integer(Itens[I].Tabela) ;

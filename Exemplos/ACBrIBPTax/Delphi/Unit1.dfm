@@ -56,13 +56,21 @@ object Form1: TForm1
       Text = 'edNCM'
     end
     object btnPesquisar: TBitBtn
-      Left = 192
+      Left = 307
       Top = 33
       Width = 99
       Height = 26
       Caption = 'Pesquisar...'
       TabOrder = 1
       OnClick = btnPesquisarClick
+    end
+    object ckbBuscaNCMParcial: TCheckBox
+      Left = 192
+      Top = 37
+      Width = 97
+      Height = 17
+      Caption = 'Busca parcial'
+      TabOrder = 2
     end
   end
   object rgTipoExportacao: TRadioGroup

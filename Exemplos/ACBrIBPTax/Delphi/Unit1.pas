@@ -40,6 +40,7 @@ type
     ACBrIBPTax1: TACBrIBPTax;
     Label2: TLabel;
     edURL: TEdit;
+    ckbBuscaNCMParcial: TCheckBox;
     procedure FormCreate(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure btExportarClick(Sender: TObject);
@@ -200,7 +201,7 @@ var
   tabela: Integer;
   aliqNac, aliqImp: Double;
 begin
-  if ACBrIBPTax1.Procurar(edNCM.Text, ex, tabela, aliqNac, aliqImp) then
+  if ACBrIBPTax1.Procurar(edNCM.Text, ex, tabela, aliqNac, aliqImp, ckbBuscaNCMParcial.Checked) then
   begin
     ShowMessage(
       'Código: '   + edNCM.Text  + sLineBreak +
