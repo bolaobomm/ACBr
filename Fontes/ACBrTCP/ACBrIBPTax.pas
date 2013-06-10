@@ -59,6 +59,8 @@ type
 
   TACBrIBPTaxTabela = (tabNCM, tabNBS);
 
+  TACBrIBPTaxErroImportacao = procedure(const ALinha: String; const AErro: String) of object;
+
   TACBrIBPTaxRegistro = class
   private
     FTabela: TACBrIBPTaxTabela;
@@ -93,12 +95,14 @@ type
     FVersaoArquivo: String;
     FURLDownload: String;
     FItens: TACBrIBPTaxRegistros;
+    FOnErroImportacao: TACBrIBPTaxErroImportacao;
     procedure ExportarCSV(const AArquivo: String);
     procedure ExportarDSV(const AArquivo: String);
     procedure ExportarHTML(const AArquivo: String);
     procedure ExportarXML(const AArquivo: String);
     procedure ExportarTXT(const AArquivo: String);
     procedure PopularItens;
+    procedure EventoErroImportacao(const Alinha, AErro: String);
   public
     destructor Destroy; override;
     constructor Create(AOwner: TComponent); override;
@@ -113,6 +117,7 @@ type
 
     property Itens: TACBrIBPTaxRegistros read FItens;
   published
+    property OnErroImportacao: TACBrIBPTaxErroImportacao read FOnErroImportacao write FOnErroImportacao;
     property VersaoArquivo : String read FVersaoArquivo ;
     property URLDownload: String read FURLDownload write FURLDownload;
     property Arquivo: TStringList read FArquivo write FArquivo;
@@ -174,6 +179,7 @@ begin
   FArquivo := TStringList.Create;
   FURLDownload := '';
   FVersaoArquivo := '';
+  FOnErroImportacao := nil;
 end;
 
 destructor TACBrIBPTax.Destroy;
@@ -187,6 +193,25 @@ procedure TACBrIBPTax.PopularItens;
 var
   Item: TStringList;
   I: Integer;
+
+  procedure QuebrarLinha(const Alinha: String; const ALista: TStringList);
+  var
+    Texto: String;
+    PosSep: Integer;
+    I: Integer;
+  begin
+    ALista.Clear;
+    Texto := Alinha;
+    repeat
+      PosSep := Pos(';', Texto);
+
+      ALista.Add(Copy(Texto, 0, PosSep - 1));
+      Texto := Trim(Copy(Texto, PosSep + 1, Length(Texto)));
+    until Pos(';', Texto) <= 0;
+
+    if Trim(Texto) <> '' then
+      ALista.Add(Texto);
+  end;
 begin
   if Arquivo.Count <= 0 then
     raise EACBrIBPTax.Create('Arquivo de itens não foi baixado!');
@@ -196,18 +221,16 @@ begin
 
   Item := TStringList.Create;
   try
-    Item.Delimiter := ';';
-
     // primeira linha contem os cabecalhos de campo e versão do arquivo
-    Item.DelimitedText := Arquivo.Strings[0];
+    QuebrarLinha(Arquivo.Strings[0], Item);
     if Item.Count = 7 then
       FVersaoArquivo := Item.Strings[6];
 
     // proximas linhas contem os registros
     for I := 1 to Arquivo.Count - 1 do
     begin
-      Item.DelimitedText := Arquivo.Strings[I];
-      if Item.Count = 7 then
+      QuebrarLinha(Arquivo.Strings[I], Item);
+      if Item.Count = 6 then
       begin
         // codigo;ex;tabela;descricao;aliqNac;aliqImp;0.0.2
         with Itens.New do
@@ -219,6 +242,10 @@ begin
           AliqNacional  := StringToFloatDef(Item.Strings[4], 0.00);
           AliqImportado := StringToFloatDef(Item.Strings[5], 0.00);
         end;
+      end
+      else
+      begin
+        EventoErroImportacao(Arquivo.Strings[I], Format('Registro inválido, quantidade de colunas "%d" excede o esperado "6"!', [Item.Count]));
       end;
     end;
   finally
@@ -227,41 +254,7 @@ begin
 end;
 
 function TACBrIBPTax.DownloadTabela: Boolean;
-//Var
-//  StreamHTML: TMemoryStream;
-//  I, PosInicial, PosFinal: Integer;
-//  HtmlRetorno: String;
 begin
-  { removido porque o site foi tirado do ar, ao invés disso agora
-    confifure diretamente a url para baixar
-
-  // descobrir primeiro o nome da tabela
-  HTTPGet('http://www.impostometro.com.br/lei12741/ibptax');
-  HtmlRetorno := '';
-  for I := 0 to RespHTTP.Count - 1 do
-  begin
-    if Pos('.csv', RespHTTP.Strings[I]) > 0 then
-    begin
-      HtmlRetorno := RespHTTP.Strings[I];
-      Break;
-    end;
-  end;
-
-  Result := Trim(HtmlRetorno) <> '';
-  if Result then
-  begin
-    PosInicial   := Pos('http:', HtmlRetorno);
-    PosFinal     := (Pos('.csv', HtmlRetorno) + 4) - PosInicial;
-    FURLDownload := Copy(HtmlRetorno, PosInicial, PosFinal);
-
-    // baixar a tabela
-    HTTPGet( FURLDownload );
-    FArquivo.Text := RespHTTP.Text;
-    Result := True;
-
-    PopularItens;
-  end;
-  }
 
   if Trim(FURLDownload) = '' then
     raise EACBrIBPTax.Create('URL do arquivo .csv não foi informado em "URLDownload!"');
@@ -333,6 +326,12 @@ begin
     exXML:  ExportarXML(AArquivo);
     exHTML: ExportarHTML(AArquivo);
   end;
+end;
+
+procedure TACBrIBPTax.EventoErroImportacao(const Alinha, AErro: String);
+begin
+  if Assigned(FOnErroImportacao) then
+    FOnErroImportacao(Alinha, AErro);
 end;
 
 procedure TACBrIBPTax.Exportar(const AArquivo, ADelimitador: String);

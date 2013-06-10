@@ -11,25 +11,9 @@ object Form1: TForm1
   Font.Name = 'Tahoma'
   Font.Style = []
   OldCreateOrder = False
-  OnClose = FormClose
   OnCreate = FormCreate
   PixelsPerInch = 96
   TextHeight = 13
-  object DBGrid1: TDBGrid
-    Left = 0
-    Top = 141
-    Width = 822
-    Height = 253
-    Align = alClient
-    DataSource = dtsCadastro
-    ReadOnly = True
-    TabOrder = 0
-    TitleFont.Charset = DEFAULT_CHARSET
-    TitleFont.Color = clWindowText
-    TitleFont.Height = -11
-    TitleFont.Name = 'Tahoma'
-    TitleFont.Style = []
-  end
   object GroupBox2: TGroupBox
     Left = 0
     Top = 394
@@ -37,7 +21,7 @@ object Form1: TForm1
     Height = 68
     Align = alBottom
     Caption = 'Pesquisar no componente'
-    TabOrder = 1
+    TabOrder = 0
     object Label3: TLabel
       Left = 12
       Top = 19
@@ -88,7 +72,7 @@ object Form1: TForm1
       'Formato HTML'
       'Formato TXT'
       'Demilitado')
-    TabOrder = 2
+    TabOrder = 1
   end
   object Panel1: TPanel
     Left = 0
@@ -97,7 +81,7 @@ object Form1: TForm1
     Height = 34
     Align = alBottom
     BevelOuter = bvNone
-    TabOrder = 3
+    TabOrder = 2
     DesignSize = (
       822
       34)
@@ -246,7 +230,7 @@ object Form1: TForm1
     Height = 141
     Align = alTop
     Caption = 'Arquivo Tabela_CNIEE.bin'
-    TabOrder = 4
+    TabOrder = 3
     DesignSize = (
       822
       141)
@@ -319,6 +303,13 @@ object Form1: TForm1
       Caption = 'URL do arquivo .csv no padr'#227'o IBPT'
       Color = clBtnFace
       ParentColor = False
+    end
+    object Label4: TLabel
+      Left = 145
+      Top = 110
+      Width = 104
+      Height = 13
+      Caption = 'Quantidade de itens: '
     end
     object edArquivo: TEdit
       Left = 12
@@ -431,6 +422,48 @@ object Form1: TForm1
         'rIBPTax/tabela/AcspDeOlhoNoImpostoIbptV.0.0.2.csv'
     end
   end
+  object PageControl1: TPageControl
+    Left = 0
+    Top = 141
+    Width = 822
+    Height = 253
+    ActivePage = TabSheet2
+    Align = alClient
+    TabOrder = 4
+    object TabSheet1: TTabSheet
+      Caption = 'Dados importados'
+      object DBGrid1: TDBGrid
+        Left = 0
+        Top = 0
+        Width = 814
+        Height = 225
+        Align = alClient
+        DataSource = dtsCadastro
+        ReadOnly = True
+        TabOrder = 0
+        TitleFont.Charset = DEFAULT_CHARSET
+        TitleFont.Color = clWindowText
+        TitleFont.Height = -11
+        TitleFont.Name = 'Tahoma'
+        TitleFont.Style = []
+      end
+    end
+    object TabSheet2: TTabSheet
+      Caption = 'Erros'
+      ImageIndex = 1
+      object Memo1: TMemo
+        Left = 0
+        Top = 0
+        Width = 814
+        Height = 225
+        Align = alClient
+        Lines.Strings = (
+          'Memo1')
+        ScrollBars = ssBoth
+        TabOrder = 0
+      end
+    end
+  end
   object OpenDialog1: TOpenDialog
     DefaultExt = '.csv'
     Filter = 'Tabela IBPTax|*.csv'
@@ -477,6 +510,7 @@ object Form1: TForm1
   end
   object ACBrIBPTax1: TACBrIBPTax
     ProxyPort = '8080'
+    OnErroImportacao = ACBrIBPTax1ErroImportacao
     Left = 305
     Top = 185
   end

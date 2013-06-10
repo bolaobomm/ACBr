@@ -6,11 +6,10 @@ uses
   ACBrIBPTax,
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
   Dialogs, StdCtrls, DB, DBClient, Buttons, DBCtrls, ExtCtrls, Grids, DBGrids,
-  ACBrBase, ACBrSocket;
+  ACBrBase, ACBrSocket, ComCtrls;
 
 type
   TForm1 = class(TForm)
-    DBGrid1: TDBGrid;
     GroupBox2: TGroupBox;
     Label3: TLabel;
     edNCM: TEdit;
@@ -42,8 +41,13 @@ type
     edURL: TEdit;
     ckbBuscaNCMParcial: TCheckBox;
     tmpCadastroDescricao: TStringField;
+    Label4: TLabel;
+    PageControl1: TPageControl;
+    TabSheet1: TTabSheet;
+    TabSheet2: TTabSheet;
+    DBGrid1: TDBGrid;
+    Memo1: TMemo;
     procedure FormCreate(Sender: TObject);
-    procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure btExportarClick(Sender: TObject);
     procedure btSairClick(Sender: TObject);
     procedure btDownloadClick(Sender: TObject);
@@ -51,6 +55,7 @@ type
     procedure sbArquivoClick(Sender: TObject);
     procedure btProxyClick(Sender: TObject);
     procedure btnPesquisarClick(Sender: TObject);
+    procedure ACBrIBPTax1ErroImportacao(const ALinha, AErro: string);
   private
 
   public
@@ -67,39 +72,55 @@ uses
 
 {$R *.dfm}
 
+procedure TForm1.ACBrIBPTax1ErroImportacao(const ALinha, AErro: string);
+begin
+  Memo1.Lines.Add(Alinha);
+  Memo1.Lines.Add(AErro);
+  Memo1.Lines.Add('');
+end;
+
 procedure TForm1.btAbrirClick(Sender: TObject);
 var
   I: Integer;
 begin
+  Memo1.Clear;
+
   // configurar a URL do arquivo para ser baixado
   if Trim(edURL.Text) <> '' then
     ACBrIBPTax1.URLDownload := Trim(edURL.Text);
 
   // se o path do arquivo não for passado, então o componente vai tentar baixar
   // a tabela no URL informado
-  if ACBrIBPTax1.AbrirTabela(edArquivo.Text) then
-  begin
-    lVersao.Caption := 'Versão: ' + ACBrIBPTax1.VersaoArquivo;
+  Memo1.Lines.BeginUpdate;
+  try
+    if ACBrIBPTax1.AbrirTabela(edArquivo.Text) then
+    begin
+      lVersao.Caption := 'Versão: ' + ACBrIBPTax1.VersaoArquivo;
 
-    tmpCadastro.Close;
-    tmpCadastro.CreateDataSet;
-    tmpCadastro.DisableControls;
-    try
-      for I := 0 to ACBrIBPTax1.Itens.Count - 1 do
-      begin
-        tmpCadastro.Append;
-        tmpCadastroNCM.AsString              := ACBrIBPTax1.Itens[I].NCM;
-        tmpCadastroDescricao.AsString        := ACBrIBPTax1.Itens[I].Descricao;
-        tmpCadastroEx.AsString               := ACBrIBPTax1.Itens[I].Excecao;
-        tmpCadastroTabela.AsInteger          := Integer(ACBrIBPTax1.Itens[I].Tabela);
-        tmpCadastroAliqNacional.AsFloat      := ACBrIBPTax1.Itens[I].AliqNacional;
-        tmpCadastroAliqInternacional.AsFloat := ACBrIBPTax1.Itens[I].AliqImportado;
-        tmpCadastro.Post;
+      tmpCadastro.Close;
+      tmpCadastro.CreateDataSet;
+      tmpCadastro.DisableControls;
+      try
+        for I := 0 to ACBrIBPTax1.Itens.Count - 1 do
+        begin
+          tmpCadastro.Append;
+          tmpCadastroNCM.AsString              := ACBrIBPTax1.Itens[I].NCM;
+          tmpCadastroDescricao.AsString        := ACBrIBPTax1.Itens[I].Descricao;
+          tmpCadastroEx.AsString               := ACBrIBPTax1.Itens[I].Excecao;
+          tmpCadastroTabela.AsInteger          := Integer(ACBrIBPTax1.Itens[I].Tabela);
+          tmpCadastroAliqNacional.AsFloat      := ACBrIBPTax1.Itens[I].AliqNacional;
+          tmpCadastroAliqInternacional.AsFloat := ACBrIBPTax1.Itens[I].AliqImportado;
+          tmpCadastro.Post;
+        end;
+      finally
+        tmpCadastro.First;
+        tmpCadastro.EnableControls;
+
+        Label4.Caption := 'Quantidade de itens: ' + IntToStr(tmpCadastro.RecordCount);
       end;
-    finally
-      tmpCadastro.First;
-      tmpCadastro.EnableControls;
     end;
+  finally
+    Memo1.Lines.EndUpdate;
   end;
 end;
 
@@ -245,14 +266,9 @@ begin
   Close;
 end;
 
-procedure TForm1.FormClose(Sender: TObject; var Action: TCloseAction);
-begin
-  ACBrIBPTax1.Free;
-end;
-
 procedure TForm1.FormCreate(Sender: TObject);
 begin
-  ACBrIBPTax1 := TACBrIBPTax.Create(Self);
+  PageControl1.ActivePageIndex := 0;
 end;
 
 procedure TForm1.sbArquivoClick(Sender: TObject);
