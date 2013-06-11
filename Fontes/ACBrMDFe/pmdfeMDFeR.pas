@@ -86,7 +86,7 @@ end;
 function TMDFeR.LerXml: boolean;
 var
   ok: boolean;
-  i, j, i01, i02: integer;
+  i, j, i01, i02, i03, i04, i05: integer;
 begin
 
   I := 0;
@@ -289,10 +289,10 @@ begin
        while Leitor.rExtrai(3, 'vag', '', i01 + 1) <> '' do
        begin
          MDFe.ferrov.vag.Add;
-         MDFe.ferrov.vag[i01].serie := Leitor.rCampo(tcInt, 'serie');
+         MDFe.ferrov.vag[i01].serie := Leitor.rCampo(tcStr, 'serie');
          MDFe.ferrov.vag[i01].nVag  := Leitor.rCampo(tcInt, 'nVag');
          MDFe.ferrov.vag[i01].nSeq  := Leitor.rCampo(tcInt, 'nSeq');
-         MDFe.ferrov.vag[i01].TU    := Leitor.rCampo(tcInt, 'TU');
+         MDFe.ferrov.vag[i01].TU    := Leitor.rCampo(tcDe3, 'TU');
          inc(i01);
        end;
 
@@ -315,6 +315,45 @@ begin
         MDFe.infDoc.infMunDescarga[i01].infCTe.Add;
         MDFe.infDoc.infMunDescarga[i01].infCTe[i02].chCTe       := Leitor.rCampo(tcStr, 'chCTe');
         MDFe.infDoc.infMunDescarga[i01].infCTe[i02].SegCodBarra := Leitor.rCampo(tcStr, 'SegCodBarra');
+
+        i03 := 0;
+        while Leitor.rExtrai(4, 'infUnidTransp', '', i03 + 1) <> '' do
+        begin
+          MDFe.infDoc.infMunDescarga[i01].infCTe[i02].infUnidTransp.Add;
+          MDFe.infDoc.infMunDescarga[i01].infCTe[i02].infUnidTransp[i03].tpUnidTransp := StrToUnidTransp(ok, Leitor.rCampo(tcStr, 'tpUnidTransp'));
+          MDFe.infDoc.infMunDescarga[i01].infCTe[i02].infUnidTransp[i03].idUnidTransp := Leitor.rCampo(tcStr, 'idUnidTransp');
+          MDFe.infDoc.infMunDescarga[i01].infCTe[i02].infUnidTransp[i03].qtdRat       := Leitor.rCampo(tcDe2, 'qtdRat');
+
+          i04 := 0;
+          while Leitor.rExtrai(5, 'lacUnidTransp', '', i04 + 1) <> '' do
+          begin
+            MDFe.infDoc.infMunDescarga[i01].infCTe[i02].infUnidTransp[i03].lacUnidTransp.Add;
+            MDFe.infDoc.infMunDescarga[i01].infCTe[i02].infUnidTransp[i03].lacUnidTransp[i04].nLacre := Leitor.rCampo(tcStr, 'nLacre');
+            inc(i04);
+          end;
+
+          i04 := 0;
+          while Leitor.rExtrai(5, 'infUnidCarga', '', i04 + 1) <> '' do
+          begin
+            MDFe.infDoc.infMunDescarga[i01].infCTe[i02].infUnidTransp[i03].infUnidCarga.Add;
+            MDFe.infDoc.infMunDescarga[i01].infCTe[i02].infUnidTransp[i03].infUnidCarga[i04].tpUnidCarga := StrToUnidCarga(ok, Leitor.rCampo(tcStr, 'tpUnidCarga'));
+            MDFe.infDoc.infMunDescarga[i01].infCTe[i02].infUnidTransp[i03].infUnidCarga[i04].idUnidCarga := Leitor.rCampo(tcStr, 'idUnidCarga');
+            MDFe.infDoc.infMunDescarga[i01].infCTe[i02].infUnidTransp[i03].infUnidCarga[i04].qtdRat      := Leitor.rCampo(tcDe2, 'qtdRat');
+
+            i05 := 0;
+            while Leitor.rExtrai(6, 'lacUnidCarga', '', i05 + 1) <> '' do
+            begin
+              MDFe.infDoc.infMunDescarga[i01].infCTe[i02].infUnidTransp[i03].infUnidCarga[i04].lacUnidCarga.Add;
+              MDFe.infDoc.infMunDescarga[i01].infCTe[i02].infUnidTransp[i03].infUnidCarga[i04].lacUnidCarga[i05].nLacre := Leitor.rCampo(tcStr, 'nLacre');
+              inc(i05);
+            end;
+
+            inc(i04);
+          end;
+
+          inc(i03);
+        end;
+
         inc(i02);
       end;
 
@@ -327,6 +366,45 @@ begin
         MDFe.infDoc.infMunDescarga[i01].infCT[i02].subser := Leitor.rCampo(tcInt, 'subser');
         MDFe.infDoc.infMunDescarga[i01].infCT[i02].dEmi   := Leitor.rCampo(tcDat, 'dEmi');
         MDFe.infDoc.infMunDescarga[i01].infCT[i02].vCarga := Leitor.rCampo(tcDe2, 'vCarga');
+
+        i03 := 0;
+        while Leitor.rExtrai(4, 'infUnidTransp', '', i03 + 1) <> '' do
+        begin
+          MDFe.infDoc.infMunDescarga[i01].infCT[i02].infUnidTransp.Add;
+          MDFe.infDoc.infMunDescarga[i01].infCT[i02].infUnidTransp[i03].tpUnidTransp := StrToUnidTransp(ok, Leitor.rCampo(tcStr, 'tpUnidTransp'));
+          MDFe.infDoc.infMunDescarga[i01].infCT[i02].infUnidTransp[i03].idUnidTransp := Leitor.rCampo(tcStr, 'idUnidTransp');
+          MDFe.infDoc.infMunDescarga[i01].infCT[i02].infUnidTransp[i03].qtdRat       := Leitor.rCampo(tcDe2, 'qtdRat');
+
+          i04 := 0;
+          while Leitor.rExtrai(5, 'lacUnidTransp', '', i04 + 1) <> '' do
+          begin
+            MDFe.infDoc.infMunDescarga[i01].infCT[i02].infUnidTransp[i03].lacUnidTransp.Add;
+            MDFe.infDoc.infMunDescarga[i01].infCT[i02].infUnidTransp[i03].lacUnidTransp[i04].nLacre := Leitor.rCampo(tcStr, 'nLacre');
+            inc(i04);
+          end;
+
+          i04 := 0;
+          while Leitor.rExtrai(5, 'infUnidCarga', '', i04 + 1) <> '' do
+          begin
+            MDFe.infDoc.infMunDescarga[i01].infCT[i02].infUnidTransp[i03].infUnidCarga.Add;
+            MDFe.infDoc.infMunDescarga[i01].infCT[i02].infUnidTransp[i03].infUnidCarga[i04].tpUnidCarga := StrToUnidCarga(ok, Leitor.rCampo(tcStr, 'tpUnidCarga'));
+            MDFe.infDoc.infMunDescarga[i01].infCT[i02].infUnidTransp[i03].infUnidCarga[i04].idUnidCarga := Leitor.rCampo(tcStr, 'idUnidCarga');
+            MDFe.infDoc.infMunDescarga[i01].infCT[i02].infUnidTransp[i03].infUnidCarga[i04].qtdRat      := Leitor.rCampo(tcDe2, 'qtdRat');
+
+            i05 := 0;
+            while Leitor.rExtrai(6, 'lacUnidCarga', '', i05 + 1) <> '' do
+            begin
+              MDFe.infDoc.infMunDescarga[i01].infCT[i02].infUnidTransp[i03].infUnidCarga[i04].lacUnidCarga.Add;
+              MDFe.infDoc.infMunDescarga[i01].infCT[i02].infUnidTransp[i03].infUnidCarga[i04].lacUnidCarga[i05].nLacre := Leitor.rCampo(tcStr, 'nLacre');
+              inc(i05);
+            end;
+
+            inc(i04);
+          end;
+
+          inc(i03);
+        end;
+
         inc(i02);
       end;
 
@@ -336,6 +414,45 @@ begin
         MDFe.infDoc.infMunDescarga[i01].infNFe.Add;
         MDFe.infDoc.infMunDescarga[i01].infNFe[i02].chNFe       := Leitor.rCampo(tcStr, 'chNFe');
         MDFe.infDoc.infMunDescarga[i01].infNFe[i02].SegCodBarra := Leitor.rCampo(tcStr, 'SegCodBarra');
+
+        i03 := 0;
+        while Leitor.rExtrai(4, 'infUnidTransp', '', i03 + 1) <> '' do
+        begin
+          MDFe.infDoc.infMunDescarga[i01].infNFe[i02].infUnidTransp.Add;
+          MDFe.infDoc.infMunDescarga[i01].infNFe[i02].infUnidTransp[i03].tpUnidTransp := StrToUnidTransp(ok, Leitor.rCampo(tcStr, 'tpUnidTransp'));
+          MDFe.infDoc.infMunDescarga[i01].infNFe[i02].infUnidTransp[i03].idUnidTransp := Leitor.rCampo(tcStr, 'idUnidTransp');
+          MDFe.infDoc.infMunDescarga[i01].infNFe[i02].infUnidTransp[i03].qtdRat       := Leitor.rCampo(tcDe2, 'qtdRat');
+
+          i04 := 0;
+          while Leitor.rExtrai(5, 'lacUnidTransp', '', i04 + 1) <> '' do
+          begin
+            MDFe.infDoc.infMunDescarga[i01].infNFe[i02].infUnidTransp[i03].lacUnidTransp.Add;
+            MDFe.infDoc.infMunDescarga[i01].infNFe[i02].infUnidTransp[i03].lacUnidTransp[i04].nLacre := Leitor.rCampo(tcStr, 'nLacre');
+            inc(i04);
+          end;
+
+          i04 := 0;
+          while Leitor.rExtrai(5, 'infUnidCarga', '', i04 + 1) <> '' do
+          begin
+            MDFe.infDoc.infMunDescarga[i01].infNFe[i02].infUnidTransp[i03].infUnidCarga.Add;
+            MDFe.infDoc.infMunDescarga[i01].infNFe[i02].infUnidTransp[i03].infUnidCarga[i04].tpUnidCarga := StrToUnidCarga(ok, Leitor.rCampo(tcStr, 'tpUnidCarga'));
+            MDFe.infDoc.infMunDescarga[i01].infNFe[i02].infUnidTransp[i03].infUnidCarga[i04].idUnidCarga := Leitor.rCampo(tcStr, 'idUnidCarga');
+            MDFe.infDoc.infMunDescarga[i01].infNFe[i02].infUnidTransp[i03].infUnidCarga[i04].qtdRat      := Leitor.rCampo(tcDe2, 'qtdRat');
+
+            i05 := 0;
+            while Leitor.rExtrai(6, 'lacUnidCarga', '', i05 + 1) <> '' do
+            begin
+              MDFe.infDoc.infMunDescarga[i01].infNFe[i02].infUnidTransp[i03].infUnidCarga[i04].lacUnidCarga.Add;
+              MDFe.infDoc.infMunDescarga[i01].infNFe[i02].infUnidTransp[i03].infUnidCarga[i04].lacUnidCarga[i05].nLacre := Leitor.rCampo(tcStr, 'nLacre');
+              inc(i05);
+            end;
+
+            inc(i04);
+          end;
+
+          inc(i03);
+        end;
+
         inc(i02);
       end;
 
@@ -350,6 +467,45 @@ begin
         MDFe.infDoc.infMunDescarga[i01].infNF[i02].dEmi  := Leitor.rCampo(tcDat, 'dEmi');
         MDFe.infDoc.infMunDescarga[i01].infNF[i02].vNF   := Leitor.rCampo(tcDe2, 'vNF');
         MDFe.infDoc.infMunDescarga[i01].infNF[i02].PIN   := Leitor.rCampo(tcInt, 'PIN');
+
+        i03 := 0;
+        while Leitor.rExtrai(4, 'infUnidTransp', '', i03 + 1) <> '' do
+        begin
+          MDFe.infDoc.infMunDescarga[i01].infNF[i02].infUnidTransp.Add;
+          MDFe.infDoc.infMunDescarga[i01].infNF[i02].infUnidTransp[i03].tpUnidTransp := StrToUnidTransp(ok, Leitor.rCampo(tcStr, 'tpUnidTransp'));
+          MDFe.infDoc.infMunDescarga[i01].infNF[i02].infUnidTransp[i03].idUnidTransp := Leitor.rCampo(tcStr, 'idUnidTransp');
+          MDFe.infDoc.infMunDescarga[i01].infNF[i02].infUnidTransp[i03].qtdRat       := Leitor.rCampo(tcDe2, 'qtdRat');
+
+          i04 := 0;
+          while Leitor.rExtrai(5, 'lacUnidTransp', '', i04 + 1) <> '' do
+          begin
+            MDFe.infDoc.infMunDescarga[i01].infNF[i02].infUnidTransp[i03].lacUnidTransp.Add;
+            MDFe.infDoc.infMunDescarga[i01].infNF[i02].infUnidTransp[i03].lacUnidTransp[i04].nLacre := Leitor.rCampo(tcStr, 'nLacre');
+            inc(i04);
+          end;
+
+          i04 := 0;
+          while Leitor.rExtrai(5, 'infUnidCarga', '', i04 + 1) <> '' do
+          begin
+            MDFe.infDoc.infMunDescarga[i01].infNF[i02].infUnidTransp[i03].infUnidCarga.Add;
+            MDFe.infDoc.infMunDescarga[i01].infNF[i02].infUnidTransp[i03].infUnidCarga[i04].tpUnidCarga := StrToUnidCarga(ok, Leitor.rCampo(tcStr, 'tpUnidCarga'));
+            MDFe.infDoc.infMunDescarga[i01].infNF[i02].infUnidTransp[i03].infUnidCarga[i04].idUnidCarga := Leitor.rCampo(tcStr, 'idUnidCarga');
+            MDFe.infDoc.infMunDescarga[i01].infNF[i02].infUnidTransp[i03].infUnidCarga[i04].qtdRat      := Leitor.rCampo(tcDe2, 'qtdRat');
+
+            i05 := 0;
+            while Leitor.rExtrai(6, 'lacUnidCarga', '', i05 + 1) <> '' do
+            begin
+              MDFe.infDoc.infMunDescarga[i01].infNF[i02].infUnidTransp[i03].infUnidCarga[i04].lacUnidCarga.Add;
+              MDFe.infDoc.infMunDescarga[i01].infNF[i02].infUnidTransp[i03].infUnidCarga[i04].lacUnidCarga[i05].nLacre := Leitor.rCampo(tcStr, 'nLacre');
+              inc(i05);
+            end;
+
+            inc(i04);
+          end;
+
+          inc(i03);
+        end;
+
         inc(i02);
       end;
 

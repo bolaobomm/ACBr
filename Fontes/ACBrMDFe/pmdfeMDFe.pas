@@ -86,14 +86,30 @@ type
   TinfDoc                       = class;
   TinfMunDescargaCollection     = class;
   TinfMunDescargaCollectionItem = class;
+
   TinfCTeCollection             = class;
   TinfCTeCollectionItem         = class;
+  TinfUnidTranspCTeCollection   = class;
+
+  TinfUnidTranspCollectionItem  = class;
+  TlacUnidTranspCollection      = class;
+  TlacUnidTranspCollectionItem  = class;
+  TinfUnidCargaCollection       = class;
+  TinfUnidCargaCollectionItem   = class;
+  TlacUnidCargaCollection       = class;
+  TlacUnidCargaCollectionItem   = class;
+
   TinfCTCollection              = class;
   TinfCTCollectionItem          = class;
+  TinfUnidTranspCTCollection    = class;
+
   TinfNFeCollection             = class;
   TinfNFeCollectionItem         = class;
+  TinfUnidTranspNFeCollection   = class;
+
   TinfNFCollection              = class;
   TinfNFCollectionItem          = class;
+  TinfUnidTranspNFCollection    = class;
 
   Ttot                          = class;
   TlacresCollection             = class;
@@ -512,18 +528,18 @@ type
 
   TvagCollectionItem = class(TCollectionItem)
   private
-    Fserie: integer;
+    Fserie: String;
     FnVag: integer;
     FnSeq: integer;
-    FTU: integer;
+    FTU: Double;
   public
     constructor Create; reintroduce;
     destructor Destroy; override;
   published
-    property serie: integer read Fserie write Fserie;
+    property serie: String read Fserie write Fserie;
     property nVag: integer read FnVag write FnVag;
     property nSeq: integer read FnSeq write FnSeq;
-    property TU: integer read FTU write FTU;
+    property TU: Double read FTU write FTU;
   end;
 
   TinfDoc = class(TPersistent)
@@ -573,6 +589,8 @@ type
     property infNF: TinfNFCollection read FinfNF write SetinfNF;
   end;
 
+////////////////////////////////////////////////////////////////////////////////
+
   TinfCTeCollection = class(TCollection)
   private
     function GetItem(Index: Integer): TinfCTeCollectionItem;
@@ -587,13 +605,119 @@ type
   private
     FchCTe: String;
     FSegCodBarra: String;
+    FinfUnidTransp: TinfUnidTranspCTeCollection;
+    procedure SetinfUnidTransp(const Value: TinfUnidTranspCTeCollection);
   public
     constructor Create; reintroduce;
     destructor Destroy; override;
   published
     property chCTe: String read FchCTe write FchCTe;
     property SegCodBarra: String read FSegCodBarra write FSegCodBarra;
+    property infUnidTransp: TinfUnidTranspCTeCollection read FinfUnidTransp write SetinfUnidTransp;
   end;
+
+  TinfUnidTranspCTeCollection = class(TCollection)
+  private
+    function GetItem(Index: Integer): TinfUnidTranspCollectionItem;
+    procedure SetItem(Index: Integer; Value: TinfUnidTranspCollectionItem);
+  public
+    constructor Create(AOwner: TinfCTeCollectionItem);
+    function Add: TinfUnidTranspCollectionItem;
+    property Items[Index: Integer]: TinfUnidTranspCollectionItem read GetItem write SetItem; default;
+  end;
+
+////////////////////////////////////////////////////////////////////////////////
+
+  TinfUnidTranspCollectionItem = class(TCollectionItem)
+  private
+    FtpUnidTransp: TpcnUnidTransp;
+    FidUnidTransp: String;
+    FlacUnidTransp: TlacUnidTranspCollection;
+    FinfUnidCarga: TinfUnidCargaCollection;
+    FqtdRat: Double;
+
+    procedure SetlacUnidTransp(const Value: TlacUnidTranspCollection);
+    procedure SetinfUnidCarga(const Value: TinfUnidCargaCollection);
+  public
+    constructor Create; reintroduce;
+    destructor Destroy; override;
+  published
+    property tpUnidTransp: TpcnUnidTransp read FtpUnidTransp write FtpUnidTransp;
+    property idUnidTransp: String read FidUnidTransp write FidUnidTransp;
+    property lacUnidTransp: TlacUnidTranspCollection read FlacUnidTransp write SetlacUnidTransp;
+    property infUnidCarga: TinfUnidCargaCollection read FinfUnidCarga write SetinfUnidCarga;
+    property qtdRat: Double read FqtdRat write FqtdRat;
+  end;
+
+  TlacUnidTranspCollection = class(TCollection)
+  private
+    function GetItem(Index: Integer): TlacUnidTranspCollectionItem;
+    procedure SetItem(Index: Integer; Value: TlacUnidTranspCollectionItem);
+  public
+    constructor Create(AOwner: TinfUnidTranspCollectionItem);
+    function Add: TlacUnidTranspCollectionItem;
+    property Items[Index: Integer]: TlacUnidTranspCollectionItem read GetItem write SetItem; default;
+  end;
+
+  TlacUnidTranspCollectionItem = class(TCollectionItem)
+  private
+    FnLacre: String;
+  public
+    constructor Create; reintroduce;
+    destructor Destroy; override;
+  published
+    property nLacre: String read FnLacre write FnLacre;
+  end;
+
+  TinfUnidCargaCollection = class(TCollection)
+  private
+    function GetItem(Index: Integer): TinfUnidCargaCollectionItem;
+    procedure SetItem(Index: Integer; Value: TinfUnidCargaCollectionItem);
+  public
+    constructor Create(AOwner: TinfUnidTranspCollectionItem);
+    function Add: TinfUnidCargaCollectionItem;
+    property Items[Index: Integer]: TinfUnidCargaCollectionItem read GetItem write SetItem; default;
+  end;
+
+  TinfUnidCargaCollectionItem = class(TCollectionItem)
+  private
+    FtpUnidCarga: TpcnUnidCarga;
+    FidUnidCarga: String;
+    FlacUnidCarga: TlacUnidCargaCollection;
+    FqtdRat: Double;
+
+    procedure SetlacUnidCarga(const Value: TlacUnidCargaCollection);
+  public
+    constructor Create; reintroduce;
+    destructor Destroy; override;
+  published
+    property tpUnidCarga: TpcnUnidCarga read FtpUnidCarga write FtpUnidCarga;
+    property idUnidCarga: String read FidUnidCarga write FidUnidCarga;
+    property lacUnidCarga: TlacUnidCargaCollection read FlacUnidCarga write SetlacUnidCarga;
+    property qtdRat: Double read FqtdRat write FqtdRat;
+  end;
+
+  TlacUnidCargaCollection = class(TCollection)
+  private
+    function GetItem(Index: Integer): TlacUnidCargaCollectionItem;
+    procedure SetItem(Index: Integer; Value: TlacUnidCargaCollectionItem);
+  public
+    constructor Create(AOwner: TinfUnidCargaCollectionItem);
+    function Add: TlacUnidCargaCollectionItem;
+    property Items[Index: Integer]: TlacUnidCargaCollectionItem read GetItem write SetItem; default;
+  end;
+
+  TlacUnidCargaCollectionItem = class(TCollectionItem)
+  private
+    FnLacre: String;
+  public
+    constructor Create; reintroduce;
+    destructor Destroy; override;
+  published
+    property nLacre: String read FnLacre write FnLacre;
+  end;
+
+////////////////////////////////////////////////////////////////////////////////
 
   TinfCTCollection = class(TCollection)
   private
@@ -612,6 +736,8 @@ type
     Fsubser: integer;
     FdEmi: TDateTime;
     FvCarga: Double;
+    FinfUnidTransp: TinfUnidTranspCTCollection;
+    procedure SetinfUnidTransp(const Value: TinfUnidTranspCTCollection);
   public
     constructor Create; reintroduce;
     destructor Destroy; override;
@@ -621,7 +747,20 @@ type
     property subser: integer read Fsubser write Fsubser;
     property dEmi: TDateTime read FdEmi write FdEmi;
     property vCarga: Double read FvCarga write FvCarga;
+    property infUnidTransp: TinfUnidTranspCTCollection read FinfUnidTransp write SetinfUnidTransp;
   end;
+
+  TinfUnidTranspCTCollection = class(TCollection)
+  private
+    function GetItem(Index: Integer): TinfUnidTranspCollectionItem;
+    procedure SetItem(Index: Integer; Value: TinfUnidTranspCollectionItem);
+  public
+    constructor Create(AOwner: TinfCTCollectionItem);
+    function Add: TinfUnidTranspCollectionItem;
+    property Items[Index: Integer]: TinfUnidTranspCollectionItem read GetItem write SetItem; default;
+  end;
+
+////////////////////////////////////////////////////////////////////////////////
 
   TinfNFeCollection = class(TCollection)
   private
@@ -637,13 +776,28 @@ type
   private
     FchNFe: String;
     FSegCodBarra: String;
+    FinfUnidTransp: TinfUnidTranspNFeCollection;
+    procedure SetinfUnidTransp(const Value: TinfUnidTranspNFeCollection);
   public
     constructor Create; reintroduce;
     destructor Destroy; override;
   published
     property chNFe: String read FchNFe write FchNFe;
     property SegCodBarra: String read FSegCodBarra write FSegCodBarra;
+    property infUnidTransp: TinfUnidTranspNFeCollection read FinfUnidTransp write SetinfUnidTransp;
   end;
+
+  TinfUnidTranspNFeCollection = class(TCollection)
+  private
+    function GetItem(Index: Integer): TinfUnidTranspCollectionItem;
+    procedure SetItem(Index: Integer; Value: TinfUnidTranspCollectionItem);
+  public
+    constructor Create(AOwner: TinfNFeCollectionItem);
+    function Add: TinfUnidTranspCollectionItem;
+    property Items[Index: Integer]: TinfUnidTranspCollectionItem read GetItem write SetItem; default;
+  end;
+
+////////////////////////////////////////////////////////////////////////////////
 
   TinfNFCollection = class(TCollection)
   private
@@ -664,6 +818,8 @@ type
     FdEmi: TDateTime;
     FvNF: Double;
     FPIN: integer;
+    FinfUnidTransp: TinfUnidTranspNFCollection;
+    procedure SetinfUnidTransp(const Value: TinfUnidTranspNFCollection);
   public
     constructor Create; reintroduce;
     destructor Destroy; override;
@@ -675,7 +831,20 @@ type
     property dEmi: TDateTime read FdEmi write FdEmi;
     property vNF: Double read FvNF write FvNF;
     property PIN: integer read FPIN write FPIN;
+    property infUnidTransp: TinfUnidTranspNFCollection read FinfUnidTransp write SetinfUnidTransp;
   end;
+
+  TinfUnidTranspNFCollection = class(TCollection)
+  private
+    function GetItem(Index: Integer): TinfUnidTranspCollectionItem;
+    procedure SetItem(Index: Integer; Value: TinfUnidTranspCollectionItem);
+  public
+    constructor Create(AOwner: TinfNFCollectionItem);
+    function Add: TinfUnidTranspCollectionItem;
+    property Items[Index: Integer]: TinfUnidTranspCollectionItem read GetItem write SetItem; default;
+  end;
+
+////////////////////////////////////////////////////////////////////////////////
 
   Ttot = class(TPersistent)
   private
@@ -780,22 +949,22 @@ implementation
 
 constructor TMDFe.Create;
 begin
-  FinfMDFe   := TInfMDFe.Create;
-  Fide       := Tide.Create(Self);
-  Femit      := Temit.Create(Self);
+  FinfMDFe       := TInfMDFe.Create;
+  Fide           := Tide.Create(Self);
+  Femit          := Temit.Create(Self);
 
-  Frodo      := Trodo.Create(Self);
-  Faereo     := Taereo.Create;
-  Faquav     := Taquav.Create(Self);
-  Fferrov    := Tferrov.Create(Self);
+  Frodo          := Trodo.Create(Self);
+  Faereo         := Taereo.Create;
+  Faquav         := Taquav.Create(Self);
+  Fferrov        := Tferrov.Create(Self);
 
-  FinfDoc    := TinfDoc.Create(Self);
-  Ftot       := Ttot.Create;
-  Flacres    := TlacresCollection.Create(Self);
-  FinfAdic   := TinfAdic.Create;
+  FinfDoc        := TinfDoc.Create(Self);
+  Ftot           := Ttot.Create;
+  Flacres        := TlacresCollection.Create(Self);
+  FinfAdic       := TinfAdic.Create;
 
-  FProcMDFe  := TProcMDFe.create;
-  Fsignature := Tsignature.create;
+  FProcMDFe      := TProcMDFe.create;
+  Fsignature     := Tsignature.create;
 end;
 
 destructor TMDFe.Destroy;
@@ -803,10 +972,12 @@ begin
   FinfMDFe.Free;
   Fide.Free;
   Femit.Free;
+
   Frodo.Free;
   Faereo.Free;
   Faquav.Free;
   Fferrov.Free;
+
   FinfDoc.Free;
   Ftot.Free;
   Flacres.Free;
@@ -1215,11 +1386,10 @@ end;
 
 constructor TinfMunDescargaCollectionItem.Create;
 begin
-//  inherited Create;
   FinfCTe := TinfCTeCollection.Create(Self);
-  FinfCT := TinfCTCollection.Create(Self);
+  FinfCT  := TinfCTCollection.Create(Self);
   FinfNFe := TinfNFeCollection.Create(Self);
-  FinfNF := TinfNFCollection.Create(Self);
+  FinfNF  := TinfNFCollection.Create(Self);
 end;
 
 destructor TinfMunDescargaCollectionItem.Destroy;
@@ -1284,13 +1454,19 @@ end;
 
 constructor TinfCTeCollectionItem.Create;
 begin
-
+  FinfUnidTransp := TInfUnidTranspCTeCollection.Create(Self);
 end;
 
 destructor TinfCTeCollectionItem.Destroy;
 begin
-
+  FinfUnidTransp.Free;
   inherited;
+end;
+
+procedure TinfCTeCollectionItem.SetinfUnidTransp(
+  const Value: TinfUnidTranspCTeCollection);
+begin
+  FinfUnidTransp := Value;
 end;
 
 { TinfCTCollection }
@@ -1321,13 +1497,19 @@ end;
 
 constructor TinfCTCollectionItem.Create;
 begin
-
+  FinfUnidTransp := TInfUnidTranspCTCollection.Create(Self);
 end;
 
 destructor TinfCTCollectionItem.Destroy;
 begin
-
+  FinfUnidTransp.Free;
   inherited;
+end;
+
+procedure TinfCTCollectionItem.SetinfUnidTransp(
+  const Value: TinfUnidTranspCTCollection);
+begin
+  FinfUnidTransp := Value;
 end;
 
 { TinfNFeCollection }
@@ -1359,13 +1541,19 @@ end;
 
 constructor TinfNFeCollectionItem.Create;
 begin
-
+  FinfUnidTransp := TInfUnidTranspNFeCollection.Create(Self);
 end;
 
 destructor TinfNFeCollectionItem.Destroy;
 begin
-
+  FinfUnidTransp.Free;
   inherited;
+end;
+
+procedure TinfNFeCollectionItem.SetinfUnidTransp(
+  const Value: TinfUnidTranspNFeCollection);
+begin
+  FinfUnidTransp := Value;
 end;
 
 { TinfNFCollection }
@@ -1396,13 +1584,19 @@ end;
 
 constructor TinfNFCollectionItem.Create;
 begin
-
+  FinfUnidTransp := TInfUnidTranspNFCollection.Create(Self);
 end;
 
 destructor TinfNFCollectionItem.Destroy;
 begin
-
+  FinfUnidTransp.Free;
   inherited;
+end;
+
+procedure TinfNFCollectionItem.SetinfUnidTransp(
+  const Value: TinfUnidTranspNFCollection);
+begin
+  FinfUnidTransp := Value;
 end;
 
 { TlacresCollection }
@@ -1485,9 +1679,9 @@ end;
 constructor Taquav.Create(AOwner: TMDFe);
 begin
   inherited Create;
-  FinfTermCarreg := TinfTermCarregCollection.Create(Self);
+  FinfTermCarreg    := TinfTermCarregCollection.Create(Self);
   FinfTermDescarreg := TinfTermDescarregCollection.Create(Self);
-  FinfEmbComb := TinfEmbCombCollection.Create(Self);
+  FinfEmbComb       := TinfEmbCombCollection.Create(Self);
 end;
 
 destructor Taquav.Destroy;
@@ -1587,6 +1781,260 @@ destructor TinfEmbCombCollectionItem.Destroy;
 begin
 
   inherited;
+end;
+
+{ TinfUnidTranspCTeCollection }
+
+function TinfUnidTranspCTeCollection.Add: TinfUnidTranspCollectionItem;
+begin
+  Result := TinfUnidTranspCollectionItem(inherited Add);
+  Result.create;
+end;
+
+constructor TinfUnidTranspCTeCollection.Create(
+  AOwner: TinfCTeCollectionItem);
+begin
+  inherited Create(TinfUnidTranspCollectionItem);
+end;
+
+function TinfUnidTranspCTeCollection.GetItem(
+  Index: Integer): TinfUnidTranspCollectionItem;
+begin
+  Result := TinfUnidTranspCollectionItem(inherited GetItem(Index));
+end;
+
+procedure TinfUnidTranspCTeCollection.SetItem(Index: Integer;
+  Value: TinfUnidTranspCollectionItem);
+begin
+  inherited Create(TinfUnidTranspCollectionItem);
+end;
+
+{ TinfUnidTranspCollectionItem }
+
+constructor TinfUnidTranspCollectionItem.Create;
+begin
+  FlacUnidTransp := TlacUnidTranspCollection.Create(Self);
+  FinfUnidCarga  := TinfUnidCargaCollection.Create(Self);
+end;
+
+destructor TinfUnidTranspCollectionItem.Destroy;
+begin
+  FlacUnidTransp.Free;
+  FinfUnidCarga.Free;
+  inherited;
+end;
+
+procedure TinfUnidTranspCollectionItem.SetlacUnidTransp(
+  const Value: TlacUnidTranspCollection);
+begin
+  FlacUnidTransp := Value;
+end;
+
+procedure TinfUnidTranspCollectionItem.SetinfUnidCarga(
+  const Value: TinfUnidCargaCollection);
+begin
+  FinfUnidCarga := Value;
+end;
+
+{ TlacUnidTranspCollection }
+
+function TlacUnidTranspCollection.Add: TlacUnidTranspCollectionItem;
+begin
+  Result := TlacUnidTranspCollectionItem(inherited Add);
+  Result.create;
+end;
+
+constructor TlacUnidTranspCollection.Create(
+  AOwner: TinfUnidTranspCollectionItem);
+begin
+  inherited Create(TlacUnidTranspCollectionItem);
+end;
+
+function TlacUnidTranspCollection.GetItem(
+  Index: Integer): TlacUnidTranspCollectionItem;
+begin
+  Result := TlacUnidTranspCollectionItem(inherited GetItem(Index));
+end;
+
+procedure TlacUnidTranspCollection.SetItem(Index: Integer;
+  Value: TlacUnidTranspCollectionItem);
+begin
+  inherited SetItem(Index, Value);
+end;
+
+{ TlacUnidTranspCollectionItem }
+
+constructor TlacUnidTranspCollectionItem.Create;
+begin
+
+end;
+
+destructor TlacUnidTranspCollectionItem.Destroy;
+begin
+
+  inherited;
+end;
+
+{ TinfUnidCargaCollection }
+
+function TinfUnidCargaCollection.Add: TinfUnidCargaCollectionItem;
+begin
+  Result := TinfUnidCargaCollectionItem(inherited Add);
+  Result.create;
+end;
+
+constructor TinfUnidCargaCollection.Create(
+  AOwner: TinfUnidTranspCollectionItem);
+begin
+  inherited Create(TinfUnidCargaCollectionItem);
+end;
+
+function TinfUnidCargaCollection.GetItem(
+  Index: Integer): TinfUnidCargaCollectionItem;
+begin
+  Result := TinfUnidCargaCollectionItem(inherited GetItem(Index));
+end;
+
+procedure TinfUnidCargaCollection.SetItem(Index: Integer;
+  Value: TinfUnidCargaCollectionItem);
+begin
+  inherited SetItem(Index, Value);
+end;
+
+{ TinfUnidCargaCollectionItem }
+
+constructor TinfUnidCargaCollectionItem.Create;
+begin
+  FlacUnidCarga := TlacUnidCargaCollection.Create(Self);
+end;
+
+destructor TinfUnidCargaCollectionItem.Destroy;
+begin
+  FlacUnidCarga.Free;
+  inherited;
+end;
+
+procedure TinfUnidCargaCollectionItem.SetlacUnidCarga(
+  const Value: TlacUnidCargaCollection);
+begin
+  FlacUnidCarga := Value;
+end;
+
+{ TlacUnidCargaCollection }
+
+function TlacUnidCargaCollection.Add: TlacUnidCargaCollectionItem;
+begin
+  Result := TlacUnidCargaCollectionItem(inherited Add);
+  Result.create;
+end;
+
+constructor TlacUnidCargaCollection.Create(
+  AOwner: TinfUnidCargaCollectionItem);
+begin
+  inherited Create(TlacUnidCargaCollectionItem);
+end;
+
+function TlacUnidCargaCollection.GetItem(
+  Index: Integer): TlacUnidCargaCollectionItem;
+begin
+  Result := TlacUnidCargaCollectionItem(inherited GetItem(Index));
+end;
+
+procedure TlacUnidCargaCollection.SetItem(Index: Integer;
+  Value: TlacUnidCargaCollectionItem);
+begin
+  inherited SetItem(Index, Value);
+end;
+
+{ TlacUnidCargaCollectionItem }
+
+constructor TlacUnidCargaCollectionItem.Create;
+begin
+
+end;
+
+destructor TlacUnidCargaCollectionItem.Destroy;
+begin
+
+  inherited;
+end;
+
+{ TinfUnidTranspCTCollection }
+
+function TinfUnidTranspCTCollection.Add: TinfUnidTranspCollectionItem;
+begin
+  Result := TinfUnidTranspCollectionItem(inherited Add);
+  Result.create;
+end;
+
+constructor TinfUnidTranspCTCollection.Create(
+  AOwner: TinfCTCollectionItem);
+begin
+  inherited Create(TinfUnidTranspCollectionItem);
+end;
+
+function TinfUnidTranspCTCollection.GetItem(
+  Index: Integer): TinfUnidTranspCollectionItem;
+begin
+  Result := TinfUnidTranspCollectionItem(inherited GetItem(Index));
+end;
+
+procedure TinfUnidTranspCTCollection.SetItem(Index: Integer;
+  Value: TinfUnidTranspCollectionItem);
+begin
+  inherited Create(TinfUnidTranspCollectionItem);
+end;
+
+{ TinfUnidTranspNFeCollection }
+
+function TinfUnidTranspNFeCollection.Add: TinfUnidTranspCollectionItem;
+begin
+  Result := TinfUnidTranspCollectionItem(inherited Add);
+  Result.create;
+end;
+
+constructor TinfUnidTranspNFeCollection.Create(
+  AOwner: TinfNFeCollectionItem);
+begin
+  inherited Create(TinfUnidTranspCollectionItem);
+end;
+
+function TinfUnidTranspNFeCollection.GetItem(
+  Index: Integer): TinfUnidTranspCollectionItem;
+begin
+  Result := TinfUnidTranspCollectionItem(inherited GetItem(Index));
+end;
+
+procedure TinfUnidTranspNFeCollection.SetItem(Index: Integer;
+  Value: TinfUnidTranspCollectionItem);
+begin
+  inherited Create(TinfUnidTranspCollectionItem);
+end;
+
+{ TinfUnidTranspNFCollection }
+
+function TinfUnidTranspNFCollection.Add: TinfUnidTranspCollectionItem;
+begin
+  Result := TinfUnidTranspCollectionItem(inherited Add);
+  Result.create;
+end;
+
+constructor TinfUnidTranspNFCollection.Create(
+  AOwner: TinfNFCollectionItem);
+begin
+  inherited Create(TinfUnidTranspCollectionItem);
+end;
+
+function TinfUnidTranspNFCollection.GetItem(
+  Index: Integer): TinfUnidTranspCollectionItem;
+begin
+  Result := TinfUnidTranspCollectionItem(inherited GetItem(Index));
+end;
+
+procedure TinfUnidTranspNFCollection.SetItem(Index: Integer;
+  Value: TinfUnidTranspCollectionItem);
+begin
+  inherited Create(TinfUnidTranspCollectionItem);
 end;
 
 end.
