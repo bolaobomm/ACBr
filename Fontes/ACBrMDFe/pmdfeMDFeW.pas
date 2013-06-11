@@ -350,31 +350,31 @@ begin
   Gerador.wCampo(tcStr, '#02', 'RNTRC', 08, 08, 1, SomenteNumeros(MDFe.Rodo.RNTRC), DSC_RNTRC);
   Gerador.wCampo(tcStr, '#03', 'CIOT ', 12, 12, 0, MDFe.Rodo.CIOT, DSC_CIOT);
 
-  Gerador.wGrupo('veicPrincipal', '#04');
-  Gerador.wCampo(tcStr, '#05', 'cInt ', 01, 10, 0, MDFe.Rodo.veicPrincipal.cInt, DSC_CINTV);
-  Gerador.wCampo(tcStr, '#06', 'placa', 01, 07, 1, MDFe.Rodo.veicPrincipal.placa, DSC_PLACA);
-  Gerador.wCampo(tcInt, '#07', 'tara ', 01, 06, 1, MDFe.Rodo.veicPrincipal.tara, DSC_TARA);
-  Gerador.wCampo(tcInt, '#08', 'capKG', 01, 06, 1, MDFe.Rodo.veicPrincipal.capKG, DSC_CAPKG);
-  Gerador.wCampo(tcInt, '#09', 'capM3', 01, 03, 1, MDFe.Rodo.veicPrincipal.capM3, DSC_CAPM3);
+  Gerador.wGrupo('veicTracao', '#04');
+  Gerador.wCampo(tcStr, '#05', 'cInt ', 01, 10, 0, MDFe.Rodo.veicTracao.cInt, DSC_CINTV);
+  Gerador.wCampo(tcStr, '#06', 'placa', 01, 07, 1, MDFe.Rodo.veicTracao.placa, DSC_PLACA);
+  Gerador.wCampo(tcInt, '#07', 'tara ', 01, 06, 1, MDFe.Rodo.veicTracao.tara, DSC_TARA);
+  Gerador.wCampo(tcInt, '#08', 'capKG', 01, 06, 1, MDFe.Rodo.veicTracao.capKG, DSC_CAPKG);
+  Gerador.wCampo(tcInt, '#09', 'capM3', 01, 03, 1, MDFe.Rodo.veicTracao.capM3, DSC_CAPM3);
 
-  if MDFe.rodo.veicPrincipal.RNTRC <> ''
+  if MDFe.rodo.veicTracao.RNTRC <> ''
    then begin
     Gerador.wGrupo('prop', '#10');
-    Gerador.wCampo(tcStr, '#11', 'RNTRC', 8, 8, 1, SomenteNumeros(MDFe.Rodo.veicPrincipal.RNTRC), DSC_RNTRC);
+    Gerador.wCampo(tcStr, '#11', 'RNTRC', 8, 8, 1, SomenteNumeros(MDFe.Rodo.veicTracao.RNTRC), DSC_RNTRC);
     Gerador.wGrupo('/prop');
    end;
 
-  for i := 0 to MDFe.rodo.veicPrincipal.condutor.Count - 1 do
+  for i := 0 to MDFe.rodo.veicTracao.condutor.Count - 1 do
   begin
     Gerador.wGrupo('condutor', '#12');
-    Gerador.wCampo(tcStr, '#13', 'xNome', 01, 60, 1, MDFe.rodo.veicPrincipal.condutor[i].xNome, DSC_XNOME);
-    Gerador.wCampo(tcStr, '#14', 'CPF  ', 11, 11, 1, MDFe.rodo.veicPrincipal.condutor[i].CPF, DSC_CPF);
+    Gerador.wCampo(tcStr, '#13', 'xNome', 01, 60, 1, MDFe.rodo.veicTracao.condutor[i].xNome, DSC_XNOME);
+    Gerador.wCampo(tcStr, '#14', 'CPF  ', 11, 11, 1, MDFe.rodo.veicTracao.condutor[i].CPF, DSC_CPF);
     Gerador.wGrupo('/condutor');
   end;
-  if MDFe.rodo.veicPrincipal.condutor.Count > 10 then
+  if MDFe.rodo.veicTracao.condutor.Count > 10 then
    Gerador.wAlerta('#12', 'condutor', '', ERR_MSG_MAIOR_MAXIMO + '10');
 
-  Gerador.wGrupo('/veicPrincipal');
+  Gerador.wGrupo('/veicTracao');
 
   for i := 0 to MDFe.rodo.veicReboque.Count - 1 do
   begin
@@ -491,7 +491,7 @@ begin
     Gerador.wGrupo('vag', '#08');
     Gerador.wCampo(tcStr, '#09', 'serie', 3, 3, 1, MDFe.ferrov.vag[i].serie, DSC_NSERIE);
     Gerador.wCampo(tcInt, '#10', 'nVag ', 1, 8, 1, MDFe.ferrov.vag[i].nVag, DSC_NVAG);
-    Gerador.wCampo(tcInt, '#11', 'nSeq ', 1, 3, 1, MDFe.ferrov.vag[i].nSeq, DSC_NSEQ);
+    Gerador.wCampo(tcInt, '#11', 'nSeq ', 1, 3, 0, MDFe.ferrov.vag[i].nSeq, DSC_NSEQ);
     Gerador.wCampo(tcDe3, '#12', 'TU   ', 1, 7, 1, MDFe.ferrov.vag[i].TU, DSC_TU);
     Gerador.wGrupo('/vag');
   end;

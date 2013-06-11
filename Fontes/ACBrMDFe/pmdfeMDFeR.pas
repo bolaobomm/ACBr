@@ -174,23 +174,23 @@ begin
       MDFe.Rodo.RNTRC := Leitor.rCampo(tcStr,'RNTRC');
       MDFe.Rodo.CIOT  := Leitor.rCampo(tcStr, 'CIOT');
 
-      if Leitor.rExtrai(3, 'veicPrincipal') <> '' then
+      if Leitor.rExtrai(3, 'veicTracao') <> '' then
        begin
-        MDFe.Rodo.veicPrincipal.cInt  := Leitor.rCampo(tcStr, 'cInt');
-        MDFe.Rodo.veicPrincipal.placa := Leitor.rCampo(tcStr, 'placa');
-        MDFe.Rodo.veicPrincipal.tara  := Leitor.rCampo(tcInt, 'tara');
-        MDFe.Rodo.veicPrincipal.capKG := Leitor.rCampo(tcInt, 'capKG');
-        MDFe.Rodo.veicPrincipal.capM3 := Leitor.rCampo(tcInt, 'capM3');
+        MDFe.Rodo.veicTracao.cInt  := Leitor.rCampo(tcStr, 'cInt');
+        MDFe.Rodo.veicTracao.placa := Leitor.rCampo(tcStr, 'placa');
+        MDFe.Rodo.veicTracao.tara  := Leitor.rCampo(tcInt, 'tara');
+        MDFe.Rodo.veicTracao.capKG := Leitor.rCampo(tcInt, 'capKG');
+        MDFe.Rodo.veicTracao.capM3 := Leitor.rCampo(tcInt, 'capM3');
 
         if Leitor.rExtrai(4, 'prop') <> ''
-         then MDFe.Rodo.veicPrincipal.RNTRC := Leitor.rCampo(tcStr, 'RNTRC');
+         then MDFe.Rodo.veicTracao.RNTRC := Leitor.rCampo(tcStr, 'RNTRC');
 
         i01 := 0;
         while Leitor.rExtrai(4, 'condutor', '', i01 + 1) <> '' do
         begin
-          MDFe.rodo.veicPrincipal.condutor.Add;
-          MDFe.rodo.veicPrincipal.condutor[i01].xNome := Leitor.rCampo(tcStr, 'xNome');
-          MDFe.rodo.veicPrincipal.condutor[i01].CPF   := Leitor.rCampo(tcStr, 'CPF');
+          MDFe.rodo.veicTracao.condutor.Add;
+          MDFe.rodo.veicTracao.condutor[i01].xNome := Leitor.rCampo(tcStr, 'xNome');
+          MDFe.rodo.veicTracao.condutor[i01].CPF   := Leitor.rCampo(tcStr, 'CPF');
           inc(i01);
         end;
        end;

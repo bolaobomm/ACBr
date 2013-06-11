@@ -60,7 +60,7 @@ type
   TenderEmit                    = class;
 
   Trodo                         = class; // Informações do modal Rodoviário
-  TveicPrincipal                = class;
+  TveicTracao                = class;
   TcondutorCollection           = class;
   TcondutorCollectionItem       = class;
   TveicReboqueCollection        = class;
@@ -260,7 +260,7 @@ type
   private
     FRNTRC   : String;
     FCIOT    : String;
-    FveicPrincipal: TveicPrincipal;
+    FveicTracao: TveicTracao;
     FveicReboque : TveicReboqueCollection;
     FvalePed : TvalePed;
 
@@ -271,12 +271,12 @@ type
   published
     property RNTRC: String read FRNTRC write FRNTRC;
     property CIOT: String read FCIOT write FCIOT;
-    property veicPrincipal: TveicPrincipal read FveicPrincipal write FveicPrincipal;
+    property veicTracao: TveicTracao read FveicTracao write FveicTracao;
     property veicReboque: TveicReboqueCollection read FveicReboque write SetveicReboque;
     property valePed: TvalePed read FvalePed write FvalePed;
   end;
 
- TveicPrincipal = class(TPersistent)
+ TveicTracao = class(TPersistent)
   private
     FcInt: String;
     Fplaca: String;
@@ -305,7 +305,7 @@ type
     function GetItem(Index: Integer): TcondutorCollectionItem;
     procedure SetItem(Index: Integer; Value: TcondutorCollectionItem);
   public
-    constructor Create(AOwner: TveicPrincipal);
+    constructor Create(AOwner: TveicTracao);
     function Add: TcondutorCollectionItem;
     property Items[Index: Integer]: TcondutorCollectionItem read GetItem write SetItem; default;
   end;
@@ -1112,14 +1112,14 @@ end;
 constructor TRodo.Create(AOwner: TMDFe);
 begin
   inherited Create;
-  FveicPrincipal := TveicPrincipal.Create;
+  FveicTracao := TveicTracao.Create;
   FveicReboque   := TveicReboqueCollection.Create(Self);
   FvalePed       := TvalePed.Create(Self);
 end;
 
 destructor TRodo.Destroy;
 begin
-  FveicPrincipal.Free;
+  FveicTracao.Free;
   FveicReboque.Free;
   FvalePed.Free;
   inherited;
@@ -1130,21 +1130,21 @@ begin
   FveicReboque.Assign(Value);
 end;
 
-{ TveicPrincipal }
+{ TveicTracao }
 
-constructor TveicPrincipal.Create;
+constructor TveicTracao.Create;
 begin
   inherited Create;
   Fcondutor := TcondutorCollection.Create(Self);
 end;
 
-destructor TveicPrincipal.Destroy;
+destructor TveicTracao.Destroy;
 begin
   Fcondutor.Free;
   inherited;
 end;
 
-procedure TveicPrincipal.Setcondutor(const Value: TcondutorCollection);
+procedure TveicTracao.Setcondutor(const Value: TcondutorCollection);
 begin
   Fcondutor.Assign(Value);
 end;
@@ -1157,7 +1157,7 @@ begin
   Result.create;
 end;
 
-constructor TcondutorCollection.Create(AOwner: TveicPrincipal);
+constructor TcondutorCollection.Create(AOwner: TveicTracao);
 begin
   inherited Create(TcondutorCollectionItem);
 end;
