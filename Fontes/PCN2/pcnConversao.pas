@@ -153,7 +153,7 @@ type
   TpcteTipoCTe = (tcNormal, tcComplemento, tcAnulacao, tcSubstituto);
   // Alterado por Italo em 20/05/2013
   TpcteModal = (mdRodoviario, mdAereo, mdAquaviario, mdFerroviario, mdDutoviario, mdMultimodal);
-  TpcteTipoServico = (tsNormal, tsSubcontratacao, tsRedespacho, tsIntermediario);
+  TpcteTipoServico = (tsNormal, tsSubcontratacao, tsRedespacho, tsIntermediario, tsMultimodal);
   TpcteRetira = (rtSim, rtNao);
   TpcteTomador = ( tmRemetente, tmExpedidor, tmRecebedor, tmDestinatario, tmOutros);
   TpcteRspSeg = (rsRemetente, rsExpedidor, rsRecebedor, rsDestinatario, rsEmitenteCTe, rsTomadorServico);
@@ -1045,17 +1045,20 @@ end;
 
 function TpServPagToStr(const t: TpcteTipoServico): string;
 begin
-  result := EnumeradoToStr(t, ['0','1', '2', '3'], [tsNormal, tsSubcontratacao, tsRedespacho, tsIntermediario]);
+  result := EnumeradoToStr(t, ['0','1', '2', '3', '4'],
+                              [tsNormal, tsSubcontratacao, tsRedespacho, tsIntermediario, tsMultimodal]);
 end;
 
 function TpServToStrText(const t: TpcteTipoServico): string;
 begin
-  result := EnumeradoToStr(t, ['NORMAL','SUBCONTRATAÇÃO', 'REDESPACHO', 'REDESP. INTERMEDIÁRIO'], [tsNormal, tsSubcontratacao, tsRedespacho, tsIntermediario]);
+  result := EnumeradoToStr(t, ['NORMAL','SUBCONTRATAÇÃO', 'REDESPACHO', 'REDESP. INTERMEDIÁRIO', 'VINC. A MULTIMODAL'],
+                              [tsNormal, tsSubcontratacao, tsRedespacho, tsIntermediario, tsMultimodal]);
 end;
 
 function StrToTpServ(var ok: boolean; const s: string): TpcteTipoServico;
 begin
-  result := StrToEnumerado(ok, s, ['0', '1', '2', '3'], [tsNormal, tsSubcontratacao, tsRedespacho, tsIntermediario]);
+  result := StrToEnumerado(ok, s, ['0', '1', '2', '3', '4'],
+                                  [tsNormal, tsSubcontratacao, tsRedespacho, tsIntermediario, tsMultimodal]);
 end;
 
 function TpRetiraPagToStr(const t: TpcteRetira): string;
