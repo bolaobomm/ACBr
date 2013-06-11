@@ -2734,22 +2734,22 @@ begin
 
   // Alterado por Rodrigo Cantelli
   if FProvedor = proBetha
-   then FRetCompNfse := SeparaDados(FRetWS, Prefixo3 + 'ComplNfse')
-   else FRetCompNfse := SeparaDados(FRetWS, Prefixo3 + 'CompNfse');
+   then FRetCompNfse := SeparaDados(FRetWS, {Prefixo3 +} 'ComplNfse')
+   else FRetCompNfse := SeparaDados(FRetWS, {Prefixo3 +} 'CompNfse');
 
   i := 0;
   while FRetCompNfse <> '' do
    begin
-    j := Pos('</' + Prefixo3 + 'Nfse>', FRetCompNfse);
+    j := Pos('</' + {Prefixo3 +} 'Nfse>', FRetCompNfse);
     // Incluido por Italo em 17/10/2012
     if j = 0
-     then j := Pos('</' + Prefixo4 + 'Nfse>', FRetCompNfse);
+     then j := Pos('</' + {Prefixo4 +} 'Nfse>', FRetCompNfse);
 
     if j > 0
      then begin
       FRetNfse := FRetCompNfse;
 
-      FRetNFSe := FProvedorClass.GeraRetornoNFSe(Prefixo3, FRetNFSe, FNomeCidade);
+      FRetNFSe := FProvedorClass.GeraRetornoNFSe('', {Prefixo3,} FRetNFSe, FNomeCidade);
 
 //      if FConfiguracoes.Geral.Salvar
 //       then begin
