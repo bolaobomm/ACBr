@@ -167,6 +167,9 @@ begin
                  ResponEmissao := tbCliEmite ;
               end ;
 
+              CaracTitulo := TACBrCaracTitulo(IniBoletos.ReadInteger('CEDENTE','CaracTitulo',0));
+
+
               with FrmACBrMonitor do
               begin
                  cbxBOLLayout.ItemIndex := IniBoletos.ReadInteger('CEDENTE','LAYOUTBOL',0);
