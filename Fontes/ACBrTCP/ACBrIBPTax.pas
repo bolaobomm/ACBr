@@ -57,7 +57,7 @@ type
 
   TACBrIBPTaxExporta = (exTXT, exCSV, exDSV, exXML, exHTML);
 
-  TACBrIBPTaxTabela = (tabNCM, tabNBS);
+  TACBrIBPTaxTabela = (tabNCM, tabNBS, tabLC116);
 
   TACBrIBPTaxErroImportacao = procedure(const ALinha: String; const AErro: String) of object;
 
@@ -134,8 +134,9 @@ uses
 function TabelaToString(const ATabela: TACBrIBPTaxTabela): String;
 begin
   case ATabela of
-    tabNCM: Result := '0';
-    tabNBS: Result := '1';
+    tabNCM:   Result := '0';
+    tabNBS:   Result := '1';
+    tabLC116: Result := '2';
   end;
 end;
 
@@ -146,6 +147,9 @@ begin
   else
   if ATabela = '1' then
     Result := tabNBS
+  else
+  if ATabela = '2' then
+    Result := tabLC116
   else
     raise EACBrIBPTax.CreateFmt('Tipo de tabela desconhecido "%s".', [ATabela]);
 end;
@@ -201,7 +205,6 @@ var
   const
     QuoteChar = '"';
     Delimiter = ';';
-    StrictDelimiter = True;
   begin
     ALista.BeginUpdate;
     try
@@ -215,27 +218,21 @@ var
         else
         begin
           P1 := P;
-          while ((not StrictDelimiter and (P^ > ' ')) or
-                (StrictDelimiter and (P^ <> #0))) and (P^ <> Delimiter) do
-          {$IFDEF MSWINDOWS}
-            P := CharNext(P);
-          {$ELSE}
-            Inc(P);
-          {$ENDIF}
-          SetString(S, P1, P - P1);
-        end;
-        ALista.Add(S);
-        if not StrictDelimiter then
-          while (P^ in [#1..' ']) do
+          while (P^ <> #0) and (P^ <> Delimiter) do
           {$IFDEF MSWINDOWS}
             P := CharNext(P);
           {$ELSE}
             Inc(P);
           {$ENDIF}
 
+          SetString(S, P1, P - P1);
+        end;
+        ALista.Add(S);
+
         if P^ = Delimiter then
         begin
           P1 := P;
+
           {$IFDEF MSWINDOWS}
           if CharNext(P1)^ = #0 then
           {$ELSE}
@@ -243,13 +240,14 @@ var
           if P1^ = #0 then
           {$ENDIF}
             ALista.Add('');
+
           repeat
             {$IFDEF MSWINDOWS}
             P := CharNext(P);
             {$ELSE}
             Inc(P);
             {$ENDIF}
-          until not (not StrictDelimiter and (P^ in [#1..' ']));
+          until not ((P^ in [#1..' ']));
         end;
       end;
     finally
@@ -277,15 +275,22 @@ begin
       QuebrarLinha(Arquivo.Strings[I], Item);
       if Item.Count = 7 then
       begin
-        // codigo;ex;tabela;descricao;aliqNac;aliqImp;0.0.2
-        with Itens.New do
-        begin
-          NCM           := Item.Strings[0];
-          Excecao       := Item.Strings[1];
-          Tabela        := TACBrIBPTaxTabela(StrToInt(Trim(Item.Strings[2])));
-          Descricao     := Item.Strings[3];
-          AliqNacional  := StringToFloatDef(Item.Strings[4], 0.00);
-          AliqImportado := StringToFloatDef(Item.Strings[5], 0.00);
+        try
+          // codigo;ex;tabela;descricao;aliqNac;aliqImp;0.0.2
+          with Itens.New do
+          begin
+            NCM           := Item.Strings[0];
+            Excecao       := Item.Strings[1];
+            Tabela        := TACBrIBPTaxTabela(StrToInt(Trim(Item.Strings[2])));
+            Descricao     := Item.Strings[3];
+            AliqNacional  := StringToFloatDef(Item.Strings[4], 0.00);
+            AliqImportado := StringToFloatDef(Item.Strings[5], 0.00);
+          end;
+        except
+          on E: Exception do
+          begin
+            EventoErroImportacao(Arquivo.Strings[I], E.Message);
+          end;
         end;
       end
       else

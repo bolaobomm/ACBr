@@ -37,6 +37,10 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+10/06/2013
+-- ACBrIBPTax --
+[+] Adicionado suporte ao tipo de tabela 2.
+    por: regys.silveira
 
 10/06/2013
 -- ACBrIBPTax --
