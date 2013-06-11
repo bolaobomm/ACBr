@@ -70,7 +70,10 @@ var
 begin
  DadosMsg := '<' + Prefixo3 + 'LoteRps'+
                DFeUtil.SeSenao(Identificador <> '', ' ' + Identificador + '="' + NumeroLote + '"', '') +
-               DFeUtil.SeSenao(VersaoDados <> '', ' versao="' + VersaoDados + '"', '') + '>' +
+               DFeUtil.SeSenao(AProvedor in [proAbaco, proBetha, proGinfes, proGoiania, proGovBR,
+                                             proISSDigital, proIssCuritiba, proISSNET, proNatal,
+                                             proRecife, proRJ, proSimplISS, proThema, proTiplan], '',
+                DFeUtil.SeSenao(VersaoDados <> '', ' versao="' + VersaoDados + '"', '')) + '>' +
               '<' + Prefixo4 + 'NumeroLote>' +
                 NumeroLote +
               '</' + Prefixo4 + 'NumeroLote>' +
