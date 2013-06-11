@@ -165,10 +165,16 @@ Informar 'EX' para operações com o exterior.</xs:documentation>
 														<xs:documentation source="Código do Munícpio de Carregamento">Código do Município de Carregamento</xs:documentation>
 													</xs:annotation>
 												</xs:element>
-												<xs:element name="xMunCarrega" type="TString">
+												<xs:element name="xMunCarrega">
 													<xs:annotation>
 														<xs:documentation>Nome do Município de Carregamento</xs:documentation>
 													</xs:annotation>
+													<xs:simpleType>
+														<xs:restriction base="TString">
+															<xs:minLength value="1"/>
+															<xs:maxLength value="60"/>
+														</xs:restriction>
+													</xs:simpleType>
 												</xs:element>
 											</xs:sequence>
 										</xs:complexType>
@@ -299,6 +305,12 @@ Por exemplo, o arquivo para o schema do modal Rodoviário na versão 1.00 será 
 													<xs:annotation>
 														<xs:documentation>Nome do Município de Descarregamento</xs:documentation>
 													</xs:annotation>
+													<xs:simpleType>
+														<xs:restriction base="TString">
+															<xs:minLength value="1"/>
+															<xs:maxLength value="60"/>
+														</xs:restriction>
+													</xs:simpleType>
 												</xs:element>
 												<xs:element name="infCTe" minOccurs="0" maxOccurs="2000">
 													<xs:annotation>
@@ -314,6 +326,12 @@ Por exemplo, o arquivo para o schema do modal Rodoviário na versão 1.00 será 
 															<xs:element name="SegCodBarra" minOccurs="0">
 																<xs:annotation>
 																	<xs:documentation>Segundo código de barras</xs:documentation>
+																</xs:annotation>
+															</xs:element>
+															<xs:element name="infUnidTransp" type="TUnidadeTransp" minOccurs="0" maxOccurs="unbounded">
+																<xs:annotation>
+																	<xs:documentation>Informações das Unidades de Transporte (Carreta/Reboque/Vagão)</xs:documentation>
+																	<xs:documentation>Dispositivo de carga utilizada (Unit Load Device - ULD) significa todo tipo de contêiner de carga, vagão, contêiner de avião, palete de aeronave com rede ou palete de aeronave com rede sobre um iglu. </xs:documentation>
 																</xs:annotation>
 															</xs:element>
 														</xs:sequence>
@@ -363,6 +381,12 @@ Por exemplo, o arquivo para o schema do modal Rodoviário na versão 1.00 será 
 																	<xs:documentation>Valor total da carga</xs:documentation>
 																</xs:annotation>
 															</xs:element>
+															<xs:element name="infUnidTransp" type="TUnidadeTransp" minOccurs="0" maxOccurs="unbounded">
+																<xs:annotation>
+																	<xs:documentation>Informações das Unidades de Transporte (Carreta/Reboque/Vagão)</xs:documentation>
+																	<xs:documentation>Dispositivo de carga utilizada (Unit Load Device - ULD) significa todo tipo de contêiner de carga, vagão, contêiner de avião, palete de aeronave com rede ou palete de aeronave com rede sobre um iglu. </xs:documentation>
+																</xs:annotation>
+															</xs:element>
 														</xs:sequence>
 													</xs:complexType>
 												</xs:element>
@@ -380,6 +404,12 @@ Por exemplo, o arquivo para o schema do modal Rodoviário na versão 1.00 será 
 															<xs:element name="SegCodBarra" minOccurs="0">
 																<xs:annotation>
 																	<xs:documentation>Segundo código de barras</xs:documentation>
+																</xs:annotation>
+															</xs:element>
+															<xs:element name="infUnidTransp" type="TUnidadeTransp" minOccurs="0" maxOccurs="unbounded">
+																<xs:annotation>
+																	<xs:documentation>Informações das Unidades de Transporte (Carreta/Reboque/Vagão)</xs:documentation>
+																	<xs:documentation>Dispositivo de carga utilizada (Unit Load Device - ULD) significa todo tipo de contêiner de carga, vagão, contêiner de avião, palete de aeronave com rede ou palete de aeronave com rede sobre um iglu. </xs:documentation>
 																</xs:annotation>
 															</xs:element>
 														</xs:sequence>
@@ -432,6 +462,12 @@ Por exemplo, o arquivo para o schema do modal Rodoviário na versão 1.00 será 
 																<xs:annotation>
 																	<xs:documentation>PIN SUFRAMA</xs:documentation>
 																	<xs:documentation>PIN atribuído pela SUFRAMA para a operação.</xs:documentation>
+																</xs:annotation>
+															</xs:element>
+															<xs:element name="infUnidTransp" type="TUnidadeTransp" minOccurs="0" maxOccurs="unbounded">
+																<xs:annotation>
+																	<xs:documentation>Informações das Unidades de Transporte (Carreta/Reboque/Vagão)</xs:documentation>
+																	<xs:documentation>Dispositivo de carga utilizada (Unit Load Device - ULD) significa todo tipo de contêiner de carga, vagão, contêiner de avião, palete de aeronave com rede ou palete de aeronave com rede sobre um iglu. </xs:documentation>
 																</xs:annotation>
 															</xs:element>
 														</xs:sequence>
@@ -1428,6 +1464,116 @@ Não informar o conteúdo da TAG se a operação for realizada com o Exterior.</
 			</xs:element>
 		</xs:choice>
 	</xs:complexType>
+	<xs:complexType name="TUnidadeTransp">
+		<xs:annotation>
+			<xs:documentation>Tipo Dados Unidade de Transporte</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="tpUnidTransp" type="TtipoUnidTransp">
+				<xs:annotation>
+					<xs:documentation>Tipo da Unidade de Transporte</xs:documentation>
+					<xs:documentation>1 - Rodoviário Tração;
+
+2 - Rodoviário Reboque;
+
+3 - Navio;
+
+4 - Balsa;
+
+5 - Aeronave;
+
+6 - Vagão;
+
+7 - Outros</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="idUnidTransp" type="TContainer">
+				<xs:annotation>
+					<xs:documentation>Identificação da Unidade de Transporte</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="lacUnidTransp" minOccurs="0" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation>Lacres das Unidades de Transporte</xs:documentation>
+				</xs:annotation>
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="nLacre">
+							<xs:annotation>
+								<xs:documentation>Número do lacre</xs:documentation>
+							</xs:annotation>
+							<xs:simpleType>
+								<xs:restriction base="TString">
+									<xs:minLength value="1"/>
+									<xs:maxLength value="20"/>
+								</xs:restriction>
+							</xs:simpleType>
+						</xs:element>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="infUnidCarga" type="TUnidCarga" minOccurs="0" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation>Informações das Unidades de Carga (Containeres/ULD/Outros)</xs:documentation>
+					<xs:documentation>Dispositivo de carga utilizada (Unit Load Device - ULD) significa todo tipo de contêiner de carga, vagão, contêiner de avião, palete de aeronave com rede ou palete de aeronave com rede sobre um iglu. </xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="qtdRat" type="TDec_0302" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Quantidade rateada (Peso,Volume)</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="TUnidCarga">
+		<xs:annotation>
+			<xs:documentation>Tipo Dados Unidade de Carga</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="tpUnidCarga" type="TtipoUnidCarga">
+				<xs:annotation>
+					<xs:documentation>Tipo da Unidade de Carga</xs:documentation>
+					<xs:documentation>1 - Container;
+
+2 - ULD;
+
+3 - Pallet;
+
+4 - Outros;</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="idUnidCarga" type="TContainer">
+				<xs:annotation>
+					<xs:documentation>Identificação da Unidade de Carga</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="lacUnidCarga" minOccurs="0" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation>Lacres das Unidades de Carga</xs:documentation>
+				</xs:annotation>
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="nLacre">
+							<xs:annotation>
+								<xs:documentation>Número do lacre</xs:documentation>
+							</xs:annotation>
+							<xs:simpleType>
+								<xs:restriction base="TString">
+									<xs:minLength value="1"/>
+									<xs:maxLength value="20"/>
+								</xs:restriction>
+							</xs:simpleType>
+						</xs:element>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="qtdRat" type="TDec_0302" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Quantidade rateada (Peso,Volume)</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
 	<xs:simpleType name="TProcEmi">
 		<xs:annotation>
 			<xs:documentation>Tipo processo de emissão do MDF-e</xs:documentation>
@@ -1523,6 +1669,17 @@ Não informar o conteúdo da TAG se a operação for realizada com o Exterior.</
 			<xs:minLength value="2"/>
 			<xs:maxLength value="9"/>
 			<xs:pattern value="[1-9]{1}[0-9]{1,8}"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="TContainer">
+		<xs:annotation>
+			<xs:documentation>Tipo Número do Container</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:minLength value="1"/>
+			<xs:maxLength value="20"/>
+			<xs:whiteSpace value="preserve"/>
+			<xs:pattern value="[A-Z0-9]+"/>
 		</xs:restriction>
 	</xs:simpleType>
 	<xs:simpleType name="TEmail">

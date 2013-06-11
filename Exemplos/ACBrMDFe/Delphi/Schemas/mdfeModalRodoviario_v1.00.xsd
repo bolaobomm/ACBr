@@ -51,7 +51,7 @@
 						<xs:restriction base="TCIOT"/>
 					</xs:simpleType>
 				</xs:element>
-				<xs:element name="veicPrincipal">
+				<xs:element name="veicTracao">
 					<xs:annotation>
 						<xs:documentation>Dados do Veículo com a Tração</xs:documentation>
 					</xs:annotation>

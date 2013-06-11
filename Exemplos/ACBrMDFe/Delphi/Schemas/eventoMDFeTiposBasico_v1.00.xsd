@@ -12,7 +12,7 @@
 					<xs:sequence>
 						<xs:element name="cOrgao" type="TCOrgaoIBGE">
 							<xs:annotation>
-								<xs:documentation>Código do órgão de recepção do Evento. Utilizar a Tabela do IBGE extendida, utilizar 90 para identificar SUFRAMA</xs:documentation>
+								<xs:documentation>Código do órgão de recepção do Evento. Utilizar a Tabela do IBGE extendida, utilizar 90 para identificar SUFRAMA e 91 para RFB</xs:documentation>
 							</xs:annotation>
 						</xs:element>
 						<xs:element name="tpAmb" type="TAmb">
@@ -228,7 +228,7 @@ Insira neste local o XML específico do tipo de evento (cancelamento, encerramen
 	</xs:simpleType>
 	<xs:simpleType name="TCOrgaoIBGE">
 		<xs:annotation>
-			<xs:documentation>Tipo Código de orgão (UF da tabela do IBGE + 90 SUFRAMA)</xs:documentation>
+			<xs:documentation>Tipo Código de orgão (UF da tabela do IBGE + 90 SUFRAMA + 91 RFB)</xs:documentation>
 		</xs:annotation>
 		<xs:restriction base="xs:string">
 			<xs:whiteSpace value="preserve"/>
@@ -260,6 +260,7 @@ Insira neste local o XML específico do tipo de evento (cancelamento, encerramen
 			<xs:enumeration value="52"/>
 			<xs:enumeration value="53"/>
 			<xs:enumeration value="90"/>
+ 		    <xs:enumeration value="91"/>
 		</xs:restriction>
 	</xs:simpleType>
 </xs:schema>

@@ -421,14 +421,14 @@ begin
    rodo.RNTRC := '12345678';
    rodo.CIOT  := '123456789012';
 
-   rodo.veicPrincipal.cInt  := '001';
-   rodo.veicPrincipal.placa := 'ABC1234';
-   rodo.veicPrincipal.tara  := 5000;
-   rodo.veicPrincipal.capKG := 4500;
-   rodo.veicPrincipal.capM3 := 400;
-   rodo.veicPrincipal.RNTRC := '12345678';
+   rodo.veicTracao.cInt  := '001';
+   rodo.veicTracao.placa := 'ABC1234';
+   rodo.veicTracao.tara  := 5000;
+   rodo.veicTracao.capKG := 4500;
+   rodo.veicTracao.capM3 := 400;
+   rodo.veicTracao.RNTRC := '12345678';
 
-   with rodo.veicPrincipal.condutor.Add do
+   with rodo.veicTracao.condutor.Add do
     begin
      xNome := 'JOAO';
      CPF   := '12345678912';
@@ -459,16 +459,107 @@ begin
      with infCTe.Add do
       begin
        chCTe := '35110803911545000148570010000001011000001018';
-      end;
+
+      // Informações das Unidades de Transporte (Carreta/Reboque/Vagão)
+
+      with infUnidTransp.Add do
+       begin
+        //TpcnUnidTransp = ( utRodoTracao, utRodoReboque, utNavio, utBalsa, utAeronave, utVagao, utOutros );
+        tpUnidTransp := utRodoTracao;
+        idUnidTransp := 'Caminhao';
+        with lacUnidTransp.Add do
+         begin
+          nLacre := '123';
+         end;
+        // Informações das Unidades de carga (Containeres/ULD/Outros)
+        with infUnidCarga.Add do
+         begin
+          // TpcnUnidCarga  = ( ucContainer, ucULD, ucPallet, ucOutros );
+          tpUnidCarga := ucOutros;
+          idUnidCarga := 'Caixas';
+          with lacUnidCarga.Add do
+           begin
+            nLacre := '123';
+           end;
+          qtdRat := 1.0;
+         end;
+        qtdRat := 1.0;
+       end;
+
+      end; // fim do with
 
      with infCTe.Add do
       begin
        chCTe := '35110803911545000148570010000001021000001023';
-      end;
+
+      // Informações das Unidades de Transporte (Carreta/Reboque/Vagão)
+
+      with infUnidTransp.Add do
+       begin
+        //TpcnUnidTransp = ( utRodoTracao, utRodoReboque, utNavio, utBalsa, utAeronave, utVagao, utOutros );
+        tpUnidTransp := utRodoReboque;
+        idUnidTransp := 'Carreta';
+        with lacUnidTransp.Add do
+         begin
+          nLacre := '321';
+         end;
+        // Informações das Unidades de carga (Containeres/ULD/Outros)
+        with infUnidCarga.Add do
+         begin
+          // TpcnUnidCarga  = ( ucContainer, ucULD, ucPallet, ucOutros );
+          tpUnidCarga := ucOutros;
+          idUnidCarga := 'Caixas';
+          with lacUnidCarga.Add do
+           begin
+            nLacre := '321';
+           end;
+          qtdRat := 1.0;
+         end;
+        qtdRat := 1.0;
+       end;
+
+      end; // fim do with
+
+     with infCT.Add do
+      begin
+       nCT    := '13245';
+       serie  := 1;
+       subser := 0;
+       dEmi   := date;
+       vCarga := 230.00;
+
+      // Informações das Unidades de Transporte (Carreta/Reboque/Vagão)
+
+      with infUnidTransp.Add do
+       begin
+        //TpcnUnidTransp = ( utRodoTracao, utRodoReboque, utNavio, utBalsa, utAeronave, utVagao, utOutros );
+        tpUnidTransp := utRodoReboque;
+        idUnidTransp := 'Carreta';
+        with lacUnidTransp.Add do
+         begin
+          nLacre := '456';
+         end;
+        // Informações das Unidades de carga (Containeres/ULD/Outros)
+        with infUnidCarga.Add do
+         begin
+          // TpcnUnidCarga  = ( ucContainer, ucULD, ucPallet, ucOutros );
+          tpUnidCarga := ucOutros;
+          idUnidCarga := 'Caixas';
+          with lacUnidCarga.Add do
+           begin
+            nLacre := '789';
+           end;
+          qtdRat := 1.0;
+         end;
+        qtdRat := 1.0;
+       end;
+
+      end; // fim do with
 
     end;
 
    tot.qCTe := 2;
+   tot.qCT  := 1;
    tot.vCarga := 3500.00;
    // UnidMed = (uM3,uKG, uTON, uUNIDADE, uLITROS);
    tot.cUnid  :=  uTon;
