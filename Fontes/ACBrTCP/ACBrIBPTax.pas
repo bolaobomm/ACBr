@@ -49,8 +49,8 @@ unit ACBrIBPTax;
 interface
 
 uses
-  Contnrs,  SysUtils, Variants, Classes,
-  ACBrUtil, ACBrSocket;
+  {$IFDEF MSWINDOWS} Windows, {$ENDIF}
+  Contnrs,  SysUtils, Variants, Classes, ACBrUtil, ACBrSocket;
 
 type
   EACBrIBPTax = class(Exception);
@@ -194,24 +194,69 @@ var
   Item: TStringList;
   I: Integer;
 
-  procedure QuebrarLinha(const Alinha: String; const ALista: TStringList);
+  procedure QuebrarLinha(const Alinha: string; const ALista: TStringList);
   var
-    Texto: String;
-    PosSep: Integer;
-    I: Integer;
+    P, P1: PChar;
+    S: string;
+  const
+    QuoteChar = '"';
+    Delimiter = ';';
+    StrictDelimiter = True;
   begin
-    ALista.Clear;
-    Texto := Alinha;
-    repeat
-      PosSep := Pos(';', Texto);
+    ALista.BeginUpdate;
+    try
+      ALista.Clear;
+      P := PChar(Alinha);
 
-      ALista.Add(Copy(Texto, 0, PosSep - 1));
-      Texto := Trim(Copy(Texto, PosSep + 1, Length(Texto)));
-    until Pos(';', Texto) <= 0;
+      while P^ <> #0 do
+      begin
+        if P^ = QuoteChar then
+          S := AnsiExtractQuotedStr(P, QuoteChar)
+        else
+        begin
+          P1 := P;
+          while ((not StrictDelimiter and (P^ > ' ')) or
+                (StrictDelimiter and (P^ <> #0))) and (P^ <> Delimiter) do
+          {$IFDEF MSWINDOWS}
+            P := CharNext(P);
+          {$ELSE}
+            Inc(P);
+          {$ENDIF}
+          SetString(S, P1, P - P1);
+        end;
+        ALista.Add(S);
+        if not StrictDelimiter then
+          while (P^ in [#1..' ']) do
+          {$IFDEF MSWINDOWS}
+            P := CharNext(P);
+          {$ELSE}
+            Inc(P);
+          {$ENDIF}
 
-    if Trim(Texto) <> '' then
-      ALista.Add(Texto);
+        if P^ = Delimiter then
+        begin
+          P1 := P;
+          {$IFDEF MSWINDOWS}
+          if CharNext(P1)^ = #0 then
+          {$ELSE}
+          Inc(P1);
+          if P1^ = #0 then
+          {$ENDIF}
+            ALista.Add('');
+          repeat
+            {$IFDEF MSWINDOWS}
+            P := CharNext(P);
+            {$ELSE}
+            Inc(P);
+            {$ENDIF}
+          until not (not StrictDelimiter and (P^ in [#1..' ']));
+        end;
+      end;
+    finally
+      ALista.EndUpdate;
+    end;
   end;
+
 begin
   if Arquivo.Count <= 0 then
     raise EACBrIBPTax.Create('Arquivo de itens não foi baixado!');
@@ -230,7 +275,7 @@ begin
     for I := 1 to Arquivo.Count - 1 do
     begin
       QuebrarLinha(Arquivo.Strings[I], Item);
-      if Item.Count = 6 then
+      if Item.Count = 7 then
       begin
         // codigo;ex;tabela;descricao;aliqNac;aliqImp;0.0.2
         with Itens.New do
@@ -245,7 +290,7 @@ begin
       end
       else
       begin
-        EventoErroImportacao(Arquivo.Strings[I], Format('Registro inválido, quantidade de colunas "%d" excede o esperado "6"!', [Item.Count]));
+        EventoErroImportacao(Arquivo.Strings[I], Format('Registro inválido, quantidade de colunas "%d" excede o esperado "7"!', [Item.Count]));
       end;
     end;
   finally

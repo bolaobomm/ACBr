@@ -42,7 +42,8 @@ Símbolo : Significado
 -- ACBrIBPTax --
 [*] Acerto no componente para a nova versão da tabela ibpt (0.0.2).
 [*] Acerto na leitura do campo descrição para considerar somente o ';' 
-    como separador.
+    como separador e sem gerar problemas com descrições que possuem o ';' 
+    dentro delas.
 [+] Adicionado evento para capturar erros de importação.
     por: regys.silveira
 
