@@ -855,10 +855,11 @@ begin
       else
         FieldByName('DESCR_CST').AsString  := 'CSOSN';
 
+      //Modificado por Fábio Gabriel - 10/06/2013 - Para evitar que fique truncado.
       cdsEmitenteDADOS_ENDERECO.AsString :=
-        Trim(FieldByName('XLgr').AsString) + ', ' + trim(FieldByName('Nro').AsString) + #13 +
+        Trim(FieldByName('XLgr').AsString) + ', ' + trim(FieldByName('Nro').AsString) + ' - ' +
         Trim(FieldByName('XBairro').AsString) + ' - ' + Trim(FieldByName('XMun').AsString) + ' - ' + Trim(FieldByName('UF').AsString) + #13 +
-        'Fone: ' + Trim(FieldByName('Fone').AsString) + ' CEP: ' + Trim(FieldByName('CEP').AsString);
+        'Fone: ' + Trim(FieldByName('Fone').AsString) + ' - CEP: ' + Trim(FieldByName('CEP').AsString);
       if trim(FDANFEClassOwner.Site) <> '' then
         cdsEmitenteDADOS_ENDERECO.AsString := cdsEmitenteDADOS_ENDERECO.AsString + #13 +
         trim(FDANFEClassOwner.Site);
