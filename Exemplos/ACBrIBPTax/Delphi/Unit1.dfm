@@ -317,7 +317,6 @@ object Form1: TForm1
       Width = 551
       Height = 21
       Anchors = [akLeft, akTop, akRight]
-      ReadOnly = True
       TabOrder = 1
     end
     object btAbrir: TBitBtn
@@ -418,8 +417,8 @@ object Form1: TForm1
       Anchors = [akLeft, akTop, akRight]
       TabOrder = 3
       Text = 
-        'https://acbr.svn.sourceforge.net/svnroot/acbr/trunk/Exemplos/ACB' +
-        'rIBPTax/tabela/AcspDeOlhoNoImpostoIbptV.0.0.2.csv'
+        'svn://svn.code.sf.net/p/acbr/code/trunk/Exemplos/ACBrIBPTax/tabe' +
+        'la/AcspDeOlhoNoImpostoIbptV.0.0.2.csv'
     end
   end
   object PageControl1: TPageControl

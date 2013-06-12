@@ -220,18 +220,19 @@ end;
 
 procedure TForm1.btnPesquisarClick(Sender: TObject);
 var
-  ex: String;
+  ex, descricao: String;
   tabela: Integer;
   aliqNac, aliqImp: Double;
 begin
-  if ACBrIBPTax1.Procurar(edNCM.Text, ex, tabela, aliqNac, aliqImp, ckbBuscaNCMParcial.Checked) then
+  if ACBrIBPTax1.Procurar(edNCM.Text, ex, descricao, tabela, aliqNac, aliqImp, ckbBuscaNCMParcial.Checked) then
   begin
     ShowMessage(
-      'Código: '   + edNCM.Text  + sLineBreak +
-      'Exceção: '  + ex + sLineBreak +
-      'Tabela: '   + IntToStr(tabela) + sLineBreak +
-      'Aliq Nac: ' + FloatToStr(aliqNac) + sLineBreak +
-      'Aliq Imp: ' + FloatToStr(aliqImp)
+      'Código: '    + edNCM.Text  + sLineBreak +
+      'Exceção: '   + ex + sLineBreak +
+      'Descrição: ' + descricao + sLineBreak +
+      'Tabela: '    + IntToStr(tabela) + sLineBreak +
+      'Aliq Nac: '  + FloatToStr(aliqNac) + sLineBreak +
+      'Aliq Imp: '  + FloatToStr(aliqImp)
     );
   end
   else

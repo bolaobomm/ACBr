@@ -111,7 +111,7 @@ type
     function AbrirTabela(const AFileName: TFileName): Boolean;
     procedure Exportar(const AArquivo: String; ATipo: TACBrIBPTaxExporta); overload;
     procedure Exportar(const AArquivo, ADelimitador: String; const AQuoted: Boolean); overload;
-    function Procurar(const ACodigo: String; var ex: String;
+    function Procurar(const ACodigo: String; var ex, descricao: String;
       var tabela: Integer; var aliqNac, aliqImp: Double ;
       const BuscaParcial: Boolean = False): Boolean;
 
@@ -281,7 +281,7 @@ begin
           begin
             NCM           := Item.Strings[0];
             Excecao       := Item.Strings[1];
-            Tabela        := TACBrIBPTaxTabela(StrToInt(Trim(Item.Strings[2])));
+            Tabela        := TACBrIBPTaxTabela(StrToInt(Trim(Item.Strings[2]))) ;
             Descricao     := Item.Strings[3];
             AliqNacional  := StringToFloatDef(Item.Strings[4], 0.00);
             AliqImportado := StringToFloatDef(Item.Strings[5], 0.00);
@@ -333,7 +333,7 @@ begin
   Result := Itens.Count > 0;
 end;
 
-function TACBrIBPTax.Procurar(const ACodigo: String; var ex: String;
+function TACBrIBPTax.Procurar(const ACodigo: String; var ex, descricao: String;
   var tabela: Integer; var aliqNac, aliqImp: Double ;
   const BuscaParcial: Boolean): Boolean;
 var
@@ -347,16 +347,17 @@ begin
   for I := 0 to Itens.Count - 1 do
   begin
     if BuscaParcial then
-      Igual := Pos(Trim(ACodigo), Trim(Itens[I].NCM)) > 0 //CompareText(Trim(ACodigo), Trim(Itens[I].NCM)) < 0
+      Igual := Pos(Trim(ACodigo), Trim(Itens[I].NCM)) > 0
     else
       Igual := SameText(Trim(ACodigo), Trim(Itens[I].NCM));
 
     if Igual Then
      begin
-       ex      := Itens[I].Excecao ;
-       tabela  := Integer(Itens[I].Tabela) ;
-       aliqNac := Itens[I].AliqNacional ;
-       aliqImp := Itens[I].AliqImportado ;
+       ex        := Itens[I].Excecao ;
+       descricao := Itens[I].Descricao;
+       tabela    := Integer(Itens[I].Tabela) ;
+       aliqNac   := Itens[I].AliqNacional ;
+       aliqImp   := Itens[I].AliqImportado ;
 
        Result := True;
        Exit;
