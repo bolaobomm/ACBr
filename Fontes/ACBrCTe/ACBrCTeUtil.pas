@@ -97,7 +97,6 @@ type
     // AC, AL, AM, BA, CE, DF, ES, GO, MA, PA, PB, PI, RJ, RN, RO, SC, SE, TO.
     class function GetURLSVRS(AAmbiente: Integer; ALayOut: TLayOut): WideString;
 
-    // Incluido por Italo em 03/10/2012
     class function GetURLAC(AAmbiente: Integer; ALayOut: TLayOut): WideString;
     class function GetURLAL(AAmbiente: Integer; ALayOut: TLayOut): WideString;
     class function GetURLAP(AAmbiente: Integer; ALayOut: TLayOut): WideString;
@@ -145,7 +144,6 @@ type
     class function FormatarValor(mask: TpcteMask; const AValue: real): string;
     class function GerarChaveContingencia(FCTe:TCTe): String;
     class function FormatarChaveContingencia(AValue: String): String;
-    // Incluido por Italo em 10/02/2012
     class function ValidaAssinatura(const AXML: AnsiString;  var AMsg: AnsiString): Boolean;
 
 {$IFDEF ACBrCTeOpenSSL}
@@ -155,7 +153,6 @@ type
 {$ENDIF}
 
     class function UFtoCUF(UF : String): Integer;
-    // Incluido por Italo em 13/09/2012
     class function IdentificaTipoSchema(Const AXML: AnsiString; var I: Integer): integer;
   end;
 
@@ -239,7 +236,6 @@ begin
              end;
              }
              case AUF of
-              // Alterados por Italo em 03/10/2012
               12: Result := CTeUtil.GetURLAC(AAmbiente, ALayOut);               //AC - Acre
               27: Result := CTeUtil.GetURLAL(AAmbiente, ALayOut);               //AL - Alagoas
               16: Result := CTeUtil.GetURLAP(AAmbiente, ALayOut);               //AP - Amapá
@@ -252,34 +248,26 @@ begin
               21: Result := CTeUtil.GetURLMA(AAmbiente, ALayOut);               //MA - Maranhão
 
               51: Result := CTeUtil.GetURLMT(AAmbiente, ALayOut);               //MT - Mato Grosso
-                  // Só Homologacao
               50: Result := CTeUtil.GetURLMS(AAmbiente, ALayOut);               //MS - Mato Grosso do Sul
               31: Result := CTeUtil.GetURLMG(AAmbiente, ALayOut);               //MG - Minas Gerais
-              // Alterados por Italo em 03/10/2012
               15: Result := CTeUtil.GetURLPA(AAmbiente, ALayOut);               //PA - Pará
               25: Result := CTeUtil.GetURLPB(AAmbiente, ALayOut);               //PB - Paraibá
               41: Result := CTeUtil.GetURLPR(AAmbiente, ALayOut);               //PR - Paraná
 //              41: Result := CTeUtil.GetURLSVRS(AAmbiente, ALayOut);             //PR - Paraná
 
-              // Alterado por Italo em 07/03/2012
-              // conforme informações postadas no fórum por
-              // Eliton.net e jek
               26: Result := CTeUtil.GetURLPE(AAmbiente, ALayOut);               //PE - Pernambuco
 //              26: Result := CTeUtil.GetURLSVRS(AAmbiente, ALayOut);             //PE - Pernambuco
 
-              // Alterados por Italo em 03/10/2012
               22: Result := CTeUtil.GetURLPI(AAmbiente, ALayOut);               //PI - Piauí
               33: Result := CTeUtil.GetURLRJ(AAmbiente, ALayOut);               //RJ - Rio de Janeiro
               24: Result := CTeUtil.GetURLRN(AAmbiente, ALayOut);               //RN - Rio Grande do Norte
 
               43: Result := CTeUtil.GetURLRS(AAmbiente, ALayOut);               //RS - Rio Grande do Sul
-              // Alterados por Italo em 03/10/2012
               11: Result := CTeUtil.GetURLRO(AAmbiente, ALayOut);               //RO - Rondônia
               14: Result := CTeUtil.GetURLRR(AAmbiente, ALayOut);               //RR - Roraima
               42: Result := CTeUtil.GetURLSC(AAmbiente, ALayOut);               //SC - Santa Catarina
 
               35: Result := CTeUtil.GetURLSP(AAmbiente, ALayOut);               //SP - São Paulo
-              // Alterados por Italo em 03/10/2012
               28: Result := CTeUtil.GetURLSE(AAmbiente, ALayOut);               //SE - Sergipe
               17: Result := CTeUtil.GetURLTO(AAmbiente, ALayOut);               //TO - Tocantins
              end;
@@ -372,7 +360,6 @@ begin
   end;
 end;
 
-// Incluido por Italo em 03/10/2012
 class function CTeUtil.GetURLAC(AAmbiente: Integer; ALayOut: TLayOut): WideString;
 begin
   case ALayOut of
@@ -381,7 +368,6 @@ begin
   end;
 end;
 
-// Incluido por Italo em 03/10/2012
 class function CTeUtil.GetURLAL(AAmbiente: Integer; ALayOut: TLayOut): WideString;
 begin
   case ALayOut of
@@ -390,7 +376,6 @@ begin
   end;
 end;
 
-// Incluido por Italo em 03/10/2012
 class function CTeUtil.GetURLAP(AAmbiente: Integer; ALayOut: TLayOut): WideString;
 begin
   case ALayOut of
@@ -399,7 +384,6 @@ begin
   end;
 end;
 
-// Incluido por Italo em 03/10/2012
 class function CTeUtil.GetURLAM(AAmbiente: Integer; ALayOut: TLayOut): WideString;
 begin
   case ALayOut of
@@ -408,7 +392,6 @@ begin
   end;
 end;
 
-// Incluido por Italo em 03/10/2012
 class function CTeUtil.GetURLBA(AAmbiente: Integer; ALayOut: TLayOut): WideString;
 begin
   case ALayOut of
@@ -417,7 +400,6 @@ begin
   end;
 end;
 
-// Incluido por Italo em 03/10/2012
 class function CTeUtil.GetURLCE(AAmbiente: Integer; ALayOut: TLayOut): WideString;
 begin
   case ALayOut of
@@ -426,7 +408,6 @@ begin
   end;
 end;
 
-// Incluido por Italo em 03/10/2012
 class function CTeUtil.GetURLDF(AAmbiente: Integer; ALayOut: TLayOut): WideString;
 begin
   case ALayOut of
@@ -435,7 +416,6 @@ begin
   end;
 end;
 
-// Incluido por Italo em 03/10/2012
 class function CTeUtil.GetURLES(AAmbiente: Integer; ALayOut: TLayOut): WideString;
 begin
   case ALayOut of
@@ -444,7 +424,6 @@ begin
   end;
 end;
 
-// Incluido por Italo em 03/10/2012
 class function CTeUtil.GetURLGO(AAmbiente: Integer; ALayOut: TLayOut): WideString;
 begin
   case ALayOut of
@@ -453,7 +432,6 @@ begin
   end;
 end;
 
-// Incluido por Italo em 03/10/2012
 class function CTeUtil.GetURLMA(AAmbiente: Integer; ALayOut: TLayOut): WideString;
 begin
   case ALayOut of
@@ -462,7 +440,6 @@ begin
   end;
 end;
 
-// Incluido por Italo em 03/10/2012
 class function CTeUtil.GetURLPA(AAmbiente: Integer; ALayOut: TLayOut): WideString;
 begin
   case ALayOut of
@@ -471,7 +448,6 @@ begin
   end;
 end;
 
-// Incluido por Italo em 03/10/2012
 class function CTeUtil.GetURLPB(AAmbiente: Integer; ALayOut: TLayOut): WideString;
 begin
   case ALayOut of
@@ -480,17 +456,14 @@ begin
   end;
 end;
 
-// Incluido por Italo em 03/10/2012
 class function CTeUtil.GetURLPE(AAmbiente: Integer; ALayOut: TLayOut): WideString;
 begin
   case ALayOut of
    LayCTeCadastro: Result := DFeUtil.SeSenao(AAmbiente = 1, 'https://nfe.sefaz.pe.gov.br/nfe-service/services/CadConsultaCadastro2', '');
    else Result := CTeUtil.GetURLSP(AAmbiente, ALayOut);
   end;
-
 end;
 
-// Incluido por Italo em 03/10/2012
 class function CTeUtil.GetURLPI(AAmbiente: Integer; ALayOut: TLayOut): WideString;
 begin
   case ALayOut of
@@ -499,7 +472,6 @@ begin
   end;
 end;
 
-// Incluido por Italo em 03/10/2012
 class function CTeUtil.GetURLRJ(AAmbiente: Integer; ALayOut: TLayOut): WideString;
 begin
   case ALayOut of
@@ -508,7 +480,6 @@ begin
   end;
 end;
 
-// Incluido por Italo em 03/10/2012
 class function CTeUtil.GetURLRN(AAmbiente: Integer; ALayOut: TLayOut): WideString;
 begin
   case ALayOut of
@@ -517,7 +488,6 @@ begin
   end;
 end;
 
-// Incluido por Italo em 03/10/2012
 class function CTeUtil.GetURLRO(AAmbiente: Integer; ALayOut: TLayOut): WideString;
 begin
   case ALayOut of
@@ -526,7 +496,6 @@ begin
   end;
 end;
 
-// Incluido por Italo em 03/10/2012
 class function CTeUtil.GetURLRR(AAmbiente: Integer; ALayOut: TLayOut): WideString;
 begin
   case ALayOut of
@@ -535,7 +504,6 @@ begin
   end;
 end;
 
-// Incluido por Italo em 03/10/2012
 class function CTeUtil.GetURLSC(AAmbiente: Integer; ALayOut: TLayOut): WideString;
 begin
   case ALayOut of
@@ -544,7 +512,6 @@ begin
   end;
 end;
 
-// Incluido por Italo em 03/10/2012
 class function CTeUtil.GetURLSE(AAmbiente: Integer; ALayOut: TLayOut): WideString;
 begin
   case ALayOut of
@@ -553,7 +520,6 @@ begin
   end;
 end;
 
-// Incluido por Italo em 03/10/2012
 class function CTeUtil.GetURLTO(AAmbiente: Integer; ALayOut: TLayOut): WideString;
 begin
   case ALayOut of
@@ -572,7 +538,6 @@ begin
     LayCTeInutilizacao:  Result := DFeUtil.SeSenao(AAmbiente = 1, 'https://cte.fazenda.mg.gov.br/cte/services/CteInutilizacao' , 'https://hcte.fazenda.mg.gov.br/cte/services/CteInutilizacao');
     LayCTeConsultaCT:    Result := DFeUtil.SeSenao(AAmbiente = 1, 'https://cte.fazenda.mg.gov.br/cte/services/CteConsulta'     , 'https://hcte.fazenda.mg.gov.br/cte/services/CteConsulta');
     LayCTeStatusServico: Result := DFeUtil.SeSenao(AAmbiente = 1, 'https://cte.fazenda.mg.gov.br/cte/services/CteStatusServico', 'https://hcte.fazenda.mg.gov.br/cte/services/CteStatusServico');
-    // Incluido por Italo em 03/10/2012 conforme sugestão de Moacir
     LayCTeCadastro:      Result := DFeUtil.SeSenao(AAmbiente = 1, 'https://nfe.fazenda.mg.gov.br/nfe2/services/cadconsultacadastro2', 'https://hnfe.fazenda.mg.gov.br/nfe2/services/cadconsultacadastro2');
 //    LayCTeCadastro: Result      := DFeUtil.SeSenao(AAmbiente = 1, 'https://cte.fazenda.mg.gov.br/cte/services/cadConsultaCadastro', 'https://hcte.fazenda.mg.gov.br/cte/services/cadConsultaCadastro');
   end;
@@ -588,7 +553,6 @@ begin
     LayCTeInutilizacao:  Result := DFeUtil.SeSenao(AAmbiente = 1, 'https://cte.sefaz.rs.gov.br/ws/cteinutilizacao/cteinutilizacao.asmx'  , 'https://homologacao.cte.sefaz.rs.gov.br/ws/cteinutilizacao/cteinutilizacao.asmx');
     LayCTeConsultaCT:    Result := DFeUtil.SeSenao(AAmbiente = 1, 'https://cte.sefaz.rs.gov.br/ws/cteconsulta/CteConsulta.asmx'          , 'https://homologacao.cte.sefaz.rs.gov.br/ws/cteconsulta/CteConsulta.asmx');
     LayCTeStatusServico: Result := DFeUtil.SeSenao(AAmbiente = 1, 'https://cte.sefaz.rs.gov.br/ws/ctestatusservico/CteStatusServico.asmx', 'https://homologacao.cte.sefaz.rs.gov.br/ws/ctestatusservico/CteStatusServico.asmx');
-    // Alterado por Italo em 14/03/2012 conforme sugestão de Moacir
     LayCTeCadastro:      Result := DFeUtil.SeSenao(AAmbiente = 1, 'https://sef.sefaz.rs.gov.br/ws/cadconsultacadastro/cadconsultacadastro2.asmx', 'https://sef.sefaz.rs.gov.br/ws/cadconsultacadastro/cadconsultacadastro2.asmx');
   end;
 end;
@@ -631,7 +595,6 @@ begin
     LayCTeInutilizacao:  Result := DFeUtil.SeSenao(AAmbiente = 1, 'https://cte.sefaz.mt.gov.br/ctews/services/CteInutilizacao' , 'https://homologacao.sefaz.mt.gov.br/ctews/services/CteInutilizacao');
     LayCTeConsultaCT:    Result := DFeUtil.SeSenao(AAmbiente = 1, 'https://cte.sefaz.mt.gov.br/ctews/services/CteConsulta'     , 'https://homologacao.sefaz.mt.gov.br/ctews/services/CteConsulta');
     LayCTeStatusServico: Result := DFeUtil.SeSenao(AAmbiente = 1, 'https://cte.sefaz.mt.gov.br/ctews/services/CteStatusServico', 'https://homologacao.sefaz.mt.gov.br/ctews/services/CteStatusServico'); //?WSDL
-    // Incluido por Italo em 03/10/2012 conforme sugestão de Moacir
     LayCTeCadastro:      Result := DFeUtil.SeSenao(AAmbiente = 1, 'https://nfe.sefaz.mt.gov.br/nfews/v2/services/CadConsultaCadastro2', 'https://homologacao.sefaz.mt.gov.br/nfews/v2/services/CadConsultaCadastro2');
 //    LayCTeCadastro: Result      := DFeUtil.SeSenao(AAmbiente = 1, 'https://cte.sefaz.mt.gov.br/ctews/services/cadConsultaCadastro', 'https://homologacao.sefaz.mt.gov.br/ctews/services/cadConsultaCadastro');
   end;
@@ -648,7 +611,6 @@ begin
     LayCTeInutilizacao:  Result := DFeUtil.SeSenao(AAmbiente = 1, 'https://cte.fazenda.pr.gov.br/cte/CteInutilizacao?wsdl' , 'https://homologacao.cte.fazenda.pr.gov.br/cte/CteInutilizacao?wsdl');
     LayCTeConsultaCT:    Result := DFeUtil.SeSenao(AAmbiente = 1, 'https://cte.fazenda.pr.gov.br/cte/CteConsulta?wsdl'     , 'https://homologacao.cte.fazenda.pr.gov.br/cte/CteConsulta?wsdl');
     LayCTeStatusServico: Result := DFeUtil.SeSenao(AAmbiente = 1, 'https://cte.fazenda.pr.gov.br/cte/CteStatusServico?wsdl', 'https://homologacao.cte.fazenda.pr.gov.br/cte/CteStatusServico?wsdl'); //?WSDL
-    // Incluido por Italo em 03/10/2012 conforme sugestão de Moacir
     LayCTeCadastro:      Result := DFeUtil.SeSenao(AAmbiente = 1, 'https://nfe2.fazenda.pr.gov.br/nfe/CadConsultaCadastro2', 'https://homologacao.nfe2.fazenda.pr.gov.br/nfe/CadConsultaCadastro2');
 //    LayCTeCadastro: Result      := DFeUtil.SeSenao(AAmbiente = 1, 'https://cte.sefaz.mt.gov.br/ctews/services/cadConsultaCadastro', 'https://homologacao.sefaz.mt.gov.br/ctews/services/cadConsultaCadastro');
   end;
@@ -667,7 +629,6 @@ end;
 class function CTeUtil.FormatarChaveAcesso(AValue: String; Mascara: Boolean = False ): String;
 begin
   AValue := DFeUtil.LimpaNumero(AValue);
-  // Alterado por Italo em 06/06/2012
   if Mascara
    then Result := copy(AValue,1,2)  + '-' + copy(AValue,3,2)  + '/' +
                   copy(AValue,5,2)  + '-' + copy(AValue,7,2)  + '.' +
@@ -739,25 +700,25 @@ begin
      end;
  end;
 {$ENDIF}
-{$IFDEF PL_104}
+{$IFNDEF PL_103}
  case Tipo of
   1: begin
       if DFeUtil.EstaVazio(APathSchemas) then
-        schema_filename := pchar(PathWithDelim(ExtractFileDir(application.ExeName))+'Schemas\cte_v1.04.xsd')
+        schema_filename := pchar(PathWithDelim(ExtractFileDir(application.ExeName))+'Schemas\cte_v' + CTeenviCTe + '.xsd')
        else
-        schema_filename := pchar(PathWithDelim(APathSchemas)+'cte_v1.04.xsd');
+        schema_filename := pchar(PathWithDelim(APathSchemas)+'cte_v' + CTeenviCTe + '.xsd');
      end;
   2: begin
       if DFeUtil.EstaVazio(APathSchemas) then
-        schema_filename := pchar(PathWithDelim(ExtractFileDir(application.ExeName))+'Schemas\canccte_v1.04.xsd')
+        schema_filename := pchar(PathWithDelim(ExtractFileDir(application.ExeName))+'Schemas\canccte_v' + CTecancCTe + '.xsd')
        else
-        schema_filename := pchar(PathWithDelim(APathSchemas)+'canccte_v1.04.xsd');
+        schema_filename := pchar(PathWithDelim(APathSchemas)+'canccte_v' + CTecancCTe + '.xsd');
      end;
   3: begin
       if DFeUtil.EstaVazio(APathSchemas) then
-        schema_filename := pchar(PathWithDelim(ExtractFileDir(application.ExeName))+'Schemas\inutcte_v1.04.xsd')
+        schema_filename := pchar(PathWithDelim(ExtractFileDir(application.ExeName))+'Schemas\inutcte_v' + CTeinutCTe + '.xsd')
        else
-        schema_filename := pchar(PathWithDelim(APathSchemas)+'inutcte_v1.04.xsd');
+        schema_filename := pchar(PathWithDelim(APathSchemas)+'inutcte_v' + CTeinutCTe + '.xsd');
      end;
   4: begin
       {
@@ -908,7 +869,7 @@ begin
       end;
   end;
 {$ENDIF}
-{$IFDEF PL_104}
+{$IFNDEF PL_103}
   case Tipo of
    1: begin
        Schema.remove('http://www.portalfiscal.inf.br/cte');
@@ -916,28 +877,30 @@ begin
        Schema.add('http://www.portalfiscal.inf.br/cte',
         DFeUtil.SeSenao(DFeUtil.EstaVazio(APathSchemas),
         PathWithDelim(ExtractFileDir(application.ExeName))+'Schemas\',
-        PathWithDelim(APathSchemas))+'cte_v1.04.xsd');
+        PathWithDelim(APathSchemas))+'cte_v' + CTeenviCTe + '.xsd');
       end;
    2: begin
        Schema.remove('http://www.portalfiscal.inf.br/cte');
        Schema.add('http://www.portalfiscal.inf.br/cte',
         DFeUtil.SeSenao(DFeUtil.EstaVazio(APathSchemas),
         PathWithDelim(ExtractFileDir(application.ExeName))+'Schemas\',
-        PathWithDelim(APathSchemas))+'cancCte_v1.04.xsd');
+        PathWithDelim(APathSchemas))+'cancCte_v' + CTecancCTe + '.xsd');
       end;
    3: begin
        Schema.remove('http://www.portalfiscal.inf.br/cte');
        Schema.add('http://www.portalfiscal.inf.br/cte',
         DFeUtil.SeSenao(DFeUtil.EstaVazio(APathSchemas),
         PathWithDelim(ExtractFileDir(application.ExeName))+'Schemas\',
-        PathWithDelim(APathSchemas))+'inutCte_v1.04.xsd');
+        PathWithDelim(APathSchemas))+'inutCte_v' + CTeinutCTe + '.xsd');
       end;
    4: begin
+   (*
        Schema.remove('http://www.portalfiscal.inf.br/cte');
        Schema.add( 'http://www.portalfiscal.inf.br/cte',
         DFeUtil.SeSenao(DFeUtil.EstaVazio(APathSchemas),
         PathWithDelim(ExtractFileDir(application.ExeName))+'Schemas\',
-        PathWithDelim(APathSchemas))+'envDPEC_v1.04.xsd');
+        PathWithDelim(APathSchemas))+'envDPEC_v' + CTeenviCTe + '.xsd');
+   *)
       end;
     5..11:
       begin
@@ -959,10 +922,9 @@ begin
   Schema              := nil;
 end;
 
-// Incluido por Italo em 16/03/2012
 function ValidaModalMSXML(XML: AnsiString; out Msg: AnsiString;
  const APathSchemas: string = ''): Boolean;
-{$IFDEF PL_104}
+{$IFNDEF PL_103}
 var
   DOMDocument : IXMLDOMDocument2;
   ParseError  : IXMLDOMParseError;
@@ -975,11 +937,10 @@ begin
   Result := True;
 {$ENDIF}
 
-{$IFDEF PL_104}
+{$IFNDEF PL_103}
   Tipo := 0;
   AXML := XML;
 
-  // Incluido por Italo em 19/10/2012
   XML := SeparaDados( XML, 'infModal' );
 
   if pos( '<aereo>', XML ) <> 0
@@ -1022,15 +983,22 @@ begin
             XML +
            '</rodo>';
    end;
+  if pos( '<multimodal>', XML) <> 0
+   then begin
+    Tipo := 6;
+    XML := SeparaDados( XML, 'multimodal' );
+    XML := '<multimodal xmlns="http://www.portalfiscal.inf.br/cte">' +
+            XML +
+           '</multimodal>';
+   end;
 
-  // Incluido por Italo em 27/11/2012
   // Eventos
   if Tipo = 0
    then begin
     XML := AXML;
     if pos( '<evEPECCTe>', XML) <> 0
      then begin
-      Tipo := 6;
+      Tipo := 7;
       XML := SeparaDados( XML, 'evEPECCTe' );
       XML := '<evEPECCTe xmlns="http://www.portalfiscal.inf.br/cte">' +
               XML +
@@ -1066,33 +1034,39 @@ begin
        Schema.add('http://www.portalfiscal.inf.br/cte',
           DFeUtil.SeSenao(DFeUtil.EstaVazio(APathSchemas),
           PathWithDelim(ExtractFileDir(application.ExeName))+'Schemas\',
-          PathWithDelim(APathSchemas))+'cteModalAereo_v1.04.xsd');
+          PathWithDelim(APathSchemas))+'cteModalAereo_v' + CTeModalAereo + '.xsd');
       end;
    2: begin
        Schema.add('http://www.portalfiscal.inf.br/cte',
           DFeUtil.SeSenao(DFeUtil.EstaVazio(APathSchemas),
           PathWithDelim(ExtractFileDir(application.ExeName))+'Schemas\',
-          PathWithDelim(APathSchemas))+'cteModalAquaviario_v1.04.xsd');
+          PathWithDelim(APathSchemas))+'cteModalAquaviario_v' + CTeModalAqua + '.xsd');
       end;
    3: begin
        Schema.add('http://www.portalfiscal.inf.br/cte',
           DFeUtil.SeSenao(DFeUtil.EstaVazio(APathSchemas),
           PathWithDelim(ExtractFileDir(application.ExeName))+'Schemas\',
-          PathWithDelim(APathSchemas))+'cteModalDutoviario_v1.04.xsd');
+          PathWithDelim(APathSchemas))+'cteModalDutoviario_v' + CTeModalDuto + '.xsd');
       end;
    4: begin
        Schema.add('http://www.portalfiscal.inf.br/cte',
           DFeUtil.SeSenao(DFeUtil.EstaVazio(APathSchemas),
           PathWithDelim(ExtractFileDir(application.ExeName))+'Schemas\',
-          PathWithDelim(APathSchemas))+'cteModalFerroviario_v1.04.xsd');
+          PathWithDelim(APathSchemas))+'cteModalFerroviario_v' + CTeModalFerro + '.xsd');
       end;
    5: begin
        Schema.add('http://www.portalfiscal.inf.br/cte',
           DFeUtil.SeSenao(DFeUtil.EstaVazio(APathSchemas),
           PathWithDelim(ExtractFileDir(application.ExeName))+'Schemas\',
-          PathWithDelim(APathSchemas))+'cteModalRodoviario_v1.04.xsd');
+          PathWithDelim(APathSchemas))+'cteModalRodoviario_v' + CTeModalRodo + '.xsd');
       end;
    6: begin
+       Schema.add('http://www.portalfiscal.inf.br/cte',
+          DFeUtil.SeSenao(DFeUtil.EstaVazio(APathSchemas),
+          PathWithDelim(ExtractFileDir(application.ExeName))+'Schemas\',
+          PathWithDelim(APathSchemas))+'cteMultiModal_v' + CTeMultiModal + '.xsd');
+      end;
+   7: begin
        Schema.add('http://www.portalfiscal.inf.br/cte',
           DFeUtil.SeSenao(DFeUtil.EstaVazio(APathSchemas),
           PathWithDelim(ExtractFileDir(application.ExeName))+'Schemas\',
@@ -1164,7 +1138,6 @@ begin
 {$IFDEF ACBrCTeOpenSSL}
   Result := ValidaLibXML(AXML, AMsg, APathSchemas);
 {$ELSE}
-  // Alterado por Italo em 27/11/2012
   if (pos('<infCTeNorm>', AXML) <> 0) or (pos('<infEvento', AXML) <> 0)
    then Result := ValidaMSXML(AXML, AMsg, APathSchemas) and
                   ValidaModalMSXML(AXML, AMsg, APathSchemas)
@@ -1196,7 +1169,6 @@ begin
   AStr := AXML;
 
   //// Encontrando o URI ////
-  // Alterado por Italo em 13/09/2012
   Tipo := CTeUtil.IdentificaTipoSchema(AStr, I);
 
   I := DFeUtil.PosEx('Id=', AStr, I + 6);
@@ -1236,7 +1208,6 @@ begin
   end;
 
   //// Inserindo Template da Assinatura digital ////
-  // Alterado por Italo em 13/09/2012
   case Tipo of
    1: begin
        I := pos('</CTe>', AStr);
@@ -1255,7 +1226,6 @@ begin
       end;
    5..11:
       begin
-       // Incluido por Italo em 27/11/2012
        I := pos('</eventoCTe>', AStr) ;
        if I = 0 then
         raise Exception.Create('Não encontrei final do XML: </eventoCTe>') ;
@@ -1289,7 +1259,6 @@ begin
       '</KeyInfo>' +
     '</Signature>';
 
-  // Alterado por Italo em 13/09/2012
   case Tipo of
     1: AStr := AStr + '</CTe>';
     2: AStr := AStr + '</cancCTe>';
@@ -1300,7 +1269,6 @@ begin
 
 //  XmlAss := CTeUtil.sign_file(PAnsiChar(AStr), PChar(ArqPFX), PChar(PFXSenha));
 
-  // Alterado por Italo em 13/09/2012
   if FileExists(ArqPFX) then
     XmlAss := CTeUtil.sign_file(PAnsiChar(AStr), PAnsiChar(ArqPFX), PAnsiChar(PFXSenha))
   else
@@ -1321,7 +1289,6 @@ begin
   XmlAss := StringReplace(XmlAss, #13, '', [rfReplaceAll]);
 
   // Removendo DTD //
-  // Alterado por Italo em 13/09/2012
   case Tipo of
     1: XmlAss := StringReplace( XmlAss, cDTD, '', [] );
     2: XmlAss := StringReplace( XmlAss, cDTDCanc, '', [] );
@@ -1355,7 +1322,6 @@ var
 begin
   if Pos('<Signature', XML) <= 0 then
   begin
-    // Alterado por Italo em 13/09/2012
     Tipo := CTeUtil.IdentificaTipoSchema(XML,I);
 
     I := DFeUtil.PosEx('Id=', XML, 6);
@@ -1694,8 +1660,7 @@ var
    wd,wm,wa: word;
    Digito: integer;
 begin
-   // Alterado por Italo em 29/10/2012
-   // Conforme NT 2012/007
+   // Alterado Conforme NT 2012/007
    //UF
    // TpcteTomador = ( tmRemetente, tmExpedidor, tmRecebedor, tmDestinatario, tmOutros);
    if FCTe.Ide.toma4.CNPJCPF<>''
@@ -1766,8 +1731,7 @@ begin
     then wicms_p := '1';
    if (DFeUtil.NaoEstaZerado(FCTe.Imp.ICMS.CST80.vICMS))
     then wicms_s := '1';
-{$ENDIF}
-{$IFDEF PL_104}
+{$ELSE}
    if (DFeUtil.NaoEstaZerado(FCTe.Imp.ICMS.ICMS00.vICMS))
     then wicms_p := '1';
    if (DFeUtil.NaoEstaZerado(FCTe.Imp.ICMS.ICMSOutraUF.vICMSOutraUF))
@@ -1798,12 +1762,10 @@ begin
             copy(AValue,33,4) ;
 end;
 
-// Incluido por Italo em 13/09/2012
 class function CTeUtil.IdentificaTipoSchema(const AXML: AnsiString; var I: integer): integer;
 var
  lTipoEvento: String;
 begin
-  // Corrigido por Italo em 05/10/2012
   I := pos('<infCte',AXML) ;
   Result := 1;
   if I = 0  then

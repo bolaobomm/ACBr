@@ -69,6 +69,10 @@ const
 const
   ACBRCTE_VERSAO = '0.6.0a XML 1.04';
 {$ENDIF}
+{$IFDEF PL_200}
+const
+  ACBRCTE_VERSAO = '0.7.0a XML 2.00';
+{$ENDIF}
 
 type
   TACBrCTeAboutInfo = (ACBrCTeAbout);
@@ -94,7 +98,7 @@ type
       sSmtpPasswd, sFrom, sTo, sAssunto: String; sMensagem: TStrings;
       SSL: Boolean; sCC, Anexos: TStrings; PedeConfirma, AguardarEnvio: Boolean;
       NomeRemetente: String; TLS: Boolean; StreamCTe: TStringStream;
-      NomeArq: String);
+      NomeArq: String; HTML: Boolean = False);
     procedure EnviarEmailNormal(const sSmtpHost, sSmtpPort, sSmtpUser,
       sSmtpPasswd, sFrom, sTo, sAssunto: String; sMensagem: TStrings;
       SSL: Boolean; sCC, Anexos: TStrings; PedeConfirma, AguardarEnvio: Boolean;
@@ -131,7 +135,8 @@ type
                                   TLS : Boolean = True;
                                   StreamCTe : TStringStream = nil;
                                   NomeArq : String = '';
-                                  UsarThread: Boolean = True);
+                                  UsarThread: Boolean = True;
+                                  HTML: Boolean = False);
   published
     property Configuracoes: TConfiguracoes read FConfiguracoes write FConfiguracoes;
     property OnStatusChange: TNotifyEvent read FOnStatusChange write FOnStatusChange;
@@ -323,7 +328,7 @@ procedure TACBrCTe.EnviaEmailThread(const sSmtpHost, sSmtpPort, sSmtpUser,
   sSmtpPasswd, sFrom, sTo, sAssunto: String; sMensagem: TStrings;
   SSL: Boolean; sCC, Anexos: TStrings; PedeConfirma,
   AguardarEnvio: Boolean; NomeRemetente: String; TLS: Boolean;
-  StreamCTe: TStringStream; NomeArq: String);
+  StreamCTe: TStringStream; NomeArq: String; HTML: Boolean = False);
 var
  ThreadSMTP : TSendMailThread;
  m:TMimemess;
@@ -336,7 +341,12 @@ begin
  try
     p := m.AddPartMultipart('mixed', nil);
     if sMensagem <> nil then
-       m.AddPartText(sMensagem, p);
+    begin
+       if HTML = true then
+          m.AddPartHTML(sMensagem, p)
+       else
+          m.AddPartText(sMensagem, p);
+    end;
 
     if StreamCTe <> nil then
       m.AddPartBinary(StreamCTe,NomeArq, p);
@@ -375,7 +385,9 @@ begin
 
     ThreadSMTP.smtp.FullSSL := SSL;
     ThreadSMTP.smtp.AutoTLS := TLS;
-    ThreadSMTP.smtp.StartTLS;
+
+    if (TLS) then
+      ThreadSMTP.smtp.StartTLS;
 
     SetStatus( stCTeEmail );
     ThreadSMTP.Resume; // inicia a thread
@@ -441,7 +453,10 @@ begin
      smtp.TargetPort := sSmtpPort;
 
      smtp.FullSSL := SSL;
-     smtp.AutoTLS := SSL;
+     smtp.AutoTLS := TLS;
+
+     if (TLS) then
+       smtp.StartTLS;
 
      if not smtp.Login then
        raise Exception.Create('SMTP ERROR: Login: ' + smtp.EnhCodeString+sLineBreak+smtp.FullResult.Text);
@@ -479,7 +494,7 @@ procedure TACBrCTe.EnviaEmail(const sSmtpHost, sSmtpPort, sSmtpUser,
   sSmtpPasswd, sFrom, sTo, sAssunto: String; sMensagem: TStrings;
   SSL: Boolean; sCC, Anexos: TStrings; PedeConfirma,
   AguardarEnvio: Boolean; NomeRemetente: String; TLS: Boolean;
-  StreamCTe: TStringStream; NomeArq: String; UsarThread: Boolean);
+  StreamCTe: TStringStream; NomeArq: String; UsarThread: Boolean; HTML: Boolean);
 begin
   if UsarThread then
   begin
@@ -500,7 +515,8 @@ begin
       NomeRemetente,
       TLS,
       StreamCTe,
-      NomeArq
+      NomeArq,
+      HTML
     );
   end
   else
