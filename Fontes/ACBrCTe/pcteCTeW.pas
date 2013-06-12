@@ -1120,14 +1120,14 @@ end;
 
 procedure TCTeW.GerarInfNF;
 var
-  i: integer;
+  i, j, k, l: integer;
 begin
   for i := 0 to CTe.infCTeNorm.infDoc.infNF.Count - 1 do
   begin
     Gerador.wGrupo('infNF', '#131');
     Gerador.wCampo(tcStr, '#132', 'nRoma ', 01, 20, 0, CTe.infCTeNorm.infDoc.InfNF[i].nRoma, '');
     Gerador.wCampo(tcStr, '#133', 'nPed  ', 01, 20, 0, CTe.infCTeNorm.infDoc.InfNF[i].nPed, '');
-    Gerador.wCampo(tcStr, '#134', 'mod  ', 02, 02, 1, ModeloNFToStr(CTe.infCTeNorm.infDoc.InfNF[i].modelo), '');
+    Gerador.wCampo(tcStr, '#134', 'mod   ', 02, 02, 1, ModeloNFToStr(CTe.infCTeNorm.infDoc.InfNF[i].modelo), '');
     Gerador.wCampo(tcStr, '#135', 'serie ', 01, 03, 1, CTe.infCTeNorm.infDoc.InfNF[i].serie, DSC_SERIE);
     Gerador.wCampo(tcEsp, '#136', 'nDoc  ', 01, 20, 1, SomenteNumeros(CTe.infCTeNorm.infDoc.InfNF[i].nDoc), DSC_NDOC);
     Gerador.wCampo(tcDat, '#137', 'dEmi  ', 10, 10, 1, CTe.infCTeNorm.infDoc.InfNF[i].dEmi, DSC_DEMI);
@@ -1143,6 +1143,58 @@ begin
     if (FOpcoes.ValidarInscricoes) and (CTe.infCTeNorm.infDoc.InfNF[i].PIN <> '') then
       if not ValidarISUF(CTe.infCTeNorm.infDoc.InfNF[i].PIN) then
         Gerador.wAlerta('#146', 'PIN', DSC_ISUF, ERR_MSG_INVALIDO);
+    Gerador.wCampo(tcDat, '#278', 'dPrev ', 10, 10, 1, CTe.infCTeNorm.infDoc.InfNF[i].dPrev, '***');
+
+    for j := 0 to CTe.infCTeNorm.infDoc.infNF[i].infUnidTransp.Count - 1 do
+    begin
+      Gerador.wGrupo('infUnidTransp', '#051');
+      Gerador.wCampo(tcStr, '#052', 'tpUnidTransp', 01, 01, 1, UnidTranspToStr(CTe.infCTeNorm.infDoc.infNF[i].infUnidTransp[j].tpUnidTransp), '***');
+      Gerador.wCampo(tcStr, '#053', 'idUnidTransp', 01, 20, 1, CTe.infCTeNorm.infDoc.infNF[i].infUnidTransp[j].idUnidTransp, '***');
+
+      for k := 0 to CTe.infCTeNorm.infDoc.infNF[i].infUnidTransp[j].lacUnidTransp.Count - 1 do
+      begin
+        Gerador.wGrupo('lacUnidTransp', '#054');
+        Gerador.wCampo(tcStr, '#055', 'nLacre', 01, 20, 1, CTe.infCTeNorm.infDoc.infNF[i].infUnidTransp[j].lacUnidTransp[k].nLacre, DSC_NLACRE);
+        Gerador.wGrupo('/lacUnidTransp');
+      end;
+
+      for k := 0 to CTe.infCTeNorm.infDoc.infNF[i].infUnidTransp[j].infUnidCarga.Count - 1 do
+      begin
+        Gerador.wGrupo('infUnidCarga', '#056');
+        Gerador.wCampo(tcStr, '#057', 'tpUnidCarga', 01, 01, 1, UnidCargaToStr(CTe.infCTeNorm.infDoc.infNF[i].infUnidTransp[j].infUnidCarga[k].tpUnidCarga), '***');
+        Gerador.wCampo(tcStr, '#058', 'idUnidCarga', 01, 20, 1, CTe.infCTeNorm.infDoc.infNF[i].infUnidTransp[j].infUnidCarga[k].idUnidCarga, '***');
+
+        for l := 0 to CTe.infCTeNorm.infDoc.infNF[i].infUnidTransp[j].infUnidCarga[k].lacUnidCarga.Count - 1 do
+        begin
+          Gerador.wGrupo('lacUnidCarga', '#059');
+          Gerador.wCampo(tcStr, '#060', 'nLacre', 01, 20, 1, CTe.infCTeNorm.infDoc.infNF[i].infUnidTransp[j].infUnidCarga[k].lacUnidCarga[l].nLacre, DSC_NLACRE);
+          Gerador.wGrupo('/lacUnidCarga');
+        end;
+        Gerador.wCampo(tcDe2, '#061', 'qtdRat', 01, 05, 0, CTe.infCTeNorm.infDoc.infNF[i].infUnidTransp[j].infUnidCarga[k].qtdRat, '***');
+
+        Gerador.wGrupo('/infUnidCarga');
+      end;
+      Gerador.wCampo(tcDe2, '#062', 'qtdRat', 01, 05, 0, CTe.infCTeNorm.infDoc.infNF[i].infUnidTransp[j].qtdRat, '***');
+
+      Gerador.wGrupo('/infUnidTransp');
+    end;
+
+    for j := 0 to CTe.infCTeNorm.infDoc.infNF[i].infUnidCarga.Count - 1 do
+    begin
+      Gerador.wGrupo('infUnidCarga', '#056');
+      Gerador.wCampo(tcStr, '#057', 'tpUnidCarga', 01, 01, 1, UnidCargaToStr(CTe.infCTeNorm.infDoc.infNF[i].infUnidCarga[j].tpUnidCarga), '***');
+      Gerador.wCampo(tcStr, '#058', 'idUnidCarga', 01, 20, 1, CTe.infCTeNorm.infDoc.infNF[i].infUnidCarga[j].idUnidCarga, '***');
+
+      for k := 0 to CTe.infCTeNorm.infDoc.infNF[i].infUnidCarga[j].lacUnidCarga.Count - 1 do
+      begin
+        Gerador.wGrupo('lacUnidCarga', '#059');
+        Gerador.wCampo(tcStr, '#060', 'nLacre', 01, 20, 1, CTe.infCTeNorm.infDoc.infNF[i].infUnidCarga[j].lacUnidCarga[k].nLacre, DSC_NLACRE);
+        Gerador.wGrupo('/lacUnidCarga');
+      end;
+      Gerador.wCampo(tcDe2, '#061', 'qtdRat', 01, 05, 0, CTe.infCTeNorm.infDoc.infNF[i].infUnidCarga[j].qtdRat, '***');
+
+      Gerador.wGrupo('/infUnidCarga');
+    end;
 
     Gerador.wGrupo('/infNF');
   end;
@@ -1152,7 +1204,7 @@ end;
 
 procedure TCTeW.GerarInfNFe;
 var
-  i: integer;
+  i, j, k, l: integer;
 begin
   for i := 0 to CTe.infCTeNorm.infDoc.InfNFe.Count - 1 do
   begin
@@ -1161,11 +1213,62 @@ begin
     if SomenteNumeros(CTe.infCTeNorm.infDoc.InfNFe[i].chave) <> '' then
      if not ValidarChave('NFe' + SomenteNumeros(CTe.infCTeNorm.infDoc.InfNFe[i].chave)) then
       Gerador.wAlerta('#159', 'chave', DSC_REFNFE, ERR_MSG_INVALIDO);
-
     Gerador.wCampo(tcStr, '#160', 'PIN   ', 02, 09, 0, CTe.infCTeNorm.infDoc.InfNFe[i].PIN, DSC_ISUF);
     if (FOpcoes.ValidarInscricoes) and (CTe.infCTeNorm.infDoc.InfNFe[i].PIN <> '') then
       if not ValidarISUF(CTe.infCTeNorm.infDoc.InfNFe[i].PIN) then
         Gerador.wAlerta('#160', 'PIN', DSC_ISUF, ERR_MSG_INVALIDO);
+    Gerador.wCampo(tcDat, '#278', 'dPrev ', 10, 10, 1, CTe.infCTeNorm.infDoc.InfNFe[i].dPrev, '***');
+
+    for j := 0 to CTe.infCTeNorm.infDoc.infNFe[i].infUnidTransp.Count - 1 do
+    begin
+      Gerador.wGrupo('infUnidTransp', '#051');
+      Gerador.wCampo(tcStr, '#052', 'tpUnidTransp', 01, 01, 1, UnidTranspToStr(CTe.infCTeNorm.infDoc.infNFe[i].infUnidTransp[j].tpUnidTransp), '***');
+      Gerador.wCampo(tcStr, '#053', 'idUnidTransp', 01, 20, 1, CTe.infCTeNorm.infDoc.infNFe[i].infUnidTransp[j].idUnidTransp, '***');
+
+      for k := 0 to CTe.infCTeNorm.infDoc.infNFe[i].infUnidTransp[j].lacUnidTransp.Count - 1 do
+      begin
+        Gerador.wGrupo('lacUnidTransp', '#054');
+        Gerador.wCampo(tcStr, '#055', 'nLacre', 01, 20, 1, CTe.infCTeNorm.infDoc.infNFe[i].infUnidTransp[j].lacUnidTransp[k].nLacre, DSC_NLACRE);
+        Gerador.wGrupo('/lacUnidTransp');
+      end;
+
+      for k := 0 to CTe.infCTeNorm.infDoc.infNFe[i].infUnidTransp[j].infUnidCarga.Count - 1 do
+      begin
+        Gerador.wGrupo('infUnidCarga', '#056');
+        Gerador.wCampo(tcStr, '#057', 'tpUnidCarga', 01, 01, 1, UnidCargaToStr(CTe.infCTeNorm.infDoc.infNFe[i].infUnidTransp[j].infUnidCarga[k].tpUnidCarga), '***');
+        Gerador.wCampo(tcStr, '#058', 'idUnidCarga', 01, 20, 1, CTe.infCTeNorm.infDoc.infNFe[i].infUnidTransp[j].infUnidCarga[k].idUnidCarga, '***');
+
+        for l := 0 to CTe.infCTeNorm.infDoc.infNFe[i].infUnidTransp[j].infUnidCarga[k].lacUnidCarga.Count - 1 do
+        begin
+          Gerador.wGrupo('lacUnidCarga', '#059');
+          Gerador.wCampo(tcStr, '#060', 'nLacre', 01, 20, 1, CTe.infCTeNorm.infDoc.infNFe[i].infUnidTransp[j].infUnidCarga[k].lacUnidCarga[l].nLacre, DSC_NLACRE);
+          Gerador.wGrupo('/lacUnidCarga');
+        end;
+        Gerador.wCampo(tcDe2, '#061', 'qtdRat', 01, 05, 0, CTe.infCTeNorm.infDoc.infNFe[i].infUnidTransp[j].infUnidCarga[k].qtdRat, '***');
+
+        Gerador.wGrupo('/infUnidCarga');
+      end;
+      Gerador.wCampo(tcDe2, '#062', 'qtdRat', 01, 05, 0, CTe.infCTeNorm.infDoc.infNFe[i].infUnidTransp[j].qtdRat, '***');
+
+      Gerador.wGrupo('/infUnidTransp');
+    end;
+
+    for j := 0 to CTe.infCTeNorm.infDoc.infNFe[i].infUnidCarga.Count - 1 do
+    begin
+      Gerador.wGrupo('infUnidCarga', '#056');
+      Gerador.wCampo(tcStr, '#057', 'tpUnidCarga', 01, 01, 1, UnidCargaToStr(CTe.infCTeNorm.infDoc.infNFe[i].infUnidCarga[j].tpUnidCarga), '***');
+      Gerador.wCampo(tcStr, '#058', 'idUnidCarga', 01, 20, 1, CTe.infCTeNorm.infDoc.infNFe[i].infUnidCarga[j].idUnidCarga, '***');
+
+      for k := 0 to CTe.infCTeNorm.infDoc.infNFe[i].infUnidCarga[j].lacUnidCarga.Count - 1 do
+      begin
+        Gerador.wGrupo('lacUnidCarga', '#059');
+        Gerador.wCampo(tcStr, '#060', 'nLacre', 01, 20, 1, CTe.infCTeNorm.infDoc.infNFe[i].infUnidCarga[j].lacUnidCarga[k].nLacre, DSC_NLACRE);
+        Gerador.wGrupo('/lacUnidCarga');
+      end;
+      Gerador.wCampo(tcDe2, '#061', 'qtdRat', 01, 05, 0, CTe.infCTeNorm.infDoc.infNFe[i].infUnidCarga[j].qtdRat, '***');
+
+      Gerador.wGrupo('/infUnidCarga');
+    end;
 
     Gerador.wGrupo('/infNFe');
   end;
@@ -1175,7 +1278,7 @@ end;
 
 procedure TCTeW.GerarInfOutros;
 var
-  i: integer;
+  i, j, k, l: integer;
 begin
   for i := 0 to CTe.infCTeNorm.infDoc.InfOutros.Count - 1 do
   begin
@@ -1185,15 +1288,64 @@ begin
     Gerador.wCampo(tcStr, '#164', 'nDoc        ', 01, 20, 0, CTe.infCTeNorm.infDoc.InfOutros[i].nDoc, DSC_NRO);
     Gerador.wCampo(tcDat, '#165', 'dEmi        ', 10, 10, 1, CTe.infCTeNorm.infDoc.InfOutros[i].dEmi, DSC_DEMI);
     Gerador.wCampo(tcDe2, '#166', 'vDocFisc    ', 01, 15, 0, CTe.infCTeNorm.infDoc.InfOutros[i].vDocFisc, DSC_VDOC);
+    Gerador.wCampo(tcDat, '#278', 'dPrev       ', 10, 10, 1, CTe.infCTeNorm.infDoc.infOutros[i].dPrev, '***');
+
+    for j := 0 to CTe.infCTeNorm.infDoc.infOutros[i].infUnidTransp.Count - 1 do
+    begin
+      Gerador.wGrupo('infUnidTransp', '#051');
+      Gerador.wCampo(tcStr, '#052', 'tpUnidTransp', 01, 01, 1, UnidTranspToStr(CTe.infCTeNorm.infDoc.infOutros[i].infUnidTransp[j].tpUnidTransp), '***');
+      Gerador.wCampo(tcStr, '#053', 'idUnidTransp', 01, 20, 1, CTe.infCTeNorm.infDoc.infOutros[i].infUnidTransp[j].idUnidTransp, '***');
+
+      for k := 0 to CTe.infCTeNorm.infDoc.infOutros[i].infUnidTransp[j].lacUnidTransp.Count - 1 do
+      begin
+        Gerador.wGrupo('lacUnidTransp', '#054');
+        Gerador.wCampo(tcStr, '#055', 'nLacre', 01, 20, 1, CTe.infCTeNorm.infDoc.infOutros[i].infUnidTransp[j].lacUnidTransp[k].nLacre, DSC_NLACRE);
+        Gerador.wGrupo('/lacUnidTransp');
+      end;
+
+      for k := 0 to CTe.infCTeNorm.infDoc.infOutros[i].infUnidTransp[j].infUnidCarga.Count - 1 do
+      begin
+        Gerador.wGrupo('infUnidCarga', '#056');
+        Gerador.wCampo(tcStr, '#057', 'tpUnidCarga', 01, 01, 1, UnidCargaToStr(CTe.infCTeNorm.infDoc.infOutros[i].infUnidTransp[j].infUnidCarga[k].tpUnidCarga), '***');
+        Gerador.wCampo(tcStr, '#058', 'idUnidCarga', 01, 20, 1, CTe.infCTeNorm.infDoc.infOutros[i].infUnidTransp[j].infUnidCarga[k].idUnidCarga, '***');
+
+        for l := 0 to CTe.infCTeNorm.infDoc.infOutros[i].infUnidTransp[j].infUnidCarga[k].lacUnidCarga.Count - 1 do
+        begin
+          Gerador.wGrupo('lacUnidCarga', '#059');
+          Gerador.wCampo(tcStr, '#060', 'nLacre', 01, 20, 1, CTe.infCTeNorm.infDoc.infOutros[i].infUnidTransp[j].infUnidCarga[k].lacUnidCarga[l].nLacre, DSC_NLACRE);
+          Gerador.wGrupo('/lacUnidCarga');
+        end;
+        Gerador.wCampo(tcDe2, '#061', 'qtdRat', 01, 05, 0, CTe.infCTeNorm.infDoc.infOutros[i].infUnidTransp[j].infUnidCarga[k].qtdRat, '***');
+
+        Gerador.wGrupo('/infUnidCarga');
+      end;
+      Gerador.wCampo(tcDe2, '#062', 'qtdRat', 01, 05, 0, CTe.infCTeNorm.infDoc.infOutros[i].infUnidTransp[j].qtdRat, '***');
+
+      Gerador.wGrupo('/infUnidTransp');
+    end;
+
+    for j := 0 to CTe.infCTeNorm.infDoc.InfOutros[i].infUnidCarga.Count - 1 do
+    begin
+      Gerador.wGrupo('infUnidCarga', '#056');
+      Gerador.wCampo(tcStr, '#057', 'tpUnidCarga', 01, 01, 1, UnidCargaToStr(CTe.infCTeNorm.infDoc.InfOutros[i].infUnidCarga[j].tpUnidCarga), '***');
+      Gerador.wCampo(tcStr, '#058', 'idUnidCarga', 01, 20, 1, CTe.infCTeNorm.infDoc.InfOutros[i].infUnidCarga[j].idUnidCarga, '***');
+
+      for k := 0 to CTe.infCTeNorm.infDoc.InfOutros[i].infUnidCarga[j].lacUnidCarga.Count - 1 do
+      begin
+        Gerador.wGrupo('lacUnidCarga', '#059');
+        Gerador.wCampo(tcStr, '#060', 'nLacre', 01, 20, 1, CTe.infCTeNorm.infDoc.InfOutros[i].infUnidCarga[j].lacUnidCarga[k].nLacre, DSC_NLACRE);
+        Gerador.wGrupo('/lacUnidCarga');
+      end;
+      Gerador.wCampo(tcDe2, '#061', 'qtdRat', 01, 05, 0, CTe.infCTeNorm.infDoc.InfOutros[i].infUnidCarga[j].qtdRat, '***');
+
+      Gerador.wGrupo('/infUnidCarga');
+    end;
+
     Gerador.wGrupo('/infOutros');
   end;
   if CTe.infCTeNorm.infDoc.InfOutros.Count > 990 then
     Gerador.wAlerta('#161', 'infOutros', DSC_INFOUTRO, ERR_MSG_MAIOR_MAXIMO + '990');
 end;
-
-
-
-
 
 procedure TCTeW.GerarDocAnt;
 var
@@ -1464,7 +1616,7 @@ end;
 
 procedure TCTeW.GerarAquav;  // N
 var
- i, i01: Integer;
+ i: Integer;
 begin
   Gerador.wGrupo('aquav', '#01');
   Gerador.wCampo(tcDe2, '#02', 'vPrest   ', 01, 15, 1, CTe.infCTeNorm.aquav.vPrest, '');
