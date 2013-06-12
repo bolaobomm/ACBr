@@ -497,7 +497,7 @@ begin
         '<tabela>' + IntToStr(Integer(Itens[I].Tabela)) + '</tabela>' +
         '<aliqNac>' + FloatToString(Itens[I].AliqNacional) + '</aliqNac>' +
         '<aliqImp>' + FloatToString(Itens[I].AliqImportado) + '</aliqImp>' +
-        '<descricao>' + Itens[I].Descricao + '</descricao>' +
+        '<descricao>' + ACBrUtil.ParseText(Itens[I].Descricao, False, False) + '</descricao>' +
       '</imposto>';
   end;
   Texto := Texto + '</IBPTax>';
@@ -545,7 +545,7 @@ begin
         '<td>' + IntToStr(Integer(Itens[I].Tabela)) + '</td>' + slineBreak +
         '<td>' + FloatToStr(Itens[I].AliqNacional) + '</td>' + slineBreak +
         '<td>' + FloatToStr(Itens[I].AliqImportado) + '</td>' + slineBreak +
-        '<td>' + Itens[I].Descricao + '</td>' + slineBreak +
+        '<td>' + ACBrUtil.ParseText(Itens[I].Descricao, False, False) + '</td>' + slineBreak +
       '</tr>' + slineBreak;
   end;
 
