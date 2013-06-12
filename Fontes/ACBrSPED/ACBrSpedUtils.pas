@@ -91,7 +91,7 @@ function funStrZero(Zeros: String; Quant: Integer): String;
 function funChecaCOD_CONS(const COD_MOD, COD_CONS: AnsiString): Boolean;
 
 function IfThen(AValue: Boolean; const ATrue: Char; AFalse: Char): Char; overload;
-function IfThen(AValue: Boolean; const ATrue: Double; AFalse: Double): Double; overload;
+function IfThen(AValue: Boolean; const ATrue: Currency; AFalse: Currency): Currency; overload;
 
 implementation
 
@@ -1648,7 +1648,7 @@ begin
      Result := AFalse;
 end;
 
-function IfThen(AValue: Boolean; const ATrue: Double; AFalse: Double): Double;
+function IfThen(AValue: Boolean; const ATrue: Currency; AFalse: Currency): Currency;
 begin
   if AValue then
      Result := ATrue
