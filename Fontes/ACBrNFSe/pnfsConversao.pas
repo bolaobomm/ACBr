@@ -622,7 +622,6 @@ begin
   3550605, // Sao Roque/SP
   3550704, // Sao Sebastiao
   3552502, // Suzano/SP
-  3554003, // Tatui/SP
   3557105, // Votuporanga/SP
   3704708, // Marechal Deodoro/AL
   4118204, // Paranagua/PR
@@ -819,6 +818,7 @@ begin
   3127701, // Governador Valadares/MG
   3510203, // Capão Bonito/SP
   3523503  // Itatinga/SP
+  3554003, // Tatui/SP
          : Provedor := '4R';
 
   3132404, // Itajubá/MG
