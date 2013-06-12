@@ -37,9 +37,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
-10/06/2013
+11/06/2013
 -- ACBrIBPTax --
 [+] Adicionado suporte ao tipo de tabela 2.
+[*] Acerto nos métodos de exportação.
+[+] Método de exportação agora aceita usar aspas duplas ou não para campos
     por: regys.silveira
 
 10/06/2013

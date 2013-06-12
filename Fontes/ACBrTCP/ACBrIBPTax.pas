@@ -110,7 +110,7 @@ type
     function DownloadTabela: Boolean;
     function AbrirTabela(const AFileName: TFileName): Boolean;
     procedure Exportar(const AArquivo: String; ATipo: TACBrIBPTaxExporta); overload;
-    procedure Exportar(const AArquivo, ADelimitador: String); overload;
+    procedure Exportar(const AArquivo, ADelimitador: String; const AQuoted: Boolean); overload;
     function Procurar(const ACodigo: String; var ex: String;
       var tabela: Integer; var aliqNac, aliqImp: Double ;
       const BuscaParcial: Boolean = False): Boolean;
@@ -384,10 +384,19 @@ begin
     FOnErroImportacao(Alinha, AErro);
 end;
 
-procedure TACBrIBPTax.Exportar(const AArquivo, ADelimitador: String);
+procedure TACBrIBPTax.Exportar(const AArquivo, ADelimitador: String;
+  const AQuoted: Boolean);
 var
   I: Integer;
   Texto: String;
+
+  function AddQuoted(const AValor: String): String;
+  begin
+    if AQuoted then
+      Result := '"' + AValor + '"'
+    else
+      Result := AValor
+  end;
 begin
   if Itens.Count <= 0 then
     EACBrIBPTax.Create('Tabela de itens ainda não foi aberta!');
@@ -396,11 +405,12 @@ begin
   for I := 0 to Itens.Count - 1 do
   begin
     Texto := Texto +
-      Itens[I].NCM + ADelimitador +
-      Itens[I].Excecao + ADelimitador +
-      IntToStr(Integer(Itens[I].Tabela)) + ADelimitador +
-      FloatToString(Itens[I].AliqNacional) + ADelimitador +
-      FloatToString(Itens[I].AliqImportado) + ADelimitador +
+      AddQuoted(Itens[I].NCM) + ADelimitador +
+      AddQuoted(Itens[I].Excecao) + ADelimitador +
+      AddQuoted(IntToStr(Integer(Itens[I].Tabela))) + ADelimitador +
+      AddQuoted(FloatToString(Itens[I].AliqNacional)) + ADelimitador +
+      AddQuoted(FloatToString(Itens[I].AliqImportado)) + ADelimitador +
+      AddQuoted(Itens[I].Descricao) + ADelimitador +
       sLineBreak;
   end;
 
@@ -425,6 +435,7 @@ begin
       PadL(IntToStr(Integer(Itens[I].Tabela)), 1) +
       PadR(FloatToString(Itens[I].AliqNacional * 100), 4, '0') +
       PadR(FloatToString(Itens[I].AliqImportado * 100), 4, '0') +
+      PadL(Itens[I].Descricao, 400) +
       sLineBreak;
   end;
 
@@ -434,7 +445,7 @@ end;
 
 procedure TACBrIBPTax.ExportarCSV(const AArquivo: String);
 begin
-  Exportar(AArquivo, ';');
+  Exportar(AArquivo, ';', True);
 end;
 
 procedure TACBrIBPTax.ExportarDSV(const AArquivo: String);
@@ -459,7 +470,8 @@ begin
       AddAspasDuplas(Itens[I].Excecao) + ',' +
       AddAspasDuplas(IntToStr(Integer(Itens[I].Tabela))) + ',' +
       AddAspasDuplas(FloatToString(Itens[I].AliqNacional)) + ',' +
-      AddAspasDuplas(FloatToString(Itens[I].AliqImportado)) +
+      AddAspasDuplas(FloatToString(Itens[I].AliqImportado)) + ',' +
+      AddAspasDuplas(Itens[I].Descricao) +
       sLineBreak;
   end;
 
@@ -480,11 +492,12 @@ begin
   begin
     Texto := Texto +
       '<imposto>' +
-      '<ncm>' + Itens[I].NCM + '</ncm>' +
-      '<ex>' + Itens[I].Excecao + '</ex>' +
-      '<tabela>' + IntToStr(Integer(Itens[I].Tabela)) + '</tabela>' +
-      '<aliqNac>' + FloatToString(Itens[I].AliqNacional) + '</aliqNac>' +
-      '<aliqImp>' + FloatToString(Itens[I].AliqImportado) + '</aliqImp>' +
+        '<ncm>' + Itens[I].NCM + '</ncm>' +
+        '<ex>' + Itens[I].Excecao + '</ex>' +
+        '<tabela>' + IntToStr(Integer(Itens[I].Tabela)) + '</tabela>' +
+        '<aliqNac>' + FloatToString(Itens[I].AliqNacional) + '</aliqNac>' +
+        '<aliqImp>' + FloatToString(Itens[I].AliqImportado) + '</aliqImp>' +
+        '<descricao>' + Itens[I].Descricao + '</descricao>' +
       '</imposto>';
   end;
   Texto := Texto + '</IBPTax>';
@@ -520,6 +533,7 @@ begin
     '          <th>Tabela</th>' + slineBreak +
     '          <th>Aliq. Nacional</th>' + slineBreak +
     '          <th>Aliq. Importado</th>' + slineBreak +
+    '          <th>Descrição</th>' + slineBreak +
 		'        </tr>' + slineBreak;
 
   for I := 0 to Itens.Count - 1 do
@@ -531,6 +545,7 @@ begin
         '<td>' + IntToStr(Integer(Itens[I].Tabela)) + '</td>' + slineBreak +
         '<td>' + FloatToStr(Itens[I].AliqNacional) + '</td>' + slineBreak +
         '<td>' + FloatToStr(Itens[I].AliqImportado) + '</td>' + slineBreak +
+        '<td>' + Itens[I].Descricao + '</td>' + slineBreak +
       '</tr>' + slineBreak;
   end;
 

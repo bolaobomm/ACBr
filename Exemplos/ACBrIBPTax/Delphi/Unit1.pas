@@ -206,7 +206,7 @@ begin
         SaveDialog1.Filter     := 'Arquivos TXT|*.txt';
 
         if SaveDialog1.Execute then
-          ACBrIBPTax1.Exportar(SaveDialog1.FileName, '|');
+          ACBrIBPTax1.Exportar(SaveDialog1.FileName, '|', False);
       end;
   end;
 
