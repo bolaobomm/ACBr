@@ -768,7 +768,7 @@ begin
                                              TNFSeEnviarLoteRPS(Self).FNotasFiscais.Items[0].NFSe.Prestador.InscricaoMunicipal,
                                              IntToStr(TNFSeEnviarLoteRps(Self).FNotasFiscais.Count),
                                              vNotas,
-                                             FTagI, FTagF);
+                                             FTagI, FTagF, FProvedor);
 
  if FConfiguracoes.WebServices.Salvar
   then FConfiguracoes.Geral.Save('-xxx1.xml', FDadosMsg);
@@ -861,7 +861,7 @@ begin
                                                 TNFSeConsultarSituacaoLoteRPS(Self).Protocolo,
                                                 SomenteNumeros(TNFSeConsultarSituacaoLoteRPS(Self).Cnpj),
                                                 TNFSeConsultarSituacaoLoteRPS(Self).InscricaoMunicipal,
-                                                '', '');
+                                                '', '', FProvedor);
   {$IFDEF ACBrNFSeOpenSSL}
    if not(NotaUtil.AssinarXML(FDadosMsg, URISig, URIRef, FTagI, FTagF,
                    FConfiguracoes.Certificados.Certificado,
@@ -881,7 +881,7 @@ begin
                                                     TNFSeConsultarSituacaoLoteRPS(Self).Protocolo,
                                                     SomenteNumeros(TNFSeConsultarSituacaoLoteRPS(Self).Cnpj),
                                                     TNFSeConsultarSituacaoLoteRPS(Self).InscricaoMunicipal,
-                                                    FTagI, FTagF);
+                                                    FTagI, FTagF, FProvedor);
 end;
 
 procedure TWebServicesBase.DoNFSeConsultarLoteRPS;
@@ -959,7 +959,7 @@ begin
                                              TNFSeConsultarLoteRPS(Self).Protocolo,
                                              TNFSeConsultarLoteRPS(Self).FCNPJ,
                                              TNFSeConsultarLoteRPS(Self).FIM,
-                                             '', '');
+                                             '', '', FProvedor);
   {$IFDEF ACBrNFSeOpenSSL}
    if not(NotaUtil.AssinarXML(FDadosMsg, URISig, URIRef, FTagI, FTagF,
                    FConfiguracoes.Certificados.Certificado,
@@ -979,7 +979,7 @@ begin
                                                  TNFSeConsultarLoteRPS(Self).Protocolo,
                                                  TNFSeConsultarLoteRPS(Self).FCNPJ,
                                                  TNFSeConsultarLoteRPS(Self).FIM,
-                                                 FTagI, FTagF);
+                                                 FTagI, FTagF, FProvedor);
 end;
 
 procedure TWebServicesBase.DoNFSeConsultarNFSeporRPS;
@@ -1054,7 +1054,7 @@ begin
                                                 TNFSeConsultarNfseRPS(Self).Tipo,
                                                 SomenteNumeros(TNFSeConsultarNfseRPS(Self).Cnpj),
                                                 TNFSeConsultarNfseRPS(Self).InscricaoMunicipal,
-                                                '', '');
+                                                '', '', FProvedor);
   {$IFDEF ACBrNFSeOpenSSL}
    if not(NotaUtil.AssinarXML(FDadosMsg, URISig, URIRef, FTagI, FTagF,
                    FConfiguracoes.Certificados.Certificado,
@@ -1076,7 +1076,7 @@ begin
                                                     TNFSeConsultarNfseRPS(Self).Tipo,
                                                     SomenteNumeros(TNFSeConsultarNfseRPS(Self).Cnpj),
                                                     TNFSeConsultarNfseRPS(Self).InscricaoMunicipal,
-                                                    FTagI, FTagF);
+                                                    FTagI, FTagF, FProvedor);
 end;
 
 procedure TWebServicesBase.DoNFSeConsultarNFSe;
@@ -1151,7 +1151,7 @@ begin
                                              TNFSeConsultarNfse(Self).DataInicial,
                                              TNFSeConsultarNfse(Self).DataFinal,
                                              '', '',
-                                             TNFSeConsultarNfse(Self).FNumeroNFSe);
+                                             TNFSeConsultarNfse(Self).FNumeroNFSe, FProvedor);
   {$IFDEF ACBrNFSeOpenSSL}
    if not(NotaUtil.AssinarXML(FDadosMsg, URISig, URIRef, FTagI, FTagF,
                    FConfiguracoes.Certificados.Certificado,
@@ -1173,7 +1173,7 @@ begin
                                                  TNFSeConsultarNfse(Self).DataInicial,
                                                  TNFSeConsultarNfse(Self).DataFinal,
                                                  FTagI, FTagF,
-                                                 TNFSeConsultarNfse(Self).FNumeroNFSe);
+                                                 TNFSeConsultarNfse(Self).FNumeroNFSe, FProvedor);
 end;
 
 procedure TWebServicesBase.DoNFSeCancelarNFSe;
@@ -1276,7 +1276,7 @@ begin
                                                  TNFSeCancelarNfse(Self).FIM,
                                                  TNFSeCancelarNfse(Self).FCodigoMunicipio,
                                                  TNFSeCancelarNfse(Self).FCodigoCancelamento,
-                                                 '', '');
+                                                 '', '', FProvedor);
   {$IFDEF ACBrNFSeOpenSSL}
    if not(NotaUtil.AssinarXML(FDadosMsg, URISig, URIRef, FTagI, FTagF,
                    FConfiguracoes.Certificados.Certificado,
@@ -1298,7 +1298,7 @@ begin
                                                      TNFSeCancelarNfse(Self).FIM,
                                                      TNFSeCancelarNfse(Self).FCodigoMunicipio,
                                                      TNFSeCancelarNfse(Self).FCodigoCancelamento,
-                                                     FTagI, FTagF);
+                                                     FTagI, FTagF, FProvedor);
 end;
 
 procedure TWebServicesBase.DoNFSeGerarNFSe;
@@ -1440,7 +1440,7 @@ begin
                                             TNFSeGerarNFSe(Self).FNotasFiscais.Items[0].NFSe.Prestador.InscricaoMunicipal,
                                             IntToStr(TNFSeGerarNFSe(Self).FNotasFiscais.Count),
                                             vNotas,
-                                            FTagI, FTagF);
+                                            FTagI, FTagF, FProvedor);
 
  if FConfiguracoes.WebServices.Salvar
   then FConfiguracoes.Geral.Save('-xxx1.xml', FDadosMsg);
@@ -1594,7 +1594,7 @@ begin
                                              TNFSeGerarLoteRPS(Self).FNotasFiscais.Items[0].NFSe.Prestador.InscricaoMunicipal,
                                              IntToStr(TNFSeGerarLoteRps(Self).FNotasFiscais.Count),
                                              vNotas,
-                                             FTagI, FTagF);
+                                             FTagI, FTagF, FProvedor);
 
  FDadosMsg := TNFSeGerarLoteRPS(Self).FNotasFiscais.AssinarLoteRps(TNFSeGerarLoteRps(Self).NumeroLote, FDadosMSg);
 
@@ -1739,7 +1739,7 @@ begin
                                                  TNFSeEnviarSincrono(Self).FNotasFiscais.Items[0].NFSe.Prestador.InscricaoMunicipal,
                                                  IntToStr(TNFSeEnviarSincrono(Self).FNotasFiscais.Count),
                                                  vNotas,
-                                                 FTagI, FTagF);
+                                                 FTagI, FTagF, FProvedor);
 
  if FConfiguracoes.WebServices.Salvar
   then FConfiguracoes.Geral.Save('-xxx1.xml', FDadosMsg);
