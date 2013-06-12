@@ -68,6 +68,9 @@ class function TNFSeG.Gera_DadosMsgEnviarLote(Prefixo3, Prefixo4,
 var
  DadosMsg: AnsiString;
 begin
+ if AProvedor = proBetha
+  then Prefixo3 := '';
+  
  DadosMsg := '<' + Prefixo3 + 'LoteRps'+
                DFeUtil.SeSenao(Identificador <> '', ' ' + Identificador + '="' + NumeroLote + '"', '') +
                DFeUtil.SeSenao(AProvedor in [proAbaco, proBetha, proGinfes, proGoiania, proGovBR,
