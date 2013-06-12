@@ -113,6 +113,9 @@ class function TNFSeG.Gera_DadosMsgConsSitLote(Prefixo3, Prefixo4,
 var
  DadosMsg: AnsiString;
 begin
+ if AProvedor = proBetha
+  then Prefixo3 := '';
+  
  DadosMsg := '<' + Prefixo3 + 'Prestador>' +
 
                DFeUtil.SeSenao(VersaoXML = '1',
@@ -144,6 +147,9 @@ class function TNFSeG.Gera_DadosMsgConsLote(Prefixo3, Prefixo4,
 var
  DadosMsg: AnsiString;
 begin
+ if AProvedor = proBetha
+  then Prefixo3 := '';
+  
  DadosMsg := '<' + Prefixo3 + 'Prestador>' +
 
                DFeUtil.SeSenao(VersaoXML = '1',
@@ -175,6 +181,9 @@ class function TNFSeG.Gera_DadosMsgConsNFSeRPS(Prefixo3, Prefixo4,
 var
  DadosMsg: AnsiString;
 begin
+ if AProvedor = proBetha
+  then Prefixo3 := '';
+  
  DadosMsg := '<' + Prefixo3 + 'IdentificacaoRps>' +
               '<' + Prefixo4 + 'Numero>' +
                 NumeroRps +
@@ -214,6 +223,9 @@ class function TNFSeG.Gera_DadosMsgConsNFSe(Prefixo3, Prefixo4,
 var
  DadosMsg: AnsiString;
 begin
+ if AProvedor = proBetha
+  then Prefixo3 := '';
+  
  DadosMsg := '<' + Prefixo3 + 'Prestador>' +
 
                DFeUtil.SeSenao(VersaoXML = '1',
@@ -306,6 +318,9 @@ class function TNFSeG.Gera_DadosMsgGerarNFSe(Prefixo3, Prefixo4,
 var
  DadosMsg: AnsiString;
 begin
+ if AProvedor = proBetha
+  then Prefixo3 := '';
+  
  case AProvedor of
   pro4R: Result := TagI + Notas + TagF;
   else begin // proWebISS
