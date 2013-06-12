@@ -199,7 +199,7 @@ procedure TACBrBancoSicredi.GerarRegistroTransacao400(ACBrTitulo :TACBrTitulo; a
 var
   DigitoNossoNumero, CodProtesto, DiasProtesto: String;
   TipoSacado, AceiteStr, wLinha, Ocorrencia: String;
-  TipoBoleto, TipoImpressao: Char;
+  TipoBoleto : Char;
 begin
 
    with ACBrTitulo do
@@ -279,23 +279,12 @@ begin
         atNao: AceiteStr := 'N';
       end;
 
-      {Pegando Tipo de Impressão}
-      //Tipo de Impressão -- Usando como variavel auxiliar EspecieMod, pois no componente não tem previsto tipo de impressao (Carne, Padrão) no titulo somente no componente da impressao,
-      //Com esse controle é possivel ter apenas um cedente para gerar remessa de bloquetos de impressao padrão e/ou carne na mesma remessa
-      if EspecieMod='' then
-         EspecieMod:='1';
-
-      case (StrToInt(Copy(EspecieMod,1,1))) of
-        1 : TipoImpressao := 'A';
-        2 : TipoImpressao := 'B';
-      end;
-
       with ACBrBoleto do
       begin
          wLinha:= '1'                                                     +  // 001 a 001 - Identificação do registro detalhe
                   'A'                                                     +  // 002 a 002 - Tipo de cobrança = "A" SICREDI com registro
                   'A'                                                     +  // 003 a 003 - Tipo de carteira = "A" Simples
-                  TipoImpressao                                           +  // 004 a 004 - Tipo de impressão = "A" Normal "B" Carnê //--Anderson
+                  IfThen(TipoImpressao=tipCarne,'B','A')                  +  // 004 a 004 - Tipo de impressão = "A" Normal "B" Carnê //--Anderson
                   Space(12)                                               +  // 005 a 016 - Filler - Brancos
                   'A'                                                     +  // 017 a 017 - Tipo de moeda = "A" Real
                   'A'                                                     +  // 018 a 018 - Tipo de desconto: "A" Valor "B" percentual

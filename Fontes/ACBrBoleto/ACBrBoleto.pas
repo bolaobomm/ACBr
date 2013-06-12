@@ -58,7 +58,7 @@ uses ACBrBase,  {Units da ACBr}
      Graphics, Contnrs, Classes;
 
 const
-  CACBrBoleto_Versao = '0.0.71a' ;
+  CACBrBoleto_Versao = '0.0.72a' ;
 
 type
   TACBrTipoCobranca =
@@ -397,6 +397,11 @@ type
 
   {TipoDiasIntrucao}
   TACBrTipoDiasIntrucao = (diCorridos, diUteis);
+
+  {Com essa propriedade é possivel ter apenas um cedente para gerar remessa de bloquetos de impressao normal e/ou carne na mesma remessa - Para Sicredi}
+  {TipoImpressao}
+  TACBrTipoImpressao = (tipCarne, tipNormal);
+
   { TACBrCedente }
 
   TACBrCedente = class(TComponent)
@@ -496,6 +501,7 @@ type
     fPercentualMulta   : Double;
     fSeuNumero         : String;
     fTipoDiasProtesto: TACBrTipoDiasIntrucao;
+    fTipoImpressao     : TACBrTipoImpressao;
     fTotalParcelas: Integer;
     fValorDescontoAntDia: Currency;
     fVencimento        : TDateTime;
@@ -595,6 +601,7 @@ type
      property TextoLivre : String read fTextoLivre write fTextoLivre;
      property CodigoMora : String read fCodigoMora write fCodigoMora;
      property TipoDiasProtesto     : TACBrTipoDiasIntrucao read fTipoDiasProtesto write fTipoDiasProtesto;
+     property TipoImpressao        : TACBrTipoImpressao read fTipoImpressao write fTipoImpressao;
    end;
 
   { TListadeBoletos }

@@ -48,6 +48,15 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 
+Data: 12/06/2013
+-- ACBrBoleto ver. 0.0.72 --
+[+] Adicionado aos titulos a propriedade TipoImpressao, pois alguns bancos exigem 
+    o mesmo. (AndersonH)
+
+-- ACBrBancoSicredi --
+[*] Modificado unit para utilizar a propriedade TipoImpressao criada para o titulo.   
+    (AndersonH)
+
 Data: 10/06/2013
 -- ACBrBoleto ver. 0.0.71 --
 -- ACBrBancoBrasil --
