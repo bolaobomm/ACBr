@@ -49,6 +49,7 @@
 |*  - Tratamento da propriedade "ExibirResumoCanhoto_Texto"
 ******************************************************************************}
 {$I ACBr.inc}
+
 unit ACBrNFeDANFeQRClass;
 
 interface
