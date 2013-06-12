@@ -840,6 +840,7 @@ type
   private
     // Incluido por Italo em 29/04/2013 conforme NT 2013/003
     FvTotTrib: currency;
+    FvPerTrib: currency;
     FICMS: TICMS;
     FIPI: TIPI;
     FII: TII;
@@ -853,6 +854,7 @@ type
     destructor Destroy; override;
   published
     property vTotTrib: currency read FvTotTrib write FvTotTrib;
+    property vPerTrib: currency read FvPerTrib write FvPerTrib;
     property ICMS: TICMS read FICMS write FICMS;
     property IPI: TIPI read FIPI write FIPI;
     property II: TII read FII write FII;
