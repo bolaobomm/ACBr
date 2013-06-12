@@ -47,7 +47,7 @@
 |* 06/02/2007: Adcionada compatibilidade com o C++ Builder
 |*    Thiago Delgado Pinto
 |* 23/10/2012: Reformulação do arquivo para utilizar o jedi.inc e kilyx.inc
-      do projeto Jedi, visando uma melhor utilização do arquivo
+|*    do projeto Jedi, visando uma melhor utilização do arquivo
 |*    Régys Borges da Silveira
 ******************************************************************************}
 
@@ -190,6 +190,7 @@
 //------------------------------------------------------------------------------
 //{$DEFINE PL_103}
 {$DEFINE PL_104}
+//{$DEFINE PL_200}
 
 // Verificando se a compilação deve sem em modo texto "NOGUI"
 // Nota: FPC no Linux sempre liga a diretiva "CONSOLE", por isso criamos a NOGUI
