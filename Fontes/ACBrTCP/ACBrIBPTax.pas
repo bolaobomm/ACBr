@@ -318,10 +318,22 @@ begin
 end;
 
 function TACBrIBPTax.AbrirTabela(const AFileName: TFileName): Boolean;
+var
+  vStringStream: TStringStream;
 begin
   if Trim(AFileName) <> '' then
   begin
-    Arquivo.LoadFromFile(AFileName);
+    if FileExists(AFileName) then
+      Arquivo.LoadFromFile(AFileName)
+    else
+    begin
+      vStringStream:= TStringStream.Create(AFileName);
+      try
+        Arquivo.LoadFromStream(vStringStream);
+      finally
+        vStringStream.Free;
+      end;
+    end;
     PopularItens;
   end
   else
