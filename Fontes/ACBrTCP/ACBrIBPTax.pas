@@ -108,7 +108,8 @@ type
     constructor Create(AOwner: TComponent); override;
 
     function DownloadTabela: Boolean;
-    function AbrirTabela(const AFileName: TFileName): Boolean;
+    function AbrirTabela(const AFileName: TFileName): Boolean; overload;
+    function AbrirTabela(const AConteudoArquivo: TStream): Boolean; overload;
     procedure Exportar(const AArquivo: String; ATipo: TACBrIBPTaxExporta); overload;
     procedure Exportar(const AArquivo, ADelimitador: String; const AQuoted: Boolean); overload;
     function Procurar(const ACodigo: String; var ex, descricao: String;
@@ -321,26 +322,37 @@ function TACBrIBPTax.AbrirTabela(const AFileName: TFileName): Boolean;
 var
   vStringStream: TStringStream;
 begin
+  // se foi passado nome do arquivo abrir do arquivo
   if Trim(AFileName) <> '' then
   begin
-    if FileExists(AFileName) then
-      Arquivo.LoadFromFile(AFileName)
+    if not FileExists(AFileName) then
+      raise EACBrIBPTax.CreateFmt('Arquivo informado "%s" não encontrando!', [AFileName])
     else
-    begin
-      vStringStream:= TStringStream.Create(AFileName);
-      try
-        Arquivo.LoadFromStream(vStringStream);
-      finally
-        vStringStream.Free;
-      end;
-    end;
+      Arquivo.LoadFromFile(AFileName);
+
     PopularItens;
   end
   else
   begin
+    // se não foi passado fazer o downloda da tabela utilizando o endereço web informado
     if Arquivo.Count <= 0 then
+    begin
+      if Trim(URLDownload) = EmptyStr then
+        raise EACBrIBPTax.Create('URL para download da tabela IBPT não foi informada!');
+
       DownloadTabela;
+    end;
   end;
+
+  Result := Itens.Count > 0;
+end;
+
+function TACBrIBPTax.AbrirTabela(const AConteudoArquivo: TStream): Boolean;
+begin
+  Arquivo.Clear;
+  Arquivo.LoadFromStream(AConteudoArquivo);
+
+  PopularItens;
 
   Result := Itens.Count > 0;
 end;
