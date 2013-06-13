@@ -146,6 +146,7 @@ begin
 
   case ACodCidade of
    3127701: ConfigURL.ProNomeCidade  := 'valadares';
+   3500105: ConfigURL.ProNomeCidade  := 'adamantina';
    3510203: ConfigURL.ProNomeCidade  := 'capaobonito';
    3523503: ConfigURL.ProNomeCidade  := 'itatinga';
    3554003: ConfigURL.ProNomeCidade  := 'tatui';

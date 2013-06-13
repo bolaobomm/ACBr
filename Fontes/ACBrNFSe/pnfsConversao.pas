@@ -816,6 +816,7 @@ begin
          : Provedor := 'ISSe';
 
   3127701, // Governador Valadares/MG
+  3500105, // Adamantina/SP
   3510203, // Capão Bonito/SP
   3523503, // Itatinga/SP
   3554003  // Tatui/SP
