@@ -206,7 +206,7 @@ begin
                               '<' + Prefixo4 + 'InfPedidoCancelamento' +
                                  DFeUtil.SeSenao(Identificador <> '', ' ' + Identificador + '="' + URI + '"', '') + '>';
    acGerar:       Result := '<' + Prefixo3 + 'GerarNfseEnvio' + NameSpaceDad;
-   acRecSincrono: Result := '<' + Prefixo3 + 'EnviarLoteRpsEnvio' + NameSpaceDad;
+   acRecSincrono: Result := '<' + Prefixo3 + 'EnviarLoteRpsSincronoEnvio' + NameSpaceDad;
  end;
 end;
 
@@ -234,7 +234,7 @@ begin
    acCancelar:    Result := '</' + Prefixo3 + 'Pedido>' +
                             '</' + Prefixo3 + 'CancelarNfseEnvio>';
    acGerar:       Result := '</' + Prefixo3 + 'GerarNfseEnvio>';
-   acRecSincrono: Result := '</' + Prefixo3 + 'EnviarLoteRpsEnvio>';
+   acRecSincrono: Result := '</' + Prefixo3 + 'EnviarLoteRpsSincronoEnvio>';
  end;
 end;
 (*
