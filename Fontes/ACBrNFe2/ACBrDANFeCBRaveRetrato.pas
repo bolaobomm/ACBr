@@ -842,10 +842,7 @@ begin
     begin
       lVTotTrib :=DFeUtil.FormatFloat(Total.ICMSTot.vTotTrib);
 //      lVTotTrib :=lVTotTrib + '('+DFeUtil.FormatFloat((Total.ICMSTot.vTotTrib*100)/Total.ICMSTot.VProd)+'%)';
-      if Total.ICMSTot.vPerTrib <> 0 then
-         lVTotTrib :=lVTotTrib + '('+DFeUtil.FormatFloat(Total.ICMSTot.vPerTrib)+'%)'
-      else
-         lVTotTrib :=lVTotTrib + '('+DFeUtil.FormatFloat((Total.ICMSTot.vTotTrib*100)/( Total.ICMSTot.VProd - Total.ICMSTot.VDesc ))+'%)';
+      lVTotTrib :=lVTotTrib + '('+DFeUtil.FormatFloat((Total.ICMSTot.vTotTrib*100)/( Total.ICMSTot.VProd - Total.ICMSTot.VDesc ))+'%)';
       Box([fsLeft],XPos,YPos,(x*4),aHeigthPadrao,'Val. Aprox. Tributos',lVTotTrib,taRightJustify);
     end;
     Box([fsLeft],XPos,YPos,40,aHeigthPadrao,'Valor Total dos Produtos',DFeUtil.FormatFloat(Total.ICMSTot.VProd),taRightJustify,True);
