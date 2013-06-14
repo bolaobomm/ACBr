@@ -256,14 +256,6 @@ var
  NomeArq : String;
  AnexosEmail:TStrings ;
  StreamCTe : TStringStream;
-(*
- ThreadSMTP : TSendMailThread;
- m          : TMimemess;
- p          : TMimepart;
- StreamCTe  : TStringStream;
- NomeArq    : String;
- i          : Integer;
-*)
 begin
  AnexosEmail := TStringList.Create;
  StreamCTe  := TStringStream.Create('');
@@ -312,77 +304,6 @@ begin
     AnexosEmail.Free ;
     StreamCTe.Free ;
  end;
-(*
- m:=TMimemess.create;
- ThreadSMTP := TSendMailThread.Create(Self);  // Não Libera, pois usa FreeOnTerminate := True ;
- StreamCTe  := TStringStream.Create('');
- try
-    p := m.AddPartMultipart('mixed', nil);
-    if sMensagem <> nil then
-       m.AddPartText(sMensagem, p);
-    SaveToStream(StreamCTe) ;
-    m.AddPartBinary(StreamCTe,copy(CTe.infCTe.ID, (length(CTe.infCTe.ID)-44)+1, 44)+'-cte.xml', p);
-    if (EnviaPDF) then
-    begin
-       if TACBrCTe( TConhecimentos( Collection ).ACBrCTe ).DACTE <> nil then
-       begin
-          TACBrCTe( TConhecimentos( Collection ).ACBrCTe ).DACTE.ImprimirDACTEPDF(CTe);
-          NomeArq :=  StringReplace(CTe.infCTe.ID,'CTe', '', [rfIgnoreCase]);
-          NomeArq := PathWithDelim(TACBrCTe( TConhecimentos( Collection ).ACBrCTe ).DACTE.PathPDF)+NomeArq+'.pdf';
-          m.AddPartBinaryFromFile(NomeArq, p);
-       end;
-    end;
-
-    if assigned(Anexos) then
-      for i := 0 to Anexos.Count - 1 do
-      begin
-        m.AddPartBinaryFromFile(Anexos[i], p);
-      end;
-
-    m.header.tolist.add(sTo);
-
-    if Trim(NomeRemetente) <> ''
-     then m.header.From := Format('%s<%s>', [NomeRemetente, sFrom])
-     else m.header.From := sFrom;
-
-    m.header.subject:= sAssunto;
-    m.Header.ReplyTo := sFrom;
-    if PedeConfirma then
-       m.Header.CustomHeaders.Add('Disposition-Notification-To: '+sFrom);
-    m.EncodeMessage;
-
-    ThreadSMTP.sFrom := sFrom;
-    ThreadSMTP.sTo   := sTo;
-    if sCC <> nil then
-       ThreadSMTP.sCC.AddStrings(sCC);
-    ThreadSMTP.slmsg_Lines.AddStrings(m.Lines);
-
-    ThreadSMTP.smtp.UserName := sSmtpUser;
-    ThreadSMTP.smtp.Password := sSmtpPasswd;
-
-    ThreadSMTP.smtp.TargetHost := sSmtpHost;
-    if not CTeUtil.EstaVazio( sSmtpPort ) then     // Usa default
-       ThreadSMTP.smtp.TargetPort := sSmtpPort;
-
-    ThreadSMTP.smtp.FullSSL := SSL;
-    ThreadSMTP.smtp.AutoTLS := TLS;
-    TACBrCTe( TConhecimentos( Collection ).ACBrCTe ).SetStatus( stCTeEmail );
-
-    ThreadSMTP.Resume; // inicia a thread
-    if AguardarEnvio then
-     begin
-      repeat
-       Sleep(1000);
-       Application.ProcessMessages;
-      until ThreadSMTP.Terminado;
-     end;
-    TACBrCTe( TConhecimentos( Collection ).ACBrCTe ).SetStatus( stCTeIdle );
-
- finally
-    m.free;
-    StreamCTe.Free ;
- end;
-*)
 end;
 
 function Conhecimento.GetCTeXML: AnsiString;

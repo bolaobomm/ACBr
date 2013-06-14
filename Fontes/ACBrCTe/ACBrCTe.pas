@@ -109,7 +109,8 @@ type
   public
     constructor Create(AOwner: TComponent); override;
     destructor Destroy; override;
-    function Enviar(ALote: Integer; Imprimir:Boolean = True): Boolean;
+    function Enviar(ALote: Integer; Imprimir: Boolean = True): Boolean;  overload;
+    function Enviar(ALote: String; Imprimir: Boolean = True): Boolean;  overload;
     function Cancelamento(AJustificativa:WideString): Boolean;
     function Consultar: Boolean;
     function EnviarEventoCTe(idLote : Integer): Boolean;
@@ -118,6 +119,26 @@ type
     property EventoCTe: TEventoCTe read FEventoCTe write FEventoCTe;
     property Status: TStatusACBrCTe read FStatus;
     procedure SetStatus( const stNewStatus : TStatusACBrCTe );
+
+    procedure ImprimirEvento;
+    procedure ImprimirEventoPDF;
+    procedure EnviarEmailEvento(const sSmtpHost,
+                                sSmtpPort,
+                                sSmtpUser,
+                                sSmtpPasswd,
+                                sFrom,
+                                sTo,
+                                sAssunto: String;
+                                sMensagem : TStrings;
+                                SSL : Boolean;
+                                EnviaPDF: Boolean = true;
+                                sCC: TStrings = nil;
+                                Anexos:TStrings=nil;
+                                PedeConfirma: Boolean = False;
+                                AguardarEnvio: Boolean = False;
+                                NomeRemetente: String = '';
+                                TLS : Boolean = True);
+
     procedure EnviaEmail(const sSmtpHost,
                                   sSmtpPort,
                                   sSmtpUser,
@@ -151,16 +172,17 @@ procedure ACBrAboutDialog;
 implementation
 
 procedure ACBrAboutDialog;
-var Msg : String;
+var
+  Msg : String;
 begin
-    Msg := 'Componente ACBrCTe'+#10+
-           'Versão: '+ACBRCTe_VERSAO+#10+#10+
-           'Automação Comercial Brasil'+#10+#10+
-           'http://acbr.sourceforge.net'+#10+#10+
-           'Projeto Cooperar - PCN'+#10+#10+
-           'http://www.projetocooperar.org/pcn/';
+  Msg := 'Componente ACBrCTe'+#10+
+         'Versão: '+ACBRCTe_VERSAO+#10+#10+
+         'Automação Comercial Brasil'+#10+#10+
+         'http://acbr.sourceforge.net'+#10+#10+
+         'Projeto Cooperar - PCN'+#10+#10+
+         'http://www.projetocooperar.org/pcn/';
 
-     MessageDlg(Msg ,mtInformation ,[mbOk],0);
+  MessageDlg(Msg ,mtInformation ,[mbOk],0);
 end;
 
 { TACBrCTe }
@@ -322,6 +344,11 @@ begin
      end;
   end;
 
+end;
+
+function TACBrCTe.Enviar(ALote: String; Imprimir: Boolean): Boolean;
+begin
+  Result := Enviar(StrToIntDef(ALote, 0), Imprimir);
 end;
 
 procedure TACBrCTe.EnviaEmailThread(const sSmtpHost, sSmtpPort, sSmtpUser,
@@ -591,6 +618,67 @@ begin
     if Assigned(Self.OnGerarLog) then
       Self.OnGerarLog(WebServices.EnvEvento.Msg);
     raise EACBrCTeException.Create(WebServices.EnvEvento.Msg);
+  end;
+end;
+
+procedure TACBrCTe.ImprimirEvento;
+begin
+  if not Assigned( DACTE ) then
+     raise EACBrCTeException.Create('Componente DACTE não associado.')
+  else
+     DACTE.ImprimirEVENTO(nil);
+end;
+
+procedure TACBrCTe.ImprimirEventoPDF;
+begin
+  if not Assigned( DACTE ) then
+     raise EACBrCTeException.Create('Componente DACTE não associado.')
+  else
+     DACTE.ImprimirEVENTOPDF(nil);
+end;
+
+procedure TACBrCTe.EnviarEmailEvento(const sSmtpHost, sSmtpPort, sSmtpUser,
+  sSmtpPasswd, sFrom, sTo, sAssunto: String; sMensagem: TStrings; SSL,
+  EnviaPDF: Boolean; sCC, Anexos: TStrings; PedeConfirma,
+  AguardarEnvio: Boolean; NomeRemetente: String; TLS: Boolean);
+var
+  NomeArq : String;
+  AnexosEmail : TStrings;
+begin
+  AnexosEmail := TStringList.Create;
+  try
+    AnexosEmail.Clear;
+    if Anexos <> nil then
+      AnexosEmail.Text := Anexos.Text;
+
+    if (EnviaPDF) then
+    begin
+      if DACTE <> nil then
+      begin
+        ImprimirEventoPDF;
+        NomeArq := StringReplace(EventoCTe.Evento[0].InfEvento.id,'ID', '', [rfIgnoreCase]);
+        NomeArq := PathWithDelim(DACTE.PathPDF)+NomeArq+'evento.pdf';
+        AnexosEmail.Add(NomeArq);
+      end;
+    end;
+
+    EnviaEmail(sSmtpHost,
+                sSmtpPort,
+                sSmtpUser,
+                sSmtpPasswd,
+                sFrom,
+                sTo,
+                sAssunto,
+                sMensagem,
+                SSL,
+                sCC,
+                AnexosEmail,
+                PedeConfirma,
+                AguardarEnvio,
+                NomeRemetente,
+                TLS);
+  finally
+    AnexosEmail.Free;
   end;
 end;
 

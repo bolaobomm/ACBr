@@ -58,6 +58,7 @@ type
     procedure SetCTE(const Value: TComponent);
     procedure ErroAbstract( NomeProcedure : String );
     function GetPathArquivos: String;
+    procedure SetPathArquivos(const Value: String);
   protected
     FACBrCTE : TComponent;
     FLogo: String;
@@ -89,12 +90,14 @@ type
     destructor Destroy; override;
     procedure ImprimirDACTE(CTE : TCTE = nil); virtual;
     procedure ImprimirDACTEPDF(CTE : TCTE = nil); virtual;
+    procedure ImprimirEVENTO(CTE : TCTe = nil); virtual;
+    procedure ImprimirEVENTOPDF(CTE : TCTe = nil); virtual;
   published
     property ACBrCTE : TComponent  read FACBrCTE write SetCTE;
     property Logo: String read FLogo write FLogo;
     property Sistema: String read FSistema write FSistema;
     property Usuario: String read FUsuario write FUsuario;
-    property PathPDF: String read GetPathArquivos write FPathArquivos;
+    property PathPDF: String read GetPathArquivos write SetPathArquivos;
     property Impressora: String read FImpressora write FImpressora;
     property ImprimirHoraSaida: Boolean read FImprimirHoraSaida write FImprimirHoraSaida;
     property ImprimirHoraSaida_Hora: string read FImprimirHoraSaida_Hora write FImprimirHoraSaida_Hora;
@@ -220,6 +223,21 @@ begin
         ForceDirectories(FPathArquivos);
 
   Result := PathWithDelim(FPathArquivos);
+end;
+
+procedure TACBrCteDACTEClass.SetPathArquivos(const Value: String);
+begin
+  FPathArquivos := Value;
+end;
+
+procedure TACBrCteDACTEClass.ImprimirEVENTO(CTE: TCTe);
+begin
+  ErroAbstract('Imprimir');
+end;
+
+procedure TACBrCteDACTEClass.ImprimirEVENTOPDF(CTE: TCTe);
+begin
+  ErroAbstract('ImprimirPDF');
 end;
 
 end.
