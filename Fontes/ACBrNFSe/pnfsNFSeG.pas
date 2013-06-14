@@ -286,9 +286,19 @@ begin
                     '<' + Prefixo4 + 'Numero>' +
                       NumeroNFse +
                     '</' + Prefixo4 + 'Numero>' +
+
+                   DFeUtil.SeSenao(AProvedor = pro4R,
+
+                    '<' + Prefixo4 + 'CpfCnpj>' +
+                     '<' + Prefixo4 + 'Cnpj>' +
+                      Cnpj +
+                     '</' + Prefixo4 + 'Cnpj>' +
+                    '</' + Prefixo4 + 'CpfCnpj>',
+
                     '<' + Prefixo4 + 'Cnpj>' +
                       Cnpj +
-                    '</' + Prefixo4 + 'Cnpj>' +
+                    '</' + Prefixo4 + 'Cnpj>') +
+
                     '<' + Prefixo4 + 'InscricaoMunicipal>' +
                       IM +
                     '</' + Prefixo4 + 'InscricaoMunicipal>' +
