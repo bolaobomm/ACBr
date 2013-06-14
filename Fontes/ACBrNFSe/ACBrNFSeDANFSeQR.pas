@@ -105,6 +105,10 @@ class procedure TfqrDANFSeQR.Imprimir(ANFSe           : TNFSe;
                                       AImpressora     : String  = '';
                                       APrestLogo      : String  = '';
                                       APrefeitura     : String  = '');
+{$IFDEF QReport_PDF}
+var
+ qf : TQRPDFFilter;
+{$ENDIF}
 begin
  with Create ( nil ) do
   try
@@ -138,6 +142,8 @@ begin
        QRNFSe.PrevShowThumbs      := False;
        QRNFSe.PreviewInitialState := wsMaximized;
        QRNFSe.PrevInitialZoom     := qrZoomToWidth;
+       
+       qf := TQRPDFFilter.Create(nil);
      {$ENDIF}
 
      QRNFSe.Prepare;
