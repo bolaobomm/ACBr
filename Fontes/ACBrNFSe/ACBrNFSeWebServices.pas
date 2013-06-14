@@ -1890,7 +1890,7 @@ begin
  Self.ConsLote.CNPJ := ACNPJ;
  Self.ConsLote.IM := AInscricaoMunicipal;
 
- Result := ConsultaLoteRPS(AProtocolo,False);
+ Result := ConsultaLoteRPS(AProtocolo, False);
 end;
 
 function TWebServices.ConsultaNFSeporRps(ANumero, ASerie, ATipo, ACnpj,

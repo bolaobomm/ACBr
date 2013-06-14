@@ -43,7 +43,7 @@ type
     function Enviar(ALote: Integer; Imprimir: Boolean = True): Boolean; overload;
     function Enviar(ALote: String; Imprimir: Boolean = True): Boolean; overload;
     function ConsultarSituacao(ACnpj, AInscricaoMunicipal, AProtocolo: String): Boolean;
-    function ConsultarLoteRps(ANumLote, AProtocolo: String): Boolean;
+    function ConsultarLoteRps(ANumLote, AProtocolo: string; ACNPJ: string = ''; AInscricaoMunicipal: string = ''): Boolean;
     function ConsultarNFSeporRps(ANumero, ASerie, ATipo, ACnpj, AInscricaoMunicipal: String): Boolean;
     function ConsultarNFSe(ACnpj, AInscricaoMunicipal: String; ADataInicial, ADataFinal: TDateTime; NumeroNFSe: string = ''): Boolean;
     function CancelarNFSe(ACodigoCancelamento: String): Boolean;
@@ -204,35 +204,38 @@ begin
  Result := WebServices.ConsultaSituacao(ACnpj, AInscricaoMunicipal, AProtocolo);
 end;
 
-function TACBrNFSe.ConsultarLoteRps(ANumLote, AProtocolo: String): Boolean;
+function TACBrNFSe.ConsultarLoteRps(ANumLote, AProtocolo: String; ACNPJ: string = ''; AInscricaoMunicipal: string = ''): Boolean;
 var
  aPath: String;
  wAno, wMes, wDia: Word;
 begin
  aPath := FConfiguracoes.Geral.PathSalvar;
 
- // Acrescentado por Endrigo Rodrigues
- if FConfiguracoes.Arquivos.PastaMensal
+ if (ACNPJ='') and (AInscricaoMunicipal='')
   then begin
-   DecodeDate(Now, wAno, wMes, wDia);
-   if Pos(IntToStr(wAno)+IntToStrZero(wMes,2),aPath) <= 0
-    then aPath := PathWithDelim(aPath)+IntToStr(wAno)+IntToStrZero(wMes,2) + '\';
+   // Acrescentado por Endrigo Rodrigues
+   if FConfiguracoes.Arquivos.PastaMensal
+    then begin
+     DecodeDate(Now, wAno, wMes, wDia);
+     if Pos(IntToStr(wAno)+IntToStrZero(wMes,2),aPath) <= 0
+      then aPath := PathWithDelim(aPath)+IntToStr(wAno)+IntToStrZero(wMes,2) + '\';
+    end;
+
+   // Alterado por Rodrigo Cantelli
+   if FConfiguracoes.Arquivos.AdicionarLiteral
+    then NotasFiscais.LoadFromFile(aPath+'Ger\'+ANumLote+'-env-lot.xml')
+    else NotasFiscais.LoadFromFile(aPath+ANumLote+'-env-lot.xml');
+
+   if NotasFiscais.Count <= 0
+    then begin
+     if Assigned(Self.OnGerarLog)
+      then Self.OnGerarLog('ERRO: Nenhum RPS adicionado');
+     raise Exception.Create('ERRO: Nenhum RPS adicionado');
+     exit;
+    end;
   end;
 
- // Alterado por Rodrigo Cantelli
- if FConfiguracoes.Arquivos.AdicionarLiteral
-  then NotasFiscais.LoadFromFile(aPath+'Ger\'+ANumLote+'-env-lot.xml')
-  else NotasFiscais.LoadFromFile(aPath+ANumLote+'-env-lot.xml');
-
- if NotasFiscais.Count <= 0
-  then begin
-   if Assigned(Self.OnGerarLog)
-    then Self.OnGerarLog('ERRO: Nenhum RPS adicionado');
-   raise Exception.Create('ERRO: Nenhum RPS adicionado');
-   exit;
-  end;
-
- Result := WebServices.ConsultaLoteRps(AProtocolo);
+ Result := WebServices.ConsultaLoteRps(AProtocolo, ACNPJ, AInscricaoMunicipal);
 end;
 
 function TACBrNFSe.ConsultarNFSeporRps(ANumero, ASerie, ATipo, ACnpj,
