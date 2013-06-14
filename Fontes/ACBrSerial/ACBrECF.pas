@@ -3126,7 +3126,7 @@ begin
         'Val.Aprox.Impostos R$' +
         FormatFloat(',#0.00', VlImposto) +
         FormatFloat('(,#0.00%)', VlPercentual) +
-        ' Fonte:' + InfoRodapeCupom.Imposto.Fonte;
+        IfThen(Trim(InfoRodapeCupom.Imposto.Fonte) <> '', ' Fonte:' + InfoRodapeCupom.Imposto.Fonte, '');
     end;
   end;
 end;
