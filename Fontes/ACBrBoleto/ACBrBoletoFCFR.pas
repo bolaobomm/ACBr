@@ -52,7 +52,7 @@ uses
   frxClass, frxDBSet, frxBarcode, frxExportHTML, frxExportPDF;
 
 const
-  CACBrBoletoFCFR_Versao = '0.0.12a';
+  CACBrBoletoFCFR_Versao = '0.0.13a';
 
 type
   EACBrBoletoFCFR = class(Exception);
@@ -89,8 +89,10 @@ type
     cdsBanco: TClientDataSet;
     frxBanco: TfrxDBDataset;
     procedure DataModuleCreate(Sender: TObject);
+    procedure frxReportBeforePrint(Sender: TfrxReportComponent);
   private
     { Private declarations }
+    procedure ImprimeLogoMarca(sCaminhoFoto, sfrxPicture: string);
   public
     { Public declarations }
   end;
@@ -102,7 +104,31 @@ implementation
 uses ACBrUtil, ACBrBanestes;
 
 { TdmACBrBoletoFCFR }
+procedure TdmACBrBoletoFCFR.frxReportBeforePrint(Sender: TfrxReportComponent);
+begin
+  ImprimeLogoMarca(cdsBanco.FieldByName('DirLogo').AsString +'\' +cdsBanco.FieldByName('Numero').AsString  + '.bmp','Logo_1');
+  ImprimeLogoMarca(cdsBanco.FieldByName('DirLogo').AsString +'\' +cdsBanco.FieldByName('Numero').AsString  + '.bmp','Logo_2');
+  ImprimeLogoMarca(cdsBanco.FieldByName('DirLogo').AsString +'\' +cdsBanco.FieldByName('Numero').AsString  + '.bmp','Logo_3');
+end;
 
+procedure TdmACBrBoletoFCFR.ImprimeLogoMarca(sCaminhoFoto, sfrxPicture: string);
+var
+  strAux: String; // Variável String auxiliar
+  frxPict: TfrxPictureView; // Componente para inserção de imagem na impressão.
+begin
+
+  // INSERE imagem do disco no relatorio
+  frxPict := TfrxPictureView(Self.frxReport.FindObject(sfrxPicture));
+  if Assigned(frxPict) then
+  Begin
+    strAux := sCaminhoFoto;
+    if FileExists(strAux) then
+      frxPict.Picture.LoadFromFile(strAux)
+    ELSE
+      frxPict.Picture := nil;
+  End;
+
+end;
 procedure TdmACBrBoletoFCFR.DataModuleCreate(Sender: TObject);
 begin
    // Banco

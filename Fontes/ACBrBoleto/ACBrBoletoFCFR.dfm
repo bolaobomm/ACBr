@@ -1,6 +1,8 @@
 object dmACBrBoletoFCFR: TdmACBrBoletoFCFR
   OldCreateOrder = False
   OnCreate = DataModuleCreate
+  Left = 530
+  Top = 166
   Height = 341
   Width = 539
   object frxPDFExport: TfrxPDFExport
@@ -57,6 +59,7 @@ object dmACBrBoletoFCFR: TdmACBrBoletoFCFR
     ReportOptions.LastChange = 40760.619535729170000000
     ScriptLanguage = 'PascalScript'
     StoreInDFM = False
+    OnBeforePrint = frxReportBeforePrint
     Left = 50
     Top = 36
   end

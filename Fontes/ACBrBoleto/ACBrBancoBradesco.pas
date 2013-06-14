@@ -555,20 +555,20 @@ begin
       12: Result := toRetornoAbatimentoConcedido;
       13: Result := toRetornoAbatimentoCancelado;
       14: Result := toRetornoVencimentoAlterado;
-      15: Result := toRetornoLiquidadoEmCartorio;
-      16: Result := toRetornoLiquidado;
+      15: Result := toRetornoLiquidadoEmCartorio;   
+      16: Result := toRetornoTituloPagoEmCheque;
       17: Result := toRetornoLiquidadoAposBaixaouNaoRegistro;
       18: Result := toRetornoAcertoDepositaria;
       19: Result := toRetornoRecebimentoInstrucaoProtestar;
       20: Result := toRetornoRecebimentoInstrucaoSustarProtesto;
-      21: Result := toRetornoAcertoControleParticipante;
-      22: Result := toRetornoRecebimentoInstrucaoAlterarDados;
+      21: Result := toRetornoAcertoControleParticipante;      
+      22: Result := toRetornoTituloPagamentoCancelado;
       23: Result := toRetornoEncaminhadoACartorio;
       24: Result := toRetornoEntradaRejeitaCEPIrregular;
       27: Result := toRetornoBaixaRejeitada;
       28: Result := toRetornoDebitoTarifas;
       29: Result := toRetornoOcorrenciasdoSacado;
-      30: Result := toRetornoALteracaoOutrosDadosRejeitada;
+      30: Result := toRetornoAlteracaoOutrosDadosRejeitada;
       32: Result := toRetornoComandoRecusado;
       33: Result := toRetornoRecebimentoInstrucaoAlterarDados;
       34: Result := toRetornoRetiradoDeCartorio;
@@ -579,37 +579,41 @@ begin
    end;
 end;
 
-function TACBrBancoBradesco.TipoOCorrenciaToCod ( const TipoOcorrencia: TACBrTipoOcorrencia ) : String;
+function TACBrBancoBradesco.TipoOcorrenciaToCod ( const TipoOcorrencia: TACBrTipoOcorrencia ) : String;
 begin
-   case TipoOcorrencia of
-      toRetornoRegistroConfirmado : Result:='02';
-      toRetornoRegistroRecusado   : Result:='03';
-      toRetornoLiquidado          : Result:='06';
-      toRetornoBaixadoViaArquivo  : Result:='09';
-      toRetornoBaixadoInstAgencia : Result:='10';
-      toRetornoTituloEmSer        : Result:='11';
-      toRetornoAbatimentoConcedido: Result:='12';
-      toRetornoAbatimentoCancelado: Result:='13';
-      toRetornoVencimentoAlterado : Result:='14';
-      toRetornoLiquidadoEmCartorio: Result:='15';
-      toRetornoTituloPagoemCheque : Result:='16';
-      toRetornoLiquidadoAposBaixaouNaoRegistro : Result:= '17';
-      toRetornoAcertoDepositaria  : Result:='18';
-      toRetornoRecebimentoInstrucaoProtestar      : Result := '19';
-      toRetornoRecebimentoInstrucaoSustarProtesto : Result := '20';
-      toRetornoAcertoControleParticipante         : Result := '21';
-      toRetornoRecebimentoInstrucaoAlterarDados   : Result := '22';
-      toRetornoEncaminhadoACartorio               : Result := '23';
-      toRetornoEntradaRejeitaCEPIrregular         : Result := '24';
-      toRetornoBaixaRejeitada                     : Result := '27';
-      toRetornoDebitoTarifas      : Result:='28';
-      toRetornoOcorrenciasdoSacado                : Result := '29';
-      toRetornoALteracaoOutrosDadosRejeitada      : Result := '30';
-      toRetornoComandoRecusado                    : Result := '32';
-      toRetornoDesagendamentoDebitoAutomatico     : Result := '35';
-   else
-      Result:= '02';
-   end;
+  case TipoOcorrencia of
+    toRetornoRegistroConfirmado                : Result := '02';
+    toRetornoRegistroRecusado                  : Result := '03';
+    toRetornoLiquidado                         : Result := '06';
+    toRetornoBaixadoViaArquivo                 : Result := '09';
+    toRetornoBaixadoInstAgencia                : Result := '10';
+    toRetornoTituloEmSer                       : Result := '11';
+    toRetornoAbatimentoConcedido               : Result := '12';
+    toRetornoAbatimentoCancelado               : Result := '13';
+    toRetornoVencimentoAlterado                : Result := '14';
+    toRetornoLiquidadoEmCartorio               : Result := '15';
+    toRetornoTituloPagoEmCheque                : Result := '16';
+    toRetornoLiquidadoAposBaixaouNaoRegistro   : Result := '17';
+    toRetornoAcertoDepositaria                 : Result := '18';
+    toRetornoRecebimentoInstrucaoProtestar     : Result := '19';
+    toRetornoRecebimentoInstrucaoSustarProtesto: Result := '20';
+    toRetornoAcertoControleParticipante        : Result := '21';
+    toRetornoTituloPagamentoCancelado          : Result := '22';
+    toRetornoEncaminhadoACartorio              : Result := '23';
+    toRetornoEntradaRejeitaCEPIrregular        : Result := '24';
+    toRetornoBaixaRejeitada                    : Result := '27';
+    toRetornoDebitoTarifas                     : Result := '28';
+    toRetornoOcorrenciasDoSacado               : Result := '29';
+    toRetornoAlteracaoOutrosDadosRejeitada     : Result := '30';
+    toRetornoComandoRecusado                   : Result := '32';
+    { DONE -oJacinto -cAjuste : Acrescentar a ocorrência correta referente ao código. }
+    toRetornoRecebimentoInstrucaoAlterarDados  : Result := '33';
+    { DONE -oJacinto -cAjuste : Acrescentar a ocorrência correta referente ao código. }
+    toRetornoRetiradoDeCartorio                : Result := '34';
+    toRetornoDesagendamentoDebitoAutomatico    : Result := '35';
+  else
+    Result := '02';
+  end;
 end;
 
 function TACBrBancoBradesco.COdMotivoRejeicaoToDescricao( const TipoOcorrencia:TACBrTipoOcorrencia ;CodMotivo: Integer) : String;

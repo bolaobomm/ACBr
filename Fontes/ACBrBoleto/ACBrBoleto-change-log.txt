@@ -48,6 +48,20 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 
+Data: 14/06/2013
+
+-- ACBrBoletoFCFR ver. 0.0.13a --
+[-] Corrigido problema com a impressão das logomarcas dos bancos. (por: Solivan Araujo)
+
+-- ACBrBoleto ver. 0.0.73 --
+--ACBrBancoBradesco --
+[-] Corrigido conversão dos códigos de ocorrência para o tipo enumerado.
+   (Jacinto Junior)
+
+--ACBrBancoItau --
+[-] Corrigido conversão dos códigos de ocorrência para o tipo enumerado.
+   (Jacinto Junior)
+
 Data: 12/06/2013
 -- ACBrBoleto ver. 0.0.72 --
 [+] Adicionado aos titulos a propriedade TipoImpressao, pois alguns bancos exigem 

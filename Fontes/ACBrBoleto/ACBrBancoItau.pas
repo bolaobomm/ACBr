@@ -918,20 +918,35 @@ begin
 
          OcorrenciaOriginal.Tipo     := CodOcorrenciaToTipo(StrToIntDef(copy(Linha,109,2),0));
 
-         MotivoLinha := 378;
-         for i := 0 to 3 do
+         if OcorrenciaOriginal.Tipo in [toRetornoInstrucaoProtestoRejeitadaSustadaOuPendente,
+           toRetornoAlegacaoDoSacado, toRetornoInstrucaoCancelada] then
          begin
-            MotivoRejeicaoComando.Add(IfThen(copy(Linha,MotivoLinha,2) = '  ',
-                                              '00',copy(Linha,MotivoLinha,2)));
+           MotivoLinha := 302;
 
-            if MotivoRejeicaoComando[i] <> '00' then
-            begin
-               CodOCorrencia:= StrToIntDef(MotivoRejeicaoComando[i],0) ;
-               DescricaoMotivoRejeicaoComando.Add(CodMotivoRejeicaoToDescricao(
-                                                 OcorrenciaOriginal.Tipo,CodOCorrencia));
-            end;
+           MotivoRejeicaoComando.Add(IfThen(Copy(Linha, MotivoLinha, 4) = '    ', '0000', Copy(Linha, MotivoLinha, 4)));
 
-            MotivoLinha := MotivoLinha + 2;
+           if MotivoRejeicaoComando[0] <> '0000' then
+           begin
+             CodOcorrencia := StrToIntDef(MotivoRejeicaoComando[0], 0);
+             DescricaoMotivoRejeicaoComando.Add(CodMotivoRejeicaoToDescricao(OcorrenciaOriginal.Tipo, CodOcorrencia));
+           end;
+         end
+         else
+         begin
+           MotivoLinha := 378;
+
+           for I := 0 to 3 do
+           begin
+             MotivoRejeicaoComando.Add(IfThen(Copy(Linha, MotivoLinha, 2) = '  ', '00', Copy(Linha, MotivoLinha, 2)));
+
+             if MotivoRejeicaoComando[I] <> '00' then
+             begin
+               CodOcorrencia := StrToIntDef(MotivoRejeicaoComando[I], 0) ;
+               DescricaoMotivoRejeicaoComando.Add(CodMotivoRejeicaoToDescricao(OcorrenciaOriginal.Tipo, CodOcorrencia));
+             end;
+
+             MotivoLinha := MotivoLinha + 2;
+           end;
          end;
 
          DataOcorrencia := StringToDateTimeDef( Copy(Linha,111,2)+'/'+
@@ -1487,6 +1502,14 @@ begin
                       '25, 28, 30, 35, 43, 44 E 45, PODENDO A SUA DEVOLUÇÃO OCORRER A QUALQUER TEMPO - PASSÍVEL DE REAPRESENTAÇÃO: NÃO';
       else
          Result:= IntToStrZero(CodMotivo,2) +' - Outros Motivos';
+      end;
+
+      // Tabela 10
+      toRetornoRegistroConfirmado:
+      case CodMotivo of
+        01: Result := 'CEP SEM ATENDIMENTO DE PROTESTO NO MOMENTO';
+      else
+        Result:= IntToStrZero(CodMotivo, 2) + ' - Outros Motivos';
       end;
    else
       Result:= IntToStrZero(CodMotivo,2) +' - Outros Motivos';
