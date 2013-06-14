@@ -6254,7 +6254,7 @@ begin
 
     Relatorio.Add('<n>REQ XXXIII</n>');
     Relatorio.Add('ITENS 1 e 2: Emite controle de encerrantes');
-    Relatorio.Add(PadL('após a Redução Z e Leitura Z', TamColSimNao, '.') + GetDescrFlag( AInfoPafECF.EmiteContrEncerrAposREDZLEIX ));
+    Relatorio.Add(PadL('após a Redução Z e Leitura X', TamColSimNao, '.') + GetDescrFlag( AInfoPafECF.EmiteContrEncerrAposREDZLEIX ));
 
     Relatorio.Add('<n>REQ XXXV</n>');
     Relatorio.Add(padL('ITEM 1: PAF integrado com bombas', TamColSimNao, '.') + GetDescrFlag( AInfoPafECF.IntegradoComBombas ));
