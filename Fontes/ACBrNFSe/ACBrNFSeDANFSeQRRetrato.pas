@@ -180,7 +180,6 @@ type
     qrmPrefeitura: TQRMemo;
     qrmDescricao: TQRMemo;
     QRShape18: TQRShape;
-    QRLabel33: TQRLabel;
     QRShape11: TQRShape;
     QRLabel26: TQRLabel;
     qrlPrestNomeCompEnt: TQRLabel;
