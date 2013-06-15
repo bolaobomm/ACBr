@@ -1428,8 +1428,7 @@ begin
 {$ENDIF}
 {$IFDEF PL_103}
   qrlVlrTotalMerc.Caption := CTeUtil.FormatarValor(msk15x2, FCTe.InfCarga.vMerc);
-{$ENDIF}
-{$IFDEF PL_104}
+{$ELSE}
   qrlVlrTotalMerc.Caption := CTeUtil.FormatarValor(msk15x2, FCTe.InfCarga.vCarga);
 {$ENDIF}
 
@@ -1695,8 +1694,9 @@ begin
         qrlICMS_ST.Caption     := CTeUtil.FormatarValor(msk4x2, FCTe.Imp.ICMS.CST90.vCred);
       end;
   end;
-{$ENDIF}
-{$IFDEF PL_104}
+{$ELSE}
+//{$ENDIF}
+//{$IFDEF PL_104}
   case FCTe.Imp.ICMS.SituTrib of
     cst00:
       begin
@@ -1751,8 +1751,10 @@ begin
         qrlRedBaseCalc.Caption := '';
         qrlBaseCalc.Caption    := CTeUtil.FormatarValor(msk9x2, FCTe.Imp.ICMS.ICMS60.vBCSTRet);
         qrlAliqICMS.Caption    := CTeUtil.FormatarValor(msk4x2, FCTe.Imp.ICMS.ICMS60.pICMSSTRet);
-        qrlVlrICMS.Caption     := CTeUtil.FormatarValor(msk9x2, FCTe.Imp.ICMS.ICMS60.vICMSSTRet);
-        qrlICMS_ST.Caption     := CTeUtil.FormatarValor(msk9x2, FCTe.Imp.ICMS.ICMS60.vCred);
+//        qrlVlrICMS.Caption     := CTeUtil.FormatarValor(msk9x2, FCTe.Imp.ICMS.ICMS60.vICMSSTRet);
+        qrlVlrICMS.Caption     := '';
+//        qrlICMS_ST.Caption     := CTeUtil.FormatarValor(msk9x2, FCTe.Imp.ICMS.ICMS60.vCred);
+        qrlICMS_ST.Caption     := CTeUtil.FormatarValor(msk9x2, FCTe.Imp.ICMS.ICMS60.vICMSSTRet);
       end;
     cst90:
       begin
@@ -1760,7 +1762,8 @@ begin
         qrlBaseCalc.Caption    := CTeUtil.FormatarValor(msk9x2, FCTe.Imp.ICMS.ICMS90.vBC);
         qrlAliqICMS.Caption    := CTeUtil.FormatarValor(msk4x2, FCTe.Imp.ICMS.ICMS90.pICMS);
         qrlVlrICMS.Caption     := CTeUtil.FormatarValor(msk9x2, FCTe.Imp.ICMS.ICMS90.vICMS);
-        qrlICMS_ST.Caption     := CTeUtil.FormatarValor(msk4x2, FCTe.Imp.ICMS.ICMS90.vCred);
+//        qrlICMS_ST.Caption     := CTeUtil.FormatarValor(msk4x2, FCTe.Imp.ICMS.ICMS90.vCred);
+        qrlICMS_ST.Caption     := '';
       end;
     // Incluido por Italo em 05/12/2011 (contribuição de Doni Dephi)
     cstICMSOutraUF:
@@ -2216,7 +2219,7 @@ begin
     qrlTarifaCL.Caption      := tarifa.CL;
     qrlTarifaCodigo.Caption  := tarifa.cTar;
     qrlTarifaValor.Caption   := FormatCurr('###,###,##0.00', tarifa.vTar);
-  {$IFDEF PL_104}
+  {$IFNDEF PL_103}
     qrlContaCorrente.Caption := IdT; // ??? Conta Corrente ???
   {$ENDIF}
     qrlMinuta.Caption        := FormatFloat('0000000000', nMinu);
@@ -2266,7 +2269,7 @@ begin
 
     // Incluido por Fabio
     qrlIndBalsas.Caption:='';
-  {$IFDEF PL_104}
+  {$IFNDEF PL_103}
     for i := 0 to (balsa.Count - 1) do
      begin
       if i = 0
