@@ -455,7 +455,8 @@ begin
     if VTotTrib <> 0 then
     begin
       lVTotTrib :=DFeUtil.FormatFloat(vTotTrib);
-      lVTotTrib :=lVTotTrib + '('+DFeUtil.FormatFloat((vTotTrib*100)/VProd)+'%)';
+//      lVTotTrib :=lVTotTrib + '('+DFeUtil.FormatFloat((vTotTrib*100)/VProd)+'%)';
+      lVTotTrib :=lVTotTrib + '('+DFeUtil.FormatFloat((vTotTrib*100)/(VProd-vDesc))+'%)';
     end
     else
       lVTotTrib := '';
