@@ -37,6 +37,13 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+17/06/2013
+-- ACBrConsultaCNPJ --
+[+] Adicionado parâmetro para limpeza de espaços duplos retornados nos campos 
+    da consulta.
+    pro: regys.silveira
+
+
 11/06/2013
 -- ACBrIBPTax --
 [+] Adicionado suporte ao tipo de tabela 2.

@@ -3,7 +3,7 @@ object F_Principal: TF_Principal
   Top = 0
   BorderIcons = [biSystemMenu, biMinimize]
   Caption = 'Consulta de CNPJ'
-  ClientHeight = 384
+  ClientHeight = 420
   ClientWidth = 650
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
@@ -17,8 +17,8 @@ object F_Principal: TF_Principal
   PixelsPerInch = 96
   TextHeight = 13
   object Panel2: TPanel
-    Left = 9
-    Top = 167
+    Left = 8
+    Top = 201
     Width = 633
     Height = 211
     BevelInner = bvRaised
@@ -223,7 +223,7 @@ object F_Principal: TF_Principal
       Left = 192
       Top = 77
       Width = 288
-      Height = 22
+      Height = 24
       Font.Charset = DEFAULT_CHARSET
       Font.Color = clWindowText
       Font.Height = -13
@@ -341,7 +341,7 @@ object F_Principal: TF_Principal
     Left = 8
     Top = 8
     Width = 634
-    Height = 153
+    Height = 187
     BevelInner = bvRaised
     BevelOuter = bvLowered
     TabOrder = 0
@@ -495,6 +495,20 @@ object F_Principal: TF_Principal
         ParentFont = False
         OnClick = LabAtualizarCaptchaClick
       end
+    end
+    object ckRemoverEspacosDuplos: TCheckBox
+      Left = 10
+      Top = 150
+      Width = 368
+      Height = 17
+      Caption = 'Remover espa'#231'os duplos dos dados retornados'
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = clWindowText
+      Font.Height = -16
+      Font.Name = 'Tahoma'
+      Font.Style = []
+      ParentFont = False
+      TabOrder = 4
     end
   end
   object Timer1: TTimer

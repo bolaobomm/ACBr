@@ -46,6 +46,7 @@ type
     Panel3: TPanel;
     Image1: TImage;
     LabAtualizarCaptcha: TLabel;
+    ckRemoverEspacosDuplos: TCheckBox;
     procedure LabAtualizarCaptchaClick(Sender: TObject);
     procedure ButBuscarClick(Sender: TObject);
     procedure Timer1Timer(Sender: TObject);
@@ -68,7 +69,11 @@ procedure TF_Principal.ButBuscarClick(Sender: TObject);
 begin
   if EditCaptcha.Text <> '' then
   begin
-    if ACBrConsultaCNPJ1.Consulta(EditCNPJ.Text, EditCaptcha.Text) then
+    if ACBrConsultaCNPJ1.Consulta(
+      EditCNPJ.Text,
+      EditCaptcha.Text,
+      ckRemoverEspacosDuplos.Checked
+    ) then
     begin
       EditTipo.Text        := ACBrConsultaCNPJ1.EmpresaTipo;
       EditRazaoSocial.Text := ACBrConsultaCNPJ1.RazaoSocial;

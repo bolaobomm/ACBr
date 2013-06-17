@@ -159,6 +159,7 @@ function padS(const AString : AnsiString; const nLen : Integer; Separador : Stri
    const Caracter : AnsiChar = ' ') : AnsiString ;
 function RemoveString(const sSubStr, sString: AnsiString): AnsiString;
 function RemoveStrings(const AText: AnsiString; StringsToRemove: array of AnsiString): AnsiString;
+function RemoverEspacosDuplos(const AString: AnsiString): AnsiString;
 function StripHTML(const AHTMLString : AnsiString) : AnsiString;
 function RandomName(const LenName : Integer = 8) : String ;
 
@@ -662,6 +663,16 @@ begin
     Ini    := Pos( String(Separador), String(Result) ) ;
   end ;
 end ;
+
+{-----------------------------------------------------------------------------
+   Remove todos os espacos duplos do texto
+ ---------------------------------------------------------------------------- }
+function RemoverEspacosDuplos(const AString: AnsiString): AnsiString;
+begin
+  Result := Trim(AString);
+  while Pos('  ', Result) > 0 do
+    Result := AnsiString(StringReplace( Result, '  ', ' ', [rfReplaceAll]));
+end;
 
 {-----------------------------------------------------------------------------
    Remove todas ocorrencias do array <StringsToRemove> da String <AText>

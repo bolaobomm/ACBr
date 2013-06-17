@@ -87,7 +87,8 @@ type
     function GetSituacao: String;
   public
     procedure Captcha(Stream: TStream);
-    function Consulta(CNPJ, Captcha: String): Boolean;
+    function Consulta(const ACNPJ, ACaptcha: String;
+      ARemoverEspacosDuplos: Boolean = False): Boolean;
   published
     property CNPJ: String Read FCNPJ Write FCNPJ;
     property EmpresaTipo: String Read FEmpresaTipo;
@@ -503,16 +504,17 @@ begin
   Result:= Res;
 end;
 
-function TACBrConsultaCNPJ.Consulta(CNPJ, Captcha: String): Boolean;
-  var
-    Post: TStringStream;
+function TACBrConsultaCNPJ.Consulta(const ACNPJ, ACaptcha: String;
+  ARemoverEspacosDuplos: Boolean): Boolean;
+var
+  Post: TStringStream;
 begin
   Post:= TStringStream.Create('');
   try
     Post.WriteString('origem=comprovante&');
     Post.WriteString('viewstate=' + HttpEncode(fviewstate)+'&');
-    Post.WriteString('cnpj='+OnlyNumber(CNPJ)+'&');
-    Post.WriteString('captcha='+Captcha+'&');
+    Post.WriteString('cnpj='+OnlyNumber(ACNPJ)+'&');
+    Post.WriteString('captcha='+ACaptcha+'&');
     Post.WriteString('captchaAudio=&');
     Post.WriteString('submit1=Consultar&');
     Post.WriteString('search_type=cnpj');
@@ -524,21 +526,32 @@ begin
     begin
       Result:= True;
 
-      FEmpresaTipo:= GetEmpresaTipo;
-      FAbertura:= GetAbertura;
-      FRazaoSocial:= GetRazaoSocial;
-      FEndereco:= GetEndereco;
-      FNumero:= GetNumero;
-      FComplemento:= GetComplemento;
-      FCEP:= GetCEP;
-      FBairro:= GetBairro;
-      FCidade:= GetCidade;
-      FUF:= GetUF;
-      FSituacao:= GetSituacao;
-      FFantasia:= GetFantasia;
+      FEmpresaTipo := GetEmpresaTipo;
+      FAbertura    := GetAbertura;
+      FRazaoSocial := GetRazaoSocial;
+      FEndereco    := GetEndereco;
+      FNumero      := GetNumero;
+      FComplemento := GetComplemento;
+      FCEP         := GetCEP;
+      FBairro      := GetBairro;
+      FCidade      := GetCidade;
+      FUF          := GetUF;
+      FSituacao    := GetSituacao;
+      FFantasia    := GetFantasia;
 
       if Trim(FRazaoSocial) = '' then
         raise EACBrConsultaCNPJException.Create('Não foi possível obter os dados.');
+
+      if ARemoverEspacosDuplos then
+      begin
+        FRazaoSocial := RemoverEspacosDuplos(FRazaoSocial);
+        FFantasia    := RemoverEspacosDuplos(FFantasia);
+        FEndereco    := RemoverEspacosDuplos(FEndereco);
+        FNumero      := RemoverEspacosDuplos(FNumero);
+        FComplemento := RemoverEspacosDuplos(FComplemento);
+        FBairro      := RemoverEspacosDuplos(FBairro);
+        FCidade      := RemoverEspacosDuplos(FCidade);
+      end;
     end
     else
     begin
