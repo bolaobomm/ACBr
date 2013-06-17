@@ -692,7 +692,7 @@ begin
       proISSDigital,
       proISSe,
       pro4R,
-      proFiorilli
+      proFiorilli,
       proGoiania: vNotas := vNotas +
                               '<' + Prefixo4 + 'Rps>' +
                                '<' + Prefixo4 + 'InfDeclaracaoPrestacaoServico' +
