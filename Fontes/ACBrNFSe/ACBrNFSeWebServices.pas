@@ -463,7 +463,7 @@ begin
  CertContext := Cert as ICertContext;
  CertContext.Get_CertContext(Integer(PCertContext));
 
- if not (FProvedor in [proGovBr, proSimplISS, proAbaco, proISSNet, pro4R])
+ if not (FProvedor in [proGovBr, proSimplISS, proAbaco, proISSNet, pro4R, proFiorilli])
   then begin
    if not InternetSetOption(Data, INTERNET_OPTION_CLIENT_CERT_CONTEXT, PCertContext, Sizeof(CERT_CONTEXT)*5)
     then begin
@@ -692,6 +692,7 @@ begin
       proISSDigital,
       proISSe,
       pro4R,
+      proFiorilli
       proGoiania: vNotas := vNotas +
                               '<' + Prefixo4 + 'Rps>' +
                                '<' + Prefixo4 + 'InfDeclaracaoPrestacaoServico' +
@@ -733,7 +734,7 @@ begin
   else begin
    for i := 0 to TNFSeEnviarLoteRPS(Self).FNotasFiscais.Count-1 do
     begin
-     if (FProvedor in [profintelISS, proSaatri, proGoiania, proISSDigital, proISSe, pro4R])
+     if (FProvedor in [profintelISS, proSaatri, proGoiania, proISSDigital, proISSe, pro4R, proFiorilli])
       then vNotas := vNotas + '<' + Prefixo4 + 'Rps>' +
                                '<' + Prefixo4 + 'InfDeclaracaoPrestacaoServico' +
                                  RetornarConteudoEntre(TNFSeEnviarLoteRPS(Self).FNotasFiscais.Items[I].XML_Rps,
@@ -1363,6 +1364,7 @@ begin
       proISSDigital,
       proISSe,
       pro4R,
+      proFiorilli,
       proGoiania: vNotas := vNotas +
                               '<' + Prefixo4 + 'Rps>' +
                                '<' + Prefixo4 + 'InfDeclaracaoPrestacaoServico' +
@@ -1404,7 +1406,7 @@ begin
   else begin
    for i := 0 to TNFSeGerarNFSe(Self).FNotasFiscais.Count-1 do
     begin
-     if (FProvedor in [profintelISS, proSaatri, proGoiania, proISSDigital, proISSe, pro4R])
+     if (FProvedor in [profintelISS, proSaatri, proGoiania, proISSDigital, proISSe, pro4R, proFiorilli])
       then vNotas := vNotas + '<' + Prefixo4 + 'Rps>' +
                                '<' + Prefixo4 + 'InfDeclaracaoPrestacaoServico' +
                                  RetornarConteudoEntre(TNFSeGerarNFSe(Self).FNotasFiscais.Items[I].XML_Rps,
@@ -1535,6 +1537,7 @@ begin
       proISSDigital,
       proISSe,
       pro4R,
+      proFiorilli,
       proGoiania: vNotas := vNotas +
                               '<' + Prefixo4 + 'Rps>' +
                                '<' + Prefixo4 + 'InfDeclaracaoPrestacaoServico' +
@@ -1559,7 +1562,7 @@ begin
   else begin
    for i := 0 to TNFSeGerarLoteRPS(Self).FNotasFiscais.Count-1 do
     begin
-     if (FProvedor in [profintelISS, proSaatri, proGoiania, proISSDigital, proISSe, pro4R])
+     if (FProvedor in [profintelISS, proSaatri, proGoiania, proISSDigital, proISSe, pro4R, proFiorilli])
       then vNotas := vNotas + '<' + Prefixo4 + 'Rps>' +
                                '<' + Prefixo4 + 'InfDeclaracaoPrestacaoServico' +
                                  RetornarConteudoEntre(TNFSeGerarLoteRPS(Self).FNotasFiscais.Items[I].XML_Rps,
@@ -1809,7 +1812,9 @@ begin
   then begin
    if Assigned(TACBrNFSe( FACBrNFSe ).OnGerarLog)
     then TACBrNFSe( FACBrNFSe ).OnGerarLog(Self.Enviar.Msg);
-   raise Exception.Create(Self.Enviar.Msg);
+   if Self.Enviar.Msg <> ''
+    then raise Exception.Create(Self.Enviar.Msg)
+    else raise Exception.Create('Erro Desconhecido!')
   end;
 
  if TACBrNFSe( FACBrNFSe ).Configuracoes.WebServices.ConsultaLoteAposEnvio then
@@ -1857,7 +1862,9 @@ begin
   then begin
    if Assigned(TACBrNFSe( FACBrNFSe ).OnGerarLog)
     then TACBrNFSe( FACBrNFSe ).OnGerarLog(Self.ConsSitLote.Msg);
-   raise Exception.Create(Self.ConsSitLote.Msg);
+   if Self.ConsSitLote.Msg <> ''
+    then raise Exception.Create(Self.ConsSitLote.Msg)
+    else raise Exception.Create('Erro Desconhecido!')
   end;
 
  Result := true;
@@ -1878,7 +1885,9 @@ begin
   then begin
    if Assigned(TACBrNFSe( FACBrNFSe ).OnGerarLog)
     then TACBrNFSe( FACBrNFSe ).OnGerarLog(Self.ConsLote.Msg);
-   raise Exception.Create(Self.ConsLote.Msg);
+   if Self.ConsLote.Msg <> ''
+    then raise Exception.Create(Self.ConsLote.Msg)
+    else raise Exception.Create('Erro Desconhecido!')
   end;
 
  Result := true;
@@ -1910,7 +1919,9 @@ begin
   then begin
    if Assigned(TACBrNFSe( FACBrNFSe ).OnGerarLog)
     then TACBrNFSe( FACBrNFSe ).OnGerarLog(Self.ConsNfseRps.Msg);
-   raise Exception.Create(Self.ConsNfseRps.Msg);
+   if Self.ConsNfseRps.Msg <> ''
+    then raise Exception.Create(Self.ConsNfseRps.Msg)
+    else raise Exception.Create('Erro Desconhecido!')
   end;
 
  Result := true;
@@ -1933,7 +1944,9 @@ begin
   then begin
    if Assigned(TACBrNFSe( FACBrNFSe ).OnGerarLog)
     then TACBrNFSe( FACBrNFSe ).OnGerarLog(Self.ConsNfse.Msg);
-   raise Exception.Create(Self.ConsNfse.Msg);
+   if Self.ConsNfse.Msg <> ''
+    then raise Exception.Create(Self.ConsNfse.Msg)
+    else raise Exception.Create('Erro Desconhecido!')
   end;
 
  Result := true;
@@ -1956,7 +1969,9 @@ begin
   then begin
    if Assigned(TACBrNFSe( FACBrNFSe ).OnGerarLog)
     then TACBrNFSe( FACBrNFSe ).OnGerarLog(Self.CancNfse.Msg);
-   raise Exception.Create(Self.CancNfse.Msg);
+   if Self.CancNfse.Msg <> ''
+    then raise Exception.Create(Self.CancNfse.Msg)
+    else raise Exception.Create('Erro Desconhecido!')
   end;
 
  // Incluido por Italo em 03/04/2012
@@ -1970,7 +1985,9 @@ begin
   then begin
    if Assigned(TACBrNFSe( FACBrNFSe ).OnGerarLog)
     then TACBrNFSe( FACBrNFSe ).OnGerarLog(Self.ConsNfseRps.Msg);
-   raise Exception.Create(Self.ConsNfseRps.Msg);
+   if Self.ConsNfseRps.Msg <> ''
+    then raise Exception.Create(Self.ConsNfseRps.Msg)
+    else raise Exception.Create('Erro Desconhecido!')
   end;
 
  Result := true;
@@ -1995,7 +2012,9 @@ begin
   then begin
    if Assigned(TACBrNFSe( FACBrNFSe ).OnGerarLog)
     then TACBrNFSe( FACBrNFSe ).OnGerarLog(Self.GerarNfse.Msg);
-   raise Exception.Create(Self.GerarNfse.Msg);
+   if Self.GerarNfse.Msg <> ''
+    then raise Exception.Create(Self.GerarNfse.Msg)
+    else raise Exception.Create('Erro Desconhecido!')
   end;
 
  Result := true;
@@ -2012,7 +2031,9 @@ begin
   then begin
    if Assigned(TACBrNFSe( FACBrNFSe ).OnGerarLog)
     then TACBrNFSe( FACBrNFSe ).OnGerarLog(Self.LinkNfse.Msg);
-   raise Exception.Create(Self.LinkNfse.Msg);
+   if Self.LinkNfse.Msg <> ''
+    then raise Exception.Create(Self.LinkNfse.Msg)
+    else raise Exception.Create('Erro Desconhecido!')
   end;
 
  Result := self.LinkNFSe.FLink;
@@ -2031,7 +2052,9 @@ begin
   then begin
    if Assigned(TACBrNFSe( FACBrNFSe ).OnGerarLog)
     then TACBrNFSe( FACBrNFSe ).OnGerarLog(Self.GerarLoteRPs.Msg);
-   raise Exception.Create(Self.GerarLoteRps.Msg);
+   if Self.GerarLoteRPs.Msg <> ''
+    then raise Exception.Create(Self.GerarLoteRPs.Msg)
+    else raise Exception.Create('Erro Desconhecido!')
   end;
 
  Result := true;
@@ -2052,7 +2075,9 @@ begin
   then begin
    if Assigned(TACBrNFSe( FACBrNFSe ).OnGerarLog)
     then TACBrNFSe( FACBrNFSe ).OnGerarLog(Self.EnviarSincrono.Msg);
-   raise Exception.Create(Self.EnviarSincrono.Msg);
+   if Self.EnviarSincrono.Msg <> ''
+    then raise Exception.Create(Self.EnviarSincrono.Msg)
+    else raise Exception.Create('Erro Desconhecido!')
   end;
 end;
 
@@ -2198,7 +2223,9 @@ begin
      Result := False;
      if Assigned(TACBrNFSe( FACBrNFSe ).OnGerarLog) then
         TACBrNFSe( FACBrNFSe ).OnGerarLog(E.Message);
-     raise Exception.Create(E.Message);
+     if E.Message<>''
+      then raise Exception.Create(E.Message)
+      else raise Exception.Create('Erro Desconhecido!');
 		end;
   end;
 

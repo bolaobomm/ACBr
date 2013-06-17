@@ -458,6 +458,7 @@ begin
       proISSDigital,
       proISSe,
       pro4R,
+      proFiorilli,
       proSaatri:    begin
                      AStr := copy(AStr, 1, pos('</InfDeclaracaoPrestacaoServico>', AStr) - 1);
                      AStr := AStr + '</InfDeclaracaoPrestacaoServico>';
@@ -670,6 +671,7 @@ begin
       proISSDigital,
       proISSe,
       pro4R,
+      proFiorilli,
       proSaatri:    begin
                      AXML := copy(AXML, 1, pos('</InfDeclaracaoPrestacaoServico>', AXML) - 1);
                      AXML := AXML + '</InfDeclaracaoPrestacaoServico>';

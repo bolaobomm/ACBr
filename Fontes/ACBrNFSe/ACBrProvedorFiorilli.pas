@@ -116,7 +116,7 @@ var
 begin
  ConfigSchema.VersaoCabecalho       := '1.00';
  ConfigSchema.VersaoDados           := '1.00';
- ConfigSchema.VersaoXML             := '2';
+ ConfigSchema.VersaoXML             := '1';
  ConfigSchema.NameSpaceXML          := 'http://www.abrasf.org.br/';
  ConfigSchema.Cabecalho             := 'nfse.xsd';
  ConfigSchema.ServicoEnviar         := 'nfse.xsd';
@@ -135,28 +135,33 @@ end;
 function TProvedorFiorilli.GetConfigURL(ACodCidade: Integer): TConfigURL;
 var
  ConfigURL: TConfigURL;
+const
+  cURL_Homologacao = 'http://201.28.69.146:5663/IssWeb-ejb/IssWebWS/IssWebWS';
+  cURL_Producao    = 'http://201.28.69.146:5663/IssWeb-ejb/IssWebWS/IssWebWS';
 begin
  case ACodCidade of
-  2103000: begin  // Caxias/MA
+  2103000, // Caxias/MA
+  3504800  // Balsamo/SP
+         : begin
             ConfigURL.HomNomeCidade         := '';
-            ConfigURL.HomRecepcaoLoteRPS    := 'http://localhost:8080/IssWeb-ejb/IssWebWS/IssWebWS';
-            ConfigURL.HomConsultaLoteRPS    := 'http://localhost:8080/IssWeb-ejb/IssWebWS/IssWebWS';
-            ConfigURL.HomConsultaNFSeRPS    := 'http://localhost:8080/IssWeb-ejb/IssWebWS/IssWebWS';
-            ConfigURL.HomConsultaSitLoteRPS := 'http://localhost:8080/IssWeb-ejb/IssWebWS/IssWebWS';
-            ConfigURL.HomConsultaNFSe       := 'http://localhost:8080/IssWeb-ejb/IssWebWS/IssWebWS';
-            ConfigURL.HomCancelaNFSe        := 'http://localhost:8080/IssWeb-ejb/IssWebWS/IssWebWS';
-          	ConfigURL.HomGerarNFSe          := 'http://localhost:8080/IssWeb-ejb/IssWebWS/IssWebWS';
-           	ConfigURL.HomRecepcaoSincrono   := 'http://localhost:8080/IssWeb-ejb/IssWebWS/IssWebWS';
+            ConfigURL.HomRecepcaoLoteRPS    := cURL_Homologacao;
+            ConfigURL.HomConsultaLoteRPS    := cURL_Homologacao;
+            ConfigURL.HomConsultaNFSeRPS    := cURL_Homologacao;
+            ConfigURL.HomConsultaSitLoteRPS := cURL_Homologacao;
+            ConfigURL.HomConsultaNFSe       := cURL_Homologacao;
+            ConfigURL.HomCancelaNFSe        := cURL_Homologacao;
+          	ConfigURL.HomGerarNFSe          := cURL_Homologacao;
+           	ConfigURL.HomRecepcaoSincrono   := cURL_Homologacao;
 
             ConfigURL.ProNomeCidade         := '';
-            ConfigURL.ProRecepcaoLoteRPS    := 'http://localhost:8080/IssWeb-ejb/IssWebWS/IssWebWS';
-            ConfigURL.ProConsultaLoteRPS    := 'http://localhost:8080/IssWeb-ejb/IssWebWS/IssWebWS';
-            ConfigURL.ProConsultaNFSeRPS    := 'http://localhost:8080/IssWeb-ejb/IssWebWS/IssWebWS';
-            ConfigURL.ProConsultaSitLoteRPS := 'http://localhost:8080/IssWeb-ejb/IssWebWS/IssWebWS';
-            ConfigURL.ProConsultaNFSe       := 'http://localhost:8080/IssWeb-ejb/IssWebWS/IssWebWS';
-            ConfigURL.ProCancelaNFSe        := 'http://localhost:8080/IssWeb-ejb/IssWebWS/IssWebWS';
-            ConfigURL.ProGerarNFSe          := 'http://localhost:8080/IssWeb-ejb/IssWebWS/IssWebWS';
-           	ConfigURL.ProRecepcaoSincrono   := 'http://localhost:8080/IssWeb-ejb/IssWebWS/IssWebWS';
+            ConfigURL.ProRecepcaoLoteRPS    := cURL_Producao;
+            ConfigURL.ProConsultaLoteRPS    := cURL_Producao;
+            ConfigURL.ProConsultaNFSeRPS    := cURL_Producao;
+            ConfigURL.ProConsultaSitLoteRPS := cURL_Producao;
+            ConfigURL.ProConsultaNFSe       := cURL_Producao;
+            ConfigURL.ProCancelaNFSe        := cURL_Producao;
+            ConfigURL.ProGerarNFSe          := cURL_Producao;
+           	ConfigURL.ProRecepcaoSincrono   := cURL_Producao;
            end;
  end;
 
@@ -465,18 +470,18 @@ end;
 function TProvedorFiorilli.GeraEnvelopeRecepcionarLoteRPS(URLNS: String;
   CabMsg, DadosMsg, DadosSenha: AnsiString): AnsiString;
 begin
- result := '<?xml version="1.0" encoding="UTF-8"?>' +
-           '<s:Envelope xmlns:xd="http://www.w3.org/2000/09/xmldsig#" ' +
-                       'xmlns:ws="http://ws.issweb.fiorilli.com.br/" ' +
-                       'xmlns:s="http://schemas.xmlsoap.org/soap/envelope/">' +
-            '<s:Header/>' +
-            '<s:Body>' +
-             '<ws:recepcionarLoteRps>' +
-                DadosMsg +
-                DadosSenha +
-             '</ws:recepcionarLoteRps>' +
-            '</s:Body>' +
-           '</s:Envelope>';
+ result := '<?xml version="1.0" encoding="utf-8"?>'+
+           '<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" '+
+                             'xmlns:ws="http://ws.issweb.fiorilli.com.br/" '+
+                             'xmlns:xd="http://www.w3.org/2000/09/xmldsig#"> ' +
+           '<soapenv:Header/>' +
+             '<soapenv:Body>' +
+               '<ws:recepcionarLoteRps>' +
+                   DadosMsg +
+                   DadosSenha +
+                '</ws:recepcionarLoteRps>' +
+             '</soapenv:Body>' +
+          '</soapenv:Envelope>';
 end;
 
 function TProvedorFiorilli.GeraEnvelopeConsultarSituacaoLoteRPS(
@@ -488,23 +493,35 @@ end;
 function TProvedorFiorilli.GeraEnvelopeConsultarLoteRPS(URLNS: String;
   CabMsg, DadosMsg, DadosSenha: AnsiString): AnsiString;
 begin
- result := '';
+ result := '<?xml version="1.0" encoding="utf-8"?>'+
+           '<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" '+
+                             'xmlns:ws="http://ws.issweb.fiorilli.com.br/" '+
+                             'xmlns:xd="http://www.w3.org/2000/09/xmldsig#"> ' +
+           '<soapenv:Header/>' +
+              '<soapenv:Body>' +
+                '<ws:consultarLoteRps>' +
+                    DadosMsg +
+                    DadosSenha +
+                 '</ws:consultarLoteRps>' +
+              '</soapenv:Body>' +
+           '</soapenv:Envelope>';
 end;
 
 function TProvedorFiorilli.GeraEnvelopeConsultarNFSeporRPS(URLNS: String;
   CabMsg, DadosMsg, DadosSenha: AnsiString): AnsiString;
 begin
- result := '<?xml version="1.0" encoding="UTF-8"?>' +
-           '<s:Envelope xmlns:xsd="http://www.w3.org/2001/XMLSchema" ' +
-                       'xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" ' +
-                       'xmlns:s="http://schemas.xmlsoap.org/soap/envelope/">' +
-            '<s:Body>' +
-             '<ns4:consultarNfsePorRps xmlns:ns4="http://ws.issweb.fiorilli.com.br/">' +
-                DadosMsg +
-                DadosSenha +
-             '</ns4:consultarNfsePorRps>' +
-            '</s:Body>' +
-           '</s:Envelope>';
+ result := '<?xml version="1.0" encoding="utf-8"?>'+
+           '<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" '+
+                             'xmlns:ws="http://ws.issweb.fiorilli.com.br/" '+
+                             'xmlns:xd="http://www.w3.org/2000/09/xmldsig#"> ' +
+           '<soapenv:Header/>' +
+              '<soapenv:Body>' +
+                '<ws:consultarNfsePorRps>' +
+                    DadosMsg +
+                    DadosSenha +
+                 '</ws:consultarNfsePorRps>' +
+              '</soapenv:Body>' +
+           '</soapenv:Envelope>';
 end;
 
 function TProvedorFiorilli.GeraEnvelopeConsultarNFSe(URLNS: String; CabMsg,
@@ -516,53 +533,57 @@ end;
 function TProvedorFiorilli.GeraEnvelopeCancelarNFSe(URLNS: String; CabMsg,
   DadosMsg, DadosSenha: AnsiString): AnsiString;
 begin
- result := '<?xml version="1.0" encoding="UTF-8"?>' +
-           '<s:Envelope xmlns:xd="http://www.w3.org/2000/09/xmldsig#" ' +
-                       'xmlns:ws="http://ws.issweb.fiorilli.com.br/" ' +
-                       'xmlns:s="http://schemas.xmlsoap.org/soap/envelope/">' +
-            '<s:Header/>' +
-            '<s:Body>' +
-             '<ws:cancelarNfse>' +
-                DadosMsg +
-                DadosSenha +
-             '</ws:cancelarNfse>' +
-            '</s:Body>' +
-           '</s:Envelope>';
+ result := '<?xml version="1.0" encoding="utf-8"?>'+
+           '<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" '+
+                             'xmlns:ws="http://ws.issweb.fiorilli.com.br/" '+
+                             'xmlns:xd="http://www.w3.org/2000/09/xmldsig#"> ' +
+           '<soapenv:Header/>' +
+              '<soapenv:Body>' +
+                '<ws:cancelarNfse>' +
+                    DadosMsg +
+                    DadosSenha +
+                '</ws:cancelarNfse>' +
+              '</soapenv:Body>' +
+           '</soapenv:Envelope>';
 end;
 
 function TProvedorFiorilli.GeraEnvelopeGerarNFSe(URLNS: String; CabMsg,
   DadosMsg, DadosSenha: AnsiString): AnsiString;
 begin
- result := '<?xml version="1.0" encoding="UTF-8"?>' +
-           '<s:Envelope xmlns:xd="http://www.w3.org/2000/09/xmldsig#" ' +
-                       'xmlns:ws="http://ws.issweb.fiorilli.com.br/" ' +
-                       'xmlns:s="http://schemas.xmlsoap.org/soap/envelope/">' +
-            '<s:Header/>' +
-            '<s:Body>' +
-             '<ws:gerarNfse>' +
-                DadosMsg +
-                DadosSenha +
-             '</ws:gerarNfse>' +
-            '</s:Body>' +
-           '</s:Envelope>';
+ result := '<?xml version="1.0" encoding="utf-8"?>'+
+           '<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" '+
+                             'xmlns:ws="http://ws.issweb.fiorilli.com.br/" '+
+                             'xmlns:xd="http://www.w3.org/2000/09/xmldsig#"> ' +
+           '<soapenv:Header/>' +
+              '<soapenv:Body>' +
+                '<ws:gerarNfse>' +
+                    DadosMsg +
+                    DadosSenha +
+                '</ws:gerarNfse>' +
+              '</soapenv:Body>' +
+           '</soapenv:Envelope>';
 end;
 
 function TProvedorFiorilli.GetSoapAction(Acao: TnfseAcao; NomeCidade: String): String;
+const
+ urlsoap = 'http://ws.issweb.fiorilli.com.br/';
 begin
  case Acao of
-   acRecepcionar: Result := 'recepcionarLoteRps';
-   acConsSit:     Result := '';
-   acConsLote:    Result := 'consultarLoteRps';
-   acConsNFSeRps: Result := 'consultarNfsePorRps';
-   acConsNFSe:    Result := '';
-   acCancelar:    Result := 'cancelarNfse';
-   acGerar:       Result := 'gerarNfse';
-   acRecSincrono: Result := 'recepcionarLoteRpsSincrono';
+   acRecepcionar: Result := urlsoap + 'recepcionarLoteRps';
+   acConsSit:     Result := urlsoap + 'consultarSituacaoLoteRps';
+   acConsLote:    Result := urlsoap + 'consultarLoteRps';
+   acConsNFSeRps: Result := urlsoap + 'consultarNfsePorRps';
+   acConsNFSe:    Result := urlsoap + 'consultarNfse';
+   acCancelar:    Result := urlsoap + 'cancelarNfse';
+   acGerar:       Result := urlsoap + 'gerarNfse';
+   acRecSincrono: Result := urlsoap + 'recepcionarLoteRpsSincrono';
  end;
 end;
 
 function TProvedorFiorilli.GetRetornoWS(Acao: TnfseAcao; RetornoWS: AnsiString): AnsiString;
 begin
+ Result := SeparaDados( RetornoWS, 'soap:Body' );
+ (*
  case Acao of
    acRecepcionar: Result := SeparaDados( RetornoWS, 'recepcionarLoteRpsResponse' );
    acConsSit:     Result := SeparaDados( RetornoWS, '' );
@@ -573,6 +594,7 @@ begin
    acGerar:       Result := SeparaDados( RetornoWS, 'gerarNfseResponse' );
    acRecSincrono: Result := SeparaDados( RetornoWS, 'recepcionarLoteRpsSincronoResponse' );
  end;
+ *)
 end;
 
 function TProvedorFiorilli.GeraRetornoNFSe(Prefixo: String;
@@ -602,18 +624,18 @@ end;
 function TProvedorFiorilli.GeraEnvelopeRecepcionarSincrono(URLNS: String;
   CabMsg, DadosMsg, DadosSenha: AnsiString): AnsiString;
 begin
- result := '<?xml version="1.0" encoding="UTF-8"?>' +
-           '<s:Envelope xmlns:xd="http://www.w3.org/2000/09/xmldsig#" ' +
-                       'xmlns:ws="http://ws.issweb.fiorilli.com.br/" ' +
-                       'xmlns:s="http://schemas.xmlsoap.org/soap/envelope/">' +
-            '<s:Header/>' +
-            '<s:Body>' +
-             '<ws:recepcionarLoteRpsSincrono>' +
-                DadosMsg +
-                DadosSenha +
-             '</ws:recepcionarLoteRpsSincrono>' +
-            '</s:Body>' +
-           '</s:Envelope>';
+ result := '<?xml version="1.0" encoding="utf-8"?>'+
+           '<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" '+
+                             'xmlns:ws="http://ws.issweb.fiorilli.com.br/" '+
+                             'xmlns:xd="http://www.w3.org/2000/09/xmldsig#"> ' +
+           '<soapenv:Header/>' +
+              '<soapenv:Body>' +
+                '<ws:recepcionarLoteRpsSincrono>' +
+                    DadosMsg +
+                    DadosSenha +
+                '</ws:recepcionarLoteRpsSincrono>' +
+              '</soapenv:Body>' +
+           '</soapenv:Envelope>';
 end;
 
 end.

@@ -827,7 +827,8 @@ begin
   3522307  // Itapetininga/SP
          : Provedor := 'GovDigital';
 
-  2103000  // Caxias/MA
+  2103000, // Caxias/MA
+  3504800  // Balsamo/SP
          : Provedor := 'Fiorilli';
  end;
  Result := Provedor;
