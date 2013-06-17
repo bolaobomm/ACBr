@@ -230,6 +230,10 @@ begin
            QRCTe.Print;
          end;
      finally
+        // Incluido por Rodrigo Fernandes em 17/06/2013
+        QRCTe.QRPrinter.Free;
+        QRCTe.QRPrinter:=nil;
+
         // Incluido por Rodrigo Fernandes em 11/03/2013
         // Liberando o objeto Printer da memoria
         Printer.Free;
