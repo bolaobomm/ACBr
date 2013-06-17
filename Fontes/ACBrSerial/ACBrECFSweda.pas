@@ -383,8 +383,7 @@ TACBrECFSweda = class( TACBrECFClass )
        NomeArquivo : AnsiString; Documentos : TACBrECFTipoDocumentoSet = [docTodos];
        Finalidade: TACBrECFFinalizaArqMFD = finMFD;
        TipoContador: TACBrECFTipoContador = tpcCOO ) ; override ;
-
-
+    Procedure ArquivoMF_DLL(NomeArquivo: AnsiString); override ;
 
  end ;
 
@@ -3628,6 +3627,37 @@ begin
   if not FileExists( NomeArquivo ) then
      raise EACBrECFERRO.Create( ACBrStr( 'Erro na execução de ECF_DownloadMFD.'+sLineBreak+
                             'Arquivo: "'+NomeArquivo + '" não gerado' ))
+end;
+
+procedure TACBrECFSweda.ArquivoMF_DLL(NomeArquivo: AnsiString);
+var
+  Resp: Integer;
+  FileMF : AnsiString;
+  OldAtivo: Boolean;
+begin
+  LoadDLLFunctions;
+
+  OldAtivo := Ativo ;
+  try
+    AbrePortaSerialDLL;
+
+    // fazer o download da MF
+    GravaLog( '   xECF_DownloadMF' );
+    FileMF := ExtractFileName( NomeArquivo );
+    Resp := xECF_DownloadMF( FileMF );
+    if (Resp <> 1) then
+       raise EACBrECFERRO.Create( ACBrStr( 'Erro ao executar ECF_DownloadMF.'+sLineBreak+
+                                  DescricaoErroDLL(Resp) ));
+  finally
+     xECF_FechaPortaSerial ;
+     try
+        Ativo := OldAtivo ;
+     except
+     end;
+  end;
+  if not FileExists( NomeArquivo ) then
+     raise EACBrECFERRO.Create( ACBrStr( 'Erro na execução de ECF_DownloadMF.'+sLineBreak+
+                            'Arquivo: "'+NomeArquivo+'" não gerado' ))
 end;
 
 function TACBrECFSweda.GetNumReducoesZRestantes: String;
