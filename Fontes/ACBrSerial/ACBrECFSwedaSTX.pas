@@ -102,7 +102,7 @@ TACBrECFSwedaSTX = class( TACBrECFClass )
       fxaf:  AnsiString; asc: AnsiString; bin: AnsiString): Integer; {$IFDEF LINUX} cdecl {$ELSE} stdcall {$ENDIF} ;
     xECF_FechaPortaSerial : Function: Integer; {$IFDEF LINUX} cdecl {$ELSE} stdcall {$ENDIF} ;
 
-    Function DescricaoErroDLL(const NErro: Integer) : String;
+    function DescricaoErroDLL(const NErro: Integer): String;
     procedure LoadDLLFunctions;
     procedure AbrePortaSerialDLL;
 
@@ -289,6 +289,8 @@ TACBrECFSwedaSTX = class( TACBrECFClass )
        NomeArquivo : AnsiString; Documentos : TACBrECFTipoDocumentoSet = [docTodos];
        Finalidade: TACBrECFFinalizaArqMFD = finMFD;
        TipoContador: TACBrECFTipoContador = tpcCOO  ) ; override ;
+
+    Procedure ArquivoMF_DLL(NomeArquivo: AnsiString); override ;
 
     procedure PafMF_GerarCAT52(const DataInicial: TDateTime;
       const DataFinal: TDateTime; const DirArquivos: string); override;
@@ -1078,6 +1080,37 @@ begin
                             'Arquivo: "'+NomeArquivo + '" não gerado' ))
 end;
 
+procedure TACBrECFSwedaSTX.ArquivoMF_DLL(NomeArquivo: AnsiString);
+var
+  Resp: Integer;
+  FileMF : AnsiString;
+  OldAtivo: Boolean;
+begin
+  LoadDLLFunctions;
+
+  OldAtivo := Ativo ;
+  try
+    AbrePortaSerialDLL;
+
+    // fazer o download da MF
+    GravaLog( '   xECF_DownloadMF' );
+    FileMF := ExtractFileName( NomeArquivo );
+    Resp := xECF_DownloadMF( FileMF );
+    if (Resp <> 1) then
+       raise EACBrECFERRO.Create( ACBrStr( 'Erro ao executar ECF_DownloadMF.'+sLineBreak+
+                                  DescricaoErroDLL(Resp) ));
+  finally
+     xECF_FechaPortaSerial ;
+     try
+        Ativo := OldAtivo ;
+     except
+     end;
+  end;
+  if not FileExists( NomeArquivo ) then
+     raise EACBrECFERRO.Create( ACBrStr( 'Erro na execução de ECF_DownloadMF.'+sLineBreak+
+                            'Arquivo: "'+NomeArquivo+'" não gerado' ))
+end;
+
 procedure TACBrECFSwedaSTX.PafMF_GerarCAT52(const DataInicial: TDateTime;
    const DataFinal: TDateTime; const DirArquivos: string);
 var
@@ -1098,6 +1131,7 @@ begin
     FileMF := 'ACBr.MF';
 
     // fazer primeiro o download da MF
+    GravaLog( '   xECF_DownloadMF' );
     Resp := xECF_DownloadMF(FileMF);
     if (Resp <> 1) then
        raise EACBrECFERRO.Create( ACBrStr( 'Erro ao executar ECF_DownloadMF.'+sLineBreak+
@@ -2491,6 +2525,7 @@ begin
      Ini.WriteInteger('COMUNICAÇÃO','PORTA', Porta ) ;
      Ini.WriteInteger('COMUNICAÇÃO','VELOCIDADE', Velocidade ) ;
      Ini.WriteString('COMUNICAÇÃO','LOG', fsApplicationPath+'LogDLLSweda.txt' ) ;
+     Ini.WriteString('SWEDA','DIRETORIO', fsApplicationPath ) ;
   finally
      Ini.Free ;
   end ;

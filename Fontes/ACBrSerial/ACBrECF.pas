@@ -701,6 +701,8 @@ TACBrECF = class( TACBrComponent )
        NomeArquivo : AnsiString; Documentos : TACBrECFTipoDocumentoSet = [docTodos];
        Finalidade: TACBrECFFinalizaArqMFD = finMFD; TipoContador: TACBrECFTipoContador = tpcCOO) ; overload ;
 
+    Procedure ArquivoMF_DLL(NomeArquivo: AnsiString);
+
     Procedure IdentificaOperador( Nome : String) ;
     Procedure IdentificaPAF( NomeVersao, MD5 : String) ;
     Function RetornaInfoECF( Registrador : String ) : AnsiString;
@@ -775,6 +777,8 @@ TACBrECF = class( TACBrComponent )
 
     procedure PafMF_GerarCAT52(const DataInicial, DataFinal: TDateTime;
       const DirArquivos: String);
+
+    procedure PafMF_Binario(const PathArquivo: String);
 
     procedure DoVerificaValorGT ;
     procedure DoAtualizarValorGT ;
@@ -3961,6 +3965,14 @@ begin
   fsECF.ArquivoMFD_DLL( ContInicial, ContFinal, NomeArquivo, Documentos, Finalidade, TipoContador ) ;
 end;
 
+procedure TACBrECF.ArquivoMF_DLL(NomeArquivo: AnsiString);
+begin
+   TestaSeE_MFD ;
+
+   ComandoLOG := 'ArquivoMF_DLL( ' + NomeArquivo + ' ) ';
+   fsECF.ArquivoMF_DLL( NomeArquivo ) ;
+end;
+
 procedure TACBrECF.ImprimeCheque(Banco: String; Valor: Double; Favorecido,
   Cidade: String; Data: TDateTime; Observacao: String);
 begin
@@ -5635,6 +5647,15 @@ begin
   DoVerificaValorGT ;
 
   Self.LeituraMemoriaFiscalSerial(CRZInicial, CRZFinal, PathArquivo, False);
+  Self.AssinaArquivoComEAD(PathArquivo);
+end;
+
+procedure TACBrECF.PafMF_Binario(const PathArquivo: String);
+begin
+  fsNumSerieCache := '' ;  // Isso força a Leitura do Numero de Série
+  DoVerificaValorGT ;
+
+  Self.ArquivoMF_DLL(PathArquivo);
   Self.AssinaArquivoComEAD(PathArquivo);
 end;
 

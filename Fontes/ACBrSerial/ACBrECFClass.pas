@@ -1078,6 +1078,8 @@ TACBrECFClass = class
        Finalidade: TACBrECFFinalizaArqMFD = finMFD;
        TipoContador: TACBrECFTipoContador = tpcCOO ) ; overload ; virtual ;
 
+    Procedure ArquivoMF_DLL(  NomeArquivo : AnsiString  ) ; overload ; virtual ;
+
     procedure PafMF_GerarCAT52(const DataInicial, DataFinal: TDateTime;
       const DirArquivos: String); virtual;
 
@@ -2159,6 +2161,10 @@ begin
   ErroAbstract('ArquivoMFD_DLL');
 end;
 
+procedure TACBrECFClass.ArquivoMF_DLL(NomeArquivo: AnsiString);
+begin
+    ErroAbstract('ArquivoMF_DLL');
+end;
 
 { Essa função PODE ser override por cada Classe Filha criada }
 procedure TACBrECFClass.ImprimeCheque(Banco: String; Valor: Double; Favorecido,

@@ -161,6 +161,8 @@ TACBrECFEpson = class( TACBrECFClass )
     xEPSON_Send_From_FileEXX : function (pszLineIn:AnsiString;
        pszStatus:PAnsiChar; pszLineOut:PAnsiChar ) : Integer;
        {$IFDEF LINUX} cdecl {$ELSE} stdcall {$ENDIF} ;
+    xEPSON_Obter_Arquivo_Binario_MF : function( pszArquivo:AnsiString ) : Integer;
+       {$IFDEF LINUX} cdecl {$ELSE} stdcall {$ENDIF} ;
 
     procedure Ativar_Epson ;
 
@@ -314,6 +316,8 @@ TACBrECFEpson = class( TACBrECFClass )
        NomeArquivo : AnsiString; Documentos : TACBrECFTipoDocumentoSet = [docTodos];
        Finalidade: TACBrECFFinalizaArqMFD = finMFD;
        TipoContador: TACBrECFTipoContador = tpcCOO ) ; override ;
+
+    Procedure ArquivoMF_DLL(NomeArquivo: AnsiString); override ;
 
     Procedure AbreGaveta ; override ;
 
@@ -3384,6 +3388,7 @@ begin
    EpsonFunctionDetect('EPSON_Serial_Fechar_Porta', @xEPSON_Serial_Fechar_Porta);
    EpsonFunctionDetect('EPSON_Serial_Obter_Estado_Com', @xEPSON_Serial_Obter_Estado_Com);
    EpsonFunctionDetect('EPSON_Send_From_FileEXX', @xEPSON_Send_From_FileEXX);
+   EpsonFunctionDetect('EPSON_Obter_Arquivo_Binario_MF', @xEPSON_Obter_Arquivo_Binario_MF);
 end ;
 
 procedure TACBrECFEpson.AbrePortaSerialDLL ;
@@ -3643,6 +3648,32 @@ begin
                             'Arquivo: "'+ArqTmp + '_CTP.txt" não gerado' ))
 end;
 
+
+procedure TACBrECFEpson.ArquivoMF_DLL(NomeArquivo: AnsiString);
+var
+  Resp: Integer;
+  OldAtivo: Boolean;
+begin
+  LoadDLLFunctions;
+
+  OldAtivo := Ativo ;
+  try
+    AbrePortaSerialDLL;
+
+    // fazer o download da MF
+    GravaLog( '   xEPSON_Obter_Arquivo_Binario_MF' );
+    Resp := xEPSON_Obter_Arquivo_Binario_MF( NomeArquivo );
+    if (Resp <> 1) then
+      raise EACBrECFERRO.Create( ACBrStr( 'Erro ao executar EPSON_Obter_Arquivo_Binario_MF.'+sLineBreak+
+                                       'Cod.: '+IntToStr(Resp) ))
+  finally
+     FechaPortaSerialDLL(OldAtivo) ;
+  end;
+  if not FileExists( NomeArquivo ) then
+     raise EACBrECFERRO.Create( ACBrStr( 'Erro na execução de EPSON_Obter_Arquivo_Binario_MF.'+sLineBreak+
+                            'Arquivo: "'+NomeArquivo+'" não gerado' ))
+
+end;
 
 function TACBrECFEpson.DocumentosToNum(
   Documentos: TACBrECFTipoDocumentoSet): Integer;

@@ -346,6 +346,7 @@ TACBrECFBematech = class( TACBrECFClass )
        cData: AnsiString): Integer; stdcall;
     xBematech_FI_DownloadMFD: function(cNomeArquivoMFD, cTipoDownload,
       cDadoInicial, cDadoFinal, cUsuario: AnsiString): Integer; stdcall;
+    xBematech_FI_DownloadMF: function(cNomeArquivoMF: AnsiString): Integer; stdcall;
 
     xBematech_FI_EnviaComando: function(cComando: AnsiString;
       iTamanhoComando: Integer): Integer; stdcall;
@@ -558,6 +559,8 @@ TACBrECFBematech = class( TACBrECFClass )
        NomeArquivo : AnsiString; Documentos : TACBrECFTipoDocumentoSet = [docTodos]  ) ; override ;
     Procedure EspelhoMFD_DLL( COOInicial, COOFinal : Integer;
        NomeArquivo : AnsiString; Documentos : TACBrECFTipoDocumentoSet = [docTodos]  ) ; override ;
+
+    Procedure ArquivoMF_DLL(NomeArquivo: AnsiString); override ;
 
     Procedure ArquivoMFD_DLL( DataInicial, DataFinal : TDateTime;
        NomeArquivo : AnsiString; Documentos : TACBrECFTipoDocumentoSet = [docTodos]; Finalidade: TACBrECFFinalizaArqMFD = finMFD  ) ; override ;
@@ -3245,6 +3248,7 @@ begin
    BematechFunctionDetect( 'Bematech_FI_EspelhoMFD',@xBematech_FI_EspelhoMFD );
    BematechFunctionDetect( 'Bematech_FI_GeraRegistrosCAT52MFD',@xBematech_FI_GeraRegistrosCAT52MFD );
    BematechFunctionDetect( 'Bematech_FI_DownloadMFD',@xBematech_FI_DownloadMFD );
+   BematechFunctionDetect( 'Bematech_FI_DownloadMF',@xBematech_FI_DownloadMF );
 
    if fpDevice.IsDLLPort then
    begin
@@ -3591,6 +3595,36 @@ begin
     FechaPortaSerialDLL( OldAtivo );
   end;
  {$ENDIF}
+end;
+
+Procedure TACBrECFBematech.ArquivoMF_DLL(NomeArquivo: AnsiString);
+Var
+  Arquivos : TStringList ;
+  Resp, Tipo : Integer ;
+  DiaIni, DiaFim, Prop,  FileMask, FilePath : AnsiString ;
+  OldAtivo : Boolean ;
+  {$IFDEF LINUX} Cmd, ArqTmp : String ; {$ENDIF}
+begin
+  Prop     := IntToStr( StrToIntDef( UsuarioAtual, 1) ) ;
+  FilePath := ExtractFilePath( NomeArquivo );
+  LoadDLLFunctions;
+  try
+     DeleteFile( NomeArquivo );
+
+     AbrePortaSerialDLL( FilePath ) ;
+
+     GravaLog( '   xBematech_FI_DownloadMF' );
+     Resp := xBematech_FI_DownloadMF( NomeArquivo ) ;
+
+     if (Resp <> 1) then
+        raise EACBrECFErro.Create( ACBrStr( 'Erro ao executar xBematech_FI_ArquivoMF.'+sLineBreak+
+                                         AnalisarRetornoDll(Resp) )) ;
+
+  finally
+     Arquivos.Free;
+     FechaPortaSerialDLL( OldAtivo );
+  end;
+
 end;
 
 procedure TACBrECFBematech.ArquivoMFD_DLL(DataInicial, DataFinal: TDateTime;
