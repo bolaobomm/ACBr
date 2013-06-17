@@ -1808,7 +1808,9 @@ function TWebServices.Envia(ALote: String): Boolean;
 begin
  self.Enviar.FNumeroLote := ALote;
 
- if not (Self.Enviar.Executar)
+ Result := Self.Enviar.Executar;
+
+ if not (Result)
   then begin
    if Assigned(TACBrNFSe( FACBrNFSe ).OnGerarLog)
     then TACBrNFSe( FACBrNFSe ).OnGerarLog(Self.Enviar.Msg);
@@ -1817,7 +1819,7 @@ begin
     else raise Exception.Create('Erro Desconhecido!')
   end;
 
- if TACBrNFSe( FACBrNFSe ).Configuracoes.WebServices.ConsultaLoteAposEnvio then
+ if (TACBrNFSe( FACBrNFSe ).Configuracoes.WebServices.ConsultaLoteAposEnvio) and (Result) then
  begin
    Self.ConsSitLote.Cnpj               := TACBrNFSe( FACBrNFSe ).NotasFiscais.Items[0].NFSe.Prestador.Cnpj;
    Self.ConsSitLote.InscricaoMunicipal := TACBrNFSe( FACBrNFSe ).NotasFiscais.Items[0].NFSe.Prestador.InscricaoMunicipal;
@@ -1828,7 +1830,9 @@ begin
    // Alterado por Akai L. Massao Aihara
    if not (TACBrNFSe( FACBrNFSe ).Configuracoes.WebServices.Provedor in [profintelISS, proSaatri, proISSDigital])
     then begin
-     if not (Self.ConsSitLote.Executar)
+     Result := Self.ConsSitLote.Executar;
+
+     if not (Result)
       then begin
        if Assigned(TACBrNFSe( FACBrNFSe ).OnGerarLog)
         then TACBrNFSe( FACBrNFSe ).OnGerarLog(Self.ConsSitLote.Msg);
@@ -1836,15 +1840,15 @@ begin
       end;
     end;
 
-   if not (Self.ConsLote.Executar)
+   Result := Self.ConsLote.Executar;
+
+   if not (Result)
     then begin
      if Assigned(TACBrNFSe( FACBrNFSe ).OnGerarLog)
       then TACBrNFSe( FACBrNFSe ).OnGerarLog(Self.ConsLote.Msg);
      raise Exception.Create(Self.ConsLote.Msg);
     end;
  end;
-
- Result := true;
 end;
 
 function TWebServices.ConsultaSituacao(ACnpj, AInscricaoMunicipal,
@@ -1858,7 +1862,9 @@ begin
  Self.ConsSitLote.InscricaoMunicipal := AInscricaoMunicipal;
  Self.ConsSitLote.Protocolo          := AProtocolo;
 
- if not (Self.ConsSitLote.Executar)
+ Result := Self.ConsSitLote.Executar;
+
+ if not (Result)
   then begin
    if Assigned(TACBrNFSe( FACBrNFSe ).OnGerarLog)
     then TACBrNFSe( FACBrNFSe ).OnGerarLog(Self.ConsSitLote.Msg);
@@ -1866,8 +1872,6 @@ begin
     then raise Exception.Create(Self.ConsSitLote.Msg)
     else raise Exception.Create('Erro Desconhecido!')
   end;
-
- Result := true;
 end;
 
 function TWebServices.ConsultaLoteRps(AProtocolo: String;
@@ -1881,7 +1885,9 @@ begin
 
  Self.ConsLote.Protocolo := AProtocolo;
 
- if not (Self.ConsLote.Executar)
+ Result := Self.ConsLote.Executar;
+
+ if not (Result)
   then begin
    if Assigned(TACBrNFSe( FACBrNFSe ).OnGerarLog)
     then TACBrNFSe( FACBrNFSe ).OnGerarLog(Self.ConsLote.Msg);
@@ -1889,8 +1895,6 @@ begin
     then raise Exception.Create(Self.ConsLote.Msg)
     else raise Exception.Create('Erro Desconhecido!')
   end;
-
- Result := true;
 end;
 
 function TWebServices.ConsultaLoteRps(AProtocolo, ACNPJ,
@@ -1915,7 +1919,10 @@ begin
  Self.ConsNfseRps.Cnpj               := ACnpj;
  Self.ConsNfseRps.InscricaoMunicipal := AInscricaoMunicipal;
 
- if not (Self.ConsNfseRps.Executar)
+ // Alterado por Rosemir Zeferino em 24/05/2013
+ Result := Self.ConsNfseRps.Executar;
+
+ if not (Result)
   then begin
    if Assigned(TACBrNFSe( FACBrNFSe ).OnGerarLog)
     then TACBrNFSe( FACBrNFSe ).OnGerarLog(Self.ConsNfseRps.Msg);
@@ -1923,8 +1930,6 @@ begin
     then raise Exception.Create(Self.ConsNfseRps.Msg)
     else raise Exception.Create('Erro Desconhecido!')
   end;
-
- Result := true;
 end;
 
 function TWebServices.ConsultaNFSe(ACnpj, AInscricaoMunicipal: String;
@@ -1940,7 +1945,9 @@ begin
  Self.ConsNfse.DataFinal          := ADataFinal;
  Self.ConsNfse.NumeroNFSe         := NumeroNFSe;
 
- if not (Self.ConsNfse.Executar)
+ Result := Self.ConsNfse.Executar;
+
+ if not (Result)
   then begin
    if Assigned(TACBrNFSe( FACBrNFSe ).OnGerarLog)
     then TACBrNFSe( FACBrNFSe ).OnGerarLog(Self.ConsNfse.Msg);
@@ -1948,8 +1955,6 @@ begin
     then raise Exception.Create(Self.ConsNfse.Msg)
     else raise Exception.Create('Erro Desconhecido!')
   end;
-
- Result := true;
 end;
 
 function TWebServices.CancelaNFSe(ACodigoCancelamento: String;
@@ -1965,7 +1970,9 @@ begin
 
  Self.CancNfse.CodigoCancelamento := ACodigoCancelamento;
 
- if not (Self.CancNfse.Executar)
+ Result := Self.CancNfse.Executar;
+
+ if not (Result)
   then begin
    if Assigned(TACBrNFSe( FACBrNFSe ).OnGerarLog)
     then TACBrNFSe( FACBrNFSe ).OnGerarLog(Self.CancNfse.Msg);
@@ -1981,7 +1988,9 @@ begin
  Self.ConsNfseRps.Cnpj               := TACBrNFSe( FACBrNFSe ).NotasFiscais.Items[0].NFSe.PrestadorServico.IdentificacaoPrestador.Cnpj;
  Self.ConsNfseRps.InscricaoMunicipal := TACBrNFSe( FACBrNFSe ).NotasFiscais.Items[0].NFSe.PrestadorServico.IdentificacaoPrestador.InscricaoMunicipal;
 
- if not( Self.ConsNfseRps.Executar)
+ Result := Self.ConsNfseRps.Executar;
+
+ if not(Result)
   then begin
    if Assigned(TACBrNFSe( FACBrNFSe ).OnGerarLog)
     then TACBrNFSe( FACBrNFSe ).OnGerarLog(Self.ConsNfseRps.Msg);
@@ -1989,8 +1998,6 @@ begin
     then raise Exception.Create(Self.ConsNfseRps.Msg)
     else raise Exception.Create('Erro Desconhecido!')
   end;
-
- Result := true;
 end;
 
 function TWebServices.CancelaNFSe(ACodigoCancelamento, ANumeroRPS, ACNPJ,
@@ -2008,7 +2015,9 @@ function TWebServices.Gera(ARps:Integer): Boolean;
 begin
  self.GerarNfse.FNumeroRps := ARps;
 
- if not (Self.GerarNfse.Executar)
+ Result := Self.GerarNfse.Executar;
+
+ if not (Result)
   then begin
    if Assigned(TACBrNFSe( FACBrNFSe ).OnGerarLog)
     then TACBrNFSe( FACBrNFSe ).OnGerarLog(Self.GerarNfse.Msg);
@@ -2016,8 +2025,6 @@ begin
     then raise Exception.Create(Self.GerarNfse.Msg)
     else raise Exception.Create('Erro Desconhecido!')
   end;
-
- Result := true;
 end;
 
 function TWebServices.LinkNFSeGerada(ANumeroNFSe: Integer;
@@ -2048,7 +2055,8 @@ function TWebServices.GeraLote(ALote: String): Boolean;
 begin
  self.GerarLoteRPS.FNumeroLote := ALote;
 
- if not (Self.GerarLoteRPS.Executar)
+ Result := Self.GerarLoteRPS.Executar;
+ if not (Result)
   then begin
    if Assigned(TACBrNFSe( FACBrNFSe ).OnGerarLog)
     then TACBrNFSe( FACBrNFSe ).OnGerarLog(Self.GerarLoteRPs.Msg);
@@ -2056,8 +2064,6 @@ begin
     then raise Exception.Create(Self.GerarLoteRPs.Msg)
     else raise Exception.Create('Erro Desconhecido!')
   end;
-
- Result := true;
 end;
 
 function TWebServices.EnviaSincrono(ALote: Integer): Boolean;
@@ -2754,7 +2760,8 @@ begin
   end;
 
   NFSeRetorno.Leitor.Arquivo := FRetWS;
-  NFSeRetorno.LerXml;
+  // Alterado por Rosemir Zeferino em 24/05/2013
+  Result := NFSeRetorno.LerXml;
 
  // Incluido por Ricardo Miranda em 14/03/2013
   FRetWS := NotaUtil.RetirarPrefixos(FRetWS);
@@ -2827,7 +2834,8 @@ begin
   if Assigned(TACBrNFSe( FACBrNFSe ).OnGerarLog)
    then TACBrNFSe( FACBrNFSe ).OnGerarLog(aMsg);
 
-  Result := (FMsg = '');
+  // Alterado por Rosemir Zeferino em 24/05/2013
+  Result := (Result) and (FMsg = '');
 
  finally
   {$IFDEF ACBrNFSeOpenSSL}
