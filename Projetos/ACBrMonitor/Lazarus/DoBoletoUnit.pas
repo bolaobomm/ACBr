@@ -75,7 +75,8 @@ begin
        begin
          DirArqRemessa := Cmd.Params(0);
          NomeArqRemessa:= Cmd.Params(2);
-         GerarRemessa( StrToIntDef(cmd.Params(1),1))
+         //GerarRemessa( StrToIntDef(cmd.Params(1),1))
+         GerarRemessa(1 {StrToIntDef(cmd.Params(1),1)})
        end
 
       else if cmd.Metodo = 'lerretorno' then
@@ -116,6 +117,8 @@ var
    MudouDados: boolean;
    NumeroBanco: LongInt;
    IndiceACBr: LongInt;
+   teste: LongInt;
+   teste2: TACBrCaracTitulo;
 begin
   MudouDados := False;
   IniBoletos := TMemIniFile.Create('boletos.ini');
