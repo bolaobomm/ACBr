@@ -40,7 +40,7 @@
 //                                                                            //
 //    Nota (2): - O uso integral (ou parcial) das units do projeto esta       //
 //              condicionado a manutenção deste cabeçalho junto ao código     //
-//           teste de alteração                                                                 //
+//                                                                          //
 ////////////////////////////////////////////////////////////////////////////////
 
 {******************************************************************************
