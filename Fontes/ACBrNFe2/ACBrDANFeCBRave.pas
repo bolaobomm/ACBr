@@ -105,6 +105,8 @@ type
      FMostrarStatus: Boolean;
      FNFeCancelada: Boolean;
      FMostrarSetup: boolean;
+    FTributosFonte: string;
+    FTributosPercentual: TpcnPercentualTributos;
   public
      FCurrentPage, FPageNum, FNFIndex, FNumNFe:Integer;
      FChaveNFe, FNumeroNF, FSerie: String;
@@ -152,6 +154,8 @@ type
      property MostrarStatus:boolean read FMostrarStatus write FMostrarStatus default true;
      property MostrarSetup:boolean read FMostrarSetup write FMostrarSetup default true;
      property NFeCancelada:boolean read FNFeCancelada write FNFeCancelada default false;
+     property TributosFonte: string read FTributosFonte write FTributosFonte;
+     property TributosPercentual: TpcnPercentualTributos read FTributosPercentual write FTributosPercentual;
   end;
 
   TEventoRave = class(TRvSystem)
@@ -245,6 +249,8 @@ procedure ImprimirDANFeRave(aACBrNFe:TACBrNFe;
                             aFormularioContinuo:boolean=false;
                             aExpadirLogoMarca:boolean=false;
                             aNFeCancelada:boolean=false;
+                            aTributosFonte:string='';
+                            aTributosPercentual:TpcnPercentualTributos=ptValorProdutos;
                             NFE : TNFe = nil);
 
 procedure ImprimirEventoRave(aACBrNFe:TACBrNFe;
@@ -314,6 +320,8 @@ procedure ImprimirDANFeRave(aACBrNFe:TACBrNFe;
                             aFormularioContinuo:boolean=false;
                             aExpadirLogoMarca:boolean=false;
                             aNFeCancelada:boolean=false;
+                            aTributosFonte:string='';
+                            aTributosPercentual:TpcnPercentualTributos=ptValorProdutos;
                             NFE : TNFe = nil);
 var DANFeRave:TDANFeRave;
     rvPDF:TRvRenderPDF;
@@ -382,7 +390,8 @@ begin
     DANFeRave.ImprimirDescPorc:=aImprimirDescPorc;
     DANFeRave.ImprimirValorLiquido:=aImprimirValorLiquido;
     DANFeRave.ImprimirDetalhamentoEspecifico:=aImprimirDetalhamentoEspecifico;
-    DANFeRave.FormularioContinuo:=aFormularioContinuo;
+    DANFeRave.TributosFonte:=aTributosFonte;
+    DANFeRave.TributosPercentual:=aTributosPercentual;
     if aFormularioContinuo then
        DANFeRave.FColorBorders:=clWhite
       else

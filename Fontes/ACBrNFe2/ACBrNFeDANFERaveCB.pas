@@ -62,7 +62,9 @@ type
      FTamanhoFonte_ANTT: integer;
      FFonte : TFont;
      FEspessuraBorda: Integer;
-    FMostrarSetup: boolean;
+     FMostrarSetup: boolean;
+     FTributosFonte: string;
+     FTributosPercentual: TpcnPercentualTributos;
 
      function SeSenaoJPEG(ACondicao: Boolean; ATrue, AFalse: TJPEGImage): TJPEGImage;
    public
@@ -78,6 +80,9 @@ type
      property Fonte:TFont read FFonte write FFonte;
      property EspessuraBorda:Integer read FEspessuraBorda write FEspessuraBorda;
      property MostrarSetup: boolean read FMostrarSetup write FMostrarSetup;
+     property TributosFonte: string read FTributosFonte write FTributosFonte;
+     property TributosPercentual: TpcnPercentualTributos read FTributosPercentual write FTributosPercentual;
+
   end;
 
 implementation
@@ -92,6 +97,7 @@ begin
   FTamanhoFonte_ANTT:=10;
   FEspessuraBorda:=2;
   FMostrarSetup:=False;
+  FTributosPercentual:=ptValorProdutos;
 end;
 
 destructor TACBrNFeDANFERaveCB.Destroy;
@@ -162,6 +168,8 @@ begin
                        FormularioContinuo,
                        ExpandirLogoMarca,
                        NFeCancelada,
+                       TributosFonte,
+                       TributosPercentual,
                        NFe);
     finally
       LogoMarcaEmpresa.Free;
@@ -238,6 +246,8 @@ begin
                        FormularioContinuo,
                        ExpandirLogoMarca,
                        NFeCancelada,
+                       TributosFonte,
+                       TributosPercentual,
                        NFE);
     finally
       LogoMarcaEmpresa.Free;

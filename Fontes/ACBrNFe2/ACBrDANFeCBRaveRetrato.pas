@@ -826,12 +826,13 @@ function ImprimirCalculoImposto(PosX, PosY: Double): Double;
 var
   x: double;
   lVTotTrib: string;
+  lTemp: string;
 begin
   with DANFeRave, DANFeRave.ACBrNFe.NotasFiscais.Items[DANFeRave.FNFIndex].NFe, DANFeRave.BaseReport do
   begin
     x:=0;
     if Total.ICMSTot.vTotTrib <> 0 then
-      x := 9;
+      x := 10;
 
     TituloDoBloco(PosX,PosY,'CÁLCULO DO IMPOSTO');
     Box([],PosX,YPos,38.5-x,aHeigthPadrao,'Base de Cálc. ICMS',DFeUtil.FormatFloat(Total.ICMSTot.VBC),taRightJustify);
@@ -841,9 +842,14 @@ begin
     if Total.ICMSTot.vTotTrib <> 0 then
     begin
       lVTotTrib :=DFeUtil.FormatFloat(Total.ICMSTot.vTotTrib);
-//      lVTotTrib :=lVTotTrib + '('+DFeUtil.FormatFloat((Total.ICMSTot.vTotTrib*100)/Total.ICMSTot.VProd)+'%)';
-      lVTotTrib :=lVTotTrib + '('+DFeUtil.FormatFloat((Total.ICMSTot.vTotTrib*100)/( Total.ICMSTot.VProd - Total.ICMSTot.VDesc ))+'%)';
-      Box([fsLeft],XPos,YPos,(x*4),aHeigthPadrao,'Val. Aprox. Tributos',lVTotTrib,taRightJustify);
+      if (TributosPercentual = ptValorProdutos) and (Total.ICMSTot.VProd > 0) then
+        lVTotTrib :=lVTotTrib + '('+DFeUtil.FormatFloat((Total.ICMSTot.vTotTrib*100)/( Total.ICMSTot.VProd - Total.ICMSTot.VDesc ))+'%)'
+      else if (TributosPercentual = ptValorNF) and (Total.ICMSTot.VNF > 0) then
+        lVTotTrib :=lVTotTrib + '('+DFeUtil.FormatFloat((Total.ICMSTot.vTotTrib*100)/( Total.ICMSTot.VNF ))+'%)';
+      lTemp:='V.Aprox.Tributos';
+      if DFeUtil.NaoEstaVazio(TributosFonte) then
+        lTemp:=lTemp+' (Fonte:'+TributosFonte+')';
+      Box([fsLeft],XPos,YPos,(x*4),aHeigthPadrao,lTemp,lVTotTrib,taRightJustify);
     end;
     Box([fsLeft],XPos,YPos,40,aHeigthPadrao,'Valor Total dos Produtos',DFeUtil.FormatFloat(Total.ICMSTot.VProd),taRightJustify,True);
 
