@@ -141,6 +141,10 @@ begin
             ConfigURL.HomNomeCidade := 'canoas';
             ConfigURL.ProNomeCidade := 'canoas';
            end;
+  5107040: begin // Primavera do Leste/MT
+            ConfigURL.HomNomeCidade := 'primavera';
+            ConfigURL.ProNomeCidade := 'primavera';
+           end;
   5107602: begin // Rondonopolis/MT
             ConfigURL.HomNomeCidade := 'roo';
             ConfigURL.ProNomeCidade := 'roo';

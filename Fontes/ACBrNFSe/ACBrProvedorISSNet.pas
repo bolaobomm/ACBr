@@ -134,41 +134,20 @@ function TProvedorISSNet.GetConfigURL(ACodCidade: Integer): TConfigURL;
 var
  ConfigURL: TConfigURL;
 begin
+ ConfigURL.HomNomeCidade := 'homologacao'; //adicionado por ronnei
+
  case ACodCidade of
-  3530607: begin // Mogi das Cruzes/SP
-            ConfigURL.HomNomeCidade := 'mogidascruzes';
-            ConfigURL.ProNomeCidade := 'mogidascruzes';
-           end;
-  4313409: begin // Novo Hamburgo/RS
-            ConfigURL.HomNomeCidade := 'novohamburgo';
-            ConfigURL.ProNomeCidade := 'novohamburgo';
-           end;
-  5103403: begin // Cuiaba/MT
-            ConfigURL.HomNomeCidade := 'cuiaba';
-            ConfigURL.ProNomeCidade := 'cuiaba';
-           end;
-  5108402: begin
-            ConfigURL.HomNomeCidade := 'varzeagrande';
-            ConfigURL.ProNomeCidade := 'varzeagrande';
-           end;
-  5201108: begin // Anapolis/GO
-            ConfigURL.HomNomeCidade := 'anapolis';
-            ConfigURL.ProNomeCidade := 'anapolis';
-           end;
-  5201405: begin // Aparecida de Goiania/GO
-            ConfigURL.HomNomeCidade := 'aparecidadegoiania';
-            ConfigURL.ProNomeCidade := 'aparecidadegoiania';
-           end;
-  5003702: begin // Dourados/MS
-            ConfigURL.HomNomeCidade := 'dourados';//adicionado por ronnei
-            ConfigURL.ProNomeCidade := 'dourados';//adicionado por ronnei
-           end;
-
-  999: begin // Dourados/MS
-            ConfigURL.HomNomeCidade := 'dourados'; //adicionado por ronnei
-            ConfigURL.ProNomeCidade := 'dourados';//adicionado por ronnei
-           end;
-
+      999: ConfigURL.ProNomeCidade := 'homologacao';//adicionado por ronnei
+  3530607: ConfigURL.ProNomeCidade := 'mogidascruzes'; // Mogi das Cruzes/SP
+  4313409: ConfigURL.ProNomeCidade := 'novohamburgo'; // Novo Hamburgo/RS
+  5003702: ConfigURL.ProNomeCidade := 'dourados'; // Dourados/MS
+  5100250: ConfigURL.ProNomeCidade := 'altafloresta'; // Alta Floresta/MT
+  5103403: ConfigURL.ProNomeCidade := 'cuiaba'; // Cuiaba/MT
+  5106232: ConfigURL.ProNomeCidade := 'novaolimpia'; // Nova Olimpia/MT
+  5107925: ConfigURL.ProNomeCidade := 'sorriso'; // Sorriso/MT
+  5108402: ConfigURL.ProNomeCidade := 'varzeagrande'; // Varzea Grande/MT
+  5201108: ConfigURL.ProNomeCidade := 'anapolis'; // Anapolis/GO
+  5201405: ConfigURL.ProNomeCidade := 'aparecidadegoiania'; // Aparecida de Goiania/GO
  end;
 
  ConfigURL.HomRecepcaoLoteRPS    := 'http://www.issnetonline.com.br/webserviceabrasf/homologacao/servicos.asmx';

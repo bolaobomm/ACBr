@@ -632,16 +632,20 @@ begin
   4314407  // Pelotas/RS
          : Provedor := 'GINFES';
 
+      999, // Adicionado por ronnei, esse código é usado na homologação
   3530607, // Mogi das Cruzes/SP
   4313409, // Novo Hamburgo/RS
+  5003702, // Dourados/MT
+  5100250, // Alta Floresta/MT
   5103403, // Cuiaba/MT
+  5106232, // Nova Olimpia/MT
+  5107925, // Sorriso/MT
   5108402, // Várzea Grande/MT
   5201108, // Anapolis/GO
-  5201405,  // Aparecida de Goiania/GO
-  5003702, //adicionado por Ronnei
-  999      //adicionado por ronnei, esse código é usado na homologação
+  5201405  // Aparecida de Goiania/GO
          : Provedor := 'ISSNET';
 
+  1100049, // Cacoal/RO
   2910800, // Feira de Santana/BA
   3104205, // Arcos/MG
   3105608, // Barbacena/MG
@@ -651,6 +655,7 @@ begin
   3170107, // Uberaba/MG
   3303302, // Niteroi/RJ
   4301602, // Bage/RS
+  5105259, // Lucas do Rio Verde/MT
   5107909  // Sinop/MT
          : Provedor := 'WebISS';
 
@@ -805,7 +810,9 @@ begin
   5107958  // Tangara da Serra/MT
          : Provedor := 'FISSLEX';
 
+  3201209, // Cachoeiro do Itapemirim/ES
   4304606, // Canoas/RS
+  5107040, // Primavera do Leste/MT
   5107602  // Rondonopolis/MT
          : Provedor := 'Abaco';
 
