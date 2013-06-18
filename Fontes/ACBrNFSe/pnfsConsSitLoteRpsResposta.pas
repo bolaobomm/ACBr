@@ -147,7 +147,8 @@ begin
     Leitor.Arquivo := NotaUtil.RetirarPrefixos(Leitor.Arquivo);
     Leitor.Grupo   := Leitor.Arquivo;
 
-    if leitor.rExtrai(1, 'ConsultarSituacaoLoteRpsResposta') <> '' then
+    if (leitor.rExtrai(1, 'ConsultarSituacaoLoteRpsResposta') <> '') or
+       (leitor.rExtrai(1, 'ConsultarLoteRpsResposta') <> '') then
     begin
       InfSit.FNumeroLote := Leitor.rCampo(tcStr, 'NumeroLote');
       InfSit.FSituacao   := Leitor.rCampo(tcStr, 'Situacao');
