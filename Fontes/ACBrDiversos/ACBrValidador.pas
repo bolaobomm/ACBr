@@ -853,7 +853,7 @@ begin
   begin
      Tamanho  := 9 ;
      vDigitos := VarArrayOf(
-        [ 'DVX',c0_9,c0_9,c0_9,c0_9,c0_9,c0_9,'0,8','0','','','','',''] ) ;
+        [ 'DVX',c0_9,c0_9,c0_9,c0_9,c0_9,c0_9,c0_9,c0_9,'','','','',''] ) ;
   end ;
 
   if fsComplemento = 'GO' then
