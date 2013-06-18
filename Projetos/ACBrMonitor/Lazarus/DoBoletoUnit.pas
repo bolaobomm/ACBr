@@ -75,8 +75,7 @@ begin
        begin
          DirArqRemessa := Cmd.Params(0);
          NomeArqRemessa:= Cmd.Params(2);
-         //GerarRemessa( StrToIntDef(cmd.Params(1),1))
-         GerarRemessa(1 {StrToIntDef(cmd.Params(1),1)})
+         GerarRemessa( StrToIntDef(cmd.Params(1),1))
        end
 
       else if cmd.Metodo = 'lerretorno' then
@@ -315,6 +314,12 @@ begin
          except
             OcorrenciaOriginal.Tipo := toRemessaRegistrar ;
          end ;
+
+         try
+           TipoDiasProtesto := TACBrTipoDiasIntrucao(aIni.ReadInteger(Sessao,'TipoDiasProtesto',0));
+         except
+           TipoDiasProtesto := diCorridos;
+         end;
 
          LocalPagto := aIni.ReadString(Sessao,'LocalPagamento','');
 
