@@ -11,6 +11,7 @@ object dmACBrNFeFR: TdmACBrNFeFR
     Outline = False
     Background = True
     HTMLTags = True
+    Quality = 95
     Author = 'FastReport'
     Subject = 'Exportando DANFE para PDF'
     ProtectionFlags = [ePrint, eModify, eCopy, eAnnot]
@@ -545,6 +546,13 @@ object dmACBrNFeFR: TdmACBrNFeFR
     object cdsCalculoImpostoVTotTrib: TFloatField
       FieldName = 'VTotTrib'
     end
+    object cdsCalculoImpostoVTribPerc: TFloatField
+      FieldName = 'VTribPerc'
+    end
+    object cdsCalculoImpostoVTribFonte: TStringField
+      FieldName = 'VTribFonte'
+      Size = 100
+    end
   end
   object cdsTransportador: TClientDataSet
     Aggregates = <>
@@ -895,6 +903,24 @@ object dmACBrNFeFR: TdmACBrNFeFR
   object frxCalculoImposto: TfrxDBDataset
     UserName = 'CalculoImposto'
     CloseDataSource = False
+    FieldAliases.Strings = (
+      'VBC=VBC'
+      'VICMS=VICMS'
+      'VBCST=VBCST'
+      'VST=VST'
+      'VProd=VProd'
+      'VFrete=VFrete'
+      'VSeg=VSeg'
+      'VDesc=VDesc'
+      'VII=VII'
+      'VIPI=VIPI'
+      'VPIS=VPIS'
+      'VCOFINS=VCOFINS'
+      'VOutro=VOutro'
+      'VNF=VNF'
+      'VTotTrib=VTotTrib'
+      'VTribPerc=VTribPerc'
+      'VTribFonte=VTribFonte')
     OpenDataSource = False
     DataSet = cdsCalculoImposto
     BCDToCurrency = False
@@ -978,7 +1004,7 @@ object dmACBrNFeFR: TdmACBrNFeFR
     Top = 148
   end
   object frxReport: TfrxReport
-    Version = '4.12.6'
+    Version = '4.14'
     DotMatrixReport = False
     IniFile = '\Software\Fast Reports'
     PreviewOptions.AllowEdit = False
@@ -987,7 +1013,7 @@ object dmACBrNFeFR: TdmACBrNFeFR
     PrintOptions.Printer = 'Default'
     PrintOptions.PrintOnSheet = 0
     ReportOptions.CreateDate = 40401.475989294000000000
-    ReportOptions.LastChange = 41420.196894467600000000
+    ReportOptions.LastChange = 41443.398037349540000000
     ScriptLanguage = 'PascalScript'
     StoreInDFM = False
     OnReportPrint = 'frxReportOnReportPrint'

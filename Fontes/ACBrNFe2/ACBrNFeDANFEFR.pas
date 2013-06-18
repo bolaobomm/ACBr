@@ -68,7 +68,9 @@ type
     FFastFileEvento: String;
     FShowDialog: Boolean;
     FExibirTotalTributosItem: Boolean;
-    FExibeCampoFatura: Boolean;  //Incluido em 22/05/2013 - Fábio Gabriel
+    FExibeCampoFatura: Boolean;
+    FTributosFonte: string;
+    FTributosPercentual: TpcnPercentualTributos;  //Incluido em 22/05/2013 - Fábio Gabriel
     function GetPreparedReport: TfrxReport;
     function GetPreparedReportEvento: TfrxReport;
     function PrepareReport(NFE: TNFe = nil): Boolean;
@@ -90,6 +92,8 @@ type
     property ShowDialog: Boolean read FShowDialog write FShowDialog default false; // Isaque Pinheiro
     property ExibirTotalTributosItem: Boolean read FExibirTotalTributosItem write FExibirTotalTributosItem;
     property ExibeCampoFatura: Boolean read FExibeCampoFatura write FExibeCampoFatura;  //Incluido em 22/05/2013 - Fábio Gabriel
+    property TributosFonte: string read FTributosFonte write FTributosFonte;
+    property TributosPercentual: TpcnPercentualTributos read FTributosPercentual write FTributosPercentual;
   end;
 
 implementation
@@ -104,6 +108,8 @@ begin
   FEspessuraBorda := 1;
   FExibirTotalTributosItem := False;
   FExibeCampoFatura := True;  //Incluido em 22/05/2013 - Fábio Gabriel - Setado por padrão True
+  FTributosFonte := '';
+  FTributosPercentual := ptValorProdutos;
 end;
 
 destructor TACBrNFeDANFEFR.Destroy;
@@ -146,6 +152,8 @@ begin
 
   dmDanfe.ExibirTotalTributosItem := FExibirTotalTributosItem;
   dmDanfe.ExibeCampoFatura :=  FExibeCampoFatura;
+  dmDanfe.TributosFonte :=  FTributosFonte;
+  dmDanfe.TributosPercentual :=  FTributosPercentual;
 
   if Trim(FastFile) <> '' then
   begin

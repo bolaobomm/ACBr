@@ -278,6 +278,8 @@ type
     cdsDadosProdutosVProd: TFloatField;
     cdsCalculoImpostoVTotTrib: TFloatField;
     cdsDadosProdutosVTotTrib: TFloatField;
+    cdsCalculoImpostoVTribPerc: TFloatField;
+    cdsCalculoImpostoVTribFonte: TStringField;
     constructor Create(AOwner: TComponent); override;
   private
     FDANFEClassOwner: TACBrNFeDANFEClass;
@@ -285,6 +287,8 @@ type
     FEvento: TEventoNFe;
     FExibirTotalTributosItem: Boolean;
     FExibeCampoFatura: Boolean;
+    FTributosFonte: string;
+    FTributosPercentual: TpcnPercentualTributos;
     procedure CarregaIdentificacao;
     procedure CarregaEmitente;
     procedure CarregaDestinatario;
@@ -306,6 +310,8 @@ type
     property DANFEClassOwner: TACBrNFeDANFEClass read FDANFEClassOwner;
     property ExibirTotalTributosItem: Boolean read FExibirTotalTributosItem write FExibirTotalTributosItem default False;
     property ExibeCampoFatura: Boolean read FExibeCampoFatura write FExibeCampoFatura default True;
+    property TributosFonte: string read FTributosFonte write FTributosFonte;
+    property TributosPercentual: TpcnPercentualTributos read FTributosPercentual write FTributosPercentual;
     procedure CarregaDadosNFe;
     procedure CarregaDadosEventos;
   end;
@@ -460,6 +466,14 @@ begin
       FieldByName('VOutro').AsFloat := DFeUtil.StringToFloatDef(FloatToStr(VOutro), 0);
       FieldByName('VNF').AsFloat := DFeUtil.StringToFloatDef(FloatToStr(VNF), 0);
       FieldByName('VTotTrib').AsFloat := DFeUtil.StringToFloatDef(FloatToStr(VTotTrib), 0);
+      if (TributosPercentual = ptValorProdutos) and (VProd > 0) then
+        FieldByName('VTribPerc').AsFloat := DFeUtil.StringToFloatDef(FloatToStr(VTotTrib*100/VProd), 0)
+      else if (TributosPercentual = ptValorNF) and (VNF > 0) then
+        FieldByName('VTribPerc').AsFloat := DFeUtil.StringToFloatDef(FloatToStr(VTotTrib*100/VNF), 0)
+      else
+        FieldByName('VTribPerc').AsFloat := 0;
+      if DFeUtil.NaoEstaVazio(TributosFonte) then
+        FieldByName('VTribFonte').AsString := '(Fonte: '+TributosFonte+')';
     end;
 
     Post;

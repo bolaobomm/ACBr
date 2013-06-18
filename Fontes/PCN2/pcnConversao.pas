@@ -121,6 +121,7 @@ type
   TpcnIndicadorPagamento = (ipVista, ipPrazo, ipOutras);
   TpcnTipoNFe = (tnEntrada, tnSaida);
   TpcnTipoImpressao = (tiSemGeracao, tiRetrato, tiPaisagem, tiSimplificado, tiNFCe, tiMsgEletronica);
+  TpcnPercentualTributos = (ptValorProdutos, ptValorNF);
 
   TpcnTipoEmissao = (teNormal, teContingencia, teSCAN, teDPEC, teFSDA, teSVCAN, teSVCRS, teSVCSP, teOffLine);
   TpcnTipoAmbiente = (taProducao, taHomologacao);
@@ -342,6 +343,8 @@ function tpNFToStr(const t: TpcnTipoNFe): string;
 function StrToTpNF(var ok: boolean; const s: string): TpcnTipoNFe;
 function TpImpToStr(const t: TpcnTipoImpressao): string;
 function StrToTpImp(var ok: boolean; const s: string): TpcnTipoImpressao;
+function PercTribToStr(const t: TpcnPercentualTributos): string;
+function StrToPercTrib(var ok: boolean; const s: string): TpcnPercentualTributos;
 function TpEmisToStr(const t: TpcnTipoEmissao): string;
 function StrToTpEmis(var ok: boolean; const s: string): TpcnTipoEmissao;
 function TpAmbToStr(const t: TpcnTipoAmbiente): string;
@@ -623,6 +626,18 @@ function StrToTpImp(var ok: boolean; const s: string): TpcnTipoImpressao;
 begin
   result := StrToEnumerado(ok, s, ['0', '1', '2', '3', '4', '5'],
                                   [tiSemGeracao, tiRetrato, tiPaisagem, tiSimplificado, tiNFCe, tiMsgEletronica]);
+end;
+
+function PercTribToStr(const t: TpcnPercentualTributos): string;
+begin
+  result := EnumeradoToStr(t, ['0', '1'],
+                              [ptValorProdutos, ptValorNF]);
+end;
+
+function StrToPercTrib(var ok: boolean; const s: string): TpcnPercentualTributos;
+begin
+  result := StrToEnumerado(ok, s, ['0', '1'],
+                                  [ptValorProdutos, ptValorNF]);
 end;
 
 function TpMaskToStrText(const t: TpcteMask): string;
