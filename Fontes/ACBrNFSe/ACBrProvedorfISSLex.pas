@@ -100,13 +100,23 @@ begin
  ConfigCidade.Prefixo4      := '';
  ConfigCidade.Identificador := 'Id';
 
- case ACodCidade of
-  5107958: begin
-            if AAmbiente = 1
-             then ConfigCidade.NameSpaceEnvelope := 'https://demo.fisslex.com.br'
-             else ConfigCidade.NameSpaceEnvelope := 'https://tangara.fisslex.com.br';
-           end;
- end;
+ if AAmbiente = 1
+  then ConfigCidade.NameSpaceEnvelope := 'https://demo.fisslex.com.br'
+  else begin
+   case ACodCidade of
+    1100304: ConfigCidade.NameSpaceEnvelope := 'https://vilhena.fisslex.com.br';
+    5101704: ConfigCidade.NameSpaceEnvelope := 'https://barradobugres.fisslex.com.br';
+    5102504: ConfigCidade.NameSpaceEnvelope := 'https://caceres.fisslex.com.br';
+    5102702: ConfigCidade.NameSpaceEnvelope := 'https://canarana.fisslex.com.br';
+    5103007: ConfigCidade.NameSpaceEnvelope := 'https://chapada.fisslex.com.br';
+    5104559: ConfigCidade.NameSpaceEnvelope := 'https://itauba.fisslex.com.br';
+    5104609: ConfigCidade.NameSpaceEnvelope := 'https://itiquira.fisslex.com.br';
+    5107248: ConfigCidade.NameSpaceEnvelope := 'https://santacarmen.fisslex.com.br';
+    5107800: ConfigCidade.NameSpaceEnvelope := 'https://leverger.fisslex.com.br';
+    5107875: ConfigCidade.NameSpaceEnvelope := 'https://sapezal.fisslex.com.br';
+    5107958: ConfigCidade.NameSpaceEnvelope := 'https://tangara.fisslex.com.br';
+   end;
+  end;
 
  ConfigCidade.AssinaRPS  := False;
  ConfigCidade.AssinaLote := True;
@@ -139,6 +149,46 @@ var
  ConfigURL: TConfigURL;
 begin
  case ACodCidade of
+  1100304: begin // Vilhena/RO
+            ConfigURL.HomNomeCidade := 'vilhena';
+            ConfigURL.ProNomeCidade := 'vilhena';
+           end;
+  5101704: begin // Barra do Bugres/MT
+            ConfigURL.HomNomeCidade := 'barradobugres';
+            ConfigURL.ProNomeCidade := 'barradobugres';
+           end;
+  5102504: begin // Cáceres/MT
+            ConfigURL.HomNomeCidade := 'caceres';
+            ConfigURL.ProNomeCidade := 'caceres';
+           end;
+  5102702: begin // Canarana/MT
+            ConfigURL.HomNomeCidade := 'canarana';
+            ConfigURL.ProNomeCidade := 'canarana';
+           end;
+  5103007:begin // Chapada dos Guimarães/MT
+            ConfigURL.HomNomeCidade := 'chapada';
+            ConfigURL.ProNomeCidade := 'chapada';
+           end;
+  5104559: begin // Itaúba/MT
+            ConfigURL.HomNomeCidade := 'itauba';
+            ConfigURL.ProNomeCidade := 'itauba';
+           end;
+  5104609: begin // Itiquira/MT
+            ConfigURL.HomNomeCidade := 'itiquira';
+            ConfigURL.ProNomeCidade := 'itiquira';
+           end;
+  5107248: begin // Santa Carmen/MT
+            ConfigURL.HomNomeCidade := 'santacarmen';
+            ConfigURL.ProNomeCidade := 'santacarmen';
+           end;
+  5107800: begin // Santo Antônio do Leverger/MT
+            ConfigURL.HomNomeCidade := 'leverger';
+            ConfigURL.ProNomeCidade := 'leverger';
+           end;
+  5107875: begin // Sapezal/MT
+            ConfigURL.HomNomeCidade := 'sapezal';
+            ConfigURL.ProNomeCidade := 'sapezal';
+           end;
   5107958: begin // Tangara da Serra/MT
             ConfigURL.HomNomeCidade := 'tangara';
             ConfigURL.ProNomeCidade := 'tangara';

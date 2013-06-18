@@ -792,6 +792,16 @@ begin
   2903201  // Barreiras/BA
          : Provedor := 'Saatri';
 
+  1100304, // Vilhena/RO
+  5101704, // Barra do Bugres/MT
+  5102504, // Cáceres/MT
+  5102702, // Canarana/MT
+  5103007, // Chapada dos Guimarães/MT
+  5104559, // Itaúba/MT
+  5104609, // Itiquira/MT
+  5107248, // Santa Carmen/MT
+  5107800, // Santo Antônio do Leverger/MT
+  5107875, // Sapezal/MT
   5107958  // Tangara da Serra/MT
          : Provedor := 'FISSLEX';
 
