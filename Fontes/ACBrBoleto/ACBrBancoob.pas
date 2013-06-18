@@ -74,7 +74,7 @@ type
 
 implementation
 
-uses ACBrUtil, StrUtils, Variants,ACBrValidador,math;
+uses ACBrUtil, StrUtils, Variants, math;
 
 constructor TACBrBancoob.create(AOwner: TACBrBanco);
 begin

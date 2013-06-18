@@ -38,7 +38,7 @@ unit ACBrBanestes;
 interface
 
 uses
-  Classes, SysUtils,ACBrBoleto, MaskUtils,
+  Classes, SysUtils,ACBrBoleto,
   {$IFDEF COMPILER6_UP} dateutils {$ELSE} ACBrD5 {$ENDIF};
 
 type

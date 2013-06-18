@@ -68,7 +68,7 @@ type
 
 implementation
 
-uses ACBrUtil, StrUtils, ACBrValidador;
+uses ACBrUtil, StrUtils;
 
 var
   aTotal: Extended;
@@ -189,7 +189,6 @@ function TACBrBanrisul.MontarCodigoBarras(const ACBrTitulo: TACBrTitulo): string
 var
   CodigoBarras, FatorVencimento, DigitoCodBarras, CampoLivre, Modalidade,digitoVerificador: string;
   DigitoNum: Integer;
-  v_calc  : Integer;
 begin
   with ACBrTitulo do
   begin

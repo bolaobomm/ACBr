@@ -56,7 +56,7 @@ type
 implementation
 
 uses
-  ACBrUtil, StrUtils, ACBrValidador;
+  ACBrUtil, StrUtils;
 
 { TACBrBancoBRB }
 

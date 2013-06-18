@@ -376,7 +376,6 @@ function TACBrCaixaEconomicaSICOB.MontarCodigoBarras(const ACBrTitulo : TACBrTit
 var
   CodigoBarras, FatorVencimento, DigitoCodBarras :String;
   ANossoNumero, CampoLivre,aCodCedente :String;
-  teste: String;
 begin
    FatorVencimento := CalcularFatorVencimento(ACBrTitulo.Vencimento);
 
