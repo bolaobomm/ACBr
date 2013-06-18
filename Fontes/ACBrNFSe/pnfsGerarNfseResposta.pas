@@ -585,7 +585,23 @@ begin
       end;
 
       Result := True;
+    end
+    else // alterado Joel Takei ISSe 08/06/2013
+    if leitor.rExtrai(1, 'ListaMensagemRetorno') <> '' then
+    begin
+      i := 0;
+      while Leitor.rExtrai(2, 'MensagemRetorno', '', i + 1) <> '' do
+      begin
+        ListaNfse.FMsgRetorno.Add;
+        ListaNfse.FMsgRetorno[i].FCodigo   := Leitor.rCampo(tcStr, 'Codigo');
+        ListaNfse.FMsgRetorno[i].FMensagem := Leitor.rCampo(tcStr, 'Mensagem');
+        ListaNfse.FMsgRetorno[i].FCorrecao := Leitor.rCampo(tcStr, 'Correcao');
+
+        inc(i);
+      end;
+      Result := True;
     end;
+
   except
     result := False;
   end;

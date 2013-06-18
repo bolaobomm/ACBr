@@ -658,7 +658,8 @@ begin
    acConsNFSe:    Result := SeparaDados( RetornoWS, 'outputXML' );
    acCancelar:    Result := SeparaDados( RetornoWS, 'outputXML' );
    acGerar:       Result := SeparaDados( RetornoWS, 'outputXML' );
-   acRecSincrono: Result := SeparaDados( RetornoWS, 'outputXML' );
+   // Alterado por Joel Takei 13/06/2013
+   acRecSincrono: Result := SeparaDados( RetornoWS, 'return' );
  end;
 end;
 
