@@ -68,6 +68,8 @@ type
     FEspessuraBorda: Integer;
     FTamanhoFonte_RazaoSocial: Integer;
     FTamanhoFonte_ANTT: Integer;
+    FTributosFonte: string;
+    FTributosPercentual: TpcnPercentualTributos;
     procedure ExecutaReport;
    public
     constructor Create(AOwner: TComponent); override;
@@ -81,6 +83,8 @@ type
     property EspessuraBorda : Integer read FEspessuraBorda write FEspessuraBorda;
     property TamanhoFonte_RazaoSocial: Integer read FTamanhoFonte_RazaoSocial write FTamanhoFonte_RazaoSocial;
     property TamanhoFonte_ANTT: Integer read FTamanhoFonte_ANTT write FTamanhoFonte_ANTT;
+    property TributosFonte: string read FTributosFonte write FTributosFonte;
+    property TributosPercentual: TpcnPercentualTributos read FTributosPercentual write FTributosPercentual;
   end;
 
 implementation
@@ -95,6 +99,7 @@ begin
   FEspessuraBorda := 1;
   FTamanhoFonte_RazaoSocial := 12;
   FTamanhoFonte_ANTT := 10;
+  FTributosPercentual := ptValorProdutos;
 end;
 
 destructor TACBrNFeDANFERave.Destroy;
@@ -254,13 +259,27 @@ begin
                i:=i-1;
             end;
             //vTotTrib
-            if dmDanfe.NFe.Total.ICMSTot.vTotTrib = 0 then
+            if dmDanfe.NFe.Total.ICMSTot.vTotTrib <> 0 then
+            begin
+              wText[7] := FindRaveComponent('Text7',wPage[1]) as TRaveText;
+              wDataText[7] := FindRaveComponent('DataText7',wPage[1]) as TRaveDataText;
+              if ((wDataText[7] <> nil) and (wText[7] <> nil)) then
+              begin
+                wText[7].Text := 'V.APROX.TRIBUTOS';
+                if DFeUtil.NaoEstaVazio(FTributosFonte) then
+                  wText[7].Text := wText[7].Text+' (Fonte:'+FTributosFonte+')';
+              end;
+            end
+            else
             begin
               wText[7] := FindRaveComponent('Text7',wPage[1]) as TRaveText;
               wDataText[7] := FindRaveComponent('DataText7',wPage[1]) as TRaveDataText;
               wVLine[10] := FindRaveComponent('VLine10',wPage[1]) as TRaveVLine;
               if ((wDataText[7] <> nil) and (wText[7] <> nil) and (wVLine[10] <> nil)) then
               begin
+                wText[7].Text := 'V.Aprox.Tributos';
+                if DFeUtil.NaoEstaVazio(FTributosFonte) then
+                  wText[7].Text := wText[7].Text+'-Fonte:'+FTributosFonte;
                 wVLine[6] := FindRaveComponent('VLine6',wPage[1]) as TRaveVLine;
                 k := wVLine[6].Left-wVLine[10].Left;
 
@@ -800,6 +819,7 @@ begin
          end;
       end;
    finally
+      dmDanfe.TributosPercentual := FtributosPercentual;
       dmDanfe.RvProject.ExecuteReport('DANFE1');
       dmDanfe.RvProject.Close;
       ProtocoloNFe:='';
@@ -902,7 +922,7 @@ begin
     finally
       dmDanfe.RvSystem1.OnBeforePrint := dmDanfe.RvSystem1BeforePrint;
       dmDanfe.RvSystem1.OnPrint := nil;
-    end;  
+    end;
   end
   else
   begin

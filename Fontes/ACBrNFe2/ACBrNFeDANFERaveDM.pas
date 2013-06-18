@@ -129,9 +129,11 @@ type
   private
     FDANFEClassOwner : TACBrNFeDANFEClass ;
     FNFe : TNFe;
+    FTributosPercentual: TpcnPercentualTributos;
   public
     property NFe : TNFe read FNFe write FNFe;
     property DANFEClassOwner : TACBrNFeDANFEClass read FDANFEClassOwner ;
+    property TributosPercentual: TpcnPercentualTributos read FTributosPercentual write FTributosPercentual;
   end;
 
 implementation
@@ -455,8 +457,10 @@ begin
     if VTotTrib <> 0 then
     begin
       lVTotTrib :=DFeUtil.FormatFloat(vTotTrib);
-//      lVTotTrib :=lVTotTrib + '('+DFeUtil.FormatFloat((vTotTrib*100)/VProd)+'%)';
-      lVTotTrib :=lVTotTrib + '('+DFeUtil.FormatFloat((vTotTrib*100)/(VProd-vDesc))+'%)';
+      if (TributosPercentual = ptValorProdutos) and (VProd > 0) then
+        lVTotTrib :=lVTotTrib + '('+DFeUtil.FormatFloat((vTotTrib*100)/( VProd - VDesc ))+'%)'
+      else if (TributosPercentual = ptValorNF) and (VNF > 0) then
+        lVTotTrib :=lVTotTrib + '('+DFeUtil.FormatFloat((vTotTrib*100)/( VNF ))+'%)';
     end
     else
       lVTotTrib := '';
