@@ -4955,14 +4955,12 @@ end;
 
 procedure TACBrECFDaruma.ArquivoMF_DLL(NomeArquivo: AnsiString);
 Var
-  Arquivos : TStringList ;
-  Resp, Tipo : Integer ;
-  DiaIni, DiaFim, Prop,  FileMask, FilePath : AnsiString ;
+  Resp : Integer ;
+  FilePath : AnsiString ;
   OldAtivo : Boolean ;
   {$IFDEF LINUX} Cmd, ArqTmp : String ; {$ENDIF}
 begin
   OldAtivo := Ativo;
-  Prop     := IntToStr( StrToIntDef( UsuarioAtual, 1) ) ;
   FilePath := ExtractFilePath( NomeArquivo );
   LoadDLLFunctions;
   ConfigurarDLL(FilePath);
@@ -4977,7 +4975,6 @@ begin
                                             'Cod.: '+IntToStr(Resp)+' '+GetDescricaoErroDLL(Resp) )) ;
 
   finally
-     Arquivos.Free;
      UnloadDLLFunctions;
      Ativo := OldAtivo;
   end;

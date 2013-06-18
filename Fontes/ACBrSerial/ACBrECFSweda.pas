@@ -3647,7 +3647,7 @@ begin
     Resp := xECF_DownloadMF( FileMF );
     if (Resp <> 1) then
        raise EACBrECFERRO.Create( ACBrStr( 'Erro ao executar ECF_DownloadMF.'+sLineBreak+
-                                  DescricaoErroDLL(Resp) ));
+                                  'Cod.: '+IntToStr(Resp) ));
   finally
      xECF_FechaPortaSerial ;
      try

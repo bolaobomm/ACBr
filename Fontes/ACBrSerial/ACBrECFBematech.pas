@@ -3599,18 +3599,16 @@ end;
 
 Procedure TACBrECFBematech.ArquivoMF_DLL(NomeArquivo: AnsiString);
 Var
-  Arquivos : TStringList ;
-  Resp, Tipo : Integer ;
-  DiaIni, DiaFim, Prop,  FileMask, FilePath : AnsiString ;
+  Resp : Integer ;
+  FilePath : AnsiString ;
   OldAtivo : Boolean ;
   {$IFDEF LINUX} Cmd, ArqTmp : String ; {$ENDIF}
 begin
-  Prop     := IntToStr( StrToIntDef( UsuarioAtual, 1) ) ;
   FilePath := ExtractFilePath( NomeArquivo );
   LoadDLLFunctions;
+  OldAtivo := Ativo ;
   try
      DeleteFile( NomeArquivo );
-
      AbrePortaSerialDLL( FilePath ) ;
 
      GravaLog( '   xBematech_FI_DownloadMF' );
@@ -3621,7 +3619,6 @@ begin
                                          AnalisarRetornoDll(Resp) )) ;
 
   finally
-     Arquivos.Free;
      FechaPortaSerialDLL( OldAtivo );
   end;
 
