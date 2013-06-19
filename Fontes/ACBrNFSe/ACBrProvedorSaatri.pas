@@ -140,9 +140,125 @@ begin
             ConfigURL.HomNomeCidade         := 'boavista';
             ConfigURL.ProNomeCidade         := 'boavista';
            end;
-  2903201: begin
+  1400209: begin // Caracarai/RR
+            ConfigURL.HomNomeCidade         := 'caracarai';
+            ConfigURL.ProNomeCidade         := 'caracarai';
+           end;
+  2900801: begin // Alcobaca/BA
+            ConfigURL.HomNomeCidade         := 'alcobaca';
+            ConfigURL.ProNomeCidade         := 'alcobaca';
+           end;
+  2902708: begin // Barra/BA
+            ConfigURL.HomNomeCidade         := 'barra';
+            ConfigURL.ProNomeCidade         := 'barra';
+           end;
+  2903201: begin // Barreiras/BA
             ConfigURL.HomNomeCidade         := 'barreiras';
             ConfigURL.ProNomeCidade         := 'barreiras';
+           end;
+  2903904: begin // Bom Jesus Da Lapa/BA
+            ConfigURL.HomNomeCidade         := 'bjlapa';
+            ConfigURL.ProNomeCidade         := 'bjlapa';
+           end;
+  2905602: begin // Camacan/BA
+            ConfigURL.HomNomeCidade         := 'camacan';
+            ConfigURL.ProNomeCidade         := 'camacan';
+           end;
+  2906006: begin // Campo Formoso/BA
+            ConfigURL.HomNomeCidade         := 'campoformoso';
+            ConfigURL.ProNomeCidade         := 'campoformoso';
+           end;
+  2907202: begin // Casa Nova/BA
+            ConfigURL.HomNomeCidade         := 'casanova';
+            ConfigURL.ProNomeCidade         := 'casanova';
+           end;
+  2909307: begin // Correntina/BA
+            ConfigURL.HomNomeCidade         := 'correntina';
+            ConfigURL.ProNomeCidade         := 'correntina';
+           end;
+  2910057: begin // Dias D Avila/BA
+            ConfigURL.HomNomeCidade         := 'diasdavila';
+            ConfigURL.ProNomeCidade         := 'diasdavila';
+           end;
+  2910602: begin // Esplanada/BA
+            ConfigURL.HomNomeCidade         := 'esplanada';
+            ConfigURL.ProNomeCidade         := 'esplanada';
+           end;
+  2913200: begin // Ibotirama/BA
+            ConfigURL.HomNomeCidade         := 'ibotirama';
+            ConfigURL.ProNomeCidade         := 'ibotirama';
+           end;
+  2913903: begin // Ipiau/BA
+            ConfigURL.HomNomeCidade         := 'ipiau';
+            ConfigURL.ProNomeCidade         := 'ipiau';
+           end;
+  2914505: begin // Irara/BA
+            ConfigURL.HomNomeCidade         := 'irara';
+            ConfigURL.ProNomeCidade         := 'irara';
+           end;
+  2914653: begin // Itabela/BA
+            ConfigURL.HomNomeCidade         := 'itabela';
+            ConfigURL.ProNomeCidade         := 'itabela';
+           end;
+  2914703: begin // Itaberaba/BA
+            ConfigURL.HomNomeCidade         := 'itaberaba';
+            ConfigURL.ProNomeCidade         := 'itaberaba';
+           end;
+  2917003: begin // Itiuba/BA
+            ConfigURL.HomNomeCidade         := 'itiuba';
+            ConfigURL.ProNomeCidade         := 'itiuba';
+           end;
+  2917508: begin // Jacobina/BA
+            ConfigURL.HomNomeCidade         := 'jacobina';
+            ConfigURL.ProNomeCidade         := 'jacobina';
+           end;
+  2917706: begin // Jaguarari/BA
+            ConfigURL.HomNomeCidade         := 'jaguarari';
+            ConfigURL.ProNomeCidade         := 'jaguarari';
+           end;
+  2919157: begin // Lapao/BA
+            ConfigURL.HomNomeCidade         := 'lapao';
+            ConfigURL.ProNomeCidade         := 'lapao';
+           end;
+  2919926: begin // Madre De Deus/BA
+            ConfigURL.HomNomeCidade         := 'madre';
+            ConfigURL.ProNomeCidade         := 'madre';
+           end;
+  2922656: begin // Nordestina/BA
+            ConfigURL.HomNomeCidade         := 'nordestina';
+            ConfigURL.ProNomeCidade         := 'nordestina';
+           end;
+  2922003: begin // Mucuri/BA
+            ConfigURL.HomNomeCidade         := 'mucuri';
+            ConfigURL.ProNomeCidade         := 'mucuri';
+           end;
+  2927705: begin // Santa Cruz Cabralia/BA
+            ConfigURL.HomNomeCidade         := 'santacruzcabralia';
+            ConfigURL.ProNomeCidade         := 'santacruzcabralia';
+           end;
+  2928901: begin // Sao Desiderio/BA
+            ConfigURL.HomNomeCidade         := 'saodesiderio';
+            ConfigURL.ProNomeCidade         := 'saodesiderio';
+           end;
+  2931350: begin // Teixeira De Freitas/BA
+            ConfigURL.HomNomeCidade         := 'teixeiradefreitas';
+            ConfigURL.ProNomeCidade         := 'teixeiradefreitas';
+           end;
+  2932804: begin // Utinga/BA
+            ConfigURL.HomNomeCidade         := 'utinga';
+            ConfigURL.ProNomeCidade         := 'utinga';
+           end;
+  2933208: begin // Vera Cruz/BA
+            ConfigURL.HomNomeCidade         := 'veracruz';
+            ConfigURL.ProNomeCidade         := 'veracruz';
+           end;
+  4201653: begin // Arvoredo/SC
+            ConfigURL.HomNomeCidade         := 'arvoredo';
+            ConfigURL.ProNomeCidade         := 'arvoredo';
+           end;
+  4204558: begin // Correia Pinto/SC
+            ConfigURL.HomNomeCidade         := 'correiapinto';
+            ConfigURL.ProNomeCidade         := 'correiapinto';
            end;
  end;
 

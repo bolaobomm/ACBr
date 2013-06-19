@@ -101,10 +101,80 @@ begin
  ConfigCidade.Identificador := 'Id';
 
  case ACodCidade of
+  1709500: begin // Gurupi/TO
+            if AAmbiente = 1
+             then ConfigCidade.NameSpaceEnvelope := 'https://gurupi-to.issintel.com.br/webservices/abrasf/api'
+             else ConfigCidade.NameSpaceEnvelope := 'https://gurupi-to.treino-issintel.com.br/webservices/abrasf/api';
+           end;
+  2112209: begin // Timon/MA
+            if AAmbiente = 1
+             then ConfigCidade.NameSpaceEnvelope := 'https://timon-ma.issintel.com.br/webservices/abrasf/api'
+             else ConfigCidade.NameSpaceEnvelope := 'https://timon-ma.treino-issintel.com.br/webservices/abrasf/api';
+           end;
+  2207009: begin // Oeiras/PI
+            if AAmbiente = 1
+             then ConfigCidade.NameSpaceEnvelope := 'https://oeiras-pi.issintel.com.br/webservices/abrasf/api'
+             else ConfigCidade.NameSpaceEnvelope := 'https://oeiras-pi.treino-issintel.com.br/webservices/abrasf/api';
+           end;
+  2208007: begin // Picos/PI
+            if AAmbiente = 1
+             then ConfigCidade.NameSpaceEnvelope := 'https://picos-pi.issintel.com.br/webservices/abrasf/api'
+             else ConfigCidade.NameSpaceEnvelope := 'https://picos-pi.treino-issintel.com.br/webservices/abrasf/api';
+           end;
+  2211209: begin // Uruçuí/PI
+            if AAmbiente = 1
+             then ConfigCidade.NameSpaceEnvelope := 'https://urucui-pi.issintel.com.br/webservices/abrasf/api'
+             else ConfigCidade.NameSpaceEnvelope := 'https://urucui-pi.treino-issintel.com.br/webservices/abrasf/api';
+           end;
+  2307304: begin // Juazeiro do Norte/CE
+            if AAmbiente = 1
+             then ConfigCidade.NameSpaceEnvelope := 'https://juazeirodonorte-ce.issintel.com.br/webservices/abrasf/api'
+             else ConfigCidade.NameSpaceEnvelope := 'https://juazeirodonorte-ce.treino-issintel.com.br/webservices/abrasf/api';
+           end;
+  2910727: begin // Eunapolis/BA
+            if AAmbiente = 1
+             then ConfigCidade.NameSpaceEnvelope := 'https://eunapolis-ba.issintel.com.br/webservices/abrasf/api'
+             else ConfigCidade.NameSpaceEnvelope := 'https://eunapolis-ba.treino-issintel.com.br/webservices/abrasf/api';
+           end;
   2925303: begin // Porto Seguro/BA
             if AAmbiente = 1
              then ConfigCidade.NameSpaceEnvelope := 'https://portoseguro-ba.issintel.com.br/webservices/abrasf/api'
              else ConfigCidade.NameSpaceEnvelope := 'https://portoseguro-ba.treino-issintel.com.br/webservices/abrasf/api';
+           end;
+  3107109: begin // Boa Esperança/MG
+            if AAmbiente = 1
+             then ConfigCidade.NameSpaceEnvelope := 'https://boaesperanca-mg.issintel.com.br/webservices/abrasf/api'
+             else ConfigCidade.NameSpaceEnvelope := 'https://boaesperanca-mg.treino-issintel.com.br/webservices/abrasf/api';
+           end;
+  3112505: begin // Capim Branco/MG
+            if AAmbiente = 1
+             then ConfigCidade.NameSpaceEnvelope := 'https://capimbranco-mg.issintel.com.br/webservices/abrasf/api'
+             else ConfigCidade.NameSpaceEnvelope := 'https://capimbranco-mg.treino-issintel.com.br/webservices/abrasf/api';
+           end;
+  3113305: begin // Carangola/MG
+            if AAmbiente = 1
+             then ConfigCidade.NameSpaceEnvelope := 'https://carangola-mg.issintel.com.br/webservices/abrasf/api'
+             else ConfigCidade.NameSpaceEnvelope := 'https://carangola-mg.treino-issintel.com.br/webservices/abrasf/api';
+           end;
+  3114402: begin // Carmo do Rio Claro/MG
+            if AAmbiente = 1
+             then ConfigCidade.NameSpaceEnvelope := 'https://carmodorioclaro-mg.issintel.com.br/webservices/abrasf/api'
+             else ConfigCidade.NameSpaceEnvelope := 'https://carmodorioclaro-mg.treino-issintel.com.br/webservices/abrasf/api';
+           end;
+  3116605: begin // Cláudio/MG
+            if AAmbiente = 1
+             then ConfigCidade.NameSpaceEnvelope := 'https://claudio-mg.issintel.com.br/webservices/abrasf/api'
+             else ConfigCidade.NameSpaceEnvelope := 'https://claudio-mg.treino-issintel.com.br/webservices/abrasf/api';
+           end;
+  3128006: begin // Guanhães/MG
+            if AAmbiente = 1
+             then ConfigCidade.NameSpaceEnvelope := 'https://guanhaes-mg.issintel.com.br/webservices/abrasf/api'
+             else ConfigCidade.NameSpaceEnvelope := 'https://guanhaes-mg.treino-issintel.com.br/webservices/abrasf/api';
+           end;
+  3128105: begin // Guapé/MG
+            if AAmbiente = 1
+             then ConfigCidade.NameSpaceEnvelope := 'https://guape-mg.issintel.com.br/webservices/abrasf/api'
+             else ConfigCidade.NameSpaceEnvelope := 'https://guape-mg.treino-issintel.com.br/webservices/abrasf/api';
            end;
   3131307: begin // Ipatinga/MG
             if AAmbiente = 1
@@ -117,6 +187,91 @@ begin
 //             then ConfigCidade.NameSpaceEnvelope := 'https://santaluzia-mg.issintel.com.br/webservices/abrasf/api'
 //             else ConfigCidade.NameSpaceEnvelope := 'https://santaluzia-mg.treino-issintel.com.br/webservices/abrasf/api';
 //           end;
+  3147907: begin // Passos/MG
+            if AAmbiente = 1
+             then ConfigCidade.NameSpaceEnvelope := 'https://passos-mg.issintel.com.br/webservices/abrasf/api'
+             else ConfigCidade.NameSpaceEnvelope := 'https://passos-mg.treino-issintel.com.br/webservices/abrasf/api';
+           end;
+  3148004: begin // Patos de Minas/MG
+            if AAmbiente = 1
+             then ConfigCidade.NameSpaceEnvelope := 'https://patosdeminas-mg.issintel.com.br/webservices/abrasf/api'
+             else ConfigCidade.NameSpaceEnvelope := 'https://patosdeminas-mg.treino-issintel.com.br/webservices/abrasf/api';
+           end;
+  3149903: begin // Perdões/MG
+            if AAmbiente = 1
+             then ConfigCidade.NameSpaceEnvelope := 'https://perdoes-mg.issintel.com.br/webservices/abrasf/api'
+             else ConfigCidade.NameSpaceEnvelope := 'https://perdoes-mg.treino-issintel.com.br/webservices/abrasf/api';
+           end;
+  3151503: begin // Piumhi/MG
+            if AAmbiente = 1
+             then ConfigCidade.NameSpaceEnvelope := 'https://piumhi-mg.issintel.com.br/webservices/abrasf/api'
+             else ConfigCidade.NameSpaceEnvelope := 'https://piumhi-mg.treino-issintel.com.br/webservices/abrasf/api';
+           end;
+  3152600: begin // Pouso Alto/MG
+            if AAmbiente = 1
+             then ConfigCidade.NameSpaceEnvelope := 'https://pousoalto-mg.issintel.com.br/webservices/abrasf/api'
+             else ConfigCidade.NameSpaceEnvelope := 'https://pousoalto-mg.treino-issintel.com.br/webservices/abrasf/api';
+           end;
+  3153905: begin // Raposos/MG
+            if AAmbiente = 1
+             then ConfigCidade.NameSpaceEnvelope := 'https://raposos-mg.issintel.com.br/webservices/abrasf/api'
+             else ConfigCidade.NameSpaceEnvelope := 'https://raposos-mg.treino-issintel.com.br/webservices/abrasf/api';
+           end;
+  3170800: begin // Várzea da Palma/MG
+            if AAmbiente = 1
+             then ConfigCidade.NameSpaceEnvelope := 'https://varzeadapalma-mg.issintel.com.br/webservices/abrasf/api'
+             else ConfigCidade.NameSpaceEnvelope := 'https://varzeadapalma-mg.treino-issintel.com.br/webservices/abrasf/api';
+           end;
+  3171303: begin // Viçosa/MG
+            if AAmbiente = 1
+             then ConfigCidade.NameSpaceEnvelope := 'https://vicosa-mg.issintel.com.br/webservices/abrasf/api'
+             else ConfigCidade.NameSpaceEnvelope := 'https://vicosa-mg.treino-issintel.com.br/webservices/abrasf/api';
+           end;
+  3200102: begin // Afonso Cláudio/ES
+            if AAmbiente = 1
+             then ConfigCidade.NameSpaceEnvelope := 'https://afonsoclaudio-es.issintel.com.br/webservices/abrasf/api'
+             else ConfigCidade.NameSpaceEnvelope := 'https://afonsoclaudio-es.treino-issintel.com.br/webservices/abrasf/api';
+           end;
+  3200300: begin // Alfredo Chaves/ES
+            if AAmbiente = 1
+             then ConfigCidade.NameSpaceEnvelope := 'https://alfredochaves-es.issintel.com.br/webservices/abrasf/api'
+             else ConfigCidade.NameSpaceEnvelope := 'https://alfredochaves-es.treino-issintel.com.br/webservices/abrasf/api';
+           end;
+  3204708: begin // São Gabriel da Palha/ES
+            if AAmbiente = 1
+             then ConfigCidade.NameSpaceEnvelope := 'https://saogabrieldapalha-es.issintel.com.br/webservices/abrasf/api'
+             else ConfigCidade.NameSpaceEnvelope := 'https://saogabrieldapalha-es.treino-issintel.com.br/webservices/abrasf/api';
+           end;
+  4109609: begin // Guaratuba/PR
+            if AAmbiente = 1
+             then ConfigCidade.NameSpaceEnvelope := 'https://guaratuba-pr.issintel.com.br/webservices/abrasf/api'
+             else ConfigCidade.NameSpaceEnvelope := 'https://guaratuba-pr.treino-issintel.com.br/webservices/abrasf/api';
+           end;
+  4300406: begin // Alegrete/RS
+            if AAmbiente = 1
+             then ConfigCidade.NameSpaceEnvelope := 'https://alegrete-rs.issintel.com.br/webservices/abrasf/api'
+             else ConfigCidade.NameSpaceEnvelope := 'https://alegrete-rs.treino-issintel.com.br/webservices/abrasf/api';
+           end;
+  4313953: begin // Pantano Grande/RS
+            if AAmbiente = 1
+             then ConfigCidade.NameSpaceEnvelope := 'https://pantanogrande-rs.issintel.com.br/webservices/abrasf/api'
+             else ConfigCidade.NameSpaceEnvelope := 'https://pantanogrande-rs.treino-issintel.com.br/webservices/abrasf/api';
+           end;
+  5106505: begin // Poconé/MT
+            if AAmbiente = 1
+             then ConfigCidade.NameSpaceEnvelope := 'https://pocone-mt.issintel.com.br/webservices/abrasf/api'
+             else ConfigCidade.NameSpaceEnvelope := 'https://pocone-mt.treino-issintel.com.br/webservices/abrasf/api';
+           end;
+  5106778: begin // Porto Alegre do Norte/MT
+            if AAmbiente = 1
+             then ConfigCidade.NameSpaceEnvelope := 'https://portoalegredonorte-mt.issintel.com.br/webservices/abrasf/api'
+             else ConfigCidade.NameSpaceEnvelope := 'https://portoalegredonorte-mt.treino-issintel.com.br/webservices/abrasf/api';
+           end;
+  5107107: begin // São José dos Quatro Marcos/MT
+            if AAmbiente = 1
+             then ConfigCidade.NameSpaceEnvelope := 'https://saojosedosquatromarcos-mt.issintel.com.br/webservices/abrasf/api'
+             else ConfigCidade.NameSpaceEnvelope := 'https://saojosedosquatromarcos-mt.treino-issintel.com.br/webservices/abrasf/api';
+           end;
  end;
  ConfigCidade.AssinaRPS  := False;
  ConfigCidade.AssinaLote := True;
@@ -151,22 +306,171 @@ var
  Porta: String;
 begin
  case ACodCidade of
-  2925303: begin
+  1709500: begin // Gurupi/TO
+            ConfigURL.HomNomeCidade := 'gurupi-to';
+            ConfigURL.ProNomeCidade := 'gurupi-to';
+            Porta := ''; //Porta := ':442';
+           end;
+  2112209: begin // Timon/MA
+            ConfigURL.HomNomeCidade := 'timon-ma';
+            ConfigURL.ProNomeCidade := 'timon-ma';
+            Porta := ''; //Porta := ':442';
+           end;
+  2207009: begin // Oeiras/PI
+            ConfigURL.HomNomeCidade := 'oeiras-pi';
+            ConfigURL.ProNomeCidade := 'oeiras-pi';
+            Porta := ''; //Porta := ':442';
+           end;
+  2208007: begin // Picos/PI
+            ConfigURL.HomNomeCidade := 'picos-pi';
+            ConfigURL.ProNomeCidade := 'picos-pi';
+            Porta := ''; //Porta := ':442';
+           end;
+  2211209: begin // Uruçuí/PI
+            ConfigURL.HomNomeCidade := 'urucui-pi';
+            ConfigURL.ProNomeCidade := 'urucui-pi';
+            Porta := ''; //Porta := ':442';
+           end;
+  2307304: begin // Juazeiro do Norte/CE
+            ConfigURL.HomNomeCidade := 'juazeirodonorte-ce';
+            ConfigURL.ProNomeCidade := 'juazeirodonorte-ce';
+            Porta := ''; //Porta := ':442';
+           end;
+  2910727: begin // Eunapolis/BA
+            ConfigURL.HomNomeCidade := 'eunapolis-ba';
+            ConfigURL.ProNomeCidade := 'eunapolis-ba';
+            Porta := ''; //Porta := ':442';
+           end;
+  2925303: begin // Porto Seguro/BA
             ConfigURL.HomNomeCidade := 'portoseguro-ba';
             ConfigURL.ProNomeCidade := 'portoseguro-ba';
-
             Porta := '';
            end;
-  3131307: begin
+  3107109: begin // Boa Esperança/MG
+            ConfigURL.HomNomeCidade := 'boaesperanca-mg';
+            ConfigURL.ProNomeCidade := 'boaesperanca-mg';
+            Porta := ''; //Porta := ':442';
+           end;
+  3112505: begin // Capim Branco/MG
+            ConfigURL.HomNomeCidade := 'capimbranco-mg';
+            ConfigURL.ProNomeCidade := 'capimbranco-mg';
+            Porta := ''; //Porta := ':442';
+           end;
+  3113305: begin // Carangola/MG
+            ConfigURL.HomNomeCidade := 'carangola-mg';
+            ConfigURL.ProNomeCidade := 'carangola-mg';
+            Porta := ''; //Porta := ':442';
+           end;
+  3114402: begin // Carmo do Rio Claro/MG
+            ConfigURL.HomNomeCidade := 'carmodorioclaro-mg';
+            ConfigURL.ProNomeCidade := 'carmodorioclaro-mg';
+            Porta := ''; //Porta := ':442';
+           end;
+  3116605: begin // Cláudio/MG
+            ConfigURL.HomNomeCidade := 'claudio-mg';
+            ConfigURL.ProNomeCidade := 'claudio-mg';
+            Porta := ''; //Porta := ':442';
+           end;
+  3128006: begin // Guanhães/MG
+            ConfigURL.HomNomeCidade := 'guanhaes-mg';
+            ConfigURL.ProNomeCidade := 'guanhaes-mg';
+            Porta := ''; //Porta := ':442';
+           end;
+  3128105: begin // Guapé/MG
+            ConfigURL.HomNomeCidade := 'guape-mg';
+            ConfigURL.ProNomeCidade := 'guape-mg';
+            Porta := ''; //Porta := ':442';
+           end;
+  3131307: begin // Ipatinga/MG
             ConfigURL.HomNomeCidade := 'ipatinga-mg';
             ConfigURL.ProNomeCidade := 'ipatinga-mg';
-
-            Porta := ':442';
+            Porta := ''; //Porta := ':442';
            end;
-//  3157807: begin
-//            ConfigURL.HomNomeCidade := 'santaluzia-mg';
-//            ConfigURL.ProNomeCidade := 'santaluzia-mg';
-//           end;
+  3147907: begin // Passos/MG
+            ConfigURL.HomNomeCidade := 'passos-mg';
+            ConfigURL.ProNomeCidade := 'passos-mg';
+            Porta := ''; //Porta := ':442';
+           end;
+  3148004: begin // Patos de Minas/MG
+            ConfigURL.HomNomeCidade := 'patosdeminas-mg';
+            ConfigURL.ProNomeCidade := 'patosdeminas-mg';
+            Porta := ''; //Porta := ':442';
+           end;
+  3149903: begin // Perdões/MG
+            ConfigURL.HomNomeCidade := 'perdoes-mg';
+            ConfigURL.ProNomeCidade := 'perdoes-mg';
+            Porta := ''; //Porta := ':442';
+           end;
+  3151503: begin // Piumhi/MG
+            ConfigURL.HomNomeCidade := 'piumhi-mg';
+            ConfigURL.ProNomeCidade := 'piumhi-mg';
+            Porta := ''; //Porta := ':442';
+           end;
+  3152600: begin // Pouso Alto/MG
+            ConfigURL.HomNomeCidade := 'pousoalto-mg';
+            ConfigURL.ProNomeCidade := 'pousoalto-mg';
+            Porta := ''; //Porta := ':442';
+           end;
+  3153905: begin // Raposos/MG
+            ConfigURL.HomNomeCidade := 'raposos-mg';
+            ConfigURL.ProNomeCidade := 'raposos-mg';
+            Porta := ''; //Porta := ':442';
+           end;
+  3170800: begin // Várzea da Palma/MG
+            ConfigURL.HomNomeCidade := 'varzeadapalma-mg';
+            ConfigURL.ProNomeCidade := 'varzeadapalma-mg';
+            Porta := ''; //Porta := ':442';
+           end;
+  3171303: begin // Viçosa/MG
+            ConfigURL.HomNomeCidade := 'vicosa-mg';
+            ConfigURL.ProNomeCidade := 'vicosa-mg';
+            Porta := ''; //Porta := ':442';
+           end;
+  3200102: begin // Afonso Cláudio/ES
+            ConfigURL.HomNomeCidade := 'afonsoclaudio-es';
+            ConfigURL.ProNomeCidade := 'afonsoclaudio-es';
+            Porta := ''; //Porta := ':442';
+           end;
+  3200300: begin // Alfredo Chaves/ES
+            ConfigURL.HomNomeCidade := 'alfredochaves-es';
+            ConfigURL.ProNomeCidade := 'alfredochaves-es';
+            Porta := ''; //Porta := ':442';
+           end;
+  3204708: begin // São Gabriel da Palha/ES
+            ConfigURL.HomNomeCidade := 'saogabrieldapalha-es';
+            ConfigURL.ProNomeCidade := 'saogabrieldapalha-es';
+            Porta := ''; //Porta := ':442';
+           end;
+  4109609: begin // Guaratuba/PR
+            ConfigURL.HomNomeCidade := 'guaratuba-pr';
+            ConfigURL.ProNomeCidade := 'guaratuba-pr';
+            Porta := ''; //Porta := ':442';
+           end;
+  4300406: begin // Alegrete/RS
+            ConfigURL.HomNomeCidade := 'alegrete-rs';
+            ConfigURL.ProNomeCidade := 'alegrete-rs';
+            Porta := ''; //Porta := ':442';
+           end;
+  4313953: begin // Pantano Grande/RS
+            ConfigURL.HomNomeCidade := 'pantanogrande-rs';
+            ConfigURL.ProNomeCidade := 'pantanogrande-rs';
+            Porta := ''; //Porta := ':442';
+           end;
+  5106505: begin // Poconé/MT
+            ConfigURL.HomNomeCidade := 'pocone-mt';
+            ConfigURL.ProNomeCidade := 'pocone-mt';
+            Porta := ''; //Porta := ':442';
+           end;
+  5106778: begin // Porto Alegre do Norte/MT
+            ConfigURL.HomNomeCidade := 'portoalegredonorte-mt';
+            ConfigURL.ProNomeCidade := 'portoalegredonorte-mt';
+            Porta := ''; //Porta := ':442';
+           end;
+  5107107: begin // São José dos Quatro Marcos/MT
+            ConfigURL.HomNomeCidade := 'saojosedosquatromarcos-mt';
+            ConfigURL.ProNomeCidade := 'saojosedosquatromarcos-mt';
+            Porta := ''; //Porta := ':442';
+           end;
  end;
 
  ConfigURL.HomRecepcaoLoteRPS    := 'https://' + ConfigURL.HomNomeCidade + '.treino-issintel.com.br' + Porta + '/webservices/abrasf/api';

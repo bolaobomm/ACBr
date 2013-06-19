@@ -565,7 +565,7 @@ begin
   2700300, // Arapiraca/AL
   2704302, // Maceio/AL
   2704708, // Marechal Deodoro/AL
-  2910727, // Eunapolis/BA
+//  2910727, // Eunapolis/BA
   2933307, // Vitoria da Conquista/BA
   3101607, // Alfenas/MG
   3115300, // Cataguases/MG
@@ -842,13 +842,72 @@ begin
   4318705  // Sao Leopoldo/RS
          : Provedor := 'Thema';
 
-//  3157807, // Santa Luzia/MG
+  1709500, // Gurupi/TO
+  2112209, // Timon/MA
+  2207009, // Oeiras/PI
+  2208007, // Picos/PI
+  2211209, // Uruçuí/PI
+  2307304, // Juazeiro do Norte/CE
+  2910727, // Eunapolis/BA
   2925303, // Porto Seguro/BA
-  3131307  // Ipatinga/MG
+  3107109, // Boa Esperança/MG
+  3112505, // Capim Branco/MG
+  3113305, // Carangola/MG
+  3114402, // Carmo do Rio Claro/MG
+  3116605, // Cláudio/MG
+  3128006, // Guanhães/MG
+  3128105, // Guapé/MG
+  3131307, // Ipatinga/MG
+  3147907, // Passos/MG
+  3148004, // Patos de Minas/MG
+  3149903, // Perdões/MG
+  3151503, // Piumhi/MG
+  3152600, // Pouso Alto/MG
+  3153905, // Raposos/MG
+  3170800, // Várzea da Palma/MG
+  3171303, // Viçosa/MG
+  3200102, // Afonso Cláudio/ES
+  3200300, // Alfredo Chaves/ES
+  3204708, // São Gabriel da Palha/ES
+  4109609, // Guaratuba/PR
+  4300406, // Alegrete/RS
+  4313953, // Pantano Grande/RS
+  5106505, // Poconé/MT
+  5106778, // Porto Alegre do Norte/MT
+  5107107  // São José dos Quatro Marcos/MT
          : Provedor := 'ISSIntel';
 
   1400100, // Boa Vista/RR
-  2903201  // Barreiras/BA
+  1400209, // Caracarai/RR
+  2900801, // Alcobaca/BA
+  2902708, // Barra/BA
+  2903201, // Barreiras/BA
+  2903904, // Bom Jesus Da Lapa/BA
+  2905602, // Camacan/BA
+  2906006, // Campo Formoso/BA
+  2907202, // Casa Nova/BA
+  2909307, // Correntina/BA
+  2910057, // Dias D Avila/BA
+  2910602, // Esplanada/BA
+  2913200, // Ibotirama/BA
+  2913903, // Ipiau/BA
+  2914505, // Irara/BA
+  2914653, // Itabela/BA
+  2914703, // Itaberaba/BA
+  2917003, // Itiuba/BA
+  2917508, // Jacobina/BA
+  2917706, // Jaguarari/BA
+  2919157, // Lapao/BA
+  2919926, // Madre De Deus/BA
+  2922003, // Mucuri/BA
+  2922656, // Nordestina/BA
+  2927705, // Santa Cruz Cabralia/BA
+  2928901, // Sao Desiderio/BA
+  2931350, // Teixeira De Freitas/BA
+  2932804, // Utinga/BA
+  2933208, // Vera Cruz/BA
+  4201653, // Arvoredo/SC
+  4204558  // Correia Pinto/SC
          : Provedor := 'Saatri';
 
   1100304, // Vilhena/RO
