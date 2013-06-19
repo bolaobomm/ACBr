@@ -159,6 +159,26 @@ begin
             ConfigURL.HomNomeCidade := 'cacoalro';
             ConfigURL.ProNomeCidade := 'cacoalro';
            end;
+  2800308: begin // Aracaju/SE
+            ConfigURL.HomNomeCidade := 'aracajuse';
+            ConfigURL.ProNomeCidade := 'aracajuse';
+           end;
+  2801009: begin // Campo do Brito/SE
+            ConfigURL.HomNomeCidade := 'campodobritose';
+            ConfigURL.ProNomeCidade := 'campodobritose';
+           end;
+  2802106: begin // Estância/SE
+            ConfigURL.HomNomeCidade := 'estanciase';
+            ConfigURL.ProNomeCidade := 'estanciase';
+           end;
+  2803500: begin // Lagarto/SE
+            ConfigURL.HomNomeCidade := 'lagartose';
+            ConfigURL.ProNomeCidade := 'lagartose';
+           end;
+  2901007: begin // Amargosa/BA
+            ConfigURL.HomNomeCidade := 'amargosaba';
+            ConfigURL.ProNomeCidade := 'amargosaba';
+           end;
   2910800: begin // Feira de Santana/BA
             ConfigURL.HomNomeCidade := 'feiradesantanaba';
             ConfigURL.ProNomeCidade := 'feiradesantanaba';
@@ -166,6 +186,14 @@ begin
   3104205: begin // Arcos/MG
             ConfigURL.HomNomeCidade := 'arcosmg';
             ConfigURL.ProNomeCidade := 'arcosmg';
+           end;
+  2907509: begin // Catu/BA
+            ConfigURL.HomNomeCidade := 'catuba';
+            ConfigURL.ProNomeCidade := 'catuba';
+           end;
+  2925204: begin // Pojuca/BA
+            ConfigURL.HomNomeCidade := 'bapojuca';
+            ConfigURL.ProNomeCidade := 'bapojuca';
            end;
   3105608: begin // Barbacena/MG
             ConfigURL.HomNomeCidade := 'mgbarbacena';
@@ -175,6 +203,18 @@ begin
             ConfigURL.HomNomeCidade := 'barrosomg';
             ConfigURL.ProNomeCidade := 'barrosomg';
            end;
+  3110509: begin // Camanducaia/MG
+            ConfigURL.HomNomeCidade := 'camanducaiamg';
+            ConfigURL.ProNomeCidade := 'camanducaiamg';
+           end;
+  3111200: begin // Campo Belo/MG
+            ConfigURL.HomNomeCidade := 'campobelomg';
+            ConfigURL.ProNomeCidade := 'campobelomg';
+           end;
+  3119401: begin // Coronel Fabriciano/MG
+            ConfigURL.HomNomeCidade := 'fabriciano';
+            ConfigURL.ProNomeCidade := 'fabriciano';
+           end;
   3126109: begin // Formiga/MG
             ConfigURL.HomNomeCidade := 'formigamg';
             ConfigURL.ProNomeCidade := 'formigamg';
@@ -183,13 +223,93 @@ begin
             ConfigURL.HomNomeCidade := 'mgfrutal';
             ConfigURL.ProNomeCidade := 'mgfrutal';
            end;
+  3133808: begin // Itaúna/MG
+            ConfigURL.HomNomeCidade := 'itauna';
+            ConfigURL.ProNomeCidade := 'itauna';
+           end;
+  3136207: begin // João Monlevade/MG
+            ConfigURL.HomNomeCidade := 'mgjoaomonlevade';
+            ConfigURL.ProNomeCidade := 'mgjoaomonlevade';
+           end;
+  3150703: begin // Pirajuba/MG
+            ConfigURL.HomNomeCidade := 'pirajubamg';
+            ConfigURL.ProNomeCidade := 'pirajubamg';
+           end;
+  3155702: begin // Rio Piracicaba/MG
+            ConfigURL.HomNomeCidade := 'riopiracicabamg';
+            ConfigURL.ProNomeCidade := 'riopiracicabamg';
+           end;
+  3159605: begin // Santa Rita do Sapucaí/MG
+            ConfigURL.HomNomeCidade := 'santaritadosapucai';
+            ConfigURL.ProNomeCidade := 'santaritadosapucai';
+           end;
+  3162104: begin // São Gotardo/MG
+            ConfigURL.HomNomeCidade := 'saogotardomg';
+            ConfigURL.ProNomeCidade := 'saogotardomg';
+           end;
   3170107: begin // Uberaba/MG
             ConfigURL.HomNomeCidade := 'Uberaba';
             ConfigURL.ProNomeCidade := 'Uberaba';
            end;
+  3300209: begin // Araruama/RJ
+            ConfigURL.HomNomeCidade := 'araruama';
+            ConfigURL.ProNomeCidade := 'araruama';
+           end;
+  3300803: begin // Cachoeiras de Macacu/RJ
+            ConfigURL.HomNomeCidade := 'cachoeirasdemacacurj';
+            ConfigURL.ProNomeCidade := 'cachoeirasdemacacurj';
+           end;
+  3301207: begin // Carmo/RJ
+            ConfigURL.HomNomeCidade := 'carmorj';
+            ConfigURL.ProNomeCidade := 'carmorj';
+           end;
+  3301306: begin // Casimiro de Abreu/RJ
+            ConfigURL.HomNomeCidade := 'casimirodeabreurj';
+            ConfigURL.ProNomeCidade := 'casimirodeabreurj';
+           end;
+  3301504: begin // Cordeiro/RJ
+            ConfigURL.HomNomeCidade := 'cordeirorj';
+            ConfigURL.ProNomeCidade := 'cordeirorj';
+           end;
+  3302908: begin // Miguel Pereira/RJ
+            ConfigURL.HomNomeCidade := 'miguelpereirarj';
+            ConfigURL.ProNomeCidade := 'miguelpereirarj';
+           end;
   3303302: begin // Niteroi/RJ
             ConfigURL.HomNomeCidade := 'rjniteroi';
             ConfigURL.ProNomeCidade := 'rjniteroi';
+           end;
+  3303401: begin // Nova Friburgo/RJ
+            ConfigURL.HomNomeCidade := 'rjnovafriburgo';
+            ConfigURL.ProNomeCidade := 'rjnovafriburgo';
+           end;
+  3303856: begin // Paty do Alferes/RJ
+            ConfigURL.HomNomeCidade := 'patydoalferesrj';
+            ConfigURL.ProNomeCidade := 'patydoalferesrj';
+           end;
+  3304110: begin // Porto Real/RJ
+            ConfigURL.HomNomeCidade := 'rjportoreal';
+            ConfigURL.ProNomeCidade := 'rjportoreal';
+           end;
+  3304144: begin // Queimados/RJ
+            ConfigURL.HomNomeCidade := 'queimadosrj';
+            ConfigURL.ProNomeCidade := 'queimadosrj';
+           end;
+  3304607: begin // Santa Maria Madalena/RJ
+            ConfigURL.HomNomeCidade := 'santamariamadalenarj';
+            ConfigURL.ProNomeCidade := 'santamariamadalenarj';
+           end;
+  3305000: begin // São João da Barra/RJ
+            ConfigURL.HomNomeCidade := 'saojoaodabarrarj';
+            ConfigURL.ProNomeCidade := 'saojoaodabarrarj';
+           end;
+  3305604: begin // Silva Jardim/RJ
+            ConfigURL.HomNomeCidade := 'silvajardimrj';
+            ConfigURL.ProNomeCidade := 'silvajardimrj';
+           end;
+  3305802: begin // Teresópolis/RJ
+            ConfigURL.HomNomeCidade := 'rjteresopolis';
+            ConfigURL.ProNomeCidade := 'rjteresopolis';
            end;
   4301602: begin // Bage/RS
             ConfigURL.HomNomeCidade := 'bagers';
@@ -203,10 +323,18 @@ begin
             ConfigURL.HomNomeCidade := 'sinop';
             ConfigURL.ProNomeCidade := 'sinop';
            end;
+  5204508: begin // Caldas Novas/GO
+            ConfigURL.HomNomeCidade := 'caldasnovasgo';
+            ConfigURL.ProNomeCidade := 'caldasnovasgo';
+           end;
  end;
 
  case ACodCidade of
-  1100049: begin
+  1100049,
+  3150703,
+  3162104,
+  3301207,
+  3301306: begin
             ConfigURL.HomRecepcaoLoteRPS    := 'https://www4.webiss.com.br/' + ConfigURL.HomNomeCidade + '_wsnfse_homolog/NfseServices.svc';
             ConfigURL.HomConsultaLoteRPS    := 'https://www4.webiss.com.br/' + ConfigURL.HomNomeCidade + '_wsnfse_homolog/NfseServices.svc';
             ConfigURL.HomConsultaNFSeRPS    := 'https://www4.webiss.com.br/' + ConfigURL.HomNomeCidade + '_wsnfse_homolog/NfseServices.svc';
@@ -222,10 +350,20 @@ begin
             ConfigURL.ProCancelaNFSe        := 'https://www4.webiss.com.br/' + ConfigURL.ProNomeCidade + '_wsnfse/NfseServices.svc';
            end;
 
+  2901007,
+  2907509,
   3104205,
   3105905,
+  3110509,
+  3111200,
   3126109,
   3170107,
+  3302908,
+  3303401,
+  3303856,
+  3304110,
+  3304144,
+  3305802,
   4301602,
   5105259: begin
             ConfigURL.HomRecepcaoLoteRPS    := 'https://www1.webiss.com.br/' + ConfigURL.HomNomeCidade + '_wsnfse_homolog/NfseServices.svc';
@@ -245,8 +383,17 @@ begin
             ConfigURL.ProGerarNFSe          := 'https://www1.webiss.com.br/' + ConfigURL.ProNomeCidade + '_wsnfse/NfseServices.svc';
            end;
 
+  2800308,
+  2801009,
+  2803500,
+  2802106,
   2910800,
-  3303302: begin
+  3303302,
+  3155702,
+  3301504,
+  3304607,
+  3305604,
+  5204508: begin
             ConfigURL.HomRecepcaoLoteRPS    := 'https://www3.webiss.com.br/' + ConfigURL.HomNomeCidade + '_wsnfse_homolog/NfseServices.svc';
             ConfigURL.HomConsultaLoteRPS    := 'https://www3.webiss.com.br/' + ConfigURL.HomNomeCidade + '_wsnfse_homolog/NfseServices.svc';
             ConfigURL.HomConsultaNFSeRPS    := 'https://www3.webiss.com.br/' + ConfigURL.HomNomeCidade + '_wsnfse_homolog/NfseServices.svc';
@@ -262,8 +409,15 @@ begin
             ConfigURL.ProCancelaNFSe        := 'https://www3.webiss.com.br/' + ConfigURL.ProNomeCidade + '_wsnfse/NfseServices.svc';
            end;
 
+  2925204,
   3105608,
+  3119401,
   3127107,
+  3133808,
+  3136207,
+  3159605,
+  3300209,
+  3300803,
   5107909: begin
             ConfigURL.HomRecepcaoLoteRPS    := 'https://www.webiss.com.br/' + ConfigURL.HomNomeCidade + '_wsnfse_homolog/NfseServices.svc';
             ConfigURL.HomConsultaLoteRPS    := 'https://www.webiss.com.br/' + ConfigURL.HomNomeCidade + '_wsnfse_homolog/NfseServices.svc';

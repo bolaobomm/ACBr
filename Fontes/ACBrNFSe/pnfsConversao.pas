@@ -598,7 +598,7 @@ begin
   3518800, // Guarulhos/SP
   3519071, // Hortolandia/SP
   3523909, // Itu/SP
-  3524709, // Jaguariuna/SP
+//  3524709, // Jaguariuna/SP
   3525102, // Jardinopolis/SP
   3525300, // Jau/SP
   3525904, // Jundiai/SP
@@ -633,11 +633,34 @@ begin
          : Provedor := 'GINFES';
 
       999, // Adicionado por ronnei, esse código é usado na homologação
+  1702109, // Araguaína/TO
+  3139607, // Mantena/MG
+  3169307, // Três Corações/MG
+  3502101, // Andradina/SP
+  3502507, // Aparecida/SP
+  3522307, // Itapetininga/SP
+  3524402, // Jacareí/SP
+  3524709, // Jaguariuna/SP
+  3527207, // Lorena/SP
   3530607, // Mogi das Cruzes/SP
+  3541000, // Praia Grande/SP
+  3551009, // São Vicente/SP
+  3551504, // Serrana/SP
+  4104808, // Cascavel/PR
+  4219507, // Xanxerê/SC
+  4306106, // Cruz Alta/RS
   4313409, // Novo Hamburgo/RS
+  4316907, // Santa Maria/RS
+  5002209, // Bonito/MS
   5003702, // Dourados/MT
+  5005707, // Naviraí/MS
+  5006002, // Nova Alvorada do Sul/MS
+  5007208, // Rio Brilhante/MS
+  5007901, // Sidrolândia/MS
   5100250, // Alta Floresta/MT
   5103403, // Cuiaba/MT
+  5105101, // Juara/MT
+  5105903, // Nobres/MT
   5106232, // Nova Olimpia/MT
   5107925, // Sorriso/MT
   5108402, // Várzea Grande/MT
@@ -646,17 +669,48 @@ begin
          : Provedor := 'ISSNET';
 
   1100049, // Cacoal/RO
+  2800308, // Aracaju/SE
+  2801009, // Campo do Brito/SE
+  2802106, // Estância/SE
+  2803500, // Lagarto/SE
+  2901007, // Amargosa/BA
+  2907509, // Catu/BA
   2910800, // Feira de Santana/BA
+  2925204, // Pojuca/BA
   3104205, // Arcos/MG
   3105608, // Barbacena/MG
   3105905, // Barroso/MG
+  3110509, // Camanducaia/MG
+  3111200, // Campo Belo/MG
+  3119401, // Coronel Fabriciano/MG
   3126109, // Formiga/MG
   3127107, // Frutal/MG
+  3133808, // Itaúna/MG
+  3136207, // João Monlevade/MG
+  3150703, // Pirajuba/MG
+  3155702, // Rio Piracicaba/MG
+  3159605, // Santa Rita do Sapucaí/MG
+  3162104, // São Gotardo/MG
   3170107, // Uberaba/MG
+  3300209, // Araruama/RJ
+  3300803, // Cachoeiras de Macacu/RJ
+  3301207, // Carmo/RJ
+  3301306, // Casimiro de Abreu/RJ
+  3301504, // Cordeiro/RJ
+  3302908, // Miguel Pereira/RJ
   3303302, // Niteroi/RJ
+  3303401, // Nova Friburgo/RJ
+  3303856, // Paty do Alferes/RJ
+  3304110, // Porto Real/RJ
+  3304144, // Queimados/RJ
+  3304607, // Santa Maria Madalena/RJ
+  3305000, // São João da Barra/RJ
+  3305604, // Silva Jardim/RJ
+  3305802, // Teresópolis/RJ
   4301602, // Bage/RS
   5105259, // Lucas do Rio Verde/MT
-  5107909  // Sinop/MT
+  5107909, // Sinop/MT
+  5204508  // Caldas Novas/GO
          : Provedor := 'WebISS';
 
   3118601, // Contagem/MG
@@ -840,8 +894,8 @@ begin
          : Provedor := '4R';
 
   3132404, // Itajubá/MG
-  3151800, // Poços de Caldas/MG
-  3522307  // Itapetininga/SP
+  3151800  // Poços de Caldas/MG
+//  3522307  // Itapetininga/SP
          : Provedor := 'GovDigital';
 
   2103000, // Caxias/MA

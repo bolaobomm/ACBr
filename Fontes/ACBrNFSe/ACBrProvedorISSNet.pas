@@ -138,11 +138,29 @@ begin
 
  case ACodCidade of
       999: ConfigURL.ProNomeCidade := 'homologacao';//adicionado por ronnei
+  1702109: ConfigURL.ProNomeCidade := 'araguaina'; // Araguaína/TO
+  3139607: ConfigURL.ProNomeCidade := 'mantena'; // Mantena/MG
+  3169307: ConfigURL.ProNomeCidade := 'trescoracoes'; // Três Corações/MG
+  3502101: ConfigURL.ProNomeCidade := 'andradina'; // Andradina/SP
+  3502507: ConfigURL.ProNomeCidade := 'aparecidasp'; // Aparecida/SP
+  3522307: ConfigURL.ProNomeCidade := 'itapetininga'; // Itapetininga/SP
+  3524402: ConfigURL.ProNomeCidade := 'jacarei'; // Jacareí/SP
+  3524709: ConfigURL.ProNomeCidade := 'jaguariuna'; // Jaguariúna/SP
+  3527207: ConfigURL.ProNomeCidade := 'lorena'; // Lorena/SP
   3530607: ConfigURL.ProNomeCidade := 'mogidascruzes'; // Mogi das Cruzes/SP
+  3541000: ConfigURL.ProNomeCidade := 'praiagrande'; // Praia Grande/SP
+  3551009: ConfigURL.ProNomeCidade := 'saovicente'; // São Vicente/SP
+  3551504: ConfigURL.ProNomeCidade := 'serrana'; // Serrana/SP
+  4104808: ConfigURL.ProNomeCidade := 'cascavel'; // Cascavel/PR
+  4219507: ConfigURL.ProNomeCidade := 'xanxere'; // Xanxerê/SC
   4313409: ConfigURL.ProNomeCidade := 'novohamburgo'; // Novo Hamburgo/RS
+  4316907: ConfigURL.ProNomeCidade := 'santamaria'; // Santa Maria/RS
+  5002209: ConfigURL.ProNomeCidade := 'bonito'; // Bonito/MS
   5003702: ConfigURL.ProNomeCidade := 'dourados'; // Dourados/MS
   5100250: ConfigURL.ProNomeCidade := 'altafloresta'; // Alta Floresta/MT
   5103403: ConfigURL.ProNomeCidade := 'cuiaba'; // Cuiaba/MT
+  5105101: ConfigURL.ProNomeCidade := 'juara'; // Juara/MT
+  5105903: ConfigURL.ProNomeCidade := 'nobres'; // Nobres/MT
   5106232: ConfigURL.ProNomeCidade := 'novaolimpia'; // Nova Olimpia/MT
   5107925: ConfigURL.ProNomeCidade := 'sorriso'; // Sorriso/MT
   5108402: ConfigURL.ProNomeCidade := 'varzeagrande'; // Varzea Grande/MT

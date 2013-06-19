@@ -111,11 +111,12 @@ begin
               then ConfigCidade.NameSpaceEnvelope := 'https://www.govdigital.com.br/ws/pocos'
               else ConfigCidade.NameSpaceEnvelope := 'https://homolog.govdigital.com.br/ws/pocos';
             end;
-   3522307: begin // Itapetininga/SP
-             if AAmbiente = 1
-              then ConfigCidade.NameSpaceEnvelope := 'https://www.govdigital.com.br/ws/itapetininga'
-              else ConfigCidade.NameSpaceEnvelope := 'https://homolog.govdigital.com.br/ws/itapetininga';
-            end;
+   // A Cidade de Itapetininga/SP trocou o provedor de GovDigital para ISSNet         
+//   3522307: begin // Itapetininga/SP
+//             if AAmbiente = 1
+//              then ConfigCidade.NameSpaceEnvelope := 'https://www.govdigital.com.br/ws/itapetininga'
+//              else ConfigCidade.NameSpaceEnvelope := 'https://homolog.govdigital.com.br/ws/itapetininga';
+//            end;
   end;
 
  	ConfigCidade.AssinaRPS  := True;
@@ -158,10 +159,10 @@ begin
              ConfigURL.HomNomeCidade := 'pocos';
              ConfigURL.ProNomeCidade := 'pocos';
             end;
-   3522307: begin // Itapetininga/SP
-             ConfigURL.HomNomeCidade := 'itapetininga';
-             ConfigURL.ProNomeCidade := 'itapetininga';
-            end;
+//   3522307: begin // Itapetininga/SP
+//             ConfigURL.HomNomeCidade := 'itapetininga';
+//             ConfigURL.ProNomeCidade := 'itapetininga';
+//            end;
   end;
 
  	ConfigURL.HomRecepcaoLoteRPS    := 'http://homolog.govdigital.com.br:80/ws/' + ConfigURL.HomNomeCidade;
