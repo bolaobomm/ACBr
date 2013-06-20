@@ -139,6 +139,7 @@ type
     Label30: TLabel;
     btnLinkNFSe: TButton;
     btnGerarLoteRPS: TButton;
+    btnGerarEnviarSincrono: TButton;
     procedure sbtnCaminhoCertClick(Sender: TObject);
     procedure sbtnGetCertClick(Sender: TObject);
     procedure sbtnLogoMarcaClick(Sender: TObject);
@@ -166,6 +167,7 @@ type
     procedure btnEnviaremailClick(Sender: TObject);
     procedure btnLinkNFSeClick(Sender: TObject);
     procedure btnGerarLoteRPSClick(Sender: TObject);
+    procedure btnGerarEnviarSincronoClick(Sender: TObject);
     {
     procedure lblMouseEnter(Sender: TObject);
     procedure lblMouseLeave(Sender: TObject);
@@ -935,7 +937,7 @@ begin
  //
  //**************************************************************************
 
- if not(InputQuery('Gerar e Enviar Lote', 'Numero do RPS', vNumRPS))
+ if not(InputQuery('Gerar e Enviar NFSe', 'Numero do RPS', vNumRPS))
   then exit;
 
  ACBrNFSe1.NotasFiscais.Clear;
@@ -1040,6 +1042,29 @@ begin
  ACBrNFSe1.GerarLote(vNumLote);
 
  ShowMessage('Arquivo gerado em: '+ACBrNFSe1.NotasFiscais.Items[0].NomeArq);
+
+ ACBrNFSe1.NotasFiscais.Clear;
+end;
+
+procedure TfrmDemo_ACBrNFSe.btnGerarEnviarSincronoClick(Sender: TObject);
+var
+ vAux, vNumLote : String;
+begin
+ //**************************************************************************
+ //
+ // A function EnviarSincrono só esta disponivel para alguns provedores.
+ //
+ //**************************************************************************
+
+ if not(InputQuery('Gerar e Enviar Lote - Sincrono', 'Numero do RPS', vAux))
+  then exit;
+
+ if not(InputQuery('Gerar e Enviar Lote - Sincrono', 'Numero do Lote', vNumLote))
+  then exit;
+
+ ACBrNFSe1.NotasFiscais.Clear;
+ GerarNFSe(vAux);
+ ACBrNFSe1.EnviarSincrono(vNumLote);
 
  ACBrNFSe1.NotasFiscais.Clear;
 end;
