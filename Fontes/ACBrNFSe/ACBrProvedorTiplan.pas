@@ -129,21 +129,58 @@ function TProvedorTiplan.GetConfigURL(ACodCidade: Integer): TConfigURL;
 var
  ConfigURL: TConfigURL;
 begin
- ConfigURL.HomNomeCidade         := '';
- ConfigURL.HomRecepcaoLoteRPS    := 'https://nfse.americana.sp.gov.br/nfse/WSNacional/nfse.asmx';
- ConfigURL.HomConsultaLoteRPS    := 'https://nfse.americana.sp.gov.br/nfse/WSNacional/nfse.asmx';
- ConfigURL.HomConsultaNFSeRPS    := 'https://nfse.americana.sp.gov.br/nfse/WSNacional/nfse.asmx';
- ConfigURL.HomConsultaSitLoteRPS := 'https://nfse.americana.sp.gov.br/nfse/WSNacional/nfse.asmx';
- ConfigURL.HomConsultaNFSe       := 'https://nfse.americana.sp.gov.br/nfse/WSNacional/nfse.asmx';
- ConfigURL.HomCancelaNFSe        := 'https://nfse.americana.sp.gov.br/nfse/WSNacional/nfse.asmx';
+ case ACodCidade of
+  3300100: begin // Angra dos Reis/RJ
+            ConfigURL.HomNomeCidade := 'spe.angra.rj';
+            ConfigURL.ProNomeCidade := 'spe.angra.rj';
+           end;
+  3300407: begin // Barra Mansa/RJ
+            ConfigURL.HomNomeCidade := 'spe.barramansa.rj';
+            ConfigURL.ProNomeCidade := 'spe.barramansa.rj';
+           end;
+  3301702: begin // Duque de Caxias/RJ
+            ConfigURL.HomNomeCidade := 'nfse.duquedecaxias.rj';
+            ConfigURL.ProNomeCidade := 'nfse.duquedecaxias.rj';
+           end;
+  3302007: begin // Itaguaí/RJ
+            ConfigURL.HomNomeCidade := 'spe.itaguai.rj';
+            ConfigURL.ProNomeCidade := 'spe.itaguai.rj';
+           end;
+  3302403: begin // Macaé/RJ
+            ConfigURL.HomNomeCidade := 'spe.macae.rj';
+            ConfigURL.ProNomeCidade := 'spe.macae.rj';
+           end;
+  3302601: begin // Mangaratiba/RJ
+            ConfigURL.HomNomeCidade := 'spe.mangaratiba.rj';
+            ConfigURL.ProNomeCidade := 'spe.mangaratiba.rj';
+           end;
+  3304201: begin // Resende/RJ
+            ConfigURL.HomNomeCidade := 'spe.resende.rj';
+            ConfigURL.ProNomeCidade := 'spe.resende.rj';
+           end;
+  3304524: begin // Rio das Ostras/RJ
+            ConfigURL.HomNomeCidade := 'spe.riodasostras.rj';
+            ConfigURL.ProNomeCidade := 'spe.riodasostras.rj';
+           end;
+  3501608: begin // Americana/SP
+            ConfigURL.HomNomeCidade := 'nfse.americana.sp';
+            ConfigURL.ProNomeCidade := 'nfse.americana.sp';
+           end;
+ end;
 
- ConfigURL.ProNomeCidade         := '';
- ConfigURL.ProRecepcaoLoteRPS    := 'https://nfse.americana.sp.gov.br/nfse/WSNacional/nfse.asmx';
- ConfigURL.ProConsultaLoteRPS    := 'https://nfse.americana.sp.gov.br/nfse/WSNacional/nfse.asmx';
- ConfigURL.ProConsultaNFSeRPS    := 'https://nfse.americana.sp.gov.br/nfse/WSNacional/nfse.asmx';
- ConfigURL.ProConsultaSitLoteRPS := 'https://nfse.americana.sp.gov.br/nfse/WSNacional/nfse.asmx';
- ConfigURL.ProConsultaNFSe       := 'https://nfse.americana.sp.gov.br/nfse/WSNacional/nfse.asmx';
- ConfigURL.ProCancelaNFSe        := 'https://nfse.americana.sp.gov.br/nfse/WSNacional/nfse.asmx';
+ ConfigURL.HomRecepcaoLoteRPS    := 'https://' + ConfigURL.HomNomeCidade + '.gov.br/nfse/WSNacional/nfse.asmx';
+ ConfigURL.HomConsultaLoteRPS    := 'https://' + ConfigURL.HomNomeCidade + '.gov.br/nfse/WSNacional/nfse.asmx';
+ ConfigURL.HomConsultaNFSeRPS    := 'https://' + ConfigURL.HomNomeCidade + '.gov.br/nfse/WSNacional/nfse.asmx';
+ ConfigURL.HomConsultaSitLoteRPS := 'https://' + ConfigURL.HomNomeCidade + '.gov.br/nfse/WSNacional/nfse.asmx';
+ ConfigURL.HomConsultaNFSe       := 'https://' + ConfigURL.HomNomeCidade + '.gov.br/nfse/WSNacional/nfse.asmx';
+ ConfigURL.HomCancelaNFSe        := 'https://' + ConfigURL.HomNomeCidade + '.gov.br/nfse/WSNacional/nfse.asmx';
+
+ ConfigURL.ProRecepcaoLoteRPS    := 'https://' + ConfigURL.ProNomeCidade + '.gov.br/nfse/WSNacional/nfse.asmx';
+ ConfigURL.ProConsultaLoteRPS    := 'https://' + ConfigURL.ProNomeCidade + '.gov.br/nfse/WSNacional/nfse.asmx';
+ ConfigURL.ProConsultaNFSeRPS    := 'https://' + ConfigURL.ProNomeCidade + '.gov.br/nfse/WSNacional/nfse.asmx';
+ ConfigURL.ProConsultaSitLoteRPS := 'https://' + ConfigURL.ProNomeCidade + '.gov.br/nfse/WSNacional/nfse.asmx';
+ ConfigURL.ProConsultaNFSe       := 'https://' + ConfigURL.ProNomeCidade + '.gov.br/nfse/WSNacional/nfse.asmx';
+ ConfigURL.ProCancelaNFSe        := 'https://' + ConfigURL.ProNomeCidade + '.gov.br/nfse/WSNacional/nfse.asmx';
 
  Result := ConfigURL;
 end;

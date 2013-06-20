@@ -174,6 +174,7 @@ begin
    acCancelar:    Result := False;
    acGerar:       Result := False;
    acRecSincrono: Result := False;
+   else           Result := False;
  end;
 end;
 
@@ -601,7 +602,18 @@ end;
 function TProvedor4R.GetLinkNFSe(ACodMunicipio, ANumeroNFSe: Integer;
   ACodVerificacao, AInscricaoM: String; AAmbiente: Integer): String;
 begin
- Result := '';
+ if AAmbiente = 1
+  then begin
+   case ACodMunicipio of
+    3127701: Result := 'https://valadares.sistemas4r.com.br/CS/Em_Impressao_Nfe.aspx?id=' + ACodVerificacao;
+    3500105: Result := 'https://adamantina.sistemas4r.com.br/CS/Em_Impressao_Nfe.aspx?id=' + ACodVerificacao;
+    3510203: Result := 'https://capaobonito.sistemas4r.com.br/CS/Em_Impressao_Nfe.aspx?id=' + ACodVerificacao;
+    3523503: Result := 'https://itatinga.sistemas4r.com.br/CS/Em_Impressao_Nfe.aspx?id=' + ACodVerificacao;
+    3554003: Result := 'https://tatui.sistemas4r.com.br/CS/Em_Impressao_Nfe.aspx?id=' + ACodVerificacao;
+    else     Result := '';
+   end;
+  end
+  else Result := '';
 end;
 
 function TProvedor4R.GeraEnvelopeRecepcionarSincrono(URLNS: String; CabMsg,

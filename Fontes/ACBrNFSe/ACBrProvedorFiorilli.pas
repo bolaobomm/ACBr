@@ -179,6 +179,7 @@ begin
    acCancelar:    Result := True;
    acGerar:       Result := False;
    acRecSincrono: Result := False;
+   else           Result := False;
  end;
 end;
 

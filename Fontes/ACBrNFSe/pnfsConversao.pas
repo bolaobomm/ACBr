@@ -738,7 +738,14 @@ begin
   3304557  // Rio de Janeiro/RJ
          : Provedor := 'RJ';
 
+  3300100, // Angra dos Reis/RJ
+  3300407, // Barra Mansa/RJ
   3301702, // Duque de Caxias/RJ
+  3302007, // Itaguaí/RJ
+  3302403, // Macaé/RJ
+  3302601, // Mangaratiba/RJ
+  3304201, // Resende/RJ
+  3304524, // Rio das Ostras/RJ
   3501608  // Americana/SP
          : Provedor := 'Tiplan';
 

@@ -592,7 +592,7 @@ end;
 function TProvedorGinfesV3.GeraEnvelopeCancelarNFSe(URLNS: String; CabMsg,
   DadosMsg, DadosSenha: AnsiString): AnsiString;
 var
- TagCab, TagDados: String;
+ TagDados: String;
 begin
  if Pos('issfortaleza', URLNS) > 0
   then TagDados := 'CancelarNfseEnvio'

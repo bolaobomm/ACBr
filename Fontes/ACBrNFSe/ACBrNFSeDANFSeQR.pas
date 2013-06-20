@@ -41,7 +41,7 @@ type
     FPrefeitura     : String;
 
     procedure qrlSemValorFiscalPrint(sender: TObject; var Value: String);
-    procedure SetBarCodeImage ( ACode : String ; QRImage : TQRImage ) ;
+    procedure SetBarCodeImage (ACode: String; QRImage: TQRImage);
   public
     { Public declarations }
     class procedure Imprimir(ANFSe           : TNFSe;
@@ -142,7 +142,7 @@ begin
        QRNFSe.PrevShowThumbs      := False;
        QRNFSe.PreviewInitialState := wsMaximized;
        QRNFSe.PrevInitialZoom     := qrZoomToWidth;
-       
+
        qf := TQRPDFFilter.Create(nil);
      {$ENDIF}
 
@@ -152,17 +152,20 @@ begin
      // Segundo o Rodrigo Chiva resolveu o problema de travamento
      // após o fechamento do Preview
      Application.ProcessMessages;
+    {$IFDEF QReport_PDF}
+     qf.Free;
+    {$ENDIF}
     end
     else begin
-     AfterPreview := True ;
+     AfterPreview := True;
      QRNFSe.PrinterSettings.Copies := FNumCopias;
      QRNFSe.Prepare;
      QRNFSe.Print;
     end;
 
   finally
-   Free ;
-  end ;
+   Free;
+  end;
 end;
 
 class procedure TfqrDANFSeQR.SavePDF(AFile           : String;
@@ -235,13 +238,13 @@ end;
 
 procedure TfqrDANFSeQR.SetBarCodeImage(ACode: String; QRImage: TQRImage);
 //var
-// b : TBarCode128c ;
+// b : TBarCode128c;
 begin
 //   b := TBarCode128c.Create;
-//      Width  := QRImage.Width ;
+//   Width  := QRImage.Width;
 //   b.Code := ACode ;
-//   b.PaintCodeToCanvas( ACode, QRImage.Canvas, QRImage.ClientRect );
-//   b.free ;
+//   b.PaintCodeToCanvas(ACode, QRImage.Canvas, QRImage.ClientRect);
+//   b.free;
 end;
 
 end.
