@@ -319,8 +319,6 @@ begin
 end;
 
 function TACBrIBPTax.AbrirTabela(const AFileName: TFileName): Boolean;
-var
-  vStringStream: TStringStream;
 begin
   // se foi passado nome do arquivo abrir do arquivo
   if Trim(AFileName) <> '' then
