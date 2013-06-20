@@ -640,10 +640,11 @@ begin
           FieldByName('ORIGEM').AsString := OrigToStr(orig);
 
           case FNFe.Emit.CRT of
-            crtSimplesNacional, crtSimplesExcessoReceita:
+            crtSimplesNacional:
               begin
                 case CSOSN of
-                  csosn101, csosn102, csosn103, csosn201, csosn202, csosn203, csosn300, csosn400, csosn500, csosn900:
+                  csosn101, csosn102, csosn103, csosn201, csosn202, csosn203,
+                  csosn300, csosn400, csosn500, csosn900:
                     begin
                       FieldByName('CST').AsString  := CSOSNIcmsToStr(CSOSN);
                       FieldByName('VBC').AsFloat   := vBC;
@@ -864,10 +865,10 @@ begin
       FieldByName('IEST').AsString := IEST;
       FieldByName('CRT').AsString := CRTToStr(CRT);
 
-      if Trim(FieldByName('CRT').AsString) = '3' then
-        FieldByName('DESCR_CST').AsString := 'CST'
+      if Trim(FieldByName('CRT').AsString) = '1' then
+        FieldByName('DESCR_CST').AsString := 'CSOSN'
       else
-        FieldByName('DESCR_CST').AsString  := 'CSOSN';
+        FieldByName('DESCR_CST').AsString  := 'CST';
 
       //Modificado por Fábio Gabriel - 10/06/2013 - Para evitar que fique truncado.
       cdsEmitenteDADOS_ENDERECO.AsString :=
