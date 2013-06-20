@@ -58,10 +58,6 @@ type
                                    NameSpaceDad, VersaoDados, VersaoXML,
                                    NumeroLote, CNPJ, IM, QtdeNotas: String;
                                    Notas, TagI, TagF: AnsiString): AnsiString; OverRide;
-   function Gera_DadosMsgEnviarSincrono(Prefixo3, Prefixo4, Identificador,
-                                        NameSpaceDad, VersaoDados, VersaoXML,
-                                        NumeroLote, CNPJ, IM, QtdeNotas: String;
-                                        Notas, TagI, TagF: AnsiString): AnsiString; OverRide;
    *)
    function GeraEnvelopeRecepcionarLoteRPS(URLNS: String; CabMsg, DadosMsg, DadosSenha: AnsiString): AnsiString; OverRide;
    function GeraEnvelopeConsultarSituacaoLoteRPS(URLNS: String; CabMsg, DadosMsg, DadosSenha: AnsiString): AnsiString; OverRide;
@@ -93,16 +89,14 @@ function TProvedor4R.GetConfigCidade(ACodCidade, AAmbiente: Integer): TConfigCid
 var
   ConfigCidade: TConfigCidade;
 begin
- 	ConfigCidade.VersaoSoap    := '1.1';
- 	ConfigCidade.Prefixo2      := '';
- 	ConfigCidade.Prefixo3      := '';
- 	ConfigCidade.Prefixo4      := '';
- 	ConfigCidade.Identificador := 'Id';
-
-	ConfigCidade.NameSpaceEnvelope   := 'http://www.abrasf.org.br';
-
- 	ConfigCidade.AssinaRPS  := True;
- 	ConfigCidade.AssinaLote := True;
+ 	ConfigCidade.VersaoSoap        := '1.1';
+ 	ConfigCidade.Prefixo2          := '';
+ 	ConfigCidade.Prefixo3          := '';
+ 	ConfigCidade.Prefixo4          := '';
+ 	ConfigCidade.Identificador     := 'Id';
+	ConfigCidade.NameSpaceEnvelope := 'http://www.abrasf.org.br';
+ 	ConfigCidade.AssinaRPS         := True;
+ 	ConfigCidade.AssinaLote        := True;
 
  	Result := ConfigCidade;
 end;
@@ -145,11 +139,11 @@ begin
  	ConfigURL.HomRecepcaoSincrono   := 'http://abrasf.sistemas4r.com.br/arecepcionarloterpssincrono.aspx?wsdl';
 
   case ACodCidade of
-   3127701: ConfigURL.ProNomeCidade  := 'valadares';
-   3500105: ConfigURL.ProNomeCidade  := 'adamantina';
-   3510203: ConfigURL.ProNomeCidade  := 'capaobonito';
-   3523503: ConfigURL.ProNomeCidade  := 'itatinga';
-   3554003: ConfigURL.ProNomeCidade  := 'tatui';
+   3127701: ConfigURL.ProNomeCidade := 'valadares';
+   3500105: ConfigURL.ProNomeCidade := 'adamantina';
+   3510203: ConfigURL.ProNomeCidade := 'capaobonito';
+   3523503: ConfigURL.ProNomeCidade := 'itatinga';
+   3554003: ConfigURL.ProNomeCidade := 'tatui';
   end;
 
  	ConfigURL.ProRecepcaoLoteRPS    := '';
@@ -609,16 +603,7 @@ function TProvedor4R.GetLinkNFSe(ACodMunicipio, ANumeroNFSe: Integer;
 begin
  Result := '';
 end;
-(*
-function TProvedor4R.Gera_DadosMsgEnviarSincrono(Prefixo3, Prefixo4,
-  Identificador, NameSpaceDad, VersaoDados, VersaoXML, NumeroLote, CNPJ,
-  IM, QtdeNotas: String; Notas, TagI, TagF: AnsiString): AnsiString;
-begin
- Result := Gera_DadosMsgEnviarLote(Prefixo3, Prefixo4, Identificador, NameSpaceDad,
-                              VersaoDados, VersaoXML, NumeroLote, CNPJ, IM,
-                              QtdeNotas, Notas, TagI, TagF);
-end;
-*)
+
 function TProvedor4R.GeraEnvelopeRecepcionarSincrono(URLNS: String; CabMsg,
   DadosMsg, DadosSenha: AnsiString): AnsiString;
 begin

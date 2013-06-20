@@ -27,7 +27,6 @@ type
    function GetConfigURL(ACodCidade: Integer): TConfigURL; OverRide;
    function GetURI(URI: String): String; OverRide;
    function GetAssinarXML(Acao: TnfseAcao): Boolean; OverRide;
-   // Sugestão de Rodrigo Cantelli
    function GetValidarLote: Boolean; OverRide;
 
    function Gera_TagI(Acao: TnfseAcao; Prefixo3, Prefixo4, NameSpaceDad, Identificador, URI: String): AnsiString; OverRide;
@@ -59,10 +58,6 @@ type
                                    NameSpaceDad, VersaoDados, VersaoXML,
                                    NumeroLote, CNPJ, IM, QtdeNotas: String;
                                    Notas, TagI, TagF: AnsiString): AnsiString; OverRide;
-   function Gera_DadosMsgEnviarSincrono(Prefixo3, Prefixo4, Identificador,
-                                        NameSpaceDad, VersaoDados, VersaoXML,
-                                        NumeroLote, CNPJ, IM, QtdeNotas: String;
-                                        Notas, TagI, TagF: AnsiString): AnsiString; OverRide;
    *)
    function GeraEnvelopeRecepcionarLoteRPS(URLNS: String; CabMsg, DadosMsg, DadosSenha: AnsiString): AnsiString; OverRide;
    function GeraEnvelopeConsultarSituacaoLoteRPS(URLNS: String; CabMsg, DadosMsg, DadosSenha: AnsiString): AnsiString; OverRide;
@@ -94,8 +89,6 @@ function TProvedorBetha.GetConfigCidade(ACodCidade,
 var
  ConfigCidade: TConfigCidade;
 begin
- // Alterado por Rodrigo Cantelli
-
  ConfigCidade.VersaoSoap    := '1.1';
  ConfigCidade.Prefixo2      := '';
  ConfigCidade.Prefixo3      := 'ns3:';
@@ -116,8 +109,6 @@ function TProvedorBetha.GetConfigSchema(ACodCidade: Integer): TConfigSchema;
 var
  ConfigSchema: TConfigSchema;
 begin
- // Alterado por Rodrigo Cantelli
-
  ConfigSchema.VersaoCabecalho := '1.00';
  ConfigSchema.VersaoDados     := '1.00';
  ConfigSchema.VersaoXML       := '2';
@@ -164,8 +155,6 @@ end;
 
 function TProvedorBetha.GetAssinarXML(Acao: TnfseAcao): Boolean;
 begin
- // Alterado por Rodrigo Cantelli
-
  case Acao of
    acRecepcionar: Result := True;
    acConsSit:     Result := False;
@@ -186,8 +175,6 @@ end;
 function TProvedorBetha.Gera_TagI(Acao: TnfseAcao; Prefixo3, Prefixo4,
   NameSpaceDad, Identificador, URI: String): AnsiString;
 begin
- // Alterado por Rodrigo Cantelli
-
  case Acao of
    acRecepcionar: Result := '<' + Prefixo3 + 'EnviarLoteRpsEnvio' + NameSpaceDad;
    acConsSit:     Result := '<' + Prefixo3 + 'ConsultarSituacaoLoteRpsEnvio' + NameSpaceDad;
@@ -217,8 +204,6 @@ end;
 
 function TProvedorBetha.Gera_TagF(Acao: TnfseAcao; Prefixo3: String): AnsiString;
 begin
- // Alterado por Rodrigo Cantelli
-
  case Acao of
    acRecepcionar: Result := '</' + Prefixo3 + 'EnviarLoteRpsEnvio>';
    acConsSit:     Result := '</' + Prefixo3 + 'ConsultarSituacaoLoteRpsEnvio>';
@@ -469,8 +454,6 @@ end;
 function TProvedorBetha.GeraEnvelopeRecepcionarLoteRPS(URLNS: String;
   CabMsg, DadosMsg, DadosSenha: AnsiString): AnsiString;
 begin
- // Alterado por Rodrigo Cantelli
-
  Result := '<?xml version="1.0" encoding="UTF-8"?>' +
            '<S:Envelope xmlns:S="http://schemas.xmlsoap.org/soap/envelope/">' +
             '<S:Body>' +
@@ -482,8 +465,6 @@ end;
 function TProvedorBetha.GeraEnvelopeConsultarSituacaoLoteRPS(
   URLNS: String; CabMsg, DadosMsg, DadosSenha: AnsiString): AnsiString;
 begin
- // Alterado por Rodrigo Cantelli
-
  Result := '<?xml version="1.0" encoding="UTF-8"?>' +
            '<S:Envelope xmlns:S="http://schemas.xmlsoap.org/soap/envelope/">' +
             '<S:Body>' +
@@ -495,8 +476,6 @@ end;
 function TProvedorBetha.GeraEnvelopeConsultarLoteRPS(URLNS: String;
   CabMsg, DadosMsg, DadosSenha: AnsiString): AnsiString;
 begin
- // Alterado por Rodrigo Cantelli
-
  Result := '<?xml version="1.0" encoding="UTF-8"?>' +
            '<S:Envelope xmlns:S="http://schemas.xmlsoap.org/soap/envelope/">' +
             '<S:Body>' +
@@ -508,8 +487,6 @@ end;
 function TProvedorBetha.GeraEnvelopeConsultarNFSeporRPS(URLNS: String;
   CabMsg, DadosMsg, DadosSenha: AnsiString): AnsiString;
 begin
- // Alterado por Rodrigo Cantelli
-
  Result := '<?xml version="1.0" encoding="UTF-8"?>' +
            '<S:Envelope xmlns:S="http://schemas.xmlsoap.org/soap/envelope/">' +
             '<S:Body>' +
@@ -521,8 +498,6 @@ end;
 function TProvedorBetha.GeraEnvelopeConsultarNFSe(URLNS: String; CabMsg,
   DadosMsg, DadosSenha: AnsiString): AnsiString;
 begin
- // Alterado por Rodrigo Cantelli
-
  Result := '<?xml version="1.0" encoding="UTF-8"?>' +
            '<S:Envelope xmlns:S="http://schemas.xmlsoap.org/soap/envelope/">' +
             '<S:Body>' +
@@ -534,8 +509,6 @@ end;
 function TProvedorBetha.GeraEnvelopeCancelarNFSe(URLNS: String; CabMsg,
   DadosMsg, DadosSenha: AnsiString): AnsiString;
 begin
- // Alterado por Rodrigo Cantelli
-
  Result := '<?xml version="1.0" encoding="UTF-8"?>' +
             '<S:Envelope xmlns:S="http://schemas.xmlsoap.org/soap/envelope/">' +
              '<S:Body>' +
@@ -553,8 +526,6 @@ end;
 
 function TProvedorBetha.GetSoapAction(Acao: TnfseAcao; NomeCidade: String): String;
 begin
- // Alterado por Rodrigo Cantelli
-
  case Acao of
    acRecepcionar: Result := 'http://www.betha.com.br/e-nota-contribuinte-ws/recepcionarLoteRps';
    acConsSit:     Result := 'http://www.betha.com.br/e-nota-contribuinte-ws/ConsultarSituacaoLoteRpsEnvio';
@@ -568,8 +539,6 @@ end;
 
 function TProvedorBetha.GetRetornoWS(Acao: TnfseAcao; RetornoWS: AnsiString): AnsiString;
 begin
- // Alterado por Rodrigo Cantelli
-
  case Acao of
    acRecepcionar: Result := SeparaDados( RetornoWS, 'EnviarLoteRpsResposta', True );
    acConsSit:     Result := SeparaDados( RetornoWS, 'ConsultarSituacaoLoteRpsResposta', True );
@@ -584,8 +553,6 @@ end;
 function TProvedorBetha.GeraRetornoNFSe(Prefixo: String;
   RetNFSe: AnsiString; NomeCidade: String): AnsiString;
 begin
- // Alterado por Rodrigo Cantelli
- 
  Result := '<?xml version="1.0" encoding="UTF-8"?>' +
            '<ComplNfse xmlns="http://www.betha.com.br/e-nota-contribuinte-ws">' +
              RetNfse +
@@ -597,14 +564,7 @@ function TProvedorBetha.GetLinkNFSe(ACodMunicipio, ANumeroNFSe: Integer;
 begin
  Result := '';
 end;
-(*
-function TProvedorBetha.Gera_DadosMsgEnviarSincrono(Prefixo3, Prefixo4,
-  Identificador, NameSpaceDad, VersaoDados, VersaoXML, NumeroLote, CNPJ,
-  IM, QtdeNotas: String; Notas, TagI, TagF: AnsiString): AnsiString;
-begin
- Result := '';
-end;
-*)
+
 function TProvedorBetha.GeraEnvelopeRecepcionarSincrono(URLNS: String;
   CabMsg, DadosMsg, DadosSenha: AnsiString): AnsiString;
 begin

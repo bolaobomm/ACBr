@@ -27,7 +27,6 @@ type
    function GetConfigURL(ACodCidade: Integer): TConfigURL; OverRide;
    function GetURI(URI: String): String; OverRide;
    function GetAssinarXML(Acao: TnfseAcao): Boolean; OverRide;
-   // Sugestão de Rodrigo Cantelli
    function GetValidarLote: Boolean; OverRide;
 
    function Gera_TagI(Acao: TnfseAcao; Prefixo3, Prefixo4, NameSpaceDad, Identificador, URI: String): AnsiString; OverRide;
@@ -59,10 +58,6 @@ type
                                    NameSpaceDad, VersaoDados, VersaoXML,
                                    NumeroLote, CNPJ, IM, QtdeNotas: String;
                                    Notas, TagI, TagF: AnsiString): AnsiString; OverRide;
-   function Gera_DadosMsgEnviarSincrono(Prefixo3, Prefixo4, Identificador,
-                                        NameSpaceDad, VersaoDados, VersaoXML,
-                                        NumeroLote, CNPJ, IM, QtdeNotas: String;
-                                        Notas, TagI, TagF: AnsiString): AnsiString; OverRide;
    *)
    function GeraEnvelopeRecepcionarLoteRPS(URLNS: String; CabMsg, DadosMsg, DadosSenha: AnsiString): AnsiString; OverRide;
    function GeraEnvelopeConsultarSituacaoLoteRPS(URLNS: String; CabMsg, DadosMsg, DadosSenha: AnsiString): AnsiString; OverRide;
@@ -128,9 +123,8 @@ begin
  ConfigSchema.ServicoConRps   := 'nfse.xsd';
  ConfigSchema.ServicoConNfse  := 'nfse.xsd';
  ConfigSchema.ServicoCancelar := 'nfse.xsd';
- ConfigSchema.DefTipos        := '';
- //Incluido por Lutzem Massao Aihara...
  ConfigSchema.ServicoGerar    := 'nfse.xsd';
+ ConfigSchema.DefTipos        := '';
 
  Result := ConfigSchema;
 end;
@@ -146,7 +140,6 @@ begin
  ConfigURL.HomConsultaSitLoteRPS := 'https://iss.pontagrossa.pr.gov.br:4431/Homologacao/Services.asmx';
  ConfigURL.HomConsultaNFSe       := 'https://iss.pontagrossa.pr.gov.br:4431/Homologacao/Services.asmx';
  ConfigURL.HomCancelaNFSe        := 'https://iss.pontagrossa.pr.gov.br:4431/Homologacao/Services.asmx';
- //Incluido por Lutzem Massao Aihara...
  ConfigURL.HomGerarNFSe          := 'https://iss.pontagrossa.pr.gov.br:4431/Homologacao/Services.asmx';
 
  ConfigURL.ProNomeCidade         := 'pontagrossa.pr';
@@ -156,7 +149,6 @@ begin
  ConfigURL.ProConsultaSitLoteRPS := 'https://iss.pontagrossa.pr.gov.br:4431/Services.asmx';
  ConfigURL.ProConsultaNFSe       := 'https://iss.pontagrossa.pr.gov.br:4431/Services.asmx';
  ConfigURL.ProCancelaNFSe        := 'https://iss.pontagrossa.pr.gov.br:4431/Services.asmx';
- //Incluido por Lutzem Massao Aihara...
  ConfigURL.ProGerarNFSe          := 'https://iss.pontagrossa.pr.gov.br:4431/Services.asmx';
 
  Result := ConfigURL;
@@ -644,14 +636,7 @@ function TProvedorfintelISS.GetLinkNFSe(ACodMunicipio,
 begin
  Result := '';
 end;
-(*
-function TProvedorfintelISS.Gera_DadosMsgEnviarSincrono(Prefixo3, Prefixo4,
-  Identificador, NameSpaceDad, VersaoDados, VersaoXML, NumeroLote, CNPJ,
-  IM, QtdeNotas: String; Notas, TagI, TagF: AnsiString): AnsiString;
-begin
- Result := '';
-end;
-*)
+
 function TProvedorfintelISS.GeraEnvelopeRecepcionarSincrono(URLNS: String;
   CabMsg, DadosMsg, DadosSenha: AnsiString): AnsiString;
 begin

@@ -58,10 +58,6 @@ type
                                    NameSpaceDad, VersaoDados, VersaoXML,
                                    NumeroLote, CNPJ, IM, QtdeNotas: String;
                                    Notas, TagI, TagF: AnsiString): AnsiString; OverRide;
-   function Gera_DadosMsgEnviarSincrono(Prefixo3, Prefixo4, Identificador,
-                                        NameSpaceDad, VersaoDados, VersaoXML,
-                                        NumeroLote, CNPJ, IM, QtdeNotas: String;
-                                        Notas, TagI, TagF: AnsiString): AnsiString; OverRide;
    *)
    function GeraEnvelopeRecepcionarLoteRPS(URLNS: String; CabMsg, DadosMsg, DadosSenha: AnsiString): AnsiString; OverRide;
    function GeraEnvelopeConsultarSituacaoLoteRPS(URLNS: String; CabMsg, DadosMsg, DadosSenha: AnsiString): AnsiString; OverRide;
@@ -97,8 +93,6 @@ begin
  	ConfigCidade.Prefixo3      := '';
  	ConfigCidade.Prefixo4      := '';
  	ConfigCidade.Identificador := 'Id';
-
-	ConfigCidade.NameSpaceEnvelope   := 'http://www.abrasf.org.br';
 
   case ACodCidade of
    3132404: begin // Itajubá/MG
@@ -637,15 +631,7 @@ function TProvedorGovDigital.GetLinkNFSe(ACodMunicipio, ANumeroNFSe: Integer;
 begin
  Result := '';
 end;
-(*
-function TProvedorGovDigital.Gera_DadosMsgEnviarSincrono(Prefixo3,
-  Prefixo4, Identificador, NameSpaceDad, VersaoDados, VersaoXML,
-  NumeroLote, CNPJ, IM, QtdeNotas: String; Notas, TagI,
-  TagF: AnsiString): AnsiString;
-begin
- Result := '';
-end;
-*)
+
 function TProvedorGovDigital.GeraEnvelopeRecepcionarSincrono(URLNS: String;
   CabMsg, DadosMsg, DadosSenha: AnsiString): AnsiString;
 begin

@@ -27,7 +27,6 @@ type
    function GetConfigURL(ACodCidade: Integer): TConfigURL; OverRide;
    function GetURI(URI: String): String; OverRide;
    function GetAssinarXML(Acao: TnfseAcao): Boolean; OverRide;
-   // Sugestão de Rodrigo Cantelli
    function GetValidarLote: Boolean; OverRide;
 
    function Gera_TagI(Acao: TnfseAcao; Prefixo3, Prefixo4, NameSpaceDad, Identificador, URI: String): AnsiString; OverRide;
@@ -59,10 +58,6 @@ type
                                    NameSpaceDad, VersaoDados, VersaoXML,
                                    NumeroLote, CNPJ, IM, QtdeNotas: String;
                                    Notas, TagI, TagF: AnsiString): AnsiString; OverRide;
-   function Gera_DadosMsgEnviarSincrono(Prefixo3, Prefixo4, Identificador,
-                                        NameSpaceDad, VersaoDados, VersaoXML,
-                                        NumeroLote, CNPJ, IM, QtdeNotas: String;
-                                        Notas, TagI, TagF: AnsiString): AnsiString; OverRide;
    *)
    function GeraEnvelopeRecepcionarLoteRPS(URLNS: String; CabMsg, DadosMsg, DadosSenha: AnsiString): AnsiString; OverRide;
    function GeraEnvelopeConsultarSituacaoLoteRPS(URLNS: String; CabMsg, DadosMsg, DadosSenha: AnsiString): AnsiString; OverRide;
@@ -94,16 +89,14 @@ function TProvedorAbaco.GetConfigCidade(ACodCidade,
 var
  ConfigCidade: TConfigCidade;
 begin
- ConfigCidade.VersaoSoap    := '1.1';
- ConfigCidade.Prefixo2      := '';
- ConfigCidade.Prefixo3      := '';
- ConfigCidade.Prefixo4      := '';
- ConfigCidade.Identificador := 'id';
-
+ ConfigCidade.VersaoSoap        := '1.1';
+ ConfigCidade.Prefixo2          := '';
+ ConfigCidade.Prefixo3          := '';
+ ConfigCidade.Prefixo4          := '';
+ ConfigCidade.Identificador     := 'id';
  ConfigCidade.NameSpaceEnvelope := 'http://www.e-nfs.com.br';
-
- ConfigCidade.AssinaRPS  := False;
- ConfigCidade.AssinaLote := True;
+ ConfigCidade.AssinaRPS         := False;
+ ConfigCidade.AssinaLote        := True;
 
  Result := ConfigCidade;
 end;
@@ -653,14 +646,7 @@ function TProvedorAbaco.GetLinkNFSe(ACodMunicipio, ANumeroNFSe: Integer;
 begin
  Result := '';
 end;
-(*
-function TProvedorAbaco.Gera_DadosMsgEnviarSincrono(Prefixo3, Prefixo4,
-  Identificador, NameSpaceDad, VersaoDados, VersaoXML, NumeroLote, CNPJ,
-  IM, QtdeNotas: String; Notas, TagI, TagF: AnsiString): AnsiString;
-begin
- Result := '';
-end;
-*)
+
 function TProvedorAbaco.GeraEnvelopeRecepcionarSincrono(URLNS: String;
   CabMsg, DadosMsg, DadosSenha: AnsiString): AnsiString;
 begin

@@ -166,7 +166,6 @@ type
     FNumeroLote: String;
     FDataRecebimento: TDateTime;
     FProtocolo : String;
-    // Incluido por Rodrigo Cantelli
     FNFSeRetorno : TretEnvLote;
     FNotasFiscais : TNotasFiscais;
   public
@@ -175,7 +174,6 @@ type
     property NumeroLote: String read FNumeroLote;
     property DataRecebimento: TDateTime read FDataRecebimento;
     property Protocolo: String read FProtocolo;
-    // Incluido por Rodrigo Cantelli
     property NFSeRetorno: TretEnvLote read FNFSeRetorno write FNFSeRetorno;
   end;
 
@@ -771,25 +769,28 @@ begin
                                              vNotas,
                                              FTagI, FTagF, FProvedor);
 
- if FConfiguracoes.WebServices.Salvar
-  then FConfiguracoes.Geral.Save('-xxx1.xml', FDadosMsg);
-
- FDadosMsg := TNFSeEnviarLoteRPS(Self).FNotasFiscais.AssinarLoteRps(TNFSeEnviarLoteRps(Self).NumeroLote, FDadosMSg);
-
- if FConfiguracoes.WebServices.Salvar
-  then FConfiguracoes.Geral.Save('-xxx2.xml', FDadosMsg);
-
- // Sugestão de Rodrigo Cantelli
- if FProvedorClass.GetValidarLote
+ if FDadosMsg <> ''
   then begin
-   if not(NotaUtil.Valida(FDadosMsg, FMsg,
-                          FConfiguracoes.Geral.PathSchemas,
-                          FConfiguracoes.WebServices.URL,
-                          FConfiguracoes.WebServices.ServicoEnviar,
-                          FConfiguracoes.WebServices.Prefixo4))
-    then raise Exception.Create('Falha na validação do Lote ' +
-                   TNFSeEnviarLoteRps(Self).NumeroLote + sLineBreak + FMsg);
-  end;
+   if FConfiguracoes.WebServices.Salvar
+    then FConfiguracoes.Geral.Save('-xxx1.xml', FDadosMsg);
+
+   FDadosMsg := TNFSeEnviarLoteRPS(Self).FNotasFiscais.AssinarLoteRps(TNFSeEnviarLoteRps(Self).NumeroLote, FDadosMSg);
+
+   if FConfiguracoes.WebServices.Salvar
+    then FConfiguracoes.Geral.Save('-xxx2.xml', FDadosMsg);
+
+   if FProvedorClass.GetValidarLote
+    then begin
+     if not(NotaUtil.Valida(FDadosMsg, FMsg,
+                            FConfiguracoes.Geral.PathSchemas,
+                            FConfiguracoes.WebServices.URL,
+                            FConfiguracoes.WebServices.ServicoEnviar,
+                            FConfiguracoes.WebServices.Prefixo4))
+      then raise Exception.Create('Falha na validação do Lote ' +
+                     TNFSeEnviarLoteRps(Self).NumeroLote + sLineBreak + FMsg);
+    end;
+  end
+  else raise Exception.Create('A funcionalidade Enviar Lote não esta disponivel para o provedor: ' + FxProvedor);
 end;
 
 procedure TWebServicesBase.DoNFSeConsultarSituacaoLoteRPS;
@@ -883,6 +884,8 @@ begin
                                                     SomenteNumeros(TNFSeConsultarSituacaoLoteRPS(Self).Cnpj),
                                                     TNFSeConsultarSituacaoLoteRPS(Self).InscricaoMunicipal,
                                                     FTagI, FTagF, FProvedor);
+  if FDadosMsg = '' then
+   raise Exception.Create('A funcionalidade Consultar Situação do Lote não esta disponivel para o provedor: ' + FxProvedor);
 end;
 
 procedure TWebServicesBase.DoNFSeConsultarLoteRPS;
@@ -981,6 +984,8 @@ begin
                                                  TNFSeConsultarLoteRPS(Self).FCNPJ,
                                                  TNFSeConsultarLoteRPS(Self).FIM,
                                                  FTagI, FTagF, FProvedor);
+  if FDadosMsg = '' then
+   raise Exception.Create('A funcionalidade Consultar Lote não esta disponivel para o provedor: ' + FxProvedor);
 end;
 
 procedure TWebServicesBase.DoNFSeConsultarNFSeporRPS;
@@ -1078,6 +1083,8 @@ begin
                                                     SomenteNumeros(TNFSeConsultarNfseRPS(Self).Cnpj),
                                                     TNFSeConsultarNfseRPS(Self).InscricaoMunicipal,
                                                     FTagI, FTagF, FProvedor);
+  if FDadosMsg = '' then
+   raise Exception.Create('A funcionalidade Consultar NFSe por RPS não esta disponivel para o provedor: ' + FxProvedor);
 end;
 
 procedure TWebServicesBase.DoNFSeConsultarNFSe;
@@ -1175,6 +1182,8 @@ begin
                                                  TNFSeConsultarNfse(Self).DataFinal,
                                                  FTagI, FTagF,
                                                  TNFSeConsultarNfse(Self).FNumeroNFSe, FProvedor);
+  if FDadosMsg = '' then
+   raise Exception.Create('A funcionalidade Consultar NFSe não esta disponivel para o provedor: ' + FxProvedor);
 end;
 
 procedure TWebServicesBase.DoNFSeCancelarNFSe;
@@ -1300,6 +1309,8 @@ begin
                                                      TNFSeCancelarNfse(Self).FCodigoMunicipio,
                                                      TNFSeCancelarNfse(Self).FCodigoCancelamento,
                                                      FTagI, FTagF, FProvedor);
+  if DadosMsg = '' then
+   raise Exception.Create('A funcionalidade Cancelar NFSe não esta disponivel para o provedor: ' + FxProvedor);
 end;
 
 procedure TWebServicesBase.DoNFSeGerarNFSe;
@@ -1444,25 +1455,29 @@ begin
                                             vNotas,
                                             FTagI, FTagF, FProvedor);
 
- if FConfiguracoes.WebServices.Salvar
-  then FConfiguracoes.Geral.Save('-xxx1.xml', FDadosMsg);
-
- if not (FProvedor = profintelISS) then
-  FDadosMsg := TNFSeGerarNFSe(Self).FNotasFiscais.AssinarLoteRps(IntToStr(TNFSeGerarNFSe(Self).NumeroRps), FDadosMSg);
-
- if FConfiguracoes.WebServices.Salvar
-  then FConfiguracoes.Geral.Save('-xxx2.xml', FDadosMsg);
-
- if FProvedorClass.GetValidarLote
+ if FDadosMsg <> ''
   then begin
-   if not(NotaUtil.Valida(FDadosMsg, FMsg,
-                          FConfiguracoes.Geral.PathSchemas,
-                          FConfiguracoes.WebServices.URL,
-                          FConfiguracoes.WebServices.ServicoEnviar,
-                          FConfiguracoes.WebServices.Prefixo4))
-    then raise Exception.Create('Falha na validação do Lote ' +
-                   IntToStr(TNFSeGerarNFSe(Self).NumeroRps) + sLineBreak + FMsg);
-  end;
+   if FConfiguracoes.WebServices.Salvar
+    then FConfiguracoes.Geral.Save('-xxx1.xml', FDadosMsg);
+
+   if not (FProvedor = profintelISS) then
+    FDadosMsg := TNFSeGerarNFSe(Self).FNotasFiscais.AssinarLoteRps(IntToStr(TNFSeGerarNFSe(Self).NumeroRps), FDadosMSg);
+
+   if FConfiguracoes.WebServices.Salvar
+    then FConfiguracoes.Geral.Save('-xxx2.xml', FDadosMsg);
+
+   if FProvedorClass.GetValidarLote
+    then begin
+     if not(NotaUtil.Valida(FDadosMsg, FMsg,
+                            FConfiguracoes.Geral.PathSchemas,
+                            FConfiguracoes.WebServices.URL,
+                            FConfiguracoes.WebServices.ServicoEnviar,
+                            FConfiguracoes.WebServices.Prefixo4))
+      then raise Exception.Create('Falha na validação do Lote ' +
+                     IntToStr(TNFSeGerarNFSe(Self).NumeroRps) + sLineBreak + FMsg);
+    end;
+  end
+  else raise Exception.Create('A funcionalidade Gerar NFSe não esta disponivel para o provedor: ' + FxProvedor);
 end;
 
 procedure TWebServicesBase.DoNFSeLinkNFSe;
@@ -1744,24 +1759,28 @@ begin
                                                  vNotas,
                                                  FTagI, FTagF, FProvedor);
 
- if FConfiguracoes.WebServices.Salvar
-  then FConfiguracoes.Geral.Save('-xxx1.xml', FDadosMsg);
-
- FDadosMsg := TNFSeEnviarSincrono(Self).FNotasFiscais.AssinarLoteRps(TNFSeEnviarSincrono(Self).NumeroLote, FDadosMSg);
-
- if FConfiguracoes.WebServices.Salvar
-  then FConfiguracoes.Geral.Save('-xxx2.xml', FDadosMsg);
-
- if FProvedorClass.GetValidarLote
+ if FDadosMsg <> ''
   then begin
-   if not(NotaUtil.Valida(FDadosMsg, FMsg,
-                          FConfiguracoes.Geral.PathSchemas,
-                          FConfiguracoes.WebServices.URL,
-                          FConfiguracoes.WebServices.ServicoEnviar,
-                          FConfiguracoes.WebServices.Prefixo4))
-    then raise Exception.Create('Falha na validação do Lote ' +
-                   TNFSeEnviarLoteRps(Self).NumeroLote + sLineBreak + FMsg);
-  end;
+   if FConfiguracoes.WebServices.Salvar
+    then FConfiguracoes.Geral.Save('-xxx1.xml', FDadosMsg);
+
+   FDadosMsg := TNFSeEnviarSincrono(Self).FNotasFiscais.AssinarLoteRps(TNFSeEnviarSincrono(Self).NumeroLote, FDadosMSg);
+
+   if FConfiguracoes.WebServices.Salvar
+    then FConfiguracoes.Geral.Save('-xxx2.xml', FDadosMsg);
+
+   if FProvedorClass.GetValidarLote
+    then begin
+     if not(NotaUtil.Valida(FDadosMsg, FMsg,
+                            FConfiguracoes.Geral.PathSchemas,
+                            FConfiguracoes.WebServices.URL,
+                            FConfiguracoes.WebServices.ServicoEnviar,
+                            FConfiguracoes.WebServices.Prefixo4))
+      then raise Exception.Create('Falha na validação do Lote ' +
+                     TNFSeEnviarLoteRps(Self).NumeroLote + sLineBreak + FMsg);
+    end;
+  end
+  else raise Exception.Create('A funcionalidade Enviar Sincrono não esta disponivel para o provedor: ' + FxProvedor);
 end;
 
 { TWebServices }
@@ -1827,7 +1846,6 @@ begin
 
    Self.ConsLote.Protocolo := Self.Enviar.Protocolo;
 
-   // Alterado por Akai L. Massao Aihara
    if not (TACBrNFSe( FACBrNFSe ).Configuracoes.WebServices.Provedor in [profintelISS, proSaatri, proISSDigital])
     then begin
      Result := Self.ConsSitLote.Executar;
@@ -1981,7 +1999,6 @@ begin
     else raise Exception.Create('Erro Desconhecido!')
   end;
 
- // Incluido por Italo em 03/04/2012
  Self.ConsNfseRps.Numero             := TACBrNFSe( FACBrNFSe ).NotasFiscais.Items[0].NFSe.IdentificacaoRps.Numero;
  Self.ConsNfseRps.Serie              := TACBrNFSe( FACBrNFSe ).NotasFiscais.Items[0].NFSe.IdentificacaoRps.Serie;
  Self.ConsNfseRps.Tipo               := TipoRPSToStr(TACBrNFSe( FACBrNFSe ).NotasFiscais.Items[0].NFSe.IdentificacaoRps.Tipo);
@@ -2113,7 +2130,6 @@ var
 begin
  {Result :=} inherited Executar;
 
- // Incluido por Rodrigo Cantelli
  if Assigned(NFSeRetorno)
   then NFSeRetorno.Free;
 
@@ -2278,7 +2294,6 @@ var
 begin
  {Result :=} inherited Executar;
 
- // Incluido por Rodrigo Cantelli
  if Assigned(NFSeRetorno)
   then NFSeRetorno.Free;
 
@@ -2465,7 +2480,6 @@ var
 begin
  {Result :=} inherited Executar;
 
- // Incluido por Rodrigo Cantelli
  if Assigned(NFSeRetorno)
   then NFSeRetorno.Free;
 
@@ -2531,7 +2545,6 @@ begin
   Prefixo3 := FConfiguracoes.WebServices.Prefixo3;
   Prefixo4 := FConfiguracoes.WebServices.Prefixo4;
 
-  // Alterado por Rodrigo Cantelli
   case FProvedor of
    proBetha: Prefixo3 := '';
   end;
@@ -2544,14 +2557,12 @@ try
   i := 0;
   while FRetListaNfse <> '' do
    begin
-    // Alterado por Rodrigo Cantelli
     j := Pos('</' + Prefixo3 +
                     DFeUtil.seSenao(FProvedor = proBetha, 'ComplNfse', 'CompNfse') + '>', FRetListaNfse);
     p := Length(trim(Prefixo3));
     if j > 0
      then begin
 
-      // Alterado por Italo em 19/07/2012
       for ii := 0 to NFSeRetorno.ListaNfse.CompNfse.Count -1 do
        begin
         if FNotasFiscais.Items[ii].NFSe.IdentificacaoRps.Numero = NFSeRetorno.ListaNfse.CompNfse.Items[i].Nfse.IdentificacaoRps.Numero
@@ -2689,7 +2700,6 @@ var
 begin
  {Result :=} inherited Executar;
 
- // Incluido por Italo em 17/02/2012
  if Assigned(NFSeRetorno)
   then NFSeRetorno.Free;
 
@@ -2754,7 +2764,6 @@ begin
   Prefixo3 := FConfiguracoes.WebServices.Prefixo3;
   Prefixo4 := FConfiguracoes.WebServices.Prefixo4;
 
-  // Alterado por Rodrigo Cantelli
   case FProvedor of
    proBetha: Prefixo3 := '';
   end;
@@ -2766,7 +2775,6 @@ begin
  // Incluido por Ricardo Miranda em 14/03/2013
   FRetWS := NotaUtil.RetirarPrefixos(FRetWS);
 
-  // Alterado por Rodrigo Cantelli
   if FProvedor = proBetha
    then FRetCompNfse := SeparaDados(FRetWS, {Prefixo3 +} 'ComplNfse')
    else FRetCompNfse := SeparaDados(FRetWS, {Prefixo3 +} 'CompNfse');
@@ -2775,7 +2783,6 @@ begin
   while FRetCompNfse <> '' do
    begin
     j := Pos('</' + {Prefixo3 +} 'Nfse>', FRetCompNfse);
-    // Incluido por Italo em 17/10/2012
     if j = 0
      then j := Pos('</' + {Prefixo4 +} 'Nfse>', FRetCompNfse);
 
@@ -2883,7 +2890,6 @@ var
 begin
  {Result :=} inherited Executar;
 
- // Incluido por Rodrigo Cantelli
  if Assigned(NFSeRetorno)
   then NFSeRetorno.Free;
 
@@ -2952,7 +2958,6 @@ begin
   Prefixo3 := FConfiguracoes.WebServices.Prefixo3;
   Prefixo4 := FConfiguracoes.WebServices.Prefixo4;
 
-  // Alterado por Rodrigo Cantelli
   case FProvedor of
    proBetha: Prefixo3 := '';
   end;
@@ -2964,7 +2969,6 @@ begin
   i := 0;
   while FRetListaNfse <> '' do
    begin
-    // Alterado por Rodrigo Cantelli
     if FProvedor = proBetha
      then j := Pos('</' + Prefixo3 + 'ComplNfse>', FRetListaNfse)
      else j := Pos('</' + Prefixo3 + 'CompNfse>', FRetListaNfse);
@@ -3073,7 +3077,6 @@ var
 begin
  {Result :=} inherited Executar;
 
- // Incluido por Italo em 01/03/2012
  if Assigned(NFSeRetorno)
   then NFSeRetorno.Free;
 
@@ -3284,7 +3287,6 @@ begin
   Prefixo3 := FConfiguracoes.WebServices.Prefixo3;
   Prefixo4 := FConfiguracoes.WebServices.Prefixo4;
 
-  // Alterado por Rodrigo Cantelli
   case FProvedor of
    proBetha: Prefixo3 := '';
   end;
@@ -3298,7 +3300,6 @@ begin
   i := 0;
   while FRetListaNfse <> '' do
    begin
-    // Alterado por Rodrigo Cantelli
     if FProvedor = proBetha
      then j := Pos('</' + Prefixo3 + 'ComplNfse>', FRetListaNfse)
      else j := Pos('</' + Prefixo3 + 'CompNfse>', FRetListaNfse);

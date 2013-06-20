@@ -58,10 +58,6 @@ type
                                    NameSpaceDad, VersaoDados, VersaoXML,
                                    NumeroLote, CNPJ, IM, QtdeNotas: String;
                                    Notas, TagI, TagF: AnsiString): AnsiString; OverRide;
-   function Gera_DadosMsgEnviarSincrono(Prefixo3, Prefixo4, Identificador,
-                                        NameSpaceDad, VersaoDados, VersaoXML,
-                                        NumeroLote, CNPJ, IM, QtdeNotas: String;
-                                        Notas, TagI, TagF: AnsiString): AnsiString; OverRide;
    *)
    function GeraEnvelopeRecepcionarLoteRPS(URLNS: String; CabMsg, DadosMsg, DadosSenha: AnsiString): AnsiString; OverRide;
    function GeraEnvelopeConsultarSituacaoLoteRPS(URLNS: String; CabMsg, DadosMsg, DadosSenha: AnsiString): AnsiString; OverRide;
@@ -101,7 +97,7 @@ begin
  	{if AAmbiente = 1
   	then ConfigCidade.NameSpaceEnvelope := 'http://nfse.goiania.go.gov.br/xsd/nfse_gyn_v02.xsd'
   else }
-	ConfigCidade.NameSpaceEnvelope   := 'http://nfse.goiania.go.gov.br/xsd/nfse_gyn_v02.xsd';
+	ConfigCidade.NameSpaceEnvelope := 'http://nfse.goiania.go.gov.br/xsd/nfse_gyn_v02.xsd';
 
  	ConfigCidade.AssinaRPS  := True;
  	ConfigCidade.AssinaLote := False;
@@ -588,14 +584,7 @@ begin
   vUrlNota := vUrlNota + '&nota=' + IntToStr(ANumeroNFSe) + '&verificador=' + ACodVerificacao;
   Result   := vUrlNota;
 end;
-(*
-function TProvedorGoiania.Gera_DadosMsgEnviarSincrono(Prefixo3, Prefixo4,
-  Identificador, NameSpaceDad, VersaoDados, VersaoXML, NumeroLote, CNPJ,
-  IM, QtdeNotas: String; Notas, TagI, TagF: AnsiString): AnsiString;
-begin
- Result := '';
-end;
-*)
+
 function TProvedorGoiania.GeraEnvelopeRecepcionarSincrono(URLNS: String;
   CabMsg, DadosMsg, DadosSenha: AnsiString): AnsiString;
 begin

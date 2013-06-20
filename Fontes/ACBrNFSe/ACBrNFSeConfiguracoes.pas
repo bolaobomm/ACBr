@@ -305,7 +305,6 @@ type
    function GetConfigURL(ACodCidade: Integer): TConfigURL; Virtual; Abstract;
    function GetURI(URI: String): String; Virtual; Abstract;
    function GetAssinarXML(Acao: TnfseAcao): Boolean; Virtual; Abstract;
-   // Sugestão de Rodrigo Catelli
    function GetValidarLote: Boolean; Virtual; Abstract;
 
    function Gera_TagI(Acao: TnfseAcao; Prefixo3, Prefixo4, NameSpaceDad, Identificador, URI: String): AnsiString; Virtual; Abstract;
@@ -337,10 +336,6 @@ type
                                    NameSpaceDad, VersaoDados, VersaoXML,
                                    NumeroLote, CNPJ, IM, QtdeNotas: String;
                                    Notas, TagI, TagF: AnsiString): AnsiString; Virtual; Abstract;
-   function Gera_DadosMsgEnviarSincrono(Prefixo3, Prefixo4, Identificador,
-                                        NameSpaceDad, VersaoDados, VersaoXML,
-                                        NumeroLote, CNPJ, IM, QtdeNotas: String;
-                                        Notas, TagI, TagF: AnsiString): AnsiString; Virtual; Abstract;
    *)
    function GeraEnvelopeRecepcionarLoteRPS(URLNS: String; CabMsg, DadosMsg, DadosSenha: AnsiString): AnsiString; Virtual; Abstract;
    function GeraEnvelopeConsultarSituacaoLoteRPS(URLNS: String; CabMsg, DadosMsg, DadosSenha: AnsiString): AnsiString; Virtual; Abstract;

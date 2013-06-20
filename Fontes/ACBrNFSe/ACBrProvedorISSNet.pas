@@ -27,7 +27,6 @@ type
    function GetConfigURL(ACodCidade: Integer): TConfigURL; OverRide;
    function GetURI(URI: String): String; OverRide;
    function GetAssinarXML(Acao: TnfseAcao): Boolean; OverRide;
-   // Sugestão de Rodrigo Cantelli
    function GetValidarLote: Boolean; OverRide;
 
    function Gera_TagI(Acao: TnfseAcao; Prefixo3, Prefixo4, NameSpaceDad, Identificador, URI: String): AnsiString; OverRide;
@@ -59,10 +58,6 @@ type
                                    NameSpaceDad, VersaoDados, VersaoXML,
                                    NumeroLote, CNPJ, IM, QtdeNotas: String;
                                    Notas, TagI, TagF: AnsiString): AnsiString; OverRide;
-   function Gera_DadosMsgEnviarSincrono(Prefixo3, Prefixo4, Identificador,
-                                        NameSpaceDad, VersaoDados, VersaoXML,
-                                        NumeroLote, CNPJ, IM, QtdeNotas: String;
-                                        Notas, TagI, TagF: AnsiString): AnsiString; OverRide;
    *)
    function GeraEnvelopeRecepcionarLoteRPS(URLNS: String; CabMsg, DadosMsg, DadosSenha: AnsiString): AnsiString; OverRide;
    function GeraEnvelopeConsultarSituacaoLoteRPS(URLNS: String; CabMsg, DadosMsg, DadosSenha: AnsiString): AnsiString; OverRide;
@@ -134,37 +129,37 @@ function TProvedorISSNet.GetConfigURL(ACodCidade: Integer): TConfigURL;
 var
  ConfigURL: TConfigURL;
 begin
- ConfigURL.HomNomeCidade := 'homologacao'; //adicionado por ronnei
+ ConfigURL.HomNomeCidade := 'homologacao';
 
  case ACodCidade of
-      999: ConfigURL.ProNomeCidade := 'homologacao';//adicionado por ronnei
-  1702109: ConfigURL.ProNomeCidade := 'araguaina'; // Araguaína/TO
-  3139607: ConfigURL.ProNomeCidade := 'mantena'; // Mantena/MG
-  3169307: ConfigURL.ProNomeCidade := 'trescoracoes'; // Três Corações/MG
-  3502101: ConfigURL.ProNomeCidade := 'andradina'; // Andradina/SP
-  3502507: ConfigURL.ProNomeCidade := 'aparecidasp'; // Aparecida/SP
-  3522307: ConfigURL.ProNomeCidade := 'itapetininga'; // Itapetininga/SP
-  3524402: ConfigURL.ProNomeCidade := 'jacarei'; // Jacareí/SP
-  3524709: ConfigURL.ProNomeCidade := 'jaguariuna'; // Jaguariúna/SP
-  3527207: ConfigURL.ProNomeCidade := 'lorena'; // Lorena/SP
-  3530607: ConfigURL.ProNomeCidade := 'mogidascruzes'; // Mogi das Cruzes/SP
-  3541000: ConfigURL.ProNomeCidade := 'praiagrande'; // Praia Grande/SP
-  3551009: ConfigURL.ProNomeCidade := 'saovicente'; // São Vicente/SP
-  3551504: ConfigURL.ProNomeCidade := 'serrana'; // Serrana/SP
-  4104808: ConfigURL.ProNomeCidade := 'cascavel'; // Cascavel/PR
-  4219507: ConfigURL.ProNomeCidade := 'xanxere'; // Xanxerê/SC
-  4313409: ConfigURL.ProNomeCidade := 'novohamburgo'; // Novo Hamburgo/RS
-  4316907: ConfigURL.ProNomeCidade := 'santamaria'; // Santa Maria/RS
-  5002209: ConfigURL.ProNomeCidade := 'bonito'; // Bonito/MS
-  5003702: ConfigURL.ProNomeCidade := 'dourados'; // Dourados/MS
-  5100250: ConfigURL.ProNomeCidade := 'altafloresta'; // Alta Floresta/MT
-  5103403: ConfigURL.ProNomeCidade := 'cuiaba'; // Cuiaba/MT
-  5105101: ConfigURL.ProNomeCidade := 'juara'; // Juara/MT
-  5105903: ConfigURL.ProNomeCidade := 'nobres'; // Nobres/MT
-  5106232: ConfigURL.ProNomeCidade := 'novaolimpia'; // Nova Olimpia/MT
-  5107925: ConfigURL.ProNomeCidade := 'sorriso'; // Sorriso/MT
-  5108402: ConfigURL.ProNomeCidade := 'varzeagrande'; // Varzea Grande/MT
-  5201108: ConfigURL.ProNomeCidade := 'anapolis'; // Anapolis/GO
+      999: ConfigURL.ProNomeCidade := 'homologacao';
+  1702109: ConfigURL.ProNomeCidade := 'araguaina';          // Araguaína/TO
+  3139607: ConfigURL.ProNomeCidade := 'mantena';            // Mantena/MG
+  3169307: ConfigURL.ProNomeCidade := 'trescoracoes';       // Três Corações/MG
+  3502101: ConfigURL.ProNomeCidade := 'andradina';          // Andradina/SP
+  3502507: ConfigURL.ProNomeCidade := 'aparecidasp';        // Aparecida/SP
+  3522307: ConfigURL.ProNomeCidade := 'itapetininga';       // Itapetininga/SP
+  3524402: ConfigURL.ProNomeCidade := 'jacarei';            // Jacareí/SP
+  3524709: ConfigURL.ProNomeCidade := 'jaguariuna';         // Jaguariúna/SP
+  3527207: ConfigURL.ProNomeCidade := 'lorena';             // Lorena/SP
+  3530607: ConfigURL.ProNomeCidade := 'mogidascruzes';      // Mogi das Cruzes/SP
+  3541000: ConfigURL.ProNomeCidade := 'praiagrande';        // Praia Grande/SP
+  3551009: ConfigURL.ProNomeCidade := 'saovicente';         // São Vicente/SP
+  3551504: ConfigURL.ProNomeCidade := 'serrana';            // Serrana/SP
+  4104808: ConfigURL.ProNomeCidade := 'cascavel';           // Cascavel/PR
+  4219507: ConfigURL.ProNomeCidade := 'xanxere';            // Xanxerê/SC
+  4313409: ConfigURL.ProNomeCidade := 'novohamburgo';       // Novo Hamburgo/RS
+  4316907: ConfigURL.ProNomeCidade := 'santamaria';         // Santa Maria/RS
+  5002209: ConfigURL.ProNomeCidade := 'bonito';             // Bonito/MS
+  5003702: ConfigURL.ProNomeCidade := 'dourados';           // Dourados/MS
+  5100250: ConfigURL.ProNomeCidade := 'altafloresta';       // Alta Floresta/MT
+  5103403: ConfigURL.ProNomeCidade := 'cuiaba';             // Cuiaba/MT
+  5105101: ConfigURL.ProNomeCidade := 'juara';              // Juara/MT
+  5105903: ConfigURL.ProNomeCidade := 'nobres';             // Nobres/MT
+  5106232: ConfigURL.ProNomeCidade := 'novaolimpia';        // Nova Olimpia/MT
+  5107925: ConfigURL.ProNomeCidade := 'sorriso';            // Sorriso/MT
+  5108402: ConfigURL.ProNomeCidade := 'varzeagrande';       // Varzea Grande/MT
+  5201108: ConfigURL.ProNomeCidade := 'anapolis';           // Anapolis/GO
   5201405: ConfigURL.ProNomeCidade := 'aparecidadegoiania'; // Aparecida de Goiania/GO
  end;
 
@@ -680,14 +675,7 @@ function TProvedorISSNet.GetLinkNFSe(ACodMunicipio, ANumeroNFSe: Integer;
 begin
  Result := '';
 end;
-(*
-function TProvedorISSNet.Gera_DadosMsgEnviarSincrono(Prefixo3, Prefixo4,
-  Identificador, NameSpaceDad, VersaoDados, VersaoXML, NumeroLote, CNPJ,
-  IM, QtdeNotas: String; Notas, TagI, TagF: AnsiString): AnsiString;
-begin
- Result := '';
-end;
-*)
+
 function TProvedorISSNet.GeraEnvelopeRecepcionarSincrono(URLNS: String;
   CabMsg, DadosMsg, DadosSenha: AnsiString): AnsiString;
 begin

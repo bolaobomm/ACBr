@@ -28,7 +28,6 @@ type
    function GetConfigURL(ACodCidade: Integer): TConfigURL; OverRide;
    function GetURI(URI: String): String; OverRide;
    function GetAssinarXML(Acao: TnfseAcao): Boolean; OverRide;
-   // Sugestão de Rodrigo Cantelli
    function GetValidarLote: Boolean; OverRide;
 
    function Gera_TagI(Acao: TnfseAcao; Prefixo3, Prefixo4, NameSpaceDad, Identificador, URI: String): AnsiString; OverRide;
@@ -60,10 +59,6 @@ type
                                    NameSpaceDad, VersaoDados, VersaoXML,
                                    NumeroLote, CNPJ, IM, QtdeNotas: String;
                                    Notas, TagI, TagF: AnsiString): AnsiString; OverRide;
-   function Gera_DadosMsgEnviarSincrono(Prefixo3, Prefixo4, Identificador,
-                                        NameSpaceDad, VersaoDados, VersaoXML,
-                                        NumeroLote, CNPJ, IM, QtdeNotas: String;
-                                        Notas, TagI, TagF: AnsiString): AnsiString; OverRide;
    *)
    function GeraEnvelopeRecepcionarLoteRPS(URLNS: String; CabMsg, DadosMsg, DadosSenha: AnsiString): AnsiString; OverRide;
    function GeraEnvelopeConsultarSituacaoLoteRPS(URLNS: String; CabMsg, DadosMsg, DadosSenha: AnsiString): AnsiString; OverRide;
@@ -102,13 +97,13 @@ begin
  ConfigCidade.Prefixo2      := '';
  ConfigCidade.Prefixo3      := '';
  ConfigCidade.Prefixo4      := '';
- ConfigCidade.Identificador := ''; // Alterado por Rafael Müller
+ ConfigCidade.Identificador := '';
 
  if AAmbiente = 1
   then ConfigCidade.NameSpaceEnvelope := 'http://server.nfse.thema.inf.br'
   else ConfigCidade.NameSpaceEnvelope := 'http://server.nfse.thema.inf.br';
 
- ConfigCidade.AssinaRPS  := False; // Alterado por Rafael Müller
+ ConfigCidade.AssinaRPS  := False;
  ConfigCidade.AssinaLote := True;
 
  Result := ConfigCidade;
@@ -183,7 +178,7 @@ begin
    acConsLote:    Result := False;
    acConsNFSeRps: Result := False;
    acConsNFSe:    Result := False;
-   acCancelar:    Result := True;  // Alterado Por Rafael Müller
+   acCancelar:    Result := True;
    acGerar:       Result := False;
    else           Result := False;
  end;
@@ -607,7 +602,6 @@ end;
 
 function TProvedorThema.GetSoapAction(Acao: TnfseAcao; NomeCidade: String): String;
 begin
- // Alterado por Rafael Müller
  case Acao of
    acRecepcionar: Result := 'urn:' + FMetodoRecepcionar;
    acConsSit:     Result := 'urn:consultarSituacaoLoteRps';
@@ -658,14 +652,7 @@ function TProvedorThema.GetLinkNFSe(ACodMunicipio, ANumeroNFSe: Integer;
 begin
  Result := '';
 end;
-(*
-function TProvedorThema.Gera_DadosMsgEnviarSincrono(Prefixo3, Prefixo4,
-  Identificador, NameSpaceDad, VersaoDados, VersaoXML, NumeroLote, CNPJ,
-  IM, QtdeNotas: String; Notas, TagI, TagF: AnsiString): AnsiString;
-begin
- Result := '';
-end;
-*)
+
 function TProvedorThema.GeraEnvelopeRecepcionarSincrono(URLNS: String;
   CabMsg, DadosMsg, DadosSenha: AnsiString): AnsiString;
 begin
