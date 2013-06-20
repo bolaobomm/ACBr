@@ -567,7 +567,7 @@ var
 begin
  try
   ArquivoXML := TStringList.Create;
-  ArquivoXML.LoadFromFile(CaminhoArquivo);
+  ArquivoXML.LoadFromFile(CaminhoArquivo {$IFDEF DELPHI2009_UP},TEncoding.UTF8{$ENDIF});
   Result := True;
 
   ArquivoXML.Text := StringReplace(StringReplace( ArquivoXML.Text, '&lt;', '<', [rfReplaceAll]), '&gt;', '>', [rfReplaceAll]);

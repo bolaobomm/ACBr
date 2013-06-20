@@ -501,7 +501,7 @@ var
 begin
  try
     ArquivoXML := TStringList.Create;
-    ArquivoXML.LoadFromFile(CaminhoArquivo);
+    ArquivoXML.LoadFromFile(CaminhoArquivo {$IFDEF DELPHI2009_UP},TEncoding.UTF8{$ENDIF});
     Result := True;
     while pos('</MDFe>',ArquivoXML.Text) > 0 do
      begin
