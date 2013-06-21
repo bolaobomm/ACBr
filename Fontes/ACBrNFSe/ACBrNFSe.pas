@@ -46,6 +46,7 @@ type
     function ConsultarLoteRps(ANumLote, AProtocolo: string; ACNPJ: string = ''; AInscricaoMunicipal: string = ''): Boolean;
     function ConsultarNFSeporRps(ANumero, ASerie, ATipo, ACnpj, AInscricaoMunicipal: String): Boolean;
     function ConsultarNFSe(ACnpj, AInscricaoMunicipal: String; ADataInicial, ADataFinal: TDateTime; NumeroNFSe: string = ''): Boolean;
+    function ConsultarSequencialRPS(ACidade, ACnpj, AInscricaoMunicipal, ASeriePrestacao: String):Boolean;
     function CancelarNFSe(ACodigoCancelamento: String): Boolean;
     function Gerar(ARps: Integer): Boolean;
     function LinkNFSe(ANumeroNFSe: Integer; ACodVerificacao, AInscricaoM: String): String;
@@ -370,6 +371,12 @@ begin
  NotasFiscais.Assinar; // Assina os Rps
 
  Result := WebServices.EnviaSincrono(ALote);
+end;
+
+function TACBrNFSe.ConsultarSequencialRPS(ACidade, ACnpj,
+  AInscricaoMunicipal, ASeriePrestacao: String): Boolean;
+begin
+  Result := WebServices.ConsultaSequencialRPS(ACidade, ACnpj, AInscricaoMunicipal, ASeriePrestacao);
 end;
 
 end.

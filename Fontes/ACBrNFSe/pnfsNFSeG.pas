@@ -53,6 +53,34 @@ type
                                         NumeroLote, CNPJ, IM, QtdeNotas: String;
                                         Notas, TagI, TagF: AnsiString; AProvedor: TnfseProvedor = proNenhum): AnsiString;
 
+     //-------------------------------------------------------------------------
+     // As classes abaixo são exclusivas para o provedor DSF
+     //-------------------------------------------------------------------------
+     class function Gera_DadosMsgEnviarLoteDSF(Prefixo3, Prefixo4,Identificador, NameSpaceDad, VersaoXML,
+                                               NumeroLote, CodCidade, CNPJ, IM, RazaoSocial, Transacao,
+                                               QtdeNotas, ValorTotalServicos, ValorTotalDeducoes: String;
+                                               DataInicial, DataFinal: TDateTime;
+                                               Notas, TagI, TagF: AnsiString): AnsiString;
+
+     class function Gera_DadosMsgConsLoteDSF(Prefixo3, Prefixo4, NameSpaceDad,
+                                             VersaoXML, CodCidade, CNPJ, NumeroLote: String;
+                                             TagI, TagF: AnsiString): AnsiString;
+
+     class function Gera_DadosMsgConsNFSeRPSDSF(Prefixo3, Prefixo4, NameSpaceDad,VersaoXML,
+                                                CodCidade, CNPJ, Transacao, NumeroLote: String;
+                                                Notas, TagI, TagF: AnsiString): AnsiString;
+
+     class function Gera_DadosMsgConsNFSeDSF(Prefixo3, Prefixo4, NameSpaceDad, VersaoXML, CodCidade,
+                                             CNPJ, IM, NotaInicial: String; DataInicial, DataFinal: TDateTime;
+                                             TagI, TagF: AnsiString): AnsiString;
+
+     class function Gera_DadosMsgCancelarNFSeDSF(Prefixo3, Prefixo4, NameSpaceDad, VersaoXML,
+                                                 CNPJ, Transacao, CodMunicipio, NumeroLote: String;
+                                                 Notas, TagI, TagF: AnsiString): AnsiString;
+
+     class function Gera_DadosMsgConsSeqRPSDSF(TagI, TagF: AnsiString; VersaoXML, CodCidade,
+                                               IM, CNPJ, SeriePrestacao: String): AnsiString;
+
    published
 
    end;
@@ -376,7 +404,7 @@ begin
   end;
  end;
 
- if AProvedor = proNenhum then Result := '';
+ if AProvedor in [proNenhum, proBetim] then Result := '';
 end;
 
 class function TNFSeG.Gera_DadosMsgEnviarSincrono(Prefixo3, Prefixo4,
@@ -392,6 +420,135 @@ begin
      proGovDigital, proIssCuritiba, proISSDigital, proISSIntel, proISSNet, proNatal,
      proProdemge, proPublica, proRecife, proRJ, proSaatri, proSimplISS, proThema,
      proTiplan, proWebISS] then Result := '';
+end;
+
+//-------------------------------------------------------------------------
+// As classes abaixo são exclusivas para o provedor DSF
+//-------------------------------------------------------------------------
+class function TNFSeG.Gera_DadosMsgEnviarLoteDSF(Prefixo3, Prefixo4,
+  Identificador, NameSpaceDad, VersaoXML, NumeroLote, CodCidade, CNPJ, IM,
+  RazaoSocial, Transacao, QtdeNotas, ValorTotalServicos,
+  ValorTotalDeducoes: String; DataInicial, DataFinal: TDateTime; Notas,
+  TagI, TagF: AnsiString): AnsiString;
+var
+ DadosMsg: AnsiString;
+begin
+ DadosMsg := '<Cabecalho>' +
+               '<CodCidade>'            + CodCidade   + '</CodCidade>' +
+               '<CPFCNPJRemetente>'     + Cnpj        + '</CPFCNPJRemetente>' +
+               '<RazaoSocialRemetente>' + RazaoSocial + '</RazaoSocialRemetente>' +
+               '<transacao>'            + Transacao   + '</transacao>' +
+               '<dtInicio>' + FormatDateTime('yyyy-mm-dd', DataInicial) + '</dtInicio>' +
+               '<dtFim>'    + FormatDateTime('yyyy-mm-dd', DataInicial) + '</dtFim>' +
+               '<QtdRPS>'               + QtdeNotas               + '</QtdRPS>' +
+               '<ValorTotalServicos>'   + ValorTotalServicos + '</ValorTotalServicos>' +
+               '<ValorTotalDeducoes>'   + ValorTotalDeducoes + '</ValorTotalDeducoes>' +
+               '<Versao>'               + VersaoXML          + '</Versao>' +
+               '<MetodoEnvio>'          + 'WS'               + '</MetodoEnvio>' +
+             '</Cabecalho>' +
+             '<Lote ' + Identificador + '="Lote:' + NumeroLote + '">' +
+                Notas +
+             '</Lote>';
+
+  Result := TagI + DadosMsg + TagF;
+end;
+
+class function TNFSeG.Gera_DadosMsgConsLoteDSF(Prefixo3, Prefixo4,
+  NameSpaceDad, VersaoXML, CodCidade, CNPJ, NumeroLote: String; TagI,
+  TagF: AnsiString): AnsiString;
+var
+ DadosMsg: AnsiString;
+begin
+ DadosMsg := '<Cabecalho>' +
+               '<CodCidade>' + CodCidade + '</CodCidade>' +
+               '<CPFCNPJRemetente>' + Cnpj + '</CPFCNPJRemetente>' +
+               '<Versao>' + VersaoXML + '</Versao>' +
+               '<NumeroLote>' + NumeroLote + '</NumeroLote>' +
+             '</Cabecalho>';
+
+ Result := TagI + DadosMsg + TagF;
+end;
+
+class function TNFSeG.Gera_DadosMsgConsNFSeRPSDSF(Prefixo3, Prefixo4,
+  NameSpaceDad, VersaoXML, CodCidade, CNPJ, Transacao, NumeroLote: String;
+  Notas, TagI, TagF: AnsiString): AnsiString;
+var
+ DadosMsg: AnsiString;
+begin
+  DadosMsg := '<Cabecalho>' +
+               '<CodCidade>' + CodCidade + '</CodCidade>' +
+               '<CPFCNPJRemetente>' + Cnpj + '</CPFCNPJRemetente>' +
+               '<transacao>' + Transacao + '</transacao>' +
+               '<Versao>' + VersaoXML + '</Versao>' +
+             '</Cabecalho>' +
+             '<Lote  Id="Lote:' + NumeroLote + '">' +
+                Notas +
+             '</Lote>';
+
+ Result := TagI + DadosMsg + TagF;
+end;
+
+class function TNFSeG.Gera_DadosMsgConsNFSeDSF(Prefixo3, Prefixo4,
+  NameSpaceDad, VersaoXML, CodCidade, CNPJ, IM, NotaInicial: String;
+  DataInicial, DataFinal: TDateTime; TagI, TagF: AnsiString): AnsiString;
+var
+ DadosMsg: AnsiString;
+begin
+ DadosMsg := '<Cabecalho Id="Consulta:notas">' +
+               '<CodCidade>'         + CodCidade    + '</CodCidade>' +
+               '<CPFCNPJRemetente>'  + CNPJ         + '</CPFCNPJRemetente>' +
+               '<InscricaoMunicipalPrestador>' + IM + '</InscricaoMunicipalPrestador>' +
+
+               '<dtInicio>' +
+                 FormatDateTime('yyyy-mm-dd', DataInicial) +
+               '</dtInicio>' +
+
+               '<dtFim>' +
+                 FormatDateTime('yyyy-mm-dd', DataInicial) +
+               '</dtFim>' +
+
+               '<NotaInicial>' + NotaInicial + '</NotaInicial>' +
+               '<Versao>'      + VersaoXML   + '</Versao>' +
+             '</Cabecalho>';
+
+ Result := TagI + DadosMsg + TagF;
+end;
+
+class function TNFSeG.Gera_DadosMsgCancelarNFSeDSF(Prefixo3, Prefixo4,
+  NameSpaceDad, VersaoXML, CNPJ, Transacao, CodMunicipio,
+  NumeroLote: String; Notas, TagI, TagF: AnsiString): AnsiString;
+var
+ DadosMsg: AnsiString;
+begin
+
+ DadosMsg := '<Cabecalho>' +
+		         '<CodCidade>'        + CodMunicipio + '</CodCidade>' +
+		         '<CPFCNPJRemetente>' + CNPJ      + '</CPFCNPJRemetente> ' +
+		         '<transacao>'        + Transacao + '</transacao>' +
+		         '<Versao>'           + VersaoXML + '</Versao>' +
+	          '</Cabecalho>' +
+             '<Lote Id="Lote:' + NumeroLote + '">' +
+                Notas +
+             '</Lote>';
+
+ Result := TagI + DadosMsg + TagF;
+end;
+
+class function TNFSeG.Gera_DadosMsgConsSeqRPSDSF(TagI, TagF: AnsiString;
+  VersaoXML, CodCidade, IM, CNPJ, SeriePrestacao: String): AnsiString;
+var
+ DadosMsg: AnsiString;
+begin
+ //consultar sequencial RPS
+ DadosMsg := '<Cabecalho>' +
+               '<CodCid>' + CodCidade + '</CodCid>' +
+               '<IMPrestador>' + IM + '</IMPrestador>' +
+               '<CPFCNPJRemetente>' + CNPJ + '</CPFCNPJRemetente>' +
+               '<SeriePrestacao>' + SeriePrestacao + '</SeriePrestacao>' +
+               '<Versao>' + VersaoXML + '</Versao>' +
+             '</Cabecalho>';
+
+ Result := TagI + DadosMsg + TagF;
 end;
 
 end.

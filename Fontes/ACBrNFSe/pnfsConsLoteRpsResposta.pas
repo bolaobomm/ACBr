@@ -89,6 +89,7 @@ type
     constructor Create;
     destructor Destroy; override;
     function LerXml: boolean;
+    function LerXml_provedorIssDsf: boolean;
   published
     property PathArquivoMunicipios: string  read FPathArquivoMunicipios  write FPathArquivoMunicipios;
     property PathArquivoTabServicos: string read FPathArquivoTabServicos write FPathArquivoTabServicos;
@@ -597,6 +598,123 @@ begin
   end;
 end;
 
+function TretLote.LerXml_provedorIssDsf: boolean;  //falta homologar
+var
+  ok: boolean;
+  i, Item, posI, count: Integer;
+  sOperacao, sTributacao, VersaoXML: String;
+  strAux, strItem: AnsiString;
+  leitorAux, leitorItem:TLeitor;
+begin
+  result := False;
+
+  try
+    Leitor.Arquivo := NotaUtil.RetirarPrefixos(Leitor.Arquivo);
+    VersaoXML      := '1';
+    Leitor.Grupo   := Leitor.Arquivo;
+
+    if leitor.rExtrai(1, 'RetornoConsultaLote') <> '' then
+    begin
+
+      if (leitor.rExtrai(2, 'Cabecalho') <> '') then
+      begin
+         if (Leitor.rCampo(tcStr, 'Sucesso') = 'true') then
+         begin
+            if (Leitor.rCampo(tcInt, 'QtdNotasProcessadas') > 0) then
+            begin
+
+               strAux := leitor.rExtrai(2, 'ListaNFSe');
+               if (strAux <> '') then
+               begin
+                  i := 0 ;
+                  posI := pos('<ConsultaNFSe>', strAux);
+
+                  while ( posI > 0 ) do begin
+                     count := pos('</ConsultaNFSe>', strAux) + 14;
+
+                     ListaNfse.FCompNfse.Add;
+                     inc(i);
+
+                     LeitorAux := TLeitor.Create;
+                     leitorAux.Arquivo := copy(strAux, PosI, count);
+                     leitorAux.Grupo   := leitorAux.Arquivo;                                                                // <NumeroNFe>            51  </NumeroNFe>
+                                                                                                                            // <CodigoVerificacao>    7c0a82a5  </CodigoVerificacao>
+                     ListaNfse.FCompNfse[i].FNFSe.Numero            := leitorAux.rCampo(tcStr, 'NumeroNFe');                // <SerieRPS>             NF  </SerieRPS>
+                     ListaNfse.FCompNfse[i].FNFSe.CodigoVerificacao := leitorAux.rCampo(tcStr, 'CodigoVerificacao');        // <NumeroRPS>            51  </NumeroRPS>
+                     ListaNfse.FCompNfse[i].FNFSe.DataEmissaoRps    := leitorAux.rCampo(tcDatHor, 'DataEmissaoRPS');        // <DataEmissaoRPS>       2010-02-23T00:00:00  </DataEmissaoRPS>
+                                                                                                                            // <RazaoSocialPrestador> GAPLAN CAMINHOES LTDA  </RazaoSocialPrestador>
+                     LeitorAux.free;                                                                                        // <TipoRecolhimento>     A  </TipoRecolhimento>
+                                                                                                                            // <ValorDeduzir>         0  </ValorDeduzir>
+                     Delete(strAux, PosI, count);                                                                           // <ValorTotal>           98  </ValorTotal>
+                     posI := pos('<ConsultaNFSe>', strAux);                                                                 // <Aliquota>             5  </Aliquota>
+                  end;
+               end;
+            end;
+         end;
+      end;
+
+      i := 0 ;
+      if (leitor.rExtrai(2, 'Alertas') <> '') then
+      begin     
+         strAux := leitor.rExtrai(2, 'Alertas');
+         if (strAux <> '') then
+         begin
+            posI := pos('<Alerta>', strAux);
+
+            while ( posI > 0 ) do begin
+               count := pos('</Alerta>', strAux) + 7;
+
+               ListaNfse.FMsgRetorno.Add;
+               inc(i);
+
+               LeitorAux := TLeitor.Create;
+               leitorAux.Arquivo := copy(strAux, PosI, count);
+               leitorAux.Grupo   := leitorAux.Arquivo;
+
+               ListaNfse.FMsgRetorno[i].Mensagem := 'Alerta: '+ leitorAux.rCampo(tcStr, 'Codigo') + ' - ' + leitorAux.rCampo(tcStr, 'Descricao');
+
+               LeitorAux.free;
+
+               Delete(strAux, PosI, count);
+               posI := pos('<Alerta>', strAux);
+            end;
+         end;
+      end;
+
+      if (leitor.rExtrai(2, 'Erros') <> '') then
+      begin
+
+         strAux := leitor.rExtrai(2, 'Erros');
+         if (strAux <> '') then
+         begin
+            //i := 0 ;
+            posI := pos('<Erro>', strAux);
+
+            while ( posI > 0 ) do begin
+               count := pos('</Erro>', strAux) + 6;
+
+               ListaNfse.FMsgRetorno.Add;
+               inc(i);
+
+               LeitorAux := TLeitor.Create;
+               leitorAux.Arquivo := copy(strAux, PosI, count);
+               leitorAux.Grupo   := leitorAux.Arquivo;
+
+               ListaNfse.FMsgRetorno[i].Mensagem := 'Erro: '+ leitorAux.rCampo(tcStr, 'Codigo') + ' - ' + leitorAux.rCampo(tcStr, 'Descricao');
+
+               LeitorAux.free;
+
+               Delete(strAux, PosI, count);
+               posI := pos('<Erro>', strAux);
+            end;
+         end;
+      end;
+      Result := True;
+    end;
+  except
+    result := False;
+  end;
+end;
 {
 function TretLote.ObterDescricaoServico(cCodigo: string): string;
 var
@@ -656,4 +774,3 @@ begin
 end;
 }
 end.
-

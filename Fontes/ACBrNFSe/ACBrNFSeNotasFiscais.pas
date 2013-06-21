@@ -74,6 +74,7 @@ type
     FACBrNFSe : TComponent;
 
     FNumeroLote: string;
+    FTransacao: boolean;
     FXML_Lote: AnsiString;
     FXML_Lote_Ass: AnsiString;
 
@@ -99,6 +100,7 @@ type
     function SaveToFile(PathArquivo: string = ''): boolean;
 
     property NumeroLote: String read FNumeroLote write FNumeroLote;
+    property Transacao: Boolean read FTransacao write FTransacao;
     property XML_Lote: AnsiString  read FXML_Lote write FXML_Lote;
     property XML_Lote_Ass: AnsiString  read FXML_Lote_Ass write FXML_Lote_Ass;
 
@@ -674,6 +676,23 @@ begin
          end;
         end;
       end;
+  end;
+
+  if pos('</Notas>', ArquivoXML.Text)> 0 then begin
+    while pos('</Notas>', ArquivoXML.Text) > 0 do begin
+      XML             := copy(ArquivoXML.Text, 1, pos('</Notas>', ArquivoXML.Text) + 5);
+      ArquivoXML.Text := Trim(copy(ArquivoXML.Text, pos('</Notas>',ArquivoXML.Text) + 6, length(ArquivoXML.Text)));
+      LocNFSeR        := TNFSeR.Create(Self.Add.NFSe);
+      try
+       LocNFSeR.Leitor.Arquivo := XML;
+       LocNFSeR.VersaoXML      := NotaUtil.VersaoXML(XML);
+       LocNFSeR.LerXml;
+       Items[Self.Count-1].XML_Rps := LocNFSeR.Leitor.Arquivo;
+       Items[Self.Count-1].NomeArq := CaminhoArquivo;
+      finally
+       LocNFSeR.Free;
+      end;
+    end;
   end;
 
   ArquivoXML.Free;

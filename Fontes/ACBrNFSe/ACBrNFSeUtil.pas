@@ -524,7 +524,7 @@ function AssinarMSXML(XML : AnsiString;
                       ASincrono: Boolean = False): Boolean;
 var
  I, J, PosIni, PosFim, PosIniAssLote : Integer;
- URI, AID, Identificador, NameSpaceLote, EnviarLoteRps : String;
+ LoteURI, URI, AID, Identificador, NameSpaceLote, EnviarLoteRps : String;
  AXML, Assinatura, xmlHeaderAntes, xmlHeaderDepois : AnsiString;
  xmldoc    : IXMLDOMDocument3;
  xmldsig   : IXMLDigitalSignature;
@@ -533,9 +533,15 @@ var
 begin
  AXML := XML;
 
- if ASincrono
-  then EnviarLoteRps := 'EnviarLoteRpsSincronoEnvio'
-  else EnviarLoteRps := 'EnviarLoteRpsEnvio';
+ if AProvedor = proIssDsf then begin
+    EnviarLoteRps := 'ReqEnvioLoteRPS';
+    LoteURI := 'Lote';
+ end else begin
+    if ASincrono
+     then EnviarLoteRps := 'EnviarLoteRpsSincronoEnvio'
+     else EnviarLoteRps := 'EnviarLoteRpsEnvio';
+    LoteURI := 'LoteRps';
+ end;
 
  if ALote
   then begin
@@ -543,17 +549,25 @@ begin
    if I = 0
     then NameSpaceLote := ''
     else begin
-     I := I + 25;
+     I := I + {25} Length(EnviarLoteRps);
      J := pos('>', AXML);
      NameSpaceLote := ' xmlns:ds1=' + Copy(AXML, I, J - I);
     end;
 
+   if AProvedor = proIssDsf then begin
+      I := I + {25} Length(EnviarLoteRps);
+      J := pos('>', AXML);
+      NameSpaceLote := Copy(AXML, I, J - I);
+      I := Pos( 'xmlns:ns1=',NameSpaceLote);
+      NameSpaceLote := Copy(NameSpaceLote, I, J - I);
+   end;
+
    Identificador := 'Id';
-   I             := pos('LoteRps Id=', AXML);
+   I             := pos(LoteURI + ' Id=', AXML);
    if I = 0
     then begin
      Identificador := 'id';
-     I             := pos('LoteRps id=', AXML);
+     I             := pos(LoteURI + ' id=', AXML);
     end;
    if I = 0
     then begin
@@ -574,7 +588,7 @@ begin
    AXML := copy(AXML, 1, pos('</'+ APrefixo3 + EnviarLoteRps + '>', AXML) - 1);
 
    // Alterado por Italo em 10/05/2013 - incluido na lista o proRJ
-   if (URI = '') or (AProvedor in [proRecife, proRJ, proAbaco])
+   if (URI = '') or (AProvedor in [proRecife, proRJ, proAbaco, proIssDSF])
     then AID := '>'
     else AID := ' ' + Identificador + '="AssLote_' + URI + '">';
 

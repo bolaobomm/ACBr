@@ -17,6 +17,8 @@ type
  TValores                           = class;
  TItemServicoCollection             = class;
  TItemServicoCollectionItem         = class;
+ TDeducaoCollection                 = class;
+ TDeducaoCollectionItem             = class;
  TDadosServico                      = class;
  TIdentificacaoPrestador            = class;
  TEndereco                          = class;
@@ -81,6 +83,11 @@ type
     FOutrasRetencoes: currency;
     FBaseCalculo: currency;
     FAliquota: currency;
+    FAliquotaPis: currency;
+    FAliquotaCofins: currency;
+    FAliquotaInss: currency;
+    FAliquotaIr: currency;
+    FAliquotaCsll: currency;
     FValorLiquidoNfse: currency;
     FValorIssRetido: currency;
     FDescontoCondicionado: currency;
@@ -98,6 +105,13 @@ type
     property OutrasRetencoes: currency read FOutrasRetencoes write FOutrasRetencoes;
     property BaseCalculo: currency read FBaseCalculo write FBaseCalculo;
     property Aliquota: currency read FAliquota write FAliquota;
+    // Aliquotas usadas pelo Provedor IssDsf
+    property AliquotaPis: currency read FAliquotaPis write FAliquotaPis;
+    property AliquotaCofins: currency read FAliquotaCofins write FAliquotaCofins;
+    property AliquotaInss: currency read FAliquotaInss write FAliquotaInss;
+    property AliquotaIr: currency read FAliquotaIr write FAliquotaIr;
+    property AliquotaCsll: currency read FAliquotaCsll write FAliquotaCsll;
+
     property ValorLiquidoNfse: currency read FValorLiquidoNfse write FValorLiquidoNfse;
     property ValorIssRetido: currency read FValorIssRetido write FValorIssRetido;
     property DescontoCondicionado: currency read FDescontoCondicionado write FDescontoCondicionado;
@@ -119,6 +133,7 @@ type
     FDescricao : String;
     FQuantidade : Integer;
     FValorUnitario : currency;
+    FValorTotal : currency;
     FAliquota: currency;
     FValorIss: currency;
     FBaseCalculo: currency;
@@ -127,6 +142,7 @@ type
     FDescontoCondicionado: currency;
     FDescontoIncondicionado: currency;
     FDiscriminacao: string;
+    FTributavel : TnfseSimNao;
   public
     constructor Create; reintroduce;
     destructor Destroy; override;
@@ -134,6 +150,7 @@ type
     property Descricao: string read FDescricao write FDescricao;
     property Quantidade: Integer read FQuantidade write FQuantidade;
     property ValorUnitario: currency read FValorUnitario write FValorUnitario;
+    property ValorTotal : currency read FValorTotal write FValorTotal;
     property ValorServicos: currency read FValorServicos write FValorServicos;
     property ValorDeducoes: currency read FValorDeducoes write FValorDeducoes;
     property ValorIss: currency read FValorIss write FValorIss;
@@ -142,6 +159,40 @@ type
     property DescontoCondicionado: currency read FDescontoCondicionado write FDescontoCondicionado;
     property DescontoIncondicionado: currency read FDescontoIncondicionado write FDescontoIncondicionado;
     property Discriminacao: string read FDiscriminacao write FDiscriminacao;
+    property Tributavel : TnfseSimNao read FTributavel write FTributavel;
+  end;
+
+ TDeducaoCollection = class(TCollection)
+  private
+    function GetItem(Index: Integer): TDeducaoCollectionItem;
+    procedure SetItem(Index: Integer; Value: TDeducaoCollectionItem);
+  public
+    constructor Create(AOwner: TDadosServico);
+    function Add: TDeducaoCollectionItem;
+    property Items[Index: Integer]: TDeducaoCollectionItem read GetItem write SetItem; default;
+  end;
+
+ //classe usada no provedor IssDSF
+ TDeducaoCollectionItem = class(TCollectionItem)
+  private
+    FDeducaoPor : TnfseDeducaoPor;
+    FTipoDeducao : TnfseTipoDeducao;
+    FCpfCnpjReferencia : string;
+    FNumeroNFReferencia : String;
+    FValorTotalReferencia : currency;
+    FPercentualDeduzir: currency;
+    FValorDeduzir: currency;
+  public
+    constructor Create; reintroduce;
+    destructor Destroy; override;
+  published
+    property DeducaoPor : TnfseDeducaoPor read FDeducaoPor write FDeducaoPor;
+    property TipoDeducao : TnfseTipoDeducao read FTipoDeducao write FTipoDeducao;
+    property CpfCnpjReferencia : string read FCpfCnpjReferencia write FCpfCnpjReferencia;
+    property NumeroNFReferencia : String read FNumeroNFReferencia write FNumeroNFReferencia;
+    property ValorTotalReferencia : currency read FValorTotalReferencia write FValorTotalReferencia;
+    property PercentualDeduzir: currency read FPercentualDeduzir write FPercentualDeduzir;
+    property ValorDeduzir: currency read FValorDeduzir write FValorDeduzir;
   end;
 
  TDadosServico = class(TPersistent)
@@ -160,6 +211,7 @@ type
     FItemServico: TItemServicoCollection;
     FResponsavelRetencao: TnfseResponsavelRetencao;
     FDescricao: string;
+    FDeducao : TDeducaoCollection;
 
     procedure SetItemServico(Value: TItemServicoCollection);
   public
@@ -180,6 +232,8 @@ type
     property ItemServico: TItemServicoCollection read FItemServico write SetItemServico;
     property ResponsavelRetencao: TnfseResponsavelRetencao read FResponsavelRetencao write FResponsavelRetencao;
     property Descricao: string read FDescricao write FDescricao;
+    // Deducao usada pelo Provedor IssDsf
+    property Deducao : TDeducaoCollection read FDeducao write FDeducao;
   end;
 
  TIdentificacaoPrestador = class(TPersistent)
@@ -200,9 +254,11 @@ type
 
  TEndereco = class(TPersistent)
   private
+    FTipoLogradouro: string;
     FEndereco: string;
     FNumero: string;
     FComplemento: string;
+    FTipoBairro : string;
     FBairro: string;
     FCodigoMunicipio: string;
     FUF: string;
@@ -210,9 +266,11 @@ type
     FxMunicipio: string;
     FCodigoPais: integer;
   published
+    property TipoLogradouro: string read FTipoLogradouro write FTipoLogradouro;
     property Endereco: string read FEndereco write FEndereco;
     property Numero: string read FNumero write FNumero;
     property Complemento: string read FComplemento write FComplemento;
+    property TipoBairro: string read FTipoBairro write FTipoBairro;
     property Bairro: string read FBairro write FBairro;
     property CodigoMunicipio: string read FCodigoMunicipio write FCodigoMunicipio;
     property UF: string read FUF write FUF;
@@ -253,10 +311,12 @@ type
     FCpfCnpj: string;
     FInscricaoMunicipal: string;
     FInscricaoEstadual: string;
+    FDocTomadorEstrangeiro: string;
   published
     property CpfCnpj: string read FCpfCnpj write FCpfCnpj;
     property InscricaoMunicipal: string read FInscricaoMunicipal write FInscricaoMunicipal;
     property InscricaoEstadual: string read FInscricaoEstadual write FInscricaoEstadual;
+    property DocTomadorEstrangeiro: string read FDocTomadorEstrangeiro write FDocTomadorEstrangeiro;
   end;
 
  TDadosTomador = class(TPersistent)
@@ -319,11 +379,13 @@ type
     FProducao: TnfseSimNao;
     FStatus: TnfseStatusRps;
     FRpsSubstituido: TIdentificacaoRps;
+    FSeriePrestacao: string;
     FServico: TDadosServico;
     FPrestador: TIdentificacaoPrestador;
     FTomador: TDadosTomador;
     FIntermediarioServico: TIdentificacaoIntermediarioServico;
     FConstrucaoCivil: TDadosConstrucaoCivil;
+    FDeducaoMateriais: TnfseSimNao;
     // NFSe
     FNumero: String;
     FCodigoVerificacao: String;
@@ -344,6 +406,7 @@ type
 
     FNfseCancelamento: TConfirmacaoCancelamento;
     FNfseSubstituidora: String;
+    FMotivoCancelamento: string; // para provedor ISSDSF
   public
     constructor Create;
     destructor Destroy; override;
@@ -361,11 +424,14 @@ type
     property Producao: TnfseSimNao read FProducao write FProducao;
     property Status: TnfseStatusRps read FStatus write FStatus;
     property RpsSubstituido: TIdentificacaoRps read FRpsSubstituido write FRpsSubstituido;
+    //SeriePrestacao usada no provedor IssDsf
+    property SeriePrestacao: string read FSeriePrestacao write FSeriePrestacao;
     property Servico: TDadosServico read FServico write FServico;
     property Prestador: TIdentificacaoPrestador read FPrestador write FPrestador;
     property Tomador: TDadosTomador read FTomador write FTomador;
     property IntermediarioServico: TIdentificacaoIntermediarioServico read FIntermediarioServico write FIntermediarioServico;
     property ConstrucaoCivil: TDadosConstrucaoCivil read FConstrucaoCivil write FConstrucaoCivil;
+    property DeducaoMateriais: TnfseSimNao read FDeducaoMateriais write FDeducaoMateriais;
     // NFSe
     property Numero: String read FNumero write FNumero;
     property CodigoVerificacao: String read FCodigoVerificacao write FCodigoVerificacao;
@@ -384,6 +450,7 @@ type
     property XML: AnsiString read FXML write FXML;
     property NfseCancelamento: TConfirmacaoCancelamento read FNfseCancelamento write FNfseCancelamento;
     property NfseSubstituidora: String read FNfseSubstituidora write FNfseSubstituidora;
+    property MotivoCancelamento: string read FMotivoCancelamento write FMotivoCancelamento; // para provedor ISSDSF
   end;
 
  TLoteRps = class(TPersistent)
@@ -488,6 +555,7 @@ begin
   end;
 
  FItemServico := TItemServicoCollection.Create(Self);
+ FDeducao     := TDeducaoCollection.Create(Self);
  FDescricao   := '';
  
 end;
@@ -713,6 +781,29 @@ begin
   inherited SetItem(Index, Value);
 end;
 
+{ TDeducaoCollection }
+function TDeducaoCollection.Add: TDeducaoCollectionItem;
+begin
+  Result := TDeducaoCollectionItem(inherited Add);
+  Result.create;
+end;
+
+constructor TDeducaoCollection.Create(AOwner: TDadosServico);
+begin
+  inherited Create(TDeducaoCollectionItem);
+end;
+
+function TDeducaoCollection.GetItem(Index: Integer): TDeducaoCollectionItem;
+begin
+  Result := TDeducaoCollectionItem(inherited GetItem(Index));
+end;
+
+procedure TDeducaoCollection.SetItem(Index: Integer;
+  Value: TDeducaoCollectionItem);
+begin
+  inherited SetItem(Index, Value);
+end;
+
 { TItemServicoCollectionItem }
 
 constructor TItemServicoCollectionItem.Create;
@@ -726,5 +817,17 @@ begin
   inherited;
 end;
 
-end.
+{ TDeducaoCollectionItem }
 
+constructor TDeducaoCollectionItem.Create;
+begin
+
+end;
+
+destructor TDeducaoCollectionItem.Destroy;
+begin
+
+  inherited;
+end;
+
+end.

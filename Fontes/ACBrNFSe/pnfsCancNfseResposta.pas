@@ -11,6 +11,8 @@ type
 
  TMsgRetornoCancCollection = class;
  TMsgRetornoCancCollectionItem = class;
+ TNotasCanceladasCollection = class;
+ TNotasCanceladasCollectionItem = class;
 
  TInfCanc = class(TPersistent)
   private
@@ -19,6 +21,8 @@ type
     FSucesso: String;
     FMsgCanc: String;
     FMsgRetorno : TMsgRetornoCancCollection;
+    FNotasCanceladas: TNotasCanceladasCollection;
+
     procedure SetMsgRetorno(Value: TMsgRetornoCancCollection);
   public
     constructor Create; reintroduce;
@@ -54,6 +58,30 @@ type
     property Correcao: string read FCorrecao write FCorrecao;
   end;
 
+ TNotasCanceladasCollection = class(TCollection)
+  private
+    function GetItem(Index: Integer): TNotasCanceladasCollectionItem;
+    procedure SetItem(Index: Integer; Value: TNotasCanceladasCollectionItem);
+  public
+    constructor Create(AOwner: TInfCanc);
+    function Add: TNotasCanceladasCollectionItem;
+    property Items[Index: Integer]: TNotasCanceladasCollectionItem read GetItem write SetItem; default;
+  end;
+
+ TNotasCanceladasCollectionItem = class(TCollectionItem)
+  private
+    FNumeroNota : String;
+    FCodigoVerficacao : String;
+    FInscricaoMunicipalPrestador : String;
+  public
+    constructor Create; reintroduce;
+    destructor Destroy; override;
+  published
+    property NumeroNota: string read FNumeroNota  write FNumeroNota;
+    property CodigoVerficacao: string read FCodigoVerficacao write FCodigoVerficacao;
+    property InscricaoMunicipalPrestador: string read FInscricaoMunicipalPrestador write FInscricaoMunicipalPrestador;
+  end;
+
  TretCancNFSe = class(TPersistent)
   private
     FLeitor: TLeitor;
@@ -62,6 +90,7 @@ type
     constructor Create;
     destructor Destroy; override;
     function LerXml: boolean;
+    function LerXml_provedorIssDsf: boolean;
   published
     property Leitor: TLeitor   read FLeitor   write FLeitor;
     property InfCanc: TInfCanc read FInfCanc  write FInfCanc;
@@ -128,6 +157,43 @@ begin
   inherited;
 end;
 
+{ TNotasCanceladasCollection }
+
+function TNotasCanceladasCollection.Add: TNotasCanceladasCollectionItem;
+begin
+  Result := TNotasCanceladasCollectionItem(inherited Add);
+  Result.create;
+end;
+
+constructor TNotasCanceladasCollection.Create(AOwner: TInfCanc);
+begin
+  inherited Create(TNotasCanceladasCollectionItem);
+end;
+
+function TNotasCanceladasCollection.GetItem(
+  Index: Integer): TNotasCanceladasCollectionItem;
+begin
+
+end;
+
+procedure TNotasCanceladasCollection.SetItem(Index: Integer;
+  Value: TNotasCanceladasCollectionItem);
+begin
+
+end;
+
+{ TNotasCanceladasCollectionItem }
+
+constructor TNotasCanceladasCollectionItem.Create;
+begin
+
+end;
+
+destructor TNotasCanceladasCollectionItem.Destroy;
+begin
+
+  inherited;
+end;
 { TretCancNFSe }
 
 constructor TretCancNFSe.Create;
@@ -231,6 +297,123 @@ begin
   except
     result := False;
   end;
+end;
+
+function TretCancNFSe.LerXml_provedorIssDsf: boolean; //falta homologar
+var
+  ok: boolean;
+  i, Item, posI, count: Integer;
+  sOperacao, sTributacao, VersaoXML: String;
+  strAux, strItem: AnsiString;
+  leitorAux, leitorItem:TLeitor;
+begin
+  result := False;
+
+  try
+    Leitor.Arquivo := NotaUtil.RetirarPrefixos(Leitor.Arquivo);
+    VersaoXML      := '1';
+    Leitor.Grupo   := Leitor.Arquivo;
+
+    if leitor.rExtrai(1, 'RetornoCancelamentoNFSe') <> '' then
+    begin
+
+      if (leitor.rExtrai(2, 'Cabecalho') <> '') then
+      begin
+         FInfCanc.FSucesso := Leitor.rCampo(tcStr, 'Sucesso');
+      end;
+
+      strAux := leitor.rExtrai(2, 'NotasCanceladas');
+      if (strAux <> '') then
+      begin
+         i := 0 ;
+         posI := pos('<Nota>', strAux);
+
+         while ( posI > 0 ) do begin
+            count := pos('</Nota>', strAux) + 6;
+
+            inc(i);
+            FInfCanc.FNotasCanceladas.Add;
+
+            LeitorAux := TLeitor.Create;
+            leitorAux.Arquivo := copy(strAux, PosI, count);
+            leitorAux.Grupo   := leitorAux.Arquivo;
+
+            FInfCanc.FNotasCanceladas[i].InscricaoMunicipalPrestador := LeitorAux.rCampo(tcStr,'InscricaoMunicipalPrestador');
+            FInfCanc.FNotasCanceladas[i].NumeroNota                  := LeitorAux.rCampo(tcStr,'NumeroNota');
+            FInfCanc.FNotasCanceladas[i].CodigoVerficacao            := LeitorAux.rCampo(tcStr,'CodigoVerificacao');
+
+            LeitorAux.free;
+                                                                                                                   
+            Delete(strAux, PosI, count);                                                                           
+            posI := pos('<Nota>', strAux);
+         end;
+      end;
+
+      i := 0 ;
+      if (leitor.rExtrai(2, 'Alertas') <> '') then
+      begin     
+         strAux := leitor.rExtrai(2, 'Alertas');
+         if (strAux <> '') then
+         begin
+            posI := pos('<Alerta>', strAux);
+
+            while ( posI > 0 ) do begin
+               count := pos('</Alerta>', strAux) + 7;
+
+               InfCanc.FMsgRetorno.Add;
+               inc(i);
+               
+               LeitorAux := TLeitor.Create;
+               leitorAux.Arquivo := copy(strAux, PosI, count);
+               leitorAux.Grupo   := leitorAux.Arquivo;
+
+               InfCanc.FMsgRetorno[i].FCodigo   := Leitor.rCampo(tcStr, 'Codigo');
+               InfCanc.FMsgRetorno[i].FMensagem := 'Alerta - ' + Leitor.rCampo(tcStr, 'Descricao');
+
+
+               LeitorAux.free;
+
+               Delete(strAux, PosI, count);
+               posI := pos('<Alerta>', strAux);
+            end;
+         end;
+      end;
+
+      if (leitor.rExtrai(2, 'Erros') <> '') then
+      begin
+
+         strAux := leitor.rExtrai(2, 'Erros');
+         if (strAux <> '') then
+         begin
+            //i := 0 ;
+            posI := pos('<Erro>', strAux);
+
+            while ( posI > 0 ) do begin
+               count := pos('</Erro>', strAux) + 6;
+
+               InfCanc.FMsgRetorno.Add;
+               inc(i);
+
+               LeitorAux := TLeitor.Create;
+               leitorAux.Arquivo := copy(strAux, PosI, count);
+               leitorAux.Grupo   := leitorAux.Arquivo;
+
+               InfCanc.FMsgRetorno[i].FCodigo   := Leitor.rCampo(tcStr, 'Codigo');
+               InfCanc.FMsgRetorno[i].FMensagem := Leitor.rCampo(tcStr, 'Descricao');
+
+               LeitorAux.free;
+
+               Delete(strAux, PosI, count);
+               posI := pos('<Erro>', strAux);
+            end;
+         end;
+      end;
+      Result := True;
+    end;
+  except
+    result := False;
+  end;
+
 end;
 
 end.
