@@ -69,7 +69,8 @@ var
  DadosMsg: AnsiString;
 begin
  if AProvedor = proBetha then Prefixo3 := '';
-  
+ if AProvedor = proGovBR then Identificador := '';
+
  DadosMsg := '<' + Prefixo3 + 'LoteRps'+
                DFeUtil.SeSenao(Identificador <> '', ' ' + Identificador + '="' + NumeroLote + '"', '') +
                DFeUtil.SeSenao(AProvedor in [proAbaco, proBetha, proGinfes, proGoiania, proGovBR,
