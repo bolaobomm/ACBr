@@ -133,29 +133,29 @@ var
 begin
  case ACodCidade of
   4115200: begin
-            ConfigURL.HomNomeCidade         := 'maringa.pr';
+            ConfigURL.HomNomeCidade         := 'teste.maringa.pr';
 
-            ConfigURL.ProNomeCidade         := 'maringa.pr';
+            ConfigURL.ProNomeCidade         := '.maringa.pr';
            end;
  end;
 
- ConfigURL.HomRecepcaoLoteRPS    := 'https://isseteste.' + ConfigURL.HomNomeCidade + '.gov.br/ws/';
- ConfigURL.HomConsultaLoteRPS    := 'https://isseteste.' + ConfigURL.HomNomeCidade + '.gov.br/ws/';
- ConfigURL.HomConsultaNFSeRPS    := 'https://isseteste.' + ConfigURL.HomNomeCidade + '.gov.br/ws/';
- ConfigURL.HomConsultaSitLoteRPS := 'https://isseteste.' + ConfigURL.HomNomeCidade + '.gov.br/ws/';
- ConfigURL.HomConsultaNFSe       := 'https://isseteste.' + ConfigURL.HomNomeCidade + '.gov.br/ws/';
- ConfigURL.HomCancelaNFSe        := 'https://isseteste.' + ConfigURL.HomNomeCidade + '.gov.br/ws/';
- ConfigURL.HomGerarNFSe          := 'https://isseteste.' + ConfigURL.HomNomeCidade + '.gov.br/ws/';
- ConfigURL.HomRecepcaoSincrono   := 'https://isseteste.' + ConfigURL.HomNomeCidade + '.gov.br/ws/';
+ ConfigURL.HomRecepcaoLoteRPS    := 'https://isse' + ConfigURL.HomNomeCidade + '.gov.br/ws/';
+ ConfigURL.HomConsultaLoteRPS    := 'https://isse' + ConfigURL.HomNomeCidade + '.gov.br/ws/';
+ ConfigURL.HomConsultaNFSeRPS    := 'https://isse' + ConfigURL.HomNomeCidade + '.gov.br/ws/';
+ ConfigURL.HomConsultaSitLoteRPS := 'https://isse' + ConfigURL.HomNomeCidade + '.gov.br/ws/';
+ ConfigURL.HomConsultaNFSe       := 'https://isse' + ConfigURL.HomNomeCidade + '.gov.br/ws/';
+ ConfigURL.HomCancelaNFSe        := 'https://isse' + ConfigURL.HomNomeCidade + '.gov.br/ws/';
+ ConfigURL.HomGerarNFSe          := 'https://isse' + ConfigURL.HomNomeCidade + '.gov.br/ws/';
+ ConfigURL.HomRecepcaoSincrono   := 'https://isse' + ConfigURL.HomNomeCidade + '.gov.br/ws/';
 
- ConfigURL.ProRecepcaoLoteRPS    := 'https://isse.' + ConfigURL.ProNomeCidade + '.gov.br/ws/';
- ConfigURL.ProConsultaLoteRPS    := 'https://isse.' + ConfigURL.ProNomeCidade + '.gov.br/ws/';
- ConfigURL.ProConsultaNFSeRPS    := 'https://isse.' + ConfigURL.ProNomeCidade + '.gov.br/ws/';
- ConfigURL.ProConsultaSitLoteRPS := 'https://isse.' + ConfigURL.ProNomeCidade + '.gov.br/ws/';
- ConfigURL.ProConsultaNFSe       := 'https://isse.' + ConfigURL.ProNomeCidade + '.gov.br/ws/';
- ConfigURL.ProCancelaNFSe        := 'https://isse.' + ConfigURL.ProNomeCidade + '.gov.br/ws/';
- ConfigURL.ProGerarNFSe          := 'https://isse.' + ConfigURL.ProNomeCidade + '.gov.br/ws/';
- ConfigURL.ProRecepcaoSincrono   := 'https://isse.' + ConfigURL.ProNomeCidade + '.gov.br/ws/';
+ ConfigURL.ProRecepcaoLoteRPS    := 'https://isse' + ConfigURL.ProNomeCidade + '.gov.br/ws/';
+ ConfigURL.ProConsultaLoteRPS    := 'https://isse' + ConfigURL.ProNomeCidade + '.gov.br/ws/';
+ ConfigURL.ProConsultaNFSeRPS    := 'https://isse' + ConfigURL.ProNomeCidade + '.gov.br/ws/';
+ ConfigURL.ProConsultaSitLoteRPS := 'https://isse' + ConfigURL.ProNomeCidade + '.gov.br/ws/';
+ ConfigURL.ProConsultaNFSe       := 'https://isse' + ConfigURL.ProNomeCidade + '.gov.br/ws/';
+ ConfigURL.ProCancelaNFSe        := 'https://isse' + ConfigURL.ProNomeCidade + '.gov.br/ws/';
+ ConfigURL.ProGerarNFSe          := 'https://isse' + ConfigURL.ProNomeCidade + '.gov.br/ws/';
+ ConfigURL.ProRecepcaoSincrono   := 'https://isse' + ConfigURL.ProNomeCidade + '.gov.br/ws/';
 
  Result := ConfigURL;
 end;
@@ -173,7 +173,7 @@ begin
    acConsLote:    Result := False;
    acConsNFSeRps: Result := False;
    acConsNFSe:    Result := False;
-   acCancelar:    Result := False;
+   acCancelar:    Result := True;
    acGerar:       Result := False;
    acRecSincrono: Result := False;
    else           Result := False;
@@ -485,14 +485,8 @@ begin
  result := '<?xml version="1.0" encoding="UTF-8"?>' +
            '<S:Envelope xmlns:S="http://schemas.xmlsoap.org/soap/envelope/"' +
                       ' xmlns:nfse="http://nfse.abrasf.org.br">' +
-//            '<S:Header>' +
-//              DadosSenha +
-//            '</S:Header>' +
             '<S:Body>' +
              '<EnviarLoteRps>' +
-//              '<nfseCabecMsg>' +
-//               '<![CDATA[' + CabMsg + ']]>' +
-//              '</nfseCabecMsg>' +
               '<xml>' +
                '<![CDATA[' + DadosMsg + ']]>' +
               '</xml>' +
@@ -514,18 +508,12 @@ begin
  result := '<?xml version="1.0" encoding="UTF-8"?>' +
            '<S:Envelope xmlns:S="http://schemas.xmlsoap.org/soap/envelope/"' +
                       ' xmlns:nfse="http://nfse.abrasf.org.br">' +
-            '<S:Header>' +
-              DadosSenha +
-            '</S:Header>' +
             '<S:Body>' +
-             '<nfse:ConsultarLoteRpsRequest>' +
-              '<nfseCabecMsg>' +
-               '<![CDATA[' + CabMsg + ']]>' +
-              '</nfseCabecMsg>' +
-              '<nfseDadosMsg>' +
+             '<ConsultarLoteRps>' +
+              '<xml>' +
                '<![CDATA[' + DadosMsg + ']]>' +
-              '</nfseDadosMsg>' +
-             '</nfse:ConsultarLoteRpsRequest>' +
+              '</xml>' +
+             '</ConsultarLoteRps>' +
             '</S:Body>' +
            '</S:Envelope>';
 end;
@@ -536,18 +524,12 @@ begin
  result := '<?xml version="1.0" encoding="UTF-8"?>' +
            '<S:Envelope xmlns:S="http://schemas.xmlsoap.org/soap/envelope/"' +
                       ' xmlns:nfse="http://nfse.abrasf.org.br">' +
-            '<S:Header>' +
-              DadosSenha +
-            '</S:Header>' +
             '<S:Body>' +
-             '<nfse:ConsultarNfsePorRpsRequest>' +
-              '<nfseCabecMsg>' +
-               '<![CDATA[' + CabMsg + ']]>' +
-              '</nfseCabecMsg>' +
-              '<nfseDadosMsg>' +
+             '<ConsultarNfseRps>' +
+              '<xml>' +
                '<![CDATA[' + DadosMsg + ']]>' +
-              '</nfseDadosMsg>' +
-             '</nfse:ConsultarNfsePorRpsRequest>' +
+              '</xml>' +
+             '</ConsultarNfseRps>' +
             '</S:Body>' +
            '</S:Envelope>';
 end;
@@ -558,18 +540,12 @@ begin
  result := '<?xml version="1.0" encoding="UTF-8"?>' +
            '<S:Envelope xmlns:S="http://schemas.xmlsoap.org/soap/envelope/"' +
                       ' xmlns:nfse="http://nfse.abrasf.org.br">' +
-            '<S:Header>' +
-              DadosSenha +
-            '</S:Header>' +
             '<S:Body>' +
-             '<nfse:ConsultarNfseServicoPrestadoRequest>' +
-              '<nfseCabecMsg>' +
-               '<![CDATA[' + CabMsg + ']]>' +
-              '</nfseCabecMsg>' +
-              '<nfseDadosMsg>' +
+             '<consultarNfseFaixa>' +
+              '<xml>' +
                '<![CDATA[' + DadosMsg + ']]>' +
-              '</nfseDadosMsg>' +
-             '</nfse:ConsultarNfseServicoPrestadoRequest>' +
+              '</xml>' +
+             '</ConsultarNfseFaixa>' +
             '</S:Body>' +
            '</S:Envelope>';
 end;
@@ -580,18 +556,12 @@ begin
  result := '<?xml version="1.0" encoding="UTF-8"?>' +
            '<S:Envelope xmlns:S="http://schemas.xmlsoap.org/soap/envelope/"' +
                       ' xmlns:nfse="http://nfse.abrasf.org.br">' +
-            '<S:Header>' +
-              DadosSenha +
-            '</S:Header>' +
             '<S:Body>' +
-             '<nfse:CancelarNfseRequest>' +
-              '<nfseCabecMsg>' +
-               '<![CDATA[' + CabMsg + ']]>' +
-              '</nfseCabecMsg>' +
-              '<nfseDadosMsg>' +
+             '<CancelarNfse>' +
+              '<xml>' +
                '<![CDATA[' + DadosMsg + ']]>' +
-              '</nfseDadosMsg>' +
-             '</nfse:CancelarNfseRequest>' +
+              '</xml>' +
+             '</CancelarNfse>' +
             '</S:Body>' +
            '</S:Envelope>';
 end;
@@ -602,18 +572,12 @@ begin
  result := '<?xml version="1.0" encoding="UTF-8"?>' +
            '<S:Envelope xmlns:S="http://schemas.xmlsoap.org/soap/envelope/"' +
                       ' xmlns:nfse="http://nfse.abrasf.org.br">' +
-            '<S:Header>' +
-              DadosSenha +
-            '</S:Header>' +
             '<S:Body>' +
-             '<nfse:GerarNfseRequest>' +
-              '<nfseCabecMsg>' +
-               '<![CDATA[' + CabMsg + ']]>' +
-              '</nfseCabecMsg>' +
-              '<nfseDadosMsg>' +
+             '<GerarNfse>' +
+              '<xml>' +
                '<![CDATA[' + DadosMsg + ']]>' +
-              '</nfseDadosMsg>' +
-             '</nfse:GerarNfseRequest>' +
+              '</xml>' +
+             '</GerarNfse>' +
             '</S:Body>' +
            '</S:Envelope>';
 end;
@@ -621,38 +585,27 @@ end;
 function TProvedorISSe.GetSoapAction(Acao: TnfseAcao; NomeCidade: String): String;
 begin
  case Acao of
-   acRecepcionar: Result := 'https://isse.' + NomeCidade + '.gov.br/ws/#EnviarLoteRps';
+   acRecepcionar: Result := 'https://isse' + NomeCidade + '.gov.br/ws/#EnviarLoteRps';
    acConsSit:     Result := '';
-   acConsLote:    Result := 'https://isse.' + NomeCidade + '.gov.br/ws/#ConsultarLoteRps';
-   acConsNFSeRps: Result := 'https://isse.' + NomeCidade + '.gov.br/ws/#ConsultarNfseRps';
-   acConsNFSe:    Result := 'https://isse.' + NomeCidade + '.gov.br/ws/#ConsultarNfseServicoPrestado';
-   acCancelar:    Result := 'https://isse.' + NomeCidade + '.gov.br/ws/#CancelarNfse';
-   acGerar:       Result := 'https://isse.' + NomeCidade + '.gov.br/ws/#GerarNfse';
-   acRecSincrono: Result := 'https://isse.' + NomeCidade + '.gov.br/ws/#EnviarLoteRpsSincrono';
+   acConsLote:    Result := 'https://isse' + NomeCidade + '.gov.br/ws/#ConsultarLoteRps';
+   acConsNFSeRps: Result := 'https://isse' + NomeCidade + '.gov.br/ws/#ConsultarNfseRps';
+   acConsNFSe:    Result := 'https://isse' + NomeCidade + '.gov.br/ws/#ConsultarNfseFaixa';
+   acCancelar:    Result := 'https://isse' + NomeCidade + '.gov.br/ws/#CancelarNfse';
+   acGerar:       Result := 'https://isse' + NomeCidade + '.gov.br/ws/#GerarNfse';
+   acRecSincrono: Result := 'https://isse' + NomeCidade + '.gov.br/ws/#EnviarLoteRpsSincrono';
  end;
-(*
- case Acao of
-   acRecepcionar: Result := 'http://nfse.abrasf.org.br/Infse/RecepcionarLoteRps';
-   acConsSit:     Result := '';
-   acConsLote:    Result := 'http://nfse.abrasf.org.br/Infse/ConsultarLoteRps';
-   acConsNFSeRps: Result := 'http://nfse.abrasf.org.br/Infse/ConsultarNfsePorRps';
-   acConsNFSe:    Result := 'http://nfse.abrasf.org.br/Infse/ConsultarNfseServicoPrestado';
-   acCancelar:    Result := 'http://nfse.abrasf.org.br/Infse/CancelarNfse';
-   acGerar:       Result := 'http://nfse.abrasf.org.br/Infse/GerarNfse';
- end;
-*)
 end;
 
 function TProvedorISSe.GetRetornoWS(Acao: TnfseAcao; RetornoWS: AnsiString): AnsiString;
 begin
  case Acao of
-   acRecepcionar: Result := SeparaDados( RetornoWS, 'outputXML' );
+   acRecepcionar: Result := SeparaDados( RetornoWS, 'return' );
    acConsSit:     Result := RetornoWS;
-   acConsLote:    Result := SeparaDados( RetornoWS, 'outputXML' );
-   acConsNFSeRps: Result := SeparaDados( RetornoWS, 'outputXML' );
-   acConsNFSe:    Result := SeparaDados( RetornoWS, 'outputXML' );
-   acCancelar:    Result := SeparaDados( RetornoWS, 'outputXML' );
-   acGerar:       Result := SeparaDados( RetornoWS, 'outputXML' );
+   acConsLote:    Result := SeparaDados( RetornoWS, 'return' );
+   acConsNFSeRps: Result := SeparaDados( RetornoWS, 'return' );
+   acConsNFSe:    Result := SeparaDados( RetornoWS, 'return' );
+   acCancelar:    Result := SeparaDados( RetornoWS, 'return' );
+   acGerar:       Result := SeparaDados( RetornoWS, 'return' );
    // Alterado por Joel Takei 13/06/2013
    acRecSincrono: Result := SeparaDados( RetornoWS, 'return' );
  end;
@@ -686,14 +639,8 @@ begin
  result := '<?xml version="1.0" encoding="UTF-8"?>' +
            '<S:Envelope xmlns:S="http://schemas.xmlsoap.org/soap/envelope/"' +
                       ' xmlns:nfse="http://nfse.abrasf.org.br">' +
-//            '<S:Header>' +
-//              DadosSenha +
-//            '</S:Header>' +
             '<S:Body>' +
              '<EnviarLoteRpsSincrono>' +
-//              '<nfseCabecMsg>' +
-//               '<![CDATA[' + CabMsg + ']]>' +
-//              '</nfseCabecMsg>' +
               '<xml>' +
                '<![CDATA[' + DadosMsg + ']]>' +
               '</xml>' +
