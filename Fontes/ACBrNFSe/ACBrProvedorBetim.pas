@@ -100,7 +100,7 @@ begin
   else ConfigCidade.NameSpaceEnvelope := 'https://betim.rps.com.br/sgm/zend/nfs/ambienteteste';
 
  ConfigCidade.AssinaRPS  := False;
- ConfigCidade.AssinaLote := False;
+ ConfigCidade.AssinaLote := True;
 
  Result := ConfigCidade;
 end;
@@ -585,6 +585,16 @@ var
  RetWS: AnsiString;
 begin
  case Acao of
+   acRecepcionar: Result := SeparaDados( RetornoWS, 'return' );
+   acConsSit:     Result := SeparaDados( RetornoWS, 'return' );
+   acConsLote:    Result := SeparaDados( RetornoWS, 'return' );
+   acConsNFSeRps: Result := SeparaDados( RetornoWS, 'return' );
+   acConsNFSe:    Result := SeparaDados( RetornoWS, 'return' );
+   acCancelar:    Result := SeparaDados( RetornoWS, 'return' );
+   acGerar:       Result := SeparaDados( RetornoWS, 'return' );
+ end;
+(*
+ case Acao of
    acRecepcionar: begin
                    RetWS := SeparaDados( RetornoWS, 'EnviarLoteRpsResposta>' );
                    RetWS := RetWS + '</EnviarLoteRpsResposta>';
@@ -609,6 +619,7 @@ begin
                   end;
    acGerar:       Result := '';
  end;
+*)
 end;
 
 function TProvedorBetim.GeraRetornoNFSe(Prefixo: String;
