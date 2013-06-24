@@ -550,7 +550,8 @@ begin
    if I = 0
     then NameSpaceLote := ''
     else begin
-     I := I + {25} Length(EnviarLoteRps);
+     // Diego Gonçalves -- Correção pois estava duplicando o campo xmlns
+     I := I + {25} Length(EnviarLoteRps + ' xmlns=');
      J := pos('>', AXML);
      NameSpaceLote := ' xmlns:ds1=' + Copy(AXML, I, J - I);
     end;
