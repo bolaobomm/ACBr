@@ -74,10 +74,6 @@ type
    function Gera_DadosMsgCancelarNFSe(Prefixo4, NameSpaceDad, NumeroNFSe, CNPJ, IM,
                                       CodMunicipio, CodCancelamento: String;
                                       TagI, TagF: AnsiString): AnsiString; OverRide;
-   function Gera_DadosMsgGerarNFSe(Prefixo3, Prefixo4, Identificador,
-                                   NameSpaceDad, VersaoDados, VersaoXML,
-                                   NumeroLote, CNPJ, IM, QtdeNotas: String;
-                                   Notas, TagI, TagF: AnsiString): AnsiString; OverRide;
    function Gera_DadosMsgEnviarSincrono(Prefixo3, Prefixo4, Identificador,
                                         NameSpaceDad, VersaoDados, VersaoXML,
                                         NumeroLote, CNPJ, IM, QtdeNotas: String;
@@ -783,16 +779,6 @@ function TProvedorIssDSF.Gera_DadosMsgCancelarNFSe(Prefixo4, NameSpaceDad,
 begin
  Result := '';
  raise Exception.Create( 'Para este provedor use a função Gera_DadosMsgCancelarNFSeDSF' );
-end;
-
-function TProvedorIssDSF.Gera_DadosMsgGerarNFSe(Prefixo3, Prefixo4,
-  Identificador, NameSpaceDad, VersaoDados, VersaoXML, NumeroLote, CNPJ,
-  IM, QtdeNotas: String; Notas, TagI, TagF: AnsiString): AnsiString;
-var
- DadosMsg: AnsiString;
-begin
- Result := '';
- raise Exception.Create( 'Opção não implementada para este provedor.' );
 end;
 *)
 function TProvedorIssDSF.GeraEnvelopeGerarNFSe(URLNS: String; CabMsg,

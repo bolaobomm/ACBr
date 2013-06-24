@@ -368,7 +368,13 @@ begin
  if AProvedor = proBetha then Prefixo3 := '';
 
  case AProvedor of
-  pro4R:     Result := TagI + Notas + TagF;
+  pro4R,
+  profintelIss,
+  proGoiania,
+  proGovDigital,
+  proIssDigital,
+  proISSe,
+  proSaatri: Result := TagI + Notas + TagF;
   else begin // proWebISS
    DadosMsg := '<' + Prefixo3 + 'LoteRps'+
                  DFeUtil.SeSenao(Identificador <> '', ' ' + Identificador + '="' + NumeroLote + '"', '') +
@@ -404,7 +410,10 @@ begin
   end;
  end;
 
- if AProvedor in [proNenhum, proBetim] then Result := '';
+ if AProvedor in [proNenhum, proAbaco, proBetha, proBetim, proBHIss, proDigifred,
+  proEquiplano, proFiorilli, proFIssLex, proGinfes, proGovBR, proIssCuritiba,
+  proIssIntel, proIssNet, proNatal, proProdemge, proPublica, proRecife, proRJ,
+  proSimplIss, proThema, proTiplan] then Result := '';
 end;
 
 class function TNFSeG.Gera_DadosMsgEnviarSincrono(Prefixo3, Prefixo4,

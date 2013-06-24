@@ -54,10 +54,6 @@ type
    function Gera_DadosMsgCancelarNFSe(Prefixo4, NameSpaceDad, NumeroNFSe, CNPJ, IM,
                                       CodMunicipio, CodCancelamento: String;
                                       TagI, TagF: AnsiString): AnsiString; OverRide;
-   function Gera_DadosMsgGerarNFSe(Prefixo3, Prefixo4, Identificador,
-                                   NameSpaceDad, VersaoDados, VersaoXML,
-                                   NumeroLote, CNPJ, IM, QtdeNotas: String;
-                                   Notas, TagI, TagF: AnsiString): AnsiString; OverRide;
    *)
    function GeraEnvelopeRecepcionarLoteRPS(URLNS: String; CabMsg, DadosMsg, DadosSenha: AnsiString): AnsiString; OverRide;
    function GeraEnvelopeConsultarSituacaoLoteRPS(URLNS: String; CabMsg, DadosMsg, DadosSenha: AnsiString): AnsiString; OverRide;
@@ -491,13 +487,6 @@ begin
              '</' + Prefixo4 + 'InfPedidoCancelamento>';
 
  Result := TagI + DadosMsg + TagF;
-end;
-
-function TProvedorFISSLEX.Gera_DadosMsgGerarNFSe(Prefixo3, Prefixo4,
-  Identificador, NameSpaceDad, VersaoDados, VersaoXML, NumeroLote, CNPJ,
-  IM, QtdeNotas: String; Notas, TagI, TagF: AnsiString): AnsiString;
-begin
- Result := '';
 end;
 *)
 function TProvedorFISSLEX.GeraEnvelopeRecepcionarLoteRPS(URLNS: String;
