@@ -37,7 +37,7 @@ uses
     ACBrProvedorAbaco, ACBrProvedorGoiania, ACBrProvedorIssCuritiba,
     ACBrProvedorBHISS, ACBrProvedorNatal, ACBrProvedorISSDigital,
     ACBrProvedorISSe, ACBrProvedor4R, ACBrProvedorGovDigital,
-    ACBrProvedorFiorilli, ACBrProvedorIssDsf;
+    ACBrProvedorFiorilli, ACBrProvedorIssDsf, ACBrProvedorCoplan;
 
 type
 
@@ -566,6 +566,7 @@ begin
   proGovDigital:  FProvedorClass := TProvedorGovDigital.Create;
   proFiorilli:    FProvedorClass := TProvedorFiorilli.Create;
   proIssDsf:      FProvedorClass := TProvedorIssDsf.Create;
+  proCoplan:      FProvedorClass := TProvedorCoplan.Create;
  end;
 
  FPrefixo2     := FConfiguracoes.WebServices.Prefixo2;
@@ -738,7 +739,8 @@ begin
                                    '<' + Prefixo4 + 'InfDeclaracaoPrestacaoServico', '</Signature>') +
                                '</Signature>'+
                               '</' + Prefixo4 + 'Rps>';
-      proDigifred: vNotas := vNotas +
+      proDigifred,
+      proCoplan: vNotas := vNotas +
                               '<' + Prefixo4 + 'Rps ' +
                                  RetornarConteudoEntre(TNFSeEnviarLoteRPS(Self).FNotasFiscais.Items[I].XML_Rps_Ass,
                                    '<' + Prefixo4 + 'Rps', '</Signature>') +
@@ -1664,7 +1666,8 @@ begin
                                    '<' + Prefixo4 + 'InfDeclaracaoPrestacaoServico', '</Signature>') +
                                '</Signature>'+
                               '</' + Prefixo4 + 'Rps>';
-      proDigifred: vNotas := vNotas +
+      proDigifred,
+      proCoplan: vNotas := vNotas +
                               '<' + Prefixo4 + 'Rps ' +
                                  RetornarConteudoEntre(TNFSeGerarNFSe(Self).FNotasFiscais.Items[I].XML_Rps_Ass,
                                    '<' + Prefixo4 + 'Rps', '</Signature>') +
@@ -1853,7 +1856,8 @@ begin
                                    '<' + Prefixo4 + 'InfDeclaracaoPrestacaoServico', '</Signature>') +
                                '</Signature>'+
                               '</' + Prefixo4 + 'Rps>';
-      proDigifred: vNotas := vNotas +
+      proDigifred,
+      proCoplan: vNotas := vNotas +
                               '<' + Prefixo4 + 'Rps ' +
                                  RetornarConteudoEntre(TNFSeGerarLoteRPS(Self).FNotasFiscais.Items[I].XML_Rps_Ass,
                                    '<' + Prefixo4 + 'Rps', '</Signature>') +
@@ -2018,7 +2022,8 @@ begin
                                    '<' + Prefixo4 + 'InfDeclaracaoPrestacaoServico', '</Signature>') +
                                '</Signature>'+
                               '</' + Prefixo4 + 'Rps>';
-      proDigifred: vNotas := vNotas +
+      proDigifred,
+      proCoplan: vNotas := vNotas +
                               '<' + Prefixo4 + 'Rps ' +
                                  RetornarConteudoEntre(TNFSeEnviarSincrono(Self).FNotasFiscais.Items[I].XML_Rps_Ass,
                                    '<' + Prefixo4 + 'Rps', '</Signature>') +

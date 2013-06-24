@@ -368,7 +368,7 @@ uses
  ACBrProvedorAbaco, ACBrProvedorGoiania, ACBrProvedorIssCuritiba,
  ACBrProvedorBHISS, ACBrProvedorNatal, ACBrProvedorISSDigital,
  ACBrProvedorISSe, ACBrProvedor4R, ACBrProvedorGovDigital,
- ACBrProvedorFiorilli, ACBrProvedorISSDSF;
+ ACBrProvedorFiorilli, ACBrProvedorISSDSF, ACBrProvedorCoplan;
 
 { TConfiguracoes }
 
@@ -709,6 +709,7 @@ begin
   proGovDigital:  FProvedorClass := TProvedorGovDigital.Create;
   proFiorilli:    FProvedorClass := TProvedorFiorilli.Create;
   proIssDSF:      FProvedorClass := TProvedorIssDSF.Create;
+  proCoplan:      FProvedorClass := TProvedorCoplan.Create;
  end;
 
  ConfigCidade   := FProvedorClass.GetConfigCidade(FCodigoMunicipio, FAmbienteCodigo);

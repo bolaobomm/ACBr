@@ -413,7 +413,7 @@ begin
  if AProvedor in [proNenhum, proAbaco, proBetha, proBetim, proBHIss, proDigifred,
   proEquiplano, proFiorilli, proFIssLex, proGinfes, proGovBR, proIssCuritiba,
   proIssIntel, proIssNet, proNatal, proProdemge, proPublica, proRecife, proRJ,
-  proSimplIss, proThema, proTiplan] then Result := '';
+  proSimplIss, proThema, proTiplan, proCoplan] then Result := '';
 end;
 
 class function TNFSeG.Gera_DadosMsgEnviarSincrono(Prefixo3, Prefixo4,
@@ -428,7 +428,7 @@ begin
      proEquiplano, profintelISS, proFISSLex, proGinfes, proGoiania, proGovBR,
      proGovDigital, proIssCuritiba, proISSDigital, proISSIntel, proISSNet, proNatal,
      proProdemge, proPublica, proRecife, proRJ, proSaatri, proSimplISS, proThema,
-     proTiplan, proWebISS] then Result := '';
+     proTiplan, proWebISS, proCoplan] then Result := '';
 end;
 
 //-------------------------------------------------------------------------
