@@ -763,7 +763,18 @@ begin
   3556404  // Vargem Grande do Sul/SP
          : Provedor := 'SimplISS';
 
-  4108403  // Francisco Beltrao/PR
+  4102307, // Balsa Nova/PR
+  4104501, // Capanema/PR
+  4104659, // Carambei/PR
+  4107207, // Dois Vizinhos/PR
+  4108403, // Francisco Beltrao/PR
+  4109807, // Ibipora/PR
+  4120606, // Prudentopolis/PR
+  4122008, // Rio Azul/PR
+  4123501, // Santa Helena/PR
+  4126306, // Senges/PR
+  4127106, // Telemaco Borba/PR
+  4127700  // Toledo/PR
          : Provedor := 'Equiplano';
 
   4119905  // Ponta Grossa/PR
@@ -784,7 +795,7 @@ begin
   4118402, // Paranavaí/PR
   4120853, // Quatro Pontes/PR
   4125605, // São Mateus do Sul/PR
-  4127106, // Telemaco Borba/PR
+//  4127106, // Telemaco Borba/PR
   4128203, // União da Vitória/PR
   4202131, // Bela Vista do Toldo/SC
   4202305, // Biguaçu/SC
