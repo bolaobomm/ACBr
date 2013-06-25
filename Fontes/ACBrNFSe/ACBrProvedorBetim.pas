@@ -130,12 +130,12 @@ var
  ConfigURL: TConfigURL;
 begin
  ConfigURL.HomNomeCidade         := '';
- ConfigURL.HomRecepcaoLoteRPS    := 'https://betim.rps.com.br/sgm/zend/nfs/ambienteteste/wsdl';  // /wsdl
- ConfigURL.HomConsultaLoteRPS    := 'https://betim.rps.com.br/sgm/zend/nfs/ambienteteste/wsdl';
- ConfigURL.HomConsultaNFSeRPS    := 'https://betim.rps.com.br/sgm/zend/nfs/ambienteteste/wsdl';
- ConfigURL.HomConsultaSitLoteRPS := 'https://betim.rps.com.br/sgm/zend/nfs/ambienteteste/wsdl';
- ConfigURL.HomConsultaNFSe       := 'https://betim.rps.com.br/sgm/zend/nfs/ambienteteste/wsdl';
- ConfigURL.HomCancelaNFSe        := 'https://betim.rps.com.br/sgm/zend/nfs/ambienteteste/wsdl';
+ ConfigURL.HomRecepcaoLoteRPS    := 'https://betim.rps.com.br/sgm/zend/nfs/ambienteteste';  // /wsdl
+ ConfigURL.HomConsultaLoteRPS    := 'https://betim.rps.com.br/sgm/zend/nfs/ambienteteste';
+ ConfigURL.HomConsultaNFSeRPS    := 'https://betim.rps.com.br/sgm/zend/nfs/ambienteteste';
+ ConfigURL.HomConsultaSitLoteRPS := 'https://betim.rps.com.br/sgm/zend/nfs/ambienteteste';
+ ConfigURL.HomConsultaNFSe       := 'https://betim.rps.com.br/sgm/zend/nfs/ambienteteste';
+ ConfigURL.HomCancelaNFSe        := 'https://betim.rps.com.br/sgm/zend/nfs/ambienteteste';
 
  ConfigURL.ProNomeCidade         := '';
  ConfigURL.ProRecepcaoLoteRPS    := 'https://betim.rps.com.br/sgm/zend/nfs/nfs'; // /wsdl
