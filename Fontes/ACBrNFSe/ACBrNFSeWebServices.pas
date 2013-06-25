@@ -663,6 +663,7 @@ var
  vNotas    : WideString;
  URI       : String;
  Separador : String;
+ DataInicial, DataFinal : TDateTime;
 begin
  vNotas := '';
 
@@ -806,11 +807,24 @@ begin
  FTagF := FProvedorClass.Gera_TagF(acRecepcionar, Prefixo3);
 
  if (FProvedor = proIssDSF)
-  then FDadosMsg := TNFSeG.Gera_DadosMsgEnviarLoteDSF(Prefixo3, Prefixo4,
+  then begin
+    DataInicial := TNFSeEnviarLoteRPS(Self).FNotasFiscais.Items[0].NFSe.DataEmissao;
+    DataFinal   := DataInicial;
+
+    for i := 0 to TNFSeEnviarLoteRPS(Self).FNotasFiscais.Count-1 do begin
+
+       if TNFSeEnviarLoteRPS(Self).FNotasFiscais.Items[i].NFSe.DataEmissao < dataInicial then
+          DataInicial := TNFSeEnviarLoteRPS(Self).FNotasFiscais.Items[i].NFSe.DataEmissao;
+
+       if TNFSeEnviarLoteRPS(Self).FNotasFiscais.Items[i].NFSe.DataEmissao > dataFinal then
+          DataFinal := TNFSeEnviarLoteRPS(Self).FNotasFiscais.Items[i].NFSe.DataEmissao;
+    end;
+
+   FDadosMsg := TNFSeG.Gera_DadosMsgEnviarLoteDSF(Prefixo3, Prefixo4,
                                                       FConfiguracoes.WebServices.Identificador,
                                                       NameSpaceDad, FVersaoXML,
                                                       TNFSeEnviarLoteRps(Self).NumeroLote,
-                                                      CodCidadeToCodSiafi( StrToInt64(TNFSeEnviarLoteRPS(Self).FNotasFiscais.Items[0].NFSe.PrestadorServico.Endereco.CodigoMunicipio)),
+                                                      CodCidadeToCodSiafi( StrToIntDef(TNFSeEnviarLoteRPS(Self).FNotasFiscais.Items[0].NFSe.PrestadorServico.Endereco.CodigoMunicipio, 0)),
                                                       SomenteNumeros(TNFSeEnviarLoteRPS(Self).FNotasFiscais.Items[0].NFSe.Prestador.Cnpj),
                                                       TNFSeEnviarLoteRPS(Self).FNotasFiscais.Items[0].NFSe.Prestador.InscricaoMunicipal,
                                                       TNFSeEnviarLoteRPS(Self).FNotasFiscais.Items[0].NFSe.PrestadorServico.RazaoSocial,
@@ -818,10 +832,10 @@ begin
                                                       IntToStr(TNFSeEnviarLoteRps(Self).FNotasFiscais.Count),
                                                       FormatDateTime('yyyy-mm-dd',TNFSeEnviarLoteRps(Self).FNotasFiscais.Items[0].NFSe.DataEmissaoRps),
                                                       FormatDateTime('yyyy-mm-dd',TNFSeEnviarLoteRps(Self).FNotasFiscais.Items[0].NFSe.DataEmissaoRps),
-                                                      TNFSeEnviarLoteRPS(Self).FNotasFiscais.Items[0].NFSe.DataEmissao,
-                                                      TNFSeEnviarLoteRPS(Self).FNotasFiscais.Items[0].NFSe.DataEmissao,
+                                                      DataInicial, DataFinal,
                                                       vNotas,
                                                       FTagI, FTagF)
+ end
  else FDadosMsg := TNFSeG.Gera_DadosMsgEnviarLote(Prefixo3, Prefixo4,
                                                   FConfiguracoes.WebServices.Identificador,
                                                   NameSpaceDad, VersaoDados, FVersaoXML,
@@ -1036,7 +1050,7 @@ begin
    if (FProvedor = proIssDSF)
     then FDadosMsg := TNFSeG.Gera_DadosMsgConsLoteDSF(Prefixo3, Prefixo4,
                                                       NameSpaceDad, VersaoXML,
-                                                      CodCidadeToCodSiafi( strtoint64(TNFSeConsultarLoteRPS(Self).FNotasFiscais.Items[0].NFSe.PrestadorServico.Endereco.CodigoMunicipio)),
+                                                      CodCidadeToCodSiafi( strtointDef(TNFSeConsultarLoteRPS(Self).FNotasFiscais.Items[0].NFSe.PrestadorServico.Endereco.CodigoMunicipio, 0)),
                                                       TNFSeConsultarLoteRPS(Self).Cnpj,
                                                       TNFSeConsultarLoteRPS(Self).NumeroLote,
                                                       TagI, TagF)
@@ -1064,7 +1078,7 @@ begin
    if (FProvedor = proIssDSF)
     then FDadosMsg := TNFSeG.Gera_DadosMsgConsLoteDSF(Prefixo3, Prefixo4,
                                                       NameSpaceDad, VersaoXML,
-                                                      CodCidadeToCodSiafi( strtoint64(TNFSeConsultarLoteRPS(Self).FNotasFiscais.Items[0].NFSe.PrestadorServico.Endereco.CodigoMunicipio)),
+                                                      CodCidadeToCodSiafi( strtointDef(TNFSeConsultarLoteRPS(Self).FNotasFiscais.Items[0].NFSe.PrestadorServico.Endereco.CodigoMunicipio, 0)),
                                                       TNFSeConsultarLoteRPS(Self).Cnpj,
                                                       TNFSeConsultarLoteRPS(Self).NumeroLote,
                                                       TagI, TagF)
@@ -1168,7 +1182,7 @@ begin
    if (FProvedor = proIssDSF)
     then FDadosMsg := TNFSeG.Gera_DadosMsgConsNFSeRPSDSF(Prefixo3, Prefixo4,
                                                          NameSpaceDad, VersaoXML,
-                                                         CodCidadeToCodSiafi( strtoint64(TNFSeConsultarNfseRPS(Self).FNotasFiscais.Items[0].NFSe.PrestadorServico.Endereco.CodigoMunicipio)),
+                                                         CodCidadeToCodSiafi( strtointDef(TNFSeConsultarNfseRPS(Self).FNotasFiscais.Items[0].NFSe.PrestadorServico.Endereco.CodigoMunicipio, 0)),
                                                          TNFSeConsultarNfseRPS(Self).FNotasFiscais.Items[0].NFSe.Prestador.Cnpj,
                                                          booltostr(TNFSeConsultarNfseRPS(Self).FNotasFiscais.Transacao,true),
                                                          TNFSeConsultarNfseRPS(Self).FNotasFiscais.NumeroLote,
@@ -1200,7 +1214,7 @@ begin
    if (FProvedor = proIssDSF)
     then FDadosMsg := TNFSeG.Gera_DadosMsgConsNFSeRPSDSF(Prefixo3, Prefixo4,
                                                          NameSpaceDad, VersaoXML,
-                                                         CodCidadeToCodSiafi( strtoint64(TNFSeConsultarNfseRPS(Self).FNotasFiscais.Items[0].NFSe.PrestadorServico.Endereco.CodigoMunicipio)),
+                                                         CodCidadeToCodSiafi( strtointDef(TNFSeConsultarNfseRPS(Self).FNotasFiscais.Items[0].NFSe.PrestadorServico.Endereco.CodigoMunicipio, 0)),
                                                          TNFSeConsultarNfseRPS(Self).FNotasFiscais.Items[0].NFSe.Prestador.Cnpj,
                                                          booltostr(TNFSeConsultarNfseRPS(Self).FNotasFiscais.Transacao,true),
                                                          TNFSeConsultarNfseRPS(Self).FNotasFiscais.NumeroLote,
@@ -1300,7 +1314,7 @@ begin
    if (FProvedor = proIssDSF)
     then FDadosMsg := TNFSeG.Gera_DadosMsgConsNFSeDSF(Prefixo3, Prefixo4,
                                                       NameSpaceDad, VersaoXML,
-                                                      CodCidadeToCodSiafi(strtoint64(TNFSeConsultarNfse(Self).FNotasFiscais.Items[0].NFSe.PrestadorServico.Endereco.CodigoMunicipio)),
+                                                      CodCidadeToCodSiafi(strtointDef(TNFSeConsultarNfse(Self).FNotasFiscais.Items[0].NFSe.PrestadorServico.Endereco.CodigoMunicipio, 0)),
                                                       SomenteNumeros(TNFSeConsultarNfse(Self).Cnpj),
                                                       TNFSeConsultarNfse(Self).InscricaoMunicipal,
                                                       TNFSeConsultarNfse(Self).FNumeroNFSe,
@@ -1333,7 +1347,7 @@ begin
    if (FProvedor = proIssDSF)
     then FDadosMsg := TNFSeG.Gera_DadosMsgConsNFSeDSF(Prefixo3, Prefixo4,
                                                       NameSpaceDad, VersaoXML,
-                                                      CodCidadeToCodSiafi(strtoint64(TNFSeConsultarNfse(Self).FNotasFiscais.Items[0].NFSe.PrestadorServico.Endereco.CodigoMunicipio)),
+                                                      CodCidadeToCodSiafi(strtointDef(TNFSeConsultarNfse(Self).FNotasFiscais.Items[0].NFSe.PrestadorServico.Endereco.CodigoMunicipio, 0)),
                                                       SomenteNumeros(TNFSeConsultarNfse(Self).Cnpj),
                                                       TNFSeConsultarNfse(Self).InscricaoMunicipal,
                                                       TNFSeConsultarNfse(Self).FNumeroNFSe,
@@ -1416,7 +1430,7 @@ begin
  FTagF := FProvedorClass.Gera_TagF(acConsNFSe, Prefixo3);
 
  FDadosMsg := TNFSeG.Gera_DadosMsgConsSeqRPSDSF(FTagI, FTagF, VersaoXML,
-                                                CodCidadeToCodSiafi(StrToInt64(TNFSeConsultarSequencialRPS(Self).FCidade)),
+                                                CodCidadeToCodSiafi(StrToIntDef(TNFSeConsultarSequencialRPS(Self).FCidade, 0)),
                                                 TNFSeConsultarSequencialRPS(Self).InscricaoMunicipal,
                                                 TNFSeConsultarSequencialRPS(Self).Cnpj,
                                                 TNFSeConsultarSequencialRPS(Self).SeriePrestacao);
@@ -1780,6 +1794,7 @@ var
  URI,
  Separador,
  PathSalvar: String;
+ DataInicial, DataFinal : TDateTime;
 begin
  vNotas := '';
 
@@ -1905,7 +1920,20 @@ begin
  FTagF := FProvedorClass.Gera_TagF(acRecepcionar, Prefixo3);
 
  if (FProvedor = proIssDSF)
-  then FDadosMsg := TNFSeG.Gera_DadosMsgEnviarLoteDSF(Prefixo3, Prefixo4,
+  then begin
+    DataInicial := TNFSeGerarLoteRPS(Self).FNotasFiscais.Items[0].NFSe.DataEmissao;
+    DataFinal   := DataInicial;
+
+    for i := 0 to TNFSeEnviarLoteRPS(Self).FNotasFiscais.Count-1 do begin
+
+       if TNFSeEnviarLoteRPS(Self).FNotasFiscais.Items[i].NFSe.DataEmissao < dataInicial then
+          DataInicial := TNFSeGerarLoteRPS(Self).FNotasFiscais.Items[i].NFSe.DataEmissao;
+
+       if TNFSeEnviarLoteRPS(Self).FNotasFiscais.Items[i].NFSe.DataEmissao > dataFinal then
+          DataFinal := TNFSeGerarLoteRPS(Self).FNotasFiscais.Items[i].NFSe.DataEmissao;
+    end;
+
+       FDadosMsg := TNFSeG.Gera_DadosMsgEnviarLoteDSF(Prefixo3, Prefixo4,
                                                       FConfiguracoes.WebServices.Identificador,
                                                       NameSpaceDad, FVersaoXML,
                                                       TNFSeGerarLoteRPS(Self).NumeroLote,
@@ -1917,10 +1945,10 @@ begin
                                                       IntToStr(TNFSeGerarLoteRPS(Self).FNotasFiscais.Count),
                                                       FormatDateTime('yyyy-mm-dd',TNFSeGerarLoteRPS(Self).FNotasFiscais.Items[0].NFSe.DataEmissaoRps),
                                                       FormatDateTime('yyyy-mm-dd',TNFSeGerarLoteRPS(Self).FNotasFiscais.Items[0].NFSe.DataEmissaoRps),
-                                                      TNFSeGerarLoteRPS(Self).FNotasFiscais.Items[0].NFSe.DataEmissao,
-                                                      TNFSeGerarLoteRPS(Self).FNotasFiscais.Items[0].NFSe.DataEmissao,
+                                                      DataInicial, DataFinal,
                                                       vNotas,
                                                       FTagI, FTagF)
+  end
   else FDadosMsg := TNFSeG.Gera_DadosMsgEnviarLote(Prefixo3, Prefixo4,
                                                    FConfiguracoes.WebServices.Identificador,
                                                    NameSpaceDad, VersaoDados, FVersaoXML,

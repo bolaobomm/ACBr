@@ -448,7 +448,7 @@ begin
                '<RazaoSocialRemetente>' + RazaoSocial + '</RazaoSocialRemetente>' +
                '<transacao>'            + Transacao   + '</transacao>' +
                '<dtInicio>' + FormatDateTime('yyyy-mm-dd', DataInicial) + '</dtInicio>' +
-               '<dtFim>'    + FormatDateTime('yyyy-mm-dd', DataInicial) + '</dtFim>' +
+               '<dtFim>'    + FormatDateTime('yyyy-mm-dd', DataFinal) + '</dtFim>' +
                '<QtdRPS>'               + QtdeNotas               + '</QtdRPS>' +
                '<ValorTotalServicos>'   + ValorTotalServicos + '</ValorTotalServicos>' +
                '<ValorTotalDeducoes>'   + ValorTotalDeducoes + '</ValorTotalDeducoes>' +
@@ -513,7 +513,7 @@ begin
                '</dtInicio>' +
 
                '<dtFim>' +
-                 FormatDateTime('yyyy-mm-dd', DataInicial) +
+                 FormatDateTime('yyyy-mm-dd', DataFinal) +
                '</dtFim>' +
 
                '<NotaInicial>' + NotaInicial + '</NotaInicial>' +

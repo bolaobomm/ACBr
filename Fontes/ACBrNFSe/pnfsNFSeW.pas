@@ -148,6 +148,7 @@ begin
  if FProvedor = proISSDigital
   then Atributo := '';
 
+ if FProvedor <> proIssDsf then
  // Alterado Por Cleiver em 01/02/2013
  if (FProvedor = proGoiania)
   then begin
@@ -164,6 +165,8 @@ begin
                          StrToInt(SomenteNumeros(FNFSe.IdentificacaoRps.Numero)),
                          StrToInt(SomenteNumeros(FNFSe.IdentificacaoRps.Numero)));
 
+  proIssDsf: FNFSe.InfID.ID := FNFSe.IdentificacaoRps.Numero;
+
   else FNFSe.InfID.ID := SomenteNumeros(FNFSe.IdentificacaoRps.Numero) + FNFSe.IdentificacaoRps.Serie;
  end;
 
@@ -176,6 +179,7 @@ begin
   proISSe:       GerarXML_Provedor_ISSe;
   pro4R:         GerarXML_Provedor_4R;
   proFiorilli:   GerarXML_Provedor_Fiorilli;
+  proIssDsf:     GerarXML_Provedor_IssDsf;
   proCoplan:     GerarXML_Provedor_Coplan;
   else begin
         if FIdentificador = ''
@@ -229,6 +233,7 @@ begin
     end;
   end;
 
+ if FProvedor <> proIssDsf then
  // Alterado por Cleiver em 01/02/2013
  if (FProvedor = proGoiania)
   then begin
@@ -558,6 +563,8 @@ begin
                  Gerador.wGrupoNFSe('/Servico');
                 end;
 
+  proIssDSF: GerarServico_Provedor_IssDsf;
+  
   else          begin
                  Gerador.wGrupoNFSe('Servico');
                   Gerador.wGrupoNFSe('Valores');
