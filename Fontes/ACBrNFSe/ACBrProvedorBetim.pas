@@ -130,12 +130,12 @@ var
  ConfigURL: TConfigURL;
 begin
  ConfigURL.HomNomeCidade         := '';
- ConfigURL.HomRecepcaoLoteRPS    := 'https://betim.rps.com.br/sgm/zend/nfs/ambienteteste';  // /wsdl
- ConfigURL.HomConsultaLoteRPS    := 'https://betim.rps.com.br/sgm/zend/nfs/ambienteteste';
- ConfigURL.HomConsultaNFSeRPS    := 'https://betim.rps.com.br/sgm/zend/nfs/ambienteteste';
- ConfigURL.HomConsultaSitLoteRPS := 'https://betim.rps.com.br/sgm/zend/nfs/ambienteteste';
- ConfigURL.HomConsultaNFSe       := 'https://betim.rps.com.br/sgm/zend/nfs/ambienteteste';
- ConfigURL.HomCancelaNFSe        := 'https://betim.rps.com.br/sgm/zend/nfs/ambienteteste';
+ ConfigURL.HomRecepcaoLoteRPS    := 'https://betim.rps.com.br/sgm/zend/nfs/ambienteteste/wsdl';  // /wsdl
+ ConfigURL.HomConsultaLoteRPS    := 'https://betim.rps.com.br/sgm/zend/nfs/ambienteteste/wsdl';
+ ConfigURL.HomConsultaNFSeRPS    := 'https://betim.rps.com.br/sgm/zend/nfs/ambienteteste/wsdl';
+ ConfigURL.HomConsultaSitLoteRPS := 'https://betim.rps.com.br/sgm/zend/nfs/ambienteteste/wsdl';
+ ConfigURL.HomConsultaNFSe       := 'https://betim.rps.com.br/sgm/zend/nfs/ambienteteste/wsdl';
+ ConfigURL.HomCancelaNFSe        := 'https://betim.rps.com.br/sgm/zend/nfs/ambienteteste/wsdl';
 
  ConfigURL.ProNomeCidade         := '';
  ConfigURL.ProRecepcaoLoteRPS    := 'https://betim.rps.com.br/sgm/zend/nfs/nfs'; // /wsdl
@@ -445,16 +445,18 @@ begin
 
  result := '<?xml version="1.0" encoding="UTF-8"?>' +
            '<soap:Envelope xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/" ' +
-                       'xmlns:soapenc="http://schemas.xmlsoap,org/soap/encoding/" ' +
-                       'xmlns:tns="' + URLNS + '" ' +
-                       'xmlns:types="' + URLNS + '/encodedTypes" ' +
-                       'xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" ' +
-                       'xmlns:xsd="http://www.w3.org/2001/XMLSchema">' +
-            '<soap:Body soap:encodingStyle="http://schemas.xmlsoap.org/soap/encoding/">' +
+                          'xmlns:tns="' + URLNS + '" ' +
+                          'xmlns:xsd="http://www.w3.org/2001/XMLSchema" ' +
+                          'xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" ' +
+                          'xmlns:soapenc="http://schemas.xmlsoap,org/soap/encoding/" ' +
+                          'soap:encodingStyle="http://schemas.xmlsoap.org/soap/encoding/">' +
+//                       'xmlns:types="' + URLNS + '/encodedTypes" ' +
+//            '<soap:Body soap:encodingStyle="http://schemas.xmlsoap.org/soap/encoding/">' +
+            '<soap:Body>' +
              '<tns:RecepcionarLoteRps>' +
-//              '<EnviarLoteRpsEnvio xsi:type="xsd:string">' +
+              '<EnviarLoteRpsEnvio xsi:type="xsd:string">' +
                 AXML +
-//              '</EnviarLoteRpsEnvio>' +
+              '</EnviarLoteRpsEnvio>' +
              '</tns:RecepcionarLoteRps>' +
             '</soap:Body>' +
            '</soap:Envelope>';
@@ -476,7 +478,8 @@ begin
                        'xmlns:types="' + URLNS + '/encodedTypes" ' +
                        'xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" ' +
                        'xmlns:xsd="http://www.w3.org/2001/XMLSchema">' +
-            '<soap:Body soap:encodingStyle="http://schemas.xmlsoap.org/soap/encoding/">' +
+//            '<soap:Body soap:encodingStyle="http://schemas.xmlsoap.org/soap/encoding/">' +
+            '<soap:Body>' +
              '<tns:ConsultarSituacaoLoteRps>' +
                 AXML +
              '</tns:ConsultarSituacaoLoteRps>' +
@@ -507,7 +510,8 @@ begin
                        'xmlns:types="' + URLNS + '/encodedTypes" ' +
                        'xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" ' +
                        'xmlns:xsd="http://www.w3.org/2001/XMLSchema">' +
-            '<soap:Body soap:encodingStyle="http://schemas.xmlsoap.org/soap/encoding/">' +
+//            '<soap:Body soap:encodingStyle="http://schemas.xmlsoap.org/soap/encoding/">' +
+            '<soap:Body>' +
              '<tns:ConsultarLoteRps>' +
                 AXML +
              '</tns:ConsultarLoteRps>' +
@@ -538,7 +542,8 @@ begin
                        'xmlns:types="' + URLNS + '/encodedTypes" ' +
                        'xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" ' +
                        'xmlns:xsd="http://www.w3.org/2001/XMLSchema">' +
-            '<soap:Body soap:encodingStyle="http://schemas.xmlsoap.org/soap/encoding/">' +
+//            '<soap:Body soap:encodingStyle="http://schemas.xmlsoap.org/soap/encoding/">' +
+            '<soap:Body>' +
              '<tns:ConsultarNfsePorRps>' +
                 AXML +
              '</tns:ConsultarNfsePorRps>' +
@@ -569,7 +574,8 @@ begin
                        'xmlns:types="' + URLNS + '/encodedTypes" ' +
                        'xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" ' +
                        'xmlns:xsd="http://www.w3.org/2001/XMLSchema">' +
-            '<soap:Body soap:encodingStyle="http://schemas.xmlsoap.org/soap/encoding/">' +
+//            '<soap:Body soap:encodingStyle="http://schemas.xmlsoap.org/soap/encoding/">' +
+            '<soap:Body>' +
              '<tns:ConsultarNfse>' +
                 AXML +
              '</tns:ConsultarNfse>' +
@@ -600,7 +606,8 @@ begin
                        'xmlns:types="' + URLNS + '/encodedTypes" ' +
                        'xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" ' +
                        'xmlns:xsd="http://www.w3.org/2001/XMLSchema">' +
-            '<soap:Body soap:encodingStyle="http://schemas.xmlsoap.org/soap/encoding/">' +
+//            '<soap:Body soap:encodingStyle="http://schemas.xmlsoap.org/soap/encoding/">' +
+            '<soap:Body>' +
              '<tns:CancelarNfse>' +
                 AXML +
              '</tns:CancelarNfse>' +
@@ -631,7 +638,8 @@ begin
                        'xmlns:types="' + URLNS + '/encodedTypes" ' +
                        'xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" ' +
                        'xmlns:xsd="http://www.w3.org/2001/XMLSchema">' +
-            '<soap:Body soap:encodingStyle="http://schemas.xmlsoap.org/soap/encoding/">' +
+//            '<soap:Body soap:encodingStyle="http://schemas.xmlsoap.org/soap/encoding/">' +
+            '<soap:Body>' +
              '<tns:GerarNfse>' +
                 AXML +
              '</tns:GerarNfse>' +
