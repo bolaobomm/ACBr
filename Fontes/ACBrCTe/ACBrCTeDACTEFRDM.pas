@@ -316,6 +316,7 @@ begin
           FieldByName('TXTSITTRIB').AsString := CSTICMSToStr(cst51) + '-' + CSTICMSToStrTagPosText(cst51);
         end;
 
+
       cst60:
         begin
           FieldByName('TXTSITTRIB').AsString := CSTICMSToStr(cst60) + '-' + CSTICMSToStrTagPosText(cst60);
@@ -1093,7 +1094,14 @@ begin
   //          raise EACBrCTeException.Create('Protocolo de Registro no DPEC não informado.')
   //        else
   //          FieldByName('Contingencia_Valor').AsString := FDACTEClassOwner.ProtocoloCTe;
-        end;
+        end
+        else // 25/06/13 - Wislei - Adicionado a verificação para os SVC.
+          if (FCTe.Ide.tpEmis = teSVCSP) or (FCTe.Ide.tpEmis = teSVCRS) then
+          begin
+            FieldByName('Contingencia_Descricao').AsString := 'PROTOCOLO DE AUTORIZAÇÃO DE USO';
+            FieldByName('Contingencia_Valor').AsString := FCTe.procCTe.nProt + ' ' + DFeUtil.SeSenao(FCTe.procCTe.dhRecbto <> 0,
+              DateTimeToStr(FCTe.procCTe.dhRecbto), '');
+          end;
     end;
 
     //    FieldByName('LinhasPorPagina').AsInteger := FDACTEClassOwner.ProdutosPorPagina;
