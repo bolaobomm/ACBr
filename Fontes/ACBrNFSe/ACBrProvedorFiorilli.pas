@@ -472,7 +472,18 @@ end;
 function TProvedorFiorilli.GeraEnvelopeConsultarSituacaoLoteRPS(
   URLNS: String; CabMsg, DadosMsg, DadosSenha: AnsiString): AnsiString;
 begin
- result := '';
+ result := '<?xml version="1.0" encoding="utf-8"?>'+
+           '<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" '+
+                             'xmlns:ws="http://ws.issweb.fiorilli.com.br/" '+
+                             'xmlns:xd="http://www.w3.org/2000/09/xmldsig#"> ' +
+           '<soapenv:Header/>' +
+              '<soapenv:Body>' +
+                '<ws:consultarSituacaoLoteRps>' +
+                    DadosMsg +
+                    DadosSenha +
+                 '</ws:consultarSituacaoLoteRps>' +
+              '</soapenv:Body>' +
+           '</soapenv:Envelope>';
 end;
 
 function TProvedorFiorilli.GeraEnvelopeConsultarLoteRPS(URLNS: String;
@@ -512,7 +523,18 @@ end;
 function TProvedorFiorilli.GeraEnvelopeConsultarNFSe(URLNS: String; CabMsg,
   DadosMsg, DadosSenha: AnsiString): AnsiString;
 begin
- result := '';
+ result := '<?xml version="1.0" encoding="utf-8"?>'+
+           '<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" '+
+                             'xmlns:ws="http://ws.issweb.fiorilli.com.br/" '+
+                             'xmlns:xd="http://www.w3.org/2000/09/xmldsig#"> ' +
+           '<soapenv:Header/>' +
+              '<soapenv:Body>' +
+                '<ws:consultarNfse>' +
+                    DadosMsg +
+                    DadosSenha +
+                 '</ws:consultarNfse>' +
+              '</soapenv:Body>' +
+           '</soapenv:Envelope>';
 end;
 
 function TProvedorFiorilli.GeraEnvelopeCancelarNFSe(URLNS: String; CabMsg,
@@ -567,18 +589,18 @@ end;
 
 function TProvedorFiorilli.GetRetornoWS(Acao: TnfseAcao; RetornoWS: AnsiString): AnsiString;
 begin
- Result := SeparaDados( RetornoWS, 'soap:Body' );
- (*
  case Acao of
-   acRecepcionar: Result := SeparaDados( RetornoWS, 'recepcionarLoteRpsResponse' );
-   acConsSit:     Result := SeparaDados( RetornoWS, '' );
-   acConsLote:    Result := SeparaDados( RetornoWS, 'consultarLoteRpsResponse' );
-   acConsNFSeRps: Result := SeparaDados( RetornoWS, 'consultarNfsePorRpsResponse' );
-   acConsNFSe:    Result := SeparaDados( RetornoWS, '' );
-   acCancelar:    Result := SeparaDados( RetornoWS, 'cancelarNfseResponse' );
-   acGerar:       Result := SeparaDados( RetornoWS, 'gerarNfseResponse' );
-   acRecSincrono: Result := SeparaDados( RetornoWS, 'recepcionarLoteRpsSincronoResponse' );
+   acRecepcionar: Result := SeparaDados( RetornoWS, 'ns3:recepcionarLoteRpsResponse' );
+   acConsSit:     Result := SeparaDados( RetornoWS, 'ns3:consultarSituacaoLoteRpsResponse' );
+   acConsLote:    Result := SeparaDados( RetornoWS, 'ns3:consultarLoteRpsResponse' );
+   acConsNFSeRps: Result := SeparaDados( RetornoWS, 'ns3:consultarNfsePorRpsResponse' );
+   acConsNFSe:    Result := SeparaDados( RetornoWS, 'ns3:consultarNfseResponse' );
+   acCancelar:    Result := SeparaDados( RetornoWS, 'ns3:cancelarNfseResponse' );
+   acGerar:       Result := SeparaDados( RetornoWS, 'ns3:gerarNfseResponse' );
+   acRecSincrono: Result := SeparaDados( RetornoWS, 'ns3:recepcionarLoteRpsSincronoResponse' );
  end;
+ (*
+ Result := SeparaDados( RetornoWS, 'soap:Body' );
  *)
 end;
 
