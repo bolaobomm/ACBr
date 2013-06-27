@@ -1577,6 +1577,7 @@ end;
 function TNFSeR.LerNFSe: Boolean;
 var
  ok  : Boolean;
+ CM: String;
 begin
  FProvedor := proNenhum;
 
@@ -1589,10 +1590,17 @@ begin
 			FProvedor := proSaatri;
   end;
 
- //By Lutzem Massao Aihara
- if (Leitor.rExtrai(1, 'OrgaoGerador') <> '') then
-  if (Leitor.rCampo(tcStr, 'CodigoMunicipio') = '4119905') then
-   FProvedor := profintelISS;
+ if (Leitor.rExtrai(1, 'OrgaoGerador') <> '')
+  then begin
+   CM:= Leitor.rCampo(tcStr, 'CodigoMunicipio');
+
+   if (CM = '4119905') then
+    FProvedor := profintelISS;
+
+   if (CM = '3127701') or (CM = '3500105') or (CM = '3510203') or
+      (CM = '3523503') or (CM = '3554003') then
+    FProvedor := pro4R;
+  end;
 
  if (Leitor.rExtrai(1, 'Nfse') <> '')
   then begin
@@ -1612,10 +1620,10 @@ begin
      NFSe.Competencia              := Leitor.rCampo(tcStr, 'Competencia');
 
      case FProvedor of
-      proSaatri: NFSe_ProvedorSaatri;
+      proSaatri:    NFSe_ProvedorSaatri;
       profintelISS: NFSe_ProvedorfintelISS;
-      proGoiania  : NFSe_ProvedorGoiania;
-      else NFSe_Demais;
+      proGoiania:   NFSe_ProvedorGoiania;
+      else          NFSe_Demais;
      end;
 
     end; // fim do infNfse
