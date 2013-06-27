@@ -179,7 +179,6 @@ type
     qrlISSReter: TQRLabel;
     qrmPrefeitura: TQRMemo;
     qrmDescricao: TQRMemo;
-    QRShape18: TQRShape;
     QRShape11: TQRShape;
     QRLabel26: TQRLabel;
     qrlPrestNomeCompEnt: TQRLabel;
@@ -244,7 +243,8 @@ begin
  cdsItens.Open;
 
  cdsItens.Append;
- cdsItens.FieldByName('DESCRICAO').AsString := FNFSe.Servico.Discriminacao;
+// cdsItens.FieldByName('DESCRICAO').AsString := FNFSe.Servico.Discriminacao;
+ cdsItens.FieldByName('DESCRICAO').AsString := 'Item 1';
  cdsItens.Post;
 
  cdsItens.First;
@@ -385,10 +385,13 @@ procedure TfqrDANFSeQRRetrato.qrb_5_ItensBeforePrint(Sender: TQRCustomBand;
 begin
   inherited;
 
+ qrmDescricao.Lines.BeginUpdate;
  qrmDescricao.Lines.Clear;
 
  qrmDescricao.Lines.Add( StringReplace( FNFSe.Servico.Discriminacao,
                          ';', #13#10, [rfReplaceAll, rfIgnoreCase] ) );
+
+ qrmDescricao.Lines.EndUpdate;                        
 end;
 
 procedure TfqrDANFSeQRRetrato.qrb_6_ISSQNBeforePrint(Sender: TQRCustomBand;
@@ -531,7 +534,7 @@ begin
  qrmDadosAdicionais.Lines.BeginUpdate;
  qrmDadosAdicionais.Lines.Clear;
 
- qrmDadosAdicionais.Lines.Add(StringReplace( FNFSe.OutrasInformacoes,
+ qrmDadosAdicionais.Lines.Add(StringReplace( trim(FNFSe.OutrasInformacoes),
                          ';', #13#10, [rfReplaceAll,rfIgnoreCase] ) );
 
  qrmDadosAdicionais.Lines.EndUpdate;

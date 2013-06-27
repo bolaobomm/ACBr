@@ -1,8 +1,8 @@
 object fqrDANFSeQR: TfqrDANFSeQR
-  Left = 195
-  Top = 121
+  Left = 205
+  Top = 124
   Width = 880
-  Height = 742
+  Height = 831
   Caption = 'fqrDANFSeQR'
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
