@@ -1320,11 +1320,9 @@ begin
       if DataProtesto <> 0 then
       begin
          if TipoDiasProtesto = diCorridos then
-            wMsgProtesto:= ' dias corridos'
+            AStringList.Add(ACBrStr('Protestar em ' + IntToStr(DaysBetween(Vencimento, DataProtesto))+ ' dias corridos após o vencimento'))
          else
-            wMsgProtesto:= ' dias uteis';
-
-         AStringList.Add(ACBrStr('Protestar em ' + IntToStr(DaysBetween(Vencimento, DataProtesto))+ wMsgProtesto));
+            AStringList.Add(ACBrStr('Protestar no ' + IntToStr(DaysBetween(Vencimento, DataProtesto))+ ' dia útil após o vencimento'));
       end;
 
       if ValorAbatimento <> 0 then
