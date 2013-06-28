@@ -89,7 +89,7 @@ begin
   Try
      fpUltimaResposta := Copy(fpDevice.Serial.RecvPacket( MillisecTimeOut ),1,10);
 
-     Resposta := Trim( copy( fpUltimaResposta, 2, 6 )) ;
+     Resposta := Trim( copy( fpUltimaResposta, 2, 7 )) ;
 
      { Ajustando o separador de Decimal corretamente }
      Resposta := StringReplace(Resposta, '.', DecimalSeparator, [rfReplaceAll]);
