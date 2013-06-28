@@ -37,12 +37,19 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+28/06/2013
+-- ACBrConsultaCNPJ --
+[*] Ajustes para compatibilizar o componente com Lazarus,
+[+] Adicionado Demo para Lazarus, migrado por: "Roberto Brandão"
+[*] Refactoring de funções que já existiam nos fontes do ACBr ou synapse:
+    HTTPEncode -> synacode.EncodeURLElement; PosEx -> strutils.PosEx
+    (por: DSA)
+
 17/06/2013
 -- ACBrConsultaCNPJ --
 [+] Adicionado parâmetro para limpeza de espaços duplos retornados nos campos 
     da consulta.
     pro: regys.silveira
-
 
 11/06/2013
 -- ACBrIBPTax --
