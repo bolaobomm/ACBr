@@ -108,69 +108,7 @@ type
 implementation
 
 uses
-  ACBrUtil;
-
-function HTTPEncode(const AStr: AnsiString): AnsiString;
-// The NoConversion set contains characters as specificed in RFC 1738 and
-// should not be modified unless the standard changes.
-const
-  NoConversion = ['A'..'Z','a'..'z','*','@','.','_','-',
-                  '0'..'9','$','!','''','(',')'];
-var
-  Sp, Rp: PAnsiChar;
-begin
-  SetLength(Result, Length(AStr) * 3);
-  Sp := PAnsiChar(AStr);
-  Rp := PAnsiChar(Result);
-  while Sp^ <> #0 do
-  begin
-    if Sp^ in NoConversion then
-      Rp^ := Sp^
-    else
-      if Sp^ = ' ' then
-        Rp^ := '+'
-      else
-      begin
-        FormatBuf(Rp^, 3, AnsiString('%%%.2x'), 6, [Ord(Sp^)]);
-        Inc(Rp,2);
-      end;
-    Inc(Rp);
-    Inc(Sp);
-  end;
-  SetLength(Result, Rp - PAnsiChar(Result));
-end;
-
-function PosEx(const SubStr, S: string; Offset: Cardinal = 1): Integer;
-var
-  I,X: Integer;
-  Len, LenSubStr: Integer;
-begin
-  if Offset = 1 then
-    Result := Pos(SubStr, S)
-  else
-  begin
-    I := Offset;
-    LenSubStr := Length(SubStr);
-    Len := Length(S) - LenSubStr + 1;
-    while I <= Len do
-    begin
-      if S[I] = SubStr[1] then
-      begin
-        X := 1;
-        while (X < LenSubStr) and (S[I + X] = SubStr[X + 1]) do
-          Inc(X);
-        if (X = LenSubStr) then
-        begin
-          Result := I;
-          exit;
-        end;
-      end;
-      Inc(I);
-    end;
-
-    Result := 0;
-  end;
-end;
+  ACBrUtil, synacode, strutils;
 
 function HeadersGetValue(Nome: String; Headers: TStringList): String;
 var
@@ -512,9 +450,9 @@ begin
   Post:= TStringStream.Create('');
   try
     Post.WriteString('origem=comprovante&');
-    Post.WriteString('viewstate=' + HttpEncode(fviewstate)+'&');
+    Post.WriteString('viewstate=' + EncodeURLElement(fviewstate)+'&');
     Post.WriteString('cnpj='+OnlyNumber(ACNPJ)+'&');
-    Post.WriteString('captcha='+ACaptcha+'&');
+    Post.WriteString('captcha='+Trim(ACaptcha)+'&');
     Post.WriteString('captchaAudio=&');
     Post.WriteString('submit1=Consultar&');
     Post.WriteString('search_type=cnpj');

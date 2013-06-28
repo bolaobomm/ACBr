@@ -1,0 +1,150 @@
+<?xml version="1.0"?>
+<CONFIG>
+  <ProjectSession>
+    <Version Value="9"/>
+    <BuildModes Active="Default"/>
+    <Units Count="12">
+      <Unit0>
+        <Filename Value="ConsultaCNPJ.lpr"/>
+        <IsPartOfProject Value="True"/>
+        <UnitName Value="ConsultaCNPJ"/>
+        <UsageCount Value="26"/>
+      </Unit0>
+      <Unit1>
+        <Filename Value="u_principal.pas"/>
+        <IsPartOfProject Value="True"/>
+        <ComponentName Value="Fprincipal"/>
+        <HasResources Value="True"/>
+        <ResourceBaseClass Value="Form"/>
+        <UnitName Value="u_principal"/>
+        <IsVisibleTab Value="True"/>
+        <EditorIndex Value="0"/>
+        <WindowIndex Value="0"/>
+        <TopLine Value="1"/>
+        <CursorPos X="36" Y="10"/>
+        <UsageCount Value="26"/>
+        <Loaded Value="True"/>
+        <LoadedDesigner Value="True"/>
+      </Unit1>
+      <Unit2>
+        <Filename Value="ConverterBackup/U_Principal.pas"/>
+        <UnitName Value="U_Principal"/>
+        <WindowIndex Value="0"/>
+        <TopLine Value="1"/>
+        <CursorPos X="1" Y="1"/>
+        <UsageCount Value="10"/>
+      </Unit2>
+      <Unit3>
+        <Filename Value="../Delphi/U_Principal.pas"/>
+        <ComponentName Value="F_Principal"/>
+        <HasResources Value="True"/>
+        <ResourceBaseClass Value="Form"/>
+        <UnitName Value="U_Principal"/>
+        <WindowIndex Value="0"/>
+        <TopLine Value="61"/>
+        <CursorPos X="47" Y="8"/>
+        <UsageCount Value="10"/>
+      </Unit3>
+      <Unit4>
+        <Filename Value="/usr/share/fpcsrc/2.6.2/rtl/wince/windows.pp"/>
+        <UnitName Value="windows"/>
+        <WindowIndex Value="0"/>
+        <TopLine Value="25"/>
+        <CursorPos X="5" Y="38"/>
+        <UsageCount Value="10"/>
+      </Unit4>
+      <Unit5>
+        <Filename Value="../../sga/fprincipal.pas"/>
+        <UnitName Value="FPrincipal"/>
+        <WindowIndex Value="0"/>
+        <TopLine Value="175"/>
+        <CursorPos X="1" Y="190"/>
+        <UsageCount Value="10"/>
+      </Unit5>
+      <Unit6>
+        <Filename Value="../../Fontes/ACBrTCP/ACBrConsultaCNPJ.pas"/>
+        <UnitName Value="ACBrConsultaCNPJ"/>
+        <WindowIndex Value="0"/>
+        <TopLine Value="504"/>
+        <CursorPos X="29" Y="511"/>
+        <UsageCount Value="12"/>
+      </Unit6>
+      <Unit7>
+        <Filename Value="../../Pacotes/Lazarus/ACBrTCP.pas"/>
+        <UnitName Value="ACBrTCP"/>
+        <TopLine Value="1"/>
+        <CursorPos X="68" Y="10"/>
+        <UsageCount Value="10"/>
+      </Unit7>
+      <Unit8>
+        <Filename Value="../../lazsolutions/Units/LSHTTPSend.pas"/>
+        <UnitName Value="LSHTTPSend"/>
+        <WindowIndex Value="0"/>
+        <TopLine Value="10"/>
+        <CursorPos X="3" Y="23"/>
+        <UsageCount Value="10"/>
+      </Unit8>
+      <Unit9>
+        <Filename Value="/usr/share/fpcsrc/2.6.2/rtl/objpas/sysutils/sysutilh.inc"/>
+        <WindowIndex Value="0"/>
+        <TopLine Value="101"/>
+        <CursorPos X="4" Y="104"/>
+        <UsageCount Value="12"/>
+      </Unit9>
+      <Unit10>
+        <Filename Value="../../Fontes/ACBrTCP/ACBrSocket.pas"/>
+        <UnitName Value="ACBrSocket"/>
+        <WindowIndex Value="0"/>
+        <TopLine Value="244"/>
+        <CursorPos X="1" Y="175"/>
+        <UsageCount Value="12"/>
+      </Unit10>
+      <Unit11>
+        <Filename Value="../../Pascal/Comp/ACBr/trunk/Fontes/ACBrTCP/ACBrConsultaCNPJ.pas"/>
+        <UnitName Value="ACBrConsultaCNPJ"/>
+        <WindowIndex Value="0"/>
+        <TopLine Value="1"/>
+        <CursorPos X="5" Y="6"/>
+        <UsageCount Value="10"/>
+        <Bookmarks Count="1">
+          <Item0 X="37" Y="515" ID="1"/>
+        </Bookmarks>
+      </Unit11>
+    </Units>
+    <General>
+      <ActiveWindowIndexAtStart Value="0"/>
+    </General>
+    <JumpHistory Count="4" HistoryIndex="3">
+      <Position1>
+        <Filename Value="u_principal.pas"/>
+        <Caret Line="35" Column="53" TopLine="29"/>
+      </Position1>
+      <Position2>
+        <Filename Value="u_principal.pas"/>
+        <Caret Line="10" Column="3" TopLine="1"/>
+      </Position2>
+      <Position3>
+        <Filename Value="u_principal.pas"/>
+        <Caret Line="9" Column="79" TopLine="1"/>
+      </Position3>
+      <Position4>
+        <Filename Value="u_principal.pas"/>
+        <Caret Line="17" Column="67" TopLine="1"/>
+      </Position4>
+    </JumpHistory>
+  </ProjectSession>
+  <Debugging>
+    <Watches Count="3">
+      <Item1>
+        <Expression Value="Str"/>
+      </Item1>
+      <Item2>
+        <Expression Value="Html"/>
+      </Item2>
+      <Item3>
+        <Expression Value="Post"/>
+      </Item3>
+    </Watches>
+  </Debugging>
+  <EditorMacros Count="0"/>
+</CONFIG>
