@@ -51,8 +51,9 @@ uses
   Classes, SysUtils, contnrs, ACBrSocket;
 
 type
-
-  TACBrCEPWebService = ( wsNenhum, wsBuscarCep, wsCepLivre, wsRepublicaVirtual, wsBases4you, wsRNSolucoes, wsKingHost, wsByJG ) ;
+  TACBrCEPWebService = ( wsNenhum, wsBuscarCep, wsCepLivre, wsRepublicaVirtual,
+                         wsBases4you, wsRNSolucoes, wsKingHost, wsByJG,
+                         wsCorreios ) ;
 
   EACBrCEPException = class ( Exception );
 
@@ -219,34 +220,47 @@ type
        AUF, ABairro : String ) ; override ;
   end;
 
-TACBrWSKingHost = class(TACBrCEPWSClass)
-    private
-      FCepBusca: String;
-      procedure ProcessaResposta ;
-    public
-      constructor Create( AOwner : TACBrCEP ) ; override ;
+  TACBrWSKingHost = class(TACBrCEPWSClass)
+  private
+    FCepBusca: String;
+    procedure ProcessaResposta ;
+  public
+    constructor Create( AOwner : TACBrCEP ) ; override ;
 
-      Procedure BuscarPorCEP( ACEP : String ) ; override ;
-      Procedure BuscarPorLogradouro( AMunicipio, ATipo_Logradouro, ALogradouro,
-         AUF, ABairro : String ) ; override ;
-end ;
+    Procedure BuscarPorCEP( ACEP : String ) ; override ;
+    Procedure BuscarPorLogradouro( AMunicipio, ATipo_Logradouro, ALogradouro,
+       AUF, ABairro : String ) ; override ;
+  end ;
 
-{ TACBrWSByJG }
+  { TACBrWSByJG }
 
-TACBrWSByJG = class(TACBrCEPWSClass)
-    private
-      FCepBusca: String;
-      FTipoBusca: Integer;
-      procedure ProcessaCEP;
-      procedure ProcessaLogradouro;
-      procedure ProcessaResposta ;
-    public
-      constructor Create( AOwner : TACBrCEP ) ; override ;
+  TACBrWSByJG = class(TACBrCEPWSClass)
+  private
+    FCepBusca: String;
+    FTipoBusca: Integer;
+    procedure ProcessaCEP;
+    procedure ProcessaLogradouro;
+    procedure ProcessaResposta ;
+  public
+    constructor Create( AOwner : TACBrCEP ) ; override ;
 
-      Procedure BuscarPorCEP( ACEP : String ) ; override ;
-      Procedure BuscarPorLogradouro( AMunicipio, ATipo_Logradouro, ALogradouro,
-         AUF, ABairro : String ) ; override ;
-end ;
+    Procedure BuscarPorCEP( ACEP : String ) ; override ;
+    Procedure BuscarPorLogradouro( AMunicipio, ATipo_Logradouro, ALogradouro,
+       AUF, ABairro : String ) ; override ;
+  end ;
+
+  { TACBrWSCorreios }
+
+  TACBrWSCorreios = class(TACBrCEPWSClass)
+  private
+    function  ExtractText(aText, OpenTag, CloseTag: String) : String;
+    procedure ProcessaResposta;
+  public
+    constructor Create( AOwner: TACBrCEP ); override ;
+
+    procedure BuscarPorCEP( ACEP: String ); override ;
+  end;
+
 
 implementation
 
@@ -335,6 +349,7 @@ begin
     wsRNSolucoes: fACBrCEPWS := TACBrWSRNSolucoes.Create(Self);
     wsKingHost: fACBrCEPWS := TACBrWSKingHost.Create(Self);
     wsByJG: fACBrCEPWS := TACBrWSByJG.Create(Self);
+    wsCorreios: fACBrCEPWS := TACBrWSCorreios.Create(Self);
   else
      fACBrCEPWS := TACBrCEPWSClass.Create( Self ) ;
   end ;
@@ -1051,6 +1066,88 @@ begin
 
   finally
     Buffer.Free;
+  end;
+end;
+
+{ TACBrWSCorreios }
+
+constructor TACBrWSCorreios.Create(AOwner: TACBrCEP);
+begin
+  inherited Create(AOwner);
+  fpURL := 'http://www.buscacep.correios.com.br/servicos/dnec/consultaEnderecoAction.do?' ;
+end;
+
+procedure TACBrWSCorreios.BuscarPorCEP(ACEP: String);
+var
+sParams: string;
+begin
+  ACEP := OnlyNumber( AnsiString( ACEP ) );
+  sParams := 'relaxation='+ACEP+'&TipoCep=ALL&cfm=1&Metodo=listaLogradouro&TipoConsulta=relaxation&StartRow=1&EndRow=100';
+  fOwner.HTTPGet(fpURL + sParams);
+  ProcessaResposta;
+end;
+
+procedure TACBrWSCorreios.ProcessaResposta;
+var
+iFor, iPos: Integer;
+sStr: string;
+begin
+  fOwner.fEnderecos.Clear;
+
+  with fOwner.Enderecos.New do
+  begin
+     iPos := 0;
+     for iFor := 0 to fOwner.RespHTTP.Count -1 do
+     begin
+        if Pos('Resultado superior a 100', fOwner.RespHTTP.Strings[iFor]) > 0 then
+           raise Exception.Create('Resultado superior a 100 registros');
+
+        sStr := Trim(ExtractText(fOwner.RespHTTP.Strings[iFor],'"padding: 2px">','</td>'));
+
+        if (sStr <> '') or (iPos > 0) then // count maior que zero é por causa desse cep {78075-990} que não retorna nome de rua
+        begin                              // pois é uma caixa postal comunitaria, pode ser que existam outras
+           Inc(iPos);
+           if iPos = 1 then
+           begin
+              Tipo_Logradouro := '';
+              Logradouro      := sStr;
+              Complemento     := '';
+           end
+           else
+           if iPos = 2 then
+              Bairro := sStr
+           else
+           if iPos = 3 then
+              Municipio := sStr
+           else
+           if iPos = 4 then
+              UF := sStr
+           else
+           if iPos = 5 then
+           begin
+              CEP  := sStr;
+              iPos := 0;
+           end;
+           IBGE_Municipio := '';
+        end;
+     end;
+  end;
+
+  if Assigned( fOwner.OnBuscaEfetuada ) then
+    fOwner.OnBuscaEfetuada( Self );
+end;
+
+function TACBrWSCorreios.ExtractText(aText, OpenTag, CloseTag: String) : String;
+var
+iAux, kAux : Integer;
+begin
+  Result := '';
+
+  if (Pos(CloseTag, aText) <> 0) and (Pos(OpenTag, aText) <> 0) then
+  begin
+    iAux := Pos(OpenTag, aText) + Length(OpenTag);
+    kAux := Pos(CloseTag, aText);
+    Result := Copy(aText, iAux, kAux-iAux);
   end;
 end;
 
