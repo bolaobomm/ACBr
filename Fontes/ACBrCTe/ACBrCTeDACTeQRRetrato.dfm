@@ -1,8 +1,8 @@
 inherited frmDACTeQRRetrato: TfrmDACTeQRRetrato
-  Left = 197
-  Top = 127
+  Left = 292
+  Top = 67
   Width = 835
-  Height = 854
+  Height = 780
   Caption = 'DACTe - Retrato'
   Font.Height = -8
   Font.Name = 'Arial'
@@ -31,7 +31,7 @@ inherited frmDACTeQRRetrato: TfrmDACTeQRRetrato
     Units = Native
     object qrb_08_Itens: TQRBand
       Left = 26
-      Top = 1016
+      Top = 984
       Width = 741
       Height = 13
       Frame.Color = clBlack
@@ -283,7 +283,7 @@ inherited frmDACTeQRRetrato: TfrmDACTeQRRetrato
         Frame.DrawLeft = False
         Frame.DrawRight = False
         Size.Values = (
-          34.395833333333340000
+          34.395833333333330000
           1206.500000000000000000
           5.291666666666667000
           132.291666666666700000)
@@ -318,8 +318,8 @@ inherited frmDACTeQRRetrato: TfrmDACTeQRRetrato
         Frame.DrawLeft = False
         Frame.DrawRight = False
         Size.Values = (
-          34.395833333333340000
-          232.833333333333400000
+          34.395833333333330000
+          232.833333333333300000
           5.291666666666667000
           132.291666666666700000)
         XLColumn = 0
@@ -633,7 +633,7 @@ inherited frmDACTeQRRetrato: TfrmDACTeQRRetrato
           39.687500000000000000
           1711.854166666667000000
           44.979166666666670000
-          68.791666666666680000)
+          68.791666666666670000)
         XLColumn = 0
         Alignment = taLeftJustify
         AlignToBand = False
@@ -699,7 +699,7 @@ inherited frmDACTeQRRetrato: TfrmDACTeQRRetrato
           34.395833333333340000
           1600.729166666667000000
           124.354166666666700000
-          76.729166666666680000)
+          76.729166666666670000)
         XLColumn = 0
         Alignment = taLeftJustify
         AlignToBand = False
@@ -767,7 +767,7 @@ inherited frmDACTeQRRetrato: TfrmDACTeQRRetrato
           34.395833333333340000
           15.875000000000000000
           55.562500000000000000
-          76.729166666666680000)
+          76.729166666666670000)
         XLColumn = 0
         Alignment = taLeftJustify
         AlignToBand = False
@@ -941,7 +941,7 @@ inherited frmDACTeQRRetrato: TfrmDACTeQRRetrato
     end
     object qrb_07_HeaderItens: TQRBand
       Left = 26
-      Top = 992
+      Top = 960
       Width = 741
       Height = 24
       Frame.Color = clBlack
@@ -1036,7 +1036,7 @@ inherited frmDACTeQRRetrato: TfrmDACTeQRRetrato
         Size.Values = (
           23.812500000000000000
           460.375000000000000000
-          42.333333333333340000
+          42.333333333333330000
           224.895833333333300000)
         XLColumn = 0
         Alignment = taLeftJustify
@@ -1068,8 +1068,8 @@ inherited frmDACTeQRRetrato: TfrmDACTeQRRetrato
         Frame.DrawRight = False
         Size.Values = (
           23.812500000000000000
-          232.833333333333400000
-          42.333333333333340000
+          232.833333333333300000
+          42.333333333333330000
           179.916666666666700000)
         XLColumn = 0
         Alignment = taLeftJustify
@@ -1102,8 +1102,8 @@ inherited frmDACTeQRRetrato: TfrmDACTeQRRetrato
         Size.Values = (
           23.812500000000000000
           13.229166666666670000
-          42.333333333333340000
-          74.083333333333340000)
+          42.333333333333330000
+          74.083333333333320000)
         XLColumn = 0
         Alignment = taLeftJustify
         AlignToBand = False
@@ -1167,9 +1167,9 @@ inherited frmDACTeQRRetrato: TfrmDACTeQRRetrato
         Frame.DrawRight = False
         Size.Values = (
           23.812500000000000000
-          986.895833333333400000
-          42.333333333333340000
-          74.083333333333340000)
+          986.895833333333200000
+          42.333333333333330000
+          74.083333333333320000)
         XLColumn = 0
         Alignment = taLeftJustify
         AlignToBand = False
@@ -1201,7 +1201,7 @@ inherited frmDACTeQRRetrato: TfrmDACTeQRRetrato
         Size.Values = (
           23.812500000000000000
           1206.500000000000000000
-          42.333333333333340000
+          42.333333333333330000
           179.916666666666700000)
         XLColumn = 0
         Alignment = taLeftJustify
@@ -1234,7 +1234,7 @@ inherited frmDACTeQRRetrato: TfrmDACTeQRRetrato
         Size.Values = (
           23.812500000000000000
           1434.041666666667000000
-          42.333333333333340000
+          42.333333333333330000
           224.895833333333300000)
         XLColumn = 0
         Alignment = taLeftJustify
@@ -1257,7 +1257,7 @@ inherited frmDACTeQRRetrato: TfrmDACTeQRRetrato
     end
     object qrb_09_Obs: TQRBand
       Left = 26
-      Top = 1029
+      Top = 997
       Width = 741
       Height = 72
       Frame.Color = clBlack
@@ -1440,7 +1440,7 @@ inherited frmDACTeQRRetrato: TfrmDACTeQRRetrato
       ForceNewColumn = False
       ForceNewPage = False
       Size.Values = (
-        537.104166666666800000
+        537.104166666666700000
         1960.562500000000000000)
       PreCaluculateBandHeight = False
       KeepOnOnePage = False
@@ -2905,7 +2905,7 @@ inherited frmDACTeQRRetrato: TfrmDACTeQRRetrato
     end
     object qrb_10_ModRodFracionado: TQRChildBand
       Left = 26
-      Top = 1101
+      Top = 1069
       Width = 741
       Height = 44
       Frame.Color = clBlack
@@ -3071,9 +3071,9 @@ inherited frmDACTeQRRetrato: TfrmDACTeQRRetrato
         Frame.DrawLeft = False
         Frame.DrawRight = False
         Size.Values = (
-          34.395833333333340000
+          34.395833333333330000
           15.875000000000000000
-          66.145833333333340000
+          66.145833333333320000
           171.979166666666700000)
         XLColumn = 0
         Alignment = taLeftJustify
@@ -3137,9 +3137,9 @@ inherited frmDACTeQRRetrato: TfrmDACTeQRRetrato
         Frame.DrawLeft = False
         Frame.DrawRight = False
         Size.Values = (
-          34.395833333333340000
-          518.583333333333400000
-          66.145833333333340000
+          34.395833333333330000
+          518.583333333333300000
+          66.145833333333320000
           185.208333333333300000)
         XLColumn = 0
         Alignment = taLeftJustify
@@ -3206,9 +3206,9 @@ inherited frmDACTeQRRetrato: TfrmDACTeQRRetrato
         Frame.DrawRight = False
         Size.Values = (
           23.812500000000000000
-          518.583333333333400000
-          42.333333333333340000
-          264.583333333333400000)
+          518.583333333333300000
+          42.333333333333330000
+          264.583333333333300000)
         XLColumn = 0
         Alignment = taLeftJustify
         AlignToBand = False
@@ -3239,9 +3239,9 @@ inherited frmDACTeQRRetrato: TfrmDACTeQRRetrato
         Frame.DrawRight = False
         Size.Values = (
           23.812500000000000000
-          407.458333333333400000
-          42.333333333333340000
-          89.958333333333340000)
+          407.458333333333300000
+          42.333333333333330000
+          89.958333333333320000)
         XLColumn = 0
         Alignment = taLeftJustify
         AlignToBand = False
@@ -3273,7 +3273,7 @@ inherited frmDACTeQRRetrato: TfrmDACTeQRRetrato
         Size.Values = (
           23.812500000000000000
           15.875000000000000000
-          42.333333333333340000
+          42.333333333333330000
           187.854166666666700000)
         XLColumn = 0
         Alignment = taLeftJustify
@@ -3306,7 +3306,7 @@ inherited frmDACTeQRRetrato: TfrmDACTeQRRetrato
         Size.Values = (
           23.812500000000000000
           222.250000000000000000
-          42.333333333333340000
+          42.333333333333330000
           44.979166666666670000)
         XLColumn = 0
         Alignment = taLeftJustify
@@ -3337,9 +3337,9 @@ inherited frmDACTeQRRetrato: TfrmDACTeQRRetrato
         Frame.DrawLeft = False
         Frame.DrawRight = False
         Size.Values = (
-          34.395833333333340000
+          34.395833333333330000
           222.250000000000000000
-          66.145833333333340000
+          66.145833333333320000
           87.312500000000000000)
         XLColumn = 0
         Alignment = taLeftJustify
@@ -3382,7 +3382,7 @@ inherited frmDACTeQRRetrato: TfrmDACTeQRRetrato
     end
     object qrb_11_ModRodLot103: TQRChildBand
       Left = 26
-      Top = 1145
+      Top = 1113
       Width = 741
       Height = 108
       Frame.Color = clBlack
@@ -6372,7 +6372,7 @@ inherited frmDACTeQRRetrato: TfrmDACTeQRRetrato
         Frame.DrawRight = False
         Size.Values = (
           23.812500000000000000
-          989.541666666666800000
+          989.541666666666700000
           293.687500000000000000
           113.770833333333300000)
         XLColumn = 0
@@ -6405,7 +6405,7 @@ inherited frmDACTeQRRetrato: TfrmDACTeQRRetrato
         Frame.DrawRight = False
         Size.Values = (
           23.812500000000000000
-          751.416666666666800000
+          751.416666666666700000
           206.375000000000000000
           37.041666666666670000)
         XLColumn = 0
@@ -6438,7 +6438,7 @@ inherited frmDACTeQRRetrato: TfrmDACTeQRRetrato
         Frame.DrawRight = False
         Size.Values = (
           23.812500000000000000
-          989.541666666666800000
+          989.541666666666700000
           449.791666666666700000
           97.895833333333340000)
         XLColumn = 0
@@ -6834,7 +6834,7 @@ inherited frmDACTeQRRetrato: TfrmDACTeQRRetrato
         Frame.DrawRight = False
         Size.Values = (
           23.812500000000000000
-          989.541666666666800000
+          989.541666666666700000
           254.000000000000000000
           42.333333333333340000)
         XLColumn = 0
@@ -6867,7 +6867,7 @@ inherited frmDACTeQRRetrato: TfrmDACTeQRRetrato
         Frame.DrawRight = False
         Size.Values = (
           23.812500000000000000
-          989.541666666666800000
+          989.541666666666700000
           230.187500000000000000
           87.312500000000000000)
         XLColumn = 0
@@ -6900,7 +6900,7 @@ inherited frmDACTeQRRetrato: TfrmDACTeQRRetrato
         Frame.DrawRight = False
         Size.Values = (
           23.812500000000000000
-          989.541666666666800000
+          989.541666666666700000
           206.375000000000000000
           97.895833333333340000)
         XLColumn = 0
@@ -6933,7 +6933,7 @@ inherited frmDACTeQRRetrato: TfrmDACTeQRRetrato
         Frame.DrawRight = False
         Size.Values = (
           23.812500000000000000
-          989.541666666666800000
+          989.541666666666700000
           164.041666666666700000
           100.541666666666700000)
         XLColumn = 0
@@ -6999,7 +6999,7 @@ inherited frmDACTeQRRetrato: TfrmDACTeQRRetrato
         Frame.DrawRight = False
         Size.Values = (
           23.812500000000000000
-          989.541666666666800000
+          989.541666666666700000
           142.875000000000000000
           134.937500000000000000)
         XLColumn = 0
@@ -7164,7 +7164,7 @@ inherited frmDACTeQRRetrato: TfrmDACTeQRRetrato
         Frame.DrawRight = False
         Size.Values = (
           23.812500000000000000
-          989.541666666666800000
+          989.541666666666700000
           74.083333333333340000
           224.895833333333300000)
         XLColumn = 0
@@ -7494,7 +7494,7 @@ inherited frmDACTeQRRetrato: TfrmDACTeQRRetrato
         Frame.DrawRight = False
         Size.Values = (
           23.812500000000000000
-          989.541666666666800000
+          989.541666666666700000
           492.125000000000000000
           50.270833333333330000)
         XLColumn = 0
@@ -7527,7 +7527,7 @@ inherited frmDACTeQRRetrato: TfrmDACTeQRRetrato
         Frame.DrawRight = False
         Size.Values = (
           23.812500000000000000
-          751.416666666666800000
+          751.416666666666700000
           357.187500000000000000
           37.041666666666670000)
         XLColumn = 0
@@ -7659,7 +7659,7 @@ inherited frmDACTeQRRetrato: TfrmDACTeQRRetrato
         Frame.DrawRight = False
         Size.Values = (
           23.812500000000000000
-          989.541666666666800000
+          989.541666666666700000
           404.812500000000000000
           42.333333333333340000)
         XLColumn = 0
@@ -7692,7 +7692,7 @@ inherited frmDACTeQRRetrato: TfrmDACTeQRRetrato
         Frame.DrawRight = False
         Size.Values = (
           23.812500000000000000
-          989.541666666666800000
+          989.541666666666700000
           381.000000000000000000
           87.312500000000000000)
         XLColumn = 0
@@ -7725,7 +7725,7 @@ inherited frmDACTeQRRetrato: TfrmDACTeQRRetrato
         Frame.DrawRight = False
         Size.Values = (
           23.812500000000000000
-          989.541666666666800000
+          989.541666666666700000
           357.187500000000000000
           97.895833333333340000)
         XLColumn = 0
@@ -7758,7 +7758,7 @@ inherited frmDACTeQRRetrato: TfrmDACTeQRRetrato
         Frame.DrawRight = False
         Size.Values = (
           23.812500000000000000
-          989.541666666666800000
+          989.541666666666700000
           314.854166666666700000
           100.541666666666700000)
         XLColumn = 0
@@ -7784,7 +7784,7 @@ inherited frmDACTeQRRetrato: TfrmDACTeQRRetrato
       Left = 26
       Top = 666
       Width = 741
-      Height = 114
+      Height = 82
       Frame.Color = clBlack
       Frame.DrawTop = False
       Frame.DrawBottom = False
@@ -7797,7 +7797,7 @@ inherited frmDACTeQRRetrato: TfrmDACTeQRRetrato
       ForceNewColumn = False
       ForceNewPage = False
       Size.Values = (
-        301.625000000000000000
+        216.958333333333400000
         1960.562500000000000000)
       PreCaluculateBandHeight = False
       KeepOnOnePage = False
@@ -7807,14 +7807,14 @@ inherited frmDACTeQRRetrato: TfrmDACTeQRRetrato
         Left = 0
         Top = 0
         Width = 741
-        Height = 113
+        Height = 81
         Frame.Color = clBlack
         Frame.DrawTop = False
         Frame.DrawBottom = False
         Frame.DrawLeft = False
         Frame.DrawRight = False
         Size.Values = (
-          298.979166666666700000
+          214.312500000000000000
           0.000000000000000000
           0.000000000000000000
           1960.562500000000000000)
@@ -7845,18 +7845,18 @@ inherited frmDACTeQRRetrato: TfrmDACTeQRRetrato
       end
       object QRShape8: TQRShape
         Left = 632
-        Top = 66
+        Top = 50
         Width = 1
-        Height = 46
+        Height = 30
         Frame.Color = clBlack
         Frame.DrawTop = False
         Frame.DrawBottom = False
         Frame.DrawLeft = False
         Frame.DrawRight = False
         Size.Values = (
-          121.708333333333300000
+          79.375000000000000000
           1672.166666666667000000
-          174.625000000000000000
+          132.291666666666700000
           2.645833333333333000)
         XLColumn = 0
         Brush.Style = bsClear
@@ -7865,18 +7865,18 @@ inherited frmDACTeQRRetrato: TfrmDACTeQRRetrato
       end
       object QRShape7: TQRShape
         Left = 526
-        Top = 66
+        Top = 50
         Width = 1
-        Height = 46
+        Height = 30
         Frame.Color = clBlack
         Frame.DrawTop = False
         Frame.DrawBottom = False
         Frame.DrawLeft = False
         Frame.DrawRight = False
         Size.Values = (
-          121.708333333333300000
+          79.375000000000000000
           1391.708333333333000000
-          174.625000000000000000
+          132.291666666666700000
           2.645833333333333000)
         XLColumn = 0
         Brush.Style = bsClear
@@ -7885,7 +7885,7 @@ inherited frmDACTeQRRetrato: TfrmDACTeQRRetrato
       end
       object QRShape62: TQRShape
         Left = 414
-        Top = 66
+        Top = 50
         Width = 326
         Height = 1
         Frame.Color = clBlack
@@ -7896,7 +7896,7 @@ inherited frmDACTeQRRetrato: TfrmDACTeQRRetrato
         Size.Values = (
           2.645833333333333000
           1095.375000000000000000
-          174.625000000000000000
+          132.291666666666700000
           862.541666666666900000)
         XLColumn = 0
         Brush.Style = bsClear
@@ -7907,14 +7907,14 @@ inherited frmDACTeQRRetrato: TfrmDACTeQRRetrato
         Left = 414
         Top = 26
         Width = 1
-        Height = 86
+        Height = 54
         Frame.Color = clBlack
         Frame.DrawTop = False
         Frame.DrawBottom = False
         Frame.DrawLeft = False
         Frame.DrawRight = False
         Size.Values = (
-          227.541666666666700000
+          142.875000000000000000
           1095.375000000000000000
           68.791666666666680000
           2.645833333333333000)
@@ -7927,14 +7927,14 @@ inherited frmDACTeQRRetrato: TfrmDACTeQRRetrato
         Left = 324
         Top = 26
         Width = 1
-        Height = 86
+        Height = 54
         Frame.Color = clBlack
         Frame.DrawTop = False
         Frame.DrawBottom = False
         Frame.DrawLeft = False
         Frame.DrawRight = False
         Size.Values = (
-          227.541666666666700000
+          142.875000000000000000
           857.250000000000000000
           68.791666666666680000
           2.645833333333333000)
@@ -7947,14 +7947,14 @@ inherited frmDACTeQRRetrato: TfrmDACTeQRRetrato
         Left = 164
         Top = 26
         Width = 1
-        Height = 86
+        Height = 54
         Frame.Color = clBlack
         Frame.DrawTop = False
         Frame.DrawBottom = False
         Frame.DrawLeft = False
         Frame.DrawRight = False
         Size.Values = (
-          227.541666666666700000
+          142.875000000000000000
           433.916666666666800000
           68.791666666666680000
           2.645833333333333000)
@@ -7967,14 +7967,14 @@ inherited frmDACTeQRRetrato: TfrmDACTeQRRetrato
         Left = 84
         Top = 26
         Width = 1
-        Height = 86
+        Height = 54
         Frame.Color = clBlack
         Frame.DrawTop = False
         Frame.DrawBottom = False
         Frame.DrawLeft = False
         Frame.DrawRight = False
         Size.Values = (
-          227.541666666666700000
+          142.875000000000000000
           222.250000000000000000
           68.791666666666680000
           2.645833333333333000)
@@ -8027,14 +8027,14 @@ inherited frmDACTeQRRetrato: TfrmDACTeQRRetrato
         Left = 328
         Top = 37
         Width = 84
-        Height = 68
+        Height = 40
         Frame.Color = clBlack
         Frame.DrawTop = False
         Frame.DrawBottom = False
         Frame.DrawLeft = False
         Frame.DrawRight = False
         Size.Values = (
-          179.916666666666700000
+          105.833333333333300000
           867.833333333333500000
           97.895833333333340000
           222.250000000000000000)
@@ -8063,14 +8063,14 @@ inherited frmDACTeQRRetrato: TfrmDACTeQRRetrato
         Left = 166
         Top = 37
         Width = 76
-        Height = 68
+        Height = 40
         Frame.Color = clBlack
         Frame.DrawTop = False
         Frame.DrawBottom = False
         Frame.DrawLeft = False
         Frame.DrawRight = False
         Size.Values = (
-          179.916666666666700000
+          105.833333333333300000
           439.208333333333400000
           97.895833333333340000
           201.083333333333300000)
@@ -8099,14 +8099,14 @@ inherited frmDACTeQRRetrato: TfrmDACTeQRRetrato
         Left = 86
         Top = 37
         Width = 76
-        Height = 68
+        Height = 40
         Frame.Color = clBlack
         Frame.DrawTop = False
         Frame.DrawBottom = False
         Frame.DrawLeft = False
         Frame.DrawRight = False
         Size.Values = (
-          179.916666666666700000
+          105.833333333333300000
           227.541666666666700000
           97.895833333333340000
           201.083333333333300000)
@@ -8135,14 +8135,14 @@ inherited frmDACTeQRRetrato: TfrmDACTeQRRetrato
         Left = 5
         Top = 37
         Width = 76
-        Height = 68
+        Height = 40
         Frame.Color = clBlack
         Frame.DrawTop = False
         Frame.DrawBottom = False
         Frame.DrawLeft = False
         Frame.DrawRight = False
         Size.Values = (
-          179.916666666666700000
+          105.833333333333300000
           13.229166666666670000
           97.895833333333340000
           201.083333333333300000)
@@ -8194,6 +8194,39 @@ inherited frmDACTeQRRetrato: TfrmDACTeQRRetrato
         Font.Height = -9
         Font.Name = 'Times New Roman'
         Font.Style = [fsBold]
+        ParentFont = False
+        Transparent = True
+        WordWrap = True
+        ExportAs = exptText
+        FontSize = 7
+      end
+      object qrlRespSeguroMerc: TQRLabel
+        Left = 416
+        Top = 64
+        Width = 108
+        Height = 13
+        Frame.Color = clBlack
+        Frame.DrawTop = False
+        Frame.DrawBottom = False
+        Frame.DrawLeft = False
+        Frame.DrawRight = False
+        Size.Values = (
+          34.395833333333340000
+          1100.666666666667000000
+          169.333333333333300000
+          285.750000000000000000)
+        XLColumn = 0
+        Alignment = taLeftJustify
+        AlignToBand = False
+        AutoSize = False
+        AutoStretch = False
+        Caption = 'qrlRespSeguroMerc'
+        Color = clWhite
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWindowText
+        Font.Height = -9
+        Font.Name = 'Times New Roman'
+        Font.Style = []
         ParentFont = False
         Transparent = True
         WordWrap = True
@@ -8262,6 +8295,105 @@ inherited frmDACTeQRRetrato: TfrmDACTeQRRetrato
         Font.Style = []
         ParentFont = False
         Transparent = True
+        WordWrap = True
+        ExportAs = exptText
+        FontSize = 7
+      end
+      object qrlNroAverbacao: TQRLabel
+        Left = 634
+        Top = 64
+        Width = 102
+        Height = 13
+        Frame.Color = clBlack
+        Frame.DrawTop = False
+        Frame.DrawBottom = False
+        Frame.DrawLeft = False
+        Frame.DrawRight = False
+        Size.Values = (
+          34.395833333333340000
+          1677.458333333333000000
+          169.333333333333300000
+          269.875000000000000000)
+        XLColumn = 0
+        Alignment = taLeftJustify
+        AlignToBand = False
+        AutoSize = False
+        AutoStretch = False
+        Caption = 'qrlNroAverbacao'
+        Color = clWhite
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWindowText
+        Font.Height = -9
+        Font.Name = 'Times New Roman'
+        Font.Style = []
+        ParentFont = False
+        Transparent = True
+        WordWrap = True
+        ExportAs = exptText
+        FontSize = 7
+      end
+      object qrlNroApolice: TQRLabel
+        Left = 528
+        Top = 64
+        Width = 102
+        Height = 13
+        Frame.Color = clBlack
+        Frame.DrawTop = False
+        Frame.DrawBottom = False
+        Frame.DrawLeft = False
+        Frame.DrawRight = False
+        Size.Values = (
+          34.395833333333340000
+          1397.000000000000000000
+          169.333333333333300000
+          269.875000000000000000)
+        XLColumn = 0
+        Alignment = taLeftJustify
+        AlignToBand = False
+        AutoSize = False
+        AutoStretch = False
+        Caption = 'qrlNroApolice'
+        Color = clWhite
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWindowText
+        Font.Height = -9
+        Font.Name = 'Times New Roman'
+        Font.Style = []
+        ParentFont = False
+        Transparent = True
+        WordWrap = True
+        ExportAs = exptText
+        FontSize = 7
+      end
+      object qrlNomeSeguradora: TQRLabel
+        Left = 418
+        Top = 35
+        Width = 319
+        Height = 13
+        Frame.Color = clBlack
+        Frame.DrawTop = False
+        Frame.DrawBottom = False
+        Frame.DrawLeft = False
+        Frame.DrawRight = False
+        Size.Values = (
+          34.395833333333340000
+          1105.958333333333000000
+          92.604166666666680000
+          844.020833333333500000)
+        XLColumn = 0
+        Alignment = taLeftJustify
+        AlignToBand = False
+        AutoSize = False
+        AutoStretch = False
+        Caption = 'qrlNomeSeguradora'
+        Color = clWhite
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWindowText
+        Font.Height = -9
+        Font.Name = 'Times New Roman'
+        Font.Style = []
+        ParentFont = False
+        Transparent = False
         WordWrap = True
         ExportAs = exptText
         FontSize = 7
@@ -8367,7 +8499,7 @@ inherited frmDACTeQRRetrato: TfrmDACTeQRRetrato
       end
       object QRLabel40: TQRLabel
         Left = 634
-        Top = 70
+        Top = 54
         Width = 89
         Height = 9
         Frame.Color = clBlack
@@ -8378,7 +8510,7 @@ inherited frmDACTeQRRetrato: TfrmDACTeQRRetrato
         Size.Values = (
           23.812500000000000000
           1677.458333333333000000
-          185.208333333333300000
+          142.875000000000000000
           235.479166666666700000)
         XLColumn = 0
         Alignment = taLeftJustify
@@ -8433,7 +8565,7 @@ inherited frmDACTeQRRetrato: TfrmDACTeQRRetrato
       end
       object QRLabel39: TQRLabel
         Left = 528
-        Top = 70
+        Top = 54
         Width = 74
         Height = 9
         Frame.Color = clBlack
@@ -8444,7 +8576,7 @@ inherited frmDACTeQRRetrato: TfrmDACTeQRRetrato
         Size.Values = (
           23.812500000000000000
           1397.000000000000000000
-          185.208333333333300000
+          142.875000000000000000
           195.791666666666700000)
         XLColumn = 0
         Alignment = taLeftJustify
@@ -8466,7 +8598,7 @@ inherited frmDACTeQRRetrato: TfrmDACTeQRRetrato
       end
       object QRLabel37: TQRLabel
         Left = 416
-        Top = 70
+        Top = 54
         Width = 50
         Height = 9
         Frame.Color = clBlack
@@ -8477,7 +8609,7 @@ inherited frmDACTeQRRetrato: TfrmDACTeQRRetrato
         Size.Values = (
           23.812500000000000000
           1100.666666666667000000
-          185.208333333333300000
+          142.875000000000000000
           132.291666666666700000)
         XLColumn = 0
         Alignment = taLeftJustify
@@ -8633,14 +8765,14 @@ inherited frmDACTeQRRetrato: TfrmDACTeQRRetrato
         Left = 246
         Top = 37
         Width = 76
-        Height = 68
+        Height = 40
         Frame.Color = clBlack
         Frame.DrawTop = False
         Frame.DrawBottom = False
         Frame.DrawLeft = False
         Frame.DrawRight = False
         Size.Values = (
-          179.916666666666700000
+          105.833333333333300000
           650.875000000000000000
           97.895833333333340000
           201.083333333333300000)
@@ -8702,14 +8834,14 @@ inherited frmDACTeQRRetrato: TfrmDACTeQRRetrato
         Left = 244
         Top = 26
         Width = 1
-        Height = 86
+        Height = 54
         Frame.Color = clBlack
         Frame.DrawTop = False
         Frame.DrawBottom = False
         Frame.DrawLeft = False
         Frame.DrawRight = False
         Size.Values = (
-          227.541666666666700000
+          142.875000000000000000
           645.583333333333400000
           68.791666666666680000
           2.645833333333333000)
@@ -8718,150 +8850,10 @@ inherited frmDACTeQRRetrato: TfrmDACTeQRRetrato
         Shape = qrsRectangle
         VertAdjust = 0
       end
-      object qrmNomeSeguradora: TQRMemo
-        Left = 418
-        Top = 37
-        Width = 319
-        Height = 28
-        Frame.Color = clBlack
-        Frame.DrawTop = False
-        Frame.DrawBottom = False
-        Frame.DrawLeft = False
-        Frame.DrawRight = False
-        Size.Values = (
-          74.083333333333340000
-          1105.958333333333000000
-          97.895833333333340000
-          844.020833333333500000)
-        XLColumn = 0
-        Alignment = taLeftJustify
-        AlignToBand = False
-        AutoSize = False
-        AutoStretch = False
-        Color = clWhite
-        Font.Charset = DEFAULT_CHARSET
-        Font.Color = clWindowText
-        Font.Height = -7
-        Font.Name = 'Times New Roman'
-        Font.Style = []
-        Lines.Strings = (
-          'Seguradora 1'
-          'Seguradora 2')
-        ParentFont = False
-        Transparent = True
-        WordWrap = True
-        FullJustify = False
-        FontSize = 5
-      end
-      object qrmRespSeguroMerc: TQRMemo
-        Left = 416
-        Top = 80
-        Width = 108
-        Height = 30
-        Frame.Color = clBlack
-        Frame.DrawTop = False
-        Frame.DrawBottom = False
-        Frame.DrawLeft = False
-        Frame.DrawRight = False
-        Size.Values = (
-          79.375000000000000000
-          1100.666666666667000000
-          211.666666666666700000
-          285.750000000000000000)
-        XLColumn = 0
-        Alignment = taLeftJustify
-        AlignToBand = False
-        AutoSize = False
-        AutoStretch = False
-        Color = clWhite
-        Font.Charset = DEFAULT_CHARSET
-        Font.Color = clWindowText
-        Font.Height = -7
-        Font.Name = 'Times New Roman'
-        Font.Style = []
-        Lines.Strings = (
-          'Resp Seguro 1'
-          'Resp Seguro 2')
-        ParentFont = False
-        Transparent = True
-        WordWrap = True
-        FullJustify = False
-        FontSize = 5
-      end
-      object qrmNroApolice: TQRMemo
-        Left = 528
-        Top = 80
-        Width = 102
-        Height = 30
-        Frame.Color = clBlack
-        Frame.DrawTop = False
-        Frame.DrawBottom = False
-        Frame.DrawLeft = False
-        Frame.DrawRight = False
-        Size.Values = (
-          79.375000000000000000
-          1397.000000000000000000
-          211.666666666666700000
-          269.875000000000000000)
-        XLColumn = 0
-        Alignment = taLeftJustify
-        AlignToBand = False
-        AutoSize = False
-        AutoStretch = False
-        Color = clWhite
-        Font.Charset = DEFAULT_CHARSET
-        Font.Color = clWindowText
-        Font.Height = -7
-        Font.Name = 'Times New Roman'
-        Font.Style = []
-        Lines.Strings = (
-          'Nro Apolice 1'
-          'Nro Apolice 2')
-        ParentFont = False
-        Transparent = True
-        WordWrap = True
-        FullJustify = False
-        FontSize = 5
-      end
-      object qrmNroAverbacao: TQRMemo
-        Left = 634
-        Top = 80
-        Width = 102
-        Height = 30
-        Frame.Color = clBlack
-        Frame.DrawTop = False
-        Frame.DrawBottom = False
-        Frame.DrawLeft = False
-        Frame.DrawRight = False
-        Size.Values = (
-          79.375000000000000000
-          1677.458333333333000000
-          211.666666666666700000
-          269.875000000000000000)
-        XLColumn = 0
-        Alignment = taLeftJustify
-        AlignToBand = False
-        AutoSize = False
-        AutoStretch = False
-        Color = clWhite
-        Font.Charset = DEFAULT_CHARSET
-        Font.Color = clWindowText
-        Font.Height = -7
-        Font.Name = 'Times New Roman'
-        Font.Style = []
-        Lines.Strings = (
-          'Nro Averbacao 1'
-          'Nro Averbacao 2')
-        ParentFont = False
-        Transparent = True
-        WordWrap = True
-        FullJustify = False
-        FontSize = 5
-      end
     end
     object qrb_05_Complemento: TQRChildBand
       Left = 26
-      Top = 780
+      Top = 748
       Width = 741
       Height = 96
       Frame.Color = clBlack
@@ -9136,9 +9128,9 @@ inherited frmDACTeQRRetrato: TfrmDACTeQRRetrato
         Frame.DrawRight = False
         Size.Values = (
           23.812500000000000000
-          997.479166666666900000
+          997.479166666666800000
           47.625000000000000000
-          312.208333333333400000)
+          312.208333333333300000)
         XLColumn = 0
         Alignment = taLeftJustify
         AlignToBand = False
@@ -9169,7 +9161,7 @@ inherited frmDACTeQRRetrato: TfrmDACTeQRRetrato
         Frame.DrawRight = False
         Size.Values = (
           23.812500000000000000
-          740.833333333333400000
+          740.833333333333200000
           47.625000000000000000
           235.479166666666700000)
         XLColumn = 0
@@ -9204,7 +9196,7 @@ inherited frmDACTeQRRetrato: TfrmDACTeQRRetrato
           23.812500000000000000
           13.229166666666670000
           47.625000000000000000
-          312.208333333333400000)
+          312.208333333333300000)
         XLColumn = 0
         Alignment = taLeftJustify
         AlignToBand = False
@@ -9259,7 +9251,7 @@ inherited frmDACTeQRRetrato: TfrmDACTeQRRetrato
     end
     object qrb_17_Sistema: TQRChildBand
       Left = 26
-      Top = 1629
+      Top = 1613
       Width = 741
       Height = 16
       Frame.Color = clBlack
@@ -9380,9 +9372,9 @@ inherited frmDACTeQRRetrato: TfrmDACTeQRRetrato
     end
     object qrb_16_DadosExcEmitente: TQRChildBand
       Left = 26
-      Top = 1560
+      Top = 1528
       Width = 741
-      Height = 69
+      Height = 85
       Frame.Color = clBlack
       Frame.DrawTop = False
       Frame.DrawBottom = False
@@ -9395,7 +9387,7 @@ inherited frmDACTeQRRetrato: TfrmDACTeQRRetrato
       ForceNewColumn = False
       ForceNewPage = False
       Size.Values = (
-        182.562500000000000000
+        224.895833333333300000
         1960.562500000000000000)
       PreCaluculateBandHeight = False
       KeepOnOnePage = False
@@ -9405,14 +9397,14 @@ inherited frmDACTeQRRetrato: TfrmDACTeQRRetrato
         Left = 0
         Top = 0
         Width = 741
-        Height = 68
+        Height = 84
         Frame.Color = clBlack
         Frame.DrawTop = False
         Frame.DrawBottom = False
         Frame.DrawLeft = False
         Frame.DrawRight = False
         Size.Values = (
-          179.916666666666700000
+          222.250000000000000000
           0.000000000000000000
           0.000000000000000000
           1960.562500000000000000)
@@ -9491,14 +9483,14 @@ inherited frmDACTeQRRetrato: TfrmDACTeQRRetrato
         Left = 5
         Top = 16
         Width = 492
-        Height = 49
+        Height = 65
         Frame.Color = clBlack
         Frame.DrawTop = False
         Frame.DrawBottom = False
         Frame.DrawLeft = False
         Frame.DrawRight = False
         Size.Values = (
-          129.645833333333300000
+          171.979166666666700000
           13.229166666666670000
           42.333333333333340000
           1301.750000000000000000)
@@ -9547,14 +9539,14 @@ inherited frmDACTeQRRetrato: TfrmDACTeQRRetrato
         Left = 500
         Top = 0
         Width = 1
-        Height = 68
+        Height = 84
         Frame.Color = clBlack
         Frame.DrawTop = False
         Frame.DrawBottom = False
         Frame.DrawLeft = False
         Frame.DrawRight = False
         Size.Values = (
-          179.916666666666700000
+          222.250000000000000000
           1322.916666666667000000
           0.000000000000000000
           2.645833333333333000)
@@ -9567,14 +9559,14 @@ inherited frmDACTeQRRetrato: TfrmDACTeQRRetrato
         Left = 509
         Top = 16
         Width = 228
-        Height = 49
+        Height = 65
         Frame.Color = clBlack
         Frame.DrawTop = False
         Frame.DrawBottom = False
         Frame.DrawLeft = False
         Frame.DrawRight = False
         Size.Values = (
-          129.645833333333300000
+          171.979166666666700000
           1346.729166666667000000
           42.333333333333340000
           603.250000000000000000)
@@ -9601,7 +9593,7 @@ inherited frmDACTeQRRetrato: TfrmDACTeQRRetrato
     end
     object qrb_06_ValorPrestacao: TQRChildBand
       Left = 26
-      Top = 876
+      Top = 844
       Width = 741
       Height = 116
       Frame.Color = clBlack
@@ -10386,7 +10378,7 @@ inherited frmDACTeQRRetrato: TfrmDACTeQRRetrato
           23.812500000000000000
           1735.666666666667000000
           248.708333333333300000
-          74.083333333333340000)
+          74.083333333333320000)
         XLColumn = 0
         Alignment = taLeftJustify
         AlignToBand = False
@@ -10683,7 +10675,7 @@ inherited frmDACTeQRRetrato: TfrmDACTeQRRetrato
           23.812500000000000000
           1397.000000000000000000
           47.625000000000000000
-          66.145833333333340000)
+          66.145833333333320000)
         XLColumn = 0
         Alignment = taLeftJustify
         AlignToBand = False
@@ -10714,7 +10706,7 @@ inherited frmDACTeQRRetrato: TfrmDACTeQRRetrato
         Frame.DrawRight = False
         Size.Values = (
           23.812500000000000000
-          997.479166666666900000
+          997.479166666666800000
           47.625000000000000000
           55.562500000000000000)
         XLColumn = 0
@@ -10749,7 +10741,7 @@ inherited frmDACTeQRRetrato: TfrmDACTeQRRetrato
           23.812500000000000000
           412.750000000000000000
           47.625000000000000000
-          66.145833333333340000)
+          66.145833333333320000)
         XLColumn = 0
         Alignment = taLeftJustify
         AlignToBand = False
@@ -10782,7 +10774,7 @@ inherited frmDACTeQRRetrato: TfrmDACTeQRRetrato
           23.812500000000000000
           904.875000000000000000
           47.625000000000000000
-          66.145833333333340000)
+          66.145833333333320000)
         XLColumn = 0
         Alignment = taLeftJustify
         AlignToBand = False
@@ -10846,7 +10838,7 @@ inherited frmDACTeQRRetrato: TfrmDACTeQRRetrato
         Frame.DrawRight = False
         Size.Values = (
           23.812500000000000000
-          502.708333333333400000
+          502.708333333333300000
           47.625000000000000000
           55.562500000000000000)
         XLColumn = 0
@@ -10903,7 +10895,7 @@ inherited frmDACTeQRRetrato: TfrmDACTeQRRetrato
     end
     object qrb_12_ModAereo: TQRChildBand
       Left = 26
-      Top = 1361
+      Top = 1329
       Width = 741
       Height = 97
       Frame.Color = clBlack
@@ -12027,7 +12019,7 @@ inherited frmDACTeQRRetrato: TfrmDACTeQRRetrato
     end
     object qrb_13_ModAquaviario: TQRChildBand
       Left = 26
-      Top = 1458
+      Top = 1426
       Width = 741
       Height = 90
       Frame.Color = clBlack
@@ -12841,7 +12833,7 @@ inherited frmDACTeQRRetrato: TfrmDACTeQRRetrato
     end
     object qrb_14_ModFerroviario: TQRChildBand
       Left = 26
-      Top = 1548
+      Top = 1516
       Width = 741
       Height = 6
       Frame.Color = clBlack
@@ -12865,7 +12857,7 @@ inherited frmDACTeQRRetrato: TfrmDACTeQRRetrato
     end
     object qrb_15_ModDutoviario: TQRChildBand
       Left = 26
-      Top = 1554
+      Top = 1522
       Width = 741
       Height = 6
       Frame.Color = clBlack
@@ -13018,7 +13010,7 @@ inherited frmDACTeQRRetrato: TfrmDACTeQRRetrato
           34.395833333333340000
           15.875000000000000000
           211.666666666666700000
-          76.729166666666680000)
+          76.729166666666670000)
         XLColumn = 0
         Alignment = taLeftJustify
         AlignToBand = False
@@ -13301,9 +13293,9 @@ inherited frmDACTeQRRetrato: TfrmDACTeQRRetrato
         Frame.DrawRight = False
         Size.Values = (
           34.395833333333340000
-          989.541666666666800000
+          989.541666666666700000
           211.666666666666700000
-          76.729166666666680000)
+          76.729166666666670000)
         XLColumn = 0
         Alignment = taLeftJustify
         AlignToBand = False
@@ -13334,7 +13326,7 @@ inherited frmDACTeQRRetrato: TfrmDACTeQRRetrato
         Frame.DrawRight = False
         Size.Values = (
           34.395833333333340000
-          989.541666666666800000
+          989.541666666666700000
           288.395833333333400000
           37.041666666666670000)
         XLColumn = 0
@@ -13424,7 +13416,7 @@ inherited frmDACTeQRRetrato: TfrmDACTeQRRetrato
     end
     object qrb_11_ModRodLot104: TQRChildBand
       Left = 26
-      Top = 1253
+      Top = 1221
       Width = 741
       Height = 108
       Frame.Color = clBlack
@@ -14422,7 +14414,7 @@ inherited frmDACTeQRRetrato: TfrmDACTeQRRetrato
     end
     object qrb_18_Recibo: TQRChildBand
       Left = 26
-      Top = 1645
+      Top = 1629
       Width = 741
       Height = 68
       Frame.Color = clBlack

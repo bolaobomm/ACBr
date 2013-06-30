@@ -41,6 +41,7 @@
 |* 16/02/2012: Italo Jurisato Junior
 ******************************************************************************}
 
+
 {$I ACBr.inc}
 
 unit ACBrCTeDACTeQRRetrato;
@@ -242,9 +243,13 @@ type
     QRLabel41: TQRLabel;
     QRLabel43: TQRLabel;
     QRLabel5: TQRLabel;
+    qrlNomeSeguradora: TQRLabel;
     QRLabel37: TQRLabel;
+    qrlRespSeguroMerc: TQRLabel;
     QRLabel39: TQRLabel;
+    qrlNroApolice: TQRLabel;
     QRLabel40: TQRLabel;
+    qrlNroAverbacao: TQRLabel;
     QRShape8: TQRShape;
     QRShape7: TQRShape;
     qrb_04_DadosNotaFiscal: TQRChildBand;
@@ -561,10 +566,6 @@ type
     QRShape101: TQRShape;
     QRLabel178: TQRLabel;
     qrlIndBalsas: TQRLabel;
-    qrmNomeSeguradora: TQRMemo;
-    qrmRespSeguroMerc: TQRMemo;
-    qrmNroApolice: TQRMemo;
-    qrmNroAverbacao: TQRMemo;
     procedure QRCTeBeforePrint(Sender: TCustomQuickRep; var PrintReport: Boolean);
     procedure qrb_01_ReciboBeforePrint(Sender: TQRCustomBand; var PrintBand: Boolean);
     procedure qrb_02_CabecalhoBeforePrint(Sender: TQRCustomBand; var PrintBand: Boolean);
@@ -1438,15 +1439,10 @@ begin
   qrmQtdUnidMedida4.Lines.Clear;
   qrmQtdUnidMedida5.Lines.Clear;
 
-  qrmNomeSeguradora.Lines.Clear;
-  qrmRespSeguroMerc.Lines.Clear;
-  qrmNroApolice.Lines.Clear;
-  qrMNroAverbacao.Lines.Clear;
-
-//  qrlNomeSeguradora.Caption := '';
-//  qrlRespSeguroMerc.Caption := '';
-//  qrlNroApolice.Caption     := '';
-//  qrlNroAverbacao.Caption   := '';
+  qrlNomeSeguradora.Caption := '';
+  qrlRespSeguroMerc.Caption := '';
+  qrlNroApolice.Caption     := '';
+  qrlNroAverbacao.Caption   := '';
 
   qrmCompNome1.Lines.Clear;
   qrmCompNome2.Lines.Clear;
@@ -1503,17 +1499,10 @@ begin
 
   if FCTe.infCTeNorm.seg.Count > 0 then
   begin
-    for i := 0 to FCTe.infCTeNorm.seg.Count-1 do
-     begin
-      qrmNomeSeguradora.Lines.Add(FCTe.infCTeNorm.seg.Items[i].xSeg);
-      qrmRespSeguroMerc.Lines.Add(TpRspSeguroToStrText(FCTe.infCTeNorm.seg.Items[i].respSeg));
-      qrmNroApolice.Lines.Add(FCTe.infCTeNorm.seg.Items[i].nApol);
-      qrmNroAverbacao.Lines.Add(FCTe.infCTeNorm.seg.Items[i].nAver);
-     end;
-//    qrlNomeSeguradora.Caption := FCTe.infCTeNorm.seg.Items[0].xSeg;
-//    qrlRespSeguroMerc.Caption := TpRspSeguroToStrText(FCTe.infCTeNorm.seg.Items[0].respSeg);
-//    qrlNroApolice.Caption := FCTe.infCTeNorm.seg.Items[0].nApol;
-//    qrlNroAverbacao.Caption := FCTe.infCTeNorm.seg.Items[0].nAver;
+    qrlNomeSeguradora.Caption := FCTe.infCTeNorm.seg.Items[0].xSeg;
+    qrlRespSeguroMerc.Caption := TpRspSeguroToStrText(FCTe.infCTeNorm.seg.Items[0].respSeg);
+    qrlNroApolice.Caption := FCTe.infCTeNorm.seg.Items[0].nApol;
+    qrlNroAverbacao.Caption := FCTe.infCTeNorm.seg.Items[0].nAver;
   end;
 
   for i := 0 to (FCTe.vPrest.comp.Count - 1) do
@@ -1590,17 +1579,10 @@ begin
 
   if FCTe.InfSeg.Count > 0 then
   begin
-    for i := 0 to FCTe.infSeg.Count-1 do
-     begin
-      qrmNomeSeguradora.Lines.Add(FCTe.infSeg.Items[i].xSeg);
-      qrmRespSeguroMerc.Lines.Add(TpRspSeguroToStrText(FCTe.infSeg.Items[i].respSeg));
-      qrmNroApolice.Lines.Add(FCTe.infSeg.Items[i].nApol);
-      qrmNroAverbacao.Lines.Add(FCTe.infSeg.Items[i].nAver);
-     end;
-//    qrlNomeSeguradora.Caption := FCTe.InfSeg.Items[0].xSeg;
-//    qrlRespSeguroMerc.Caption := TpRspSeguroToStrText(FCTe.InfSeg.Items[0].respSeg);
-//    qrlNroApolice.Caption := FCTe.InfSeg.Items[0].nApol;
-//    qrlNroAverbacao.Caption := FCTe.InfSeg.Items[0].nAver;
+    qrlNomeSeguradora.Caption := FCTe.InfSeg.Items[0].xSeg;
+    qrlRespSeguroMerc.Caption := TpRspSeguroToStrText(FCTe.InfSeg.Items[0].respSeg);
+    qrlNroApolice.Caption := FCTe.InfSeg.Items[0].nApol;
+    qrlNroAverbacao.Caption := FCTe.InfSeg.Items[0].nAver;
   end;
 
   for i := 0 to (FCTe.vPrest.comp.Count - 1) do
