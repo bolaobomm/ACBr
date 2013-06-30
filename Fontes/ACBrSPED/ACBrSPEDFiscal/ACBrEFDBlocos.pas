@@ -400,7 +400,8 @@ type
                         assResidencial,            // 3 - Residencial/Pessoa física
                         assPublico,                // 4 - Público
                         assSemiPublico,            // 5 - Semi-Público
-                        assOutros                  // 6 - Outros
+                        assOutros,                 // 6 - Outros    
+                        assNenhum                  // Preencher vazio
                         );
   /// Motivo do Inventário
   TACBrMotivoInventario = (miFinalPeriodo,

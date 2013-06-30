@@ -1527,6 +1527,7 @@ var
   intFor: integer;
   intTP_ASSINANTE: integer;
   strCOD_SIT: AnsiString;
+  booConsiderarComoValorNulo: Boolean;
 begin
   if Assigned( RegD001.RegistroD500 ) then
   begin
@@ -1552,33 +1553,38 @@ begin
             assPublico:             intTP_ASSINANTE := 4;
             assSemiPublico:         intTP_ASSINANTE := 5;
             assOutros:              intTP_ASSINANTE := 6;
-            else                    intTP_ASSINANTE := 6;
-          end;
+            assNenhum:              intTP_ASSINANTE := 0; //Preencher vazio  
+            else                    intTP_ASSINANTE := 0; //Preencher vazio
+          end;    
+          booConsiderarComoValorNulo := (strCOD_SIT = '02') or {Cancelado}
+                                        (strCOD_SIT = '03') or {Cancelado extemporâneo}
+                                        (strCOD_SIT = '04') or {Denegado}
+                                        (strCOD_SIT = '05');   {Inutilizado}
 
           Add( LFill('D500') +
                LFill( Integer(IND_OPER), 0 ) +
-               LFill( Integer(IND_EMIT), 0 ) +
-               LFill( COD_PART ) +
+               LFill( Integer(IND_EMIT), 0 ) + 
+               LFill( COD_PART,0, booConsiderarComoValorNulo ) +
                LFill( COD_MOD ) +
                LFill( strCOD_SIT ) +
-               LFill( SER ) +
-               LFill( SUB ) +
+               LFill( SER ) +   
+               LFill( SUB,0, booConsiderarComoValorNulo ) +
                LFill( NUM_DOC ) +
                LFill( DT_DOC ) +
                LFill( DT_A_P ) +
-               LFill( VL_DOC,0,2 ) +
-               LFill( VL_DESC,0,2 ) +
-               LFill( VL_SERV,0,2 ) +
-               LFill( VL_SERV_NT,0,2 ) +
-               LFill( VL_TERC,0,2 ) +
-               LFill( VL_DA,0,2 ) +
-               LFill( VL_BC_ICMS,0,2 ) +
-               LFill( VL_ICMS,0,2 ) +
-               LFill( COD_INF ) +
-               LFill( VL_PIS,0,2 ) +
-               LFill( VL_COFINS,0,2 ) +
-               LFill( COD_CTA ) +
-               LFill( intTP_ASSINANTE, 0, True ) ) ;
+               LFill( VL_DOC,0,2, booConsiderarComoValorNulo ) +
+               LFill( VL_DESC,0,2, booConsiderarComoValorNulo ) +
+               LFill( VL_SERV,0,2, booConsiderarComoValorNulo ) +  
+               LFill( VL_SERV_NT,0,2, booConsiderarComoValorNulo ) +  
+               LFill( VL_TERC,0,2, booConsiderarComoValorNulo ) +  
+               LFill( VL_DA,0,2, booConsiderarComoValorNulo ) +
+               LFill( VL_BC_ICMS,0,2, booConsiderarComoValorNulo ) +
+               LFill( VL_ICMS,0,2, booConsiderarComoValorNulo ) +
+               LFill( COD_INF,0, booConsiderarComoValorNulo ) +
+               LFill( VL_PIS,0,2, booConsiderarComoValorNulo ) +   
+               LFill( VL_COFINS,0,2, booConsiderarComoValorNulo ) +  
+               LFill( COD_CTA,0, booConsiderarComoValorNulo ) +
+               LFill( intTP_ASSINANTE, 0, booConsiderarComoValorNulo ) ) ;
         end;
         /// Registros FILHOS
         WriteRegistroD510( RegD001.RegistroD500.Items[intFor] ) ;
