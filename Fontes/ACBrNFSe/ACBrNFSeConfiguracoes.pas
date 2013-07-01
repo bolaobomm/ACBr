@@ -172,6 +172,7 @@ type
     procedure SetIntervaloTentativas(const Value: Cardinal);
   public
     constructor Create(AOwner: TComponent); override;
+    destructor Destroy; override;
     procedure SetConfigMunicipio(aPath: String = '');
   published
     property Salvar: Boolean               read FSalvar     write FSalvar     default False;
@@ -490,6 +491,14 @@ begin
  FIdentificador := 'Id';
  FNameSpace     := '';
  FConsultaLoteAposEnvio := True;
+end;
+
+destructor TWebServicesConf.Destroy;
+begin
+ if Assigned(FProvedorClass) then
+  FProvedorClass.Free;
+
+ inherited;
 end;
 
 procedure TWebServicesConf.SetAmbiente(AValue: TpcnTipoAmbiente);
