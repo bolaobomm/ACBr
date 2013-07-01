@@ -13,6 +13,7 @@ type
     procedure SetNFSe(const Value: TComponent);
     procedure ErroAbstract( NomeProcedure: String );
     function GetPathArquivos: String;
+    procedure SetPathArquivos(const Value: String);
   protected
     FACBrNFSe: TComponent;
     FLogo: String;
@@ -45,7 +46,7 @@ type
     property Logo: String read FLogo write FLogo;
     property Sistema: String read FSistema write FSistema;
     property Usuario: String read FUsuario write FUsuario;
-    property PathPDF: String read GetPathArquivos write FPathArquivos ;
+    property PathPDF: String read GetPathArquivos write FPathArquivos;
     property Impressora: String read FImpressora write FImpressora;
     property MostrarPreview: Boolean read FMostrarPreview write FMostrarPreview;
     property MostrarStatus: Boolean read FMostrarStatus write FMostrarStatus;
@@ -164,6 +165,11 @@ begin
      TACBrNFSe(Value).DANFSe := self;
     end;
   end;
+end;
+
+procedure TACBrNFSeDANFSeClass.SetPathArquivos(const Value: String);
+begin
+  FPathArquivos := Value;
 end;
 
 end.
