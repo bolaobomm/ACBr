@@ -1236,6 +1236,25 @@ begin
     begin
       for I := 0 to CTe.InfSeg.Count - 1 do
       begin
+{
+
+alterado por
+adm. dennis willian rondolfo
+cra-sp 107.526
+email: suporte@dennisrondolfo.adm.br
+em 01/07/2013
+
+}
+        if not (State in [dsInsert, dsEdit]) then
+          Edit;
+
+{
+
+foram acrescentadas estas duas linhas para evitar
+erro de state not edit or insert mode
+
+}
+
         case CTe.InfSeg.Items[I].respSeg of
           rsRemetente: FieldByName('RESPONSAVEL').AsString := 'Remetente';
           rsExpedidor: FieldByName('RESPONSAVEL').AsString := 'Expedidor';
