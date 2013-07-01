@@ -47,6 +47,10 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+01/07/2013
+[+] Diponibilizado o pacote de instalação do DANFSE em Fast Report, 
+    Fontes do componente escrito por Ney Robson. 
+
 04/04/2013
 -- ACBrNFSeReg --
 [*] Alterado para por a imagem no componente para Lazarus
