@@ -603,7 +603,7 @@ begin
                   '<Reference URI="' + DFeUtil.SeSenao(URI = '', '">', '#' + URI + '">') +
                    '<Transforms>' +
                     '<Transform Algorithm="http://www.w3.org/2000/09/xmldsig#enveloped-signature" />' +
-                      DFeUtil.SeSenao((AProvedor in [profintelISS, proGovBr, proISSNet, proNatal]), '',
+                      DFeUtil.SeSenao((AProvedor in [profintelISS, proGovBr, proISSNet, proNatal, proIssDSF]), '',
                     '<Transform Algorithm="http://www.w3.org/TR/2001/REC-xml-c14n-20010315" />') +
                    '</Transforms>' +
                    '<DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" />' +

@@ -118,14 +118,14 @@ begin
 
  if AAmbiente = 1
   then case ACodCidade of
-     3509502: ConfigCidade.NameSpaceEnvelope := 'http://issdigital.campinas.sp.gov.br/WsNFe2/Lote'; // Campinas/SP
-     3170206: ConfigCidade.NameSpaceEnvelope := 'http://udigital.uberlandia.mg.gov.br/WsNFe2/Lote'; // Uberlandia/MG
-     1501402: ConfigCidade.NameSpaceEnvelope := 'http://www.issdigitalbel.com.br/WsNFe2/Lote';      // Belem/PA
-     5002704: ConfigCidade.NameSpaceEnvelope := 'http://issdigital.pmcg.ms.gov.br/WsNFe2/Lote';     // Campo Grande/MS
-     3303500: ConfigCidade.NameSpaceEnvelope := 'http://www.issmaisfacil.com.br/WsNFe2/Lote';       // Nova Iguacu/RJ
-     2211001: ConfigCidade.NameSpaceEnvelope := 'http://www.issdigitalthe.com.br/WsNFe2/Lote';      // Teresina/PI
-     2111300: ConfigCidade.NameSpaceEnvelope := 'http://www.issdigitalslz.com.br/WsNFe2/Lote';      // Sao Luis/MA
-     3552205: ConfigCidade.NameSpaceEnvelope := 'http://www.issdigitalsod.com.br/WsNFe2/Lote';      // Sorocaba/SP
+     3509502: ConfigCidade.NameSpaceEnvelope := 'http://localhost:8080/WsNFe2/Lote';  // 'http://issdigital.campinas.sp.gov.br/WsNFe2/Lote'; // Campinas/SP
+     3170206: ConfigCidade.NameSpaceEnvelope := 'http://localhost:8080/WsNFe2/Lote';  // 'http://udigital.uberlandia.mg.gov.br/WsNFe2/Lote'; // Uberlandia/MG
+     1501402: ConfigCidade.NameSpaceEnvelope := 'http://localhost:8080/WsNFe2/Lote';  // 'http://www.issdigitalbel.com.br/WsNFe2/Lote';      // Belem/PA
+     5002704: ConfigCidade.NameSpaceEnvelope := 'http://localhost:8080/WsNFe2/Lote';  // 'http://issdigital.pmcg.ms.gov.br/WsNFe2/Lote';     // Campo Grande/MS
+     3303500: ConfigCidade.NameSpaceEnvelope := 'http://localhost:8080/WsNFe2/Lote';  // 'http://www.issmaisfacil.com.br/WsNFe2/Lote';       // Nova Iguacu/RJ
+     2211001: ConfigCidade.NameSpaceEnvelope := 'http://localhost:8080/WsNFe2/Lote';  // 'http://www.issdigitalthe.com.br/WsNFe2/Lote';      // Teresina/PI
+     2111300: ConfigCidade.NameSpaceEnvelope := 'http://localhost:8080/WsNFe2/Lote';  // 'http://www.issdigitalslz.com.br/WsNFe2/Lote';      // Sao Luis/MA
+     3552205: ConfigCidade.NameSpaceEnvelope := 'http://localhost:8080/WsNFe2/Lote';  // 'http://www.issdigitalsod.com.br/WsNFe2/Lote';      // Sorocaba/SP
   end
   else ConfigCidade.NameSpaceEnvelope := '';
 
@@ -144,101 +144,25 @@ begin
   ConfigSchema.VersaoDados     := '';
   ConfigSchema.VersaoXML       := '1';
   case ACodCidade of                                                      //tentar estes se não der certo 
-    3509502: ConfigSchema.NameSpaceXML := 'http://localhost:8080/WsNFe2/xsd/';//'http://issdigital.campinas.sp.gov.br/WsNFe2'; // Campinas/SP
-    3170206: ConfigSchema.NameSpaceXML := 'http://localhost:8080/WsNFe2/xsd/';//'http://udigital.uberlandia.mg.gov.br/WsNFe2'; // Uberlandia/MG
-    1501402: ConfigSchema.NameSpaceXML := 'http://localhost:8080/WsNFe2/xsd/';//'http://www.issdigitalbel.com.br/WsNFe2';      // Belem/PA
-    5002704: ConfigSchema.NameSpaceXML := 'http://localhost:8080/WsNFe2/xsd/';//'http://issdigital.pmcg.ms.gov.br/WsNFe2';     // Campo Grande/MS
-    3303500: ConfigSchema.NameSpaceXML := 'http://localhost:8080/WsNFe2/xsd/';//'http://www.issmaisfacil.com.br/WsNFe2';       // Nova Iguacu/RJ
-    2211001: ConfigSchema.NameSpaceXML := 'http://localhost:8080/WsNFe2/xsd/';//'http://www.issdigitalthe.com.br/WsNFe2';      // Teresina/PI
-    2111300: ConfigSchema.NameSpaceXML := 'http://localhost:8080/WsNFe2/xsd/';//'http://www.issdigitalslz.com.br/WsNFe2';      // Sao Luis/MA
-    3552205: ConfigSchema.NameSpaceXML := 'http://localhost:8080/WsNFe2/xsd/';//'http://www.issdigitalsod.com.br/WsNFe2';      // Sorocaba/SP
+    3509502: ConfigSchema.NameSpaceXML := 'http://localhost:8080/WsNFe2/'; //'http://issdigital.campinas.sp.gov.br/WsNFe2'; // Campinas/SP
+    3170206: ConfigSchema.NameSpaceXML := 'http://localhost:8080/WsNFe2/'; //'http://udigital.uberlandia.mg.gov.br/WsNFe2'; // Uberlandia/MG
+    1501402: ConfigSchema.NameSpaceXML := 'http://localhost:8080/WsNFe2/'; //'http://www.issdigitalbel.com.br/WsNFe2';      // Belem/PA
+    5002704: ConfigSchema.NameSpaceXML := 'http://localhost:8080/WsNFe2/'; //'http://issdigital.pmcg.ms.gov.br/WsNFe2';     // Campo Grande/MS
+    3303500: ConfigSchema.NameSpaceXML := 'http://localhost:8080/WsNFe2/'; //'http://www.issmaisfacil.com.br/WsNFe2';       // Nova Iguacu/RJ
+    2211001: ConfigSchema.NameSpaceXML := 'http://localhost:8080/WsNFe2/'; //'http://www.issdigitalthe.com.br/WsNFe2';      // Teresina/PI
+    2111300: ConfigSchema.NameSpaceXML := 'http://localhost:8080/WsNFe2/'; //'http://www.issdigitalslz.com.br/WsNFe2';      // Sao Luis/MA
+    3552205: ConfigSchema.NameSpaceXML := 'http://localhost:8080/WsNFe2/'; //'http://www.issdigitalsod.com.br/WsNFe2';      // Sorocaba/SP
   end;
                                    //tentar este se não der certo http://localhost:8080/WsNFe2/xsd/...
   ConfigSchema.Cabecalho       := '';
-  ConfigSchema.ServicoEnviar   := 'ReqEnvioLoteRPS.xsd';
-  ConfigSchema.ServicoConSit   := 'ConsultaSeqRps.xsd';
-  ConfigSchema.ServicoConLot   := 'ReqConsultaLote.xsd';
-  ConfigSchema.ServicoConRps   := 'ReqConsultaNFSeRPS.xsd';
-  ConfigSchema.ServicoConNfse  := 'ReqConsultaNotas.xsd';
-  ConfigSchema.ServicoCancelar := 'RetornoCancelamentoNFSe.xsd';
-  ConfigSchema.DefTipos        := 'Tipos.xsd'; 
+  ConfigSchema.ServicoEnviar   := 'xsd/ReqEnvioLoteRPS.xsd';
+  ConfigSchema.ServicoConSit   := 'xsd/ConsultaSeqRps.xsd';
+  ConfigSchema.ServicoConLot   := 'xsd/ReqConsultaLote.xsd';
+  ConfigSchema.ServicoConRps   := 'xsd/ReqConsultaNFSeRPS.xsd';
+  ConfigSchema.ServicoConNfse  := 'xsd/xsd/ReqConsultaNotas.xsd';
+  ConfigSchema.ServicoCancelar := 'xsd/RetornoCancelamentoNFSe.xsd';
+  ConfigSchema.DefTipos        := 'tp';//'xsd/Tipos.xsd';
 
-  {// testar esssa configuração se nao der certo --
-  case ACodCidade of
-    3509502: begin // Campinas/SP
-      ConfigSchema.ServicoEnviar   := 'http://issdigital.campinas.sp.gov.br/WsNFe2/xsd/ReqEnvioLoteRPS.xsd'
-      ConfigSchema.ServicoConSit   := 'http://issdigital.campinas.sp.gov.br/WsNFe2/xsd/ConsultaSeqRps.xsd';
-      ConfigSchema.ServicoConLot   := 'http://issdigital.campinas.sp.gov.br/WsNFe2/xsd/ReqConsultaLote.xsd';
-      ConfigSchema.ServicoConRps   := 'http://issdigital.campinas.sp.gov.br/WsNFe2/xsd/ReqConsultaNFSeRPS.xsd';
-      ConfigSchema.ServicoConNfse  := 'http://issdigital.campinas.sp.gov.br/WsNFe2/xsd/ReqConsultaNotas.xsd';
-      ConfigSchema.ServicoCancelar := 'http://issdigital.campinas.sp.gov.br/WsNFe2/xsd/RetornoCancelamentoNFSe.xsd';
-      ConfigSchema.DefTipos        := 'http://issdigital.campinas.sp.gov.br/WsNFe2/xsd/Tipos.xsd';
-    end;
-    3170206: begin // Uberlandia/MG
-      ConfigSchema.ServicoEnviar   := 'http://udigital.uberlandia.mg.gov.br/WsNFe2/xsd/ReqEnvioLoteRPS.xsd'
-      ConfigSchema.ServicoConSit   := 'http://udigital.uberlandia.mg.gov.br/WsNFe2/xsd/ConsultaSeqRps.xsd';
-      ConfigSchema.ServicoConLot   := 'http://udigital.uberlandia.mg.gov.br/WsNFe2/xsd/ReqConsultaLote.xsd';
-      ConfigSchema.ServicoConRps   := 'http://udigital.uberlandia.mg.gov.br/WsNFe2/xsd/ReqConsultaNFSeRPS.xsd';
-      ConfigSchema.ServicoConNfse  := 'http://udigital.uberlandia.mg.gov.br/WsNFe2/xsd/ReqConsultaNotas.xsd';
-      ConfigSchema.ServicoCancelar := 'http://udigital.uberlandia.mg.gov.br/WsNFe2/xsd/RetornoCancelamentoNFSe.xsd';
-      ConfigSchema.DefTipos        := 'http://udigital.uberlandia.mg.gov.br/WsNFe2/xsd/Tipos.xsd';
-    end;
-    1501402: begin // Belem/PA
-      ConfigSchema.ServicoEnviar   := 'http://www.issdigitalbel.com.br/WsNFe2/xsd/ReqEnvioLoteRPS.xsd'
-      ConfigSchema.ServicoConSit   := 'http://www.issdigitalbel.com.br/WsNFe2/xsd/ConsultaSeqRps.xsd';
-      ConfigSchema.ServicoConLot   := 'http://www.issdigitalbel.com.br/WsNFe2/xsd/ReqConsultaLote.xsd';
-      ConfigSchema.ServicoConRps   := 'http://www.issdigitalbel.com.br/WsNFe2/xsd/ReqConsultaNFSeRPS.xsd';
-      ConfigSchema.ServicoConNfse  := 'http://www.issdigitalbel.com.br/WsNFe2/xsd/ReqConsultaNotas.xsd';
-      ConfigSchema.ServicoCancelar := 'http://www.issdigitalbel.com.br/WsNFe2/xsd/RetornoCancelamentoNFSe.xsd';
-      ConfigSchema.DefTipos        := 'http://www.issdigitalbel.com.br/WsNFe2/xsd/Tipos.xsd';
-    end;
-    5002704: begin // Campo Grande/MS
-      ConfigSchema.ServicoEnviar   := 'http://issdigital.pmcg.ms.gov.br/WsNFe2/xsd/ReqEnvioLoteRPS.xsd'
-      ConfigSchema.ServicoConSit   := 'http://issdigital.pmcg.ms.gov.br/WsNFe2/xsd/ConsultaSeqRps.xsd';
-      ConfigSchema.ServicoConLot   := 'http://issdigital.pmcg.ms.gov.br/WsNFe2/xsd/ReqConsultaLote.xsd';
-      ConfigSchema.ServicoConRps   := 'http://issdigital.pmcg.ms.gov.br/WsNFe2/xsd/ReqConsultaNFSeRPS.xsd';
-      ConfigSchema.ServicoConNfse  := 'http://issdigital.pmcg.ms.gov.br/WsNFe2/xsd/ReqConsultaNotas.xsd';
-      ConfigSchema.ServicoCancelar := 'http://issdigital.pmcg.ms.gov.br/WsNFe2/xsd/RetornoCancelamentoNFSe.xsd';
-      ConfigSchema.DefTipos        := 'http://issdigital.pmcg.ms.gov.br/WsNFe2/xsd/Tipos.xsd';
-    end;
-    3303500: begin // Nova Iguacu/RJ
-      ConfigSchema.ServicoEnviar   := 'http://www.issmaisfacil.com.br/WsNFe2/xsd/ReqEnvioLoteRPS.xsd'
-      ConfigSchema.ServicoConSit   := 'http://www.issmaisfacil.com.br/WsNFe2/xsd/ConsultaSeqRps.xsd';
-      ConfigSchema.ServicoConLot   := 'http://www.issmaisfacil.com.br/WsNFe2/xsd/ReqConsultaLote.xsd';
-      ConfigSchema.ServicoConRps   := 'http://www.issmaisfacil.com.br/WsNFe2/xsd/ReqConsultaNFSeRPS.xsd';
-      ConfigSchema.ServicoConNfse  := 'http://www.issmaisfacil.com.br/WsNFe2/xsd/ReqConsultaNotas.xsd';
-      ConfigSchema.ServicoCancelar := 'http://www.issmaisfacil.com.br/WsNFe2/xsd/RetornoCancelamentoNFSe.xsd';
-      ConfigSchema.DefTipos        := 'http://www.issmaisfacil.com.br/WsNFe2/xsd/Tipos.xsd';
-    end;
-    2211001: begin // Teresina/PI
-      ConfigSchema.ServicoEnviar   := 'http://www.issdigitalthe.com.br/WsNFe2/xsd/ReqEnvioLoteRPS.xsd'
-      ConfigSchema.ServicoConSit   := 'http://www.issdigitalthe.com.br/WsNFe2/xsd/ConsultaSeqRps.xsd';
-      ConfigSchema.ServicoConLot   := 'http://www.issdigitalthe.com.br/WsNFe2/xsd/ReqConsultaLote.xsd';
-      ConfigSchema.ServicoConRps   := 'http://www.issdigitalthe.com.br/WsNFe2/xsd/ReqConsultaNFSeRPS.xsd';
-      ConfigSchema.ServicoConNfse  := 'http://www.issdigitalthe.com.br/WsNFe2/xsd/ReqConsultaNotas.xsd';
-      ConfigSchema.ServicoCancelar := 'http://www.issdigitalthe.com.br/WsNFe2/xsd/RetornoCancelamentoNFSe.xsd';
-      ConfigSchema.DefTipos        := 'http://www.issdigitalthe.com.br/WsNFe2/xsd/Tipos.xsd';
-    end;
-    2111300: begin // Sao Luis/MA
-      ConfigSchema.ServicoEnviar   := 'http://www.issdigitalslz.com.br/WsNFe2/xsd/ReqEnvioLoteRPS.xsd'
-      ConfigSchema.ServicoConSit   := 'http://www.issdigitalslz.com.br/WsNFe2/xsd/ConsultaSeqRps.xsd';
-      ConfigSchema.ServicoConLot   := 'http://www.issdigitalslz.com.br/WsNFe2/xsd/ReqConsultaLote.xsd';
-      ConfigSchema.ServicoConRps   := 'http://www.issdigitalslz.com.br/WsNFe2/xsd/ReqConsultaNFSeRPS.xsd';
-      ConfigSchema.ServicoConNfse  := 'http://www.issdigitalslz.com.br/WsNFe2/xsd/ReqConsultaNotas.xsd';
-      ConfigSchema.ServicoCancelar := 'http://www.issdigitalslz.com.br/WsNFe2/xsd/RetornoCancelamentoNFSe.xsd';
-      ConfigSchema.DefTipos        := 'http://www.issdigitalslz.com.br/WsNFe2/xsd/Tipos.xsd';
-    end;
-    3552205: begin // Sorocaba/SP
-      ConfigSchema.ServicoEnviar   := 'http://www.issdigitalsod.com.br/WsNFe2/xsd/ReqEnvioLoteRPS.xsd'
-      ConfigSchema.ServicoConSit   := 'http://www.issdigitalsod.com.br/WsNFe2/xsd/ConsultaSeqRps.xsd';
-      ConfigSchema.ServicoConLot   := 'http://www.issdigitalsod.com.br/WsNFe2/xsd/ReqConsultaLote.xsd';
-      ConfigSchema.ServicoConRps   := 'http://www.issdigitalsod.com.br/WsNFe2/xsd/ReqConsultaNFSeRPS.xsd';
-      ConfigSchema.ServicoConNfse  := 'http://www.issdigitalsod.com.br/WsNFe2/xsd/ReqConsultaNotas.xsd';
-      ConfigSchema.ServicoCancelar := 'http://www.issdigitalsod.com.br/WsNFe2/xsd/RetornoCancelamentoNFSe.xsd';
-      ConfigSchema.DefTipos        := 'http://www.issdigitalsod.com.br/WsNFe2/xsd/Tipos.xsd';
-    end;
-  end;
- }
  Result := ConfigSchema;
 end;
 
@@ -369,27 +293,28 @@ function TProvedorIssDSF.Gera_TagI(Acao: TnfseAcao; Prefixo3, Prefixo4,
   NameSpaceDad, Identificador, URI: String): AnsiString;
 begin
  case Acao of
-   acRecepcionar: Result := '<' + Prefixo3 + 'ReqEnvioLoteRPS'     + { 'xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"' +}
-                              ' xsi:schemaLocation' + NameSpaceDad;
+   acRecepcionar: Result := '<' + Prefixo3 + 'ReqEnvioLoteRPS' + NameSpaceDad
+                               { 'xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"' +};
 
    acConsSit:     Result := '';
 
-   acConsLote:    Result := '<' + Prefixo3 + 'ReqConsultaLote'     + { 'xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"' +}
-                              ' xsi:schemaLocation' + NameSpaceDad;
+   acConsLote:    Result := '<' + Prefixo3 + 'ReqConsultaLote' + NameSpaceDad 
+                              { 'xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"' +};
 
-   acConsNFSeRps: Result := '<' + Prefixo3 + 'ReqConsultaNFSeRPS'  + { 'xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"' +}
-                              ' xsi:schemaLocation' + NameSpaceDad;
+   acConsNFSeRps: Result := '<' + Prefixo3 + 'ReqConsultaNFSeRPS' + NameSpaceDad
+                              { 'xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"' +};
 
-   acConsNFSe:    Result := '<' + Prefixo3 + 'ReqConsultaNotas'    + { 'xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"' +}
-                              ' xsi:schemaLocation' + NameSpaceDad;
+   acConsNFSe:    Result := '<' + Prefixo3 + 'ReqConsultaNotas' + NameSpaceDad
+                              { 'xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"' +};
 
-   acCancelar:    Result := '<' + Prefixo3 + 'ReqCancelamentoNFSe' + { 'xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"' +}
-                              ' xsi:schemaLocation' + NameSpaceDad;
+   acCancelar:    Result := '<' + Prefixo3 + 'ReqCancelamentoNFSe' + NameSpaceDad
+                              { 'xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"' +};
 
-   acGerar:       Result := '';
+   acGerar:       Result := '<' + Prefixo3 + 'ReqEnvioLoteRPS' + NameSpaceDad
+                              { 'xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"' +};
 
-   acConsSecRps:  Result := '<' + Prefixo3 + 'ConsultaSeqRps'      + { 'xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"' +}
-                              ' xsi:schemaLocation' + NameSpaceDad;
+   acConsSecRps:  Result := '<' + Prefixo3 + 'ConsultaSeqRps' + NameSpaceDad 
+                              { 'xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"' +};
  end;
 end;
 
@@ -416,7 +341,7 @@ begin
    acConsNFSeRps: Result := '</' + Prefixo3 + 'ReqConsultaNFSeRPS>';
    acConsNFSe:    Result := '</' + Prefixo3 + 'ReqConsultaNotas>';
    acCancelar:    Result := '</' + Prefixo3 + 'ReqCancelamentoNFSe>';
-   acGerar:       Result := '';
+   acGerar:       Result := '</' + Prefixo3 + 'ReqEnvioLoteRPS>';
    acConsSecRps:  Result := '</' + Prefixo3 + 'ConsultaSeqRps>';
  end;
 end;

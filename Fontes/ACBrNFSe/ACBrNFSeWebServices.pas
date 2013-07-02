@@ -682,16 +682,10 @@ begin
  if FServicoEnviar <> ''
   then begin
    if (FProvedor = proIssDSF)
-    then begin
-     if (RightStr(FHTTP_AG, 1) = '/')
-      then begin
-       FNameSpaceDad := '="' + FURLNS1 + ' ' + FHTTP_AG + Separador + FServicoEnviar + '"';
-      end
-      else begin
-       FNameSpaceDad := '="' + FURLNS1 + ' ' + FHTTP_AG + '"'
-      end;
-    end
-   else begin
+    then FNameSpaceDad := 'xmlns:' + stringReplace(Prefixo3, ':', '', []) + '="' + FURLNS1 + '" ' +
+                          'xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="' + FURLNS1 + ' ' +
+                          FHTTP_AG + FServicoEnviar + '"'
+    else begin
      if (RightStr(FHTTP_AG, 1) = '/')
       then begin
        if Prefixo3 <> ''
@@ -703,7 +697,7 @@ begin
         then FNameSpaceDad := 'xmlns:' + stringReplace(Prefixo3, ':', '', []) + '="' + FHTTP_AG + '"'
         else FNameSpaceDad := 'xmlns="' + FHTTP_AG + '"';
       end;
-   end;
+    end;
   end
   else FNameSpaceDad := '';
 
@@ -984,15 +978,9 @@ begin
  if FServicoConLot <> ''
   then begin
    if (FProvedor = proIssDSF)
-    then begin
-     if (RightStr(FHTTP_AG, 1) = '/')
-      then begin
-       FNameSpaceDad := '="' + FURLNS1 + ' ' + FHTTP_AG + Separador + FServicoConLot + '"';
-      end
-      else begin
-       FNameSpaceDad := '="' + FURLNS1 + ' ' + FHTTP_AG + '"'
-      end;
-    end
+    then FNameSpaceDad := 'xmlns:' + stringReplace(Prefixo3, ':', '', []) + '="' + FURLNS1 + '" ' +
+                          'xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="' + FURLNS1 + ' ' +
+                          FHTTP_AG + FServicoConLot + '"'
     else begin
      if RightStr(FHTTP_AG, 1) = '/'
       then begin
@@ -1116,15 +1104,9 @@ begin
  if FServicoConRps <> ''
   then begin
    if (FProvedor = proIssDSF)
-    then begin
-     if (RightStr(FHTTP_AG, 1) = '/')
-      then begin
-       FNameSpaceDad := '="' + FURLNS1 + ' ' + FHTTP_AG + Separador + FServicoConRps + '"';
-      end
-      else begin
-       FNameSpaceDad := '="' + FURLNS1 + ' ' + FHTTP_AG + '"'
-      end;
-    end
+    then FNameSpaceDad := 'xmlns:' + stringReplace(Prefixo3, ':', '', []) + '="' + FURLNS1 + '" ' +
+                          'xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="' + FURLNS1 + ' ' +
+                          FHTTP_AG + FServicoConRps + '"'
     else begin
      if RightStr(FHTTP_AG, 1) = '/'
       then begin
@@ -1253,15 +1235,9 @@ begin
  if FServicoConNfse <> ''
   then begin
    if (FProvedor = proIssDSF)
-    then begin
-     if (RightStr(FHTTP_AG, 1) = '/')
-      then begin
-       FNameSpaceDad := '="' + FURLNS1 + ' ' + FHTTP_AG + Separador + FServicoConRps + '"';
-      end
-      else begin
-       FNameSpaceDad := '="' + FURLNS1 + ' ' + FHTTP_AG + '"'
-      end;
-    end
+    then FNameSpaceDad := 'xmlns:' + stringReplace(Prefixo3, ':', '', []) + '="' + FURLNS1 + '" ' +
+                          'xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="' + FURLNS1 + ' ' +
+                          FHTTP_AG + FServicoConNfse + '"'
     else begin
      if RightStr(FHTTP_AG, 1) = '/'
       then begin
@@ -1389,13 +1365,11 @@ begin
   end else FNameSpaceCab := '>';
 
  if FServicoConNfse <> '' then begin
-   //if (FProvedor = proIssDSF) then begin
-     if (RightStr(FHTTP_AG, 1) = '/')then begin
-       FNameSpaceDad := '="' + FURLNS1 + ' ' + FHTTP_AG + Separador + FServicoConRps + '"';
-     end else begin
-       FNameSpaceDad := '="' + FURLNS1 + ' ' + FHTTP_AG + '"'
-     end;
-   //end
+   if (RightStr(FHTTP_AG, 1) = '/')then begin
+     FNameSpaceDad := '="' + FURLNS1 + ' ' + FHTTP_AG + Separador + FServicoConRps + '"';
+   end else begin
+     FNameSpaceDad := '="' + FURLNS1 + ' ' + FHTTP_AG + '"'
+   end;
   end else FNameSpaceDad := '';
 
  if (FDefTipos = '') and (FNameSpaceDad <> '')
@@ -1475,16 +1449,22 @@ begin
 
  if FServicoCancelar <> ''
   then begin
-   if RightStr(FHTTP_AG, 1) = '/'
-    then begin
-     if Prefixo3 <> ''
-      then FNameSpaceDad := 'xmlns:' + stringReplace(Prefixo3, ':', '', []) + '="' + FHTTP_AG + Separador + FServicoCancelar + '"'
-      else FNameSpaceDad := 'xmlns="' + FHTTP_AG + Separador + FServicoCancelar + '"';
-    end
+   if (FProvedor = proIssDSF)
+    then FNameSpaceDad := 'xmlns:' + stringReplace(Prefixo3, ':', '', []) + '="' + FURLNS1 + '" ' +
+                          'xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="' + FURLNS1 + ' ' +
+                          FHTTP_AG + FServicoCancelar + '"'
     else begin
-     if Prefixo3 <> ''
-      then FNameSpaceDad := 'xmlns:' + stringReplace(Prefixo3, ':', '', []) + '="' + FHTTP_AG + '"'
-      else FNameSpaceDad := 'xmlns="' + FHTTP_AG + '"';
+     if RightStr(FHTTP_AG, 1) = '/'
+      then begin
+       if Prefixo3 <> ''
+        then FNameSpaceDad := 'xmlns:' + stringReplace(Prefixo3, ':', '', []) + '="' + FHTTP_AG + Separador + FServicoCancelar + '"'
+        else FNameSpaceDad := 'xmlns="' + FHTTP_AG + Separador + FServicoCancelar + '"';
+      end
+      else begin
+       if Prefixo3 <> ''
+        then FNameSpaceDad := 'xmlns:' + stringReplace(Prefixo3, ':', '', []) + '="' + FHTTP_AG + '"'
+        else FNameSpaceDad := 'xmlns="' + FHTTP_AG + '"';
+      end;
     end;
   end
   else FNameSpaceDad := '';
@@ -1813,15 +1793,9 @@ begin
  if FServicoEnviar <> ''
   then begin
    if (FProvedor = proIssDSF)
-    then begin
-     if (RightStr(FHTTP_AG, 1) = '/')
-      then begin
-       FNameSpaceDad := '="' + FURLNS1 + ' ' + FHTTP_AG + Separador + FServicoEnviar + '"';
-      end
-      else begin
-       FNameSpaceDad := '="' + FURLNS1 + ' ' + FHTTP_AG + '"'
-      end;
-    end
+    then FNameSpaceDad := 'xmlns:' + stringReplace(Prefixo3, ':', '', []) + '="' + FURLNS1 + '" ' +
+                          'xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="' + FURLNS1 + ' ' +
+                          FHTTP_AG + FServicoEnviar + '"'
     else begin
       if (RightStr(FHTTP_AG, 1) = '/')
       then begin
@@ -1878,7 +1852,7 @@ begin
                                    '<' + Prefixo4 + 'Rps', '</Signature>') +
                                '</Signature>'+
                               '</' + Prefixo4 + 'Rps>';
-      proIssDSF : vNotas :=  vNotas + TNFSeEnviarLoteRPS(Self).FNotasFiscais.Items[I].XML_Rps;//.XML_Rps_Ass;
+      proIssDSF : vNotas :=  vNotas + TNFSeGerarLoteRPS(Self).FNotasFiscais.Items[I].XML_Rps;//.XML_Rps_Ass;
       else vNotas := vNotas + '<' + Prefixo4 + 'Rps>' +
                                '<' + Prefixo4 + 'InfRps' +
                                  RetornarConteudoEntre(TNFSeGerarLoteRPS(Self).FNotasFiscais.Items[I].XML_Rps_Ass,
@@ -1898,7 +1872,7 @@ begin
                                '</' + Prefixo4 + 'InfDeclaracaoPrestacaoServico>'+
                               '</' + Prefixo4 + 'Rps>'
       else if (FProvedor = proIssDSF ) then
-       vNotas :=  vNotas + TNFSeEnviarLoteRPS(Self).FNotasFiscais.Items[I].XML_Rps
+       vNotas :=  vNotas + TNFSeGerarLoteRPS(Self).FNotasFiscais.Items[I].XML_Rps
       else vNotas := vNotas + '<' + Prefixo4 + 'Rps>' +
                                '<' + Prefixo4 + 'InfRps' +
                                  RetornarConteudoEntre(TNFSeGerarLoteRPS(Self).FNotasFiscais.Items[I].XML_Rps,
