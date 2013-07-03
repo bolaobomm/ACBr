@@ -1,11 +1,9 @@
 object dmACBrNFSeFR: TdmACBrNFSeFR
   OldCreateOrder = False
-  Left = 298
-  Top = 182
   Height = 363
   Width = 580
   object frxReport: TfrxReport
-    Version = '4.5'
+    Version = '4.13.1'
     DotMatrixReport = False
     IniFile = '\Software\Fast Reports'
     PreviewOptions.Buttons = [pbPrint, pbLoad, pbSave, pbExport, pbZoom, pbFind, pbOutline, pbPageSetup, pbTools, pbEdit, pbNavigator, pbExportQuick]
@@ -13,12 +11,8 @@ object dmACBrNFSeFR: TdmACBrNFSeFR
     PrintOptions.Printer = 'Padr'#227'o'
     PrintOptions.PrintOnSheet = 0
     ReportOptions.CreateDate = 41401.601407893500000000
-    ReportOptions.LastChange = 41417.456938229200000000
+    ReportOptions.LastChange = 41457.740088564820000000
     ScriptLanguage = 'PascalScript'
-    ScriptText.Strings = (
-      'begin'
-      ''
-      'end.')
     StoreInDFM = False
     Left = 64
     Top = 48
@@ -27,10 +21,12 @@ object dmACBrNFSeFR: TdmACBrNFSeFR
     UseFileCache = True
     ShowProgress = True
     OverwritePrompt = False
+    DataOnly = False
     PrintOptimized = True
     Outline = False
     Background = True
     HTMLTags = True
+    Quality = 95
     Author = 'FastReport'
     Subject = 'Exportando o DANFSe para PDF'
     ProtectionFlags = [ePrint, eModify, eCopy, eAnnot]
@@ -267,6 +263,7 @@ object dmACBrNFSeFR: TdmACBrNFSeFR
       'CodigoVerificacao=CodigoVerificacao')
     OpenDataSource = False
     DataSet = cdsIdentificacao
+    BCDToCurrency = False
     Left = 216
     Top = 56
   end
@@ -291,6 +288,7 @@ object dmACBrNFSeFR: TdmACBrNFSeFR
       'Email=Email')
     OpenDataSource = False
     DataSet = cdsPrestador
+    BCDToCurrency = False
     Left = 216
     Top = 120
   end
@@ -315,6 +313,7 @@ object dmACBrNFSeFR: TdmACBrNFSeFR
       'Email=Email')
     OpenDataSource = False
     DataSet = cdsTomador
+    BCDToCurrency = False
     Left = 216
     Top = 184
   end
@@ -353,30 +352,15 @@ object dmACBrNFSeFR: TdmACBrNFSeFR
       'TotalNota=TotalNota')
     OpenDataSource = False
     DataSet = cdsServicos
+    BCDToCurrency = False
     Left = 400
     Top = 56
   end
   object cdsParametros: TClientDataSet
-    Active = True
     Aggregates = <>
     Params = <>
     Left = 152
     Top = 240
-    Data = {
-      A10100009619E0BD01000000180000000B000000000003000000A10110457869
-      676962696C69646164654953530100490000000100055749445448020002003C
-      000F436F6469676F4D756E69636970696F010049000000010005574944544802
-      0002003C00134D756E69636970696F496E636964656E63696101004900000001
-      00055749445448020002003C00114F7574726173496E666F726D61636F657302
-      0049000000010005574944544802000200F4010A436F6469676F4F6272610100
-      490000000100055749445448020002003C000341727401004900000001000557
-      49445448020002003C0006496D6167656D020049000000010005574944544802
-      00020000010D4C6F676F457870616E6469646F01004900000001000557494454
-      480200020001000D4C6F676F43617272656761646F04004B0000000100075355
-      425459504502004900070042696E617279000D696D6750726566656974757261
-      0200490000000100055749445448020002000001114C6F676F50726566436172
-      72656761646F04004B0000000100075355425459504502004900070042696E61
-      7279000000}
     object cdsParametrosExigibilidadeISS: TStringField
       FieldName = 'ExigibilidadeISS'
       Size = 60
@@ -417,13 +401,15 @@ object dmACBrNFSeFR: TdmACBrNFSeFR
       Size = 256
     end
     object cdsParametrosLogoPrefExpandido: TStringField
-      FieldKind = fkCalculated
       FieldName = 'LogoPrefExpandido'
       Size = 1
-      Calculated = True
     end
     object cdsParametrosLogoPrefCarregado: TBlobField
       FieldName = 'LogoPrefCarregado'
+    end
+    object cdsParametrosNome_Prefeitura: TStringField
+      FieldName = 'Nome_Prefeitura'
+      Size = 256
     end
   end
   object frxParametros: TfrxDBDataset
@@ -441,9 +427,11 @@ object dmACBrNFSeFR: TdmACBrNFSeFR
       'LogoCarregado=LogoCarregado'
       'imgPrefeitura=imgPrefeitura'
       'LogoPrefExpandido=LogoPrefExpandido'
-      'LogoPrefCarregado=LogoPrefCarregado')
+      'LogoPrefCarregado=LogoPrefCarregado'
+      'Nome_Prefeitura=Nome_Prefeitura')
     OpenDataSource = False
     DataSet = cdsParametros
+    BCDToCurrency = False
     Left = 216
     Top = 240
   end

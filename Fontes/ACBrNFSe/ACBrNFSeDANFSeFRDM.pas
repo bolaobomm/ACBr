@@ -95,6 +95,7 @@ type
     cdsParametrosimgPrefeitura: TStringField;
     cdsParametrosLogoPrefExpandido: TStringField;
     cdsParametrosLogoPrefCarregado: TBlobField;
+    cdsParametrosNome_Prefeitura: TStringField;
     constructor Create(AOwner: TComponent); override;
   private
     FDANFSeClassOwner: TACBrNFSeDANFSeClass;
@@ -175,37 +176,37 @@ begin
     Close;
     CreateDataSet;
     Append;
-	
+
 	with FNFse do
 	begin
 	  FieldByName('OutrasInformacoes').AsString			:= OutrasInformacoes;
 	end;
-    
+
     with FNFSe.Servico do
     begin
       FieldByName('CodigoMunicipio').AsString           := CodCidadeToCidade(StrToInt(CodigoMunicipio));
       FieldByName('ExigibilidadeISS').AsString          := DFeUtil.SeSenao(ExigibilidadeISS = exiExigivel,'Exigível', DFeUtil.SeSenao(ExigibilidadeISS = exiNaoIncidencia,'Não Incidência', DFeUtil.SeSenao(ExigibilidadeISS = exiIsencao,'Insenção', DFeUtil.SeSenao(ExigibilidadeISS = exiExportacao,'Exportação', DFeUtil.SeSenao(ExigibilidadeISS = exiImunidade,'Imunidade', DFeUtil.SeSenao(ExigibilidadeISS = exiSuspensaDecisaoJudicial,'Suspensa Decisao Judicial','Suspensa Processo Administrativo'))))));
       FieldByName('MunicipioIncidencia').AsString       := CodCidadeToCidade(MunicipioIncidencia);
-	  
     end;
-	
+
 	with FNFSe.ConstrucaoCivil do
 	begin
 	  FieldByName('CodigoObra').AsString				:= CodigoObra;
-	  FieldByName('Art').AsString						:= Art;
+	  FieldByName('Art').AsString					    	:= Art;
 	end;
 
     // Carrega a Logo Prefeitura
-    if DFeUtil.NaoEstaVazio(DANFSeClassOwner.Prefeitura) then
+    if DFeUtil.NaoEstaVazio(DANFSeClassOwner.Logo) then
     begin
-      FieldByName('imgPrefeitura').AsString := DANFSeClassOwner.Prefeitura;
+      FieldByName('Nome_Prefeitura').AsString := DANFSeClassOwner.Prefeitura;
+      FieldByName('imgPrefeitura').AsString   := DANFSeClassOwner.Logo;
       vStream := TMemoryStream.Create;
       try
-        if FileExists(DANFSeClassOwner.Prefeitura) then
-          vStream.LoadFromFile(DANFSeClassOwner.Prefeitura)
+        if FileExists(DANFSeClassOwner.Logo) then
+          vStream.LoadFromFile(DANFSeClassOwner.Logo)
         else
         begin
-          vStringStream := TStringStream.Create(DANFSeClassOwner.Prefeitura);
+          vStringStream := TStringStream.Create(DANFSeClassOwner.Logo);
           try
             vStream.LoadFromStream(vStringStream);
           finally
