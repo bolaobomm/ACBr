@@ -259,6 +259,8 @@ type
     constructor Create( AOwner: TACBrCEP ); override ;
 
     procedure BuscarPorCEP( ACEP: String ); override ;
+    procedure BuscarPorLogradouro( AMunicipio, ATipo_Logradouro, ALogradouro,
+         AUF, ABairro : String ) ; override ;
   end;
 
 
@@ -1087,6 +1089,41 @@ begin
   ProcessaResposta;
 end;
 
+procedure TACBrWSCorreios.BuscarPorLogradouro( AMunicipio, ATipo_Logradouro, ALogradouro,
+         AUF, ABairro : String ) ;
+var
+sParams: string;
+sEndereco: String;
+begin
+   if (trim(ATipo_Logradouro) <> '') and (trim(ALogradouro) <> '')  then
+      sEndereco := ATipo_Logradouro+' '+ALogradouro;
+
+   if trim(sEndereco) <> '' then
+      sEndereco := sEndereco+'/'+ABairro
+   else
+      sEndereco := ABairro;
+
+   if trim(sEndereco) <> '' then
+      sEndereco := sEndereco+'/'+AMunicipio
+   else
+      sEndereco := AMunicipio;
+
+   if trim(sEndereco) <> '' then
+      sEndereco := sEndereco+'/'+AUF
+   else
+      sEndereco := AUF;
+
+   if trim(sEndereco) = '' then
+      raise Exception.Create('Não existe Parametros para Pesquisa');
+
+   //sEndereco := ATipo_Logradouro+' '+ALogradouro+ '/'+ABairro+'/'+AMunicipio+'/'+AUF;
+   sEndereco := StringReplace(sEndereco,' ','%20',[rfReplaceAll]);
+
+   sParams := 'relaxation='+sEndereco+'&TipoCep=ALL&cfm=1&Metodo=listaLogradouro&TipoConsulta=relaxation&StartRow=1&EndRow=100';
+   fOwner.HTTPGet(fpURL + sParams);
+   ProcessaResposta;
+end;
+
 procedure TACBrWSCorreios.ProcessaResposta;
 var
 iFor, iPos: Integer;
@@ -1109,8 +1146,8 @@ begin
            Inc(iPos);
            if iPos = 1 then
            begin
-              Tipo_Logradouro := '';
-              Logradouro      := sStr;
+              Tipo_Logradouro := Trim(Copy(sStr,1,Pos(' ',sStr)));
+              Logradouro      := Trim(Copy(sStr,Pos(' ',sStr),Length(sStr)));
               Complemento     := '';
            end
            else
