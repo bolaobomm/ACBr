@@ -39,6 +39,16 @@ Símbolo : Significado
 
 28/06/2013
 -- ACBrConsultaCNPJ --
+[*] Refactoring, substituindo alguns métodos que a classe (ACBrSocket) já possui...
+[-] Correção para compatibilizar com Linux, não funcionava devido a problemas de
+    conversão de UTF8 e Ansi.
+[*] Otimização da rotina que captura os campos do HTML.
+[+] Implemetada Leitura do CNAE Principal e CNAE Secundário
+[*] Campos do tipo Data modificados para TDateTime
+    (por: DSA)
+
+28/06/2013
+-- ACBrConsultaCNPJ --
 [*] Ajustes para compatibilizar o componente com Lazarus,
 [+] Adicionado Demo para Lazarus, migrado por: "Roberto Brandão"
 [*] Refactoring de funções que já existiam nos fontes do ACBr ou synapse:
