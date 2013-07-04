@@ -97,6 +97,10 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+Data: 04/07/2013
+-- ACBrECFSwedaStx --
+[*] Adicionado suporte a identificação do Consumidor no rodapé do Cupom (por:DSA)
+
 Data: 17/06/2013
 -- ACBrECF e correlatos --
 [+] Acerto para geração do arquivo MF binário do Paf-ECF

@@ -362,6 +362,7 @@ begin
   fsFalhasRX         := 0 ;
   fpModeloStr        := 'SwedaSTX' ;
   fpRFDID            := 'SW' ;
+  fpIdentificaConsumidorRodape := True ;
 end;
 
 destructor TACBrECFSwedaSTX.Destroy;
@@ -1602,6 +1603,14 @@ end;
 
 procedure TACBrECFSwedaSTX.FechaCupom(Observacao: AnsiString; IndiceBMP : Integer);
 begin
+  if not Consumidor.Enviado and (Trim(Consumidor.Documento) <> '') then    { Tem Docto ? }
+  begin
+     EnviaComando('12|'+LeftStr(Consumidor.Documento ,20)+'|'+
+                        LeftStr(Consumidor.Nome      ,30)+'|'+
+                        LeftStr(Consumidor.Endereco  ,79)+'|1') ;
+     Consumidor.Enviado := True ;
+  end ;
+
   AguardaImpressao := True ;
   EnviaComando( '07|' + LeftStr( Observacao,800) ) ;
 end;
