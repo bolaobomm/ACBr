@@ -342,6 +342,7 @@ type
     cbxUF: TComboBox;
     Label29: TLabel;
     chbCupomMania: TCheckBox;
+    DataHoraltimaReduoZ1: TMenuItem;
     procedure cbxModeloChange(Sender: TObject);
     procedure Sair1Click(Sender: TObject);
     procedure bAtivarClick(Sender: TObject);
@@ -545,6 +546,7 @@ type
     procedure speBarrasLarguraChange(Sender: TObject);
     procedure speBarrasAlturaChange(Sender: TObject);
     procedure chbCupomManiaClick(Sender: TObject);
+    procedure DataHoraltimaReduoZ1Click(Sender: TObject);
   private
     { Private declarations }
     Function Converte( cmd : String) : String;
@@ -3867,6 +3869,13 @@ end;
 procedure TForm1.chbCupomManiaClick(Sender: TObject);
 begin
   ACBrECF1.InfoRodapeCupom.CupomMania := chbCupomMania.Checked;
+end;
+
+procedure TForm1.DataHoraltimaReduoZ1Click(Sender: TObject);
+begin
+  mResp.Lines.Add( 'Data/Hora Última Redução Z: ('+ FormatDateTime('dd/mm/yy hh:nn:ss',
+                   ACBrECF1.DataHoraUltimaReducaoZ) +')' );
+  AtualizaMemos ;
 end;
 
 end.

@@ -141,6 +141,7 @@ TACBrECFSwedaSTX = class( TACBrECFClass )
     function GetDataHoraSB: TDateTime; override ;
     function GetPAF: String; override ;
     function GetDataMovimento: TDateTime; override ;
+    function GetDataHoraUltimaReducaoZ : TDateTime ; override ;
     function GetGrandeTotal: Double; override ;
     function GetNumCRO: String; override ;
     function GetNumCCF: String; override ;
@@ -427,7 +428,7 @@ begin
   end ;
 end;
 
-Function TACBrECFSwedaSTX.EnviaComando_ECF( cmd : AnsiString ) : AnsiString ;
+function TACBrECFSwedaSTX.EnviaComando_ECF(cmd : AnsiString) : AnsiString ;
 Var ErroMsg, Mensagem : String ;
     FalhasTX : Integer;
     ACK_ECF  : Byte ;
@@ -843,7 +844,7 @@ begin
    end ;
 end;
 
-Function TACBrECFSwedaSTX.PreparaCmd( cmd : AnsiString ) : AnsiString ;
+function TACBrECFSwedaSTX.PreparaCmd(cmd : AnsiString) : AnsiString ;
 begin
   Result := '' ;
 
@@ -860,7 +861,7 @@ begin
   Result := cmd + CalcCheckSum( cmd ) ;
 end ;
 
-Function TACBrECFSwedaSTX.CalcCheckSum( cmd : AnsiString ) : AnsiChar ;
+function TACBrECFSwedaSTX.CalcCheckSum(cmd : AnsiString) : AnsiChar ;
 Var A, iSoma, LenCmd, CheckSum : Integer ;
 begin
   { Calculando a Soma dos caracteres ASC }
@@ -876,7 +877,7 @@ begin
 end ;
 
 { Remove Blocos de Resposta de Status não solicitados  (envio automático pelo ECF)}
-Function TACBrECFSwedaSTX.AjustaRetorno(Retorno: AnsiString) : AnsiString ;
+function TACBrECFSwedaSTX.AjustaRetorno(Retorno : AnsiString) : AnsiString ;
 Var
   LenRet, PosETX, PosSTX, Erro : Integer ;
   Bloco, Tipo : AnsiString ;
@@ -918,7 +919,8 @@ begin
 end ;
 
 { Remove Blocos de Resposta de Status não solicitados  (envio automático pelo ECF)}
-Function TACBrECFSwedaSTX.ExtraiRetornoLeituras(Retorno: AnsiString) : AnsiString ;
+function TACBrECFSwedaSTX.ExtraiRetornoLeituras(Retorno : AnsiString
+  ) : AnsiString ;
 Var
   PosETX, PosSTX : Integer ;
   Bloco, Tipo : AnsiString ;
@@ -1396,7 +1398,7 @@ begin
   Result := (UpperCase( copy(RetCmd,20,1) ) = 'V') ;
 end;
 
-Procedure TACBrECFSwedaSTX.LeituraX ;
+procedure TACBrECFSwedaSTX.LeituraX ;
 begin
   AguardaImpressao := True ;
   EnviaComando( '15' ) ;
@@ -1409,13 +1411,13 @@ begin
   Linhas.Text := ExtraiRetornoLeituras( RetCmd ) ;
 end;
 
-Procedure TACBrECFSwedaSTX.AbreGaveta ;
+procedure TACBrECFSwedaSTX.AbreGaveta ;
 begin
   EnviaComando( '11' ) ;
   Sleep(200);
 end;
 
-Procedure TACBrECFSwedaSTX.ReducaoZ(DataHora: TDateTime) ;
+procedure TACBrECFSwedaSTX.ReducaoZ(DataHora : TDateTime) ;
 Var Cmd : String ;
      DtHrECF : TDateTime ;
 begin
@@ -1445,7 +1447,7 @@ begin
   end;
 end;
 
-Procedure TACBrECFSwedaSTX.MudaHorarioVerao ;
+procedure TACBrECFSwedaSTX.MudaHorarioVerao ;
 begin
    MudaHorarioVerao(not HorarioVerao)
 end;
@@ -1632,11 +1634,11 @@ begin
   EnviaComando('64') ;  // Totalização
 end;
 
-Procedure TACBrECFSwedaSTX.VendeItem( Codigo, Descricao : String;
-  AliquotaECF : String; Qtd : Double ; ValorUnitario : Double;
-  ValorDescontoAcrescimo : Double; Unidade : String;
-  TipoDescontoAcrescimo : String; DescontoAcrescimo : String ;
-  CodDepartamento: Integer) ;
+procedure TACBrECFSwedaSTX.VendeItem(Codigo, Descricao : String ;
+  AliquotaECF : String ; Qtd : Double ; ValorUnitario : Double ;
+  ValorDescontoAcrescimo : Double ; Unidade : String ;
+  TipoDescontoAcrescimo : String ; DescontoAcrescimo : String ;
+  CodDepartamento : Integer) ;
 var
    Aliquota : TACBrECFAliquota;
    IAT:String;
@@ -2256,6 +2258,20 @@ begin
    end ;
 end;
 
+function TACBrECFSwedaSTX.GetDataHoraUltimaReducaoZ : TDateTime ;
+var
+  RetCmd : String ;
+begin
+  RetCmd := Trim(RetornaInfoECF('A2'));
+  Result := StringToDateTime( copy(RetCmd, 1,2) + DateSeparator +
+                              copy(RetCmd, 4,2) + DateSeparator +
+                              copy(RetCmd, 7,4) + ' ' +
+                              copy(RetCmd,12,2) + TimeSeparator +
+                              copy(RetCmd,15,2) + TimeSeparator +
+                              copy(RetCmd,18,2),
+                              'dd/mm/yyyy hh:nn:ss' ) ;
+end ;
+
 function TACBrECFSwedaSTX.GetGrandeTotal: Double;
 var
    RetCMD : AnsiString;
@@ -2498,7 +2514,7 @@ begin
   SwedaFunctionDetect('ECF_FechaPortaSerial', @xECF_FechaPortaSerial);
 end ;
 
-Function TACBrECFSwedaSTX.DescricaoErroDLL(const NErro: Integer) : String ;
+function TACBrECFSwedaSTX.DescricaoErroDLL(const NErro : Integer) : String ;
 var
   Descr : String ;
 begin
@@ -2701,9 +2717,10 @@ begin
     NumeroDoECF      := Copy(RetCMD,73,3);
     NumeroDeSerieMFD := Copy(RetCMD,76,21);
     CRZ              := StrToIntDef( Copy(RetCMD,168,04), 0) ;
+    DataHoraEmissao  := StringToDateTimeDef( Copy(RetCMD,172,10) + ' ' +
+                                             Copy(RetCMD,183,8), 0, 'dd/mm/yyyy hh:nn:ss' );
     COO              := StrToIntDef( Copy(RetCMD,193,06), 0) ;
-    DataDoMovimento  := StringToDateTimeDef( Copy(RetCMD,199,5) + DateSeparator+
-                                             Copy(RetCMD,207,2), 0, 'dd/mm/yy' );
+    DataDoMovimento  := StringToDateTimeDef( Copy(RetCMD,199,10), 0, 'dd/mm/yyyy' );
     NumeroCOOInicial := Copy(RetCMD,210,06) ;
     CRO              := StrToIntDef( Copy(RetCMD,216,04), 0) ;
     VendaLiquida     := RoundTo( StrToFloatDef( copy(RetCMD,272,18),0) / 100, -2) ;

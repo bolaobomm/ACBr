@@ -402,6 +402,7 @@ TACBrECFBematech = class( TACBrECFClass )
 
     function GetPAF: String; override ;
     function GetDataMovimento: TDateTime; override ;
+    function GetDataHoraUltimaReducaoZ : TDateTime ; override ;
     function GetGrandeTotal: Double; override ;
     function GetNumCRO: String; override ;
     function GetNumCCF: String; override ;
@@ -717,7 +718,7 @@ begin
 end;
 
 
-Function TACBrECFBematech.EnviaComando_ECF( cmd : AnsiString ) : AnsiString ;
+function TACBrECFBematech.EnviaComando_ECF(cmd : AnsiString) : AnsiString ;
 Var
   ErroMsg : String ;
   B : Byte ;
@@ -1290,7 +1291,7 @@ begin
   Result := (fsArredonda = 'S') ;
 end;
 
-Procedure TACBrECFBematech.LeituraX ;
+procedure TACBrECFBematech.LeituraX ;
  Var Espera : Integer ;
 begin
   Espera := 40 ;
@@ -1309,14 +1310,14 @@ begin
   Linhas.Text := EnviaComando( #69, 10 ) ;
 end;
 
-Procedure TACBrECFBematech.AbreGaveta ;
+procedure TACBrECFBematech.AbreGaveta ;
 begin
   BytesResp := 0 ;
   EnviaComando( #22 + #100 ) ;
   sleep(100) ;
 end;
 
-Procedure TACBrECFBematech.ReducaoZ(DataHora: TDateTime) ;
+procedure TACBrECFBematech.ReducaoZ(DataHora : TDateTime) ;
 var
   DataStr: AnsiString;
   Espera : Integer ;
@@ -1335,7 +1336,7 @@ begin
   EnviaComando( #05 + DataStr, Espera );
 end;
 
-Procedure TACBrECFBematech.MudaHorarioVerao ;
+procedure TACBrECFBematech.MudaHorarioVerao ;
 begin
   BytesResp := 0 ;
   EnviaComando( #18 ) ;
@@ -1498,11 +1499,11 @@ begin
   fsTotalizadoresParciais := '';
 end;
 
-Procedure TACBrECFBematech.VendeItem( Codigo, Descricao : String;
-  AliquotaECF : String; Qtd : Double ; ValorUnitario : Double;
-  ValorDescontoAcrescimo : Double; Unidade : String;
-  TipoDescontoAcrescimo : String; DescontoAcrescimo : String ;
-  CodDepartamento: Integer) ;
+procedure TACBrECFBematech.VendeItem(Codigo, Descricao : String ;
+  AliquotaECF : String ; Qtd : Double ; ValorUnitario : Double ;
+  ValorDescontoAcrescimo : Double ; Unidade : String ;
+  TipoDescontoAcrescimo : String ; DescontoAcrescimo : String ;
+  CodDepartamento : Integer) ;
 Var QtdStr, ValorStr, AcrescimoStr, DescontoStr : String ;
     CMD : Byte ;
 begin
@@ -2509,6 +2510,23 @@ begin
                                   copy(RetCmd, 5,2), 'dd/mm/yy' );
 end;
 
+function TACBrECFBematech.GetDataHoraUltimaReducaoZ : TDateTime ;
+Var
+  RetCmd : AnsiString ;
+begin
+  RetCmd := RetornaInfoECF( '26' ) ;
+  if copy(RetCmd,1,6) = '000000' then
+     Result := 0
+  else
+     Result := StringToDateTime( copy(RetCmd, 1,2) + DateSeparator +
+                                 copy(RetCmd, 3,2) + DateSeparator +
+                                 copy(RetCmd, 5,2) + ' ' +
+                                 copy(RetCmd, 7,2) + TimeSeparator +
+                                 copy(RetCmd, 9,2) + TimeSeparator +
+                                 copy(RetCmd,11,2),
+                                 'dd/mm/yy hh:nn:ss' ) ;
+end ;
+
 function TACBrECFBematech.GetGrandeTotal: Double;
 begin
   Result := StrToFloatDef(  RetornaInfoECF( '03' )  ,0) / 100 ;
@@ -2604,7 +2622,7 @@ begin
   Result := StrToFloatDef( BcdToAsc( copy(TotalizadoresParciais,134,7) ),0) / 100 ;
 end;
 
-Function TACBrECFBematech.GetTotalizadoresParciais : String  ;
+function TACBrECFBematech.GetTotalizadoresParciais : String ;
 begin
   if fsTotalizadoresParciais = '' then
   begin
@@ -2844,6 +2862,7 @@ Var
   AliqZ: TACBrECFAliquota;
   CNFZ: TACBrECFComprovanteNaoFiscal;
   RGZ : TACBrECFRelatorioGerencial;
+  DHUltZ : TDateTime ;
 begin
   // Zerar variaveis e inicializa Dados do ECF //
   InitDadosUltimaReducaoZ;
@@ -2860,6 +2879,11 @@ begin
     // Dados dos Relatorios Gerenciais //
     if not Assigned( fpRelatoriosGerenciais ) then
       CarregaRelatoriosGerenciais ;
+
+    with TACBrECF(fpOwner) do
+    begin
+      DHUltZ := DataHoraUltimaReducaoZ;
+    end;
 
     BytesResp := 621 ;
     RetCmd    := BcdToAsc(EnviaComando( #88, 5 )) ;
@@ -2907,8 +2931,9 @@ begin
     { Alimenta a class com os dados atuais do ECF }
     with fpDadosReducaoZClass do
     begin
+      DataHoraEmissao := DHUltZ;
       DataDoMovimento := StringToDateTimeDef( copy(RetCmd,1237,2) + DateSeparator +
-                                           copy(RetCmd,1239,2) + DateSeparator +
+                                              copy(RetCmd,1239,2) + DateSeparator +
                                               copy(RetCmd,1241,2), 0, 'dd/mm/yy' );
 
       CRO  := StrToIntDef( copy(RetCmd,  3,4), 0) ;
@@ -3597,7 +3622,7 @@ begin
  {$ENDIF}
 end;
 
-Procedure TACBrECFBematech.ArquivoMF_DLL(NomeArquivo: AnsiString);
+procedure TACBrECFBematech.ArquivoMF_DLL(NomeArquivo : AnsiString) ;
 Var
   Resp : Integer ;
   FilePath : AnsiString ;

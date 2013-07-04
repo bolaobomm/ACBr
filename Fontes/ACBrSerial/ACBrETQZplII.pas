@@ -69,8 +69,8 @@ type
 
 implementation
 Uses
-     {$IFNDEF COMPILER6_UP} ACBrD5, Windows, {$ENDIF}
-     SysUtils ;
+  math, {$IFNDEF COMPILER6_UP} ACBrD5, Windows, {$ENDIF}
+  SysUtils ;
 
 { TACBrETQPpla }
 
@@ -212,6 +212,9 @@ procedure TACBrETQZplII.Imprimir(Copias: Integer = 1; AvancoEtq: Integer = 0);
 begin
   {Inserindo comando iniciais na posicao Zero}
   ListaCmd.Insert(0, '^XA');
+
+  if Copias > 1 then
+    ListaCmd.Add('^PQ'+IntToStr(min(Copias,999)) );
 
   ListaCmd.Add('^XZ');
 

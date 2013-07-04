@@ -349,6 +349,7 @@ TACBrECF = class( TACBrComponent )
     function GetDadosReducaoZ: AnsiString;
     function GetDadosUltimaReducaoZ: AnsiString;
     function GetDataMovimentoClass: TDateTime;
+    function GetDataHoraUltimaReducaoZClass : TDateTime ;
     function GetGrandeTotalClass: Double;
     function GetNumCOOInicialClass: String;
     function GetVendaBrutaClass: Double;
@@ -444,6 +445,7 @@ TACBrECF = class( TACBrComponent )
 
     { Retorna String com todos os valores no formato: Campo = Valor (1 por linha)}
     Property DataMovimento      : TDateTime  read GetDataMovimentoClass ;
+    Property DataHoraUltimaReducaoZ : TDateTime read GetDataHoraUltimaReducaoZClass ;
     Property DataHoraSB         : TDateTime  read GetDataHoraSBClass ;
     Property CNPJ               : String     read GetCNPJClass ;
     Property IE                 : String     read GetIEClass ;
@@ -1560,6 +1562,13 @@ begin
   Result := fsECF.ArredondaItemMFD;
 end;
 
+function TACBrECF.GetDataHoraUltimaReducaoZClass : TDateTime ;
+begin
+  if ComandoLOG = '' then
+     ComandoLOG := 'DataHoraUltimaReducaoZ' ;
+  Result := fsECF.DataHoraUltimaReducaoZ ;
+end;
+
 function TACBrECF.GetIgnorarErroSemPapel : Boolean ;
 begin
   Result := fsECF.IgnorarErroSemPapel;
@@ -2294,8 +2303,8 @@ begin
 
 end;
 
-Procedure TACBrECF.IdentificaConsumidor( CPF_CNPJ : String; Nome : String = '';
-       Endereco : String = '') ;
+procedure TACBrECF.IdentificaConsumidor(CPF_CNPJ : String ; Nome : String ;
+  Endereco : String) ;
 begin
   fsECF.Consumidor.AtribuiConsumidor(CPF_CNPJ, Nome, Endereco);
 end;
@@ -3463,7 +3472,7 @@ begin
      FOnDepoisCancelaNaoFiscal(Self);
 end;
 
-Procedure TACBrECF.CancelaItemNaoFiscal(const AItem: Integer);
+procedure TACBrECF.CancelaItemNaoFiscal(const AItem : Integer) ;
 var
   Tratado: Boolean;
 begin
@@ -3719,7 +3728,7 @@ begin
   {$ENDIF}
 end;
 
-Procedure TACBrECF.CortaPapel( const CorteParcial : Boolean ) ;
+procedure TACBrECF.CortaPapel(const CorteParcial : Boolean) ;
 begin
   ComandoLOG := 'CortaPapel';
   fsECF.CortaPapel( CorteParcial ) ;
@@ -3988,7 +3997,7 @@ begin
   fsECF.ImprimeCheque( Banco, Valor, Favorecido, Cidade, Data, Observacao );
 end;
 
-Function TACBrECF.LeituraCMC7 : AnsiString ;
+function TACBrECF.LeituraCMC7 : AnsiString ;
 begin
   ComandoLOG := 'LeituraCMC7';
   Result := fsECF.LeituraCMC7 ;
@@ -5589,7 +5598,7 @@ begin
   end ;
 end;
 
-Function TACBrECF.RetornaInfoECF( Registrador : String ) : AnsiString;
+function TACBrECF.RetornaInfoECF(Registrador : String) : AnsiString ;
 begin
   ComandoLOG := 'RetornaInfoECF('+Registrador+')';
 

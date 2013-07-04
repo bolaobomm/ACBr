@@ -347,6 +347,7 @@ TACBrECFDadosRZ = class
     fsIsentoICMS: Double;
     fsSubstituicaoTributariaICMS: Double;
     fsDataDaImpressora: TDateTime;
+    fsDataHoraEmissao : TDateTime ;
     fsTotalOperacaoNaoFiscal: Double;
     fsDescontoISSQN: Double;
     fsCancelamentoOPNF: Double;
@@ -383,6 +384,7 @@ TACBrECFDadosRZ = class
     procedure AdicionaAliquota( AliqZ: TACBrECFAliquota );
 
     property DataDaImpressora: TDateTime read fsDataDaImpressora write fsDataDaImpressora;
+    property DataHoraEmissao: TDateTime read fsDataHoraEmissao write fsDataHoraEmissao;
     property NumeroDeSerie: AnsiString read fsNumeroDeSerie write fsNumeroDeSerie;
     property NumeroDeSerieMFD: AnsiString read fsNumeroDeSerieMFD write fsNumeroDeSerieMFD;
     property NumeroDoECF: AnsiString read fsNumeroDoECF write fsNumeroDoECF;
@@ -639,6 +641,7 @@ TACBrECFClass = class
 
     function GetPAF: String; virtual ;
     function GetDataMovimento: TDateTime; virtual ;
+    function GetDataHoraUltimaReducaoZ : TDateTime ; virtual ;
     function GetGrandeTotal: Double; virtual ;
     function GetNumCRO: String; virtual ;
     function GetNumCCF: String; virtual ;
@@ -828,6 +831,7 @@ TACBrECFClass = class
 
     { Dados da Reducao Z - Registro 60M }
     Property DataMovimento      : TDateTime  read GetDataMovimento ;
+    Property DataHoraUltimaReducaoZ : TDateTime read GetDataHoraUltimaReducaoZ ;
     Property CNPJ               : String     read GetCNPJ ;
     Property IE                 : String     read GetIE ;
     Property IM                 : String     read GetIM ;
@@ -1550,6 +1554,11 @@ begin
   Result := PathWithDelim(fsPathDLL);
 end;
 
+function TACBrECFClass.GetDataHoraUltimaReducaoZ : TDateTime ;
+begin
+  Result := 0;
+end;
+
 procedure TACBrECFClass.Ativar;
 begin
   if fpAtivo then exit ;
@@ -1652,7 +1661,7 @@ begin
   end ;
 end;
 
-Procedure TACBrECFClass.GravaLog(AString: AnsiString; Traduz :Boolean = False);
+procedure TACBrECFClass.GravaLog(AString : AnsiString ; Traduz : Boolean) ;
 Var Buf, Ch : AnsiString ;
     I   : Integer ;
     ASC : Byte ;
@@ -1896,7 +1905,7 @@ begin
   Result := EmLinha(1) ;  //  Result := True ;
 end;
 
-Procedure TACBrECFClass.VerificaEmLinha( TimeOut : Integer = 3) ;
+procedure TACBrECFClass.VerificaEmLinha(TimeOut : Integer) ;
 begin
   while not EmLinha( TimeOut ) do  { Impressora está em-linha ? }
   begin
@@ -1924,7 +1933,7 @@ begin
 end;
 
 { Essa função PODE ser override por cada Classe Filha criada }
-Function TACBrECFClass.TestaPodeAbrirCupom : Boolean ;
+function TACBrECFClass.TestaPodeAbrirCupom : Boolean ;
 Var Msg : String ;
     Est : TACBrECFEstado ;
 begin
@@ -2054,7 +2063,7 @@ begin
 end;
 
 { Essa função DEVE ser override por cada Classe Filha criada }
-Procedure TACBrECFClass.AbreGaveta ;
+procedure TACBrECFClass.AbreGaveta ;
 begin
   GeraErro( EACBrECFCMDInvalido.Create( Format(cACBrECFAbreGavetaException, [ModeloStr] ))) ;
 end;
@@ -2175,7 +2184,7 @@ begin
 end;
 
 { Essa função PODE ser override por cada Classe Filha criada }
-Function TACBrECFClass.LeituraCMC7 : AnsiString ;
+function TACBrECFClass.LeituraCMC7 : AnsiString ;
 begin
   Result := '';
   GeraErro( EACBrECFCMDInvalido.Create( Format(cACBrECFLeituraCMC7Exception,
@@ -2298,7 +2307,7 @@ begin
   CancelaCupom ;
 end;
 
-Procedure TACBrECFClass.CancelaItemNaoFiscal(const AItem: Integer);
+procedure TACBrECFClass.CancelaItemNaoFiscal(const AItem : Integer) ;
 begin
   ErroAbstract('AbreNaoFiscal');
 end;
@@ -2803,7 +2812,7 @@ begin
   ErroAbstract('IdentificaPAF');
 end;
 
-Function TACBrECFClass.RetornaInfoECF( Registrador : String ) : AnsiString ;
+function TACBrECFClass.RetornaInfoECF(Registrador : String) : AnsiString ;
 begin
   Result := '';
   ErroAbstract('RetornaInfoECF');
@@ -2843,18 +2852,18 @@ begin
   ErroAbstract('LegendaInmetroProximoItem');
 end;
 
-Procedure TACBrECFClass.VendeItem( Codigo, Descricao : String;
-  AliquotaECF : String; Qtd : Double ; ValorUnitario : Double;
-  ValorDescontoAcrescimo : Double; Unidade : String;
-  TipoDescontoAcrescimo : String; DescontoAcrescimo : String;
-  CodDepartamento: Integer) ;
+procedure TACBrECFClass.VendeItem(Codigo, Descricao : String ;
+  AliquotaECF : String ; Qtd : Double ; ValorUnitario : Double ;
+  ValorDescontoAcrescimo : Double ; Unidade : String ;
+  TipoDescontoAcrescimo : String ; DescontoAcrescimo : String ;
+  CodDepartamento : Integer) ;
 begin
   ErroAbstract('VendeItem');
 end;
 
-Procedure TACBrECFClass.DescontoAcrescimoItemAnterior(
-   ValorDescontoAcrescimo : Double; DescontoAcrescimo : String;
-   TipoDescontoAcrescimo : String; NumItem : Integer) ;
+procedure TACBrECFClass.DescontoAcrescimoItemAnterior(
+  ValorDescontoAcrescimo : Double ; DescontoAcrescimo : String ;
+  TipoDescontoAcrescimo : String ; NumItem : Integer) ;
 begin
   ErroAbstract('DescontoAcrescimoItemAnterior');
 end ;
@@ -4200,6 +4209,7 @@ begin
    fsTotalTroco                  := -1;
    fsDataDoMovimento             := 0 ;
    fsDataDaImpressora            := 0 ;
+   fsDataHoraEmissao             := 0 ;
    fsNumeroCOOInicial            := '' ;
    fsNumeroDoECF                 := '' ;
    fsNumeroDeSerie               := '' ;
@@ -4338,6 +4348,8 @@ begin
      Result := Result + 'DataECF = ' + FormatDateTime('dd/mm/yy', DataDaImpressora) + sLineBreak ;
   if DataDoMovimento > 0 then
      Result := Result + 'DataMovimento = ' + FormatDateTime('dd/mm/yy', DataDoMovimento) + sLineBreak ;
+  if DataHoraEmissao > 0 then
+     Result := Result + 'DataHoraEmissao = ' + FormatDateTime('dd/mm/yy hh:nn:ss', DataHoraEmissao) + sLineBreak ;
   if NumeroDeSerie <> '' then
      Result := Result + 'NumSerie = '      + NumeroDeSerie               + sLineBreak ;
   if NumeroDeSerieMFD <> '' then

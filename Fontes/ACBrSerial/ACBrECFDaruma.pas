@@ -144,6 +144,7 @@ TACBrECFDaruma = class( TACBrECFClass )
 
     function GetPAF: String; override ;
     function GetDataMovimento: TDateTime; override ;
+    function GetDataHoraUltimaReducaoZ : TDateTime ; override ;
 
     function GetNumCRZ: String; override ;
     function GetGrandeTotal: Double; override ;
@@ -776,7 +777,7 @@ begin
   end ;
 end;
 
-Function TACBrECFDaruma.EnviaComando_ECF( cmd : AnsiString ) : AnsiString ;
+function TACBrECFDaruma.EnviaComando_ECF(cmd : AnsiString) : AnsiString ;
  Var Tentativas : Integer ;
 begin
   {   Nas Darumas com MFD, em algumas situações o ECF pode ficar temporariamente
@@ -814,7 +815,7 @@ begin
   end ;
 end ;
 
-Function TACBrECFDaruma.EnviaComando_ECF_Daruma( cmd : AnsiString ) : AnsiString ;
+function TACBrECFDaruma.EnviaComando_ECF_Daruma(cmd : AnsiString) : AnsiString ;
 Var
   ErroMsg : String ;
   PoucoPapel : Boolean ;
@@ -973,7 +974,7 @@ begin
   Self.ArquivoMFD_DLL(DataInicial, DataFinal, DirArquivos, [docTodos], finNFPTDM);
 end;
 
-Function TACBrECFDaruma.PreparaCmd( cmd : AnsiString ) : AnsiString ;
+function TACBrECFDaruma.PreparaCmd(cmd : AnsiString) : AnsiString ;
 Var I, chksum, LenCmd : Integer ;
 begin
 { Recomendações da Daruma:
@@ -1023,8 +1024,8 @@ begin
 end;
 
 
-Function TACBrECFDaruma.VerificaFimLeitura(var Retorno: AnsiString;
-   var TempoLimite: TDateTime) : Boolean ;
+function TACBrECFDaruma.VerificaFimLeitura(var Retorno : AnsiString ;
+  var TempoLimite : TDateTime) : Boolean ;
  Var LenRet : Integer ;
      EndStr : AnsiString ;
 begin
@@ -1733,7 +1734,7 @@ begin
      Result := False;
 end ;
 
-Procedure TACBrECFDaruma.LeituraX ;
+procedure TACBrECFDaruma.LeituraX ;
 begin
   fsNumCupom := '';
   AguardaImpressao := True ;
@@ -1763,7 +1764,7 @@ begin
 end;
 
 
-Procedure TACBrECFDaruma.AbreGaveta ;
+procedure TACBrECFDaruma.AbreGaveta ;
 Var wRetentar : Boolean ;
 begin
   wRetentar := Retentar ;
@@ -1786,7 +1787,7 @@ begin
   end ;
 end;
 
-Procedure TACBrECFDaruma.ReducaoZ(DataHora: TDateTime) ;
+procedure TACBrECFDaruma.ReducaoZ(DataHora : TDateTime) ;
 begin
   fsNumCupom := '';
 
@@ -1818,7 +1819,7 @@ begin
   fsRet244 := '' ;
 end;
 
-Procedure TACBrECFDaruma.MudaHorarioVerao ;
+procedure TACBrECFDaruma.MudaHorarioVerao ;
 begin
   MudaHorarioVerao( not HorarioVerao) ;
 end;
@@ -2138,11 +2139,11 @@ begin
     EnviaComando(FS + 'C' + #215 + '1');
 end;
 
-Procedure TACBrECFDaruma.VendeItem( Codigo, Descricao : String;
-  AliquotaECF : String; Qtd : Double ; ValorUnitario : Double;
-  ValorDescontoAcrescimo : Double; Unidade : String;
-  TipoDescontoAcrescimo : String; DescontoAcrescimo : String ;
-  CodDepartamento: Integer) ;
+procedure TACBrECFDaruma.VendeItem(Codigo, Descricao : String ;
+  AliquotaECF : String ; Qtd : Double ; ValorUnitario : Double ;
+  ValorDescontoAcrescimo : Double ; Unidade : String ;
+  TipoDescontoAcrescimo : String ; DescontoAcrescimo : String ;
+  CodDepartamento : Integer) ;
 Var
   QtdStr, ValorStr, DescontoStr, SepDec, FlagDesc, ModoCalculo : String;
   LenQtd : Integer ;
@@ -3321,7 +3322,8 @@ begin
   Linhas.Text := RetCmd ;
 end;
 
-Function TACBrECFDaruma.DocumentosToStr(Documentos : TACBrECFTipoDocumentoSet) : String ;
+function TACBrECFDaruma.DocumentosToStr(Documentos : TACBrECFTipoDocumentoSet
+  ) : String ;
 begin
   if (Documentos - [docTodos]) = [] then
      Result := StringOfChar('1',18)
@@ -4075,6 +4077,25 @@ begin
   end;
 end;
 
+function TACBrECFDaruma.GetDataHoraUltimaReducaoZ : TDateTime ;
+var
+  RetCmd : String ;
+begin
+  if fpMFD then
+  begin
+    RetCmd := RetornaInfoECF('154');
+    Result := StringToDateTime( copy(RetCmd, 1,2) + DateSeparator +
+                                copy(RetCmd, 3,2) + DateSeparator +
+                                copy(RetCmd, 5,4) + ' ' +
+                                copy(RetCmd, 9,2) + TimeSeparator +
+                                copy(RetCmd,11,2) + TimeSeparator +
+                                copy(RetCmd,13,2),
+                                'dd/mm/yyyy hh:nn:ss' ) ;
+  end
+  else
+    Result := 0;
+end ;
+
 procedure TACBrECFDaruma.LerTotaisAliquota;
  var
     A: Integer;
@@ -4299,7 +4320,7 @@ begin
   end;
 end;
 
-Function TACBrECFDaruma.RetornaInfoECF( Registrador: String) : AnsiString;
+function TACBrECFDaruma.RetornaInfoECF(Registrador : String) : AnsiString ;
  Var Indice : Integer ;
 begin
   Result := '' ;
@@ -4458,6 +4479,7 @@ Var RetCmd, S, SS : AnsiString ;
     CNFZ  : TACBrECFComprovanteNaoFiscal ;
     RGZ   : TACBrECFRelatorioGerencial ;
     GTInicial :Double;
+    DHUltZ : TDateTime ;
 begin
 //Comando 140 - Retorno:1164 caracteres
 //                         INICIO    TAM
@@ -4525,12 +4547,18 @@ begin
   if not Assigned( fpRelatoriosGerenciais ) then
     CarregaRelatoriosGerenciais ;
 
+  with TACBrECF(fpOwner) do
+  begin
+    DHUltZ := DataHoraUltimaReducaoZ;
+  end;
+
   RetCmd := RetornaInfoECF('140');
 
   { Alimenta a class com os dados atuais do ECF }
   with fpDadosReducaoZClass do
   begin
     { REDUÇÃO Z }
+    DataHoraEmissao := DHUltZ;
     DataDoMovimento := StringToDateTimeDef( copy(RetCmd,1,2)+DateSeparator+
                                             copy(RetCmd,3,2)+DateSeparator+
                                             copy(RetCmd,7,2), 0, 'dd/mm/yy' );

@@ -5,6 +5,7 @@ object Form1: TForm1
   Height = 447
   VertScrollBar.Range = 59
   ActiveControl = PageControl1
+  AutoScroll = False
   Caption = 'Teste de Impressora Fiscal'
   Color = clBtnFace
   Constraints.MinHeight = 400
@@ -140,6 +141,7 @@ object Form1: TForm1
         Width = 105
         Height = 21
         Style = csDropDownList
+        ItemHeight = 13
         TabOrder = 0
         OnChange = cbxModeloChange
         Items.Strings = (
@@ -161,6 +163,7 @@ object Form1: TForm1
         Top = 25
         Width = 105
         Height = 21
+        ItemHeight = 13
         TabOrder = 1
         Text = 'Procurar'
         OnChange = cbxPortaChange
@@ -269,6 +272,9 @@ object Form1: TForm1
         Cancel = True
         Caption = 'Serial'
         Default = True
+        ModalResult = 1
+        TabOrder = 11
+        OnClick = btSerialClick
         Glyph.Data = {
           36030000424D3603000000000000360000002800000010000000100000000100
           1800000000000003000000000000000000000000000000000000FFFFFFFFFFFF
@@ -296,9 +302,6 @@ object Form1: TForm1
           FFFFFFFFFFFFFFFFFFFFFFFF5050004A4A4A3232323232323232323232325032
           00FFFFFF6B8FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
           FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF}
-        ModalResult = 1
-        TabOrder = 11
-        OnClick = btSerialClick
       end
       object chDescricaoGrande: TCheckBox
         Left = 195
@@ -376,6 +379,7 @@ object Form1: TForm1
         Width = 47
         Height = 21
         Style = csDropDownList
+        ItemHeight = 13
         TabOrder = 19
         OnChange = cbxModeloChange
         Items.Strings = (
@@ -557,7 +561,7 @@ object Form1: TForm1
         Left = 0
         Top = 55
         Width = 586
-        Height = 267
+        Height = 247
         ActivePage = TabSheet6
         Align = alClient
         TabOrder = 1
@@ -885,7 +889,7 @@ object Form1: TForm1
         Left = 0
         Top = 0
         Width = 586
-        Height = 254
+        Height = 234
         Align = alClient
         Caption = 'Op'#231#245'es do Menu fiscal'
         TabOrder = 0
@@ -996,7 +1000,7 @@ object Form1: TForm1
       end
       object pgcMenuFiscalTipo: TPageControl
         Left = 0
-        Top = 254
+        Top = 234
         Width = 586
         Height = 68
         ActivePage = tbsMenuFiscalTipoData
@@ -1515,6 +1519,9 @@ object Form1: TForm1
       Cancel = True
       Caption = 'Ativar'
       Default = True
+      ModalResult = 1
+      TabOrder = 0
+      OnClick = bAtivarClick
       Glyph.Data = {
         36030000424D3603000000000000360000002800000010000000100000000100
         18000000000000030000120B0000120B00000000000000000000FFFFFFFFFFFF
@@ -1542,9 +1549,6 @@ object Form1: TForm1
         21218C3131943131943131943131943131943131943131943131943131943131
         94292994181884FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
         FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF}
-      ModalResult = 1
-      TabOrder = 0
-      OnClick = bAtivarClick
     end
   end
   object MainMenu1: TMainMenu
@@ -1681,12 +1685,16 @@ object Form1: TForm1
           Caption = 'Data Movimento'
           OnClick = DataMovimento1Click
         end
+        object DataHoraltimaReduoZ1: TMenuItem
+          Caption = 'Data/Hora '#218'ltima Redu'#231#227'o Z'
+          OnClick = DataHoraltimaReduoZ1Click
+        end
         object DadosReducaoZ1: TMenuItem
           Caption = 'Dados Reducao Z (60M)'
           OnClick = DadosReducaoZ1Click
         end
         object DadosUltimaReduoZ1: TMenuItem
-          Caption = 'Dados Ultima Redu'#231#227'o Z'
+          Caption = 'Dados '#218'ltima Redu'#231#227'o Z'
           OnClick = DadosUltimaReduoZ1Click
         end
         object N20: TMenuItem

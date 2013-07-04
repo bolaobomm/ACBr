@@ -2607,12 +2607,16 @@ object Form1: TForm1
           Caption = 'Data Movimento'
           OnClick = DataMovimento1Click
         end
+        object mDataHoraUltimaReducaoZ: TMenuItem
+          Caption = 'Data/Hora Última Redução Z'
+          OnClick = mDataHoraUltimaReducaoZClick
+        end
         object DadosReducaoZ1: TMenuItem
           Caption = 'Dados Reducao Z (60M)'
           OnClick = DadosReducaoZ1Click
         end
         object DadosUltimaReduoZ1: TMenuItem
-          Caption = 'Dados Ultima Redução Z'
+          Caption = 'Dados Última Redução Z'
           OnClick = DadosUltimaReduoZ1Click
         end
         object MenuItem30: TMenuItem

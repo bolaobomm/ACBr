@@ -109,6 +109,7 @@ type
     edAAC_ECF_GT : TDBEdit ;
     edAAC_SH_RazaoSocial : TEdit ;
     MenuItem31: TMenuItem;
+    mDataHoraUltimaReducaoZ : TMenuItem ;
     mTotalTroco: TMenuItem;
     sePaginaCodigo: TSpinEdit;
     edtDtInicial : TDateEdit ;
@@ -468,6 +469,7 @@ type
     procedure mARQMFDDLLCooClick(Sender : TObject) ;
     procedure mARQMFDDLLPeriodoClick(Sender : TObject) ;
     procedure mCancNaoFiscalClick(Sender : TObject) ;
+    procedure mDataHoraUltimaReducaoZClick(Sender : TObject) ;
     procedure mDAVClick(Sender: TObject);
     procedure mDAVOSClick(Sender: TObject);
     procedure mDescNaoFiscalClick(Sender : TObject) ;
@@ -1748,6 +1750,13 @@ end;
 procedure TForm1.mCancNaoFiscalClick(Sender : TObject) ;
 begin
   mResp.Lines.Add( 'TotalCancelamentosOPNF: ('+ FloatToStr(ACBrECF1.TotalCancelamentosOPNF)+')' );
+  AtualizaMemos ;
+end;
+
+procedure TForm1.mDataHoraUltimaReducaoZClick(Sender : TObject) ;
+begin
+  mResp.Lines.Add( 'Data/Hora Última Redução Z: ('+ FormatDateTime('dd/mm/yy hh:nn:ss',
+                   ACBrECF1.DataHoraUltimaReducaoZ) +')' );
   AtualizaMemos ;
 end;
 

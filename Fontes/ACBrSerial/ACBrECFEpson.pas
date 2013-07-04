@@ -138,6 +138,7 @@ TACBrECFEpson = class( TACBrECFClass )
     fsSubModeloECF : String ;
     fsRet0906 : AnsiString ;
     fsRet0907 : AnsiString ;
+    fsRet080A : AnsiString ;
     fsBytesIn : Integer ;
     fsByteACK : Byte ;
     fsEpsonComando: TACBrECFEpsonComando;
@@ -178,10 +179,13 @@ TACBrECFEpson = class( TACBrECFClass )
 
     function  GetRet0402( Indice: Integer): AnsiString;
     function  GetRet0906: AnsiString;
-    property  Ret0906 : AnsiString read GetRet0906 ;
     function  GetRet0907: AnsiString;
-    property  Ret0907 : AnsiString read GetRet0907 ;
+    function  GetRet080A: AnsiString ;
     procedure EnviaPAF;
+ private
+    property  Ret0906 : AnsiString read GetRet0906 ;
+    property  Ret0907 : AnsiString read GetRet0907 ;
+    property  Ret080A : AnsiString read GetRet080A ;
  protected
     function GetDataHora: TDateTime; override ;
     function GetNumCupom: String; override ;
@@ -222,6 +226,7 @@ TACBrECFEpson = class( TACBrECFClass )
     
     function GetPAF: String; override ;
     function GetDataMovimento: TDateTime; override ;
+    function GetDataHoraUltimaReducaoZ : TDateTime ; override ;
     function GetGrandeTotal: Double; override ;
     function GetVendaBruta: Double; override ;
     function GetTotalAcrescimos: Double; override ;
@@ -1148,7 +1153,7 @@ begin
 end ;
 
 
-Function TACBrECFEpson.EnviaComando_ECF( cmd : AnsiString = '' ) : AnsiString ;
+function TACBrECFEpson.EnviaComando_ECF(cmd : AnsiString) : AnsiString ;
 Var
   ErroMsg    : String ;
   OldTimeOut, Ret : Integer ;
@@ -1276,7 +1281,7 @@ begin
   end
 end;
 
-Procedure TACBrECFEpson.PreparaCmd(cmd: AnsiString) ;
+procedure TACBrECFEpson.PreparaCmd(cmd : AnsiString) ;
  Var Buf : AnsiString ;
      P   : Integer ;
      SL  : TStringList ;
@@ -1315,8 +1320,8 @@ begin
   end ;
 end;
 
-Function TACBrECFEpson.VerificaFimLeitura(var Retorno: AnsiString;
-   var TempoLimite: TDateTime) : Boolean ;
+function TACBrECFEpson.VerificaFimLeitura(var Retorno : AnsiString ;
+  var TempoLimite : TDateTime) : Boolean ;
 
 var
   LenRet : Integer ;
@@ -1565,9 +1570,7 @@ end;
 
 function TACBrECFEpson.GetNumReducoesZRestantes: String;
 begin
-  EpsonComando.Comando := '080A' ;
-  EnviaComando ;
-
+  EpsonResposta.Resposta := Ret080A ;
   Result := EpsonResposta.Params[7] ;
 end;
 
@@ -1736,7 +1739,7 @@ begin
   end ;
 end ;
 
-Procedure TACBrECFEpson.LeituraX ;
+procedure TACBrECFEpson.LeituraX ;
 begin
   if Estado = estRequerx then
      EpsonComando.Comando := '0805'
@@ -1784,7 +1787,7 @@ begin
   end ;
 end;
 
-Procedure TACBrECFEpson.AbreGaveta ;
+procedure TACBrECFEpson.AbreGaveta ;
 begin
   EpsonComando.Comando := '0707' ;   // Gaveta 1 ??
   EpsonComando.Extensao := '0000' ;
@@ -1795,7 +1798,7 @@ begin
   EnviaComando ;
 end;
 
-Procedure TACBrECFEpson.ReducaoZ(DataHora: TDateTime) ;
+procedure TACBrECFEpson.ReducaoZ(DataHora : TDateTime) ;
 var
   DtHrECF : TDateTime ;
 begin
@@ -1840,7 +1843,7 @@ begin
   ZeraCache;
 end;
 
-Procedure TACBrECFEpson.MudaHorarioVerao ;
+procedure TACBrECFEpson.MudaHorarioVerao ;
 begin
   MudaHorarioVerao( not HorarioVerao ) ;
 end;
@@ -2028,11 +2031,11 @@ begin
   RespostasComando.AddField( 'SubTotal', EpsonResposta.Params[0] );
 end;
 
-Procedure TACBrECFEpson.VendeItem( Codigo, Descricao : String;
-  AliquotaECF : String; Qtd : Double ; ValorUnitario : Double;
-  ValorDescontoAcrescimo : Double; Unidade : String;
-  TipoDescontoAcrescimo : String; DescontoAcrescimo : String ;
-  CodDepartamento: Integer) ;
+procedure TACBrECFEpson.VendeItem(Codigo, Descricao : String ;
+  AliquotaECF : String ; Qtd : Double ; ValorUnitario : Double ;
+  ValorDescontoAcrescimo : Double ; Unidade : String ;
+  TipoDescontoAcrescimo : String ; DescontoAcrescimo : String ;
+  CodDepartamento : Integer) ;
 begin
   Codigo    := LeftStr(Codigo,14);
   Unidade   := Trim(LeftStr( OnlyAlphaNum(Unidade),3)) ;
@@ -2712,8 +2715,7 @@ function TACBrECFEpson.GetDataMovimento: TDateTime;
 Var
   DtStr, HrStr : AnsiString ;
 begin
-  EpsonComando.Comando := '080A' ;
-  EnviaComando ;
+  EpsonResposta.Resposta := Ret080A ;
   DtStr := EpsonResposta.Params[0] ;
   HrStr := EpsonResposta.Params[1] ;
 
@@ -2725,6 +2727,23 @@ begin
                             StrToInt(copy(HrStr, 5,2)),   // Seg
                             0 );
 end;
+
+function TACBrECFEpson.GetDataHoraUltimaReducaoZ : TDateTime ;
+Var
+  DtStr, HrStr : AnsiString ;
+begin
+  EpsonResposta.Resposta := Ret080A ;
+  DtStr := EpsonResposta.Params[2] ;
+  HrStr := EpsonResposta.Params[3] ;
+
+  Result := EncodeDateTime( StrToInt(copy(DtStr, 5,4)),   // Ano
+                            StrToInt(copy(DtStr, 3,2)),   // Mes
+                            StrToInt(copy(DtStr, 1,2)),   // Dia
+                            StrToInt(copy(HrStr, 1,2)),   // Hora
+                            StrToInt(copy(HrStr, 3,2)),   // Min
+                            StrToInt(copy(HrStr, 5,2)),   // Seg
+                            0 );
+end ;
 
 function TACBrECFEpson.GetGrandeTotal: Double;
 begin
@@ -2782,9 +2801,7 @@ end;
 
 function TACBrECFEpson.GetNumCOOInicial: String;
 begin
-  EpsonComando.Comando := '080A' ;
-  EnviaComando ;
-
+  EpsonResposta.Resposta := Ret080A ;
   Result := EpsonResposta.Params[4] ;
 end;
 
@@ -2891,7 +2908,8 @@ begin
   RespostasComando.AddField( 'TotalTroco', EpsonResposta.Params[1] );
 end;
 
-procedure TACBrECFEpson.FechaNaoFiscal(Observacao: ansiString; IndiceBMP : Integer);
+procedure TACBrECFEpson.FechaNaoFiscal(Observacao : AnsiString ;
+  IndiceBMP : Integer) ;
   Var SL : TStringList ;
       I  : Integer ;
 begin
@@ -2985,6 +3003,20 @@ begin
   Result := fsRet0907 ;
 end;
 
+function TACBrECFEpson.GetRet080A : AnsiString ;
+begin
+  if fsRet080A = '' then
+  begin
+     EpsonComando.Comando := '080A' ;
+     EnviaComando ;
+
+     fsRet080A := EpsonResposta.Resposta ;
+  end ;
+
+  Result := fsRet080A ;
+end;
+
+
 // Andre Bohn - Comando para cancelar impressão do cheque
 procedure TACBrECFEpson.CancelaImpressaoCheque;
 begin
@@ -3036,7 +3068,7 @@ begin
 end;
 
 // Andre Bohn - Comando para fazer a leitura do CMC7
-Function TACBrECFEpson.LeituraCMC7 : AnsiString;
+function TACBrECFEpson.LeituraCMC7 : AnsiString ;
 begin
   Result :=  '';
   if fsLeituraCMC7 then
@@ -3273,6 +3305,7 @@ begin
   with fpDadosReducaoZClass do
   begin
     DataDoMovimento := DataMov;
+    DataHoraEmissao := DataFechaZ;
 
     CRZ := StrToIntDef( EpsonResposta.Params[0], 0) ;
     COO := StrToIntDef( EpsonResposta.Params[1], 0) ;
@@ -3359,6 +3392,7 @@ begin
 
   fsRet0906 := '';
   fsRet0907 := '';
+  fsRet080A := '';
 end ;
 
 procedure TACBrECFEpson.LoadDLLFunctions ;
@@ -3793,7 +3827,8 @@ begin
   CarregaRelatoriosGerenciais;
 end ;
 
-procedure TACBrECFEpson.ProgramaRelatorioGerencial( var Descricao: String; Posicao: String);
+procedure TACBrECFEpson.ProgramaRelatorioGerencial(var Descricao : string ;
+  Posicao : string) ;
 begin
   CarregaRelatoriosGerenciais;
   Descricao := Copy(Trim(Descricao),1,15);

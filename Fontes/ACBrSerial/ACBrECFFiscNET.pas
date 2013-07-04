@@ -200,6 +200,7 @@ TACBrECFFiscNET = class( TACBrECFClass )
     function GetSubModeloECF: String ; override ;
     
     function GetDataMovimento: TDateTime; override ;
+    function GetDataHoraUltimaReducaoZ : TDateTime ; override ;
     function GetGrandeTotal: Double; override ;
     function GetNumCRO: String; override ;
     function GetNumGRG: String; override ;
@@ -677,7 +678,7 @@ begin
 end;
 
 
-Function TACBrECFFiscNET.EnviaComando_ECF( cmd : AnsiString = '' ) : AnsiString ;
+function TACBrECFFiscNET.EnviaComando_ECF(cmd : AnsiString) : AnsiString ;
 var
   ErroMsg: string;
   OldTimeOut : Integer ;
@@ -749,7 +750,7 @@ begin
   end ;
 end;
 
-Procedure TACBrECFFiscNET.PreparaCmd(cmd: AnsiString) ;
+procedure TACBrECFFiscNET.PreparaCmd(cmd : AnsiString) ;
 var
   P: Integer;
 begin
@@ -760,8 +761,8 @@ begin
   FiscNETComando.Params.Text := copy(cmd,P+1,Length(cmd)) ;
 end;
 
-Function TACBrECFFiscNET.VerificaFimLeitura(var Retorno: AnsiString;
-   var TempoLimite: TDateTime) : Boolean ;
+function TACBrECFFiscNET.VerificaFimLeitura(var Retorno : AnsiString ;
+  var TempoLimite : TDateTime) : Boolean ;
 begin
   Result := (RightStr(Retorno,1) = '}') and (CountStr(Retorno,';') >= 3) ; 
 end;
@@ -980,7 +981,7 @@ begin
   end ;
 end;
 
-Procedure TACBrECFFiscNET.LeituraX ;
+procedure TACBrECFFiscNET.LeituraX ;
 begin
   FiscNETComando.NomeComando := 'EmiteLeituraX' ;
   FiscNETComando.TimeOut     := 30 ;
@@ -1018,13 +1019,13 @@ begin
 end;
 
 
-Procedure TACBrECFFiscNET.AbreGaveta ;
+procedure TACBrECFFiscNET.AbreGaveta ;
 begin
   FiscNETComando.NomeComando := 'AbreGaveta' ;
   EnviaComando ;
 end;
 
-Procedure TACBrECFFiscNET.ReducaoZ(DataHora: TDateTime) ;
+procedure TACBrECFFiscNET.ReducaoZ(DataHora : TDateTime) ;
 begin
   FiscNETComando.NomeComando := 'EmiteReducaoZ' ;
   FiscNETComando.TimeOut     := 900 ;
@@ -1045,7 +1046,7 @@ begin
   end ;
 end;
 
-Procedure TACBrECFFiscNET.MudaHorarioVerao ;
+procedure TACBrECFFiscNET.MudaHorarioVerao ;
 begin
   MudaHorarioVerao( not HorarioVerao ) ;
 end;
@@ -1228,11 +1229,11 @@ begin
   EnviaComando ;
 end;
 
-Procedure TACBrECFFiscNET.VendeItem( Codigo, Descricao : String;
-  AliquotaECF : String; Qtd : Double ; ValorUnitario : Double;
-  ValorDescontoAcrescimo : Double; Unidade : String;
-  TipoDescontoAcrescimo : String; DescontoAcrescimo : String ;
-  CodDepartamento: Integer) ;
+procedure TACBrECFFiscNET.VendeItem(Codigo, Descricao : String ;
+  AliquotaECF : String ; Qtd : Double ; ValorUnitario : Double ;
+  ValorDescontoAcrescimo : Double ; Unidade : String ;
+  TipoDescontoAcrescimo : String ; DescontoAcrescimo : String ;
+  CodDepartamento : Integer) ;
 var
   CodAliq: Integer;
 begin
@@ -1956,7 +1957,8 @@ begin
   Linhas.Text := AjustaLeitura( Leitura ) ;
 end;
 
-Function TACBrECFFiscNET.DocumentosToStr(Documentos : TACBrECFTipoDocumentoSet) : String ;
+function TACBrECFFiscNET.DocumentosToStr(Documentos : TACBrECFTipoDocumentoSet
+  ) : String ;
 begin
   Result := '' ;
   if (docTodos in Documentos) then
@@ -1983,7 +1985,7 @@ begin
   Result := copy(Result,1,Length(Result)-1) ; // Remove a ultima Virgula
 end ;
 
-Function TACBrECFFiscNET.AjustaLeitura( AString : AnsiString ) : AnsiString ;
+function TACBrECFFiscNET.AjustaLeitura(AString : AnsiString) : AnsiString ;
 Var
   A, Cols : Integer ;
 begin
@@ -2043,7 +2045,7 @@ begin
  {14;ImprimeCheque;Cidade="Tatui" Data=#01/03/07# Favorecido="Daniel Simoes de Almeida" HPosAno=1 HPosCidade=2 HPosDia=3 HPosExtensoLinha1=4 HPosExtensoLinha2=5 HPosFavorecido=6 HPosMes=7 HPosMsgLinha1=8 HPosMsgLinha2=9 HPosMsgLinha3=10 HPosValor=11 MensagemDocLinha1="Msg DOC Linha 1" MensagemDocLinha2="Msg DOC Linha 1" MensagemDocLinha3="Msg DOC Linha 1" TempoEspera=10 Valor=100,00 VPosCidade=12 VPosExtensoLinha1=13 VPosExtensoLinha2=14 VPosFavorecido=15 VPosMsgLinha1=16 VPosMsgLinha2=17 VPosMsgLinha3=18 VPosValor=19;522}
 end;
 
-Function TACBrECFFiscNET.LeituraCMC7 : AnsiString ;     
+function TACBrECFFiscNET.LeituraCMC7 : AnsiString ;
 begin
   FiscNETComando.NomeComando := 'LeTexto' ;
   FiscNETComando.AddParamString('NomeTexto', 'CMC7Documento') ;
@@ -2192,6 +2194,48 @@ begin
      ShortDateFormat := OldShortDateFormat ;
   end ;
 end;
+
+function TACBrECFFiscNET.GetDataHoraUltimaReducaoZ : TDateTime ;
+var
+  RetCmd: AnsiString;
+  OldShortDateFormat : String ;
+  ECFCRZ : Integer ;
+begin
+  with TACBrECF(fpOwner) do
+  begin
+    ECFCRZ := StrToIntDef( NumCRZ, 0);
+  end;
+
+  FiscNETComando.NomeComando := 'LeData' ;
+  FiscNETComando.AddParamString('NomeData','DataReducao[' + IntToStr(ECFCRZ) + ']');
+  EnviaComando ;
+  RetCmd := FiscNETResposta.Params.Values['ValorData'] ;
+  RetCmd := StringReplace(RetCmd ,'/',DateSeparator, [rfReplaceAll] );
+  OldShortDateFormat := ShortDateFormat ;
+  try
+     ShortDateFormat := 'dd/mm/yyyy' ;
+     Result := StrToDate( RetCmd ) ;
+  finally
+     ShortDateFormat := OldShortDateFormat ;
+  end ;
+
+  try
+     FiscNETComando.NomeComando := 'LeHora' ;
+     FiscNETComando.AddParamString('NomeData','HoraReducao[' + IntToStr(ECFCRZ) + ']');
+     EnviaComando ;
+     RetCmd := FiscNETResposta.Params.Values['ValorHora'] ;
+
+     Result := RecodeHour(  Result,StrToInt(copy(RetCmd,1,2))) ;
+     Result := RecodeMinute(Result,StrToInt(copy(RetCmd,4,2))) ;
+     Result := RecodeSecond(Result,StrToInt(copy(RetCmd,7,2))) ;
+  except
+     On E: Exception do
+     begin
+        if pos('11000', E.Message) = 0 then   // Erro: 11000 - ErroProtParamInvalido
+           raise ;
+     end ;
+  end ;
+end ;
 
 function TACBrECFFiscNET.GetGrandeTotal: Double;
 begin
@@ -2991,6 +3035,7 @@ var
    ECFVBruta : Double ;
    AliqZ: TACBrECFAliquota;
    CNFZ: TACBrECFComprovanteNaoFiscal;
+   DHUltZ : TDateTime ;
 begin
   // Zerar variaveis e inicializa Dados do ECF //
   InitDadosUltimaReducaoZ;
@@ -3005,6 +3050,7 @@ begin
   begin
     ECFCRZ := StrToIntDef( NumCRZ, 0);
     ECFCRO := StrToIntDef( NumCRO, 0);
+    DHUltZ := DataHoraUltimaReducaoZ;
   end;
 
   EnviaComando ;
@@ -3042,8 +3088,9 @@ begin
   { Alimenta a class com os dados atuais do ECF }
   with fpDadosReducaoZClass do
   begin
-    CRO := ECFCRO;
-    CRZ := ECFCRZ;
+    DataHoraEmissao := DHUltZ;
+    CRO             := ECFCRO;
+    CRZ             := ECFCRZ;
     ValorVendaBruta := ECFVBruta;
 
     ValorGrandeTotal := RoundTo( StrToFloatDef( copy( RetCmd, 3, 18 ), 0 ) / 100, -2 ) ;

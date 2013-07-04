@@ -98,8 +98,34 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 Data: 04/07/2013
+-- ACBrECF --
+[+] Adicionada nova propriedade ACBrECF.DataHoraUltimaReducaoZ, que retorna a
+    Data e Hora da emissão da última redução Z                  (por: DSA)
+[+] Adiciona a propriedade DadosReducaoZ.DataHoraEmissao, que só será preenchida
+    quando for chamada por DadosUltimaReducaoZ    (por: DSA)
+
+-- ACBrECFBematech --
+[+] Adicionada suporte a propriedade ACBrECF.DataHoraUltimaReducaoZ,   (por:DSA)
+
+-- ACBrECFDaruma --
+[+] Adicionada suporte a propriedade ACBrECF.DataHoraUltimaReducaoZ,   (por:DSA)
+
+-- ACBrECFEpson --
+[+] Adicionada suporte a propriedade ACBrECF.DataHoraUltimaReducaoZ,   (por:DSA)
+
+-- ACBrECFFiscNET --
+[+] Adicionada suporte a propriedade ACBrECF.DataHoraUltimaReducaoZ,   (por:DSA)
+
 -- ACBrECFSwedaStx --
 [*] Adicionado suporte a identificação do Consumidor no rodapé do Cupom (por:DSA)
+[+] Adicionada suporte a propriedade ACBrECF.DataHoraUltimaReducaoZ    (por:DSA)
+
+-- ECFTeste --
+[*] Modificado em Lazarus e Delphi para exibir o retorno de
+    ACBrECF.DataHoraUltimaReducaoZ      (por: DSA)
+
+-- ACBrETQZplII --
+[-] Correção do metodo Imprimir, para suportar o número de cópias   (por:DSA)
 
 Data: 17/06/2013
 -- ACBrECF e correlatos --
