@@ -3604,6 +3604,9 @@ Var
   OldAtivo : Boolean ;
   {$IFDEF LINUX} Cmd, ArqTmp : String ; {$ENDIF}
 begin
+  {$IFDEF LINUX}
+   inherited ArquivoMF_DLL( NomeArquivo );
+  {$ELSE}
   FilePath := ExtractFilePath( NomeArquivo );
   LoadDLLFunctions;
   OldAtivo := Ativo ;
@@ -3621,7 +3624,7 @@ begin
   finally
      FechaPortaSerialDLL( OldAtivo );
   end;
-
+  {$ENDIF}
 end;
 
 procedure TACBrECFBematech.ArquivoMFD_DLL(DataInicial, DataFinal: TDateTime;
