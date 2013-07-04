@@ -21,7 +21,7 @@ object Fprincipal: TFprincipal
     TabOrder = 0
     object Label2: TLabel
       Left = 8
-      Height = 16
+      Height = 15
       Top = 11
       Width = 98
       Caption = 'Tipo de Empresa'
@@ -33,7 +33,7 @@ object Fprincipal: TFprincipal
     end
     object Label3: TLabel
       Left = 112
-      Height = 16
+      Height = 15
       Top = 11
       Width = 77
       Caption = 'Razão Social'
@@ -45,7 +45,7 @@ object Fprincipal: TFprincipal
     end
     object Label4: TLabel
       Left = 536
-      Height = 16
+      Height = 15
       Top = 11
       Width = 49
       Caption = 'Abertura'
@@ -57,7 +57,7 @@ object Fprincipal: TFprincipal
     end
     object Label5: TLabel
       Left = 192
-      Height = 16
+      Height = 15
       Top = 59
       Width = 59
       Caption = 'Endereço:'
@@ -69,7 +69,7 @@ object Fprincipal: TFprincipal
     end
     object Label6: TLabel
       Left = 486
-      Height = 16
+      Height = 15
       Top = 59
       Width = 45
       Caption = 'Número'
@@ -81,7 +81,7 @@ object Fprincipal: TFprincipal
     end
     object Label7: TLabel
       Left = 8
-      Height = 16
+      Height = 15
       Top = 105
       Width = 80
       Caption = 'Complemento'
@@ -93,7 +93,7 @@ object Fprincipal: TFprincipal
     end
     object Label8: TLabel
       Left = 344
-      Height = 16
+      Height = 15
       Top = 105
       Width = 34
       Caption = 'Bairro'
@@ -105,7 +105,7 @@ object Fprincipal: TFprincipal
     end
     object Label9: TLabel
       Left = 8
-      Height = 16
+      Height = 15
       Top = 153
       Width = 40
       Caption = 'Cidade'
@@ -117,7 +117,7 @@ object Fprincipal: TFprincipal
     end
     object Label10: TLabel
       Left = 305
-      Height = 16
+      Height = 15
       Top = 153
       Width = 17
       Caption = 'UF'
@@ -129,7 +129,7 @@ object Fprincipal: TFprincipal
     end
     object Label11: TLabel
       Left = 344
-      Height = 16
+      Height = 15
       Top = 153
       Width = 27
       Caption = 'CEP'
@@ -141,7 +141,7 @@ object Fprincipal: TFprincipal
     end
     object Label12: TLabel
       Left = 464
-      Height = 16
+      Height = 15
       Top = 153
       Width = 51
       Caption = 'Situação'
@@ -153,7 +153,7 @@ object Fprincipal: TFprincipal
     end
     object Label13: TLabel
       Left = 8
-      Height = 16
+      Height = 15
       Top = 59
       Width = 50
       Caption = 'Fantasia'
@@ -165,7 +165,7 @@ object Fprincipal: TFprincipal
     end
     object EditTipo: TEdit
       Left = 8
-      Height = 24
+      Height = 21
       Top = 29
       Width = 98
       Font.Color = clWindowText
@@ -176,7 +176,7 @@ object Fprincipal: TFprincipal
     end
     object EditRazaoSocial: TEdit
       Left = 112
-      Height = 24
+      Height = 21
       Top = 29
       Width = 418
       Font.Color = clWindowText
@@ -187,7 +187,7 @@ object Fprincipal: TFprincipal
     end
     object EditAbertura: TEdit
       Left = 536
-      Height = 24
+      Height = 21
       Top = 29
       Width = 88
       Font.Color = clWindowText
@@ -198,7 +198,7 @@ object Fprincipal: TFprincipal
     end
     object EditEndereco: TEdit
       Left = 192
-      Height = 24
+      Height = 21
       Top = 77
       Width = 288
       Font.Color = clWindowText
@@ -209,7 +209,7 @@ object Fprincipal: TFprincipal
     end
     object EditNumero: TEdit
       Left = 486
-      Height = 24
+      Height = 21
       Top = 77
       Width = 138
       Font.Color = clWindowText
@@ -220,7 +220,7 @@ object Fprincipal: TFprincipal
     end
     object EditComplemento: TEdit
       Left = 8
-      Height = 24
+      Height = 21
       Top = 123
       Width = 330
       Font.Color = clWindowText
@@ -231,7 +231,7 @@ object Fprincipal: TFprincipal
     end
     object EditBairro: TEdit
       Left = 344
-      Height = 24
+      Height = 21
       Top = 123
       Width = 280
       Font.Color = clWindowText
@@ -242,7 +242,7 @@ object Fprincipal: TFprincipal
     end
     object EditCidade: TEdit
       Left = 8
-      Height = 24
+      Height = 21
       Top = 171
       Width = 289
       Font.Color = clWindowText
@@ -253,7 +253,7 @@ object Fprincipal: TFprincipal
     end
     object EditUF: TEdit
       Left = 305
-      Height = 24
+      Height = 21
       Top = 171
       Width = 33
       Font.Color = clWindowText
@@ -264,7 +264,7 @@ object Fprincipal: TFprincipal
     end
     object EditCEP: TEdit
       Left = 344
-      Height = 24
+      Height = 21
       Top = 171
       Width = 114
       Font.Color = clWindowText
@@ -275,7 +275,7 @@ object Fprincipal: TFprincipal
     end
     object EditSituacao: TEdit
       Left = 464
-      Height = 24
+      Height = 21
       Top = 171
       Width = 160
       Font.Color = clWindowText
@@ -286,7 +286,7 @@ object Fprincipal: TFprincipal
     end
     object EditFantasia: TEdit
       Left = 8
-      Height = 24
+      Height = 21
       Top = 77
       Width = 178
       Font.Color = clWindowText
@@ -308,7 +308,7 @@ object Fprincipal: TFprincipal
     TabOrder = 1
     object Label1: TLabel
       Left = 388
-      Height = 16
+      Height = 15
       Top = 12
       Width = 85
       Caption = 'Digite o CNPJ:'
@@ -320,7 +320,7 @@ object Fprincipal: TFprincipal
     end
     object Label14: TLabel
       Left = 388
-      Height = 16
+      Height = 15
       Top = 78
       Width = 96
       Caption = 'Digite o Captcha'
@@ -387,7 +387,7 @@ object Fprincipal: TFprincipal
     end
     object EditCaptcha: TEdit
       Left = 388
-      Height = 41
+      Height = 37
       Top = 97
       Width = 169
       CharCase = ecUppercase

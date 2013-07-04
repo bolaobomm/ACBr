@@ -78,7 +78,7 @@ begin
     begin
       EditTipo.Text        := ACBrConsultaCNPJ1.EmpresaTipo;
       EditRazaoSocial.Text := ACBrConsultaCNPJ1.RazaoSocial;
-      EditAbertura.Text    := ACBrConsultaCNPJ1.Abertura;
+      EditAbertura.Text    := DateToStr( ACBrConsultaCNPJ1.Abertura );
       EditFantasia.Text    := ACBrConsultaCNPJ1.Fantasia;
       EditEndereco.Text    := ACBrConsultaCNPJ1.Endereco;
       EditNumero.Text      := ACBrConsultaCNPJ1.Numero;
