@@ -194,6 +194,7 @@ TACBrHTTP = class( TACBrComponent )
     procedure HTTPGet( AURL : String) ; virtual ;
     Procedure HTTPPost( AURL : String ) ; virtual ;
     procedure HTTPMethod( Method, AURL : String ); virtual ;
+
     function GetHeaderValue( AValue : String ) : String ;
 
     procedure LerConfiguracoesProxy; 
@@ -211,9 +212,16 @@ TACBrHTTP = class( TACBrComponent )
        read fOnAntesAbrirHTTP write fOnAntesAbrirHTTP ;
 end ;
 
+function GetURLBasePath(URL: String): String;
+
 implementation
 
-Uses ACBrUtil, synacode {$IFNDEF NOGUI},Controls, Forms {$ENDIF} ;
+Uses ACBrUtil, synacode, synautil {$IFNDEF NOGUI},Controls, Forms {$ENDIF} ;
+
+function GetURLBasePath(URL: String): String;
+begin
+  Result := Copy(URL, 1, PosLast('/',URL) );
+end;
 
 { TACBrTCPServerDaemon }
 
@@ -622,7 +630,7 @@ var
   {$IFNDEF NOGUI}
    OldCursor : TCursor ;
   {$ENDIF}
-   CT : String ;
+   CT, Location : String ;
 begin
   {$IFNDEF NOGUI}
    OldCursor := Screen.Cursor ;
@@ -642,6 +650,16 @@ begin
     //HTTPSend.Document.SaveToFile( 'c:\temp\HttpSend.txt' );
 
     HTTPSend.HTTPMethod(Method, AURL);
+
+    while HTTPSend.ResultCode = 302 do
+    begin
+      Location := Trim(SeparateLeft( GetHeaderValue('Location:'), ';' ));
+
+      AURL := GetURLBasePath( AURL ) + Location;
+      HTTPSend.Clear;
+      HTTPSend.HTTPMethod('GET', AURL ) ;
+    end ;
+
     OK := HTTPSend.ResultCode = 200;
     RespHTTP.LoadFromStream( HTTPSend.Document ) ;
 
@@ -853,4 +871,4 @@ begin
   fHTTPSend.ProxyUser := AValue;
 end;
 
-end.
+end.

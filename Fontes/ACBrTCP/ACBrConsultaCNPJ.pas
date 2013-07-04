@@ -52,14 +52,17 @@ uses
 type
   EACBrConsultaCNPJException = class ( Exception );
 
+  { TACBrConsultaCNPJ }
+
   TACBrConsultaCNPJ = class(TACBrHTTP)
   private
-    Html: String;
     FViewState: String;
     FEmpresaTipo: String;
-    FAbertura: String;
+    FAbertura: TDateTime;
     FRazaoSocial: String;
     FFantasia: String;
+    FCNAE1: String;
+    FCNAE2: String;
     FEndereco: String;
     FNumero: String;
     FComplemento: String;
@@ -69,22 +72,11 @@ type
     FUF: String;
     FSituacao: String;
     FCNPJ: String;
-    procedure MyHttpGetStream(URL: String; var Stream: TStream);
-    function  MyHttpGet(URL: String): String;
-    function  MyHttpPost(URL: String; Post: TStringStream): String;
-    Function CaptchaGetURL: String;
-    function GetEmpresaTipo: String;
-    function GetAbertura: String;
-    function GetRazaoSocial: String;
-    function GetFantasia: String;
-    function GetEndereco: String;
-    function GetNumero: String;
-    function GetComplemento: String;
-    function GetCEP: String;
-    function GetBairro: String;
-    function GetCidade: String;
-    function GetUF: String;
-    function GetSituacao: String;
+    FDataSituacao: TDateTime;
+    Function GetCaptchaURL: String;
+
+    function VerificarErros(Str: String): String;
+    function LerCampo(Texto: TStringList; NomeCampo: AnsiString): String;
   public
     procedure Captcha(Stream: TStream);
     function Consulta(const ACNPJ, ACaptcha: String;
@@ -92,9 +84,11 @@ type
   published
     property CNPJ: String Read FCNPJ Write FCNPJ;
     property EmpresaTipo: String Read FEmpresaTipo;
-    property Abertura: String Read FAbertura;
+    property Abertura: TDateTime Read FAbertura;
     property RazaoSocial: String Read FRazaoSocial;
     property Fantasia: String Read FFantasia;
+    property CNAE1: String Read FCNAE1;
+    property CNAE2: String Read FCNAE2;
     property Endereco: String Read FEndereco;
     property Numero: String Read FNumero;
     property Complemento: String Read FComplemento;
@@ -103,41 +97,13 @@ type
     property Cidade: String Read FCidade;
     property UF: String Read FUF;
     property Situacao: String Read FSituacao;
+    property DataSituacao: TDateTime Read FDataSituacao;
   end;
 
 implementation
 
 uses
-  ACBrUtil, synacode, strutils;
-
-function HeadersGetValue(Nome: String; Headers: TStringList): String;
-var
-  I: Integer;
-  Res: String;
-begin
-  for I := 0 to Headers.Count -1 do
-  begin
-    if Pos(UpperCase(Nome+':'), UpperCase(Headers[i])) > 0 then
-    begin
-      Res:= Headers[i];
-      Res:= Copy(Res, Pos(':', Res) + 2, Length(Res));
-      Break;
-    end;
-  end;
-
-  Result:= Res;
-end;
-
-function GetURLSepara(URL: String): String;
-  var
-    I, R: Integer;
-begin
-  R:= Length(URL);
-  for I := 0 to Length(URL) do
-    if URL[i] = '/' then
-      R:= I;
-  Result:= Copy(URL, 1, R);
-end;
+  ACBrUtil, synacode, synautil, strutils;
 
 function StrEntreStr(Str, StrInicial, StrFinal: String; ComecarDe: Integer = 1): String;
 var
@@ -156,241 +122,17 @@ begin
     Result:= '';
 end;
 
-function StrPularStr(Str, StrPular: String): String;
-  var
-    Ini: Integer;
-begin
-  Ini:= Pos(StrPular, Str);
-  if Ini > 0 then
-    Result:= Copy(Str, Ini + Length(StrPular), Length(Str))
-  else
-    Result:= Str;
-end;
-
-procedure TACBrConsultaCNPJ.MyHttpGetStream(URL: String; var Stream: TStream);
-begin
-  HttpSend.Headers.Clear;
-  HttpSend.Document.Clear;
-  HttpSend.HTTPMethod('GET', URL);
-  if HttpSend.ResultCode = 200 then
-  begin
-    Stream.CopyFrom(HttpSend.Document, HttpSend.Document.Size);
-    Stream.Position:= 0;
-  end;
-end;
-
-function TACBrConsultaCNPJ.MyHttpGet(URL: String): String;
+Function TACBrConsultaCNPJ.GetCaptchaURL: String;
 var
-  Res: TStringList;
-  Red: String;
-begin
-  Res:= TStringList.Create;
-  try
-    HttpSend.Headers.Clear;
-    HttpSend.Document.Clear;
-    HttpSend.HTTPMethod('GET', URL);
-
-    if HttpSend.ResultCode = 200 then
-    begin
-      Res.LoadFromStream(HttpSend.Document);
-      Result:= Res.Text;
-    end;
-
-    if HttpSend.ResultCode = 302 then
-    begin
-      Red:= GetURLSepara(URL) + HeadersGetValue('location', HttpSend.Headers);
-      Result:= MyHttpGet(Red);
-    end;
-  finally
-    Res.Free;
-  end;
-end;
-
-function TACBrConsultaCNPJ.MyHttpPost(URL: String; Post: TStringStream): String;
-var
-  Res: TStringList;
-  Red: String;
-begin
-  Res:= TStringList.Create;
-  try
-    HttpSend.Headers.Clear;
-    HttpSend.Document.Clear;
-    Post.Position:= 0;
-    HttpSend.Document.Position:= 0;
-    HttpSend.Document.CopyFrom(Post, Post.Size);
-    HttpSend.MimeType:= 'application/x-www-form-urlencoded';
-    HttpSend.HTTPMethod('POST', URL);
-
-    if HttpSend.ResultCode = 200 then
-    begin
-      Res.LoadFromStream(HttpSend.Document);
-      Result:= Res.Text;
-    end;
-
-    if HttpSend.ResultCode = 302 then
-    begin
-      Red:= GetURLSepara(URL) + HeadersGetValue('location', HttpSend.Headers);
-      Result:= MyHttpGet(Red);
-    end;
-  finally
-    Res.Free;
-  end;
-end;
-
-function TACBrConsultaCNPJ.GetEmpresaTipo: String;
-var
-  S: String;
-begin
-  S:= Html;
-  S:= StrPularStr(S, '<font face="Arial" style="font-size: 6pt">		NÚMERO DE INSCRIÇÃO		</font>');
-  S:= StrPularStr(S, '<br>');
-  S:= StrPularStr(S, '<br>');
-  S:= StrEntreStr(S, '<b>', '</b>');
-  Result:= Trim(S);
-end;
-
-function TACBrConsultaCNPJ.GetAbertura: String;
-var
-  S: String;
-begin
-  S:= Html;
-  S:= StrPularStr(S, '<font face="Arial" style="font-size: 6pt">		DATA DE ABERTURA		</font>');
-  S:= StrEntreStr(S, '<b>', '</b>');
-
-  if Trim(S) <> '' then
-  begin
-    try
-      Result:= FormatDateTime('DD/MM/YYYY', StrToDate(Trim(S)));
-    except
-      Result:= '';
-    end;
-  end
-  else
-    Result:= '';
-end;
-
-function TACBrConsultaCNPJ.GetRazaoSocial: String;
-var
-  S: String;
-begin
-  S:= Html;
-  S:= StrPularStr(S, '<font face="Arial" style="font-size: 6pt">		NOME EMPRESARIAL		</font>');
-  S:= StrPularStr(S, '<br>');
-  S:= StrEntreStr(S, '<b>', '</b>');
-  Result:= Trim(S);
-end;
-
-function TACBrConsultaCNPJ.GetFantasia: String;
-var
-  S: String;
-begin
-  S:= Html;
-  S:= StrPularStr(S, '<font face="Arial" style="font-size: 6pt">		TÍTULO DO ESTABELECIMENTO (NOME DE FANTASIA)		</font>');
-  S:= StrPularStr(S, '<br>');
-  S:= StrEntreStr(S, '<b>', '</b>');
-  Result:= Trim(S);
-end;
-
-//Endereco, Numero, Complemento, CEP, Bairro, Cidade, UF, Situacao
-
-function TACBrConsultaCNPJ.GetEndereco: String;
-  var
-    S: String;
-begin
-  S:= Html;
-  S:= StrPularStr(S, '<font face="Arial" style="font-size: 6pt">		LOGRADOURO		</font>');
-  S:= StrPularStr(S, '<br>');
-  S:= StrEntreStr(S, '<b>', '</b>');
-  Result:= Trim(S);
-end;
-
-function TACBrConsultaCNPJ.GetNumero: String;
-  var
-    S: String;
-begin
-  S:= Html;
-  S:= StrPularStr(S, '<font face="Arial" style="font-size: 6pt">		NÚMERO		</font>');
-  S:= StrPularStr(S, '<br>');
-  S:= StrEntreStr(S, '<b>', '</b>');
-  Result:= Trim(S);
-end;
-
-function TACBrConsultaCNPJ.GetComplemento: String;
-  var
-    S: String;
-begin
-  S:= Html;
-  S:= StrPularStr(S, '<font face="Arial" style="font-size: 6pt">		COMPLEMENTO		</font>');
-  S:= StrPularStr(S, '<br>');
-  S:= StrEntreStr(S, '<b>', '</b>');
-  Result:= Trim(S);
-end;
-
-function TACBrConsultaCNPJ.GetCEP: String;
-  var
-    S: String;
-begin
-  S:= Html;
-  S:= StrPularStr(S, '<font face="Arial" style="font-size: 6pt">		CEP		</font>');
-  S:= StrPularStr(S, '<br>');
-  S:= StrEntreStr(S, '<b>', '</b>');
-  Result:= Trim(S);
-end;
-
-function TACBrConsultaCNPJ.GetBairro: String;
-  var
-    S: String;
-begin
-  S:= Html;
-  S:= StrPularStr(S, '<font face="Arial" style="font-size: 6pt">		BAIRRO/DISTRITO		</font>');
-  S:= StrPularStr(S, '<br>');
-  S:= StrEntreStr(S, '<b>', '</b>');
-  Result:= Trim(S);
-end;
-
-function TACBrConsultaCNPJ.GetCidade: String;
-  var
-    S: String;
-begin
-  S:= Html;
-  S:= StrPularStr(S, '<font face="Arial" style="font-size: 6pt">		MUNICÍPIO		</font>');
-  S:= StrPularStr(S, '<br>');
-  S:= StrEntreStr(S, '<b>', '</b>');
-  Result:= Trim(S);
-end;
-
-function TACBrConsultaCNPJ.GetUF: String;
-  var
-    S: String;
-begin
-  S:= Html;
-  S:= StrPularStr(S, '<font face="Arial" style="font-size: 6pt">		UF		</font>');
-  S:= StrPularStr(S, '<br>');
-  S:= StrEntreStr(S, '<b>', '</b>');
-  Result:= Trim(S);
-end;
-
-function TACBrConsultaCNPJ.GetSituacao: String;
-  var
-    S: String;
-begin
-  S:= Html;
-  S:= StrPularStr(S, '<font face="Arial" style="font-size: 6pt">		SITUAÇÃO CADASTRAL		</font>');
-  S:= StrPularStr(S, '<br>');
-  S:= StrEntreStr(S, '<b>', '</b>');
-  Result:= Trim(S);
-end;
-
-Function TACBrConsultaCNPJ.CaptchaGetURL: String;
-  var
-    URL: String;
+  URL, Html: String;
 begin
   try
-    Html:= MyHttpGet('http://www.receita.fazenda.gov.br/pessoajuridica/cnpj/cnpjreva/cnpjreva_solicitacao2.asp');
+    Self.HTTPGet('http://www.receita.fazenda.gov.br/pessoajuridica/cnpj/cnpjreva/cnpjreva_solicitacao2.asp');
+    Html := Self.RespHTTP.Text;
 
     URL := 'http://www.receita.fazenda.gov.br' +
-      StrEntreStr(Html, 'alt='+
-      QuotedStr('Imagem com os caracteres anti robô') + ' src='+'''', '''');
+           StrEntreStr(Html, 'alt='+
+                        QuotedStr(ACBrStr('Imagem com os caracteres anti robô')) + ' src='+'''', '''');
 
     FViewState := StrEntreStr(Html, '<input type=hidden id=viewstate name=viewstate value='+'''', '''');
 
@@ -406,46 +148,71 @@ end;
 procedure TACBrConsultaCNPJ.Captcha(Stream: TStream);
 begin
   try
-    MyHttpGetStream(CaptchaGetURL, Stream);
+    HTTPGet(GetCaptchaURL);
+    if HttpSend.ResultCode = 200 then
+    begin
+      HTTPSend.Document.Position := 0;
+      Stream.CopyFrom(HttpSend.Document, HttpSend.Document.Size);
+      Stream.Position := 0;
+    end;
   Except on E: Exception do begin
     raise EACBrConsultaCNPJException.Create('Erro na hora de fazer o download da imagem do captcha.'+#13#10+E.Message);
   end;
   end;
 end;
 
-function VerificarErros(Str: String): String;
+function TACBrConsultaCNPJ.VerificarErros(Str: String): String;
   var
     Res: String;
 begin
   Res:= '';
   if Res = '' then
-    if Pos('Erro na Consulta', Str) > 0 then
+    if Pos( ACBrStr('Erro na Consulta'), Str) > 0 then
       Res:= 'Catpcha errado.';
 
   if Res = '' then
-    if Pos('O número do CNPJ não é válido. Verifique se o mesmo foi digitado c'+
-    'orretamente.', Str) > 0 then
+    if Pos(ACBrStr('O número do CNPJ não é válido. Verifique se o mesmo foi digitado c'+
+    'orretamente.'), Str) > 0 then
       Res:= 'O número do CNPJ não é válido. Verifique se o mesmo foi digitado'+
       ' corretamente.';
 
   if Res = '' then
-    if Pos('Não existe no Cadastro de Pessoas Jurídicas o número de CNPJ infor'+
-    'mado. Verifique se o mesmo foi digitado corretamente.', Str) > 0 then
+    if Pos(ACBrStr('Não existe no Cadastro de Pessoas Jurídicas o número de CNPJ infor'+
+    'mado. Verifique se o mesmo foi digitado corretamente.'), Str) > 0 then
       Res:= 'Não existe no Cadastro de Pessoas Jurídicas o número de CNPJ info'+
       'rmado. Verifique se o mesmo foi digitado corretamente.';
 
   if Res = '' then
-    if Pos('a. No momento não podemos atender a sua solicitaão. Por favor tent'+
-    'e mais tarde.', Str) > 0 then
+    if Pos(ACBrStr('a. No momento não podemos atender a sua solicitação. Por favor tent'+
+    'e mais tarde.'), Str) > 0 then
       Res:= 'Erro no site da receita federal. Tente mais tarde.';
 
-  Result:= Res;
+  Result:= ACBrStr(Res);
+end;
+
+function TACBrConsultaCNPJ.LerCampo(Texto: TStringList; NomeCampo: AnsiString): string;
+var
+  i : integer;
+begin
+  NomeCampo := ACBrStr(UpperCase(NomeCampo));
+  Result := '';
+  for i := 0 to Texto.Count-1 do
+  begin
+    if Trim(UpperCase(Texto[i])) = NomeCampo then
+    begin
+      Result := StringReplace(Trim(Texto[i+1]),'&nbsp;',' ',[rfReplaceAll]);
+      break;
+    end;
+  end
 end;
 
 function TACBrConsultaCNPJ.Consulta(const ACNPJ, ACaptcha: String;
   ARemoverEspacosDuplos: Boolean): Boolean;
 var
   Post: TStringStream;
+  Erro, Html: String;
+  Resposta : TStringList;
+  I: Integer;
 begin
   Post:= TStringStream.Create('');
   try
@@ -456,26 +223,57 @@ begin
     Post.WriteString('captchaAudio=&');
     Post.WriteString('submit1=Consultar&');
     Post.WriteString('search_type=cnpj');
+    Post.Position:= 0;
 
-    Html:= MyHttpPost('http://www.receita.fazenda.gov.br/pessoajuridica/cnpj/cnpjreva/valida.asp', Post);
-    Html:= StringReplace(Html, #13#10, '', [rfReplaceAll]);
+    HttpSend.Clear;
+    HttpSend.Document.Position:= 0;
+    HttpSend.Document.CopyFrom(Post, Post.Size);
+    HTTPSend.MimeType := 'application/x-www-form-urlencoded';
+    HTTPPost('http://www.receita.fazenda.gov.br/pessoajuridica/cnpj/cnpjreva/valida.asp');
 
-    if VerificarErros(Html) = '' then
+    Erro := VerificarErros(RespHTTP.Text);
+
+    if Erro = '' then
     begin
       Result:= True;
+      Resposta := TStringList.Create;
+      try
+        Resposta.Text := StripHTML(RespHTTP.Text);
 
-      FEmpresaTipo := GetEmpresaTipo;
-      FAbertura    := GetAbertura;
-      FRazaoSocial := GetRazaoSocial;
-      FEndereco    := GetEndereco;
-      FNumero      := GetNumero;
-      FComplemento := GetComplemento;
-      FCEP         := GetCEP;
-      FBairro      := GetBairro;
-      FCidade      := GetCidade;
-      FUF          := GetUF;
-      FSituacao    := GetSituacao;
-      FFantasia    := GetFantasia;
+        I := 0;
+        while i < Resposta.Count-1 do
+        begin
+          if trim(Resposta[I]) = '' then
+          begin
+            Resposta.Delete(I);
+            Inc(I,-1);
+          end;
+          Inc(I);
+        end;
+
+        //Resposta.Text := AnsiToUtf8(Resposta.Text);
+        //DEBUG: Resposta.SaveToFile('/tmp/bobo.txt');
+
+        FCNPJ         := LerCampo(Resposta,'NÚMERO DE INSCRIÇÃO');
+        FEmpresaTipo  := LerCampo(Resposta,FCNPJ);
+        FAbertura     := StrToDateDef(LerCampo(Resposta,'DATA DE ABERTURA'),0);
+        FRazaoSocial  := LerCampo(Resposta,'NOME EMPRESARIAL');
+        FFantasia     := LerCampo(Resposta,'TÍTULO DO ESTABELECIMENTO (NOME DE FANTASIA)');
+        FCNAE1        := LerCampo(Resposta,'CÓDIGO E DESCRIÇÃO DA ATIVIDADE ECONÔMICA PRINCIPAL');
+        FCNAE2        := LerCampo(Resposta,'CÓDIGO E DESCRIÇÃO DAS ATIVIDADES ECONÔMICAS SECUNDÁRIAS');
+        FEndereco     := LerCampo(Resposta,'LOGRADOURO');
+        FNumero       := LerCampo(Resposta,'NÚMERO');
+        FComplemento  := LerCampo(Resposta,'COMPLEMENTO');
+        FCEP          := OnlyNumber( LerCampo(Resposta,'CEP') ) ;
+        FCEP          := copy(FCEP,1,5)+'-'+copy(FCEP,6,3) ;
+        FBairro        := LerCampo(Resposta,'BAIRRO/DISTRITO');
+        FCidade       := LerCampo(Resposta,'MUNICÍPIO');
+        FUF           := LerCampo(Resposta,'UF');
+        FSituacao     := LerCampo(Resposta,'SITUAÇÃO CADASTRAL');
+        FDataSituacao := StrToDateDef(LerCampo(Resposta,'DATA DA SITUAÇÃO CADASTRAL'),0);
+      finally
+        Resposta.Free;
+      end ;
 
       if Trim(FRazaoSocial) = '' then
         raise EACBrConsultaCNPJException.Create('Não foi possível obter os dados.');
@@ -494,7 +292,7 @@ begin
     else
     begin
       Result:= False;
-      raise EACBrConsultaCNPJException.Create(VerificarErros(Html));
+      raise EACBrConsultaCNPJException.Create(Erro);
     end;
   finally
     Post.Free;
@@ -502,3 +300,4 @@ begin
 end;
 
 end.
+
