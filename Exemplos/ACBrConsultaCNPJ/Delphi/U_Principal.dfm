@@ -1,10 +1,10 @@
 object F_Principal: TF_Principal
-  Left = 0
-  Top = 0
+  Left = 348
+  Top = 130
+  Width = 683
+  Height = 458
   BorderIcons = [biSystemMenu, biMinimize]
   Caption = 'Consulta de CNPJ'
-  ClientHeight = 420
-  ClientWidth = 650
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -382,6 +382,9 @@ object F_Principal: TF_Principal
       Font.Height = -16
       Font.Name = 'Tahoma'
       Font.Style = []
+      ParentFont = False
+      TabOrder = 2
+      OnClick = ButBuscarClick
       Glyph.Data = {
         E6040000424DE604000000000000360000002800000014000000140000000100
         180000000000B0040000120B0000120B00000000000000000000FFFFFFFDFDFD
@@ -423,9 +426,6 @@ object F_Principal: TF_Principal
         E5E6FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
         FFFFFFFFFFFFFFFFFFFAFAFAE6E6E6D9D8D8DADADAE4E3E4FCFCFCFFFFFFFFFF
         FFFFFFFFFFFFFFFFFFFF}
-      ParentFont = False
-      TabOrder = 2
-      OnClick = ButBuscarClick
     end
     object EditCaptcha: TEdit
       Left = 361
