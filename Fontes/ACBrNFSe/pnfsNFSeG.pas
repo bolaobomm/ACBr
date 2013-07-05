@@ -321,7 +321,7 @@ begin
                       NumeroNFse +
                     '</' + Prefixo4 + 'Numero>' +
 
-                   DFeUtil.SeSenao(AProvedor = pro4R,
+                   DFeUtil.SeSenao(AProvedor in [pro4R, proISSe],
 
                     '<' + Prefixo4 + 'CpfCnpj>' +
                      '<' + Prefixo4 + 'Cnpj>' +
