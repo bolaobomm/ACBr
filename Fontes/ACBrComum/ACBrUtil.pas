@@ -161,6 +161,7 @@ function RemoveString(const sSubStr, sString: AnsiString): AnsiString;
 function RemoveStrings(const AText: AnsiString; StringsToRemove: array of AnsiString): AnsiString;
 function RemoverEspacosDuplos(const AString: AnsiString): AnsiString;
 function StripHTML(const AHTMLString : AnsiString) : AnsiString;
+procedure RemoveEmptyLines( AStringList: TStringList) ;
 function RandomName(const LenName : Integer = 8) : String ;
 
 { PosEx, retirada de StrUtils.pas do D7, para compatibilizar com o Delphi 6
@@ -744,6 +745,22 @@ end;
 function RemoveString(const sSubstr, sString: AnsiString): AnsiString;
 begin
    Result := AnsiString(StringReplace( String(sString), String(sSubStr), '', [rfReplaceAll]));
+end;
+
+procedure RemoveEmptyLines(AStringList : TStringList) ;
+var
+  I : Integer ;
+begin
+  I := 0;
+  while I < AStringList.Count-1 do
+  begin
+    if trim(AStringList[I]) = '' then
+    begin
+      AStringList.Delete(I);
+      Inc(I,-1);
+    end;
+    Inc(I);
+  end;
 end;
 
 {-----------------------------------------------------------------------------

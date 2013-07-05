@@ -48,7 +48,7 @@ unit ACBrCEP ;
 interface
 
 uses
-  Classes, SysUtils, contnrs, ACBrSocket;
+  Classes, SysUtils, contnrs, ACBrSocket, ACBrIBGE;
 
 type
   TACBrCEPWebService = ( wsNenhum, wsBuscarCep, wsCepLivre, wsRepublicaVirtual,
@@ -253,10 +253,11 @@ type
 
   TACBrWSCorreios = class(TACBrCEPWSClass)
   private
-    function  ExtractText(aText, OpenTag, CloseTag: String) : String;
+    fACBrIBGE: TACBrIBGE;
     procedure ProcessaResposta;
   public
     constructor Create( AOwner: TACBrCEP ); override ;
+    destructor Destroy; override;
 
     procedure BuscarPorCEP( ACEP: String ); override ;
     procedure BuscarPorLogradouro( AMunicipio, ATipo_Logradouro, ALogradouro,
@@ -266,7 +267,7 @@ type
 
 implementation
 
-uses ACBrUtil, strutils ;
+uses strutils, math, synacode, ACBrUtil ;
 
 { TACBrCEPEndereco ************************************************************}
 
@@ -1077,7 +1078,14 @@ constructor TACBrWSCorreios.Create(AOwner: TACBrCEP);
 begin
   inherited Create(AOwner);
   fpURL := 'http://www.buscacep.correios.com.br/servicos/dnec/consultaEnderecoAction.do?' ;
+  fACBrIBGE := TACBrIBGE.Create(nil);
 end;
+
+destructor TACBrWSCorreios.Destroy ;
+begin
+  fACBrIBGE.Free;
+  inherited Destroy ;
+end ;
 
 procedure TACBrWSCorreios.BuscarPorCEP(ACEP: String);
 var
@@ -1092,100 +1100,143 @@ end;
 procedure TACBrWSCorreios.BuscarPorLogradouro( AMunicipio, ATipo_Logradouro, ALogradouro,
          AUF, ABairro : String ) ;
 var
-sParams: string;
-sEndereco: String;
+  sParams: string;
+  sEndereco: String;
+
+  Procedure AddParam( AParam: String; Separador: String = '/' ) ;
+  begin
+    if (Trim(AParam) <> '') then
+       sEndereco := sEndereco + Separador + AParam;
+  end ;
+
 begin
-   if (trim(ATipo_Logradouro) <> '') and (trim(ALogradouro) <> '')  then
-      sEndereco := ATipo_Logradouro+' '+ALogradouro;
+  if trim(AMunicipio) = '' then
+     raise Exception.Create( ACBrStr('Você deve informar o Município') );
 
-   if trim(sEndereco) <> '' then
-      sEndereco := sEndereco+'/'+ABairro
-   else
-      sEndereco := ABairro;
+  if trim(AUF) = '' then
+     raise Exception.Create( ACBrStr('Você deve informar a UF') );
 
-   if trim(sEndereco) <> '' then
-      sEndereco := sEndereco+'/'+AMunicipio
-   else
-      sEndereco := AMunicipio;
-
-   if trim(sEndereco) <> '' then
-      sEndereco := sEndereco+'/'+AUF
-   else
-      sEndereco := AUF;
+   sEndereco := '';
+   AddParam( ATipo_Logradouro, '' );
+   AddParam( ALogradouro, ' ' );
+   AddParam( ABairro );
+   AddParam( AMunicipio );
+   AddParam( AUF );
 
    if trim(sEndereco) = '' then
-      raise Exception.Create('Não existe Parametros para Pesquisa');
+      raise Exception.Create(ACBrStr('Não existe Parametros para Pesquisa'));
 
    //sEndereco := ATipo_Logradouro+' '+ALogradouro+ '/'+ABairro+'/'+AMunicipio+'/'+AUF;
-   sEndereco := StringReplace(sEndereco,' ','%20',[rfReplaceAll]);
 
-   sParams := 'relaxation='+sEndereco+'&TipoCep=ALL&cfm=1&Metodo=listaLogradouro&TipoConsulta=relaxation&StartRow=1&EndRow=100';
+   sParams := 'relaxation='+EncodeURL( ACBrStrToAnsi(sEndereco) )+
+              '&TipoCep=ALL&semelhante=N&cfm=1&Metodo=listaLogradouro&TipoConsulta=relaxation&StartRow=1&EndRow=10';
    fOwner.HTTPGet(fpURL + sParams);
    ProcessaResposta;
 end;
 
 procedure TACBrWSCorreios.ProcessaResposta;
 var
-iFor, iPos: Integer;
-sStr: string;
+  iLin, iPos, iEnd, iFim : Integer;
+  sLin, sMun : string;
+  SL : TStringList;
 begin
   fOwner.fEnderecos.Clear;
 
-  with fOwner.Enderecos.New do
-  begin
-     iPos := 0;
-     for iFor := 0 to fOwner.RespHTTP.Count -1 do
-     begin
-        if Pos('Resultado superior a 100', fOwner.RespHTTP.Strings[iFor]) > 0 then
-           raise Exception.Create('Resultado superior a 100 registros');
+  fACBrIBGE.ProxyHost := fOwner.ProxyHost;
+  fACBrIBGE.ProxyPort := fOwner.ProxyPort;
+  fACBrIBGE.ProxyPass := fOwner.ProxyPass;
+  fACBrIBGE.ProxyUser := fOwner.ProxyUser;
 
-        sStr := Trim(ExtractText(fOwner.RespHTTP.Strings[iFor],'"padding: 2px">','</td>'));
+  SL := TStringList.Create;
+  Try
+    // Limpando HTML //
+    SL.Text := StripHTML( fOwner.RespHTTP.Text );
+    RemoveEmptyLines( SL );
 
-        if (sStr <> '') or (iPos > 0) then // count maior que zero é por causa desse cep {78075-990} que não retorna nome de rua
-        begin                              // pois é uma caixa postal comunitaria, pode ser que existam outras
-           Inc(iPos);
-           if iPos = 1 then
-           begin
-              Tipo_Logradouro := Trim(Copy(sStr,1,Pos(' ',sStr)));
-              Logradouro      := Trim(Copy(sStr,Pos(' ',sStr),Length(sStr)));
-              Complemento     := '';
-           end
-           else
-           if iPos = 2 then
-              Bairro := sStr
-           else
-           if iPos = 3 then
-              Municipio := sStr
-           else
-           if iPos = 4 then
-              UF := sStr
-           else
-           if iPos = 5 then
-           begin
-              CEP  := sStr;
-              iPos := 0;
-           end;
-           IBGE_Municipio := '';
-        end;
-     end;
-  end;
+    //DEBUG
+    //SL.SaveToFile('c:\temp\bobo.txt');
+
+    iLin := 0;
+    iFim := SL.Count-1;
+    while iLin < iFim do
+    begin
+      sLin := SL[iLin] ;
+
+      if Pos('Resultado superior a 100', sLin) > 0 then
+        raise Exception.Create('Resultado superior a 100 registros');
+
+      if (Pos( ACBrStr('O endereço informado'), sLin) > 0) and
+         (Pos( ACBrStr('não foi encontrado'), sLin) > 0) then
+        break ;
+
+      if Pos('Logradouro(s)', sLin) > 0 then       // Aqui começam os endereços
+      begin
+        iEnd := StrToIntDef( OnlyNumber(sLin), 0) ;
+        if iEnd < 1 then
+          Break;
+
+        iLin := iLin + 6 ;  // Pulando linhas do cabeçalho
+        sMun := '';
+
+        // Achando a linha final //
+        iFim := iLin;
+        while (iFim < SL.Count) and (Pos( ACBrStr('Para mais informações,'), SL[iFim]) = 0) do
+           Inc( iFim );
+
+        while iLin < iFim do
+        begin
+          { Se tem 1 endereço apenas, verifica se retornou Logradouro.
+            Ex: "78075-990" é o CEP de uma caixa comunitária }
+          iPos := IfThen( iEnd = 1, 5-(iFim - iLin), 0 ) ;
+
+          with fOwner.Enderecos.New do
+          begin
+            while (iLin < iFim) and (iPos < 5) do
+            begin
+              sLin := Trim(SL[iLin]) ;
+
+              Case iPos of
+                0 :
+                  begin
+                    Tipo_Logradouro := Trim(Copy(sLin,1,Pos(' ',sLin)));
+                    Logradouro      := Trim(Copy(sLin,Pos(' ',sLin),Length(sLin)));
+                    Complemento     := '';
+                  end ;
+                1 : Bairro    := sLin ;
+                2 : Municipio := sLin ;
+                3 : UF        := sLin ;
+                4 : CEP       := sLin;
+              end ;
+
+              Inc( iPos );
+              Inc( iLin );
+            end ;
+
+            // Correios não retornam informação do IBGE, Fazendo busca do IBGE com ACBrIBGE //
+            IBGE_Municipio := '';
+            if (Municipio <> '') then
+            begin
+              if (sMun <> Municipio) then  // Evita buscar municipio já encontrado
+              begin
+                fACBrIBGE.BuscarPorNome( Municipio ) ;
+                sMun := Municipio;
+              end ;
+
+              if fACBrIBGE.Cidades.Count > 0 then  // Achou ?
+                IBGE_Municipio := IntToStr( fACBrIBGE.Cidades[0].CodMunicio );
+            end ;
+          end ;
+        end ;
+      end
+      else
+        Inc( iLin );
+    end;
+  finally
+    SL.Free;
+  end ;
 
   if Assigned( fOwner.OnBuscaEfetuada ) then
     fOwner.OnBuscaEfetuada( Self );
-end;
-
-function TACBrWSCorreios.ExtractText(aText, OpenTag, CloseTag: String) : String;
-var
-iAux, kAux : Integer;
-begin
-  Result := '';
-
-  if (Pos(CloseTag, aText) <> 0) and (Pos(OpenTag, aText) <> 0) then
-  begin
-    iAux := Pos(OpenTag, aText) + Length(OpenTag);
-    kAux := Pos(CloseTag, aText);
-    Result := Copy(aText, iAux, kAux-iAux);
-  end;
 end;
 
 end.

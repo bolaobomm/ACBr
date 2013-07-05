@@ -37,7 +37,13 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
-28/06/2013
+05/07/2013
+-- ACBrCEP --
+[*] Melhorado o interpretador de retorno do Correios, Refactoring de rotinas (por: DSA)
+[+] Adicionada integração com ACBrIBGE, na consulta dos Correios      (por: DSA)
+[*] Corrigido problemas na Busca por Logradouro com acentuação          (por: DSA)
+
+04/07/2013
 -- ACBrConsultaCNPJ --
 [*] Refactoring, substituindo alguns métodos que a classe (ACBrSocket) já possui...
 [-] Correção para compatibilizar com Linux, não funcionava devido a problemas de

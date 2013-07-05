@@ -192,7 +192,8 @@ TACBrHTTP = class( TACBrComponent )
 
     function AjustaParam(AParam : String) : String ;
     procedure HTTPGet( AURL : String) ; virtual ;
-    Procedure HTTPPost( AURL : String ) ; virtual ;
+    Procedure HTTPPost( AURL : String ) ; overload; virtual ;
+    Procedure HTTPPost( AURL : String; APostData : String  ) ; overload; virtual ;
     procedure HTTPMethod( Method, AURL : String ); virtual ;
 
     function GetHeaderValue( AValue : String ) : String ;
@@ -619,9 +620,16 @@ begin
   HTTPMethod( 'GET', AURL );
 end ;
 
-Procedure TACBrHTTP.HTTPPost( AURL : String ) ;
+procedure TACBrHTTP.HTTPPost(AURL : String) ;
 begin
   HTTPMethod( 'POST', AURL ) ;
+end ;
+
+procedure TACBrHTTP.HTTPPost(AURL : String ; APostData : String) ;
+begin
+  HTTPSend.Clear;
+  HTTPSend.Document.Write(Pointer(APostData)^,Length(APostData));
+  HTTPPost( AURL ) ;
 end ;
 
 procedure TACBrHTTP.HTTPMethod(Method, AURL: String);
@@ -871,4 +879,4 @@ begin
   fHTTPSend.ProxyUser := AValue;
 end;
 
-end.
+end.

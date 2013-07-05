@@ -239,17 +239,7 @@ begin
       Resposta := TStringList.Create;
       try
         Resposta.Text := StripHTML(RespHTTP.Text);
-
-        I := 0;
-        while i < Resposta.Count-1 do
-        begin
-          if trim(Resposta[I]) = '' then
-          begin
-            Resposta.Delete(I);
-            Inc(I,-1);
-          end;
-          Inc(I);
-        end;
+        RemoveEmptyLines( Resposta );
 
         //Resposta.Text := AnsiToUtf8(Resposta.Text);
         //DEBUG: Resposta.SaveToFile('/tmp/bobo.txt');
@@ -300,4 +290,4 @@ begin
 end;
 
 end.
-
+
