@@ -50,7 +50,7 @@ type
 
   TnfseSituacaoTributaria = ( stRetencao, stNormal, stSubstituicao );
 
-  TnfseResponsavelRetencao = ( rtPrestador, ptTomador );
+  TnfseResponsavelRetencao = ( ptTomador, rtPrestador );
 
 function PadraoLayoutToStr(const t: TnfsePadraoLayout):string;
 function StrToPadraoLayout(var ok: boolean; const s: string):TnfsePadraoLayout;
@@ -18159,14 +18159,14 @@ function ResponsavelRetencaoToStr(const t: TnfseResponsavelRetencao):string;
 begin
   result := EnumeradoToStr(t,
                            ['1', '2'],
-                           [rtPrestador, ptTomador]);
+                           [ptTomador, rtPrestador]);
 end;
 
 function StrToResponsavelRetencao(var ok: boolean; const s: string):TnfseResponsavelRetencao;
 begin
   result := StrToEnumerado(ok, s,
                            ['1', '2'],
-                           [rtPrestador, ptTomador]);
+                           [ptTomador, rtPrestador]);
 end;
 
 end.
