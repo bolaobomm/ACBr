@@ -99,7 +99,6 @@ type
     qrlValorTotal: TQRLabel;
     QRShape5: TQRShape;
     QRLabel16: TQRLabel;
-    qrlCodServico: TQRLabel;
     QRLabel3: TQRLabel;
     qrlAliquota: TQRLabel;
     QRShape6: TQRShape;
@@ -179,6 +178,7 @@ type
     qrlISSReter: TQRLabel;
     qrmPrefeitura: TQRMemo;
     qrmDescricao: TQRMemo;
+    QRShape18: TQRShape;
     QRShape11: TQRShape;
     QRLabel26: TQRLabel;
     qrlPrestNomeCompEnt: TQRLabel;
@@ -191,6 +191,9 @@ type
     QRLabel58: TQRLabel;
     QRLabel59: TQRLabel;
     QRLabel60: TQRLabel;
+    QRLabel33: TQRLabel;
+    qrlDataServ: TQRLabel;
+    qrmCodServico: TQRMemo;
     procedure qrb_1_CabecalhoBeforePrint(Sender: TQRCustomBand;
       var PrintBand: Boolean);
     procedure qrb_2_PrestadorServicoBeforePrint(Sender: TQRCustomBand;
@@ -243,8 +246,7 @@ begin
  cdsItens.Open;
 
  cdsItens.Append;
-// cdsItens.FieldByName('DESCRICAO').AsString := FNFSe.Servico.Discriminacao;
- cdsItens.FieldByName('DESCRICAO').AsString := 'Item 1';
+ cdsItens.FieldByName('DESCRICAO').AsString := FNFSe.Servico.Discriminacao;
  cdsItens.Post;
 
  cdsItens.First;
@@ -252,8 +254,6 @@ end;
 
 procedure TfqrDANFSeQRRetrato.qrb_1_CabecalhoBeforePrint(Sender: TQRCustomBand;
   var PrintBand: Boolean);
-var
- t: integer;
 begin
   inherited;
 
@@ -267,16 +267,22 @@ begin
  qrmPrefeitura.Lines.Add(StringReplace( FPrefeitura,
                          ';', #13#10, [rfReplaceAll,rfIgnoreCase] ) );
 
- qrlNumNF0.Caption  := FormatFloat('00000000000', StrToFloatDef(FNFSe.Numero, 0));
- // Alterado em 27/12/2012  Daniel Jr -> passando parâmetro para Comprovante de Entrega.
+ qrlNumNF0.Caption   := FormatFloat('00000000000', StrToFloatDef(FNFSe.Numero, 0));
+ qrlDataServ.Caption := DFeUtil.FormatDateTime(DateTimeToStr(FNFSe.DataEmissaoRps));
  qrlNumeroNotaCompEnt.Caption := FormatFloat('00000000000', StrToFloatDef(FNFSe.Numero, 0));
 
  qrlEmissao.Caption := DFeUtil.FormatDateTime(DateTimeToStr(FNFSe.DataEmissao));
  qrlCodVerificacao.Caption := FNFSe.CodigoVerificacao;
- t:=length(FNFSe.Competencia);
- if t=6
-  then qrlCompetencia.Caption := Copy(FNFSe.Competencia, 5, 2) + '/' + Copy(FNFSe.Competencia, 1, 4)
-  else qrlCompetencia.Caption := Copy(FNFSe.Competencia, 6, 2) + '/' + Copy(FNFSe.Competencia, 1, 4);
+ if Length(Trim(FNFSe.Competencia))=6 then
+   qrlCompetencia.Caption := Copy(FNFSe.Competencia, 5, 2) + '/' + Copy(FNFSe.Competencia, 1, 4)
+ else
+  begin
+    if Trim(FNFSe.Competencia) <> '' then
+      qrlCompetencia.Caption := Copy(FNFSe.Competencia, 6, 2) + '/' + Copy(FNFSe.Competencia, 1, 4)
+    else
+      qrlCompetencia.Caption := '';
+  end;
+
  qrlNumeroRPS.Caption := FNFSe.IdentificacaoRps.Numero;
  qrlNumNFSeSubstituida.Caption := FNFSe.NfseSubstituida;
 end;
@@ -286,17 +292,14 @@ procedure TfqrDANFSeQRRetrato.qrb_2_PrestadorServicoBeforePrint(Sender: TQRCusto
 begin
   inherited;
 
- if (FPrestLogo <> '') and FilesExists(FPrestLogo)
-  then begin
+ if (FPrestLogo <> '') and FilesExists(FPrestLogo) then
    qriPrestLogo.Picture.LoadFromFile(FPrestLogo);
-  end;
 
  qrlPrestCNPJ.Caption := DFeUtil.FormatarCNPJ( FNFSe.PrestadorServico.IdentificacaoPrestador.Cnpj );
  qrlPrestInscMunicipal.Caption := FNFSe.PrestadorServico.IdentificacaoPrestador.InscricaoMunicipal;
  qrlPrestNome.Caption := FNFSe.PrestadorServico.RazaoSocial;
- // Alterado em 27/12/2012  Daniel Jr -> passando parâmetro para Comprovante de Entrega.
  qrlPrestNomeCompEnt.Caption := FNFSe.PrestadorServico.RazaoSocial;
- 
+
  qrlPrestEndereco.Caption := Trim( FNFSe.PrestadorServico.Endereco.Endereco )+', '+
                              Trim( FNFSe.PrestadorServico.Endereco.Numero )+' - '+
                              Trim( FNFSe.PrestadorServico.Endereco.Bairro )+
@@ -385,20 +388,17 @@ procedure TfqrDANFSeQRRetrato.qrb_5_ItensBeforePrint(Sender: TQRCustomBand;
 begin
   inherited;
 
- qrmDescricao.Lines.BeginUpdate;
  qrmDescricao.Lines.Clear;
 
  qrmDescricao.Lines.Add( StringReplace( FNFSe.Servico.Discriminacao,
                          ';', #13#10, [rfReplaceAll, rfIgnoreCase] ) );
-
- qrmDescricao.Lines.EndUpdate;                        
 end;
 
 procedure TfqrDANFSeQRRetrato.qrb_6_ISSQNBeforePrint(Sender: TQRCustomBand;
   var PrintBand: Boolean);
 var
  MostrarObra: Boolean;
- Municipio1, Municipio2: String;
+ Municipio1, Municipio2, DescricaoServico: String;
 begin
   inherited;
 
@@ -408,13 +408,22 @@ begin
  qrlValorTotal.Caption := 'VALOR TOTAL DA NOTA = R$ '+
     DFeUtil.FormatFloat( FNFSe.Servico.Valores.ValorServicos );
 
- if trim(FNFSe.Servico.Descricao) = ''
-  then qrlCodServico.Caption := FNFSe.Servico.ItemListaServico + ' / ' +
-                                FNFSe.Servico.CodigoTributacaoMunicipio + ' - ' +
-                                FNFSe.Servico.xItemListaServico
-  else qrlCodServico.Caption := FNFSe.Servico.ItemListaServico + ' / ' +
-                                FNFSe.Servico.CodigoTributacaoMunicipio + ' - ' +
-                                FNFSe.Servico.Descricao;
+ if trim(FNFSe.Servico.Descricao) = '' then
+    DescricaoServico := FNFSe.Servico.ItemListaServico + ' / ' +
+                        FNFSe.Servico.CodigoTributacaoMunicipio + ' - ' +
+                        FNFSe.Servico.xItemListaServico
+  else
+    DescricaoServico := FNFSe.Servico.ItemListaServico + ' / ' +
+                        FNFSe.Servico.CodigoTributacaoMunicipio + ' - ' +
+                        FNFSe.Servico.Descricao;
+
+ qrmCodServico.Lines.BeginUpdate;
+ qrmCodServico.Lines.Clear;
+
+ qrmCodServico.Lines.Add(StringReplace( DescricaoServico,
+                         ';', #13#10, [rfReplaceAll,rfIgnoreCase] ) );
+
+ qrmCodServico.Lines.EndUpdate;
 
  qrlCodObra.Caption := FNFSe.ConstrucaoCivil.CodigoObra;
  qrlCodART.Caption  := FNFSe.ConstrucaoCivil.Art;
@@ -510,8 +519,18 @@ begin
  qrlValorServicos2.Caption      := DFeUtil.FormatFloat( FNFSe.Servico.Valores.ValorServicos );
  qrlValorDeducoes.Caption       := DFeUtil.FormatFloat( FNFSe.Servico.Valores.ValorDeducoes );
  qrlDescIncondicionado2.Caption := DFeUtil.FormatFloat( FNFSe.Servico.Valores.DescontoIncondicionado );
- qrlBaseCalc.Caption            := DFeUtil.FormatFloat( FNFSe.Servico.Valores.BaseCalculo );
- qrlAliquota.Caption            := DFeUtil.FormatFloat( FNFSe.Servico.Valores.Aliquota );
+ if FNFSe.OptanteSimplesNacional = snSim then
+  begin
+    qrlBaseCalc.Caption := '---';
+    qrlAliquota.Caption := '---';
+    qrlValorISS.Caption := '---';
+  end
+ else
+  begin
+    qrlBaseCalc.Caption := DFeUtil.FormatFloat( FNFSe.Servico.Valores.BaseCalculo );
+    qrlAliquota.Caption := DFeUtil.FormatFloat( FNFSe.Servico.Valores.Aliquota );
+    qrlValorISS.Caption := DFeUtil.FormatFloat( FNFSe.Servico.Valores.ValorIss );
+  end;
  // TnfseSimNao = ( snSim, snNao )
  case FNFSe.Servico.Valores.IssRetido of
   stRetencao     : qrlISSReter.Caption := 'Sim';
@@ -519,8 +538,6 @@ begin
   stSubstituicao : qrlISSReter.Caption := 'ST';
  end;
 
- // Alterado esta linha em 27/12/2012  Daniel Jr - Pois o ICMS não estava sendo dividido por 100) Ex 1,00 estava 100,00
- qrlValorISS.Caption := DFeUtil.FormatFloat( (FNFSe.Servico.Valores.ValorIss / 100) );
 
 // qrlValorCredito.Caption := DFeUtil.FormatFloat( FNFSe.ValorCredito );
 
@@ -534,7 +551,13 @@ begin
  qrmDadosAdicionais.Lines.BeginUpdate;
  qrmDadosAdicionais.Lines.Clear;
 
- qrmDadosAdicionais.Lines.Add(StringReplace( trim(FNFSe.OutrasInformacoes),
+ if FNFSe.OptanteSimplesNacional = snSim then
+  begin
+    qrmDadosAdicionais.Lines.Add('Documento emitido por ME/EPP optante pelo Simples Nacional.');
+    qrmDadosAdicionais.Lines.Add('Não gera direito a crédito fiscal.');
+  end;
+
+ qrmDadosAdicionais.Lines.Add(StringReplace( FNFSe.OutrasInformacoes,
                          ';', #13#10, [rfReplaceAll,rfIgnoreCase] ) );
 
  qrmDadosAdicionais.Lines.EndUpdate;

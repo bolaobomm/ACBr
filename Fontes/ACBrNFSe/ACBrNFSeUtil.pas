@@ -14,7 +14,7 @@ uses
   {$ELSE}
     StrUtils,
   {$ENDIF}
-  ACBrNFSeConfiguracoes, pnfsConversao, pnfsNFSe, ACBrDFeUtil;
+  ACBrNFSeConfiguracoes, pnfsConversao, pnfsNFSe, pcnAuxiliar, ACBrDFeUtil;
 
   {$IFDEF ACBrNFSeOpenSSL}
     const
@@ -95,6 +95,8 @@ type
     class function RetornarConteudoEntre(const Frase, Inicio, Fim: string): string;
     class function ChaveAcesso(AUF:Integer; ADataEmissao:TDateTime; ACNPJ:String; ASerie:Integer;
                                ANumero,ACodigo: Integer; AModelo:Integer=56): String;
+    class function ObterNomeMunicipio(const xMun, xUF: string; const cMun: integer): string;
+    class function ObterCodigoMunicipio(const xMun, xUF: string): integer;                               
 
   published
 
@@ -1425,6 +1427,64 @@ begin
 
   Result := vUF+vDataEmissao+ACNPJ+vModelo+vSerie+vNumero+vCodigo;
 //  Result := Result+NotaUtil.Modulo11(Result);
+end;
+
+class function NotaUtil.ObterNomeMunicipio(const xMun, xUF: string; const cMun: integer): string;
+var
+  i: integer;
+  PathArquivo, Codigo, Cidade: string;
+  List: TstringList;
+begin
+  result := '';
+  PathArquivo := ExtractFilePath(Application.ExeName) + 'MunIBGE\MunIBGE-UF' + InttoStr(UFparaCodigo(xUF)) + '.txt';
+  if FileExists(PathArquivo) then
+   begin
+     List := TstringList.Create;
+     List.LoadFromFile(PathArquivo);
+     Codigo := IntToStr(cMun);
+     Cidade := '';
+     i := 0;
+     while (i < list.count) and (Cidade = '') do
+      begin
+        if pos(Codigo, List[i]) > 0 then
+         begin
+          Cidade := List[i];
+          Cidade := copy(Cidade,9,Length(Cidade));
+          if Utf8ToAnsi(Trim(Cidade)) <> '' then
+             Cidade := Utf8ToAnsi(Trim(Cidade));
+         end;
+        inc(i);
+      end;
+     List.free;
+   end;
+
+  Result := Cidade;
+
+  if result = '' then
+    result := xMun;
+end;
+
+class function NotaUtil.ObterCodigoMunicipio(const xMun, xUF: string): integer;
+var
+  i: integer;
+  PathArquivo: string;
+  List: TstringList;
+begin
+  result := 0;
+  PathArquivo :=  PathWithDelim(ExtractFilePath(Application.ExeName))+ 'MunIBGE\MunIBGE-UF' + InttoStr(UFparaCodigo(xUF)) + '.txt';
+  if FileExists(PathArquivo) then
+   begin
+     List := TstringList.Create;
+     List.LoadFromFile(PathArquivo);
+     i := 0;
+     while (i < list.count) and (result = 0) do
+      begin
+       if pos(UpperCase(TiraAcentos(xMun)), UpperCase(TiraAcentos(List[i]))) > 0 then
+          result := StrToInt(Trim(copy(list[i],1,7)));
+       inc(i);
+      end;
+     List.free;
+   end;
 end;
 
 end.

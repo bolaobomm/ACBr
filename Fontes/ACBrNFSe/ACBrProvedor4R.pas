@@ -123,16 +123,32 @@ function TProvedor4R.GetConfigURL(ACodCidade: Integer): TConfigURL;
 var
  	ConfigURL: TConfigURL;
 begin
- 	ConfigURL.HomNomeCidade         := '';
+  case ACodCidade of
+   3554003:
+     begin
+    	 ConfigURL.HomNomeCidade         := 'tatui';
 
- 	ConfigURL.HomRecepcaoLoteRPS    := '';
- 	ConfigURL.HomConsultaLoteRPS    := 'http://abrasf.sistemas4r.com.br/aconsultarloterps.aspx?wsdl';
- 	ConfigURL.HomConsultaNFSeRPS    := 'http://abrasf.sistemas4r.com.br/aconsultarnfseporrps.aspx?wsdl';
- 	ConfigURL.HomConsultaSitLoteRPS := '';
- 	ConfigURL.HomConsultaNFSe       := '';
- 	ConfigURL.HomCancelaNFSe        := 'http://abrasf.sistemas4r.com.br/acancelarnfse.aspx';
- 	ConfigURL.HomGerarNFSe          := 'http://abrasf.sistemas4r.com.br/agerarnfse.aspx?wsdl';
- 	ConfigURL.HomRecepcaoSincrono   := 'http://abrasf.sistemas4r.com.br/arecepcionarloterpssincrono.aspx?wsdl';
+    	 ConfigURL.HomRecepcaoLoteRPS    := '';
+    	 ConfigURL.HomConsultaLoteRPS    := 'http://abrasf.sistemas4r.com.br/aconsultarloterps.aspx?wsdl';
+    	 ConfigURL.HomConsultaNFSeRPS    := 'http://tatui.sistemas4r.com.br/abrasf/ahconsultarnfseporrps.aspx?wsdl';
+    	 ConfigURL.HomConsultaSitLoteRPS := '';
+       ConfigURL.HomConsultaNFSe       := '';
+       ConfigURL.HomCancelaNFSe        := 'http://tatui.sistemas4r.com.br/abrasf/ahcancelarnfse.aspx?wsdl';
+    	 ConfigURL.HomGerarNFSe          := 'http://abrasf.sistemas4r.com.br/agerarnfse.aspx?wsdl';
+    	 ConfigURL.HomRecepcaoSincrono   := 'http://tatui.sistemas4r.com.br/abrasf/ahrecepcionarloterpssincrono.aspx?wsdl';
+    end;
+  else
+    	ConfigURL.HomNomeCidade         := '';
+
+    	ConfigURL.HomRecepcaoLoteRPS    := '';
+    	ConfigURL.HomConsultaLoteRPS    := 'http://abrasf.sistemas4r.com.br/aconsultarloterps.aspx?wsdl';
+    	ConfigURL.HomConsultaNFSeRPS    := 'http://abrasf.sistemas4r.com.br/aconsultarnfseporrps.aspx?wsdl';
+    	ConfigURL.HomConsultaSitLoteRPS := '';
+    	ConfigURL.HomConsultaNFSe       := '';
+    	ConfigURL.HomCancelaNFSe        := 'http://abrasf.sistemas4r.com.br/acancelarnfse.aspx';
+    	ConfigURL.HomGerarNFSe          := 'http://abrasf.sistemas4r.com.br/agerarnfse.aspx?wsdl';
+    	ConfigURL.HomRecepcaoSincrono   := 'http://abrasf.sistemas4r.com.br/arecepcionarloterpssincrono.aspx?wsdl';
+  end;
 
   case ACodCidade of
    3127701: ConfigURL.ProNomeCidade := 'valadares';
@@ -591,18 +607,31 @@ end;
 function TProvedor4R.GetLinkNFSe(ACodMunicipio, ANumeroNFSe: Integer;
   ACodVerificacao, AInscricaoM: String; AAmbiente: Integer): String;
 begin
- if AAmbiente = 1
-  then begin
+ if AAmbiente = 1 then
+  begin
    case ACodMunicipio of
-    3127701: Result := 'https://valadares.sistemas4r.com.br/CS/Em_Impressao_Nfe.aspx?id=' + ACodVerificacao;
-    3500105: Result := 'https://adamantina.sistemas4r.com.br/CS/Em_Impressao_Nfe.aspx?id=' + ACodVerificacao;
-    3510203: Result := 'https://capaobonito.sistemas4r.com.br/CS/Em_Impressao_Nfe.aspx?id=' + ACodVerificacao;
-    3523503: Result := 'https://itatinga.sistemas4r.com.br/CS/Em_Impressao_Nfe.aspx?id=' + ACodVerificacao;
-    3554003: Result := 'https://tatui.sistemas4r.com.br/CS/Em_Impressao_Nfe.aspx?id=' + ACodVerificacao;
-    else     Result := '';
+     3127701: Result := 'https://valadares.sistemas4r.com.br/CS/Em_Impressao_Nfe.aspx?id=' + ACodVerificacao;
+     3500105: Result := 'https://adamantina.sistemas4r.com.br/CS/Em_Impressao_Nfe.aspx?id=' + ACodVerificacao;
+     3510203: Result := 'https://capaobonito.sistemas4r.com.br/CS/Em_Impressao_Nfe.aspx?id=' + ACodVerificacao;
+     3523503: Result := 'https://itatinga.sistemas4r.com.br/CS/Em_Impressao_Nfe.aspx?id=' + ACodVerificacao;
+     3554003: Result := 'https://tatui.sistemas4r.com.br/CS/Em_Impressao_Nfe.aspx?id=' + ACodVerificacao;
+   else
+     Result := '';
    end;
   end
-  else Result := '';
+ else
+  begin
+   case ACodMunicipio of
+     3127701: Result := 'https://valadares.sistemas4r.com.br/CS/Em_Impressao_NfeHomologa.aspx?id=' + ACodVerificacao;
+     3500105: Result := 'https://adamantina.sistemas4r.com.br/CS/Em_Impressao_NfeHomologa.aspx?id=' + ACodVerificacao;
+     3510203: Result := 'https://capaobonito.sistemas4r.com.br/CS/Em_Impressao_NfeHomologa.aspx?id=' + ACodVerificacao;
+     3523503: Result := 'https://itatinga.sistemas4r.com.br/CS/Em_Impressao_NfeHomologa.aspx?id=' + ACodVerificacao;
+     3554003: Result := 'https://tatui.sistemas4r.com.br/CS/Em_Impressao_NfeHomologa.aspx?id=' + ACodVerificacao;
+   else
+     Result := '';
+   end;     
+  end;
+
 end;
 
 function TProvedor4R.GeraEnvelopeRecepcionarSincrono(URLNS: String; CabMsg,

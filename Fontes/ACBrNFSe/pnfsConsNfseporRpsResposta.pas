@@ -258,6 +258,11 @@ begin
             ListaNfse.FCompNfse[i].FNFSe.CodigoVerificacao := Leitor.rCampo(tcStr, 'CodigoVerificacao');
             ListaNfse.FCompNfse[i].FNFSe.DataEmissao       := Leitor.rCampo(tcDatHor, 'DataEmissao');
 
+            ListaNfse.FCompNfse[i].FNFSe.ValoresNfse.BaseCalculo            := Leitor.rCampo(tcDe2, 'BaseCalculo');
+            ListaNfse.FCompNfse[i].FNFSe.ValoresNfse.Aliquota               := Leitor.rCampo(tcDe3, 'Aliquota');
+            ListaNfse.FCompNfse[i].FNFSe.ValoresNfse.ValorIss               := Leitor.rCampo(tcDe2, 'ValorIss');
+            ListaNfse.FCompNfse[i].FNFSe.ValoresNfse.ValorLiquidoNfse       := Leitor.rCampo(tcDe2, 'ValorLiquidoNfse');
+
             ListaNfse.FCompNfse[i].FNFSe.NaturezaOperacao         := StrToNaturezaOperacao(ok, Leitor.rCampo(tcStr, 'NaturezaOperacao'));
             ListaNfse.FCompNfse[i].FNFSe.RegimeEspecialTributacao := StrToRegimeEspecialTributacao(ok, Leitor.rCampo(tcStr, 'RegimeEspecialTributacao'));
             ListaNfse.FCompNfse[i].FNFSe.OptanteSimplesNacional   := StrToSimNao(ok, Leitor.rCampo(tcStr, 'OptanteSimplesNacional'));

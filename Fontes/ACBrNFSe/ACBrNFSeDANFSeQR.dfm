@@ -16,7 +16,7 @@ object fqrDANFSeQR: TfqrDANFSeQR
   TextHeight = 13
   object QRNFSe: TQuickRep
     Left = 0
-    Top = 0
+    Top = -8
     Width = 794
     Height = 1123
     Frame.Color = clBlack
@@ -74,7 +74,5 @@ object fqrDANFSeQR: TfqrDANFSeQR
     PreviewInitialState = wsNormal
     PrevInitialZoom = qrZoomToFit
     PreviewDefaultSaveType = stQRP
-    PreviewLeft = 0
-    PreviewTop = 0
   end
 end

@@ -14,6 +14,7 @@ type
  TInfID                             = class;
  TIdentificacaoRps                  = class;
  TIdentificacaoNfse                 = class;
+ TValoresNfse                       = class;
  TValores                           = class;
  TItemServicoCollection             = class;
  TItemServicoCollectionItem         = class;
@@ -68,6 +69,19 @@ type
     property InscricaoMunicipal: string read FInscricaoMunicipal write FInscricaoMunicipal;
     property CodigoMunicipio: string read FCodigoMunicipio write FCodigoMunicipio;
   end;
+
+ TValoresNfse = class(TPersistent)
+ private
+   FBaseCalculo: currency;
+   FAliquota: currency;
+   FValorIss: currency;
+   FValorLiquidoNfse: currency;
+ published
+   property BaseCalculo: currency read FBaseCalculo write FBaseCalculo;
+   property Aliquota: currency read FAliquota write FAliquota;
+   property ValorIss: currency read FValorIss write FValorIss;
+   property ValorLiquidoNfse: currency read FValorLiquidoNfse write FValorLiquidoNfse;
+ end;
 
  TValores = class(TPersistent)
   private
@@ -395,6 +409,7 @@ type
     FValorCredito: Currency;
     FPrestadorServico: TDadosPrestador;
     FOrgaoGerador: TIdentificacaoOrgaoGerador;
+    FValoresNfse: TValoresNfse;
     // RPS e NFSe
     FSignature: TSignature;
 
@@ -441,6 +456,7 @@ type
     property ValorCredito: Currency read FValorCredito write FValorCredito;
     property PrestadorServico: TDadosPrestador read FPrestadorServico write FPrestadorServico;
     property OrgaoGerador: TIdentificacaoOrgaoGerador read FOrgaoGerador write FOrgaoGerador;
+    property ValoresNfse: TValoresNfse read FValoresNfse write FValoresNfse;
     // RPS e NFSe
     property signature: Tsignature read Fsignature write Fsignature;
 
@@ -653,6 +669,7 @@ begin
  FValorCredito                 := 0;
  FPrestadorServico             := TDadosPrestador.Create(self);
  FOrgaoGerador                 := TIdentificacaoOrgaoGerador.Create;
+ FValoresNfse                  := TValoresNfse.Create; 
  // RPS e NFSe
  Fsignature                    := Tsignature.create;
 
@@ -675,6 +692,7 @@ begin
  // NFSe
  FPrestadorServico.Free;
  FOrgaoGerador.Free;
+ FValoresNfse.Free;
  // RPS e NFSe
  Fsignature.Free;
  FNfseCancelamento.Free;

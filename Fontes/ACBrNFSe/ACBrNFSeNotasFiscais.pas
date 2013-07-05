@@ -85,7 +85,7 @@ type
 
     procedure GerarRPS;
     procedure Assinar;
-    function AssinarLoteRps(nLote:String; vLote: WideString): WideString;
+    function AssinarLoteRps(nLote:String; vLote: WideString; ASincrono: Boolean = False): WideString;
     procedure Valida;
     procedure Imprimir;
     procedure ImprimirPDF;
@@ -433,7 +433,7 @@ begin
   end;
 end;
 
-function TNotasFiscais.AssinarLoteRps(nLote:String; vLote: WideString): WideString;
+function TNotasFiscais.AssinarLoteRps(nLote:String; vLote: WideString; ASincrono: Boolean = False): WideString;
 var
  vAssinada : AnsiString;
 // Leitor    : TLeitor;
@@ -449,7 +449,8 @@ begin
                               vAssinada, FMsg, True,
                               FConfiguracoes.WebServices.Prefixo3,
                               FConfiguracoes.WebServices.Prefixo4,
-                              FConfiguracoes.WebServices.Provedor))
+                              FConfiguracoes.WebServices.Provedor,
+                              ASincrono))
        then raise Exception.Create('Falha ao assinar o Lote de RPS, '+ nLote + FMsg);
     {$ELSE}
       // Alterado por Italo em 24/07/2012
@@ -458,7 +459,8 @@ begin
                               vAssinada, FMsg, True,
                               FConfiguracoes.WebServices.Prefixo3,
                               FConfiguracoes.WebServices.Prefixo4,
-                              FConfiguracoes.WebServices.Provedor))
+                              FConfiguracoes.WebServices.Provedor,
+                              ASincrono))
        then raise Exception.Create('Falha ao assinar o Lote de RPS, '+
                                      nLote + FMsg);
     {$ENDIF}
