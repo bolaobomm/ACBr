@@ -14,19 +14,6 @@ type
  TGerarMsgRetornoNfseCollection = class;
  TGerarMsgRetornoNfseCollectionItem = class;
 
- TValoresNfse = class(TPersistent)
-  private
-    FBaseCalculo: currency;
-    FAliquota: currency;
-    FValorIss: currency;
-    FValorLiquidoNfse: currency;
-  published
-    property BaseCalculo: currency read FBaseCalculo write FBaseCalculo;
-    property Aliquota: currency read FAliquota write FAliquota;
-    property ValorIss: currency read FValorIss write FValorIss;
-    property ValorLiquidoNfse: currency read FValorLiquidoNfse write FValorLiquidoNfse;
-  end;
-
  TGerarListaNfse = class(TPersistent)
   private
     FCompNfse : TGerarCompNfseCollection;
@@ -93,10 +80,6 @@ type
     FPathArquivoMunicipios: string;
     FPathArquivoTabServicos: string;
     FLeitor: TLeitor;
-    FNumeroLote: String;
-    FDataRecebimento: TDateTime;
-    FProtocolo: String;
-    FValoresNfse: TValoresNfse;
     FListaNfse: TGerarListaNfse;
   public
     constructor Create;
@@ -106,10 +89,6 @@ type
     property PathArquivoMunicipios: string  read FPathArquivoMunicipios  write FPathArquivoMunicipios;
     property PathArquivoTabServicos: string read FPathArquivoTabServicos write FPathArquivoTabServicos;
     property Leitor: TLeitor                read FLeitor                 write FLeitor;
-    property NumeroLote: string             read FNumeroLote             write FNumeroLote;
-    property DataRecebimento: TDateTime     read FDataRecebimento        write FDataRecebimento;
-    property Protocolo: string              read FProtocolo              write FProtocolo;
-    property ValoresNfse: TValoresNfse      read FValoresNfse            write FValoresNfse;
     property ListaNfse: TGerarListaNfse     read FListaNfse              write FListaNfse;
   end;
 
@@ -227,7 +206,6 @@ end;
 constructor TGerarretNfse.Create;
 begin
   FLeitor                 := TLeitor.Create;
-  FValoresNfse            := TValoresNfse.Create;
   FListaNfse              := TGerarListaNfse.Create;
   FPathArquivoMunicipios  := '';
   FPathArquivoTabServicos := '';
@@ -236,7 +214,6 @@ end;
 destructor TGerarretNfse.Destroy;
 begin
   FLeitor.Free;
-  FValoresNfse.Free;
   FListaNfse.Free;
   inherited;
 end;
@@ -259,15 +236,15 @@ begin
     if (leitor.rExtrai(1, 'GerarNfseResposta') <> '') or (leitor.rExtrai(1, 'GerarNfseResponse') <> '') or
        (leitor.rExtrai(1, 'EnviarLoteRpsSincronoResposta') <> '') then
     begin
-      NumeroLote      := Leitor.rCampo(tcStr,   'NumeroLote');
-      DataRecebimento := Leitor.rCampo(tcDatHor,'DataRecebimento');
-      Protocolo       := Leitor.rCampo(tcStr,   'Protocolo');
 
-      ValoresNfse.BaseCalculo      := Leitor.rCampo(tcDe2, 'BaseCalculo');
-      ValoresNfse.Aliquota         := Leitor.rCampo(tcDe3, 'Aliquota');
-      ValoresNfse.ValorIss         := Leitor.rCampo(tcDe2, 'ValorIss');
-      ValoresNfse.ValorLiquidoNfse := Leitor.rCampo(tcDe2, 'ValorLiquidoNfse');
-
+      // alterado por joel takei 04/07/2013
+      if leitor.rExtrai(1, 'EnviarLoteRpsSincronoResposta') <> '' then
+      begin
+        i := 0;
+        ListaNfse.FCompNfse.Add;
+        ListaNfse.FCompNfse[i].FNfse.Protocolo         := Leitor.rCampo(tcStr, 'Protocolo');
+        ListaNfse.FCompNfse[i].FNfse.dhRecebimento     := Leitor.rCampo(tcDatHor, 'DataRecebimento');
+      end;
 
       // Ler a Lista de NFSe
       if leitor.rExtrai(2, 'ListaNfse') <> '' then
@@ -282,6 +259,9 @@ begin
           // Grupo da TAG <Nfse> *************************************************
           if Leitor.rExtrai(4, 'Nfse') <> ''
            then begin
+            // alterado por joel takei 04/07/2013
+            ListaNfse.FCompNfse[i].FNfse.XML := Leitor.rExtrai(4, 'Nfse');
+
             // Grupo da TAG <InfNfse> *****************************************************
             if Leitor.rExtrai(5, 'InfNfse') <> ''
              then begin
@@ -339,6 +319,7 @@ begin
                       Copy(ListaNfse.FCompNfse[i].FNFSe.Servico.ItemListaServico, 1, 2) + '.' +
                       Copy(ListaNfse.FCompNfse[i].FNFSe.Servico.ItemListaServico, 3, 2);
                  end;
+
                 (*
                 Item := StrToInt(SomenteNumeros(ListaNfse.FCompNfse[i].FNfse.Servico.ItemListaServico));
                 if Item<100 then Item:=Item*100+1;
@@ -348,6 +329,7 @@ begin
                     Copy(ListaNfse.FCompNfse[i].FNFSe.Servico.ItemListaServico, 1, 2) + '.' +
                     Copy(ListaNfse.FCompNfse[i].FNFSe.Servico.ItemListaServico, 3, 2);
                 *)
+
                 if length(ListaNfse.FCompNfse[i].FNFSe.Servico.CodigoMunicipio)<7
                  then ListaNfse.FCompNfse[i].FNFSe.Servico.CodigoMunicipio :=
                        Copy(ListaNfse.FCompNfse[i].FNFSe.Servico.CodigoMunicipio, 1, 2) +
@@ -355,7 +337,8 @@ begin
 
                 //Alterado por Cleiver em 26/02/2013
                 if (ListaNfse.FCompNfse[i].FNFSe.Servico.ItemListaServico <> '')
-                 then ListaNfse.FCompNfse[i].FNFSe.Servico.xItemListaServico := CodigoToDesc(ListaNfse.FCompNfse[i].FNFSe.Servico.ItemListaServico);
+                 then ListaNfse.FCompNfse[i].FNFSe.Servico.xItemListaServico :=
+                      CodigoToDesc(SomenteNumeros(ListaNfse.FCompNfse[i].FNFSe.Servico.ItemListaServico));
 
                 if Leitor.rExtrai(7, 'Valores') <> ''
                  then begin

@@ -324,7 +324,7 @@ var
  i: Integer;
  r: ansistring;
 begin
-  i := StrToInt(copy(s, 1, 2) + copy(s, 4, 2));
+  i := StrToIntDef(s, 0);
   r := '';
   case i of
   0101: r := 'Analise e desenvolvimento de sistemas.';

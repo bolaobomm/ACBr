@@ -318,12 +318,18 @@ type
     FNumeroLote: String;
     FNFSeRetorno : TGerarretNfse;
     FNotasFiscais : TNotasFiscais;
+    FProtocolo: String;
+    FDataRecebimento: TDateTime;
+    FSituacao: String;
   public
     function Executar: Boolean; override;
     constructor Create(AOwner : TComponent; ANotasFiscais : TNotasFiscais); reintroduce;
 
     property NumeroLote: String read FNumeroLote;
     property NFSeRetorno: TGerarretNfse read FNFSeRetorno write FNFSeRetorno;
+    property Protocolo: String read FProtocolo;
+    property DataRecebimento: TDateTime read FDataRecebimento;
+    property Situacao: String read FSituacao;
   end;
 
   TNFSeLinkNFSe = Class(TWebServicesBase)
@@ -2063,11 +2069,11 @@ begin
 
  URI := FProvedorClass.GetURI(URI);
 
- FTagI := FProvedorClass.Gera_TagI(acRecSincrono, Prefixo3, Prefixo4, NameSpaceDad, FConfiguracoes.WebServices.Identificador, URI);
+ FTagI := FProvedorClass.Gera_TagI(acRecepcionar, Prefixo3, Prefixo4, NameSpaceDad, FConfiguracoes.WebServices.Identificador, URI);
 
  FDadosSenha := FProvedorClass.Gera_DadosSenha(FConfiguracoes.WebServices.UserWeb,
                                                FConfiguracoes.WebServices.SenhaWeb);
- FTagF := FProvedorClass.Gera_TagF(acRecSincrono, Prefixo3);
+ FTagF := FProvedorClass.Gera_TagF(acRecepcionar, Prefixo3);
 
  FDadosMsg := TNFSeG.Gera_DadosMsgEnviarSincrono(Prefixo3, Prefixo4,
                                                  FConfiguracoes.WebServices.Identificador,
@@ -2084,7 +2090,7 @@ begin
    if FConfiguracoes.WebServices.Salvar
     then FConfiguracoes.Geral.Save('-xxx1.xml', FDadosMsg);
 
-   FDadosMsg := TNFSeEnviarSincrono(Self).FNotasFiscais.AssinarLoteRps(TNFSeEnviarSincrono(Self).NumeroLote, FDadosMSg, True);
+   FDadosMsg := TNFSeEnviarSincrono(Self).FNotasFiscais.AssinarLoteRps(TNFSeEnviarSincrono(Self).NumeroLote, FDadosMSg);
 
    if FConfiguracoes.WebServices.Salvar
     then FConfiguracoes.Geral.Save('-xxx2.xml', FDadosMsg);
@@ -2334,35 +2340,30 @@ begin
 
  Result := Self.CancNfse.Executar;
 
- if not (Result) then
-  begin
-    if Assigned(TACBrNFSe( FACBrNFSe ).OnGerarLog) then
-      TACBrNFSe( FACBrNFSe ).OnGerarLog(Self.CancNfse.Msg);
-    if Self.CancNfse.Msg <> '' then
-      raise Exception.Create(Self.CancNfse.Msg)
-    else
-      raise Exception.Create('Erro Desconhecido!')
+ if not (Result)
+  then begin
+   if Assigned(TACBrNFSe( FACBrNFSe ).OnGerarLog)
+    then TACBrNFSe( FACBrNFSe ).OnGerarLog(Self.CancNfse.Msg);
+   if Self.CancNfse.Msg <> ''
+    then raise Exception.Create(Self.CancNfse.Msg)
+    else raise Exception.Create('Erro Desconhecido!')
   end;
 
- if TACBrNFSe( FACBrNFSe ).NotasFiscais.Count > 0 then
-  begin
-    Self.ConsNfseRps.Numero             := TACBrNFSe( FACBrNFSe ).NotasFiscais.Items[0].NFSe.IdentificacaoRps.Numero;
-    Self.ConsNfseRps.Serie              := TACBrNFSe( FACBrNFSe ).NotasFiscais.Items[0].NFSe.IdentificacaoRps.Serie;
-    Self.ConsNfseRps.Tipo               := TipoRPSToStr(TACBrNFSe( FACBrNFSe ).NotasFiscais.Items[0].NFSe.IdentificacaoRps.Tipo);
-    Self.ConsNfseRps.Cnpj               := TACBrNFSe( FACBrNFSe ).NotasFiscais.Items[0].NFSe.PrestadorServico.IdentificacaoPrestador.Cnpj;
-    Self.ConsNfseRps.InscricaoMunicipal := TACBrNFSe( FACBrNFSe ).NotasFiscais.Items[0].NFSe.PrestadorServico.IdentificacaoPrestador.InscricaoMunicipal;
+ Self.ConsNfseRps.Numero             := TACBrNFSe( FACBrNFSe ).NotasFiscais.Items[0].NFSe.IdentificacaoRps.Numero;
+ Self.ConsNfseRps.Serie              := TACBrNFSe( FACBrNFSe ).NotasFiscais.Items[0].NFSe.IdentificacaoRps.Serie;
+ Self.ConsNfseRps.Tipo               := TipoRPSToStr(TACBrNFSe( FACBrNFSe ).NotasFiscais.Items[0].NFSe.IdentificacaoRps.Tipo);
+ Self.ConsNfseRps.Cnpj               := TACBrNFSe( FACBrNFSe ).NotasFiscais.Items[0].NFSe.PrestadorServico.IdentificacaoPrestador.Cnpj;
+ Self.ConsNfseRps.InscricaoMunicipal := TACBrNFSe( FACBrNFSe ).NotasFiscais.Items[0].NFSe.PrestadorServico.IdentificacaoPrestador.InscricaoMunicipal;
 
-    Result := Self.ConsNfseRps.Executar;
+ Result := Self.ConsNfseRps.Executar;
 
-    if not(Result)then
-     begin
-       if Assigned(TACBrNFSe( FACBrNFSe ).OnGerarLog) then
-         TACBrNFSe( FACBrNFSe ).OnGerarLog(Self.ConsNfseRps.Msg);
-       if Self.ConsNfseRps.Msg <> '' then
-         raise Exception.Create(Self.ConsNfseRps.Msg)
-       else
-         raise Exception.Create('Erro Desconhecido!')
-     end;
+ if not(Result)
+  then begin
+   if Assigned(TACBrNFSe( FACBrNFSe ).OnGerarLog)
+    then TACBrNFSe( FACBrNFSe ).OnGerarLog(Self.ConsNfseRps.Msg);
+   if Self.ConsNfseRps.Msg <> ''
+    then raise Exception.Create(Self.ConsNfseRps.Msg)
+    else raise Exception.Create('Erro Desconhecido!')
   end;
 end;
 
@@ -3131,48 +3132,43 @@ begin
  // Incluido por Ricardo Miranda em 14/03/2013
   FRetWS := NotaUtil.RetirarPrefixos(FRetWS);
 
-  if FProvedor = proBetha then
-    FRetCompNfse := SeparaDados(FRetWS, {Prefixo3 +} 'ComplNfse')
-  else
-    FRetCompNfse := SeparaDados(FRetWS, {Prefixo3 +} 'CompNfse');
+  if FProvedor = proBetha
+   then FRetCompNfse := SeparaDados(FRetWS, {Prefixo3 +} 'ComplNfse')
+   else FRetCompNfse := SeparaDados(FRetWS, {Prefixo3 +} 'CompNfse');
 
   i := 0;
   while FRetCompNfse <> '' do
    begin
     j := Pos('</' + {Prefixo3 +} 'Nfse>', FRetCompNfse);
-    if j = 0 then
-       j := Pos('</' + {Prefixo4 +} 'Nfse>', FRetCompNfse);
+    if j = 0
+     then j := Pos('</' + {Prefixo4 +} 'Nfse>', FRetCompNfse);
 
-    if j > 0 then
-     begin
-       FRetNfse := FRetCompNfse;
+    if j > 0
+     then begin
+      FRetNfse := FRetCompNfse;
 
-       FRetNFSe := FProvedorClass.GeraRetornoNFSe('', {Prefixo3,} FRetNFSe, FNomeCidade);
+      FRetNFSe := FProvedorClass.GeraRetornoNFSe('', {Prefixo3,} FRetNFSe, FNomeCidade);
 
 //      if FConfiguracoes.Geral.Salvar
 //       then begin
-       PathSalvar := FConfiguracoes.Arquivos.GetPathNFSe(0);
-       FConfiguracoes.Geral.Save(NFSeRetorno.ListaNfse.CompNfse.Items[i].Nfse.Numero + '-nfse.xml',
+        PathSalvar := FConfiguracoes.Arquivos.GetPathNFSe(0);
+        FConfiguracoes.Geral.Save(NFSeRetorno.ListaNfse.CompNfse.Items[i].Nfse.Numero + '-nfse.xml',
                                   NotaUtil.RetirarPrefixos(FRetNfse), PathSalvar);
-       if FNotasFiscais.Count > 0 then
-        begin
-          FNotasFiscais.Items[i].NomeArq := PathWithDelim(PathSalvar) + NFSeRetorno.ListaNfse.CompNfse.Items[i].Nfse.Numero + '-nfse.xml';
+        if FNotasFiscais.Count>0
+         then FNotasFiscais.Items[i].NomeArq := PathWithDelim(PathSalvar) + NFSeRetorno.ListaNfse.CompNfse.Items[i].Nfse.Numero + '-nfse.xml';
 //       end;
 
+      FNotasFiscais.Items[i].NFSe.Protocolo         := NFSeRetorno.ListaNfse.CompNfse.Items[i].Nfse.Protocolo;
+      FNotasFiscais.Items[i].NFSe.CodigoVerificacao := NFSeRetorno.ListaNfse.CompNfse.Items[i].Nfse.CodigoVerificacao;
+      FNotasFiscais.Items[i].NFSe.Numero            := NFSeRetorno.ListaNfse.CompNfse.Items[i].Nfse.Numero;
+      FNotasFiscais.Items[i].XML_NFSe               := FRetNfse;
 
-          FNotasFiscais.Items[i].NFSe.Protocolo         := NFSeRetorno.ListaNfse.CompNfse.Items[i].Nfse.Protocolo;
-          FNotasFiscais.Items[i].NFSe.CodigoVerificacao := NFSeRetorno.ListaNfse.CompNfse.Items[i].Nfse.CodigoVerificacao;
-          FNotasFiscais.Items[i].NFSe.Numero            := NFSeRetorno.ListaNfse.CompNfse.Items[i].Nfse.Numero;
-          FNotasFiscais.Items[i].NFSe.XML               := FRetNfse;
-          FNotasFiscais.Items[i].XML_NFSe               := FRetNfse;
+      FNotasFiscais.Items[i].NFSe.NfseCancelamento.DataHora := NFSeRetorno.ListaNfse.CompNfse.Items[i].Nfse.NfseCancelamento.DataHora;
 
-          FNotasFiscais.Items[i].NFSe.NfseCancelamento.DataHora := NFSeRetorno.ListaNfse.CompNfse.Items[i].Nfse.NfseCancelamento.DataHora;
-        end;
       FRetCompNfse := '';
       inc(i);
      end
-    else
-       FRetCompNfse := '';
+     else FRetCompNfse := '';
    end;
 
   TACBrNFSe( FACBrNFSe ).SetStatus( stNFSeIdle );
@@ -3471,10 +3467,10 @@ begin
   TACBrNFSe( FACBrNFSe ).SetStatus( stNFSeCancelamento );
 
   if FConfiguracoes.WebServices.Salvar
-   then FConfiguracoes.Geral.Save(Self.FNumeroRPS + '-ped-can-c.xml', Texto, FConfiguracoes.Arquivos.GetPathCan );
+   then FConfiguracoes.Geral.Save(TNFSeCancelarNFse(Self).FNotasFiscais.Items[0].NFSe.Numero + '-ped-can-c.xml', Texto, FConfiguracoes.Arquivos.GetPathCan );
 
   if FConfiguracoes.Geral.Salvar
-   then FConfiguracoes.Geral.Save(Self.FNumeroRPS + '-ped-can.xml', FDadosMsg, FConfiguracoes.Arquivos.GetPathCan );
+   then FConfiguracoes.Geral.Save(TNFSeCancelarNFse(Self).FNotasFiscais.Items[0].NFSe.Numero + '-ped-can.xml', FDadosMsg, FConfiguracoes.Arquivos.GetPathCan );
 
   {$IFDEF ACBrNFSeOpenSSL}
     HTTP.Document.LoadFromStream(Stream);
@@ -3500,10 +3496,10 @@ begin
   {$ENDIF}
 
   if FConfiguracoes.WebServices.Salvar
-   then FConfiguracoes.Geral.Save(Self.FNumeroRPS + '-can-c.xml', FRetornoWS, FConfiguracoes.Arquivos.GetPathCan);
+   then FConfiguracoes.Geral.Save(TNFSeCancelarNFse(Self).FNotasFiscais.Items[0].NFSe.Numero + '-can-c.xml', FRetornoWS, FConfiguracoes.Arquivos.GetPathCan);
 
   if FConfiguracoes.Geral.Salvar
-   then FConfiguracoes.Geral.Save(Self.FNumeroRPS + '-can.xml', FRetWS, FConfiguracoes.Arquivos.GetPathCan);
+   then FConfiguracoes.Geral.Save(TNFSeCancelarNFse(Self).FNotasFiscais.Items[0].NFSe.Numero + '-can.xml', FRetWS, FConfiguracoes.Arquivos.GetPathCan);
   self.ArquivoRetorno := FRetWS;
 
   NFSeRetorno := TretCancNfse.Create;
@@ -3875,6 +3871,14 @@ begin
   NFSeRetorno.LerXml;
 
   TACBrNFSe( FACBrNFSe ).SetStatus( stNFSeIdle );
+
+//  FDataRecebimento := NFSeRetorno.InfRec.DataRecebimento;
+//  FProtocolo       := NFSeRetorno.InfRec.Protocolo;
+//  FSituacao        := NFSeRetorno.InfSit.Situacao;
+  // FSituacao: 1 = Não Recebido
+  //            2 = Não Processado
+  //            3 = Processado com Erro
+  //            4 = Processado com Sucesso
 
   FRetListaNfse := SeparaDados(FRetWS, Prefixo3 + 'ListaNfse');
   i := 0;
