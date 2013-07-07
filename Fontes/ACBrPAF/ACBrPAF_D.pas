@@ -110,31 +110,22 @@ type
     property Items[Index: Integer]: TRegistroD2 read GetItem write SetItem;
   end;
 
-  TRegistroD3 = class
+  TRegistroD_Base = class
   private
     fCOD_ITEM: string;
-    fRegistroValido: Boolean;
     fVL_TOTAL: Currency;
     fDESC_ITEM: string;
     fIND_CANC: string;
     fVL_ACRES: Currency;
     fUNI_ITEM: string;
-    fNUM_ITEM: Integer;
     fVL_DESCTO: Currency;
     fVL_UNIT: Currency;
-    fDT_INCLUSAO: TDateTime;
     fDEC_VL_UNIT: Integer;
     fDEC_QTDE_ITEM: Integer;
     fQTDE_ITEM: Currency;
-    //Versão 01.09
     fALIQ: Currency;
     fSIT_TRIB: string;
   public
-    constructor Create; virtual;
-
-    property RegistroValido: Boolean read fRegistroValido write fRegistroValido default True;
-    property DT_INCLUSAO: TDateTime read fDT_INCLUSAO write fDT_INCLUSAO;
-    property NUM_ITEM: Integer read fNUM_ITEM write fNUM_ITEM;
     property COD_ITEM: string read fCOD_ITEM write fCOD_ITEM;
     property DESC_ITEM: string read fDESC_ITEM write fDESC_ITEM;
     property QTDE_ITEM: Currency read fQTDE_ITEM write fQTDE_ITEM;
@@ -150,6 +141,19 @@ type
     property DEC_VL_UNIT: Integer read fDEC_VL_UNIT write fDEC_VL_UNIT;
   end;
 
+  TRegistroD3 = class(TRegistroD_Base)
+  private
+    fRegistroValido: Boolean;
+    fDT_INCLUSAO: TDateTime;
+    fNUM_ITEM: Integer;
+  public
+    constructor Create; virtual;
+
+    property RegistroValido: Boolean read fRegistroValido write fRegistroValido default True;
+    property DT_INCLUSAO: TDateTime read fDT_INCLUSAO write fDT_INCLUSAO;
+    property NUM_ITEM: Integer read fNUM_ITEM write fNUM_ITEM;
+  end;
+
   /// REGISTRO D3 - Lista
 
   TRegistroD3List = class(TObjectList)
@@ -159,6 +163,27 @@ type
   public
     function New: TRegistroD3;
     property Items[Index: Integer]: TRegistroD3 read GetItem write SetItem;
+  end;
+
+  //Registro D4 - Log de alterações do DAV
+  TRegistroD4 = class(TRegistroD_Base)
+  private
+    FNUM_DAV: string;      //Número do DAV
+    FDT_ALT: TDateTime;    //Data e Hora da alteração
+    FTIP_ALT: String;      //Tipo Alteração ("A" para Alteração, "E" para Exclusão, "I" para Inclusão
+  public
+    property NUM_DAV: string   read FNUM_DAV write FNUM_DAV;
+    property DT_ALT: TDatetime read FDT_ALT  write FDT_ALT;
+    property TIP_ALT: String   read FTIP_ALT write FTIP_ALT;
+  end;
+
+  TRegistroD4List = class(TObjectList)
+  private
+    function GetItem(Index: Integer): TRegistroD4;
+    procedure SetItem(Index: Integer; const Value: TRegistroD4);
+  public
+    function New: TRegistroD4;
+    property Items[Index: Integer]: TRegistroD4 read GetItem write SetItem;
   end;
 
   /// REGISTRO TIPO D9 - TOTALIZAÇÃO DO ARQUIVO
@@ -227,6 +252,24 @@ begin
 end;
 
 procedure TRegistroD3List.SetItem(Index: Integer; const Value: TRegistroD3);
+begin
+  Put(Index, Value);
+end;
+
+{ TRegistroD4List }  
+function TRegistroD4List.GetItem(Index: Integer): TRegistroD4;
+begin
+  Result := TRegistroD4(inherited Items[Index]);
+end;
+
+function TRegistroD4List.New: TRegistroD4;
+begin
+  Result := TRegistroD4.Create;
+  Add(Result);
+end;
+
+procedure TRegistroD4List.SetItem(Index: Integer;
+  const Value: TRegistroD4);
 begin
   Put(Index, Value);
 end;

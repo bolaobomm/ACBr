@@ -53,6 +53,7 @@ type
   private
     FRegistroD1: TRegistroD1;       /// FRegistroD1
     FRegistroD2: TRegistroD2List;   /// Lista de FRegistroD2
+    FRegistroD4: TRegistroD4List;   /// Lista de FRegistroD4
     FRegistroD9: TRegistroD9;       /// FRegistroD9
 
     function WriteRegistroD3(RegD2: TRegistroD2): String;
@@ -65,10 +66,12 @@ type
 
     function WriteRegistroD1: String;
     function WriteRegistroD2: String;
+    function WriteRegistroD4: String;
     function WriteRegistroD9: String;
 
     property RegistroD1: TRegistroD1     read FRegistroD1 write FRegistroD1;
     property RegistroD2: TRegistroD2List read FRegistroD2 write FRegistroD2;
+    property RegistroD4: TRegistroD4List read FRegistroD4 write FRegistroD4;
     property RegistroD9: TRegistroD9     read FRegistroD9 write FRegistroD9;
   end;
 
@@ -87,6 +90,7 @@ procedure TPAF_D.CriaRegistros;
 begin
   FRegistroD1  := TRegistroD1.Create;
   FRegistroD2  := TRegistroD2List.Create;
+  FRegistroD4  := TRegistroD4List.Create;
   FRegistroD9  := TRegistroD9.Create;
 
   FRegistroD9.TOT_REG_D2 := 0;
@@ -104,6 +108,7 @@ procedure TPAF_D.LiberaRegistros;
 begin
   FRegistroD1.Free;
   FRegistroD2.Free;
+  FRegistroD4.Free;
   FRegistroD9.Free;
 end;
 
@@ -256,6 +261,61 @@ begin
      end;
      Result := strRegistroD3;
   end;
+end;
+
+function OrdenarD4(const ARegistro1, ARegistro2: Pointer): Integer;
+var
+  Reg1, Reg2: String;
+begin
+  Reg1 :=
+    Format('%-13s', [TRegistroD4(ARegistro1).NUM_DAV]) +
+    FormatDateTime('yyyymmddhhmmss', TRegistroD4(ARegistro1).DT_ALT);
+
+  Reg2 :=
+    Format('%-13s', [TRegistroD4(ARegistro2).NUM_DAV]) +
+    FormatDateTime('yyyymmddhhmmss', TRegistroD4(ARegistro2).DT_ALT);
+
+  Result := AnsiCompareText(Reg1, Reg2);
+end;
+
+function TPAF_D.WriteRegistroD4: String;
+var
+  intFor: integer;
+  strRegistroD4: String;
+begin
+  strRegistroD4:= '';
+
+  if Assigned(RegistroD4) then
+  begin
+    RegistroD4.Sort(@OrdenarD4);
+    
+    for intFor := 0 to RegistroD4.Count - 1 do
+    begin
+      with RegistroD4.Items[intFor] do
+      begin
+        strRegistroD4 := strRegistroD4 + LFill('D4') +
+                                         RFill(NUM_DAV, 13) +
+                                         LFill(DT_ALT, 'yyyymmddhhmmss') +
+                                         RFill(COD_ITEM, 14) +
+                                         RFill(DESC_ITEM, 100) +
+                                         LFill(QTDE_ITEM, 7, DEC_QTDE_ITEM) +
+                                         RFill(UNI_ITEM, 3) +
+                                         LFill(VL_UNIT, 8, DEC_VL_UNIT) +
+                                         LFill(VL_DESCTO, 8, 2) +
+                                         LFill(VL_ACRES, 8, 2) +
+                                         LFill(VL_TOTAL, 14, 2) +
+                                         RFill(SIT_TRIB, 1) +
+                                         LFill(ALIQ, 4, 2) +
+                                         LFill(IND_CANC) +
+                                         LFill(DEC_QTDE_ITEM, 1) +
+                                         LFill(DEC_VL_UNIT, 1) +
+                                         RFill(TIP_ALT, 1) +
+                                         sLineBreak;
+      end;
+    end;
+    Result := strRegistroD4;
+  end;
+
 end;
 
 function TPAF_D.WriteRegistroD9: String;

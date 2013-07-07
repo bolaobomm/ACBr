@@ -98,6 +98,27 @@ type
     property Items[Index: Integer]: TRegistroE2 read GetItem write SetItem;
   end;
 
+  TRegistroE3 = class
+  private
+    fRegistroValido: boolean;
+    fNUM_FAB: string;      //Nº de fabricação do ECF
+    fMF_ADICIONAL: string; //Letra indicativa de MF adicional
+    fTIPO_ECF: string;     //Tipo do ECF
+    fMARCA_ECF: string;    //Marca do ECF
+    fMODELO_ECF: string;   //Modelo do ECF
+    fDT_EST: TDateTime;    //DataHora de atualização do estoque
+  public
+    constructor Create; virtual;
+
+    property RegistroValido: Boolean read fRegistroValido write fRegistroValido default True;
+    property NUM_FAB: string read FNUM_FAB write FNUM_FAB;
+    property MF_ADICIONAL: string read FMF_ADICIONAL write FMF_ADICIONAL;
+    property TIPO_ECF: string read FTIPO_ECF write FTIPO_ECF;
+    property MARCA_ECF: string read FMARCA_ECF write FMARCA_ECF;
+    property MODELO_ECF: string read FMODELO_ECF write FMODELO_ECF;
+    property DT_EST: TDateTime read fDT_EST write fDT_EST;
+  end;
+
   /// REGISTRO TIPO E9 - TOTALIZAÇÃO DO ARQUIVO
 
   TRegistroE9 = class(TRegistroX9)
@@ -128,6 +149,13 @@ end;
 constructor TRegistroE2.Create;
 begin
    fRegistroValido := True;
+end;
+
+{ TRegistroE3 }
+
+constructor TRegistroE3.Create;
+begin
+  fRegistroValido := True;
 end;
 
 end.

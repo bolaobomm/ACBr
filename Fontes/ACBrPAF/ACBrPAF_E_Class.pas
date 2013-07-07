@@ -53,6 +53,7 @@ type
   private
     FRegistroE1: TRegistroE1;       /// FRegistroE1
     FRegistroE2: TRegistroE2List;   /// Lista de FRegistroE2
+    FRegistroE3: TRegistroE3;       /// FRegistroE3
     FRegistroE9: TRegistroE9;       /// FRegistroE9
 
     procedure CriaRegistros;
@@ -64,10 +65,12 @@ type
 
     function WriteRegistroE1: string;
     function WriteRegistroE2: string;
+    function WriteRegistroE3: string;
     function WriteRegistroE9: string;
 
     property RegistroE1: TRegistroE1 read FRegistroE1 write FRegistroE1;
     property RegistroE2: TRegistroE2List read FRegistroE2 write FRegistroE2;
+    property RegistroE3: TRegistroE3 read FRegistroE3 write FRegistroE3;
     property RegistroE9: TRegistroE9 read FRegistroE9 write FRegistroE9;
   end;
 
@@ -86,6 +89,7 @@ procedure TPAF_E.CriaRegistros;
 begin
   FRegistroE1 := TRegistroE1.Create;
   FRegistroE2 := TRegistroE2List.Create;
+  FRegistroE3 := TRegistroE3.Create;
   FRegistroE9 := TRegistroE9.Create;
 
   FRegistroE9.TOT_REG := 0;
@@ -101,6 +105,7 @@ procedure TPAF_E.LiberaRegistros;
 begin
   FRegistroE1.Free;
   FRegistroE2.Free;
+  FRegistroE3.Free;
   FRegistroE9.Free;
 end;
 
@@ -176,6 +181,21 @@ begin
         FRegistroE9.TOT_REG := FRegistroE9.TOT_REG + 1;
      end;
      Result := strRegistroE2;
+  end;
+end;
+
+function TPAF_E.WriteRegistroE3: string;
+begin
+  if Assigned(FRegistroE3) then
+  begin
+    Result:= LFill('E3') +
+             RFill(FRegistroE3.NUM_FAB, 20) +
+             RFill(FRegistroE3.MF_ADICIONAL, 1) +
+             RFill(FRegistroE3.TIPO_ECF, 7) +
+             RFill(FRegistroE3.MARCA_ECF, 20) +
+             RFill(FRegistroE3.MODELO_ECF, 20, ifThen(FRegistroE3.RegistroValido, ' ', '?')) +
+             LFill(FRegistroE3.DT_EST, 'yyyymmddhhmmss') +
+             sLineBreak;
   end;
 end;
 

@@ -223,6 +223,7 @@ object Form6: TForm6
       450019B1FEF3FEB466C7FBCFFAD1450019B1FEF3FEB466C7FBCFFAD1450019B1
       FEF3FEB466C7FBCFFAD1450019B1FEF3FEB466C7FBCFFAD1450019B1FEF3FEB4
       66C7FBCFFAD145001BAC7D5FF5A3758FABFEB451401FFFD9}
+    ExplicitWidth = 1024
   end
   object GroupBox1: TGroupBox
     Left = 0
@@ -359,7 +360,7 @@ object Form6: TForm6
     Width = 75
     Height = 25
     Caption = 'Tipo R'
-    TabOrder = 5
+    TabOrder = 7
     OnClick = btnRClick
   end
   object btnT: TButton
@@ -368,7 +369,7 @@ object Form6: TForm6
     Width = 75
     Height = 25
     Caption = 'Tipo T'
-    TabOrder = 6
+    TabOrder = 8
     OnClick = btnTClick
   end
   object btnC: TButton
@@ -377,7 +378,7 @@ object Form6: TForm6
     Width = 75
     Height = 25
     Caption = 'Tipo C'
-    TabOrder = 7
+    TabOrder = 9
     OnClick = btnCClick
   end
   object btnN: TButton
@@ -386,7 +387,7 @@ object Form6: TForm6
     Width = 75
     Height = 25
     Caption = 'Tipo N'
-    TabOrder = 8
+    TabOrder = 5
     OnClick = btnNClick
   end
   object btnH: TButton
@@ -395,17 +396,26 @@ object Form6: TForm6
     Width = 75
     Height = 25
     Caption = 'Tipo H'
-    TabOrder = 9
+    TabOrder = 10
     OnClick = btnHClick
   end
   object btnTITP: TButton
-    Left = 357
-    Top = 142
+    Left = 332
+    Top = 127
     Width = 204
     Height = 25
     Caption = 'Tabela de Indice T'#233'cnico de Produ'#231#227'o'
-    TabOrder = 10
+    TabOrder = 6
     OnClick = btnTITPClick
+  end
+  object btnRegistrosPAF: TButton
+    Left = 332
+    Top = 158
+    Width = 204
+    Height = 25
+    Caption = 'Registros PAF'
+    TabOrder = 11
+    OnClick = btnRegistrosPAFClick
   end
   object ACBrPAF: TACBrPAF
     Path = '.\'
