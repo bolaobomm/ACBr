@@ -162,9 +162,9 @@ object ACBRBoletoFCFortesFr: TACBRBoletoFCFortesFr
       object RLLabel2: TRLLabel
         Left = 4
         Top = 46
-        Width = 30
+        Width = 42
         Height = 10
-        Caption = 'Cedente'
+        Caption = 'Benefici'#225'rio'
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
         Font.Height = -8
@@ -468,9 +468,9 @@ object ACBRBoletoFCFortesFr: TACBRBoletoFCFortesFr
       object RLLabel25: TRLLabel
         Left = 4
         Top = 73
-        Width = 27
+        Width = 31
         Height = 10
-        Caption = 'Sacado'
+        Caption = 'Pagador'
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
         Font.Height = -8
@@ -875,7 +875,7 @@ object ACBRBoletoFCFortesFr: TACBRBoletoFCFortesFr
         Height = 18
         Alignment = taRightJustify
         AutoSize = False
-        Caption = 'Recibo do Sacado'
+        Caption = 'Recibo do Pagador'
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
         Font.Height = -16
@@ -913,9 +913,9 @@ object ACBRBoletoFCFortesFr: TACBRBoletoFCFortesFr
       object RLLabel69: TRLLabel
         Left = 4
         Top = 70
-        Width = 30
+        Width = 42
         Height = 10
-        Caption = 'Cedente'
+        Caption = 'Benefici'#225'rio'
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
         Font.Height = -8
@@ -924,9 +924,9 @@ object ACBRBoletoFCFortesFr: TACBRBoletoFCFortesFr
         ParentFont = False
       end
       object txtNomeCedente2: TRLLabel
-        Left = 38
-        Top = 70
-        Width = 529
+        Left = 49
+        Top = 69
+        Width = 519
         Height = 14
         AutoSize = False
         Caption = 'Nome do Cedente'
@@ -1448,9 +1448,9 @@ object ACBRBoletoFCFortesFr: TACBRBoletoFCFortesFr
       object RLLabel88: TRLLabel
         Left = 65
         Top = 288
-        Width = 43
+        Width = 46
         Height = 14
-        Caption = 'Sacado:'
+        Caption = 'Pagador:'
         Font.Charset = ANSI_CHARSET
         Font.Color = clBlack
         Font.Height = -11
@@ -1601,9 +1601,9 @@ object ACBRBoletoFCFortesFr: TACBRBoletoFCFortesFr
       object RLLabel102: TRLLabel
         Left = 4
         Top = 329
-        Width = 89
+        Width = 88
         Height = 14
-        Caption = 'Sacador/Avalista:'
+        Caption = 'Pagador/Avalista:'
         Font.Charset = ANSI_CHARSET
         Font.Color = clBlack
         Font.Height = -11
@@ -1639,7 +1639,7 @@ object ACBRBoletoFCFortesFr: TACBRBoletoFCFortesFr
         Visible = False
       end
       object txtEndCedente: TRLLabel
-        Left = 38
+        Left = 48
         Top = 84
         Width = 106
         Height = 15
@@ -1960,9 +1960,9 @@ object ACBRBoletoFCFortesFr: TACBRBoletoFCFortesFr
       object RLLabel147: TRLLabel
         Left = 4
         Top = 85
-        Width = 30
+        Width = 42
         Height = 10
-        Caption = 'Cedente'
+        Caption = 'Benefici'#225'rio'
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
         Font.Height = -8
@@ -1971,9 +1971,9 @@ object ACBRBoletoFCFortesFr: TACBRBoletoFCFortesFr
         ParentFont = False
       end
       object txtNomeCedente3: TRLLabel
-        Left = 37
+        Left = 48
         Top = 85
-        Width = 497
+        Width = 486
         Height = 13
         AutoSize = False
         Caption = 'Nome do Cedente'
@@ -2467,7 +2467,7 @@ object ACBRBoletoFCFortesFr: TACBRBoletoFCFortesFr
         Top = 293
         Width = 43
         Height = 14
-        Caption = 'Sacado:'
+        Caption = 'Pagador'
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
         Font.Height = -11
@@ -2586,9 +2586,9 @@ object ACBRBoletoFCFortesFr: TACBRBoletoFCFortesFr
       object RLLabel175: TRLLabel
         Left = 4
         Top = 330
-        Width = 89
+        Width = 88
         Height = 14
-        Caption = 'Sacador/Avalista:'
+        Caption = 'Pagador/Avalista:'
         Font.Charset = ANSI_CHARSET
         Font.Color = clBlack
         Font.Height = -11
@@ -2740,7 +2740,7 @@ object ACBRBoletoFCFortesFr: TACBRBoletoFCFortesFr
         DrawKind = dkLine
       end
       object txtEndCedente1: TRLLabel
-        Left = 37
+        Left = 48
         Top = 99
         Width = 106
         Height = 15
@@ -2950,9 +2950,9 @@ object ACBRBoletoFCFortesFr: TACBRBoletoFCFortesFr
       object RLLabel95: TRLLabel
         Left = 154
         Top = 71
-        Width = 30
+        Width = 42
         Height = 10
-        Caption = 'Cedente'
+        Caption = 'Benefici'#225'rio'
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
         Font.Height = -8
@@ -3201,9 +3201,9 @@ object ACBRBoletoFCFortesFr: TACBRBoletoFCFortesFr
       object RLLabel130: TRLLabel
         Left = 152
         Top = 229
-        Width = 27
+        Width = 31
         Height = 10
-        Caption = 'Sacado'
+        Caption = 'Pagador'
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
         Font.Height = -8
@@ -3280,9 +3280,9 @@ object ACBRBoletoFCFortesFr: TACBRBoletoFCFortesFr
       object RLLabel15: TRLLabel
         Left = 150
         Top = 268
-        Width = 89
+        Width = 88
         Height = 14
-        Caption = 'Sacador/Avalista:'
+        Caption = 'Pagador/Avalista:'
         Font.Charset = ANSI_CHARSET
         Font.Color = clBlack
         Font.Height = -11
@@ -3516,9 +3516,9 @@ object ACBRBoletoFCFortesFr: TACBRBoletoFCFortesFr
       object RLLabel47: TRLLabel
         Left = 0
         Top = 256
-        Width = 27
+        Width = 31
         Height = 10
-        Caption = 'Sacado'
+        Caption = 'Pagador'
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
         Font.Height = -8

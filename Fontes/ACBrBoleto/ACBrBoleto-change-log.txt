@@ -47,6 +47,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+Data: 08/07/2013
+
+-- ACBrBoletoFCFortesFR 0.0.21a --
+[-] Aplicados modificações para os textos Cedente e Sacado conforme exigência do Itau.
+    (por: Carlos Nascimento)
+
 
 Data: 14/06/2013
 
