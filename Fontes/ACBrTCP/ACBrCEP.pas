@@ -345,14 +345,14 @@ begin
   fACBrCEPWS.Free;
 
   case AValue of
-    wsBuscarCep : fACBrCEPWS := TACBrWSBuscarCEP.Create( Self );
-    wsCepLivre  : fACBrCEPWS := TACBrWSCEPLivre.Create( Self );
+    wsBuscarCep        : fACBrCEPWS := TACBrWSBuscarCEP.Create( Self );
+    wsCepLivre         : fACBrCEPWS := TACBrWSCEPLivre.Create( Self );
     wsRepublicaVirtual : fACBrCEPWS := TACBrWSRepublicaVirtual.Create(Self);
-    wsBases4you : fACBrCEPWS := TACBrWSBases4you.Create(Self);
-    wsRNSolucoes: fACBrCEPWS := TACBrWSRNSolucoes.Create(Self);
-    wsKingHost: fACBrCEPWS := TACBrWSKingHost.Create(Self);
-    wsByJG: fACBrCEPWS := TACBrWSByJG.Create(Self);
-    wsCorreios: fACBrCEPWS := TACBrWSCorreios.Create(Self);
+    wsBases4you        : fACBrCEPWS := TACBrWSBases4you.Create(Self);
+    wsRNSolucoes       : fACBrCEPWS := TACBrWSRNSolucoes.Create(Self);
+    wsKingHost         : fACBrCEPWS := TACBrWSKingHost.Create(Self);
+    wsByJG             : fACBrCEPWS := TACBrWSByJG.Create(Self);
+    wsCorreios         : fACBrCEPWS := TACBrWSCorreios.Create(Self);
   else
      fACBrCEPWS := TACBrCEPWSClass.Create( Self ) ;
   end ;
@@ -1139,6 +1139,7 @@ var
   iLin, iPos, iEnd, iFim : Integer;
   sLin, sMun : string;
   SL : TStringList;
+  I: Integer;
 begin
   fOwner.fEnderecos.Clear;
 
@@ -1223,7 +1224,17 @@ begin
               end ;
 
               if fACBrIBGE.Cidades.Count > 0 then  // Achou ?
-                IBGE_Municipio := IntToStr( fACBrIBGE.Cidades[0].CodMunicio );
+              begin
+                for I := 0 to fACBrIBGE.Cidades.Count - 1 do
+                begin
+                  if (fACBrIBGE.Cidades[I].Municipio = Municipio) and
+                     (fACBrIBGE.Cidades[I].UF        = UF) then
+                  begin
+                    IBGE_Municipio := IntToStr( fACBrIBGE.Cidades[I].CodMunicio );
+                    break;
+                  end; 
+                end;
+              end;
             end ;
           end ;
         end ;

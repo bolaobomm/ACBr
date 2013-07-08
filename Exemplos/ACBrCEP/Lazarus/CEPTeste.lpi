@@ -46,7 +46,7 @@
         <WindowIndex Value="0"/>
         <TopLine Value="1"/>
         <CursorPos X="51" Y="5"/>
-        <UsageCount Value="104"/>
+        <UsageCount Value="105"/>
       </Unit0>
       <Unit1>
         <Filename Value="CEPTeste1.pas"/>
@@ -59,7 +59,7 @@
         <WindowIndex Value="0"/>
         <TopLine Value="105"/>
         <CursorPos X="40" Y="112"/>
-        <UsageCount Value="104"/>
+        <UsageCount Value="105"/>
         <Loaded Value="True"/>
         <LoadedDesigner Value="True"/>
       </Unit1>
@@ -202,10 +202,11 @@
       <Unit20>
         <Filename Value="..\..\..\Fontes\ACBrTCP\ACBrCEP.pas"/>
         <UnitName Value="ACBrCEP"/>
+        <IsVisibleTab Value="True"/>
         <EditorIndex Value="1"/>
         <WindowIndex Value="0"/>
         <TopLine Value="1219"/>
-        <CursorPos X="27" Y="1226"/>
+        <CursorPos X="54" Y="1231"/>
         <UsageCount Value="43"/>
         <Bookmarks Count="1">
           <Item0 X="1" Y="1241" ID="1"/>
@@ -215,11 +216,10 @@
       <Unit21>
         <Filename Value="..\..\..\Fontes\ACBrTCP\ACBrSocket.pas"/>
         <UnitName Value="ACBrSocket"/>
-        <IsVisibleTab Value="True"/>
         <EditorIndex Value="6"/>
         <WindowIndex Value="0"/>
         <TopLine Value="7"/>
-        <CursorPos X="66" Y="647"/>
+        <CursorPos X="28" Y="15"/>
         <UsageCount Value="45"/>
         <Bookmarks Count="1">
           <Item0 X="1" Y="632" ID="2"/>
@@ -255,9 +255,9 @@
         <UnitName Value="ACBrIBGE"/>
         <EditorIndex Value="3"/>
         <WindowIndex Value="0"/>
-        <TopLine Value="93"/>
-        <CursorPos X="3" Y="94"/>
-        <UsageCount Value="13"/>
+        <TopLine Value="39"/>
+        <CursorPos X="27" Y="52"/>
+        <UsageCount Value="14"/>
         <Loaded Value="True"/>
       </Unit25>
       <Unit26>
@@ -275,7 +275,7 @@
         <WindowIndex Value="0"/>
         <TopLine Value="121"/>
         <CursorPos X="23" Y="132"/>
-        <UsageCount Value="22"/>
+        <UsageCount Value="23"/>
         <Loaded Value="True"/>
       </Unit27>
       <Unit28>
@@ -351,7 +351,7 @@
         <EditorIndex Value="2"/>
         <WindowIndex Value="0"/>
         <TopLine Value="34"/>
-        <CursorPos X="45" Y="43"/>
+        <CursorPos X="32" Y="46"/>
         <UsageCount Value="17"/>
         <Loaded Value="True"/>
         <DefaultSyntaxHighlighter Value="None"/>
@@ -479,67 +479,67 @@
     <JumpHistory Count="30" HistoryIndex="29">
       <Position1>
         <Filename Value="..\..\..\Fontes\ACBrTCP\ACBrCEP.pas"/>
-        <Caret Line="1162" Column="1" TopLine="1150"/>
+        <Caret Line="1221" Column="35" TopLine="1205"/>
       </Position1>
       <Position2>
         <Filename Value="..\..\..\Fontes\ACBrTCP\ACBrCEP.pas"/>
-        <Caret Line="1166" Column="1" TopLine="1150"/>
+        <Caret Line="1219" Column="49" TopLine="1210"/>
       </Position2>
       <Position3>
         <Filename Value="..\..\..\Fontes\ACBrTCP\ACBrCEP.pas"/>
-        <Caret Line="1180" Column="11" TopLine="1190"/>
+        <Caret Line="1132" Column="40" TopLine="1123"/>
       </Position3>
       <Position4>
-        <Filename Value="..\..\..\Fontes\ACBrTCP\ACBrCEP.pas"/>
-        <Caret Line="1221" Column="35" TopLine="1205"/>
+        <Filename Value="..\..\..\Fontes\ACBrTCP\ACBrSocket.pas"/>
+        <Caret Line="619" Column="3" TopLine="616"/>
       </Position4>
       <Position5>
         <Filename Value="..\..\..\Fontes\ACBrTCP\ACBrCEP.pas"/>
-        <Caret Line="1219" Column="49" TopLine="1210"/>
+        <Caret Line="1131" Column="53" TopLine="1120"/>
       </Position5>
       <Position6>
         <Filename Value="..\..\..\Fontes\ACBrTCP\ACBrCEP.pas"/>
-        <Caret Line="1132" Column="40" TopLine="1123"/>
+        <Caret Line="1141" Column="13" TopLine="1132"/>
       </Position6>
       <Position7>
-        <Filename Value="..\..\..\Fontes\ACBrTCP\ACBrSocket.pas"/>
-        <Caret Line="619" Column="3" TopLine="616"/>
+        <Filename Value="..\..\..\Fontes\ACBrTCP\ACBrCEP.pas"/>
+        <Caret Line="1222" Column="17" TopLine="1213"/>
       </Position7>
       <Position8>
         <Filename Value="..\..\..\Fontes\ACBrTCP\ACBrCEP.pas"/>
-        <Caret Line="1131" Column="53" TopLine="1120"/>
+        <Caret Line="1219" Column="1" TopLine="1213"/>
       </Position8>
       <Position9>
         <Filename Value="..\..\..\Fontes\ACBrTCP\ACBrCEP.pas"/>
-        <Caret Line="1141" Column="13" TopLine="1132"/>
+        <Caret Line="1221" Column="1" TopLine="1213"/>
       </Position9>
       <Position10>
         <Filename Value="..\..\..\Fontes\ACBrTCP\ACBrCEP.pas"/>
-        <Caret Line="1222" Column="17" TopLine="1213"/>
+        <Caret Line="1219" Column="1" TopLine="1213"/>
       </Position10>
       <Position11>
         <Filename Value="..\..\..\Fontes\ACBrTCP\ACBrCEP.pas"/>
-        <Caret Line="1219" Column="1" TopLine="1213"/>
+        <Caret Line="1221" Column="1" TopLine="1213"/>
       </Position11>
       <Position12>
         <Filename Value="..\..\..\Fontes\ACBrTCP\ACBrCEP.pas"/>
-        <Caret Line="1221" Column="1" TopLine="1213"/>
+        <Caret Line="1219" Column="1" TopLine="1213"/>
       </Position12>
       <Position13>
         <Filename Value="..\..\..\Fontes\ACBrTCP\ACBrCEP.pas"/>
-        <Caret Line="1219" Column="1" TopLine="1213"/>
+        <Caret Line="1225" Column="1" TopLine="1213"/>
       </Position13>
       <Position14>
         <Filename Value="..\..\..\Fontes\ACBrTCP\ACBrCEP.pas"/>
-        <Caret Line="1221" Column="1" TopLine="1213"/>
+        <Caret Line="1219" Column="1" TopLine="1213"/>
       </Position14>
       <Position15>
         <Filename Value="..\..\..\Fontes\ACBrTCP\ACBrCEP.pas"/>
-        <Caret Line="1219" Column="1" TopLine="1213"/>
+        <Caret Line="1225" Column="1" TopLine="1213"/>
       </Position15>
       <Position16>
         <Filename Value="..\..\..\Fontes\ACBrTCP\ACBrCEP.pas"/>
-        <Caret Line="1225" Column="1" TopLine="1213"/>
+        <Caret Line="1226" Column="1" TopLine="1213"/>
       </Position16>
       <Position17>
         <Filename Value="..\..\..\Fontes\ACBrTCP\ACBrCEP.pas"/>
@@ -587,15 +587,15 @@
       </Position27>
       <Position28>
         <Filename Value="..\..\..\Fontes\ACBrTCP\ACBrCEP.pas"/>
-        <Caret Line="1226" Column="1" TopLine="1213"/>
+        <Caret Line="1222" Column="17" TopLine="1219"/>
       </Position28>
       <Position29>
         <Filename Value="..\..\..\Fontes\ACBrTCP\ACBrCEP.pas"/>
-        <Caret Line="1219" Column="1" TopLine="1213"/>
+        <Caret Line="1" Column="1" TopLine="1"/>
       </Position29>
       <Position30>
         <Filename Value="..\..\..\Fontes\ACBrTCP\ACBrCEP.pas"/>
-        <Caret Line="1225" Column="1" TopLine="1213"/>
+        <Caret Line="57" Column="31" TopLine="47"/>
       </Position30>
     </JumpHistory>
   </ProjectOptions>
@@ -621,6 +621,15 @@
     </Other>
   </CompilerOptions>
   <Debugging>
+    <BreakPoints Count="1">
+      <Item1>
+        <Kind Value="bpkSource"/>
+        <WatchScope Value="wpsLocal"/>
+        <WatchKind Value="wpkWrite"/>
+        <Source Value="..\..\..\Fontes\ACBrTCP\ACBrCEP.pas"/>
+        <Line Value="1233"/>
+      </Item1>
+    </BreakPoints>
     <Exceptions Count="8">
       <Item1>
         <Name Value="EAbort"/>
