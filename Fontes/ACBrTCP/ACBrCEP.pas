@@ -1139,7 +1139,6 @@ var
   iLin, iPos, iEnd, iFim : Integer;
   sLin, sMun : string;
   SL : TStringList;
-  I: Integer;
 begin
   fOwner.fEnderecos.Clear;
 
@@ -1219,22 +1218,12 @@ begin
             begin
               if (sMun <> Municipio) then  // Evita buscar municipio já encontrado
               begin
-                fACBrIBGE.BuscarPorNome( Municipio ) ;
+                fACBrIBGE.BuscarPorNome( Municipio, UF, True ) ;
                 sMun := Municipio;
               end ;
 
               if fACBrIBGE.Cidades.Count > 0 then  // Achou ?
-              begin
-                for I := 0 to fACBrIBGE.Cidades.Count - 1 do
-                begin
-                  if (fACBrIBGE.Cidades[I].Municipio = Municipio) and
-                     (fACBrIBGE.Cidades[I].UF        = UF) then
-                  begin
-                    IBGE_Municipio := IntToStr( fACBrIBGE.Cidades[I].CodMunicio );
-                    break;
-                  end; 
-                end;
-              end;
+                 IBGE_Municipio := IntToStr( fACBrIBGE.Cidades[0].CodMunicio );
             end ;
           end ;
         end ;

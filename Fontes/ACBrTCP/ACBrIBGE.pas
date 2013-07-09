@@ -103,8 +103,9 @@ type
 
       property Cidades : TACBrIBGECidades  read fCidades ;
 
-      function BuscarPorCodigo( ACodigo : Integer ) : Integer ;
-      function BuscarPorNome( ACidade : String ) : Integer ;
+      function BuscarPorCodigo( const ACodigo : Integer ) : Integer ;
+      function BuscarPorNome( const ACidade : String; const AUF: String = '';
+        const Exata: Boolean = False ) : Integer ;
 
     published
       property OnBuscaEfetuada : TNotifyEvent read fOnBuscaEfetuada
@@ -168,7 +169,7 @@ begin
   inherited Destroy ;
 end ;
 
-function TACBrIBGE.BuscarPorCodigo(ACodigo : Integer) : Integer ;
+function TACBrIBGE.BuscarPorCodigo(const ACodigo : Integer) : Integer ;
 begin
   fCidades.Clear;
 
@@ -181,16 +182,36 @@ begin
   Result := fCidades.Count;
 end ;
 
-function TACBrIBGE.BuscarPorNome(ACidade : String) : Integer ;
+function TACBrIBGE.BuscarPorNome(const ACidade : String ; const AUF : String ;
+  const Exata : Boolean) : Integer ;
+var
+  I : Integer ;
+  Param: String ;
 begin
   fCidades.Clear;
 
-  ACidade := AjustaParam( ACidade ) ;
-  if ACidade = '' then
+  Param := AjustaParam( ACidade ) ;
+  if Param = '' then
      raise Exception.Create( ACBrStr('Nome do Município deve ser informado') );
 
-  HTTPGet(CIBGE_URL + '?nome='+ACidade ) ;
+  HTTPGet(CIBGE_URL + '?nome='+Param ) ;
+
   ProcessaResposta;
+
+  // Aplicando filtros (se informados) //
+  if (AUF <> '') or Exata then
+  begin
+    I := 0;
+    while I < fCidades.Count do
+    begin
+      if (AUF <> '') and (fCidades[I].UF <> AUF) then
+         fCidades.Delete(I)
+      else if Exata and (fCidades[I].Municipio <> ACidade) then
+         fCidades.Delete(I)
+      else
+         Inc( I ) ;
+    end ;
+  end ;
 
   Result := fCidades.Count;
 end ;
@@ -263,4 +284,4 @@ begin
 end ;
 
 end.
-
+
