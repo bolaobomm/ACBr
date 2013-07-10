@@ -156,6 +156,7 @@ type
     { Private declarations }
     procedure GravarConfiguracao;
     procedure LerConfiguracao;
+    procedure ConfiguraComponente;
     procedure LoadXML(MyMemo: TMemo; MyWebBrowser: TWebBrowser);
     procedure GerarMDFe(NumMDFe : String);
   public
@@ -253,9 +254,7 @@ procedure TfrmDemo_ACBrMDFe.LerConfiguracao;
 var
  IniFile    : String;
  Ini        : TIniFile;
- Ok         : Boolean;
  StreamMemo : TMemoryStream;
- Caminho    : String;
 begin
  IniFile := ChangeFileExt( Application.ExeName, '.ini');
 
@@ -264,15 +263,11 @@ begin
   {$IFDEF ACBrMDFeOpenSSL}
    edtCaminho.Text  := Ini.ReadString( 'Certificado','Caminho' ,'');
    edtSenha.Text    := Ini.ReadString( 'Certificado','Senha'   ,'');
-   ACBrMDFe1.Configuracoes.Certificados.Certificado  := edtCaminho.Text;
-   ACBrMDFe1.Configuracoes.Certificados.Senha        := edtSenha.Text;
    edtNumSerie.Visible := False;
    Label25.Visible     := False;
    sbtnGetCert.Visible := False;
   {$ELSE}
    edtNumSerie.Text := Ini.ReadString( 'Certificado','NumSerie','');
-   ACBrMDFe1.Configuracoes.Certificados.NumeroSerie := edtNumSerie.Text;
-   //edtNumSerie.Text := ACBrMDFe1.Configuracoes.Certificados.NumeroSerie;
    Label1.Caption := 'Informe o número de série do certificado'#13+
                      'Disponível no Internet Explorer no menu'#13+
                      'Ferramentas - Opções da Internet - Conteúdo '#13+
@@ -287,42 +282,18 @@ begin
   rgFormaEmissao.ItemIndex := Ini.ReadInteger('Geral','FormaEmissao',0);
   ckSalvar.Checked         := Ini.ReadBool(   'Geral','Salvar'      ,True);
   edtPathLogs.Text         := Ini.ReadString( 'Geral','PathSalvar'  ,'');
-  ACBrMDFe1.Configuracoes.Geral.FormaEmissao := StrToTpEmis(OK,IntToStr(rgFormaEmissao.ItemIndex+1));
-  ACBrMDFe1.Configuracoes.Geral.Salvar       := ckSalvar.Checked;
-  ACBrMDFe1.Configuracoes.Geral.PathSalvar   := edtPathLogs.Text;
 
   cbUF.ItemIndex       := cbUF.Items.IndexOf(Ini.ReadString('WebService','UF','SP'));
   rgTipoAmb.ItemIndex  := Ini.ReadInteger('WebService','Ambiente'  ,0);
   ckVisualizar.Checked :=Ini.ReadBool(    'WebService','Visualizar',False);
-  ACBrMDFe1.Configuracoes.WebServices.UF         := cbUF.Text;
-  ACBrMDFe1.Configuracoes.WebServices.Ambiente   := StrToTpAmb(Ok,IntToStr(rgTipoAmb.ItemIndex+1));
-  ACBrMDFe1.Configuracoes.WebServices.Visualizar := ckVisualizar.Checked;
-
-  ACBrMDFe1.Configuracoes.Arquivos.Salvar           := True;
-  ACBrMDFe1.Configuracoes.Arquivos.PastaMensal      := True;
-  ACBrMDFe1.Configuracoes.Arquivos.AdicionarLiteral := True;
-//  ACBrMDFe1.Configuracoes.Arquivos.PathMDFe := Caminho;
-  Caminho := ACBrMDFe1.Configuracoes.Arquivos.GetPathMDFe(0);
-
-  ACBrMDFe1.Configuracoes.Geral.PathSalvar := Caminho;
 
   edtProxyHost.Text  := Ini.ReadString( 'Proxy','Host'   ,'');
   edtProxyPorta.Text := Ini.ReadString( 'Proxy','Porta'  ,'');
   edtProxyUser.Text  := Ini.ReadString( 'Proxy','User'   ,'');
   edtProxySenha.Text := Ini.ReadString( 'Proxy','Pass'   ,'');
-  ACBrMDFe1.Configuracoes.WebServices.ProxyHost := edtProxyHost.Text;
-  ACBrMDFe1.Configuracoes.WebServices.ProxyPort := edtProxyPorta.Text;
-  ACBrMDFe1.Configuracoes.WebServices.ProxyUser := edtProxyUser.Text;
-  ACBrMDFe1.Configuracoes.WebServices.ProxyPass := edtProxySenha.Text;
 
   rgTipoDAMDFe.ItemIndex := Ini.ReadInteger( 'Geral','DAMDFe'       ,0);
-  edtLogoMarca.Text     := Ini.ReadString( 'Geral','LogoMarca'   ,'');
-  if ACBrMDFe1.DAMDFe <> nil then
-   begin
-    ACBrMDFe1.DAMDFe.TipoDAMDFe := StrToTpImp(OK,IntToStr(rgTipoDaMDFe.ItemIndex+1));
-    ACBrMDFe1.DAMDFe.Logo       := edtLogoMarca.Text;
-    ACBrMDFe1.DAMDFe.PathPDF    := Caminho;
-   end;
+  edtLogoMarca.Text      := Ini.ReadString( 'Geral','LogoMarca'   ,'');
 
   edtEmitCNPJ.Text       := Ini.ReadString( 'Emitente','CNPJ'       ,'');
   edtEmitIE.Text         := Ini.ReadString( 'Emitente','IE'         ,'');
@@ -352,6 +323,61 @@ begin
  finally
   Ini.Free;
  end;
+
+ ConfiguraComponente;
+end;
+
+procedure TfrmDemo_ACBrMDFe.ConfiguraComponente;
+var
+ Ok: Boolean;
+ PathMensal: String;
+begin
+ // Configurações -> Certificados
+ {$IFDEF ACBrMDFeOpenSSL}
+   ACBrMDFe1.Configuracoes.Certificados.Certificado := edtCaminho.Text;
+   ACBrMDFe1.Configuracoes.Certificados.Senha       := edtSenha.Text;
+ {$ELSE}
+   ACBrMDFe1.Configuracoes.Certificados.NumeroSerie := edtNumSerie.Text;
+ {$ENDIF}
+
+ // Configurações -> Arquivos
+ ACBrMDFe1.Configuracoes.Arquivos.AdicionarLiteral := True;
+ ACBrMDFe1.Configuracoes.Arquivos.EmissaoPathMDFe  := True;
+ ACBrMDFe1.Configuracoes.Arquivos.PastaMensal      := True;
+ ACBrMDFe1.Configuracoes.Arquivos.PathMDFe         := Trim(edtPathLogs.Text);
+ ACBrMDFe1.Configuracoes.Arquivos.Salvar           := True;
+
+ PathMensal := ACBrMDFe1.Configuracoes.Arquivos.GetPathMDFe(0);
+
+ // Configurações -> Geral
+ ACBrMDFe1.Configuracoes.Geral.FormaEmissao := StrToTpEmis(OK,IntToStr(rgFormaEmissao.ItemIndex+1));
+ ACBrMDFe1.Configuracoes.Geral.PathSalvar   := PathMensal;
+ ACBrMDFe1.Configuracoes.Geral.Salvar       := ckSalvar.Checked;
+
+ // Configurações -> WebServices
+ ACBrMDFe1.Configuracoes.WebServices.AguardarConsultaRet      := 0;
+ ACBrMDFe1.Configuracoes.WebServices.AjustaAguardaConsultaRet := False;
+ ACBrMDFe1.Configuracoes.WebServices.Ambiente                 := StrToTpAmb(Ok, IntToStr(rgTipoAmb.ItemIndex+1));
+ ACBrMDFe1.Configuracoes.WebServices.IntervaloTentativas      := 0;
+ ACBrMDFe1.Configuracoes.WebServices.Tentativas               := 5;
+ ACBrMDFe1.Configuracoes.WebServices.UF                       := cbUF.Text;
+ ACBrMDFe1.Configuracoes.WebServices.Visualizar               := ckVisualizar.Checked;
+ ACBrMDFe1.Configuracoes.WebServices.ProxyHost                := edtProxyHost.Text;
+ ACBrMDFe1.Configuracoes.WebServices.ProxyPort                := edtProxyPorta.Text;
+ ACBrMDFe1.Configuracoes.WebServices.ProxyUser                := edtProxyUser.Text;
+ ACBrMDFe1.Configuracoes.WebServices.ProxyPass                := edtProxySenha.Text;
+
+ // DAMDFe
+ if ACBrMDFe1.DAMDFe <> nil then
+  begin
+   ACBrMDFe1.DAMDFe.PathPDF           := PathMensal;
+   ACBrMDFe1.DAMDFe.ExpandirLogoMarca := False;
+   ACBrMDFe1.DAMDFe.ImprimirDescPorc  := False;
+   ACBrMDFe1.DAMDFe.Logo              := edtLogoMarca.Text;
+   ACBrMDFe1.DAMDFe.MostrarPreview    := True;
+   ACBrMDFe1.DAMDFe.TipoDAMDFe        := StrToTpImp(OK, IntToStr(rgTipoDaMDFe.ItemIndex+1));
+  end;
+
 end;
 
 procedure TfrmDemo_ACBrMDFe.LoadXML(MyMemo: TMemo;
