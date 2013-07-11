@@ -246,6 +246,37 @@ begin
    begin
       RegistroJ001.IND_DAD := 0;
 
+      with RegistroJ005.New do
+      begin
+        DT_INI := StrToDate('01/01/2006');
+        DT_FIN := StrToDate('31/01/2006');
+        ID_DEM := 1;
+
+        with RegistroJ100.New do
+        begin
+          COD_AGL   := '1';
+          NIVEL_AGL := '1';
+          IND_GRP_BAL := '1';
+          VL_CTA := 1;
+
+        end;
+      end;
+
+      with RegistroJ005.New do
+      begin
+        DT_INI := StrToDate('01/02/2006');
+        DT_FIN := StrToDate('28/02/2006');
+        ID_DEM := 2;
+
+        with RegistroJ100.New do
+        begin
+          COD_AGL   := '2';
+          NIVEL_AGL := '2';
+          IND_GRP_BAL := '2';
+          VL_CTA := 2;
+        end;
+      end;
+
       with RegistroJ900 do
       begin
          NUM_ORD := '100';
@@ -311,12 +342,15 @@ begin
 
    // Limpa a lista de erros.
    memoError.Lines.Clear;
+   memoTXT.Clear;
 
    // Informa o pata onde será salvo o arquivo TXT.
    ACBrSPEDContabil1.Path := '.\';
 
    // Método que gera o arquivo TXT.
    ACBrSPEDContabil1.SaveFileTXT(edtFile.Text) ;
+
+   memoTXT.Lines.LoadFromFile(edtFile.Text);
 
    // Habilita os botões
    btnB_0.Enabled := true;
