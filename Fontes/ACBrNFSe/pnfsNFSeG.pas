@@ -292,6 +292,11 @@ begin
                                '</' + Prefixo3 + 'DataFinal>' +
                               '</' + Prefixo3 + 'PeriodoEmissao>';
 
+ if AProvedor in [proFiorilli, profintelISS]
+  then DadosMsg := DadosMsg + '<' + Prefixo3 + 'Pagina>' +
+                                '1' +
+                              '</' + Prefixo3 + 'Pagina>';
+
  Result := TagI + DadosMsg + TagF;
 
  if AProvedor = proNenhum then Result := '';
