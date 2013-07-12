@@ -192,7 +192,7 @@ begin
    acConsSit:     Result := '<' + Prefixo3 + 'ConsultarSituacaoLoteRpsEnvio' + NameSpaceDad;
    acConsLote:    Result := '<' + Prefixo3 + 'ConsultarLoteRpsEnvio' + NameSpaceDad;
    acConsNFSeRps: Result := '<' + Prefixo3 + 'ConsultarNfseRpsEnvio' + NameSpaceDad;
-   acConsNFSe:    Result := '<' + Prefixo3 + 'ConsultarNfseEnvio' + NameSpaceDad;
+   acConsNFSe:    Result := '<' + Prefixo3 + 'ConsultarNfseServicoPrestadoEnvio' + NameSpaceDad;
    acCancelar:    Result := '<' + Prefixo3 + 'CancelarNfseEnvio' + NameSpaceDad +
                              '<' + Prefixo3 + 'Pedido>' +
                               '<' + Prefixo4 + 'InfPedidoCancelamento' +
@@ -223,7 +223,7 @@ begin
    acConsSit:     Result := '</' + Prefixo3 + 'ConsultarSituacaoLoteRpsEnvio>';
    acConsLote:    Result := '</' + Prefixo3 + 'ConsultarLoteRpsEnvio>';
    acConsNFSeRps: Result := '</' + Prefixo3 + 'ConsultarNfseRpsEnvio>';
-   acConsNFSe:    Result := '</' + Prefixo3 + 'ConsultarNfseEnvio>';
+   acConsNFSe:    Result := '</' + Prefixo3 + 'ConsultarNfseServicoPrestadoEnvio>';
    acCancelar:    Result := '</' + Prefixo3 + 'Pedido>' +
                             '</' + Prefixo3 + 'CancelarNfseEnvio>';
    acGerar:       Result := '</' + Prefixo3 + 'GerarNfseEnvio>';
@@ -529,10 +529,10 @@ begin
                              'xmlns:xd="http://www.w3.org/2000/09/xmldsig#"> ' +
            '<soapenv:Header/>' +
               '<soapenv:Body>' +
-                '<ws:consultarNfse>' +
+                '<ws:consultarNfseServicoPrestado>' +
                     DadosMsg +
                     DadosSenha +
-                 '</ws:consultarNfse>' +
+                 '</ws:consultarNfseServicoPrestado>' +
               '</soapenv:Body>' +
            '</soapenv:Envelope>';
 end;
@@ -580,7 +580,7 @@ begin
    acConsSit:     Result := urlsoap + 'consultarSituacaoLoteRps';
    acConsLote:    Result := urlsoap + 'consultarLoteRps';
    acConsNFSeRps: Result := urlsoap + 'consultarNfsePorRps';
-   acConsNFSe:    Result := urlsoap + 'consultarNfse';
+   acConsNFSe:    Result := urlsoap + 'consultarNfseServicoPrestado';
    acCancelar:    Result := urlsoap + 'cancelarNfse';
    acGerar:       Result := urlsoap + 'gerarNfse';
    acRecSincrono: Result := urlsoap + 'recepcionarLoteRpsSincrono';
