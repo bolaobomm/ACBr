@@ -56,6 +56,7 @@ type
 
   TACBrConsultaCNPJ = class(TACBrHTTP)
   private
+    FNaturezaJuridica : String ;
     FViewState: String;
     FEmpresaTipo: String;
     FAbertura: TDateTime;
@@ -98,6 +99,7 @@ type
     property UF: String Read FUF;
     property Situacao: String Read FSituacao;
     property DataSituacao: TDateTime Read FDataSituacao;
+    property NaturezaJuridica: String Read FNaturezaJuridica;
   end;
 
 implementation
@@ -122,7 +124,7 @@ begin
     Result:= '';
 end;
 
-Function TACBrConsultaCNPJ.GetCaptchaURL: String;
+function TACBrConsultaCNPJ.GetCaptchaURL : String ;
 var
   URL, Html: String;
 begin
@@ -190,7 +192,8 @@ begin
   Result:= ACBrStr(Res);
 end;
 
-function TACBrConsultaCNPJ.LerCampo(Texto: TStringList; NomeCampo: AnsiString): string;
+function TACBrConsultaCNPJ.LerCampo(Texto : TStringList ; NomeCampo : AnsiString
+  ) : String ;
 var
   i : integer;
 begin
@@ -261,6 +264,7 @@ begin
         FUF           := LerCampo(Resposta,'UF');
         FSituacao     := LerCampo(Resposta,'SITUAÇÃO CADASTRAL');
         FDataSituacao := StrToDateDef(LerCampo(Resposta,'DATA DA SITUAÇÃO CADASTRAL'),0);
+        FNaturezaJuridica := LerCampo(Resposta,'CÓDIGO E DESCRIÇÃO DA NATUREZA JURÍDICA');
       finally
         Resposta.Free;
       end ;

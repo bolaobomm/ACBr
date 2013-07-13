@@ -20,6 +20,9 @@ type
     EditCaptcha: TEdit;
     EditCEP: TEdit;
     EditCidade: TEdit;
+    EditCNAE1 : TEdit ;
+    EditCNAE2 : TEdit ;
+    EditNaturezaJuridica : TEdit ;
     EditCNPJ: TMaskEdit;
     EditComplemento: TEdit;
     EditEndereco: TEdit;
@@ -37,6 +40,9 @@ type
     Label12: TLabel;
     Label13: TLabel;
     Label14: TLabel;
+    Label15 : TLabel ;
+    Label16 : TLabel ;
+    Label17 : TLabel ;
     Label2: TLabel;
     Label3: TLabel;
     Label4: TLabel;
@@ -89,6 +95,9 @@ begin
       EditUF.Text          := ACBrConsultaCNPJ1.UF;
       EditCEP.Text         := ACBrConsultaCNPJ1.CEP;
       EditSituacao.Text    := ACBrConsultaCNPJ1.Situacao;
+      EditCNAE1.Text       := ACBrConsultaCNPJ1.CNAE1;
+      EditCNAE2.Text       := ACBrConsultaCNPJ1.CNAE2;
+      EditNaturezaJuridica.Text := ACBrConsultaCNPJ1.NaturezaJuridica;
     end;
   end
   else
