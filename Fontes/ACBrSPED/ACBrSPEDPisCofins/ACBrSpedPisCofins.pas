@@ -1044,7 +1044,10 @@ end;
 procedure TACBrSPEDPisCofins.WriteRegistroA001;
 begin
    Bloco_A.WriteRegistroA001;
-   //
+end;
+
+procedure TACBrSPEDPisCofins.WriteRegistroA990;
+begin
    with Bloco_9.Registro9900 do
    begin
       with New do
@@ -1107,16 +1110,13 @@ begin
          end;
       end;
    end;
-end;
 
-procedure TACBrSPEDPisCofins.WriteRegistroA990;
-begin
-  with Bloco_9.Registro9900.New do
-  begin
-    REG_BLC := 'A990';
-    QTD_REG_BLC := 1;
-  end;
-  Bloco_A.WriteRegistroA990;
+   with Bloco_9.Registro9900.New do
+   begin
+      REG_BLC := 'A990';
+      QTD_REG_BLC := 1;
+   end;
+   Bloco_A.WriteRegistroA990;
 end;
 
 procedure TACBrSPEDPisCofins.WriteRegistroC001;

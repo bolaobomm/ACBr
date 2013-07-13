@@ -667,17 +667,19 @@ procedure TBloco_C.WriteRegistroC001 ;
 begin
   if Assigned(FRegistroC001) then
   begin
-     with FRegistroC001 do
+     if (RegistroC990.QTD_LIN_C = 0) then   // Já gravou o C001 ?
      begin
-        Add( LFill( 'C001' ) +
-             LFill( Integer(IND_MOV), 0 ) ) ;
-
-        if IND_MOV = imComDados then
+        with FRegistroC001 do
         begin
-          WriteRegistroC010(FRegistroC001) ;
+           Add( LFill( 'C001' ) +
+                LFill( Integer(IND_MOV), 0 ) ) ;
         end;
+        RegistroC990.QTD_LIN_C := RegistroC990.QTD_LIN_C + 1;
      end;
-     RegistroC990.QTD_LIN_C := RegistroC990.QTD_LIN_C + 1;
+     if FRegistroC001.IND_MOV = imComDados then
+     begin
+       WriteRegistroC010(FRegistroC001) ;
+     end;
   end;
 end;
 
@@ -688,36 +690,52 @@ procedure TBloco_C.WriteRegistroC010(RegC001: TRegistroC001) ;
 begin
   if Assigned(RegC001.RegistroC010) then
   begin
-    for intFor := 0 to RegC001.RegistroC010.Count - 1 do
+    if (FRegistroC010Count<RegC001.RegistroC010.Count) then // Algum C010 ainda nao gravado?
     begin
-      with RegC001.RegistroC010.Items[intFor] do
+      for intFor := FRegistroC010Count to RegC001.RegistroC010.Count - 1 do
       begin
-        Check(funChecaCNPJ(CNPJ), '(C-010) ESTABELECIMENTO: O CNPJ "%s" digitado é inválido!', [CNPJ]);
+        with RegC001.RegistroC010.Items[intFor] do
+        begin
+          Check(funChecaCNPJ(CNPJ), '(C-010) ESTABELECIMENTO: O CNPJ "%s" digitado é inválido!', [CNPJ]);
 
-        case IND_ESCRI of
-           IndEscriConsolidado       : strIND_ESCRI := '1';
-           IndEscriIndividualizado   : strIND_ESCRI := '2';
+          case IND_ESCRI of
+             IndEscriConsolidado       : strIND_ESCRI := '1';
+             IndEscriIndividualizado   : strIND_ESCRI := '2';
+          end;
+
+          Add( LFill('C010')   +
+               LFill(CNPJ, 14) +
+               LFill(strIND_ESCRI) ) ;
         end;
-
-        Add( LFill('C010')   +
-             LFill(CNPJ, 14) +
-             LFill(strIND_ESCRI) ) ;
+        // Registros FILHOS
+        WriteRegistroC100( RegC001.RegistroC010.Items[intFor] );
+        WriteRegistroC180( RegC001.RegistroC010.Items[intFor] );
+        WriteRegistroC190( RegC001.RegistroC010.Items[intFor] );
+        WriteRegistroC380( RegC001.RegistroC010.Items[intFor] );
+        WriteRegistroC395( RegC001.RegistroC010.Items[intFor] );
+        WriteRegistroC400( RegC001.RegistroC010.Items[intFor] );
+        WriteRegistroC490( RegC001.RegistroC010.Items[intFor] );
+        WriteRegistroC500( RegC001.RegistroC010.Items[intFor] );
+        WriteRegistroC600( RegC001.RegistroC010.Items[intFor] );
+        //
+        RegistroC990.QTD_LIN_C := RegistroC990.QTD_LIN_C + 1;
       end;
+      // Variavél para armazenar a quantidade de registro do tipo.
+      FRegistroC010Count := FRegistroC010Count + RegC001.RegistroC010.Count;
+    end
+    else // apenas gravar os registros FILHOS do ultimo C010 existente
+    begin
       // Registros FILHOS
-      WriteRegistroC100( RegC001.RegistroC010.Items[intFor] );
-      WriteRegistroC180( RegC001.RegistroC010.Items[intFor] );
-      WriteRegistroC190( RegC001.RegistroC010.Items[intFor] );
-      WriteRegistroC380( RegC001.RegistroC010.Items[intFor] );
-      WriteRegistroC395( RegC001.RegistroC010.Items[intFor] );
-      WriteRegistroC400( RegC001.RegistroC010.Items[intFor] );
-      WriteRegistroC490( RegC001.RegistroC010.Items[intFor] );
-      WriteRegistroC500( RegC001.RegistroC010.Items[intFor] );
-      WriteRegistroC600( RegC001.RegistroC010.Items[intFor] );
-      //
-      RegistroC990.QTD_LIN_C := RegistroC990.QTD_LIN_C + 1;
+      WriteRegistroC100( RegC001.RegistroC010.Items[FRegistroC010Count-1] );
+      WriteRegistroC180( RegC001.RegistroC010.Items[FRegistroC010Count-1] );
+      WriteRegistroC190( RegC001.RegistroC010.Items[FRegistroC010Count-1] );
+      WriteRegistroC380( RegC001.RegistroC010.Items[FRegistroC010Count-1] );
+      WriteRegistroC395( RegC001.RegistroC010.Items[FRegistroC010Count-1] );
+      WriteRegistroC400( RegC001.RegistroC010.Items[FRegistroC010Count-1] );
+      WriteRegistroC490( RegC001.RegistroC010.Items[FRegistroC010Count-1] );
+      WriteRegistroC500( RegC001.RegistroC010.Items[FRegistroC010Count-1] );
+      WriteRegistroC600( RegC001.RegistroC010.Items[FRegistroC010Count-1] );
     end;
-    // Variavél para armazenar a quantidade de registro do tipo.
-    FRegistroC010Count := FRegistroC010Count + RegC001.RegistroC010.Count;
   end;
 end;
 
@@ -870,6 +888,8 @@ begin
      end;
      /// Variavél para armazenar a quantidade de registro do tipo.
      FRegistroC100Count := FRegistroC100Count + RegC010.RegistroC100.Count;
+     //
+     RegC010.RegistroC100.Clear;
   end;
 end;
 
@@ -1197,6 +1217,8 @@ begin
     end;
     // Variavél para armazenar a quantidade de registro do tipo.
     FRegistroC180Count := FRegistroC180Count + RegC010.RegistroC180.Count;
+    //
+    RegC010.RegistroC180.Clear;
   end;
 end;
 
@@ -1395,6 +1417,8 @@ begin
     end;
     // Variavél para armazenar a quantidade de registro do tipo.
     FRegistroC190Count := FRegistroC190Count + RegC010.RegistroC190.Count;
+    //
+    RegC010.RegistroC190.Clear;
   end;
 end;
 
@@ -1624,6 +1648,8 @@ begin
     end;
     // Variavél para armazenar a quantidade de registro do tipo.
     FRegistroC380Count := FRegistroC380Count + RegC010.RegistroC380.Count;
+    //
+    RegC010.RegistroC380.Clear;
   end;
 end;
 
@@ -1787,6 +1813,8 @@ begin
     end;
     // Variavél para armazenar a quantidade de registro do tipo.
     FRegistroC395Count := FRegistroC395Count + RegC010.RegistroC395.Count;
+    //
+    RegC010.RegistroC395.Clear;
   end;
 end;
 
@@ -2170,6 +2198,8 @@ begin
     end;
     // Variavél para armazenar a quantidade de registro do tipo.
     FRegistroC490Count := FRegistroC490Count + RegC010.RegistroC490.Count;
+    //
+    RegC010.RegistroC490.Clear;
   end;
 end;
 

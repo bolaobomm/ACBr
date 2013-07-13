@@ -226,18 +226,19 @@ procedure TBloco_A.WriteRegistroA001 ;
 begin
   if Assigned(FRegistroA001) then
   begin
-     with FRegistroA001 do
+     if (RegistroA990.QTD_LIN_A = 0) then  // Ja gravou o A001?
      begin
-        Add( LFill( 'A001' ) +
-             LFill( Integer(IND_MOV), 0 ) ) ;
-
-        if IND_MOV = imComDados then
+        with FRegistroA001 do
         begin
-          WriteRegistroA010(FRegistroA001) ;
+           Add( LFill( 'A001' ) +
+                LFill( Integer(IND_MOV), 0 ) ) ;
         end;
+        RegistroA990.QTD_LIN_A := RegistroA990.QTD_LIN_A + 1;
      end;
-
-     RegistroA990.QTD_LIN_A := RegistroA990.QTD_LIN_A + 1;
+     if FRegistroA001.IND_MOV = imComDados then
+     begin
+       WriteRegistroA010(FRegistroA001) ;
+     end;
   end;
 end;
 
@@ -247,23 +248,31 @@ procedure TBloco_A.WriteRegistroA010(RegA001: TRegistroA001) ;
 begin
   if Assigned(RegA001.RegistroA010) then
   begin
-    for intFor := 0 to RegA001.RegistroA010.Count - 1 do
+    if (FRegistroA010Count<RegA001.RegistroA010.Count) then // Algum A010 ainda nao gravado?
     begin
-      with RegA001.RegistroA010.Items[intFor] do
+      for intFor := FRegistroA010Count to RegA001.RegistroA010.Count - 1 do
       begin
-        Check(funChecaCNPJ(CNPJ), '(A-010) ESTABELECIMENTO: O CNPJ "%s" digitado é inválido!', [CNPJ]);
+        with RegA001.RegistroA010.Items[intFor] do
+        begin
+          Check(funChecaCNPJ(CNPJ), '(A-010) ESTABELECIMENTO: O CNPJ "%s" digitado é inválido!', [CNPJ]);
 
-        Add( LFill('A010') +
-             LFill(CNPJ, 14) ) ;
+          Add( LFill('A010') +
+               LFill(CNPJ, 14) ) ;
+        end;
+
+        // Registros FILHOS
+        WriteRegistroA100( RegA001.RegistroA010.Items[intFor] );
+        //
+        RegistroA990.QTD_LIN_A := RegistroA990.QTD_LIN_A + 1;
       end;
-
+      // Variavél para armazenar a quantidade de registro do tipo.
+      FRegistroA010Count := FRegistroA010Count + RegA001.RegistroA010.Count;
+    end
+    else // apenas gravar os registros FILHOS do ultimo A010 existente
+    begin
       // Registros FILHOS
-      WriteRegistroA100( RegA001.RegistroA010.Items[intFor] );
-      //
-      RegistroA990.QTD_LIN_A := RegistroA990.QTD_LIN_A + 1;
+      WriteRegistroA100( RegA001.RegistroA010.Items[FRegistroA010Count-1] );
     end;
-    // Variavél para armazenar a quantidade de registro do tipo.
-    FRegistroA010Count := FRegistroA010Count + RegA001.RegistroA010.Count;
   end;
 end;
 
@@ -350,6 +359,8 @@ begin
      end;
      /// Variavél para armazenar a quantidade de registro do tipo.
      FRegistroA100Count := FRegistroA100Count + RegA010.RegistroA100.Count;
+     //
+     RegA010.RegistroA100.Clear;
   end;
 end;
 
