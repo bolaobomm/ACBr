@@ -53,7 +53,7 @@ uses
 type
   TACBrCEPWebService = ( wsNenhum, wsBuscarCep, wsCepLivre, wsRepublicaVirtual,
                          wsBases4you, wsRNSolucoes, wsKingHost, wsByJG,
-                         wsCorreios ) ;
+                         wsCorreios, wsDevMedia ) ;
 
   EACBrCEPException = class ( Exception );
 
@@ -264,6 +264,22 @@ type
          AUF, ABairro : String ) ; override ;
   end;
 
+{ TACBrDevMedia }
+
+TACBrWSDevMedia = class(TACBrCEPWSClass)
+    private
+      FCepBusca: String;
+      procedure TestarChave;
+      procedure ProcessaResposta;
+    public
+      constructor Create( AOwner : TACBrCEP ) ; override ;
+
+      Procedure BuscarPorCEP( ACEP : String ) ; override ;
+      Procedure BuscarPorLogradouro( AMunicipio, ATipo_Logradouro,
+          ALogradouro, AUF, ABairro : String ) ; override ;
+  end ;
+
+
 
 implementation
 
@@ -353,6 +369,7 @@ begin
     wsKingHost         : fACBrCEPWS := TACBrWSKingHost.Create(Self);
     wsByJG             : fACBrCEPWS := TACBrWSByJG.Create(Self);
     wsCorreios         : fACBrCEPWS := TACBrWSCorreios.Create(Self);
+    wsDevMedia         : fACBrCEPWS := TACBrWSDevMedia.Create(Self);
   else
      fACBrCEPWS := TACBrCEPWSClass.Create( Self ) ;
   end ;
@@ -1238,5 +1255,67 @@ begin
   if Assigned( fOwner.OnBuscaEfetuada ) then
     fOwner.OnBuscaEfetuada( Self );
 end;
+
+{ TACBrWSDevMedia http://www.devmedia.com.br/devware/cep/service/ *************}
+
+constructor TACBrWSDevMedia.Create(AOwner: TACBrCEP);
+begin
+  inherited Create(AOwner);
+  fpURL := 'http://www.devmedia.com.br/devware/cep/service/';
+end;
+
+procedure TACBrWSDevMedia.BuscarPorCEP(ACEP: String);
+begin
+  TestarChave;
+
+  FCepBusca := ACep;
+  ACEP := OnlyNumber( AnsiString( ACEP ) );
+
+  fOwner.HTTPGet( fpURL + '?cep=' + ACEP + '&chave=' + Trim(fOwner.ChaveAcesso) + '&formato=xml' ) ;
+  ProcessaResposta;
+end;
+
+procedure TACBrWSDevMedia.BuscarPorLogradouro(AMunicipio,
+  ATipo_Logradouro, ALogradouro, AUF, ABairro: String);
+begin
+  raise EACBrCEPException.Create(ACBrStr('Busca por Logradouro não disponível no site DevMedia.'));
+end;
+
+procedure TACBrWSDevMedia.ProcessaResposta;
+var
+  Resultado, Buffer : String ;
+begin
+  fOwner.fEnderecos.Clear;
+
+  Buffer    := fOwner.RespHTTP.Text;
+  Resultado := LerTagXML(Buffer, 'resultado_txt') ;
+
+  if Resultado = 'sucesso' then
+  begin
+    with fOwner.Enderecos.New do
+    begin
+      CEP             := FCepBusca ; // DEVMEDIA nao devolve o cep na resposta
+      Tipo_Logradouro := LerTagXML(Buffer,'tipo_logradouro') ;
+      Logradouro      := LerTagXML(Buffer,'logradouro') ;
+      Complemento     := LerTagXML(Buffer,'complemento') ;
+      Bairro          := LerTagXML(Buffer,'bairro') ;
+      Municipio       := LerTagXML(Buffer,'cidade') ;
+      UF              := LerTagXML(Buffer,'uf') ;
+      IBGE_Municipio  := '';
+    end ;
+  end
+  else
+     raise EACBrCEPException.Create( ACBrStr(Resultado) );
+
+  if Assigned( fOwner.OnBuscaEfetuada ) then
+    fOwner.OnBuscaEfetuada( Self );
+end ;
+
+procedure TACBrWSDevMedia.TestarChave;
+begin
+  if fOwner.ChaveAcesso = EmptyStr then
+    raise EACBrCEPException.Create( ACBrStr('Chave de acesso não informada.') );
+end;
+
 
 end.
