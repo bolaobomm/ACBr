@@ -313,7 +313,7 @@ TACBrECFBematech = class( TACBrECFClass )
     { Tamanho da Resposta Esperada ao comando. Necessário, pois a Bematech nao
       usa um Sufixo padrão no fim da resposta da Impressora. }
     fs25MFD      : Boolean ;  // True se for MP25 ou Superior (MFD)
-    fsEnviaPorDLL: Boolean ;  // True se a DLL suporta envio e recebimento de dados (USB)
+    fsUsarDLL    : Boolean ;  // True se a DLL suporta envio e recebimento de dados (USB)
     fsPAF        : String ;
     fsBytesResp  : Integer ;
     fsFalhasFimImpressao : Integer ;
@@ -349,18 +349,16 @@ TACBrECFBematech = class( TACBrECFClass )
     xBematech_FI_DownloadMF: function(cNomeArquivoMF: AnsiString): Integer; stdcall;
 
     xBematech_FI_EnviaComando: function(cComando: AnsiString;
-      iTamanhoComando: Integer): Integer; stdcall;
+      iTamanhoComando: Integer): Integer; StdCall;
     xBematech_FI_LeituraRetorno: function(cRetorno: AnsiString;
-      iTamanhoRetorno: Integer): Integer; stdcall;
+      iTamanhoRetorno: Integer): Integer; StdCall;
+    xBematech_FI_BytesDisponiveisLeitura: function: Integer; StdCall;
 
     {$IFDEF MSWINDOWS}
      procedure LoadDLLFunctions;
      procedure AbrePortaSerialDLL(const aPath: String='');
      procedure FechaPortaSerialDLL(const OldAtivo : Boolean) ;
      function AnalisarRetornoDll(const ARetorno: Integer): String;
-
-     procedure EnviaStringDLL(const cmd: AnsiString) ;
-     procedure LeStringDLL(const NumBytes, ATimeOut: Integer; var Retorno: AnsiString);
     {$ENDIF}
 
     function GetTotalizadoresParciais : String ;
@@ -631,21 +629,15 @@ procedure TACBrECFBematech.Ativar;
 var
   wRetentar : Boolean ;
 begin
-  fsEnviaPorDLL := False;
+  fsUsarDLL := False;
 
   {$IFDEF MSWINDOWS}
    if fpDevice.IsDLLPort then
    begin
-     fsEnviaPorDLL := True;
-
      // Lendo métodos da DLL, Se falhar a carga dos novos métodos, dispara exception
      LoadDLLFunctions ;
-
-     // Programando Hooks de leitua e envio //
-     fpDevice.HookEnviaString := EnviaStringDLL;
-     fpDevice.HookLeString    := LeStringDLL;
-
      AbrePortaSerialDLL;
+     fsUsarDLL := True;
    end
    else
   {$ENDIF}
@@ -706,7 +698,7 @@ end;
 procedure TACBrECFBematech.Desativar;
 begin
   {$ifdef windows}
-  if fsEnviaPorDLL and Ativo then
+  if fsUsarDLL and Ativo then
      try
         FechaPortaSerialDLL(False);
      except
@@ -725,6 +717,25 @@ Var
   PediuStatus : Boolean ;
   FalhasACK   : Integer;
   nSTL, nSTH  : Integer;
+  cRetorno    : AnsiString;
+  LenCMD, Resp, I : Integer ;
+  TempoLimite : TDateTime ;
+
+  procedure AnalisaACK ;
+  begin
+     if fsACK = 0 then
+        raise EACBrECFSemResposta.create( ACBrStr(
+                 'Impressora '+fpModeloStr+' não responde (ACK = 0)'))
+     else if fsACK = 21 then    { retorno em caracter 21d=15h=NAK }
+        raise EACBrECFSemResposta.create( ACBrStr(
+              'Impressora '+fpModeloStr+' não reconheceu o Comando'+
+              sLineBreak+' (ACK = 21)'))
+     else if fsACK <> 6 then
+        raise EACBrECFSemResposta.create( ACBrStr(
+              'Erro. Resposta da Impressora '+fpModeloStr+' inválida'+
+              sLineBreak+' (ACK = '+IntToStr(fsACK)+')')) ;
+  end ;
+
 begin
   fsACK   := 0  ;
   fsST1   := 0  ;
@@ -740,154 +751,190 @@ begin
 
   PediuStatus := ( cmd = #19 ) ; { quando pede Status nao deve disparar
                                    exceçao com erros "Pouco Papel" ou "Cupom Aberto" }
+
+  { Codificando CMD de acordo com o protocolo da Bematech }
+  cmd := PreparaCmd( cmd ) ;
+
   try
-     { Codificando CMD de acordo com o protocolo da Bematech }
-     cmd := PreparaCmd( cmd ) ;
+     if fsUsarDLL then
+      begin
+        LenCMD := Length(cmd);
+        GravaLog( '   xBematech_FI_EnviaComando -> '+IntToStr(LenCMD)+' bytes' );
+        Resp := xBematech_FI_EnviaComando( cmd, LenCMD );
+        if Resp <> 1 then
+           raise EACBrECFTimeOut.Create( ACBrStr( 'Erro ao executar Bematech_FI_EnviaComando.'+sLineBreak+
+                                           AnalisarRetornoDll(Resp) )) ;
+        fpComandoEnviado := cmd ;
 
-     fpDevice.Serial.DeadlockTimeout := 2000 ; { Timeout p/ Envio }
-     FalhasACK := 0 ;
+        TempoLimite := IncSecond( now, TimeOut) ;
 
-     while (fsACK <> 6) do     { Se ACK = 6 Comando foi reconhecido }
-     begin
-        fsACK := 0 ;
-        if not fsEnviaPorDLL then
+        repeat
+           BytesResp := xBematech_FI_BytesDisponiveisLeitura;
+           GravaLog( '   xBematech_FI_BytesDisponiveisLeitura, '+IntToStr(BytesResp)+' bytes' );
+           if BytesResp <= 0 then
+              raise EACBrECFTimeOut.Create( ACBrStr( 'Sem dados disponível para Leitura.'+sLineBreak+
+                                            AnalisarRetornoDll(BytesResp) )) ;
+
+           SetLength( cRetorno, BytesResp+1 );
+           cRetorno[1] := #0; // Zera Buffer de Saida
+
+           GravaLog( '   xBematech_FI_LeituraRetorno' );
+           BytesResp := xBematech_FI_LeituraRetorno( cRetorno, BytesResp );
+           fpRespostaComando := copy(cRetorno,1,BytesResp);
+
+           GravaLog( '      Resp:'+IntToStr(BytesResp) );
+           if BytesResp < 1 then
+              Sleep(100);
+        until (BytesResp > 0) or (now > TempoLimite) ;
+        
+        if BytesResp <= 0 then
+           raise EACBrECFTimeOut.Create( ACBrStr( 'Erro ao executar Bematech_FI_LeituraRetorno.'+sLineBreak+
+                                         AnalisarRetornoDll(BytesResp) )) ;
+
+        fsACK := ord(fpRespostaComando[ 1 ]);
+        AnalisaACK;
+
+        fsST1  := ord(fpRespostaComando[ BytesResp - 3 ]);
+        fsST2  := ord(fpRespostaComando[ BytesResp - 2 ]);
+        nSTL   := ord(fpRespostaComando[ BytesResp - 1 ]);
+        nSTH   := ord(fpRespostaComando[ BytesResp ]);
+        Result := copy(fpRespostaComando, 2, Length(fpRespostaComando)-5);
+      end
+     else
+      begin
+        fpDevice.Serial.DeadlockTimeout := 2000 ; { Timeout p/ Envio }
+        FalhasACK := 0 ;
+
+        while (fsACK <> 6) do     { Se ACK = 6 Comando foi reconhecido }
+        begin
+           fsACK := 0 ;
            fpDevice.Serial.Purge ;                   { Limpa a Porta }
 
-        if not TransmiteComando( cmd ) then
-           continue ;
+           if not TransmiteComando( cmd ) then
+              continue ;
 
-        try
-           { espera ACK chegar na Porta por 4s }
            try
-              fsACK := fpDevice.LeByte( 4000 ) ;
-           except
-           end ;
+              { espera ACK chegar na Porta por 4s }
+              try
+                 fsACK := fpDevice.LeByte( 4000 ) ;
+              except
+              end ;
 
-           if fsACK = 0 then
-              raise EACBrECFSemResposta.create( ACBrStr(
-                       'Impressora '+fpModeloStr+' não responde (ACK = 0)'))
-           else if fsACK = 21 then    { retorno em caracter 21d=15h=NAK }
-              raise EACBrECFSemResposta.create( ACBrStr(
-                    'Impressora '+fpModeloStr+' não reconheceu o Comando'+
-                    sLineBreak+' (ACK = 21)'))
-           else if fsACK <> 6 then
-              raise EACBrECFSemResposta.create( ACBrStr(
-                    'Erro. Resposta da Impressora '+fpModeloStr+' inválida'+
-                    sLineBreak+' (ACK = '+IntToStr(fsACK)+')')) ;
-        except
-           on E : EACBrECFSemResposta do
-            begin
-              if not fsEnviaPorDLL then
+              AnalisaACK;
+           except
+              on E : EACBrECFSemResposta do
+               begin
                  fpDevice.Serial.Purge ;
 
-              Inc( FalhasACK ) ;
-              GravaLog('Bematech EnviaComando_ECF: ACK = '+IntToStr(ACK)+' Falha: '+IntToStr(FalhasACK) ) ;
+                 Inc( FalhasACK ) ;
+                 GravaLog('Bematech EnviaComando_ECF: ACK = '+IntToStr(ACK)+' Falha: '+IntToStr(FalhasACK) ) ;
 
-              if FalhasACK < 3 then
-                 Sleep(100)
-              else
-                 if not DoOnMsgRetentar( E.Message +sLineBreak+sLineBreak+
+                 if FalhasACK < 3 then
+                    Sleep(100)
+                 else
+                    if not DoOnMsgRetentar( E.Message +sLineBreak+sLineBreak+
                     'Se o problema persistir, verifique os cabos, ou'+sLineBreak+
                     'experimente desligar a impressora durante 5 seg,'+sLineBreak+
                     'liga-la novamente, e repetir a operação...'
                     , 'LerACK') then
                     raise ;
-            end ;
-           else
-              raise ;
+               end ;
+              else
+                 raise ;
+           end ;
         end ;
-     end ;
 
-     fpComandoEnviado := cmd ;
+        fpComandoEnviado := cmd ;
 
-     { Chama Rotina da Classe mãe TACBrClass para ler Resposta. Se houver
-       falha na leitura LeResposta dispara Exceçao }
-     LeResposta ;
+        { Chama Rotina da Classe mãe TACBrClass para ler Resposta. Se houver
+          falha na leitura LeResposta dispara Exceçao }
+        LeResposta ;
 
-     { Separando o Retorno }
-     try
-        if BytesResp >= 0 then
-         begin
-           fsST1 := ord( fpRespostaComando[ BytesResp + 1 ] ) ;
-           fsST2 := ord( fpRespostaComando[ BytesResp + 2 ] ) ;
-
-           if fs25MFD then
-           try
-             nSTL := ord( fpRespostaComando[ BytesResp + 3 ] );
-             nSTH := ord( fpRespostaComando[ BytesResp + 4 ] );
-           except
-           end;
-
-           Result := copy(fpRespostaComando, 1, BytesResp) ;
-         end
-        else  { Quando BytesResp < 0 espera por ETX no final }
-         begin
-           fsST1 := ord( fpRespostaComando[ 1 ] ) ;
-           fsST2 := ord( fpRespostaComando[ 2 ] ) ;
-
-           if fs25MFD then
+        { Separando o Retorno }
+        try
+           if BytesResp >= 0 then
             begin
-              try
-                 nSTL := ord( fpRespostaComando[ 3 ] );
-                 nSTH := ord( fpRespostaComando[ 4 ] );
-              except
-              end;
+              fsST1 := ord( fpRespostaComando[ BytesResp + 1 ] ) ;
+              fsST2 := ord( fpRespostaComando[ BytesResp + 2 ] ) ;
 
-              Result := copy(fpRespostaComando, 5, Length(fpRespostaComando)-5 ) ;
+              if fs25MFD then
+              begin
+                 try
+                    nSTL := ord( fpRespostaComando[ BytesResp + 3 ] );
+                    nSTH := ord( fpRespostaComando[ BytesResp + 4 ] );
+                 except
+                 end;
+              end ;
+
+              Result := copy(fpRespostaComando, 1, BytesResp) ;
             end
-           else
-              Result := copy(fpRespostaComando, 3, Length(fpRespostaComando)-3 ) ;
-         end ;
-     except
-     end ;
+           else  { Quando BytesResp < 0 espera por ETX no final }
+            begin
+              fsST1 := ord( fpRespostaComando[ 1 ] ) ;
+              fsST2 := ord( fpRespostaComando[ 2 ] ) ;
 
-     if fs25MFD then
-        fsST3 := (nSTH shl 8) + nSTL;
+              if fs25MFD then
+               begin
+                  try
+                     nSTL := ord( fpRespostaComando[ 3 ] );
+                     nSTH := ord( fpRespostaComando[ 4 ] );
+                  except
+                  end;
 
-     { Verifica se possui erro "Pouco Papel" }
-     if TestBit( ST1, 6 ) then
-        DoOnMsgPoucoPapel ;
-
-     ErroMsg := '' ;
-     // Alguns erros estendidos não impedem de continuar a 'conversa' com o ECF
-     // por isso só busca o erro estendido se realmente tiver algum erro grave!
-     if fs25MFD then
-      begin
-        if (fsST3 > 0) and (fsST3 <= High(ErrosST3)) and
-           (fsST1+fsST2 <> 0) then
-           ErroMsg := ErrosST3[fsST3] + sLineBreak
-      end
-     else
-      begin
-        { Verificando por erros em ST1 e ST2 }
-        For B := 0 to 7 do
-        begin
-           if (B <> 6) and TestBit( ST1, B) then
-              if (not PediuStatus) or (B <> 1) then
-                 ErroMsg := ErroMsg + ErrosST1[ B ] + sLineBreak ;
-
-           if TestBit( ST2, B) then
-              ErroMsg := ErroMsg + ErrosST2[ B ] + sLineBreak ;
+                  Result := copy(fpRespostaComando, 5, Length(fpRespostaComando)-5 ) ;
+               end
+              else
+                 Result := copy(fpRespostaComando, 3, Length(fpRespostaComando)-3 ) ;
+            end ;
+        except
         end ;
       end ;
 
-     if ErroMsg <> '' then
-      begin
-        ErroMsg := 'Erro retornado pela Impressora: ' + fpModeloStr + sLineBreak+sLineBreak+
-                   ErroMsg ;
+      if fs25MFD then
+         fsST3 := (nSTH shl 8) + nSTL;
 
-        if (fsST1 = 128) or (fsST3 = 11) then
-           DoOnErrorSemPapel
-        else
-           raise EACBrECFSemResposta.create(ACBrStr(ErroMsg)) ;
-      end
-     else
-        Sleep( IntervaloAposComando ) ;  { Pequena pausa entre comandos }
+      { Verifica se possui erro "Pouco Papel" }
+      if TestBit( ST1, 6 ) then
+         DoOnMsgPoucoPapel ;
 
+      ErroMsg := '' ;
+      // Alguns erros estendidos não impedem de continuar a 'conversa' com o ECF
+      // por isso só busca o erro estendido se realmente tiver algum erro grave!
+      if fs25MFD then
+       begin
+         if (fsST3 > 0) and (fsST3 <= High(ErrosST3)) and
+            (fsST1+fsST2 <> 0) then
+            ErroMsg := ErrosST3[fsST3] + sLineBreak
+       end
+      else
+       begin
+         { Verificando por erros em ST1 e ST2 }
+         For B := 0 to 7 do
+         begin
+            if (B <> 6) and TestBit( ST1, B) then
+               if (not PediuStatus) or (B <> 1) then
+                  ErroMsg := ErroMsg + ErrosST1[ B ] + sLineBreak ;
+
+            if TestBit( ST2, B) then
+               ErroMsg := ErroMsg + ErrosST2[ B ] + sLineBreak ;
+         end ;
+       end ;
+
+      if ErroMsg <> '' then
+       begin
+         ErroMsg := 'Erro retornado pela Impressora: ' + fpModeloStr + sLineBreak+sLineBreak+
+                    ErroMsg ;
+
+         if (fsST1 = 128) or (fsST3 = 11) then
+            DoOnErrorSemPapel
+         else
+            raise EACBrECFSemResposta.create(ACBrStr(ErroMsg)) ;
+       end
+      else
+         Sleep( IntervaloAposComando ) ;  { Pequena pausa entre comandos }
   finally
-     BytesResp  := 0 ;
+     BytesResp := 0;
   end ;
-
 end;
 
 
@@ -950,8 +997,7 @@ begin
      try
 //      GravaLog('Bematech VerificaFimImpressao: Pedindo o Status') ;
 
-        if not fsEnviaPorDLL then
-           fpDevice.Serial.Purge ;           // Limpa buffer de Entrada e Saida //
+        fpDevice.Serial.Purge ;           // Limpa buffer de Entrada e Saida //
         fpDevice.EnviaString( Cmd );         // Envia comando //
 
         // espera ACK chegar na Porta por 1,5s //
@@ -3265,7 +3311,7 @@ procedure TACBrECFBematech.LoadDLLFunctions;
    end ;
  end ;
 begin
-   if fsEnviaPorDLL and Ativo then exit; // Já fez a leitura
+   if fsUsarDLL and Ativo then exit; // Já fez a leitura
 
    BematechFunctionDetect( 'Bematech_FI_AbrePortaSerial',@xBematech_FI_AbrePortaSerial );
    BematechFunctionDetect( 'Bematech_FI_FechaPortaSerial',@xBematech_FI_FechaPortaSerial );
@@ -3279,6 +3325,7 @@ begin
    begin
      BematechFunctionDetect( 'Bematech_FI_EnviaComando',@xBematech_FI_EnviaComando );
      BematechFunctionDetect( 'Bematech_FI_LeituraRetorno',@xBematech_FI_LeituraRetorno );
+     BematechFunctionDetect( 'Bematech_FI_BytesDisponiveisLeitura',@xBematech_FI_BytesDisponiveisLeitura );
    end;
 end;
 
@@ -3306,7 +3353,7 @@ Var
 begin
   aPorta := fpDevice.Porta;
 
-  if not fsEnviaPorDLL then
+  if not fsUsarDLL then
   begin
      GravaLog( '   Desativando ACBrECF' );
      Ativo := False ;
@@ -3317,7 +3364,7 @@ begin
   if FileExists( IniFile ) then
      ConfiguraBemaFI32ini(aPorta, aPath);
 
-  if fsEnviaPorDLL and Ativo then exit;
+  if fsUsarDLL and Ativo then exit;
 
   GravaLog( '   xBematech_FI_AbrePortaSerial' );
   Resp := xBematech_FI_AbrePortaSerial();
@@ -3334,6 +3381,7 @@ begin
      Resp := xBematech_FI_AbrePortaSerial();
   end ;
 
+(*
   if Resp = -5 then
   begin
      GravaLog( '      Erro = -5' );
@@ -3341,6 +3389,7 @@ begin
      GravaLog( '   xBematech_FI_AbrePortaSerial' );
      Resp := xBematech_FI_AbrePortaSerial();
   end ;
+*)
 
   if Resp <> 1 then
      raise EACBrECFErro.Create( ACBrStr('Erro em Bematech_FI_AbrePortaSerial'+sLineBreak+
@@ -3351,7 +3400,7 @@ procedure TACBrECFBematech.FechaPortaSerialDLL(const OldAtivo: Boolean);
 Var
   Resp: Integer;
 begin
-  if fsEnviaPorDLL and OldAtivo then exit;
+  if fsUsarDLL and OldAtivo then exit;
 
   GravaLog( '   xBematech_FI_FechaPortaSerial' ) ;
   Resp := xBematech_FI_FechaPortaSerial ;
@@ -3391,37 +3440,6 @@ begin
   end;
 
   Result := 'Cod.: '+IntToStr(ARetorno) + ifthen(Result='','',' - ') + Result;
-end;
-
-procedure TACBrECFBematech.EnviaStringDLL(const cmd: AnsiString);
-var
-   LenCMD, Resp: Integer;
-begin
-  LenCMD := Length(cmd);
-  GravaLog( '   xBematech_FI_EnviaComando -> '+IntToStr(LenCMD)+' bytes' );
-  Resp := xBematech_FI_EnviaComando( cmd, Length(cmd) );
-  if Resp <> 1 then
-     raise EACBrECFTimeOut.Create( ACBrStr( 'Erro ao executar Bematech_FI_EnviaComando.'+sLineBreak+
-                                AnalisarRetornoDll(Resp) )) ;
-end;
-
-procedure TACBrECFBematech.LeStringDLL(const NumBytes, ATimeOut: Integer;
-   var Retorno: AnsiString);
-Var
-  Resp: Integer;
-  Ret : AnsiString;
-begin
-  //ATimeOut não é usado
-  Ret  := StringOfChar( #0, NumBytes + 1 );
-
-  GravaLog( '   xBematech_FI_LeituraRetorno, '+IntToStr(NumBytes)+' bytes' );
-  Resp := xBematech_FI_LeituraRetorno( Ret, NumBytes );
-  Retorno := IfThen(Resp = 1, LeftStr(Ret,NumBytes), '') ;
-
-  GravaLog( '      Resp:'+IntToStr(Resp)+ ' Retorno:'+Retorno, True );
-  if Resp <> 1 then
-     raise EACBrECFTimeOut.Create( ACBrStr( 'Erro ao executar Bematech_FI_LeituraRetorno.'+sLineBreak+
-                                   AnalisarRetornoDll(Resp) )) ;
 end;
 
 {$ENDIF}

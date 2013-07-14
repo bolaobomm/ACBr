@@ -147,8 +147,8 @@
         <IsPartOfProject Value="True"/>
         <UnitName Value="ECFTeste"/>
         <WindowIndex Value="0"/>
-        <TopLine Value="1"/>
-        <CursorPos X="32" Y="14"/>
+        <TopLine Value="8"/>
+        <CursorPos X="1" Y="26"/>
         <UsageCount Value="201"/>
       </Unit0>
       <Unit1>
@@ -160,8 +160,8 @@
         <UnitName Value="ECFTeste1"/>
         <EditorIndex Value="0"/>
         <WindowIndex Value="0"/>
-        <TopLine Value="1756"/>
-        <CursorPos X="24" Y="1767"/>
+        <TopLine Value="1"/>
+        <CursorPos X="31" Y="10"/>
         <UsageCount Value="201"/>
         <Loaded Value="True"/>
         <LoadedDesigner Value="True"/>
@@ -279,15 +279,6 @@
     </Other>
   </CompilerOptions>
   <Debugging>
-    <BreakPoints Count="1">
-      <Item1>
-        <Kind Value="bpkSource"/>
-        <WatchScope Value="wpsLocal"/>
-        <WatchKind Value="wpkWrite"/>
-        <Source Value="..\..\..\Fontes\ACBrSerial\ACBrECFFiscNET.pas"/>
-        <Line Value="2209"/>
-      </Item1>
-    </BreakPoints>
     <Watches Count="1">
       <Item1>
         <Expression Value="R"/>
