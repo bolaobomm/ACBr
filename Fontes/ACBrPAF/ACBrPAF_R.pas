@@ -51,6 +51,10 @@ type
   TRegistroR07List = class;
   TRegistroR07xList = class;
 
+  TRegistroR02List = class;
+  TRegistroR06List =class;
+  TRegistroR04List =class;
+
   /// REGISTRO TIPO R01 - IDENTIFICAÇÃO DO ECF, DO USUÁRIO, DO PAF-ECF E DA EMPRESA DESENVOLVEDORA E DADOS DO ARQUIVO
 
   TRegistroR01 = class
@@ -77,7 +81,13 @@ type
     fDT_INI: TDateTime;      /// Data do início do período informado no arquivo
     fDT_FIN: TDateTime;      /// Data do fim do período informado no arquivo
     fER_PAF_ECF: string;     /// Versão da Especificação de Requisitos do PAF-ECF
-    fInclusaoExclusao: Boolean; /// ER 1.08 inclusão/exclusão de registros
+    fInclusaoExclusao: Boolean;
+    FRegistroR02: TRegistroR02List;
+    FRegistroR06: TRegistroR06List;
+    FRegistroR04: TRegistroR04List;
+    procedure SetRegistroR02(const Value: TRegistroR02List);
+    procedure SetRegistroR04(const Value: TRegistroR04List);
+    procedure SetRegistroR06(const Value: TRegistroR06List); /// ER 1.08 inclusão/exclusão de registros
   public
     constructor Create; virtual; /// Create
 
@@ -104,6 +114,20 @@ type
     property DT_INI: TDateTime read FDT_INI write FDT_INI;
     property DT_FIN: TDateTime read FDT_FIN write FDT_FIN;
     property ER_PAF_ECF: string read FER_PAF_ECF write FER_PAF_ECF;
+
+    property RegistroR02 : TRegistroR02List read FRegistroR02 write SetRegistroR02;
+    property RegistroR04 : TRegistroR04List read FRegistroR04 write SetRegistroR04;
+    property RegistroR06 : TRegistroR06List read FRegistroR06 write SetRegistroR06;
+
+  end;
+
+  TRegistroR01List = class(TObjectList)
+  private
+    function GetItem(Index: Integer): TRegistroR01;
+    procedure SetItem(Index: Integer; const Value: TRegistroR01);
+  public
+    function New: TRegistroR01;
+    property Items[Index: Integer]: TRegistroR01 read GetItem write SetItem;
   end;
 
   /// REGISTRO TIPO R02 - RELAÇÃO DE REDUÇÕES Z
@@ -138,6 +162,7 @@ type
     property PAR_ECF: string read FPAR_ECF write FPAR_ECF;
 
     property RegistroR03: TRegistroR03List read FRegistroR03 write FRegistroR03;
+
   end;
 
   /// REGISTRO R02 - Lista
@@ -356,10 +381,12 @@ type
     fVL_EST: currency;          /// Valor do estorno efetuado, com duas casas decimais
     fTipoRegistroPai: string;
     fRegistroPai: Pointer;
+    FCOO: integer;
   public
     constructor Create(const cTipoRegistroPai:string; cRegistroPai:Pointer); virtual; /// Create
 
     property RegistroValido: Boolean read fRegistroValido write fRegistroValido default True;
+    property COO: integer read FCOO write FCOO;
     property CCF: integer read FCCF write FCCF;
     property GNF: integer read FGNF write FGNF;
     property MP: string read FMP write FMP;
@@ -510,6 +537,24 @@ constructor TRegistroR01.Create;
 begin
    fRegistroValido := True;
    fInclusaoExclusao := False;
+   FRegistroR02 := TRegistroR02List.Create;
+   FRegistroR04 := TRegistroR04List.Create;
+   FRegistroR06 := TRegistroR06List.Create;
+end;
+
+procedure TRegistroR01.SetRegistroR02(const Value: TRegistroR02List);
+begin
+  FRegistroR02 := Value;
+end;
+
+procedure TRegistroR01.SetRegistroR04(const Value: TRegistroR04List);
+begin
+  FRegistroR04 := Value;
+end;
+
+procedure TRegistroR01.SetRegistroR06(const Value: TRegistroR06List);
+begin
+  FRegistroR06 := Value;
 end;
 
 { TRegistroR02 }
@@ -609,6 +654,24 @@ begin
 end;
 
 procedure TRegistroR07xList.SetItem(Index: Integer; const Value: TRegistroR07);
+begin
+  Put(Index, Value);
+end;
+
+{ TRegistroR01List }
+
+function TRegistroR01List.GetItem(Index: Integer): TRegistroR01;
+begin
+  Result := TRegistroR01(inherited Items[Index]);
+end;
+
+function TRegistroR01List.New: TRegistroR01;
+begin
+  Result := TRegistroR01.Create;
+  Add(Result);
+end;
+
+procedure TRegistroR01List.SetItem(Index: Integer; const Value: TRegistroR01);
 begin
   Put(Index, Value);
 end;

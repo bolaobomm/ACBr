@@ -62,7 +62,7 @@ type
     procedure SetItem(Index: Integer; const Value: TRegistroA2);
   public
     function New: TRegistroA2;
-    property Items[Index: Integer]: TRegistroA2 read GetItem write SetItem;
+    property Items[Index: Integer]: TRegistroA2 read GetItem write SetItem; default;
   end;
 
   

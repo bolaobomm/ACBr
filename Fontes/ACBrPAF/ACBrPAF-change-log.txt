@@ -47,6 +47,9 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+15/07/2013
+[*] Acertos na geração do arquivo "Registros do Paf-ECF", enviados pelo fórum.
+
 28/02/2012
 [*] Adicionado campo R5.NUM_CONT, para exibir o conteudo da invalidação deste
     registro nos testes de adulteração do PAF-ECF. (Se esse registro não for

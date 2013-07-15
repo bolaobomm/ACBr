@@ -97,7 +97,7 @@ begin
   begin
     with FRegistroU1 do
     begin
-      Check(funChecaCNPJ(CNPJ), '(D1) ESTABELECIMENTO: O CNPJ "%s" digitado é inválido!', [CNPJ]);
+      Check(funChecaCNPJ(CNPJ), '(U1) ESTABELECIMENTO: O CNPJ "%s" digitado é inválido!', [CNPJ]);
 
       Result := LFill('U1') +
                 LFill(CNPJ, 14) +

@@ -543,7 +543,7 @@ begin
       Rewrite(txtFile);
 
       Write(txtFile, FPAF_R.WriteRegistroR01);
-      if FPAF_R.RegistroR02.Count > 0 then
+     { if FPAF_R.RegistroR02.Count > 0 then
         Write(txtFile, FPAF_R.WriteRegistroR02);
 
       if FPAF_R.RegistroR04.Count > 0 then
@@ -553,7 +553,7 @@ begin
         Write(txtFile, FPAF_R.WriteRegistroR06);
 
       if (FPAF_R.RegistroR04.Count + FPAF_R.RegistroR06.Count) > 0 then
-        Write(txtFile, FPAF_R.WriteRegistroR07);
+        Write(txtFile, FPAF_R.WriteRegistroR07);   }
     finally
       CloseFile(txtFile);
     end;
@@ -932,7 +932,7 @@ begin
         Write(txtFile, FPAF_S.WriteRegistroS2);
 
       Write(txtFile, FPAF_R.WriteRegistroR01);
-      if FPAF_R.RegistroR02.Count > 0 then
+     { if FPAF_R.RegistroR02.Count > 0 then
         Write(txtFile, FPAF_R.WriteRegistroR02);
 
       if FPAF_R.RegistroR04.Count > 0 then
@@ -942,7 +942,7 @@ begin
         Write(txtFile, FPAF_R.WriteRegistroR06);
 
       if (FPAF_R.RegistroR04.Count + FPAF_R.RegistroR06.Count) > 0 then
-        Write(txtFile, FPAF_R.WriteRegistroR07);
+        Write(txtFile, FPAF_R.WriteRegistroR07); }
 
     finally
       CloseFile(txtFile);
