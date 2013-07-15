@@ -560,6 +560,7 @@ TACBrECFBematech = class( TACBrECFClass )
        NomeArquivo : AnsiString; Documentos : TACBrECFTipoDocumentoSet = [docTodos]  ) ; override ;
 
     Procedure ArquivoMF_DLL(NomeArquivo: AnsiString); override ;
+    Procedure ArquivoMFD_DLL(NomeArquivo: AnsiString); override ;
 
     Procedure ArquivoMFD_DLL( DataInicial, DataFinal : TDateTime;
        NomeArquivo : AnsiString; Documentos : TACBrECFTipoDocumentoSet = [docTodos]; Finalidade: TACBrECFFinalizaArqMFD = finMFD  ) ; override ;
@@ -3638,6 +3639,39 @@ begin
     FechaPortaSerialDLL( OldAtivo );
   end;
  {$ENDIF}
+end;
+
+procedure TACBrECFBematech.ArquivoMFD_DLL(NomeArquivo: AnsiString);
+Var
+  Resp : Integer ;
+  FilePath : AnsiString ;
+  OldAtivo : Boolean ;
+  {$IFDEF LINUX} Cmd, ArqTmp : String ; {$ENDIF}
+  UsuarioAtual: AnsiString;
+begin
+  UsuarioAtual := Self.UsuarioAtual;
+
+  {$IFDEF LINUX}
+   inherited ArquivoMFD_DLL( NomeArquivo );
+  {$ELSE}
+  FilePath := ExtractFilePath( NomeArquivo );
+  LoadDLLFunctions;
+  OldAtivo := Ativo ;
+  try
+     DeleteFile( NomeArquivo );
+     AbrePortaSerialDLL( FilePath ) ;
+
+     GravaLog( '   xBematech_FI_DownloadMFD' );
+     Resp := xBematech_FI_DownloadMFD( NomeArquivo, '0', '', '', UsuarioAtual ) ;
+
+     if (Resp <> 1) then
+        raise EACBrECFErro.Create( ACBrStr( 'Erro ao executar xBematech_FI_ArquivoMF.'+sLineBreak+
+                                         AnalisarRetornoDll(Resp) )) ;
+
+  finally
+     FechaPortaSerialDLL( OldAtivo );
+  end;
+  {$ENDIF}
 end;
 
 procedure TACBrECFBematech.ArquivoMF_DLL(NomeArquivo : AnsiString) ;
