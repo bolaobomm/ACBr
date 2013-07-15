@@ -327,6 +327,8 @@ begin
         fsIdentPAF.Paf.TipoFuncionamento   := TACBrPAFTipoFuncionamento(Ini.ReadInteger('PAF', 'TipoFuncionamento', 0));
         fsIdentPAF.Paf.TipoDesenvolvimento := TACBrPAFTipoDesenvolvimento(Ini.ReadInteger('PAF', 'TipoDesenvolvimento', 0));
         fsIdentPAF.Paf.IntegracaoPAFECF    := TACBrPAFTipoIntegracao(Ini.ReadInteger('PAF', 'IntegracaoPAFECF', 0));
+
+        fsIdentPAF.Paf.PerfilRequisitos    := Ini.ReadString('PAF', 'PerfilRequisitos', '');
      end ;
 
      if (not ArquivoInvalido) and GravarConfigApp then
@@ -489,6 +491,8 @@ begin
         Ini.WriteInteger('PAF', 'TipoFuncionamento', Integer(fsIdentPAF.Paf.TipoFuncionamento));
         Ini.WriteInteger('PAF', 'TipoDesenvolvimento', Integer(fsIdentPAF.Paf.TipoDesenvolvimento));
         Ini.WriteInteger('PAF', 'IntegracaoPAFECF', Integer(fsIdentPAF.Paf.IntegracaoPAFECF));
+
+        Ini.WriteString('PAF', 'PerfilRequisitos', fsIdentPAF.Paf.PerfilRequisitos);
      end ;
 
      if GravarConfigApp then

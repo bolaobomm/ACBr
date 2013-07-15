@@ -186,6 +186,7 @@ type
     FTrocoEmCartao: Boolean;
     FNotaLegalDF: Boolean;
     FParaibaLegal: Boolean;
+    FPerfilRequisitos: String;
     procedure SetVersao(const AValue : String) ;
   public
     constructor Create;
@@ -231,7 +232,7 @@ type
     // transporte de passageiros
     property TransportePassageiro: Boolean read FTransportePassageiro write FTransportePassageiro;
 
-   //criterios por uf
+    //criterios por uf
     property TotalizaValoresLista: Boolean read FTotalizaValoresLista write FTotalizaValoresLista;
     property TransfPreVenda: Boolean read FTransfPreVenda write FTransfPreVenda;
     property TransfDAV: Boolean read FTransfDAV write FTransfDAV;
@@ -243,6 +244,9 @@ type
     property NotaLegalDF: Boolean read FNotaLegalDF write FNotaLegalDF;
     property ParaibaLegal: Boolean read FParaibaLegal write FParaibaLegal;
     property TrocoEmCartao: Boolean read FTrocoEmCartao write FTrocoEmCartao;
+
+    // homologação 02.01
+    property PerfilRequisitos: String read FPerfilRequisitos write FPerfilRequisitos;
   end;
 
   TACBrECFIdentificacaoPAF = class( TPersistent )
