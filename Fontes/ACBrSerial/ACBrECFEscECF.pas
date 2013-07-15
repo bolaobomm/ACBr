@@ -370,7 +370,14 @@ TACBrECFEscECF = class( TACBrECFClass )
     Procedure IdentificaOperador(Nome : String); override;
     Procedure IdentificaPAF( NomeVersao, MD5 : String) ; override ;
 
+    { TODO: TAGs de formatação, o protocolo não prevê...
+    function TraduzirTag(const ATag: AnsiString): AnsiString; override;
+    function TraduzirTagBloco(const ATag, Conteudo: AnsiString): AnsiString; override;
+    }
+
     Function RetornaInfoECF( Registrador: String) : AnsiString; override ;
+
+    Function CapturaXMLCupom( Inicial, Final: String; Tipo: Integer = 2 ): AnsiString;
  end ;
 
 implementation
@@ -685,6 +692,9 @@ begin
        fsArqMemoria := ExtractFilePath( ParamStr(0) )+'ACBrECFEscECF'+
                        Poem_Zeros( fsNumECF, 3 )+'.txt';
 
+     if UpperCase(fsMarcaECF) = 'BEMATECH' then
+       fpColunas := 48;
+
      LeRespostasMemoria;
   except
      Desativar ;
@@ -836,7 +846,7 @@ begin
      if (Byte1 = WAK) then // Ocupado, aguarde e solicite novo Status
       begin
         GravaLog('                RX <- '+Retorno, True);
-        Sleep( 100 );
+        Sleep( 50 );
         PedeStatus;
         Result := False;
       end
@@ -1199,6 +1209,25 @@ begin
      Delete( Result, Length(Result), 1 );
 end;
 
+function TACBrECFEscECF.CapturaXMLCupom(Inicial, Final : String ; Tipo : Integer
+   ) : AnsiString ;
+Var
+  I: Integer;
+begin
+  with EscECFComando do
+  begin
+    CMD := 150;
+    AddParamInteger(Tipo);
+    AddParamString(Inicial);
+    AddParamString(Final);
+    EnviaComando;
+  end ;
+
+  Result := '';
+  For I := 0 to EscECFResposta.Params.Count-1 do
+     Result := Result + EscECFResposta.Params[I] ;
+end ;
+
 function TACBrECFEscECF.GetDataHora: TDateTime;
 Var
   RetCmd : String ;
@@ -1271,7 +1300,7 @@ end;
 
 function TACBrECFEscECF.GetSubTotal: Double;
 begin
-  // Obs: Não há comando que retorne o SubTotal...
+  // TODO: Obs: Não há comando que retorne o SubTotal...
   try
      Result := RespostasComando.FieldByName('SubTotal').AsFloat;
   except
@@ -1608,7 +1637,7 @@ procedure TACBrECFEscECF.LeituraMFDSerial(COOInicial, COOFinal: Integer;
    Buffer: AnsiString;
    I: Integer;}
 begin
-  // TODO:  Não há como retornar o espelho pela Serial ??
+  // TODO:  Não há como retornar a MFD pela Serial ??
 
   Inherited LeituraMFDSerial(COOInicial, COOFinal, Linhas, Documentos);
 
@@ -1638,7 +1667,8 @@ end;
 
 procedure TACBrECFEscECF.IdentificaPAF(NomeVersao, MD5: String);
 begin
-  fsPAF := LeftStr(Trim(MD5) + LF + Trim(NomeVersao), 84) ;
+  // 48 e 36 para garantir que NomeVersao inicie na linha 2
+  fsPAF := padL(MD5,48) + padL(NomeVersao,36) ;
   EscECFComando.CMD := 24;
   EscECFComando.AddParamString( fsPAF ) ;
   EnviaComando;
@@ -1739,7 +1769,26 @@ begin
       end;
   else
     begin
+      // Tenta cancelar todos os CCDs anteriores, gera exceção muda se não for CCD
       UltimoCOO := StrToInt( TACBrECF( fpOwner ).NumCOO );
+      try
+        repeat
+           with EscECFComando do
+           begin
+             CMD := 13;
+             AddParamInteger( UltimoCOO ) ;
+             AddParamString(LeftStr(OnlyNumber(Consumidor.Documento),14)) ;
+             AddParamString(LeftStr(Consumidor.Nome,30)) ;
+             AddParamString(LeftStr(Consumidor.Endereco,79)) ;
+           end ;
+           EnviaComando;
+           FechaRelatorio;
+
+           Dec( UltimoCOO );
+        until UltimoCOO < 1;
+      except
+      end ;
+
       EscECFComando.CMD := 7;
       EscECFComando.AddParamInteger( UltimoCOO );
       EnviaComando;
@@ -1822,7 +1871,7 @@ begin
   EnviaComando;
 
   RespostasComando.AddField( 'NumUltItem', EscECFResposta.Params[0] );
-  RespostasComando.AddField( 'SubTotal',   EscECFResposta.Params[2] );
+  RespostasComando.AddField( 'SubTotal',   EscECFResposta.Params[1] );
   fsEmPagamento := false ;
   SalvaRespostasMemoria(True);
 end;
@@ -2473,34 +2522,43 @@ end;
 
 function TACBrECFEscECF.EstornaCCD(const Todos: Boolean): Integer;
 var
-   UltimoCOO: Integer;
+   UltimoCOO, AtualCOO: Integer;
 begin
-  // TODO: Como ler os CCDs pendentes ??
   Result := 0 ;
   UltimoCOO := StrToInt( TACBrECF( fpOwner ).NumCOO );
+  AtualCOO  := UltimoCOO;
 
-  with EscECFComando do
-  begin
-     CMD := 13;
-     AddParamInteger( UltimoCOO ) ;
-     AddParamString(LeftStr(OnlyNumber(Consumidor.Documento),14)) ;
-     AddParamString(LeftStr(Consumidor.Nome,30)) ;
-     AddParamString(LeftStr(Consumidor.Endereco,79)) ;
-  end;
-  EnviaComando;
+  try
+    repeat
+      with EscECFComando do
+      begin
+        CMD := 13;
+        AddParamInteger( UltimoCOO ) ;
+        AddParamString(LeftStr(OnlyNumber(Consumidor.Documento),14)) ;
+        AddParamString(LeftStr(Consumidor.Nome,30)) ;
+        AddParamString(LeftStr(Consumidor.Endereco,79)) ;
+      end;
+      EnviaComando;
 
-  RespostasComando.Clear;
-  RespostasComando.AddField( 'COO',            EscECFResposta.Params[0] );
-  RespostasComando.AddField( 'DataHora',       EscECFResposta.Params[1] );
-  RespostasComando.AddField( 'VendaBruta',     EscECFResposta.Params[2] );
-  RespostasComando.AddField( 'NumSerie',       EscECFResposta.Params[3] );
-  RespostasComando.AddField( 'SeqPagto',       EscECFResposta.Params[4] );
-  RespostasComando.AddField( 'NumParcela',     EscECFResposta.Params[5] );
+      RespostasComando.Clear;
+      RespostasComando.AddField( 'COO',            EscECFResposta.Params[0] );
+      RespostasComando.AddField( 'DataHora',       EscECFResposta.Params[1] );
+      RespostasComando.AddField( 'VendaBruta',     EscECFResposta.Params[2] );
+      RespostasComando.AddField( 'NumSerie',       EscECFResposta.Params[3] );
+      RespostasComando.AddField( 'SeqPagto',       EscECFResposta.Params[4] );
+      RespostasComando.AddField( 'NumParcela',     EscECFResposta.Params[5] );
+
+      FechaRelatorio;
+
+      Dec( UltimoCOO );
+    until not Todos;
+  except
+    if UltimoCOO = AtualCOO then  // Não cancelou nada ?
+      raise;
+  end ;
 
   Consumidor.Enviado := True ;
   fsEmPagamento := false ;
-
-  FechaRelatorio;
 end;
 
 function TACBrECFEscECF.GetTotalAcrescimos: Double;

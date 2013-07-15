@@ -17,7 +17,7 @@ object frRelatorio: TfrRelatorio
   OnCreate = FormCreate
   OnShow = FormShow
   Position = poMainFormCenter
-  LCLVersion = '0.9.31'
+  LCLVersion = '1.1'
   object sbFPG: TSpeedButton
     Left = 128
     Height = 22
@@ -66,18 +66,18 @@ object frRelatorio: TfrRelatorio
   end
   object Label1: TLabel
     Left = 8
-    Height = 14
+    Height = 13
     Top = 5
-    Width = 24
+    Width = 23
     Caption = '&Vias:'
     FocusControl = edVias
     ParentColor = False
   end
   object lCodFPG: TLabel
     Left = 96
-    Height = 14
+    Height = 13
     Top = 5
-    Width = 55
+    Width = 54
     Caption = '&Form.Pagto'
     FocusControl = lCodFPG
     ParentColor = False
@@ -85,9 +85,9 @@ object frRelatorio: TfrRelatorio
   end
   object lValor: TLabel
     Left = 224
-    Height = 14
+    Height = 13
     Top = 5
-    Width = 28
+    Width = 27
     Caption = '&Valor:'
     FocusControl = edValor
     ParentColor = False
@@ -95,18 +95,18 @@ object frRelatorio: TfrRelatorio
   end
   object lCupom: TLabel
     Left = 40
-    Height = 14
+    Height = 13
     Top = 5
-    Width = 34
+    Width = 33
     Caption = '&Cupom'
     FocusControl = edCupom
     ParentColor = False
   end
   object lCodCNF: TLabel
     Left = 160
-    Height = 14
+    Height = 13
     Top = 5
-    Width = 22
+    Width = 21
     Caption = 'C&NF'
     FocusControl = lCodCNF
     ParentColor = False
@@ -138,26 +138,6 @@ object frRelatorio: TfrRelatorio
       'comprovantes, quando a impressao do '
       'Cupom NAO Fiscal vinculado falhar.'
       '</linha_dupla>'
-      '<CE>*** CARACTERES ACENTUADOS '
-      '***</CE>'
-      'ÁÉÚÍÓÚáéíóúÇçÃÕãõ'
-      '</linha_simples>'
-      '<CE>*** TAGS DE FORMATAÇÃO ***</CE>'
-      '<e>EXPANDIDO</e>'
-      '<N>Negrito</n>'
-      '<S>Sublinhado</s>'
-      '<C>CONDENSADO</C>'
-      '<i>ITALICO</I>'
-      '</linha_simples>'
-      '<CE>*** TAGS DE FORMATAÇÃO ***</CE>'
-      '<ce>NO CENTRO</CE>'
-      '<AD>A Direira</ad>'
-      '</linha_simples>'
-      '<CE>*** TESTE DE TAGS INVÁLIDAS</CE>'
-      '<ce> <>tags inválidas no texto">">><<</CE>'
-      '<AD><da><ec></</A Direira</ad>'
-      '</linha_dupla>'
-      ''
     )
     ParentFont = False
     ScrollBars = ssVertical

@@ -97,6 +97,13 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+Data: 15/07/2013
+-- ACBrECFEscECF --
+[-] Corrigido cancelamento de Cupom Fiscal seguido de CCD
+[*] Adicionado suporte para cancelar vários CCDs
+[-] Correção no numero de Colunas suportadas para a Bematech
+[*] Ajuste em IdentificaPAF para imprimir Nome Programa corretamente na 2a linha
+
 Data: 04/07/2013
 -- ACBrECF --
 [+] Adicionada nova propriedade ACBrECF.DataHoraUltimaReducaoZ, que retorna a

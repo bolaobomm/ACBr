@@ -160,8 +160,8 @@
         <UnitName Value="ECFTeste1"/>
         <EditorIndex Value="0"/>
         <WindowIndex Value="0"/>
-        <TopLine Value="1"/>
-        <CursorPos X="31" Y="10"/>
+        <TopLine Value="1244"/>
+        <CursorPos X="29" Y="1258"/>
         <UsageCount Value="201"/>
         <Loaded Value="True"/>
         <LoadedDesigner Value="True"/>
@@ -193,12 +193,16 @@
         <Filename Value="relatorio.pas"/>
         <IsPartOfProject Value="True"/>
         <ComponentName Value="frRelatorio"/>
+        <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
         <UnitName Value="Relatorio"/>
+        <EditorIndex Value="1"/>
         <WindowIndex Value="0"/>
-        <TopLine Value="67"/>
-        <CursorPos X="17" Y="72"/>
+        <TopLine Value="66"/>
+        <CursorPos X="37" Y="79"/>
         <UsageCount Value="201"/>
+        <Loaded Value="True"/>
+        <LoadedDesigner Value="True"/>
       </Unit4>
       <Unit5>
         <Filename Value="sobre.pas"/>
@@ -285,7 +289,7 @@
         <DisplayStyle Value="wdfString"/>
       </Item1>
     </Watches>
-    <Exceptions Count="10">
+    <Exceptions Count="11" IgnoreAll="True">
       <Item1>
         <Name Value="EACBrECFSemResposta"/>
       </Item1>
@@ -316,6 +320,9 @@
       <Item10>
         <Name Value="EConvertError"/>
       </Item10>
+      <Item11>
+        <Name Value="EACBrECFSemPapel"/>
+      </Item11>
     </Exceptions>
   </Debugging>
   <EditorMacros Count="0"/>
