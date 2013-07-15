@@ -37,7 +37,9 @@ type
      class function Gera_DadosMsgConsNFSe(Prefixo3, Prefixo4, NameSpaceDad, VersaoXML,
                                   CNPJ, IM: String;
                                   DataInicial, DataFinal: TDateTime;
-                                  TagI, TagF: AnsiString; NumeroNFSe: string = ''; AProvedor: TnfseProvedor = proNenhum): AnsiString;
+                                  TagI, TagF: AnsiString; NumeroNFSe: string = '';
+                                  AProvedor: TnfseProvedor = proNenhum;
+                                  APagina: Integer = 1): AnsiString;
 
      class function Gera_DadosMsgCancelarNFSe(Prefixo4, NameSpaceDad, NumeroNFSe, CNPJ, IM,
                                       CodMunicipio, CodCancelamento: String;
@@ -252,7 +254,8 @@ end;
 
 class function TNFSeG.Gera_DadosMsgConsNFSe(Prefixo3, Prefixo4,
   NameSpaceDad, VersaoXML, CNPJ, IM: String; DataInicial, DataFinal: TDateTime; TagI,
-  TagF: AnsiString; NumeroNFSe: string = ''; AProvedor: TnfseProvedor = proNenhum): AnsiString;
+  TagF: AnsiString; NumeroNFSe: string = ''; AProvedor: TnfseProvedor = proNenhum;
+  APagina: Integer = 1): AnsiString;
 var
  DadosMsg: AnsiString;
 begin
@@ -294,7 +297,7 @@ begin
 
  if AProvedor in [proFiorilli, profintelISS]
   then DadosMsg := DadosMsg + '<' + Prefixo3 + 'Pagina>' +
-                                '1' +
+                                IntToStr(APagina) +
                               '</' + Prefixo3 + 'Pagina>';
 
  Result := TagI + DadosMsg + TagF;

@@ -247,6 +247,7 @@ type
     FNumeroNFSe: String;
     FNFSeRetorno: TRetNfse;
     FNotasFiscais : TNotasFiscais;
+    FPagina: Integer;
   public
     function Executar: Boolean; override;
     constructor Create(AOwner : TComponent; ANotasFiscais : TNotasFiscais); reintroduce;
@@ -256,6 +257,7 @@ type
     property DataFinal: TDateTime read FDataFinal write FDataFinal;
     property NumeroNFSe: String read FNumeroNFSe write FNumeroNFSe;
     property NFSeRetorno: TRetNfse read FNFSeRetorno write FNFSeRetorno;
+    property Pagina: Integer read FPagina write FPagina;
   end;
 
   TNFSeConsultarSequencialRPS = Class(TWebServicesBase)
@@ -384,7 +386,8 @@ type
     function ConsultaLoteRps(AProtocolo,
                              ACNPJ, AInscricaoMunicipal: string): Boolean; overload;
     function ConsultaNFSeporRps(ANumero, ASerie, ATipo, ACnpj, AInscricaoMunicipal: String): Boolean;
-    function ConsultaNFSe(ACnpj, AInscricaoMunicipal: String; ADataInicial, ADataFinal: TDateTime; NumeroNFSe: string = ''): Boolean;
+    function ConsultaNFSe(ACnpj, AInscricaoMunicipal: String; ADataInicial, ADataFinal: TDateTime;
+                          NumeroNFSe: string = ''; APagina: Integer = 1): Boolean;
     function ConsultaSequencialRPS(ACidade, ACnpj, AInscricaoMunicipal, ASeriePrestacao: String):Boolean;
     function CancelaNFSe(ACodigoCancelamento: String;
                          const CarregaProps: boolean = true): Boolean; overload;
@@ -1310,7 +1313,8 @@ begin
                                                    TNFSeConsultarNfse(Self).DataInicial,
                                                    TNFSeConsultarNfse(Self).DataFinal,
                                                    '', '',
-                                                   TNFSeConsultarNfse(Self).FNumeroNFSe, FProvedor);
+                                                   TNFSeConsultarNfse(Self).FNumeroNFSe, FProvedor,
+                                                   TNFSeConsultarNfse(Self).FPagina);
   {$IFDEF ACBrNFSeOpenSSL}
    if not(NotaUtil.AssinarXML(FDadosMsg, URISig, URIRef, FTagI, FTagF,
                    FConfiguracoes.Certificados.Certificado,
@@ -1343,7 +1347,8 @@ begin
                                                    TNFSeConsultarNfse(Self).DataInicial,
                                                    TNFSeConsultarNfse(Self).DataFinal,
                                                    FTagI, FTagF,
-                                                   TNFSeConsultarNfse(Self).FNumeroNFSe, FProvedor);
+                                                   TNFSeConsultarNfse(Self).FNumeroNFSe, FProvedor,
+                                                   TNFSeConsultarNfse(Self).FPagina);
   end;
 
   if FDadosMsg = '' then
@@ -2277,7 +2282,8 @@ begin
 end;
 
 function TWebServices.ConsultaNFSe(ACnpj, AInscricaoMunicipal: String;
-  ADataInicial, ADataFinal: TDateTime; NumeroNFSe: string = ''): Boolean;
+  ADataInicial, ADataFinal: TDateTime; NumeroNFSe: string = '';
+  APagina: Integer = 1): Boolean;
 begin
  ACnpj := OnlyNumber(ACnpj);
  if not ValidarCNPJ(ACnpj) then
@@ -2288,6 +2294,7 @@ begin
  Self.ConsNfse.DataInicial        := ADataInicial;
  Self.ConsNfse.DataFinal          := ADataFinal;
  Self.ConsNfse.NumeroNFSe         := NumeroNFSe;
+ Self.ConsNfse.Pagina             := APagina;
 
  Result := Self.ConsNfse.Executar;
 
@@ -3323,8 +3330,13 @@ begin
 
   if (FProvedor = proIssDsf) then
      NFSeRetorno.LerXml_provedorIssDsf //falta homologar
-  else
+  else begin
      NFSeRetorno.LerXml;
+     // Incluido por Italo em 15/07/2013
+     // Será utilizado para realizar as consultas as NFSe
+     // quando o provedor por Fiorilli e fintelISS
+     FPagina := NFSeRetorno.ListaNfse.Pagina;
+  end;
 
   FRetListaNfse := SeparaDados(FRetWS, Prefixo3 + 'ListaNfse');
   i := 0;

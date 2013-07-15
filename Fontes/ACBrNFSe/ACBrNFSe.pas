@@ -45,7 +45,8 @@ type
     function ConsultarSituacao(ACnpj, AInscricaoMunicipal, AProtocolo: String): Boolean;
     function ConsultarLoteRps(ANumLote, AProtocolo: string; ACNPJ: String = ''; AInscricaoMunicipal: String = ''): Boolean;
     function ConsultarNFSeporRps(ANumero, ASerie, ATipo, ACnpj, AInscricaoMunicipal: String): Boolean;
-    function ConsultarNFSe(ACnpj, AInscricaoMunicipal: String; ADataInicial, ADataFinal: TDateTime; NumeroNFSe: String = ''): Boolean;
+    function ConsultarNFSe(ACnpj, AInscricaoMunicipal: String; ADataInicial, ADataFinal: TDateTime; NumeroNFSe: String = '';
+                           APagina: Integer = 1): Boolean;
     function ConsultarSequencialRPS(ACidade, ACnpj, AInscricaoMunicipal, ASeriePrestacao: String):Boolean;
     function CancelarNFSe(ACodigoCancelamento: String): Boolean;
     function Gerar(ARps: Integer): Boolean;
@@ -254,9 +255,9 @@ begin
 end;
 
 function TACBrNFSe.ConsultarNFSe(ACnpj, AInscricaoMunicipal: String;
-  ADataInicial, ADataFinal: TDateTime; NumeroNFSe: string = ''): Boolean;
+  ADataInicial, ADataFinal: TDateTime; NumeroNFSe: string = ''; APagina: Integer = 1): Boolean;
 begin
- Result := WebServices.ConsultaNFSe(ACnpj, AInscricaoMunicipal, ADataInicial, ADataFinal, NumeroNFSe);
+ Result := WebServices.ConsultaNFSe(ACnpj, AInscricaoMunicipal, ADataInicial, ADataFinal, NumeroNFSe, APagina);
 end;
 
 function TACBrNFSe.CancelarNFSe(ACodigoCancelamento: String): Boolean;

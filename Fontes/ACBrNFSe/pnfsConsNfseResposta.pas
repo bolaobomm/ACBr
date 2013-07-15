@@ -18,6 +18,7 @@ type
   private
     FCompNfse : TCompNfseCollection;
     FMsgRetorno : TMsgRetornoNfseCollection;
+    FPagina: Integer;
     procedure SetCompNfse(Value: TCompNfseCollection);
     procedure SetMsgRetorno(Value: TMsgRetornoNfseCollection);
   public
@@ -25,6 +26,7 @@ type
     destructor Destroy; override;
     property CompNfse: TCompNfseCollection         read FCompNfse   write SetCompNfse;
     property MsgRetorno: TMsgRetornoNfseCollection read FMsgRetorno write SetMsgRetorno;
+    property Pagina: Integer                       read FPagina     write FPagina;
   end;
 
  TCompNfseCollection = class(TCollection)
@@ -242,6 +244,11 @@ begin
       // Ler a Lista de NFSe
       if leitor.rExtrai(2, 'ListaNfse') <> '' then
       begin
+        // Incluido por Italo em 15/07/2013
+        // Será utilizado para realizar as consultas as NFSe
+        // quando o provedor por Fiorilli e fintelISS
+        ListaNfse.FPagina := Leitor.rCampo(tcInt, 'ProximaPagina');
+
         i := 0;
         // Alterado por Rodrigo Cantelli
         while (Leitor.rExtrai(3, 'CompNfse', '', i + 1) <> '') or
