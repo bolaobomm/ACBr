@@ -41,7 +41,6 @@ requires
   {$IFDEF VER230} RLibWinDXE2, vclimg, {$ENDIF} //XE2
   {$IFDEF VER240} RLibWinDXE3, vclimg, {$ENDIF} //XE3  
   {$IFDEF VER250} RLibWinDXE4, vclimg, {$ENDIF} //XE4
-  vcljpg,
   dsnap,
   vcldb,
   designide,
