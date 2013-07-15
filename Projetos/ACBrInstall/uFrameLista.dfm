@@ -700,7 +700,6 @@ object framePacotes: TframePacotes
     OnClick = VerificarCheckboxes
   end
   object ACBrNFeDanfeQR_dpk: TCheckBox
-    Tag = 1
     AlignWithMargins = True
     Left = 387
     Top = 226
@@ -741,7 +740,6 @@ object framePacotes: TframePacotes
     OnClick = VerificarCheckboxes
   end
   object ACBrCTeDacteQR_dpk: TCheckBox
-    Tag = 1
     AlignWithMargins = True
     Left = 387
     Top = 314
@@ -762,7 +760,6 @@ object framePacotes: TframePacotes
     OnClick = VerificarCheckboxes
   end
   object ACBr_BoletoFC_Quick_dpk: TCheckBox
-    Tag = 1
     AlignWithMargins = True
     Left = 387
     Top = 416
@@ -905,7 +902,6 @@ object framePacotes: TframePacotes
     OnClick = VerificarCheckboxes
   end
   object CheckBox2: TCheckBox
-    Tag = 1
     AlignWithMargins = True
     Left = 214
     Top = 367
@@ -926,7 +922,6 @@ object framePacotes: TframePacotes
     OnClick = VerificarCheckboxes
   end
   object CheckBox4: TCheckBox
-    Tag = 1
     AlignWithMargins = True
     Left = 34
     Top = 367
@@ -947,7 +942,6 @@ object framePacotes: TframePacotes
     OnClick = VerificarCheckboxes
   end
   object CheckBox5: TCheckBox
-    Tag = 1
     AlignWithMargins = True
     Left = 387
     Top = 367

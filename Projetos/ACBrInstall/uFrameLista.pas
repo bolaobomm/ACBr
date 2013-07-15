@@ -165,20 +165,21 @@ end;
 
 function TframePacotes.IsPacoteNF2(const ANomePacote: String): Boolean;
 const
-  PACOTES_NF2: array [0..13] of String =
+  PACOTES_NF2: array [0..14] of String =
     ('PCN2.dpk',
      'ACBr_NFe2.dpk',
      'ACBr_CTe.dpk',
      'ACBr_NFSe.dpk',
      'ACBr_MDFe.dpk',
      'ACBrNFeDanfeFRpkg.dpk',
-     'ACBrNFeDanfeRLpkg.dpk',
+     'ACBrCTeDacteFRpkg.dpk',
+     'ACBrNFSeDanfseFRpkg.dpk',
      'ACBrNFeDanfeRV.dpk',
      'ACBrNFeDanfeRVCodeBase.dpk',
-     'ACBrCTeDacteFRpkg.dpk',
-     'ACBrCTeDacteQRpkg.dpk',
-     'ACBrNFSeDanfseFRpkg.dpk',
+     'ACBrNFeDanfeRLpkg.dpk',
      'ACBrNFSeDanfseRLpkg.dpk',
+     'ACBrNFeDanfeQRpkg.dpk',
+     'ACBrCTeDacteQRpkg.dpk',
      'ACBrNFSeDanfseQRpkg.dpk');
 begin
   Result := MatchText(ANomePacote, PACOTES_NF2);
