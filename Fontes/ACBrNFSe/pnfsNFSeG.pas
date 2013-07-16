@@ -103,6 +103,7 @@ begin
 
  DadosMsg := '<' + Prefixo3 + 'LoteRps'+
                DFeUtil.SeSenao(Identificador <> '', ' ' + Identificador + '="' + NumeroLote + '"', '') +
+               DFeUtil.SeSenao(AProvedor = proSimplISS, NameSpaceDad, '') +
                DFeUtil.SeSenao(AProvedor in [proAbaco, proBetha, proGinfes, proGoiania, proGovBR,
                                              proISSDigital, proIssCuritiba, proISSNET, proNatal,
                                              proRecife, proRJ, proSimplISS, proThema, proTiplan], '',
@@ -147,8 +148,8 @@ var
 begin
  if AProvedor = proBetha then Prefixo3 := '';
 
- DadosMsg := '<' + Prefixo3 + 'Prestador>' +
-
+ DadosMsg := '<' + Prefixo3 + 'Prestador' +
+               DFeUtil.SeSenao(AProvedor = proSimplISS, ' ' + NameSpaceDad, '>') +
                DFeUtil.SeSenao(VersaoXML = '1',
 
                  '<' + Prefixo4 + 'CpfCnpj>' +
@@ -165,7 +166,8 @@ begin
                  IM +
                '</' + Prefixo4 + 'InscricaoMunicipal>' +
               '</' + Prefixo3 + 'Prestador>' +
-              '<' + Prefixo3 + 'Protocolo>' +
+              '<' + Prefixo3 + 'Protocolo' +
+               DFeUtil.SeSenao(AProvedor = proSimplISS, ' ' + NameSpaceDad, '>') +
                 Protocolo +
               '</' + Prefixo3 + 'Protocolo>';
 
@@ -182,7 +184,8 @@ var
 begin
  if AProvedor = proBetha then Prefixo3 := '';
 
- DadosMsg := '<' + Prefixo3 + 'Prestador>' +
+ DadosMsg := '<' + Prefixo3 + 'Prestador' +
+               DFeUtil.SeSenao(AProvedor = proSimplISS, ' ' + NameSpaceDad, '>') +
 
                DFeUtil.SeSenao(VersaoXML = '1',
 
@@ -200,7 +203,8 @@ begin
                  IM +
                '</' + Prefixo4 + 'InscricaoMunicipal>' +
               '</' + Prefixo3 + 'Prestador>' +
-              '<' + Prefixo3 + 'Protocolo>' +
+              '<' + Prefixo3 + 'Protocolo' +
+               DFeUtil.SeSenao(AProvedor = proSimplISS, ' ' + NameSpaceDad, '>') +
                 Protocolo +
               '</' + Prefixo3 + 'Protocolo>';
 
@@ -217,7 +221,8 @@ var
 begin
  if AProvedor = proBetha then Prefixo3 := '';
 
- DadosMsg := '<' + Prefixo3 + 'IdentificacaoRps>' +
+ DadosMsg := '<' + Prefixo3 + 'IdentificacaoRps' +
+               DFeUtil.SeSenao(AProvedor = proSimplISS, ' ' + NameSpaceDad, '>') +
               '<' + Prefixo4 + 'Numero>' +
                 NumeroRps +
               '</' + Prefixo4 + 'Numero>' +
@@ -228,7 +233,8 @@ begin
                 TipoRps +
               '</' + Prefixo4 + 'Tipo>' +
              '</' + Prefixo3 + 'IdentificacaoRps>' +
-             '<' + Prefixo3 + 'Prestador>' +
+             '<' + Prefixo3 + 'Prestador' +
+               DFeUtil.SeSenao(AProvedor = proSimplISS, ' ' + NameSpaceDad, '>') +
 
               DFeUtil.SeSenao(VersaoXML = '1',
 
@@ -261,8 +267,8 @@ var
 begin
  if AProvedor = proBetha then Prefixo3 := '';
 
- DadosMsg := '<' + Prefixo3 + 'Prestador>' +
-
+ DadosMsg := '<' + Prefixo3 + 'Prestador' +
+               DFeUtil.SeSenao(AProvedor = proSimplISS, ' ' + NameSpaceDad, '>') +
                DFeUtil.SeSenao(VersaoXML = '1',
 
                  '<' + Prefixo4 + 'CpfCnpj>' +
@@ -281,12 +287,12 @@ begin
               '</' + Prefixo3 + 'Prestador>';
 
  if NumeroNFSe <> ''
-  then DadosMsg := DadosMsg + '<' + Prefixo3 + 'NumeroNfse>' +
+  then DadosMsg := DadosMsg + '<' + Prefixo3 + 'NumeroNfse' +
                                NumeroNFSe +
                               '</' + Prefixo3 + 'NumeroNfse>';
 
  if (DataInicial>0) and (DataFinal>0)
-  then DadosMsg := DadosMsg + '<' + Prefixo3 + 'PeriodoEmissao>' +
+  then DadosMsg := DadosMsg + '<' + Prefixo3 + 'PeriodoEmissao' +
                                '<' + Prefixo3 + 'DataInicial>' +
                                  FormatDateTime('yyyy-mm-dd', DataInicial) +
                                '</' + Prefixo3 + 'DataInicial>' +
