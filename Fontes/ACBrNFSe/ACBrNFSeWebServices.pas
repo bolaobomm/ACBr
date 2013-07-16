@@ -2177,7 +2177,7 @@ begin
 
    Self.ConsLote.Protocolo := Self.Enviar.Protocolo;
 
-   if not (TACBrNFSe( FACBrNFSe ).Configuracoes.WebServices.Provedor in [profintelISS, proSaatri, proISSDigital])
+   if not (TACBrNFSe( FACBrNFSe ).Configuracoes.WebServices.Provedor in [profintelISS, proSaatri, proISSDigital, proFiorilli])
     then begin
      Result := Self.ConsSitLote.Executar;
 
