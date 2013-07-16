@@ -710,7 +710,8 @@ type
                  stipiSaidaNaoTributada         ,// '53' // Saída não-tributada
                  stipiSaidaImune                ,// '54' // Saída imune
                  stipiSaidaComSuspensao         ,// '55' // Saída com suspensão
-                 stipiOutrasSaidas               // '99' // Outras saídas
+                 stipiOutrasSaidas              ,// '99' // Outras saídas
+                 stipiVazio
                 );
   TACBrSituacaoTribIPI = TACBrCstIpi;
 
@@ -1118,6 +1119,7 @@ cstipi53 = stipiSaidaNaoTributada;
 cstipi54 = stipiSaidaImune;
 cstipi55 = stipiSaidaComSuspensao;
 cstipi99 = stipiOutrasSaidas;
+cstipiVazio = stipiVazio;
 
 sdRegular = sdfRegular;
 sdExtempRegular = sdfExtRegular;
