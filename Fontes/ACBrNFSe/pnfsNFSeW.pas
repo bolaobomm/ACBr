@@ -351,7 +351,8 @@ begin
                  Gerador.wCampoNFSe(tcDe2, '#28', 'DescontoCondicionado  ', 01, 15, 0, NFSe.Servico.Valores.DescontoCondicionado, '');
                  Gerador.wGrupoNFSe('/Valores');
                  Gerador.wCampoNFSe(tcStr, '#20', 'IssRetido                ', 01, 01,   1, SituacaoTributariaToStr(NFSe.Servico.Valores.IssRetido), '');
-                 Gerador.wCampoNFSe(tcStr, '#21', 'ResponsavelRetencao      ', 01, 01,   1, ResponsavelRetencaoToStr(NFSe.Servico.ResponsavelRetencao), '');
+                 if (NFSe.Servico.Valores.IssRetido) <> stNormal then
+                   Gerador.wCampoNFSe(tcStr, '#21', 'ResponsavelRetencao      ', 01, 01,   1, ResponsavelRetencaoToStr(NFSe.Servico.ResponsavelRetencao), '');
                  Gerador.wCampoNFSe(tcStr, '#29', 'ItemListaServico         ', 01, 0005, 1, NFSe.Servico.ItemListaServico, '');
                  Gerador.wCampoNFSe(tcStr, '#30', 'CodigoCnae               ', 01, 0007, 0, SomenteNumeros(NFSe.Servico.CodigoCnae), '');
                  Gerador.wCampoNFSe(tcStr, '#32', 'Discriminacao            ', 01, 2000, 1, NFSe.Servico.Discriminacao, '');
