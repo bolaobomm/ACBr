@@ -229,7 +229,7 @@ object Form6: TForm6
     Left = 0
     Top = 0
     Width = 578
-    Height = 121
+    Height = 110
     Align = alTop
     Caption = 'Identifica'#231#227'o do Estabelecimento Usu'#225'rio do PAF-ECF'
     TabOrder = 0
@@ -309,122 +309,138 @@ object Form6: TForm6
       TabOrder = 4
     end
   end
-  object GroupBox2: TGroupBox
-    Left = 0
-    Top = 189
-    Width = 578
-    Height = 157
-    Align = alBottom
-    Caption = 'Log de erros'
-    TabOrder = 1
-    object logErros: TMemo
-      Left = 2
-      Top = 15
-      Width = 574
-      Height = 140
-      Align = alClient
-      ScrollBars = ssVertical
-      TabOrder = 0
-    end
-  end
   object btnD: TButton
     Left = 8
-    Top = 127
+    Top = 115
     Width = 75
     Height = 25
     Caption = 'Tipo D'
-    TabOrder = 2
+    TabOrder = 1
     OnClick = btnDClick
   end
   object btnE: TButton
     Left = 89
-    Top = 127
+    Top = 115
     Width = 75
     Height = 25
     Caption = 'Tipo E'
-    TabOrder = 3
+    TabOrder = 2
     OnClick = btnEClick
   end
   object btnP: TButton
     Left = 170
-    Top = 127
+    Top = 115
     Width = 75
     Height = 25
     Caption = 'Tipo P'
-    TabOrder = 4
+    TabOrder = 3
     OnClick = btnPClick
   end
   object btnR: TButton
     Left = 8
-    Top = 158
+    Top = 146
     Width = 75
     Height = 25
     Caption = 'Tipo R'
-    TabOrder = 7
+    TabOrder = 6
     OnClick = btnRClick
   end
   object btnT: TButton
     Left = 89
-    Top = 158
+    Top = 146
     Width = 75
     Height = 25
     Caption = 'Tipo T'
-    TabOrder = 8
+    TabOrder = 7
     OnClick = btnTClick
   end
   object btnC: TButton
     Left = 170
-    Top = 158
+    Top = 146
     Width = 75
     Height = 25
     Caption = 'Tipo C'
-    TabOrder = 9
+    TabOrder = 8
     OnClick = btnCClick
   end
   object btnN: TButton
     Left = 251
-    Top = 127
+    Top = 115
     Width = 75
     Height = 25
     Caption = 'Tipo N'
-    TabOrder = 5
+    TabOrder = 4
     OnClick = btnNClick
   end
   object btnH: TButton
     Left = 250
-    Top = 158
+    Top = 146
     Width = 75
     Height = 25
     Caption = 'Tipo H'
-    TabOrder = 10
+    TabOrder = 9
     OnClick = btnHClick
   end
   object btnTITP: TButton
     Left = 332
-    Top = 127
+    Top = 115
     Width = 204
     Height = 25
     Caption = 'Tabela de Indice T'#233'cnico de Produ'#231#227'o'
-    TabOrder = 6
+    TabOrder = 5
     OnClick = btnTITPClick
   end
   object btnRegistrosPAF: TButton
     Left = 332
-    Top = 158
+    Top = 146
     Width = 204
     Height = 25
     Caption = 'Registros PAF'
-    TabOrder = 11
+    TabOrder = 10
     OnClick = btnRegistrosPAFClick
+  end
+  object pc1: TPageControl
+    Left = 0
+    Top = 175
+    Width = 578
+    Height = 171
+    ActivePage = ts1
+    Align = alBottom
+    TabOrder = 11
+    object ts1: TTabSheet
+      Caption = 'Log de erros'
+      object logErros: TMemo
+        Left = 0
+        Top = 0
+        Width = 570
+        Height = 143
+        Align = alClient
+        ScrollBars = ssVertical
+        TabOrder = 0
+      end
+    end
+    object ts2: TTabSheet
+      Caption = 'Arquivo gerado'
+      ImageIndex = 1
+      object mmArquivoGerado: TMemo
+        Left = 0
+        Top = 0
+        Width = 570
+        Height = 143
+        Align = alClient
+        ScrollBars = ssBoth
+        TabOrder = 0
+      end
+    end
   end
   object ACBrPAF: TACBrPAF
     Path = '.\'
     OnPAFCalcEAD = ACBrPAFPAFCalcEAD
-    Left = 272
-    Top = 184
+    Left = 503
+    Top = 13
   end
   object ACBrEAD: TACBrEAD
-    Left = 270
-    Top = 250
+    Left = 504
+    Top = 60
   end
 end

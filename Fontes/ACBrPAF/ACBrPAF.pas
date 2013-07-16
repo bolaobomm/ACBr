@@ -58,7 +58,11 @@ uses
    ACBrPAF_C, ACBrPAF_C_Class,
    ACBrPAF_D, ACBrPAF_D_Class,
    ACBrPAF_E, ACBrPAF_E_Class,
+   ACBrPAF_F, ACBrPAF_F_Class,
+   ACBrPAF_G, ACBrPAF_G_Class,
    ACBrPAF_H, ACBrPAF_H_Class,
+   ACBrPAF_L, ACBrPAF_L_Class,
+   ACBrPAF_M, ACBrPAF_M_Class,
    ACBrPAF_N, ACBrPAF_N_Class,
    ACBrPAF_P, ACBrPAF_P_Class,
    ACBrPAF_R, ACBrPAF_R_Class,
@@ -95,7 +99,11 @@ type
     FPAF_C: TPAF_C;
     FPAF_D: TPAF_D;
     FPAF_E: TPAF_E;
+    FPAF_F: TPAF_F;
+    FPAF_G: TPAF_G;
     FPAF_H: TPAF_H;
+    FPAF_L: TPAF_L;
+    FPAF_M: TPAF_M;
     FPAF_N: TPAF_N;
     FPAF_P: TPAF_P;
     FPAF_R: TPAF_R;
@@ -142,7 +150,11 @@ type
     property PAF_C: TPAF_C read FPAF_C write FPAF_C;
     property PAF_D: TPAF_D read FPAF_D write FPAF_D;
     property PAF_E: TPAF_E read FPAF_E write FPAF_E;
+    property PAF_F: TPAF_F read FPAF_F write FPAF_F;
+    property PAF_G: TPAF_G read FPAF_G write FPAF_G;
     property PAF_H: TPAF_H read FPAF_H write FPAF_H;
+    property PAF_L: TPAF_L read FPAF_L write FPAF_L;
+    property PAF_M: TPAF_M read FPAF_M write FPAF_M;
     property PAF_N: TPAF_N read FPAF_N write FPAF_N;
     property PAF_P: TPAF_P read FPAF_P write FPAF_P;
     property PAF_R: TPAF_R read FPAF_R write FPAF_R;
@@ -198,7 +210,11 @@ begin
   FPAF_C := TPAF_C.Create;
   FPAF_D := TPAF_D.Create;
   FPAF_E := TPAF_E.Create;
+  FPAF_F := TPAF_F.Create;
+  FPAF_G := TPAF_G.Create;
   FPAF_H := TPAF_H.Create;
+  FPAF_L := TPAF_L.Create;
+  FPAF_M := TPAF_M.Create;
   FPAF_N := TPAF_N.Create( Self );
   FPAF_P := TPAF_P.Create;
   FPAF_R := TPAF_R.Create;
@@ -230,7 +246,11 @@ begin
   FPAF_C.Free;
   FPAF_D.Free;
   FPAF_E.Free;
+  FPAF_F.Free;
+  FPAF_G.Free;
   FPAF_H.Free;
+  FPAF_L.Free;
+  FPAF_M.Free;
   FPAF_N.Free;
   FPAF_P.Free;
   FPAF_R.Free;
@@ -264,7 +284,11 @@ begin
   FPAF_C.Delimitador := Value;
   FPAF_D.Delimitador := Value;
   FPAF_E.Delimitador := Value;
+  FPAF_F.Delimitador := Value;
+  FPAF_G.Delimitador := Value;
   FPAF_H.Delimitador := Value;
+  FPAF_L.Delimitador := Value;
+  FPAF_M.Delimitador := Value;
   FPAF_N.Delimitador := Value;
   FPAF_P.Delimitador := Value;
   FPAF_R.Delimitador := Value;
@@ -288,7 +312,11 @@ begin
   FPAF_C.CurMascara := Value;
   FPAF_D.CurMascara := Value;
   FPAF_E.CurMascara := Value;
+  FPAF_F.CurMascara := Value;
+  FPAF_G.CurMascara := Value;
   FPAF_H.CurMascara := Value;
+  FPAF_L.CurMascara := Value;
+  FPAF_M.CurMascara := Value;
   FPAF_N.CurMascara := Value;
   FPAF_P.CurMascara := Value;
   FPAF_R.CurMascara := Value;
@@ -312,7 +340,11 @@ begin
   FPAF_C.TrimString := Value;
   FPAF_D.TrimString := Value;
   FPAF_E.TrimString := Value;
+  FPAF_F.TrimString := Value;
+  FPAF_G.TrimString := Value;
   FPAF_H.TrimString := Value;
+  FPAF_L.TrimString := Value;
+  FPAF_M.TrimString := Value;
   FPAF_N.TrimString := Value;
   FPAF_P.TrimString := Value;
   FPAF_R.TrimString := Value;
@@ -336,7 +368,11 @@ begin
   FPAF_C.OnError := Value;
   FPAF_D.OnError := Value;
   FPAF_E.OnError := Value;
+  FPAF_F.OnError := Value;
+  FPAF_G.OnError := Value;
   FPAF_H.OnError := Value;
+  FPAF_L.OnError := Value;
+  FPAF_M.OnError := Value;
   FPAF_N.OnError := Value;
   FPAF_P.OnError := Value;
   FPAF_R.OnError := Value;
@@ -760,9 +796,9 @@ begin
     // Copie do AAC campos não informados do N2 //
     with FPAF_N.RegistroN2 do
     begin
-       LAUDO  := ifthen( LAUDO = '', fsAAC.IdentPAF.NumeroLaudo, LAUDO ) ;
-       NOME   := ifthen( NOME = '', fsAAC.IdentPAF.paf.Nome, NOME ) ;
-       VERSAO := ifthen( VERSAO = '', fsAAC.IdentPAF.Paf.Versao, VERSAO ) ;
+      LAUDO  := ifthen( LAUDO = '', fsAAC.IdentPAF.NumeroLaudo, LAUDO ) ;
+      NOME   := ifthen( NOME = '', fsAAC.IdentPAF.paf.Nome, NOME ) ;
+      VERSAO := ifthen( VERSAO = '', fsAAC.IdentPAF.Paf.Versao, VERSAO ) ;
     end;
 
     // Se informou os arquivos no ACBrAAC copie-os para o N3 //
@@ -771,11 +807,11 @@ begin
       FPAF_N.RegistroN3.Clear;
       For iFor := 0 to fsAAC.IdentPAF.OutrosArquivos.Count-1 do
       begin
-         with FPAF_N.RegistroN3.New do
-         begin
-            NOME_ARQUIVO := fsAAC.IdentPAF.OutrosArquivos[iFor].Nome;
-	    MD5 := '' ; // MD5 será calculado em WriteRegistroN3
-         end ;
+        with FPAF_N.RegistroN3.New do
+        begin
+          NOME_ARQUIVO := fsAAC.IdentPAF.OutrosArquivos[iFor].Nome;
+	      MD5 := '' ; // MD5 será calculado em WriteRegistroN3
+        end ;
       end;
     end;
   end ;
@@ -808,11 +844,11 @@ begin
     // possa ser usada na impressão do relatório "Identificação do PAF-ECF"
     for iFor := 0 to FPAF_N.RegistroN3.Count - 1 do
     begin
-       with AAC.IdentPAF.OutrosArquivos.New do
-       begin
-          Nome := FPAF_N.RegistroN3.Items[iFor].NOME_ARQUIVO;
-          MD5  := FPAF_N.RegistroN3.Items[iFor].MD5;
-       end;
+      with AAC.IdentPAF.OutrosArquivos.New do
+      begin
+        Nome := FPAF_N.RegistroN3.Items[iFor].NOME_ARQUIVO;
+        MD5  := FPAF_N.RegistroN3.Items[iFor].MD5;
+      end;
     end;
 
     // Gera o MD5 do arquivo
@@ -960,11 +996,11 @@ begin
     FPAF_D.LimpaRegistros;
     FPAF_B.LimpaRegistros;
     FPAF_C.LimpaRegistros;
-    //FPAF_F.LimpaRegistros;
+    FPAF_F.LimpaRegistros;
     FPAF_T.LimpaRegistros;
-    //FPAF_M.LimpaRegistros;
-    //FPAF_L.LimpaRegistros;
-    //FPAF_G.LimpaRegistros;
+    FPAF_M.LimpaRegistros;
+    FPAF_L.LimpaRegistros;
+    FPAF_G.LimpaRegistros;
     FPAF_H.LimpaRegistros;
     FPAF_S.LimpaRegistros;
     FPAF_R.LimpaRegistros;
