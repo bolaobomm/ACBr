@@ -198,64 +198,6 @@ procedure TACBrIBPTax.PopularItens;
 var
   Item: TStringList;
   I: Integer;
-
-  procedure QuebrarLinha(const Alinha: string; const ALista: TStringList);
-  var
-    P, P1: PChar;
-    S: string;
-  const
-    QuoteChar = '"';
-    Delimiter = ';';
-  begin
-    ALista.BeginUpdate;
-    try
-      ALista.Clear;
-      P := PChar(Alinha);
-
-      while P^ <> #0 do
-      begin
-        if P^ = QuoteChar then
-          S := AnsiExtractQuotedStr(P, QuoteChar)
-        else
-        begin
-          P1 := P;
-          while (P^ <> #0) and (P^ <> Delimiter) do
-          {$IFDEF MSWINDOWS}
-            P := CharNext(P);
-          {$ELSE}
-            Inc(P);
-          {$ENDIF}
-
-          SetString(S, P1, P - P1);
-        end;
-        ALista.Add(S);
-
-        if P^ = Delimiter then
-        begin
-          P1 := P;
-
-          {$IFDEF MSWINDOWS}
-          if CharNext(P1)^ = #0 then
-          {$ELSE}
-          Inc(P1);
-          if P1^ = #0 then
-          {$ENDIF}
-            ALista.Add('');
-
-          repeat
-            {$IFDEF MSWINDOWS}
-            P := CharNext(P);
-            {$ELSE}
-            Inc(P);
-            {$ENDIF}
-          until not ((P^ in [#1..' ']));
-        end;
-      end;
-    finally
-      ALista.EndUpdate;
-    end;
-  end;
-
 begin
   if Arquivo.Count <= 0 then
     raise EACBrIBPTax.Create('Arquivo de itens não foi baixado!');

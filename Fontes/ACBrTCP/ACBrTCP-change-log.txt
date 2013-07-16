@@ -37,6 +37,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+15/07/2013
+-- ACBrCotacao --
+[+] Adicionado componente ACBrCotacao responsável pela leitura da cotação de 
+    moedas atualizado via Banco Central do Brasil.
+    por: regys.silveira
+
 13/07/2013
 -- ACBrConsultaCNPJ --
 [+] Adicionada a leitura da informação "Natureza Juridica"  (por: DSA)
