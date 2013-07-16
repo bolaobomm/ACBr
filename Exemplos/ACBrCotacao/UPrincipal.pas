@@ -14,9 +14,12 @@ type
     ACBrCotacao1: TACBrCotacao;
     btnProcurarSimbolo: TButton;
     ListBox1: TListBox;
+    GroupBox2: TGroupBox;
+    Label1: TLabel;
+    Label2: TLabel;
     procedure btnAtualizarMostrarClick(Sender: TObject);
-    procedure FormCreate(Sender: TObject);
     procedure btnProcurarSimboloClick(Sender: TObject);
+    procedure Label2Click(Sender: TObject);
   private
 
   public
@@ -27,6 +30,9 @@ var
   frmPrincipal: TfrmPrincipal;
 
 implementation
+
+uses
+  ShellAPI;
 
 {$R *.dfm}
 
@@ -42,7 +48,7 @@ begin
     for I := 0 to ACBrCotacao1.Tabela.Count - 1 do
     begin
       ListBox1.Items.Add(
-        Format('%s  %3.3d  %s  %s  %-20s  %5.5d  %-50s  %10.2f  %10.2f  %10.2f  %10.2f', [
+        Format('%s  %3.3d  %s  %s  %-20s  %5.5d  %-30s  %10s  %10s  %10s  %10s', [
           DateToStr(ACBrCotacao1.Tabela[I].DataCotacao),
           ACBrCotacao1.Tabela[I].CodigoMoeda,
           ACBrCotacao1.Tabela[I].Tipo,
@@ -50,10 +56,10 @@ begin
           ACBrCotacao1.Tabela[I].Nome,
           ACBrCotacao1.Tabela[I].CodPais,
           ACBrCotacao1.Tabela[I].Pais,
-          ACBrCotacao1.Tabela[I].TaxaCompra,
-          ACBrCotacao1.Tabela[I].TaxaVenda,
-          ACBrCotacao1.Tabela[I].ParidadeCompra,
-          ACBrCotacao1.Tabela[I].ParidadeVenda
+          FloatTostr(ACBrCotacao1.Tabela[I].TaxaCompra),
+          FloatTostr(ACBrCotacao1.Tabela[I].TaxaVenda),
+          FloatTostr(ACBrCotacao1.Tabela[I].ParidadeCompra),
+          FloatTostr(ACBrCotacao1.Tabela[I].ParidadeVenda)
         ])
       );
     end;
@@ -102,9 +108,9 @@ begin
   
 end;
 
-procedure TfrmPrincipal.FormCreate(Sender: TObject);
+procedure TfrmPrincipal.Label2Click(Sender: TObject);
 begin
-  ReportMemoryLeaksOnShutdown := DebugHook <> 0;
+  ShellExecute(Handle, 'open', PWideChar(TLabel(Sender).Caption), '', '', WS_MAXIMIZE)
 end;
 
 end.
