@@ -452,7 +452,7 @@ begin
    rodo.veicTracao.tara  := 5000;
    rodo.veicTracao.capKG := 4500;
    rodo.veicTracao.capM3 := 400;
-   rodo.veicTracao.RNTRC := '12345678';
+//   rodo.veicTracao.RNTRC := '12345678';
 
    with rodo.veicTracao.condutor.Add do
     begin
@@ -467,7 +467,7 @@ begin
      tara  := 4000;
      capKG := 3000;
      capM3 := 300;
-     RNTRC := '87654321';
+//     RNTRC := '87654321';
     end;
 
    with rodo.valePed.disp.Add do
