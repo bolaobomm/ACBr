@@ -172,7 +172,8 @@ type
     procedure GerarICMSOutraUFComp; // Nivel 4
     procedure GerarICMSSNComp;      // Nivel 4
 
-    procedure GerarInfCTeAnu;  // Nivel 1
+    procedure GerarInfCTeAnu; // Nivel 1
+    procedure GerarautXML;    // Nivel 1
 
     procedure AjustarMunicipioUF(var xUF: string; var xMun: string; var cMun: integer; cPais: integer; vxUF, vxMun: string; vcMun: integer);
     function ObterNomeMunicipio(const xMun, xUF: string; const cMun: integer): string;
@@ -2032,6 +2033,20 @@ begin
     Gerador.wCampo(tcDat, '#401', 'dEmi  ', 10, 10, 1, CTe.InfCTeAnu.dEmi, DSC_DEMI);
     Gerador.wGrupo('/infCteAnu');
   end;
+end;
+
+procedure TCTeW.GerarautXML;
+var
+  i: integer;
+begin
+  for i := 0 to CTe.autXML.Count - 1 do
+  begin
+    Gerador.wGrupo('autXML', '#140');
+    Gerador.wCampoCNPJCPF('#141', '#142', CTe.autXML[i].CNPJCPF, CODIGO_BRASIL);
+    Gerador.wGrupo('/autXML');
+  end;
+  if CTe.autXML.Count > 10 then
+    Gerador.wAlerta('#140', 'autXML', DSC_LACR, ERR_MSG_MAIOR_MAXIMO + '10');
 end;
 
 procedure TCTeW.AjustarMunicipioUF(var xUF, xMun: string;

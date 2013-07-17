@@ -1238,6 +1238,15 @@ begin
     CTe.InfCTeAnu.dEmi  := Leitor.rCampo(tcDat,'dEmi');
   end;
 
+  (* Grupo da TAG <autXML> ****************************************************)
+  i01 := 0;
+  while Leitor.rExtrai(1, 'autXML', '', i01 + 1) <> '' do
+  begin
+    CTe.autXML.Add;
+    CTe.autXML[i01].CNPJCPF := Leitor.rCampoCNPJCPF;;
+    inc(i01);
+  end;
+
   (* Grupo da TAG <signature> *************************************************)
 
   Leitor.Grupo := Leitor.Arquivo;

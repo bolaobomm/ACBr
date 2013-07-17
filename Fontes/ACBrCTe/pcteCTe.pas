@@ -254,6 +254,10 @@ type
   TInfCteAnu = class;
 
 ////////////////////////////////////////////////////////////////////////////////
+  TautXMLCollection     = class;
+  TautXMLCollectionItem = class;
+
+  ////////////////////////////////////////////////////////////////////////////////
 
   TCTe = class(TPersistent)
   private
@@ -275,9 +279,12 @@ type
     FinfCTeNorm : TInfCTeNorm;
     FinfCteComp : TInfCteComp;
     FInfCteAnu  : TInfCteAnu;
+    FautXML     : TautXMLCollection;
 
     FProcCTe   : TProcCTe;
     FSignature : TSignature;
+
+    procedure SetautXML(const Value: TautXMLCollection);
   public
     constructor Create;
     destructor Destroy; override;
@@ -300,6 +307,7 @@ type
     property infCTeNorm: TInfCTeNorm read FinfCTeNorm write FinfCTeNorm;
     property infCteComp: TInfCteComp read FinfCteComp write FinfCteComp;
     property infCteAnu: TInfCteAnu   read FinfCteAnu  write FinfCteAnu;
+    property autXML: TautXMLCollection read FautXML write SetautXML;
 
     property procCTe: TProcCTe     read FProcCTe   write FProcCTe;
     property signature: Tsignature read Fsignature write Fsignature;
@@ -2245,6 +2253,26 @@ type
 
   ////////////////////////////////////////////////////////////////////////////////
 
+  TautXMLCollection = class(TCollection)
+  private
+    function GetItem(Index: Integer): TautXMLCollectionItem;
+    procedure SetItem(Index: Integer; Value: TautXMLCollectionItem);
+  public
+    constructor Create(AOwner: TCTe);
+    function Add: TautXMLCollectionItem;
+    property Items[Index: Integer]: TautXMLCollectionItem read GetItem write SetItem; default;
+  end;
+
+  TautXMLCollectionItem = class(TCollectionItem)
+  private
+    FCNPJCPF: String;
+  public
+    constructor Create; reintroduce;
+    destructor Destroy; override;
+  published
+    property CNPJCPF: String read FCNPJCPF write FCNPJCPF;
+  end;
+
 const
   CMUN_EXTERIOR : Integer = 9999999;
   XMUN_EXTERIOR : String  = 'EXTERIOR';
@@ -2272,6 +2300,7 @@ begin
   FinfCTeNorm := TInfCTeNorm.Create(Self);
   FinfCTeComp := TInfCteComp.Create(Self);
   FinfCteAnu  := TInfCteAnu.Create;
+  FautXML     := TautXMLCollection.Create(Self);
 
   FProcCTe   := TProcCTe.create;
   Fsignature := Tsignature.create;
@@ -2295,11 +2324,17 @@ begin
   FinfCTeNorm.Free;
   FInfCTeComp.Free;
   FInfCTeAnu.Free;
-
+  FautXML.Free;
+  
   FProcCTe.Free;
   Fsignature.Free;
 
   inherited Destroy;
+end;
+
+procedure TCTe.SetautXML(const Value: TautXMLCollection);
+begin
+  FautXML := Value;
 end;
 
 { TIde }
@@ -4189,6 +4224,43 @@ begin
   FCST90.Free;
   FICMSOutraUF.Free;
   FICMSSN.Free;
+  inherited;
+end;
+
+{ TautXMLCollection }
+
+function TautXMLCollection.Add: TautXMLCollectionItem;
+begin
+  Result := TautXMLCollectionItem(inherited Add);
+  Result.create;
+end;
+
+constructor TautXMLCollection.Create(AOwner: TCTe);
+begin
+  inherited Create(TautXMLCollectionItem);
+end;
+
+function TautXMLCollection.GetItem(Index: Integer): TautXMLCollectionItem;
+begin
+  Result := TautXMLCollectionItem(inherited GetItem(Index));
+end;
+
+procedure TautXMLCollection.SetItem(Index: Integer;
+  Value: TautXMLCollectionItem);
+begin
+  inherited SetItem(Index, Value);
+end;
+
+{ TautXMLCollectionItem }
+
+constructor TautXMLCollectionItem.Create;
+begin
+
+end;
+
+destructor TautXMLCollectionItem.Destroy;
+begin
+
   inherited;
 end;
 
