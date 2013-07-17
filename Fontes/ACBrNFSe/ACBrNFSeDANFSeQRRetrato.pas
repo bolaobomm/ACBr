@@ -192,6 +192,7 @@ type
     QRLabel58: TQRLabel;
     QRLabel59: TQRLabel;
     QRLabel60: TQRLabel;
+    qrlDataServ: TQRLabel;
     procedure qrb_1_CabecalhoBeforePrint(Sender: TQRCustomBand;
       var PrintBand: Boolean);
     procedure qrb_2_PrestadorServicoBeforePrint(Sender: TQRCustomBand;
@@ -267,7 +268,9 @@ begin
  qrmPrefeitura.Lines.Add(StringReplace( FPrefeitura,
                          ';', #13#10, [rfReplaceAll,rfIgnoreCase] ) );
 
- qrlNumNF0.Caption  := FormatFloat('00000000000', StrToFloatDef(FNFSe.Numero, 0));
+ qrlNumNF0.Caption   := FormatFloat('00000000000', StrToFloatDef(FNFSe.Numero, 0));
+ qrlDataServ.Caption := '';
+
  // Alterado em 27/12/2012  Daniel Jr -> passando parâmetro para Comprovante de Entrega.
  qrlNumeroNotaCompEnt.Caption := FormatFloat('00000000000', StrToFloatDef(FNFSe.Numero, 0));
 
@@ -526,7 +529,9 @@ begin
  end;
 
  // Alterado esta linha em 27/12/2012  Daniel Jr - Pois o ICMS não estava sendo dividido por 100) Ex 1,00 estava 100,00
- qrlValorISS.Caption := DFeUtil.FormatFloat( (FNFSe.Servico.Valores.ValorIss / 100) );
+ // Alterado por Italo em 17/07/2013 (> removido a divisão por 100
+ // qrlValorISS.Caption := DFeUtil.FormatFloat( (FNFSe.Servico.Valores.ValorIss / 100) );
+ qrlValorISS.Caption := DFeUtil.FormatFloat( FNFSe.Servico.Valores.ValorIss );
 
 // qrlValorCredito.Caption := DFeUtil.FormatFloat( FNFSe.ValorCredito );
 
