@@ -981,7 +981,8 @@ begin
          : Provedor := 'GovDigital';
 
   2103000, // Caxias/MA
-  3504800  // Balsamo/SP
+  3504800, // Balsamo/SP
+  3505203  // Bariri/SP
          : Provedor := 'Fiorilli';
 
   1501402, // Belem/PA
