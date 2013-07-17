@@ -53,10 +53,11 @@ type
   private
     FRegistroD1: TRegistroD1;       /// FRegistroD1
     FRegistroD2: TRegistroD2List;   /// Lista de FRegistroD2
-    FRegistroD4: TRegistroD4List;   /// Lista de FRegistroD4
     FRegistroD9: TRegistroD9;       /// FRegistroD9
 
     function WriteRegistroD3(RegD2: TRegistroD2): String;
+    function WriteRegistroD4(RegD2: TRegistroD2): String;
+
     procedure CriaRegistros;
     procedure LiberaRegistros;
   public
@@ -66,12 +67,10 @@ type
 
     function WriteRegistroD1: String;
     function WriteRegistroD2: String;
-    function WriteRegistroD4: String;
     function WriteRegistroD9: String;
 
     property RegistroD1: TRegistroD1     read FRegistroD1 write FRegistroD1;
     property RegistroD2: TRegistroD2List read FRegistroD2 write FRegistroD2;
-    property RegistroD4: TRegistroD4List read FRegistroD4 write FRegistroD4;
     property RegistroD9: TRegistroD9     read FRegistroD9 write FRegistroD9;
   end;
 
@@ -90,7 +89,6 @@ procedure TPAF_D.CriaRegistros;
 begin
   FRegistroD1  := TRegistroD1.Create;
   FRegistroD2  := TRegistroD2List.Create;
-  FRegistroD4  := TRegistroD4List.Create;
   FRegistroD9  := TRegistroD9.Create;
 
   FRegistroD9.TOT_REG_D2 := 0;
@@ -108,7 +106,6 @@ procedure TPAF_D.LiberaRegistros;
 begin
   FRegistroD1.Free;
   FRegistroD2.Free;
-  FRegistroD4.Free;
   FRegistroD9.Free;
 end;
 
@@ -160,9 +157,11 @@ var
   intFor: integer;
   strRegistroD2: String;
   strRegistroD3: String;
+  strRegistroD4: String;
 begin
   strRegistroD2 := '';
   strRegistroD3 := '';
+  strRegistroD4 := '';
 
   if Assigned(FRegistroD2) then
   begin
@@ -197,11 +196,14 @@ begin
         strRegistroD3 := strRegistroD3 +
                          WriteRegistroD3( FRegistroD2.Items[intFor] );
 
+        strRegistroD4 := strRegistroD4 +
+                         WriteRegistroD4( FRegistroD2.Items[intFor] );
+
         FRegistroD9.TOT_REG_D2 := FRegistroD9.TOT_REG_D2 + 1;
         FRegistroD9.TOT_REG    := FRegistroD9.TOT_REG + 1;
      end;
 
-     Result := strRegistroD2 + strRegistroD3;
+     Result := strRegistroD2 + strRegistroD3 + strRegistroD4;
   end;
 end;
 
@@ -278,20 +280,20 @@ begin
   Result := AnsiCompareText(Reg1, Reg2);
 end;
 
-function TPAF_D.WriteRegistroD4: String;
+function TPAF_D.WriteRegistroD4(RegD2: TRegistroD2): String;
 var
   intFor: integer;
   strRegistroD4: String;
 begin
   strRegistroD4:= '';
 
-  if Assigned(RegistroD4) then
+  if Assigned(RegD2.RegistroD4) then
   begin
-    RegistroD4.Sort(@OrdenarD4);
+    RegD2.RegistroD4.Sort(@OrdenarD4);
     
-    for intFor := 0 to RegistroD4.Count - 1 do
+    for intFor := 0 to RegD2.RegistroD4.Count - 1 do
     begin
-      with RegistroD4.Items[intFor] do
+      with RegD2.RegistroD4.Items[intFor] do
       begin
         strRegistroD4 := strRegistroD4 + LFill('D4') +
                                          RFill(NUM_DAV, 13) +

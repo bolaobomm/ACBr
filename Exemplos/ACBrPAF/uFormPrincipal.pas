@@ -752,33 +752,36 @@ begin
         end;
       end;
 
+      //D4 - Log alterações DAV
+      for j := 1 to 2 do
+      begin
+        with RegistroD4.New do
+        begin
+          NUM_DAV       := IntToStr(I * QualquerNumero);
+          DT_ALT        := Now;
+          COD_ITEM      := '10';
+          DESC_ITEM     := 'descricao do item';
+          QTDE_ITEM     := 10.00;
+          UNI_ITEM      := 'UN';
+          VL_UNIT       := 1.00;
+          VL_DESCTO     := 0.00;
+          VL_ACRES      := 0.00;
+          VL_TOTAL      := 10.00;
+          SIT_TRIB      := 'T'; // T, S, I, N, F
+          ALIQ          := 7.00; // SOMENTE QUANDO T E S
+          IND_CANC      := 'N';
+          DEC_QTDE_ITEM := 2;
+          DEC_VL_UNIT   := 2;
+          TIP_ALT       := 'I';
+
+          RegistroValido := True;
+        end;
+      end;
+
     end;
   end;
 
-  //D4 - Log alterações DAV
-  ACBrPAF.PAF_D.RegistroD4.Clear;
-  for I := 1 to 5 do
-  begin
-    with ACBrPAF.PAF_D.RegistroD4.New do
-    begin
-      NUM_DAV       := IntToStr(I * QualquerNumero);
-      DT_ALT        := Now;
-      COD_ITEM      := '10';
-      DESC_ITEM     := 'descricao do item';
-      QTDE_ITEM     := 10.00;
-      UNI_ITEM      := 'UN';
-      VL_UNIT       := 1.00;
-      VL_DESCTO     := 0.00;
-      VL_ACRES      := 0.00;
-      VL_TOTAL      := 10.00;
-      SIT_TRIB      := 'T'; // T, S, I, N, F
-      ALIQ          := 7.00; // SOMENTE QUANDO T E S
-      IND_CANC      := 'N';
-      DEC_QTDE_ITEM := 2;
-      DEC_VL_UNIT   := 2;
-      TIP_ALT       := 'I';
-    end;
-  end;
+
 
   //F2
   ACBrPAF.PAF_F.RegistroF2.Clear;

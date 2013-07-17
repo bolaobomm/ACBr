@@ -931,8 +931,8 @@ begin
       if FPAF_D.RegistroD2.Count > 0 then
         Write(txtFile, FPAF_D.WriteRegistroD2);  //D2 e D3
 
-      if FPAF_D.RegistroD4.Count > 0 then
-        Write(txtFile, FPAF_D.WriteRegistroD4);
+      //if FPAF_D.RegistroD4.Count > 0 then
+      //  Write(txtFile, FPAF_D.WriteRegistroD4);
 
       if FPAF_B.RegistroB2.Count > 0 then
         Write(txtFile, FPAF_B.WriteRegistroB2);

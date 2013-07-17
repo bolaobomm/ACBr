@@ -47,6 +47,7 @@ uses
 
 type
   TRegistroD3List = class;
+  TRegistroD4List = class;
 
   /// REGISTRO TIPO D1 - IDENTIFICAÇÃO DO ESTABELECIMENTO USUÁRIO DO PAF-ECF
 
@@ -76,6 +77,7 @@ type
     fRegistroValido: boolean;
 
     fRegistroD3: TRegistroD3List; /// Registro FILHO
+    FRegistroD4: TRegistroD4List; /// Lista de FRegistroD4
   public
     constructor Create; virtual; /// Create
     destructor Destroy; override; /// Destroy
@@ -97,6 +99,7 @@ type
     property CPF_CNPJ: string read FCPF_CNPJ write FCPF_CNPJ;
 
     property RegistroD3: TRegistroD3List read FRegistroD3 write FRegistroD3;
+    property RegistroD4: TRegistroD4List read FRegistroD4 write FRegistroD4;
   end;
 
   /// REGISTRO D2 - Lista
@@ -222,12 +225,14 @@ end;
 constructor TRegistroD2.Create;
 begin
   fRegistroD3 := TRegistroD3List.Create;
+  FRegistroD4  := TRegistroD4List.Create;
   fRegistroValido := True;
 end;
 
 destructor TRegistroD2.Destroy;
 begin
   fRegistroD3.Free;
+  FRegistroD4.Free;
   inherited;
 end;
 
