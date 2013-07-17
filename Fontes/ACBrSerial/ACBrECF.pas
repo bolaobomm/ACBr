@@ -2907,7 +2907,7 @@ begin
   if (Observacao = '') then
      Observacao := fsMensagemRodape ;
 
-  if not Consumidor.Enviado then
+  if (not Consumidor.Enviado) and (not IdentificaConsumidorRodape) then
   begin
      if Consumidor.Documento <> '' then
         Observacao := Observacao + '|CPF/CNPJ consumidor: '+Consumidor.Documento ;

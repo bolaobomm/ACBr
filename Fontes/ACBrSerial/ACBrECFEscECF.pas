@@ -157,7 +157,7 @@ TACBrECFEscECF = class( TACBrECFClass )
     fsNomeArqMemoria : String ;
     fsArqMemoria     : String ;
 
-    procedure EnviaConsumidor(var Obs: String);
+    procedure EnviaConsumidor;
     function PreparaCmd(CmdExtBcd: AnsiString): AnsiString;
     Function TraduzErroMsg( CAT, Ocorrencia : Byte) : String;
 
@@ -898,12 +898,8 @@ begin
   Result := EscECFComando.Comando ;
 end;
 
-procedure TACBrECFEscECF.EnviaConsumidor(var Obs: String);
+procedure TACBrECFEscECF.EnviaConsumidor;
 begin
-  { Removendo o Consumidor da Observação, pois vai usar comando próprio }
-  Obs := StringReplace(Obs, LF+'CPF/CNPJ consumidor: ' + Consumidor.Documento, '', []) ;
-  Obs := StringReplace(Obs, LF+'Nome: '+Consumidor.Nome, '', []) ;
-  Obs := StringReplace(Obs, LF+'Endereco: '+Consumidor.Endereco, '', []) ;
   try
      with EscECFComando do
      begin
@@ -1921,20 +1917,16 @@ begin
 end;
 
 procedure TACBrECFEscECF.FechaCupom(Observacao: AnsiString; IndiceBMP: Integer);
-var
-   Obs: String;
 begin
-  Obs := Observacao ;
-
   if not Consumidor.Enviado then
-     EnviaConsumidor( Obs );
+     EnviaConsumidor;
 
   with EscECFComando do
   begin
      CMD := 5 ;
      AddParamInteger( 0 );  // Sem Cupom Adicional
      AddParamInteger( 1 );  // Aciona a Guilhotina
-     AddParamString( Obs );
+     AddParamString( Observacao );
   end ;
   EnviaComando ;
 
@@ -2464,7 +2456,7 @@ begin
   Obs := Observacao ;
 
   if not Consumidor.Enviado then
-     EnviaConsumidor(Obs);
+     EnviaConsumidor;
 
   with EscECFComando do
   begin

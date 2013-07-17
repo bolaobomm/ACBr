@@ -97,6 +97,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+Data: 17/07/2013
+-- ACBrECF --
+[*] Refactoring em rotinas de Fechamento de Cupom. Simplificação da decisão
+    de exibir os dados do Consumidor nas linhas de Observação ou em comando
+    especial quando suportado pelo ECF (por: DSA)
+
 Data: 15/07/2013
 -- ACBrECFEscECF --
 [-] Corrigido cancelamento de Cupom Fiscal seguido de CCD

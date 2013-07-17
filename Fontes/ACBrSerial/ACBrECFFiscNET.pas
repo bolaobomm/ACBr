@@ -1158,10 +1158,6 @@ begin
 
   if not Consumidor.Enviado then
   begin
-     { Removendo o Consumidor da Observação, pois vai usar comando próprio }
-     Obs := StringReplace(Obs,#10+'CPF/CNPJ consumidor: '+Consumidor.Documento,'',[]) ;
-     Obs := StringReplace(Obs,#10+'Nome: '+Consumidor.Nome,'',[]) ;
-     Obs := StringReplace(Obs,#10+'Endereco: '+Consumidor.Endereco,'',[]) ;
      try
         { Se tiver Observações no rodape, deve enviar antes do consumidor }
         if Obs <> '' then
