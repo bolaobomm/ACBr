@@ -324,12 +324,16 @@ begin
   qrmPlaca.Lines.Add(DFeUtil.FormatarPlaca(FMDFe.rodo.veicTracao.placa));
 
   qrmRNTRC.Lines.Clear;
-  qrmRNTRC.Lines.Add(FMDFe.rodo.veicTracao.RNTRC);
+  if FMDFe.rodo.veicTracao.prop.RNTRC <> ''
+   then qrmRNTRC.Lines.Add(FMDFe.rodo.veicTracao.prop.RNTRC)
+   else qrmRNTRC.Lines.Add(FMDFe.rodo.RNTRC);
 
   for i := 0 to FMDFe.rodo.veicReboque.Count -1 do
    begin
     qrmPlaca.Lines.Add(DFeUtil.FormatarPlaca(FMDFe.rodo.veicReboque.Items[i].placa));
-    qrmRNTRC.Lines.Add(FMDFe.rodo.veicReboque.Items[i].RNTRC);
+    if FMDFe.rodo.veicReboque.Items[i].prop.RNTRC <> ''
+     then qrmRNTRC.Lines.Add(FMDFe.rodo.veicReboque.Items[i].prop.RNTRC)
+     else qrmRNTRC.Lines.Add(FMDFe.rodo.RNTRC);
    end;
 
   qrmCPF.Lines.Clear;

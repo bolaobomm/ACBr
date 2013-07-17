@@ -1209,7 +1209,7 @@ inherited fqrDAMDFEQRRetrato: TfqrDAMDFEQRRetrato
         AlignToBand = False
         AutoSize = False
         AutoStretch = False
-        Caption = 'Modal Rodo de Carga'
+        Caption = 'Modal Rodovi'#225'rio de Carga'
         Color = clWhite
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clWindowText

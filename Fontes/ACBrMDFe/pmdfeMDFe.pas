@@ -50,26 +50,27 @@ uses
 type
 
   // Relação dos Tipos
-  TinfMDFe                      = class;
-  TinfMunCarregaCollection      = class;
-  TinfMunCarregaCollectionItem  = class;
-  TinfPercursoCollection        = class;
-  TinfPercursoCollectionItem    = class;
-  Tide                          = class;
-  Temit                         = class;
-  TenderEmit                    = class;
+  TinfMDFe                     = class;
+  TinfMunCarregaCollection     = class;
+  TinfMunCarregaCollectionItem = class;
+  TinfPercursoCollection       = class;
+  TinfPercursoCollectionItem   = class;
+  Tide                         = class;
+  Temit                        = class;
+  TenderEmit                   = class;
 
-  Trodo                         = class; // Informações do modal Rodoviário
+  Trodo                      = class; // Informações do modal Rodoviário
+  Tprop                      = class;
   TveicTracao                = class;
-  TcondutorCollection           = class;
-  TcondutorCollectionItem       = class;
-  TveicReboqueCollection        = class;
-  TveicReboqueCollectionItem    = class;
-  TvalePed                      = class;
-  TdispCollection               = class;
-  TdispCollectionItem           = class;
+  TcondutorCollection        = class;
+  TcondutorCollectionItem    = class;
+  TveicReboqueCollection     = class;
+  TveicReboqueCollectionItem = class;
+  TvalePed                   = class;
+  TdispCollection            = class;
+  TdispCollectionItem        = class;
 
-  Taereo                        = class; // Informações do modal Aéreo
+  Taereo = class; // Informações do modal Aéreo
 
   Taquav                          = class; // Informações do modal Aquaviário
   TinfTermCarregCollection        = class;
@@ -79,44 +80,50 @@ type
   TinfEmbCombCollection           = class;
   TinfEmbCombCollectionItem       = class;
 
-  Tferrov                       = class; // Informações do modal Ferroviário
-  TvagCollection                = class;
-  TvagCollectionItem            = class;
+  Tferrov            = class; // Informações do modal Ferroviário
+  TvagCollection     = class;
+  TvagCollectionItem = class;
 
   TinfDoc                       = class;
   TinfMunDescargaCollection     = class;
   TinfMunDescargaCollectionItem = class;
 
-  TinfCTeCollection             = class;
-  TinfCTeCollectionItem         = class;
-  TinfUnidTranspCTeCollection   = class;
+  TinfCTeCollection           = class;
+  TinfCTeCollectionItem       = class;
+  TinfUnidTranspCTeCollection = class;
 
-  TinfUnidTranspCollectionItem  = class;
-  TlacUnidTranspCollection      = class;
-  TlacUnidTranspCollectionItem  = class;
-  TinfUnidCargaCollection       = class;
-  TinfUnidCargaCollectionItem   = class;
-  TlacUnidCargaCollection       = class;
-  TlacUnidCargaCollectionItem   = class;
+  TinfUnidTranspCollectionItem = class;
+  TlacUnidTranspCollection     = class;
+  TlacUnidTranspCollectionItem = class;
+  TinfUnidCargaCollection      = class;
+  TinfUnidCargaCollectionItem  = class;
+  TlacUnidCargaCollection      = class;
+  TlacUnidCargaCollectionItem  = class;
 
-  TinfCTCollection              = class;
-  TinfCTCollectionItem          = class;
-  TinfUnidTranspCTCollection    = class;
+  TinfCTCollection           = class;
+  TinfCTCollectionItem       = class;
+  TinfUnidTranspCTCollection = class;
 
-  TinfNFeCollection             = class;
-  TinfNFeCollectionItem         = class;
-  TinfUnidTranspNFeCollection   = class;
+  TinfNFeCollection           = class;
+  TinfNFeCollectionItem       = class;
+  TinfUnidTranspNFeCollection = class;
 
-  TinfNFCollection              = class;
-  TinfNFCollectionItem          = class;
-  TinfUnidTranspNFCollection    = class;
+  TinfNFCollection           = class;
+  TinfNFCollectionItem       = class;
+  TinfUnidTranspNFCollection = class;
 
-  Ttot                          = class;
-  TlacresCollection             = class;
-  TlacresCollectionItem         = class;
-  TinfAdic                      = class;
+  TinfMDFeCollection           = class;
+  TinfMDFeCollectionItem       = class;
+  TinfUnidTranspMDFeCollection = class;
 
-  TMDFe                         = class;
+  Ttot                  = class;
+  TlacresCollection     = class;
+  TlacresCollectionItem = class;
+  TautXMLCollection     = class;
+  TautXMLCollectionItem = class;
+  TinfAdic              = class;
+
+  TMDFe = class;
 
   // Definição dos Tipos
   TinfMDFe = class(TPersistent)
@@ -283,8 +290,12 @@ type
     Ftara: Integer;
     FcapKG: Integer;
     FcapM3: Integer;
-    FRNTRC: String;
+    Fprop: Tprop;
+//    FRNTRC: String;
     Fcondutor: TcondutorCollection;
+    FtpRod: TpcteTipoRodado;
+    FtpCar: TpcteTipoCarroceria;
+    FUF: String;
 
     procedure Setcondutor(const Value: TcondutorCollection);
   public
@@ -296,8 +307,29 @@ type
     property tara: Integer read Ftara write Ftara;
     property capKG: Integer read FcapKG write FcapKG;
     property capM3: Integer read FcapM3 write FcapM3;
-    property RNTRC: String read FRNTRC write FRNTRC;
+    property prop: Tprop read Fprop write Fprop;
+//    property RNTRC: String read FRNTRC write FRNTRC;
     property condutor: TcondutorCollection read Fcondutor write Setcondutor;
+    property tpRod: TpcteTipoRodado read FtpRod write FtpRod;
+    property tpCar: TpcteTipoCarroceria read FtpCar write FtpCar;
+    property UF: String read FUF write FUF;
+  end;
+
+  Tprop = class(TPersistent)
+  private
+    FCNPJCPF : String;
+    FRNTRC   : String;
+    FxNome   : String;
+    FIE      : String;
+    FUF      : String;
+    FtpProp  : TpcteProp;
+  published
+    property CNPJCPF: String read FCNPJCPF write FCNPJCPF;
+    property RNTRC: String read FRNTRC write FRNTRC;
+    property xNome: String read FxNome write FxNome;
+    property IE: String read FIE write FIE;
+    property UF: String read FUF write FUF;
+    property tpProp: TpcteProp read FtpProp write FtpProp;
   end;
 
   TcondutorCollection = class(TCollection)
@@ -339,7 +371,10 @@ type
     Ftara: Integer;
     FcapKG: Integer;
     FcapM3: Integer;
-    FRNTRC: String;
+//    FRNTRC: String;
+    Fprop: Tprop;
+    FtpCar: TpcteTipoCarroceria;
+    FUF: String;
   public
     constructor Create; reintroduce;
     destructor Destroy; override;
@@ -349,7 +384,10 @@ type
     property tara: Integer read Ftara write Ftara;
     property capKG: Integer read FcapKG write FcapKG;
     property capM3: Integer read FcapM3 write FcapM3;
-    property RNTRC: String read FRNTRC write FRNTRC;
+//    property RNTRC: String read FRNTRC write FRNTRC;
+    property prop: Tprop read Fprop write Fprop;
+    property tpCar: TpcteTipoCarroceria read FtpCar write FtpCar;
+    property UF: String read FUF write FUF;
   end;
 
   TvalePed = class(TPersistent)
@@ -572,11 +610,13 @@ type
     FinfCT: TinfCTCollection;
     FinfNFe: TinfNFeCollection;
     FinfNF: TinfNFCollection;
+    FinfMDFe: TinfMDFeCollection;
 
     procedure SetinfCTe(const Value: TinfCTeCollection);
     procedure SetinfCT(const Value: TinfCTCollection);
     procedure SetinfNFe(const Value: TinfNFeCollection);
     procedure SetinfNF(const Value: TinfNFCollection);
+    procedure SetinfMDFe(const Value: TinfMDFeCollection);
   public
     constructor Create; reintroduce;
     destructor Destroy; override;
@@ -587,6 +627,7 @@ type
     property infCT: TinfCTCollection read FinfCT write SetinfCT;
     property infNFe: TinfNFeCollection read FinfNFe write SetinfNFe;
     property infNF: TinfNFCollection read FinfNF write SetinfNF;
+    property infMDFe: TinfMDFeCollection read FinfMDFe write SetinfMDFe;
   end;
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -846,6 +887,41 @@ type
 
 ////////////////////////////////////////////////////////////////////////////////
 
+  TinfMDFeCollection = class(TCollection)
+  private
+    function GetItem(Index: Integer): TinfMDFeCollectionItem;
+    procedure SetItem(Index: Integer; Value: TinfMDFeCollectionItem);
+  public
+    constructor Create(AOwner: TinfMunDescargaCollectionItem);
+    function Add: TinfMDFeCollectionItem;
+    property Items[Index: Integer]: TinfMDFeCollectionItem read GetItem write SetItem; default;
+  end;
+
+  TinfMDFeCollectionItem = class(TCollectionItem)
+  private
+    FchMDFe: String;
+    FinfUnidTransp: TinfUnidTranspMDFeCollection;
+    procedure SetinfUnidTransp(const Value: TinfUnidTranspMDFeCollection);
+  public
+    constructor Create; reintroduce;
+    destructor Destroy; override;
+  published
+    property chMDFe: String read FchMDFe write FchMDFe;
+    property infUnidTransp: TinfUnidTranspMDFeCollection read FinfUnidTransp write SetinfUnidTransp;
+  end;
+
+  TinfUnidTranspMDFeCollection = class(TCollection)
+  private
+    function GetItem(Index: Integer): TinfUnidTranspCollectionItem;
+    procedure SetItem(Index: Integer; Value: TinfUnidTranspCollectionItem);
+  public
+    constructor Create(AOwner: TinfMDFeCollectionItem);
+    function Add: TinfUnidTranspCollectionItem;
+    property Items[Index: Integer]: TinfUnidTranspCollectionItem read GetItem write SetItem; default;
+  end;
+
+////////////////////////////////////////////////////////////////////////////////
+
   Ttot = class(TPersistent)
   private
     FqCTe: Integer;
@@ -885,6 +961,26 @@ type
     property nLacre: String read FnLacre write FnLacre;
   end;
 
+  TautXMLCollection = class(TCollection)
+  private
+    function GetItem(Index: Integer): TautXMLCollectionItem;
+    procedure SetItem(Index: Integer; Value: TautXMLCollectionItem);
+  public
+    constructor Create(AOwner: TMDFe);
+    function Add: TautXMLCollectionItem;
+    property Items[Index: Integer]: TautXMLCollectionItem read GetItem write SetItem; default;
+  end;
+
+  TautXMLCollectionItem = class(TCollectionItem)
+  private
+    FCNPJCPF: String;
+  public
+    constructor Create; reintroduce;
+    destructor Destroy; override;
+  published
+    property CNPJCPF: String read FCNPJCPF write FCNPJCPF;
+  end;
+
   TinfAdic = class(TPersistent)
   private
     FinfAdFisco: String;
@@ -909,12 +1005,14 @@ type
     FinfDoc: TinfDoc;
     Ftot: Ttot;
     Flacres: TlacresCollection;
+    FautXML: TautXMLCollection;
     FinfAdic: TinfAdic;
 
     FProcMDFe: TProcMDFe;
     FSignature: TSignature;
 
     procedure Setlacres(const Value: TlacresCollection);
+    procedure SetautXML(const Value: TautXMLCollection);
   public
     constructor Create;
     destructor Destroy; override;
@@ -932,6 +1030,7 @@ type
     property infDoc: TinfDoc read FinfDoc write FinfDoc;
     property tot: Ttot read Ftot write Ftot;
     property lacres: TlacresCollection read Flacres write Setlacres;
+    property autXML: TautXMLCollection read FautXML write SetautXML;
     property infAdic: TinfAdic read FinfAdic write FinfAdic;
 
     property procMDFe: TProcMDFe read FProcMDFe write FProcMDFe;
@@ -949,22 +1048,23 @@ implementation
 
 constructor TMDFe.Create;
 begin
-  FinfMDFe       := TInfMDFe.Create;
-  Fide           := Tide.Create(Self);
-  Femit          := Temit.Create(Self);
+  FinfMDFe := TInfMDFe.Create;
+  Fide     := Tide.Create(Self);
+  Femit    := Temit.Create(Self);
 
-  Frodo          := Trodo.Create(Self);
-  Faereo         := Taereo.Create;
-  Faquav         := Taquav.Create(Self);
-  Fferrov        := Tferrov.Create(Self);
+  Frodo   := Trodo.Create(Self);
+  Faereo  := Taereo.Create;
+  Faquav  := Taquav.Create(Self);
+  Fferrov := Tferrov.Create(Self);
 
-  FinfDoc        := TinfDoc.Create(Self);
-  Ftot           := Ttot.Create;
-  Flacres        := TlacresCollection.Create(Self);
-  FinfAdic       := TinfAdic.Create;
+  FinfDoc  := TinfDoc.Create(Self);
+  Ftot     := Ttot.Create;
+  Flacres  := TlacresCollection.Create(Self);
+  FautXML  := TautXMLCollection.Create(Self);
+  FinfAdic := TinfAdic.Create;
 
-  FProcMDFe      := TProcMDFe.create;
-  Fsignature     := Tsignature.create;
+  FProcMDFe  := TProcMDFe.create;
+  Fsignature := Tsignature.create;
 end;
 
 destructor TMDFe.Destroy;
@@ -981,6 +1081,7 @@ begin
   FinfDoc.Free;
   Ftot.Free;
   Flacres.Free;
+  FautXML.Free;
   FinfAdic.Free;
 
   FProcMDFe.Free;
@@ -991,6 +1092,11 @@ end;
 procedure TMDFe.Setlacres(const Value: TlacresCollection);
 begin
   Flacres.Assign(Value);
+end;
+
+procedure TMDFe.SetautXML(const Value: TautXMLCollection);
+begin
+  FautXML := Value;
 end;
 
 { TinfMunCarregaCollection }
@@ -1112,9 +1218,9 @@ end;
 constructor TRodo.Create(AOwner: TMDFe);
 begin
   inherited Create;
-  FveicTracao := TveicTracao.Create;
-  FveicReboque   := TveicReboqueCollection.Create(Self);
-  FvalePed       := TvalePed.Create(Self);
+  FveicTracao  := TveicTracao.Create;
+  FveicReboque := TveicReboqueCollection.Create(Self);
+  FvalePed     := TvalePed.Create(Self);
 end;
 
 destructor TRodo.Destroy;
@@ -1135,11 +1241,13 @@ end;
 constructor TveicTracao.Create;
 begin
   inherited Create;
+  Fprop     := Tprop.Create;
   Fcondutor := TcondutorCollection.Create(Self);
 end;
 
 destructor TveicTracao.Destroy;
 begin
+  Fprop.Free;
   Fcondutor.Free;
   inherited;
 end;
@@ -1216,12 +1324,12 @@ end;
 
 constructor TveicReboqueCollectionItem.Create;
 begin
-
+  Fprop := Tprop.Create;
 end;
 
 destructor TveicReboqueCollectionItem.Destroy;
 begin
-
+  Fprop.Free;
   inherited;
 end;
 
@@ -1390,6 +1498,7 @@ begin
   FinfCT  := TinfCTCollection.Create(Self);
   FinfNFe := TinfNFeCollection.Create(Self);
   FinfNF  := TinfNFCollection.Create(Self);
+  FinfMDFe := TinfMDFeCollection.Create(Self);
 end;
 
 destructor TinfMunDescargaCollectionItem.Destroy;
@@ -1398,6 +1507,7 @@ begin
   FinfCT.Free;
   FinfNFe.Free;
   FinfNF.Free;
+  FinfMDFe.Free;
   inherited;
 end;
 
@@ -1423,6 +1533,12 @@ procedure TinfMunDescargaCollectionItem.SetinfNF(
   const Value: TinfNFCollection);
 begin
   FinfNF.Assign(Value);
+end;
+
+procedure TinfMunDescargaCollectionItem.SetinfMDFe(
+  const Value: TinfMDFeCollection);
+begin
+  FinfMDFe := Value;
 end;
 
 { TinfCTeCollection }
@@ -2035,6 +2151,114 @@ procedure TinfUnidTranspNFCollection.SetItem(Index: Integer;
   Value: TinfUnidTranspCollectionItem);
 begin
   inherited Create(TinfUnidTranspCollectionItem);
+end;
+
+{ TinfMDFeCollection }
+
+function TinfMDFeCollection.Add: TinfMDFeCollectionItem;
+begin
+  Result := TinfMDFeCollectionItem(inherited Add);
+  Result.create;
+end;
+
+constructor TinfMDFeCollection.Create(
+  AOwner: TinfMunDescargaCollectionItem);
+begin
+  inherited Create(TinfMDFeCollectionItem);
+end;
+
+function TinfMDFeCollection.GetItem(
+  Index: Integer): TinfMDFeCollectionItem;
+begin
+  Result := TinfMDFeCollectionItem(inherited GetItem(Index));
+end;
+
+procedure TinfMDFeCollection.SetItem(Index: Integer;
+  Value: TinfMDFeCollectionItem);
+begin
+  inherited SetItem(Index, Value);
+end;
+
+{ TinfMDFeCollectionItem }
+
+constructor TinfMDFeCollectionItem.Create;
+begin
+  FinfUnidTransp := TInfUnidTranspMDFeCollection.Create(Self);
+end;
+
+destructor TinfMDFeCollectionItem.Destroy;
+begin
+  FinfUnidTransp.Free;
+  inherited;
+end;
+
+procedure TinfMDFeCollectionItem.SetinfUnidTransp(
+  const Value: TinfUnidTranspMDFeCollection);
+begin
+  FinfUnidTransp := Value;
+end;
+
+{ TinfUnidTranspMDFeCollection }
+
+function TinfUnidTranspMDFeCollection.Add: TinfUnidTranspCollectionItem;
+begin
+  Result := TinfUnidTranspCollectionItem(inherited Add);
+  Result.create;
+end;
+
+constructor TinfUnidTranspMDFeCollection.Create(
+  AOwner: TinfMDFeCollectionItem);
+begin
+  inherited Create(TinfUnidTranspCollectionItem);
+end;
+
+function TinfUnidTranspMDFeCollection.GetItem(
+  Index: Integer): TinfUnidTranspCollectionItem;
+begin
+  Result := TinfUnidTranspCollectionItem(inherited GetItem(Index));
+end;
+
+procedure TinfUnidTranspMDFeCollection.SetItem(Index: Integer;
+  Value: TinfUnidTranspCollectionItem);
+begin
+  inherited Create(TinfUnidTranspCollectionItem);
+end;
+
+{ TautXMLCollection }
+
+function TautXMLCollection.Add: TautXMLCollectionItem;
+begin
+  Result := TautXMLCollectionItem(inherited Add);
+  Result.create;
+end;
+
+constructor TautXMLCollection.Create(AOwner: TMDFe);
+begin
+  inherited Create(TautXMLCollectionItem);
+end;
+
+function TautXMLCollection.GetItem(Index: Integer): TautXMLCollectionItem;
+begin
+  Result := TautXMLCollectionItem(inherited GetItem(Index));
+end;
+
+procedure TautXMLCollection.SetItem(Index: Integer;
+  Value: TautXMLCollectionItem);
+begin
+  inherited SetItem(Index, Value);
+end;
+
+{ TautXMLCollectionItem }
+
+constructor TautXMLCollectionItem.Create;
+begin
+
+end;
+
+destructor TautXMLCollectionItem.Destroy;
+begin
+
+  inherited;
 end;
 
 end.

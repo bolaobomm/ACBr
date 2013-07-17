@@ -181,9 +181,19 @@ begin
         MDFe.Rodo.veicTracao.tara  := Leitor.rCampo(tcInt, 'tara');
         MDFe.Rodo.veicTracao.capKG := Leitor.rCampo(tcInt, 'capKG');
         MDFe.Rodo.veicTracao.capM3 := Leitor.rCampo(tcInt, 'capM3');
+        MDFe.rodo.veicTracao.tpRod := StrToTpRodado(ok, Leitor.rCampo(tcStr, 'tpRod'));
+        MDFe.rodo.veicTracao.tpCar := StrToTpCarroceria(ok, Leitor.rCampo(tcStr, 'tpCar'));
+        MDFe.rodo.veicTracao.UF    := Leitor.rCampo(tcStr, 'UF');
 
-        if Leitor.rExtrai(4, 'prop') <> ''
-         then MDFe.Rodo.veicTracao.RNTRC := Leitor.rCampo(tcStr, 'RNTRC');
+        if Leitor.rExtrai(4, 'prop') <> '' then
+        begin
+          MDFe.rodo.veicTracao.prop.CNPJCPF := Leitor.rCampoCNPJCPF;
+          MDFe.rodo.veicTracao.prop.RNTRC   := Leitor.rCampo(tcStr, 'RNTRC');
+          MDFe.rodo.veicTracao.prop.xNome   := Leitor.rCampo(tcStr, 'xNome');
+          MDFe.rodo.veicTracao.prop.IE      := Leitor.rCampo(tcStr, 'IE');
+          MDFe.rodo.veicTracao.prop.UF      := Leitor.rCampo(tcStr, 'UF');
+          MDFe.rodo.veicTracao.prop.tpProp  := StrToTpProp(ok, Leitor.rCampo(tcStr, 'tpProp'));
+        end;
 
         i01 := 0;
         while Leitor.rExtrai(4, 'condutor', '', i01 + 1) <> '' do
@@ -204,9 +214,18 @@ begin
         MDFe.Rodo.veicReboque[i01].tara  := Leitor.rCampo(tcInt, 'tara');
         MDFe.Rodo.veicReboque[i01].capKG := Leitor.rCampo(tcInt, 'capKG');
         MDFe.Rodo.veicReboque[i01].capM3 := Leitor.rCampo(tcInt, 'capM3');
+        MDFe.rodo.veicReboque[i01].tpCar := StrToTpCarroceria(ok, Leitor.rCampo(tcStr, 'tpCar'));
+        MDFe.rodo.veicReboque[i01].UF    := Leitor.rCampo(tcStr, 'UF');
 
-        if Leitor.rExtrai(4, 'prop') <> ''
-         then MDFe.Rodo.veicReboque[i01].RNTRC := Leitor.rCampo(tcStr, 'RNTRC');
+        if Leitor.rExtrai(4, 'prop') <> '' then
+        begin
+          MDFe.rodo.veicReboque[i01].prop.CNPJCPF := Leitor.rCampoCNPJCPF;
+          MDFe.rodo.veicReboque[i01].prop.RNTRC   := Leitor.rCampo(tcStr, 'RNTRC');
+          MDFe.rodo.veicReboque[i01].prop.xNome   := Leitor.rCampo(tcStr, 'xNome');
+          MDFe.rodo.veicReboque[i01].prop.IE      := Leitor.rCampo(tcStr, 'IE');
+          MDFe.rodo.veicReboque[i01].prop.UF      := Leitor.rCampo(tcStr, 'UF');
+          MDFe.rodo.veicReboque[i01].prop.tpProp  := StrToTpProp(ok, Leitor.rCampo(tcStr, 'tpProp'));
+        end;
 
         inc(i01);
       end;
@@ -509,6 +528,53 @@ begin
         inc(i02);
       end;
 
+      i02 := 0;
+      while Leitor.rExtrai(3, 'infMDFe', '', i02 + 1) <> '' do
+      begin
+        MDFe.infDoc.infMunDescarga[i01].infMDFe.Add;
+        MDFe.infDoc.infMunDescarga[i01].infMDFe[i02].chMDFe := Leitor.rCampo(tcStr, 'chMDFe');
+
+        i03 := 0;
+        while Leitor.rExtrai(4, 'infUnidTransp', '', i03 + 1) <> '' do
+        begin
+          MDFe.infDoc.infMunDescarga[i01].infMDFe[i02].infUnidTransp.Add;
+          MDFe.infDoc.infMunDescarga[i01].infMDFe[i02].infUnidTransp[i03].tpUnidTransp := StrToUnidTransp(ok, Leitor.rCampo(tcStr, 'tpUnidTransp'));
+          MDFe.infDoc.infMunDescarga[i01].infMDFe[i02].infUnidTransp[i03].idUnidTransp := Leitor.rCampo(tcStr, 'idUnidTransp');
+          MDFe.infDoc.infMunDescarga[i01].infMDFe[i02].infUnidTransp[i03].qtdRat       := Leitor.rCampo(tcDe2, 'qtdRat');
+
+          i04 := 0;
+          while Leitor.rExtrai(5, 'lacUnidTransp', '', i04 + 1) <> '' do
+          begin
+            MDFe.infDoc.infMunDescarga[i01].infMDFe[i02].infUnidTransp[i03].lacUnidTransp.Add;
+            MDFe.infDoc.infMunDescarga[i01].infMDFe[i02].infUnidTransp[i03].lacUnidTransp[i04].nLacre := Leitor.rCampo(tcStr, 'nLacre');
+            inc(i04);
+          end;
+
+          i04 := 0;
+          while Leitor.rExtrai(5, 'infUnidCarga', '', i04 + 1) <> '' do
+          begin
+            MDFe.infDoc.infMunDescarga[i01].infMDFe[i02].infUnidTransp[i03].infUnidCarga.Add;
+            MDFe.infDoc.infMunDescarga[i01].infMDFe[i02].infUnidTransp[i03].infUnidCarga[i04].tpUnidCarga := StrToUnidCarga(ok, Leitor.rCampo(tcStr, 'tpUnidCarga'));
+            MDFe.infDoc.infMunDescarga[i01].infMDFe[i02].infUnidTransp[i03].infUnidCarga[i04].idUnidCarga := Leitor.rCampo(tcStr, 'idUnidCarga');
+            MDFe.infDoc.infMunDescarga[i01].infMDFe[i02].infUnidTransp[i03].infUnidCarga[i04].qtdRat      := Leitor.rCampo(tcDe2, 'qtdRat');
+
+            i05 := 0;
+            while Leitor.rExtrai(6, 'lacUnidCarga', '', i05 + 1) <> '' do
+            begin
+              MDFe.infDoc.infMunDescarga[i01].infMDFe[i02].infUnidTransp[i03].infUnidCarga[i04].lacUnidCarga.Add;
+              MDFe.infDoc.infMunDescarga[i01].infMDFe[i02].infUnidTransp[i03].infUnidCarga[i04].lacUnidCarga[i05].nLacre := Leitor.rCampo(tcStr, 'nLacre');
+              inc(i05);
+            end;
+
+            inc(i04);
+          end;
+
+          inc(i03);
+        end;
+
+        inc(i02);
+      end;
+
       inc(i01);
     end;
   end;
@@ -531,6 +597,15 @@ begin
   begin
     MDFe.lacres.Add;
     MDFe.lacres[i01].nLacre := Leitor.rCampo(tcStr, 'nLacre');
+    inc(i01);
+  end;
+
+  (* Grupo da TAG <autXML> ****************************************************)
+  i01 := 0;
+  while Leitor.rExtrai(1, 'autXML', '', i01 + 1) <> '' do
+  begin
+    MDFe.autXML.Add;
+    MDFe.autXML[i01].CNPJCPF := Leitor.rCampoCNPJCPF;;
     inc(i01);
   end;
 
