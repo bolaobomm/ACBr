@@ -940,26 +940,26 @@ begin
       if FPAF_C.RegistroC2.Count > 0 then
         Write(txtFile, FPAF_C.WriteRegistroC2);
 
-      //if FPAF_F.RegistroF2.Count > 0 then
-        //Write(txtFile, FPAF_F.WriteRegistroF2);
+      if FPAF_F.RegistroF2.Count > 0 then
+        Write(txtFile, FPAF_F.WriteRegistroF2);
 
-      //if FPAF_F.RegistroF3.Count > 0 then
-        //Write(txtFile, FPAF_F.WriteRegistroF3);
+      if FPAF_F.RegistroF3.Count > 0 then
+        Write(txtFile, FPAF_F.WriteRegistroF3);
 
-      //if FPAF_F.RegistroF4.Count > 0 then
-        //Write(txtFile, FPAF_F.WriteRegistroF4);
+      if FPAF_F.RegistroF4.Count > 0 then
+        Write(txtFile, FPAF_F.WriteRegistroF4);
 
       if FPAF_T.RegistroT2.Count > 0 then
         Write(txtFile, FPAF_T.WriteRegistroT2);
 
-      //if FPAF_M.RegistroM2.Count > 0 then
-        //Write(txtFile, FPAF_M.WriteRegistroM2);
+      if FPAF_M.RegistroM2.Count > 0 then
+        Write(txtFile, FPAF_M.WriteRegistroM2);
 
-      //if FPAF_L.RegistroL2.Count > 0 then
-        //Write(txtFile, FPAF_L.WriteRegistroL2);
+      if FPAF_L.RegistroL2.Count > 0 then
+        Write(txtFile, FPAF_L.WriteRegistroL2);
 
-      //if FPAF_G.RegistroG2.Count > 0 then
-        //Write(txtFile, FPAF_G.WriteRegistroG2);
+      if FPAF_G.RegistroG2.Count > 0 then
+        Write(txtFile, FPAF_G.WriteRegistroG2);
         
       if FPAF_H.RegistroH2.Count > 0 then
         Write(txtFile, FPAF_H.WriteRegistroH2);
