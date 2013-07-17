@@ -99,7 +99,8 @@ type
     qrlValorTotal: TQRLabel;
     QRShape5: TQRShape;
     QRLabel16: TQRLabel;
-    qrlCodServico: TQRLabel;
+//    qrlCodServico: TQRLabel;
+    qrmCodServico: TQRMemo;
     QRLabel3: TQRLabel;
     qrlAliquota: TQRLabel;
     QRShape6: TQRShape;
@@ -407,13 +408,19 @@ begin
  qrlValorTotal.Caption := 'VALOR TOTAL DA NOTA = R$ '+
     DFeUtil.FormatFloat( FNFSe.Servico.Valores.ValorServicos );
 
+ qrmCodServico.Lines.BeginUpdate;
+ qrmCodServico.Lines.Clear;
+
  if trim(FNFSe.Servico.Descricao) = ''
-  then qrlCodServico.Caption := FNFSe.Servico.ItemListaServico + ' / ' +
-                                FNFSe.Servico.CodigoTributacaoMunicipio + ' - ' +
-                                FNFSe.Servico.xItemListaServico
-  else qrlCodServico.Caption := FNFSe.Servico.ItemListaServico + ' / ' +
-                                FNFSe.Servico.CodigoTributacaoMunicipio + ' - ' +
-                                FNFSe.Servico.Descricao;
+  then qrmCodServico.Lines.Add(FNFSe.Servico.ItemListaServico + ' / ' +
+                               FNFSe.Servico.CodigoTributacaoMunicipio + ' - ' +
+                               FNFSe.Servico.xItemListaServico)
+
+  else qrmCodServico.Lines.Add(FNFSe.Servico.ItemListaServico + ' / ' +
+                               FNFSe.Servico.CodigoTributacaoMunicipio + ' - ' +
+                               FNFSe.Servico.Descricao);
+
+ qrmCodServico.Lines.EndUpdate;
 
  qrlCodObra.Caption := FNFSe.ConstrucaoCivil.CodigoObra;
  qrlCodART.Caption  := FNFSe.ConstrucaoCivil.Art;
