@@ -691,9 +691,9 @@ begin
  if FServicoEnviar <> ''
   then begin
    if (FProvedor = proIssDSF)
-    then FNameSpaceDad := 'xmlns:' + stringReplace(Prefixo3, ':', '', []) + '="' + FURLNS1 + '" ' +
-                          'xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="' + FURLNS1 + ' ' +
-                          FHTTP_AG + FServicoEnviar + '"'
+    then FNameSpaceDad := 'xmlns:' + stringReplace(Prefixo3, ':', '', []) + '="' + FURLNS1 + '" ' {+
+                              'xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="'
+                              + FURLNS1 + ' ' + FHTTP_AG + FServicoEnviar + '"'}
     else begin
      if (RightStr(FHTTP_AG, 1) = '/')
       then begin
@@ -833,8 +833,8 @@ begin
                                                       TNFSeEnviarLoteRPS(Self).FNotasFiscais.Items[0].NFSe.PrestadorServico.RazaoSocial,
                                                       booltostr(TNFSeEnviarLoteRPS(Self).FNotasFiscais.Transacao,true),
                                                       IntToStr(TNFSeEnviarLoteRps(Self).FNotasFiscais.Count),
-                                                      FormatDateTime('yyyy-mm-dd',TNFSeEnviarLoteRps(Self).FNotasFiscais.Items[0].NFSe.DataEmissaoRps),
-                                                      FormatDateTime('yyyy-mm-dd',TNFSeEnviarLoteRps(Self).FNotasFiscais.Items[0].NFSe.DataEmissaoRps),
+                                                      FloatToStr( TNFSeEnviarLoteRps(Self).FNotasFiscais.Items[0].NFSe.Servico.Valores.ValorServicos),
+                                                      FloatToStr( TNFSeEnviarLoteRps(Self).FNotasFiscais.Items[0].NFSe.Servico.Valores.ValorDeducoes),
                                                       DataInicial, DataFinal,
                                                       vNotas,
                                                       FTagI, FTagF)
@@ -987,9 +987,9 @@ begin
  if FServicoConLot <> ''
   then begin
    if (FProvedor = proIssDSF)
-    then FNameSpaceDad := 'xmlns:' + stringReplace(Prefixo3, ':', '', []) + '="' + FURLNS1 + '" ' +
+    then FNameSpaceDad := 'xmlns:' + stringReplace(Prefixo3, ':', '', []) + '="' + FURLNS1 + '" ' {+
                           'xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="' + FURLNS1 + ' ' +
-                          FHTTP_AG + FServicoConLot + '"'
+                          FHTTP_AG + FServicoConLot + '"'}
     else begin
      if RightStr(FHTTP_AG, 1) = '/'
       then begin
@@ -1113,9 +1113,9 @@ begin
  if FServicoConRps <> ''
   then begin
    if (FProvedor = proIssDSF)
-    then FNameSpaceDad := 'xmlns:' + stringReplace(Prefixo3, ':', '', []) + '="' + FURLNS1 + '" ' +
+    then FNameSpaceDad := 'xmlns:' + stringReplace(Prefixo3, ':', '', []) + '="' + FURLNS1 + '" ' {+
                           'xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="' + FURLNS1 + ' ' +
-                          FHTTP_AG + FServicoConRps + '"'
+                          FHTTP_AG + FServicoConRps + '"'}
     else begin
      if RightStr(FHTTP_AG, 1) = '/'
       then begin
@@ -1244,9 +1244,9 @@ begin
  if FServicoConNfse <> ''
   then begin
    if (FProvedor = proIssDSF)
-    then FNameSpaceDad := 'xmlns:' + stringReplace(Prefixo3, ':', '', []) + '="' + FURLNS1 + '" ' +
+    then FNameSpaceDad := 'xmlns:' + stringReplace(Prefixo3, ':', '', []) + '="' + FURLNS1 + '" ' {+
                           'xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="' + FURLNS1 + ' ' +
-                          FHTTP_AG + FServicoConNfse + '"'
+                          FHTTP_AG + FServicoConNfse + '"'}
     else begin
      if RightStr(FHTTP_AG, 1) = '/'
       then begin
@@ -1375,13 +1375,11 @@ begin
     else FNameSpaceCab := ' xmlns="' + FHTTP_AG + Separador + FCabecalho +'">';
   end else FNameSpaceCab := '>';
 
- if FServicoConNfse <> '' then begin
-   if (RightStr(FHTTP_AG, 1) = '/')then begin
-     FNameSpaceDad := '="' + FURLNS1 + ' ' + FHTTP_AG + Separador + FServicoConRps + '"';
-   end else begin
-     FNameSpaceDad := '="' + FURLNS1 + ' ' + FHTTP_AG + '"'
-   end;
-  end else FNameSpaceDad := '';
+ if FServicoConNfse <> '' then
+    FNameSpaceDad := 'xmlns:' + stringReplace(Prefixo3, ':', '', []) + '="' + FURLNS1 + '" ' {+
+                     'xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="' + FURLNS1 +
+                     ' ' + FHTTP_AG + FServicoCancelar + '"'}
+ else FNameSpaceDad := '';
 
  if (FDefTipos = '') and (FNameSpaceDad <> '')
   then FNameSpaceDad := FNameSpaceDad + '>';
@@ -1461,9 +1459,9 @@ begin
  if FServicoCancelar <> ''
   then begin
    if (FProvedor = proIssDSF)
-    then FNameSpaceDad := 'xmlns:' + stringReplace(Prefixo3, ':', '', []) + '="' + FURLNS1 + '" ' +
+    then FNameSpaceDad := 'xmlns:' + stringReplace(Prefixo3, ':', '', []) + '="' + FURLNS1 + '" ' {+
                           'xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="' + FURLNS1 + ' ' +
-                          FHTTP_AG + FServicoCancelar + '"'
+                          FHTTP_AG + FServicoCancelar + '"'}
     else begin
      if RightStr(FHTTP_AG, 1) = '/'
       then begin
@@ -1804,9 +1802,9 @@ begin
  if FServicoEnviar <> ''
   then begin
    if (FProvedor = proIssDSF)
-    then FNameSpaceDad := 'xmlns:' + stringReplace(Prefixo3, ':', '', []) + '="' + FURLNS1 + '" ' +
+    then FNameSpaceDad := 'xmlns:' + stringReplace(Prefixo3, ':', '', []) + '="' + FURLNS1 + '" ' {+
                           'xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="' + FURLNS1 + ' ' +
-                          FHTTP_AG + FServicoEnviar + '"'
+                          FHTTP_AG + FServicoEnviar + '"'}
     else begin
       if (RightStr(FHTTP_AG, 1) = '/')
       then begin
@@ -1922,14 +1920,14 @@ begin
                                                       FConfiguracoes.WebServices.Identificador,
                                                       NameSpaceDad, FVersaoXML,
                                                       TNFSeGerarLoteRPS(Self).NumeroLote,
-                                                      CodCidadeToCodSiafi( StrToInt64(TNFSeGerarLoteRPS(Self).FNotasFiscais.Items[0].NFSe.PrestadorServico.Endereco.CodigoMunicipio)),
+                                                      CodCidadeToCodSiafi( StrToIntDef(TNFSeGerarLoteRPS(Self).FNotasFiscais.Items[0].NFSe.PrestadorServico.Endereco.CodigoMunicipio, 0)),
                                                       SomenteNumeros(TNFSeGerarLoteRPS(Self).FNotasFiscais.Items[0].NFSe.Prestador.Cnpj),
                                                       TNFSeGerarLoteRPS(Self).FNotasFiscais.Items[0].NFSe.Prestador.InscricaoMunicipal,
                                                       TNFSeGerarLoteRPS(Self).FNotasFiscais.Items[0].NFSe.PrestadorServico.RazaoSocial,
                                                       booltostr(TNFSeGerarLoteRPS(Self).FNotasFiscais.Transacao,true),
                                                       IntToStr(TNFSeGerarLoteRPS(Self).FNotasFiscais.Count),
-                                                      FormatDateTime('yyyy-mm-dd',TNFSeGerarLoteRPS(Self).FNotasFiscais.Items[0].NFSe.DataEmissaoRps),
-                                                      FormatDateTime('yyyy-mm-dd',TNFSeGerarLoteRPS(Self).FNotasFiscais.Items[0].NFSe.DataEmissaoRps),
+                                                      FormatFloat('#0.00', TNFSeGerarLoteRPS(Self).FNotasFiscais.Items[0].NFSe.Servico.Valores.ValorServicos),
+                                                      FormatFloat('#0.00', TNFSeGerarLoteRPS(Self).FNotasFiscais.Items[0].NFSe.Servico.Valores.ValorDeducoes),
                                                       DataInicial, DataFinal,
                                                       vNotas,
                                                       FTagI, FTagF)

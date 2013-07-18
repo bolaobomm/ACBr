@@ -32,6 +32,7 @@ type
     property Sucesso: String                       read FSucesso    write FSucesso;
     property MsgCanc: String                       read FMsgCanc    write FMsgCanc;
     property MsgRetorno: TMsgRetornoCancCollection read FMsgRetorno write SetMsgRetorno;
+    property NotasCanceladas: TNotasCanceladasCollection read FNotasCanceladas write FNotasCanceladas;
   end;
 
  TMsgRetornoCancCollection = class(TCollection)

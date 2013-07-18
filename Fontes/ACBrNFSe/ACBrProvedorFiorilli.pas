@@ -133,7 +133,8 @@ begin
  case ACodCidade of
   2103000, // Caxias/MA
   3504800, // Balsamo/SP
-  3505203  // Bariri/SP
+  3505203, // Bariri/SP
+  3540200  // Pontal/SP
          : begin
             ConfigURL.HomNomeCidade         := '';
             ConfigURL.HomRecepcaoLoteRPS    := cURL_Homologacao;

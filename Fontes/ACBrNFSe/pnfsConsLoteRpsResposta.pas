@@ -637,16 +637,16 @@ begin
 
                      LeitorAux := TLeitor.Create;
                      leitorAux.Arquivo := copy(strAux, PosI, count);
-                     leitorAux.Grupo   := leitorAux.Arquivo;                                                                // <NumeroNFe>            51  </NumeroNFe>
-                                                                                                                            // <CodigoVerificacao>    7c0a82a5  </CodigoVerificacao>
-                     ListaNfse.FCompNfse[i].FNFSe.Numero            := leitorAux.rCampo(tcStr, 'NumeroNFe');                // <SerieRPS>             NF  </SerieRPS>
-                     ListaNfse.FCompNfse[i].FNFSe.CodigoVerificacao := leitorAux.rCampo(tcStr, 'CodigoVerificacao');        // <NumeroRPS>            51  </NumeroRPS>
-                     ListaNfse.FCompNfse[i].FNFSe.DataEmissaoRps    := leitorAux.rCampo(tcDatHor, 'DataEmissaoRPS');        // <DataEmissaoRPS>       2010-02-23T00:00:00  </DataEmissaoRPS>
-                                                                                                                            // <RazaoSocialPrestador> GAPLAN CAMINHOES LTDA  </RazaoSocialPrestador>
-                     LeitorAux.free;                                                                                        // <TipoRecolhimento>     A  </TipoRecolhimento>
-                                                                                                                            // <ValorDeduzir>         0  </ValorDeduzir>
-                     Delete(strAux, PosI, count);                                                                           // <ValorTotal>           98  </ValorTotal>
-                     posI := pos('<ConsultaNFSe>', strAux);                                                                 // <Aliquota>             5  </Aliquota>
+                     leitorAux.Grupo   := leitorAux.Arquivo;
+
+                     ListaNfse.FCompNfse[i].FNFSe.Numero            := leitorAux.rCampo(tcStr, 'NumeroNFe');
+                     ListaNfse.FCompNfse[i].FNFSe.CodigoVerificacao := leitorAux.rCampo(tcStr, 'CodigoVerificacao');
+                     ListaNfse.FCompNfse[i].FNFSe.DataEmissaoRps    := leitorAux.rCampo(tcDatHor, 'DataEmissaoRPS');
+
+                     LeitorAux.free;
+
+                     Delete(strAux, PosI, count);
+                     posI := pos('<ConsultaNFSe>', strAux);
                   end;
                end;
             end;
@@ -671,7 +671,8 @@ begin
                leitorAux.Arquivo := copy(strAux, PosI, count);
                leitorAux.Grupo   := leitorAux.Arquivo;
 
-               ListaNfse.FMsgRetorno[i].Mensagem := 'Alerta: '+ leitorAux.rCampo(tcStr, 'Codigo') + ' - ' + leitorAux.rCampo(tcStr, 'Descricao');
+               ListaNfse.FMsgRetorno[i].FCodigo  := leitorAux.rCampo(tcStr, 'Codigo');
+               ListaNfse.FMsgRetorno[i].Mensagem := leitorAux.rCampo(tcStr, 'Descricao');
 
                LeitorAux.free;
 
@@ -700,7 +701,8 @@ begin
                leitorAux.Arquivo := copy(strAux, PosI, count);
                leitorAux.Grupo   := leitorAux.Arquivo;
 
-               ListaNfse.FMsgRetorno[i].Mensagem := 'Erro: '+ leitorAux.rCampo(tcStr, 'Codigo') + ' - ' + leitorAux.rCampo(tcStr, 'Descricao');
+               ListaNfse.FMsgRetorno[i].FCodigo  := leitorAux.rCampo(tcStr, 'Codigo');
+               ListaNfse.FMsgRetorno[i].Mensagem := leitorAux.rCampo(tcStr, 'Descricao');
 
                LeitorAux.free;
 

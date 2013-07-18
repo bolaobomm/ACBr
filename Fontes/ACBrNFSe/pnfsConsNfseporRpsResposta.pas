@@ -604,18 +604,6 @@ begin
     Leitor.Grupo   := Leitor.Arquivo;
     if leitor.rExtrai(1, 'RetornoConsultaNFSeRPS') <> '' then
     begin
-      //if (leitor.rExtrai(2, 'Cabecalho') <> '') then
-      //begin
-          //    <Cabecalho>
-          //      <CodCidade>                      7145            </CodCidade>
-          //      <CPFCNPJRemetente>               02852715000106  </CPFCNPJRemetente>
-          //      <InscricaoMunicipalPrestador>    000132683       </InscricaoMunicipalPrestador>
-          //      <dtInicio>                       2010-01-01      </dtInicio>
-          //      <dtFim>                          2011-12-30      </dtFim>
-          //      <Versao>                         1               </Versao>
-          //    </Cabecalho>
-      //end;
-
       if (leitor.rExtrai(2, 'NotasConsultadas') <> '') then
       begin
 
@@ -669,24 +657,23 @@ begin
 
                ListaNfse.FCompNfse[i].NFSe.Servico.CodigoMunicipio := CodSiafiToCodCidade( LeitorAux.rCampo(tcStr, 'MunicipioPrestacao'));
 
-               sOperacao   := AnsiUpperCase(LeitorAux.rCampo(tcStr, 'Operacao'));
-               sTributacao := AnsiUpperCase(LeitorAux.rCampo(tcStr, 'Tributacao'));
-
+               sOperacao   := AnsiUpperCase(Leitor.rCampo(tcStr, 'Operacao'));
+               sTributacao := AnsiUpperCase(Leitor.rCampo(tcStr, 'Tributacao'));
 
                if sOperacao[1] in ['A', 'B'] then begin
-                  if ListaNfse.FCompNfse[i].NFSe.Servico.CodigoMunicipio = ListaNfse.FCompNfse[i].NFSe.PrestadorServico.Endereco.CodigoMunicipio then
-                     ListaNfse.FCompNfse[i].NFSe.NaturezaOperacao := noTributacaoNoMunicipio      // ainda estamos
-                  else                                                                            // em análise sobre
-                     ListaNfse.FCompNfse[i].NFSe.NaturezaOperacao := noTributacaoForaMunicipio;   // este ponto
+
+                  if (sOperacao = 'A') and (sTributacao = 'N') then
+                     ListaNfse.FCompNfse[i].NFSe.NaturezaOperacao := noNaoIncidencia
+                  else if sTributacao = 'G' then
+                     ListaNfse.FCompNfse[i].NFSe.NaturezaOperacao := noTributacaoForaMunicipio
+                  else if sTributacao = 'T' then
+                     ListaNfse.FCompNfse[i].NFSe.NaturezaOperacao := noTributacaoNoMunicipio;
                end
                else if (sOperacao = 'C') and (sTributacao = 'C') then begin
                   ListaNfse.FCompNfse[i].NFSe.NaturezaOperacao := noIsencao;
                end
                else if (sOperacao = 'C') and (sTributacao = 'F') then begin
                   ListaNfse.FCompNfse[i].NFSe.NaturezaOperacao := noImune;
-               end
-               else if (sOperacao = 'A') and (sTributacao = 'N') then begin
-                  ListaNfse.FCompNfse[i].NFSe.NaturezaOperacao := noNaoIncidencia;
                end;
 
                ListaNfse.FCompNfse[i].NFSe.NaturezaOperacao := StrToEnumerado( ok,sTributacao, ['T','K'], [ ListaNfse.FCompNfse[i].NFSe.NaturezaOperacao, noSuspensaDecisaoJudicial ]);
@@ -816,7 +803,8 @@ begin
               leitorAux.Arquivo := copy(strAux, PosI, count);
               leitorAux.Grupo   := leitorAux.Arquivo;
 
-              ListaNfse.FMsgRetorno[i].Mensagem := 'Alerta: '+ leitorAux.rCampo(tcStr, 'Codigo') + ' - ' + leitorAux.rCampo(tcStr, 'Descricao');
+              ListaNfse.FMsgRetorno[i].FCodigo  := leitorAux.rCampo(tcStr, 'Codigo');
+              ListaNfse.FMsgRetorno[i].Mensagem := leitorAux.rCampo(tcStr, 'Descricao');
 
               LeitorAux.free;
 
@@ -844,7 +832,8 @@ begin
               leitorAux.Arquivo := copy(strAux, PosI, count);
               leitorAux.Grupo   := leitorAux.Arquivo;
 
-              ListaNfse.FMsgRetorno[i].Mensagem := 'Erro: '+ leitorAux.rCampo(tcStr, 'Codigo') + ' - ' + leitorAux.rCampo(tcStr, 'Descricao');
+              ListaNfse.FMsgRetorno[i].FCodigo  := leitorAux.rCampo(tcStr, 'Codigo');
+              ListaNfse.FMsgRetorno[i].Mensagem := leitorAux.rCampo(tcStr, 'Descricao');
 
               LeitorAux.free;
 

@@ -678,6 +678,23 @@ begin
          end;
         end;
       end;
+   end;
+
+  if pos('</Notas>', ArquivoXML.Text)> 0 then begin
+    while pos('</Notas>', ArquivoXML.Text) > 0 do begin
+      XML             := copy(ArquivoXML.Text, 1, pos('</Notas>', ArquivoXML.Text) + 5);
+      ArquivoXML.Text := Trim(copy(ArquivoXML.Text, pos('</Notas>',ArquivoXML.Text) + 6, length(ArquivoXML.Text)));
+      LocNFSeR        := TNFSeR.Create(Self.Add.NFSe);
+      try
+       LocNFSeR.Leitor.Arquivo := XML;
+       LocNFSeR.VersaoXML      := NotaUtil.VersaoXML(XML);
+       LocNFSeR.LerXml;
+       Items[Self.Count-1].XML_Rps := LocNFSeR.Leitor.Arquivo;
+       Items[Self.Count-1].NomeArq := CaminhoArquivo;
+      finally
+       LocNFSeR.Free;
+      end;
+    end;
   end;
 
   if pos('</Notas>', ArquivoXML.Text)> 0 then begin

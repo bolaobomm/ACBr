@@ -517,7 +517,7 @@ begin
       NFSe.Tomador.Endereco.Bairro          := Leitor.rCampo(tcStr, 'BairroTomador');
       NFSe.Tomador.Endereco.CEP             := Leitor.rCampo(tcStr, 'CEPTomador');
      	NFSe.Tomador.Endereco.CodigoMunicipio := CodSiafiToCodCidade( Leitor.rCampo(tcStr, 'CidadeTomador')) ;
-     	NFSe.Tomador.Endereco.UF              := '';//Leitor.rCampo(tcStr, 'Uf');
+     	NFSe.Tomador.Endereco.UF              := Leitor.rCampo(tcStr, 'Uf');
      	NFSe.Tomador.IdentificacaoTomador.InscricaoMunicipal := Leitor.rCampo(tcStr, 'InscricaoMunicipalTomador');
      	NFSe.Tomador.IdentificacaoTomador.CpfCnpj := Leitor.rCampo(tcStr, 'CPFCNPJTomador');
       NFSe.Tomador.IdentificacaoTomador.DocTomadorEstrangeiro := 'DocTomadorEstrangeiro';
@@ -536,19 +536,19 @@ begin
 
 
       if sOperacao[1] in ['A', 'B'] then begin
-         if NFSe.Servico.CodigoMunicipio = NFSe.PrestadorServico.Endereco.CodigoMunicipio then
-            NFSe.NaturezaOperacao := noTributacaoNoMunicipio      // ainda estamos
-         else                                                     // em análise sobre
-            NFSe.NaturezaOperacao := noTributacaoForaMunicipio;   // este ponto
+
+         if (sOperacao = 'A') and (sTributacao = 'N') then
+            NFSe.NaturezaOperacao := noNaoIncidencia
+         else if sTributacao = 'G' then
+            NFSe.NaturezaOperacao := noTributacaoForaMunicipio
+         else if sTributacao = 'T' then
+            NFSe.NaturezaOperacao := noTributacaoNoMunicipio;
       end
       else if (sOperacao = 'C') and (sTributacao = 'C') then begin
          NFSe.NaturezaOperacao := noIsencao;
       end
       else if (sOperacao = 'C') and (sTributacao = 'F') then begin
          NFSe.NaturezaOperacao := noImune;
-      end
-      else if (sOperacao = 'A') and (sTributacao = 'N') then begin
-         NFSe.NaturezaOperacao := noNaoIncidencia;
       end;
 
       NFSe.NaturezaOperacao := StrToEnumerado( ok,sTributacao, ['T','K'], [ NFSe.NaturezaOperacao, noSuspensaDecisaoJudicial ]);
@@ -1283,7 +1283,6 @@ begin
 
    sOperacao   := AnsiUpperCase(Leitor.rCampo(tcStr, 'Operacao'));
    sTributacao := AnsiUpperCase(Leitor.rCampo(tcStr, 'Tributacao'));
-
 
    if sOperacao[1] in ['A', 'B'] then begin
       if NFSe.Servico.CodigoMunicipio = NFSe.PrestadorServico.Endereco.CodigoMunicipio then

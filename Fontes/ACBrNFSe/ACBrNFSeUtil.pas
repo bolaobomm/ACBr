@@ -736,7 +736,9 @@ begin
 
  if ALote
   then begin
-   if (URI <> '') and (AProvedor <> proRecife)
+   if (URI <> '') and (AProvedor = proIssDSF) 
+    then xmldsig.signature := xmldoc.selectSingleNode('.//ns1:'+ EnviarLoteRps + '/ds:Signature')
+   else if (URI <> '') and (AProvedor <> proRecife)
     then xmldsig.signature := xmldoc.selectSingleNode('.//ds:Signature[@' + Identificador + '="AssLote_' + URI + '"]')
     else begin
      xmldsig.signature := xmldoc.selectSingleNode('.//ds1:' + EnviarLoteRps + '/ds:Signature');
