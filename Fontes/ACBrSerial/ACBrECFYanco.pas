@@ -71,6 +71,9 @@ uses ACBrECFClass, ACBrDevice, ACBrUtil, Classes, IniFiles;
 type
 
 { Classe filha de TACBrECFClass com implementaçao para Yanco }
+
+{ TACBrECFYanco }
+
 TACBrECFYanco = class( TACBrECFClass )
  private
     { Tamanho da Resposta Esperada ao comando. Necessário, pois a Yanco nao
@@ -138,8 +141,8 @@ TACBrECFYanco = class( TACBrECFClass )
     Procedure SubtotalizaCupom( DescontoAcrescimo : Double = 0;
        MensagemRodape : AnsiString  = '' ) ; override ;
     Procedure EfetuaPagamento( CodFormaPagto : String; Valor : Double;
-       Observacao : AnsiString = ''; ImprimeVinculado : Boolean = false) ;
-       override ;
+       Observacao : AnsiString = ''; ImprimeVinculado : Boolean = false;
+       CodMeioPagamento: Integer = 0) ; override ;
     Procedure FechaCupom( Observacao : AnsiString = ''; IndiceBMP : Integer = 0) ; override ;
     Procedure CancelaCupom ; override ;
     Procedure CancelaItemVendido( NumItem : Integer ) ; override ;
@@ -246,7 +249,7 @@ begin
 end;
 
 
-Function TACBrECFYanco.EnviaComando_ECF( cmd : AnsiString ) : AnsiString ;
+function TACBrECFYanco.EnviaComando_ECF(cmd : AnsiString) : AnsiString ;
 Var ErroMsg : String ;
     ACK : Byte ;
     Erro : String ;
@@ -419,15 +422,15 @@ begin
      Sleep( IntervaloAposComando ) ;  { Pequena pausa entre comandos }
 end;
 
-Function TACBrECFYanco.VerificaFimLeitura(var Retorno: AnsiString;
-   var TempoLimite: TDateTime) : Boolean ;
+function TACBrECFYanco.VerificaFimLeitura(var Retorno : AnsiString ;
+   var TempoLimite : TDateTime) : Boolean ;
 begin
   result := // fpDevice.Serial.CTS and
            (length(Retorno) > 10) and
            (copy(  Retorno, length(fpRespostaComando)-2,1) = ETX) ;
 end;
 
-Function TACBrECFYanco.PreparaCmd( cmd : AnsiString ) : AnsiString ;
+function TACBrECFYanco.PreparaCmd(cmd : AnsiString) : AnsiString ;
 Var A, iSoma   : Integer ;
     CKS1, CKS2 : AnsiChar ;
 begin
@@ -565,7 +568,7 @@ begin
   Result := RetCmd[9] = '1';
 end;
 
-Procedure TACBrECFYanco.LeituraX ;
+procedure TACBrECFYanco.LeituraX ;
 var RetCmd : Ansistring;
 begin
   RetCmd := EnviaComando('25');
@@ -576,18 +579,18 @@ begin
      EnviaComando( '241'+PadL(Operador,13),40) ;
 end;
 
-Procedure TACBrECFYanco.AbreGaveta ;
+procedure TACBrECFYanco.AbreGaveta ;
 begin
   EnviaComando('26') ;
   sleep(100) ;
 end;
 
-Procedure TACBrECFYanco.ReducaoZ(DataHora: TDateTime) ;
+procedure TACBrECFYanco.ReducaoZ(DataHora : TDateTime) ;
 begin
   EnviaComando( '221'+PadL(Operador,13),40) ;  
 end;
 
-Procedure TACBrECFYanco.MudaHorarioVerao ;
+procedure TACBrECFYanco.MudaHorarioVerao ;
 begin
   if GetHorarioVerao then
     EnviaComando('080')
@@ -631,8 +634,9 @@ begin
   EnviaComando('35' + IntToStrZero(NumItem, 3) + '                    ');
 end;
 
-procedure TACBrECFYanco.EfetuaPagamento(CodFormaPagto: String;
-  Valor: Double; Observacao: AnsiString; ImprimeVinculado: Boolean);
+procedure TACBrECFYanco.EfetuaPagamento(CodFormaPagto : String ;
+   Valor : Double ; Observacao : AnsiString ; ImprimeVinculado : Boolean ;
+   CodMeioPagamento : Integer) ;
 begin
   EnviaComando('15' + CodFormaPagto + IntToStrZero( Round( Valor * 1000), 13), 10);
   SetTotalPago(Valor);
@@ -673,11 +677,11 @@ begin
   SetTotalPago(0);
 end;
 
-Procedure TACBrECFYanco.VendeItem( Codigo, Descricao : String;
-  AliquotaECF : String; Qtd : Double ; ValorUnitario : Double;
-  ValorDescontoAcrescimo : Double; Unidade : String;
-  TipoDescontoAcrescimo : String; DescontoAcrescimo : String ;
-  CodDepartamento: Integer) ;
+procedure TACBrECFYanco.VendeItem(Codigo, Descricao : String ;
+   AliquotaECF : String ; Qtd : Double ; ValorUnitario : Double ;
+   ValorDescontoAcrescimo : Double ; Unidade : String ;
+   TipoDescontoAcrescimo : String ; DescontoAcrescimo : String ;
+   CodDepartamento : Integer) ;
 Var QtdStr, ValorStr, DescontoStr : String ;
     Total : Double ;
     TotalStr: String;
@@ -807,7 +811,7 @@ begin
   result := false ;    // TODO
 end;
 
-procedure TACBrECFYanco.AbreRelatorioGerencial;
+procedure TACBrECFYanco.AbreRelatorioGerencial(Indice : Integer) ;
 var RetCmd : AnsiString;
 begin
   RetCmd := EnviaComando('25');
@@ -855,8 +859,8 @@ begin
      EnviaComando( '2C',40) ;
 end;
 
-procedure TACBrECFyanco.LeituraMemoriaFiscal(ReducaoInicial,
-   ReducaoFinal: Integer; Simplificada : Boolean);
+procedure TACBrECFYanco.LeituraMemoriaFiscal(ReducaoInicial,
+   ReducaoFinal : Integer ; Simplificada : Boolean) ;
 Var Espera : Integer ;
 begin
   // Yanco não possui Leitura Simplificada

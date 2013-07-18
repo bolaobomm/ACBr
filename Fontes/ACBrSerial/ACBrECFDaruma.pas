@@ -202,8 +202,8 @@ TACBrECFDaruma = class( TACBrECFClass )
     procedure CancelaDescontoAcrescimoSubTotal(TipoAcrescimoDesconto: Char) ;
        override ;//A -> Acrescimo D -> Desconto  // Função implementada até o momento apenas para Daruma
     Procedure EfetuaPagamento( CodFormaPagto : String; Valor : Double;
-       Observacao : AnsiString = ''; ImprimeVinculado : Boolean = false) ;
-       override ;
+       Observacao : AnsiString = ''; ImprimeVinculado : Boolean = false;
+       CodMeioPagamento: Integer = 0) ; override ;
     procedure EstornaPagamento(const CodFormaPagtoEstornar,
       CodFormaPagtoEfetivar : String; const Valor: Double;
       Observacao : AnsiString = '') ; override ;
@@ -1969,8 +1969,9 @@ begin
     EnviaComando(FS + 'F' + #205 +  IntToStrZero(NumItem,3));
 end;
 
-procedure TACBrECFDaruma.EfetuaPagamento(CodFormaPagto: String;
-  Valor: Double; Observacao: AnsiString; ImprimeVinculado: Boolean);
+procedure TACBrECFDaruma.EfetuaPagamento(CodFormaPagto : String ;
+   Valor : Double ; Observacao : AnsiString ; ImprimeVinculado : Boolean ;
+   CodMeioPagamento : Integer) ;
 var
   RetCmd : AnsiString ;
   Sinal: AnsiString ;

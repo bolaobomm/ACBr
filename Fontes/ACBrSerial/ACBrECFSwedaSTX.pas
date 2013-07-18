@@ -197,8 +197,8 @@ TACBrECFSwedaSTX = class( TACBrECFClass )
     Procedure SubtotalizaCupom( DescontoAcrescimo : Double = 0;
        MensagemRodape : AnsiString  = '') ; override ;
     Procedure EfetuaPagamento( CodFormaPagto : String; Valor : Double;
-       Observacao : AnsiString = ''; ImprimeVinculado : Boolean = false) ;
-       override ;
+       Observacao : AnsiString = ''; ImprimeVinculado : Boolean = false;
+       CodMeioPagamento: Integer = 0) ; override ;
     Procedure FechaCupom( Observacao : AnsiString = ''; IndiceBMP : Integer = 0) ; override ;
     Procedure CancelaCupom ; override ;
     Procedure CancelaItemVendido( NumItem : Integer ) ; override ;
@@ -1596,8 +1596,9 @@ begin
   EnviaComando( '05|' + IntToStr(NumItem) ) ;
 end;
 
-procedure TACBrECFSwedaSTX.EfetuaPagamento(CodFormaPagto: String;
-  Valor: Double; Observacao: AnsiString; ImprimeVinculado: Boolean);
+procedure TACBrECFSwedaSTX.EfetuaPagamento(CodFormaPagto : String ;
+   Valor : Double ; Observacao : AnsiString ; ImprimeVinculado : Boolean ;
+   CodMeioPagamento : Integer) ;
 begin
   EnviaComando( '06|' + CodFormaPagto +'|'+AjustaValor(Valor)+'|'+
                 LeftStr(Observacao,84) ) ;

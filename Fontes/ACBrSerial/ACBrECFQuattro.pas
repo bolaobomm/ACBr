@@ -135,8 +135,8 @@ TACBrECFQuattro = class( TACBrECFClass )
     Procedure SubtotalizaCupom( DescontoAcrescimo : Double = 0;
        MensagemRodape : AnsiString  = '' ) ; override ;
     Procedure EfetuaPagamento( CodFormaPagto : String; Valor : Double;
-       Observacao : AnsiString = ''; ImprimeVinculado : Boolean = false) ;
-       override ;
+       Observacao : AnsiString = ''; ImprimeVinculado : Boolean = false;
+       CodMeioPagamento: Integer = 0) ; override ;
     Procedure FechaCupom( Observacao : AnsiString = ''; IndiceBMP : Integer = 0) ; override ;
     Procedure CancelaCupom ; override ;
     Procedure CancelaItemVendido( NumItem : Integer ) ; override ;
@@ -262,7 +262,7 @@ begin
 end;
 
 
-Function TACBrECFQuattro.EnviaComando_ECF( cmd : AnsiString ) : AnsiString ;
+function TACBrECFQuattro.EnviaComando_ECF(cmd : AnsiString) : AnsiString ;
 Var ErroMsg : String ;
     Erro : Integer ;
     LeituraMF : Boolean ;
@@ -459,8 +459,8 @@ begin
      Sleep( IntervaloAposComando ) ;  { Pequena pausa entre comandos }
 end;
 
-Function TACBrECFQuattro.VerificaFimLeitura(var Retorno: AnsiString;
-   var TempoLimite: TDateTime) : Boolean ;
+function TACBrECFQuattro.VerificaFimLeitura(var Retorno : AnsiString ;
+   var TempoLimite : TDateTime) : Boolean ;
 begin
   { Nota sobre o VerificaFimLeitura: A Quattro responde muito antes da
     Impressao terminar, o que pode causar problemas com comandos enviados logo
@@ -740,7 +740,7 @@ begin
   Result := (fsArredonda = 'S') ;
 end;
 
-Procedure TACBrECFQuattro.LeituraX ;
+procedure TACBrECFQuattro.LeituraX ;
 begin
   AguardaImpressao := True ;
   EnviaComando('13N' , 45 ) ;
@@ -800,7 +800,7 @@ begin
   end ;
 end;
 
-Procedure TACBrECFQuattro.ReducaoZ(DataHora: TDateTime) ;
+procedure TACBrECFQuattro.ReducaoZ(DataHora : TDateTime) ;
 begin
   AguardaImpressao := true ;
   EnviaComando( '14N', 50 ) ;
@@ -812,12 +812,12 @@ begin
      end ;
 end;
 
-Procedure TACBrECFQuattro.AbreGaveta ;
+procedure TACBrECFQuattro.AbreGaveta ;
 begin
   EnviaComando('21',7) ;
 end;
 
-Procedure TACBrECFQuattro.MudaHorarioVerao ;
+procedure TACBrECFQuattro.MudaHorarioVerao ;
 begin
   MudaHorarioVerao( not HorarioVerao );
 end;
@@ -883,8 +883,9 @@ begin
   EnviaComando( '04' + IntToStrZero(NumItem,3) ) ;
 end;
 
-procedure TACBrECFQuattro.EfetuaPagamento(CodFormaPagto: String;
-  Valor: Double; Observacao: AnsiString; ImprimeVinculado: Boolean);
+procedure TACBrECFQuattro.EfetuaPagamento(CodFormaPagto : String ;
+   Valor : Double ; Observacao : AnsiString ; ImprimeVinculado : Boolean ;
+   CodMeioPagamento : Integer) ;
 begin
   Observacao := '{' + copy(Observacao,1,80) ;
 
@@ -938,11 +939,11 @@ begin
   fsFechando  := true ;
 end;
 
-Procedure TACBrECFQuattro.VendeItem( Codigo, Descricao : String;
-  AliquotaECF : String; Qtd : Double ; ValorUnitario : Double;
-  ValorDescontoAcrescimo : Double; Unidade : String;
-  TipoDescontoAcrescimo : String; DescontoAcrescimo : String ;
-  CodDepartamento: Integer) ;
+procedure TACBrECFQuattro.VendeItem(Codigo, Descricao : String ;
+   AliquotaECF : String ; Qtd : Double ; ValorUnitario : Double ;
+   ValorDescontoAcrescimo : Double ; Unidade : String ;
+   TipoDescontoAcrescimo : String ; DescontoAcrescimo : String ;
+   CodDepartamento : Integer) ;
 Var QtdStr, ValorStr, Descr2 : String ;
     ValDesc, ValTotal : Double ;
 begin
@@ -1292,8 +1293,8 @@ begin
   end;
 end;
 
-procedure TACBrECFQuattro.ProgramaComprovanteNaoFiscal(var Descricao: String;
-  Tipo: String; Posicao : String);
+procedure TACBrECFQuattro.ProgramaComprovanteNaoFiscal(var Descricao : string ;
+   Tipo : string ; Posicao : string) ;
 Var CNF : TACBrECFComprovanteNaoFiscal ;
 begin
   if Trim(Tipo) = '' then
@@ -1315,7 +1316,7 @@ begin
 end;
 
 
-procedure TACBrECFQuattro.AbreRelatorioGerencial;
+procedure TACBrECFQuattro.AbreRelatorioGerencial(Indice : Integer) ;
 begin
   AguardaImpressao := True ;
   EnviaComando( '13' + 'S' ,50 );
@@ -1584,7 +1585,8 @@ begin
   CarregaFormato_ChequeTXT ;
 end;
 
-procedure TACBrECFQuattro.AbreNaoFiscal( CPF_CNPJ, Nome, Endereco: String );
+procedure TACBrECFQuattro.AbreNaoFiscal(CPF_CNPJ : String ; Nome : String ;
+   Endereco : String) ;
 begin
   EnviaComando('19',5);
 end;

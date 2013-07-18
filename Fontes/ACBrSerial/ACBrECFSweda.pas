@@ -296,8 +296,8 @@ TACBrECFSweda = class( TACBrECFClass )
        override ;//A -> Acrescimo D -> Desconto  // Função implementada até o momento apenas para Daruma
 
     Procedure EfetuaPagamento( CodFormaPagto : String; Valor : Double;
-       Observacao : AnsiString = ''; ImprimeVinculado : Boolean = false) ;
-       override ;
+       Observacao : AnsiString = ''; ImprimeVinculado : Boolean = false;
+       CodMeioPagamento: Integer = 0) ; override ;
     Procedure FechaCupom( Observacao : AnsiString = ''; IndiceBMP : Integer = 0) ; override ;
     Procedure CancelaCupom ; override ;
     Procedure CancelaItemVendido( NumItem : Integer ) ; override ;
@@ -466,7 +466,7 @@ begin
 end;
 
 
-Function TACBrECFSweda.EnviaComando_ECF( cmd : AnsiString ) : AnsiString ;
+function TACBrECFSweda.EnviaComando_ECF(cmd : AnsiString) : AnsiString ;
 Var ErroMsg : String ;
     AUT, SLIP, STATUS : AnsiChar ;
     Verificar : Boolean ;
@@ -615,8 +615,8 @@ begin
   end ;
 end;
 
-Function TACBrECFSweda.VerificaFimLeitura(var Retorno: AnsiString;
-   var TempoLimite: TDateTime) : Boolean ;
+function TACBrECFSweda.VerificaFimLeitura(var Retorno : AnsiString ;
+   var TempoLimite : TDateTime) : Boolean ;
 begin
   { Nota sobre o VerificaFimLeitura: A SWEDA responde muito antes da
     Impressao terminar, o que pode causar problemas com comandos enviados logo
@@ -705,7 +705,7 @@ begin
 
 end;
 
-Procedure TACBrECFSweda.Purge(Id: AnsiString) ;
+procedure TACBrECFSweda.Purge(Id : AnsiString) ;
  Var RetCmd, Ret : AnsiString ;
      I : Integer ;
 begin
@@ -1188,7 +1188,7 @@ begin
   Result := fsArredonda  // (fsVersaoSweda < swdD) ;
 end;
 
-Procedure TACBrECFSweda.LeituraX ;
+procedure TACBrECFSweda.LeituraX ;
 Var Espera : Integer ;
 begin
   Espera := IfThen( fsVersaoSweda >= swdST, 20, 120) ;
@@ -1205,7 +1205,8 @@ begin
   LeBufferSerial('13|', Linhas);
 end;
 
-Procedure TACBrECFSweda.LeBufferSerial( Cmd: String; AStringList : TStringList) ;
+procedure TACBrECFSweda.LeBufferSerial(Cmd : String ; AStringList : TStringList
+   ) ;
   Var P1,P2 : Integer ;
       Resp, Ret, Linha : String ;
       wTempoInicioMsg : Integer ;
@@ -1252,7 +1253,7 @@ begin
   end ;
 end ;
 
-Procedure TACBrECFSweda.ReducaoZ(DataHora: TDateTime) ;
+procedure TACBrECFSweda.ReducaoZ(DataHora : TDateTime) ;
 Var Cmd, DataStr : AnsiString ;
     Espera : Integer ;
 begin
@@ -1275,7 +1276,7 @@ begin
   EsperaEstado([estLivre, estRequerX], 5000 );
 end;
 
-Procedure TACBrECFSweda.AbreGaveta ;
+procedure TACBrECFSweda.AbreGaveta ;
 begin
   try
     if (fsModeloSweda='B') or
@@ -1290,7 +1291,7 @@ begin
   end;
 end;
 
-Procedure TACBrECFSweda.MudaHorarioVerao ;
+procedure TACBrECFSweda.MudaHorarioVerao ;
 begin
   MudaHorarioVerao( not HorarioVerao) ;
 end;
@@ -1403,8 +1404,9 @@ begin
   EnviaComando( '04' + IntToStrZero(NumItem,3) ) ;
 end;
 
-procedure TACBrECFSweda.EfetuaPagamento(CodFormaPagto: String;
-  Valor: Double; Observacao: AnsiString; ImprimeVinculado: Boolean);
+procedure TACBrECFSweda.EfetuaPagamento(CodFormaPagto : String ;
+   Valor : Double ; Observacao : AnsiString ; ImprimeVinculado : Boolean ;
+   CodMeioPagamento : Integer) ;
 Var Espera : Integer ;
 begin
   if ImprimeVinculado then
@@ -1571,9 +1573,9 @@ begin
 end;
 
 
-Procedure TACBrECFSweda.DescontoAcrescimoItemAnterior(ValorDescontoAcrescimo :
-   Double; DescontoAcrescimo : String; TipoDescontoAcrescimo : String;
-   NumItem : Integer);
+procedure TACBrECFSweda.DescontoAcrescimoItemAnterior(
+   ValorDescontoAcrescimo : Double ; DescontoAcrescimo : String ;
+   TipoDescontoAcrescimo : String ; NumItem : Integer) ;
 begin
   if (fsVersaoSweda >= swdD) then
      EnviaComando('02' + '0000' + IntToStrZero( Round(ValorDescontoAcrescimo * 100) ,12) )
@@ -1582,11 +1584,11 @@ begin
                   IntToStrZero( Round(ValorDescontoAcrescimo * 100) ,12) ) ;
 end;
 
-Procedure TACBrECFSweda.VendeItem( Codigo, Descricao : String;
-  AliquotaECF : String; Qtd : Double ; ValorUnitario : Double;
-  ValorDescontoAcrescimo : Double; Unidade : String;
-  TipoDescontoAcrescimo : String; DescontoAcrescimo : String ;
-  CodDepartamento: Integer) ;
+procedure TACBrECFSweda.VendeItem(Codigo, Descricao : String ;
+   AliquotaECF : String ; Qtd : Double ; ValorUnitario : Double ;
+   ValorDescontoAcrescimo : Double ; Unidade : String ;
+   TipoDescontoAcrescimo : String ; DescontoAcrescimo : String ;
+   CodDepartamento : Integer) ;
 Var QtdStr, ValorStr, TotalStr, Descr2 : String ;
     ValDesc, ValTotal : Double ;
     wIntervaloAposComando : Integer ;
@@ -3203,7 +3205,8 @@ begin
   end;
 end;
 
-procedure TACBrECFSweda.AbreNaoFiscal( CPF_CNPJ, Nome, Endereco: String );
+procedure TACBrECFSweda.AbreNaoFiscal(CPF_CNPJ : String ; Nome : String ;
+   Endereco : String) ;
 begin
   { Nao abre ainda... Precisa saber o CodCNF que será registrado para achar o
     Título... veja abaixo }
@@ -3387,7 +3390,7 @@ begin
   end ;
 end;
 
-Procedure TACBrECFSweda.IdentificaPAF( NomeVersao, MD5 : String);
+procedure TACBrECFSweda.IdentificaPAF(NomeVersao, MD5 : String) ;
 begin
   EnviaComando('57'+ padL(MD5,42) + padL(NomeVersao,42)) ;
 end;

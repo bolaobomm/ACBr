@@ -149,6 +149,7 @@ TACBrECFEscECF = class( TACBrECFClass )
     fsVersaoEscECF   : String ;
     fsNumECF         : String ;
     fsNumCRO         : String ;
+    fsNumLoja        : String ;
     fsEscECFComando  : TACBrECFEscECFComando;
     fsEscECFResposta : TACBrECFEscECFResposta;
     fsMarcaECF       : String ;
@@ -156,6 +157,8 @@ TACBrECFEscECF = class( TACBrECFClass )
     fsEmPagamento    : Boolean ;
     fsNomeArqMemoria : String ;
     fsArqMemoria     : String ;
+
+    function IsBematech: Boolean;
 
     procedure EnviaConsumidor;
     function PreparaCmd(CmdExtBcd: AnsiString): AnsiString;
@@ -174,7 +177,7 @@ TACBrECFEscECF = class( TACBrECFClass )
     function GetDataHora: TDateTime; override ;
     function GetNumCupom: String; override ;
     function GetNumECF: String; override ;
-    //TODO (não encontrado): function GetNumLoja: String; override ;
+    function GetNumLoja: String; override ;
     function GetNumCRO: String; override ;
     function GetNumSerie: String; override ;
     function GetNumVersao: String; override ;
@@ -232,7 +235,6 @@ TACBrECFEscECF = class( TACBrECFClass )
     function GetGavetaAberta: Boolean; override ;
     function GetPoucoPapel : Boolean; override ;
     function GetHorarioVerao: Boolean; override ;
-    { TODO (não encontrado): function GetChequePronto: Boolean; override ;}
 
     function GetParamDescontoISSQN: Boolean; override;
 
@@ -290,8 +292,8 @@ TACBrECFEscECF = class( TACBrECFClass )
     procedure CancelaDescontoAcrescimoSubTotal(TipoAcrescimoDesconto: Char) ;
        override ;{ A -> Acrescimo D -> Desconto }
     Procedure EfetuaPagamento( CodFormaPagto : String; Valor : Double;
-       Observacao : AnsiString = ''; ImprimeVinculado : Boolean = false) ;
-       override ;
+       Observacao : AnsiString = ''; ImprimeVinculado : Boolean = false;
+       CodMeioPagamento: Integer = 0) ; override ;
     procedure EstornaPagamento(const CodFormaPagtoEstornar,
       CodFormaPagtoEfetivar : String; const Valor: Double;
       Observacao : AnsiString = '') ; override ;
@@ -344,6 +346,7 @@ TACBrECFEscECF = class( TACBrECFClass )
        Cidade : String; Data : TDateTime ;Observacao : String = '') ; override ;
     Procedure CancelaImpressaoCheque ; override ;
     Function LeituraCMC7 : AnsiString ; override ;
+    function GetChequePronto: Boolean; override ;
     }
 
     { Utilitarios e Diversos }
@@ -370,10 +373,8 @@ TACBrECFEscECF = class( TACBrECFClass )
     Procedure IdentificaOperador(Nome : String); override;
     Procedure IdentificaPAF( NomeVersao, MD5 : String) ; override ;
 
-    { TODO: TAGs de formatação, o protocolo não prevê...
     function TraduzirTag(const ATag: AnsiString): AnsiString; override;
     function TraduzirTagBloco(const ATag, Conteudo: AnsiString): AnsiString; override;
-    }
 
     Function RetornaInfoECF( Registrador: String) : AnsiString; override ;
 
@@ -381,7 +382,7 @@ TACBrECFEscECF = class( TACBrECFClass )
  end ;
 
 implementation
-Uses SysUtils, Math, ACBrECF,
+Uses SysUtils, Math, ACBrECF, ACBrECFBematech,
     {$IFDEF COMPILER6_UP} DateUtils, StrUtils {$ELSE} ACBrD5, Windows{$ENDIF} ;
 
 { TACBrECFEscECFRET }
@@ -632,8 +633,9 @@ begin
   fsPAF           := '' ;
   fsNumECF        := '' ;
   fsNumCRO        := '' ;
-  fsMarcaECF      := '';
-  fsModeloECF     := '';
+  fsNumLoja       := '' ;
+  fsMarcaECF      := '' ;
+  fsModeloECF     := '' ;
   fsEmPagamento   := False ;
 
   RespostasComando.Clear;
@@ -662,8 +664,9 @@ begin
   fsPAF          := '' ;
   fsNumECF       := '' ;
   fsNumCRO       := '' ;
-  fsMarcaECF     := '';
-  fsModeloECF    := '';
+  fsNumLoja      := '' ;
+  fsMarcaECF     := '' ;
+  fsModeloECF    := '' ;
   
   fpMFD     := True ;
   fpTermica := True ;
@@ -692,8 +695,13 @@ begin
        fsArqMemoria := ExtractFilePath( ParamStr(0) )+'ACBrECFEscECF'+
                        Poem_Zeros( fsNumECF, 3 )+'.txt';
 
-     if UpperCase(fsMarcaECF) = 'BEMATECH' then
+     if IsBematech then
+     begin
        fpColunas := 48;
+
+       if MaxLinhasBuffer = 0 then  // Bematech congela se receber um Buffer muito grande
+         MaxLinhasBuffer := 5;
+     end ;
 
      LeRespostasMemoria;
   except
@@ -897,6 +905,11 @@ begin
 
   Result := EscECFComando.Comando ;
 end;
+
+function TACBrECFEscECF.IsBematech : Boolean ;
+begin
+   Result := (UpperCase(fsMarcaECF) = 'BEMATECH') ;
+end ;
 
 procedure TACBrECFEscECF.EnviaConsumidor;
 begin
@@ -1250,12 +1263,26 @@ begin
   Result := fsNumECF ;
 end;
 
+function TACBrECFEscECF.GetNumLoja : String ;
+begin
+  if Trim(fsNumLoja) = '' then
+  begin
+    if IsBematech then
+    begin
+      RetornaInfoECF( '99|5' ) ;
+      fsNumLoja := EscECFResposta.Params[1] ;
+    end ;
+  end ;
+
+  Result := fsNumLoja ;
+end ;
+
 function TACBrECFEscECF.GetNumCRO: String;
 begin
   if Trim(fsNumCRO) = '' then
   begin
     RetornaInfoECF( '1|3' ) ;
-    Result := EscECFResposta.Params[1] ;
+    fsNumCRO := EscECFResposta.Params[1] ;
   end ;
 
   Result := fsNumCRO ;
@@ -1482,11 +1509,36 @@ end;
 
 procedure TACBrECFEscECF.AbreCupomVinculado(COO, CodFormaPagto,
    CodComprovanteNaoFiscal: String; Valor: Double);
+Var
+  Sequencia, NumPagtos, P : Integer ;
+  APagto, CodPagto : String ;
 begin
+  // Achando a Sequencia do Pagamento de acordo com o Indice //
+  Sequencia := 1;
+  try
+    NumPagtos := RespostasComando.FieldByName('NumPagtos').AsInteger;
+    if NumPagtos > 1 then
+    begin
+      repeat
+        APagto := RespostasComando.FieldByName('Pagto'+IntToStr(Sequencia)).AsString;
+        P := pos('|',APagto);
+        CodPagto := Copy(APagto,1,P-1);
+        if CodPagto = CodFormaPagto then
+        begin
+          APagto := '*'+APagto;  // sinaliza que já usou;
+          break;
+        end ;
+
+        Inc( Sequencia );
+      until (Sequencia >= NumPagtos);
+    end ;
+  except
+  end ;
+
   with EscECFComando do
   begin
      CMD := 8;
-     AddParamInteger(1) ;   // TODO: Achar a Sequencia do Pagamento...
+     AddParamInteger(Sequencia) ;
      AddParamString(CodFormaPagto) ;
      AddParamInteger(1) ;   // Qtd Parcelas ??
      AddParamInteger(1) ;   // Num Parcela ??
@@ -1496,7 +1548,8 @@ begin
   end;
   EnviaComando;
 
-  RespostasComando.Clear;
+  //RespostasComando.Clear;
+  RespostasComando.AddField( 'Pagto'+IntToStr(Sequencia), APagto );
   RespostasComando.AddField( 'COO',            EscECFResposta.Params[0] );
   RespostasComando.AddField( 'DataHora',       EscECFResposta.Params[1] );
   RespostasComando.AddField( 'VendaBruta',     EscECFResposta.Params[2] );
@@ -1669,6 +1722,26 @@ begin
   EscECFComando.AddParamString( fsPAF ) ;
   EnviaComando;
 end;
+
+function TACBrECFEscECF.TraduzirTag(const ATag : AnsiString) : AnsiString ;
+begin
+  if IsBematech then
+    Result := BematechTraduzirTag( ATag )
+  else
+    Result := inherited TraduzirTag( ATag );
+end ;
+
+function TACBrECFEscECF.TraduzirTagBloco(const ATag, Conteudo : AnsiString
+   ) : AnsiString ;
+begin
+  Result := '';
+
+  if IsBematech then
+    Result := BematechTraduzirTagBloco( ATag, Conteudo, Self);
+
+  if Result = '' then
+     Result := inherited TraduzirTagBloco(ATag, Conteudo) ;
+end ;
 
 procedure TACBrECFEscECF.AbreCupom ;
 begin
@@ -1872,9 +1945,18 @@ begin
   SalvaRespostasMemoria(True);
 end;
 
-procedure TACBrECFEscECF.EfetuaPagamento(CodFormaPagto: String;
-  Valor: Double; Observacao: AnsiString; ImprimeVinculado: Boolean);
+procedure TACBrECFEscECF.EfetuaPagamento(CodFormaPagto : String ;
+   Valor : Double ; Observacao : AnsiString ; ImprimeVinculado : Boolean ;
+   CodMeioPagamento : Integer) ;
+Var
+  NumPagtos : Integer;
 begin
+  if (CodMeioPagamento <= 0) or (CodMeioPagamento > 7) then
+    CodMeioPagamento := 7;
+  { 1-Dinheiro, 2-Cheque, 3-Cartão de Crédito, 4-Cartão de Débito,
+     5-Cartão Refeição/Alimentação, 6-Vale Refeição/Alimentação (em papel),
+     7-Outros }
+
   with EscECFComando do
   begin
      CMD := 4 ;
@@ -1882,15 +1964,23 @@ begin
      AddParamDouble( Valor );
      AddParamInteger( 1 );  // Parcelas ??
      AddParamString( LeftStr(Observacao, 84) );
-     AddParamInteger( 7 );  // TODO: Meios de pagamento ??
-     { 1-Dinheiro, 2-Cheque, 3-Cartão de Crédito, 4-Cartão de Débito,
-       5-Cartão Refeição/Alimentação, 6-Vale Refeição/Alimentação (em papel),
-       7-Outros }
+     AddParamInteger( CodMeioPagamento );
   end ;
 
   EnviaComando ;
 
+  try
+    NumPagtos := RespostasComando.FieldByName('NumPagtos').AsInteger;
+  except
+    NumPagtos := 0;
+  end ;
+
+  Inc( NumPagtos ) ;
+  RespostasComando.AddField( 'NumPagtos', IntToStr(NumPagtos) );
+  RespostasComando.AddField( 'Pagto'+IntToStr(NumPagtos),
+     CodFormaPagto+'|'+FloatToStr(Valor)+'|'+IntToStr(CodMeioPagamento) );
   RespostasComando.AddField( 'TotalAPagar', EscECFResposta.Params[0] );
+
   SalvaRespostasMemoria(False);
 end;
 

@@ -98,6 +98,9 @@ uses ACBrECFClass, ACBrDevice, ACBrUtil,
 
 type
 { Classe filha de TACBrECFClass com implementaçao para Mecaf }
+
+{ TACBrECFMecaf }
+
 TACBrECFMecaf = class( TACBrECFClass )
  private
     fsNumVersao : String ;
@@ -170,8 +173,8 @@ TACBrECFMecaf = class( TACBrECFClass )
     Procedure SubtotalizaCupom( DescontoAcrescimo : Double = 0;
        MensagemRodape : AnsiString  = '' ) ; override ;
     Procedure EfetuaPagamento( CodFormaPagto : String; Valor : Double;
-       Observacao : AnsiString = ''; ImprimeVinculado : Boolean = false) ;
-       override ;
+       Observacao : AnsiString = ''; ImprimeVinculado : Boolean = false;
+       CodMeioPagamento: Integer = 0) ; override ;
     Procedure FechaCupom( Observacao : AnsiString = ''; IndiceBMP : Integer = 0) ; override ;
     Procedure CancelaCupom ; override ;
     Procedure CancelaItemVendido( NumItem : Integer ) ; override ;
@@ -297,7 +300,7 @@ begin
 end;
 
 
-Function TACBrECFMecaf.EnviaComando_ECF( cmd : AnsiString ) : AnsiString ;
+function TACBrECFMecaf.EnviaComando_ECF(cmd : AnsiString) : AnsiString ;
 Var ErroMsg : String ;
     Erro : Integer ;
 begin
@@ -403,8 +406,8 @@ begin
 
 end;
 
-Function TACBrECFMecaf.VerificaFimLeitura(var Retorno: AnsiString;
-   var TempoLimite: TDateTime) : Boolean ;
+function TACBrECFMecaf.VerificaFimLeitura(var Retorno : AnsiString ;
+   var TempoLimite : TDateTime) : Boolean ;
 begin
 //  result := (LeftStr(  Retorno,1 ) = STX) and
 //            (RightStr( Retorno,1 ) = ETX) ;
@@ -623,23 +626,23 @@ begin
   Result := (fsArredonda = 'S') ;
 end;
 
-Procedure TACBrECFMecaf.LeituraX ;
+procedure TACBrECFMecaf.LeituraX ;
 begin
   EnviaComando('150' , 40 ) ;
 end;
 
-Procedure TACBrECFMecaf.ReducaoZ(DataHora: TDateTime) ;
+procedure TACBrECFMecaf.ReducaoZ(DataHora : TDateTime) ;
 begin
   EnviaComando( '160', 40 ) ;  { Mecaf NAO usa DataHora }
 end;
 
-Procedure TACBrECFMecaf.AbreGaveta ;
+procedure TACBrECFMecaf.AbreGaveta ;
 begin
   sleep(300) ;
   EnviaComando( '240' + #20 + #80 ) ;
 end;
 
-Procedure TACBrECFMecaf.MudaHorarioVerao ;
+procedure TACBrECFMecaf.MudaHorarioVerao ;
 begin
   MudaHorarioVerao( not HorarioVerao ) ;
 end;
@@ -698,8 +701,9 @@ begin
   EnviaComando( '12' + IntToStrZero(NumItem,3) ,1) ;
 end;
 
-procedure TACBrECFMecaf.EfetuaPagamento(CodFormaPagto: String;
-  Valor: Double; Observacao: AnsiString; ImprimeVinculado: Boolean);
+procedure TACBrECFMecaf.EfetuaPagamento(CodFormaPagto : String ;
+   Valor : Double ; Observacao : AnsiString ; ImprimeVinculado : Boolean ;
+   CodMeioPagamento : Integer) ;
 Var Linhas, CodTroco : String ;
     FPG : TACBrECFFormaPagamento ;
 begin
@@ -782,11 +786,11 @@ begin
   fsVinculado := false ;
 end;
 
-Procedure TACBrECFMecaf.VendeItem( Codigo, Descricao : String;
-  AliquotaECF : String; Qtd : Double ; ValorUnitario : Double;
-  ValorDescontoAcrescimo : Double; Unidade : String;
-  TipoDescontoAcrescimo : String; DescontoAcrescimo : String ;
-  CodDepartamento: Integer) ;
+procedure TACBrECFMecaf.VendeItem(Codigo, Descricao : String ;
+   AliquotaECF : String ; Qtd : Double ; ValorUnitario : Double ;
+   ValorDescontoAcrescimo : Double ; Unidade : String ;
+   TipoDescontoAcrescimo : String ; DescontoAcrescimo : String ;
+   CodDepartamento : Integer) ;
 Var QtdStr, ValorStr, DescontoStr, Fmt: String ;
     FlagDesc : Integer ;
 begin
@@ -1124,7 +1128,7 @@ begin
 end;
 
 
-procedure TACBrECFMecaf.AbreRelatorioGerencial;
+procedure TACBrECFMecaf.AbreRelatorioGerencial(Indice : Integer) ;
 begin
   EnviaComando( '151' ,40 ) ;
 end;
@@ -1267,7 +1271,8 @@ begin
   Result := (pos('201', fsNumVersao) > 0) or (pos('301', fsNumVersao) > 0) or (pos('400', fsNumVersao) > 0) or (pos('302', fsNumVersao) > 0);
 end;
 
-procedure TACBrECFMecaf.AbreNaoFiscal( CPF_CNPJ, Nome, Endereco: String );
+procedure TACBrECFMecaf.AbreNaoFiscal(CPF_CNPJ : String ; Nome : String ;
+   Endereco : String) ;
 begin
   EnviaComando( '22', 10 ) ;
 end;

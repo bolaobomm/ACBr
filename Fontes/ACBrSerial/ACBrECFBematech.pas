@@ -471,8 +471,8 @@ TACBrECFBematech = class( TACBrECFClass )
     Procedure SubtotalizaCupom( DescontoAcrescimo : Double = 0;
        MensagemRodape : AnsiString  = '') ; override ;
     Procedure EfetuaPagamento( CodFormaPagto : String; Valor : Double;
-       Observacao : AnsiString = ''; ImprimeVinculado : Boolean = false) ;
-       override ;
+       Observacao : AnsiString = ''; ImprimeVinculado : Boolean = false;
+       CodMeioPagamento: Integer = 0) ; override ;
     Procedure FechaCupom( Observacao : AnsiString = ''; IndiceBMP : Integer = 0) ; override ;
     Procedure CancelaCupom ; override ;
     Procedure CancelaItemVendido( NumItem : Integer ) ; override ;
@@ -577,11 +577,126 @@ TACBrECFBematech = class( TACBrECFClass )
 
  end ;
 
+function BematechTraduzirTag(const ATag: AnsiString): AnsiString;
+function BematechTraduzirTagBloco(const ATag, Conteudo: AnsiString;
+  AECFClass: TACBrECFClass): AnsiString;
+
 implementation
 Uses
    SysUtils, IniFiles, ACBrConsts, ACBrECF,
    {$IFDEF COMPILER6_UP} DateUtils, StrUtils, {$ELSE} ACBrD5,{$ENDIF}
    Math ;
+
+function BematechTraduzirTag(const ATag : AnsiString) : AnsiString ;
+const
+  C_ON  = #1 ;
+  C_OFF = #0 ;
+
+  // <e></e>
+  cExpandidoOn   = ESC + SO;
+  cExpandidoOff  = #20;
+
+  // <n></n>
+  cNegritoOn     = ESC + 'E';
+  cNegritoOff    = ESC + 'F';
+
+  // <s></s>
+  cSublinhadoOn  = ESC + '-' + C_ON;
+  cSublinhadoOff = ESC + '-' + C_OFF;
+
+  // <c></c>
+  cCondensadoOn  = ESC + SI;
+  cCondensadoOff = DC2;
+
+  //<i></i>
+  cItalicoOn  = ESC + '4';
+  cITalicoOff = ESC + '5';
+begin
+
+  case AnsiIndexText( ATag, ARRAY_TAGS) of
+     -1: Result := ATag;
+     2 : Result := cExpandidoOn;
+     3 : Result := cExpandidoOff;
+     4 : Result := cNegritoOn;
+     5 : Result := cNegritoOff;
+     6 : Result := cSublinhadoOn;
+     7 : Result := cSublinhadoOff;
+     8 : Result := cCondensadoOn;
+     9 : Result := cCondensadoOff;
+     10: Result := cItalicoOn;
+     11: Result := cITalicoOff;
+  else
+     Result := '' ;
+  end;
+end;
+
+function BematechTraduzirTagBloco(const ATag, Conteudo : AnsiString;
+  AECFClass: TACBrECFClass) : AnsiString ;
+const
+  C_BARRA = GS + 'k' ;
+
+  cEAN8     = C_BARRA + 'D' ; // <ean8></ean8>
+  cEAN13    = C_BARRA + 'C' ; // <ean13></ean13>
+  cINTER25  = C_BARRA + 'F' ; // <inter></inter>
+  cCODE39   = C_BARRA + 'E' ; // <code39></code39>
+  cCODE93   = C_BARRA + 'H' ; // <code93></code93>
+  cCODE128  = C_BARRA + 'I' ; // <code128></code128>
+  cUPCA     = C_BARRA + 'A' ; // <upca></upca>
+  cCODABAR  = C_BARRA + 'G' ; // <codabar></codabar>
+  cMSI      = C_BARRA + #130; // <msi></msi>
+
+  function MontaCodBarras(const ATipo: AnsiString; ACodigo: AnsiString;
+    TamFixo: Integer = 0): AnsiString;
+  var
+    L, A : Integer ;
+  begin
+    with AECFClass.ConfigBarras do
+    begin
+      L := IfThen( LarguraLinha = 0, 3, max(min(LarguraLinha,4),2) );
+      A := IfThen( Altura = 0, 162, max(min(Altura,255),1) );
+    end ;
+
+    ACodigo := Trim( ACodigo );
+    if TamFixo > 0 then
+       ACodigo := padR( ACodigo, TamFixo, '0') ;
+
+    Result := GS + 'w' + chr( L ) + // Largura
+              GS + 'h' + chr( A ) + // Altura
+              GS + 'H' + ifthen( AECFClass.ConfigBarras.MostrarCodigo, #1, #0 ) +
+              ATipo + chr( Length( ACodigo ) ) + ACodigo;
+  end;
+
+  Function AddStartStop( Conteudo: AnsiString ) : AnsiString ;
+  begin
+    Result := Trim(Conteudo) ;
+    if LeftStr(Result,1) <> '*' then
+       Result := '*'+Result;
+    if RightStr(Result,1) <> '*' then
+       Result := Result+'*' ;
+  end ;
+
+var
+   Is010000 : Boolean ;
+
+begin
+  // MP4000 ver 01.00.00 tem sérios problemas quando tenta imprimir CODE39 ou CODEBAR
+  Is010000 := (StrToIntDef( AECFClass.NumVersao,0 ) <= 10000) ;
+  Result   := '';
+
+  case AnsiIndexText( ATag, ARRAY_TAGS) of
+     12,13: Result := MontaCodBarras(cEAN8, Conteudo, 7);
+     14,15: Result := MontaCodBarras(cEAN13, Conteudo, 12);
+     18,19: Result := MontaCodBarras(cINTER25, Conteudo);
+     22,23: Result := ifthen( Is010000, '',
+                              MontaCodBarras(cCODE39, AddStartStop(Conteudo) ) );
+     24,25: Result := MontaCodBarras(cCODE93, Conteudo);
+     26,27: Result := MontaCodBarras(cCODE128, Conteudo);
+     28,29: Result := MontaCodBarras(cUPCA, Conteudo, 11);
+     30,31: Result := ifthen( Is010000, '',
+                              MontaCodBarras(cCODABAR, AddStartStop(Conteudo) ) );
+     32,33: Result := MontaCodBarras(cMSI, Conteudo);
+  end;
+end;
 
 { ----------------------------- TACBrECFBematech ------------------------------ }
 
@@ -1504,8 +1619,9 @@ begin
   EnviaComando( #31 + IntToStrZero(NumItem ,4) ) ;
 end;
 
-procedure TACBrECFBematech.EfetuaPagamento(CodFormaPagto: String;
-  Valor: Double; Observacao: AnsiString; ImprimeVinculado: Boolean);
+procedure TACBrECFBematech.EfetuaPagamento(CodFormaPagto : String ;
+   Valor : Double ; Observacao : AnsiString ; ImprimeVinculado : Boolean ;
+   CodMeioPagamento : Integer) ;
 begin
   Observacao := copy(Observacao,1,80) ;
   BytesResp  := 0 ;
@@ -3962,114 +4078,17 @@ begin
 end;
 
 function TACBrECFBematech.TraduzirTag(const ATag: AnsiString): AnsiString;
-const
-  C_ON  = #1 ;
-  C_OFF = #0 ;
-
-  // <e></e>
-  cExpandidoOn   = ESC + SO;
-  cExpandidoOff  = #20;
-
-  // <n></n>
-  cNegritoOn     = ESC + 'E';
-  cNegritoOff    = ESC + 'F';
-
-  // <s></s>
-  cSublinhadoOn  = ESC + '-' + C_ON;
-  cSublinhadoOff = ESC + '-' + C_OFF;
-
-  // <c></c>
-  cCondensadoOn  = ESC + SI;
-  cCondensadoOff = DC2;
-
-  //<i></i>
-  cItalicoOn  = ESC + '4';
-  cITalicoOff = ESC + '5';
 begin
-
-  case AnsiIndexText( ATag, ARRAY_TAGS) of
-     -1: Result := ATag;
-     2 : Result := cExpandidoOn;
-     3 : Result := cExpandidoOff;
-     4 : Result := cNegritoOn;
-     5 : Result := cNegritoOff;
-     6 : Result := cSublinhadoOn;
-     7 : Result := cSublinhadoOff;
-     8 : Result := cCondensadoOn;
-     9 : Result := cCondensadoOff;
-     10: Result := cItalicoOn;
-     11: Result := cITalicoOff;
-  else
-     Result := '' ;
-  end;
-
+   Result := BematechTraduzirTag( ATag );
 end;
 
 function TACBrECFBematech.TraduzirTagBloco(const ATag, Conteudo : AnsiString
    ) : AnsiString ;
-const
-  C_BARRA = GS + 'k' ;
-
-  cEAN8     = C_BARRA + 'D' ; // <ean8></ean8>
-  cEAN13    = C_BARRA + 'C' ; // <ean13></ean13>
-  cINTER25  = C_BARRA + 'F' ; // <inter></inter>
-  cCODE39   = C_BARRA + 'E' ; // <code39></code39>
-  cCODE93   = C_BARRA + 'H' ; // <code93></code93>
-  cCODE128  = C_BARRA + 'I' ; // <code128></code128>
-  cUPCA     = C_BARRA + 'A' ; // <upca></upca>
-  cCODABAR  = C_BARRA + 'G' ; // <codabar></codabar>
-  cMSI      = C_BARRA + #130; // <msi></msi>
-
-  function MontaCodBarras(const ATipo: AnsiString; ACodigo: AnsiString;
-    TamFixo: Integer = 0): AnsiString;
-  var
-    L, A : Integer ;
-  begin
-    L := IfThen( ConfigBarras.LarguraLinha = 0, 3, max(min(ConfigBarras.LarguraLinha,4),2) );
-    A := IfThen( ConfigBarras.Altura = 0, 162, max(min(ConfigBarras.Altura,255),1) );
-
-    ACodigo := Trim( ACodigo );
-    if TamFixo > 0 then
-       ACodigo := padR( ACodigo, TamFixo, '0') ;
-
-    Result := GS + 'w' + chr( L ) + // Largura
-              GS + 'h' + chr( A ) + // Altura
-              GS + 'H' + ifthen( ConfigBarras.MostrarCodigo, #1, #0 ) +
-              ATipo + chr( Length( ACodigo ) ) + ACodigo;
-  end;
-
-  Function AddStartStop( Conteudo: AnsiString ) : AnsiString ;
-  begin
-    Result := Trim(Conteudo) ;
-    if LeftStr(Result,1) <> '*' then
-       Result := '*'+Result;
-    if RightStr(Result,1) <> '*' then
-       Result := Result+'*' ;
-  end ;
-
-var
-   Is010000 : Boolean ;
-
 begin
-  // MP4000 ver 01.00.00 tem sérios problemas quando tenta imprimir CODE39 ou CODEBAR
-  Is010000 := (StrToIntDef( NumVersao,0 ) <= 10000) ;
+  Result := BematechTraduzirTagBloco( ATag, Conteudo, Self);
 
-  case AnsiIndexText( ATag, ARRAY_TAGS) of
-     12,13: Result := MontaCodBarras(cEAN8, Conteudo, 7);
-     14,15: Result := MontaCodBarras(cEAN13, Conteudo, 12);
-     18,19: Result := MontaCodBarras(cINTER25, Conteudo);
-     22,23: Result := ifthen( Is010000, '',
-                              MontaCodBarras(cCODE39, AddStartStop(Conteudo) ) );
-     24,25: Result := MontaCodBarras(cCODE93, Conteudo);
-     26,27: Result := MontaCodBarras(cCODE128, Conteudo);
-     28,29: Result := MontaCodBarras(cUPCA, Conteudo, 11);
-     30,31: Result := ifthen( Is010000, '',
-                              MontaCodBarras(cCODABAR, AddStartStop(Conteudo) ) );
-     32,33: Result := MontaCodBarras(cMSI, Conteudo);
-  else
+  if Result = '' then
      Result := inherited TraduzirTagBloco(ATag, Conteudo) ;
-  end;
-
 end ;
 
 end.

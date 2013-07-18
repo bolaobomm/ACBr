@@ -718,8 +718,6 @@ TACBrECFClass = class
        var Continuar: Boolean);
 
     procedure ImprimirLinhaALinha( Texto, Cmd : AnsiString ) ;
-
-    function ConfigBarras: TACBrECFConfigBarras;
  public
     Constructor create( AOwner : TComponent ) ;
     Destructor Destroy  ; override ;
@@ -975,8 +973,8 @@ TACBrECFClass = class
     procedure CancelaDescontoAcrescimoSubTotal(TipoAcrescimoDesconto: Char) ;
        Virtual ;{ A -> Acrescimo D -> Desconto } 
     Procedure EfetuaPagamento( CodFormaPagto : String; Valor : Double;
-       Observacao : AnsiString = ''; ImprimeVinculado : Boolean = false) ;
-       virtual ;
+       Observacao : AnsiString = ''; ImprimeVinculado : Boolean = false;
+       CodMeioPagamento: Integer = 0) ; virtual ;
     procedure EstornaPagamento(const CodFormaPagtoEstornar,
       CodFormaPagtoEfetivar : String; const Valor: Double;
       Observacao : AnsiString = '') ; Virtual ;
@@ -1113,6 +1111,8 @@ TACBrECFClass = class
     procedure ProgramarBitmapPromocional(const AIndice: Integer;
       const APathArquivo: AnsiString;
       const AAlinhamento: TACBrAlinhamento = alCentro); virtual;
+
+    function ConfigBarras: TACBrECFConfigBarras;
 
     function TraduzirTag(const ATag: AnsiString): AnsiString; virtual;
     function TraduzirTagBloco(const ATag, Conteudo: AnsiString): AnsiString; virtual;
@@ -2282,8 +2282,9 @@ begin
   ErroAbstract('CancelaItemVendido');
 end;
 
-procedure TACBrECFClass.EfetuaPagamento(CodFormaPagto: String;
-  Valor: Double; Observacao: AnsiString; ImprimeVinculado: Boolean);
+procedure TACBrECFClass.EfetuaPagamento(CodFormaPagto : String ;
+   Valor : Double ; Observacao : AnsiString ; ImprimeVinculado : Boolean ;
+   CodMeioPagamento : Integer) ;
 begin
   ErroAbstract('EfetuaPagamento');
 end;

@@ -99,6 +99,29 @@ Símbolo : Significado
 
 Data: 18/07/2013
 -- ACBrECF --
+[*] Modificada a assinatura do método "EfetuaPagamento", inserindo novo parâmetro
+    "CodMeioPagamento: Integer, default = 0", para compatibilização com o novo
+    protocolo que exige essa informação no Pagamento, de acordo com a tabela
+    fixa abaixo. Valores diferentes de tabela abaixo serão considerados "7"
+     1-Dinheiro, 2-Cheque, 3-Cartão de Crédito, 4-Cartão de Débito,
+     5-Cartão Refeição/Alimentação, 6-Vale Refeição/Alimentação (em papel),
+     7-Outros                              (por: DSA)
+
+-- ACBrECFBematech --
+[*] Refactoring em TraduzirTag e TraduzirTagBloco para compartilhar código com
+    ACBrECFEscECF                               (por: DSA)
+
+-- ACBrECFEscECF --
+[+] Implementado leitura do NumLoja (apenas para Bematech)     (por: DSA)
+[+] Adicionado suporte a Tags de Formatação e Código de Barras
+    (apenas para Bematech)     (por: DSA)
+[-] Corrigido bug na leitura de NumCRO        (por: DSA)
+[-] Correção em AbreCupomVinculado, inserindo rotina que procura pela sequencia
+    de pagamento de acordo com os pagamentos Efetuados e o valor de
+    "CodFormaPagto" informado na abertura do Vinculado/CCD   (por: DSA)
+
+Data: 18/07/2013
+-- ACBrECF --
 [+] Adicionada informação de rodapé para: ER 02.01 - Requisito XXVIII item 8
     http://www.projetoacbr.com.br/forum/index.php?/topic/11450-incluir-numero-de-nota-serie-d-no-rodap%C3%A9-do-cupom-fiscal/
     por: cleber

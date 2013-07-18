@@ -79,6 +79,9 @@ const R = 'XXXXX' ;
 type
 
 { Classe filha de TACBrECFClass com implementaçao para Urano }
+
+{ TACBrECFUrano }
+
 TACBrECFUrano = class( TACBrECFClass )
  private
     { Tamanho da Resposta Esperada ao comando. Necessário, pois a Urano nao
@@ -142,8 +145,8 @@ TACBrECFUrano = class( TACBrECFClass )
     Procedure SubtotalizaCupom( DescontoAcrescimo : Double = 0;
        MensagemRodape : AnsiString  = '' ) ; override ;
     Procedure EfetuaPagamento( CodFormaPagto : String; Valor : Double;
-       Observacao : AnsiString = ''; ImprimeVinculado : Boolean = false) ;
-       override ;
+       Observacao : AnsiString = ''; ImprimeVinculado : Boolean = false;
+       CodMeioPagamento: Integer = 0) ; override ;
     Procedure FechaCupom( Observacao : AnsiString = ''; IndiceBMP : Integer = 0) ; override ;
     Procedure CancelaCupom ; override ;
     Procedure CancelaItemVendido( NumItem : Integer ) ; override ;
@@ -251,7 +254,7 @@ begin
 end;
 
 
-Function TACBrECFUrano.EnviaComando_ECF( cmd : AnsiString ) : AnsiString ;
+function TACBrECFUrano.EnviaComando_ECF(cmd : AnsiString) : AnsiString ;
 Var ErroMsg     : String ;
     Erro        : Byte ;
     PediuEstado : Boolean ;
@@ -380,8 +383,8 @@ begin
   end ;
 end;
 
-Function TACBrECFUrano.VerificaFimLeitura(var Retorno: AnsiString;
-   var TempoLimite: TDateTime) : Boolean ;
+function TACBrECFUrano.VerificaFimLeitura(var Retorno : AnsiString ;
+   var TempoLimite : TDateTime) : Boolean ;
 begin
   { Lê até atingir todos os Bytes esperados (BytesResp) e ECF entra EmLinha}
   { BytesResp é necessário, pois a Urano nao usa um Sufixo padrão no fim
@@ -391,7 +394,7 @@ begin
   Result := (Length( Retorno ) >= (BytesResp+1) )
 end;
 
-Function TACBrECFUrano.PreparaCmd( cmd : AnsiString ) : AnsiString ;
+function TACBrECFUrano.PreparaCmd(cmd : AnsiString) : AnsiString ;
 begin
   result := '' ;
   if cmd = '' then exit ;
@@ -512,25 +515,25 @@ begin
   Result := False ;    { ????? AAS }
 end;
 
-Procedure TACBrECFUrano.LeituraX ;
+procedure TACBrECFUrano.LeituraX ;
 begin
   BytesResp := 0 ;
   EnviaComando( '11' + '0' + R , 35 ) ;
 end;
 
-Procedure TACBrECFUrano.AbreGaveta ;
+procedure TACBrECFUrano.AbreGaveta ;
 begin
   BytesResp := 0;
   EnviaComando( '19' + R, 5 );
 end;
 
-Procedure TACBrECFUrano.ReducaoZ(DataHora: TDateTime) ;
+procedure TACBrECFUrano.ReducaoZ(DataHora : TDateTime) ;
 begin
   BytesResp := 0 ;
   EnviaComando( '11' + '1' + R , 35 ) ;
 end;
 
-Procedure TACBrECFUrano.MudaHorarioVerao ;
+procedure TACBrECFUrano.MudaHorarioVerao ;
 begin
 end;
 
@@ -583,8 +586,9 @@ begin
   EnviaComando('02' + Descricao + ItemStr + R ) ;
 end;
 
-procedure TACBrECFUrano.EfetuaPagamento(CodFormaPagto: String;
-  Valor: Double; Observacao: AnsiString; ImprimeVinculado: Boolean);
+procedure TACBrECFUrano.EfetuaPagamento(CodFormaPagto : String ;
+   Valor : Double ; Observacao : AnsiString ; ImprimeVinculado : Boolean ;
+   CodMeioPagamento : Integer) ;
 var
   ValorStr,
   Vinculado: String;
@@ -644,11 +648,11 @@ begin
   end;
 end;
 
-Procedure TACBrECFUrano.VendeItem( Codigo, Descricao : String;
-  AliquotaECF : String; Qtd : Double ; ValorUnitario : Double;
-  ValorDescontoAcrescimo : Double; Unidade : String;
-  TipoDescontoAcrescimo : String; DescontoAcrescimo : String ;
-  CodDepartamento: Integer) ;
+procedure TACBrECFUrano.VendeItem(Codigo, Descricao : String ;
+   AliquotaECF : String ; Qtd : Double ; ValorUnitario : Double ;
+   ValorDescontoAcrescimo : Double ; Unidade : String ;
+   TipoDescontoAcrescimo : String ; DescontoAcrescimo : String ;
+   CodDepartamento : Integer) ;
 Var QtdStr, ValorStr, DescontoStr : String ;
     Tipo : Char ;
 begin
@@ -851,7 +855,7 @@ begin
   { código aqui }
 end;
 
-procedure TACBrECFUrano.AbreRelatorioGerencial;
+procedure TACBrECFUrano.AbreRelatorioGerencial(Indice : Integer) ;
 begin
 //  BytesResp := 0 ;
 //  EnviaComando( '11' + '2' + R , 35 ) ;
@@ -967,7 +971,8 @@ begin
                            IntToStrZero(0,8) + R, Espera ) ;
 end;
 
-procedure TACBrECFUrano.AbreNaoFiscal( CPF_CNPJ, Nome, Endereco: String );
+procedure TACBrECFUrano.AbreNaoFiscal(CPF_CNPJ : String ; Nome : String ;
+   Endereco : String) ;
 begin
   { nada a fazer, o Cupom Não Fiscal será aberto no RegistraItemNaoFiscal }
 end;

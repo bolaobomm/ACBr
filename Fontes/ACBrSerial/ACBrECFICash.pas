@@ -54,6 +54,9 @@ const  cACK = 06  ;
 
 type
 { Classe filha de TACBrECFClass com implementaçao para ICash }
+
+{ TACBrECFICash }
+
 TACBrECFICash = class( TACBrECFClass )
  private
     fsACK, fsST1, fsST2 : Integer ; { Status da ICash }
@@ -125,8 +128,8 @@ TACBrECFICash = class( TACBrECFClass )
     Procedure SubtotalizaCupom( DescontoAcrescimo : Double = 0;
        MensagemRodape : AnsiString = '' ) ; override ;
     Procedure EfetuaPagamento( CodFormaPagto : String; Valor : Double;
-       Observacao : AnsiString = ''; ImprimeVinculado : Boolean = false) ;
-       override ;
+       Observacao : AnsiString = ''; ImprimeVinculado : Boolean = false;
+       CodMeioPagamento: Integer = 0) ; override ;
     Procedure FechaCupom( Observacao : AnsiString = ''; IndiceBMP : Integer = 0) ; override ;
     Procedure CancelaCupom ; override ;
     Procedure CancelaItemVendido( NumItem : Integer ) ; override ;
@@ -244,7 +247,7 @@ begin
   end ;
 end;
 
-Function TACBrECFICash.EnviaComando_ECF( cmd : AnsiString ) : AnsiString ;
+function TACBrECFICash.EnviaComando_ECF(cmd : AnsiString) : AnsiString ;
  Var ErroMsg, StatusMsg : String ;
      FalhasACK : Integer;
 begin
@@ -398,8 +401,8 @@ begin
   end ;
 end;
 
-Function TACBrECFICash.VerificaFimLeitura(var Retorno: AnsiString;
-   var TempoLimite: TDateTime) : Boolean ;
+function TACBrECFICash.VerificaFimLeitura(var Retorno : AnsiString ;
+   var TempoLimite : TDateTime) : Boolean ;
  var LenRet : Integer ;
      Dados  : AnsiString ;
 begin
@@ -434,7 +437,7 @@ begin
   end ;
 end;
 
-Function TACBrECFICash.PreparaCMD( cmd : AnsiString ) : AnsiString;
+function TACBrECFICash.PreparaCMD(cmd : AnsiString) : AnsiString ;
   Var A, iSoma : Integer ;
       CS1, CS2 : AnsiChar ;
 Begin
@@ -577,7 +580,7 @@ begin
   Result := True ;
 end;
 
-Procedure TACBrECFICash.LeituraX ;
+procedure TACBrECFICash.LeituraX ;
 begin
   EnviaComando( '510', 50 ) ;
 end;
@@ -593,7 +596,7 @@ begin
   Linhas.Text := RetCmd ;
 end;
 
-Procedure TACBrECFICash.ReducaoZ(DataHora: TDateTime) ;
+procedure TACBrECFICash.ReducaoZ(DataHora : TDateTime) ;
  Var Cmd     : AnsiString ;
      Ajuste  : Integer ;
      DtHrECF : TDateTime ;
@@ -622,12 +625,12 @@ begin
   EnviaComando( Cmd, 50 );
 end;
 
-Procedure TACBrECFICash.AbreGaveta ;
+procedure TACBrECFICash.AbreGaveta ;
 begin
   EnviaComando( '45' );
 end;
 
-Procedure TACBrECFICash.MudaHorarioVerao ;
+procedure TACBrECFICash.MudaHorarioVerao ;
 begin
   EnviaComando( '71', 3 ) ;
 end;
@@ -678,11 +681,11 @@ begin
       EnviaComando( '29', 8 ); // Cancela Cupom Atual
 end;
 
-Procedure TACBrECFICash.VendeItem( Codigo, Descricao : String;
-  AliquotaECF : String; Qtd : Double ; ValorUnitario : Double;
-  ValorDescontoAcrescimo : Double; Unidade : String;
-  TipoDescontoAcrescimo : String; DescontoAcrescimo : String ;
-  CodDepartamento: Integer) ;
+procedure TACBrECFICash.VendeItem(Codigo, Descricao : String ;
+   AliquotaECF : String ; Qtd : Double ; ValorUnitario : Double ;
+   ValorDescontoAcrescimo : Double ; Unidade : String ;
+   TipoDescontoAcrescimo : String ; DescontoAcrescimo : String ;
+   CodDepartamento : Integer) ;
 Var QtdStr, ValorStr, DescontoStr : String ;
     RetCMD : AnsiString;
     NumItem, NumDecimais : Integer;
@@ -755,8 +758,9 @@ begin
    end;
 end;
 
-procedure TACBrECFICash.EfetuaPagamento(CodFormaPagto: String;
-  Valor: Double; Observacao: AnsiString; ImprimeVinculado: Boolean);
+procedure TACBrECFICash.EfetuaPagamento(CodFormaPagto : String ;
+   Valor : Double ; Observacao : AnsiString ; ImprimeVinculado : Boolean ;
+   CodMeioPagamento : Integer) ;
 begin
 {  TODO: Mecanismo de vinculados
   if ImprimeVinculado then
@@ -1004,7 +1008,7 @@ begin
 end;
 
 
-procedure TACBrECFICash.AbreRelatorioGerencial;
+procedure TACBrECFICash.AbreRelatorioGerencial(Indice : Integer) ;
 begin
    EnviaComando( '5601', 50 ) ;
 end;
@@ -1223,7 +1227,8 @@ begin
   Result := Result + StrToFloatDef( copy(RetCmd,8,13), 0 ) / 100 ;
 end;
 
-procedure TACBrECFICash.AbreNaoFiscal( CPF_CNPJ, Nome, Endereco: String );
+procedure TACBrECFICash.AbreNaoFiscal(CPF_CNPJ : String ; Nome : String ;
+   Endereco : String) ;
 begin
   CPF_CNPJ := Trim(CPF_CNPJ) ;
   if CPF_CNPJ <> '' then
@@ -1350,8 +1355,8 @@ begin
   EnviaComando('41' + CNF.Indice + FPG.Indice +
                       IntToStrZero(Round(Valor*100),13) + ObsStr, 15 ) ;
 end;
-procedure TACBrECFICash.Suprimento(const Valor: Double; Obs: AnsiString;
-  DescricaoCNF, DescricaoFPG: String; IndiceBMP: Integer);
+procedure TACBrECFICash.Suprimento(const Valor : Double ; Obs : AnsiString ;
+   DescricaoCNF : String ; DescricaoFPG : String ; IndiceBMP : Integer) ;
 begin
   if UpperCase(Trim(DescricaoCNF)) = 'SUPRIMENTO' then
      DescricaoCNF := 'FUNDO DE CAIXA' ;

@@ -84,6 +84,9 @@ const
    
 type
 { Classe filha de TACBrECFClass com implementaçao para Schalter }
+
+{ TACBrECFSchalter }
+
 TACBrECFSchalter = class( TACBrECFClass )
  private
     fsBytesResp : Integer ;
@@ -155,8 +158,8 @@ TACBrECFSchalter = class( TACBrECFClass )
     Procedure SubtotalizaCupom( DescontoAcrescimo : Double = 0 ;
        MensagemRodape : AnsiString  = '') ; override ;
     Procedure EfetuaPagamento( CodFormaPagto : String; Valor : Double;
-       Observacao : AnsiString = ''; ImprimeVinculado : Boolean = false) ;
-       override ;
+       Observacao : AnsiString = ''; ImprimeVinculado : Boolean = false;
+       CodMeioPagamento: Integer = 0) ; override ;
     Procedure FechaCupom( Observacao : AnsiString = ''; IndiceBMP : Integer = 0) ; override ;
     Procedure CancelaCupom ; override ;
     Procedure CancelaItemVendido( NumItem : Integer ) ; override ;
@@ -276,7 +279,7 @@ begin
 end;
 
 
-Function TACBrECFSchalter.EnviaComando_ECF( cmd : AnsiString ) : AnsiString ;
+function TACBrECFSchalter.EnviaComando_ECF(cmd : AnsiString) : AnsiString ;
 Var ErroMsg : String ;
     Erro : Integer ;
 begin
@@ -429,8 +432,8 @@ begin
   Result := cmd + AnsiChar( chr( iSoma ) );
 end;
 
-Function TACBrECFSchalter.VerificaFimLeitura(var Retorno: AnsiString;
-   var TempoLimite: TDateTime) : Boolean ;
+function TACBrECFSchalter.VerificaFimLeitura(var Retorno : AnsiString ;
+   var TempoLimite : TDateTime) : Boolean ;
 begin
   { Lê até atingir todos os Bytes esperados (BytesResp) e ECF entra EmLinha}
   { BytesResp é necessário, pois a Schalter nao usa um Sufixo padrão no fim
@@ -675,7 +678,7 @@ begin
   Result := true ;  { ACBrECF sempre tenta arredondar na Schalter }
 end;
 
-Procedure TACBrECFSchalter.LeituraX ;
+procedure TACBrECFSchalter.LeituraX ;
 begin
   BytesResp := 1 ;
   AguardaImpressao := True ;
@@ -690,7 +693,7 @@ begin
   Linhas.Text := DadosLeituraX ;
 end;
 
-Procedure TACBrECFSchalter.AbreGaveta ;
+procedure TACBrECFSchalter.AbreGaveta ;
 begin
   BytesResp := 1 ;
   AguardaImpressao := True ;
@@ -698,7 +701,7 @@ begin
   sleep(100) ;
 end;
 
-Procedure TACBrECFSchalter.ReducaoZ(DataHora: TDateTime) ;
+procedure TACBrECFSchalter.ReducaoZ(DataHora : TDateTime) ;
 begin
   BytesResp := 1 ;
   AguardaImpressao := True ;
@@ -715,7 +718,7 @@ begin
   Result := False ;
 end;
 
-Procedure TACBrECFSchalter.MudaHorarioVerao ;
+procedure TACBrECFSchalter.MudaHorarioVerao ;
 begin
   MudaHorarioVerao( True ) ;  // True nunca será usado, mas é necessário
 end;
@@ -864,8 +867,9 @@ begin
   fsDadosLeituraX := '' ;
 end;
 
-procedure TACBrECFSchalter.EfetuaPagamento(CodFormaPagto: String;
-  Valor: Double; Observacao: AnsiString; ImprimeVinculado: Boolean);
+procedure TACBrECFSchalter.EfetuaPagamento(CodFormaPagto : String ;
+   Valor : Double ; Observacao : AnsiString ; ImprimeVinculado : Boolean ;
+   CodMeioPagamento : Integer) ;
 Var FlagObs : AnsiChar ;
 begin
   if StrToFloat( NumVersao ) > 3 then
@@ -952,11 +956,11 @@ begin
   fsEmPagamento := true ;
 end;
 
-Procedure TACBrECFSchalter.VendeItem( Codigo, Descricao : String;
-  AliquotaECF : String; Qtd : Double ; ValorUnitario : Double;
-  ValorDescontoAcrescimo : Double; Unidade : String;
-  TipoDescontoAcrescimo : String; DescontoAcrescimo : String ;
-  CodDepartamento: Integer) ;
+procedure TACBrECFSchalter.VendeItem(Codigo, Descricao : String ;
+   AliquotaECF : String ; Qtd : Double ; ValorUnitario : Double ;
+   ValorDescontoAcrescimo : Double ; Unidade : String ;
+   TipoDescontoAcrescimo : String ; DescontoAcrescimo : String ;
+   CodDepartamento : Integer) ;
 Var QtdStr, ValorStr, DescontoStr, TotalStr : String ;
     Decimais : Integer ;
 begin
@@ -1370,7 +1374,7 @@ begin
 end;
 
 
-procedure TACBrECFSchalter.AbreRelatorioGerencial;
+procedure TACBrECFSchalter.AbreRelatorioGerencial(Indice : Integer) ;
 begin
   BytesResp := 1 ;
   AguardaImpressao := True ;
@@ -1595,7 +1599,8 @@ begin
   Result    := StringToFloatDef( RetCmd, 0 );
 end;
 
-procedure TACBrECFSchalter.AbreNaoFiscal( CPF_CNPJ, Nome, Endereco: String );
+procedure TACBrECFSchalter.AbreNaoFiscal(CPF_CNPJ : String ; Nome : String ;
+   Endereco : String) ;
   Var TamDoc : Integer ;
 begin
   fpUltimaMsgPoucoPapel := 0 ;  { Zera tempo pra msg de pouco papel }

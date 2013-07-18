@@ -353,8 +353,8 @@ TACBrECFNaoFiscal = class( TACBrECFClass )
     Procedure SubtotalizaCupom( DescontoAcrescimo : Double = 0;
        MensagemRodape : AnsiString  = '' ) ; override ;
     Procedure EfetuaPagamento( CodFormaPagto : String; Valor : Double;
-       Observacao : AnsiString = ''; ImprimeVinculado : Boolean = false) ;
-       override ;
+       Observacao : AnsiString = ''; ImprimeVinculado : Boolean = false;
+       CodMeioPagamento: Integer = 0) ; override ;
     Procedure FechaCupom( Observacao : AnsiString = ''; IndiceBMP : Integer = 0) ; override ;
     Procedure CancelaCupom ; override ;
     Procedure CancelaItemVendido( NumItem : Integer ) ; override ;
@@ -622,7 +622,7 @@ begin
   inherited Desativar ;
 end;
 
-Function TACBrECFNaoFiscal.EnviaComando_ECF( cmd : AnsiString ) : AnsiString ;
+function TACBrECFNaoFiscal.EnviaComando_ECF(cmd : AnsiString) : AnsiString ;
 begin
   cmd := AjustaLinhas(cmd, Colunas) ;
   ImprimePorta( cmd );
@@ -809,12 +809,12 @@ begin
   end ;
 end;
 
-Procedure TACBrECFNaoFiscal.LeituraX ;
+procedure TACBrECFNaoFiscal.LeituraX ;
 begin
   ListaLeituraX( estLivre );
 end;
 
-Procedure TACBrECFNaoFiscal.AbreGaveta ;
+procedure TACBrECFNaoFiscal.AbreGaveta ;
 var
   Ini : TIniFile;
 begin
@@ -832,7 +832,7 @@ begin
   ImprimePorta( fsGavetaCmd );
 end;
 
-Procedure TACBrECFNaoFiscal.ReducaoZ(DataHora: TDateTime) ;
+procedure TACBrECFNaoFiscal.ReducaoZ(DataHora : TDateTime) ;
 var
   A: Integer ;
 begin
@@ -889,7 +889,7 @@ begin
 
 end;
 
-Procedure TACBrECFNaoFiscal.MudaHorarioVerao ;
+procedure TACBrECFNaoFiscal.MudaHorarioVerao ;
 begin
   fsVERAO := not fsVERAO ;
 
@@ -1091,8 +1091,9 @@ begin
 
 end;
 
-procedure TACBrECFNaoFiscal.EfetuaPagamento(CodFormaPagto: String;
-  Valor: Double; Observacao: AnsiString; ImprimeVinculado: Boolean);
+procedure TACBrECFNaoFiscal.EfetuaPagamento(CodFormaPagto : String ;
+   Valor : Double ; Observacao : AnsiString ; ImprimeVinculado : Boolean ;
+   CodMeioPagamento : Integer) ;
 Var FPG    : TACBrECFNaoFiscalFormaPagamento ;
     PosFPG : Integer ;
     Troco  : Double ;
@@ -1293,11 +1294,11 @@ begin
 
 end;
 
-Procedure TACBrECFNaoFiscal.VendeItem( Codigo, Descricao : String;
-  AliquotaECF : String; Qtd : Double ; ValorUnitario : Double;
-  ValorDescontoAcrescimo : Double; Unidade : String;
-  TipoDescontoAcrescimo : String; DescontoAcrescimo : String ;
-  CodDepartamento: Integer) ;
+procedure TACBrECFNaoFiscal.VendeItem(Codigo, Descricao : String ;
+   AliquotaECF : String ; Qtd : Double ; ValorUnitario : Double ;
+   ValorDescontoAcrescimo : Double ; Unidade : String ;
+   TipoDescontoAcrescimo : String ; DescontoAcrescimo : String ;
+   CodDepartamento : Integer) ;
 Var PosAliq : Integer ;
     Aliq : TACBrECFNaoFiscalAliquota ;
     ItemCupom : TACBrECFNaoFiscalItemCupom ;
@@ -1440,7 +1441,7 @@ begin
   end ;
 end ;
 
-procedure TACBrECFNaoFiscal.AbreRelatorioGerencial;
+procedure TACBrECFNaoFiscal.AbreRelatorioGerencial(Indice : Integer) ;
 begin
   if not (Estado in [estLivre,estRequerZ,estRequerX])  then
      raise EACBrECFERRO.Create(ACBrStr('O Estado da Impressora não é "LIVRE"'));
@@ -1602,7 +1603,8 @@ begin
   Sleep(100);
 end ;
 
-procedure TACBrECFNaoFiscal.AbreNaoFiscal( CPF_CNPJ, Nome, Endereco: String );
+procedure TACBrECFNaoFiscal.AbreNaoFiscal(CPF_CNPJ : String ; Nome : String ;
+   Endereco : String) ;
 begin
   TestaPodeAbrirCupom ;
 
@@ -2190,7 +2192,7 @@ begin
    end ;
 end;
 
-Procedure TACBrECFNaoFiscal.AvisoLegal ;
+procedure TACBrECFNaoFiscal.AvisoLegal ;
 begin
   {$IFNDEF NOGUI}
     if MessageDlg(ACBrStr( 'Este Emulador destina-se EXCLUSIVAMENTE para auxiliar no '+

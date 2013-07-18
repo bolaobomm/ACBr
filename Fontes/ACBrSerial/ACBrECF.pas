@@ -581,7 +581,8 @@ TACBrECF = class( TACBrComponent )
     Procedure SubtotalizaCupom( DescontoAcrescimo : Double = 0;
        MensagemRodape : AnsiString = '') ;
     Procedure EfetuaPagamento( CodFormaPagto : String; Valor : Double;
-       Observacao : AnsiString = ''; ImprimeVinculado : Boolean = false) ;
+       Observacao : AnsiString = ''; ImprimeVinculado : Boolean = false;
+       CodMeioPagamento: Integer = 0) ;
     { Para quebrar linhas nos parametros Observacao use: '|' (pipe),
        #10 ou chr(10).      Geralmente o ECF aceita no máximo 8 linhas }
     procedure EstornaPagamento(CodFormaPagtoEstornar,
@@ -2823,8 +2824,9 @@ begin
   {$ENDIF}
 end;
 
-procedure TACBrECF.EfetuaPagamento(CodFormaPagto: String; Valor: Double;
-  Observacao: AnsiString; ImprimeVinculado: Boolean);
+procedure TACBrECF.EfetuaPagamento(CodFormaPagto : String ; Valor : Double ;
+   Observacao : AnsiString ; ImprimeVinculado : Boolean ;
+   CodMeioPagamento : Integer) ;
 Var
   FPG     : TACBrECFFormaPagamento ;
   Tratado : Boolean;
@@ -2838,7 +2840,7 @@ begin
 
   ComandoLOG := 'EfetuaPagamento( '+CodFormaPagto+' , '+
                     FloatToStr(Valor)+' , '+Observacao+', '+
-                    BoolToStr( ImprimeVinculado)+' )';
+                    BoolToStr( ImprimeVinculado)+', '+IntToStr(CodMeioPagamento)+' )';
 
   if Assigned( fsAAC ) then
      fsAAC.VerificaReCarregarArquivo;
@@ -2855,7 +2857,8 @@ begin
 
   try
     Tratado := False;
-    fsECF.EfetuaPagamento( CodFormaPagto, Valor, Observacao, ImprimeVinculado);
+    fsECF.EfetuaPagamento( CodFormaPagto, Valor, Observacao, ImprimeVinculado,
+                           CodMeioPagamento );
   except
      if Assigned( fOnErrorEfetuaPagamento ) then
         fOnErrorEfetuaPagamento(Tratado);

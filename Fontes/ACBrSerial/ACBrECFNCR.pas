@@ -107,6 +107,9 @@ TACBrECFNCRResposta = class
  end ;
 
 { Classe filha de TACBrECFClass com implementaçao para NCR }
+
+{ TACBrECFNCR }
+
 TACBrECFNCR = class( TACBrECFClass )
  private
     fsNumLoja       : String ;
@@ -174,8 +177,8 @@ TACBrECFNCR = class( TACBrECFClass )
     Procedure SubtotalizaCupom( DescontoAcrescimo : Double = 0;
        MensagemRodape : AnsiString  = '' ) ; override ;
     Procedure EfetuaPagamento( CodFormaPagto : String; Valor : Double;
-       Observacao : AnsiString = ''; ImprimeVinculado : Boolean = false) ;
-       override ;
+       Observacao : AnsiString = ''; ImprimeVinculado : Boolean = false;
+       CodMeioPagamento: Integer = 0) ; override ;
     Procedure FechaCupom( Observacao : AnsiString = ''; IndiceBMP : Integer = 0) ; override ;
     Procedure CancelaCupom ; override ;
     Procedure CancelaItemVendido( NumItem : Integer ) ; override ;
@@ -964,7 +967,7 @@ begin
   end ;
 end;
 
-Function TACBrECFNCR.EnviaComando_ECF( cmd : AnsiString = '' ) : AnsiString ;
+function TACBrECFNCR.EnviaComando_ECF(cmd : AnsiString) : AnsiString ;
 Var ErroMsg    : String ;
     OldTimeOut : Integer ;
     ByteACK    : Byte ;
@@ -1105,8 +1108,8 @@ begin
   end ;
 end;
 
-Function TACBrECFNCR.VerificaFimLeitura(var Retorno: AnsiString;
-   var TempoLimite: TDateTime) : Boolean ;
+function TACBrECFNCR.VerificaFimLeitura(var Retorno : AnsiString ;
+   var TempoLimite : TDateTime) : Boolean ;
 var
 //  ByteWAK : Byte;
   TamRetorno : Integer;
@@ -1392,7 +1395,7 @@ begin
   Result := (fsHorarioVerao = '1') ;
 end;
 
-Procedure TACBrECFNCR.LeituraX ;
+procedure TACBrECFNCR.LeituraX ;
 begin
   if fpEstado = estRequerx then
      NCRComando.Comando := '18'
@@ -1403,13 +1406,13 @@ begin
   EnviaComando ;
 end;
 
-Procedure TACBrECFNCR.AbreGaveta ;
+procedure TACBrECFNCR.AbreGaveta ;
 begin
   NCRComando.Comando := '206' ;
   EnviaComando ;
 end;
 
-Procedure TACBrECFNCR.ReducaoZ(DataHora: TDateTime) ;
+procedure TACBrECFNCR.ReducaoZ(DataHora : TDateTime) ;
 begin
   NCRComando.Comando := '17' ;
   NCRComando.AddParam('0');
@@ -1419,7 +1422,7 @@ begin
   EnviaComando ;
 end;
 
-Procedure TACBrECFNCR.MudaHorarioVerao ;
+procedure TACBrECFNCR.MudaHorarioVerao ;
 begin
   MudaHorarioVerao( not HorarioVerao ) ;
 end;
@@ -1511,8 +1514,9 @@ begin
   EnviaComando ;
 end;
 
-procedure TACBrECFNCR.EfetuaPagamento(CodFormaPagto: String;
-  Valor: Double; Observacao: AnsiString; ImprimeVinculado: Boolean);
+procedure TACBrECFNCR.EfetuaPagamento(CodFormaPagto : String ; Valor : Double ;
+   Observacao : AnsiString ; ImprimeVinculado : Boolean ;
+   CodMeioPagamento : Integer) ;
 //Var
 //  IdxSeq : Integer ;
 begin
@@ -1578,11 +1582,11 @@ begin
   EnviaComando ;
 end;
 
-Procedure TACBrECFNCR.VendeItem( Codigo, Descricao : String;
-  AliquotaECF : String; Qtd : Double ; ValorUnitario : Double;
-  ValorDescontoAcrescimo : Double; Unidade : String;
-  TipoDescontoAcrescimo : String; DescontoAcrescimo : String ;
-  CodDepartamento: Integer) ;
+procedure TACBrECFNCR.VendeItem(Codigo, Descricao : String ;
+   AliquotaECF : String ; Qtd : Double ; ValorUnitario : Double ;
+   ValorDescontoAcrescimo : Double ; Unidade : String ;
+   TipoDescontoAcrescimo : String ; DescontoAcrescimo : String ;
+   CodDepartamento : Integer) ;
  Var
   ValDesc, ValTotal : Double ;
   IndAliq : Integer ;  
@@ -1896,7 +1900,7 @@ begin
   CarregaComprovantesNaoFiscais ;
 end;
 
-procedure TACBrECFNCR.AbreRelatorioGerencial;
+procedure TACBrECFNCR.AbreRelatorioGerencial(Indice : Integer) ;
 begin
   NCRComando.Comando  := '28' ;
   NCRComando.AddParam( '1' ) ;
@@ -2143,7 +2147,8 @@ begin
   Result := NCRResposta.Params[0] ;
 end;
 
-procedure TACBrECFNCR.AbreNaoFiscal( CPF_CNPJ, Nome, Endereco: String );
+procedure TACBrECFNCR.AbreNaoFiscal(CPF_CNPJ : String ; Nome : String ;
+   Endereco : String) ;
 begin
   if Trim(CPF_CNPJ) <> '' then
      Consumidor.AtribuiConsumidor(CPF_CNPJ,'','');
@@ -2233,7 +2238,7 @@ begin
 end;
 
 // Andre Bohn - Comando para fazer a leitura do CMC7
-Function TACBrECFNCR.LeituraCMC7 : AnsiString ;
+function TACBrECFNCR.LeituraCMC7 : AnsiString ;
 begin
   Result :=  '';
   if fsLeituraCMC7 then

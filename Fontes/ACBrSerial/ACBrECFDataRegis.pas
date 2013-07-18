@@ -151,6 +151,9 @@ const
 
 Type
 { Classe filha de TACBrECFClass com implementaçao para DataRegis }
+
+{ TACBrECFDataRegis }
+
 TACBrECFDataRegis = class( TACBrECFClass )
  private
     fsNumVersao : String ;
@@ -253,8 +256,8 @@ TACBrECFDataRegis = class( TACBrECFClass )
     Procedure SubtotalizaCupom( DescontoAcrescimo : Double = 0;
        MensagemRodape : AnsiString  = '' ) ; override ;
     Procedure EfetuaPagamento( CodFormaPagto : String; Valor : Double;
-       Observacao : AnsiString = ''; ImprimeVinculado : Boolean = false) ;
-       override ;
+       Observacao : AnsiString = ''; ImprimeVinculado : Boolean = false;
+       CodMeioPagamento: Integer = 0) ; override ;
     Procedure FechaCupom( Observacao : AnsiString = ''; IndiceBMP : Integer = 0) ; override ;
     Procedure CancelaCupom ; override ;
     Procedure CancelaItemVendido( NumItem : Integer ) ; override ;
@@ -411,7 +414,7 @@ begin
 end;
 
 
-Function TACBrECFDataRegis.EnviaComando_ECF( cmd : AnsiString ) : AnsiString ;
+function TACBrECFDataRegis.EnviaComando_ECF(cmd : AnsiString) : AnsiString ;
 Var ErroMsg     : String ;
     charAviso   : AnsiChar;
     PediuStatus : Boolean ;
@@ -548,7 +551,7 @@ begin
   end ;
 end;
 
-Function TACBrECFDataRegis.PreparaCmd( cmd : AnsiString ) : AnsiString ;
+function TACBrECFDataRegis.PreparaCmd(cmd : AnsiString) : AnsiString ;
 Var A, iSoma   : Integer ;
     CKS1       : AnsiChar ;
 begin
@@ -606,8 +609,8 @@ begin
   end ;
 end;
 
-Function TACBrECFDataRegis.VerificaFimLeitura(var Retorno: AnsiString;
-   var TempoLimite: TDateTime) : Boolean ;
+function TACBrECFDataRegis.VerificaFimLeitura(var Retorno : AnsiString ;
+   var TempoLimite : TDateTime) : Boolean ;
 Var ACK : AnsiChar ;
     cmd : AnsiString ;
     Bytes : Integer ;
@@ -901,7 +904,7 @@ begin
    Result := (RetCmd[2] = 'N') ;
 end;
 
-Procedure TACBrECFDataRegis.LeituraX ;
+procedure TACBrECFDataRegis.LeituraX ;
 begin
    {Compativel com 02.03 e 02.05}
    AguardaImpressao := True ;
@@ -925,13 +928,13 @@ begin
   Linhas.Text := EnviaComando( 'GSN', 15 );
 end;
 
-Procedure TACBrECFDataRegis.AbreGaveta ;
+procedure TACBrECFDataRegis.AbreGaveta ;
 begin
    {Compativel com 02.03 e 02.05}
    EnviaComando('N') ;
 end;
 
-Procedure TACBrECFDataRegis.ReducaoZ(DataHora: TDateTime) ;
+procedure TACBrECFDataRegis.ReducaoZ(DataHora : TDateTime) ;
 begin
    {Compativel com 02.03 e 02.05}
    {Dataregis, Nao usa DataHora}
@@ -949,7 +952,7 @@ begin
   GravaArqINI ;
 end;
 
-Procedure TACBrECFDataRegis.MudaHorarioVerao ;
+procedure TACBrECFDataRegis.MudaHorarioVerao ;
 var
    DataHora : TDateTime;
 begin
@@ -1065,8 +1068,9 @@ unidade de medida[2]        Unidade=00 indice da unidade
   fsTotalAcumulado:= GetSubTotal;
 end;
 
-procedure TACBrECFDataRegis.EfetuaPagamento(CodFormaPagto: String;
-  Valor: Double; Observacao: AnsiString; ImprimeVinculado: Boolean);
+procedure TACBrECFDataRegis.EfetuaPagamento(CodFormaPagto : String ;
+   Valor : Double ; Observacao : AnsiString ; ImprimeVinculado : Boolean ;
+   CodMeioPagamento : Integer) ;
 var curValorDescAcre:currency;
     strTipo:string;
 begin
@@ -1132,11 +1136,11 @@ begin
    GravaArqINI ;
 end;
 
-Procedure TACBrECFDataRegis.VendeItem( Codigo, Descricao : String;
-  AliquotaECF : String; Qtd : Double ; ValorUnitario : Double;
-  ValorDescontoAcrescimo : Double; Unidade : String;
-  TipoDescontoAcrescimo : String; DescontoAcrescimo : String ;
-  CodDepartamento: Integer) ;
+procedure TACBrECFDataRegis.VendeItem(Codigo, Descricao : String ;
+   AliquotaECF : String ; Qtd : Double ; ValorUnitario : Double ;
+   ValorDescontoAcrescimo : Double ; Unidade : String ;
+   TipoDescontoAcrescimo : String ; DescontoAcrescimo : String ;
+   CodDepartamento : Integer) ;
 Var QtdStr, ValorStr, DescStr, CodDescr, LinhaItem : String ;
     UMD : TACBrECFUnidadeMedida;
     Ini : TIniFile;
@@ -1411,8 +1415,8 @@ begin
    end ;
 end;
 
-procedure TACBrECFDataregis.ProgramaFormaPagamento( var Descricao: String;
-  PermiteVinculado : Boolean; Posicao : String) ;
+procedure TACBrECFDataRegis.ProgramaFormaPagamento(var Descricao : String ;
+   PermiteVinculado : Boolean ; Posicao : String) ;
 Var
    FPagto : TACBrECFFormaPagamento ;
    FlagVinc : Char ;
@@ -1462,7 +1466,7 @@ begin
    Result := True ;
 end;
 
-procedure TACBrECFDataRegis.AbreRelatorioGerencial;
+procedure TACBrECFDataRegis.AbreRelatorioGerencial(Indice : Integer) ;
 begin
    {Compativel com 02.03 e 02.05}
    {Impressora 02.05 pede o indice do relatorio gerencial, 00 é o default}
@@ -1555,7 +1559,7 @@ begin
 end;
 
 procedure TACBrECFDataRegis.ProgramaComprovanteNaoFiscal(
-  var Descricao: String; Tipo, Posicao: String);
+   var Descricao : String ; Tipo : String ; Posicao : String) ;
 begin
    {Compativel com 02.03 e 02.05}
    { Obs: Dataregis nao usa Tipo }
@@ -2324,7 +2328,8 @@ begin
    CarregaFormasPagamento;
 end;
 
-procedure TACBrECFDataRegis.AbreNaoFiscal( CPF_CNPJ, Nome, Endereco: String );
+procedure TACBrECFDataRegis.AbreNaoFiscal(CPF_CNPJ : String ; Nome : String ;
+   Endereco : String) ;
 begin
    {Na Dataregis nao precisa Abrir Nao Fiscal}
    fsTotalPago := 0;
