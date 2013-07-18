@@ -183,7 +183,7 @@ type
   // Alterado por Italo em 20/05/2013
   TpcnTpEvento = (teCCe, teCancelamento, teManifDestConfirmacao, teManifDestCiencia,
                   teManifDestDesconhecimento, teManifDestOperNaoRealizada,
-                  teEncerramento, teEPEC, teMultiModal);
+                  teEncerramento, teEPEC, teMultiModal, teInclusaoCondutor);
   TpcnIndicadorNFe = (inTodas, inSemManifestacaoComCiencia, inSemManifestacaoSemCiencia);
   TpcnIndicadorEmissor = (ieTodos, ieRaizCNPJDiferente);
   TpcnIndicadorContinuacao = (icNaoPossuiMaisDocumentos, icPossuiMaisDocumentos);
