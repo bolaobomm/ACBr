@@ -96,6 +96,8 @@ type
     FcUF: Integer;     // Encerramento
     FcMun: Integer;    // Encerramento
     FxJust: string;    // Cancelamento
+    FxNome: String;    // Inclusao de Condutor
+    FCPF: String;      // Inclusao de Condutor
   public
     property descEvento: String read FdescEvento write FdescEvento;
     property nProt: String      read FnProt      write FnProt;
@@ -103,6 +105,8 @@ type
     property cUF: Integer       read FcUF        write FcUF;
     property cMun: Integer      read FcMun       write FcMun;
     property xJust: String      read FxJust      write FxJust;
+    property xNome: String      read FxNome      write FxNome;
+    property CPF: String        read FCPF        write FCPF;
   end;
 
   TRetInfEvento = class
@@ -173,8 +177,9 @@ end;
 function TInfEvento.getDescEvento: string;
 begin
   case fTpEvento of
-    teCancelamento : Result := 'Cancelamento';
-    teEncerramento : Result := 'Encerramento';
+    teCancelamento:     Result := 'Cancelamento';
+    teEncerramento:     Result := 'Encerramento';
+    teInclusaoCondutor: Result := 'Inclusao Condutor';
   else
     raise EventoException.Create('Descrição do Evento não Implementado!');
   end;
@@ -183,8 +188,9 @@ end;
 function TInfEvento.getTipoEvento: string;
 begin
   case FTpEvento of
-    teCancelamento: Result := '110111';
-    teEncerramento: Result := '110112';
+    teCancelamento:     Result := '110111';
+    teEncerramento:     Result := '110112';
+    teInclusaoCondutor: Result := '110114';
   else
     raise EventoException.Create('Tipo do Evento não Implementado!');
   end;
@@ -198,8 +204,9 @@ end;
 function TInfEvento.DescricaoTipoEvento(TipoEvento: TpcnTpEvento): String;
 begin
   case TipoEvento of
-    teCancelamento : Result := 'CANCELAMENTO';
-    teEncerramento : Result := 'ENCERRAMENTO';
+    teCancelamento:     Result := 'CANCELAMENTO';
+    teEncerramento:     Result := 'ENCERRAMENTO';
+    teInclusaoCondutor: Result := 'INCLUSAO CONDUTOR';
   else
     Result := 'Não Definido';
   end;

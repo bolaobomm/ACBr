@@ -256,7 +256,7 @@ type
     property cStat: Integer                read FcStat;
     property xMotivo: String               read FxMotivo;
     property TpAmb: TpcnTipoAmbiente       read FTpAmb;
-    property EventoRetorno: TRetEventoMDFe  read FEventoRetorno;
+    property EventoRetorno: TRetEventoMDFe read FEventoRetorno;
   end;
 
   TWebServices = Class(TWebServicesBase)
@@ -506,6 +506,11 @@ begin
             infEvento.detEvento.dtEnc := TMDFeEnvEvento(Self).FEvento.Evento[i].InfEvento.detEvento.dtEnc;
             infEvento.detEvento.cUF   := TMDFeEnvEvento(Self).FEvento.Evento[i].InfEvento.detEvento.cUF;
             infEvento.detEvento.cMun  := TMDFeEnvEvento(Self).FEvento.Evento[i].InfEvento.detEvento.cMun;
+          end;
+          teInclusaoCondutor:
+          begin
+            infEvento.detEvento.xNome := TMDFeEnvEvento(Self).FEvento.Evento[i].InfEvento.detEvento.xNome;
+            infEvento.detEvento.CPF   := TMDFeEnvEvento(Self).FEvento.Evento[i].InfEvento.detEvento.CPF;
           end;
         end;
       end;
@@ -1457,8 +1462,11 @@ begin
 
 //      FprocEventoMDFe.Items[I].RetEventoMDFe.InfEvento.DetEvento.xCorrecao := MDFeRetorno.procEventoMDFe.Items[I].RetEventoMDFe.InfEvento.DetEvento.xCorrecao;
 //      FprocEventoMDFe.Items[I].RetEventoMDFe.InfEvento.DetEvento.xCondUso  := MDFeRetorno.procEventoMDFe.Items[I].RetEventoMDFe.InfEvento.DetEvento.xCondUso;
-      FprocEventoMDFe.Items[I].RetEventoMDFe.InfEvento.DetEvento.nProt     := MDFeRetorno.procEventoMDFe.Items[I].RetEventoMDFe.InfEvento.DetEvento.nProt;
-      FprocEventoMDFe.Items[I].RetEventoMDFe.InfEvento.DetEvento.xJust     := MDFeRetorno.procEventoMDFe.Items[I].RetEventoMDFe.InfEvento.DetEvento.xJust;
+      FprocEventoMDFe.Items[I].RetEventoMDFe.InfEvento.DetEvento.nProt := MDFeRetorno.procEventoMDFe.Items[I].RetEventoMDFe.InfEvento.DetEvento.nProt;
+      FprocEventoMDFe.Items[I].RetEventoMDFe.InfEvento.DetEvento.xJust := MDFeRetorno.procEventoMDFe.Items[I].RetEventoMDFe.InfEvento.DetEvento.xJust;
+
+      FprocEventoMDFe.Items[I].RetEventoMDFe.InfEvento.DetEvento.xNome := MDFeRetorno.procEventoMDFe.Items[I].RetEventoMDFe.InfEvento.DetEvento.xNome;
+      FprocEventoMDFe.Items[I].RetEventoMDFe.InfEvento.DetEvento.CPF   := MDFeRetorno.procEventoMDFe.Items[I].RetEventoMDFe.InfEvento.DetEvento.CPF;
 
       FprocEventoMDFe.Items[I].RetEventoMDFe.retEvento.Clear;
       for j := 0 to MDFeRetorno.procEventoMDFe.Items[I].RetEventoMDFe.retEvento.Count-1 do
@@ -1510,7 +1518,7 @@ begin
 //    FDhRecbto  := FprotMDFe.dhRecbto; // MDFeUtil.SeSenao(MDFeRetorno.retCancMDFe.dhRecbto <> 0,MDFeRetorno.retCancMDFe.dhRecbto,MDFeRetorno.protMDFe.dhRecbto);
 
     TACBrMDFe( FACBrMDFe ).SetStatus( stMDFeIdle );
-    
+
     aMsg := 'Identificador : ' + MDFeRetorno.protMDFe.chMDFe + LineBreak +
             'Ambiente : ' + TpAmbToStr(MDFeRetorno.TpAmb) + LineBreak +
             'Versão Aplicativo : ' + MDFeRetorno.verAplic + LineBreak +
@@ -1569,7 +1577,7 @@ begin
              if DFeUtil.NaoEstaVazio(TACBrMDFe( FACBrMDFe ).Manifestos.Items[i].NomeArq)
               then AProcMDFe.PathMDFe := TACBrMDFe( FACBrMDFe ).Manifestos.Items[i].NomeArq
               else AProcMDFe.PathMDFe := PathWithDelim(FConfiguracoes.Geral.PathSalvar)+FMDFeChave+'-mdfe.xml';
-              
+
              AProcMDFe.PathRetConsSitMDFe := PathWithDelim(FConfiguracoes.Geral.PathSalvar)+FMDFeChave+'-sit.xml';
 
              AProcMDFe.GerarXML;

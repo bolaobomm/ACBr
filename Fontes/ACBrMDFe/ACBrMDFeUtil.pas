@@ -397,7 +397,7 @@ begin
        then schema_filename := pchar(PathWithDelim(ExtractFileDir(application.ExeName))+'Schemas\MDFe_v' + MDFeEnviMDFe + '.xsd')
        else schema_filename := pchar(PathWithDelim(APathSchemas)+'MDFe_v' + MDFeEnviMDFe + '.xsd');
      end;
-  2,3:
+  2..4:
      begin
       if DFeUtil.EstaVazio(APathSchemas) then
         schema_filename := pchar(PathWithDelim(ExtractFileDir(application.ExeName))+'Schemas\eventoMDFe_v' + MDFeEventoMDFe + '.xsd')
@@ -509,7 +509,7 @@ begin
     1: schema_filename := DFeUtil.SeSenao(DFeUtil.EstaVazio(APathSchemas),
                                            PathWithDelim(ExtractFileDir(application.ExeName)) + 'Schemas\',
                                            PathWithDelim(APathSchemas)) + 'MDFe_v' + MDFeEnviMDFe + '.xsd';
-    2,3: schema_filename := DFeUtil.SeSenao(DFeUtil.EstaVazio(APathSchemas),
+    2..4: schema_filename := DFeUtil.SeSenao(DFeUtil.EstaVazio(APathSchemas),
                                              PathWithDelim(ExtractFileDir(application.ExeName)) + 'Schemas\',
                                              PathWithDelim(APathSchemas)) + 'eventoMDFe_v' + MDFeEventoMDFe + '.xsd';
     else schema_filename := '';
@@ -599,6 +599,14 @@ begin
             XML +
            '</evCancMDFe>';
    end;
+  if pos( '<evIncCondutorMDFe>', XML) <> 0
+   then begin
+    Tipo := 8;
+    XML := SeparaDados( XML, 'evIncCondutorMDFe' );
+    XML := '<evIncCondutorMDFe xmlns="http://www.portalfiscal.inf.br/mdfe">' +
+            XML +
+           '</evIncCondutorMDFe>';
+   end;
 
   XML := '<?xml version="1.0" encoding="UTF-8" ?>' + XML;
 
@@ -666,6 +674,12 @@ begin
           DFeUtil.SeSenao(DFeUtil.EstaVazio(APathSchemas),
           PathWithDelim(ExtractFileDir(application.ExeName))+'Schemas\',
           PathWithDelim(APathSchemas))+'evCancMDFe_v' + MDFeModalRodo + '.xsd');
+      end;
+   8: begin
+       Schema.add('http://www.portalfiscal.inf.br/mdfe',
+          DFeUtil.SeSenao(DFeUtil.EstaVazio(APathSchemas),
+          PathWithDelim(ExtractFileDir(application.ExeName))+'Schemas\',
+          PathWithDelim(APathSchemas))+'evIncCondutorMDFe_v' + MDFeModalRodo + '.xsd');
       end;
   end;
 
@@ -781,8 +795,8 @@ begin
   case Tipo of
     1: AStr := Copy(AStr,1,StrToInt(VarToStr(DFeUtil.SeSenao(I>0,I+1,I)))) + cDTD +
                Copy(AStr,StrToInt(VarToStr(DFeUtil.SeSenao(I>0,I+2,I))),Length(AStr));
-    2,3: AStr := Copy(AStr,1,StrToInt(VarToStr(DFeUtil.SeSenao(I>0,I+1,I)))) + cDTDEven +
-                 Copy(AStr,StrToInt(VarToStr(DFeUtil.SeSenao(I>0,I+2,I))),Length(AStr));
+    2..4: AStr := Copy(AStr,1,StrToInt(VarToStr(DFeUtil.SeSenao(I>0,I+1,I)))) + cDTDEven +
+                  Copy(AStr,StrToInt(VarToStr(DFeUtil.SeSenao(I>0,I+2,I))),Length(AStr));
     else AStr := '';
   end;
 
@@ -793,7 +807,7 @@ begin
       if I = 0 then
         raise Exception.Create('Não encontrei final do XML: </MDFe>');
     end;
-    2,3:
+    2..4:
     begin
       // Alterado por Italo em 02/10/2012
       I := pos('</eventoMDFe>',AStr);
@@ -831,7 +845,7 @@ begin
   // Alterado por Italo em 02/10/2012
   case Tipo of
     1: AStr := AStr + '</MDFe>';
-    2,3: AStr := AStr + '</eventoMDFe>';
+    2..4: AStr := AStr + '</eventoMDFe>';
     else AStr := '';
   end;
 
@@ -844,7 +858,7 @@ begin
   // Removendo DTD //
   case Tipo of
     1: XmlAss := StringReplace( XmlAss, cDTD, '', [] );
-    2,3: XmlAss := StringReplace( XmlAss, cDTDEven, '', [] );
+    2..4: XmlAss := StringReplace( XmlAss, cDTDEven, '', [] );
     else XmlAss := '';
   end;
 
@@ -890,7 +904,7 @@ begin
     // Alterado por Italo em 02/10/2012
     case Tipo of
       1: XML := copy(XML,1,pos('</MDFe>',XML)-1);
-      2,3: XML := copy(XML,1,pos('</eventoMDFe>',XML)-1);
+      2..4: XML := copy(XML,1,pos('</eventoMDFe>',XML)-1);
       else XML := '';
     end;
 
@@ -902,7 +916,7 @@ begin
     // Alterado por Italo em 02/10/2012
     case Tipo of
       1: XML := XML + '</MDFe>';
-      2,3: XML := XML + '</eventoMDFe>';
+      2..4: XML := XML + '</eventoMDFe>';
       else XML := '';
     end;
   end;
@@ -1204,7 +1218,11 @@ begin
         else begin
          if lTipoEvento = '110112'
           then Result := 3 //Encerramento
-          else Result := 4;
+          else begin
+           if lTipoEvento = '110114'
+            then Result := 4 //Inclusao de Condutor
+            else Result := 5;
+          end;
         end;
       end;
    end;

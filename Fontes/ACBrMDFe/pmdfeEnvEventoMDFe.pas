@@ -117,8 +117,9 @@ end;
 function TEventoMDFe.ObterNomeArquivo(tpEvento: TpcnTpEvento): string;
 begin
  case tpEvento of
-    teCancelamento : Result := Evento.Items[0].InfEvento.chMDFe + '-can-eve.xml'; // Cancelamento da MDFe como Evento
-    teEncerramento : Result := Evento.Items[0].InfEvento.chMDFe + '-ped-eve.xml'; // Encerramento
+    teCancelamento:     Result := Evento.Items[0].InfEvento.chMDFe + '-can-eve.xml'; // Cancelamento da MDFe como Evento
+    teEncerramento:     Result := Evento.Items[0].InfEvento.chMDFe + '-ped-eve.xml'; // Encerramento
+    teInclusaoCondutor: Result := Evento.Items[0].InfEvento.chMDFe + '-inc-eve.xml'; // Inclusao de Condutor
   else
     raise EventoException.Create('Obter nome do arquivo de Evento não Implementado!');
  end;
@@ -188,6 +189,16 @@ begin
        Gerador.wCampo(tcInt, 'EP06', 'cMun      ', 07, 07, 1, Evento.Items[0].InfEvento.detEvento.cMun);
        Gerador.wGrupo('/evEncMDFe');
      end;
+   teInclusaoCondutor:
+     begin
+       Gerador.wGrupo('evIncCondutorMDFe');
+       Gerador.wCampo(tcStr, 'EP02', 'descEvento', 05, 12, 1, Evento.Items[0].InfEvento.DescEvento);
+       Gerador.wGrupo('Condutor');
+       Gerador.wCampo(tcStr, 'EP04', 'xNome     ', 01, 60, 1, Evento.Items[0].InfEvento.detEvento.xNome);
+       Gerador.wCampo(tcStr, 'EP05', 'CPF       ', 11, 11, 1, Evento.Items[0].InfEvento.detEvento.CPF);
+       Gerador.wGrupo('/Condutor');
+       Gerador.wGrupo('/evIncCondutorMDFe');
+     end;
   end;
   Gerador.wGrupo('/detEvento');
   Gerador.wGrupo('/infEvento');
@@ -203,7 +214,7 @@ end;
 
 function TEventoMDFe.LerXML(const CaminhoArquivo: string): boolean;
 var
-  ArqEvento    : TStringList;
+  ArqEvento : TStringList;
 begin
   ArqEvento := TStringList.Create;
   try
@@ -239,7 +250,9 @@ begin
          infEvento.detEvento.dtEnc      := RetEventoMDFe.InfEvento.detEvento.dtEnc;
          infEvento.detEvento.cUF        := RetEventoMDFe.InfEvento.detEvento.cUF;
          infEvento.detEvento.cMun       := RetEventoMDFe.InfEvento.detEvento.cMun;
-         infEvento.detEvento.xJust      := RetEventoMDFe.InfEvento.DetEvento.xJust;
+         infEvento.detEvento.xJust      := RetEventoMDFe.InfEvento.detEvento.xJust;
+         infEvento.detEvento.xNome      := RetEventoMDFe.InfEvento.detEvento.xNome;
+         infEvento.detEvento.CPF        := RetEventoMDFe.InfEvento.detEvento.CPF;
 
         if RetEventoMDFe.retEvento.Count > 0 then
          begin
