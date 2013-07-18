@@ -2996,6 +2996,13 @@ begin
   if Trim(InfoRodapeCupom.DavOs) <> EmptyStr then
     Result := Result + 'DAV-OS' + Trim(InfoRodapeCupom.DavOs);
 
+  // atende ao requisito do paf-ECF XXVIII item 8
+  if Trim(InfoRodapeCupom.DavOs) <> EmptyStr then
+    Result := Result + 'DAV-OS' + Trim(InfoRodapeCupom.DavOs);
+
+  if Trim(InfoRodapeCupom.NF) <> EmptyStr then
+    Result := Result + 'NF:' + Trim(InfoRodapeCupom.NF);
+
   Result := Trim(Result) + sLineBreak + Trim(GetRodapeRestaurante);
   Result := Trim(Result) + sLineBreak + Trim(GetRodapeUF);
   Result := Trim(Result) + sLineBreak + Trim(GetRodapeImposto);

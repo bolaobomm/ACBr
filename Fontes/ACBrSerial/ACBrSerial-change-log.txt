@@ -97,6 +97,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+Data: 18/07/2013
+-- ACBrECF --
+[+] Adicionada informação de rodapé para: ER 02.01 - Requisito XXVIII item 8
+    http://www.projetoacbr.com.br/forum/index.php?/topic/11450-incluir-numero-de-nota-serie-d-no-rodap%C3%A9-do-cupom-fiscal/
+    por: cleber
+
 Data: 17/07/2013
 -- ACBrECF --
 [*] Refactoring em rotinas de Fechamento de Cupom. Simplificação da decisão

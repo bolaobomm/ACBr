@@ -117,6 +117,7 @@ TACBrECFRodape = class( TPersistent )
     fsDavOs: String;
     fsMD5: String;
     fsDav: String;
+    fsNF: String;
     fsRestaurante: TACBrECFRodapeRestaurante;
     fsMinasLegal: Boolean;
     fsCupomMania: Boolean;
@@ -132,6 +133,7 @@ TACBrECFRodape = class( TPersistent )
   published
     property MD5         : String  read fsMD5         write SetMD5;
     property Dav         : String  read fsDav         write fsDav   stored False;
+    property NF          : String  read fsNF          write fsNF stored False;
     property DavOs       : String  read fsDavOs       write fsDavOs stored False;
     property PreVenda    : String  read fsPreVenda    write fsPreVenda stored False;
     property Restaurante : TACBrECFRodapeRestaurante read fsRestaurante write fsRestaurante;
@@ -4565,6 +4567,7 @@ begin
   fsDav        := EmptyStr;
   fsDavOs      := EmptyStr;
   fsPreVenda   := EmptyStr;
+  fsNF         := EmptyStr;
 
   fsRestaurante.Imprimir:= False;
   fsRestaurante.CER    := 0;

@@ -1245,6 +1245,9 @@ begin
      ACBrECF1.InfoRodapeCupom.Imposto.ValorAproximado := 1.23;  // informar o valor aproximado calculado a partir dos itens
      ACBrECF1.InfoRodapeCupom.Imposto.Fonte           := 'IBPT'; // informar a fonte de onde veio a informação para calculo
 
+     // ER 02.01 - Requisito XXVIII item 8
+     ACBrECF1.InfoRodapeCupom.NF := '123456';
+
      Obs := StringReplace(Obs,'|',#10,[rfReplaceAll,rfIgnoreCase]) ;
      ACBrECF1.FechaCupom( Obs, StrToIntDef(IndiceBMP, 0) );
      mResp.Lines.Add( 'Fecha Cupom: '+#10+Obs );
