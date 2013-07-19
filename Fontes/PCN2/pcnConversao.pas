@@ -183,7 +183,7 @@ type
   // Alterado por Italo em 20/05/2013
   TpcnTpEvento = (teCCe, teCancelamento, teManifDestConfirmacao, teManifDestCiencia,
                   teManifDestDesconhecimento, teManifDestOperNaoRealizada,
-                  teEncerramento, teEPEC, teMultiModal, teInclusaoCondutor);
+                  teEncerramento, teEPEC, teInclusaoCondutor, teMultiModal);
   TpcnIndicadorNFe = (inTodas, inSemManifestacaoComCiencia, inSemManifestacaoSemCiencia);
   TpcnIndicadorEmissor = (ieTodos, ieRaizCNPJDiferente);
   TpcnIndicadorContinuacao = (icNaoPossuiMaisDocumentos, icPossuiMaisDocumentos);
@@ -211,7 +211,7 @@ type
   TpcnindNegociavel = (inNaoNegociavel, inNegociavel);
 
 const
-  TpcnTpEventoString : array[0..8] of String =( '110110',
+  TpcnTpEventoString : array[0..9] of String =( '110110',
                                                 '110111',
                                                 '210200',
                                                 '210210',
@@ -219,6 +219,7 @@ const
                                                 '210240',
                                                 '110112',
                                                 '110113',
+                                                '110114',
                                                 '110160' );
 
   NFeUF: array[0..26] of String =
