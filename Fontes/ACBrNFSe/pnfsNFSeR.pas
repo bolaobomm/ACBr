@@ -768,14 +768,18 @@ begin
    if (CM = '3127701') or (CM = '3500105') or (CM = '3510203') or
       (CM = '3523503') or (CM = '3554003') then
     FProvedor := pro4R;
+
+   if (CM = '5213103') or (CM = '5218805') then
+    FProvedor := proProdata;
   end;
 
  if (Leitor.rExtrai(1, 'Rps') <> '')
   then begin
    case FProvedor of
-    proSaatri: Rps_ProvedorSaatri;
-   	proGoiania: Rps_ProvedorGoiania;
-    proIssDsf: Rps_ProvedorIssDsf;
+    proSaatri:  Rps_ProvedorSaatri;
+   	proGoiania,
+    proProdata: Rps_ProvedorGoiania;
+    proIssDsf:  Rps_ProvedorIssDsf;
     else Rps_Demais;
    end;
   end; // fim do Rps
@@ -2375,6 +2379,9 @@ begin
 
    if(CM = '3503307') or (CM = '3538709') or (CM = '3541406') then
       FProvedor := proSimplISS;
+
+   if (CM = '5213103') or (CM = '5218805') then
+    FProvedor := proProdata;
   end;
 
  if (Leitor.rExtrai(1, 'Nfse') <> '') or (Pos('Nfse versao="2.01"', Leitor.Arquivo) > 0) then // alterado por Joel Takei 24/06/2013
@@ -2397,7 +2404,8 @@ begin
      case FProvedor of
       proSaatri:    NFSe_ProvedorSaatri;
       profintelISS: NFSe_ProvedorfintelISS;
-      proGoiania:   NFSe_ProvedorGoiania;
+      proGoiania,
+      proProdata:   NFSe_ProvedorGoiania;
       pro4R:        NFSe_Provedor4R;
       proISSe:      NFSe_ProvedorISSe; // alterado por Joel Takei 24/06/2013
       proTiplan:    NFSe_ProvedorTiplan;

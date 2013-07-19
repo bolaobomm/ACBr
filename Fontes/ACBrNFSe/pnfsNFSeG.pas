@@ -106,7 +106,8 @@ begin
                DFeUtil.SeSenao(AProvedor = proSimplISS, NameSpaceDad, '') +
                DFeUtil.SeSenao(AProvedor in [proAbaco, proBetha, proGinfes, proGoiania, proGovBR,
                                              proISSDigital, proIssCuritiba, proISSNET, proNatal,
-                                             proRecife, proRJ, proSimplISS, proThema, proTiplan], '',
+                                             proRecife, proRJ, proSimplISS, proThema, proTiplan,
+                                             proProdata], '',
                 DFeUtil.SeSenao(VersaoDados <> '', ' versao="' + VersaoDados + '"', '')) + '>' +
               '<' + Prefixo4 + 'NumeroLote>' +
                 NumeroLote +
@@ -335,7 +336,7 @@ begin
                       NumeroNFse +
                     '</' + Prefixo4 + 'Numero>' +
 
-                    // alterado por joel takei 05/07/2013 
+                    // alterado por joel takei 05/07/2013
                    DFeUtil.SeSenao(AProvedor in [pro4R, proISSe],
 
                     '<' + Prefixo4 + 'CpfCnpj>' +
@@ -388,6 +389,7 @@ begin
   proGovDigital,
   proIssDigital,
   proISSe,
+  proProdata,
   proSaatri: Result := TagI + Notas + TagF;
   else begin // proWebISS
    DadosMsg := '<' + Prefixo3 + 'LoteRps'+
@@ -442,7 +444,7 @@ begin
      proEquiplano, profintelISS, proFISSLex, proGinfes, proGoiania, proGovBR,
      proGovDigital, proIssCuritiba, proISSDigital, proISSIntel, proISSNet, proNatal,
      proProdemge, proPublica, proRecife, proRJ, proSaatri, proSimplISS, proThema,
-     proTiplan, proWebISS, proCoplan] then Result := '';
+     proTiplan, proWebISS, proCoplan, proProdata] then Result := '';
 end;
 
 //-------------------------------------------------------------------------

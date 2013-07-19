@@ -150,7 +150,7 @@ begin
 
  if FProvedor <> proIssDsf then
  // Alterado Por Cleiver em 01/02/2013
- if (FProvedor = proGoiania)
+ if (FProvedor in [proGoiania, proProdata])
   then begin
    Gerador.wGrupo('GerarNfseEnvio' + Atributo);
 	 Gerador.wGrupo('Rps');
@@ -173,7 +173,8 @@ begin
  case FProvedor of
   profintelISS:  GerarXML_Provedor_fintelISS;
   proSaatri:     GerarXML_Provedor_Saatri;
-  proGoiania:    GerarXML_Provedor_Goiania;
+  proGoiania,
+  proProdata:    GerarXML_Provedor_Goiania;
   proDigifred:   GerarXML_Provedor_Digifred;
   proISSDigital: GerarXML_Provedor_ISSDigital;
   proISSe:       GerarXML_Provedor_ISSe;
@@ -235,7 +236,7 @@ begin
 
  if FProvedor <> proIssDsf then
  // Alterado por Cleiver em 01/02/2013
- if (FProvedor = proGoiania)
+ if (FProvedor in [proGoiania, proProdata])
   then begin
    Gerador.wGrupo('/Rps');
    Gerador.wGrupo('/GerarNfseEnvio');
@@ -366,7 +367,8 @@ begin
                  Gerador.wGrupoNFSe('/Servico');
                 end;
 
-  proGoiania:   begin
+  proGoiania,
+  proProdata:   begin
                  Gerador.wGrupoNFSe('Servico');
                  Gerador.wGrupoNFSe('Valores');
                  Gerador.wCampoNFSe(tcDe2, '#13', 'ValorServicos', 01, 15, 1, NFSe.Servico.Valores.ValorServicos, '');

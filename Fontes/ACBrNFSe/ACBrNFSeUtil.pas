@@ -469,7 +469,7 @@ begin
                      AStr := AStr + Assinatura;
                      AStr := AStr + '</Rps>';
                      // Alterado por Cleiver em 26/02/2013
-                     if (AProvedor = proGoiania)
+                     if (AProvedor in [proGoiania, proProdata])
                       then AStr := AStr + '</GerarNfseEnvio>';
                     end;
       else begin
@@ -477,7 +477,7 @@ begin
             AStr := AStr + Assinatura;
             AStr := AStr + '</Rps>';
             // Alterado por Cleiver em 26/02/2013
-            if (AProvedor = proGoiania)
+            if (AProvedor in [proGoiania, proProdata])
              then AStr := AStr + '</GerarNfseEnvio>';
            end;
      end;
@@ -699,7 +699,7 @@ begin
                      AXML := AXML + Assinatura;
                      AXML := AXML + '</Rps>';
                      // Alterado por Cleiver em 26/02/2013
-                     if (AProvedor = proGoiania)
+                     if (AProvedor in [proGoiania, proProdata])
                       then AXML := AXML + '</GerarNfseEnvio>';
                     end;
       else begin
@@ -707,7 +707,7 @@ begin
             AXML := AXML + Assinatura;
             AXML := AXML + '</Rps>';
             // Alterado por Cleiver em 26/02/2013
-            if (AProvedor = proGoiania)
+            if (AProvedor in [proGoiania, proProdata])
              then AXML := AXML + '</GerarNfseEnvio>';
            end;
      end;
@@ -822,7 +822,7 @@ begin
                    AXML := AXML + '</Rps>';
 
                    // Alterado por Cleiver em 26/02/2013
-                   if (AProvedor = proGoiania)
+                   if (AProvedor in [proGoiania, proProdata])
                     then AXML := AXML + '</GerarNfseEnvio>';
 
                    XMLAssinado := AXML;
