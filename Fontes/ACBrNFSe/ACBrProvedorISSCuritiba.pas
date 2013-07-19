@@ -89,7 +89,7 @@ begin
  ConfigCidade.Prefixo2      := '';
  ConfigCidade.Prefixo3      := '';
  ConfigCidade.Prefixo4      := '';
- ConfigCidade.Identificador := 'Id';
+ ConfigCidade.Identificador := 'id';
 
  if AAmbiente = 1
   then ConfigCidade.NameSpaceEnvelope := 'https://isscuritiba.curitiba.pr.gov.br'
@@ -172,10 +172,10 @@ function TProvedorIssCuritiba.Gera_TagI(Acao: TnfseAcao; Prefixo3, Prefixo4,
   NameSpaceDad, Identificador, URI: String): AnsiString;
 begin
  case Acao of
-   acRecepcionar: Result := '<' + Prefixo3 + 'EnviarLoteRpsEnvio' + //+ NameSpaceDad;
-                              ' xmlns="http://isscuritiba.curitiba.pr.gov.br/iss/nfse.xsd"' +
-                              ' xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"' +
-                              ' xsi:schemaLocation="http://isscuritiba.curitiba.pr.gov.br/iss/nfse.xsd">';
+   acRecepcionar: Result := '<' + Prefixo3 + 'EnviarLoteRpsEnvio' + NameSpaceDad;
+//                              ' xmlns="http://isscuritiba.curitiba.pr.gov.br/iss/nfse.xsd"' +
+//                              ' xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"' +
+//                              ' xsi:schemaLocation="http://isscuritiba.curitiba.pr.gov.br/iss/nfse.xsd">';
    acConsSit:     Result := '<' + Prefixo3 + 'ConsultarSituacaoLoteRpsEnvio' + NameSpaceDad;
    acConsLote:    Result := '<' + Prefixo3 + 'ConsultarLoteRpsEnvio' + NameSpaceDad;
    acConsNFSeRps: Result := '<' + Prefixo3 + 'ConsultarNfseRpsEnvio' + NameSpaceDad;

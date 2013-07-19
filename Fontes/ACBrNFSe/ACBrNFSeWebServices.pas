@@ -37,7 +37,8 @@ uses
     ACBrProvedorAbaco, ACBrProvedorGoiania, ACBrProvedorIssCuritiba,
     ACBrProvedorBHISS, ACBrProvedorNatal, ACBrProvedorISSDigital,
     ACBrProvedorISSe, ACBrProvedor4R, ACBrProvedorGovDigital,
-    ACBrProvedorFiorilli, ACBrProvedorIssDsf, ACBrProvedorCoplan;
+    ACBrProvedorFiorilli, ACBrProvedorIssDsf, ACBrProvedorCoplan,
+    ACBrProvedorProdata;
 
 type
 
@@ -576,6 +577,7 @@ begin
   proFiorilli:    FProvedorClass := TProvedorFiorilli.Create;
   proIssDsf:      FProvedorClass := TProvedorIssDsf.Create;
   proCoplan:      FProvedorClass := TProvedorCoplan.Create;
+  proProdata:     FProvedorClass := TProvedorProdata.Create;
  end;
 
  FPrefixo2     := FConfiguracoes.WebServices.Prefixo2;
@@ -736,6 +738,7 @@ begin
       proISSe,
       pro4R,
       proFiorilli,
+      proProdata,
       proGoiania: vNotas := vNotas +
                               '<' + Prefixo4 + 'Rps>' +
                                '<' + Prefixo4 + 'InfDeclaracaoPrestacaoServico' +
@@ -779,7 +782,7 @@ begin
   else begin
    for i := 0 to TNFSeEnviarLoteRPS(Self).FNotasFiscais.Count-1 do
     begin
-     if (FProvedor in [profintelISS, proSaatri, proGoiania, proISSDigital, proISSe, pro4R, proFiorilli])
+     if (FProvedor in [profintelISS, proSaatri, proGoiania, proISSDigital, proISSe, pro4R, proFiorilli, proProdata])
       then vNotas := vNotas + '<' + Prefixo4 + 'Rps>' +
                                '<' + Prefixo4 + 'InfDeclaracaoPrestacaoServico' +
                                  RetornarConteudoEntre(TNFSeEnviarLoteRPS(Self).FNotasFiscais.Items[I].XML_Rps,
@@ -1662,6 +1665,7 @@ begin
       proISSe,
       pro4R,
       proFiorilli,
+      proProdata,
       proGoiania: vNotas := vNotas +
                               '<' + Prefixo4 + 'Rps>' +
                                '<' + Prefixo4 + 'InfDeclaracaoPrestacaoServico' +
@@ -1704,7 +1708,7 @@ begin
   else begin
    for i := 0 to TNFSeGerarNFSe(Self).FNotasFiscais.Count-1 do
     begin
-     if (FProvedor in [profintelISS, proSaatri, proGoiania, proISSDigital, proISSe, pro4R, proFiorilli])
+     if (FProvedor in [profintelISS, proSaatri, proGoiania, proISSDigital, proISSe, pro4R, proFiorilli, proProdata])
       then vNotas := vNotas + '<' + Prefixo4 + 'Rps>' +
                                '<' + Prefixo4 + 'InfDeclaracaoPrestacaoServico' +
                                  RetornarConteudoEntre(TNFSeGerarNFSe(Self).FNotasFiscais.Items[I].XML_Rps,
@@ -1847,6 +1851,7 @@ begin
       proISSe,
       pro4R,
       proFiorilli,
+      proProdata,
       proGoiania: vNotas := vNotas +
                               '<' + Prefixo4 + 'Rps>' +
                                '<' + Prefixo4 + 'InfDeclaracaoPrestacaoServico' +
@@ -1873,7 +1878,7 @@ begin
   else begin
    for i := 0 to TNFSeGerarLoteRPS(Self).FNotasFiscais.Count-1 do
     begin
-     if (FProvedor in [profintelISS, proSaatri, proGoiania, proISSDigital, proISSe, pro4R, proFiorilli])
+     if (FProvedor in [profintelISS, proSaatri, proGoiania, proISSDigital, proISSe, pro4R, proFiorilli, proProdata])
       then vNotas := vNotas + '<' + Prefixo4 + 'Rps>' +
                                '<' + Prefixo4 + 'InfDeclaracaoPrestacaoServico' +
                                  RetornarConteudoEntre(TNFSeGerarLoteRPS(Self).FNotasFiscais.Items[I].XML_Rps,
@@ -2027,6 +2032,7 @@ begin
       proISSe,
       pro4R,
       proFiorilli,
+      proProdata,
       proGoiania: vNotas := vNotas +
                               '<' + Prefixo4 + 'Rps>' +
                                '<' + Prefixo4 + 'InfDeclaracaoPrestacaoServico' +
@@ -2052,7 +2058,7 @@ begin
   else begin
    for i := 0 to TNFSeEnviarSincrono(Self).FNotasFiscais.Count-1 do
     begin
-     if (FProvedor in [profintelISS, proSaatri, proGoiania, proISSDigital, proISSe, pro4R, proFiorilli])
+     if (FProvedor in [profintelISS, proSaatri, proGoiania, proISSDigital, proISSe, pro4R, proFiorilli, proProdata])
       then vNotas := vNotas + '<' + Prefixo4 + 'Rps>' +
                                '<' + Prefixo4 + 'InfDeclaracaoPrestacaoServico' +
                                  RetornarConteudoEntre(TNFSeEnviarSincrono(Self).FNotasFiscais.Items[I].XML_Rps,

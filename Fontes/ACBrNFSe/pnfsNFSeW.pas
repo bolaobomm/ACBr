@@ -135,7 +135,7 @@ begin
 
  if (FProvedor in [proProdemge, proBHISS, profintelISS, proGovBR,
                    proSaatri, proGoiania, proNatal, proDigifred,
-                   proISSDigital, pro4R, proFiorilli, proCoplan])
+                   proISSDigital, pro4R, proFiorilli, proCoplan, proProdata])
   then FDefTipos := FServicoEnviar;
 
  if (RightStr(FURL, 1) <> '/') and (FDefTipos <> '')
@@ -685,6 +685,7 @@ begin
   pro4R,
   proPublica,
   proFiorilli,
+  proProdata,
   proNatal: begin
              Gerador.wCampoNFSe(tcStr, '#43', 'CodigoMunicipio', 7, 7, 0, SomenteNumeros(NFSe.Tomador.Endereco.CodigoMunicipio), '');
              Gerador.wCampoNFSe(tcStr, '#44', 'Uf             ', 2, 2, 0, NFSe.Tomador.Endereco.UF, '');
