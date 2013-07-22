@@ -3113,11 +3113,8 @@ begin
 
     Rodape := Rodape + #10 + '<n>NOTA LEGAL:</n>';
 
-    if InfoRodapeCupom.NotaLegalDF.ValorICMS > 0.00 then
-      Rodape := Rodape + ' ICMS = ' + FormatFloat(',#0.00', InfoRodapeCupom.NotaLegalDF.ValorICMS);
-
-    if InfoRodapeCupom.NotaLegalDF.ValorISS > 0.00 then
-      Rodape := Rodape + ' ISS = ' + FormatFloat(',#0.00', InfoRodapeCupom.NotaLegalDF.ValorISS);
+    Rodape := Rodape + ' ICMS = ' + FormatFloat(',#0.00', InfoRodapeCupom.NotaLegalDF.ValorICMS);
+    Rodape := Rodape + ' ISS = ' + FormatFloat(',#0.00', InfoRodapeCupom.NotaLegalDF.ValorISS);
   end;
 
   Result := ACBrStr( Rodape );
