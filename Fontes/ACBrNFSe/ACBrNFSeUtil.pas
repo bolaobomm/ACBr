@@ -352,7 +352,7 @@ begin
 
    AStr := copy(AStr, 1, pos('</'+ APrefixo3 + EnviarLoteRps + '>', AStr) - 1);
 
-   if (URI = '') or (AProvedor in [proRecife, {proRJ,} proAbaco])
+   if (URI = '') or (AProvedor in [proRecife, {proRJ,} proAbaco, proIssCuritiba])
     then AID := '>'
     else AID := ' ' + Identificador + '="AssLote_' + URI + '">';
 
@@ -593,7 +593,7 @@ begin
    AXML := copy(AXML, 1, pos('</'+ APrefixo3 + EnviarLoteRps + '>', AXML) - 1);
 
    // Alterado por Italo em 10/05/2013 - incluido na lista o proRJ
-   if (URI = '') or (AProvedor in [proRecife, proRJ, proAbaco, proIssDSF])
+   if (URI = '') or (AProvedor in [proRecife, proRJ, proAbaco, proIssDSF, proIssCuritiba])
     then AID := '>'
     else AID := ' ' + Identificador + '="AssLote_' + URI + '">';
 

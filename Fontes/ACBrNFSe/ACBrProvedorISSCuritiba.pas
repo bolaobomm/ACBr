@@ -107,7 +107,7 @@ var
 begin
  ConfigSchema.VersaoCabecalho := '';
  ConfigSchema.VersaoDados     := '';
- ConfigSchema.VersaoXML       := '1';
+ ConfigSchema.VersaoXML       := '2';
  ConfigSchema.NameSpaceXML    := 'http://isscuritiba.curitiba.pr.gov.br/iss/'; // 'http://www.e-governeapps2.com.br/'
  ConfigSchema.Cabecalho       := 'nfse.xsd';
  ConfigSchema.ServicoEnviar   := 'nfse.xsd';
