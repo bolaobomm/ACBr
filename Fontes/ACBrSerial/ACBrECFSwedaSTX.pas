@@ -1975,7 +1975,7 @@ begin
    Moeda      := padL('Real',20) ;
    Moedas     := padL('Reais',20) ;
    sValor     := FormatFloat('#0.00',Valor);
-   sData      := FormatDateTime('MM-DD-yyyy',Data);
+   sData      := FormatDateTime('dd/mm/yyyy',Data);
    EnviaComando('14|'+Banco+'|'+sValor+'|'+Moeda+'|'+Moedas+'|'+Favorecido+
                 '|'+Cidade+'|'+sData);
 end;

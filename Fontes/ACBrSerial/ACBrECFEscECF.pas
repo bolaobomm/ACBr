@@ -1441,10 +1441,8 @@ begin
   except
      on E : Exception do
      begin
-        if (pos('999-999',E.Message) <> 0) then     // TODO: Erro de Hora fora da faixa ?  
-           ReducaoZ(0)                              // Tenta sem DataHora
-        else if (pos('5-1',E.Message) <> 0) then    // Comando inválido para o documento atual.
-         begin                                      //  Ficou algum Cupom aberto ?
+        if (pos('5-1',E.Message) <> 0) then    // Comando inválido para o documento atual.
+         begin                                 //  Ficou algum Cupom aberto ?
            // Cancelando o Cupom em aberto
            EscECFComando.CMD := 31;
            EnviaComando;

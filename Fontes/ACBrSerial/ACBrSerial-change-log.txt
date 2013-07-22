@@ -97,6 +97,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+Data: 22/07/2013
+-- ACBrECFSwedaSTX --
+[-] Correção do formato de data na Impressão de cheque (por: giulianon)
+http://www.projetoacbr.com.br/forum/index.php?/topic/11315-sweda-erro-atributo-invalido/?p=68665
+
 Data: 18/07/2013
 -- ACBrECF --
 [*] Modificada a assinatura do método "EfetuaPagamento", inserindo novo parâmetro
