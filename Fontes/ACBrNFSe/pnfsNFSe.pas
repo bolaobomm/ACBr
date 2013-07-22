@@ -413,6 +413,7 @@ type
     // RPS e NFSe
     FSignature: TSignature;
 
+    FNumeroLote: String;
     FProtocolo: String;
     FdhRecebimento: TDateTime;
     FSituacao: String;
@@ -460,6 +461,7 @@ type
     // RPS e NFSe
     property signature: Tsignature read Fsignature write Fsignature;
 
+    property NumeroLote: String read FNumeroLote write FNumeroLote;
     property Protocolo: String read FProtocolo write FProtocolo;
     property dhRecebimento: TDateTime read FdhRecebimento write FdhRecebimento;
     property Situacao: String read FSituacao write FSituacao;

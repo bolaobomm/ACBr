@@ -229,7 +229,7 @@ begin
     Leitor.Arquivo := NotaUtil.RetirarPrefixos(Leitor.Arquivo);
     VersaoXML := NotaUtil.VersaoXML(Leitor.Arquivo);
 
-    k        := 0; //length(Prefixo4);
+    k := 0; //length(Prefixo4);
 
     Leitor.Grupo := Leitor.Arquivo;
     // Alterado por Cleiver em 26/02/2013
@@ -238,23 +238,24 @@ begin
     begin
 
       // alterado por joel takei 04/07/2013
-      if leitor.rExtrai(1, 'EnviarLoteRpsSincronoResposta') <> '' then
-      begin
+//      if leitor.rExtrai(1, 'EnviarLoteRpsSincronoResposta') <> '' then
+//      begin
         i := 0;
         ListaNfse.FCompNfse.Add;
-        ListaNfse.FCompNfse[i].FNfse.Protocolo         := Leitor.rCampo(tcStr, 'Protocolo');
-        ListaNfse.FCompNfse[i].FNfse.dhRecebimento     := Leitor.rCampo(tcDatHor, 'DataRecebimento');
-      end;
+        ListaNfse.FCompNfse[i].FNfse.NumeroLote    := Leitor.rCampo(tcStr, 'NumeroLote');
+        ListaNfse.FCompNfse[i].FNfse.dhRecebimento := Leitor.rCampo(tcDatHor, 'DataRecebimento');
+        ListaNfse.FCompNfse[i].FNfse.Protocolo     := Leitor.rCampo(tcStr, 'Protocolo');
+//      end;
 
       // Ler a Lista de NFSe
       if leitor.rExtrai(2, 'ListaNfse') <> '' then
       begin
-        i := 0;
+//        i := 0;
         // Alterado por Rodrigo Cantelli
         while (Leitor.rExtrai(3, 'CompNfse', '', i + 1) <> '') or
               (Leitor.rExtrai(3, 'ComplNfse', '', i + 1) <> '') do
         begin
-          ListaNfse.FCompNfse.Add;
+//          ListaNfse.FCompNfse.Add;
 
           // Grupo da TAG <Nfse> *************************************************
           if Leitor.rExtrai(4, 'Nfse') <> ''
@@ -265,7 +266,13 @@ begin
             // Grupo da TAG <InfNfse> *****************************************************
             if Leitor.rExtrai(5, 'InfNfse') <> ''
              then begin
-              ListaNfse.FCompNfse[i].FNfse.InfID.ID          := Leitor.rCampo(tcStr, 'Numero');
+              ListaNfse.FCompNfse[i].FNfse.InfID.ID := trim(Leitor.rAtributo('InfNfse Id='));
+              if ListaNfse.FCompNfse[i].FNfse.InfID.ID = ''
+               then begin
+                ListaNfse.FCompNfse[i].FNfse.InfID.ID := trim(Leitor.rAtributo('InfNfse id='));
+                if ListaNfse.FCompNfse[i].FNfse.InfID.ID = ''
+                 then ListaNfse.FCompNfse[i].FNfse.InfID.ID := Leitor.rCampo(tcStr, 'Numero');
+               end;
               ListaNfse.FCompNfse[i].FNFSe.Numero            := Leitor.rCampo(tcStr, 'Numero');
               ListaNfse.FCompNfse[i].FNFSe.CodigoVerificacao := Leitor.rCampo(tcStr, 'CodigoVerificacao');
               ListaNfse.FCompNfse[i].FNFSe.DataEmissao       := Leitor.rCampo(tcDatHor, 'DataEmissao');
