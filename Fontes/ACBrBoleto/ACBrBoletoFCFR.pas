@@ -181,6 +181,7 @@ begin
      FieldDefs.Add('Vencimento', ftDateTime);
      FieldDefs.Add('DataDocumento', ftDateTime);
      FieldDefs.Add('NumeroDocumento', ftString, 20);
+     FieldDefs.Add('TotalParcelas', ftInteger);
      FieldDefs.Add('Parcela', ftInteger);
      FieldDefs.Add('EspecieDoc', ftString, 10);
      FieldDefs.Add('EspecieMod', ftString, 10);
@@ -385,6 +386,7 @@ begin
             FieldByName('Vencimento').AsDateTime        := ListadeBoletos[iFor].Vencimento;
             FieldByName('DataDocumento').AsDateTime     := ListadeBoletos[iFor].DataDocumento;
             FieldByName('NumeroDocumento').AsString     := ListadeBoletos[iFor].NumeroDocumento;
+            FieldByName('TotalParcelas').AsInteger      := ListadeBoletos[iFor].TotalParcelas;
             FieldByName('Parcela').AsInteger            := ListadeBoletos[iFor].Parcela;
             FieldByName('EspecieMod').AsString          := ListadeBoletos[iFor].EspecieMod;
             FieldByName('EspecieDoc').AsString          := ListadeBoletos[iFor].EspecieDoc;
