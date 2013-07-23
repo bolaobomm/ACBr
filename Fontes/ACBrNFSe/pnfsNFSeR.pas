@@ -147,8 +147,8 @@ begin
 
    if (Leitor.rExtrai(2, 'Rps') <> '')
     then begin
-     NFSe.DataEmissao := Leitor.rCampo(tcDatHor, 'DataEmissao');
-     NFSe.Status      := StrToStatusRPS(ok, Leitor.rCampo(tcStr, 'Status'));
+     NFSe.DataEmissaoRps := Leitor.rCampo(tcDat, 'DataEmissao');
+     NFSe.Status         := StrToStatusRPS(ok, Leitor.rCampo(tcStr, 'Status'));
 
      if (Leitor.rExtrai(2, 'IdentificacaoRps') <> '')
       then begin
@@ -172,7 +172,8 @@ begin
      NFSe.Servico.ItemListaServico := Copy(NFSe.Servico.ItemListaServico, 1, 2) + '.' +
                                       Copy(NFSe.Servico.ItemListaServico, 3, 2);
 
-     NFSe.Servico.xItemListaServico   := CodigoToDesc(NFSe.Servico.ItemListaServico);
+     NFSe.Servico.xItemListaServico := CodigoToDesc(SomenteNumeros(NFSe.Servico.ItemListaServico));
+
      //NFSe.Servico.Discriminacao       := Leitor.rCampo(tcStr, 'Discriminacao');
      NFSe.Servico.CodigoMunicipio     := Leitor.rCampo(tcStr, 'CodigoMunicipio');
      NFSe.Servico.CodigoPais          := Leitor.rCampo(tcInt, 'CodigoPais');
@@ -287,8 +288,8 @@ begin
 
    if (Leitor.rExtrai(3, 'Rps') <> '')
     then begin
-     NFSe.DataEmissao := Leitor.rCampo(tcDatHor, 'DataEmissao');
-     NFSe.Status      := StrToStatusRPS(ok, Leitor.rCampo(tcStr, 'Status'));
+     NFSe.DataEmissaoRps := Leitor.rCampo(tcDat, 'DataEmissao');
+     NFSe.Status         := StrToStatusRPS(ok, Leitor.rCampo(tcStr, 'Status'));
 
      if (Leitor.rExtrai(3, 'IdentificacaoRps') <> '')
       then begin
@@ -312,7 +313,8 @@ begin
      NFSe.Servico.ItemListaServico := Copy(NFSe.Servico.ItemListaServico, 1, 2) + '.' +
                                       Copy(NFSe.Servico.ItemListaServico, 3, 2);
 
-     NFSe.Servico.xItemListaServico   := CodigoToDesc(NFSe.Servico.ItemListaServico);
+     NFSe.Servico.xItemListaServico := CodigoToDesc(SomenteNumeros(NFSe.Servico.ItemListaServico));
+
      NFSe.Servico.Discriminacao       := Leitor.rCampo(tcStr, 'Discriminacao');
      NFSe.Servico.CodigoMunicipio     := Leitor.rCampo(tcStr, 'CodigoMunicipio');
      NFSe.Servico.CodigoPais          := Leitor.rCampo(tcInt, 'CodigoPais');
@@ -417,8 +419,8 @@ begin
 
    if (Leitor.rExtrai(2, 'Rps') <> '')
     then begin
-     NFSe.DataEmissao := Leitor.rCampo(tcDatHor, 'DataEmissao');
-     NFSe.Status      := StrToStatusRPS(ok, Leitor.rCampo(tcStr, 'Status'));
+     NFSe.DataEmissaoRps := Leitor.rCampo(tcDat, 'DataEmissao');
+     NFSe.Status         := StrToStatusRPS(ok, Leitor.rCampo(tcStr, 'Status'));
 
      if (Leitor.rExtrai(2, 'IdentificacaoRps') <> '')
       then begin
@@ -595,7 +597,7 @@ var
 begin
  if (Leitor.rExtrai(2, 'InfRps') <> '') 
   then begin
-   NFSe.DataEmissao              := Leitor.rCampo(tcDatHor, 'DataEmissao');
+   NFSe.DataEmissaoRps           := Leitor.rCampo(tcDat, 'DataEmissao');
    NFSe.NaturezaOperacao         := StrToNaturezaOperacao(ok, Leitor.rCampo(tcStr, 'NaturezaOperacao'));
    NFSe.RegimeEspecialTributacao := StrToRegimeEspecialTributacao(ok, Leitor.rCampo(tcStr, 'RegimeEspecialTributacao'));
    NFSe.OptanteSimplesNacional   := StrToSimNao(ok, Leitor.rCampo(tcStr, 'OptanteSimplesNacional'));
@@ -634,11 +636,11 @@ begin
      NFSe.Servico.ItemListaServico := Copy(NFSe.Servico.ItemListaServico, 1, 2) + '.' +
                                       Copy(NFSe.Servico.ItemListaServico, 3, 2);
 
+     NFSe.Servico.xItemListaServico := CodigoToDesc(SomenteNumeros(NFSe.Servico.ItemListaServico));
+
      if length(NFSe.Servico.CodigoMunicipio)<7
       then NFSe.Servico.CodigoMunicipio := Copy(NFSe.Servico.CodigoMunicipio, 1, 2) +
             FormatFloat('00000', StrToIntDef(Copy(NFSe.Servico.CodigoMunicipio, 3, 5), 0));
-
-     NFSe.Servico.xItemListaServico := CodigoToDesc(NFSe.Servico.ItemListaServico);
 
      if Leitor.rExtrai(4, 'Valores') <> ''
       then begin
@@ -945,8 +947,9 @@ begin
 
      if (Leitor.rExtrai(5, 'Rps') <> '')
       then begin
-       NFSe.DataEmissao := Leitor.rCampo(tcDatHor, 'DataEmissao');
-       NFSe.Status      := StrToStatusRPS(ok, Leitor.rCampo(tcStr, 'Status'));
+//       NFSe.DataEmissao := Leitor.rCampo(tcDatHor, 'DataEmissao');
+       NFSe.DataEmissaoRps := Leitor.rCampo(tcDat, 'DataEmissao');
+       NFSe.Status         := StrToStatusRPS(ok, Leitor.rCampo(tcStr, 'Status'));
 
        if (Leitor.rExtrai(6, 'IdentificacaoRps') <> '')
         then begin
@@ -970,7 +973,8 @@ begin
        NFSe.Servico.ItemListaServico := Copy(NFSe.Servico.ItemListaServico, 1, 2) + '.' +
                                         Copy(NFSe.Servico.ItemListaServico, 3, 2);
 
-       NFSe.Servico.xItemListaServico   := CodigoToDesc(NFSe.Servico.ItemListaServico);
+       NFSe.Servico.xItemListaServico := CodigoToDesc(SomenteNumeros(NFSe.Servico.ItemListaServico));
+
        NFSe.Servico.CodigoCnae          := Leitor.rCampo(tcStr, 'CodigoCnae');
        NFSe.Servico.Discriminacao       := Leitor.rCampo(tcStr, 'Discriminacao');
        NFSe.Servico.CodigoMunicipio     := Leitor.rCampo(tcStr, 'CodigoMunicipio');
@@ -1124,9 +1128,9 @@ begin
 
  	if Leitor.rExtrai(3, 'DeclaracaoPrestacaoServico') <> '' then
 	begin
-    NFSe.Competencia              := Leitor.rCampo(tcStr, 'Competencia');
-    NFSe.OptanteSimplesNacional   := StrToSimNao(ok, Leitor.rCampo(tcStr, 'OptanteSimplesNacional'));
-    NFSe.DataEmissao := Leitor.rCampo(tcDat, 'DataEmissao');
+    NFSe.Competencia            := Leitor.rCampo(tcStr, 'Competencia');
+    NFSe.OptanteSimplesNacional := StrToSimNao(ok, Leitor.rCampo(tcStr, 'OptanteSimplesNacional'));
+    NFSe.DataEmissaoRps         := Leitor.rCampo(tcDat, 'DataEmissao');
 
     if (Leitor.rExtrai(4, 'IdentificacaoRps') <> '') then
 		begin
@@ -1434,7 +1438,8 @@ begin
    NFSe.Servico.ItemListaServico := Copy(NFSe.Servico.ItemListaServico, 1, 2) + '.' +
                                     Copy(NFSe.Servico.ItemListaServico, 3, 2);
 
-   NFSe.Servico.xItemListaServico   := CodigoToDesc(NFSe.Servico.ItemListaServico);
+   NFSe.Servico.xItemListaServico := CodigoToDesc(SomenteNumeros(NFSe.Servico.ItemListaServico));
+
    NFSe.Servico.CodigoCnae          := Leitor.rCampo(tcStr, 'CodigoCnae');
    NFSe.Servico.Discriminacao       := Leitor.rCampo(tcStr, 'Discriminacao');
    NFSe.Servico.CodigoMunicipio     := Leitor.rCampo(tcStr, 'CodigoMunicipio');
@@ -1680,7 +1685,8 @@ begin
         NFSe.Servico.Valores.IssRetido := StrToSituacaoTributaria(ok, Leitor.rCampo(tcStr, 'IssRetido'));
         NFSe.Servico.ItemListaServico  := Leitor.rCampo(tcStr, 'ItemListaServico');
         NFSe.Servico.Discriminacao     := Leitor.rCampo(tcStr, 'Discriminacao');
-        NFSe.Servico.xItemListaServico := CodigoToDesc(NFSe.Servico.ItemListaServico);
+
+        NFSe.Servico.xItemListaServico := CodigoToDesc(SomenteNumeros(NFSe.Servico.ItemListaServico));
 
         NFSe.Servico.CodigoMunicipio     := Leitor.rCampo(tcStr, 'CodigoMunicipio');
         NFSe.Servico.CodigoPais          := Leitor.rCampo(tcInt, 'CodigoPais');
@@ -1793,10 +1799,11 @@ begin
    if Item<100 then Item:=Item*100+1;
 
    NFSe.Servico.ItemListaServico := FormatFloat('0000', Item);
-  // NFSe.Servico.ItemListaServico := Copy(NFSe.Servico.ItemListaServico, 1, 2) + '.' +
-  //                                  Copy(NFSe.Servico.ItemListaServico, 3, 2);
+   NFSe.Servico.ItemListaServico := Copy(NFSe.Servico.ItemListaServico, 1, 2) + '.' +
+                                    Copy(NFSe.Servico.ItemListaServico, 3, 2);
 
-   NFSe.Servico.xItemListaServico   := CodigoToDesc(NFSe.Servico.ItemListaServico);
+   NFSe.Servico.xItemListaServico := CodigoToDesc(SomenteNumeros(NFSe.Servico.ItemListaServico));
+   
    NFSe.Servico.CodigoCnae          := Leitor.rCampo(tcStr, 'CodigoCnae');
    NFSe.Servico.Discriminacao       := Leitor.rCampo(tcStr, 'Discriminacao');
    NFSe.Servico.CodigoMunicipio     := Leitor.rCampo(tcStr, 'CodigoMunicipio');
@@ -1983,10 +1990,11 @@ begin
    if Item<100 then Item:=Item*100+1;
 
    NFSe.Servico.ItemListaServico := FormatFloat('0000', Item);
-  // NFSe.Servico.ItemListaServico := Copy(NFSe.Servico.ItemListaServico, 1, 2) + '.' +
-  //                                  Copy(NFSe.Servico.ItemListaServico, 3, 2);
+   NFSe.Servico.ItemListaServico := Copy(NFSe.Servico.ItemListaServico, 1, 2) + '.' +
+                                    Copy(NFSe.Servico.ItemListaServico, 3, 2);
 
-   NFSe.Servico.xItemListaServico   := CodigoToDesc(NFSe.Servico.ItemListaServico);
+   NFSe.Servico.xItemListaServico := CodigoToDesc(SomenteNumeros(NFSe.Servico.ItemListaServico));
+
    NFSe.Servico.CodigoCnae          := Leitor.rCampo(tcStr, 'CodigoCnae');
    NFSe.Servico.Discriminacao       := Leitor.rCampo(tcStr, 'Discriminacao');
    NFSe.Servico.CodigoMunicipio     := Leitor.rCampo(tcStr, 'CodigoMunicipio');
@@ -2177,7 +2185,8 @@ begin
    NFSe.Servico.ItemListaServico := Copy(NFSe.Servico.ItemListaServico, 1, 2) + '.' +
                                     Copy(NFSe.Servico.ItemListaServico, 3, 2);
 
-   NFSe.Servico.xItemListaServico   := CodigoToDesc(NFSe.Servico.ItemListaServico);
+   NFSe.Servico.xItemListaServico := CodigoToDesc(SomenteNumeros(NFSe.Servico.ItemListaServico));
+
    NFSe.Servico.CodigoCnae          := Leitor.rCampo(tcStr, 'CodigoCnae');
    NFSe.Servico.Discriminacao       := Leitor.rCampo(tcStr, 'Discriminacao');
    NFSe.Servico.CodigoMunicipio     := Leitor.rCampo(tcStr, 'CodigoMunicipio');
