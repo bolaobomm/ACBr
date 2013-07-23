@@ -593,7 +593,8 @@ begin
       end; // fim do ListaNfse - Nivel 2
 
       // Ler a Lista de Mensagens
-      if leitor.rExtrai(2, 'ListaMensagemRetorno') <> '' then
+      if (leitor.rExtrai(2, 'ListaMensagemRetorno') <> '') or
+         (leitor.rExtrai(2, 'ListaMensagemRetornoLote') <> '') then
       begin
         i := 0;
         while Leitor.rExtrai(3, 'MensagemRetorno', '', i + 1) <> '' do
@@ -610,7 +611,8 @@ begin
       Result := True;
     end
     else // alterado Joel Takei ISSe 08/06/2013
-    if leitor.rExtrai(1, 'ListaMensagemRetorno') <> '' then
+    if (leitor.rExtrai(1, 'ListaMensagemRetorno') <> '') or
+       (leitor.rExtrai(1, 'ListaMensagemRetornoLote') <> '') then
     begin
       i := 0;
       while Leitor.rExtrai(2, 'MensagemRetorno', '', i + 1) <> '' do
