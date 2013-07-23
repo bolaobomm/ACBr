@@ -1234,7 +1234,7 @@ begin
     EXIT; //não deve preencher a TAG
 
   Gerador.wGrupo('IPI', 'O01');
-  Gerador.wCampo(tcStr, 'O02', 'clEnq   ', 05, 05, 0, nfe.Det[i].Imposto.IPI.clEnq, DSC_CLENQ);
+  Gerador.wCampo(tcStr, 'O02', 'clEnq   ', 01, 05, 0, nfe.Det[i].Imposto.IPI.clEnq, DSC_CLENQ);
   Gerador.wCampo(tcStr, 'O03', 'CNPJProd', 14, 14, 0, nfe.Det[i].Imposto.IPI.CNPJProd, DSC_CNPJPROD);
   Gerador.wCampo(tcStr, 'O04', 'cSelo   ', 01, 60, 0, nfe.Det[i].Imposto.IPI.cSelo, DSC_CSELO);
   Gerador.wCampo(tcInt, 'O05', 'qSelo   ', 01, 12, 0, nfe.Det[i].Imposto.IPI.qSelo, DSC_QSELO);
