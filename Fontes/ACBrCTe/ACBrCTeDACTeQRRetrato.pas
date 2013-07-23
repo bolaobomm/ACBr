@@ -1428,8 +1428,12 @@ begin
 {$ENDIF}
 {$IFDEF PL_103}
   qrlVlrTotalMerc.Caption := CTeUtil.FormatarValor(msk15x2, FCTe.InfCarga.vMerc);
-{$ELSE}
+{$ENDIF}
+{$IFDEF PL_104}
   qrlVlrTotalMerc.Caption := CTeUtil.FormatarValor(msk15x2, FCTe.InfCarga.vCarga);
+{$ENDIF}
+{$IFDEF PL_200}
+  qrlVlrTotalMerc.Caption := CTeUtil.FormatarValor(msk15x2, FCTe.infCTeNorm.infCarga.vCarga);
 {$ENDIF}
 
   qrmQtdUnidMedida1.Lines.Clear;
