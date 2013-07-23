@@ -2079,11 +2079,11 @@ begin
 
  URI := FProvedorClass.GetURI(URI);
 
- FTagI := FProvedorClass.Gera_TagI(acRecepcionar, Prefixo3, Prefixo4, NameSpaceDad, FConfiguracoes.WebServices.Identificador, URI);
+ FTagI := FProvedorClass.Gera_TagI(acRecSincrono, Prefixo3, Prefixo4, NameSpaceDad, FConfiguracoes.WebServices.Identificador, URI);
 
  FDadosSenha := FProvedorClass.Gera_DadosSenha(FConfiguracoes.WebServices.UserWeb,
                                                FConfiguracoes.WebServices.SenhaWeb);
- FTagF := FProvedorClass.Gera_TagF(acRecepcionar, Prefixo3);
+ FTagF := FProvedorClass.Gera_TagF(acRecSincrono, Prefixo3);
 
  FDadosMsg := TNFSeG.Gera_DadosMsgEnviarSincrono(Prefixo3, Prefixo4,
                                                  FConfiguracoes.WebServices.Identificador,
@@ -2113,7 +2113,7 @@ begin
                             FConfiguracoes.WebServices.ServicoEnviar,
                             FConfiguracoes.WebServices.Prefixo4))
       then raise Exception.Create('Falha na validação do Lote ' +
-                     TNFSeEnviarLoteRps(Self).NumeroLote + sLineBreak + FMsg);
+                     TNFSeEnviarSincrono(Self).NumeroLote + sLineBreak + FMsg);
     end;
   end
   else raise Exception.Create('A funcionalidade Enviar Sincrono não esta disponivel para o provedor: ' + FxProvedor);

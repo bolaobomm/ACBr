@@ -105,8 +105,8 @@ function TProvedorFiorilli.GetConfigSchema(ACodCidade: Integer): TConfigSchema;
 var
  ConfigSchema: TConfigSchema;
 begin
- ConfigSchema.VersaoCabecalho       := '1.00';
- ConfigSchema.VersaoDados           := '1.00';
+ ConfigSchema.VersaoCabecalho       := '2.01';
+ ConfigSchema.VersaoDados           := '2.01';
  ConfigSchema.VersaoXML             := '1';
  ConfigSchema.NameSpaceXML          := 'http://www.abrasf.org.br/';
  ConfigSchema.Cabecalho             := 'nfse.xsd';
