@@ -1648,7 +1648,8 @@ begin
       end;
     cst20:
       begin
-        qrlRedBaseCalc.Caption := CTeUtil.FormatarValor(mskAliq, FCTe.Imp.ICMS.CST20.pRedBC);
+//        qrlRedBaseCalc.Caption := CTeUtil.FormatarValor(mskAliq, FCTe.Imp.ICMS.CST20.pRedBC);
+        qrlRedBaseCalc.Caption := CTeUtil.FormatarValor(msk4x2, FCTe.Imp.ICMS.CST20.pRedBC);
         qrlBaseCalc.Caption    := CTeUtil.FormatarValor(msk9x2, FCTe.Imp.ICMS.CST20.vBC);
 //        qrlAliqICMS.Caption    := CTeUtil.FormatarValor(mskAliq, FCTe.Imp.ICMS.CST20.pICMS);
         qrlAliqICMS.Caption    := CTeUtil.FormatarValor(msk4x2, FCTe.Imp.ICMS.CST20.pICMS);
@@ -1699,7 +1700,8 @@ begin
       end;
     cst81:
       begin
-        qrlRedBaseCalc.Caption := CTeUtil.FormatarValor(mskAliq, FCTe.Imp.ICMS.CST81.pRedBC);
+//        qrlRedBaseCalc.Caption := CTeUtil.FormatarValor(mskAliq, FCTe.Imp.ICMS.CST81.pRedBC);
+        qrlRedBaseCalc.Caption := CTeUtil.FormatarValor(msk4x2, FCTe.Imp.ICMS.CST81.pRedBC);
         qrlBaseCalc.Caption    := CTeUtil.FormatarValor(msk9x2, FCTe.Imp.ICMS.CST81.vBC);
 //        qrlAliqICMS.Caption    := CTeUtil.FormatarValor(mskAliq, FCTe.Imp.ICMS.CST81.pICMS);
         qrlAliqICMS.Caption    := CTeUtil.FormatarValor(msk4x2, FCTe.Imp.ICMS.CST81.pICMS);
@@ -1709,7 +1711,8 @@ begin
       end;
     cst90:
       begin
-        qrlRedBaseCalc.Caption := CTeUtil.FormatarValor(mskAliq, FCTe.Imp.ICMS.CST90.pRedBC);
+//        qrlRedBaseCalc.Caption := CTeUtil.FormatarValor(mskAliq, FCTe.Imp.ICMS.CST90.pRedBC);
+        qrlRedBaseCalc.Caption := CTeUtil.FormatarValor(msk4x2, FCTe.Imp.ICMS.CST90.pRedBC);
         qrlBaseCalc.Caption    := CTeUtil.FormatarValor(msk9x2, FCTe.Imp.ICMS.CST90.vBC);
 //        qrlAliqICMS.Caption    := CTeUtil.FormatarValor(mskAliq, FCTe.Imp.ICMS.CST90.pICMS);
         qrlAliqICMS.Caption    := CTeUtil.FormatarValor(msk4x2, FCTe.Imp.ICMS.CST90.pICMS);
@@ -1731,7 +1734,8 @@ begin
       end;
     cst20:
       begin
-        qrlRedBaseCalc.Caption := CTeUtil.FormatarValor(mskAliq, FCTe.Imp.ICMS.ICMS20.pRedBC);
+//        qrlRedBaseCalc.Caption := CTeUtil.FormatarValor(mskAliq, FCTe.Imp.ICMS.ICMS20.pRedBC);
+        qrlRedBaseCalc.Caption := CTeUtil.FormatarValor(msk4x2, FCTe.Imp.ICMS.ICMS20.pRedBC);
         qrlBaseCalc.Caption    := CTeUtil.FormatarValor(msk9x2, FCTe.Imp.ICMS.ICMS20.vBC);
         qrlAliqICMS.Caption    := CTeUtil.FormatarValor(msk4x2, FCTe.Imp.ICMS.ICMS20.pICMS);
         qrlVlrICMS.Caption     := CTeUtil.FormatarValor(msk4x2, FCTe.Imp.ICMS.ICMS20.vICMS);
@@ -1781,7 +1785,8 @@ begin
       end;
     cst90:
       begin
-        qrlRedBaseCalc.Caption := CTeUtil.FormatarValor(mskAliq, FCTe.Imp.ICMS.ICMS90.pRedBC);
+//        qrlRedBaseCalc.Caption := CTeUtil.FormatarValor(mskAliq, FCTe.Imp.ICMS.ICMS90.pRedBC);
+        qrlRedBaseCalc.Caption := CTeUtil.FormatarValor(msk4x2, FCTe.Imp.ICMS.ICMS90.pRedBC);
         qrlBaseCalc.Caption    := CTeUtil.FormatarValor(msk9x2, FCTe.Imp.ICMS.ICMS90.vBC);
         qrlAliqICMS.Caption    := CTeUtil.FormatarValor(msk4x2, FCTe.Imp.ICMS.ICMS90.pICMS);
         qrlVlrICMS.Caption     := CTeUtil.FormatarValor(msk9x2, FCTe.Imp.ICMS.ICMS90.vICMS);
@@ -1791,7 +1796,8 @@ begin
     // Incluido por Italo em 05/12/2011 (contribuição de Doni Dephi)
     cstICMSOutraUF:
       begin
-        qrlRedBaseCalc.Caption := CTeUtil.FormatarValor(mskAliq, FCTe.Imp.ICMS.ICMSOutraUF.pRedBCOutraUF);
+//        qrlRedBaseCalc.Caption := CTeUtil.FormatarValor(mskAliq, FCTe.Imp.ICMS.ICMSOutraUF.pRedBCOutraUF);
+        qrlRedBaseCalc.Caption := CTeUtil.FormatarValor(msk4x2, FCTe.Imp.ICMS.ICMSOutraUF.pRedBCOutraUF);
         qrlBaseCalc.Caption    := CTeUtil.FormatarValor(msk9x2, FCTe.Imp.ICMS.ICMSOutraUF.vBCOutraUF);
         qrlAliqICMS.Caption    := CTeUtil.FormatarValor(msk4x2, FCTe.Imp.ICMS.ICMSOutraUF.pICMSOutraUF);
         qrlVlrICMS.Caption     := CTeUtil.FormatarValor(msk9x2, FCTe.Imp.ICMS.ICMSOutraUF.vICMSOutraUF);
