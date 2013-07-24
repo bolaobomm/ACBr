@@ -97,6 +97,21 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+Data: 24/07/2013
+-- ACBrECFEscECF --
+[-] Correção no protocolo de comunicação. Adicionando tratamento para o caso do
+    ECF retornar WACK (ocupado) durante o envio do comando.    (por: DSA)
+[*] Modificada as rotinas "ProgramaRelatorioGerencial, ProgramaFormaPagamento,
+    ProgramaComprovanteNaoFiscais, AchaFPGDescricao, AchaRGDescricao,
+    AchaCNFDescricao" para usar apenas caracteres válidos na Descricao, de
+    acordo com o Previsto na Lei: " Máximo de 15, Mínimo de 4 caracteres ASCII
+    de posição 65 a 90 (letras maiúsculas) ou 97 a 122 (letras minúsculas)"  (por: DSA)
+[-] Correção no retorno de "GetTotalPago", criando controle interno para
+    administrar o valor, já que o Protocolo não retorna essa informação (por: DSA)
+[*] Aplicado ajuste em "VendeItem", inserindo tratamento no tamanho mínimo do
+    código do Produto de acordo com a Lei. Se o mesmo for inferior a 3, são
+    inseridos zeros a esquerda. Ex: "1" = "001"      (por: DSA)
+
 Data: 22/07/2013
 -- ACBrECFSwedaSTX --
 [-] Correção do formato de data na Impressão de cheque (por: giulianon)

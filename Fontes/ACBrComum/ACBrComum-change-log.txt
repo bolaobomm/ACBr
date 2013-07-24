@@ -38,6 +38,13 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+Data: 24/07/2013
+-- ACBrUtil --
+[+] Adicionada a função:                                              (por: DSA)
+    FloatToIntStr(const AValue: Double; const DecimalDigits: SmallInt = 2): String;
+    Converte um Double para string, SEM o separator decimal, considerando as
+     decimais como parte final da String. Ex: 100,00 = "10000"; 1,23 = "123"
+
 Data: 05/04/2013
 -- ACBrUtil --
 [+] Adicionado os metodos para conversão de Inteiros em Strings binárias no

@@ -197,8 +197,8 @@ function CountStr(const AString, SubStr : AnsiString ) : Integer ;
 Function Poem_Zeros(const Texto : AnsiString; const Tamanho : Integer) : AnsiString;
 Function IntToStrZero(const NumInteiro : Int64; Tamanho : Integer) : AnsiString;
 
+function FloatToIntStr(const AValue: Double; const DecimalDigits: SmallInt = 2): String;
 function FloatToString(const AValue: Double): String;
-
 Function StringToFloat( NumString : String ) : Double ;
 Function StringToFloatDef( const NumString : String ;
    const DefaultValue : Double ) : Double ;
@@ -464,7 +464,8 @@ end;
     00 00 00 00 12 34 56    ou
     chr(00) + chr(00) + chr(00) + chr(00) + chr(12) + chr(34) + chr(56).
  ---------------------------------------------------------------------------- }
-Function AscToBcd( const ANumStr: AnsiString ; const TamanhoBCD : Byte) : AnsiString ;
+function AscToBcd(const ANumStr : AnsiString ; const TamanhoBCD : Byte
+   ) : AnsiString ;
   Var StrBCD : AnsiString ;
       I      : Integer ;
 begin
@@ -533,7 +534,7 @@ end;
       igual a "1100000010000000" em binário
       Portanto se HexStr = "CO80", Result = "+Ç"
  ---------------------------------------------------------------------------- }
-Function HexToAscii(const HexStr: AnsiString) : AnsiString ;
+function HexToAscii(const HexStr : AnsiString) : AnsiString ;
 Var
   B   : Byte ;
   Cmd : AnsiString ;
@@ -745,7 +746,7 @@ end;
 {-----------------------------------------------------------------------------
    Remove todas ocorrencias <sSubStr> de <sString>, retornando a String alterada
  ---------------------------------------------------------------------------- }
-function RemoveString(const sSubstr, sString: AnsiString): AnsiString;
+function RemoveString(const sSubStr, sString : AnsiString) : AnsiString ;
 begin
    Result := AnsiString(StringReplace( String(sString), String(sSubStr), '', [rfReplaceAll]));
 end;
@@ -949,7 +950,8 @@ end ;
 {-----------------------------------------------------------------------------
   Insere ZEROS (0) a esquerda de <Texto> até completar <Tamanho> 
  ---------------------------------------------------------------------------- }
-Function Poem_Zeros(const Texto : AnsiString; const Tamanho : Integer) : AnsiString;
+function Poem_Zeros(const Texto : AnsiString ; const Tamanho : Integer
+   ) : AnsiString ;
 begin
   Result := PadR(AnsiString(Trim(String(Texto))),Tamanho,'0') ;
 end ;
@@ -958,7 +960,8 @@ end ;
   Transforma <NumInteiro> em String, preenchendo com Zeros a Esquerda até
   atingiros digitos de <Tamnho>
  ---------------------------------------------------------------------------- }
-Function IntToStrZero(const NumInteiro : Int64; Tamanho : Integer) : AnsiString;
+function IntToStrZero(const NumInteiro : Int64 ; Tamanho : Integer
+   ) : AnsiString ;
 begin
   Result := '' ;
   try
@@ -973,8 +976,8 @@ end ;
   verifica se a virgula é '.' ou ',' efetuando a conversão se necessário
   Se não for possivel converter, retorna <DefaultValue>
  ---------------------------------------------------------------------------- }
-Function StringToFloatDef( const NumString : String ;
-   const DefaultValue : Double ) : Double ;
+function StringToFloatDef(const NumString : String ; const DefaultValue : Double
+   ) : Double ;
 begin
   try
      Result := StringToFloat( NumString ) ;
@@ -988,7 +991,7 @@ end ;
   verifica se a virgula é '.' ou ',' efetuando a conversão se necessário
   Se não for possivel converter, retorna <DefaultValue>
  ---------------------------------------------------------------------------- }
-Function StringToFloat( NumString : String ) : Double ;
+function StringToFloat(NumString : String) : Double ;
 begin
   NumString := Trim( NumString ) ;
 
@@ -1000,6 +1003,19 @@ begin
 
   Result := StrToFloat(NumString)
 end ;
+
+{-----------------------------------------------------------------------------
+  Converte um Double para string, SEM o separator decimal, considerando as
+  decimais como parte final da String. Ex: 100,00 = "10000"; 1,23 = "123"
+ ---------------------------------------------------------------------------- }
+function FloatToIntStr(const AValue : Double ; const DecimalDigits : SmallInt
+   ) : String ;
+var
+   Pow : Extended ;
+begin
+  Pow    := intpower(10, abs(DecimalDigits) );
+  Result := IntToStr( Trunc( SimpleRoundTo( AValue * Pow ,0) ) ) ;
+end;
 
 {-----------------------------------------------------------------------------
   Converte um Double para string com o decimal separator sendo o .(ponto)
@@ -1019,8 +1035,8 @@ end;
   mas verifica se o seprador da Data é compativo com o S.O., efetuando a
   conversão se necessário. Se não for possivel converter, retorna <DefaultValue>
  ---------------------------------------------------------------------------- }
-Function StringToDateTimeDef( const DateTimeString : String ;
-   const DefaultValue : TDateTime; const Format : String = '' ) : TDateTime ;
+function StringToDateTimeDef(const DateTimeString : String ;
+   const DefaultValue : TDateTime ; const Format : String) : TDateTime ;
 begin
   try
      Result := StringToDateTime( DateTimeString, Format ) ;
@@ -1034,8 +1050,8 @@ end ;
   mas verifica se o seprador da Data é compativo com o S.O., efetuando a
   conversão se necessário. Se não for possivel converter, retorna <DefaultValue>
  ---------------------------------------------------------------------------- }
-Function StringToDateTime( const DateTimeString : String;
-   const Format : String = '') : TDateTime ;
+function StringToDateTime(const DateTimeString : String ; const Format : String
+   ) : TDateTime ;
  Var
     OldShortDateFormat, AStr : String ;
 begin
@@ -1677,8 +1693,8 @@ begin
 {$ENDIF}
 end ;
 
-Procedure FindFiles( const FileMask : String; AStringList : TStrings;
-  IncludePath : Boolean = True ) ;
+procedure FindFiles(const FileMask : String ; AStringList : TStrings ;
+   IncludePath : Boolean) ;
 var SearchRec : TSearchRec ;
     RetFind   : Integer ;
     LastFile  : string ;
@@ -1708,7 +1724,7 @@ end;
 {-----------------------------------------------------------------------------
   Semelhante a FileExists, mas permite uso de mascaras Ex:(*.BAK, TEST*.PX, etc)
  ---------------------------------------------------------------------------- }
-Function FilesExists(const FileMask: string) : Boolean ;
+function FilesExists(const FileMask : String) : Boolean ;
 var SearchRec : TSearchRec ;
     RetFind   : Integer ;
     LastFile  : string ;
@@ -1733,7 +1749,7 @@ end ;
   Semelhante a DeleteFile, porem tenta deletar o Arquivo por
   <WaitTime> milisegundos. Gera Exceção se não conseguir apagar o arquivo.
  ---------------------------------------------------------------------------- }
-Procedure TryDeleteFile(const AFile: String; WaitTime: Integer = 100)  ;
+procedure TryDeleteFile(const AFile : String ; WaitTime : Integer) ;
   Var TFim : TDateTime ;
 begin
   TFim := IncMilliSecond(now,WaitTime) ;
@@ -1748,7 +1764,8 @@ end ;
   Semelhante a DeleteFile, mas permite uso de mascaras Ex:(*.BAK, TEST*.PX, etc)
   Gera Exceção se não conseguir apagar algum dos arquivos.
  ---------------------------------------------------------------------------- }
-Procedure DeleteFiles(const FileMask: string; RaiseExceptionOnFail : Boolean = True)  ;
+procedure DeleteFiles(const FileMask : String ; RaiseExceptionOnFail : Boolean
+   ) ;
 var SearchRec : TSearchRec ;
     RetFind   : Integer ;
     LastFile  : string ;
@@ -1815,7 +1832,7 @@ end;
   Verifica se <APath> possui "PathDelim" no final. Retorna String com o Path
   já ajustado
  ---------------------------------------------------------------------------- }
-Function PathWithDelim( const APath : String ) : String ;
+function PathWithDelim(const APath : String) : String ;
 begin
   Result := Trim(APath) ;
   if Result <> '' then
@@ -1842,8 +1859,8 @@ end;
   Copia todos os arquivos especificados na mascara <FileMask> para o diretório
   <ToDirName>   Gera Exceção se não conseguir copiar algum dos arquivos.
  ---------------------------------------------------------------------------- }
-Procedure CopyFilesToDir(FileMask: string; ToDirName : String;
-   const ForceDirectory : Boolean)  ;
+procedure CopyFilesToDir(FileMask : String ; ToDirName : String ;
+   const ForceDirectory : Boolean) ;
 var SearchRec : TSearchRec ;
     RetFind   : Integer ;
     LastFile  : string ;
@@ -2097,8 +2114,8 @@ end ;
  - Se "Reboot" for true Reinicializa
  *** Versão Windows extraida do www.forumweb.com.br/forum  por: Rafael Luiz ***
  ---------------------------------------------------------------------------- }
-Procedure DesligarMaquina(Reboot: Boolean = False; Forcar: Boolean = False;
-   LogOff: Boolean = False) ;
+procedure DesligarMaquina(Reboot : Boolean ; Forcar : Boolean ; LogOff : Boolean
+   ) ;
 
 {$IFDEF MSWINDOWS}
    function WindowsNT: Boolean;
@@ -2171,8 +2188,8 @@ Procedure DesligarMaquina(Reboot: Boolean = False; Forcar: Boolean = False;
  - Se arquivo "ArqTXT" não existir, será criado.  Se "ArqTXT" já existir e
    "Append" for verdadeiro adiciona "AString" no final do arquivo
  ---------------------------------------------------------------------------- }
-Procedure WriteToTXT( const ArqTXT, AString : AnsiString;
-   const AppendIfExists : Boolean = True; AddLineBreak : Boolean = True );
+procedure WriteToTXT(const ArqTXT, AString : AnsiString ;
+   const AppendIfExists : Boolean ; AddLineBreak : Boolean) ;
 var
   FS : TFileStream ;
   LineBreak : AnsiString ;

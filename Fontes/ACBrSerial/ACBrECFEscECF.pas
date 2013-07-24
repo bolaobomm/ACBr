@@ -143,6 +143,9 @@ TACBrECFEscECFResposta = class
  { Classe filha de TACBrECFClass com implementaçao para EscECF }
 TACBrECFEscECF = class( TACBrECFClass )
  private
+    fsFalhas : Byte;
+    fsACK    : Boolean;
+
     fsSPR            : Byte;
     fsPAF            : AnsiString ;
     fsNumVersao      : String ;
@@ -165,6 +168,7 @@ TACBrECFEscECF = class( TACBrECFClass )
     Function TraduzErroMsg( CAT, Ocorrencia : Byte) : String;
 
     Function GetValorTotalizador( N, I: Integer): Double;
+    Function AjustaDescricao( ADescricao: String ): String;
 
     Procedure SalvaRespostasMemoria( AtualizaVB: Boolean = True );
     Procedure LeRespostasMemoria;
@@ -265,18 +269,27 @@ TACBrECFEscECF = class( TACBrECFClass )
     procedure LerTotaisFormaPagamento ; override ;
     Procedure ProgramaFormaPagamento( var Descricao: String;
        PermiteVinculado : Boolean = true; Posicao : String = '' ) ; override ;
+    function AchaFPGDescricao( Descricao : String;
+       BuscaExata : Boolean = False; IgnorarCase : Boolean = True ) :
+       TACBrECFFormaPagamento ; override ;
 
     { Relatório Gerencial (RG) }
     procedure CarregaRelatoriosGerenciais ; override ;
     procedure LerTotaisRelatoriosGerenciais ; override ;
     Procedure ProgramaRelatorioGerencial( var Descricao: String;
        Posicao : String = '') ; override ;
+    function AchaRGDescricao( Descricao : String;
+       BuscaExata : Boolean = False; IgnorarCase : Boolean = True ) :
+       TACBrECFRelatorioGerencial ; override ;
 
     { Comprovantes Nao Fiscais (CNF) }
     procedure CarregaComprovantesNaoFiscais ; override ;
     procedure LerTotaisComprovanteNaoFiscal ; override ;
     Procedure ProgramaComprovanteNaoFiscal( var Descricao: String;
        Tipo : String = ''; Posicao : String = '') ; override ;
+    function AchaCNFDescricao( Descricao : String;
+       BuscaExata : Boolean = False; IgnorarCase : Boolean = True ) :
+       TACBrECFComprovanteNaoFiscal ; override ;
 
     { Cupom Fiscal }
     Procedure AbreCupom ; override ;
@@ -637,6 +650,8 @@ begin
   fsMarcaECF      := '' ;
   fsModeloECF     := '' ;
   fsEmPagamento   := False ;
+  fsFalhas        := 0;
+  fsACK           := False;
 
   RespostasComando.Clear;
 end;
@@ -722,6 +737,8 @@ begin
   EscECFResposta.Clear( True ) ;       // Zera toda a Resposta
   cmd := EscECFComando.Comando ;
 
+  fsACK             := False;
+  fsFalhas          := 0 ;
   fsSPR             := 0 ;
   Result            := '' ;
   ErroMsg           := '' ;
@@ -816,11 +833,29 @@ begin
     ACK :
       begin
         fsSPR := 0;
+        fsACK := True;
         GravaLog( '                RX <- '+Retorno, True);
         PedeStatus ;
       end;
 
-    NAK,WAK :  Result := (LenRet >= 6) ;
+    WAK :
+      begin
+        Result := (LenRet >= 6) ;
+
+        if Result and (not fsACK) then  // Comando não foi recebido, re-envie
+        begin
+          GravaLog('                RX <- '+Retorno, True);
+          Sleep(100);
+          GravaLog('        Reenvio TX -> '+fpComandoEnviado, True);
+          fpDevice.EnviaString( fpComandoEnviado ) ;
+          Retorno     := '';
+          Result      := False;
+          TempoLimite := IncSecond(now, TimeOut);
+        end ;
+
+      end ;
+
+    NAK :  Result := (LenRet >= 6) ;
   end;
 
   if Result then
@@ -843,6 +878,10 @@ begin
            GravaLog( '              Erro <- '+E.Message + ' - ' + Retorno  , True ) ;
            Result  := False ;
            Retorno := '' ;
+
+           Inc( fsFalhas ) ;
+           if fsFalhas < 6 then
+             PedeStatus;
          end
         else
            raise ;
@@ -1164,6 +1203,15 @@ begin
   end;
 end;
 
+function TACBrECFEscECF.AjustaDescricao(ADescricao : String) : String ;
+begin
+  { Ajusta uma descrição de acordo com as regras do protocolo EscECF
+    Máximo de 15, Mínimo de 4 caracteres ASCII de posição 65 a 90 (letras maiúsculas)
+    ou 97 a 122 (letras minúsculas) }
+
+  Result := OnlyAlpha( LeftStr( TiraAcentos( ADescricao ),15) );
+end ;
+
 procedure TACBrECFEscECF.SalvaRespostasMemoria(AtualizaVB : Boolean) ;
 Var
   ValVB : Double;
@@ -1177,7 +1225,7 @@ begin
   if AtualizaVB then
   begin
     ValVB := GetVendaBruta;
-    RespostasComando.AddField( 'VendaBruta', IntToStr(Trunc(SimpleRoundTo( ValVB * 100 ,0))) );
+    RespostasComando.AddField( 'VendaBruta', FloatToIntStr(ValVB) );
     RespostasComando.AddField( 'EmPagamento', ifthen( fsEmPagamento,'1','0') );
   end ;
 
@@ -1304,15 +1352,24 @@ var
 begin
   // Obs: Não há comando que retorne o TotalPago...
   try
-     APagar := RespostasComando.FieldByName('TotalAPagar').AsFloat;
+    Result := RespostasComando.FieldByName('TotalPago').AsFloat;
   except
-     APagar := 0;
-  end;
+    Result := -1;
+  end ;
 
-  if APagar > 0 then
-    Result := (GetSubTotal - APagar)
-  else
-    Result := 0;
+  if Result < 0 then
+  begin
+     try
+        APagar := RespostasComando.FieldByName('TotalAPagar').AsFloat;
+     except
+        APagar := 0;
+     end;
+
+     if APagar > 0 then
+       Result := (GetSubTotal - APagar)
+     else
+       Result := 0;
+  end ;
 end;
 
 function TACBrECFEscECF.GetNumReducoesZRestantes: String;
@@ -1767,10 +1824,14 @@ procedure TACBrECFEscECF.VendeItem(Codigo, Descricao: String;
    TipoDescontoAcrescimo: String; DescontoAcrescimo: String;
    CodDepartamento: Integer);
 begin
+  Codigo := LeftStr(Codigo,14) ;
+  if Length(Codigo) < 3 then
+    Codigo := padR(Codigo,3,'0');
+
   with EscECFComando do
   begin
      CMD := 2 ;
-     AddParamString( LeftStr(Codigo,14) );
+     AddParamString( Codigo );
      AddParamString( LeftStr(Descricao,233) );
      AddParamString( AliquotaECF );
      AddParamString( Trim(LeftStr( OnlyAlphaNum(Unidade),3)) );
@@ -1948,6 +2009,7 @@ procedure TACBrECFEscECF.EfetuaPagamento(CodFormaPagto : String ;
    CodMeioPagamento : Integer) ;
 Var
   NumPagtos : Integer;
+  TotPag : Double;
 begin
   if (CodMeioPagamento <= 0) or (CodMeioPagamento > 7) then
     CodMeioPagamento := 7;
@@ -1973,11 +2035,18 @@ begin
     NumPagtos := 0;
   end ;
 
+  try
+    TotPag := RespostasComando.FieldByName('TotalPago').AsFloat;
+  except
+    TotPag := 0;
+  end ;
+
   Inc( NumPagtos ) ;
   RespostasComando.AddField( 'NumPagtos', IntToStr(NumPagtos) );
   RespostasComando.AddField( 'Pagto'+IntToStr(NumPagtos),
      CodFormaPagto+'|'+FloatToStr(Valor)+'|'+IntToStr(CodMeioPagamento) );
   RespostasComando.AddField( 'TotalAPagar', EscECFResposta.Params[0] );
+  RespostasComando.AddField( 'TotalPago',  FloatToIntStr(Valor + TotPag) );
 
   SalvaRespostasMemoria(False);
 end;
@@ -2165,7 +2234,7 @@ begin
   if not Assigned( fpFormasPagamentos ) then
      CarregaFormasPagamento ;
 
-  Descricao := LeftStr(TiraAcentos( DecodificarPaginaDeCodigoECF(Descricao) ),15) ;
+  Descricao := AjustaDescricao( Descricao );
 
   EscECFComando.CMD := 84;
   if Posicao = '' then
@@ -2179,6 +2248,13 @@ begin
 
   CarregaFormasPagamento;
 end;
+
+function TACBrECFEscECF.AchaFPGDescricao(Descricao : String ;
+   BuscaExata : Boolean ; IgnorarCase : Boolean) : TACBrECFFormaPagamento ;
+begin
+  Descricao := AjustaDescricao( Descricao );
+  Result    := inherited AchaFPGDescricao(Descricao, BuscaExata, IgnorarCase) ;
+end ;
 
 procedure TACBrECFEscECF.CarregaRelatoriosGerenciais;
 Var
@@ -2233,7 +2309,7 @@ begin
   if not Assigned( fpRelatoriosGerenciais ) then
      CarregaRelatoriosGerenciais ;
 
-  Descricao := LeftStr(TiraAcentos( DecodificarPaginaDeCodigoECF(Descricao) ),15) ;
+  Descricao := AjustaDescricao( Descricao );
 
   EscECFComando.CMD := 86;
   if Posicao = '' then
@@ -2246,6 +2322,13 @@ begin
 
   CarregaRelatoriosGerenciais;
 end;
+
+function TACBrECFEscECF.AchaRGDescricao(Descricao : String ;
+   BuscaExata : Boolean ; IgnorarCase : Boolean) : TACBrECFRelatorioGerencial ;
+begin
+  Descricao := AjustaDescricao( Descricao );
+  Result    := inherited AchaRGDescricao(Descricao, BuscaExata, IgnorarCase) ;
+end ;
 
 procedure TACBrECFEscECF.CarregaComprovantesNaoFiscais;
 Var
@@ -2303,7 +2386,8 @@ begin
   if not Assigned( fpComprovantesNaoFiscais ) then
      CarregaComprovantesNaoFiscais ;
 
-  Descricao := LeftStr(TiraAcentos( DecodificarPaginaDeCodigoECF(Descricao) ),15) ;
+  Descricao := AjustaDescricao( Descricao );
+
   if (Tipo = '-') then
      Tipo := 'S'
   else
@@ -2321,6 +2405,14 @@ begin
 
   CarregaComprovantesNaoFiscais;
 end;
+
+function TACBrECFEscECF.AchaCNFDescricao(Descricao : String ;
+   BuscaExata : Boolean ; IgnorarCase : Boolean
+   ) : TACBrECFComprovanteNaoFiscal ;
+begin
+  Descricao := AjustaDescricao( Descricao );
+  Result    := inherited AchaCNFDescricao(Descricao, BuscaExata, IgnorarCase) ;
+end ;
 
 procedure TACBrECFEscECF.LinhaCupomVinculado(Linha: AnsiString);
 begin
