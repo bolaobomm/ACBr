@@ -773,12 +773,68 @@ begin
    case ACodMunicipio of
     1400100: Result := 'https://boavista.saatri.com.br/VisualizarNotaFiscal?numero=' +
                        IntToStr(ANumeroNFSe) + '&codigoVerificacao=' + ACodVerificacao;
+    1400209: Result := 'https://caracarai.saatri.com.br/VisualizarNotaFiscal?numero=' +
+	                     IntToStr(ANumeroNFSe) + '&codigoVerificacao=' + ACodVerificacao;
+    2902708: Result := 'https://barra.saatri.com.br/VisualizarNotaFiscal?numero=' +
+	                     IntToStr(ANumeroNFSe) + '&codigoVerificacao=' + ACodVerificacao;
     2903201: Result := 'https://barreiras.saatri.com.br/Relatorio/VisualizarNotaFiscal?numero=' +
                        IntToStr(ANumeroNFSe) + '&codigoVerificacao=' + ACodVerificacao;
+    2903904: Result := 'https://bjlapa.saatri.com.br/Relatorio/VisualizarNotaFiscal?numero=' +
+	                     IntToStr(ANumeroNFSe) + '&codigoVerificacao=' + ACodVerificacao;
+    2905602: Result := 'https://camacan.saatri.com.br/Relatorio/VisualizarNotaFiscal?numero=' +
+	                     IntToStr(ANumeroNFSe) + '&codigoVerificacao=' + ACodVerificacao;
+    2906006: Result := 'https://campoformoso.saatri.com.br/Relatorio/VisualizarNotaFiscal?numero=' +
+	                     IntToStr(ANumeroNFSe) + '&codigoVerificacao=' + ACodVerificacao;
+    2907202: Result := 'https://casanova.saatri.com.br/Relatorio/VisualizarNotaFiscal?numero=' +
+	                     IntToStr(ANumeroNFSe) + '&codigoVerificacao=' + ACodVerificacao;
+    2909307: Result := 'https://correntina.saatri.com.br/Relatorio/VisualizarNotaFiscal?numero=' +
+	                     IntToStr(ANumeroNFSe) + '&codigoVerificacao=' + ACodVerificacao;
+    2910057: Result := 'https://diasdavila.saatri.com.br/Relatorio/VisualizarNotaFiscal?numero=' +
+                       IntToStr(ANumeroNFSe) + '&codigoVerificacao=' + ACodVerificacao;
+    2910602: Result := 'https://esplanada.saatri.com.br/Relatorio/VisualizarNotaFiscal?numero=' +
+	                     IntToStr(ANumeroNFSe) + '&codigoVerificacao=' + ACodVerificacao;
+    2913200: Result := 'https://ibotirama.saatri.com.br/Relatorio/VisualizarNotaFiscal?numero=' +
+	                     IntToStr(ANumeroNFSe) + '&codigoVerificacao=' + ACodVerificacao;
+    2913903: Result := 'https://ipiau.saatri.com.br/Relatorio/VisualizarNotaFiscal?numero=' +
+  	                   IntToStr(ANumeroNFSe) + '&codigoVerificacao=' + ACodVerificacao;
+    2914505: Result := 'https://irara.saatri.com.br/Relatorio/VisualizarNotaFiscal?numero=' +
+	                     IntToStr(ANumeroNFSe) + '&codigoVerificacao=' + ACodVerificacao;
+    2914653: Result := 'https://itabela.saatri.com.br/Relatorio/VisualizarNotaFiscal?numero=' +
+	                     IntToStr(ANumeroNFSe) + '&codigoVerificacao=' + ACodVerificacao;
+    2914703: Result := 'https://itaberaba.saatri.com.br/Relatorio/VisualizarNotaFiscal?numero=' +
+ 	                     IntToStr(ANumeroNFSe) + '&codigoVerificacao=' + ACodVerificacao;
+    2917003: Result := 'https://itiuba.saatri.com.br/Relatorio/VisualizarNotaFiscal?numero=' +
+	                     IntToStr(ANumeroNFSe) + '&codigoVerificacao=' + ACodVerificacao;
+    2917508: Result := 'https://jacobina.saatri.com.br/Relatorio/VisualizarNotaFiscal?numero=' +
+	                     IntToStr(ANumeroNFSe) + '&codigoVerificacao=' + ACodVerificacao;
+    2917706: Result := 'https://jaguarari.saatri.com.br/Relatorio/VisualizarNotaFiscal?numero=' +
+	                     IntToStr(ANumeroNFSe) + '&codigoVerificacao=' + ACodVerificacao;
+  	2919157: Result := 'https://lapao.saatri.com.br/Relatorio/VisualizarNotaFiscal?numero=' +
+	                     IntToStr(ANumeroNFSe) + '&codigoVerificacao=' + ACodVerificacao;
+	  2919926: Result := 'https://madre.saatri.com.br/Relatorio/VisualizarNotaFiscal?numero=' +
+	                     IntToStr(ANumeroNFSe) + '&codigoVerificacao=' + ACodVerificacao;
+	  2922656: Result := 'https://nordestina.saatri.com.br/Relatorio/VisualizarNotaFiscal?numero=' +
+  	                   IntToStr(ANumeroNFSe) + '&codigoVerificacao=' + ACodVerificacao;
+	  2922003: Result := 'https://mucuri.saatri.com.br/Relatorio/VisualizarNotaFiscal?numero=' +
+	                     IntToStr(ANumeroNFSe) + '&codigoVerificacao=' + ACodVerificacao;
+	  2927705: Result := 'https://santacruzcabralia.saatri.com.br/Relatorio/VisualizarNotaFiscal?numero=' +
+	                     IntToStr(ANumeroNFSe) + '&codigoVerificacao=' + ACodVerificacao;
+	  2928901: Result := 'https://saodesiderio.saatri.com.br/Relatorio/VisualizarNotaFiscal?numero=' +
+	                     IntToStr(ANumeroNFSe) + '&codigoVerificacao=' + ACodVerificacao;
+	  2931350: Result := 'https://teixeiradefreitas.saatri.com.br/Relatorio/VisualizarNotaFiscal?numero=' +
+	                     IntToStr(ANumeroNFSe) + '&codigoVerificacao=' + ACodVerificacao;
+	  2932804: Result := 'https://utinga.saatri.com.br/Relatorio/VisualizarNotaFiscal?numero=' +
+	                     IntToStr(ANumeroNFSe) + '&codigoVerificacao=' + ACodVerificacao;
+	  2933208: Result := 'https://veracruz.saatri.com.br/Relatorio/VisualizarNotaFiscal?numero=' +
+	                     IntToStr(ANumeroNFSe) + '&codigoVerificacao=' + ACodVerificacao;
+	  4201653: Result := 'https://arvoredo.saatri.com.br/Relatorio/VisualizarNotaFiscal?numero=' +
+	                     IntToStr(ANumeroNFSe) + '&codigoVerificacao=' + ACodVerificacao;
+	  4204558: Result := 'https://correiapinto.saatri.com.br/Relatorio/VisualizarNotaFiscal?numero=' +
+	                     IntToStr(ANumeroNFSe) + '&codigoVerificacao=' + ACodVerificacao;
    else Result := '';
    end;
   end
-  else Result := ''; 
+  else Result := '';
 end;
 
 function TProvedorSaatri.GeraEnvelopeRecepcionarSincrono(URLNS: String;
