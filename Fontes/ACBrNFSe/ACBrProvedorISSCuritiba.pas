@@ -91,9 +91,11 @@ begin
  ConfigCidade.Prefixo4      := '';
  ConfigCidade.Identificador := 'id';
 
- if AAmbiente = 1
-  then ConfigCidade.NameSpaceEnvelope := 'https://isscuritiba.curitiba.pr.gov.br'
-  else ConfigCidade.NameSpaceEnvelope := 'http://200.189.192.82/pilotonota_iss/';
+// if AAmbiente = 1
+//  then ConfigCidade.NameSpaceEnvelope := 'https://isscuritiba.curitiba.pr.gov.br'
+//  else ConfigCidade.NameSpaceEnvelope := 'http://200.189.192.82/pilotonota_iss/';
+
+ ConfigCidade.NameSpaceEnvelope := 'http://www.e-governeapps2.com.br/';
 
  ConfigCidade.AssinaRPS  := False;
  ConfigCidade.AssinaLote := True;
@@ -108,7 +110,8 @@ begin
  ConfigSchema.VersaoCabecalho := '';
  ConfigSchema.VersaoDados     := '';
  ConfigSchema.VersaoXML       := '2';
- ConfigSchema.NameSpaceXML    := 'http://isscuritiba.curitiba.pr.gov.br/iss/'; // 'http://www.e-governeapps2.com.br/'
+// ConfigSchema.NameSpaceXML    := 'http://www.e-governeapps2.com.br/';
+ ConfigSchema.NameSpaceXML    := 'http://isscuritiba.curitiba.pr.gov.br/iss/';
  ConfigSchema.Cabecalho       := 'nfse.xsd';
  ConfigSchema.ServicoEnviar   := 'nfse.xsd';
  ConfigSchema.ServicoConSit   := 'nfse.xsd';
@@ -126,12 +129,20 @@ var
  ConfigURL: TConfigURL;
 begin
  ConfigURL.HomNomeCidade         := '';
+ (*
  ConfigURL.HomRecepcaoLoteRPS    := 'http://200.189.192.82/pilotonota_webservice/nfsews.asmx';
  ConfigURL.HomConsultaLoteRPS    := 'http://200.189.192.82/pilotonota_webservice/nfsews.asmx';
  ConfigURL.HomConsultaNFSeRPS    := 'http://200.189.192.82/pilotonota_webservice/nfsews.asmx';
  ConfigURL.HomConsultaSitLoteRPS := 'http://200.189.192.82/pilotonota_webservice/nfsews.asmx';
  ConfigURL.HomConsultaNFSe       := 'http://200.189.192.82/pilotonota_webservice/nfsews.asmx';
  ConfigURL.HomCancelaNFSe        := 'http://200.189.192.82/pilotonota_webservice/nfsews.asmx';
+ *)
+ ConfigURL.HomRecepcaoLoteRPS    := 'https://pilotoisscuritiba.curitiba.pr.gov.br/nfse_ws/NfseWs.asmx';
+ ConfigURL.HomConsultaLoteRPS    := 'https://pilotoisscuritiba.curitiba.pr.gov.br/nfse_ws/NfseWs.asmx';
+ ConfigURL.HomConsultaNFSeRPS    := 'https://pilotoisscuritiba.curitiba.pr.gov.br/nfse_ws/NfseWs.asmx';
+ ConfigURL.HomConsultaSitLoteRPS := 'https://pilotoisscuritiba.curitiba.pr.gov.br/nfse_ws/NfseWs.asmx';
+ ConfigURL.HomConsultaNFSe       := 'https://pilotoisscuritiba.curitiba.pr.gov.br/nfse_ws/NfseWs.asmx';
+ ConfigURL.HomCancelaNFSe        := 'https://pilotoisscuritiba.curitiba.pr.gov.br/nfse_ws/NfseWs.asmx';
 
  ConfigURL.ProNomeCidade         := '';
  ConfigURL.ProRecepcaoLoteRPS    := 'https://isscuritiba.curitiba.pr.gov.br/Iss.NfseWebService/Nfsews.asmx';
@@ -170,16 +181,19 @@ end;
 
 function TProvedorIssCuritiba.Gera_TagI(Acao: TnfseAcao; Prefixo3, Prefixo4,
   NameSpaceDad, Identificador, URI: String): AnsiString;
+var
+ xmlns: String;
 begin
+ xmlns := NameSpaceDad +
+          ' xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"' +
+          ' xsi:schemaLocation="http://isscuritiba.curitiba.pr.gov.br/iss/nfse.xsd">';
+
  case Acao of
-   acRecepcionar: Result := '<' + Prefixo3 + 'EnviarLoteRpsEnvio' + NameSpaceDad;
-//                              ' xmlns="http://isscuritiba.curitiba.pr.gov.br/iss/nfse.xsd"' +
-//                              ' xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"' +
-//                              ' xsi:schemaLocation="http://isscuritiba.curitiba.pr.gov.br/iss/nfse.xsd">';
-   acConsSit:     Result := '<' + Prefixo3 + 'ConsultarSituacaoLoteRpsEnvio' + NameSpaceDad;
-   acConsLote:    Result := '<' + Prefixo3 + 'ConsultarLoteRpsEnvio' + NameSpaceDad;
-   acConsNFSeRps: Result := '<' + Prefixo3 + 'ConsultarNfseRpsEnvio' + NameSpaceDad;
-   acConsNFSe:    Result := '<' + Prefixo3 + 'ConsultarNfseEnvio' + NameSpaceDad;
+   acRecepcionar: Result := '<' + Prefixo3 + 'EnviarLoteRpsEnvio' + xmlns;
+   acConsSit:     Result := '<' + Prefixo3 + 'ConsultarSituacaoLoteRpsEnvio' + xmlns;
+   acConsLote:    Result := '<' + Prefixo3 + 'ConsultarLoteRpsEnvio' + xmlns;
+   acConsNFSeRps: Result := '<' + Prefixo3 + 'ConsultarNfseRpsEnvio' + xmlns;
+   acConsNFSe:    Result := '<' + Prefixo3 + 'ConsultarNfseEnvio' + xmlns;
    acCancelar:    Result := '<CancelarNfseEnvio>';
    acGerar:       Result := '';
  end;
@@ -480,6 +494,7 @@ begin
    acConsNFSe:    Result := 'http://www.e-governeapps2.com.br/ConsultarNfse';
    acCancelar:    Result := 'http://www.e-governeapps2.com.br/CancelarNfse';
    acGerar:       Result := '';
+   acRecSincrono: Result := '';
  end;
 end;
 
@@ -493,6 +508,7 @@ begin
    acConsNFSe:    Result := SeparaDados( RetornoWS, 'ConsultarNfseResult' );
    acCancelar:    Result := SeparaDados( RetornoWS, 'CancelarNfseResult' );
    acGerar:       Result := '';
+   acRecSincrono: Result := '';
  end;
 end;
 
