@@ -623,7 +623,15 @@ end;
 function TProvedorTiplan.GetLinkNFSe(ACodMunicipio, ANumeroNFSe: Integer;
   ACodVerificacao, AInscricaoM: String; AAmbiente: Integer): String;
 begin
- Result := '';
+ case ACodCidade of
+  3501608: begin // Americana/SP
+            ACodVerificacao := StringReplace(ACodVerificacao, '-', '', [rfReplaceAll]);
+            Result := 'https://nfse.americana.sp.gov.br/nfse/nfse.aspx?inscricao=' +
+                      AInscricaoM + '&nf=' + IntToStr(ANumeroNFSe) +
+                      '&cod=' + ACodVerificacao;
+           end;
+  else Result := '';
+ end;
 end;
 
 function TProvedorTiplan.GeraEnvelopeRecepcionarSincrono(URLNS: String;

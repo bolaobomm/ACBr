@@ -1669,7 +1669,8 @@ begin
         a := copy(dt, 1, 4);
 
         NFSe.DataEmissaoRps := strtodate(d + '/' + m + '/' + a);
-        NFSe.Status         :=  TNfseStatusRps(Leitor.rCampo(tcInt, 'Status'));
+        // Alterado por Joel Takei em 24/07/2013
+        NFSe.Status         :=  StrToStatusRps(Ok, Leitor.rCampo(tcStr, 'Status'));
 
         if (Leitor.rExtrai(5, 'IdentificacaoRps') <> '') then
         begin
