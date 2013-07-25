@@ -107,7 +107,7 @@ begin
                DFeUtil.SeSenao(AProvedor in [proAbaco, proBetha, proGinfes, proGoiania, proGovBR,
                                              proISSDigital, proIssCuritiba, proISSNET, proNatal,
                                              proRecife, proRJ, proSimplISS, proThema, proTiplan,
-                                             proProdata], '',
+                                             proProdata, proAgili], '',
                 DFeUtil.SeSenao(VersaoDados <> '', ' versao="' + VersaoDados + '"', '')) + '>' +
               '<' + Prefixo4 + 'NumeroLote>' +
                 NumeroLote +
@@ -390,6 +390,7 @@ begin
   proIssDigital,
   proISSe,
   proProdata,
+  proAgili,
   proSaatri: Result := TagI + Notas + TagF;
   else begin // proWebISS
    DadosMsg := '<' + Prefixo3 + 'LoteRps'+
@@ -429,7 +430,7 @@ begin
  if AProvedor in [proNenhum, proAbaco, proBetha, proBetim, proBHIss, proDigifred,
   proEquiplano, proFiorilli, proFIssLex, proGinfes, proGovBR, proIssCuritiba,
   proIssIntel, proIssNet, proNatal, proProdemge, proPublica, proRecife, proRJ,
-  proSimplIss, proThema, proTiplan, proCoplan, proIssDSF] then Result := '';
+  proSimplIss, proThema, proTiplan, proCoplan, proIssDSF, proAgili] then Result := '';
 end;
 
 class function TNFSeG.Gera_DadosMsgEnviarSincrono(Prefixo3, Prefixo4,
@@ -444,7 +445,7 @@ begin
      proEquiplano, profintelISS, proFISSLex, proGinfes, proGoiania, proGovBR,
      proGovDigital, proIssCuritiba, proISSDigital, proISSIntel, proISSNet, proNatal,
      proProdemge, proPublica, proRecife, proRJ, proSaatri, proSimplISS, proThema,
-     proTiplan, proWebISS, proCoplan, proProdata] then Result := '';
+     proTiplan, proWebISS, proCoplan, proProdata, proAgili] then Result := '';
 end;
 
 //-------------------------------------------------------------------------
