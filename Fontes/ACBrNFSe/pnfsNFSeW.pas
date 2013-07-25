@@ -897,9 +897,8 @@ begin
   else Gerador.wGrupoNFSe('Rps ' + FIdentificador + '="rps' + NFSe.InfID.ID + '"');
 
  GerarIdentificacaoRPS;
- Gerador.wCampoNFSe(tcDat, '#4', 'DataEmissao', 19, 19, 1, NFSe.DataEmissao, DSC_DEMI);
-
- Gerador.wCampoNFSe(tcStr,    '#9', 'Status     ', 01, 01, 1, StatusRPSToStr(NFSe.Status), '');
+ Gerador.wCampoNFSe(tcDat, '#4', 'DataEmissao', 10, 10, 1, NFSe.DataEmissao, DSC_DEMI);
+ Gerador.wCampoNFSe(tcStr, '#9', 'Status     ', 01, 01, 1, StatusRPSToStr(NFSe.Status), '');
  Gerador.wGrupoNFSe('/Rps');
 Gerador.wCampoNFSe(tcDat   , '#4', 'Competencia', 19, 19, 1, NFSe.DataEmissao, DSC_DEMI);
 
