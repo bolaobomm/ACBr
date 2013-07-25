@@ -161,8 +161,7 @@ end;
 
 procedure TfrmPrincipal.LerSerial(Sender: TObject);
 var
-  Dados: String;
-  PesoAtual: Double;
+  Dados, StrAEnviar: String;
 begin
   try
     if not FDevice.InstanceActive then
@@ -175,8 +174,13 @@ begin
       // Verificar se o pacote corresponde a pedida do peso
       if Dados = ENQ then
       begin
-        PesoAtual := StrToFloat(edtPesoAtual.Text);
-        EnviarResposta(FormataPeso(PesoAtual, 5))
+        try
+          StrAEnviar := FormataPeso(StrToFloat(edtPesoAtual.Text), 5);
+        except
+          StrAEnviar := edtPesoAtual.Text;
+        end ;
+
+        EnviarResposta( StrAEnviar )
       end;
     end;
 
@@ -287,25 +291,33 @@ end;
 
 procedure TfrmPrincipal.btnPesoEnviarClick(Sender: TObject);
 var
-  PesoAtual: Double;
+  StrAEnviar: String;
 begin
-  PesoAtual := StrToFloat(edtPesoAtual.Text);
-  EnviarResposta(FormataPeso(PesoAtual, 5))
+  try
+    StrAEnviar := FormataPeso(StrToFloat(edtPesoAtual.Text), 5);
+  except
+    StrAEnviar := edtPesoAtual.Text;
+  end ;
+
+  EnviarResposta( StrAEnviar )
 end;
 
 procedure TfrmPrincipal.btnSimularPesoInstavelClick(Sender: TObject);
 begin
   EnviarResposta(PESO_INSTAVEL);
+  edtPesoAtual.Text := PESO_INSTAVEL;
 end;
 
 procedure TfrmPrincipal.btnSimularPesoNegativoClick(Sender: TObject);
 begin
   EnviarResposta(PESO_NEGATIVO);
+  edtPesoAtual.Text := PESO_NEGATIVO;
 end;
 
 procedure TfrmPrincipal.btnSimularSobrepesoClick(Sender: TObject);
 begin
   EnviarResposta(PESO_SOBRECARGA);
+  edtPesoAtual.Text := PESO_SOBRECARGA;
 end;
 
 end.
