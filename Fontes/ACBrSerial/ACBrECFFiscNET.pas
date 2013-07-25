@@ -2228,7 +2228,7 @@ begin
   except
      On E: Exception do
      begin
-        if pos('11000', E.Message) = 0 then   // Erro: 11000 - ErroProtParamInvalido
+        if (pos('11000', E.Message) = 0) then   // Erro: 11000 - ErroProtParamInvalido
            raise ;
      end ;
   end ;
@@ -3050,7 +3050,6 @@ begin
     DHUltZ := DataHoraUltimaReducaoZ;
   end;
 
-  EnviaComando ;
   ECFVBruta := LeMoeda( 'VendaBrutaReducao['+IntToStr(ECFCRZ) + ']' ) ;
 
   FiscNETComando.NomeComando := 'LeTexto' ;

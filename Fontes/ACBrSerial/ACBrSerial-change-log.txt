@@ -97,6 +97,10 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+Data: 25/07/2013
+-- ACBrECFFiscNet --
+[-] Corrigido Bug na leitura de DadosUltimaReducaoZ  (por: DSA)
+
 Data: 24/07/2013
 -- ACBrECFEscECF --
 [-] Correção no protocolo de comunicação. Adicionando tratamento para o caso do
