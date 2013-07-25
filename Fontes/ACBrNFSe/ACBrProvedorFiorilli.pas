@@ -128,7 +128,8 @@ var
  ConfigURL: TConfigURL;
 const
   cURL_Homologacao = 'http://201.28.69.146:5663/IssWeb-ejb/IssWebWS/IssWebWS';
-  cURL_Producao    = 'http://201.28.69.146:5663/IssWeb-ejb/IssWebWS/IssWebWS';
+//  cURL_Producao    = 'http://201.28.69.146:5663/IssWeb-ejb/IssWebWS/IssWebWS';
+  cURL_Producao    = 'http://177.69.210.132:8080/IssWeb-ejb/IssWebWS/IssWebWS';
 begin
  case ACodCidade of
   2103000, // Caxias/MA
