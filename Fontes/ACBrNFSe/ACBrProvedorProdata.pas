@@ -112,7 +112,7 @@ begin
             ConfigURL.ProNomeCidade := 'mineiros.gdc.net.br';
            end;
   5218805: begin // Rio Verde/GO
-            ConfigURL.HomNomeCidade := 'rioverdegoias.com.br';
+            ConfigURL.HomNomeCidade := 'homologacao.rioverdegoias.com.br';
             ConfigURL.ProNomeCidade := 'rioverdegoias.com.br';
            end;
  end;
