@@ -1079,7 +1079,7 @@ object Form1: TForm1
       Top = 301
       Width = 579
       Height = 291
-      ActivePage = TabSheet5
+      ActivePage = Dados
       Align = alClient
       TabOrder = 1
       object TabSheet5: TTabSheet

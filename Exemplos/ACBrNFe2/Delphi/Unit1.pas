@@ -563,15 +563,29 @@ begin
   OpenDialog1.DefaultExt := '*-nfe.XML';
   OpenDialog1.Filter := 'Arquivos NFE (*-nfe.XML)|*-nfe.XML|Arquivos XML (*.XML)|*.XML|Todos os Arquivos (*.*)|*.*';
   OpenDialog1.InitialDir := ACBrNFe1.Configuracoes.Geral.PathSalvar;
+// Configuração padrão para exibição dos erros de validação
+//  ACBrNFe1.Configuracoes.Geral.ExibirErroSchema := True;
+//  ACBrNFe1.Configuracoes.Geral.FormatoAlerta := 'TAG:%TAGNIVEL% ID:%ID%/%TAG%(%DESCRICAO%) - %MSG%.';
+
+// Sugestão de configuração para apresentação de mensagem mais amigável ao usuário final 
+  ACBrNFe1.Configuracoes.Geral.ExibirErroSchema := False;
+  ACBrNFe1.Configuracoes.Geral.FormatoAlerta := 'Campo:%DESCRICAO% - %MSG%';
+
   if OpenDialog1.Execute then
-  begin
-    ACBrNFe1.NotasFiscais.Clear;
-    ACBrNFe1.NotasFiscais.LoadFromFile(OpenDialog1.FileName);
-    ACBrNFe1.NotasFiscais.Valida;
-    if ACBrNFe1.NotasFiscais.Items[0].Alertas <> '' then
-      MemoDados.Lines.Add('Alertas: '+ACBrNFe1.NotasFiscais.Items[0].Alertas);
-    showmessage('Nota Fiscal Eletrônica Valida');
-  end;
+   begin
+     ACBrNFe1.NotasFiscais.Clear;
+     ACBrNFe1.NotasFiscais.LoadFromFile(OpenDialog1.FileName);
+     try
+        ACBrNFe1.NotasFiscais.Valida;
+        if ACBrNFe1.NotasFiscais.Items[0].Alertas <> '' then
+          MemoDados.Lines.Add('Alertas: '+ACBrNFe1.NotasFiscais.Items[0].Alertas);
+        ShowMessage('Nota Fiscal Eletrônica Valida');
+     except
+        PageControl2.ActivePage := Dados;
+        MemoDados.Lines.Add('Erro: '+ACBrNFe1.NotasFiscais.Items[0].ErroValidacao);
+        MemoDados.Lines.Add('Erro Completo: '+ACBrNFe1.NotasFiscais.Items[0].ErroValidacaoCompleto); //Útil para gravar em arquivos de LOG
+     end;
+   end;
 end;
 
 procedure TForm1.btnManifDestConfirmacaoClick(Sender: TObject);
