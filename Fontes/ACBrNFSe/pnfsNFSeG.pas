@@ -107,7 +107,7 @@ begin
                DFeUtil.SeSenao(AProvedor in [proAbaco, proBetha, proGinfes, proGoiania, proGovBR,
                                              proISSDigital, proIssCuritiba, proISSNET, proNatal,
                                              proRecife, proRJ, proSimplISS, proThema, proTiplan,
-                                             proProdata, proAgili], '',
+                                             proAgili], '',
                 DFeUtil.SeSenao(VersaoDados <> '', ' versao="' + VersaoDados + '"', '')) + '>' +
               '<' + Prefixo4 + 'NumeroLote>' +
                 NumeroLote +
