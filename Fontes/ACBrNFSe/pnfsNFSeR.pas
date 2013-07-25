@@ -598,6 +598,7 @@ begin
  if (Leitor.rExtrai(2, 'InfRps') <> '') 
   then begin
    NFSe.DataEmissaoRps           := Leitor.rCampo(tcDat, 'DataEmissao');
+   NFSe.DataEmissao              := Leitor.rCampo(tcDatHor, 'DataEmissao');
    NFSe.NaturezaOperacao         := StrToNaturezaOperacao(ok, Leitor.rCampo(tcStr, 'NaturezaOperacao'));
    NFSe.RegimeEspecialTributacao := StrToRegimeEspecialTributacao(ok, Leitor.rCampo(tcStr, 'RegimeEspecialTributacao'));
    NFSe.OptanteSimplesNacional   := StrToSimNao(ok, Leitor.rCampo(tcStr, 'OptanteSimplesNacional'));
