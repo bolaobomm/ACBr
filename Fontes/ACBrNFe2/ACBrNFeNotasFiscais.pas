@@ -63,6 +63,7 @@ type
   private
     FNFe: TNFe;
     FXML: AnsiString;
+    FXMLOriginal: AnsiString;
     FConfirmada : Boolean;
     FMsg : AnsiString ;
     FAlertas: AnsiString;
@@ -96,6 +97,7 @@ type
                                 UsarThread: Boolean = True);
     property NFe: TNFe  read FNFe write FNFe;
     property XML: AnsiString  read GetNFeXML write FXML;
+    property XMLOriginal: AnsiString  read FXMLOriginal write FXMLOriginal;
     property Confirmada: Boolean  read FConfirmada write FConfirmada;
     property Msg: AnsiString  read FMsg write FMsg;
     property Alertas: AnsiString read FAlertas write FAlertas;
@@ -543,7 +545,7 @@ begin
   Result := False;
   for i:= 0 to Self.Count-1 do
   begin
-     if not(NotaUtil.ValidaAssinatura(('<NFe xmlns' + RetornarConteudoEntre(Self.Items[i].XML, '<NFe xmlns', '</NFe>')+ '</NFe>'), FMsg)) then
+     if not(NotaUtil.ValidaAssinatura(Self.Items[i].XMLOriginal, FMsg)) then
       begin
         Result := False;
         Msg := 'Falha na validação da assinatura da nota '+
@@ -558,12 +560,13 @@ function TNotasFiscais.LoadFromFile(CaminhoArquivo: string): boolean;
 var
  LocNFeR : TNFeR;
  ArquivoXML: TStringList;
- XML : AnsiString;
+ XML, XMLOriginal : AnsiString;
 begin
  try
     ArquivoXML := TStringList.Create;
     try
       ArquivoXML.LoadFromFile(CaminhoArquivo {$IFDEF DELPHI2009_UP}, TEncoding.UTF8{$ENDIF});
+      XMLOriginal := ArquivoXML.Text;
       Result := True;
       while pos('</NFe>',ArquivoXML.Text) > 0 do
        begin
@@ -582,6 +585,7 @@ begin
             LocNFeR.Leitor.Arquivo := XML;
             LocNFeR.LerXml;
             Items[Self.Count-1].XML := LocNFeR.Leitor.Arquivo;
+            Items[Self.Count-1].XMLOriginal := XMLOriginal;
             Items[Self.Count-1].NomeArq := CaminhoArquivo;
             GerarNFe;
          finally
@@ -607,8 +611,9 @@ begin
     try
        LocNFeR.Leitor.CarregarArquivo(Stream);
        LocNFeR.LerXml;
+       Items[Self.Count-1].XMLOriginal := Stream.DataString;
        Items[Self.Count-1].XML := LocNFeR.Leitor.Arquivo;
-       GerarNFe;       
+       GerarNFe;
     finally
        LocNFeR.Free
     end;
