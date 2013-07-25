@@ -86,7 +86,7 @@ var
 begin
  ConfigSchema.VersaoCabecalho := '2.01';
  ConfigSchema.VersaoDados     := '2.01';
- ConfigSchema.VersaoXML       := '2';
+ ConfigSchema.VersaoXML       := '1';
  ConfigSchema.NameSpaceXML    := 'http://www.abrasf.org.br/';
  ConfigSchema.Cabecalho       := 'nfse.xsd';
  ConfigSchema.ServicoEnviar   := 'nfse.xsd';
