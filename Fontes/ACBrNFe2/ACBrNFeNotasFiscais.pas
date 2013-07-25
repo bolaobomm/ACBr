@@ -51,7 +51,7 @@ unit ACBrNFeNotasFiscais;
 interface
 
 uses
-  Classes, Sysutils, Dialogs, Forms,
+  Classes, Sysutils, Dialogs, Forms, StrUtils,
   ACBrNFeUtil, ACBrNFeConfiguracoes, ACBrDFeUtil,
   ACBrNFeDANFEClass,
   smtpsend, ssl_openssl, mimemess, mimepart, // units para enviar email
@@ -66,6 +66,8 @@ type
     FConfirmada : Boolean;
     FMsg : AnsiString ;
     FAlertas: AnsiString;
+    FErroValidacao: AnsiString;
+    FErroValidacaoCompleto: AnsiString;
     FNomeArq: String;
     function GetNFeXML: AnsiString;
   public
@@ -97,6 +99,8 @@ type
     property Confirmada: Boolean  read FConfirmada write FConfirmada;
     property Msg: AnsiString  read FMsg write FMsg;
     property Alertas: AnsiString read FAlertas write FAlertas;
+    property ErroValidacao: AnsiString read FErroValidacao write FErroValidacao;
+    property ErroValidacaoCompleto: AnsiString read FErroValidacaoCompleto write FErroValidacaoCompleto;    
     property NomeArq: String read FNomeArq write FNomeArq;
   end;
 
@@ -230,6 +234,7 @@ begin
         else
            LocNFeW.Versao := NFenviNFe;  }
 
+        LocNFeW.Gerador.Opcoes.FormatoAlerta := TACBrNFe( TNotasFiscais( Collection ).ACBrNFe ).Configuracoes.Geral.FormatoAlerta;
         LocNFeW.GerarXml;
         if DFeUtil.EstaVazio(CaminhoArquivo) then
            CaminhoArquivo := PathWithDelim(TACBrNFe( TNotasFiscais( Collection ).ACBrNFe ).Configuracoes.Geral.PathSalvar)+copy(NFe.infNFe.ID, (length(NFe.infNFe.ID)-44)+1, 44)+'-NFe.xml';
@@ -266,6 +271,7 @@ begin
         else
            LocNFeW.Versao := NFenviNFe;  }
 
+        LocNFeW.Gerador.Opcoes.FormatoAlerta := TACBrNFe( TNotasFiscais( Collection ).ACBrNFe ).Configuracoes.Geral.FormatoAlerta;
         LocNFeW.GerarXml;
         Stream.WriteString(LocNFeW.Gerador.ArquivoFormatoXML);
      finally
@@ -360,6 +366,7 @@ begin
     else
        LocNFeW.Versao := NFenviNFe;   }
 
+    LocNFeW.Gerador.Opcoes.FormatoAlerta := TACBrNFe( TNotasFiscais( Collection ).ACBrNFe ).Configuracoes.Geral.FormatoAlerta;       
     LocNFeW.GerarXml;
     Result := LocNFeW.Gerador.ArquivoFormatoXML;
  finally
@@ -405,6 +412,7 @@ begin
         else
            LocNFeW.Versao := NFenviNFe;    }
 
+        LocNFeW.Gerador.Opcoes.FormatoAlerta := FConfiguracoes.Geral.FormatoAlerta;
         LocNFeW.GerarXml;
         Self.Items[i].Alertas := LocNFeW.Gerador.ListaDeAlertas.Text;
 {$IFDEF ACBrNFeOpenSSL}
@@ -452,11 +460,11 @@ begin
     try
        LocNFeW.schema := TsPL006;
 
-{       if (FConfiguracoes.Geral.ModeloDF = moNFCe) then 
+{       if (FConfiguracoes.Geral.ModeloDF = moNFCe) then
           LocNFeW.Versao := NFCeEnvi
        else
           LocNFeW.Versao := NFenviNFe;   }
-
+       LocNFeW.Gerador.Opcoes.FormatoAlerta := FConfiguracoes.Geral.FormatoAlerta;
        LocNFeW.GerarXml;
        Self.Items[i].XML := LocNFeW.Gerador.ArquivoFormatoXML;
        Self.Items[i].Alertas := LocNFeW.Gerador.ListaDeAlertas.Text;
@@ -513,8 +521,17 @@ begin
         Assinar;
      if not(NotaUtil.Valida(('<NFe xmlns' + RetornarConteudoEntre(Self.Items[i].XML, '<NFe xmlns', '</NFe>')+ '</NFe>'),
                             FMsg, Self.FConfiguracoes.Geral.PathSchemas, Self.FConfiguracoes.Geral.ModeloDF)) then
-        raise EACBrNFeException.Create('Falha na validação dos dados da nota '+
-                               IntToStr(Self.Items[i].NFe.Ide.nNF)+sLineBreak+Self.Items[i].Alertas+FMsg);
+      begin
+        Self.Items[i].ErroValidacaoCompleto := 'Falha na validação dos dados da nota '+
+                                               IntToStr(Self.Items[i].NFe.Ide.nNF)+sLineBreak+
+                                               Self.Items[i].Alertas+
+                                               FMsg;
+        Self.Items[i].ErroValidacao := 'Falha na validação dos dados da nota '+
+                                       IntToStr(Self.Items[i].NFe.Ide.nNF)+sLineBreak+
+                                       Self.Items[i].Alertas+
+                                       IfThen(Self.FConfiguracoes.Geral.ExibirErroSchema,FMsg,'');
+        raise EACBrNFeException.Create(Self.Items[i].ErroValidacao);
+      end;
   end;
 end;
 
@@ -643,7 +660,7 @@ end;
 function TNotasFiscais.SaveToTXT(PathArquivo: string): boolean;
 var
   loSTR: TStringList;
-  loNFeW : TNFeW;
+  LocNFeW : TNFeW;
   I,J: integer;
 begin
   Result:=False;
@@ -652,21 +669,22 @@ begin
     loSTR.Clear;
     for I := 0 to Self.Count - 1 do
     begin
-      loNFeW := TNFeW.Create(Self.Items[I].Nfe);
+      LocNFeW := TNFeW.Create(Self.Items[I].Nfe);
       try
-        loNFeW.schema := TsPL006;
-        loNFeW.Opcoes.GerarTXTSimultaneamente:=true;
+        LocNFeW.schema := TsPL006;
+        LocNFeW.Opcoes.GerarTXTSimultaneamente:=true;
 
 {        if (FConfiguracoes.Geral.ModeloDF= moNFCe) then
-           LoNFeW.Versao := NFCeEnvi
+           LocNFeW.Versao := NFCeEnvi
         else
-           LoNFeW.Versao := NFenviNFe;  }
+           LocNFeW.Versao := NFenviNFe;  }
 
-        loNFeW.GerarXml;
+        LocNFeW.Gerador.Opcoes.FormatoAlerta := FConfiguracoes.Geral.FormatoAlerta;
+        LocNFeW.GerarXml;
         loSTR.Text := loSTR.Text +
-                      copy(loNFeW.Gerador.ArquivoFormatoTXT,14,length(loNFeW.Gerador.ArquivoFormatoTXT));
+                      copy(LocNFeW.Gerador.ArquivoFormatoTXT,14,length(LocNFeW.Gerador.ArquivoFormatoTXT));
       finally
-        loNFeW.Free;
+        LocNFeW.Free;
       end;
     end;
     

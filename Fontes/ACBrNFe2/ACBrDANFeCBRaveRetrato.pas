@@ -99,7 +99,7 @@ begin
           vEnd:='Recebemos de '+Emit.XNome+' os produtos/serviços constantes da NFe indicada ao lado';
           if FontNameUsed = 'Courier New' then
           begin
-             if Length(vEnd)>96 then
+             if Length(vEnd)>108 then
              begin
                 vEnd:='Recebemos de '+Emit.XNome;
                 PrintCenter(vEnd,PosX+(aWidthOutros/2));
@@ -114,7 +114,7 @@ begin
                 if ExibirResumoCanhoto then
                 begin
                    if DFeUtil.EstaVazio(ExibirResumoCanhoto_Texto) then
-                      PrintCenter('Emissão: '+DFeUtil.FormatDate(DateToStr(Ide.DEmi))+'  Dest/Reme: '+Dest.XNome+'  Valor Total: '+DFeUtil.FormatFloat(Total.ICMSTot.VNF),PosX+(aWidthOutros/2))
+                      PrintCenter('Emissão:'+DFeUtil.FormatDate(DateToStr(Ide.DEmi))+' Dest/Rem:'+Dest.XNome+' Total:'+DFeUtil.FormatFloat(Total.ICMSTot.VNF),PosX+(aWidthOutros/2))
                    else
                       PrintCenter(ExibirResumoCanhoto_Texto,PosX+(aWidthOutros/2));
                 end;
@@ -122,7 +122,7 @@ begin
           end
           else
           begin
-             if Length(vEnd)>110 then
+             if Length(vEnd)>122 then
              begin
                 vEnd:='Recebemos de '+Emit.XNome;
                 PrintCenter(vEnd,PosX+(aWidthOutros/2));
@@ -137,7 +137,7 @@ begin
                 if ExibirResumoCanhoto then
                 begin
                    if DFeUtil.EstaVazio(ExibirResumoCanhoto_Texto) then
-                      PrintCenter('Emissão: '+DFeUtil.FormatDate(DateToStr(Ide.DEmi))+'  Dest/Reme: '+Dest.XNome+'  Valor Total: '+DFeUtil.FormatFloat(Total.ICMSTot.VNF),PosX+(aWidthOutros/2))
+                      PrintCenter('Emissão:'+DFeUtil.FormatDate(DateToStr(Ide.DEmi))+' Dest/Rem:'+Dest.XNome+' Total:'+DFeUtil.FormatFloat(Total.ICMSTot.VNF),PosX+(aWidthOutros/2))
                    else
                       PrintCenter(ExibirResumoCanhoto_Texto,PosX+(aWidthOutros/2));
                 end;

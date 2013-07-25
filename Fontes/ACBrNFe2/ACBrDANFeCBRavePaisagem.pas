@@ -120,7 +120,7 @@ begin
           GotoXY(PosX+FontHeight+0.5,FLastY-2);
           //GotoXY(PosX+LineHeight,FLastY-2);
           vEnd:='Recebemos de '+Emit.XNome+' os produtos / serviços constantes da Nota Fiscal indicada ao lado';
-          if Length(vEnd)>110 then
+          if Length(vEnd)>122 then
           begin
              vEnd:='Recebemos de '+Emit.XNome;
              Print(vEnd);
@@ -135,7 +135,7 @@ begin
              if ExibirResumoCanhoto then
              begin
                 if DFeUtil.EstaVazio(ExibirResumoCanhoto_Texto) then
-                   Print('Emissão: '+DFeUtil.FormatDate(DateToStr(Ide.DEmi))+'  Dest/Rem: '+Dest.XNome+'  Valor Total: '+DFeUtil.FormatFloat(Total.ICMSTot.VNF))
+                   Print('Emissão:'+DFeUtil.FormatDate(DateToStr(Ide.DEmi))+' Dest/Rem:'+Dest.XNome+' Total:'+DFeUtil.FormatFloat(Total.ICMSTot.VNF))
                 else
                    Print(ExibirResumoCanhoto_Texto);
              end;
