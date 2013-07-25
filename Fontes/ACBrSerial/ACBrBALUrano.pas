@@ -71,10 +71,15 @@ end;
 
 function TACBrBALUrano.LePeso(MillisecTimeOut : Integer) : Double;
 begin
+  fpUltimoPesoLido := 0 ;
+  fpUltimaResposta := '' ;
+
   fpDevice.Serial.Purge;
   fpDevice.EnviaString(#05); { Envia comando solicitando o Peso }
   sleep(300);
+
   LeSerial( MillisecTimeOut );
+
   Result := fpUltimoPesoLido;
 end;
 

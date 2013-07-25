@@ -72,24 +72,17 @@ begin
 end;
 
 function TACBrBALMagna.LePeso( MillisecTimeOut : Integer) : Double;
-Var TempoFinal : TDateTime ;
 begin
-  Result := 0 ;
   fpUltimoPesoLido := 0 ;
   fpUltimaResposta := '' ;
-  TempoFinal := IncMilliSecond(now,MillisecTimeOut) ;
 
-  while (Result <= 0) and (TempoFinal > now) do
-  begin
-     fpDevice.Serial.Purge ;
-     fpDevice.EnviaString( #80 );      { Envia comando solicitando o Peso }
-     sleep(200) ;
-     MillisecTimeOut := MilliSecondsBetween(now,TempoFinal) ;
+  fpDevice.Serial.Purge ;
+  fpDevice.EnviaString( #80 );      { Envia comando solicitando o Peso }
+  sleep(200) ;
 
-     LeSerial( MillisecTimeOut );
+  LeSerial( MillisecTimeOut );
 
-     Result := fpUltimoPesoLido ;
-  end ;
+  Result := fpUltimoPesoLido ;
 end;
 
 procedure TACBrBALMagna.LeSerial( MillisecTimeOut : Integer) ;

@@ -101,6 +101,12 @@ Data: 25/07/2013
 -- ACBrECFFiscNet --
 [-] Corrigido Bug na leitura de DadosUltimaReducaoZ  (por: DSA)
 
+-- ACBrBALFilizola --
+[-] Correção na leitura, só tenta ler novamente se o peso for Instável (por: DSA)
+
+-- ACBrBAL --
+[*] Revisão em demais fontes e pequenos ajustes  (por: DSA)
+
 Data: 24/07/2013
 -- ACBrECFEscECF --
 [-] Correção no protocolo de comunicação. Adicionando tratamento para o caso do

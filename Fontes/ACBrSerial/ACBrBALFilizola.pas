@@ -61,7 +61,7 @@ type
   end ;
 
 implementation
-Uses ACBrConsts,
+Uses ACBrConsts, math,
      {$IFDEF COMPILER6_UP} DateUtils, StrUtils {$ELSE} ACBrD5, Windows{$ENDIF},
      SysUtils ;
 
@@ -81,17 +81,17 @@ begin
     estabilizar... Portanto o Loop abaixo tenta ler um Peso válido até o limite
     de tempo estabelecido em "MilliSecTimeOut" ser atingido ou um Peso valido
     retornado }
-  Result := 0 ;
+  Result := -1 ;
   fpUltimoPesoLido := 0 ;
   fpUltimaResposta := '' ;
   TempoFinal := IncMilliSecond(now,MillisecTimeOut) ;
 
-  while (Result <= 0) and (TempoFinal > now) do
+  while (Result = -1) and (TempoFinal > now) do
   begin
      fpDevice.Serial.Purge ;
      fpDevice.EnviaString( #05 );      { Envia comando solicitando o Peso }
      sleep(200) ;
-     MillisecTimeOut := MilliSecondsBetween(now,TempoFinal) ;
+     MillisecTimeOut := max( MilliSecondsBetween(now,TempoFinal), 1000) ;
 
      LeSerial( MillisecTimeOut );
 
