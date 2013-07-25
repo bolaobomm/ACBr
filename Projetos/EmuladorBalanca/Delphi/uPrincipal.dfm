@@ -1,6 +1,6 @@
 object frmPrincipal: TfrmPrincipal
-  Left = 0
-  Top = 0
+  Left = 120
+  Top = 74
   BorderStyle = bsDialog
   Caption = 'Emulador de balan'#231'a (Filizola / Toledo)'
   ClientHeight = 235
@@ -18,10 +18,9 @@ object frmPrincipal: TfrmPrincipal
   PixelsPerInch = 96
   TextHeight = 13
   object gbxConfigAplicativo: TGroupBox
-    AlignWithMargins = True
-    Left = 3
-    Top = 3
-    Width = 453
+    Left = 0
+    Top = 0
+    Width = 459
     Height = 78
     Align = alTop
     Caption = ' Configura'#231#245'es do aplicativo '
@@ -49,6 +48,7 @@ object frmPrincipal: TfrmPrincipal
       Width = 135
       Height = 21
       Style = csDropDownList
+      ItemHeight = 13
       TabOrder = 0
       Items.Strings = (
         'COM1'
@@ -64,10 +64,9 @@ object frmPrincipal: TfrmPrincipal
     end
   end
   object gbxControlePeso: TGroupBox
-    AlignWithMargins = True
-    Left = 3
-    Top = 87
-    Width = 453
+    Left = 0
+    Top = 78
+    Width = 459
     Height = 74
     Align = alTop
     Caption = ' Controle de peso atual '
@@ -108,11 +107,10 @@ object frmPrincipal: TfrmPrincipal
     end
   end
   object gbxSimulacoes: TGroupBox
-    AlignWithMargins = True
-    Left = 3
-    Top = 167
-    Width = 453
-    Height = 65
+    Left = 0
+    Top = 152
+    Width = 459
+    Height = 83
     Align = alClient
     Caption = ' Simula'#231#245'es '
     TabOrder = 2

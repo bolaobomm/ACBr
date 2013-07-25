@@ -188,11 +188,7 @@ begin
     on E: Exception do
     begin
       FTimer.Enabled := False;
-      Application.MessageBox(
-        PWideChar('Ocorreu o seguinte erro: '#13 + E.Message),
-        'Erro',
-        MB_ICONERROR + MB_OK
-      );
+      MessageDlg('Ocorreu o seguinte erro: '+sLineBreak+ E.Message, mtError, [mbOK], 0);
     end;
   end;
 end;
