@@ -416,13 +416,14 @@ begin
 
     if CTe.Ide.Toma4.IE <> ''
      then begin
-      if Trim(CTe.Ide.Toma4.IE) = 'ISENTO'
-       then Gerador.wCampo(tcStr, '#041', 'IE ', 00, 14, 1, CTe.Ide.Toma4.IE, DSC_IE)
-       else Gerador.wCampo(tcStr, '#041', 'IE ', 00, 14, 1, SomenteNumeros(CTe.Ide.Toma4.IE), DSC_IE);
+      if Trim(CTe.Ide.Toma4.IE) = 'ISENTO' then
+        Gerador.wCampo(tcStr, '#041', 'IE ', 00, 14, 1, CTe.Ide.Toma4.IE, DSC_IE)
+      else
+        Gerador.wCampo(tcStr, '#041', 'IE ', 00, 14, 1, SomenteNumeros(CTe.Ide.Toma4.IE), DSC_IE);
 
-      if (FOpcoes.ValidarInscricoes)
-       then if not ValidarIE(CTe.Ide.Toma4.IE, CTe.Ide.Toma4.EnderToma.UF) then
-        Gerador.wAlerta('#041', 'IE', DSC_IE, ERR_MSG_INVALIDO);
+      if (FOpcoes.ValidarInscricoes) then
+        if not ValidarIE(CTe.Ide.Toma4.IE, CTe.Ide.Toma4.EnderToma.UF) then
+          Gerador.wAlerta('#041', 'IE', DSC_IE, ERR_MSG_INVALIDO);
      end;
 
     Gerador.wCampo(tcStr, '#042', 'xNome  ', 01, 60, 1, CTe.Ide.Toma4.xNome, DSC_XNOME);

@@ -1635,11 +1635,9 @@ type
     FtpNav    : TpcteTipoNavegacao;
     Firin     : String;
     Fbalsa    : TbalsaCollection;
-    Flacre    : TLacreCollection;
     FdetCont  : TdetContCollection;
 
     procedure Setbalsa(const Value: TbalsaCollection);
-    procedure SetLacre(const Value: TLacreCollection);
     procedure SetdetCont(const Value: TdetContCollection);
   public
     constructor Create(AOwner: TCTe);
@@ -1658,7 +1656,6 @@ type
     property tpNav: TpcteTipoNavegacao read FtpNav write FtpNav;
     property irin: String read Firin write Firin;
     property balsa: TbalsaCollection read Fbalsa write Setbalsa;
-    property Lacre: TLacreCollection read FLacre write SetLacre;
     property detCont: TdetContCollection read FdetCont write SetdetCont;
   end;
 
@@ -1687,7 +1684,7 @@ type
     function GetItem(Index: Integer): TLacreCollectionItem;
     procedure SetItem(Index: Integer; Value: TLacreCollectionItem);
   public
-    constructor Create(AOwner: Taquav);
+    constructor Create(AOwner: TdetContCollectionItem);
     function Add: TLacreCollectionItem;
     property Items[Index: Integer]: TLacreCollectionItem read GetItem write SetItem; default;
   end;
@@ -1715,8 +1712,10 @@ type
   TdetContCollectionItem = class(TCollectionItem)
   private
     FnCont : string;
+    Flacre    : TLacreCollection;
     FinfNFCont : TinfNFContCollection;
     FinfNFeCont : TinfNFeContCollection;
+    procedure SetLacre(const Value: TLacreCollection);
     procedure SetinfNFCont(const Value: TinfNFContCollection);
     procedure SetinfNFeCont(const Value: TinfNFeContCollection);
   public
@@ -1724,6 +1723,7 @@ type
     destructor Destroy; override;
   published
     property nCont: string read FnCont write FnCont;
+    property Lacre: TLacreCollection read FLacre write SetLacre;
     property infNFCont: TinfNFContCollection read FinfNFCont write SetinfNFCont;
     property infNFeCont: TinfNFeContCollection read FinfNFeCont write SetinfNFeCont;
   end;
@@ -3572,14 +3572,12 @@ end;
 constructor Taquav.Create(AOwner: TCTe);
 begin
  Fbalsa := TbalsaCollection.Create(Self);
- Flacre := TlacreCollection.Create(Self);
  FdetCont := TdetContCollection.Create(Self);
 end;
 
 destructor Taquav.Destroy;
 begin
   Fbalsa.Free;
-  Flacre.Free;
   FdetCont.Free;
   inherited;
 end;
@@ -3587,11 +3585,6 @@ end;
 procedure Taquav.Setbalsa(const Value: TbalsaCollection);
 begin
   Fbalsa.Assign(Value);
-end;
-
-procedure Taquav.SetLacre(const Value: TLacreCollection);
-begin
-  FLacre.Assign(Value);
 end;
 
 procedure Taquav.SetdetCont(const Value: TdetContCollection);
@@ -3644,7 +3637,7 @@ begin
   Result.create;
 end;
 
-constructor TLacreCollection.Create(AOwner: Taquav);
+constructor TLacreCollection.Create(AOwner: TdetContCollectionItem);
 begin
   inherited Create(TLacreCollectionItem);
 end;
@@ -3701,16 +3694,23 @@ end;
 
 constructor TdetContCollectionItem.Create;
 begin
- FinfNFCont := TinfNFContCollection.Create(Self);
+ Flacre      := TlacreCollection.Create(Self);
+ FinfNFCont  := TinfNFContCollection.Create(Self);
  FinfNFeCont := TinfNFeContCollection.Create(Self);
 end;
 
 destructor TdetContCollectionItem.Destroy;
 begin
+  Flacre.Free;
   FinfNFCont.Free;
   FinfNFeCont.Free;
 
   inherited;
+end;
+
+procedure TdetContCollectionItem.SetLacre(const Value: TLacreCollection);
+begin
+  FLacre.Assign(Value);
 end;
 
 procedure TdetContCollectionItem.SetinfNFCont(

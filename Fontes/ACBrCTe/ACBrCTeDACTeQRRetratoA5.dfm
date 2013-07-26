@@ -69,7 +69,6 @@ inherited frmDACTeQRRetratoA5: TfrmDACTeQRRetratoA5
           978.958333333333200000
           0.000000000000000000
           2.204861111111111000)
-        XLColumn = 0
         Brush.Style = bsClear
         Shape = qrsRectangle
         VertAdjust = 0
@@ -89,7 +88,6 @@ inherited frmDACTeQRRetratoA5: TfrmDACTeQRRetratoA5
           0.000000000000000000
           0.000000000000000000
           2.204861111111111000)
-        XLColumn = 0
         Brush.Style = bsClear
         Shape = qrsRectangle
         VertAdjust = 0
@@ -109,7 +107,6 @@ inherited frmDACTeQRRetratoA5: TfrmDACTeQRRetratoA5
           1957.916666666667000000
           0.000000000000000000
           2.645833333333333000)
-        XLColumn = 0
         Brush.Style = bsClear
         Shape = qrsRectangle
         VertAdjust = 0
@@ -129,7 +126,6 @@ inherited frmDACTeQRRetratoA5: TfrmDACTeQRRetratoA5
           986.895833333333200000
           2.645833333333333000
           121.708333333333300000)
-        XLColumn = 0
         Alignment = taLeftJustify
         AlignToBand = False
         AutoSize = False
@@ -146,7 +142,6 @@ inherited frmDACTeQRRetratoA5: TfrmDACTeQRRetratoA5
         Transparent = False
         WordWrap = True
         ExportAs = exptText
-        FullJustify = False
         FontSize = 7
       end
       object qrdbtTpDoc1: TQRDBText
@@ -164,7 +159,6 @@ inherited frmDACTeQRRetratoA5: TfrmDACTeQRRetratoA5
           13.229166666666670000
           2.645833333333333000
           121.708333333333300000)
-        XLColumn = 0
         Alignment = taLeftJustify
         AlignToBand = False
         AutoSize = False
@@ -181,7 +175,6 @@ inherited frmDACTeQRRetratoA5: TfrmDACTeQRRetratoA5
         Transparent = False
         WordWrap = True
         ExportAs = exptText
-        FullJustify = False
         FontSize = 7
       end
       object qrdbtDocumento2: TQRDBText
@@ -199,7 +192,6 @@ inherited frmDACTeQRRetratoA5: TfrmDACTeQRRetratoA5
           1434.041666666667000000
           2.645833333333333000
           515.937500000000000000)
-        XLColumn = 0
         Alignment = taLeftJustify
         AlignToBand = False
         AutoSize = False
@@ -216,7 +208,6 @@ inherited frmDACTeQRRetratoA5: TfrmDACTeQRRetratoA5
         Transparent = False
         WordWrap = True
         ExportAs = exptText
-        FullJustify = False
         FontSize = 7
       end
       object qrdbtDocumento1: TQRDBText
@@ -234,7 +225,6 @@ inherited frmDACTeQRRetratoA5: TfrmDACTeQRRetratoA5
           460.375000000000000000
           2.645833333333333000
           515.937500000000000000)
-        XLColumn = 0
         Alignment = taLeftJustify
         AlignToBand = False
         AutoSize = False
@@ -251,7 +241,6 @@ inherited frmDACTeQRRetratoA5: TfrmDACTeQRRetratoA5
         Transparent = False
         WordWrap = True
         ExportAs = exptText
-        FullJustify = False
         FontSize = 7
       end
       object qrdbtCnpjEmitente2: TQRDBText
@@ -269,7 +258,6 @@ inherited frmDACTeQRRetratoA5: TfrmDACTeQRRetratoA5
           1121.833333333333000000
           2.645833333333333000
           132.291666666666700000)
-        XLColumn = 0
         Alignment = taLeftJustify
         AlignToBand = False
         AutoSize = True
@@ -286,7 +274,6 @@ inherited frmDACTeQRRetratoA5: TfrmDACTeQRRetratoA5
         Transparent = False
         WordWrap = False
         ExportAs = exptText
-        FullJustify = False
         FontSize = 7
       end
       object qrdbtCnpjEmitente1: TQRDBText
@@ -304,7 +291,6 @@ inherited frmDACTeQRRetratoA5: TfrmDACTeQRRetratoA5
           148.166666666666700000
           2.645833333333333000
           132.291666666666700000)
-        XLColumn = 0
         Alignment = taLeftJustify
         AlignToBand = False
         AutoSize = True
@@ -321,7 +307,6 @@ inherited frmDACTeQRRetratoA5: TfrmDACTeQRRetratoA5
         Transparent = False
         WordWrap = False
         ExportAs = exptText
-        FullJustify = False
         FontSize = 7
       end
       object qrsFimItens: TQRShape
@@ -340,7 +325,6 @@ inherited frmDACTeQRRetratoA5: TfrmDACTeQRRetratoA5
           0.000000000000000000
           37.041666666666670000
           1957.916666666667000000)
-        XLColumn = 0
         Brush.Style = bsClear
         Shape = qrsHorLine
         VertAdjust = 0
@@ -383,7 +367,6 @@ inherited frmDACTeQRRetratoA5: TfrmDACTeQRRetratoA5
           0.000000000000000000
           0.000000000000000000
           1960.562500000000000000)
-        XLColumn = 0
         Brush.Style = bsClear
         Shape = qrsRectangle
         VertAdjust = 0
@@ -404,7 +387,6 @@ inherited frmDACTeQRRetratoA5: TfrmDACTeQRRetratoA5
           2.645833333333333000
           105.833333333333300000
           531.812500000000000000)
-        XLColumn = 0
         Brush.Style = bsClear
         Shape = qrsHorLine
         VertAdjust = 0
@@ -424,7 +406,6 @@ inherited frmDACTeQRRetratoA5: TfrmDACTeQRRetratoA5
           1568.979166666667000000
           37.041666666666670000
           2.645833333333333000)
-        XLColumn = 0
         Brush.Style = bsClear
         Shape = qrsVertLine
         VertAdjust = 0
@@ -444,7 +425,6 @@ inherited frmDACTeQRRetratoA5: TfrmDACTeQRRetratoA5
           1251.479166666667000000
           37.041666666666670000
           2.645833333333333000)
-        XLColumn = 0
         Brush.Style = bsClear
         Shape = qrsVertLine
         VertAdjust = 0
@@ -464,7 +444,6 @@ inherited frmDACTeQRRetratoA5: TfrmDACTeQRRetratoA5
           534.458333333333300000
           37.041666666666670000
           2.645833333333333000)
-        XLColumn = 0
         Brush.Style = bsClear
         Shape = qrsVertLine
         VertAdjust = 0
@@ -484,7 +463,6 @@ inherited frmDACTeQRRetratoA5: TfrmDACTeQRRetratoA5
           1733.020833333333000000
           124.354166666666700000
           132.291666666666700000)
-        XLColumn = 0
         Alignment = taCenter
         AlignToBand = False
         AutoSize = True
@@ -517,7 +495,6 @@ inherited frmDACTeQRRetratoA5: TfrmDACTeQRRetratoA5
           1688.041666666667000000
           87.312500000000000000
           227.541666666666700000)
-        XLColumn = 0
         Alignment = taRightJustify
         AlignToBand = False
         AutoSize = False
@@ -550,7 +527,6 @@ inherited frmDACTeQRRetratoA5: TfrmDACTeQRRetratoA5
           1270.000000000000000000
           121.708333333333300000
           283.104166666666700000)
-        XLColumn = 0
         Alignment = taCenter
         AlignToBand = False
         AutoSize = False
@@ -583,7 +559,6 @@ inherited frmDACTeQRRetratoA5: TfrmDACTeQRRetratoA5
           1270.000000000000000000
           60.854166666666680000
           283.104166666666700000)
-        XLColumn = 0
         Alignment = taCenter
         AlignToBand = False
         AutoSize = False
@@ -616,7 +591,6 @@ inherited frmDACTeQRRetratoA5: TfrmDACTeQRRetratoA5
           1711.854166666667000000
           44.979166666666670000
           68.791666666666670000)
-        XLColumn = 0
         Alignment = taLeftJustify
         AlignToBand = False
         AutoSize = True
@@ -645,11 +619,10 @@ inherited frmDACTeQRRetratoA5: TfrmDACTeQRRetratoA5
         Frame.DrawLeft = False
         Frame.DrawRight = False
         Size.Values = (
-          34.395833333333340000
+          34.395833333333330000
           1600.729166666667000000
           87.312500000000000000
-          34.395833333333340000)
-        XLColumn = 0
+          34.395833333333330000)
         Alignment = taLeftJustify
         AlignToBand = False
         AutoSize = True
@@ -678,11 +651,10 @@ inherited frmDACTeQRRetratoA5: TfrmDACTeQRRetratoA5
         Frame.DrawLeft = False
         Frame.DrawRight = False
         Size.Values = (
-          34.395833333333340000
+          34.395833333333330000
           1600.729166666667000000
           124.354166666666700000
           76.729166666666670000)
-        XLColumn = 0
         Alignment = taLeftJustify
         AlignToBand = False
         AutoSize = True
@@ -715,7 +687,6 @@ inherited frmDACTeQRRetratoA5: TfrmDACTeQRRetratoA5
           15.875000000000000000
           2.645833333333333000
           1934.104166666667000000)
-        XLColumn = 0
         Alignment = taCenter
         AlignToBand = False
         AutoSize = False
@@ -746,11 +717,10 @@ inherited frmDACTeQRRetratoA5: TfrmDACTeQRRetratoA5
         Frame.DrawLeft = False
         Frame.DrawRight = False
         Size.Values = (
-          34.395833333333340000
+          34.395833333333330000
           15.875000000000000000
           55.562500000000000000
           76.729166666666670000)
-        XLColumn = 0
         Alignment = taLeftJustify
         AlignToBand = False
         AutoSize = True
@@ -783,7 +753,6 @@ inherited frmDACTeQRRetratoA5: TfrmDACTeQRRetratoA5
           1270.000000000000000000
           39.687500000000000000
           283.104166666666700000)
-        XLColumn = 0
         Alignment = taCenter
         AlignToBand = False
         AutoSize = False
@@ -816,7 +785,6 @@ inherited frmDACTeQRRetratoA5: TfrmDACTeQRRetratoA5
           1270.000000000000000000
           100.541666666666700000
           283.104166666666700000)
-        XLColumn = 0
         Alignment = taCenter
         AlignToBand = False
         AutoSize = False
@@ -849,7 +817,6 @@ inherited frmDACTeQRRetratoA5: TfrmDACTeQRRetratoA5
           547.687500000000000000
           127.000000000000000000
           690.562500000000000000)
-        XLColumn = 0
         Alignment = taCenter
         AlignToBand = False
         AutoSize = False
@@ -882,7 +849,6 @@ inherited frmDACTeQRRetratoA5: TfrmDACTeQRRetratoA5
           15.875000000000000000
           119.062500000000000000
           50.270833333333330000)
-        XLColumn = 0
         Alignment = taLeftJustify
         AlignToBand = False
         AutoSize = False
@@ -915,7 +881,6 @@ inherited frmDACTeQRRetratoA5: TfrmDACTeQRRetratoA5
           0.000000000000000000
           171.979166666666700000
           2000.250000000000000000)
-        XLColumn = 0
         Pen.Style = psDot
         Shape = qrsHorLine
         VertAdjust = 0
@@ -936,7 +901,6 @@ inherited frmDACTeQRRetratoA5: TfrmDACTeQRRetratoA5
           2.645833333333333000
           37.041666666666670000
           1957.916666666667000000)
-        XLColumn = 0
         Brush.Style = bsClear
         Shape = qrsHorLine
         VertAdjust = 0
@@ -980,7 +944,6 @@ inherited frmDACTeQRRetratoA5: TfrmDACTeQRRetratoA5
           0.000000000000000000
           0.000000000000000000
           1960.562500000000000000)
-        XLColumn = 0
         Brush.Style = bsClear
         Shape = qrsRectangle
         VertAdjust = 0
@@ -1000,7 +963,6 @@ inherited frmDACTeQRRetratoA5: TfrmDACTeQRRetratoA5
           978.958333333333200000
           0.000000000000000000
           2.645833333333333000)
-        XLColumn = 0
         Brush.Style = bsClear
         Shape = qrsRectangle
         VertAdjust = 0
@@ -1020,7 +982,6 @@ inherited frmDACTeQRRetratoA5: TfrmDACTeQRRetratoA5
           460.375000000000000000
           2.645833333333333000
           224.895833333333300000)
-        XLColumn = 0
         Alignment = taLeftJustify
         AlignToBand = False
         AutoSize = True
@@ -1053,7 +1014,6 @@ inherited frmDACTeQRRetratoA5: TfrmDACTeQRRetratoA5
           148.166666666666700000
           2.645833333333333000
           179.916666666666700000)
-        XLColumn = 0
         Alignment = taLeftJustify
         AlignToBand = False
         AutoSize = True
@@ -1086,7 +1046,6 @@ inherited frmDACTeQRRetratoA5: TfrmDACTeQRRetratoA5
           13.229166666666670000
           2.645833333333333000
           74.083333333333320000)
-        XLColumn = 0
         Alignment = taLeftJustify
         AlignToBand = False
         AutoSize = True
@@ -1119,7 +1078,6 @@ inherited frmDACTeQRRetratoA5: TfrmDACTeQRRetratoA5
           986.895833333333200000
           2.645833333333333000
           74.083333333333320000)
-        XLColumn = 0
         Alignment = taLeftJustify
         AlignToBand = False
         AutoSize = True
@@ -1152,7 +1110,6 @@ inherited frmDACTeQRRetratoA5: TfrmDACTeQRRetratoA5
           1121.833333333333000000
           2.645833333333333000
           179.916666666666700000)
-        XLColumn = 0
         Alignment = taLeftJustify
         AlignToBand = False
         AutoSize = True
@@ -1185,7 +1142,6 @@ inherited frmDACTeQRRetratoA5: TfrmDACTeQRRetratoA5
           1434.041666666667000000
           2.645833333333333000
           224.895833333333300000)
-        XLColumn = 0
         Alignment = taLeftJustify
         AlignToBand = False
         AutoSize = True
@@ -1241,7 +1197,6 @@ inherited frmDACTeQRRetratoA5: TfrmDACTeQRRetratoA5
           0.000000000000000000
           0.000000000000000000
           1960.562500000000000000)
-        XLColumn = 0
         Brush.Style = bsClear
         Shape = qrsRectangle
         VertAdjust = 0
@@ -1261,7 +1216,6 @@ inherited frmDACTeQRRetratoA5: TfrmDACTeQRRetratoA5
           804.333333333333200000
           39.687500000000000000
           637.645833333333200000)
-        XLColumn = 0
         Alignment = taLeftJustify
         AlignToBand = False
         AutoSize = False
@@ -1280,7 +1234,6 @@ inherited frmDACTeQRRetratoA5: TfrmDACTeQRRetratoA5
         ParentFont = False
         Transparent = True
         WordWrap = True
-        FullJustify = False
         FontSize = 6
       end
       object QRLabel10: TQRLabel
@@ -1298,7 +1251,6 @@ inherited frmDACTeQRRetratoA5: TfrmDACTeQRRetratoA5
           804.333333333333200000
           2.645833333333333000
           616.479166666666800000)
-        XLColumn = 0
         Alignment = taCenter
         AlignToBand = False
         AutoSize = False
@@ -1331,7 +1283,6 @@ inherited frmDACTeQRRetratoA5: TfrmDACTeQRRetratoA5
           15.875000000000000000
           2.645833333333333000
           187.854166666666700000)
-        XLColumn = 0
         Alignment = taLeftJustify
         AlignToBand = False
         AutoSize = True
@@ -1364,7 +1315,6 @@ inherited frmDACTeQRRetratoA5: TfrmDACTeQRRetratoA5
           222.250000000000000000
           2.645833333333333000
           44.979166666666670000)
-        XLColumn = 0
         Alignment = taLeftJustify
         AlignToBand = False
         AutoSize = True
@@ -1397,7 +1347,6 @@ inherited frmDACTeQRRetratoA5: TfrmDACTeQRRetratoA5
           407.458333333333300000
           2.645833333333333000
           89.958333333333320000)
-        XLColumn = 0
         Alignment = taLeftJustify
         AlignToBand = False
         AutoSize = True
@@ -1430,7 +1379,6 @@ inherited frmDACTeQRRetratoA5: TfrmDACTeQRRetratoA5
           518.583333333333300000
           2.645833333333333000
           264.583333333333300000)
-        XLColumn = 0
         Alignment = taLeftJustify
         AlignToBand = False
         AutoSize = True
@@ -1463,7 +1411,6 @@ inherited frmDACTeQRRetratoA5: TfrmDACTeQRRetratoA5
           15.875000000000000000
           21.166666666666670000
           171.979166666666700000)
-        XLColumn = 0
         Alignment = taLeftJustify
         AlignToBand = False
         AutoSize = True
@@ -1496,7 +1443,6 @@ inherited frmDACTeQRRetratoA5: TfrmDACTeQRRetratoA5
           222.250000000000000000
           21.166666666666670000
           87.312500000000000000)
-        XLColumn = 0
         Alignment = taLeftJustify
         AlignToBand = False
         AutoSize = True
@@ -1529,7 +1475,6 @@ inherited frmDACTeQRRetratoA5: TfrmDACTeQRRetratoA5
           407.458333333333300000
           21.166666666666670000
           87.312500000000000000)
-        XLColumn = 0
         Alignment = taCenter
         AlignToBand = False
         AutoSize = False
@@ -1562,7 +1507,6 @@ inherited frmDACTeQRRetratoA5: TfrmDACTeQRRetratoA5
           518.583333333333300000
           21.166666666666670000
           185.208333333333300000)
-        XLColumn = 0
         Alignment = taLeftJustify
         AlignToBand = False
         AutoSize = True
@@ -1595,7 +1539,6 @@ inherited frmDACTeQRRetratoA5: TfrmDACTeQRRetratoA5
           211.666666666666700000
           0.000000000000000000
           2.645833333333333000)
-        XLColumn = 0
         Brush.Style = bsClear
         Shape = qrsRectangle
         VertAdjust = 0
@@ -1615,7 +1558,6 @@ inherited frmDACTeQRRetratoA5: TfrmDACTeQRRetratoA5
           396.875000000000000000
           0.000000000000000000
           2.645833333333333000)
-        XLColumn = 0
         Brush.Style = bsClear
         Shape = qrsRectangle
         VertAdjust = 0
@@ -1635,7 +1577,6 @@ inherited frmDACTeQRRetratoA5: TfrmDACTeQRRetratoA5
           508.000000000000000000
           0.000000000000000000
           2.645833333333333000)
-        XLColumn = 0
         Brush.Style = bsClear
         Shape = qrsRectangle
         VertAdjust = 0
@@ -1655,7 +1596,6 @@ inherited frmDACTeQRRetratoA5: TfrmDACTeQRRetratoA5
           793.750000000000000000
           0.000000000000000000
           2.645833333333333000)
-        XLColumn = 0
         Brush.Style = bsClear
         Shape = qrsRectangle
         VertAdjust = 0
@@ -1676,7 +1616,6 @@ inherited frmDACTeQRRetratoA5: TfrmDACTeQRRetratoA5
           2.645833333333333000
           52.916666666666670000
           793.750000000000000000)
-        XLColumn = 0
         Brush.Style = bsClear
         Shape = qrsRectangle
         VertAdjust = 0
@@ -1696,7 +1635,6 @@ inherited frmDACTeQRRetratoA5: TfrmDACTeQRRetratoA5
           15.875000000000000000
           58.208333333333320000
           769.937500000000000000)
-        XLColumn = 0
         Alignment = taCenter
         AlignToBand = False
         AutoSize = False
@@ -1731,7 +1669,6 @@ inherited frmDACTeQRRetratoA5: TfrmDACTeQRRetratoA5
           1460.500000000000000000
           2.645833333333333000
           489.479166666666700000)
-        XLColumn = 0
         Alignment = taCenter
         AlignToBand = False
         AutoSize = False
@@ -1764,7 +1701,6 @@ inherited frmDACTeQRRetratoA5: TfrmDACTeQRRetratoA5
           1449.916666666667000000
           0.000000000000000000
           2.645833333333333000)
-        XLColumn = 0
         Brush.Style = bsClear
         Shape = qrsRectangle
         VertAdjust = 0
@@ -1784,7 +1720,6 @@ inherited frmDACTeQRRetratoA5: TfrmDACTeQRRetratoA5
           1460.500000000000000000
           39.687500000000000000
           489.479166666666700000)
-        XLColumn = 0
         Alignment = taLeftJustify
         AlignToBand = False
         AutoSize = False
@@ -1801,7 +1736,6 @@ inherited frmDACTeQRRetratoA5: TfrmDACTeQRRetratoA5
         ParentFont = False
         Transparent = True
         WordWrap = True
-        FullJustify = False
         FontSize = 6
       end
       object qrlMsgTeste: TQRLabel
@@ -1820,7 +1754,6 @@ inherited frmDACTeQRRetratoA5: TfrmDACTeQRRetratoA5
           31.750000000000000000
           58.208333333333320000
           1897.062500000000000000)
-        XLColumn = 0
         Alignment = taCenter
         AlignToBand = False
         AutoSize = True
@@ -1854,7 +1787,6 @@ inherited frmDACTeQRRetratoA5: TfrmDACTeQRRetratoA5
           793.750000000000000000
           37.041666666666670000
           1164.166666666667000000)
-        XLColumn = 0
         Brush.Style = bsClear
         Shape = qrsRectangle
         VertAdjust = 0
@@ -1898,7 +1830,6 @@ inherited frmDACTeQRRetratoA5: TfrmDACTeQRRetratoA5
           0.000000000000000000
           0.000000000000000000
           1960.562500000000000000)
-        XLColumn = 0
         Brush.Style = bsClear
         Shape = qrsRectangle
         VertAdjust = 0
@@ -1918,7 +1849,6 @@ inherited frmDACTeQRRetratoA5: TfrmDACTeQRRetratoA5
           878.416666666666800000
           142.875000000000000000
           1079.500000000000000000)
-        XLColumn = 0
         Brush.Style = bsClear
         Shape = qrsRectangle
         VertAdjust = 0
@@ -1938,7 +1868,6 @@ inherited frmDACTeQRRetratoA5: TfrmDACTeQRRetratoA5
           878.416666666666800000
           232.833333333333300000
           1079.500000000000000000)
-        XLColumn = 0
         Brush.Style = bsClear
         Shape = qrsHorLine
         VertAdjust = 0
@@ -1958,7 +1887,6 @@ inherited frmDACTeQRRetratoA5: TfrmDACTeQRRetratoA5
           460.375000000000000000
           301.625000000000000000
           2.645833333333333000)
-        XLColumn = 0
         Brush.Style = bsClear
         Shape = qrsRectangle
         VertAdjust = 0
@@ -1978,7 +1906,6 @@ inherited frmDACTeQRRetratoA5: TfrmDACTeQRRetratoA5
           878.416666666666800000
           0.000000000000000000
           2.645833333333333000)
-        XLColumn = 0
         Brush.Style = bsClear
         Shape = qrsRectangle
         VertAdjust = 0
@@ -1998,7 +1925,6 @@ inherited frmDACTeQRRetratoA5: TfrmDACTeQRRetratoA5
           968.375000000000000000
           76.729166666666680000
           2.645833333333333000)
-        XLColumn = 0
         Brush.Style = bsClear
         Shape = qrsRectangle
         VertAdjust = 0
@@ -2018,7 +1944,6 @@ inherited frmDACTeQRRetratoA5: TfrmDACTeQRRetratoA5
           1031.875000000000000000
           76.729166666666680000
           2.645833333333333000)
-        XLColumn = 0
         Brush.Style = bsClear
         Shape = qrsRectangle
         VertAdjust = 0
@@ -2038,7 +1963,6 @@ inherited frmDACTeQRRetratoA5: TfrmDACTeQRRetratoA5
           1624.541666666667000000
           76.729166666666680000
           2.645833333333333000)
-        XLColumn = 0
         Brush.Style = bsClear
         Shape = qrsRectangle
         VertAdjust = 0
@@ -2058,7 +1982,6 @@ inherited frmDACTeQRRetratoA5: TfrmDACTeQRRetratoA5
           1227.666666666667000000
           76.729166666666680000
           2.645833333333333000)
-        XLColumn = 0
         Brush.Style = bsClear
         Shape = qrsRectangle
         VertAdjust = 0
@@ -2078,7 +2001,6 @@ inherited frmDACTeQRRetratoA5: TfrmDACTeQRRetratoA5
           1344.083333333333000000
           76.729166666666680000
           2.645833333333333000)
-        XLColumn = 0
         Brush.Style = bsClear
         Shape = qrsRectangle
         VertAdjust = 0
@@ -2098,7 +2020,6 @@ inherited frmDACTeQRRetratoA5: TfrmDACTeQRRetratoA5
           1658.937500000000000000
           0.000000000000000000
           2.645833333333333000)
-        XLColumn = 0
         Brush.Style = bsClear
         Shape = qrsRectangle
         VertAdjust = 0
@@ -2118,7 +2039,6 @@ inherited frmDACTeQRRetratoA5: TfrmDACTeQRRetratoA5
           18.520833333333330000
           84.666666666666680000
           248.708333333333300000)
-        XLColumn = 0
         Center = True
         Picture.Data = {
           0A544A504547496D616765D1080000FFD8FFE000104A46494600010101006000
@@ -2209,7 +2129,6 @@ inherited frmDACTeQRRetratoA5: TfrmDACTeQRRetratoA5
           944.562500000000000000
           145.520833333333300000
           955.145833333333200000)
-        XLColumn = 0
         Center = True
       end
       object qrsLinhaH04: TQRShape
@@ -2227,7 +2146,6 @@ inherited frmDACTeQRRetratoA5: TfrmDACTeQRRetratoA5
           0.000000000000000000
           301.625000000000000000
           878.416666666666800000)
-        XLColumn = 0
         Brush.Style = bsClear
         Shape = qrsRectangle
         VertAdjust = 0
@@ -2247,7 +2165,6 @@ inherited frmDACTeQRRetratoA5: TfrmDACTeQRRetratoA5
           18.520833333333330000
           2.645833333333333000
           851.958333333333200000)
-        XLColumn = 0
         Alignment = taCenter
         AlignToBand = False
         AutoSize = False
@@ -2261,7 +2178,6 @@ inherited frmDACTeQRRetratoA5: TfrmDACTeQRRetratoA5
         ParentFont = False
         Transparent = False
         WordWrap = True
-        FullJustify = False
         FontSize = 8
       end
       object qrmDadosEmitente: TQRMemo
@@ -2279,7 +2195,6 @@ inherited frmDACTeQRRetratoA5: TfrmDACTeQRRetratoA5
           298.979166666666700000
           68.791666666666680000
           571.500000000000000000)
-        XLColumn = 0
         Alignment = taLeftJustify
         AlignToBand = False
         AutoSize = False
@@ -2299,7 +2214,6 @@ inherited frmDACTeQRRetratoA5: TfrmDACTeQRRetratoA5
         ParentFont = False
         Transparent = False
         WordWrap = True
-        FullJustify = False
         FontSize = 7
       end
       object QRLabel17: TQRLabel
@@ -2317,7 +2231,6 @@ inherited frmDACTeQRRetratoA5: TfrmDACTeQRRetratoA5
           981.604166666666800000
           2.645833333333333000
           574.145833333333300000)
-        XLColumn = 0
         Alignment = taCenter
         AlignToBand = False
         AutoSize = False
@@ -2350,7 +2263,6 @@ inherited frmDACTeQRRetratoA5: TfrmDACTeQRRetratoA5
           910.166666666666800000
           42.333333333333330000
           732.895833333333200000)
-        XLColumn = 0
         Alignment = taCenter
         AlignToBand = False
         AutoSize = False
@@ -2383,7 +2295,6 @@ inherited frmDACTeQRRetratoA5: TfrmDACTeQRRetratoA5
           1693.333333333333000000
           2.645833333333333000
           198.437500000000000000)
-        XLColumn = 0
         Alignment = taCenter
         AlignToBand = False
         AutoSize = False
@@ -2416,7 +2327,6 @@ inherited frmDACTeQRRetratoA5: TfrmDACTeQRRetratoA5
           1674.812500000000000000
           42.333333333333330000
           251.354166666666700000)
-        XLColumn = 0
         Alignment = taCenter
         AlignToBand = False
         AutoSize = False
@@ -2446,10 +2356,9 @@ inherited frmDACTeQRRetratoA5: TfrmDACTeQRRetratoA5
         Frame.DrawRight = False
         Size.Values = (
           23.812500000000000000
-          883.708333333333400000
+          883.708333333333300000
           79.375000000000000000
           79.375000000000000000)
-        XLColumn = 0
         Alignment = taCenter
         AlignToBand = False
         AutoSize = True
@@ -2482,7 +2391,6 @@ inherited frmDACTeQRRetratoA5: TfrmDACTeQRRetratoA5
           883.708333333333200000
           100.541666666666700000
           79.375000000000000000)
-        XLColumn = 0
         Alignment = taCenter
         AlignToBand = False
         AutoSize = False
@@ -2512,10 +2420,9 @@ inherited frmDACTeQRRetratoA5: TfrmDACTeQRRetratoA5
         Frame.DrawRight = False
         Size.Values = (
           23.812500000000000000
-          973.666666666666900000
+          973.666666666666700000
           79.375000000000000000
           52.916666666666670000)
-        XLColumn = 0
         Alignment = taCenter
         AlignToBand = False
         AutoSize = True
@@ -2548,7 +2455,6 @@ inherited frmDACTeQRRetratoA5: TfrmDACTeQRRetratoA5
           973.666666666666800000
           100.541666666666700000
           52.916666666666670000)
-        XLColumn = 0
         Alignment = taCenter
         AlignToBand = False
         AutoSize = False
@@ -2581,7 +2487,6 @@ inherited frmDACTeQRRetratoA5: TfrmDACTeQRRetratoA5
           1037.166666666667000000
           79.375000000000000000
           185.208333333333300000)
-        XLColumn = 0
         Alignment = taCenter
         AlignToBand = False
         AutoSize = False
@@ -2614,7 +2519,6 @@ inherited frmDACTeQRRetratoA5: TfrmDACTeQRRetratoA5
           1037.166666666667000000
           100.541666666666700000
           185.208333333333300000)
-        XLColumn = 0
         Alignment = taCenter
         AlignToBand = False
         AutoSize = False
@@ -2647,7 +2551,6 @@ inherited frmDACTeQRRetratoA5: TfrmDACTeQRRetratoA5
           1232.958333333333000000
           79.375000000000000000
           108.479166666666700000)
-        XLColumn = 0
         Alignment = taCenter
         AlignToBand = False
         AutoSize = False
@@ -2680,7 +2583,6 @@ inherited frmDACTeQRRetratoA5: TfrmDACTeQRRetratoA5
           1232.958333333333000000
           100.541666666666700000
           108.479166666666700000)
-        XLColumn = 0
         Alignment = taCenter
         AlignToBand = False
         AutoSize = False
@@ -2713,7 +2615,6 @@ inherited frmDACTeQRRetratoA5: TfrmDACTeQRRetratoA5
           1349.375000000000000000
           79.375000000000000000
           251.354166666666700000)
-        XLColumn = 0
         Alignment = taLeftJustify
         AlignToBand = False
         AutoSize = False
@@ -2746,7 +2647,6 @@ inherited frmDACTeQRRetratoA5: TfrmDACTeQRRetratoA5
           1349.375000000000000000
           100.541666666666700000
           153.458333333333300000)
-        XLColumn = 0
         Alignment = taLeftJustify
         AlignToBand = False
         AutoSize = True
@@ -2776,10 +2676,9 @@ inherited frmDACTeQRRetratoA5: TfrmDACTeQRRetratoA5
         Frame.DrawRight = False
         Size.Values = (
           31.750000000000000000
-          883.708333333333400000
+          883.708333333333300000
           238.125000000000000000
           150.812500000000000000)
-        XLColumn = 0
         Alignment = taLeftJustify
         AlignToBand = False
         AutoSize = True
@@ -2812,7 +2711,6 @@ inherited frmDACTeQRRetratoA5: TfrmDACTeQRRetratoA5
           889.000000000000000000
           264.583333333333300000
           1060.979166666667000000)
-        XLColumn = 0
         Alignment = taCenter
         AlignToBand = False
         AutoSize = False
@@ -2845,7 +2743,6 @@ inherited frmDACTeQRRetratoA5: TfrmDACTeQRRetratoA5
           10.583333333333330000
           306.916666666666700000
           119.062500000000000000)
-        XLColumn = 0
         Alignment = taLeftJustify
         AlignToBand = False
         AutoSize = True
@@ -2878,7 +2775,6 @@ inherited frmDACTeQRRetratoA5: TfrmDACTeQRRetratoA5
           10.583333333333330000
           328.083333333333300000
           201.083333333333300000)
-        XLColumn = 0
         Alignment = taLeftJustify
         AlignToBand = False
         AutoSize = False
@@ -2908,10 +2804,9 @@ inherited frmDACTeQRRetratoA5: TfrmDACTeQRRetratoA5
         Frame.DrawRight = False
         Size.Values = (
           23.812500000000000000
-          470.958333333333400000
+          470.958333333333300000
           306.916666666666700000
           158.750000000000000000)
-        XLColumn = 0
         Alignment = taLeftJustify
         AlignToBand = False
         AutoSize = True
@@ -2944,7 +2839,6 @@ inherited frmDACTeQRRetratoA5: TfrmDACTeQRRetratoA5
           470.958333333333300000
           328.083333333333300000
           240.770833333333300000)
-        XLColumn = 0
         Alignment = taLeftJustify
         AlignToBand = False
         AutoSize = False
@@ -2977,7 +2871,6 @@ inherited frmDACTeQRRetratoA5: TfrmDACTeQRRetratoA5
           10.583333333333330000
           394.229166666666700000
           211.666666666666700000)
-        XLColumn = 0
         Alignment = taLeftJustify
         AlignToBand = False
         AutoSize = True
@@ -3010,7 +2903,6 @@ inherited frmDACTeQRRetratoA5: TfrmDACTeQRRetratoA5
           10.583333333333330000
           418.041666666666700000
           214.312500000000000000)
-        XLColumn = 0
         Alignment = taLeftJustify
         AlignToBand = False
         AutoSize = False
@@ -3040,10 +2932,9 @@ inherited frmDACTeQRRetratoA5: TfrmDACTeQRRetratoA5
         Frame.DrawRight = False
         Size.Values = (
           23.812500000000000000
-          470.958333333333400000
+          470.958333333333300000
           394.229166666666700000
-          216.958333333333400000)
-        XLColumn = 0
+          216.958333333333300000)
         Alignment = taLeftJustify
         AlignToBand = False
         AutoSize = True
@@ -3076,7 +2967,6 @@ inherited frmDACTeQRRetratoA5: TfrmDACTeQRRetratoA5
           470.958333333333300000
           418.041666666666700000
           193.145833333333300000)
-        XLColumn = 0
         Alignment = taLeftJustify
         AlignToBand = False
         AutoSize = False
@@ -3097,7 +2987,7 @@ inherited frmDACTeQRRetratoA5: TfrmDACTeQRRetratoA5
       object qrlDescricao: TQRLabel
         Left = 334
         Top = 149
-        Width = 54
+        Width = 55
         Height = 9
         Frame.Color = clBlack
         Frame.DrawTop = False
@@ -3106,10 +2996,9 @@ inherited frmDACTeQRRetratoA5: TfrmDACTeQRRetratoA5
         Frame.DrawRight = False
         Size.Values = (
           23.812500000000000000
-          883.708333333333400000
+          883.708333333333300000
           394.229166666666700000
-          142.875000000000000000)
-        XLColumn = 0
+          145.520833333333300000)
         Alignment = taLeftJustify
         AlignToBand = False
         AutoSize = True
@@ -3142,7 +3031,6 @@ inherited frmDACTeQRRetratoA5: TfrmDACTeQRRetratoA5
           889.000000000000000000
           418.041666666666700000
           1060.979166666667000000)
-        XLColumn = 0
         Alignment = taCenter
         AlignToBand = False
         AutoSize = False
@@ -3175,7 +3063,6 @@ inherited frmDACTeQRRetratoA5: TfrmDACTeQRRetratoA5
           1629.833333333333000000
           79.375000000000000000
           314.854166666666700000)
-        XLColumn = 0
         Alignment = taLeftJustify
         AlignToBand = False
         AutoSize = True
@@ -3208,7 +3095,6 @@ inherited frmDACTeQRRetratoA5: TfrmDACTeQRRetratoA5
           1629.833333333333000000
           100.541666666666700000
           150.812500000000000000)
-        XLColumn = 0
         Alignment = taLeftJustify
         AlignToBand = False
         AutoSize = True
@@ -3241,7 +3127,6 @@ inherited frmDACTeQRRetratoA5: TfrmDACTeQRRetratoA5
           878.416666666666800000
           391.583333333333300000
           1079.500000000000000000)
-        XLColumn = 0
         Brush.Style = bsClear
         Shape = qrsRectangle
         VertAdjust = 0
@@ -3261,7 +3146,6 @@ inherited frmDACTeQRRetratoA5: TfrmDACTeQRRetratoA5
           910.166666666666800000
           306.916666666666700000
           1018.645833333333000000)
-        XLColumn = 0
         Alignment = taCenter
         AlignToBand = False
         AutoSize = False
@@ -3296,7 +3180,6 @@ inherited frmDACTeQRRetratoA5: TfrmDACTeQRRetratoA5
           878.416666666666800000
           76.729166666666680000
           1079.500000000000000000)
-        XLColumn = 0
         Brush.Style = bsClear
         Shape = qrsRectangle
         VertAdjust = 0
@@ -3316,7 +3199,6 @@ inherited frmDACTeQRRetratoA5: TfrmDACTeQRRetratoA5
           944.562500000000000000
           304.270833333333300000
           955.145833333333200000)
-        XLColumn = 0
         Center = True
       end
       object QRShape99: TQRShape
@@ -3334,7 +3216,6 @@ inherited frmDACTeQRRetratoA5: TfrmDACTeQRRetratoA5
           878.416666666666800000
           301.625000000000000000
           1079.500000000000000000)
-        XLColumn = 0
         Brush.Style = bsClear
         Shape = qrsRectangle
         VertAdjust = 0
@@ -3354,7 +3235,6 @@ inherited frmDACTeQRRetratoA5: TfrmDACTeQRRetratoA5
           0.000000000000000000
           391.583333333333300000
           878.416666666666800000)
-        XLColumn = 0
         Brush.Style = bsClear
         Shape = qrsRectangle
         VertAdjust = 0
@@ -3398,7 +3278,6 @@ inherited frmDACTeQRRetratoA5: TfrmDACTeQRRetratoA5
           1143.000000000000000000
           108.479166666666700000
           801.687500000000000000)
-        XLColumn = 0
         Alignment = taLeftJustify
         AlignToBand = False
         AutoSize = False
@@ -3431,7 +3310,6 @@ inherited frmDACTeQRRetratoA5: TfrmDACTeQRRetratoA5
           0.000000000000000000
           0.000000000000000000
           1960.562500000000000000)
-        XLColumn = 0
         Brush.Style = bsClear
         Shape = qrsRectangle
         VertAdjust = 0
@@ -3451,7 +3329,6 @@ inherited frmDACTeQRRetratoA5: TfrmDACTeQRRetratoA5
           978.958333333333200000
           63.500000000000000000
           2.645833333333333000)
-        XLColumn = 0
         Brush.Style = bsClear
         Shape = qrsRectangle
         VertAdjust = 0
@@ -3471,7 +3348,6 @@ inherited frmDACTeQRRetratoA5: TfrmDACTeQRRetratoA5
           2.645833333333333000
           63.500000000000000000
           1957.916666666667000000)
-        XLColumn = 0
         Brush.Style = bsClear
         Shape = qrsRectangle
         VertAdjust = 0
@@ -3491,7 +3367,6 @@ inherited frmDACTeQRRetratoA5: TfrmDACTeQRRetratoA5
           127.000000000000000000
           66.145833333333320000
           841.375000000000000000)
-        XLColumn = 0
         Alignment = taLeftJustify
         AlignToBand = False
         AutoSize = False
@@ -3524,7 +3399,6 @@ inherited frmDACTeQRRetratoA5: TfrmDACTeQRRetratoA5
           1143.000000000000000000
           66.145833333333320000
           801.687500000000000000)
-        XLColumn = 0
         Alignment = taLeftJustify
         AlignToBand = False
         AutoSize = False
@@ -3557,7 +3431,6 @@ inherited frmDACTeQRRetratoA5: TfrmDACTeQRRetratoA5
           127.000000000000000000
           177.270833333333300000
           552.979166666666700000)
-        XLColumn = 0
         Alignment = taLeftJustify
         AlignToBand = False
         AutoSize = False
@@ -3590,7 +3463,6 @@ inherited frmDACTeQRRetratoA5: TfrmDACTeQRRetratoA5
           889.000000000000000000
           23.812500000000000000
           515.937500000000000000)
-        XLColumn = 0
         Alignment = taLeftJustify
         AlignToBand = False
         AutoSize = False
@@ -3623,7 +3495,6 @@ inherited frmDACTeQRRetratoA5: TfrmDACTeQRRetratoA5
           10.583333333333330000
           23.812500000000000000
           859.895833333333200000)
-        XLColumn = 0
         Alignment = taLeftJustify
         AlignToBand = False
         AutoSize = False
@@ -3656,7 +3527,6 @@ inherited frmDACTeQRRetratoA5: TfrmDACTeQRRetratoA5
           127.000000000000000000
           129.645833333333300000
           619.125000000000000000)
-        XLColumn = 0
         Alignment = taLeftJustify
         AlignToBand = False
         AutoSize = False
@@ -3689,7 +3559,6 @@ inherited frmDACTeQRRetratoA5: TfrmDACTeQRRetratoA5
           1143.000000000000000000
           129.645833333333300000
           595.312500000000000000)
-        XLColumn = 0
         Alignment = taLeftJustify
         AlignToBand = False
         AutoSize = False
@@ -3722,7 +3591,6 @@ inherited frmDACTeQRRetratoA5: TfrmDACTeQRRetratoA5
           677.333333333333200000
           153.458333333333300000
           288.395833333333300000)
-        XLColumn = 0
         Alignment = taLeftJustify
         AlignToBand = False
         AutoSize = False
@@ -3755,7 +3623,6 @@ inherited frmDACTeQRRetratoA5: TfrmDACTeQRRetratoA5
           1672.166666666667000000
           153.458333333333300000
           269.875000000000000000)
-        XLColumn = 0
         Alignment = taLeftJustify
         AlignToBand = False
         AutoSize = False
@@ -3788,7 +3655,6 @@ inherited frmDACTeQRRetratoA5: TfrmDACTeQRRetratoA5
           762.000000000000000000
           179.916666666666700000
           203.729166666666700000)
-        XLColumn = 0
         Alignment = taLeftJustify
         AlignToBand = False
         AutoSize = False
@@ -3821,7 +3687,6 @@ inherited frmDACTeQRRetratoA5: TfrmDACTeQRRetratoA5
           1756.833333333333000000
           177.270833333333300000
           185.208333333333300000)
-        XLColumn = 0
         Alignment = taLeftJustify
         AlignToBand = False
         AutoSize = False
@@ -3854,7 +3719,6 @@ inherited frmDACTeQRRetratoA5: TfrmDACTeQRRetratoA5
           127.000000000000000000
           108.479166666666700000
           841.375000000000000000)
-        XLColumn = 0
         Alignment = taLeftJustify
         AlignToBand = False
         AutoSize = False
@@ -3887,7 +3751,6 @@ inherited frmDACTeQRRetratoA5: TfrmDACTeQRRetratoA5
           127.000000000000000000
           87.312500000000000000
           841.375000000000000000)
-        XLColumn = 0
         Alignment = taLeftJustify
         AlignToBand = False
         AutoSize = False
@@ -3920,7 +3783,6 @@ inherited frmDACTeQRRetratoA5: TfrmDACTeQRRetratoA5
           1143.000000000000000000
           87.312500000000000000
           801.687500000000000000)
-        XLColumn = 0
         Alignment = taLeftJustify
         AlignToBand = False
         AutoSize = False
@@ -3953,7 +3815,6 @@ inherited frmDACTeQRRetratoA5: TfrmDACTeQRRetratoA5
           1434.041666666667000000
           23.812500000000000000
           515.937500000000000000)
-        XLColumn = 0
         Alignment = taLeftJustify
         AlignToBand = False
         AutoSize = False
@@ -3986,7 +3847,6 @@ inherited frmDACTeQRRetratoA5: TfrmDACTeQRRetratoA5
           127.000000000000000000
           153.458333333333300000
           328.083333333333300000)
-        XLColumn = 0
         Alignment = taLeftJustify
         AlignToBand = False
         AutoSize = False
@@ -4019,7 +3879,6 @@ inherited frmDACTeQRRetratoA5: TfrmDACTeQRRetratoA5
           796.395833333333200000
           129.645833333333300000
           169.333333333333300000)
-        XLColumn = 0
         Alignment = taLeftJustify
         AlignToBand = False
         AutoSize = False
@@ -4052,7 +3911,6 @@ inherited frmDACTeQRRetratoA5: TfrmDACTeQRRetratoA5
           1791.229166666667000000
           129.645833333333300000
           150.812500000000000000)
-        XLColumn = 0
         Alignment = taLeftJustify
         AlignToBand = False
         AutoSize = False
@@ -4085,7 +3943,6 @@ inherited frmDACTeQRRetratoA5: TfrmDACTeQRRetratoA5
           751.416666666666700000
           129.645833333333300000
           37.041666666666670000)
-        XLColumn = 0
         Alignment = taLeftJustify
         AlignToBand = False
         AutoSize = True
@@ -4115,10 +3972,9 @@ inherited frmDACTeQRRetratoA5: TfrmDACTeQRRetratoA5
         Frame.DrawRight = False
         Size.Values = (
           23.812500000000000000
-          693.208333333333400000
+          693.208333333333300000
           179.916666666666700000
           50.270833333333330000)
-        XLColumn = 0
         Alignment = taLeftJustify
         AlignToBand = False
         AutoSize = True
@@ -4151,7 +4007,6 @@ inherited frmDACTeQRRetratoA5: TfrmDACTeQRRetratoA5
           460.375000000000000000
           153.458333333333300000
           203.729166666666700000)
-        XLColumn = 0
         Alignment = taLeftJustify
         AlignToBand = False
         AutoSize = True
@@ -4183,8 +4038,7 @@ inherited frmDACTeQRRetratoA5: TfrmDACTeQRRetratoA5
           23.812500000000000000
           989.541666666666700000
           177.270833333333300000
-          42.333333333333340000)
-        XLColumn = 0
+          42.333333333333330000)
         Alignment = taLeftJustify
         AlignToBand = False
         AutoSize = True
@@ -4217,7 +4071,6 @@ inherited frmDACTeQRRetratoA5: TfrmDACTeQRRetratoA5
           989.541666666666700000
           153.458333333333300000
           87.312500000000000000)
-        XLColumn = 0
         Alignment = taLeftJustify
         AlignToBand = False
         AutoSize = True
@@ -4249,8 +4102,7 @@ inherited frmDACTeQRRetratoA5: TfrmDACTeQRRetratoA5
           23.812500000000000000
           989.541666666666700000
           129.645833333333300000
-          97.895833333333340000)
-        XLColumn = 0
+          97.895833333333330000)
         Alignment = taLeftJustify
         AlignToBand = False
         AutoSize = True
@@ -4283,7 +4135,6 @@ inherited frmDACTeQRRetratoA5: TfrmDACTeQRRetratoA5
           989.541666666666700000
           87.312500000000000000
           100.541666666666700000)
-        XLColumn = 0
         Alignment = taLeftJustify
         AlignToBand = False
         AutoSize = True
@@ -4316,7 +4167,6 @@ inherited frmDACTeQRRetratoA5: TfrmDACTeQRRetratoA5
           10.583333333333330000
           2.645833333333333000
           301.625000000000000000)
-        XLColumn = 0
         Alignment = taLeftJustify
         AlignToBand = False
         AutoSize = True
@@ -4347,9 +4197,8 @@ inherited frmDACTeQRRetratoA5: TfrmDACTeQRRetratoA5
         Size.Values = (
           23.812500000000000000
           989.541666666666700000
-          66.145833333333340000
+          66.145833333333330000
           134.937500000000000000)
-        XLColumn = 0
         Alignment = taLeftJustify
         AlignToBand = False
         AutoSize = True
@@ -4381,8 +4230,7 @@ inherited frmDACTeQRRetratoA5: TfrmDACTeQRRetratoA5
           23.812500000000000000
           10.583333333333330000
           177.270833333333300000
-          42.333333333333340000)
-        XLColumn = 0
+          42.333333333333330000)
         Alignment = taLeftJustify
         AlignToBand = False
         AutoSize = True
@@ -4415,7 +4263,6 @@ inherited frmDACTeQRRetratoA5: TfrmDACTeQRRetratoA5
           10.583333333333330000
           153.458333333333300000
           87.312500000000000000)
-        XLColumn = 0
         Alignment = taLeftJustify
         AlignToBand = False
         AutoSize = True
@@ -4447,8 +4294,7 @@ inherited frmDACTeQRRetratoA5: TfrmDACTeQRRetratoA5
           23.812500000000000000
           10.583333333333330000
           129.645833333333300000
-          97.895833333333340000)
-        XLColumn = 0
+          97.895833333333330000)
         Alignment = taLeftJustify
         AlignToBand = False
         AutoSize = True
@@ -4481,7 +4327,6 @@ inherited frmDACTeQRRetratoA5: TfrmDACTeQRRetratoA5
           10.583333333333330000
           87.312500000000000000
           100.541666666666700000)
-        XLColumn = 0
         Alignment = taLeftJustify
         AlignToBand = False
         AutoSize = True
@@ -4514,7 +4359,6 @@ inherited frmDACTeQRRetratoA5: TfrmDACTeQRRetratoA5
           1434.041666666667000000
           2.645833333333333000
           224.895833333333300000)
-        XLColumn = 0
         Alignment = taLeftJustify
         AlignToBand = False
         AutoSize = True
@@ -4545,9 +4389,8 @@ inherited frmDACTeQRRetratoA5: TfrmDACTeQRRetratoA5
         Size.Values = (
           23.812500000000000000
           10.583333333333330000
-          66.145833333333340000
+          66.145833333333330000
           108.479166666666700000)
-        XLColumn = 0
         Alignment = taLeftJustify
         AlignToBand = False
         AutoSize = True
@@ -4580,7 +4423,6 @@ inherited frmDACTeQRRetratoA5: TfrmDACTeQRRetratoA5
           889.000000000000000000
           2.645833333333333000
           219.604166666666700000)
-        XLColumn = 0
         Alignment = taLeftJustify
         AlignToBand = False
         AutoSize = True
@@ -4613,7 +4455,6 @@ inherited frmDACTeQRRetratoA5: TfrmDACTeQRRetratoA5
           1693.333333333333000000
           177.270833333333300000
           50.270833333333330000)
-        XLColumn = 0
         Alignment = taLeftJustify
         AlignToBand = False
         AutoSize = True
@@ -4646,7 +4487,6 @@ inherited frmDACTeQRRetratoA5: TfrmDACTeQRRetratoA5
           1457.854166666667000000
           153.458333333333300000
           203.729166666666700000)
-        XLColumn = 0
         Alignment = taLeftJustify
         AlignToBand = False
         AutoSize = True
@@ -4679,7 +4519,6 @@ inherited frmDACTeQRRetratoA5: TfrmDACTeQRRetratoA5
           1418.166666666667000000
           0.000000000000000000
           2.645833333333333000)
-        XLColumn = 0
         Brush.Style = bsClear
         Shape = qrsRectangle
         VertAdjust = 0
@@ -4699,7 +4538,6 @@ inherited frmDACTeQRRetratoA5: TfrmDACTeQRRetratoA5
           878.416666666666800000
           0.000000000000000000
           2.645833333333333000)
-        XLColumn = 0
         Brush.Style = bsClear
         Shape = qrsRectangle
         VertAdjust = 0
@@ -4719,7 +4557,6 @@ inherited frmDACTeQRRetratoA5: TfrmDACTeQRRetratoA5
           1143.000000000000000000
           153.458333333333300000
           304.270833333333300000)
-        XLColumn = 0
         Alignment = taLeftJustify
         AlignToBand = False
         AutoSize = False
@@ -4752,7 +4589,6 @@ inherited frmDACTeQRRetratoA5: TfrmDACTeQRRetratoA5
           1143.000000000000000000
           177.270833333333300000
           537.104166666666700000)
-        XLColumn = 0
         Alignment = taLeftJustify
         AlignToBand = False
         AutoSize = False
@@ -4785,7 +4621,6 @@ inherited frmDACTeQRRetratoA5: TfrmDACTeQRRetratoA5
           1746.250000000000000000
           129.645833333333300000
           37.041666666666670000)
-        XLColumn = 0
         Alignment = taLeftJustify
         AlignToBand = False
         AutoSize = True
@@ -4842,7 +4677,6 @@ inherited frmDACTeQRRetratoA5: TfrmDACTeQRRetratoA5
           0.000000000000000000
           0.000000000000000000
           1960.562500000000000000)
-        XLColumn = 0
         Brush.Style = bsClear
         Shape = qrsRectangle
         VertAdjust = 0
@@ -4862,7 +4696,6 @@ inherited frmDACTeQRRetratoA5: TfrmDACTeQRRetratoA5
           391.583333333333300000
           0.000000000000000000
           2.645833333333333000)
-        XLColumn = 0
         Brush.Style = bsClear
         Shape = qrsRectangle
         VertAdjust = 0
@@ -4882,7 +4715,6 @@ inherited frmDACTeQRRetratoA5: TfrmDACTeQRRetratoA5
           1672.166666666667000000
           60.854166666666680000
           2.645833333333333000)
-        XLColumn = 0
         Brush.Style = bsClear
         Shape = qrsRectangle
         VertAdjust = 0
@@ -4902,7 +4734,6 @@ inherited frmDACTeQRRetratoA5: TfrmDACTeQRRetratoA5
           1391.708333333333000000
           60.854166666666680000
           2.645833333333333000)
-        XLColumn = 0
         Brush.Style = bsClear
         Shape = qrsRectangle
         VertAdjust = 0
@@ -4922,7 +4753,6 @@ inherited frmDACTeQRRetratoA5: TfrmDACTeQRRetratoA5
           1098.020833333333000000
           0.000000000000000000
           2.645833333333333000)
-        XLColumn = 0
         Brush.Style = bsClear
         Shape = qrsRectangle
         VertAdjust = 0
@@ -4942,7 +4772,6 @@ inherited frmDACTeQRRetratoA5: TfrmDACTeQRRetratoA5
           857.250000000000000000
           60.854166666666680000
           2.645833333333333000)
-        XLColumn = 0
         Brush.Style = bsClear
         Shape = qrsRectangle
         VertAdjust = 0
@@ -4962,7 +4791,6 @@ inherited frmDACTeQRRetratoA5: TfrmDACTeQRRetratoA5
           433.916666666666700000
           60.854166666666680000
           2.645833333333333000)
-        XLColumn = 0
         Brush.Style = bsClear
         Shape = qrsRectangle
         VertAdjust = 0
@@ -4982,7 +4810,6 @@ inherited frmDACTeQRRetratoA5: TfrmDACTeQRRetratoA5
           222.250000000000000000
           60.854166666666680000
           2.645833333333333000)
-        XLColumn = 0
         Brush.Style = bsClear
         Shape = qrsRectangle
         VertAdjust = 0
@@ -5002,7 +4829,6 @@ inherited frmDACTeQRRetratoA5: TfrmDACTeQRRetratoA5
           777.875000000000000000
           0.000000000000000000
           2.645833333333333000)
-        XLColumn = 0
         Brush.Style = bsClear
         Shape = qrsRectangle
         VertAdjust = 0
@@ -5022,7 +4848,6 @@ inherited frmDACTeQRRetratoA5: TfrmDACTeQRRetratoA5
           2.645833333333333000
           60.854166666666680000
           1957.916666666667000000)
-        XLColumn = 0
         Brush.Style = bsClear
         Shape = qrsRectangle
         VertAdjust = 0
@@ -5042,7 +4867,6 @@ inherited frmDACTeQRRetratoA5: TfrmDACTeQRRetratoA5
           867.833333333333200000
           84.666666666666680000
           222.250000000000000000)
-        XLColumn = 0
         Alignment = taRightJustify
         AlignToBand = False
         AutoSize = False
@@ -5058,7 +4882,6 @@ inherited frmDACTeQRRetratoA5: TfrmDACTeQRRetratoA5
         ParentFont = False
         Transparent = True
         WordWrap = True
-        FullJustify = False
         FontSize = 7
       end
       object qrmQtdUnidMedida3: TQRMemo
@@ -5076,7 +4899,6 @@ inherited frmDACTeQRRetratoA5: TfrmDACTeQRRetratoA5
           439.208333333333300000
           84.666666666666680000
           201.083333333333300000)
-        XLColumn = 0
         Alignment = taRightJustify
         AlignToBand = False
         AutoSize = False
@@ -5092,7 +4914,6 @@ inherited frmDACTeQRRetratoA5: TfrmDACTeQRRetratoA5
         ParentFont = False
         Transparent = True
         WordWrap = True
-        FullJustify = False
         FontSize = 7
       end
       object qrmQtdUnidMedida2: TQRMemo
@@ -5110,7 +4931,6 @@ inherited frmDACTeQRRetratoA5: TfrmDACTeQRRetratoA5
           227.541666666666700000
           84.666666666666680000
           201.083333333333300000)
-        XLColumn = 0
         Alignment = taRightJustify
         AlignToBand = False
         AutoSize = False
@@ -5126,7 +4946,6 @@ inherited frmDACTeQRRetratoA5: TfrmDACTeQRRetratoA5
         ParentFont = False
         Transparent = True
         WordWrap = True
-        FullJustify = False
         FontSize = 7
       end
       object qrmQtdUnidMedida1: TQRMemo
@@ -5144,7 +4963,6 @@ inherited frmDACTeQRRetratoA5: TfrmDACTeQRRetratoA5
           13.229166666666670000
           84.666666666666680000
           201.083333333333300000)
-        XLColumn = 0
         Alignment = taRightJustify
         AlignToBand = False
         AutoSize = False
@@ -5160,7 +4978,6 @@ inherited frmDACTeQRRetratoA5: TfrmDACTeQRRetratoA5
         ParentFont = False
         Transparent = True
         WordWrap = True
-        FullJustify = False
         FontSize = 7
       end
       object qrlVlrTotalMerc: TQRLabel
@@ -5178,7 +4995,6 @@ inherited frmDACTeQRRetratoA5: TfrmDACTeQRRetratoA5
           788.458333333333200000
           26.458333333333330000
           291.041666666666700000)
-        XLColumn = 0
         Alignment = taRightJustify
         AlignToBand = False
         AutoSize = False
@@ -5211,7 +5027,6 @@ inherited frmDACTeQRRetratoA5: TfrmDACTeQRRetratoA5
           1105.958333333333000000
           84.666666666666680000
           280.458333333333300000)
-        XLColumn = 0
         Alignment = taLeftJustify
         AlignToBand = False
         AutoSize = False
@@ -5244,7 +5059,6 @@ inherited frmDACTeQRRetratoA5: TfrmDACTeQRRetratoA5
           10.583333333333330000
           26.458333333333330000
           373.062500000000000000)
-        XLColumn = 0
         Alignment = taLeftJustify
         AlignToBand = False
         AutoSize = False
@@ -5277,7 +5091,6 @@ inherited frmDACTeQRRetratoA5: TfrmDACTeQRRetratoA5
           402.166666666666700000
           26.458333333333330000
           367.770833333333300000)
-        XLColumn = 0
         Alignment = taLeftJustify
         AlignToBand = False
         AutoSize = False
@@ -5310,7 +5123,6 @@ inherited frmDACTeQRRetratoA5: TfrmDACTeQRRetratoA5
           1677.458333333333000000
           84.666666666666680000
           269.875000000000000000)
-        XLColumn = 0
         Alignment = taLeftJustify
         AlignToBand = False
         AutoSize = False
@@ -5343,7 +5155,6 @@ inherited frmDACTeQRRetratoA5: TfrmDACTeQRRetratoA5
           1397.000000000000000000
           84.666666666666680000
           269.875000000000000000)
-        XLColumn = 0
         Alignment = taLeftJustify
         AlignToBand = False
         AutoSize = False
@@ -5376,7 +5187,6 @@ inherited frmDACTeQRRetratoA5: TfrmDACTeQRRetratoA5
           1105.958333333333000000
           26.458333333333330000
           844.020833333333200000)
-        XLColumn = 0
         Alignment = taLeftJustify
         AlignToBand = False
         AutoSize = False
@@ -5409,7 +5219,6 @@ inherited frmDACTeQRRetratoA5: TfrmDACTeQRRetratoA5
           1105.958333333333000000
           2.645833333333333000
           219.604166666666700000)
-        XLColumn = 0
         Alignment = taLeftJustify
         AlignToBand = False
         AutoSize = True
@@ -5442,7 +5251,6 @@ inherited frmDACTeQRRetratoA5: TfrmDACTeQRRetratoA5
           867.833333333333200000
           63.500000000000000000
           222.250000000000000000)
-        XLColumn = 0
         Alignment = taCenter
         AlignToBand = False
         AutoSize = False
@@ -5475,7 +5283,6 @@ inherited frmDACTeQRRetratoA5: TfrmDACTeQRRetratoA5
           439.208333333333300000
           63.500000000000000000
           201.083333333333300000)
-        XLColumn = 0
         Alignment = taCenter
         AlignToBand = False
         AutoSize = False
@@ -5508,7 +5315,6 @@ inherited frmDACTeQRRetratoA5: TfrmDACTeQRRetratoA5
           1677.458333333333000000
           63.500000000000000000
           235.479166666666700000)
-        XLColumn = 0
         Alignment = taLeftJustify
         AlignToBand = False
         AutoSize = True
@@ -5541,7 +5347,6 @@ inherited frmDACTeQRRetratoA5: TfrmDACTeQRRetratoA5
           402.166666666666700000
           2.645833333333333000
           354.541666666666700000)
-        XLColumn = 0
         Alignment = taLeftJustify
         AlignToBand = False
         AutoSize = True
@@ -5574,7 +5379,6 @@ inherited frmDACTeQRRetratoA5: TfrmDACTeQRRetratoA5
           1397.000000000000000000
           63.500000000000000000
           195.791666666666700000)
-        XLColumn = 0
         Alignment = taLeftJustify
         AlignToBand = False
         AutoSize = True
@@ -5607,7 +5411,6 @@ inherited frmDACTeQRRetratoA5: TfrmDACTeQRRetratoA5
           1105.958333333333000000
           63.500000000000000000
           132.291666666666700000)
-        XLColumn = 0
         Alignment = taLeftJustify
         AlignToBand = False
         AutoSize = True
@@ -5640,7 +5443,6 @@ inherited frmDACTeQRRetratoA5: TfrmDACTeQRRetratoA5
           227.541666666666700000
           63.500000000000000000
           201.083333333333300000)
-        XLColumn = 0
         Alignment = taCenter
         AlignToBand = False
         AutoSize = False
@@ -5673,7 +5475,6 @@ inherited frmDACTeQRRetratoA5: TfrmDACTeQRRetratoA5
           13.229166666666670000
           63.500000000000000000
           201.083333333333300000)
-        XLColumn = 0
         Alignment = taCenter
         AlignToBand = False
         AutoSize = False
@@ -5703,10 +5504,9 @@ inherited frmDACTeQRRetratoA5: TfrmDACTeQRRetratoA5
         Frame.DrawRight = False
         Size.Values = (
           23.812500000000000000
-          788.458333333333400000
+          788.458333333333300000
           2.645833333333333000
           291.041666666666700000)
-        XLColumn = 0
         Alignment = taLeftJustify
         AlignToBand = False
         AutoSize = True
@@ -5739,7 +5539,6 @@ inherited frmDACTeQRRetratoA5: TfrmDACTeQRRetratoA5
           10.583333333333330000
           2.645833333333333000
           238.125000000000000000)
-        XLColumn = 0
         Alignment = taLeftJustify
         AlignToBand = False
         AutoSize = True
@@ -5772,7 +5571,6 @@ inherited frmDACTeQRRetratoA5: TfrmDACTeQRRetratoA5
           650.875000000000000000
           84.666666666666680000
           201.083333333333300000)
-        XLColumn = 0
         Alignment = taRightJustify
         AlignToBand = False
         AutoSize = False
@@ -5788,7 +5586,6 @@ inherited frmDACTeQRRetratoA5: TfrmDACTeQRRetratoA5
         ParentFont = False
         Transparent = True
         WordWrap = True
-        FullJustify = False
         FontSize = 7
       end
       object QRLabel73: TQRLabel
@@ -5806,7 +5603,6 @@ inherited frmDACTeQRRetratoA5: TfrmDACTeQRRetratoA5
           650.875000000000000000
           63.500000000000000000
           201.083333333333300000)
-        XLColumn = 0
         Alignment = taCenter
         AlignToBand = False
         AutoSize = False
@@ -5839,7 +5635,6 @@ inherited frmDACTeQRRetratoA5: TfrmDACTeQRRetratoA5
           645.583333333333200000
           60.854166666666680000
           2.645833333333333000)
-        XLColumn = 0
         Brush.Style = bsClear
         Shape = qrsRectangle
         VertAdjust = 0
@@ -5859,7 +5654,6 @@ inherited frmDACTeQRRetratoA5: TfrmDACTeQRRetratoA5
           7.937500000000000000
           119.062500000000000000
           211.666666666666700000)
-        XLColumn = 0
         Alignment = taLeftJustify
         AlignToBand = False
         AutoSize = True
@@ -5892,7 +5686,6 @@ inherited frmDACTeQRRetratoA5: TfrmDACTeQRRetratoA5
           7.937500000000000000
           137.583333333333300000
           899.583333333333200000)
-        XLColumn = 0
         Alignment = taLeftJustify
         AlignToBand = False
         AutoSize = False
@@ -5925,7 +5718,6 @@ inherited frmDACTeQRRetratoA5: TfrmDACTeQRRetratoA5
           915.458333333333200000
           116.416666666666700000
           2.645833333333333000)
-        XLColumn = 0
         Brush.Style = bsClear
         Shape = qrsVertLine
         VertAdjust = 0
@@ -5945,7 +5737,6 @@ inherited frmDACTeQRRetratoA5: TfrmDACTeQRRetratoA5
           926.041666666666700000
           119.062500000000000000
           171.979166666666700000)
-        XLColumn = 0
         Alignment = taLeftJustify
         AlignToBand = False
         AutoSize = True
@@ -5978,7 +5769,6 @@ inherited frmDACTeQRRetratoA5: TfrmDACTeQRRetratoA5
           1201.208333333333000000
           119.062500000000000000
           100.541666666666700000)
-        XLColumn = 0
         Alignment = taLeftJustify
         AlignToBand = False
         AutoSize = True
@@ -6011,7 +5801,6 @@ inherited frmDACTeQRRetratoA5: TfrmDACTeQRRetratoA5
           1333.500000000000000000
           119.062500000000000000
           116.416666666666700000)
-        XLColumn = 0
         Alignment = taLeftJustify
         AlignToBand = False
         AutoSize = True
@@ -6044,7 +5833,6 @@ inherited frmDACTeQRRetratoA5: TfrmDACTeQRRetratoA5
           1561.041666666667000000
           119.062500000000000000
           153.458333333333300000)
-        XLColumn = 0
         Alignment = taLeftJustify
         AlignToBand = False
         AutoSize = True
@@ -6076,8 +5864,7 @@ inherited frmDACTeQRRetratoA5: TfrmDACTeQRRetratoA5
           23.812500000000000000
           1735.666666666667000000
           119.062500000000000000
-          74.083333333333340000)
-        XLColumn = 0
+          74.083333333333330000)
         Alignment = taLeftJustify
         AlignToBand = False
         AutoSize = True
@@ -6110,7 +5897,6 @@ inherited frmDACTeQRRetratoA5: TfrmDACTeQRRetratoA5
           1185.333333333333000000
           116.416666666666700000
           2.645833333333333000)
-        XLColumn = 0
         Brush.Style = bsClear
         Shape = qrsVertLine
         VertAdjust = 0
@@ -6130,7 +5916,6 @@ inherited frmDACTeQRRetratoA5: TfrmDACTeQRRetratoA5
           1322.916666666667000000
           116.416666666666700000
           2.645833333333333000)
-        XLColumn = 0
         Brush.Style = bsClear
         Shape = qrsVertLine
         VertAdjust = 0
@@ -6150,7 +5935,6 @@ inherited frmDACTeQRRetratoA5: TfrmDACTeQRRetratoA5
           1550.458333333333000000
           116.416666666666700000
           2.645833333333333000)
-        XLColumn = 0
         Brush.Style = bsClear
         Shape = qrsVertLine
         VertAdjust = 0
@@ -6170,7 +5954,6 @@ inherited frmDACTeQRRetratoA5: TfrmDACTeQRRetratoA5
           1719.791666666667000000
           116.416666666666700000
           2.645833333333333000)
-        XLColumn = 0
         Brush.Style = bsClear
         Shape = qrsVertLine
         VertAdjust = 0
@@ -6190,7 +5973,6 @@ inherited frmDACTeQRRetratoA5: TfrmDACTeQRRetratoA5
           926.041666666666800000
           137.583333333333300000
           251.354166666666700000)
-        XLColumn = 0
         Alignment = taRightJustify
         AlignToBand = False
         AutoSize = False
@@ -6223,7 +6005,6 @@ inherited frmDACTeQRRetratoA5: TfrmDACTeQRRetratoA5
           1201.208333333333000000
           137.583333333333300000
           108.479166666666700000)
-        XLColumn = 0
         Alignment = taRightJustify
         AlignToBand = False
         AutoSize = False
@@ -6256,7 +6037,6 @@ inherited frmDACTeQRRetratoA5: TfrmDACTeQRRetratoA5
           1333.500000000000000000
           137.583333333333300000
           209.020833333333300000)
-        XLColumn = 0
         Alignment = taRightJustify
         AlignToBand = False
         AutoSize = False
@@ -6289,7 +6069,6 @@ inherited frmDACTeQRRetratoA5: TfrmDACTeQRRetratoA5
           1561.041666666667000000
           137.583333333333300000
           150.812500000000000000)
-        XLColumn = 0
         Alignment = taRightJustify
         AlignToBand = False
         AutoSize = False
@@ -6322,7 +6101,6 @@ inherited frmDACTeQRRetratoA5: TfrmDACTeQRRetratoA5
           1735.666666666667000000
           137.583333333333300000
           214.312500000000000000)
-        XLColumn = 0
         Alignment = taRightJustify
         AlignToBand = False
         AutoSize = False
@@ -6355,7 +6133,6 @@ inherited frmDACTeQRRetratoA5: TfrmDACTeQRRetratoA5
           0.000000000000000000
           116.416666666666700000
           1957.916666666667000000)
-        XLColumn = 0
         Brush.Style = bsClear
         Shape = qrsRectangle
         VertAdjust = 0
@@ -6399,7 +6176,6 @@ inherited frmDACTeQRRetratoA5: TfrmDACTeQRRetratoA5
           0.000000000000000000
           0.000000000000000000
           1960.562500000000000000)
-        XLColumn = 0
         Brush.Style = bsClear
         Shape = qrsRectangle
         VertAdjust = 0
@@ -6419,7 +6195,6 @@ inherited frmDACTeQRRetratoA5: TfrmDACTeQRRetratoA5
           984.250000000000000000
           0.000000000000000000
           2.645833333333333000)
-        XLColumn = 0
         Brush.Style = bsClear
         Shape = qrsRectangle
         VertAdjust = 0
@@ -6439,7 +6214,6 @@ inherited frmDACTeQRRetratoA5: TfrmDACTeQRRetratoA5
           1706.562500000000000000
           29.104166666666670000
           235.479166666666700000)
-        XLColumn = 0
         Alignment = taRightJustify
         AlignToBand = False
         AutoSize = False
@@ -6458,7 +6232,6 @@ inherited frmDACTeQRRetratoA5: TfrmDACTeQRRetratoA5
         ParentFont = False
         Transparent = True
         WordWrap = True
-        FullJustify = False
         FontSize = 7
       end
       object qrmComplValor1: TQRMemo
@@ -6476,7 +6249,6 @@ inherited frmDACTeQRRetratoA5: TfrmDACTeQRRetratoA5
           740.833333333333200000
           29.104166666666670000
           235.479166666666700000)
-        XLColumn = 0
         Alignment = taRightJustify
         AlignToBand = False
         AutoSize = False
@@ -6495,7 +6267,6 @@ inherited frmDACTeQRRetratoA5: TfrmDACTeQRRetratoA5
         ParentFont = False
         Transparent = True
         WordWrap = True
-        FullJustify = False
         FontSize = 7
       end
       object qrmComplChave2: TQRMemo
@@ -6513,7 +6284,6 @@ inherited frmDACTeQRRetratoA5: TfrmDACTeQRRetratoA5
           997.479166666666800000
           29.104166666666670000
           698.500000000000000000)
-        XLColumn = 0
         Alignment = taLeftJustify
         AlignToBand = False
         AutoSize = False
@@ -6532,7 +6302,6 @@ inherited frmDACTeQRRetratoA5: TfrmDACTeQRRetratoA5
         ParentFont = False
         Transparent = True
         WordWrap = True
-        FullJustify = False
         FontSize = 7
       end
       object qrmComplChave1: TQRMemo
@@ -6550,7 +6319,6 @@ inherited frmDACTeQRRetratoA5: TfrmDACTeQRRetratoA5
           13.229166666666670000
           29.104166666666670000
           711.729166666666800000)
-        XLColumn = 0
         Alignment = taLeftJustify
         AlignToBand = False
         AutoSize = False
@@ -6569,7 +6337,6 @@ inherited frmDACTeQRRetratoA5: TfrmDACTeQRRetratoA5
         ParentFont = False
         Transparent = True
         WordWrap = True
-        FullJustify = False
         FontSize = 7
       end
       object QRLabel64: TQRLabel
@@ -6587,7 +6354,6 @@ inherited frmDACTeQRRetratoA5: TfrmDACTeQRRetratoA5
           1706.562500000000000000
           5.291666666666667000
           235.479166666666700000)
-        XLColumn = 0
         Alignment = taLeftJustify
         AlignToBand = False
         AutoSize = True
@@ -6620,7 +6386,6 @@ inherited frmDACTeQRRetratoA5: TfrmDACTeQRRetratoA5
           997.479166666666800000
           5.291666666666667000
           312.208333333333300000)
-        XLColumn = 0
         Alignment = taLeftJustify
         AlignToBand = False
         AutoSize = True
@@ -6653,7 +6418,6 @@ inherited frmDACTeQRRetratoA5: TfrmDACTeQRRetratoA5
           740.833333333333200000
           5.291666666666667000
           235.479166666666700000)
-        XLColumn = 0
         Alignment = taLeftJustify
         AlignToBand = False
         AutoSize = True
@@ -6686,7 +6450,6 @@ inherited frmDACTeQRRetratoA5: TfrmDACTeQRRetratoA5
           13.229166666666670000
           5.291666666666667000
           312.208333333333300000)
-        XLColumn = 0
         Alignment = taLeftJustify
         AlignToBand = False
         AutoSize = True
@@ -6722,7 +6485,7 @@ inherited frmDACTeQRRetratoA5: TfrmDACTeQRRetratoA5
       ForceNewColumn = False
       ForceNewPage = False
       Size.Values = (
-        34.395833333333340000
+        34.395833333333330000
         1960.562500000000000000)
       PreCaluculateBandHeight = False
       KeepOnOnePage = False
@@ -6743,7 +6506,6 @@ inherited frmDACTeQRRetratoA5: TfrmDACTeQRRetratoA5
           2.645833333333333000
           0.000000000000000000
           367.770833333333300000)
-        XLColumn = 0
         Alignment = taLeftJustify
         AlignToBand = False
         AutoSize = True
@@ -6776,7 +6538,6 @@ inherited frmDACTeQRRetratoA5: TfrmDACTeQRRetratoA5
           378.354166666666700000
           2.645833333333333000
           121.708333333333300000)
-        XLColumn = 0
         Alignment = taLeftJustify
         AlignToBand = False
         AutoSize = True
@@ -6807,7 +6568,6 @@ inherited frmDACTeQRRetratoA5: TfrmDACTeQRRetratoA5
           931.333333333333200000
           2.645833333333333000
           1023.937500000000000000)
-        XLColumn = 0
         Alignment = taRightJustify
         AlignToBand = False
         AutoSize = False
@@ -6864,7 +6624,6 @@ inherited frmDACTeQRRetratoA5: TfrmDACTeQRRetratoA5
           0.000000000000000000
           0.000000000000000000
           1960.562500000000000000)
-        XLColumn = 0
         Brush.Style = bsClear
         Shape = qrsRectangle
         VertAdjust = 0
@@ -6885,7 +6644,6 @@ inherited frmDACTeQRRetratoA5: TfrmDACTeQRRetratoA5
           1473.729166666667000000
           55.562500000000000000
           486.833333333333300000)
-        XLColumn = 0
         Brush.Style = bsClear
         Shape = qrsHorLine
         VertAdjust = 0
@@ -6905,7 +6663,6 @@ inherited frmDACTeQRRetratoA5: TfrmDACTeQRRetratoA5
           984.250000000000000000
           0.000000000000000000
           2.645833333333333000)
-        XLColumn = 0
         Brush.Style = bsClear
         Shape = qrsVertLine
         VertAdjust = 0
@@ -6925,7 +6682,6 @@ inherited frmDACTeQRRetratoA5: TfrmDACTeQRRetratoA5
           1471.083333333333000000
           0.000000000000000000
           2.645833333333333000)
-        XLColumn = 0
         Brush.Style = bsClear
         Shape = qrsVertLine
         VertAdjust = 0
@@ -6945,7 +6701,6 @@ inherited frmDACTeQRRetratoA5: TfrmDACTeQRRetratoA5
           492.125000000000000000
           0.000000000000000000
           2.645833333333333000)
-        XLColumn = 0
         Brush.Style = bsClear
         Shape = qrsVertLine
         VertAdjust = 0
@@ -6965,7 +6720,6 @@ inherited frmDACTeQRRetratoA5: TfrmDACTeQRRetratoA5
           1259.416666666667000000
           26.458333333333330000
           206.375000000000000000)
-        XLColumn = 0
         Alignment = taRightJustify
         AlignToBand = False
         AutoSize = False
@@ -6983,7 +6737,6 @@ inherited frmDACTeQRRetratoA5: TfrmDACTeQRRetratoA5
         ParentFont = False
         Transparent = True
         WordWrap = True
-        FullJustify = False
         FontSize = 7
       end
       object qrmCompValor2: TQRMemo
@@ -7001,7 +6754,6 @@ inherited frmDACTeQRRetratoA5: TfrmDACTeQRRetratoA5
           767.291666666666800000
           26.458333333333330000
           206.375000000000000000)
-        XLColumn = 0
         Alignment = taRightJustify
         AlignToBand = False
         AutoSize = False
@@ -7019,7 +6771,6 @@ inherited frmDACTeQRRetratoA5: TfrmDACTeQRRetratoA5
         ParentFont = False
         Transparent = True
         WordWrap = True
-        FullJustify = False
         FontSize = 7
       end
       object qrmCompValor1: TQRMemo
@@ -7037,7 +6788,6 @@ inherited frmDACTeQRRetratoA5: TfrmDACTeQRRetratoA5
           275.166666666666700000
           26.458333333333330000
           206.375000000000000000)
-        XLColumn = 0
         Alignment = taRightJustify
         AlignToBand = False
         AutoSize = False
@@ -7055,7 +6805,6 @@ inherited frmDACTeQRRetratoA5: TfrmDACTeQRRetratoA5
         ParentFont = False
         Transparent = True
         WordWrap = True
-        FullJustify = False
         FontSize = 7
       end
       object qrmCompNome3: TQRMemo
@@ -7073,7 +6822,6 @@ inherited frmDACTeQRRetratoA5: TfrmDACTeQRRetratoA5
           997.479166666666800000
           26.458333333333330000
           254.000000000000000000)
-        XLColumn = 0
         Alignment = taLeftJustify
         AlignToBand = False
         AutoSize = False
@@ -7091,7 +6839,6 @@ inherited frmDACTeQRRetratoA5: TfrmDACTeQRRetratoA5
         ParentFont = False
         Transparent = True
         WordWrap = True
-        FullJustify = False
         FontSize = 7
       end
       object qrmCompNome2: TQRMemo
@@ -7109,7 +6856,6 @@ inherited frmDACTeQRRetratoA5: TfrmDACTeQRRetratoA5
           502.708333333333300000
           26.458333333333330000
           254.000000000000000000)
-        XLColumn = 0
         Alignment = taLeftJustify
         AlignToBand = False
         AutoSize = False
@@ -7127,7 +6873,6 @@ inherited frmDACTeQRRetratoA5: TfrmDACTeQRRetratoA5
         ParentFont = False
         Transparent = True
         WordWrap = True
-        FullJustify = False
         FontSize = 7
       end
       object qrmCompNome1: TQRMemo
@@ -7145,7 +6890,6 @@ inherited frmDACTeQRRetratoA5: TfrmDACTeQRRetratoA5
           13.229166666666670000
           26.458333333333330000
           254.000000000000000000)
-        XLColumn = 0
         Alignment = taLeftJustify
         AlignToBand = False
         AutoSize = False
@@ -7163,7 +6907,6 @@ inherited frmDACTeQRRetratoA5: TfrmDACTeQRRetratoA5
         ParentFont = False
         Transparent = True
         WordWrap = True
-        FullJustify = False
         FontSize = 7
       end
       object qrlVlrTotServico: TQRLabel
@@ -7181,7 +6924,6 @@ inherited frmDACTeQRRetratoA5: TfrmDACTeQRRetratoA5
           1740.958333333333000000
           15.875000000000000000
           206.375000000000000000)
-        XLColumn = 0
         Alignment = taRightJustify
         AlignToBand = False
         AutoSize = False
@@ -7214,7 +6956,6 @@ inherited frmDACTeQRRetratoA5: TfrmDACTeQRRetratoA5
           1740.958333333333000000
           74.083333333333320000
           206.375000000000000000)
-        XLColumn = 0
         Alignment = taRightJustify
         AlignToBand = False
         AutoSize = False
@@ -7247,7 +6988,6 @@ inherited frmDACTeQRRetratoA5: TfrmDACTeQRRetratoA5
           1481.666666666667000000
           60.854166666666680000
           254.000000000000000000)
-        XLColumn = 0
         Alignment = taLeftJustify
         AlignToBand = False
         AutoSize = False
@@ -7280,7 +7020,6 @@ inherited frmDACTeQRRetratoA5: TfrmDACTeQRRetratoA5
           1481.666666666667000000
           2.645833333333333000
           254.000000000000000000)
-        XLColumn = 0
         Alignment = taLeftJustify
         AlignToBand = False
         AutoSize = False
@@ -7313,7 +7052,6 @@ inherited frmDACTeQRRetratoA5: TfrmDACTeQRRetratoA5
           1397.000000000000000000
           2.645833333333333000
           66.145833333333320000)
-        XLColumn = 0
         Alignment = taLeftJustify
         AlignToBand = False
         AutoSize = True
@@ -7346,7 +7084,6 @@ inherited frmDACTeQRRetratoA5: TfrmDACTeQRRetratoA5
           997.479166666666800000
           2.645833333333333000
           55.562500000000000000)
-        XLColumn = 0
         Alignment = taLeftJustify
         AlignToBand = False
         AutoSize = True
@@ -7379,7 +7116,6 @@ inherited frmDACTeQRRetratoA5: TfrmDACTeQRRetratoA5
           412.750000000000000000
           2.645833333333333000
           66.145833333333320000)
-        XLColumn = 0
         Alignment = taLeftJustify
         AlignToBand = False
         AutoSize = True
@@ -7412,7 +7148,6 @@ inherited frmDACTeQRRetratoA5: TfrmDACTeQRRetratoA5
           904.875000000000000000
           2.645833333333333000
           66.145833333333320000)
-        XLColumn = 0
         Alignment = taLeftJustify
         AlignToBand = False
         AutoSize = True
@@ -7445,7 +7180,6 @@ inherited frmDACTeQRRetratoA5: TfrmDACTeQRRetratoA5
           13.229166666666670000
           2.645833333333333000
           55.562500000000000000)
-        XLColumn = 0
         Alignment = taLeftJustify
         AlignToBand = False
         AutoSize = True
@@ -7478,7 +7212,6 @@ inherited frmDACTeQRRetratoA5: TfrmDACTeQRRetratoA5
           502.708333333333300000
           2.645833333333333000
           55.562500000000000000)
-        XLColumn = 0
         Alignment = taLeftJustify
         AlignToBand = False
         AutoSize = True
@@ -7514,7 +7247,7 @@ inherited frmDACTeQRRetratoA5: TfrmDACTeQRRetratoA5
       ForceNewColumn = False
       ForceNewPage = False
       Size.Values = (
-        256.645833333333400000
+        256.645833333333300000
         1960.562500000000000000)
       PreCaluculateBandHeight = False
       KeepOnOnePage = False
@@ -7535,7 +7268,6 @@ inherited frmDACTeQRRetratoA5: TfrmDACTeQRRetratoA5
           0.000000000000000000
           0.000000000000000000
           1960.562500000000000000)
-        XLColumn = 0
         Brush.Style = bsClear
         Shape = qrsRectangle
         VertAdjust = 0
@@ -7555,7 +7287,6 @@ inherited frmDACTeQRRetratoA5: TfrmDACTeQRRetratoA5
           179.916666666666700000
           129.645833333333300000
           2.645833333333333000)
-        XLColumn = 0
         Brush.Style = bsClear
         Shape = qrsRectangle
         VertAdjust = 0
@@ -7575,7 +7306,6 @@ inherited frmDACTeQRRetratoA5: TfrmDACTeQRRetratoA5
           238.125000000000000000
           129.645833333333300000
           2.645833333333333000)
-        XLColumn = 0
         Brush.Style = bsClear
         Shape = qrsRectangle
         VertAdjust = 0
@@ -7595,7 +7325,6 @@ inherited frmDACTeQRRetratoA5: TfrmDACTeQRRetratoA5
           407.458333333333400000
           129.645833333333300000
           2.645833333333333000)
-        XLColumn = 0
         Brush.Style = bsClear
         Shape = qrsRectangle
         VertAdjust = 0
@@ -7615,7 +7344,6 @@ inherited frmDACTeQRRetratoA5: TfrmDACTeQRRetratoA5
           1428.750000000000000000
           39.687500000000000000
           2.645833333333333000)
-        XLColumn = 0
         Brush.Style = bsClear
         Shape = qrsRectangle
         VertAdjust = 0
@@ -7635,7 +7363,6 @@ inherited frmDACTeQRRetratoA5: TfrmDACTeQRRetratoA5
           687.916666666666800000
           39.687500000000000000
           2.645833333333333000)
-        XLColumn = 0
         Brush.Style = bsClear
         Shape = qrsRectangle
         VertAdjust = 0
@@ -7656,7 +7383,6 @@ inherited frmDACTeQRRetratoA5: TfrmDACTeQRRetratoA5
           2.645833333333333000
           100.541666666666700000
           1957.916666666667000000)
-        XLColumn = 0
         Brush.Style = bsClear
         Shape = qrsRectangle
         VertAdjust = 0
@@ -7676,7 +7402,6 @@ inherited frmDACTeQRRetratoA5: TfrmDACTeQRRetratoA5
           1576.916666666667000000
           103.187500000000000000
           2.645833333333333000)
-        XLColumn = 0
         Brush.Style = bsClear
         Shape = qrsRectangle
         VertAdjust = 0
@@ -7696,7 +7421,6 @@ inherited frmDACTeQRRetratoA5: TfrmDACTeQRRetratoA5
           89.958333333333340000
           185.208333333333300000
           2.645833333333333000)
-        XLColumn = 0
         Brush.Style = bsClear
         Shape = qrsRectangle
         VertAdjust = 0
@@ -7716,7 +7440,6 @@ inherited frmDACTeQRRetratoA5: TfrmDACTeQRRetratoA5
           5.291666666666667000
           153.458333333333300000
           100.541666666666700000)
-        XLColumn = 0
         Alignment = taLeftJustify
         AlignToBand = False
         AutoSize = True
@@ -7749,7 +7472,6 @@ inherited frmDACTeQRRetratoA5: TfrmDACTeQRRetratoA5
           418.041666666666700000
           153.458333333333300000
           251.354166666666700000)
-        XLColumn = 0
         Alignment = taRightJustify
         AlignToBand = False
         AutoSize = False
@@ -7782,7 +7504,6 @@ inherited frmDACTeQRRetratoA5: TfrmDACTeQRRetratoA5
           251.354166666666700000
           153.458333333333300000
           55.562500000000000000)
-        XLColumn = 0
         Alignment = taLeftJustify
         AlignToBand = False
         AutoSize = True
@@ -7815,7 +7536,6 @@ inherited frmDACTeQRRetratoA5: TfrmDACTeQRRetratoA5
           190.500000000000000000
           153.458333333333300000
           29.104166666666670000)
-        XLColumn = 0
         Alignment = taLeftJustify
         AlignToBand = False
         AutoSize = True
@@ -7848,7 +7568,6 @@ inherited frmDACTeQRRetratoA5: TfrmDACTeQRRetratoA5
           5.291666666666667000
           214.312500000000000000
           68.791666666666680000)
-        XLColumn = 0
         Alignment = taCenter
         AlignToBand = False
         AutoSize = False
@@ -7881,7 +7600,6 @@ inherited frmDACTeQRRetratoA5: TfrmDACTeQRRetratoA5
           1778.000000000000000000
           132.291666666666700000
           171.979166666666700000)
-        XLColumn = 0
         Alignment = taLeftJustify
         AlignToBand = False
         AutoSize = False
@@ -7914,7 +7632,6 @@ inherited frmDACTeQRRetratoA5: TfrmDACTeQRRetratoA5
           1582.208333333333000000
           214.312500000000000000
           235.479166666666700000)
-        XLColumn = 0
         Alignment = taLeftJustify
         AlignToBand = False
         AutoSize = True
@@ -7947,7 +7664,6 @@ inherited frmDACTeQRRetratoA5: TfrmDACTeQRRetratoA5
           103.187500000000000000
           214.312500000000000000
           1465.791666666667000000)
-        XLColumn = 0
         Alignment = taLeftJustify
         AlignToBand = False
         AutoSize = False
@@ -7980,7 +7696,6 @@ inherited frmDACTeQRRetratoA5: TfrmDACTeQRRetratoA5
           693.208333333333200000
           129.645833333333300000
           179.916666666666700000)
-        XLColumn = 0
         Alignment = taLeftJustify
         AlignToBand = False
         AutoSize = True
@@ -8013,7 +7728,6 @@ inherited frmDACTeQRRetratoA5: TfrmDACTeQRRetratoA5
           693.208333333333200000
           66.145833333333320000
           227.541666666666700000)
-        XLColumn = 0
         Alignment = taLeftJustify
         AlignToBand = False
         AutoSize = True
@@ -8046,7 +7760,6 @@ inherited frmDACTeQRRetratoA5: TfrmDACTeQRRetratoA5
           15.875000000000000000
           66.145833333333320000
           195.791666666666700000)
-        XLColumn = 0
         Alignment = taLeftJustify
         AlignToBand = False
         AutoSize = True
@@ -8079,7 +7792,6 @@ inherited frmDACTeQRRetratoA5: TfrmDACTeQRRetratoA5
           1672.166666666667000000
           42.333333333333340000
           277.812500000000000000)
-        XLColumn = 0
         Alignment = taLeftJustify
         AlignToBand = False
         AutoSize = False
@@ -8112,7 +7824,6 @@ inherited frmDACTeQRRetratoA5: TfrmDACTeQRRetratoA5
           1582.208333333333000000
           190.500000000000000000
           240.770833333333300000)
-        XLColumn = 0
         Alignment = taLeftJustify
         AlignToBand = False
         AutoSize = True
@@ -8145,7 +7856,6 @@ inherited frmDACTeQRRetratoA5: TfrmDACTeQRRetratoA5
           693.208333333333200000
           105.833333333333300000
           169.333333333333300000)
-        XLColumn = 0
         Alignment = taLeftJustify
         AlignToBand = False
         AutoSize = True
@@ -8178,7 +7888,6 @@ inherited frmDACTeQRRetratoA5: TfrmDACTeQRRetratoA5
           693.208333333333200000
           42.333333333333330000
           439.208333333333300000)
-        XLColumn = 0
         Alignment = taLeftJustify
         AlignToBand = False
         AutoSize = True
@@ -8211,7 +7920,6 @@ inherited frmDACTeQRRetratoA5: TfrmDACTeQRRetratoA5
           15.875000000000000000
           42.333333333333330000
           399.520833333333300000)
-        XLColumn = 0
         Alignment = taLeftJustify
         AlignToBand = False
         AutoSize = True
@@ -8244,7 +7952,6 @@ inherited frmDACTeQRRetratoA5: TfrmDACTeQRRetratoA5
           21.166666666666670000
           5.291666666666667000
           1928.812500000000000000)
-        XLColumn = 0
         Alignment = taCenter
         AlignToBand = False
         AutoSize = False
@@ -8277,7 +7984,6 @@ inherited frmDACTeQRRetratoA5: TfrmDACTeQRRetratoA5
           103.187500000000000000
           190.500000000000000000
           391.583333333333300000)
-        XLColumn = 0
         Alignment = taLeftJustify
         AlignToBand = False
         AutoSize = True
@@ -8310,7 +8016,6 @@ inherited frmDACTeQRRetratoA5: TfrmDACTeQRRetratoA5
           5.291666666666667000
           190.500000000000000000
           68.791666666666680000)
-        XLColumn = 0
         Alignment = taLeftJustify
         AlignToBand = False
         AutoSize = True
@@ -8343,7 +8048,6 @@ inherited frmDACTeQRRetratoA5: TfrmDACTeQRRetratoA5
           1582.208333333333000000
           105.833333333333300000
           190.500000000000000000)
-        XLColumn = 0
         Alignment = taLeftJustify
         AlignToBand = False
         AutoSize = True
@@ -8376,7 +8080,6 @@ inherited frmDACTeQRRetratoA5: TfrmDACTeQRRetratoA5
           418.041666666666700000
           132.291666666666700000
           66.145833333333320000)
-        XLColumn = 0
         Alignment = taLeftJustify
         AlignToBand = False
         AutoSize = True
@@ -8409,7 +8112,6 @@ inherited frmDACTeQRRetratoA5: TfrmDACTeQRRetratoA5
           251.354166666666700000
           132.291666666666700000
           74.083333333333320000)
-        XLColumn = 0
         Alignment = taLeftJustify
         AlignToBand = False
         AutoSize = True
@@ -8442,7 +8144,6 @@ inherited frmDACTeQRRetratoA5: TfrmDACTeQRRetratoA5
           190.500000000000000000
           132.291666666666700000
           26.458333333333330000)
-        XLColumn = 0
         Alignment = taLeftJustify
         AlignToBand = False
         AutoSize = True
@@ -8475,7 +8176,6 @@ inherited frmDACTeQRRetratoA5: TfrmDACTeQRRetratoA5
           5.291666666666667000
           132.291666666666700000
           76.729166666666680000)
-        XLColumn = 0
         Alignment = taLeftJustify
         AlignToBand = False
         AutoSize = True
@@ -8508,7 +8208,6 @@ inherited frmDACTeQRRetratoA5: TfrmDACTeQRRetratoA5
           21.166666666666670000
           105.833333333333300000
           658.812500000000000000)
-        XLColumn = 0
         Alignment = taCenter
         AlignToBand = False
         AutoSize = False
@@ -8541,7 +8240,6 @@ inherited frmDACTeQRRetratoA5: TfrmDACTeQRRetratoA5
           1436.687500000000000000
           42.333333333333330000
           216.958333333333300000)
-        XLColumn = 0
         Alignment = taLeftJustify
         AlignToBand = False
         AutoSize = True
@@ -8575,7 +8273,6 @@ inherited frmDACTeQRRetratoA5: TfrmDACTeQRRetratoA5
           2.645833333333333000
           37.041666666666670000
           1957.916666666667000000)
-        XLColumn = 0
         Brush.Style = bsClear
         Shape = qrsRectangle
         VertAdjust = 0
@@ -8595,7 +8292,6 @@ inherited frmDACTeQRRetratoA5: TfrmDACTeQRRetratoA5
           0.000000000000000000
           185.208333333333300000
           1960.562500000000000000)
-        XLColumn = 0
         Brush.Style = bsClear
         Shape = qrsRectangle
         VertAdjust = 0
@@ -8615,7 +8311,6 @@ inherited frmDACTeQRRetratoA5: TfrmDACTeQRRetratoA5
           0.000000000000000000
           127.000000000000000000
           687.916666666666800000)
-        XLColumn = 0
         Brush.Style = bsClear
         Shape = qrsRectangle
         VertAdjust = 0
@@ -8659,7 +8354,6 @@ inherited frmDACTeQRRetratoA5: TfrmDACTeQRRetratoA5
           0.000000000000000000
           0.000000000000000000
           1960.562500000000000000)
-        XLColumn = 0
         Brush.Style = bsClear
         Shape = qrsRectangle
         VertAdjust = 0
@@ -8679,7 +8373,6 @@ inherited frmDACTeQRRetratoA5: TfrmDACTeQRRetratoA5
           15.875000000000000000
           7.937500000000000000
           1934.104166666667000000)
-        XLColumn = 0
         Alignment = taCenter
         AlignToBand = False
         AutoSize = False
@@ -8713,7 +8406,6 @@ inherited frmDACTeQRRetratoA5: TfrmDACTeQRRetratoA5
           2.645833333333333000
           37.041666666666670000
           1957.916666666667000000)
-        XLColumn = 0
         Brush.Style = bsClear
         Shape = qrsRectangle
         VertAdjust = 0
@@ -8733,7 +8425,6 @@ inherited frmDACTeQRRetratoA5: TfrmDACTeQRRetratoA5
           15.875000000000000000
           42.333333333333330000
           201.083333333333300000)
-        XLColumn = 0
         Alignment = taLeftJustify
         AlignToBand = False
         AutoSize = True
@@ -8766,7 +8457,6 @@ inherited frmDACTeQRRetratoA5: TfrmDACTeQRRetratoA5
           15.875000000000000000
           66.145833333333320000
           190.500000000000000000)
-        XLColumn = 0
         Alignment = taLeftJustify
         AlignToBand = False
         AutoSize = True
@@ -8799,7 +8489,6 @@ inherited frmDACTeQRRetratoA5: TfrmDACTeQRRetratoA5
           1074.208333333333000000
           42.333333333333330000
           174.625000000000000000)
-        XLColumn = 0
         Alignment = taLeftJustify
         AlignToBand = False
         AutoSize = True
@@ -8832,7 +8521,6 @@ inherited frmDACTeQRRetratoA5: TfrmDACTeQRRetratoA5
           1074.208333333333000000
           66.145833333333320000
           171.979166666666700000)
-        XLColumn = 0
         Alignment = taLeftJustify
         AlignToBand = False
         AutoSize = True
@@ -8866,7 +8554,6 @@ inherited frmDACTeQRRetratoA5: TfrmDACTeQRRetratoA5
           2.645833333333333000
           100.541666666666700000
           1957.916666666667000000)
-        XLColumn = 0
         Brush.Style = bsClear
         Shape = qrsRectangle
         VertAdjust = 0
@@ -8886,7 +8573,6 @@ inherited frmDACTeQRRetratoA5: TfrmDACTeQRRetratoA5
           15.875000000000000000
           105.833333333333300000
           370.416666666666700000)
-        XLColumn = 0
         Alignment = taLeftJustify
         AlignToBand = False
         AutoSize = True
@@ -8919,7 +8605,6 @@ inherited frmDACTeQRRetratoA5: TfrmDACTeQRRetratoA5
           15.875000000000000000
           129.645833333333300000
           238.125000000000000000)
-        XLColumn = 0
         Alignment = taLeftJustify
         AlignToBand = False
         AutoSize = True
@@ -8953,7 +8638,6 @@ inherited frmDACTeQRRetratoA5: TfrmDACTeQRRetratoA5
           2.645833333333333000
           164.041666666666700000
           1957.916666666667000000)
-        XLColumn = 0
         Brush.Style = bsClear
         Shape = qrsRectangle
         VertAdjust = 0
@@ -8973,7 +8657,6 @@ inherited frmDACTeQRRetratoA5: TfrmDACTeQRRetratoA5
           15.875000000000000000
           169.333333333333300000
           304.270833333333300000)
-        XLColumn = 0
         Alignment = taLeftJustify
         AlignToBand = False
         AutoSize = True
@@ -9006,7 +8689,6 @@ inherited frmDACTeQRRetratoA5: TfrmDACTeQRRetratoA5
           15.875000000000000000
           193.145833333333300000
           177.270833333333300000)
-        XLColumn = 0
         Alignment = taLeftJustify
         AlignToBand = False
         AutoSize = True
@@ -9039,7 +8721,6 @@ inherited frmDACTeQRRetratoA5: TfrmDACTeQRRetratoA5
           1063.625000000000000000
           39.687500000000000000
           2.645833333333333000)
-        XLColumn = 0
         Brush.Style = bsClear
         Shape = qrsRectangle
         VertAdjust = 0
@@ -9059,7 +8740,6 @@ inherited frmDACTeQRRetratoA5: TfrmDACTeQRRetratoA5
           1074.208333333333000000
           105.833333333333300000
           248.708333333333300000)
-        XLColumn = 0
         Alignment = taLeftJustify
         AlignToBand = False
         AutoSize = True
@@ -9092,7 +8772,6 @@ inherited frmDACTeQRRetratoA5: TfrmDACTeQRRetratoA5
           1074.208333333333000000
           129.645833333333300000
           153.458333333333300000)
-        XLColumn = 0
         Alignment = taLeftJustify
         AlignToBand = False
         AutoSize = True
@@ -9125,7 +8804,6 @@ inherited frmDACTeQRRetratoA5: TfrmDACTeQRRetratoA5
           1370.541666666667000000
           105.833333333333300000
           145.520833333333300000)
-        XLColumn = 0
         Alignment = taLeftJustify
         AlignToBand = False
         AutoSize = True
@@ -9158,7 +8836,6 @@ inherited frmDACTeQRRetratoA5: TfrmDACTeQRRetratoA5
           1370.541666666667000000
           129.645833333333300000
           177.270833333333300000)
-        XLColumn = 0
         Alignment = taLeftJustify
         AlignToBand = False
         AutoSize = True
@@ -9191,7 +8868,6 @@ inherited frmDACTeQRRetratoA5: TfrmDACTeQRRetratoA5
           1624.541666666667000000
           105.833333333333300000
           193.145833333333300000)
-        XLColumn = 0
         Alignment = taLeftJustify
         AlignToBand = False
         AutoSize = True
@@ -9224,7 +8900,6 @@ inherited frmDACTeQRRetratoA5: TfrmDACTeQRRetratoA5
           1624.541666666667000000
           129.645833333333300000
           121.708333333333300000)
-        XLColumn = 0
         Alignment = taLeftJustify
         AlignToBand = False
         AutoSize = True
@@ -9257,7 +8932,6 @@ inherited frmDACTeQRRetratoA5: TfrmDACTeQRRetratoA5
           1836.208333333333000000
           105.833333333333300000
           84.666666666666680000)
-        XLColumn = 0
         Alignment = taLeftJustify
         AlignToBand = False
         AutoSize = True
@@ -9290,7 +8964,6 @@ inherited frmDACTeQRRetratoA5: TfrmDACTeQRRetratoA5
           1836.208333333333000000
           129.645833333333300000
           111.125000000000000000)
-        XLColumn = 0
         Alignment = taLeftJustify
         AlignToBand = False
         AutoSize = True
@@ -9323,7 +8996,6 @@ inherited frmDACTeQRRetratoA5: TfrmDACTeQRRetratoA5
           1825.625000000000000000
           103.187500000000000000
           2.645833333333333000)
-        XLColumn = 0
         Brush.Style = bsClear
         Shape = qrsRectangle
         VertAdjust = 0
@@ -9343,7 +9015,6 @@ inherited frmDACTeQRRetratoA5: TfrmDACTeQRRetratoA5
           1613.958333333333000000
           103.187500000000000000
           2.645833333333333000)
-        XLColumn = 0
         Brush.Style = bsClear
         Shape = qrsRectangle
         VertAdjust = 0
@@ -9363,7 +9034,6 @@ inherited frmDACTeQRRetratoA5: TfrmDACTeQRRetratoA5
           1359.958333333333000000
           103.187500000000000000
           2.645833333333333000)
-        XLColumn = 0
         Brush.Style = bsClear
         Shape = qrsRectangle
         VertAdjust = 0
@@ -9455,7 +9125,6 @@ inherited frmDACTeQRRetratoA5: TfrmDACTeQRRetratoA5
           0.000000000000000000
           0.000000000000000000
           1960.562500000000000000)
-        XLColumn = 0
         Brush.Style = bsClear
         Shape = qrsRectangle
         VertAdjust = 0
@@ -9475,7 +9144,6 @@ inherited frmDACTeQRRetratoA5: TfrmDACTeQRRetratoA5
           971.020833333333400000
           174.625000000000000000
           2.645833333333333000)
-        XLColumn = 0
         Brush.Style = bsClear
         Shape = qrsVertLine
         VertAdjust = 0
@@ -9496,7 +9164,6 @@ inherited frmDACTeQRRetratoA5: TfrmDACTeQRRetratoA5
           2.645833333333333000
           39.687500000000000000
           1957.916666666667000000)
-        XLColumn = 0
         Brush.Style = bsClear
         Shape = qrsHorLine
         VertAdjust = 0
@@ -9512,11 +9179,10 @@ inherited frmDACTeQRRetratoA5: TfrmDACTeQRRetratoA5
         Frame.DrawLeft = False
         Frame.DrawRight = False
         Size.Values = (
-          34.395833333333340000
+          34.395833333333330000
           15.875000000000000000
-          288.395833333333400000
+          288.395833333333300000
           37.041666666666670000)
-        XLColumn = 0
         Alignment = taLeftJustify
         AlignToBand = False
         AutoSize = True
@@ -9545,11 +9211,10 @@ inherited frmDACTeQRRetratoA5: TfrmDACTeQRRetratoA5
         Frame.DrawLeft = False
         Frame.DrawRight = False
         Size.Values = (
-          34.395833333333340000
+          34.395833333333330000
           15.875000000000000000
           211.666666666666700000
           76.729166666666670000)
-        XLColumn = 0
         Alignment = taLeftJustify
         AlignToBand = False
         AutoSize = True
@@ -9582,7 +9247,6 @@ inherited frmDACTeQRRetratoA5: TfrmDACTeQRRetratoA5
           15.875000000000000000
           5.291666666666667000
           1931.458333333333000000)
-        XLColumn = 0
         Alignment = taCenter
         AlignToBand = False
         AutoSize = False
@@ -9617,7 +9281,6 @@ inherited frmDACTeQRRetratoA5: TfrmDACTeQRRetratoA5
           15.875000000000000000
           44.979166666666670000
           1931.458333333333000000)
-        XLColumn = 0
         Alignment = taLeftJustify
         AlignToBand = False
         AutoSize = False
@@ -9661,7 +9324,6 @@ inherited frmDACTeQRRetratoA5: TfrmDACTeQRRetratoA5
           2.645833333333333000
           174.625000000000000000
           1957.916666666667000000)
-        XLColumn = 0
         Brush.Style = bsClear
         Shape = qrsHorLine
         VertAdjust = 0
@@ -9682,7 +9344,6 @@ inherited frmDACTeQRRetratoA5: TfrmDACTeQRRetratoA5
           2.645833333333333000
           203.729166666666700000
           1957.916666666667000000)
-        XLColumn = 0
         Brush.Style = bsClear
         Shape = qrsHorLine
         VertAdjust = 0
@@ -9702,7 +9363,6 @@ inherited frmDACTeQRRetratoA5: TfrmDACTeQRRetratoA5
           322.791666666666700000
           179.916666666666700000
           227.541666666666700000)
-        XLColumn = 0
         Alignment = taCenter
         AlignToBand = False
         AutoSize = True
@@ -9735,7 +9395,6 @@ inherited frmDACTeQRRetratoA5: TfrmDACTeQRRetratoA5
           1344.083333333333000000
           179.916666666666700000
           261.937500000000000000)
-        XLColumn = 0
         Alignment = taCenter
         AlignToBand = False
         AutoSize = True
@@ -9764,11 +9423,10 @@ inherited frmDACTeQRRetratoA5: TfrmDACTeQRRetratoA5
         Frame.DrawLeft = False
         Frame.DrawRight = False
         Size.Values = (
-          34.395833333333340000
+          34.395833333333330000
           545.041666666666700000
           211.666666666666700000
           161.395833333333300000)
-        XLColumn = 0
         Alignment = taLeftJustify
         AlignToBand = False
         AutoSize = True
@@ -9797,11 +9455,10 @@ inherited frmDACTeQRRetratoA5: TfrmDACTeQRRetratoA5
         Frame.DrawLeft = False
         Frame.DrawRight = False
         Size.Values = (
-          34.395833333333340000
+          34.395833333333330000
           545.041666666666700000
-          288.395833333333400000
+          288.395833333333300000
           158.750000000000000000)
-        XLColumn = 0
         Alignment = taLeftJustify
         AlignToBand = False
         AutoSize = True
@@ -9830,11 +9487,10 @@ inherited frmDACTeQRRetratoA5: TfrmDACTeQRRetratoA5
         Frame.DrawLeft = False
         Frame.DrawRight = False
         Size.Values = (
-          34.395833333333340000
+          34.395833333333330000
           989.541666666666700000
           211.666666666666700000
           76.729166666666670000)
-        XLColumn = 0
         Alignment = taLeftJustify
         AlignToBand = False
         AutoSize = True
@@ -9863,11 +9519,10 @@ inherited frmDACTeQRRetratoA5: TfrmDACTeQRRetratoA5
         Frame.DrawLeft = False
         Frame.DrawRight = False
         Size.Values = (
-          34.395833333333340000
+          34.395833333333330000
           989.541666666666700000
-          288.395833333333400000
+          288.395833333333300000
           37.041666666666670000)
-        XLColumn = 0
         Alignment = taLeftJustify
         AlignToBand = False
         AutoSize = True
@@ -9896,11 +9551,10 @@ inherited frmDACTeQRRetratoA5: TfrmDACTeQRRetratoA5
         Frame.DrawLeft = False
         Frame.DrawRight = False
         Size.Values = (
-          34.395833333333340000
+          34.395833333333330000
           1518.708333333333000000
           211.666666666666700000
           161.395833333333300000)
-        XLColumn = 0
         Alignment = taLeftJustify
         AlignToBand = False
         AutoSize = True
@@ -9929,11 +9583,10 @@ inherited frmDACTeQRRetratoA5: TfrmDACTeQRRetratoA5
         Frame.DrawLeft = False
         Frame.DrawRight = False
         Size.Values = (
-          34.395833333333340000
+          34.395833333333330000
           1518.708333333333000000
-          288.395833333333400000
+          288.395833333333300000
           158.750000000000000000)
-        XLColumn = 0
         Alignment = taLeftJustify
         AlignToBand = False
         AutoSize = True
@@ -9990,7 +9643,6 @@ inherited frmDACTeQRRetratoA5: TfrmDACTeQRRetratoA5
           0.000000000000000000
           0.000000000000000000
           1957.916666666667000000)
-        XLColumn = 0
         Brush.Style = bsClear
         Shape = qrsRectangle
         VertAdjust = 0
@@ -10010,7 +9662,6 @@ inherited frmDACTeQRRetratoA5: TfrmDACTeQRRetratoA5
           547.687500000000000000
           0.000000000000000000
           2.645833333333333000)
-        XLColumn = 0
         Brush.Style = bsClear
         Shape = qrsRectangle
         VertAdjust = 0
@@ -10031,7 +9682,6 @@ inherited frmDACTeQRRetratoA5: TfrmDACTeQRRetratoA5
           2.645833333333333000
           37.041666666666670000
           1957.916666666667000000)
-        XLColumn = 0
         Brush.Style = bsClear
         Shape = qrsRectangle
         VertAdjust = 0
@@ -10051,7 +9701,6 @@ inherited frmDACTeQRRetratoA5: TfrmDACTeQRRetratoA5
           111.125000000000000000
           34.395833333333340000
           2.645833333333333000)
-        XLColumn = 0
         Brush.Style = bsClear
         Shape = qrsRectangle
         VertAdjust = 0
@@ -10071,7 +9720,6 @@ inherited frmDACTeQRRetratoA5: TfrmDACTeQRRetratoA5
           264.583333333333400000
           34.395833333333340000
           2.645833333333333000)
-        XLColumn = 0
         Brush.Style = bsClear
         Shape = qrsRectangle
         VertAdjust = 0
@@ -10091,7 +9739,6 @@ inherited frmDACTeQRRetratoA5: TfrmDACTeQRRetratoA5
           322.791666666666700000
           34.395833333333340000
           2.645833333333333000)
-        XLColumn = 0
         Brush.Style = bsClear
         Shape = qrsRectangle
         VertAdjust = 0
@@ -10112,7 +9759,6 @@ inherited frmDACTeQRRetratoA5: TfrmDACTeQRRetratoA5
           2.645833333333333000
           76.729166666666680000
           1957.916666666667000000)
-        XLColumn = 0
         Brush.Style = bsClear
         Shape = qrsRectangle
         VertAdjust = 0
@@ -10133,7 +9779,6 @@ inherited frmDACTeQRRetratoA5: TfrmDACTeQRRetratoA5
           2.645833333333333000
           216.958333333333400000
           1957.916666666667000000)
-        XLColumn = 0
         Brush.Style = bsClear
         Shape = qrsRectangle
         VertAdjust = 0
@@ -10153,7 +9798,6 @@ inherited frmDACTeQRRetratoA5: TfrmDACTeQRRetratoA5
           912.812500000000100000
           216.958333333333400000
           2.645833333333333000)
-        XLColumn = 0
         Brush.Style = bsClear
         Shape = qrsRectangle
         VertAdjust = 0
@@ -10173,7 +9817,6 @@ inherited frmDACTeQRRetratoA5: TfrmDACTeQRRetratoA5
           873.124999999999900000
           34.395833333333340000
           2.645833333333333000)
-        XLColumn = 0
         Brush.Style = bsClear
         Shape = qrsRectangle
         VertAdjust = 0
@@ -10193,7 +9836,6 @@ inherited frmDACTeQRRetratoA5: TfrmDACTeQRRetratoA5
           5.291666666666667000
           39.687500000000000000
           58.208333333333320000)
-        XLColumn = 0
         Alignment = taLeftJustify
         AlignToBand = False
         AutoSize = True
@@ -10226,7 +9868,6 @@ inherited frmDACTeQRRetratoA5: TfrmDACTeQRRetratoA5
           566.208333333333400000
           2.645833333333333000
           1383.770833333333000000)
-        XLColumn = 0
         Alignment = taCenter
         AlignToBand = False
         AutoSize = False
@@ -10259,7 +9900,6 @@ inherited frmDACTeQRRetratoA5: TfrmDACTeQRRetratoA5
           5.291666666666667000
           2.645833333333333000
           534.458333333333400000)
-        XLColumn = 0
         Alignment = taCenter
         AlignToBand = False
         AutoSize = False
@@ -10292,7 +9932,6 @@ inherited frmDACTeQRRetratoA5: TfrmDACTeQRRetratoA5
           928.687500000000000000
           222.250000000000000000
           388.937500000000000000)
-        XLColumn = 0
         Alignment = taLeftJustify
         AlignToBand = False
         AutoSize = True
@@ -10325,7 +9964,6 @@ inherited frmDACTeQRRetratoA5: TfrmDACTeQRRetratoA5
           560.916666666666700000
           222.250000000000000000
           179.916666666666700000)
-        XLColumn = 0
         Alignment = taLeftJustify
         AlignToBand = False
         AutoSize = True
@@ -10358,7 +9996,6 @@ inherited frmDACTeQRRetratoA5: TfrmDACTeQRRetratoA5
           10.583333333333330000
           222.250000000000000000
           198.437500000000000000)
-        XLColumn = 0
         Alignment = taLeftJustify
         AlignToBand = False
         AutoSize = True
@@ -10391,7 +10028,6 @@ inherited frmDACTeQRRetratoA5: TfrmDACTeQRRetratoA5
           883.708333333333200000
           39.687500000000000000
           227.541666666666700000)
-        XLColumn = 0
         Alignment = taLeftJustify
         AlignToBand = False
         AutoSize = True
@@ -10424,7 +10060,6 @@ inherited frmDACTeQRRetratoA5: TfrmDACTeQRRetratoA5
           1635.125000000000000000
           39.687500000000000000
           182.562500000000000000)
-        XLColumn = 0
         Alignment = taLeftJustify
         AlignToBand = False
         AutoSize = True
@@ -10457,7 +10092,6 @@ inherited frmDACTeQRRetratoA5: TfrmDACTeQRRetratoA5
           555.625000000000000000
           39.687500000000000000
           177.270833333333300000)
-        XLColumn = 0
         Alignment = taLeftJustify
         AlignToBand = False
         AutoSize = True
@@ -10490,7 +10124,6 @@ inherited frmDACTeQRRetratoA5: TfrmDACTeQRRetratoA5
           328.083333333333300000
           39.687500000000000000
           82.020833333333320000)
-        XLColumn = 0
         Alignment = taLeftJustify
         AlignToBand = False
         AutoSize = True
@@ -10523,7 +10156,6 @@ inherited frmDACTeQRRetratoA5: TfrmDACTeQRRetratoA5
           269.875000000000000000
           39.687500000000000000
           34.395833333333330000)
-        XLColumn = 0
         Alignment = taLeftJustify
         AlignToBand = False
         AutoSize = True
@@ -10556,7 +10188,6 @@ inherited frmDACTeQRRetratoA5: TfrmDACTeQRRetratoA5
           116.416666666666700000
           39.687500000000000000
           87.312500000000000000)
-        XLColumn = 0
         Alignment = taLeftJustify
         AlignToBand = False
         AutoSize = True
@@ -10589,7 +10220,6 @@ inherited frmDACTeQRRetratoA5: TfrmDACTeQRRetratoA5
           269.875000000000000000
           84.666666666666680000
           42.333333333333340000)
-        XLColumn = 0
         Alignment = taLeftJustify
         AlignToBand = False
         AutoSize = False
@@ -10608,7 +10238,6 @@ inherited frmDACTeQRRetratoA5: TfrmDACTeQRRetratoA5
         ParentFont = False
         Transparent = True
         WordWrap = True
-        FullJustify = False
         FontSize = 7
       end
       object qrmTipo2: TQRMemo
@@ -10626,7 +10255,6 @@ inherited frmDACTeQRRetratoA5: TfrmDACTeQRRetratoA5
           5.291666666666667000
           84.666666666666680000
           95.250000000000000000)
-        XLColumn = 0
         Alignment = taLeftJustify
         AlignToBand = False
         AutoSize = False
@@ -10645,7 +10273,6 @@ inherited frmDACTeQRRetratoA5: TfrmDACTeQRRetratoA5
         ParentFont = False
         Transparent = True
         WordWrap = True
-        FullJustify = False
         FontSize = 7
       end
       object qrmRNTRC2: TQRMemo
@@ -10663,7 +10290,6 @@ inherited frmDACTeQRRetratoA5: TfrmDACTeQRRetratoA5
           328.083333333333400000
           84.666666666666680000
           203.729166666666700000)
-        XLColumn = 0
         Alignment = taLeftJustify
         AlignToBand = False
         AutoSize = False
@@ -10682,7 +10308,6 @@ inherited frmDACTeQRRetratoA5: TfrmDACTeQRRetratoA5
         ParentFont = False
         Transparent = True
         WordWrap = True
-        FullJustify = False
         FontSize = 7
       end
       object qrmPlaca2: TQRMemo
@@ -10700,7 +10325,6 @@ inherited frmDACTeQRRetratoA5: TfrmDACTeQRRetratoA5
           116.416666666666700000
           84.666666666666680000
           140.229166666666700000)
-        XLColumn = 0
         Alignment = taLeftJustify
         AlignToBand = False
         AutoSize = False
@@ -10719,7 +10343,6 @@ inherited frmDACTeQRRetratoA5: TfrmDACTeQRRetratoA5
         ParentFont = False
         Transparent = True
         WordWrap = True
-        FullJustify = False
         FontSize = 7
       end
       object qrmCNPJForn: TQRMemo
@@ -10737,7 +10360,6 @@ inherited frmDACTeQRRetratoA5: TfrmDACTeQRRetratoA5
           555.625000000000000000
           84.666666666666680000
           309.562500000000000000)
-        XLColumn = 0
         Alignment = taLeftJustify
         AlignToBand = False
         AutoSize = False
@@ -10755,7 +10377,6 @@ inherited frmDACTeQRRetratoA5: TfrmDACTeQRRetratoA5
         ParentFont = False
         Transparent = True
         WordWrap = True
-        FullJustify = False
         FontSize = 7
       end
       object qrmNumCompra: TQRMemo
@@ -10773,7 +10394,6 @@ inherited frmDACTeQRRetratoA5: TfrmDACTeQRRetratoA5
           883.708333333333400000
           84.666666666666680000
           727.604166666666800000)
-        XLColumn = 0
         Alignment = taLeftJustify
         AlignToBand = False
         AutoSize = False
@@ -10791,7 +10411,6 @@ inherited frmDACTeQRRetratoA5: TfrmDACTeQRRetratoA5
         ParentFont = False
         Transparent = True
         WordWrap = True
-        FullJustify = False
         FontSize = 7
       end
       object qrlNomeMotorista2: TQRLabel
@@ -10809,7 +10428,6 @@ inherited frmDACTeQRRetratoA5: TfrmDACTeQRRetratoA5
           10.583333333333330000
           246.062500000000000000
           203.729166666666700000)
-        XLColumn = 0
         Alignment = taLeftJustify
         AlignToBand = False
         AutoSize = True
@@ -10842,7 +10460,6 @@ inherited frmDACTeQRRetratoA5: TfrmDACTeQRRetratoA5
           928.687500000000000000
           246.062500000000000000
           111.125000000000000000)
-        XLColumn = 0
         Alignment = taLeftJustify
         AlignToBand = False
         AutoSize = True
@@ -10875,7 +10492,6 @@ inherited frmDACTeQRRetratoA5: TfrmDACTeQRRetratoA5
           560.916666666666700000
           246.062500000000000000
           190.500000000000000000)
-        XLColumn = 0
         Alignment = taLeftJustify
         AlignToBand = False
         AutoSize = True
@@ -10908,7 +10524,6 @@ inherited frmDACTeQRRetratoA5: TfrmDACTeQRRetratoA5
           1624.541666666667000000
           34.395833333333340000
           2.645833333333333000)
-        XLColumn = 0
         Brush.Style = bsClear
         Shape = qrsRectangle
         VertAdjust = 0
@@ -10928,7 +10543,6 @@ inherited frmDACTeQRRetratoA5: TfrmDACTeQRRetratoA5
           1635.125000000000000000
           84.666666666666680000
           309.562500000000000000)
-        XLColumn = 0
         Alignment = taLeftJustify
         AlignToBand = False
         AutoSize = False
@@ -10946,7 +10560,6 @@ inherited frmDACTeQRRetratoA5: TfrmDACTeQRRetratoA5
         ParentFont = False
         Transparent = True
         WordWrap = True
-        FullJustify = False
         FontSize = 7
       end
     end
@@ -10988,7 +10601,6 @@ inherited frmDACTeQRRetratoA5: TfrmDACTeQRRetratoA5
           0.000000000000000000
           0.000000000000000000
           1960.562500000000000000)
-        XLColumn = 0
         Brush.Style = bsClear
         Shape = qrsRectangle
         VertAdjust = 0
@@ -11008,7 +10620,6 @@ inherited frmDACTeQRRetratoA5: TfrmDACTeQRRetratoA5
           534.458333333333400000
           39.687500000000000000
           2.645833333333333000)
-        XLColumn = 0
         Brush.Style = bsClear
         Shape = qrsVertLine
         VertAdjust = 0
@@ -11028,7 +10639,6 @@ inherited frmDACTeQRRetratoA5: TfrmDACTeQRRetratoA5
           1251.479166666667000000
           39.687500000000000000
           2.645833333333333000)
-        XLColumn = 0
         Brush.Style = bsClear
         Shape = qrsVertLine
         VertAdjust = 0
@@ -11048,7 +10658,6 @@ inherited frmDACTeQRRetratoA5: TfrmDACTeQRRetratoA5
           1568.979166666667000000
           39.687500000000000000
           2.645833333333333000)
-        XLColumn = 0
         Brush.Style = bsClear
         Shape = qrsVertLine
         VertAdjust = 0
@@ -11069,7 +10678,6 @@ inherited frmDACTeQRRetratoA5: TfrmDACTeQRRetratoA5
           2.645833333333333000
           105.833333333333300000
           531.812500000000000000)
-        XLColumn = 0
         Brush.Style = bsClear
         Shape = qrsHorLine
         VertAdjust = 0
@@ -11090,7 +10698,6 @@ inherited frmDACTeQRRetratoA5: TfrmDACTeQRRetratoA5
           2.645833333333333000
           39.687500000000000000
           1957.916666666667000000)
-        XLColumn = 0
         Brush.Style = bsClear
         Shape = qrsHorLine
         VertAdjust = 0
@@ -11110,7 +10717,6 @@ inherited frmDACTeQRRetratoA5: TfrmDACTeQRRetratoA5
           1270.000000000000000000
           129.645833333333300000
           283.104166666666700000)
-        XLColumn = 0
         Alignment = taCenter
         AlignToBand = False
         AutoSize = False
@@ -11143,7 +10749,6 @@ inherited frmDACTeQRRetratoA5: TfrmDACTeQRRetratoA5
           1270.000000000000000000
           66.145833333333340000
           283.104166666666700000)
-        XLColumn = 0
         Alignment = taCenter
         AlignToBand = False
         AutoSize = False
@@ -11176,7 +10781,6 @@ inherited frmDACTeQRRetratoA5: TfrmDACTeQRRetratoA5
           1711.854166666667000000
           44.979166666666670000
           68.791666666666680000)
-        XLColumn = 0
         Alignment = taLeftJustify
         AlignToBand = False
         AutoSize = True
@@ -11209,7 +10813,6 @@ inherited frmDACTeQRRetratoA5: TfrmDACTeQRRetratoA5
           1600.729166666667000000
           87.312500000000000000
           34.395833333333330000)
-        XLColumn = 0
         Alignment = taLeftJustify
         AlignToBand = False
         AutoSize = True
@@ -11242,7 +10845,6 @@ inherited frmDACTeQRRetratoA5: TfrmDACTeQRRetratoA5
           1600.729166666667000000
           124.354166666666700000
           76.729166666666680000)
-        XLColumn = 0
         Alignment = taLeftJustify
         AlignToBand = False
         AutoSize = True
@@ -11275,7 +10877,6 @@ inherited frmDACTeQRRetratoA5: TfrmDACTeQRRetratoA5
           15.875000000000000000
           5.291666666666667000
           1934.104166666667000000)
-        XLColumn = 0
         Alignment = taCenter
         AlignToBand = False
         AutoSize = False
@@ -11310,7 +10911,6 @@ inherited frmDACTeQRRetratoA5: TfrmDACTeQRRetratoA5
           15.875000000000000000
           55.562500000000000000
           76.729166666666680000)
-        XLColumn = 0
         Alignment = taLeftJustify
         AlignToBand = False
         AutoSize = True
@@ -11343,7 +10943,6 @@ inherited frmDACTeQRRetratoA5: TfrmDACTeQRRetratoA5
           1270.000000000000000000
           44.979166666666670000
           283.104166666666700000)
-        XLColumn = 0
         Alignment = taCenter
         AlignToBand = False
         AutoSize = False
@@ -11376,7 +10975,6 @@ inherited frmDACTeQRRetratoA5: TfrmDACTeQRRetratoA5
           1270.000000000000000000
           105.833333333333300000
           283.104166666666700000)
-        XLColumn = 0
         Alignment = taCenter
         AlignToBand = False
         AutoSize = False
@@ -11409,7 +11007,6 @@ inherited frmDACTeQRRetratoA5: TfrmDACTeQRRetratoA5
           547.687500000000000000
           127.000000000000000000
           690.562500000000000000)
-        XLColumn = 0
         Alignment = taCenter
         AlignToBand = False
         AutoSize = False
@@ -11442,7 +11039,6 @@ inherited frmDACTeQRRetratoA5: TfrmDACTeQRRetratoA5
           15.875000000000000000
           119.062500000000000000
           37.041666666666670000)
-        XLColumn = 0
         Alignment = taLeftJustify
         AlignToBand = False
         AutoSize = True
@@ -11475,7 +11071,6 @@ inherited frmDACTeQRRetratoA5: TfrmDACTeQRRetratoA5
           1733.020833333333000000
           124.354166666666700000
           132.291666666666700000)
-        XLColumn = 0
         Alignment = taCenter
         AlignToBand = False
         AutoSize = True
@@ -11508,7 +11103,6 @@ inherited frmDACTeQRRetratoA5: TfrmDACTeQRRetratoA5
           1688.041666666667000000
           87.312500000000000000
           227.541666666666700000)
-        XLColumn = 0
         Alignment = taRightJustify
         AlignToBand = False
         AutoSize = False
@@ -11531,7 +11125,7 @@ inherited frmDACTeQRRetratoA5: TfrmDACTeQRRetratoA5
   object cdsDocumentos: TClientDataSet
     Aggregates = <>
     Params = <>
-    Left = 360
+    Left = 368
     Top = 67
     object cdsDocumentosTIPO_1: TStringField
       DisplayWidth = 6

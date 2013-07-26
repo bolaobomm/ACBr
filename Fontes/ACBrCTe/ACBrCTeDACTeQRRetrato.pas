@@ -2265,7 +2265,7 @@ end;
 procedure TfrmDACTeQRRetrato.qrb_13_ModAquaviarioBeforePrint(
   Sender: TQRCustomBand; var PrintBand: Boolean);
 var
- i: Integer;
+ i, j: Integer;
 begin
   inherited;
   PrintBand := QRCTe.PageNumber = 1;
@@ -2301,19 +2301,26 @@ begin
   {$IFNDEF PL_103}
     for i := 0 to (balsa.Count - 1) do
      begin
-      if i = 0
-       then qrlIndBalsas.Caption := balsa.Items[i].xBalsa
-       else qrlIndBalsas.Caption := qrlIndBalsas.Caption + '/' + balsa.Items[i].xBalsa;
+      if i = 0 then
+        qrlIndBalsas.Caption := balsa.Items[i].xBalsa
+      else
+        qrlIndBalsas.Caption := qrlIndBalsas.Caption + '/' + balsa.Items[i].xBalsa;
      end;
   {$ENDIF}
 
   {$IFNDEF PL_200}
     qrlIndConteiners.Caption := '';
-    for i := 0 to (Lacre.Count - 1) do
+    for i := 0 to (detCont.Count - 1) do
      begin
-      if i = 0
-       then qrlIndConteiners.Caption := Lacre.Items[i].nLacre
-       else qrlIndConteiners.Caption := qrlIndConteiners.Caption + '/' + Lacre.Items[i].nLacre;
+       for j := 0 to (detCont.Items[i].Lacre.Count - 1) do
+        begin
+         if i > 0 then
+           qrlIndConteiners.Caption := qrlIndConteiners.Caption + '  '; 
+         if j = 0 then
+           qrlIndConteiners.Caption := qrlIndConteiners.Caption + detCont.Items[i].nCont+'-'+detCont.Items[i].Lacre.Items[j].nLacre
+         else
+           qrlIndConteiners.Caption := qrlIndConteiners.Caption + '/' + detCont.Items[i].Lacre.Items[j].nLacre;
+        end;
      end;
   {$ENDIF}
   end;

@@ -739,8 +739,8 @@ begin
         i02 := 0;
         while Leitor.rExtrai(4, 'lacre', '', i02 + 1) <> '' do
         begin
-          CTe.Aquav.Lacre.Add;
-          CTe.Aquav.Lacre[i02].nLacre := Leitor.rCampo(tcStr, 'nLacre');
+          CTe.Aquav.detCont[i01].Lacre.Add;
+          CTe.Aquav.detCont[i01].Lacre[i02].nLacre := Leitor.rCampo(tcStr, 'nLacre');
           inc(i02);
         end;
 
