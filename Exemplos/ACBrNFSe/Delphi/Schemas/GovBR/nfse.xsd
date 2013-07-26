@@ -339,11 +339,11 @@
             <xsd:element name="ValorCsll" type="tsValor" minOccurs="0" maxOccurs="1"/>
             <xsd:element name="IssRetido" type="tsSimNao" minOccurs="1" maxOccurs="1"/>
             <xsd:element name="ValorIss" type="tsValor" minOccurs="0" maxOccurs="1"/>
-            <xsd:element name="ValorIssRetido" type="tsValor" minOccurs="0" maxOccurs="1"/>
             <xsd:element name="OutrasRetencoes" type="tsValor" minOccurs="0" maxOccurs="1"/>
             <xsd:element name="BaseCalculo" type="tsValor" minOccurs="0" maxOccurs="1"/>
             <xsd:element name="Aliquota" type="tsAliquota" minOccurs="0" maxOccurs="1"/>
             <xsd:element name="ValorLiquidoNfse" type="tsValor" minOccurs="0" maxOccurs="1"/>
+            <xsd:element name="ValorIssRetido" type="tsValor" minOccurs="0" maxOccurs="1"/>
             <xsd:element name="DescontoIncondicionado" type="tsValor" minOccurs="0" maxOccurs="1"/>
             <xsd:element name="DescontoCondicionado" type="tsValor" minOccurs="0" maxOccurs="1"/>
         </xsd:sequence>
