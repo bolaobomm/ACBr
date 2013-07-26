@@ -130,7 +130,7 @@ type
     FPathSalvar: String;
     FPathSchemas: String;
     FExibirErroSchema: boolean;
-    FFormatoAlerta: string;
+    FFormatoAlerta: String;
     {$IFDEF ACBrNFeOpenSSL}
        FIniFinXMLSECAutomatico: boolean;
     {$ENDIF}

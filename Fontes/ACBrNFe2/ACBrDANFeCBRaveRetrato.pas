@@ -48,7 +48,7 @@ unit ACBrDANFeCBRaveRetrato;
 interface
 
 uses Graphics, Forms, Windows, SysUtils, Classes,
-     Variants, DBClient, Math, StdCtrls, DB, Dialogs,
+     Variants, Math, StdCtrls, DB, Dialogs,
      Controls, ExtCtrls, Mask, MaskUtils,
      {$IFNDEF COMPILER16} JPEG, {$ELSE} Vcl.Imaging.jpeg, {$ENDIF}
      RpDefine, RpBase, RpSystem, RpBars, RpMemo,
