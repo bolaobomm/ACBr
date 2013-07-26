@@ -1589,6 +1589,9 @@ begin
             Retirada.cMun    := INIRec.ReadInteger('Retirada','cMun',0);
             Retirada.xMun    := INIRec.ReadString( 'Retirada','xMun','');
             Retirada.UF      := INIRec.ReadString( 'Retirada','UF'  ,'');
+            if Retirada.cMun <= 0 then
+               Retirada.cMun := ObterCodigoMunicipio(Retirada.xMun,Retirada.UF);
+
           end;
 
          if INIRec.ReadString(  'Entrega','CNPJ','') <> '' then
@@ -1601,6 +1604,8 @@ begin
             Entrega.cMun    := INIRec.ReadInteger( 'Entrega','cMun',0);
             Entrega.xMun    := INIRec.ReadString(  'Entrega','xMun','');
             Entrega.UF      := INIRec.ReadString(  'Entrega','UF','');
+            if Entrega.cMun <= 0 then
+               Entrega.cMun := ObterCodigoMunicipio(Entrega.xMun,Entrega.UF);
           end;
 
          I := 1 ;
@@ -2408,7 +2413,7 @@ begin
                INIRec.WriteString(  sSecao,'xPed'     , Prod.xPed);
                INIRec.WriteInteger( sSecao,'nItemPed' , Prod.nItemPed);
 
-               INIRec.WriteFloat(sSecao,'vTotTrib',Imposto.vTotTrib) ;               
+               INIRec.WriteFloat(sSecao,'vTotTrib',Imposto.vTotTrib) ;
 
                for J:=0 to Prod.DI.Count-1 do
                 begin

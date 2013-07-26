@@ -4133,7 +4133,7 @@ object frmAcbrNfeMonitor: TfrmAcbrNfeMonitor
       Top = 1
       Width = 569
       Height = 261
-      ActivePage = Monitor
+      ActivePage = DANFE
       Align = alClient
       Style = tsFlatButtons
       TabOrder = 0
@@ -4479,7 +4479,7 @@ object frmAcbrNfeMonitor: TfrmAcbrNfeMonitor
         end
       end
       object Certificado: TTabSheet
-        Caption = 'Certificado/Software House'
+        Caption = 'Certificado'
         ImageIndex = 1
         DesignSize = (
           561
@@ -4568,287 +4568,304 @@ object frmAcbrNfeMonitor: TfrmAcbrNfeMonitor
       object WebService: TTabSheet
         Caption = 'WebService'
         ImageIndex = 2
-        object GroupBox4: TGroupBox
-          Left = 6
-          Top = 4
-          Width = 291
-          Height = 139
-          Caption = 'WebService'
+        object pgTipoWebService: TPageControl
+          Left = 0
+          Top = 0
+          Width = 561
+          Height = 230
+          ActivePage = tsWSNFeCTe
+          Align = alClient
+          Style = tsFlatButtons
           TabOrder = 0
-          object Label6: TLabel
-            Left = 8
-            Top = 16
-            Width = 121
-            Height = 13
-            Caption = 'Selecione UF de Destino:'
-            Font.Charset = DEFAULT_CHARSET
-            Font.Color = clWindowText
-            Font.Height = -11
-            Font.Name = 'MS Sans Serif'
-            Font.Style = []
-            ParentFont = False
+          object tsWSNFeCTe: TTabSheet
+            Caption = 'NF-e/CT-e'
+            object GroupBox4: TGroupBox
+              Left = 3
+              Top = -1
+              Width = 291
+              Height = 139
+              Caption = 'WebService'
+              TabOrder = 0
+              object Label6: TLabel
+                Left = 8
+                Top = 16
+                Width = 121
+                Height = 13
+                Caption = 'Selecione UF de Destino:'
+                Font.Charset = DEFAULT_CHARSET
+                Font.Color = clWindowText
+                Font.Height = -11
+                Font.Name = 'MS Sans Serif'
+                Font.Style = []
+                ParentFont = False
+              end
+              object sbPathSalvar: TSpeedButton
+                Left = 259
+                Top = 109
+                Width = 23
+                Height = 24
+                Glyph.Data = {
+                  76010000424D7601000000000000760000002800000020000000100000000100
+                  04000000000000010000130B0000130B00001000000000000000000000000000
+                  800000800000008080008000000080008000808000007F7F7F00BFBFBF000000
+                  FF0000FF000000FFFF00FF000000FF00FF00FFFF0000FFFFFF0033333333B333
+                  333B33FF33337F3333F73BB3777BB7777BB3377FFFF77FFFF77333B000000000
+                  0B3333777777777777333330FFFFFFFF07333337F33333337F333330FFFFFFFF
+                  07333337F3FF3FFF7F333330F00F000F07333337F77377737F333330FFFFFFFF
+                  07333FF7F3FFFF3F7FFFBBB0F0000F0F0BB37777F7777373777F3BB0FFFFFFFF
+                  0BBB3777F3FF3FFF77773330F00F000003333337F773777773333330FFFF0FF0
+                  33333337F3FF7F37F3333330F08F0F0B33333337F7737F77FF333330FFFF003B
+                  B3333337FFFF77377FF333B000000333BB33337777777F3377FF3BB3333BB333
+                  3BB33773333773333773B333333B3333333B7333333733333337}
+                NumGlyphs = 2
+                OnClick = sbPathSalvarClick
+              end
+              object cbUF: TComboBox
+                Left = 8
+                Top = 32
+                Width = 273
+                Height = 24
+                Style = csDropDownList
+                Font.Charset = DEFAULT_CHARSET
+                Font.Color = clWindowText
+                Font.Height = -13
+                Font.Name = 'MS Sans Serif'
+                Font.Style = []
+                ItemHeight = 16
+                ItemIndex = 24
+                ParentFont = False
+                TabOrder = 0
+                Text = 'SP'
+                Items.Strings = (
+                  'AC'
+                  'AL'
+                  'AP'
+                  'AM'
+                  'BA'
+                  'CE'
+                  'DF'
+                  'ES'
+                  'GO'
+                  'MA'
+                  'MT'
+                  'MS'
+                  'MG'
+                  'PA'
+                  'PB'
+                  'PR'
+                  'PE'
+                  'PI'
+                  'RJ'
+                  'RN'
+                  'RS'
+                  'RO'
+                  'RR'
+                  'SC'
+                  'SP'
+                  'SE'
+                  'TO')
+              end
+              object ckSalvar: TCheckBox
+                Left = 8
+                Top = 96
+                Width = 278
+                Height = 15
+                Caption = 'Salvar Arquivos Enviados/Recebidos p/WebServices'
+                Font.Charset = DEFAULT_CHARSET
+                Font.Color = clWindowText
+                Font.Height = -11
+                Font.Name = 'MS Sans Serif'
+                Font.Style = []
+                ParentFont = False
+                TabOrder = 1
+              end
+              object edtPathLogs: TEdit
+                Left = 8
+                Top = 112
+                Width = 249
+                Height = 21
+                TabOrder = 2
+              end
+              object rgTipoAmb: TRadioGroup
+                Left = 8
+                Top = 58
+                Width = 273
+                Height = 35
+                Caption = 'Selecione o Ambiente de Destino'
+                Columns = 2
+                ItemIndex = 1
+                Items.Strings = (
+                  'Produ'#231#227'o'
+                  'Homologa'#231#227'o')
+                TabOrder = 3
+              end
+            end
+            object gbxProxy: TGroupBox
+              Left = 300
+              Top = -1
+              Width = 250
+              Height = 100
+              Caption = 'Proxy'
+              TabOrder = 1
+              object Label8: TLabel
+                Left = 8
+                Top = 14
+                Width = 22
+                Height = 13
+                Caption = 'Host'
+              end
+              object Label9: TLabel
+                Left = 192
+                Top = 14
+                Width = 25
+                Height = 13
+                Caption = 'Porta'
+              end
+              object Label10: TLabel
+                Left = 8
+                Top = 54
+                Width = 36
+                Height = 13
+                Caption = 'Usu'#225'rio'
+              end
+              object Label11: TLabel
+                Left = 130
+                Top = 54
+                Width = 31
+                Height = 13
+                Caption = 'Senha'
+              end
+              object edtProxyHost: TEdit
+                Left = 8
+                Top = 30
+                Width = 177
+                Height = 21
+                TabOrder = 0
+              end
+              object edtProxyPorta: TEdit
+                Left = 192
+                Top = 30
+                Width = 50
+                Height = 21
+                TabOrder = 1
+              end
+              object edtProxyUser: TEdit
+                Left = 8
+                Top = 70
+                Width = 114
+                Height = 21
+                TabOrder = 2
+              end
+              object edtProxySenha: TEdit
+                Left = 128
+                Top = 70
+                Width = 114
+                Height = 21
+                PasswordChar = '*'
+                TabOrder = 3
+              end
+            end
+            object rgFormaEmissao: TRadioGroup
+              Left = 300
+              Top = 100
+              Width = 250
+              Height = 80
+              Caption = 'Forma de Emiss'#227'o'
+              Columns = 2
+              ItemIndex = 0
+              Items.Strings = (
+                'Normal'
+                'Conting'#234'ncia'
+                'SCAN'
+                'DPEC'
+                'FSDA')
+              TabOrder = 2
+            end
+            object gbxRetornoEnvio: TGroupBox
+              Left = 3
+              Top = 116
+              Width = 291
+              Height = 81
+              Caption = 'Retorno de Envio de NFe'
+              TabOrder = 3
+              object Label36: TLabel
+                Left = 102
+                Top = 38
+                Width = 50
+                Height = 13
+                Caption = 'Tentativas'
+              end
+              object Label37: TLabel
+                Left = 196
+                Top = 38
+                Width = 41
+                Height = 13
+                Caption = 'Intervalo'
+              end
+              object Label38: TLabel
+                Left = 8
+                Top = 38
+                Width = 43
+                Height = 13
+                Hint = 
+                  'Aguardar quantos segundos para primeira consulta de retorno de e' +
+                  'nvio'
+                Caption = 'Aguardar'
+              end
+              object cbxAjustarAut: TCheckBox
+                Left = 8
+                Top = 17
+                Width = 234
+                Height = 17
+                Caption = 'Ajustar Automaticamente prop. "Aguardar"'
+                TabOrder = 0
+                OnClick = cbxAjustarAutClick
+              end
+              object edtTentativas: TEdit
+                Left = 102
+                Top = 54
+                Width = 85
+                Height = 21
+                TabOrder = 2
+                OnKeyPress = edtNumCopiaKeyPress
+              end
+              object edtIntervalo: TEdit
+                Left = 196
+                Top = 54
+                Width = 85
+                Height = 21
+                TabOrder = 3
+                OnKeyPress = edtNumCopiaKeyPress
+              end
+              object edtAguardar: TEdit
+                Left = 8
+                Top = 54
+                Width = 85
+                Height = 21
+                Hint = 
+                  'Aguardar quantos segundos para primeira consulta de retorno de e' +
+                  'nvio'
+                TabOrder = 1
+                OnKeyPress = edtNumCopiaKeyPress
+              end
+            end
+            object rgTipoCancelamento: TRadioGroup
+              Left = 300
+              Top = 159
+              Width = 250
+              Height = 38
+              Caption = 'Tipo de Cancelamento'
+              Columns = 2
+              Items.Strings = (
+                'Por Evento'
+                'Anterior')
+              TabOrder = 4
+            end
           end
-          object sbPathSalvar: TSpeedButton
-            Left = 259
-            Top = 109
-            Width = 23
-            Height = 24
-            Glyph.Data = {
-              76010000424D7601000000000000760000002800000020000000100000000100
-              04000000000000010000130B0000130B00001000000000000000000000000000
-              800000800000008080008000000080008000808000007F7F7F00BFBFBF000000
-              FF0000FF000000FFFF00FF000000FF00FF00FFFF0000FFFFFF0033333333B333
-              333B33FF33337F3333F73BB3777BB7777BB3377FFFF77FFFF77333B000000000
-              0B3333777777777777333330FFFFFFFF07333337F33333337F333330FFFFFFFF
-              07333337F3FF3FFF7F333330F00F000F07333337F77377737F333330FFFFFFFF
-              07333FF7F3FFFF3F7FFFBBB0F0000F0F0BB37777F7777373777F3BB0FFFFFFFF
-              0BBB3777F3FF3FFF77773330F00F000003333337F773777773333330FFFF0FF0
-              33333337F3FF7F37F3333330F08F0F0B33333337F7737F77FF333330FFFF003B
-              B3333337FFFF77377FF333B000000333BB33337777777F3377FF3BB3333BB333
-              3BB33773333773333773B333333B3333333B7333333733333337}
-            NumGlyphs = 2
-            OnClick = sbPathSalvarClick
+          object tsWSNFSe: TTabSheet
+            Caption = 'NFS-e'
+            ImageIndex = 1
           end
-          object cbUF: TComboBox
-            Left = 8
-            Top = 32
-            Width = 273
-            Height = 24
-            Style = csDropDownList
-            Font.Charset = DEFAULT_CHARSET
-            Font.Color = clWindowText
-            Font.Height = -13
-            Font.Name = 'MS Sans Serif'
-            Font.Style = []
-            ItemHeight = 16
-            ItemIndex = 24
-            ParentFont = False
-            TabOrder = 0
-            Text = 'SP'
-            Items.Strings = (
-              'AC'
-              'AL'
-              'AP'
-              'AM'
-              'BA'
-              'CE'
-              'DF'
-              'ES'
-              'GO'
-              'MA'
-              'MT'
-              'MS'
-              'MG'
-              'PA'
-              'PB'
-              'PR'
-              'PE'
-              'PI'
-              'RJ'
-              'RN'
-              'RS'
-              'RO'
-              'RR'
-              'SC'
-              'SP'
-              'SE'
-              'TO')
-          end
-          object ckSalvar: TCheckBox
-            Left = 8
-            Top = 96
-            Width = 278
-            Height = 15
-            Caption = 'Salvar Arquivos Enviados/Recebidos p/WebServices'
-            Font.Charset = DEFAULT_CHARSET
-            Font.Color = clWindowText
-            Font.Height = -11
-            Font.Name = 'MS Sans Serif'
-            Font.Style = []
-            ParentFont = False
-            TabOrder = 1
-          end
-          object edtPathLogs: TEdit
-            Left = 8
-            Top = 112
-            Width = 249
-            Height = 21
-            TabOrder = 2
-          end
-          object rgTipoAmb: TRadioGroup
-            Left = 8
-            Top = 58
-            Width = 273
-            Height = 35
-            Caption = 'Selecione o Ambiente de Destino'
-            Columns = 2
-            ItemIndex = 1
-            Items.Strings = (
-              'Produ'#231#227'o'
-              'Homologa'#231#227'o')
-            TabOrder = 3
-          end
-        end
-        object gbxProxy: TGroupBox
-          Left = 304
-          Top = 4
-          Width = 250
-          Height = 100
-          Caption = 'Proxy'
-          TabOrder = 1
-          object Label8: TLabel
-            Left = 8
-            Top = 14
-            Width = 22
-            Height = 13
-            Caption = 'Host'
-          end
-          object Label9: TLabel
-            Left = 192
-            Top = 14
-            Width = 25
-            Height = 13
-            Caption = 'Porta'
-          end
-          object Label10: TLabel
-            Left = 8
-            Top = 54
-            Width = 36
-            Height = 13
-            Caption = 'Usu'#225'rio'
-          end
-          object Label11: TLabel
-            Left = 130
-            Top = 54
-            Width = 31
-            Height = 13
-            Caption = 'Senha'
-          end
-          object edtProxyHost: TEdit
-            Left = 8
-            Top = 30
-            Width = 177
-            Height = 21
-            TabOrder = 0
-          end
-          object edtProxyPorta: TEdit
-            Left = 192
-            Top = 30
-            Width = 50
-            Height = 21
-            TabOrder = 1
-          end
-          object edtProxyUser: TEdit
-            Left = 8
-            Top = 70
-            Width = 114
-            Height = 21
-            TabOrder = 2
-          end
-          object edtProxySenha: TEdit
-            Left = 128
-            Top = 70
-            Width = 114
-            Height = 21
-            PasswordChar = '*'
-            TabOrder = 3
-          end
-        end
-        object rgFormaEmissao: TRadioGroup
-          Left = 304
-          Top = 105
-          Width = 250
-          Height = 80
-          Caption = 'Forma de Emiss'#227'o'
-          Columns = 2
-          ItemIndex = 0
-          Items.Strings = (
-            'Normal'
-            'Conting'#234'ncia'
-            'SCAN'
-            'DPEC'
-            'FSDA')
-          TabOrder = 2
-        end
-        object gbxRetornoEnvio: TGroupBox
-          Left = 6
-          Top = 144
-          Width = 291
-          Height = 81
-          Caption = 'Retorno de Envio de NFe'
-          TabOrder = 3
-          object Label36: TLabel
-            Left = 102
-            Top = 38
-            Width = 50
-            Height = 13
-            Caption = 'Tentativas'
-          end
-          object Label37: TLabel
-            Left = 196
-            Top = 38
-            Width = 41
-            Height = 13
-            Caption = 'Intervalo'
-          end
-          object Label38: TLabel
-            Left = 8
-            Top = 38
-            Width = 43
-            Height = 13
-            Hint = 
-              'Aguardar quantos segundos para primeira consulta de retorno de e' +
-              'nvio'
-            Caption = 'Aguardar'
-          end
-          object cbxAjustarAut: TCheckBox
-            Left = 8
-            Top = 17
-            Width = 234
-            Height = 17
-            Caption = 'Ajustar Automaticamente prop. "Aguardar"'
-            TabOrder = 0
-            OnClick = cbxAjustarAutClick
-          end
-          object edtTentativas: TEdit
-            Left = 102
-            Top = 54
-            Width = 85
-            Height = 21
-            TabOrder = 2
-            OnKeyPress = edtNumCopiaKeyPress
-          end
-          object edtIntervalo: TEdit
-            Left = 196
-            Top = 54
-            Width = 85
-            Height = 21
-            TabOrder = 3
-            OnKeyPress = edtNumCopiaKeyPress
-          end
-          object edtAguardar: TEdit
-            Left = 8
-            Top = 54
-            Width = 85
-            Height = 21
-            Hint = 
-              'Aguardar quantos segundos para primeira consulta de retorno de e' +
-              'nvio'
-            TabOrder = 1
-            OnKeyPress = edtNumCopiaKeyPress
-          end
-        end
-        object rgTipoCancelamento: TRadioGroup
-          Left = 305
-          Top = 187
-          Width = 250
-          Height = 38
-          Caption = 'Tipo de Cancelamento'
-          Columns = 2
-          Items.Strings = (
-            'Por Evento'
-            'Anterior')
-          TabOrder = 4
         end
       end
       object Email: TTabSheet
@@ -4989,16 +5006,16 @@ object frmAcbrNfeMonitor: TfrmAcbrNfeMonitor
       object DANFE: TTabSheet
         Caption = 'DANFE/DACTE'
         ImageIndex = 4
-        object PageControl2: TPageControl
+        object pgDANFe: TPageControl
           Left = 0
           Top = 0
           Width = 561
           Height = 230
-          ActivePage = TabSheet1
+          ActivePage = tsDanfe
           Align = alClient
           Style = tsFlatButtons
           TabOrder = 0
-          object TabSheet1: TTabSheet
+          object tsDanfe: TTabSheet
             Caption = 'Danfe'
             object Label5: TLabel
               Left = 6
@@ -5110,21 +5127,21 @@ object frmAcbrNfeMonitor: TfrmAcbrNfeMonitor
                 Caption = 'Inferior'
               end
               object Label29: TLabel
-                Left = 76
+                Left = 79
                 Top = 12
                 Width = 39
                 Height = 13
                 Caption = 'Superior'
               end
               object Label30: TLabel
-                Left = 145
+                Left = 151
                 Top = 12
                 Width = 30
                 Height = 13
                 Caption = 'Direita'
               end
               object Label31: TLabel
-                Left = 213
+                Left = 222
                 Top = 12
                 Width = 45
                 Height = 13
@@ -5140,7 +5157,7 @@ object frmAcbrNfeMonitor: TfrmAcbrNfeMonitor
                 OnKeyPress = edtMargemInfKeyPress
               end
               object edtMargemSup: TEdit
-                Left = 75
+                Left = 78
                 Top = 28
                 Width = 64
                 Height = 21
@@ -5149,7 +5166,7 @@ object frmAcbrNfeMonitor: TfrmAcbrNfeMonitor
                 OnKeyPress = edtMargemInfKeyPress
               end
               object edtMargemDir: TEdit
-                Left = 144
+                Left = 150
                 Top = 28
                 Width = 64
                 Height = 21
@@ -5158,7 +5175,7 @@ object frmAcbrNfeMonitor: TfrmAcbrNfeMonitor
                 OnKeyPress = edtMargemInfKeyPress
               end
               object edtMargemEsq: TEdit
-                Left = 212
+                Left = 221
                 Top = 28
                 Width = 64
                 Height = 21
@@ -5208,10 +5225,11 @@ object frmAcbrNfeMonitor: TfrmAcbrNfeMonitor
             object rgTipoFonte: TRadioGroup
               Left = 316
               Top = 164
-              Width = 212
+              Width = 221
               Height = 36
               Caption = 'Tipo de Fonte(Rave CB)'
               Columns = 2
+              ItemIndex = 0
               Items.Strings = (
                 'Times'
                 'Courier')
@@ -5236,7 +5254,7 @@ object frmAcbrNfeMonitor: TfrmAcbrNfeMonitor
             object edtProdPag: TEdit
               Left = 6
               Top = 142
-              Width = 98
+              Width = 99
               Height = 21
               TabOrder = 5
               Text = '0'
@@ -5272,7 +5290,7 @@ object frmAcbrNfeMonitor: TfrmAcbrNfeMonitor
             object rgCasasDecimaisQtd: TRadioGroup
               Left = 6
               Top = 164
-              Width = 163
+              Width = 147
               Height = 36
               Caption = 'Decimais Quantidade'
               Columns = 3
@@ -5294,7 +5312,7 @@ object frmAcbrNfeMonitor: TfrmAcbrNfeMonitor
               Value = 0
             end
           end
-          object TabSheet2: TTabSheet
+          object tsDadosEmpresa: TTabSheet
             Caption = 'Dados Empresa'
             ImageIndex = 1
             object Label3: TLabel
@@ -5676,20 +5694,20 @@ object frmAcbrNfeMonitor: TfrmAcbrNfeMonitor
         object Panel1: TPanel
           Left = 0
           Top = 0
-          Width = 153
+          Width = 159
           Height = 230
           Align = alLeft
           TabOrder = 0
-          object PageControl3: TPageControl
+          object pgTestes: TPageControl
             Left = 1
             Top = 1
-            Width = 152
+            Width = 157
             Height = 228
-            ActivePage = TabSheet3
-            Align = alLeft
+            ActivePage = tsTesteNFe
+            Align = alClient
             Style = tsFlatButtons
             TabOrder = 0
-            object TabSheet3: TTabSheet
+            object tsTesteNFe: TTabSheet
               Caption = 'NF-e'
               object btnStatusServ: TButton
                 Left = 0
@@ -5755,7 +5773,7 @@ object frmAcbrNfeMonitor: TfrmAcbrNfeMonitor
                 OnClick = btnEnviarClick
               end
               object btnEnviarEmail: TButton
-                Left = -1
+                Left = 0
                 Top = 173
                 Width = 140
                 Height = 22
@@ -5764,7 +5782,7 @@ object frmAcbrNfeMonitor: TfrmAcbrNfeMonitor
                 OnClick = btnEnviarEmailClick
               end
             end
-            object TabSheet4: TTabSheet
+            object tsTesteCTe: TTabSheet
               Caption = 'CT-e'
               ImageIndex = 1
               object btnStatusServCTe: TButton
@@ -5831,24 +5849,28 @@ object frmAcbrNfeMonitor: TfrmAcbrNfeMonitor
                 OnClick = btnEnviarCTeClick
               end
             end
+            object tsTesteNFSe: TTabSheet
+              Caption = 'NFS-e'
+              ImageIndex = 2
+            end
           end
         end
         object Panel2: TPanel
-          Left = 153
+          Left = 159
           Top = 0
-          Width = 408
+          Width = 402
           Height = 230
           Align = alClient
           TabOrder = 1
           object WBResposta: TWebBrowser
             Left = 1
             Top = 18
-            Width = 406
+            Width = 400
             Height = 211
             Align = alClient
             TabOrder = 0
             ControlData = {
-              4C000000F6290000CF1500000000000000000000000000000000000000000000
+              4C00000057290000CF1500000000000000000000000000000000000000000000
               000000004C000000000000000000000001000000E0D057007335CF11AE690800
               2B2E126208000000000000004C0000000114020000000000C000000000000046
               8000000000000000000000000000000000000000000000000000000000000000
@@ -5857,7 +5879,7 @@ object frmAcbrNfeMonitor: TfrmAcbrNfeMonitor
           object Panel3: TPanel
             Left = 1
             Top = 1
-            Width = 406
+            Width = 400
             Height = 17
             Align = alTop
             Alignment = taLeftJustify
@@ -5871,6 +5893,10 @@ object frmAcbrNfeMonitor: TfrmAcbrNfeMonitor
             TabOrder = 1
           end
         end
+      end
+      object Integracao: TTabSheet
+        Caption = 'Integra'#231#227'o'
+        ImageIndex = 7
       end
     end
   end
@@ -6425,6 +6451,6 @@ object frmAcbrNfeMonitor: TfrmAcbrNfeMonitor
     MargemDireita = 0.510000000000000000
     CTeCancelada = False
     Left = 425
-    Top = 28
+    Top = 20
   end
 end
