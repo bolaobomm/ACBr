@@ -337,7 +337,7 @@ begin
                     '</' + Prefixo4 + 'Numero>' +
 
                     // alterado por joel takei 05/07/2013
-                   DFeUtil.SeSenao(AProvedor in [pro4R, proISSe],
+                   DFeUtil.SeSenao(AProvedor in [pro4R, proISSe, proFiorilli],
 
                     '<' + Prefixo4 + 'CpfCnpj>' +
                      '<' + Prefixo4 + 'Cnpj>' +
