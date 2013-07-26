@@ -133,11 +133,14 @@ type
     FAtualizarXMLCancelado: Boolean;
     FPathSalvar: String;
     FPathSchemas: String;
+    FExibirErroSchema: boolean;
+    FFormatoAlerta: string;
   {$IFDEF ACBrCTeOpenSSL}
     FIniFinXMLSECAutomatico: boolean;
   {$ENDIF}
     procedure SetFormaEmissao(AValue: TpcnTipoEmissao);
     function GetPathSalvar: String;
+    function GetFormatoAlerta: string;
   public
     constructor Create(AOwner: TComponent); override ;
     function Save(AXMLName: String; AXMLFile: WideString; aPath: String = ''): Boolean;
@@ -149,6 +152,8 @@ type
     property AtualizarXMLCancelado: Boolean read FAtualizarXMLCancelado write FAtualizarXMLCancelado default True ;
     property PathSalvar: String read GetPathSalvar write FPathSalvar;
     property PathSchemas: String read FPathSchemas write FPathSchemas;
+    property ExibirErroSchema: Boolean read FExibirErroSchema write FExibirErroSchema;
+    property FormatoAlerta: string read GetFormatoAlerta write FFormatoAlerta;
   {$IFDEF ACBrCTeOpenSSL}
     property IniFinXMLSECAutomatico: Boolean read FIniFinXMLSECAutomatico write FIniFinXMLSECAutomatico;
   {$ENDIF}
@@ -258,9 +263,30 @@ begin
   FAtualizarXMLCancelado := True;
   FPathSalvar            := '' ;
   FPathSchemas           := '' ;
+  FExibirErroSchema      := True;
+  FFormatoAlerta         := 'TAG:%TAGNIVEL% ID:%ID%/%TAG%(%DESCRICAO%) - %MSG%.';
+  // O Formato da mensagem de erro pode ser alterado pelo usuario alterando-se a property FFormatoAlerta: onde;
+  // %TAGNIVEL%  : Representa o Nivel da TAG; ex: <transp><vol><lacres>
+  // %TAG%       : Representa a TAG; ex: <nLacre>
+  // %ID%        : Representa a ID da TAG; ex X34
+  // %MSG%       : Representa a mensagem de alerta
+  // %DESCRICAO% : Representa a Descrição da TAG
 {$IFDEF ACBrCTeOpenSSL}
   FIniFinXMLSECAutomatico:=True;
 {$ENDIF}
+end;
+
+function TGeralConf.GetFormatoAlerta: string;
+begin
+  if (FFormatoAlerta = '') or (
+     (pos('%TAGNIVEL%',FFormatoAlerta) <= 0) and
+     (pos('%TAG%',FFormatoAlerta) <= 0) and
+     (pos('%ID%',FFormatoAlerta) <= 0) and
+     (pos('%MSG%',FFormatoAlerta) <= 0) and
+     (pos('%DESCRICAO%',FFormatoAlerta) <= 0) )then
+     Result := 'TAG:%TAGNIVEL% ID:%ID%/%TAG%(%DESCRICAO%) - %MSG%.'
+  else
+     Result := FFormatoAlerta;
 end;
 
 function TGeralConf.GetPathSalvar: String;

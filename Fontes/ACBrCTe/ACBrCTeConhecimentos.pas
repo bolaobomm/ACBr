@@ -48,7 +48,7 @@ unit ACBrCTeConhecimentos;
 interface
 
 uses
-  Classes, Sysutils, Dialogs, Forms,
+  Classes, Sysutils, Dialogs, Forms, StrUtils,
   ACBrCTeUtil, ACBrCTeConfiguracoes,
   ACBrCTeDACTEClass,
   smtpsend, ssl_openssl, mimemess, mimepart, // units para enviar email
@@ -60,9 +60,12 @@ type
   private
     FCTe: TCTe;
     FXML: AnsiString;
+    FXMLOriginal: AnsiString;
     FConfirmada : Boolean;
     FMsg : AnsiString ;
     FAlertas: AnsiString;
+    FErroValidacao: AnsiString;
+    FErroValidacaoCompleto: AnsiString;
     FNomeArq: String;
     function GetCTeXML: AnsiString;
   public
@@ -91,9 +94,12 @@ type
                                 UsarThread: Boolean = True);
     property CTe: TCTe  read FCTe write FCTe;
     property XML: AnsiString  read GetCTeXML write FXML;
+    property XMLOriginal: AnsiString  read FXMLOriginal write FXMLOriginal;
     property Confirmada: Boolean  read FConfirmada write FConfirmada;
     property Msg: AnsiString  read FMsg write FMsg;
     property Alertas: AnsiString read FAlertas write FAlertas;
+    property ErroValidacao: AnsiString read FErroValidacao write FErroValidacao;
+    property ErroValidacaoCompleto: AnsiString read FErroValidacaoCompleto write FErroValidacaoCompleto;    
     property NomeArq: String read FNomeArq write FNomeArq;
   end;
 
@@ -201,6 +207,7 @@ begin
      Result  := True;
      LocCTeW := TCTeW.Create(CTe);
      try
+        LocCTeW.Gerador.Opcoes.FormatoAlerta := TACBrCTe( TConhecimentos( Collection ).ACBrCTe ).Configuracoes.Geral.FormatoAlerta;
         LocCTeW.GerarXml;
         if DFeUtil.EstaVazio(CaminhoArquivo) then
            CaminhoArquivo := PathWithDelim(TACBrCTe( TConhecimentos( Collection ).ACBrCTe ).Configuracoes.Geral.PathSalvar)+copy(CTe.inFCTe.ID, (length(CTe.inFCTe.ID)-44)+1, 44)+'-cte.xml';
@@ -225,6 +232,7 @@ begin
      Result  := True;
      LocCTeW := TCTeW.Create(CTe);
      try
+        LocCTeW.Gerador.Opcoes.FormatoAlerta := TACBrCTe( TConhecimentos( Collection ).ACBrCTe ).Configuracoes.Geral.FormatoAlerta;
         LocCTeW.GerarXml;
         Stream.WriteString(LocCTeW.Gerador.ArquivoFormatoXML);
      finally
@@ -312,6 +320,7 @@ var
 begin
  LocCTeW := TCTeW.Create(Self.CTe);
  try
+    LocCTeW.Gerador.Opcoes.FormatoAlerta := TACBrCTe( TConhecimentos( Collection ).ACBrCTe ).Configuracoes.Geral.FormatoAlerta;
     LocCTeW.GerarXml;
     Result := LocCTeW.Gerador.ArquivoFormatoXML;
  finally
@@ -352,6 +361,7 @@ begin
    begin
      LocCTeW := TCTeW.Create(Self.Items[i].CTe);
      try
+        LocCTeW.Gerador.Opcoes.FormatoAlerta := FConfiguracoes.Geral.FormatoAlerta;
         LocCTeW.GerarXml;
         Self.Items[i].Alertas := LocCTeW.Gerador.ListaDeAlertas.Text;
 {$IFDEF ACBrCTeOpenSSL}
@@ -396,6 +406,7 @@ begin
   begin
     LocCTeW := TCTeW.Create(Self.Items[i].CTe);
     try
+       LocCTeW.Gerador.Opcoes.FormatoAlerta := FConfiguracoes.Geral.FormatoAlerta;
        LocCTeW.GerarXml;
        Self.Items[i].XML     := LocCTeW.Gerador.ArquivoFormatoXML;
        Self.Items[i].Alertas := LocCTeW.Gerador.ListaDeAlertas.Text;
@@ -446,6 +457,7 @@ var
  i: Integer;
  FMsg : AnsiString;
 begin
+(*
   for i:= 0 to Self.Count-1 do
    begin
      if pos('<Signature',Self.Items[i].XML) = 0 then
@@ -457,6 +469,25 @@ begin
                     IntToStr(Self.Items[i].CTe.Ide.nCT) +
                     sLineBreak + Self.Items[i].Alertas + FMsg);
   end;
+ *)
+  for i:= 0 to Self.Count-1 do
+   begin
+     if pos('<Signature',Self.Items[i].XML) = 0 then
+        Assinar;
+     if not(CTeUtil.Valida(('<CTe xmlns' + RetornarConteudoEntre(Self.Items[i].XML, '<CTe xmlns', '</CTe>')+ '</CTe>'),
+                            FMsg, Self.FConfiguracoes.Geral.PathSchemas)) then
+      begin
+        Self.Items[i].ErroValidacaoCompleto := 'Falha na validação dos dados da nota '+
+                                               IntToStr(Self.Items[i].CTe.Ide.nCT)+sLineBreak+
+                                               Self.Items[i].Alertas+
+                                               FMsg;
+        Self.Items[i].ErroValidacao := 'Falha na validação dos dados da nota '+
+                                       IntToStr(Self.Items[i].CTe.Ide.nCT)+sLineBreak+
+                                       Self.Items[i].Alertas+
+                                       IfThen(Self.FConfiguracoes.Geral.ExibirErroSchema,FMsg,'');
+        raise Exception.Create(Self.Items[i].ErroValidacao);
+      end;
+  end;
 end;
 
 function TConhecimentos.ValidaAssinatura(out Msg : String) : Boolean;
@@ -467,7 +498,7 @@ begin
   Result := True;
   for i:= 0 to Self.Count-1 do
    begin
-     if not(CTeUtil.ValidaAssinatura(('<CTe xmlns' + RetornarConteudoEntre(Self.Items[i].XML, '<CTe xmlns', '</CTe>')+ '</CTe>'), FMsg)) then
+     if not(CTeUtil.ValidaAssinatura(Self.Items[i].XMLOriginal, FMsg)) then
       begin
         Result := False;
         Msg := 'Falha na validação da assinatura do conhecimento '+
@@ -482,12 +513,13 @@ function TConhecimentos.LoadFromFile(CaminhoArquivo: string; AGerarCTe: Boolean 
 var
  LocCTeR : TCTeR;
  ArquivoXML: TStringList;
- XML : AnsiString;
+ XML, XMLOriginal : AnsiString;
 begin
  try
     ArquivoXML := TStringList.Create;
     try
       ArquivoXML.LoadFromFile(CaminhoArquivo {$IFDEF DELPHI2009_UP}, TEncoding.UTF8{$ENDIF});
+      XMLOriginal := ArquivoXML.Text;
       Result := True;
       while pos('</CTe>',ArquivoXML.Text) > 0 do
        begin
@@ -506,6 +538,7 @@ begin
             LocCTeR.Leitor.Arquivo := XML;
             LocCTeR.LerXml;
             Items[Self.Count-1].XML := LocCTeR.Leitor.Arquivo;
+            Items[Self.Count-1].XMLOriginal := XMLOriginal;
             Items[Self.Count-1].NomeArq := CaminhoArquivo;
             if AGerarCTe then GerarCTe;
          finally
@@ -532,6 +565,7 @@ begin
        LocCTeR.Leitor.CarregarArquivo(Stream);
        LocCTeR.LerXml;
        Items[Self.Count-1].XML := LocCTeR.Leitor.Arquivo;
+       Items[Self.Count-1].XMLOriginal := Stream.DataString;
        if AGerarCTe then GerarCTe;
     finally
        LocCTeR.Free
