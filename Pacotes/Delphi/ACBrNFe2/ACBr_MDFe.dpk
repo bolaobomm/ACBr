@@ -22,7 +22,7 @@ package ACBr_MDFe;
 {$WRITEABLECONST OFF}
 {$MINENUMSIZE 1}
 {$IMAGEBASE $400000}
-{$DESCRIPTION 'ACBrMDFe - (http://acbr.sourceforge.net/)'}
+{$DESCRIPTION 'ACBr Automação Comercial Brasil - ACBrMDFe (http://acbr.sourceforge.net/)'}
 {$IMPLICITBUILD OFF}
 
 requires
