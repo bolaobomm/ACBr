@@ -24,7 +24,8 @@ package ACBr_LFD;
 {$MINENUMSIZE 1}
 {$IMAGEBASE $400000}
 {$DEFINE DEBUG}
-{$ENDIF IMPLICITBUILDING}
+{$ENDIF IMPLICITBUILDING}     
+{$DESCRIPTION 'ACBr Automação Comercial Brasil - ACBrLFD (http://acbr.sourceforge.net/)'}
 {$IMPLICITBUILD ON}
 
 requires

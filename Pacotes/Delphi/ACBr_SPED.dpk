@@ -26,8 +26,8 @@ package ACBr_SPED;
 {$DEFINE DEBUG}
 {$DEFINE DEBUG}
 {$DEFINE DEBUG}
-{$ENDIF IMPLICITBUILDING}
-{$DESCRIPTION 'ACBr Automação Comercial Brasil Sped Fiscal e Contabil (http://acbr.sourceforge.net/)'}
+{$ENDIF IMPLICITBUILDING}                                                  
+{$DESCRIPTION 'ACBr Automação Comercial Brasil - ACBrSPED (http://acbr.sourceforge.net/)'}
 {$IMPLICITBUILD ON}
 
 requires
