@@ -21,8 +21,8 @@ package ACBr_NFSe;
 {$VARSTRINGCHECKS ON}
 {$WRITEABLECONST OFF}
 {$MINENUMSIZE 1}
-{$IMAGEBASE $400000}
-{$DESCRIPTION 'ACBrNFSe - (http://acbr.sourceforge.net/)'}
+{$IMAGEBASE $400000}                                    
+{$DESCRIPTION 'ACBr Automação Comercial Brasil - ACBrNFSe (http://acbr.sourceforge.net/)'}
 {$IMPLICITBUILD ON}
 
 requires
