@@ -63,42 +63,76 @@ Const
   ipiOutrasSaidas              = '99' ; // Outras saídas
 
   /// Código da Situação Tributária referente ao PIS.
-  pisValorAliquotaNormal                = '01' ; // Saída: Operação Tributável (base de cálculo = valor da operação alíquota normal (cumulativo/não cumulativo)).
-  pisValorAliquotaDiferenciada          = '02' ; // Operação Tributável (base de cálculo = valor da operação (alíquota diferenciada)).
-  pisQtdeAliquotaUnidade                = '03' ; // Operação Tributável (base de cálculo = quantidade vendida x alíquota por unidade de produto).
-  pisMonofaticaAliquotaZero             = '04' ; // Operação Tributável (tributação monofásica (alíquota zero)).
-  pisAliquotaZero                       = '06' ; // Operação Tributável (alíquota zero).
-  pisIsentaContribuicao                 = '07' ; // Operação Isenta da Contribuição.
-  pisSemIncidenciaContribuicao          = '08' ; // Operação Sem Incidência da Contribuição.
-  pisSuspensaoContribuicao              = '09' ; // Operação com Suspensão da Contribuição.
-  // 13/05/13 modificado: entradas
-  pisOperCredExcRecTribMercInt          = '50' ; // Entrada: Operação Tributável (base de cálculo = valor da operação alíquota normal (cumulativo/não cumulativo)).
-  pisCredPresAquiExcRecTribMercInt      = '60' ;
-  pisOperAquiComIsensao                 = '71' ; // Operação de Aquisição com Isenção
-  pisOperAquiComSuspensao               = '72' ; // Operação de Aquisição com Suspensão
-  pisOperAquiAliquotaZero               = '73' ; // Operação de Aquisição a Alíquota Zero
-  pisOperAqui_SemIncidenciaContribuicao = '74' ; // Operação de Aquisição sem Incidência da Contribuição
-  pisOutrasOperacoes                    = '99' ; // Outras Operações,
+  pisValorAliquotaNormal                           = '01' ; // Operação Tributável (base de cálculo = valor da operação alíquota normal (cumulativo/não cumulativo)).
+  pisValorAliquotaDiferenciada                     = '02' ; // Operação Tributável (base de cálculo = valor da operação (alíquota diferenciada)).
+  pisQtdeAliquotaUnidade                           = '03' ; // Operação Tributável (base de cálculo = quantidade vendida x alíquota por unidade de produto).
+  pisMonofaticaAliquotaZero                        = '04' ; // Operação Tributável (tributação monofásica (alíquota zero)).
+  pisAliquotaZero                                  = '06' ; // Operação Tributável (alíquota zero).
+  pisIsentaContribuicao                            = '07' ; // Operação Isenta da Contribuição.
+  pisSemIncidenciaContribuicao                     = '08' ; // Operação Sem Incidência da Contribuição.
+  pisSuspensaoContribuicao                         = '09' ; // Operação com Suspensão da Contribuição.
+  //início alteração Raphael - Ts1Desenvolvedor
+  pisOutrasOperacoesSaida                          = '49' ; // Outras Operações de Saída
+  pisOperCredExcRecTribMercInt                     = '50' ; // Operação com Direito a Crédito - Vinculada Exclusivamente a Receita Tributada no Mercado Interno
+  pisOperCredExcRecNaoTribMercInt                  = '51' ; // Operação com Direito a Crédito – Vinculada Exclusivamente a Receita Não Tributada no Mercado Interno
+  pisOperCredExcRecExportacao                      = '52' ; // Operação com Direito a Crédito - Vinculada Exclusivamente a Receita de Exportação
+  pisOperCredRecTribNaoTribMercInt                 = '53' ; // Operação com Direito a Crédito - Vinculada a Receitas Tributadas e Não-Tributadas no Mercado Interno
+  pisOperCredRecTribMercIntEExportacao             = '54' ; // Operação com Direito a Crédito - Vinculada a Receitas Tributadas no Mercado Interno e de Exportação
+  pisOperCredRecNaoTribMercIntEExportacao          = '55' ; // Operação com Direito a Crédito - Vinculada a Receitas Não-Tributadas no Mercado Interno e de Exportação
+  pisOperCredRecTribENaoTribMercIntEExportacao     = '56' ; // Operação com Direito a Crédito - Vinculada a Receitas Tributadas e Não-Tributadas no Mercado Interno, e de Exportação
+  pisCredPresAquiExcRecTribMercInt                 = '60' ; // Crédito Presumido - Operação de Aquisição Vinculada Exclusivamente a Receita Tributada no Mercado Interno
+  pisCredPresAquiExcRecNaoTribMercInt              = '61' ; // Crédito Presumido - Operação de Aquisição Vinculada Exclusivamente a Receita Não-Tributada no Mercado Interno
+  pisCredPresAquiExcExcRecExportacao               = '62' ; // Crédito Presumido - Operação de Aquisição Vinculada Exclusivamente a Receita de Exportação
+  pisCredPresAquiRecTribNaoTribMercInt             = '63' ; // Crédito Presumido - Operação de Aquisição Vinculada a Receitas Tributadas e Não-Tributadas no Mercado Interno
+  pisCredPresAquiRecTribMercIntEExportacao         = '64' ; // Crédito Presumido - Operação de Aquisição Vinculada a Receitas Tributadas no Mercado Interno e de Exportação
+  pisCredPresAquiRecNaoTribMercIntEExportacao      = '65' ; // Crédito Presumido - Operação de Aquisição Vinculada a Receitas Não-Tributadas no Mercado Interno e de Exportação
+  pisCredPresAquiRecTribENaoTribMercIntEExportacao = '66' ; // Crédito Presumido - Operação de Aquisição Vinculada a Receitas Tributadas e Não-Tributadas no Mercado Interno, e de Exportação
+  pisOutrasOperacoes_CredPresumido                 = '67' ; // Crédito Presumido - Outras Operações
+  pisOperAquiSemDirCredito                         = '70' ; // Operação de Aquisição sem Direito a Crédito
+  pisOperAquiComIsensao                            = '71' ; // Operação de Aquisição com Isenção
+  pisOperAquiComSuspensao                          = '72' ; // Operação de Aquisição com Suspensão
+  pisOperAquiAliquotaZero                          = '73' ; // Operação de Aquisição a Alíquota Zero
+  pisOperAqui_SemIncidenciaContribuicao            = '74' ; // Operação de Aquisição sem Incidência da Contribuição
+  pisOperAquiPorST                                 = '75' ; // Operação de Aquisição por Substituição Tributária
+  pisOutrasOperacoesEntrada                        = '98' ; // Outras Operações de Entrada
+  //fim alteração Raphael - Ts1Desenvolvedor
+  pisOutrasOperacoes                               = '99' ; // Outras Operações,
 
   /// Código da Situação Tributária referente ao COFINS.
-  cofinsValorAliquotaNormal       = '01' ; // Operação Tributável (base de cálculo = valor da operação alíquota normal (cumulativo/não cumulativo)).
-  cofinsValorAliquotaDiferenciada = '02' ; // Operação Tributável (base de cálculo = valor da operação (alíquota diferenciada)).
-  cofinsQtdeAliquotaUnidade       = '03' ; // Operação Tributável (base de cálculo = quantidade vendida x alíquota por unidade de produto).
-  cofinsMonofaticaAliquotaZero    = '04' ; // Operação Tributável (tributação monofásica (alíquota zero)).
-  cofinsAliquotaZero              = '06' ; // Operação Tributável (alíquota zero).
-  cofinsIsentaContribuicao        = '07' ; // Operação Isenta da Contribuição.
-  cofinsSemIncidenciaContribuicao = '08' ; // Operação Sem Incidência da Contribuição.
-  cofinsSuspensaoContribuicao     = '09' ; // Operação com Suspensão da Contribuição.
-
-  // 13/05/13 modificado: entradas
-  cofinsOperCredExcRecTribMercInt          = '50' ; // Entrada: Operação Tributável (base de cálculo = valor da operação alíquota normal (cumulativo/não cumulativo)).
-  cofinsCredPresAquiExcRecTribMercInt      = '60' ;
-  cofinsOperAquiComIsensao                 = '71' ; // Operação de Aquisição com Isenção
-  cofinsOperAquiComSuspensao               = '72' ; // Operação de Aquisição com Suspensão
-  cofinsOperAquiAliquotaZero               = '73' ; // Operação de Aquisição a Alíquota Zero
-  cofinsOperAqui_SemIncidenciaContribuicao = '74' ; // Operação de Aquisição sem Incidência da Contribuição
-  cofinsOutrasOperacoes                    = '99' ; // Outras Operações,
-
+  cofinsValorAliquotaNormal                           = '01' ; // Operação Tributável (base de cálculo = valor da operação alíquota normal (cumulativo/não cumulativo)).
+  cofinsValorAliquotaDiferenciada                     = '02' ; // Operação Tributável (base de cálculo = valor da operação (alíquota diferenciada)).
+  cofinsQtdeAliquotaUnidade                           = '03' ; // Operação Tributável (base de cálculo = quantidade vendida x alíquota por unidade de produto).
+  cofinsMonofaticaAliquotaZero                        = '04' ; // Operação Tributável (tributação monofásica (alíquota zero)).
+  cofinsAliquotaZero                                  = '06' ; // Operação Tributável (alíquota zero).
+  cofinsIsentaContribuicao                            = '07' ; // Operação Isenta da Contribuição.
+  cofinsSemIncidenciaContribuicao                     = '08' ; // Operação Sem Incidência da Contribuição.
+  cofinsSuspensaoContribuicao                         = '09' ; // Operação com Suspensão da Contribuição.
+  //início alteração Raphael - Ts1Desenvolvedor
+  cofinsOutrasOperacoesSaida                          = '49' ; // Outras Operações de Saída
+  cofinsOperCredExcRecTribMercInt                     = '50' ; // Operação com Direito a Crédito - Vinculada Exclusivamente a Receita Tributada no Mercado Interno
+  cofinsOperCredExcRecNaoTribMercInt                  = '51' ; // Operação com Direito a Crédito - Vinculada Exclusivamente a Receita Não-Tributada no Mercado Interno
+  cofinsOperCredExcRecExportacao                      = '52' ; // Operação com Direito a Crédito - Vinculada Exclusivamente a Receita de Exportação
+  cofinsOperCredRecTribNaoTribMercInt                 = '53' ; // Operação com Direito a Crédito - Vinculada a Receitas Tributadas e Não-Tributadas no Mercado Interno
+  cofinsOperCredRecTribMercIntEExportacao             = '54' ; // Operação com Direito a Crédito - Vinculada a Receitas Tributadas no Mercado Interno e de Exportação
+  cofinsOperCredRecNaoTribMercIntEExportacao          = '55' ; // Operação com Direito a Crédito - Vinculada a Receitas Não Tributadas no Mercado Interno e de Exportação
+  cofinsOperCredRecTribENaoTribMercIntEExportacao     = '56' ; // Operação com Direito a Crédito - Vinculada a Receitas Tributadas e Não-Tributadas no Mercado Interno e de Exportação
+  cofinsCredPresAquiExcRecTribMercInt                 = '60' ; // Crédito Presumido - Operação de Aquisição Vinculada Exclusivamente a Receita Tributada no Mercado Interno
+  cofinsCredPresAquiExcRecNaoTribMercInt              = '61' ; // Crédito Presumido - Operação de Aquisição Vinculada Exclusivamente a Receita Não-Tributada no Mercado Interno
+  cofinsCredPresAquiExcExcRecExportacao               = '62' ; // Crédito Presumido - Operação de Aquisição Vinculada Exclusivamente a Receita de Exportação
+  cofinsCredPresAquiRecTribNaoTribMercInt             = '63' ; // Crédito Presumido - Operação de Aquisição Vinculada a Receitas Tributadas e Não-Tributadas no Mercado Interno
+  cofinsCredPresAquiRecTribMercIntEExportacao         = '64' ; // Crédito Presumido - Operação de Aquisição Vinculada a Receitas Tributadas no Mercado Interno e de Exportação
+  cofinsCredPresAquiRecNaoTribMercIntEExportacao      = '65' ; // Crédito Presumido - Operação de Aquisição Vinculada a Receitas Não-Tributadas no Mercado Interno e de Exportação
+  cofinsCredPresAquiRecTribENaoTribMercIntEExportacao = '66' ; // Crédito Presumido - Operação de Aquisição Vinculada a Receitas Tributadas e Não-Tributadas no Mercado Interno e de Exportação
+  cofinsOutrasOperacoes_CredPresumido                 = '67' ; // Crédito Presumido - Outras Operações
+  cofinsOperAquiSemDirCredito                         = '70' ; // Operação de Aquisição sem Direito a Crédito
+  cofinsOperAquiComIsensao                            = '71' ; // Operação de Aquisição com Isenção
+  cofinsOperAquiComSuspensao                          = '72' ; // Operação de Aquisição com Suspensão
+  cofinsOperAquiAliquotaZero                          = '73' ; // Operação de Aquisição a Alíquota Zero
+  cofinsOperAqui_SemIncidenciaContribuicao            = '74' ; // Operação de Aquisição sem Incidência da Contribuição
+  cofinsOperAquiPorST                                 = '75' ; // Operação de Aquisição por Substituição Tributária
+  cofinsOutrasOperacoesEntrada                        = '98' ; // Outras Operações de Entrada
+  //fim alteração Raphael - Ts1Desenvolvedor
+  cofinsOutrasOperacoes                               = '99' ; // Outras Operações,
 
 type
   /// Indicador de movimento - TOpenBlocos
