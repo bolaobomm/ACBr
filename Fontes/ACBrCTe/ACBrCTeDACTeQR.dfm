@@ -2,7 +2,7 @@ object frmDACTeQR: TfrmDACTeQR
   Left = 194
   Top = 125
   Width = 880
-  Height = 708
+  Height = 675
   Caption = 'frmDACTeQR'
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
@@ -15,8 +15,8 @@ object frmDACTeQR: TfrmDACTeQR
   PixelsPerInch = 96
   TextHeight = 13
   object QRCTe: TQuickRep
-    Left = 6
-    Top = 6
+    Left = 3
+    Top = 3
     Width = 794
     Height = 1123
     Frame.Color = clBlack
