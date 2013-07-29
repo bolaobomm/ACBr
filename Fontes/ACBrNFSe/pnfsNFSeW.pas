@@ -399,8 +399,8 @@ begin
                    Gerador.wCampoNFSe(tcDe2, '#17', 'ValorInss    ', 01, 15, 1, NFSe.Servico.Valores.ValorInss, '');
                    Gerador.wCampoNFSe(tcDe2, '#18', 'ValorIr      ', 01, 15, 1, NFSe.Servico.Valores.ValorIr, '');
                    Gerador.wCampoNFSe(tcDe2, '#19', 'ValorCsll    ', 01, 15, 1, NFSe.Servico.Valores.ValorCsll, '');
-						   		 if NFSe.OptanteSimplesNacional = snSim then
-	                   Gerador.wCampoNFSe(tcDe2, '#25', 'Aliquota              ', 01, 05, 0, NFSe.Servico.Valores.Aliquota, '');
+                   Gerador.wCampoNFSe(tcDe2, '#25', 'Aliquota     ', 01, 05, 0, NFSe.Servico.Valores.Aliquota, '');
+
                    Gerador.wCampoNFSe(tcDe2, '#27', 'DescontoIncondicionado', 01, 15, 1, NFSe.Servico.Valores.DescontoIncondicionado, '');
                   Gerador.wGrupoNFSe('/Valores');
 
@@ -409,6 +409,7 @@ begin
                   Gerador.wCampoNFSe(tcStr, '#25', 'ItemListaServico         ', 01, 0005, 1, NFSe.Servico.ItemListaServico, '');
                   if (SomenteNumeros(NFSe.Servico.CodigoCnae) <> '')then
                     Gerador.wCampoNFSe(tcStr, '#26', 'CodigoCnae', 01, 0007, 1, SomenteNumeros(NFSe.Servico.CodigoCnae), '');
+                  if NFSe.Servico.CodigoTributacaoMunicipio <> '' then
                   Gerador.wCampoNFSe(tcStr, '#31', 'CodigoTributacaoMunicipio', 01, 0020, 1, NFSe.Servico.CodigoTributacaoMunicipio, '');
                   Gerador.wCampoNFSe(tcStr, '#27', 'Discriminacao', 01, 2000, 1, NFSe.Servico.Discriminacao, '');
                   Gerador.wCampoNFSe(tcStr, '#33', 'CodigoMunicipio          ', 01, 0007, 1, SomenteNumeros(NFSe.Servico.CodigoMunicipio), '');
