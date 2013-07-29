@@ -67,6 +67,7 @@ Const
   pisValorAliquotaDiferenciada                     = '02' ; // Operação Tributável (base de cálculo = valor da operação (alíquota diferenciada)).
   pisQtdeAliquotaUnidade                           = '03' ; // Operação Tributável (base de cálculo = quantidade vendida x alíquota por unidade de produto).
   pisMonofaticaAliquotaZero                        = '04' ; // Operação Tributável (tributação monofásica (alíquota zero)).
+  pisValorAliquotaPorST                            = '05' ; // Operação Tributável por Substituição Tributária
   pisAliquotaZero                                  = '06' ; // Operação Tributável (alíquota zero).
   pisIsentaContribuicao                            = '07' ; // Operação Isenta da Contribuição.
   pisSemIncidenciaContribuicao                     = '08' ; // Operação Sem Incidência da Contribuição.
@@ -103,6 +104,7 @@ Const
   cofinsValorAliquotaDiferenciada                     = '02' ; // Operação Tributável (base de cálculo = valor da operação (alíquota diferenciada)).
   cofinsQtdeAliquotaUnidade                           = '03' ; // Operação Tributável (base de cálculo = quantidade vendida x alíquota por unidade de produto).
   cofinsMonofaticaAliquotaZero                        = '04' ; // Operação Tributável (tributação monofásica (alíquota zero)).
+  cofinsValorAliquotaPorST                            = '05' ; // Operação Tributável por Substituição Tributária
   cofinsAliquotaZero                                  = '06' ; // Operação Tributável (alíquota zero).
   cofinsIsentaContribuicao                            = '07' ; // Operação Isenta da Contribuição.
   cofinsSemIncidenciaContribuicao                     = '08' ; // Operação Sem Incidência da Contribuição.
