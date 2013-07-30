@@ -266,7 +266,7 @@ begin
     CodCedente     := Banco.MontarCampoCodigoCedente(Titulo);
     NossoNum       := Banco.MontarCampoNossoNumero(Titulo);
     CodBarras      := Banco.MontarCodigoBarras(Titulo);
-    LinhaDigitavel := Banco.MontarLinhaDigitavel(CodBarras);
+    LinhaDigitavel := Banco.MontarLinhaDigitavel(CodBarras, Titulo);
 
     MensagemPadrao.Clear;
     MensagemPadrao.Text := Titulo.Mensagem.Text;

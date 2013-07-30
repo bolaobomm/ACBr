@@ -47,6 +47,13 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+Data: 30/07/2013
+-- ACBrBoleto ver. 0.0.73 --
+[+] Adicionado propriedade LinhaDigitada para os Titulos para armazenar o conteúdo
+    da linha digitável calculado pela função MontarLinhaDigitável.
+   (Juliana Tamizou)
+
+
 Data: 08/07/2013
 
 -- ACBrBoletoFCFortesFR 0.0.21a --

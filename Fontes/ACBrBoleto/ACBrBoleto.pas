@@ -58,7 +58,7 @@ uses ACBrBase,  {Units da ACBr}
      Graphics, Contnrs, Classes;
 
 const
-  CACBrBoleto_Versao = '0.0.73a' ;
+  CACBrBoleto_Versao = '0.0.74a' ;
 
 type
   TACBrTipoCobranca =
@@ -306,7 +306,7 @@ type
 
     function MontarCodigoBarras(const ACBrTitulo : TACBrTitulo): String; virtual;
     function MontarCampoNossoNumero(const ACBrTitulo : TACBrTitulo): String; virtual;
-    function MontarLinhaDigitavel(const CodigoBarras: String): String; virtual;
+    function MontarLinhaDigitavel(const CodigoBarras: String; ACBrTitulo : TACBrTitulo): String; virtual;
     function MontarCampoCodigoCedente(const ACBrTitulo: TACBrTitulo): String; virtual;
 
     procedure GerarRegistroHeader400(NumeroRemessa : Integer; ARemessa:TStringList);  Virtual;
@@ -365,7 +365,7 @@ type
     function MontarCampoCodigoCedente(const ACBrTitulo: TACBrTitulo): String;
     function MontarCampoNossoNumero(const ACBrTitulo :TACBrTitulo): String;
     function MontarCodigoBarras(const ACBrTitulo : TACBrTitulo): String;
-    function MontarLinhaDigitavel(const CodigoBarras: String): String;
+    function MontarLinhaDigitavel(const CodigoBarras: String; ACBrTitulo : TACBrTitulo): String;
 
     procedure GerarRegistroHeader400(NumeroRemessa : Integer; ARemessa:TStringList);
     function GerarRegistroHeader240(NumeroRemessa : Integer): String;
@@ -541,8 +541,8 @@ type
     fVersao               : String;
     fACBrBoleto           : TACBrBoleto;
     fTextoLivre           : String;
-
     fCodigoMora           : String;
+    fpLinhaDigitada       : String;
 
     procedure SetCarteira(const AValue: String);
     procedure SetNossoNumero ( const AValue: String ) ;
@@ -602,6 +602,7 @@ type
      property CodigoMora : String read fCodigoMora write fCodigoMora;
      property TipoDiasProtesto     : TACBrTipoDiasIntrucao read fTipoDiasProtesto write fTipoDiasProtesto;
      property TipoImpressao        : TACBrTipoImpressao read fTipoImpressao write fTipoImpressao;
+     property LinhaDigitada : String read fpLinhaDigitada;
    end;
 
   { TListadeBoletos }
@@ -1554,9 +1555,9 @@ begin
    Result:= BancoClass.MontarCodigoBarras(ACBrTitulo);
 end;
 
-function TACBrBanco.MontarLinhaDigitavel ( const CodigoBarras:String) : String;
+function TACBrBanco.MontarLinhaDigitavel ( const CodigoBarras:String; ACBrTitulo : TACBrTitulo) : String;
 begin
-   Result:= BancoClass.MontarLinhaDigitavel(CodigoBarras);
+   Result:= BancoClass.MontarLinhaDigitavel(CodigoBarras, ACBrTitulo);
 end;
 
 procedure TACBrBanco.GerarRegistroHeader400(NumeroRemessa: Integer; ARemessa:TStringList);
@@ -1792,7 +1793,7 @@ begin
    Result:= ACBrTitulo.NossoNumero;
 end;
 
-function TACBrBancoClass.MontarLinhaDigitavel (const CodigoBarras: String): String;
+function TACBrBancoClass.MontarLinhaDigitavel (const CodigoBarras: String;ACBrTitulo : TACBrTitulo): String;
 var
   Campo1, Campo2, Campo3, Campo4, Campo5: String;
 begin
@@ -1833,6 +1834,7 @@ begin
    Campo5 := Copy( CodigoBarras, 6, 14);
 
    Result := Campo1+' '+Campo2+' '+Campo3+' '+Campo4+' '+Campo5;
+   ACBrTitulo.fpLinhaDigitada := Result;
 end;
 
 function TACBrBoleto.GerarRemessa( NumeroRemessa : Integer ) : String;

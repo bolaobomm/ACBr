@@ -674,7 +674,7 @@ begin
 
 
      CodBarras      := Banco.MontarCodigoBarras( Titulo );
-     LinhaDigitavel := Banco.MontarLinhaDigitavel( CodBarras );
+     LinhaDigitavel := Banco.MontarLinhaDigitavel( CodBarras, Titulo );
 
      imgBanco3.Picture.Assign(imgBanco2.Picture);
      txtNumeroBanco3.Caption         := txtNumeroBanco2.Caption;
@@ -748,7 +748,7 @@ begin
     fBoletoFC.CarregaLogo( imgBanco4.Picture, Banco.Numero );
 
       CodBarras      := Banco.MontarCodigoBarras( Titulo );
-      LinhaDigitavel := Banco.MontarLinhaDigitavel( CodBarras );
+      LinhaDigitavel := Banco.MontarLinhaDigitavel( CodBarras, Titulo );
 
     txtNumeroBanco4.Caption         := IntToStrZero(Banco.Numero, 3)+ '-' +
                                         ifthen(Banco.Digito >= 10,'X',IntToStrZero(Banco.Digito, 1));
@@ -888,7 +888,7 @@ begin
 
 
      CodBarras      := Banco.MontarCodigoBarras( Titulo );
-     LinhaDigitavel := Banco.MontarLinhaDigitavel( CodBarras );
+     LinhaDigitavel := Banco.MontarLinhaDigitavel( CodBarras, Titulo );
 
      imgBanco6_2.Picture.Assign(imgBanco6_1.Picture);
      txtNumeroBanco6_2.Caption         := txtNumeroBanco6_1.Caption;

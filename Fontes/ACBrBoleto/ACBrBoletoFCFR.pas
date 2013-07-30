@@ -381,7 +381,7 @@ begin
             FieldByName('NossoNum').AsString            := Banco.MontarCampoNossoNumero( ListadeBoletos[iFor] );
             FieldByName('CodCedente').AsString          := Banco.MontarCampoCodigoCedente( ListadeBoletos[iFor] );
             FieldByName('CodBarras').AsString           := Banco.MontarCodigoBarras( ListadeBoletos[iFor] );
-            FieldByName('LinhaDigitavel').AsString      := Banco.MontarLinhaDigitavel( FieldByName('CodBarras').AsString );
+            FieldByName('LinhaDigitavel').AsString      := Banco.MontarLinhaDigitavel( FieldByName('CodBarras').AsString,ListadeBoletos[iFor] );
             FieldByName('TipoDoc').AsString             := sTipoDoc;
             FieldByName('Vencimento').AsDateTime        := ListadeBoletos[iFor].Vencimento;
             FieldByName('DataDocumento').AsDateTime     := ListadeBoletos[iFor].DataDocumento;

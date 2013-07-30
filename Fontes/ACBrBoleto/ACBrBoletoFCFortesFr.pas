@@ -679,7 +679,7 @@ begin
   with fBoletoFC.ACBrBoleto do
   begin
      CodBarras      := Banco.MontarCodigoBarras( Titulo );
-     LinhaDigitavel := Banco.MontarLinhaDigitavel( CodBarras );
+     LinhaDigitavel := Banco.MontarLinhaDigitavel( CodBarras,Titulo );
 
      imgBanco3.Picture.Assign(imgBanco2.Picture);
      fBoletoFC.CarregaLogo( imgBanco3.Picture, Banco.Numero );
@@ -719,7 +719,7 @@ begin
    begin
       NossoNum       := Banco.MontarCampoNossoNumero( Titulo );
       CodBarras      := Banco.MontarCodigoBarras( Titulo );
-      LinhaDigitavel := Banco.MontarLinhaDigitavel( CodBarras );
+      LinhaDigitavel := Banco.MontarLinhaDigitavel( CodBarras, Titulo );
       CodCedente     := Banco.MontarCampoCodigoCedente(Titulo);
 
       MensagemPadrao.Clear;
