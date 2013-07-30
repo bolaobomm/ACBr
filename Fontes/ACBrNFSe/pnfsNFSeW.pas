@@ -602,7 +602,7 @@ begin
                 end;
 
   proIssDSF: GerarServico_Provedor_IssDsf;
-  
+
   else          begin
                  Gerador.wGrupoNFSe('Servico');
                   Gerador.wGrupoNFSe('Valores');
@@ -618,7 +618,12 @@ begin
                    Gerador.wCampoNFSe(tcDe2, '#22', 'ValorIssRetido        ', 01, 15, 0, NFSe.Servico.Valores.ValorIssRetido, '');
                    Gerador.wCampoNFSe(tcDe2, '#23', 'OutrasRetencoes       ', 01, 15, 0, NFSe.Servico.Valores.OutrasRetencoes, '');
                    Gerador.wCampoNFSe(tcDe2, '#24', 'BaseCalculo           ', 01, 15, 0, NFSe.Servico.Valores.BaseCalculo, '');
-                   Gerador.wCampoNFSe(tcDe4, '#25', 'Aliquota              ', 01, 05, 0, NFSe.Servico.Valores.Aliquota, '');
+
+                   // Alterado por Italo em 30/07/2013
+                   if FProvedor = proISSNet
+                    then Gerador.wCampoNFSe(tcDe4, '#25', 'Aliquota', 01, 05, 1, NFSe.Servico.Valores.Aliquota, '')
+                    else Gerador.wCampoNFSe(tcDe4, '#25', 'Aliquota', 01, 05, 0, NFSe.Servico.Valores.Aliquota, '');
+
                    Gerador.wCampoNFSe(tcDe2, '#26', 'ValorLiquidoNfse      ', 01, 15, 0, NFSe.Servico.Valores.ValorLiquidoNfse, '');
                    Gerador.wCampoNFSe(tcDe2, '#27', 'DescontoIncondicionado', 01, 15, 0, NFSe.Servico.Valores.DescontoIncondicionado, '');
                    Gerador.wCampoNFSe(tcDe2, '#28', 'DescontoCondicionado  ', 01, 15, 0, NFSe.Servico.Valores.DescontoCondicionado, '');
