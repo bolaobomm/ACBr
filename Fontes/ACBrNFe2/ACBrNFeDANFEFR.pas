@@ -269,7 +269,7 @@ begin
 
     for I := 0 to TACBrNFe(ACBrNFe).NotasFiscais.Count - 1 do
     begin
-      dmDanfe.frxPDFExport.FileName := PathPDF + ReplaceStr(UpperCase(dmDanfe.NFe.infNFe.ID),'NFE','') + '.pdf';
+      dmDanfe.frxPDFExport.FileName := PathPDF + StringReplace(UpperCase(dmDanfe.NFe.infNFe.ID),'NFE','', [rfReplaceAll, rfIgnoreCase]) + '.pdf';
       dmDanfe.frxReport.Export(dmDanfe.frxPDFExport);
     end;
   end;
