@@ -295,7 +295,7 @@ begin
                               '</' + Prefixo3 + 'NumeroNfse>';
 
  if (DataInicial>0) and (DataFinal>0)
-  then DadosMsg := DadosMsg + '<' + Prefixo3 + 'PeriodoEmissao' +
+  then DadosMsg := DadosMsg + '<' + Prefixo3 + 'PeriodoEmissao>' +
                                '<' + Prefixo3 + 'DataInicial>' +
                                  FormatDateTime('yyyy-mm-dd', DataInicial) +
                                '</' + Prefixo3 + 'DataInicial>' +
