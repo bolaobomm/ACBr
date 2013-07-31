@@ -10,8 +10,6 @@ inherited frmDACTeQRRetrato: TfrmDACTeQRRetrato
   PixelsPerInch = 96
   TextHeight = 10
   inherited QRCTe: TQuickRep
-    Left = 3
-    Top = 3
     BeforePrint = QRCTeBeforePrint
     DataSet = cdsDocumentos
     Font.Height = -8
@@ -2076,7 +2074,7 @@ inherited frmDACTeQRRetrato: TfrmDACTeQRRetrato
         Frame.DrawRight = False
         Size.Values = (
           23.812500000000000000
-          973.666666666666800000
+          973.666666666666900000
           92.604166666666680000
           52.916666666666670000)
         XLColumn = 0
@@ -6441,7 +6439,7 @@ inherited frmDACTeQRRetrato: TfrmDACTeQRRetrato
           23.812500000000000000
           989.541666666666800000
           449.791666666666700000
-          97.895833333333320000)
+          97.895833333333340000)
         XLColumn = 0
         Alignment = taLeftJustify
         AlignToBand = False
@@ -6472,7 +6470,7 @@ inherited frmDACTeQRRetrato: TfrmDACTeQRRetrato
         Frame.DrawRight = False
         Size.Values = (
           23.812500000000000000
-          693.208333333333200000
+          693.208333333333400000
           254.000000000000000000
           50.270833333333330000)
         XLColumn = 0
@@ -6573,7 +6571,7 @@ inherited frmDACTeQRRetrato: TfrmDACTeQRRetrato
           23.812500000000000000
           10.583333333333330000
           404.812500000000000000
-          42.333333333333330000)
+          42.333333333333340000)
         XLColumn = 0
         Alignment = taLeftJustify
         AlignToBand = False
@@ -6639,7 +6637,7 @@ inherited frmDACTeQRRetrato: TfrmDACTeQRRetrato
           23.812500000000000000
           10.583333333333330000
           357.187500000000000000
-          97.895833333333320000)
+          97.895833333333340000)
         XLColumn = 0
         Alignment = taLeftJustify
         AlignToBand = False
@@ -6770,7 +6768,7 @@ inherited frmDACTeQRRetrato: TfrmDACTeQRRetrato
         Size.Values = (
           23.812500000000000000
           10.583333333333330000
-          470.958333333333300000
+          470.958333333333400000
           100.541666666666700000)
         XLColumn = 0
         Alignment = taLeftJustify
@@ -6837,7 +6835,7 @@ inherited frmDACTeQRRetrato: TfrmDACTeQRRetrato
           23.812500000000000000
           989.541666666666800000
           254.000000000000000000
-          42.333333333333330000)
+          42.333333333333340000)
         XLColumn = 0
         Alignment = taLeftJustify
         AlignToBand = False
@@ -6903,7 +6901,7 @@ inherited frmDACTeQRRetrato: TfrmDACTeQRRetrato
           23.812500000000000000
           989.541666666666800000
           206.375000000000000000
-          97.895833333333320000)
+          97.895833333333340000)
         XLColumn = 0
         Alignment = taLeftJustify
         AlignToBand = False
@@ -7035,7 +7033,7 @@ inherited frmDACTeQRRetrato: TfrmDACTeQRRetrato
           23.812500000000000000
           10.583333333333330000
           254.000000000000000000
-          42.333333333333330000)
+          42.333333333333340000)
         XLColumn = 0
         Alignment = taLeftJustify
         AlignToBand = False
@@ -7101,7 +7099,7 @@ inherited frmDACTeQRRetrato: TfrmDACTeQRRetrato
           23.812500000000000000
           10.583333333333330000
           206.375000000000000000
-          97.895833333333320000)
+          97.895833333333340000)
         XLColumn = 0
         Alignment = taLeftJustify
         AlignToBand = False
@@ -7463,8 +7461,8 @@ inherited frmDACTeQRRetrato: TfrmDACTeQRRetrato
         Size.Values = (
           23.812500000000000000
           1322.916666666667000000
-          470.958333333333300000
-          42.333333333333330000)
+          470.958333333333400000
+          42.333333333333340000)
         XLColumn = 0
         Alignment = taLeftJustify
         AlignToBand = False
@@ -7594,7 +7592,7 @@ inherited frmDACTeQRRetrato: TfrmDACTeQRRetrato
         Frame.DrawRight = False
         Size.Values = (
           23.812500000000000000
-          693.208333333333200000
+          693.208333333333400000
           404.812500000000000000
           50.270833333333330000)
         XLColumn = 0
@@ -7662,7 +7660,7 @@ inherited frmDACTeQRRetrato: TfrmDACTeQRRetrato
           23.812500000000000000
           989.541666666666800000
           404.812500000000000000
-          42.333333333333330000)
+          42.333333333333340000)
         XLColumn = 0
         Alignment = taLeftJustify
         AlignToBand = False
@@ -7728,7 +7726,7 @@ inherited frmDACTeQRRetrato: TfrmDACTeQRRetrato
           23.812500000000000000
           989.541666666666800000
           357.187500000000000000
-          97.895833333333320000)
+          97.895833333333340000)
         XLColumn = 0
         Alignment = taLeftJustify
         AlignToBand = False
@@ -8411,7 +8409,7 @@ inherited frmDACTeQRRetrato: TfrmDACTeQRRetrato
         Frame.DrawRight = False
         Size.Values = (
           23.812500000000000000
-          756.708333333333200000
+          756.708333333333400000
           5.291666666666667000
           354.541666666666700000)
         XLColumn = 0

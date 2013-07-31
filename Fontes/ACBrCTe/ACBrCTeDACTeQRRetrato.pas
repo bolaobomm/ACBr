@@ -34,17 +34,19 @@
 {                                                                              }
 {******************************************************************************}
 
-
 {******************************************************************************
 |* Historico
 |*
-|* 16/02/2012: Italo Jurisato Junior
 ******************************************************************************}
 
 {$I ACBr.inc}
 
 unit ACBrCTeDACTeQRRetrato;
 
+// Atenção André, Daniel, Isaque, ...
+// Quando enviar os fontes referentes ao DACTE favor alterar
+// a data e o nome da linha abaixo.
+// Última liberação: 31/07/2013 por Italo Jurisato Junior
 
 interface
 
