@@ -38,9 +38,6 @@ type
                                     NameSpaceDad, VersaoDados, VersaoXML,
                                     NumeroLote, CNPJ, IM, QtdeNotas: String;
                                     Notas, TagI, TagF: AnsiString): AnsiString; OverRide;
-   function Gera_DadosMsgConsSitLote(Prefixo3, Prefixo4, NameSpaceDad,
-                                     VersaoXML, Protocolo, CNPJ, IM: String;
-                                     TagI, TagF: AnsiString): AnsiString; OverRide;
    function Gera_DadosMsgConsLote(Prefixo3, Prefixo4, NameSpaceDad,
                                   VersaoXML, Protocolo, CNPJ, IM: String;
                                   TagI, TagF: AnsiString): AnsiString; OverRide;
@@ -258,37 +255,6 @@ begin
              '</' + Prefixo3 + 'LoteRps>';
 
   Result := TagI + DadosMsg + TagF;
-end;
-
-function TProvedorAbaco.Gera_DadosMsgConsSitLote(Prefixo3, Prefixo4,
-  NameSpaceDad, VersaoXML, Protocolo, CNPJ, IM: String; TagI,
-  TagF: AnsiString): AnsiString;
-var
- DadosMsg: AnsiString;
-begin
- DadosMsg := '<' + Prefixo3 + 'Prestador>' +
-
-               DFeUtil.SeSenao(VersaoXML = '1',
-
-                 '<' + Prefixo4 + 'CpfCnpj>' +
-                 '<' + Prefixo4 + 'Cnpj>' +
-                   Cnpj +
-                 '</' + Prefixo4 + 'Cnpj>' +
-                 '</' + Prefixo4 + 'CpfCnpj>',
-
-                 '<' + Prefixo4 + 'Cnpj>' +
-                   Cnpj +
-                 '</' + Prefixo4 + 'Cnpj>') +
-
-               '<' + Prefixo4 + 'InscricaoMunicipal>' +
-                 IM +
-               '</' + Prefixo4 + 'InscricaoMunicipal>' +
-              '</' + Prefixo3 + 'Prestador>' +
-              '<' + Prefixo3 + 'Protocolo>' +
-                Protocolo +
-              '</' + Prefixo3 + 'Protocolo>';
-
- Result := TagI + DadosMsg + TagF;
 end;
 
 function TProvedorAbaco.Gera_DadosMsgConsLote(Prefixo3, Prefixo4,

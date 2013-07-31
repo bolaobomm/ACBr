@@ -174,7 +174,9 @@ begin
 
  Result := TagI + DadosMsg + TagF;
 
- if AProvedor in [proNenhum, proFiorilli] then Result := '';
+ if AProvedor in [proNenhum, pro4R, proAgili, proCoplan, profintelISS, proFiorilli, proFISSLex,
+                  proGoiania, proGovDigital, proISSDigital, proISSe, proProdata,
+                  proSaatri] then Result := '';
 end;
 
 class function TNFSeG.Gera_DadosMsgConsLote(Prefixo3, Prefixo4,
