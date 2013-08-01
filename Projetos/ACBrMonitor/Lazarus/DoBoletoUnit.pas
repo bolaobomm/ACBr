@@ -321,6 +321,13 @@ begin
            TipoDiasProtesto := diCorridos;
          end;
 
+         try
+           TipoImpressao := TACBrTipoImpressao(aIni.ReadInteger(Sessao,'TipoImpressao',1));
+         except
+           TipoImpressao := tipNormal;
+         end;
+
+
          LocalPagto := aIni.ReadString(Sessao,'LocalPagamento','');
 
          Vencimento          := StrToDateDef(Trim(aIni.ReadString(Sessao,'Vencimento','')), now);
