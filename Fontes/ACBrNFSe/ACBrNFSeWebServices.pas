@@ -2992,9 +2992,11 @@ try
 //           then begin
             PathSalvar := FConfiguracoes.Arquivos.GetPathNFSe(0);
             FConfiguracoes.Geral.Save(NFSeRetorno.ListaNfse.CompNfse.Items[i].Nfse.Numero + '-nfse.xml',
-                                      NotaUtil.RetirarPrefixos(FRetNfse), PathSalvar);
+                                      FRetNfse, PathSalvar);
+//                                      NotaUtil.RetirarPrefixos(FRetNfse), PathSalvar);
             if FNotasFiscais.Count>0
-             then FNotasFiscais.Items[ii].NomeArq := PathWithDelim(PathSalvar) + NFSeRetorno.ListaNfse.CompNfse.Items[i].Nfse.Numero + '-nfse.xml';
+             then FNotasFiscais.Items[ii].NomeArq := PathWithDelim(PathSalvar) +
+                                                     NFSeRetorno.ListaNfse.CompNfse.Items[i].Nfse.Numero + '-nfse.xml';
 //           end;
 
           FRetListaNfse := Copy(FRetListaNfse, j + 11 + p, length(FRetListaNfse));
@@ -3185,9 +3187,11 @@ begin
 //       then begin
         PathSalvar := FConfiguracoes.Arquivos.GetPathNFSe(0);
         FConfiguracoes.Geral.Save(NFSeRetorno.ListaNfse.CompNfse.Items[i].Nfse.Numero + '-nfse.xml',
-                                  NotaUtil.RetirarPrefixos(FRetNfse), PathSalvar);
+                                  FRetNfse, PathSalvar);
+//                                  NotaUtil.RetirarPrefixos(FRetNfse), PathSalvar);
         if FNotasFiscais.Count>0
-         then FNotasFiscais.Items[i].NomeArq := PathWithDelim(PathSalvar) + NFSeRetorno.ListaNfse.CompNfse.Items[i].Nfse.Numero + '-nfse.xml';
+         then FNotasFiscais.Items[i].NomeArq := PathWithDelim(PathSalvar) +
+                                                NFSeRetorno.ListaNfse.CompNfse.Items[i].Nfse.Numero + '-nfse.xml';
 //       end;
 
       FNotasFiscais.Items[i].NFSe.Protocolo         := NFSeRetorno.ListaNfse.CompNfse.Items[i].Nfse.Protocolo;
@@ -3384,7 +3388,8 @@ begin
 //       then begin
         PathSalvar := FConfiguracoes.Arquivos.GetPathNFSe(NFSeRetorno.ListaNfse.CompNfse.Items[i].Nfse.DataEmissao);
         FConfiguracoes.Geral.Save(NFSeRetorno.ListaNfse.CompNfse.Items[i].Nfse.Numero + '-nfse.xml',
-                                  NotaUtil.RetirarPrefixos(FRetNfse), PathSalvar);
+                                  FRetNfse, PathSalvar);
+//                                  NotaUtil.RetirarPrefixos(FRetNfse), PathSalvar);
 //       end;
       FRetListaNfse := Copy(FRetListaNfse, j + 11 + p, length(FRetListaNfse));
       inc(i);
@@ -3715,9 +3720,11 @@ begin
 //       then begin
         PathSalvar := FConfiguracoes.Arquivos.GetPathNFSe(0);
         FConfiguracoes.Geral.Save(NFSeRetorno.ListaNfse.CompNfse.Items[i].Nfse.Numero + '-nfse.xml',
-                                      NotaUtil.RetirarPrefixos(FRetNfse), PathSalvar);
+                                  FRetNfse, PathSalvar);
+//                                      NotaUtil.RetirarPrefixos(FRetNfse), PathSalvar);
         if FNotasFiscais.Count>0
-         then FNotasFiscais.Items[i].NomeArq := PathWithDelim(PathSalvar) + NFSeRetorno.ListaNfse.CompNfse.Items[i].Nfse.Numero + '-nfse.xml';
+         then FNotasFiscais.Items[i].NomeArq := PathWithDelim(PathSalvar) +
+                                                NFSeRetorno.ListaNfse.CompNfse.Items[i].Nfse.Numero + '-nfse.xml';
 //       end;
       FRetListaNfse := Copy(FRetListaNfse, j + 11 + p, length(FRetListaNfse));
 
@@ -3987,9 +3994,11 @@ begin
 //           then begin
             PathSalvar := FConfiguracoes.Arquivos.GetPathNFSe(0);
             FConfiguracoes.Geral.Save(NFSeRetorno.ListaNfse.CompNfse.Items[i].Nfse.Numero + '-nfse.xml',
-                                      NotaUtil.RetirarPrefixos(FRetNfse), PathSalvar);
+                                      FRetNfse, PathSalvar);
+//                                      NotaUtil.RetirarPrefixos(FRetNfse), PathSalvar);
             if FNotasFiscais.Count>0
-             then FNotasFiscais.Items[ii].NomeArq := PathWithDelim(PathSalvar) + NFSeRetorno.ListaNfse.CompNfse.Items[i].Nfse.Numero + '-nfse.xml';
+             then FNotasFiscais.Items[ii].NomeArq := PathWithDelim(PathSalvar) +
+                                                     NFSeRetorno.ListaNfse.CompNfse.Items[i].Nfse.Numero + '-nfse.xml';
 //           end;
 
           FRetListaNfse := Copy(FRetListaNfse, j + 11 + p, length(FRetListaNfse));
