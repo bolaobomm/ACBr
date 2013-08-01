@@ -196,7 +196,6 @@ TACBrECFFiscNET = class( TACBrECFClass )
     function GetIM: String; override ;
     function GetCliche: AnsiString; override ;
     function GetUsuarioAtual: String; override ;
-    function GetDataHoraSB: TDateTime; override ;
     function GetSubModeloECF: String ; override ;
     
     function GetDataMovimento: TDateTime; override ;
@@ -2076,78 +2075,6 @@ end;
 function TACBrECFFiscNET.GetUsuarioAtual: String;
 begin
   Result := IntToStrZero( LeInteiro( 'ContadorProprietarios' ), 3) ;
-end;
-
-function TACBrECFFiscNET.GetDataHoraSB: TDateTime;
-Var Linha, LinhaVer : AnsiString ;
-    OldShortDateFormat : String ;
-    Linhas : TStringList;
-    I, CRZ :Integer;
-    AchouBlocoSB : Boolean ;
-begin
-  Result := 0.0;
-
-  // verificar se a redução Z está pendente e não fazer se estiver
-  // porque acontecerá erro, conforme consulta ao atendimento da bematech
-  if Estado in [estLivre] then
-  begin
-    Linhas := TStringList.Create;
-
-    try
-      CRZ := StrToIntDef(NumCRZ, 1) ;
-      LeituraMemoriaFiscalSerial(CRZ, CRZ, Linhas);
-
-      I := 0 ;
-      AchouBlocoSB := False;
-      while (not AchouBlocoSB) and (I < Linhas.Count) do
-      begin
-         Linha := Linhas[I] ;
-         AchouBlocoSB := (pos('SOFTWARE B', Linha ) > 0) ;
-         Inc( I ) ;
-      end ;
-
-      Linha    := '';
-      LinhaVer := '';
-      while AchouBlocoSB and (I < Linhas.Count) and (Linha = LinhaVer) do
-      begin
-         Linha := Trim(Linhas[I]) ;
-         if (Linha <> '') then
-         begin
-            if ( StrIsNumber( copy(Linha,1,2) ) and ( copy(Linha,3,1) = '.' ) and
-                 StrIsNumber( copy(Linha,4,2) ) and ( copy(Linha,6,1) = '.' ) and
-                 StrIsNumber( copy(Linha,7,2) ) ) then
-               LinhaVer := Linha;
-         end ;
-
-         Inc( I ) ;
-      end ;
-
-      if LinhaVer <> '' then
-      begin
-        // SOFTWARE BµSICO:
-        //03.00.00 09/10/2002   12:18:47
-        //03.03.00 06/03/2006   10:57:23
-
-        I := pos('/', LinhaVer ) ;
-
-        OldShortDateFormat := ShortDateFormat ;
-        try
-          ShortDateFormat := 'dd/mm/yyyy' ;
-          Result := StrToDate( StringReplace( copy(LinhaVer, I-2, 10 ),
-                                           '/', DateSeparator, [rfReplaceAll] ) ) ;
-
-          I := pos(':', LinhaVer ) ;
-          Result := RecodeHour(  result,StrToInt(copy(LinhaVer, I-2,2))) ;
-          Result := RecodeMinute(result,StrToInt(copy(LinhaVer, I+1,2))) ;
-          Result := RecodeSecond(result,StrToInt(copy(LinhaVer, I+4,2))) ;
-        finally
-          ShortDateFormat := OldShortDateFormat ;
-        end ;
-      end
-    finally
-      Linhas.Free ;
-    end ;
-  end;
 end;
 
 function TACBrECFFiscNET.GetSubModeloECF: String;

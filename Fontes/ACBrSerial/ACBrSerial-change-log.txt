@@ -97,6 +97,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+Data: 01/08/2013
+-- ACBrECF --
+[*] Refactoring em GetDataHoraSB, efetando os modelos: ecfBematech, ecfFiscNET,
+    ecfEpson. Usando uma única rotina para captura da Data e Hora do Sw.Básico
+    através da Captura de informações da Leitura da Memoria Fiscal.   (por: DSA)
+
 Data: 25/07/2013
 -- ACBrECFFiscNet --
 [-] Corrigido Bug na leitura de DadosUltimaReducaoZ  (por: DSA)

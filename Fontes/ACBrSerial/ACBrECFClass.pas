@@ -2490,9 +2490,62 @@ begin
 end;
 
 function TACBrECFClass.GetDataHoraSB: TDateTime;
+Var
+  Linha, LinhaVer, DtHrStr : AnsiString ;
+  Linhas : TStringList;
+  I, CRZ :Integer;
+  AchouBlocoSB : Boolean ;
 begin
-  Result := now ;
+  Result := 0;
+  Linhas := TStringList.Create;
+  try
+    CRZ := StrToIntDef(NumCRZ, 1) ;
+    LeituraMemoriaFiscalSerial(CRZ, CRZ, Linhas);
+
+    I := 0 ;
+    AchouBlocoSB := False;
+    while (not AchouBlocoSB) and (I < Linhas.Count) do
+    begin
+       Linha := Linhas[I] ;
+       AchouBlocoSB := (pos('SOFTWARE B', Linha ) > 0) ;
+       Inc( I ) ;
+    end ;
+
+    Linha    := '';
+    LinhaVer := '';
+    while AchouBlocoSB and (I < Linhas.Count) and (Linha = LinhaVer) do
+    begin
+       Linha := Trim(Linhas[I]) ;
+       if (Linha <> '') then
+       begin
+          if ( StrIsNumber( copy(Linha,1,2) ) and ( copy(Linha,3,1) = '.' ) and
+               StrIsNumber( copy(Linha,4,2) ) and ( copy(Linha,6,1) = '.' ) and
+               StrIsNumber( copy(Linha,7,2) ) ) then
+             LinhaVer := Linha;
+       end ;
+
+       Inc( I ) ;
+    end ;
+
+    if LinhaVer <> '' then
+    begin
+      //EPSON: 01.00.01                    25/06/2009 21:07:40
+      //FISCNET:03.00.00 09/10/2002   12:18:47
+      //FISCNET:03.03.00 06/03/2006   10:57:23
+      //BEMATECH: 01.00.01                    25/06/2009 21:07:40
+
+      I := pos('/', LinhaVer ) ;
+      DtHrStr := copy(LinhaVer, I-2, 10 ) ;
+      I := pos(':', LinhaVer ) ;
+      DtHrStr := DtHrStr + ' ' + copy(LinhaVer, I-2, 8 ) ;
+
+      Result := StringToDateTime( DtHrStr, 'dd/mm/yyyy hh:nn:ss' ) ;
+    end
+  finally
+    Linhas.Free ;
+  end ;
 end;
+
 function TACBrECFClass.GetSubModeloECF: String;
 begin
   Result := '' ;

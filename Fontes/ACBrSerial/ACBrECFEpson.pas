@@ -2679,24 +2679,24 @@ end;
 
 function TACBrECFEpson.GetDataHoraSB: TDateTime;
 Var
-  DtStr, HrStr : AnsiString ;
+  DtHrStr : AnsiString ;
 begin
-  EpsonComando.Comando := '0402' ;
-  EnviaComando ;
+  try
+     // Le pela Captura da Leitura da Memoria Fiscal
+     Result := inherited GetDataHoraSB;
+  except
+     EpsonComando.Comando := '0402' ;
+     EnviaComando ;
 
-  DtStr := EpsonResposta.Params[8] ;
-  HrStr := '000000' ;
-  { Atualmente não tem informações de como pegar a hora por comando direto,
-    tem que utilizar a mesma forma que a Bemateh realizar a partir da LMF.
-    A ser implementado.... }
-
-  Result := EncodeDateTime( StrToInt(copy(DtStr, 5,4)),   // Ano
-                            StrToInt(copy(DtStr, 3,2)),   // Mes
-                            StrToInt(copy(DtStr, 1,2)),   // Dia
-                            StrToInt(copy(HrStr, 1,2)),   // Hora
-                            StrToInt(copy(HrStr, 3,2)),   // Min
-                            StrToInt(copy(HrStr, 5,2)),   // Seg
-                            0 );
+     DtHrStr := EpsonResposta.Params[8] + '000000' ;
+     Result := EncodeDateTime( StrToInt(copy(DtHrStr, 5,4)),   // Ano
+                               StrToInt(copy(DtHrStr, 3,2)),   // Mes
+                               StrToInt(copy(DtHrStr, 1,2)),   // Dia
+                               StrToInt(copy(DtHrStr, 1,2)),   // Hora
+                               StrToInt(copy(DtHrStr, 3,2)),   // Min
+                               StrToInt(copy(DtHrStr, 5,2)),   // Seg
+                               0 );
+  end;
 end;
 
 function TACBrECFEpson.GetSubModeloECF: String;

@@ -2584,66 +2584,12 @@ begin
 end;
 
 function TACBrECFBematech.GetDataHoraSB: TDateTime;
-{Segundo a Bematech esta informação tem que se colhida a partir da
-Leitura da Memória Fiscal, só para não retornar erro coloquei esta
-informação abaixo, temos que criar uma rotina que leia a LMF serial
-para retornar os valores corretos}
-Var Linha, LinhaVer, DtHrStr : AnsiString ;
-    Linhas : TStringList;
-    I, CRZ :Integer;
-    AchouBlocoSB : Boolean ;
 begin
-  Result := 0.0;
-
+  Result := 0;
   // verificar se a redução Z está pendente e não fazer se estiver
   // porque acontecerá erro, conforme consulta ao atendimento da bematech
   if Estado in [estLivre] then
-  begin
-    Linhas := TStringList.Create;
-
-    try
-      CRZ := StrToIntDef(NumCRZ, 1) ;
-      LeituraMemoriaFiscalSerial(CRZ, CRZ, Linhas);
-
-      I := 0 ;
-      AchouBlocoSB := False;
-      while (not AchouBlocoSB) and (I < Linhas.Count) do
-      begin
-         Linha := Linhas[I] ;
-         AchouBlocoSB := (pos('SOFTWARE B', Linha ) > 0) ;
-         Inc( I ) ;
-      end ;
-
-      Linha    := '';
-      LinhaVer := '';
-      while AchouBlocoSB and (I < Linhas.Count) and (Linha = LinhaVer) do
-      begin
-         Linha := Trim(Linhas[I]) ;
-         if (Linha <> '') then
-         begin
-            if ( StrIsNumber( copy(Linha,1,2) ) and ( copy(Linha,3,1) = '.' ) and
-                 StrIsNumber( copy(Linha,4,2) ) and ( copy(Linha,6,1) = '.' ) and
-                 StrIsNumber( copy(Linha,7,2) ) ) then
-               LinhaVer := Linha;
-         end ;
-
-         Inc( I ) ;
-      end ;
-
-      if LinhaVer <> '' then
-      begin
-        // 01.00.01                    25/06/2009 21:07:40
-        I := pos('/', LinhaVer ) ;
-        DtHrStr := copy(LinhaVer, I-2, 10 ) ;
-        I := pos(':', LinhaVer ) ;
-        DtHrStr := DtHrStr + ' ' + copy(LinhaVer, I-2, 8 ) ;
-
-        Result := StringToDateTime( DtHrStr, 'dd/mm/yyyy hh:nn:ss' ) ;
-      end;
-    finally
-      Linhas.Free ;
-    end ;
-  end;
+     Result := inherited GetDataHoraSB;
 end;
 
 function TACBrECFBematech.GetSubModeloECF: String;
