@@ -43,6 +43,9 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+Versão 0.9.26.1  01/08/13    (Por: DSA)
+[+]   Adicionado suporte para conversão do Arquivo de Entrada e Saida para ANSI
+
 Versão 0.9.5  22/10/11    (Por: DSA)
 [-]    Corrigido Bug que desativava a comunicação TCP/IP ao clicar no botão Salvar ou Cancelar
 [+]   Adicionado método: pafmf_lmfc_impressao( DtInicial, DtFinal )

@@ -95,7 +95,9 @@ procedure TACBrMonitorConsole.DoRun;
 var
   ErrorMsg: String;
   Txt : String ;
-  IpList : TStringList ;
+  IpList, Linhas: TStringList;
+  MS: TMemoryStream;
+  S : AnsiString;
 begin
   // quick check parameters
   ErrorMsg:=CheckOptions('h','help');
@@ -212,30 +214,45 @@ begin
      repeat
         if FileExists( dm.ArqEntTXT ) then  { Existe arquivo para ler ? }
         begin
-           try
-             dm.TipoCMD := 'A' ;
-             if ( UpperCase(ExtractFileName( dm.ArqEntTXT )) = 'BEMAFI32.CMD' ) then
-                dm.TipoCMD := 'B'
-             else if ( UpperCase(ExtractFileName( dm.ArqEntTXT )) = 'DARUMA.CMD' ) then
-                dm.TipoCMD := 'D' ;
+          try
+            Linhas := TStringList.Create;
 
-             dm.ComandosAProcessar.LoadFromFile( dm.ArqEntTXT );
-             DeleteFile( dm.ArqEntTXT );
+            dm.TipoCMD := 'A' ;
+            if ( UpperCase(ExtractFileName( dm.ArqEntTXT )) = 'BEMAFI32.CMD' ) then
+              dm.TipoCMD := 'B'
+            else if ( UpperCase(ExtractFileName( dm.ArqEntTXT )) = 'DARUMA.CMD' ) then
+              dm.TipoCMD := 'D' ;
 
-             if dm.TipoCMD = 'B' then
-                dm.ComandosAProcessar.Text := TraduzBemafi( dm.ComandosAProcessar.Text )
-             else if dm.TipoCMD = 'D' then
-                dm.ComandosAProcessar.Text := TraduzObserver( dm.ComandosAProcessar.Text ) ;
+            { Lendo em MemoryStream temporário para nao apagar comandos nao processados }
+            MS := TMemoryStream.Create;
+            try
+              MS.LoadFromFile(dm.ArqEntTXT);
+              MS.Position := 0;
+              SetLength(S, MS.Size);
+              MS.ReadBuffer(PChar(S)^, MS.Size);
+              if dm.ConvENT then
+                S := AnsiToUtf8(S);
+              Linhas.Text := S;
+            finally
+              MS.Free;
+            end;
 
-           except
-             { Ignora Exceçoes na Tentativa de Leitura o Deleçao }
-           end ;
+            TryDeleteFile(dm.ArqEntTXT, 1000); // Tenta apagar por até 1 segundo
 
-           dm.Processar ;
+            if dm.TipoCMD = 'B' then
+              Linhas.Text := TraduzBemafi( Linhas.Text )
+            else if dm.TipoCMD = 'D' then
+              Linhas.Text := TraduzObserver( Linhas.Text );
+
+            dm.ComandosAProcessar.AddStrings( Linhas );
+          finally
+            Linhas.Free ;
+          end ;
+
+          dm.Processar ;
         end;
 
         Sleep( dm.Intervalo ) ;
-
      until False ;
   EXCEPT
     On E : Exception do
@@ -291,4 +308,4 @@ begin
      Application.Free;
   end ;
 end.
-
+

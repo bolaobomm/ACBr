@@ -132,6 +132,8 @@ type
     chECFDescrGrande: TCheckBox;
     chECFSinalGavetaInvertido: TCheckBox;
     chECFIgnorarTagsFormatacao: TCheckBox;
+    chbArqEntANSI: TCheckBox;
+    chbArqSaiANSI: TCheckBox;
     chLCBExcluirSufixo: TCheckBox;
     chRFD: TCheckBox;
     chRFDIgnoraMFD: TCheckBox;
@@ -1400,6 +1402,8 @@ begin
     edTimeOutTCP.Text := IntToStr(Ini.ReadInteger('ACBrMonitor', 'TCP_TimeOut', 10000));
     edEntTXT.Text := Ini.ReadString('ACBrMonitor', 'TXT_Entrada', 'ENT.TXT');
     edSaiTXT.Text := Ini.ReadString('ACBrMonitor', 'TXT_Saida', 'SAI.TXT');
+    chbArqEntANSI.Checked := Ini.ReadBool('ACBrMonitor', 'Converte_TXT_Entrada_Ansi', False);
+    chbArqSaiANSI.Checked := Ini.ReadBool('ACBrMonitor', 'Converte_TXT_Saida_Ansi', False);
     sedIntervalo.Value := Ini.ReadInteger('ACBrMonitor', 'Intervalo', 50);
     edLogArq.Text := Ini.ReadString('ACBrMonitor', 'Arquivo_Log', 'LOG.TXT');
     cbLog.Checked := Ini.ReadBool('ACBrMonitor', 'Gravar_Log', False) and
@@ -1854,6 +1858,8 @@ begin
     Ini.WriteInteger( 'ACBrMonitor', 'TCP_TimeOut', StrToIntDef(edTimeOutTCP.Text, 10000));
     Ini.WriteString(  'ACBrMonitor', 'TXT_Entrada', edEntTXT.Text);
     Ini.WriteString(  'ACBrMonitor', 'TXT_Saida', edSaiTXT.Text);
+    Ini.WriteBool(    'ACBrMonitor', 'Converte_TXT_Entrada_Ansi', chbArqEntANSI.Checked);
+    Ini.WriteBool(    'ACBrMonitor', 'Converte_TXT_Saida_Ansi', chbArqSaiANSI.Checked);
     Ini.WriteInteger( 'ACBrMonitor', 'Intervalo', sedIntervalo.Value);
     GravaINICrypt(INI,'ACBrMonitor', 'HashSenha', IntToStrZero(fsHashSenha, 8), _C);
 
@@ -2293,6 +2299,8 @@ begin
 
     if TipoCMD = 'A' then
      begin
+       if chbArqSaiANSI.Checked then
+          Resposta := Utf8ToAnsi(Resposta);
        WriteToTXT(ArqSaiTMP, Resposta);
        RenameFile(ArqSaiTMP, ArqSaiTXT);
      end
@@ -2490,6 +2498,8 @@ begin
         MS.Position := 0;
         SetLength(S, MS.Size);
         MS.ReadBuffer(PChar(S)^, MS.Size);
+        if chbArqEntANSI.Checked then
+          S := AnsiToUtf8(S);
         Linhas.Text := S;
       finally
         MS.Free;

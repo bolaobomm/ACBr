@@ -89,7 +89,7 @@ type
     ComandosAProcessar : TStringList ;
     ArqSaiTXT, ArqSaiTMP, ArqEntTXT, ArqLogTXT : String ;
     Intervalo, LinhasLog : Integer ;
-    PermiteComandos, VerificaCheque, GravarLog, IsTCP, IsTXT : Boolean ;
+    PermiteComandos, VerificaCheque, GravarLog, IsTCP, IsTXT, ConvENT, ConvSAI : Boolean ;
     LCBIntervalo : Integer ;
     LCBTeclado : Boolean ;
     LCBSufixoIncluir : String ;
@@ -246,6 +246,8 @@ begin
 
     ArqEntTXT := AcertaPath( Ini.ReadString('ACBrMonitor','TXT_Entrada','ENT.TXT') ) ;
     ArqSaiTXT := AcertaPath( Ini.ReadString('ACBrMonitor','TXT_Saida','SAI.TXT') ) ;
+    ConvENT   := Ini.ReadBool('ACBrMonitor', 'Converte_TXT_Entrada_Ansi', False);
+    ConvSAI   := Ini.ReadBool('ACBrMonitor', 'Converte_TXT_Saida_Ansi', False);
     ArqSaiTMP := ChangeFileExt( ArqSaiTXT, '.tmp' ) ;
     ArqLogTXT := AcertaPath( Ini.ReadString('ACBrMonitor','Arquivo_Log','LOG.TXT') ) ;
 
@@ -515,6 +517,8 @@ begin
 
      if TipoCMD = 'A' then
      begin
+        if ConvSAI then
+           Resposta := Utf8ToAnsi(Resposta);
         WriteToTXT(ArqSaiTMP, Resposta);
         RenameFile(ArqSaiTMP, ArqSaiTXT) ;
      end
