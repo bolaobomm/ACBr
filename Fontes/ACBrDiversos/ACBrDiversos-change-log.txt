@@ -96,6 +96,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+01/08/2013
+-- ACBrValidador --
+[*] Acertos de acentuação nas mensagens de Erro.
+    http://www.projetoacbr.com.br/forum/index.php?/topic/11666-mensagens-no-acbrvalidador/
+
 18/06/2013
 -- ACBrValidador --
 [+] Acerto no calculo da IE para o estado do ES

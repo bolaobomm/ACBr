@@ -485,7 +485,7 @@ begin
      fsMsgErro := 'Número de Cheque inválido.' ;
 
      if fsExibeDigitoCorreto then
-        fsMsgErro := fsMsgErro + '.. Digito correto: '+fsDigitoCalculado ;
+        fsMsgErro := fsMsgErro + '.. Dígito correto: '+fsDigitoCalculado ;
   end ;
 end;
 
@@ -505,7 +505,7 @@ begin
 
   if (Length( fsDocto ) <> 14) or ( not StrIsNumber( fsDocto ) ) then
   begin
-     fsMsgErro := 'CNPJ deve ter 14 digitos. (Apenas numeros)' ;
+     fsMsgErro := 'CNPJ deve ter 14 dígitos. (Apenas números)' ;
      exit
   end ;
 
@@ -551,7 +551,7 @@ begin
 
   if (Length( fsDocto ) <> 11) or ( not StrIsNumber( fsDocto ) ) then
   begin
-     fsMsgErro := 'CPF deve ter 11 digitos. (Apenas numeros)' ;
+     fsMsgErro := 'CPF deve ter 11 dígitos. (Apenas números)' ;
      exit
   end ;
 
@@ -580,7 +580,7 @@ begin
      fsMsgErro := 'CPF inválido.' ;
 
      if fsExibeDigitoCorreto then
-        fsMsgErro := fsMsgErro + '.. Digito calculado: '+fsDigitoCalculado ;
+        fsMsgErro := fsMsgErro + '.. Dígito calculado: '+fsDigitoCalculado ;
   end ;
 end;
 
@@ -591,7 +591,7 @@ begin
 
   if (Length( fsDocto ) <> 8) or ( not StrIsNumber( fsDocto ) ) then
   begin
-     fsMsgErro := 'CEP deve ter 8 digitos. (Apenas numeros)' ;
+     fsMsgErro := 'CEP deve ter 8 dígitos. (Apenas números)' ;
      exit
   end ;
 
@@ -1101,7 +1101,7 @@ begin
         OK := ( D = vDigitos[I] ) ;
 
      if not OK then
-        fsMsgErro := Format('Digito %d deveria ser %s ',
+        fsMsgErro := Format('Dígito %d deveria ser %s ',
          [14-I-(14-Tamanho), vDigitos[I]]) ;
 
      I := I - 1 ;
@@ -1158,7 +1158,7 @@ begin
      fsDigitoCalculado := IntToStr(DV) ;
      if not OK then
      begin
-        fsMsgErro := 'Digito verificador inválido.' ;
+        fsMsgErro := 'Dígito verificador inválido.' ;
 
         if fsExibeDigitoCorreto then
            fsMsgErro := fsMsgErro + '.. Calculado: '+fsDigitoCalculado ;
@@ -1208,7 +1208,7 @@ begin
 
   if (Length( fsDocto ) <> 11) or ( not StrIsNumber( fsDocto ) ) then
   begin
-     fsMsgErro := 'PIS deve ter 11 digitos. (Apenas numeros)' ;
+     fsMsgErro := 'PIS deve ter 11 dígitos. (Apenas números)' ;
      exit
   end ;
 
@@ -1223,7 +1223,7 @@ begin
      fsMsgErro := 'PIS inválido.' ;
 
      if fsExibeDigitoCorreto then
-        fsMsgErro := fsMsgErro + '.. Digito calculado: '+fsDigitoCalculado ;
+        fsMsgErro := fsMsgErro + '.. Dígito calculado: '+fsDigitoCalculado ;
   end ;
 end;
 
@@ -1231,7 +1231,7 @@ procedure TACBrValidador.ValidarSuframa;
 begin
   if ( Length( fsDocto ) < 9 ) or ( not StrIsNumber( fsDocto ) ) then
   begin
-     fsMsgErro := 'Código SUFRAMA deve ter no minímo 9 dígitos. (Apenas números)' ;
+     fsMsgErro := 'Código SUFRAMA deve ter no mínimo 9 dígitos. (Apenas números)' ;
      exit
   end ;
 
@@ -1246,7 +1246,7 @@ begin
      fsMsgErro := 'Número SUFRAMA inválido.' ;
 
      if fsExibeDigitoCorreto then
-        fsMsgErro := fsMsgErro + ' Digito calculado: ' + fsDigitoCalculado ;
+        fsMsgErro := fsMsgErro + ' Dígito calculado: ' + fsDigitoCalculado ;
   end;
 end;
 
@@ -1298,7 +1298,7 @@ begin
    fsDigitoCalculado := DigCalculado;
 
    if fsExibeDigitoCorreto then
-     fsMsgErro := fsMsgErro + ' Digito calculado: ' + fsDigitoCalculado ;
+     fsMsgErro := fsMsgErro + ' Dígito calculado: ' + fsDigitoCalculado ;
   end;
 end;
 
@@ -1338,7 +1338,7 @@ begin
      fsMsgErro := 'Numero do Cartão Inválido.' ;
 
      if fsExibeDigitoCorreto then
-        fsMsgErro := fsMsgErro + '.. Digito calculado: '+fsDigitoCalculado ;
+        fsMsgErro := fsMsgErro + '.. Dígito calculado: '+fsDigitoCalculado ;
   end ;
 end;
 
