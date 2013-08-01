@@ -1025,13 +1025,13 @@ begin
   else 
    begin
     case ALayOut of
-      LayNfeRecepcao      : Result := DFeUtil.SeSenao(AAmbiente=1, 'https://nfe.sefaz.am.gov.br/nfce-services/services/NfeRecepcao2', 'https://homnfce.sefaz.am.gov.br/nfce-services/services/NfeRecepcao2');
-      LayNfeRetRecepcao   : Result := DFeUtil.SeSenao(AAmbiente=1, 'https://nfe.sefaz.am.gov.br/nfce-services/services/NfeRetRecepcao2', 'https://homnfce.sefaz.am.gov.br/nfce-services/services/NfeRetRecepcao2');
-      LayNfeInutilizacao  : Result := DFeUtil.SeSenao(AAmbiente=1, 'https://nfe.sefaz.am.gov.br/nfce-services/services/NfeInutilizacao2', 'https://homnfce.sefaz.am.gov.br/nfce-services/services/NfeInutilizacao2');
-      LayNfeConsulta      : Result := DFeUtil.SeSenao(AAmbiente=1, 'https://nfe.sefaz.am.gov.br/nfce-services/services/NfeConsulta2', 'https://homnfce.sefaz.am.gov.br/nfce-services/services/NfeConsulta2');
-      LayNfeStatusServico : Result := DFeUtil.SeSenao(AAmbiente=1, 'https://nfe.sefaz.am.gov.br/nfce-services/services/NfeStatusServico2', 'https://homnfce.sefaz.am.gov.br/nfce-services/services/NfeStatusServico2');
+      LayNfeRecepcao      : Result := DFeUtil.SeSenao(AAmbiente=1, 'https://nfce.sefaz.am.gov.br/nfce-services/services/NfeRecepcao2', 'https://homnfce.sefaz.am.gov.br/nfce-services/services/NfeRecepcao2');
+      LayNfeRetRecepcao   : Result := DFeUtil.SeSenao(AAmbiente=1, 'https://nfce.sefaz.am.gov.br/nfce-services/services/NfeRetRecepcao2', 'https://homnfce.sefaz.am.gov.br/nfce-services/services/NfeRetRecepcao2');
+      LayNfeInutilizacao  : Result := DFeUtil.SeSenao(AAmbiente=1, 'https://nfce.sefaz.am.gov.br/nfce-services/services/NfeInutilizacao2', 'https://homnfce.sefaz.am.gov.br/nfce-services/services/NfeInutilizacao2');
+      LayNfeConsulta      : Result := DFeUtil.SeSenao(AAmbiente=1, 'https://nfce.sefaz.am.gov.br/nfce-services/services/NfeConsulta2', 'https://homnfce.sefaz.am.gov.br/nfce-services/services/NfeConsulta2');
+      LayNfeStatusServico : Result := DFeUtil.SeSenao(AAmbiente=1, 'https://nfce.sefaz.am.gov.br/nfce-services/services/NfeStatusServico2', 'https://homnfce.sefaz.am.gov.br/nfce-services/services/NfeStatusServico2');
       LayNFeCCe,
-      LayNFeEvento        : Result := DFeUtil.SeSenao(AAmbiente=1, 'https://nfe.sefaz.am.gov.br/nfce-services/services/RecepcaoEvento', 'https://homnfce.sefaz.am.gov.br/nfce-services/services/RecepcaoEvento');
+      LayNFeEvento        : Result := DFeUtil.SeSenao(AAmbiente=1, 'https://nfce.sefaz.am.gov.br/nfce-services/services/RecepcaoEvento', 'https://homnfce.sefaz.am.gov.br/nfce-services/services/RecepcaoEvento');
     end;
    end;
 end;
