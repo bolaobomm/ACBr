@@ -47,6 +47,13 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+Data: 02/08/2013
+-- ACBrBoleto ver. 0.0.74 --
+--ACBrBancoHSBC --
+[-] Corrigido montagem do código de barras para passar a considerar o DV da conta.
+   (Alfeu)
+
+
 Data: 30/07/2013
 -- ACBrBoleto ver. 0.0.73 --
 [+] Adicionado propriedade LinhaDigitada para os Titulos para armazenar o conteúdo
