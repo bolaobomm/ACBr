@@ -42,8 +42,7 @@ requires
   soaprtl,
   synapse,
   ACBrCapicom,
-  visualclx, // se ocorrer erro, comente.  
-  {$IFDEF VER150} QR5RunD7, vcljpg; {$ENDIF} // D7
+  {$IFDEF VER150} QR5RunD7, vcljpg, visualclx; {$ENDIF} // D7
   {$IFDEF VER170} QR5RunD2005, vcljpg; {$ENDIF} // D2005
   {$IFDEF VER180}
     {$IFNDEF VER185} QR5RunD2006, vcljpg; {$ENDIF} // D2006
