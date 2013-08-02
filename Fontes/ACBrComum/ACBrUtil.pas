@@ -541,13 +541,13 @@ Var
   I, L: Integer ;
 begin
   Result := '' ;
-  Cmd    := AnsiString(Trim(String(HexStr)));
+  Cmd    := Trim(HexStr);
   I      := 1 ;
   L      := Length( HexStr ) ;
 
   while I < L do
   begin
-     B := StrToIntDef('$' + copy(String(Cmd), I, 2), 32) ;
+     B := StrToIntDef('$' + copy(Cmd, I, 2), 32) ;
      Result := Result + AnsiChar( chr(B) ) ;
      Inc( I, 2) ;
   end ;
@@ -953,7 +953,7 @@ end ;
 function Poem_Zeros(const Texto : AnsiString ; const Tamanho : Integer
    ) : AnsiString ;
 begin
-  Result := PadR(AnsiString(Trim(String(Texto))),Tamanho,'0') ;
+  Result := PadR(Trim(Texto),Tamanho,'0') ;
 end ;
 
 {-----------------------------------------------------------------------------
@@ -2194,8 +2194,8 @@ var
   FS : TFileStream ;
   LineBreak : AnsiString ;
 begin
-  FS := TFileStream.Create( String( ArqTXT ),
-               IfThen( AppendIfExists and FileExists(String(ArqTXT)),
+  FS := TFileStream.Create( ArqTXT,
+               IfThen( AppendIfExists and FileExists(ArqTXT),
                        Integer(fmOpenReadWrite), Integer(fmCreate)) or fmShareDenyWrite );
   try
      FS.Seek(0, soFromEnd);  // vai para EOF
