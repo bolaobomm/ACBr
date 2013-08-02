@@ -255,6 +255,8 @@ begin
          aEspecie:= '11'
       else if trim(EspecieDoc) = 'DS' then
          aEspecie:= '12'
+      else if trim(EspecieDoc) = 'OU' then
+         aEspecie:= '99'
       else
          aEspecie := EspecieDoc;
 

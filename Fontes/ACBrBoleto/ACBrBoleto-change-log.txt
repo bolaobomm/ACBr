@@ -48,10 +48,17 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 Data: 02/08/2013
--- ACBrBoleto ver. 0.0.74 --
+-- ACBrBoleto ver. 0.0.75 --
+--ACBrBancoBradesco --
+[*] Passado a suportar a Espécie de Documento OU-Outras.(leandrokcs)
+
 --ACBrBancoHSBC --
 [-] Corrigido montagem do código de barras para passar a considerar o DV da conta.
    (Alfeu)
+
+--ACBrBancoSicred --
+[-] Corrigido geração da remessa CNAB240 adicionado zeros a esquerda da agência e do
+    número da conta.(Juliana Tamizou)
 
 
 Data: 30/07/2013

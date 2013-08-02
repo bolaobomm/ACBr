@@ -1402,9 +1402,9 @@ begin
              'P'                                                            + // 014 a 014 - Cód. segmento do registro detalhe
              Space(1)                                                       + // 015 a 015 - Uso exclusivo FEBRABAN/CNAB
              '01'                                                           + // 016 a 017 - Código de movimento remessa
-             padR(OnlyNumber(Agencia), 5)                                   + // 018 a 022 - Agência mantenedora da conta
+             padL(OnlyNumber(Agencia), 5)                                   + // 018 a 022 - Agência mantenedora da conta
              Space(1)                                                       + // 023 a 023 - Dígito verificador da agência
-             padR(OnlyNumber(Conta), 12)                                    + // 024 a 035 - Número da conta corrente
+             padL(OnlyNumber(Conta), 12)                                    + // 024 a 035 - Número da conta corrente
              padR(OnlyNumber(ContaDigito), 1)                               + // 036 a 036 - Dígito verificador da conta
              Space(1)                                                       + // 037 a 037 - Dígito verificador da coop/ag/conta
              padL(NossoNumero + DigitoNossoNumero, 20, '0')                 + // 038 a 057 - Identificação do título no banco
