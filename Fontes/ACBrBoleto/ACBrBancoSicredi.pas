@@ -1268,8 +1268,8 @@ begin
               padR(OnlyNumber(Agencia), 5, '0')                             + // 053 a 057 - Agência mantenedora da conta
               Space(1)                                                      + // 058 a 058 - Dígito verificador da agência
               padR(OnlyNumber(CodigoCedente), 12, '0')                      + // 059 a 070 - Código do cedente
-              '0'                                                           + // 071 a 071 - Zeros
-              Space(1)                                                      + // 072 a 072 - Dígito verificador da ag/conta
+              padL(ContaDigito, 1, '0')                                     + // 071 a 071 - DV Conta
+              padL(AgenciaDigito, 1)                                        + // 072 a 072 - Dígito verificador da ag
               padL(Nome, 30)                                                + // 073 a 102 - Nome da empresa
               padL('SICREDI', 30)                                           + // 103 a 132 - Nome do banco = "SICREDI"
               Space(10)                                                     + // 133 a 142 - Uso exclusivo FEBRABAN/CNAB
@@ -1299,8 +1299,8 @@ begin
               padR(OnlyNumber(Agencia), 5, '0')                             + // 054 a 058 - Agência mantenedora da conta
               Space(1)                                                      + // 059 a 059 - Dígito verificador da agência
               padR(OnlyNumber(CodigoCedente), 12, '0')                      + // 060 a 071 - Código do cedente
-              '0'                                                           + // 072 a 072 - Zeros
-              ContaDigito                                                   + // 073 a 073 - Dígito verificador da coop/ag/conta
+              padL(ContaDigito,1)                                           + // 072 a 072 - Zeros
+              AgenciaDigito                                                 + // 073 a 073 - Dígito verificador da coop/ag/conta
               padL(Nome, 30)                                                + // 074 a 103 - Nome da empresa
               Space(40)                                                     + // 104 a 143 - Mensagem 1
               Space(40)                                                     + // 144 a 183 - Mensagem 2
@@ -1402,9 +1402,9 @@ begin
              'P'                                                            + // 014 a 014 - Cód. segmento do registro detalhe
              Space(1)                                                       + // 015 a 015 - Uso exclusivo FEBRABAN/CNAB
              '01'                                                           + // 016 a 017 - Código de movimento remessa
-             padL(OnlyNumber(Agencia), 5)                                   + // 018 a 022 - Agência mantenedora da conta
+             padL(OnlyNumber(Agencia), 5,'0')                               + // 018 a 022 - Agência mantenedora da conta
              Space(1)                                                       + // 023 a 023 - Dígito verificador da agência
-             padL(OnlyNumber(Conta), 12)                                    + // 024 a 035 - Número da conta corrente
+             padL(OnlyNumber(Conta), 12, '0')                               + // 024 a 035 - Número da conta corrente
              padR(OnlyNumber(ContaDigito), 1)                               + // 036 a 036 - Dígito verificador da conta
              Space(1)                                                       + // 037 a 037 - Dígito verificador da coop/ag/conta
              padL(NossoNumero + DigitoNossoNumero, 20, '0')                 + // 038 a 057 - Identificação do título no banco
