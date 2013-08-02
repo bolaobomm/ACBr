@@ -110,7 +110,16 @@ begin
     if MostrarPreview then
       dmDacte.frxReport.ShowPreparedReport
     else
-      dmDacte.frxReport.Print;
+      begin
+      // dmDacte.frxReport.PrepareReport(false);
+       if MostrarStatus then
+          dmDacte.frxReport.PrintOptions.ShowDialog := True
+       else
+        dmDacte.frxReport.PrintOptions.ShowDialog := False;
+       dmDacte.frxReport.PrintOptions.Printer    := Impressora;
+       dmDacte.frxReport.PrintOptions.Copies     := 1;
+       dmDacte.frxReport.Print;
+      end;
   end;
 end;
 
@@ -158,7 +167,6 @@ begin
   begin
     dmDacte.CTe := CTE;
     dmDacte.CarregaDados;
-
     Result := dmDacte.frxReport.PrepareReport;
   end
   else
