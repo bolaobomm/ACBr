@@ -160,7 +160,8 @@ begin
                                 , PosRecibo
                                 , CTeCancelada); // Incluido por Italo em 12/04/2013
 
-  frmDACTeQRRetrato.Free;
+  if frmDACTeQRRetrato.QRCTe <> nil then
+    frmDACTeQRRetrato.Free;
 end;
 
 procedure TACBrCTeDACTeQR.ImprimirDACTePDF(CTe: TCTe = nil);
@@ -247,8 +248,8 @@ begin
                                 , CTeCancelada); // Incluido por Italo em 12/04/2013
   end;
 
-  frmDACTeQRRetrato.Free;
-
+  if frmDACTeQRRetrato.QRCTe <> nil then
+    frmDACTeQRRetrato.Free;
 end;
 (*
 procedure TACBrCTeDACTeQR.SetTamanhoPapel(Value: TpcnTamanhoPapel);
