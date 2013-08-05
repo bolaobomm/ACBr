@@ -840,7 +840,7 @@ begin
     begin
       Gerador.wGrupo('dest', '#203');
       if CTe.Dest.EnderDest.cPais = 1058 then
-        Gerador.wCampoCNPJCPF('#204', '#205', CTe.Dest.CNPJCPF, CTe.Dest.EnderDest.cPais);
+        Gerador.wCampoCNPJCPF('#204', '#205', CTe.Dest.CNPJCPF, CTe.Dest.EnderDest.cPais)
        else
         Gerador.wCampo(tcStr, '#204', 'CNPJ', 00, 14, 1, '00000000000000', 'erro');
 
