@@ -2124,7 +2124,7 @@ type
 
   TRefNF = class(TPersistent)
   private
-    FCNPJ     : String;
+    FCNPJCPF     : String;
     Fmod      : String;
     Fserie    : Integer;
     Fsubserie : Integer;
@@ -2132,7 +2132,7 @@ type
     Fvalor    : Currency;
     FdEmi     : TDateTime;
   published
-    property CNPJ: String      read FCNPJ     write FCNPJ;
+    property CNPJCPF: String   read FCNPJCPF  write FCNPJCPF;
     property modelo: String    read Fmod      write Fmod;
     property serie: Integer    read Fserie    write Fserie;
     property subserie: Integer read Fsubserie write Fsubserie;

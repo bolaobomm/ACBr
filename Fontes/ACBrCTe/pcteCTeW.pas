@@ -1855,7 +1855,7 @@ begin
        if (CTe.infCTeNorm.infCTeSub.tomaICMS.refNF.CNPJ<>'')
         then begin
          Gerador.wGrupo('refNF', '#344');
-         Gerador.wCampoCNPJ('#345', CTe.infCTeNorm.infCTeSub.tomaICMS.refNF.CNPJ, CODIGO_BRASIL, True);
+         Gerador.wCampoCNPJCPF('#345', '#345a', CTe.infCTeNorm.infCTeSub.tomaICMS.refNF.CNPJCPF, CODIGO_BRASIL);
          Gerador.wCampo(tcStr, '#346', 'mod      ', 02, 02, 1, CTe.infCTeNorm.infCTeSub.tomaICMS.refNF.modelo, '');
          Gerador.wCampo(tcInt, '#347', 'serie    ', 01, 03, 1, CTe.infCTeNorm.infCTeSub.tomaICMS.refNF.serie, '');
          Gerador.wCampo(tcInt, '#348', 'subserie ', 01, 03, 0, CTe.infCTeNorm.infCTeSub.tomaICMS.refNF.subserie, '');

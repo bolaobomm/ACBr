@@ -1102,7 +1102,7 @@ begin
        CTe.infCTeNorm.infCTeSub.tomaICMS.refCte := Leitor.rCampo(tcStr, 'refCte');
        if Leitor.rExtrai(4, 'refNF') <> '' then
         begin
-         CTe.infCTeNorm.infCTeSub.tomaICMS.refNF.CNPJ     := Leitor.rCampo(tcStr, 'CNPJ');
+         CTe.infCTeNorm.infCTeSub.tomaICMS.refNF.CNPJCPF  := Leitor.rCampoCNPJCPF;
          CTe.infCTeNorm.infCTeSub.tomaICMS.refNF.modelo   := Leitor.rCampo(tcStr, 'mod');
          CTe.infCTeNorm.infCTeSub.tomaICMS.refNF.serie    := Leitor.rCampo(tcInt, 'serie');
          CTe.infCTeNorm.infCTeSub.tomaICMS.refNF.subserie := Leitor.rCampo(tcInt, 'subserie');
