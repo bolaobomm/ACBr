@@ -291,7 +291,7 @@ type
 
   TCTeInutilizacao = Class(TWebServicesBase)
   private
-    FCTeChave: WideString;
+    FID: WideString;
     FProtocolo: string;
     FModelo: Integer;
     FSerie: Integer;
@@ -311,9 +311,9 @@ type
   public
     // Incluido por Italo em 03/01/2013 (Sujestão de Nilton Olher)
     procedure Clear;
-    function Executar: Boolean;override;
+    function Executar: Boolean; override;
 
-    property CTeChave: WideString read FCTeChave write FCTeChave;
+    property ID: WideString read FID write FID;
     property Protocolo: String read FProtocolo write FProtocolo;
     property Modelo: Integer read FModelo write FModelo;
     property Serie: Integer read FSerie write FSerie;
@@ -611,7 +611,7 @@ begin
      end;
 {$ENDIF}
 
-  TCTeInutilizacao(Self).CTeChave := InutCTe.ID;
+  TCTeInutilizacao(Self).ID := InutCTe.ID;
 
   InutCTe.Free;
 
@@ -912,7 +912,7 @@ begin
   if not ValidarCNPJ(CNPJ) then
      raise Exception.Create('CNPJ '+CNPJ+' inválido.');
 
-  Self.Inutilizacao.CTeChave      := 'ID';
+  Self.Inutilizacao.ID            := 'ID';
   Self.Inutilizacao.CNPJ          := CNPJ;
   Self.Inutilizacao.Modelo        := Modelo;
   Self.Inutilizacao.Serie         := Serie;
@@ -2130,28 +2130,15 @@ begin
 
       // Alterado por Italo em 03/04/2013
       Texto := '<?xml version="1.0" encoding="UTF-8" ?>';
- {$IFDEF PL_103}
-      Texto := Texto + '<procCancCTe versao="1.03" xmlns="http://www.portalfiscal.inf.br/cte">';
- {$ENDIF}
- {$IFDEF PL_104}
-      Texto := Texto + '<procCancCTe versao="1.04" xmlns="http://www.portalfiscal.inf.br/cte">';
- {$ENDIF}
+// {$IFDEF PL_103}
+//      Texto := Texto + '<procCancCTe versao="1.03" xmlns="http://www.portalfiscal.inf.br/cte">';
+// {$ENDIF}
+// {$IFDEF PL_104}
+      Texto := Texto + '<procCancCTe versao="' + CTecancCTe + '" xmlns="http://www.portalfiscal.inf.br/cte">';
+// {$ENDIF}
       Texto := Texto + FDadosMSG;
       Texto := Texto + FRetWS;
       Texto := Texto + '</procCancCTe>';
-
-      (*
-      wProc.Add('<?xml version="1.0" encoding="UTF-8" ?>');
- {$IFDEF PL_103}
-      wProc.Add('<procCancCTe versao="1.03" xmlns="http://www.portalfiscal.inf.br/cte">');
- {$ENDIF}
- {$IFDEF PL_104}
-      wProc.Add('<procCancCTe versao="1.04" xmlns="http://www.portalfiscal.inf.br/cte">');
- {$ENDIF}
-      wProc.Add(FDadosMSG);
-      wProc.Add(FRetWS);
-      wProc.Add('</procCancCTe>');
-      *)
 
       FXML_ProcCancCTe := Texto; //wProc.Text;
 //      wProc.Free;
@@ -2264,10 +2251,14 @@ begin
   try
     TACBrCTe( FACBrCTe ).SetStatus( stCTeInutilizacao );
     if FConfiguracoes.Geral.Salvar then
-      FConfiguracoes.Geral.Save(FormatDateTime('yyyymmddhhnnss',Now)+FCTeChave+'-ped-inu.xml', FDadosMsg);
+      FConfiguracoes.Geral.Save(StringReplace(FID, 'ID', '', [rfIgnoreCase]) +
+                                {FormatDateTime('yyyymmddhhnnss',Now)+FCTeChave+}
+                                '-ped-inu.xml', FDadosMsg);
 
     if FConfiguracoes.Arquivos.Salvar then
-      FConfiguracoes.Geral.Save(FormatDateTime('yyyymmddhhnnss',Now)+FCTeChave+'-ped-inu.xml', FDadosMsg, FConfiguracoes.Arquivos.GetPathInu);
+      FConfiguracoes.Geral.Save(StringReplace(FID, 'ID', '', [rfIgnoreCase]) +
+                                {FormatDateTime('yyyymmddhhnnss',Now)+FCTeChave+}
+                                '-ped-inu.xml', FDadosMsg, FConfiguracoes.Arquivos.GetPathInu);
 
     {$IFDEF ACBrCTeOpenSSL}
        HTTP.Document.LoadFromStream(Stream);
@@ -2318,10 +2309,14 @@ begin
     // CTeRetorno.Free;
 
     if FConfiguracoes.Geral.Salvar then
-      FConfiguracoes.Geral.Save(FormatDateTime('yyyymmddhhnnss',Now)+FCTeChave+'-inu.xml', FRetWS);
+      FConfiguracoes.Geral.Save(StringReplace(FID, 'ID', '', [rfIgnoreCase]) +
+                                {FormatDateTime('yyyymmddhhnnss',Now)+FCTeChave+}
+                                '-inu.xml', FRetWS);
 
     if FConfiguracoes.Arquivos.Salvar then
-      FConfiguracoes.Geral.Save(FormatDateTime('yyyymmddhhnnss',Now)+FCTeChave+'-inu.xml', FRetWS, FConfiguracoes.Arquivos.GetPathInu);
+      FConfiguracoes.Geral.Save(StringReplace(FID, 'ID', '', [rfIgnoreCase]) +
+                               {FormatDateTime('yyyymmddhhnnss',Now)+FCTeChave+}
+                               '-inu.xml', FRetWS, FConfiguracoes.Arquivos.GetPathInu);
 
     //gerar arquivo proc de inutilizacao
     if CTeRetorno.cStat=102 then
@@ -2330,37 +2325,28 @@ begin
 
       // Alterado por Italo em 03/04/2013
       Texto := '<?xml version="1.0" encoding="UTF-8" ?>';
- {$IFDEF PL_103}
-      Texto := Texto + '<ProcInutCTe versao="1.03" xmlns="http://www.portalfiscal.inf.br/cte">';
- {$ENDIF}
- {$IFDEF PL_104}
-      Texto := Texto + '<ProcInutCTe versao="1.04" xmlns="http://www.portalfiscal.inf.br/cte">';
- {$ENDIF}
+// {$IFDEF PL_103}
+//      Texto := Texto + '<ProcInutCTe versao="1.03" xmlns="http://www.portalfiscal.inf.br/cte">';
+// {$ENDIF}
+// {$IFDEF PL_104}
+      Texto := Texto + '<ProcInutCTe versao="' + CTeinutCTe + '" xmlns="http://www.portalfiscal.inf.br/cte">';
+// {$ENDIF}
       Texto := Texto + FDadosMSG;
       Texto := Texto + FRetWS;
       Texto := Texto + '</ProcInutCTe>';
-
-      (*
-      wProc.Add('<?xml version="1.0" encoding="UTF-8" ?>');
- {$IFDEF PL_103}
-      wProc.Add('<ProcInutCTe versao="1.03" xmlns="http://www.portalfiscal.inf.br/cte">');
- {$ENDIF}
- {$IFDEF PL_104}
-      wProc.Add('<ProcInutCTe versao="1.04" xmlns="http://www.portalfiscal.inf.br/cte">');
- {$ENDIF}
-      wProc.Add(FDadosMSG);
-      wProc.Add(FRetWS);
-      wProc.Add('</ProcInutCTe>');
-      *)
 
       FXML_ProcInutCTe := Texto; //wProc.Text;
 
 //      wProc.Free;
 
       if FConfiguracoes.Geral.Salvar then
-         FConfiguracoes.Geral.Save(FormatDateTime('yyyymmddhhnnss',Now)+FCTeChave+'-ProcInutCTe.xml', FXML_ProcInutCTe);
+         FConfiguracoes.Geral.Save(StringReplace(FID, 'ID', '', [rfIgnoreCase]) +
+                                   {FormatDateTime('yyyymmddhhnnss',Now)+FCTeChave+}
+                                   '-ProcInutCTe.xml', FXML_ProcInutCTe);
       if FConfiguracoes.Arquivos.Salvar then
-         FConfiguracoes.Geral.Save(FormatDateTime('yyyymmddhhnnss',Now)+FCTeChave+'-ProcInutCTe.xml', FXML_ProcInutCTe, FConfiguracoes.Arquivos.GetPathInu );
+         FConfiguracoes.Geral.Save(StringReplace(FID, 'ID', '', [rfIgnoreCase]) +
+                                   {FormatDateTime('yyyymmddhhnnss',Now)+FCTeChave+}
+                                   '-ProcInutCTe.xml', FXML_ProcInutCTe, FConfiguracoes.Arquivos.GetPathInu );
     end;
 
   finally
