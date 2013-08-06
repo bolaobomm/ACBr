@@ -2,6 +2,7 @@
 
 unit ACBrNFSeDANFSeQR;
 
+
 interface
 
 uses
@@ -206,6 +207,8 @@ begin
     FMargemDireita  := AMargemDireita;
     FPrestLogo      := APrestLogo;
     FPrefeitura     := APrefeitura;
+
+
 
     for i := 0 to ComponentCount -1 do
      begin

@@ -1,6 +1,6 @@
 object fqrDANFSeQR: TfqrDANFSeQR
-  Left = 205
-  Top = 124
+  Left = 2
+  Top = 2
   Width = 880
   Height = 831
   Caption = 'fqrDANFSeQR'
@@ -41,7 +41,6 @@ object fqrDANFSeQR: TfqrDANFSeQR
     Page.Columns = 1
     Page.Orientation = poPortrait
     Page.PaperSize = A4
-    Page.Continuous = False
     Page.Values = (
       100.000000000000000000
       2970.000000000000000000

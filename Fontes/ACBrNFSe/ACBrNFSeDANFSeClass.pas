@@ -41,6 +41,7 @@ type
     destructor Destroy; override;
     procedure ImprimirDANFSe(NFSe: TNFSe = nil); virtual;
     procedure ImprimirDANFSePDF(NFSe: TNFSe = nil); virtual;
+    procedure ImprimirDANFSeCampinas(NFSe : TNFSe = nil); virtual;
   published
     property ACBrNFSe: TComponent  read FACBrNFSe write SetNFSe;
     property Logo: String read FLogo write FLogo;
@@ -123,6 +124,12 @@ end;
 procedure TACBrNFSeDANFSeClass.ImprimirDANFSe(NFSe: TNFSe);
 begin
  ErroAbstract('Imprimir');
+end;
+
+// Fernando Oliveira - 05/08/2013 - ALTERAÇÃO ESPECÍFICA PARA O ASIX
+procedure TACBrNFSeDANFSeClass.ImprimirDANFSeCampinas(NFSe: TNFSe);
+begin
+  ErroAbstract('ImprimirCampinas');
 end;
 
 procedure TACBrNFSeDANFSeClass.ImprimirDANFSePDF(NFSe: TNFSe);
