@@ -46,7 +46,7 @@ unit ACBrCTeDACTeQRRetratoA5;
 // Atenção André, Daniel, Isaque, ...
 // Quando enviar os fontes referentes ao DACTE favor alterar
 // a data e o nome da linha abaixo.
-// Última liberação: 31/07/2013 por Italo Jurisato Junior
+// Última liberação: 06/08/2013 por Italo Jurisato Junior
 
 interface
 

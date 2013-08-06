@@ -1,6 +1,6 @@
 inherited frmDACTeQRRetratoA5: TfrmDACTeQRRetratoA5
-  Left = 242
-  Top = 179
+  Left = 198
+  Top = 127
   Width = 835
   Height = 629
   Caption = 'DACTe - Retrato A5'
@@ -11,6 +11,8 @@ inherited frmDACTeQRRetratoA5: TfrmDACTeQRRetratoA5
   PixelsPerInch = 96
   TextHeight = 10
   inherited QRCTe: TQuickRep
+    Left = 3
+    Top = 3
     Height = 559
     BeforePrint = QRCTeBeforePrint
     DataSet = cdsDocumentos

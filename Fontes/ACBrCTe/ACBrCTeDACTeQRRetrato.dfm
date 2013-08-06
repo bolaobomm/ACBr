@@ -10,6 +10,8 @@ inherited frmDACTeQRRetrato: TfrmDACTeQRRetrato
   PixelsPerInch = 96
   TextHeight = 10
   inherited QRCTe: TQuickRep
+    Left = 3
+    Top = 3
     BeforePrint = QRCTeBeforePrint
     DataSet = cdsDocumentos
     Font.Height = -8
