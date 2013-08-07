@@ -483,7 +483,8 @@ begin
    else
    if AValue = '007' then
       Result := vlVersao106
-      ;
+   else
+     raise Exception.CreateFmt('Versão desconhecida. Versao "%s" não é um valor válido.', [AValue]);
 end;
 
 function CodVerToStr(AValue: TACBrVersaoLeiaute): string;

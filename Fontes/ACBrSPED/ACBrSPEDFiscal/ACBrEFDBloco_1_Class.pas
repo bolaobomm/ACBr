@@ -1261,7 +1261,7 @@ begin
   U1900Count := FRegistro1001.Registro1900.Count -1;
   U1910Count := FRegistro1001.Registro1900.Items[U1900Count].Registro1910.Count -1;
   U1920Count := FRegistro1001.Registro1900.Items[U1900Count].Registro1910.Items[U1910Count].Registro1920.Count -1;
-  U1921Count := FRegistro1001.Registro1900.Items[U1900Count].Registro1910.Items[U1910Count].Registro1920.Items[U1921Count].Registro1921.Count -1;
+  U1921Count := FRegistro1001.Registro1900.Items[U1900Count].Registro1910.Items[U1910Count].Registro1920.Items[U1920Count].Registro1921.Count -1;
 
   Result := FRegistro1001.Registro1900.Items[U1900Count].Registro1910.Items[U1910Count].Registro1920.Items[U1920Count].Registro1921.Items[U1921Count].Registro1922.New;
 
