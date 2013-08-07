@@ -2033,7 +2033,7 @@ procedure TACBrECFEpson.VendeItem(Codigo, Descricao : String ;
   TipoDescontoAcrescimo : String ; DescontoAcrescimo : String ;
   CodDepartamento : Integer) ;
 begin
-  Codigo    := LeftStr(Codigo,14);
+  Codigo    := OnlyAlphaNum( LeftStr(Codigo,14) );   // Epson só aceita AlfaNumerico no Codigo
   Unidade   := Trim(LeftStr( OnlyAlphaNum(Unidade),3)) ;
   Descricao := LeftStr(Descricao,233);
 

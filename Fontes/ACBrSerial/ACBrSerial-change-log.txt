@@ -97,6 +97,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+Data: 07/08/2013
+-- ACBrECFEpson --
+[*] Tratamento para remover caractere não alfanuméricos do Codigo    (por: DSA)
+    www.projetoacbr.com.br/forum/index.php?showtopic=11698
+
 Data: 01/08/2013
 -- ACBrECF --
 [*] Refactoring em GetDataHoraSB, efetando os modelos: ecfBematech, ecfFiscNET,
