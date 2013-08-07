@@ -89,8 +89,9 @@ begin
 
     for I := 0 to TACBrNFSe(ACBrNFSe).NotasFiscais.Count -1 do
     begin
-      dmDanfse.frxPDFExport.FileName := PathPDF+ dmDanfse.NFSe.Numero+dmDanfse.NFSe.CodigoVerificacao+'.pdf';
-      dmDanfse.frxReport.Export(dmDanfse.frxPDFExport);      
+//      dmDanfse.frxPDFExport.FileName := PathPDF+ dmDanfse.NFSe.Numero+dmDanfse.NFSe.CodigoVerificacao+'.pdf';
+      dmDanfse.frxPDFExport.FileName := PathPDF+ dmDanfse.NFSe.Numero+'.pdf';
+      dmDanfse.frxReport.Export(dmDanfse.frxPDFExport);
     end;
   end;
 end;
