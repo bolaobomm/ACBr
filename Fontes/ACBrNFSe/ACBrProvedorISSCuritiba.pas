@@ -181,9 +181,9 @@ function TProvedorIssCuritiba.Gera_TagI(Acao: TnfseAcao; Prefixo3, Prefixo4,
 var
  xmlns: String;
 begin
- xmlns := NameSpaceDad +
+ xmlns := NameSpaceDad {+
           ' xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"' +
-          ' xsi:schemaLocation="http://isscuritiba.curitiba.pr.gov.br/iss/nfse.xsd">';
+          ' xsi:schemaLocation="http://isscuritiba.curitiba.pr.gov.br/iss/nfse.xsd">'};
 
  case Acao of
    acRecepcionar: Result := '<' + Prefixo3 + 'EnviarLoteRpsEnvio' + xmlns;
