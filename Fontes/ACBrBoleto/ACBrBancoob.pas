@@ -300,7 +300,7 @@ begin
       else
          TipoCedente := '02';
 
-      if ACBrBoleto.Cedente.ResponEmissao= tbCliEmite of
+      if ACBrBoleto.Cedente.ResponEmissao= tbCliEmite then
          wRespEntrega := '2'
       else
          wRespEntrega := '1';
