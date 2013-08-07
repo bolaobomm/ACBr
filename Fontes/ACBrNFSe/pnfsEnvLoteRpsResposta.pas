@@ -145,6 +145,7 @@ end;
 function TretEnvLote.LerXml: boolean;
 var
   i: Integer;
+  iNivel: Integer;
 begin
   result := False;
 
@@ -153,19 +154,25 @@ begin
     Leitor.Arquivo := NotaUtil.RetirarPrefixos(Leitor.Arquivo);
     Leitor.Grupo   := Leitor.Arquivo;
 
-    if (leitor.rExtrai(1, 'EnviarLoteRpsResposta') <> '') or
+//    if (leitor.rExtrai(1, 'EnviarLoteRpsResposta') <> '') or
        // Incluido por João Paulo Delboni em 22/04/2013 - Retorno do provedor 4R
-       (leitor.rExtrai(1, 'EnviarLoteRpsSincronoResposta') <> '') then
-    begin
+//       (leitor.rExtrai(1, 'EnviarLoteRpsSincronoResposta') <> '') then
+//    begin
       infRec.FNumeroLote      := Leitor.rCampo(tcStr, 'NumeroLote');
       infRec.FDataRecebimento := Leitor.rCampo(tcDatHor, 'DataRecebimento');
       infRec.FProtocolo       := Leitor.rCampo(tcStr, 'Protocolo');
 
       // Ler a Lista de Mensagens
+      iNivel := 0;
       if leitor.rExtrai(2, 'ListaMensagemRetorno') <> '' then
-      begin
+        iNivel := 3
+      else if leitor.rExtrai(1, 'ListaMensagemRetorno') <> '' then
+        iNivel := 2;
+
+//      if leitor.rExtrai(2, 'ListaMensagemRetorno') <> '' then
+//      begin
         i := 0;
-        while Leitor.rExtrai(3, 'MensagemRetorno', '', i + 1) <> '' do
+        while Leitor.rExtrai(iNivel, 'MensagemRetorno', '', i + 1) <> '' do
         begin
           InfRec.FMsgRetorno.Add;
           InfRec.FMsgRetorno[i].FCodigo   := Leitor.rCampo(tcStr, 'Codigo');
@@ -174,10 +181,10 @@ begin
 
           inc(i);
         end;
-      end;
+//      end;
 
       Result := True;
-    end;
+//    end;
   except
     result := False;
   end;

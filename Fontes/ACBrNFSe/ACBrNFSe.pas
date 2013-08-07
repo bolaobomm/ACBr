@@ -226,7 +226,8 @@ begin
    // Alterado por Rodrigo Cantelli
    if FConfiguracoes.Arquivos.AdicionarLiteral
     then NotasFiscais.LoadFromFile(aPath+'Ger\'+ANumLote+'-env-lot.xml')
-    else NotasFiscais.LoadFromFile(aPath+ANumLote+'-env-lot.xml');
+    else if FConfiguracoes.Arquivos.Salvar then
+           NotasFiscais.LoadFromFile(aPath+ANumLote+'-env-lot.xml');
 
    if NotasFiscais.Count <= 0
     then begin
