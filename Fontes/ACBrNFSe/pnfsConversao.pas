@@ -793,6 +793,7 @@ begin
   3143302, // Montes Claros/MG
   3202405, // Guarapari/ES
   3305505, // Saquarema/RJ
+  3504008, // Assis/SP
   3511102, // Catanduva/SP
   3530300, // Mirassol/SP'
   3541505, // Presidente Venceslau/SP
