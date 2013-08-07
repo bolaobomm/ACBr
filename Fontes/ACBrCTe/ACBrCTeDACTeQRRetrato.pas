@@ -1324,7 +1324,10 @@ begin
   qrlEnderecoRemet2.Caption := FCTe.Rem.EnderReme.xCpl + ' - ' + FCTe.Rem.EnderReme.xBairro;
   qrlCEPRemet.Caption := DFeUtil.FormatarCEP(FormatFloat( '00000000', FCTe.Rem.EnderReme.CEP ));
   qrlMunRemet.Caption := FCTe.Rem.EnderReme.xMun+' - '+FCTe.Rem.EnderReme.UF;
-  qrlCnpjRemet.Caption := DFeUtil.FormatarCNPJ(FCTe.Rem.CNPJCPF);
+  if Length(FCTe.Rem.CNPJCPF) = 14 then
+    qrlCnpjRemet.Caption := DFeUtil.FormatarCNPJ(FCTe.Rem.CNPJCPF)
+  else
+    qrlCnpjRemet.Caption := DFeUtil.FormatarCPF(FCTe.Rem.CNPJCPF);
   qrlPaisRemet.Caption := FCTe.Rem.EnderReme.xPais;
   qrlInscEstRemet.Caption := FCTe.Rem.IE;
   qrlFoneRemet.Caption := DFeUtil.FormatarFone(FCTe.Rem.fone);
