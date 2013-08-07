@@ -239,6 +239,7 @@ var
   TipoSacado, ATipoAceite,MensagemCedente:String;
   TipoCedente, wLinha :String;
   I: Integer;
+  wRespEntrega: Char;
 begin
 
     if (Length(ACBrTitulo.Carteira) < 1 )then
@@ -299,6 +300,11 @@ begin
       else
          TipoCedente := '02';
 
+      if ACBrBoleto.Cedente.ResponEmissao= tbCliEmite of
+         wRespEntrega := '2'
+      else
+         wRespEntrega := '1';
+
       with ACBrBoleto do
       begin
          MensagemCedente:= '';
@@ -344,7 +350,7 @@ begin
                   IntToStrZero( 1, 2)                                     +  // 34 Primeira instrução (SEQ 34) = 00 e segunda (SEQ 35) = 00, não imprime nada.
                   IntToStrZero( 0, 6)                                     +  // Taxa de mora mês
                   IntToStrZero( 0, 6)                                     +  // Taxa de multa
-                  Space(1)                                                +  // Brancos
+                  wRespEntrega                                            +  // Responsabilidade Distribuição
                   IntToStrZero( 0, 6)                                     +  // Preencher com zeros quando não for concedido nenhum desconto.
                   IntToStrZero( 0, 13)                                    +  // Preencher com zeros quando não for concedido nenhum desconto.
                   IntToStrZero( 9 , 1)                                    +  // MOEDA 9 BRASIL
