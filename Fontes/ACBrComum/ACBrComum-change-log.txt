@@ -38,6 +38,21 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+Data: 07/08/2013
+-- ACBrUtil --
+[+] Adicionada a função:                                              (por: DSA)
+    CompareVersions(const VersionStr1, VersionStr2: String; Delimiter: char ): Extended;
+ Compara 2 Strings de controle de versão. Delimiter padrão = '.'
+ Retorna 0 se VersionStr1 = VersionStr2
+ Retorna Valor Negativo se VersionStr1 < VersionStr2
+ Retorna Valor Positivo se VersionStr1 > VersionStr2
+ Retorna valor indicando as diferenças encontras de acordo com os niveis. Ex:
+ 1.0.3; 1=Major=100, 0=Minor=10, 3=Build=1
+ VersionStr1 VersionStr2       Result
+    1.0.3      1.0.4        0 + 0 -1 = -1
+    1.2.5      1.1.4        0 +10 +1 = 11
+    2.0.3      1.2.9       100-10 -1 = 89
+
 Data: 24/07/2013
 -- ACBrUtil --
 [+] Adicionada a função:                                              (por: DSA)

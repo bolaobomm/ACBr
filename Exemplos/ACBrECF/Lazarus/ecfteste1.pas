@@ -1245,8 +1245,20 @@ begin
 end;
 
 procedure TForm1.Button1Click(Sender : TObject) ;
+var
+  I: Extended;
 begin
    ACBrECF1.RetornaInfoECF( edOperador.Text );
+
+   {
+   I := CompareVersions('1.0.3', '01.00.04');    // -1
+   I := CompareVersions('1.2.5', '01.01.04');    // 11
+   I := CompareVersions('1.2.3', '01.10.5555');  // -11
+   I := CompareVersions('8', '1');               // 1
+   I := CompareVersions('2.3.7', '1.9');         // 91
+   I := CompareVersions('2.0.0.9.8.6', '0.9.9.7.6.5.34.3.2');   // 89110889
+   I := CompareVersions('1.2a', '1.2d');         // -1
+   }
 end;
 
 procedure TForm1.chAACFlushChange(Sender : TObject) ;

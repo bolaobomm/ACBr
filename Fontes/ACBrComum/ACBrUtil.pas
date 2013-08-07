@@ -135,6 +135,8 @@ function ACBrStr( AString : AnsiString ) : String ;
 function ACBrStrToAnsi( AString : String ) : AnsiString ;
 function TruncFix( X : Double ) : Integer ;
 function RoundABNT(const AValue: Double; const Digits: SmallInt): Double;
+function CompareVersions( const VersionStr1, VersionStr2 : String;
+  Delimiter: char = '.' ) : Extended;
 
 function TestBit(const Value: Integer; const Bit: Byte): Boolean;
 function IntToBin (value: LongInt; digits: integer ): string;
@@ -381,6 +383,74 @@ Begin
     end ;
 
    Result := (IntPart / Pow);
+end;
+
+{-----------------------------------------------------------------------------
+ Compara 2 Strings de controle de versão. Delimiter padrão = '.'
+ Retorna 0 se VersionStr1 = VersionStr2
+ Retorna Valor Negativo se VersionStr1 < VersionStr2
+ Retorna Valor Positivo se VersionStr1 > VersionStr2
+ Retorna valor indicando as diferenças encontras de acordo com os niveis. Ex:
+ 1.0.3; 1=Major=100, 0=Minor=10, 3=Build=1
+ VersionStr1 VersionStr2       Result
+    1.0.3      1.0.4        0 + 0 -1 = -1
+    1.2.5      1.1.4        0 +10 +1 = 11
+    2.0.3      1.2.9       100-10 -1 = 89
+ ---------------------------------------------------------------------------- }
+function CompareVersions(const VersionStr1, VersionStr2: String; Delimiter: char
+  ): Extended;
+var
+  Niveis, I, P1I, P1F, P2I, P2F: Integer;
+  SubVer1, SubVer2: String;
+  Pow: Extended;
+
+  Function FormataSubVer( ASubVer: String): String;
+  const
+    cDIGITOS_COMPARAR = 9;
+  begin
+     Result := Trim(ASubVer);
+     if ASubVer = '' then
+       Result := StringOfChar('0',cDIGITOS_COMPARAR)
+     else if StrIsNumber(Result) then  // Se for numerico, remove zeros a esquerda
+       Result := IntToStrZero(StrToInt(Result),cDIGITOS_COMPARAR) ;
+  end;
+begin
+  Result := 0;
+  if Trim(VersionStr1) = Trim(VersionStr2) then
+    exit ;
+
+  Niveis := max( CountStr(VersionStr1, Delimiter), CountStr(VersionStr2, Delimiter) ) ;
+  P1I := 1; P1F := 0 ;
+  P2I := 1; P2F := 0 ;
+
+  I := Niveis;
+  while I >= 0 do
+  begin
+    P1F := PosEx(Delimiter, VersionStr1, P1I);
+    P2F := PosEx(Delimiter, VersionStr2, P2I);
+
+    if P1F = 0 then
+      P1F := Length(VersionStr1)+1;
+    if P2F = 0 then
+      P2F := Length(VersionStr2)+1;
+
+    SubVer1 := FormataSubVer( Copy(VersionStr1, P1I, P1F-P1I) );
+    SubVer2 := FormataSubVer( Copy(VersionStr2, P2I, P2F-P2I) );
+
+    if SubVer1 <> SubVer2 then
+    begin
+      Pow := intpower(10, I );
+
+      if (SubVer1 > SubVer2) then
+        Result := Result + Pow
+      else
+        Result := Result - Pow ;
+    end;
+
+    P1I := P1F+1;
+    P2I := P2F+1;
+    Dec( I );
+  end;
 end;
 
 {-----------------------------------------------------------------------------
