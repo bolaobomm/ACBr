@@ -47,6 +47,14 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+
+Data: 07/08/2013
+-- ACBrBoleto ver. 0.0.76 --
+--ACBrBancoBancoob --
+[*] Corrigido tamanho da Conta para suportar 8 dígitos conforme o manual.
+    (Juliana Tamizou)
+
+
 Data: 02/08/2013
 -- ACBrBoleto ver. 0.0.75 --
 --ACBrBancoBradesco --

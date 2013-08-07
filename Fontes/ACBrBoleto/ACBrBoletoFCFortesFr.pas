@@ -535,7 +535,7 @@ begin
    RLBand4.Visible := (fBoletoFC.LayOut = lPadraoEntrega) ;
 
    {$IFDEF UNICODE}
-    // Fontes do ACBr estão em CP1252, convertendo textos para UTF-8 //
+   { // Fontes do ACBr estão em CP1252, convertendo textos para UTF-8 //
     For I := 0 to ComponentCount-1 do
     begin
        if Components[I] is TRLMemo then
@@ -548,7 +548,7 @@ begin
           with TRLLabel( Components[I] ) do
              Caption := AnsiToUtf8( Caption )
         end
-    end ;
+    end ;}
    {$ENDIF}
 end;
 

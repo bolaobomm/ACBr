@@ -1,7 +1,7 @@
 object ACBRBoletoFCFortesFr: TACBRBoletoFCFortesFr
-  Left = 293
+  Left = 383
   Height = 750
-  Top = 21
+  Top = 56
   Width = 1033
   Caption = 'ACBRBoletoFCFortesFr'
   ClientHeight = 750
@@ -16,7 +16,7 @@ object ACBRBoletoFCFortesFr: TACBRBoletoFCFortesFr
   object LayoutBoleto: TRLReport
     Left = 16
     Height = 1123
-    Top = -336
+    Top = -264
     Width = 794
     Margins.LeftMargin = 4
     Margins.TopMargin = 5
@@ -1546,9 +1546,9 @@ object ACBRBoletoFCFortesFr: TACBRBoletoFCFortesFr
         RealBounds.Height = 0
       end
       object txtInstrucoes2: TRLMemo
-        Left = 4
+        Left = 5
         Height = 83
-        Top = 170
+        Top = 171
         Width = 529
         AutoSize = False
         Font.Color = clBlack
@@ -2093,9 +2093,9 @@ object ACBRBoletoFCFortesFr: TACBRBoletoFCFortesFr
         Transparent = False
       end
       object txtOrientacoesBanco: TRLMemo
-        Left = 201
+        Left = 195
         Height = 49
-        Top = 237
+        Top = 348
         Width = 296
         Alignment = taCenter
         AutoSize = False
@@ -2495,9 +2495,9 @@ object ACBRBoletoFCFortesFr: TACBRBoletoFCFortesFr
         RealBounds.Height = 0
       end
       object RLLabel148: TRLLabel
-        Left = 551
+        Left = 550
         Height = 10
-        Top = 85
+        Top = 84
         Width = 91
         Caption = 'Agência / Código Cedente'
         Font.Color = clBlack
