@@ -593,10 +593,14 @@ begin
 
    AXML := copy(AXML, 1, pos('</'+ APrefixo3 + EnviarLoteRps + '>', AXML) - 1);
 
-   // Alterado por Italo em 10/05/2013 - incluido na lista o proRJ
+   // Alterado por Italo em 07/08/2013 - incluido na lista o proAbaco
    if (URI = '') or (AProvedor in [proRecife, proRJ, proAbaco, proIssDSF, proIssCuritiba])
     then AID := '>'
     else AID := ' ' + Identificador + '="AssLote_' + URI + '">';
+
+   // Incluido por Italo em 07/08/2013
+   if AProvedor = proAbaco
+    then URI := '';
 
    AXML := AXML + '<Signature xmlns="http://www.w3.org/2000/09/xmldsig#"' + AID +
                  '<SignedInfo>' +
@@ -742,7 +746,7 @@ begin
   then begin
    if (URI <> '') and (AProvedor = proIssDSF) 
     then xmldsig.signature := xmldoc.selectSingleNode('.//ns1:'+ EnviarLoteRps + '/ds:Signature')
-   else if (URI <> '') and (AProvedor <> proRecife) and (AProvedor <> proRJ)
+   else if (URI <> '') and (AProvedor <> proRecife) and (AProvedor <> proRJ) and (AProvedor <> proAbaco)
     then xmldsig.signature := xmldoc.selectSingleNode('.//ds:Signature[@' + Identificador + '="AssLote_' + URI + '"]')
     else begin
      xmldsig.signature := xmldoc.selectSingleNode('.//ds1:' + EnviarLoteRps + '/ds:Signature');

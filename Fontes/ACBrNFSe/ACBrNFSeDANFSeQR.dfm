@@ -1,6 +1,6 @@
 object fqrDANFSeQR: TfqrDANFSeQR
-  Left = 2
-  Top = 2
+  Left = 202
+  Top = 118
   Width = 880
   Height = 831
   Caption = 'fqrDANFSeQR'
@@ -41,6 +41,7 @@ object fqrDANFSeQR: TfqrDANFSeQR
     Page.Columns = 1
     Page.Orientation = poPortrait
     Page.PaperSize = A4
+    Page.Continuous = False
     Page.Values = (
       100.000000000000000000
       2970.000000000000000000
@@ -73,5 +74,7 @@ object fqrDANFSeQR: TfqrDANFSeQR
     PreviewInitialState = wsNormal
     PrevInitialZoom = qrZoomToFit
     PreviewDefaultSaveType = stQRP
+    PreviewLeft = 0
+    PreviewTop = 0
   end
 end
