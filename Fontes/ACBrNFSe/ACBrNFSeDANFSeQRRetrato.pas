@@ -193,6 +193,9 @@ type
     QRLabel59: TQRLabel;
     QRLabel60: TQRLabel;
     qrlDataServ: TQRLabel;
+    QRShape22: TQRShape;
+    QRLabel61: TQRLabel;
+    qrlCodigoMunicipio: TQRLabel;
     procedure qrb_1_CabecalhoBeforePrint(Sender: TQRCustomBand;
       var PrintBand: Boolean);
     procedure qrb_2_PrestadorServicoBeforePrint(Sender: TQRCustomBand;
@@ -282,6 +285,9 @@ begin
   else qrlCompetencia.Caption := Copy(FNFSe.Competencia, 6, 2) + '/' + Copy(FNFSe.Competencia, 1, 4);
  qrlNumeroRPS.Caption := FNFSe.IdentificacaoRps.Numero;
  qrlNumNFSeSubstituida.Caption := FNFSe.NfseSubstituida;
+ if trim(FNFSe.Servico.CodigoMunicipio)<>'' then
+   qrlCodigoMunicipio.Caption := FNFSe.Servico.CodigoMunicipio + ' - ' +
+                                 CodCidadeToCidade(StrToInt(FNFSe.Servico.CodigoMunicipio));
 end;
 
 procedure TfqrDANFSeQRRetrato.qrb_2_PrestadorServicoBeforePrint(Sender: TQRCustomBand;
