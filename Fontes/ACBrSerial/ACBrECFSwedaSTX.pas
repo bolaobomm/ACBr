@@ -1889,7 +1889,7 @@ begin
    sClassificacao := '0';
    if PermiteVinculado then
       sClassificacao := '2';
-   EnviaComando('36|'+sClassificacao+'|'+Descricao);
+   EnviaComando('36|'+sClassificacao+'|'+LeftStr(Descricao,15) );
 end;
 
 procedure TACBrECFSwedaSTX.ProgramaRelatorioGerencial( var Descricao: String; Posicao: String);

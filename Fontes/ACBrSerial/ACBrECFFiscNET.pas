@@ -1539,8 +1539,8 @@ begin
      NomeComando := 'DefineMeioPagamento' ;
      if StrToIntDef(Posicao,-1) >= 0 then
         AddParamInteger('CodMeioPagamentoProgram', StrToInt(Posicao) ) ;
-     AddParamString('DescricaoMeioPagamento',Descricao) ;
-     AddParamString('NomeMeioPagamento',Descricao) ;
+     AddParamString('DescricaoMeioPagamento', LeftStr(Descricao,80) ) ;
+     AddParamString('NomeMeioPagamento', LeftStr(Descricao,16) ) ;
      AddParamBool('PermiteVinculado',PermiteVinculado) ;
   end ;
   EnviaComando ;
