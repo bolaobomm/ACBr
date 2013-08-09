@@ -1782,6 +1782,7 @@ begin
   FiscNETComando.NomeComando := 'CortaPapel';
   FiscNETComando.AddParamInteger('TipoCorte', TipoCorte);
   EnviaComando;
+  Sleep( 100 );
 end;
 
 

@@ -3145,6 +3145,7 @@ procedure TACBrECFEpson.CortaPapel(const CorteParcial: Boolean);
 begin
   EpsonComando.Comando  := '0702' ;
   EnviaComando ;
+  Sleep( 100 );
 end;
 
 procedure TACBrECFEpson.Suprimento(const Valor : Double ; Obs : AnsiString ;

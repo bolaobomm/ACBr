@@ -2788,6 +2788,7 @@ begin
      Cmd := Cmd + '|' + ifthen( CorteParcial, '1', '2') ;
 
   EnviaComando( Cmd );
+  Sleep( 100 );
 end;
 
 procedure TACBrECFSwedaSTX.IdentificaOperador(Nome: String);

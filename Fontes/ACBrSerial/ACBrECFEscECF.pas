@@ -2448,6 +2448,7 @@ procedure TACBrECFEscECF.CortaPapel(const CorteParcial: Boolean);
 begin
   EscECFComando.CMD := 11;
   EnviaComando;
+  Sleep( 100 );
 end;
 
 function TACBrECFEscECF.GetNumCRZ: String;

@@ -99,6 +99,11 @@ Símbolo : Significado
 
 Data: 08/08/2013
 -- ACBrECF --
+[*] Ajuste para evitar TimeOut em CortaPapel para as classes:         (por: DSA)
+    ACBrECFEpson, ACBrECFDaruma, ACBrECFFiscNET, ACBrECFSwedaSTX, ACBrECFEscECF
+
+Data: 08/08/2013
+-- ACBrECF --
 [*] Ajuste de tamanho máximo no método ProgramaFormaPagamento para as classes:
     ACBrECFFiscNET e ACBrECFSwedaSTX                          (por: DSA)
 

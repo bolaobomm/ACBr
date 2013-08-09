@@ -4356,6 +4356,7 @@ begin
            FlagCorte := ifthen(CorteParcial, #0, #1);
 
         EnviaComando( FS + 'N' + #202 + FlagCorte ) ;
+        Sleep( 100 );
       end
      else
        inherited CortaPapel ;
