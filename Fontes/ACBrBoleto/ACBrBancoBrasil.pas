@@ -399,15 +399,13 @@ begin
 
       wCarteira:= StrToIntDef(Carteira,0);
 
-      if ((wCarteira = 11) or (wCarteira = 12)) and (ACaracTitulo = '1') then
+      if ((wCarteira = 11) or (wCarteira = 12) or (wCarteira = 17)) and (ACaracTitulo = '1') then
          wTipoCarteira := '1'
       else if (((wCarteira = 11) or (wCarteira = 17)) and
                ((ACaracTitulo = '2') or (ACaracTitulo = '3'))) or (wCarteira = 31) then
          wTipoCarteira:= ACaracTitulo
       else if (((wCarteira = 11) or (wCarteira = 17)) and (ACaracTitulo = '4')) or (wCarteira = 51) then
-         wTipoCarteira:= ACaracTitulo
-      else if (wCarteira = 17) and (ACaracTitulo = '1') then
-         wTipoCarteira:= '1'
+         wTipoCarteira:= ACaracTitulo      
       else
          wTipoCarteira:= '7';
 

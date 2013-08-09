@@ -47,6 +47,14 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+Data: 09/08/2013
+-- ACBrBoleto ver. 0.0.77 --
+--ACBrBancoBrasil --
+[*] Corrigida remessa CNAB240 para carteira 17.(Akay)
+
+--ACBrCaixaEconomicaSicob --
+[*] Corrigido número da Agência no campo Código do Cedente do boleto.(Juliana Tamizou)
+
 Data: 08/08/2013
 -- ACBrBoleto ver. 0.0.76 --
 --ACBrBancoHSBC --

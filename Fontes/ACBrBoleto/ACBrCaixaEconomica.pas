@@ -227,7 +227,7 @@ end;
 function TACBrCaixaEconomica.MontarCampoCodigoCedente (
    const ACBrTitulo: TACBrTitulo ) : String;
 begin
-  Result := ACBrTitulo.ACBrBoleto.Cedente.Agencia      + '/' +
+  Result := RightStr(ACBrTitulo.ACBrBoleto.Cedente.Agencia,4)+ '/' +
             ACBrTitulo.ACBrBoleto.Cedente.CodigoCedente+ '-' +
                 CalcularDVCedente(ACBrTitulo);
 end;
