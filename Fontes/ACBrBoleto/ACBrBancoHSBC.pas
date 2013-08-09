@@ -227,7 +227,7 @@ begin
          Parte2 := CalcularFatorVencimento(Vencimento) +
                    IntToStrZero(Round(ValorDocumento * 100), 10) +
                    padR(trim(ACBrBoleto.Cedente.CodigoCedente), 7, '0') +
-                   RightStr(padR(NossoNumero, 13, '0'),13) +
+                   padR(RightStr(NossoNumero, 13), 13, '0') +
                    DataToJuliano(Vencimento);
        end;
 

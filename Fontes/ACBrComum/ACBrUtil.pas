@@ -412,7 +412,7 @@ var
      if ASubVer = '' then
        Result := StringOfChar('0',cDIGITOS_COMPARAR)
      else if StrIsNumber(Result) then  // Se for numerico, remove zeros a esquerda
-       Result := IntToStrZero(StrToInt(Result),cDIGITOS_COMPARAR) ;
+       Result := padR(Result,cDIGITOS_COMPARAR,'0') ;
   end;
 begin
   Result := 0;
