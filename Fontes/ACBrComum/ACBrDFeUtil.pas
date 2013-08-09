@@ -117,7 +117,8 @@ type
      class function ValidaUFCidade(const UF, Cidade: Integer): Boolean; overload;
      class procedure ValidaUFCidade(const UF, Cidade: Integer; const AMensagem: string); overload;
      class function FormatarPlaca(AValue: string): string;
-
+     // Incluido por Italo em 09/08/2013
+     class function FormatarCNPJCPF(AValue : String ): String;
    published
 
    end;
@@ -702,5 +703,17 @@ begin
             copy(AValue,41,4) ;
 end;
 
+class function DFeUtil.FormatarCNPJCPF(AValue: String): String;
+begin
+  if Length(AValue) = 0 then
+     Result := AValue
+  else
+   begin
+    if Length(AValue) = 14 then
+     Result := FormatarCNPJ(AValue)
+    else
+     Result := FormatarCPF(AValue);
+   end;
+end;
 
 end.
