@@ -1,7 +1,7 @@
 object frmPrincipal: TfrmPrincipal
   Left = 359
   Top = 202
-  ActiveControl = wizPgInicio
+  ActiveControl = edtDirDestino
   BorderIcons = [biSystemMenu, biMinimize]
   BorderStyle = bsSingle
   Caption = 'Instalador ACBr'
@@ -24,7 +24,7 @@ object frmPrincipal: TfrmPrincipal
     Top = 0
     Width = 720
     Height = 612
-    ActivePage = wizPgInicio
+    ActivePage = wizPgConfiguracao
     ButtonBarHeight = 42
     ButtonStart.Caption = 'Para o in'#237'cio'
     ButtonStart.NumGlyphs = 1
@@ -1195,7 +1195,7 @@ object frmPrincipal: TfrmPrincipal
       end
       object ckbInstalarCapicom: TCheckBox
         Left = 17
-        Top = 186
+        Top = 198
         Width = 97
         Height = 17
         Caption = 'Instalar Capicom'
@@ -1203,7 +1203,7 @@ object frmPrincipal: TfrmPrincipal
       end
       object ckbInstalarOpenSSL: TCheckBox
         Left = 17
-        Top = 209
+        Top = 221
         Width = 97
         Height = 17
         Caption = 'Instalar OpenSSL'
@@ -1211,7 +1211,7 @@ object frmPrincipal: TfrmPrincipal
       end
       object ckbUtilizarOpenSSL: TCheckBox
         Left = 17
-        Top = 163
+        Top = 175
         Width = 304
         Height = 17
         Caption = 'Utilizar o OpenSSL ao inv'#233's da Capicom na NF-e e similares'
@@ -1220,7 +1220,7 @@ object frmPrincipal: TfrmPrincipal
       end
       object rdgDLL: TRadioGroup
         Left = 41
-        Top = 272
+        Top = 284
         Width = 350
         Height = 107
         Caption = 'Local para onde ser'#227'o copiadas as DLL'#39's'
@@ -1234,7 +1234,7 @@ object frmPrincipal: TfrmPrincipal
       end
       object ckbCopiarTodasDll: TCheckBox
         Left = 17
-        Top = 244
+        Top = 256
         Width = 305
         Height = 17
         Hint = 'Copia todas as DLL'#180's "Extras" para o destino selecionado'
@@ -1415,7 +1415,7 @@ object frmPrincipal: TfrmPrincipal
       OnNextButtonClick = wizPgInstalacaoNextButtonClick
       object btnInstalarACBr: TSpeedButton
         Left = 430
-        Top = 395
+        Top = 463
         Width = 106
         Height = 25
         Caption = 'Instalar'
@@ -1423,7 +1423,7 @@ object frmPrincipal: TfrmPrincipal
       end
       object btnVisualizarLogCompilacao: TSpeedButton
         Left = 20
-        Top = 395
+        Top = 463
         Width = 106
         Height = 25
         Caption = 'Visualizar log'
@@ -1433,7 +1433,7 @@ object frmPrincipal: TfrmPrincipal
         Left = 20
         Top = 72
         Width = 516
-        Height = 294
+        Height = 362
         ItemHeight = 13
         ParentShowHint = False
         ShowHint = True
@@ -1441,7 +1441,7 @@ object frmPrincipal: TfrmPrincipal
       end
       object pgbInstalacao: TProgressBar
         Left = 20
-        Top = 372
+        Top = 440
         Width = 516
         Height = 17
         TabOrder = 1
