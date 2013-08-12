@@ -360,6 +360,17 @@
     </xs:restriction>
   </xs:simpleType>
 
+  <xs:simpleType name="tsOutrasInformacoes">
+    <xs:annotation>
+      <xs:documentation>Dados adicionais NFS-e.</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:minLength value="0" />
+      <xs:maxLength value="255" />
+      <xs:whiteSpace value="collapse" />
+    </xs:restriction>
+  </xs:simpleType>
+  
   <!-- Tipos Complexos-->
   <xs:complexType name="tcIdentificacaoPrestador">
     <xs:annotation>
@@ -445,6 +456,7 @@
       <xs:element name="OptanteSimplesNacional" type="tipos:TsSimNao" minOccurs="1" maxOccurs="1" />
       <xs:element name="IncentivadorCultural" type="tipos:TsSimNao" minOccurs="1" maxOccurs="1" />
       <xs:element name="Status" type="tipos:TsStatusRps" minOccurs="1" maxOccurs="1" />
+      <xs:element name="OutrasInformacoes" type="tipos:tsOutrasInformacoes" minOccurs="0" maxOccurs="1" />
       <xs:element name="RpsSubstituido" type="tipos:tcIdentificacaoRps" minOccurs="0" maxOccurs="1" />
       <xs:element name="Servico" type="tipos:TcDadosServico" minOccurs="1" maxOccurs="1" />
       <xs:element name="Prestador" type="tipos:tcIdentificacaoPrestador" minOccurs="1" maxOccurs="1" />
