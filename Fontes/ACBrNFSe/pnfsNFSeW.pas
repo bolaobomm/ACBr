@@ -205,7 +205,7 @@ begin
         Gerador.wCampoNFSe(tcStr, '#9', 'Status                ', 01, 01, 1, StatusRPSToStr(NFSe.Status), '');
         GerarRPSSubstituido;
 
-        if FProvedor = proSimplISS
+        if (FProvedor in [proSimplISS, proBetha])
          then Gerador.wCampoNFSe(tcStr, '#11', 'OutrasInformacoes', 001, 255, 0, NFSe.OutrasInformacoes, '');
 
         GerarServico;
