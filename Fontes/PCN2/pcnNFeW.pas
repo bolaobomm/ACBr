@@ -56,7 +56,7 @@ unit pcnNFeW;
 interface uses
 
   SysUtils, Classes,
-  pcnAuxiliar, pcnConversao, pcnGerador, pcnNFe, pcnLayoutTXT;
+  pcnAuxiliar, pcnConversao, pcnGerador, pcnNFe, pcnLayoutTXT, ACBrDFeUtil;
 
 type
 
@@ -83,10 +83,12 @@ type
     procedure GerarDestEnderDest(var UF: string);
     procedure GerarRetirada;
     procedure GerarEntrega;
+    procedure GerarautXML;    
     procedure GerarDet;
     procedure GerarDetProd(const i: integer);
     procedure GerarDetProdDI(const i: integer);
     procedure GerarDetProdDIadi(const i, j: integer);
+    procedure GerarDetProddetExport(const i: integer);
     procedure GerarDetProdVeicProd(const i: integer);
     procedure GerarDetProdMed(const i: integer);
     procedure GerarDetProdArma(const i: integer);
@@ -104,6 +106,7 @@ type
     procedure GerarDetImpostoCOFINS(const i: integer);
     procedure GerarDetImpostoCOFINSST(const i: integer);
     procedure GerarDetImpostoISSQN(const i: integer);
+    procedure GerarDetDevol(const i: integer);
     procedure GerarTotal;
     procedure GerarTotalICMSTotal;
     procedure GerarTotalISSQNtot;
@@ -222,12 +225,15 @@ begin
        Gerador.wAlerta('A01', 'infNFe', DSC_CHAVE, ERR_MSG_GERAR_CHAVE);
    end;
 
+  if (copy(nfe.infNFe.ID, 1, 3) <> 'NFe') then
+    NFe.infNFe.ID := 'NFe' + NFe.infNFe.ID;
+
   if (Trim(nfe.infNFe.ID) = '') or (not ValidarChave(nfe.infNFe.ID)) then
      nfe.infNFe.ID := chave
   else
    begin
-     NFe.infNFe.ID := StringReplace( UpperCase(NFe.infNFe.ID), 'NFE', '', [rfReplaceAll] ) ;;
-     NFe.infNFe.ID := 'NFe'+NFe.infNFe.ID;
+     NFe.infNFe.ID := StringReplace( UpperCase(NFe.infNFe.ID), 'NFE', '', [rfReplaceAll] ) ;
+     NFe.infNFe.ID := 'NFe' + NFe.infNFe.ID;
    end;
    
   nfe.ide.cDV := RetornarDigito(nfe.infNFe.ID);
@@ -306,12 +312,13 @@ begin
 
   GerarRetirada;
   GerarEntrega;
+  GerarautXML;
   GerarDet;
   GerarTotal;
   GerarTransp;
   GerarCobr;
 
-  if (nfe.infNFe.Versao >= 3) and (nfe.Ide.modelo = 65) then 
+  if (nfe.infNFe.Versao >= 3) and (nfe.Ide.modelo = 65) then
      Gerarpag;
 
   GerarInfAdic;
@@ -353,10 +360,10 @@ begin
 
   if nfe.infNFe.Versao >= 3 then  //Verificar
    begin
-    if nfe.ide.modelo = 55 then 
-       Gerador.wCampo(tcStr, 'B11a', 'idDest', 01, 01, 1, DestinoOperacaoToStr(nfe.Ide.idDest), 'erro')
+    if nfe.ide.modelo = 55 then
+       Gerador.wCampo(tcStr, 'B11a', 'idDest', 01, 01, 1, DestinoOperacaoToStr(nfe.Ide.idDest), DSC_IDDEST)
     else 
-       Gerador.wCampo(tcStr, 'B11a', 'idDest', 01, 01, 1, '1', 'erro');
+       Gerador.wCampo(tcStr, 'B11a', 'idDest', 01, 01, 1, '1', DSC_IDDEST);
    end;
 
   Gerador.wCampo(tcInt, 'B12', 'cMunFG ', 07, 07, 1, nfe.ide.cMunFG, DSC_CMUNFG);
@@ -371,22 +378,23 @@ begin
 
   if nfe.infNFe.Versao >= 3 then
    begin
-    Gerador.wCampo(tcStr, 'B25a', 'indFinal', 01, 01, 1, ConsumidorFinalToStr(nfe.Ide.indFinal), 'erro');
-    Gerador.wCampo(tcStr, 'B25b', 'indPres ', 01, 01, 1, PresencaCompradorToStr(nfe.Ide.indPres), 'erro');
+    Gerador.wCampo(tcStr, 'B25a', 'indFinal', 01, 01, 1, ConsumidorFinalToStr(nfe.Ide.indFinal), DSC_INDFINAL);
+    Gerador.wCampo(tcStr, 'B25b', 'indPres ', 01, 01, 1, PresencaCompradorToStr(nfe.Ide.indPres), DSC_INDPRES);
    end;
 
   Gerador.wCampo(tcStr, 'B26', 'procEmi', 01, 01, 1, procEmiToStr(nfe.Ide.procEmi), DSC_PROCEMI);
   Gerador.wCampo(tcStr, 'B27', 'verProc', 01, 20, 1, nfe.Ide.verProc, DSC_VERPROC);
 
-  if nfe.Ide.dhCont > 0 then 
+  if (nfe.Ide.dhCont > 0) or (nfe.Ide.xJust <> '') then
    begin
-    if nfe.infNFe.Versao >= 3 then 
-       Gerador.wCampo(tcStr, 'B28', 'dhCont ', 19, 19, 0, DateTimeTodh(nfe.ide.dhCont) + GetUTC(CodigoParaUF(nfe.ide.cUF), nfe.ide.dhCont), DSC_DHCONT)
-    else 
-       Gerador.wCampo(tcStr, 'B28', 'dhCont ', 19, 19, 0, DateTimeTodh(nfe.Ide.dhCont), DSC_DHCONT);
+    if nfe.infNFe.Versao >= 3 then
+       Gerador.wCampo(tcStr, 'B28', 'dhCont ', 19, 19, 1, DateTimeTodh(nfe.ide.dhCont) + GetUTC(CodigoParaUF(nfe.ide.cUF), nfe.ide.dhCont), DSC_DHCONT)
+    else
+       Gerador.wCampo(tcStr, 'B28', 'dhCont ', 19, 19, 1, DateTimeTodh(nfe.Ide.dhCont), DSC_DHCONT);
+
+    Gerador.wCampo(tcStr, 'B29', 'xJust  ', 01,256, 1, nfe.ide.xJust, DSC_XJUSTCONT);
    end;
 
-  Gerador.wCampo(tcStr, 'B29', 'xJust  ', 01,256, 0, nfe.ide.xJust, DSC_XJUSTCONT);
   Gerador.wGrupo('/ide');
 end;
 
@@ -548,22 +556,48 @@ begin
   Gerador.wGrupo('dest', 'E01');
 //  Gerador.wCampoCNPJCPF('E02', 'E03', nfe.Dest.CNPJCPF, nfe.Dest.enderDest.cPais);
 
-    if nfe.infNFe.Versao >= 3 then 
+    if nfe.infNFe.Versao >= 3 then
      begin
-      if nfe.Dest.idEstrangeiro <> '' then 
-         Gerador.wCampo(tcStr, 'E03a', 'idEstrangeiro', 01, 20, 1, nfe.Dest.idEstrangeiro, 'erro')
-      else 
+      if nfe.Dest.idEstrangeiro <> '' then
+         Gerador.wCampo(tcStr, 'E03a', 'idEstrangeiro', 01, 20, 1, nfe.Dest.idEstrangeiro, DSC_IDESTR)
+      else
          Gerador.wCampoCNPJCPF('E02', 'E03', nfe.Dest.CNPJCPF, nfe.Dest.enderDest.cPais);
      end
-    else 
+    else
        Gerador.wCampoCNPJCPF('E02', 'E03', nfe.Dest.CNPJCPF, nfe.Dest.enderDest.cPais);
-  if nfe.Ide.tpAmb = taProducao then
-    Gerador.wCampo(tcStr, 'E04', 'xNome  ', 02, 60, 1, nfe.Dest.xNome, DSC_XNOME)
-  else
-    Gerador.wCampo(tcStr, 'E04', 'xNome  ', 02, 60, 1, HOM_NOME_DEST, DSC_XNOME);
 
-  (**)GerarDestEnderDest(UF);
+  // Alterado por Italo em 13/08/2013
+  // Quando for NFC-e (modelo = 65) o nome do destinatário é opcional
+  if nfe.Ide.tpAmb = taProducao then
+  begin
+    if nfe.Ide.modelo = 55 then
+      Gerador.wCampo(tcStr, 'E04', 'xNome  ', 02, 60, 1, nfe.Dest.xNome, DSC_XNOME)
+    else
+      Gerador.wCampo(tcStr, 'E04', 'xNome  ', 02, 60, 0, nfe.Dest.xNome, DSC_XNOME);
+  end
+  else
+  begin
+    if nfe.Ide.modelo = 55 then
+      Gerador.wCampo(tcStr, 'E04', 'xNome  ', 02, 60, 1, HOM_NOME_DEST, DSC_XNOME)
+    else
+      Gerador.wCampo(tcStr, 'E04', 'xNome  ', 02, 60, 0, HOM_NOME_DEST, DSC_XNOME);
+  end;
+
+  // Alterado por Italo em 13/08/2013
+  // Quando for NFC-e (modelo = 65) o endereço do destinatário é opcional
+  if nfe.Ide.modelo = 55 then
+    (**)GerarDestEnderDest(UF)
+  else
+  begin
+    if nfe.Dest.EnderDest.xLgr <> '' then
+      (**)GerarDestEnderDest(UF)
+  end;
+
   Gerador.IDNivel := 'E01';
+
+  if nfe.infNFe.Versao >= 3 then
+    Gerador.wCampo(tcStr, 'E16a', 'indIEDest', 01, 01, 1, indIEDestToStr(nfe.Dest.indIEDest), DSC_INDIEDEST);
+
   // Inscrição Estadual
   if nfe.Dest.IE = 'ISENTO' then
     Gerador.wCampo(tcStr, 'E17', 'IE ', 00, 14, 1, nfe.Dest.IE, DSC_IE)
@@ -579,6 +613,7 @@ begin
   if (FOpcoes.ValidarInscricoes) and (nfe.Dest.ISUF <> '') then
     if not ValidarISUF(nfe.Dest.ISUF) then
       Gerador.wAlerta('E18', 'ISUF', DSC_ISUF, ERR_MSG_INVALIDO);
+  Gerador.wCampo(tcStr, 'E18a', 'IM     ', 01, 15, 0, nfe.Dest.IM, DSC_IM);
   Gerador.wCampo(tcStr, 'E19', 'email   ', 01, 60, 0, nfe.Dest.Email, DSC_EMAIL);
   Gerador.wGrupo('/dest');
 end;
@@ -665,6 +700,20 @@ begin
   end;
 end;
 
+procedure TNFeW.GerarautXML;
+var
+  i: integer;
+begin
+  for i := 0 to NFe.autXML.Count - 1 do
+  begin
+    Gerador.wGrupo('autXML', 'G50');
+    Gerador.wCampoCNPJCPF('G51', 'G52', NFe.autXML[i].CNPJCPF, CODIGO_BRASIL);
+    Gerador.wGrupo('/autXML');
+  end;
+  if NFe.autXML.Count > 10 then
+    Gerador.wAlerta('G50', 'autXML', DSC_LACR, ERR_MSG_MAIOR_MAXIMO + '10');
+end;
+
 procedure TNFeW.GerarDet;
 var
   i: integer;
@@ -675,6 +724,10 @@ begin
     Gerador.gtCampo('nItem', IntToStr(nfe.Det[i].Prod.nItem));
     (**)GerarDetProd(i);
     (**)GerarDetImposto(i);
+
+    if nfe.Det[i].pDevol > 0 then
+      (**)GerarDetDevol(i);
+
     Gerador.IDNivel := 'H01';
     Gerador.wCampo(tcStr, 'V01', 'infAdProd', 01, 500, 0, nfe.Det[i].infAdProd, DSC_INFADPROD);
     Gerador.wGrupo('/det');
@@ -690,6 +743,9 @@ begin
   Gerador.wCampo(tcStr, 'I03 ', 'cEAN    ', 00, 14, 1, nfe.Det[i].Prod.cEAN, DSC_CEAN);
   Gerador.wCampo(tcStr, 'I04 ', 'xProd   ', 1, 120, 1, nfe.Det[i].Prod.xProd, DSC_XPROD);
   Gerador.wCampo(tcStr, 'I05 ', 'NCM     ', 02, 08,   IIf(NFe.infNFe.Versao >= 2,1,0), nfe.Det[i].Prod.NCM, DSC_NCM);
+  Gerador.wCampo(tcStr, 'I05a', 'NVE     ', 06, 06, 0, nfe.Det[i].Prod.NVE, DSC_NVE);
+  if not DFeUtil.ValidaNVE(nfe.Det[i].Prod.NVE) then
+    Gerador.wAlerta('I05a', 'NVE', DSC_NVE, ERR_MSG_INVALIDO);
   Gerador.wCampo(tcStr, 'I06 ', 'EXTIPI  ', 02, 03, 0, nfe.Det[i].Prod.EXTIPI, DSC_EXTIPI);
   //Gerador.wCampo(tcInt, 'I07 ', 'genero  ', 02, 02, 0, nfe.Det[i].Prod.genero, DSC_GENERO);
   Gerador.wCampo(tcEsp, 'I08 ', 'CFOP    ', 04, 04, 1, somenteNumeros(nfe.Det[i].Prod.CFOP), DSC_CFOP);
@@ -710,10 +766,15 @@ begin
   (**)GerarDetProdDI(i);
   Gerador.wCampo(tcStr, 'I30', 'xPed       ', 01, 15, 0, nfe.Det[i].Prod.xPed, DSC_XPED);
   Gerador.wCampo(tcInt, 'I31', 'nItemPed   ', 06, 06, 0, nfe.Det[i].Prod.nItemPed, DSC_NITEMPED);
+  (**)GerarDetProddetExport(i);
+  Gerador.wCampo(tcStr, 'I70', 'nFCI       ', 36, 36, 0, nfe.Det[i].Prod.nFCI, DSC_NFCI);
   (**)GerarDetProdVeicProd(i);
   (**)GerarDetProdMed(i);
   (**)GerarDetProdArma(i);
   (**)GerarDetProdComb(i);
+  Gerador.wCampo(tcStr, 'L109', 'nRECOPI', 20, 20, 0, nfe.Det[i].Prod.nRECOPI, DSC_NRECOPI);
+  if not DFeUtil.ValidaRECOPI(nfe.Det[i].Prod.nRECOPI) then
+    Gerador.wAlerta('L109', 'nRECOPI', DSC_NRECOPI, ERR_MSG_INVALIDO);
   Gerador.wGrupo('/prod');
 end;
 
@@ -725,12 +786,28 @@ begin
   begin
     Gerador.wGrupo('DI', 'I18');
     Gerador.wCampo(tcStr, 'I19', 'nDI        ', 01, 12, 1, nfe.Det[i].Prod.DI[j].nDI, DSC_NDI);
+
+    if not DFeUtil.ValidaDIDSI(nfe.Det[i].Prod.DI[j].nDI) then
+      Gerador.wAlerta('I19', 'nDI', DSC_NDI, ERR_MSG_INVALIDO);
+
     Gerador.wCampo(tcDat, 'I20', 'dDI        ', 10, 10, 1, nfe.Det[i].Prod.DI[j].dDI, DSC_DDi);
     Gerador.wCampo(tcStr, 'I21', 'xLocDesemb ', 01, 60, 1, nfe.Det[i].Prod.DI[j].xLocDesemb, DSC_XLOCDESEMB);
     Gerador.wCampo(tcStr, 'I22', 'UFDesemb   ', 02, 02, 1, nfe.Det[i].Prod.DI[j].UFDesemb, DSC_UFDESEMB);
     if not ValidarUF(nfe.Det[i].Prod.DI[j].UFDesemb) then
       Gerador.wAlerta('I22', 'UFDesemb', DSC_UFDESEMB, ERR_MSG_INVALIDO);
     Gerador.wCampo(tcDat, 'I23', 'dDesemb    ', 10, 10, 1, nfe.Det[i].Prod.DI[j].dDesemb, DSC_DDESEMB);
+
+    if nfe.infNFe.Versao >= 3 then
+    begin
+      Gerador.wCampo(tcStr, 'I23a', 'tpViaTransp ', 02, 02, 1, TipoViaTranspToStr(nfe.Det[i].Prod.DI[j].tpViaTransp), DSC_TPVIATRANSP);
+      Gerador.wCampo(tcDe2, 'I23b', 'vAFRMM      ', 00, 15, 0, nfe.Det[i].Prod.DI[j].vAFRMM, DSC_VAFRMM);
+      Gerador.wCampo(tcStr, 'I23c', 'tpIntermedio', 01, 01, 1, TipoIntermedioToStr(nfe.Det[i].Prod.DI[j].tpIntermedio), DSC_TPINTERMEDIO);
+      Gerador.wCampoCNPJCPF('I23d', 'I23d', nfe.Det[i].Prod.DI[j].CNPJ, CODIGO_BRASIL);
+      Gerador.wCampo(tcStr, 'I23e', 'UFTerceiro  ', 02, 02, 1, nfe.Det[i].Prod.DI[j].UFTerceiro, DSC_UF);
+      if not ValidarUF(nfe.Det[i].Prod.DI[j].UFTerceiro) then
+        Gerador.wAlerta('I23e', 'UFTerceiro', DSC_UF, ERR_MSG_INVALIDO);
+    end;
+
     Gerador.wCampo(tcStr, 'I24', 'cExportador', 01, 60, 1, nfe.Det[i].Prod.DI[j].cExportador, DSC_CEXPORTADOR);
     (**)GerarDetProdDIadi(i, j);
     Gerador.wGrupo('/DI');
@@ -750,10 +827,43 @@ begin
     Gerador.wCampo(tcInt, 'I27', 'nSeqAdic   ', 01, 03, 1, nfe.Det[i].Prod.DI[j].adi[k].nSeqAdi, DSC_NSEQADIC);
     Gerador.wCampo(tcStr, 'I28', 'cFabricante', 01, 60, 1, nfe.Det[i].Prod.DI[j].adi[k].cFabricante, DSC_CFABRICANTE);
     Gerador.wCampo(tcDe2, 'I29', 'vDescDI    ', 00, 15, 0, nfe.Det[i].Prod.DI[j].adi[k].vDescDI, DSC_VDESCDI);
+    Gerador.wCampo(tcStr, 'I29a', 'nDraw     ', 11, 11, 0, nfe.Det[i].Prod.DI[j].adi[k].nDraw, DSC_NDRAW);
+    if not DFeUtil.ValidaDrawback(nfe.Det[i].Prod.DI[j].adi[k].nDraw) then
+      Gerador.wAlerta('I29a', 'nDraw', DSC_NDRAW, ERR_MSG_INVALIDO);
     Gerador.wGrupo('/adi');
   end;
   if nfe.Det[i].Prod.DI[j].adi.Count > 100 then
     Gerador.wAlerta('I25', 'adi', DSC_NITEM, ERR_MSG_MAIOR_MAXIMO + '100');
+end;
+
+procedure TNFeW.GerarDetProddetExport(const i: integer);
+var
+  j: integer;
+begin
+  for j := 0 to nfe.Det[i].Prod.detExport.Count - 1 do
+  begin
+    Gerador.wGrupo('detExport', 'I50');
+    Gerador.wCampo(tcStr, 'I51', 'nDraw      ', 11, 11, 0, nfe.Det[i].Prod.detExport[j].nDraw, DSC_NDRAW);
+    if not DFeUtil.ValidaDrawback(nfe.Det[i].Prod.detExport[j].nDraw) then
+      Gerador.wAlerta('I51', 'nDraw', DSC_NDRAW, ERR_MSG_INVALIDO);
+
+    if nfe.Det[i].Prod.detExport[j].nRE <> '' then
+    begin
+      Gerador.wGrupo('exportInd', 'I51');
+      Gerador.wCampo(tcStr, 'I53', 'nRE    ', 12, 12, 1, nfe.Det[i].Prod.detExport[j].nRE, DSC_NRE);
+      if not DFeUtil.ValidaRE(nfe.Det[i].Prod.detExport[j].nRE) then
+        Gerador.wAlerta('I53', 'nRE', DSC_NRE, ERR_MSG_INVALIDO);
+      Gerador.wCampo(tcEsp, 'I54', 'chNFe  ', 44, 44, 1, SomenteNumeros(nfe.Det[i].Prod.detExport[j].chNFe), DSC_REFNFE);
+      if not ValidarChave('NFe' + SomenteNumeros(nfe.Det[i].Prod.detExport[j].chNFe)) then
+        Gerador.wAlerta('I54', 'chNFe', DSC_REFNFE, ERR_MSG_INVALIDO);
+      Gerador.wCampo(tcDe4, 'I55', 'qExport', 00, 15, 1, nfe.Det[i].Prod.detExport[j].qExport, DSC_QEXPORT);
+      Gerador.wGrupo('/exportInd');
+    end;
+
+    Gerador.wGrupo('/detExport');
+  end;
+  if nfe.Det[i].Prod.detExport.Count > 500 then
+    Gerador.wAlerta('I50', 'detExport', DSC_NITEM, ERR_MSG_MAIOR_MAXIMO + '500');
 end;
 
 procedure TNFeW.GerarDetProdVeicProd(const i: integer);
@@ -813,6 +923,8 @@ begin
     Gerador.wCampo(tcDe2, 'K06', 'vPMC ', 00, 15, 1, nfe.Det[i].Prod.med[j].vPMC, DSC_VPMC);
     Gerador.wGrupo('/med');
   end;
+  if nfe.Det[i].Prod.med.Count > 500 then
+    Gerador.wAlerta('K01', 'med', DSC_NITEM, ERR_MSG_MAIOR_MAXIMO + '500');
 end;
 
 procedure TNFeW.GerarDetProdArma(const i: integer);
@@ -821,13 +933,15 @@ var
 begin
   for j := 0 to nfe.Det[i].Prod.arma.Count - 1 do
   begin
-    Gerador.wGrupo('arma', 'L00');
+    Gerador.wGrupo('arma', 'L01');
     Gerador.wCampo(tcStr, 'L02', 'tpArma', 01, 001, 1, tpArmaToStr(nfe.Det[i].Prod.arma[j].tpArma), DSC_TPARMA);
-    Gerador.wCampo(tcStr, 'L03', 'nSerie', 01, 009, 1, nfe.Det[i].Prod.arma[j].nSerie, DSC_NSERIE);
-    Gerador.wCampo(tcStr, 'L04', 'nCano ', 01, 009, 1, nfe.Det[i].Prod.arma[j].nCano, DSC_NCANO);
+    Gerador.wCampo(tcStr, 'L03', 'nSerie', 01, 015, 1, nfe.Det[i].Prod.arma[j].nSerie, DSC_NSERIE);
+    Gerador.wCampo(tcStr, 'L04', 'nCano ', 01, 015, 1, nfe.Det[i].Prod.arma[j].nCano, DSC_NCANO);
     Gerador.wCampo(tcStr, 'L05', 'descr ', 01, 256, 1, nfe.Det[i].Prod.arma[j].descr, DSC_DESCR);
     Gerador.wGrupo('/arma');
   end;
+  if nfe.Det[i].Prod.arma.Count > 500 then
+    Gerador.wAlerta('L01', 'arma', DSC_NITEM, ERR_MSG_MAIOR_MAXIMO + '500');
 end;
 
 procedure TNFeW.GerarDetProdComb(const i: integer);
@@ -836,8 +950,9 @@ begin
   begin
     Gerador.wGrupo('comb', 'L01');
     Gerador.wCampo(tcInt, 'L102', 'cProdANP', 09, 09, 1, nfe.Det[i].Prod.comb.cProdANP, DSC_CPRODANP);
+    Gerador.wCampo(tcDe4, 'L102a', 'pMixGN ', 00, 06, 0, nfe.Det[i].Prod.comb.pMixGN, DSC_PMIXGN);
 
-    if (trim(nfe.Det[i].Prod.comb.CODIF))  <> '' then Gerador.wCampo(tcEsp, 'L103', 'CODIF   ', 00, 21, 1, nfe.Det[i].Prod.comb.CODIF, DSC_CODIF);
+    if (trim(nfe.Det[i].Prod.comb.CODIF)) <> '' then Gerador.wCampo(tcEsp, 'L103', 'CODIF   ', 00, 21, 1, nfe.Det[i].Prod.comb.CODIF, DSC_CODIF);
     if nfe.Det[i].Prod.comb.qTemp         <> 0  then Gerador.wCampo(tcDe4, 'L104', 'qTemp   ', 01, 16, 1, nfe.Det[i].Prod.comb.qTemp, DSC_QTEMP);
 
     if  (nfe.infNFe.Versao < 2) and ((nfe.Det[i].Prod.comb.ICMS.vBCICMS    > 0) or
@@ -1009,7 +1124,7 @@ begin
                   begin
                      Gerador.wCampo(tcStr, 'N13', 'modBC   ', 01, 01, 1, modBCToStr(nfe.Det[i].Imposto.ICMS.modBC), DSC_MODBC);
                      Gerador.wCampo(tcDe2, 'N15', 'vBC     ', 01, 15, 1, nfe.Det[i].Imposto.ICMS.vBC, DSC_VBC);
-                     Gerador.wCampo(tcDe2, 'N16', 'pICMS   ', 01, 05, 1, nfe.Det[i].Imposto.ICMS.pICMS, DSC_PICMS);
+                     Gerador.wCampo(tcDe4, 'N16', 'pICMS   ', 01, 05, 1, nfe.Det[i].Imposto.ICMS.pICMS, DSC_PICMS);
                      Gerador.wCampo(tcDe2, 'N17', 'vICMS   ', 01, 15, 1, nfe.Det[i].Imposto.ICMS.vICMS, DSC_VICMS);
                   end;
                cst10,
@@ -1020,64 +1135,89 @@ begin
                      if (nfe.Det[i].Imposto.ICMS.UFST <> '') or
                         (nfe.Det[i].Imposto.ICMS.pBCOp <> 0) or
                         (nfe.Det[i].Imposto.ICMS.CST = cstPart10) then
-                        Gerador.wCampo(tcDe2, 'N14', 'pRedBC  ', 01, 05, 0, nfe.Det[i].Imposto.ICMS.pRedBC, DSC_PREDBC);
-                     Gerador.wCampo(tcDe2, 'N16', 'pICMS   ', 01, 05, 1, nfe.Det[i].Imposto.ICMS.pICMS, DSC_PICMS);
+                        Gerador.wCampo(tcDe4, 'N14', 'pRedBC  ', 01, 05, 0, nfe.Det[i].Imposto.ICMS.pRedBC, DSC_PREDBC);
+                     Gerador.wCampo(tcDe4, 'N16', 'pICMS   ', 01, 05, 1, nfe.Det[i].Imposto.ICMS.pICMS, DSC_PICMS);
                      Gerador.wCampo(tcDe2, 'N17', 'vICMS   ', 01, 15, 1, nfe.Det[i].Imposto.ICMS.vICMS, DSC_VICMS);
                      Gerador.wCampo(tcStr, 'N18', 'modBCST ', 01, 01, 1, modBCSTToStr(nfe.Det[i].Imposto.ICMS.modBCST), DSC_MODBCST);
-                     Gerador.wCampo(tcDe2, 'N19', 'pMVAST  ', 01, 05, 0, nfe.Det[i].Imposto.ICMS.pMVAST, DSC_PMVAST);
-                     Gerador.wCampo(tcDe2, 'N20', 'pRedBCST', 01, 05, 0, nfe.Det[i].Imposto.ICMS.pRedBCST, DSC_PREDBCST);
+                     Gerador.wCampo(tcDe4, 'N19', 'pMVAST  ', 01, 05, 0, nfe.Det[i].Imposto.ICMS.pMVAST, DSC_PMVAST);
+                     Gerador.wCampo(tcDe4, 'N20', 'pRedBCST', 01, 05, 0, nfe.Det[i].Imposto.ICMS.pRedBCST, DSC_PREDBCST);
                      Gerador.wCampo(tcDe2, 'N21', 'vBCST   ', 01, 15, 1, nfe.Det[i].Imposto.ICMS.vBCST, DSC_VBCST);
-                     Gerador.wCampo(tcDe2, 'N22', 'pICMSST ', 01, 05, 1, nfe.Det[i].Imposto.ICMS.pICMSST, DSC_PICMSST);
+                     Gerador.wCampo(tcDe4, 'N22', 'pICMSST ', 01, 05, 1, nfe.Det[i].Imposto.ICMS.pICMSST, DSC_PICMSST);
                      Gerador.wCampo(tcDe2, 'N23', 'vICMSST ', 01, 15, 1, nfe.Det[i].Imposto.ICMS.vICMSST, DSC_VICMSST);
                      if (nfe.Det[i].Imposto.ICMS.UFST <> '') or
                         (nfe.Det[i].Imposto.ICMS.pBCOp <> 0) or
                         (nfe.Det[i].Imposto.ICMS.CST = cstPart10) then
                       begin
-                        Gerador.wCampo(tcDe2, 'N25', 'pBCOp   ', 01, 05, 1, nfe.Det[i].Imposto.ICMS.pBCOp, DSC_PBCOP);
+                        Gerador.wCampo(tcDe4, 'N25', 'pBCOp   ', 01, 05, 1, nfe.Det[i].Imposto.ICMS.pBCOp, DSC_PBCOP);
                         Gerador.wCampo(tcStr, 'N24', 'UFST    ', 02, 02, 1, nfe.Det[i].Imposto.ICMS.UFST, DSC_UFST);
                       end;
                   end;
                cst20 :
                   begin
                      Gerador.wCampo(tcStr, 'N13', 'modBC   ', 01, 01, 1, modBCToStr(nfe.Det[i].Imposto.ICMS.modBC), DSC_MODBC);
-                     Gerador.wCampo(tcDe2, 'N14', 'pRedBC  ', 01, 05, 1, nfe.Det[i].Imposto.ICMS.pRedBC, DSC_PREDBC);
+                     Gerador.wCampo(tcDe4, 'N14', 'pRedBC  ', 01, 05, 1, nfe.Det[i].Imposto.ICMS.pRedBC, DSC_PREDBC);
                      Gerador.wCampo(tcDe2, 'N15', 'vBC     ', 01, 15, 1, nfe.Det[i].Imposto.ICMS.vBC, DSC_VBC);
-                     Gerador.wCampo(tcDe2, 'N16', 'pICMS   ', 01, 05, 1, nfe.Det[i].Imposto.ICMS.pICMS, DSC_PICMS);
+                     Gerador.wCampo(tcDe4, 'N16', 'pICMS   ', 01, 05, 1, nfe.Det[i].Imposto.ICMS.pICMS, DSC_PICMS);
                      Gerador.wCampo(tcDe2, 'N17', 'vICMS   ', 01, 15, 1, nfe.Det[i].Imposto.ICMS.vICMS, DSC_VICMS);
+
+                     if nfe.Det[i].Imposto.ICMS.vICMSDeson > 0 then
+                     begin
+                       Gerador.wCampo(tcDe2, 'N17a', 'vICMSDeson', 01, 15, 1, nfe.Det[i].Imposto.ICMS.vICMSDeson, DSC_VICMSDESON);
+                       Gerador.wCampo(tcStr, 'N17b', 'motDesICMS', 01, 02, 1, motDesICMSToStr(nfe.Det[i].Imposto.ICMS.motDesICMS), DSC_MOTDESICMS);
+                     end;
                   end;
                cst30 :
                   begin
                      Gerador.wCampo(tcStr, 'N18', 'modBCST ', 01, 01, 1, modBCSTToStr(nfe.Det[i].Imposto.ICMS.modBCST), DSC_MODBCST);
-                     Gerador.wCampo(tcDe2, 'N19', 'pMVAST  ', 01, 05, 0, nfe.Det[i].Imposto.ICMS.pMVAST, DSC_PMVAST);
-                     Gerador.wCampo(tcDe2, 'N20', 'pRedBCST', 01, 05, 0, nfe.Det[i].Imposto.ICMS.pRedBCST, DSC_PRedBCST);
+                     Gerador.wCampo(tcDe4, 'N19', 'pMVAST  ', 01, 05, 0, nfe.Det[i].Imposto.ICMS.pMVAST, DSC_PMVAST);
+                     Gerador.wCampo(tcDe4, 'N20', 'pRedBCST', 01, 05, 0, nfe.Det[i].Imposto.ICMS.pRedBCST, DSC_PRedBCST);
                      Gerador.wCampo(tcDe2, 'N21', 'vBCST   ', 01, 15, 1, nfe.Det[i].Imposto.ICMS.vBCST, DSC_VBCST);
-                     Gerador.wCampo(tcDe2, 'N22', 'pICMSST ', 01, 05, 1, nfe.Det[i].Imposto.ICMS.pICMSST, DSC_PICMSST);
+                     Gerador.wCampo(tcDe4, 'N22', 'pICMSST ', 01, 05, 1, nfe.Det[i].Imposto.ICMS.pICMSST, DSC_PICMSST);
                      Gerador.wCampo(tcDe2, 'N23', 'vICMSST ', 01, 15, 1, nfe.Det[i].Imposto.ICMS.vICMSST, DSC_VICMSST);
+
+                     if nfe.Det[i].Imposto.ICMS.vICMSDeson > 0 then
+                     begin
+                       Gerador.wCampo(tcDe2, 'N23a', 'vICMSDeson', 01, 15, 1, nfe.Det[i].Imposto.ICMS.vICMSDeson, DSC_VICMSDESON);
+                       Gerador.wCampo(tcStr, 'N23b', 'motDesICMS', 01, 02, 1, motDesICMSToStr(nfe.Det[i].Imposto.ICMS.motDesICMS), DSC_MOTDESICMS);
+                     end;
                   end;
                cst40,
                cst41,
 	             cst50 :
                   begin
                      //Esse bloco fica a critério de cada UF a obrigação das informações, conforme o manual
+                     if nfe.Det[i].Imposto.ICMS.vICMSDeson > 0 then
+                     begin
+                       Gerador.wCampo(tcDe2, 'N13a', 'vICMSDeson', 01, 15, 1, nfe.Det[i].Imposto.ICMS.vICMSDeson, DSC_VICMSDESON);
+                       Gerador.wCampo(tcStr, 'N13b', 'motDesICMS', 01, 02, 1, motDesICMSToStr(nfe.Det[i].Imposto.ICMS.motDesICMS), DSC_MOTDESICMS);
+                     end;
+                     (*
                      Gerador.wCampo(tcDe2, 'N17', 'vICMS     ', 01, 15, 0, nfe.Det[i].Imposto.ICMS.vICMS, DSC_VICMS);
                      if (nfe.Det[i].Imposto.ICMS.vICMS > 0) then
                         Gerador.wCampo(tcStr, 'N28', 'motDesICMS', 01, 01, 0, motDesICMSToStr(nfe.Det[i].Imposto.ICMS.motDesICMS), DSC_MOTDESICMS);
+                     *)
                   end;
                cst51 :
                   begin
                      //Esse bloco fica a critério de cada UF a obrigação das informações, conforme o manual
-                     Gerador.wCampo(tcStr, 'N13', 'modBC   ', 01, 01, 0, modBCToStr(nfe.Det[i].Imposto.ICMS.modBC), DSC_MODBC);
-                     Gerador.wCampo(tcDe2, 'N14', 'pRedBC  ', 01, 05, 0, nfe.Det[i].Imposto.ICMS.pRedBC, DSC_PREDBC);
-                     Gerador.wCampo(tcDe2, 'N15', 'vBC     ', 01, 15, 0, nfe.Det[i].Imposto.ICMS.vBC, DSC_VBC);
-                     Gerador.wCampo(tcDe2, 'N16', 'pICMS   ', 01, 05, 0, nfe.Det[i].Imposto.ICMS.pICMS, DSC_PICMS);
-                     Gerador.wCampo(tcDe2, 'N17', 'vICMS   ', 01, 15, 0, nfe.Det[i].Imposto.ICMS.vICMS, DSC_VICMS);
+                     Gerador.wCampo(tcStr, 'N13', 'modBC    ', 01, 01, 0, modBCToStr(nfe.Det[i].Imposto.ICMS.modBC), DSC_MODBC);
+                     Gerador.wCampo(tcDe4, 'N14', 'pRedBC   ', 01, 05, 0, nfe.Det[i].Imposto.ICMS.pRedBC, DSC_PREDBC);
+                     Gerador.wCampo(tcDe2, 'N15', 'vBC      ', 01, 15, 0, nfe.Det[i].Imposto.ICMS.vBC, DSC_VBC);
+                     Gerador.wCampo(tcDe4, 'N16', 'pICMS    ', 01, 05, 0, nfe.Det[i].Imposto.ICMS.pICMS, DSC_PICMS);
+                     Gerador.wCampo(tcDe2, 'N16a', 'vICMSOp ', 01, 15, 0, nfe.Det[i].Imposto.ICMS.vICMSOp, DSC_VICMS);
+                     Gerador.wCampo(tcDe4, 'N16b', 'pDif    ', 01, 05, 0, nfe.Det[i].Imposto.ICMS.pDif, DSC_PICMS);
+                     Gerador.wCampo(tcDe2, 'N16c', 'vICMSDif', 01, 15, 0, nfe.Det[i].Imposto.ICMS.vICMSDif, DSC_VICMS);
+                     Gerador.wCampo(tcDe2, 'N17', 'vICMS    ', 01, 15, 0, nfe.Det[i].Imposto.ICMS.vICMS, DSC_VICMS);
                   end;
                cst60 :
                   begin
                      if NFe.infNFe.Versao >= 2 then
                       begin
-                        Gerador.wCampo(tcDe2, 'N26', 'vBCSTRet  ', 01, 15, 1, nfe.Det[i].Imposto.ICMS.vBCSTRET, DSC_VBCSTRET);
-                        Gerador.wCampo(tcDe2, 'N27', 'vICMSSTRet', 01, 15, 1, nfe.Det[i].Imposto.ICMS.vICMSSTRET, DSC_VICMSSTRET);
+                        if nfe.Det[i].Imposto.ICMS.vBCSTRET > 0 then
+                        begin
+                          Gerador.wCampo(tcDe2, 'N26', 'vBCSTRet  ', 01, 15, 1, nfe.Det[i].Imposto.ICMS.vBCSTRET, DSC_VBCSTRET);
+                          Gerador.wCampo(tcDe2, 'N27', 'vICMSSTRet', 01, 15, 1, nfe.Det[i].Imposto.ICMS.vICMSSTRET, DSC_VICMSSTRET);
+                        end;
                       end
                      else
                       begin
@@ -1088,38 +1228,56 @@ begin
                cst70 :
                   begin
                      Gerador.wCampo(tcStr, 'N13', 'modBC   ', 01, 01, 1, modBCToStr(nfe.Det[i].Imposto.ICMS.modBC), DSC_MODBC);
-                     Gerador.wCampo(tcDe2, 'N14', 'pRedBC  ', 01, 05, 1, nfe.Det[i].Imposto.ICMS.pRedBC, DSC_PREDBC);
+                     Gerador.wCampo(tcDe4, 'N14', 'pRedBC  ', 01, 05, 1, nfe.Det[i].Imposto.ICMS.pRedBC, DSC_PREDBC);
                      Gerador.wCampo(tcDe2, 'N15', 'vBC     ', 01, 15, 1, nfe.Det[i].Imposto.ICMS.vBC, DSC_VBC);
-                     Gerador.wCampo(tcDe2, 'N16', 'pICMS   ', 01, 05, 1, nfe.Det[i].Imposto.ICMS.pICMS, DSC_PICMS);
+                     Gerador.wCampo(tcDe4, 'N16', 'pICMS   ', 01, 05, 1, nfe.Det[i].Imposto.ICMS.pICMS, DSC_PICMS);
                      Gerador.wCampo(tcDe2, 'N17', 'vICMS   ', 01, 15, 1, nfe.Det[i].Imposto.ICMS.vICMS, DSC_VICMS);
                      Gerador.wCampo(tcStr, 'N18', 'modBCST ', 01, 01, 1, modBCSTToStr(nfe.Det[i].Imposto.ICMS.modBCST), DSC_MODBCST);
-                     Gerador.wCampo(tcDe2, 'N19', 'pMVAST  ', 01, 05, 0, nfe.Det[i].Imposto.ICMS.pMVAST, DSC_PMVAST);
-                     Gerador.wCampo(tcDe2, 'N20', 'pRedBCST', 01, 05, 0, nfe.Det[i].Imposto.ICMS.pRedBCST, DSC_PREDBCST);
+                     Gerador.wCampo(tcDe4, 'N19', 'pMVAST  ', 01, 05, 0, nfe.Det[i].Imposto.ICMS.pMVAST, DSC_PMVAST);
+                     Gerador.wCampo(tcDe4, 'N20', 'pRedBCST', 01, 05, 0, nfe.Det[i].Imposto.ICMS.pRedBCST, DSC_PREDBCST);
                      Gerador.wCampo(tcDe2, 'N21', 'vBCST   ', 01, 15, 1, nfe.Det[i].Imposto.ICMS.vBCST, DSC_VBCST);
-                     Gerador.wCampo(tcDe2, 'N22', 'pICMSST ', 01, 05, 1, nfe.Det[i].Imposto.ICMS.pICMSST, DSC_PICMSST);
+                     Gerador.wCampo(tcDe4, 'N22', 'pICMSST ', 01, 05, 1, nfe.Det[i].Imposto.ICMS.pICMSST, DSC_PICMSST);
                      Gerador.wCampo(tcDe2, 'N23', 'vICMSST ', 01, 15, 1, nfe.Det[i].Imposto.ICMS.vICMSST, DSC_VICMSST);
+
+                     if nfe.Det[i].Imposto.ICMS.vICMSDeson > 0 then
+                     begin
+                       Gerador.wCampo(tcDe2, 'N23a', 'vICMSDeson', 01, 15, 1, nfe.Det[i].Imposto.ICMS.vICMSDeson, DSC_VICMSDESON);
+                       Gerador.wCampo(tcStr, 'N23b', 'motDesICMS', 01, 02, 1, motDesICMSToStr(nfe.Det[i].Imposto.ICMS.motDesICMS), DSC_MOTDESICMS);
+                     end;
                   end;
                cst90,
 	             cstPart90 :
                   begin
-                     Gerador.wCampo(tcStr, 'N13', 'modBC   ', 01, 01, 1, modBCToStr(nfe.Det[i].Imposto.ICMS.modBC), DSC_MODBC);
-                     Gerador.wCampo(tcDe2, 'N15', 'vBC     ', 01, 15, 1, nfe.Det[i].Imposto.ICMS.vBC, DSC_VBC);
-                     Gerador.wCampo(tcDe2, 'N14', 'pRedBC  ', 01, 05, 0, nfe.Det[i].Imposto.ICMS.pRedBC, DSC_PREDBC);
-                     Gerador.wCampo(tcDe2, 'N16', 'pICMS   ', 01, 05, 1, nfe.Det[i].Imposto.ICMS.pICMS, DSC_PICMS);
-                     Gerador.wCampo(tcDe2, 'N17', 'vICMS   ', 01, 15, 1, nfe.Det[i].Imposto.ICMS.vICMS, DSC_VICMS);
-                     Gerador.wCampo(tcStr, 'N18', 'modBCST ', 01, 01, 1, modBCSTToStr(nfe.Det[i].Imposto.ICMS.modBCST), DSC_MODBCST);
-                     Gerador.wCampo(tcDe2, 'N19', 'pMVAST  ', 01, 05, 0, nfe.Det[i].Imposto.ICMS.pMVAST, DSC_PMVAST);
-                     Gerador.wCampo(tcDe2, 'N20', 'pRedBCST', 01, 05, 0, nfe.Det[i].Imposto.ICMS.pRedBCST, DSC_PREDBCST);
-                     Gerador.wCampo(tcDe2, 'N21', 'vBCST   ', 01, 15, 1, nfe.Det[i].Imposto.ICMS.vBCST, DSC_VBCST);
-                     Gerador.wCampo(tcDe2, 'N22', 'pICMSST ', 01, 05, 1, nfe.Det[i].Imposto.ICMS.pICMSST, DSC_PICMSST);
-                     Gerador.wCampo(tcDe2, 'N23', 'vICMSST ', 01, 15, 1, nfe.Det[i].Imposto.ICMS.vICMSST, DSC_VICMSST);
-                     if (nfe.Det[i].Imposto.ICMS.UFST <> '') or
-                        (nfe.Det[i].Imposto.ICMS.pBCOp <> 0) or
-                        (nfe.Det[i].Imposto.ICMS.CST = cstPart90) then
-                     begin
-                        Gerador.wCampo(tcDe2, 'N25', 'pBCOp  ', 01, 05, 1, nfe.Det[i].Imposto.ICMS.pBCOp, DSC_PBCOP);
-                        Gerador.wCampo(tcStr, 'N24', 'UFST   ', 02, 02, 1, nfe.Det[i].Imposto.ICMS.UFST, DSC_UFST);
-                     end;
+                    if nfe.Det[i].Imposto.ICMS.vBC > 0 then
+                    begin
+                      Gerador.wCampo(tcStr, 'N13', 'modBC   ', 01, 01, 1, modBCToStr(nfe.Det[i].Imposto.ICMS.modBC), DSC_MODBC);
+                      Gerador.wCampo(tcDe2, 'N15', 'vBC     ', 01, 15, 1, nfe.Det[i].Imposto.ICMS.vBC, DSC_VBC);
+                      Gerador.wCampo(tcDe4, 'N14', 'pRedBC  ', 01, 05, 0, nfe.Det[i].Imposto.ICMS.pRedBC, DSC_PREDBC);
+                      Gerador.wCampo(tcDe4, 'N16', 'pICMS   ', 01, 05, 1, nfe.Det[i].Imposto.ICMS.pICMS, DSC_PICMS);
+                      Gerador.wCampo(tcDe2, 'N17', 'vICMS   ', 01, 15, 1, nfe.Det[i].Imposto.ICMS.vICMS, DSC_VICMS);
+                    end;
+                    if nfe.Det[i].Imposto.ICMS.vBCST > 0 then
+                    begin
+                      Gerador.wCampo(tcStr, 'N18', 'modBCST ', 01, 01, 1, modBCSTToStr(nfe.Det[i].Imposto.ICMS.modBCST), DSC_MODBCST);
+                      Gerador.wCampo(tcDe2, 'N19', 'pMVAST  ', 01, 05, 0, nfe.Det[i].Imposto.ICMS.pMVAST, DSC_PMVAST);
+                      Gerador.wCampo(tcDe4, 'N20', 'pRedBCST', 01, 05, 0, nfe.Det[i].Imposto.ICMS.pRedBCST, DSC_PREDBCST);
+                      Gerador.wCampo(tcDe2, 'N21', 'vBCST   ', 01, 15, 1, nfe.Det[i].Imposto.ICMS.vBCST, DSC_VBCST);
+                      Gerador.wCampo(tcDe4, 'N22', 'pICMSST ', 01, 05, 1, nfe.Det[i].Imposto.ICMS.pICMSST, DSC_PICMSST);
+                      Gerador.wCampo(tcDe2, 'N23', 'vICMSST ', 01, 15, 1, nfe.Det[i].Imposto.ICMS.vICMSST, DSC_VICMSST);
+                    end;
+                    if (nfe.Det[i].Imposto.ICMS.CST = cst90) and
+                       (nfe.Det[i].Imposto.ICMS.vICMSDeson > 0) then
+                    begin
+                      Gerador.wCampo(tcDe2, 'N23a', 'vICMSDeson', 01, 15, 1, nfe.Det[i].Imposto.ICMS.vICMSDeson, DSC_VICMSDESON);
+                      Gerador.wCampo(tcStr, 'N23b', 'motDesICMS', 01, 02, 1, motDesICMSToStr(nfe.Det[i].Imposto.ICMS.motDesICMS), DSC_MOTDESICMS);
+                    end;
+                    if (nfe.Det[i].Imposto.ICMS.UFST <> '') or
+                       (nfe.Det[i].Imposto.ICMS.pBCOp <> 0) or
+                       (nfe.Det[i].Imposto.ICMS.CST = cstPart90) then
+                    begin
+                      Gerador.wCampo(tcDe4, 'N25', 'pBCOp  ', 01, 05, 1, nfe.Det[i].Imposto.ICMS.pBCOp, DSC_PBCOP);
+                      Gerador.wCampo(tcStr, 'N24', 'UFST   ', 02, 02, 1, nfe.Det[i].Imposto.ICMS.UFST, DSC_UFST);
+                    end;
                   end;
 	            	cstRep41 :
 		               begin
@@ -1142,7 +1300,7 @@ begin
             case  nfe.Det[i].Imposto.ICMS.CSOSN of
                csosn101 :
                   begin
-                     Gerador.wCampo(tcDe2, 'N29', 'pCredSN    ', 01, 05, 1, nfe.Det[i].Imposto.ICMS.pCredSN, DSC_PCREDSN);
+                     Gerador.wCampo(tcDe4, 'N29', 'pCredSN    ', 01, 05, 1, nfe.Det[i].Imposto.ICMS.pCredSN, DSC_PCREDSN);
                      Gerador.wCampo(tcDe2, 'N30', 'vCredICMSSN', 01, 15, 1, nfe.Det[i].Imposto.ICMS.vCredICMSSN, DSC_VCREDICMSSN);
                   end;
                csosn102,
@@ -1155,44 +1313,56 @@ begin
                csosn201 :
                   begin  //10e
                      Gerador.wCampo(tcStr, 'N18', 'modBCST ', 01, 01, 1, modBCSTToStr(nfe.Det[i].Imposto.ICMS.modBCST), DSC_MODBCST);
-                     Gerador.wCampo(tcDe2, 'N19', 'pMVAST  ', 01, 05, 0, nfe.Det[i].Imposto.ICMS.pMVAST, DSC_PMVAST);
-                     Gerador.wCampo(tcDe2, 'N20', 'pRedBCST', 01, 05, 0, nfe.Det[i].Imposto.ICMS.pRedBCST, DSC_PREDBCST);
+                     Gerador.wCampo(tcDe4, 'N19', 'pMVAST  ', 01, 05, 0, nfe.Det[i].Imposto.ICMS.pMVAST, DSC_PMVAST);
+                     Gerador.wCampo(tcDe4, 'N20', 'pRedBCST', 01, 05, 0, nfe.Det[i].Imposto.ICMS.pRedBCST, DSC_PREDBCST);
                      Gerador.wCampo(tcDe2, 'N21', 'vBCST   ', 01, 15, 1, nfe.Det[i].Imposto.ICMS.vBCST, DSC_VBCST);
-                     Gerador.wCampo(tcDe2, 'N22', 'pICMSST ', 01, 05, 1, nfe.Det[i].Imposto.ICMS.pICMSST, DSC_PICMSST);
+                     Gerador.wCampo(tcDe4, 'N22', 'pICMSST ', 01, 05, 1, nfe.Det[i].Imposto.ICMS.pICMSST, DSC_PICMSST);
                      Gerador.wCampo(tcDe2, 'N23', 'vICMSST ', 01, 15, 1, nfe.Det[i].Imposto.ICMS.vICMSST, DSC_VICMSST);
-                     Gerador.wCampo(tcDe2, 'N29', 'pCredSN    ', 01, 05, 1, nfe.Det[i].Imposto.ICMS.pCredSN, DSC_PCREDSN);
+                     Gerador.wCampo(tcDe4, 'N29', 'pCredSN    ', 01, 05, 1, nfe.Det[i].Imposto.ICMS.pCredSN, DSC_PCREDSN);
                      Gerador.wCampo(tcDe2, 'N30', 'vCredICMSSN', 01, 15, 1, nfe.Det[i].Imposto.ICMS.vCredICMSSN, DSC_VCREDICMSSN);
                   end;
                csosn202,
                csosn203 :
                   begin   //10f
                      Gerador.wCampo(tcStr, 'N18', 'modBCST ', 01, 01, 1, modBCSTToStr(nfe.Det[i].Imposto.ICMS.modBCST), DSC_MODBCST);
-                     Gerador.wCampo(tcDe2, 'N19', 'pMVAST  ', 01, 05, 0, nfe.Det[i].Imposto.ICMS.pMVAST, DSC_PMVAST);
-                     Gerador.wCampo(tcDe2, 'N20', 'pRedBCST', 01, 05, 0, nfe.Det[i].Imposto.ICMS.pRedBCST, DSC_PREDBCST);
+                     Gerador.wCampo(tcDe4, 'N19', 'pMVAST  ', 01, 05, 0, nfe.Det[i].Imposto.ICMS.pMVAST, DSC_PMVAST);
+                     Gerador.wCampo(tcDe4, 'N20', 'pRedBCST', 01, 05, 0, nfe.Det[i].Imposto.ICMS.pRedBCST, DSC_PREDBCST);
                      Gerador.wCampo(tcDe2, 'N21', 'vBCST   ', 01, 15, 1, nfe.Det[i].Imposto.ICMS.vBCST, DSC_VBCST);
-                     Gerador.wCampo(tcDe2, 'N22', 'pICMSST ', 01, 05, 1, nfe.Det[i].Imposto.ICMS.pICMSST, DSC_PICMSST);
+                     Gerador.wCampo(tcDe4, 'N22', 'pICMSST ', 01, 05, 1, nfe.Det[i].Imposto.ICMS.pICMSST, DSC_PICMSST);
                      Gerador.wCampo(tcDe2, 'N23', 'vICMSST ', 01, 15, 1, nfe.Det[i].Imposto.ICMS.vICMSST, DSC_VICMSST);
                   end;
                csosn500 :
                   begin //10g
-                     Gerador.wCampo(tcDe2, 'N26', 'vBCSTRet  ', 01, 15, 1, nfe.Det[i].Imposto.ICMS.vBCSTRET, DSC_VBCSTRET);
-                     Gerador.wCampo(tcDe2, 'N27', 'vICMSSTRet', 01, 15, 1, nfe.Det[i].Imposto.ICMS.vICMSSTRET, DSC_VICMSSTRET);
+                    if nfe.Det[i].Imposto.ICMS.vBCSTRET > 0 then
+                    begin
+                      Gerador.wCampo(tcDe2, 'N26', 'vBCSTRet  ', 01, 15, 1, nfe.Det[i].Imposto.ICMS.vBCSTRET, DSC_VBCSTRET);
+                      Gerador.wCampo(tcDe2, 'N27', 'vICMSSTRet', 01, 15, 1, nfe.Det[i].Imposto.ICMS.vICMSSTRET, DSC_VICMSSTRET);
+                    end;
                   end;
                csosn900:
                  begin //10h
-                   Gerador.wCampo(tcStr, 'N13', 'modBC   ', 01, 01, 1, modBCToStr(nfe.Det[i].Imposto.ICMS.modBC), DSC_MODBC);
-                   Gerador.wCampo(tcDe2, 'N15', 'vBC     ', 01, 15, 1, nfe.Det[i].Imposto.ICMS.vBC, DSC_VBC);
-                   Gerador.wCampo(tcDe2, 'N14', 'pRedBC  ', 01, 05, 0, nfe.Det[i].Imposto.ICMS.pRedBC, DSC_PREDBC);
-                   Gerador.wCampo(tcDe2, 'N16', 'pICMS   ', 01, 05, 1, nfe.Det[i].Imposto.ICMS.pICMS, DSC_PICMS);
-                   Gerador.wCampo(tcDe2, 'N17', 'vICMS   ', 01, 15, 1, nfe.Det[i].Imposto.ICMS.vICMS, DSC_VICMS);
-                   Gerador.wCampo(tcStr, 'N18', 'modBCST ', 01, 01, 1, modBCSTToStr(nfe.Det[i].Imposto.ICMS.modBCST), DSC_MODBCST);
-                   Gerador.wCampo(tcDe2, 'N19', 'pMVAST  ', 01, 05, 0, nfe.Det[i].Imposto.ICMS.pMVAST, DSC_PMVAST);
-                   Gerador.wCampo(tcDe2, 'N20', 'pRedBCST', 01, 05, 0, nfe.Det[i].Imposto.ICMS.pRedBCST, DSC_PREDBCST);
-                   Gerador.wCampo(tcDe2, 'N21', 'vBCST   ', 01, 15, 1, nfe.Det[i].Imposto.ICMS.vBCST, DSC_VBCST);
-                   Gerador.wCampo(tcDe2, 'N22', 'pICMSST ', 01, 05, 1, nfe.Det[i].Imposto.ICMS.pICMSST, DSC_PICMSST);
-                   Gerador.wCampo(tcDe2, 'N23', 'vICMSST ', 01, 15, 1, nfe.Det[i].Imposto.ICMS.vICMSST, DSC_VICMSST);
-                   Gerador.wCampo(tcDe2, 'N29', 'pCredSN    ', 01, 05, 1, nfe.Det[i].Imposto.ICMS.pCredSN, DSC_PCREDSN);
-                   Gerador.wCampo(tcDe2, 'N30', 'vCredICMSSN', 01, 15, 1, nfe.Det[i].Imposto.ICMS.vCredICMSSN, DSC_VCREDICMSSN);
+                   if nfe.Det[i].Imposto.ICMS.vBC > 0 then
+                   begin
+                     Gerador.wCampo(tcStr, 'N13', 'modBC   ', 01, 01, 1, modBCToStr(nfe.Det[i].Imposto.ICMS.modBC), DSC_MODBC);
+                     Gerador.wCampo(tcDe2, 'N15', 'vBC     ', 01, 15, 1, nfe.Det[i].Imposto.ICMS.vBC, DSC_VBC);
+                     Gerador.wCampo(tcDe4, 'N14', 'pRedBC  ', 01, 05, 0, nfe.Det[i].Imposto.ICMS.pRedBC, DSC_PREDBC);
+                     Gerador.wCampo(tcDe4, 'N16', 'pICMS   ', 01, 05, 1, nfe.Det[i].Imposto.ICMS.pICMS, DSC_PICMS);
+                     Gerador.wCampo(tcDe2, 'N17', 'vICMS   ', 01, 15, 1, nfe.Det[i].Imposto.ICMS.vICMS, DSC_VICMS);
+                   end;
+                   if nfe.Det[i].Imposto.ICMS.vBCST > 0 then
+                   begin
+                     Gerador.wCampo(tcStr, 'N18', 'modBCST ', 01, 01, 1, modBCSTToStr(nfe.Det[i].Imposto.ICMS.modBCST), DSC_MODBCST);
+                     Gerador.wCampo(tcDe4, 'N19', 'pMVAST  ', 01, 05, 0, nfe.Det[i].Imposto.ICMS.pMVAST, DSC_PMVAST);
+                     Gerador.wCampo(tcDe4, 'N20', 'pRedBCST', 01, 05, 0, nfe.Det[i].Imposto.ICMS.pRedBCST, DSC_PREDBCST);
+                     Gerador.wCampo(tcDe2, 'N21', 'vBCST   ', 01, 15, 1, nfe.Det[i].Imposto.ICMS.vBCST, DSC_VBCST);
+                     Gerador.wCampo(tcDe4, 'N22', 'pICMSST ', 01, 05, 1, nfe.Det[i].Imposto.ICMS.pICMSST, DSC_PICMSST);
+                     Gerador.wCampo(tcDe2, 'N23', 'vICMSST ', 01, 15, 1, nfe.Det[i].Imposto.ICMS.vICMSST, DSC_VICMSST);
+                   end;
+                   if nfe.Det[i].Imposto.ICMS.pCredSN > 0 then
+                   begin
+                     Gerador.wCampo(tcDe4, 'N29', 'pCredSN    ', 01, 05, 1, nfe.Det[i].Imposto.ICMS.pCredSN, DSC_PCREDSN);
+                     Gerador.wCampo(tcDe2, 'N30', 'vCredICMSSN', 01, 15, 1, nfe.Det[i].Imposto.ICMS.vCredICMSSN, DSC_VCREDICMSSN);
+                   end;  
                  end;
             end;
 
@@ -1261,7 +1431,7 @@ begin
       Gerador.wGrupo('IPITrib', 'O07');
       Gerador.wCampo(tcStr, 'O09', 'CST     ', 02, 02, 1, CSTIPITOStr(nfe.Det[i].Imposto.IPI.CST), DSC_CST);
       Gerador.wCampo(tcDe2, 'O10', 'vBC     ', 01, 15, 1, nfe.Det[i].Imposto.IPI.vBC, DSC_VBC);
-      Gerador.wCampo(tcDe2, 'O13', 'pIPI    ', 01, 05, 1, nfe.Det[i].Imposto.IPI.pIPI, DSC_PIPI);
+      Gerador.wCampo(tcDe4, 'O13', 'pIPI    ', 01, 05, 1, nfe.Det[i].Imposto.IPI.pIPI, DSC_PIPI);
       Gerador.wCampo(tcDe2, 'O14', 'vIPI    ', 01, 15, 1, nfe.Det[i].Imposto.IPI.vIPI, DSC_VIPI);
       Gerador.wGrupo('/IPITrib');
     end;
@@ -1300,7 +1470,7 @@ begin
     Gerador.wGrupo('PISAliq', 'Q02');
     Gerador.wCampo(tcStr, 'Q06', 'CST      ', 02, 02, 1, CSTPISTOStr(nfe.Det[i].Imposto.PIS.CST), DSC_CST);
     Gerador.wCampo(tcDe2, 'Q07', 'vBC      ', 01, 15, 1, nfe.Det[i].Imposto.PIS.vBC, DSC_VBC);
-    Gerador.wCampo(tcDe2, 'Q08', 'pPIS     ', 01, 05, 1, nfe.Det[i].Imposto.PIS.pPIS, DSC_PPIS);
+    Gerador.wCampo(tcDe4, 'Q08', 'pPIS     ', 01, 05, 1, nfe.Det[i].Imposto.PIS.pPIS, DSC_PPIS);
     Gerador.wCampo(tcDe2, 'Q09', 'vPIS     ', 01, 15, 1, nfe.Det[i].Imposto.PIS.vPIS, DSC_VPIS);
     Gerador.wGrupo('/PISAliq');
   end
@@ -1313,7 +1483,7 @@ begin
     Gerador.wCampo(tcDe2, 'Q09', 'vPIS     ', 01, 15, 1, nfe.Det[i].Imposto.PIS.vPIS, DSC_VPIS);
     Gerador.wGrupo('/PISQtde');
   end
-  else if nfe.Det[i].Imposto.PIS.CST in [pis04, pis06, pis07, pis08, pis09] then
+  else if nfe.Det[i].Imposto.PIS.CST in [pis04, pis05, pis06, pis07, pis08, pis09] then
   begin
     Gerador.wGrupo('PISNT', 'Q04');
     Gerador.wCampo(tcStr, 'Q06', 'CST      ', 02, 02, 1, CSTPISTOStr(nfe.Det[i].Imposto.PIS.CST), DSC_CST);
@@ -1339,7 +1509,7 @@ begin
       Gerador.wGrupo('PISOutr', 'Q05');
       Gerador.wCampo(tcStr, 'Q06', 'CST      ', 02, 02, 1, CSTPISTOStr(nfe.Det[i].Imposto.PIS.CST), DSC_CST);
       Gerador.wCampo(tcDe2, 'Q07', 'vBC      ', 01, 15, 1, nfe.Det[i].Imposto.PIS.vBC, DSC_VBC);
-      Gerador.wCampo(tcDe2, 'Q08', 'pPIS     ', 01, 05, 1, nfe.Det[i].Imposto.PIS.pPIS, DSC_PPIS);
+      Gerador.wCampo(tcDe4, 'Q08', 'pPIS     ', 01, 05, 1, nfe.Det[i].Imposto.PIS.pPIS, DSC_PPIS);
       Gerador.wCampo(tcDe2, 'Q09', 'vPIS     ', 01, 15, 1, nfe.Det[i].Imposto.PIS.vPIS, DSC_VPIS);
       Gerador.wGrupo('/PISOutr');
     end;
@@ -1363,7 +1533,7 @@ begin
     begin
       Gerador.wGrupo('PISST', 'R01');
       Gerador.wCampo(tcDe2, 'R02', 'vBC      ', 01, 15, 1, nfe.Det[i].Imposto.PISST.vBc, DSC_VBC);
-      Gerador.wCampo(tcDe2, 'R03', 'pPIS     ', 01, 05, 1, nfe.Det[i].Imposto.PISST.pPis, DSC_PPIS);
+      Gerador.wCampo(tcDe4, 'R03', 'pPIS     ', 01, 05, 1, nfe.Det[i].Imposto.PISST.pPis, DSC_PPIS);
       Gerador.wCampo(tcDe2, 'R06', 'vPIS     ', 01, 15, 1, nfe.Det[i].Imposto.PISST.vPIS, DSC_VPIS);
       Gerador.wGrupo('/PISST');
     end;
@@ -1386,7 +1556,7 @@ begin
     Gerador.wGrupo('COFINSAliq', 'S02');
     Gerador.wCampo(tcStr, 'S06', 'CST      ', 02, 02, 1, CSTCOFINSTOStr(nfe.Det[i].Imposto.COFINS.CST), DSC_CST);
     Gerador.wCampo(tcDe2, 'S07', 'vBC      ', 01, 15, 1, nfe.Det[i].Imposto.COFINS.vBC, DSC_VBC);
-    Gerador.wCampo(tcDe2, 'S08', 'pCOFINS  ', 01, 05, 1, nfe.Det[i].Imposto.COFINS.pCOFINS, DSC_PCOFINS);
+    Gerador.wCampo(tcDe4, 'S08', 'pCOFINS  ', 01, 05, 1, nfe.Det[i].Imposto.COFINS.pCOFINS, DSC_PCOFINS);
     Gerador.wCampo(tcDe2, 'S11', 'vCOFINS  ', 01, 15, 1, nfe.Det[i].Imposto.COFINS.vCOFINS, DSC_VCOFINS);
     Gerador.wGrupo('/COFINSAliq');
   end
@@ -1399,7 +1569,7 @@ begin
     Gerador.wCampo(tcDe2, 'S11', 'vCOFINS  ', 01, 15, 1, nfe.Det[i].Imposto.COFINS.vCOFINS, DSC_VCOFINS);
     Gerador.wGrupo('/COFINSQtde');
   end
-  else if nfe.Det[i].Imposto.COFINS.CST in [cof04, cof06, cof07, cof08, cof09] then
+  else if nfe.Det[i].Imposto.COFINS.CST in [cof04, cof05, cof06, cof07, cof08, cof09] then
   begin
     Gerador.wGrupo('COFINSNT', 'S04');
     Gerador.wCampo(tcStr, 'S06', 'CST      ', 02, 02, 1, CSTCOFINSTOStr(nfe.Det[i].Imposto.COFINS.CST), DSC_CST);
@@ -1425,7 +1595,7 @@ begin
       Gerador.wGrupo('COFINSOutr', 'S05');
       Gerador.wCampo(tcStr, 'S06', 'CST      ', 02, 02, 1, CSTCOFINSTOStr(nfe.Det[i].Imposto.COFINS.CST), DSC_CST);
       Gerador.wCampo(tcDe2, 'S07', 'vBC      ', 01, 15, 1, nfe.Det[i].Imposto.COFINS.vBC, DSC_VBC);
-      Gerador.wCampo(tcDe2, 'S08', 'pCOFINS  ', 01, 05, 1, nfe.Det[i].Imposto.COFINS.pCOFINS, DSC_PCOFINS);
+      Gerador.wCampo(tcDe4, 'S08', 'pCOFINS  ', 01, 05, 1, nfe.Det[i].Imposto.COFINS.pCOFINS, DSC_PCOFINS);
       Gerador.wCampo(tcDe2, 'S11', 'vCOFINS  ', 01, 15, 1, nfe.Det[i].Imposto.COFINS.vCOFINS, DSC_VCOFINS);
       Gerador.wGrupo('/COFINSOutr');
     end;
@@ -1449,7 +1619,7 @@ begin
     begin
       Gerador.wGrupo('COFINSST', 'T01');
       Gerador.wCampo(tcDe2, 'T02', 'vBC        ', 01, 15, 1, nfe.Det[i].Imposto.COFINSST.vBC, DSC_VBC);
-      Gerador.wCampo(tcDe2, 'T03', 'pCOFINS    ', 01, 05, 1, nfe.Det[i].Imposto.COFINSST.pCOFINS, DSC_PCOFINS);
+      Gerador.wCampo(tcDe4, 'T03', 'pCOFINS    ', 01, 05, 1, nfe.Det[i].Imposto.COFINSST.pCOFINS, DSC_PCOFINS);
       Gerador.wCampo(tcDe2, 'T06', 'vCOFINS    ', 01, 15, 1, nfe.Det[i].Imposto.COFINSST.vCOFINS, DSC_VCOFINS);
       Gerador.wGrupo('/COFINSST');
     end;
@@ -1465,28 +1635,52 @@ begin
 end;
 
 procedure TNFeW.GerarDetImpostoISSQN(const i: integer);
+var
+ Codigo: String;
 begin
   if (nfe.Det[i].Imposto.ISSQN.vBC > 0) or
     (nfe.Det[i].Imposto.ISSQN.vAliq > 0) or
     (nfe.Det[i].Imposto.ISSQN.vISSQN > 0) or
     (nfe.Det[i].Imposto.ISSQN.cMunFG > 0) or
-    (nfe.Det[i].Imposto.ISSQN.cListServ > 0) then
+    (nfe.Det[i].Imposto.ISSQN.cListServ <> '') then
   begin
     Gerador.wGrupo('ISSQN', 'U01');
     Gerador.wCampo(tcDe2, 'U02', 'vBC        ', 01, 15, 1, nfe.Det[i].Imposto.ISSQN.vBC, DSC_VBCISS);
-    Gerador.wCampo(tcDe2, 'U03', 'vAliq      ', 01, 05, 1, nfe.Det[i].Imposto.ISSQN.vAliq, DSC_VAliq);
+    Gerador.wCampo(tcDe4, 'U03', 'vAliq      ', 01, 05, 1, nfe.Det[i].Imposto.ISSQN.vAliq, DSC_VAliq);
     Gerador.wCampo(tcDe2, 'U04', 'vISSQN     ', 01, 15, 1, nfe.Det[i].Imposto.ISSQN.vISSQN, DSC_VISSQN);
     Gerador.wCampo(tcInt, 'U05', 'cMunFG     ', 07, 07, 1, nfe.Det[i].Imposto.ISSQN.cMunFG, DSC_CMUNFG);
     if not ValidarMunicipio(nfe.Det[i].Imposto.ISSQN.cMunFG) then
       Gerador.wAlerta('U05', 'cMunFG', DSC_CMUNFG, ERR_MSG_INVALIDO);
-    Gerador.wCampo(tcInt, 'U06', 'cListServ  ', 03, 04, 1, nfe.Det[i].Imposto.ISSQN.cListServ, DSC_CLISTSERV);
-    if (FOpcoes.ValidarListaServicos) and (nfe.Det[i].Imposto.ISSQN.cListServ <> 0) then
-      if not ValidarCListServ(nfe.Det[i].Imposto.ISSQN.cListServ) then
+
+    if NFe.infNFe.Versao >= 3 then
+    begin
+      Gerador.wCampo(tcStr, 'U06', 'cListServ  ', 05, 05, 1, nfe.Det[i].Imposto.ISSQN.cListServ, DSC_CLISTSERV);
+      Codigo := Copy(nfe.Det[i].Imposto.ISSQN.cListServ, 1, 2) + Copy(nfe.Det[i].Imposto.ISSQN.cListServ, 4, 2);
+    end
+    else
+    begin
+      Gerador.wCampo(tcStr, 'U06', 'cListServ  ', 03, 04, 1, nfe.Det[i].Imposto.ISSQN.cListServ, DSC_CLISTSERV);
+      Codigo := nfe.Det[i].Imposto.ISSQN.cListServ;
+    end;
+
+    if (FOpcoes.ValidarListaServicos) and (nfe.Det[i].Imposto.ISSQN.cListServ <> '') then
+      if not ValidarCListServ(StrToIntDef(Codigo, 0)) then
       Gerador.wAlerta('U06', 'cListServ', DSC_CLISTSERV, ERR_MSG_INVALIDO);
-    if NFe.infNFe.Versao >= 2 then
+
+    if (NFe.infNFe.Versao >= 2) and (NFe.infNFe.Versao < 3) then
        Gerador.wCampo(tcStr, 'U07', 'cSitTrib', 01, 01, 1, ISSQNcSitTribToStr( nfe.Det[i].Imposto.ISSQN.cSitTrib ) , DSC_CSITTRIB);
     Gerador.wGrupo('/ISSQN');
   end;
+end;
+
+procedure TNFeW.GerarDetDevol(const i: integer);
+begin
+  Gerador.wGrupo('impostoDevol', 'U50');
+  Gerador.wCampo(tcDe2, 'U51', 'pDevol', 01, 05, 1, nfe.Det[i].pDevol, DSC_PDEVOL);
+  Gerador.wGrupo('IPI', 'U60');
+  Gerador.wCampo(tcDe2, 'U61', 'vIPIDevol', 01, 15, 1, nfe.Det[i].vIPIDevol, DSC_VIPIDEVOL);
+  Gerador.wGrupo('/IPI');
+  Gerador.wGrupo('/impostoDevol');
 end;
 
 procedure TNFeW.GerarTotal;
@@ -1503,6 +1697,7 @@ begin
   Gerador.wGrupo('ICMSTot', 'W02');
   Gerador.wCampo(tcDe2, 'W03', 'vBC       ', 01, 15, 1, nfe.Total.ICMSTot.vBC, DSC_VBC);
   Gerador.wCampo(tcDe2, 'W04', 'vICMS     ', 01, 15, 1, nfe.Total.ICMSTot.vICMS, DSC_VICMS);
+  Gerador.wCampo(tcDe2, 'W04a','vICMSDeson', 01, 15, 1, nfe.Total.ICMSTot.vICMSDeson, DSC_VICMSDESON);
   Gerador.wCampo(tcDe2, 'W05', 'vBCST     ', 01, 15, 1, nfe.Total.ICMSTot.vBCST, DSC_VBCST);
   Gerador.wCampo(tcDe2, 'W06', 'vST       ', 01, 15, 1, nfe.Total.ICMSTot.vST, DSC_VST);
   Gerador.wCampo(tcDe2, 'W07', 'vProd     ', 01, 15, 1, nfe.Total.ICMSTot.vProd, DSC_VPROD);
@@ -1533,6 +1728,27 @@ begin
     Gerador.wCampo(tcDe2, 'W20', 'vISS      ', 01, 15, 0, nfe.Total.ISSQNtot.vISS, DSC_VISS);
     Gerador.wCampo(tcDe2, 'W21', 'vPIS      ', 01, 15, 0, nfe.Total.ISSQNtot.vPIS, DSC_VPIS);
     Gerador.wCampo(tcDe2, 'W22', 'vCOFINS   ', 01, 15, 0, nfe.Total.ISSQNtot.vCOFINS, DSC_VCOFINS);
+
+    if nfe.infNFe.Versao >= 3 then
+    begin
+      Gerador.wCampo(tcStr, 'W22a', 'dCompet     ', 10, 10, 1, FormatDateTime('YYYYMMDD', nfe.Total.ISSQNtot.dCompet), DSC_DCOMPET);
+      Gerador.wCampo(tcDe2, 'W22b', 'vDeducao    ', 01, 15, 0, nfe.Total.ISSQNtot.vDeducao, DSC_VDEDUCAO);
+      Gerador.wCampo(tcDe2, 'W22c', 'vINSS       ', 01, 15, 0, nfe.Total.ISSQNtot.vINSS, DSC_VINSS);
+      Gerador.wCampo(tcDe2, 'W22d', 'vIR         ', 01, 15, 0, nfe.Total.ISSQNtot.vIR, DSC_VIR);
+      Gerador.wCampo(tcDe2, 'W22e', 'vCSLL       ', 01, 15, 0, nfe.Total.ISSQNtot.vCSLL, DSC_VCSLL);
+      Gerador.wCampo(tcDe2, 'W22f', 'vOutro      ', 01, 15, 0, nfe.Total.ISSQNtot.vOutro, DSC_VOUTRODED);
+      Gerador.wCampo(tcDe2, 'W22g', 'vDescIncond ', 01, 15, 0, nfe.Total.ISSQNtot.vDescIncond, DSC_VDESCINCOND);
+      Gerador.wCampo(tcDe2, 'W22h', 'vDescCond   ', 01, 15, 0, nfe.Total.ISSQNtot.vDescCond, DSC_VDESCCOND);
+      Gerador.wCampo(tcStr, 'W22i', 'indISSRet   ', 01, 01, 1, indISSRetToStr( nfe.Total.ISSQNtot.indISSRet ) , DSC_INDISSRET);
+      Gerador.wCampo(tcStr, 'W22j', 'indISS      ', 01, 01, 1, indISSToStr( nfe.Total.ISSQNtot.indISS ) , DSC_INDISS);
+      Gerador.wCampo(tcStr, 'W22k', 'cServico    ', 01, 20, 0, nfe.Total.ISSQNtot.cServico , DSC_CSERVICO);
+      Gerador.wCampo(tcInt, 'W22l', 'cMun        ', 01, 07, 0, nfe.Total.ISSQNtot.cMun, DSC_CMUN);
+      Gerador.wCampo(tcInt, 'W22m', 'cPais       ', 01, 04, 0, nfe.Total.ISSQNtot.cPais, DSC_CPAIS);
+      Gerador.wCampo(tcStr, 'W22n', 'nProcesso   ', 01, 30, 0, nfe.Total.ISSQNtot.nProcesso , DSC_NPROCESSO);
+      Gerador.wCampo(tcStr, 'W22o', 'cRegTrib    ', 01, 01, 1, RegTribISSQNToStr( nfe.Total.ISSQNtot.cRegTrib ) , DSC_CREGTRIB);
+      Gerador.wCampo(tcStr, 'W22p', 'indIncentivo', 01, 01, 1, indIncentivoToStr( nfe.Total.ISSQNtot.indIncentivo ) , DSC_INDINCENTIVO);
+    end;
+
     Gerador.wGrupo('/ISSQNtot');
   end;
 end;
@@ -1812,14 +2028,30 @@ end;
 
 procedure TNFeW.GerarExporta;
 begin
-  if trim(nfe.exporta.UFembarq) + trim(nfe.exporta.xLocEmbarq) <> '' then
+  if nfe.infNFe.Versao >= 3 then
   begin
-    Gerador.wGrupo('exporta', 'ZA01');
-    Gerador.wCampo(tcStr, 'ZA02', 'UFEmbarq', 02, 02, 1, nfe.exporta.UFembarq, DSC_UFEMBARQ);
-    if not ValidarUF(nfe.exporta.UFembarq) then
-      Gerador.wAlerta('ZA02', 'UFEmbarq', DSC_UFEMBARQ, ERR_MSG_INVALIDO);
-    Gerador.wCampo(tcStr, 'ZA03', 'xLocEmbarq', 01, 60, 1, nfe.exporta.xLocEmbarq, DSC_XLOCEMBARQ);
-    Gerador.wGrupo('/exporta');
+    if trim(nfe.exporta.UFSaidaPais) + trim(nfe.exporta.xLocExporta) <> '' then
+    begin
+      Gerador.wGrupo('exporta', 'ZA01');
+      Gerador.wCampo(tcStr, 'ZA02', 'UFSaidaPais', 02, 02, 1, nfe.exporta.UFSaidaPais, DSC_UFEMBARQ);
+      if not ValidarUF(nfe.exporta.UFSaidaPais) then
+        Gerador.wAlerta('ZA02', 'UFSaidaPais', DSC_UFEMBARQ, ERR_MSG_INVALIDO);
+      Gerador.wCampo(tcStr, 'ZA03', 'xLocExporta ', 01, 60, 1, nfe.exporta.xLocExporta, DSC_XLOCEMBARQ);
+      Gerador.wCampo(tcStr, 'ZA04', 'xLocDespacho', 01, 60, 1, nfe.exporta.xLocDespacho, DSC_XLOCDESP);
+      Gerador.wGrupo('/exporta');
+    end;
+  end
+  else
+  begin
+    if trim(nfe.exporta.UFembarq) + trim(nfe.exporta.xLocEmbarq) <> '' then
+    begin
+      Gerador.wGrupo('exporta', 'ZA01');
+      Gerador.wCampo(tcStr, 'ZA02', 'UFEmbarq', 02, 02, 1, nfe.exporta.UFembarq, DSC_UFEMBARQ);
+      if not ValidarUF(nfe.exporta.UFembarq) then
+        Gerador.wAlerta('ZA02', 'UFEmbarq', DSC_UFEMBARQ, ERR_MSG_INVALIDO);
+      Gerador.wCampo(tcStr, 'ZA03', 'xLocEmbarq', 01, 60, 1, nfe.exporta.xLocEmbarq, DSC_XLOCEMBARQ);
+      Gerador.wGrupo('/exporta');
+    end;
   end;
 end;
 
@@ -1933,14 +2165,14 @@ begin
   for i := 0 to nfe.pag.Count - 1 do
   begin
     Gerador.wGrupo('pag', 'YA01');
-    Gerador.wCampo(tcStr, 'YA02', 'tPag', 02, 02, 1, FormaPagamentoToStr(nfe.pag[i].tPag), 'erro');
-    Gerador.wCampo(tcDe2, 'YA03', 'vPag', 01, 15, 1, nfe.pag[i].vPag, 'erro');
+    Gerador.wCampo(tcStr, 'YA02', 'tPag', 02, 02, 1, FormaPagamentoToStr(nfe.pag[i].tPag), DSC_TPAG);
+    Gerador.wCampo(tcDe2, 'YA03', 'vPag', 01, 15, 1, nfe.pag[i].vPag, DSC_VPAG);
     if nfe.pag[i].CNPJ <> '' then
      begin
        Gerador.wGrupo('card', 'YA04');
        Gerador.wCampo(tcStr, 'YA05', 'CNPJ ', 14, 14, 1, nfe.pag[i].CNPJ, DSC_CNPJ);
-       Gerador.wCampo(tcStr, 'YA06', 'tBand', 02, 02, 1, BandeiraCartaoToStr(nfe.pag[i].tBand), 'erro');
-       Gerador.wCampo(tcStr, 'YA07', 'cAut ', 01, 20, 1, nfe.pag[i].cAut, 'erro');
+       Gerador.wCampo(tcStr, 'YA06', 'tBand', 02, 02, 1, BandeiraCartaoToStr(nfe.pag[i].tBand), DSC_TBAND);
+       Gerador.wCampo(tcStr, 'YA07', 'cAut ', 01, 20, 1, nfe.pag[i].cAut, DSC_CAUT);
        Gerador.wGrupo('/card');
      end;
     Gerador.wGrupo('/pag');

@@ -101,6 +101,10 @@ type
   TDICollectionItem = class;
   TAdiCollection = class;
   TAdiCollectionItem = class;
+
+  TdetExportCollection = class;
+  TdetExportCollectionItem = class;
+
   TImposto = class;
   TICMS = class;
   TIPI = class;
@@ -145,6 +149,9 @@ type
   TpagCollection = class;
   TpagCollectionItem = class;
 
+  TautXMLCollection     = class;
+  TautXMLCollectionItem = class;
+
   TNFe = class(TPersistent)
   private
     FSchema: TpcnSchema;
@@ -166,8 +173,11 @@ type
     Fcana: Tcana;    
     FSignature: TSignature;
     FProcNFe: TProcNFe;
+    FautXML: TautXMLCollection;
+
     procedure SetDet(Value: TDetCollection);
     procedure Setpag(Value: TpagCollection);
+    procedure SetautXML(const Value: TautXMLCollection);
   public
     constructor Create;
     destructor Destroy; override;
@@ -181,6 +191,7 @@ type
     property Dest: TDest read FDest write FDest;
     property Retirada: TRetirada read FRetirada write FRetirada;
     property Entrega: TEntrega read FEntrega write FEntrega;
+    property autXML: TautXMLCollection read FautXML write SetautXML;
     property Det: TDetCollection read FDet write SetDet;
     property Total: TTotal read FTotal write FTotal;
     property Transp: TTransp read FTransp write FTransp;
@@ -429,8 +440,10 @@ type
     FidEstrangeiro: string;
     FxNome: string;
     FEnderDest: TEnderDest;
+    FindIEDest: TpcnindIEDest;
     FIE: string;
     FISUF: string;
+    FIM: string;
     Femail: string;
   public
     constructor Create(AOwner: TNFe);
@@ -440,9 +453,11 @@ type
     property idEstrangeiro: string read FidEstrangeiro write FidEstrangeiro;
     property xNome: string read FxNome write FxNome;
     property EnderDest: TEnderDest read FEnderDest write FEnderDest;
+    property indIEDest: TpcnindIEDest read FindIEDest write FindIEDest;
     property IE: string read FIE write FIE;
     property ISUF: string read FISUF write FISUF;
-    property Email: string read Femail write Femail;    
+    property IM: string read FIM write FIM;
+    property Email: string read Femail write Femail;
   end;
 
   TEnderDest = class(TPersistent)
@@ -528,6 +543,8 @@ type
   private
     FProd: TProd;
     FImposto: TImposto;
+    FpDevol: currency;
+    FvIPIDevol: currency;
     FinfAdProd: string;
   public
     constructor Create; reintroduce;
@@ -535,6 +552,8 @@ type
   published
     property Prod: TProd read FProd write FProd;
     property Imposto: TImposto read FImposto write FImposto;
+    property pDevol: currency read FpDevol write FpDevol;
+    property vIPIDevol: currency read FvIPIDevol write FvIPIDevol;
     property infAdProd: string read FinfAdProd write FinfAdProd;
   end;
 
@@ -545,6 +564,7 @@ type
     FcEAN: string;
     FxProd: string;
     FNCM: string;
+    FNVE: string;
     FEXTIPI: string;
     //Fgenero: integer;
     FCFOP: string;
@@ -564,13 +584,18 @@ type
     FDI: TDICollection;
     FxPed: string;
     FnItemPed: integer;
+    FdetExport: TdetExportCollection;
     FveicProd: TveicProd;
     Fmed: TMedCollection;
     Farma: TarmaCollection;
     Fcomb: Tcomb;
+    FnRECOPI: string;
+    FnFCI: string;
+
     procedure SetDI(Value: TDICollection);
     procedure SetMed(Value: TmedCollection);
     procedure SetArma(Value: TarmaCollection);
+    procedure SetdetExport(const Value: TdetExportCollection);
   public
     constructor Create(AOwner: TDetcollectionItem);
     destructor Destroy; override;
@@ -580,6 +605,7 @@ type
     property cEAN: string read FcEAN write FcEAN;
     property xProd: string read FxProd write FxProd;
     property NCM: string read FNCM write FNCM;
+    property NVE: string read FNVE write FNVE;
     property EXTIPI: string read FEXTIPI write FEXTIPI;
     //property genero: integer read Fgenero write Fgenero;
     property CFOP: string read FCFOP write FCFOP;
@@ -599,10 +625,13 @@ type
     property DI: TDICollection read FDI write SetDI;
     property xPed: string read FxPed write FxPed;
     property nItemPed : integer read FnItemPed write FnItemPed;
+    property detExport: TdetExportCollection read FdetExport write SetdetExport;
     property veicProd: TveicProd read FveicProd write FveicProd;
     property med: TMedCollection read Fmed write SetMed;
     property arma: TarmaCollection read Farma write SetArma;
     property comb: Tcomb read Fcomb write Fcomb;
+    property nRECOPI: string read FnRECOPI write FnRECOPI;
+    property nFCI: string read FnFCI write FnFCI;
   end;
 
   TveicProd = class(TPersistent)
@@ -715,6 +744,7 @@ type
   Tcomb = class(TPersistent)
   private
     FcProdANP: integer;
+    FpMixGN: currency;
     FCODIF: string;
     FqTemp: currency;
     FUFcons: string;
@@ -727,6 +757,7 @@ type
     destructor Destroy; override;
   published
     property cProdANP: integer read FcProdANP write FcProdANP;
+    property pMixGN: currency read FpMixGN write FpMixGN;
     property CODIF: string read FCODIF write FCODIF;
     property qTemp: currency read FqTemp write FqTemp;
     property UFcons: string read FUFcons write FUFcons;
@@ -797,8 +828,14 @@ type
     FxLocDesemb: string;
     FUFDesemb: string;
     FdDesemb: TDateTime;
+    FtpViaTransp: TpcnTipoViaTransp;
+    FvAFRMM: currency;
+    FtpIntermedio: TpcnTipoIntermedio;
+    FCNPJ: string;
+    FUFTerceiro: string;
     FcExportador: string;
     Fadi: TadiCollection;
+
     procedure SetAdi(Value: TAdiCollection);
   public
     constructor Create; reintroduce;
@@ -809,6 +846,11 @@ type
     property xLocDesemb: string read FxLocDesemb write FxLocDesemb;
     property UFDesemb: string read FUFDesemb write FUFDesemb;
     property dDesemb: TDateTime read FdDesemb write FdDesemb;
+    property tpViaTransp: TpcnTipoViaTransp read FtpViaTransp write FtpViaTransp;
+    property vAFRMM: currency read FvAFRMM write FvAFRMM;
+    property tpIntermedio: TpcnTipoIntermedio read FtpIntermedio write FtpIntermedio;
+    property CNPJ: string read FCNPJ write FCNPJ;
+    property UFTerceiro: string read FUFTerceiro write FUFTerceiro;
     property cExportador: string read FcExportador write FcExportador;
     property adi: TAdiCollection read Fadi write SetAdi;
   end;
@@ -829,11 +871,36 @@ type
     FnSeqAdi: integer;
     FcFabricante: string;
     FvDescDI: currency;
+    FnDraw: string;
   published
     property nAdicao: integer read FnAdicao write FnAdicao;
     property nSeqAdi: integer read FnSeqAdi write FnSeqAdi;
     property cFabricante: string read FcFabricante write FcFabricante;
     property vDescDI: currency read FvDescDI write FvDescDI;
+    property nDraw: string read FnDraw write FnDraw;
+  end;
+
+  TdetExportCollection = class(TCollection)
+  private
+    function GetItem(Index: Integer): TdetExportCollectionItem;
+    procedure SetItem(Index: Integer; Value: TdetExportCollectionItem);
+  public
+    constructor Create(AOwner: TProd);
+    function Add: TdetExportCollectionItem;
+    property Items[Index: Integer]: TdetExportCollectionItem read GetItem write SetItem; default;
+  end;
+
+  TdetExportCollectionItem = class(TCollectionItem)
+  private
+    FnDraw: string;
+    FnRE: string;
+    FchNFe: string;
+    FqExport: currency;
+  published
+    property nDraw: string read FnDraw write FnDraw;
+    property nRE: string read FnRE write FnRE;
+    property chNFe: string read FchNFe write FchNFe;
+    property qExport: currency read FqExport write FqExport;
   end;
 
   TImposto = class(TPersistent)
@@ -888,6 +955,10 @@ type
     FvCredICMSSN: currency;               //N30
     FvBCSTDest: currency;                 //N31
     FvICMSSTDest: currency;               //N32
+    FvICMSDeson: currency;
+    FvICMSOp: currency;
+    FpDif: currency;
+    FvICMSDif: currency;
   published
     property orig: TpcnOrigemMercadoria read Forig write Forig default oeNacional;
     property CST: TpcnCSTIcms read FCST write FCST default cst00;
@@ -912,6 +983,10 @@ type
     property vCredICMSSN: currency read FvCredICMSSN write FvCredICMSSN;
     property vBCSTDest: currency read FvBCSTDest write FvBCSTDest;
     property vICMSSTDest: currency read FvICMSSTDest write FvICMSSTDest;
+    property vICMSDeson: currency read FvICMSDeson write FvICMSDeson;
+    property vICMSOp: currency read FvICMSOp write FvICMSOp;
+    property pDif: currency read FpDif write FpDif;
+    property vICMSDif: currency read FvICMSDif write FvICMSDif;
   end;
 
   TIPI = class(TPersistent)
@@ -1023,6 +1098,7 @@ type
   private
     FvBC: Currency;
     FvICMS: Currency;
+    FvICMSDeson: Currency;
     FvBCST: Currency;
     FvST: Currency;
     FvProd: Currency;
@@ -1040,6 +1116,7 @@ type
   published
     property vBC: Currency read FvBC write FvBC;
     property vICMS: Currency read FvICMS write FvICMS;
+    property vICMSDeson: Currency read FvICMSDeson write FvICMSDeson;
     property vBCST: Currency read FvBCST write FvBCST;
     property vST: Currency read FvST write FvST;
     property vProd: Currency read FvProd write FvProd;
@@ -1062,12 +1139,45 @@ type
     FvISS: Currency;
     FvPIS: Currency;
     FvCOFINS: Currency;
+    FdCompet: TDateTime;
+    FvDeducao: Currency;
+    FvINSS: Currency;
+    FvIR: Currency;
+    FvCSLL: Currency;
+    FvOutro: Currency;
+    FvDescIncond: Currency;
+    FvDescCond: Currency;
+    FindISSRet: TpcnindISSRet;
+    FindISS: TpcnindISS;
+    FcServico: String;
+    FcMun: integer;
+    FcPais: integer;
+    FnProcesso: String;
+    FcRegTrib: TpcnRegTribISSQN;
+    FindIncentivo: TpcnindIncentivo;
   published
     property vServ: Currency read FvServ write FvServ;
     property vBC: Currency read FvBC write FvBC;
     property vISS: Currency read FvISS write FvISS;
     property vPIS: Currency read FvPIS write FvPIS;
     property vCOFINS: Currency read FvCOFINS write FvCOFINS;
+    property dCompet: TDateTime read FdCompet write FdCompet;
+    property vDeducao: Currency read FvDeducao write FvDeducao;
+    property vINSS: Currency read FvINSS write FvINSS;
+    property vIR: Currency read FvIR write FvIR;
+    property vCSLL: Currency read FvCSLL write FvCSLL;
+    property vOutro: Currency read FvOutro write FvOutro;
+    property vDescIncond: Currency read FvDescIncond write FvDescIncond;
+    property vDescCond: Currency read FvDescCond write FvDescCond;
+    property indISSRet: TpcnindISSRet read FindISSRet write FindISSRet;
+    property indISS: TpcnindISS read FindISS write FindISS;
+    property cServico: String read FcServico write FcServico;
+    property cMun: integer read FcMun write FcMun;
+    property cPais: integer read FcPais write FcPais;
+    property nProcesso: String read FnProcesso write FnProcesso;
+    property cRegTrib: TpcnRegTribISSQN read FcRegTrib write FcRegTrib;
+    property indIncentivo: TpcnindIncentivo read FindIncentivo write FindIncentivo;
+
   end;
 
   TretTrib = class(TPersistent)
@@ -1111,7 +1221,7 @@ type
     FvAliq: currency;
     FvISSQN: currency;
     FcMunFG: integer;
-    FcListServ: integer;
+    FcListServ: String;
     FcSitTrib: TpcnISSQNcSitTrib;
   public
   published
@@ -1119,7 +1229,7 @@ type
     property vAliq: currency read FvAliq write FvAliq;
     property vISSQN: currency read FvISSQN write FvISSQN;
     property cMunFG: integer read FcMunFG write FcMunFG;
-    property cListServ: integer read FcListServ write FcListServ;
+    property cListServ: String read FcListServ write FcListServ;
     property cSitTrib: TpcnISSQNcSitTrib read FcSitTrib write FcSitTrib default ISSQNcSitTribVazio;
   end;
 
@@ -1423,9 +1533,17 @@ type
   private
     FUFembarq: string;
     FxLocEmbarq: string;
+    // Versao 3.10
+    FUFSaidaPais: string;
+    FxLocExporta: string;
+    FxLocDespacho: string;
   published
     property UFembarq: string read FUFembarq write FUFembarq;
     property xLocEmbarq: string read FxLocEmbarq write FxLocEmbarq;
+    // Versao 3.10
+    property UFSaidaPais: string read FUFSaidaPais write FUFSaidaPais;
+    property xLocExporta: string read FxLocExporta write FxLocExporta;
+    property xLocDespacho: string read FxLocDespacho write FxLocDespacho;
   end;
 
   TCompra = class(TPersistent)
@@ -1507,6 +1625,26 @@ type
     property vDed: currency read FvDed write FvDed;
   end;
 
+  TautXMLCollection = class(TCollection)
+  private
+    function GetItem(Index: Integer): TautXMLCollectionItem;
+    procedure SetItem(Index: Integer; Value: TautXMLCollectionItem);
+  public
+    constructor Create(AOwner: TNFe);
+    function Add: TautXMLCollectionItem;
+    property Items[Index: Integer]: TautXMLCollectionItem read GetItem write SetItem; default;
+  end;
+
+  TautXMLCollectionItem = class(TCollectionItem)
+  private
+    FCNPJCPF: String;
+  public
+    constructor Create; reintroduce;
+    destructor Destroy; override;
+  published
+    property CNPJCPF: String read FCNPJCPF write FCNPJCPF;
+  end;
+
 const
 
   CMUN_EXTERIOR: integer = 9999999;
@@ -1526,6 +1664,7 @@ begin
   FDest    := TDest.Create(Self);
   FRetirada := TRetirada.Create;
   FEntrega := TEntrega.Create;
+  FautXML  := TautXMLCollection.Create(Self);
   FDet     := TDetCollection.Create(Self);
   FTotal   := TTotal.Create(self);
   FCobr    := TCobr.Create(Self);
@@ -1558,6 +1697,7 @@ begin
   FDest.Free;
   FRetirada.Free;
   FEntrega.Free;
+  FautXML.Free;
   FDet.Free;
   FTotal.Free;
   FCobr.Free;
@@ -1570,6 +1710,11 @@ begin
   Fsignature.Free;
   FProcNFe.Free;
   inherited Destroy;
+end;
+
+procedure TNFe.SetautXML(const Value: TautXMLCollection);
+begin
+  FautXML := Value;
 end;
 
 procedure TNFe.SetDet(Value: TDetCollection);
@@ -1715,6 +1860,7 @@ constructor TProd.Create(AOwner: TDetcollectionItem);
 begin
   inherited Create;
   FDI := TDICollection.Create(Self);
+  FdetExport := TdetExportCollection.Create(Self);
   FveicProd := TveicProd.Create;
   FMed := TMedCollection.Create(Self);
   Farma := TArmaCollection.Create(Self);
@@ -1724,6 +1870,7 @@ end;
 destructor TProd.Destroy;
 begin
   FDI.Free;
+  FdetExport.Free;
   FveicProd.Free;
   FMed.Free;
   FArma.Free;
@@ -1734,6 +1881,11 @@ end;
 procedure TProd.SetDI(Value: TDICollection);
 begin
   FDI.Assign(Value);
+end;
+
+procedure TProd.SetdetExport(const Value: TdetExportCollection);
+begin
+  FdetExport := Value;
 end;
 
 procedure TProd.SetMed(Value: TMedCollection);
@@ -2361,6 +2513,67 @@ end;
 
 procedure TpagCollection.SetItem(Index: Integer;
   Value: TpagCollectionItem);
+begin
+  inherited SetItem(Index, Value);
+end;
+
+{ TautXMLCollection }
+
+function TautXMLCollection.Add: TautXMLCollectionItem;
+begin
+  Result := TautXMLCollectionItem(inherited Add);
+  Result.create;
+end;
+
+constructor TautXMLCollection.Create(AOwner: TNFe);
+begin
+  inherited Create(TautXMLCollectionItem);
+end;
+
+function TautXMLCollection.GetItem(Index: Integer): TautXMLCollectionItem;
+begin
+  Result := TautXMLCollectionItem(inherited GetItem(Index));
+end;
+
+procedure TautXMLCollection.SetItem(Index: Integer;
+  Value: TautXMLCollectionItem);
+begin
+  inherited SetItem(Index, Value);
+end;
+
+{ TautXMLCollectionItem }
+
+constructor TautXMLCollectionItem.Create;
+begin
+
+end;
+
+destructor TautXMLCollectionItem.Destroy;
+begin
+
+  inherited;
+end;
+
+{ TdetExportCollection }
+
+function TdetExportCollection.Add: TdetExportCollectionItem;
+begin
+  Result := TdetExportCollectionItem(inherited Add);
+end;
+
+constructor TdetExportCollection.Create(AOwner: TProd);
+begin
+  inherited Create(TdetExportCollectionItem);
+end;
+
+function TdetExportCollection.GetItem(
+  Index: Integer): TdetExportCollectionItem;
+begin
+  Result := TdetExportCollectionItem(inherited GetItem(Index));
+end;
+
+procedure TdetExportCollection.SetItem(Index: Integer;
+  Value: TdetExportCollectionItem);
 begin
   inherited SetItem(Index, Value);
 end;

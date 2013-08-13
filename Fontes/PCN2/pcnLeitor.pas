@@ -71,8 +71,8 @@ type
     constructor Create;
     destructor Destroy; override;
     function rExtrai(const nivel: integer; const TagInicio: string; TagFim: string = ''; const item: integer = 1): AnsiString;
-    function rCampo(const Tipo: TpcnTipoCampo; TAG: string): variant;
-    function rCampoCNPJCPF: string;
+    function rCampo(const Tipo: TpcnTipoCampo; TAG: string; TAGparada: string = ''): variant;
+    function rCampoCNPJCPF(TAGparada: string = ''): string;
     function rAtributo(Atributo: string): variant;
     function CarregarArquivo(const CaminhoArquivo: string): boolean; overload;
     function CarregarArquivo(const Stream: TStringStream): boolean; overload;
@@ -169,21 +169,31 @@ begin
   FGrupo := result;
 end;
 
-function TLeitor.rCampoCNPJCPF: string;
+function TLeitor.rCampoCNPJCPF(TAGparada: string = ''): string;
 begin
-  result := rCampo(tcStr, 'CNPJ');
+  result := rCampo(tcStr, 'CNPJ', TAGparada);
   if trim(result) = '' then
-    result := rCampo(tcStr, 'CPF');
+    result := rCampo(tcStr, 'CPF', TAGparada);
 end;
 
-function TLeitor.rCampo(const Tipo: TpcnTipoCampo; TAG: string): variant;
+function TLeitor.rCampo(const Tipo: TpcnTipoCampo; TAG: string; TAGparada: string = ''): variant;
 var
   ConteudoTag: string;
-  inicio, fim: integer;
+  inicio, fim, inicioTAGparada: integer;
 begin
   Tag := UpperCase(Trim(TAG));
   inicio := pos('<' + Tag + '>', UpperCase(FGrupo));
-  if inicio = 0 then
+
+  if Trim(TAGparada) <> '' then
+   begin
+    inicioTAGparada := pos('<' + UpperCase(Trim(TAGparada)) + '>', UpperCase(FGrupo));
+    if inicioTAGparada = 0 then
+      inicioTAGparada := inicio;
+   end
+   else
+    inicioTAGparada := inicio;
+
+  if (inicio = 0) or (InicioTAGparada < inicio) then
     ConteudoTag := ''
   else
   begin

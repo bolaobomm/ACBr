@@ -423,6 +423,44 @@ const
   // Incluido por Italo em 29/04/2013 conforme NT 2013/003
   DSC_QNF = 'Quantidade de Documento Fiscal';
   DSC_VTOTTRIB = 'Valor Aproximado Total de Tributos';
+  // Incluido por Italo em 13/08/2013
+  DSC_IDDEST = 'Destino da Operação';
+  DSC_INDFINAL = 'Indicador de Operação com Consumidor Final';
+  DSC_INDPRES = 'Indicador de Presença do Consumidor Final';
+  DSC_IDESTR = 'Documento de Identificação do Estrangeiro';
+  DSC_INDIEDEST = 'Indicador da IE do Destinatário';
+  DSC_NVE = 'Nomenclatura de Valor Aduaneiro e Estatística';
+  DSC_NFCI = 'Número de Controle da FCI';
+  DSC_NRECOPI = 'Número do RECOPI';
+  DSC_TPVIATRANSP = 'Via de Transporte Internacional';
+  DSC_VAFRMM = 'Valor da AFRMM';
+  DSC_TPINTERMEDIO = 'Forma de Importação';
+  DSC_NDRAW = 'Número do Drawback';
+  DSC_NRE = 'Número do Registro de Exportação';
+  DSC_QEXPORT = 'Qtde Exportada';
+  DSC_PMIXGN = 'Percentual de Gás Natural';
+  DSC_VICMSDESON = 'Valor do ICMS Desoneração';
+  DSC_PDEVOL = 'Percentual da Mercadoria Devolvida';
+  DSC_VIPIDEVOL = 'Valor do IPI Devolvido';
+  DSC_DCOMPET = 'Data da Prestação do Serviço';
+  DSC_VDEDUCAO = 'Valor da Dedução';
+  DSC_VINSS = 'Valor do INSS';
+  DSC_VIR = 'Valor do IR';
+  DSC_VCSLL = 'Valor do CSLL';
+  DSC_VOUTRODED = 'Valor Outras Deduções';
+  DSC_VDESCINCOND = 'Valor Desconto Incondicionado';
+  DSC_VDESCCOND = 'Valor Desconto Condicionado';
+  DSC_INDISSRET = 'Indicador de ISS Retido';
+  DSC_INDISS = 'Indicador da Exigibilidade do ISS';
+  DSC_CSERVICO = 'Código do Serviço';
+  DSC_NPROCESSO = 'Número do Processo';
+  DSC_CREGTRIB = 'Código do Regime Especial de Tributação';
+  DSC_INDINCENTIVO = 'Indicador de Incentivo Fiscal';
+  DSC_XLOCDESP = 'Local de Despacho';
+  DSC_TPAG = 'Forma de Pagamento';
+  DSC_VPAG = 'Valor do Pagamento';
+  DSC_TBAND = 'Bandeira da Operadora de Cartão';
+  DSC_CAUT = 'Número da Autorização';
 
   // CTE //
   DSC_CHCTE    = 'Chave do CTe';
