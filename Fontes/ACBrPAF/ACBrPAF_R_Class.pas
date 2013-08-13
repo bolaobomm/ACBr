@@ -93,7 +93,7 @@ type
 
 implementation
 
-uses ACBrSPEDUtils;
+uses Math, ACBrSpedUtils;
 
 { ordenações de registros }
 
