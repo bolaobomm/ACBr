@@ -119,6 +119,15 @@ type
      class function FormatarPlaca(AValue: string): string;
      // Incluido por Italo em 09/08/2013
      class function FormatarCNPJCPF(AValue : String ): String;
+     // Incluido por Italo em 13/08/2013
+     class function Modulo11(Valor: string; Peso: Integer = 2; Base: Integer = 9): String;
+     class function ValidaDIDSI(AValue: string): Boolean;
+     class function ValidaDIRE(AValue: string): Boolean;
+     class function ValidaRE(AValue: string): Boolean;
+     class function ValidaDrawback(AValue: string): Boolean;
+     class function ValidaSUFRAMA(AValue: string): Boolean;
+     class function ValidaRECOPI(AValue: string): Boolean;
+     class function ValidaNVE(AValue: string): Boolean;
    published
 
    end;
@@ -126,7 +135,7 @@ type
 implementation
 
 uses
- IniFiles, Variants, ACBrUtil, ACBrConsts;
+ IniFiles, Variants, DateUtils, ACBrUtil, ACBrConsts;
 
 class function DFeUtil.EstaVazio(const AValue: String): Boolean;
 begin
@@ -714,6 +723,149 @@ begin
     else
      Result := FormatarCPF(AValue);
    end;
+end;
+
+// Incluido por Italo em 13/08/2013
+class function DFeUtil.Modulo11(Valor: string; Peso: Integer = 2; Base: Integer = 9): String;
+var
+  Soma: integer;
+  Contador, Digito: integer;
+begin
+  Soma := 0;
+  for Contador := Length(Valor) downto 1 do
+  begin
+    Soma := Soma + (StrToInt(Valor[Contador]) * Peso);
+    if Peso < Base then
+      Peso := Peso + 1
+    else
+      Peso := 2;
+  end;
+
+  Digito := 11 - (Soma mod 11);
+  if (Digito > 9) or (Digito = 1) then
+    Digito := 0;
+
+  Result := IntToStr(Digito);
+end;
+
+class function DFeUtil.ValidaDIDSI(AValue: string): Boolean;
+var
+ ano: Integer;
+begin
+ // AValue = TAANNNNNNND
+ // Onde: T Identifica o tipo de documento ( 2 = DI e 4 = DSI )
+ //       AA Ano corrente da geração do documento
+ //       NNNNNNN Número sequencial dentro do Ano ( 7 dígitos )
+ //       D Dígito Verificador, Módulo 11, Pesos de 2 a 9
+ AValue := LimpaNumero(AValue);
+ ano := StrToInt(Copy(IntToStr(YearOf(Date)), 3, 2));
+ if length(AValue) <> 11 then
+   Result := False
+ else if (copy(Avalue, 1, 1) <> '2') and (copy(Avalue, 1, 1) <> '4') then
+        Result := False
+      else if not ((StrToInt(copy(Avalue, 2, 2)) >= ano -1) and (StrToInt(copy(Avalue, 2, 2)) <= ano +1)) then
+             Result := False
+           else
+             Result := copy(AValue, 11, 1) = Modulo11(AValue);
+end;
+
+class function DFeUtil.ValidaDIRE(AValue: string): Boolean;
+var
+ ano: Integer;
+begin
+ // AValue = AANNNNNNNNNN
+ // Onde: AA Ano corrente da geração do documento
+ //       NNNNNNNNNN Número sequencial dentro do Ano ( 10 dígitos )
+ AValue := LimpaNumero(AValue);
+ ano := StrToInt(Copy(IntToStr(YearOf(Date)), 3, 2));
+ if length(AValue) <> 12 then
+   Result := False
+ else
+   Result := (StrToInt(copy(Avalue, 1, 2)) >= ano -1) and (StrToInt(copy(Avalue, 1, 2)) <= ano +1);
+end;
+
+class function DFeUtil.ValidaRE(AValue: string): Boolean;
+var
+ ano: Integer;
+begin
+ // AValue = AANNNNNNNSSS
+ // Onde: AA Ano corrente da geração do documento
+ //       NNNNNNN Número sequencial dentro do Ano ( 7 dígitos )
+ //       SSS Serie do RE (001, 002, ...)
+ AValue := LimpaNumero(AValue);
+ ano := StrToInt(Copy(IntToStr(YearOf(Date)), 3, 2));
+ if length(AValue) <> 12 then
+   Result := False
+ else if not ((StrToInt(copy(Avalue, 2, 2)) >= ano -1) and (StrToInt(copy(Avalue, 2, 2)) <= ano +1)) then
+        Result := False
+      else
+        Result := (StrToInt(copy(Avalue, 10, 3)) >= 1) and (StrToInt(copy(Avalue, 10, 3)) <= 999);
+end;
+
+class function DFeUtil.ValidaDrawback(AValue: string): Boolean;
+var
+ ano: Integer;
+begin
+ // AValue = AAAANNNNNND
+ // Onde: AAAA Ano corrente do registro
+ //       NNNNNN Número sequencial dentro do Ano ( 6 dígitos )
+ //       D Dígito Verificador, Módulo 11, Pesos de 2 a 9
+ AValue := LimpaNumero(AValue);
+ ano := StrToInt(Copy(IntToStr(YearOf(Date)), 3, 2));
+ if length(AValue) = 11 then
+   AValue := copy(AValue, 3, 9);
+ if length(AValue) <> 9 then
+   Result := False
+ else if not ((StrToInt(copy(Avalue, 1, 2)) >= ano -1) and (StrToInt(copy(Avalue, 1, 2)) <= ano +1)) then
+        Result := False
+      else
+        Result := copy(AValue, 9, 1) = Modulo11(AValue);
+end;
+
+class function DFeUtil.ValidaSUFRAMA(AValue: string): Boolean;
+var
+ SS, LL: Integer;
+begin
+ // AValue = SSNNNNLLD
+ // Onde: SS Código do setor de atividade da empresa ( 01, 02, 10, 11, 20 e 60 )
+ //       NNNN Número sequencial ( 4 dígitos )
+ //       LL Código da localidade da Unidade Administrativa da Suframa ( 01 = Manaus, 10 = Boa Vista e 30 = Porto Velho )
+ //       D Dígito Verificador, Módulo 11, Pesos de 2 a 9
+ AValue := LimpaNumero(AValue);
+ if length(AValue) < 9 then
+   AValue := '0' + AValue;
+ if length(AValue) <> 9 then
+   Result := False
+ else
+  begin
+   SS := StrToInt(copy(Avalue, 1, 2));
+   LL := StrToInt(copy(Avalue, 7, 2));
+   if not (SS in [01, 02, 10, 11, 20, 60]) then
+     Result := False
+   else if not (LL in [01, 10, 30]) then
+          Result := False
+        else
+          Result := copy(AValue, 9, 1) = Modulo11(AValue);
+ end;
+end;
+
+class function DFeUtil.ValidaRECOPI(AValue: string): Boolean;
+begin
+ // AValue = aaaammddhhmmssffffDD
+ // Onde: aaaammdd Ano/Mes/Dia da autorização
+ //       hhmmssffff Hora/Minuto/Segundo da autorização com mais 4 digitos da fração de segundo
+ //       DD Dígitos Verificadores, Módulo 11, Pesos de 1 a 18 e de 1 a 19
+ AValue := LimpaNumero(AValue);
+ if length(AValue) <> 20 then
+   Result := False
+ else if copy(AValue, 19, 1) <> Modulo11(copy(AValue, 1, 18), 1, 18) then
+        Result := False
+      else Result := copy(AValue, 20, 1) = Modulo11(copy(AValue, 1, 19), 1, 19);
+end;
+
+class function DFeUtil.ValidaNVE(AValue: string): Boolean;
+begin
+ Result := True;
 end;
 
 end.
