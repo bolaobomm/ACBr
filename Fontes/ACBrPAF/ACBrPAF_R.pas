@@ -57,6 +57,8 @@ type
 
   /// REGISTRO TIPO R01 - IDENTIFICAÇÃO DO ECF, DO USUÁRIO, DO PAF-ECF E DA EMPRESA DESENVOLVEDORA E DADOS DO ARQUIVO
 
+  { TRegistroR01 }
+
   TRegistroR01 = class
   private
     fRegistroValido: boolean;
@@ -90,6 +92,7 @@ type
     procedure SetRegistroR06(const Value: TRegistroR06List); /// ER 1.08 inclusão/exclusão de registros
   public
     constructor Create; virtual; /// Create
+    destructor Destroy; override; /// Destroy
 
     property InclusaoExclusao: Boolean read fInclusaoExclusao write fInclusaoExclusao default False;
     property RegistroValido: Boolean read fRegistroValido write fRegistroValido default True;
@@ -540,6 +543,14 @@ begin
    FRegistroR02 := TRegistroR02List.Create;
    FRegistroR04 := TRegistroR04List.Create;
    FRegistroR06 := TRegistroR06List.Create;
+end;
+
+destructor TRegistroR01.Destroy;
+begin
+  FRegistroR02.Free;
+  FRegistroR04.Free;
+  FRegistroR06.Free;
+  inherited;
 end;
 
 procedure TRegistroR01.SetRegistroR02(const Value: TRegistroR02List);
