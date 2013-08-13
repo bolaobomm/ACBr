@@ -231,9 +231,9 @@ begin
   (* Grupo da TAG <rem> *******************************************************)
   if Leitor.rExtrai(1, 'rem') <> '' then
   begin
-    CTe.Rem.CNPJCPF := Leitor.rCampoCNPJCPF;
+    CTe.Rem.CNPJCPF := Leitor.rCampoCNPJCPF('locRet');
     CTe.Rem.IE      := Leitor.rCampo(tcStr, 'IE');
-    CTe.Rem.xNome   := Leitor.rCampo(tcStr, 'xNome');
+    CTe.Rem.xNome   := Leitor.rCampo(tcStr, 'xNome', 'locRet');
     CTe.Rem.xFant   := Leitor.rCampo(tcStr, 'xFant');
     CTe.Rem.fone    := Leitor.rCampo(tcStr, 'fone');
     CTe.Rem.email   := Leitor.rCampo(tcStr, 'email');
