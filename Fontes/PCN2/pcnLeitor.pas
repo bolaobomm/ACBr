@@ -238,9 +238,9 @@ begin
     tcDe3,
     tcDe4,
     tcDe6,  
-    tcDe10    : result := StrToFloat(StringReplace('0' + ConteudoTag, '.', DecimalSeparator, []));
+    tcDe10    : result := StrToFloatDef(StringReplace(ConteudoTag, '.', DecimalSeparator, []),0);
     tcEsp     : result := ConteudoTag;
-    tcInt     : result := StrToInt('0' + Trim(SomenteNumeros(ConteudoTag)));
+    tcInt     : result := StrToIntDef(Trim(SomenteNumeros(ConteudoTag)),0);
     else
       raise Exception.Create('Tag <' + Tag + '> com conteúdo inválido. '+ConteudoTag);
   end;
