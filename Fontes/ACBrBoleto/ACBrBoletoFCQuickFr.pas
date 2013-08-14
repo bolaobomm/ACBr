@@ -46,7 +46,8 @@ interface
 
 uses
   SysUtils, StdCtrls, Classes, Graphics, Controls, Forms, Dialogs, ACBrBoleto,
-  QRMultiExport, QRCtrls, QuickRpt, ExtCtrls, QRExport, ACBrBarCode, QRWebFilt ;
+  QRMultiExport, QRCtrls, QuickRpt, ExtCtrls, QRExport, ACBrBarCode, QRWebFilt,
+  RLFilters, RLPDFFilter ;
 
 const
   CACBrBoletoFCQuick_Versao = '0.0.14a' ;
@@ -540,11 +541,11 @@ begin
 end;
 
 procedure TACBrBoletoFCQuick.Imprimir;
-
 var
   frACBrBoletoQuick : TACBRBoletoFCQuickFr;
   RLLayout: TQuickRep;
-  MultiExport : TQRMultiExport ;
+  //MultiExport : TQRMultiExport ;
+  FiltroExportacao: TQRPAbstractExportFilter;
   //HTMLFilter  : TQRHTMLDocumentFilter ;
 begin
   inherited Imprimir;    // Executa verificações padroes
@@ -565,17 +566,24 @@ begin
         case Filtro of
           fiPDF  :
             begin
-               MultiExport := TQRMultiExport.Create(self);
-               try
-                  MultiExport.Report       := RLLayout ;
-                  MultiExport.ExportFormat := qrxPDF ;
-                  MultiExport.FileName     := NomeArquivo ;
-                  MultiExport.ShowDialog   := MostrarSetup ;
-                  MultiExport.DPI          := 300 ;
-                  MultiExport.DoExport ;
-               finally
-                  MultiExport.Free ;
-               end ;
+              FiltroExportacao := TQRPDFDocumentFilter.Create(NomeArquivo);
+              try
+                TQRPDFDocumentFilter(FiltroExportacao).CompressionOn := true;
+                RLLayout.ExportToFilter(FiltroExportacao);
+              finally
+                FiltroExportacao.Free;
+              end;
+//               MultiExport := TQRMultiExport.Create(self);
+//               try
+//                  MultiExport.Report       := RLLayout ;
+//                  MultiExport.ExportFormat := qrxPDF ;
+//                  MultiExport.FileName     := NomeArquivo ;
+//                  MultiExport.ShowDialog   := MostrarSetup ;
+//                  MultiExport.DPI          := 300 ;
+//                  MultiExport.DoExport ;
+//               finally
+//                  MultiExport.Free ;
+//               end ;
             end ;
 
           fiHTML :
