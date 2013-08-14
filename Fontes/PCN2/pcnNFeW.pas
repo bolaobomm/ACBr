@@ -773,8 +773,9 @@ begin
   (**)GerarDetProdArma(i);
   (**)GerarDetProdComb(i);
   Gerador.wCampo(tcStr, 'L109', 'nRECOPI', 20, 20, 0, nfe.Det[i].Prod.nRECOPI, DSC_NRECOPI);
-  if not DFeUtil.ValidaRECOPI(nfe.Det[i].Prod.nRECOPI) then
-    Gerador.wAlerta('L109', 'nRECOPI', DSC_NRECOPI, ERR_MSG_INVALIDO);
+  if trim(nfe.Det[i].Prod.nRECOPI)<>'' then
+    if not DFeUtil.ValidaRECOPI(nfe.Det[i].Prod.nRECOPI) then
+      Gerador.wAlerta('L109', 'nRECOPI', DSC_NRECOPI, ERR_MSG_INVALIDO);
   Gerador.wGrupo('/prod');
 end;
 
