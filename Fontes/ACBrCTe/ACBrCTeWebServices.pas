@@ -791,7 +791,7 @@ end;
 procedure TWebServicesBase.DoCTeEnvEvento;
 var
   EventoCTe : TEventoCTe;
-  i : integer;
+  i, j : integer;
 begin
   EventoCTe        := TEventoCTe.Create;
   EventoCTe.idLote := TCTeEnvEvento(Self).idLote;
@@ -808,19 +808,43 @@ begin
         infEvento.nSeqEvento := TCTeEnvEvento(Self).FEvento.Evento[i].InfEvento.nSeqEvento;
 
         case InfEvento.tpEvento of
+          teEPEC:
+          begin
+            infEvento.detEvento.xJust   := TCTeEnvEvento(Self).FEvento.Evento[i].InfEvento.detEvento.xJust;
+            infEvento.detEvento.vICMS   := TCTeEnvEvento(Self).FEvento.Evento[i].InfEvento.detEvento.vICMS;
+            infEvento.detEvento.vTPrest := TCTeEnvEvento(Self).FEvento.Evento[i].InfEvento.detEvento.vTPrest;
+            infEvento.detEvento.vCarga  := TCTeEnvEvento(Self).FEvento.Evento[i].InfEvento.detEvento.vCarga;
+            infEvento.detEvento.toma    := TCTeEnvEvento(Self).FEvento.Evento[i].InfEvento.detEvento.toma;
+            infEvento.detEvento.UF      := TCTeEnvEvento(Self).FEvento.Evento[i].InfEvento.detEvento.UF;
+            infEvento.detEvento.CNPJCPF := TCTeEnvEvento(Self).FEvento.Evento[i].InfEvento.detEvento.CNPJCPF;
+            infEvento.detEvento.IE      := TCTeEnvEvento(Self).FEvento.Evento[i].InfEvento.detEvento.IE;
+            infEvento.detEvento.modal   := TCTeEnvEvento(Self).FEvento.Evento[i].InfEvento.detEvento.modal;
+            infEvento.detEvento.UFIni   := TCTeEnvEvento(Self).FEvento.Evento[i].InfEvento.detEvento.UFIni;
+            infEvento.detEvento.UFFim   := TCTeEnvEvento(Self).FEvento.Evento[i].InfEvento.detEvento.UFFim;
+          end;
           teCancelamento:
           begin
             infEvento.detEvento.nProt := TCTeEnvEvento(Self).FEvento.Evento[i].InfEvento.detEvento.nProt;
             infEvento.detEvento.xJust := TCTeEnvEvento(Self).FEvento.Evento[i].InfEvento.detEvento.xJust;
           end;
-          teEncerramento:
+          teMultiModal:
           begin
-          (*
-            infEvento.detEvento.nProt := TCTeEnvEvento(Self).FEvento.Evento[i].InfEvento.detEvento.nProt;
-            infEvento.detEvento.dtEnc := TCTeEnvEvento(Self).FEvento.Evento[i].InfEvento.detEvento.dtEnc;
-            infEvento.detEvento.cUF   := TCTeEnvEvento(Self).FEvento.Evento[i].InfEvento.detEvento.cUF;
-            infEvento.detEvento.cMun  := TCTeEnvEvento(Self).FEvento.Evento[i].InfEvento.detEvento.cMun;
-          *)  
+            infEvento.detEvento.xRegistro := TCTeEnvEvento(Self).FEvento.Evento[i].InfEvento.detEvento.xRegistro;
+            infEvento.detEvento.nDoc      := TCTeEnvEvento(Self).FEvento.Evento[i].InfEvento.detEvento.nDoc;
+          end;
+          teCCe:
+          begin
+            for j := 0 to TCTeEnvEvento(Self).FEvento.Evento[i].InfEvento.detEvento.infCorrecao.Count-1 do
+             begin
+               with EventoCTe.Evento[i].InfEvento.detEvento.infCorrecao.Add do
+                begin
+                 grupoAlterado   := TCTeEnvEvento(Self).FEvento.Evento[i].InfEvento.detEvento.infCorrecao[i].grupoAlterado;
+                 campoAlterado   := TCTeEnvEvento(Self).FEvento.Evento[i].InfEvento.detEvento.infCorrecao[i].campoAlterado;
+                 valorAlterado   := TCTeEnvEvento(Self).FEvento.Evento[i].InfEvento.detEvento.infCorrecao[i].valorAlterado;
+                 nroItemAlterado := TCTeEnvEvento(Self).FEvento.Evento[i].InfEvento.detEvento.infCorrecao[i].nroItemAlterado;
+                 nroItemAlterado := TCTeEnvEvento(Self).FEvento.Evento[i].InfEvento.detEvento.infCorrecao[i].nroItemAlterado;
+                end;
+             end;
           end;
         end;
       end;
