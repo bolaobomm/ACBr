@@ -2360,6 +2360,7 @@ end;
 function TWebServices.CancelaNFSe(ACodigoCancelamento: String;
   const CarregaProps: boolean): Boolean;
 begin
+  (*
   if CarregaProps then
   begin
     Self.CancNfse.NumeroRPS := '';
@@ -2367,6 +2368,14 @@ begin
     Self.CancNfse.IM := '';
     Self.CancNfse.CodigoMunicipio := '';
   end;
+  *)
+ if CarregaProps then
+ begin
+   Self.CancNfse.NumeroRPS       := TACBrNFSe( FACBrNFSe ).NotasFiscais.Items[0].NFSe.IdentificacaoRps.Numero;
+   Self.CancNfse.CNPJ            := TACBrNFSe( FACBrNFSe ).NotasFiscais.Items[0].NFSe.PrestadorServico.IdentificacaoPrestador.Cnpj;
+   Self.CancNfse.IM              := TACBrNFSe( FACBrNFSe ).NotasFiscais.Items[0].NFSe.PrestadorServico.IdentificacaoPrestador.InscricaoMunicipal;
+   Self.CancNfse.CodigoMunicipio := TACBrNFSe( FACBrNFSe ).NotasFiscais.Items[0].NFSe.PrestadorServico.Endereco.CodigoMunicipio;
+ end;
 
  Self.CancNfse.CodigoCancelamento := ACodigoCancelamento;
 
@@ -2402,9 +2411,9 @@ end;
 function TWebServices.CancelaNFSe(ACodigoCancelamento, ANumeroRPS, ACNPJ,
   AInscricaoMunicipal, ACodigoMunicipio: string): Boolean;
 begin
-  Self.CancNfse.NumeroRPS := ANumeroRPS;
-  Self.CancNfse.CNPJ := ACNPJ;
-  Self.CancNfse.IM := AInscricaoMunicipal;
+  Self.CancNfse.NumeroRPS       := ANumeroRPS;
+  Self.CancNfse.CNPJ            := ACNPJ;
+  Self.CancNfse.IM              := AInscricaoMunicipal;
   Self.CancNfse.CodigoMunicipio := ACodigoMunicipio;
 
   Result := CancelaNFSe(ACodigoCancelamento,False);
