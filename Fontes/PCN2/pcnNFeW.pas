@@ -577,7 +577,7 @@ begin
 
   Gerador.IDNivel := 'E01';
 
-  if nfe.infNFe.Versao >= 3 then
+  if nfe.infNFe.Versao >= 3.1 then
     Gerador.wCampo(tcStr, 'E16a', 'indIEDest', 01, 01, 1, indIEDestToStr(nfe.Dest.indIEDest), DSC_INDIEDEST);
 
   // Inscrição Estadual
@@ -1680,7 +1680,7 @@ begin
   Gerador.wGrupo('ICMSTot', 'W02');
   Gerador.wCampo(tcDe2, 'W03', 'vBC       ', 01, 15, 1, nfe.Total.ICMSTot.vBC, DSC_VBC);
   Gerador.wCampo(tcDe2, 'W04', 'vICMS     ', 01, 15, 1, nfe.Total.ICMSTot.vICMS, DSC_VICMS);
-  if NFe.infNFe.Versao >= 3 then
+  if NFe.infNFe.Versao >= 3.10 then
     Gerador.wCampo(tcDe2, 'W04a','vICMSDeson', 01, 15, 1, nfe.Total.ICMSTot.vICMSDeson, DSC_VICMSDESON);
   Gerador.wCampo(tcDe2, 'W05', 'vBCST     ', 01, 15, 1, nfe.Total.ICMSTot.vBCST, DSC_VBCST);
   Gerador.wCampo(tcDe2, 'W06', 'vST       ', 01, 15, 1, nfe.Total.ICMSTot.vST, DSC_VST);
@@ -1713,7 +1713,7 @@ begin
     Gerador.wCampo(tcDe2, 'W21', 'vPIS      ', 01, 15, 0, nfe.Total.ISSQNtot.vPIS, DSC_VPIS);
     Gerador.wCampo(tcDe2, 'W22', 'vCOFINS   ', 01, 15, 0, nfe.Total.ISSQNtot.vCOFINS, DSC_VCOFINS);
 
-    if nfe.infNFe.Versao >= 3 then
+    if nfe.infNFe.Versao >= 3.10 then
     begin
       Gerador.wCampo(tcStr, 'W22a', 'dCompet     ', 10, 10, 1, FormatDateTime('YYYYMMDD', nfe.Total.ISSQNtot.dCompet), DSC_DCOMPET);
       Gerador.wCampo(tcDe2, 'W22b', 'vDeducao    ', 01, 15, 0, nfe.Total.ISSQNtot.vDeducao, DSC_VDEDUCAO);
