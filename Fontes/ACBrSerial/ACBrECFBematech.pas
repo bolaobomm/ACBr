@@ -813,7 +813,7 @@ end;
 
 procedure TACBrECFBematech.Desativar;
 begin
-  {$ifdef windows}
+  {$IFDEF MSWINDOWS}
   if fsUsarDLL and Ativo then
      try
         FechaPortaSerialDLL(False);
@@ -872,6 +872,7 @@ begin
   cmd := PreparaCmd( cmd ) ;
 
   try
+    {$IFDEF MSWINDOWS}
      if fsUsarDLL then
       begin
         LenCMD := Length(cmd);
@@ -917,6 +918,7 @@ begin
         Result := copy(fpRespostaComando, 2, Length(fpRespostaComando)-5);
       end
      else
+     {$ENDIF}
       begin
         fpDevice.Serial.DeadlockTimeout := 2000 ; { Timeout p/ Envio }
         FalhasACK := 0 ;
