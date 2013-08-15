@@ -54,7 +54,7 @@ interface
 
 uses
   ACBrSocket, ACBrUtil,
-  Windows, SysUtils, Variants, Classes, Contnrs;
+  SysUtils, Variants, Classes, Contnrs;
 
 type
   EACBrCotacao = class(Exception);
@@ -277,4 +277,4 @@ begin
   end;
 end;
 
-end.
+end.

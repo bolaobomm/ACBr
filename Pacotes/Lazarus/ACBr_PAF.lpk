@@ -19,7 +19,7 @@
       </Other>
     </CompilerOptions>
     <Description Value="Componentes para geração de arquivos exigidos pelo PAF-ECF"/>
-    <Files Count="16">
+    <Files Count="18">
       <Item1>
         <Filename Value="..\..\Fontes\ACBrPAF\ACBrPAFRegistros.pas"/>
         <UnitName Value="ACBrPAFRegistros"/>
@@ -85,6 +85,14 @@
         <Filename Value="..\..\Fontes\ACBrPAF\ACBrPAF_N_Class.pas"/>
         <UnitName Value="ACBrPAF_N_Class"/>
       </Item16>
+      <Item17>
+        <Filename Value="..\..\Fontes\ACBrPAF\ACBrPAF_A.pas"/>
+        <UnitName Value="ACBrPAF_A"/>
+      </Item17>
+      <Item18>
+        <Filename Value="..\..\Fontes\ACBrPAF\ACBrPAF_A_Class.pas"/>
+        <UnitName Value="ACBrPAF_A_Class"/>
+      </Item18>
     </Files>
     <Type Value="RunAndDesignTime"/>
     <RequiredPkgs Count="2">

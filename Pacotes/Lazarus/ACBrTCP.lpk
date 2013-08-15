@@ -28,7 +28,7 @@
     <License Value="LGPL
 "/>
     <Version Minor="10"/>
-    <Files Count="11">
+    <Files Count="12">
       <Item1>
         <Filename Value="..\..\Fontes\ACBrTCP\ACBrSocket.pas"/>
         <UnitName Value="ACBrSocket"/>
@@ -74,6 +74,10 @@
         <Filename Value="..\..\Fontes\ACBrTCP\ACBrIBPTax.pas"/>
         <UnitName Value="ACBrIBPTax"/>
       </Item11>
+      <Item12>
+        <Filename Value="..\..\Fontes\ACBrTCP\ACBrCotacao.pas"/>
+        <UnitName Value="ACBrCotacao"/>
+      </Item12>
     </Files>
     <Type Value="RunAndDesignTime"/>
     <RequiredPkgs Count="4">

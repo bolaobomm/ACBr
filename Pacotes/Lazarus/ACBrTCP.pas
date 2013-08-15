@@ -2,22 +2,22 @@
   This source is only used to compile and install the package.
  }
 
-unit ACBrTCP ;
+unit ACBrTCP;
 
 interface
 
 uses
   ACBrSocket, ACBrCEP, ACBrTCPReg, ACBrIBGE, ACBrCNIEE, ACBrSuframa, 
   ACBrDownload, ACBrDownloadClass, ACBrNFPws, ACBrConsultaCNPJ, ACBrIBPTax, 
-  LazarusPackageIntf;
+  ACBrCotacao, LazarusPackageIntf;
 
 implementation
 
-procedure Register ;
+procedure Register;
 begin
-  RegisterUnit('ACBrTCPReg', @ACBrTCPReg.Register) ;
-end ;
+  RegisterUnit('ACBrTCPReg', @ACBrTCPReg.Register);
+end;
 
 initialization
-  RegisterPackage('ACBrTCP', @Register) ;
+  RegisterPackage('ACBrTCP', @Register);
 end.
