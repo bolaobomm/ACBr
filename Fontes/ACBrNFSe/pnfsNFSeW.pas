@@ -757,10 +757,19 @@ end;
 
 procedure TNFSeW.GerarIntermediarioServico;
 begin
- if NFSe.IntermediarioServico.RazaoSocial<>''
+ if (NFSe.IntermediarioServico.RazaoSocial<>'') or
+    ((FProvedor in [proISSe]) and (NFSe.IntermediarioServico.CpfCnpj <> ''))
   then begin
-   Gerador.wGrupoNFSe('IntermediarioServico');
-   Gerador.wCampoNFSe(tcStr, '#48', 'RazaoSocial', 001, 115, 0, NFSe.IntermediarioServico.RazaoSocial, '');
+   case FProvedor of                                         // Alteraçãoes para Maringá PR - Rafael Marcelo dos Santos
+   proISSe:
+     begin
+       Gerador.wGrupoNFSe('Intermediario');
+       Gerador.wGrupoNFSe('IdentificacaoIntermediario');
+     end;
+   else
+     Gerador.wGrupoNFSe('IntermediarioServico');
+     Gerador.wCampoNFSe(tcStr, '#48', 'RazaoSocial', 001, 115, 0, NFSe.IntermediarioServico.RazaoSocial, '');
+   end;
 
    Gerador.wGrupoNFSe('CpfCnpj');
 
@@ -772,8 +781,20 @@ begin
 
    Gerador.wCampoNFSe(tcStr, '#50', 'InscricaoMunicipal', 01, 15, 0, NFSe.IntermediarioServico.InscricaoMunicipal, '');
 
-   Gerador.wGrupoNFSe('/IntermediarioServico');
+   case FProvedor of
+   proISSe:                                                           // Alteraçãoes para Maringá PR - Rafael Marcelo dos Santos
+     begin
+       Gerador.wGrupoNFSe('/IdentificacaoIntermediario');
+       Gerador.wCampoNFSe(tcStr, '#48', 'RazaoSocial', 001, 115, 0, NFSe.IntermediarioServico.RazaoSocial, '');
+       Gerador.wGrupoNFSe('/Intermediario');
+     end;
+   else
+     Gerador.wGrupoNFSe('/IntermediarioServico');
+   end;
+
   end;
+
+
 end;
 
 procedure TNFSeW.GerarConstrucaoCivil;
