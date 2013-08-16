@@ -238,15 +238,47 @@ function TInfEvento.getcOrgao: integer;
 begin
   Result := StrToInt(copy(FChave, 1, 2));
 
-  {Estados que utilizam a SVAN: ES, MA, PA, PI, RN}
-  {Devem utilizar 91}
-  if Result in [32,21,15,22,24] then
-    Result := 91;
+  if FTpEvento = teEPEC then
+  begin
+    case Result of
+     11, // Rondônia
+     12, // Acre
+     13, // Amazonas
+     14, // Roraima
+     15, // Pará
+     16, // Amapá
+     17, // Tocantins
+     21, // Maranhão
+     22, // Piauí
+     23, // Ceará
+     24, // Rio Grande do Norte
+     25, // Paraibá
+     27, // Alagoas
+     28, // Sergipe
+     29, // Bahia
+     31, // Minas Gerais
+     32, // Espirito Santo
+     33, // Rio de Janeiro
+     41, // Paraná
+     42, // Santa Catarina
+     43, // Rio Grande do Sul
+     52, // Goiás
+     53: // Distrito Federal
+        Result := 35;
+     26, // Pernanbuco
+     35, // São Paulo
+     50, // Mato Grosso do Sul
+     51: // Mato Grosso
+        Result := 43;
+    end;
+  end  // Estados que utilizam a SVAN: ES, MA, PA, PI, RN Devem utilizar 91
+  else if Result in [32, 21, 15, 22, 24] then
+         Result := 91;
 end;
 
 function TInfEvento.getDescEvento: string;
 begin
-  case fTpEvento of
+  case FTpEvento of
     teCCe         : Result := 'Carta de Correcao';
     teCancelamento: Result := 'Cancelamento';
     teEPEC        : Result := 'EPEC';
