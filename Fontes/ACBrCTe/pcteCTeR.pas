@@ -326,9 +326,9 @@ begin
   (* Grupo da TAG <rem> *******************************************************)
   if Leitor.rExtrai(1, 'rem') <> '' then
   begin
-    CTe.Rem.CNPJCPF := Leitor.rCampoCNPJCPF;
+    CTe.Rem.CNPJCPF := Leitor.rCampoCNPJCPF('locColeta');
     CTe.Rem.IE      := Leitor.rCampo(tcStr, 'IE');
-    CTe.Rem.xNome   := Leitor.rCampo(tcStr, 'xNome');
+    CTe.Rem.xNome   := Leitor.rCampo(tcStr, 'xNome', 'locColeta');
     CTe.Rem.xFant   := Leitor.rCampo(tcStr, 'xFant');
     CTe.Rem.fone    := Leitor.rCampo(tcStr, 'fone');
     CTe.Rem.email   := Leitor.rCampo(tcStr, 'email');
@@ -412,9 +412,9 @@ begin
   (* Grupo da TAG <dest> ******************************************************)
   if Leitor.rExtrai(1, 'dest') <> '' then
   begin
-    CTe.Dest.CNPJCPF := Leitor.rCampoCNPJCPF;
+    CTe.Dest.CNPJCPF := Leitor.rCampoCNPJCPF('locEnt');
     CTe.Dest.IE      := Leitor.rCampo(tcStr, 'IE');
-    CTe.Dest.xNome   := Leitor.rCampo(tcStr, 'xNome');
+    CTe.Dest.xNome   := Leitor.rCampo(tcStr, 'xNome', 'locEnt');
     CTe.Dest.fone    := Leitor.rCampo(tcStr, 'fone');
     CTe.Dest.ISUF    := Leitor.rCampo(tcStr, 'ISUF');
     CTe.Dest.email   := Leitor.rCampo(tcStr, 'email');

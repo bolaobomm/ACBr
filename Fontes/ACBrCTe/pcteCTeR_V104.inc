@@ -360,9 +360,9 @@ begin
   (* Grupo da TAG <dest> ******************************************************)
   if Leitor.rExtrai(1, 'dest') <> '' then
   begin
-    CTe.Dest.CNPJCPF := Leitor.rCampoCNPJCPF;
+    CTe.Dest.CNPJCPF := Leitor.rCampoCNPJCPF('locEnt');
     CTe.Dest.IE      := Leitor.rCampo(tcStr, 'IE');
-    CTe.Dest.xNome   := Leitor.rCampo(tcStr, 'xNome');
+    CTe.Dest.xNome   := Leitor.rCampo(tcStr, 'xNome', 'locEnt');
     CTe.Dest.fone    := Leitor.rCampo(tcStr, 'fone');
     CTe.Dest.ISUF    := Leitor.rCampo(tcStr, 'ISUF');
     CTe.Dest.email   := Leitor.rCampo(tcStr, 'email');

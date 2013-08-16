@@ -1857,7 +1857,7 @@ begin
          Gerador.wAlerta('#343', 'refNFe', DSC_REFNFE, ERR_MSG_INVALIDO);
       end
       else begin
-       if (CTe.infCTeNorm.infCTeSub.tomaICMS.refNF.CNPJ<>'')
+       if (CTe.infCTeNorm.infCTeSub.tomaICMS.refNF.CNPJCPF<>'')
         then begin
          Gerador.wGrupo('refNF', '#344');
          Gerador.wCampoCNPJCPF('#345', '#345a', CTe.infCTeNorm.infCTeSub.tomaICMS.refNF.CNPJCPF, CODIGO_BRASIL);
