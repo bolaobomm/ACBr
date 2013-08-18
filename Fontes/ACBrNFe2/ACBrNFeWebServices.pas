@@ -1819,7 +1819,7 @@ begin
     if (FConfiguracoes.Geral.ModeloDF = moNFCe) and FSincrono then
      begin
        NFeRetornoSincrono := TRetConsSitNFe.Create;
-       
+
        if pos('retEnviNFe',FRetWS) > 0 then
           NFeRetornoSincrono.Leitor.Arquivo := StringReplace(FRetWS,'retEnviNFe','retConsSitNFe',[rfReplaceAll,rfIgnoreCase])
        else if pos('retConsReciNFe',FRetWS) > 0 then
@@ -1847,6 +1847,10 @@ begin
 
        FTpAmb    := NFeRetornoSincrono.TpAmb;
        FverAplic := NFeRetornoSincrono.verAplic;
+
+       // Consta no Retorno da NFC-e
+       FRecibo   := NFeRetornoSincrono.nRec;
+
        FcStat    := NFeRetornoSincrono.protNFe.cStat;
        FcUF      := NFeRetornoSincrono.cUF;
        FMsg      := NFeRetornoSincrono.protNFe.xMotivo;
@@ -2020,9 +2024,9 @@ begin
                AProcNFe.PathRetConsReciNFe:=PathWithDelim(FConfiguracoes.Geral.PathSalvar)+FNFeRetorno.nRec+'-pro-rec.xml';
 
 
-               if (FConfiguracoes.Geral.ModeloDF = moNFCe) then 
+               if (FConfiguracoes.Geral.ModeloDF = moNFCe) then
                   AProcNFe.Versao := NFCeEnvi
-               else 
+               else
                   AProcNFe.Versao := NFenviNFe;
 
                AProcNFe.GerarXML;
