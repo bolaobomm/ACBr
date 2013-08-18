@@ -225,6 +225,9 @@ begin
        Gerador.wAlerta('A01', 'infNFe', DSC_CHAVE, ERR_MSG_GERAR_CHAVE);
    end;
 
+  if trim(nfe.infNFe.ID) = '' then
+    nfe.infNFe.ID := chave;
+
   if (copy(nfe.infNFe.ID, 1, 3) <> 'NFe') then
     NFe.infNFe.ID := 'NFe' + NFe.infNFe.ID;
 

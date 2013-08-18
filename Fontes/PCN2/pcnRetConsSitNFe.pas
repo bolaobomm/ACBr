@@ -97,6 +97,7 @@ type
     FprotNFe: TProcNFe;
     FretCancNFe: TRetCancNFe;
     FprocEventoNFe: TRetEventoNFeCollection;
+    FnRec: string; // Consta no Retorno da NFC-e
   public
     constructor Create;
     destructor Destroy; override;
@@ -113,6 +114,7 @@ type
     property protNFe: TProcNFe read FprotNFe write FprotNFe;
     property retCancNFe: TRetCancNFe read FretCancNFe write FretCancNFe;
     property procEventoNFe: TRetEventoNFeCollection read FprocEventoNFe write FprocEventoNFe;
+    property nRec: string read FnRec write FnRec;
   end;
 
 implementation
@@ -147,6 +149,10 @@ begin
     begin
       (*ER03 *)FtpAmb     := StrToTpAmb(ok, leitor.rCampo(tcStr, 'tpAmb'));
       (*ER04 *)FverAplic  := leitor.rCampo(tcStr, 'verAplic');
+
+      // Consta no Retorno da NFC-e
+      (*ER04a*)FnRec      := leitor.rCampo(tcStr, 'nRec');
+
       (*ER05 *)FcStat     := leitor.rCampo(tcInt, 'cStat');
       (*ER06 *)FxMotivo   := leitor.rCampo(tcStr, 'xMotivo');
       (*ER07 *)FcUF       := leitor.rCampo(tcInt, 'cUF');
