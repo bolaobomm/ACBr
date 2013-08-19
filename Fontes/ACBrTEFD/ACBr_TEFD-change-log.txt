@@ -47,6 +47,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+Data:  19/08/2013 - 4.3.6
+-- ACBrTEFDClass --
+[*] Ajuste para retorno fora do padrão em Cancelamento de ADM no AMEX  (por:DSA)
+    www.projetoacbr.com.br/forum/index.php?showtopic=11915
+
 Data:  05/06/2013 - 4.3.5
 -- ACBrTEFD* --
 -- ACBrTEFDClass --
