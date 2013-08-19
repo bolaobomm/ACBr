@@ -270,7 +270,7 @@ begin
       raise Exception.Create('Nenhuma Nota Fiscal de Serviço Eletrônica Informada!');
    end;
 
- Result := WebServices.CancelaNFSe(ACodigoCancelamento);
+ Result := WebServices.CancelaNFSe(ACodigoCancelamento, True);
 end;
 
 procedure TACBrNFSe.SetStatus( const stNewStatus : TStatusACBrNFSe );
