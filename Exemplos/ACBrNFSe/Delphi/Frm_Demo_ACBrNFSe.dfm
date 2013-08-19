@@ -315,6 +315,7 @@ object frmDemo_ACBrNFSe: TfrmDemo_ACBrNFSe
               'Boa Vista/1400100/RR'
               'Brusque/4202909/SC'
               'Cachoeiro do Itapemirim/3201209/ES'
+              'Campo Grande/5002704/MS'
               'Campos dos Goytacazes/3301009/RJ'
               'Canoas/4304606/RS'
               'Capao Bonito/3510203/SP'
