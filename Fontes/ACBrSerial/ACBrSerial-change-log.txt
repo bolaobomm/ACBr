@@ -97,6 +97,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+Data: 19/08/2013
+-- ACBrECFEpson --
+[-] Correção no retorno de DataHoraSB quando o ECF ainda não possui nenhuma
+    Redução Z emitida
+    www.projetoacbr.com.br/forum/index.php?showtopic=11922
+
 Data: 08/08/2013
 -- ACBrECF --
 [*] Ajuste para evitar TimeOut em CortaPapel para as classes:         (por: DSA)

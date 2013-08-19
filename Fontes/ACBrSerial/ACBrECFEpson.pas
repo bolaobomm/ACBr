@@ -2688,14 +2688,14 @@ begin
      EpsonComando.Comando := '0402' ;
      EnviaComando ;
 
-     DtHrStr := EpsonResposta.Params[8] + '000000' ;
+     DtHrStr := EpsonResposta.Params[8] ;
      Result := EncodeDateTime( StrToInt(copy(DtHrStr, 5,4)),   // Ano
                                StrToInt(copy(DtHrStr, 3,2)),   // Mes
                                StrToInt(copy(DtHrStr, 1,2)),   // Dia
-                               StrToInt(copy(DtHrStr, 1,2)),   // Hora
-                               StrToInt(copy(DtHrStr, 3,2)),   // Min
-                               StrToInt(copy(DtHrStr, 5,2)),   // Seg
-                               0 );
+                               0,                              // Hora
+                               0,                              // Min
+                               0,                              // Seg
+                               0 );                            // Milisegundo
   end;
 end;
 
