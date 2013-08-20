@@ -32,10 +32,8 @@ requires
   vcl,
   designide,
   synapse,
-{$IFDEF COMPILER7_UP}
   vclactnband,
   vclx,
-{$ENDIF}
   ACBrDiversos,
   ACBrComum;
 
@@ -54,6 +52,7 @@ contains
   ACBrBancoHSBC in '..\..\Fontes\ACBrBoleto\ACBrBancoHSBC.pas',
   ACBrBanestes in '..\..\Fontes\ACBrBoleto\ACBrBanestes.pas',
   ACBrBancoNordeste in '..\..\Fontes\ACBrBoleto\ACBrBancoNordeste.pas',
-  ACBrBancoBRB in '..\..\Fontes\ACBrBoleto\ACBrBancoBRB.pas';
+  ACBrBancoBRB in '..\..\Fontes\ACBrBoleto\ACBrBancoBRB.pas',
+  ACBrBicBanco in '..\..\Fontes\ACBrBoleto\ACBrBicBanco.pas';
 
 end.
