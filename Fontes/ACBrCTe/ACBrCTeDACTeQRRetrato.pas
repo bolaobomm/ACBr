@@ -1059,11 +1059,9 @@ begin
                    if FCTe.infCTeNorm.rodo.lota = ltNao
                     then begin
                      qrb_10_ModRodFracionado.Height := 44;
-                     Fracionado                     := 10;
                     end
                     else begin
                      qrb_10_ModRodFracionado.Height := 44;
-                     Fracionado                     := 0;
                      qrb_11_ModRodLot104.Height     := 108;
                     end;
                  {$ELSE}
