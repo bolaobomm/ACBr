@@ -43,10 +43,12 @@
 
 unit ACBrCTeDACTeQRRetratoA5;
 
-// Atenção André, Daniel, Isaque, ...
+// Atenção todos os comiters
 // Quando enviar os fontes referentes ao DACTE favor alterar
 // a data e o nome da linha abaixo.
-// Última liberação: 06/08/2013 por Italo Jurisato Junior
+// Última liberação:
+// 20/08/2013 por André F. Moraes
+// 06/08/2013 por Italo Jurisato Junior
 
 interface
 
@@ -488,7 +490,6 @@ type
     procedure qrb_18_ReciboBeforePrint(Sender: TQRCustomBand;
       var PrintBand: Boolean);
   private
-    FTotalPages: integer;
     procedure Itens;
   public
     procedure ProtocoloCTe(const sProtocolo: string);
@@ -501,16 +502,8 @@ uses
 
 {$R *.dfm}
 
-const
-  // Alterado por Italo em 13/04/2012
-  _NUM_ITEMS_PAGE1      = 6; //esse valor eh dobrado por ter 2 NF por linha
-//  _NUM_ITEMS_PAGE1      = 26; //esse valor eh dobrado por ter 2 NF por linha
-  _NUM_ITEMS_OTHERPAGES = 88;
-
 var
   FProtocoloCTe : string;
-  nItemControle : Integer;
-  Fracionado    : Integer;
   Versao        : Integer;
 
 procedure TfrmDACTeQRRetratoA5.Itens;
@@ -918,8 +911,6 @@ begin
 end;
 
 procedure TfrmDACTeQRRetratoA5.QRCTeBeforePrint(Sender: TCustomQuickRep; var PrintReport: Boolean);
-var
-  nRestItens, nTotalItens : Integer;
 begin
   inherited;
 
@@ -934,33 +925,6 @@ begin
 {$ENDIF}
 
   Itens;
-  nItemControle := 0;
-  FTotalPages   := 1;
-  nTotalItens   := 0;
-
-{$IFDEF PL_200}
-  if (FCTe.infCTeNorm.infDoc.InfNF.Count > 0)
-   then nTotalItens := FCTe.infCTeNorm.infDoc.InfNF.Count
-   else begin
-    if (FCTe.infCTeNorm.infDoc.InfNFE.Count > 0)
-     then nTotalItens := FCTe.infCTeNorm.infDoc.InfNFE.Count
-     else begin
-      if (FCTe.infCTeNorm.infDoc.InfOutros.Count > 0)
-       then nTotalItens := FCTe.infCTeNorm.infDoc.InfOutros.Count;
-     end;
-   end;
-{$ELSE}
-  if (FCTe.Rem.InfNF.Count > 0)
-   then nTotalItens := FCTe.Rem.InfNF.Count
-   else begin
-    if (FCTe.Rem.InfNFE.Count > 0)
-     then nTotalItens := FCTe.Rem.InfNFE.Count
-     else begin
-      if (FCTe.Rem.InfOutros.Count > 0)
-       then nTotalItens := FCTe.Rem.InfOutros.Count;
-     end;
-   end;
-{$ENDIF}
 
   qrb_11_ModRodLot104.Height     := 0;
   qrb_12_ModAereo.Height         := 0;
@@ -970,46 +934,20 @@ begin
 
   case FCTe.Ide.modal of
    mdRodoviario: begin
-                 {$IFDEF PL_200}
-                  if FCTe.infCTeNorm.rodo.lota = ltNao
-                   then Fracionado := 10
-                   else begin
-                    Fracionado                 := 0;
-                    qrb_11_ModRodLot104.Height := 108;
-                   end;
-                 {$ELSE}
-                  if FCTe.Rodo.Lota = ltNao
-                   then Fracionado := 10
-                   else begin
-                    Fracionado                 := 0;
-                    qrb_11_ModRodLot104.Height := 108;
-                   end;
-                 {$ENDIF}
+                   qrb_11_ModRodLot104.Height := 108;
                  end;
    mdAereo: begin
-             qrb_12_ModAereo.Height := 97;
+              qrb_12_ModAereo.Height := 97;
             end;
    mdAquaviario: begin
-                  qrb_13_ModAquaviario.Height    := 0;
+                   qrb_13_ModAquaviario.Height    := 0;
                  end;
    mdFerroviario: begin
-                   qrb_14_ModFerroviario.Height   := 0;
+                    qrb_14_ModFerroviario.Height   := 0;
                   end;
    mdDutoviario: begin
-                  qrb_15_ModDutoviario.Height    := 0;
+                   qrb_15_ModDutoviario.Height    := 0;
                  end;
-  end;
-  if (nTotalItens > (_NUM_ITEMS_PAGE1 + Fracionado)) then
-  begin
-    nRestItens := nTotalItens - (_NUM_ITEMS_PAGE1 + Fracionado);
-    if nRestItens <= (_NUM_ITEMS_OTHERPAGES + Fracionado) then
-      Inc(FTotalPages)
-    else
-    begin
-      Inc(FTotalPages, nRestItens div (_NUM_ITEMS_OTHERPAGES + Fracionado));
-      if (nRestItens mod (_NUM_ITEMS_OTHERPAGES + Fracionado)) > 0 then
-        Inc(FTotalPages)
-    end;
   end;
 
   QRCTe.ReportTitle:='CT-e: ' + FormatFloat( '000,000,000', FCTe.Ide.nCT );
@@ -1729,23 +1667,6 @@ begin
       TQRDBText(FindComponent('qrdbtCnpjEmitente' + intToStr(i))).Width := 325
     else
       TQRDBText(FindComponent('qrdbtCnpjEmitente' + intToStr(i))).Width := 128;
-
-  Inc(nItemControle);
-
-  if QRCTe.PageNumber = 1 then
-    if QRCTe.RecordCount < (_NUM_ITEMS_PAGE1 + Fracionado) then
-      qrsFimItens.Enabled := (nItemControle = QRCTe.RecordCount)
-    else
-      qrsFimItens.Enabled := (nItemControle = (_NUM_ITEMS_PAGE1 + Fracionado))
-  else
-  begin
-    qrsFimItens.Enabled := (nItemControle = (_NUM_ITEMS_OTHERPAGES + Fracionado)) or
-      (QRCTe.RecordNumber = QRCTe.RecordCount) or
-      (cdsDocumentos.Eof);
-  end;
-
-  if qrsFimItens.Enabled then
-    nItemControle := 0;
 end;
 
 procedure TfrmDACTeQRRetratoA5.qrb_09_ObsBeforePrint(

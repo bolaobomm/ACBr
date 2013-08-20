@@ -101,6 +101,7 @@ type
     FImpressora         : String;
     FPosRecibo          : TPosRecibo;
     FCTeCancelada       : Boolean; //Incluido por Italo em  12/04/2013
+    FTotalPages         : integer;
 
     procedure qrlSemValorFiscalPrint(sender: TObject; var Value: string);
     procedure SetBarCodeImage(ACode: string; QRImage: TQRImage);
@@ -222,6 +223,7 @@ begin
          {$ENDIF}
 
            QRCTe.Prepare;
+           FTotalPages := QRCTe.QRPrinter.PageCount;
            QRCTe.Preview;
            // Incluido por Italo em 11/04/2013
            // Segundo o Rodrigo Chiva resolveu o problema de travamento
@@ -232,6 +234,7 @@ begin
            AfterPreview := True;
            QRCTe.PrinterSettings.Copies := FNumCopias;
            QRCTe.Prepare;
+           FTotalPages := QRCTe.QRPrinter.PageCount;
            QRCTe.Print;
          end;
      finally
