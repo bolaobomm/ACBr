@@ -2021,15 +2021,15 @@ begin
   begin
     qrlRntrcEmpresa.Caption := RNTRC;
 
-{$IFDEF PL_200}
+{$IFDEF PL_103}
+    qrsCIOT.Enabled := False;
+    lblCIOT.Enabled := False;
+    qrlCIOT.Enabled := False;
+{$ELSE}
     qrsCIOT.Enabled := True;
     lblCIOT.Enabled := True;
     qrlCIOT.Enabled := True;
     qrlCIOT.Caption := CIOT;
-{$ELSE}
-    qrsCIOT.Enabled := False;
-    lblCIOT.Enabled := False;
-    qrlCIOT.Enabled := False;
 {$ENDIF}
 
     case Lota of

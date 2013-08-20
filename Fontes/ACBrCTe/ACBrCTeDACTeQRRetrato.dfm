@@ -1,6 +1,6 @@
 inherited frmDACTeQRRetrato: TfrmDACTeQRRetrato
-  Left = 197
-  Top = 127
+  Left = 249
+  Top = 15
   Width = 835
   Caption = 'DACTe - Retrato'
   Font.Height = -8
@@ -1441,7 +1441,7 @@ inherited frmDACTeQRRetrato: TfrmDACTeQRRetrato
       ForceNewColumn = False
       ForceNewPage = False
       Size.Values = (
-        537.104166666666700000
+        537.104166666666800000
         1960.562500000000000000)
       PreCaluculateBandHeight = False
       KeepOnOnePage = False
@@ -2661,7 +2661,7 @@ inherited frmDACTeQRRetrato: TfrmDACTeQRRetrato
       object qrlDescricao: TQRLabel
         Left = 334
         Top = 174
-        Width = 54
+        Width = 55
         Height = 9
         Frame.Color = clBlack
         Frame.DrawTop = False
@@ -2672,7 +2672,7 @@ inherited frmDACTeQRRetrato: TfrmDACTeQRRetrato
           23.812500000000000000
           883.708333333333400000
           460.375000000000000000
-          142.875000000000000000)
+          145.520833333333300000)
         XLColumn = 0
         Alignment = taLeftJustify
         AlignToBand = False
