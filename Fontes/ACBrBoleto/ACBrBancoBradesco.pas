@@ -341,8 +341,6 @@ var
   rConta, rDigitoConta      :String;
   Linha, rCedente, rCNPJCPF :String;
 begin
-   ContLinha := 0;
-
    if StrToIntDef(copy(ARetorno.Strings[0],77,3),-1) <> Numero then
       raise Exception.Create(ACBrStr(ACBrBanco.ACBrBoleto.NomeArqRetorno +
                              'não é um arquivo de retorno do '+ Nome));

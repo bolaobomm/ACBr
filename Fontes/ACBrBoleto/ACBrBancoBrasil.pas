@@ -864,8 +864,6 @@ var
   ContLinha : Integer;
   idxMotivo: Integer;
 begin
-   ContLinha := 0;
-
    // informação do Header
    // Verifica se o arquivo pertence ao banco
    if StrToIntDef(copy(ARetorno.Strings[0], 1, 3),-1) <> Numero then

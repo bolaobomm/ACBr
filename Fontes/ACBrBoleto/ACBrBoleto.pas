@@ -58,7 +58,7 @@ uses ACBrBase,  {Units da ACBr}
      Graphics, Contnrs, Classes;
 
 const
-  CACBrBoleto_Versao = '0.0.78a' ;
+  CACBrBoleto_Versao = '0.0.79a' ;
 
 type
   TACBrTipoCobranca =
@@ -76,7 +76,8 @@ type
     cobBanestes,
     cobHSBC,
     cobBancoDoNordeste,
-    cobBRB
+    cobBRB,
+    cobBicBanco
     );
 
   TACBrTitulo = class;
@@ -778,7 +779,8 @@ implementation
 
 Uses ACBrUtil, ACBrBancoBradesco, ACBrBancoBrasil, ACBrBanestes, ACBrBancoItau, ACBrBancoSicredi,
      ACBrBancoMercantil, ACBrCaixaEconomica, ACBrBancoBanrisul, ACBrBancoSantander,
-     ACBrBancoob, ACBrCaixaEconomicaSICOB ,ACBrBancoHSBC,ACBrBancoNordeste , ACBrBancoBRB,Forms,
+     ACBrBancoob, ACBrCaixaEconomicaSICOB ,ACBrBancoHSBC,ACBrBancoNordeste , ACBrBancoBRB, ACBrBicBanco,
+     Forms,
      {$IFDEF COMPILER6_UP} StrUtils {$ELSE} ACBrD5 {$ENDIF}, Math, dateutils;
 
 {$IFNDEF FPC}
@@ -1503,6 +1505,7 @@ begin
      cobSicred         : fBancoClass := TACBrBancoSicredi.Create(self);        {748}
      cobBancoob        : fBancoClass := TACBrBancoob.create(self);              {756}
      cobHSBC           : fBancoClass := TACBrBancoHSBC.create(self);            {399}
+     cobBicBanco       : fBancoClass := TACBrBicBanco.create(self);             {237}
    else
      fBancoClass := TACBrBancoClass.create(Self);
    end;
@@ -1834,7 +1837,6 @@ begin
    Campo5 := Copy( CodigoBarras, 6, 14);
 
    Result := Campo1+' '+Campo2+' '+Campo3+' '+Campo4+' '+Campo5;
-   ACBrTitulo.fpLinhaDigitada := Result;
 end;
 
 function TACBrBoleto.GerarRemessa( NumeroRemessa : Integer ) : String;

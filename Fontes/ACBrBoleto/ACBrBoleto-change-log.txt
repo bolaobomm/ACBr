@@ -47,6 +47,16 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+
+Data: 20/08/2013
+-- ACBrBoleto ver. 0.0.78 --
+--ACBrBancoBic --
+[*] Adicionado classe para o Banco BIC - Correspondente Bradesco.(Nazareno Neto)
+
+--ACBrBancoob --
+[-] Corrigido Código do Tipo de Baixa na leitura do returno.(Paulo Henrique)
+
+
 Data: 09/08/2013
 -- ACBrBoleto ver. 0.0.77 --
 --ACBrBancoBrasil --
