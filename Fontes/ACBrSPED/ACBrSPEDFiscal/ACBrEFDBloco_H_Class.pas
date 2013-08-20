@@ -254,8 +254,8 @@ begin
           Add( LFill('H010') +
                LFill( COD_ITEM ) +
                LFill( UNID ) +
-               LFill( QTD, 0, 3 ) +
-               LFill( VL_UNIT, 0, 6 ) +
+               DFill( QTD, 3 ) +
+               DFill( VL_UNIT, 6 ) +
                LFill( VL_ITEM, 0, 2 ) +
                LFill( Integer(IND_PROP), 0 ) +
                LFill( COD_PART ) +
