@@ -3095,9 +3095,10 @@ begin
     Rodape := Rodape + #10 +
       'PARAÍBA LEGAL – RECEITA CIDADÃ' + #10 +
       Format(
-        'TORPEDO PREMIADO: %s %s %s', [
-        OnlyNumber(Self.CNPJ),
+        'TORPEDO PREMIADO: %s %s %s %s', [
+        OnlyNumber(Self.IE),
         FormatDateTime('ddmmyyyy', Self.DataHora),
+        Self.NumCOO,
         IntToStr(TruncFix(Self.Subtotal * 100))
       ])+ #10 +
       OnlyNumber(Consumidor.Documento) ;
