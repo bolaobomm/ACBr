@@ -2375,7 +2375,6 @@ var
   Acao  : TStringList;
   Stream: TMemoryStream;
   StrStream: TStringStream;
-//  wProc  : TStringList;
   {$IFDEF ACBrCTeOpenSSL}
      HTTP: THTTPSend;
   {$ELSE}
@@ -2492,10 +2491,10 @@ begin
     begin
       // Alterado por Italo em 03/04/2013
       Texto := '<?xml version="1.0" encoding="UTF-8" ?>';
-      Texto := Texto + '<ProcInutCTe versao="' + CTeinutCTe + '" xmlns="http://www.portalfiscal.inf.br/cte">';
+      Texto := Texto + '<procInutCTe versao="' + CTeinutCTe + '" xmlns="http://www.portalfiscal.inf.br/cte">';
       Texto := Texto + FDadosMSG;
       Texto := Texto + FRetWS;
-      Texto := Texto + '</ProcInutCTe>';
+      Texto := Texto + '</procInutCTe>';
 
       FXML_ProcInutCTe := Texto;
 

@@ -54,10 +54,12 @@
 
 unit ACBrCTeDACTeQR;
 
-// Atenção André, Daniel, Isaque, ...
+// Atenção todos os comiters
 // Quando enviar os fontes referentes ao DACTE favor alterar
 // a data e o nome da linha abaixo.
-// Última liberação: 06/08/2013 por Italo Jurisato Junior
+// Última liberação:
+// 21/08/2013 por Italo Jurisato Junior
+// 06/08/2013 por Italo Jurisato Junior
 
 interface
 
@@ -239,8 +241,12 @@ begin
          end;
      finally
         // Incluido por Rodrigo Fernandes em 17/06/2013
-        QRCTe.QRPrinter.Free;
-        QRCTe.QRPrinter:=nil;
+        // QRCTe.QRPrinter.Free;
+        // QRCTe.QRPrinter:=nil;
+
+        // Incluido por Italo em 21/08/2013
+        QRCTe.Free;
+        QRCTe := nil;
 
         // Incluido por Rodrigo Fernandes em 11/03/2013
         // Liberando o objeto Printer da memoria
