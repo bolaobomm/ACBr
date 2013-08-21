@@ -89,6 +89,8 @@
   {$IFDEF LINUX}
     {$DEFINE ACBrNFeOpenSSL}
     {$DEFINE ACBrCTeOpenSSL}
+    {$DEFINE ACBrNFSeOpenSSL}
+    {$DEFINE ACBrMDFeOpenSSL}
     {$DEFINE KYLIX}
   {$ENDIF LINUX}
 {$ENDIF BORLAND}
@@ -169,6 +171,8 @@
 {$IFNDEF COMPILER7_UP}
   {$DEFINE ACBrNFeOpenSSL}
   {$DEFINE ACBrCTeOpenSSL}
+  {$DEFINE ACBrNFSeOpenSSL}
+  {$DEFINE ACBrMDFeOpenSSL}
 {$ENDIF}
 
 {$IFDEF ACBrNFeOpenSSL}
@@ -186,7 +190,7 @@
 
 // Definições para o compomente ACBrCTe
 // Define o Pacote de Liberação / Descomente o pacote a ser utilizado 
-// Atenção não comente ou descomente as duas definições
+// Atenção: descomente apenas uma das definições
 //------------------------------------------------------------------------------
 //{$DEFINE PL_103}
 {$DEFINE PL_104}
