@@ -249,7 +249,7 @@ begin
                   padR(trim(OnlyNumber(Cedente.CNPJCPF)),14,'0')          +
                   padL(trim(Cedente.CodigoTransmissao),20,'0')            +
                   padL( SeuNumero ,25,' ')                                +
-                  Copy(NossoNumero,6,7) + DigitoNossoNumero               +
+                  padR(LeftStr(NossoNumero,7),7,'0') + DigitoNossoNumero  +
                   IfThen(DataAbatimento < EncodeDate(2000,01,01),
                          '000000',
                          FormatDateTime( 'ddmmyy', DataAbatimento))       +
