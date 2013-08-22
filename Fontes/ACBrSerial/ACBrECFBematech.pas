@@ -1105,7 +1105,7 @@ begin
   if not EmLinha() then
    begin
      Sleep(100) ;
-//   GravaLog('Bematech VerificaFimImpressao: ECF fora de linha') ;
+     GravaLog('   VerificaFimImpressao: ECF fora de linha') ;
    end
   else
    begin
@@ -1113,7 +1113,7 @@ begin
      Cmd    := PreparaCmd( #19 ) ;           // Pede Status //
 
      try
-//      GravaLog('Bematech VerificaFimImpressao: Pedindo o Status') ;
+        GravaLog('  VerificaFimImpressao: Pedindo o Status (19)') ;
 
         fpDevice.Serial.Purge ;           // Limpa buffer de Entrada e Saida //
         fpDevice.EnviaString( Cmd );         // Envia comando //
@@ -1123,7 +1123,7 @@ begin
 
         if wACK = 6 then   // ECF Respondeu corretamente, portanto está trabalhando //
          begin
-//         GravaLog('Bematech VerificaFimImpressao: ACK = 6, OK... Aguardando ST1 e ST2') ;
+           GravaLog('   VerificaFimImpressao: ACK = 6, OK... Aguardando ST1 e ST2') ;
            TempoLimite := IncSecond(now, TimeOut);
            fsFalhasFimImpressao := 0 ;
 
@@ -1132,22 +1132,22 @@ begin
            Result := (Length( RetCmd ) >= 2) ;
          end
         else
-           raise EACBrECFErro.Create( ACBrStr('ACK diferente de 6'));
+           raise EACBrECFErro.Create( 'ACK <> 6' );
      except
        On E: Exception do
        begin
           if wACK <> 6 then
              Inc( fsFalhasFimImpressao ) ;
-(*          GravaLog('Bematech VerificaFimImpressao: ACK = '+IntToStr(wACK)+
-                   ' - Falhas = '+IntToStr(fsFalhasFimImpressao)+
-                   ' - Erro: ' + E.Message,True) ; *)
+             GravaLog('   VerificaFimImpressao: ACK = '+IntToStr(wACK)+
+                      ' - Falhas = '+IntToStr(fsFalhasFimImpressao)+
+                      ' - Erro: ' + E.Message,True) ;
        end ;
      end ;
    end ;
 
    if fsFalhasFimImpressao > 10 then
       raise EACBrECFSemResposta.create( ACBrStr(
-             'Impressora '+fpModeloStr+' não está em linha')) ;
+             '   VerificaFimImpressao: Impressora '+fpModeloStr+' não está em linha')) ;
 
 end;
 
