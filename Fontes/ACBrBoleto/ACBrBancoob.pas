@@ -811,7 +811,7 @@ begin
   case CodOcorrencia of
       02: Result := toRetornoRegistroConfirmado;
       03: Result := toRetornoRegistroRecusado;
-      05: Result := toRetornoLiquidadoEmCartorio;
+      05: Result := toRetornoLiquidadoSemRegistro;
       06: Result := toRetornoLiquidado;
       07: Result := toRetornoRecebimentoInstrucaoConcederDesconto;
       08: Result := toRetornoRecebimentoInstrucaoCancelarDesconto;
