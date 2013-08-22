@@ -777,7 +777,10 @@ TACBrECF = class( TACBrComponent )
       const IndiceRelatorio: Integer = 0);
 
     procedure PafMF_RelParametrosConfiguracao(
-      AInfoPafECF: TACBrECFInfoPaf; const AIndiceRelatorio: Integer = 1);
+      AInfoPafECF: TACBrECFInfoPaf; const AIndiceRelatorio: Integer = 1); overload;
+
+    procedure PafMF_RelParametrosConfiguracao(
+      const APerfilRequisitos: String; const AIndiceRelatorio: Integer = 1); overload;
 
     procedure PafMF_GerarCAT52(const DataInicial, DataFinal: TDateTime;
       const DirArquivos: String);
@@ -1368,6 +1371,9 @@ begin
      end ;
   end ;
 
+  {
+    // removido porque no paf-ecf tem que permitir
+    // ativar o ECF mesmo não encontrando o AACend;
   if Assigned( fsAAC ) then
   begin
      if (Modelo <> ecfNaoFiscal) then
@@ -1380,6 +1386,7 @@ begin
         end ;
      end ;
   end ;
+  }
 
   if fsIdentificarOperador then
   begin
@@ -6149,6 +6156,37 @@ begin
     Self.RelatorioGerencial(Relatorio, 1, IndiceRelatorio);
   finally
     Relatorio.Free;
+  end;
+end;
+
+procedure TACBrECF.PafMF_RelParametrosConfiguracao(const APerfilRequisitos: String;
+  const AIndiceRelatorio: Integer);
+var
+  Relatorio: TStringList;
+  TamColSimNao: Integer;
+  TamColDescr: Integer;
+  versaoPafECF: Integer;
+begin
+  fsNumSerieCache := '' ;
+  DoVerificaValorGT ;
+
+  Relatorio := TStringList.Create;
+  try
+    Relatorio.Clear;
+
+    Relatorio.Add('</linha_dupla>');
+    Relatorio.Add('<ce>PARÂMETROS DE CONFIGURAÇÃO</ce>');
+    Relatorio.Add('</linha_dupla>');
+    Relatorio.Add('');
+    Relatorio.Add('Perfil de Requisitos Configurado: ' + APerfilRequisitos);
+
+    {$IFDEF UNICODE}
+     Relatorio.Text := ACBrStr( Relatorio.Text );
+    {$ENDIF}
+
+    Self.RelatorioGerencial(Relatorio, 1, AIndiceRelatorio);
+  finally
+    Relatorio.Free
   end;
 end;
 
