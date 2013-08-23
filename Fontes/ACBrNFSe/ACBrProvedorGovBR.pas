@@ -174,6 +174,23 @@ begin
             ConfigURL.ProConsultaNFSe       := 'http://nfes.guarapari.es.gov.br/NFSEws/Services.svc';
             ConfigURL.ProCancelaNFSe        := 'http://nfes.guarapari.es.gov.br/NFSEws/Services.svc';
            end;
+  3205309: begin // Vitória/ES
+            ConfigURL.HomNomeCidade         := '';
+            ConfigURL.HomRecepcaoLoteRPS    := 'http://nfseteste.vitoria.es.gov.br/NFSEWSTESTE/Services.svc';
+            ConfigURL.HomConsultaLoteRPS    := 'http://nfseteste.vitoria.es.gov.br/NFSEWSTESTE/Services.svc';
+            ConfigURL.HomConsultaNFSeRPS    := 'http://nfseteste.vitoria.es.gov.br/NFSEWSTESTE/Services.svc';
+            ConfigURL.HomConsultaSitLoteRPS := 'http://nfseteste.vitoria.es.gov.br/NFSEWSTESTE/Services.svc';
+            ConfigURL.HomConsultaNFSe       := 'http://nfseteste.vitoria.es.gov.br/NFSEWSTESTE/Services.svc';
+            ConfigURL.HomCancelaNFSe        := 'http://nfseteste.vitoria.es.gov.br/NFSEWSTESTE/Services.svc';
+
+            ConfigURL.ProNomeCidade         := '';
+            ConfigURL.ProRecepcaoLoteRPS    := 'http://nfes.vitoria.es.gov.br/NFSEws/Services.svc';
+            ConfigURL.ProConsultaLoteRPS    := 'http://nfes.vitoria.es.gov.br/NFSEws/Services.svc';
+            ConfigURL.ProConsultaNFSeRPS    := 'http://nfes.vitoria.es.gov.br/NFSEws/Services.svc';
+            ConfigURL.ProConsultaSitLoteRPS := 'http://nfes.vitoria.es.gov.br/NFSEws/Services.svc';
+            ConfigURL.ProConsultaNFSe       := 'http://nfes.vitoria.es.gov.br/NFSEws/Services.svc';
+            ConfigURL.ProCancelaNFSe        := 'http://nfes.vitoria.es.gov.br/NFSEws/Services.svc';
+           end;
   3305505: begin // Saquarema/RJ
             ConfigURL.HomNomeCidade         := '';
             ConfigURL.HomRecepcaoLoteRPS    := 'http://nfe.saquarema.rj.gov.br/NFSEWSTESTE/Services.svc';

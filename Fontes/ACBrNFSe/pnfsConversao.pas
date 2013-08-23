@@ -792,6 +792,7 @@ begin
   3118601, // Contagem/MG
   3143302, // Montes Claros/MG
   3202405, // Guarapari/ES
+  3205309, // Vitória/ES
   3305505, // Saquarema/RJ
   3504008, // Assis/SP
   3511102, // Catanduva/SP
