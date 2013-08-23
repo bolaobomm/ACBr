@@ -1346,7 +1346,7 @@ begin
                    end;
                    if nfe.Det[i].Imposto.ICMS.pCredSN > 0 then
                    begin
-                     Gerador.wCampo(tcDe4, 'N29', 'pCredSN    ', 01, 05, 1, nfe.Det[i].Imposto.ICMS.pCredSN, DSC_PCREDSN);
+                     Gerador.wCampo(IIf(NFe.infNFe.Versao >= 3.10,tcDe4,tcDe2), 'N29', 'pCredSN    ', 01, 05, 1, nfe.Det[i].Imposto.ICMS.pCredSN, DSC_PCREDSN);
                      Gerador.wCampo(tcDe2, 'N30', 'vCredICMSSN', 01, 15, 1, nfe.Det[i].Imposto.ICMS.vCredICMSSN, DSC_VCREDICMSSN);
                    end;
                  end;
