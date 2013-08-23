@@ -582,7 +582,8 @@ destructor TDadosServico.Destroy;
 begin
  FValores.Free;
  FItemServico.Free;
-
+ FDeducao.Free;
+ 
  inherited destroy;
 end;
 

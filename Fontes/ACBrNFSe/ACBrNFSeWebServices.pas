@@ -118,6 +118,7 @@ type
   public
     function Executar: Boolean; virtual;
     constructor Create(AOwner : TComponent); virtual;
+    destructor Destroy; override;
     property CabMsg: WideString read FCabMsg;
     property DadosMsg: AnsiString read FDadosMsg;
     property DadosSenha: AnsiString read FDadosSenha;
@@ -433,6 +434,13 @@ constructor TWebServicesBase.Create(AOwner: TComponent);
 begin
  FConfiguracoes := TConfiguracoes( TACBrNFSe( AOwner ).Configuracoes );
  FACBrNFSe      := TACBrNFSe( AOwner );
+end;
+
+destructor TWebServicesBase.Destroy;
+begin
+ if Assigned(FProvedorClass) then
+  FProvedorClass.Free();
+ inherited;
 end;
 
 {$IFDEF ACBrNFSeOpenSSL}
