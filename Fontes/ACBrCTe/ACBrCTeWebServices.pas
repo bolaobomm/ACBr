@@ -2371,7 +2371,7 @@ function TCTeInutilizacao.Executar: Boolean;
 var
   CTeRetorno: TRetInutCTe;
   aMsg  : string;
-  Texto : String;
+  Texto, NomeArq : String;
   Acao  : TStringList;
   Stream: TMemoryStream;
   StrStream: TStringStream;
@@ -2498,12 +2498,13 @@ begin
 
       FXML_ProcInutCTe := Texto;
 
+      NomeArq := Copy(StringReplace(FID, 'ID', '', [rfIgnoreCase]), 3, 37);
+
       if FConfiguracoes.Geral.Salvar then
-         FConfiguracoes.Geral.Save(StringReplace(FID, 'ID', '', [rfIgnoreCase]) +
-                                   '-ProcInutCTe.xml', FXML_ProcInutCTe);
+         FConfiguracoes.Geral.Save(NomeArq + '-ProcInutCTe.xml', FXML_ProcInutCTe);
       if FConfiguracoes.Arquivos.Salvar then
-         FConfiguracoes.Geral.Save(StringReplace(FID, 'ID', '', [rfIgnoreCase]) +
-                                   '-ProcInutCTe.xml', FXML_ProcInutCTe, FConfiguracoes.Arquivos.GetPathInu );
+         FConfiguracoes.Geral.Save(NomeArq + '-ProcInutCTe.xml', FXML_ProcInutCTe,
+                                   FConfiguracoes.Arquivos.GetPathInu );
     end;
 
   finally
