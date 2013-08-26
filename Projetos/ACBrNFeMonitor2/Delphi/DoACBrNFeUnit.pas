@@ -1956,7 +1956,7 @@ begin
                            vAliq     := StringToFloatDef( INIRec.ReadString(sSecao,'Aliquota'    ,INIRec.ReadString(sSecao,'vAliq' ,'')) ,0);
                            vISSQN    := StringToFloatDef( INIRec.ReadString(sSecao,'ValorISSQN'  ,INIRec.ReadString(sSecao,'vISSQN','')) ,0);
                            cMunFG    := StrToInt( INIRec.ReadString(sSecao,'MunicipioFatoGerador',INIRec.ReadString(sSecao,'cMunFG','')));
-                           cListServ := INIRec.ReadInteger(sSecao,'CodigoServico',INIRec.ReadInteger(sSecao,'cListServ',0));
+                           cListServ :=           INIRec.ReadString(sSecao,'CodigoServico'       ,INIRec.ReadString(sSecao,'cListServ',''));
                            cSitTrib  := StrToISSQNcSitTrib( OK,INIRec.ReadString(sSecao,'cSitTrib','')) ; //NFe2
                          end;
                       end;
@@ -2699,7 +2699,7 @@ begin
                         INIRec.WriteFloat(  sSecao,'Aliquota'  ,vAliq);
                         INIRec.WriteFloat(  sSecao,'ValorISSQN',vISSQN);
                         INIRec.WriteInteger(sSecao,'MunicipioFatoGerador',cMunFG);
-                        INIRec.WriteInteger(sSecao,'CodigoServico',cListServ);
+                        INIRec.WriteString (sSecao,'CodigoServico',cListServ);
                         INIRec.WriteString( sSecao,'cSitTrib',ISSQNcSitTribToStr(cSitTrib));
                       end;
                     end;
