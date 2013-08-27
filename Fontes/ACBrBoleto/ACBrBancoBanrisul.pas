@@ -235,11 +235,11 @@ end;
 
 function TACBrBanrisul.MontarCampoCodigoCedente(const ACBrTitulo: TACBrTitulo): string;
 begin
-  Result:=copy(ACBrTitulo.ACBrBoleto.Cedente.Agencia, 2, 4)+'-'+
-         copy(ACBrTitulo.ACBrBoleto.Cedente.Agencia, 5, 1)+ ACBrTitulo.ACBrBoleto.Cedente.AgenciaDigito+'/'+
-         copy(ACBrTitulo.ACBrBoleto.Cedente.CodigoCedente,1,6) + '.' +
-         copy(ACBrTitulo.ACBrBoleto.Cedente.CodigoCedente,7,1) + '.' +
-         copy(ACBrTitulo.ACBrBoleto.Cedente.CodigoCedente,8,2);
+  Result := copy(ACBrTitulo.ACBrBoleto.Cedente.Agencia, 1, 4)+'-'+
+            ACBrTitulo.ACBrBoleto.Cedente.AgenciaDigito+'/'+
+            copy(ACBrTitulo.ACBrBoleto.Cedente.CodigoCedente,1,6) + '.' +
+            copy(ACBrTitulo.ACBrBoleto.Cedente.CodigoCedente,7,1) + '.' +
+            copy(ACBrTitulo.ACBrBoleto.Cedente.CodigoCedente,8,2);
 end;
 
 procedure TACBrBanrisul.GerarRegistroHeader400(NumeroRemessa: Integer; aRemessa: TStringList);

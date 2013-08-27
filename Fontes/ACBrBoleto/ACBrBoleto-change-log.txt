@@ -47,6 +47,17 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+
+Data: 27/08/2013
+-- ACBrBoleto ver. 0.0.81 --
+--ACBrBancoBanrisul --
+[*] Corrigido montagem do campo Código Cedente.(Reginaldo Costa)
+
+--ACBrBoletoFCFR -- 
+[-] Passado a utilizar a função MontarCampoCedente na impressão dos boletos.
+    (OsvaldoKalvaitir)
+
+
 Data: 22/08/2013
 -- ACBrBoleto ver. 0.0.80 --
 --ACBrBancoSantander --
