@@ -1380,17 +1380,19 @@ begin
 {$ENDIF}
 end;
 
-class function NotaUtil.RetirarPrefixos(AXML: String): String;
+class function NotaUtil.RetirarPrefixos(const AXML: String): String;
+var
+ XML: string
 begin
- AXML := StringReplace( AXML, 'ns2:', '', [rfReplaceAll] );
- AXML := StringReplace( AXML, 'ns3:', '', [rfReplaceAll] );
- AXML := StringReplace( AXML, 'ns4:', '', [rfReplaceAll] );
- AXML := StringReplace( AXML, 'ns5:', '', [rfReplaceAll] );  //Incluido por jrJunior82 09/05/2013
- AXML := StringReplace( AXML, 'tc:', '', [rfReplaceAll] );
+ XML := StringReplace( AXML, 'ns2:', '', [rfReplaceAll] );
+ XML := StringReplace( XML, 'ns3:', '', [rfReplaceAll] );
+ XML := StringReplace( XML, 'ns4:', '', [rfReplaceAll] );
+ XML := StringReplace( XML, 'ns5:', '', [rfReplaceAll] );  //Incluido por jrJunior82 09/05/2013
+ XML := StringReplace( XML, 'tc:', '', [rfReplaceAll] );
  // Incluido por Ricardo Miranda em 14/03/2013
- AXML := StringReplace( AXML, 'ii:', '', [rfReplaceAll] );
+ XML := StringReplace( XML, 'ii:', '', [rfReplaceAll] );
 
- result := AXML;
+ result := XML;
 end;
 
 class function NotaUtil.VersaoXML(AXML: String): String;
