@@ -89,7 +89,7 @@ type
                           AServico: string = '';
                           APrefixo: string = ''): Boolean;
 
-    class function RetirarPrefixos(AXML: String): String;
+    class function RetirarPrefixos(const AXML: String): String;
     class function VersaoXML(AXML: String): String;
     class function PathWithDelim( const APath : String ) : String;
     class function RetornarConteudoEntre(const Frase, Inicio, Fim: string): string;
@@ -1382,7 +1382,7 @@ end;
 
 class function NotaUtil.RetirarPrefixos(const AXML: String): String;
 var
- XML: string
+ XML: string;
 begin
  XML := StringReplace( AXML, 'ns2:', '', [rfReplaceAll] );
  XML := StringReplace( XML, 'ns3:', '', [rfReplaceAll] );
