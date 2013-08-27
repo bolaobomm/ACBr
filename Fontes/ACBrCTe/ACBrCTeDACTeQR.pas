@@ -58,6 +58,7 @@ unit ACBrCTeDACTeQR;
 // Quando enviar os fontes referentes ao DACTE favor alterar
 // a data e o nome da linha abaixo.
 // Última liberação:
+// 27/08/2013 por Italo Jurisato Junior
 // 21/08/2013 por Italo Jurisato Junior
 // 06/08/2013 por Italo Jurisato Junior
 
@@ -312,6 +313,9 @@ begin
           end;
         AfterPreview := True;
         QRCTe.Prepare;
+        // Incluido por Italo em 27/08/2013
+        FTotalPages := QRCTe.QRPrinter.PageCount;
+
         qf := TQRPDFDocumentFilter.Create(AFile);
         qf.CompressionOn := False;
         QRCTe.QRPrinter.ExportToFilter( qf );
