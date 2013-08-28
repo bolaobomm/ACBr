@@ -48,7 +48,7 @@
 unit ACBrBoleto;
 
 interface
-ac ACBrBase,  {Units da ACBr}
+uses  ACBrBase,  {Units da ACBr}
      {$IFDEF FPC}
        LResources,
      {$ENDIF}
