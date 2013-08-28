@@ -106,7 +106,7 @@ begin
       CodigoBarras := '033'+'9'+ FatorVencimento +
                        IntToStrZero(Round(ACBrTitulo.ValorDocumento*100),10) +
                        '9'+ padR(trim(Cedente.CodigoCedente),7,'0') +
-                       padR(ACBrTitulo.NossoNumero + DigitoNossoNumero, 13) +
+                       padR(ACBrTitulo.NossoNumero + DigitoNossoNumero, 13,'0') +
                        '0'+ padR(trim(Cedente.Modalidade),3,'0');
 
 

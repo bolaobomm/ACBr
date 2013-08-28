@@ -48,7 +48,7 @@
 unit ACBrBoleto;
 
 interface
-uses ACBrBase,  {Units da ACBr}
+ac ACBrBase,  {Units da ACBr}
      {$IFDEF FPC}
        LResources,
      {$ENDIF}
@@ -58,7 +58,7 @@ uses ACBrBase,  {Units da ACBr}
      Graphics, Contnrs, Classes;
 
 const
-  CACBrBoleto_Versao = '0.0.81a' ;
+  CACBrBoleto_Versao = '0.0.82a' ;
 
 type
   TACBrTipoCobranca =

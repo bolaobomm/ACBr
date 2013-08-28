@@ -47,6 +47,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+Data: 28/08/2013
+-- ACBrBoleto ver. 0.0.82 --
+--ACBrBancoSantander --
+[*] Melhorado montagem do código de barras para garantir que os campos utilizados
+    tenham o tamanho correto.(Juliana Tamizou)
+
 
 Data: 27/08/2013
 -- ACBrBoleto ver. 0.0.81 --
