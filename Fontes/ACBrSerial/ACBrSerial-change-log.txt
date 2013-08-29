@@ -103,6 +103,10 @@ Data: 19/08/2013
     Redução Z emitida
     www.projetoacbr.com.br/forum/index.php?showtopic=11922
 
+Data: 29/08/2013
+-- ACBrECFEscECF --
+[-] Correção no método DescontoAcrescimoItemAnterior          (por: DSA)
+
 Data: 08/08/2013
 -- ACBrECF --
 [*] Ajuste para evitar TimeOut em CortaPapel para as classes:         (por: DSA)

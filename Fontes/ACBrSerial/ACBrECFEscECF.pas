@@ -1852,6 +1852,7 @@ begin
   SalvaRespostasMemoria(True);
 
   { Se o desconto é maior que zero dá o comando de desconto de item }
+
   if ValorDescontoAcrescimo > 0 then
      DescontoAcrescimoItemAnterior( ValorDescontoAcrescimo, DescontoAcrescimo,
         TipoDescontoAcrescimo);
@@ -1866,10 +1867,8 @@ begin
      CMD := 27 ;
      AddParamInteger( ifthen(DescontoAcrescimo    ='D',0,1) );
      AddParamInteger( ifthen(TipoDescontoAcrescimo='%',0,1) );
-     if NumItem > 0 then
-        AddParamInteger( NumItem )
-     else
-        AddParamString( '' ) ;
+     AddParamDouble( ValorDescontoAcrescimo );
+     AddParamInteger( NumItem )
   end ;
 
   EnviaComando ;
