@@ -52,7 +52,7 @@ uses
   ACBrBoleto, ACBrBarCode ;
 
 const
-  CACBrBoletoFCFortes_Versao = '0.0.21a' ;
+  CACBrBoletoFCFortes_Versao = '0.0.22a' ;
 
 type
 
@@ -71,6 +71,7 @@ type
      BoletoCarne: TRLReport;
      imgBarrasCarne: TRLBarcode;
     ImgLoja: TRLImage;
+    lblLocalPagto: TRLMemo;
     RLDraw1: TRLDraw;
     RLDraw10: TRLDraw;
     RLDraw11: TRLDraw;
@@ -214,6 +215,8 @@ type
     RLLabel92: TRLLabel;
     RLLabel96: TRLLabel;
     RLLabel98: TRLLabel;
+    txtLocal: TRLMemo;
+    txtLocalPagamento3: TRLMemo;
     txtNomeSacado: TRLLabel;
     txtNomeSacadoCarne: TRLMemo;
     txtOrientacoesBanco: TRLMemo;
@@ -243,7 +246,6 @@ type
     txtLinhaDigitavelCarne: TRLLabel;
     RLDBText17: TRLDBText;
     RLDBText18: TRLDBText;
-    txtLocal: TRLLabel;
     txtNomeCedente: TRLLabel;
     txtNossoNumeroCarne: TRLLabel;
     txtNumeroDocto: TRLLabel;
@@ -337,7 +339,6 @@ type
     RLBand1: TRLBand;
     imgBanco2: TRLImage;
     txtNumeroBanco2: TRLLabel;
-    lblLocalPagto: TRLLabel;
     txtNomeCedente2: TRLLabel;
     txtDataDocumento2: TRLLabel;
     txtNumeroDocumento2: TRLLabel;
@@ -370,7 +371,6 @@ type
     imgBanco3: TRLImage;
     txtNumeroBanco3: TRLLabel;
     txtLinhaDigitavel: TRLLabel;
-    txtLocalPagamento3: TRLLabel;
     txtNomeCedente3: TRLLabel;
     txtDataDocumento3: TRLLabel;
     txtNumeroDocumento3: TRLLabel;
@@ -635,7 +635,7 @@ begin
       txtNumeroBanco2.Caption         := IntToStrZero(Banco.Numero, 3)+ '-' +
                                          IfThen(Banco.Digito >= 10,'X',
                                          IntToStrZero(Banco.Digito, 1));
-      lblLocalPagto.Caption           := Titulo.LocalPagamento;
+      lblLocalPagto.Lines.Text        := Titulo.LocalPagamento;
       txtDataVencimento2.Caption      := FormatDateTime('dd/mm/yyyy', Titulo.Vencimento);
       txtNomeCedente2.Caption         := Cedente.Nome+ ' - '+TipoDoc + Cedente.CNPJCPF;
       txtCodigoCedente2.Caption       := CodCedente;
@@ -684,7 +684,7 @@ begin
      imgBanco3.Picture.Assign(imgBanco2.Picture);
      fBoletoFC.CarregaLogo( imgBanco3.Picture, Banco.Numero );
      txtNumeroBanco3.Caption         := txtNumeroBanco2.Caption;
-     txtLocalPagamento3.Caption      := lblLocalPagto.Caption;
+     txtLocalPagamento3.Lines.Text   := lblLocalPagto.Lines.Text;
      txtDataVencimento3.Caption      := txtDataVencimento2.Caption;
      txtNomeCedente3.Caption         := txtNomeCedente2.Caption;
      txtEndCedente1.Caption          := txtEndCedente.Caption  ;
@@ -741,7 +741,7 @@ begin
       txtNomeSacado.Caption           := Titulo.Sacado.NomeSacado;
       txtNomeSacadoCarne.Lines.Text   := txtNomeSacado.Caption;
 
-      txtLocal.Caption                := Titulo.LocalPagamento;
+      txtLocal.Lines.Text             := Titulo.LocalPagamento;
       txtNomeCedente.Caption          := Cedente.Nome;
 
       txtDataDocto.Caption            := FormatDateTime('dd/mm/yyyy', Titulo.DataDocumento);
