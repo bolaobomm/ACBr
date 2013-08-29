@@ -1,6 +1,6 @@
 object ACBRBoletoFCFortesFr: TACBRBoletoFCFortesFr
-  Left = 364
-  Top = 236
+  Left = 352
+  Top = 115
   Width = 1084
   Height = 768
   Caption = 'ACBRBoletoFCFortesFr'
@@ -17,8 +17,8 @@ object ACBRBoletoFCFortesFr: TACBRBoletoFCFortesFr
   PixelsPerInch = 96
   TextHeight = 13
   object LayoutBoleto: TRLReport
-    Left = -3
-    Top = 3
+    Left = 5
+    Top = -69
     Width = 794
     Height = 1123
     Margins.LeftMargin = 4.000000000000000000
@@ -709,7 +709,7 @@ object ACBRBoletoFCFortesFr: TACBRBoletoFCFortesFr
       Left = 15
       Top = 222
       Width = 768
-      Height = 401
+      Height = 403
       BeforePrint = RLBand1BeforePrint
       object RLDraw21: TRLDraw
         Left = 117
@@ -825,16 +825,16 @@ object ACBRBoletoFCFortesFr: TACBRBoletoFCFortesFr
       end
       object RLDraw18: TRLDraw
         Left = 0
-        Top = 36
+        Top = 32
         Width = 763
         Height = 13
         DrawKind = dkLine
       end
       object RLDraw17: TRLDraw
-        Left = 278
+        Left = 279
         Top = 3
         Width = 17
-        Height = 39
+        Height = 34
         Angle = 90.000000000000000000
         DrawKind = dkLine
       end
@@ -842,20 +842,20 @@ object ACBRBoletoFCFortesFr: TACBRBoletoFCFortesFr
         Left = 173
         Top = 3
         Width = 17
-        Height = 39
+        Height = 35
         Angle = 90.000000000000000000
         DrawKind = dkLine
       end
       object imgBanco2: TRLImage
         Left = 1
-        Top = -3
+        Top = -6
         Width = 179
         Height = 42
         Scaled = True
       end
       object txtNumeroBanco2: TRLLabel
         Left = 184
-        Top = 10
+        Top = 6
         Width = 102
         Height = 29
         Alignment = taCenter
@@ -870,7 +870,7 @@ object ACBRBoletoFCFortesFr: TACBRBoletoFCFortesFr
       end
       object RLLabel67: TRLLabel
         Left = 289
-        Top = 21
+        Top = 15
         Width = 465
         Height = 18
         Alignment = taRightJustify
@@ -885,7 +885,7 @@ object ACBRBoletoFCFortesFr: TACBRBoletoFCFortesFr
       end
       object RLLabel68: TRLLabel
         Left = 4
-        Top = 43
+        Top = 40
         Width = 70
         Height = 10
         Caption = 'Local de Pagamento'
@@ -896,16 +896,16 @@ object ACBRBoletoFCFortesFr: TACBRBoletoFCFortesFr
         Font.Style = []
         ParentFont = False
       end
-      object lblLocalPagto: TRLLabel
+      object lblLocalPagto: TRLMemo
         Left = 9
-        Top = 52
-        Width = 529
-        Height = 15
+        Top = 49
+        Width = 557
+        Height = 17
         AutoSize = False
-        Caption = 'Local de Pagamento'
+        Behavior = [beSiteExpander]
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
-        Font.Height = -12
+        Font.Height = -9
         Font.Name = 'Arial'
         Font.Style = []
         ParentFont = False
@@ -1734,9 +1734,9 @@ object ACBRBoletoFCFortesFr: TACBRBoletoFCFortesFr
     end
     object RLBand2: TRLBand
       Left = 15
-      Top = 623
+      Top = 625
       Width = 768
-      Height = 452
+      Height = 456
       RealBounds.UsedUnit = buMilimeters
       BeforePrint = RLBand2BeforePrint
       object RLDraw50: TRLDraw
@@ -1830,7 +1830,7 @@ object ACBRBoletoFCFortesFr: TACBRBoletoFCFortesFr
       end
       object RLDraw35: TRLDraw
         Left = 0
-        Top = 50
+        Top = 45
         Width = 763
         Height = 16
         DrawKind = dkLine
@@ -1846,20 +1846,20 @@ object ACBRBoletoFCFortesFr: TACBRBoletoFCFortesFr
         Left = 4
         Top = 11
         Width = 179
-        Height = 42
+        Height = 38
         Scaled = True
       end
       object RLDraw81: TRLDraw
         Left = 177
-        Top = 17
+        Top = 15
         Width = 17
-        Height = 41
+        Height = 36
         Angle = 90.000000000000000000
         DrawKind = dkLine
       end
       object txtLinhaDigitavel: TRLLabel
         Left = 270
-        Top = 34
+        Top = 30
         Width = 488
         Height = 19
         AutoSize = False
@@ -1873,17 +1873,17 @@ object ACBRBoletoFCFortesFr: TACBRBoletoFCFortesFr
       end
       object RLDraw82: TRLDraw
         Left = 261
-        Top = 17
+        Top = 16
         Width = 11
-        Height = 41
+        Height = 36
         Angle = 90.000000000000000000
         DrawKind = dkLine
       end
       object txtNumeroBanco3: TRLLabel
         Left = 187
-        Top = 24
+        Top = 22
         Width = 78
-        Height = 29
+        Height = 28
         Alignment = taCenter
         AutoSize = False
         Caption = '000-0'
@@ -1896,7 +1896,7 @@ object ACBRBoletoFCFortesFr: TACBRBoletoFCFortesFr
       end
       object RLLabel145: TRLLabel
         Left = 4
-        Top = 59
+        Top = 54
         Width = 70
         Height = 10
         Caption = 'Local de Pagamento'
@@ -1907,16 +1907,16 @@ object ACBRBoletoFCFortesFr: TACBRBoletoFCFortesFr
         Font.Style = []
         ParentFont = False
       end
-      object txtLocalPagamento3: TRLLabel
+      object txtLocalPagamento3: TRLMemo
         Left = 4
-        Top = 68
-        Width = 529
-        Height = 14
+        Top = 64
+        Width = 533
+        Height = 18
         AutoSize = False
-        Caption = 'Local de Pagamento'
+        Behavior = [beSiteExpander]
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
-        Font.Height = -12
+        Font.Height = -9
         Font.Name = 'Arial'
         Font.Style = []
         ParentFont = False
@@ -3679,12 +3679,13 @@ object ACBRBoletoFCFortesFr: TACBRBoletoFCFortesFr
         Font.Style = []
         ParentFont = False
       end
-      object txtLocal: TRLLabel
+      object txtLocal: TRLMemo
         Left = 154
         Top = 53
         Width = 412
         Height = 14
         AutoSize = False
+        Behavior = [beSiteExpander]
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
         Font.Height = -11
