@@ -526,7 +526,7 @@ begin
  qrlValorDeducoes.Caption       := DFeUtil.FormatFloat( FNFSe.Servico.Valores.ValorDeducoes );
  qrlDescIncondicionado2.Caption := DFeUtil.FormatFloat( FNFSe.Servico.Valores.DescontoIncondicionado );
  qrlBaseCalc.Caption            := DFeUtil.FormatFloat( FNFSe.Servico.Valores.BaseCalculo );
- qrlAliquota.Caption            := DFeUtil.FormatFloat( FNFSe.Servico.Valores.Aliquota );
+ qrlAliquota.Caption            := DFeUtil.FormatFloat( FNFSe.Servico.Valores.Aliquota, ',0.0000' );
  // TnfseSimNao = ( snSim, snNao )
  case FNFSe.Servico.Valores.IssRetido of
   stRetencao     : qrlISSReter.Caption := 'Sim';
