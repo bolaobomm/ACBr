@@ -140,7 +140,7 @@ begin
   3551009: ConfigURL.ProNomeCidade := 'saovicente';         // São Vicente/SP
   3551504: ConfigURL.ProNomeCidade := 'serrana';            // Serrana/SP
   4104808: ConfigURL.ProNomeCidade := 'cascavel';           // Cascavel/PR
-  4219507: ConfigURL.ProNomeCidade := 'xanxere';            // Xanxerê/SC
+//  4219507: ConfigURL.ProNomeCidade := 'xanxere';            // Xanxerê/SC passou para o provedor Betha
   4313409: ConfigURL.ProNomeCidade := 'novohamburgo';       // Novo Hamburgo/RS
   4316907: ConfigURL.ProNomeCidade := 'santamaria';         // Santa Maria/RS
   5002209: ConfigURL.ProNomeCidade := 'bonito';             // Bonito/MS

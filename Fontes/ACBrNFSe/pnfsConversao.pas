@@ -639,7 +639,7 @@ begin
   4217907, // Tangará/SC
   4218004, // Tijucas/SC
   4219002, // Urussanga/SC
-//  4219507, // Xanxere/SC ??
+  4219507, // Xanxere/SC 
   4219606, // Xavantina/SC
   4219705, // Xaxim/SC
   4302105, // Bento Gonçalves/RS
@@ -880,7 +880,7 @@ begin
   3551009, // São Vicente/SP
   3551504, // Serrana/SP
   4104808, // Cascavel/PR
-  4219507, // Xanxerê/SC
+//  4219507, // Xanxerê/SC passou para o provedor Betha
   4306106, // Cruz Alta/RS
   4313409, // Novo Hamburgo/RS
   4316907, // Santa Maria/RS
