@@ -595,12 +595,14 @@ begin
   4202305, // Biguaçu/SC
   4202453, // Bombinhas/SC
   4202800, // Braço do Norte/SC
+  4203006, // Cacador/SC
   4203600, // Campos Novos/SC
   4203808, // Canoinhas/SC
   4204202, // Chapecó/SC
   4204350, // Cordilheira Alta/SC
   4204509, // Corupá/SC
   4204608, // Criciúma/SC
+  4205001, // Dionísio Cerqueira/SC
   4205555, // Frei Rogério/SC
   4205704, // Garopaba/SC
   4206207, // Gravatal/SC
@@ -637,6 +639,7 @@ begin
   4217907, // Tangará/SC
   4218004, // Tijucas/SC
   4219002, // Urussanga/SC
+//  4219507, // Xanxere/SC ??
   4219606, // Xavantina/SC
   4219705, // Xaxim/SC
   4302105, // Bento Gonçalves/RS
@@ -16969,7 +16972,7 @@ begin
       0910: CodCidade := 4204756 ; //Cunhatai/SC  
       8093: CodCidade := 4204806 ; //Curitibanos/SC  
       8095: CodCidade := 4204905 ; //Descanso/SC  
-      8097: CodCidade := 4205001 ; //Dionisio Cerqueira/SC  
+      8097: CodCidade := 4205001 ; //Dionisio Cerqueira/SC
       8099: CodCidade := 4205100 ; //Dona Emma/SC  
       9945: CodCidade := 4205159 ; //Doutor Pedrinho/SC  
       0912: CodCidade := 4205175 ; //Entre Rios/SC  
@@ -17093,7 +17096,7 @@ begin
       5569: CodCidade := 4213351 ; //Ponte Alta Do Norte/SC  
       8263: CodCidade := 4213401 ; //Ponte Serrada/SC  
       8265: CodCidade := 4213500 ; //Porto Belo/SC  
-      8267: CodCidade := 4213609 ; //Porto Uniao/SC  
+      8267: CodCidade := 4213609 ; //Porto Uniao/SC
       8269: CodCidade := 4213708 ; //Pouso Redondo/SC  
       8271: CodCidade := 4213807 ; //Praia Grande/SC  
       8273: CodCidade := 4213906 ; //Presidente Castello Branco/SC  
