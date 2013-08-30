@@ -110,7 +110,8 @@ var
  FPrefeitura     : String;
  Printer         : TPrinter;
 
- class procedure ImprimirCampinas(ANFSe           : TNFSe;
+ // Removido "class" por Francis Silva
+ procedure ImprimirCampinas(ANFSe           : TNFSe;
                                       ALogo           : String  = '';
                                       AEmail          : String  = '';
                                       AFax            : String  = '';
@@ -127,7 +128,8 @@ var
                                       APrestLogo      : String  = '';
                                       APrefeitura     : String  = '');
   begin
-  with Create ( nil ) do
+ // Incluido "TACBrNFSeDANFSeQR." por Francis Silva
+  with TACBrNFSeDANFSeQR.Create ( nil ) do
   try
    FNFSe           := ANFSe;
    FLogo           := ALogo;
