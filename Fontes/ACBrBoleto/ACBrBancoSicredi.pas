@@ -242,12 +242,11 @@ begin
        end;
 
       {Pegando Tipo de Sacado}
-      case Sacado.Pessoa of
-         pFisica   : TipoSacado := '1';
-         pJuridica : TipoSacado := '2';
+      if Length(OnlyNumber(Sacado.CNPJCPF)) > 11 then
+         TipoSacado:= '2'
       else
-         TipoSacado := '9';
-      end;
+         TipoSacado:= '1';
+
 
       { Pegando o tipo de EspecieDoc }
       if EspecieDoc = 'DMI' then

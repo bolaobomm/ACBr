@@ -48,6 +48,12 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 Data: 29/08/2013
+-- ACBrBoleto ver. 0.0.83 --
+-- ACBrBancoSicred.pas
+[*] Remessa CNAB400 - Modificado verificação do tipo de Inscrição do Sacado para verificar
+    o campo CNPJ/CPF para decidir qual valor informar.(Juliana Tamizou)
+
+Data: 29/08/2013
 -- ACBrBoletoFCFortesFr ver. 0.0.22 --
 [*] Modificado tamanho do espaço para impressão do local de pagamento dos boletos e
     reduzida a fonte do mesmo para suportar um texto maior.(Juliana Tamizou)
