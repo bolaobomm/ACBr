@@ -2937,7 +2937,7 @@ begin
    then FConfiguracoes.Geral.Save(Protocolo + '-lista-nfse-c.xml', FRetornoWS, FConfiguracoes.Arquivos.GetPathGer);
 
   if FConfiguracoes.Geral.Salvar
-   then FConfiguracoes.Geral.Save(Protocolo + '-lista-nfse.xml', NotaUtil.RetirarPrefixos(FRetWS), FConfiguracoes.Arquivos.GetPathGer);
+   then FConfiguracoes.Geral.Save(Protocolo + '-lista-nfse.xml', {NotaUtil.RetirarPrefixos(FRetWS)} FRetWS, FConfiguracoes.Arquivos.GetPathGer);
   self.ArquivoRetorno := FRetWS;
 
   NFSeRetorno := TretLote.Create;
