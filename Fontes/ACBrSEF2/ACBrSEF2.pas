@@ -52,7 +52,7 @@ Uses SysUtils, Classes, Contnrs,
 	   ACBrSEF2_eDoc_BlocoC_Class, ACBrSEF2Conversao, ACBrUtil, DateUtils;
 
 const
-  CACBrSEF2_Versao = '0.10';
+  CACBrSEF2_Versao = '0.20';
 
 type
   TACBrSEF2Arquivo = (aSEF,aEDOC);
@@ -299,9 +299,9 @@ end;
 procedure TACBrSEF2.LimpaRegistros;
 begin
    FBloco_0.LimpaRegistros;
-   //FBloco_C.LimpaRegistros;
+   FBloco_C.LimpaRegistros;
    FBloco_E.LimpaRegistros;
-   //FBloco_9.LimpaRegistros;
+   FBloco_9.LimpaRegistros;
 end;
 
 procedure TACBrSEF2.SaveFileTXT;
@@ -475,9 +475,6 @@ end;
 procedure TACBrSEF2.WriteBloco_E;
 begin
    if Bloco_E.Gravado then Exit;
-
-   if not Bloco_C.Gravado then
-      WriteBloco_C(True);
 
    /// BLOCO E
    WriteRegistroE001;
@@ -768,12 +765,39 @@ begin
             end;
          end;
 
+         if Bloco_E.RegistroE050Count > 0 then
+         begin
+            with New do
+            begin
+               REG_BLC := 'E050';
+               QTD_REG_BLC := Bloco_E.RegistroE050Count;
+            end;
+         end;
+
+         if Bloco_E.RegistroE055Count > 0 then
+         begin
+            with New do
+            begin
+               REG_BLC := 'E055';
+               QTD_REG_BLC := Bloco_E.RegistroE055Count;
+            end;
+         end;
+
          if Bloco_E.RegistroE060Count > 0 then
          begin
             with New do
             begin
                REG_BLC := 'E060';
               QTD_REG_BLC := Bloco_E.RegistroE060Count;
+            end;
+         end;
+
+         if Bloco_E.RegistroE060Count > 0 then
+         begin
+            with New do
+            begin
+               REG_BLC := 'E065';
+              QTD_REG_BLC := Bloco_E.RegistroE065Count;
             end;
          end;
 

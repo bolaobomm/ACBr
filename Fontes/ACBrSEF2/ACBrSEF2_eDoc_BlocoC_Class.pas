@@ -72,6 +72,7 @@ type
   public
     constructor Create;
     destructor Destroy;override;
+    procedure LimpaRegistros;
 
     function RegistroC001New: TRegistroSEFC001;
     function RegistroC020New: TRegistroSEFC020;
@@ -171,6 +172,16 @@ begin
   inherited;
 end;
 
+procedure TBloco_C.LimpaRegistros;
+begin
+   /// Limpa os Registros
+   LiberaRegistros;
+   Conteudo.Clear;
+
+   /// Recriar os Registros Limpos
+   CriaRegistros;
+end;
+
 function TBloco_C.RegistroC001New: TRegistroSEFC001;
 begin
   Result := FRegistroC001;
@@ -184,7 +195,7 @@ end;
 procedure TBloco_C.LiberaRegistros;
 begin
   FRegistroC001.Free;
-  FreeAndNil(FRegistroC990);
+  FRegistroC990.Free;
 end;
 
 procedure TBloco_C.CriaRegistros;
@@ -193,6 +204,12 @@ begin
   FRegistroC990 := TRegistroSEFC990.Create;
 
   FRegistroC020Count := 0;
+  FRegistroC300Count := 0;
+  FRegistroC550Count := 0;
+  FRegistroC560Count := 0;
+  FRegistroC600Count := 0;
+  FRegistroC610Count := 0;
+  FRegistroC990.QTD_LIN_C := 0;
   
 end;
 

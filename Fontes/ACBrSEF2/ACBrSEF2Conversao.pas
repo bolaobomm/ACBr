@@ -291,7 +291,7 @@ Uses SysUtils, Classes, ACBrTXTClass, contnrs;
 
 
     TIndicadorExigeEscrImposto = (impSimRegimeSimplificado,
-                                  impsimRegimeIntermediario,
+                                  impSimRegimeIntermediario,
                                   impSimRegimeIntegral,
                                   impNaoObrigado);
 
