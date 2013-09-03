@@ -393,6 +393,7 @@ begin
   0710: r := 'Limpeza, manutencao e conservacao de vias e logradouros publicos, imoveis, chamines, piscinas, parques, jardins e congeneres.';
   0711: r := 'Decoracao e jardinagem, inclusive corte e poda de arvores.';
   0712: r := 'Controle e tratamento de efluentes de qualquer natureza e de agentes fisicos, quimicos e biologicos.';
+//  0713: r := 'Atividades pos Colheita.';
   0713: r := 'Dedetizacao, desinfeccao, desinsetizacao, imunizacao, higienizacao, desratizacao, pulverizacao e congeneres.';
   0714: r := '(VETADO)';
   0715: r := '(VETADO)';
@@ -960,6 +961,7 @@ begin
          : Provedor := 'SimplISS';
 
   4303103, // Cachoeirinha/RS
+  4311403, // Lajeado/RS
   4314100, // Passo Fundo/RS
   4318705  // Sao Leopoldo/RS
          : Provedor := 'Thema';

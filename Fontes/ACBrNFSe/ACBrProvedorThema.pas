@@ -135,6 +135,11 @@ begin
             ConfigURL.ProNomeCidade := 'nfse.cachoeirinha.rs.gov.br/';
             sHTTPPro := 'http://';
            end;
+  4311403: begin // Lajeado/RS
+            ConfigURL.HomNomeCidade := 'nfsehml.lajeado.rs.gov.br/thema-';
+            ConfigURL.ProNomeCidade := 'nfse.lajeado.rs.gov.br/thema-';
+            sHTTPPro := 'http://';
+           end;
   4314100: begin // Passo Fundo/RS
             ConfigURL.HomNomeCidade := 'nfsehomologacao.pmpf.rs.gov.br/';
             ConfigURL.ProNomeCidade := 'nfse.pmpf.rs.gov.br/thema-';
