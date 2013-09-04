@@ -338,7 +338,11 @@ begin
   begin
     Gerador.wGrupo('toma4', '#037');
     Gerador.wCampo(tcStr, '#038', 'toma ', 01, 01, 1, TpTomadorToStr(CTe.ide.Toma4.Toma), DSC_TOMA);
-    Gerador.wCampoCNPJCPF('#039', '#040', CTe.ide.Toma4.CNPJCPF, CTe.Ide.Toma4.EnderToma.cPais);
+
+    if CTe.Ide.Toma4.EnderToma.cPais = 1058 then
+      Gerador.wCampoCNPJCPF('#039', '#040', CTe.ide.Toma4.CNPJCPF, CTe.Ide.Toma4.EnderToma.cPais)
+     else
+      Gerador.wCampo(tcStr, '#039', 'CNPJ', 00, 14, 1, '00000000000000', 'erro');
 
     if CTe.Ide.Toma4.IE <> ''
      then begin
