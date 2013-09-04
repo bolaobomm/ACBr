@@ -230,40 +230,40 @@ begin
  case FormaEmissao of
   1, 4, 5 : begin
              case ALayOut of
-              LayCTeEvento : begin
-                               case AUF of
-                                11, // Rondônia
-                                12, // Acre
-                                13, // Amazonas
-                                14, // Roraima
-                                15, // Pará
-                                16, // Amapá
-                                17, // Tocantins
-                                21, // Maranhão
-                                22, // Piauí
-                                23, // Ceará
-                                24, // Rio Grande do Norte
-                                25, // Paraibá
-                                27, // Alagoas
-                                28, // Sergipe
-                                29, // Bahia
-                                31, // Minas Gerais
-                                32, // Espirito Santo
-                                33, // Rio de Janeiro
-                                41, // Paraná
-                                42, // Santa Catarina
-                                43, // Rio Grande do Sul
-                                52, // Goiás
-                                53: // Distrito Federal
-                                    Result := DFeUtil.SeSenao(AAmbiente=1, 'https://nfe.fazenda.sp.gov.br/cteWEB/services/CteRecepcaoEvento.asmx', 'https://homologacao.nfe.fazenda.sp.gov.br/cteWEB/services/CteRecepcaoEvento.asmx');
-                                26, // Pernanbuco
-                                35, // São Paulo
-                                50, // Mato Grosso do Sul
-                                51: // Mato Grosso
-                                    // Alterado por Italo em 23/04/2013 conforme NT2013/003
-                                    Result := DFeUtil.SeSenao(AAmbiente=1, 'https://cte.sefaz.rs.gov.br/ws/CteRecepcaoEvento/CteRecepcaoEvento.asmx', 'https://homologacao.cte.sefaz.rs.gov.br/ws/CteRecepcaoEvento/CteRecepcaoEvento.asmx');
-                               end;
-                             end;
+              LayCTeEventoEPEC : begin
+                                   case AUF of
+                                    11, // Rondônia
+                                    12, // Acre
+                                    13, // Amazonas
+                                    14, // Roraima
+                                    15, // Pará
+                                    16, // Amapá
+                                    17, // Tocantins
+                                    21, // Maranhão
+                                    22, // Piauí
+                                    23, // Ceará
+                                    24, // Rio Grande do Norte
+                                    25, // Paraibá
+                                    27, // Alagoas
+                                    28, // Sergipe
+                                    29, // Bahia
+                                    31, // Minas Gerais
+                                    32, // Espirito Santo
+                                    33, // Rio de Janeiro
+                                    41, // Paraná
+                                    42, // Santa Catarina
+                                    43, // Rio Grande do Sul
+                                    52, // Goiás
+                                    53: // Distrito Federal
+                                        Result := DFeUtil.SeSenao(AAmbiente=1, 'https://nfe.fazenda.sp.gov.br/cteWEB/services/CteRecepcaoEvento.asmx', 'https://homologacao.nfe.fazenda.sp.gov.br/cteWEB/services/CteRecepcaoEvento.asmx');
+                                    26, // Pernanbuco
+                                    35, // São Paulo
+                                    50, // Mato Grosso do Sul
+                                    51: // Mato Grosso
+                                        // Alterado por Italo em 23/04/2013 conforme NT2013/003
+                                        Result := DFeUtil.SeSenao(AAmbiente=1, 'https://cte.sefaz.rs.gov.br/ws/CteRecepcaoEvento/CteRecepcaoEvento.asmx', 'https://homologacao.cte.sefaz.rs.gov.br/ws/CteRecepcaoEvento/CteRecepcaoEvento.asmx');
+                                   end;
+                                 end;
               else begin
                      case AUF of
                       12: Result := CTeUtil.GetURLAC(AAmbiente, ALayOut);       //AC - Acre
@@ -449,6 +449,7 @@ begin
     LayCTeConsultaCT:    Result := DFeUtil.SeSenao(AAmbiente = 1, 'https://cte.sefaz.rs.gov.br/ws/cteconsulta/cteconsulta.asmx'          , 'https://homologacao.cte.sefaz.rs.gov.br/ws/cteconsulta/cteconsulta.asmx');
     LayCTeStatusServico: Result := DFeUtil.SeSenao(AAmbiente = 1, 'https://cte.sefaz.rs.gov.br/ws/ctestatusservico/ctestatusservico.asmx', 'https://homologacao.cte.sefaz.rs.gov.br/ws/ctestatusservico/ctestatusservico.asmx');
     LayCTeCadastro:      Result := DFeUtil.SeSenao(AAmbiente = 1, '', '');
+    LayCTeEvento:        Result := DFeUtil.SeSenao(AAmbiente = 1, 'https://cte.sefaz.rs.gov.br/ws/cteRecepcaoEvento/cteRecepcaoEvento.asmx', 'https://homologacao.cte.sefaz.rs.gov.br/ws/cteRecepcaoEvento/cteRecepcaoEvento.asmx');
   end;
 end;
 
@@ -1096,6 +1097,30 @@ begin
               XML +
              '</evEPECCTe>';
      end;
+    if pos( '<evCancCTe>', XML) <> 0
+     then begin
+      Tipo := 8;
+      XML := SeparaDados( XML, 'evCancCTe' );
+      XML := '<evCancCTe xmlns="http://www.portalfiscal.inf.br/cte">' +
+              XML +
+             '</evCancCTe>';
+     end;
+    if pos( '<evRegMultimodal>', XML) <> 0
+     then begin
+      Tipo := 9;
+      XML := SeparaDados( XML, 'evRegMultimodal' );
+      XML := '<evRegMultimodal xmlns="http://www.portalfiscal.inf.br/cte">' +
+              XML +
+             '</evRegMultimodal>';
+     end;
+    if pos( '<evCCeCTe>', XML) <> 0
+     then begin
+      Tipo := 10;
+      XML := SeparaDados( XML, 'evCCeCTe' );
+      XML := '<evCCeCTe xmlns="http://www.portalfiscal.inf.br/cte">' +
+              XML +
+             '</evCCeCTe>';
+     end;
    end;
 
   XML := '<?xml version="1.0" encoding="UTF-8" ?>' + XML;
@@ -1163,6 +1188,24 @@ begin
           DFeUtil.SeSenao(DFeUtil.EstaVazio(APathSchemas),
           PathWithDelim(ExtractFileDir(application.ExeName))+'Schemas\',
           PathWithDelim(APathSchemas))+'evEPECCTe_v' + CTeEventoCTe + '.xsd');
+      end;
+   8: begin
+       Schema.add('http://www.portalfiscal.inf.br/cte',
+          DFeUtil.SeSenao(DFeUtil.EstaVazio(APathSchemas),
+          PathWithDelim(ExtractFileDir(application.ExeName))+'Schemas\',
+          PathWithDelim(APathSchemas))+'evCancCTe_v' + CTeEventoCTe + '.xsd');
+      end;
+   9: begin
+       Schema.add('http://www.portalfiscal.inf.br/cte',
+          DFeUtil.SeSenao(DFeUtil.EstaVazio(APathSchemas),
+          PathWithDelim(ExtractFileDir(application.ExeName))+'Schemas\',
+          PathWithDelim(APathSchemas))+'evMultimodal_v' + CTeEventoCTe + '.xsd');
+      end;
+  10: begin
+       Schema.add('http://www.portalfiscal.inf.br/cte',
+          DFeUtil.SeSenao(DFeUtil.EstaVazio(APathSchemas),
+          PathWithDelim(ExtractFileDir(application.ExeName))+'Schemas\',
+          PathWithDelim(APathSchemas))+'evCCeCTe_v' + CTeEventoCTe + '.xsd');
       end;
   end;
 

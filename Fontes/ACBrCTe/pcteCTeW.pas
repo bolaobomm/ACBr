@@ -1153,7 +1153,7 @@ begin
     if (FOpcoes.ValidarInscricoes) and (CTe.infCTeNorm.infDoc.InfNF[i].PIN <> '') then
       if not ValidarISUF(CTe.infCTeNorm.infDoc.InfNF[i].PIN) then
         Gerador.wAlerta('#146', 'PIN', DSC_ISUF, ERR_MSG_INVALIDO);
-    Gerador.wCampo(tcDat, '#278', 'dPrev ', 10, 10, 1, CTe.infCTeNorm.infDoc.InfNF[i].dPrev, '***');
+    Gerador.wCampo(tcDat, '#278', 'dPrev ', 10, 10, 0, CTe.infCTeNorm.infDoc.InfNF[i].dPrev, '***');
 
     for j := 0 to CTe.infCTeNorm.infDoc.infNF[i].infUnidTransp.Count - 1 do
     begin
@@ -1227,7 +1227,7 @@ begin
     if (FOpcoes.ValidarInscricoes) and (CTe.infCTeNorm.infDoc.InfNFe[i].PIN <> '') then
       if not ValidarISUF(CTe.infCTeNorm.infDoc.InfNFe[i].PIN) then
         Gerador.wAlerta('#160', 'PIN', DSC_ISUF, ERR_MSG_INVALIDO);
-    Gerador.wCampo(tcDat, '#278', 'dPrev ', 10, 10, 1, CTe.infCTeNorm.infDoc.InfNFe[i].dPrev, '***');
+    Gerador.wCampo(tcDat, '#300', 'dPrev ', 10, 10, 0, CTe.infCTeNorm.infDoc.InfNFe[i].dPrev, '***');
 
     for j := 0 to CTe.infCTeNorm.infDoc.infNFe[i].infUnidTransp.Count - 1 do
     begin
@@ -1293,12 +1293,12 @@ begin
   for i := 0 to CTe.infCTeNorm.infDoc.InfOutros.Count - 1 do
   begin
     Gerador.wGrupo('infOutros', '#161');
-    Gerador.wCampo(tcStr, '#162', 'tpDoc       ', 02, 02, 1, TpDocumentoToStr(CTe.infCTeNorm.infDoc.InfOutros[i].tpDoc), DSC_TPDOC);
+    Gerador.wCampo(tcStr, '#162', 'tpDoc       ', 02, 002, 1, TpDocumentoToStr(CTe.infCTeNorm.infDoc.InfOutros[i].tpDoc), DSC_TPDOC);
     Gerador.wCampo(tcStr, '#163', 'descOutros  ', 01, 100, 0, CTe.infCTeNorm.infDoc.InfOutros[i].descOutros, DSC_OUTROS);
-    Gerador.wCampo(tcStr, '#164', 'nDoc        ', 01, 20, 0, CTe.infCTeNorm.infDoc.InfOutros[i].nDoc, DSC_NRO);
-    Gerador.wCampo(tcDat, '#165', 'dEmi        ', 10, 10, 1, CTe.infCTeNorm.infDoc.InfOutros[i].dEmi, DSC_DEMI);
-    Gerador.wCampo(tcDe2, '#166', 'vDocFisc    ', 01, 15, 0, CTe.infCTeNorm.infDoc.InfOutros[i].vDocFisc, DSC_VDOC);
-    Gerador.wCampo(tcDat, '#278', 'dPrev       ', 10, 10, 1, CTe.infCTeNorm.infDoc.infOutros[i].dPrev, '***');
+    Gerador.wCampo(tcStr, '#164', 'nDoc        ', 01, 020, 0, CTe.infCTeNorm.infDoc.InfOutros[i].nDoc, DSC_NRO);
+    Gerador.wCampo(tcDat, '#165', 'dEmi        ', 10, 010, 0, CTe.infCTeNorm.infDoc.InfOutros[i].dEmi, DSC_DEMI);
+    Gerador.wCampo(tcDe2, '#166', 'vDocFisc    ', 01, 015, 0, CTe.infCTeNorm.infDoc.InfOutros[i].vDocFisc, DSC_VDOC);
+    Gerador.wCampo(tcDat, '#325', 'dPrev       ', 10, 010, 0, CTe.infCTeNorm.infDoc.infOutros[i].dPrev, '***');
 
     for j := 0 to CTe.infCTeNorm.infDoc.infOutros[i].infUnidTransp.Count - 1 do
     begin

@@ -385,6 +385,7 @@ type
     FxMotivo: String;
     FTpAmb: TpcnTipoAmbiente;
     FEventoRetorno: TRetEventoCTe;
+    FEveEPEC: Boolean;
   public
     constructor Create(AOwner : TComponent; AEvento : TEventoCTe); reintroduce;
     destructor Destroy; override;
@@ -757,6 +758,7 @@ var
 begin
   EventoCTe        := TEventoCTe.Create;
   EventoCTe.idLote := TCTeEnvEvento(Self).idLote;
+  TCTeEnvEvento(Self).FEveEPEC := False;
 
   for i := 0 to TCTeEnvEvento(Self).FEvento.Evento.Count-1 do
    begin
@@ -773,6 +775,8 @@ begin
         case InfEvento.tpEvento of
           teEPEC:
           begin
+            TCTeEnvEvento(Self).FEveEPEC := True;
+
             infEvento.detEvento.xJust   := TCTeEnvEvento(Self).FEvento.Evento[i].InfEvento.detEvento.xJust;
             infEvento.detEvento.vICMS   := TCTeEnvEvento(Self).FEvento.Evento[i].InfEvento.detEvento.vICMS;
             infEvento.detEvento.vTPrest := TCTeEnvEvento(Self).FEvento.Evento[i].InfEvento.detEvento.vTPrest;
@@ -895,7 +899,10 @@ begin
   else if self is TCTeConsultaCadastro then
     FURL := CTeUtil.GetURL(FConfiguracoes.WebServices.UFCodigo, FConfiguracoes.WebServices.AmbienteCodigo, FConfiguracoes.Geral.FormaEmissaoCodigo, LayCTeCadastro)
   else if self is TCTeEnvEvento then
-    FURL := CTeUtil.GetURL(FConfiguracoes.WebServices.UFCodigo, FConfiguracoes.WebServices.AmbienteCodigo, FConfiguracoes.Geral.FormaEmissaoCodigo, LayCTeEvento)
+    FURL := CTeUtil.GetURL(FConfiguracoes.WebServices.UFCodigo, FConfiguracoes.WebServices.AmbienteCodigo, FConfiguracoes.Geral.FormaEmissaoCodigo, LayCTeEvento);
+
+  if TCTeEnvEvento(Self).FEveEPEC then
+    FURL := CTeUtil.GetURL(FConfiguracoes.WebServices.UFCodigo, FConfiguracoes.WebServices.AmbienteCodigo, FConfiguracoes.Geral.FormaEmissaoCodigo, LayCTeEventoEPEC);
 end;
 
 { TWebServices }
