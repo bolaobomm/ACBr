@@ -1541,7 +1541,7 @@ begin
      Resp.LeArquivo( ArqResp );
 
      // Amex retorna 101 e não FF
-     if (pos(UpperCase(Resp.Conteudo.LeInformacao(9,0).AsString), 'FF|101') > 0) then
+     if (pos(UpperCase('|'+Trim(Resp.Conteudo.LeInformacao(9,0).AsString)+'|'), '|FF|101|') > 0) then
         ApagaEVerifica( ArqResp );
 
      Resp.Clear;
