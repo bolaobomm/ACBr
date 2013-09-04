@@ -83,6 +83,7 @@ type
              LayNFeConsNFeDest, LayNFeDownloadNFe,
              LayCTeRecepcao, LayCTeRetRecepcao, LayCTeCancelamento, LayCTeInutilizacao,
              LayCTeConsultaCT, LayCTeStatusServico, LayCTeCadastro, LayCTeEvento,
+             LayCTeEventoEPEC,
              LayMDFeRecepcao, LayMDFeRetRecepcao, LayMDFeConsulta, LayMDFeStatusServico,
              LayMDFeEvento);
 
