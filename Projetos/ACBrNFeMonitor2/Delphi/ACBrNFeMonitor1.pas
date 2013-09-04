@@ -1205,9 +1205,9 @@ begin
             begin
               Cmd.Comando := Linha ;
               
-              if Cmd.Objeto = 'NFE' then
+              if UpperCase(Cmd.Objeto) = 'NFE' then
                  DoACBrNFe( Cmd )
-              else if Cmd.Objeto = 'CTE' then
+              else if UpperCase(Cmd.Objeto) = 'CTE' then
                  DoACBrCTe( Cmd );
 
               if not cbModoXML.Checked then
@@ -1610,7 +1610,7 @@ begin
         end;
      end;
   end;
-  
+
 end;
 
 procedure TfrmAcbrNfeMonitor.PathClick(Sender: TObject);

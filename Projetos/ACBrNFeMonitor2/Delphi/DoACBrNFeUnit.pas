@@ -1224,7 +1224,7 @@ begin
 
         else if Cmd.Metodo = 'setformaemissao' then //1-Normal 2-Contingencia 3-SCAN 4-DPEC 5-FSDA
          begin
-           if (StrToInt(Cmd.Params(0))>=1) and (StrToInt(Cmd.Params(0))<=5) then
+           if (StrToInt(Cmd.Params(0))>=1) and (StrToInt(Cmd.Params(0))<=9) then
             begin
               ACBrNFe1.Configuracoes.Geral.FormaEmissao := StrToTpEmis(OK, Cmd.Params(0));
               rgFormaEmissao.ItemIndex := ACBrNFe1.Configuracoes.Geral.FormaEmissaoCodigo-1;
@@ -1956,7 +1956,7 @@ begin
                            vAliq     := StringToFloatDef( INIRec.ReadString(sSecao,'Aliquota'    ,INIRec.ReadString(sSecao,'vAliq' ,'')) ,0);
                            vISSQN    := StringToFloatDef( INIRec.ReadString(sSecao,'ValorISSQN'  ,INIRec.ReadString(sSecao,'vISSQN','')) ,0);
                            cMunFG    := StrToInt( INIRec.ReadString(sSecao,'MunicipioFatoGerador',INIRec.ReadString(sSecao,'cMunFG','')));
-                           cListServ :=           INIRec.ReadString(sSecao,'CodigoServico'       ,INIRec.ReadString(sSecao,'cListServ',''));
+                           cListServ := INIRec.ReadString(sSecao,'CodigoServico',INIRec.ReadString(sSecao,'cListServ',''));
                            cSitTrib  := StrToISSQNcSitTrib( OK,INIRec.ReadString(sSecao,'cSitTrib','')) ; //NFe2
                          end;
                       end;
@@ -2149,10 +2149,11 @@ begin
             exporta.xLocEmbarq := INIRec.ReadString( 'Exporta','xLocEmbarq','');
           end;
 
-         sFim   := INIRec.ReadString( 'Compra','xNEmp','FIM') ;
-         if (sFim <> 'FIM') then
+         if (INIRec.ReadString( 'Compra','xNEmp','') <> '') or
+            (INIRec.ReadString( 'Compra','xPed' ,'') <> '') or
+            (INIRec.ReadString( 'Compra','xCont','') <> '') then
           begin
-            compra.xNEmp := sFim;
+            compra.xNEmp := INIRec.ReadString( 'Compra','xNEmp','');
             compra.xPed  := INIRec.ReadString( 'Compra','xPed','');
             compra.xCont := INIRec.ReadString( 'Compra','xCont','');
           end;
@@ -2699,7 +2700,7 @@ begin
                         INIRec.WriteFloat(  sSecao,'Aliquota'  ,vAliq);
                         INIRec.WriteFloat(  sSecao,'ValorISSQN',vISSQN);
                         INIRec.WriteInteger(sSecao,'MunicipioFatoGerador',cMunFG);
-                        INIRec.WriteString (sSecao,'CodigoServico',cListServ);
+                        INIRec.WriteString(sSecao,'CodigoServico',cListServ);
                         INIRec.WriteString( sSecao,'cSitTrib',ISSQNcSitTribToStr(cSitTrib));
                       end;
                     end;

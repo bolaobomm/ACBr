@@ -691,7 +691,7 @@ begin
 
         else if Cmd.Metodo = 'setformaemissao' then 
          begin
-           if (StrToInt(Cmd.Params(0))>=1) and (StrToInt(Cmd.Params(0))<=5) then
+           if (StrToInt(Cmd.Params(0))>=1) and (StrToInt(Cmd.Params(0))<=9) then
             begin
               ACBrCTe1.Configuracoes.Geral.FormaEmissao := StrToTpEmis(OK, Cmd.Params(0));
               rgFormaEmissao.ItemIndex := ACBrCTe1.Configuracoes.Geral.FormaEmissaoCodigo-1;
@@ -1232,6 +1232,7 @@ begin
           if INIRec.ReadString('ICMS00', 'CST','') <> '' then
           begin
             Imp.ICMS.ICMS00.CST   := StrToCSTICMS(OK,INIRec.ReadString('ICMS00','CST','00'));
+            imp.ICMS.SituTrib     := Imp.ICMS.ICMS00.CST;
             Imp.ICMS.ICMS00.vBC   := StringToFloatDef( INIRec.ReadString('ICMS00','vBC','') ,0);
             Imp.ICMS.ICMS00.pICMS := StringToFloatDef( INIRec.ReadString('ICMS00','pICMS','') ,0);
             Imp.ICMS.ICMS00.vICMS := StringToFloatDef( INIRec.ReadString('ICMS00','vICMS','') ,0);
@@ -1240,6 +1241,7 @@ begin
           if INIRec.ReadString('ICMS20', 'CST','') <> '' then
           begin
             Imp.ICMS.ICMS20.CST     := StrToCSTICMS(OK,INIRec.ReadString('ICMS20','CST','00'));
+            imp.ICMS.SituTrib       := Imp.ICMS.ICMS20.CST;
             Imp.ICMS.ICMS20.pRedBC  := StringToFloatDef( INIRec.ReadString('ICMS20','pRedBC','') ,0);
             Imp.ICMS.ICMS20.vBC     := StringToFloatDef( INIRec.ReadString('ICMS20','vBC','') ,0);
             Imp.ICMS.ICMS20.pICMS   := StringToFloatDef( INIRec.ReadString('ICMS20','pICMS','') ,0);
@@ -1247,20 +1249,25 @@ begin
           end;
 
           if INIRec.ReadString('ICMS45','CST','') <> '' then
+           begin
             Imp.ICMS.ICMS45.CST := StrToCSTICMS(OK,INIRec.ReadString('ICMS45','CST','40'));
+            imp.ICMS.SituTrib   := Imp.ICMS.ICMS45.CST;
+           end;
 
           if INIRec.ReadString('ICMS60', 'CST','') <> '' then
           begin
             Imp.ICMS.ICMS60.CST     := StrToCSTICMS(OK,INIRec.ReadString('ICMS60','CST','60'));
-            Imp.ICMS.ICMS60.vBCSTRet  := StringToFloatDef( INIRec.ReadString('ICMS60','vBCSTRet','') ,0);
-            Imp.ICMS.ICMS60.vICMSSTRet     := StringToFloatDef( INIRec.ReadString('ICMS60','vICMSSTRet','') ,0);
-            Imp.ICMS.ICMS60.pICMSSTRet   := StringToFloatDef( INIRec.ReadString('ICMS60','pICMSSTRet','') ,0);
-            Imp.ICMS.ICMS60.vCred   := StringToFloatDef( INIRec.ReadString('ICMS60','vCred','') ,0);
+            imp.ICMS.SituTrib       := Imp.ICMS.ICMS60.CST;
+            Imp.ICMS.ICMS60.vBCSTRet   := StringToFloatDef( INIRec.ReadString('ICMS60','vBCSTRet','') ,0);
+            Imp.ICMS.ICMS60.vICMSSTRet := StringToFloatDef( INIRec.ReadString('ICMS60','vICMSSTRet','') ,0);
+            Imp.ICMS.ICMS60.pICMSSTRet := StringToFloatDef( INIRec.ReadString('ICMS60','pICMSSTRet','') ,0);
+            Imp.ICMS.ICMS60.vCred      := StringToFloatDef( INIRec.ReadString('ICMS60','vCred','') ,0);
           end;
 
           if INIRec.ReadString('ICMS90', 'CST','') <> '' then
           begin
             Imp.ICMS.ICMS90.CST     := StrToCSTICMS(OK,INIRec.ReadString('ICMS90','CST','90'));
+            imp.ICMS.SituTrib       := Imp.ICMS.ICMS90.CST;
             Imp.ICMS.ICMS90.pRedBC  := StringToFloatDef( INIRec.ReadString('ICMS90','pRedBC','') ,0);
             Imp.ICMS.ICMS90.vBC     := StringToFloatDef( INIRec.ReadString('ICMS90','vBC','') ,0);
             Imp.ICMS.ICMS90.pICMS   := StringToFloatDef( INIRec.ReadString('ICMS90','pICMS','') ,0);
@@ -1271,6 +1278,7 @@ begin
           if INIRec.ReadString('ICMSOutraUF', 'CST','') <> '' then
           begin
             Imp.ICMS.ICMSOutraUF.CST     := StrToCSTICMS(OK,INIRec.ReadString('ICMSOutraUF','CST','90'));
+            imp.ICMS.SituTrib            := Imp.ICMS.ICMSOutraUF.CST;
             Imp.ICMS.ICMSOutraUF.pRedBCOutraUF  := StringToFloatDef( INIRec.ReadString('ICMSOutraUF','pRedBCOutraUF','') ,0);
             Imp.ICMS.ICMSOutraUF.vBCOutraUF     := StringToFloatDef( INIRec.ReadString('ICMSOutraUF','vBCOutraUF','') ,0);
             Imp.ICMS.ICMSOutraUF.pICMSOutraUF   := StringToFloatDef( INIRec.ReadString('ICMSOutraUF','pICMSOutraUF','') ,0);
