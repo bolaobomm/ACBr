@@ -112,7 +112,7 @@ begin
    Result := 10;
 
    if (ACBrBanco.ACBrBoleto.Cedente.Convenio = '') then
-      raise Exception.Create(ACBrStr('Banco do Brasil requer que a Convênio do Cedente '+
+      raise Exception.Create(ACBrStr('Banco do Brasil requer que o Convênio do Cedente '+
                                      'seja informado.'));
 
    if (Carteira = '') then
