@@ -318,8 +318,7 @@ begin
                        Copy(ListaNfse.FCompNfse[i].FNFSe.Servico.CodigoMunicipio, 1, 2) +
                        FormatFloat('00000', StrToIntDef(Copy(ListaNfse.FCompNfse[i].FNFSe.Servico.CodigoMunicipio, 3, 5), 0));
 
-                ListaNfse.FCompNfse[i].FNFSe.Servico.xItemListaServico := CodigoToDesc(ListaNfse.FCompNfse[i].FNFSe.Servico.ItemListaServico);
-//                ListaNfse.FCompNfse[i].FNFSe.Servico.xItemListaServico := ObterDescricaoServico(ListaNfse.FCompNfse[i].FNFSe.Servico.ItemListaServico);
+                ListaNfse.FCompNfse[i].FNFSe.Servico.xItemListaServico := CodigoToDesc(SomenteNumeros(ListaNfse.FCompNfse[i].FNFSe.Servico.ItemListaServico));
 
                 if Leitor.rExtrai(7, 'Valores') <> ''
                  then begin

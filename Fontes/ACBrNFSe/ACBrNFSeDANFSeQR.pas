@@ -2,6 +2,11 @@
 
 unit ACBrNFSeDANFSeQR;
 
+// Atenção todos os comiters
+// Quando enviar os fontes referentes ao DANFSE favor alterar
+// a data e o nome da linha abaixo.
+// Última liberação:
+// 05/09/2013 por Italo Jurisato Junior
 
 interface
 
