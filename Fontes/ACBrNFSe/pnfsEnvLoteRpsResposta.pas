@@ -163,7 +163,9 @@ begin
       infRec.FProtocolo       := Leitor.rCampo(tcStr, 'Protocolo');
 
       // Ler a Lista de Mensagens
-      iNivel := 0;
+      // Alterado em 06/09/2013 por Italo Jurisato Junior
+      // de 0 -> 1
+      iNivel := 1; 
       if leitor.rExtrai(2, 'ListaMensagemRetorno') <> '' then
         iNivel := 3
       else if leitor.rExtrai(1, 'ListaMensagemRetorno') <> '' then
