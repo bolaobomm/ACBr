@@ -47,6 +47,7 @@ unit ACBrCTeDACTeQRRetrato;
 // Quando enviar os fontes referentes ao DACTE favor alterar
 // a data e o nome da linha abaixo.
 // Última liberação:
+// 06/09/2013 por Italo Jurisato Junior
 // 21/08/2013 por Italo Jurisato Junior
 // 20/08/2013 por André F. Moraes
 // 06/08/2013 por Italo Jurisato Junior
@@ -564,7 +565,7 @@ type
     QRLabel73: TQRLabel;
     QRShape100: TQRShape;
     qrsQuadro03: TQRShape;
-    QRShape101: TQRShape;
+    qrsLinhaPontilhada: TQRShape;
     QRLabel178: TQRLabel;
     qrlIndBalsas: TQRLabel;
     qrmNomeSeguradora: TQRMemo;
@@ -1063,7 +1064,7 @@ begin
                     end
                     else begin
                      qrb_10_ModRodFracionado.Height := 44;
-                     qrb_11_ModRodLot104.Height     := 108;
+                     qrb_11_ModRodLot104.Height     := 105;
                     end;
                  {$ELSE}
                   if FCTe.Rodo.Lota = ltNao then
@@ -1076,7 +1077,7 @@ begin
                     if Versao = 103 then
                       qrb_11_ModRodLot103.Height := 108
                     else
-                      qrb_11_ModRodLot104.Height := 108;
+                      qrb_11_ModRodLot104.Height := 105;
                    end;
                  {$ENDIF}
                  end;
