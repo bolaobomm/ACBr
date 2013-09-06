@@ -730,7 +730,11 @@ begin
      (CTe.Exped.xNome <> '') then
   begin
     Gerador.wGrupo('exped', '#142');
-    Gerador.wCampoCNPJCPF('#143', '#144', CTe.Exped.CNPJCPF, CTe.Exped.EnderExped.cPais);
+
+    if CTe.Exped.EnderExped.cPais = 1058 then
+      Gerador.wCampoCNPJCPF('#143', '#144', CTe.Exped.CNPJCPF, CTe.Exped.EnderExped.cPais)
+     else
+      Gerador.wCampo(tcStr, '#143', 'CNPJ', 00, 14, 1, '00000000000000', DSC_CNPJ);
 
     if Trim(CTe.Exped.IE) = 'ISENTO'
      then Gerador.wCampo(tcStr, '#145', 'IE ', 00, 14, 1, CTe.Exped.IE, DSC_IE)
@@ -785,7 +789,11 @@ begin
      (CTe.Receb.xNome <> '') then
   Begin
     Gerador.wGrupo('receb', '#160');
-    Gerador.wCampoCNPJCPF('#161', '#162', CTe.Receb.CNPJCPF, CTe.Receb.EnderReceb.cPais);
+
+    if CTe.Receb.EnderReceb.cPais = 1058 then
+      Gerador.wCampoCNPJCPF('#161', '#162', CTe.Receb.CNPJCPF, CTe.Receb.EnderReceb.cPais)
+     else
+      Gerador.wCampo(tcStr, '#161', 'CNPJ', 00, 14, 1, '00000000000000', DSC_CNPJ);
 
     if Trim(CTe.Receb.IE) = 'ISENTO'
      then Gerador.wCampo(tcStr, '#163', 'IE ', 00, 14, 1, CTe.Receb.IE, DSC_IE)
