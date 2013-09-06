@@ -1011,6 +1011,16 @@ begin
                       StringToDateTime(Cmd.Params(1)),         { Dt.Final }
                       Cmd.Params(2) )                          { Diretorio Arquivo }
           end
+					
+        else if Cmd.Metodo = 'pafmf_arquivomf' then
+          begin
+              ArquivoMF_DLL(Cmd.Params(0) )                          { Path do Arquivo }
+          end
+
+        else if Cmd.Metodo = 'pafmf_arquivomfd' then
+          begin
+              ArquivoMFD_DLL(Cmd.Params(0) )                          { Path do Arquivo }
+          end					
 
         else if Cmd.Metodo = 'enviacomando' then
            if Cmd.Params(1) <> '' then
