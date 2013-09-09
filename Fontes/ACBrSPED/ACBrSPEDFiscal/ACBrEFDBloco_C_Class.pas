@@ -1595,16 +1595,16 @@ begin
                        // LFill( strCST_PIS ) +
                        LFill( CST_PIS ) +
                        LFill( VL_BC_PIS, 0, 2 ) +
-                       LFill( ALIQ_PIS_PERC, 0, 4 ) +
-                       LFill( QUANT_BC_PIS,  0, 3 ) +
-                       LFill( ALIQ_PIS_R, 0, 4 ) +
+                       LFill( ALIQ_PIS_PERC, 0, 4, False, '0', '#0.0000' ) +
+                       LFill( QUANT_BC_PIS,  0, 3, False, '0', '#0.000' ) + 
+                       LFill( ALIQ_PIS_R, 0, 4, False, '0', '#0.0000' ) + 
                        LFill( VL_PIS, 0, 2 ) +
                        // LFill( strCST_COFINS ) +
                        LFill( CST_COFINS ) +
                        LFill( VL_BC_COFINS, 0, 2 ) +
-                       LFill( ALIQ_COFINS_PERC, 0, 4 ) +
-                       LFill( QUANT_BC_COFINS,  0, 3 ) +
-                       LFill( ALIQ_COFINS_R, 0, 4 ) +
+                       LFill( ALIQ_COFINS_PERC, 0, 4, False, '0', '#0.0000' ) + 
+                       LFill( QUANT_BC_COFINS,  0, 3, False, '0', '#0.000' ) + 
+                       LFill( ALIQ_COFINS_R, 0, 4, False, '0', '#0.0000' ) + 
                        LFill( VL_COFINS, 0, 2 ) +
                        LFill( COD_CTA );
           //-- Write
