@@ -97,6 +97,14 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+
+Data: 09/09/2013
+-- ACBrECF --
+[+] Adicionados os métodos PafMF_ArqMF e PafMF_ArqMFD para geração dos 
+    respectivos menus fiscais, os métodos já efetuam a geração automática 
+    dos arquivos .TXT de mesmo nome com a assinatura EAD.
+    por: regys.silveira
+
 Data: 19/08/2013
 -- ACBrECFEpson --
 [-] Correção no retorno de DataHoraSB quando o ECF ainda não possui nenhuma

@@ -787,6 +787,9 @@ TACBrECF = class( TACBrComponent )
 
     procedure PafMF_Binario(const PathArquivo: String);
 
+    procedure PafMF_ArqMF(const APathArquivo: String);
+    procedure PafMF_ArqMFD(const APathArquivo: String);
+
     procedure DoVerificaValorGT ;
     procedure DoAtualizarValorGT ;
     function AssinaArquivoComEAD(Arquivo: String): Boolean;
@@ -5962,7 +5965,7 @@ begin
       // sub-total do ultimo dia
       AddSubTotal;
 
-      // ***********************************************************************      
+      // ***********************************************************************
       // impressão do total geral
       // ***********************************************************************
       Relatorio.Add('');
@@ -6401,6 +6404,44 @@ begin
   finally
     Relatorio.Free
   end;
+end;
+
+procedure TACBrECF.PafMF_ArqMF(const APathArquivo: String);
+var
+  EADStr: String;
+  Arquivo: TStringList;
+begin
+  Self.ArquivoMF_DLL(APathArquivo);
+
+  if FileExists(APathArquivo) then
+  begin
+    // assinar o arquivo baixado da impressora
+    EADStr := 'EAD' + EAD.AssinarArquivoComEAD(APathArquivo, True);
+
+    // gravar o arquivo texto com a assinatura EAD
+    WriteToTXT(ChangeFileExt(APathArquivo, '.TXT'), EADStr, False, True);
+  end
+  else
+    raise EACBrEADException.CreateFmt('Não foi possível assinar o arquivo "%s"', [APathArquivo]);
+end;
+
+procedure TACBrECF.PafMF_ArqMFD(const APathArquivo: String);
+var
+  EADStr: String;
+  Arquivo: TStringList;
+begin
+  Self.ArquivoMFD_DLL(APathArquivo);
+
+  if FileExists(APathArquivo) then
+  begin
+    // assinar o arquivo baixado da impressora
+    EADStr := 'EAD' + EAD.AssinarArquivoComEAD(APathArquivo, True);
+
+    // gravar o arquivo texto com a assinatura EAD
+    WriteToTXT(ChangeFileExt(APathArquivo, '.TXT'), EADStr, False, True);
+  end
+  else
+    raise EACBrEADException.CreateFmt('Não foi possível assinar o arquivo "%s"', [APathArquivo]);
 end;
 
 procedure TACBrECF.ProgramarBitmapPromocional(const AIndice: Integer;
