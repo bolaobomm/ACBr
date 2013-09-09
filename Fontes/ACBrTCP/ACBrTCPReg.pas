@@ -42,7 +42,7 @@ procedure Register;
 implementation
 
 Uses ACBrSocket, ACBrCEP, ACBrIBGE, ACBrNFPws, ACBrCNIEE, ACBrSuframa, ACBrDownload,
-   SysUtils, ACBrIBPTax, ACBrConsultaCNPJ, ACBrCotacao;
+   SysUtils, ACBrIBPTax, ACBrConsultaCNPJ, ACBrConsultaCPF, ACBrCotacao;
 
 {$IFNDEF FPC}
    {$R ACBrTCP.dcr}
@@ -52,7 +52,7 @@ procedure Register;
 begin
   RegisterComponents('ACBr',
     [ TACBrTCPServer, TACBrCEP, TACBrIBGE, TACBrNFPws, TACBrCNIEE, TACBrSuframa,
-      TACBrDownload, TACBrIBPTax, TACBrConsultaCNPJ, TACBrCotacao ]
+      TACBrDownload, TACBrIBPTax, TACBrConsultaCNPJ, TACBrConsultaCPF, TACBrCotacao ]
   );
 end;
 
