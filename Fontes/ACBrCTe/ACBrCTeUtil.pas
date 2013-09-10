@@ -786,14 +786,6 @@ begin
        else
         schema_filename := pchar(PathWithDelim(APathSchemas)+'inutcte_v1.03.xsd');
      end;
-  4: begin
-      {
-      if DFeUtil.EstaVazio(APathSchemas) then
-        schema_filename := pchar(PathWithDelim(ExtractFileDir(application.ExeName))+'Schemas\envDPEC_v1.03.xsd')
-       else
-        schema_filename := pchar(PathWithDelim(APathSchemas)+'envDPEC_v1.03.xsd');
-      }
-     end;
  end;
 {$ENDIF}
 {$IFNDEF PL_103}
@@ -905,6 +897,257 @@ begin
   xmlFreeDoc(schema_doc);
   Result := True;
 end;
+
+function ValidaModalLibXML(XML: AnsiString; var Msg: AnsiString;
+ const APathSchemas: string = ''): Boolean;
+{$IFNDEF PL_103}
+var
+  doc, schema_doc : xmlDocPtr;
+  parser_ctxt     : xmlSchemaParserCtxtPtr;
+  schema          : xmlSchemaPtr;
+  valid_ctxt      : xmlSchemaValidCtxtPtr;
+  schemError      : xmlErrorPtr;
+  schema_filename : PChar;
+  Tipo            : Integer;
+  AXML            : AnsiString;
+{$ENDIF}
+begin
+{$IFDEF PL_103}
+  Result := True;
+{$ENDIF}
+
+{$IFNDEF PL_103}
+  Tipo := 0;
+  AXML := XML;
+
+  XML := SeparaDados( XML, 'infModal' );
+
+  if pos( '<aereo>', XML ) <> 0
+   then begin
+    Tipo := 1;
+    XML := SeparaDados( XML, 'aereo' );
+    XML := '<aereo xmlns="http://www.portalfiscal.inf.br/cte">' +
+            XML +
+           '</aereo>';
+   end;
+  if pos( '<aquav>', XML) <> 0
+   then begin
+    Tipo := 2;
+    XML := SeparaDados( XML, 'aquav' );
+    XML := '<aquav xmlns="http://www.portalfiscal.inf.br/cte">' +
+            XML +
+           '</aquav>';
+   end;
+  if pos( '<duto>', XML) <> 0
+   then begin
+    Tipo := 3;
+    XML := SeparaDados( XML, 'duto' );
+    XML := '<duto xmlns="http://www.portalfiscal.inf.br/cte">' +
+            XML +
+           '</duto>';
+   end;
+  if pos( '<ferrov>', XML) <> 0
+   then begin
+    Tipo := 4;
+    XML := SeparaDados( XML, 'ferrov' );
+    XML := '<ferrov xmlns="http://www.portalfiscal.inf.br/cte">' +
+            XML +
+           '</ferrov>';
+   end;
+  if pos( '<rodo>', XML) <> 0
+   then begin
+    Tipo := 5;
+    XML := SeparaDados( XML, 'rodo' );
+    XML := '<rodo xmlns="http://www.portalfiscal.inf.br/cte">' +
+            XML +
+           '</rodo>';
+   end;
+  if pos( '<multimodal>', XML) <> 0
+   then begin
+    Tipo := 6;
+    XML := SeparaDados( XML, 'multimodal' );
+    XML := '<multimodal xmlns="http://www.portalfiscal.inf.br/cte">' +
+            XML +
+           '</multimodal>';
+   end;
+
+  // Eventos
+  if Tipo = 0
+   then begin
+    XML := AXML;
+    if pos( '<evEPECCTe>', XML) <> 0
+     then begin
+      Tipo := 7;
+      XML := SeparaDados( XML, 'evEPECCTe' );
+      XML := '<evEPECCTe xmlns="http://www.portalfiscal.inf.br/cte">' +
+              XML +
+             '</evEPECCTe>';
+     end;
+    if pos( '<evCancCTe>', XML) <> 0
+     then begin
+      Tipo := 8;
+      XML := SeparaDados( XML, 'evCancCTe' );
+      XML := '<evCancCTe xmlns="http://www.portalfiscal.inf.br/cte">' +
+              XML +
+             '</evCancCTe>';
+     end;
+    if pos( '<evRegMultimodal>', XML) <> 0
+     then begin
+      Tipo := 9;
+      XML := SeparaDados( XML, 'evRegMultimodal' );
+      XML := '<evRegMultimodal xmlns="http://www.portalfiscal.inf.br/cte">' +
+              XML +
+             '</evRegMultimodal>';
+     end;
+    if pos( '<evCCeCTe>', XML) <> 0
+     then begin
+      Tipo := 10;
+      XML := SeparaDados( XML, 'evCCeCTe' );
+      XML := '<evCCeCTe xmlns="http://www.portalfiscal.inf.br/cte">' +
+              XML +
+             '</evCCeCTe>';
+     end;
+   end;
+
+  XML := '<?xml version="1.0" encoding="UTF-8" ?>' + XML;
+
+  if Tipo = 0 then
+    raise Exception.Create('Modal não encontrado no XML.');
+
+
+  if not DirectoryExists(DFeUtil.SeSenao(DFeUtil.EstaVazio(APathSchemas),
+                 PathWithDelim(ExtractFileDir(application.ExeName))+'Schemas',
+                 PathWithDelim(APathSchemas))) then
+    raise Exception.Create('Diretório de Schemas não encontrado'+sLineBreak+
+                           DFeUtil.SeSenao(DFeUtil.EstaVazio(APathSchemas),
+                           PathWithDelim(ExtractFileDir(application.ExeName))+
+                           'Schemas',PathWithDelim(APathSchemas)));
+
+  case Tipo of
+   1: begin
+       schema_filename := pchar(DFeUtil.SeSenao(DFeUtil.EstaVazio(APathSchemas),
+          PathWithDelim(ExtractFileDir(application.ExeName))+'Schemas\',
+          PathWithDelim(APathSchemas))+'cteModalAereo_v' + CTeModalAereo + '.xsd');
+      end;
+   2: begin
+       schema_filename := pchar(DFeUtil.SeSenao(DFeUtil.EstaVazio(APathSchemas),
+          PathWithDelim(ExtractFileDir(application.ExeName))+'Schemas\',
+          PathWithDelim(APathSchemas))+'cteModalAquaviario_v' + CTeModalAqua + '.xsd');
+      end;
+   3: begin
+       schema_filename := pchar(DFeUtil.SeSenao(DFeUtil.EstaVazio(APathSchemas),
+          PathWithDelim(ExtractFileDir(application.ExeName))+'Schemas\',
+          PathWithDelim(APathSchemas))+'cteModalDutoviario_v' + CTeModalDuto + '.xsd');
+      end;
+   4: begin
+       schema_filename := pchar(DFeUtil.SeSenao(DFeUtil.EstaVazio(APathSchemas),
+          PathWithDelim(ExtractFileDir(application.ExeName))+'Schemas\',
+          PathWithDelim(APathSchemas))+'cteModalFerroviario_v' + CTeModalFerro + '.xsd');
+      end;
+   5: begin
+       schema_filename := pchar(DFeUtil.SeSenao(DFeUtil.EstaVazio(APathSchemas),
+          PathWithDelim(ExtractFileDir(application.ExeName))+'Schemas\',
+          PathWithDelim(APathSchemas))+'cteModalRodoviario_v' + CTeModalRodo + '.xsd');
+      end;
+   6: begin
+       schema_filename := pchar(DFeUtil.SeSenao(DFeUtil.EstaVazio(APathSchemas),
+          PathWithDelim(ExtractFileDir(application.ExeName))+'Schemas\',
+          PathWithDelim(APathSchemas))+'cteMultiModal_v' + CTeMultiModal + '.xsd');
+      end;
+   7: begin
+       schema_filename := pchar(DFeUtil.SeSenao(DFeUtil.EstaVazio(APathSchemas),
+          PathWithDelim(ExtractFileDir(application.ExeName))+'Schemas\',
+          PathWithDelim(APathSchemas))+'evEPECCTe_v' + CTeEventoCTe + '.xsd');
+      end;
+   8: begin
+       schema_filename := pchar(DFeUtil.SeSenao(DFeUtil.EstaVazio(APathSchemas),
+          PathWithDelim(ExtractFileDir(application.ExeName))+'Schemas\',
+          PathWithDelim(APathSchemas))+'evCancCTe_v' + CTeEventoCTe + '.xsd');
+      end;
+   9: begin
+       schema_filename := pchar(DFeUtil.SeSenao(DFeUtil.EstaVazio(APathSchemas),
+          PathWithDelim(ExtractFileDir(application.ExeName))+'Schemas\',
+          PathWithDelim(APathSchemas))+'evMultimodal_v' + CTeEventoCTe + '.xsd');
+      end;
+  10: begin
+       schema_filename := pchar(DFeUtil.SeSenao(DFeUtil.EstaVazio(APathSchemas),
+          PathWithDelim(ExtractFileDir(application.ExeName))+'Schemas\',
+          PathWithDelim(APathSchemas))+'evCCeCTe_v' + CTeEventoCTe + '.xsd');
+      end;
+  end;
+
+  doc         := nil;
+  schema_doc  := nil;
+  parser_ctxt := nil;
+  schema      := nil;
+  valid_ctxt  := nil;
+  doc         := xmlParseDoc(PAnsiChar(XML));
+
+  if ((doc = nil) or (xmlDocGetRootElement(doc) = nil)) then
+  begin
+    Msg := 'Erro: unable to parse';
+    Result := False;
+    exit;
+  end;
+
+  schema_doc := xmlReadFile(Pansichar(AnsiToUtf8(schema_filename)), nil, XML_DETECT_IDS);
+
+  //  the schema cannot be loaded or is not well-formed
+  if (schema_doc = nil) then
+  begin
+    Msg := 'Erro: Schema não pode ser carregado ou está corrompido';
+    Result := False;
+    exit;
+  end;
+
+  parser_ctxt := xmlSchemaNewDocParserCtxt(schema_doc);
+  // unable to create a parser context for the schema */
+  if (parser_ctxt = nil) then
+  begin
+    xmlFreeDoc(schema_doc);
+    Msg := 'Erro: unable to create a parser context for the schema';
+    Result := False;
+    exit;
+  end;
+
+  schema := xmlSchemaParse(parser_ctxt);
+  // the schema itself is not valid
+  if (schema = nil) then
+  begin
+    xmlSchemaFreeParserCtxt(parser_ctxt);
+    xmlFreeDoc(schema_doc);
+    Msg := 'Error: the schema itself is not valid';
+    Result := False;
+    exit;
+  end;
+
+  valid_ctxt := xmlSchemaNewValidCtxt(schema);
+  //   unable to create a validation context for the schema */
+  if (valid_ctxt = nil) then
+  begin
+    xmlSchemaFree(schema);
+    xmlSchemaFreeParserCtxt(parser_ctxt);
+    xmlFreeDoc(schema_doc);
+    Msg := 'Error: unable to create a validation context for the schema';
+    Result := False;
+    exit;
+  end;
+
+  if (xmlSchemaValidateDoc(valid_ctxt, doc) <> 0) then
+  begin
+    schemError := xmlGetLastError();
+    Msg := IntToStr(schemError^.code) + ' - ' + schemError^.message;
+    Result := False;
+    exit;
+  end;
+
+  xmlSchemaFreeValidCtxt(valid_ctxt);
+  xmlSchemaFree(schema);
+  xmlSchemaFreeParserCtxt(parser_ctxt);
+  xmlFreeDoc(schema_doc);
+  Result := True;
+{$ENDIF}
+end;
 {$ELSE}
 
 function ValidaMSXML(XML: AnsiString; out Msg: AnsiString;
@@ -956,13 +1199,6 @@ begin
         PathWithDelim(ExtractFileDir(application.ExeName))+'Schemas\',
         PathWithDelim(APathSchemas))+'inutCte_v1.03.xsd')
       end;
-   4: begin
-       Schema.remove('http://www.portalfiscal.inf.br/cte');
-       Schema.add( 'http://www.portalfiscal.inf.br/cte',
-        DFeUtil.SeSenao(DFeUtil.EstaVazio(APathSchemas),
-        PathWithDelim(ExtractFileDir(application.ExeName))+'Schemas\',
-        PathWithDelim(APathSchemas))+'envDPEC_v1.03.xsd')
-      end;
   end;
 {$ENDIF}
 {$IFNDEF PL_103}
@@ -988,15 +1224,6 @@ begin
         DFeUtil.SeSenao(DFeUtil.EstaVazio(APathSchemas),
         PathWithDelim(ExtractFileDir(application.ExeName))+'Schemas\',
         PathWithDelim(APathSchemas))+'inutCte_v' + CTeinutCTe + '.xsd');
-      end;
-   4: begin
-   (*
-       Schema.remove('http://www.portalfiscal.inf.br/cte');
-       Schema.add( 'http://www.portalfiscal.inf.br/cte',
-        DFeUtil.SeSenao(DFeUtil.EstaVazio(APathSchemas),
-        PathWithDelim(ExtractFileDir(application.ExeName))+'Schemas\',
-        PathWithDelim(APathSchemas))+'envDPEC_v' + CTeenviCTe + '.xsd');
-   *)
       end;
     5..11:
       begin
@@ -1274,7 +1501,11 @@ class function CTeUtil.Valida(const AXML: AnsiString;
   var AMsg: AnsiString; const APathSchemas: string = ''): Boolean;
 begin
 {$IFDEF ACBrCTeOpenSSL}
-  Result := ValidaLibXML(AXML, AMsg, APathSchemas);
+//  Result := ValidaLibXML(AXML, AMsg, APathSchemas);
+  if (pos('<infCTeNorm>', AXML) <> 0) or (pos('<infEvento', AXML) <> 0)
+   then Result := ValidaLibXML(AXML, AMsg, APathSchemas) and
+                  ValidaModalLibXML(AXML, AMsg, APathSchemas)
+   else Result := ValidaLibXML(AXML, AMsg, APathSchemas);
 {$ELSE}
   if (pos('<infCTeNorm>', AXML) <> 0) or (pos('<infEvento', AXML) <> 0)
    then Result := ValidaMSXML(AXML, AMsg, APathSchemas) and
