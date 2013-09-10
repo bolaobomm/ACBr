@@ -2404,7 +2404,11 @@ begin
      NFSe.CodigoVerificacao        := Leitor.rCampo(tcStr, 'CodigoVerificacao');
      NFSe.DataEmissao              := Leitor.rCampo(tcDatHor, 'DataEmissao');
      NFSe.DataEmissaoRps           := Leitor.rCampo(tcDat, 'DataEmissaoRps');
-     NFSe.NfseSubstituida          := Leitor.rCampo(tcStr, 'NfseSubstituida');
+
+     if FProvedor = proISSNet
+      then FNFSe.NfseSubstituida := ''
+      else NFSe.NfseSubstituida  := Leitor.rCampo(tcStr, 'NfseSubstituida');
+      
      NFSe.OutrasInformacoes        := Leitor.rCampo(tcStr, 'OutrasInformacoes');
      NFSe.ValorCredito             := Leitor.rCampo(tcDe2, 'ValorCredito');
      NFSe.NaturezaOperacao         := StrToNaturezaOperacao(ok, Leitor.rCampo(tcStr, 'NaturezaOperacao'));

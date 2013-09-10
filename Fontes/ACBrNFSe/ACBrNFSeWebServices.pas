@@ -38,7 +38,7 @@ uses
     ACBrProvedorBHISS, ACBrProvedorNatal, ACBrProvedorISSDigital,
     ACBrProvedorISSe, ACBrProvedor4R, ACBrProvedorGovDigital,
     ACBrProvedorFiorilli, ACBrProvedorIssDsf, ACBrProvedorCoplan,
-    ACBrProvedorProdata, ACBrProvedorAgili;
+    ACBrProvedorProdata, ACBrProvedorAgili, ACBrProvedorFISSLex;
 
 type
 
@@ -587,6 +587,7 @@ begin
   proCoplan:      FProvedorClass := TProvedorCoplan.Create;
   proProdata:     FProvedorClass := TProvedorProdata.Create;
   proAgili:       FProvedorClass := TProvedorAgili.Create;
+  proFISSLex:     FProvedorClass := TProvedorFISSLex.Create;
  end;
 
  FPrefixo2     := FConfiguracoes.WebServices.Prefixo2;
@@ -2951,6 +2952,7 @@ begin
 
 try
   NFSeRetorno.Leitor.Arquivo := FRetWS;
+  NFSeRetorno.Provedor       := FProvedor;
 
   if (FProvedor = proIssDsf )then
      NFSeRetorno.LerXml_provedorIssDsf //falta homologar
@@ -3178,6 +3180,8 @@ begin
   end;
 
   NFSeRetorno.Leitor.Arquivo := FRetWS;
+  NFSeRetorno.Provedor       := FProvedor;
+  
   // Alterado por Rosemir Zeferino em 24/05/2013
   if (FProvedor = proIssDsf )then
      Result := NFSeRetorno.LerXml_provedorIssDsf //falta homologar
@@ -3377,6 +3381,7 @@ begin
   end;
 
   NFSeRetorno.Leitor.Arquivo := FRetWS;
+  NFSeRetorno.Provedor       := FProvedor;
 
   if (FProvedor = proIssDsf) then
      NFSeRetorno.LerXml_provedorIssDsf //falta homologar
@@ -3716,6 +3721,8 @@ begin
   end;
 
   NFSeRetorno.Leitor.Arquivo := FRetWS;
+  NFSeRetorno.Provedor       := FProvedor;
+  
   NFSeRetorno.LerXml;
 
   TACBrNFSe( FACBrNFSe ).SetStatus( stNFSeIdle );
@@ -3934,6 +3941,8 @@ begin
   end;
 
   NFSeRetorno.Leitor.Arquivo := FRetWS;
+  NFSeRetorno.Provedor       := FProvedor;
+
   NFSeRetorno.LerXml;
 
   TACBrNFSe( FACBrNFSe ).SetStatus( stNFSeIdle );
@@ -4177,6 +4186,7 @@ begin
   Prefixo4 := FConfiguracoes.WebServices.Prefixo4;
 
   NFSeRetorno.Leitor.Arquivo := FRetWS;
+  NFSeRetorno.Provedor       := FProvedor;
 
   //Este metodo é usado somente por este provedor.
   if (FProvedor = proIssDsf) then

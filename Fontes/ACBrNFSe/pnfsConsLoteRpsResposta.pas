@@ -83,6 +83,7 @@ type
     FPathArquivoTabServicos: string;
     FLeitor: TLeitor;
     FListaNfse: TListaNfse;
+    FProvedor: TnfseProvedor;
 //    function ObterNomeMunicipio(xUF: string; const cMun: integer): string;
 //    function ObterDescricaoServico(cCodigo: string): string;
   public
@@ -95,6 +96,7 @@ type
     property PathArquivoTabServicos: string read FPathArquivoTabServicos write FPathArquivoTabServicos;
     property Leitor: TLeitor                read FLeitor                 write FLeitor;
     property ListaNfse: TListaNfse          read FListaNfse              write FListaNfse;
+    property Provedor: TnfseProvedor        read FProvedor               write FProvedor;
   end;
 
 implementation
@@ -280,7 +282,9 @@ begin
               ListaNfse.FCompNfse[i].FNFSe.IncentivadorCultural     := StrToSimNao(ok, Leitor.rCampo(tcStr, 'IncentivadorCultural'));
 
               ListaNfse.FCompNfse[i].FNFSe.Competencia       := Leitor.rCampo(tcStr, 'Competencia');
-              ListaNfse.FCompNfse[i].FNFSe.NfseSubstituida   := Leitor.rCampo(tcStr, 'NfseSubstituida');
+              if FProvedor = proISSNet
+               then ListaNfse.FCompNfse[i].FNFSe.NfseSubstituida   := ''
+               else ListaNfse.FCompNfse[i].FNFSe.NfseSubstituida   := Leitor.rCampo(tcStr, 'NfseSubstituida');
               ListaNfse.FCompNfse[i].FNFSe.OutrasInformacoes := Leitor.rCampo(tcStr, 'OutrasInformacoes');
               ListaNfse.FCompNfse[i].FNFSe.ValorCredito      := Leitor.rCampo(tcDe2, 'ValorCredito');
 
