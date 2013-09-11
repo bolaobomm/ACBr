@@ -98,6 +98,7 @@ type
     FACBrCTe : TComponent;
     FPathArqResp: AnsiString;
     FPathArqEnv: AnsiString;
+    FEveEPEC: Boolean;
 
     procedure LoadMsgEntrada;
     procedure LoadURL;
@@ -385,7 +386,6 @@ type
     FxMotivo: String;
     FTpAmb: TpcnTipoAmbiente;
     FEventoRetorno: TRetEventoCTe;
-    FEveEPEC: Boolean;
   public
     constructor Create(AOwner : TComponent; AEvento : TEventoCTe); reintroduce;
     destructor Destroy; override;
@@ -758,7 +758,7 @@ var
 begin
   EventoCTe        := TEventoCTe.Create;
   EventoCTe.idLote := TCTeEnvEvento(Self).idLote;
-  TCTeEnvEvento(Self).FEveEPEC := False;
+  FEveEPEC := False;
 
   for i := 0 to TCTeEnvEvento(Self).FEvento.Evento.Count-1 do
    begin
@@ -775,7 +775,7 @@ begin
         case InfEvento.tpEvento of
           teEPEC:
           begin
-            TCTeEnvEvento(Self).FEveEPEC := True;
+            FEveEPEC := True;
 
             infEvento.detEvento.xJust   := TCTeEnvEvento(Self).FEvento.Evento[i].InfEvento.detEvento.xJust;
             infEvento.detEvento.vICMS   := TCTeEnvEvento(Self).FEvento.Evento[i].InfEvento.detEvento.vICMS;
@@ -884,6 +884,8 @@ end;
 
 procedure TWebServicesBase.LoadURL;
 begin
+  FEveEPEC := False;
+  
   if self is TCTeStatusServico then
     FURL := CTeUtil.GetURL(FConfiguracoes.WebServices.UFCodigo, FConfiguracoes.WebServices.AmbienteCodigo, FConfiguracoes.Geral.FormaEmissaoCodigo, LayCTeStatusServico)
   else if self is TCTeRecepcao then
@@ -901,7 +903,7 @@ begin
   else if self is TCTeEnvEvento then
     FURL := CTeUtil.GetURL(FConfiguracoes.WebServices.UFCodigo, FConfiguracoes.WebServices.AmbienteCodigo, FConfiguracoes.Geral.FormaEmissaoCodigo, LayCTeEvento);
 
-  if TCTeEnvEvento(Self).FEveEPEC then
+  if FEveEPEC then
     FURL := CTeUtil.GetURL(FConfiguracoes.WebServices.UFCodigo, FConfiguracoes.WebServices.AmbienteCodigo, FConfiguracoes.Geral.FormaEmissaoCodigo, LayCTeEventoEPEC);
 end;
 
