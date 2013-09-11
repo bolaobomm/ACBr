@@ -428,6 +428,7 @@ type
     tsRFDINI: TTabSheet;
     tsTC: TTabSheet;
     procedure ACBrEAD1GetChavePrivada(var Chave: AnsiString);
+    procedure ACBrEAD1GetChavePublica(var Chave: AnsiString);
     procedure ACBrGIF1Click(Sender : TObject) ;
     procedure ApplicationProperties1Exception(Sender: TObject; E: Exception);
     procedure ApplicationProperties1Minimize(Sender: TObject);
@@ -863,6 +864,12 @@ begin
                              '- Salve as configurações'+sLineBreak+
                              '- Distribua a sua Chave Privada com o arquivo '+sLineBreak+
                              '  criptografado "swh.ini"' ) ;
+end;
+
+procedure TFrmACBrMonitor.ACBrEAD1GetChavePublica(var Chave: AnsiString);
+begin
+  Chave  := ACBrEAD1.CalcularChavePublica;
+  Chave  := StringReplace( Chave, #10, sLineBreak, [rfReplaceAll] );
 end;
 
 procedure TFrmACBrMonitor.ACBrGIF1Click(Sender : TObject) ;
@@ -1367,6 +1374,7 @@ var
   Ini: TIniFile;
   ECFAtivado, CHQAtivado, GAVAtivado, DISAtivado, BALAtivado, ETQAtivado: boolean;
   Senha, ECFDeviceParams, CHQDeviceParams: string;
+  wNomeArquivo: String;
 begin
   Ini := TIniFile.Create(ACBrMonitorINI);
 
@@ -1738,10 +1746,16 @@ begin
     DirLogo        := deBOLDirLogo.Text;
     MostrarPreview := ckgBOLMostrar.Checked[0];
     MostrarSetup   := ckgBOLMostrar.Checked[1];
+
+    wNomeArquivo := Trim(deBOLDirArquivo.Text);
+    NomeArquivo := Trim(deBOLDirArquivo.Text);
+    if wNomeArquivo = '' then
+       wNomeArquivo := ExtractFileDir(Application.ExeName);
+
     if Filtro = fiHTML then
-       NomeArquivo := deBOLDirArquivo.Text + PathDelim + 'boleto.html'
+       NomeArquivo := wNomeArquivo + PathDelim + 'boleto.html'
     else
-       NomeArquivo := deBOLDirArquivo.Text + PathDelim + 'boleto.pdf';
+       NomeArquivo := wNomeArquivo + PathDelim + 'boleto.pdf';
   end;
 
   if cbxTCModelo.ItemIndex > 0 then
@@ -3417,7 +3431,8 @@ procedure TFrmACBrMonitor.bRSAPrivKeyClick(Sender: TObject);
 Var
   ChavePublica, ChavePrivada : AnsiString ;
 begin
-  if mRSAKey.Text <> '' then
+  if ( ( mRSAKey.Text <> '' )and
+        (mRSAKey.Text <> 'ATENÇÃO: Chave RSA Privada NÃO pode ser lida no arquivo "swh.ini".' ) ) then
     raise Exception.Create('Você já possui uma chave RSA.');
 
   ChavePrivada := '' ;
