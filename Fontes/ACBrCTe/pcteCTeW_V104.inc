@@ -403,8 +403,9 @@ begin
 
   (**)GerarFluxo;
 
-  if (TpDataPeriodoToStr(CTe.Compl.Entrega.TipoData)>='0') and
-     (TpHorarioIntervaloToStr(CTe.Compl.Entrega.TipoHora)>='0')
+  // Alterado por Italo em 11/09/2013
+  if (CTe.Compl.Entrega.TipoData <> tdNaoInformado) and
+     (CTe.Compl.Entrega.TipoHora <> thNaoInformado)
    then (**)GerarEntrega;
 
   Gerador.wCampo(tcStr, '#088', 'origCalc ', 01, 40, 0, CTe.Compl.origCalc, DSC_ORIGCALC);

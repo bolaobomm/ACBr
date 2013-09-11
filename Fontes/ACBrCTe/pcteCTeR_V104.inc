@@ -132,6 +132,10 @@ begin
       end;
     end;
 
+    // Incluido por Italo em 11/09/2013
+    CTe.Compl.Entrega.TipoData := tdNaoInformado;
+    CTe.Compl.Entrega.TipoHora := thNaoInformado;
+    
     if Leitor.rExtrai(2, 'Entrega') <> '' then
     begin
       if Leitor.rExtrai(3, 'semData') <> '' then

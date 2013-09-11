@@ -480,8 +480,9 @@ begin
 
   GerarFluxo;
 
-  if (TpDataPeriodoToStr(CTe.Compl.Entrega.TipoData)>='0') and
-     (TpHorarioIntervaloToStr(CTe.Compl.Entrega.TipoHora)>='0')
+  // Alterado por Italo em 11/09/2013
+  if (CTe.Compl.Entrega.TipoData <> tdNaoInformado) and
+     (CTe.Compl.Entrega.TipoHora <> thNaoInformado)
    then GerarEntrega;
 
   Gerador.wCampo(tcStr, '#088', 'origCalc ', 01, 40, 0, CTe.Compl.origCalc, DSC_ORIGCALC);
@@ -529,7 +530,7 @@ begin
        Gerador.wCampo(tcStr, '#071', 'tpPer ', 01, 01, 1, TpDataPeriodoToStr(CTe.Compl.Entrega.semData.tpPer), DSC_TPPER);
        Gerador.wGrupo('/semData');
       end;
-  tdNaData,tdAteData,tdApartirData: begin
+  tdNaData, tdAteData, tdApartirData: begin
           Gerador.wGrupo('comData', '#072');
           Gerador.wCampo(tcStr, '#073', 'tpPer ', 01, 01, 1, TpDataPeriodoToStr(CTe.Compl.Entrega.comData.tpPer), DSC_TPPER);
           Gerador.wCampo(tcDat, '#074', 'dProg ', 10, 10, 1, CTe.Compl.Entrega.comData.dProg, DSC_DPROG);
@@ -550,7 +551,7 @@ begin
        Gerador.wCampo(tcStr, '#080', 'tpHor ', 01, 01, 1, TpHorarioIntervaloToStr(CTe.Compl.Entrega.semHora.tpHor), DSC_TPHOR);
        Gerador.wGrupo('/semHora');
       end;
-  thNoHorario,thAteHorario,thApartirHorario: begin
+  thNoHorario, thAteHorario, thApartirHorario: begin
           Gerador.wGrupo('comHora', '#081');
           Gerador.wCampo(tcStr, '#082', 'tpHor ', 01, 01, 1, TpHorarioIntervaloToStr(CTe.Compl.Entrega.comHora.tpHor), DSC_TPHOR);
           Gerador.wCampo(tcStr, '#083', 'hProg ', 08, 08, 1, TimeToStr(CTe.Compl.Entrega.comHora.hProg), DSC_HPROG);

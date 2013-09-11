@@ -855,7 +855,9 @@ end;
 
 function TWebServicesBase.Executar: Boolean;
 begin
-  Result := False;
+  Result   := False;
+  FEveEPEC := False;
+
   LoadMsgEntrada;
   LoadURL;
 end;
@@ -884,8 +886,6 @@ end;
 
 procedure TWebServicesBase.LoadURL;
 begin
-  FEveEPEC := False;
-  
   if self is TCTeStatusServico then
     FURL := CTeUtil.GetURL(FConfiguracoes.WebServices.UFCodigo, FConfiguracoes.WebServices.AmbienteCodigo, FConfiguracoes.Geral.FormaEmissaoCodigo, LayCTeStatusServico)
   else if self is TCTeRecepcao then
