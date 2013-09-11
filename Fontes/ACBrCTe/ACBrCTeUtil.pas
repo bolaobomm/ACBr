@@ -907,7 +907,7 @@ var
   schema          : xmlSchemaPtr;
   valid_ctxt      : xmlSchemaValidCtxtPtr;
   schemError      : xmlErrorPtr;
-  schema_filename : PChar;
+  schema_filename : String; // PChar;
   Tipo            : Integer;
   AXML            : AnsiString;
 {$ENDIF}
@@ -1025,52 +1025,52 @@ begin
 
   case Tipo of
    1: begin
-       schema_filename := pchar(DFeUtil.SeSenao(DFeUtil.EstaVazio(APathSchemas),
+       schema_filename := {pchar}(DFeUtil.SeSenao(DFeUtil.EstaVazio(APathSchemas),
           PathWithDelim(ExtractFileDir(application.ExeName))+'Schemas\',
           PathWithDelim(APathSchemas))+'cteModalAereo_v' + CTeModalAereo + '.xsd');
       end;
    2: begin
-       schema_filename := pchar(DFeUtil.SeSenao(DFeUtil.EstaVazio(APathSchemas),
+       schema_filename := {pchar}(DFeUtil.SeSenao(DFeUtil.EstaVazio(APathSchemas),
           PathWithDelim(ExtractFileDir(application.ExeName))+'Schemas\',
           PathWithDelim(APathSchemas))+'cteModalAquaviario_v' + CTeModalAqua + '.xsd');
       end;
    3: begin
-       schema_filename := pchar(DFeUtil.SeSenao(DFeUtil.EstaVazio(APathSchemas),
+       schema_filename := {pchar}(DFeUtil.SeSenao(DFeUtil.EstaVazio(APathSchemas),
           PathWithDelim(ExtractFileDir(application.ExeName))+'Schemas\',
           PathWithDelim(APathSchemas))+'cteModalDutoviario_v' + CTeModalDuto + '.xsd');
       end;
    4: begin
-       schema_filename := pchar(DFeUtil.SeSenao(DFeUtil.EstaVazio(APathSchemas),
+       schema_filename := {pchar}(DFeUtil.SeSenao(DFeUtil.EstaVazio(APathSchemas),
           PathWithDelim(ExtractFileDir(application.ExeName))+'Schemas\',
           PathWithDelim(APathSchemas))+'cteModalFerroviario_v' + CTeModalFerro + '.xsd');
       end;
    5: begin
-       schema_filename := pchar(DFeUtil.SeSenao(DFeUtil.EstaVazio(APathSchemas),
+       schema_filename := {pchar}(DFeUtil.SeSenao(DFeUtil.EstaVazio(APathSchemas),
           PathWithDelim(ExtractFileDir(application.ExeName))+'Schemas\',
           PathWithDelim(APathSchemas))+'cteModalRodoviario_v' + CTeModalRodo + '.xsd');
       end;
    6: begin
-       schema_filename := pchar(DFeUtil.SeSenao(DFeUtil.EstaVazio(APathSchemas),
+       schema_filename := {pchar}(DFeUtil.SeSenao(DFeUtil.EstaVazio(APathSchemas),
           PathWithDelim(ExtractFileDir(application.ExeName))+'Schemas\',
           PathWithDelim(APathSchemas))+'cteMultiModal_v' + CTeMultiModal + '.xsd');
       end;
    7: begin
-       schema_filename := pchar(DFeUtil.SeSenao(DFeUtil.EstaVazio(APathSchemas),
+       schema_filename := {pchar}(DFeUtil.SeSenao(DFeUtil.EstaVazio(APathSchemas),
           PathWithDelim(ExtractFileDir(application.ExeName))+'Schemas\',
           PathWithDelim(APathSchemas))+'evEPECCTe_v' + CTeEventoCTe + '.xsd');
       end;
    8: begin
-       schema_filename := pchar(DFeUtil.SeSenao(DFeUtil.EstaVazio(APathSchemas),
+       schema_filename := {pchar}(DFeUtil.SeSenao(DFeUtil.EstaVazio(APathSchemas),
           PathWithDelim(ExtractFileDir(application.ExeName))+'Schemas\',
           PathWithDelim(APathSchemas))+'evCancCTe_v' + CTeEventoCTe + '.xsd');
       end;
    9: begin
-       schema_filename := pchar(DFeUtil.SeSenao(DFeUtil.EstaVazio(APathSchemas),
+       schema_filename := {pchar}(DFeUtil.SeSenao(DFeUtil.EstaVazio(APathSchemas),
           PathWithDelim(ExtractFileDir(application.ExeName))+'Schemas\',
           PathWithDelim(APathSchemas))+'evMultimodal_v' + CTeEventoCTe + '.xsd');
       end;
   10: begin
-       schema_filename := pchar(DFeUtil.SeSenao(DFeUtil.EstaVazio(APathSchemas),
+       schema_filename := {pchar}(DFeUtil.SeSenao(DFeUtil.EstaVazio(APathSchemas),
           PathWithDelim(ExtractFileDir(application.ExeName))+'Schemas\',
           PathWithDelim(APathSchemas))+'evCCeCTe_v' + CTeEventoCTe + '.xsd');
       end;
