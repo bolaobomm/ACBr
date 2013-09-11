@@ -340,12 +340,14 @@ var
   CodMotivo_19, rAgencia    :String;
   rConta, rDigitoConta      :String;
   Linha, rCedente, rCNPJCPF :String;
+  rCodEmpresa               :String;
 begin
    if StrToIntDef(copy(ARetorno.Strings[0],77,3),-1) <> Numero then
       raise Exception.Create(ACBrStr(ACBrBanco.ACBrBoleto.NomeArqRetorno +
                              'não é um arquivo de retorno do '+ Nome));
 
-   rCedente := trim(Copy(ARetorno[0],47,30));
+   rCodEmpresa:= trim(Copy(ARetorno[0],27,20));
+   rCedente   := trim(Copy(ARetorno[0],47,30));
 
    rAgencia := trim(Copy(ARetorno[1], 26, ACBrBanco.TamanhoAgencia));
    rConta   := trim(Copy(ARetorno[1], 30, ACBrBanco.TamanhoConta));
@@ -371,25 +373,34 @@ begin
 
    with ACBrBanco.ACBrBoleto do
    begin
-      if (not LeCedenteRetorno) and (rCNPJCPF <> OnlyNumber(Cedente.CNPJCPF)) then
-         raise Exception.Create(ACBrStr('CNPJ\CPF do arquivo inválido'));
+      if (not LeCedenteRetorno) and (rCodEmpresa <> Cedente.CodigoCedente) then
+         raise Exception.Create(ACBrStr('Código da Empresa do arquivo inválido'));
 
       if (not LeCedenteRetorno) and ((rAgencia <> OnlyNumber(Cedente.Agencia)) or
          (rConta <> RightStr(OnlyNumber(Cedente.Conta),Length(rConta)))) then
          raise Exception.Create(ACBrStr('Agencia\Conta do arquivo inválido'));
-
-      Cedente.Nome         := rCedente;
-      Cedente.CNPJCPF      := rCNPJCPF;
-      Cedente.Agencia      := rAgencia;
-      Cedente.AgenciaDigito:= '0';
-      Cedente.Conta        := rConta;
-      Cedente.ContaDigito  := rDigitoConta;
 
       case StrToIntDef(Copy(ARetorno[1],2,2),0) of
          11: Cedente.TipoInscricao:= pFisica;
          14: Cedente.TipoInscricao:= pJuridica;
       else
          Cedente.TipoInscricao := pJuridica;
+      end;
+
+      if LeCedenteRetorno then
+      begin
+         try
+           Cedente.CNPJCPF := rCNPJCPF;
+         except
+           // Retorno quando é CPF está vindo errado por isso ignora erro na atribuição
+         end;
+
+         Cedente.CodigoCedente:= rCodEmpresa;
+         Cedente.Nome         := rCedente;
+         Cedente.Agencia      := rAgencia;
+         Cedente.AgenciaDigito:= '0';
+         Cedente.Conta        := rConta;
+         Cedente.ContaDigito  := rDigitoConta;
       end;
 
       ACBrBanco.ACBrBoleto.ListadeBoletos.Clear;

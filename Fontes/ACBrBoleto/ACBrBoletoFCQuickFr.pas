@@ -46,7 +46,7 @@ interface
 
 uses
   SysUtils, StdCtrls, Classes, Graphics, Controls, Forms, Dialogs, ACBrBoleto,
-  QRMultiExport, QRCtrls, QuickRpt, ExtCtrls, QRExport, ACBrBarCode, QRWebFilt,
+  QRMultiExport, QRCtrls, QuickRpt, ExtCtrls, QRExport, ACBrBarCode, {QRWebFilt,}
   RLFilters, RLPDFFilter ;
 
 const
@@ -545,7 +545,7 @@ var
   frACBrBoletoQuick : TACBRBoletoFCQuickFr;
   RLLayout: TQuickRep;
   //MultiExport : TQRMultiExport ;
-  FiltroExportacao: TQRPAbstractExportFilter;
+  //FiltroExportacao: TQRPAbstractExportFilter;
   //HTMLFilter  : TQRHTMLDocumentFilter ;
 begin
   inherited Imprimir;    // Executa verificações padroes
@@ -566,12 +566,12 @@ begin
         case Filtro of
           fiPDF  :
             begin
-              FiltroExportacao := TQRPDFDocumentFilter.Create(NomeArquivo);
+//              FiltroExportacao := TQRPDFDocumentFilter.Create(NomeArquivo);
               try
-                TQRPDFDocumentFilter(FiltroExportacao).CompressionOn := true;
-                RLLayout.ExportToFilter(FiltroExportacao);
+//                TQRPDFDocumentFilter(FiltroExportacao).CompressionOn := true;
+//                RLLayout.ExportToFilter(FiltroExportacao);
               finally
-                FiltroExportacao.Free;
+//                FiltroExportacao.Free;
               end;
 //               MultiExport := TQRMultiExport.Create(self);
 //               try
@@ -658,7 +658,9 @@ begin
       txtNumeroBanco2.Caption         := IntToStrZero(Banco.Numero, 3)+ '-' +
                                          IfThen(Banco.Digito >= 10,'X',IntToStrZero(Banco.Digito, 1));
       lblLocalPagto.Caption           := Titulo.LocalPagamento;
-      txtDataVencimento2.Caption      := FormatDateTime('dd/mm/yyyy', Titulo.Vencimento);
+            
+      txtDataVencimento2.Caption := ifthen(Titulo.Vencimento = 0, '', FormatDateTime('dd/mm/yyyy', Titulo.Vencimento));
+      
       txtNomeCedente2.Caption         := Cedente.Nome;
       txtCodigoCedente2.Caption       := CodCedente;
       txtDataDocumento2.Caption       := FormatDateTime('dd/mm/yyyy', Titulo.DataDocumento);
@@ -670,7 +672,9 @@ begin
       txtUsoBanco2.Caption            := Titulo.UsoBanco;
       txtCarteira2.Caption            := Titulo.Carteira;
       txtEspecie2.Caption             := IfThen(Titulo.EspecieMod = '', 'R$', Titulo.EspecieMod);
-      txtValorDocumento2.Caption      := FormatFloat('###,###,##0.00',Titulo.ValorDocumento);
+      
+      txtValorDocumento2.Caption := ifthen(Titulo.ValorDocumento > 0,FormatFloat('###,###,##0.00',Titulo.ValorDocumento), '');
+      
       txtNomeSacado2.Caption          := Titulo.Sacado.NomeSacado;
       txtEnderecoSacado2.Caption      := Titulo.Sacado.Logradouro + ' '+
                                          Titulo.Sacado.Numero + Titulo.Sacado.Complemento;
@@ -760,7 +764,9 @@ begin
     txtNumeroBanco4.Caption         := IntToStrZero(Banco.Numero, 3)+ '-' +
                                         ifthen(Banco.Digito >= 10,'X',IntToStrZero(Banco.Digito, 1));
     txtLocalPagamento4.Caption      := Titulo.LocalPagamento;
-    txtDataVencimento4.Caption      := FormatDateTime('dd/mm/yyyy', Titulo.Vencimento);
+       
+    txtDataVencimento4.Caption := ifthen(Titulo.Vencimento = 0, '', FormatDateTime('dd/mm/yyyy', Titulo.Vencimento));    
+
     txtNomeCedente4.Caption         := Cedente.Nome;
     txtCodigoCedente4.Caption       := CodCedente;
     txtDataDocumento4.Caption       := FormatDateTime('dd/mm/yyyy', Titulo.DataDocumento);
@@ -772,7 +778,9 @@ begin
     txtUsoBanco4.Caption            := Titulo.UsoBanco;
     txtCarteira4.Caption            := Titulo.Carteira;
     txtEspecieMod.Caption           := IfThen(Titulo.EspecieMod = '', 'R$', Titulo.EspecieMod);
-    txtValorDocumento4.Caption      := FormatFloat('###,###,##0.00',Titulo.ValorDocumento);
+    
+    txtValorDocumento4.Caption := ifthen(Titulo.ValorDocumento > 0, FormatFloat('###,###,##0.00',Titulo.ValorDocumento), '');
+    
     txtNomeSacado4.Caption          := Titulo.Sacado.NomeSacado;
     txtEnderecoSacado4.Caption      := Titulo.Sacado.Logradouro + ' '+
                                        Titulo.Sacado.Numero + ' ' + Titulo.Sacado.Complemento;
@@ -853,7 +861,10 @@ begin
       txtNumeroBanco6_0.Caption         := IntToStrZero(Banco.Numero, 3)+ '-' +
                                            IfThen(Banco.Digito >= 10,'X',IntToStrZero(Banco.Digito, 1));
       lblLocalPagto6_0.Caption          := Titulo.LocalPagamento;
-      txtDataVencimento6_0.Caption      := FormatDateTime('dd/mm/yyyy', Titulo.Vencimento);
+    
+    
+      txtDataVencimento6_0.Caption := ifthen(Titulo.Vencimento = 0, '', FormatDateTime('dd/mm/yyyy', Titulo.Vencimento));
+    
       txtNomeCedente6_0.Caption         := Cedente.Nome;
       txtCodigoCedente6_0.Caption       := CodCedente;
       txtDataDocumento6_0.Caption       := FormatDateTime('dd/mm/yyyy', Titulo.DataDocumento);
@@ -862,7 +873,9 @@ begin
       txtAceite6_0.Caption              := ifThen(Titulo.Aceite = atSim,'S','N');
       txtDataProcessamento6_0.Caption   := FormatDateTime('dd/mm/yyyy',Now);
       txtNossoNumero6_0.Caption         := NossoNum;
-      txtValorDocumento6_0.Caption      := FormatFloat('###,###,##0.00',Titulo.ValorDocumento);
+    
+      txtValorDocumento6_0.Caption:= ifthen(Titulo.ValorDocumento > 0, FormatFloat('###,###,##0.00',Titulo.ValorDocumento), '');
+      
       txtNomeSacado6_0.Caption          := Titulo.Sacado.NomeSacado;
       txtEnderecoSacado6_0.Caption      := Titulo.Sacado.Logradouro + ' '+
                                            Titulo.Sacado.Numero + Titulo.Sacado.Complemento;

@@ -636,7 +636,7 @@ begin
                                          IfThen(Banco.Digito >= 10,'X',
                                          IntToStrZero(Banco.Digito, 1));
       lblLocalPagto.Lines.Text        := Titulo.LocalPagamento;
-      txtDataVencimento2.Caption      := FormatDateTime('dd/mm/yyyy', Titulo.Vencimento);
+      txtDataVencimento2.Caption      := IfThen(Titulo.Vencimento > 0,FormatDateTime('dd/mm/yyyy', Titulo.Vencimento));
       txtNomeCedente2.Caption         := Cedente.Nome+ ' - '+TipoDoc + Cedente.CNPJCPF;
       txtCodigoCedente2.Caption       := CodCedente;
       txtDataDocumento2.Caption       := FormatDateTime('dd/mm/yyyy', Titulo.DataDocumento);
@@ -650,7 +650,7 @@ begin
       txtUsoBanco2.Caption            := Titulo.UsoBanco;
       txtCarteira2.Caption            := Titulo.Carteira;
       txtEspecie2.Caption             := IfThen(trim(Titulo.EspecieMod) = '','R$',Titulo.EspecieMod);
-      txtValorDocumento2.Caption      := FormatFloat('###,###,##0.00',Titulo.ValorDocumento);
+      txtValorDocumento2.Caption      := IfThen(Titulo.ValorDocumento > 0,FormatFloat('###,###,##0.00',Titulo.ValorDocumento));
       txtNomeSacado2.Caption          := Titulo.Sacado.NomeSacado;
       txtEnderecoSacado2.Caption      := Titulo.Sacado.Logradouro + ' '+
                                          Titulo.Sacado.Numero + Titulo.Sacado.Complemento;

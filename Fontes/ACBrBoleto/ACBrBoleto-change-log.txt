@@ -47,6 +47,14 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+Data: 11/09/2013
+-- ACBrBoleto ver. 0.0.84 --
+[+] Adicionado suporte a impressão de boletos sem vencimento e valor(contra-apresentação).
+    (Juliana Tamizou)
+-- ACBrBancoBradesco.pas
+[*] Retorno CNAB400 - Modificado verificação do tipo de Inscrição do Sacado para verificar
+    o campo CNPJ/CPF para decidir qual valor informar.(Juliana Tamizou)
+
 Data: 29/08/2013
 -- ACBrBoleto ver. 0.0.83 --
 -- ACBrBancoSicred.pas

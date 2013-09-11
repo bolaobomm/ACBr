@@ -58,7 +58,7 @@ uses  ACBrBase,  {Units da ACBr}
      Graphics, Contnrs, Classes;
 
 const
-  CACBrBoleto_Versao = '0.0.83a' ;
+  CACBrBoleto_Versao = '0.0.84a' ;
 
 type
   TACBrTipoCobranca =
@@ -1744,7 +1744,7 @@ end;
 
 function TACBrBancoClass.CalcularFatorVencimento(const DataVencimento: TDatetime) : String;
 begin
-   Result := IntToStr( Trunc(DataVencimento - EncodeDate(1997,10,07)) );
+   Result := IntToStrZero( Max(Trunc(DataVencimento - EncodeDate(1997,10,07)),0),4 );
 end;
 
 function TACBrBancoClass.CalcularDigitoCodigoBarras (
