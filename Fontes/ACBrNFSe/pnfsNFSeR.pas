@@ -316,6 +316,7 @@ begin
      NFSe.Servico.xItemListaServico := CodigoToDesc(SomenteNumeros(NFSe.Servico.ItemListaServico));
 
      NFSe.Servico.Discriminacao       := Leitor.rCampo(tcStr, 'Discriminacao');
+     NFSe.Servico.Descricao           := '';
      NFSe.Servico.CodigoMunicipio     := Leitor.rCampo(tcStr, 'CodigoMunicipio');
      NFSe.Servico.CodigoPais          := Leitor.rCampo(tcInt, 'CodigoPais');
      NFSe.Servico.ExigibilidadeISS    := StrToExigibilidadeISS(ok, Leitor.rCampo(tcStr, 'ExigibilidadeISS'));
@@ -435,6 +436,7 @@ begin
     then begin
      NFSe.Servico.CodigoTributacaoMunicipio := Leitor.rCampo(tcStr, 'CodigoTributacaoMunicipio');
      NFSe.Servico.Discriminacao       			:= Leitor.rCampo(tcStr, 'Discriminacao');
+     NFSe.Servico.Descricao                 := '';
      NFSe.Servico.CodigoMunicipio     			:= Leitor.rCampo(tcStr, 'CodigoMunicipio');
 
      if (Leitor.rExtrai(2, 'Valores') <> '')
@@ -625,6 +627,7 @@ begin
      NFSe.Servico.ItemListaServico          := DFeUtil.LimpaNumero(Leitor.rCampo(tcStr, 'ItemListaServico'));
      NFSe.Servico.CodigoTributacaoMunicipio := Leitor.rCampo(tcStr, 'CodigoTributacaoMunicipio');
      NFSe.Servico.Discriminacao             := Leitor.rCampo(tcStr, 'Discriminacao');
+     NFSe.Servico.Descricao                 := '';
 
      if VersaoXML='1'
       then NFSe.Servico.CodigoMunicipio := Leitor.rCampo(tcStr, 'MunicipioPrestacaoServico')
@@ -978,6 +981,7 @@ begin
 
        NFSe.Servico.CodigoCnae          := Leitor.rCampo(tcStr, 'CodigoCnae');
        NFSe.Servico.Discriminacao       := Leitor.rCampo(tcStr, 'Discriminacao');
+       NFSe.Servico.Descricao           := '';
        NFSe.Servico.CodigoMunicipio     := Leitor.rCampo(tcStr, 'CodigoMunicipio');
        NFSe.Servico.CodigoPais          := Leitor.rCampo(tcInt, 'CodigoPais');
        NFSe.Servico.ExigibilidadeISS    := StrToExigibilidadeISS(ok, Leitor.rCampo(tcStr, 'ExigibilidadeISS'));
@@ -1145,6 +1149,7 @@ begin
       NFSe.Servico.Valores.IssRetido   := StrToSituacaoTributaria(ok, Leitor.rCampo(tcStr, 'IssRetido'));
        NFSe.Servico.CodigoTributacaoMunicipio := Leitor.rCampo(tcStr, 'CodigoTributacaoMunicipio');
        NFSe.Servico.Discriminacao             := Leitor.rCampo(tcStr, 'Discriminacao');
+       NFSe.Servico.Descricao                 := '';
        NFSe.Servico.CodigoMunicipio           := Leitor.rCampo(tcStr, 'CodigoMunicipio');
        NFSe.Servico.ExigibilidadeISS          := StrToExigibilidadeISS(ok, Leitor.rCampo(tcStr, 'ExigibilidadeISS'));
        NFSe.Servico.MunicipioIncidencia       := Leitor.rCampo(tcInt, 'MunicipioIncidencia');
@@ -1443,6 +1448,7 @@ begin
 
    NFSe.Servico.CodigoCnae          := Leitor.rCampo(tcStr, 'CodigoCnae');
    NFSe.Servico.Discriminacao       := Leitor.rCampo(tcStr, 'Discriminacao');
+   NFSe.Servico.Descricao           := '';
    NFSe.Servico.CodigoMunicipio     := Leitor.rCampo(tcStr, 'CodigoMunicipio');
    NFSe.Servico.CodigoPais          := Leitor.rCampo(tcInt, 'CodigoPais');
    NFSe.Servico.ExigibilidadeISS    := StrToExigibilidadeISS(ok, Leitor.rCampo(tcStr, 'ExigibilidadeISS'));
@@ -1687,6 +1693,7 @@ begin
         NFSe.Servico.Valores.IssRetido := StrToSituacaoTributaria(ok, Leitor.rCampo(tcStr, 'IssRetido'));
         NFSe.Servico.ItemListaServico  := Leitor.rCampo(tcStr, 'ItemListaServico');
         NFSe.Servico.Discriminacao     := Leitor.rCampo(tcStr, 'Discriminacao');
+        NFSe.Servico.Descricao         := '';
 
         NFSe.Servico.xItemListaServico := CodigoToDesc(SomenteNumeros(NFSe.Servico.ItemListaServico));
 
@@ -1808,6 +1815,7 @@ begin
    
    NFSe.Servico.CodigoCnae          := Leitor.rCampo(tcStr, 'CodigoCnae');
    NFSe.Servico.Discriminacao       := Leitor.rCampo(tcStr, 'Discriminacao');
+   NFSe.Servico.Descricao           := '';
    NFSe.Servico.CodigoMunicipio     := Leitor.rCampo(tcStr, 'CodigoMunicipio');
    NFSe.Servico.CodigoPais          := Leitor.rCampo(tcInt, 'CodigoPais');
    NFSe.Servico.ExigibilidadeISS    := StrToExigibilidadeISS(ok, Leitor.rCampo(tcStr, 'ExigibilidadeISS'));
@@ -1999,6 +2007,7 @@ begin
 
    NFSe.Servico.CodigoCnae          := Leitor.rCampo(tcStr, 'CodigoCnae');
    NFSe.Servico.Discriminacao       := Leitor.rCampo(tcStr, 'Discriminacao');
+   NFSe.Servico.Descricao           := '';
    NFSe.Servico.CodigoMunicipio     := Leitor.rCampo(tcStr, 'CodigoMunicipio');
    NFSe.Servico.CodigoPais          := Leitor.rCampo(tcInt, 'CodigoPais');
    NFSe.Servico.ExigibilidadeISS    := StrToExigibilidadeISS(ok, Leitor.rCampo(tcStr, 'ExigibilidadeISS'));
@@ -2191,6 +2200,7 @@ begin
 
    NFSe.Servico.CodigoCnae          := Leitor.rCampo(tcStr, 'CodigoCnae');
    NFSe.Servico.Discriminacao       := Leitor.rCampo(tcStr, 'Discriminacao');
+   NFSe.Servico.Descricao           := '';
    NFSe.Servico.CodigoMunicipio     := Leitor.rCampo(tcStr, 'CodigoMunicipio');
    NFSe.Servico.CodigoPais          := Leitor.rCampo(tcInt, 'CodigoPais');
    NFSe.Servico.ExigibilidadeISS    := StrToExigibilidadeISS(ok, Leitor.rCampo(tcStr, 'ExigibilidadeISS'));

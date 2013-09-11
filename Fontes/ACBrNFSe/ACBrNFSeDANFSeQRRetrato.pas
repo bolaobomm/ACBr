@@ -22,18 +22,6 @@ type
     cdsItens: TClientDataSet;
     cdsItensCODIGO: TStringField;
     cdsItensDESCRICAO: TStringField;
-    cdsItensNCM: TStringField;
-    cdsItensCFOP: TStringField;
-    cdsItensUNIDADE: TStringField;
-    cdsItensQTDE: TStringField;
-    cdsItensVALOR: TStringField;
-    cdsItensTOTAL: TStringField;
-    cdsItensCST: TStringField;
-    cdsItensBICMS: TStringField;
-    cdsItensALIQICMS: TStringField;
-    cdsItensVALORICMS: TStringField;
-    cdsItensALIQIPI: TStringField;
-    cdsItensVALORIPI: TStringField;
     qrb_1_Cabecalho: TQRBand;
     qrb_2_PrestadorServico: TQRChildBand;
     qrb_3_TomadorServico: TQRChildBand;
@@ -72,9 +60,6 @@ type
     qrmProdutoDescricao: TQRDBText;
     qrlDataHoraImpressao: TQRLabel;
     qrlSistema: TQRLabel;
-    cdsItensXPROD: TStringField;
-    cdsItensINFADIPROD: TStringField;
-    cdsItensCSOSN: TStringField;
     qriLogo: TQRImage;
     qrlEmissao: TQRLabel;
     QRLabel8: TQRLabel;
@@ -234,10 +219,6 @@ uses
 
 {$R *.dfm}
 
-const
- _NUM_ITEMS_PAGE1      = 18;
- _NUM_ITEMS_OTHERPAGES = 50;
-
 procedure TfqrDANFSeQRRetrato.cdsItensAfterScroll(DataSet: TDataSet);
 //var
 // intTamanhoDescricao: Integer;
@@ -249,14 +230,29 @@ begin
 end;
 
 procedure TfqrDANFSeQRRetrato.Itens;
+var
+ i: Integer;
 begin
  cdsItens.Close;
  cdsItens.CreateDataSet;
  cdsItens.Open;
 
- cdsItens.Append;
- cdsItens.FieldByName('DESCRICAO').AsString := FNFSe.Servico.Discriminacao;
- cdsItens.Post;
+ for i :=0 to FNFSe.Servico.ItemServico.Count -1 do
+  begin
+   cdsItens.Append;
+   cdsItensCodigo.AsString    := '';
+   cdsItensDescricao.AsString := trim(FNFSe.Servico.ItemServico.Items[i].Descricao);
+//   cdsItensDescricao.AsString := trim(FNFSe.Servico.Descricao);
+   cdsItens.Post;
+  end;
+
+ if FNFSe.Servico.ItemServico.Count = 0
+  then begin
+   cdsItens.Append;
+   cdsItensCodigo.AsString    := '';
+   cdsItensDescricao.AsString := '';
+   cdsItens.Post;
+  end;
 
  cdsItens.First;
 end;
@@ -292,9 +288,10 @@ begin
   else qrlCompetencia.Caption := Copy(FNFSe.Competencia, 6, 2) + '/' + Copy(FNFSe.Competencia, 1, 4);
  qrlNumeroRPS.Caption := FNFSe.IdentificacaoRps.Numero;
  qrlNumNFSeSubstituida.Caption := FNFSe.NfseSubstituida;
- if trim(FNFSe.Servico.CodigoMunicipio)<>'' then
-   qrlCodigoMunicipio.Caption := FNFSe.Servico.CodigoMunicipio + ' - ' +
-                                 CodCidadeToCidade(StrToInt(FNFSe.Servico.CodigoMunicipio));
+ if trim(FNFSe.Servico.CodigoMunicipio)<>''
+  then qrlCodigoMunicipio.Caption := FNFSe.Servico.CodigoMunicipio + ' - ' +
+                                     CodCidadeToCidade(StrToInt(FNFSe.Servico.CodigoMunicipio));
+  else qrlCodigoMunicipio.Caption := '';
 end;
 
 procedure TfqrDANFSeQRRetrato.qrb_2_PrestadorServicoBeforePrint(Sender: TQRCustomBand;
@@ -407,7 +404,7 @@ begin
  qrmDescricao.Lines.Add( StringReplace( FNFSe.Servico.Discriminacao,
                          ';', #13#10, [rfReplaceAll, rfIgnoreCase] ) );
 
- qrmDescricao.Lines.EndUpdate;                        
+ qrmDescricao.Lines.EndUpdate;
 end;
 
 procedure TfqrDANFSeQRRetrato.qrb_6_ISSQNBeforePrint(Sender: TQRCustomBand;
@@ -418,6 +415,7 @@ var
 begin
   inherited;
 
+  PrintBand := (QRNFSe.PageNumber = 1);
 // qrlValorTotal.Caption := 'VALOR TOTAL DA NOTA = R$ '+
 //    DFeUtil.FormatFloat( FNFSe.Servico.Valores.ValorLiquidoNfse );
 
@@ -428,26 +426,30 @@ begin
  qrmCodServico.Lines.Clear;
 
  if trim(FNFSe.Servico.Descricao) = ''
-  then qrmCodServico.Lines.Add(FNFSe.Servico.ItemListaServico + ' / ' +
-                               FNFSe.Servico.CodigoTributacaoMunicipio + ' - ' +
-                               FNFSe.Servico.xItemListaServico)
-
-  else qrmCodServico.Lines.Add(FNFSe.Servico.ItemListaServico + ' / ' +
-                               FNFSe.Servico.CodigoTributacaoMunicipio + ' - ' +
-                               FNFSe.Servico.Descricao);
+  then begin
+   qrmCodServico.Lines.Add(FNFSe.Servico.ItemListaServico + ' / ' +
+                           FNFSe.Servico.CodigoTributacaoMunicipio);
+   qrmCodServico.Lines.Add(FNFSe.Servico.xItemListaServico);
+  end
+  else begin
+   qrmCodServico.Lines.Add(FNFSe.Servico.ItemListaServico + ' / ' +
+                           FNFSe.Servico.CodigoTributacaoMunicipio);
+   qrmCodServico.Lines.Add(FNFSe.Servico.Descricao);
+  end;
 
  qrmCodServico.Lines.EndUpdate;
 
- qrlCodObra.Caption := FNFSe.ConstrucaoCivil.CodigoObra;
- qrlCodART.Caption  := FNFSe.ConstrucaoCivil.Art;
+ qrlCodObra.Caption := trim(FNFSe.ConstrucaoCivil.CodigoObra);
+ qrlCodART.Caption  := trim(FNFSe.ConstrucaoCivil.Art);
 
- MostrarObra := (qrlCodObra.Caption<>'') or (qrlCodART.Caption<>'');
- qrsLinhaH1.Enabled:=MostrarObra;
- qrlTituloConstCivil.Enabled:=MostrarObra;
- qrlCodigoObra.Enabled:=MostrarObra;
- qrlCodObra.Enabled:=MostrarObra;
- qrlCodigoArt.Enabled:=MostrarObra;
- qrlCodART.Enabled:=MostrarObra;
+ MostrarObra := (qrlCodObra.Caption <> '') or (qrlCodART.Caption <> '');
+
+ qrsLinhaH1.Enabled          := MostrarObra;
+ qrlTituloConstCivil.Enabled := MostrarObra;
+ qrlCodigoObra.Enabled       := MostrarObra;
+ qrlCodObra.Enabled          := MostrarObra;
+ qrlCodigoArt.Enabled        := MostrarObra;
+ qrlCodART.Enabled           := MostrarObra;
 
  qrlValorPIS.Caption    := DFeUtil.FormatFloat( FNFSe.Servico.Valores.ValorPis );
  qrlValorCOFINS.Caption := DFeUtil.FormatFloat( FNFSe.Servico.Valores.ValorCofins );
@@ -554,6 +556,8 @@ procedure TfqrDANFSeQRRetrato.qrb_7_OutrasInformacoesBeforePrint(Sender: TQRCust
   var PrintBand: Boolean);
 begin
   inherited;
+
+  PrintBand := (QRNFSe.PageNumber = 1);
 
  qrmDadosAdicionais.Lines.BeginUpdate;
  qrmDadosAdicionais.Lines.Clear;
