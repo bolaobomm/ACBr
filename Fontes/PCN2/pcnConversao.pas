@@ -169,8 +169,8 @@ type
   TpcteDirecao = (drNorte, drLeste, drSul, drOeste);
   TpcteTipoNavegacao = (tnInterior, tnCabotagem);
   TpcteTipoTrafego = (ttProprio, ttMutuo, ttRodoferroviario, ttRodoviario);
-  TpcteTipoDataPeriodo = (tdSemData, tdNaData, tdAteData, tdApartirData, tdNoPeriodo);
-  TpcteTipoHorarioIntervalo = (thSemHorario, thNoHorario, thAteHorario, thApartirHorario, thNoIntervalo);
+  TpcteTipoDataPeriodo = (tdSemData, tdNaData, tdAteData, tdApartirData, tdNoPeriodo, tdNaoInformado);
+  TpcteTipoHorarioIntervalo = (thSemHorario, thNoHorario, thAteHorario, thApartirHorario, thNoIntervalo, thNaoInformado);
   TpcteTipoDocumento = (tdDeclaracao, tdDutoviario, tdOutros);
   TpcteTipoDocumentoAnterior = (daCTRC, daCTAC, daACT, daNF7, daNF27, daCAN, daCTMC, daATRE, daDTA, daCAI, daCCPI, daCA, daTIF, daOutros);
   TpcteRspPagPedagio = (rpEmitente, rpRemetente, rpExpedidor, rpRecebedor, rpDestinatario, rpTomadorServico);
@@ -1253,22 +1253,26 @@ end;
 
 function TpDataPeriodoToStr(const t: TpcteTipoDataPeriodo): string;
 begin
-  result := EnumeradoToStr(t, ['0','1','2','3','4'], [tdSemData, tdNaData, tdAteData, tdApartirData, tdNoPeriodo]);
+  result := EnumeradoToStr(t, ['0','1','2','3','4','N'],
+                              [tdSemData, tdNaData, tdAteData, tdApartirData, tdNoPeriodo, tdNaoInformado]);
 end;
 
 function StrToTpDataPeriodo(var ok: boolean; const s: string): TpcteTipoDataPeriodo;
 begin
-  result := StrToEnumerado(ok, s, ['0','1','2','3','4'], [tdSemData, tdNaData, tdAteData, tdApartirData, tdNoPeriodo]);
+  result := StrToEnumerado(ok, s, ['0','1','2','3','4','N'],
+                                  [tdSemData, tdNaData, tdAteData, tdApartirData, tdNoPeriodo, tdNaoInformado]);
 end;
 
 function TpHorarioIntervaloToStr(const t: TpcteTipoHorarioIntervalo): string;
 begin
-  result := EnumeradoToStr(t, ['0','1','2','3','4'], [thSemHorario, thNoHorario, thAteHorario, thApartirHorario, thNoIntervalo]);
+  result := EnumeradoToStr(t, ['0','1','2','3','4','N'],
+                              [thSemHorario, thNoHorario, thAteHorario, thApartirHorario, thNoIntervalo, thNaoInformado]);
 end;
 
 function StrToTpHorarioIntervalo(var ok: boolean; const s: string): TpcteTipoHorarioIntervalo;
 begin
-  result := StrToEnumerado(ok, s, ['0','1','2','3','4'], [thSemHorario, thNoHorario, thAteHorario, thApartirHorario, thNoIntervalo]);
+  result := StrToEnumerado(ok, s, ['0','1','2','3','4','N'],
+                                  [thSemHorario, thNoHorario, thAteHorario, thApartirHorario, thNoIntervalo, thNaoInformado]);
 end;
 
 function TpDocumentoToStr(const t: TpcteTipoDocumento): string;
