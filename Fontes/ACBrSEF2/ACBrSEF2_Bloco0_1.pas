@@ -790,23 +790,37 @@ end;
 
 procedure TBloco_0.WriteRegistro0030(Reg0001: TRegistroSEF0001);
 var
-  wPRF_ISS,wIND_EC:Integer;
+  wPRF_ISS, wPRF_ICMS, wIND_EC:Integer;
+  wIND_RI: String;
 begin
    if Assigned(Reg0001.Registro030) then
    begin
       with Reg0001.Registro030 do
       begin
+
          if Integer(PRF_ISS) > 2 then
-            wPRF_ISS:= 9;
+            wPRF_ISS:= 9
+         else
+            wPRF_ISS:= Integer(PRF_ISS);
+
+         if Integer(PRF_ICMS) > 2 then
+            wPRF_ICMS:= 9
+         else
+            wPRF_ICMS:= Integer(PRF_ICMS);
 
          if Integer(IND_EC) > 5 then
             wIND_EC:= 9;
+
+         if Integer(IND_RI) > 1 then
+            wIND_RI:= ''
+         else
+            wIND_RI:= IntToStr(Integer(IND_RI));
 
          Add( LFill('0030')              +
               LFill(Integer(IND_ED),0)   +
               LFill(Integer(IND_ARQ),0)  +
               LFill(wPRF_ISS,0)          +
-              LFill(Integer(PRF_ICMS),0) +
+              LFill(wPRF_ICMS,0)         +
               LFill(Integer(PRF_RIDF))   +
               LFill(Integer(PRF_RUDF),0) +
               LFill(Integer(PRF_LMC))    +
@@ -819,7 +833,7 @@ begin
               LFill(Integer(IND_ST),0)   +
               LFill(Integer(IND_AT),0)   +
               LFill(Integer(IND_IPI),0)  +
-              LFill(Integer(IND_RI))) ;
+              LFill(wIND_RI) ) ;
 
          Registro0990.QTD_LIN_0 := Registro0990.QTD_LIN_0 + 1;
       end;

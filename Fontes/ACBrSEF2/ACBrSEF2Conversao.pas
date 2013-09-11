@@ -274,7 +274,7 @@ Uses SysUtils, Classes, ACBrTXTClass, contnrs;
                       SefcsSemrepercussaofiscal       //99
                       );
 
-    TIndicePagamento = (SefipAVista, SefAPrazao, SefNaoOnerada);
+    TIndicePagamento = (SefNenhum,SefipAVista, SefAPrazao, SefNaoOnerada);
 
     TIndicadorDados = (entDigitacao,entImportacao,entValidacao);
 
@@ -295,7 +295,7 @@ Uses SysUtils, Classes, ACBrTXTClass, contnrs;
                                   impSimRegimeIntegral,
                                   impNaoObrigado);
 
-    TIndicadorExigeDiversas = (exSim,exNao);
+    TIndicadorExigeDiversas = (exSim,exNao,exVazio);
 
     TIndicadorEscrContabil = (esCompletaArquivo,
                               esCompletaPapel,

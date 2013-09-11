@@ -206,6 +206,7 @@ end;
 function ConvertIndicePagamento(IndicePagamento : TIndicePagamento) : string;
 begin
   case IndicePagamento of
+   SefNenhum     : Result := '';
    SefipAVista   : Result := '0';
    SefAPrazao    : Result := '1';
    SefNaoOnerada : Result := '2';
