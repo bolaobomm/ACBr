@@ -1889,7 +1889,7 @@ begin
    sClassificacao := '0';
    if PermiteVinculado then
       sClassificacao := '2';
-   EnviaComando('36|'+sClassificacao+'|'+LeftStr(Descricao,15) );
+   EnviaComando('36|'+sClassificacao+'|'+Descricao);
 end;
 
 procedure TACBrECFSwedaSTX.ProgramaRelatorioGerencial( var Descricao: String; Posicao: String);
@@ -1976,8 +1976,9 @@ begin
    Moedas     := padL('Reais',20) ;
    sValor     := FormatFloat('#0.00',Valor);
    sData      := FormatDateTime('dd/mm/yyyy',Data);
+   // Impreesão da observação na frente do cheque com até 80 caracteres
    EnviaComando('14|'+Banco+'|'+sValor+'|'+Moeda+'|'+Moedas+'|'+Favorecido+
-                '|'+Cidade+'|'+sData);
+                '|'+Cidade+'|'+sData+'|N|N|'+Observacao);
 end;
 
 procedure TACBrECFSwedaSTX.CancelaImpressaoCheque;
@@ -2788,7 +2789,6 @@ begin
      Cmd := Cmd + '|' + ifthen( CorteParcial, '1', '2') ;
 
   EnviaComando( Cmd );
-  Sleep( 100 );
 end;
 
 procedure TACBrECFSwedaSTX.IdentificaOperador(Nome: String);
