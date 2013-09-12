@@ -70,11 +70,14 @@ type
     FExibirTotalTributosItem: Boolean;
     FExibeCampoFatura: Boolean;
     FTributosFonte: string;
-    FTributosPercentual: TpcnPercentualTributos;  //Incluido em 22/05/2013 - Fábio Gabriel
+    FTributosPercentual: TpcnPercentualTributos;
+    FTributosPercentualPersonalizado: double;
     function GetPreparedReport: TfrxReport;
     function GetPreparedReportEvento: TfrxReport;
     function PrepareReport(NFE: TNFe = nil): Boolean;
     function PrepareReportEvento: Boolean;
+    procedure setTributosPercentual(const Value: TpcnPercentualTributos);
+    procedure setTributosPercentualPersonalizado(const Value: double);
    public
     constructor Create(AOwner: TComponent); override;
     destructor Destroy; override;
@@ -93,7 +96,8 @@ type
     property ExibirTotalTributosItem: Boolean read FExibirTotalTributosItem write FExibirTotalTributosItem;
     property ExibeCampoFatura: Boolean read FExibeCampoFatura write FExibeCampoFatura;  //Incluido em 22/05/2013 - Fábio Gabriel
     property TributosFonte: string read FTributosFonte write FTributosFonte;
-    property TributosPercentual: TpcnPercentualTributos read FTributosPercentual write FTributosPercentual;
+    property TributosPercentual: TpcnPercentualTributos read FTributosPercentual write setTributosPercentual;
+    property TributosPercentualPersonalizado: double read FTributosPercentualPersonalizado write setTributosPercentualPersonalizado;
   end;
 
 implementation
@@ -110,6 +114,7 @@ begin
   FExibeCampoFatura := True;  //Incluido em 22/05/2013 - Fábio Gabriel - Setado por padrão True
   FTributosFonte := '';
   FTributosPercentual := ptValorProdutos;
+  FTributosPercentualPersonalizado := 0;
 end;
 
 destructor TACBrNFeDANFEFR.Destroy;
@@ -154,6 +159,7 @@ begin
   dmDanfe.ExibeCampoFatura :=  FExibeCampoFatura;
   dmDanfe.TributosFonte :=  FTributosFonte;
   dmDanfe.TributosPercentual :=  FTributosPercentual;
+  dmDanfe.TributosPercentualPersonalizado :=  FTributosPercentualPersonalizado;
 
   if Trim(FastFile) <> '' then
   begin
@@ -238,6 +244,23 @@ begin
   end
   else
     raise EACBrNFeDANFEFR.Create('Propriedade ACBrNFe não assinalada.');
+end;
+
+procedure TACBrNFeDANFEFR.setTributosPercentual(
+  const Value: TpcnPercentualTributos);
+begin
+  FTributosPercentual := Value;
+  if Value <> ptPersonalizado then
+    FTributosPercentualPersonalizado := 0;
+end;
+
+procedure TACBrNFeDANFEFR.setTributosPercentualPersonalizado(
+  const Value: double);
+begin
+  if FTributosPercentual=ptPersonalizado then
+    FTributosPercentualPersonalizado := Value
+  else
+    FTributosPercentualPersonalizado := 0;
 end;
 
 procedure TACBrNFeDANFEFR.ImprimirDANFE(NFE: TNFe);

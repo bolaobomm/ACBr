@@ -791,7 +791,7 @@ var
   alerta, ConteudoProcessado: string;
   wAno, wMes, wDia, wHor, wMin, wSeg, wMse: Word;
   EstaVazio: boolean;
-  VlrExt:Extended;
+//  VlrExt:Extended;
 begin
   ID                  := Trim(ID);
   Tag                 := Trim(TAG);

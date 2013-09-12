@@ -289,6 +289,7 @@ type
     FExibeCampoFatura: Boolean;
     FTributosFonte: string;
     FTributosPercentual: TpcnPercentualTributos;
+    FTributosPercentualPersonalizado: double;
     procedure CarregaIdentificacao;
     procedure CarregaEmitente;
     procedure CarregaDestinatario;
@@ -312,6 +313,7 @@ type
     property ExibeCampoFatura: Boolean read FExibeCampoFatura write FExibeCampoFatura default True;
     property TributosFonte: string read FTributosFonte write FTributosFonte;
     property TributosPercentual: TpcnPercentualTributos read FTributosPercentual write FTributosPercentual;
+    property TributosPercentualPersonalizado: double read FTributosPercentualPersonalizado write FTributosPercentualPersonalizado;
     procedure CarregaDadosNFe;
     procedure CarregaDadosEventos;
   end;
@@ -466,12 +468,17 @@ begin
       FieldByName('VOutro').AsFloat := DFeUtil.StringToFloatDef(FloatToStr(VOutro), 0);
       FieldByName('VNF').AsFloat := DFeUtil.StringToFloatDef(FloatToStr(VNF), 0);
       FieldByName('VTotTrib').AsFloat := DFeUtil.StringToFloatDef(FloatToStr(VTotTrib), 0);
-      if (TributosPercentual = ptValorProdutos) and (VProd > 0) then
-        FieldByName('VTribPerc').AsFloat := DFeUtil.StringToFloatDef(FloatToStr(VTotTrib*100/VProd), 0)
-      else if (TributosPercentual = ptValorNF) and (VNF > 0) then
-        FieldByName('VTribPerc').AsFloat := DFeUtil.StringToFloatDef(FloatToStr(VTotTrib*100/VNF), 0)
+      if TributosPercentual = ptPersonalizado then
+        FieldByName('VTribPerc').AsFloat := DFeUtil.StringToFloatDef(FloatToStr(TributosPercentualPersonalizado), 0)
       else
-        FieldByName('VTribPerc').AsFloat := 0;
+      begin
+        if (TributosPercentual = ptValorProdutos) and (VProd > 0) then
+          FieldByName('VTribPerc').AsFloat := DFeUtil.StringToFloatDef(FloatToStr(VTotTrib*100/VProd), 0)
+        else if (TributosPercentual = ptValorNF) and (VNF > 0) then
+          FieldByName('VTribPerc').AsFloat := DFeUtil.StringToFloatDef(FloatToStr(VTotTrib*100/VNF), 0)
+        else
+          FieldByName('VTribPerc').AsFloat := 0;
+      end;
       if DFeUtil.NaoEstaVazio(TributosFonte) then
         FieldByName('VTribFonte').AsString := '(Fonte: '+TributosFonte+')';
     end;

@@ -122,7 +122,7 @@ type
   TpcnIndicadorPagamento = (ipVista, ipPrazo, ipOutras);
   TpcnTipoNFe = (tnEntrada, tnSaida);
   TpcnTipoImpressao = (tiSemGeracao, tiRetrato, tiPaisagem, tiSimplificado, tiNFCe, tiMsgEletronica);
-  TpcnPercentualTributos = (ptValorProdutos, ptValorNF);
+  TpcnPercentualTributos = (ptValorProdutos, ptValorNF, ptPersonalizado);
 
   TpcnTipoEmissao = (teNormal, teContingencia, teSCAN, teDPEC, teFSDA, teSVCAN, teSVCRS, teSVCSP, teOffLine);
   TpcnTipoAmbiente = (taProducao, taHomologacao);
