@@ -294,79 +294,85 @@ begin
      if GravarDadosSH then
      begin
         if not Ini.SectionExists('SH') then
-           fsDtHrArquivo := 0;
-
-        fsIdentPAF.Empresa.Cep         := Ini.ReadString('SH','Cep','');
-        fsIdentPAF.Empresa.Cidade      := Ini.ReadString('SH','Cidade','');
-        fsIdentPAF.Empresa.CNPJ        := Ini.ReadString('SH','CNPJ','');
-        fsIdentPAF.Empresa.Contato     := Ini.ReadString('SH','Contato','');
-        fsIdentPAF.Empresa.Email       := Ini.ReadString('SH','Email','');
-        fsIdentPAF.Empresa.Endereco    := Ini.ReadString('SH','Endereco','');
-        fsIdentPAF.Empresa.IE          := Ini.ReadString('SH','IE','');
-        fsIdentPAF.Empresa.IM          := Ini.ReadString('SH','IM','');
-        fsIdentPAF.Empresa.RazaoSocial := Ini.ReadString('SH','Nome','');
-        fsIdentPAF.Empresa.Telefone    := Ini.ReadString('SH','Telefone','');
-        fsIdentPAF.Empresa.Uf          := Ini.ReadString('SH','Uf','');
+           fsDtHrArquivo := 0
+        else
+        begin
+           fsIdentPAF.Empresa.Cep         := Ini.ReadString('SH','Cep','');
+           fsIdentPAF.Empresa.Cidade      := Ini.ReadString('SH','Cidade','');
+           fsIdentPAF.Empresa.CNPJ        := Ini.ReadString('SH','CNPJ','');
+           fsIdentPAF.Empresa.Contato     := Ini.ReadString('SH','Contato','');
+           fsIdentPAF.Empresa.Email       := Ini.ReadString('SH','Email','');
+           fsIdentPAF.Empresa.Endereco    := Ini.ReadString('SH','Endereco','');
+           fsIdentPAF.Empresa.IE          := Ini.ReadString('SH','IE','');
+           fsIdentPAF.Empresa.IM          := Ini.ReadString('SH','IM','');
+           fsIdentPAF.Empresa.RazaoSocial := Ini.ReadString('SH','Nome','');
+           fsIdentPAF.Empresa.Telefone    := Ini.ReadString('SH','Telefone','');
+           fsIdentPAF.Empresa.Uf          := Ini.ReadString('SH','Uf','');
+        end;
      end ;
 
      if (not ArquivoInvalido) and GravarDadosPAF then
      begin
         if not Ini.SectionExists('PAF') then
-           fsDtHrArquivo := 0;
+           fsDtHrArquivo := 0
+        else
+        begin
+           fsIdentPAF.NumeroLaudo             := Ini.ReadString('PAF','NumeroLaudo','');        // Número do Laudo
+           fsIdentPAF.VersaoER                := Ini.ReadString('PAF','VersaoER','');           // Versão do Roteiro Executado na Homologação
+           fsIdentPAF.Paf.Nome                := Ini.ReadString('PAF','Nome','');               // Nome do Sistema PAF
+           fsIdentPAF.Paf.Versao              := Ini.ReadString('PAF','Versao','');             // Versão do Sistema PAF
+           fsIdentPAF.Paf.Linguagem           := Ini.ReadString('PAF','Linguagem','');          // Linguagem de programação utilizada
+           fsIdentPAF.Paf.BancoDados          := Ini.ReadString('PAF','BancoDados','');         // Banco de dados utilizado
+           fsIdentPAF.Paf.SistemaOperacional  := Ini.ReadString('PAF','SistemaOperacional',''); // Sistema operacional em que roda o aplicativo
+           fsIdentPAF.Paf.PrincipalExe.Nome   := Ini.ReadString('PAF','NomeExe','');            // Nome do Principal EXE do PAF
+           fsIdentPAF.Paf.PrincipalExe.MD5    := Ini.ReadString('PAF','MD5Exe','');             // MD5 do Principal EXE do PAF
 
-        fsIdentPAF.NumeroLaudo             := Ini.ReadString('PAF','NumeroLaudo','');        // Número do Laudo
-        fsIdentPAF.VersaoER                := Ini.ReadString('PAF','VersaoER','');           // Versão do Roteiro Executado na Homologação
-        fsIdentPAF.Paf.Nome                := Ini.ReadString('PAF','Nome','');               // Nome do Sistema PAF
-        fsIdentPAF.Paf.Versao              := Ini.ReadString('PAF','Versao','');             // Versão do Sistema PAF
-        fsIdentPAF.Paf.Linguagem           := Ini.ReadString('PAF','Linguagem','');          // Linguagem de programação utilizada
-        fsIdentPAF.Paf.BancoDados          := Ini.ReadString('PAF','BancoDados','');         // Banco de dados utilizado
-        fsIdentPAF.Paf.SistemaOperacional  := Ini.ReadString('PAF','SistemaOperacional',''); // Sistema operacional em que roda o aplicativo
-        fsIdentPAF.Paf.PrincipalExe.Nome   := Ini.ReadString('PAF','NomeExe','');            // Nome do Principal EXE do PAF
-        fsIdentPAF.Paf.PrincipalExe.MD5    := Ini.ReadString('PAF','MD5Exe','');             // MD5 do Principal EXE do PAF
+           fsIdentPAF.Paf.TipoFuncionamento   := TACBrPAFTipoFuncionamento(Ini.ReadInteger('PAF', 'TipoFuncionamento', 0));
+           fsIdentPAF.Paf.TipoDesenvolvimento := TACBrPAFTipoDesenvolvimento(Ini.ReadInteger('PAF', 'TipoDesenvolvimento', 0));
+           fsIdentPAF.Paf.IntegracaoPAFECF    := TACBrPAFTipoIntegracao(Ini.ReadInteger('PAF', 'IntegracaoPAFECF', 0));
 
-        fsIdentPAF.Paf.TipoFuncionamento   := TACBrPAFTipoFuncionamento(Ini.ReadInteger('PAF', 'TipoFuncionamento', 0));
-        fsIdentPAF.Paf.TipoDesenvolvimento := TACBrPAFTipoDesenvolvimento(Ini.ReadInteger('PAF', 'TipoDesenvolvimento', 0));
-        fsIdentPAF.Paf.IntegracaoPAFECF    := TACBrPAFTipoIntegracao(Ini.ReadInteger('PAF', 'IntegracaoPAFECF', 0));
-
-        fsIdentPAF.Paf.PerfilRequisitos    := Ini.ReadString('PAF', 'PerfilRequisitos', '');
+           fsIdentPAF.Paf.PerfilRequisitos    := Ini.ReadString('PAF', 'PerfilRequisitos', '');
+        end ;
      end ;
 
      if (not ArquivoInvalido) and GravarConfigApp then
      begin
         if not Ini.SectionExists('PAF') then
-           fsDtHrArquivo := 0;
-
-        fsIdentPAF.Paf.RealizaPreVenda              := Ini.ReadBool('PAF', 'RealizaPreVenda', False);
-        fsIdentPAF.Paf.RealizaDAVECF                := Ini.ReadBool('PAF', 'RealizaDAVECF', False);
-        fsIdentPAF.Paf.RealizaDAVNaoFiscal          := Ini.ReadBool('PAF', 'RealizaDAVNaoFiscal', False);
-        fsIdentPAF.Paf.RealizaDAVOS                 := Ini.ReadBool('PAF', 'RealizaDAVOS', False);
-        fsIdentPAF.Paf.DAVConfAnexoII               := Ini.ReadBool('PAF', 'DAVConfAnexoII', False);
-        fsIdentPAF.Paf.RealizaLancamentoMesa        := Ini.ReadBool('PAF', 'RealizaLancamentoMesa', False);
-        fsIdentPAF.Paf.IndiceTecnicoProd            := Ini.ReadBool('PAF', 'IndiceTecnicoProd', False);
-        fsIdentPAF.Paf.BarSimilarECFRestaurante     := Ini.ReadBool('PAF', 'BarSimilarECFRestaurante', False);
-        fsIdentPAF.Paf.BarSimilarECFComum           := Ini.ReadBool('PAF', 'BarSimilarECFComum', False);
-        fsIdentPAF.Paf.BarSimilarBalanca            := Ini.ReadBool('PAF', 'BarSimilarBalanca', False);
-        fsIdentPAF.Paf.UsaImpressoraNaoFiscal       := Ini.ReadBool('PAF', 'UsaImpressoraNaoFiscal', False);
-        fsIdentPAF.Paf.DAVDiscrFormula              := Ini.ReadBool('PAF', 'DAVDiscrFormula', False);
-        fsIdentPAF.Paf.ImpedeVendaVlrZero           := Ini.ReadBool('PAF', 'ImpedeVendaVlrZero', False);
-        fsIdentPAF.Paf.AcumulaVolumeDiario          := Ini.ReadBool('PAF', 'AcumulaVolumeDiario', False);
-        fsIdentPAF.Paf.ArmazenaEncerranteIniFinal   := Ini.ReadBool('PAF', 'ArmazenaEncerranteIniFinal', False);
-        fsIdentPAF.Paf.EmiteContrEncerrAposREDZLEIX := Ini.ReadBool('PAF', 'EmiteContrEncerrAposREDZLEIX', False);
-        fsIdentPAF.Paf.IntegradoComBombas           := Ini.ReadBool('PAF', 'IntegradoComBombas', False);
-        fsIdentPAF.Paf.CriaAbastDivergEncerrante    := Ini.ReadBool('PAF', 'CriaAbastDivergEncerrante', False);
-        fsIdentPAF.Paf.CadastroPlacaBomba           := Ini.ReadBool('PAF', 'CadastroPlacaBomba', False);
-        fsIdentPAF.Paf.TransportePassageiro         := Ini.ReadBool('PAF', 'TransportePassageiro', False);
-        fsIdentPAF.Paf.TotalizaValoresLista         := Ini.ReadBool('PAF', 'TotalizaValoresLista', False);
-        fsIdentPAF.Paf.TransfPreVenda               := Ini.ReadBool('PAF', 'TransfPreVenda', False);
-        fsIdentPAF.Paf.TransfDAV                    := Ini.ReadBool('PAF', 'TransfDAV', False);
-        fsIdentPAF.Paf.RecompoeGT                   := Ini.ReadBool('PAF', 'RecompoeGT', False);
-        fsIdentPAF.Paf.RecompoeNumSerie             := Ini.ReadBool('PAF', 'RecompoeNumSerie', False);
-        fsIdentPAF.Paf.EmitePED                     := Ini.ReadBool('PAF', 'EmitePED', False);
-        fsIdentPAF.Paf.CupomMania                   := Ini.ReadBool('PAF', 'CupomMania', False);
-        fsIdentPAF.Paf.MinasLegal                   := Ini.ReadBool('PAF', 'MinasLegal', False);
-        fsIdentPAF.Paf.NotaLegalDF                  := Ini.ReadBool('PAF', 'NotaLegalDF', False);
-        fsIdentPAF.Paf.ParaibaLegal                 := Ini.ReadBool('PAF', 'ParaibaLegal', False);
-        fsIdentPAF.Paf.TrocoEmCartao                := Ini.ReadBool('PAF', 'TrocoEmCartao', False);
+           fsDtHrArquivo := 0
+        else
+        begin
+           fsIdentPAF.Paf.RealizaPreVenda              := Ini.ReadBool('PAF', 'RealizaPreVenda', False);
+           fsIdentPAF.Paf.RealizaDAVECF                := Ini.ReadBool('PAF', 'RealizaDAVECF', False);
+           fsIdentPAF.Paf.RealizaDAVNaoFiscal          := Ini.ReadBool('PAF', 'RealizaDAVNaoFiscal', False);
+           fsIdentPAF.Paf.RealizaDAVOS                 := Ini.ReadBool('PAF', 'RealizaDAVOS', False);
+           fsIdentPAF.Paf.DAVConfAnexoII               := Ini.ReadBool('PAF', 'DAVConfAnexoII', False);
+           fsIdentPAF.Paf.RealizaLancamentoMesa        := Ini.ReadBool('PAF', 'RealizaLancamentoMesa', False);
+           fsIdentPAF.Paf.IndiceTecnicoProd            := Ini.ReadBool('PAF', 'IndiceTecnicoProd', False);
+           fsIdentPAF.Paf.BarSimilarECFRestaurante     := Ini.ReadBool('PAF', 'BarSimilarECFRestaurante', False);
+           fsIdentPAF.Paf.BarSimilarECFComum           := Ini.ReadBool('PAF', 'BarSimilarECFComum', False);
+           fsIdentPAF.Paf.BarSimilarBalanca            := Ini.ReadBool('PAF', 'BarSimilarBalanca', False);
+           fsIdentPAF.Paf.UsaImpressoraNaoFiscal       := Ini.ReadBool('PAF', 'UsaImpressoraNaoFiscal', False);
+           fsIdentPAF.Paf.DAVDiscrFormula              := Ini.ReadBool('PAF', 'DAVDiscrFormula', False);
+           fsIdentPAF.Paf.ImpedeVendaVlrZero           := Ini.ReadBool('PAF', 'ImpedeVendaVlrZero', False);
+           fsIdentPAF.Paf.AcumulaVolumeDiario          := Ini.ReadBool('PAF', 'AcumulaVolumeDiario', False);
+           fsIdentPAF.Paf.ArmazenaEncerranteIniFinal   := Ini.ReadBool('PAF', 'ArmazenaEncerranteIniFinal', False);
+           fsIdentPAF.Paf.EmiteContrEncerrAposREDZLEIX := Ini.ReadBool('PAF', 'EmiteContrEncerrAposREDZLEIX', False);
+           fsIdentPAF.Paf.IntegradoComBombas           := Ini.ReadBool('PAF', 'IntegradoComBombas', False);
+           fsIdentPAF.Paf.CriaAbastDivergEncerrante    := Ini.ReadBool('PAF', 'CriaAbastDivergEncerrante', False);
+           fsIdentPAF.Paf.CadastroPlacaBomba           := Ini.ReadBool('PAF', 'CadastroPlacaBomba', False);
+           fsIdentPAF.Paf.TransportePassageiro         := Ini.ReadBool('PAF', 'TransportePassageiro', False);
+           fsIdentPAF.Paf.TotalizaValoresLista         := Ini.ReadBool('PAF', 'TotalizaValoresLista', False);
+           fsIdentPAF.Paf.TransfPreVenda               := Ini.ReadBool('PAF', 'TransfPreVenda', False);
+           fsIdentPAF.Paf.TransfDAV                    := Ini.ReadBool('PAF', 'TransfDAV', False);
+           fsIdentPAF.Paf.RecompoeGT                   := Ini.ReadBool('PAF', 'RecompoeGT', False);
+           fsIdentPAF.Paf.RecompoeNumSerie             := Ini.ReadBool('PAF', 'RecompoeNumSerie', False);
+           fsIdentPAF.Paf.EmitePED                     := Ini.ReadBool('PAF', 'EmitePED', False);
+           fsIdentPAF.Paf.CupomMania                   := Ini.ReadBool('PAF', 'CupomMania', False);
+           fsIdentPAF.Paf.MinasLegal                   := Ini.ReadBool('PAF', 'MinasLegal', False);
+           fsIdentPAF.Paf.NotaLegalDF                  := Ini.ReadBool('PAF', 'NotaLegalDF', False);
+           fsIdentPAF.Paf.ParaibaLegal                 := Ini.ReadBool('PAF', 'ParaibaLegal', False);
+           fsIdentPAF.Paf.TrocoEmCartao                := Ini.ReadBool('PAF', 'TrocoEmCartao', False);
+        end;
      end;
 
      if ArquivoInvalido then
