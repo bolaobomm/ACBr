@@ -551,7 +551,9 @@ begin
         if FieldByName('vTotTrib').AsFloat <> 0 then
         begin
           wInfAdProd := wInfAdProd+#13+'Val Aprox Tributos: '+ FloatToStrF(FieldByName('vTotTrib').AsFloat,ffCurrency,15,2);
-          wInfAdProd := wInfAdProd+' ('+FloatToStrF(((FieldByName('vTotTrib').AsFloat*100)/FieldByName('VProd').AsFloat),ffNumber,15,2)+'%)';
+          wInfAdProd := wInfAdProd+' ('+FloatToStrF(((FieldByName('vTotTrib').AsFloat*100)/(FieldByName('VProd').AsFloat +
+                                                                                            FieldByName('VOutro').AsFloat -
+                                                                                            FieldByName('VDesc').AsFloat) ),ffNumber,15,2)+'%)';
         end;
 
         vTemp2 := TStringList.Create;
