@@ -2817,7 +2817,7 @@ begin
 end;
 
 var
-  vCont: Integer;
+  vCont, qTent: Integer;
 begin
   {Result :=} inherited Executar;
 //  Result := False;
@@ -2825,6 +2825,8 @@ begin
   TACBrNFSe( FACBrNFSe ).SetStatus( stNFSeConsulta );
   Sleep(TACBrNFSe( FACBrNFSe ).Configuracoes.WebServices.AguardarConsultaRet);
   vCont := 10000;
+  qTent := 1;
+
   while Processando do  // Enquanto FSituacao = 2 (Não Processado) tenta mais uma vez
   begin
     if TACBrNFSe( FACBrNFSe ).Configuracoes.WebServices.IntervaloTentativas > 0 then
@@ -2832,10 +2834,16 @@ begin
     else
        sleep(vCont);
 
+    if qTent > TACBrNFSe( FACBrNFSe ).Configuracoes.WebServices.Tentativas then
+      break;
+
+    qTent := qTent + 1;  
+    {
     if vCont > (TACBrNFSe( FACBrNFSe ).Configuracoes.WebServices.Tentativas * 10000) then
       break;
 
     vCont := vCont + 10000;
+    }
   end;
   TACBrNFSe( FACBrNFSe ).SetStatus( stNFSeIdle );
 

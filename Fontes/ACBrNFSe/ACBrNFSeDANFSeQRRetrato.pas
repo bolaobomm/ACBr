@@ -290,7 +290,7 @@ begin
  qrlNumNFSeSubstituida.Caption := FNFSe.NfseSubstituida;
  if trim(FNFSe.Servico.CodigoMunicipio)<>''
   then qrlCodigoMunicipio.Caption := FNFSe.Servico.CodigoMunicipio + ' - ' +
-                                     CodCidadeToCidade(StrToInt(FNFSe.Servico.CodigoMunicipio));
+                                     CodCidadeToCidade(StrToInt(FNFSe.Servico.CodigoMunicipio))
   else qrlCodigoMunicipio.Caption := '';
 end;
 
