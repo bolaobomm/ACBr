@@ -2,6 +2,7 @@ inherited fqrDANFSeQRRetrato: TfqrDANFSeQRRetrato
   Left = 206
   Width = 845
   Height = 776
+  VertScrollBar.Position = 386
   Caption = 'DANFSe - Retrato'
   Font.Height = -8
   Font.Name = 'Arial'
@@ -12,7 +13,7 @@ inherited fqrDANFSeQRRetrato: TfqrDANFSeQRRetrato
   inherited QRNFSe: TQuickRep
     Tag = 1
     Left = 8
-    Top = 5
+    Top = -381
     BeforePrint = QRNFSeBeforePrint
     DataSet = cdsItens
     Font.Height = -8
@@ -4902,10 +4903,11 @@ inherited fqrDANFSeQRRetrato: TfqrDANFSeQRRetrato
         FontSize = 8
       end
       object qrlNatOperacao: TQRLabel
-        Left = 296
+        Left = 448
         Top = 182
         Width = 185
         Height = 30
+        Enabled = False
         Frame.Color = clBlack
         Frame.DrawTop = False
         Frame.DrawBottom = False
@@ -4913,7 +4915,7 @@ inherited fqrDANFSeQRRetrato: TfqrDANFSeQRRetrato
         Frame.DrawRight = False
         Size.Values = (
           79.375000000000000000
-          783.166666666666800000
+          1185.333333333333000000
           481.541666666666700000
           489.479166666666600000)
         XLColumn = 0
@@ -5087,14 +5089,14 @@ inherited fqrDANFSeQRRetrato: TfqrDANFSeQRRetrato
         Left = 105
         Top = 4
         Width = 641
-        Height = 29
+        Height = 37
         Frame.Color = clBlack
         Frame.DrawTop = False
         Frame.DrawBottom = False
         Frame.DrawLeft = False
         Frame.DrawRight = False
         Size.Values = (
-          76.729166666666660000
+          97.895833333333340000
           277.812500000000000000
           10.583333333333330000
           1695.979166666667000000)
@@ -5148,6 +5150,38 @@ inherited fqrDANFSeQRRetrato: TfqrDANFSeQRRetrato
         WordWrap = True
         ExportAs = exptText
         FontSize = 16
+      end
+      object qrmNatOperacao: TQRMemo
+        Left = 296
+        Top = 184
+        Width = 185
+        Height = 25
+        Frame.Color = clBlack
+        Frame.DrawTop = False
+        Frame.DrawBottom = False
+        Frame.DrawLeft = False
+        Frame.DrawRight = False
+        Size.Values = (
+          66.145833333333340000
+          783.166666666666800000
+          486.833333333333400000
+          489.479166666666600000)
+        XLColumn = 0
+        Alignment = taCenter
+        AlignToBand = False
+        AutoSize = False
+        AutoStretch = True
+        Color = clWhite
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWindowText
+        Font.Height = -9
+        Font.Name = 'Arial'
+        Font.Style = []
+        ParentFont = False
+        Transparent = False
+        WordWrap = True
+        FullJustify = False
+        FontSize = 7
       end
     end
     object qrb_7_OutrasInformacoes: TQRChildBand
