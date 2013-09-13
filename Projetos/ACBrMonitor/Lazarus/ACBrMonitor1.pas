@@ -1748,7 +1748,6 @@ begin
     MostrarSetup   := ckgBOLMostrar.Checked[1];
 
     wNomeArquivo := Trim(deBOLDirArquivo.Text);
-    NomeArquivo := Trim(deBOLDirArquivo.Text);
     if wNomeArquivo = '' then
        wNomeArquivo := ExtractFileDir(Application.ExeName);
 
