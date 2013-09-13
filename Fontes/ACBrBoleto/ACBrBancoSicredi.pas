@@ -198,8 +198,8 @@ end;
 procedure TACBrBancoSicredi.GerarRegistroTransacao400(ACBrTitulo :TACBrTitulo; aRemessa: TStringList);
 var
   DigitoNossoNumero, CodProtesto, DiasProtesto: String;
-  TipoSacado, AceiteStr, wLinha, Ocorrencia: String;
-  TipoBoleto : Char;
+  TipoSacado, AceiteStr, wLinha, Ocorrencia   : String;
+  TipoBoleto, wModalidade: Char;
 begin
 
    with ACBrTitulo do
@@ -278,61 +278,114 @@ begin
         atNao: AceiteStr := 'N';
       end;
 
+      if StrToIntDef(ACBrBoleto.Cedente.Modalidade,1) = 1 then
+         wModalidade := 'A'
+      else
+         wModalidade := 'C';
+
       with ACBrBoleto do
       begin
-         wLinha:= '1'                                                     +  // 001 a 001 - Identificação do registro detalhe
-                  'A'                                                     +  // 002 a 002 - Tipo de cobrança = "A" SICREDI com registro
-                  'A'                                                     +  // 003 a 003 - Tipo de carteira = "A" Simples
-                  IfThen(TipoImpressao=tipCarne,'B','A')                  +  // 004 a 004 - Tipo de impressão = "A" Normal "B" Carnê //--Anderson
-                  Space(12)                                               +  // 005 a 016 - Filler - Brancos
-                  'A'                                                     +  // 017 a 017 - Tipo de moeda = "A" Real
-                  'A'                                                     +  // 018 a 018 - Tipo de desconto: "A" Valor "B" percentual
-                  'A'                                                     +  // 019 a 019 - Tipo de juro: "A" Valor "B" percentual
-                  Space(28)                                               +  // 020 a 047 - Filler - Brancos
-                  padR(NossoNumero+DigitoNossoNumero,9,'0')               +  // 048 a 056 - Nosso número sem edição YYXNNNNND - YY=Ano, X-Emissao, NNNNN-Sequência, D-Dígito
-                  Space(6)                                                +  // 057 a 062 - Filler - Brancos
-                  FormatDateTime( 'yyyymmdd', date)                       +  // 063 a 070 - Data da instrução
-                  Space(1)                                                +  // 071 a 071 - Campo alterado, quando instrução "31" Conforme tabela de instruções
-                  'N'                                                     +  // 072 a 072 - Postagem do título = "S" Para postar o título "N" Não postar e remeter para o cedente
-                  Space(1)                                                +  // 073 a 073 - Filler Brancos
-                  TipoBoleto                                              +  // 074 a 074 - Emissão do bloqueto = "A" Impressão pelo SICREDI "B" Impressão pelo Cedente
-                  IfThen(Parcela > 0, padR(IntToStr(Parcela),2,'0'), '00')+  // 075 a 076 - Número da parcela do carnê --Anderson
-                  IfThen(TotalParcelas > 0, padR(IntToStr(TotalParcelas),2,'0'), '00')  +  // 077 a 078 - Número total de parcelas do carnê -- Anderson
-                  Space(4)                                                +  // 079 a 082 - Filler - Brancos
-                  IntToStrZero( round( ValorDesconto * 100), 10)          +  // 083 a 092 - Valor de desconto por dia de antecipação
-                  IntToStrZero( round( PercentualMulta * 100 ), 4)        +  // 093 a 096 - % multa por pagamento em atraso
-                  Space(12)                                               +  // 097 a 108 - Filler - Brancos
-                  Ocorrencia                                              +  // 109 a 110 - Instrução = "01" Cadastro de título ... ---Anderson
-                  padL( NumeroDocumento,  10)                             +  // 111 a 120 - Seu número
-                  FormatDateTime( 'ddmmyy', Vencimento)                   +  // 121 a 126 - Data de vencimento
-                  IntToStrZero( Round( ValorDocumento * 100 ), 13)        +  // 127 a 139 - Valor do título
-                  Space(9)                                                +  // 140 a 148 - Filler - Brancos
-                  EspecieDoc                                              +  // 149 a 149 - Espécie de documento
-                  AceiteStr                                               +  // 150 a 150 - Aceite do título
-                  FormatDateTime( 'ddmmyy', DataDocumento )               +  // 151 a 156 - Data de emissão
-                  CodProtesto                                             +  // 157 a 158 - Instrução de protesto automático = "00" Não protestar "06" Protestar automaticamente
-                  DiasProtesto                                            +  // 159 a 160 - Número de dias para protesto automático
-                  IntToStrZero( round(ValorMoraJuros * 100 ), 13)         +  // 161 a 173 - Valor/% de juros por dia de atraso
+         wLinha:= '1'                                                                   +  // 001 a 001 - Identificação do registro detalhe
+                  wModalidade                                                           +  // 002 a 002 - Tipo de cobrança ("A" - Registrada  e "C" Sem Regsitro)
+                  ifthen(wModalidade = 'A', 'A', ' ')                                   +  // 003 a 003 - Tipo de carteira = "A" Simples
+                  IfThen(TipoImpressao = tipCarne, 'B', 'A')                            +  // 004 a 004 - Tipo de impressão = "A" Normal "B" Carnê //--Anderson
+                  Space(12)                                                             +  // 005 a 016 - Filler - Brancos
+                  'A'                                                                   +  // 017 a 017 - Tipo de moeda = "A" Real
+                  'A'                                                                   +  // 018 a 018 - Tipo de desconto: "A" Valor "B" percentual
+                  'A'                                                                   +  // 019 a 019 - Tipo de juro: "A" Valor "B" percentual
+                  Space(28)                                                             +  // 020 a 047 - Filler - Brancos
+                  padR(NossoNumero+DigitoNossoNumero,9,'0');                               // 048 a 056 - Nosso número sem edição YYXNNNNND - YY=Ano, X-Emissao, NNNNN-Sequência, D-Dígito
+
+         if wModalidade = 'A' then
+            wLinha:= wLinha +
+                     Space(6)                                                           +  // 057 a 062 - Filler - Brancos
+                     FormatDateTime( 'yyyymmdd', date)                                  +  // 063 a 070 - Data da instrução
+                     Space(1)                                                           +  // 071 a 071 - Campo alterado, quando instrução "31" Conforme tabela de instruções
+                     IfThen(TipoBoleto = 'A', 'S', 'N')                                 +  // 072 a 072 - Postagem do título = "S" Para postar o título "N" Não postar e remeter para o cedente
+                     Space(1)                                                           +  // 073 a 073 - Filler Brancos
+                     TipoBoleto                                                         +  // 074 a 074 - Emissão do bloqueto = "A" Impressão pelo SICREDI "B" Impressão pelo Cedente
+                     IfThen(Parcela > 0, padR(IntToStr(Parcela),2,'0'), '00')           +  // 075 a 076 - Número da parcela do carnê --Anderson
+                     IfThen(TotalParcelas > 0, padR(IntToStr(TotalParcelas),2,'0'), '00')  // 077 a 078 - Número total de parcelas do carnê -- Anderson
+         else
+            wLinha:= wLinha +
+                     Space(1)                                                           +  // 057 a 057 - Filler - Brancos
+                     'B'                                                                +  // 058 a 058 - Tipo Impressão (Completa)
+                     Space(13)                                                          +  // 059 a 071 - Filler - Brancos
+                     IfThen(TipoBoleto = 'A', 'S', 'N')                                 +  // 072 a 072 - Postagem do título = "S" Para postar o título "N" Não postar e remeter para o cedente
+                     Space(2)                                                           +  // 073 a 074 - Filler Brancos
+                     IfThen(Parcela > 0, padR(IntToStr(Parcela),2,'0'), '00')           +  // 075 a 076 - Número da parcela do carnê --Anderson
+                     IfThen((TipoBoleto = 'B') and (TotalParcelas > 0),
+                            padR(IntToStr(TotalParcelas),2,'0'), '  ');                    // 077 a 078 - Número total de parcelas do carnê -- Anderson
+
+
+         wLinha:= wLinha +
+                  Space(4)                                                              +  // 079 a 082 - Filler - Brancos
+                  IntToStrZero( round( ValorDesconto * 100), 10)                        +  // 083 a 092 - Valor de desconto por dia de antecipação
+                  IntToStrZero( round( PercentualMulta * 100 ), 4)                      +  // 093 a 096 - % multa por pagamento em atraso
+                  Space(12)                                                             +  // 097 a 108 - Filler - Brancos
+                  Ocorrencia                                                            +  // 109 a 110 - Instrução = "01" Cadastro de título ... ---Anderson
+                  padL( NumeroDocumento,  10)                                           +  // 111 a 120 - Seu número
+                  FormatDateTime( 'ddmmyy', Vencimento)                                 +  // 121 a 126 - Data de vencimento
+                  IntToStrZero( Round( ValorDocumento * 100 ), 13)                      +  // 127 a 139 - Valor do título
+                  Space(9)                                                              +  // 140 a 148 - Filler - Brancos
+                  EspecieDoc                                                            +  // 149 a 149 - Espécie de documento
+                  IfThen(wModalidade = 'A', AceiteStr, ' ')                             +  // 150 a 150 - Aceite do título
+                  FormatDateTime( 'ddmmyy', DataDocumento );                               // 151 a 156 - Data de emissão
+
+         if wModalidade = 'A' then
+            wLinha:= wLinha +
+                     CodProtesto                                                        +  // 157 a 158 - Instrução de protesto automático = "00" Não protestar "06" Protestar automaticamente
+                     DiasProtesto                                                          // 159 a 160 - Número de dias para protesto automático
+         else
+            wLinha:= wLinha + Space(4);                                                    // 157 a 160 - Filler Brancos
+
+         wLinha:= wLinha +
+                  IntToStrZero( round(ValorMoraJuros * 100 ), 13)                       +  // 161 a 173 - Valor/% de juros por dia de atraso
                   IfThen(DataDesconto < EncodeDate(2000,01,01),'000000',
-                         FormatDateTime( 'ddmmyy', DataDesconto))         +  // 174 a 179 - Data limite para concessão de desconto
-                  IntToStrZero( round( ValorDesconto * 100 ), 13)         +  // 180 a 192 - Valor/% do desconto
-                  padL('', 13, '0')                                       +  // 193 a 205 - Filler - Zeros
-                  IntToStrZero( round( ValorAbatimento * 100 ), 13)       +  // 206 a 218 - Valor do abatimento
-                  TipoSacado                                              +  // 219 a 219 - Tipo de pessoa do sacado: PF ou PJ = "1" Pessoa Física "2" Pessoa Jurídica
-                  '0'                                                     +  // 220 a 220 - Filler - Zeros
-                  padR(OnlyNumber(Sacado.CNPJCPF),14,'0')                 +  // 221 a 234 - CIC/CGC do sacado
-                  padL( Sacado.NomeSacado, 40, ' ')                       +  // 235 a 274 - Nome do sacado
-                  padL( Sacado.Logradouro +','+ Sacado.Numero +','+
-                        Sacado.Bairro +','+ Sacado.Cidade +','+
-                        Sacado.UF, 40)                                    +  // 275 a 314 - Endereço do sacado
-                  padL('', 5, '0')                                        +  // 315 a 319 - Código do sacado na cooperativa cedente (utilizar zeros)
-                  padL('', 6, '0')                                        +  // 320 a 325 - Filler - Zeros
-                  Space(1)                                                +  // 326 a 326 - Filler - Brancos
-                  padL( OnlyNumber(Sacado.CEP), 8 )                       +  // 327 a 334 - CEP do sacado
-                  padL('', 5, '0')                                        +  // 335 a 339 - Código do sacado junto ao cliente (zeros quando inexistente)
-                  padL('', 14, ' ')                                       +  // 340 a 353 - CIC/CGC do sacador avalista
-                  padL(Sacado.Avalista, 41, ' ')                          +  // 354 a 394 - Nome do sacador avalista ---Anderson
-                  IntToStrZero(aRemessa.Count + 1, 6 );                      // 395 a 400 - Número sequencial do registro
+                         FormatDateTime( 'ddmmyy', DataDesconto))                       +  // 174 a 179 - Data limite para concessão de desconto
+                  IntToStrZero( round( ValorDesconto * 100 ), 13);                         // 180 a 192 - Valor/% do desconto
+
+         if wModalidade = 'A' then
+            wLinha:= wLinha +
+                     padL('', 13, '0')                                                  +  // 193 a 205 - Filler - Zeros
+                     IntToStrZero( round( ValorAbatimento * 100 ), 13)                     // 206 a 218 - Valor do abatimento
+         else
+            wLinha:= wLinha + padL('', 26, '0');                                           // 193 a 218 - Filler Zeros
+
+
+         wLinha:= wLinha +
+                  TipoSacado                                                            +  // 219 a 219 - Tipo de pessoa do sacado: PF ou PJ = "1" Pessoa Física "2" Pessoa Jurídica
+                  IfThen(wModalidade = 'A', '0', ' ')                                   +  // 220 a 220 - Filler - (Cob. Registrada = '0', Cob. Sem Registro = ' ')
+                  padR(OnlyNumber(Sacado.CNPJCPF),14,'0')                               +  // 221 a 234 - CIC/CGC do sacado
+                  padL( Sacado.NomeSacado, 40, ' ');                                       // 235 a 274 - Nome do sacado
+
+         if wModalidade = 'A' then
+            wLinha:= wLinha +
+                     padL( Sacado.Logradouro + ',' + Sacado.Numero + ',' +
+                           Sacado.Bairro + ',' + Sacado.Cidade + ',' +
+                           Sacado.UF, 40)                                               +  // 275 a 314 - Endereço do sacado
+                     padL('', 5, '0')                                                   +  // 315 a 319 - Código do sacado na cooperativa cedente (utilizar zeros)
+                     padL('', 6, '0')                                                   +  // 320 a 325 - Filler - Zeros
+                     Space(1)                                                           +  // 326 a 326 - Filler - Brancos
+                     padL( OnlyNumber(Sacado.CEP), 8 )                                  +  // 327 a 334 - CEP do sacado
+                     padL('', 5, '0')                                                   +  // 335 a 339 - Código do sacado junto ao cliente (zeros quando inexistente)
+                     padL('', 14, ' ')                                                  +  // 340 a 353 - CIC/CGC do sacador avalista
+                     padL(Sacado.Avalista, 41, ' ')                                        // 354 a 394 - Nome do sacador avalista ---Anderson
+         else
+            wLinha:= wLinha +
+                     padL( Sacado.Logradouro + ',' + Sacado.Numero + ',' +
+                           Sacado.Bairro, 40)                                           +  // 275 a 314 - Endereço do sacado
+                     padL('', 5, '0')                                                   +  // 315 a 319 - Código do sacado na cooperativa beneficiário (zeros quando inexistente)
+                     padL('', 6, '0')                                                   +  // 320 a 325 - Filler - Zeros
+                     Space(1)                                                           +  // 326 a 326 - Filler - Brancos
+                     padL( OnlyNumber(Sacado.CEP), 8 )                                  +  // 327 a 334 - CEP do sacado
+                     padL( Sacado.Cidade, 25  )                                         +  // 335 a 359 - Cidade do sacado
+                     padL( Sacado.UF, 2  )                                              +  // 360 a 361 - UF do sacado
+                     padL('', 5, '0')                                                   +  // 362 a 366 - Código do sacado junto ao cliente (zeros quando inexistente)
+                     padL('', 28, ' ');                                                    // 367 a 394 - Filler - Brancos
+
+
+         wLinha:= wLinha + IntToStrZero(aRemessa.Count + 1, 6 );  // 395 a 400 - Número sequencial do registro
 
          aRemessa.Text:= aRemessa.Text + UpperCase(wLinha);
       end;

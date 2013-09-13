@@ -47,6 +47,13 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+Data: 13/09/2013
+-- ACBrBoleto ver. 0.0.85 --
+
+-- ACBrBancoSicredi.pas
+[*] Remessa CNAB400 - Efetuados ajustes para enviar a remessa corretamente nos casos de 
+    cobrança sem registro e emissão pelo banco.(Juliana Tamizou)
+
 Data: 11/09/2013
 -- ACBrBoleto ver. 0.0.84 --
 [+] Adicionado suporte a impressão de boletos sem vencimento e valor(contra-apresentação).
