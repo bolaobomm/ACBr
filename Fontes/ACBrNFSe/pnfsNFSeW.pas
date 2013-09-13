@@ -980,8 +980,12 @@ end;
 
 procedure TNFSeW.GerarXML_Provedor_ISSDigital;
 begin
- Gerador.wGrupoNFSe('InfDeclaracaoPrestacaoServico');
- Gerador.wGrupoNFSe('Rps ' + FIdentificador + '="rps' + NFSe.InfID.ID + '"');
+ Gerador.wGrupoNFSe('InfDeclaracaoPrestacaoServico ' + FIdentificador + '="' + NFSe.NumeroLote + '"');
+ Gerador.wGrupoNFSe('Rps ' + FIdentificador + '="' + NFSe.IdentificacaoRps.Serie +'"');
+
+// Gerador.wGrupoNFSe('InfDeclaracaoPrestacaoServico');
+// Gerador.wGrupoNFSe('Rps ' + FIdentificador + '="rps' + NFSe.InfID.ID + '"');
+
  (*
  Gerador.wGrupoNFSe('InfDeclaracaoPrestacaoServico xmlns="http://www.abrasf.org.br/nfse.xsd" ' +
                                 FIdentificador + '="NSe' + NFSe.InfID.ID + '"');

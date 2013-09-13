@@ -815,6 +815,7 @@ begin
   4106902  // Curitiba/PR
          : Provedor := 'IssCuritiba';
 
+  3144805, // Nova Lima
   3157807  // Santa Luzia/MG
          : Provedor := 'ISSDigital';
 

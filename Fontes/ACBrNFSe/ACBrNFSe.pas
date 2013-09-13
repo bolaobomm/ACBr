@@ -43,7 +43,9 @@ type
     function Enviar(ALote: Integer; Imprimir: Boolean = True): Boolean; overload;
     function Enviar(ALote: String; Imprimir: Boolean = True): Boolean; overload;
     function ConsultarSituacao(ACnpj, AInscricaoMunicipal, AProtocolo: String): Boolean;
-    function ConsultarLoteRps(ANumLote, AProtocolo: string; ACNPJ: String = ''; AInscricaoMunicipal: String = ''; Mes: Integer = 0; Ano: Integer = 0): Boolean;
+    function ConsultarLoteRps(ANumLote, AProtocolo: string; ACNPJ: String = ''; AInscricaoMunicipal: String = '';
+                              ASenha: string = ''; AFraseSecreta: string ='';
+                              Mes: Integer = 0; Ano: Integer = 0): Boolean;
     function ConsultarNFSeporRps(ANumero, ASerie, ATipo, ACnpj, AInscricaoMunicipal: String): Boolean;
     function ConsultarNFSe(ACnpj, AInscricaoMunicipal: String; ADataInicial, ADataFinal: TDateTime; NumeroNFSe: String = '';
                            APagina: Integer = 1): Boolean;
@@ -206,7 +208,9 @@ begin
  Result := WebServices.ConsultaSituacao(ACnpj, AInscricaoMunicipal, AProtocolo);
 end;
 
-function TACBrNFSe.ConsultarLoteRps(ANumLote, AProtocolo: String; ACNPJ: string = ''; AInscricaoMunicipal: string = ''; Mes: Integer = 0; Ano: Integer = 0): Boolean;
+function TACBrNFSe.ConsultarLoteRps(ANumLote, AProtocolo: String; ACNPJ: string = ''; AInscricaoMunicipal: string = '';
+                                    ASenha: string = ''; AFraseSecreta: string ='';
+                                    Mes: Integer = 0; Ano: Integer = 0): Boolean;
 var
  aPath: String;
  wAno, wMes, wDia: Word;
@@ -243,7 +247,7 @@ begin
     end;
   end;
 
- Result := WebServices.ConsultaLoteRps(AProtocolo, ACNPJ, AInscricaoMunicipal);
+ Result := WebServices.ConsultaLoteRps(AProtocolo, ACNPJ, AInscricaoMunicipal, ASenha, AFraseSecreta);
 end;
 
 function TACBrNFSe.ConsultarNFSeporRps(ANumero, ASerie, ATipo, ACnpj,

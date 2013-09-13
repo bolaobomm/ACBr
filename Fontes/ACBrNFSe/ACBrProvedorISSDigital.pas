@@ -122,29 +122,36 @@ end;
 function TProvedorISSDigital.GetConfigURL(ACodCidade: Integer): TConfigURL;
 var
  ConfigURL: TConfigURL;
+ URL: String;
 begin
  case ACodCidade of
+  3144805: begin
+            URL := 'http://issonline.pnl.mg.gov.br/nfe/snissdigitalsvc';
+            ConfigURL.HomNomeCidade := ''; // 'novalima';
+            ConfigURL.ProNomeCidade := ''; // 'novalima';
+           end;
   3157807: begin
-            ConfigURL.HomNomeCidade := 'santaluzia';
-            ConfigURL.ProNomeCidade := 'santaluzia';
+            URL := 'http://209.126.222.200/nfe/snissdigitalsvc';
+            ConfigURL.HomNomeCidade := '_santaluzia';
+            ConfigURL.ProNomeCidade := '_santaluzia';
            end;
  end;
 
- ConfigURL.HomRecepcaoLoteRPS    := 'http://209.126.222.200/nfe/snissdigitalsvc_' + ConfigURL.HomNomeCidade + '.dll/soap/IuWebServiceIssDigital';
- ConfigURL.HomConsultaLoteRPS    := 'http://209.126.222.200/nfe/snissdigitalsvc_' + ConfigURL.HomNomeCidade + '.dll/soap/IuWebServiceIssDigital';
- ConfigURL.HomConsultaNFSeRPS    := 'http://209.126.222.200/nfe/snissdigitalsvc_' + ConfigURL.HomNomeCidade + '.dll/soap/IuWebServiceIssDigital';
- ConfigURL.HomConsultaSitLoteRPS := 'http://209.126.222.200/nfe/snissdigitalsvc_' + ConfigURL.HomNomeCidade + '.dll/soap/IuWebServiceIssDigital';
- ConfigURL.HomConsultaNFSe       := 'http://209.126.222.200/nfe/snissdigitalsvc_' + ConfigURL.HomNomeCidade + '.dll/soap/IuWebServiceIssDigital';
- ConfigURL.HomCancelaNFSe        := 'http://209.126.222.200/nfe/snissdigitalsvc_' + ConfigURL.HomNomeCidade + '.dll/soap/IuWebServiceIssDigital';
- ConfigURL.HomGerarNFSe          := 'http://209.126.222.200/nfe/snissdigitalsvc_' + ConfigURL.HomNomeCidade + '.dll/soap/IuWebServiceIssDigital';
+ ConfigURL.HomRecepcaoLoteRPS    := URL + ConfigURL.HomNomeCidade + '.dll/soap/IuWebServiceIssDigital';
+ ConfigURL.HomConsultaLoteRPS    := URL + ConfigURL.HomNomeCidade + '.dll/soap/IuWebServiceIssDigital';
+ ConfigURL.HomConsultaNFSeRPS    := URL + ConfigURL.HomNomeCidade + '.dll/soap/IuWebServiceIssDigital';
+ ConfigURL.HomConsultaSitLoteRPS := URL + ConfigURL.HomNomeCidade + '.dll/soap/IuWebServiceIssDigital';
+ ConfigURL.HomConsultaNFSe       := URL + ConfigURL.HomNomeCidade + '.dll/soap/IuWebServiceIssDigital';
+ ConfigURL.HomCancelaNFSe        := URL + ConfigURL.HomNomeCidade + '.dll/soap/IuWebServiceIssDigital';
+ ConfigURL.HomGerarNFSe          := URL + ConfigURL.HomNomeCidade + '.dll/soap/IuWebServiceIssDigital';
 
- ConfigURL.ProRecepcaoLoteRPS    := 'http://209.126.222.200/nfe/snissdigitalsvc_' + ConfigURL.ProNomeCidade + '.dll/soap/IuWebServiceIssDigital';
- ConfigURL.ProConsultaLoteRPS    := 'http://209.126.222.200/nfe/snissdigitalsvc_' + ConfigURL.ProNomeCidade + '.dll/soap/IuWebServiceIssDigital';
- ConfigURL.ProConsultaNFSeRPS    := 'http://209.126.222.200/nfe/snissdigitalsvc_' + ConfigURL.ProNomeCidade + '.dll/soap/IuWebServiceIssDigital';
- ConfigURL.ProConsultaSitLoteRPS := 'http://209.126.222.200/nfe/snissdigitalsvc_' + ConfigURL.ProNomeCidade + '.dll/soap/IuWebServiceIssDigital';
- ConfigURL.ProConsultaNFSe       := 'http://209.126.222.200/nfe/snissdigitalsvc_' + ConfigURL.ProNomeCidade + '.dll/soap/IuWebServiceIssDigital';
- ConfigURL.ProCancelaNFSe        := 'http://209.126.222.200/nfe/snissdigitalsvc_' + ConfigURL.ProNomeCidade + '.dll/soap/IuWebServiceIssDigital';
- ConfigURL.ProGerarNFSe          := 'http://209.126.222.200/nfe/snissdigitalsvc_' + ConfigURL.ProNomeCidade + '.dll/soap/IuWebServiceIssDigital';
+ ConfigURL.ProRecepcaoLoteRPS    := URL + ConfigURL.ProNomeCidade + '.dll/soap/IuWebServiceIssDigital';
+ ConfigURL.ProConsultaLoteRPS    := URL + ConfigURL.ProNomeCidade + '.dll/soap/IuWebServiceIssDigital';
+ ConfigURL.ProConsultaNFSeRPS    := URL + ConfigURL.ProNomeCidade + '.dll/soap/IuWebServiceIssDigital';
+ ConfigURL.ProConsultaSitLoteRPS := URL + ConfigURL.ProNomeCidade + '.dll/soap/IuWebServiceIssDigital';
+ ConfigURL.ProConsultaNFSe       := URL + ConfigURL.ProNomeCidade + '.dll/soap/IuWebServiceIssDigital';
+ ConfigURL.ProCancelaNFSe        := URL + ConfigURL.ProNomeCidade + '.dll/soap/IuWebServiceIssDigital';
+ ConfigURL.ProGerarNFSe          := URL + ConfigURL.ProNomeCidade + '.dll/soap/IuWebServiceIssDigital';
 
  Result := ConfigURL;
 end;
@@ -186,10 +193,15 @@ begin
    acConsLote:    Result := '<' + Prefixo3 + 'ConsultarLoteRpsEnvio' + xmlns;
    acConsNFSeRps: Result := '<' + Prefixo3 + 'ConsultarNfseRpsEnvio' + xmlns;
    acConsNFSe:    Result := '<' + Prefixo3 + 'ConsultarNfseServicoPrestadoEnvio' + xmlns;
+   {
    acCancelar:    Result := '<' + Prefixo3 + 'CancelarNfseEnvio' + xmlns +
                              '<' + Prefixo3 + 'Pedido>' +
                               '<' + Prefixo4 + 'InfPedidoCancelamento' +
                                  DFeUtil.SeSenao(Identificador <> '', ' ' + Identificador + '="' + URI + '"', '') + '>';
+   }
+   acCancelar:    Result := '<' + Prefixo3 + 'CancelarNfseEnvio' + xmlns +
+                             '<' + Prefixo3 + 'Pedido>' +
+                              '<' + Prefixo4 + 'InfPedidoCancelamento';
    acGerar:       Result := '<' + Prefixo3 + 'GerarNfseEnvio' + xmlns;
  end;
 end;
@@ -454,6 +466,8 @@ begin
  raise Exception.Create( 'Opção não implementada para este provedor.' );
 end;
 
+// Removido a palavra Request dos nfse:, exemplo:
+// '<nfse:ConsultarLoteRpsRequest>' para '<nfse:ConsultarLoteRps>'
 function TProvedorISSDigital.GeraEnvelopeConsultarLoteRPS(URLNS: String;
   CabMsg, DadosMsg, DadosSenha: AnsiString): AnsiString;
 begin
@@ -464,14 +478,14 @@ begin
               DadosSenha +
             '</S:Header>' +
             '<S:Body>' +
-             '<nfse:ConsultarLoteRpsRequest>' +
+             '<nfse:ConsultarLoteRps>' +
               '<nfseCabecMsg>' +
                '<![CDATA[' + CabMsg + ']]>' +
               '</nfseCabecMsg>' +
               '<nfseDadosMsg>' +
                '<![CDATA[' + DadosMsg + ']]>' +
               '</nfseDadosMsg>' +
-             '</nfse:ConsultarLoteRpsRequest>' +
+             '</nfse:ConsultarLoteRps>' +
             '</S:Body>' +
            '</S:Envelope>';
 end;
@@ -486,14 +500,14 @@ begin
               DadosSenha +
             '</S:Header>' +
             '<S:Body>' +
-             '<nfse:ConsultarNfsePorRpsRequest>' +
+             '<nfse:ConsultarNfsePorRps>' +
               '<nfseCabecMsg>' +
                '<![CDATA[' + CabMsg + ']]>' +
               '</nfseCabecMsg>' +
               '<nfseDadosMsg>' +
                '<![CDATA[' + DadosMsg + ']]>' +
               '</nfseDadosMsg>' +
-             '</nfse:ConsultarNfsePorRpsRequest>' +
+             '</nfse:ConsultarNfsePorRps>' +
             '</S:Body>' +
            '</S:Envelope>';
 end;
@@ -508,14 +522,14 @@ begin
               DadosSenha +
             '</S:Header>' +
             '<S:Body>' +
-             '<nfse:ConsultarNfseServicoPrestadoRequest>' +
+             '<nfse:ConsultarNfseServicoPrestado>' +
               '<nfseCabecMsg>' +
                '<![CDATA[' + CabMsg + ']]>' +
               '</nfseCabecMsg>' +
               '<nfseDadosMsg>' +
                '<![CDATA[' + DadosMsg + ']]>' +
               '</nfseDadosMsg>' +
-             '</nfse:ConsultarNfseServicoPrestadoRequest>' +
+             '</nfse:ConsultarNfseServicoPrestado>' +
             '</S:Body>' +
            '</S:Envelope>';
 end;
@@ -530,14 +544,14 @@ begin
               DadosSenha +
             '</S:Header>' +
             '<S:Body>' +
-             '<nfse:CancelarNfseRequest>' +
+             '<nfse:CancelarNfse>' +
               '<nfseCabecMsg>' +
                '<![CDATA[' + CabMsg + ']]>' +
               '</nfseCabecMsg>' +
               '<nfseDadosMsg>' +
                '<![CDATA[' + DadosMsg + ']]>' +
               '</nfseDadosMsg>' +
-             '</nfse:CancelarNfseRequest>' +
+             '</nfse:CancelarNfse>' +
             '</S:Body>' +
            '</S:Envelope>';
 end;
@@ -552,14 +566,14 @@ begin
               DadosSenha +
             '</S:Header>' +
             '<S:Body>' +
-             '<nfse:GerarNfseRequest>' +
+             '<nfse:GerarNfse>' +
               '<nfseCabecMsg>' +
                '<![CDATA[' + CabMsg + ']]>' +
               '</nfseCabecMsg>' +
               '<nfseDadosMsg>' +
                '<![CDATA[' + DadosMsg + ']]>' +
               '</nfseDadosMsg>' +
-             '</nfse:GerarNfseRequest>' +
+             '</nfse:GerarNfse>' +
             '</S:Body>' +
            '</S:Envelope>';
 end;

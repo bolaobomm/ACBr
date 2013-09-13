@@ -27,7 +27,7 @@ type
                                      TagI, TagF: AnsiString; AProvedor: TnfseProvedor = proNenhum): AnsiString;
 
      class function Gera_DadosMsgConsLote(Prefixo3, Prefixo4, NameSpaceDad,
-                                  VersaoXML, Protocolo, CNPJ, IM: String;
+                                  VersaoXML, Protocolo, CNPJ, IM, senha, frase_secreta: String;
                                   TagI, TagF: AnsiString; AProvedor: TnfseProvedor = proNenhum): AnsiString;
 
      class function Gera_DadosMsgConsNFSeRPS(Prefixo3, Prefixo4, NameSpaceDad, VersaoXML,
@@ -102,10 +102,11 @@ begin
  if AProvedor = proGovBR then Identificador := '';
 
  DadosMsg := '<' + Prefixo3 + 'LoteRps'+
-               DFeUtil.SeSenao(Identificador <> '', ' ' + Identificador + '="' + NumeroLote + '"', '') +
+               DFeUtil.SeSenao(AProvedor = proISSDigital, '',
+                               DFeUtil.SeSenao(Identificador <> '', ' ' + Identificador + '="' + NumeroLote + '"', '')) +
                DFeUtil.SeSenao(AProvedor = proSimplISS, NameSpaceDad, '') +
                DFeUtil.SeSenao(AProvedor in [proAbaco, proBetha, proGinfes, proGoiania, proGovBR,
-                                             proISSDigital, proIssCuritiba, proISSNET, proNatal,
+                                             {proISSDigital, }proIssCuritiba, proISSNET, proNatal,
                                              proRecife, proRJ, proSimplISS, proThema, proTiplan,
                                              proAgili], '',
                 DFeUtil.SeSenao(VersaoDados <> '', ' versao="' + VersaoDados + '"', '')) + '>' +
@@ -180,7 +181,7 @@ begin
 end;
 
 class function TNFSeG.Gera_DadosMsgConsLote(Prefixo3, Prefixo4,
-  NameSpaceDad, VersaoXML, Protocolo, CNPJ, IM: String; TagI,
+  NameSpaceDad, VersaoXML, Protocolo, CNPJ, IM, senha, frase_secreta: String; TagI,
   TagF: AnsiString; AProvedor: TnfseProvedor = proNenhum): AnsiString;
 var
  DadosMsg: AnsiString;
@@ -205,6 +206,15 @@ begin
                '<' + Prefixo4 + 'InscricaoMunicipal>' +
                  IM +
                '</' + Prefixo4 + 'InscricaoMunicipal>' +
+
+              DFeUtil.SeSenao(AProvedor = proISSDigital,
+               '<' + Prefixo4 + 'Senha>' +
+                 Senha +
+               '</' + Prefixo4 + 'Senha>' +
+               '<' + Prefixo4 + 'FraseSecreta>' +
+                 frase_secreta +
+               '</' + Prefixo4 + 'FraseSecreta>', '') +
+
               '</' + Prefixo3 + 'Prestador>' +
               '<' + Prefixo3 + 'Protocolo' +
                DFeUtil.SeSenao(AProvedor = proSimplISS, ' ' + NameSpaceDad, '>') +
