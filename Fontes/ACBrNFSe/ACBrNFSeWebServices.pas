@@ -504,7 +504,7 @@ begin
  CertContext := Cert as ICertContext;
  CertContext.Get_CertContext(Integer(PCertContext));
 
- if not (FProvedor in [proGovBr, proSimplISS, proAbaco, proISSNet, pro4R, proFiorilli, proProdata])
+ if not (FProvedor in [proGovBr, proSimplISS, proAbaco, proISSNet, pro4R, proFiorilli, proProdata, proThema])
   then begin
    if not InternetSetOption(Data, INTERNET_OPTION_CLIENT_CERT_CONTEXT, PCertContext, Sizeof(CERT_CONTEXT)*5)
     then begin

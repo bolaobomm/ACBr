@@ -43,7 +43,7 @@ type
     function Enviar(ALote: Integer; Imprimir: Boolean = True): Boolean; overload;
     function Enviar(ALote: String; Imprimir: Boolean = True): Boolean; overload;
     function ConsultarSituacao(ACnpj, AInscricaoMunicipal, AProtocolo: String): Boolean;
-    function ConsultarLoteRps(ANumLote, AProtocolo: string; ACNPJ: String = ''; AInscricaoMunicipal: String = ''): Boolean;
+    function ConsultarLoteRps(ANumLote, AProtocolo: string; ACNPJ: String = ''; AInscricaoMunicipal: String = ''; Mes: Integer = 0; Ano: Integer = 0): Boolean;
     function ConsultarNFSeporRps(ANumero, ASerie, ATipo, ACnpj, AInscricaoMunicipal: String): Boolean;
     function ConsultarNFSe(ACnpj, AInscricaoMunicipal: String; ADataInicial, ADataFinal: TDateTime; NumeroNFSe: String = '';
                            APagina: Integer = 1): Boolean;
@@ -206,11 +206,12 @@ begin
  Result := WebServices.ConsultaSituacao(ACnpj, AInscricaoMunicipal, AProtocolo);
 end;
 
-function TACBrNFSe.ConsultarLoteRps(ANumLote, AProtocolo: String; ACNPJ: string = ''; AInscricaoMunicipal: string = ''): Boolean;
+function TACBrNFSe.ConsultarLoteRps(ANumLote, AProtocolo: String; ACNPJ: string = ''; AInscricaoMunicipal: string = ''; Mes: Integer = 0; Ano: Integer = 0): Boolean;
 var
  aPath: String;
  wAno, wMes, wDia: Word;
 begin
+ // Alteri os parâmetros para receber Mes e Ano para Formatar o Path
  aPath := FConfiguracoes.Geral.PathSalvar;
 
  if (ACNPJ='') and (AInscricaoMunicipal='')
@@ -219,6 +220,10 @@ begin
    if FConfiguracoes.Arquivos.PastaMensal
     then begin
      DecodeDate(Now, wAno, wMes, wDia);
+     if Mes > 0 then
+       wMes:= Mes;
+     if Ano > 0 then
+       wAno:= Ano;
      if Pos(IntToStr(wAno)+IntToStrZero(wMes,2),aPath) <= 0
       then aPath := PathWithDelim(aPath)+IntToStr(wAno)+IntToStrZero(wMes,2) + '\';
     end;

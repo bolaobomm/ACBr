@@ -6,6 +6,7 @@ unit ACBrNFSeDANFSeQRRetrato;
 // Quando enviar os fontes referentes ao DANFSE favor alterar
 // a data e o nome da linha abaixo.
 // Última liberação:
+// 13/09/2013 por Italo Jurisato Junior
 // 09/09/2013 por Italo Jurisato Junior
 // 05/09/2013 por Italo Jurisato Junior
 
@@ -165,7 +166,6 @@ type
     qrlValorLiquido: TQRLabel;
     QRShape17: TQRShape;
     qrlIncentivador: TQRLabel;
-    qrlNatOperacao: TQRLabel;
     qrlValorDeducoes: TQRLabel;
     qrlRegimeEspecial: TQRLabel;
     qrlOpcaoSimples: TQRLabel;

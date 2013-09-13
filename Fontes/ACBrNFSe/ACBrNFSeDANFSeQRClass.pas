@@ -249,15 +249,18 @@ begin
    for i:= 0 to TACBrNFSe(ACBrNFSe).NotasFiscais.Count-1 do
     begin
       // Alterado por Italo em 05/11/2012
-      NomeArqPDF := trim(TACBrNFSe(ACBrNFSe).NotasFiscais.Items[i].NomeArq);
+
+      // Aki Alteri a ordem Se não receber a pasta PDF configurada pega a da NFSe
+
+      NomeArqPDF := StringReplace(TACBrNFSe(ACBrNFSe).NotasFiscais.Items[i].NFSe.Numero, 'NFSe', '', [rfIgnoreCase]);
+      NomeArqPDF := PathWithDelim(Self.PathPDF) + NomeArqPDF + '.pdf';
       if NomeArqPDF = ''
       then begin
-       NomeArqPDF := StringReplace(TACBrNFSe(ACBrNFSe).NotasFiscais.Items[i].NFSe.Numero, 'NFSe', '', [rfIgnoreCase]);
-       NomeArqPDF := PathWithDelim(Self.PathPDF) + NomeArqPDF + '.pdf';
-      end
-      else NomeArqPDF := StringReplace(NomeArqPDF, '-nfse.xml', '.pdf', [rfIgnoreCase]);
+        NomeArqPDF := trim(TACBrNFSe(ACBrNFSe).NotasFiscais.Items[i].NomeArq);
+        NomeArqPDF := StringReplace(NomeArqPDF, '-nfse.xml', '.pdf', [rfIgnoreCase]);
+      end;
 
-     fqrDANFSeQRRetrato.SavePDF( NomeArqPDF
+      fqrDANFSeQRRetrato.SavePDF( NomeArqPDF
                                , TACBrNFSe(ACBrNFSe).NotasFiscais.Items[i].NFSe
                                , Logo
                                , Email
