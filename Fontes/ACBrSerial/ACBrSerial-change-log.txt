@@ -97,6 +97,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+Data: 13/09/2013
+-- ACBrECF --
+[+] Modificado rotina de impressão do texto referente ao Paraíba Legal para
+    atender a legislação fo Ato Cotepe 09/13.
+    por: Juliana Tamizou
 
 Data: 09/09/2013
 -- ACBrECF --

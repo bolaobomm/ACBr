@@ -3110,8 +3110,7 @@ begin
         FormatDateTime('ddmmyyyy', Self.DataHora),
         Self.NumCOO,
         IntToStr(TruncFix(Self.Subtotal * 100))
-      ])+ #10 +
-      OnlyNumber(Consumidor.Documento) ;
+      ])+ #10 ;
   end
   else if InfoRodapeCupom.NotaLegalDF.Imprimir then
   begin
