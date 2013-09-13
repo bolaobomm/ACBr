@@ -843,7 +843,10 @@ begin
  Gerador.wGrupoNFSe('/Rps');
 
  GerarServico;
- Gerador.wCampoNFSe(tcDatHor, '#4', 'Competencia', 19, 19, 1, NFSe.DataEmissao, DSC_DEMI);
+
+ if NFSe.Competencia <> ''
+  then Gerador.wCampoNFSe(tcStr   , '#4', 'Competencia', 19, 19, 1, NFSe.Competencia, DSC_DEMI)
+  else Gerador.wCampoNFSe(tcDatHor, '#4', 'Competencia', 19, 19, 1, NFSe.DataEmissao, DSC_DEMI);
 
  GerarPrestador;
  GerarTomador;
@@ -873,7 +876,10 @@ begin
  Gerador.wCampoNFSe(tcStr,    '#9', 'Status     ', 01, 01, 1, StatusRPSToStr(NFSe.Status), '');
  Gerador.wGrupoNFSe('/Rps');
 
- Gerador.wCampoNFSe(tcDat   , '#4', 'Competencia', 19, 19, 1, NFSe.DataEmissao, DSC_DEMI);
+ if NFSe.Competencia <> ''
+  then Gerador.wCampoNFSe(tcStr, '#4', 'Competencia', 19, 19, 1, NFSe.Competencia, DSC_DEMI)
+  else Gerador.wCampoNFSe(tcDat, '#4', 'Competencia', 19, 19, 1, NFSe.DataEmissao, DSC_DEMI);
+
  GerarServico;
 
  GerarPrestador;
@@ -932,7 +938,10 @@ begin
  Gerador.wCampoNFSe(tcDat, '#4', 'DataEmissao', 10, 10, 1, NFSe.DataEmissao, DSC_DEMI);
  Gerador.wCampoNFSe(tcStr, '#9', 'Status     ', 01, 01, 1, StatusRPSToStr(NFSe.Status), '');
  Gerador.wGrupoNFSe('/Rps');
-Gerador.wCampoNFSe(tcDat   , '#4', 'Competencia', 19, 19, 1, NFSe.DataEmissao, DSC_DEMI);
+
+ if NFSe.Competencia <> ''
+  then Gerador.wCampoNFSe(tcStr, '#4', 'Competencia', 19, 19, 1, NFSe.Competencia, DSC_DEMI)
+  else Gerador.wCampoNFSe(tcDat, '#4', 'Competencia', 19, 19, 1, NFSe.DataEmissao, DSC_DEMI);
 
  GerarServico;
 
@@ -961,7 +970,10 @@ begin
  Gerador.wCampoNFSe(tcStr,    '#9', 'Status     ', 01, 01, 1, StatusRPSToStr(NFSe.Status), '');
  Gerador.wGrupoNFSe('/Rps');
 
- Gerador.wCampoNFSe(tcDat   , '#4', 'Competencia', 19, 19, 1, NFSe.DataEmissao, DSC_DEMI);
+ if NFSe.Competencia <> ''
+  then Gerador.wCampoNFSe(tcStr, '#4', 'Competencia', 19, 19, 1, NFSe.Competencia, DSC_DEMI)
+  else Gerador.wCampoNFSe(tcDat, '#4', 'Competencia', 19, 19, 1, NFSe.DataEmissao, DSC_DEMI);
+
  GerarServico;
 
  GerarPrestador;
@@ -997,7 +1009,10 @@ begin
  Gerador.wCampoNFSe(tcStr,    '#9', 'Status     ', 01, 01, 1, StatusRPSToStr(NFSe.Status), '');
  Gerador.wGrupoNFSe('/Rps');
 
- Gerador.wCampoNFSe(tcDat   , '#4', 'Competencia', 19, 19, 1, NFSe.DataEmissao, DSC_DEMI);
+ if NFSe.Competencia <> ''
+  then Gerador.wCampoNFSe(tcStr, '#4', 'Competencia', 19, 19, 1, NFSe.Competencia, DSC_DEMI)
+  else Gerador.wCampoNFSe(tcDat, '#4', 'Competencia', 19, 19, 1, NFSe.DataEmissao, DSC_DEMI);
+
  GerarServico;
 
  GerarPrestador;
@@ -1025,7 +1040,10 @@ begin
  Gerador.wCampoNFSe(tcStr,    '#9', 'Status     ', 01, 01, 1, StatusRPSToStr(NFSe.Status), '');
  Gerador.wGrupoNFSe('/Rps');
 
- Gerador.wCampoNFSe(tcDat   , '#4', 'Competencia', 19, 19, 1, NFSe.DataEmissao, DSC_DEMI);
+ if NFSe.Competencia <> ''
+  then Gerador.wCampoNFSe(tcStr, '#4', 'Competencia', 19, 19, 1, NFSe.Competencia, DSC_DEMI)
+  else Gerador.wCampoNFSe(tcDat, '#4', 'Competencia', 19, 19, 1, NFSe.DataEmissao, DSC_DEMI);
+
  GerarServico;
 
  GerarPrestador;
@@ -1056,7 +1074,10 @@ begin
  Gerador.wCampoNFSe(tcStr,    '#9', 'Status     ', 01, 01, 1, StatusRPSToStr(NFSe.Status), '');
  Gerador.wGrupoNFSe('/Rps');
 
- Gerador.wCampoNFSe(tcDatHor, '#4', 'Competencia', 19, 19, 1, NFSe.DataEmissao, DSC_DEMI);
+ if NFSe.Competencia <> ''
+  then Gerador.wCampoNFSe(tcStr   , '#4', 'Competencia', 19, 19, 1, NFSe.Competencia, DSC_DEMI)
+  else Gerador.wCampoNFSe(tcDatHor, '#4', 'Competencia', 19, 19, 1, NFSe.DataEmissao, DSC_DEMI);
+
  GerarServico;
 
  GerarPrestador;
@@ -1085,7 +1106,10 @@ begin
  Gerador.wCampoNFSe(tcStr,    '#9', 'Status     ', 01, 01, 1, StatusRPSToStr(NFSe.Status), '');
  Gerador.wGrupoNFSe('/Rps');
 
- Gerador.wCampoNFSe(tcDat, '#4', 'Competencia', 1, 10, 1, NFSe.DataEmissao, DSC_DEMI);
+ if NFSe.Competencia <> ''
+  then Gerador.wCampoNFSe(tcStr, '#4', 'Competencia', 19, 19, 1, NFSe.Competencia, DSC_DEMI)
+  else Gerador.wCampoNFSe(tcDat, '#4', 'Competencia', 1, 10, 1, NFSe.DataEmissao, DSC_DEMI);
+
  GerarServico;
 
  GerarPrestador;
@@ -1113,7 +1137,10 @@ begin
  Gerador.wCampoNFSe(tcStr,    '#9', 'Status     ', 01, 01, 1, StatusRPSToStr(NFSe.Status), '');
  Gerador.wGrupoNFSe('/Rps');
 
- Gerador.wCampoNFSe(tcDat   , '#4', 'Competencia', 19, 19, 1, NFSe.DataEmissao, DSC_DEMI);
+ if NFSe.Competencia <> ''
+  then Gerador.wCampoNFSe(tcStr, '#4', 'Competencia', 19, 19, 1, NFSe.Competencia, DSC_DEMI)
+  else Gerador.wCampoNFSe(tcDat, '#4', 'Competencia', 19, 19, 1, NFSe.DataEmissao, DSC_DEMI);
+  
  GerarServico;
 
  GerarPrestador;
@@ -1357,7 +1384,10 @@ begin
  Gerador.wCampoNFSe(tcStr,    '#9', 'Status     ', 01, 01, 1, StatusRPSToStr(NFSe.Status), '');
  Gerador.wGrupoNFSe('/Rps');
 
- Gerador.wCampoNFSe(tcDat   , '#4', 'Competencia', 19, 19, 1, NFSe.DataEmissao, DSC_DEMI);
+ if NFSe.Competencia <> ''
+  then Gerador.wCampoNFSe(tcStr, '#4', 'Competencia', 19, 19, 1, NFSe.Competencia, DSC_DEMI)
+  else Gerador.wCampoNFSe(tcDat, '#4', 'Competencia', 19, 19, 1, NFSe.DataEmissao, DSC_DEMI);
+
  GerarServico;
 
  GerarPrestador;
