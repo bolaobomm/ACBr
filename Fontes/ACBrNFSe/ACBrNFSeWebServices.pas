@@ -3038,7 +3038,10 @@ try
 
           FNotasFiscais.Items[iNF].NFSe.Tomador.Endereco.xMunicipio := NFSeRetorno.ListaNfse.CompNfse.Items[iNFRetorno].Nfse.Tomador.Endereco.xMunicipio;
 
-          FRetNfse := Copy(FRetListaNfse, 1, j - 1);
+//          FRetNfse := Copy(FRetListaNfse, 1, j - 1);
+          // Alterado por Augusto Fontana - 16/09/2013
+          FRetNfse := NFSeRetorno.ListaNfse.CompNfse.Items[iNFRetorno].Nfse.XML;
+
           k :=  Pos('<' + Prefixo4 + 'Nfse', FRetNfse);
           FRetNfse := Copy(FRetNfse, k, length(FRetNfse));
 
