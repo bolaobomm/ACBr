@@ -3046,7 +3046,12 @@ try
 
 //          if FConfiguracoes.Geral.Salvar
 //           then begin
-            PathSalvar := FConfiguracoes.Arquivos.GetPathNFSe(0);
+
+            if FConfiguracoes.Arquivos.EmissaoPathNFSe then
+              PathSalvar := FConfiguracoes.Arquivos.GetPathNFSe(FNotasFiscais.Items[iNF].NFSe.DataEmissao)
+            else
+              PathSalvar := FConfiguracoes.Arquivos.GetPathNFSe(0);
+
             FConfiguracoes.Geral.Save(NFSeRetorno.ListaNfse.CompNfse.Items[iNFRetorno].Nfse.Numero + '-nfse.xml',
                                       FRetNfse, PathSalvar);
 //                                      NotaUtil.RetirarPrefixos(FRetNfse), PathSalvar);
@@ -3244,7 +3249,12 @@ begin
 
 //      if FConfiguracoes.Geral.Salvar
 //       then begin
-        PathSalvar := FConfiguracoes.Arquivos.GetPathNFSe(0);
+
+        if FConfiguracoes.Arquivos.EmissaoPathNFSe then
+          PathSalvar := FConfiguracoes.Arquivos.GetPathNFSe(NFSeRetorno.ListaNfse.CompNfse.Items[i].NFSe.DataEmissao)
+        else
+          PathSalvar := FConfiguracoes.Arquivos.GetPathNFSe(0);
+
         FConfiguracoes.Geral.Save(NFSeRetorno.ListaNfse.CompNfse.Items[i].Nfse.Numero + '-nfse.xml',
                                   FRetNfse, PathSalvar);
 //                                  NotaUtil.RetirarPrefixos(FRetNfse), PathSalvar);
@@ -3446,7 +3456,12 @@ begin
 
 //      if FConfiguracoes.Geral.Salvar
 //       then begin
-        PathSalvar := FConfiguracoes.Arquivos.GetPathNFSe(NFSeRetorno.ListaNfse.CompNfse.Items[i].Nfse.DataEmissao);
+
+        if FConfiguracoes.Arquivos.EmissaoPathNFSe then
+          PathSalvar := FConfiguracoes.Arquivos.GetPathNFSe(NFSeRetorno.ListaNfse.CompNfse.Items[i].Nfse.DataEmissao)
+        else
+          PathSalvar := FConfiguracoes.Arquivos.GetPathNFSe(0);
+
         FConfiguracoes.Geral.Save(NFSeRetorno.ListaNfse.CompNfse.Items[i].Nfse.Numero + '-nfse.xml',
                                   FRetNfse, PathSalvar);
 //                                  NotaUtil.RetirarPrefixos(FRetNfse), PathSalvar);
@@ -3780,7 +3795,11 @@ begin
 
 //      if FConfiguracoes.Geral.Salvar
 //       then begin
-        PathSalvar := FConfiguracoes.Arquivos.GetPathNFSe(0);
+        if FConfiguracoes.Arquivos.EmissaoPathNFSe then
+          PathSalvar := FConfiguracoes.Arquivos.GetPathNFSe(NFSeRetorno.ListaNfse.CompNfse.Items[i].NFSe.DataEmissao)
+        else
+          PathSalvar := FConfiguracoes.Arquivos.GetPathNFSe(0);
+
         FConfiguracoes.Geral.Save(NFSeRetorno.ListaNfse.CompNfse.Items[i].Nfse.Numero + '-nfse.xml',
                                   FRetNfse, PathSalvar);
 //                                      NotaUtil.RetirarPrefixos(FRetNfse), PathSalvar);
@@ -4056,7 +4075,11 @@ begin
 
 //          if FConfiguracoes.Geral.Salvar
 //           then begin
+          if FConfiguracoes.Arquivos.EmissaoPathNFSe then
+            PathSalvar := FConfiguracoes.Arquivos.GetPathNFSe(NFSeRetorno.ListaNfse.CompNfse.Items[i].NFSe.DataEmissao)
+          else
             PathSalvar := FConfiguracoes.Arquivos.GetPathNFSe(0);
+
             FConfiguracoes.Geral.Save(NFSeRetorno.ListaNfse.CompNfse.Items[i].Nfse.Numero + '-nfse.xml',
                                       FRetNfse, PathSalvar);
 //                                      NotaUtil.RetirarPrefixos(FRetNfse), PathSalvar);
