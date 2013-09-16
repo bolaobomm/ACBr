@@ -168,13 +168,15 @@ type
     FSalvarEvento   : Boolean;
     FPathCTe        : String;
     FPathCan        : String;
+    FPathCCe        : String;
     FPathInu        : String;
-    FPathDPEC       : String;
+    FPathEPEC       : String;
     FPathEvento     : String;
   public
     constructor Create(AOwner: TComponent); override ;
     function GetPathCan: String;
-    function GetPathDPEC: String;
+    function GetPathCCe: String;
+    function GetPathEPEC: String;
     function GetPathInu: String;
     function GetPathCTe(Data : TDateTime = 0): String;
     function GetPathEvento(tipoEvento : TpcnTpEvento): String;
@@ -186,8 +188,9 @@ type
     property SalvarCCeCanEvento: Boolean read FSalvarEvento write FSalvarEvento default False ;
     property PathCTe : String read FPathCTe  write FPathCTe;
     property PathCan : String read FPathCan  write FPathCan;
+    property PathCCe : String read FPathCCe  write FPathCCe;
     property PathInu : String read FPathInu  write FPathInu;
-    property PathDPEC: String read FPathDPEC write FPathDPEC;
+    property PathEPEC: String read FPathEPEC write FPathEPEC;
     property PathEvento : String read FPathEvento write FPathEvento;
   end;
 
@@ -571,15 +574,15 @@ begin
   Result  := Dir;
 end;
 
-function TArquivosConf.GetPathDPEC: String;
+function TArquivosConf.GetPathCCe: String;
 var
   wDia, wMes, wAno : Word;
   Dir : String;
 begin
-  if DFeUtil.EstaVazio(FPathDPEC) then
+  if DFeUtil.EstaVazio(FPathCCe) then
      Dir := TConfiguracoes( Self.Owner ).Geral.PathSalvar
   else
-     Dir := FPathDPEC;
+     Dir := FPathCCe;
 
   if FMensal then
    begin
@@ -590,8 +593,37 @@ begin
 
   if FLiteral then
    begin
-     if copy(Dir,length(Dir)-3,4) <> 'DPEC' then
-        Dir := PathWithDelim(Dir)+'DPEC';
+     if copy(Dir,length(Dir)-2,3) <> 'CCe' then
+        Dir := PathWithDelim(Dir)+'CCe';
+   end;
+
+  if not DirectoryExists(Dir) then
+     ForceDirectories(Dir);
+
+  Result  := Dir;
+end;
+
+function TArquivosConf.GetPathEPEC: String;
+var
+  wDia, wMes, wAno : Word;
+  Dir : String;
+begin
+  if DFeUtil.EstaVazio(FPathEPEC) then
+     Dir := TConfiguracoes( Self.Owner ).Geral.PathSalvar
+  else
+     Dir := FPathEPEC;
+
+  if FMensal then
+   begin
+     DecodeDate(Now, wAno, wMes, wDia);
+     if Pos(IntToStr(wAno)+IntToStrZero(wMes,2),Dir) <= 0 then
+        Dir := PathWithDelim(Dir)+IntToStr(wAno)+IntToStrZero(wMes,2);
+   end;
+
+  if FLiteral then
+   begin
+     if copy(Dir,length(Dir)-3,4) <> 'EPEC' then
+        Dir := PathWithDelim(Dir)+'EPEC';
    end;
 
   if not DirectoryExists(Dir) then
@@ -686,10 +718,12 @@ begin
   case tipoEvento of
     teCCe                      : Dir := PathWithDelim(Dir)+'CCe';
     teCancelamento             : Dir := PathWithDelim(Dir)+'Cancelamento';
+    teEPEC                     : Dir := PathWithDelim(Dir)+'EPEC';
     teManifDestConfirmacao     : Dir := PathWithDelim(Dir)+'Confirmacao';
     teManifDestCiencia         : Dir := PathWithDelim(Dir)+'Ciencia';
     teManifDestDesconhecimento : Dir := PathWithDelim(Dir)+'Desconhecimento';
     teManifDestOperNaoRealizada: Dir := PathWithDelim(Dir)+'NaoRealizada';
+    teMultimodal               : Dir := PathWithDelim(Dir)+'Multimodal';
   end;
 
   if not DirectoryExists(Dir) then

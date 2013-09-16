@@ -1587,6 +1587,7 @@ function TCteRetRecepcao.Executar: Boolean;
 
 var
   vCont: Integer;
+  qTent: Integer; // Incluido por Italo Jurisato Junior em 16/09/2013
 begin
   {Result :=} inherited Executar;
   Result := False;
@@ -1595,6 +1596,8 @@ begin
   TACBrCTe( FACBrCTe ).SetStatus( stCTeRetRecepcao );
   Sleep(TACBrCTe( FACBrCTe ).Configuracoes.WebServices.AguardarConsultaRet);
   vCont := 1000;
+  qTent := 1; // Inicializa o contador de tentativas
+
   while Processando do
   begin
     if TACBrCTe( FACBrCTe ).Configuracoes.WebServices.IntervaloTentativas > 0 then
@@ -1602,10 +1605,31 @@ begin
     else
        sleep(vCont);
 
+    // Alterado por Italo Jurisato Junior em 16/09/2013
+    if qTent > TACBrCTe( FACBrCTe ).Configuracoes.WebServices.Tentativas then
+      break;
+
+    qTent := qTent + 1;
+
+    // Segundo o código abaixo comentado a cada nova tentativa a variável vCont
+    // é acrescida de 1000 ou seja 1 segundo, uma vez que ela é utilizada no
+    // sleep.
+    // Desta forma vazendo com que o tempo de espera entre uma tentativa e outra
+    // seja crescente: 1 seg, 2 seg, 3 seg, ...
+    //
+    // Com a alteração realizada por mim, o tempo se torna fixo ou seja sempre
+    // 1 segundo.
+    // Caso esse tempo seja pouco, devemos utilizar a propriedade:
+    // IntervaloTentativas.
+    // Se o valor dessa propriedade for 3000 o tempo passa a ser de 3 segundos
+    // entre uma tentativa e outra.
+
+    (*
     if vCont > (TACBrCTe( FACBrCTe ).Configuracoes.WebServices.Tentativas * 1000) then
       break;
 
     vCont := vCont + 1000;
+    *)
   end;
   TACBrCTe( FACBrCTe ).SetStatus( stCTeIdle );
 
@@ -2820,8 +2844,7 @@ begin
     if FConfiguracoes.Arquivos.Salvar then
      begin
        if (FEvento.Evento.Items[0].InfEvento.tpEvento = teCCe) and not FConfiguracoes.Arquivos.SalvarCCeCanEvento then
-          FConfiguracoes.Geral.Save(FPathArqEnv, FDadosMsg,
-                                    FConfiguracoes.Arquivos.GetPathEvento(FEvento.Evento.Items[0].InfEvento.tpEvento))
+          FConfiguracoes.Geral.Save(FPathArqEnv, FDadosMsg, FConfiguracoes.Arquivos.GetPathCCe)
        else if (FEvento.Evento.Items[0].InfEvento.tpEvento = teCancelamento) and not FConfiguracoes.Arquivos.SalvarCCeCanEvento then
           FConfiguracoes.Geral.Save(FPathArqEnv, FDadosMsg, FConfiguracoes.Arquivos.GetPathCan)
        else
@@ -2883,8 +2906,7 @@ begin
     if FConfiguracoes.Arquivos.Salvar then
      begin
        if (FEvento.Evento.Items[0].InfEvento.tpEvento = teCCe) and not FConfiguracoes.Arquivos.SalvarCCeCanEvento  then
-          FConfiguracoes.Geral.Save(FPathArqResp, FRetWS,
-                                    FConfiguracoes.Arquivos.GetPathEvento(FEvento.Evento.Items[0].InfEvento.tpEvento))
+          FConfiguracoes.Geral.Save(FPathArqResp, FRetWS, FConfiguracoes.Arquivos.GetPathCCe)
        else if (FEvento.Evento.Items[0].InfEvento.tpEvento = teCancelamento) and not FConfiguracoes.Arquivos.SalvarCCeCanEvento  then
           FConfiguracoes.Geral.Save(FPathArqEnv, FDadosMsg, FConfiguracoes.Arquivos.GetPathCan)
        else

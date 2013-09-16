@@ -2247,6 +2247,7 @@ function TNFeRetRecepcao.Executar: Boolean;
 
 var
   vCont: Integer;
+  qTent: Integer; // Incluido por Italo Jurisato Junior em 16/09/2013
 begin
   inherited Executar;
   Result := False;
@@ -2254,6 +2255,8 @@ begin
   TACBrNFe( FACBrNFe ).SetStatus( stNfeRetRecepcao );
   Sleep(TACBrNFe( FACBrNFe ).Configuracoes.WebServices.AguardarConsultaRet);
   vCont := 1000;
+  qTent := 1; // Inicializa o contador de tentativas
+
   while Processando do
   begin
     if TACBrNFe( FACBrNFe ).Configuracoes.WebServices.IntervaloTentativas > 0 then
@@ -2261,10 +2264,31 @@ begin
     else
        sleep(vCont);
 
+    // Alterado por Italo Jurisato Junior em 16/09/2013
+    if qTent > TACBrNFe( FACBrNFe ).Configuracoes.WebServices.Tentativas then
+      break;
+
+    qTent := qTent + 1;
+
+    // Segundo o código abaixo comentado a cada nova tentativa a variável vCont
+    // é acrescida de 1000 ou seja 1 segundo, uma vez que ela é utilizada no
+    // sleep.
+    // Desta forma vazendo com que o tempo de espera entre uma tentativa e outra
+    // seja crescente: 1 seg, 2 seg, 3 seg, ...
+    //
+    // Com a alteração realizada por mim, o tempo se torna fixo ou seja sempre
+    // 1 segundo.
+    // Caso esse tempo seja pouco, devemos utilizar a propriedade:
+    // IntervaloTentativas.
+    // Se o valor dessa propriedade for 3000 o tempo passa a ser de 3 segundos
+    // entre uma tentativa e outra.
+
+    (*
     if vCont > (TACBrNFe( FACBrNFe ).Configuracoes.WebServices.Tentativas*1000) then
       break;
 
     vCont := vCont +1000;
+    *)
   end;
   TACBrNFe( FACBrNFe ).SetStatus( stIdle );
 
