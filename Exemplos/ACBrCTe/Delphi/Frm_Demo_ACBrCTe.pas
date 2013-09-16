@@ -111,7 +111,7 @@ type
     btnGerarPDF: TButton;
     btnEnviarEmail: TButton;
     btnConsultarRecibo: TButton;
-    btnEnvDPEC: TButton;
+    btnEnvEPEC: TButton;
     btnConsultarDPEC: TButton;
     btnImportarXML: TButton;
     btnConsultarChave: TButton;
@@ -129,9 +129,9 @@ type
     memoRespWS: TMemo;
     Dados: TTabSheet;
     MemoDados: TMemo;
+    OpenDialog1: TOpenDialog;
     ACBrCTe1: TACBrCTe;
     ACBrCTeDACTeQR1: TACBrCTeDACTeQR;
-    OpenDialog1: TOpenDialog;
     procedure sbtnCaminhoCertClick(Sender: TObject);
     procedure sbtnGetCertClick(Sender: TObject);
     procedure sbtnLogoMarcaClick(Sender: TObject);
@@ -153,7 +153,7 @@ type
     procedure btnGerarCTeClick(Sender: TObject);
     procedure btnGerarPDFClick(Sender: TObject);
     procedure btnImprimirClick(Sender: TObject);
-    procedure btnEnvDPECClick(Sender: TObject);
+    procedure btnEnvEPECClick(Sender: TObject);
     procedure btnConsultarDPECClick(Sender: TObject);
     procedure btnImportarXMLClick(Sender: TObject);
     procedure btnValidarXMLClick(Sender: TObject);
@@ -1388,68 +1388,20 @@ begin
   begin
    ACBrCTe1.Conhecimentos.Clear;
    ACBrCTe1.Conhecimentos.LoadFromFile(OpenDialog1.FileName);
-   if ACBrCTe1.Conhecimentos.Items[0].CTe.Ide.tpEmis = teDPEC then
-    begin
-     {
-     ACBrCTe1.WebServices.ConsultaDPEC.CTeChave := ACBrCTe1.Conhecimentos.Items[0].CTe.infCTe.ID;
-     ACBrCTe1.WebServices.ConsultaDPEC.Executar;
-     ACBrCTe1.DACTe.ProtocoloCTe := ACBrCTe1.WebServices.ConsultaDPEC.nRegDPEC +
-       ' '+ DateTimeToStr(ACBrCTe1.WebServices.ConsultaDPEC.retDPEC.dhRegDPEC);
-     }
-    end;
    ACBrCTe1.Conhecimentos.Imprimir;
   end;
 end;
 
-procedure TfrmDemo_ACBrCTe.btnEnvDPECClick(Sender: TObject);
+procedure TfrmDemo_ACBrCTe.btnEnvEPECClick(Sender: TObject);
 var
  vAux : String;
 begin
- ShowMessage('Opção não Implementada!');
- {
- if not(InputQuery('WebServices DPEC', 'Numero do Conhecimento', vAux))
-  then exit;
-
- ACBrCTe1.Conhecimentos.Clear;
- GerarCTe(vAux);
- ACBrCTe1.Conhecimentos.SaveToFile();
- ACBrCTe1.WebServices.EnviarDPEC.Executar;
-
- //protocolo de envio ao DPEC e impressão do DACTe
- ACBrCTe1.DACTe.ProtocoloCTe:=ACBrCTe1.WebServices.EnviarDPEC.nRegDPEC+' '+
-                       DateTimeToStr(ACBrCTe1.WebServices.EnviarDPEC.DhRegDPEC);
- ACBrCTe1.Conhecimentos.Imprimir;
-
- ShowMessage(DateTimeToStr(ACBrCTe1.WebServices.EnviarDPEC.DhRegDPEC));
- ShowMessage(ACBrCTe1.WebServices.EnviarDPEC.nRegDPEC);
-
- MemoResp.Lines.Text   := UTF8Encode(ACBrCTe1.WebServices.EnviarDPEC.RetWS);
- memoRespWS.Lines.Text := UTF8Encode(ACBrCTe1.WebServices.EnviarDPEC.RetWS);
- LoadXML(MemoResp, WBResposta);
-
- ACBrCTe1.Conhecimentos.Clear;
- }
+ ShowMessage('Opção não Implementada, no programa exemplo!');
 end;
 
 procedure TfrmDemo_ACBrCTe.btnConsultarDPECClick(Sender: TObject);
-var
- vAux : String;
 begin
- ShowMessage('Opção não Implementada!');
-{
- if not(InputQuery('WebServices DPEC', 'Informe o Numero do Registro do DPEC ou a Chave do CTe', vAux))
-  then exit;
-
- if Length(Trim(vAux)) < 44
-  then ACBrCTe1.WebServices.ConsultaDPEC.nRegDPEC := vAux
-  else ACBrCTe1.WebServices.ConsultaDPEC.CTeChave := vAux;
-
- ACBrCTe1.WebServices.ConsultaDPEC.Executar;
-
- MemoResp.Lines.Text   := UTF8Encode(ACBrCTe1.WebServices.ConsultaDPEC.RetWS);
- memoRespWS.Lines.Text := UTF8Encode(ACBrCTe1.WebServices.ConsultaDPEC.RetWS);
- LoadXML(MemoResp, WBResposta);
- }
+ {a}
 end;
 
 procedure TfrmDemo_ACBrCTe.btnImportarXMLClick(Sender: TObject);

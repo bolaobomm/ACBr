@@ -910,21 +910,21 @@ object frmDemo_ACBrCTe: TfrmDemo_ACBrCTe
         TabOrder = 11
         OnClick = btnConsultarReciboClick
       end
-      object btnEnvDPEC: TButton
+      object btnEnvEPEC: TButton
         Left = 377
         Top = 6
         Width = 177
         Height = 25
-        Caption = 'Enviar DPEC'
+        Caption = 'Enviar EPEC'
         TabOrder = 12
-        OnClick = btnEnvDPECClick
+        OnClick = btnEnvEPECClick
       end
       object btnConsultarDPEC: TButton
         Left = 377
         Top = 36
         Width = 177
         Height = 25
-        Caption = 'Consultar DPEC'
+        Caption = '...'
         TabOrder = 13
         OnClick = btnConsultarDPECClick
       end
@@ -1045,36 +1045,6 @@ object frmDemo_ACBrCTe: TfrmDemo_ACBrCTe
       end
     end
   end
-  object ACBrCTe1: TACBrCTe
-    Configuracoes.Geral.PathSalvar = 'C:\Arquivos de programas\Borland\Delphi7\Bin\'
-    Configuracoes.WebServices.UF = 'SP'
-    Configuracoes.WebServices.AguardarConsultaRet = 0
-    Configuracoes.WebServices.IntervaloTentativas = 0
-    Configuracoes.WebServices.AjustaAguardaConsultaRet = False
-    OnStatusChange = ACBrCTe1StatusChange
-    DACTe = ACBrCTeDACTeQR1
-    OnGerarLog = ACBrCTe1GerarLog
-    Left = 520
-    Top = 256
-  end
-  object ACBrCTeDACTeQR1: TACBrCTeDACTeQR
-    ACBrCTE = ACBrCTe1
-    PathPDF = 'C:\Arquivos de programas\Borland\Delphi7\Bin\'
-    ImprimirHoraSaida = False
-    MostrarPreview = True
-    MostrarStatus = True
-    TipoDACTE = tiRetrato
-    TamanhoPapel = tpA4
-    NumCopias = 1
-    ImprimirDescPorc = False
-    MargemInferior = 0.800000000000000000
-    MargemSuperior = 0.800000000000000000
-    MargemEsquerda = 0.600000000000000000
-    MargemDireita = 0.510000000000000000
-    CTeCancelada = False
-    Left = 560
-    Top = 256
-  end
   object OpenDialog1: TOpenDialog
     DefaultExt = '*-nfe.XML'
     Filter = 
@@ -1083,5 +1053,32 @@ object frmDemo_ACBrCTe: TfrmDemo_ACBrCTe
     Title = 'Selecione a NFe'
     Left = 480
     Top = 256
+  end
+  object ACBrCTe1: TACBrCTe
+    Configuracoes.Geral.PathSalvar = 'C:\Arquivos de programas\Borland\Delphi7\Bin\'
+    Configuracoes.Geral.ExibirErroSchema = True
+    Configuracoes.Geral.FormatoAlerta = 'TAG:%TAGNIVEL% ID:%ID%/%TAG%(%DESCRICAO%) - %MSG%.'
+    Configuracoes.WebServices.UF = 'SP'
+    Configuracoes.WebServices.AguardarConsultaRet = 0
+    Configuracoes.WebServices.IntervaloTentativas = 0
+    Configuracoes.WebServices.AjustaAguardaConsultaRet = False
+    Left = 232
+    Top = 400
+  end
+  object ACBrCTeDACTeQR1: TACBrCTeDACTeQR
+    ImprimirHoraSaida = False
+    MostrarPreview = True
+    MostrarStatus = True
+    TipoDACTE = tiSemGeracao
+    TamanhoPapel = tpA4
+    NumCopias = 1
+    ImprimirDescPorc = False
+    MargemInferior = 0.800000000000000000
+    MargemSuperior = 0.800000000000000000
+    MargemEsquerda = 0.600000000000000000
+    MargemDireita = 0.510000000000000000
+    CTeCancelada = False
+    Left = 264
+    Top = 400
   end
 end
