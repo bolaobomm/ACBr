@@ -142,7 +142,7 @@ type
 
   TCTeRecepcao = Class(TWebServicesBase)
   private
-    FLote: Integer;
+    FLote: String;
     FRecibo : String;
     FCTes : TConhecimentos;
     FTpAmb: TpcnTipoAmbiente;
@@ -153,7 +153,7 @@ type
     FdhRecbto: TDateTime;
     FTMed: Integer;
 
-    function GetLote: Integer;
+    function GetLote: String;
   public
     constructor Create(AOwner : TComponent; ACTes : TConhecimentos);reintroduce;
     function Executar: Boolean; override;
@@ -166,7 +166,7 @@ type
     property xMotivo: String read FxMotivo;
     property dhRecbto: TDateTime read FdhRecbto;
     property TMed: Integer read FTMed;
-    property Lote: Integer read GetLote write FLote;
+    property Lote: String read GetLote write FLote;
   end;
 
   TCteRetRecepcao = Class(TWebServicesBase)
@@ -416,7 +416,8 @@ type
   public
     constructor Create(AFCTe: TComponent);reintroduce;
     destructor Destroy; override;
-    function Envia(ALote: Integer): Boolean;
+    function Envia(ALote: Integer): Boolean; overload;
+    function Envia(ALote: String): Boolean; overload;
     procedure Cancela(AJustificativa: String);
     procedure Inutiliza(CNPJ, AJustificativa: String; Ano, Modelo, Serie, NumeroInicial, NumeroFinal : Integer);
 //  published
@@ -671,8 +672,12 @@ procedure TWebServicesBase.DoCTeRecepcao;
 var
   i    : Integer;
   vCtes: WideString;
+  sLote: String;
 begin
   vCtes := '';
+  sLote := OnlyNumber(TCTeRecepcao(Self).Lote);
+  if sLote = '' then sLote := '0';
+
   for i := 0 to TCTeRecepcao(Self).FCTes.Count-1 do
     vCtes := vCtes + TCTeRecepcao(Self).FCTes.Items[I].XML;
 
@@ -680,7 +685,7 @@ begin
   vCtes := StringReplace( vCtes, '<?xml version="1.0" encoding="UTF-8"?>' , '', [rfReplaceAll] );
 
   FDadosMsg := '<enviCTe xmlns="http://www.portalfiscal.inf.br/cte" versao="'+CTeenviCTe+'">'+
-               '<idLote>'+IntToStr(TCTeRecepcao(Self).Lote)+'</idLote>'+vCtes+'</enviCTe>';
+               '<idLote>'+sLote+'</idLote>'+vCtes+'</enviCTe>';
 
   if Length(FDadosMsg) > (500 * 1024) then
    begin
@@ -1005,6 +1010,11 @@ end;
 
 function TWebServices.Envia(ALote: Integer): Boolean;
 begin
+  Result := Envia(IntToStr(ALote));
+end;
+
+function TWebServices.Envia(ALote: String): Boolean;
+begin
 // retirado por recomendação do documento disponivel em http://www.nfe.fazenda.gov.br/PORTAL/docs/Consumo_Indevido_Aplicacao_Cliente_v1.00.pdf
 {  if not(Self.StatusServico.Executar) then
      begin
@@ -1028,6 +1038,7 @@ begin
           TACBrCTe( FACBrCTe ).OnGerarLog(Self.Retorno.Msg);
        raise Exception.Create(Self.Retorno.Msg);
      end;
+
   Result := true;
 end;
 
@@ -1240,7 +1251,7 @@ begin
     TACBrCTe( FACBrCTe ).SetStatus( stCTeRecepcao );
     if FConfiguracoes.Geral.Salvar then
      begin
-       FPathArqEnv := IntToStr(Lote)+'-env-lot.xml';
+       FPathArqEnv := Lote + '-env-lot.xml';
        FConfiguracoes.Geral.Save(FPathArqEnv, FDadosMsg);
      end;
     try
@@ -1297,7 +1308,7 @@ begin
 
       if FConfiguracoes.Geral.Salvar then
        begin
-         FPathArqResp := IntToStr(Lote)+'-rec.xml';
+         FPathArqResp := Lote + '-rec.xml';
          FConfiguracoes.Geral.Save(FPathArqResp, FRetWS);
        end;
 
@@ -1322,7 +1333,7 @@ begin
   end;
 end;
 
-function TCTeRecepcao.GetLote: Integer;
+function TCTeRecepcao.GetLote: String;
 begin
   Result := FLote;
 end;

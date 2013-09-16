@@ -47,6 +47,7 @@ unit ACBrCTeDACTeQRRetrato;
 // Quando enviar os fontes referentes ao DACTE favor alterar
 // a data e o nome da linha abaixo.
 // Última liberação:
+// 16/09/2013 por Italo Jurisato Junior
 // 06/09/2013 por Italo Jurisato Junior
 // 21/08/2013 por Italo Jurisato Junior
 // 20/08/2013 por André F. Moraes

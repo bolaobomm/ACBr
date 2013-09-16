@@ -309,6 +309,11 @@ begin
 end;
 
 function TACBrCTe.Enviar(ALote: Integer; Imprimir:Boolean = True): Boolean;
+begin
+  Result := Enviar(IntToStr(ALote), Imprimir);
+end;
+
+function TACBrCTe.Enviar(ALote: String; Imprimir: Boolean): Boolean;
 var
   i: Integer;
 begin
@@ -343,12 +348,6 @@ begin
        end;
      end;
   end;
-
-end;
-
-function TACBrCTe.Enviar(ALote: String; Imprimir: Boolean): Boolean;
-begin
-  Result := Enviar(StrToIntDef(ALote, 0), Imprimir);
 end;
 
 procedure TACBrCTe.EnviaEmailThread(const sSmtpHost, sSmtpPort, sSmtpUser,
