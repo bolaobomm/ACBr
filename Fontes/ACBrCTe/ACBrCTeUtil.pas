@@ -228,7 +228,7 @@ begin
   //  (12,27,16,13,29,23,53,32,52,21,51,50,31,15,25,41,26,22,33,24,43,11,14,42,35,28,17);
 
  case FormaEmissao of
-  1, 4, 5 : begin
+  1, 4, 5 : begin // 1 = Normal, 4 = EPEC (Envio Prévio de Emissão em Contingência), 5 = Contingência FSDA
              case ALayOut of
               LayCTeEventoEPEC : begin
                                    case AUF of
@@ -297,7 +297,7 @@ begin
                    end;
              end;
             end;
-        7 : begin // SVC-RS
+        7 : begin // Autorização pela SVC-RS (SEFAZ Vitual de Contingência do RS)
              case ALayOut of
                LayCTeRecepcao:      Result := DFeUtil.SeSenao(AAmbiente = 1, 'https://cte.sefaz.rs.gov.br/ws/CTeRecepcao/CTeRecepcao.asmx'          , 'https://homologacao.cte.sefazvirtual.rs.gov.br/ws/CTeRecepcao/CTeRecepcao.asmx');
                LayCTeRetRecepcao:   Result := DFeUtil.SeSenao(AAmbiente = 1, 'https://cte.sefaz.rs.gov.br/ws/CTeRetRecepcao/CTeRetRecepcao.asmx'    , 'https://homologacao.cte.sefazvirtual.rs.gov.br/ws/CTeRetRecepcao/CTeRetRecepcao.asmx');
@@ -306,7 +306,7 @@ begin
                LayCTeStatusServico: Result := DFeUtil.SeSenao(AAmbiente = 1, 'https://cte.sefaz.rs.gov.br/ws/CTeStatusServico/CTeStatusServico.asmx', 'https://homologacao.cte.sefazvirtual.rs.gov.br/ws/CTeStatusServico/CTeStatusServico.asmx');
              end;
             end;
-        8 : begin // SVC-SP
+        8 : begin // Autorização pela SVC-SP (SEFAZ Vitual de Contingência de SP)
              case ALayOut of
                LayCTeRecepcao:      Result := DFeUtil.SeSenao(AAmbiente = 1, 'https://nfe.fazenda.sp.gov.br/cteWEB/services/CteRecepcao.asmx'     , 'https://homologacao.nfe.fazenda.sp.gov.br/cteWEB/services/CteRecepcao.asmx');
                LayCTeRetRecepcao:   Result := DFeUtil.SeSenao(AAmbiente = 1, 'https://nfe.fazenda.sp.gov.br/cteWEB/services/CteRetRecepcao.asmx'  , 'https://homologacao.nfe.fazenda.sp.gov.br/cteWEB/services/CteRetRecepcao.asmx');
@@ -317,129 +317,12 @@ begin
             end;
 
  end;
- (*
- case FormaEmissao of
-  1,2,5   : begin
-             {
-             case ALayOut of
-              LayCTeEnvDPEC:      Result := CTeUtil.SeSenao(AAmbiente=1, 'https://www.nfe.fazenda.gov.br/SCERecepcaoRFB/SCERecepcaoRFB.asmx', 'https://hom.nfe.fazenda.gov.br/SCERecepcaoRFB/SCERecepcaoRFB.asmx');
-              LayCTeConsultaDPEC: Result := CTeUtil.SeSenao(AAmbiente=1, 'https://www.nfe.fazenda.gov.br/SCEConsultaRFB/SCEConsultaRFB.asmx', 'https://hom.nfe.fazenda.gov.br/SCEConsultaRFB/SCEConsultaRFB.asmx');
-             end;
-             }
-             case AUF of
-              12: Result := CTeUtil.GetURLAC(AAmbiente, ALayOut);               //AC - Acre
-              27: Result := CTeUtil.GetURLAL(AAmbiente, ALayOut);               //AL - Alagoas
-              16: Result := CTeUtil.GetURLAP(AAmbiente, ALayOut);               //AP - Amapá
-              13: Result := CTeUtil.GetURLAM(AAmbiente, ALayOut);               //AM - Amazonas
-              29: Result := CTeUtil.GetURLBA(AAmbiente, ALayOut);               //BA - Bahia
-              23: Result := CTeUtil.GetURLCE(AAmbiente, ALayOut);               //CE - Ceará
-              53: Result := CTeUtil.GetURLDF(AAmbiente, ALayOut);               //DF - Distrito Federal
-              32: Result := CTeUtil.GetURLES(AAmbiente, ALayOut);               //ES - Espirito Santo
-              52: Result := CTeUtil.GetURLGO(AAmbiente, ALayOut);               //GO - Goiás
-              21: Result := CTeUtil.GetURLMA(AAmbiente, ALayOut);               //MA - Maranhão
-
-              51: Result := CTeUtil.GetURLMT(AAmbiente, ALayOut);               //MT - Mato Grosso
-              50: Result := CTeUtil.GetURLMS(AAmbiente, ALayOut);               //MS - Mato Grosso do Sul
-              31: Result := CTeUtil.GetURLMG(AAmbiente, ALayOut);               //MG - Minas Gerais
-              15: Result := CTeUtil.GetURLPA(AAmbiente, ALayOut);               //PA - Pará
-              25: Result := CTeUtil.GetURLPB(AAmbiente, ALayOut);               //PB - Paraibá
-              41: Result := CTeUtil.GetURLPR(AAmbiente, ALayOut);               //PR - Paraná
-//              41: Result := CTeUtil.GetURLSVRS(AAmbiente, ALayOut);             //PR - Paraná
-
-              26: Result := CTeUtil.GetURLPE(AAmbiente, ALayOut);               //PE - Pernambuco
-//              26: Result := CTeUtil.GetURLSVRS(AAmbiente, ALayOut);             //PE - Pernambuco
-
-              22: Result := CTeUtil.GetURLPI(AAmbiente, ALayOut);               //PI - Piauí
-              33: Result := CTeUtil.GetURLRJ(AAmbiente, ALayOut);               //RJ - Rio de Janeiro
-              24: Result := CTeUtil.GetURLRN(AAmbiente, ALayOut);               //RN - Rio Grande do Norte
-
-              43: Result := CTeUtil.GetURLRS(AAmbiente, ALayOut);               //RS - Rio Grande do Sul
-              11: Result := CTeUtil.GetURLRO(AAmbiente, ALayOut);               //RO - Rondônia
-              14: Result := CTeUtil.GetURLRR(AAmbiente, ALayOut);               //RR - Roraima
-              42: Result := CTeUtil.GetURLSC(AAmbiente, ALayOut);               //SC - Santa Catarina
-
-              35: Result := CTeUtil.GetURLSP(AAmbiente, ALayOut);               //SP - São Paulo
-              28: Result := CTeUtil.GetURLSE(AAmbiente, ALayOut);               //SE - Sergipe
-              17: Result := CTeUtil.GetURLTO(AAmbiente, ALayOut);               //TO - Tocantins
-             end;
-            end;
-        3 : begin
-             {
-             case ALayOut of
-              LayCTeRecepcao      : Result := CTeUtil.SeSenao(AAmbiente=1, 'https://www.scan.fazenda.gov.br/NfeRecepcao/NfeRecepcao.asmx'          , 'https://hom.nfe.fazenda.gov.br/SCAN/nferecepcao/NfeRecepcao.asmx');
-              LayCTeRetRecepcao   : Result := CTeUtil.SeSenao(AAmbiente=1, 'https://www.scan.fazenda.gov.br/NfeRetRecepcao/NfeRetRecepcao.asmx'    , 'https://hom.nfe.fazenda.gov.br/SCAN/nferetrecepcao/NfeRetRecepcao.asmx');
-              LayCTeCancelamento  : Result := CTeUtil.SeSenao(AAmbiente=1, 'https://www.scan.fazenda.gov.br/NfeCancelamento/NfeCancelamento.asmx'  , 'https://hom.nfe.fazenda.gov.br/SCAN/nfecancelamento/NfeCancelamento.asmx');
-              LayCTeInutilizacao  : Result := CTeUtil.SeSenao(AAmbiente=1, 'https://www.scan.fazenda.gov.br/NfeInutilizacao/NfeInutilizacao.asmx'  , 'https://hom.nfe.fazenda.gov.br/SCAN/nfeinutilizacao/NfeInutilizacao.asmx');
-              LayCTeConsultaCT    : Result := CTeUtil.SeSenao(AAmbiente=1, 'https://www.scan.fazenda.gov.br/NfeConsulta/NfeConsulta.asmx'          , 'https://hom.nfe.fazenda.gov.br/SCAN/nfeconsulta/NfeConsulta.asmx');
-              LayCTeStatusServico : Result := CTeUtil.SeSenao(AAmbiente=1, 'https://www.scan.fazenda.gov.br/NfeStatusServico/NfeStatusServico.asmx', 'https://hom.nfe.fazenda.gov.br/SCAN/nfestatusservico/NfeStatusServico.asmx');
-             end;
-             }
-            end;
-        4 : begin
-             case ALayOut of
-              LayCTeEvento : begin
-                               case AUF of
-                                11, // Rondônia
-                                12, // Acre
-                                13, // Amazonas
-                                14, // Roraima
-                                15, // Pará
-                                16, // Amapá
-                                17, // Tocantins
-                                21, // Maranhão
-                                22, // Piauí
-                                23, // Ceará
-                                24, // Rio Grande do Norte
-                                25, // Paraibá
-                                27, // Alagoas
-                                28, // Sergipe
-                                29, // Bahia
-                                31, // Minas Gerais
-                                32, // Espirito Santo
-                                33, // Rio de Janeiro
-                                41, // Paraná
-                                42, // Santa Catarina
-                                43, // Rio Grande do Sul
-                                52, // Goiás
-                                53: // Distrito Federal
-                                    Result := DFeUtil.SeSenao(AAmbiente=1, 'https://nfe.fazenda.sp.gov.br/cteWEB/services/CteRecepcaoEvento.asmx', 'https://homologacao.nfe.fazenda.sp.gov.br/cteWEB/services/CteRecepcaoEvento.asmx');
-                                26, // Pernanbuco
-                                35, // São Paulo
-                                50, // Mato Grosso do Sul
-                                51: // Mato Grosso
-                                    // Alterado por Italo em 23/04/2013 conforme NT2013/003
-                                    Result := DFeUtil.SeSenao(AAmbiente=1, 'https://cte.sefaz.rs.gov.br/ws/CteRecepcaoEvento/CteRecepcaoEvento.asmx', 'https://homologacao.cte.sefaz.rs.gov.br/ws/CteRecepcaoEvento/CteRecepcaoEvento.asmx');
-                               end;
-                             end;
-             end;
-            end;
-        7 : begin // SVC-RS
-             case ALayOut of
-               LayCTeRecepcao:      Result := DFeUtil.SeSenao(AAmbiente = 1, 'https://cte.sefaz.rs.gov.br/ws/CTeRecepcao/CTeRecepcao.asmx'          , 'https://homologacao.cte.sefazvirtual.rs.gov.br/ws/CTeRecepcao/CTeRecepcao.asmx');
-               LayCTeRetRecepcao:   Result := DFeUtil.SeSenao(AAmbiente = 1, 'https://cte.sefaz.rs.gov.br/ws/CTeRetRecepcao/CTeRetRecepcao.asmx'    , 'https://homologacao.cte.sefazvirtual.rs.gov.br/ws/CTeRetRecepcao/CTeRetRecepcao.asmx');
-               LayCTeCancelamento:  Result := DFeUtil.SeSenao(AAmbiente = 1, 'https://cte.sefaz.rs.gov.br/ws/CTeCancelamento/CTeCancelamento.asmx'  , 'https://homologacao.cte.sefazvirtual.rs.gov.br/ws/CTeCancelamento/CTeCancelamento.asmx');
-               LayCTeConsultaCT:    Result := DFeUtil.SeSenao(AAmbiente = 1, 'https://cte.sefaz.rs.gov.br/ws/CTeConsulta/CTeConsulta.asmx'          , 'https://homologacao.cte.sefazvirtual.rs.gov.br/ws/CTeConsulta/CTeConsulta.asmx');
-               LayCTeStatusServico: Result := DFeUtil.SeSenao(AAmbiente = 1, 'https://cte.sefaz.rs.gov.br/ws/CTeStatusServico/CTeStatusServico.asmx', 'https://homologacao.cte.sefazvirtual.rs.gov.br/ws/CTeStatusServico/CTeStatusServico.asmx');
-             end;
-            end;
-        8 : begin // SVC-SP
-             case ALayOut of
-               LayCTeRecepcao:      Result := DFeUtil.SeSenao(AAmbiente = 1, 'https://nfe.fazenda.sp.gov.br/cteWEB/services/CteRecepcao.asmx'     , 'https://homologacao.nfe.fazenda.sp.gov.br/cteWEB/services/CteRecepcao.asmx');
-               LayCTeRetRecepcao:   Result := DFeUtil.SeSenao(AAmbiente = 1, 'https://nfe.fazenda.sp.gov.br/cteWEB/services/CteRetRecepcao.asmx'  , 'https://homologacao.nfe.fazenda.sp.gov.br/cteWEB/services/CteRetRecepcao.asmx');
-               LayCTeCancelamento:  Result := DFeUtil.SeSenao(AAmbiente = 1, 'https://nfe.fazenda.sp.gov.br/cteWEB/services/CteCancelamento.asmx' , 'https://homologacao.nfe.fazenda.sp.gov.br/cteWEB/services/CteCancelamento.asmx');
-               LayCTeConsultaCT:    Result := DFeUtil.SeSenao(AAmbiente = 1, 'https://nfe.fazenda.sp.gov.br/cteWEB/services/CteConsulta.asmx'     , 'https://homologacao.nfe.fazenda.sp.gov.br/cteWEB/services/CteConsulta.asmx');
-               LayCTeStatusServico: Result := DFeUtil.SeSenao(AAmbiente = 1, 'https://nfe.fazenda.sp.gov.br/cteWEB/services/CteStatusServico.asmx', 'https://homologacao.nfe.fazenda.sp.gov.br/cteWEB/services/CteStatusServico.asmx');
-             end;
-            end;
-
- end;
- *)
  if Result = '' then
    raise Exception.Create('URL não disponível para o Estado solicitado.');
 end;
 
-class function CTeUtil.GetURLSVRS(AAmbiente: Integer;
-  ALayOut: TLayOut): WideString;
+// SVRS = SEFAZ Virtual do RS
+class function CTeUtil.GetURLSVRS(AAmbiente: Integer; ALayOut: TLayOut): WideString;
 begin
   case ALayOut of
     LayCTeRecepcao:      Result := DFeUtil.SeSenao(AAmbiente = 1, 'https://cte.sefaz.rs.gov.br/ws/cterecepcao/CteRecepcao.asmx'            , 'https://homologacao.cte.sefaz.rs.gov.br/ws/cterecepcao/CteRecepcao.asmx');
@@ -621,8 +504,7 @@ begin
   end;
 end;
 
-class function CTeUtil.GetURLMG(AAmbiente: Integer;
-  ALayOut: TLayOut): WideString;
+class function CTeUtil.GetURLMG(AAmbiente: Integer; ALayOut: TLayOut): WideString;
 begin
   case ALayOut of
     LayCTeRecepcao:      Result := DFeUtil.SeSenao(AAmbiente = 1, 'https://cte.fazenda.mg.gov.br/cte/services/CteRecepcao'          , 'https://hcte.fazenda.mg.gov.br/cte/services/CteRecepcao'); //?WSDL
@@ -636,8 +518,7 @@ begin
   end;
 end;
 
-class function CTeUtil.GetURLRS(AAmbiente: Integer;
-  ALayOut: TLayOut): WideString;
+class function CTeUtil.GetURLRS(AAmbiente: Integer; ALayOut: TLayOut): WideString;
 begin
   case ALayOut of
     LayCTeRecepcao:      Result := DFeUtil.SeSenao(AAmbiente = 1, 'https://cte.sefaz.rs.gov.br/ws/cterecepcao/CteRecepcao.asmx'                 , 'https://homologacao.cte.sefaz.rs.gov.br/ws/cterecepcao/CteRecepcao.asmx');
@@ -651,8 +532,8 @@ begin
   end;
 end;
 
-class function CTeUtil.GetURLSP(AAmbiente: Integer;
-  ALayOut: TLayOut): WideString;
+// As URLs da SEFAZ de SP são as mesmas para o SVSP = SEFAZ Virtual de SP
+class function CTeUtil.GetURLSP(AAmbiente: Integer; ALayOut: TLayOut): WideString;
 begin
   case ALayOut of
     LayCTeRecepcao:      Result := DFeUtil.SeSenao(AAmbiente = 1, 'https://nfe.fazenda.sp.gov.br/cteWEB/services/cteRecepcao.asmx'         , 'https://homologacao.nfe.fazenda.sp.gov.br/cteWEB/services/cteRecepcao.asmx');
@@ -666,8 +547,7 @@ begin
   end;
 end;
 
-class function CTeUtil.GetURLMS(AAmbiente: Integer;
-  ALayOut: TLayOut): WideString;
+class function CTeUtil.GetURLMS(AAmbiente: Integer; ALayOut: TLayOut): WideString;
 begin
   case ALayOut of
     LayCTeRecepcao:      Result := DFeUtil.SeSenao(AAmbiente = 1, 'https://producao.cte.ms.gov.br/cteWEB/CteRecepcao.asmx'        , 'https://homologacao.cte.ms.gov.br/cteWEB/CteRecepcao.asmx');
@@ -681,8 +561,7 @@ begin
   end;
 end;
 
-class function CTeUtil.GetURLMT(AAmbiente: Integer;
-  ALayOut: TLayOut): WideString;
+class function CTeUtil.GetURLMT(AAmbiente: Integer; ALayOut: TLayOut): WideString;
 begin
   case ALayOut of
     LayCTeRecepcao:      Result := DFeUtil.SeSenao(AAmbiente = 1, 'https://cte.sefaz.mt.gov.br/ctews/services/CteRecepcao'            , 'https://homologacao.sefaz.mt.gov.br/ctews/services/CteRecepcao'); //?WSDL
@@ -697,8 +576,7 @@ begin
 end;
 
 // Adicionado por NCC - http://www.sped.fazenda.pr.gov.br/modules/conteudo/conteudo.php?conteudo=10
-class function CTeUtil.GetURLPR(AAmbiente: Integer;
-  ALayOut: TLayOut): WideString;
+class function CTeUtil.GetURLPR(AAmbiente: Integer; ALayOut: TLayOut): WideString;
 begin
   case ALayOut of
     LayCTeRecepcao:      Result := DFeUtil.SeSenao(AAmbiente = 1, 'https://cte.fazenda.pr.gov.br/cte/CteRecepcao?wsdl'      , 'https://homologacao.cte.fazenda.pr.gov.br/cte/CteRecepcao?wsdl'); //?WSDL
