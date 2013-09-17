@@ -964,6 +964,7 @@ begin
   4303103, // Cachoeirinha/RS
   4311403, // Lajeado/RS
   4314100, // Passo Fundo/RS
+  4316808, // Santa Cruz Do Sul/RS
   4318705  // Sao Leopoldo/RS
          : Provedor := 'Thema';
 

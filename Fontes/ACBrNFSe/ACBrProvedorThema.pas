@@ -131,38 +131,43 @@ begin
 
  case ACodCidade of
   4303103: begin // Cachoeirinha/RS
-            ConfigURL.HomNomeCidade := 'nfsehomologacao.cachoeirinha.rs.gov.br/';
-            ConfigURL.ProNomeCidade := 'nfse.cachoeirinha.rs.gov.br/';
+            ConfigURL.HomNomeCidade := 'nfsehomologacao.cachoeirinha.rs.gov.br/nfse';
+            ConfigURL.ProNomeCidade := 'nfse.cachoeirinha.rs.gov.br/nfse';
             sHTTPPro := 'http://';
            end;
   4311403: begin // Lajeado/RS
-            ConfigURL.HomNomeCidade := 'nfsehml.lajeado.rs.gov.br/thema-';
-            ConfigURL.ProNomeCidade := 'nfse.lajeado.rs.gov.br/thema-';
+            ConfigURL.HomNomeCidade := 'nfsehml.lajeado.rs.gov.br/thema-nfse';
+            ConfigURL.ProNomeCidade := 'nfse.lajeado.rs.gov.br/thema-nfse';
             sHTTPPro := 'http://';
            end;
   4314100: begin // Passo Fundo/RS
-            ConfigURL.HomNomeCidade := 'nfsehomologacao.pmpf.rs.gov.br/';
-            ConfigURL.ProNomeCidade := 'nfse.pmpf.rs.gov.br/thema-';
+            ConfigURL.HomNomeCidade := 'nfsehomologacao.pmpf.rs.gov.br/nfse';
+            ConfigURL.ProNomeCidade := 'nfse.pmpf.rs.gov.br/thema-nfse';
+           end;
+  4316808: begin // Santa Cruz Do Sul/RS
+            ConfigURL.HomNomeCidade := 'nfse.santacruz.rs.gov.br/thema-nfse-hml';
+            ConfigURL.ProNomeCidade := 'nfse.santacruz.rs.gov.br/thema-nfse';
+            sHTTPPro := 'http://';
            end;
   4318705: begin // Sao Leopoldo/RS
-            ConfigURL.HomNomeCidade := 'nfehomologacao.saoleopoldo.rs.gov.br/thema-';
-            ConfigURL.ProNomeCidade := 'nfe.saoleopoldo.rs.gov.br/thema-';
+            ConfigURL.HomNomeCidade := 'nfehomologacao.saoleopoldo.rs.gov.br/thema-nfse';
+            ConfigURL.ProNomeCidade := 'nfe.saoleopoldo.rs.gov.br/thema-nfse';
            end;
  end;
 
- ConfigURL.HomRecepcaoLoteRPS    := 'http://' + ConfigURL.HomNomeCidade + 'nfse/services/NFSEremessa';
- ConfigURL.HomConsultaLoteRPS    := 'http://' + ConfigURL.HomNomeCidade + 'nfse/services/NFSEconsulta';
- ConfigURL.HomConsultaNFSeRPS    := 'http://' + ConfigURL.HomNomeCidade + 'nfse/services/NFSEconsulta';
- ConfigURL.HomConsultaSitLoteRPS := 'http://' + ConfigURL.HomNomeCidade + 'nfse/services/NFSEconsulta';
- ConfigURL.HomConsultaNFSe       := 'http://' + ConfigURL.HomNomeCidade + 'nfse/services/NFSEconsulta';
- ConfigURL.HomCancelaNFSe        := 'http://' + ConfigURL.HomNomeCidade + 'nfse/services/NFSEcancelamento';
+ ConfigURL.HomRecepcaoLoteRPS    := 'http://' + ConfigURL.HomNomeCidade + '/services/NFSEremessa';
+ ConfigURL.HomConsultaLoteRPS    := 'http://' + ConfigURL.HomNomeCidade + '/services/NFSEconsulta';
+ ConfigURL.HomConsultaNFSeRPS    := 'http://' + ConfigURL.HomNomeCidade + '/services/NFSEconsulta';
+ ConfigURL.HomConsultaSitLoteRPS := 'http://' + ConfigURL.HomNomeCidade + '/services/NFSEconsulta';
+ ConfigURL.HomConsultaNFSe       := 'http://' + ConfigURL.HomNomeCidade + '/services/NFSEconsulta';
+ ConfigURL.HomCancelaNFSe        := 'http://' + ConfigURL.HomNomeCidade + '/services/NFSEcancelamento';
 
- ConfigURL.ProRecepcaoLoteRPS    := sHTTPPro + ConfigURL.ProNomeCidade + 'nfse/services/NFSEremessa';
- ConfigURL.ProConsultaLoteRPS    := sHTTPPro + ConfigURL.ProNomeCidade + 'nfse/services/NFSEconsulta';
- ConfigURL.ProConsultaNFSeRPS    := sHTTPPro + ConfigURL.ProNomeCidade + 'nfse/services/NFSEconsulta';
- ConfigURL.ProConsultaSitLoteRPS := sHTTPPro + ConfigURL.ProNomeCidade + 'nfse/services/NFSEconsulta';
- ConfigURL.ProConsultaNFSe       := sHTTPPro + ConfigURL.ProNomeCidade + 'nfse/services/NFSEconsulta';
- ConfigURL.ProCancelaNFSe        := sHTTPPro + ConfigURL.ProNomeCidade + 'nfse/services/NFSEcancelamento';
+ ConfigURL.ProRecepcaoLoteRPS    := sHTTPPro + ConfigURL.ProNomeCidade + '/services/NFSEremessa';
+ ConfigURL.ProConsultaLoteRPS    := sHTTPPro + ConfigURL.ProNomeCidade + '/services/NFSEconsulta';
+ ConfigURL.ProConsultaNFSeRPS    := sHTTPPro + ConfigURL.ProNomeCidade + '/services/NFSEconsulta';
+ ConfigURL.ProConsultaSitLoteRPS := sHTTPPro + ConfigURL.ProNomeCidade + '/services/NFSEconsulta';
+ ConfigURL.ProConsultaNFSe       := sHTTPPro + ConfigURL.ProNomeCidade + '/services/NFSEconsulta';
+ ConfigURL.ProCancelaNFSe        := sHTTPPro + ConfigURL.ProNomeCidade + '/services/NFSEcancelamento';
 
  Result := ConfigURL;
 end;
