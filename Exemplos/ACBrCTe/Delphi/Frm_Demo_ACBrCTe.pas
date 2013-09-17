@@ -299,7 +299,15 @@ begin
   rgFormaEmissao.ItemIndex := Ini.ReadInteger('Geral','FormaEmissao',0);
   ckSalvar.Checked         := Ini.ReadBool(   'Geral','Salvar'      ,True);
   edtPathLogs.Text         := Ini.ReadString( 'Geral','PathSalvar'  ,'');
-  ACBrCTe1.Configuracoes.Geral.FormaEmissao := StrToTpEmis(OK,IntToStr(rgFormaEmissao.ItemIndex+1));
+
+  case rgFormaEmissao.ItemIndex of
+   0: ACBrCTe1.Configuracoes.Geral.FormaEmissao := teNormal;
+   1: ACBrCTe1.Configuracoes.Geral.FormaEmissao := teDPEC; // o mesmo que EPEC
+   2: ACBrCTe1.Configuracoes.Geral.FormaEmissao := teFSDA;
+   3: ACBrCTe1.Configuracoes.Geral.FormaEmissao := teSVCRS;
+   4: ACBrCTe1.Configuracoes.Geral.FormaEmissao := tESVCSP;
+  end;
+  
   ACBrCTe1.Configuracoes.Geral.Salvar       := ckSalvar.Checked;
   ACBrCTe1.Configuracoes.Geral.PathSalvar   := edtPathLogs.Text;
 

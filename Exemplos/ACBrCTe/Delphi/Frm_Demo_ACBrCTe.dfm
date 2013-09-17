@@ -301,11 +301,11 @@ object frmDemo_ACBrCTe: TfrmDemo_ACBrCTe
               Columns = 2
               ItemIndex = 0
               Items.Strings = (
-                'Normal'
-                'Conting'#234'ncia'
-                'SCAN'
-                'DPEC'
-                'FSDA')
+                '1 = Normal'
+                '4 = EPEC'
+                '5 = Conting. FSDA'
+                '7 = SVC-RS'
+                '8 = SVC-SP')
               TabOrder = 4
             end
           end
