@@ -6,6 +6,7 @@ unit ACBrNFSeDANFSeQRRetrato;
 // Quando enviar os fontes referentes ao DANFSE favor alterar
 // a data e o nome da linha abaixo.
 // Última liberação:
+// 17/09/2013 por Italo Jurisato Junior
 // 13/09/2013 por Italo Jurisato Junior
 // 09/09/2013 por Italo Jurisato Junior
 // 05/09/2013 por Italo Jurisato Junior
@@ -428,14 +429,24 @@ begin
 
  if trim(FNFSe.Servico.Descricao) = ''
   then begin
+   (*
    qrmCodServico.Lines.Add(FNFSe.Servico.ItemListaServico + ' / ' +
                            FNFSe.Servico.CodigoTributacaoMunicipio);
    qrmCodServico.Lines.Add(FNFSe.Servico.xItemListaServico);
+   *)
+   qrmCodServico.Lines.Add(FNFSe.Servico.ItemListaServico + ' / ' +
+                           FNFSe.Servico.CodigoTributacaoMunicipio + ' - ' +
+                           FNFSe.Servico.xItemListaServico);
   end
   else begin
+   (*
    qrmCodServico.Lines.Add(FNFSe.Servico.ItemListaServico + ' / ' +
                            FNFSe.Servico.CodigoTributacaoMunicipio);
    qrmCodServico.Lines.Add(FNFSe.Servico.Descricao);
+   *)
+   qrmCodServico.Lines.Add(FNFSe.Servico.ItemListaServico + ' / ' +
+                           FNFSe.Servico.CodigoTributacaoMunicipio + ' - ' +
+                           FNFSe.Servico.Descricao);
   end;
 
  qrmCodServico.Lines.EndUpdate;
