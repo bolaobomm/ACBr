@@ -194,7 +194,7 @@ begin
   then begin
    for i:= 0 to NotasFiscais.Count-1 do
     begin
-     if {NotasFiscais.Items[i].Confirmada and} Imprimir
+     if NotasFiscais.Items[i].Confirmada and Imprimir
       then begin
        NotasFiscais.Items[i].Imprimir;
       end;
