@@ -164,6 +164,8 @@ TACBrECFEpson = class( TACBrECFClass )
        {$IFDEF LINUX} cdecl {$ELSE} stdcall {$ENDIF} ;
     xEPSON_Obter_Arquivo_Binario_MF : function( pszArquivo:AnsiString ) : Integer;
        {$IFDEF LINUX} cdecl {$ELSE} stdcall {$ENDIF} ;
+    xEPSON_Obter_Arquivo_Binario_MFD : function ( pszArquivo:AnsiString ) : Integer;
+       {$IFDEF LINUX} cdecl {$ELSE} stdcall {$ENDIF} ;
 
     procedure Ativar_Epson ;
 
@@ -323,6 +325,7 @@ TACBrECFEpson = class( TACBrECFClass )
        TipoContador: TACBrECFTipoContador = tpcCOO ) ; override ;
 
     Procedure ArquivoMF_DLL(NomeArquivo: AnsiString); override ;
+    Procedure ArquivoMFD_DLL(NomeArquivo: AnsiString); override ;
 
     Procedure AbreGaveta ; override ;
 
@@ -3420,6 +3423,7 @@ begin
    EpsonFunctionDetect('EPSON_Serial_Obter_Estado_Com', @xEPSON_Serial_Obter_Estado_Com);
    EpsonFunctionDetect('EPSON_Send_From_FileEXX', @xEPSON_Send_From_FileEXX);
    EpsonFunctionDetect('EPSON_Obter_Arquivo_Binario_MF', @xEPSON_Obter_Arquivo_Binario_MF);
+   EpsonFunctionDetect('EPSON_Obter_Arquivo_Binario_MFD', @xEPSON_Obter_Arquivo_Binario_MFD);
 end ;
 
 procedure TACBrECFEpson.AbrePortaSerialDLL ;
@@ -3694,7 +3698,7 @@ begin
     // fazer o download da MF
     GravaLog( '   xEPSON_Obter_Arquivo_Binario_MF' );
     Resp := xEPSON_Obter_Arquivo_Binario_MF( NomeArquivo );
-    if (Resp <> 1) then
+    if (Resp <> 0) then
       raise EACBrECFERRO.Create( ACBrStr( 'Erro ao executar EPSON_Obter_Arquivo_Binario_MF.'+sLineBreak+
                                        'Cod.: '+IntToStr(Resp) ))
   finally
@@ -3702,6 +3706,32 @@ begin
   end;
   if not FileExists( NomeArquivo ) then
      raise EACBrECFERRO.Create( ACBrStr( 'Erro na execução de EPSON_Obter_Arquivo_Binario_MF.'+sLineBreak+
+                            'Arquivo: "'+NomeArquivo+'" não gerado' ))
+
+end;
+
+procedure TACBrECFEpson.ArquivoMFD_DLL(NomeArquivo: AnsiString);
+var
+  Resp: Integer;
+  OldAtivo: Boolean;
+begin
+  LoadDLLFunctions;
+
+  OldAtivo := Ativo ;
+  try
+    AbrePortaSerialDLL;
+
+    // fazer o download da MF
+    GravaLog( '   xEPSON_Obter_Arquivo_Binario_MFD' );
+    Resp := xEPSON_Obter_Arquivo_Binario_MFD( NomeArquivo );
+    if (Resp <> 0) then
+      raise EACBrECFERRO.Create( ACBrStr( 'Erro ao executar EPSON_Obter_Arquivo_Binario_MFD.'+sLineBreak+
+                                       'Cod.: '+IntToStr(Resp) ))
+  finally
+     FechaPortaSerialDLL(OldAtivo) ;
+  end;
+  if not FileExists( NomeArquivo ) then
+     raise EACBrECFERRO.Create( ACBrStr( 'Erro na execução de EPSON_Obter_Arquivo_Binario_MFD.'+sLineBreak+
                             'Arquivo: "'+NomeArquivo+'" não gerado' ))
 
 end;
