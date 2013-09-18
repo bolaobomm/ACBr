@@ -44,7 +44,7 @@ type
                     proEquiplano, proISSIntel, proProdam, proGovBR, proRecife, proSimplISS, proThema, proRJ,
                     proPublica, profintelISS, proDigifred, proBetim, proSaatri, proFISSLEX,
                     proGoiania, proIssCuritiba, proBHISS, proNatal, proISSDigital, proISSe, pro4R,
-                    proGovDigital, proFiorilli, proCoplan, proProdata, proAgili );
+                    proGovDigital, proFiorilli, proCoplan, proProdata, proAgili, proVirtual );
 
   TnfseAcao = ( acRecepcionar, acConsSit, acConsLote, acConsNFSeRps, acConsNFSe, acCancelar, acGerar, acRecSincrono, acConsSecRps );
 
@@ -294,12 +294,13 @@ begin
                             'Betha', 'Equiplano', 'ISSIntel', 'Prodam', 'GovBR', 'Recife',
                             'SimplISS', 'Thema', 'RJ', 'Publica', 'fintelISS', 'Digifred', 'Betim', 'Saatri',
                             'FISSLEX', 'Goiania', 'IssCuritiba', 'BHISS', 'Natal', 'ISSDigital', 'ISSe',
-                            '4R', 'GovDigital', 'Fiorilli', 'Coplan', 'Prodata', 'Agili'],
+                            '4R', 'GovDigital', 'Fiorilli', 'Coplan', 'Prodata', 'Agili', 'Virtual'],
                            [proNenhum, proTiplan, proISSNET, proWebISS, proGINFES, proIssDSF, proProdemge, proAbaco,
                             proBetha, proEquiplano, proISSIntel, proProdam, proGovBR, proRecife,
                             proSimplISS, proThema, proRJ, proPublica, profintelISS, proDigifred, proBetim,
                             proSaatri, proFISSLEX, proGoiania, proIssCuritiba, proBHISS, proNatal,
-                            proISSDigital, proISSe, pro4R, proGovDigital, proFiorilli, proCoplan, proProdata, proAgili]);
+                            proISSDigital, proISSe, pro4R, proGovDigital, proFiorilli, proCoplan, proProdata,
+                            proAgili, proVirtual]);
 end;
 
 function StrToProvedor(var ok: boolean; const s: string):TnfseProvedor;
@@ -309,12 +310,13 @@ begin
                             'Betha', 'Equiplano', 'ISSIntel', 'Prodam', 'GovBR', 'Recife',
                             'SimplISS', 'Thema', 'RJ', 'Publica', 'fintelISS', 'Digifred', 'Betim', 'Saatri',
                             'FISSLEX', 'Goiania', 'IssCuritiba', 'BHISS', 'Natal', 'ISSDigital', 'ISSe',
-                            '4R', 'GovDigital', 'Fiorilli', 'Coplan', 'Prodata', 'Agili'],
+                            '4R', 'GovDigital', 'Fiorilli', 'Coplan', 'Prodata', 'Agili', 'Virtual'],
                            [proNenhum, proTiplan, proISSNET, proWebISS, proGINFES, proIssDSF, proProdemge, proAbaco,
                             proBetha, proEquiplano, proISSIntel, proProdam, proGovBR, proRecife,
                             proSimplISS, proThema, proRJ, proPublica, profintelISS, proDigifred, proBetim,
                             proSaatri, proFISSLEX, proGoiania, proIssCuritiba, proBHISS, proNatal,
-                            proISSDigital, proISSe, pro4R, proGovDigital, proFiorilli, proCoplan, proProdata, proAgili]);
+                            proISSDigital, proISSe, pro4R, proGovDigital, proFiorilli, proCoplan, proProdata,
+                            proAgili, proVirtual]);
 end;
 
 // Descrição do Serviço ********************************************************
@@ -978,6 +980,9 @@ begin
   3304524, // Rio das Ostras/RJ
   3501608  // Americana/SP
          : Provedor := 'Tiplan';
+
+  5101803  // Barra do Garcas/MT
+         : Provedor := 'Virtual';
 
   1100049, // Cacoal/RO
   2800308, // Aracaju/SE

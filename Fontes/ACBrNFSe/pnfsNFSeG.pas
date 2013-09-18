@@ -176,7 +176,7 @@ begin
  Result := TagI + DadosMsg + TagF;
 
  if AProvedor in [proNenhum, pro4R, proAgili, proCoplan, profintelISS, proFiorilli, proFISSLex,
-                  proGoiania, proGovDigital, proISSDigital, proISSe, proProdata,
+                  proGoiania, proGovDigital, proISSDigital, proISSe, proProdata, proVirtual,
                   proSaatri] then Result := '';
 end;
 
@@ -349,7 +349,7 @@ begin
                     '</' + Prefixo4 + 'Numero>' +
 
                     // alterado por joel takei 05/07/2013
-                   DFeUtil.SeSenao(AProvedor in [pro4R, proISSe, proFiorilli],
+                   DFeUtil.SeSenao(AProvedor in [pro4R, proISSe, proFiorilli, proVirtual],
 
                     '<' + Prefixo4 + 'CpfCnpj>' +
                      '<' + Prefixo4 + 'Cnpj>' +
@@ -403,6 +403,7 @@ begin
   proISSe,
   proProdata,
   proAgili,
+  proVirtual,
   proSaatri: Result := TagI + Notas + TagF;
   else begin // proWebISS
    DadosMsg := '<' + Prefixo3 + 'LoteRps'+
