@@ -654,8 +654,8 @@ begin
   5103502  // Diamantino/MT
          : Provedor := 'Betha';
 
-  3106705  // Betim/MG
-         : Provedor := 'Betim';
+//  3106705  // Betim/MG
+//         : Provedor := 'Betim';
 
   3106200, // Belo Horizonte/MG
   3136702  // Juiz de Fora/MG
@@ -727,6 +727,7 @@ begin
 //  2910727, // Eunapolis/BA
   2933307, // Vitoria da Conquista/BA
   3101607, // Alfenas/MG
+  3106705  // Betim/MG
   3115300, // Cataguases/MG
   3117504, // Conceicao do Mato Dentro/MG
   3137601, // Lagoa Santa/MG
