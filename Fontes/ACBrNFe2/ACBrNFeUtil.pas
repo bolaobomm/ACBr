@@ -1025,6 +1025,7 @@ begin
    end
   else 
    begin
+    (*
     case ALayOut of
       LayNfeRecepcao      : Result := DFeUtil.SeSenao(AAmbiente=1, 'https://nfe.sefaz.am.gov.br/nfce-services/services/NfeRecepcao2', 'https://homnfce.sefaz.am.gov.br/nfce-services/services/NfeRecepcao2');
       LayNfeRetRecepcao   : Result := DFeUtil.SeSenao(AAmbiente=1, 'https://nfe.sefaz.am.gov.br/nfce-services/services/NfeRetRecepcao2', 'https://homnfce.sefaz.am.gov.br/nfce-services/services/NfeRetRecepcao2');
@@ -1034,8 +1035,10 @@ begin
       LayNFeCCe,
       LayNFeEvento        : Result := DFeUtil.SeSenao(AAmbiente=1, 'https://nfe.sefaz.am.gov.br/nfce-services/services/RecepcaoEvento', 'https://homnfce.sefaz.am.gov.br/nfce-services/services/RecepcaoEvento');
     end;
-    // Novos endereços em ambiente de produção já definidos mas ainda não disponiveis
-    (*
+    *)
+
+    // Novos endereços disponibilizados para a NFC-e
+
     case ALayOut of
       LayNfeRecepcao      : Result := DFeUtil.SeSenao(AAmbiente=1, 'https://nfce.sefaz.am.gov.br/nfce-services/services/NfeRecepcao2', 'https://homnfce.sefaz.am.gov.br/nfce-services/services/NfeRecepcao2');
       LayNfeRetRecepcao   : Result := DFeUtil.SeSenao(AAmbiente=1, 'https://nfce.sefaz.am.gov.br/nfce-services/services/NfeRetRecepcao2', 'https://homnfce.sefaz.am.gov.br/nfce-services/services/NfeRetRecepcao2');
@@ -1045,7 +1048,6 @@ begin
       LayNFeCCe,
       LayNFeEvento        : Result := DFeUtil.SeSenao(AAmbiente=1, 'https://nfce.sefaz.am.gov.br/nfce-services/services/RecepcaoEvento', 'https://homnfce.sefaz.am.gov.br/nfce-services/services/RecepcaoEvento');
     end;
-    *)
    end;
 end;
 
