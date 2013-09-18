@@ -393,7 +393,7 @@ begin
   0710: r := 'Limpeza, manutencao e conservacao de vias e logradouros publicos, imoveis, chamines, piscinas, parques, jardins e congeneres.';
   0711: r := 'Decoracao e jardinagem, inclusive corte e poda de arvores.';
   0712: r := 'Controle e tratamento de efluentes de qualquer natureza e de agentes fisicos, quimicos e biologicos.';
-//  0713: r := 'Atividades pos Colheita.';
+// 0713: r := 'Atividades pos Colheita.';
   0713: r := 'Dedetizacao, desinfeccao, desinsetizacao, imunizacao, higienizacao, desratizacao, pulverizacao e congeneres.';
   0714: r := '(VETADO)';
   0715: r := '(VETADO)';
@@ -697,16 +697,16 @@ begin
          : Provedor := 'Fiorilli';
 
   1100304, // Vilhena/RO
-  5101704, // Barra do Bugres/MT
+//  5101704, // Barra do Bugres/MT
   5102504, // Cáceres/MT
-  5102702, // Canarana/MT
+//  5102702, // Canarana/MT
   5103007, // Chapada dos Guimarães/MT
   5104559, // Itaúba/MT
   5104609, // Itiquira/MT
   5107248, // Santa Carmen/MT
   5107800, // Santo Antônio do Leverger/MT
-  5107875, // Sapezal/MT
-  5107958  // Tangara da Serra/MT
+  5107875  // Sapezal/MT
+//  5107958  // Tangara da Serra/MT
          : Provedor := 'FISSLEX';
 
   1302603, // Manaus/AM
@@ -985,12 +985,15 @@ begin
   2802106, // Estância/SE
   2803500, // Lagarto/SE
   2901007, // Amargosa/BA
+  2901106, // Amelia Rodrigues/BA
   2907509, // Catu/BA
   2910800, // Feira de Santana/BA
-  2925204, // Pojuca/BA
+//  2925204, // Pojuca/BA
+  3101508, // Alem Paraiba/MG
   3104205, // Arcos/MG
   3105608, // Barbacena/MG
   3105905, // Barroso/MG
+  3110202, // Cajuri/MG
   3110509, // Camanducaia/MG
   3111200, // Campo Belo/MG
   3119401, // Coronel Fabriciano/MG
@@ -999,7 +1002,8 @@ begin
   3133808, // Itaúna/MG
   3136207, // João Monlevade/MG
   3150703, // Pirajuba/MG
-  3155702, // Rio Piracicaba/MG
+  3152303, // Porto Firme/MG
+//  3155702, // Rio Piracicaba/MG
   3159605, // Santa Rita do Sapucaí/MG
   3162104, // São Gotardo/MG
   3170107, // Uberaba/MG
@@ -1019,8 +1023,11 @@ begin
   3305604, // Silva Jardim/RJ
   3305802, // Teresópolis/RJ
   4301602, // Bage/RS
+  5101308, // Arenapolis/MT
+  5101704, // Barra do Bugres/MT
   5105259, // Lucas do Rio Verde/MT
   5107909, // Sinop/MT
+  5107958, // Tangara da Serra/MT
   5204508  // Caldas Novas/GO
          : Provedor := 'WebISS';
 

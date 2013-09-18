@@ -166,6 +166,10 @@ begin
             ConfigURL.HomNomeCidade := 'amargosaba';
             ConfigURL.ProNomeCidade := 'amargosaba';
            end;
+  2901106: begin // Amelia Rodrigues/BA
+            ConfigURL.HomNomeCidade := 'ameliarodriguesba';
+            ConfigURL.ProNomeCidade := 'ameliarodriguesba';
+           end;
   2910800: begin // Feira de Santana/BA
             ConfigURL.HomNomeCidade := 'feiradesantanaba';
             ConfigURL.ProNomeCidade := 'feiradesantanaba';
@@ -182,6 +186,10 @@ begin
             ConfigURL.HomNomeCidade := 'bapojuca';
             ConfigURL.ProNomeCidade := 'bapojuca';
            end;
+  3101508: begin // Alem Paraiba/MG
+            ConfigURL.HomNomeCidade := 'alemparaibamg';
+            ConfigURL.ProNomeCidade := 'alemparaibamg';
+           end;
   3105608: begin // Barbacena/MG
             ConfigURL.HomNomeCidade := 'mgbarbacena';
             ConfigURL.ProNomeCidade := 'mgbarbacena';
@@ -189,6 +197,10 @@ begin
   3105905: begin // Barroso/MG
             ConfigURL.HomNomeCidade := 'barrosomg';
             ConfigURL.ProNomeCidade := 'barrosomg';
+           end;
+  3110202: begin // Cajuri/MG
+            ConfigURL.HomNomeCidade := 'cajurimg';
+            ConfigURL.ProNomeCidade := 'cajurimg';
            end;
   3110509: begin // Camanducaia/MG
             ConfigURL.HomNomeCidade := 'camanducaiamg';
@@ -221,6 +233,10 @@ begin
   3150703: begin // Pirajuba/MG
             ConfigURL.HomNomeCidade := 'pirajubamg';
             ConfigURL.ProNomeCidade := 'pirajubamg';
+           end;
+  3152303: begin // Porto Firme/MG
+            ConfigURL.HomNomeCidade := 'portofirmemg';
+            ConfigURL.ProNomeCidade := 'portofirmemg';
            end;
   3155702: begin // Rio Piracicaba/MG
             ConfigURL.HomNomeCidade := 'riopiracicabamg';
@@ -302,6 +318,14 @@ begin
             ConfigURL.HomNomeCidade := 'bagers';
             ConfigURL.ProNomeCidade := 'bagers';
            end;
+  5101308: begin // Arenapolis/MT
+            ConfigURL.HomNomeCidade := 'arenapolismt';
+            ConfigURL.ProNomeCidade := 'arenapolismt';
+           end;
+  5101704: begin // Barra do Bugres/MT
+            ConfigURL.HomNomeCidade := 'barradobugresmt';
+            ConfigURL.ProNomeCidade := 'barradobugresmt';
+           end;
   5105259: begin // Lucas do Rio Verde/MT
             ConfigURL.HomNomeCidade := 'lucasdorioverdemt';
             ConfigURL.ProNomeCidade := 'lucasdorioverdemt';
@@ -309,6 +333,10 @@ begin
   5107909: begin // Sinop/MT
             ConfigURL.HomNomeCidade := 'sinop';
             ConfigURL.ProNomeCidade := 'sinop';
+           end;
+  5107958: begin // Tangara da Serra/MT
+            ConfigURL.HomNomeCidade := 'tangaradaserramt';
+            ConfigURL.ProNomeCidade := 'tangaradaserramt';
            end;
   5204508: begin // Caldas Novas/GO
             ConfigURL.HomNomeCidade := 'caldasnovasgo';
@@ -318,10 +346,17 @@ begin
 
  case ACodCidade of
   1100049,
+  2901106,
+  3101508,
+  3110202,
   3150703,
+  3152303,
   3162104,
   3301207,
-  3301306: begin
+  3301306,
+  5101308,
+  5101704,
+  5107958: begin
             ConfigURL.HomRecepcaoLoteRPS    := 'https://www4.webiss.com.br/' + ConfigURL.HomNomeCidade + '_wsnfse_homolog/NfseServices.svc';
             ConfigURL.HomConsultaLoteRPS    := 'https://www4.webiss.com.br/' + ConfigURL.HomNomeCidade + '_wsnfse_homolog/NfseServices.svc';
             ConfigURL.HomConsultaNFSeRPS    := 'https://www4.webiss.com.br/' + ConfigURL.HomNomeCidade + '_wsnfse_homolog/NfseServices.svc';
