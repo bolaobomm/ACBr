@@ -297,8 +297,14 @@ begin
    LocNFSeW.GerarXml;
 
    if DFeUtil.EstaVazio(CaminhoArquivo)
-    then CaminhoArquivo := NotaUtil.PathWithDelim(TACBrNFSe( TNotasFiscais( Collection ).ACBrNFSe ).Configuracoes.Arquivos.GetPathRPS) +
-                            Self.NFSe.InfID.ID + '-Rps.xml';
+    then begin
+     if TACBrNFSe( TNotasFiscais( Collection ).ACBrNFSe ).Configuracoes.Arquivos.EmissaoPathNFSe then
+       CaminhoArquivo := TACBrNFSe( TNotasFiscais( Collection ).ACBrNFSe ).Configuracoes.Arquivos.GetPathRPS(Self.NFSe.DataEmissao)
+     else
+       CaminhoArquivo := TACBrNFSe( TNotasFiscais( Collection ).ACBrNFSe ).Configuracoes.Arquivos.GetPathRPS(0);
+
+    CaminhoArquivo := NotaUtil.PathWithDelim(CaminhoArquivo) + Self.NFSe.InfID.ID + '-Rps.xml';
+    end;
 
    if DFeUtil.EstaVazio(CaminhoArquivo) or not DirectoryExists(ExtractFilePath(CaminhoArquivo))
     then raise Exception.Create('Caminho Inválido: ' + CaminhoArquivo);
@@ -361,6 +367,7 @@ var
  LocNFSeW  : TNFSeW;
  Leitor    : TLeitor;
  FMsg      : AnsiString;
+ CaminhoArquivo : String;
 begin
  for i := 0 to Self.Count-1 do
   begin
@@ -378,7 +385,13 @@ begin
     Self.Items[i].XML_Rps := LocNFSeW.Gerador.ArquivoFormatoXML;
 
     if FConfiguracoes.WebServices.Salvar
-     then FConfiguracoes.Geral.Save(NotaUtil.PathWithDelim(FConfiguracoes.Arquivos.GetPathRPS) + Self.Items[i].NFSe.InfID.ID+'-Rps2.xml', LocNFSeW.Gerador.ArquivoFormatoXML);
+     then begin
+     if FConfiguracoes.Arquivos.EmissaoPathNFSe then
+       CaminhoArquivo := FConfiguracoes.Arquivos.GetPathRPS(Self.Items[i].NFSe.DataEmissao)
+     else
+       CaminhoArquivo := FConfiguracoes.Arquivos.GetPathRPS(0);
+       FConfiguracoes.Geral.Save(NotaUtil.PathWithDelim(CaminhoArquivo) + Self.Items[i].NFSe.InfID.ID+'-Rps2.xml', LocNFSeW.Gerador.ArquivoFormatoXML);
+     end;
 
     if self.Configuracoes.Certificados.AssinaRPS
      then begin
@@ -422,7 +435,12 @@ begin
 
 //    if FConfiguracoes.Geral.Salvar
 //     then
-    FConfiguracoes.Geral.Save(NotaUtil.PathWithDelim(FConfiguracoes.Arquivos.GetPathRPS) + Self.Items[i].NFSe.InfID.ID+'-Rps.xml', vAssinada);
+    if FConfiguracoes.Arquivos.EmissaoPathNFSe then
+      CaminhoArquivo := FConfiguracoes.Arquivos.GetPathRPS(Self.Items[i].NFSe.DataEmissao)
+    else
+      CaminhoArquivo := FConfiguracoes.Arquivos.GetPathRPS(0);
+
+    FConfiguracoes.Geral.Save(NotaUtil.PathWithDelim(CaminhoArquivo) + Self.Items[i].NFSe.InfID.ID+'-Rps.xml', vAssinada);
 
     if DFeUtil.NaoEstaVazio(Self.Items[i].NomeArq)
      then FConfiguracoes.Geral.Save(ExtractFileName(Self.Items[i].NomeArq), vAssinada, ExtractFilePath(Self.Items[i].NomeArq));

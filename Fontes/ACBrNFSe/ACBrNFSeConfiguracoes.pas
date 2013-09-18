@@ -266,7 +266,7 @@ type
     constructor Create(AOwner: TComponent); override;
     function GetPathCan: String;
     function GetPathGer: String;
-    function GetPathRPS: String;
+    function GetPathRPS(Data: TDateTime = 0): String;
     function GetPathNFSe(Data : TDateTime = 0): String;
   published
     property Salvar     : Boolean read FSalvar  write FSalvar  default False;
@@ -857,7 +857,7 @@ begin
  Result := Dir;
 end;
 
-function TArquivosConf.GetPathRPS: String;
+function TArquivosConf.GetPathRPS(Data: TDateTime): String;
 var
  wDia, wMes, wAno : Word;
  Dir : String;
@@ -868,7 +868,9 @@ begin
 
  if FMensal
   then begin
-   DecodeDate(Now, wAno, wMes, wDia);
+   if Data = 0
+    then Data := Now;
+   DecodeDate(Data, wAno, wMes, wDia);
    if Pos(IntToStr(wAno)+IntToStrZero(wMes,2),Dir) <= 0
     then Dir := PathWithDelim(Dir)+IntToStr(wAno)+IntToStrZero(wMes,2);
   end;
