@@ -727,7 +727,7 @@ begin
 //  2910727, // Eunapolis/BA
   2933307, // Vitoria da Conquista/BA
   3101607, // Alfenas/MG
-  3106705  // Betim/MG
+  3106705, // Betim/MG
   3115300, // Cataguases/MG
   3117504, // Conceicao do Mato Dentro/MG
   3137601, // Lagoa Santa/MG
