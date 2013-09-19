@@ -292,6 +292,7 @@ TACBrECFSwedaSTX = class( TACBrECFClass )
        TipoContador: TACBrECFTipoContador = tpcCOO  ) ; override ;
 
     Procedure ArquivoMF_DLL(NomeArquivo: AnsiString); override ;
+    Procedure ArquivoMFD_DLL(NomeArquivo: AnsiString); override ;
 
     procedure PafMF_GerarCAT52(const DataInicial: TDateTime;
       const DataFinal: TDateTime; const DirArquivos: string); override;
@@ -1086,9 +1087,12 @@ end;
 procedure TACBrECFSwedaSTX.ArquivoMF_DLL(NomeArquivo: AnsiString);
 var
   Resp: Integer;
-  FileMF : AnsiString;
+  FileMF, ArquivoMf : AnsiString;
   OldAtivo: Boolean;
 begin
+  ArquivoMf := fsApplicationPath+'SWEDA'+PathDelim+GetNumSerie+PathDelim+GetNumSerie+'.MF' ;
+  GravaLog( '  Arquivo Binario deve estar em: '+ArquivoMf );
+
   LoadDLLFunctions;
 
   OldAtivo := Ativo ;
@@ -1101,7 +1105,11 @@ begin
     Resp := xECF_DownloadMF( FileMF );
     if (Resp <> 1) then
        raise EACBrECFERRO.Create( ACBrStr( 'Erro ao executar ECF_DownloadMF.'+sLineBreak+
-                                  DescricaoErroDLL(Resp) ));
+                                  DescricaoErroDLL(Resp) ))
+    else
+       if FileExists( ArquivoMf ) then
+          CopyFileTo( ArquivoMf, NomeArquivo );
+
   finally
      xECF_FechaPortaSerial ;
      try
@@ -1112,6 +1120,45 @@ begin
   if not FileExists( NomeArquivo ) then
      raise EACBrECFERRO.Create( ACBrStr( 'Erro na execução de ECF_DownloadMF.'+sLineBreak+
                             'Arquivo: "'+NomeArquivo+'" não gerado' ))
+end;
+
+procedure TACBrECFSwedaSTX.ArquivoMFD_DLL(NomeArquivo: AnsiString);
+var
+  Resp: Integer;
+  FileMFD, ArquivoMfd : AnsiString;
+  OldAtivo: Boolean;
+begin
+  ArquivoMfd := fsApplicationPath+'SWEDA'+PathDelim+GetNumSerie+PathDelim+GetNumSerieMFD+'.MFD' ;
+  GravaLog( '  Arquivo Binario deve estar em: '+ArquivoMfd );
+
+  LoadDLLFunctions;
+
+  OldAtivo := Ativo ;
+  try
+    AbrePortaSerialDLL;
+
+    // fazer o download da MF
+    GravaLog( '   xECF_DownloadMFD' );
+    FileMFD := ExtractFileName( NomeArquivo );
+    Resp := xECF_DownloadMFD( FileMFD, '0', '', '', '0' );
+    if (Resp <> 1) then
+       raise EACBrECFERRO.Create( ACBrStr( 'Erro ao executar ECF_DownloadMFD.'+sLineBreak+
+                                  DescricaoErroDLL(Resp) ))
+    else
+       if FileExists( ArquivoMfd ) then
+          CopyFileTo( ArquivoMfd, NomeArquivo );
+
+  finally
+     xECF_FechaPortaSerial ;
+     try
+        Ativo := OldAtivo ;
+     except
+     end;
+  end;
+  if not FileExists( NomeArquivo ) then
+     raise EACBrECFERRO.Create( ACBrStr( 'Erro na execução de ECF_DownloadMFD.'+sLineBreak+
+                            'Arquivo: "'+NomeArquivo+'" não gerado' ))
+
 end;
 
 procedure TACBrECFSwedaSTX.PafMF_GerarCAT52(const DataInicial: TDateTime;
