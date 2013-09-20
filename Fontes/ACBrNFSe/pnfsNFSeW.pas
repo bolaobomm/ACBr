@@ -149,8 +149,12 @@ begin
   then Atributo := ' xmlns:' + stringReplace(Prefixo4, ':', '', []) + '="' + FURL + FDefTipos + '"'
   else Atributo := ' xmlns="' + FURL + FDefTipos + '"';
 
- if FProvedor = proISSDigital
-  then Atributo := '';
+// if FProvedor = proISSDigital
+//  then Atributo := '';
+
+ // Jonatan ISS Nova Lima
+ if (FProvedor = proISSDigital) and (NFSe.NumeroLote <> '')
+  then Atributo := ' Id="' +  (NFSe.IdentificacaoRps.Numero) + '"';
 
  if FProvedor <> proIssDsf then
  // Alterado Por Cleiver em 01/02/2013
@@ -995,8 +999,14 @@ end;
 
 procedure TNFSeW.GerarXML_Provedor_ISSDigital;
 begin
- Gerador.wGrupoNFSe('InfDeclaracaoPrestacaoServico ' + FIdentificador + '="' + NFSe.NumeroLote + '"');
- Gerador.wGrupoNFSe('Rps ' + FIdentificador + '="' + NFSe.IdentificacaoRps.Serie +'"');
+ Gerador.wGrupoNFSe('InfDeclaracaoPrestacaoServico xmlns="http://www.abrasf.org.br/nfse.xsd" ' + FIdentificador + '="' + (NFSe.NumeroLote) + '"');
+
+ if NFSe.NumeroLote <> ''
+  then Gerador.wGrupoNFSe('Rps ' + FIdentificador + '="' + (NFSe.IdentificacaoRps.Numero) +'"')
+  else Gerador.wGrupoNFSe('Rps');
+
+// Gerador.wGrupoNFSe('InfDeclaracaoPrestacaoServico ' + FIdentificador + '="' + NFSe.NumeroLote + '"');
+// Gerador.wGrupoNFSe('Rps ' + FIdentificador + '="' + NFSe.IdentificacaoRps.Serie +'"');
 
 // Gerador.wGrupoNFSe('InfDeclaracaoPrestacaoServico');
 // Gerador.wGrupoNFSe('Rps ' + FIdentificador + '="rps' + NFSe.InfID.ID + '"');

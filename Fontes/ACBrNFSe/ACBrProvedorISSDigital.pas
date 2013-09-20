@@ -471,6 +471,22 @@ end;
 function TProvedorISSDigital.GeraEnvelopeConsultarLoteRPS(URLNS: String;
   CabMsg, DadosMsg, DadosSenha: AnsiString): AnsiString;
 begin
+ // Jonatan - Consulta Lote RPS Nova Lima
+ result := '<?xml version="1.0" encoding="UTF-8"?>' +
+           '<s:Envelope xmlns:s="http://schemas.xmlsoap.org/soap/envelope/"' +
+                      ' xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">' +
+            '<s:Header>' +
+              DadosSenha +
+            '</s:Header>' +
+            '<s:Body>' +
+             '<NS1:ConsultarLoteRps xmlns:NS1="urn:uWebServiceIssDigitalIntf-IuWebServiceIssDigital">' +
+              '<Value xsi:type="xsd:string">' +
+                 DadosMsg +
+              '</Value>' +
+             '</NS1:ConsultarLoteRps>' +
+            '</s:Body>' +
+           '</s:Envelope>';
+ (*
  result := '<?xml version="1.0" encoding="UTF-8"?>' +
            '<S:Envelope xmlns:S="http://schemas.xmlsoap.org/soap/envelope/"' +
                       ' xmlns:nfse="http://nfse.abrasf.org.br">' +
@@ -488,11 +504,28 @@ begin
              '</nfse:ConsultarLoteRps>' +
             '</S:Body>' +
            '</S:Envelope>';
+ *)
 end;
 
 function TProvedorISSDigital.GeraEnvelopeConsultarNFSeporRPS(URLNS: String;
   CabMsg, DadosMsg, DadosSenha: AnsiString): AnsiString;
 begin
+ // Jonatan
+ result := '<?xml version="1.0" encoding="UTF-8"?>' +
+           '<s:Envelope xmlns:s="http://schemas.xmlsoap.org/soap/envelope/"' +
+                      ' xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">' +
+            '<s:Header>' +
+              DadosSenha +
+            '</s:Header>' +
+            '<s:Body>' +
+             '<NS1:ConsultarNfsePorRps xmlns:NS1="urn:uWebServiceIssDigitalIntf-IuWebServiceIssDigital">' +
+              '<Value xsi:type="xsd:string">' +
+                 DadosMsg +
+              '</Value>' +
+             '</NS1:ConsultarNfsePorRps>' +
+            '</s:Body>' +
+           '</s:Envelope>';
+ (*
  result := '<?xml version="1.0" encoding="UTF-8"?>' +
            '<S:Envelope xmlns:S="http://schemas.xmlsoap.org/soap/envelope/"' +
                       ' xmlns:nfse="http://nfse.abrasf.org.br">' +
@@ -510,11 +543,28 @@ begin
              '</nfse:ConsultarNfsePorRps>' +
             '</S:Body>' +
            '</S:Envelope>';
+ *)
 end;
 
 function TProvedorISSDigital.GeraEnvelopeConsultarNFSe(URLNS: String; CabMsg,
   DadosMsg, DadosSenha: AnsiString): AnsiString;
 begin
+ // Jonatan Augusto - Nova Lima MG
+ result := '<?xml version="1.0" encoding="UTF-8"?>' +
+           '<s:Envelope xmlns:s="http://schemas.xmlsoap.org/soap/envelope/"' +
+                      ' xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">' +
+            '<s:Header>' +
+              DadosSenha +
+            '</s:Header>' +
+            '<s:Body>' +
+             '<NS1:ConsultarNfseServicoPrestado xmlns:NS1="urn:uWebServiceIssDigitalIntf-IuWebServiceIssDigital">' +
+              '<Value xsi:type="xsd:string">' +
+                 DadosMsg +
+              '</Value>' +
+             '</NS1:ConsultarNfseServicoPrestado>' +
+            '</s:Body>' +
+           '</s:Envelope>';
+ (*
  result := '<?xml version="1.0" encoding="UTF-8"?>' +
            '<S:Envelope xmlns:S="http://schemas.xmlsoap.org/soap/envelope/"' +
                       ' xmlns:nfse="http://nfse.abrasf.org.br">' +
@@ -532,11 +582,28 @@ begin
              '</nfse:ConsultarNfseServicoPrestado>' +
             '</S:Body>' +
            '</S:Envelope>';
+ *)
 end;
 
 function TProvedorISSDigital.GeraEnvelopeCancelarNFSe(URLNS: String; CabMsg,
   DadosMsg, DadosSenha: AnsiString): AnsiString;
 begin
+ // Jonatan Augusto - Nova Lima MG
+ result := '<?xml version="1.0" encoding="UTF-8"?>' +
+           '<s:Envelope xmlns:s="http://schemas.xmlsoap.org/soap/envelope/"' +
+                      ' xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">' +
+            '<s:Header>' +
+              DadosSenha +
+            '</s:Header>' +
+            '<s:Body>' +
+             '<NS1:CancelarNfse xmlns:NS1="urn:uWebServiceIssDigitalIntf-IuWebServiceIssDigital">' +
+              '<Value xsi:type="xsd:string">' +
+                 DadosMsg +
+              '</Value>' +
+             '</NS1:CancelarNfse>' +
+            '</s:Body>' +
+           '</s:Envelope>';
+ (*
  result := '<?xml version="1.0" encoding="UTF-8"?>' +
            '<S:Envelope xmlns:S="http://schemas.xmlsoap.org/soap/envelope/"' +
                       ' xmlns:nfse="http://nfse.abrasf.org.br">' +
@@ -554,11 +621,28 @@ begin
              '</nfse:CancelarNfse>' +
             '</S:Body>' +
            '</S:Envelope>';
+ *)
 end;
 
 function TProvedorISSDigital.GeraEnvelopeGerarNFSe(URLNS: String; CabMsg,
   DadosMsg, DadosSenha: AnsiString): AnsiString;
 begin
+ // Jonatan - Nova Lima MG
+ result := '<?xml version="1.0" encoding="UTF-8"?>' +
+           '<s:Envelope xmlns:s="http://schemas.xmlsoap.org/soap/envelope/"' +
+                      ' xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">' +
+            '<s:Header>' +
+              DadosSenha +
+            '</s:Header>' +
+            '<s:Body>' +
+             '<NS1:GerarNfse xmlns:NS1="urn:uWebServiceIssDigitalIntf-IuWebServiceIssDigital">' +
+              '<Value xsi:type="xsd:string">' +
+                 DadosMsg +
+              '</Value>' +
+             '</NS1:GerarNfse>' +
+            '</s:Body>' +
+           '</s:Envelope>';
+ (*
  result := '<?xml version="1.0" encoding="UTF-8"?>' +
            '<S:Envelope xmlns:S="http://schemas.xmlsoap.org/soap/envelope/"' +
                       ' xmlns:nfse="http://nfse.abrasf.org.br">' +
@@ -576,6 +660,7 @@ begin
              '</nfse:GerarNfse>' +
             '</S:Body>' +
            '</S:Envelope>';
+ *)
 end;
 
 function TProvedorISSDigital.GetSoapAction(Acao: TnfseAcao; NomeCidade: String): String;

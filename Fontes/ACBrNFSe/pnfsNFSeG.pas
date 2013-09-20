@@ -31,13 +31,14 @@ type
                                   TagI, TagF: AnsiString; AProvedor: TnfseProvedor = proNenhum): AnsiString;
 
      class function Gera_DadosMsgConsNFSeRPS(Prefixo3, Prefixo4, NameSpaceDad, VersaoXML,
-                                     NumeroRps, SerieRps, TipoRps, CNPJ, IM: String;
+                                     NumeroRps, SerieRps, TipoRps, CNPJ, IM, senha, frase_secreta: String;
                                      TagI, TagF: AnsiString; AProvedor: TnfseProvedor = proNenhum): AnsiString;
 
      class function Gera_DadosMsgConsNFSe(Prefixo3, Prefixo4, NameSpaceDad, VersaoXML,
                                   CNPJ, IM: String;
                                   DataInicial, DataFinal: TDateTime;
                                   TagI, TagF: AnsiString; NumeroNFSe: string = '';
+                                  Senha : string = ''; FraseSecreta : string = '';
                                   AProvedor: TnfseProvedor = proNenhum;
                                   APagina: Integer = 1): AnsiString;
 
@@ -227,8 +228,9 @@ begin
 end;
 
 class function TNFSeG.Gera_DadosMsgConsNFSeRPS(Prefixo3, Prefixo4,
-  NameSpaceDad, VersaoXML, NumeroRps, SerieRps, TipoRps, CNPJ, IM: String; TagI,
-  TagF: AnsiString; AProvedor: TnfseProvedor = proNenhum): AnsiString;
+  NameSpaceDad, VersaoXML, NumeroRps, SerieRps, TipoRps, CNPJ, IM,
+  senha, frase_secreta: String;
+  TagI, TagF: AnsiString; AProvedor: TnfseProvedor = proNenhum): AnsiString;
 var
  DadosMsg: AnsiString;
 begin
@@ -264,6 +266,15 @@ begin
               '<' + Prefixo4 + 'InscricaoMunicipal>' +
                 IM +
               '</' + Prefixo4 + 'InscricaoMunicipal>' +
+
+              DFeUtil.SeSenao(AProvedor = proISSDigital,
+               '<' + Prefixo4 + 'Senha>' +
+                 Senha +
+               '</' + Prefixo4 + 'Senha>' +
+               '<' + Prefixo4 + 'FraseSecreta>' +
+                 frase_secreta +
+               '</' + Prefixo4 + 'FraseSecreta>', '') +
+
              '</' + Prefixo3 + 'Prestador>';
 
  Result := TagI + DadosMsg + TagF;
@@ -273,7 +284,8 @@ end;
 
 class function TNFSeG.Gera_DadosMsgConsNFSe(Prefixo3, Prefixo4,
   NameSpaceDad, VersaoXML, CNPJ, IM: String; DataInicial, DataFinal: TDateTime; TagI,
-  TagF: AnsiString; NumeroNFSe: string = ''; AProvedor: TnfseProvedor = proNenhum;
+  TagF: AnsiString; NumeroNFSe: string = ''; Senha : string = '';
+  FraseSecreta : string = ''; AProvedor: TnfseProvedor = proNenhum;
   APagina: Integer = 1): AnsiString;
 var
  DadosMsg: AnsiString;
@@ -297,6 +309,15 @@ begin
                '<' + Prefixo4 + 'InscricaoMunicipal>' +
                 IM +
                '</' + Prefixo4 + 'InscricaoMunicipal>' +
+
+              DFeUtil.SeSenao(AProvedor = proISSDigital,
+               '<' + Prefixo4 + 'Senha>' +
+                 Senha +
+               '</' + Prefixo4 + 'Senha>' +
+               '<' + Prefixo4 + 'FraseSecreta>' +
+                 FraseSecreta +
+               '</' + Prefixo4 + 'FraseSecreta>', '') +
+
               '</' + Prefixo3 + 'Prestador>';
 
  if NumeroNFSe <> ''
@@ -349,7 +370,7 @@ begin
                     '</' + Prefixo4 + 'Numero>' +
 
                     // alterado por joel takei 05/07/2013
-                   DFeUtil.SeSenao(AProvedor in [pro4R, proISSe, proFiorilli, proVirtual],
+                   DFeUtil.SeSenao(AProvedor in [pro4R, proISSe, proFiorilli, proVirtual, proISSDigital],
 
                     '<' + Prefixo4 + 'CpfCnpj>' +
                      '<' + Prefixo4 + 'Cnpj>' +

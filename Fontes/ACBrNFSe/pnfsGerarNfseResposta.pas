@@ -610,6 +610,18 @@ begin
 
           inc(i);
         end;
+
+        // Jonatan - Nova Lima MG
+        i := 0;
+        while Leitor.rExtrai(2, 'ListaMensagemRetorno', '', i + 1) <> '' do
+        begin
+          ListaNfse.FMsgRetorno.Add;
+          ListaNfse.FMsgRetorno[i].FCodigo   := Leitor.rCampo(tcStr, 'Codigo');
+          ListaNfse.FMsgRetorno[i].FMensagem := Leitor.rCampo(tcStr, 'Mensagem');
+          ListaNfse.FMsgRetorno[i].FCorrecao := Leitor.rCampo(tcStr, 'Correcao');
+
+          inc(i);
+        end;
       end;
 
       Result := True;

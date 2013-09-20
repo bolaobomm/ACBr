@@ -236,6 +236,8 @@ type
     FTipo: String;
     FCnpj: String;
     FInscricaoMunicipal: String;
+    FSenha: string;
+    FFraseSecreta: string;
     FNFSeRetorno: TRetNfseRps;
     FNotasFiscais : TNotasFiscais;
   public
@@ -246,6 +248,8 @@ type
     property Tipo: String read FTipo write FTipo;
     property Cnpj: String read FCnpj write FCnpj;
     property InscricaoMunicipal: String read FInscricaoMunicipal write FInscricaoMunicipal;
+    property Senha: string read FSenha write FSenha;
+    property FraseSecreta: string read FFraseSecreta write FFraseSecreta;
     property NFSeRetorno: TRetNfseRps read FNFSeRetorno write FNFSeRetorno;
   end;
 
@@ -259,6 +263,8 @@ type
     FNFSeRetorno: TRetNfse;
     FNotasFiscais : TNotasFiscais;
     FPagina: Integer;
+    FSenha: string;
+    FFraseSecreta: string;
   public
     function Executar: Boolean; override;
     constructor Create(AOwner : TComponent; ANotasFiscais : TNotasFiscais); reintroduce;
@@ -269,6 +275,8 @@ type
     property NumeroNFSe: String read FNumeroNFSe write FNumeroNFSe;
     property NFSeRetorno: TRetNfse read FNFSeRetorno write FNFSeRetorno;
     property Pagina: Integer read FPagina write FPagina;
+    property Senha: string read FSenha write FSenha;
+    property FraseSecreta: string read FFraseSecreta write FFraseSecreta;
   end;
 
   TNFSeConsultarSequencialRPS = Class(TWebServicesBase)
@@ -398,9 +406,13 @@ type
                              ACNPJ, AInscricaoMunicipal: string;
                              const ASenha: string = '';
                              const AFraseSecreta: string = ''): Boolean; overload;
-    function ConsultaNFSeporRps(ANumero, ASerie, ATipo, ACnpj, AInscricaoMunicipal: String): Boolean;
+    function ConsultaNFSeporRps(ANumero, ASerie, ATipo, ACnpj, AInscricaoMunicipal: String;
+                                const ASenha: string = '';
+                                const AFraseSecreta: string = ''): Boolean;
     function ConsultaNFSe(ACnpj, AInscricaoMunicipal: String; ADataInicial, ADataFinal: TDateTime;
-                          NumeroNFSe: string = ''; APagina: Integer = 1): Boolean;
+                          NumeroNFSe: string = ''; APagina: Integer = 1;
+                          const ASenha: string = '';
+                          const AFraseSecreta: string = ''): Boolean;
     function ConsultaSequencialRPS(ACidade, ACnpj, AInscricaoMunicipal, ASeriePrestacao: String):Boolean;
     function CancelaNFSe(ACodigoCancelamento: String;
                          const CarregaProps: boolean = true): Boolean; overload;
@@ -1223,6 +1235,8 @@ begin
                                                       TNFSeConsultarNfseRPS(Self).Tipo,
                                                       SomenteNumeros(TNFSeConsultarNfseRPS(Self).Cnpj),
                                                       TNFSeConsultarNfseRPS(Self).InscricaoMunicipal,
+                                                      TNFSeConsultarNfseRPS(Self).Senha,
+                                                      TNFSeConsultarNfseRPS(Self).FraseSecreta,
                                                       '', '', FProvedor);
    if FDadosMsg <> ''
     then begin
@@ -1258,6 +1272,8 @@ begin
                                                       TNFSeConsultarNfseRPS(Self).Tipo,
                                                       SomenteNumeros(TNFSeConsultarNfseRPS(Self).Cnpj),
                                                       TNFSeConsultarNfseRPS(Self).InscricaoMunicipal,
+                                                      TNFSeConsultarNfseRPS(Self).Senha,
+                                                      TNFSeConsultarNfseRPS(Self).FraseSecreta,
                                                       FTagI, FTagF, FProvedor);
   end;
   if FDadosMsg = '' then
@@ -1353,7 +1369,10 @@ begin
                                                    TNFSeConsultarNfse(Self).DataInicial,
                                                    TNFSeConsultarNfse(Self).DataFinal,
                                                    '', '',
-                                                   TNFSeConsultarNfse(Self).FNumeroNFSe, FProvedor,
+                                                   TNFSeConsultarNfse(Self).FNumeroNFSe,
+                                                   TNFSeConsultarNfse(Self).Senha,
+                                                   TNFSeConsultarNfse(Self).FraseSecreta,
+                                                   FProvedor,
                                                    TNFSeConsultarNfse(Self).FPagina);
    if FDadosMsg <> ''
     then begin
@@ -1390,7 +1409,10 @@ begin
                                                    TNFSeConsultarNfse(Self).DataInicial,
                                                    TNFSeConsultarNfse(Self).DataFinal,
                                                    FTagI, FTagF,
-                                                   TNFSeConsultarNfse(Self).FNumeroNFSe, FProvedor,
+                                                   TNFSeConsultarNfse(Self).FNumeroNFSe,
+                                                   TNFSeConsultarNfse(Self).Senha,
+                                                   TNFSeConsultarNfse(Self).FraseSecreta,
+                                                   FProvedor,
                                                    TNFSeConsultarNfse(Self).FPagina);
   end;
 
@@ -1900,7 +1922,9 @@ begin
       proAgili,
       proVirtual,
       proGoiania: vNotas := vNotas +
-                              '<' + Prefixo4 + 'Rps>' +
+//                              '<' + Prefixo4 + 'Rps>' +
+                               // ManutJonatan
+                              '<' + Prefixo4 + 'Rps Id="' +  TNFSeGerarLoteRPS(Self).FNotasFiscais.Items[I].NFSe.IdentificacaoRps.Numero + '">' +
                                '<' + Prefixo4 + 'InfDeclaracaoPrestacaoServico' +
                                  RetornarConteudoEntre(TNFSeGerarLoteRPS(Self).FNotasFiscais.Items[I].XML_Rps_Ass,
                                    '<' + Prefixo4 + 'InfDeclaracaoPrestacaoServico', '</Signature>') +
@@ -2313,7 +2337,7 @@ begin
 end;
 
 function TWebServices.ConsultaNFSeporRps(ANumero, ASerie, ATipo, ACnpj,
-  AInscricaoMunicipal: String): Boolean;
+  AInscricaoMunicipal: String; const ASenha : String = ''; const AFraseSecreta : String = ''): Boolean;
 begin
  ACnpj := OnlyNumber(ACnpj);
  if not ValidarCNPJ(ACnpj) then
@@ -2324,6 +2348,8 @@ begin
  Self.ConsNfseRps.Tipo               := ATipo;
  Self.ConsNfseRps.Cnpj               := ACnpj;
  Self.ConsNfseRps.InscricaoMunicipal := AInscricaoMunicipal;
+ Self.ConsNfseRps.Senha              := ASenha;
+ Self.ConsNfseRps.FraseSecreta       := AFraseSecreta;
 
  // Alterado por Rosemir Zeferino em 24/05/2013
  Result := Self.ConsNfseRps.Executar;
@@ -2351,7 +2377,8 @@ end;
 
 function TWebServices.ConsultaNFSe(ACnpj, AInscricaoMunicipal: String;
   ADataInicial, ADataFinal: TDateTime; NumeroNFSe: string = '';
-  APagina: Integer = 1): Boolean;
+  APagina: Integer = 1;
+  const ASenha : string = ''; const AFraseSecreta: String = ''): Boolean;
 begin
  ACnpj := OnlyNumber(ACnpj);
  if not ValidarCNPJ(ACnpj) then
@@ -2363,6 +2390,8 @@ begin
  Self.ConsNfse.DataFinal          := ADataFinal;
  Self.ConsNfse.NumeroNFSe         := NumeroNFSe;
  Self.ConsNfse.Pagina             := APagina;
+ Self.ConsNfse.Senha              := ASenha;
+ Self.ConsNfse.FraseSecreta       := AFraseSecreta; 
 
  Result := Self.ConsNfse.Executar;
 
@@ -3269,6 +3298,14 @@ begin
         FConfiguracoes.Geral.Save(NFSeRetorno.ListaNfse.CompNfse.Items[i].Nfse.Numero + '-nfse.xml',
                                   FRetNfse, PathSalvar);
 //                                  NotaUtil.RetirarPrefixos(FRetNfse), PathSalvar);
+        if FNotasFiscais.Count = 0
+         then begin
+          with FNotasFiscais.Add do begin
+            NFSe.NumeroLote := '0';
+            NFSe.NomeArq    := '';
+          end;
+         end;
+
         if FNotasFiscais.Count>0
          then FNotasFiscais.Items[i].NomeArq := PathWithDelim(PathSalvar) +
                                                 NFSeRetorno.ListaNfse.CompNfse.Items[i].Nfse.Numero + '-nfse.xml';
