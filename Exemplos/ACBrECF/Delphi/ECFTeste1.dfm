@@ -43,7 +43,7 @@ object Form1: TForm1
     Top = 0
     Width = 594
     Height = 330
-    ActivePage = TabSheet4
+    ActivePage = tbsMenuFiscal
     Align = alClient
     TabOrder = 1
     object TabSheet4: TTabSheet
@@ -419,10 +419,6 @@ object Form1: TForm1
     end
     object TabSheet1: TTabSheet
       Caption = 'Cmd/Resp'
-      ExplicitLeft = 0
-      ExplicitTop = 0
-      ExplicitWidth = 0
-      ExplicitHeight = 0
       object Label2: TLabel
         Left = 0
         Top = 54
@@ -474,10 +470,6 @@ object Form1: TForm1
     object TabSheet2: TTabSheet
       Caption = 'Cupom'
       ImageIndex = 1
-      ExplicitLeft = 0
-      ExplicitTop = 0
-      ExplicitWidth = 0
-      ExplicitHeight = 0
       object Panel1: TPanel
         Left = 0
         Top = 41
@@ -561,26 +553,17 @@ object Form1: TForm1
     object TabSheet3: TTabSheet
       Caption = 'RFD'
       ImageIndex = 2
-      ExplicitLeft = 0
-      ExplicitTop = 0
-      ExplicitWidth = 0
-      ExplicitHeight = 0
       object PageControl2: TPageControl
         Left = 0
         Top = 55
         Width = 586
-        Height = 267
+        Height = 247
         ActivePage = TabSheet6
         Align = alClient
         TabOrder = 1
-        ExplicitHeight = 247
         object TabSheet6: TTabSheet
           Caption = 'Sw.House'
           ImageIndex = 1
-          ExplicitLeft = 0
-          ExplicitTop = 0
-          ExplicitWidth = 0
-          ExplicitHeight = 0
           object Label8: TLabel
             Left = 12
             Top = 10
@@ -744,14 +727,10 @@ object Form1: TForm1
         end
         object TabSheet5: TTabSheet
           Caption = 'ACBrRFD.INI'
-          ExplicitLeft = 0
-          ExplicitTop = 0
-          ExplicitWidth = 0
-          ExplicitHeight = 0
           object Panel4: TPanel
             Left = 0
-            Top = 189
-            Width = 586
+            Top = 185
+            Width = 578
             Height = 34
             Align = alBottom
             BevelOuter = bvNone
@@ -778,8 +757,8 @@ object Form1: TForm1
           object mRFDParam: TMemo
             Left = 0
             Top = 0
-            Width = 586
-            Height = 189
+            Width = 578
+            Height = 185
             Align = alClient
             Font.Charset = DEFAULT_CHARSET
             Font.Color = clBlack
@@ -857,10 +836,6 @@ object Form1: TForm1
     object TabSheet9: TTabSheet
       Caption = 'Dados RZ'
       ImageIndex = 6
-      ExplicitLeft = 0
-      ExplicitTop = 0
-      ExplicitWidth = 0
-      ExplicitHeight = 0
       DesignSize = (
         586
         302)
@@ -876,14 +851,13 @@ object Form1: TForm1
       end
       object Button2: TButton
         Left = 11
-        Top = -327
+        Top = -347
         Width = 108
         Height = 25
         Anchors = [akLeft, akBottom]
         Caption = 'Ler Dados RZ'
         TabOrder = 0
         OnClick = Button2Click
-        ExplicitTop = -307
       end
       object mRZ: TMemo
         Left = 0
@@ -907,22 +881,17 @@ object Form1: TForm1
     object tbsMenuFiscal: TTabSheet
       Caption = 'Menu Fiscal'
       ImageIndex = 6
-      ExplicitLeft = 0
-      ExplicitTop = 0
-      ExplicitWidth = 0
-      ExplicitHeight = 0
       object grpMenuFiscalOpcoes: TGroupBox
         Left = 0
         Top = 0
         Width = 586
-        Height = 254
+        Height = 234
         Align = alClient
         Caption = 'Op'#231#245'es do Menu fiscal'
         TabOrder = 0
-        ExplicitHeight = 234
         object Label31: TLabel
           Left = 10
-          Top = 140
+          Top = 165
           Width = 269
           Height = 13
           Caption = 'Para os menus que geram arquivos, verificar o DemoPAF'
@@ -1024,22 +993,35 @@ object Form1: TForm1
           TabOrder = 9
           OnClick = btnMenuFiscalNotaPaulistaClick
         end
+        object btnArqMFNovo: TButton
+          Left = 10
+          Top = 113
+          Width = 171
+          Height = 25
+          Caption = 'Arq.MF (novo)'
+          TabOrder = 10
+          OnClick = btnArqMFNovoClick
+        end
+        object btnArqMFDNovo: TButton
+          Left = 187
+          Top = 113
+          Width = 171
+          Height = 25
+          Caption = 'Arq.MFD (novo)'
+          TabOrder = 11
+          OnClick = btnArqMFDNovoClick
+        end
       end
       object pgcMenuFiscalTipo: TPageControl
         Left = 0
-        Top = 254
+        Top = 234
         Width = 586
         Height = 68
         ActivePage = tbsMenuFiscalTipoData
         Align = alBottom
         TabOrder = 1
-        ExplicitTop = 234
         object tbsMenuFiscalTipoData: TTabSheet
           Caption = 'Emiss'#227'o por intervalo de data'
-          ExplicitLeft = 0
-          ExplicitTop = 0
-          ExplicitWidth = 0
-          ExplicitHeight = 0
           object Label24: TLabel
             Left = 16
             Top = 15
@@ -1077,10 +1059,6 @@ object Form1: TForm1
         object tbsMenuFiscalTipoCOO: TTabSheet
           Caption = 'Emiss'#227'o por intervalo de COO'
           ImageIndex = 1
-          ExplicitLeft = 0
-          ExplicitTop = 0
-          ExplicitWidth = 0
-          ExplicitHeight = 0
           object Label26: TLabel
             Left = 16
             Top = 15
@@ -1119,9 +1097,9 @@ object Form1: TForm1
         end
       end
       object chkMenuFiscalCotepe1704: TCheckBox
-        Left = 20
-        Top = 212
-        Width = 571
+        Left = 30
+        Top = 211
+        Width = 456
         Height = 17
         Caption = 
           'Gerar o arquivo no formato do ato Cotepe 17/04 (Somente para os ' +
@@ -1129,9 +1107,9 @@ object Form1: TForm1
         TabOrder = 2
       end
       object chkMenuFiscalGerarArquivo: TCheckBox
-        Left = 3
-        Top = 189
-        Width = 588
+        Left = 10
+        Top = 188
+        Width = 468
         Height = 17
         Caption = 'Efetuar a gera'#231#227'o de arquivo'
         Font.Charset = ANSI_CHARSET
@@ -1147,10 +1125,6 @@ object Form1: TForm1
     object tsTagsImpressao: TTabSheet
       Caption = 'Tags de Impress'#227'o'
       ImageIndex = 6
-      ExplicitLeft = 0
-      ExplicitTop = 0
-      ExplicitWidth = 0
-      ExplicitHeight = 0
       DesignSize = (
         586
         302)
@@ -1203,7 +1177,6 @@ object Form1: TForm1
         Font.Style = [fsBold]
         ParentColor = False
         ParentFont = False
-        ExplicitWidth = 384
       end
       object speBarrasLargura: TSpinEdit
         Left = 12

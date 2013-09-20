@@ -343,6 +343,8 @@ type
     Label29: TLabel;
     chbCupomMania: TCheckBox;
     DataHoraltimaReduoZ1: TMenuItem;
+    btnArqMFNovo: TButton;
+    btnArqMFDNovo: TButton;
     procedure cbxModeloChange(Sender: TObject);
     procedure Sair1Click(Sender: TObject);
     procedure bAtivarClick(Sender: TObject);
@@ -547,6 +549,8 @@ type
     procedure speBarrasAlturaChange(Sender: TObject);
     procedure chbCupomManiaClick(Sender: TObject);
     procedure DataHoraltimaReduoZ1Click(Sender: TObject);
+    procedure btnArqMFNovoClick(Sender: TObject);
+    procedure btnArqMFDNovoClick(Sender: TObject);
   private
     { Private declarations }
     Function Converte( cmd : String) : String;
@@ -3527,6 +3531,42 @@ begin
   AtualizaMemos ;
 end;
 
+procedure TForm1.btnArqMFDNovoClick(Sender: TObject);
+var
+  PathArquivo: String;
+begin
+  dlgDialogoSalvar.DefaultExt := '.mfd';
+  dlgDialogoSalvar.Filter := 'Arquivos binários MF|*.mfd';
+
+  if dlgDialogoSalvar.Execute then
+  begin
+    PathArquivo := dlgDialogoSalvar.FileName;
+    ACBrECF1.PafMF_ArqMFD(PathArquivo);
+
+    // será gerado o arquivo bináio e o arquivo .txt com a assinatura EAD
+
+    ShowMessage(Format('Arquivo MFD gerado com sucesso em:'#13#10' "%s"', [PathArquivo]));
+  end;
+end;
+
+procedure TForm1.btnArqMFNovoClick(Sender: TObject);
+var
+  PathArquivo: String;
+begin
+  dlgDialogoSalvar.DefaultExt := '.mf';
+  dlgDialogoSalvar.Filter := 'Arquivos binários MF|*.mf';
+
+  if dlgDialogoSalvar.Execute then
+  begin
+    PathArquivo := dlgDialogoSalvar.FileName;
+    ACBrECF1.PafMF_ArqMF(PathArquivo);
+
+    // será gerado o arquivo bináio e o arquivo .txt com a assinatura EAD
+
+    ShowMessage(Format('Arquivo MF gerado com sucesso em:'#13#10' "%s"', [PathArquivo]));
+  end;
+end;
+
 procedure TForm1.btnIdentificaPafECFClick(Sender: TObject);
 begin
   ACBrECF1.IdentificaPAF('Demo ACBrECF', 'AXAXAXAXAXAXAXAXAXAXAXAXAXAXAXAX');
@@ -3591,6 +3631,9 @@ var
 begin
   if chkMenuFiscalGerarArquivo.Checked then
   begin
+    dlgDialogoSalvar.DefaultExt := '.txt';
+    dlgDialogoSalvar.Filter := 'Arquivos texto|*.txt';
+
     if dlgDialogoSalvar.Execute then
     begin
       PathArquivo := dlgDialogoSalvar.FileName;
@@ -3628,6 +3671,9 @@ var
 begin
   if chkMenuFiscalGerarArquivo.Checked then
   begin
+    dlgDialogoSalvar.DefaultExt := '.txt';
+    dlgDialogoSalvar.Filter := 'Arquivos texto|*.txt';
+
     if dlgDialogoSalvar.Execute then
     begin
       PathArquivo := dlgDialogoSalvar.FileName;
@@ -3657,6 +3703,9 @@ procedure TForm1.btnMenuFiscalMFDArqClick(Sender: TObject);
 var
   PathArquivo: string;
 begin
+  dlgDialogoSalvar.DefaultExt := '.txt';
+  dlgDialogoSalvar.Filter := 'Arquivos text|*.txt';
+
   if dlgDialogoSalvar.Execute then
   begin
     PathArquivo := dlgDialogoSalvar.FileName;
@@ -3674,6 +3723,9 @@ procedure TForm1.btnMenuFiscalMFDEspelhoClick(Sender: TObject);
 var
   PathArquivo: string;
 begin
+  dlgDialogoSalvar.DefaultExt := '.txt';
+  dlgDialogoSalvar.Filter := 'Arquivos text|*.txt';
+
   if dlgDialogoSalvar.Execute then
   begin
     PathArquivo := dlgDialogoSalvar.FileName;
