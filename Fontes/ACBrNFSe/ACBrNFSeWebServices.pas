@@ -395,7 +395,9 @@ type
     function ConsultaLoteRps(AProtocolo: String;
                              const CarregaProps: boolean = true): Boolean; overload;
     function ConsultaLoteRps(AProtocolo,
-                             ACNPJ, AInscricaoMunicipal, ASenha, AFraseSecreta: string): Boolean; overload;
+                             ACNPJ, AInscricaoMunicipal: string;
+                             const ASenha: string = '';
+                             const AFraseSecreta: string = ''): Boolean; overload;
     function ConsultaNFSeporRps(ANumero, ASerie, ATipo, ACnpj, AInscricaoMunicipal: String): Boolean;
     function ConsultaNFSe(ACnpj, AInscricaoMunicipal: String; ADataInicial, ADataFinal: TDateTime;
                           NumeroNFSe: string = ''; APagina: Integer = 1): Boolean;
@@ -2310,17 +2312,6 @@ begin
   end;
 end;
 
-function TWebServices.ConsultaLoteRps(AProtocolo, ACNPJ,
-  AInscricaoMunicipal, ASenha, AFraseSecreta: string): Boolean;
-begin
- Self.ConsLote.CNPJ         := ACNPJ;
- Self.ConsLote.IM           := AInscricaoMunicipal;
- Self.ConsLote.Senha        := ASenha;
- Self.ConsLote.FraseSecreta := AFraseSecreta;
-
- Result := ConsultaLoteRPS(AProtocolo, False);
-end;
-
 function TWebServices.ConsultaNFSeporRps(ANumero, ASerie, ATipo, ACnpj,
   AInscricaoMunicipal: String): Boolean;
 begin
@@ -2345,6 +2336,17 @@ begin
     then raise Exception.Create(Self.ConsNfseRps.Msg)
     else raise Exception.Create('Erro Desconhecido!')
   end;
+end;
+
+function TWebServices.ConsultaLoteRps(AProtocolo, ACNPJ,
+  AInscricaoMunicipal: string; const ASenha, AFraseSecreta: string): Boolean;
+begin
+ Self.ConsLote.CNPJ         := ACNPJ;
+ Self.ConsLote.IM           := AInscricaoMunicipal;
+ Self.ConsLote.Senha        := ASenha;
+ Self.ConsLote.FraseSecreta := AFraseSecreta;
+
+ Result := ConsultaLoteRPS(AProtocolo, False);
 end;
 
 function TWebServices.ConsultaNFSe(ACnpj, AInscricaoMunicipal: String;
