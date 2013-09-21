@@ -823,12 +823,12 @@ begin
               LFill(wPRF_ICMS,0)         +
               LFill(Integer(PRF_RIDF))   +
               LFill(Integer(PRF_RUDF),0) +
-              LFill(Integer(PRF_LMC))    +
-              LFill(Integer(PRF_RV))     +
-              LFill(Integer(PRF_RI))     +
+              LFill(Integer(PRF_LMC), 1) +
+              LFill(Integer(PRF_RV), 1)  +
+              LFill(Integer(PRF_RI), 1)  +
               LFill(wIND_EC,0)           +
-              LFill(Integer(IND_ISS),0)  +
-              LFill(Integer(IND_RT))     +
+              LFill(Integer(IND_ISS), 0) +
+              LFill(Integer(IND_RT), 1)  +
               LFill(Integer(IND_ICMS),0) +
               LFill(Integer(IND_ST),0)   +
               LFill(Integer(IND_AT),0)   +
