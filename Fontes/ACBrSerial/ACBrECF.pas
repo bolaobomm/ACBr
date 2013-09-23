@@ -6165,9 +6165,6 @@ procedure TACBrECF.PafMF_RelParametrosConfiguracao(const APerfilRequisitos: Stri
   const AIndiceRelatorio: Integer);
 var
   Relatorio: TStringList;
-  TamColSimNao: Integer;
-  TamColDescr: Integer;
-  versaoPafECF: Integer;
 begin
   fsNumSerieCache := '' ;
   DoVerificaValorGT ;
@@ -6408,7 +6405,6 @@ end;
 procedure TACBrECF.PafMF_ArqMF(const APathArquivo: String);
 var
   EADStr: String;
-  Arquivo: TStringList;
 begin
   Self.ArquivoMF_DLL(APathArquivo);
 
@@ -6427,7 +6423,6 @@ end;
 procedure TACBrECF.PafMF_ArqMFD(const APathArquivo: String);
 var
   EADStr: String;
-  Arquivo: TStringList;
 begin
   Self.ArquivoMFD_DLL(APathArquivo);
 

@@ -1493,7 +1493,7 @@ begin
                         trvwNFe.Items.AddChild(Node,'vAliq='     +FloatToStr(vAliq));
                         trvwNFe.Items.AddChild(Node,'vISSQN='    +FloatToStr(vISSQN));
                         trvwNFe.Items.AddChild(Node,'cMunFG='    +IntToStr(cMunFG));
-                        trvwNFe.Items.AddChild(Node,'cListServ=' +IntToStr(cListServ));
+                        trvwNFe.Items.AddChild(Node,'cListServ=' +cListServ);
                       end;
                    end;
 
@@ -2173,7 +2173,7 @@ begin
                vAliq     := 2;
                vISSQN    := 2;
                cMunFG    := 3554003;
-               cListServ := 1402; // Preencha este campo usando a tabela disponível
+               cListServ := '1402'; // Preencha este campo usando a tabela disponível
                                // em http://www.planalto.gov.br/Ccivil_03/LEIS/LCP/Lcp116.htm
              end;
        end ;

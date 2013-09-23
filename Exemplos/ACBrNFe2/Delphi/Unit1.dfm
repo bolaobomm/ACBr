@@ -1,9 +1,9 @@
 object Form1: TForm1
   Left = 269
   Top = 149
-  Width = 894
-  Height = 631
   Caption = 'ACBrNFe - Demonstra'#231#227'o'
+  ClientHeight = 593
+  ClientWidth = 878
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -368,7 +368,6 @@ object Form1: TForm1
               Font.Height = -13
               Font.Name = 'MS Sans Serif'
               Font.Style = []
-              ItemHeight = 16
               ItemIndex = 24
               ParentFont = False
               TabOrder = 1
@@ -780,8 +779,6 @@ object Form1: TForm1
       Width = 153
       Height = 25
       Caption = 'Salvar Configura'#231#245'es'
-      TabOrder = 1
-      OnClick = btnSalvarConfigClick
       Glyph.Data = {
         76010000424D7601000000000000760000002800000020000000100000000100
         04000000000000010000130B0000130B00001000000000000000000000000000
@@ -796,6 +793,8 @@ object Form1: TForm1
         99337F3FF7F3733777F30F08F0F0337999337F7737F73F7777330FFFF0039999
         93337FFFF7737777733300000033333333337777773333333333}
       NumGlyphs = 2
+      TabOrder = 1
+      OnClick = btnSalvarConfigClick
     end
   end
   object Panel2: TPanel
@@ -1191,6 +1190,8 @@ object Form1: TForm1
   object ACBrNFe1: TACBrNFe
     Configuracoes.Geral.FormaEmissao = teContingencia
     Configuracoes.Geral.PathSalvar = 'C:\Program Files\Borland\Delphi7\Bin\'
+    Configuracoes.Geral.ExibirErroSchema = True
+    Configuracoes.Geral.FormatoAlerta = 'TAG:%TAGNIVEL% ID:%ID%/%TAG%(%DESCRICAO%) - %MSG%.'
     Configuracoes.WebServices.UF = 'SP'
     Configuracoes.WebServices.AguardarConsultaRet = 15000
     Configuracoes.WebServices.IntervaloTentativas = 1000
@@ -1228,6 +1229,7 @@ object Form1: TForm1
     EspessuraBorda = 1
     TamanhoFonte_RazaoSocial = 12
     TamanhoFonte_ANTT = 10
+    TributosPercentual = ptValorProdutos
     Left = 758
     Top = 377
   end
@@ -1261,6 +1263,7 @@ object Form1: TForm1
     Fonte = ftCourier
     EspessuraBorda = 2
     MostrarSetup = False
+    TributosPercentual = ptValorProdutos
     Left = 726
     Top = 409
   end
