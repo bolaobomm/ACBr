@@ -912,6 +912,7 @@ begin
      if Leitor.rExtrai(3, 'tomaICMS') <> '' then
       begin
        CTe.infCTeSub.tomaICMS.refNFe := Leitor.rCampo(tcStr, 'refNFe');
+       CTe.infCTeSub.tomaICMS.refCte := Leitor.rCampo(tcStr, 'refCte');
        if Leitor.rExtrai(4, 'refNF') <> '' then
         begin
          CTe.infCTeSub.tomaICMS.refNF.CNPJ     := Leitor.rCampo(tcStr, 'CNPJ');
@@ -922,7 +923,6 @@ begin
          CTe.infCTeSub.tomaICMS.refNF.valor    := Leitor.rCampo(tcDe2, 'valor');
          CTe.infCTeSub.tomaICMS.refNF.dEmi     := Leitor.rCampo(tcDat, 'dEmi');
         end;
-       CTe.infCTeSub.tomaICMS.refCte := Leitor.rCampo(tcStr, 'refCte');
       end;
      if Leitor.rExtrai(3, 'tomaNaoICMS') <> '' then
       begin
