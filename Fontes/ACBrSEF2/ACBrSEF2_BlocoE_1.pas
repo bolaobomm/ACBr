@@ -811,6 +811,7 @@ begin
          WriteRegistroE020(FRegistroE001);
          WriteRegistroE050(FRegistroE001);
          WriteRegistroE060(FRegistroE001);
+         WriteRegistroE080(FRegistroE001);
          //WriteRegistroE300(FRegistroE001);
          //WriteRegistroE500(FRegistroE001);
       end;
@@ -1078,7 +1079,7 @@ begin
               LFill(IND_OBS));
       end;
 
-      //WriteRegistroE085(RegE080);
+      WriteRegistroE085(RegE080);
 
       RegistroE990.QTD_LIN_E := RegistroE990.QTD_LIN_E + 1;
    end;
