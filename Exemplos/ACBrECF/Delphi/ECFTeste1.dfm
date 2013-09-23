@@ -1,7 +1,7 @@
 object Form1: TForm1
   Left = 396
   Top = 223
-  Width = 610
+  Width = 806
   Height = 447
   VertScrollBar.Range = 59
   ActiveControl = PageControl1
@@ -25,7 +25,7 @@ object Form1: TForm1
   object StatusBar1: TStatusBar
     Left = 0
     Top = 370
-    Width = 594
+    Width = 790
     Height = 19
     Panels = <
       item
@@ -41,7 +41,7 @@ object Form1: TForm1
   object PageControl1: TPageControl
     Left = 0
     Top = 0
-    Width = 594
+    Width = 790
     Height = 330
     ActivePage = tbsMenuFiscal
     Align = alClient
@@ -50,10 +50,10 @@ object Form1: TForm1
       Caption = 'ECF'
       ImageIndex = 3
       DesignSize = (
-        586
+        782
         302)
       object SbArqLog: TSpeedButton
-        Left = 563
+        Left = 759
         Top = 216
         Width = 23
         Height = 22
@@ -113,7 +113,7 @@ object Form1: TForm1
         Caption = 'Operador:'
       end
       object Label21: TLabel
-        Left = 396
+        Left = 592
         Top = 141
         Width = 124
         Height = 13
@@ -217,7 +217,7 @@ object Form1: TForm1
       object mMsg: TMemo
         Left = 11
         Top = 160
-        Width = 368
+        Width = 564
         Height = 41
         Anchors = [akLeft, akTop, akRight]
         ScrollBars = ssVertical
@@ -227,7 +227,7 @@ object Form1: TForm1
       object edLog: TEdit
         Left = 56
         Top = 216
-        Width = 507
+        Width = 703
         Height = 21
         Cursor = crIBeam
         Anchors = [akLeft, akTop, akRight]
@@ -261,7 +261,7 @@ object Form1: TForm1
         OnChange = seIntervaloAposComandoChange
       end
       object btSerial: TBitBtn
-        Left = 491
+        Left = 687
         Top = 248
         Width = 88
         Height = 28
@@ -321,7 +321,7 @@ object Form1: TForm1
         OnChange = edOperadorChange
       end
       object edMsgTrabalhando: TEdit
-        Left = 394
+        Left = 590
         Top = 160
         Width = 175
         Height = 21
@@ -422,7 +422,7 @@ object Form1: TForm1
       object Label2: TLabel
         Left = 0
         Top = 54
-        Width = 586
+        Width = 782
         Height = 17
         Align = alTop
         AutoSize = False
@@ -432,7 +432,7 @@ object Form1: TForm1
       object Label17: TLabel
         Left = 0
         Top = 0
-        Width = 586
+        Width = 782
         Height = 15
         Align = alTop
         AutoSize = False
@@ -442,7 +442,7 @@ object Form1: TForm1
       object mResp: TMemo
         Left = 0
         Top = 71
-        Width = 586
+        Width = 782
         Height = 231
         Align = alClient
         Font.Charset = DEFAULT_CHARSET
@@ -460,7 +460,7 @@ object Form1: TForm1
       object mEnviado: TMemo
         Left = 0
         Top = 15
-        Width = 586
+        Width = 782
         Height = 39
         Align = alTop
         TabOrder = 0
@@ -473,7 +473,7 @@ object Form1: TForm1
       object Panel1: TPanel
         Left = 0
         Top = 41
-        Width = 586
+        Width = 782
         Height = 261
         Align = alClient
         BevelOuter = bvNone
@@ -481,7 +481,7 @@ object Form1: TForm1
         object mBobina: TMemo
           Left = 0
           Top = 0
-          Width = 586
+          Width = 782
           Height = 261
           Align = alClient
           Font.Charset = ANSI_CHARSET
@@ -499,12 +499,12 @@ object Form1: TForm1
         object wbBobina: TWebBrowser
           Left = 0
           Top = 0
-          Width = 586
+          Width = 782
           Height = 261
           Align = alClient
           TabOrder = 1
           ControlData = {
-            4C000000913C0000FA1A00000000000000000000000000000000000000000000
+            4C000000D2500000FA1A00000000000000000000000000000000000000000000
             000000004C000000000000000000000001000000E0D057007335CF11AE690800
             2B2E126208000000000000004C0000000114020000000000C000000000000046
             8000000000000000000000000000000000000000000000000000000000000000
@@ -514,7 +514,7 @@ object Form1: TForm1
       object Panel2: TPanel
         Left = 0
         Top = 0
-        Width = 586
+        Width = 782
         Height = 41
         Align = alTop
         BevelOuter = bvNone
@@ -556,7 +556,7 @@ object Form1: TForm1
       object PageControl2: TPageControl
         Left = 0
         Top = 55
-        Width = 586
+        Width = 782
         Height = 247
         ActivePage = TabSheet6
         Align = alClient
@@ -730,7 +730,7 @@ object Form1: TForm1
           object Panel4: TPanel
             Left = 0
             Top = 185
-            Width = 578
+            Width = 774
             Height = 34
             Align = alBottom
             BevelOuter = bvNone
@@ -757,7 +757,7 @@ object Form1: TForm1
           object mRFDParam: TMemo
             Left = 0
             Top = 0
-            Width = 578
+            Width = 774
             Height = 185
             Align = alClient
             Font.Charset = DEFAULT_CHARSET
@@ -774,16 +774,16 @@ object Form1: TForm1
       object Panel3: TPanel
         Left = 0
         Top = 0
-        Width = 586
+        Width = 782
         Height = 55
         Align = alTop
         BevelOuter = bvNone
         TabOrder = 0
         DesignSize = (
-          586
+          782
           55)
         object sbDirRFD: TSpeedButton
-          Left = 561
+          Left = 757
           Top = 23
           Width = 23
           Height = 22
@@ -817,7 +817,7 @@ object Form1: TForm1
         object edDirRFD: TEdit
           Left = 134
           Top = 23
-          Width = 427
+          Width = 623
           Height = 18
           Cursor = crIBeam
           Anchors = [akLeft, akTop, akRight]
@@ -837,12 +837,12 @@ object Form1: TForm1
       Caption = 'Dados RZ'
       ImageIndex = 6
       DesignSize = (
-        586
+        782
         302)
       object Label37: TLabel
         Left = 0
         Top = 0
-        Width = 586
+        Width = 782
         Height = 21
         Align = alTop
         AutoSize = False
@@ -851,7 +851,7 @@ object Form1: TForm1
       end
       object Button2: TButton
         Left = 11
-        Top = -347
+        Top = -367
         Width = 108
         Height = 25
         Anchors = [akLeft, akBottom]
@@ -862,7 +862,7 @@ object Form1: TForm1
       object mRZ: TMemo
         Left = 0
         Top = 21
-        Width = 586
+        Width = 782
         Height = 281
         Align = alClient
         Font.Charset = DEFAULT_CHARSET
@@ -884,7 +884,7 @@ object Form1: TForm1
       object grpMenuFiscalOpcoes: TGroupBox
         Left = 0
         Top = 0
-        Width = 586
+        Width = 782
         Height = 234
         Align = alClient
         Caption = 'Op'#231#245'es do Menu fiscal'
@@ -1015,7 +1015,7 @@ object Form1: TForm1
       object pgcMenuFiscalTipo: TPageControl
         Left = 0
         Top = 234
-        Width = 586
+        Width = 782
         Height = 68
         ActivePage = tbsMenuFiscalTipoData
         Align = alBottom
@@ -1126,7 +1126,7 @@ object Form1: TForm1
       Caption = 'Tags de Impress'#227'o'
       ImageIndex = 6
       DesignSize = (
-        586
+        782
         302)
       object Label28: TLabel
         Left = 84
@@ -1163,7 +1163,7 @@ object Form1: TForm1
       object Label23: TLabel
         Left = 0
         Top = 0
-        Width = 586
+        Width = 782
         Height = 16
         Align = alTop
         Alignment = taCenter
@@ -1191,7 +1191,7 @@ object Form1: TForm1
         OnChange = speBarrasLarguraChange
       end
       object BitBtn6: TBitBtn
-        Left = 380
+        Left = 576
         Top = 26
         Width = 133
         Height = 23
@@ -1205,7 +1205,7 @@ object Form1: TForm1
       object MemoTesteTags: TMemo
         Left = 0
         Top = 98
-        Width = 586
+        Width = 782
         Height = 204
         Align = alBottom
         Lines.Strings = (
@@ -1306,7 +1306,7 @@ object Form1: TForm1
   object pBotoes: TPanel
     Left = 0
     Top = 330
-    Width = 594
+    Width = 790
     Height = 40
     Cursor = crHelp
     Hint = 'Sobre o ACBrMonitor ?'
@@ -1314,12 +1314,12 @@ object Form1: TForm1
     TabOrder = 2
     TabStop = True
     DesignSize = (
-      594
+      790
       40)
     object Image1: TImage
       Left = 1
       Top = 1
-      Width = 592
+      Width = 788
       Height = 38
       Align = alClient
       Picture.Data = {
@@ -1525,7 +1525,7 @@ object Form1: TForm1
       OnClick = Image1Click
     end
     object bAtivar: TBitBtn
-      Left = 493
+      Left = 689
       Top = 4
       Width = 96
       Height = 32

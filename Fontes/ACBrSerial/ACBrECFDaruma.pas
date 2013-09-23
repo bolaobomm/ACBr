@@ -92,6 +92,7 @@ TACBrECFDaruma = class( TACBrECFClass )
     xrGerarRelatorioOffline_ECF_Daruma: function (ARelatorio, ATipo,
       AInicial, AFinal, AArquivo_MF, AArquivo_MFD, AArquivo_INF: AnsiString): Integer; {$IFDEF LINUX} cdecl {$ELSE} stdcall {$ENDIF} ;
     xrEfetuarDownloadMF_ECF_Daruma: function(pszNomeArquivo:AnsiString): Integer; {$IFDEF LINUX} cdecl {$ELSE} stdcall {$ENDIF} ;
+    xrEfetuarDownloadMFD_ECF_Daruma: function(pszTipo, pszInicio, pszFim, pszNomeArquivo:AnsiString): Integer; {$IFDEF LINUX} cdecl {$ELSE} stdcall {$ENDIF} ;
 
     procedure LoadDLLFunctions;
     procedure UnloadDLLFunctions;
@@ -261,7 +262,7 @@ TACBrECFDaruma = class( TACBrECFClass )
 
 
     Procedure ArquivoMF_DLL(NomeArquivo: AnsiString); override ;
-    //Procedure ArquivoMFD_DLL(NomeArquivo: AnsiString); override ;
+    Procedure ArquivoMFD_DLL(NomeArquivo: AnsiString); override ;
 
     Procedure IdentificaOperador ( Nome: String); override;
     Procedure IdentificaPAF( NomeVersao, MD5 : String) ; override ;
@@ -4677,6 +4678,7 @@ begin
   DarumaFunctionDetect('rGerarRelatorio_ECF_Daruma', @xrGerarRelatorio_ECF_Daruma);
   DarumaFunctionDetect('rGerarRelatorioOffline_ECF_Daruma', @xrGerarRelatorioOffline_ECF_Daruma);
   DarumaFunctionDetect('rEfetuarDownloadMF_ECF_Daruma', @xrEfetuarDownloadMF_ECF_Daruma);
+  DarumaFunctionDetect('rEfetuarDownloadMFD_ECF_Daruma', @xrEfetuarDownloadMFD_ECF_Daruma);
 end;
 
 procedure TACBrECFDaruma.UnloadDLLFunctions;
@@ -4905,14 +4907,46 @@ begin
   end;
 end;
 
-procedure TACBrECFDaruma.ArquivoMF_DLL(NomeArquivo: AnsiString);
+procedure TACBrECFDaruma.ArquivoMFD_DLL(NomeArquivo: AnsiString);
 var
   Resp: Integer;
   DirDest: AnsiString;
+  ArqDest: AnsiString;
   OldAtivo: Boolean;
 begin
   OldAtivo := Ativo;
   DirDest  := ExtractFilePath( NomeArquivo );
+  ArqDest  := ExtractFileName( NomeArquivo );
+
+  LoadDLLFunctions;
+  ConfigurarDLL(DirDest);
+
+  Ativo := False;
+  try
+     DeleteFile( NomeArquivo );
+
+     GravaLog( '   xrEfetuarDownloadMFD_ECF_Daruma' );
+     Resp := xrEfetuarDownloadMFD_ECF_Daruma( 'COO', '000001', '999999', ArqDest ) ;
+
+     if (Resp <> 1) then
+        raise EACBrECFErro.Create( ACBrStr( 'Erro ao executar rEfetuarDownloadMFD_ECF_Daruma.'+sLineBreak+
+                                            'Cod.: '+IntToStr(Resp)+' '+GetDescricaoErroDLL(Resp) )) ;
+  finally
+     UnloadDLLFunctions;
+     Ativo := OldAtivo;
+  end;
+end;
+
+procedure TACBrECFDaruma.ArquivoMF_DLL(NomeArquivo: AnsiString);
+var
+  Resp: Integer;
+  DirDest: AnsiString;
+  ArqDest: AnsiString;
+  OldAtivo: Boolean;
+begin
+  OldAtivo := Ativo;
+  DirDest  := ExtractFilePath( NomeArquivo );
+  ArqDest  := ExtractFileName( NomeArquivo );
 
   LoadDLLFunctions;
   ConfigurarDLL(DirDest);
@@ -4922,7 +4956,7 @@ begin
      DeleteFile( NomeArquivo );
 
      GravaLog( '   xrEfetuarDownloadMF_ECF_Daruma' );
-     Resp := xrEfetuarDownloadMF_ECF_Daruma( NomeArquivo ) ;
+     Resp := xrEfetuarDownloadMF_ECF_Daruma( ArqDest ) ;
 
      if (Resp <> 1) then
         raise EACBrECFErro.Create( ACBrStr( 'Erro ao executar rEfetuarDownloadMF_ECF_Daruma.'+sLineBreak+

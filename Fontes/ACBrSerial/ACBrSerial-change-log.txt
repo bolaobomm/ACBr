@@ -97,6 +97,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+Data: 23/09/2013
+-- ACBrECFDaruma --
+[-] Acerto na geração dos menus fiscais "Arq.MF" e "Arq.MFD" para impressora Daruma.
+    por: regys.silveira
+
 Data: 13/09/2013
 -- ACBrECF --
 [+] Modificado rotina de impressão do texto referente ao Paraíba Legal para
