@@ -5083,10 +5083,10 @@ inherited fqrDANFSeQRRetrato: TfqrDANFSeQRRetrato
         FontSize = 7
       end
       object qrlMsgTeste: TQRLabel
-        Left = 102
-        Top = 24
-        Width = 541
-        Height = 25
+        Left = 18
+        Top = 40
+        Width = 710
+        Height = 33
         Enabled = False
         Frame.Color = clBlack
         Frame.DrawTop = False
@@ -5094,10 +5094,10 @@ inherited fqrDANFSeQRRetrato: TfqrDANFSeQRRetrato
         Frame.DrawLeft = False
         Frame.DrawRight = False
         Size.Values = (
-          66.145833333333340000
-          269.875000000000000000
-          63.500000000000000000
-          1431.395833333333000000)
+          87.312500000000000000
+          47.625000000000000000
+          105.833333333333300000
+          1878.541666666667000000)
         XLColumn = 0
         Alignment = taCenter
         AlignToBand = False
@@ -5107,14 +5107,14 @@ inherited fqrDANFSeQRRetrato: TfqrDANFSeQRRetrato
         Color = clWhite
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clGray
-        Font.Height = -21
+        Font.Height = -27
         Font.Name = 'Arial'
         Font.Style = [fsBold]
         ParentFont = False
         Transparent = True
         WordWrap = True
         ExportAs = exptText
-        FontSize = 16
+        FontSize = 20
       end
       object qrmNatOperacao: TQRMemo
         Left = 296
