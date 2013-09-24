@@ -1,5 +1,7 @@
 object dmACBrNFSeFR: TdmACBrNFSeFR
   OldCreateOrder = False
+  Left = 199
+  Top = 125
   Height = 363
   Width = 580
   object frxReport: TfrxReport
@@ -14,6 +16,7 @@ object dmACBrNFSeFR: TdmACBrNFSeFR
     ReportOptions.LastChange = 41457.740088564820000000
     ScriptLanguage = 'PascalScript'
     StoreInDFM = False
+    
     Left = 64
     Top = 48
   end
@@ -411,6 +414,10 @@ object dmACBrNFSeFR: TdmACBrNFSeFR
       FieldName = 'Nome_Prefeitura'
       Size = 256
     end
+    object cdsParametrosMensagem0: TStringField
+      FieldName = 'Mensagem0'
+      Size = 50
+    end
   end
   object frxParametros: TfrxDBDataset
     UserName = 'Parametros'
@@ -428,7 +435,8 @@ object dmACBrNFSeFR: TdmACBrNFSeFR
       'imgPrefeitura=imgPrefeitura'
       'LogoPrefExpandido=LogoPrefExpandido'
       'LogoPrefCarregado=LogoPrefCarregado'
-      'Nome_Prefeitura=Nome_Prefeitura')
+      'Nome_Prefeitura=Nome_Prefeitura'
+      'Mensagem0=Mensagem0')
     OpenDataSource = False
     DataSet = cdsParametros
     BCDToCurrency = False

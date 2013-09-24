@@ -96,6 +96,7 @@ type
     cdsParametrosLogoPrefExpandido: TStringField;
     cdsParametrosLogoPrefCarregado: TBlobField;
     cdsParametrosNome_Prefeitura: TStringField;
+    cdsParametrosMensagem0: TStringField;
     constructor Create(AOwner: TComponent); override;
   private
     FDANFSeClassOwner: TACBrNFSeDANFSeClass;
@@ -180,11 +181,18 @@ begin
 	with FNFse do
 	begin
 	  FieldByName('OutrasInformacoes').AsString			:= OutrasInformacoes;
+   if DANFSeClassOwner.NFSeCancelada then
+     FieldByName('Mensagem0').AsString := 'NFSe CANCELADA'
+   else
+     FieldByName('Mensagem0').AsString := '';
 	end;
 
     with FNFSe.Servico do
     begin
-      FieldByName('CodigoMunicipio').AsString           := CodCidadeToCidade(StrToInt(CodigoMunicipio));
+      if CodigoMunicipio <> '' then
+       FieldByName('CodigoMunicipio').AsString          := CodCidadeToCidade(StrToInt(CodigoMunicipio))
+      else
+       FieldByName('CodigoMunicipio').AsString          := '';
       FieldByName('ExigibilidadeISS').AsString          := DFeUtil.SeSenao(ExigibilidadeISS = exiExigivel,'Exigível', DFeUtil.SeSenao(ExigibilidadeISS = exiNaoIncidencia,'Não Incidência', DFeUtil.SeSenao(ExigibilidadeISS = exiIsencao,'Insenção', DFeUtil.SeSenao(ExigibilidadeISS = exiExportacao,'Exportação', DFeUtil.SeSenao(ExigibilidadeISS = exiImunidade,'Imunidade', DFeUtil.SeSenao(ExigibilidadeISS = exiSuspensaDecisaoJudicial,'Suspensa Decisao Judicial','Suspensa Processo Administrativo'))))));
       FieldByName('MunicipioIncidencia').AsString       := CodCidadeToCidade(MunicipioIncidencia);
     end;
