@@ -58,7 +58,7 @@ uses  ACBrBase,  {Units da ACBr}
      Graphics, Contnrs, Classes;
 
 const
-  CACBrBoleto_Versao = '0.0.86a' ;
+  CACBrBoleto_Versao = '0.0.87a' ;
 
 type
   TACBrTipoCobranca =
@@ -77,7 +77,8 @@ type
     cobHSBC,
     cobBancoDoNordeste,
     cobBRB,
-    cobBicBanco
+    cobBicBanco,
+    cobBradescoSICOOB
     );
 
   TACBrTitulo = class;
@@ -780,7 +781,7 @@ implementation
 Uses ACBrUtil, ACBrBancoBradesco, ACBrBancoBrasil, ACBrBanestes, ACBrBancoItau, ACBrBancoSicredi,
      ACBrBancoMercantil, ACBrCaixaEconomica, ACBrBancoBanrisul, ACBrBancoSantander,
      ACBrBancoob, ACBrCaixaEconomicaSICOB ,ACBrBancoHSBC,ACBrBancoNordeste , ACBrBancoBRB, ACBrBicBanco,
-     Forms,
+     ACBrBancoBradescoSICOOB, Forms,
      {$IFDEF COMPILER6_UP} StrUtils {$ELSE} ACBrD5 {$ENDIF}, Math, dateutils;
 
 {$IFNDEF FPC}
@@ -1496,16 +1497,17 @@ begin
      cobBanestes       : fBancoClass := TACBrBanestes.create(self);            {021}
      cobSantander      : fBancoClass := TACBrBancoSantander.create(Self);      {033,353,008}
      cobBanrisul       : fBancoClass := TACBrBanrisul.create(Self);            {041}
-     cobBRB            : fBancoClass := TACBrBancoBRB.create(self);             {070}
+     cobBRB            : fBancoClass := TACBrBancoBRB.create(self);            {070}
      cobCaixaEconomica : fBancoClass := TACBrCaixaEconomica.create(Self);      {104}
      cobCaixaSicob     : fBancoClass := TACBrCaixaEconomicaSICOB.create(Self); {104}
      cobBradesco       : fBancoClass := TACBrBancoBradesco.create(Self);       {237}
      cobItau           : fBancoClass := TACBrBancoItau.Create(self);           {341}
      cobBancoMercantil : fBancoClass := TACBrBancoMercantil.create(Self);      {389}
      cobSicred         : fBancoClass := TACBrBancoSicredi.Create(self);        {748}
-     cobBancoob        : fBancoClass := TACBrBancoob.create(self);              {756}
-     cobHSBC           : fBancoClass := TACBrBancoHSBC.create(self);            {399}
-     cobBicBanco       : fBancoClass := TACBrBicBanco.create(self);             {237}
+     cobBancoob        : fBancoClass := TACBrBancoob.create(self);             {756}
+     cobHSBC           : fBancoClass := TACBrBancoHSBC.create(self);           {399}
+     cobBicBanco       : fBancoClass := TACBrBicBanco.create(self);            {237}
+     cobBradescoSICOOB : fBancoClass := TAcbrBancoBradescoSICOOB.create(self); {237}
    else
      fBancoClass := TACBrBancoClass.create(Self);
    end;
