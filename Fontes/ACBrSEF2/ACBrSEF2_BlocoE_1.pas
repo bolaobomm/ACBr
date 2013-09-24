@@ -1060,9 +1060,9 @@ begin
       with RegE080 do
       begin
          Add( LFill('E080')         +
-              LFill(IND_TOT)        +
+              LFill(IND_TOT, 1)     +
               LFill(COD_MOD)        +
-              LFill(NUM_MR)         +
+              LFill(NUM_MR,  Length(inttostr(NUM_MR)) +) +
               LFill(DT_DOC)         +
               LFill(VL_BRT,2)       +
               LFill(VL_CANC_ICMS,2) +
