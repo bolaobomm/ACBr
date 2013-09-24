@@ -2247,26 +2247,26 @@ begin
     else raise Exception.Create('Erro Desconhecido!')
   end;
 
+ Self.ConsSitLote.Cnpj               := TACBrNFSe( FACBrNFSe ).NotasFiscais.Items[0].NFSe.Prestador.Cnpj;
+ Self.ConsSitLote.InscricaoMunicipal := TACBrNFSe( FACBrNFSe ).NotasFiscais.Items[0].NFSe.Prestador.InscricaoMunicipal;
+ Self.ConsSitLote.Protocolo          := Self.Enviar.Protocolo;
+
+ if (TACBrNFSe( FACBrNFSe ).Configuracoes.WebServices.Provedor in [ proISSDigital] ) then
+ begin
+   Self.ConsSitLote.Senha        := TACBrNFSe( FACBrNFSe ).NotasFiscais.Items[0].NFSe.Prestador.Senha;
+   Self.ConsSitLote.FraseSecreta := TACBrNFSe( FACBrNFSe ).NotasFiscais.Items[0].NFSe.Prestador.FraseSecreta;
+ end;
+
+ Self.ConsLote.Protocolo := Self.Enviar.Protocolo;
+
+ if (TACBrNFSe( FACBrNFSe ).Configuracoes.WebServices.Provedor in [ proISSDigital] ) then
+ begin
+   Self.ConsLote.Senha        := TACBrNFSe( FACBrNFSe ).NotasFiscais.Items[0].NFSe.Prestador.Senha;
+   Self.ConsLote.FraseSecreta := TACBrNFSe( FACBrNFSe ).NotasFiscais.Items[0].NFSe.Prestador.FraseSecreta;
+ end;
+
  if (TACBrNFSe( FACBrNFSe ).Configuracoes.WebServices.ConsultaLoteAposEnvio) and (Result) then
  begin
-   Self.ConsSitLote.Cnpj               := TACBrNFSe( FACBrNFSe ).NotasFiscais.Items[0].NFSe.Prestador.Cnpj;
-   Self.ConsSitLote.InscricaoMunicipal := TACBrNFSe( FACBrNFSe ).NotasFiscais.Items[0].NFSe.Prestador.InscricaoMunicipal;
-   Self.ConsSitLote.Protocolo          := Self.Enviar.Protocolo;
-
-   if (TACBrNFSe( FACBrNFSe ).Configuracoes.WebServices.Provedor in [ proISSDigital] ) then
-   begin
-     Self.ConsSitLote.Senha        := TACBrNFSe( FACBrNFSe ).NotasFiscais.Items[0].NFSe.Prestador.Senha;
-     Self.ConsSitLote.FraseSecreta := TACBrNFSe( FACBrNFSe ).NotasFiscais.Items[0].NFSe.Prestador.FraseSecreta;
-   end;
-
-   Self.ConsLote.Protocolo := Self.Enviar.Protocolo;
-
-   if (TACBrNFSe( FACBrNFSe ).Configuracoes.WebServices.Provedor in [ proISSDigital] ) then
-   begin
-     Self.ConsLote.Senha        := TACBrNFSe( FACBrNFSe ).NotasFiscais.Items[0].NFSe.Prestador.Senha;
-     Self.ConsLote.FraseSecreta := TACBrNFSe( FACBrNFSe ).NotasFiscais.Items[0].NFSe.Prestador.FraseSecreta;
-   end;
-
    if not (TACBrNFSe( FACBrNFSe ).Configuracoes.WebServices.Provedor in [profintelISS, proSaatri, proISSDigital, proFiorilli])
     then begin
      Result := Self.ConsSitLote.Executar;
