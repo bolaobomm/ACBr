@@ -280,6 +280,7 @@ type
     cdsDadosProdutosVTotTrib: TFloatField;
     cdsCalculoImpostoVTribPerc: TFloatField;
     cdsCalculoImpostoVTribFonte: TStringField;
+    cdsDadosProdutosVOutro: TFloatField;
     constructor Create(AOwner: TComponent); override;
   private
     FDANFEClassOwner: TACBrNFeDANFEClass;
@@ -551,9 +552,9 @@ begin
         if FieldByName('vTotTrib').AsFloat <> 0 then
         begin
           wInfAdProd := wInfAdProd+#13+'Val Aprox Tributos: '+ FloatToStrF(FieldByName('vTotTrib').AsFloat,ffCurrency,15,2);
-          wInfAdProd := wInfAdProd+' ('+FloatToStrF(((FieldByName('vTotTrib').AsFloat*100)/(FieldByName('VProd').AsFloat +
-                                                                                            FieldByName('VOutro').AsFloat -
-                                                                                            FieldByName('VDesc').AsFloat) ),ffNumber,15,2)+'%)';
+          wInfAdProd := wInfAdProd+' ('+FloatToStrF(((DFeUtil.StringToFloatDef(FieldByName('vTotTrib').AsString,0)*100)/(DFeUtil.StringToFloatDef(FieldByName('VProd').AsString,0) +
+                                      DFeUtil.StringToFloatDef(FieldByName('VOutro').AsString,0) -
+                                      DFeUtil.StringToFloatDef(FieldByName('VDesc').AsString,0)) ),ffNumber,15,2)+'%)';
         end;
 
         vTemp2 := TStringList.Create;

@@ -11,6 +11,7 @@ object dmACBrNFeFR: TdmACBrNFeFR
     Outline = False
     Background = True
     HTMLTags = True
+    Quality = 95
     Author = 'FastReport'
     Subject = 'Exportando DANFE para PDF'
     ProtectionFlags = [ePrint, eModify, eCopy, eAnnot]
@@ -327,6 +328,9 @@ object dmACBrNFeFR: TdmACBrNFeFR
     end
     object cdsDadosProdutosvFrete: TFloatField
       FieldName = 'vFrete'
+    end
+    object cdsDadosProdutosVOutro: TFloatField
+      FieldName = 'VOutro'
     end
     object cdsDadosProdutosvSeg: TFloatField
       FieldName = 'vSeg'
@@ -835,6 +839,7 @@ object dmACBrNFeFR: TdmACBrNFeFR
       'QTrib=QTrib'
       'VUnTrib=VUnTrib'
       'vFrete=vFrete'
+      'VOutro=VOutro'
       'vSeg=vSeg'
       'vDesc=vDesc'
       'ORIGEM=ORIGEM'
@@ -845,6 +850,7 @@ object dmACBrNFeFR: TdmACBrNFeFR
       'VIPI=VIPI'
       'PIPI=PIPI'
       'DescricaoProduto=DescricaoProduto'
+      'VTotTrib=VTotTrib'
       'ChaveNFe=ChaveNFe')
     OpenDataSource = False
     DataSet = cdsDadosProdutos
@@ -1003,8 +1009,9 @@ object dmACBrNFeFR: TdmACBrNFeFR
     Top = 148
   end
   object frxReport: TfrxReport
-    Version = '4.12'
+    Version = '4.14'
     DotMatrixReport = False
+    EngineOptions.DoublePass = True
     IniFile = '\Software\Fast Reports'
     PreviewOptions.AllowEdit = False
     PreviewOptions.Buttons = [pbPrint, pbZoom, pbFind, pbNavigator, pbExportQuick]
@@ -1012,7 +1019,7 @@ object dmACBrNFeFR: TdmACBrNFeFR
     PrintOptions.Printer = 'Default'
     PrintOptions.PrintOnSheet = 0
     ReportOptions.CreateDate = 40401.475989294000000000
-    ReportOptions.LastChange = 41443.398037349540000000
+    ReportOptions.LastChange = 41536.672595069400000000
     ScriptLanguage = 'PascalScript'
     StoreInDFM = False
     OnReportPrint = 'frxReportOnReportPrint'
