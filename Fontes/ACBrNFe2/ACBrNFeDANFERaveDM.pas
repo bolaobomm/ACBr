@@ -197,9 +197,9 @@ begin
          if vChar > #127 then
            Resultado := #32
          {$IFDEF UNICODE}
-         else if CharInset(vChar, ['a'..'z','A'..'Z','0'..'9','-',' ']) then
+         else if CharInset(vChar, ['a'..'z','A'..'Z','0'..'9','-',' ',Chr(39)]) then
          {$ELSE}
-         else if vChar in ['a'..'z','A'..'Z','0'..'9','-',' '] then
+         else if vChar in ['a'..'z','A'..'Z','0'..'9','-',' ',Chr(39)] then
          {$ENDIF}
            resultado:=uppercase(vCHAR);
       end;
