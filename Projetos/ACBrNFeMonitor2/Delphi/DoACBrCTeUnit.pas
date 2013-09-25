@@ -1458,7 +1458,7 @@ begin
                 begin
                   cInt     := INIRec.ReadString(sSecao,'cInt','');
                   RENAVAM  := INIRec.ReadString(sSecao,'RENAVAM','') ;
-                  placa    := INIRec.ReadString(sSecao,'CNPJPg','') ;
+                  placa    := INIRec.ReadString(sSecao,'placa','') ;
                   tara     := INIRec.ReadInteger(sSecao,'tara',0) ;
                   capKG    := INIRec.ReadInteger(sSecao,'capKG',0) ;
                   capM3    := INIRec.ReadInteger(sSecao,'capM3',0) ;
