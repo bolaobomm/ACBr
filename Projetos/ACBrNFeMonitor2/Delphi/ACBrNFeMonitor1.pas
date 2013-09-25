@@ -980,7 +980,7 @@ begin
      ACBrCTe1.Configuracoes.Arquivos.PathCTe  := edtPathNFe.Text;
      ACBrCTe1.Configuracoes.Arquivos.PathCan  := edtPathCan.Text;
      ACBrCTe1.Configuracoes.Arquivos.PathInu  := edtPathInu.Text;
-     ACBrCTe1.Configuracoes.Arquivos.PathDPEC := edtPathDPEC.Text;
+     ACBrCTe1.Configuracoes.Arquivos.PathEPEC := edtPathDPEC.Text;
   finally
      Ini.Free ;
   end ;
