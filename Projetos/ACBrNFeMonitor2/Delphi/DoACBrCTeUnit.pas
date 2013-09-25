@@ -284,9 +284,9 @@ begin
             raise Exception.Create(ACBrCTe1.WebServices.StatusServico.Msg);
 
            if Trim(OnlyNumber(Cmd.Params(1))) = '' then
-              ACBrCTe1.WebServices.Enviar.Lote := 1
+              ACBrCTe1.WebServices.Enviar.Lote := '1'
            else
-              ACBrCTe1.WebServices.Enviar.Lote := StrToIntDef( OnlyNumber(Cmd.Params(1)),1);
+              ACBrCTe1.WebServices.Enviar.Lote := OnlyNumber(Cmd.Params(1)); //StrToIntDef( OnlyNumber(Cmd.Params(1)),1);
 
            ACBrCTe1.WebServices.Enviar.Executar;
 
@@ -536,16 +536,16 @@ begin
                  if (Cmd.Metodo = 'criarenviarcte') or (Cmd.Metodo = 'criarenviarctesefaz') then
                   begin
                     if Trim(OnlyNumber(Cmd.Params(1))) = '' then
-                       ACBrCTe1.WebServices.Enviar.Lote := 1
+                       ACBrCTe1.WebServices.Enviar.Lote := '1'
                     else
-                       ACBrCTe1.WebServices.Enviar.Lote := StrToIntDef( OnlyNumber(Cmd.Params(1)),1);
+                       ACBrCTe1.WebServices.Enviar.Lote := OnlyNumber(Cmd.Params(1)); //StrToIntDef( OnlyNumber(Cmd.Params(1)),1);
                   end
                  else
                   begin
                     if Trim(OnlyNumber(Cmd.Params(0))) = '' then
-                       ACBrCTe1.WebServices.Enviar.Lote := 1
+                       ACBrCTe1.WebServices.Enviar.Lote := '1'
                     else
-                       ACBrCTe1.WebServices.Enviar.Lote := StrToIntDef( OnlyNumber(Cmd.Params(0)),1);
+                       ACBrCTe1.WebServices.Enviar.Lote := OnlyNumber(Cmd.Params(0)); //StrToIntDef( OnlyNumber(Cmd.Params(0)),1);
                   end;
                  ACBrCTe1.WebServices.Enviar.Executar ;
 
