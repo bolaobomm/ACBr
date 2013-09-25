@@ -1650,6 +1650,7 @@ begin
 
                Prod.xPed      := INIRec.ReadString( sSecao,'xPed'    ,'');  //NFe2
                Prod.nItemPed  := INIRec.ReadInteger( sSecao,'nItemPed',0);  //NFe2
+               Prod.nFCI      := INIRec.ReadString( sSecao,'nFCI','');  //NFe2
 
                Imposto.vTotTrib := StringToFloatDef( INIRec.ReadString(sSecao,'vTotTrib','') ,0) ; //NFe2
 
