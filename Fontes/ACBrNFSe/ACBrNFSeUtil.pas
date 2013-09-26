@@ -14,7 +14,7 @@ uses
   {$ELSE}
     StrUtils,
   {$ENDIF}
-  ACBrNFSeConfiguracoes, pnfsConversao, pnfsNFSe, pcnAuxiliar, ACBrDFeUtil;
+  Sysutils, ACBrNFSeConfiguracoes, pnfsConversao, pnfsNFSe, pcnAuxiliar, ACBrDFeUtil;
 
   {$IFDEF ACBrNFSeOpenSSL}
     const
@@ -112,7 +112,7 @@ uses
  {$ELSE}
    ComObj,
  {$ENDIF}
- IniFiles, Sysutils, Variants, ACBrUtil, ACBrNFSe;
+ IniFiles, Variants, ACBrUtil, ACBrNFSe;
 
 { NotaUtil }
 
@@ -1516,10 +1516,12 @@ begin
    if ArquivoXML.Text <> '' then
      Result := TEncoding.UTF8
    else begin
+     {$IFDEF VER230}
      ArquivoXML.LoadFromFile(CaminhoArquivo ,TEncoding.ANSI);
      if ArquivoXML.Text <> '' then
        Result := TEncoding.ANSI
      else begin
+     {$ENDIF}
        ArquivoXML.LoadFromFile(CaminhoArquivo, TEncoding.ASCII);
        if ArquivoXML.Text <> '' then
          Result := TEncoding.ASCII
@@ -1535,7 +1537,9 @@ begin
              Result := TEncoding.Default;
          end;
        end;
+     {$IFDEF VER230}
      end;
+     {$ENDIF}
    end;
    ArquivoXML.Free;
 end;
