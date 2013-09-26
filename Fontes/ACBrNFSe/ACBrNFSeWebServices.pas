@@ -2948,8 +2948,9 @@ var
  Prefixo4      : String;
  FRetListaNfse : AnsiString;
  FRetNfse      : AnsiString;
+ FRetNfse2     : AnsiString;
  i, j, k, p,
- ii            : Integer;
+ ii, l, m      : Integer;
  PathSalvar    : String;
  iNFRetorno    : Integer;
  iNF           : Integer;
@@ -3080,11 +3081,39 @@ try
           FNotasFiscais.Items[iNF].NFSe.Tomador.Endereco.xMunicipio := NFSeRetorno.ListaNfse.CompNfse.Items[iNFRetorno].Nfse.Tomador.Endereco.xMunicipio;
 
 //          FRetNfse := Copy(FRetListaNfse, 1, j - 1);
+
           // Alterado por Augusto Fontana - 16/09/2013
           FRetNfse := NFSeRetorno.ListaNfse.CompNfse.Items[iNFRetorno].Nfse.XML;
 
           k :=  Pos('<' + Prefixo4 + 'Nfse', FRetNfse);
           FRetNfse := Copy(FRetNfse, k, length(FRetNfse));
+
+          // Recoloca o prefixo4 quando o provedor for ISSNet
+          if FProvedor = proISSNet
+           then begin
+            m := length(FRetNFSe);
+            FRetNfse2 := '';
+            l := 1;
+            while l <= m do
+             begin
+              if FRetNFSe[l] = '<'
+               then begin
+                if FRetNFSe[l+1] = '?'
+                 then FRetNfse2 := FRetNfse2 + FRetNFSe[l]
+                 else begin
+                  if FRetNFSe[l+1] = '/'
+                   then begin
+                    FRetNfse2 := FRetNfse2 + '/' + Prefixo4;
+                    inc(l);
+                   end
+                   else FRetNfse2 := FRetNfse2 + Prefixo4;
+                 end;
+               end
+               else FRetNfse2 := FRetNfse2 + FRetNFSe[l];
+              inc(l);
+             end;
+            FRetNFSe := FRetNfse2;
+           end;
 
           FRetNFSe := FProvedorClass.GeraRetornoNFSe(Prefixo3, FRetNFSe, FNomeCidade);
 
@@ -3264,7 +3293,7 @@ begin
 
   NFSeRetorno.Leitor.Arquivo := FRetWS;
   NFSeRetorno.Provedor       := FProvedor;
-  
+
   // Alterado por Rosemir Zeferino em 24/05/2013
   if (FProvedor = proIssDsf )then
      Result := NFSeRetorno.LerXml_provedorIssDsf //falta homologar
@@ -3272,24 +3301,30 @@ begin
      Result := NFSeRetorno.LerXml;
 
  // Incluido por Ricardo Miranda em 14/03/2013
-  FRetWS := NotaUtil.RetirarPrefixos(FRetWS);
+
+  if FProvedor <> proISSNet
+   then begin
+    FRetWS := NotaUtil.RetirarPrefixos(FRetWS);
+    Prefixo3 := '';
+    Prefixo4 := '';
+   end;
 
   if FProvedor = proBetha
-   then FRetCompNfse := SeparaDados(FRetWS, {Prefixo3 +} 'ComplNfse')
-   else FRetCompNfse := SeparaDados(FRetWS, {Prefixo3 +} 'CompNfse');
+   then FRetCompNfse := SeparaDados(FRetWS, Prefixo3 + 'ComplNfse')
+   else FRetCompNfse := SeparaDados(FRetWS, Prefixo3 + 'CompNfse');
 
   i := 0;
   while FRetCompNfse <> '' do
    begin
-    j := Pos('</' + {Prefixo3 +} 'Nfse>', FRetCompNfse);
+    j := Pos('</' + Prefixo3 + 'Nfse>', FRetCompNfse);
     if j = 0
-     then j := Pos('</' + {Prefixo4 +} 'Nfse>', FRetCompNfse);
+     then j := Pos('</' + Prefixo4 + 'Nfse>', FRetCompNfse);
 
     if j > 0
      then begin
       FRetNfse := FRetCompNfse;
 
-      FRetNFSe := FProvedorClass.GeraRetornoNFSe('', {Prefixo3,} FRetNFSe, FNomeCidade);
+      FRetNFSe := FProvedorClass.GeraRetornoNFSe(Prefixo3, FRetNFSe, FNomeCidade);
 
 //      if FConfiguracoes.Geral.Salvar
 //       then begin
