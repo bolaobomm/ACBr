@@ -97,7 +97,9 @@ type
                                ANumero,ACodigo: Integer; AModelo:Integer=56): String;
     class function ObterNomeMunicipio(const xMun, xUF: string; const cMun: integer): string;
     class function ObterCodigoMunicipio(const xMun, xUF: string): integer;                               
-
+{$IFDEF DELPHI2009_UP}
+    class function LoadXML(CaminhoArquivo: string): TEncoding;
+{$ENDIF}
   published
 
   end;
@@ -352,7 +354,7 @@ begin
 
    AStr := copy(AStr, 1, pos('</'+ APrefixo3 + EnviarLoteRps + '>', AStr) - 1);
 
-   if (URI = '') or (AProvedor in [proRecife, {proRJ,} proAbaco, proIssCuritiba])
+   if (URI = '') or (AProvedor in [proRecife, {proRJ,} proAbaco, proIssCuritiba, proFISSLex])
     then AID := '>'
     else AID := ' ' + Identificador + '="AssLote_' + URI + '">';
 
@@ -595,12 +597,12 @@ begin
    AXML := copy(AXML, 1, pos('</'+ APrefixo3 + EnviarLoteRps + '>', AXML) - 1);
 
    // Alterado por Italo em 07/08/2013 - incluido na lista o proAbaco
-   if (URI = '') or (AProvedor in [proRecife, proRJ, proAbaco, proIssDSF, proIssCuritiba])
+   if (URI = '') or (AProvedor in [proRecife, proRJ, proAbaco, proIssDSF, proIssCuritiba, proFISSLex])
     then AID := '>'
     else AID := ' ' + Identificador + '="AssLote_' + URI + '">';
 
    // Incluido por Italo em 07/08/2013
-   if AProvedor in [proAbaco, proIssCuritiba]
+   if AProvedor in [proAbaco, proIssCuritiba, proFISSLex]
     then URI := '';
 
    AXML := AXML + '<Signature xmlns="http://www.w3.org/2000/09/xmldsig#"' + AID +
@@ -748,7 +750,7 @@ begin
   then begin
    if (URI <> '') and (AProvedor = proIssDSF) 
     then xmldsig.signature := xmldoc.selectSingleNode('.//ns1:'+ EnviarLoteRps + '/ds:Signature')
-   else if (URI <> '') and not (AProvedor in [proRecife, proRJ, proAbaco, proIssCuritiba])
+   else if (URI <> '') and not (AProvedor in [proRecife, proRJ, proAbaco, proIssCuritiba, proFISSLex])
     then xmldsig.signature := xmldoc.selectSingleNode('.//ds:Signature[@' + Identificador + '="AssLote_' + URI + '"]')
     else begin
      xmldsig.signature := xmldoc.selectSingleNode('.//ds1:' + EnviarLoteRps + '/ds:Signature');
@@ -1503,5 +1505,40 @@ begin
      List.free;
    end;
 end;
+
+{$IFDEF DELPHI2009_UP}
+class function NotaUtil.LoadXML(CaminhoArquivo: string): TEncoding;
+var
+ ArquivoXML: TStringList;
+begin
+   ArquivoXML := TStringList.Create;
+   ArquivoXML.LoadFromFile(CaminhoArquivo, TEncoding.UTF8);
+   if ArquivoXML.Text <> '' then
+     Result := TEncoding.UTF8
+   else begin
+     ArquivoXML.LoadFromFile(CaminhoArquivo ,TEncoding.ANSI);
+     if ArquivoXML.Text <> '' then
+       Result := TEncoding.ANSI
+     else begin
+       ArquivoXML.LoadFromFile(CaminhoArquivo, TEncoding.ASCII);
+       if ArquivoXML.Text <> '' then
+         Result := TEncoding.ASCII
+       else begin
+         ArquivoXML.LoadFromFile(CaminhoArquivo,TEncoding.Unicode);
+         if ArquivoXML.Text <> '' then
+           Result := TEncoding.Unicode
+         else begin
+           ArquivoXML.LoadFromFile(CaminhoArquivo ,TEncoding.UTF7);
+           if ArquivoXML.Text <> '' then
+             Result := TEncoding.UTF7
+           else
+             Result := TEncoding.Default;
+         end;
+       end;
+     end;
+   end;
+   ArquivoXML.Free;
+end;
+{$ENDIF}
 
 end.

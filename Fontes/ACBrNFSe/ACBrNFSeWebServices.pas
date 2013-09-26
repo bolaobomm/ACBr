@@ -523,6 +523,9 @@ var
  PCertContext : Pointer;
  ContentHeader: string;
 begin
+ if DFeUtil.EstaVazio( FConfiguracoes.Certificados.NumeroSerie )
+  then Exit;
+
  Cert        := FConfiguracoes.Certificados.GetCertificado;
  CertContext := Cert as ICertContext;
  CertContext.Get_CertContext(Integer(PCertContext));
@@ -893,7 +896,8 @@ begin
    if FConfiguracoes.WebServices.Salvar
     then FConfiguracoes.Geral.Save('-xxx1.xml', FDadosMsg);
 
-   FDadosMsg := TNFSeEnviarLoteRPS(Self).FNotasFiscais.AssinarLoteRps(TNFSeEnviarLoteRps(Self).NumeroLote, FDadosMSg);
+   if FConfiguracoes.Certificados.AssinaLote
+    then FDadosMsg := TNFSeEnviarLoteRPS(Self).FNotasFiscais.AssinarLoteRps(TNFSeEnviarLoteRps(Self).NumeroLote, FDadosMSg);
 
    if FConfiguracoes.WebServices.Salvar
     then FConfiguracoes.Geral.Save('-xxx2.xml', FDadosMsg);

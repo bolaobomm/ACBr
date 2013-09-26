@@ -586,10 +586,16 @@ var
  ArquivoXML: TStringList;
  XML : AnsiString;
  Tipo: Integer;
+{$IFDEF DELPHI2009_UP}
+ Encoding : TEncoding;
+{$ENDIF}
 begin
  try
+  {$IFDEF DELPHI2009_UP}
+    Encoding := NotaUtil.LoadXML(CaminhoArquivo);
+  {$ENDIF}
   ArquivoXML := TStringList.Create;
-  ArquivoXML.LoadFromFile(CaminhoArquivo {$IFDEF DELPHI2009_UP},TEncoding.UTF8{$ENDIF});
+  ArquivoXML.LoadFromFile(CaminhoArquivo {$IFDEF DELPHI2009_UP},Encoding{$ENDIF});
   Result := True;
 
   ArquivoXML.Text := StringReplace(StringReplace( ArquivoXML.Text, '&lt;', '<', [rfReplaceAll]), '&gt;', '>', [rfReplaceAll]);
