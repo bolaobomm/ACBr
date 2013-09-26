@@ -176,7 +176,7 @@ begin
 
  Result := TagI + DadosMsg + TagF;
 
- if AProvedor in [proNenhum, pro4R, proAgili, proCoplan, profintelISS, proFiorilli, proFISSLex,
+ if AProvedor in [proNenhum, pro4R, proAgili, proCoplan, profintelISS, proFiorilli,
                   proGoiania, proGovDigital, proISSDigital, proISSe, proProdata, proVirtual,
                   proSaatri] then Result := '';
 end;

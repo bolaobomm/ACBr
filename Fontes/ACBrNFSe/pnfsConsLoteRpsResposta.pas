@@ -265,8 +265,8 @@ begin
           // Grupo da TAG <Nfse> *************************************************
           if Leitor.rExtrai(iNivel + 3, 'Nfse') <> ''
            then begin
-            ListaNfse.FCompNfse[i].FNfse.XML := '<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>'+
-                                                Leitor.Grupo+
+            ListaNfse.FCompNfse[i].FNfse.XML := {'<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>'+}
+                                                Leitor.Grupo +
                                                 '</Nfse>';
             // Grupo da TAG <InfNfse> *****************************************************
             if Leitor.rExtrai(iNivel + 4, 'InfNfse') <> ''
