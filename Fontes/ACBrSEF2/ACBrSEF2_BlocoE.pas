@@ -409,7 +409,7 @@ type
   private
     fCOD_MOD     : String;
     fNUM_LCTO    : String;
-    fCOP         : Integer;
+    fCOP         : String;
     fIND_TOT     : Integer;
     fNUM_MR      : Integer;
     fIND_OBS     : Integer;
@@ -432,7 +432,7 @@ type
     property NUM_LCTO    : String    read	FNUM_LCTO     write FNUM_LCTO;      // Observação
     property IND_TOT     : Integer   read	FIND_TOT      write FIND_TOT;       // Indicador de totalização: 0- Total do dia 1- Total do mês
     property NUM_MR      : Integer	 read  FNUM_MR      write FNUM_MR;        // Número de ordem do mapa resumo, correspondente ao dia do mês em que ocorreram as vendas (ou correspondente ao mês em houve a totalização)
-    property COP         : Integer   read	FCOP          write FCOP;           // Código da classe da operação ou prestação, conforme a tabela indicada no item 4.2.2.1
+    property COP         : string    read	FCOP          write FCOP;           // Código da classe da operação ou prestação, conforme a tabela indicada no item 4.2.2.1
     property IND_OBS     : Integer   read	FIND_OBS      write FIND_OBS;       // Indicador de observações do Mapa-resumo ECF: 0- Lançamento sem observação 1- Lançamento com observação
     property DT_DOC      : TDateTime read	FDT_DOC       write FDT_DOC;        // Data do resumo das vendas por ECF
     property VL_BRT      : Double    read	FVL_BRT       write FVL_BRT;        // Valor da venda bruta

@@ -790,8 +790,8 @@ end;
 
 procedure TBloco_0.WriteRegistro0030(Reg0001: TRegistroSEF0001);
 var
-  wPRF_ISS, wPRF_ICMS, wIND_EC:Integer;
-  wIND_RI: String;
+  wPRF_ISS, wPRF_ICMS:Integer;
+  wIND_EC,wIND_RI,wPRF_RIDF,wPRF_RUDF,wPRF_LMC,wPRF_RV,wPRF_RI: String;
 begin
    if Assigned(Reg0001.Registro030) then
    begin
@@ -808,24 +808,58 @@ begin
          else
             wPRF_ICMS:= Integer(PRF_ICMS);
 
-         if Integer(IND_EC) > 5 then
-            wIND_EC:= 9;
+         if Integer(IND_EC) > 6 then
+            wIND_EC:= ''
+         else if Integer(IND_EC) > 5 then
+            wIND_EC:= '9'
+         else
+            wIND_EC:= IntToStr(Integer(IND_EC));
 
          if Integer(IND_RI) > 1 then
             wIND_RI:= ''
          else
             wIND_RI:= IntToStr(Integer(IND_RI));
 
+         if (Integer(PRF_RIDF) > 1) then
+            wPRF_RIDF := ''
+         else
+            wPRF_RIDF := IntToStr(Integer(PRF_RIDF));
+
+         if (Integer(PRF_RUDF) > 1) then
+            wPRF_RUDF := ''
+         else
+            wPRF_RUDF := IntToStr(Integer(PRF_RUDF));
+
+         if (Integer(PRF_LMC) > 1) then
+            wPRF_LMC := ''
+         else
+            wPRF_LMC := IntToStr(Integer(PRF_LMC));
+
+         if (Integer(PRF_RV) > 1) then
+            wPRF_RV := ''
+         else
+            wPRF_RV := IntToStr(Integer(PRF_RV));
+
+         if (Integer(PRF_RIDF) > 1) then
+            wPRF_RIDF := ''
+         else
+            wPRF_RIDF := IntToStr(Integer(PRF_RIDF));
+
+         if (Integer(PRF_RI) > 1) then
+            wPRF_RI := ''
+         else
+            wPRF_RI := IntToStr(Integer(PRF_RI));
+
          Add( LFill('0030')              +
               LFill(Integer(IND_ED),0)   +
               LFill(Integer(IND_ARQ),0)  +
               LFill(wPRF_ISS,0)          +
               LFill(wPRF_ICMS,0)         +
-              LFill(Integer(PRF_RIDF))   +
-              LFill(Integer(PRF_RUDF),0) +
-              LFill(Integer(PRF_LMC), 1) +
-              LFill(Integer(PRF_RV), 1)  +
-              LFill(Integer(PRF_RI), 1)  +
+              LFill(wPRF_RIDF,0)   +
+              LFill(wPRF_RUDF,0) +
+              LFill(wPRF_LMC, 0) +
+              LFill(wPRF_RV, 0)  +
+              LFill(wPRF_RI, 0)  +
               LFill(wIND_EC,0)           +
               LFill(Integer(IND_ISS), 0) +
               LFill(Integer(IND_RT), 1)  +

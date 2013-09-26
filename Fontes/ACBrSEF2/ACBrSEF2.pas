@@ -52,7 +52,7 @@ Uses SysUtils, Classes, Contnrs,
 	   ACBrSEF2_eDoc_BlocoC_Class, ACBrSEF2Conversao, ACBrUtil, DateUtils;
 
 const
-  CACBrSEF2_Versao = '0.20';
+  CACBrSEF2_Versao = '0.21';
 
 type
   TACBrSEF2Arquivo = (aSEF,aEDOC);

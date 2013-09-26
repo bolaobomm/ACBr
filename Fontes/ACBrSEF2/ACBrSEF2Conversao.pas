@@ -303,7 +303,8 @@ Uses SysUtils, Classes, ACBrTXTClass, contnrs;
                               esSimplificadaPapel,
                               esLivroCaixaArquivo,
                               esLivroCaixaPapel,
-                              esNaoObrigado);
+                              esNaoObrigado,
+                              esVazio);
 
 
 

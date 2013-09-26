@@ -1062,7 +1062,7 @@ begin
          Add( LFill('E080')         +
               LFill(IND_TOT, 1)     +
               LFill(COD_MOD)        +
-              LFill(NUM_MR,  Length(inttostr(NUM_MR)) +) +
+              LFill(NUM_MR, 2)      +
               LFill(DT_DOC)         +
               LFill(VL_BRT,2)       +
               LFill(VL_CANC_ICMS,2) +
@@ -1102,7 +1102,7 @@ begin
             Add( LFill('E085')           +
                  LFill(VL_CONT_P,2)      +
                  LFill(VL_OP_ISS_P,2)    +
-                 LFill(CFOP)             +
+                 LFill(CFOP,4)           +
                  LFill(VL_BC_ICMS_P,2)   +
                  LFill(ALIQ_ICMS,2)      +
                  LFill(VL_ICMS_P,2)      +
