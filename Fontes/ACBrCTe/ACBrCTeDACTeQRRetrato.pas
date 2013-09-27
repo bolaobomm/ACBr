@@ -37,7 +37,7 @@
 {******************************************************************************
 |* Historico
 |*
-******************************************************************************}
+*******************************************************************************}
 
 {$I ACBr.inc}
 
@@ -47,6 +47,7 @@ unit ACBrCTeDACTeQRRetrato;
 // Quando enviar os fontes referentes ao DACTE favor alterar
 // a data e o nome da linha abaixo.
 // Última liberação:
+// 27/09/2013 por Italo Jurisato Junior
 // 16/09/2013 por Italo Jurisato Junior
 // 06/09/2013 por Italo Jurisato Junior
 // 21/08/2013 por Italo Jurisato Junior
@@ -573,6 +574,25 @@ type
     qrmRespSeguroMerc: TQRMemo;
     qrmNroApolice: TQRMemo;
     qrmNroAverbacao: TQRMemo;
+    qrb_06_ProdutosPerigosos: TQRChildBand;
+    QRShape101: TQRShape;
+    QRLabel192: TQRLabel;
+    QRShape102: TQRShape;
+    QRLabel193: TQRLabel;
+    QRLabel194: TQRLabel;
+    QRLabel195: TQRLabel;
+    QRLabel196: TQRLabel;
+    QRLabel197: TQRLabel;
+    QRShape103: TQRShape;
+    QRShape104: TQRShape;
+    QRShape105: TQRShape;
+    QRShape106: TQRShape;
+    qrmNumONU: TQRMemo;
+    qrmNomeApropriado: TQRMemo;
+    qrmClasse: TQRMemo;
+    qrmGrupoEmbalagem: TQRMemo;
+    qrmQtdeProduto: TQRMemo;
+    QRShape107: TQRShape;
     procedure QRCTeBeforePrint(Sender: TCustomQuickRep; var PrintReport: Boolean);
     procedure qrb_01_ReciboBeforePrint(Sender: TQRCustomBand; var PrintBand: Boolean);
     procedure qrb_02_CabecalhoBeforePrint(Sender: TQRCustomBand; var PrintBand: Boolean);
@@ -607,6 +627,8 @@ type
     procedure qrb_11_ModRodLot104BeforePrint(Sender: TQRCustomBand;
       var PrintBand: Boolean);
     procedure qrb_18_ReciboBeforePrint(Sender: TQRCustomBand;
+      var PrintBand: Boolean);
+    procedure qrb_06_ProdutosPerigososBeforePrint(Sender: TQRCustomBand;
       var PrintBand: Boolean);
   private
     procedure Itens;
@@ -1047,6 +1069,9 @@ begin
 {$ENDIF}
 
   Itens;
+
+  if FCTe.peri.Count = 0
+   then qrb_06_ProdutosPerigosos.Height := 0;
 
   qrb_10_ModRodFracionado.Height := 0;
   qrb_11_ModRodLot103.Height     := 0;
@@ -2359,6 +2384,31 @@ begin
      then qrb_18_Recibo.Height  := 68
      else qrb_18_Recibo.Height  := 0;
    end;
+end;
+
+procedure TfrmDACTeQRRetrato.qrb_06_ProdutosPerigososBeforePrint(
+  Sender: TQRCustomBand; var PrintBand: Boolean);
+var
+ i: Integer;
+begin
+  inherited;
+  PrintBand := (QRCTe.PageNumber = 1);
+
+  qrmNumONU.Lines.Clear;
+  qrmNomeApropriado.Lines.Clear;
+  qrmClasse.Lines.Clear;
+  qrmGrupoEmbalagem.Lines.Clear;
+  qrmQtdeProduto.Lines.Clear;
+
+  for i := 0 to (FCTe.peri.Count-1) do
+   begin
+     qrmNumONU.Lines.Add(FCTe.peri.Items[i].nONU);
+     qrmNomeApropriado.Lines.Add(FCTe.peri.Items[i].xNomeAE);
+     qrmClasse.Lines.Add(FCTe.peri.Items[i].xClaRisco);
+     qrmGrupoEmbalagem.Lines.Add(FCTe.peri.Items[i].grEmb);
+     qrmQtdeProduto.Lines.Add(FCTe.peri.Items[i].qTotProd);
+   end;
+
 end;
 
 end.
