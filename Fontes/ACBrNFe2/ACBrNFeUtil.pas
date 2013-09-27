@@ -1164,13 +1164,13 @@ begin
   else 
    begin
     case ALayOut of
-      LayNfeRecepcao      : Result := DFeUtil.SeSenao(AAmbiente=1, '', 'https://homologacao.sefaz.mt.gov.br/nfcews/services/NfeAutorizacao?wsdl');
-      LayNfeRetRecepcao   : Result := DFeUtil.SeSenao(AAmbiente=1, '', 'https://homologacao.sefaz.mt.gov.br/nfcews/services/NfeRetAutorizacao?wsdl');
-      LayNfeInutilizacao  : Result := DFeUtil.SeSenao(AAmbiente=1, '', 'https://homologacao.sefaz.mt.gov.br/nfcews/services/NfeInutilizacao2?wsdl');
-      LayNfeConsulta      : Result := DFeUtil.SeSenao(AAmbiente=1, '', 'https://homologacao.sefaz.mt.gov.br/nfcews/services/NfeConsulta2?wsdl');
-      LayNfeStatusServico : Result := DFeUtil.SeSenao(AAmbiente=1, '', 'https://homologacao.sefaz.mt.gov.br/nfcews/services/NfeStatusServico2?wsdl');
+      LayNfeRecepcao      : Result := DFeUtil.SeSenao(AAmbiente=1, 'https://nfce.sefaz.mt.gov.br/nfcews/services/NfeAutorizacao?wsdl', 'https://homologacao.sefaz.mt.gov.br/nfcews/services/NfeAutorizacao?wsdl');
+      LayNfeRetRecepcao   : Result := DFeUtil.SeSenao(AAmbiente=1, 'https://nfce.sefaz.mt.gov.br/nfcews/services/NfeRetAutorizacao?wsdl', 'https://homologacao.sefaz.mt.gov.br/nfcews/services/NfeRetAutorizacao?wsdl');
+      LayNfeInutilizacao  : Result := DFeUtil.SeSenao(AAmbiente=1, 'https://nfce.sefaz.mt.gov.br/nfcews/services/NfeInutilizacao2?wsdl', 'https://homologacao.sefaz.mt.gov.br/nfcews/services/NfeInutilizacao2?wsdl');
+      LayNfeConsulta      : Result := DFeUtil.SeSenao(AAmbiente=1, 'https://nfce.sefaz.mt.gov.br/nfcews/services/NfeConsulta2?wsdl', 'https://homologacao.sefaz.mt.gov.br/nfcews/services/NfeConsulta2?wsdl');
+      LayNfeStatusServico : Result := DFeUtil.SeSenao(AAmbiente=1, 'https://nfce.sefaz.mt.gov.br/nfcews/services/NfeStatusServico2?wsdl', 'https://homologacao.sefaz.mt.gov.br/nfcews/services/NfeStatusServico2?wsdl');
       LayNFeCCe,
-      LayNFeEvento        : Result := DFeUtil.SeSenao(AAmbiente=1, '', 'https://homologacao.sefaz.mt.gov.br/nfcews/services/RecepcaoEvento?wsdl');
+      LayNFeEvento        : Result := DFeUtil.SeSenao(AAmbiente=1, 'https://nfce.sefaz.mt.gov.br/nfcews/services/RecepcaoEvento?wsdl', 'https://homologacao.sefaz.mt.gov.br/nfcews/services/RecepcaoEvento?wsdl');
     end;
    end;
 end;
