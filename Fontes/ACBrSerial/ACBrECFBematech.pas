@@ -337,7 +337,8 @@ TACBrECFBematech = class( TACBrECFClass )
        cDadoInicial: AnsiString; cDadoFinal: AnsiString;
        cTipoDownload: AnsiString; cUsuario: AnsiString;
        cChavePublica: AnsiString; cChavePrivada: AnsiString ):Integer;StdCall;
-    xBematech_FI_ArquivoMFD:Function( cNomeArquivoOrigem: AnsiString;
+    xBematech_FI_ArquivoMFDPath:Function( cNomeArquivoOrigem: AnsiString;
+       cNomeArquivoDestino: AnsiString;
        cDadoInicial: AnsiString; cDadoFinal: AnsiString;
        cTipoDownload: AnsiString; cUsuario: AnsiString;
        iTipoGeracao: integer; cChavePublica: AnsiString;
@@ -834,7 +835,7 @@ Var
   FalhasACK   : Integer;
   nSTL, nSTH  : Integer;
   cRetorno    : AnsiString;
-  LenCMD, Resp, I : Integer ;
+  LenCMD, Resp: Integer ;
   TempoLimite : TDateTime ;
 
   procedure AnalisaACK ;
@@ -3380,7 +3381,7 @@ begin
 
    BematechFunctionDetect( 'Bematech_FI_AbrePortaSerial',@xBematech_FI_AbrePortaSerial );
    BematechFunctionDetect( 'Bematech_FI_FechaPortaSerial',@xBematech_FI_FechaPortaSerial );
-   BematechFunctionDetect( 'Bematech_FI_ArquivoMFD',@xBematech_FI_ArquivoMFD );
+   BematechFunctionDetect( 'Bematech_FI_ArquivoMFDPath',@xBematech_FI_ArquivoMFDPath );
    BematechFunctionDetect( 'Bematech_FI_EspelhoMFD',@xBematech_FI_EspelhoMFD );
    BematechFunctionDetect( 'Bematech_FI_GeraRegistrosCAT52MFD',@xBematech_FI_GeraRegistrosCAT52MFD );
    BematechFunctionDetect( 'Bematech_FI_DownloadMFD',@xBematech_FI_DownloadMFD );
@@ -3772,9 +3773,8 @@ procedure TACBrECFBematech.ArquivoMFD_DLL(DataInicial, DataFinal: TDateTime;
   NomeArquivo: AnsiString; Documentos: TACBrECFTipoDocumentoSet;
   Finalidade: TACBrECFFinalizaArqMFD);
 Var
-  Arquivos : TStringList ;
   Resp, Tipo : Integer ;
-  DiaIni, DiaFim, Prop, Prefixo, FileMask, FilePath : AnsiString ;
+  DiaIni, DiaFim, Prop, Prefixo, FilePath : AnsiString ;
   OldAtivo : Boolean ;
   {$IFDEF LINUX} Cmd, ArqTmp : String ; {$ENDIF}
 begin
@@ -3819,33 +3819,25 @@ begin
 
   DiaIni   := FormatDateTime('dd"/"mm"/"yyyy', DataInicial) ;
   DiaFim   := FormatDateTime('dd"/"mm"/"yyyy', DataFinal) ;
-  FileMask := FilePath + Prefixo + Trim(NumSerie) + '_' +
-              FormatDateTime('yyyymmdd',Now ) + '_*.TXT';
-
-  Arquivos := TStringList.Create;
   OldAtivo := Ativo ;
   try
      DeleteFile( NomeArquivo );
-     DeleteFiles( FileMask );
 
      AbrePortaSerialDLL( FilePath ) ;
 
-     Resp := xBematech_FI_ArquivoMFD( '', DiaIni, DiaFim, 'D', Prop, Tipo,
-                                      cChavePublica, cChavePrivada, 1 ) ;
+     Resp := xBematech_FI_ArquivoMFDPath( '',           // Origem = MFD
+                                          NomeArquivo,  // Destino
+                                          DiaIni, DiaFim, 'D', Prop, Tipo,
+                                          cChavePublica, cChavePrivada, 1 ) ;
 
      if (Resp <> 1) then
-        raise EACBrECFErro.Create( ACBrStr( 'Erro ao executar xBematech_FI_ArquivoMFD.'+sLineBreak+
+        raise EACBrECFErro.Create( ACBrStr( 'Erro ao executar xBematech_FI_ArquivoMFDPath.'+sLineBreak+
                                          AnalisarRetornoDll(Resp) )) ;
 
-     FindFiles( FileMask, Arquivos );
-
-     if Arquivos.Count < 1 then
-        raise EACBrECFErro.Create( ACBrStr( 'Erro na execução de xBematech_FI_ArquivoMFD.'+sLineBreak+
-                                'Arquivo: "'+NomeArquivo + '" não gerado' )) ;
-
-     RenameFile( Arquivos[0], NomeArquivo );
+     if not FileExists( NomeArquivo ) then
+        raise EACBrECFErro.Create( ACBrStr( 'Erro na execução de xBematech_FI_ArquivoMFDPath.'+sLineBreak+
+                                   'Arquivo: "'+NomeArquivo + '" não gerado' )) ;
   finally
-     Arquivos.Free;
      FechaPortaSerialDLL( OldAtivo );
   end;
  {$ENDIF}
@@ -3855,9 +3847,8 @@ procedure TACBrECFBematech.ArquivoMFD_DLL( ContInicial, ContFinal : Integer;
   NomeArquivo : AnsiString; Documentos : TACBrECFTipoDocumentoSet;
   Finalidade: TACBrECFFinalizaArqMFD; TipoContador: TACBrECFTipoContador);
 Var
-  Arquivos : TStringList ;
   Resp, Tipo : Integer ;
-  Prop, COOIni, COOFim, Prefixo, FileMask, FilePath : AnsiString ;
+  Prop, COOIni, COOFim, Prefixo, FilePath : AnsiString ;
   OldAtivo : Boolean ;
   {$IFDEF LINUX} Cmd, ArqTmp : String ; {$ENDIF}
 begin
@@ -3903,33 +3894,24 @@ begin
  {$ELSE}
   LoadDLLFunctions;
 
-  FileMask := FilePath + Prefixo + Trim(NumSerie) + '_' +
-              FormatDateTime('yyyymmdd',Now ) + '_*.TXT';
-
-  Arquivos := TStringList.Create;
   OldAtivo := Ativo ;
   try
      DeleteFile( NomeArquivo );
-     DeleteFiles( FileMask );
 
      AbrePortaSerialDLL( FilePath ) ;
 
-     Resp := xBematech_FI_ArquivoMFD( '', COOIni, COOFim, 'C', Prop, Tipo,
-                                      cChavePublica, cChavePrivada, 1 ) ;
+     Resp := xBematech_FI_ArquivoMFDPath( '',           // Origem = MFD
+                                          NomeArquivo,  // Destino
+                                          COOIni, COOFim, 'C', Prop, Tipo,
+                                          cChavePublica, cChavePrivada, 1 ) ;
      if (Resp <> 1) then
-        raise EACBrECFErro.Create( ACBrStr( 'Erro ao executar xBematech_FI_ArquivoMFD.'+sLineBreak+
-                                         AnalisarRetornoDll(Resp) )) ;
+        raise EACBrECFErro.Create( ACBrStr( 'Erro ao executar xBematech_FI_ArquivoMFDPath.'+sLineBreak+
+                                   AnalisarRetornoDll(Resp) )) ;
 
-     FindFiles( FileMask, Arquivos );
-
-     if Arquivos.Count < 1 then
-        raise EACBrECFErro.Create( ACBrStr( 'Erro na execução de xBematech_FI_ArquivoMFD.'+sLineBreak+
-                                'Arquivo: "'+NomeArquivo + '" não gerado' )) ;
-
-     RenameFile( Arquivos[0], NomeArquivo );
+     if not FileExists( NomeArquivo ) then
+        raise EACBrECFErro.Create( ACBrStr( 'Erro na execução de xBematech_FI_ArquivoMFDPath.'+sLineBreak+
+                                   'Arquivo: "'+NomeArquivo + '" não gerado' )) ;
   finally
-     Arquivos.Free;
-     //DeleteFile( ArqTmp ) ;
      FechaPortaSerialDLL( OldAtivo );
   end;
  {$ENDIF}
