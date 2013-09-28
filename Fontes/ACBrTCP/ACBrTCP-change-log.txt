@@ -37,6 +37,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+28/09/2013
+-- ACBrCNIEE --
+[*] Ajuste para método BuscarECF com o Parametro RemoveEspacos  (por: DSA)
+http://www.projetoacbr.com.br/forum/index.php?/topic/
+12384-corre%C3%A7%C3%A3o-na-fun%C3%A7%C3%A3o-buscarecf-no-acbrcniee/
+
 15/07/2013
 -- ACBrCotacao --
 [+] Adicionado componente ACBrCotacao responsável pela leitura da cotação de 

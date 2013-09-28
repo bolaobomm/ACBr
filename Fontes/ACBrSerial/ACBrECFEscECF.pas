@@ -2910,11 +2910,15 @@ var
    DataStr: String;
 begin
   RetornaInfoECF( '8' ) ;
-  DataStr := EscECFComando.Params[0];
+  DataStr := EscECFResposta.Params[0];
 
-  Result := EncodeDate( StrToInt(copy(DataStr,5,4)),   // Ano
-                        StrToInt(copy(DataStr,3,2)),   // Mes
-                        StrToInt(copy(DataStr,1,2)) ); // Dia
+  try
+     Result := EncodeDate( StrToInt(copy(DataStr,5,4)),   // Ano
+                           StrToInt(copy(DataStr,3,2)),   // Mes
+                           StrToInt(copy(DataStr,1,2)) ); // Dia
+  except
+     Result := 0;
+  end;
 end;
 
 procedure TACBrECFEscECF.LerTotaisAliquota;

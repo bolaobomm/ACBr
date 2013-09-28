@@ -97,6 +97,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+Data: 28/09/2013
+-- ACBrECFEscECF --
+[-] Correção do método GetDataMovimento  (por: DSA)
+    http://www.projetoacbr.com.br/forum/index.php?/topic/12487-erro-datamovimento-mp4200/
+
 Data: 23/09/2013
 -- ACBrECFDaruma --
 [-] Acerto na geração dos menus fiscais "Arq.MF" e "Arq.MFD" para impressora Daruma.

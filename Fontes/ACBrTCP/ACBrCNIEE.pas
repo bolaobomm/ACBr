@@ -309,6 +309,13 @@ begin
   Modelo   := AnsiUpperCase(AModelo);
   VersaoSB := AnsiUpperCase(ACBrUtil.OnlyNumber(AVersaoSB));
 
+  if RemoveEspacos then
+  begin
+     Marca    := StringReplace(Marca,    ' ', '', [rfReplaceAll]);
+     Modelo   := StringReplace(Modelo,   ' ', '', [rfReplaceAll]);
+     VersaoSB := StringReplace(VersaoSB, ' ', '', [rfReplaceAll]);
+  end;
+
   Result := nil;
   for I := 0 to Cadastros.Count - 1 do
   begin
