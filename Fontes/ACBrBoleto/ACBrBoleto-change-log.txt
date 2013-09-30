@@ -47,6 +47,14 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+
+Data: 30/09/2013
+-- ACBrBoleto ver. 0.0.88 --
+
+-- ACBrBancoSantander.pas
+[-] Correção remessa CNAB400, NossNumero estava sendo informado errado.(Juliana Tamizou)
+
+
 Data: 23/09/2013
 -- ACBrBoleto ver. 0.0.87 --
 
