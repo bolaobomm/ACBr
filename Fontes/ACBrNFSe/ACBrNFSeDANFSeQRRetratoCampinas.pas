@@ -136,6 +136,7 @@ type
     FImpressora     : String;
     FPrestLogo      : String;
     FPrefeitura     : String;
+    FNFSeCancelada  : Boolean;
   end;
 
 var

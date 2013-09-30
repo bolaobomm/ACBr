@@ -45,6 +45,7 @@ type
     FImpressora     : String;
     FPrestLogo      : String;
     FPrefeitura     : String;
+    FNFSeCancelada  : Boolean;
 
     procedure qrlSemValorFiscalPrint(sender: TObject; var Value: String);
     procedure SetBarCodeImage (ACode: String; QRImage: TQRImage);
@@ -65,7 +66,8 @@ type
                              AMargemDireita  : Double  = 0.51;
                              AImpressora     : String  = '';
                              APrestLogo      : String  = '';
-                             APrefeitura     : String  = '');
+                             APrefeitura     : String  = '';
+                             ANFSeCancelada  : Boolean = False);
 
     class procedure SavePDF(AFile           : String;
                             ANFSe           : TNFSe;
@@ -81,7 +83,8 @@ type
                             AMargemEsquerda : Double  = 0.6;
                             AMargemDireita  : Double  = 0.51;
                             APrestLogo      : String  = '';
-                            APrefeitura     : String  = '');
+                            APrefeitura     : String  = '';
+                            ANFSeCancelada  : Boolean = False);
 
   end;
 
@@ -110,7 +113,8 @@ class procedure TfqrDANFSeQR.Imprimir(ANFSe           : TNFSe;
                                       AMargemDireita  : Double  = 0.51;
                                       AImpressora     : String  = '';
                                       APrestLogo      : String  = '';
-                                      APrefeitura     : String  = '');
+                                      APrefeitura     : String  = '';
+                                      ANFSeCancelada  : Boolean = False);
 {$IFDEF QReport_PDF}
 var
  qf : TQRPDFFilter;
@@ -133,6 +137,7 @@ begin
    FImpressora     := AImpressora;
    FPrestLogo      := APrestLogo;
    FPrefeitura     := APrefeitura;
+   FNFSeCancelada  := ANFSeCancelada;
 
    Printer := TPrinter.Create;
 
@@ -188,7 +193,9 @@ class procedure TfqrDANFSeQR.SavePDF(AFile           : String;
                                      AMargemEsquerda : Double  = 0.6;
                                      AMargemDireita  : Double  = 0.51;
                                      APrestLogo      : String  = '';
-                                     APrefeitura     : String  = '');
+                                     APrefeitura     : String  = '';
+                                     ANFSeCancelada  : Boolean = False);
+
 {$IFDEF QReport_PDF}
 var
  qf : TQRPDFDocumentFilter;
@@ -212,6 +219,7 @@ begin
     FMargemDireita  := AMargemDireita;
     FPrestLogo      := APrestLogo;
     FPrefeitura     := APrefeitura;
+    FNFSeCancelada  := ANFSeCancelada;
 
 
 

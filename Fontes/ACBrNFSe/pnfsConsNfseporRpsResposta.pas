@@ -252,6 +252,10 @@ begin
         // Grupo da TAG <Nfse> *************************************************
         if Leitor.rExtrai(3, 'Nfse') <> ''
          then begin
+
+          // Incluido por joel takei 04/07/2013
+          ListaNfse.FCompNfse[i].FNfse.XML := Leitor.rExtrai(3, 'Nfse');
+
           // Grupo da TAG <InfNfse> *****************************************************
           if Leitor.rExtrai(4, 'InfNfse') <> ''
            then begin
@@ -553,6 +557,9 @@ begin
         if Leitor.rExtrai(3, 'NfseCancelamento') <> ''
          then begin
           ListaNfse.FCompNfse[i].NFSe.NfseCancelamento.DataHora := Leitor.rCampo(tcDatHor, 'DataHora');
+          // Incluido por joel takei 09/07/2013
+          ListaNfse.FCompNfse[i].NFSe.Status := srCancelado;
+          ListaNfse.FCompNfse[i].NFSe.NfseCancelamento.Pedido.CodigoCancelamento := Leitor.rCampo(tcStr, 'CodigoCancelamento');
 
           // Incluido por Mauro Gomes
           // se não encontrou o campo DataHora, deve procurar pelo DataHoraCancelamento

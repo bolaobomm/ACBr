@@ -61,7 +61,8 @@ begin
                                  , MargemDireita
                                  , Impressora
                                  , PrestLogo
-                                 , Prefeitura);
+                                 , Prefeitura
+                                 , NFSeCancelada);
     end;
   end
   else fqrDANFSeQRRetrato.Imprimir(  NFSe
@@ -79,7 +80,8 @@ begin
                                    , MargemDireita
                                    , Impressora
                                    , PrestLogo
-                                   , Prefeitura);
+                                   , Prefeitura
+                                   , NFSeCancelada);
 
  fqrDANFSeQRRetrato.Free;
 end;
@@ -108,6 +110,7 @@ var
  FImpressora     : String;
  FPrestLogo      : String;
  FPrefeitura     : String;
+ FNFSeCancelada  : Boolean;
  Printer         : TPrinter;
 
  // Removido "class" por Francis Silva
@@ -126,7 +129,8 @@ var
                                       AMargemDireita  : Double  = 0.51;
                                       AImpressora     : String  = '';
                                       APrestLogo      : String  = '';
-                                      APrefeitura     : String  = '');
+                                      APrefeitura     : String  = '';
+                                      ANFSeCancelada  : Boolean = False);
   begin
  // Incluido "TACBrNFSeDANFSeQR." por Francis Silva
   with TACBrNFSeDANFSeQR.Create ( nil ) do
@@ -146,6 +150,7 @@ var
    FImpressora     := AImpressora;
    FPrestLogo      := APrestLogo;
    FPrefeitura     := APrefeitura;
+   FNFSeCancelada  := ANFSeCancelada;
 
    Printer := TPrinter.Create;
 
@@ -170,6 +175,7 @@ var
      fqrDANFSeQRRetratoCampinas.FImpressora     := FImpressora;
      fqrDANFSeQRRetratoCampinas.FPrestLogo      := FPrestLogo;
      fqrDANFSeQRRetratoCampinas.FPrefeitura     := FPrefeitura;
+     fqrDANFSeQRRetratoCampinas.FNFSeCancelada  := FNFSeCancelada;
 
      fqrDANFSeQRRetratoCampinas.QRNFSeCamp.Prepare;
      fqrDANFSeQRRetratoCampinas.QRNFSeCamp.Preview;
@@ -213,7 +219,8 @@ begin
                                          , MargemDireita
                                          , Impressora
                                          , PrestLogo
-                                         , Prefeitura);
+                                         , Prefeitura
+                                         , NFSeCancelada);
     end;
   end
   else ImprimirCampinas(  NFSe
@@ -231,7 +238,8 @@ begin
                                            , MargemDireita
                                            , Impressora
                                            , PrestLogo
-                                           , Prefeitura);
+                                           , Prefeitura
+                                           , NFSeCancelada);
 
  fqrDANFSeQRRetratoCampinas.Free;
 end;
@@ -274,7 +282,8 @@ begin
                                , MargemEsquerda
                                , MargemDireita
                                , PrestLogo
-                               , Prefeitura);
+                               , Prefeitura
+                               , NFSeCancelada);
     end;
   end
   else begin
@@ -301,7 +310,8 @@ begin
                              , MargemEsquerda
                              , MargemDireita
                              , PrestLogo
-                             , Prefeitura);
+                             , Prefeitura
+                             , NFSeCancelada);
   end;
 
  fqrDANFSeQRRetrato.Free;

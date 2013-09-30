@@ -3351,11 +3351,16 @@ begin
 //       end;
 
       FNotasFiscais.Items[i].NFSe.Protocolo         := NFSeRetorno.ListaNfse.CompNfse.Items[i].Nfse.Protocolo;
+      FNotasFiscais.Items[i].NFSe.IdentificacaoRps  := NFSeRetorno.ListaNfse.CompNfse.Items[i].Nfse.IdentificacaoRps;
       FNotasFiscais.Items[i].NFSe.CodigoVerificacao := NFSeRetorno.ListaNfse.CompNfse.Items[i].Nfse.CodigoVerificacao;
       FNotasFiscais.Items[i].NFSe.Numero            := NFSeRetorno.ListaNfse.CompNfse.Items[i].Nfse.Numero;
-      FNotasFiscais.Items[i].XML_NFSe               := FRetNfse;
+//      FNotasFiscais.Items[i].XML_NFSe               := FRetNfse;
+      // alterado por joel takei 12/08/2013
+      FNotasFiscais.Items[i].XML                    := FRetNfse;
 
       FNotasFiscais.Items[i].NFSe.NfseCancelamento.DataHora := NFSeRetorno.ListaNfse.CompNfse.Items[i].Nfse.NfseCancelamento.DataHora;
+      // Incluido por joel takei 12/08/2013
+      FNotasFiscais.Items[i].NFSe.NfseCancelamento.Pedido.CodigoCancelamento := NFSeRetorno.ListaNfse.CompNfse.Items[i].Nfse.NfseCancelamento.Pedido.CodigoCancelamento;
 
       FRetCompNfse := '';
       inc(i);

@@ -207,6 +207,7 @@ type
       var PrintReport: Boolean);
   private
     { Private declarations }
+    FProvedor: TnfseProvedor;
     procedure Itens;
   public
     { Public declarations }
@@ -298,6 +299,8 @@ end;
 
 procedure TfqrDANFSeQRRetrato.qrb_2_PrestadorServicoBeforePrint(Sender: TQRCustomBand;
   var PrintBand: Boolean);
+var
+ Ok: Boolean;
 begin
   inherited;
 
@@ -324,6 +327,7 @@ begin
  qrlPrestUF.Caption := FNFSe.PrestadorServico.Endereco.UF;
  qrlPrestEmail.Caption := FNFSe.PrestadorServico.Contato.Email;
 
+ FProvedor := StrToProvedor(Ok, CodCidadeToProvedor(StrToIntDef(FNFSe.PrestadorServico.Endereco.CodigoMunicipio, 0)));
 end;
 
 procedure TfqrDANFSeQRRetrato.qrb_3_TomadorServicoBeforePrint(Sender: TQRCustomBand;
@@ -352,7 +356,7 @@ begin
  // Mensagem para modo Homologacao.
  qrlMsgTeste.Visible := False;
  qrlMsgTeste.Enabled := False;
- if FNFSe.NfseCancelamento.DataHora<>0
+ if (FNFSe.NfseCancelamento.DataHora<>0) or FNFSeCancelada
   then begin
    qrlMsgTeste.Caption  := 'NFS-e CANCELADA';
    qrlMsgTeste.Visible  := True;
@@ -553,7 +557,13 @@ begin
  qrlValorDeducoes.Caption       := DFeUtil.FormatFloat( FNFSe.Servico.Valores.ValorDeducoes );
  qrlDescIncondicionado2.Caption := DFeUtil.FormatFloat( FNFSe.Servico.Valores.DescontoIncondicionado );
  qrlBaseCalc.Caption            := DFeUtil.FormatFloat( FNFSe.Servico.Valores.BaseCalculo );
- qrlAliquota.Caption            := DFeUtil.FormatFloat( FNFSe.Servico.Valores.Aliquota, ',0.0000' );
+
+ // Checar os provedores que retornam a Aliquota dividida por 100
+ // e multiplicar por 100 para que seja apresentada no formado x.xx %
+ if FProvedor = proGinfes
+  then qrlAliquota.Caption := DFeUtil.FormatFloat( FNFSe.Servico.Valores.Aliquota * 100, ',0.00' )
+  else qrlAliquota.Caption := DFeUtil.FormatFloat( FNFSe.Servico.Valores.Aliquota, ',0.0000' );
+
  // TnfseSimNao = ( snSim, snNao )
  case FNFSe.Servico.Valores.IssRetido of
   stRetencao     : qrlISSReter.Caption := 'Sim';
@@ -564,6 +574,7 @@ begin
  // Alterado esta linha em 27/12/2012  Daniel Jr - Pois o ICMS não estava sendo dividido por 100) Ex 1,00 estava 100,00
  // Alterado por Italo em 17/07/2013 (> removido a divisão por 100
  // qrlValorISS.Caption := DFeUtil.FormatFloat( (FNFSe.Servico.Valores.ValorIss / 100) );
+
  qrlValorISS.Caption := DFeUtil.FormatFloat( FNFSe.Servico.Valores.ValorIss );
 
 // qrlValorCredito.Caption := DFeUtil.FormatFloat( FNFSe.ValorCredito );
