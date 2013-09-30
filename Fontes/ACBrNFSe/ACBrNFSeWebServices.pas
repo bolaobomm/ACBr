@@ -1578,7 +1578,12 @@ begin
  if (TNFSeCancelarNfse(Self).FIM = '') then
    TNFSeCancelarNfse(Self).FIM              := TNFSeCancelarNfse(Self).FNotasFiscais.Items[0].NFSe.PrestadorServico.IdentificacaoPrestador.InscricaoMunicipal;
  if (TNFSeCancelarNfse(Self).FCodigoMunicipio = '') then
+ begin
+  if (FProvedor = proISSNet) and (FConfiguracoes.WebServices.AmbienteCodigo = 2) then
+   TNFSeCancelarNfse(Self).FCodigoMunicipio := '999'
+  else
    TNFSeCancelarNfse(Self).FCodigoMunicipio := TNFSeCancelarNfse(Self).FNotasFiscais.Items[0].NFSe.PrestadorServico.Endereco.CodigoMunicipio;
+ end;
 
  FDadosSenha := FProvedorClass.Gera_DadosSenha(FConfiguracoes.WebServices.UserWeb,
                                                FConfiguracoes.WebServices.SenhaWeb);
