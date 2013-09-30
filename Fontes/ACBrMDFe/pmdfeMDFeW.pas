@@ -166,7 +166,7 @@ begin
    then Gerador.wGrupo('mdfeProc versao="' + MDFeEnviMDFe + '" ' + NAME_SPACE_MDFe, '');
 
   Gerador.wGrupo('MDFe ' + NAME_SPACE_MDFe);
-  Gerador.wGrupo('infMDFe versao="' + MDFeEnviMDFe + '" Id="' + MDFe.infMDFe.ID + '"');
+  Gerador.wGrupo('infMDFe Id="' + MDFe.infMDFe.ID + '" versao="' + MDFeEnviMDFe + '"');
   GerarInfMDFe;
   Gerador.wGrupo('/infMDFe');
 
