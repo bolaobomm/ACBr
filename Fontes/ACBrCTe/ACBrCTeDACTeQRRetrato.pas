@@ -1070,8 +1070,13 @@ begin
 
   Itens;
 
+{$IFDEF PL_200}
+  if FCTe.infCTeNorm.peri.Count = 0
+   then qrb_06_ProdutosPerigosos.Height := 0;
+{$ELSE}
   if FCTe.peri.Count = 0
    then qrb_06_ProdutosPerigosos.Height := 0;
+{$ENDIF}
 
   qrb_10_ModRodFracionado.Height := 0;
   qrb_11_ModRodLot103.Height     := 0;
@@ -2400,6 +2405,16 @@ begin
   qrmGrupoEmbalagem.Lines.Clear;
   qrmQtdeProduto.Lines.Clear;
 
+{$IFDEF PL_200}
+  for i := 0 to (FCTe.infCTeNorm.peri.Count-1) do
+   begin
+     qrmNumONU.Lines.Add(FCTe.infCTeNorm.peri.Items[i].nONU);
+     qrmNomeApropriado.Lines.Add(FCTe.infCTeNorm.peri.Items[i].xNomeAE);
+     qrmClasse.Lines.Add(FCTe.infCTeNorm.peri.Items[i].xClaRisco);
+     qrmGrupoEmbalagem.Lines.Add(FCTe.infCTeNorm.peri.Items[i].grEmb);
+     qrmQtdeProduto.Lines.Add(FCTe.infCTeNorm.peri.Items[i].qTotProd);
+   end;
+{$ELSE}
   for i := 0 to (FCTe.peri.Count-1) do
    begin
      qrmNumONU.Lines.Add(FCTe.peri.Items[i].nONU);
@@ -2408,6 +2423,7 @@ begin
      qrmGrupoEmbalagem.Lines.Add(FCTe.peri.Items[i].grEmb);
      qrmQtdeProduto.Lines.Add(FCTe.peri.Items[i].qTotProd);
    end;
+{$ENDIF}
 
 end;
 
