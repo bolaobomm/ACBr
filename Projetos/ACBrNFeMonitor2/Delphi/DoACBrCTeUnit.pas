@@ -861,7 +861,7 @@ begin
           Ide.modelo      := INIRec.ReadString( 'ide','mod' ,'55');
           Ide.serie       := INIRec.ReadInteger( 'ide','serie'  ,1);
           Ide.nCT         := INIRec.ReadInteger( 'ide','nCT' ,0);
-          Ide.dhEmi       := DFeUtil.StringToDate(INIRec.ReadString( 'ide','dhEmi','0'));
+          Ide.dhEmi       := NotaUtil.StringToDateTime(INIRec.ReadString( 'ide','dhEmi','0'));
           Ide.tpImp       := StrToTpImp(  OK, INIRec.ReadString( 'ide','tpImp',TpImpToStr(ACBrCTe1.DACTe.TipoDACTE)));
           Ide.tpEmis      := StrToTpEmis( OK,INIRec.ReadString( 'ide','tpemis',IntToStr(ACBrCTe1.Configuracoes.Geral.FormaEmissaoCodigo)));
           Ide.tpCTe       := StrTotpCTe(OK,INIRec.ReadString('ide','tpCTe','0'));
