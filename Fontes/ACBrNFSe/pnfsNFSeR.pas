@@ -1351,7 +1351,7 @@ end;
 
 procedure TNFSeR.NFSe_ProvedorGoiania;
 var
-// 	item: Integer;
+ 	item: Integer;
  	ok  : Boolean;
 begin
  	if Leitor.rExtrai(3, 'ValoresNfse') <> '' then
@@ -1361,8 +1361,39 @@ begin
    	NFSe.Servico.Valores.ValorIss         := Leitor.rCampo(tcDe2, 'ValorIss');
   end; // fim ValoresNfse
 
- 	if Leitor.rExtrai(3, 'Prestador') <> '' then
+ 	if (Leitor.rExtrai(3, 'PrestadorServico') <> '') or
+     (Leitor.rExtrai(3, 'Prestador') <> '') then
 	begin
+    NFSe.PrestadorServico.RazaoSocial  := Leitor.rCampo(tcStr, 'RazaoSocial');
+    NFSe.PrestadorServico.NomeFantasia := Leitor.rCampo(tcStr, 'NomeFantasia');
+
+    NFSe.PrestadorServico.Endereco.Endereco := Leitor.rCampo(tcStr, 'Endereco');
+    if Copy(NFSe.PrestadorServico.Endereco.Endereco, 1, 10) = '<' + 'Endereco>'
+     then NFSe.PrestadorServico.Endereco.Endereco := Copy(NFSe.PrestadorServico.Endereco.Endereco, 11, 125);
+
+    NFSe.PrestadorServico.Endereco.Numero      := Leitor.rCampo(tcStr, 'Numero');
+    NFSe.PrestadorServico.Endereco.Complemento := Leitor.rCampo(tcStr, 'Complemento');
+    NFSe.PrestadorServico.Endereco.Bairro      := Leitor.rCampo(tcStr, 'Bairro');
+
+    if VersaoXML='1'
+     then begin
+      NFSe.PrestadorServico.Endereco.CodigoMunicipio := Leitor.rCampo(tcStr, 'Cidade');
+      NFSe.PrestadorServico.Endereco.UF              := Leitor.rCampo(tcStr, 'Estado');
+     end
+     else begin
+      NFSe.PrestadorServico.Endereco.CodigoMunicipio := Leitor.rCampo(tcStr, 'CodigoMunicipio');
+      NFSe.PrestadorServico.Endereco.UF              := Leitor.rCampo(tcStr, 'Uf');
+     end;
+
+    NFSe.PrestadorServico.Endereco.CodigoPais := Leitor.rCampo(tcInt, 'CodigoPais');
+    NFSe.PrestadorServico.Endereco.CEP        := Leitor.rCampo(tcStr, 'Cep');
+
+    if length(NFSe.PrestadorServico.Endereco.CodigoMunicipio)<7
+     then NFSe.PrestadorServico.Endereco.CodigoMunicipio := Copy(NFSe.PrestadorServico.Endereco.CodigoMunicipio, 1, 2) +
+           FormatFloat('00000', StrToIntDef(Copy(NFSe.PrestadorServico.Endereco.CodigoMunicipio, 3, 5), 0));
+
+    NFSe.PrestadorServico.Endereco.xMunicipio := CodCidadeToCidade(StrToIntDef(NFSe.PrestadorServico.Endereco.CodigoMunicipio, 0));
+
    	if (Leitor.rExtrai(4, 'IdentificacaoPrestador') <> '') then
 		begin
      	NFSe.PrestadorServico.IdentificacaoPrestador.InscricaoMunicipal := Leitor.rCampo(tcStr, 'InscricaoMunicipal');
@@ -1398,23 +1429,34 @@ begin
 
     if (Leitor.rExtrai(4, 'Servico') <> '') then
 		begin
-      NFSe.Servico.Valores.IssRetido   := StrToSituacaoTributaria(ok, Leitor.rCampo(tcStr, 'IssRetido'));
-       NFSe.Servico.CodigoTributacaoMunicipio := Leitor.rCampo(tcStr, 'CodigoTributacaoMunicipio');
-       NFSe.Servico.Discriminacao             := Leitor.rCampo(tcStr, 'Discriminacao');
-       NFSe.Servico.Descricao                 := '';
-       NFSe.Servico.CodigoMunicipio           := Leitor.rCampo(tcStr, 'CodigoMunicipio');
-       NFSe.Servico.ExigibilidadeISS          := StrToExigibilidadeISS(ok, Leitor.rCampo(tcStr, 'ExigibilidadeISS'));
-       NFSe.Servico.MunicipioIncidencia       := Leitor.rCampo(tcInt, 'MunicipioIncidencia');
+      NFSe.Servico.Valores.IssRetido := StrToSituacaoTributaria(ok, Leitor.rCampo(tcStr, 'IssRetido'));
+      NFSe.Servico.ItemListaServico  := DFeUtil.LimpaNumero(Leitor.rCampo(tcStr, 'ItemListaServico'));
 
-       if StrToIntDef(NFSe.PrestadorServico.Endereco.CodigoMunicipio, 0) = 0
-        then begin
-         NFSe.PrestadorServico.Endereco.CodigoMunicipio := NFSe.Servico.CodigoMunicipio;
-         if length(NFSe.PrestadorServico.Endereco.CodigoMunicipio)<7
-          then NFSe.PrestadorServico.Endereco.CodigoMunicipio := Copy(NFSe.PrestadorServico.Endereco.CodigoMunicipio, 1, 2) +
-           FormatFloat('00000', StrToIntDef(Copy(NFSe.PrestadorServico.Endereco.CodigoMunicipio, 3, 5), 0));
+      Item := StrToInt(SomenteNumeros(Nfse.Servico.ItemListaServico));
+      if Item<100 then Item:=Item*100+1;
 
-         NFSe.PrestadorServico.Endereco.xMunicipio := CodCidadeToCidade(StrToIntDef(NFSe.PrestadorServico.Endereco.CodigoMunicipio, 0));
-        end;
+      NFSe.Servico.ItemListaServico := FormatFloat('0000', Item);
+      NFSe.Servico.ItemListaServico := Copy(NFSe.Servico.ItemListaServico, 1, 2) + '.' +
+                                       Copy(NFSe.Servico.ItemListaServico, 3, 2);
+
+      NFSe.Servico.xItemListaServico := CodigoToDesc(SomenteNumeros(NFSe.Servico.ItemListaServico));
+
+      NFSe.Servico.CodigoTributacaoMunicipio := Leitor.rCampo(tcStr, 'CodigoTributacaoMunicipio');
+      NFSe.Servico.Discriminacao             := Leitor.rCampo(tcStr, 'Discriminacao');
+      NFSe.Servico.Descricao                 := '';
+      NFSe.Servico.CodigoMunicipio           := Leitor.rCampo(tcStr, 'CodigoMunicipio');
+      NFSe.Servico.ExigibilidadeISS          := StrToExigibilidadeISS(ok, Leitor.rCampo(tcStr, 'ExigibilidadeISS'));
+      NFSe.Servico.MunicipioIncidencia       := Leitor.rCampo(tcInt, 'MunicipioIncidencia');
+
+      if StrToIntDef(NFSe.PrestadorServico.Endereco.CodigoMunicipio, 0) = 0
+       then begin
+        NFSe.PrestadorServico.Endereco.CodigoMunicipio := NFSe.Servico.CodigoMunicipio;
+        if length(NFSe.PrestadorServico.Endereco.CodigoMunicipio)<7
+         then NFSe.PrestadorServico.Endereco.CodigoMunicipio := Copy(NFSe.PrestadorServico.Endereco.CodigoMunicipio, 1, 2) +
+          FormatFloat('00000', StrToIntDef(Copy(NFSe.PrestadorServico.Endereco.CodigoMunicipio, 3, 5), 0));
+
+        NFSe.PrestadorServico.Endereco.xMunicipio := CodCidadeToCidade(StrToIntDef(NFSe.PrestadorServico.Endereco.CodigoMunicipio, 0));
+       end;
 
        if (Leitor.rExtrai(4, 'Valores') <> '')
         then begin
@@ -1491,7 +1533,7 @@ begin
 
        	NFSe.Tomador.Endereco.xMunicipio := CodCidadeToCidade(StrToIntDef(NFSe.Tomador.Endereco.CodigoMunicipio, 0));
 
-       	if (Leitor.rExtrai(4, 'IdentificacaoTomador') <> '') then
+       	if (Leitor.rExtrai(5, 'IdentificacaoTomador') <> '') then
 				begin
          	NFSe.Tomador.IdentificacaoTomador.InscricaoMunicipal := Leitor.rCampo(tcStr, 'InscricaoMunicipal');
          	if Leitor.rCampo(tcStr, 'Cpf')<>'' then
@@ -1499,6 +1541,11 @@ begin
          	else
 						NFSe.Tomador.IdentificacaoTomador.CpfCnpj := Leitor.rCampo(tcStr, 'Cnpj');
         end;
+        if (Leitor.rExtrai(5, 'Contato') <> '')
+         then begin
+           NFSe.Tomador.Contato.Telefone := Leitor.rCampo(tcStr, 'Telefone');
+           NFSe.Tomador.Contato.Email    := Leitor.rCampo(tcStr, 'Email');
+         end;
       end; // fim Tomador
   end; // fim DeclaracaoPrestacaoServico
 

@@ -256,7 +256,9 @@ begin
   else
     begin
       // Alterado por Rodrigo Cantelli
-      if (leitor.rExtrai(1, 'CancelarNfseResposta') <> '') or (leitor.rExtrai(1, 'CancelarNfseReposta') <> '') then
+      if (leitor.rExtrai(1, 'CancelarNfseResposta') <> '') or
+         (leitor.rExtrai(1, 'Cancelarnfseresposta') <> '') or
+         (leitor.rExtrai(1, 'CancelarNfseReposta') <> '') then
       begin
         infCanc.DataHora                   := Leitor.rCampo(tcDatHor, 'DataHora');
         InfCanc.FPedido.InfID.ID           := Leitor.rAtributo('InfPedidoCancelamento Id=');

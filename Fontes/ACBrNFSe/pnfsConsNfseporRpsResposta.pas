@@ -238,7 +238,8 @@ begin
 
     k        := 0; //length(Prefixo4);
 
-    if leitor.rExtrai(1, 'ConsultarNfseRpsResposta') <> '' then
+    if (leitor.rExtrai(1, 'ConsultarNfseRpsResposta') <> '') or
+       (leitor.rExtrai(1, 'Consultarnfserpsresposta') <> '') then
     begin
       // Ler a NFSe
 
@@ -577,7 +578,8 @@ begin
       end; // fim do CompNfse - Nivel 2
 
       // Ler a Lista de Mensagens
-      if leitor.rExtrai(2, 'ListaMensagemRetorno') <> '' then
+      if (leitor.rExtrai(2, 'ListaMensagemRetorno') <> '') or
+         (leitor.rExtrai(2, 'Listamensagemretorno') <> '') then
       begin
         i := 0;
         while Leitor.rExtrai(3, 'MensagemRetorno', '', i + 1) <> '' do

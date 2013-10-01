@@ -242,7 +242,8 @@ begin
     k      := 0; //length(Prefixo4);
     iNivel := 0;
 
-    if leitor.rExtrai(1, 'ConsultarLoteRpsResposta') <> '' then
+    if (leitor.rExtrai(1, 'ConsultarLoteRpsResposta') <> '') or
+       (leitor.rExtrai(1, 'Consultarloterpsresposta') <> '') then
 //    begin
       iNivel := 1;
 
@@ -584,6 +585,7 @@ begin
 
       // Ler a Lista de Mensagens
       if (leitor.rExtrai(iNivel + 1, 'ListaMensagemRetorno') <> '') or
+         (leitor.rExtrai(iNivel + 1, 'Listamensagemretorno') <> '') or
          (leitor.rExtrai(iNivel + 1, 'ListaMensagemRetornoLote') <> '') then
       begin
         i := 0;

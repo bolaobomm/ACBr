@@ -560,9 +560,9 @@ begin
 
  // Checar os provedores que retornam a Aliquota dividida por 100
  // e multiplicar por 100 para que seja apresentada no formado x.xx %
- if FProvedor = proGinfes
+ if FProvedor = proThema
   then qrlAliquota.Caption := DFeUtil.FormatFloat( FNFSe.Servico.Valores.Aliquota * 100, ',0.00' )
-  else qrlAliquota.Caption := DFeUtil.FormatFloat( FNFSe.Servico.Valores.Aliquota, ',0.0000' );
+  else qrlAliquota.Caption := DFeUtil.FormatFloat( FNFSe.Servico.Valores.Aliquota, ',0.00' );
 
  // TnfseSimNao = ( snSim, snNao )
  case FNFSe.Servico.Valores.IssRetido of

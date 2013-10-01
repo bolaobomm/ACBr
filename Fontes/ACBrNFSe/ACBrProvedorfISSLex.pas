@@ -671,9 +671,9 @@ function TProvedorFISSLEX.GetRetornoWS(Acao: TnfseAcao; RetornoWS: AnsiString): 
 begin
  case Acao of
    acRecepcionar: Result := SeparaDados( RetornoWS, 'WS_RecepcionarLoteRps.ExecuteResponse' );
-   acConsSit:     Result := SeparaDados( RetornoWS, 'WS_ConsultaLoteRps.ExecuteResponse' );
-   acConsLote:    Result := SeparaDados( RetornoWS, 'WS_ConsultarSituacaoLoteRps.ExecuteResponse' );
-   acConsNFSeRps: Result := SeparaDados( RetornoWS, 'WS_ConsultaNfsePorRpsExecuteResponse' );
+   acConsSit:     Result := SeparaDados( RetornoWS, 'WS_ConsultarSituacaoLoteRps.ExecuteResponse' );
+   acConsLote:    Result := SeparaDados( RetornoWS, 'WS_ConsultaLoteRps.ExecuteResponse' );
+   acConsNFSeRps: Result := SeparaDados( RetornoWS, 'WS_ConsultaNfsePorRps.ExecuteResponse' );
    acConsNFSe:    Result := SeparaDados( RetornoWS, 'WS_ConsultaNfse.ExecuteResponse' );
    acCancelar:    Result := SeparaDados( RetornoWS, 'WS_CancelarNfse.ExecuteResponse' );
    acGerar:       Result := '';

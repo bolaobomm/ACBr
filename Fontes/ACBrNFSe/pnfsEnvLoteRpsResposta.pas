@@ -184,8 +184,8 @@ begin
           inc(i);
         end;
 
-        if i = 0 then
-          InfRec.FMsgRetorno.Add;
+//        if i = 0 then
+//          InfRec.FMsgRetorno.Add;
 //      end;
 
       Result := True;

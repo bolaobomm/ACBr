@@ -148,6 +148,7 @@ begin
     Leitor.Grupo   := Leitor.Arquivo;
 
     if (leitor.rExtrai(1, 'ConsultarSituacaoLoteRpsResposta') <> '') or
+       (leitor.rExtrai(1, 'Consultarsituacaoloterpsresposta') <> '') or
        (leitor.rExtrai(1, 'ConsultarLoteRpsResposta') <> '') then
     begin
       InfSit.FNumeroLote := Leitor.rCampo(tcStr, 'NumeroLote');
