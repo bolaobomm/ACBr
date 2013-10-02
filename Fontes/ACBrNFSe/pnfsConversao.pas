@@ -841,6 +841,7 @@ begin
   2208007, // Picos/PI
   2211209, // Uruçuí/PI
   2307304, // Juazeiro do Norte/CE
+  2504009, // Campina Grande/PB
   2910727, // Eunapolis/BA
   2925303, // Porto Seguro/BA
   3107109, // Boa Esperança/MG

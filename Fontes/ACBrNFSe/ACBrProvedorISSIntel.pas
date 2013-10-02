@@ -119,6 +119,11 @@ begin
              then ConfigCidade.NameSpaceEnvelope := 'https://juazeirodonorte-ce.issintel.com.br/webservices/abrasf/api'
              else ConfigCidade.NameSpaceEnvelope := 'https://juazeirodonorte-ce.treino-issintel.com.br/webservices/abrasf/api';
            end;
+  2504009: begin // Campina Grande/PB
+            if AAmbiente = 1
+             then ConfigCidade.NameSpaceEnvelope := 'https://campinagrande-pb.issintel.com.br/webservices/abrasf/api'
+             else ConfigCidade.NameSpaceEnvelope := 'https://campinagrande-pb.treino-issintel.com.br/webservices/abrasf/api';
+           end;
   2910727: begin // Eunapolis/BA
             if AAmbiente = 1
              then ConfigCidade.NameSpaceEnvelope := 'https://eunapolis-ba.issintel.com.br/webservices/abrasf/api'
@@ -321,6 +326,11 @@ begin
   2307304: begin // Juazeiro do Norte/CE
             ConfigURL.HomNomeCidade := 'juazeirodonorte-ce';
             ConfigURL.ProNomeCidade := 'juazeirodonorte-ce';
+            Porta := ''; //Porta := ':442';
+           end;
+  2504009: begin // Campina Grande/PB
+            ConfigURL.HomNomeCidade := 'campinagrande-pb';
+            ConfigURL.ProNomeCidade := 'campinagrande-pb';
             Porta := ''; //Porta := ':442';
            end;
   2910727: begin // Eunapolis/BA
