@@ -714,6 +714,9 @@ end;
 
 class function DFeUtil.FormatarCNPJCPF(AValue: String): String;
 begin
+  // Incluido por Italo em 02/10/2013
+  // proposto por Juliomar Marchetti
+  AValue := OnlyNumber(AValue);
   if Length(AValue) = 0 then
      Result := AValue
   else
