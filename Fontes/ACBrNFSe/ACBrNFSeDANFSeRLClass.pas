@@ -10,11 +10,17 @@ uses
 type
   TACBrNFSeDANFSeRL = class( TACBrNFSeDANFSeClass )
    private
+   // Augusto Fontana
+   protected
+     FPrintDialog: Boolean;
    public
     constructor Create(AOwner: TComponent); override;
     destructor Destroy; override;
     procedure ImprimirDANFSe(NFSe : TNFSe = nil); override ;
     procedure ImprimirDANFSePDF(NFSe : TNFSe = nil); override ;
+   // Augusto Fontana
+   published
+     property PrintDialog: Boolean read FPrintDialog write FPrintDialog;
   end;
 
 implementation
@@ -25,6 +31,8 @@ uses
 constructor TACBrNFSeDANFSeRL.Create(AOwner: TComponent);
 begin
   inherited create( AOwner );
+  // Augusto Fontana
+  FPrintDialog := True;
 end;
 
 destructor TACBrNFSeDANFSeRL.Destroy;
@@ -59,7 +67,9 @@ begin
                                  , MargemDireita
                                  , Impressora
                                  , PrestLogo
-                                 , Prefeitura);
+                                 , Prefeitura
+                                 // Augusto Fontana
+                                 , PrintDialog);
     end;
   end
   else frlDANFSeRLRetrato.Imprimir(  NFSe
@@ -77,7 +87,9 @@ begin
                                    , MargemDireita
                                    , Impressora
                                    , PrestLogo
-                                   , Prefeitura);
+                                   , Prefeitura
+                                   // Augusto Fontana
+                                   , PrintDialog);
 
  frlDANFSeRLRetrato.Free;
 end;

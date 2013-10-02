@@ -56,7 +56,9 @@ type
                              AMargemDireita  : Double  = 0.51;
                              AImpressora     : String  = '';
                              APrestLogo      : String  = '';
-                             APrefeitura     : String  = '');
+                             APrefeitura     : String  = '';
+                             // Augusto Fontana
+                             APrintDialog    : Boolean = True);
 
     class procedure SavePDF(AFile           : String;
                             ANFSe           : TNFSe;
@@ -100,7 +102,7 @@ end;
 class procedure TfrlDANFSeRL.Imprimir(ANFSe: TNFSe; ALogo, AEmail, AFax: String;
   ANumCopias: Integer; ASistema, ASite, AUsuario: String; APreview: Boolean;
   AMargemSuperior, AMargemInferior, AMargemEsquerda, AMargemDireita: Double;
-  AImpressora, APrestLogo, APrefeitura: String);
+  AImpressora, APrestLogo, APrefeitura: String; APrintDialog: Boolean);
 begin
  with Create ( nil ) do
   try
@@ -129,7 +131,8 @@ begin
      RLPrinter.Copies := FNumCopias
    else
      RLPrinter.Copies := 1;
-
+   // Augusto Fontana
+   RLNFSe.PrintDialog := APrintDialog;
    if APreview = True then
      RLNFSe.PreviewModal
    else
