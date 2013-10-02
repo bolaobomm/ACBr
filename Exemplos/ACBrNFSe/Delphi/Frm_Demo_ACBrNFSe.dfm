@@ -437,6 +437,7 @@ object frmDemo_ACBrNFSe: TfrmDemo_ACBrNFSe
               'Vargem Grande do Sul/3556404/SP'
               'Varginha/3170701/MG'
               'Varzea Grande/5108402/MT'
+              'Vilhena/1100304/RO'
               'Votuporanga/3557105/SP')
           end
           object edtCodCidade: TEdit
