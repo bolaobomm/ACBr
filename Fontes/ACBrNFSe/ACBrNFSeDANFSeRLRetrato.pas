@@ -1,3 +1,5 @@
+{$WARNINGS OFF}
+{$HINTS OFF}
 {$I ACBr.inc}
 
 unit ACBrNFSeDANFSeRLRetrato;
@@ -228,13 +230,30 @@ procedure TfrlDANFSeRLRetrato.rlbCabecalhoBeforePrint(Sender: TObject;
   var PrintIt: Boolean);
 var
  t: integer;
+ vStringStream: TStringStream;
 begin
   inherited;
-
+ (*
  if (FLogo <> '') and FilesExists(FLogo)
   then begin
    rliLogo.Picture.LoadFromFile(FLogo);
   end;
+ *)
+ // Alterado por Augusto Fontana - 17/09/2013
+ if (FLogo <> '') then
+   begin
+     if FilesExists(FLogo) then
+       rliLogo.Picture.LoadFromFile(FLogo)
+     else
+       begin
+         vStringStream := TStringStream.Create(FLogo);
+         try
+           rliLogo.Picture.Bitmap.LoadFromStream(vStringStream);
+         finally
+           vStringStream.Free;
+         end;
+       end;
+   end;
 
  rlmPrefeitura.Lines.Clear;
 
@@ -362,12 +381,31 @@ end;
 
 procedure TfrlDANFSeRLRetrato.rlbPrestadorBeforePrint(Sender: TObject;
   var PrintIt: Boolean);
+var
+  vStringStream: TStringStream;
 begin
   inherited;
+(*
  if (FPrestLogo <> '') and FilesExists(FPrestLogo)
   then begin
    rliPrestLogo.Picture.LoadFromFile(FPrestLogo);
   end;
+ *)
+ // Alterado por Augusto Fontana - 18/09/2013
+ if (FPrestLogo <> '') then
+   begin
+     if FilesExists(FPrestLogo) then
+       rliPrestLogo.Picture.LoadFromFile(FPrestLogo)
+     else
+       begin
+         vStringStream := TStringStream.Create(FPrestLogo);
+         try
+           rliPrestLogo.Picture.Bitmap.LoadFromStream(vStringStream);
+         finally
+           vStringStream.Free;
+         end;
+       end;
+   end;
 
  rllPrestCNPJ.Caption := DFeUtil.FormatarCNPJ( FNFSe.PrestadorServico.IdentificacaoPrestador.Cnpj );//Astrogildo em 13/12/12
  rllPrestInscMunicipal.Caption := FNFSe.PrestadorServico.IdentificacaoPrestador.InscricaoMunicipal;
@@ -472,3 +510,5 @@ begin
 end;
 
 end.
+{$HINTS ON}
+{$WARNINGS ON}

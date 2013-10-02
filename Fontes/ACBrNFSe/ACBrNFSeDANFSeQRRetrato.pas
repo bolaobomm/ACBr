@@ -264,13 +264,31 @@ procedure TfqrDANFSeQRRetrato.qrb_1_CabecalhoBeforePrint(Sender: TQRCustomBand;
   var PrintBand: Boolean);
 var
  t: integer;
+ vStringStream: TStringStream;
 begin
   inherited;
-
+ (*
  if (FLogo <> '') and FilesExists(FLogo)
   then begin
    qriLogo.Picture.LoadFromFile(FLogo);
   end;
+ *)
+
+  // Alterado por Augusto Fontana - 17/09/2013
+  if (FLogo <> '') then
+    begin
+      if FilesExists(FLogo) then
+        qriLogo.Picture.LoadFromFile(FLogo)
+      else
+        begin
+          vStringStream := TStringStream.Create(FLogo);
+          try
+            qriLogo.Picture.Bitmap.LoadFromStream(vStringStream);
+          finally
+            vStringStream.Free;
+          end;
+        end;
+    end;
 
  qrmPrefeitura.Lines.Clear;
 
@@ -301,13 +319,31 @@ procedure TfqrDANFSeQRRetrato.qrb_2_PrestadorServicoBeforePrint(Sender: TQRCusto
   var PrintBand: Boolean);
 var
  Ok: Boolean;
+  vStringStream: TStringStream;
 begin
   inherited;
-
+ (*
  if (FPrestLogo <> '') and FilesExists(FPrestLogo)
   then begin
    qriPrestLogo.Picture.LoadFromFile(FPrestLogo);
   end;
+ *)
+
+  // Alterado por Augusto Fontana - 17/09/2013
+  if (FPrestLogo <> '') then
+    begin
+      if FilesExists(FPrestLogo) then
+        qriPrestLogo.Picture.LoadFromFile(FPrestLogo)
+      else
+        begin
+          vStringStream := TStringStream.Create(FPrestLogo);
+          try
+            qriPrestLogo.Picture.Bitmap.LoadFromStream(vStringStream);
+          finally
+            vStringStream.Free;
+          end;
+        end;
+    end;
 
  qrlPrestCNPJ.Caption := DFeUtil.FormatarCNPJ( FNFSe.PrestadorServico.IdentificacaoPrestador.Cnpj );
  qrlPrestInscMunicipal.Caption := FNFSe.PrestadorServico.IdentificacaoPrestador.InscricaoMunicipal;
