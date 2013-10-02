@@ -39,7 +39,7 @@ uses
     ACBrProvedorISSe, ACBrProvedor4R, ACBrProvedorGovDigital,
     ACBrProvedorFiorilli, ACBrProvedorIssDsf, ACBrProvedorCoplan,
     ACBrProvedorProdata, ACBrProvedorAgili, ACBrProvedorFISSLex,
-    ACBrProvedorVirtual;
+    ACBrProvedorVirtual, ACBrProvedorPVH;
 
 type
 
@@ -615,6 +615,7 @@ begin
   proAgili:       FProvedorClass := TProvedorAgili.Create;
   proFISSLex:     FProvedorClass := TProvedorFISSLex.Create;
   proVirtual:     FProvedorClass := TProvedorVirtual.Create;
+  proPVH:         FProvedorClass := TProvedorPVH.Create;
  end;
 
  FPrefixo2     := FConfiguracoes.WebServices.Prefixo2;

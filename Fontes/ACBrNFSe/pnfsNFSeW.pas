@@ -139,7 +139,7 @@ begin
  if (FProvedor in [proProdemge, proBHISS, profintelISS, proGovBR,
                    proSaatri, proGoiania, proNatal, proDigifred,
                    proISSDigital, pro4R, proFiorilli, proCoplan,
-                   proProdata, proAgili, proVirtual])
+                   proProdata, proAgili, proVirtual, proPVH])
   then FDefTipos := FServicoEnviar;
 
  if (RightStr(FURL, 1) <> '/') and (FDefTipos <> '')
@@ -555,7 +555,7 @@ begin
                    Gerador.wCampoNFSe(tcDe2, '#22', 'ValorIssRetido        ', 01, 15, 0, NFSe.Servico.Valores.ValorIssRetido, '');
                    Gerador.wCampoNFSe(tcDe2, '#23', 'OutrasRetencoes       ', 01, 15, 0, NFSe.Servico.Valores.OutrasRetencoes, '');
                    Gerador.wCampoNFSe(tcDe2, '#24', 'BaseCalculo           ', 01, 15, 1, NFSe.Servico.Valores.BaseCalculo, '');
-                   Gerador.wCampoNFSe(tcDe3, '#25', 'Aliquota              ', 01, 05, 0, NFSe.Servico.Valores.Aliquota, '');
+                   Gerador.wCampoNFSe(tcDe4, '#25', 'Aliquota              ', 01, 05, 0, NFSe.Servico.Valores.Aliquota, '');
                    Gerador.wCampoNFSe(tcDe2, '#26', 'ValorLiquidoNfse      ', 01, 15, 0, NFSe.Servico.Valores.ValorLiquidoNfse, '');
                    Gerador.wCampoNFSe(tcDe2, '#27', 'DescontoIncondicionado', 01, 15, 0, NFSe.Servico.Valores.DescontoIncondicionado, '');
                    Gerador.wCampoNFSe(tcDe2, '#28', 'DescontoCondicionado  ', 01, 15, 0, NFSe.Servico.Valores.DescontoCondicionado, '');
@@ -742,6 +742,7 @@ begin
   proAgili,
   proISSCuritiba,
   proFISSLex,
+  proPVH,
   proNatal: begin
              Gerador.wCampoNFSe(tcStr, '#43', 'CodigoMunicipio', 7, 7, 0, SomenteNumeros(NFSe.Tomador.Endereco.CodigoMunicipio), '');
              Gerador.wCampoNFSe(tcStr, '#44', 'Uf             ', 2, 2, 0, NFSe.Tomador.Endereco.UF, '');
