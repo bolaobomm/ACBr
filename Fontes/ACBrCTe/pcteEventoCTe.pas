@@ -236,7 +236,7 @@ function TInfEvento.getcOrgao: integer;
 //  (AC,AL,AP,AM,BA,CE,DF,ES,GO,MA,MT,MS,MG,PA,PB,PR,PE,PI,RJ,RN,RS,RO,RR,SC,SP,SE,TO);
 //  (12,27,16,13,29,23,53,32,52,21,51,50,31,15,25,41,26,22,33,24,43,11,14,42,35,28,17);
 begin
-  Result := StrToInt(copy(FChave, 1, 2));
+//  Result := StrToInt(copy(FChave, 1, 2));
 
   if FTpEvento = teEPEC then
   begin
@@ -271,9 +271,21 @@ begin
      51: // Mato Grosso
         Result := 43;
     end;
-  end  // Estados que utilizam a SVAN: ES, MA, PA, PI, RN Devem utilizar 91
-  else if Result in [32, 21, 15, 22, 24] then
-         Result := 91;
+  end
+  else begin
+   // Alterado por Italo em 03/10/2013
+   if FcOrgao <> 0 then
+     Result := FcOrgao
+   else
+     Result := StrToIntDef(copy(FChave, 1, 2), 0);
+
+   if Result = 0 then
+     raise EventoException.Create('Campo cOrgao não informado.');
+
+   // Estados que utilizam a SVAN: ES, MA, PA, PI, RN Devem utilizar 91
+//   if Result in [32, 21, 15, 22, 24] then
+//     Result := 91;
+  end;
 end;
 
 function TInfEvento.getDescEvento: string;
