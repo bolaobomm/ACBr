@@ -238,9 +238,9 @@ begin
         LocNFeW.Opcoes.GerarTXTSimultaneamente := SalvaTXT;
 
         if (TACBrNFe( TNotasFiscais( Collection ).ACBrNFe ).Configuracoes.Geral.ModeloDF = moNFCe) then
-           NFe.infNFe.Versao := StrToFloat(NFCeEnvi)
+           NFe.infNFe.Versao := DFeUtil.StringToFloat(NFCeEnvi)
         else
-           NFe.infNFe.Versao := StrToFloat(NFenviNFe);
+           NFe.infNFe.Versao := DFeUtil.StringToFloat(NFenviNFe);
 
         LocNFeW.Gerador.Opcoes.FormatoAlerta := TACBrNFe( TNotasFiscais( Collection ).ACBrNFe ).Configuracoes.Geral.FormatoAlerta;
         LocNFeW.GerarXml;
@@ -275,9 +275,9 @@ begin
 
         
         if (TACBrNFe( TNotasFiscais( Collection ).ACBrNFe ).Configuracoes.Geral.ModeloDF = moNFCe) then
-           NFe.infNFe.Versao := StrToFloat(NFCeEnvi)
+           NFe.infNFe.Versao := DFeUtil.StringToFloat(NFCeEnvi)
         else
-           NFe.infNFe.Versao := StrToFloat(NFenviNFe);
+           NFe.infNFe.Versao := DFeUtil.StringToFloat(NFenviNFe);
 
         LocNFeW.Gerador.Opcoes.FormatoAlerta := TACBrNFe( TNotasFiscais( Collection ).ACBrNFe ).Configuracoes.Geral.FormatoAlerta;
         LocNFeW.GerarXml;
@@ -370,9 +370,9 @@ begin
     LocNFeW.schema := TsPL005c;
 
     if (TACBrNFe( TNotasFiscais( Collection ).ACBrNFe ).Configuracoes.Geral.ModeloDF = moNFCe) then
-       Self.NFe.infNFe.Versao := StrToFloat(NFCeEnvi)
+       Self.NFe.infNFe.Versao := DFeUtil.StringToFloat(NFCeEnvi)
     else
-       Self.NFe.infNFe.Versao := StrToFloat(NFenviNFe);
+       Self.NFe.infNFe.Versao := DFeUtil.StringToFloat(NFenviNFe);
 
     LocNFeW.Gerador.Opcoes.FormatoAlerta := TACBrNFe( TNotasFiscais( Collection ).ACBrNFe ).Configuracoes.Geral.FormatoAlerta;       
     LocNFeW.GerarXml;
@@ -435,9 +435,9 @@ begin
         LocNFeW.schema := TsPL005c;
 
         if (FConfiguracoes.Geral.ModeloDF = moNFCe) then
-           Self.Items[i].NFe.infNFe.Versao := StrToFloat(NFCeEnvi)
+           Self.Items[i].NFe.infNFe.Versao := DFeUtil.StringToFloat(NFCeEnvi)
         else
-           Self.Items[i].NFe.infNFe.Versao := StrToFloat(NFenviNFe);
+           Self.Items[i].NFe.infNFe.Versao := DFeUtil.StringToFloat(NFenviNFe);
 
         LocNFeW.Gerador.Opcoes.FormatoAlerta := FConfiguracoes.Geral.FormatoAlerta;
         LocNFeW.GerarXml;
@@ -488,9 +488,9 @@ begin
        LocNFeW.schema := TsPL006;
 
        if (FConfiguracoes.Geral.ModeloDF = moNFCe) then
-          Self.Items[i].NFe.infNFe.Versao := StrToFloat(NFCeEnvi)
+          Self.Items[i].NFe.infNFe.Versao := DFeUtil.StringToFloat(NFCeEnvi)
        else
-          Self.Items[i].NFe.infNFe.Versao := StrToFloat(NFenviNFe);
+          Self.Items[i].NFe.infNFe.Versao := DFeUtil.StringToFloat(NFenviNFe);
        LocNFeW.Gerador.Opcoes.FormatoAlerta := FConfiguracoes.Geral.FormatoAlerta;
        LocNFeW.GerarXml;
        Self.Items[i].XML := LocNFeW.Gerador.ArquivoFormatoXML;
@@ -760,9 +760,9 @@ begin
         LocNFeW.Opcoes.GerarTXTSimultaneamente:=true;
 
         if (FConfiguracoes.Geral.ModeloDF= moNFCe) then
-           Self.Items[i].NFe.infNFe.Versao := StrToFloat(NFCeEnvi)
+           Self.Items[i].NFe.infNFe.Versao := DFeUtil.StringToFloat(NFCeEnvi)
         else
-           Self.Items[i].NFe.infNFe.Versao := StrToFloat(NFenviNFe);
+           Self.Items[i].NFe.infNFe.Versao := DFeUtil.StringToFloat(NFenviNFe);
 
         LocNFeW.Gerador.Opcoes.FormatoAlerta := FConfiguracoes.Geral.FormatoAlerta;
         LocNFeW.GerarXml;
