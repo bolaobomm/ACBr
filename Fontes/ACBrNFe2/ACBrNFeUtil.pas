@@ -177,6 +177,7 @@ type
     class function CollateBr(Str: String): String;
     class function UpperCase2(Str: String): String;
     class function UFtoCUF(UF : String): Integer;
+    class function GetURLConsultaNFCe(const AUF, AAmbiente : Integer) : String;
   end;
 
 implementation
@@ -2371,6 +2372,10 @@ begin
      Result := -1
   else
      Result := Codigo;
+end;
+
+class function NotaUtil.GetURLConsultaNFCe(const AUF, AAmbiente : Integer) : String;
+begin
 end;
 
 end.

@@ -69,6 +69,7 @@ type
     FAlertas: AnsiString;
     FErroValidacao: AnsiString;
     FErroValidacaoCompleto: AnsiString;
+    FRegrasdeNegocios: AnsiString;
     FNomeArq: String;
     function GetNFeXML: AnsiString;
   public
@@ -95,6 +96,9 @@ type
                                 NomeRemetente: String = '';
                                 TLS : Boolean = True;
                                 UsarThread: Boolean = True);
+    //Funções para validar Regras de Negócios
+    function ValidarConcatChave : Boolean;
+
     property NFe: TNFe  read FNFe write FNFe;
     property XML: AnsiString  read GetNFeXML write FXML;
     property XMLOriginal: AnsiString  read FXMLOriginal write FXMLOriginal;
@@ -102,7 +106,8 @@ type
     property Msg: AnsiString  read FMsg write FMsg;
     property Alertas: AnsiString read FAlertas write FAlertas;
     property ErroValidacao: AnsiString read FErroValidacao write FErroValidacao;
-    property ErroValidacaoCompleto: AnsiString read FErroValidacaoCompleto write FErroValidacaoCompleto;    
+    property ErroValidacaoCompleto: AnsiString read FErroValidacaoCompleto write FErroValidacaoCompleto;
+    property RegrasdeNegocios: AnsiString read FRegrasdeNegocios write FRegrasdeNegocios;       
     property NomeArq: String read FNomeArq write FNomeArq;
   end;
 
@@ -120,6 +125,7 @@ type
     procedure Assinar;
     procedure Valida;
     function ValidaAssinatura(out Msg : String) : Boolean;
+    function ValidaRegrasdeNegocios : Boolean;
     procedure Imprimir;
     procedure ImprimirPDF;
     function  Add: NotaFiscal;
@@ -231,10 +237,10 @@ begin
         LocNFeW.schema := TsPL005c;
         LocNFeW.Opcoes.GerarTXTSimultaneamente := SalvaTXT;
 
-       { if (TACBrNFe( TNotasFiscais( Collection ).ACBrNFe ).Configuracoes.Geral.ModeloDF = moNFCe) then
-           LocNFeW.Versao := NFCeEnvi
+        if (TACBrNFe( TNotasFiscais( Collection ).ACBrNFe ).Configuracoes.Geral.ModeloDF = moNFCe) then
+           NFe.infNFe.Versao := StrToFloat(NFCeEnvi)
         else
-           LocNFeW.Versao := NFenviNFe;  }
+           NFe.infNFe.Versao := StrToFloat(NFenviNFe);
 
         LocNFeW.Gerador.Opcoes.FormatoAlerta := TACBrNFe( TNotasFiscais( Collection ).ACBrNFe ).Configuracoes.Geral.FormatoAlerta;
         LocNFeW.GerarXml;
@@ -268,10 +274,10 @@ begin
         LocNFeW.schema := TsPL005c;
 
         
-{        if (TACBrNFe( TNotasFiscais( Collection ).ACBrNFe ).Configuracoes.Geral.ModeloDF = moNFCe) then
-           LocNFeW.Versao := NFCeEnvi
+        if (TACBrNFe( TNotasFiscais( Collection ).ACBrNFe ).Configuracoes.Geral.ModeloDF = moNFCe) then
+           NFe.infNFe.Versao := StrToFloat(NFCeEnvi)
         else
-           LocNFeW.Versao := NFenviNFe;  }
+           NFe.infNFe.Versao := StrToFloat(NFenviNFe);
 
         LocNFeW.Gerador.Opcoes.FormatoAlerta := TACBrNFe( TNotasFiscais( Collection ).ACBrNFe ).Configuracoes.Geral.FormatoAlerta;
         LocNFeW.GerarXml;
@@ -363,10 +369,10 @@ begin
  try
     LocNFeW.schema := TsPL005c;
 
-{    if (TACBrNFe( TNotasFiscais( Collection ).ACBrNFe ).Configuracoes.Geral.ModeloDF = moNFCe) then 
-       LocNFeW.Versao := NFCeEnvi
+    if (TACBrNFe( TNotasFiscais( Collection ).ACBrNFe ).Configuracoes.Geral.ModeloDF = moNFCe) then
+       Self.NFe.infNFe.Versao := StrToFloat(NFCeEnvi)
     else
-       LocNFeW.Versao := NFenviNFe;   }
+       Self.NFe.infNFe.Versao := StrToFloat(NFenviNFe);
 
     LocNFeW.Gerador.Opcoes.FormatoAlerta := TACBrNFe( TNotasFiscais( Collection ).ACBrNFe ).Configuracoes.Geral.FormatoAlerta;       
     LocNFeW.GerarXml;
@@ -375,6 +381,25 @@ begin
     LocNFeW.Free;
  end;
 // Result := FXML;
+end;
+
+function NotaFiscal.ValidarConcatChave: Boolean;
+var
+  wAno, wMes, wDia: Word;
+begin
+  DecodeDate(nfe.ide.dEmi, wAno, wMes, wDia);
+  if (Copy(NFe.infNFe.ID,4,2) <> IntToStrZero(nfe.ide.cUF, 2)) or
+     (Copy(NFe.infNFe.ID,6,2) <> Copy(FormatFloat('0000', wAno), 3, 2)) or
+     (Copy(NFe.infNFe.ID,8,2) <> FormatFloat('00', wMes)) or
+     (Copy(NFe.infNFe.ID,10,14) <> copy(SomenteNumeros(nfe.Emit.CNPJCPF) + '00000000000000', 1, 14)) or
+     (Copy(NFe.infNFe.ID,24,2) <> IntToStrZero(nfe.ide.modelo, 2)) or
+     (Copy(NFe.infNFe.ID,26,3) <> IntToStrZero(nfe.ide.serie, 3)) or
+     (Copy(NFe.infNFe.ID,29,9) <> IntToStrZero(nfe.ide.nNF, 9)) or
+     (Copy(NFe.infNFe.ID,38,1) <> TpEmisToStr(nfe.ide.tpEmis)) or
+     (Copy(NFe.infNFe.ID,39,8) <> IntToStrZero(nfe.ide.cNF, 8)) then
+    Result := False
+  else
+    Result := True;
 end;
 
 { TNotasFiscais }
@@ -409,10 +434,10 @@ begin
      try
         LocNFeW.schema := TsPL005c;
 
-{        if (FConfiguracoes.Geral.ModeloDF = moNFCe) then 
-           LocNFeW.Versao := NFCeEnvi
+        if (FConfiguracoes.Geral.ModeloDF = moNFCe) then
+           Self.Items[i].NFe.infNFe.Versao := StrToFloat(NFCeEnvi)
         else
-           LocNFeW.Versao := NFenviNFe;    }
+           Self.Items[i].NFe.infNFe.Versao := StrToFloat(NFenviNFe);
 
         LocNFeW.Gerador.Opcoes.FormatoAlerta := FConfiguracoes.Geral.FormatoAlerta;
         LocNFeW.GerarXml;
@@ -462,10 +487,10 @@ begin
     try
        LocNFeW.schema := TsPL006;
 
-{       if (FConfiguracoes.Geral.ModeloDF = moNFCe) then
-          LocNFeW.Versao := NFCeEnvi
+       if (FConfiguracoes.Geral.ModeloDF = moNFCe) then
+          Self.Items[i].NFe.infNFe.Versao := StrToFloat(NFCeEnvi)
        else
-          LocNFeW.Versao := NFenviNFe;   }
+          Self.Items[i].NFe.infNFe.Versao := StrToFloat(NFenviNFe);
        LocNFeW.Gerador.Opcoes.FormatoAlerta := FConfiguracoes.Geral.FormatoAlerta;
        LocNFeW.GerarXml;
        Self.Items[i].XML := LocNFeW.Gerador.ArquivoFormatoXML;
@@ -553,6 +578,61 @@ begin
       end
      else
        Result := True;
+  end;
+end;
+
+function TNotasFiscais.ValidaRegrasdeNegocios: Boolean;
+var
+ i: Integer;
+ Erros : AnsiString;
+begin
+  Result := True;
+  for i:= 0 to Self.Count-1 do
+  begin
+    Erros := '';
+    if not Self.Items[i].ValidarConcatChave then  //GA03
+       Erros := '502-Rejeição: Erro na Chave de Acesso - Campo Id não corresponde à concatenação dos campos correspondentes'+sLineBreak;
+
+    if copy(IntToStr(Self.Items[i].NFe.Emit.EnderEmit.cMun),1,2) <> IntToStr(FConfiguracoes.WebServices.UFCodigo) then //GB02
+       Erros := Erros + '226-Rejeição: Código da UF do Emitente diverge da UF autorizadora'+sLineBreak;
+
+    if (Self.Items[i].NFe.Ide.serie > 889) and   //GB07
+//       (Self.Items[i].NFe.Ide.serie < 900) and
+       (Self.Items[i].NFe.Ide.tpEmis = teSCAN)then
+       Erros := Erros + '266-Rejeição: Série utilizada fora da faixa permitida no Web Service (0-889)'+sLineBreak;
+
+    if (Self.Items[i].NFe.Ide.serie > 899) and  //GB07.1
+       (Self.Items[i].NFe.Ide.tpEmis <> teSCAN)then
+       Erros := Erros + '503-Rejeição: Série utilizada fora da faixa permitida no SCAN (900-999)'+sLineBreak;
+
+    if (Self.Items[i].NFe.Ide.dEmi > now) then  //GB09
+       Erros := Erros + '212-Rejeição: Data de emissão NF-e posterior a data de recebimento'+sLineBreak;
+
+    if ((now - Self.Items[i].NFe.Ide.dEmi) > 30) then  //GB09.1
+       Erros := Erros + '228-Rejeição: Data de Emissão muito atrasada'+sLineBreak;
+
+    //GB09.02 - Data de Emissão posterior à 31/03/2011
+    //GB09.03 - Data de Recepção posterior à 31/03/2011 e tpAmb (B24) = 2
+
+    if ((Self.Items[i].NFe.Ide.dSaiEnt - now) > 30) then  //GB10  - Facultativo
+       Erros := Erros + '504-Rejeição: Data de Entrada/Saída posterior ao permitido'+sLineBreak;
+
+    if ((now - Self.Items[i].NFe.Ide.dSaiEnt) > 30) then  //GB10.1  - Facultativo
+       Erros := Erros + '505-Rejeição: Data de Entrada/Saída anterior ao permitido'+sLineBreak;
+
+    if (Self.Items[i].NFe.Ide.dSaiEnt < Self.Items[i].NFe.Ide.dEmi) then  //GB10.2  - Facultativo
+       Erros := Erros + '506-Rejeição: Data de Saída menor que a Data de Emissão'+sLineBreak;
+
+    if not ValidarMunicipio(Self.Items[i].NFe.Ide.cMunFG) then //GB12
+       Erros := Erros + '270-Rejeição: Código Município do Fato Gerador: dígito inválido'+sLineBreak;
+
+    if (UFparaCodigo(Self.Items[i].NFe.Emit.EnderEmit.UF)<>StrToIntDef(copy(IntToStr(Self.Items[i].NFe.Ide.cMunFG),1,2),0)) then//GB12.1
+       Erros := Erros + '271-Rejeição: Código Município do Fato Gerador: difere da UF do emitente'+sLineBreak;
+
+
+    Self.Items[i].RegrasdeNegocios := Erros;
+    if Erros <> '' then
+      Result := False;
   end;
 end;
 
@@ -679,10 +759,10 @@ begin
         LocNFeW.schema := TsPL006;
         LocNFeW.Opcoes.GerarTXTSimultaneamente:=true;
 
-{        if (FConfiguracoes.Geral.ModeloDF= moNFCe) then
-           LocNFeW.Versao := NFCeEnvi
+        if (FConfiguracoes.Geral.ModeloDF= moNFCe) then
+           Self.Items[i].NFe.infNFe.Versao := StrToFloat(NFCeEnvi)
         else
-           LocNFeW.Versao := NFenviNFe;  }
+           Self.Items[i].NFe.infNFe.Versao := StrToFloat(NFenviNFe);
 
         LocNFeW.Gerador.Opcoes.FormatoAlerta := FConfiguracoes.Geral.FormatoAlerta;
         LocNFeW.GerarXml;
