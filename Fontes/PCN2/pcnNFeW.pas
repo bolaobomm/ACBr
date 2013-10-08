@@ -132,7 +132,6 @@ type
     procedure GerarforDia;
     procedure GerarDeduc;
 
-    //
     procedure AjustarMunicipioUF(var xUF: string; var xMun: string; var cMun: integer; cPais: integer; vxUF, vxMun: string; vcMun: integer);
     function ObterNomeMunicipio(const xMun, xUF: string; const cMun: integer): string;
   public
@@ -347,9 +346,9 @@ begin
 
   if nfe.infNFe.Versao >= 3 then
    begin
-     Gerador.wCampo(tcStr, 'B09', 'dhEmi   ', 10, 10, 1, DateTimeTodh(nfe.ide.dEmi) + GetUTC(CodigoParaUF(nfe.ide.cUF), nfe.ide.dEmi), DSC_DEMI);
+     Gerador.wCampo(tcStr, 'B09', 'dhEmi   ', 25, 25, 1, DateTimeTodh(nfe.ide.dEmi) + GetUTC(CodigoParaUF(nfe.ide.cUF), nfe.ide.dEmi), DSC_DEMI);
      if nfe.ide.modelo = 55 then
-       Gerador.wCampo(tcStr, 'B10', 'dhSaiEnt', 10, 10, 0, DateTimeTodh(nfe.ide.dSaiEnt) + GetUTC(CodigoParaUF(nfe.ide.cUF), nfe.ide.dSaiEnt), DSC_DSAIENT);
+       Gerador.wCampo(tcStr, 'B10', 'dhSaiEnt', 25, 25, 0, DateTimeTodh(nfe.ide.dSaiEnt) + GetUTC(CodigoParaUF(nfe.ide.cUF), nfe.ide.dSaiEnt), DSC_DSAIENT);
    end
   else
    begin

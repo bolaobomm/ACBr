@@ -82,7 +82,7 @@ type
              LayNfeConsultaDPEC, LayNFeCCe, LayNFeEvento, LayNFeEventoAN,
              LayNFeConsNFeDest, LayNFeDownloadNFe,
              LayCTeRecepcao, LayCTeRetRecepcao, LayCTeCancelamento, LayCTeInutilizacao,
-             LayCTeConsultaCT, LayCTeStatusServico, LayCTeCadastro, LayCTeEvento,
+             LayCTeConsultaCT, LayCTeStatusServico, LayCTeCadastro, LayCTeEvento, 
              LayCTeEventoEPEC,
              LayMDFeRecepcao, LayMDFeRetRecepcao, LayMDFeConsulta, LayMDFeStatusServico,
              LayMDFeEvento);
@@ -496,6 +496,7 @@ function StrToConsumidorFinal(var ok: boolean; const s: string): TpcnConsumidorF
 function PresencaCompradorToStr(const t: TpcnPresencaComprador): string;
 function StrToPresencaComprador(var ok: boolean; const s: string): TpcnPresencaComprador;
 function FormaPagamentoToStr(const t: TpcnFormaPagamento): string;
+function FormaPagamentoToDescricao(const t: TpcnFormaPagamento): string;
 function StrToFormaPagamento(var ok: boolean; const s: string): TpcnFormaPagamento;
 function BandeiraCartaoToStr(const t: TpcnBandeiraCartao): string;
 function StrToBandeiraCartao(var ok: boolean; const s: string): TpcnBandeiraCartao;
@@ -1538,6 +1539,17 @@ begin
                                fpValeAlimentacao, fpValeRefeicao, fpValePresente, fpValeCombustivel,
                                fpOutro]);
 end;
+
+function FormaPagamentoToDescricao(const t: TpcnFormaPagamento): string;
+begin
+  result := EnumeradoToStr(t,  ['Dinheiro', 'Cheque', 'Cartão de Crédito', 'Cartão de Débito', 'Crédito Loja',
+                               'Vale Alimentação', 'Vale Refeição', 'Vale Presente', 'Vale Combustível',
+                               'Outro'],
+                               [fpDinheiro, fpCheque, fpCartaoCredito, fpCartaoDebito, fpCreditoLoja,
+                               fpValeAlimentacao, fpValeRefeicao, fpValePresente, fpValeCombustivel,
+                               fpOutro]);
+end;
+
 
 function StrToFormaPagamento(var ok: boolean; const s: string): TpcnFormaPagamento;
 begin
