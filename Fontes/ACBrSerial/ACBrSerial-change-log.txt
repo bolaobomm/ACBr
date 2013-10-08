@@ -97,6 +97,20 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+Data: 08/10/2013
+-- ACBrECFBematech --
+[*] Aplicado refactoring para facilitar e otimizar leitura do número do
+    proprietário (por: DSA)
+[*] Adicionado código para verificar versão mínima da DLL da Bematech como:
+    6.1.1.6, para evitar erros na geração de arquivos por Download da MFD
+    (por: DSA)
+[*] ArquivoMFD_DLL por CRZ, modificado para usar método específico da DLL
+    (por: DSA)
+
+-- ACBrECFEscECF --
+[*] Tentativa de implementação dos métodos: EspelhoMFD_DLL, ArquivoMFD_DLL e
+    ArquivoMF_DLL, usando classes já existentes... (por: DSA)
+
 Data: 28/09/2013
 -- ACBrECFEscECF --
 [-] Correção do método GetDataMovimento  (por: DSA)

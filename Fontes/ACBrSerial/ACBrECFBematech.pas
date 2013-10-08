@@ -299,6 +299,7 @@ const
  cLIB_Bema = 'linuxmfd';
 {$ELSE}
  cLIB_Bema = 'Bemafi32.dll';
+ cLIB_VersaoMinima = '6.1.1.6';
 {$ENDIF}
 
 type
@@ -310,6 +311,7 @@ type
 TACBrECFBematech = class( TACBrECFClass )
  private
     fsACK, fsST1, fsST2, fsST3: Integer ; { Status da Bematech }
+    fsProp: AnsiString;
     { Tamanho da Resposta Esperada ao comando. Necessário, pois a Bematech nao
       usa um Sufixo padrão no fim da resposta da Impressora. }
     fs25MFD      : Boolean ;  // True se for MP25 ou Superior (MFD)
@@ -332,6 +334,7 @@ TACBrECFBematech = class( TACBrECFClass )
     fsModelosCheque : TACBrCHQModelos ;
 
     xBematech_FI_AbrePortaSerial:Function:Integer;StdCall;
+    xBematech_FI_VersaoDll:Function( cVersao: AnsiString ): Integer; StdCall;
     xBematech_FI_FechaPortaSerial:Function:Integer;StdCall;
     xBematech_FI_EspelhoMFD:Function( cNomeArquivoDestino: AnsiString;
        cDadoInicial: AnsiString; cDadoFinal: AnsiString;
@@ -362,6 +365,7 @@ TACBrECFBematech = class( TACBrECFClass )
      function AnalisarRetornoDll(const ARetorno: Integer): String;
     {$ENDIF}
 
+    function GetProp: AnsiString;
     function GetTotalizadoresParciais : String ;
     procedure CRZToCOO(const ACRZIni, ACRZFim: Integer; var ACOOIni,
       ACOOFim: Integer);
@@ -457,6 +461,7 @@ TACBrECFBematech = class( TACBrECFClass )
     property ST3   : Integer read fsST3 ;
     property ModelosCheque : TACBrCHQModelos read fsModelosCheque
        write fsModelosCheque ;
+    property Prop  : AnsiString read GetProp write fsProp;
 
     Property BytesResp : Integer read fsBytesResp write fsBytesResp ;
     Function EnviaComando_ECF( cmd : AnsiString ) : AnsiString ; override ;
@@ -725,7 +730,8 @@ begin
   fsNumCOOInicial := '' ;
   fsNFCodCNF := '' ;
   fsNFCodFPG := '' ;
-  fsNFValor  := 0 ;
+  fsNFValor  := 0  ;
+  fsProp     := '' ;
 
   fsModelosCheque := TACBrCHQModelos.create( true );
 
@@ -778,6 +784,7 @@ begin
   fsNFCodFPG  := '' ;
   fsNFValor   := 0 ;
   fs25MFD     := false ;
+  fsProp      := '';
 
   try
      { Testando a comunicaçao com a porta }
@@ -800,6 +807,7 @@ begin
                  'Erro inicializando a impressora '+fpModeloStr ));
 
      NumVersao ;   { Inicializa fpMFD, fsNumVersao e fpTermica }
+     GetProp;      { Inicializa o Numero do Proprietário }
 
      { Verificando se é MP40. Se for MP40 tem apenas 40 colunas e não 48 colunas
        Se os 4 primeiros dígitos do Numero de série forem 4708, corresponde
@@ -2517,8 +2525,9 @@ end;
 
 procedure TACBrECFBematech.LeituraMFDSerial(COOInicial, COOFinal: Integer;
   Linhas: TStringList; Documentos : TACBrECFTipoDocumentoSet);
- Var Espera : Integer ;
-     UsuarioECF : String ;
+Var
+  Espera : Integer ;
+  UsuarioECF : String ;
 begin
   { O download da MFD é um processo bastante demorado por isso forcei um TimeOut
     maior. Dependendo da Faixa de COO's a ser baixada pode ser necessário aumantar
@@ -2528,7 +2537,7 @@ begin
 
   BytesResp := -1 ; { espera por ETX }
   Espera := 30 + (COOFinal - COOInicial) * 2 ;
-  UsuarioECF := UsuarioAtual ;
+  UsuarioECF := Prop ;
 
   Linhas.Clear ;
   Linhas.Text := EnviaComando( #62+#69 + 'C' +
@@ -3355,6 +3364,7 @@ end;
 
 {$IFDEF MSWINDOWS}
 procedure TACBrECFBematech.LoadDLLFunctions;
+
  procedure BematechFunctionDetect( FuncName: String; var LibPointer: Pointer;
     LibName : String = cLIB_Bema ) ;
  var
@@ -3376,8 +3386,23 @@ procedure TACBrECFBematech.LoadDLLFunctions;
      end ;
    end ;
  end ;
+
+var
+  VersaoAtual: AnsiString;
+  Resp : Integer ;
 begin
    if fsUsarDLL and Ativo then exit; // Já fez a leitura
+
+   BematechFunctionDetect( 'Bematech_FI_VersaoDll',@xBematech_FI_VersaoDll );
+   VersaoAtual := StringOfChar(' ',10) ;
+   Resp := xBematech_FI_VersaoDll( VersaoAtual ) ;
+   if Resp = 1 then
+   begin
+     VersaoAtual := StringReplace( Trim(VersaoAtual), ',', '.', [rfReplaceAll] ) ;
+     if CompareVersions(VersaoAtual, cLIB_VersaoMinima) < 0 then
+        raise EACBrECFErro.Create( ACBrStr('A versão de '+cLIB_Bema+' é: '+VersaoAtual+sLineBreak+
+                                           'Você deve atualizar para no mímimo: '+cLIB_VersaoMinima)   );
+   end;
 
    BematechFunctionDetect( 'Bematech_FI_AbrePortaSerial',@xBematech_FI_AbrePortaSerial );
    BematechFunctionDetect( 'Bematech_FI_FechaPortaSerial',@xBematech_FI_FechaPortaSerial );
@@ -3393,6 +3418,14 @@ begin
      BematechFunctionDetect( 'Bematech_FI_LeituraRetorno',@xBematech_FI_LeituraRetorno );
      BematechFunctionDetect( 'Bematech_FI_BytesDisponiveisLeitura',@xBematech_FI_BytesDisponiveisLeitura );
    end;
+end;
+
+function TACBrECFBematech.GetProp: AnsiString;
+begin
+  if (fsProp = '') and Ativo then
+     fsProp := IntToStr( StrToIntDef( UsuarioAtual, 1) ) ;
+
+  Result := fsProp;
 end;
 
 procedure TACBrECFBematech.AbrePortaSerialDLL(const aPath: String);
@@ -3515,12 +3548,10 @@ procedure TACBrECFBematech.EspelhoMFD_DLL(DataInicial,
   Documentos: TACBrECFTipoDocumentoSet);
 var
   Resp : Integer ;
-  DiaIni, DiaFim, Prop: AnsiString ;
+  DiaIni, DiaFim: AnsiString ;
   OldAtivo : Boolean ;
   {$IFDEF LINUX} Cmd, ArqTmp : String ; {$ENDIF}
 begin
-  Prop := IntToStr( StrToIntDef( UsuarioAtual, 1) ) ;
-
  {$IFDEF LINUX}
   ArqTmp := ExtractFilePath( NomeArquivo ) + 'ACBr.mfd' ;
   DeleteFile( ArqTmp ) ;
@@ -3580,13 +3611,12 @@ procedure TACBrECFBematech.EspelhoMFD_DLL(COOInicial, COOFinal: Integer;
   NomeArquivo: AnsiString; Documentos: TACBrECFTipoDocumentoSet);
 var
   Resp : Integer ;
-  CooIni, CooFim, Prop: AnsiString ;
+  CooIni, CooFim: AnsiString ;
   OldAtivo : Boolean ;
   {$IFDEF LINUX} Cmd, ArqTmp : String ; {$ENDIF}
 begin
   CooIni := IntToStrZero( COOInicial, 6 ) ;
   CooFim := IntToStrZero( COOFinal, 6 ) ;
-  Prop   := IntToStr( StrToIntDef( UsuarioAtual, 1) ) ;
 
  {$IFDEF LINUX}
   ArqTmp := ExtractFilePath( NomeArquivo ) + 'ACBr.mfd' ;
@@ -3642,18 +3672,15 @@ procedure TACBrECFBematech.PafMF_GerarCAT52(const DataInicial: TDateTime;
    const DataFinal: TDateTime; const DirArquivos: string);
 var
   Resp: Integer;
-  FilePath, DiaIni, DiaFim, NumUsu: AnsiString;
+  FilePath, DiaIni, DiaFim: AnsiString;
   OldAtivo: Boolean;
   FileMFD: AnsiString;
   DataArquivo: TDateTime;
 begin
-
  {$IFDEF LINUX}
   inherited PafMF_GerarCAT52( DataInicial, DataFinal, DirArquivos);
  {$ELSE}
   LoadDLLFunctions;
-
-  NumUsu   := AnsiString(UsuarioAtual);
 
   DiaIni   := FormatDateTime('dd/mm/yyyy', DataInicial);
   DiaFim   := FormatDateTime('dd/mm/yyyy', DataFinal);
@@ -3670,7 +3697,7 @@ begin
     AbrePortaSerialDLL( FilePath ) ;
 
     // fazer primeiro o download da MFD para o período
-    Resp := xBematech_FI_DownloadMFD( FileMFD, '1', DiaIni, DiaFim, NumUsu );
+    Resp := xBematech_FI_DownloadMFD( FileMFD, '1', DiaIni, DiaFim, Prop );
     if (Resp <> 1) then
     begin
       raise EACBrECFErro.Create(ACBrStr(
@@ -3712,10 +3739,7 @@ Var
   FilePath : AnsiString ;
   OldAtivo : Boolean ;
   {$IFDEF LINUX} Cmd, ArqTmp : String ; {$ENDIF}
-  UsuarioAtual: AnsiString;
 begin
-  UsuarioAtual := Self.UsuarioAtual;
-
   {$IFDEF LINUX}
    inherited ArquivoMFD_DLL( NomeArquivo );
   {$ELSE}
@@ -3727,7 +3751,7 @@ begin
      AbrePortaSerialDLL( FilePath ) ;
 
      GravaLog( '   xBematech_FI_DownloadMFD' );
-     Resp := xBematech_FI_DownloadMFD( NomeArquivo, '0', '', '', UsuarioAtual ) ;
+     Resp := xBematech_FI_DownloadMFD( NomeArquivo, '0', '', '', Prop ) ;
 
      if (Resp <> 1) then
         raise EACBrECFErro.Create( ACBrStr( 'Erro ao executar xBematech_FI_ArquivoMF.'+sLineBreak+
@@ -3774,11 +3798,10 @@ procedure TACBrECFBematech.ArquivoMFD_DLL(DataInicial, DataFinal: TDateTime;
   Finalidade: TACBrECFFinalizaArqMFD);
 Var
   Resp, Tipo : Integer ;
-  DiaIni, DiaFim, Prop, Prefixo, FilePath : AnsiString ;
+  DiaIni, DiaFim, Prefixo, FilePath : AnsiString ;
   OldAtivo : Boolean ;
   {$IFDEF LINUX} Cmd, ArqTmp : String ; {$ENDIF}
 begin
-  Prop     := IntToStr( StrToIntDef( UsuarioAtual, 1) ) ;
   FilePath := ExtractFilePath( NomeArquivo );
   Tipo     := 2;
   Prefixo  := 'TDM';
@@ -3848,7 +3871,7 @@ procedure TACBrECFBematech.ArquivoMFD_DLL( ContInicial, ContFinal : Integer;
   Finalidade: TACBrECFFinalizaArqMFD; TipoContador: TACBrECFTipoContador);
 Var
   Resp, Tipo : Integer ;
-  Prop, COOIni, COOFim, Prefixo, FilePath : AnsiString ;
+  DadoInicial, DadoFinal, Prefixo, FilePath, TipoDownload : AnsiString ;
   OldAtivo : Boolean ;
   {$IFDEF LINUX} Cmd, ArqTmp : String ; {$ENDIF}
 begin
@@ -3856,16 +3879,15 @@ begin
   Tipo     := 2;
   Prefixo  := 'TDM';
 
-  if TipoContador = tpcCRZ then
-    CRZToCOO(ContInicial, ContFinal, ContInicial, ContFinal) ;
-
   FinalidadeToTipoPrefixo( Finalidade, Tipo, Prefixo );
 
-  Prop   := IntToStr( StrToIntDef( UsuarioAtual, 1) ) ;
-  COOIni := IntToStrZero( ContInicial, 6 ) ;
-  COOFim := IntToStrZero( ContFinal, 6 ) ;
-
  {$IFDEF LINUX}
+  if TipoContador = tpcCRZ then
+     CRZToCOO(ContInicial, ContFinal, ContInicial, ContFinal) ;
+
+  DadoInicial := IntToStrZero( ContInicial, 6 ) ;
+  DadoFinal   := IntToStrZero( ContFinal, 6 ) ;
+
   ArqTmp := FilePath + 'ACBr.mfd';
   DeleteFile( ArqTmp ) ;
 
@@ -3873,7 +3895,7 @@ begin
   try
      Ativo := False;
 
-     Cmd := fpDevice.Porta + ' ' + ArqTmp+' 3 ' + COOIni + ' ' + COOFim + ' ' + Prop;
+     Cmd := fpDevice.Porta + ' ' + ArqTmp+' 3 ' + DadoInicial + ' ' + DadoFinal + ' ' + Prop;
      RunCommand('./linuxmfd',Cmd,True) ;
 
      if not FileExists( ArqTmp ) then
@@ -3881,7 +3903,7 @@ begin
                                         'Arquivo: '+ArqTmp+' não foi criado' ) ) ;
 
      SysUtils.DeleteFile( NomeArquivo ) ;
-     Cmd := NomeArquivo + ' ' + ArqTmp + ' 3 ' + COOIni + ' ' + COOFim + ' ' + Prop ;
+     Cmd := NomeArquivo + ' ' + ArqTmp + ' 3 ' + DadoInicial + ' ' + DadoFinal + ' ' + Prop ;
      RunCommand('./bemamfd2',Cmd,True) ;
 
      if not FileExists( NomeArquivo ) then
@@ -3892,6 +3914,19 @@ begin
      Ativo := OldAtivo ;
   end;
  {$ELSE}
+  if (TipoContador = tpcCRZ) then
+  begin
+     DadoInicial  := IntToStrZero( ContInicial, 4 ) ;
+     DadoFinal    := IntToStrZero( ContFinal, 4 ) ;
+     TipoDownload := 'Z';
+  end
+  else
+  begin
+    DadoInicial  := IntToStrZero( ContInicial, 6 ) ;
+    DadoFinal    := IntToStrZero( ContFinal, 6 ) ;
+    TipoDownload := 'C';
+  end ;
+
   LoadDLLFunctions;
 
   OldAtivo := Ativo ;
@@ -3902,7 +3937,7 @@ begin
 
      Resp := xBematech_FI_ArquivoMFDPath( '',           // Origem = MFD
                                           NomeArquivo,  // Destino
-                                          COOIni, COOFim, 'C', Prop, Tipo,
+                                          DadoInicial, DadoFinal, TipoDownload, Prop, Tipo,
                                           cChavePublica, cChavePrivada, 1 ) ;
      if (Resp <> 1) then
         raise EACBrECFErro.Create( ACBrStr( 'Erro ao executar xBematech_FI_ArquivoMFDPath.'+sLineBreak+

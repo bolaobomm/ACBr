@@ -161,6 +161,8 @@ TACBrECFEscECF = class( TACBrECFClass )
     fsNomeArqMemoria : String ;
     fsArqMemoria     : String ;
 
+    ClasseFabricante : TACBrECFClass;
+
     function IsBematech: Boolean;
 
     procedure EnviaConsumidor;
@@ -382,6 +384,21 @@ TACBrECFEscECF = class( TACBrECFClass )
        Linhas : TStringList; Documentos : TACBrECFTipoDocumentoSet = [docTodos] ) ; overload ; override ;
     Procedure LeituraMFDSerial( COOInicial, COOFinal : Integer;
        Linhas : TStringList; Documentos : TACBrECFTipoDocumentoSet = [docTodos] ) ; overload ; override ;
+
+    Procedure EspelhoMFD_DLL( DataInicial, DataFinal : TDateTime;
+       NomeArquivo : AnsiString; Documentos : TACBrECFTipoDocumentoSet = [docTodos]  ) ; overload ; override ;
+    Procedure EspelhoMFD_DLL( COOInicial, COOFinal : Integer;
+       NomeArquivo : AnsiString; Documentos : TACBrECFTipoDocumentoSet = [docTodos]  ) ; overload ; override ;
+    Procedure ArquivoMFD_DLL( DataInicial, DataFinal : TDateTime;
+       NomeArquivo : AnsiString; Documentos : TACBrECFTipoDocumentoSet = [docTodos];
+       Finalidade: TACBrECFFinalizaArqMFD = finMFD  ) ; overload ; override ;
+    Procedure ArquivoMFD_DLL( ContInicial, ContFinal : Integer;
+       NomeArquivo : AnsiString; Documentos : TACBrECFTipoDocumentoSet = [docTodos];
+       Finalidade: TACBrECFFinalizaArqMFD = finMFD;
+       TipoContador: TACBrECFTipoContador = tpcCOO ) ; overload ; override ;
+
+    Procedure ArquivoMF_DLL(  NomeArquivo : AnsiString  ) ; overload ; override ;
+    Procedure ArquivoMFD_DLL(NomeArquivo: AnsiString); overload ; override ;
 
     Procedure IdentificaOperador(Nome : String); override;
     Procedure IdentificaPAF( NomeVersao, MD5 : String) ; override ;
@@ -654,12 +671,17 @@ begin
   fsACK           := False;
 
   RespostasComando.Clear;
+
+  // Usa a Classe do fabricante para compartilhar rotinas de carga da DLL //
+  ClasseFabricante := TACBrECFClass.create( fpOwner );
 end;
 
 destructor TACBrECFEscECF.Destroy;
 begin
   fsEscECFComando.Free ;
   fsEscECFResposta.Free ;
+
+  ClasseFabricante.Free;
 
   inherited Destroy ;
 end;
@@ -705,17 +727,21 @@ begin
      fsVersaoEscECF  := EscECFResposta.Params[19];
 
      if NomeArqMemoria <> '' then
-       fsArqMemoria := NomeArqMemoria
+        fsArqMemoria := NomeArqMemoria
      else
-       fsArqMemoria := ExtractFilePath( ParamStr(0) )+'ACBrECFEscECF'+
-                       Poem_Zeros( fsNumECF, 3 )+'.txt';
+        fsArqMemoria := ExtractFilePath( ParamStr(0) )+'ACBrECFEscECF'+
+                        Poem_Zeros( fsNumECF, 3 )+'.txt';
 
      if IsBematech then
      begin
-       fpColunas := 48;
+        fpColunas := 48;
 
-       if MaxLinhasBuffer = 0 then  // Bematech congela se receber um Buffer muito grande
-         MaxLinhasBuffer := 5;
+        if MaxLinhasBuffer = 0 then  // Bematech congela se receber um Buffer muito grande
+           MaxLinhasBuffer := 5;
+
+        ClasseFabricante.Free;
+        ClasseFabricante := TACBrECFBematech.create( fpOwner );
+        TACBrECFBematech(ClasseFabricante).Prop := GetUsuarioAtual;
      end ;
 
      LeRespostasMemoria;
@@ -1760,6 +1786,98 @@ begin
   Linhas.Clear;
   Linhas.Text := Buffer;
   }
+end;
+
+procedure TACBrECFEscECF.EspelhoMFD_DLL(DataInicial, DataFinal: TDateTime;
+  NomeArquivo: AnsiString; Documentos: TACBrECFTipoDocumentoSet);
+var
+  OldAtivo: Boolean;
+begin
+  OldAtivo := False;
+  try
+     Ativo := False;
+
+     ClasseFabricante.EspelhoMFD_DLL(DataInicial, DataFinal, NomeArquivo, Documentos);
+  finally
+     Ativo := OldAtivo;
+  end;
+end;
+
+procedure TACBrECFEscECF.EspelhoMFD_DLL(COOInicial, COOFinal: Integer;
+  NomeArquivo: AnsiString; Documentos: TACBrECFTipoDocumentoSet);
+var
+  OldAtivo: Boolean;
+begin
+  OldAtivo := False;
+  try
+     Ativo := False;
+
+     ClasseFabricante.EspelhoMFD_DLL(COOInicial, COOFinal, NomeArquivo, Documentos);
+  finally
+     Ativo := OldAtivo;
+  end;
+end;
+
+procedure TACBrECFEscECF.ArquivoMFD_DLL(DataInicial, DataFinal: TDateTime;
+  NomeArquivo: AnsiString; Documentos: TACBrECFTipoDocumentoSet;
+  Finalidade: TACBrECFFinalizaArqMFD);
+var
+  OldAtivo: Boolean;
+begin
+  OldAtivo := False;
+  try
+     Ativo := False;
+
+     ClasseFabricante.ArquivoMFD_DLL(DataInicial, DataFinal, NomeArquivo, Documentos,
+       Finalidade);
+  finally
+     Ativo := OldAtivo;
+  end;
+end;
+
+procedure TACBrECFEscECF.ArquivoMFD_DLL(ContInicial, ContFinal: Integer;
+  NomeArquivo: AnsiString; Documentos: TACBrECFTipoDocumentoSet;
+  Finalidade: TACBrECFFinalizaArqMFD; TipoContador: TACBrECFTipoContador);
+var
+  OldAtivo: Boolean;
+begin
+  OldAtivo := False;
+  try
+     Ativo := False;
+
+     ClasseFabricante.ArquivoMFD_DLL(ContInicial, ContFinal, NomeArquivo, Documentos,
+       Finalidade, TipoContador);
+  finally
+     Ativo := OldAtivo;
+  end;
+end;
+
+procedure TACBrECFEscECF.ArquivoMF_DLL(NomeArquivo: AnsiString);
+var
+  OldAtivo: Boolean;
+begin
+  OldAtivo := False;
+  try
+     Ativo := False;
+
+     ClasseFabricante.ArquivoMF_DLL(NomeArquivo);
+  finally
+     Ativo := OldAtivo;
+  end;
+end;
+
+procedure TACBrECFEscECF.ArquivoMFD_DLL(NomeArquivo: AnsiString);
+var
+  OldAtivo: Boolean;
+begin
+  OldAtivo := False;
+  try
+     Ativo := False;
+
+     ClasseFabricante.ArquivoMFD_DLL(NomeArquivo);
+  finally
+     Ativo := OldAtivo;
+  end;
 end;
 
 procedure TACBrECFEscECF.IdentificaOperador(Nome: String);
@@ -2862,7 +2980,7 @@ end;
 
 function TACBrECFEscECF.GetUsuarioAtual : String ;
 begin
-  Result := '001' ; // No convênio 09/09 não é mais possível cadastrar outros usuários
+  Result := '1' ; // No convênio 09/09 não é mais possível cadastrar outros usuários
 end ;
 
 function TACBrECFEscECF.GetDataHoraSB : TDateTime ;
