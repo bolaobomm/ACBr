@@ -283,7 +283,10 @@ begin
         begin
           vStringStream := TStringStream.Create(FLogo);
           try
-            qriLogo.Picture.Bitmap.LoadFromStream(vStringStream);
+            try
+              qriLogo.Picture.Bitmap.LoadFromStream(vStringStream);
+            except
+            end;
           finally
             vStringStream.Free;
           end;
@@ -338,7 +341,10 @@ begin
         begin
           vStringStream := TStringStream.Create(FPrestLogo);
           try
-            qriPrestLogo.Picture.Bitmap.LoadFromStream(vStringStream);
+            try
+              qriPrestLogo.Picture.Bitmap.LoadFromStream(vStringStream);
+            except
+            end;
           finally
             vStringStream.Free;
           end;

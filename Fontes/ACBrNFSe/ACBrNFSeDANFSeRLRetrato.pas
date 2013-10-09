@@ -248,7 +248,10 @@ begin
        begin
          vStringStream := TStringStream.Create(FLogo);
          try
-           rliLogo.Picture.Bitmap.LoadFromStream(vStringStream);
+           try
+             rliLogo.Picture.Bitmap.LoadFromStream(vStringStream);
+           except
+           end;
          finally
            vStringStream.Free;
          end;
@@ -400,7 +403,10 @@ begin
        begin
          vStringStream := TStringStream.Create(FPrestLogo);
          try
-           rliPrestLogo.Picture.Bitmap.LoadFromStream(vStringStream);
+           try
+             rliPrestLogo.Picture.Bitmap.LoadFromStream(vStringStream);
+           except
+           end;
          finally
            vStringStream.Free;
          end;
