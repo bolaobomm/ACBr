@@ -1237,12 +1237,13 @@ begin
     FieldDefs.Add('NUMEROAPOLICE', ftString, 60);
     FieldDefs.Add('NUMEROAVERBACAO', ftString, 60);
     CreateDataSet;
-    Append;
+//    Append;
     //
     if CTe.InfSeg.Count > 0 then
     begin
       for I := 0 to CTe.InfSeg.Count - 1 do
       begin
+        Append;
         case CTe.InfSeg.Items[I].respSeg of
           rsRemetente: FieldByName('RESPONSAVEL').AsString := 'Remetente';
           rsExpedidor: FieldByName('RESPONSAVEL').AsString := 'Expedidor';
@@ -1259,6 +1260,7 @@ begin
     end
     else
     begin
+      Append;
       FieldByName('RESPONSAVEL').AsString := '';
       FieldByName('NOMESEGURADORA').AsString := '';
       FieldByName('NUMEROAPOLICE').AsString := '';
