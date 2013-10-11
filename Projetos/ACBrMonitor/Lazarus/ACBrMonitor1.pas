@@ -1718,6 +1718,7 @@ begin
     Cedente.AgenciaDigito := edtBOLDigitoAgencia.Text;
     Cedente.Conta         := edtBOLConta.Text;
     Cedente.ContaDigito   := edtBOLDigitoConta.Text;
+    Cedente.Modalidade    := edtModalidade.Text;
 
     case cbxBOLEmissao.ItemIndex of
       0: Cedente.ResponEmissao := tbCliEmite;
