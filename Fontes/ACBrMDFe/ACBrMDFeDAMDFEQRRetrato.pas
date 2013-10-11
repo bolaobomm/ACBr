@@ -147,6 +147,9 @@ type
     cdsItensChave_2: TStringField;
     qrlDataHoraImpressao: TQRLabel;
     qrlSistema: TQRLabel;
+    QRLabel23: TQRLabel;
+    qrlqMDFe: TQRLabel;
+    QRShape19: TQRShape;
     procedure QRMDFeBeforePrint(Sender: TCustomQuickRep;
       var PrintReport: Boolean);
     procedure qrb_1_DadosManifestoBeforePrint(Sender: TQRCustomBand;
@@ -299,11 +302,12 @@ begin
                   end;
   end;
 
-  qrlqCTe.Caption      := FormatFloat( '##0', FMDFe.tot.qCTe);
-  qrlqCT.Caption       := FormatFloat( '##0', FMDFe.tot.qCT);
-  qrlqNFe.Caption      := FormatFloat( '##0', FMDFe.tot.qNFe);
-  qrlqNF.Caption       := FormatFloat( '##0', FMDFe.tot.qNF);
-  
+  qrlqCTe.Caption  := FormatFloat( '##0', FMDFe.tot.qCTe);
+  qrlqCT.Caption   := FormatFloat( '##0', FMDFe.tot.qCT);
+  qrlqNFe.Caption  := FormatFloat( '##0', FMDFe.tot.qNFe);
+  qrlqNF.Caption   := FormatFloat( '##0', FMDFe.tot.qNF);
+  qrlqMDFe.Caption := FormatFloat( '##0', FMDFe.tot.qMDFe);
+
   // UnidMed = (uM3,uKG, uTON, uUNIDADE, uLITROS, uMMBTU);
   if FMDFe.tot.cUnid = uKG
    then qrlPesoTotal.Caption := FormatFloat( '#,##0.###', FMDFe.tot.qCarga)

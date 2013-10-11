@@ -112,8 +112,8 @@ type
   TinfNFCollectionItem       = class;
   TinfUnidTranspNFCollection = class;
 
-  TinfMDFeCollection           = class;
-  TinfMDFeCollectionItem       = class;
+  TinfMDFeTranspCollection     = class;
+  TinfMDFeTranspCollectionItem = class;
   TinfUnidTranspMDFeCollection = class;
 
   Ttot                  = class;
@@ -610,13 +610,13 @@ type
     FinfCT: TinfCTCollection;
     FinfNFe: TinfNFeCollection;
     FinfNF: TinfNFCollection;
-    FinfMDFe: TinfMDFeCollection;
+    FinfMDFeTransp: TinfMDFeTranspCollection;
 
     procedure SetinfCTe(const Value: TinfCTeCollection);
     procedure SetinfCT(const Value: TinfCTCollection);
     procedure SetinfNFe(const Value: TinfNFeCollection);
     procedure SetinfNF(const Value: TinfNFCollection);
-    procedure SetinfMDFe(const Value: TinfMDFeCollection);
+    procedure SetinfMDFeTransp(const Value: TinfMDFeTranspCollection);
   public
     constructor Create; reintroduce;
     destructor Destroy; override;
@@ -627,7 +627,7 @@ type
     property infCT: TinfCTCollection read FinfCT write SetinfCT;
     property infNFe: TinfNFeCollection read FinfNFe write SetinfNFe;
     property infNF: TinfNFCollection read FinfNF write SetinfNF;
-    property infMDFe: TinfMDFeCollection read FinfMDFe write SetinfMDFe;
+    property infMDFeTransp: TinfMDFeTranspCollection read FinfMDFeTransp write SetinfMDFeTransp;
   end;
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -887,17 +887,17 @@ type
 
 ////////////////////////////////////////////////////////////////////////////////
 
-  TinfMDFeCollection = class(TCollection)
+  TinfMDFeTranspCollection = class(TCollection)
   private
-    function GetItem(Index: Integer): TinfMDFeCollectionItem;
-    procedure SetItem(Index: Integer; Value: TinfMDFeCollectionItem);
+    function GetItem(Index: Integer): TinfMDFeTranspCollectionItem;
+    procedure SetItem(Index: Integer; Value: TinfMDFeTranspCollectionItem);
   public
     constructor Create(AOwner: TinfMunDescargaCollectionItem);
-    function Add: TinfMDFeCollectionItem;
-    property Items[Index: Integer]: TinfMDFeCollectionItem read GetItem write SetItem; default;
+    function Add: TinfMDFeTranspCollectionItem;
+    property Items[Index: Integer]: TinfMDFeTranspCollectionItem read GetItem write SetItem; default;
   end;
 
-  TinfMDFeCollectionItem = class(TCollectionItem)
+  TinfMDFeTranspCollectionItem = class(TCollectionItem)
   private
     FchMDFe: String;
     FinfUnidTransp: TinfUnidTranspMDFeCollection;
@@ -915,7 +915,7 @@ type
     function GetItem(Index: Integer): TinfUnidTranspCollectionItem;
     procedure SetItem(Index: Integer; Value: TinfUnidTranspCollectionItem);
   public
-    constructor Create(AOwner: TinfMDFeCollectionItem);
+    constructor Create(AOwner: TinfMDFeTranspCollectionItem);
     function Add: TinfUnidTranspCollectionItem;
     property Items[Index: Integer]: TinfUnidTranspCollectionItem read GetItem write SetItem; default;
   end;
@@ -928,6 +928,7 @@ type
     FqCT: Integer;
     FqNFe: Integer;
     FqNF: Integer;
+    FqMDFe: Integer;
     FvCarga: Double;
     FcUnid: UnidMed;
     FqCarga: Double;
@@ -936,6 +937,7 @@ type
     property qCT: Integer read FqCT write FqCT;
     property qNFe: Integer read FqNFe write FqNFe;
     property qNF: Integer read FqNF write FqNF;
+    property qMDFe: Integer read FqMDFe write FqMDFe;
     property vCarga: Double read FvCarga write FvCarga;
     property cUnid: UnidMed read FcUnid write FcUnid;
     property qCarga: Double read FqCarga write FqCarga;
@@ -1498,7 +1500,7 @@ begin
   FinfCT  := TinfCTCollection.Create(Self);
   FinfNFe := TinfNFeCollection.Create(Self);
   FinfNF  := TinfNFCollection.Create(Self);
-  FinfMDFe := TinfMDFeCollection.Create(Self);
+  FinfMDFeTransp := TinfMDFeTranspCollection.Create(Self);
 end;
 
 destructor TinfMunDescargaCollectionItem.Destroy;
@@ -1507,7 +1509,7 @@ begin
   FinfCT.Free;
   FinfNFe.Free;
   FinfNF.Free;
-  FinfMDFe.Free;
+  FinfMDFeTransp.Free;
   inherited;
 end;
 
@@ -1535,10 +1537,10 @@ begin
   FinfNF.Assign(Value);
 end;
 
-procedure TinfMunDescargaCollectionItem.SetinfMDFe(
-  const Value: TinfMDFeCollection);
+procedure TinfMunDescargaCollectionItem.SetinfMDFeTransp(
+  const Value: TinfMDFeTranspCollection);
 begin
-  FinfMDFe := Value;
+  FinfMDFeTransp := Value;
 end;
 
 { TinfCTeCollection }
@@ -2153,46 +2155,46 @@ begin
   inherited Create(TinfUnidTranspCollectionItem);
 end;
 
-{ TinfMDFeCollection }
+{ TinfMDFeTranspCollection }
 
-function TinfMDFeCollection.Add: TinfMDFeCollectionItem;
+function TinfMDFeTranspCollection.Add: TinfMDFeTranspCollectionItem;
 begin
-  Result := TinfMDFeCollectionItem(inherited Add);
+  Result := TinfMDFeTranspCollectionItem(inherited Add);
   Result.create;
 end;
 
-constructor TinfMDFeCollection.Create(
+constructor TinfMDFeTranspCollection.Create(
   AOwner: TinfMunDescargaCollectionItem);
 begin
-  inherited Create(TinfMDFeCollectionItem);
+  inherited Create(TinfMDFeTranspCollectionItem);
 end;
 
-function TinfMDFeCollection.GetItem(
-  Index: Integer): TinfMDFeCollectionItem;
+function TinfMDFeTranspCollection.GetItem(
+  Index: Integer): TinfMDFeTranspCollectionItem;
 begin
-  Result := TinfMDFeCollectionItem(inherited GetItem(Index));
+  Result := TinfMDFeTranspCollectionItem(inherited GetItem(Index));
 end;
 
-procedure TinfMDFeCollection.SetItem(Index: Integer;
-  Value: TinfMDFeCollectionItem);
+procedure TinfMDFeTranspCollection.SetItem(Index: Integer;
+  Value: TinfMDFeTranspCollectionItem);
 begin
   inherited SetItem(Index, Value);
 end;
 
-{ TinfMDFeCollectionItem }
+{ TinfMDFeTranspCollectionItem }
 
-constructor TinfMDFeCollectionItem.Create;
+constructor TinfMDFeTranspCollectionItem.Create;
 begin
   FinfUnidTransp := TInfUnidTranspMDFeCollection.Create(Self);
 end;
 
-destructor TinfMDFeCollectionItem.Destroy;
+destructor TinfMDFeTranspCollectionItem.Destroy;
 begin
   FinfUnidTransp.Free;
   inherited;
 end;
 
-procedure TinfMDFeCollectionItem.SetinfUnidTransp(
+procedure TinfMDFeTranspCollectionItem.SetinfUnidTransp(
   const Value: TinfUnidTranspMDFeCollection);
 begin
   FinfUnidTransp := Value;
@@ -2207,7 +2209,7 @@ begin
 end;
 
 constructor TinfUnidTranspMDFeCollection.Create(
-  AOwner: TinfMDFeCollectionItem);
+  AOwner: TinfMDFeTranspCollectionItem);
 begin
   inherited Create(TinfUnidTranspCollectionItem);
 end;

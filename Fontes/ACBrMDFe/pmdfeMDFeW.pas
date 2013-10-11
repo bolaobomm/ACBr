@@ -791,52 +791,52 @@ begin
 
     if MDFe.Ide.modal = moAquaviario
      then begin
-       for j := 0 to MDFe.infDoc.infMunDescarga[i].infMDFe.Count - 1 do
+       for j := 0 to MDFe.infDoc.infMunDescarga[i].infMDFeTransp.Count - 1 do
        begin
-         Gerador.wGrupo('infMDFe', '#057');
-         Gerador.wCampo(tcEsp, '#058', 'chMDFe      ', 44, 44, 1, SomenteNumeros(MDFe.infDoc.infMunDescarga[i].infMDFe[j].chMDFe), DSC_REFNFE);
-         if SomenteNumeros(MDFe.infDoc.infMunDescarga[i].infMDFe[j].chMDFe) <> '' then
-          if not ValidarChave('NFe' + SomenteNumeros(MDFe.infDoc.infMunDescarga[i].infMDFe[j].chMDFe)) then
+         Gerador.wGrupo('infMDFeTransp', '#057');
+         Gerador.wCampo(tcEsp, '#058', 'chMDFe      ', 44, 44, 1, SomenteNumeros(MDFe.infDoc.infMunDescarga[i].infMDFeTransp[j].chMDFe), DSC_REFNFE);
+         if SomenteNumeros(MDFe.infDoc.infMunDescarga[i].infMDFeTransp[j].chMDFe) <> '' then
+          if not ValidarChave('NFe' + SomenteNumeros(MDFe.infDoc.infMunDescarga[i].infMDFeTransp[j].chMDFe)) then
            Gerador.wAlerta('#058', 'chMDFe', DSC_REFNFE, ERR_MSG_INVALIDO);
 
-         for k := 0 to MDFe.infDoc.infMunDescarga[i].infMDFe[j].infUnidTransp.Count - 1 do
+         for k := 0 to MDFe.infDoc.infMunDescarga[i].infMDFeTransp[j].infUnidTransp.Count - 1 do
          begin
            Gerador.wGrupo('infUnidTransp', '#051');
-           Gerador.wCampo(tcStr, '#052', 'tpUnidTransp', 01, 01, 1, UnidTranspToStr(MDFe.infDoc.infMunDescarga[i].infMDFe[j].infUnidTransp[k].tpUnidTransp), '***');
-           Gerador.wCampo(tcStr, '#053', 'idUnidTransp', 01, 20, 1, MDFe.infDoc.infMunDescarga[i].infMDFe[j].infUnidTransp[k].idUnidTransp, '***');
+           Gerador.wCampo(tcStr, '#052', 'tpUnidTransp', 01, 01, 1, UnidTranspToStr(MDFe.infDoc.infMunDescarga[i].infMDFeTransp[j].infUnidTransp[k].tpUnidTransp), '***');
+           Gerador.wCampo(tcStr, '#053', 'idUnidTransp', 01, 20, 1, MDFe.infDoc.infMunDescarga[i].infMDFeTransp[j].infUnidTransp[k].idUnidTransp, '***');
 
-           for l := 0 to MDFe.infDoc.infMunDescarga[i].infMDFe[j].infUnidTransp[k].lacUnidTransp.Count - 1 do
+           for l := 0 to MDFe.infDoc.infMunDescarga[i].infMDFeTransp[j].infUnidTransp[k].lacUnidTransp.Count - 1 do
            begin
              Gerador.wGrupo('lacUnidTransp', '#054');
-             Gerador.wCampo(tcStr, '#055', 'nLacre', 01, 20, 1, MDFe.infDoc.infMunDescarga[i].infMDFe[j].infUnidTransp[k].lacUnidTransp[l].nLacre, DSC_NLACRE);
+             Gerador.wCampo(tcStr, '#055', 'nLacre', 01, 20, 1, MDFe.infDoc.infMunDescarga[i].infMDFeTransp[j].infUnidTransp[k].lacUnidTransp[l].nLacre, DSC_NLACRE);
              Gerador.wGrupo('/lacUnidTransp');
            end;
 
-           for l := 0 to MDFe.infDoc.infMunDescarga[i].infMDFe[j].infUnidTransp[k].infUnidCarga.Count - 1 do
+           for l := 0 to MDFe.infDoc.infMunDescarga[i].infMDFeTransp[j].infUnidTransp[k].infUnidCarga.Count - 1 do
            begin
              Gerador.wGrupo('infUnidCarga', '#056');
-             Gerador.wCampo(tcStr, '#057', 'tpUnidCarga', 01, 01, 1, UnidCargaToStr(MDFe.infDoc.infMunDescarga[i].infMDFe[j].infUnidTransp[k].infUnidCarga[l].tpUnidCarga), '***');
-             Gerador.wCampo(tcStr, '#058', 'idUnidCarga', 01, 20, 1, MDFe.infDoc.infMunDescarga[i].infMDFe[j].infUnidTransp[k].infUnidCarga[l].idUnidCarga, '***');
+             Gerador.wCampo(tcStr, '#057', 'tpUnidCarga', 01, 01, 1, UnidCargaToStr(MDFe.infDoc.infMunDescarga[i].infMDFeTransp[j].infUnidTransp[k].infUnidCarga[l].tpUnidCarga), '***');
+             Gerador.wCampo(tcStr, '#058', 'idUnidCarga', 01, 20, 1, MDFe.infDoc.infMunDescarga[i].infMDFeTransp[j].infUnidTransp[k].infUnidCarga[l].idUnidCarga, '***');
 
-             for m := 0 to MDFe.infDoc.infMunDescarga[i].infMDFe[j].infUnidTransp[k].infUnidCarga[l].lacUnidCarga.Count - 1 do
+             for m := 0 to MDFe.infDoc.infMunDescarga[i].infMDFeTransp[j].infUnidTransp[k].infUnidCarga[l].lacUnidCarga.Count - 1 do
              begin
                Gerador.wGrupo('lacUnidCarga', '#059');
-               Gerador.wCampo(tcStr, '#060', 'nLacre', 01, 20, 1, MDFe.infDoc.infMunDescarga[i].infMDFe[j].infUnidTransp[k].infUnidCarga[l].lacUnidCarga[m].nLacre, DSC_NLACRE);
+               Gerador.wCampo(tcStr, '#060', 'nLacre', 01, 20, 1, MDFe.infDoc.infMunDescarga[i].infMDFeTransp[j].infUnidTransp[k].infUnidCarga[l].lacUnidCarga[m].nLacre, DSC_NLACRE);
                Gerador.wGrupo('/lacUnidCarga');
              end;
-             Gerador.wCampo(tcDe2, '#061', 'qtdRat', 01, 05, 0, MDFe.infDoc.infMunDescarga[i].infMDFe[j].infUnidTransp[k].infUnidCarga[l].qtdRat, '***');
+             Gerador.wCampo(tcDe2, '#061', 'qtdRat', 01, 05, 0, MDFe.infDoc.infMunDescarga[i].infMDFeTransp[j].infUnidTransp[k].infUnidCarga[l].qtdRat, '***');
 
              Gerador.wGrupo('/infUnidCarga');
            end;
-           Gerador.wCampo(tcDe2, '#062', 'qtdRat', 01, 05, 0, MDFe.infDoc.infMunDescarga[i].infMDFe[j].infUnidTransp[k].qtdRat, '***');
+           Gerador.wCampo(tcDe2, '#062', 'qtdRat', 01, 05, 0, MDFe.infDoc.infMunDescarga[i].infMDFeTransp[j].infUnidTransp[k].qtdRat, '***');
 
            Gerador.wGrupo('/infUnidTransp');
          end;
 
-         Gerador.wGrupo('/infMDFe');
+         Gerador.wGrupo('/infMDFeTransp');
        end;
-       if MDFe.infDoc.infMunDescarga[i].infMDFe.Count > 2000 then
-        Gerador.wAlerta('#057', 'infMDFe', '', ERR_MSG_MAIOR_MAXIMO + '2000');
+       if MDFe.infDoc.infMunDescarga[i].infMDFeTransp.Count > 2000 then
+        Gerador.wAlerta('#057', 'infMDFeTransp', '', ERR_MSG_MAIOR_MAXIMO + '2000');
      end;
 
     Gerador.wGrupo('/infMunDescarga');
@@ -854,6 +854,7 @@ begin
   Gerador.wCampo(tcInt, '#070', 'qCT   ', 01, 04, 0, MDFe.tot.qCT, DSC_QCT);
   Gerador.wCampo(tcInt, '#071', 'qNFe  ', 01, 04, 0, MDFe.tot.qNFe, DSC_QNFE);
   Gerador.wCampo(tcInt, '#072', 'qNF   ', 01, 04, 0, MDFe.tot.qNF, DSC_QNF);
+  Gerador.wCampo(tcInt, '#072', 'qMDFe ', 01, 04, 0, MDFe.tot.qMDFe, DSC_QNF);
   Gerador.wCampo(tcDe2, '#073', 'vCarga', 01, 15, 1, MDFe.tot.vCarga, DSC_VDOC);
   Gerador.wCampo(tcStr, '#074', 'cUnid ', 02, 02, 1, UnidMedToStr(MDFe.tot.cUnid), DSC_CUNID);
   Gerador.wCampo(tcDe4, '#075', 'qCarga', 01, 15, 1, MDFe.tot.qCarga, DSC_QCARGA);
