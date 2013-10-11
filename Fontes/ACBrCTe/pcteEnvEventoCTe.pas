@@ -193,10 +193,10 @@ begin
          Gerador.wCampo(tcStr, 'EP05', 'campoAlterado  ', 001, 0020, 1, Evento.Items[0].InfEvento.detEvento.infCorrecao.Items[i].campoAlterado);
          Gerador.wCampo(tcStr, 'EP06', 'valorAlterado  ', 001, 0500, 1, Evento.Items[0].InfEvento.detEvento.infCorrecao.Items[i].valorAlterado);
          Gerador.wCampo(tcInt, 'EP07', 'nroItemAlterado', 002, 0002, 0, Evento.Items[0].InfEvento.detEvento.infCorrecao.Items[i].nroItemAlterado);
-         Gerador.wCampo(tcStr, 'EP08', 'xCondUso       ', 001, 5000, 1, Evento.Items[0].InfEvento.detEvento.infCorrecao.Items[i].xCondUso);
          Gerador.wGrupo('/infCorrecao');
         end;
 
+       Gerador.wCampo(tcStr, 'EP08', 'xCondUso', 001, 5000, 1, Evento.Items[0].InfEvento.detEvento.xCondUso);
        Gerador.wGrupo('/evCCeCTe');
      end;
    teCancelamento:

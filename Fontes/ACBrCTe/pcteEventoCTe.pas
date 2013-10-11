@@ -122,7 +122,10 @@ type
     FnDoc: String;
 
     FinfCorrecao: TInfCorrecaoCollection;
+    FCondUso: String;
+
     procedure SetCorrecao(const Value: TInfCorrecaoCollection);
+    procedure setCondUso(const Value: String);
   public
     constructor Create;
     destructor Destroy; override;
@@ -147,6 +150,7 @@ type
     property nDoc: String       read FnDoc       write FnDoc;
 
     property infCorrecao: TInfCorrecaoCollection read FinfCorrecao write SetCorrecao;
+    property xCondUso: String                    read FCondUso     write setCondUso;
   end;
 
   TInfCorrecaoCollection = class(TCollection)
@@ -165,9 +169,6 @@ type
     FcampoAlterado: String;
     FvalorAlterado: String;
     FnroItemAlterado: Integer;
-    FCondUso: String;
-
-    procedure setCondUso(const Value: String);
   public
     constructor Create; reintroduce;
     destructor Destroy; override;
@@ -176,7 +177,6 @@ type
     property campoAlterado: String    read FcampoAlterado   write FcampoAlterado;
     property valorAlterado: String    read FvalorAlterado   write FvalorAlterado;
     property nroItemAlterado: Integer read FnroItemAlterado write FnroItemAlterado;
-    property xCondUso: String         read FCondUso         write setCondUso;
   end;
 
   TRetInfEvento = class
@@ -367,7 +367,20 @@ begin
   inherited;
 end;
 
-procedure TInfCorrecaoCollectionItem.setCondUso(const Value: String);
+{ TDetEvento }
+
+constructor TDetEvento.Create;
+begin
+  FinfCorrecao := TInfCorrecaoCollection.Create(Self);
+end;
+
+destructor TDetEvento.Destroy;
+begin
+  FInfCorrecao.Free;
+  inherited;
+end;
+
+procedure TDetEvento.setCondUso(const Value: String);
 begin
   FCondUso := Value;
 
@@ -382,19 +395,6 @@ begin
                 ' II - a correcao de dados cadastrais que implique mudanca do' +
                 ' emitente, tomador, remetente ou do destinatario; III - a data' +
                 ' de emissao ou de saida.';
-end;
-
-{ TDetEvento }
-
-constructor TDetEvento.Create;
-begin
-  FinfCorrecao := TInfCorrecaoCollection.Create(Self);
-end;
-
-destructor TDetEvento.Destroy;
-begin
-  FInfCorrecao.Free;
-  inherited;
 end;
 
 procedure TDetEvento.SetCorrecao(const Value: TInfCorrecaoCollection);

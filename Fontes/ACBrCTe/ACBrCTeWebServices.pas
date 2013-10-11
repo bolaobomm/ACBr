@@ -806,6 +806,8 @@ begin
           end;
           teCCe:
           begin
+            infEvento.detEvento.xCondUso := TCTeEnvEvento(Self).FEvento.Evento[i].InfEvento.detEvento.xCondUso;
+
             for j := 0 to TCTeEnvEvento(Self).FEvento.Evento[i].InfEvento.detEvento.infCorrecao.Count-1 do
              begin
                with EventoCTe.Evento[i].InfEvento.detEvento.infCorrecao.Add do
@@ -1982,22 +1984,23 @@ begin
     for I := 0 to CTeRetorno.procEventoCTe.Count -1 do
     begin
       FprocEventoCTe.Add;
-      FprocEventoCTe.Items[I].RetEventoCTe.idLote                    := CTeRetorno.procEventoCTe.Items[I].RetEventoCTe.idLote;
-      FprocEventoCTe.Items[I].RetEventoCTe.tpAmb                     := CTeRetorno.procEventoCTe.Items[I].RetEventoCTe.tpAmb;
-      FprocEventoCTe.Items[I].RetEventoCTe.verAplic                  := CTeRetorno.procEventoCTe.Items[I].RetEventoCTe.verAplic;
-      FprocEventoCTe.Items[I].RetEventoCTe.cOrgao                    := CTeRetorno.procEventoCTe.Items[I].RetEventoCTe.cOrgao;
-      FprocEventoCTe.Items[I].RetEventoCTe.cStat                     := CTeRetorno.procEventoCTe.Items[I].RetEventoCTe.cStat;
-      FprocEventoCTe.Items[I].RetEventoCTe.xMotivo                   := CTeRetorno.procEventoCTe.Items[I].RetEventoCTe.xMotivo;
-      FprocEventoCTe.Items[I].RetEventoCTe.Infevento.ID              := CTeRetorno.procEventoCTe.Items[I].RetEventoCTe.InfEvento.ID;
-      FprocEventoCTe.Items[I].RetEventoCTe.Infevento.tpAmb           := CTeRetorno.procEventoCTe.Items[I].RetEventoCTe.InfEvento.tpAmb;
-      FprocEventoCTe.Items[I].RetEventoCTe.InfEvento.CNPJ            := CTeRetorno.procEventoCTe.Items[I].RetEventoCTe.InfEvento.CNPJ;
-      FprocEventoCTe.Items[I].RetEventoCTe.InfEvento.chCTe           := CTeRetorno.procEventoCTe.Items[I].RetEventoCTe.InfEvento.chCTe;
-      FprocEventoCTe.Items[I].RetEventoCTe.InfEvento.dhEvento        := CTeRetorno.procEventoCTe.Items[I].RetEventoCTe.InfEvento.dhEvento;
-      FprocEventoCTe.Items[I].RetEventoCTe.InfEvento.TpEvento        := CTeRetorno.procEventoCTe.Items[I].RetEventoCTe.InfEvento.TpEvento;
-      FprocEventoCTe.Items[I].RetEventoCTe.InfEvento.nSeqEvento      := CTeRetorno.procEventoCTe.Items[I].RetEventoCTe.InfEvento.nSeqEvento;
-      FprocEventoCTe.Items[I].RetEventoCTe.InfEvento.VersaoEvento    := CTeRetorno.procEventoCTe.Items[I].RetEventoCTe.InfEvento.VersaoEvento;
-      FprocEventoCTe.Items[I].RetEventoCTe.InfEvento.DetEvento.nProt := CTeRetorno.procEventoCTe.Items[I].RetEventoCTe.InfEvento.DetEvento.nProt;
-      FprocEventoCTe.Items[I].RetEventoCTe.InfEvento.DetEvento.xJust := CTeRetorno.procEventoCTe.Items[I].RetEventoCTe.InfEvento.DetEvento.xJust;
+      FprocEventoCTe.Items[I].RetEventoCTe.idLote                       := CTeRetorno.procEventoCTe.Items[I].RetEventoCTe.idLote;
+      FprocEventoCTe.Items[I].RetEventoCTe.tpAmb                        := CTeRetorno.procEventoCTe.Items[I].RetEventoCTe.tpAmb;
+      FprocEventoCTe.Items[I].RetEventoCTe.verAplic                     := CTeRetorno.procEventoCTe.Items[I].RetEventoCTe.verAplic;
+      FprocEventoCTe.Items[I].RetEventoCTe.cOrgao                       := CTeRetorno.procEventoCTe.Items[I].RetEventoCTe.cOrgao;
+      FprocEventoCTe.Items[I].RetEventoCTe.cStat                        := CTeRetorno.procEventoCTe.Items[I].RetEventoCTe.cStat;
+      FprocEventoCTe.Items[I].RetEventoCTe.xMotivo                      := CTeRetorno.procEventoCTe.Items[I].RetEventoCTe.xMotivo;
+      FprocEventoCTe.Items[I].RetEventoCTe.Infevento.ID                 := CTeRetorno.procEventoCTe.Items[I].RetEventoCTe.InfEvento.ID;
+      FprocEventoCTe.Items[I].RetEventoCTe.Infevento.tpAmb              := CTeRetorno.procEventoCTe.Items[I].RetEventoCTe.InfEvento.tpAmb;
+      FprocEventoCTe.Items[I].RetEventoCTe.InfEvento.CNPJ               := CTeRetorno.procEventoCTe.Items[I].RetEventoCTe.InfEvento.CNPJ;
+      FprocEventoCTe.Items[I].RetEventoCTe.InfEvento.chCTe              := CTeRetorno.procEventoCTe.Items[I].RetEventoCTe.InfEvento.chCTe;
+      FprocEventoCTe.Items[I].RetEventoCTe.InfEvento.dhEvento           := CTeRetorno.procEventoCTe.Items[I].RetEventoCTe.InfEvento.dhEvento;
+      FprocEventoCTe.Items[I].RetEventoCTe.InfEvento.TpEvento           := CTeRetorno.procEventoCTe.Items[I].RetEventoCTe.InfEvento.TpEvento;
+      FprocEventoCTe.Items[I].RetEventoCTe.InfEvento.nSeqEvento         := CTeRetorno.procEventoCTe.Items[I].RetEventoCTe.InfEvento.nSeqEvento;
+      FprocEventoCTe.Items[I].RetEventoCTe.InfEvento.VersaoEvento       := CTeRetorno.procEventoCTe.Items[I].RetEventoCTe.InfEvento.VersaoEvento;
+      FprocEventoCTe.Items[I].RetEventoCTe.InfEvento.DetEvento.nProt    := CTeRetorno.procEventoCTe.Items[I].RetEventoCTe.InfEvento.DetEvento.nProt;
+      FprocEventoCTe.Items[I].RetEventoCTe.InfEvento.DetEvento.xJust    := CTeRetorno.procEventoCTe.Items[I].RetEventoCTe.InfEvento.DetEvento.xJust;
+      FprocEventoCTe.Items[I].RetEventoCTe.InfEvento.DetEvento.xCondUso := CTeRetorno.procEventoCTe.Items[I].RetEventoCTe.InfEvento.DetEvento.xCondUso;
 
       FprocEventoCTe.Items[I].RetEventoCTe.InfEvento.DetEvento.infCorrecao.Clear;
       for k := 0 to CTeRetorno.procEventoCTe.Items[I].RetEventoCTe.InfEvento.detEvento.infCorrecao.Count -1 do
@@ -2007,7 +2010,6 @@ begin
         FprocEventoCTe.Items[I].RetEventoCTe.InfEvento.DetEvento.infCorrecao.Items[k].campoAlterado   := CTeRetorno.procEventoCTe.Items[I].RetEventoCTe.InfEvento.DetEvento.infCorrecao.Items[k].campoAlterado;
         FprocEventoCTe.Items[I].RetEventoCTe.InfEvento.DetEvento.infCorrecao.Items[k].valorAlterado   := CTeRetorno.procEventoCTe.Items[I].RetEventoCTe.InfEvento.DetEvento.infCorrecao.Items[k].valorAlterado;
         FprocEventoCTe.Items[I].RetEventoCTe.InfEvento.DetEvento.infCorrecao.Items[k].nroItemAlterado := CTeRetorno.procEventoCTe.Items[I].RetEventoCTe.InfEvento.DetEvento.infCorrecao.Items[k].nroItemAlterado;
-        FprocEventoCTe.Items[I].RetEventoCTe.InfEvento.DetEvento.infCorrecao.Items[k].xCondUso        := CTeRetorno.procEventoCTe.Items[I].RetEventoCTe.InfEvento.DetEvento.infCorrecao.Items[k].xCondUso;
       end;
 
       FprocEventoCTe.Items[I].RetEventoCTe.retEvento.Clear;
