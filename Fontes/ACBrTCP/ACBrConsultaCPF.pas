@@ -193,9 +193,8 @@ function TACBrConsultaCPF.Consulta(const ACPF, ACaptcha: String;
   ARemoverEspacosDuplos: Boolean): Boolean;
 var
   Post: TStringStream;
-  Erro, Html: String;
+  Erro: String;
   Resposta : TStringList;
-  I: Integer;
 begin
   Post:= TStringStream.Create('');
   try

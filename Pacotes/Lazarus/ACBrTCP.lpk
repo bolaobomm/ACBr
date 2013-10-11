@@ -1,4 +1,4 @@
-<?xml version="1.0"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <CONFIG>
   <Package Version="4">
     <PathDelim Value="\"/>
@@ -19,6 +19,7 @@
       </Parsing>
       <Other>
         <CompilerMessages>
+          <IgnoredMessages idx5024="True"/>
           <UseMsgFile Value="True"/>
         </CompilerMessages>
         <CompilerPath Value="$(CompPath)"/>
@@ -28,7 +29,7 @@
     <License Value="LGPL
 "/>
     <Version Minor="10"/>
-    <Files Count="12">
+    <Files Count="14">
       <Item1>
         <Filename Value="..\..\Fontes\ACBrTCP\ACBrSocket.pas"/>
         <UnitName Value="ACBrSocket"/>
@@ -78,6 +79,14 @@
         <Filename Value="..\..\Fontes\ACBrTCP\ACBrCotacao.pas"/>
         <UnitName Value="ACBrCotacao"/>
       </Item12>
+      <Item13>
+        <Filename Value="..\..\Fontes\ACBrTCP\ACBrMail.pas"/>
+        <UnitName Value="ACBrMail"/>
+      </Item13>
+      <Item14>
+        <Filename Value="..\..\Fontes\ACBrTCP\ACBrConsultaCPF.pas"/>
+        <UnitName Value="ACBrConsultaCPF"/>
+      </Item14>
     </Files>
     <Type Value="RunAndDesignTime"/>
     <RequiredPkgs Count="4">

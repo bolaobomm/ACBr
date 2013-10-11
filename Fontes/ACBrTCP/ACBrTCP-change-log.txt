@@ -37,6 +37,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+11/10/2013
+-- ACBrMail --
+[+] Adicionado novo componente ACBrMail, que é um completo Cliente SMTP
+    (Por: Jean Patrick)
+
 28/09/2013
 -- ACBrCNIEE --
 [*] Ajuste para método BuscarECF com o Parametro RemoveEspacos  (por: DSA)
