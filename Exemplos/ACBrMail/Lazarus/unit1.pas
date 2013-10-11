@@ -70,62 +70,36 @@ end;
 
 procedure TForm1.ACBrMail1MailProcess(const aStatus: TMailStatus);
 begin
+  ProgressBar1.Position := Integer( aStatus );
+
   case aStatus of
     pmsStartProcess:
     begin
       Memo1.Lines.Clear;
       Memo1.Lines.Add('Iniciando processo de envio.');
-      ProgressBar1.Position := 1;
     end;
     pmsConfigHeaders:
-    begin
       Memo1.Lines.Add('Configurando o cabeçalho do e-mail.');
-      ProgressBar1.Position := 2;
-    end;
     pmsLoginSMTP:
-    begin
       Memo1.Lines.Add('Logando no servidor de e-mail.');
-      ProgressBar1.Position := 3;
-    end;
     pmsStartSends:
-    begin
       Memo1.Lines.Add('Iniciando os envios.');
-      ProgressBar1.Position := 4;
-    end;
     pmsSendTo:
-    begin
       Memo1.Lines.Add('Processando lista de destinatários.');
-      ProgressBar1.Position := 5;
-    end;
     pmsSendCC:
-    begin
       Memo1.Lines.Add('Processando lista CC.');
-      ProgressBar1.Position := 6;
-    end;
     pmsSendBCC:
-    begin
       Memo1.Lines.Add('Processando lista BCC.');
-      ProgressBar1.Position := 7;
-    end;
     pmsSendReplyTo:
-    begin
       Memo1.Lines.Add('Processando lista ReplyTo.');
-      ProgressBar1.Position := 8;
-    end;
     pmsSendData:
-    begin
       Memo1.Lines.Add('Enviando dados.');
-      ProgressBar1.Position := 9;
-    end;
     pmsLogoutSMTP:
-    begin
       Memo1.Lines.Add('Fazendo Logout no servidor de e-mail.');
-      ProgressBar1.Position := 10;
-    end;
     pmsDone:
     begin
       Memo1.Lines.Add('Terminando e limpando.');
-      ProgressBar1.Position := 11;
+      ProgressBar1.Position := ProgressBar1.Max;
     end;
   end;
 end;
