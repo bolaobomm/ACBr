@@ -1,0 +1,58 @@
+<?xml version="1.0"?>
+<CONFIG>
+  <Package Version="4">
+    <PathDelim Value="\"/>
+    <Name Value="ACBr_NFSe_DanfseRL"/>
+    <CompilerOptions>
+      <Version Value="11"/>
+      <PathDelim Value="\"/>
+      <SearchPaths>
+        <OtherUnitFiles Value="..\..\..\Fontes\ACBrNFSe"/>
+        <UnitOutputDirectory Value="..\..\..\Fontes\ACBrNFSe\lib\$(TargetCPU)-$(TargetOS)"/>
+      </SearchPaths>
+      <Other>
+        <CompilerMessages>
+          <MsgFileName Value=""/>
+        </CompilerMessages>
+        <CompilerPath Value="$(CompPath)"/>
+      </Other>
+    </CompilerOptions>
+    <Files Count="4">
+      <Item1>
+        <Filename Value="..\..\..\Fontes\ACBrNFSe\ACBrNFSeDANFSeRL.pas"/>
+        <UnitName Value="ACBrNFSeDANFSeRL"/>
+      </Item1>
+      <Item2>
+        <Filename Value="..\..\..\Fontes\ACBrNFSe\ACBrNFSeDANFSeRLClass.pas"/>
+        <UnitName Value="ACBrNFSeDANFSeRLClass"/>
+      </Item2>
+      <Item3>
+        <Filename Value="..\..\..\Fontes\ACBrNFSe\ACBrNFSeDANFSeRLReg.pas"/>
+        <HasRegisterProc Value="True"/>
+        <UnitName Value="ACBrNFSeDANFSeRLReg"/>
+      </Item3>
+      <Item4>
+        <Filename Value="..\..\..\Fontes\ACBrNFSe\ACBrNFSeDANFSeRLRetrato.pas"/>
+        <UnitName Value="ACBrNFSeDANFSeRLRetrato"/>
+      </Item4>
+    </Files>
+    <Type Value="RunAndDesignTime"/>
+    <RequiredPkgs Count="3">
+      <Item1>
+        <PackageName Value="ACBr_NFSe"/>
+      </Item1>
+      <Item2>
+        <PackageName Value="fortes324forlaz"/>
+      </Item2>
+      <Item3>
+        <PackageName Value="FCL"/>
+      </Item3>
+    </RequiredPkgs>
+    <UsageOptions>
+      <UnitPath Value="$(PkgOutDir)"/>
+    </UsageOptions>
+    <PublishOptions>
+      <Version Value="2"/>
+    </PublishOptions>
+  </Package>
+</CONFIG>

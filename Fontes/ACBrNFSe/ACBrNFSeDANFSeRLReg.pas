@@ -5,7 +5,7 @@ unit ACBrNFSeDANFSeRLReg;
 interface
 
 uses
-  SysUtils, Classes, Dialogs, ACBrNFSeDANFSeRLClass;
+  SysUtils, {$IFDEF FPC}LResources ,{$ENDIF} Classes, Dialogs, ACBrNFSeDANFSeRLClass;
 
 procedure Register;
 
@@ -19,9 +19,10 @@ procedure Register;
 begin
   RegisterComponents('ACBr', [TACBrNFSeDANFSeRL]);
 end;
-initialization
+
 {$IFDEF FPC}
-//   {$i acbrNFSepcn_lcl.lrs}
+initialization
+   {$i ACBrNFSeDANFSeRL.lrs}
 {$ENDIF}
 
 end.

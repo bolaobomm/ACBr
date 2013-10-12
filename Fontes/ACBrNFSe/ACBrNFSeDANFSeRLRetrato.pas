@@ -1,5 +1,46 @@
-{$WARNINGS OFF}
-{$HINTS OFF}
+{******************************************************************************}
+{ Projeto: Componente ACBrNFe                                                  }
+{  Biblioteca multiplataforma de componentes Delphi para emissão de Nota Fiscal}
+{ eletrônica - NFe - http://www.nfe.fazenda.gov.br                             }
+{                                                                              }
+{ Direitos Autorais Reservados (c) 2008 Wemerson Souto                         }
+{                                       Daniel Simoes de Almeida               }
+{                                       André Ferreira de Moraes               }
+{                                                                              }
+{ Colaboradores nesse arquivo:                                                 }
+{                                                                              }
+{  Você pode obter a última versão desse arquivo na pagina do Projeto ACBr     }
+{ Componentes localizado em http://www.sourceforge.net/projects/acbr           }
+{                                                                              }
+{                                                                              }
+{  Esta biblioteca é software livre; você pode redistribuí-la e/ou modificá-la }
+{ sob os termos da Licença Pública Geral Menor do GNU conforme publicada pela  }
+{ Free Software Foundation; tanto a versão 2.1 da Licença, ou (a seu critério) }
+{ qualquer versão posterior.                                                   }
+{                                                                              }
+{  Esta biblioteca é distribuída na expectativa de que seja útil, porém, SEM   }
+{ NENHUMA GARANTIA; nem mesmo a garantia implícita de COMERCIABILIDADE OU      }
+{ ADEQUAÇÃO A UMA FINALIDADE ESPECÍFICA. Consulte a Licença Pública Geral Menor}
+{ do GNU para mais detalhes. (Arquivo LICENÇA.TXT ou LICENSE.TXT)              }
+{                                                                              }
+{  Você deve ter recebido uma cópia da Licença Pública Geral Menor do GNU junto}
+{ com esta biblioteca; se não, escreva para a Free Software Foundation, Inc.,  }
+{ no endereço 59 Temple Street, Suite 330, Boston, MA 02111-1307 USA.          }
+{ Você também pode obter uma copia da licença em:                              }
+{ http://www.opensource.org/licenses/lgpl-license.php                          }
+{                                                                              }
+{ Daniel Simões de Almeida  -  daniel@djsystem.com.br  -  www.djsystem.com.br  }
+{              Praça Anita Costa, 34 - Tatuí - SP - 18270-410                  }
+{                                                                              }
+{******************************************************************************}
+{******************************************************************************
+|* Historico
+|*
+|* 10/10/2013: Juliomar Marchetti
+|*  - Compatibilização para Lazarus da DANFSe em Fortes Report
+******************************************************************************}
+//{$WARNINGS OFF}
+//{$HINTS OFF}
 {$I ACBr.inc}
 
 unit ACBrNFSeDANFSeRLRetrato;
@@ -7,14 +48,18 @@ unit ACBrNFSeDANFSeRLRetrato;
 interface
 
 uses
-  Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
-  Dialogs, ExtCtrls, ACBrNFSeDANFSeRL, RLFilters, RLPDFFilter, RLReport, DB, DBClient,
+  SysUtils, Variants, Classes, StrUtils,
+  {$IFDEF CLX}
+  QGraphics, QControls, QForms, QDialogs, QExtCtrls, Qt,
+  {$ELSE}
+    {$IFDEF MSWINDOWS}Windows, Messages, {$ENDIF}
+      Graphics, Controls, Forms, Dialogs, ExtCtrls,
+  {$ENDIF}  
+  ACBrNFSeDANFSeRL, RLFilters, RLPDFFilter, RLReport, DB, 
   pnfsConversao, ACBrNFSeDANFSEClass, ACBrNFSeDANFSeRLClass;
 
 type
   TfrlDANFSeRLRetrato = class(TfrlDANFSeRL)
-    cdsItens: TClientDataSet;
-    cdsItensDISCRIMINACAO: TStringField;
     rlbCabecalho: TRLBand;
     rllNumNF0: TRLLabel;
     RLLabel13: TRLLabel;
@@ -152,7 +197,6 @@ type
     rllDataHoraImpressao: TRLLabel;
     rllSistema: TRLLabel;
     RLLabel6: TRLLabel;
-    dsItens: TDataSource;
     procedure rlbCabecalhoBeforePrint(Sender: TObject; var PrintIt: Boolean);
     procedure rlbPrestadorBeforePrint(Sender: TObject; var PrintIt: Boolean);
     procedure rlbTomadorBeforePrint(Sender: TObject; var PrintIt: Boolean);
@@ -174,17 +218,15 @@ var
 implementation
 
 uses
- StrUtils, DateUtils, ACBrUtil, pnfsNFSe, ACBrNFSeUtil, ACBrDFeUtil; //Astrogildo em 13/12/12
+ DateUtils, ACBrUtil, pnfsNFSe, ACBrNFSeUtil, ACBrDFeUtil; //Astrogildo em 13/12/12
 
 {$R *.dfm}
 
-{ TfrlDANFSeRLRetrato }
-
 procedure TfrlDANFSeRLRetrato.Itens;
 begin
- cdsItens.Close;
- cdsItens.CreateDataSet;
- cdsItens.Open;
+ //cdsItens.Close;
+ //cdsItens.CreateDataSet;
+ //cdsItens.Open;
 
  cdsItens.Append;
  cdsItens.FieldByName('DISCRIMINACAO').AsString := FNFSe.Servico.Discriminacao;
@@ -516,5 +558,5 @@ begin
 end;
 
 end.
-{$HINTS ON}
-{$WARNINGS ON}
+//{$HINTS ON}
+//{$WARNINGS ON}

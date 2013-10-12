@@ -17,7 +17,7 @@ echo "****************************************"
 echo.
 
 :Diversos
-%1\tools\lazres.exe ACBrDiversos.lrs TACBrCalculadora.bmp TACBrExtenso.bmp TACBrValidador.bmp TACBrTroco.bmp TACBrCMC7.bmp TACBrFala.bmp TACBrGIF.bmp TACBrBarCode.bmp TACBrEnterTab.bmp
+%1\tools\lazres.exe ACBrDiversos.lrs TACBrCalculadora.bmp TACBrExtenso.bmp TACBrValidador.bmp TACBrTroco.bmp TACBrCMC7.bmp TACBrFala.bmp TACBrGIF.bmp TACBrBarCode.bmp TACBrEnterTab.bmp TACBrCargaBal.png TACBrCotacao.png TACBrInStore.png
 move ACBrDiversos.lrs ..\ACBrDiversos
 echo.
 echo "****************************************"
@@ -44,7 +44,7 @@ echo "****************************************"
 echo.
 
 :TCP
-%1\tools\lazres.exe ACBrTCP.lrs TACBrTCPServer.bmp TACBrCEP.bmp TACBrIBGE.bmp TACBrNFPws.bmp TACBrCNIEE.bmp TACBrSuframa.bmp TACBrDownload.bmp TACBrIBPTax.bmp TACBrConsultaCNPJ.bmp TACBrMail.bmp
+%1\tools\lazres.exe ACBrTCP.lrs TACBrTCPServer.bmp TACBrCEP.bmp TACBrIBGE.bmp TACBrNFPws.bmp TACBrCNIEE.bmp TACBrSuframa.bmp TACBrDownload.bmp TACBrIBPTax.bmp TACBrConsultaCNPJ.bmp TACBrMail.bmp TACBrConsultaCPF.png
 move ACBrTCP.lrs ..\ACBrTCP
 echo.
 echo "****************************************"
@@ -107,6 +107,9 @@ echo.
 %1\tools\lazres.exe ACBrNFSe.lrs TACBrNFSe.bmp 
 move ACBrNFSe.lrs ..\ACBrNFSe
 
+%1\tools\lazres.exe ACBrNFSeDANFSeRL.lrs TACBrNFSeDANFSeRL.png 
+move ACBrNFSeDANFSeRL.lrs ..\ACBrNFSe
+
 echo.
 echo "****************************************"
 echo "* Arquivo    ACBrNFSe.lrs     gerado    *"
@@ -161,6 +164,14 @@ echo "*   Arquivo   ACBrSAT.lrs   gerado     *"
 echo "****************************************"
 echo.
 
+:SEF2
+%1\tools\lazres.exe ACBrSEF2.lrs TACBrSEF2.png
+move ACBrSEF2.lrs ..\ACBrSEF2
+echo.
+echo "****************************************"
+echo "*   Arquivo   ACBrSEF2.lrs   gerado     *"
+echo "****************************************"
+echo.
 
 GOTO fim
 

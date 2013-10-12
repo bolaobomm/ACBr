@@ -1,3 +1,44 @@
+{******************************************************************************}
+{ Projeto: Componente ACBrNFe                                                  }
+{  Biblioteca multiplataforma de componentes Delphi para emissão de Nota Fiscal}
+{ eletrônica - NFe - http://www.nfe.fazenda.gov.br                             }
+{                                                                              }
+{ Direitos Autorais Reservados (c) 2008 Wemerson Souto                         }
+{                                       Daniel Simoes de Almeida               }
+{                                       André Ferreira de Moraes               }
+{                                                                              }
+{ Colaboradores nesse arquivo:                                                 }
+{                                                                              }
+{  Você pode obter a última versão desse arquivo na pagina do Projeto ACBr     }
+{ Componentes localizado em http://www.sourceforge.net/projects/acbr           }
+{                                                                              }
+{                                                                              }
+{  Esta biblioteca é software livre; você pode redistribuí-la e/ou modificá-la }
+{ sob os termos da Licença Pública Geral Menor do GNU conforme publicada pela  }
+{ Free Software Foundation; tanto a versão 2.1 da Licença, ou (a seu critério) }
+{ qualquer versão posterior.                                                   }
+{                                                                              }
+{  Esta biblioteca é distribuída na expectativa de que seja útil, porém, SEM   }
+{ NENHUMA GARANTIA; nem mesmo a garantia implícita de COMERCIABILIDADE OU      }
+{ ADEQUAÇÃO A UMA FINALIDADE ESPECÍFICA. Consulte a Licença Pública Geral Menor}
+{ do GNU para mais detalhes. (Arquivo LICENÇA.TXT ou LICENSE.TXT)              }
+{                                                                              }
+{  Você deve ter recebido uma cópia da Licença Pública Geral Menor do GNU junto}
+{ com esta biblioteca; se não, escreva para a Free Software Foundation, Inc.,  }
+{ no endereço 59 Temple Street, Suite 330, Boston, MA 02111-1307 USA.          }
+{ Você também pode obter uma copia da licença em:                              }
+{ http://www.opensource.org/licenses/lgpl-license.php                          }
+{                                                                              }
+{ Daniel Simões de Almeida  -  daniel@djsystem.com.br  -  www.djsystem.com.br  }
+{              Praça Anita Costa, 34 - Tatuí - SP - 18270-410                  }
+{                                                                              }
+{******************************************************************************}
+{******************************************************************************
+|* Historico
+|*
+|* 10/10/2013: Juliomar Marchetti
+|*  - Compatibilização para Lazarus da DANFSe em Fortes Report
+******************************************************************************}
 {$I ACBr.inc}
 
 unit ACBrNFSeDANFSeRL;
@@ -5,14 +46,27 @@ unit ACBrNFSeDANFSeRL;
 interface
 
 uses
-  Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
-  Dialogs, ExtCtrls,
-  pnfsNFSe, ACBrNFSe, ACBrNFSeUtil, Printers, RLPrinters, RLFilters, RLPDFFilter, RLReport;
-
+  SysUtils, Variants, Classes, StrUtils,
+  {$IFDEF CLX}
+  QGraphics, QControls, QForms, QDialogs, QExtCtrls, Qt,
+  {$ELSE}
+    {$IFDEF MSWINDOWS}Windows, Messages, {$ENDIF}
+      Graphics, Controls, Forms, Dialogs, ExtCtrls,
+  {$ENDIF}
+  MaskUtils, pnfsNFSe, ACBrNFSe, ACBrNFSeUtil, Printers,
+  RLReport, RLFilters, RLPrinters, RLPDFFilter, RLConsts,
+  {$IFDEF BORLAND} DBClient, {$ELSE} BufDataset, {$ENDIF} DB;
+  
 type
+
+  { TfrlDANFSeRL }
+
   TfrlDANFSeRL = class(TForm)
+    dsItens: TDatasource;
     RLNFSe: TRLReport;
     RLPDFFilter1: TRLPDFFilter;
+    procedure FormCreate(Sender: TObject);
+    procedure FormDestroy(Sender: TObject);
   private
     { Private declarations }
   protected
@@ -37,6 +91,9 @@ type
     FPrestLogo      : String;
     FPrefeitura     : String;
 
+	cdsItens:  {$IFDEF BORLAND} TClientDataSet {$ELSE} TBufDataset{$ENDIF};
+	procedure ConfigDataSet;
+	
     procedure frlSemValorFiscalPrint(sender: TObject; var Value: String);
     procedure SetBarCodeImage ( ACode : String ; RLImage : TRLImage ) ;
   public
@@ -82,15 +139,84 @@ var
 
 implementation
 
-uses
- MaskUtils;
-
-var
- Printer: TPrinter;
-
 {$R *.dfm}
 
-{ TfrlDANFSeRL }
+procedure TfrlDANFSeRL.FormCreate(Sender: TObject);
+begin
+ ConfigDataSet;
+end;
+
+procedure TfrlDANFSeRL.FormDestroy(Sender: TObject);
+begin
+ FreeAndNil( cdsItens );
+end;
+
+procedure TfrlDANFSeRL.ConfigDataSet;
+begin
+ if not Assigned( cdsItens ) then
+ cdsItens:=  {$IFDEF BORLAND}  TClientDataSet.create(nil)  {$ELSE}  TBufDataset.create(nil) {$ENDIF};
+
+  if cdsItens.Active then
+ begin
+ {$IFDEF BORLAND}
+  if cdsItens is TClientDataSet then
+  TClientDataSet(cdsItens).EmptyDataSet;
+ {$ENDIF}
+  cdsItens.Active := False;
+ end;
+
+ {$IFDEF BORLAND}
+ if cdsItens is TClientDataSet then
+  begin
+  TClientDataSet(cdsItens).StoreDefs := False;
+  TClientDataSet(cdsItens).IndexDefs.Clear;
+  TClientDataSet(cdsItens).IndexFieldNames := '';
+  TClientDataSet(cdsItens).IndexName := '';
+  TClientDataSet(cdsItens).Aggregates.Clear;
+  TClientDataSet(cdsItens).AggFields.Clear;
+  end;
+ {$ELSE}
+ if cdsItens is TBufDataset then
+  begin
+  TBufDataset(cdsItens).IndexDefs.Clear;
+  TBufDataset(cdsItens).IndexFieldNames:='';
+  TBufDataset(cdsItens).IndexName:='';
+  end;
+ {$ENDIF}
+
+ with cdsItens do
+  if FieldCount = 0 then
+  begin
+    FieldDefs.Clear;
+    Fields.Clear;
+    FieldDefs.Add('DISCRIMINACAO',ftString,60);
+
+   {$IFDEF BORLAND}
+    if cdsItens is TClientDataSet then
+    TClientDataSet(cdsItens).CreateDataSet;
+   {$ELSE}
+    if cdsItens is TBufDataset then
+    TBufDataset(cdsItens).CreateDataSet;
+   {$ENDIF}
+   end;
+
+ {$IFDEF BORLAND}
+  if cdsItens is TClientDataSet then
+  TClientDataSet(cdsItens).StoreDefs := False;
+ {$ENDIF}
+
+   if not cdsItens.Active then
+   cdsItens.Active := True;
+
+  {$IFDEF BORLAND}
+   if cdsItens is TClientDataSet then
+   if cdsItens.Active then
+   TClientDataSet(cdsItens).LogChanges := False;
+ {$ENDIF}
+
+ dsItens.dataset := cdsItens;
+
+end;
 
 procedure TfrlDANFSeRL.frlSemValorFiscalPrint(sender: TObject;
   var Value: String);
@@ -121,8 +247,6 @@ begin
    FImpressora     := AImpressora;
    FPrestLogo      := APrestLogo;
    FPrefeitura     := APrefeitura;
-
-   Printer := TPrinter.Create;
 
    if FImpressora > '' then
      RLPrinter.PrinterName := FImpressora;
@@ -185,5 +309,11 @@ procedure TfrlDANFSeRL.SetBarCodeImage(ACode: String; RLImage : TRLImage);
 begin
 
 end;
+
+// Descomentar este comando quando aparecer a mensagem do Fortes sobre
+// versão diferente
+
+{initialization
+RLConsts.SetVersion(3,71,'B');}
 
 end.
