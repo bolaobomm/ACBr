@@ -832,4 +832,8 @@ begin
    Bloco_E.WriteRegistroE990;
 end;
 
+{$IFDEF FPC}
+initialization
+	{$i ACBrSEF2.lrs}
+{$ENDIF}
 end.
