@@ -1934,11 +1934,21 @@ begin
     end;
 
    //TIPO DE EMISSAO
+   // Alterado por Italo em 14/10/2013
+   case FCTe.Ide.tpEmis of
+    teDPEC,
+    teContingencia: wchave := wchave + '2';
+    teFSDA:         wchave := wchave + '5';
+    else            wchave := wchave + '0'; //esta valor caracteriza ERRO, valor tem q ser  2 ou 5
+   end;
+
+   (*
    if FCTe.Ide.tpEmis = teContingencia
     then wchave := wchave + '2'
     else if FCTe.Ide.tpEmis = teFSDA
           then wchave := wchave + '5'
           else wchave := wchave + '0'; //esta valor caracteriza ERRO, valor tem q ser  2 ou 5
+   *)
 
    //CNPJ OU CPF
    if FCTe.Ide.toma4.CNPJCPF<>''
@@ -1996,7 +2006,7 @@ begin
    wchave := wchave + inttostr(digito);
 
    //RETORNA A CHAVE DE CONTINGENCIA
-   result:=wchave;
+   result := wchave;
 end;
 
 class function CTeUtil.FormatarChaveContingencia(AValue: String): String;

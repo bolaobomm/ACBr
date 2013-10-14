@@ -1277,12 +1277,21 @@ begin
       qrlProtocolo.Caption := CTeUtil.FormatarChaveContingencia(strChaveContingencia);
      end;
    end;
-   
+
   // DPEC ****************************************************************
   if FCTe.Ide.tpEmis = teDPEC then
    begin
-    qrlDescricao.Caption := 'NÚMERO DE REGISTRO DPEC';
-    qrlProtocolo.Caption := FProtocoloCTE;
+    // Alterado por Italo em 14/10/2013
+      qrlVariavel1.Enabled := False;
+      qriBarCode2.Enabled  := True;
+
+      strChaveContingencia := CTeUtil.GerarChaveContingencia(FCTe);
+      SetBarCodeImage(strChaveContingencia, qriBarCode2);
+      qrlDescricao.Caption := 'DADOS DO CT-E';
+      qrlProtocolo.Caption := CTeUtil.FormatarChaveContingencia(strChaveContingencia);
+
+//    qrlDescricao.Caption := 'NÚMERO DE REGISTRO EPEC';
+//    qrlProtocolo.Caption := FProtocoloCTE;
    end;
 
   qrlInscSuframa.Caption := FCTe.Dest.ISUF;
