@@ -453,6 +453,11 @@ begin
      // TnfseStatusRPS = ( srNormal, srCancelado );
      Status := srNormal;
 
+     // Somente Os provedores Betha, FISSLex e SimplISS permitem incluir no RPS
+     // a TAG: OutrasInformacoes os demais essa TAG é gerada e preenchida pelo
+     // WebService do provedor.
+     OutrasInformacoes := 'Pagamento a Vista';
+
      (* Usando quando o RPS for substituir outro
      RpsSubstituido.Numero := FormatFloat('#########0', i);
      RpsSubstituido.Serie  := 'UNICA';

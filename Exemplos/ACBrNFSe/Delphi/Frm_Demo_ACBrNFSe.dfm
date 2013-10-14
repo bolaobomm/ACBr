@@ -1269,6 +1269,7 @@ object frmDemo_ACBrNFSe: TfrmDemo_ACBrNFSe
     MargemEsquerda = 0.600000000000000000
     MargemDireita = 0.510000000000000000
     NFSeCancelada = False
+    ImprimeCanhoto = True
     Left = 256
     Top = 400
   end
