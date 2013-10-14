@@ -173,23 +173,24 @@ type
     qrlISSReter: TQRLabel;
     qrmPrefeitura: TQRMemo;
     qrmDescricao: TQRMemo;
-    QRShape11: TQRShape;
-    QRLabel26: TQRLabel;
-    qrlPrestNomeCompEnt: TQRLabel;
-    QRLabel28: TQRLabel;
-    QRShape19: TQRShape;
-    QRShape20: TQRShape;
-    QRLabel57: TQRLabel;
-    qrlNumeroNotaCompEnt: TQRLabel;
-    QRShape21: TQRShape;
-    QRLabel58: TQRLabel;
-    QRLabel59: TQRLabel;
-    QRLabel60: TQRLabel;
     qrlDataServ: TQRLabel;
     QRShape22: TQRShape;
     QRLabel61: TQRLabel;
     qrlCodigoMunicipio: TQRLabel;
     qrmNatOperacao: TQRMemo;
+    qrb_8_Canhoto: TQRChildBand;
+    QRShape11: TQRShape;
+    QRLabel26: TQRLabel;
+    qrlPrestNomeCompEnt: TQRLabel;
+    QRLabel28: TQRLabel;
+    QRLabel60: TQRLabel;
+    QRLabel59: TQRLabel;
+    QRShape21: TQRShape;
+    QRLabel58: TQRLabel;
+    QRShape20: TQRShape;
+    QRLabel57: TQRLabel;
+    qrlNumeroNotaCompEnt: TQRLabel;
+    QRShape19: TQRShape;
     procedure qrb_1_CabecalhoBeforePrint(Sender: TQRCustomBand;
       var PrintBand: Boolean);
     procedure qrb_2_PrestadorServicoBeforePrint(Sender: TQRCustomBand;
@@ -205,6 +206,8 @@ type
     procedure cdsItensAfterScroll(DataSet: TDataSet);
     procedure QRNFSeBeforePrint(Sender: TCustomQuickRep;
       var PrintReport: Boolean);
+    procedure qrb_8_CanhotoBeforePrint(Sender: TQRCustomBand;
+      var PrintBand: Boolean);
   private
     { Private declarations }
     FProvedor: TnfseProvedor;
@@ -658,19 +661,38 @@ begin
 
 end;
 
+procedure TfqrDANFSeQRRetrato.qrb_8_CanhotoBeforePrint(
+  Sender: TQRCustomBand; var PrintBand: Boolean);
+begin
+  inherited;
+
+  PrintBand := (QRNFSe.PageNumber = 1) and FImprimeCanhoto;
+
+end;
+
 procedure TfqrDANFSeQRRetrato.QRNFSeBeforePrint(Sender: TCustomQuickRep;
   var PrintReport: Boolean);
 begin
   inherited;
 
- Itens;
+  if FImprimeCanhoto
+   then begin
+    qrb_5_Itens.Height  := 106;
+    qrmDescricao.Height := 100;
+   end
+   else begin
+    qrb_5_Itens.Height  := 196;
+    qrmDescricao.Height := 190;
+   end;
 
- QRNFSe.ReportTitle := 'NFS-e: ' + FNFSe.Numero;
+  Itens;
 
- QRNFSe.Page.TopMargin    := FMargemSuperior * 100;
- QRNFSe.Page.BottomMargin := FMargemInferior * 100;
- QRNFSe.Page.LeftMargin   := FMargemEsquerda * 100;
- QRNFSe.Page.RightMargin  := FMargemDireita  * 100;
+  QRNFSe.ReportTitle := 'NFS-e: ' + FNFSe.Numero;
+
+  QRNFSe.Page.TopMargin    := FMargemSuperior * 100;
+  QRNFSe.Page.BottomMargin := FMargemInferior * 100;
+  QRNFSe.Page.LeftMargin   := FMargemEsquerda * 100;
+  QRNFSe.Page.RightMargin  := FMargemDireita  * 100;
 
 end;
 

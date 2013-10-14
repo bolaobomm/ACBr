@@ -749,6 +749,7 @@ function TNotasFiscais.LoadFromStream(Stream: TStringStream): boolean;
 var
  LocNFSeR : TNFSeR;
  ArquivoXML: TStringList;
+ StreamText: TStringStream;
 begin
  try
   Result     := True;
@@ -760,15 +761,20 @@ begin
    ArquivoXML.Text := StringReplace(StringReplace( ArquivoXML.Text, '&lt;', '<', [rfReplaceAll]), '&gt;', '>', [rfReplaceAll]);
    ArquivoXML.Text := NotaUtil.RetirarPrefixos(ArquivoXML.Text);
 
-   LocNFSeR.VersaoXML := NotaUtil.VersaoXML(ArquivoXML.Text);
-   LocNFSeR.Leitor.CarregarArquivo(TStringStream.Create(ArquivoXML.Text));
-   LocNFSeR.LerXml;
-   Items[Self.Count-1].XML_Rps := LocNFSeR.Leitor.Arquivo;
-   GerarRPS;
+   StreamText := TStringStream.Create(ArquivoXML.Text);
+   try
+    LocNFSeR.VersaoXML := NotaUtil.VersaoXML(ArquivoXML.Text);
+    LocNFSeR.Leitor.CarregarArquivo(StreamText);
+    LocNFSeR.LerXml;
+    Items[Self.Count-1].XML_Rps := LocNFSeR.Leitor.Arquivo;
+    GerarRPS;
+   finally
+    StreamText.Free;
+   end;
   finally
-   LocNFSeR.Free
+   LocNFSeR.Free;
+   ArquivoXML.Free;
   end;
-  ArquivoXML.Free;
  except
   Result := False;
  end;

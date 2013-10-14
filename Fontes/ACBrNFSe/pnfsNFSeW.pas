@@ -33,27 +33,22 @@ type
 
     procedure GerarIdentificacaoRPS;
     procedure GerarRPSSubstituido;
-    procedure GerarServico;
+
+    procedure GerarServicoValores_V1;
+    procedure GerarServicoValores_V2;
+    procedure GerarListaServicos;
+    procedure GerarValoresServico;
+
     procedure GerarPrestador;
     procedure GerarTomador;
     procedure GerarIntermediarioServico;
     procedure GerarConstrucaoCivil;
-    procedure GerarValoresServico;
 
-    procedure GerarXML_Provedor_fintelISS;
-    procedure GerarXML_Provedor_Saatri;
-		procedure GerarXML_Provedor_Goiania;
-    procedure GerarXML_Provedor_Prodata;
-		procedure GerarXML_Provedor_Digifred;
-		procedure GerarXML_Provedor_ISSDigital;
-		procedure GerarXML_Provedor_ISSe;
-		procedure GerarXML_Provedor_4R;
-    procedure GerarXML_Provedor_Fiorilli;
-    procedure GerarXML_Provedor_IssDsf;
+    procedure GerarXML_ABRASF_V1;
+    procedure GerarXML_ABRASF_V2;
+
     procedure GerarServico_Provedor_IssDsf;
-    procedure GerarXML_Provedor_Coplan;
-    procedure GerarXML_Provedor_Agili;
-    procedure GerarXML_Provedor_Virtual;
+    procedure GerarXML_Provedor_IssDsf;
 
   public
     constructor Create(AOwner: TNFSe);
@@ -111,7 +106,6 @@ begin
  FOpcoes.FGerarTagAssinatura   := taSomenteSeAssinada;
  FOpcoes.FValidarInscricoes    := False;
  FOpcoes.FValidarListaServicos := False;
-
 end;
 
 destructor TNFSeW.Destroy;
@@ -136,34 +130,31 @@ begin
  Gerador.ArquivoFormatoXML := '';
  Gerador.Prefixo           := FPrefixo4;
 
- if (FProvedor in [proProdemge, proBHISS, profintelISS, proGovBR,
-                   proSaatri, proGoiania, proNatal, proDigifred,
-                   proISSDigital, pro4R, proFiorilli, proCoplan,
-                   proProdata, proAgili, proVirtual, proPVH])
-  then FDefTipos := FServicoEnviar;
+ if (FProvedor in [pro4R, proAgili, proBHISS, proCoplan, proDigifred,
+                   profintelISS, proFiorilli, proGoiania, proGovBR,
+                   proISSDigital, proNatal, proProdata, proProdemge, proPVH,
+                   proSaatri, proVirtual])
+   then FDefTipos := FServicoEnviar;
 
  if (RightStr(FURL, 1) <> '/') and (FDefTipos <> '')
-  then FDefTipos := '/' + FDefTipos;
+   then FDefTipos := '/' + FDefTipos;
 
  if Trim(FPrefixo4) <> ''
-  then Atributo := ' xmlns:' + stringReplace(Prefixo4, ':', '', []) + '="' + FURL + FDefTipos + '"'
-  else Atributo := ' xmlns="' + FURL + FDefTipos + '"';
-
-// if FProvedor = proISSDigital
-//  then Atributo := '';
+   then Atributo := ' xmlns:' + stringReplace(Prefixo4, ':', '', []) + '="' + FURL + FDefTipos + '"'
+   else Atributo := ' xmlns="' + FURL + FDefTipos + '"';
 
  // Jonatan ISS Nova Lima
  if (FProvedor = proISSDigital) and (NFSe.NumeroLote <> '')
-  then Atributo := ' Id="' +  (NFSe.IdentificacaoRps.Numero) + '"';
+   then Atributo := ' Id="' +  (NFSe.IdentificacaoRps.Numero) + '"';
 
  if FProvedor <> proIssDsf then
- // Alterado Por Cleiver em 01/02/2013
- if (FProvedor in [proGoiania, proProdata])
-  then begin
-   Gerador.wGrupo('GerarNfseEnvio' + Atributo);
-	 Gerador.wGrupo('Rps');
-  end
-	else Gerador.wGrupo('Rps' + Atributo);
+   // Alterado Por Cleiver em 01/02/2013
+   if (FProvedor in [proGoiania, proProdata])
+     then begin
+      Gerador.wGrupo('GerarNfseEnvio' + Atributo);
+	    Gerador.wGrupo('Rps');
+     end
+     else Gerador.wGrupo('Rps' + Atributo);
 
  case FProvedor of
   proISSDigital: FNFSe.InfID.ID := NotaUtil.ChaveAcesso(FNFSe.Prestador.cUF,
@@ -179,90 +170,85 @@ begin
  end;
 
  case FProvedor of
-  profintelISS:  GerarXML_Provedor_fintelISS;
-  proSaatri:     GerarXML_Provedor_Saatri;
-  proGoiania:    GerarXML_Provedor_Goiania;
-  proProdata:    GerarXML_Provedor_Prodata;
-  proDigifred:   GerarXML_Provedor_Digifred;
-  proISSDigital: GerarXML_Provedor_ISSDigital;
-  proISSe:       GerarXML_Provedor_ISSe;
-  pro4R:         GerarXML_Provedor_4R;
-  proFiorilli:   GerarXML_Provedor_Fiorilli;
+  proAbaco,
+  proBetha,
+  proBetim,
+  proBHISS,
+  proFISSLex,
+  proGinfes,
+  proGovBR,
+  proISSCuritiba,
+  proISSIntel,
+  proISSNet,
+  proNatal,
+  proProdemge,
+  proPublica,
+  proRecife,
+  proRJ,
+  proSimplISS,
+  proThema,
+  proTiplan,
+  proWebISS: GerarXML_ABRASF_V1;
+
+  pro4R,
+  proAgili,
+  proCoplan,
+  proDigifred,
+  proFIntelISS,
+  proFiorilli,
+  proGoiania,
+  proGovDigital,
+  proISSDigital,
+  proISSe,
+  proProdata,
+  proPVH,
+  proSaatri,
+  proVirtual: GerarXML_ABRASF_V2;
+
   proIssDsf:     GerarXML_Provedor_IssDsf;
-  proCoplan:     GerarXML_Provedor_Coplan;
-  proAgili:      GerarXML_Provedor_Agili;
-  proVirtual:    GerarXML_Provedor_Virtual;
-  else begin
-        if FIdentificador = ''
-         then Gerador.wGrupoNFSe('InfRps')
-         else Gerador.wGrupoNFSe('InfRps ' + FIdentificador + '="rps' + NFSe.InfID.ID + '"');
-
-        GerarIdentificacaoRPS;
-        Gerador.wCampoNFSe(tcDatHor, '#4', 'DataEmissao     ', 19, 19, 1, NFSe.DataEmissao, DSC_DEMI);
-        Gerador.wCampoNFSe(tcStr,    '#5', 'NaturezaOperacao', 01, 01, 1, NaturezaOperacaoToStr(NFSe.NaturezaOperacao), '');
-
-        if FProvedor <> proPublica
-         then begin
-          if (NFSe.RegimeEspecialTributacao <> retNenhum)
-           then Gerador.wCampoNFSe(tcStr, '#6', 'RegimeEspecialTributacao', 01, 01, 0, RegimeEspecialTributacaoToStr(NFSe.RegimeEspecialTributacao), '');
-         end;
-
-        Gerador.wCampoNFSe(tcStr, '#7', 'OptanteSimplesNacional', 01, 01, 1, SimNaoToStr(NFSe.OptanteSimplesNacional), '');
-        Gerador.wCampoNFSe(tcStr, '#8', 'IncentivadorCultural  ', 01, 01, 1, SimNaoToStr(NFSe.IncentivadorCultural), '');
-        Gerador.wCampoNFSe(tcStr, '#9', 'Status                ', 01, 01, 1, StatusRPSToStr(NFSe.Status), '');
-        GerarRPSSubstituido;
-
-        if (FProvedor in [proSimplISS, proBetha])
-         then Gerador.wCampoNFSe(tcStr, '#11', 'OutrasInformacoes', 001, 255, 0, NFSe.OutrasInformacoes, '');
-
-        GerarServico;
-        GerarPrestador;
-        GerarTomador;
-        GerarIntermediarioServico;
-        GerarConstrucaoCivil;
-        Gerador.wGrupoNFSe('/InfRps');
-       end;
  end;
 
  if FOpcoes.GerarTagAssinatura <> taNunca
-  then begin
-   Gerar := true;
-   if FOpcoes.GerarTagAssinatura = taSomenteSeAssinada
-    then Gerar := ((NFSe.signature.DigestValue <> '') and
-                   (NFSe.signature.SignatureValue <> '') and
-                   (NFSe.signature.X509Certificate <> ''));
-   if FOpcoes.GerarTagAssinatura = taSomenteParaNaoAssinada
-    then Gerar := ((NFSe.signature.DigestValue = '') and
-                   (NFSe.signature.SignatureValue = '') and
-                   (NFSe.signature.X509Certificate = ''));
-   if Gerar
-    then begin
-     FNFSe.signature.URI := FNFSe.InfID.ID;
-     FNFSe.signature.Gerador.Opcoes.IdentarXML := Gerador.Opcoes.IdentarXML;
-     FNFSe.signature.GerarXMLNFSe;
-     Gerador.ArquivoFormatoXML := Gerador.ArquivoFormatoXML + FNFSe.signature.Gerador.ArquivoFormatoXML;
-    end;
-  end;
+   then begin
+    Gerar := true;
+    if FOpcoes.GerarTagAssinatura = taSomenteSeAssinada
+      then Gerar := ((NFSe.signature.DigestValue <> '') and
+                     (NFSe.signature.SignatureValue <> '') and
+                     (NFSe.signature.X509Certificate <> ''));
+    if FOpcoes.GerarTagAssinatura = taSomenteParaNaoAssinada
+      then Gerar := ((NFSe.signature.DigestValue = '') and
+                     (NFSe.signature.SignatureValue = '') and
+                     (NFSe.signature.X509Certificate = ''));
+    if Gerar
+      then begin
+       FNFSe.signature.URI := FNFSe.InfID.ID;
+       FNFSe.signature.Gerador.Opcoes.IdentarXML := Gerador.Opcoes.IdentarXML;
+       FNFSe.signature.GerarXMLNFSe;
+       Gerador.ArquivoFormatoXML := Gerador.ArquivoFormatoXML + FNFSe.signature.Gerador.ArquivoFormatoXML;
+      end;
+   end;
 
  if FProvedor <> proIssDsf then
- // Alterado por Cleiver em 01/02/2013
- if (FProvedor in [proGoiania, proProdata])
-  then begin
-   Gerador.wGrupo('/Rps');
-   Gerador.wGrupo('/GerarNfseEnvio');
-  end
-	else Gerador.wGrupo('/Rps');
+   // Alterado por Cleiver em 01/02/2013
+   if (FProvedor in [proGoiania, proProdata])
+     then begin
+      Gerador.wGrupo('/Rps');
+      Gerador.wGrupo('/GerarNfseEnvio');
+     end
+     else Gerador.wGrupo('/Rps');
 
  Gerador.gtAjustarRegistros(NFSe.InfID.ID);
  Result := (Gerador.ListaDeAlertas.Count = 0);
 end;
 
+////////////////////////////////////////////////////////////////////////////////
+
 procedure TNFSeW.GerarIdentificacaoRPS;
 begin
  Gerador.wGrupoNFSe('IdentificacaoRps');
- Gerador.wCampoNFSe(tcStr, '#1', 'Numero', 01, 15, 1, SomenteNumeros(NFSe.IdentificacaoRps.Numero), '');
- Gerador.wCampoNFSe(tcStr, '#2', 'Serie ', 01, 05, 1, NFSe.IdentificacaoRps.Serie, '');
- Gerador.wCampoNFSe(tcStr, '#3', 'Tipo  ', 01, 01, 1, TipoRPSToStr(NFSe.IdentificacaoRps.Tipo), '');
+  Gerador.wCampoNFSe(tcStr, '#1', 'Numero', 01, 15, 1, SomenteNumeros(NFSe.IdentificacaoRps.Numero), '');
+  Gerador.wCampoNFSe(tcStr, '#2', 'Serie ', 01, 05, 1, NFSe.IdentificacaoRps.Serie, '');
+  Gerador.wCampoNFSe(tcStr, '#3', 'Tipo  ', 01, 01, 1, TipoRPSToStr(NFSe.IdentificacaoRps.Tipo), '');
  Gerador.wGrupoNFSe('/IdentificacaoRps');
 end;
 
@@ -271,413 +257,259 @@ begin
  if NFSe.RpsSubstituido.Numero<>''
   then begin
    Gerador.wGrupoNFSe('RpsSubstituido');
-   Gerador.wCampoNFSe(tcStr, '#10', 'Numero', 01, 15, 1, SomenteNumeros(NFSe.RpsSubstituido.Numero), '');
-   Gerador.wCampoNFSe(tcStr, '#11', 'Serie ', 01, 05, 1, NFSe.RpsSubstituido.Serie, '');
-   Gerador.wCampoNFSe(tcStr, '#12', 'Tipo  ', 01, 01, 1, TipoRPSToStr(NFSe.RpsSubstituido.Tipo), '');
+    Gerador.wCampoNFSe(tcStr, '#10', 'Numero', 01, 15, 1, SomenteNumeros(NFSe.RpsSubstituido.Numero), '');
+    Gerador.wCampoNFSe(tcStr, '#11', 'Serie ', 01, 05, 1, NFSe.RpsSubstituido.Serie, '');
+    Gerador.wCampoNFSe(tcStr, '#12', 'Tipo  ', 01, 01, 1, TipoRPSToStr(NFSe.RpsSubstituido.Tipo), '');
    Gerador.wGrupoNFSe('/RpsSubstituido');
   end;
 end;
 
-procedure TNFSeW.GerarServico;
+procedure TNFSeW.GerarServicoValores_V1;
 var
-  i: integer;
+ i: Integer;
 begin
- case FProvedor of
-  profintelISS: begin
-                 Gerador.wGrupoNFSe('ListaServicos');
-                 for i := 0 to NFSe.Servico.ItemServico.Count - 1 do
-                  begin
-                   Gerador.wGrupoNFSe('Servico');
-                   Gerador.wGrupoNFSe('Valores');
-                   Gerador.wCampoNFSe(tcDe2, '#13', 'ValorServicos         ', 01, 15, 1, NFSe.Servico.ItemServico[i].ValorServicos, '');
-                   Gerador.wCampoNFSe(tcDe2, '#14', 'ValorDeducoes         ', 01, 15, 1, NFSe.Servico.ItemServico[i].ValorDeducoes, '');
-                   Gerador.wCampoNFSe(tcDe2, '#21', 'ValorIss              ', 01, 15, 1, NFSe.Servico.ItemServico[i].ValorIss, '');
-                   Gerador.wCampoNFSe(tcDe2, '#25', 'Aliquota              ', 01, 05, 1, NFSe.Servico.ItemServico[i].Aliquota, '');
-                   Gerador.wCampoNFSe(tcDe2, '#24', 'BaseCalculo           ', 01, 15, 1, NFSe.Servico.ItemServico[i].BaseCalculo, '');
-                   Gerador.wCampoNFSe(tcDe2, '#27', 'DescontoIncondicionado', 01, 15, 0, NFSe.Servico.ItemServico[i].DescontoIncondicionado, '');
-                   Gerador.wCampoNFSe(tcDe2, '#28', 'DescontoCondicionado  ', 01, 15, 0, NFSe.Servico.ItemServico[i].DescontoCondicionado, '');
-                   Gerador.wGrupoNFSe('/Valores');
-                   Gerador.wCampoNFSe(tcStr, '#20', 'IssRetido                ', 01, 01,   1, SituacaoTributariaToStr(NFSe.Servico.Valores.IssRetido), '');
-                   Gerador.wCampoNFSe(tcStr, '#29', 'ItemListaServico         ', 01, 0005, 1, NFSe.Servico.ItemListaServico, '');
-                   Gerador.wCampoNFSe(tcStr, '#30', 'CodigoCnae               ', 01, 0007, 0, SomenteNumeros(NFSe.Servico.CodigoCnae), '');
-                   Gerador.wCampoNFSe(tcStr, '#31', 'CodigoTributacaoMunicipio', 01, 0020, 0, SomenteNumeros(NFSe.Servico.CodigoTributacaoMunicipio), '');
-                   Gerador.wCampoNFSe(tcStr, '#32', 'Discriminacao            ', 01, 2000, 1, NFSe.Servico.ItemServico[i].Discriminacao, '');
-                   Gerador.wCampoNFSe(tcStr, '#33', 'CodigoMunicipio          ', 01, 0007, 1, SomenteNumeros(NFSe.Servico.CodigoMunicipio), '');
-                   Gerador.wCampoNFSe(tcInt, '#34', 'CodigoPais               ', 04, 04,   0, NFSe.Servico.CodigoPais, '');
-                   Gerador.wCampoNFSe(tcStr, '#35', 'ExigibilidadeISS         ', 01, 01,   1, ExigibilidadeISSToStr(NFSe.Servico.ExigibilidadeISS), '');
-                   Gerador.wCampoNFSe(tcInt, '#36', 'MunicipioIncidencia      ', 07, 07,   0, NFSe.Servico.MunicipioIncidencia, '');
-                   Gerador.wCampoNFSe(tcStr, '#37', 'NumeroProcesso           ', 01, 30,   0, NFSe.Servico.NumeroProcesso, '');
-                   Gerador.wGrupoNFSe('/Servico');
-                  end;
-                 Gerador.wGrupoNFSe('/ListaServicos');
-                end;
+  Gerador.wGrupoNFSe('Servico');
+   Gerador.wGrupoNFSe('Valores');
+    Gerador.wCampoNFSe(tcDe2, '#13', 'ValorServicos', 01, 15, 1, NFSe.Servico.Valores.ValorServicos, '');
+    if FProvedor in [proGinfes, proRecife]
+      then begin
+        Gerador.wCampoNFSe(tcDe2, '#14', 'ValorDeducoes', 01, 15, 1, NFSe.Servico.Valores.ValorDeducoes, '');
+        Gerador.wCampoNFSe(tcDe2, '#15', 'ValorPis     ', 01, 15, 1, NFSe.Servico.Valores.ValorPis, '');
+        Gerador.wCampoNFSe(tcDe2, '#16', 'ValorCofins  ', 01, 15, 1, NFSe.Servico.Valores.ValorCofins, '');
+        Gerador.wCampoNFSe(tcDe2, '#17', 'ValorInss    ', 01, 15, 1, NFSe.Servico.Valores.ValorInss, '');
+        Gerador.wCampoNFSe(tcDe2, '#18', 'ValorIr      ', 01, 15, 1, NFSe.Servico.Valores.ValorIr, '');
+        Gerador.wCampoNFSe(tcDe2, '#19', 'ValorCsll    ', 01, 15, 1, NFSe.Servico.Valores.ValorCsll, '');
+        Gerador.wCampoNFSe(tcStr, '#20', 'IssRetido    ', 01, 01, 1, SituacaoTributariaToStr(NFSe.Servico.Valores.IssRetido), '');
+        Gerador.wCampoNFSe(tcDe2, '#21', 'ValorIss     ', 01, 15, 1, NFSe.Servico.Valores.ValorIss, '');
+      end
+      else begin
+        Gerador.wCampoNFSe(tcDe2, '#14', 'ValorDeducoes', 01, 15, 0, NFSe.Servico.Valores.ValorDeducoes, '');
+        Gerador.wCampoNFSe(tcDe2, '#15', 'ValorPis     ', 01, 15, 0, NFSe.Servico.Valores.ValorPis, '');
+        Gerador.wCampoNFSe(tcDe2, '#16', 'ValorCofins  ', 01, 15, 0, NFSe.Servico.Valores.ValorCofins, '');
+        Gerador.wCampoNFSe(tcDe2, '#17', 'ValorInss    ', 01, 15, 0, NFSe.Servico.Valores.ValorInss, '');
+        Gerador.wCampoNFSe(tcDe2, '#18', 'ValorIr      ', 01, 15, 0, NFSe.Servico.Valores.ValorIr, '');
+        Gerador.wCampoNFSe(tcDe2, '#19', 'ValorCsll    ', 01, 15, 0, NFSe.Servico.Valores.ValorCsll, '');
+        Gerador.wCampoNFSe(tcStr, '#20', 'IssRetido    ', 01, 01, 1, SituacaoTributariaToStr(NFSe.Servico.Valores.IssRetido), '');
+        Gerador.wCampoNFSe(tcDe2, '#21', 'ValorIss     ', 01, 15, 0, NFSe.Servico.Valores.ValorIss, '');
+      end;
 
-  pro4R:
-                begin
-                 Gerador.wGrupoNFSe('Servico');
-                 Gerador.wGrupoNFSe('Valores');
-                 Gerador.wCampoNFSe(tcDe2, '#13', 'ValorServicos', 01, 15, 1, NFSe.Servico.Valores.ValorServicos, '');
-                 Gerador.wCampoNFSe(tcDe2, '#14', 'ValorDeducoes', 01, 15, 0, NFSe.Servico.Valores.ValorDeducoes, '');
-                 Gerador.wCampoNFSe(tcDe2, '#15', 'ValorPis     ', 01, 15, 0, NFSe.Servico.Valores.ValorPis, '');
-                 Gerador.wCampoNFSe(tcDe2, '#16', 'ValorCofins  ', 01, 15, 0, NFSe.Servico.Valores.ValorCofins, '');
-                 Gerador.wCampoNFSe(tcDe2, '#17', 'ValorInss    ', 01, 15, 0, NFSe.Servico.Valores.ValorInss, '');
-                 Gerador.wCampoNFSe(tcDe2, '#18', 'ValorIr      ', 01, 15, 0, NFSe.Servico.Valores.ValorIr, '');
-                 Gerador.wCampoNFSe(tcDe2, '#19', 'ValorCsll    ', 01, 15, 0, NFSe.Servico.Valores.ValorCsll, '');
-                 Gerador.wCampoNFSe(tcDe2, '#22', 'OutrasRetencoes ', 01, 15, 0, NFSe.Servico.Valores.OutrasRetencoes, '');
-                 Gerador.wCampoNFSe(tcDe2, '#21', 'ValorIss              ', 01, 15, 1, NFSe.Servico.Valores.ValorIss, '');
-                 Gerador.wCampoNFSe(tcDe2, '#25', 'Aliquota              ', 01, 05, 1, NFSe.Servico.Valores.Aliquota, '');
-                 Gerador.wCampoNFSe(tcDe2, '#27', 'DescontoIncondicionado', 01, 15, 0, NFSe.Servico.Valores.DescontoIncondicionado, '');
-                 Gerador.wCampoNFSe(tcDe2, '#28', 'DescontoCondicionado  ', 01, 15, 0, NFSe.Servico.Valores.DescontoCondicionado, '');
-                 Gerador.wGrupoNFSe('/Valores');
-                 Gerador.wCampoNFSe(tcStr, '#20', 'IssRetido                ', 01, 01,   1, SituacaoTributariaToStr(NFSe.Servico.Valores.IssRetido), '');
-                 if (NFSe.Servico.Valores.IssRetido) <> stNormal then
-                 Gerador.wCampoNFSe(tcStr, '#21', 'ResponsavelRetencao      ', 01, 01,   1, ResponsavelRetencaoToStr(NFSe.Servico.ResponsavelRetencao), '');
-                 Gerador.wCampoNFSe(tcStr, '#29', 'ItemListaServico         ', 01, 0005, 1, NFSe.Servico.ItemListaServico, '');
-                 Gerador.wCampoNFSe(tcStr, '#30', 'CodigoCnae               ', 01, 0007, 0, SomenteNumeros(NFSe.Servico.CodigoCnae), '');
-                 Gerador.wCampoNFSe(tcStr, '#31', 'CodigoTributacaoMunicipio', 01, 0020, 0, SomenteNumeros(NFSe.Servico.CodigoTributacaoMunicipio), '');
-                 Gerador.wCampoNFSe(tcStr, '#32', 'Discriminacao            ', 01, 2000, 1, NFSe.Servico.Discriminacao, '');
-                 Gerador.wCampoNFSe(tcStr, '#33', 'CodigoMunicipio          ', 01, 0007, 1, SomenteNumeros(NFSe.Servico.CodigoMunicipio), '');
-                 Gerador.wCampoNFSe(tcStr, '#35', 'ExigibilidadeISS         ', 01, 01,   1, ExigibilidadeISSToStr(NFSe.Servico.ExigibilidadeISS), '');
-                 Gerador.wCampoNFSe(tcInt, '#36', 'MunicipioIncidencia      ', 07, 07,   0, NFSe.Servico.MunicipioIncidencia, '');
-                 Gerador.wGrupoNFSe('/Servico');
-                end;
+    if FProvedor <> proGovBR
+      then Gerador.wCampoNFSe(tcDe2, '#22', 'ValorIssRetido', 01, 15, 0, NFSe.Servico.Valores.ValorIssRetido, '');
 
-  proISSDigital,
-  proFiorilli,
-  proSaatri:
-                begin
-                 Gerador.wGrupoNFSe('Servico');
-                 Gerador.wGrupoNFSe('Valores');
-                 Gerador.wCampoNFSe(tcDe2, '#13', 'ValorServicos', 01, 15, 1, NFSe.Servico.Valores.ValorServicos, '');
-                 Gerador.wCampoNFSe(tcDe2, '#14', 'ValorDeducoes', 01, 15, 0, NFSe.Servico.Valores.ValorDeducoes, '');
-                 Gerador.wCampoNFSe(tcDe2, '#15', 'ValorPis     ', 01, 15, 0, NFSe.Servico.Valores.ValorPis, '');
-                 Gerador.wCampoNFSe(tcDe2, '#16', 'ValorCofins  ', 01, 15, 0, NFSe.Servico.Valores.ValorCofins, '');
-                 Gerador.wCampoNFSe(tcDe2, '#17', 'ValorInss    ', 01, 15, 0, NFSe.Servico.Valores.ValorInss, '');
-                 Gerador.wCampoNFSe(tcDe2, '#18', 'ValorIr      ', 01, 15, 0, NFSe.Servico.Valores.ValorIr, '');
-                 Gerador.wCampoNFSe(tcDe2, '#19', 'ValorCsll    ', 01, 15, 0, NFSe.Servico.Valores.ValorCsll, '');
-                 Gerador.wCampoNFSe(tcDe2, '#22', 'OutrasRetencoes ', 01, 15, 0, NFSe.Servico.Valores.OutrasRetencoes, '');
-                 Gerador.wCampoNFSe(tcDe2, '#21', 'ValorIss              ', 01, 15, 1, NFSe.Servico.Valores.ValorIss, '');
-                 Gerador.wCampoNFSe(tcDe2, '#25', 'Aliquota              ', 01, 05, 1, NFSe.Servico.Valores.Aliquota, '');
-                 Gerador.wCampoNFSe(tcDe2, '#27', 'DescontoIncondicionado', 01, 15, 0, NFSe.Servico.Valores.DescontoIncondicionado, '');
-                 Gerador.wCampoNFSe(tcDe2, '#28', 'DescontoCondicionado  ', 01, 15, 0, NFSe.Servico.Valores.DescontoCondicionado, '');
-                 Gerador.wGrupoNFSe('/Valores');
-                 Gerador.wCampoNFSe(tcStr, '#20', 'IssRetido                ', 01, 01,   1, SituacaoTributariaToStr(NFSe.Servico.Valores.IssRetido), '');
-                 if (NFSe.Servico.Valores.IssRetido) <> stNormal then
-                   Gerador.wCampoNFSe(tcStr, '#21', 'ResponsavelRetencao      ', 01, 01,   1, ResponsavelRetencaoToStr(NFSe.Servico.ResponsavelRetencao), '');
-                 Gerador.wCampoNFSe(tcStr, '#29', 'ItemListaServico         ', 01, 0005, 1, NFSe.Servico.ItemListaServico, '');
-                 Gerador.wCampoNFSe(tcStr, '#30', 'CodigoCnae               ', 01, 0007, 0, SomenteNumeros(NFSe.Servico.CodigoCnae), '');
-                 Gerador.wCampoNFSe(tcStr, '#32', 'Discriminacao            ', 01, 2000, 1, NFSe.Servico.Discriminacao, '');
-                 Gerador.wCampoNFSe(tcStr, '#33', 'CodigoMunicipio          ', 01, 0007, 1, SomenteNumeros(NFSe.Servico.CodigoMunicipio), '');
+    Gerador.wCampoNFSe(tcDe2, '#23', 'OutrasRetencoes', 01, 15, 0, NFSe.Servico.Valores.OutrasRetencoes, '');
+    Gerador.wCampoNFSe(tcDe2, '#24', 'BaseCalculo    ', 01, 15, 0, NFSe.Servico.Valores.BaseCalculo, '');
 
-                 if FProvedor <> proISSDigital
-                  then Gerador.wCampoNFSe(tcInt, '#34', 'CodigoPais         ', 04, 04,   0, NFSe.Servico.CodigoPais, '');
+    case FProvedor of
+     proISSNet:   Gerador.wCampoNFSe(tcDe4, '#25', 'Aliquota', 01, 05, 1, NFSe.Servico.Valores.Aliquota, '');
+     proRecife:   if NFSe.OptanteSimplesNacional = snSim
+                    then Gerador.wCampoNFSe(tcDe2, '#25', 'Aliquota', 01, 05, 0, NFSe.Servico.Valores.Aliquota, '')
+                    else Gerador.wCampoNFSe(tcDe2, '#25', 'Aliquota', 01, 05, 1, NFSe.Servico.Valores.Aliquota, '');
+     proSimplISS: Gerador.wCampoNFSe(tcDe2, '#25', 'Aliquota', 01, 05, 0, NFSe.Servico.Valores.Aliquota, '')
+     else         Gerador.wCampoNFSe(tcDe4, '#25', 'Aliquota', 01, 05, 0, NFSe.Servico.Valores.Aliquota, '');
+    end;
 
-                 Gerador.wCampoNFSe(tcStr, '#35', 'ExigibilidadeISS         ', 01, 01,   1, ExigibilidadeISSToStr(NFSe.Servico.ExigibilidadeISS), '');
-                 Gerador.wCampoNFSe(tcInt, '#36', 'MunicipioIncidencia      ', 07, 07,   0, NFSe.Servico.MunicipioIncidencia, '');
-                 Gerador.wGrupoNFSe('/Servico');
-                end;
+    Gerador.wCampoNFSe(tcDe2, '#26', 'ValorLiquidoNfse', 01, 15, 0, NFSe.Servico.Valores.ValorLiquidoNfse, '');
 
-  proGoiania:   begin
-                 Gerador.wGrupoNFSe('Servico');
-                 Gerador.wGrupoNFSe('Valores');
-                 Gerador.wCampoNFSe(tcDe2, '#13', 'ValorServicos', 01, 15, 1, NFSe.Servico.Valores.ValorServicos, '');
-                 Gerador.wCampoNFSe(tcDe2, '#15', 'ValorPis     ', 01, 15, 1, NFSe.Servico.Valores.ValorPis, '');
-                 Gerador.wCampoNFSe(tcDe2, '#16', 'ValorCofins  ', 01, 15, 1, NFSe.Servico.Valores.ValorCofins, '');
-                 Gerador.wCampoNFSe(tcDe2, '#17', 'ValorInss    ', 01, 15, 1, NFSe.Servico.Valores.ValorInss, '');
-                 Gerador.wCampoNFSe(tcDe2, '#18', 'ValorIr      ', 01, 15, 1, NFSe.Servico.Valores.ValorIr, '');
-                 Gerador.wCampoNFSe(tcDe2, '#19', 'ValorCsll    ', 01, 15, 1, NFSe.Servico.Valores.ValorCsll, '');
-								 if NFSe.OptanteSimplesNacional = snSim then
-	                 Gerador.wCampoNFSe(tcDe2, '#25', 'Aliquota              ', 01, 05, 0, NFSe.Servico.Valores.Aliquota, '');
-                 Gerador.wCampoNFSe(tcDe2, '#27', 'DescontoIncondicionado', 01, 15, 1, NFSe.Servico.Valores.DescontoIncondicionado, '');
-                 Gerador.wGrupoNFSe('/Valores');
-                 Gerador.wCampoNFSe(tcStr, '#31', 'CodigoTributacaoMunicipio', 01, 0020, 1, NFSe.Servico.CodigoTributacaoMunicipio, '');
-                 Gerador.wCampoNFSe(tcStr, '#32', 'Discriminacao            ', 01, 2000, 1, NFSe.Servico.Discriminacao, '');
-                 Gerador.wCampoNFSe(tcStr, '#33', 'CodigoMunicipio          ', 01, 0007, 1, SomenteNumeros(NFSe.Servico.CodigoMunicipio), '');
-                 Gerador.wGrupoNFSe('/Servico');
-                end;
+    if FProvedor = proGovBR
+      then Gerador.wCampoNFSe(tcDe2, '#22', 'ValorIssRetido', 01, 15, 0, NFSe.Servico.Valores.ValorIssRetido, '');
 
-  proProdata:   begin
-                 Gerador.wGrupoNFSe('Servico');
+    Gerador.wCampoNFSe(tcDe2, '#27', 'DescontoIncondicionado', 01, 15, 0, NFSe.Servico.Valores.DescontoIncondicionado, '');
+    Gerador.wCampoNFSe(tcDe2, '#28', 'DescontoCondicionado  ', 01, 15, 0, NFSe.Servico.Valores.DescontoCondicionado, '');
+   Gerador.wGrupoNFSe('/Valores');
 
-                  Gerador.wGrupoNFSe('Valores');
-                   Gerador.wCampoNFSe(tcDe2, '#13', 'ValorServicos', 01, 15, 1, NFSe.Servico.Valores.ValorServicos, '');
-                   Gerador.wCampoNFSe(tcDe2, '#15', 'ValorPis     ', 01, 15, 1, NFSe.Servico.Valores.ValorPis, '');
-                   Gerador.wCampoNFSe(tcDe2, '#16', 'ValorCofins  ', 01, 15, 1, NFSe.Servico.Valores.ValorCofins, '');
-                   Gerador.wCampoNFSe(tcDe2, '#17', 'ValorInss    ', 01, 15, 1, NFSe.Servico.Valores.ValorInss, '');
-                   Gerador.wCampoNFSe(tcDe2, '#18', 'ValorIr      ', 01, 15, 1, NFSe.Servico.Valores.ValorIr, '');
-                   Gerador.wCampoNFSe(tcDe2, '#19', 'ValorCsll    ', 01, 15, 1, NFSe.Servico.Valores.ValorCsll, '');
-                   Gerador.wCampoNFSe(tcDe2, '#25', 'Aliquota     ', 01, 05, 0, NFSe.Servico.Valores.Aliquota, '');
+   if FProvedor = proWebISS
+     then Gerador.wCampoNFSe(tcStr, '#29', 'ItemListaServico', 01, 05, 1, SomenteNumeros(NFSe.Servico.ItemListaServico), '')
+     else Gerador.wCampoNFSe(tcStr, '#29', 'ItemListaServico', 01, 05, 1, NFSe.Servico.ItemListaServico, '');
 
-                   Gerador.wCampoNFSe(tcDe2, '#27', 'DescontoIncondicionado', 01, 15, 1, NFSe.Servico.Valores.DescontoIncondicionado, '');
-                  Gerador.wGrupoNFSe('/Valores');
+   Gerador.wCampoNFSe(tcStr, '#30', 'CodigoCnae', 01, 0007, 0, SomenteNumeros(NFSe.Servico.CodigoCnae), '');
 
-                  Gerador.wCampoNFSe(tcStr, '#20', 'IssRetido                ', 01, 01,   1, SituacaoTributariaToStr(NFSe.Servico.Valores.IssRetido), '');
-                  Gerador.wCampoNFSe(tcStr, '#24', 'ResponsavelRetencao', 01, 01, 1, ResponsavelRetencaoToStr(NFSe.Servico.ResponsavelRetencao), '');
-                  Gerador.wCampoNFSe(tcStr, '#25', 'ItemListaServico         ', 01, 0005, 1, NFSe.Servico.ItemListaServico, '');
-                  if (SomenteNumeros(NFSe.Servico.CodigoCnae) <> '')then
-                    Gerador.wCampoNFSe(tcStr, '#26', 'CodigoCnae', 01, 0007, 1, SomenteNumeros(NFSe.Servico.CodigoCnae), '');
-                  if NFSe.Servico.CodigoTributacaoMunicipio <> '' then
-                  Gerador.wCampoNFSe(tcStr, '#31', 'CodigoTributacaoMunicipio', 01, 0020, 1, NFSe.Servico.CodigoTributacaoMunicipio, '');
-                  Gerador.wCampoNFSe(tcStr, '#27', 'Discriminacao', 01, 2000, 1, NFSe.Servico.Discriminacao, '');
-                  Gerador.wCampoNFSe(tcStr, '#33', 'CodigoMunicipio          ', 01, 0007, 1, SomenteNumeros(NFSe.Servico.CodigoMunicipio), '');
-                  Gerador.wCampoNFSe(tcInt, '#29', 'CodigoPais', 04, 04,   1, NFSe.Servico.CodigoPais, '');
-                  Gerador.wCampoNFSe(tcStr, '#30', 'ExigibilidadeISS', 01, 01,   1, ExigibilidadeISSToStr(NFSe.Servico.ExigibilidadeISS), '');
-                  Gerador.wCampoNFSe(tcInt, '#31', 'MunicipioIncidencia', 07, 07,  1, NFSe.Servico.MunicipioIncidencia, '');
-                  Gerador.wCampoNFSe(tcStr, '#32', 'NumeroProcesso', 01, 30,   0, NFSe.Servico.NumeroProcesso, '');
+   if FProvedor <> proPublica
+     then Gerador.wCampoNFSe(tcStr, '#31', 'CodigoTributacaoMunicipio', 01, 0020, 0, NFSe.Servico.CodigoTributacaoMunicipio, '');
 
-                 Gerador.wGrupoNFSe('/Servico');
-                end;
+   Gerador.wCampoNFSe(tcStr, '#32', 'Discriminacao', 01, 2000, 1, NFSe.Servico.Discriminacao, '');
 
-	// Alterado por Cleiver em 01/02/2013
-  proRecife:    begin
-                 Gerador.wGrupoNFSe('Servico');
-                 Gerador.wGrupoNFSe('Valores');
-                 Gerador.wCampoNFSe(tcDe2, '#13', 'ValorServicos', 01, 15, 1, NFSe.Servico.Valores.ValorServicos, '');
-                 Gerador.wCampoNFSe(tcDe2, '#14', 'ValorDeducoes', 01, 15, 1, NFSe.Servico.Valores.ValorDeducoes, '');
-                 Gerador.wCampoNFSe(tcDe2, '#15', 'ValorPis     ', 01, 15, 1, NFSe.Servico.Valores.ValorPis, '');
-                 Gerador.wCampoNFSe(tcDe2, '#16', 'ValorCofins  ', 01, 15, 1, NFSe.Servico.Valores.ValorCofins, '');
-                 Gerador.wCampoNFSe(tcDe2, '#17', 'ValorInss    ', 01, 15, 1, NFSe.Servico.Valores.ValorInss, '');
-                 Gerador.wCampoNFSe(tcDe2, '#18', 'ValorIr      ', 01, 15, 1, NFSe.Servico.Valores.ValorIr, '');
-                 Gerador.wCampoNFSe(tcDe2, '#19', 'ValorCsll    ', 01, 15, 1, NFSe.Servico.Valores.ValorCsll, '');
-                 Gerador.wCampoNFSe(tcStr, '#20', 'IssRetido    ', 01, 01, 1, SituacaoTributariaToStr(NFSe.Servico.Valores.IssRetido), '');
-                 Gerador.wCampoNFSe(tcDe2, '#21', 'ValorIss     ', 01, 15, 1, NFSe.Servico.Valores.ValorIss, '');
-								 if NFSe.OptanteSimplesNacional = snSim then
-	                 Gerador.wCampoNFSe(tcDe2, '#25', 'Aliquota   ', 01, 05, 0, NFSe.Servico.Valores.Aliquota, '')
-                 else
-	                 Gerador.wCampoNFSe(tcDe2, '#25', 'Aliquota   ', 01, 05, 1, NFSe.Servico.Valores.Aliquota, '');
-                 Gerador.wGrupoNFSe('/Valores');
-                 Gerador.wCampoNFSe(tcStr, '#29', 'ItemListaServico         ', 01, 0005, 1, NFSe.Servico.ItemListaServico, '');
-                 Gerador.wCampoNFSe(tcStr, '#31', 'CodigoTributacaoMunicipio', 01, 0020, 1, NFSe.Servico.CodigoTributacaoMunicipio, '');
-                 Gerador.wCampoNFSe(tcStr, '#32', 'Discriminacao            ', 01, 2000, 1, NFSe.Servico.Discriminacao, '');
-                 Gerador.wCampoNFSe(tcStr, '#33', 'CodigoMunicipio          ', 01, 0007, 1, SomenteNumeros(NFSe.Servico.CodigoMunicipio), '');
-                 Gerador.wGrupoNFSe('/Servico');
-                end;
+   // Provedor Ginfes
+   // Schema: tipos_v02 o nome da tag é MunicipioPrestacaoServico *** essa versão não esta em uso
+   // Schema: tipos_v03 o nome da tag é CodigoMunicipio
+   
+   // No provedor ISSNet o nome da tag é MunicipioPrestacaoServico e os demais é CodigoMunicipio
+   if FProvedor = proISSNet
+     then Gerador.wCampoNFSe(tcStr, '#33', 'MunicipioPrestacaoServico', 01, 0007, 1, SomenteNumeros(NFSe.Servico.CodigoMunicipio), '')
+     else Gerador.wCampoNFSe(tcStr, '#33', 'CodigoMunicipio          ', 01, 0007, 1, SomenteNumeros(NFSe.Servico.CodigoMunicipio), '');
 
-	// Alterado por Joel Takei 08/06/2013
-  proISSe:      begin
-                 Gerador.wGrupoNFSe('Servico');
-                  Gerador.wGrupoNFSe('Valores');
-                    Gerador.wCampoNFSe(tcDe2, '#13', 'ValorServicos', 01, 15, 1, NFSe.Servico.Valores.ValorServicos, '');
-                    Gerador.wCampoNFSe(tcDe2, '#14', 'ValorDeducoes', 01, 15, 1, NFSe.Servico.Valores.ValorDeducoes, '');
-                    Gerador.wCampoNFSe(tcDe2, '#15', 'ValorPis', 01, 15, 1, NFSe.Servico.Valores.ValorPis, '');
-                    Gerador.wCampoNFSe(tcDe2, '#16', 'ValorCofins', 01, 15, 1, NFSe.Servico.Valores.ValorCofins, '');
-                    Gerador.wCampoNFSe(tcDe2, '#17', 'ValorInss', 01, 15, 1, NFSe.Servico.Valores.ValorInss, '');
-                    Gerador.wCampoNFSe(tcDe2, '#18', 'ValorIr', 01, 15, 1, NFSe.Servico.Valores.ValorIr, '');
-                    Gerador.wCampoNFSe(tcDe2, '#19', 'ValorCsll', 01, 15, 1, NFSe.Servico.Valores.ValorCsll, '');
-                    Gerador.wCampoNFSe(tcDe2, '#20', 'OutrasRetencoes', 01, 15, 1, NFSe.Servico.Valores.OutrasRetencoes, '');
-                    Gerador.wCampoNFSe(tcDe2, '#21', 'ValorIss', 01, 15, 1, NFSe.Servico.Valores.ValorIss, '');
- 	                  Gerador.wCampoNFSe(tcDe2, '#22', 'Aliquota   ', 01, 05, 1, NFSe.Servico.Valores.Aliquota, '');
-                  Gerador.wGrupoNFSe('/Valores');
+   if FProvedor = proSimplISS
+     then begin
+      for i := 0 to NFSe.Servico.ItemServico.Count - 1 do
+         begin
+          Gerador.wGrupo('ItensServico');
+           Gerador.wCampo(tcStr, '#33a', 'Descricao    ', 01, 100, 1, NFSe.Servico.ItemServico[i].Descricao, '');
+           Gerador.wCampo(tcInt, '#33b', 'Quantidade   ', 01, 015, 1, NFSe.Servico.ItemServico[i].Quantidade, '');
+           Gerador.wCampo(tcDe2, '#33c', 'ValorUnitario', 01, 015, 1, NFSe.Servico.ItemServico[i].ValorUnitario, '');
+          Gerador.wGrupo('/ItensServico');
+         end;
+      if NFSe.Servico.ItemServico.Count > 10
+        then Gerador.wAlerta('#33a', 'ItensServico', 'Itens de Servico', ERR_MSG_MAIOR_MAXIMO + '10');
+     end;
 
-                  Gerador.wCampoNFSe(tcStr, '#23', 'IssRetido', 01, 01, 1, SituacaoTributariaToStr(NFSe.Servico.Valores.IssRetido), '');
-                  Gerador.wCampoNFSe(tcStr, '#24', 'ResponsavelRetencao', 01, 01, 1, ResponsavelRetencaoToStr(NFSe.Servico.ResponsavelRetencao), '');
+  Gerador.wGrupoNFSe('/Servico');
+end;
 
-                  Gerador.wCampoNFSe(tcStr, '#25', 'ItemListaServico', 01, 05, 1, SomenteNumeros(NFSe.Servico.ItemListaServico), '');
-                  Gerador.wCampoNFSe(tcStr, '#26', 'CodigoCnae', 01, 0007, 1, SomenteNumeros(NFSe.Servico.CodigoCnae), '');
-                  Gerador.wCampoNFSe(tcStr, '#27', 'Discriminacao', 01, 2000, 1, NFSe.Servico.Discriminacao, '');
-                  Gerador.wCampoNFSe(tcStr, '#28', 'CodigoMunicipio', 01, 0007, 1, SomenteNumeros(NFSe.Servico.CodigoMunicipio), '');
-                  Gerador.wCampoNFSe(tcInt, '#29', 'CodigoPais', 04, 04,   1, NFSe.Servico.CodigoPais, '');
-                  Gerador.wCampoNFSe(tcStr, '#30', 'ExigibilidadeISS', 01, 01,   1, ExigibilidadeISSToStr(NFSe.Servico.ExigibilidadeISS), '');
-                  Gerador.wCampoNFSe(tcInt, '#31', 'MunicipioIncidencia', 07, 07,  1, NFSe.Servico.MunicipioIncidencia, '');
-                  Gerador.wCampoNFSe(tcStr, '#32', 'NumeroProcesso', 01, 30,   0, NFSe.Servico.NumeroProcesso, '');
-                 Gerador.wGrupoNFSe('/Servico');
-                end;
+procedure TNFSeW.GerarServicoValores_V2;
+begin
+  Gerador.wGrupoNFSe('Servico');
+   Gerador.wGrupoNFSe('Valores');
+    Gerador.wCampoNFSe(tcDe2, '#13', 'ValorServicos  ', 01, 15, 1, NFSe.Servico.Valores.ValorServicos, '');
 
-  proGovBR:     begin
-                 Gerador.wGrupoNFSe('Servico');
-                  Gerador.wGrupoNFSe('Valores');
-                   Gerador.wCampoNFSe(tcDe2, '#13', 'ValorServicos         ', 01, 15, 1, NFSe.Servico.Valores.ValorServicos, '');
-                   Gerador.wCampoNFSe(tcDe2, '#14', 'ValorDeducoes         ', 01, 15, 0, NFSe.Servico.Valores.ValorDeducoes, '');
-                   Gerador.wCampoNFSe(tcDe2, '#15', 'ValorPis              ', 01, 15, 0, NFSe.Servico.Valores.ValorPis, '');
-                   Gerador.wCampoNFSe(tcDe2, '#16', 'ValorCofins           ', 01, 15, 0, NFSe.Servico.Valores.ValorCofins, '');
-                   Gerador.wCampoNFSe(tcDe2, '#17', 'ValorInss             ', 01, 15, 0, NFSe.Servico.Valores.ValorInss, '');
-                   Gerador.wCampoNFSe(tcDe2, '#18', 'ValorIr               ', 01, 15, 0, NFSe.Servico.Valores.ValorIr, '');
-                   Gerador.wCampoNFSe(tcDe2, '#19', 'ValorCsll             ', 01, 15, 0, NFSe.Servico.Valores.ValorCsll, '');
-                   Gerador.wCampoNFSe(tcStr, '#20', 'IssRetido             ', 01, 01, 1, SituacaoTributariaToStr(NFSe.Servico.Valores.IssRetido), '');
-                   Gerador.wCampoNFSe(tcDe2, '#21', 'ValorIss              ', 01, 15, 0, NFSe.Servico.Valores.ValorIss, '');
-                   Gerador.wCampoNFSe(tcDe2, '#22', 'OutrasRetencoes       ', 01, 15, 0, NFSe.Servico.Valores.OutrasRetencoes, '');
-                   Gerador.wCampoNFSe(tcDe2, '#23', 'BaseCalculo           ', 01, 15, 0, NFSe.Servico.Valores.BaseCalculo, '');
-                   Gerador.wCampoNFSe(tcDe4, '#24', 'Aliquota              ', 01, 05, 0, NFSe.Servico.Valores.Aliquota, '');
-                   Gerador.wCampoNFSe(tcDe2, '#25', 'ValorLiquidoNfse      ', 01, 15, 0, NFSe.Servico.Valores.ValorLiquidoNfse, '');
-                   Gerador.wCampoNFSe(tcDe2, '#26', 'ValorIssRetido        ', 01, 15, 0, NFSe.Servico.Valores.ValorIssRetido, '');
-                   Gerador.wCampoNFSe(tcDe2, '#27', 'DescontoIncondicionado', 01, 15, 0, NFSe.Servico.Valores.DescontoIncondicionado, '');
-                   Gerador.wCampoNFSe(tcDe2, '#28', 'DescontoCondicionado  ', 01, 15, 0, NFSe.Servico.Valores.DescontoCondicionado, '');
-                  Gerador.wGrupoNFSe('/Valores');
-                  Gerador.wCampoNFSe(tcStr, '#29', 'ItemListaServico         ', 01, 05, 1, NFSe.Servico.ItemListaServico, '');
-                  Gerador.wCampoNFSe(tcStr, '#30', 'CodigoCnae               ', 01, 0007, 0, SomenteNumeros(NFSe.Servico.CodigoCnae), '');
-                  Gerador.wCampoNFSe(tcStr, '#31', 'CodigoTributacaoMunicipio', 01, 0020, 0, NFSe.Servico.CodigoTributacaoMunicipio, '');
-                  Gerador.wCampoNFSe(tcStr, '#32', 'Discriminacao            ', 01, 2000, 1, NFSe.Servico.Discriminacao, '');
-                  Gerador.wCampoNFSe(tcStr, '#33', 'CodigoMunicipio          ', 01, 0007, 1, SomenteNumeros(NFSe.Servico.CodigoMunicipio), '');
-                 Gerador.wGrupoNFSe('/Servico');
-                end;
+    if FProvedor in [profintelISS]
+      then begin
+       Gerador.wCampoNFSe(tcDe2, '#14', 'ValorDeducoes  ', 01, 15, 1, NFSe.Servico.Valores.ValorDeducoes, '');
+       Gerador.wCampoNFSe(tcDe2, '#21', 'ValorIss       ', 01, 15, 1, NFSe.Servico.Valores.ValorIss, '');
+      end
+      else begin
+       Gerador.wCampoNFSe(tcDe2, '#14', 'ValorDeducoes  ', 01, 15, 0, NFSe.Servico.Valores.ValorDeducoes, '');
 
-  proBetha:     begin
-                 Gerador.wGrupoNFSe('Servico');
-                  Gerador.wGrupoNFSe('Valores');
-                   Gerador.wCampoNFSe(tcDe2, '#13', 'ValorServicos         ', 01, 15, 1, NFSe.Servico.Valores.ValorServicos, '');
-                   Gerador.wCampoNFSe(tcDe2, '#14', 'ValorDeducoes         ', 01, 15, 0, NFSe.Servico.Valores.ValorDeducoes, '');
-                   Gerador.wCampoNFSe(tcDe2, '#15', 'ValorPis              ', 01, 15, 0, NFSe.Servico.Valores.ValorPis, '');
-                   Gerador.wCampoNFSe(tcDe2, '#16', 'ValorCofins           ', 01, 15, 0, NFSe.Servico.Valores.ValorCofins, '');
-                   Gerador.wCampoNFSe(tcDe2, '#17', 'ValorInss             ', 01, 15, 0, NFSe.Servico.Valores.ValorInss, '');
-                   Gerador.wCampoNFSe(tcDe2, '#18', 'ValorIr               ', 01, 15, 0, NFSe.Servico.Valores.ValorIr, '');
-                   Gerador.wCampoNFSe(tcDe2, '#19', 'ValorCsll             ', 01, 15, 0, NFSe.Servico.Valores.ValorCsll, '');
-                   Gerador.wCampoNFSe(tcStr, '#20', 'IssRetido             ', 01, 01, 1, SituacaoTributariaToStr(NFSe.Servico.Valores.IssRetido), '');
-                   Gerador.wCampoNFSe(tcDe2, '#21', 'ValorIss              ', 01, 15, 0, NFSe.Servico.Valores.ValorIss, '');
-                   Gerador.wCampoNFSe(tcDe2, '#22', 'OutrasRetencoes       ', 01, 15, 0, NFSe.Servico.Valores.OutrasRetencoes, '');
-                   Gerador.wCampoNFSe(tcDe2, '#23', 'BaseCalculo           ', 01, 15, 1, NFSe.Servico.Valores.BaseCalculo, '');
-                   Gerador.wCampoNFSe(tcDe4, '#24', 'Aliquota              ', 01, 05, 0, NFSe.Servico.Valores.Aliquota, '');
-                   Gerador.wCampoNFSe(tcDe2, '#25', 'ValorLiquidoNfse      ', 01, 15, 0, NFSe.Servico.Valores.ValorLiquidoNfse, '');
-                   Gerador.wCampoNFSe(tcDe2, '#26', 'ValorIssRetido        ', 01, 15, 0, NFSe.Servico.Valores.ValorIssRetido, '');
-                   Gerador.wCampoNFSe(tcDe2, '#27', 'DescontoCondicionado  ', 01, 15, 0, NFSe.Servico.Valores.DescontoCondicionado, '');
-                   Gerador.wCampoNFSe(tcDe2, '#28', 'DescontoIncondicionado', 01, 15, 0, NFSe.Servico.Valores.DescontoIncondicionado, '');
-                  Gerador.wGrupoNFSe('/Valores');
-                  Gerador.wCampoNFSe(tcStr, '#29', 'ItemListaServico         ', 01, 05, 1, SomenteNumeros(NFSe.Servico.ItemListaServico), '');
-                  Gerador.wCampoNFSe(tcStr, '#30', 'CodigoCnae               ', 01, 0007, 0, SomenteNumeros(NFSe.Servico.CodigoCnae), '');
-                  Gerador.wCampoNFSe(tcStr, '#31', 'CodigoTributacaoMunicipio', 01, 0020, 0, NFSe.Servico.CodigoTributacaoMunicipio, '');
-                  Gerador.wCampoNFSe(tcStr, '#32', 'Discriminacao            ', 01, 2000, 1, NFSe.Servico.Discriminacao, '');
-                  Gerador.wCampoNFSe(tcStr, '#33', 'CodigoMunicipio          ', 01, 0007, 1, SomenteNumeros(NFSe.Servico.CodigoMunicipio), '');
-                 Gerador.wGrupoNFSe('/Servico');
-                end;
+       if FProvedor in [proGoiania, proISSe, proProdata]
+         then begin
+           Gerador.wCampoNFSe(tcDe2, '#15', 'ValorPis       ', 01, 15, 1, NFSe.Servico.Valores.ValorPis, '');
+           Gerador.wCampoNFSe(tcDe2, '#16', 'ValorCofins    ', 01, 15, 1, NFSe.Servico.Valores.ValorCofins, '');
+           Gerador.wCampoNFSe(tcDe2, '#17', 'ValorInss      ', 01, 15, 1, NFSe.Servico.Valores.ValorInss, '');
+           Gerador.wCampoNFSe(tcDe2, '#18', 'ValorIr        ', 01, 15, 1, NFSe.Servico.Valores.ValorIr, '');
+           Gerador.wCampoNFSe(tcDe2, '#19', 'ValorCsll      ', 01, 15, 1, NFSe.Servico.Valores.ValorCsll, '');
+           Gerador.wCampoNFSe(tcDe2, '#23', 'OutrasRetencoes', 01, 15, 0, NFSe.Servico.Valores.OutrasRetencoes, '');
+         end
+         else begin
+           Gerador.wCampoNFSe(tcDe2, '#15', 'ValorPis       ', 01, 15, 0, NFSe.Servico.Valores.ValorPis, '');
+           Gerador.wCampoNFSe(tcDe2, '#16', 'ValorCofins    ', 01, 15, 0, NFSe.Servico.Valores.ValorCofins, '');
+           Gerador.wCampoNFSe(tcDe2, '#17', 'ValorInss      ', 01, 15, 0, NFSe.Servico.Valores.ValorInss, '');
+           Gerador.wCampoNFSe(tcDe2, '#18', 'ValorIr        ', 01, 15, 0, NFSe.Servico.Valores.ValorIr, '');
+           Gerador.wCampoNFSe(tcDe2, '#19', 'ValorCsll      ', 01, 15, 0, NFSe.Servico.Valores.ValorCsll, '');
+           Gerador.wCampoNFSe(tcDe2, '#23', 'OutrasRetencoes', 01, 15, 0, NFSe.Servico.Valores.OutrasRetencoes, '');
+         end;
 
-  proGinfes:    begin
-                 Gerador.wGrupoNFSe('Servico');
-                  Gerador.wGrupoNFSe('Valores');
-                   Gerador.wCampoNFSe(tcDe2, '#13', 'ValorServicos         ', 01, 15, 1, NFSe.Servico.Valores.ValorServicos, '');
-                   Gerador.wCampoNFSe(tcDe2, '#14', 'ValorDeducoes         ', 01, 15, 1, NFSe.Servico.Valores.ValorDeducoes, '');
-                   Gerador.wCampoNFSe(tcDe2, '#15', 'ValorPis              ', 01, 15, 1, NFSe.Servico.Valores.ValorPis, '');
-                   Gerador.wCampoNFSe(tcDe2, '#16', 'ValorCofins           ', 01, 15, 1, NFSe.Servico.Valores.ValorCofins, '');
-                   Gerador.wCampoNFSe(tcDe2, '#17', 'ValorInss             ', 01, 15, 1, NFSe.Servico.Valores.ValorInss, '');
-                   Gerador.wCampoNFSe(tcDe2, '#18', 'ValorIr               ', 01, 15, 1, NFSe.Servico.Valores.ValorIr, '');
-                   Gerador.wCampoNFSe(tcDe2, '#19', 'ValorCsll             ', 01, 15, 1, NFSe.Servico.Valores.ValorCsll, '');
-                   Gerador.wCampoNFSe(tcStr, '#20', 'IssRetido             ', 01, 01, 1, SituacaoTributariaToStr(NFSe.Servico.Valores.IssRetido), '');
+       if FProvedor in [pro4R, proISSDigital, proISSe, proFiorilli, proSaatri]
+         then Gerador.wCampoNFSe(tcDe2, '#21', 'ValorIss', 01, 15, 1, NFSe.Servico.Valores.ValorIss, '')
+         else Gerador.wCampoNFSe(tcDe2, '#21', 'ValorIss', 01, 15, 0, NFSe.Servico.Valores.ValorIss, '');
+      end;
 
-                   Gerador.wCampoNFSe(tcDe2, '#21', 'ValorIss              ', 01, 15, 1, NFSe.Servico.Valores.ValorIss, '');
-                   Gerador.wCampoNFSe(tcDe2, '#22', 'ValorIssRetido        ', 01, 15, 0, NFSe.Servico.Valores.ValorIssRetido, '');
-                   Gerador.wCampoNFSe(tcDe2, '#23', 'OutrasRetencoes       ', 01, 15, 0, NFSe.Servico.Valores.OutrasRetencoes, '');
-                   Gerador.wCampoNFSe(tcDe2, '#24', 'BaseCalculo           ', 01, 15, 1, NFSe.Servico.Valores.BaseCalculo, '');
-                   Gerador.wCampoNFSe(tcDe4, '#25', 'Aliquota              ', 01, 05, 0, NFSe.Servico.Valores.Aliquota, '');
-                   Gerador.wCampoNFSe(tcDe2, '#26', 'ValorLiquidoNfse      ', 01, 15, 0, NFSe.Servico.Valores.ValorLiquidoNfse, '');
-                   Gerador.wCampoNFSe(tcDe2, '#27', 'DescontoIncondicionado', 01, 15, 0, NFSe.Servico.Valores.DescontoIncondicionado, '');
-                   Gerador.wCampoNFSe(tcDe2, '#28', 'DescontoCondicionado  ', 01, 15, 0, NFSe.Servico.Valores.DescontoCondicionado, '');
-                  Gerador.wGrupoNFSe('/Valores');
-                  Gerador.wCampoNFSe(tcStr, '#29', 'ItemListaServico         ', 01, 05, 1, NFSe.Servico.ItemListaServico, '');
-                  Gerador.wCampoNFSe(tcStr, '#30', 'CodigoCnae               ', 01, 0007, 0, SomenteNumeros(NFSe.Servico.CodigoCnae), '');
-                  Gerador.wCampoNFSe(tcStr, '#31', 'CodigoTributacaoMunicipio', 01, 0020, 0, NFSe.Servico.CodigoTributacaoMunicipio, '');
-                  Gerador.wCampoNFSe(tcStr, '#32', 'Discriminacao            ', 01, 2000, 1, NFSe.Servico.Discriminacao, '');
-                  Gerador.wCampoNFSe(tcStr, '#33', 'CodigoMunicipio          ', 01, 0007, 1, SomenteNumeros(NFSe.Servico.CodigoMunicipio), '');
-                 Gerador.wGrupoNFSe('/Servico');
-                end;
+    if not (FProvedor in [pro4R, profinteliSS, proFiorilli, proGoiania, proISSDigital, proISSe, proProdata, proSaatri])
+      then Gerador.wCampoNFSe(tcDe2, '#24', 'BaseCalculo', 01, 15, 0, NFSe.Servico.Valores.BaseCalculo, '');
 
-  proSimplISS:  begin
-                 Gerador.wGrupoNFSe('Servico');
-                  Gerador.wGrupoNFSe('Valores');
-                   Gerador.wCampoNFSe(tcDe2, '#13', 'ValorServicos   ', 01, 15, 1, NFSe.Servico.Valores.ValorServicos, '');
-                   Gerador.wCampoNFSe(tcDe2, '#14', 'ValorDeducoes   ', 01, 15, 0, NFSe.Servico.Valores.ValorDeducoes, '');
-                   Gerador.wCampoNFSe(tcDe2, '#15', 'ValorPis        ', 01, 15, 0, NFSe.Servico.Valores.ValorPis, '');
-                   Gerador.wCampoNFSe(tcDe2, '#16', 'ValorCofins     ', 01, 15, 0, NFSe.Servico.Valores.ValorCofins, '');
-                   Gerador.wCampoNFSe(tcDe2, '#17', 'ValorInss       ', 01, 15, 0, NFSe.Servico.Valores.ValorInss, '');
-                   Gerador.wCampoNFSe(tcDe2, '#18', 'ValorIr         ', 01, 15, 0, NFSe.Servico.Valores.ValorIr, '');
-                   Gerador.wCampoNFSe(tcDe2, '#19', 'ValorCsll       ', 01, 15, 0, NFSe.Servico.Valores.ValorCsll, '');
-                   Gerador.wCampoNFSe(tcStr, '#20', 'IssRetido       ', 01, 01, 1, SituacaoTributariaToStr(NFSe.Servico.Valores.IssRetido), '');
-                   Gerador.wCampoNFSe(tcDe2, '#21', 'ValorIss        ', 01, 15, 0, NFSe.Servico.Valores.ValorIss, '');
-                   Gerador.wCampoNFSe(tcDe2, '#22', 'ValorIssRetido  ', 01, 15, 0, NFSe.Servico.Valores.ValorIssRetido, '');
-                   Gerador.wCampoNFSe(tcDe2, '#23', 'OutrasRetencoes ', 01, 15, 0, NFSe.Servico.Valores.OutrasRetencoes, '');
-                   Gerador.wCampoNFSe(tcDe2, '#24', 'BaseCalculo     ', 01, 15, 0, NFSe.Servico.Valores.BaseCalculo, '');
-                   Gerador.wCampoNFSe(tcDe2, '#25', 'Aliquota        ', 01, 05, 0, NFSe.Servico.Valores.Aliquota, '');
-                   Gerador.wCampoNFSe(tcDe2, '#26', 'ValorLiquidoNfse', 01, 15, 0, NFSe.Servico.Valores.ValorLiquidoNfse, '');
-                   Gerador.wCampoNFSe(tcDe2, '#27', 'DescontoIncondicionado', 01, 15, 0, NFSe.Servico.Valores.DescontoIncondicionado, '');
-                   Gerador.wCampoNFSe(tcDe2, '#28', 'DescontoCondicionado  ', 01, 15, 0, NFSe.Servico.Valores.DescontoCondicionado, '');
-                  Gerador.wGrupoNFSe('/Valores');
-                 Gerador.wCampoNFSe(tcStr, '#29', 'ItemListaServico', 01, 05, 1, NFSe.Servico.ItemListaServico, '');
-                 Gerador.wCampoNFSe(tcStr, '#30', 'CodigoCnae      ', 01, 0007, 0, SomenteNumeros(NFSe.Servico.CodigoCnae), '');
-                 Gerador.wCampoNFSe(tcStr, '#31', 'CodigoTributacaoMunicipio', 01, 0020, 0, NFSe.Servico.CodigoTributacaoMunicipio, '');
-                 Gerador.wCampoNFSe(tcStr, '#32', 'Discriminacao', 01, 2000, 1, NFSe.Servico.Discriminacao, '');
-                 Gerador.wCampoNFSe(tcStr, '#33', 'CodigoMunicipio          ', 01, 0007, 1, SomenteNumeros(NFSe.Servico.CodigoMunicipio), '');
+    if FProvedor in [pro4R, profintelISS, proISSDigital, proISSe, proFiorilli, proSaatri]
+      then Gerador.wCampoNFSe(tcDe4, '#25', 'Aliquota', 01, 05, 1, NFSe.Servico.Valores.Aliquota, '')
+      else begin
+        if FProvedor = proGoiania
+          then begin
+            if NFSe.OptanteSimplesNacional = snSim
+              then Gerador.wCampoNFSe(tcDe4, '#25', 'Aliquota', 01, 05, 0, NFSe.Servico.Valores.Aliquota, '');
+          end
+          else Gerador.wCampoNFSe(tcDe4, '#25', 'Aliquota', 01, 05, 0, NFSe.Servico.Valores.Aliquota, '');
+      end;
 
-                 for i := 0 to NFSe.Servico.ItemServico.Count - 1 do
-                  begin
-                   Gerador.wGrupo('ItensServico');
-                   Gerador.wCampo(tcStr, '#33a', 'Descricao    ', 01, 100, 1, NFSe.Servico.ItemServico[i].Descricao, '');
-                   Gerador.wCampo(tcInt, '#33b', 'Quantidade   ', 01, 015, 1, NFSe.Servico.ItemServico[i].Quantidade, '');
-                   Gerador.wCampo(tcDe2, '#33c', 'ValorUnitario', 01, 015, 1, NFSe.Servico.ItemServico[i].ValorUnitario, '');
-                   Gerador.wGrupo('/ItensServico');
-                  end;
-                 if NFSe.Servico.ItemServico.Count > 10
-                  then Gerador.wAlerta('#33a', 'ItensServico', 'Itens de Servico', ERR_MSG_MAIOR_MAXIMO + '10');
+    if FProvedor in [profintelISS]
+      then Gerador.wCampoNFSe(tcDe2, '#24', 'BaseCalculo', 01, 15, 1, NFSe.Servico.Valores.BaseCalculo, '');
 
-                 Gerador.wGrupoNFSe('/Servico');
-                end;
+    if FProvedor in [pro4R, proFiorilli, proGoiania, proISSDigital, proISSe, proProdata, proSaatri]
+      then begin
+       Gerador.wCampoNFSe(tcDe2, '#27', 'DescontoIncondicionado', 01, 15, 0, NFSe.Servico.Valores.DescontoIncondicionado, '');
+       Gerador.wCampoNFSe(tcDe2, '#28', 'DescontoCondicionado  ', 01, 15, 0, NFSe.Servico.Valores.DescontoCondicionado, '');
+      end
+      else begin
+       Gerador.wCampoNFSe(tcDe2, '#27', 'DescontoCondicionado  ', 01, 15, 0, NFSe.Servico.Valores.DescontoCondicionado, '');
+       Gerador.wCampoNFSe(tcDe2, '#28', 'DescontoIncondicionado', 01, 15, 0, NFSe.Servico.Valores.DescontoIncondicionado, '');
+      end;
 
-  proIssDSF: GerarServico_Provedor_IssDsf;
+   Gerador.wGrupoNFSe('/Valores');
 
-  else          begin
-                 Gerador.wGrupoNFSe('Servico');
-                  Gerador.wGrupoNFSe('Valores');
-                   Gerador.wCampoNFSe(tcDe2, '#13', 'ValorServicos         ', 01, 15, 1, NFSe.Servico.Valores.ValorServicos, '');
-                   Gerador.wCampoNFSe(tcDe2, '#14', 'ValorDeducoes         ', 01, 15, 0, NFSe.Servico.Valores.ValorDeducoes, '');
-                   Gerador.wCampoNFSe(tcDe2, '#15', 'ValorPis              ', 01, 15, 0, NFSe.Servico.Valores.ValorPis, '');
-                   Gerador.wCampoNFSe(tcDe2, '#16', 'ValorCofins           ', 01, 15, 0, NFSe.Servico.Valores.ValorCofins, '');
-                   Gerador.wCampoNFSe(tcDe2, '#17', 'ValorInss             ', 01, 15, 0, NFSe.Servico.Valores.ValorInss, '');
-                   Gerador.wCampoNFSe(tcDe2, '#18', 'ValorIr               ', 01, 15, 0, NFSe.Servico.Valores.ValorIr, '');
-                   Gerador.wCampoNFSe(tcDe2, '#19', 'ValorCsll             ', 01, 15, 0, NFSe.Servico.Valores.ValorCsll, '');
-                   Gerador.wCampoNFSe(tcStr, '#20', 'IssRetido             ', 01, 01, 1, SituacaoTributariaToStr(NFSe.Servico.Valores.IssRetido), '');
-                   Gerador.wCampoNFSe(tcDe2, '#21', 'ValorIss              ', 01, 15, 0, NFSe.Servico.Valores.ValorIss, '');
-                   Gerador.wCampoNFSe(tcDe2, '#22', 'ValorIssRetido        ', 01, 15, 0, NFSe.Servico.Valores.ValorIssRetido, '');
-                   Gerador.wCampoNFSe(tcDe2, '#23', 'OutrasRetencoes       ', 01, 15, 0, NFSe.Servico.Valores.OutrasRetencoes, '');
-                   Gerador.wCampoNFSe(tcDe2, '#24', 'BaseCalculo           ', 01, 15, 0, NFSe.Servico.Valores.BaseCalculo, '');
+   if FProvedor = proGoiania
+     then Gerador.wCampoNFSe(tcStr, '#20', 'IssRetido', 01, 01, 0, SituacaoTributariaToStr(NFSe.Servico.Valores.IssRetido), '')
+     else Gerador.wCampoNFSe(tcStr, '#20', 'IssRetido', 01, 01, 1, SituacaoTributariaToStr(NFSe.Servico.Valores.IssRetido), '');
 
-                   // Alterado por Italo em 30/07/2013
-                   if FProvedor = proISSNet
-                    then Gerador.wCampoNFSe(tcDe4, '#25', 'Aliquota', 01, 05, 1, NFSe.Servico.Valores.Aliquota, '')
-                    else Gerador.wCampoNFSe(tcDe4, '#25', 'Aliquota', 01, 05, 0, NFSe.Servico.Valores.Aliquota, '');
+   if NFSe.Servico.Valores.IssRetido <> stNormal
+     then Gerador.wCampoNFSe(tcStr, '#21', 'ResponsavelRetencao', 01, 01, 1, ResponsavelRetencaoToStr(NFSe.Servico.ResponsavelRetencao), '');
 
-                   Gerador.wCampoNFSe(tcDe2, '#26', 'ValorLiquidoNfse      ', 01, 15, 0, NFSe.Servico.Valores.ValorLiquidoNfse, '');
-                   Gerador.wCampoNFSe(tcDe2, '#27', 'DescontoIncondicionado', 01, 15, 0, NFSe.Servico.Valores.DescontoIncondicionado, '');
-                   Gerador.wCampoNFSe(tcDe2, '#28', 'DescontoCondicionado  ', 01, 15, 0, NFSe.Servico.Valores.DescontoCondicionado, '');
-                  Gerador.wGrupoNFSe('/Valores');
+   Gerador.wCampoNFSe(tcStr, '#29', 'ItemListaServico         ', 01, 05,   1, NFSe.Servico.ItemListaServico, '');
+   Gerador.wCampoNFSe(tcStr, '#30', 'CodigoCnae               ', 01, 0007, 0, SomenteNumeros(NFSe.Servico.CodigoCnae), '');
+   Gerador.wCampoNFSe(tcStr, '#31', 'CodigoTributacaoMunicipio', 01, 0020, 0, SomenteNumeros(NFSe.Servico.CodigoTributacaoMunicipio), '');
+   Gerador.wCampoNFSe(tcStr, '#32', 'Discriminacao            ', 01, 2000, 1, NFSe.Servico.Discriminacao, '');
+   Gerador.wCampoNFSe(tcStr, '#33', 'CodigoMunicipio          ', 01, 0007, 1, SomenteNumeros(NFSe.Servico.CodigoMunicipio), '');
 
-                 if FProvedor = proWebISS
-                  then Gerador.wCampoNFSe(tcStr, '#29', 'ItemListaServico', 01, 05, 1, SomenteNumeros(NFSe.Servico.ItemListaServico), '')
-                  else Gerador.wCampoNFSe(tcStr, '#29', 'ItemListaServico', 01, 05, 1, NFSe.Servico.ItemListaServico, '');
-                  
-                 Gerador.wCampoNFSe(tcStr, '#30', 'CodigoCnae      ', 01, 0007, 0, SomenteNumeros(NFSe.Servico.CodigoCnae), '');
+//   if FProvedor <> proISSDigital
+//     then Gerador.wCampoNFSe(tcInt, '#34', 'CodigoPais', 04, 04,   0, NFSe.Servico.CodigoPais, '');
 
-                 if FProvedor <> proPublica
-                  then Gerador.wCampoNFSe(tcStr, '#31', 'CodigoTributacaoMunicipio', 01, 0020, 0, NFSe.Servico.CodigoTributacaoMunicipio, '');
+   Gerador.wCampoNFSe(tcInt, '#34', 'CodigoPais         ', 04, 04,   0, NFSe.Servico.CodigoPais, '');
 
-                 Gerador.wCampoNFSe(tcStr, '#32', 'Discriminacao', 01, 2000, 1, NFSe.Servico.Discriminacao, '');
+   Gerador.wCampoNFSe(tcStr, '#35', 'ExigibilidadeISS   ', 01, 01,   1, ExigibilidadeISSToStr(NFSe.Servico.ExigibilidadeISS), '');
+   Gerador.wCampoNFSe(tcInt, '#36', 'MunicipioIncidencia', 07, 07,   0, NFSe.Servico.MunicipioIncidencia, '');
+   Gerador.wCampoNFSe(tcStr, '#37', 'NumeroProcesso     ', 01, 30,   0, NFSe.Servico.NumeroProcesso, '');
+  Gerador.wGrupoNFSe('/Servico');
+end;
 
-                 if VersaoXML = '1'
-                  then Gerador.wCampoNFSe(tcStr, '#33', 'MunicipioPrestacaoServico', 01, 0007, 1, SomenteNumeros(NFSe.Servico.CodigoMunicipio), '')
-                  else Gerador.wCampoNFSe(tcStr, '#33', 'CodigoMunicipio          ', 01, 0007, 1, SomenteNumeros(NFSe.Servico.CodigoMunicipio), '');
+procedure TNFSeW.GerarListaServicos;
+var
+ i: Integer;
+begin
+  Gerador.wGrupoNFSe('ListaServicos');
+   for i := 0 to NFSe.Servico.ItemServico.Count - 1 do
+    begin
+     Gerador.wGrupoNFSe('Servico');
+      Gerador.wGrupoNFSe('Valores');
+       Gerador.wCampoNFSe(tcDe2, '#13', 'ValorServicos         ', 01, 15, 1, NFSe.Servico.ItemServico[i].ValorServicos, '');
+       Gerador.wCampoNFSe(tcDe2, '#14', 'ValorDeducoes         ', 01, 15, 1, NFSe.Servico.ItemServico[i].ValorDeducoes, '');
+       Gerador.wCampoNFSe(tcDe2, '#21', 'ValorIss              ', 01, 15, 1, NFSe.Servico.ItemServico[i].ValorIss, '');
+       Gerador.wCampoNFSe(tcDe2, '#25', 'Aliquota              ', 01, 05, 1, NFSe.Servico.ItemServico[i].Aliquota, '');
+       Gerador.wCampoNFSe(tcDe2, '#24', 'BaseCalculo           ', 01, 15, 1, NFSe.Servico.ItemServico[i].BaseCalculo, '');
+       Gerador.wCampoNFSe(tcDe2, '#27', 'DescontoIncondicionado', 01, 15, 0, NFSe.Servico.ItemServico[i].DescontoIncondicionado, '');
+       Gerador.wCampoNFSe(tcDe2, '#28', 'DescontoCondicionado  ', 01, 15, 0, NFSe.Servico.ItemServico[i].DescontoCondicionado, '');
+      Gerador.wGrupoNFSe('/Valores');
+      Gerador.wCampoNFSe(tcStr, '#20', 'IssRetido                ', 01, 01,   1, SituacaoTributariaToStr(NFSe.Servico.Valores.IssRetido), '');
+      Gerador.wCampoNFSe(tcStr, '#29', 'ItemListaServico         ', 01, 0005, 1, NFSe.Servico.ItemListaServico, '');
+      Gerador.wCampoNFSe(tcStr, '#30', 'CodigoCnae               ', 01, 0007, 0, SomenteNumeros(NFSe.Servico.CodigoCnae), '');
+      Gerador.wCampoNFSe(tcStr, '#31', 'CodigoTributacaoMunicipio', 01, 0020, 0, SomenteNumeros(NFSe.Servico.CodigoTributacaoMunicipio), '');
+      Gerador.wCampoNFSe(tcStr, '#32', 'Discriminacao            ', 01, 2000, 1, NFSe.Servico.ItemServico[i].Discriminacao, '');
+      Gerador.wCampoNFSe(tcStr, '#33', 'CodigoMunicipio          ', 01, 0007, 1, SomenteNumeros(NFSe.Servico.CodigoMunicipio), '');
+      Gerador.wCampoNFSe(tcInt, '#34', 'CodigoPais               ', 04, 04,   0, NFSe.Servico.CodigoPais, '');
+      Gerador.wCampoNFSe(tcStr, '#35', 'ExigibilidadeISS         ', 01, 01,   1, ExigibilidadeISSToStr(NFSe.Servico.ExigibilidadeISS), '');
+      Gerador.wCampoNFSe(tcInt, '#36', 'MunicipioIncidencia      ', 07, 07,   0, NFSe.Servico.MunicipioIncidencia, '');
+      Gerador.wCampoNFSe(tcStr, '#37', 'NumeroProcesso           ', 01, 30,   0, NFSe.Servico.NumeroProcesso, '');
+     Gerador.wGrupoNFSe('/Servico');
+    end;
+  Gerador.wGrupoNFSe('/ListaServicos');
+end;
 
-                 Gerador.wGrupoNFSe('/Servico');
-                end;
- end;
+procedure TNFSeW.GerarValoresServico;
+begin
+ Gerador.wGrupoNFSe('ValoresServico');
+  Gerador.wCampoNFSe(tcDe2, '#15', 'ValorPis        ', 01, 15, 0, NFSe.Servico.Valores.ValorPis, '');
+  Gerador.wCampoNFSe(tcDe2, '#16', 'ValorCofins     ', 01, 15, 0, NFSe.Servico.Valores.ValorCofins, '');
+  Gerador.wCampoNFSe(tcDe2, '#17', 'ValorInss       ', 01, 15, 0, NFSe.Servico.Valores.ValorInss, '');
+  Gerador.wCampoNFSe(tcDe2, '#18', 'ValorIr         ', 01, 15, 0, NFSe.Servico.Valores.ValorIr, '');
+  Gerador.wCampoNFSe(tcDe2, '#19', 'ValorCsll       ', 01, 15, 0, NFSe.Servico.Valores.ValorCsll, '');
+  Gerador.wCampoNFSe(tcDe2, '#21', 'ValorIss        ', 01, 15, 1, NFSe.Servico.Valores.ValorIss, '');
+  Gerador.wCampoNFSe(tcDe2, '#13', 'ValorLiquidoNfse', 01, 15, 1, NFSe.Servico.Valores.ValorLiquidoNfse, '');
+  Gerador.wCampoNFSe(tcDe2, '#13', 'ValorServicos   ', 01, 15, 1, NFSe.Servico.Valores.ValorServicos, '');
+ Gerador.wGrupoNFSe('/ValoresServico');
 end;
 
 procedure TNFSeW.GerarPrestador;
 begin
  Gerador.wGrupoNFSe('Prestador');
 
- if VersaoXML='1'
-  then begin
+ if VersaoXML = '1'
+  then Gerador.wCampoNFSe(tcStr, '#34', 'Cnpj', 14, 14, 1, SomenteNumeros(NFSe.Prestador.Cnpj), '')
+  else begin
    Gerador.wGrupoNFSe('CpfCnpj');
-
-   if length(SomenteNumeros(NFSe.Prestador.Cnpj))<=11
+   if length(SomenteNumeros(NFSe.Prestador.Cnpj)) <= 11
     then Gerador.wCampoNFSe(tcStr, '#34', 'Cpf ', 11, 11, 1, SomenteNumeros(NFSe.Prestador.Cnpj), '')
     else Gerador.wCampoNFSe(tcStr, '#34', 'Cnpj', 14, 14, 1, SomenteNumeros(NFSe.Prestador.Cnpj), '');
-
    Gerador.wGrupoNFSe('/CpfCnpj');
-  end
-  else Gerador.wCampoNFSe(tcStr, '#34', 'Cnpj', 14, 14, 1, SomenteNumeros(NFSe.Prestador.Cnpj), '');
+  end;
 
  Gerador.wCampoNFSe(tcStr, '#35', 'InscricaoMunicipal', 01, 15, 0, NFSe.Prestador.InscricaoMunicipal, '');
 
  if (FProvedor in [proISSDigital, proAgili])
   then begin
    Gerador.wCampoNFSe(tcStr, '#36', 'Senha       ', 01, 255, 1, NFSe.Prestador.Senha, '');
-   Gerador.wCampoNFSe(tcStr, '#36', 'FraseSecreta', 01, 255, 1, NFSe.Prestador.FraseSecreta, '');
+   Gerador.wCampoNFSe(tcStr, '#37', 'FraseSecreta', 01, 255, 1, NFSe.Prestador.FraseSecreta, '');
   end;
 
  Gerador.wGrupoNFSe('/Prestador');
@@ -685,129 +517,87 @@ end;
 
 procedure TNFSeW.GerarTomador;
 begin
- if FProvedor = profintelISS
-  then Gerador.wGrupoNFSe('TomadorServico')
-  else Gerador.wGrupoNFSe('Tomador');
+ if VersaoXML = '1'
+   then Gerador.wGrupoNFSe('Tomador')
+   else Gerador.wGrupoNFSe('TomadorServico');
 
  if NFSe.Tomador.Endereco.UF <> 'EX'
-  then begin
-   Gerador.wGrupoNFSe('IdentificacaoTomador');
-
-   Gerador.wGrupoNFSe('CpfCnpj');
-
-   if Length(SomenteNumeros(NFSe.Tomador.IdentificacaoTomador.CpfCnpj))<=11
-    then Gerador.wCampoNFSe(tcStr, '#36', 'Cpf ', 11, 11, 1, SomenteNumeros(NFSe.Tomador.IdentificacaoTomador.CpfCnpj), '')
-    else Gerador.wCampoNFSe(tcStr, '#36', 'Cnpj', 14, 14, 1, SomenteNumeros(NFSe.Tomador.IdentificacaoTomador.CpfCnpj), '');
-
-   Gerador.wGrupoNFSe('/CpfCnpj');
-   Gerador.wCampoNFSe(tcStr, '#37', 'InscricaoMunicipal', 01, 15, 0, NFSe.Tomador.IdentificacaoTomador.InscricaoMunicipal, '');
-
-   if FProvedor = proSimplISS
-    then Gerador.wCampoNFSe(tcStr, '#38', 'InscricaoEstadual', 01, 20, 0, NFSe.Tomador.IdentificacaoTomador.InscricaoEstadual, '');
-
-   Gerador.wGrupoNFSe('/IdentificacaoTomador');
-  end;
+   then begin
+     Gerador.wGrupoNFSe('IdentificacaoTomador');
+      Gerador.wGrupoNFSe('CpfCnpj');
+      if Length(SomenteNumeros(NFSe.Tomador.IdentificacaoTomador.CpfCnpj)) <= 11
+        then Gerador.wCampoNFSe(tcStr, '#36', 'Cpf ', 11, 11, 1, SomenteNumeros(NFSe.Tomador.IdentificacaoTomador.CpfCnpj), '')
+        else Gerador.wCampoNFSe(tcStr, '#36', 'Cnpj', 14, 14, 1, SomenteNumeros(NFSe.Tomador.IdentificacaoTomador.CpfCnpj), '');
+      Gerador.wGrupoNFSe('/CpfCnpj');
+      Gerador.wCampoNFSe(tcStr, '#37', 'InscricaoMunicipal', 01, 15, 0, NFSe.Tomador.IdentificacaoTomador.InscricaoMunicipal, '');
+      if FProvedor = proSimplISS
+        then Gerador.wCampoNFSe(tcStr, '#38', 'InscricaoEstadual', 01, 20, 0, NFSe.Tomador.IdentificacaoTomador.InscricaoEstadual, '');
+     Gerador.wGrupoNFSe('/IdentificacaoTomador');
+   end;
 
  Gerador.wCampoNFSe(tcStr, '#38', 'RazaoSocial', 001, 115, 0, NFSe.Tomador.RazaoSocial, '');
  Gerador.wGrupoNFSe('Endereco');
- Gerador.wCampoNFSe(tcStr, '#39', 'Endereco   ', 001, 125, 0, NFSe.Tomador.Endereco.Endereco, '');
- Gerador.wCampoNFSe(tcStr, '#40', 'Numero     ', 001, 010, 0, NFSe.Tomador.Endereco.Numero, '');
- Gerador.wCampoNFSe(tcStr, '#41', 'Complemento', 001, 060, 0, NFSe.Tomador.Endereco.Complemento, '');
- Gerador.wCampoNFSe(tcStr, '#42', 'Bairro     ', 001, 060, 0, NFSe.Tomador.Endereco.Bairro, '');
+  Gerador.wCampoNFSe(tcStr, '#39', 'Endereco   ', 001, 125, 0, NFSe.Tomador.Endereco.Endereco, '');
+  Gerador.wCampoNFSe(tcStr, '#40', 'Numero     ', 001, 010, 0, NFSe.Tomador.Endereco.Numero, '');
+  Gerador.wCampoNFSe(tcStr, '#41', 'Complemento', 001, 060, 0, NFSe.Tomador.Endereco.Complemento, '');
+  Gerador.wCampoNFSe(tcStr, '#42', 'Bairro     ', 001, 060, 0, NFSe.Tomador.Endereco.Bairro, '');
 
- case FProvedor of
-  profintelISS,
-  proISSIntel,
-  proGinfes,
-  proThema,
-  proProdemge,
-  proBHISS,
-  proBetim,
-  proWebISS,
-  proGovBR,
-  proSaatri,
-  proRJ,
-  proTiplan,
-  proRecife,
-  proAbaco,
-  proSimplISS,
-  proGoiania,
-  proBetha,
-  proISSDigital,
-  proISSe,
-  pro4R,
-  proPublica,
-  proFiorilli,
-  proProdata,
-  proAgili,
-  proISSCuritiba,
-  proFISSLex,
-  proPVH,
-  proNatal: begin
-             Gerador.wCampoNFSe(tcStr, '#43', 'CodigoMunicipio', 7, 7, 0, SomenteNumeros(NFSe.Tomador.Endereco.CodigoMunicipio), '');
-             Gerador.wCampoNFSe(tcStr, '#44', 'Uf             ', 2, 2, 0, NFSe.Tomador.Endereco.UF, '');
-            end;
+ if FProvedor in [proCoplan, proDigifred, proEquiplano, proGovDigital, proISSNet, proVirtual] 
+  then begin
+    Gerador.wCampoNFSe(tcStr, '#43', 'Cidade', 007, 007, 0, SomenteNumeros(NFSe.Tomador.Endereco.CodigoMunicipio), '');
+    Gerador.wCampoNFSe(tcStr, '#44', 'Estado', 002, 002, 0, NFSe.Tomador.Endereco.UF, '');
+  end
   else begin
-       Gerador.wCampoNFSe(tcStr, '#43', 'Cidade', 007, 007, 0, SomenteNumeros(NFSe.Tomador.Endereco.CodigoMunicipio), '');
-       Gerador.wCampoNFSe(tcStr, '#44', 'Estado', 002, 002, 0, NFSe.Tomador.Endereco.UF, '');
-       end;
- end;
+    Gerador.wCampoNFSe(tcStr, '#43', 'CodigoMunicipio', 7, 7, 0, SomenteNumeros(NFSe.Tomador.Endereco.CodigoMunicipio), '');
+    Gerador.wCampoNFSe(tcStr, '#44', 'Uf             ', 2, 2, 0, NFSe.Tomador.Endereco.UF, '');
+  end;
 
- if FProvedor in [proISSDigital, proISSe]
-  then Gerador.wCampoNFSe(tcInt, '#34', 'CodigoPais ', 04, 04, 0, NFSe.Servico.CodigoPais, '');
+ if VersaoXML = '2'
+   then Gerador.wCampoNFSe(tcInt, '#34', 'CodigoPais ', 04, 04, 0, NFSe.Servico.CodigoPais, '');
 
- Gerador.wCampoNFSe(tcStr, '#45', 'Cep', 008, 008, 0, SomenteNumeros(NFSe.Tomador.Endereco.CEP), '');
+  Gerador.wCampoNFSe(tcStr, '#45', 'Cep', 008, 008, 0, SomenteNumeros(NFSe.Tomador.Endereco.CEP), '');
  Gerador.wGrupoNFSe('/Endereco');
+
  Gerador.wGrupoNFSe('Contato');
- Gerador.wCampoNFSe(tcStr, '#46', 'Telefone', 01, 11, 0, SomenteNumeros(NFSe.Tomador.Contato.Telefone), '');
- Gerador.wCampoNFSe(tcStr, '#47', 'Email   ', 01, 80, 0, NFSe.Tomador.Contato.Email, '');
+  Gerador.wCampoNFSe(tcStr, '#46', 'Telefone', 01, 11, 0, SomenteNumeros(NFSe.Tomador.Contato.Telefone), '');
+  Gerador.wCampoNFSe(tcStr, '#47', 'Email   ', 01, 80, 0, NFSe.Tomador.Contato.Email, '');
  Gerador.wGrupoNFSe('/Contato');
 
- if FProvedor = profintelISS
-  then Gerador.wGrupoNFSe('/TomadorServico')
-  else Gerador.wGrupoNFSe('/Tomador');
+ if VersaoXML = '1'
+   then Gerador.wGrupoNFSe('/Tomador')
+   else Gerador.wGrupoNFSe('/TomadorServico');
 end;
 
 procedure TNFSeW.GerarIntermediarioServico;
 begin
- if (NFSe.IntermediarioServico.RazaoSocial<>'') or
-    ((FProvedor in [proISSe]) and (NFSe.IntermediarioServico.CpfCnpj <> ''))
-  then begin
-   case FProvedor of                                         // Alteraçãoes para Maringá PR - Rafael Marcelo dos Santos
-   proISSe:
-     begin
+ if (NFSe.IntermediarioServico.RazaoSocial<>'') or (NFSe.IntermediarioServico.CpfCnpj <> '')
+   then begin
+    if VersaoXML = '1'
+      then begin
+       Gerador.wGrupoNFSe('IntermediarioServico');
+        Gerador.wCampoNFSe(tcStr, '#48', 'RazaoSocial', 001, 115, 0, NFSe.IntermediarioServico.RazaoSocial, '');
+        Gerador.wGrupoNFSe('CpfCnpj');
+        if Length(SomenteNumeros(NFSe.IntermediarioServico.CpfCnpj)) <= 11
+          then Gerador.wCampoNFSe(tcStr, '#49', 'Cpf ', 11, 11, 1, SomenteNumeros(NFSe.IntermediarioServico.CpfCnpj), '')
+          else Gerador.wCampoNFSe(tcStr, '#49', 'Cnpj', 14, 14, 1, SomenteNumeros(NFSe.IntermediarioServico.CpfCnpj), '');
+        Gerador.wGrupoNFSe('/CpfCnpj');
+        Gerador.wCampoNFSe(tcStr, '#50', 'InscricaoMunicipal', 01, 15, 0, NFSe.IntermediarioServico.InscricaoMunicipal, '');
+       Gerador.wGrupoNFSe('/IntermediarioServico');
+      end
+      else begin
        Gerador.wGrupoNFSe('Intermediario');
-       Gerador.wGrupoNFSe('IdentificacaoIntermediario');
-     end;
-   else
-     Gerador.wGrupoNFSe('IntermediarioServico');
-     Gerador.wCampoNFSe(tcStr, '#48', 'RazaoSocial', 001, 115, 0, NFSe.IntermediarioServico.RazaoSocial, '');
-   end;
-
-   Gerador.wGrupoNFSe('CpfCnpj');
-
-   if Length(SomenteNumeros(NFSe.IntermediarioServico.CpfCnpj))<=11
-    then Gerador.wCampoNFSe(tcStr, '#49', 'Cpf ', 11, 11, 1, SomenteNumeros(NFSe.IntermediarioServico.CpfCnpj), '')
-    else Gerador.wCampoNFSe(tcStr, '#49', 'Cnpj', 14, 14, 1, SomenteNumeros(NFSe.IntermediarioServico.CpfCnpj), '');
-
-   Gerador.wGrupoNFSe('/CpfCnpj');
-
-   Gerador.wCampoNFSe(tcStr, '#50', 'InscricaoMunicipal', 01, 15, 0, NFSe.IntermediarioServico.InscricaoMunicipal, '');
-
-   case FProvedor of
-   proISSe:                                                           // Alteraçãoes para Maringá PR - Rafael Marcelo dos Santos
-     begin
-       Gerador.wGrupoNFSe('/IdentificacaoIntermediario');
-       Gerador.wCampoNFSe(tcStr, '#48', 'RazaoSocial', 001, 115, 0, NFSe.IntermediarioServico.RazaoSocial, '');
+        Gerador.wGrupoNFSe('IdentificacaoIntermediario');
+         Gerador.wGrupoNFSe('CpfCnpj');
+         if Length(SomenteNumeros(NFSe.IntermediarioServico.CpfCnpj))<=11
+           then Gerador.wCampoNFSe(tcStr, '#49', 'Cpf ', 11, 11, 1, SomenteNumeros(NFSe.IntermediarioServico.CpfCnpj), '')
+           else Gerador.wCampoNFSe(tcStr, '#49', 'Cnpj', 14, 14, 1, SomenteNumeros(NFSe.IntermediarioServico.CpfCnpj), '');
+         Gerador.wGrupoNFSe('/CpfCnpj');
+         Gerador.wCampoNFSe(tcStr, '#50', 'InscricaoMunicipal', 01, 15, 0, NFSe.IntermediarioServico.InscricaoMunicipal, '');
+        Gerador.wGrupoNFSe('/IdentificacaoIntermediario');
+        Gerador.wCampoNFSe(tcStr, '#48', 'RazaoSocial', 001, 115, 0, NFSe.IntermediarioServico.RazaoSocial, '');
        Gerador.wGrupoNFSe('/Intermediario');
-     end;
-   else
-     Gerador.wGrupoNFSe('/IntermediarioServico');
+      end;
    end;
-
-  end;
-
-
 end;
 
 procedure TNFSeW.GerarConstrucaoCivil;
@@ -815,365 +605,157 @@ begin
  if NFSe.ConstrucaoCivil.CodigoObra<>''
   then begin
    Gerador.wGrupoNFSe('ConstrucaoCivil');
-   Gerador.wCampoNFSe(tcStr, '#51', 'CodigoObra', 01, 15, 1, NFSe.ConstrucaoCivil.CodigoObra, '');
-   Gerador.wCampoNFSe(tcStr, '#52', 'Art       ', 01, 15, 1, NFSe.ConstrucaoCivil.Art, '');
+    Gerador.wCampoNFSe(tcStr, '#51', 'CodigoObra', 01, 15, 1, NFSe.ConstrucaoCivil.CodigoObra, '');
+    Gerador.wCampoNFSe(tcStr, '#52', 'Art       ', 01, 15, 1, NFSe.ConstrucaoCivil.Art, '');
    Gerador.wGrupoNFSe('/ConstrucaoCivil');
   end;
 end;
 
-procedure TNFSeW.GerarValoresServico;
+////////////////////////////////////////////////////////////////////////////////
+
+procedure TNFSeW.GerarXML_ABRASF_V1;
 begin
- Gerador.wGrupoNFSe('ValoresServico');
+  if FIdentificador = ''
+    then Gerador.wGrupoNFSe('InfRps')
+    else Gerador.wGrupoNFSe('InfRps ' + FIdentificador + '="rps' + NFSe.InfID.ID + '"');
 
- Gerador.wCampoNFSe(tcDe2, '#15', 'ValorPis        ', 01, 15, 0, NFSe.Servico.Valores.ValorPis, '');
- Gerador.wCampoNFSe(tcDe2, '#16', 'ValorCofins     ', 01, 15, 0, NFSe.Servico.Valores.ValorCofins, '');
- Gerador.wCampoNFSe(tcDe2, '#17', 'ValorInss       ', 01, 15, 0, NFSe.Servico.Valores.ValorInss, '');
- Gerador.wCampoNFSe(tcDe2, '#18', 'ValorIr         ', 01, 15, 0, NFSe.Servico.Valores.ValorIr, '');
- Gerador.wCampoNFSe(tcDe2, '#19', 'ValorCsll       ', 01, 15, 0, NFSe.Servico.Valores.ValorCsll, '');
- Gerador.wCampoNFSe(tcDe2, '#21', 'ValorIss        ', 01, 15, 1, NFSe.Servico.Valores.ValorIss, '');
- Gerador.wCampoNFSe(tcDe2, '#13', 'ValorLiquidoNfse', 01, 15, 1, NFSe.Servico.Valores.ValorLiquidoNfse, '');
- Gerador.wCampoNFSe(tcDe2, '#13', 'ValorServicos   ', 01, 15, 1, NFSe.Servico.Valores.ValorServicos, '');
+   GerarIdentificacaoRPS;
 
- Gerador.wGrupoNFSe('/ValoresServico');
+   Gerador.wCampoNFSe(tcDatHor, '#4', 'DataEmissao     ', 19, 19, 1, NFSe.DataEmissao, DSC_DEMI);
+   Gerador.wCampoNFSe(tcStr,    '#5', 'NaturezaOperacao', 01, 01, 1, NaturezaOperacaoToStr(NFSe.NaturezaOperacao), '');
+
+   if FProvedor <> proPublica
+     then begin
+       if (NFSe.RegimeEspecialTributacao <> retNenhum)
+         then Gerador.wCampoNFSe(tcStr, '#6', 'RegimeEspecialTributacao', 01, 01, 0, RegimeEspecialTributacaoToStr(NFSe.RegimeEspecialTributacao), '');
+     end;
+
+   Gerador.wCampoNFSe(tcStr, '#7', 'OptanteSimplesNacional', 01, 01, 1, SimNaoToStr(NFSe.OptanteSimplesNacional), '');
+   Gerador.wCampoNFSe(tcStr, '#8', 'IncentivadorCultural  ', 01, 01, 1, SimNaoToStr(NFSe.IncentivadorCultural), '');
+   Gerador.wCampoNFSe(tcStr, '#9', 'Status                ', 01, 01, 1, StatusRPSToStr(NFSe.Status), '');
+
+   if FProvedor in [proBetha, proFISSLex, proSimplISS]
+    then Gerador.wCampoNFSe(tcStr, '#11', 'OutrasInformacoes', 001, 255, 0, NFSe.OutrasInformacoes, '');
+
+   GerarRPSSubstituido;
+
+   GerarServicoValores_V1;
+   GerarPrestador;
+   GerarTomador;
+   GerarIntermediarioServico;
+   GerarConstrucaoCivil;
+
+  Gerador.wGrupoNFSe('/InfRps');
 end;
 
-procedure TNFSeW.GerarXML_Provedor_fintelISS;
+////////////////////////////////////////////////////////////////////////////////
+
+procedure TNFSeW.GerarXML_ABRASF_V2;
 begin
- Gerador.wGrupoNFSe('InfDeclaracaoPrestacaoServico');
- if FIdentificador = ''
-  then Gerador.wGrupoNFSe('Rps')
-  else Gerador.wGrupoNFSe('Rps ' + FIdentificador + '="rps' + NFSe.InfID.ID + '"');
+  if FProvedor in [proCoplan, proDigifred, proFiorilli, proISSe, proISSDigital]
+    then begin
+      Gerador.wGrupoNFSe('InfDeclaracaoPrestacaoServico ' + FIdentificador + '="rps' + NFSe.InfID.ID + '"');
+       Gerador.wGrupoNFSe('Rps');
+    end
+    else begin
+      Gerador.wGrupoNFSe('InfDeclaracaoPrestacaoServico');
+       if FIdentificador = ''
+         then Gerador.wGrupoNFSe('Rps')
+         else Gerador.wGrupoNFSe('Rps ' + FIdentificador + '="rps' + NFSe.InfID.ID + '"');
+    end;
 
- GerarIdentificacaoRPS;
+    GerarIdentificacaoRPS;
 
- Gerador.wCampoNFSe(tcDatHor, '#4', 'DataEmissao', 19, 19, 1, NFSe.DataEmissao, DSC_DEMI);
+    if FProvedor in [proAgili, proCoplan, proDigifred, proFiorilli, proISSe, proISSDigital, proProdata, proSaatri]
+      then Gerador.wCampoNFSe(tcDat,    '#4', 'DataEmissao', 19, 19, 1, NFSe.DataEmissao, DSC_DEMI)
+      else Gerador.wCampoNFSe(tcDatHor, '#4', 'DataEmissao', 19, 19, 1, NFSe.DataEmissao, DSC_DEMI);
 
- Gerador.wCampoNFSe(tcStr,    '#9', 'Status     ', 01, 01, 1, StatusRPSToStr(NFSe.Status), '');
- Gerador.wGrupoNFSe('/Rps');
+    Gerador.wCampoNFSe(tcStr,    '#9', 'Status     ', 01, 01, 1, StatusRPSToStr(NFSe.Status), '');
 
- GerarServico;
+    GerarRPSSubstituido;
 
- if NFSe.Competencia <> ''
-  then Gerador.wCampoNFSe(tcStr   , '#4', 'Competencia', 19, 19, 1, NFSe.Competencia, DSC_DEMI)
-  else Gerador.wCampoNFSe(tcDatHor, '#4', 'Competencia', 19, 19, 1, NFSe.DataEmissao, DSC_DEMI);
+   Gerador.wGrupoNFSe('/Rps');
 
- GerarPrestador;
- GerarTomador;
- GerarIntermediarioServico;
- GerarConstrucaoCivil;
+   if FProvedor = profintelISS
+     then begin
+      GerarListaServicos;
 
- if (NFSe.RegimeEspecialTributacao <> retNenhum)
-  then Gerador.wCampoNFSe(tcStr, '#6', 'RegimeEspecialTributacao', 01, 01, 0, RegimeEspecialTributacaoToStr(NFSe.RegimeEspecialTributacao), '');
+      if NFSe.Competencia <> ''
+        then Gerador.wCampoNFSe(tcStr   , '#4', 'Competencia', 19, 19, 1, NFSe.Competencia, DSC_DEMI)
+        else Gerador.wCampoNFSe(tcDatHor, '#4', 'Competencia', 19, 19, 1, NFSe.DataEmissao, DSC_DEMI);
+     end
+     else begin
+      if NFSe.Competencia <> ''
+        then Gerador.wCampoNFSe(tcStr   , '#4', 'Competencia', 19, 19, 1, NFSe.Competencia, DSC_DEMI)
+        else Gerador.wCampoNFSe(tcDatHor, '#4', 'Competencia', 19, 19, 1, NFSe.DataEmissao, DSC_DEMI);
 
- Gerador.wCampoNFSe(tcStr, '#7', 'OptanteSimplesNacional', 01, 01, 1, SimNaoToStr(NFSe.OptanteSimplesNacional), '');
- Gerador.wCampoNFSe(tcStr, '#8', 'IncentivoFiscal       ', 01, 01, 1, SimNaoToStr(NFSe.IncentivadorCultural), '');
- GerarValoresServico;
- Gerador.wGrupoNFSe('/InfDeclaracaoPrestacaoServico');
+      GerarServicoValores_V2;
+     end;
+
+   GerarPrestador;
+   GerarTomador;
+   GerarIntermediarioServico;
+   GerarConstrucaoCivil;
+
+   if NFSe.RegimeEspecialTributacao <> retNenhum
+     then Gerador.wCampoNFSe(tcStr, '#6', 'RegimeEspecialTributacao', 01, 01, 0, RegimeEspecialTributacaoToStr(NFSe.RegimeEspecialTributacao), '');
+
+   Gerador.wCampoNFSe(tcStr, '#7', 'OptanteSimplesNacional', 01, 01, 1, SimNaoToStr(NFSe.OptanteSimplesNacional), '');
+   Gerador.wCampoNFSe(tcStr, '#8', 'IncentivoFiscal       ', 01, 01, 1, SimNaoToStr(NFSe.IncentivadorCultural), '');
+
+   if FProvedor = profintelISS
+     then GerarValoresServico;
+
+   if FProvedor in [proAgili, proISSDigital]
+     then Gerador.wCampoNFSe(tcStr, '#9', 'Producao', 01, 01, 1, SimNaoToStr(NFSe.Producao), '');
+
+  Gerador.wGrupoNFSe('/InfDeclaracaoPrestacaoServico');
 end;
 
-procedure TNFSeW.GerarXML_Provedor_Saatri;
+////////////////////////////////////////////////////////////////////////////////
+
+procedure TNFSeW.GerarServico_Provedor_IssDsf;
+var
+   i: integer;
+   sDeducaoPor, sTipoDeducao: string;
 begin
- Gerador.wGrupoNFSe('InfDeclaracaoPrestacaoServico');
- if FIdentificador = ''
-  then Gerador.wGrupoNFSe('Rps')
-  else Gerador.wGrupoNFSe('Rps ' + FIdentificador + '="rps' + NFSe.InfID.ID + '"');
 
- GerarIdentificacaoRPS;
+   for i:=0 to NFSe.Servico.ItemServico.Count -1 do begin
+       Gerador.wCampoNFSe(tcStr, '', 'DiscriminacaoServico', 01, 80, 1, NFSe.Servico.ItemServico.Items[i].Descricao , '');
+       Gerador.wCampoNFSe(tcDe4, '', 'Quantidade'          , 01, 15, 1, NFSe.Servico.ItemServico.Items[i].Quantidade , '');
+       Gerador.wCampoNFSe(tcDe4, '', 'ValorUnitario'       , 01, 20, 1, NFSe.Servico.ItemServico.Items[i].ValorUnitario , '');
+       Gerador.wCampoNFSe(tcDe2, '', 'ValorTotal'          , 01, 18, 1, NFSe.Servico.ItemServico.Items[i].ValorTotal , '');
+       Gerador.wCampoNFSe(tcStr, '', 'Tributavel'          , 01, 01, 0, NFSe.Servico.ItemServico.Items[i].Descricao , '');
+   end;
 
- Gerador.wCampoNFSe(tcDat,    '#4', 'DataEmissao', 19, 19, 1, NFSe.DataEmissao, DSC_DEMI);
+   for i:=0 to NFSe.Servico.Deducao.Count -1 do begin
+      Gerador.wGrupoNFSe('Deducoes');
+         Gerador.wGrupoNFSe('Deducao');
 
- Gerador.wCampoNFSe(tcStr,    '#9', 'Status     ', 01, 01, 1, StatusRPSToStr(NFSe.Status), '');
- Gerador.wGrupoNFSe('/Rps');
+            sDeducaoPor := EnumeradoToStr( NFSe.Servico.Deducao.Items[i].DeducaoPor,
+                                           ['Percentual', 'Valor'], [dpPercentual, dpValor]);
+            Gerador.wCampoNFSe(tcStr, '', 'DeducaoPor', 01, 20, 1, sDeducaoPor , '');
 
- if NFSe.Competencia <> ''
-  then Gerador.wCampoNFSe(tcStr, '#4', 'Competencia', 19, 19, 1, NFSe.Competencia, DSC_DEMI)
-  else Gerador.wCampoNFSe(tcDat, '#4', 'Competencia', 19, 19, 1, NFSe.DataEmissao, DSC_DEMI);
+            sTipoDeducao := EnumeradoToStr( NFSe.Servico.Deducao.Items[i].DeducaoPor,
+                                            ['', 'Despesas com Materiais', 'Despesas com Sub-empreitada'],
+                                            [tdNenhum, tdMateriais, tdSubEmpreitada]);
+            Gerador.wCampoNFSe(tcStr, '', 'TipoDeducao', 00, 255, 1, sTipoDeducao , '');
 
- GerarServico;
+            Gerador.wCampoNFSe(tcStr, '', 'CPFCNPJReferencia'   , 00, 14, 1, NFSe.Servico.Deducao.Items[i].CpfCnpjReferencia , '');
+            Gerador.wCampoNFSe(tcStr, '', 'NumeroNFReferencia'  , 00, 10, 1, NFSe.Servico.Deducao.Items[i].NumeroNFReferencia, '');
+            Gerador.wCampoNFSe(tcDe2, '', 'ValorTotalReferencia', 00, 18, 1, NFSe.Servico.Deducao.Items[i].ValorTotalReferencia, '');
+            Gerador.wCampoNFSe(tcDe2, '', 'PercentualDeduzir'   , 00, 08, 1, NFSe.Servico.Deducao.Items[i].PercentualDeduzir, '');
 
- GerarPrestador;
- GerarTomador;
- GerarIntermediarioServico;
- GerarConstrucaoCivil;
-
- if (NFSe.RegimeEspecialTributacao <> retNenhum)
-  then Gerador.wCampoNFSe(tcStr, '#6', 'RegimeEspecialTributacao', 01, 01, 0, RegimeEspecialTributacaoToStr(NFSe.RegimeEspecialTributacao), '');
-
- Gerador.wCampoNFSe(tcStr, '#7', 'OptanteSimplesNacional', 01, 01, 1, SimNaoToStr(NFSe.OptanteSimplesNacional), '');
- Gerador.wCampoNFSe(tcStr, '#8', 'IncentivoFiscal       ', 01, 01, 1, SimNaoToStr(NFSe.IncentivadorCultural), '');
-// GerarValoresServico;
- Gerador.wGrupoNFSe('/InfDeclaracaoPrestacaoServico');
+         Gerador.wGrupoNFSe('/Deducao');
+      Gerador.wGrupoNFSe('/Deducoes');
+   end;
 end;
 
-procedure TNFSeW.GerarXML_Provedor_Goiania;
-begin
- Gerador.wGrupoNFSe('InfDeclaracaoPrestacaoServico');
- if FIdentificador = ''
-  then Gerador.wGrupoNFSe('Rps')
-  else Gerador.wGrupoNFSe('Rps ' + FIdentificador + '="rps' + NFSe.InfID.ID + '"');
-
- GerarIdentificacaoRPS;
-
- // Alterado por Cleiver em 26/02/2013
- Gerador.wCampoNFSe(tcDatHor, '#4', 'DataEmissao', 19, 19, 1, NFSe.DataEmissao, DSC_DEMI);
- Gerador.wCampoNFSe(tcStr,    '#9', 'Status     ', 01, 01, 1, StatusRPSToStr(NFSe.Status), '');
- Gerador.wGrupoNFSe('/Rps');
-
-// Gerador.wCampoNFSe(tcDat   , '#4', 'Competencia', 19, 19, 1, NFSe.DataEmissao, DSC_DEMI);
- GerarServico;
-
- GerarPrestador;
- GerarTomador;
- GerarIntermediarioServico;
- GerarConstrucaoCivil;
-
- if (NFSe.RegimeEspecialTributacao <> retNenhum)
-  then Gerador.wCampoNFSe(tcStr, '#6', 'RegimeEspecialTributacao', 01, 01, 0, RegimeEspecialTributacaoToStr(NFSe.RegimeEspecialTributacao), '');
-
-// Gerador.wCampoNFSe(tcStr, '#7', 'OptanteSimplesNacional', 01, 01, 1, SimNaoToStr(NFSe.OptanteSimplesNacional), '');
-// Gerador.wCampoNFSe(tcStr, '#8', 'IncentivoFiscal       ', 01, 01, 1, SimNaoToStr(NFSe.IncentivadorCultural), '');
-// GerarValoresServico;
- Gerador.wGrupoNFSe('/InfDeclaracaoPrestacaoServico');
-end;
-
-procedure TNFSeW.GerarXML_Provedor_Prodata;
-begin
- Gerador.wGrupoNFSe('InfDeclaracaoPrestacaoServico');
- if FIdentificador = ''
-  then Gerador.wGrupoNFSe('Rps')
-  else Gerador.wGrupoNFSe('Rps ' + FIdentificador + '="rps' + NFSe.InfID.ID + '"');
-
- GerarIdentificacaoRPS;
- Gerador.wCampoNFSe(tcDat, '#4', 'DataEmissao', 10, 10, 1, NFSe.DataEmissao, DSC_DEMI);
- Gerador.wCampoNFSe(tcStr, '#9', 'Status     ', 01, 01, 1, StatusRPSToStr(NFSe.Status), '');
- Gerador.wGrupoNFSe('/Rps');
-
- if NFSe.Competencia <> ''
-  then Gerador.wCampoNFSe(tcStr, '#4', 'Competencia', 19, 19, 1, NFSe.Competencia, DSC_DEMI)
-  else Gerador.wCampoNFSe(tcDat, '#4', 'Competencia', 19, 19, 1, NFSe.DataEmissao, DSC_DEMI);
-
- GerarServico;
-
- GerarPrestador;
- GerarTomador;
- GerarIntermediarioServico;
- GerarConstrucaoCivil;
-
- if (NFSe.RegimeEspecialTributacao <> retNenhum)
-  then Gerador.wCampoNFSe(tcStr, '#6', 'RegimeEspecialTributacao', 01, 01, 0, RegimeEspecialTributacaoToStr(NFSe.RegimeEspecialTributacao), '');
-
- Gerador.wCampoNFSe(tcStr, '#7', 'OptanteSimplesNacional', 01, 01, 1, SimNaoToStr(NFSe.OptanteSimplesNacional), '');
- Gerador.wCampoNFSe(tcStr, '#8', 'IncentivoFiscal       ', 01, 01, 1, SimNaoToStr(NFSe.IncentivadorCultural), '');
-// GerarValoresServico;
- Gerador.wGrupoNFSe('/InfDeclaracaoPrestacaoServico');
-end;
-
-procedure TNFSeW.GerarXML_Provedor_Digifred;
-begin
- Gerador.wGrupoNFSe('InfDeclaracaoPrestacaoServico ' + FIdentificador + '="rps' + NFSe.InfID.ID + '"');
- Gerador.wGrupoNFSe('Rps');
-
- GerarIdentificacaoRPS;
-
- Gerador.wCampoNFSe(tcDat,    '#4', 'DataEmissao', 19, 19, 1, NFSe.DataEmissao, DSC_DEMI);
- Gerador.wCampoNFSe(tcStr,    '#9', 'Status     ', 01, 01, 1, StatusRPSToStr(NFSe.Status), '');
- Gerador.wGrupoNFSe('/Rps');
-
- if NFSe.Competencia <> ''
-  then Gerador.wCampoNFSe(tcStr, '#4', 'Competencia', 19, 19, 1, NFSe.Competencia, DSC_DEMI)
-  else Gerador.wCampoNFSe(tcDat, '#4', 'Competencia', 19, 19, 1, NFSe.DataEmissao, DSC_DEMI);
-
- GerarServico;
-
- GerarPrestador;
- GerarTomador;
- GerarIntermediarioServico;
- GerarConstrucaoCivil;
-
- if (NFSe.RegimeEspecialTributacao <> retNenhum)
-  then Gerador.wCampoNFSe(tcStr, '#6', 'RegimeEspecialTributacao', 01, 01, 0, RegimeEspecialTributacaoToStr(NFSe.RegimeEspecialTributacao), '');
-
- Gerador.wCampoNFSe(tcStr, '#7', 'OptanteSimplesNacional', 01, 01, 1, SimNaoToStr(NFSe.OptanteSimplesNacional), '');
- Gerador.wCampoNFSe(tcStr, '#8', 'IncentivoFiscal       ', 01, 01, 1, SimNaoToStr(NFSe.IncentivadorCultural), '');
-// GerarValoresServico;
- Gerador.wGrupoNFSe('/InfDeclaracaoPrestacaoServico');
-end;
-
-procedure TNFSeW.GerarXML_Provedor_ISSDigital;
-begin
- Gerador.wGrupoNFSe('InfDeclaracaoPrestacaoServico xmlns="http://www.abrasf.org.br/nfse.xsd" ' + FIdentificador + '="' + (NFSe.NumeroLote) + '"');
-
- if NFSe.NumeroLote <> ''
-  then Gerador.wGrupoNFSe('Rps ' + FIdentificador + '="' + (NFSe.IdentificacaoRps.Numero) +'"')
-  else Gerador.wGrupoNFSe('Rps');
-
-// Gerador.wGrupoNFSe('InfDeclaracaoPrestacaoServico ' + FIdentificador + '="' + NFSe.NumeroLote + '"');
-// Gerador.wGrupoNFSe('Rps ' + FIdentificador + '="' + NFSe.IdentificacaoRps.Serie +'"');
-
-// Gerador.wGrupoNFSe('InfDeclaracaoPrestacaoServico');
-// Gerador.wGrupoNFSe('Rps ' + FIdentificador + '="rps' + NFSe.InfID.ID + '"');
-
- (*
- Gerador.wGrupoNFSe('InfDeclaracaoPrestacaoServico xmlns="http://www.abrasf.org.br/nfse.xsd" ' +
-                                FIdentificador + '="NSe' + NFSe.InfID.ID + '"');
- Gerador.wGrupoNFSe('Rps ' + FIdentificador + '="NSe' + NFSe.InfID.ID + '"');
- *)
- GerarIdentificacaoRPS;
-
- Gerador.wCampoNFSe(tcDat,    '#4', 'DataEmissao', 19, 19, 1, NFSe.DataEmissao, DSC_DEMI);
- Gerador.wCampoNFSe(tcStr,    '#9', 'Status     ', 01, 01, 1, StatusRPSToStr(NFSe.Status), '');
- Gerador.wGrupoNFSe('/Rps');
-
- if NFSe.Competencia <> ''
-  then Gerador.wCampoNFSe(tcStr, '#4', 'Competencia', 19, 19, 1, NFSe.Competencia, DSC_DEMI)
-  else Gerador.wCampoNFSe(tcDat, '#4', 'Competencia', 19, 19, 1, NFSe.DataEmissao, DSC_DEMI);
-
- GerarServico;
-
- GerarPrestador;
- GerarTomador;
- GerarIntermediarioServico;
- GerarConstrucaoCivil;
-
- if (NFSe.RegimeEspecialTributacao <> retNenhum)
-  then Gerador.wCampoNFSe(tcStr, '#6', 'RegimeEspecialTributacao', 01, 01, 0, RegimeEspecialTributacaoToStr(NFSe.RegimeEspecialTributacao), '');
-
- Gerador.wCampoNFSe(tcStr, '#7', 'OptanteSimplesNacional', 01, 01, 1, SimNaoToStr(NFSe.OptanteSimplesNacional), '');
- Gerador.wCampoNFSe(tcStr, '#8', 'IncentivoFiscal       ', 01, 01, 1, SimNaoToStr(NFSe.IncentivadorCultural), '');
- Gerador.wCampoNFSe(tcStr, '#9', 'Producao              ', 01, 01, 1, SimNaoToStr(NFSe.Producao), '');
- Gerador.wGrupoNFSe('/InfDeclaracaoPrestacaoServico');
-end;
-
-procedure TNFSeW.GerarXML_Provedor_ISSe;
-begin
- Gerador.wGrupoNFSe('InfDeclaracaoPrestacaoServico ' + FIdentificador + '="rps' + NFSe.InfID.ID + '"');
- Gerador.wGrupoNFSe('Rps');
-
- GerarIdentificacaoRPS;
-
- Gerador.wCampoNFSe(tcDat,    '#4', 'DataEmissao', 19, 19, 1, NFSe.DataEmissao, DSC_DEMI);
- Gerador.wCampoNFSe(tcStr,    '#9', 'Status     ', 01, 01, 1, StatusRPSToStr(NFSe.Status), '');
- Gerador.wGrupoNFSe('/Rps');
-
- if NFSe.Competencia <> ''
-  then Gerador.wCampoNFSe(tcStr, '#4', 'Competencia', 19, 19, 1, NFSe.Competencia, DSC_DEMI)
-  else Gerador.wCampoNFSe(tcDat, '#4', 'Competencia', 19, 19, 1, NFSe.DataEmissao, DSC_DEMI);
-
- GerarServico;
-
- GerarPrestador;
- GerarTomador;
- GerarIntermediarioServico;
- GerarConstrucaoCivil;
-
- if (NFSe.RegimeEspecialTributacao <> retNenhum)
-  then Gerador.wCampoNFSe(tcStr, '#6', 'RegimeEspecialTributacao', 01, 01, 0, RegimeEspecialTributacaoToStr(NFSe.RegimeEspecialTributacao), '');
-
- Gerador.wCampoNFSe(tcStr, '#7', 'OptanteSimplesNacional', 01, 01, 1, SimNaoToStr(NFSe.OptanteSimplesNacional), '');
- Gerador.wCampoNFSe(tcStr, '#8', 'IncentivoFiscal       ', 01, 01, 1, SimNaoToStr(NFSe.IncentivadorCultural), '');
-// GerarValoresServico;
- Gerador.wGrupoNFSe('/InfDeclaracaoPrestacaoServico');
-end;
-
-procedure TNFSeW.GerarXML_Provedor_4R;
-begin
- Gerador.wGrupoNFSe('InfDeclaracaoPrestacaoServico');
- if FIdentificador = ''
-  then Gerador.wGrupoNFSe('Rps')
-  else Gerador.wGrupoNFSe('Rps ' + FIdentificador + '="rps' + NFSe.InfID.ID + '"');
-
- GerarIdentificacaoRPS;
-
- // Alterado por Cleiver em 26/02/2013
- Gerador.wCampoNFSe(tcDatHor, '#4', 'DataEmissao', 19, 19, 1, NFSe.DataEmissao, DSC_DEMI);
- Gerador.wCampoNFSe(tcStr,    '#9', 'Status     ', 01, 01, 1, StatusRPSToStr(NFSe.Status), '');
- Gerador.wGrupoNFSe('/Rps');
-
- if NFSe.Competencia <> ''
-  then Gerador.wCampoNFSe(tcStr   , '#4', 'Competencia', 19, 19, 1, NFSe.Competencia, DSC_DEMI)
-  else Gerador.wCampoNFSe(tcDatHor, '#4', 'Competencia', 19, 19, 1, NFSe.DataEmissao, DSC_DEMI);
-
- GerarServico;
-
- GerarPrestador;
- GerarTomador;
- GerarIntermediarioServico;
- GerarConstrucaoCivil;
-
- if (NFSe.RegimeEspecialTributacao <> retNenhum)
-  then Gerador.wCampoNFSe(tcStr, '#6', 'RegimeEspecialTributacao', 01, 01, 0, RegimeEspecialTributacaoToStr(NFSe.RegimeEspecialTributacao), '');
-
- Gerador.wCampoNFSe(tcStr, '#7', 'OptanteSimplesNacional', 01, 01, 1, SimNaoToStr(NFSe.OptanteSimplesNacional), '');
- Gerador.wCampoNFSe(tcStr, '#8', 'IncentivoFiscal       ', 01, 01, 1, SimNaoToStr(NFSe.IncentivadorCultural), '');
-// GerarValoresServico;
-
- Gerador.wGrupoNFSe('/InfDeclaracaoPrestacaoServico');
-end;
-
-procedure TNFSeW.GerarXML_Provedor_Fiorilli;
-begin
- Gerador.wGrupoNFSe('InfDeclaracaoPrestacaoServico ' + FIdentificador + '="rps' + NFSe.InfID.ID + '"');
- Gerador.wGrupoNFSe('Rps');
- GerarIdentificacaoRPS;
-
- Gerador.wCampoNFSe(tcDat, '#4', 'DataEmissao     ', 1, 10, 1, NFSe.DataEmissao, DSC_DEMI);
-
- Gerador.wCampoNFSe(tcStr,    '#9', 'Status     ', 01, 01, 1, StatusRPSToStr(NFSe.Status), '');
- Gerador.wGrupoNFSe('/Rps');
-
- if NFSe.Competencia <> ''
-  then Gerador.wCampoNFSe(tcStr, '#4', 'Competencia', 19, 19, 1, NFSe.Competencia, DSC_DEMI)
-  else Gerador.wCampoNFSe(tcDat, '#4', 'Competencia', 1, 10, 1, NFSe.DataEmissao, DSC_DEMI);
-
- GerarServico;
-
- GerarPrestador;
- GerarTomador;
- GerarIntermediarioServico;
- GerarConstrucaoCivil;
-
- if (NFSe.RegimeEspecialTributacao <> retNenhum)
-  then Gerador.wCampoNFSe(tcStr, '#6', 'RegimeEspecialTributacao', 01, 01, 0, RegimeEspecialTributacaoToStr(NFSe.RegimeEspecialTributacao), '');
-
- Gerador.wCampoNFSe(tcStr, '#7', 'OptanteSimplesNacional', 01, 01, 1, SimNaoToStr(NFSe.OptanteSimplesNacional), '');
- Gerador.wCampoNFSe(tcStr, '#8', 'IncentivoFiscal       ', 01, 01, 1, SimNaoToStr(NFSe.IncentivadorCultural), '');
-// GerarValoresServico;
- Gerador.wGrupoNFSe('/InfDeclaracaoPrestacaoServico');
-end;
-
-procedure TNFSeW.GerarXML_Provedor_Coplan;
-begin
- Gerador.wGrupoNFSe('InfDeclaracaoPrestacaoServico ' + FIdentificador + '="rps' + NFSe.InfID.ID + '"');
- Gerador.wGrupoNFSe('Rps');
-
- GerarIdentificacaoRPS;
-
- Gerador.wCampoNFSe(tcDat,    '#4', 'DataEmissao', 19, 19, 1, NFSe.DataEmissao, DSC_DEMI);
- Gerador.wCampoNFSe(tcStr,    '#9', 'Status     ', 01, 01, 1, StatusRPSToStr(NFSe.Status), '');
- Gerador.wGrupoNFSe('/Rps');
-
- if NFSe.Competencia <> ''
-  then Gerador.wCampoNFSe(tcStr, '#4', 'Competencia', 19, 19, 1, NFSe.Competencia, DSC_DEMI)
-  else Gerador.wCampoNFSe(tcDat, '#4', 'Competencia', 19, 19, 1, NFSe.DataEmissao, DSC_DEMI);
-
- GerarServico;
-
- GerarPrestador;
- GerarTomador;
- GerarIntermediarioServico;
- GerarConstrucaoCivil;
-
- if (NFSe.RegimeEspecialTributacao <> retNenhum)
-  then Gerador.wCampoNFSe(tcStr, '#6', 'RegimeEspecialTributacao', 01, 01, 0, RegimeEspecialTributacaoToStr(NFSe.RegimeEspecialTributacao), '');
-
- Gerador.wCampoNFSe(tcStr, '#7', 'OptanteSimplesNacional', 01, 01, 1, SimNaoToStr(NFSe.OptanteSimplesNacional), '');
- Gerador.wCampoNFSe(tcStr, '#8', 'IncentivoFiscal       ', 01, 01, 1, SimNaoToStr(NFSe.IncentivadorCultural), '');
-
- Gerador.wGrupoNFSe('/InfDeclaracaoPrestacaoServico');
-end;
+////////////////////////////////////////////////////////////////////////////////
 
 procedure TNFSeW.GerarXML_Provedor_IssDsf;
-var sAssinatura, sSituacao, sTipoRecolhimento, sValorServico_Assinatura: string;
+var
+   sAssinatura, sSituacao, sTipoRecolhimento, sValorServico_Assinatura: string;
 begin
    Gerador.Prefixo := '';
    Gerador.wGrupoNFSe('Rps ' + FIdentificador + '="rps:' + NFSe.InfID.ID + '"');
@@ -1282,7 +864,7 @@ begin
          Gerador.wCampoNFSe(tcStr, '', 'Operacao',   01, 01, 1, 'C', '');
          Gerador.wCampoNFSe(tcStr, '', 'Tributacao', 01, 01, 1, 'C', '');
       end
-      else if (NFSe.NaturezaOperacao = noImune) then begin   
+      else if (NFSe.NaturezaOperacao = noImune) then begin
          Gerador.wCampoNFSe(tcStr, '', 'Operacao',   01, 01, 1, 'C', '');
          Gerador.wCampoNFSe(tcStr, '', 'Tributacao', 01, 01, 1, 'F', '');
       end
@@ -1348,109 +930,6 @@ begin
       GerarServico_Provedor_IssDsf;
 
    Gerador.wGrupoNFSe('/Rps');
-end;
-
-procedure TNFSeW.GerarServico_Provedor_IssDsf;
-var
-   i: integer;
-   sDeducaoPor, sTipoDeducao: string;
-begin
-
-   for i:=0 to NFSe.Servico.ItemServico.Count -1 do begin
-       Gerador.wCampoNFSe(tcStr, '', 'DiscriminacaoServico', 01, 80, 1, NFSe.Servico.ItemServico.Items[i].Descricao , '');
-       Gerador.wCampoNFSe(tcDe4, '', 'Quantidade'          , 01, 15, 1, NFSe.Servico.ItemServico.Items[i].Quantidade , '');
-       Gerador.wCampoNFSe(tcDe4, '', 'ValorUnitario'       , 01, 20, 1, NFSe.Servico.ItemServico.Items[i].ValorUnitario , '');
-       Gerador.wCampoNFSe(tcDe2, '', 'ValorTotal'          , 01, 18, 1, NFSe.Servico.ItemServico.Items[i].ValorTotal , '');
-       Gerador.wCampoNFSe(tcStr, '', 'Tributavel'          , 01, 01, 0, NFSe.Servico.ItemServico.Items[i].Descricao , '');
-   end;
-
-   for i:=0 to NFSe.Servico.Deducao.Count -1 do begin
-      Gerador.wGrupoNFSe('Deducoes');
-         Gerador.wGrupoNFSe('Deducao');
-
-            sDeducaoPor := EnumeradoToStr( NFSe.Servico.Deducao.Items[i].DeducaoPor,
-                                           ['Percentual', 'Valor'], [dpPercentual, dpValor]);
-            Gerador.wCampoNFSe(tcStr, '', 'DeducaoPor', 01, 20, 1, sDeducaoPor , '');
-
-            sTipoDeducao := EnumeradoToStr( NFSe.Servico.Deducao.Items[i].DeducaoPor,
-                                            ['', 'Despesas com Materiais', 'Despesas com Sub-empreitada'],
-                                            [tdNenhum, tdMateriais, tdSubEmpreitada]);
-            Gerador.wCampoNFSe(tcStr, '', 'TipoDeducao', 00, 255, 1, sTipoDeducao , '');
-
-            Gerador.wCampoNFSe(tcStr, '', 'CPFCNPJReferencia'   , 00, 14, 1, NFSe.Servico.Deducao.Items[i].CpfCnpjReferencia , '');
-            Gerador.wCampoNFSe(tcStr, '', 'NumeroNFReferencia'  , 00, 10, 1, NFSe.Servico.Deducao.Items[i].NumeroNFReferencia, '');
-            Gerador.wCampoNFSe(tcDe2, '', 'ValorTotalReferencia', 00, 18, 1, NFSe.Servico.Deducao.Items[i].ValorTotalReferencia, '');
-            Gerador.wCampoNFSe(tcDe2, '', 'PercentualDeduzir'   , 00, 08, 1, NFSe.Servico.Deducao.Items[i].PercentualDeduzir, '');
-
-         Gerador.wGrupoNFSe('/Deducao');
-      Gerador.wGrupoNFSe('/Deducoes');
-   end;
-
-end;
-
-procedure TNFSeW.GerarXML_Provedor_Agili;
-begin
- Gerador.wGrupoNFSe('InfDeclaracaoPrestacaoServico');
- Gerador.wGrupoNFSe('Rps ' + FIdentificador + '="rps' + NFSe.InfID.ID + '"');
- 
- GerarIdentificacaoRPS;
-
- Gerador.wCampoNFSe(tcDat,    '#4', 'DataEmissao', 19, 19, 1, NFSe.DataEmissao, DSC_DEMI);
- Gerador.wCampoNFSe(tcStr,    '#9', 'Status     ', 01, 01, 1, StatusRPSToStr(NFSe.Status), '');
- Gerador.wGrupoNFSe('/Rps');
-
- if NFSe.Competencia <> ''
-  then Gerador.wCampoNFSe(tcStr, '#4', 'Competencia', 19, 19, 1, NFSe.Competencia, DSC_DEMI)
-  else Gerador.wCampoNFSe(tcDat, '#4', 'Competencia', 19, 19, 1, NFSe.DataEmissao, DSC_DEMI);
-
- GerarServico;
-
- GerarPrestador;
- GerarTomador;
- GerarIntermediarioServico;
- GerarConstrucaoCivil;
-
- if (NFSe.RegimeEspecialTributacao <> retNenhum)
-  then Gerador.wCampoNFSe(tcStr, '#6', 'RegimeEspecialTributacao', 01, 01, 0, RegimeEspecialTributacaoToStr(NFSe.RegimeEspecialTributacao), '');
-
- Gerador.wCampoNFSe(tcStr, '#7', 'OptanteSimplesNacional', 01, 01, 1, SimNaoToStr(NFSe.OptanteSimplesNacional), '');
- Gerador.wCampoNFSe(tcStr, '#8', 'IncentivoFiscal       ', 01, 01, 1, SimNaoToStr(NFSe.IncentivadorCultural), '');
- Gerador.wCampoNFSe(tcStr, '#9', 'Producao              ', 01, 01, 1, SimNaoToStr(NFSe.Producao), '');
- Gerador.wGrupoNFSe('/InfDeclaracaoPrestacaoServico');
-end;
-
-procedure TNFSeW.GerarXML_Provedor_Virtual;
-begin
- Gerador.wGrupoNFSe('InfDeclaracaoPrestacaoServico');
- if FIdentificador = ''
-  then Gerador.wGrupoNFSe('Rps')
-  else Gerador.wGrupoNFSe('Rps ' + FIdentificador + '="rps' + NFSe.InfID.ID + '"');
-
- GerarIdentificacaoRPS;
-
- Gerador.wCampoNFSe(tcDatHor, '#4', 'DataEmissao', 19, 19, 1, NFSe.DataEmissao, DSC_DEMI);
- Gerador.wCampoNFSe(tcStr,    '#9', 'Status     ', 01, 01, 1, StatusRPSToStr(NFSe.Status), '');
- Gerador.wGrupoNFSe('/Rps');
-
- if NFSe.Competencia <> ''
-  then Gerador.wCampoNFSe(tcStr   , '#4', 'Competencia', 19, 19, 1, NFSe.Competencia, DSC_DEMI)
-  else Gerador.wCampoNFSe(tcDatHor, '#4', 'Competencia', 19, 19, 1, NFSe.DataEmissao, DSC_DEMI);
-
- GerarServico;
-
- GerarPrestador;
- GerarTomador;
- GerarIntermediarioServico;
- GerarConstrucaoCivil;
-
- if (NFSe.RegimeEspecialTributacao <> retNenhum)
-  then Gerador.wCampoNFSe(tcStr, '#6', 'RegimeEspecialTributacao', 01, 01, 0, RegimeEspecialTributacaoToStr(NFSe.RegimeEspecialTributacao), '');
-
- Gerador.wCampoNFSe(tcStr, '#7', 'OptanteSimplesNacional', 01, 01, 1, SimNaoToStr(NFSe.OptanteSimplesNacional), '');
- Gerador.wCampoNFSe(tcStr, '#8', 'IncentivoFiscal       ', 01, 01, 1, SimNaoToStr(NFSe.IncentivadorCultural), '');
- //GerarValoresServico;
-
- Gerador.wGrupoNFSe('/InfDeclaracaoPrestacaoServico');
 end;
 
 end.

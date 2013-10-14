@@ -35,6 +35,8 @@ type
     FPrestLogo: String;
     FPrefeitura: String;
     FNFSeCancelada: boolean;
+    FImprimeCanhoto: Boolean;
+
     procedure Notification(AComponent: TComponent; Operation: TOperation); override;
   public
     constructor Create(AOwner: TComponent); override;
@@ -63,6 +65,7 @@ type
     property PrestLogo: String read FPrestLogo write FPrestLogo;
     property Prefeitura: String read FPrefeitura write FPrefeitura;
     property NFSeCancelada: Boolean read FNFSeCancelada write FNFSeCancelada;
+    property ImprimeCanhoto: Boolean read FImprimeCanhoto write FImprimeCanhoto default False;
   end;
 
 implementation

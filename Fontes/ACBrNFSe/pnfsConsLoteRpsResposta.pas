@@ -609,11 +609,10 @@ end;
 
 function TretLote.LerXml_provedorIssDsf: boolean;  //falta homologar
 var
-  ok: boolean;
-  i, Item, posI, count: Integer;
-  sOperacao, sTributacao, VersaoXML: String;
-  strAux, strItem: AnsiString;
-  leitorAux, leitorItem:TLeitor;
+  i, posI, count: Integer;
+  VersaoXML: String;
+  strAux: AnsiString;
+  leitorAux: TLeitor;
 begin
   result := False;
 

@@ -33,25 +33,7 @@ type
    function Gera_CabMsg(Prefixo2, VersaoLayOut, VersaoDados, NameSpaceCab: String; ACodCidade: Integer): AnsiString; OverRide;
    function Gera_DadosSenha(CNPJ, Senha: String): AnsiString; OverRide;
    function Gera_TagF(Acao: TnfseAcao; Prefixo3: String): AnsiString; OverRide;
-   (*
-   function Gera_DadosMsgEnviarLote(Prefixo3, Prefixo4, Identificador,
-                                    NameSpaceDad, VersaoDados, VersaoXML,
-                                    NumeroLote, CNPJ, IM, QtdeNotas: String;
-                                    Notas, TagI, TagF: AnsiString): AnsiString; OverRide;
-   function Gera_DadosMsgConsLote(Prefixo3, Prefixo4, NameSpaceDad,
-                                  VersaoXML, Protocolo, CNPJ, IM: String;
-                                  TagI, TagF: AnsiString): AnsiString; OverRide;
-   function Gera_DadosMsgConsNFSeRPS(Prefixo3, Prefixo4, NameSpaceDad, VersaoXML,
-                                     NumeroRps, SerieRps, TipoRps, CNPJ, IM: String;
-                                     TagI, TagF: AnsiString): AnsiString; OverRide;
-   function Gera_DadosMsgConsNFSe(Prefixo3, Prefixo4, NameSpaceDad, VersaoXML,
-                                  CNPJ, IM: String;
-                                  DataInicial, DataFinal: TDateTime;
-                                  TagI, TagF: AnsiString; NumeroNFSe: string = ''): AnsiString; OverRide;
-   function Gera_DadosMsgCancelarNFSe(Prefixo4, NameSpaceDad, NumeroNFSe, CNPJ, IM,
-                                      CodMunicipio, CodCancelamento: String;
-                                      TagI, TagF: AnsiString): AnsiString; OverRide;
-   *)
+
    function GeraEnvelopeRecepcionarLoteRPS(URLNS: String; CabMsg, DadosMsg, DadosSenha: AnsiString): AnsiString; OverRide;
    function GeraEnvelopeConsultarSituacaoLoteRPS(URLNS: String; CabMsg, DadosMsg, DadosSenha: AnsiString): AnsiString; OverRide;
    function GeraEnvelopeConsultarLoteRPS(URLNS: String; CabMsg, DadosMsg, DadosSenha: AnsiString): AnsiString; OverRide;
@@ -118,7 +100,7 @@ var
 begin
  ConfigSchema.VersaoCabecalho := '1.00';
  ConfigSchema.VersaoDados     := '1.00';
- ConfigSchema.VersaoXML       := '2';
+ ConfigSchema.VersaoXML       := '1';
  ConfigSchema.NameSpaceXML    := 'http://www.abrasf.org.br/ABRASF/arquivos/';
  ConfigSchema.Cabecalho       := 'nfse.xsd';
  ConfigSchema.ServicoEnviar   := 'nfse.xsd';
@@ -267,285 +249,73 @@ begin
    acGerar:       Result := '';
  end;
 end;
-(*
-function TProvedorFISSLEX.Gera_DadosMsgEnviarLote(Prefixo3, Prefixo4,
-  Identificador, NameSpaceDad, VersaoDados, VersaoXML, NumeroLote, CNPJ,
-  IM, QtdeNotas: String; Notas, TagI, TagF: AnsiString): AnsiString;
-var
- DadosMsg: AnsiString;
-begin
- DadosMsg := '<' + Prefixo3 + 'LoteRps'+
-               DFeUtil.SeSenao(Identificador <> '', ' ' + Identificador + '="' + NumeroLote + '"', '') +
-               ' versao="' + VersaoDados + '">' +
-              '<' + Prefixo4 + 'NumeroLote>' +
-                NumeroLote +
-              '</' + Prefixo4 + 'NumeroLote>' +
 
-              DFeUtil.SeSenao(VersaoXML = '1',
-
-                '<' + Prefixo4 + 'CpfCnpj>' +
-                '<' + Prefixo4 + 'Cnpj>' +
-                  Cnpj +
-                '</' + Prefixo4 + 'Cnpj>' +
-                '</' + Prefixo4 + 'CpfCnpj>',
-
-                '<' + Prefixo4 + 'Cnpj>' +
-                  Cnpj +
-                '</' + Prefixo4 + 'Cnpj>') +
-
-              '<' + Prefixo4 + 'InscricaoMunicipal>' +
-                IM +
-              '</' + Prefixo4 + 'InscricaoMunicipal>' +
-              '<' + Prefixo4 + 'QuantidadeRps>' +
-                QtdeNotas +
-              '</' + Prefixo4 + 'QuantidadeRps>' +
-              '<' + Prefixo4 + 'ListaRps>' +
-               Notas +
-              '</' + Prefixo4 + 'ListaRps>' +
-             '</' + Prefixo3 + 'LoteRps>';
-
-  Result := TagI + DadosMsg + TagF;
-end;
-
-function TProvedorFISSLEX.Gera_DadosMsgConsLote(Prefixo3, Prefixo4,
-  NameSpaceDad, VersaoXML, Protocolo, CNPJ, IM: String; TagI,
-  TagF: AnsiString): AnsiString;
-var
- DadosMsg: AnsiString;
-begin
- DadosMsg := '<' + Prefixo3 + 'Prestador>' +
-
-               DFeUtil.SeSenao(VersaoXML = '1',
-
-                 '<' + Prefixo4 + 'CpfCnpj>' +
-                 '<' + Prefixo4 + 'Cnpj>' +
-                   Cnpj +
-                 '</' + Prefixo4 + 'Cnpj>' +
-                 '</' + Prefixo4 + 'CpfCnpj>',
-
-                 '<' + Prefixo4 + 'Cnpj>' +
-                   Cnpj +
-                 '</' + Prefixo4 + 'Cnpj>') +
-
-               '<' + Prefixo4 + 'InscricaoMunicipal>' +
-                 IM +
-               '</' + Prefixo4 + 'InscricaoMunicipal>' +
-              '</' + Prefixo3 + 'Prestador>' +
-              '<' + Prefixo3 + 'Protocolo>' +
-                Protocolo +
-              '</' + Prefixo3 + 'Protocolo>';
-
- Result := TagI + DadosMsg + TagF;
-end;
-
-function TProvedorFISSLEX.Gera_DadosMsgConsNFSeRPS(Prefixo3, Prefixo4,
-  NameSpaceDad, VersaoXML, NumeroRps, SerieRps, TipoRps, CNPJ, IM: String; TagI,
-  TagF: AnsiString): AnsiString;
-var
- DadosMsg: AnsiString;
-begin
- DadosMsg := '<' + Prefixo3 + 'IdentificacaoRps>' +
-              '<' + Prefixo4 + 'Numero>' +
-                NumeroRps +
-              '</' + Prefixo4 + 'Numero>' +
-              '<' + Prefixo4 + 'Serie>' +
-                SerieRps +
-              '</' + Prefixo4 + 'Serie>' +
-              '<' + Prefixo4 + 'Tipo>' +
-                TipoRps +
-              '</' + Prefixo4 + 'Tipo>' +
-             '</' + Prefixo3 + 'IdentificacaoRps>' +
-             '<' + Prefixo3 + 'Prestador>' +
-
-              DFeUtil.SeSenao(VersaoXML = '1',
-
-                '<' + Prefixo4 + 'CpfCnpj>' +
-                '<' + Prefixo4 + 'Cnpj>' +
-                  Cnpj +
-                '</' + Prefixo4 + 'Cnpj>' +
-                '</' + Prefixo4 + 'CpfCnpj>',
-
-                '<' + Prefixo4 + 'Cnpj>' +
-                  Cnpj +
-                '</' + Prefixo4 + 'Cnpj>') +
-
-              '<' + Prefixo4 + 'InscricaoMunicipal>' +
-                IM +
-              '</' + Prefixo4 + 'InscricaoMunicipal>' +
-             '</' + Prefixo3 + 'Prestador>';
-
- Result := TagI + DadosMsg + TagF;
-end;
-
-function TProvedorFISSLEX.Gera_DadosMsgConsNFSe(Prefixo3, Prefixo4,
-  NameSpaceDad, VersaoXML, CNPJ, IM: String; DataInicial, DataFinal: TDateTime; TagI,
-  TagF: AnsiString; NumeroNFSe: string = ''): AnsiString;
-var
- DadosMsg: AnsiString;
-begin
- DadosMsg := '<' + Prefixo3 + 'Prestador>' +
-
-               DFeUtil.SeSenao(VersaoXML = '1',
-
-                 '<' + Prefixo4 + 'CpfCnpj>' +
-                 '<' + Prefixo4 + 'Cnpj>' +
-                  Cnpj +
-                 '</' + Prefixo4 + 'Cnpj>' +
-                 '</' + Prefixo4 + 'CpfCnpj>',
-
-                 '<' + Prefixo4 + 'Cnpj>' +
-                  Cnpj +
-                 '</' + Prefixo4 + 'Cnpj>') +
-
-               '<' + Prefixo4 + 'InscricaoMunicipal>' +
-                IM +
-               '</' + Prefixo4 + 'InscricaoMunicipal>' +
-              '</' + Prefixo3 + 'Prestador>';
-
- if NumeroNFSe <> ''
-  then DadosMsg := DadosMsg + '<' + Prefixo3 + 'NumeroNfse>' +
-                               NumeroNFSe +
-                              '</' + Prefixo3 + 'NumeroNfse>';
-
- if (DataInicial>0) and (DataFinal>0)
-  then DadosMsg := DadosMsg + '<' + Prefixo3 + 'PeriodoEmissao>' +
-                               '<' + Prefixo3 + 'DataInicial>' +
-                                 FormatDateTime('yyyy-mm-dd', DataInicial) +
-                               '</' + Prefixo3 + 'DataInicial>' +
-                               '<' + Prefixo3 + 'DataFinal>' +
-                                 FormatDateTime('yyyy-mm-dd', DataFinal) +
-                               '</' + Prefixo3 + 'DataFinal>' +
-                              '</' + Prefixo3 + 'PeriodoEmissao>';
-
- Result := TagI + DadosMsg + TagF;
-end;
-
-function TProvedorFISSLEX.Gera_DadosMsgCancelarNFSe(Prefixo4, NameSpaceDad, NumeroNFSe,
-  CNPJ, IM, CodMunicipio, CodCancelamento: String; TagI,
-  TagF: AnsiString): AnsiString;
-var
- DadosMsg: AnsiString;
-begin
- DadosMsg := '<' + Prefixo4 + 'IdentificacaoNfse>' +
-              '<' + Prefixo4 + 'Numero>' +
-                NumeroNFse +
-              '</' + Prefixo4 + 'Numero>' +
-              '<' + Prefixo4 + 'Cnpj>' +
-                Cnpj +
-              '</' + Prefixo4 + 'Cnpj>' +
-              '<' + Prefixo4 + 'InscricaoMunicipal>' +
-                IM +
-              '</' + Prefixo4 + 'InscricaoMunicipal>' +
-              '<' + Prefixo4 + 'CodigoMunicipio>' +
-                CodMunicipio +
-              '</' + Prefixo4 + 'CodigoMunicipio>' +
-              '</' + Prefixo4 + 'IdentificacaoNfse>' +
-              '<' + Prefixo4 + 'CodigoCancelamento>' +
-
-               // Codigo de Cancelamento
-               // 1 - Erro de emissão
-               // 2 - Serviço não concluido
-               // 3 - RPS Cancelado na Emissão
-
-                CodCancelamento +
-
-              '</' + Prefixo4 + 'CodigoCancelamento>' +
-             '</' + Prefixo4 + 'InfPedidoCancelamento>';
-
- Result := TagI + DadosMsg + TagF;
-end;
-*)
 function TProvedorFISSLEX.GeraEnvelopeRecepcionarLoteRPS(URLNS: String;
   CabMsg, DadosMsg, DadosSenha: AnsiString): AnsiString;
 begin
- result := '<?xml version="1.0" encoding="UTF-8"?>' +
-           '<S:Envelope xmlns:S="http://schemas.xmlsoap.org/soap/envelope/" ' +
-                       'xmlns:xsd="http://www.w3.org/2001/XMLSchema" ' +
-                       'xmlns:SOAP-ENC="http://schemas.xmlsoap.org/soap/encoding/" ' +
-                       'xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">' +
-            '<S:Body>' +
-              '<WS_RecepcionarLoteRps.Execute xmlns="FISS-LEX">' +
-               '<Enviarloterpsenvio>' +
-                 '&lt;?xml version="1.0" encoding="UTF-8"?&gt;' +
-                 StringReplace(StringReplace(DadosMsg, '<', '&lt;', [rfReplaceAll]), '>', '&gt;', [rfReplaceAll]) +
-               '</Enviarloterpsenvio>' +
-              '</WS_RecepcionarLoteRps.Execute>' +
-            '</S:Body>' +
-           '</S:Envelope>';
-(*
+ DadosMsg := SeparaDados( DadosMsg, 'EnviarLoteRpsEnvio' );
+ DadosMsg := '<EnviarLoteRpsEnvio>' + DadosMsg + '</EnviarLoteRpsEnvio>';
+
  result := '<?xml version="1.0" encoding="UTF-8"?>' +
            '<s:Envelope xmlns:s="http://schemas.xmlsoap.org/soap/envelope/" ' +
                        'xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" ' +
-                       'xmlns:xsd="http://www.w3.org/2001/XMLSchema" ' +
-                       'xmlns:urn="' + URLNS + '">' +
+                       'xmlns:xsd="http://www.w3.org/2001/XMLSchema">' +
             '<s:Body>' +
-             '<urn:RecepcionarLoteRps>' +
-               DadosMsg +
-             '</urn:RecepcuinarLoteRps>' +
-             '</s:Body>' +
+             '<WS_RecepcionarLoteRps.Execute xmlns="FISS-LEX">' +
+              '<Enviarloterpsenvio xmlns="FISS-LEX">' +
+                '&lt;?xml version="1.0" encoding="UTF-8"?&gt;' +
+                StringReplace(StringReplace(DadosMsg, '<', '&lt;', [rfReplaceAll]), '>', '&gt;', [rfReplaceAll]) +
+              '</Enviarloterpsenvio>' +
+             '</WS_RecepcionarLoteRps.Execute>' +
+            '</s:Body>' +
            '</s:Envelope>';
-*)
 end;
 
 function TProvedorFISSLEX.GeraEnvelopeConsultarSituacaoLoteRPS(
   URLNS: String; CabMsg, DadosMsg, DadosSenha: AnsiString): AnsiString;
 begin
+ DadosMsg := SeparaDados( DadosMsg, 'ConsultarSituacaoLoteRpsEnvio' );
+
  result := '<?xml version="1.0" encoding="UTF-8"?>' +
-           '<S:Envelope xmlns:S="http://schemas.xmlsoap.org/soap/envelope/" ' +
-                       'xmlns:xsd="http://www.w3.org/2001/XMLSchema" ' +
-                       'xmlns:SOAP-ENC="http://schemas.xmlsoap.org/soap/encoding/" ' +
-                       'xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">' +
-            '<S:Body>' +
-              '<WS_ConsultarSituacaoLoteRps.Execute xmlns="FISS-LEX">' +
-               '<Consultarsituacaoloterpsenvio>' +
-                 '&lt;?xml version="1.0" encoding="UTF-8"?&gt;' +
-                 StringReplace(StringReplace(DadosMsg, '<', '&lt;', [rfReplaceAll]), '>', '&gt;', [rfReplaceAll]) +
-               '</Consultarsituacaoloterpsenvio>' +
-              '</WS_ConsultarSituacaoLoteRps.Execute>' +
-            '</S:Body>' +
-           '</S:Envelope>';
-(*
- result := '<?xml version="1.0" encoding="UTF-8"?>' +
-           '<s:Envelope xmlns:s="http://schemas.xmlsoap.org/soap/envelope/" ' +
-                       'xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" ' +
-                       'xmlns:xsd="http://www.w3.org/2001/XMLSchema" ' +
-                       'xmlns:urn="' + URLNS + '">' +
-            '<s:Body>' +
-             '<urn:ConsultarSituacaoLoteRps>' +
-               DadosMsg +
-             '</urn:ConsultarSituacaoLoteRps>' +
-             '</s:Body>' +
-           '</s:Envelope>';
-*)
+           '<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:fiss="FISS-LEX">' +
+            '<soapenv:Header/>' +
+            '<soapenv:Body>' +
+             '<fiss:WS_ConsultarSituacaoLoteRps.Execute>' +
+              '<fiss:Consultarsituacaoloterpsenvio>' +
+                DadosMsg +
+              '</fiss:Consultarsituacaoloterpsenvio>' +
+             '</fiss:WS_ConsultarSituacaoLoteRps.Execute>' +
+            '</soapenv:Body>' +
+           '</soapenv:Envelope>';
 end;
 
 function TProvedorFISSLEX.GeraEnvelopeConsultarLoteRPS(URLNS: String;
   CabMsg, DadosMsg, DadosSenha: AnsiString): AnsiString;
 begin
+ DadosMsg := SeparaDados( DadosMsg, 'ConsultarLoteRpsEnvio' );
+
  result := '<?xml version="1.0" encoding="UTF-8"?>' +
-           '<S:Envelope xmlns:S="http://schemas.xmlsoap.org/soap/envelope/" ' +
-                       'xmlns:xsd="http://www.w3.org/2001/XMLSchema" ' +
-                       'xmlns:SOAP-ENC="http://schemas.xmlsoap.org/soap/encoding/" ' +
-                       'xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">' +
-            '<S:Body>' +
-              '<WS_ConsultaLoteRps.Execute xmlns="FISS-LEX">' +
-               '<Consultarloterpsenvio>' +
-                 '&lt;?xml version="1.0" encoding="UTF-8"?&gt;' +
-                 StringReplace(StringReplace(DadosMsg, '<', '&lt;', [rfReplaceAll]), '>', '&gt;', [rfReplaceAll]) +
-               '</Consultarloterpsenvio>' +
-              '</WS_ConsultaLoteRps.Execute>' +
-            '</S:Body>' +
-           '</S:Envelope>';
+           '<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:fiss="FISS-LEX">' +
+            '<soapenv:Header/>' +
+            '<soapenv:Body>' +
+             '<fiss:WS_ConsultaLoteRps.Execute>' +
+              '<fiss:Consultarloterpsenvio>' +
+                DadosMsg +
+              '</fiss:Consultarloterpsenvio>' +
+             '</fiss:WS_ConsultaLoteRps.Execute>' +
+            '</soapenv:Body>' +
+           '</soapenv:Envelope>';
 (*
  result := '<?xml version="1.0" encoding="UTF-8"?>' +
            '<s:Envelope xmlns:s="http://schemas.xmlsoap.org/soap/envelope/" ' +
                        'xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" ' +
-                       'xmlns:xsd="http://www.w3.org/2001/XMLSchema" ' +
-                       'xmlns:urn="' + URLNS + '">' +
+                       'xmlns:xsd="http://www.w3.org/2001/XMLSchema">' +
             '<s:Body>' +
-             '<urn:ConsultarLoteRps>' +
-               DadosMsg +
-             '</urn:ConsultarLoteRps>' +
+             '<WS_ConsultaLoteRps.Execute xmlns="FISS-LEX">' +
+              '<Consultarloterpsenvio>' +
+                StringReplace(StringReplace(DadosMsg, '<', '&lt;', [rfReplaceAll]), '>', '&gt;', [rfReplaceAll]) +
+              '</Consultarloterpsenvio>' +
+             '</WS_ConsultaLoteRps.Execute>' +
             '</s:Body>' +
            '</s:Envelope>';
 *)
@@ -555,96 +325,51 @@ function TProvedorFISSLEX.GeraEnvelopeConsultarNFSeporRPS(URLNS: String;
   CabMsg, DadosMsg, DadosSenha: AnsiString): AnsiString;
 begin
  result := '<?xml version="1.0" encoding="UTF-8"?>' +
-           '<S:Envelope xmlns:S="http://schemas.xmlsoap.org/soap/envelope/" ' +
-                       'xmlns:xsd="http://www.w3.org/2001/XMLSchema" ' +
-                       'xmlns:SOAP-ENC="http://schemas.xmlsoap.org/soap/encoding/" ' +
-                       'xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">' +
-            '<S:Body>' +
-              '<WS_ConsultaNfsePorRps.Execute xmlns="FISS-LEX">' +
-               '<Consultarnfserpsenvio>' +
-                 '&lt;?xml version="1.0" encoding="UTF-8"?&gt;' +
-                 StringReplace(StringReplace(DadosMsg, '<', '&lt;', [rfReplaceAll]), '>', '&gt;', [rfReplaceAll]) +
-               '</Consultarnfserpsenvio>' +
-              '</WS_ConsultarNfsePorRps.Execute>' +
-            '</S:Body>' +
-           '</S:Envelope>';
-(*
- result := '<?xml version="1.0" encoding="UTF-8"?>' +
            '<s:Envelope xmlns:s="http://schemas.xmlsoap.org/soap/envelope/" ' +
                        'xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" ' +
-                       'xmlns:xsd="http://www.w3.org/2001/XMLSchema" ' +
-                       'xmlns:urn="' + URLNS + '">' +
+                       'xmlns:xsd="http://www.w3.org/2001/XMLSchema">' +
             '<s:Body>' +
-             '<urn:ConsultarNfsePorRps>' +
-               DadosMsg +
-             '</urn:ConsultarNfsePorRps>' +
+             '<WS_ConsultaNfsePorRps.Execute xmlns="FISS-LEX">' +
+              '<Consultarnfserpsenvio xmlns="FISS-LEX">' +
+                StringReplace(StringReplace(DadosMsg, '<', '&lt;', [rfReplaceAll]), '>', '&gt;', [rfReplaceAll]) +
+              '</Consultarnfserpsenvio>' +
+             '</WS_ConsultarNfsePorRps.Execute>' +
             '</s:Body>' +
            '</s:Envelope>';
-*)
 end;
 
 function TProvedorFISSLEX.GeraEnvelopeConsultarNFSe(URLNS: String; CabMsg,
   DadosMsg, DadosSenha: AnsiString): AnsiString;
 begin
  result := '<?xml version="1.0" encoding="UTF-8"?>' +
-           '<S:Envelope xmlns:S="http://schemas.xmlsoap.org/soap/envelope/" ' +
-                       'xmlns:xsd="http://www.w3.org/2001/XMLSchema" ' +
-                       'xmlns:SOAP-ENC="http://schemas.xmlsoap.org/soap/encoding/" ' +
-                       'xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">' +
-            '<S:Body>' +
-              '<WS_ConsultaNfse.Execute xmlns="FISS-LEX">' +
-               '<Consultarnfseenvio>' +
-                 '&lt;?xml version="1.0" encoding="UTF-8"?&gt;' +
-                 StringReplace(StringReplace(DadosMsg, '<', '&lt;', [rfReplaceAll]), '>', '&gt;', [rfReplaceAll]) +
-               '</Consultarnfseenvio>' +
-              '</WS_ConsultaNfse.Execute>' +
-            '</S:Body>' +
-           '</S:Envelope>';
-(*
- result := '<?xml version="1.0" encoding="UTF-8"?>' +
            '<s:Envelope xmlns:s="http://schemas.xmlsoap.org/soap/envelope/" ' +
                        'xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" ' +
-                       'xmlns:xsd="http://www.w3.org/2001/XMLSchema" ' +
-                       'xmlns:urn="' + URLNS + '">' +
+                       'xmlns:xsd="http://www.w3.org/2001/XMLSchema">' +
             '<s:Body>' +
-             '<urn:ConsultarNfse>' +
-               DadosMsg +
-             '</urn:ConsultarNfse>' +
+             '<WS_ConsultaNfse.Execute xmlns="FISS-LEX">' +
+              '<Consultarnfseenvio xmlns="FISS-LEX">' +
+                StringReplace(StringReplace(DadosMsg, '<', '&lt;', [rfReplaceAll]), '>', '&gt;', [rfReplaceAll]) +
+              '</Consultarnfseenvio>' +
+             '</WS_ConsultaNfse.Execute>' +
             '</s:Body>' +
            '</s:Envelope>';
-*)
 end;
 
 function TProvedorFISSLEX.GeraEnvelopeCancelarNFSe(URLNS: String; CabMsg,
   DadosMsg, DadosSenha: AnsiString): AnsiString;
 begin
  result := '<?xml version="1.0" encoding="UTF-8"?>' +
-           '<S:Envelope xmlns:S="http://schemas.xmlsoap.org/soap/envelope/" ' +
-                       'xmlns:xsd="http://www.w3.org/2001/XMLSchema" ' +
-                       'xmlns:SOAP-ENC="http://schemas.xmlsoap.org/soap/encoding/" ' +
-                       'xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">' +
-            '<S:Body>' +
-              '<WS_CancelarNfse.Execute xmlns="FISS-LEX">' +
-               '<CancelarNfseenvio>' +
-                 '&lt;?xml version="1.0" encoding="UTF-8"?&gt;' +
-                 StringReplace(StringReplace(DadosMsg, '<', '&lt;', [rfReplaceAll]), '>', '&gt;', [rfReplaceAll]) +
-               '</CancelarNfseenvio>' +
-              '</WS_CancelarNfse.Execute>' +
-            '</S:Body>' +
-           '</S:Envelope>';
-(*
- result := '<?xml version="1.0" encoding="UTF-8"?>' +
            '<s:Envelope xmlns:s="http://schemas.xmlsoap.org/soap/envelope/" ' +
                        'xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" ' +
-                       'xmlns:xsd="http://www.w3.org/2001/XMLSchema" ' +
-                       'xmlns:urn="' + URLNS + '">' +
+                       'xmlns:xsd="http://www.w3.org/2001/XMLSchema">' +
             '<s:Body>' +
-             '<urn:CancelarNfse>' +
-               DadosMsg +
-             '</urn:CancelarNfse>' +
+             '<WS_CancelarNfse.Execute xmlns="FISS-LEX">' +
+              '<CancelarNfseenvio xmlns="FISS-LEX">' +
+                StringReplace(StringReplace(DadosMsg, '<', '&lt;', [rfReplaceAll]), '>', '&gt;', [rfReplaceAll]) +
+              '</CancelarNfseenvio>' +
+             '</WS_CancelarNfse.Execute>' +
             '</s:Body>' +
            '</s:Envelope>';
-*)
 end;
 
 function TProvedorFISSLEX.GeraEnvelopeGerarNFSe(URLNS: String; CabMsg,

@@ -175,6 +175,7 @@ type
   public
     function Executar: Boolean; override;
     constructor Create(AOwner : TComponent; ANotasFiscais : TNotasFiscais); reintroduce;
+    destructor Destroy; override;
     property NumeroLote: String read FNumeroLote;
     property DataRecebimento: TDateTime read FDataRecebimento;
     property Protocolo: String read FProtocolo;
@@ -194,6 +195,7 @@ type
   public
     function Executar: Boolean; override;
     constructor Create(AOwner : TComponent; ANotasFiscais : TNotasFiscais); reintroduce;
+    destructor Destroy; override;
     property Cnpj: String read FCnpj write FCnpj;
     property InscricaoMunicipal: String read FInscricaoMunicipal write FInscricaoMunicipal;
     property Protocolo: String read FProtocolo write FProtocolo;
@@ -217,6 +219,7 @@ type
   public
     function Executar: Boolean; override;
     constructor Create(AOwner : TComponent; ANotasFiscais : TNotasFiscais); reintroduce;
+    destructor Destroy; override;
     property Protocolo: String read FProtocolo write FProtocolo;
       //usado pelo provedor IssDsf
     property NumeroLote: String read FNumeroLote write FNumeroLote;
@@ -243,6 +246,7 @@ type
   public
     function Executar: Boolean; override;
     constructor Create(AOwner : TComponent; ANotasFiscais : TNotasFiscais); reintroduce;
+    destructor Destroy; override;
     property Numero: String read FNumero write FNumero;
     property Serie: String read FSerie write FSerie;
     property Tipo: String read FTipo write FTipo;
@@ -268,6 +272,7 @@ type
   public
     function Executar: Boolean; override;
     constructor Create(AOwner : TComponent; ANotasFiscais : TNotasFiscais); reintroduce;
+    destructor Destroy; override;
     property Cnpj: String read FCnpj write FCnpj;
     property InscricaoMunicipal: String read FInscricaoMunicipal write FInscricaoMunicipal;
     property DataInicial: TDateTime read FDataInicial write FDataInicial;
@@ -290,6 +295,7 @@ type
   public
     function Executar: Boolean; override;
     constructor Create(AOwner : TComponent; ANotasFiscais : TNotasFiscais); reintroduce;
+    destructor Destroy; override;
     property Cnpj: String read FCnpj write FCnpj;
     property InscricaoMunicipal: String read FInscricaoMunicipal write FInscricaoMunicipal;
     property Cidade: String read FCidade write FCidade;
@@ -311,6 +317,7 @@ type
   public
     function Executar: Boolean; override;
     constructor Create(AOwner : TComponent; ANotasFiscais : TNotasFiscais); reintroduce;
+    destructor Destroy; override;
     property CodigoCancelamento: String read FCodigoCancelamento write FCodigoCancelamento;
     property DataHora: TDateTime read FDataHora write FDataHora;
     property NFSeRetorno: TretCancNFSe read FNFSeRetorno write FNFSeRetorno;
@@ -329,7 +336,7 @@ type
   public
     function Executar: Boolean; override;
     constructor Create(AOwner : TComponent; ANotasFiscais : TNotasFiscais); reintroduce;
-
+    destructor Destroy; override;
     property NumeroRps: integer read FNumeroRps;
     property NFSeRetorno: TGerarretNfse read FNFSeRetorno write FNFSeRetorno;
   end;
@@ -345,7 +352,7 @@ type
   public
     function Executar: Boolean; override;
     constructor Create(AOwner : TComponent; ANotasFiscais : TNotasFiscais); reintroduce;
-
+    destructor Destroy; override;
     property NumeroLote: String read FNumeroLote;
     property NFSeRetorno: TGerarretNfse read FNFSeRetorno write FNFSeRetorno;
     property Protocolo: String read FProtocolo;
@@ -1287,7 +1294,6 @@ end;
 
 procedure TWebServicesBase.DoNFSeConsultarNFSe;
 var
- i         : Integer;
  URISig, URIRef, Separador : String;
 begin
  if RightStr(FHTTP_AG, 1) = '/'
@@ -1428,7 +1434,6 @@ end;
 //Metodo usado apenas no provedor IssDSF
 procedure TWebServicesBase.DoNFSeConsultarSequencialRPS;
 var
- i         : Integer;
  vNotas    : WideString;
  URISig, URIRef, Separador : String;
 begin
@@ -2277,7 +2282,8 @@ begin
 
  if (TACBrNFSe( FACBrNFSe ).Configuracoes.WebServices.ConsultaLoteAposEnvio) and (Result) then
  begin
-   if not (TACBrNFSe( FACBrNFSe ).Configuracoes.WebServices.Provedor in [profintelISS, proSaatri, proISSDigital, proFiorilli])
+   // Alterado por Cleiver em 10-10-2013
+   if not (TACBrNFSe( FACBrNFSe ).Configuracoes.WebServices.Provedor in [proProdata, profintelISS, proSaatri, proISSDigital, proFiorilli])
     then begin
      Result := Self.ConsSitLote.Executar;
 
@@ -2585,6 +2591,13 @@ begin
  FNotasFiscais := ANotasFiscais;
 end;
 
+destructor TNFSeEnviarLoteRPS.Destroy;
+begin
+ if Assigned(NFSeRetorno)
+  then NFSeRetorno.Free;
+ inherited;
+end;
+
 function TNFSeEnviarLoteRPS.Executar: Boolean;
 var
  aMsg        : String;
@@ -2743,6 +2756,13 @@ constructor TNFSeConsultarSituacaoLoteRPS.Create(AOwner: TComponent; ANotasFisca
 begin
  inherited Create(AOwner);
   FNotasFiscais := ANotasFiscais;
+end;
+
+destructor TNFSeConsultarSituacaoLoteRPS.Destroy;
+begin
+ if Assigned(NFSeRetorno)
+  then NFSeRetorno.Free;
+ inherited;
 end;
 
 function TNFSeConsultarSituacaoLoteRPS.Executar: Boolean;
@@ -2936,6 +2956,13 @@ begin
   FNotasFiscais := ANotasFiscais;
 end;
 
+destructor TNFSeConsultarLoteRPS.Destroy;
+begin
+ if Assigned(NFSeRetorno)
+  then NFSeRetorno.Free;
+ inherited;
+end;
+
 function TNFSeConsultarLoteRPS.Executar: Boolean;
 var
  aMsg        : String;
@@ -3042,7 +3069,7 @@ try
      NFSeRetorno.LerXml;
 
   FRetListaNfse := SeparaDados(FRetWS, Prefixo3 + 'ListaNfse');
-  i := 0;
+//  i := 0;
   while FRetListaNfse <> '' do
    begin
     j := Pos('</' + Prefixo3 +
@@ -3204,6 +3231,13 @@ constructor TNFSeConsultarNfseRPS.Create(AOwner: TComponent;
 begin
  inherited Create(AOwner);
   FNotasFiscais := ANotasFiscais;
+end;
+
+destructor TNFSeConsultarNfseRPS.Destroy;
+begin
+ if Assigned(NFSeRetorno)
+  then NFSeRetorno.Free;
+ inherited;
 end;
 
 function TNFSeConsultarNfseRPS.Executar: Boolean;
@@ -3427,6 +3461,13 @@ begin
   FNotasFiscais := ANotasFiscais;
 end;
 
+destructor TNFSeConsultarNfse.Destroy;
+begin
+ if Assigned(NFSeRetorno)
+  then NFSeRetorno.Free;
+ inherited;
+end;
+
 function TNFSeConsultarNfse.Executar: Boolean;
 var
  aMsg        : String;
@@ -3636,6 +3677,13 @@ begin
   FNotasFiscais := ANotasFiscais;
 end;
 
+destructor TNFSeCancelarNfse.Destroy;
+begin
+ if Assigned(NFSeRetorno)
+  then NFSeRetorno.Free;
+ inherited;
+end;
+
 function TNFSeCancelarNfse.Executar: Boolean;
 var
  aMsg        : String;
@@ -3774,6 +3822,13 @@ begin
  inherited Create(AOwner);
 
  FNotasFiscais := ANotasFiscais;
+end;
+
+destructor TNFSeGerarNFSe.Destroy;
+begin
+ if Assigned(NFSeRetorno)
+  then NFSeRetorno.Free;
+ inherited;
 end;
 
 function TNFSeGerarNFSe.Executar: Boolean;
@@ -3997,6 +4052,13 @@ begin
  inherited Create(AOwner);
 
  FNotasFiscais := ANotasFiscais;
+end;
+
+destructor TNFSeEnviarSincrono.Destroy;
+begin
+ if Assigned(NFSeRetorno)
+  then NFSeRetorno.Free;
+ inherited;
 end;
 
 function TNFSeEnviarSincrono.Executar: Boolean;
@@ -4251,6 +4313,13 @@ begin
   FNotasFiscais := ANotasFiscais; 
 end;
 
+destructor TNFSeConsultarSequencialRPS.Destroy;
+begin
+ if Assigned(NFSeRetorno)
+  then NFSeRetorno.Free;
+ inherited;
+end;
+
 //usado apenas pelo provedor IssDSF
 function TNFSeConsultarSequencialRPS.Executar: Boolean;
 var
@@ -4268,10 +4337,8 @@ var
 
  Prefixo3      : String;
  Prefixo4      : String;
- FRetListaNfse : AnsiString;
- FRetNfse      : AnsiString;
- i, j, k, p    : Integer;
- PathSalvar    : String;
+ i             : Integer;
+// PathSalvar    : String;
 begin
  {Result :=} inherited Executar;
 

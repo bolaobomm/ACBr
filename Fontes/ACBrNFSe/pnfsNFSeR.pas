@@ -2471,7 +2471,6 @@ end;
 
 procedure TNFSeR.NFSe_ProvedorVirtual;
 var
- item: Integer;
  ok  : Boolean;
 begin
  	if Leitor.rExtrai(3, 'ValoresNfse') <> '' then

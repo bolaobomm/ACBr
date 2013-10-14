@@ -145,6 +145,7 @@ begin
   try
     // Incluido por Ricardo Miranda em 14/03/2013
     Leitor.Arquivo := NotaUtil.RetirarPrefixos(Leitor.Arquivo);
+    Leitor.Arquivo := StringReplace(Leitor.Arquivo, ' xmlns=""', '', [rfReplaceAll]);
     Leitor.Grupo   := Leitor.Arquivo;
 
     if (leitor.rExtrai(1, 'ConsultarSituacaoLoteRpsResposta') <> '') or

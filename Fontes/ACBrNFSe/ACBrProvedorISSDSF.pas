@@ -33,52 +33,7 @@ type
    function Gera_CabMsg(Prefixo2, VersaoLayOut, VersaoDados, NameSpaceCab: String; ACodCidade: Integer): AnsiString; OverRide;
    function Gera_DadosSenha(CNPJ, Senha: String): AnsiString; OverRide;
    function Gera_TagF(Acao: TnfseAcao; Prefixo3: String): AnsiString; OverRide;
-   (*
-   function Gera_DadosMsgEnviarLoteDSF(Prefixo3, Prefixo4,Identificador, NameSpaceDad, VersaoXML,
-                                       NumeroLote, CodCidade, CNPJ, IM, RazaoSocial, Transacao,
-                                       QtdeNotas, ValorTotalServicos, ValorTotalDeducoes: String;
-                                       DataInicial, DataFinal: TDateTime;
-                                       Notas, TagI, TagF: AnsiString): AnsiString; Override;
-   function Gera_DadosMsgConsLoteDSF(Prefixo3, Prefixo4, NameSpaceDad,
-                                     VersaoXML, CodCidade, CNPJ, NumeroLote: String;
-                                     TagI, TagF: AnsiString): AnsiString; Override;
-   function Gera_DadosMsgConsNFSeRPSDSF(Prefixo3, Prefixo4, NameSpaceDad,VersaoXML,
-                                        CodCidade, CNPJ, Transacao, NumeroLote: String;
-                                        Notas, TagI, TagF: AnsiString): AnsiString; Override;
-   function Gera_DadosMsgConsNFSeDSF(Prefixo3, Prefixo4, NameSpaceDad, VersaoXML, CodCidade,
-                                     CNPJ, IM, NotaInicial: String; DataInicial, DataFinal: TDateTime;
-                                     TagI, TagF: AnsiString): AnsiString; Override;
-   function Gera_DadosMsgCancelarNFSeDSF(Prefixo3, Prefixo4, NameSpaceDad, VersaoXML,
-                                         CNPJ, Transacao, CodMunicipio, NumeroLote: String;
-                                         Notas, TagI, TagF: AnsiString): AnsiString; Override;
-   function Gera_DadosMsgConsSeqRPSDSF(TagI, TagF: AnsiString; VersaoXML, CodCidade,
-                                       IM, CNPJ, SeriePrestacao: String): AnsiString; Override;
 
-   function Gera_DadosMsgEnviarLote(Prefixo3, Prefixo4, Identificador,
-                                    NameSpaceDad, VersaoDados, VersaoXML,
-                                    NumeroLote, CNPJ, IM, QtdeNotas: String;
-                                    Notas, TagI, TagF: AnsiString): AnsiString;
-   function Gera_DadosMsgConsSitLote(Prefixo3, Prefixo4, NameSpaceDad,
-                                     VersaoXML, Protocolo, CNPJ, IM: String;
-                                     TagI, TagF: AnsiString): AnsiString; OverRide;
-   function Gera_DadosMsgConsLote(Prefixo3, Prefixo4, NameSpaceDad,
-                                  VersaoXML, Protocolo, CNPJ, IM: String;
-                                  TagI, TagF: AnsiString): AnsiString; OverRide;
-   function Gera_DadosMsgConsNFSeRPS(Prefixo3, Prefixo4, NameSpaceDad, VersaoXML,
-                                     NumeroRps, SerieRps, TipoRps, CNPJ, IM: String;
-                                     TagI, TagF: AnsiString): AnsiString; OverRide;
-   function Gera_DadosMsgConsNFSe(Prefixo3, Prefixo4, NameSpaceDad, VersaoXML,
-                                  CNPJ, IM: String;
-                                  DataInicial, DataFinal: TDateTime;
-                                  TagI, TagF: AnsiString; NumeroNFSe: string = ''): AnsiString; OverRide;
-   function Gera_DadosMsgCancelarNFSe(Prefixo4, NameSpaceDad, NumeroNFSe, CNPJ, IM,
-                                      CodMunicipio, CodCancelamento: String;
-                                      TagI, TagF: AnsiString): AnsiString; OverRide;
-   function Gera_DadosMsgEnviarSincrono(Prefixo3, Prefixo4, Identificador,
-                                        NameSpaceDad, VersaoDados, VersaoXML,
-                                        NumeroLote, CNPJ, IM, QtdeNotas: String;
-                                        Notas, TagI, TagF: AnsiString): AnsiString; OverRide;
-   *)
    function GeraEnvelopeRecepcionarLoteRPS(URLNS: String; CabMsg, DadosMsg, DadosSenha: AnsiString): AnsiString; OverRide;
    function GeraEnvelopeConsultarSituacaoLoteRPS(URLNS: String; CabMsg, DadosMsg, DadosSenha: AnsiString): AnsiString; OverRide;
    function GeraEnvelopeConsultarLoteRPS(URLNS: String; CabMsg, DadosMsg, DadosSenha: AnsiString): AnsiString; OverRide;
@@ -345,133 +300,7 @@ begin
    acConsSecRps:  Result := '</' + Prefixo3 + 'ConsultaSeqRps>';
  end;
 end;
-(*
-function TProvedorIssDSF.Gera_DadosMsgEnviarLoteDSF(Prefixo3, Prefixo4,
-  Identificador, NameSpaceDad, VersaoXML, NumeroLote,
-  CodCidade, CNPJ, IM, RazaoSocial, Transacao, QtdeNotas,
-  ValorTotalServicos, ValorTotalDeducoes: String; DataInicial, DataFinal: TDateTime;
-  Notas, TagI, TagF: AnsiString): AnsiString;
-var
- DadosMsg: AnsiString;
-begin
- DadosMsg := '<Cabecalho>' +
-               '<CodCidade>'            + CodCidade   + '</CodCidade>' +
-               '<CPFCNPJRemetente>'     + Cnpj        + '</CPFCNPJRemetente>' +
-               '<RazaoSocialRemetente>' + RazaoSocial + '</RazaoSocialRemetente>' +
-               '<transacao>'            + Transacao   + '</transacao>' +
-               '<dtInicio>' + FormatDateTime('yyyy-mm-dd', DataInicial) + '</dtInicio>' +
-               '<dtFim>'    + FormatDateTime('yyyy-mm-dd', DataInicial) + '</dtFim>' +
-               '<QtdRPS>'               + QtdeNotas               + '</QtdRPS>' +
-               '<ValorTotalServicos>'   + ValorTotalServicos + '</ValorTotalServicos>' +
-               '<ValorTotalDeducoes>'   + ValorTotalDeducoes + '</ValorTotalDeducoes>' +
-               '<Versao>'               + VersaoXML          + '</Versao>' +
-               '<MetodoEnvio>'          + 'WS'               + '</MetodoEnvio>' +
-             '</Cabecalho>' +
-             '<Lote ' + Identificador + '="Lote:' + NumeroLote + '">' +
-                Notas +
-             '</Lote>';
 
-  Result := TagI + DadosMsg + TagF;
-end;
-
-function TProvedorIssDSF.Gera_DadosMsgConsLoteDSF(Prefixo3, Prefixo4,
-  NameSpaceDad, VersaoXML, CodCidade, CNPJ, NumeroLote: String; TagI,
-  TagF: AnsiString): AnsiString;
-var
- DadosMsg: AnsiString;
-begin
- DadosMsg := '<Cabecalho>' +
-               '<CodCidade>' + CodCidade + '</CodCidade>' +
-               '<CPFCNPJRemetente>' + Cnpj + '</CPFCNPJRemetente>' +
-               '<Versao>' + VersaoXML + '</Versao>' +
-               '<NumeroLote>' + NumeroLote + '</NumeroLote>' +
-             '</Cabecalho>';
-
- Result := TagI + DadosMsg + TagF;
-end;
-
-function TProvedorIssDSF.Gera_DadosMsgConsNFSeRPSDSF(Prefixo3, Prefixo4,
-  NameSpaceDad, VersaoXML, CodCidade, CNPJ, Transacao, NumeroLote: String;
-  Notas, TagI, TagF: AnsiString): AnsiString;
-var
- DadosMsg: AnsiString;
-begin
-  DadosMsg := '<Cabecalho>' +
-               '<CodCidade>' + CodCidade + '</CodCidade>' +
-               '<CPFCNPJRemetente>' + Cnpj + '</CPFCNPJRemetente>' +
-               '<transacao>' + Transacao + '</transacao>' +
-               '<Versao>' + VersaoXML + '</Versao>' +
-             '</Cabecalho>' +
-             '<Lote  Id="Lote:' + NumeroLote + '">' +
-                Notas +
-             '</Lote>';
-
- Result := TagI + DadosMsg + TagF;
-
-end;
-
-function TProvedorIssDSF.Gera_DadosMsgConsNFSeDSF(Prefixo3, Prefixo4,
-  NameSpaceDad, VersaoXML, CodCidade, CNPJ, IM, NotaInicial: String;
-  DataInicial, DataFinal: TDateTime; TagI, TagF: AnsiString): AnsiString;
-var
- DadosMsg: AnsiString;
-begin
- DadosMsg := '<Cabecalho Id="Consulta:notas">' +
-               '<CodCidade>'         + CodCidade    + '</CodCidade>' +
-               '<CPFCNPJRemetente>'  + CNPJ         + '</CPFCNPJRemetente>' +
-               '<InscricaoMunicipalPrestador>' + IM + '</InscricaoMunicipalPrestador>' +
-
-               '<dtInicio>' +
-                 FormatDateTime('yyyy-mm-dd', DataInicial) +
-               '</dtInicio>' +
-
-               '<dtFim>' +
-                 FormatDateTime('yyyy-mm-dd', DataInicial) +
-               '</dtFim>' +
-
-               '<NotaInicial>' + NotaInicial + '</NotaInicial>' +
-               '<Versao>'      + VersaoXML   + '</Versao>' +
-             '</Cabecalho>';
-
- Result := TagI + DadosMsg + TagF;
-end;
-
-function TProvedorIssDSF.Gera_DadosMsgCancelarNFSeDSF(Prefixo3, Prefixo4,
-  NameSpaceDad, VersaoXML, CNPJ, Transacao, CodMunicipio, NumeroLote: String;
-  Notas, TagI, TagF: AnsiString): AnsiString;
-var
- DadosMsg: AnsiString;
-begin
-
- DadosMsg := '<Cabecalho>' +
-		         '<CodCidade>'        + CodMunicipio + '</CodCidade>' +
-		         '<CPFCNPJRemetente>' + CNPJ      + '</CPFCNPJRemetente> ' +
-		         '<transacao>'        + Transacao + '</transacao>' +
-		         '<Versao>'           + VersaoXML + '</Versao>' +
-	          '</Cabecalho>' +
-             '<Lote Id="Lote:' + NumeroLote + '">' +
-                Notas +
-             '</Lote>';
-
- Result := TagI + DadosMsg + TagF;
-end;
-
-function TProvedorIssDSF.Gera_DadosMsgConsSeqRPSDSF(TagI, TagF: AnsiString; VersaoXML, CodCidade,
-  IM, CNPJ, SeriePrestacao: string ):AnsiString;
-var DadosMsg:ansistring;
-begin
- //consultar sequencial RPS
- DadosMsg := '<Cabecalho>' +
-               '<CodCid>' + CodCidade + '</CodCid>' +
-               '<IMPrestador>' + IM + '</IMPrestador>' +
-               '<CPFCNPJRemetente>' + CNPJ + '</CPFCNPJRemetente>' +
-               '<SeriePrestacao>' + SeriePrestacao + '</SeriePrestacao>' +
-               '<Versao>' + VersaoXML + '</Versao>' +
-             '</Cabecalho>';
-
- Result := TagI + DadosMsg + TagF;
-end;
-*)
 function TProvedorIssDSF.GeraEnvelopeRecepcionarLoteRPS(URLNS: String;
   CabMsg, DadosMsg, DadosSenha: AnsiString): AnsiString;
 begin
@@ -642,70 +471,13 @@ function TProvedorIssDSF.GetLinkNFSe(ACodMunicipio, ANumeroNFSe: Integer;
 begin
  Result := '';
 end;
-(*
-function TProvedorIssDSF.Gera_DadosMsgEnviarSincrono(Prefixo3,
-  Prefixo4, Identificador, NameSpaceDad, VersaoDados, VersaoXML,
-  NumeroLote, CNPJ, IM, QtdeNotas: String; Notas, TagI,
-  TagF: AnsiString): AnsiString;
-begin
- Result := '';
-end;
-*)
+
 function TProvedorIssDSF.GeraEnvelopeRecepcionarSincrono(
   URLNS: String; CabMsg, DadosMsg, DadosSenha: AnsiString): AnsiString;
 begin
  Result := '';
 end;
-(*
-function TProvedorIssDSF.Gera_DadosMsgEnviarLote(Prefixo3, Prefixo4,
-  Identificador, NameSpaceDad, VersaoDados, VersaoXML, NumeroLote, CNPJ,
-  IM, QtdeNotas: String; Notas, TagI, TagF: AnsiString): AnsiString;
-begin
- Result := '';
- raise Exception.Create( 'Para este provedor use a função Gera_DadosMsgEnviarLoteDSF' );
-end;
 
-function TProvedorIssDSF.Gera_DadosMsgConsSitLote(Prefixo3, Prefixo4,
-  NameSpaceDad, VersaoXML, Protocolo, CNPJ, IM: String; TagI,
-  TagF: AnsiString): AnsiString;
-begin
- Result := '';
- raise Exception.Create( 'Para este provedor use a função Gera_DadosMsgConsSitLoteDSF' );
-end;
-
-function TProvedorIssDSF.Gera_DadosMsgConsLote(Prefixo3, Prefixo4,
-  NameSpaceDad, VersaoXML, Protocolo, CNPJ, IM: String; TagI,
-  TagF: AnsiString): AnsiString;
-begin
- Result := '';
- raise Exception.Create( 'Para este provedor use a função Gera_DadosMsgConsLoteDSF' );
-end;
-
-function TProvedorIssDSF.Gera_DadosMsgConsNFSeRPS(Prefixo3, Prefixo4,
-  NameSpaceDad, VersaoXML, NumeroRps, SerieRps, TipoRps, CNPJ, IM: String;
-  TagI, TagF: AnsiString): AnsiString;
-begin
- Result := '';
- raise Exception.Create( 'Para este provedor use a função Gera_DadosMsgConsNFSeRPSDSF' );
-end;
-
-function TProvedorIssDSF.Gera_DadosMsgConsNFSe(Prefixo3, Prefixo4,
-  NameSpaceDad, VersaoXML, CNPJ, IM: String; DataInicial,
-  DataFinal: TDateTime; TagI, TagF: AnsiString;
-  NumeroNFSe: string): AnsiString;
-begin
- Result := '';
- raise Exception.Create( 'Para este provedor use a função Gera_DadosMsgConsNFSeDSF' );
-end;
-
-function TProvedorIssDSF.Gera_DadosMsgCancelarNFSe(Prefixo4, NameSpaceDad,
-  NumeroNFSe, CNPJ, IM, CodMunicipio, CodCancelamento: String; TagI,
-  TagF: AnsiString): AnsiString;
-begin
- Result := '';
- raise Exception.Create( 'Para este provedor use a função Gera_DadosMsgCancelarNFSeDSF' );
-end;
-*)
 function TProvedorIssDSF.GeraEnvelopeGerarNFSe(URLNS: String; CabMsg,
   DadosMsg, DadosSenha: AnsiString): AnsiString;
 begin

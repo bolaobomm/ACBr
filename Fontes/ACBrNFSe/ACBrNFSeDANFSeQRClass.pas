@@ -62,7 +62,8 @@ begin
                                  , Impressora
                                  , PrestLogo
                                  , Prefeitura
-                                 , NFSeCancelada);
+                                 , NFSeCancelada
+                                 , ImprimeCanhoto);
     end;
   end
   else fqrDANFSeQRRetrato.Imprimir(  NFSe
@@ -81,7 +82,8 @@ begin
                                    , Impressora
                                    , PrestLogo
                                    , Prefeitura
-                                   , NFSeCancelada);
+                                   , NFSeCancelada
+                                   , ImprimeCanhoto);
 
  fqrDANFSeQRRetrato.Free;
 end;
@@ -283,7 +285,8 @@ begin
                                , MargemDireita
                                , PrestLogo
                                , Prefeitura
-                               , NFSeCancelada);
+                               , NFSeCancelada
+                               , ImprimeCanhoto);
     end;
   end
   else begin
@@ -311,7 +314,8 @@ begin
                              , MargemDireita
                              , PrestLogo
                              , Prefeitura
-                             , NFSeCancelada);
+                             , NFSeCancelada
+                             , ImprimeCanhoto);
   end;
 
  fqrDANFSeQRRetrato.Free;

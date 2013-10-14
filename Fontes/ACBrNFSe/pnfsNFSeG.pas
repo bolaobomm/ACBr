@@ -7,7 +7,7 @@ uses
 {$IFNDEF VER130}
   Variants,
 {$ENDIF}
-  pnfsNFSe, pnfsConversao, ACBrDFeUtil;
+  pnfsNFSe, pnfsConversao, ACBrUtil, ACBrDFeUtil;
 
 type
 
@@ -91,7 +91,7 @@ type
 implementation
 
 //uses
-// IniFiles, Variants, ACBrUtil, ACBrConsts;
+// IniFiles, Variants, ACBrConsts;
 
 class function TNFSeG.Gera_DadosMsgEnviarLote(Prefixo3, Prefixo4,
   Identificador, NameSpaceDad, VersaoDados, VersaoXML, NumeroLote, CNPJ,
@@ -115,12 +115,16 @@ begin
                 NumeroLote +
               '</' + Prefixo4 + 'NumeroLote>' +
 
-              DFeUtil.SeSenao(VersaoXML = '1',
+              DFeUtil.SeSenao(VersaoXML = '2',
 
                 '<' + Prefixo4 + 'CpfCnpj>' +
-                '<' + Prefixo4 + 'Cnpj>' +
-                  Cnpj +
-                '</' + Prefixo4 + 'Cnpj>' +
+                DFeUtil.SeSenao(Length(OnlyNumber(Cnpj)) <= 11,
+                 '<' + Prefixo4 + 'Cpf>' +
+                   Cnpj +
+                 '</' + Prefixo4 + 'Cpf>',
+                 '<' + Prefixo4 + 'Cnpj>' +
+                   Cnpj +
+                 '</' + Prefixo4 + 'Cnpj>') +
                 '</' + Prefixo4 + 'CpfCnpj>',
 
                 '<' + Prefixo4 + 'Cnpj>' +
@@ -153,12 +157,16 @@ begin
 
  DadosMsg := '<' + Prefixo3 + 'Prestador' +
                DFeUtil.SeSenao(AProvedor = proSimplISS, ' ' + NameSpaceDad, '>') +
-               DFeUtil.SeSenao(VersaoXML = '1',
+               DFeUtil.SeSenao(VersaoXML = '2',
 
                  '<' + Prefixo4 + 'CpfCnpj>' +
-                 '<' + Prefixo4 + 'Cnpj>' +
-                   Cnpj +
-                 '</' + Prefixo4 + 'Cnpj>' +
+                  DFeUtil.SeSenao(Length(OnlyNumber(Cnpj)) <= 11,
+                  '<' + Prefixo4 + 'Cpf>' +
+                    Cnpj +
+                  '</' + Prefixo4 + 'Cpf>',
+                  '<' + Prefixo4 + 'Cnpj>' +
+                    Cnpj +
+                  '</' + Prefixo4 + 'Cnpj>') +
                  '</' + Prefixo4 + 'CpfCnpj>',
 
                  '<' + Prefixo4 + 'Cnpj>' +
@@ -192,12 +200,16 @@ begin
  DadosMsg := '<' + Prefixo3 + 'Prestador' +
                DFeUtil.SeSenao(AProvedor = proSimplISS, ' ' + NameSpaceDad, '>') +
 
-               DFeUtil.SeSenao(VersaoXML = '1',
+               DFeUtil.SeSenao(VersaoXML = '2',
 
                  '<' + Prefixo4 + 'CpfCnpj>' +
-                 '<' + Prefixo4 + 'Cnpj>' +
-                   Cnpj +
-                 '</' + Prefixo4 + 'Cnpj>' +
+                  DFeUtil.SeSenao(Length(OnlyNumber(Cnpj)) <= 11,
+                  '<' + Prefixo4 + 'Cpf>' +
+                    Cnpj +
+                  '</' + Prefixo4 + 'Cpf>',
+                  '<' + Prefixo4 + 'Cnpj>' +
+                    Cnpj +
+                  '</' + Prefixo4 + 'Cnpj>') +
                  '</' + Prefixo4 + 'CpfCnpj>',
 
                  '<' + Prefixo4 + 'Cnpj>' +
@@ -251,12 +263,16 @@ begin
              '<' + Prefixo3 + 'Prestador' +
                DFeUtil.SeSenao(AProvedor = proSimplISS, ' ' + NameSpaceDad, '>') +
 
-              DFeUtil.SeSenao(VersaoXML = '1',
+              DFeUtil.SeSenao(VersaoXML = '2',
 
                 '<' + Prefixo4 + 'CpfCnpj>' +
-                '<' + Prefixo4 + 'Cnpj>' +
-                  Cnpj +
-                '</' + Prefixo4 + 'Cnpj>' +
+                  DFeUtil.SeSenao(Length(OnlyNumber(Cnpj)) <= 11,
+                  '<' + Prefixo4 + 'Cpf>' +
+                    Cnpj +
+                  '</' + Prefixo4 + 'Cpf>',
+                  '<' + Prefixo4 + 'Cnpj>' +
+                    Cnpj +
+                  '</' + Prefixo4 + 'Cnpj>') +
                 '</' + Prefixo4 + 'CpfCnpj>',
 
                 '<' + Prefixo4 + 'Cnpj>' +
@@ -294,12 +310,16 @@ begin
 
  DadosMsg := '<' + Prefixo3 + 'Prestador' +
                DFeUtil.SeSenao(AProvedor = proSimplISS, ' ' + NameSpaceDad, '>') +
-               DFeUtil.SeSenao(VersaoXML = '1',
+               DFeUtil.SeSenao(VersaoXML = '2',
 
                  '<' + Prefixo4 + 'CpfCnpj>' +
-                 '<' + Prefixo4 + 'Cnpj>' +
-                  Cnpj +
-                 '</' + Prefixo4 + 'Cnpj>' +
+                  DFeUtil.SeSenao(Length(OnlyNumber(Cnpj)) <= 11,
+                  '<' + Prefixo4 + 'Cpf>' +
+                    Cnpj +
+                  '</' + Prefixo4 + 'Cpf>',
+                  '<' + Prefixo4 + 'Cnpj>' +
+                    Cnpj +
+                  '</' + Prefixo4 + 'Cnpj>') +
                  '</' + Prefixo4 + 'CpfCnpj>',
 
                  '<' + Prefixo4 + 'Cnpj>' +
@@ -370,7 +390,8 @@ begin
                     '</' + Prefixo4 + 'Numero>' +
 
                     // alterado por joel takei 05/07/2013
-                   DFeUtil.SeSenao(AProvedor in [pro4R, proISSe, proFiorilli, proVirtual, proISSDigital],
+                   DFeUtil.SeSenao(AProvedor in [pro4R, proISSe, profintelISS,
+                                                 proFiorilli, proVirtual, proISSDigital],
 
                     '<' + Prefixo4 + 'CpfCnpj>' +
                      '<' + Prefixo4 + 'Cnpj>' +
@@ -434,12 +455,16 @@ begin
                   NumeroLote +
                 '</' + Prefixo4 + 'NumeroLote>' +
 
-                DFeUtil.SeSenao(VersaoXML = '1',
+                DFeUtil.SeSenao(VersaoXML = '2',
 
                   '<' + Prefixo4 + 'CpfCnpj>' +
-                  '<' + Prefixo4 + 'Cnpj>' +
-                    Cnpj +
-                  '</' + Prefixo4 + 'Cnpj>' +
+                   DFeUtil.SeSenao(Length(OnlyNumber(Cnpj)) <= 11,
+                   '<' + Prefixo4 + 'Cpf>' +
+                     Cnpj +
+                   '</' + Prefixo4 + 'Cpf>',
+                   '<' + Prefixo4 + 'Cnpj>' +
+                     Cnpj +
+                   '</' + Prefixo4 + 'Cnpj>') +
                   '</' + Prefixo4 + 'CpfCnpj>',
 
                   '<' + Prefixo4 + 'Cnpj>' +

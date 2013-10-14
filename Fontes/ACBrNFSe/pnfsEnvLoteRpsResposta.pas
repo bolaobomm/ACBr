@@ -197,11 +197,10 @@ end;
 
 function TretEnvLote.LerXml_provedorIssDsf: boolean;
 var
-  ok: boolean;
-  i, Item, posI, count: Integer;
+  i, posI, count: Integer;
   VersaoXML: String;
-  strAux, strItem: AnsiString;
-  leitorAux, leitorItem:TLeitor;
+  strAux: AnsiString;
+  leitorAux: TLeitor;
 begin
   result := False;
 
