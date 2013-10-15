@@ -391,7 +391,7 @@ begin
          else Gerador.wCampoNFSe(tcDe2, '#21', 'ValorIss', 01, 15, 0, NFSe.Servico.Valores.ValorIss, '');
       end;
 
-    if not (FProvedor in [pro4R, profinteliSS, proFiorilli, proGoiania, proISSDigital, proISSe, proProdata, proSaatri])
+    if not (FProvedor in [pro4R, profinteliSS, proFiorilli, proGoiania, proISSDigital, proISSe, proProdata, proPVH, proSaatri])
       then Gerador.wCampoNFSe(tcDe2, '#24', 'BaseCalculo', 01, 15, 0, NFSe.Servico.Valores.BaseCalculo, '');
 
     if FProvedor in [pro4R, profintelISS, proISSDigital, proISSe, proFiorilli, proSaatri]
@@ -408,7 +408,7 @@ begin
     if FProvedor in [profintelISS]
       then Gerador.wCampoNFSe(tcDe2, '#24', 'BaseCalculo', 01, 15, 1, NFSe.Servico.Valores.BaseCalculo, '');
 
-    if FProvedor in [pro4R, proFiorilli, proGoiania, proISSDigital, proISSe, proProdata, proSaatri]
+    if FProvedor in [pro4R, proFiorilli, proGoiania, proISSDigital, proISSe, proProdata, proPVH, proSaatri]
       then begin
        Gerador.wCampoNFSe(tcDe2, '#27', 'DescontoIncondicionado', 01, 15, 0, NFSe.Servico.Valores.DescontoIncondicionado, '');
        Gerador.wCampoNFSe(tcDe2, '#28', 'DescontoCondicionado  ', 01, 15, 0, NFSe.Servico.Valores.DescontoCondicionado, '');
@@ -517,7 +517,7 @@ end;
 
 procedure TNFSeW.GerarTomador;
 begin
- if VersaoXML = '1'
+ if (VersaoXML = '1') or (FProvedor in [proPVH])
    then Gerador.wGrupoNFSe('Tomador')
    else Gerador.wGrupoNFSe('TomadorServico');
 
@@ -563,7 +563,7 @@ begin
   Gerador.wCampoNFSe(tcStr, '#47', 'Email   ', 01, 80, 0, NFSe.Tomador.Contato.Email, '');
  Gerador.wGrupoNFSe('/Contato');
 
- if VersaoXML = '1'
+ if (VersaoXML = '1') or (FProvedor in [proPVH])
    then Gerador.wGrupoNFSe('/Tomador')
    else Gerador.wGrupoNFSe('/TomadorServico');
 end;
@@ -652,7 +652,7 @@ end;
 
 procedure TNFSeW.GerarXML_ABRASF_V2;
 begin
-  if FProvedor in [proCoplan, proDigifred, proFiorilli, proISSe, proISSDigital]
+  if FProvedor in [proCoplan, proDigifred, proFiorilli, proISSe, proISSDigital, proPVH]
     then begin
       Gerador.wGrupoNFSe('InfDeclaracaoPrestacaoServico ' + FIdentificador + '="rps' + NFSe.InfID.ID + '"');
        Gerador.wGrupoNFSe('Rps');
@@ -666,8 +666,8 @@ begin
 
     GerarIdentificacaoRPS;
 
-    if FProvedor in [proAgili, proCoplan, proDigifred, proFiorilli, proISSe, proISSDigital, proProdata, proSaatri]
-      then Gerador.wCampoNFSe(tcDat,    '#4', 'DataEmissao', 19, 19, 1, NFSe.DataEmissao, DSC_DEMI)
+    if FProvedor in [proAgili, proCoplan, proDigifred, proFiorilli, proISSe, proISSDigital, proProdata, proPVH, proSaatri]
+      then Gerador.wCampoNFSe(tcDat,    '#4', 'DataEmissao', 10, 10, 1, NFSe.DataEmissao, DSC_DEMI)
       else Gerador.wCampoNFSe(tcDatHor, '#4', 'DataEmissao', 19, 19, 1, NFSe.DataEmissao, DSC_DEMI);
 
     Gerador.wCampoNFSe(tcStr,    '#9', 'Status     ', 01, 01, 1, StatusRPSToStr(NFSe.Status), '');
@@ -681,13 +681,21 @@ begin
       GerarListaServicos;
 
       if NFSe.Competencia <> ''
-        then Gerador.wCampoNFSe(tcStr   , '#4', 'Competencia', 19, 19, 1, NFSe.Competencia, DSC_DEMI)
+        then Gerador.wCampoNFSe(tcStr,    '#4', 'Competencia', 10, 19, 1, NFSe.Competencia, DSC_DEMI)
         else Gerador.wCampoNFSe(tcDatHor, '#4', 'Competencia', 19, 19, 1, NFSe.DataEmissao, DSC_DEMI);
      end
      else begin
       if NFSe.Competencia <> ''
-        then Gerador.wCampoNFSe(tcStr   , '#4', 'Competencia', 19, 19, 1, NFSe.Competencia, DSC_DEMI)
-        else Gerador.wCampoNFSe(tcDatHor, '#4', 'Competencia', 19, 19, 1, NFSe.DataEmissao, DSC_DEMI);
+        then begin
+         if FProvedor in [proPVH]
+          then Gerador.wCampoNFSe(tcDat, '#4', 'Competencia', 10, 10, 1, NFSe.Competencia, DSC_DEMI)
+          else Gerador.wCampoNFSe(tcStr, '#4', 'Competencia', 19, 19, 1, NFSe.Competencia, DSC_DEMI);
+        end
+        else begin
+         if FProvedor in [proPVH]
+          then Gerador.wCampoNFSe(tcDat,    '#4', 'Competencia', 10, 10, 1, NFSe.DataEmissao, DSC_DEMI)
+          else Gerador.wCampoNFSe(tcDatHor, '#4', 'Competencia', 19, 19, 1, NFSe.DataEmissao, DSC_DEMI);
+        end;
 
       GerarServicoValores_V2;
      end;

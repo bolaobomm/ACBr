@@ -74,7 +74,7 @@ begin
   then ConfigCidade.NameSpaceEnvelope := 'http://nfse.abrasf.org.br'
   else ConfigCidade.NameSpaceEnvelope := 'http://nfse.abrasf.org.br';
 
- ConfigCidade.AssinaRPS  := False;
+ ConfigCidade.AssinaRPS  := True;
  ConfigCidade.AssinaLote := True;
 
  Result := ConfigCidade;
@@ -84,18 +84,20 @@ function TProvedorPVH.GetConfigSchema(ACodCidade: Integer): TConfigSchema;
 var
  ConfigSchema: TConfigSchema;
 begin
- ConfigSchema.VersaoCabecalho := '1.00';
- ConfigSchema.VersaoDados     := '1.00';
- ConfigSchema.VersaoXML       := '2';
- ConfigSchema.NameSpaceXML    := 'http://www.abrasf.org.br/';
- ConfigSchema.Cabecalho       := 'nfse.xsd';
- ConfigSchema.ServicoEnviar   := 'nfse.xsd';
- ConfigSchema.ServicoConSit   := 'nfse.xsd';
- ConfigSchema.ServicoConLot   := 'nfse.xsd';
- ConfigSchema.ServicoConRps   := 'nfse.xsd';
- ConfigSchema.ServicoConNfse  := 'nfse.xsd';
- ConfigSchema.ServicoCancelar := 'nfse.xsd';
- ConfigSchema.DefTipos        := '';
+ ConfigSchema.VersaoCabecalho       := '1.00';
+ ConfigSchema.VersaoDados           := '1.00';
+ ConfigSchema.VersaoXML             := '2';
+ ConfigSchema.NameSpaceXML          := 'http://www.abrasf.org.br/';
+ ConfigSchema.Cabecalho             := 'nfse.xsd';
+ ConfigSchema.ServicoEnviar         := 'nfse.xsd';
+ ConfigSchema.ServicoConSit         := 'nfse.xsd';
+ ConfigSchema.ServicoConLot         := 'nfse.xsd';
+ ConfigSchema.ServicoConRps         := 'nfse.xsd';
+ ConfigSchema.ServicoConNfse        := 'nfse.xsd';
+ ConfigSchema.ServicoCancelar       := 'nfse.xsd';
+ ConfigSchema.ServicoGerar          := 'nfse.xsd';
+ ConfigSchema.ServicoEnviarSincrono := 'nfse.xsd';
+ ConfigSchema.DefTipos              := '';
 
  Result := ConfigSchema;
 end;
@@ -113,6 +115,8 @@ begin
             ConfigURL.HomConsultaSitLoteRPS := 'http://www.semfazonline.com:7070/nfse/NfseWSService?wsdl';
             ConfigURL.HomConsultaNFSe       := 'http://www.semfazonline.com:7070/nfse/NfseWSService?wsdl';
             ConfigURL.HomCancelaNFSe        := 'http://www.semfazonline.com:7070/nfse/NfseWSService?wsdl';
+            ConfigURL.HomGerarNFSe          := 'http://www.semfazonline.com:7070/nfse/NfseWSService?wsdl';
+            ConfigURL.HomRecepcaoSincrono   := 'http://www.semfazonline.com:7070/nfse/NfseWSService?wsdl';
 
             ConfigURL.ProNomeCidade         := '';
             ConfigURL.ProRecepcaoLoteRPS    := 'http:/www.semfazonline.com/nfse/NfseWSService?wsdl';
@@ -121,6 +125,8 @@ begin
             ConfigURL.ProConsultaSitLoteRPS := 'http:/www.semfazonline.com/nfse/NfseWSService?wsdl';
             ConfigURL.ProConsultaNFSe       := 'http:/www.semfazonline.com/nfse/NfseWSService?wsdl';
             ConfigURL.ProCancelaNFSe        := 'http:/www.semfazonline.com/nfse/NfseWSService?wsdl';
+            ConfigURL.ProGerarNFSe          := 'http:/www.semfazonline.com/nfse/NfseWSService?wsdl';
+            ConfigURL.ProRecepcaoSincrono   := 'http:/www.semfazonline.com/nfse/NfseWSService?wsdl';
            end;
 
  end;
@@ -144,6 +150,7 @@ begin
    acConsNFSe:    Result := True;
    acCancelar:    Result := True;
    acGerar:       Result := True;
+   acRecSincrono: Result := True;
    else           Result := True;
  end;
 end;
@@ -158,16 +165,17 @@ function TProvedorPVH.Gera_TagI(Acao: TnfseAcao; Prefixo3, Prefixo4,
 begin
  case Acao of
    acRecepcionar: Result := '<' + Prefixo3 + 'EnviarLoteRpsEnvio' + NameSpaceDad;
-   acConsSit:     Result := '<' + Prefixo3 + 'ConsultarSituacaoLoteRpsEnvio' + NameSpaceDad;
+//   acConsSit:     Result := '<' + Prefixo3 + 'ConsultarSituacaoLoteRpsEnvio' + NameSpaceDad;
    acConsLote:    Result := '<' + Prefixo3 + 'ConsultarLoteRpsEnvio' + NameSpaceDad;
    acConsNFSeRps: Result := '<' + Prefixo3 + 'ConsultarNfseRpsEnvio' + NameSpaceDad;
-//   acConsNFSeRps: Result := '<' + Prefixo3 + 'ConsultarNfsePorRpsEnvio' + NameSpaceDad;
-   acConsNFSe:    Result := '<' + Prefixo3 + 'ConsultarNfseEnvio' + NameSpaceDad;
+   acConsNFSe:    Result := '<' + Prefixo3 + 'ConsultarNfseFaixaEnvio' + NameSpaceDad;
    acCancelar:    Result := '<' + Prefixo3 + 'CancelarNfseEnvio' + NameSpaceDad +
                              '<' + Prefixo3 + 'Pedido>' +
                               '<' + Prefixo4 + 'InfPedidoCancelamento' +
                                  DFeUtil.SeSenao(Identificador <> '', ' ' + Identificador + '="' + URI + '"', '') + '>';
-   acGerar:       Result := '';
+   acGerar:       Result := '<' + Prefixo3 + 'GerarNfseEnvio' + NameSpaceDad;
+   acRecSincrono: Result := '<' + Prefixo3 + 'EnviarLoteRpsSincronoEnvio' + NameSpaceDad;
+   else           Result := '';
  end;
 end;
 
@@ -188,14 +196,15 @@ function TProvedorPVH.Gera_TagF(Acao: TnfseAcao; Prefixo3: String): AnsiString;
 begin
  case Acao of
    acRecepcionar: Result := '</' + Prefixo3 + 'EnviarLoteRpsEnvio>';
-   acConsSit:     Result := '</' + Prefixo3 + 'ConsultarSituacaoLoteRpsEnvio>';
+//   acConsSit:     Result := '</' + Prefixo3 + 'ConsultarSituacaoLoteRpsEnvio>';
    acConsLote:    Result := '</' + Prefixo3 + 'ConsultarLoteRpsEnvio>';
    acConsNFSeRps: Result := '</' + Prefixo3 + 'ConsultarNfseRpsEnvio>';
-//   acConsNFSeRps: Result := '</' + Prefixo3 + 'ConsultarNfsePorRpsEnvio>';
-   acConsNFSe:    Result := '</' + Prefixo3 + 'ConsultarNfseEnvio>';
+   acConsNFSe:    Result := '</' + Prefixo3 + 'ConsultarNfseFaixaEnvio>';
    acCancelar:    Result := '</' + Prefixo3 + 'Pedido>' +
                             '</' + Prefixo3 + 'CancelarNfseEnvio>';
-   acGerar:       Result := '';
+   acGerar:       Result := '</' + Prefixo3 + 'GerarNfseEnvio';
+   acRecSincrono: Result := '</' + Prefixo3 + 'EnviarLoteRpsSincronoEnvio';
+   else           Result := '';
  end;
 end;
 
@@ -343,6 +352,28 @@ begin
            '</S:Envelope>';
 end;
 
+function TProvedorPVH.GeraEnvelopeRecepcionarSincrono(URLNS: String;
+  CabMsg, DadosMsg, DadosSenha: AnsiString): AnsiString;
+begin
+ result := '<?xml version="1.0" encoding="UTF-8"?>' +
+           '<S:Envelope xmlns:S="http://schemas.xmlsoap.org/soap/envelope/" ' +
+                       'xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" ' +
+                       'xmlns:xsd="http://www.w3.org/2001/XMLSchema">' +
+            '<S:Body>' +
+             '<ns2:RecepcionarLoteRpsSincronoRequest xmlns:ns2="' + URLNS + '">' +
+              '<nfseCabecMsg>' +
+                '&lt;?xml version="1.0" encoding="UTF-8"?&gt;' +
+                StringReplace(StringReplace(CabMsg, '<', '&lt;', [rfReplaceAll]), '>', '&gt;', [rfReplaceAll]) +
+              '</nfseCabecMsg>' +
+              '<nfseDadosMsg>' +
+                '&lt;?xml version="1.0" encoding="UTF-8"?&gt;' +
+                StringReplace(StringReplace(DadosMsg, '<', '&lt;', [rfReplaceAll]), '>', '&gt;', [rfReplaceAll]) +
+              '</nfseDadosMsg>' +
+             '</ns2:RecepcionarLoteRpsSincronoRequest>' +
+            '</S:Body>' +
+           '</S:Envelope>';
+end;
+
 function TProvedorPVH.GetSoapAction(Acao: TnfseAcao; NomeCidade: String): String;
 begin
  case Acao of
@@ -354,6 +385,8 @@ begin
    acConsNFSe:    Result := 'http:/nfse.abrasf.org.br/ConsultarNfsePorFaixa';
    acCancelar:    Result := 'http:/nfse.abrasf.org.br/CancelarNfse';
    acGerar:       Result := 'http:/nfse.abrasf.org.br/GerarNfse';
+   acRecSincrono: Result := 'http:/nfse.abrasf.org.br/RecepcionarLoteRpsSincrono';
+   else           Result := '';
  end;
 end;
 
@@ -366,7 +399,9 @@ begin
    acConsNFSeRps: Result := SeparaDados( RetornoWS, 'outputXML' );
    acConsNFSe:    Result := SeparaDados( RetornoWS, 'outputXML' );
    acCancelar:    Result := SeparaDados( RetornoWS, 'outputXML' );
-   acGerar:       Result := '';
+   acGerar:       Result := SeparaDados( RetornoWS, 'outputXML' );
+   acRecSincrono: Result := SeparaDados( RetornoWS, 'outputXML' );
+   else           Result := '';
  end;
 end;
 
@@ -381,12 +416,6 @@ end;
 
 function TProvedorPVH.GetLinkNFSe(ACodMunicipio, ANumeroNFSe: Integer;
   ACodVerificacao, AInscricaoM: String; AAmbiente: Integer): String;
-begin
- Result := '';
-end;
-
-function TProvedorPVH.GeraEnvelopeRecepcionarSincrono(URLNS: String;
-  CabMsg, DadosMsg, DadosSenha: AnsiString): AnsiString;
 begin
  Result := '';
 end;

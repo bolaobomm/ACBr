@@ -465,6 +465,7 @@ begin
       proFiorilli,
       proCoplan,
       proProdata,
+      proPVH,
       proAgili,
       ProVirtual,
       proSaatri:    begin
@@ -701,6 +702,7 @@ begin
       proFiorilli,
       proCoplan,
       proProdata,
+      proPVH,
       proAgili,
       proVirtual,
       proSaatri:    begin
@@ -807,6 +809,7 @@ begin
     pro4R,
     proCoplan,
     proProdata,
+    proPVH,
     proAgili,
     proVirtual,
     proSaatri: begin

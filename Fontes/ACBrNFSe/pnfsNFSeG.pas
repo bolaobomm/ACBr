@@ -444,6 +444,7 @@ begin
   proIssDigital,
   proISSe,
   proProdata,
+  proPVH,
   proAgili,
   proVirtual,
   proSaatri: Result := TagI + Notas + TagF;
