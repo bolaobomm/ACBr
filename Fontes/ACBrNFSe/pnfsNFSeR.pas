@@ -3054,7 +3054,11 @@ begin
 
      if FProvedor = proISSNet
       then FNFSe.NfseSubstituida := ''
-      else NFSe.NfseSubstituida  := Leitor.rCampo(tcStr, 'NfseSubstituida');
+      else begin
+       NFSe.NfseSubstituida := Leitor.rCampo(tcStr, 'NfseSubstituida');
+       if NFSe.NfseSubstituida = ''
+        then NFSe.NfseSubstituida := Leitor.rCampo(tcStr, 'NfseSubstituta');
+      end;
       
      NFSe.OutrasInformacoes        := Leitor.rCampo(tcStr, 'OutrasInformacoes');
      NFSe.ValorCredito             := Leitor.rCampo(tcDe2, 'ValorCredito');
