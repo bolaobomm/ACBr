@@ -43,6 +43,7 @@ uses Classes, SysUtils, ACBrConsts, ACBrBase,
     {$IFDEF FPC}
         LResources, LazarusPackageIntf, PropEdits, componenteditors
      {$ELSE}
+		{$IFDEF DELPHI9_UP}ToolsApi, Windows, Graphics,{$ENDIF}
         {$IFNDEF COMPILER6_UP}
            DsgnIntf
         {$ELSE}
@@ -63,11 +64,26 @@ end;
 
 procedure Register ;
 
+{$IFDEF  DELPHI9_UP}
+	{$R ACBrComum.res}
+{$ENDIF}
 implementation
 
 Uses ACBrUtil, ACBrEAD, ACBrAAC ;
 {$IFNDEF FPC}
    {$R ACBrComum.dcr}
+{$ENDIF}
+
+{$IFDEF  DELPHI9_UP}
+procedure AddSplash;
+var
+  bmp: TBitmap;
+begin
+  bmp := TBitmap.Create;
+  bmp.LoadFromResourceName(HInstance, 'ACBR');
+  SplashScreenServices.AddPluginBitmap('Projeto ACBr - Automação Comercial Brasil',bmp.Handle,false,'GNU Library or Lesser General Public License version 2.0 (LGPLv2)','');
+  bmp.Free;
+end;
 {$ENDIF}
 
 procedure Register;
@@ -93,6 +109,11 @@ function TACBrAboutDialogProperty.GetValue: string;
 begin
   Result := 'http://acbr.sf.net' ;  //ACBrStr( 'Versão: ' + ACBR_VERSAO ) ;
 end;
+
+{$IFDEF DELPHI9_UP}
+initialization
+	AddSplash;
+{$ENDIF}
 
 {$IFDEF FPC}
 initialization
