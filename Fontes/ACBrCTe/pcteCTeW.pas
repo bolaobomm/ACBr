@@ -1460,7 +1460,9 @@ end;
 procedure TCTeW.GerarRodo;
 begin
   Gerador.wGrupo('rodo', '#01');
-  Gerador.wCampo(tcStr, '#02', 'RNTRC ', 08, 08, 1, SomenteNumeros(CTe.infCTeNorm.rodo.RNTRC), DSC_RNTRC);
+  if CTe.infCTeNorm.rodo.RNTRC = 'INSETO'
+   then Gerador.wCampo(tcStr, '#02', 'RNTRC ', 06, 06, 1, CTe.infCTeNorm.rodo.RNTRC, DSC_RNTRC)
+   else Gerador.wCampo(tcStr, '#02', 'RNTRC ', 08, 08, 1, SomenteNumeros(CTe.infCTeNorm.rodo.RNTRC), DSC_RNTRC);
   Gerador.wCampo(tcDat, '#03', 'dPrev ', 10, 10, 1, CTe.infCTeNorm.rodo.dPrev, DSC_DPREV);
   Gerador.wCampo(tcStr, '#04', 'lota  ', 01, 01, 1, TpLotacaoToStr(CTe.infCTeNorm.rodo.Lota), DSC_LOTA);
   Gerador.wCampo(tcStr, '#05', 'CIOT  ', 12, 12, 0, CTe.infCTeNorm.rodo.CIOT, DSC_CIOT);
@@ -1557,7 +1559,9 @@ begin
     begin
       Gerador.wGrupo('prop', '#33');
       Gerador.wCampoCNPJCPF('#34', '#35', CTe.infCTeNorm.rodo.veic[i].prop.CNPJCPF, CODIGO_BRASIL);
-      Gerador.wCampo(tcStr, '#36', 'RNTRC ', 08, 08, 1, SomenteNumeros(CTe.infCTeNorm.rodo.veic[i].prop.RNTRC), DSC_RNTRC);
+      if CTe.infCTeNorm.rodo.veic[i].prop.RNTRC = 'ISENTO'
+       then Gerador.wCampo(tcStr, '#36', 'RNTRC ', 06, 06, 1, CTe.infCTeNorm.rodo.veic[i].prop.RNTRC, DSC_RNTRC)
+       else Gerador.wCampo(tcStr, '#36', 'RNTRC ', 08, 08, 1, SomenteNumeros(CTe.infCTeNorm.rodo.veic[i].prop.RNTRC), DSC_RNTRC);
       Gerador.wCampo(tcStr, '#37', 'xNome ', 01, 60, 1, CTe.infCTeNorm.rodo.veic[i].prop.xNome, DSC_XNOME);
 
       if CTe.infCTeNorm.rodo.veic[i].prop.IE <> ''
