@@ -389,11 +389,11 @@ begin
                 'SINIEF 06/89: Fica permitida a utilizacao de carta de correcao,' +
                 ' para regularizacao de erro ocorrido na emissao de documentos' +
                 ' fiscais relativos a prestacao de servico de transporte, desde' +
-                ' que o erro nao esteja  relacionado com: I - as variaveis que' +
+                ' que o erro nao esteja relacionado com: I - as variaveis que' +
                 ' determinam o valor do imposto tais como: base de calculo,' +
                 ' aliquota, diferenca de preco, quantidade, valor da prestacao;' +
-                ' II - a correcao de dados cadastrais que implique mudanca do' +
-                ' emitente, tomador, remetente ou do destinatario; III - a data' +
+                'II - a correcao de dados cadastrais que implique mudança do' +
+                ' emitente, tomador, remetente ou do destinatario;III - a data' +
                 ' de emissao ou de saida.';
 end;
 
