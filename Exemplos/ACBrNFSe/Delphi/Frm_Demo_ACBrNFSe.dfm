@@ -394,6 +394,7 @@ object frmDemo_ACBrNFSe: TfrmDemo_ACBrNFSe
               'Pinhalzinho/4212908/SC'
               'Ponta Grossa/4119905/PR'
               'Porto Seguro/2925303/BA'
+              'Proto Velho/1100205/RO'
               'Presidente Prudente/3541406/SP'
               'Presidente Venceslau/3541505/SP'
               'Recife/2611606/PE'
