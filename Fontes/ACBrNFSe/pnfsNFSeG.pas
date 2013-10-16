@@ -115,7 +115,7 @@ begin
                 NumeroLote +
               '</' + Prefixo4 + 'NumeroLote>' +
 
-              DFeUtil.SeSenao((VersaoXML = '2') and (AProvedor = proISSNet),
+              DFeUtil.SeSenao((VersaoXML = '2') or (AProvedor = proISSNet),
 
                 '<' + Prefixo4 + 'CpfCnpj>' +
                 DFeUtil.SeSenao(Length(OnlyNumber(Cnpj)) <= 11,
