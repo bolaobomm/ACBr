@@ -49,7 +49,7 @@ uses
      ACBrMDFeDAMDFeClass,
   //{$ENDIF}
   smtpsend, ssl_openssl, mimemess, mimepart, // units para enviar email
-  pcnConversao, pcnAuxiliar, pcnLeitor,
+  pcnConversao, pcnAuxiliar, pmdfeConversao, pcnLeitor,
   pmdfeMDFe, pmdfeMDFeR, pmdfeMDFeW;
 
 type
@@ -147,7 +147,7 @@ type
 implementation
 
 uses
-   ACBrUtil, ACBrDFeUtil, pcnGerador,ACBrMDFe;
+   ACBrUtil, ACBrDFeUtil, pcnGerador, ACBrMDFe;
 
 { Manifesto }
 
@@ -193,6 +193,7 @@ begin
      Result  := True;
      LocMDFeW := TMDFeW.Create(MDFe);
      try
+        LocMDFeW.VersaoDF := TACBrMDFe( TManifestos( Collection ).ACBrMDFe ).Configuracoes.Geral.VersaoDF;
         LocMDFeW.GerarXml;
         if DFeUtil.EstaVazio(CaminhoArquivo) then
            CaminhoArquivo := PathWithDelim(TACBrMDFe( TManifestos( Collection ).ACBrMDFe ).Configuracoes.Geral.PathSalvar)+copy(MDFe.inFMDFe.ID, (length(MDFe.inFMDFe.ID)-44)+1, 44)+'-mdfe.xml';
@@ -217,6 +218,7 @@ begin
      Result  := True;
      LocMDFeW := TMDFeW.Create(MDFe);
      try
+        LocMDFeW.VersaoDF := TACBrMDFe( TManifestos( Collection ).ACBrMDFe ).Configuracoes.Geral.VersaoDF;
         LocMDFeW.GerarXml;
         Stream.WriteString(LocMDFeW.Gerador.ArquivoFormatoXML);
      finally
@@ -328,6 +330,7 @@ var
 begin
  LocMDFeW := TMDFeW.Create(Self.MDFe);
  try
+    LocMDFeW.VersaoDF := TACBrMDFe( TManifestos( Collection ).ACBrMDFe ).Configuracoes.Geral.VersaoDF;
     LocMDFeW.GerarXml;
     Result := LocMDFeW.Gerador.ArquivoFormatoXML;
  finally
@@ -367,6 +370,7 @@ begin
    begin
      LocMDFeW := TMDFeW.Create(Self.Items[i].MDFe);
      try
+        LocMDFeW.VersaoDF := FConfiguracoes.Geral.VersaoDF;
         LocMDFeW.GerarXml;
         Self.Items[i].Alertas := LocMDFeW.Gerador.ListaDeAlertas.Text;
 {$IFDEF ACBrMDFeOpenSSL}
@@ -411,6 +415,7 @@ begin
   begin
     LocMDFeW := TMDFeW.Create(Self.Items[i].MDFe);
     try
+       LocMDFeW.VersaoDF := FConfiguracoes.Geral.VersaoDF;
        LocMDFeW.GerarXml;
        Self.Items[i].XML     := LocMDFeW.Gerador.ArquivoFormatoXML;
        Self.Items[i].Alertas := LocMDFeW.Gerador.ListaDeAlertas.Text;

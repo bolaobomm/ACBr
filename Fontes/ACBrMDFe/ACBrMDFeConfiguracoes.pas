@@ -44,7 +44,7 @@ uses
 {$IFNDEF ACBrMDFeOpenSSL}
   ACBrCAPICOM_TLB, JwaWinCrypt, JwaWinType, ACBrMSXML2_TLB,
 {$ENDIF}
-  Classes, Sysutils, pcnConversao, ActiveX;
+  Classes, Sysutils, pcnConversao, pmdfeConversao, ActiveX;
 
 {$IFNDEF ACBrMDFeOpenSSL}
   const CAPICOM_STORE_NAME = 'My'; //My CA Root AddressBook
@@ -60,6 +60,7 @@ type
     {$ELSE}
        FNumeroSerie: AnsiString;
        FDataVenc: TDateTime;
+       
        procedure SetNumeroSerie(const Value: AnsiString);
        function GetNumeroSerie: AnsiString;
        function GetDataVenc: TDateTime;
@@ -94,6 +95,7 @@ type
     FTentativas : Integer;
     FIntervaloTentativas : Cardinal;
     FAjustaAguardaConsultaRet : Boolean;
+
     procedure SetUF(AValue: String);
     procedure SetAmbiente(AValue: TpcnTipoAmbiente);
     procedure SetTentativas(const Value: Integer);
@@ -126,6 +128,8 @@ type
     FAtualizarXMLCancelado: Boolean;
     FPathSalvar: String;
     FPathSchemas: String;
+    FVersaoDF: TMDFeVersao;
+
     procedure SetFormaEmissao(AValue: TpcnTipoEmissao);
     function GetPathSalvar: String;
   public
@@ -139,6 +143,7 @@ type
     property AtualizarXMLCancelado: Boolean read FAtualizarXMLCancelado write FAtualizarXMLCancelado default True;
     property PathSalvar: String read GetPathSalvar write FPathSalvar;
     property PathSchemas: String read FPathSchemas write FPathSchemas;
+    property VersaoDF: TMDFeVersao read FVersaoDF write FVersaoDF default ve100;
   end;
 
   TArquivosConf = class(TComponent)

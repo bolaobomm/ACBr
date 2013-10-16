@@ -53,7 +53,7 @@ uses
   ACBrMDFeWebServices, ACBrMDFeUtil, ACBrMDFeDAMDFeClass;
 
 const
-  ACBRMDFe_VERSAO = '0.0.2';
+  ACBRMDFe_VERSAO = '0.1.0';
 
 type
   TACBrMDFeAboutInfo = (ACBrMDFeAbout);
