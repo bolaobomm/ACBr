@@ -494,7 +494,7 @@ procedure TNFSeW.GerarPrestador;
 begin
  Gerador.wGrupoNFSe('Prestador');
 
- if VersaoXML = '1'
+ if (VersaoXML = '1') and (FProvedor <> proISSNet)
   then Gerador.wCampoNFSe(tcStr, '#34', 'Cnpj', 14, 14, 1, SomenteNumeros(NFSe.Prestador.Cnpj), '')
   else begin
    Gerador.wGrupoNFSe('CpfCnpj');
