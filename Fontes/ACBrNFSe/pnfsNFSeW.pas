@@ -517,55 +517,62 @@ end;
 
 procedure TNFSeW.GerarTomador;
 begin
- if (VersaoXML = '1') or (FProvedor in [proPVH])
-   then Gerador.wGrupoNFSe('Tomador')
-   else Gerador.wGrupoNFSe('TomadorServico');
-
- if NFSe.Tomador.Endereco.UF <> 'EX'
+ if (NFSe.Tomador.IdentificacaoTomador.CpfCnpj <> '') or
+    (NFSe.Tomador.RazaoSocial <> '') or
+    (NFSe.Tomador.Endereco.Endereco <> '') or
+    (NFSe.Tomador.Contato.Telefone <> '') or
+    (NFSe.Tomador.Contato.Email <>'')
    then begin
-     Gerador.wGrupoNFSe('IdentificacaoTomador');
-      Gerador.wGrupoNFSe('CpfCnpj');
-      if Length(SomenteNumeros(NFSe.Tomador.IdentificacaoTomador.CpfCnpj)) <= 11
-        then Gerador.wCampoNFSe(tcStr, '#36', 'Cpf ', 11, 11, 1, SomenteNumeros(NFSe.Tomador.IdentificacaoTomador.CpfCnpj), '')
-        else Gerador.wCampoNFSe(tcStr, '#36', 'Cnpj', 14, 14, 1, SomenteNumeros(NFSe.Tomador.IdentificacaoTomador.CpfCnpj), '');
-      Gerador.wGrupoNFSe('/CpfCnpj');
-      Gerador.wCampoNFSe(tcStr, '#37', 'InscricaoMunicipal', 01, 15, 0, NFSe.Tomador.IdentificacaoTomador.InscricaoMunicipal, '');
-      if FProvedor = proSimplISS
-        then Gerador.wCampoNFSe(tcStr, '#38', 'InscricaoEstadual', 01, 20, 0, NFSe.Tomador.IdentificacaoTomador.InscricaoEstadual, '');
-     Gerador.wGrupoNFSe('/IdentificacaoTomador');
+    if (VersaoXML = '1') or (FProvedor in [proPVH])
+      then Gerador.wGrupoNFSe('Tomador')
+      else Gerador.wGrupoNFSe('TomadorServico');
+
+    if NFSe.Tomador.Endereco.UF <> 'EX'
+      then begin
+        Gerador.wGrupoNFSe('IdentificacaoTomador');
+         Gerador.wGrupoNFSe('CpfCnpj');
+         if Length(SomenteNumeros(NFSe.Tomador.IdentificacaoTomador.CpfCnpj)) <= 11
+           then Gerador.wCampoNFSe(tcStr, '#36', 'Cpf ', 11, 11, 1, SomenteNumeros(NFSe.Tomador.IdentificacaoTomador.CpfCnpj), '')
+           else Gerador.wCampoNFSe(tcStr, '#36', 'Cnpj', 14, 14, 1, SomenteNumeros(NFSe.Tomador.IdentificacaoTomador.CpfCnpj), '');
+         Gerador.wGrupoNFSe('/CpfCnpj');
+         Gerador.wCampoNFSe(tcStr, '#37', 'InscricaoMunicipal', 01, 15, 0, NFSe.Tomador.IdentificacaoTomador.InscricaoMunicipal, '');
+         if FProvedor = proSimplISS
+           then Gerador.wCampoNFSe(tcStr, '#38', 'InscricaoEstadual', 01, 20, 0, NFSe.Tomador.IdentificacaoTomador.InscricaoEstadual, '');
+       Gerador.wGrupoNFSe('/IdentificacaoTomador');
+      end;
+
+    Gerador.wCampoNFSe(tcStr, '#38', 'RazaoSocial', 001, 115, 0, NFSe.Tomador.RazaoSocial, '');
+    Gerador.wGrupoNFSe('Endereco');
+     Gerador.wCampoNFSe(tcStr, '#39', 'Endereco   ', 001, 125, 0, NFSe.Tomador.Endereco.Endereco, '');
+     Gerador.wCampoNFSe(tcStr, '#40', 'Numero     ', 001, 010, 0, NFSe.Tomador.Endereco.Numero, '');
+     Gerador.wCampoNFSe(tcStr, '#41', 'Complemento', 001, 060, 0, NFSe.Tomador.Endereco.Complemento, '');
+     Gerador.wCampoNFSe(tcStr, '#42', 'Bairro     ', 001, 060, 0, NFSe.Tomador.Endereco.Bairro, '');
+
+     if FProvedor in [proCoplan, proDigifred, proEquiplano, proGovDigital, proISSNet, proVirtual]
+      then begin
+        Gerador.wCampoNFSe(tcStr, '#43', 'Cidade', 007, 007, 0, SomenteNumeros(NFSe.Tomador.Endereco.CodigoMunicipio), '');
+        Gerador.wCampoNFSe(tcStr, '#44', 'Estado', 002, 002, 0, NFSe.Tomador.Endereco.UF, '');
+      end
+      else begin
+        Gerador.wCampoNFSe(tcStr, '#43', 'CodigoMunicipio', 7, 7, 0, SomenteNumeros(NFSe.Tomador.Endereco.CodigoMunicipio), '');
+        Gerador.wCampoNFSe(tcStr, '#44', 'Uf             ', 2, 2, 0, NFSe.Tomador.Endereco.UF, '');
+      end;
+
+     if VersaoXML = '2'
+       then Gerador.wCampoNFSe(tcInt, '#34', 'CodigoPais ', 04, 04, 0, NFSe.Servico.CodigoPais, '');
+
+     Gerador.wCampoNFSe(tcStr, '#45', 'Cep', 008, 008, 0, SomenteNumeros(NFSe.Tomador.Endereco.CEP), '');
+    Gerador.wGrupoNFSe('/Endereco');
+
+    Gerador.wGrupoNFSe('Contato');
+     Gerador.wCampoNFSe(tcStr, '#46', 'Telefone', 01, 11, 0, SomenteNumeros(NFSe.Tomador.Contato.Telefone), '');
+     Gerador.wCampoNFSe(tcStr, '#47', 'Email   ', 01, 80, 0, NFSe.Tomador.Contato.Email, '');
+    Gerador.wGrupoNFSe('/Contato');
+
+    if (VersaoXML = '1') or (FProvedor in [proPVH])
+      then Gerador.wGrupoNFSe('/Tomador')
+      else Gerador.wGrupoNFSe('/TomadorServico');
    end;
-
- Gerador.wCampoNFSe(tcStr, '#38', 'RazaoSocial', 001, 115, 0, NFSe.Tomador.RazaoSocial, '');
- Gerador.wGrupoNFSe('Endereco');
-  Gerador.wCampoNFSe(tcStr, '#39', 'Endereco   ', 001, 125, 0, NFSe.Tomador.Endereco.Endereco, '');
-  Gerador.wCampoNFSe(tcStr, '#40', 'Numero     ', 001, 010, 0, NFSe.Tomador.Endereco.Numero, '');
-  Gerador.wCampoNFSe(tcStr, '#41', 'Complemento', 001, 060, 0, NFSe.Tomador.Endereco.Complemento, '');
-  Gerador.wCampoNFSe(tcStr, '#42', 'Bairro     ', 001, 060, 0, NFSe.Tomador.Endereco.Bairro, '');
-
- if FProvedor in [proCoplan, proDigifred, proEquiplano, proGovDigital, proISSNet, proVirtual] 
-  then begin
-    Gerador.wCampoNFSe(tcStr, '#43', 'Cidade', 007, 007, 0, SomenteNumeros(NFSe.Tomador.Endereco.CodigoMunicipio), '');
-    Gerador.wCampoNFSe(tcStr, '#44', 'Estado', 002, 002, 0, NFSe.Tomador.Endereco.UF, '');
-  end
-  else begin
-    Gerador.wCampoNFSe(tcStr, '#43', 'CodigoMunicipio', 7, 7, 0, SomenteNumeros(NFSe.Tomador.Endereco.CodigoMunicipio), '');
-    Gerador.wCampoNFSe(tcStr, '#44', 'Uf             ', 2, 2, 0, NFSe.Tomador.Endereco.UF, '');
-  end;
-
- if VersaoXML = '2'
-   then Gerador.wCampoNFSe(tcInt, '#34', 'CodigoPais ', 04, 04, 0, NFSe.Servico.CodigoPais, '');
-
-  Gerador.wCampoNFSe(tcStr, '#45', 'Cep', 008, 008, 0, SomenteNumeros(NFSe.Tomador.Endereco.CEP), '');
- Gerador.wGrupoNFSe('/Endereco');
-
- Gerador.wGrupoNFSe('Contato');
-  Gerador.wCampoNFSe(tcStr, '#46', 'Telefone', 01, 11, 0, SomenteNumeros(NFSe.Tomador.Contato.Telefone), '');
-  Gerador.wCampoNFSe(tcStr, '#47', 'Email   ', 01, 80, 0, NFSe.Tomador.Contato.Email, '');
- Gerador.wGrupoNFSe('/Contato');
-
- if (VersaoXML = '1') or (FProvedor in [proPVH])
-   then Gerador.wGrupoNFSe('/Tomador')
-   else Gerador.wGrupoNFSe('/TomadorServico');
 end;
 
 procedure TNFSeW.GerarIntermediarioServico;
