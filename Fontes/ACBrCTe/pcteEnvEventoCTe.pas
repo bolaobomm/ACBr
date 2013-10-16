@@ -211,7 +211,7 @@ begin
      begin
        Gerador.wGrupo('evEPECCTe');
        Gerador.wCampo(tcStr, 'EP02', 'descEvento', 05, 12, 1, Evento.Items[0].InfEvento.DescEvento);
-       Gerador.wCampo(tcStr, 'EP04', 'xJust     ', 015, 255, 1, Evento.Items[0].InfEvento.detEvento.xJust);
+       Gerador.wCampo(tcStr, 'EP04', 'xJust     ', 15, 255, 1, Evento.Items[0].InfEvento.detEvento.xJust);
        Gerador.wCampo(tcDe2, 'EP05', 'vICMS     ', 01, 15, 1, Evento.Items[0].InfEvento.detEvento.vICMS, DSC_VICMS);
        Gerador.wCampo(tcDe2, 'EP06', 'vTPrest   ', 01, 15, 1, Evento.Items[0].InfEvento.detEvento.vTPrest, DSC_VTPREST);
        Gerador.wCampo(tcDe2, 'EP07', 'vCarga    ', 01, 15, 1, Evento.Items[0].InfEvento.detEvento.vCarga, DSC_VTMERC);
@@ -219,25 +219,39 @@ begin
        Gerador.wGrupo('toma04');
        Gerador.wCampo(tcStr, 'EP09', 'toma', 01, 01, 1, TpTomadorToStr(Evento.Items[0].InfEvento.detEvento.toma), DSC_TOMA);
        Gerador.wCampo(tcStr, 'EP10', 'UF  ', 02, 02, 1, Evento.Items[0].InfEvento.detEvento.UF, DSC_UF);
+       if not ValidarUF(Evento.Items[0].InfEvento.detEvento.UF) then
+         Gerador.wAlerta('EP10', 'UF', DSC_UF, ERR_MSG_INVALIDO);
        Gerador.wCampoCNPJCPF('EP11', 'EP12', Evento.Items[0].InfEvento.detEvento.CNPJCPF, CODIGO_BRASIL);
-       Gerador.wCampo(tcStr, 'EP13', 'IE  ', 02, 14, 1, SomenteNumeros(Evento.Items[0].InfEvento.detEvento.IE), DSC_IE);
+
+       if Evento.Items[0].InfEvento.detEvento.IE <> ''
+         then begin
+          if Trim(Evento.Items[0].InfEvento.detEvento.IE) = 'ISENTO' then
+            Gerador.wCampo(tcStr, 'EP13', 'IE  ', 00, 14, 0, Evento.Items[0].InfEvento.detEvento.IE, DSC_IE)
+          else
+            Gerador.wCampo(tcStr, 'EP13', 'IE  ', 00, 14, 0, SomenteNumeros(Evento.Items[0].InfEvento.detEvento.IE), DSC_IE);
+
+          if not ValidarIE(Evento.Items[0].InfEvento.detEvento.IE, Evento.Items[0].InfEvento.detEvento.UF) then
+            Gerador.wAlerta('EP13', 'IE', DSC_IE, ERR_MSG_INVALIDO);
+         end;
+
+//       Gerador.wCampo(tcStr, 'EP13', 'IE  ', 00, 14, 0, SomenteNumeros(Evento.Items[0].InfEvento.detEvento.IE), DSC_IE);
        Gerador.wGrupo('/toma04');
 
        Gerador.wCampo(tcStr, 'EP14', 'modal   ', 02, 02, 1, TpModalToStr(Evento.Items[0].InfEvento.detEvento.modal), DSC_MODAL);
        Gerador.wCampo(tcStr, 'EP15', 'UFIni   ', 02, 02, 1, Evento.Items[0].InfEvento.detEvento.UFIni, DSC_UF);
        if not ValidarUF(Evento.Items[0].InfEvento.detEvento.UFIni) then
-        Gerador.wAlerta('EP15', 'UFIni', DSC_UF, ERR_MSG_INVALIDO);
+         Gerador.wAlerta('EP15', 'UFIni', DSC_UF, ERR_MSG_INVALIDO);
        Gerador.wCampo(tcStr, 'EP16', 'UFFim   ', 02, 02, 1, Evento.Items[0].InfEvento.detEvento.UFFim, DSC_UF);
        if not ValidarUF(Evento.Items[0].InfEvento.detEvento.UFFim) then
-        Gerador.wAlerta('EP16', 'UFFim', DSC_UF, ERR_MSG_INVALIDO);
+         Gerador.wAlerta('EP16', 'UFFim', DSC_UF, ERR_MSG_INVALIDO);
        Gerador.wGrupo('/evEPECCTe');
      end;
    teMultiModal:
      begin
        Gerador.wGrupo('evRegMultimodal');
-       Gerador.wCampo(tcStr, 'EP02', 'descEvento', 005, 0012, 1, Evento.Items[0].InfEvento.DescEvento);
+       Gerador.wCampo(tcStr, 'EP02', 'descEvento', 005, 0019, 1, Evento.Items[0].InfEvento.DescEvento);
        Gerador.wCampo(tcStr, 'EP03', 'xRegistro ', 015, 1000, 1, Evento.Items[0].InfEvento.detEvento.xRegistro);
-       Gerador.wCampo(tcStr, 'EP04', 'nDoc      ', 043, 0043, 0, Evento.Items[0].InfEvento.detEvento.nDoc);
+       Gerador.wCampo(tcStr, 'EP04', 'nDoc      ', 001, 0044, 0, Evento.Items[0].InfEvento.detEvento.nDoc);
        Gerador.wGrupo('/evRegMultimodal');
      end;
   end;

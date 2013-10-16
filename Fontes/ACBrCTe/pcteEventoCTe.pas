@@ -404,7 +404,7 @@ begin
                 'que o erro nao esteja relacionado com: I - as variaveis que ' +
                 'determinam o valor do imposto tais como: base de calculo, ' +
                 'aliquota, diferenca de preco, quantidade, valor da prestacao;' +
-                'II - a correcao de dados cadastrais que implique mudança do ' +
+                'II - a correcao de dados cadastrais que implique mudanca do ' +
                 'emitente, tomador, remetente ou do destinatario;III - a data ' +
                 'de emissao ou de saida.';
 end;
