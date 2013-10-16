@@ -200,19 +200,19 @@ object frmDemo_ACBrMDFe: TfrmDemo_ACBrMDFe
             Left = 0
             Top = 4
             Width = 265
-            Height = 269
+            Height = 245
             Caption = 'Geral'
             TabOrder = 0
             object Label7: TLabel
               Left = 8
-              Top = 176
+              Top = 144
               Width = 57
               Height = 13
               Caption = 'Logo Marca'
             end
             object sbtnLogoMarca: TSpeedButton
               Left = 235
-              Top = 188
+              Top = 156
               Width = 23
               Height = 24
               Glyph.Data = {
@@ -233,7 +233,7 @@ object frmDemo_ACBrMDFe: TfrmDemo_ACBrMDFe
             end
             object sbtnPathSalvar: TSpeedButton
               Left = 235
-              Top = 236
+              Top = 204
               Width = 23
               Height = 24
               Glyph.Data = {
@@ -254,21 +254,21 @@ object frmDemo_ACBrMDFe: TfrmDemo_ACBrMDFe
             end
             object edtLogoMarca: TEdit
               Left = 8
-              Top = 192
+              Top = 160
               Width = 228
               Height = 21
               TabOrder = 0
             end
             object edtPathLogs: TEdit
               Left = 8
-              Top = 240
+              Top = 208
               Width = 228
               Height = 21
               TabOrder = 1
             end
             object ckSalvar: TCheckBox
               Left = 8
-              Top = 224
+              Top = 192
               Width = 209
               Height = 15
               Caption = 'Salvar Arquivos de Envio e Resposta'
@@ -284,7 +284,7 @@ object frmDemo_ACBrMDFe: TfrmDemo_ACBrMDFe
               Left = 8
               Top = 16
               Width = 249
-              Height = 49
+              Height = 57
               Caption = 'DAMDFe'
               Columns = 2
               ItemIndex = 0
@@ -295,9 +295,9 @@ object frmDemo_ACBrMDFe: TfrmDemo_ACBrMDFe
             end
             object rgFormaEmissao: TRadioGroup
               Left = 8
-              Top = 72
+              Top = 80
               Width = 249
-              Height = 97
+              Height = 57
               Caption = 'Forma de Emiss'#227'o'
               Columns = 2
               ItemIndex = 0
@@ -306,6 +306,19 @@ object frmDemo_ACBrMDFe: TfrmDemo_ACBrMDFe
                 'Conting'#234'ncia')
               TabOrder = 4
             end
+          end
+          object rgVersaoDF: TRadioGroup
+            Left = 0
+            Top = 256
+            Width = 265
+            Height = 57
+            Caption = 'Vers'#227'o do Documento Fiscal'
+            Columns = 2
+            ItemIndex = 0
+            Items.Strings = (
+              '1.00'
+              '1.00a')
+            TabOrder = 1
           end
         end
         object TabSheet3: TTabSheet

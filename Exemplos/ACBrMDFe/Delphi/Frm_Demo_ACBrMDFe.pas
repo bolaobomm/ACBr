@@ -126,6 +126,7 @@ type
     OpenDialog1: TOpenDialog;
     ACBrMDFe1: TACBrMDFe;
     DAMDFE: TACBrMDFeDAMDFEQR;
+    rgVersaoDF: TRadioGroup;
     procedure sbtnCaminhoCertClick(Sender: TObject);
     procedure sbtnGetCertClick(Sender: TObject);
     procedure sbtnLogoMarcaClick(Sender: TObject);
@@ -199,45 +200,46 @@ begin
 
  Ini := TIniFile.Create( IniFile );
  try
-  Ini.WriteString( 'Certificado','Caminho' ,edtCaminho.Text);
-  Ini.WriteString( 'Certificado','Senha'   ,edtSenha.Text);
-  Ini.WriteString( 'Certificado','NumSerie',edtNumSerie.Text);
+  Ini.WriteString( 'Certificado','Caminho' , edtCaminho.Text);
+  Ini.WriteString( 'Certificado','Senha'   , edtSenha.Text);
+  Ini.WriteString( 'Certificado','NumSerie', edtNumSerie.Text);
 
-  Ini.WriteInteger( 'Geral','DAMDFe'       ,rgTipoDAMDFe.ItemIndex);
-  Ini.WriteInteger( 'Geral','FormaEmissao',rgFormaEmissao.ItemIndex);
-  Ini.WriteString( 'Geral','LogoMarca'   ,edtLogoMarca.Text);
-  Ini.WriteBool(   'Geral','Salvar'      ,ckSalvar.Checked);
-  Ini.WriteString( 'Geral','PathSalvar'  ,edtPathLogs.Text);
+  Ini.WriteInteger( 'Geral','DAMDFe'      , rgTipoDAMDFe.ItemIndex);
+  Ini.WriteInteger( 'Geral','FormaEmissao', rgFormaEmissao.ItemIndex);
+  Ini.WriteString( 'Geral','LogoMarca'    , edtLogoMarca.Text);
+  Ini.WriteBool(   'Geral','Salvar'       , ckSalvar.Checked);
+  Ini.WriteString( 'Geral','PathSalvar'   , edtPathLogs.Text);
+  Ini.WriteInteger( 'Geral','VersaoDF'    , rgVersaoDF.ItemIndex);
 
-  Ini.WriteString( 'WebService','UF'        ,cbUF.Text);
-  Ini.WriteInteger( 'WebService','Ambiente'  ,rgTipoAmb.ItemIndex);
-  Ini.WriteBool(   'WebService','Visualizar',ckVisualizar.Checked);
+  Ini.WriteString( 'WebService','UF'        , cbUF.Text);
+  Ini.WriteInteger( 'WebService','Ambiente' , rgTipoAmb.ItemIndex);
+  Ini.WriteBool(   'WebService','Visualizar', ckVisualizar.Checked);
 
-  Ini.WriteString( 'Proxy','Host'   ,edtProxyHost.Text);
-  Ini.WriteString( 'Proxy','Porta'  ,edtProxyPorta.Text);
-  Ini.WriteString( 'Proxy','User'   ,edtProxyUser.Text);
-  Ini.WriteString( 'Proxy','Pass'   ,edtProxySenha.Text);
+  Ini.WriteString( 'Proxy','Host' , edtProxyHost.Text);
+  Ini.WriteString( 'Proxy','Porta', edtProxyPorta.Text);
+  Ini.WriteString( 'Proxy','User' , edtProxyUser.Text);
+  Ini.WriteString( 'Proxy','Pass' , edtProxySenha.Text);
 
-  Ini.WriteString( 'Emitente','CNPJ'       ,edtEmitCNPJ.Text);
-  Ini.WriteString( 'Emitente','IE'         ,edtEmitIE.Text);
-  Ini.WriteString( 'Emitente','RazaoSocial',edtEmitRazao.Text);
-  Ini.WriteString( 'Emitente','Fantasia'   ,edtEmitFantasia.Text);
-  Ini.WriteString( 'Emitente','Fone'       ,edtEmitFone.Text);
-  Ini.WriteString( 'Emitente','CEP'        ,edtEmitCEP.Text);
-  Ini.WriteString( 'Emitente','Logradouro' ,edtEmitLogradouro.Text);
-  Ini.WriteString( 'Emitente','Numero'     ,edtEmitNumero.Text);
-  Ini.WriteString( 'Emitente','Complemento',edtEmitComp.Text);
-  Ini.WriteString( 'Emitente','Bairro'     ,edtEmitBairro.Text);
-  Ini.WriteString( 'Emitente','CodCidade'  ,edtEmitCodCidade.Text);
-  Ini.WriteString( 'Emitente','Cidade'     ,edtEmitCidade.Text);
-  Ini.WriteString( 'Emitente','UF'         ,edtEmitUF.Text);
+  Ini.WriteString( 'Emitente','CNPJ'       , edtEmitCNPJ.Text);
+  Ini.WriteString( 'Emitente','IE'         , edtEmitIE.Text);
+  Ini.WriteString( 'Emitente','RazaoSocial', edtEmitRazao.Text);
+  Ini.WriteString( 'Emitente','Fantasia'   , edtEmitFantasia.Text);
+  Ini.WriteString( 'Emitente','Fone'       , edtEmitFone.Text);
+  Ini.WriteString( 'Emitente','CEP'        , edtEmitCEP.Text);
+  Ini.WriteString( 'Emitente','Logradouro' , edtEmitLogradouro.Text);
+  Ini.WriteString( 'Emitente','Numero'     , edtEmitNumero.Text);
+  Ini.WriteString( 'Emitente','Complemento', edtEmitComp.Text);
+  Ini.WriteString( 'Emitente','Bairro'     , edtEmitBairro.Text);
+  Ini.WriteString( 'Emitente','CodCidade'  , edtEmitCodCidade.Text);
+  Ini.WriteString( 'Emitente','Cidade'     , edtEmitCidade.Text);
+  Ini.WriteString( 'Emitente','UF'         , edtEmitUF.Text);
 
-  Ini.WriteString( 'Email','Host'    ,edtSmtpHost.Text);
-  Ini.WriteString( 'Email','Port'    ,edtSmtpPort.Text);
-  Ini.WriteString( 'Email','User'    ,edtSmtpUser.Text);
-  Ini.WriteString( 'Email','Pass'    ,edtSmtpPass.Text);
-  Ini.WriteString( 'Email','Assunto' ,edtEmailAssunto.Text);
-  Ini.WriteBool(   'Email','SSL'     ,cbEmailSSL.Checked );
+  Ini.WriteString( 'Email','Host'   , edtSmtpHost.Text);
+  Ini.WriteString( 'Email','Port'   , edtSmtpPort.Text);
+  Ini.WriteString( 'Email','User'   , edtSmtpUser.Text);
+  Ini.WriteString( 'Email','Pass'   , edtSmtpPass.Text);
+  Ini.WriteString( 'Email','Assunto', edtEmailAssunto.Text);
+  Ini.WriteBool(   'Email','SSL'    , cbEmailSSL.Checked );
 
   StreamMemo := TMemoryStream.Create;
   mmEmailMsg.Lines.SaveToStream(StreamMemo);
@@ -279,42 +281,43 @@ begin
    sbtnCaminhoCert.Visible := False;
   {$ENDIF}
 
-  rgFormaEmissao.ItemIndex := Ini.ReadInteger('Geral','FormaEmissao',0);
-  ckSalvar.Checked         := Ini.ReadBool(   'Geral','Salvar'      ,True);
-  edtPathLogs.Text         := Ini.ReadString( 'Geral','PathSalvar'  ,'');
+  rgFormaEmissao.ItemIndex := Ini.ReadInteger('Geral','FormaEmissao', 0);
+  ckSalvar.Checked         := Ini.ReadBool(   'Geral','Salvar'      , True);
+  edtPathLogs.Text         := Ini.ReadString( 'Geral','PathSalvar'  , '');
+  rgVersaoDF.ItemIndex     := Ini.ReadInteger('Geral','VersaoDF'    , 0);
 
-  cbUF.ItemIndex       := cbUF.Items.IndexOf(Ini.ReadString('WebService','UF','SP'));
-  rgTipoAmb.ItemIndex  := Ini.ReadInteger('WebService','Ambiente'  ,0);
-  ckVisualizar.Checked :=Ini.ReadBool(    'WebService','Visualizar',False);
+  cbUF.ItemIndex       := cbUF.Items.IndexOf(Ini.ReadString('WebService','UF', 'SP'));
+  rgTipoAmb.ItemIndex  := Ini.ReadInteger('WebService','Ambiente'  , 0);
+  ckVisualizar.Checked :=Ini.ReadBool(    'WebService','Visualizar', False);
 
-  edtProxyHost.Text  := Ini.ReadString( 'Proxy','Host'   ,'');
-  edtProxyPorta.Text := Ini.ReadString( 'Proxy','Porta'  ,'');
-  edtProxyUser.Text  := Ini.ReadString( 'Proxy','User'   ,'');
-  edtProxySenha.Text := Ini.ReadString( 'Proxy','Pass'   ,'');
+  edtProxyHost.Text  := Ini.ReadString( 'Proxy','Host' , '');
+  edtProxyPorta.Text := Ini.ReadString( 'Proxy','Porta', '');
+  edtProxyUser.Text  := Ini.ReadString( 'Proxy','User' , '');
+  edtProxySenha.Text := Ini.ReadString( 'Proxy','Pass' , '');
 
-  rgTipoDAMDFe.ItemIndex := Ini.ReadInteger( 'Geral','DAMDFe'       ,0);
-  edtLogoMarca.Text      := Ini.ReadString( 'Geral','LogoMarca'   ,'');
+  rgTipoDAMDFe.ItemIndex := Ini.ReadInteger( 'Geral','DAMDFe'  , 0);
+  edtLogoMarca.Text      := Ini.ReadString( 'Geral','LogoMarca', '');
 
-  edtEmitCNPJ.Text       := Ini.ReadString( 'Emitente','CNPJ'       ,'');
-  edtEmitIE.Text         := Ini.ReadString( 'Emitente','IE'         ,'');
-  edtEmitRazao.Text      := Ini.ReadString( 'Emitente','RazaoSocial','');
-  edtEmitFantasia.Text   := Ini.ReadString( 'Emitente','Fantasia'   ,'');
-  edtEmitFone.Text       := Ini.ReadString( 'Emitente','Fone'       ,'');
-  edtEmitCEP.Text        := Ini.ReadString( 'Emitente','CEP'        ,'');
-  edtEmitLogradouro.Text := Ini.ReadString( 'Emitente','Logradouro' ,'');
-  edtEmitNumero.Text     := Ini.ReadString( 'Emitente','Numero'     ,'');
-  edtEmitComp.Text       := Ini.ReadString( 'Emitente','Complemento','');
-  edtEmitBairro.Text     := Ini.ReadString( 'Emitente','Bairro'     ,'');
-  edtEmitCodCidade.Text  := Ini.ReadString( 'Emitente','CodCidade'  ,'');
-  edtEmitCidade.Text     := Ini.ReadString( 'Emitente','Cidade'     ,'');
-  edtEmitUF.Text         := Ini.ReadString( 'Emitente','UF'         ,'');
+  edtEmitCNPJ.Text       := Ini.ReadString( 'Emitente','CNPJ'       , '');
+  edtEmitIE.Text         := Ini.ReadString( 'Emitente','IE'         , '');
+  edtEmitRazao.Text      := Ini.ReadString( 'Emitente','RazaoSocial', '');
+  edtEmitFantasia.Text   := Ini.ReadString( 'Emitente','Fantasia'   , '');
+  edtEmitFone.Text       := Ini.ReadString( 'Emitente','Fone'       , '');
+  edtEmitCEP.Text        := Ini.ReadString( 'Emitente','CEP'        , '');
+  edtEmitLogradouro.Text := Ini.ReadString( 'Emitente','Logradouro' , '');
+  edtEmitNumero.Text     := Ini.ReadString( 'Emitente','Numero'     , '');
+  edtEmitComp.Text       := Ini.ReadString( 'Emitente','Complemento', '');
+  edtEmitBairro.Text     := Ini.ReadString( 'Emitente','Bairro'     , '');
+  edtEmitCodCidade.Text  := Ini.ReadString( 'Emitente','CodCidade'  , '');
+  edtEmitCidade.Text     := Ini.ReadString( 'Emitente','Cidade'     , '');
+  edtEmitUF.Text         := Ini.ReadString( 'Emitente','UF'         , '');
 
-  edtSmtpHost.Text      := Ini.ReadString( 'Email','Host'   ,'');
-  edtSmtpPort.Text      := Ini.ReadString( 'Email','Port'   ,'');
-  edtSmtpUser.Text      := Ini.ReadString( 'Email','User'   ,'');
-  edtSmtpPass.Text      := Ini.ReadString( 'Email','Pass'   ,'');
-  edtEmailAssunto.Text  := Ini.ReadString( 'Email','Assunto','');
-  cbEmailSSL.Checked    := Ini.ReadBool(   'Email','SSL'    ,False);
+  edtSmtpHost.Text      := Ini.ReadString( 'Email','Host'   , '');
+  edtSmtpPort.Text      := Ini.ReadString( 'Email','Port'   , '');
+  edtSmtpUser.Text      := Ini.ReadString( 'Email','User'   , '');
+  edtSmtpPass.Text      := Ini.ReadString( 'Email','Pass'   , '');
+  edtEmailAssunto.Text  := Ini.ReadString( 'Email','Assunto', '');
+  cbEmailSSL.Checked    := Ini.ReadBool(   'Email','SSL'    , False);
 
   StreamMemo := TMemoryStream.Create;
   Ini.ReadBinaryStream( 'Email','Mensagem',StreamMemo);
@@ -353,6 +356,10 @@ begin
  ACBrMDFe1.Configuracoes.Geral.FormaEmissao := StrToTpEmis(OK,IntToStr(rgFormaEmissao.ItemIndex+1));
  ACBrMDFe1.Configuracoes.Geral.PathSalvar   := PathMensal;
  ACBrMDFe1.Configuracoes.Geral.Salvar       := ckSalvar.Checked;
+ case rgVersaoDF.ItemIndex of
+  0: ACBrMDFe1.Configuracoes.Geral.VersaoDF := ve100;
+  1: ACBrMDFe1.Configuracoes.Geral.VersaoDF := ve100a;
+ end;
 
  // Configurações -> WebServices
  ACBrMDFe1.Configuracoes.WebServices.AguardarConsultaRet      := 0;
