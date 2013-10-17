@@ -107,15 +107,15 @@ begin
            end;
   4304606: begin // Canoas/RS
             ConfigURL.HomNomeCidade := 'canoas';
-            ConfigURL.ProNomeCidade := 'canoas';
+            ConfigURL.ProNomeCidade := 'e-nfs_canoas';
            end;
   5107040: begin // Primavera do Leste/MT
             ConfigURL.HomNomeCidade := 'primavera';
-            ConfigURL.ProNomeCidade := 'primavera';
+            ConfigURL.ProNomeCidade := 'e-nfs_primavera';
            end;
   5107602: begin // Rondonopolis/MT
             ConfigURL.HomNomeCidade := 'roo';
-            ConfigURL.ProNomeCidade := 'roo';
+            ConfigURL.ProNomeCidade := 'e-nfs_roo';
            end;
  end;
 
@@ -126,12 +126,12 @@ begin
  ConfigURL.HomConsultaNFSe       := 'http://www.e-nfs.com.br/'+ ConfigURL.HomNomeCidade +'_homologa/servlet/aconsultarnfse?wsdl';
  ConfigURL.HomCancelaNFSe        := 'http://www.e-nfs.com.br/'+ ConfigURL.HomNomeCidade +'_homologa/servlet/acancelarnfse?wsdl';
 
- ConfigURL.ProRecepcaoLoteRPS    := 'https://www.e-nfs.com.br/e-nfs_'+ ConfigURL.ProNomeCidade +'/servlet/arecepcionarloterps?wsdl';
- ConfigURL.ProConsultaLoteRPS    := 'https://www.e-nfs.com.br/e-nfs_'+ ConfigURL.ProNomeCidade +'/servlet/aconsultarloterps?wsdl';
- ConfigURL.ProConsultaNFSeRPS    := 'https://www.e-nfs.com.br/e-nfs_'+ ConfigURL.ProNomeCidade +'/servlet/aconsultarnfseporrps?wsdl';
- ConfigURL.ProConsultaSitLoteRPS := 'https://www.e-nfs.com.br/e-nfs_'+ ConfigURL.ProNomeCidade +'/servlet/aconsultarsituacaoloterps?wsdl';
- ConfigURL.ProConsultaNFSe       := 'https://www.e-nfs.com.br/e-nfs_'+ ConfigURL.ProNomeCidade +'/servlet/aconsultarnfse?wsdl';
- ConfigURL.ProCancelaNFSe        := 'https://www.e-nfs.com.br/e-nfs_'+ ConfigURL.ProNomeCidade +'/servlet/acancelarnfse?wsdl';
+ ConfigURL.ProRecepcaoLoteRPS    := 'https://www.e-nfs.com.br/'+ ConfigURL.ProNomeCidade +'/servlet/arecepcionarloterps?wsdl';
+ ConfigURL.ProConsultaLoteRPS    := 'https://www.e-nfs.com.br/'+ ConfigURL.ProNomeCidade +'/servlet/aconsultarloterps?wsdl';
+ ConfigURL.ProConsultaNFSeRPS    := 'https://www.e-nfs.com.br/'+ ConfigURL.ProNomeCidade +'/servlet/aconsultarnfseporrps?wsdl';
+ ConfigURL.ProConsultaSitLoteRPS := 'https://www.e-nfs.com.br/'+ ConfigURL.ProNomeCidade +'/servlet/aconsultarsituacaoloterps?wsdl';
+ ConfigURL.ProConsultaNFSe       := 'https://www.e-nfs.com.br/'+ ConfigURL.ProNomeCidade +'/servlet/aconsultarnfse?wsdl';
+ ConfigURL.ProCancelaNFSe        := 'https://www.e-nfs.com.br/'+ ConfigURL.ProNomeCidade +'/servlet/acancelarnfse?wsdl';
 
  Result := ConfigURL;
 end;
