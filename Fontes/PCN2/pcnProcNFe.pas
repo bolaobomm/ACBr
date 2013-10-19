@@ -144,7 +144,8 @@ begin
     XMLinfProt := TStringList.Create;
     XMLinfProt2 := TStringList.Create;
     xProtNFe := '';
-    FnProt := '';
+    // Comentado por Italo em 19/10/2013
+//    FnProt := '';
 
     // Arquivo NFe
     if not FileExists(FPathNFe) then
