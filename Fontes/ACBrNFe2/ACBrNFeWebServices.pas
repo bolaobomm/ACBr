@@ -1885,8 +1885,18 @@ begin
                    else
                       AProcNFe.PathNFe:=PathWithDelim(FConfiguracoes.Geral.PathSalvar) + chNFe + '-nfe.xml';
 
-                   AProcNFe.PathRetConsSitNFe:='';
-                   AProcNFe.PathRetConsReciNFe:='';
+                   AProcNFe.PathRetConsSitNFe  := '';
+                   AProcNFe.PathRetConsReciNFe := '';
+                   // Incluido por Italo em 18/10/2013
+                   AProcNFe.tpAmb              := NFeRetornoSincrono.protNFe.tpAmb;
+                   AProcNFe.verAplic           := NFeRetornoSincrono.protNFe.verAplic;
+                   AProcNFe.chNFe              := NFeRetornoSincrono.protNFe.chNFe;
+                   AProcNFe.dhRecbto           := NFeRetornoSincrono.protNFe.dhRecbto;
+                   AProcNFe.nProt              := NFeRetornoSincrono.protNFe.nProt;
+                   AProcNFe.digVal             := NFeRetornoSincrono.protNFe.digVal;
+                   AProcNFe.cStat              := NFeRetornoSincrono.protNFe.cStat;
+                   AProcNFe.xMotivo            := NFeRetornoSincrono.protNFe.xMotivo;
+
 //                   AProcNFe.PathRetConsSitNFe:=PathWithDelim(FConfiguracoes.Geral.PathSalvar) + chNFe + '-sit.xml';
 
                    if (FConfiguracoes.Geral.ModeloDF = moNFCe) then
