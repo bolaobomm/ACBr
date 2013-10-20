@@ -1,6 +1,6 @@
 inherited fqrDAMDFEQRRetrato: TfqrDAMDFEQRRetrato
-  Left = 197
-  Top = 125
+  Left = 199
+  Top = 124
   Width = 838
   Height = 784
   Caption = 'Manifesto - Retrato'
@@ -2897,11 +2897,122 @@ inherited fqrDAMDFEQRRetrato: TfqrDAMDFEQRRetrato
         FontSize = 6
       end
     end
-    object QRBand1: TQRBand
+    object qrb_8_Documentos_Lista: TQRBand
+      Left = 23
+      Top = 811
+      Width = 752
+      Height = 24
+      Frame.Color = clBlack
+      Frame.DrawTop = True
+      Frame.DrawBottom = True
+      Frame.DrawLeft = True
+      Frame.DrawRight = True
+      AlignToBottom = False
+      Color = clWhite
+      TransparentBand = False
+      ForceNewColumn = False
+      ForceNewPage = False
+      Size.Values = (
+        63.500000000000000000
+        1989.666666666667000000)
+      PreCaluculateBandHeight = False
+      KeepOnOnePage = False
+      BandType = rbDetail
+      object qrmChave1: TQRDBText
+        Left = 3
+        Top = 4
+        Width = 366
+        Height = 16
+        Frame.Color = clBlack
+        Frame.DrawTop = False
+        Frame.DrawBottom = False
+        Frame.DrawLeft = False
+        Frame.DrawRight = False
+        Size.Values = (
+          42.333333333333340000
+          7.937500000000000000
+          10.583333333333330000
+          968.375000000000000000)
+        XLColumn = 0
+        Alignment = taLeftJustify
+        AlignToBand = False
+        AutoSize = False
+        AutoStretch = False
+        Color = clWhite
+        DataSet = cdsItens
+        DataField = 'Chave_1'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWindowText
+        Font.Height = -9
+        Font.Name = 'Times New Roman'
+        Font.Style = []
+        ParentFont = False
+        Transparent = True
+        WordWrap = True
+        ExportAs = exptText
+        FullJustify = False
+        FontSize = 7
+      end
+      object qrs2: TQRShape
+        Left = 374
+        Top = 0
+        Width = 1
+        Height = 22
+        Frame.Color = clBlack
+        Frame.DrawTop = False
+        Frame.DrawBottom = False
+        Frame.DrawLeft = False
+        Frame.DrawRight = False
+        Size.Values = (
+          58.208333333333330000
+          989.541666666666700000
+          0.000000000000000000
+          2.645833333333333000)
+        XLColumn = 0
+        Shape = qrsVertLine
+        VertAdjust = 0
+      end
+      object qrmChave2: TQRDBText
+        Left = 380
+        Top = 4
+        Width = 366
+        Height = 16
+        Frame.Color = clBlack
+        Frame.DrawTop = False
+        Frame.DrawBottom = False
+        Frame.DrawLeft = False
+        Frame.DrawRight = False
+        Size.Values = (
+          42.333333333333340000
+          1005.416666666667000000
+          10.583333333333330000
+          968.375000000000000000)
+        XLColumn = 0
+        Alignment = taLeftJustify
+        AlignToBand = False
+        AutoSize = False
+        AutoStretch = False
+        Color = clWhite
+        DataSet = cdsItens
+        DataField = 'Chave_2'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWindowText
+        Font.Height = -9
+        Font.Name = 'Times New Roman'
+        Font.Style = []
+        ParentFont = False
+        Transparent = True
+        WordWrap = True
+        ExportAs = exptText
+        FullJustify = False
+        FontSize = 7
+      end
+    end
+    object qrb_7_Documentos_Titulos: TQRBand
       Left = 23
       Top = 777
       Width = 752
-      Height = 16
+      Height = 34
       Frame.Color = clBlack
       Frame.DrawTop = False
       Frame.DrawBottom = False
@@ -2913,11 +3024,262 @@ inherited fqrDAMDFEQRRetrato: TfqrDAMDFEQRRetrato
       ForceNewColumn = False
       ForceNewPage = False
       Size.Values = (
-        42.333333333333340000
+        89.958333333333330000
         1989.666666666667000000)
       PreCaluculateBandHeight = False
       KeepOnOnePage = False
-      BandType = rbDetail
+      BandType = rbColumnHeader
+      object qrsQuadrado5: TQRShape
+        Left = 0
+        Top = 0
+        Width = 752
+        Height = 20
+        Frame.Color = clBlack
+        Frame.DrawTop = False
+        Frame.DrawBottom = False
+        Frame.DrawLeft = False
+        Frame.DrawRight = False
+        Size.Values = (
+          52.916666666666670000
+          0.000000000000000000
+          0.000000000000000000
+          1989.666666666667000000)
+        XLColumn = 0
+        Brush.Style = bsClear
+        Shape = qrsRectangle
+        VertAdjust = 0
+      end
+      object QRLabel141: TQRLabel
+        Left = 254
+        Top = 4
+        Width = 243
+        Height = 13
+        Frame.Color = clBlack
+        Frame.DrawTop = False
+        Frame.DrawBottom = False
+        Frame.DrawLeft = False
+        Frame.DrawRight = False
+        Size.Values = (
+          34.395833333333330000
+          672.041666666666700000
+          10.583333333333330000
+          642.937500000000000000)
+        XLColumn = 0
+        Alignment = taCenter
+        AlignToBand = True
+        AutoSize = True
+        AutoStretch = False
+        Caption = 'RELA'#199#195'O DOS DOCUMENTOS FISCAIS ELETR'#212'NICOS'
+        Color = clWhite
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWindowText
+        Font.Height = -9
+        Font.Name = 'Times New Roman'
+        Font.Style = [fsBold]
+        ParentFont = False
+        Transparent = False
+        WordWrap = True
+        ExportAs = exptText
+        FontSize = 7
+      end
+      object QRLabel91: TQRLabel
+        Left = 5
+        Top = 22
+        Width = 28
+        Height = 9
+        Frame.Color = clBlack
+        Frame.DrawTop = False
+        Frame.DrawBottom = False
+        Frame.DrawLeft = False
+        Frame.DrawRight = False
+        Size.Values = (
+          23.812500000000000000
+          13.229166666666670000
+          58.208333333333330000
+          74.083333333333330000)
+        XLColumn = 0
+        Alignment = taLeftJustify
+        AlignToBand = False
+        AutoSize = True
+        AutoStretch = False
+        Caption = 'TP DOC.'
+        Color = clWhite
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWindowText
+        Font.Height = -7
+        Font.Name = 'Times New Roman'
+        Font.Style = []
+        ParentFont = False
+        Transparent = False
+        WordWrap = True
+        ExportAs = exptText
+        FontSize = 5
+      end
+      object QRLabel92: TQRLabel
+        Left = 88
+        Top = 22
+        Width = 68
+        Height = 9
+        Frame.Color = clBlack
+        Frame.DrawTop = False
+        Frame.DrawBottom = False
+        Frame.DrawLeft = False
+        Frame.DrawRight = False
+        Size.Values = (
+          23.812500000000000000
+          232.833333333333300000
+          58.208333333333330000
+          179.916666666666700000)
+        XLColumn = 0
+        Alignment = taLeftJustify
+        AlignToBand = False
+        AutoSize = True
+        AutoStretch = False
+        Caption = 'CNPJ/CPF EMITENTE'
+        Color = clWhite
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWindowText
+        Font.Height = -7
+        Font.Name = 'Times New Roman'
+        Font.Style = []
+        ParentFont = False
+        Transparent = False
+        WordWrap = True
+        ExportAs = exptText
+        FontSize = 5
+      end
+      object QRLabel96: TQRLabel
+        Left = 174
+        Top = 22
+        Width = 85
+        Height = 9
+        Frame.Color = clBlack
+        Frame.DrawTop = False
+        Frame.DrawBottom = False
+        Frame.DrawLeft = False
+        Frame.DrawRight = False
+        Size.Values = (
+          23.812500000000000000
+          460.375000000000000000
+          58.208333333333330000
+          224.895833333333300000)
+        XLColumn = 0
+        Alignment = taLeftJustify
+        AlignToBand = False
+        AutoSize = True
+        AutoStretch = False
+        Caption = 'S'#201'RIE/NRO. DOCUMENTO'
+        Color = clWhite
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWindowText
+        Font.Height = -7
+        Font.Name = 'Times New Roman'
+        Font.Style = []
+        ParentFont = False
+        Transparent = False
+        WordWrap = True
+        ExportAs = exptText
+        FontSize = 5
+      end
+      object QRLabel109: TQRLabel
+        Left = 381
+        Top = 22
+        Width = 28
+        Height = 9
+        Frame.Color = clBlack
+        Frame.DrawTop = False
+        Frame.DrawBottom = False
+        Frame.DrawLeft = False
+        Frame.DrawRight = False
+        Size.Values = (
+          23.812500000000000000
+          1008.062500000000000000
+          58.208333333333330000
+          74.083333333333330000)
+        XLColumn = 0
+        Alignment = taLeftJustify
+        AlignToBand = False
+        AutoSize = True
+        AutoStretch = False
+        Caption = 'TP DOC.'
+        Color = clWhite
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWindowText
+        Font.Height = -7
+        Font.Name = 'Times New Roman'
+        Font.Style = []
+        ParentFont = False
+        Transparent = False
+        WordWrap = True
+        ExportAs = exptText
+        FontSize = 5
+      end
+      object QRLabel106: TQRLabel
+        Left = 464
+        Top = 22
+        Width = 68
+        Height = 9
+        Frame.Color = clBlack
+        Frame.DrawTop = False
+        Frame.DrawBottom = False
+        Frame.DrawLeft = False
+        Frame.DrawRight = False
+        Size.Values = (
+          23.812500000000000000
+          1227.666666666667000000
+          58.208333333333330000
+          179.916666666666700000)
+        XLColumn = 0
+        Alignment = taLeftJustify
+        AlignToBand = False
+        AutoSize = True
+        AutoStretch = False
+        Caption = 'CNPJ/CPF EMITENTE'
+        Color = clWhite
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWindowText
+        Font.Height = -7
+        Font.Name = 'Times New Roman'
+        Font.Style = []
+        ParentFont = False
+        Transparent = False
+        WordWrap = True
+        ExportAs = exptText
+        FontSize = 5
+      end
+      object QRLabel100: TQRLabel
+        Left = 550
+        Top = 22
+        Width = 85
+        Height = 9
+        Frame.Color = clBlack
+        Frame.DrawTop = False
+        Frame.DrawBottom = False
+        Frame.DrawLeft = False
+        Frame.DrawRight = False
+        Size.Values = (
+          23.812500000000000000
+          1455.208333333333000000
+          58.208333333333330000
+          224.895833333333300000)
+        XLColumn = 0
+        Alignment = taLeftJustify
+        AlignToBand = False
+        AutoSize = True
+        AutoStretch = False
+        Caption = 'S'#201'RIE/NRO. DOCUMENTO'
+        Color = clWhite
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWindowText
+        Font.Height = -7
+        Font.Name = 'Times New Roman'
+        Font.Style = []
+        ParentFont = False
+        Transparent = False
+        WordWrap = True
+        ExportAs = exptText
+        FontSize = 5
+      end
     end
   end
   object cdsItens: TClientDataSet
@@ -2926,14 +3288,14 @@ inherited fqrDAMDFEQRRetrato: TfqrDAMDFEQRRetrato
     Left = 248
     Top = 114
     object cdsItensChave_1: TStringField
-      DisplayWidth = 44
+      DisplayWidth = 84
       FieldName = 'Chave_1'
-      Size = 44
+      Size = 84
     end
     object cdsItensChave_2: TStringField
-      DisplayWidth = 44
+      DisplayWidth = 84
       FieldName = 'Chave_2'
-      Size = 44
+      Size = 84
     end
   end
 end

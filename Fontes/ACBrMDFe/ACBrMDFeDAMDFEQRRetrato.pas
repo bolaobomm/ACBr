@@ -141,7 +141,7 @@ type
     QRLabel22: TQRLabel;
     qrmObservacao: TQRMemo;
     qrlMsgTeste: TQRLabel;
-    QRBand1: TQRBand;
+    qrb_8_Documentos_Lista: TQRBand;
     cdsItens: TClientDataSet;
     cdsItensChave_1: TStringField;
     cdsItensChave_2: TStringField;
@@ -150,6 +150,18 @@ type
     QRLabel23: TQRLabel;
     qrlqMDFe: TQRLabel;
     QRShape19: TQRShape;
+    qrb_7_Documentos_Titulos: TQRBand;
+    qrsQuadrado5: TQRShape;
+    QRLabel141: TQRLabel;
+    qrmChave1: TQRDBText;
+    qrs2: TQRShape;
+    qrmChave2: TQRDBText;
+    QRLabel91: TQRLabel;
+    QRLabel92: TQRLabel;
+    QRLabel96: TQRLabel;
+    QRLabel109: TQRLabel;
+    QRLabel106: TQRLabel;
+    QRLabel100: TQRLabel;
     procedure QRMDFeBeforePrint(Sender: TCustomQuickRep;
       var PrintReport: Boolean);
     procedure qrb_1_DadosManifestoBeforePrint(Sender: TQRCustomBand;
@@ -167,6 +179,7 @@ type
   private
     { Private declarations }
     FTotalPages : integer;
+    procedure Itens;
   public
     { Public declarations }
     procedure ProtocoloMDFe( const sProtocolo : String );
@@ -200,6 +213,7 @@ var
   nRestItens : Integer;
 begin
   inherited;
+   Itens;
    nItemControle := 0;
    FTotalPages   := 1;
 
@@ -425,6 +439,127 @@ begin
   if FSistema <> ''
    then qrlSistema.Caption:= 'Desenvolvido por ' + FSistema
    else qrlSistema.Caption:= '';
+end;
+
+procedure TfqrDAMDFEQRRetrato.Itens;
+var
+ I, J, nItem : Integer;
+begin
+  cdsItens.Close;
+  cdsItens.CreateDataSet;
+  cdsItens.Open;
+  nItem := 0;
+
+  for I := 0 to (FMDFe.infDoc.infMunDescarga.Count - 1) do
+   begin
+
+    // Lista de CT-e
+    for J := 0 to (FMDFe.infDoc.infMunDescarga.Items[I].infCTe.Count - 1) do
+     begin
+      with FMDFe.infDoc.infMunDescarga.Items[I].infCTe.Items[J] do
+       begin
+        if (nItem mod 2) = 0
+         then begin
+          cdsItens.Append;
+          cdsItensChave_1.AsString := 'CT-e          ' +
+                                      MDFeUtil.FormatarChaveAcesso(chCTe, True);
+         end
+         else begin
+          cdsItensChave_2.AsString := 'CT-e          ' +
+                                      MDFeUtil.FormatarChaveAcesso(chCTe, True);
+          cdsItens.Post;
+         end;
+        inc(nItem);
+       end;
+     end;
+
+    // Lista de CT
+    for J := 0 to (FMDFe.infDoc.infMunDescarga.Items[I].infCT.Count - 1) do
+     begin
+      with FMDFe.infDoc.infMunDescarga.Items[I].infCT.Items[J] do
+       begin
+        if (nItem mod 2) = 0
+         then begin
+          cdsItens.Append;
+          cdsItensChave_1.AsString := 'CT            ' +
+                              DFeUtil.FormatarCNPJCPF(FMDFe.emit.CNPJ) + ' - ' +
+                              IntToStr(serie) + '-' + nCT;
+         end
+         else begin
+          cdsItensChave_2.AsString := 'CT            ' +
+                              DFeUtil.FormatarCNPJCPF(FMDFe.emit.CNPJ) + ' - ' +
+                              IntToStr(serie) + '-' + nCT;
+          cdsItens.Post;
+         end;
+        inc(nItem);
+       end;
+     end;
+
+    // Lista de NF-e
+    for J := 0 to (FMDFe.infDoc.infMunDescarga.Items[I].infNFe.Count - 1) do
+     begin
+      with FMDFe.infDoc.infMunDescarga.Items[I].infNFe.Items[J] do
+       begin
+        if (nItem mod 2) = 0
+         then begin
+          cdsItens.Append;
+          cdsItensChave_1.AsString := 'NF-e          ' +
+                                      MDFeUtil.FormatarChaveAcesso(chNFe, True);
+         end
+         else begin
+          cdsItensChave_2.AsString := 'NF-e          ' +
+                                      MDFeUtil.FormatarChaveAcesso(chNFe, True);
+          cdsItens.Post;
+         end;
+        inc(nItem);
+       end;
+     end;
+
+    // Lista de NF
+    for J := 0 to (FMDFe.infDoc.infMunDescarga.Items[I].infNF.Count - 1) do
+     begin
+      with FMDFe.infDoc.infMunDescarga.Items[I].infNF.Items[J] do
+       begin
+        if (nItem mod 2) = 0
+         then begin
+          cdsItens.Append;
+          cdsItensChave_1.AsString := 'NF            ' +
+                                      DFeUtil.FormatarCNPJCPF(CNPJ) + ' - ' +
+                                      IntToStr(serie) + '-' + IntToStr(nNF);
+         end
+         else begin
+          cdsItensChave_2.AsString := 'NF            ' +
+                                      DFeUtil.FormatarCNPJCPF(CNPJ) + ' - ' +
+                                      IntToStr(serie) + '-' + IntToStr(nNF);
+          cdsItens.Post;
+         end;
+        inc(nItem);
+       end;
+     end;
+
+    // Lista de MDF-e
+    for J := 0 to (FMDFe.infDoc.infMunDescarga.Items[I].infMDFeTransp.Count - 1) do
+     begin
+      with FMDFe.infDoc.infMunDescarga.Items[I].infMDFeTransp.Items[J] do
+       begin
+        if (nItem mod 2) = 0
+         then begin
+          cdsItens.Append;
+          cdsItensChave_1.AsString := 'MDF-e         ' +
+                                     MDFeUtil.FormatarChaveAcesso(chMDFe, True);
+         end
+         else begin
+          cdsItensChave_2.AsString := 'MDF-e         ' +
+                                     MDFeUtil.FormatarChaveAcesso(chMDFe, True);
+          cdsItens.Post;
+         end;
+        inc(nItem);
+       end;
+     end;
+
+   end;
+
+  cdsItens.First;
 end;
 
 end.
