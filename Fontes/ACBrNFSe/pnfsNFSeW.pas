@@ -523,7 +523,10 @@ begin
     (NFSe.Tomador.Contato.Telefone <> '') or
     (NFSe.Tomador.Contato.Email <>'')
    then begin
-    if (VersaoXML = '1') or (FProvedor in [proPVH, proGoiania])
+    if (VersaoXML = '1') or
+       (FProvedor in [pro4R, proAgili, proCoplan, proDigifred, proFiorilli,
+                      proGoiania, proGovDigital, proISSDigital, proISSe,
+                      proProdata, proPVH, proSaatri, proVirtual])
       then Gerador.wGrupoNFSe('Tomador')
       else Gerador.wGrupoNFSe('TomadorServico');
 
@@ -569,7 +572,10 @@ begin
      Gerador.wCampoNFSe(tcStr, '#47', 'Email   ', 01, 80, 0, NFSe.Tomador.Contato.Email, '');
     Gerador.wGrupoNFSe('/Contato');
 
-    if (VersaoXML = '1') or (FProvedor in [proPVH, proGoiania])
+    if (VersaoXML = '1') or
+       (FProvedor in [pro4R, proAgili, proCoplan, proDigifred, proFiorilli,
+                      proGoiania, proGovDigital, proISSDigital, proISSe,
+                      proProdata, proPVH, proSaatri, proVirtual])
       then Gerador.wGrupoNFSe('/Tomador')
       else Gerador.wGrupoNFSe('/TomadorServico');
    end;
