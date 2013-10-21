@@ -232,14 +232,14 @@ function TProvedorGoiania.GeraEnvelopeConsultarNFSeporRPS(URLNS: String;
 begin
  result := '<?xml version="1.0" encoding="utf-8"?>' +
 						'<soap:Envelope xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" ' +
-						'xmlns:xsd="http://www.w3.org/2001/XMLSchema" ' +
-						'xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/">' +
-            '<soap:Body>' +
-             '<ConsultarNfseRps xmlns="http://nfse.goiania.go.gov.br/ws/">' +
-              '<ArquivoXML>' + DadosMsg + '</ArquivoXML>' +
-             '</ConsultarNfseRps>' +
-            '</soap:Body>' +
-           '</soap:Envelope>';
+						               'xmlns:xsd="http://www.w3.org/2001/XMLSchema" ' +
+                           'xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/">' +
+             '<soap:Body>' +
+              '<ConsultarNfseRps xmlns="http://nfse.goiania.go.gov.br/ws/">' +
+               '<ArquivoXML>' + DadosMsg + '</ArquivoXML>' +
+              '</ConsultarNfseRps>' +
+             '</soap:Body>' +
+            '</soap:Envelope>';
 end;
 
 function TProvedorGoiania.GeraEnvelopeConsultarNFSe(URLNS: String; CabMsg,
@@ -258,14 +258,17 @@ function TProvedorGoiania.GeraEnvelopeGerarNFSe(URLNS: String; CabMsg,
   DadosMsg, DadosSenha: AnsiString): AnsiString;
 begin
 	result := '<?xml version="1.0" encoding="utf-8"?>' +
-            '<soap:Envelope xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/">'+
-            '<soap:Body>'+
-            '<GerarNfse xmlns="http://nfse.goiania.go.gov.br/ws/">' +
-            '<ArquivoXML>' +
-            '<![CDATA[' + DadosMsg + ']]>' +
-            '</ArquivoXML>'+
-    				'</GerarNfse>' +
-  					'</soap:Body>' +
+            '<soap:Envelope xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" ' +
+                           'xmlns:xsd="http://www.w3.org/2001/XMLSchema" ' +
+                           'xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/">'+
+             '<soap:Body>'+
+              '<GerarNfse xmlns="http://nfse.goiania.go.gov.br/ws/">' +
+               '<ArquivoXML>' +
+                '&lt;?xml version="1.0" encoding="UTF-8"?&gt;' +
+                StringReplace(StringReplace(DadosMsg, '<', '&lt;', [rfReplaceAll]), '>', '&gt;', [rfReplaceAll]) +
+               '</ArquivoXML>'+
+      				'</GerarNfse>' +
+             '</soap:Body>' +
 						'</soap:Envelope>';
 end;
 

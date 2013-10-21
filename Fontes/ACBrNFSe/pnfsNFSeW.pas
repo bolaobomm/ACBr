@@ -523,7 +523,7 @@ begin
     (NFSe.Tomador.Contato.Telefone <> '') or
     (NFSe.Tomador.Contato.Email <>'')
    then begin
-    if (VersaoXML = '1') or (FProvedor in [proPVH])
+    if (VersaoXML = '1') or (FProvedor in [proPVH, proGoiania])
       then Gerador.wGrupoNFSe('Tomador')
       else Gerador.wGrupoNFSe('TomadorServico');
 
@@ -569,7 +569,7 @@ begin
      Gerador.wCampoNFSe(tcStr, '#47', 'Email   ', 01, 80, 0, NFSe.Tomador.Contato.Email, '');
     Gerador.wGrupoNFSe('/Contato');
 
-    if (VersaoXML = '1') or (FProvedor in [proPVH])
+    if (VersaoXML = '1') or (FProvedor in [proPVH, proGoiania])
       then Gerador.wGrupoNFSe('/Tomador')
       else Gerador.wGrupoNFSe('/TomadorServico');
    end;
@@ -694,9 +694,11 @@ begin
      else begin
       if NFSe.Competencia <> ''
         then begin
-         if FProvedor in [proPVH]
-          then Gerador.wCampoNFSe(tcDat, '#4', 'Competencia', 10, 10, 1, NFSe.Competencia, DSC_DEMI)
-          else Gerador.wCampoNFSe(tcStr, '#4', 'Competencia', 19, 19, 1, NFSe.Competencia, DSC_DEMI);
+         case FProvedor of
+          proPVH:     Gerador.wCampoNFSe(tcDat,    '#4', 'Competencia', 10, 10, 1, NFSe.Competencia, DSC_DEMI);
+          proGoiania: Gerador.wCampoNFSe(tcDatHor, '#4', 'Competencia', 19, 19, 1, NFSe.Competencia, DSC_DEMI);
+          else        Gerador.wCampoNFSe(tcStr,    '#4', 'Competencia', 19, 19, 1, NFSe.Competencia, DSC_DEMI);
+         end
         end
         else begin
          if FProvedor in [proPVH]
@@ -715,8 +717,15 @@ begin
    if NFSe.RegimeEspecialTributacao <> retNenhum
      then Gerador.wCampoNFSe(tcStr, '#6', 'RegimeEspecialTributacao', 01, 01, 0, RegimeEspecialTributacaoToStr(NFSe.RegimeEspecialTributacao), '');
 
-   Gerador.wCampoNFSe(tcStr, '#7', 'OptanteSimplesNacional', 01, 01, 1, SimNaoToStr(NFSe.OptanteSimplesNacional), '');
-   Gerador.wCampoNFSe(tcStr, '#8', 'IncentivoFiscal       ', 01, 01, 1, SimNaoToStr(NFSe.IncentivadorCultural), '');
+   if FProvedor = proGoiania
+    then begin
+     Gerador.wCampoNFSe(tcStr, '#7', 'OptanteSimplesNacional', 01, 01, 0, SimNaoToStr(NFSe.OptanteSimplesNacional), '');
+     Gerador.wCampoNFSe(tcStr, '#8', 'IncentivoFiscal       ', 01, 01, 0, SimNaoToStr(NFSe.IncentivadorCultural), '');
+    end
+    else begin
+     Gerador.wCampoNFSe(tcStr, '#7', 'OptanteSimplesNacional', 01, 01, 1, SimNaoToStr(NFSe.OptanteSimplesNacional), '');
+     Gerador.wCampoNFSe(tcStr, '#8', 'IncentivoFiscal       ', 01, 01, 1, SimNaoToStr(NFSe.IncentivadorCultural), '');
+    end;
 
    if FProvedor = profintelISS
      then GerarValoresServico;
