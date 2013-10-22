@@ -420,11 +420,10 @@ begin
 
    Gerador.wGrupoNFSe('/Valores');
 
-   if FProvedor = proGoiania
-     then Gerador.wCampoNFSe(tcStr, '#20', 'IssRetido', 01, 01, 0, SituacaoTributariaToStr(NFSe.Servico.Valores.IssRetido), '')
-     else Gerador.wCampoNFSe(tcStr, '#20', 'IssRetido', 01, 01, 1, SituacaoTributariaToStr(NFSe.Servico.Valores.IssRetido), '');
+   if FProvedor <> proGoiania
+     then Gerador.wCampoNFSe(tcStr, '#20', 'IssRetido', 01, 01, 1, SituacaoTributariaToStr(NFSe.Servico.Valores.IssRetido), '');
 
-   if NFSe.Servico.Valores.IssRetido <> stNormal
+   if (NFSe.Servico.Valores.IssRetido <> stNormal) and (FProvedor <> proGoiania)
      then Gerador.wCampoNFSe(tcStr, '#21', 'ResponsavelRetencao', 01, 01, 1, ResponsavelRetencaoToStr(NFSe.Servico.ResponsavelRetencao), '');
 
    Gerador.wCampoNFSe(tcStr, '#29', 'ItemListaServico         ', 01, 05,   0, NFSe.Servico.ItemListaServico, '');
@@ -438,7 +437,8 @@ begin
 
    Gerador.wCampoNFSe(tcInt, '#34', 'CodigoPais         ', 04, 04,   0, NFSe.Servico.CodigoPais, '');
 
-   Gerador.wCampoNFSe(tcStr, '#35', 'ExigibilidadeISS   ', 01, 01,   0, ExigibilidadeISSToStr(NFSe.Servico.ExigibilidadeISS), '');
+   if FProvedor <> proGoiania
+    then Gerador.wCampoNFSe(tcStr, '#35', 'ExigibilidadeISS   ', 01, 01, 1, ExigibilidadeISSToStr(NFSe.Servico.ExigibilidadeISS), '');
    Gerador.wCampoNFSe(tcInt, '#36', 'MunicipioIncidencia', 07, 07,   0, NFSe.Servico.MunicipioIncidencia, '');
    Gerador.wCampoNFSe(tcStr, '#37', 'NumeroProcesso     ', 01, 30,   0, NFSe.Servico.NumeroProcesso, '');
   Gerador.wGrupoNFSe('/Servico');
@@ -723,12 +723,8 @@ begin
    if NFSe.RegimeEspecialTributacao <> retNenhum
      then Gerador.wCampoNFSe(tcStr, '#6', 'RegimeEspecialTributacao', 01, 01, 0, RegimeEspecialTributacaoToStr(NFSe.RegimeEspecialTributacao), '');
 
-   if FProvedor = proGoiania
+   if FProvedor <> proGoiania
     then begin
-     Gerador.wCampoNFSe(tcStr, '#7', 'OptanteSimplesNacional', 01, 01, 0, SimNaoToStr(NFSe.OptanteSimplesNacional), '');
-     Gerador.wCampoNFSe(tcStr, '#8', 'IncentivoFiscal       ', 01, 01, 0, SimNaoToStr(NFSe.IncentivadorCultural), '');
-    end
-    else begin
      Gerador.wCampoNFSe(tcStr, '#7', 'OptanteSimplesNacional', 01, 01, 1, SimNaoToStr(NFSe.OptanteSimplesNacional), '');
      Gerador.wCampoNFSe(tcStr, '#8', 'IncentivoFiscal       ', 01, 01, 1, SimNaoToStr(NFSe.IncentivadorCultural), '');
     end;
