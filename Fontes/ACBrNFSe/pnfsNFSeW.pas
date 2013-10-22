@@ -427,7 +427,7 @@ begin
    if NFSe.Servico.Valores.IssRetido <> stNormal
      then Gerador.wCampoNFSe(tcStr, '#21', 'ResponsavelRetencao', 01, 01, 1, ResponsavelRetencaoToStr(NFSe.Servico.ResponsavelRetencao), '');
 
-   Gerador.wCampoNFSe(tcStr, '#29', 'ItemListaServico         ', 01, 05,   1, NFSe.Servico.ItemListaServico, '');
+   Gerador.wCampoNFSe(tcStr, '#29', 'ItemListaServico         ', 01, 05,   0, NFSe.Servico.ItemListaServico, '');
    Gerador.wCampoNFSe(tcStr, '#30', 'CodigoCnae               ', 01, 0007, 0, SomenteNumeros(NFSe.Servico.CodigoCnae), '');
    Gerador.wCampoNFSe(tcStr, '#31', 'CodigoTributacaoMunicipio', 01, 0020, 0, SomenteNumeros(NFSe.Servico.CodigoTributacaoMunicipio), '');
    Gerador.wCampoNFSe(tcStr, '#32', 'Discriminacao            ', 01, 2000, 1, NFSe.Servico.Discriminacao, '');
@@ -438,7 +438,7 @@ begin
 
    Gerador.wCampoNFSe(tcInt, '#34', 'CodigoPais         ', 04, 04,   0, NFSe.Servico.CodigoPais, '');
 
-   Gerador.wCampoNFSe(tcStr, '#35', 'ExigibilidadeISS   ', 01, 01,   1, ExigibilidadeISSToStr(NFSe.Servico.ExigibilidadeISS), '');
+   Gerador.wCampoNFSe(tcStr, '#35', 'ExigibilidadeISS   ', 01, 01,   0, ExigibilidadeISSToStr(NFSe.Servico.ExigibilidadeISS), '');
    Gerador.wCampoNFSe(tcInt, '#36', 'MunicipioIncidencia', 07, 07,   0, NFSe.Servico.MunicipioIncidencia, '');
    Gerador.wCampoNFSe(tcStr, '#37', 'NumeroProcesso     ', 01, 30,   0, NFSe.Servico.NumeroProcesso, '');
   Gerador.wGrupoNFSe('/Servico');
@@ -702,14 +702,14 @@ begin
         then begin
          case FProvedor of
           proPVH:     Gerador.wCampoNFSe(tcDat,    '#4', 'Competencia', 10, 10, 1, NFSe.Competencia, DSC_DEMI);
-          proGoiania: Gerador.wCampoNFSe(tcDatHor, '#4', 'Competencia', 19, 19, 1, NFSe.Competencia, DSC_DEMI);
+          proGoiania: Gerador.wCampoNFSe(tcDatHor, '#4', 'Competencia', 19, 19, 0, NFSe.Competencia, DSC_DEMI);
           else        Gerador.wCampoNFSe(tcStr,    '#4', 'Competencia', 19, 19, 1, NFSe.Competencia, DSC_DEMI);
          end
         end
         else begin
          if FProvedor in [proPVH]
           then Gerador.wCampoNFSe(tcDat,    '#4', 'Competencia', 10, 10, 1, NFSe.DataEmissao, DSC_DEMI)
-          else Gerador.wCampoNFSe(tcDatHor, '#4', 'Competencia', 19, 19, 1, NFSe.DataEmissao, DSC_DEMI);
+          else Gerador.wCampoNFSe(tcDatHor, '#4', 'Competencia', 19, 19, 0, NFSe.DataEmissao, DSC_DEMI);
         end;
 
       GerarServicoValores_V2;
