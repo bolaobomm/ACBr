@@ -295,7 +295,7 @@ const
     { 217 } 'Detectada abertura do equipamento',
     { 218 } 'Cancelamento de Acréscimo/Desconto não permitido');
 
-{$IFDEF LINUX}
+{$IFNDEF MSWINDOWS}
  cLIB_Bema = 'linuxmfd';
 {$ELSE}
  cLIB_Bema = 'Bemafi32.dll';
@@ -3420,14 +3420,6 @@ begin
    end;
 end;
 
-function TACBrECFBematech.GetProp: AnsiString;
-begin
-  if (fsProp = '') and Ativo then
-     fsProp := IntToStr( StrToIntDef( UsuarioAtual, 1) ) ;
-
-  Result := fsProp;
-end;
-
 procedure TACBrECFBematech.AbrePortaSerialDLL(const aPath: String);
 Var
   Resp : Integer ;
@@ -3543,6 +3535,14 @@ end;
 
 {$ENDIF}
 
+function TACBrECFBematech.GetProp: AnsiString;
+begin
+  if (fsProp = '') and Ativo then
+     fsProp := IntToStr( StrToIntDef( UsuarioAtual, 1) ) ;
+
+  Result := fsProp;
+end;
+
 procedure TACBrECFBematech.EspelhoMFD_DLL(DataInicial,
   DataFinal: TDateTime; NomeArquivo: AnsiString;
   Documentos: TACBrECFTipoDocumentoSet);
@@ -3550,9 +3550,9 @@ var
   Resp : Integer ;
   DiaIni, DiaFim: AnsiString ;
   OldAtivo : Boolean ;
-  {$IFDEF LINUX} Cmd, ArqTmp : String ; {$ENDIF}
+  {$IFNDEF MSWINDOWS} Cmd, ArqTmp : String ; {$ENDIF}
 begin
- {$IFDEF LINUX}
+ {$IFNDEF MSWINDOWS}
   ArqTmp := ExtractFilePath( NomeArquivo ) + 'ACBr.mfd' ;
   DeleteFile( ArqTmp ) ;
 
@@ -3613,12 +3613,12 @@ var
   Resp : Integer ;
   CooIni, CooFim: AnsiString ;
   OldAtivo : Boolean ;
-  {$IFDEF LINUX} Cmd, ArqTmp : String ; {$ENDIF}
+  {$IFNDEF MSWINDOWS} Cmd, ArqTmp : String ; {$ENDIF}
 begin
   CooIni := IntToStrZero( COOInicial, 6 ) ;
   CooFim := IntToStrZero( COOFinal, 6 ) ;
 
- {$IFDEF LINUX}
+ {$IFNDEF MSWINDOWS}
   ArqTmp := ExtractFilePath( NomeArquivo ) + 'ACBr.mfd' ;
   DeleteFile( ArqTmp ) ;
 
@@ -3677,7 +3677,7 @@ var
   FileMFD: AnsiString;
   DataArquivo: TDateTime;
 begin
- {$IFDEF LINUX}
+ {$IFNDEF MSWINDOWS}
   inherited PafMF_GerarCAT52( DataInicial, DataFinal, DirArquivos);
  {$ELSE}
   LoadDLLFunctions;
@@ -3738,9 +3738,9 @@ Var
   Resp : Integer ;
   FilePath : AnsiString ;
   OldAtivo : Boolean ;
-  {$IFDEF LINUX} Cmd, ArqTmp : String ; {$ENDIF}
+  {$IFNDEF MSWINDOWS} Cmd, ArqTmp : String ; {$ENDIF}
 begin
-  {$IFDEF LINUX}
+  {$IFNDEF MSWINDOWS}
    inherited ArquivoMFD_DLL( NomeArquivo );
   {$ELSE}
   FilePath := ExtractFilePath( NomeArquivo );
@@ -3768,9 +3768,9 @@ Var
   Resp : Integer ;
   FilePath : AnsiString ;
   OldAtivo : Boolean ;
-  {$IFDEF LINUX} Cmd, ArqTmp : String ; {$ENDIF}
+  {$IFNDEF MSWINDOWS} Cmd, ArqTmp : String ; {$ENDIF}
 begin
-  {$IFDEF LINUX}
+  {$IFNDEF MSWINDOWS}
    inherited ArquivoMF_DLL( NomeArquivo );
   {$ELSE}
   FilePath := ExtractFilePath( NomeArquivo );
@@ -3800,7 +3800,7 @@ Var
   Resp, Tipo : Integer ;
   DiaIni, DiaFim, Prefixo, FilePath : AnsiString ;
   OldAtivo : Boolean ;
-  {$IFDEF LINUX} Cmd, ArqTmp : String ; {$ENDIF}
+  {$IFNDEF MSWINDOWS} Cmd, ArqTmp : String ; {$ENDIF}
 begin
   FilePath := ExtractFilePath( NomeArquivo );
   Tipo     := 2;
@@ -3808,7 +3808,7 @@ begin
 
   FinalidadeToTipoPrefixo( Finalidade, Tipo, Prefixo );
 
- {$IFDEF LINUX}
+ {$IFNDEF MSWINDOWS}
   ArqTmp := FilePath +'ACBr.mfd';
   DeleteFile( ArqTmp ) ;
 
@@ -3873,7 +3873,7 @@ Var
   Resp, Tipo : Integer ;
   DadoInicial, DadoFinal, Prefixo, FilePath, TipoDownload : AnsiString ;
   OldAtivo : Boolean ;
-  {$IFDEF LINUX} Cmd, ArqTmp : String ; {$ENDIF}
+  {$IFNDEF MSWINDOWS} Cmd, ArqTmp : String ; {$ENDIF}
 begin
   FilePath := ExtractFilePath( NomeArquivo );
   Tipo     := 2;
@@ -3881,7 +3881,7 @@ begin
 
   FinalidadeToTipoPrefixo( Finalidade, Tipo, Prefixo );
 
- {$IFDEF LINUX}
+ {$IFNDEF MSWINDOWS}
   if TipoContador = tpcCRZ then
      CRZToCOO(ContInicial, ContFinal, ContInicial, ContFinal) ;
 

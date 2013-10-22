@@ -235,16 +235,16 @@ end;
 
 destructor TACBrNFe.Destroy;
 begin
+  {$IFDEF ACBrNFeOpenSSL}
+    if FConfiguracoes.Geral.IniFinXMLSECAutomatico then
+      NotaUtil.ShutDownXmlSec ;
+  {$ENDIF}
   FConfiguracoes.Free;
   FNotasFiscais.Free;
   FCartaCorrecao.Free;
   FEventoNFe.Free;
   FDownloadNFe.Free;
   FWebServices.Free;
-  {$IFDEF ACBrNFeOpenSSL}
-    if FConfiguracoes.Geral.IniFinXMLSECAutomatico then
-      NotaUtil.ShutDownXmlSec ;
-  {$ENDIF}
   inherited;
 end;
 
