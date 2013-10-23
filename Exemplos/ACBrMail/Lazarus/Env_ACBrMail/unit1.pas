@@ -226,7 +226,6 @@ type
     procedure FormCreate(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
     procedure FormResize(Sender: TObject);
-    procedure FormShow(Sender: TObject);
     procedure Memo1Change(Sender: TObject);
     procedure Memo1Enter(Sender: TObject);
     procedure Memo1KeyUp(Sender: TObject; var Key: Word; Shift: TShiftState);
@@ -353,6 +352,7 @@ begin
   CarregaTabCaracteres;
   dm.tbContas.FilterOptions := [foCaseInsensitive];
   dm.tbContatos.FilterOptions := [foCaseInsensitive];
+  NovaMensagem;
 end;
 
 procedure TForm1.FormDestroy(Sender: TObject);
@@ -369,12 +369,6 @@ begin
   DBGrid1.Columns[1].Width := l;
   DBGrid1.Columns[2].Width := l;
   DBGrid2.Columns[0].Width := DBGrid2.Width - DBGrid2.Columns[1].Width - 18;
-end;
-
-procedure TForm1.FormShow(Sender: TObject);
-begin
-  WindowState := wsMaximized;
-  NovaMensagem;
 end;
 
 procedure TForm1.Memo1Change(Sender: TObject);
@@ -923,9 +917,12 @@ begin
   CheckBox1.Checked := False;
   vTotalFileSize := 0;
   dm.tbDestinos.Append;
-  DBGrid1.SetFocus;
-  DBGrid1.SelectedIndex := 1;
-  DBGrid1.EditorMode := True;
+  if Showing then
+  begin
+    DBGrid1.SetFocus;
+    DBGrid1.SelectedIndex := 1;
+    DBGrid1.EditorMode := True;
+  end;
 end;
 
 procedure TForm1.MemoStatus;
@@ -1112,6 +1109,10 @@ end;
 
 procedure TForm1.FormActivate(Sender: TObject);
 begin
+  WindowState := wsMaximized;
+  DBGrid1.SetFocus;
+  DBGrid1.SelectedIndex := 1;
+  DBGrid1.EditorMode := True;
   if dm.tbContas.IsEmpty then
   begin
     Application.MessageBox('Você precisa cadastrar uma conta para poder enviar e-mails!',

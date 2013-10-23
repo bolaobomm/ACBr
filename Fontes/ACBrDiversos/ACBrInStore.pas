@@ -67,15 +67,14 @@ type
     procedure ZerarDados;
     procedure Desmembrar(pCodigoEtiqueta: string);
 
-    property Codificacao: String read FCodificacao write SetCodificacao;
     property Prefixo: String read fPrefixo;
     property Codigo: String read fCodigo;
     property Peso: Double read fPeso;
     property Total: Double read fTotal;
     property DV: String read fDV;
   published
-    property OnGetPrecoUnitario: TACBrPrecoUnitario read fsOnGetPrecoUnitario
-                                                   write fsOnGetPrecoUnitario;
+    property OnGetPrecoUnitario: TACBrPrecoUnitario read fsOnGetPrecoUnitario write fsOnGetPrecoUnitario;
+    property Codificacao: String read FCodificacao write SetCodificacao;
   end;
 
 implementation

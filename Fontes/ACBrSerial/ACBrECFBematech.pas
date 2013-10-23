@@ -2624,7 +2624,7 @@ begin
    RetCmd := RetornaInfoECF( '27' ) ;
 
    if RetCmd = '000000' then
-      Result := DataHora
+      Result := 0.0 //Result := DataHora // removido, porque se retornou zero ainda não tever movimento no dia
    else
       Result := StringToDateTime( copy(RetCmd, 1,2) + DateSeparator +
                                   copy(RetCmd, 3,2) + DateSeparator +
