@@ -133,7 +133,7 @@ begin
  if (FProvedor in [pro4R, proAgili, proBHISS, proCoplan, proDigifred,
                    profintelISS, proFiorilli, proGoiania, proGovBR,
                    proISSDigital, proNatal, proProdata, proProdemge, proPVH,
-                   proSaatri, proVirtual])
+                   proSaatri, proVirtual, proFreire])
    then FDefTipos := FServicoEnviar;
 
  if (RightStr(FURL, 1) <> '/') and (FDefTipos <> '')
@@ -203,6 +203,7 @@ begin
   proProdata,
   proPVH,
   proSaatri,
+  proFreire,
   proVirtual: GerarXML_ABRASF_V2;
 
   proIssDsf:     GerarXML_Provedor_IssDsf;
@@ -386,15 +387,15 @@ begin
            Gerador.wCampoNFSe(tcDe2, '#23', 'OutrasRetencoes', 01, 15, 0, NFSe.Servico.Valores.OutrasRetencoes, '');
          end;
 
-       if FProvedor in [pro4R, proISSDigital, proISSe, proFiorilli, proSaatri]
+       if FProvedor in [pro4R, proISSDigital, proISSe, proFiorilli, proSaatri, proFreire]
          then Gerador.wCampoNFSe(tcDe2, '#21', 'ValorIss', 01, 15, 1, NFSe.Servico.Valores.ValorIss, '')
          else Gerador.wCampoNFSe(tcDe2, '#21', 'ValorIss', 01, 15, 0, NFSe.Servico.Valores.ValorIss, '');
       end;
 
-    if not (FProvedor in [pro4R, profinteliSS, proFiorilli, proGoiania, proISSDigital, proISSe, proProdata, proPVH, proSaatri])
+    if not (FProvedor in [pro4R, profinteliSS, proFiorilli, proGoiania, proISSDigital, proISSe, proProdata, proPVH, proSaatri, proFreire])
       then Gerador.wCampoNFSe(tcDe2, '#24', 'BaseCalculo', 01, 15, 0, NFSe.Servico.Valores.BaseCalculo, '');
 
-    if FProvedor in [pro4R, profintelISS, proISSDigital, proISSe, proFiorilli, proSaatri]
+    if FProvedor in [pro4R, profintelISS, proISSDigital, proISSe, proFiorilli, proSaatri, proFreire]
       then Gerador.wCampoNFSe(tcDe4, '#25', 'Aliquota', 01, 05, 1, NFSe.Servico.Valores.Aliquota, '')
       else begin
         if FProvedor = proGoiania
@@ -408,7 +409,7 @@ begin
     if FProvedor in [profintelISS]
       then Gerador.wCampoNFSe(tcDe2, '#24', 'BaseCalculo', 01, 15, 1, NFSe.Servico.Valores.BaseCalculo, '');
 
-    if FProvedor in [pro4R, proFiorilli, proGoiania, proISSDigital, proISSe, proProdata, proPVH, proSaatri]
+    if FProvedor in [pro4R, proFiorilli, proGoiania, proISSDigital, proISSe, proProdata, proPVH, proSaatri, proFreire]
       then begin
        Gerador.wCampoNFSe(tcDe2, '#27', 'DescontoIncondicionado', 01, 15, 0, NFSe.Servico.Valores.DescontoIncondicionado, '');
        Gerador.wCampoNFSe(tcDe2, '#28', 'DescontoCondicionado  ', 01, 15, 0, NFSe.Servico.Valores.DescontoCondicionado, '');
@@ -526,7 +527,7 @@ begin
     if (VersaoXML = '1') or
        (FProvedor in [pro4R, proAgili, proCoplan, proDigifred, proFiorilli,
                       proGoiania, proGovDigital, proISSDigital, proISSe,
-                      proProdata, proPVH, proSaatri, proVirtual])
+                      proProdata, proPVH, proSaatri, proVirtual, proFreire])
       then Gerador.wGrupoNFSe('Tomador')
       else Gerador.wGrupoNFSe('TomadorServico');
 
@@ -575,7 +576,7 @@ begin
     if (VersaoXML = '1') or
        (FProvedor in [pro4R, proAgili, proCoplan, proDigifred, proFiorilli,
                       proGoiania, proGovDigital, proISSDigital, proISSe,
-                      proProdata, proPVH, proSaatri, proVirtual])
+                      proProdata, proPVH, proSaatri, proVirtual, proFreire])
       then Gerador.wGrupoNFSe('/Tomador')
       else Gerador.wGrupoNFSe('/TomadorServico');
    end;
@@ -679,7 +680,7 @@ begin
 
     GerarIdentificacaoRPS;
 
-    if FProvedor in [proAgili, proCoplan, proDigifred, proFiorilli, proISSe, proISSDigital, proProdata, proPVH, proSaatri]
+    if FProvedor in [proAgili, proCoplan, proDigifred, proFiorilli, proISSe, proISSDigital, proProdata, proPVH, proSaatri, proFreire]
       then Gerador.wCampoNFSe(tcDat,    '#4', 'DataEmissao', 10, 10, 1, NFSe.DataEmissao, DSC_DEMI)
       else Gerador.wCampoNFSe(tcDatHor, '#4', 'DataEmissao', 19, 19, 1, NFSe.DataEmissao, DSC_DEMI);
 
