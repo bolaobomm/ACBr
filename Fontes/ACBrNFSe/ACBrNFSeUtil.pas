@@ -918,13 +918,6 @@ begin
      PosFim      := DFeUtil.PosLast('<X509Certificate>', XMLAssinado);
      XMLAssinado := copy(XMLAssinado, 1, PosIni) +
                     copy(XMLAssinado, PosFim, length(XMLAssinado));
-
-     // Alterado por Cleiver em 26/02/2013
-     if (AProvedor = proRecife)
-      then begin
-       XMLAssinado := copy(XMLAssinado, 1, length(XMLAssinado) - 17);
-       XMLAssinado  := XMLAssinado + '</GerarNfseEnvio>';
-     end;
     end;
   end
   else raise Exception.Create('Assinatura Falhou.');
