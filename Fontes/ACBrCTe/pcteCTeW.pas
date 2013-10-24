@@ -1460,7 +1460,7 @@ end;
 procedure TCTeW.GerarRodo;
 begin
   Gerador.wGrupo('rodo', '#01');
-  if CTe.infCTeNorm.rodo.RNTRC = 'INSETO'
+  if CTe.infCTeNorm.rodo.RNTRC = 'ISENTO'
    then Gerador.wCampo(tcStr, '#02', 'RNTRC ', 06, 06, 1, CTe.infCTeNorm.rodo.RNTRC, DSC_RNTRC)
    else Gerador.wCampo(tcStr, '#02', 'RNTRC ', 08, 08, 1, SomenteNumeros(CTe.infCTeNorm.rodo.RNTRC), DSC_RNTRC);
   Gerador.wCampo(tcDat, '#03', 'dPrev ', 10, 10, 1, CTe.infCTeNorm.rodo.dPrev, DSC_DPREV);
