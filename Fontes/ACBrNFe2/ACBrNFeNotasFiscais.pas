@@ -130,7 +130,7 @@ type
     procedure ImprimirPDF;
     function  Add: NotaFiscal;
     function Insert(Index: Integer): NotaFiscal;
-    property Items[Index: Integer]: NotaFiscal read GetItem  write SetItem;
+    property Items[Index: Integer]: NotaFiscal read GetItem  write SetItem; default;
     property Configuracoes: TConfiguracoes read FConfiguracoes  write FConfiguracoes;
 
     function GetNamePath: string; override ;
