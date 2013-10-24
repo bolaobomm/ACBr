@@ -114,7 +114,7 @@ begin
  // URL de produção 
  case ACodCidade of             
   3505203 : // Bariri/SP
-    cURL_Producao := 'http://187.62.191.2:8888/IssWeb-ejb/IssWebWS/IssWebWS?wsdl';
+    cURL_Producao := 'http://sipweb.bariri.sp.gov.br:8080/IssWeb-ejb/IssWebWS/IssWebWS?wsdl';
   3540200 : // Pontal/SP
     cURL_Producao := 'http://177.69.210.132:8080/IssWeb-ejb/IssWebWS/IssWebWS';
   2103000 : // Caxias/MA
