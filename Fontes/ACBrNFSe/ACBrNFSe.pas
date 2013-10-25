@@ -151,13 +151,13 @@ end;
 
 destructor TACBrNFSe.Destroy;
 begin
- FConfiguracoes.Free;
- FNotasFiscais.Free;
- FWebServices.Free;
-
  {$IFDEF ACBrNFSeOpenSSL}
    NotaUtil.ShutDownXmlSec;
  {$ENDIF}
+
+ FConfiguracoes.Free;
+ FNotasFiscais.Free;
+ FWebServices.Free;
 
  inherited destroy;
 end;
