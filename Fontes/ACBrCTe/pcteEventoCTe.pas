@@ -240,7 +240,10 @@ begin
 
   if FTpEvento = teEPEC then
   begin
-    case Result of
+    // Alterado por Italo em 28/10/2013
+//    case Result of
+    case StrToIntDef(copy(FChave, 1, 2), 0) of
+      0,
      11, // Rondônia
      12, // Acre
      13, // Amazonas
