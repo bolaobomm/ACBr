@@ -3434,6 +3434,7 @@ Var
     Ini := TIniFile.Create( IniFile );
     try
        Ini.WriteString('Sistema','Porta',aPorta ) ;
+       Ini.WriteString('Sistema','ControlePorta','1') ;
        if aPath <> '' then
           Ini.WriteString('Sistema','Path',aPath ) ;
     finally
