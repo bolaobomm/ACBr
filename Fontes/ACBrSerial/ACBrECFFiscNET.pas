@@ -2146,7 +2146,7 @@ begin
 
   try
      FiscNETComando.NomeComando := 'LeHora' ;
-     FiscNETComando.AddParamString('NomeData','HoraReducao[' + IntToStr(ECFCRZ) + ']');
+     FiscNETComando.AddParamString('NomeHora','HoraReducao[' + IntToStr(ECFCRZ) + ']');
      EnviaComando ;
      RetCmd := FiscNETResposta.Params.Values['ValorHora'] ;
 
