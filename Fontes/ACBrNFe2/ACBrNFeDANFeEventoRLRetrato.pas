@@ -48,11 +48,11 @@ unit ACBrNFeDANFeEventoRLRetrato;
 interface
 
 uses
-  SysUtils, Variants, Classes,
+  SysUtils, Variants, Classes, Graphics,
   {$IFDEF CLX}
   QGraphics, QControls, QForms, QDialogs, QExtCtrls, Qt, QStdCtrls,
   {$ELSE}
-    {$IFDEF MSWINDOWS}Windows, Messages, Graphics,{$ENDIF}
+    {$IFDEF MSWINDOWS}Windows, Messages,{$ENDIF}
     Controls, Forms, Dialogs, ExtCtrls, MaskUtils, StdCtrls,
   {$ENDIF}
   RLReport, RLFilters, RLPDFFilter, {$IFDEF BORLAND} XMLIntf, XMLDoc, jpeg, {$ENDIF}
