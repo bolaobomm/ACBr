@@ -384,6 +384,17 @@ begin
                            NumeroNFSe +
                          '</NumeroNfse>';
 
+
+  // Adicionado por Akai - L. Massao Aihara 31/10/2013
+  proIssCuritiba: DadosMsg := '<InfPedidoCancelamento>' +
+                               '<IdentificacaoNfse>' +
+                                '<Cnpj>' + Cnpj + '</Cnpj>' +
+                                '<InscricaoMunicipal>' + IM + '</InscricaoMunicipal>' +
+                                '<Numero>' + NumeroNFse + '</Numero>' +
+                               '</IdentificacaoNfse>' +
+                              '</InfPedidoCancelamento>';
+
+
   else DadosMsg := '<' + Prefixo4 + 'IdentificacaoNfse>' +
                     '<' + Prefixo4 + 'Numero>' +
                       NumeroNFse +

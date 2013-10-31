@@ -109,7 +109,7 @@ end;
 
 destructor TListaNfse.Destroy;
 begin
-  FCompNfse.Free;
+  //FCompNfse.Free;
   FMsgRetorno.Free;
 
   inherited;
@@ -237,9 +237,12 @@ begin
     Leitor.Grupo   := Leitor.Arquivo;
 
     k        := 0; //length(Prefixo4);
-
+                           
+    // Alterado por Akai - L. Massao Aihara 31/10/2013
     if (leitor.rExtrai(1, 'ConsultarNfseRpsResposta') <> '') or
-       (leitor.rExtrai(1, 'Consultarnfserpsresposta') <> '') then
+       (leitor.rExtrai(1, 'Consultarnfserpsresposta') <> '') or
+       (leitor.rExtrai(1, 'ConsultarNfsePorRpsResult') <> '')
+       then
     begin
       // Ler a NFSe
 

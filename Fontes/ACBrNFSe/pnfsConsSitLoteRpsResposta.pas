@@ -148,9 +148,11 @@ begin
     Leitor.Arquivo := StringReplace(Leitor.Arquivo, ' xmlns=""', '', [rfReplaceAll]);
     Leitor.Grupo   := Leitor.Arquivo;
 
+    // Alterado por Akai - L. Massao Aihara 31/10/2013
     if (leitor.rExtrai(1, 'ConsultarSituacaoLoteRpsResposta') <> '') or
        (leitor.rExtrai(1, 'Consultarsituacaoloterpsresposta') <> '') or
-       (leitor.rExtrai(1, 'ConsultarLoteRpsResposta') <> '') then
+       (leitor.rExtrai(1, 'ConsultarLoteRpsResposta') <> '') or
+       (leitor.rExtrai(1, 'ConsultarSituacaoLoteRpsResult') <> '') then
     begin
       InfSit.FNumeroLote := Leitor.rCampo(tcStr, 'NumeroLote');
       InfSit.FSituacao   := Leitor.rCampo(tcStr, 'Situacao');

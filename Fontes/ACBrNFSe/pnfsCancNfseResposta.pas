@@ -255,10 +255,11 @@ begin
     end
   else
     begin
-      // Alterado por Rodrigo Cantelli
+      // Alterado por Akai - L. Massao Aihara 31/10/2013
       if (leitor.rExtrai(1, 'CancelarNfseResposta') <> '') or
          (leitor.rExtrai(1, 'Cancelarnfseresposta') <> '') or
-         (leitor.rExtrai(1, 'CancelarNfseReposta') <> '') then
+         (leitor.rExtrai(1, 'CancelarNfseReposta') <> '') or
+         (leitor.rExtrai(1, 'CancelarNfseResult') <> '') then
       begin
         infCanc.DataHora                   := Leitor.rCampo(tcDatHor, 'DataHora');
         InfCanc.FPedido.InfID.ID           := Leitor.rAtributo('InfPedidoCancelamento Id=');

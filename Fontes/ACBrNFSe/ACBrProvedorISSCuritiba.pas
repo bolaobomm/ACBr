@@ -173,7 +173,7 @@ begin
    acConsLote:    Result := '<' + Prefixo3 + 'ConsultarLoteRpsEnvio' + xmlns;
    acConsNFSeRps: Result := '<' + Prefixo3 + 'ConsultarNfseRpsEnvio' + xmlns;
    acConsNFSe:    Result := '<' + Prefixo3 + 'ConsultarNfseEnvio' + xmlns;
-   acCancelar:    Result := '<CancelarNfseEnvio>';
+   acCancelar:    Result := '<CancelarNfseEnvio' + xmlns + '<Pedido>'; // Alterado por Akai - L. Massao Aihara 31/10/2013
    acGerar:       Result := '';
  end;
 end;
@@ -200,7 +200,7 @@ begin
    acConsLote:    Result := '</' + Prefixo3 + 'ConsultarLoteRpsEnvio>';
    acConsNFSeRps: Result := '</' + Prefixo3 + 'ConsultarNfseRpsEnvio>';
    acConsNFSe:    Result := '</' + Prefixo3 + 'ConsultarNfseEnvio>';
-   acCancelar:    Result := '</CancelarNfseEnvio>';
+   acCancelar:    Result := '</Pedido></CancelarNfseEnvio>'; // Alterado por Akai - L. Massao Aihara 31/10/2013
    acGerar:       Result := '';
  end;
 end;
@@ -318,13 +318,15 @@ end;
 
 function TProvedorIssCuritiba.GetRetornoWS(Acao: TnfseAcao; RetornoWS: AnsiString): AnsiString;
 begin
+ // Alterado por Akai - L. Massao Aihara 31/10/2013
+ // para manter as chaves...
  case Acao of
-   acRecepcionar: Result := SeparaDados( RetornoWS, 'RecepcionarLoteRpsResult' );
-   acConsSit:     Result := SeparaDados( RetornoWS, 'ConsultarSituacaoLoteRpsResult' );
-   acConsLote:    Result := SeparaDados( RetornoWS, 'ConsultarLoteRpsResult' );
-   acConsNFSeRps: Result := SeparaDados( RetornoWS, 'ConsultarNfsePorRpsResult' );
-   acConsNFSe:    Result := SeparaDados( RetornoWS, 'ConsultarNfseResult' );
-   acCancelar:    Result := SeparaDados( RetornoWS, 'CancelarNfseResult' );
+   acRecepcionar: Result := SeparaDados( RetornoWS, 'RecepcionarLoteRpsResult', True );
+   acConsSit:     Result := SeparaDados( RetornoWS, 'ConsultarSituacaoLoteRpsResult', True );
+   acConsLote:    Result := SeparaDados( RetornoWS, 'ConsultarLoteRpsResult', True );
+   acConsNFSeRps: Result := SeparaDados( RetornoWS, 'ConsultarNfsePorRpsResult', True );
+   acConsNFSe:    Result := SeparaDados( RetornoWS, 'ConsultarNfseResult', True );
+   acCancelar:    Result := SeparaDados( RetornoWS, 'CancelarNfseResult', True );
    acGerar:       Result := '';
    acRecSincrono: Result := '';
  end;

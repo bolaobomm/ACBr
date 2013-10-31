@@ -242,8 +242,10 @@ begin
     k      := 0; //length(Prefixo4);
     iNivel := 0;
 
+    // Alterado por Akai - L. Massao Aihara 31/10/2013
     if (leitor.rExtrai(1, 'ConsultarLoteRpsResposta') <> '') or
-       (leitor.rExtrai(1, 'Consultarloterpsresposta') <> '') then
+       (leitor.rExtrai(1, 'Consultarloterpsresposta') <> '') or
+       (leitor.rExtrai(1, 'ConsultarLoteRpsResult') <> '') then
 //    begin
       iNivel := 1;
 
