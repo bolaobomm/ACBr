@@ -48,6 +48,11 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 
+31/10/2013
+----------
+[*] Acerto para utilização dos novos links de homologação disponibilizados pelo estado do AM e válidos para uso em todo território nacional
+    http://portalnfce.sefaz.am.gov.br/desenvolvedor/ambiente-de-homologacao-para-desenvolvedores/
+
 27/05/2013 {por Fabio Gabriel e João Henrique}
 ----------
 [+] - {ACBrNFeDANFEFR.pas} Inclusão da propriedade "ExibeCampoFatura", opção para cancelar a impressão do campo FATURA (Somente em FastReport)
@@ -64,7 +69,6 @@ Símbolo : Significado
 [*] - {DANFeRetrato.fr3} Na Fatura foi redimencionado o tamanho e incluso a opção de impressão (ExibeCampoFatura), ganhando mais espaço no produtos/serviços (obedecendo o manual).
 [+] - {DANFeRetrato.fr3} Incluso um ColumnFooter para ISSQN, assim podemos usar o recurso de exibição ou não, ganhando mais espaço com os produtos/serviços.
 [*] - {DANFeRetrato.fr3} Redimensionamento dos Dados Adicionais (obedecendo o manual)
-
 
 04/03/2013
 ----------

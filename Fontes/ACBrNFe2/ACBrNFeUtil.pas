@@ -1041,13 +1041,13 @@ begin
     // Novos endereços disponibilizados para a NFC-e
 
     case ALayOut of
-      LayNfeRecepcao      : Result := DFeUtil.SeSenao(AAmbiente=1, 'https://nfce.sefaz.am.gov.br/nfce-services/services/NfeRecepcao2', 'https://homnfce.sefaz.am.gov.br/nfce-services/services/NfeRecepcao2');
-      LayNfeRetRecepcao   : Result := DFeUtil.SeSenao(AAmbiente=1, 'https://nfce.sefaz.am.gov.br/nfce-services/services/NfeRetRecepcao2', 'https://homnfce.sefaz.am.gov.br/nfce-services/services/NfeRetRecepcao2');
-      LayNfeInutilizacao  : Result := DFeUtil.SeSenao(AAmbiente=1, 'https://nfce.sefaz.am.gov.br/nfce-services/services/NfeInutilizacao2', 'https://homnfce.sefaz.am.gov.br/nfce-services/services/NfeInutilizacao2');
-      LayNfeConsulta      : Result := DFeUtil.SeSenao(AAmbiente=1, 'https://nfce.sefaz.am.gov.br/nfce-services/services/NfeConsulta2', 'https://homnfce.sefaz.am.gov.br/nfce-services/services/NfeConsulta2');
-      LayNfeStatusServico : Result := DFeUtil.SeSenao(AAmbiente=1, 'https://nfce.sefaz.am.gov.br/nfce-services/services/NfeStatusServico2', 'https://homnfce.sefaz.am.gov.br/nfce-services/services/NfeStatusServico2');
+      LayNfeRecepcao      : Result := DFeUtil.SeSenao(AAmbiente=1, 'https://nfce.sefaz.am.gov.br/nfce-services/services/NfeRecepcao2', 'https://homnfce.sefaz.am.gov.br/nfce-services-nac/services/NfeRecepcao2');
+      LayNfeRetRecepcao   : Result := DFeUtil.SeSenao(AAmbiente=1, 'https://nfce.sefaz.am.gov.br/nfce-services/services/NfeRetRecepcao2', 'https://homnfce.sefaz.am.gov.br/nfce-services-nac/services/NfeRetRecepcao2');
+      LayNfeInutilizacao  : Result := DFeUtil.SeSenao(AAmbiente=1, 'https://nfce.sefaz.am.gov.br/nfce-services/services/NfeInutilizacao2', 'https://homnfce.sefaz.am.gov.br/nfce-services-nac/services/NfeInutilizacao2');
+      LayNfeConsulta      : Result := DFeUtil.SeSenao(AAmbiente=1, 'https://nfce.sefaz.am.gov.br/nfce-services/services/NfeConsulta2', 'https://homnfce.sefaz.am.gov.br/nfce-services-nac/services/NfeConsulta2');
+      LayNfeStatusServico : Result := DFeUtil.SeSenao(AAmbiente=1, 'https://nfce.sefaz.am.gov.br/nfce-services/services/NfeStatusServico2', 'https://homnfce.sefaz.am.gov.br/nfce-services-nac/services/NfeStatusServico2');
       LayNFeCCe,
-      LayNFeEvento        : Result := DFeUtil.SeSenao(AAmbiente=1, 'https://nfce.sefaz.am.gov.br/nfce-services/services/RecepcaoEvento', 'https://homnfce.sefaz.am.gov.br/nfce-services/services/RecepcaoEvento');
+      LayNFeEvento        : Result := DFeUtil.SeSenao(AAmbiente=1, 'https://nfce.sefaz.am.gov.br/nfce-services/services/RecepcaoEvento', 'https://homnfce.sefaz.am.gov.br/nfce-services-nac/services/RecepcaoEvento');
     end;
    end;
 end;
@@ -1721,7 +1721,7 @@ begin
     xmldsig.signature := xmldoc.selectSingleNode('.//ds:Signature');
 
    if (xmldsig.signature = nil ) then
-      raise EACBrNFeException.Create('Não foi possível carregar o ler a assinatura: '+XML);
+      raise EACBrNFeException.Create('Não foi possível carregar ou ler a assinatura: '+XML);
 
     pKeyInfo := xmldoc.selectSingleNode('.//ds:KeyInfo/ds:X509Data');
 
