@@ -2490,21 +2490,24 @@ begin
     else raise Exception.Create('Erro Desconhecido!')
   end;
 
- Self.ConsNfseRps.Numero             := TACBrNFSe( FACBrNFSe ).NotasFiscais.Items[0].NFSe.IdentificacaoRps.Numero;
- Self.ConsNfseRps.Serie              := TACBrNFSe( FACBrNFSe ).NotasFiscais.Items[0].NFSe.IdentificacaoRps.Serie;
- Self.ConsNfseRps.Tipo               := TipoRPSToStr(TACBrNFSe( FACBrNFSe ).NotasFiscais.Items[0].NFSe.IdentificacaoRps.Tipo);
- Self.ConsNfseRps.Cnpj               := TACBrNFSe( FACBrNFSe ).NotasFiscais.Items[0].NFSe.PrestadorServico.IdentificacaoPrestador.Cnpj;
- Self.ConsNfseRps.InscricaoMunicipal := TACBrNFSe( FACBrNFSe ).NotasFiscais.Items[0].NFSe.PrestadorServico.IdentificacaoPrestador.InscricaoMunicipal;
-
- Result := Self.ConsNfseRps.Executar;
-
- if not(Result)
+ if not (TACBrNFSe( FACBrNFSe ).Configuracoes.WebServices.Provedor in [proISSNet])
   then begin
-   if Assigned(TACBrNFSe( FACBrNFSe ).OnGerarLog)
-    then TACBrNFSe( FACBrNFSe ).OnGerarLog(Self.ConsNfseRps.Msg);
-   if Self.ConsNfseRps.Msg <> ''
-    then raise Exception.Create(Self.ConsNfseRps.Msg)
-    else raise Exception.Create('Erro Desconhecido!')
+   Self.ConsNfseRps.Numero             := TACBrNFSe( FACBrNFSe ).NotasFiscais.Items[0].NFSe.IdentificacaoRps.Numero;
+   Self.ConsNfseRps.Serie              := TACBrNFSe( FACBrNFSe ).NotasFiscais.Items[0].NFSe.IdentificacaoRps.Serie;
+   Self.ConsNfseRps.Tipo               := TipoRPSToStr(TACBrNFSe( FACBrNFSe ).NotasFiscais.Items[0].NFSe.IdentificacaoRps.Tipo);
+   Self.ConsNfseRps.Cnpj               := TACBrNFSe( FACBrNFSe ).NotasFiscais.Items[0].NFSe.PrestadorServico.IdentificacaoPrestador.Cnpj;
+   Self.ConsNfseRps.InscricaoMunicipal := TACBrNFSe( FACBrNFSe ).NotasFiscais.Items[0].NFSe.PrestadorServico.IdentificacaoPrestador.InscricaoMunicipal;
+
+   Result := Self.ConsNfseRps.Executar;
+
+   if not(Result)
+    then begin
+     if Assigned(TACBrNFSe( FACBrNFSe ).OnGerarLog)
+      then TACBrNFSe( FACBrNFSe ).OnGerarLog(Self.ConsNfseRps.Msg);
+     if Self.ConsNfseRps.Msg <> ''
+      then raise Exception.Create(Self.ConsNfseRps.Msg)
+      else raise Exception.Create('Erro Desconhecido!')
+    end;
   end;
 end;
 
@@ -3150,10 +3153,10 @@ try
                  else begin
                   if FRetNFSe[l+1] = '/'
                    then begin
-                    FRetNfse2 := FRetNfse2 + '/' + Prefixo4;
+                    FRetNfse2 := FRetNfse2 + '</' + Prefixo4;
                     inc(l);
                    end
-                   else FRetNfse2 := FRetNfse2 + Prefixo4;
+                   else FRetNfse2 := FRetNfse2 + '<' + Prefixo4;
                  end;
                end
                else FRetNfse2 := FRetNfse2 + FRetNFSe[l];
