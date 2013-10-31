@@ -1815,8 +1815,8 @@ begin
   inherited;
   PrintBand := QRCTe.PageNumber = 1;
 
-  // Imprime os dados da da Nota Fiscal se o Tipo de CTe for Normal
-  qrb_04_DadosNotaFiscal.Enabled:=(FCTe.Ide.tpCTe = tcNormal);
+  // Imprime os dados da da Nota Fiscal se o Tipo de CTe for Normal ou Substituto
+  qrb_04_DadosNotaFiscal.Enabled:=(FCTe.Ide.tpCTe = tcNormal) or (FCTe.Ide.tpCTe = tcSubstituto);
 end;
 
 procedure TfrmDACTeQRRetrato.qrb_05_ComplementoBeforePrint(
