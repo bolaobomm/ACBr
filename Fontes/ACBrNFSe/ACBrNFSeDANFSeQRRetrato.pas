@@ -191,6 +191,7 @@ type
     QRLabel57: TQRLabel;
     qrlNumeroNotaCompEnt: TQRLabel;
     QRShape19: TQRShape;
+    QRShape18: TQRShape;
     procedure qrb_1_CabecalhoBeforePrint(Sender: TQRCustomBand;
       var PrintBand: Boolean);
     procedure qrb_2_PrestadorServicoBeforePrint(Sender: TQRCustomBand;

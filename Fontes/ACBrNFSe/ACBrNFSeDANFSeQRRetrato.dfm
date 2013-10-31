@@ -2,7 +2,6 @@ inherited fqrDANFSeQRRetrato: TfqrDANFSeQRRetrato
   Left = 206
   Width = 845
   Height = 788
-  VertScrollBar.Position = 374
   Caption = 'DANFSe - Retrato'
   Font.Height = -8
   Font.Name = 'Arial'
@@ -13,7 +12,7 @@ inherited fqrDANFSeQRRetrato: TfqrDANFSeQRRetrato
   inherited QRNFSe: TQuickRep
     Tag = 1
     Left = 8
-    Top = -369
+    Top = 5
     BeforePrint = QRNFSeBeforePrint
     DataSet = cdsItens
     Font.Height = -8
@@ -117,7 +116,7 @@ inherited fqrDANFSeQRRetrato: TfqrDANFSeQRRetrato
       object qrlNumNF0: TQRLabel
         Left = 570
         Top = 28
-        Width = 95
+        Width = 178
         Height = 18
         Frame.Color = clBlack
         Frame.DrawTop = False
@@ -128,7 +127,7 @@ inherited fqrDANFSeQRRetrato: TfqrDANFSeQRRetrato
           47.625000000000000000
           1508.125000000000000000
           74.083333333333340000
-          251.354166666666700000)
+          470.958333333333400000)
         XLColumn = 0
         Alignment = taLeftJustify
         AlignToBand = False
@@ -992,8 +991,8 @@ inherited fqrDANFSeQRRetrato: TfqrDANFSeQRRetrato
         FontSize = 12
       end
       object QRLabel33: TQRLabel
-        Left = 671
-        Top = 4
+        Left = 664
+        Top = 140
         Width = 78
         Height = 20
         Frame.Color = clBlack
@@ -1003,8 +1002,8 @@ inherited fqrDANFSeQRRetrato: TfqrDANFSeQRRetrato
         Frame.DrawRight = False
         Size.Values = (
           52.916666666666670000
-          1775.354166666667000000
-          10.583333333333330000
+          1756.833333333333000000
+          370.416666666666700000
           206.375000000000000000)
         XLColumn = 0
         Alignment = taLeftJustify
@@ -1025,9 +1024,9 @@ inherited fqrDANFSeQRRetrato: TfqrDANFSeQRRetrato
         FontSize = 8
       end
       object qrlDataServ: TQRLabel
-        Left = 680
-        Top = 28
-        Width = 67
+        Left = 664
+        Top = 164
+        Width = 78
         Height = 18
         Frame.Color = clBlack
         Frame.DrawTop = False
@@ -1036,11 +1035,11 @@ inherited fqrDANFSeQRRetrato: TfqrDANFSeQRRetrato
         Frame.DrawRight = False
         Size.Values = (
           47.625000000000000000
-          1799.166666666667000000
-          74.083333333333340000
-          177.270833333333300000)
+          1756.833333333333000000
+          433.916666666666800000
+          206.375000000000000000)
         XLColumn = 0
-        Alignment = taRightJustify
+        Alignment = taCenter
         AlignToBand = False
         AutoSize = False
         AutoStretch = False
@@ -1142,6 +1141,26 @@ inherited fqrDANFSeQRRetrato: TfqrDANFSeQRRetrato
         WordWrap = True
         ExportAs = exptText
         FontSize = 10
+      end
+      object QRShape18: TQRShape
+        Left = 654
+        Top = 138
+        Width = 1
+        Height = 45
+        Frame.Color = clBlack
+        Frame.DrawTop = False
+        Frame.DrawBottom = False
+        Frame.DrawLeft = False
+        Frame.DrawRight = False
+        Size.Values = (
+          119.062500000000000000
+          1730.375000000000000000
+          365.125000000000000000
+          2.645833333333333000)
+        XLColumn = 0
+        Brush.Style = bsClear
+        Shape = qrsVertLine
+        VertAdjust = 0
       end
     end
     object qrb_2_PrestadorServico: TQRChildBand
