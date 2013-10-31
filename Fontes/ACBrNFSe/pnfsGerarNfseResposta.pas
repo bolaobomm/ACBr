@@ -595,10 +595,10 @@ begin
         end; // fim do CompNfse - Nivel 3
 
       end; // fim do ListaNfse - Nivel 2
-
       // Ler a Lista de Mensagens
       if (leitor.rExtrai(2, 'ListaMensagemRetorno') <> '') or
-         (leitor.rExtrai(2, 'ListaMensagemRetornoLote') <> '') then
+         (leitor.rExtrai(2, 'ListaMensagemRetornoLote') <> '') or
+         (leitor.rExtrai(3, 'Erro') <> '') then
       begin
         i := 0;
         while Leitor.rExtrai(3, 'MensagemRetorno', '', i + 1) <> '' do
@@ -622,25 +622,55 @@ begin
 
           inc(i);
         end;
+
+        // Andeson de Jesus - Luiz Eduardo Magalhães - BA
+        i := 0;
+        while Leitor.rExtrai(3, 'Erro', '', i + 1) <> '' do
+        begin
+          ListaNfse.FMsgRetorno.Add;
+          ListaNfse.FMsgRetorno[i].FCodigo   := Leitor.rCampo(tcStr, 'ErroID');
+          ListaNfse.FMsgRetorno[i].FMensagem := Leitor.rCampo(tcStr, 'ErroMensagem');
+          ListaNfse.FMsgRetorno[i].FCorrecao := Leitor.rCampo(tcStr, 'ErroSolucao');
+
+          inc(i);
+        end;
       end;
 
       Result := True;
     end
-    else // alterado Joel Takei ISSe 08/06/2013
-    if (leitor.rExtrai(1, 'ListaMensagemRetorno') <> '') or
-       (leitor.rExtrai(1, 'ListaMensagemRetornoLote') <> '') then
-    begin
-      i := 0;
-      while Leitor.rExtrai(2, 'MensagemRetorno', '', i + 1) <> '' do
-      begin
-        ListaNfse.FMsgRetorno.Add;
-        ListaNfse.FMsgRetorno[i].FCodigo   := Leitor.rCampo(tcStr, 'Codigo');
-        ListaNfse.FMsgRetorno[i].FMensagem := Leitor.rCampo(tcStr, 'Mensagem');
-        ListaNfse.FMsgRetorno[i].FCorrecao := Leitor.rCampo(tcStr, 'Correcao');
+    else begin// alterado Joel Takei ISSe 08/06/2013
+        if (leitor.rExtrai(1, 'ListaMensagemRetorno') <> '') or
+           (leitor.rExtrai(1, 'ListaMensagemRetornoLote') <> '') then
+        begin
+          i := 0;
+          while Leitor.rExtrai(2, 'MensagemRetorno', '', i + 1) <> '' do
+          begin
+            ListaNfse.FMsgRetorno.Add;
+            ListaNfse.FMsgRetorno[i].FCodigo   := Leitor.rCampo(tcStr, 'Codigo');
+            ListaNfse.FMsgRetorno[i].FMensagem := Leitor.rCampo(tcStr, 'Mensagem');
+            ListaNfse.FMsgRetorno[i].FCorrecao := Leitor.rCampo(tcStr, 'Correcao');
 
-        inc(i);
-      end;
-      Result := True;
+            inc(i);
+          end;
+          Result := True;
+        end;
+        // Andeson de Jesus - Barreiras - BA
+
+        if (leitor.rExtrai(1, 's:Fault') <> '') then begin
+
+           i := 0;
+           while Leitor.rExtrai(1, 's:Fault', '', i + 1) <> '' do
+           begin
+              ListaNfse.FMsgRetorno.Add;
+              ListaNfse.FMsgRetorno[i].FCodigo   := Leitor.rCampo(tcStr, 'faultcode');
+              ListaNfse.FMsgRetorno[i].FMensagem := Leitor.rCampo(tcStr, 'faultstring');
+              ListaNfse.FMsgRetorno[i].FCorrecao := '';
+
+              inc(i);
+           end;
+           Result := True;
+        end; //fim Fault 
+
     end;
 
   except

@@ -86,7 +86,7 @@ var
 begin
  ConfigSchema.VersaoCabecalho := '2.02';
  ConfigSchema.VersaoDados     := '2.02';
- ConfigSchema.VersaoXML       := '1';
+ ConfigSchema.VersaoXML       := '2';
  ConfigSchema.NameSpaceXML    := 'http://www.abrasf.org.br/';
  ConfigSchema.Cabecalho       := 'nfse.xsd';
  ConfigSchema.ServicoEnviar   := 'nfse.xsd';
@@ -111,21 +111,22 @@ begin
             ConfigURL.ProNomeCidade := 'nfselem';
            end;
  end;
- ConfigURL.HomRecepcaoLoteRPS    := 'http://' + ConfigURL.HomNomeCidade + '.freireinformatica.com.br:5554/webrun/webservices/nfse.svc';
- ConfigURL.HomConsultaLoteRPS    := 'http://' + ConfigURL.HomNomeCidade + '.freireinformatica.com.br:5554/webrun/webservices/nfse.svc';
- ConfigURL.HomConsultaNFSeRPS    := 'http://' + ConfigURL.HomNomeCidade + '.freireinformatica.com.br:5554/webrun/webservices/nfse.svc';
- ConfigURL.HomConsultaSitLoteRPS := 'http://' + ConfigURL.HomNomeCidade + '.freireinformatica.com.br:5554/webrun/webservices/nfse.svc';
- ConfigURL.HomConsultaNFSe       := 'http://' + ConfigURL.HomNomeCidade + '.freireinformatica.com.br:5554/webrun/webservices/nfse.svc';
- ConfigURL.HomCancelaNFSe        := 'http://' + ConfigURL.HomNomeCidade + '.freireinformatica.com.br:5554/webrun/webservices/nfse.svc';
- ConfigURL.HomGerarNFSe          := 'http://' + ConfigURL.HomNomeCidade + '.freireinformatica.com.br:5554/webrun/webservices/nfse.svc';
 
- ConfigURL.ProRecepcaoLoteRPS    := 'http://' + ConfigURL.ProNomeCidade + '.freireinformatica.com.br:4554/webrun/nfse.svc';
- ConfigURL.ProConsultaLoteRPS    := 'http://' + ConfigURL.ProNomeCidade + '.freireinformatica.com.br:4554/webrun/nfse.svc';
- ConfigURL.ProConsultaNFSeRPS    := 'http://' + ConfigURL.ProNomeCidade + '.freireinformatica.com.br:4554/webrun/nfse.svc';
- ConfigURL.ProConsultaSitLoteRPS := 'http://' + ConfigURL.ProNomeCidade + '.freireinformatica.com.br:4554/webrun/nfse.svc';
- ConfigURL.ProConsultaNFSe       := 'http://' + ConfigURL.ProNomeCidade + '.freireinformatica.com.br:4554/webrun/nfse.svc';
- ConfigURL.ProCancelaNFSe        := 'http://' + ConfigURL.ProNomeCidade + '.freireinformatica.com.br:4554/webrun/nfse.svc';
- ConfigURL.ProGerarNFSe          := 'http://' + ConfigURL.ProNomeCidade + '.freireinformatica.com.br:4554/webrun/nfse.svc';
+ ConfigURL.HomRecepcaoLoteRPS    := 'http://' + ConfigURL.HomNomeCidade + '.freireinformatica.com.br:5554/webrun/webservices/NFEServices.jws';
+ ConfigURL.HomConsultaLoteRPS    := 'http://' + ConfigURL.HomNomeCidade + '.freireinformatica.com.br:5554/webrun/webservices/NFEServices.jws';
+ ConfigURL.HomConsultaNFSeRPS    := 'http://' + ConfigURL.HomNomeCidade + '.freireinformatica.com.br:5554/webrun/webservices/NFEServices.jws';
+ ConfigURL.HomConsultaSitLoteRPS := 'http://' + ConfigURL.HomNomeCidade + '.freireinformatica.com.br:5554/webrun/webservices/NFEServices.jws';
+ ConfigURL.HomConsultaNFSe       := 'http://' + ConfigURL.HomNomeCidade + '.freireinformatica.com.br:5554/webrun/webservices/NFEServices.jws';
+ ConfigURL.HomCancelaNFSe        := 'http://' + ConfigURL.HomNomeCidade + '.freireinformatica.com.br:5554/webrun/webservices/NFEServices.jws';
+ ConfigURL.HomGerarNFSe          := 'http://' + ConfigURL.HomNomeCidade + '.freireinformatica.com.br:5554/webrun/webservices/NFEServices.jws';
+
+ ConfigURL.ProRecepcaoLoteRPS    := 'http://' + ConfigURL.ProNomeCidade + '.freireinformatica.com.br:4554/webrun/webservices/NFEServices.jws';
+ ConfigURL.ProConsultaLoteRPS    := 'http://' + ConfigURL.ProNomeCidade + '.freireinformatica.com.br:4554/webrun/webservices/NFEServices.jws';
+ ConfigURL.ProConsultaNFSeRPS    := 'http://' + ConfigURL.ProNomeCidade + '.freireinformatica.com.br:4554/webrun/webservices/NFEServices.jws';
+ ConfigURL.ProConsultaSitLoteRPS := 'http://' + ConfigURL.ProNomeCidade + '.freireinformatica.com.br:4554/webrun/webservices/NFEServices.jws';
+ ConfigURL.ProConsultaNFSe       := 'http://' + ConfigURL.ProNomeCidade + '.freireinformatica.com.br:4554/webrun/webservices/NFEServices.jws';
+ ConfigURL.ProCancelaNFSe        := 'http://' + ConfigURL.ProNomeCidade + '.freireinformatica.com.br:4554/webrun/webservices/NFEServices.jws';
+ ConfigURL.ProGerarNFSe          := 'http://' + ConfigURL.ProNomeCidade + '.freireinformatica.com.br:4554/webrun/webservices/NFEServices.jws';
 
  Result := ConfigURL;
 end;
@@ -189,19 +190,19 @@ end;
 
 function TProvedorFreire.Gera_DadosSenha(CNPJ, Senha: String): AnsiString;
 begin
- Result := '<wsse:Security S:mustUnderstand="1"' +
-               ' xmlns:wsse="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-secext-1.0.xsd"' +
-               ' xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd">' +
-            '<wsse:UsernameToken wsu:Id="UsernameToken-18">' +
-             '<wsse:Username>' +
-               CNPJ +
-             '</wsse:Username>' +
-             '<wsse:Password Type="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-username-token-profile-1.0#PasswordText">' +
-              Senha +
-             '</wsse:Password>' +
-            '</wsse:UsernameToken>' +
-           '</wsse:Security>';
-
+// Result := '<wsse:Security S:mustUnderstand="1"' +
+//               ' xmlns:wsse="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-secext-1.0.xsd"' +
+//               ' xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd">' +
+//            '<wsse:UsernameToken wsu:Id="UsernameToken-18">' +
+//             '<wsse:Username>' +
+//               CNPJ +
+//             '</wsse:Username>' +
+//             '<wsse:Password Type="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-username-token-profile-1.0#PasswordText">' +
+//              Senha +
+//             '</wsse:Password>' +
+//            '</wsse:UsernameToken>' +
+//           '</wsse:Security>';
+  Result := '';
 end;
 
 function TProvedorFreire.Gera_TagF(Acao: TnfseAcao; Prefixo3: String): AnsiString;
@@ -221,12 +222,12 @@ end;
 function TProvedorFreire.GeraEnvelopeRecepcionarLoteRPS(URLNS: String;
   CabMsg, DadosMsg, DadosSenha: AnsiString): AnsiString;
 begin
- result := '<?xml version="1.0" encoding="ISO-8859-1"?>' +
+ result := '<?xml version="1.0"' +
            '<S:Envelope xmlns:S="http://schemas.xmlsoap.org/soap/envelope/"' +
                       ' xmlns:nfse="http://nfse.abrasf.org.br">' +
-            '<S:Header>' +
-              DadosSenha +
-            '</S:Header>' +
+//            '<S:Header>' +
+//              DadosSenha +
+//            '</S:Header>' +
             '<S:Body>' +
              '<nfse:RecepcionarLoteRpsRequest>' +
               '<nfseCabecMsg>' +
@@ -253,9 +254,9 @@ begin
  result := '<?xml version="1.0" encoding="ISO-8859-1"?>' +
            '<S:Envelope xmlns:S="http://schemas.xmlsoap.org/soap/envelope/"' +
                       ' xmlns:nfse="http://nfse.abrasf.org.br">' +
-            '<S:Header>' +
-              DadosSenha +
-            '</S:Header>' +
+//            '<S:Header>' +
+//              DadosSenha +
+//            '</S:Header>' +
             '<S:Body>' +
              '<nfse:ConsultarLoteRpsRequest>' +
               '<nfseCabecMsg>' +
@@ -275,9 +276,9 @@ begin
  result := '<?xml version="1.0" encoding="ISO-8859-1"?>' +
            '<S:Envelope xmlns:S="http://schemas.xmlsoap.org/soap/envelope/"' +
                       ' xmlns:nfse="http://nfse.abrasf.org.br">' +
-            '<S:Header>' +
-              DadosSenha +
-            '</S:Header>' +
+//            '<S:Header>' +
+//              DadosSenha +
+//            '</S:Header>' +
             '<S:Body>' +
              '<nfse:ConsultarNfsePorRpsRequest>' +
               '<nfseCabecMsg>' +
@@ -297,9 +298,9 @@ begin
  result := '<?xml version="1.0" encoding="ISO-8859-1"?>' +
            '<S:Envelope xmlns:S="http://schemas.xmlsoap.org/soap/envelope/"' +
                       ' xmlns:nfse="http://nfse.abrasf.org.br">' +
-            '<S:Header>' +
-              DadosSenha +
-            '</S:Header>' +
+//            '<S:Header>' +
+//              DadosSenha +
+//            '</S:Header>' +
             '<S:Body>' +
              '<nfse:ConsultarNfseServicoPrestadoRequest>' +
               '<nfseCabecMsg>' +
@@ -319,9 +320,9 @@ begin
  result := '<?xml version="1.0" encoding="ISO-8859-1"?>' +
            '<S:Envelope xmlns:S="http://schemas.xmlsoap.org/soap/envelope/"' +
                       ' xmlns:nfse="http://nfse.abrasf.org.br">' +
-            '<S:Header>' +
-              DadosSenha +
-            '</S:Header>' +
+//            '<S:Header>' +
+//              DadosSenha +
+//            '</S:Header>' +
             '<S:Body>' +
              '<nfse:CancelarNfseRequest>' +
               '<nfseCabecMsg>' +
@@ -338,23 +339,19 @@ end;
 function TProvedorFreire.GeraEnvelopeGerarNFSe(URLNS: String; CabMsg,
   DadosMsg, DadosSenha: AnsiString): AnsiString;
 begin
- result := '<?xml version="1.0" encoding="ISO-8859-1"?>' +
-           '<S:Envelope xmlns:S="http://schemas.xmlsoap.org/soap/envelope/"' +
-                      ' xmlns:nfse="http://nfse.abrasf.org.br">' +
-            '<S:Header>' +
-              DadosSenha +
-            '</S:Header>' +
-            '<S:Body>' +
-             '<nfse:GerarNfseRequest>' +
-              '<nfseCabecMsg>' +
-               '<![CDATA[' + CabMsg + ']]>' +
-              '</nfseCabecMsg>' +
-              '<nfseDadosMsg>' +
-               '<![CDATA[' + DadosMsg + ']]>' +
-              '</nfseDadosMsg>' +
-             '</nfse:GerarNfseRequest>' +
-            '</S:Body>' +
-           '</S:Envelope>';
+ Result := '<soapenv:Envelope '+
+                'xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" '+
+                'xmlns:xsd="http://www.w3.org/2001/XMLSchema" '+
+                'xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" '+
+                'xmlns:def="http://www.abrasf.org.br/"> '+
+          '<soapenv:Header/> '+
+          '<soapenv:Body> '+
+          '<def:GerarNfse soapenv:encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"> '+
+            '<Nfsecabecmsg xsi:type="xsd:string"> <![CDATA[' + CabMsg + ']]> </Nfsecabecmsg> '+
+            '<Nfsedadosmsg xsi:type="xsd:string"> <![CDATA[' + DadosMsg + ']]> </Nfsedadosmsg> '+
+          '</def:GerarNfse>'+
+          '</soapenv:Body> '+
+          '</soapenv:Envelope>';
 end;
 
 function TProvedorFreire.GetSoapAction(Acao: TnfseAcao; NomeCidade: String): String;
@@ -367,6 +364,7 @@ begin
    acConsNFSe:    Result := 'http://nfse.abrasf.org.br/Infse/ConsultarNfseServicoPrestado';
    acCancelar:    Result := 'http://nfse.abrasf.org.br/Infse/CancelarNfse';
    acGerar:       Result := 'http://nfse.abrasf.org.br/Infse/GerarNfse';
+   acRecSincrono: Result := 'http://nfse.abrasf.org.br/Infse/RecepcionarLoteRpsSincrono';
  end;
 end;
 
@@ -379,7 +377,8 @@ begin
    acConsNFSeRps: Result := SeparaDados( RetornoWS, 'outputXML' );
    acConsNFSe:    Result := SeparaDados( RetornoWS, 'outputXML' );
    acCancelar:    Result := SeparaDados( RetornoWS, 'outputXML' );
-   acGerar:       Result := SeparaDados( RetornoWS, 'outputXML' );
+   acGerar:       Result := RetornoWS; //SeparaDados( RetornoWS, 'outputXML' );
+   acRecSincrono: Result := SeparaDados( RetornoWS, 'outputXML' );
  end;
 end;
 
@@ -411,7 +410,9 @@ end;
 function TProvedorFreire.GeraEnvelopeRecepcionarSincrono(URLNS: String;
   CabMsg, DadosMsg, DadosSenha: AnsiString): AnsiString;
 begin
- Result := '';
+ Result := CabMsg +#13#10+
+           '<?xml version="1.0" encoding="ISO-8859-1"?>' + #13#10+
+           DadosMsg;
 end;
 
 end.

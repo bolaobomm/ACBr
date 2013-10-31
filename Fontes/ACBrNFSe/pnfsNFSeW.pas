@@ -681,7 +681,8 @@ begin
 
     GerarIdentificacaoRPS;
 
-    if FProvedor in [proAgili, proCoplan, proDigifred, proFiorilli, proISSe, proISSDigital, proProdata, proPVH, proSaatri, proFreire]
+    if FProvedor in [proAgili, proCoplan, proDigifred, proFiorilli, proISSe,
+                     proISSDigital, proProdata, proPVH, proSaatri, proFreire]
       then Gerador.wCampoNFSe(tcDat,    '#4', 'DataEmissao', 10, 10, 1, NFSe.DataEmissao, DSC_DEMI)
       else Gerador.wCampoNFSe(tcDatHor, '#4', 'DataEmissao', 19, 19, 1, NFSe.DataEmissao, DSC_DEMI);
 
@@ -709,7 +710,7 @@ begin
          end
         end
         else begin
-         if FProvedor in [proPVH]
+         if FProvedor in [proPVH, proFreire]
           then Gerador.wCampoNFSe(tcDat,    '#4', 'Competencia', 10, 10, 1, NFSe.DataEmissao, DSC_DEMI)
           else Gerador.wCampoNFSe(tcDatHor, '#4', 'Competencia', 19, 19, 0, NFSe.DataEmissao, DSC_DEMI);
         end;

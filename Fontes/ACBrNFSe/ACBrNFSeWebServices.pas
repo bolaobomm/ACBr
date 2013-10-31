@@ -796,6 +796,7 @@ begin
                                    '<' + Prefixo4 + 'InfDeclaracaoPrestacaoServico', '</Signature>') +
                                '</Signature>'+
                               '</' + Prefixo4 + 'Rps>';
+
       proDigifred,
       proCoplan: vNotas := vNotas +
                               '<' + Prefixo4 + 'Rps ' +
@@ -803,7 +804,9 @@ begin
                                    '<' + Prefixo4 + 'Rps', '</Signature>') +
                                '</Signature>'+
                               '</' + Prefixo4 + 'Rps>';
+
       proIssDSF : vNotas :=  vNotas + TNFSeEnviarLoteRPS(Self).FNotasFiscais.Items[I].XML_Rps;//.XML_Rps_Ass;
+
       else vNotas := vNotas + '<' + Prefixo4 + 'Rps>' +
                                '<' + Prefixo4 + 'InfRps' +
                                  RetornarConteudoEntre(TNFSeEnviarLoteRPS(Self).FNotasFiscais.Items[I].XML_Rps_Ass,
@@ -1753,7 +1756,6 @@ begin
       proPVH,
       proAgili,
       proVirtual,
-      proFreire,
       proGoiania: vNotas := vNotas +
                               '<' + Prefixo4 + 'Rps>' +
                                '<' + Prefixo4 + 'InfDeclaracaoPrestacaoServico' +
@@ -1761,6 +1763,15 @@ begin
                                    '<' + Prefixo4 + 'InfDeclaracaoPrestacaoServico', '</Signature>') +
                                '</Signature>'+
                               '</' + Prefixo4 + 'Rps>';
+
+      proFreire: vNotas := vNotas +
+                              '<' + Prefixo4 + 'Rps>' +
+                               '<' + Prefixo4 + 'InfDeclaracaoPrestacaoServico Id ="'+ TNFSeGerarNFSe(Self).FNotasFiscais.Items[I].NFSe.InfID.ID +'"' +
+                                 RetornarConteudoEntre(TNFSeGerarNFSe(Self).FNotasFiscais.Items[I].XML_Rps_Ass,
+                                   '<' + Prefixo4 + 'InfDeclaracaoPrestacaoServico', '</Signature>') +
+                               '</Signature>'+
+                              '</' + Prefixo4 + 'Rps>';
+
       proDigifred,
       proCoplan: vNotas := vNotas +
                               '<' + Prefixo4 + 'Rps ' +
@@ -1768,6 +1779,7 @@ begin
                                    '<' + Prefixo4 + 'Rps', '</Signature>') +
                                '</Signature>'+
                               '</' + Prefixo4 + 'Rps>';
+
       else vNotas := vNotas + '<' + Prefixo4 + 'Rps>' +
                                '<' + Prefixo4 + 'InfRps' +
                                  RetornarConteudoEntre(TNFSeGerarNFSe(Self).FNotasFiscais.Items[I].XML_Rps_Ass,
@@ -1796,19 +1808,37 @@ begin
   else begin
    for i := 0 to TNFSeGerarNFSe(Self).FNotasFiscais.Count-1 do
     begin
-     if (FProvedor in [profintelISS, proSaatri, proGoiania, proISSDigital, proISSe,
-                       pro4R, proFiorilli, proProdata, proPVH, proAgili, proVirtual, proFreire])
-      then vNotas := vNotas + '<' + Prefixo4 + 'Rps>' +
+      case FProvedor of
+           profintelISS,
+           proSaatri,
+           proGoiania,
+           proISSDigital,
+           proISSe,
+           pro4R,
+           proFiorilli,
+           proProdata,
+           proPVH,
+           proAgili,
+           proVirtual: vNotas := vNotas + '<' + Prefixo4 + 'Rps>' +
                                '<' + Prefixo4 + 'InfDeclaracaoPrestacaoServico' +
                                  RetornarConteudoEntre(TNFSeGerarNFSe(Self).FNotasFiscais.Items[I].XML_Rps,
                                    '<' + Prefixo4 + 'InfDeclaracaoPrestacaoServico', '</' + Prefixo4 + 'InfDeclaracaoPrestacaoServico>') +
                                '</' + Prefixo4 + 'InfDeclaracaoPrestacaoServico>'+
-                              '</' + Prefixo4 + 'Rps>'
-      else vNotas := vNotas + '<' + Prefixo4 + 'Rps>' +
+                              '</' + Prefixo4 + 'Rps>';
+
+           proFreire : vNotas := vNotas + '<' + Prefixo4 + 'Rps>' +
+                               '<' + Prefixo4 + 'InfDeclaracaoPrestacaoServico Id="' + TNFSeGerarNFSe(Self).FNotasFiscais.Items[I].NFSe.InfID.ID + '" '+
+                                 RetornarConteudoEntre(TNFSeGerarNFSe(Self).FNotasFiscais.Items[I].XML_Rps,
+                                   '<' + Prefixo4 + 'InfDeclaracaoPrestacaoServico', '</' + Prefixo4 + 'InfDeclaracaoPrestacaoServico>') +
+                               '</' + Prefixo4 + 'InfDeclaracaoPrestacaoServico>'+
+                              '</' + Prefixo4 + 'Rps>';
+
+           else vNotas := vNotas + '<' + Prefixo4 + 'Rps>' +
                                '<' + Prefixo4 + 'InfRps' +
                                  RetornarConteudoEntre(TNFSeGerarNFSe(Self).FNotasFiscais.Items[I].XML_Rps,
                                    '<' + Prefixo4 + 'InfRps', '</Rps>') +
                               '</' + Prefixo4 + 'Rps>';
+      end;
     end;
   end;
 
@@ -3938,6 +3968,7 @@ begin
 
   case FProvedor of
    proBetha: Prefixo3 := '';
+   proFreire: Prefixo3 := 'ns1';
   end;
 
   NFSeRetorno.Leitor.Arquivo := FRetWS;

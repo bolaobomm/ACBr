@@ -500,7 +500,7 @@ begin
    acConsNFSeRps: Result := SeparaDados( RetornoWS, 'outputXML' );
    acConsNFSe:    Result := SeparaDados( RetornoWS, 'outputXML' );
    acCancelar:    Result := SeparaDados( RetornoWS, 'outputXML' );
-   acGerar:       Result := SeparaDados( RetornoWS, 'outputXML' );
+   acGerar:       Result := StringReplace( RetornoWS, ' xml:lang="pt-BR"','', [rfReplaceAll] );
  end;
 end;
 
