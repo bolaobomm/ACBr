@@ -1073,7 +1073,10 @@ begin
   begin
     Gerador.wGrupo('infCTeNorm', '#252');
     GerarinfCarga;
-    GerarInfDoc;
+
+    if (CTe.Ide.tpServ <> tsIntermediario) and (CTe.Ide.tpServ <> tsMultimodal)
+     then GerarInfDoc;
+     
     if CTe.infCTeNorm.docAnt.emiDocAnt.Count>0
      then GerarDocAnt;
     GerarInfSeg;
