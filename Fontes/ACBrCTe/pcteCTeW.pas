@@ -1623,7 +1623,7 @@ procedure TCTeW.GerarAereo;
 begin
   Gerador.wGrupo('aereo', '#01');
   Gerador.wCampo(tcInt, '#02', 'nMinu     ', 09, 09, 0, CTe.infCTeNorm.aereo.nMinu, DSC_NMINU);
-  Gerador.wCampo(tcStr, '#03', 'nOCA      ', 14, 14, 0, CTe.infCTeNorm.aereo.nOCA, DSC_NOCA);
+  Gerador.wCampo(tcStr, '#03', 'nOCA      ', 11, 11, 0, CTe.infCTeNorm.aereo.nOCA, DSC_NOCA);
   Gerador.wCampo(tcDat, '#04', 'dPrevAereo', 10, 10, 0, CTe.infCTeNorm.aereo.dPrevAereo, DSC_DPREV);
   Gerador.wCampo(tcStr, '#05', 'xLAgEmi   ', 01, 20, 0, CTe.infCTeNorm.aereo.xLAgEmi, DSC_XLAGEMI);
   Gerador.wCampo(tcStr, '#06', 'IdT       ', 01, 14, 0, CTe.infCTeNorm.aereo.IdT, DSC_IDT);
@@ -1639,7 +1639,7 @@ begin
    then begin
     Gerador.wGrupo('natCarga', '#11');
     Gerador.wCampo(tcStr, '#12', 'xDime   ', 05, 14, 0, CTe.infCTeNorm.aereo.natCarga.xDime, DSC_XDIME);
-    Gerador.wCampo(tcInt, '#13', 'cInfManu', 02, 02, 0, CTe.infCTeNorm.aereo.natCarga.cinfManu, DSC_CINFMANU);
+    Gerador.wCampo(tcInt, '#13', 'cInfManu', 01, 02, 0, CTe.infCTeNorm.aereo.natCarga.cinfManu, DSC_CINFMANU);
     Gerador.wCampo(tcStr, '#14', 'cIMP    ', 03, 03, 0, CTe.infCTeNorm.aereo.natCarga.cIMP, DSC_CIMP);
     Gerador.wGrupo('/natCarga');
    end;
