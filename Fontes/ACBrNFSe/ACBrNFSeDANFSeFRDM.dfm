@@ -13,12 +13,13 @@ object dmACBrNFSeFR: TdmACBrNFSeFR
     PrintOptions.Printer = 'Padr'#227'o'
     PrintOptions.PrintOnSheet = 0
     ReportOptions.CreateDate = 41401.601407893500000000
-    ReportOptions.LastChange = 41457.740088564820000000
+    ReportOptions.LastChange = 41579.627027037040000000
     ScriptLanguage = 'PascalScript'
     StoreInDFM = False
-    
-    Left = 64
-    Top = 48
+    OnBeforePrint = frxReportBeforePrint
+    OnReportPrint = 'frxReportOnReportPrint'
+    Left = 65
+    Top = 49
   end
   object frxPDFExport: TfrxPDFExport
     UseFileCache = True
@@ -29,7 +30,6 @@ object dmACBrNFSeFR: TdmACBrNFSeFR
     Outline = False
     Background = True
     HTMLTags = True
-    Quality = 95
     Author = 'FastReport'
     Subject = 'Exportando o DANFSe para PDF'
     ProtectionFlags = [ePrint, eModify, eCopy, eAnnot]
@@ -418,6 +418,10 @@ object dmACBrNFSeFR: TdmACBrNFSeFR
       FieldName = 'Mensagem0'
       Size = 50
     end
+    object cdsParametrosSistema: TStringField
+      FieldName = 'Sistema'
+      Size = 50
+    end
   end
   object frxParametros: TfrxDBDataset
     UserName = 'Parametros'
@@ -436,7 +440,8 @@ object dmACBrNFSeFR: TdmACBrNFSeFR
       'LogoPrefExpandido=LogoPrefExpandido'
       'LogoPrefCarregado=LogoPrefCarregado'
       'Nome_Prefeitura=Nome_Prefeitura'
-      'Mensagem0=Mensagem0')
+      'Mensagem0=Mensagem0'
+      'Sistema=Sistema')
     OpenDataSource = False
     DataSet = cdsParametros
     BCDToCurrency = False

@@ -97,7 +97,9 @@ type
     cdsParametrosLogoPrefCarregado: TBlobField;
     cdsParametrosNome_Prefeitura: TStringField;
     cdsParametrosMensagem0: TStringField;
+    cdsParametrosSistema: TStringField;
     constructor Create(AOwner: TComponent); override;
+    procedure frxReportBeforePrint(Sender: TfrxReportComponent);
   private
     FDANFSeClassOwner: TACBrNFSeDANFSeClass;
     FNFSe: TNFSe;
@@ -263,7 +265,13 @@ begin
       FieldByName('LogoExpandido').AsString := '1'
     else
       FieldByName('LogoExpandido').AsString := '0';
-    
+
+    // Sistema
+    if DANFSeClassOwner.Sistema <> '' then
+      FieldByName('Sistema').AsString := DANFSeClassOwner.Sistema
+    else
+      FieldByName('Sistema').AsString := '';
+
     Post;
   end;
 end;
@@ -410,6 +418,26 @@ constructor TdmACBrNFSeFR.Create(AOwner: TComponent);
 begin
   inherited;
   FDANFSeClassOwner := TACBrNFSeDANFSeClass(AOwner);
+end;
+
+procedure TdmACBrNFSeFR.frxReportBeforePrint(Sender: TfrxReportComponent);
+begin
+  if DANFSeClassOwner.ImprimeCanhoto
+   then begin
+     frxReport.FindObject('Memo23').Visible := True;
+     frxReport.FindObject('Memo75').Visible := True;
+     frxReport.FindObject('Memo77').Visible := True;
+     frxReport.FindObject('Memo68').Visible := True;
+     frxReport.FindObject('Memo73').Visible := True;
+   end
+   else
+   begin
+     frxReport.FindObject('Memo23').Visible := False;
+     frxReport.FindObject('Memo75').Visible := False;
+     frxReport.FindObject('Memo77').Visible := False;
+     frxReport.FindObject('Memo68').Visible := False;
+     frxReport.FindObject('Memo73').Visible := False;
+   end;
 end;
 
 end.
