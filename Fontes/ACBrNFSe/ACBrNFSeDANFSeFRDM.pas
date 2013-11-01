@@ -161,7 +161,7 @@ begin
       FieldByName('Competencia').AsString       := Competencia;
       FieldByName('NFSeSubstituida').AsString   := DFeUtil.FormatarNumeroDocumentoFiscal(NfseSubstituida);
       FieldByName('NumeroNFSe').AsString        := DFeUtil.FormatarNumeroDocumentoFiscal(Numero);
-      FieldByName('DataEmissao').AsString       := DFeUtil.FormatDateTime(DateToStr(DataEmissao));
+      FieldByName('DataEmissao').AsString       := DFeUtil.FormatDateTime(DateTimeToStr(DataEmissao));
       FieldByName('CodigoVerificacao').AsString := CodigoVerificacao;
     end;
 
