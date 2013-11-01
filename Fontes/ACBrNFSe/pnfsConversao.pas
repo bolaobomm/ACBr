@@ -584,6 +584,7 @@ begin
   4100301, // Agudos do Sul/PR
   4100400, // Almirante Tamandaré/PR
   4101002, // Ampére/PR
+  4102604, // Barracão/PR 
   4104253, // Campo Magro/PR
   4106407, // Cornélio Procópio/PR
   4107652, // Fazenda Rio Grande/PR
