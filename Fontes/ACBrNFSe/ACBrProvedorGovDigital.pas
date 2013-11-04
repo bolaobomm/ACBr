@@ -75,6 +75,11 @@ begin
               then ConfigCidade.NameSpaceEnvelope := 'https://www.govdigital.com.br/ws/itj'
               else ConfigCidade.NameSpaceEnvelope := 'https://homolog.govdigital.com.br/ws/itj';
             end;
+   3147006: begin // Paracatu/MG
+             if AAmbiente = 1
+              then ConfigCidade.NameSpaceEnvelope := 'https://www.govdigital.com.br/ws/pctu'
+              else ConfigCidade.NameSpaceEnvelope := 'https://homolog.govdigital.com.br/ws/pctu';
+            end;
    3151800: begin // Poços de Caldas/MG
              if AAmbiente = 1
               then ConfigCidade.NameSpaceEnvelope := 'https://www.govdigital.com.br/ws/pocos'
@@ -118,15 +123,23 @@ end;
 function TProvedorGovDigital.GetConfigURL(ACodCidade: Integer): TConfigURL;
 var
  	ConfigURL: TConfigURL;
+  Porta: String;
 begin
   case ACodCidade of
    3132404: begin
              ConfigURL.HomNomeCidade := 'itj';
              ConfigURL.ProNomeCidade := 'itj';
+             Porta := '80';
+            end;
+   3147006: begin // Paracatu/MG
+             ConfigURL.HomNomeCidade := 'pctu';
+             ConfigURL.ProNomeCidade := 'pctu';
+             Porta := '443';
             end;
    3151800: begin
              ConfigURL.HomNomeCidade := 'pocos';
              ConfigURL.ProNomeCidade := 'pocos';
+             Porta := '80';
             end;
 //   3522307: begin // Itapetininga/SP
 //             ConfigURL.HomNomeCidade := 'itapetininga';
@@ -134,21 +147,21 @@ begin
 //            end;
   end;
 
- 	ConfigURL.HomRecepcaoLoteRPS    := 'http://homolog.govdigital.com.br:80/ws/' + ConfigURL.HomNomeCidade;
- 	ConfigURL.HomConsultaLoteRPS    := 'http://homolog.govdigital.com.br:80/ws/' + ConfigURL.HomNomeCidade;
- 	ConfigURL.HomConsultaNFSeRPS    := 'http://homolog.govdigital.com.br:80/ws/' + ConfigURL.HomNomeCidade;
- 	ConfigURL.HomConsultaSitLoteRPS := 'http://homolog.govdigital.com.br:80/ws/' + ConfigURL.HomNomeCidade;
- 	ConfigURL.HomConsultaNFSe       := 'http://homolog.govdigital.com.br:80/ws/' + ConfigURL.HomNomeCidade;
- 	ConfigURL.HomCancelaNFSe        := 'http://homolog.govdigital.com.br:80/ws/' + ConfigURL.HomNomeCidade;
- 	ConfigURL.HomGerarNFSe          := 'http://homolog.govdigital.com.br:80/ws/' + ConfigURL.HomNomeCidade;
+ 	ConfigURL.HomRecepcaoLoteRPS    := 'http://homolog.govdigital.com.br:' + Porta + '/ws/' + ConfigURL.HomNomeCidade;
+ 	ConfigURL.HomConsultaLoteRPS    := 'http://homolog.govdigital.com.br:' + Porta + '/ws/' + ConfigURL.HomNomeCidade;
+ 	ConfigURL.HomConsultaNFSeRPS    := 'http://homolog.govdigital.com.br:' + Porta + '/ws/' + ConfigURL.HomNomeCidade;
+ 	ConfigURL.HomConsultaSitLoteRPS := 'http://homolog.govdigital.com.br:' + Porta + '/ws/' + ConfigURL.HomNomeCidade;
+ 	ConfigURL.HomConsultaNFSe       := 'http://homolog.govdigital.com.br:' + Porta + '/ws/' + ConfigURL.HomNomeCidade;
+ 	ConfigURL.HomCancelaNFSe        := 'http://homolog.govdigital.com.br:' + Porta + '/ws/' + ConfigURL.HomNomeCidade;
+ 	ConfigURL.HomGerarNFSe          := 'http://homolog.govdigital.com.br:' + Porta + '/ws/' + ConfigURL.HomNomeCidade;
 
- 	ConfigURL.ProRecepcaoLoteRPS    := 'http://www.govdigital.com.br:80/ws/' + ConfigURL.ProNomeCidade;
- 	ConfigURL.ProConsultaLoteRPS    := 'http://www.govdigital.com.br:80/ws/' + ConfigURL.ProNomeCidade;
- 	ConfigURL.ProConsultaNFSeRPS    := 'http://www.govdigital.com.br:80/ws/' + ConfigURL.ProNomeCidade;
- 	ConfigURL.ProConsultaSitLoteRPS := 'http://www.govdigital.com.br:80/ws/' + ConfigURL.ProNomeCidade;
- 	ConfigURL.ProConsultaNFSe       := 'http://www.govdigital.com.br:80/ws/' + ConfigURL.ProNomeCidade;
- 	ConfigURL.ProCancelaNFSe        := 'http://www.govdigital.com.br:80/ws/' + ConfigURL.ProNomeCidade;
-  ConfigURL.ProGerarNFSe          := 'http://www.govdigital.com.br:80/ws/' + ConfigURL.ProNomeCidade;
+ 	ConfigURL.ProRecepcaoLoteRPS    := 'http://www.govdigital.com.br:' + Porta + '/ws/' + ConfigURL.ProNomeCidade;
+ 	ConfigURL.ProConsultaLoteRPS    := 'http://www.govdigital.com.br:' + Porta + '/ws/' + ConfigURL.ProNomeCidade;
+ 	ConfigURL.ProConsultaNFSeRPS    := 'http://www.govdigital.com.br:' + Porta + '/ws/' + ConfigURL.ProNomeCidade;
+ 	ConfigURL.ProConsultaSitLoteRPS := 'http://www.govdigital.com.br:' + Porta + '/ws/' + ConfigURL.ProNomeCidade;
+ 	ConfigURL.ProConsultaNFSe       := 'http://www.govdigital.com.br:' + Porta + '/ws/' + ConfigURL.ProNomeCidade;
+ 	ConfigURL.ProCancelaNFSe        := 'http://www.govdigital.com.br:' + Porta + '/ws/' + ConfigURL.ProNomeCidade;
+  ConfigURL.ProGerarNFSe          := 'http://www.govdigital.com.br:' + Porta + '/ws/' + ConfigURL.ProNomeCidade;
 
  	Result := ConfigURL;
 end;

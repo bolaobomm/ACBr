@@ -816,6 +816,7 @@ begin
          : Provedor := 'GovBR';
 
   3132404, // Itajubá/MG
+  3147006, // Paracatu/MG
   3151800  // Poços de Caldas/MG
 //  3522307  // Itapetininga/SP
          : Provedor := 'GovDigital';
