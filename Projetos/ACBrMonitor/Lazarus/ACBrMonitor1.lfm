@@ -755,11 +755,11 @@ object FrmACBrMonitor: TFrmACBrMonitor
       AnchorSideTop.Control = pBotoes
       AnchorSideTop.Side = asrCenter
       AnchorSideRight.Control = bConfig
-      Left = 380
+      Left = 379
       Height = 27
       Hint = 'Cancela as AlteraÃ§Ãµes efetuadas'
       Top = 8
-      Width = 97
+      Width = 98
       Anchors = [akTop, akRight]
       AutoSize = True
       BorderSpacing.Right = 20
@@ -801,11 +801,11 @@ object FrmACBrMonitor: TFrmACBrMonitor
       AnchorSideTop.Control = pBotoes
       AnchorSideTop.Side = asrCenter
       AnchorSideRight.Control = bConfig
-      Left = 380
+      Left = 379
       Height = 27
       Hint = 'Esconde o ACBrMonitor'
       Top = 8
-      Width = 107
+      Width = 108
       Anchors = [akTop, akRight]
       AutoSize = True
       BorderSpacing.Right = 10
