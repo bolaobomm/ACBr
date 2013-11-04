@@ -488,10 +488,8 @@ begin
 
   fMIMEMess.Header.CharsetCode := fDefaultCharsetCode;
 
-  if fDefaultCharsetCode <> ISO_8859_1 then
-    fMIMEMess.Header.Subject := CharsetConversion(fSubject, UTF_8, fDefaultCharsetCode)
-  else
-    fMIMEMess.Header.Subject := fSubject;
+  if fDefaultCharsetCode <> UTF_8 then
+    fMIMEMess.Header.Subject := CharsetConversion(fSubject, UTF_8, fDefaultCharsetCode);
 
   if Trim(fFromName) <> '' then
     fMIMEMess.Header.From := '"' + fFromName + ' <' + From + '>"'
