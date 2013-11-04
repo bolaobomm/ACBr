@@ -818,7 +818,7 @@ end;
  ---------------------------------------------------------------------------- }
 function RemoveString(const sSubStr, sString : AnsiString) : AnsiString ;
 begin
-   Result := AnsiString(StringReplace( String(sString), String(sSubStr), '', [rfReplaceAll]));
+   Result := StringReplace( String(sString), String(sSubStr), '', [rfReplaceAll]);
 end;
 
 procedure RemoveEmptyLines(AStringList : TStringList) ;
@@ -2115,13 +2115,13 @@ end ;
    hFile: THandle;
    //bResult: boolean;
    //lastErr: Cardinal;
-   filenome: string;
+   filename: WideString;
  begin
    //Result := False;
 
-   filenome := '\\.\' + sFile; //Para usar a versão Wide da função CreateFile e aceitar o caminho completo do arquivo
+   filename := '\\.\' + sFile; //Para usar a versão Wide da função CreateFile e aceitar o caminho completo do arquivo
 
-   hFile := Windows.CreateFileW( PWideChar(filenome),
+   hFile := Windows.CreateFileW( PWideChar(filename),
                GENERIC_READ or GENERIC_WRITE,
                FILE_SHARE_READ or FILE_SHARE_WRITE, nil, OPEN_EXISTING,
                FILE_ATTRIBUTE_NORMAL  or FILE_FLAG_WRITE_THROUGH or FILE_FLAG_NO_BUFFERING, 0);
