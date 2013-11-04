@@ -97,6 +97,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+Data: 04/11/2013
+-- ACBrECFEscECF --
+[-] Remoção de código que usava outra classe de ACBrECFClass para
+    EspelhoMFD_DLL, ArquivoMFD_DLL e ArquivoMF_DLL, por causar interferências
+    na classe Principal (fpDevice é compatilhado) (por: DSA)
+
 Data: 08/10/2013
 -- ACBrECFBematech --
 [*] Aplicado refactoring para facilitar e otimizar leitura do número do

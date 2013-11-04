@@ -161,8 +161,6 @@ TACBrECFEscECF = class( TACBrECFClass )
     fsNomeArqMemoria : String ;
     fsArqMemoria     : String ;
 
-    ClasseFabricante : TACBrECFClass;
-
     function IsBematech: Boolean;
 
     procedure EnviaConsumidor;
@@ -671,17 +669,12 @@ begin
   fsACK           := False;
 
   RespostasComando.Clear;
-
-  // Usa a Classe do fabricante para compartilhar rotinas de carga da DLL //
-  ClasseFabricante := TACBrECFClass.create( fpOwner );
 end;
 
 destructor TACBrECFEscECF.Destroy;
 begin
   fsEscECFComando.Free ;
   fsEscECFResposta.Free ;
-
-  ClasseFabricante.Free;
 
   inherited Destroy ;
 end;
@@ -738,10 +731,6 @@ begin
 
         if MaxLinhasBuffer = 0 then  // Bematech congela se receber um Buffer muito grande
            MaxLinhasBuffer := 5;
-
-        ClasseFabricante.Free;
-        ClasseFabricante := TACBrECFBematech.create( fpOwner );
-        TACBrECFBematech(ClasseFabricante).Prop := GetUsuarioAtual;
      end ;
 
      LeRespostasMemoria;
@@ -1790,94 +1779,44 @@ end;
 
 procedure TACBrECFEscECF.EspelhoMFD_DLL(DataInicial, DataFinal: TDateTime;
   NomeArquivo: AnsiString; Documentos: TACBrECFTipoDocumentoSet);
-var
-  OldAtivo: Boolean;
 begin
-  OldAtivo := False;
-  try
-     Ativo := False;
-
-     ClasseFabricante.EspelhoMFD_DLL(DataInicial, DataFinal, NomeArquivo, Documentos);
-  finally
-     Ativo := OldAtivo;
-  end;
+  // TODO: Aguardar DLL 7.0 da Bematech ficar estável
+  inherited;
 end;
 
 procedure TACBrECFEscECF.EspelhoMFD_DLL(COOInicial, COOFinal: Integer;
   NomeArquivo: AnsiString; Documentos: TACBrECFTipoDocumentoSet);
-var
-  OldAtivo: Boolean;
 begin
-  OldAtivo := False;
-  try
-     Ativo := False;
-
-     ClasseFabricante.EspelhoMFD_DLL(COOInicial, COOFinal, NomeArquivo, Documentos);
-  finally
-     Ativo := OldAtivo;
-  end;
+  // TODO: Aguardar DLL 7.0 da Bematech ficar estável
+  inherited;
 end;
 
 procedure TACBrECFEscECF.ArquivoMFD_DLL(DataInicial, DataFinal: TDateTime;
   NomeArquivo: AnsiString; Documentos: TACBrECFTipoDocumentoSet;
   Finalidade: TACBrECFFinalizaArqMFD);
-var
-  OldAtivo: Boolean;
 begin
-  OldAtivo := False;
-  try
-     Ativo := False;
-
-     ClasseFabricante.ArquivoMFD_DLL(DataInicial, DataFinal, NomeArquivo, Documentos,
-       Finalidade);
-  finally
-     Ativo := OldAtivo;
-  end;
+  // TODO: Aguardar DLL 7.0 da Bematech ficar estável
+  inherited;
 end;
 
 procedure TACBrECFEscECF.ArquivoMFD_DLL(ContInicial, ContFinal: Integer;
   NomeArquivo: AnsiString; Documentos: TACBrECFTipoDocumentoSet;
   Finalidade: TACBrECFFinalizaArqMFD; TipoContador: TACBrECFTipoContador);
-var
-  OldAtivo: Boolean;
 begin
-  OldAtivo := False;
-  try
-     Ativo := False;
-
-     ClasseFabricante.ArquivoMFD_DLL(ContInicial, ContFinal, NomeArquivo, Documentos,
-       Finalidade, TipoContador);
-  finally
-     Ativo := OldAtivo;
-  end;
+  // TODO: Aguardar DLL 7.0 da Bematech ficar estável
+  inherited;
 end;
 
 procedure TACBrECFEscECF.ArquivoMF_DLL(NomeArquivo: AnsiString);
-var
-  OldAtivo: Boolean;
 begin
-  OldAtivo := False;
-  try
-     Ativo := False;
-
-     ClasseFabricante.ArquivoMF_DLL(NomeArquivo);
-  finally
-     Ativo := OldAtivo;
-  end;
+  // TODO: Aguardar DLL 7.0 da Bematech ficar estável
+  inherited;
 end;
 
 procedure TACBrECFEscECF.ArquivoMFD_DLL(NomeArquivo: AnsiString);
-var
-  OldAtivo: Boolean;
 begin
-  OldAtivo := False;
-  try
-     Ativo := False;
-
-     ClasseFabricante.ArquivoMFD_DLL(NomeArquivo);
-  finally
-     Ativo := OldAtivo;
-  end;
+  // TODO: Aguardar DLL 7.0 da Bematech ficar estável
+  inherited;
 end;
 
 procedure TACBrECFEscECF.IdentificaOperador(Nome: String);
