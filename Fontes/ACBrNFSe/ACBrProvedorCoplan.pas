@@ -372,7 +372,12 @@ begin
              '</ns2:RecepcionarLoteRpsRequest>' +
             '</s:Body>' +
            '</s:Envelope>';
- raise Exception.Create( 'Opção não implementada para este provedor.' );
+end;
+
+function TProvedorCoplan.GeraEnvelopeRecepcionarSincrono(URLNS: String;
+  CabMsg, DadosMsg, DadosSenha: AnsiString): AnsiString;
+begin
+ Result := '';
 end;
 
 function TProvedorCoplan.GetSoapAction(Acao: TnfseAcao; NomeCidade: String): String;
@@ -412,12 +417,6 @@ end;
 
 function TProvedorCoplan.GetLinkNFSe(ACodMunicipio, ANumeroNFSe: Integer;
   ACodVerificacao, AInscricaoM: String; AAmbiente: Integer): String;
-begin
- Result := '';
-end;
-
-function TProvedorCoplan.GeraEnvelopeRecepcionarSincrono(URLNS: String;
-  CabMsg, DadosMsg, DadosSenha: AnsiString): AnsiString;
 begin
  Result := '';
 end;

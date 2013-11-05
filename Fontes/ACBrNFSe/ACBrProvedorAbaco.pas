@@ -349,7 +349,12 @@ function TProvedorAbaco.GeraEnvelopeGerarNFSe(URLNS: String; CabMsg,
   DadosMsg, DadosSenha: AnsiString): AnsiString;
 begin
  Result := '';
- raise Exception.Create( 'Opção não implementada para este provedor.' );
+end;
+
+function TProvedorAbaco.GeraEnvelopeRecepcionarSincrono(URLNS: String;
+  CabMsg, DadosMsg, DadosSenha: AnsiString): AnsiString;
+begin
+ Result := '';
 end;
 
 function TProvedorAbaco.GetSoapAction(Acao: TnfseAcao; NomeCidade: String): String;
@@ -399,12 +404,6 @@ end;
 
 function TProvedorAbaco.GetLinkNFSe(ACodMunicipio, ANumeroNFSe: Integer;
   ACodVerificacao, AInscricaoM: String; AAmbiente: Integer): String;
-begin
- Result := '';
-end;
-
-function TProvedorAbaco.GeraEnvelopeRecepcionarSincrono(URLNS: String;
-  CabMsg, DadosMsg, DadosSenha: AnsiString): AnsiString;
 begin
  Result := '';
 end;

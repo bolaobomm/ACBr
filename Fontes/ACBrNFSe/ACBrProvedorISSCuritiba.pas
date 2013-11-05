@@ -299,7 +299,12 @@ function TProvedorIssCuritiba.GeraEnvelopeGerarNFSe(URLNS: String; CabMsg,
   DadosMsg, DadosSenha: AnsiString): AnsiString;
 begin
  Result := '';
- raise Exception.Create( 'Opção não implementada para este provedor.' );
+end;
+
+function TProvedorIssCuritiba.GeraEnvelopeRecepcionarSincrono(
+  URLNS: String; CabMsg, DadosMsg, DadosSenha: AnsiString): AnsiString;
+begin
+ Result := '';
 end;
 
 function TProvedorIssCuritiba.GetSoapAction(Acao: TnfseAcao; NomeCidade: String): String;
@@ -346,12 +351,6 @@ function TProvedorIssCuritiba.GetLinkNFSe(ACodMunicipio, ANumeroNFSe: Integer;
 begin
  Result := 'https://isscuritiba.curitiba.pr.gov.br/portalnfse/Default.aspx?doc=' +
            AInscricaoM + '&num=' + IntToStr(ANumeroNFSe) + '&cod=' + ACodVerificacao;
-end;
-
-function TProvedorIssCuritiba.GeraEnvelopeRecepcionarSincrono(
-  URLNS: String; CabMsg, DadosMsg, DadosSenha: AnsiString): AnsiString;
-begin
- Result := '';
 end;
 
 end.

@@ -445,6 +445,12 @@ begin
  *)
 end;
 
+function TProvedorISSDigital.GeraEnvelopeRecepcionarSincrono(URLNS: String;
+  CabMsg, DadosMsg, DadosSenha: AnsiString): AnsiString;
+begin
+ Result := '';
+end;
+
 function TProvedorISSDigital.GetSoapAction(Acao: TnfseAcao; NomeCidade: String): String;
 begin
  case Acao of
@@ -491,12 +497,6 @@ begin
    end;
   end
   else Result := '';
-end;
-
-function TProvedorISSDigital.GeraEnvelopeRecepcionarSincrono(URLNS: String;
-  CabMsg, DadosMsg, DadosSenha: AnsiString): AnsiString;
-begin
- Result := '';
 end;
 
 end.

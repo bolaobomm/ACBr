@@ -354,6 +354,14 @@ begin
           '</soapenv:Envelope>';
 end;
 
+function TProvedorFreire.GeraEnvelopeRecepcionarSincrono(URLNS: String;
+  CabMsg, DadosMsg, DadosSenha: AnsiString): AnsiString;
+begin
+ Result := CabMsg +#13#10+
+           '<?xml version="1.0" encoding="ISO-8859-1"?>' + #13#10+
+           DadosMsg;
+end;
+
 function TProvedorFreire.GetSoapAction(Acao: TnfseAcao; NomeCidade: String): String;
 begin
  case Acao of
@@ -405,14 +413,6 @@ begin
    end;
   end
   else Result := '';
-end;
-
-function TProvedorFreire.GeraEnvelopeRecepcionarSincrono(URLNS: String;
-  CabMsg, DadosMsg, DadosSenha: AnsiString): AnsiString;
-begin
- Result := CabMsg +#13#10+
-           '<?xml version="1.0" encoding="ISO-8859-1"?>' + #13#10+
-           DadosMsg;
 end;
 
 end.

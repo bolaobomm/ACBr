@@ -639,7 +639,12 @@ function TProvedorISSIntel.GeraEnvelopeGerarNFSe(URLNS: String; CabMsg,
   DadosMsg, DadosSenha: AnsiString): AnsiString;
 begin
  Result := '';
- raise Exception.Create( 'Opção não implementada para este provedor.' );
+end;
+
+function TProvedorISSIntel.GeraEnvelopeRecepcionarSincrono(URLNS: String;
+  CabMsg, DadosMsg, DadosSenha: AnsiString): AnsiString;
+begin
+ Result := '';
 end;
 
 function TProvedorISSIntel.GetSoapAction(Acao: TnfseAcao; NomeCidade: String): String;
@@ -696,12 +701,6 @@ end;
 
 function TProvedorISSIntel.GetLinkNFSe(ACodMunicipio, ANumeroNFSe: Integer;
   ACodVerificacao, AInscricaoM: String; AAmbiente: Integer): String;
-begin
- Result := '';
-end;
-
-function TProvedorISSIntel.GeraEnvelopeRecepcionarSincrono(URLNS: String;
-  CabMsg, DadosMsg, DadosSenha: AnsiString): AnsiString;
 begin
  Result := '';
 end;

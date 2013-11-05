@@ -345,6 +345,23 @@ begin
            '</soapenv:Envelope>';
 end;
 
+function TProvedorFiorilli.GeraEnvelopeRecepcionarSincrono(URLNS: String;
+  CabMsg, DadosMsg, DadosSenha: AnsiString): AnsiString;
+begin
+ result := '<?xml version="1.0" encoding="utf-8"?>'+
+           '<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" '+
+                             'xmlns:ws="http://ws.issweb.fiorilli.com.br/" '+
+                             'xmlns:xd="http://www.w3.org/2000/09/xmldsig#"> ' +
+           '<soapenv:Header/>' +
+              '<soapenv:Body>' +
+                '<ws:recepcionarLoteRpsSincrono>' +
+                    DadosMsg +
+                    DadosSenha +
+                '</ws:recepcionarLoteRpsSincrono>' +
+              '</soapenv:Body>' +
+           '</soapenv:Envelope>';
+end;
+
 function TProvedorFiorilli.GetSoapAction(Acao: TnfseAcao; NomeCidade: String): String;
 const
  urlsoap = 'http://ws.issweb.fiorilli.com.br/';
@@ -391,23 +408,6 @@ function TProvedorFiorilli.GetLinkNFSe(ACodMunicipio, ANumeroNFSe: Integer;
   ACodVerificacao, AInscricaoM: String; AAmbiente: Integer): String;
 begin
  Result := '';
-end;
-
-function TProvedorFiorilli.GeraEnvelopeRecepcionarSincrono(URLNS: String;
-  CabMsg, DadosMsg, DadosSenha: AnsiString): AnsiString;
-begin
- result := '<?xml version="1.0" encoding="utf-8"?>'+
-           '<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" '+
-                             'xmlns:ws="http://ws.issweb.fiorilli.com.br/" '+
-                             'xmlns:xd="http://www.w3.org/2000/09/xmldsig#"> ' +
-           '<soapenv:Header/>' +
-              '<soapenv:Body>' +
-                '<ws:recepcionarLoteRpsSincrono>' +
-                    DadosMsg +
-                    DadosSenha +
-                '</ws:recepcionarLoteRpsSincrono>' +
-              '</soapenv:Body>' +
-           '</soapenv:Envelope>';
 end;
 
 end.

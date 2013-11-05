@@ -44,7 +44,7 @@ type
                     proEquiplano, proISSIntel, proProdam, proGovBR, proRecife, proSimplISS, proThema, proRJ,
                     proPublica, profintelISS, proDigifred, proBetim, proSaatri, proFISSLEX,
                     proGoiania, proIssCuritiba, proBHISS, proNatal, proISSDigital, proISSe, pro4R,
-                    proGovDigital, proFiorilli, proCoplan, proProdata, proAgili, proVirtual, proPVH, proFreire );
+                    proGovDigital, proFiorilli, proCoplan, proProdata, proAgili, proVirtual, proPVH, proFreire, proLink3 );
 
   TnfseAcao = ( acRecepcionar, acConsSit, acConsLote, acConsNFSeRps, acConsNFSe, acCancelar, acGerar, acRecSincrono, acConsSecRps );
 
@@ -294,13 +294,14 @@ begin
                             'Betha', 'Equiplano', 'ISSIntel', 'Prodam', 'GovBR', 'Recife',
                             'SimplISS', 'Thema', 'RJ', 'Publica', 'fintelISS', 'Digifred', 'Betim', 'Saatri',
                             'FISSLEX', 'Goiania', 'IssCuritiba', 'BHISS', 'Natal', 'ISSDigital', 'ISSe',
-                            '4R', 'GovDigital', 'Fiorilli', 'Coplan', 'Prodata', 'Agili', 'Virtual', 'PVH', 'Freire'],
+                            '4R', 'GovDigital', 'Fiorilli', 'Coplan', 'Prodata', 'Agili', 'Virtual', 'PVH',
+                            'Freire', 'Link3'],
                            [proNenhum, proTiplan, proISSNET, proWebISS, proGINFES, proIssDSF, proProdemge, proAbaco,
                             proBetha, proEquiplano, proISSIntel, proProdam, proGovBR, proRecife,
                             proSimplISS, proThema, proRJ, proPublica, profintelISS, proDigifred, proBetim,
                             proSaatri, proFISSLEX, proGoiania, proIssCuritiba, proBHISS, proNatal,
                             proISSDigital, proISSe, pro4R, proGovDigital, proFiorilli, proCoplan, proProdata,
-                            proAgili, proVirtual, proPVH, proFreire]);
+                            proAgili, proVirtual, proPVH, proFreire, proLink3]);
 end;
 
 function StrToProvedor(var ok: boolean; const s: string):TnfseProvedor;
@@ -310,13 +311,14 @@ begin
                             'Betha', 'Equiplano', 'ISSIntel', 'Prodam', 'GovBR', 'Recife',
                             'SimplISS', 'Thema', 'RJ', 'Publica', 'fintelISS', 'Digifred', 'Betim', 'Saatri',
                             'FISSLEX', 'Goiania', 'IssCuritiba', 'BHISS', 'Natal', 'ISSDigital', 'ISSe',
-                            '4R', 'GovDigital', 'Fiorilli', 'Coplan', 'Prodata', 'Agili', 'Virtual', 'PVH', 'Freire' ],
+                            '4R', 'GovDigital', 'Fiorilli', 'Coplan', 'Prodata', 'Agili', 'Virtual', 'PVH',
+                            'Freire', 'Link3'],
                            [proNenhum, proTiplan, proISSNET, proWebISS, proGINFES, proIssDSF, proProdemge, proAbaco,
                             proBetha, proEquiplano, proISSIntel, proProdam, proGovBR, proRecife,
                             proSimplISS, proThema, proRJ, proPublica, profintelISS, proDigifred, proBetim,
                             proSaatri, proFISSLEX, proGoiania, proIssCuritiba, proBHISS, proNatal,
                             proISSDigital, proISSe, pro4R, proGovDigital, proFiorilli, proCoplan, proProdata,
-                            proAgili, proVirtual, proPVH, proFreire]);
+                            proAgili, proVirtual, proPVH, proFreire, proLink3]);
 end;
 
 // Descrição do Serviço ********************************************************
@@ -912,6 +914,9 @@ begin
   5201108, // Anapolis/GO
   5201405  // Aparecida de Goiania/GO
          : Provedor := 'ISSNET';
+
+  2911709  // Guanambi/BA
+         : Provedor := 'Link3';
 
   2408102  // Natal/RN
          : Provedor := 'Natal';
@@ -14579,7 +14584,7 @@ begin
       3529: CodCidade := 2911501 ; //Gongogi/BA  
       3531: CodCidade := 2911600 ; //Governador Mangabeira/BA  
       3095: CodCidade := 2911659 ; //Guajeru/BA  
-      3533: CodCidade := 2911709 ; //Guanambi/BA  
+      3533: CodCidade := 2911709 ; //Guanambi/BA
       3535: CodCidade := 2911808 ; //Guaratinga/BA  
       3097: CodCidade := 2911857 ; //Heliopolis/BA  
       3537: CodCidade := 2911907 ; //Iacu/BA  

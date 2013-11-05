@@ -469,6 +469,7 @@ begin
       proAgili,
       ProVirtual,
       proFreire,
+      proLink3,
       proSaatri:    begin
                      AStr := copy(AStr, 1, pos('</InfDeclaracaoPrestacaoServico>', AStr) - 1);
                      AStr := AStr + '</InfDeclaracaoPrestacaoServico>';
@@ -707,6 +708,7 @@ begin
       proAgili,
       proVirtual,
       proFreire,
+      proLink3,
       proSaatri:    begin
                      AXML := copy(AXML, 1, pos('</InfDeclaracaoPrestacaoServico>', AXML) - 1);
                      AXML := AXML + '</InfDeclaracaoPrestacaoServico>';
@@ -815,6 +817,7 @@ begin
     proAgili,
     proVirtual,
     proFreire,
+    proLink3,
     proSaatri: begin
                  //By Akai - L. Massao Aihara ==================================
                  //MUDA A ASSINATURA...

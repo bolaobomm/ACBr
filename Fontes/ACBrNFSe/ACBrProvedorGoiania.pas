@@ -272,6 +272,12 @@ begin
 						'</soap:Envelope>';
 end;
 
+function TProvedorGoiania.GeraEnvelopeRecepcionarSincrono(URLNS: String;
+  CabMsg, DadosMsg, DadosSenha: AnsiString): AnsiString;
+begin
+ Result := '';
+end;
+
 function TProvedorGoiania.GetSoapAction(Acao: TnfseAcao; NomeCidade: String): String;
 begin
  case Acao of
@@ -337,12 +343,6 @@ begin
   vUrlNota := 'http://www2.goiania.go.gov.br/sistemas/snfse/asp/snfse00200w0.asp?inscricao=' + AInscricaoM;
   vUrlNota := vUrlNota + '&nota=' + IntToStr(ANumeroNFSe) + '&verificador=' + ACodVerificacao;
   Result   := vUrlNota;
-end;
-
-function TProvedorGoiania.GeraEnvelopeRecepcionarSincrono(URLNS: String;
-  CabMsg, DadosMsg, DadosSenha: AnsiString): AnsiString;
-begin
- Result := '';
 end;
 
 end.

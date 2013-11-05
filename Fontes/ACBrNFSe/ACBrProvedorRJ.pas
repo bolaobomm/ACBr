@@ -315,6 +315,12 @@ begin
            '</s:Envelope>';
 end;
 
+function TProvedorRJ.GeraEnvelopeRecepcionarSincrono(URLNS: String; CabMsg,
+  DadosMsg, DadosSenha: AnsiString): AnsiString;
+begin
+ Result := '';
+end;
+
 function TProvedorRJ.GetSoapAction(Acao: TnfseAcao; NomeCidade: String): String;
 begin
  case Acao of
@@ -353,13 +359,6 @@ end;
 function TProvedorRJ.GetLinkNFSe(ACodMunicipio, ANumeroNFSe: Integer;
   ACodVerificacao, AInscricaoM: String; AAmbiente: Integer): String;
 begin
- Result := '';
-end;
-
-function TProvedorRJ.GeraEnvelopeRecepcionarSincrono(URLNS: String; CabMsg,
-  DadosMsg, DadosSenha: AnsiString): AnsiString;
-begin
- raise Exception.Create( 'Opção não implementada para este provedor.' );
  Result := '';
 end;
 

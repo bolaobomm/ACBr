@@ -407,6 +407,18 @@ begin
            '</soapenv:Envelope>';
 end;
 
+function TProvedorIssDSF.GeraEnvelopeGerarNFSe(URLNS: String; CabMsg,
+  DadosMsg, DadosSenha: AnsiString): AnsiString;
+begin
+ Result := '';
+end;
+
+function TProvedorIssDSF.GeraEnvelopeRecepcionarSincrono(
+  URLNS: String; CabMsg, DadosMsg, DadosSenha: AnsiString): AnsiString;
+begin
+ Result := '';
+end;
+
 function TProvedorIssDSF.GeraEnvelopeConsultarSequencialRps(URLNS: String; CabMsg,
   DadosMsg, DadosSenha: AnsiString): AnsiString;
 begin
@@ -468,18 +480,6 @@ end;
 
 function TProvedorIssDSF.GetLinkNFSe(ACodMunicipio, ANumeroNFSe: Integer;
   ACodVerificacao, AInscricaoM: String; AAmbiente: Integer): String;
-begin
- Result := '';
-end;
-
-function TProvedorIssDSF.GeraEnvelopeRecepcionarSincrono(
-  URLNS: String; CabMsg, DadosMsg, DadosSenha: AnsiString): AnsiString;
-begin
- Result := '';
-end;
-
-function TProvedorIssDSF.GeraEnvelopeGerarNFSe(URLNS: String; CabMsg,
-  DadosMsg, DadosSenha: AnsiString): AnsiString;
 begin
  Result := '';
 end;

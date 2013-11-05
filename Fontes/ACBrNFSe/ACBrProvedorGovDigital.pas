@@ -333,6 +333,12 @@ begin
            '</S:Envelope>';
 end;
 
+function TProvedorGovDigital.GeraEnvelopeRecepcionarSincrono(URLNS: String;
+  CabMsg, DadosMsg, DadosSenha: AnsiString): AnsiString;
+begin
+ Result := '';
+end;
+
 function TProvedorGovDigital.GetSoapAction(Acao: TnfseAcao; NomeCidade: String): String;
 begin
  case Acao of
@@ -392,12 +398,6 @@ end;
 
 function TProvedorGovDigital.GetLinkNFSe(ACodMunicipio, ANumeroNFSe: Integer;
   ACodVerificacao, AInscricaoM: String; AAmbiente: Integer): String;
-begin
- Result := '';
-end;
-
-function TProvedorGovDigital.GeraEnvelopeRecepcionarSincrono(URLNS: String;
-  CabMsg, DadosMsg, DadosSenha: AnsiString): AnsiString;
 begin
  Result := '';
 end;

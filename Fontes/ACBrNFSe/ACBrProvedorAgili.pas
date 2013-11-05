@@ -361,7 +361,12 @@ function TProvedorAgili.GeraEnvelopeGerarNFSe(URLNS: String; CabMsg,
   DadosMsg, DadosSenha: AnsiString): AnsiString;
 begin
  Result := '';
- raise Exception.Create( 'Opção não implementada para este provedor.' );
+end;
+
+function TProvedorAgili.GeraEnvelopeRecepcionarSincrono(URLNS: String;
+  CabMsg, DadosMsg, DadosSenha: AnsiString): AnsiString;
+begin
+ Result := '';
 end;
 
 function TProvedorAgili.GetSoapAction(Acao: TnfseAcao; NomeCidade: String): String;
@@ -405,13 +410,6 @@ function TProvedorAgili.GetLinkNFSe(ACodMunicipio, ANumeroNFSe: Integer;
   ACodVerificacao, AInscricaoM: String; AAmbiente: Integer): String;
 begin
  Result := '';
-end;
-
-function TProvedorAgili.GeraEnvelopeRecepcionarSincrono(URLNS: String;
-  CabMsg, DadosMsg, DadosSenha: AnsiString): AnsiString;
-begin
- Result := '';
- raise Exception.Create( 'Opção não implementada para este provedor.' );
 end;
 
 end.

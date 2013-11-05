@@ -310,6 +310,24 @@ begin
            '</S:Envelope>';
 end;
 
+function TProvedor4R.GeraEnvelopeRecepcionarSincrono(URLNS: String; CabMsg,
+  DadosMsg, DadosSenha: AnsiString): AnsiString;
+begin
+ result := '<?xml version="1.0" encoding="utf-8"?>' +
+           '<S:Envelope xmlns:S="http://schemas.xmlsoap.org/soap/envelope/" ' +
+                       'xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" ' +
+                       'xmlns:xsd="http://www.w3.org/2001/XMLSchema">' +
+            '<S:Body>' +
+             // Incluido por João Paulo Delboni em 22/04/2013
+             '<RecepcionarLoteRpsSincrono.Execute xmlns="Abrasf2">' +
+              '<Entrada>' +
+                StringReplace(StringReplace(DadosMsg, '<', '&lt;', [rfReplaceAll]), '>', '&gt;', [rfReplaceAll]) +
+              '</Entrada>' +
+             '</RecepcionarLoteRpsSincrono.Execute>' +
+            '</S:Body>' +
+           '</S:Envelope>';
+end;
+
 function TProvedor4R.GetSoapAction(Acao: TnfseAcao; NomeCidade: String): String;
 begin
  case Acao of
@@ -393,24 +411,6 @@ begin
    end;     
   end;
 
-end;
-
-function TProvedor4R.GeraEnvelopeRecepcionarSincrono(URLNS: String; CabMsg,
-  DadosMsg, DadosSenha: AnsiString): AnsiString;
-begin
- result := '<?xml version="1.0" encoding="utf-8"?>' +
-           '<S:Envelope xmlns:S="http://schemas.xmlsoap.org/soap/envelope/" ' +
-                       'xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" ' +
-                       'xmlns:xsd="http://www.w3.org/2001/XMLSchema">' +
-            '<S:Body>' +
-             // Incluido por João Paulo Delboni em 22/04/2013
-             '<RecepcionarLoteRpsSincrono.Execute xmlns="Abrasf2">' +
-              '<Entrada>' +
-                StringReplace(StringReplace(DadosMsg, '<', '&lt;', [rfReplaceAll]), '>', '&gt;', [rfReplaceAll]) +
-              '</Entrada>' +
-             '</RecepcionarLoteRpsSincrono.Execute>' +
-            '</S:Body>' +
-           '</S:Envelope>';
 end;
 
 end.

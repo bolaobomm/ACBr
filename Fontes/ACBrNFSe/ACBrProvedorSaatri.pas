@@ -478,6 +478,12 @@ begin
            '</S:Envelope>';
 end;
 
+function TProvedorSaatri.GeraEnvelopeRecepcionarSincrono(URLNS: String;
+  CabMsg, DadosMsg, DadosSenha: AnsiString): AnsiString;
+begin
+ Result := '';
+end;
+
 function TProvedorSaatri.GetSoapAction(Acao: TnfseAcao; NomeCidade: String): String;
 begin
  case Acao of
@@ -583,12 +589,6 @@ begin
    end;
   end
   else Result := '';
-end;
-
-function TProvedorSaatri.GeraEnvelopeRecepcionarSincrono(URLNS: String;
-  CabMsg, DadosMsg, DadosSenha: AnsiString): AnsiString;
-begin
- Result := '';
 end;
 
 end.

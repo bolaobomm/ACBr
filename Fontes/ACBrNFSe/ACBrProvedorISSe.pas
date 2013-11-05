@@ -319,6 +319,22 @@ begin
            '</S:Envelope>';
 end;
 
+function TProvedorISSe.GeraEnvelopeRecepcionarSincrono(URLNS: String;
+  CabMsg, DadosMsg, DadosSenha: AnsiString): AnsiString;
+begin
+ result := '<?xml version="1.0" encoding="UTF-8"?>' +
+           '<S:Envelope xmlns:S="http://schemas.xmlsoap.org/soap/envelope/"' +
+                      ' xmlns:nfse="http://nfse.abrasf.org.br">' +
+            '<S:Body>' +
+             '<EnviarLoteRpsSincrono>' +
+              '<xml>' +
+               '<![CDATA[' + DadosMsg + ']]>' +
+              '</xml>' +
+             '</EnviarLoteRpsSincrono>' +
+            '</S:Body>' +
+           '</S:Envelope>';
+end;
+
 function TProvedorISSe.GetSoapAction(Acao: TnfseAcao; NomeCidade: String): String;
 begin
  case Acao of
@@ -368,22 +384,6 @@ begin
    end;
   end
   else Result := '';
-end;
-
-function TProvedorISSe.GeraEnvelopeRecepcionarSincrono(URLNS: String;
-  CabMsg, DadosMsg, DadosSenha: AnsiString): AnsiString;
-begin
- result := '<?xml version="1.0" encoding="UTF-8"?>' +
-           '<S:Envelope xmlns:S="http://schemas.xmlsoap.org/soap/envelope/"' +
-                      ' xmlns:nfse="http://nfse.abrasf.org.br">' +
-            '<S:Body>' +
-             '<EnviarLoteRpsSincrono>' +
-              '<xml>' +
-               '<![CDATA[' + DadosMsg + ']]>' +
-              '</xml>' +
-             '</EnviarLoteRpsSincrono>' +
-            '</S:Body>' +
-           '</S:Envelope>';
 end;
 
 end.

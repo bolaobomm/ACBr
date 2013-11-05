@@ -371,7 +371,8 @@ uses
  ACBrProvedorISSe, ACBrProvedor4R, ACBrProvedorGovDigital,
  ACBrProvedorFiorilli, ACBrProvedorISSDSF, ACBrProvedorCoplan,
  ACBrProvedorProdata, ACBrProvedorAgili, ACBrProvedorFISSLex,
- ACBrProvedorVirtual, ACBrProvedorPVH, ACBrProvedorFreire;
+ ACBrProvedorVirtual, ACBrProvedorPVH, ACBrProvedorFreire,
+ ACBrProvedorLink3;
 
 { TConfiguracoes }
 
@@ -727,6 +728,7 @@ begin
   proVirtual:     FProvedorClass := TProvedorVirtual.Create;
   ProPVH:         FProvedorClass := TProvedorPVH.Create;
   proFreire:      FProvedorClass := TProvedorFreire.Create;
+  proLink3:       FProvedorClass := TProvedorLink3.Create;
  end;
 
  ConfigCidade   := FProvedorClass.GetConfigCidade(FCodigoMunicipio, FAmbienteCodigo);

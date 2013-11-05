@@ -335,7 +335,12 @@ begin
              '</ns2:RecepcionarLoteRpsRequest>' +
             '</s:Body>' +
            '</s:Envelope>';
- raise Exception.Create( 'Opção não implementada para este provedor.' );
+end;
+
+function TProvedorDigifred.GeraEnvelopeRecepcionarSincrono(URLNS: String;
+  CabMsg, DadosMsg, DadosSenha: AnsiString): AnsiString;
+begin
+ Result := '';
 end;
 
 function TProvedorDigifred.GetSoapAction(Acao: TnfseAcao; NomeCidade: String): String;
@@ -375,12 +380,6 @@ end;
 
 function TProvedorDigifred.GetLinkNFSe(ACodMunicipio, ANumeroNFSe: Integer;
   ACodVerificacao, AInscricaoM: String; AAmbiente: Integer): String;
-begin
- Result := '';
-end;
-
-function TProvedorDigifred.GeraEnvelopeRecepcionarSincrono(URLNS: String;
-  CabMsg, DadosMsg, DadosSenha: AnsiString): AnsiString;
 begin
  Result := '';
 end;

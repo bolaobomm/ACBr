@@ -39,7 +39,8 @@ uses
     ACBrProvedorISSe, ACBrProvedor4R, ACBrProvedorGovDigital,
     ACBrProvedorFiorilli, ACBrProvedorIssDsf, ACBrProvedorCoplan,
     ACBrProvedorProdata, ACBrProvedorAgili, ACBrProvedorFISSLex,
-    ACBrProvedorVirtual, ACBrProvedorPVH, ACBrProvedorFreire;
+    ACBrProvedorVirtual, ACBrProvedorPVH, ACBrProvedorFreire,
+    ACBrProvedorLink3;
 
 type
 
@@ -624,6 +625,7 @@ begin
   proVirtual:     FProvedorClass := TProvedorVirtual.Create;
   proPVH:         FProvedorClass := TProvedorPVH.Create;
   proFreire:      FProvedorClass := TProvedorFreire.Create;
+  proLink3:       FProvedorClass := TProvedorLink3.Create;
  end;
 
  FPrefixo2     := FConfiguracoes.WebServices.Prefixo2;
@@ -789,6 +791,7 @@ begin
       proPVH,
       proSaatri,
       proFreire,
+      proLink3,
       proVirtual: vNotas := vNotas +
                               '<' + Prefixo4 + 'Rps>' +
                                '<' + Prefixo4 + 'InfDeclaracaoPrestacaoServico' +
@@ -836,7 +839,7 @@ begin
    for i := 0 to TNFSeEnviarLoteRPS(Self).FNotasFiscais.Count-1 do
     begin
      if (FProvedor in [profintelISS, proSaatri, proGoiania, proISSDigital,
-                       proISSe, pro4R, proFiorilli, proProdata, proPVH, proAgili, proVirtual, proFreire])
+                       proISSe, pro4R, proFiorilli, proProdata, proPVH, proAgili, proVirtual, proFreire, proLink3])
       then vNotas := vNotas + '<' + Prefixo4 + 'Rps>' +
                                '<' + Prefixo4 + 'InfDeclaracaoPrestacaoServico' +
                                  RetornarConteudoEntre(TNFSeEnviarLoteRPS(Self).FNotasFiscais.Items[I].XML_Rps,
@@ -1756,6 +1759,7 @@ begin
       proPVH,
       proAgili,
       proVirtual,
+      proLink3,
       proGoiania: vNotas := vNotas +
                               '<' + Prefixo4 + 'Rps>' +
                                '<' + Prefixo4 + 'InfDeclaracaoPrestacaoServico' +
@@ -1819,6 +1823,7 @@ begin
            proProdata,
            proPVH,
            proAgili,
+           proLink3,
            proVirtual: vNotas := vNotas + '<' + Prefixo4 + 'Rps>' +
                                '<' + Prefixo4 + 'InfDeclaracaoPrestacaoServico' +
                                  RetornarConteudoEntre(TNFSeGerarNFSe(Self).FNotasFiscais.Items[I].XML_Rps,
@@ -1975,6 +1980,7 @@ begin
       proAgili,
       proVirtual,
       proFreire,
+      proLink3,
       proGoiania: vNotas := vNotas +
 //                              '<' + Prefixo4 + 'Rps>' +
                                // ManutJonatan
@@ -2004,7 +2010,7 @@ begin
    for i := 0 to TNFSeGerarLoteRPS(Self).FNotasFiscais.Count-1 do
     begin
      if (FProvedor in [profintelISS, proSaatri, proGoiania, proISSDigital, proISSe,
-                       pro4R, proFiorilli, proProdata, proPVH, proAgili, proVirtual, proFreire])
+                       pro4R, proFiorilli, proProdata, proPVH, proAgili, proVirtual, proFreire, proLink3])
       then vNotas := vNotas + '<' + Prefixo4 + 'Rps>' +
                                '<' + Prefixo4 + 'InfDeclaracaoPrestacaoServico' +
                                  RetornarConteudoEntre(TNFSeGerarLoteRPS(Self).FNotasFiscais.Items[I].XML_Rps,
@@ -2163,6 +2169,7 @@ begin
       proAgili,
       proVirtual,
       proFreire,
+      proLink3,
       proGoiania: vNotas := vNotas +
                               '<' + Prefixo4 + 'Rps>' +
                                '<' + Prefixo4 + 'InfDeclaracaoPrestacaoServico' +
@@ -2189,7 +2196,7 @@ begin
    for i := 0 to TNFSeEnviarSincrono(Self).FNotasFiscais.Count-1 do
     begin
      if (FProvedor in [profintelISS, proSaatri, proGoiania, proISSDigital, proISSe,
-                       pro4R, proFiorilli, proProdata, proPVH, proAgili, proVirtual, proFreire])
+                       pro4R, proFiorilli, proProdata, proPVH, proAgili, proVirtual, proFreire, proLink3])
       then vNotas := vNotas + '<' + Prefixo4 + 'Rps>' +
                                '<' + Prefixo4 + 'InfDeclaracaoPrestacaoServico' +
                                  RetornarConteudoEntre(TNFSeEnviarSincrono(Self).FNotasFiscais.Items[I].XML_Rps,

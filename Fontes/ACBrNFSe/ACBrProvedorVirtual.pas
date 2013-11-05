@@ -283,6 +283,23 @@ begin
            '</S:Envelope>';
 end;
 
+function TProvedorVirtual.GeraEnvelopeRecepcionarSincrono(URLNS: String; CabMsg,
+  DadosMsg, DadosSenha: AnsiString): AnsiString;
+begin
+ result := '<?xml version="1.0" encoding="utf-8"?>' +
+           '<S:Envelope xmlns:S="http://schemas.xmlsoap.org/soap/envelope/" ' +
+                       'xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" ' +
+                       'xmlns:xsd="http://www.w3.org/2001/XMLSchema">' +
+            '<S:Body>' +
+             '<RecepcionarLoteRpsSincrono.Execute xmlns="Abrasf2">' +
+              '<Entrada>' +
+                StringReplace(StringReplace(DadosMsg, '<', '&lt;', [rfReplaceAll]), '>', '&gt;', [rfReplaceAll]) +
+              '</Entrada>' +
+             '</RecepcionarLoteRpsSincrono.Execute>' +
+            '</S:Body>' +
+           '</S:Envelope>';
+end;
+
 function TProvedorVirtual.GetSoapAction(Acao: TnfseAcao; NomeCidade: String): String;
 begin
  case Acao of
@@ -341,23 +358,7 @@ function TProvedorVirtual.GetLinkNFSe(ACodMunicipio, ANumeroNFSe: Integer;
   ACodVerificacao, AInscricaoM: String; AAmbiente: Integer): String;
 begin
   // Não implementada
-end;
-
-function TProvedorVirtual.GeraEnvelopeRecepcionarSincrono(URLNS: String; CabMsg,
-  DadosMsg, DadosSenha: AnsiString): AnsiString;
-begin
- result := '<?xml version="1.0" encoding="utf-8"?>' +
-           '<S:Envelope xmlns:S="http://schemas.xmlsoap.org/soap/envelope/" ' +
-                       'xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" ' +
-                       'xmlns:xsd="http://www.w3.org/2001/XMLSchema">' +
-            '<S:Body>' +
-             '<RecepcionarLoteRpsSincrono.Execute xmlns="Abrasf2">' +
-              '<Entrada>' +
-                StringReplace(StringReplace(DadosMsg, '<', '&lt;', [rfReplaceAll]), '>', '&gt;', [rfReplaceAll]) +
-              '</Entrada>' +
-             '</RecepcionarLoteRpsSincrono.Execute>' +
-            '</S:Body>' +
-           '</S:Envelope>';
+ Result := ''; 
 end;
 
 end.
