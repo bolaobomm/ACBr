@@ -74,8 +74,15 @@ begin
   then ConfigCidade.NameSpaceEnvelope := 'http://tempuri.org'
   else ConfigCidade.NameSpaceEnvelope := 'http://tempuri.org';
 
- ConfigCidade.AssinaRPS  := False;
- ConfigCidade.AssinaLote := False;
+ if ACodCidade = 3205309
+  then begin // Vitória/ES
+   ConfigCidade.AssinaRPS  := False;
+   ConfigCidade.AssinaLote := True;
+  end
+  else begin
+   ConfigCidade.AssinaRPS  := False;
+   ConfigCidade.AssinaLote := False;
+  end;
 
  Result := ConfigCidade;
 end;
@@ -158,6 +165,22 @@ begin
            end;
   3205309: begin // Vitória/ES
             ConfigURL.HomNomeCidade         := '';
+            ConfigURL.HomRecepcaoLoteRPS    := 'https://wsnfsehomologa.vitoria.es.gov.br/NotaFiscalService.asmx';
+            ConfigURL.HomConsultaLoteRPS    := 'https://wsnfsehomologa.vitoria.es.gov.br/NotaFiscalService.asmx';
+            ConfigURL.HomConsultaNFSeRPS    := 'https://wsnfsehomologa.vitoria.es.gov.br/NotaFiscalService.asmx';
+            ConfigURL.HomConsultaSitLoteRPS := 'https://wsnfsehomologa.vitoria.es.gov.br/NotaFiscalService.asmx';
+            ConfigURL.HomConsultaNFSe       := 'https://wsnfsehomologa.vitoria.es.gov.br/NotaFiscalService.asmx';
+            ConfigURL.HomCancelaNFSe        := 'https://wsnfsehomologa.vitoria.es.gov.br/NotaFiscalService.asmx';
+
+            ConfigURL.ProNomeCidade         := '';
+            ConfigURL.ProRecepcaoLoteRPS    := 'https://wsnfse.vitoria.es.gov.br/NotaFiscalService.asmx';
+            ConfigURL.ProConsultaLoteRPS    := 'https://wsnfse.vitoria.es.gov.br/NotaFiscalService.asmx';
+            ConfigURL.ProConsultaNFSeRPS    := 'https://wsnfse.vitoria.es.gov.br/NotaFiscalService.asmx';
+            ConfigURL.ProConsultaSitLoteRPS := 'https://wsnfse.vitoria.es.gov.br/NotaFiscalService.asmx';
+            ConfigURL.ProConsultaNFSe       := 'https://wsnfse.vitoria.es.gov.br/NotaFiscalService.asmx';
+            ConfigURL.ProCancelaNFSe        := 'https://wsnfse.vitoria.es.gov.br/NotaFiscalService.asmx';
+            (*
+            ConfigURL.HomNomeCidade         := '';
             ConfigURL.HomRecepcaoLoteRPS    := 'http://nfseteste.vitoria.es.gov.br/NFSEWSTESTE/Services.svc';
             ConfigURL.HomConsultaLoteRPS    := 'http://nfseteste.vitoria.es.gov.br/NFSEWSTESTE/Services.svc';
             ConfigURL.HomConsultaNFSeRPS    := 'http://nfseteste.vitoria.es.gov.br/NFSEWSTESTE/Services.svc';
@@ -172,6 +195,7 @@ begin
             ConfigURL.ProConsultaSitLoteRPS := 'http://nfes.vitoria.es.gov.br/NFSEws/Services.svc';
             ConfigURL.ProConsultaNFSe       := 'http://nfes.vitoria.es.gov.br/NFSEws/Services.svc';
             ConfigURL.ProCancelaNFSe        := 'http://nfes.vitoria.es.gov.br/NFSEws/Services.svc';
+            *)
            end;
   3305505: begin // Saquarema/RJ
             ConfigURL.HomNomeCidade         := '';

@@ -354,7 +354,7 @@ begin
 
    AStr := copy(AStr, 1, pos('</'+ APrefixo3 + EnviarLoteRps + '>', AStr) - 1);
 
-   if (URI = '') or (AProvedor in [proRecife, {proRJ,} proAbaco, proIssCuritiba, proFISSLex])
+   if (URI = '') or (AProvedor in [proRecife, {proRJ,} proAbaco, proIssCuritiba, proFISSLex, proGovBR])
     then AID := '>'
     else AID := ' ' + Identificador + '="AssLote_' + URI + '">';
 
@@ -421,7 +421,7 @@ begin
       end
       else URI := '';
 
-     if (URI = '') or (AProvedor in [profintelISS, proRecife, proNatal{, proRJ}])
+     if (URI = '') or (AProvedor in [profintelISS, proRecife, proNatal, proGovBR{, proRJ}])
       then AID := '>'
       else AID := ' ' + Identificador + '="Ass_' + URI + '">';
 
@@ -600,7 +600,7 @@ begin
    AXML := copy(AXML, 1, pos('</'+ APrefixo3 + EnviarLoteRps + '>', AXML) - 1);
 
    // Alterado por Italo em 07/08/2013 - incluido na lista o proAbaco
-   if (URI = '') or (AProvedor in [proRecife, proRJ, proAbaco, proIssDSF, proIssCuritiba, proFISSLex])
+   if (URI = '') or (AProvedor in [proRecife, proRJ, proAbaco, proIssDSF, proIssCuritiba, proFISSLex, proGovBR])
     then AID := '>'
     else AID := ' ' + Identificador + '="AssLote_' + URI + '">';
 
@@ -666,7 +666,7 @@ begin
       else URI := '';
 
      // Alterado por Italo em 10/05/2013 - incluido na lista o proRJ
-     if (URI = '') or (AProvedor in [profintelISS, proRecife, proNatal, proRJ])
+     if (URI = '') or (AProvedor in [profintelISS, proRecife, proNatal, proRJ, proGovBR])
       then AID := '>'
       else AID := ' ' + Identificador + '="Ass_' + URI + '">';
 
@@ -754,7 +754,7 @@ begin
 
  if ALote
   then begin
-   if (URI <> '') and (AProvedor = proIssDSF) 
+   if (URI <> '') and (AProvedor = proIssDSF)
     then xmldsig.signature := xmldoc.selectSingleNode('.//ns1:'+ EnviarLoteRps + '/ds:Signature')
    else if (URI <> '') and not (AProvedor in [proRecife, proRJ, proAbaco, proIssCuritiba, proFISSLex])
     then xmldsig.signature := xmldoc.selectSingleNode('.//ds:Signature[@' + Identificador + '="AssLote_' + URI + '"]')
