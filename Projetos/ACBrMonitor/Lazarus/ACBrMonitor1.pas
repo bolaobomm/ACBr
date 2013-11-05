@@ -654,6 +654,7 @@ var
   AppDir : String ;
   ILayout: TACBrBolLayOut;
 begin
+  WindowState := wsMinimized;
   {$IFDEF LINUX}
    FpUmask(0);
   {$ENDIF}
@@ -1185,17 +1186,9 @@ begin
   Erro := '';
   ACBrMonitorINI := ExtractFilePath(Application.ExeName) + 'ACBrMonitor.ini';
 
-  while not Visible do
-  begin
-    Application.ProcessMessages;
-    sleep(200);
-  end;
-
   if not FileExists(ACBrMonitorINI) then //verifica se o arq. de config existe
   begin                                  //se nao existir vai para as configs
-    Restaurar1Click(nil);
-    bConfig.Click;
-
+    WindowState := wsNormal;
     MessageDlg('Bem vindo ao ACBrMonitor',
       'Bem vindo ao ACBrMonitor,' + sLineBreak + sLineBreak +
       'Por favor configure o ACBrMonitor, ' + sLineBreak +
@@ -1204,7 +1197,7 @@ begin
       sLineBreak + sLineBreak +
       'IMPORTANTE: Após configurar o Método de Monitoramento' + sLineBreak +
       ' o ACBrMonitor deve ser reiniciado', mtInformation, [mbOK], 0);
-
+    bConfig.Click;
     exit;
   end;
 

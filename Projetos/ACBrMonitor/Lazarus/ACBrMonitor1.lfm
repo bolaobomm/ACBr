@@ -100,7 +100,6 @@ object FrmACBrMonitor: TFrmACBrMonitor
   ShowHint = True
   LCLVersion = '1.3'
   Visible = True
-  WindowState = wsMinimized
   object StatusBar1: TStatusBar
     Left = 0
     Height = 23
