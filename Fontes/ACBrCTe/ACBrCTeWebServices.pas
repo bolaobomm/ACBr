@@ -2544,7 +2544,8 @@ begin
 
       FXML_ProcInutCTe := Texto;
 
-      NomeArq := Copy(StringReplace(FID, 'ID', '', [rfIgnoreCase]), 3, 37);
+//      NomeArq := Copy(StringReplace(FID, 'ID', '', [rfIgnoreCase]), 3, 37);
+      NomeArq := StringReplace(FID, 'ID', '', [rfIgnoreCase]);
 
       if FConfiguracoes.Geral.Salvar then
          FConfiguracoes.Geral.Save(NomeArq + '-ProcInutCTe.xml', FXML_ProcInutCTe);
