@@ -514,7 +514,7 @@ begin
     LayCTeConsultaCT:    Result := DFeUtil.SeSenao(AAmbiente = 1, 'https://cte.fazenda.mg.gov.br/cte/services/CteConsulta'          , 'https://hcte.fazenda.mg.gov.br/cte/services/CteConsulta');
     LayCTeStatusServico: Result := DFeUtil.SeSenao(AAmbiente = 1, 'https://cte.fazenda.mg.gov.br/cte/services/CteStatusServico'     , 'https://hcte.fazenda.mg.gov.br/cte/services/CteStatusServico');
     LayCTeCadastro:      Result := DFeUtil.SeSenao(AAmbiente = 1, 'https://nfe.fazenda.mg.gov.br/nfe2/services/cadconsultacadastro2', 'https://hnfe.fazenda.mg.gov.br/nfe2/services/cadconsultacadastro2');
-    LayCTeEvento:        Result := DFeUtil.SeSenao(AAmbiente = 1, 'https://cte.fazenda.mg.gov.br/cte/services/cteRecepcaoEvento'    , 'https://hcte.fazenda.mg.gov.br/cte/services/cteRecepcaoEvento');
+    LayCTeEvento:        Result := DFeUtil.SeSenao(AAmbiente = 1, 'https://cte.fazenda.mg.gov.br/cte/services/RecepcaoEvento'       , 'https://hcte.fazenda.mg.gov.br/cte/services/RecepcaoEvento');
   end;
 end;
 
