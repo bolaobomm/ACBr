@@ -40,7 +40,7 @@ uses
     ACBrProvedorFiorilli, ACBrProvedorIssDsf, ACBrProvedorCoplan,
     ACBrProvedorProdata, ACBrProvedorAgili, ACBrProvedorFISSLex,
     ACBrProvedorVirtual, ACBrProvedorPVH, ACBrProvedorFreire,
-    ACBrProvedorLink3;
+    ACBrProvedorLink3, ACBrProvedorSpeedGov;
 
 type
 
@@ -538,7 +538,9 @@ begin
  CertContext := Cert as ICertContext;
  CertContext.Get_CertContext(Integer(PCertContext));
 
- if not (FProvedor in [proGovBr, proSimplISS, proAbaco, proISSNet, pro4R, proFiorilli, proProdata, proThema, proVirtual])
+ if not (FProvedor in [proGovBr, proSimplISS, proAbaco, proISSNet, pro4R,
+                       proFiorilli, proProdata, proThema, proVirtual,
+                       proPVH])
   then begin
    if not InternetSetOption(Data, INTERNET_OPTION_CLIENT_CERT_CONTEXT, PCertContext, Sizeof(CERT_CONTEXT)*5)
     then begin
@@ -626,6 +628,7 @@ begin
   proPVH:         FProvedorClass := TProvedorPVH.Create;
   proFreire:      FProvedorClass := TProvedorFreire.Create;
   proLink3:       FProvedorClass := TProvedorLink3.Create;
+  proSpeedGov:    FProvedorClass := TProvedorSpeedGov.Create;
  end;
 
  FPrefixo2     := FConfiguracoes.WebServices.Prefixo2;

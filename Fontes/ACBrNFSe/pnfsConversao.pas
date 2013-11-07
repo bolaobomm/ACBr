@@ -40,11 +40,13 @@ type
   TnfseDeducaoPor = ( dpNenhum, dpPercentual, dpValor );
   TnfseTipoDeducao = ( tdNenhum, tdMateriais, tdSubEmpreitada );
 
-  TnfseProvedor = ( proNenhum, proTiplan, proISSNET, proWebISS, proGINFES, proIssDSF, proProdemge, proAbaco, proBetha,
-                    proEquiplano, proISSIntel, proProdam, proGovBR, proRecife, proSimplISS, proThema, proRJ,
-                    proPublica, profintelISS, proDigifred, proBetim, proSaatri, proFISSLEX,
-                    proGoiania, proIssCuritiba, proBHISS, proNatal, proISSDigital, proISSe, pro4R,
-                    proGovDigital, proFiorilli, proCoplan, proProdata, proAgili, proVirtual, proPVH, proFreire, proLink3 );
+  TnfseProvedor = ( proNenhum, proTiplan, proISSNET, proWebISS, proGINFES, proIssDSF,
+                    proProdemge, proAbaco, proBetha, proEquiplano, proISSIntel, proProdam,
+                    proGovBR, proRecife, proSimplISS, proThema, proRJ, proPublica,
+                    profintelISS, proDigifred, proBetim, proSaatri, proFISSLEX,
+                    proGoiania, proIssCuritiba, proBHISS, proNatal, proISSDigital,
+                    proISSe, pro4R, proGovDigital, proFiorilli, proCoplan, proProdata,
+                    proAgili, proVirtual, proPVH, proFreire, proLink3, proSpeedGov );
 
   TnfseAcao = ( acRecepcionar, acConsSit, acConsLote, acConsNFSeRps, acConsNFSe, acCancelar, acGerar, acRecSincrono, acConsSecRps );
 
@@ -295,13 +297,13 @@ begin
                             'SimplISS', 'Thema', 'RJ', 'Publica', 'fintelISS', 'Digifred', 'Betim', 'Saatri',
                             'FISSLEX', 'Goiania', 'IssCuritiba', 'BHISS', 'Natal', 'ISSDigital', 'ISSe',
                             '4R', 'GovDigital', 'Fiorilli', 'Coplan', 'Prodata', 'Agili', 'Virtual', 'PVH',
-                            'Freire', 'Link3'],
+                            'Freire', 'Link3', 'SpeedGov'],
                            [proNenhum, proTiplan, proISSNET, proWebISS, proGINFES, proIssDSF, proProdemge, proAbaco,
                             proBetha, proEquiplano, proISSIntel, proProdam, proGovBR, proRecife,
                             proSimplISS, proThema, proRJ, proPublica, profintelISS, proDigifred, proBetim,
                             proSaatri, proFISSLEX, proGoiania, proIssCuritiba, proBHISS, proNatal,
                             proISSDigital, proISSe, pro4R, proGovDigital, proFiorilli, proCoplan, proProdata,
-                            proAgili, proVirtual, proPVH, proFreire, proLink3]);
+                            proAgili, proVirtual, proPVH, proFreire, proLink3, proSpeedGov]);
 end;
 
 function StrToProvedor(var ok: boolean; const s: string):TnfseProvedor;
@@ -312,13 +314,13 @@ begin
                             'SimplISS', 'Thema', 'RJ', 'Publica', 'fintelISS', 'Digifred', 'Betim', 'Saatri',
                             'FISSLEX', 'Goiania', 'IssCuritiba', 'BHISS', 'Natal', 'ISSDigital', 'ISSe',
                             '4R', 'GovDigital', 'Fiorilli', 'Coplan', 'Prodata', 'Agili', 'Virtual', 'PVH',
-                            'Freire', 'Link3'],
+                            'Freire', 'Link3', 'SpeedGov'],
                            [proNenhum, proTiplan, proISSNET, proWebISS, proGINFES, proIssDSF, proProdemge, proAbaco,
                             proBetha, proEquiplano, proISSIntel, proProdam, proGovBR, proRecife,
                             proSimplISS, proThema, proRJ, proPublica, profintelISS, proDigifred, proBetim,
                             proSaatri, proFISSLEX, proGoiania, proIssCuritiba, proBHISS, proNatal,
                             proISSDigital, proISSe, pro4R, proGovDigital, proFiorilli, proCoplan, proProdata,
-                            proAgili, proVirtual, proPVH, proFreire, proLink3]);
+                            proAgili, proVirtual, proPVH, proFreire, proLink3, proSpeedGov]);
 end;
 
 // Descrição do Serviço ********************************************************
@@ -978,6 +980,9 @@ begin
   3549706, // São José do Rio Pardo/SP
   3556404  // Vargem Grande do Sul/SP
          : Provedor := 'SimplISS';
+
+  2301000  // Aquiraz/CE
+         : Provedor := 'SpeedGov';
 
   4303103, // Cachoeirinha/RS
   4311403, // Lajeado/RS
@@ -13517,7 +13522,7 @@ begin
       1587: CodCidade := 2300754 ; //Amontada/CE
       1315: CodCidade := 2300804 ; //Antonina Do Norte/CE  
       1317: CodCidade := 2300903 ; //Apuiares/CE  
-      1319: CodCidade := 2301000 ; //Aquiraz/CE  
+      1319: CodCidade := 2301000 ; //Aquiraz/CE
       1321: CodCidade := 2301109 ; //Aracati/CE  
       1323: CodCidade := 2301208 ; //Aracoiaba/CE  
       0989: CodCidade := 2301257 ; //Ararenda/CE  

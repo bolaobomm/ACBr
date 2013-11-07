@@ -109,7 +109,7 @@ begin
                DFeUtil.SeSenao(AProvedor in [proAbaco, proBetha, proGinfes, proGoiania, proGovBR,
                                              {proISSDigital, }proIssCuritiba, proISSNET, proNatal,
                                              proRecife, proRJ, proSimplISS, proThema, proTiplan,
-                                             proAgili, proFISSLex], '',
+                                             proAgili, proFISSLex, proSpeedGov], '',
                 DFeUtil.SeSenao(VersaoDados <> '', ' versao="' + VersaoDados + '"', '')) + '>' +
               '<' + Prefixo4 + 'NumeroLote>' +
                 NumeroLote +
@@ -502,7 +502,7 @@ begin
  if AProvedor in [proNenhum, proAbaco, proBetha, proBetim, proBHIss, proDigifred,
   proEquiplano, proFiorilli, proFIssLex, proGinfes, proGovBR, proIssCuritiba,
   proIssIntel, proIssNet, proNatal, proProdemge, proPublica, proRecife, proRJ,
-  proSimplIss, proThema, proTiplan, proCoplan, proIssDSF, proAgili] then Result := '';
+  proSimplIss, proThema, proTiplan, proCoplan, proIssDSF, proAgili, proSpeedGov] then Result := '';
 end;
 
 class function TNFSeG.Gera_DadosMsgEnviarSincrono(Prefixo3, Prefixo4,
@@ -517,7 +517,7 @@ begin
      proEquiplano, profintelISS, proFISSLex, proGinfes, proGoiania, proGovBR,
      proGovDigital, proIssCuritiba, proISSDigital, proISSIntel, proISSNet, proNatal,
      proProdemge, proPublica, proRecife, proRJ, proSaatri, proFreire, proSimplISS, proThema,
-     proTiplan, proWebISS, proCoplan, proProdata, proAgili] then Result := '';
+     proTiplan, proWebISS, proCoplan, proProdata, proAgili, proSpeedGov] then Result := '';
 end;
 
 //-------------------------------------------------------------------------

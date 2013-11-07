@@ -188,6 +188,7 @@ begin
   proSimplISS,
   proThema,
   proTiplan,
+  proSpeedGov,
   proWebISS: GerarXML_ABRASF_V1;
 
   pro4R,

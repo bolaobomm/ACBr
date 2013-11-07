@@ -372,7 +372,7 @@ uses
  ACBrProvedorFiorilli, ACBrProvedorISSDSF, ACBrProvedorCoplan,
  ACBrProvedorProdata, ACBrProvedorAgili, ACBrProvedorFISSLex,
  ACBrProvedorVirtual, ACBrProvedorPVH, ACBrProvedorFreire,
- ACBrProvedorLink3;
+ ACBrProvedorLink3, ACBrProvedorSpeedGov;
 
 { TConfiguracoes }
 
@@ -729,6 +729,7 @@ begin
   ProPVH:         FProvedorClass := TProvedorPVH.Create;
   proFreire:      FProvedorClass := TProvedorFreire.Create;
   proLink3:       FProvedorClass := TProvedorLink3.Create;
+  proSpeedGov:    FProvedorClass := TProvedorSpeedGov.Create;
  end;
 
  ConfigCidade   := FProvedorClass.GetConfigCidade(FCodigoMunicipio, FAmbienteCodigo);
