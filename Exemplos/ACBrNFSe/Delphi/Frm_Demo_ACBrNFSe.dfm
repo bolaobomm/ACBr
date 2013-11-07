@@ -300,9 +300,10 @@ object frmDemo_ACBrNFSe: TfrmDemo_ACBrNFSe
               'Ananindeua/1500800/PA'
               'Anapolis/5201108/GO'
               'Aparecida de Goiania/5201405/GO'
+              'Aquiraz/2301000/CE'
               'Araraquara/3503208/SP'
               'Araras/3503307/SP'
-              'Arax'#195#161'/3104007/MG'
+              'Araxa/3104007/MG'
               'Arcos/3104205/MG'
               'Bage/4301602/RS'
               'Barbacena/3105608/MG'
@@ -441,6 +442,7 @@ object frmDemo_ACBrNFSe: TfrmDemo_ACBrNFSe
               'Varginha/3170701/MG'
               'Varzea Grande/5108402/MT'
               'Vilhena/1100304/RO'
+              'Vitoria/3205309/ES'
               'Votuporanga/3557105/SP')
           end
           object edtCodCidade: TEdit
