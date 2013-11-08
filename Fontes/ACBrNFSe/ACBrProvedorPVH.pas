@@ -240,9 +240,11 @@ begin
             '<s:Body>' +
              '<ns2:ConsultarSituacaoLoteRpsRequest xmlns:ns2="' + URLNS + '">' +
               '<nfseCabecMsg>' +
+                '&lt;?xml version="1.0" encoding="UTF-8"?&gt;' +
                 StringReplace(StringReplace(CabMsg, '<', '&lt;', [rfReplaceAll]), '>', '&gt;', [rfReplaceAll]) +
               '</nfseCabecMsg>' +
               '<nfseDadosMsg>' +
+                '&lt;?xml version="1.0" encoding="UTF-8"?&gt;' +
                 StringReplace(StringReplace(DadosMsg, '<', '&lt;', [rfReplaceAll]), '>', '&gt;', [rfReplaceAll]) +
               '</nfseDadosMsg>' +
              '</ns2:ConsultarSituacaoLoteRpsRequest>' +
@@ -260,9 +262,11 @@ begin
             '<s:Body>' +
              '<ns2:ConsultarLoteRpsRequest xmlns:ns2="' + URLNS + '">' +
               '<nfseCabecMsg>' +
+                '&lt;?xml version="1.0" encoding="UTF-8"?&gt;' +
                 StringReplace(StringReplace(CabMsg, '<', '&lt;', [rfReplaceAll]), '>', '&gt;', [rfReplaceAll]) +
               '</nfseCabecMsg>' +
               '<nfseDadosMsg>' +
+                '&lt;?xml version="1.0" encoding="UTF-8"?&gt;' +
                 StringReplace(StringReplace(DadosMsg, '<', '&lt;', [rfReplaceAll]), '>', '&gt;', [rfReplaceAll]) +
               '</nfseDadosMsg>' +
              '</ns2:ConsultarLoteRpsRequest>' +
@@ -280,9 +284,11 @@ begin
             '<s:Body>' +
              '<ns2:ConsultarNfsePorRpsRequest xmlns:ns2="' + URLNS + '">' +
               '<nfseCabecMsg>' +
+                '&lt;?xml version="1.0" encoding="UTF-8"?&gt;' +
                 StringReplace(StringReplace(CabMsg, '<', '&lt;', [rfReplaceAll]), '>', '&gt;', [rfReplaceAll]) +
               '</nfseCabecMsg>' +
               '<nfseDadosMsg>' +
+                '&lt;?xml version="1.0" encoding="UTF-8"?&gt;' +
                 StringReplace(StringReplace(DadosMsg, '<', '&lt;', [rfReplaceAll]), '>', '&gt;', [rfReplaceAll]) +
               '</nfseDadosMsg>' +
              '</ns2:ConsultarNfsePorRpsRequest>' +
@@ -300,9 +306,11 @@ begin
             '<s:Body>' +
              '<ns2:ConsultarNfsePorFaixaRequest xmlns:ns2="' + URLNS + '">' +
                '<nfseCabecMsg>' +
+                '&lt;?xml version="1.0" encoding="UTF-8"?&gt;' +
                  StringReplace(StringReplace(CabMsg, '<', '&lt;', [rfReplaceAll]), '>', '&gt;', [rfReplaceAll]) +
                '</nfseCabecMsg>' +
                '<nfseDadosMsg>' +
+                '&lt;?xml version="1.0" encoding="UTF-8"?&gt;' +
                  StringReplace(StringReplace(DadosMsg, '<', '&lt;', [rfReplaceAll]), '>', '&gt;', [rfReplaceAll]) +
                '</nfseDadosMsg>' +
               '</ns2:ConsultarNfsePorFaixaRequest>' +
@@ -320,9 +328,11 @@ begin
             '<s:Body>' +
              '<ns2:CancelarNfseRequest xmlns:ns2="' + URLNS + '">' +
               '<nfseCabecMsg>' +
+                '&lt;?xml version="1.0" encoding="UTF-8"?&gt;' +
                 StringReplace(StringReplace(CabMsg, '<', '&lt;', [rfReplaceAll]), '>', '&gt;', [rfReplaceAll]) +
               '</nfseCabecMsg>' +
               '<nfseDadosMsg>' +
+                '&lt;?xml version="1.0" encoding="UTF-8"?&gt;' +
                 StringReplace(StringReplace(DadosMsg, '<', '&lt;', [rfReplaceAll]), '>', '&gt;', [rfReplaceAll]) +
               '</nfseDadosMsg>' +
              '</ns2:CancelarNfseRequest>' +

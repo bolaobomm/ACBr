@@ -934,7 +934,7 @@ begin
                      TNFSeEnviarLoteRps(Self).NumeroLote + sLineBreak + FMsg);
     end;
   end
-  else raise Exception.Create('A funcionalidade Enviar Lote não esta disponivel para o provedor: ' + FxProvedor);
+  else raise Exception.Create('A funcionalidade [Enviar Lote] não foi disponibilizada pelo provedor: ' + FxProvedor);
 end;
 
 procedure TWebServicesBase.DoNFSeConsultarSituacaoLoteRPS;
@@ -1032,7 +1032,7 @@ begin
                                                     TNFSeConsultarSituacaoLoteRPS(Self).InscricaoMunicipal,
                                                     FTagI, FTagF, FProvedor);
   if FDadosMsg = '' then
-   raise Exception.Create('A funcionalidade Consultar Situação do Lote não esta disponivel para o provedor: ' + FxProvedor);
+   raise Exception.Create('A funcionalidade [Consultar Situação do Lote] não foi disponibilizada pelo provedor: ' + FxProvedor);
 end;
 
 procedure TWebServicesBase.DoNFSeConsultarLoteRPS;
@@ -1161,7 +1161,7 @@ begin
                                                    FTagI, FTagF, FProvedor);
   end;
   if FDadosMsg = '' then
-   raise Exception.Create('A funcionalidade Consultar Lote não esta disponivel para o provedor: ' + FxProvedor);
+   raise Exception.Create('A funcionalidade [Consultar Lote] não foi disponibilizada pelo provedor: ' + FxProvedor);
 end;
 
 procedure TWebServicesBase.DoNFSeConsultarNFSeporRPS;
@@ -1302,7 +1302,7 @@ begin
                                                       FTagI, FTagF, FProvedor);
   end;
   if FDadosMsg = '' then
-   raise Exception.Create('A funcionalidade Consultar NFSe por RPS não esta disponivel para o provedor: ' + FxProvedor);
+   raise Exception.Create('A funcionalidade [Consultar NFSe por RPS] não foi disponibilizada pelo provedor: ' + FxProvedor);
 end;
 
 procedure TWebServicesBase.DoNFSeConsultarNFSe;
@@ -1441,7 +1441,7 @@ begin
   end;
 
   if FDadosMsg = '' then
-   raise Exception.Create('A funcionalidade Consultar NFSe não esta disponivel para o provedor: ' + FxProvedor);
+   raise Exception.Create('A funcionalidade [Consultar NFSe] não foi disponibilizada pelo provedor: ' + FxProvedor);
 end;
 
 //Metodo usado apenas no provedor IssDSF
@@ -1692,7 +1692,7 @@ begin
   end;
 
   if DadosMsg = '' then
-   raise Exception.Create('A funcionalidade Cancelar NFSe não esta disponivel para o provedor: ' + FxProvedor);
+   raise Exception.Create('A funcionalidade [Cancelar NFSe] não foi disponibilizada pelo provedor: ' + FxProvedor);
 end;
 
 procedure TWebServicesBase.DoNFSeGerarNFSe;
@@ -1895,7 +1895,7 @@ begin
                      IntToStr(TNFSeGerarNFSe(Self).NumeroRps) + sLineBreak + FMsg);
     end;
   end
-  else raise Exception.Create('A funcionalidade Gerar NFSe não esta disponivel para o provedor: ' + FxProvedor);
+  else raise Exception.Create('A funcionalidade [Gerar NFSe] não foi disponibilizada pelo provedor: ' + FxProvedor);
 end;
 
 procedure TWebServicesBase.DoNFSeLinkNFSe;
@@ -2257,7 +2257,7 @@ begin
                      TNFSeEnviarSincrono(Self).NumeroLote + sLineBreak + FMsg);
     end;
   end
-  else raise Exception.Create('A funcionalidade Enviar Sincrono não esta disponivel para o provedor: ' + FxProvedor);
+  else raise Exception.Create('A funcionalidade [Enviar Sincrono] não foi disponibilizada pelo provedor: ' + FxProvedor);
 end;
 
 { TWebServices }
