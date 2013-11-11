@@ -48,6 +48,13 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 
+Data: 11/11/2013
+-- ACBrBoleto ver. 0.0.89 --
+-- ACBrBancoBanestes.pas
+
+[-] Correção cálculo código ASBACE.(Franciso)
+
+
 Data: 30/09/2013
 -- ACBrBoleto ver. 0.0.88 --
 

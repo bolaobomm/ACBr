@@ -94,11 +94,12 @@ function TACBrBanestes.CalcularCampoASBACE(
 var
   cIndice, cLivreAsbace: String;
   nContAsbace: Word;
-  nResult, nResultTemp, nDigAsbace01: Integer;
+  nResult, nResultTemp, nDigAsbace01 : Integer;
 begin
   { Banestes não usa digitos verificadores para agência e conta }
   cLivreAsbace := copy(ACBrTitulo.NossoNumero,2,8)+
-                  copy(trim(ACBrTitulo.ACBrBoleto.Cedente.Conta), 1, 11)+
+                  padR(trim(ACBrTitulo.ACBrBoleto.Cedente.Conta)+
+                       trim(ACBrTitulo.ACBrBoleto.Cedente.ContaDigito),11,'0')+
                   '4'+
                   IntToStrZero(fpNumero,3);
   cIndice      := '21212121212121212121212';
