@@ -341,7 +341,7 @@ begin
               '</' + Prefixo3 + 'Prestador>';
 
  if NumeroNFSe <> ''
-  then DadosMsg := DadosMsg + '<' + Prefixo3 + 'NumeroNfse' +
+  then DadosMsg := DadosMsg + '<' + Prefixo3 + 'NumeroNfse>' +
                                NumeroNFSe +
                               '</' + Prefixo3 + 'NumeroNfse>';
 
