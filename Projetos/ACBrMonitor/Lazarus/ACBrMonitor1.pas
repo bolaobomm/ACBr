@@ -1709,6 +1709,8 @@ begin
     Cedente.Complemento   := edtBOLComplemento.Text;
     Cedente.UF            := cbxBOLUF.Text;
     Cedente.CodigoCedente := edtCodCliente.Text;
+    Cedente.Convenio      := edtConvenio.Text;
+    Cedente.CodigoTransmissao:= edtCodTransmissao.Text;
 
     Cedente.Agencia       := edtBOLAgencia.Text;
     Cedente.AgenciaDigito := edtBOLDigitoAgencia.Text;
