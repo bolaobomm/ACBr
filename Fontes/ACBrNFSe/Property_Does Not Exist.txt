@@ -13,7 +13,7 @@ Utilizando o Delphi abra o fonte: ACBrNFSeDANFSeQR que encontra-se na pasta ...\
 
 Se aparecer uma tela informando que a propriedade não existe, clique em ignorar todas.
 
-Abra também o fonte: ACBrNFSeDANFSeQRRetrato que encontra-se na mesma pasta.
+Mantendo o ACBrNFSeDANFSeQR aberto, abra o fonte: ACBrNFSeDANFSeQRRetrato que encontra-se na mesma pasta.
 
 Clique em ignorar todas se aparecer a tela informado que a propriedade não existe.
 ========================================================================
@@ -21,7 +21,7 @@ Clique em ignorar todas se aparecer a tela informado que a propriedade não exist
 
 Segundo Passo:
 ========================================================================
-Selecione o objeto QRNFSe que encontra-se no form: frmDANFSeQR.
+Selecione o objeto QRNFSe que encontra-se no form: fqrDANFSeQR.
  
 Altere o valor das propriedades Left e Top para um valor entre 0 e 10, desde que seja diferente do atual.
  
@@ -33,7 +33,7 @@ Inclua uma linha em branco no código onde não vai interferir em nada, por exempl
 
 Terceiro Passo:
 ========================================================================
-Selecione o objeto QRNFSe que encontra-se no form: frmDANFSeQRRetrato.
+Selecione o objeto QRNFSe que encontra-se no form: fqrDANFSeQRRetrato.
 
 Altere o valor das propriedades Left e Top para um valor entre 0 e 10, desde que seja diferente do atual.
  

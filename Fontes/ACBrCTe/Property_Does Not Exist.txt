@@ -13,7 +13,7 @@ Utilizando o Delphi abra o fonte: ACBrCTeDACTeQR que encontra-se na pasta ...\Fo
 
 Se aparecer uma tela informando que a propriedade não existe, clique em ignorar todas.
 
-Abra também o fonte: ACBrCTeDACTeQRRetrato que encontra-se na mesma pasta.
+Mantendo o ACBrCTeDACTeQR aberto, abra o fonte: ACBrCTeDACTeQRRetrato que encontra-se na mesma pasta.
 
 Clique em ignorar todas se aparecer a tela informado que a propriedade não existe.
 ========================================================================
