@@ -716,7 +716,7 @@ begin
          end
         end
         else begin
-         if FProvedor in [proPVH, proFreire, proISSe]
+         if FProvedor in [proPVH, proFreire, proISSe, proFiorilli]
           then Gerador.wCampoNFSe(tcDat,    '#4', 'Competencia', 10, 10, 1, NFSe.DataEmissao, DSC_DEMI)
           else Gerador.wCampoNFSe(tcDatHor, '#4', 'Competencia', 19, 19, 0, NFSe.DataEmissao, DSC_DEMI);
         end;
