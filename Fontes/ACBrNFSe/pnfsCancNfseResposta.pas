@@ -174,13 +174,13 @@ end;
 function TNotasCanceladasCollection.GetItem(
   Index: Integer): TNotasCanceladasCollectionItem;
 begin
-
+  Result := TNotasCanceladasCollectionItem(inherited GetItem(Index));
 end;
 
 procedure TNotasCanceladasCollection.SetItem(Index: Integer;
   Value: TNotasCanceladasCollectionItem);
 begin
-
+  inherited SetItem(Index, Value);
 end;
 
 { TNotasCanceladasCollectionItem }
@@ -195,6 +195,7 @@ begin
 
   inherited;
 end;
+
 { TretCancNFSe }
 
 constructor TretCancNFSe.Create;
