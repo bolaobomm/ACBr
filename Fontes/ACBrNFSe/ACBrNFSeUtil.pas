@@ -43,8 +43,8 @@ type
 
   public
     {$IFDEF ACBrNFSeOpenSSL}
-      class function sign_file(const Axml: PAnsiChar; const key_file: PChar; const senha: PChar): AnsiString;
-      class function sign_memory(const Axml: PChar; const key_file: Pchar; const senha: PChar; Size: Cardinal; Ponteiro: Pointer): AnsiString;
+      class function sign_file(const Axml: PAnsiChar; const key_file: PAnsiChar; const senha: PAnsiChar): AnsiString;
+      class function sign_memory(const Axml: PAnsiChar; const key_file: PAnsichar; const senha: PAnsiChar; Size: Cardinal; Ponteiro: Pointer): AnsiString;
       class Procedure InitXmlSec;
       class Procedure ShutDownXmlSec;
     {$ENDIF}
@@ -117,19 +117,19 @@ uses
 { NotaUtil }
 
 {$IFDEF ACBrNFSeOpenSSL}
-class function NotaUtil.sign_file(const Axml: PAnsiChar; const key_file: PChar; const senha: PChar): AnsiString;
+class function NotaUtil.sign_file(const Axml: PAnsiChar; const key_file: PAnsiChar; const senha: PAnsiChar): AnsiString;
 var
   doc: xmlDocPtr;
   node: xmlNodePtr;
   dsigCtx: xmlSecDSigCtxPtr;
-  buffer: PChar;
+  buffer: PAnsiChar;
   bufSize: integer;
 label done;
 begin
-    doc     := nil;
-    node    := nil;
+    doc := nil;
+    //node := nil;
     dsigCtx := nil;
-    result  := '';
+    result := '';
 
     if (Axml = nil) or (key_file = nil) then Exit;
 
@@ -170,6 +170,7 @@ begin
        if (buffer <> nil) then
           // success
           result := buffer;
+
    finally
        // cleanup
        if (dsigCtx <> nil) then
@@ -180,19 +181,19 @@ begin
    end;
 end;
 
-class function NotaUtil.sign_memory(const Axml: PChar; const key_file: Pchar; const senha: PChar; Size: Cardinal; Ponteiro: Pointer): AnsiString;
+class function NotaUtil.sign_memory(const Axml: PAnsiChar; const key_file: PAnsichar; const senha: PAnsiChar; Size: Cardinal; Ponteiro: Pointer): AnsiString;
 var
   doc: xmlDocPtr;
   node: xmlNodePtr;
   dsigCtx: xmlSecDSigCtxPtr;
-  buffer: PChar;
+  buffer: PAnsiChar;
   bufSize: integer;
 label done;
 begin
-    doc     := nil;
-    node    := nil;
+    doc := nil;
+    //node := nil;
     dsigCtx := nil;
-    result  := '';
+    result := '';
 
     if (Axml = nil) or (key_file = nil) then Exit;
     try
@@ -202,7 +203,7 @@ begin
          raise Exception.Create('Error: unable to parse');
 
        // find start node
-       node := xmlSecFindNode(xmlDocGetRootElement(doc), PChar(xmlSecNodeSignature), PChar(xmlSecDSigNs));
+       node := xmlSecFindNode(xmlDocGetRootElement(doc), PAnsiChar(xmlSecNodeSignature), PAnsiChar(xmlSecDSigNs));
        if (node = nil) then
          raise Exception.Create('Error: start node not found');
 
