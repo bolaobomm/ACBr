@@ -1878,7 +1878,7 @@ begin
 
   // Imprime os Documentos Originários se o Tipo de CTe for Normal
   // TpcteTipoCTe = (tcNormal, tcComplemento, tcAnulacao, tcSubstituto);
-  qrb_08_Itens.Enabled:=(FCTe.Ide.tpCTe = tcNormal)  or (FCTe.Ide.tpCTe = tcComplemento);
+  qrb_08_Itens.Enabled:=(FCTe.Ide.tpCTe = tcNormal) or (FCTe.Ide.tpCTe = tcComplemento) or (FCTe.Ide.tpCTe = tcSubstituto);
 
   for i := 1 to 2 do
     if Trim(cdsDocumentos.FieldByName('DOCUMENTO_' + IntToStr(i)).AsString) = '' then
