@@ -655,11 +655,15 @@ begin
          toRemessaConcederAbatimento             : ATipoOcorrencia := '04'; {Concessão de Abatimento}
          toRemessaCancelarAbatimento             : ATipoOcorrencia := '05'; {Cancelamento de Abatimento concedido}
          toRemessaAlterarVencimento              : ATipoOcorrencia := '06'; {Alteração de vencimento}
+         toRemessaAlterarControleParticipante    : ATipoOcorrencia := '07'; {Alteração do número de controle do participante}
          toRemessaAlterarNumeroControle          : ATipoOcorrencia := '08'; {Alteração de seu número}
          toRemessaProtestar                      : ATipoOcorrencia := '09'; {Pedido de protesto}
          toRemessaCancelarInstrucaoProtestoBaixa : ATipoOcorrencia := '10'; {Sustar protesto e baixar}
          toRemessaCancelarInstrucaoProtesto      : ATipoOcorrencia := '10'; {Sustar protesto e manter na carteira}
+         toRemessaDispensarJuros                 : ATipoOcorrencia := '11'; {Instrução para dispensar juros}
+         toRemessaAlterarNomeEnderecoSacado      : ATipoOcorrencia := '12'; {Alteração de nome e endereço do Sacado}
          toRemessaOutrasOcorrencias              : ATipoOcorrencia := '31'; {Alteração de Outros Dados}
+         toRemessaCancelarDesconto               : ATipoOcorrencia := '32'; {Não conceder desconto}
       else
          ATipoOcorrencia := '01';                                      {Remessa}
       end;
@@ -677,8 +681,6 @@ begin
          ATipoEspecieDoc   := '02'
       else if EspecieDoc = 'NS' then
          ATipoEspecieDoc   := '03'
-      else if EspecieDoc = 'ND' then
-         ATipoEspecieDoc   := '13'
       else if EspecieDoc = 'RC' then
          ATipoEspecieDoc   := '05'
       else if EspecieDoc = 'LC' then 
@@ -966,7 +968,7 @@ function TACBrBancoBrasil.TipoOCorrenciaToCod (
 begin
    case TipoOcorrencia of
       toRetornoRegistroConfirmado                         : Result := '02';
-      toRetornoRegistroRecusado                           : Result := '03';
+      toRetornoComandoRecusado                            : Result := '03';
       toRetornoLiquidado                                  : Result := '06';
       toRetornoBaixado                                    : Result := '09';
       toRetornoBaixadoInstAgencia                         : Result := '10';
@@ -1428,7 +1430,7 @@ begin
    rCedente      := trim(Copy(ARetorno[0],47,30));
    rAgencia      := trim(Copy(ARetorno[0],27,4));
    rDigitoAgencia:= Copy(ARetorno[0],31,1);
-   rConta        := trim(Copy(ARetorno[1],32,8));
+   rConta        := trim(Copy(ARetorno[0],32,8));
    rDigitoConta  := Copy(ARetorno[0],40,1);
    
    rCodigoCedente:= Copy(ARetorno[0],150,7);
@@ -1440,14 +1442,6 @@ begin
                                                              Copy(ARetorno[0],97,2)+'/'+
                                                              Copy(ARetorno[0],99,2),0, 'DD/MM/YY' );
 
-   case StrToIntDef(Copy(ARetorno[1],2,2),0) of
-      11: rCNPJCPF := Copy(ARetorno[1],7,11);
-      14: rCNPJCPF := Copy(ARetorno[1],4,14);
-   else
-     rCNPJCPF := Copy(ARetorno[1],4,14);
-   end;
-
-
    with ACBrBanco.ACBrBoleto do
    begin
       if (not LeCedenteRetorno) and
@@ -1456,20 +1450,12 @@ begin
          raise Exception.Create(ACBrStr('Agencia\Conta do arquivo inválido'));
 
       Cedente.Nome         := rCedente;
-
-      if Copy(rCNPJCPF,1,10) <> '0000000000' then
-         Cedente.CNPJCPF      := rCNPJCPF;
       Cedente.Agencia      := rAgencia;
       Cedente.AgenciaDigito:= rDigitoAgencia;
       Cedente.Conta        := rConta;
       Cedente.ContaDigito  := rDigitoConta;
       Cedente.CodigoCedente:= rCodigoCedente;
 
-      case StrToIntDef(Copy(ARetorno[1],2,2),0) of
-         11: Cedente.TipoInscricao:= pFisica;
-      else
-             Cedente.TipoInscricao:= pJuridica;
-      end;
       ACBrBanco.ACBrBoleto.ListadeBoletos.Clear;
    end;
 
@@ -1521,7 +1507,7 @@ begin
          ValorDespesaCobranca := StrToFloatDef(Copy(Linha,182,07),0)/100; //--Anderson: Valor tarifa
          ValorOutrasDespesas  := StrToFloatDef(Copy(Linha,189,13),0)/100;
 
-         if StrToIntDef(Copy(Linha,296,6),0) <> 0 then
+         if StrToIntDef(Copy(Linha,176,6),0) <> 0 then
             DataCredito:= StringToDateTimeDef( Copy(Linha,176,2)+'/'+
                                                Copy(Linha,178,2)+'/'+
                                                Copy(Linha,180,2),0, 'DD/MM/YY' );

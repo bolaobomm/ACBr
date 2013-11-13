@@ -580,8 +580,8 @@ begin
 
       {Mora Juros}
       if (ValorMoraJuros > 0) then
-      begin
-        if (DataMoraJuros <> Null) then
+      begin         
+        if DataMoraJuros <> 0 then
           ADataMoraJuros := FormatDateTime('ddmmyy', DataMoraJuros)
         else
           ADataMoraJuros := padR('', 6, '0');

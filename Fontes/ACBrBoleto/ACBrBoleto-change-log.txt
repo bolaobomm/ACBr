@@ -48,6 +48,22 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 
+Data: 13/11/2013
+-- ACBrBoleto ver. 0.0.90 --
+
+-- ACBrBancoBradesco.pas
+[*] Adicionadas melhorias na geração da remessa e leitura do arquivo retorno.
+    (Jacinto)
+
+-- ACBrBancoItau.pas
+[-] Ajuste na leitura da propriedade DataMora. (Jacinto) 
+
+-- ACBrBancoBancoBrasil.pas
+[-] Ajuste na leitura do arquivo retorno CNAB400 para ler corretamente o campos
+    DataCredito e Nr. da Conta, removidas as leituras dos campos referente ao CNPJ
+    do cedente uma vez que essa informação não é devolvida pelo banco.(Jacinto) 
+
+
 Data: 11/11/2013
 -- ACBrBoleto ver. 0.0.89 --
 -- ACBrBancoBanestes.pas

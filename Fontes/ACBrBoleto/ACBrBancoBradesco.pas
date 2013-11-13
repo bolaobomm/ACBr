@@ -292,8 +292,8 @@ begin
                   IntToStrZero( round( PercentualMulta * 100 ), 4)        +  // Percentual de Multa formatado com 2 casas decimais
                   NossoNumero + DigitoNossoNumero                         +
                   IntToStrZero( round( ValorDescontoAntDia * 100), 10)    +
-                  TipoBoleto + 'N' + Space(10)                            +  // Tipo Boleto(Quem emite) + 'N'= Nao registrar p/ Débito automático
-                  ' ' + '0' + '  ' + Ocorrencia                           +  // Ind. Rateio de Credito + Aviso de Debito Aut. + Ocorrência
+                  TipoBoleto + ' ' + Space(10)                            +  // Tipo Boleto(Quem emite) + Identificação se emite boleto para débito automático.                  
+                  ' ' + '2' + '  ' + Ocorrencia                           +  // Ind. Rateio de Credito + Aviso de Debito Aut.: 2=Não emite aviso + Ocorrência
                   padL( NumeroDocumento,  10)                             +
                   FormatDateTime( 'ddmmyy', Vencimento)                   +
                   IntToStrZero( Round( ValorDocumento * 100 ), 13)        +
@@ -307,9 +307,10 @@ begin
                   IntToStrZero( round( ValorIOF * 100 ), 13)              +
                   IntToStrZero( round( ValorAbatimento * 100 ), 13)       +
                   TipoSacado + padR(OnlyNumber(Sacado.CNPJCPF),14,'0')    +
-                  padL( Sacado.NomeSacado, 40, ' ')                       +
-                  padL( Sacado.Logradouro + Sacado.Numero                 +
-                           Sacado.Bairro + Sacado.Cidade + Sacado.UF, 40) +
+                  padL( Sacado.NomeSacado, 40, ' ')                       +        		
+                  padL(Sacado.Logradouro + ' ' + Sacado.Numero + ' '      +
+                    Sacado.Bairro + ' ' + Sacado.Cidade + ' '             +
+                    Sacado.UF, 40)                                        +
                   space(12) + padL( Sacado.CEP, 8 )                       +
                   padl( MensagemCedente, 60 );
 
@@ -373,7 +374,7 @@ begin
 
    with ACBrBanco.ACBrBoleto do
    begin
-      if (not LeCedenteRetorno) and (rCodEmpresa <> Cedente.CodigoCedente) then
+      if (not LeCedenteRetorno) and (rCodEmpresa <> padR(Cedente.CodigoCedente, 20, '0')) then
          raise Exception.Create(ACBrStr('Código da Empresa do arquivo inválido'));
 
       if (not LeCedenteRetorno) and ((rAgencia <> OnlyNumber(Cedente.Agencia)) or
