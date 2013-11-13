@@ -812,11 +812,10 @@ begin
              begin
                with EventoCTe.Evento[i].InfEvento.detEvento.infCorrecao.Add do
                 begin
-                 grupoAlterado   := TCTeEnvEvento(Self).FEvento.Evento[i].InfEvento.detEvento.infCorrecao[i].grupoAlterado;
-                 campoAlterado   := TCTeEnvEvento(Self).FEvento.Evento[i].InfEvento.detEvento.infCorrecao[i].campoAlterado;
-                 valorAlterado   := TCTeEnvEvento(Self).FEvento.Evento[i].InfEvento.detEvento.infCorrecao[i].valorAlterado;
-                 nroItemAlterado := TCTeEnvEvento(Self).FEvento.Evento[i].InfEvento.detEvento.infCorrecao[i].nroItemAlterado;
-                 nroItemAlterado := TCTeEnvEvento(Self).FEvento.Evento[i].InfEvento.detEvento.infCorrecao[i].nroItemAlterado;
+                 grupoAlterado   := TCTeEnvEvento(Self).FEvento.Evento[i].InfEvento.detEvento.infCorrecao[j].grupoAlterado;
+                 campoAlterado   := TCTeEnvEvento(Self).FEvento.Evento[i].InfEvento.detEvento.infCorrecao[j].campoAlterado;
+                 valorAlterado   := TCTeEnvEvento(Self).FEvento.Evento[i].InfEvento.detEvento.infCorrecao[j].valorAlterado;
+                 nroItemAlterado := TCTeEnvEvento(Self).FEvento.Evento[i].InfEvento.detEvento.infCorrecao[j].nroItemAlterado;
                 end;
              end;
           end;
