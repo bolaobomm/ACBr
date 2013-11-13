@@ -197,9 +197,20 @@ begin
         begin
           COD_PART := IntToStr(int0150);
           NOME := 'CLIENTE DE TESTES ' + IntToStr(int0150);
-          COD_PAIS := '1058';
-          CNPJ := '11111111111180';
-          CPF := '12345678909';
+          if int0150 = 9 then //um exemplo de cliente no exterior.
+          begin
+            COD_PAIS := '3131'; //GUAM
+            CNPJ := '';
+            CPF := '';
+//            COD_MUN := 43140070 + int0150; //O código do município é deixado de fora propositalmente. O componente vai fazê-lo ficar vazio
+          end
+          else
+          begin
+            CNPJ := '11111111111180';
+            CPF := '12345678909';
+            COD_PAIS := '1058';
+          end;
+
           IE := '';
           COD_MUN := 43140070 + int0150;
           SUFRAMA := '';
@@ -460,7 +471,10 @@ begin
         with RegistroC100New do
         begin
           IND_OPER := tpEntradaAquisicao;
-          IND_EMIT := edEmissaoPropria;
+          //Só pra variar a emissão entre própria e de terceiros
+          if Odd(INotas) then IND_EMIT := edEmissaoPropria
+          else IND_EMIT := edTerceiros;
+
           COD_PART := '001';
           COD_MOD := '';
           COD_SIT := sdRegular;
@@ -495,6 +509,18 @@ begin
             begin
               COD_INF := '000001';
               TXT_COMPL := '';
+
+              with RegistroC113New do
+              begin
+                IND_OPER := tpEntradaAquisicao;
+                IND_EMIT := edEmissaoPropria;
+                COD_PART := '001';
+                COD_MOD := '1';
+                SER := '1';
+                SUB := '1';
+                NUM_DOC := '333';
+                DT_DOC := StrToDate('02/11/2011');
+              end;
             end;
           end;
 
@@ -1127,6 +1153,14 @@ begin
             COD_PART := '';
             TXT_COMPL := '';
             COD_CTA := '';
+
+            with RegistroH020New do
+            begin
+              CST_ICMS := '00';
+              BC_ICMS  := 1;
+              VL_ICMS := 2;
+            end;
+
           end;
         end;
       end;
