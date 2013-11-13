@@ -372,7 +372,7 @@ begin
       else begin
        Gerador.wCampoNFSe(tcDe2, '#14', 'ValorDeducoes  ', 01, 15, 0, NFSe.Servico.Valores.ValorDeducoes, '');
 
-       if FProvedor in [proGoiania, proISSe, proProdata]
+       if FProvedor in [{proGoiania, }proISSe, proProdata]
          then begin
            Gerador.wCampoNFSe(tcDe2, '#15', 'ValorPis       ', 01, 15, 1, NFSe.Servico.Valores.ValorPis, '');
            Gerador.wCampoNFSe(tcDe2, '#16', 'ValorCofins    ', 01, 15, 1, NFSe.Servico.Valores.ValorCofins, '');
@@ -578,11 +578,14 @@ begin
      Gerador.wCampoNFSe(tcStr, '#45', 'Cep', 008, 008, 0, SomenteNumeros(NFSe.Tomador.Endereco.CEP), '');
     Gerador.wGrupoNFSe('/Endereco');
 
-    Gerador.wGrupoNFSe('Contato');
-     Gerador.wCampoNFSe(tcStr, '#46', 'Telefone', 01, 11, 0, SomenteNumeros(NFSe.Tomador.Contato.Telefone), '');
-     Gerador.wCampoNFSe(tcStr, '#47', 'Email   ', 01, 80, 0, NFSe.Tomador.Contato.Email, '');
-    Gerador.wGrupoNFSe('/Contato');
-
+    if (NFSe.Tomador.Contato.Telefone <> '') or (NFSe.Tomador.Contato.Email <> '')
+     then begin
+      Gerador.wGrupoNFSe('Contato');
+       Gerador.wCampoNFSe(tcStr, '#46', 'Telefone', 01, 11, 0, SomenteNumeros(NFSe.Tomador.Contato.Telefone), '');
+       Gerador.wCampoNFSe(tcStr, '#47', 'Email   ', 01, 80, 0, NFSe.Tomador.Contato.Email, '');
+      Gerador.wGrupoNFSe('/Contato');
+     end;
+     
     if (VersaoXML = '1') or
        (FProvedor in [pro4R, proAgili, proCoplan, proDigifred, proFiorilli,
                       proGoiania, proGovDigital, proISSDigital, proISSe,
