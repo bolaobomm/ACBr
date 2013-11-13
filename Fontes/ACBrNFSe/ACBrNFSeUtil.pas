@@ -493,7 +493,7 @@ begin
   end;
 
   if FileExists(ArqPFX) then
-    XmlAss := NotaUtil.sign_file(PChar(AStr), PChar(ArqPFX), PChar(PFXSenha))
+    XmlAss := NotaUtil.sign_file(PAnsiChar(AStr), PAnsiChar(ArqPFX), PAnsiChar(PFXSenha))
   else
    begin
     Cert  := TMemoryStream.Create;
@@ -501,7 +501,7 @@ begin
 
     Cert.LoadFromStream(Cert2);
 
-    XmlAss := NotaUtil.sign_memory(PChar(AStr), PChar(ArqPFX), PChar(PFXSenha), Cert.Size, Cert.Memory);
+    XmlAss := NotaUtil.sign_memory(PAnsiChar(AStr), PAnsiChar(ArqPFX), PAnsiChar(PFXSenha), Cert.Size, Cert.Memory);
   end;
 
   // Removendo quebras de linha //
@@ -1042,7 +1042,7 @@ begin
   end;
 
   if FileExists(ArqPFX) then
-    XmlAss := NotaUtil.sign_file( PChar(AXML), PChar(ArqPFX), PChar(PFXSenha) )
+    XmlAss := NotaUtil.sign_file( PAnsiChar(AXML), PAnsiChar(ArqPFX), PAnsiChar(PFXSenha) )
   else
    begin
     Cert  := TMemoryStream.Create;
@@ -1050,7 +1050,7 @@ begin
 
     Cert.LoadFromStream(Cert2);
 
-    XmlAss := NotaUtil.sign_memory( PChar(AXML), PChar(ArqPFX), PChar(PFXSenha), Cert.Size, Cert.Memory );
+    XmlAss := NotaUtil.sign_memory( PAnsiChar(AXML), PAnsiChar(ArqPFX), PAnsiChar(PFXSenha), Cert.Size, Cert.Memory );
   end;
 
   // Removendo quebras de linha //
