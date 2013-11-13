@@ -399,7 +399,7 @@ begin
                           proISSe, proProdata, proPVH, proSaatri, proFreire, proLink3])
       then Gerador.wCampoNFSe(tcDe2, '#24', 'BaseCalculo', 01, 15, 0, NFSe.Servico.Valores.BaseCalculo, '');
 
-    if FProvedor in [pro4R, profintelISS, proISSDigital, proISSe, proFiorilli, proSaatri, proFreire, proLink3]
+    if FProvedor in [pro4R, profintelISS, proISSDigital, proISSe, proSaatri, proFreire, proLink3]
       then Gerador.wCampoNFSe(tcDe4, '#25', 'Aliquota', 01, 05, 1, NFSe.Servico.Valores.Aliquota, '')
       else begin
         if FProvedor = proGoiania
@@ -407,6 +407,8 @@ begin
             if NFSe.OptanteSimplesNacional = snSim
               then Gerador.wCampoNFSe(tcDe4, '#25', 'Aliquota', 01, 05, 0, NFSe.Servico.Valores.Aliquota, '');
           end
+          else if FProvedor = proFiorilli
+          then Gerador.wCampoNFSe(tcDe2, '#25', 'Aliquota', 01, 05, 1, NFSe.Servico.Valores.Aliquota, '')
           else Gerador.wCampoNFSe(tcDe4, '#25', 'Aliquota', 01, 05, 0, NFSe.Servico.Valores.Aliquota, '');
       end;
 
@@ -433,14 +435,17 @@ begin
 
    Gerador.wCampoNFSe(tcStr, '#29', 'ItemListaServico         ', 01, 05,   0, NFSe.Servico.ItemListaServico, '');
    Gerador.wCampoNFSe(tcStr, '#30', 'CodigoCnae               ', 01, 0007, 0, SomenteNumeros(NFSe.Servico.CodigoCnae), '');
-   Gerador.wCampoNFSe(tcStr, '#31', 'CodigoTributacaoMunicipio', 01, 0020, 0, SomenteNumeros(NFSe.Servico.CodigoTributacaoMunicipio), '');
+   if FProvedor <> proFiorilli
+     then Gerador.wCampoNFSe(tcStr, '#31', 'CodigoTributacaoMunicipio', 01, 0020, 0, SomenteNumeros(NFSe.Servico.CodigoTributacaoMunicipio), '');
+
    Gerador.wCampoNFSe(tcStr, '#32', 'Discriminacao            ', 01, 2000, 1, NFSe.Servico.Discriminacao, '');
    Gerador.wCampoNFSe(tcStr, '#33', 'CodigoMunicipio          ', 01, 0007, 1, SomenteNumeros(NFSe.Servico.CodigoMunicipio), '');
 
 //   if FProvedor <> proISSDigital
 //     then Gerador.wCampoNFSe(tcInt, '#34', 'CodigoPais', 04, 04,   0, NFSe.Servico.CodigoPais, '');
 
-   Gerador.wCampoNFSe(tcInt, '#34', 'CodigoPais         ', 04, 04,   0, NFSe.Servico.CodigoPais, '');
+   if FProvedor <> proFiorilli
+     then Gerador.wCampoNFSe(tcInt, '#34', 'CodigoPais         ', 04, 04,   0, NFSe.Servico.CodigoPais, '');
 
    if FProvedor <> proGoiania
     then Gerador.wCampoNFSe(tcStr, '#35', 'ExigibilidadeISS   ', 01, 01, 1, ExigibilidadeISSToStr(NFSe.Servico.ExigibilidadeISS), '');
@@ -567,7 +572,7 @@ begin
         Gerador.wCampoNFSe(tcStr, '#44', 'Uf             ', 2, 2, 0, NFSe.Tomador.Endereco.UF, '');
       end;
 
-     if VersaoXML = '2'
+     if (VersaoXML = '2') and (FProvedor <> proFiorilli)
        then Gerador.wCampoNFSe(tcInt, '#34', 'CodigoPais ', 04, 04, 0, NFSe.Servico.CodigoPais, '');
 
      Gerador.wCampoNFSe(tcStr, '#45', 'Cep', 008, 008, 0, SomenteNumeros(NFSe.Tomador.Endereco.CEP), '');
