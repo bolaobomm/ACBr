@@ -238,6 +238,8 @@ function TInfEvento.getcOrgao: integer;
 begin
 //  Result := StrToInt(copy(FChave, 1, 2));
 
+  Result := 0;
+
   if FTpEvento = teEPEC then
   begin
     // Alterado por Italo em 28/10/2013
