@@ -84,38 +84,40 @@ function TProvedorWebISS.GetConfigSchema(ACodCidade: Integer): TConfigSchema;
 var
  ConfigSchema: TConfigSchema;
 begin
- if ACodCidade = 4301602
-  then begin // Bage/RS
-   ConfigSchema.VersaoCabecalho := '1.00';
-   ConfigSchema.VersaoDados     := ''; // '1.00';
-   ConfigSchema.VersaoXML       := '1';
-   ConfigSchema.NameSpaceXML    := 'http://www.abrasf.org.br/nfse';
-   ConfigSchema.Cabecalho       := '';
-   ConfigSchema.ServicoEnviar   := 'servico_enviar_lote_rps_envio.xsd';
-   ConfigSchema.ServicoConSit   := 'servico_consultar_situacao_lote_rps_envio.xsd';
-   ConfigSchema.ServicoConLot   := 'servico_consultar_lote_rps_envio.xsd';
-   ConfigSchema.ServicoConRps   := 'servico_consultar_nfse_rps_envio.xsd';
-   ConfigSchema.ServicoConNfse  := 'servico_consultar_nfse_envio.xsd';
-   ConfigSchema.ServicoCancelar := 'servico_cancelar_nfse_envio.xsd';
-   ConfigSchema.ServicoGerar    := 'servico_gerar_nfse_envio.xsd';
-   ConfigSchema.DefTipos        := ''; //'tipos_complexos.xsd';
-  end
+ case ACodCidade of
+  3303302, // Niteroi/RJ
+  4301602: // Bage/RS
+          begin
+           ConfigSchema.VersaoCabecalho := '1.00';
+           ConfigSchema.VersaoDados     := ''; // '1.00';
+           ConfigSchema.VersaoXML       := '1';
+           ConfigSchema.NameSpaceXML    := 'http://www.abrasf.org.br/nfse';
+           ConfigSchema.Cabecalho       := '';
+           ConfigSchema.ServicoEnviar   := 'servico_enviar_lote_rps_envio.xsd';
+           ConfigSchema.ServicoConSit   := 'servico_consultar_situacao_lote_rps_envio.xsd';
+           ConfigSchema.ServicoConLot   := 'servico_consultar_lote_rps_envio.xsd';
+           ConfigSchema.ServicoConRps   := 'servico_consultar_nfse_rps_envio.xsd';
+           ConfigSchema.ServicoConNfse  := 'servico_consultar_nfse_envio.xsd';
+           ConfigSchema.ServicoCancelar := 'servico_cancelar_nfse_envio.xsd';
+           ConfigSchema.ServicoGerar    := 'servico_gerar_nfse_envio.xsd';
+           ConfigSchema.DefTipos        := ''; //'tipos_complexos.xsd';
+          end;
   else begin
-   ConfigSchema.VersaoCabecalho := '1.00';
-   ConfigSchema.VersaoDados     := '1.00';
-   ConfigSchema.VersaoXML       := '1';
-   ConfigSchema.NameSpaceXML    := 'http://www.abrasf.org.br/';
-   ConfigSchema.Cabecalho       := 'nfse.xsd';
-   ConfigSchema.ServicoEnviar   := 'nfse.xsd';
-   ConfigSchema.ServicoConSit   := 'nfse.xsd';
-   ConfigSchema.ServicoConLot   := 'nfse.xsd';
-   ConfigSchema.ServicoConRps   := 'nfse.xsd';
-   ConfigSchema.ServicoConNfse  := 'nfse.xsd';
-   ConfigSchema.ServicoCancelar := 'nfse.xsd';
-   ConfigSchema.ServicoGerar    := '';
-   ConfigSchema.DefTipos        := '';
-  end;
-
+        ConfigSchema.VersaoCabecalho := '1.00';
+        ConfigSchema.VersaoDados     := '1.00';
+        ConfigSchema.VersaoXML       := '1';
+        ConfigSchema.NameSpaceXML    := 'http://www.abrasf.org.br/';
+        ConfigSchema.Cabecalho       := 'nfse.xsd';
+        ConfigSchema.ServicoEnviar   := 'nfse.xsd';
+        ConfigSchema.ServicoConSit   := 'nfse.xsd';
+        ConfigSchema.ServicoConLot   := 'nfse.xsd';
+        ConfigSchema.ServicoConRps   := 'nfse.xsd';
+        ConfigSchema.ServicoConNfse  := 'nfse.xsd';
+        ConfigSchema.ServicoCancelar := 'nfse.xsd';
+        ConfigSchema.ServicoGerar    := '';
+        ConfigSchema.DefTipos        := '';
+       end;
+ end;
  Result := ConfigSchema;
 end;
 
