@@ -400,9 +400,9 @@ begin
                       NumeroNFse +
                     '</' + Prefixo4 + 'Numero>' +
 
-                    // alterado por joel takei 05/07/2013
-                   DFeUtil.SeSenao(AProvedor in [pro4R, proISSe, profintelISS,
-                                                 proFiorilli, proVirtual, proISSDigital],
+                    // alterado por Akai - L. Massao Aihara 12/11/2013
+                   DFeUtil.SeSenao(AProvedor in [pro4R, proISSe, profintelISS, proFiorilli,
+                                                 proVirtual, proISSDigital, proSaatri],
 
                     '<' + Prefixo4 + 'CpfCnpj>' +
                      '<' + Prefixo4 + 'Cnpj>' +
