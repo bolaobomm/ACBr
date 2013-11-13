@@ -184,37 +184,37 @@ begin
    teCCe:
      begin
        Gerador.wGrupo('evCCeCTe');
-       Gerador.wCampo(tcStr, 'EP02', 'descEvento', 005, 012, 1, Evento.Items[0].InfEvento.DescEvento);
+       Gerador.wCampo(tcStr, 'EP02', 'descEvento', 17, 17, 1, Evento.Items[0].InfEvento.DescEvento);
 
        for i:= 0 to Evento.Items[0].FInfEvento.detEvento.infCorrecao.Count  - 1 do
         begin
          Gerador.wGrupo('infCorrecao');
-         Gerador.wCampo(tcStr, 'EP04', 'grupoAlterado  ', 001, 0020, 1, Evento.Items[0].InfEvento.detEvento.infCorrecao.Items[i].grupoAlterado);
-         Gerador.wCampo(tcStr, 'EP05', 'campoAlterado  ', 001, 0020, 1, Evento.Items[0].InfEvento.detEvento.infCorrecao.Items[i].campoAlterado);
-         Gerador.wCampo(tcStr, 'EP06', 'valorAlterado  ', 001, 0500, 1, Evento.Items[0].InfEvento.detEvento.infCorrecao.Items[i].valorAlterado);
-         Gerador.wCampo(tcInt, 'EP07', 'nroItemAlterado', 002, 0002, 0, Evento.Items[0].InfEvento.detEvento.infCorrecao.Items[i].nroItemAlterado);
+         Gerador.wCampo(tcStr, 'EP04', 'grupoAlterado  ', 01, 020, 1, Evento.Items[0].InfEvento.detEvento.infCorrecao.Items[i].grupoAlterado);
+         Gerador.wCampo(tcStr, 'EP05', 'campoAlterado  ', 01, 020, 1, Evento.Items[0].InfEvento.detEvento.infCorrecao.Items[i].campoAlterado);
+         Gerador.wCampo(tcStr, 'EP06', 'valorAlterado  ', 01, 500, 1, Evento.Items[0].InfEvento.detEvento.infCorrecao.Items[i].valorAlterado);
+         Gerador.wCampo(tcInt, 'EP07', 'nroItemAlterado', 02, 002, 0, Evento.Items[0].InfEvento.detEvento.infCorrecao.Items[i].nroItemAlterado);
          Gerador.wGrupo('/infCorrecao');
         end;
 
-       Gerador.wCampo(tcStr, 'EP08', 'xCondUso', 001, 5000, 1, Evento.Items[0].InfEvento.detEvento.xCondUso);
+       Gerador.wCampo(tcStr, 'EP08', 'xCondUso', 01, 5000, 1, Evento.Items[0].InfEvento.detEvento.xCondUso);
        Gerador.wGrupo('/evCCeCTe');
      end;
    teCancelamento:
      begin
        Gerador.wGrupo('evCancCTe');
-       Gerador.wCampo(tcStr, 'EP02', 'descEvento', 005, 012, 1, Evento.Items[0].InfEvento.DescEvento);
-       Gerador.wCampo(tcStr, 'EP03', 'nProt     ', 015, 015, 1, Evento.Items[0].InfEvento.detEvento.nProt);
-       Gerador.wCampo(tcStr, 'EP04', 'xJust     ', 015, 255, 1, Evento.Items[0].InfEvento.detEvento.xJust);
+       Gerador.wCampo(tcStr, 'EP02', 'descEvento', 12, 012, 1, Evento.Items[0].InfEvento.DescEvento);
+       Gerador.wCampo(tcStr, 'EP03', 'nProt     ', 15, 015, 1, Evento.Items[0].InfEvento.detEvento.nProt);
+       Gerador.wCampo(tcStr, 'EP04', 'xJust     ', 15, 255, 1, Evento.Items[0].InfEvento.detEvento.xJust);
        Gerador.wGrupo('/evCancCTe');
      end;
    teEPEC:
      begin
        Gerador.wGrupo('evEPECCTe');
-       Gerador.wCampo(tcStr, 'EP02', 'descEvento', 05, 12, 1, Evento.Items[0].InfEvento.DescEvento);
+       Gerador.wCampo(tcStr, 'EP02', 'descEvento', 04, 004, 1, Evento.Items[0].InfEvento.DescEvento);
        Gerador.wCampo(tcStr, 'EP04', 'xJust     ', 15, 255, 1, Evento.Items[0].InfEvento.detEvento.xJust);
-       Gerador.wCampo(tcDe2, 'EP05', 'vICMS     ', 01, 15, 1, Evento.Items[0].InfEvento.detEvento.vICMS, DSC_VICMS);
-       Gerador.wCampo(tcDe2, 'EP06', 'vTPrest   ', 01, 15, 1, Evento.Items[0].InfEvento.detEvento.vTPrest, DSC_VTPREST);
-       Gerador.wCampo(tcDe2, 'EP07', 'vCarga    ', 01, 15, 1, Evento.Items[0].InfEvento.detEvento.vCarga, DSC_VTMERC);
+       Gerador.wCampo(tcDe2, 'EP05', 'vICMS     ', 01, 015, 1, Evento.Items[0].InfEvento.detEvento.vICMS, DSC_VICMS);
+       Gerador.wCampo(tcDe2, 'EP06', 'vTPrest   ', 01, 015, 1, Evento.Items[0].InfEvento.detEvento.vTPrest, DSC_VTPREST);
+       Gerador.wCampo(tcDe2, 'EP07', 'vCarga    ', 01, 015, 1, Evento.Items[0].InfEvento.detEvento.vCarga, DSC_VTMERC);
 
        Gerador.wGrupo('toma04');
        Gerador.wCampo(tcStr, 'EP09', 'toma', 01, 01, 1, TpTomadorToStr(Evento.Items[0].InfEvento.detEvento.toma), DSC_TOMA);
@@ -249,9 +249,9 @@ begin
    teMultiModal:
      begin
        Gerador.wGrupo('evRegMultimodal');
-       Gerador.wCampo(tcStr, 'EP02', 'descEvento', 005, 0019, 1, Evento.Items[0].InfEvento.DescEvento);
-       Gerador.wCampo(tcStr, 'EP03', 'xRegistro ', 015, 1000, 1, Evento.Items[0].InfEvento.detEvento.xRegistro);
-       Gerador.wCampo(tcStr, 'EP04', 'nDoc      ', 001, 0044, 0, Evento.Items[0].InfEvento.detEvento.nDoc);
+       Gerador.wCampo(tcStr, 'EP02', 'descEvento', 23, 0023, 1, Evento.Items[0].InfEvento.DescEvento);
+       Gerador.wCampo(tcStr, 'EP03', 'xRegistro ', 15, 1000, 1, Evento.Items[0].InfEvento.detEvento.xRegistro);
+       Gerador.wCampo(tcStr, 'EP04', 'nDoc      ', 01, 0043, 0, Evento.Items[0].InfEvento.detEvento.nDoc);
        Gerador.wGrupo('/evRegMultimodal');
      end;
   end;

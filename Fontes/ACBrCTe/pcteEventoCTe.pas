@@ -297,7 +297,7 @@ begin
     teCCe         : Result := 'Carta de Correcao';
     teCancelamento: Result := 'Cancelamento';
     teEPEC        : Result := 'EPEC';
-    teMultiModal  : Result := 'Registro Multimodal';
+    teMultiModal  : Result := 'Ocorrencias de Transito';
   else
     raise EventoException.Create('Descrição do Evento não Implementado!');
   end;
@@ -326,7 +326,7 @@ begin
     teCCe         : Result := 'CARTA DE CORREÇÃO ELETRÔNICA';
     teCancelamento: Result := 'CANCELAMENTO DO CT-e';
     teEPEC        : Result := 'EPEC';
-    teMultiModal  : Result := 'REGISTRO MULTIMODAL';
+    teMultiModal  : Result := 'OCORRÊNCIAS DE TRÂNSITO';
   else
     Result := 'Não Definido';
   end;
