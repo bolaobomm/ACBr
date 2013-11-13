@@ -143,6 +143,7 @@ end;
 
 function TProvedorLink3.GetAssinarXML(Acao: TnfseAcao): Boolean;
 begin
+ Result := False;
  case Acao of
    acRecepcionar: Result := True;
    acConsSit:     Result := False;

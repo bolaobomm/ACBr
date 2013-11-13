@@ -142,6 +142,7 @@ end;
 
 function TProvedorSpeedGov.GetAssinarXML(Acao: TnfseAcao): Boolean;
 begin
+  Result := false;
  case Acao of
    acRecepcionar: Result := False;
    acConsSit:     Result := False;

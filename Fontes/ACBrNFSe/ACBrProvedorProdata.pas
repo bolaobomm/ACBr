@@ -146,6 +146,7 @@ end;
 
 function TProvedorProdata.GetAssinarXML(Acao: TnfseAcao): Boolean;
 begin
+ Result := False;
  case Acao of
    acRecepcionar: Result := True;
    acConsSit:     Result := True;
