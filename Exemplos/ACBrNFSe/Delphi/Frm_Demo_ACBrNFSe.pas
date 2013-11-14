@@ -564,6 +564,9 @@ begin
      Tomador.Endereco.CodigoMunicipio := edtCodCidade.Text;
      Tomador.Endereco.UF              := edtEmitUF.Text;
      Tomador.Endereco.CEP             := edtEmitCEP.Text;
+	 //Provedor Equiplano é obrigatório o pais e IE
+     Tomador.Endereco.xPais           := 'BRASIL';	 
+     Tomador.IdentificacaoTomador.InscricaoEstadual := '123456';
 
      Tomador.Contato.Telefone := '1122223333';
      Tomador.Contato.Email    := 'nome@provedor.com.br';
@@ -694,7 +697,7 @@ end;
 
 procedure TfrmDemo_ACBrNFSe.btnCancNFSeClick(Sender: TObject);
 var
- Codigo : String;
+ Codigo, Motivo : String; 
 begin
 
  OpenDialog1.Title := 'Selecione a NFSe';
@@ -714,6 +717,11 @@ begin
 
    if not(InputQuery('Cancelar NFSe', 'Código de Cancelamento', Codigo))
     then exit;
+	
+   //Provedor Equiplano é obrigatório o motivo de cancelamento
+   //if not(InputQuery('Cancelar NFSe', 'Motivo de Cancelamento', Motivo))
+   // then exit;
+   //ACBrNFSe1.NotasFiscais.Items[0].NFSe.MotivoCancelamento:= Motivo;
 
 //   ACBrNFSe1.WebServices.CancelaNFSe(Codigo, '1', '03310700000170', '0306223', '0');
    ACBrNFSe1.CancelarNFSe(Codigo);
