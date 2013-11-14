@@ -97,6 +97,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+Data: 14/11/2013
+-- ACBrECFEpson --
+[-] Correção na rotina de interpretação da Fim de Leitura do ECF. Em algumas
+    raras situações o ACBrECF poderia não ler todo o Buffer de resposta acusando
+    erro no Checksum e invalidando o Pacote recebido. (por: DSA)
+
 Data: 04/11/2013
 -- ACBrECFEscECF --
 [-] Remoção de código que usava outra classe de ACBrECFClass para

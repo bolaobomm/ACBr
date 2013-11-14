@@ -1330,9 +1330,16 @@ var
   LenRet : Integer ;
 
   Function BlocoEValido : Boolean ;
+  Var
+    PosETX : Integer ;
   begin
-    Result := ((LeftStr(Retorno,1) = STX) and (LenRet >= 7) and
-               (copy( Retorno, LenRet-4, 1) = ETX) ) ;
+    Result := (LeftStr(Retorno,1) = STX) and (LenRet >= 7) ;
+
+    if Result then
+    begin
+       PosETX := PosLast( ETX, Retorno );
+       Result := (PosETX = (LenRet - 4));
+    end;
   end ;
 
 begin
@@ -1396,11 +1403,12 @@ begin
      except
         on E : Exception do
         begin
-           fpDevice.Serial.SendByte(ord(NAK));
+           GravaLog( '   '+E.Message);
            GravaLog( '   Pacote Inválido, NACK enviado: '+Retorno, True ) ;
+           fpDevice.Serial.Purge;  // Zera conteudo de Porta Serial
+           fpDevice.Serial.SendByte(ord(NAK));
            Result  := False ;
            Retorno := '' ;
-           fpDevice.Serial.Purge;  // Zera conteudo de Porta Serial
         end ;
      end ;
   end ;
