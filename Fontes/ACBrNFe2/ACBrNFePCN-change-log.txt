@@ -48,6 +48,11 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 
+14/11/2013
+----------
+[-] Acerto na tag nItemPed, ela é um campo numérico e estava gerando zeros não significativos.
+    por: regys.silveira
+
 31/10/2013
 ----------
 [*] Acerto para utilização dos novos links de homologação disponibilizados pelo estado do AM e válidos para uso em todo território nacional
