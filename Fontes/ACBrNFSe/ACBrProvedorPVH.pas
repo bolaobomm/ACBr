@@ -119,14 +119,14 @@ begin
             ConfigURL.HomRecepcaoSincrono   := 'http://www.semfazonline.com:7070/nfse/NfseWSService?wsdl';
 
             ConfigURL.ProNomeCidade         := '';
-            ConfigURL.ProRecepcaoLoteRPS    := 'http:/www.semfazonline.com/nfse/NfseWSService?wsdl';
-            ConfigURL.ProConsultaLoteRPS    := 'http:/www.semfazonline.com/nfse/NfseWSService?wsdl';
-            ConfigURL.ProConsultaNFSeRPS    := 'http:/www.semfazonline.com/nfse/NfseWSService?wsdl';
-            ConfigURL.ProConsultaSitLoteRPS := 'http:/www.semfazonline.com/nfse/NfseWSService?wsdl';
-            ConfigURL.ProConsultaNFSe       := 'http:/www.semfazonline.com/nfse/NfseWSService?wsdl';
-            ConfigURL.ProCancelaNFSe        := 'http:/www.semfazonline.com/nfse/NfseWSService?wsdl';
-            ConfigURL.ProGerarNFSe          := 'http:/www.semfazonline.com/nfse/NfseWSService?wsdl';
-            ConfigURL.ProRecepcaoSincrono   := 'http:/www.semfazonline.com/nfse/NfseWSService?wsdl';
+            ConfigURL.ProRecepcaoLoteRPS    := 'http://www.semfazonline.com/nfse/NfseWSService?wsdl';
+            ConfigURL.ProConsultaLoteRPS    := 'http://www.semfazonline.com/nfse/NfseWSService?wsdl';
+            ConfigURL.ProConsultaNFSeRPS    := 'http://www.semfazonline.com/nfse/NfseWSService?wsdl';
+            ConfigURL.ProConsultaSitLoteRPS := 'http://www.semfazonline.com/nfse/NfseWSService?wsdl';
+            ConfigURL.ProConsultaNFSe       := 'http://www.semfazonline.com/nfse/NfseWSService?wsdl';
+            ConfigURL.ProCancelaNFSe        := 'http://www.semfazonline.com/nfse/NfseWSService?wsdl';
+            ConfigURL.ProGerarNFSe          := 'http://www.semfazonline.com/nfse/NfseWSService?wsdl';
+            ConfigURL.ProRecepcaoSincrono   := 'http://www.semfazonline.com/nfse/NfseWSService?wsdl';
            end;
 
  end;
@@ -388,14 +388,14 @@ function TProvedorPVH.GetSoapAction(Acao: TnfseAcao; NomeCidade: String): String
 begin
  case Acao of
 
-   acRecepcionar: Result := 'http:/nfse.abrasf.org.br/RecepcionarLoteRps';
+   acRecepcionar: Result := 'http://nfse.abrasf.org.br/RecepcionarLoteRps';
    acConsSit:     Result := '';
-   acConsLote:    Result := 'http:/nfse.abrasf.org.br/ConsultarLoteRps';
-   acConsNFSeRps: Result := 'http:/nfse.abrasf.org.br/ConsultarNfsePorRps';
-   acConsNFSe:    Result := 'http:/nfse.abrasf.org.br/ConsultarNfsePorFaixa';
-   acCancelar:    Result := 'http:/nfse.abrasf.org.br/CancelarNfse';
-   acGerar:       Result := 'http:/nfse.abrasf.org.br/GerarNfse';
-   acRecSincrono: Result := 'http:/nfse.abrasf.org.br/RecepcionarLoteRpsSincrono';
+   acConsLote:    Result := 'http://nfse.abrasf.org.br/ConsultarLoteRps';
+   acConsNFSeRps: Result := 'http://nfse.abrasf.org.br/ConsultarNfsePorRps';
+   acConsNFSe:    Result := 'http://nfse.abrasf.org.br/ConsultarNfsePorFaixa';
+   acCancelar:    Result := 'http://nfse.abrasf.org.br/CancelarNfse';
+   acGerar:       Result := 'http://nfse.abrasf.org.br/GerarNfse';
+   acRecSincrono: Result := 'http://nfse.abrasf.org.br/RecepcionarLoteRpsSincrono';
    else           Result := '';
  end;
 end;
