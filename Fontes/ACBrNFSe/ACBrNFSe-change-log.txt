@@ -47,6 +47,9 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+14/11/2013
+[+] Integração com o provedor Equiplano (por Michel Ouriques)
+
 01/07/2013
 [+] Diponibilizado o pacote de instalação do DANFSE em Fast Report, 
     Fontes do componente escrito por Ney Robson. 

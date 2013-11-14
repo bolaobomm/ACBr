@@ -42,7 +42,8 @@ type
     destructor Destroy; override;
     function Enviar(ALote: Integer; Imprimir: Boolean = True): Boolean; overload;
     function Enviar(ALote: String; Imprimir: Boolean = True): Boolean; overload;
-    function ConsultarSituacao(ACnpj, AInscricaoMunicipal, AProtocolo: String): Boolean;
+    function ConsultarSituacao(ACnpj, AInscricaoMunicipal, AProtocolo: String;
+                               const ANumLote: String = ''): Boolean;
     function ConsultarLoteRps(ANumLote, AProtocolo: string; ACNPJ: String = ''; AInscricaoMunicipal: String = '';
                               ASenha: string = ''; AFraseSecreta: string ='';
                               Mes: Integer = 0; Ano: Integer = 0): Boolean;
@@ -204,9 +205,9 @@ begin
 end;
 
 function TACBrNFSe.ConsultarSituacao(ACnpj, AInscricaoMunicipal,
-  AProtocolo: String): Boolean;
+  AProtocolo: String; const ANumLote: String = ''): Boolean;
 begin
- Result := WebServices.ConsultaSituacao(ACnpj, AInscricaoMunicipal, AProtocolo);
+ Result := WebServices.ConsultaSituacao(ACnpj, AInscricaoMunicipal, AProtocolo, ANumLote);
 end;
 
 function TACBrNFSe.ConsultarLoteRps(ANumLote, AProtocolo: String; ACNPJ: string = ''; AInscricaoMunicipal: string = '';
@@ -247,6 +248,9 @@ begin
      exit;
     end;
   end;
+
+  if (Trim(Self.WebServices.ConsLote.NumeroLote) = '') then 
+    Self.WebServices.ConsLote.NumeroLote:= ANumLote;
 
  Result := WebServices.ConsultaLoteRps(AProtocolo, ACNPJ, AInscricaoMunicipal, ASenha, AFraseSecreta);
 end;

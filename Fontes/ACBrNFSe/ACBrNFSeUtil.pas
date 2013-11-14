@@ -548,6 +548,9 @@ begin
  if AProvedor = proIssDsf then begin
     EnviarLoteRps := 'ReqEnvioLoteRPS';
     LoteURI := 'Lote';
+ end else if AProvedor = proEquiplano then begin
+    EnviarLoteRps := 'enviarLoteRpsEnvio';
+    LoteURI := 'lote';
  end else begin
     if ASincrono
      then EnviarLoteRps := 'EnviarLoteRpsSincronoEnvio'
@@ -757,9 +760,11 @@ begin
   then begin
    if (URI <> '') and (AProvedor = proIssDSF)
     then xmldsig.signature := xmldoc.selectSingleNode('.//ns1:'+ EnviarLoteRps + '/ds:Signature')
+   else if (AProvedor = proEquiplano)
+    then xmldsig.signature := xmldoc.selectSingleNode('.//ds:Signature')
    else if (URI <> '') and not (AProvedor in [proRecife, proRJ, proAbaco, proIssCuritiba, proFISSLex])
     then xmldsig.signature := xmldoc.selectSingleNode('.//ds:Signature[@' + Identificador + '="AssLote_' + URI + '"]')
-    else begin
+   else begin
      xmldsig.signature := xmldoc.selectSingleNode('.//ds1:' + EnviarLoteRps + '/ds:Signature');
     end;
   end

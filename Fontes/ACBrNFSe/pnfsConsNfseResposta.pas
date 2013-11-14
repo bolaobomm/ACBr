@@ -560,6 +560,15 @@ begin
           if Leitor.rExtrai(4, 'NfseCancelamento') <> ''
            then begin
             ListaNfse.FCompNfse[i].NFSe.NfseCancelamento.DataHora := Leitor.rCampo(tcDatHor, 'DataHora');
+            // provedor Betha sempre retorna a o grupo "NfseCancelamento" mesmo não estando cancelada,
+            // o cancelamento deverá ser verificado na TAG especifica
+            // Incluido por Roberto Godinho 13/11/20113
+            if FProvedor = proBetha then
+            begin
+              Leitor.rExtrai(4,'InfConfirmacaoCancelamento');
+              if StrToBool(Leitor.rCampo(tcStr, 'Sucesso'))then
+                ListaNfse.FCompNfse[i].NFSe.Status := srCancelado;
+            end;
 
             // Incluido por Mauro Gomes
             // se não encontrou o campo DataHora, deve procurar pelo DataHoraCancelamento

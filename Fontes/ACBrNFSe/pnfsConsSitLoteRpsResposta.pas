@@ -57,6 +57,7 @@ type
     constructor Create;
     destructor Destroy; override;
     function LerXml: boolean;
+    function LerXML_provedorEquiplano: Boolean;
   published
     property Leitor: TLeitor  read FLeitor   write FLeitor;
     property InfSit: TInfSit  read FInfSit   write FInfSit;
@@ -179,6 +180,59 @@ begin
 
       result := True;
     end;
+  except
+    result := False;
+  end;
+end;
+
+function TretSitLote.LerXML_provedorEquiplano: Boolean;
+var
+  i: Integer;
+begin
+  try
+    // Incluido por Ricardo Miranda em 14/03/2013
+    Leitor.Arquivo := NotaUtil.RetirarPrefixos(Leitor.Arquivo);
+    Leitor.Arquivo := StringReplace(Leitor.Arquivo, ' xmlns=""', '', [rfReplaceAll]);
+    Leitor.Grupo   := Leitor.Arquivo;
+
+    InfSit.FNumeroLote := Leitor.rCampo(tcStr, 'nrLoteRps');
+    InfSit.FSituacao   := Leitor.rCampo(tcStr, 'stLote');
+		//1 - Aguardando processamento
+		//2 - Não Processado, lote com erro
+		//3 - Processado com sucesso
+		//4 - Processado com avisos
+
+    if leitor.rExtrai(1, 'mensagemRetorno') <> '' then
+      begin
+        i := 0;
+        if (leitor.rExtrai(2, 'listaErros') <> '') then
+          begin
+            while Leitor.rExtrai(3, 'erro', '', i + 1) <> '' do
+              begin
+                InfSit.FMsgRetorno.Add;
+                InfSit.FMsgRetorno[i].FCodigo   := Leitor.rCampo(tcStr, 'cdMensagem');
+                InfSit.FMsgRetorno[i].FMensagem := Leitor.rCampo(tcStr, 'dsMensagem');
+                InfSit.FMsgRetorno[i].FCorrecao := Leitor.rCampo(tcStr, 'dsCorrecao');
+
+                inc(i);
+              end;
+          end;
+
+        if (leitor.rExtrai(2, 'listaAlertas') <> '') then
+          begin
+            while Leitor.rExtrai(3, 'alerta', '', i + 1) <> '' do
+              begin
+                InfSit.FMsgRetorno.Add;
+                InfSit.FMsgRetorno[i].FCodigo   := Leitor.rCampo(tcStr, 'cdMensagem');
+                InfSit.FMsgRetorno[i].FMensagem := Leitor.rCampo(tcStr, 'dsMensagem');
+                InfSit.FMsgRetorno[i].FCorrecao := Leitor.rCampo(tcStr, 'dsCorrecao');
+
+                inc(i);
+              end;
+          end;
+      end;
+
+    result := True;
   except
     result := False;
   end;

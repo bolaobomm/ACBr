@@ -91,6 +91,7 @@ type
     destructor Destroy; override;
     function LerXml: boolean;
     function LerXml_provedorIssDsf: boolean;
+    function LerXML_provedorEquiplano: Boolean;
   published
     property PathArquivoMunicipios: string  read FPathArquivoMunicipios  write FPathArquivoMunicipios;
     property PathArquivoTabServicos: string read FPathArquivoTabServicos write FPathArquivoTabServicos;
@@ -785,4 +786,69 @@ begin
   end;
 end;
 }
+
+function TretLote.LerXML_provedorEquiplano: Boolean;
+var
+  i: Integer;
+begin
+  try
+    Leitor.Arquivo := NotaUtil.RetirarPrefixos(Leitor.Arquivo);
+    Leitor.Grupo   := Leitor.Arquivo;
+
+    if leitor.rExtrai(1, 'listaNfse') <> '' then
+      begin
+        i:= 0;
+        while leitor.rExtrai(2, 'nfse', '', i + 1) <> '' do
+          begin
+            ListaNfse.FCompNfse.Add;
+            ListaNfse.FCompNfse[i].FNFSe.Numero                 := leitor.rCampo(tcStr, 'nrNfse');
+            ListaNfse.FCompNfse[i].FNFSe.CodigoVerificacao      := leitor.rCampo(tcStr, 'cdAutenticacao');
+            ListaNfse.FCompNfse[i].FNFSe.DataEmissao            := leitor.rCampo(tcDatHor, 'dtEmissaoNfs');
+            ListaNfse.FCompNfse[i].FNFSe.IdentificacaoRps.Numero:= leitor.rCampo(tcStr, 'nrRps');
+            if Leitor.rExtrai(3, 'cancelamento') <> '' then
+              begin
+                ListaNfse.FCompNfse[i].NFSe.NfseCancelamento.DataHora:= Leitor.rCampo(tcDatHor, 'dtCancelamento');
+                ListaNfse.FCompNfse[i].NFSe.MotivoCancelamento       := Leitor.rCampo(tcStr, 'dsCancelamento');
+                ListaNfse.FCompNfse[i].NFSe.Status := srCancelado;
+              end;
+            inc(i);
+          end;
+      end;
+
+    if leitor.rExtrai(1, 'mensagemRetorno') <> '' then
+      begin
+        i := 0;
+        if (leitor.rExtrai(2, 'listaErros') <> '') then
+          begin
+            while Leitor.rExtrai(3, 'erro', '', i + 1) <> '' do
+              begin
+                ListaNfse.FMsgRetorno.Add;
+                ListaNfse.FMsgRetorno[i].FCodigo   := Leitor.rCampo(tcStr, 'cdMensagem');
+                ListaNfse.FMsgRetorno[i].FMensagem := Leitor.rCampo(tcStr, 'dsMensagem');
+                ListaNfse.FMsgRetorno[i].FCorrecao := Leitor.rCampo(tcStr, 'dsCorrecao');
+
+                inc(i);
+              end;
+          end;
+
+        if (leitor.rExtrai(2, 'listaAlertas') <> '') then
+          begin
+            while Leitor.rExtrai(3, 'alerta', '', i + 1) <> '' do
+              begin
+                ListaNfse.FMsgRetorno.Add;
+                ListaNfse.FMsgRetorno[i].FCodigo   := Leitor.rCampo(tcStr, 'cdMensagem');
+                ListaNfse.FMsgRetorno[i].FMensagem := Leitor.rCampo(tcStr, 'dsMensagem');
+                ListaNfse.FMsgRetorno[i].FCorrecao := Leitor.rCampo(tcStr, 'dsCorrecao');
+
+                inc(i);
+              end;
+          end;
+      end;
+
+    Result := True;
+  except
+    result := False;
+  end;
+end;
+
 end.

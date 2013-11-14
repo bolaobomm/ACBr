@@ -66,7 +66,7 @@ var
 begin
  ConfigCidade.VersaoSoap    := '1.1';
  ConfigCidade.Prefixo2      := '';
- ConfigCidade.Prefixo3      := '';
+ ConfigCidade.Prefixo3      := 'es:';
  ConfigCidade.Prefixo4      := '';
  ConfigCidade.Identificador := 'Id';
 
@@ -86,15 +86,15 @@ var
 begin
  ConfigSchema.VersaoCabecalho := '1.00';
  ConfigSchema.VersaoDados     := '1.00';
- ConfigSchema.VersaoXML       := '2';
- ConfigSchema.NameSpaceXML    := 'http://www.abrasf.org.br/';
- ConfigSchema.Cabecalho       := 'nfse.xsd';
- ConfigSchema.ServicoEnviar   := 'nfse.xsd';
- ConfigSchema.ServicoConSit   := 'nfse.xsd';
- ConfigSchema.ServicoConLot   := 'nfse.xsd';
- ConfigSchema.ServicoConRps   := 'nfse.xsd';
- ConfigSchema.ServicoConNfse  := 'nfse.xsd';
- ConfigSchema.ServicoCancelar := 'nfse.xsd';
+ ConfigSchema.VersaoXML       := '1';
+ ConfigSchema.NameSpaceXML    := 'http://services.enfsws.es';
+ ConfigSchema.Cabecalho       := '';
+ ConfigSchema.ServicoEnviar   := 'esRecepcionarLoteRpsEnvio_v01.xsd';
+ ConfigSchema.ServicoConSit   := 'esConsultarSituacaoLoteRpsEnvio_v01.xsd';
+ ConfigSchema.ServicoConLot   := 'esConsultarLoteRpsEnvio_v01.xsd';
+ ConfigSchema.ServicoConRps   := 'esConsultarNfsePorRpsEnvio_v01.xsd';
+ ConfigSchema.ServicoConNfse  := 'esConsultarNfseEnvio_v01.xsd';
+ ConfigSchema.ServicoCancelar := 'esCancelarNfseEnvio_v01.xsd';
  ConfigSchema.DefTipos        := '';
 
  Result := ConfigSchema;
@@ -132,11 +132,11 @@ function TProvedorEquiplano.GetAssinarXML(Acao: TnfseAcao): Boolean;
 begin
  case Acao of
    acRecepcionar: Result := False;
-   acConsSit:     Result := False;
-   acConsLote:    Result := False;
-   acConsNFSeRps: Result := False;
+   acConsSit:     Result := True;
+   acConsLote:    Result := True;
+   acConsNFSeRps: Result := True;
    acConsNFSe:    Result := False;
-   acCancelar:    Result := False;
+   acCancelar:    Result := True;
    acGerar:       Result := False;
    else           Result := False;
  end;
@@ -144,22 +144,19 @@ end;
 
 function TProvedorEquiplano.GetValidarLote: Boolean;
 begin
- Result := True;
+ Result := False;
 end;
 
 function TProvedorEquiplano.Gera_TagI(Acao: TnfseAcao; Prefixo3, Prefixo4,
   NameSpaceDad, Identificador, URI: String): AnsiString;
 begin
  case Acao of
-   acRecepcionar: Result := '<' + Prefixo3 + 'EnviarLoteRpsEnvio' + NameSpaceDad;
-   acConsSit:     Result := '<' + Prefixo3 + 'ConsultarSituacaoLoteRpsEnvio' + NameSpaceDad;
-   acConsLote:    Result := '<' + Prefixo3 + 'ConsultarLoteRpsEnvio' + NameSpaceDad;
-   acConsNFSeRps: Result := '<' + Prefixo3 + 'ConsultarNfseRpsEnvio' + NameSpaceDad;
+   acRecepcionar: Result := '<' + Prefixo3 + 'enviarLoteRpsEnvio' + NameSpaceDad;
+   acConsSit:     Result := '<' + Prefixo3 + 'esConsultarSituacaoLoteRpsEnvio' + NameSpaceDad;
+   acConsLote:    Result := '<' + Prefixo3 + 'esConsultarLoteRpsEnvio' + NameSpaceDad;
+   acConsNFSeRps: Result := '<' + Prefixo3 + 'esConsultarNfsePorRpsEnvio' + NameSpaceDad;
    acConsNFSe:    Result := '<' + Prefixo3 + 'ConsultarNfseEnvio' + NameSpaceDad;
-   acCancelar:    Result := '<' + Prefixo3 + 'CancelarNfseEnvio' + NameSpaceDad +
-                             '<' + Prefixo3 + 'Pedido>' +
-                              '<' + Prefixo4 + 'InfPedidoCancelamento' +
-                                 DFeUtil.SeSenao(Identificador <> '', ' ' + Identificador + '="' + URI + '"', '') + '>';
+   acCancelar:    Result := '<' + Prefixo3 + 'esCancelarNfseEnvio' + NameSpaceDad;
    acGerar:       Result := '';
  end;
 end;
@@ -180,13 +177,12 @@ end;
 function TProvedorEquiplano.Gera_TagF(Acao: TnfseAcao; Prefixo3: String): AnsiString;
 begin
  case Acao of
-   acRecepcionar: Result := '</' + Prefixo3 + 'EnviarLoteRpsEnvio>';
-   acConsSit:     Result := '</' + Prefixo3 + 'ConsultarSituacaoLoteRpsEnvio>';
-   acConsLote:    Result := '</' + Prefixo3 + 'ConsultarLoteRpsEnvio>';
-   acConsNFSeRps: Result := '</' + Prefixo3 + 'ConsultarNfseRpsEnvio>';
+   acRecepcionar: Result := '</' + Prefixo3 + 'enviarLoteRpsEnvio>';
+   acConsSit:     Result := '</' + Prefixo3 + 'esConsultarSituacaoLoteRpsEnvio>';
+   acConsLote:    Result := '</' + Prefixo3 + 'esConsultarLoteRpsEnvio>';
+   acConsNFSeRps: Result := '</' + Prefixo3 + 'esConsultarNfsePorRpsEnvio>';
    acConsNFSe:    Result := '</' + Prefixo3 + 'ConsultarNfseEnvio>';
-   acCancelar:    Result := '</' + Prefixo3 + 'Pedido>' +
-                            '</' + Prefixo3 + 'CancelarNfseEnvio>';
+   acCancelar:    Result := '</' + Prefixo3 + 'esCancelarNfseEnvio>';
    acGerar:       Result := '';
  end;
 end;
@@ -240,23 +236,33 @@ begin
            '<S:Envelope xmlns:S="http://schemas.xmlsoap.org/soap/envelope/" ' +
                        'xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" ' +
                        'xmlns:xsd="http://www.w3.org/2001/XMLSchema">' +
-            '<S:Body>' +
-
-            '</S:Body>' +
+             '<S:Header/>' +
+             '<S:Body>' +
+               '<esConsultarLoteRps xmlns="' + URLNS + '">' +
+                 '<nrVersaoXml>1</nrVersaoXml>' +
+                 '<xml>' +
+                   '&lt;?xml version="1.0" encoding="UTF-8"?&gt;' +
+                   StringReplace(StringReplace(DadosMsg, '<', '&lt;', [rfReplaceAll]), '>', '&gt;', [rfReplaceAll]) +
+                 '</xml>' +
+               '</esConsultarLoteRps>' +
+             '</S:Body>' +
            '</S:Envelope>';
 end;
 
 function TProvedorEquiplano.GeraEnvelopeConsultarNFSeporRPS(URLNS: String;
   CabMsg, DadosMsg, DadosSenha: AnsiString): AnsiString;
 begin
- result := '<?xml version="1.0" encoding="UTF-8"?>' +
-           '<S:Envelope xmlns:S="http://schemas.xmlsoap.org/soap/envelope/" ' +
-                       'xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" ' +
-                       'xmlns:xsd="http://www.w3.org/2001/XMLSchema">' +
-            '<S:Body>' +
-
-            '</S:Body>' +
-           '</S:Envelope>';
+ result:= '<S:Envelope xmlns:S="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ser="http://services.enfsws.es">' +
+             '<S:Header/>' +
+             '<S:Body>' +
+                '<ser:esConsultarNfsePorRps>' +
+                   '<ser:nrVersaoXml>1</ser:nrVersaoXml>' +
+                   '<ser:xml>' +
+                     StringReplace(StringReplace(DadosMsg, '<', '&lt;', [rfReplaceAll]), '>', '&gt;', [rfReplaceAll]) +
+                   '</ser:xml>' +
+                '</ser:esConsultarNfsePorRps>' +
+             '</S:Body>' +
+          '</S:Envelope>';
 end;
 
 function TProvedorEquiplano.GeraEnvelopeConsultarNFSe(URLNS: String; CabMsg,
@@ -275,14 +281,17 @@ end;
 function TProvedorEquiplano.GeraEnvelopeCancelarNFSe(URLNS: String; CabMsg,
   DadosMsg, DadosSenha: AnsiString): AnsiString;
 begin
- result := '<?xml version="1.0" encoding="UTF-8"?>' +
-           '<S:Envelope xmlns:S="http://schemas.xmlsoap.org/soap/envelope/" ' +
-                       'xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" ' +
-                       'xmlns:xsd="http://www.w3.org/2001/XMLSchema">' +
-            '<S:Body>' +
-
-            '</S:Body>' +
-           '</S:Envelope>';
+ result:= '<S:Envelope xmlns:S="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ser="http://services.enfsws.es">' +
+             '<S:Header/>' +
+             '<S:Body>' +
+                '<ser:esCancelarNfse>' +
+                   '<ser:nrVersaoXml>1</ser:nrVersaoXml>' +
+                   '<ser:xml>' +
+                     StringReplace(StringReplace(DadosMsg, '<', '&lt;', [rfReplaceAll]), '>', '&gt;', [rfReplaceAll]) +
+                   '</ser:xml>' +
+                '</ser:esCancelarNfse>' +
+             '</S:Body>' +
+          '</S:Envelope>';
 end;
 
 function TProvedorEquiplano.GeraEnvelopeGerarNFSe(URLNS: String; CabMsg,
@@ -302,10 +311,10 @@ begin
  case Acao of
    acRecepcionar: Result := 'urn:esRecepcionarLoteRps';
    acConsSit:     Result := 'urn:esConsultarSituacaoLoteRps';
-   acConsLote:    Result := '';
-   acConsNFSeRps: Result := '';
-   acConsNFSe:    Result := '';
-   acCancelar:    Result := '';
+   acConsLote:    Result := 'urn:esConsultarLoteRps';
+   acConsNFSeRps: Result := 'urn:esConsultarNfsePorRps';
+   acConsNFSe:    Result := 'urn:esConsultarNfse';
+   acCancelar:    Result := 'urn:esCancelarNfse';
    acGerar:       Result := '';
  end;
 end;
@@ -313,26 +322,15 @@ end;
 function TProvedorEquiplano.GetRetornoWS(Acao: TnfseAcao; RetornoWS: AnsiString): AnsiString;
 begin
  case Acao of
-   acRecepcionar: begin
-                   Result := SeparaDados( RetornoWS, 'ns:return' );
-                  end;
-   acConsSit:     begin
-                   Result := SeparaDados( RetornoWS, 'ns:return' );
-                  end;
-   acConsLote:    begin
-                   Result := SeparaDados( RetornoWS, 'ns:return' );
-                  end;
-   acConsNFSeRps: begin
-                   Result := SeparaDados( RetornoWS, 'ns:return' );
-                  end;
-   acConsNFSe:    begin
-                   Result := SeparaDados( RetornoWS, 'ns:return' );
-                  end;
-   acCancelar:    begin
-                   Result := SeparaDados( RetornoWS, 'ns:return' );
-                  end;
+   acRecepcionar: Result := SeparaDados( RetornoWS, 'ns:return' );
+   acConsSit:     Result := SeparaDados( RetornoWS, 'ns:return' );
+   acConsLote:    Result := SeparaDados( RetornoWS, 'ns:return' );
+   acConsNFSeRps: Result := SeparaDados( RetornoWS, 'ns:return' );
+   acConsNFSe:    Result := SeparaDados( RetornoWS, 'ns:return' );
+   acCancelar:    Result := SeparaDados( RetornoWS, 'ns:return' );
    acGerar:       Result := '';
  end;
+ Result:= AnsiString(StringReplace(String(Result), '&#xd;', '', [rfReplaceAll]));
 end;
 
 function TProvedorEquiplano.GeraRetornoNFSe(Prefixo: String;

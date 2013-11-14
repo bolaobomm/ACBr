@@ -106,6 +106,7 @@ type
     FValorIssRetido: currency;
     FDescontoCondicionado: currency;
     FDescontoIncondicionado: currency;
+    FJustificativaDeducao: String;
   published
     property ValorServicos: currency read FValorServicos write FValorServicos;
     property ValorDeducoes: currency read FValorDeducoes write FValorDeducoes;
@@ -130,6 +131,8 @@ type
     property ValorIssRetido: currency read FValorIssRetido write FValorIssRetido;
     property DescontoCondicionado: currency read FDescontoCondicionado write FDescontoCondicionado;
     property DescontoIncondicionado: currency read FDescontoIncondicionado write FDescontoIncondicionado;
+    //Just. usada pelo provedor Equiplano
+    property JustificativaDeducao: String read FJustificativaDeducao write FJustificativaDeducao;
   end;
 
   TItemServicoCollection = class(TCollection)
@@ -279,6 +282,7 @@ type
     FCEP: string;
     FxMunicipio: string;
     FCodigoPais: integer;
+    FxPais: String;
   published
     property TipoLogradouro: string read FTipoLogradouro write FTipoLogradouro;
     property Endereco: string read FEndereco write FEndereco;
@@ -291,6 +295,7 @@ type
     property CEP: string read FCEP write FCEP;
     property xMunicipio: string read FxMunicipio write FxMunicipio;
     property CodigoPais: integer read FCodigoPais write FCodigoPais; 
+    property xPais: String read FxPais write FxPais;
   end;
 
  TContato = class(TPersistent)

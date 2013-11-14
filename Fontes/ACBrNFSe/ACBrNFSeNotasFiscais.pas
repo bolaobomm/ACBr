@@ -589,6 +589,7 @@ var
 {$IFDEF DELPHI2009_UP}
  Encoding : TEncoding;
 {$ENDIF}
+ CNPJ, IM: String;
 begin
  try
   {$IFDEF DELPHI2009_UP}
@@ -611,7 +612,9 @@ begin
                     then Tipo := 4
                     else if pos('</Rps>', ArquivoXML.Text) > 0
                          then Tipo := 5
-                         else Tipo := 0;
+                         else if pos('</listaRps>', ArquivoXML.Text) > 0
+                              then Tipo := 6
+                              else Tipo := 0;
 
   case Tipo of
    1: begin
@@ -702,7 +705,34 @@ begin
          end;
         end;
       end;
-   end;
+   6: begin //Equiplano
+        CNPJ:= Copy(ArquivoXML.Text,
+                    Pos('<nrCnpj>', ArquivoXML.Text) + 8,
+                    Pos('</nrCnpj>',ArquivoXML.Text) - (Pos('<nrCnpj>', ArquivoXML.Text) + 8));
+        IM:= Copy(ArquivoXML.Text,
+                  Pos('<nrInscricaoMunicipal>', ArquivoXML.Text) + 22,
+                  Pos('</nrInscricaoMunicipal>',ArquivoXML.Text) - (Pos('<nrInscricaoMunicipal>', ArquivoXML.Text) + 22));
+
+        while pos('</rps>',ArquivoXML.Text) > 0 do
+          begin
+            XML            := Copy(ArquivoXML.Text, Pos('<rps>', ArquivoXML.Text), Pos('</rps>', ArquivoXML.Text) + 5);
+            ArquivoXML.Text:= Trim(Copy(ArquivoXML.Text, Pos('</rps>', ArquivoXML.Text) + 6, Length(ArquivoXML.Text)));
+            LocNFSeR       := TNFSeR.Create(Self.Add.NFSe);
+            //LocNFSeR.Provedor:= proEquiplano;
+            LocNFSeR.NFSe.Prestador.Cnpj:= CNPJ;
+            LocNFSeR.NFSe.Prestador.InscricaoMunicipal:= IM;
+            try
+              LocNFSeR.Leitor.Arquivo := XML;
+              LocNFSeR.VersaoXML      := NotaUtil.VersaoXML(XML);
+              LocNFSeR.LerXml;
+              Items[Self.Count-1].XML_Rps := LocNFSeR.Leitor.Arquivo;
+              Items[Self.Count-1].NomeArq := CaminhoArquivo;
+            finally
+              LocNFSeR.Free;
+            end;
+          end;
+      end;
+  end;
 
   if pos('</Notas>', ArquivoXML.Text)> 0 then begin
     while pos('</Notas>', ArquivoXML.Text) > 0 do begin

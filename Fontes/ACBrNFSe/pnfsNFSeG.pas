@@ -7,13 +7,13 @@ uses
 {$IFNDEF VER130}
   Variants,
 {$ENDIF}
-  pnfsNFSe, pnfsConversao, ACBrUtil, ACBrDFeUtil;
+  pnfsNFSe, pnfsConversao, ACBrUtil, ACBrDFeUtil, StrUtils;
 
 type
 
   TNFSeG = class
    private
-
+     class function GetIdEntidadeEquiplano(const IBGE: Integer): String;
    protected
 
    public
@@ -83,6 +83,25 @@ type
 
      class function Gera_DadosMsgConsSeqRPSDSF(TagI, TagF: AnsiString; VersaoXML, CodCidade,
                                                IM, CNPJ, SeriePrestacao: String): AnsiString;
+
+
+     //As classes abaixos são exclusivas do provedor Equiplano
+     class function Gera_DadosMsgEnviarLoteEquiplano(VersaoXML, NumeroLote, QtdeRPS, CNPJ, IM: String;
+                                                     CodCidade: Integer;
+                                                     OptanteSimples: Boolean;
+                                                     Notas, TagI, TagF: AnsiString): AnsiString;
+     class function Gera_DadosMsgConsLoteEquiplano(CodCidade: Integer;
+                                                   CNPJ, IM, Protocolo, NumeroLote: String;
+                                                   TagI, TagF: AnsiString): AnsiString;
+     class function Gera_DadosMsgConsNFSeRPSEquiplano(CodCidade: Integer;
+                                                      NumeroRps, CNPJ, IM: String;
+                                                      TagI, TagF: AnsiString): AnsiString;
+     class function Gera_DadosMsgCancelarNFSeEquiplano(CodCidade: Integer;
+                                                       CNPJ, IM, NumeroNFSe, MotivoCancelamento: String;
+                                                       TagI, TagF: AnsiString): AnsiString;
+     class function Gera_DadosMsgConsSitLoteEquiplano(CodCidade: Integer;
+                                                      CNPJ, IM, Protocolo, NumeroLote: String;
+                                                      TagI, TagF: AnsiString): AnsiString;
 
    published
 
@@ -647,6 +666,107 @@ begin
              '</Cabecalho>';
 
  Result := TagI + DadosMsg + TagF;
+end;
+
+class function TNFSeG.GetIdEntidadeEquiplano(const IBGE: Integer): String;
+begin
+  case IBGE of
+    4102307: Result:= '23'; // Balsa Nova/PR
+    4104501: Result:= '50'; // Capanema/PR
+    4104659: Result:= '141';// Carambei/PR
+    4107207: Result:= '68'; // Dois Vizinhos/PR
+    4108403: Result:= '35'; // Francisco Beltrao/PR
+    4109807: Result:= '332';// Ibipora/PR
+    4120606: Result:= '28'; // Prudentopolis/PR
+    4122008: Result:= '19'; // Rio Azul/PR
+    4123501: Result:= '54'; // Santa Helena/PR
+    4126306: Result:= '61'; // Senges/PR
+    4127106: Result:= '260';// Telemaco Borba/PR
+    4127700: Result:= '136';// Toledo/PR
+  else
+    Result:= '';
+  end;
+end;
+
+class function TNFSeG.Gera_DadosMsgEnviarLoteEquiplano(VersaoXML, NumeroLote, QtdeRPS, CNPJ,
+  IM: String; CodCidade: Integer; OptanteSimples: Boolean; Notas, TagI, TagF: AnsiString): AnsiString;
+begin
+  Result:= TagI +
+             '<lote>' +
+               '<nrLote>' + NumeroLote + '</nrLote>' +
+               '<qtRps>' + QtdeRPS + '</qtRps>' +
+               '<nrVersaoXml>' + VersaoXML + '</nrVersaoXml>' +
+               '<prestador>' +
+                 '<nrCnpj>' + CNPJ + '</nrCnpj>' +
+                 '<nrInscricaoMunicipal>' +  IM + '</nrInscricaoMunicipal>' +
+                 '<isOptanteSimplesNacional>' + IfThen(OptanteSimples, '1', '2') + '</isOptanteSimplesNacional>' +
+                 '<idEntidade>' + GetIdEntidadeEquiplano(CodCidade) + '</idEntidade>' +
+               '</prestador>' +
+               '<listaRps>' +
+                 Notas +
+               '</listaRps>' +
+             '</lote>' +
+           TagF;
+end;
+
+class function TNFSeG.Gera_DadosMsgConsLoteEquiplano(CodCidade: Integer;
+  CNPJ, IM, Protocolo, NumeroLote: String; TagI, TagF: AnsiString): AnsiString;
+begin
+  Result:= TagI +
+             '<prestador>' +
+               '<nrInscricaoMunicipal>' + IM + '</nrInscricaoMunicipal>' +
+               '<cnpj>' + CNPJ + '</cnpj>' +
+               '<idEntidade>' + GetIdEntidadeEquiplano(CodCidade) + '</idEntidade>' +
+             '</prestador>' +
+             '<nrLoteRps>' + NumeroLote + '</nrLoteRps>' +
+             //'<nrProtocolo>' + Protocolo + '</nrProtocolo>' +
+           TagF;
+end;
+
+class function TNFSeG.Gera_DadosMsgConsNFSeRPSEquiplano(CodCidade: Integer;
+  NumeroRps, CNPJ, IM: String; TagI, TagF: AnsiString): AnsiString;
+begin
+  Result:= TagI +
+             '<rps>' +
+               '<nrRps>' + NumeroRps + '</nrRps>' +
+               '<nrEmissorRps>1</nrEmissorRps>' +
+             '</rps>' +
+             '<prestador>' +
+               '<nrInscricaoMunicipal>' + IM + '</nrInscricaoMunicipal>' +
+               '<cnpj>' + CNPJ + '</cnpj>' +
+               '<idEntidade>' + GetIdEntidadeEquiplano(CodCidade) + '</idEntidade>' +
+             '</prestador>' +
+           TagF;
+end;
+
+class function TNFSeG.Gera_DadosMsgCancelarNFSeEquiplano(
+  CodCidade: Integer; CNPJ, IM, NumeroNFSe, MotivoCancelamento: String;
+  TagI, TagF: AnsiString): AnsiString;
+begin
+  Result:= TagI +
+             '<prestador>' +
+               '<nrInscricaoMunicipal>' + IM + '</nrInscricaoMunicipal>' +
+               '<cnpj>' + CNPJ + '</cnpj>' +
+               '<idEntidade>' + GetIdEntidadeEquiplano(CodCidade) + '</idEntidade>' +
+             '</prestador>' +
+             '<nrNfse>' + NumeroNFSe + '</nrNfse>' +
+             '<dsMotivoCancelamento>' + MotivoCancelamento + '</dsMotivoCancelamento>' +
+           TagF;
+end;
+
+class function TNFSeG.Gera_DadosMsgConsSitLoteEquiplano(CodCidade: Integer;
+  CNPJ, IM, Protocolo, NumeroLote: String; TagI,
+  TagF: AnsiString): AnsiString;
+begin
+  Result:= TagI +
+             '<prestador>' +
+               '<nrInscricaoMunicipal>' + IM + '</nrInscricaoMunicipal>' +
+               '<cnpj>' + CNPJ + '</cnpj>' +
+               '<idEntidade>' + GetIdEntidadeEquiplano(CodCidade) + '</idEntidade>' +
+             '</prestador>' +
+             '<nrLoteRps>' + NumeroLote + '</nrLoteRps>' +
+             //'<nrProtocolo>' + Protocolo + '</nrProtocolo>' +
+           TagF;
 end;
 
 end.

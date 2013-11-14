@@ -89,6 +89,7 @@ type
     destructor Destroy; override;
     function LerXml: boolean;
     function LerXml_provedorIssDsf: boolean;
+    function LerXML_provedorEquiplano: boolean;
   published
     property PathArquivoMunicipios: string  read FPathArquivoMunicipios  write FPathArquivoMunicipios;
     property PathArquivoTabServicos: string read FPathArquivoTabServicos write FPathArquivoTabServicos;
@@ -561,9 +562,20 @@ begin
         if Leitor.rExtrai(3, 'NfseCancelamento') <> ''
          then begin
           ListaNfse.FCompNfse[i].NFSe.NfseCancelamento.DataHora := Leitor.rCampo(tcDatHor, 'DataHora');
-          // Incluido por joel takei 09/07/2013
-          ListaNfse.FCompNfse[i].NFSe.Status := srCancelado;
-          ListaNfse.FCompNfse[i].NFSe.NfseCancelamento.Pedido.CodigoCancelamento := Leitor.rCampo(tcStr, 'CodigoCancelamento');
+
+          // provedor Betha sempre retorna a o grupo "NfseCancelamento" mesmo não estando cancelada
+          // Incluido por Roberto Godinho 13/11/20113
+          if FProvedor = proBetha then
+          begin
+            Leitor.rExtrai(4,'InfConfirmacaoCancelamento');
+            if StrToBool(Leitor.rCampo(tcStr, 'Sucesso'))then
+              ListaNfse.FCompNfse[i].NFSe.Status := srCancelado;
+          end else
+            begin
+              // Incluido por joel takei 09/07/2013
+              ListaNfse.FCompNfse[i].NFSe.Status := srCancelado;
+              ListaNfse.FCompNfse[i].NFSe.NfseCancelamento.Pedido.CodigoCancelamento := Leitor.rCampo(tcStr, 'CodigoCancelamento');
+            end;
 
           // Incluido por Mauro Gomes
           // se não encontrou o campo DataHora, deve procurar pelo DataHoraCancelamento
@@ -920,5 +932,65 @@ begin
   end;
 end;
 }
+
+function TretNfseRps.LerXML_provedorEquiplano: boolean;
+var
+  i: Integer;
+begin
+  try
+    Leitor.Arquivo := NotaUtil.RetirarPrefixos(Leitor.Arquivo);
+    Leitor.Grupo   := Leitor.Arquivo;
+
+    if leitor.rExtrai(1, 'nfse') <> '' then
+      begin
+        ListaNfse.FCompNfse.Add;
+        ListaNfse.FCompNfse[0].FNFSe.Numero                 := leitor.rCampo(tcStr, 'nrNfse');
+        ListaNfse.FCompNfse[0].FNFSe.CodigoVerificacao      := leitor.rCampo(tcStr, 'cdAutenticacao');
+        ListaNfse.FCompNfse[0].FNFSe.DataEmissao            := leitor.rCampo(tcDatHor, 'dtEmissaoNfs');
+        ListaNfse.FCompNfse[0].FNFSe.IdentificacaoRps.Numero:= leitor.rCampo(tcStr, 'nrRps');
+        if Leitor.rExtrai(2, 'cancelamento') <> '' then
+          begin
+            ListaNfse.FCompNfse[0].NFSe.NfseCancelamento.DataHora:= Leitor.rCampo(tcDatHor, 'dtCancelamento');
+            ListaNfse.FCompNfse[0].NFSe.MotivoCancelamento       := Leitor.rCampo(tcStr, 'dsCancelamento');
+            ListaNfse.FCompNfse[0].NFSe.Status := srCancelado;
+          end;
+      end;
+
+    if leitor.rExtrai(1, 'mensagemRetorno') <> '' then
+      begin
+        i := 0;
+        if (leitor.rExtrai(2, 'listaErros') <> '') then
+          begin
+            while Leitor.rExtrai(3, 'erro', '', i + 1) <> '' do
+              begin
+                ListaNfse.FMsgRetorno.Add;
+                ListaNfse.FMsgRetorno[i].FCodigo   := Leitor.rCampo(tcStr, 'cdMensagem');
+                ListaNfse.FMsgRetorno[i].FMensagem := Leitor.rCampo(tcStr, 'dsMensagem');
+                ListaNfse.FMsgRetorno[i].FCorrecao := Leitor.rCampo(tcStr, 'dsCorrecao');
+
+                inc(i);
+              end;
+          end;
+
+        if (leitor.rExtrai(2, 'listaAlertas') <> '') then
+          begin
+            while Leitor.rExtrai(3, 'alerta', '', i + 1) <> '' do
+              begin
+                ListaNfse.FMsgRetorno.Add;
+                ListaNfse.FMsgRetorno[i].FCodigo   := Leitor.rCampo(tcStr, 'cdMensagem');
+                ListaNfse.FMsgRetorno[i].FMensagem := Leitor.rCampo(tcStr, 'dsMensagem');
+                ListaNfse.FMsgRetorno[i].FCorrecao := Leitor.rCampo(tcStr, 'dsCorrecao');
+
+                inc(i);
+              end;
+          end;
+      end;
+
+    Result := True;
+  except
+    result := False;
+  end;
+end;
+
 end.
 

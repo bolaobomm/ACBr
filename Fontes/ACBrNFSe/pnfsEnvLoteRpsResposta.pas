@@ -63,6 +63,7 @@ type
     destructor Destroy; override;
     function LerXml: boolean;
     function LerXml_provedorIssDsf: boolean;
+    function LerXML_provedorEquiplano: Boolean;
   published
     property Leitor: TLeitor  read FLeitor   write FLeitor;
     property InfRec: TInfRec  read FInfRec   write FInfRec;
@@ -283,6 +284,54 @@ begin
       end;
       Result := True;
     end;
+  except
+    result := False;
+  end;
+end;
+
+function TretEnvLote.LerXML_provedorEquiplano: Boolean;
+var
+  i: Integer;
+begin
+  try
+    Leitor.Arquivo := NotaUtil.RetirarPrefixos(Leitor.Arquivo);
+    Leitor.Grupo   := Leitor.Arquivo;
+
+    infRec.FNumeroLote      := Leitor.rCampo(tcStr, 'nrLote');
+    infRec.FDataRecebimento := Leitor.rCampo(tcDatHor, 'dtRecebimento');
+    infRec.FProtocolo       := Leitor.rCampo(tcStr, 'nrProtocolo');
+
+    if leitor.rExtrai(1, 'mensagemRetorno') <> '' then
+    begin
+      i := 0;
+      if (leitor.rExtrai(2, 'listaErros') <> '') then
+      begin
+        while Leitor.rExtrai(3, 'erro', '', i + 1) <> '' do
+        begin
+          InfRec.FMsgRetorno.Add;
+          InfRec.FMsgRetorno[i].FCodigo  := Leitor.rCampo(tcStr, 'cdMensagem');
+          InfRec.FMsgRetorno[i].FMensagem:= Leitor.rCampo(tcStr, 'dsMensagem');
+          InfRec.FMsgRetorno[i].FCorrecao:= Leitor.rCampo(tcStr, 'dsCorrecao');
+
+          inc(i);
+        end;
+      end;
+
+      if (leitor.rExtrai(2, 'listaAlertas') <> '') then
+      begin
+        while Leitor.rExtrai(3, 'alerta', '', i + 1) <> '' do
+        begin
+          InfRec.FMsgRetorno.Add;
+          InfRec.FMsgRetorno[i].FCodigo  := Leitor.rCampo(tcStr, 'cdMensagem');
+          InfRec.FMsgRetorno[i].FMensagem:= Leitor.rCampo(tcStr, 'dsMensagem');
+          InfRec.FMsgRetorno[i].FCorrecao:= Leitor.rCampo(tcStr, 'dsCorrecao');
+
+          inc(i);
+        end;
+      end;
+    end;
+
+    Result := True;
   except
     result := False;
   end;
