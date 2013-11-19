@@ -1280,19 +1280,17 @@ begin
      if (Leitor.rExtrai(5, 'Prestador') <> '')
       then begin
        NFSe.Prestador.InscricaoMunicipal := Leitor.rCampo(tcStr, 'InscricaoMunicipal');
+       NFSe.PrestadorServico.IdentificacaoPrestador.InscricaoMunicipal := NFSe.Prestador.InscricaoMunicipal;
 
-       if VersaoXML='1'
+       if Leitor.rExtrai(6, 'CpfCnpj') <> ''
         then begin
-         if Leitor.rExtrai(6, 'CpfCnpj') <> ''
-          then begin
-            NFSe.PrestadorServico.IdentificacaoPrestador.Cnpj := Leitor.rCampo(tcStr, 'Cpf');
-            if NFSe.PrestadorServico.IdentificacaoPrestador.Cnpj = ''
-             then NFSe.PrestadorServico.IdentificacaoPrestador.Cnpj := Leitor.rCampo(tcStr, 'Cnpj');
-          end;
+          NFSe.PrestadorServico.IdentificacaoPrestador.Cnpj := Leitor.rCampo(tcStr, 'Cpf');
+          if NFSe.PrestadorServico.IdentificacaoPrestador.Cnpj = ''
+            then NFSe.PrestadorServico.IdentificacaoPrestador.Cnpj := Leitor.rCampo(tcStr, 'Cnpj');
         end
-        else begin
-         NFSe.Prestador.Cnpj := Leitor.rCampo(tcStr, 'Cnpj');
-        end;
+       else begin
+        NFSe.Prestador.Cnpj := Leitor.rCampo(tcStr, 'Cnpj');
+       end;
 
       end; // fim Prestador
 

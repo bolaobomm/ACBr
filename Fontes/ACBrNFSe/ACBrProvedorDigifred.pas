@@ -134,10 +134,10 @@ function TProvedorDigifred.GetAssinarXML(Acao: TnfseAcao): Boolean;
 begin
  case Acao of
    acRecepcionar: Result := True;
-   acConsSit:     Result := True;
-   acConsLote:    Result := True;
-   acConsNFSeRps: Result := True;
-   acConsNFSe:    Result := True;
+   acConsSit:     Result := False;
+   acConsLote:    Result := False;
+   acConsNFSeRps: Result := False;
+   acConsNFSe:    Result := False;
    acCancelar:    Result := True;
    acGerar:       Result := True;
    else           Result := False;

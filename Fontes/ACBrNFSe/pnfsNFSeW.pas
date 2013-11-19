@@ -565,7 +565,7 @@ begin
      Gerador.wCampoNFSe(tcStr, '#41', 'Complemento', 001, 060, 0, NFSe.Tomador.Endereco.Complemento, '');
      Gerador.wCampoNFSe(tcStr, '#42', 'Bairro     ', 001, 060, 0, NFSe.Tomador.Endereco.Bairro, '');
 
-     if FProvedor in [proCoplan, proDigifred, proEquiplano, proGovDigital, proISSNet, proVirtual]
+     if FProvedor in [proCoplan, proEquiplano, proGovDigital, proISSNet, proVirtual]
       then begin
         Gerador.wCampoNFSe(tcStr, '#43', 'Cidade', 007, 007, 0, SomenteNumeros(NFSe.Tomador.Endereco.CodigoMunicipio), '');
         Gerador.wCampoNFSe(tcStr, '#44', 'Estado', 002, 002, 0, NFSe.Tomador.Endereco.UF, '');
@@ -697,7 +697,7 @@ begin
 
     GerarIdentificacaoRPS;
 
-    if FProvedor in [proAgili, proCoplan, proDigifred, proFiorilli, proISSe,
+    if FProvedor in [proAgili, proCoplan, proFiorilli, proISSe,
                      proISSDigital, proProdata, proPVH, proSaatri, proFreire]
       then Gerador.wCampoNFSe(tcDat,    '#4', 'DataEmissao', 10, 10, 1, NFSe.DataEmissao, DSC_DEMI)
       else Gerador.wCampoNFSe(tcDatHor, '#4', 'DataEmissao', 19, 19, 1, NFSe.DataEmissao, DSC_DEMI);

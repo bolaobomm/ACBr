@@ -1696,6 +1696,7 @@ begin
 
  case FProvedor of
   proEquiplano: URISig:= '';
+  proDigifred:  URISig := 'CANC' + TNFSeCancelarNfse(Self).FNumeroNFSe;
   proSaatri: URISig := 'Cancelamento_' + TNFSeCancelarNfse(Self).FCnpj;
   proIssIntel,
   proISSNet: begin
@@ -2434,11 +2435,9 @@ begin
    Self.ConsLote.FraseSecreta := TACBrNFSe( FACBrNFSe ).NotasFiscais.Items[0].NFSe.Prestador.FraseSecreta;
  end;
 
- if (TACBrNFSe( FACBrNFSe ).Configuracoes.WebServices.ConsultaLoteAposEnvio) and (Result) then
- begin
-   // Alterado por Cleiver em 10-10-2013
-   if not (TACBrNFSe( FACBrNFSe ).Configuracoes.WebServices.Provedor in [proProdata, proPVH, profintelISS, proSaatri, proISSDigital, proFiorilli, proFreire])
-    then begin
+ if (TACBrNFSe( FACBrNFSe ).Configuracoes.WebServices.ConsultaLoteAposEnvio) and (Result) then begin
+   //Alterado por Cleiver em 10-10-2013
+   if not (TACBrNFSe( FACBrNFSe ).Configuracoes.WebServices.Provedor in [proDigifred, proProdata, proPVH, profintelISS, proSaatri, proISSDigital, proFiorilli, proFreire]) then begin
      Result := Self.ConsSitLote.Executar;
 
      if not (Result)
@@ -3597,7 +3596,6 @@ begin
     if j > 0
      then begin
       FRetNfse := FRetCompNfse;
-
       FRetNFSe := FProvedorClass.GeraRetornoNFSe(Prefixo3, FRetNFSe, FNomeCidade);
 
 //      if FConfiguracoes.Geral.Salvar

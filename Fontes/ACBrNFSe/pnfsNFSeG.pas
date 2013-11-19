@@ -420,7 +420,7 @@ begin
                     '</' + Prefixo4 + 'Numero>' +
 
                     // alterado por Akai - L. Massao Aihara 12/11/2013
-                   DFeUtil.SeSenao(AProvedor in [pro4R, proISSe, profintelISS, proFiorilli,
+                   DFeUtil.SeSenao(AProvedor in [pro4R, proISSe, profintelISS, proFiorilli,proDigifred,
                                                  proVirtual, proISSDigital, proSaatri],
 
                     '<' + Prefixo4 + 'CpfCnpj>' +
