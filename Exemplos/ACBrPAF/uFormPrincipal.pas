@@ -974,11 +974,11 @@ begin
     with ACBrPAF.PAF_H.RegistroH2.New do
     begin
       CNPJ_CRED_CARTAO := '99.999.999/9999-11';
-      NUM_FAB          := GerarDados('S', 20);
-      MF_ADICIONAL     := '';
-      TIPO_ECF         := GerarDados('S', 7);
-      MARCA_ECF        := GerarDados('S', 20);
-      MODELO_ECF       := GerarDados('S', 20);
+      NUM_FAB          := uFormPrincipal.NUM_FAB;
+      MF_ADICIONAL     := uFormPrincipal.MF_ADICIONAL;
+      TIPO_ECF         := uFormPrincipal.TIPO_ECF;
+      MARCA_ECF        := uFormPrincipal.MARCA_ECF;
+      MODELO_ECF       := uFormPrincipal.MODELO_ECF;
       COO              := GerarDados('I', 6);
       CCF              := GerarDados('I', 6);
       VLR_TROCO        := GerarDados('I', 2);
@@ -1045,7 +1045,8 @@ begin
     DT_FIN      := Date;
     ER_PAF_ECF  := '0113';
 
-    InclusaoExclusao:= False;
+    InclusaoExclusao := False;
+    RegistroValido   := True;
 
     // Registro R02 - Relação de Reduções Z
     //        e R03 - Detalhe da Redução Z
