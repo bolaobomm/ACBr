@@ -6411,7 +6411,7 @@ begin
   if FileExists(APathArquivo) then
   begin
     // assinar o arquivo baixado da impressora
-    EADStr := 'EAD' + GetACBrEAD.AssinarArquivoComEAD(APathArquivo, True);
+    EADStr := 'EAD' + GetACBrEAD.CalcularEADArquivo(APathArquivo);
 
     // gravar o arquivo texto com a assinatura EAD
     WriteToTXT(ChangeFileExt(APathArquivo, '.TXT'), EADStr, False, True);
@@ -6429,7 +6429,7 @@ begin
   if FileExists(APathArquivo) then
   begin
     // assinar o arquivo baixado da impressora
-    EADStr := 'EAD' + GetACBrEAD.AssinarArquivoComEAD(APathArquivo, True);
+    EADStr := 'EAD' + GetACBrEAD.CalcularEADArquivo(APathArquivo);
 
     // gravar o arquivo texto com a assinatura EAD
     WriteToTXT(ChangeFileExt(APathArquivo, '.TXT'), EADStr, False, True);
