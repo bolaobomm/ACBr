@@ -167,11 +167,12 @@ function TInfEvento.getcOrgao: integer;
 //  (12,27,16,13,29,23,53,32,52,21,51,50,31,15,25,41,26,22,33,24,43,11,14,42,35,28,17);
 begin
   Result := StrToInt(copy(FChave, 1, 2));
-
+  (*
   {Estados que utilizam a SVAN: ES, MA, PA, PI, RN}
   {Devem utilizar 91}
   if Result in [32,21,15,22,24] then
     Result := 91;
+  *)  
 end;
 
 function TInfEvento.getDescEvento: string;
