@@ -568,11 +568,24 @@ begin
           if Leitor.rExtrai(iNivel + 3, 'NfseCancelamento') <> ''
            then begin
             ListaNfse.FCompNfse[i].NFSe.NfseCancelamento.DataHora := Leitor.rCampo(tcDatHor, 'DataHora');
-
-            // Incluido por Mauro Gomes
-            // se não encontrou o campo DataHora, deve procurar pelo DataHoraCancelamento
-            if (ListaNfse.FCompNfse[i].NFSe.NfseCancelamento.DataHora = 0) then
-               ListaNfse.FCompNfse[i].NFSe.NfseCancelamento.DataHora := Leitor.rCampo(tcDatHor, 'DataHoraCancelamento');
+            // provedor Betha sempre retorna a o grupo "NfseCancelamento" mesmo não estando cancelada,
+            // o cancelamento deverá ser verificado na TAG especifica
+            // Incluido por Roberto Godinho 13/11/20113
+            if FProvedor = proBetha
+             then begin
+              Leitor.rExtrai(4,'InfConfirmacaoCancelamento');
+              if StrToBool(Leitor.rCampo(tcStr, 'Sucesso'))
+               then begin
+                ListaNfse.CompNfse[i].NFSe.Status := srCancelado;
+                ListaNfse.CompNfse[i].NFSe.NfseCancelamento.DataHora := Leitor.rCampo(tcDatHor, 'DataHora');
+               end;
+             end else
+              begin
+                // Incluido por Mauro Gomes
+                // se não encontrou o campo DataHora, deve procurar pelo DataHoraCancelamento
+                if (ListaNfse.FCompNfse[i].NFSe.NfseCancelamento.DataHora = 0) then
+                   ListaNfse.FCompNfse[i].NFSe.NfseCancelamento.DataHora := Leitor.rCampo(tcDatHor, 'DataHoraCancelamento');
+              end;
            end;
 
           // Grupo da TAG <NfseSubstituicao> ********************************************
@@ -806,11 +819,11 @@ begin
             ListaNfse.FCompNfse[i].FNFSe.DataEmissao            := leitor.rCampo(tcDatHor, 'dtEmissaoNfs');
             ListaNfse.FCompNfse[i].FNFSe.IdentificacaoRps.Numero:= leitor.rCampo(tcStr, 'nrRps');
             if Leitor.rExtrai(3, 'cancelamento') <> '' then
-              begin
-                ListaNfse.FCompNfse[i].NFSe.NfseCancelamento.DataHora:= Leitor.rCampo(tcDatHor, 'dtCancelamento');
-                ListaNfse.FCompNfse[i].NFSe.MotivoCancelamento       := Leitor.rCampo(tcStr, 'dsCancelamento');
-                ListaNfse.FCompNfse[i].NFSe.Status := srCancelado;
-              end;
+            begin
+              ListaNfse.FCompNfse[i].NFSe.NfseCancelamento.DataHora:= Leitor.rCampo(tcDatHor, 'dtCancelamento');
+              ListaNfse.FCompNfse[i].NFSe.MotivoCancelamento       := Leitor.rCampo(tcStr, 'dsCancelamento');
+              ListaNfse.FCompNfse[i].NFSe.Status := srCancelado;
+            end;
             inc(i);
           end;
       end;
