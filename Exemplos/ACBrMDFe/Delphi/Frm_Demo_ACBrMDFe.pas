@@ -774,20 +774,65 @@ begin
    ACBrMDFe1.Manifestos.LoadFromFile(OpenDialog1.FileName);
    if not(InputQuery('WebServices Cancelamento', 'Justificativa', vAux))
     then exit;
-   {
-   ACBrMDFe1.Cancelamento(vAux);
-   MemoResp.Lines.Text :=  UTF8Encode(ACBrMDFe1.WebServices.Cancelamento.RetWS);
-   memoRespWS.Lines.Text :=  UTF8Encode(ACBrMDFe1.WebServices.Cancelamento.RetWS);
+
+   with ACBrMDFe1.EventoMDFe.Evento.Add do
+    begin
+     infEvento.chMDFe   := Copy(ACBrMDFe1.Manifestos.Items[0].MDFe.infMDFe.ID, 5, 44);
+     infEvento.CNPJ     := edtEmitCNPJ.Text;
+     infEvento.dhEvento := now;
+//  TpcnTpEvento = (teCCe, teCancelamento, teManifDestConfirmacao, teManifDestCiencia,
+//                  teManifDestDesconhecimento, teManifDestOperNaoRealizada,
+//                  teEncerramento);
+     infEvento.tpEvento   := teCancelamento;
+     infEvento.nSeqEvento := 1;
+
+     infEvento.detEvento.nProt := ACBrMDFe1.Manifestos.Items[0].MDFe.procMDFe.nProt;
+     infEvento.detEvento.xJust := trim(vAux);
+    end;
+
+   ACBrMDFe1.EnviarEventoMDFe( 1 ); // 1 = Numero do Lote
+
+   MemoResp.Lines.Text   := UTF8Encode(ACBrMDFe1.WebServices.EnvEvento.RetWS);
+   memoRespWS.Lines.Text := UTF8Encode(ACBrMDFe1.WebServices.EnvEvento.RetWS);
    LoadXML(MemoResp, WBResposta);
-   ShowMessage(IntToStr(ACBrMDFe1.WebServices.Cancelamento.cStat));
-   ShowMessage(ACBrMDFe1.WebServices.Cancelamento.Protocolo);
-   }
   end;
 end;
 
 procedure TfrmDemo_ACBrMDFe.btnEncerramentoClick(Sender: TObject);
 begin
- ShowMessage('Opção não Implementada!');
+ OpenDialog1.Title := 'Selecione o MDFe';
+ OpenDialog1.DefaultExt := '*-MDFe.xml';
+ OpenDialog1.Filter := 'Arquivos MDFe (*-MDFe.xml)|*-MDFe.xml|Arquivos XML (*.xml)|*.xml|Todos os Arquivos (*.*)|*.*';
+ OpenDialog1.InitialDir := ACBrMDFe1.Configuracoes.Geral.PathSalvar;
+
+ if OpenDialog1.Execute then
+  begin
+   ACBrMDFe1.Manifestos.Clear;
+   ACBrMDFe1.Manifestos.LoadFromFile(OpenDialog1.FileName);
+
+   with ACBrMDFe1.EventoMDFe.Evento.Add do
+    begin
+     infEvento.chMDFe   := Copy(ACBrMDFe1.Manifestos.Items[0].MDFe.infMDFe.ID, 5, 44);
+     infEvento.CNPJ     := edtEmitCNPJ.Text;
+     infEvento.dhEvento := now;
+//  TpcnTpEvento = (teCCe, teCancelamento, teManifDestConfirmacao, teManifDestCiencia,
+//                  teManifDestDesconhecimento, teManifDestOperNaoRealizada,
+//                  teEncerramento);
+     infEvento.tpEvento   := teEncerramento;
+     infEvento.nSeqEvento := 1;
+
+     infEvento.detEvento.nProt := ACBrMDFe1.Manifestos.Items[0].MDFe.procMDFe.nProt;
+     infEvento.detEvento.dtEnc := Date;
+     infEvento.detEvento.cUF   := StrToInt(Copy(IntToStr(ACBrMDFe1.Manifestos.Items[0].MDFe.infDoc.infMunDescarga.Items[0].cMunDescarga),1,2));
+     infEvento.detEvento.cMun  := ACBrMDFe1.Manifestos.Items[0].MDFe.infDoc.infMunDescarga.Items[0].cMunDescarga;
+    end;
+
+   ACBrMDFe1.EnviarEventoMDFe( 1 ); // 1 = Numero do Lote
+
+   MemoResp.Lines.Text   := UTF8Encode(ACBrMDFe1.WebServices.EnvEvento.RetWS);
+   memoRespWS.Lines.Text := UTF8Encode(ACBrMDFe1.WebServices.EnvEvento.RetWS);
+   LoadXML(MemoResp, WBResposta);
+  end;
 end;
 
 procedure TfrmDemo_ACBrMDFe.btnConsultarReciboClick(Sender: TObject);
