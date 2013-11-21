@@ -73,6 +73,11 @@ type
   private
     fRegistroValido: boolean;
     fCNPJ_CRED_CARTAO : string; /// Identificação da credenciadora do cartão
+    fNUM_FAB: string;                // Número de fabricação do ECF
+    fMF_ADICIONAL: string;           // Letra indicativa de MF adicional
+    fTIPO_ECF: string;               // Tipo de ECF
+    fMARCA_ECF: string;              // Marca do ECF
+    fMODELO_ECF: string;             // Modelo do ECF
     fCOO: Integer;     /// Contador de Ordem de Operação do Cupom Fiscal onde o troco foi registrado
     fCCF: Integer;    /// Nº do contador do respectivo documento emitido
     fVLR_TROCO: Currency;       /// Valor do troco, para o meio de pagamento cartão de crédito ou débito
@@ -83,7 +88,13 @@ type
     constructor Create; virtual; /// Create
 
     property RegistroValido: Boolean read fRegistroValido write fRegistroValido default True;
+
     property CNPJ_CRED_CARTAO: string read fCNPJ_CRED_CARTAO write fCNPJ_CRED_CARTAO;
+    property NUM_FAB: string      read fNUM_FAB      write fNUM_FAB;
+    property MF_ADICIONAL: string read fMF_ADICIONAL write fMF_ADICIONAL;
+    property TIPO_ECF: string     read fTIPO_ECF     write fTIPO_ECF;
+    property MARCA_ECF: string    read fMARCA_ECF    write fMARCA_ECF;
+    property MODELO_ECF: string   read fMODELO_ECF   write fMODELO_ECF;
     property COO: Integer read fCOO write fCOO;
     property CCF: Integer read fCCF write fCCF;
     property VLR_TROCO: Currency read fVLR_TROCO write fVLR_TROCO;

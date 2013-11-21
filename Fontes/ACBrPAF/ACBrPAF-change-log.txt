@@ -47,6 +47,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+21/11/2013
+[*] Atualização do registro H2 
+    por: Regys.Silveira
+
+
 13/08/2013
 [*] Removido memoryleaks nos registros R05,R06 e R07. (Juliana Tamizou)
 

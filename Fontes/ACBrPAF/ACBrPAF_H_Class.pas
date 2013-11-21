@@ -171,6 +171,11 @@ begin
           ///
           strRegistroH2 := strRegistroH2 + LFill('H2') +
                                            LFill(OnlyNumber(CNPJ_CRED_CARTAO), 14) +
+                                           RFill(NUM_FAB, 20) +
+                                           RFill(MF_ADICIONAL, 1) +
+                                           RFill(TIPO_ECF, 7) +
+                                           RFill(MARCA_ECF, 20) +
+                                           RFill(MODELO_ECF, 20) +
                                            LFill(COO, 6) +
                                            LFill(CCF, 6) +
                                            LFill(VLR_TROCO, 13) +

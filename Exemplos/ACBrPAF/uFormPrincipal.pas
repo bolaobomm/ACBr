@@ -608,6 +608,11 @@ begin
     begin
       H2 := ACBrPAF.PAF_H.RegistroH2.New;
       H2.CNPJ_CRED_CARTAO := '99.999.999/9999-11';
+      H2.NUM_FAB          := GerarDados('S', 20);
+      H2.MF_ADICIONAL     := '';
+      H2.TIPO_ECF         := GerarDados('S', 7);
+      H2.MARCA_ECF        := GerarDados('S', 20);
+      H2.MODELO_ECF       := GerarDados('S', 20);
       H2.COO              := GerarDados('I', 6);
       H2.CCF              := GerarDados('I', 6);
       H2.VLR_TROCO        := GerarDados('I', 2);
@@ -618,6 +623,9 @@ begin
       H2.RegistroValido := True;
     end;
   end;
+
+
+
 
   ACBrPAF.SaveFileTXT_H('PAF_H.txt');
 end;
@@ -958,6 +966,29 @@ begin
         LOCALIZACAO:= 'RODOVIA SC-370 KM 195 MUNICIPIO BRAÇO DO NORTE';
       end;
     end;
+
+  // registro E2
+  ACBrPAF.PAF_H.RegistroH2.Clear;
+  for I := 1 to 15 do
+  begin
+    with ACBrPAF.PAF_H.RegistroH2.New do
+    begin
+      CNPJ_CRED_CARTAO := '99.999.999/9999-11';
+      NUM_FAB          := GerarDados('S', 20);
+      MF_ADICIONAL     := '';
+      TIPO_ECF         := GerarDados('S', 7);
+      MARCA_ECF        := GerarDados('S', 20);
+      MODELO_ECF       := GerarDados('S', 20);
+      COO              := GerarDados('I', 6);
+      CCF              := GerarDados('I', 6);
+      VLR_TROCO        := GerarDados('I', 2);
+      DT_TROCO         := DATE;
+      CPF              := '111.111.111-99';
+      TITULO           := GerarDados('S', 7);
+
+      RegistroValido := True;
+    end;
+  end;
 
   //S2
   ACBrPAF.PAF_S.RegistroS2.Clear;
