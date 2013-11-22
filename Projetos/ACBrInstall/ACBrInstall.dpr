@@ -7,7 +7,7 @@ uses
   uFrameLista in 'uFrameLista.pas' {framePacotes: TFrame};
 
 {$R *.res}
-{$R UAC.RES}
+{$R UAC.res}
 
 begin
   {$IFDEF VER230} // XE2
