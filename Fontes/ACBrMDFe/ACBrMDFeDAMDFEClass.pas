@@ -81,6 +81,8 @@ type
     destructor Destroy; override;
     procedure ImprimirDAMDFe(MDFe : TMDFe = nil); virtual;
     procedure ImprimirDAMDFePDF(MDFe : TMDFe = nil); virtual;
+    procedure ImprimirEVENTO(MDFe : TMDFe = nil); virtual;
+    procedure ImprimirEVENTOPDF(MDFe : TMDFe = nil); virtual;
   published
     property ACBrMDFe : TComponent  read FACBrMDFe write SetMDFe;
     property Logo: String read FLogo write FLogo;
@@ -213,6 +215,16 @@ begin
         ForceDirectories(FPathArquivos);
 
   Result := PathWithDelim(FPathArquivos);
+end;
+
+procedure TACBrMDFeDAMDFeClass.ImprimirEVENTO(MDFe: TMDFe);
+begin
+  ErroAbstract('Imprimir');
+end;
+
+procedure TACBrMDFeDAMDFeClass.ImprimirEVENTOPDF(MDFe: TMDFe);
+begin
+  ErroAbstract('ImprimirPDF');
 end;
 
 end.

@@ -129,9 +129,15 @@ type
     FPathSalvar: String;
     FPathSchemas: String;
     FVersaoDF: TMDFeVersao;
+    FExibirErroSchema: Boolean;
+    FFormatoAlerta: string;
+    {$IFDEF ACBrMDFeOpenSSL}
+    FIniFinXMLSECAutomatico: boolean;
+    {$ENDIF}
 
     procedure SetFormaEmissao(AValue: TpcnTipoEmissao);
     function GetPathSalvar: String;
+    function GetFormatoAlerta: string;
   public
     constructor Create(AOwner: TComponent); override;
     function Save(AXMLName: String; AXMLFile: WideString; aPath: String = ''): Boolean;
@@ -144,24 +150,34 @@ type
     property PathSalvar: String read GetPathSalvar write FPathSalvar;
     property PathSchemas: String read FPathSchemas write FPathSchemas;
     property VersaoDF: TMDFeVersao read FVersaoDF write FVersaoDF default ve100;
+    property ExibirErroSchema: Boolean read FExibirErroSchema write FExibirErroSchema;
+    property FormatoAlerta: string read GetFormatoAlerta write FFormatoAlerta;
+    {$IFDEF ACBrMDFeOpenSSL}
+    property IniFinXMLSECAutomatico: Boolean read FIniFinXMLSECAutomatico write FIniFinXMLSECAutomatico;
+    {$ENDIF}
   end;
 
   TArquivosConf = class(TComponent)
   private
-    FSalvar   : Boolean;
-    FMensal   : Boolean;
-    FLiteral  : Boolean;
-    FEmissaoPathMDFe  : Boolean;
+    FSalvar : Boolean;
+    FMensal : Boolean;
+    FLiteral : Boolean;
+    FEmissaoPathMDFe : Boolean;
+    FSalvarEvento : Boolean;
     FPathMDFe : String;
+    FPathEvento: String;
   public
     constructor Create(AOwner: TComponent); override;
     function GetPathMDFe(Data : TDateTime = 0): String;
+    function GetPathEvento(tipoEvento : TpcnTpEvento): String;
   published
     property Salvar     : Boolean read FSalvar  write FSalvar  default False;
     property PastaMensal: Boolean read FMensal  write FMensal  default False;
     property AdicionarLiteral: Boolean read FLiteral write FLiteral default False;
     property EmissaoPathMDFe: Boolean read FEmissaoPathMDFe write FEmissaoPathMDFe default False;
+    property SalvarEvento: Boolean read FSalvarEvento write FSalvarEvento default False;
     property PathMDFe : String read FPathMDFe  write FPathMDFe;
+    property PathEvento : String read FPathEvento  write FPathEvento;
   end;
 
   TConfiguracoes = class(TComponent)
@@ -238,6 +254,30 @@ begin
   FAtualizarXMLCancelado := True;
   FPathSalvar            := '';
   FPathSchemas           := '';
+  FExibirErroSchema      := True;
+  FFormatoAlerta         := 'TAG:%TAGNIVEL% ID:%ID%/%TAG%(%DESCRICAO%) - %MSG%.';
+  // O Formato da mensagem de erro pode ser alterado pelo usuario alterando-se a property FFormatoAlerta: onde;
+  // %TAGNIVEL%  : Representa o Nivel da TAG; ex: <transp><vol><lacres>
+  // %TAG%       : Representa a TAG; ex: <nLacre>
+  // %ID%        : Representa a ID da TAG; ex X34
+  // %MSG%       : Representa a mensagem de alerta
+  // %DESCRICAO% : Representa a Descrição da TAG
+  {$IFDEF ACBrMDFeOpenSSL}
+  FIniFinXMLSECAutomatico := True;
+  {$ENDIF}
+  FVersaoDF              := ve100;
+end;
+
+function TGeralConf.GetFormatoAlerta: string;
+begin
+  if (FFormatoAlerta = '') or (
+     (pos('%TAGNIVEL%',FFormatoAlerta) <= 0) and
+     (pos('%TAG%',FFormatoAlerta) <= 0) and
+     (pos('%ID%',FFormatoAlerta) <= 0) and
+     (pos('%MSG%',FFormatoAlerta) <= 0) and
+     (pos('%DESCRICAO%',FFormatoAlerta) <= 0) )then
+     Result := 'TAG:%TAGNIVEL% ID:%ID%/%TAG%(%DESCRICAO%) - %MSG%.'
+  else Result := FFormatoAlerta;
 end;
 
 function TGeralConf.GetPathSalvar: String;
@@ -517,6 +557,40 @@ begin
      if copy(Dir,length(Dir)-2,3) <> 'MDFe' then
         Dir := PathWithDelim(Dir)+'MDFe';
    end;
+
+  if not DirectoryExists(Dir) then
+     ForceDirectories(Dir);
+
+  Result := Dir;
+end;
+
+function TArquivosConf.GetPathEvento(tipoEvento: TpcnTpEvento): String;
+var
+  wDia, wMes, wAno : Word;
+  Dir : String;
+begin
+  if DFeUtil.EstaVazio(FPathEvento) then
+     Dir := TConfiguracoes( Self.Owner ).Geral.PathSalvar
+  else
+     Dir := FPathEvento;
+
+  if FMensal then
+   begin
+     DecodeDate(Now, wAno, wMes, wDia);
+     if Pos(IntToStr(wAno)+IntToStrZero(wMes,2),Dir) <= 0 then
+        Dir := PathWithDelim(Dir)+IntToStr(wAno)+IntToStrZero(wMes,2);
+   end;
+
+  if FLiteral then
+   begin
+     if copy(Dir,length(Dir)-2,3) <> 'Evento' then
+        Dir := PathWithDelim(Dir)+'Evento';
+   end;
+
+  case tipoEvento of
+    teEncerramento: Dir := PathWithDelim(Dir)+'Encerramento';
+    teCancelamento: Dir := PathWithDelim(Dir)+'Cancelamento';
+  end;
 
   if not DirectoryExists(Dir) then
      ForceDirectories(Dir);

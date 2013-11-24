@@ -123,7 +123,7 @@ type
 
   TMDFeRecepcao = Class(TWebServicesBase)
   private
-    FLote: Integer;
+    FLote: String;
     FRecibo : String;
     FMDFes : TManifestos;
     FTpAmb: TpcnTipoAmbiente;
@@ -133,7 +133,7 @@ type
     FxMotivo: String;
     FdhRecbto: TDateTime;
     FTMed: Integer;
-    function GetLote: Integer;
+    function GetLote: String;
   public
     function Executar: Boolean; override;
     constructor Create(AOwner : TComponent; AMDFes : TManifestos);reintroduce;
@@ -145,7 +145,7 @@ type
     property xMotivo: String read FxMotivo;
     property dhRecbto: TDateTime read FdhRecbto;
     property TMed: Integer read FTMed;
-    property Lote: Integer read GetLote write FLote;
+    property Lote: String read GetLote write FLote;
   end;
 
   TMDFeRetRecepcao = Class(TWebServicesBase)
@@ -269,9 +269,10 @@ type
     FConsulta: TMDFeConsulta;
     FEnvEvento: TMDFeEnvEvento;
   public
-    constructor Create(AFMDFe: TComponent);reintroduce;
+    constructor Create(AFMDFe: TComponent); reintroduce;
     destructor Destroy; override;
-    function Envia(ALote: Integer): Boolean;
+    function Envia(ALote: Integer): Boolean; overload;
+    function Envia(ALote: String): Boolean; overload;
 //  published
     property ACBrMDFe: TComponent read FACBrMDFe write FACBrMDFe;
     property StatusServico: TMDFeStatusServico read FStatusServico write FStatusServico;
@@ -395,8 +396,12 @@ procedure TWebServicesBase.DoMDFeRecepcao;
 var
   i    : Integer;
   vMDFes: WideString;
+  sLote: String;
 begin
   vMDFes := '';
+  sLote := OnlyNumber(TMDFeRecepcao(Self).Lote);
+  if sLote = '' then sLote := '0';
+
   for i := 0 to TMDFeRecepcao(Self).FMDFes.Count-1 do
     vMDFes := vMDFes + TMDFeRecepcao(Self).FMDFes.Items[I].XML;
 
@@ -404,7 +409,7 @@ begin
   vMDFes := StringReplace( vMDFes, '<?xml version="1.0" encoding="UTF-8"?>' , '', [rfReplaceAll] );
 
   FDadosMsg := '<enviMDFe xmlns="http://www.portalfiscal.inf.br/mdfe" versao="' + MDFeenviMDFe + '">' +
-               '<idLote>' + IntToStr(TMDFeRecepcao(Self).Lote) + '</idLote>' + vMDFes + '</enviMDFe>';
+               '<idLote>' + sLote + '</idLote>' + vMDFes + '</enviMDFe>';
 
   if Length(FDadosMsg) > (500 * 1024) then
    begin
@@ -614,6 +619,11 @@ begin
 end;
 
 function TWebServices.Envia(ALote: Integer): Boolean;
+begin
+  Result := Envia(IntToStr(ALote));
+end;
+
+function TWebServices.Envia(ALote: String): Boolean;
 begin
   self.Enviar.FLote := ALote;
   if not(Self.Enviar.Executar) then
@@ -833,7 +843,7 @@ begin
   try
     TACBrMDFe( FACBrMDFe ).SetStatus( stMDFeRecepcao );
     if FConfiguracoes.Geral.Salvar then
-      FConfiguracoes.Geral.Save(IntToStr(Lote)+'-env-lot.xml', FDadosMsg);
+      FConfiguracoes.Geral.Save(Lote+'-env-lot.xml', FDadosMsg);
 
     try
       {$IFDEF ACBrMDFeOpenSSL}
@@ -888,7 +898,7 @@ begin
       MDFeRetorno.Free;
 
       if FConfiguracoes.Geral.Salvar then
-        FConfiguracoes.Geral.Save(IntToStr(Lote)+'-rec.xml', FRetWS);
+        FConfiguracoes.Geral.Save(Lote+'-rec.xml', FRetWS);
 
     except on E: Exception do
       begin
@@ -911,7 +921,7 @@ begin
   end;
 end;
 
-function TMDFeRecepcao.GetLote: Integer;
+function TMDFeRecepcao.GetLote: String;
 begin
   Result := FLote;
 end;
