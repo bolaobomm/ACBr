@@ -74,7 +74,7 @@ type
                      stCTeCadastro, stCTeEmail, stCTeCCe, stCTeEvento );
 
   TStatusACBrMDFe = ( stMDFeIdle, stMDFeStatusServico, stMDFeRecepcao, stMDFeRetRecepcao,
-                      stMDFeConsulta, stMDFeRecibo, stMDFeEvento );
+                      stMDFeConsulta, stMDFeRecibo, stMDFeEmail, stMDFeEvento );
 
   (* IMPORTANTE - Sempre que alterar um Tipo efetuar a atualização das funções de conversão correspondentes *)
   TLayOut = (LayNfeRecepcao, LayNfeRetRecepcao, LayNfeCancelamento, LayNfeInutilizacao,
@@ -82,7 +82,7 @@ type
              LayNfeConsultaDPEC, LayNFeCCe, LayNFeEvento, LayNFeEventoAN,
              LayNFeConsNFeDest, LayNFeDownloadNFe,
              LayCTeRecepcao, LayCTeRetRecepcao, LayCTeCancelamento, LayCTeInutilizacao,
-             LayCTeConsultaCT, LayCTeStatusServico, LayCTeCadastro, LayCTeEvento, 
+             LayCTeConsultaCT, LayCTeStatusServico, LayCTeCadastro, LayCTeEvento,
              LayCTeEventoEPEC,
              LayMDFeRecepcao, LayMDFeRetRecepcao, LayMDFeConsulta, LayMDFeStatusServico,
              LayMDFeEvento);
@@ -196,6 +196,8 @@ type
   TpcnTamanhoPapel = (tpA4, tpA5);
 
   TpcnModeloDF = (moNFe, moNFCe);
+  TpcnVersaoDF = (ve200, ve300, ve310);
+
   TpcnDestinoOperacao = (doInterna, doInterestadual, doExterior);
   TpcnConsumidorFinal = (cfNao, cfConsumidorFinal);
   TpcnPresencaComprador = (pcNao, pcPresencial, pcInternet, pcTeleatendimento, pcEntregaDomicilio, pcOutros);
@@ -239,6 +241,9 @@ const
   (12,27,16,13,29,23,53,32,52,21,51,50,31,15,25,41,26,22,33,24,43,11,14,42,35,28,17);
 
   NfVersao        = '2.0.0.0';
+  // -----------------------------
+  // As constantes abaixo futuramente não vão mais ser necessárias
+  // -----------------------------
   NFecabMsg       = '2.00';
   NFeconsStatServ = '2.00';
   NFenviNFe       = '2.00';
@@ -268,6 +273,7 @@ const
   NFCeEvento       = '1.00';
   NFCeConsNFeDest  = '1.01';
   NFCeDownloadNFe  = '1.00';
+  // -----------------------------
 
   MDFeCabMsg       = '1.00';
   MDFeConsStatServ = '1.00';
@@ -533,6 +539,8 @@ function indISSToStr(const t: TpcnindISS ): string;
 function StrToindISS(var ok: boolean; const s: string): TpcnindISS;
 function indIncentivoToStr(const t: TpcnindIncentivo ): string;
 function StrToindIncentivo(var ok: boolean; const s: string): TpcnindIncentivo;
+
+function GetVersaoNFe(AModeloDF: TpcnModeloDF; AVersaoDF: TpcnVersaoDF; ALayOut: TLayOut): string;
 
 implementation
 
@@ -1754,6 +1762,90 @@ function StrToindIncentivo(var ok: boolean; const s: string): TpcnindIncentivo;
 begin
   result := StrToEnumerado(ok, s, ['1', '2'],
                                   [iiSim, iiNao]);
+end;
+
+function GetVersaoNFe(AModeloDF: TpcnModeloDF; AVersaoDF: TpcnVersaoDF; ALayOut: TLayOut): string;
+begin
+  result := '';
+
+  case AModeloDF of
+   moNFe:  begin
+             case AVersaoDF of
+              ve200: begin
+                       case ALayOut of
+                        LayNfeStatusServico: result := '2.00';
+                        LayNfeRecepcao:      result := '2.00';
+                        LayNfeRetRecepcao:   result := '2.00';
+                        LayNfeConsulta:      result := '2.01';
+                        LayNfeCancelamento:  result := '2.00';
+                        LayNfeInutilizacao:  result := '2.00';
+                        LayNfeCadastro:      result := '2.00';
+                        LayNfeEnvDPEC:       result := '1.01';
+                        LayNfeConsultaDPEC:  result := '1.01';
+                        LayNFeCCe:           result := '1.00';
+                        LayNFeEvento:        result := '1.00';
+                        LayNFeConsNFeDest:   result := '1.01';
+                        LayNFeDownloadNFe:   result := '1.00';
+                       end;
+                     end;
+              ve310: begin
+                       case ALayOut of
+                        LayNfeStatusServico: result := '3.10';
+                        LayNfeRecepcao:      result := '3.10';
+                        LayNfeRetRecepcao:   result := '3.10';
+                        LayNfeConsulta:      result := '3.10';
+                        LayNfeCancelamento:  result := '3.10';
+                        LayNfeInutilizacao:  result := '3.10';
+                        LayNfeCadastro:      result := '2.00';
+                        LayNfeEnvDPEC:       result := '1.01';
+                        LayNfeConsultaDPEC:  result := '1.01';
+                        LayNFeCCe:           result := '1.00';
+                        LayNFeEvento:        result := '1.00';
+                        LayNFeConsNFeDest:   result := '1.01';
+                        LayNFeDownloadNFe:   result := '1.00';
+                       end;
+                     end;
+             end;
+           end;
+   moNFCe: begin
+             case AVersaoDF of
+              ve300: begin
+                       case ALayOut of
+                        LayNfeStatusServico: result := '3.00';
+                        LayNfeRecepcao:      result := '3.00';
+                        LayNfeRetRecepcao:   result := '3.00';
+                        LayNfeConsulta:      result := '3.00';
+                        LayNfeCancelamento:  result := '3.00';
+                        LayNfeInutilizacao:  result := '3.00';
+                        LayNfeCadastro:      result := '2.00';
+                        LayNfeEnvDPEC:       result := '1.01';
+                        LayNfeConsultaDPEC:  result := '1.01';
+                        LayNFeCCe:           result := '1.00';
+                        LayNFeEvento:        result := '1.00';
+                        LayNFeConsNFeDest:   result := '1.01';
+                        LayNFeDownloadNFe:   result := '1.00';
+                       end;
+                     end;
+              ve310: begin
+                       case ALayOut of
+                        LayNfeStatusServico: result := '3.10';
+                        LayNfeRecepcao:      result := '3.10';
+                        LayNfeRetRecepcao:   result := '3.10';
+                        LayNfeConsulta:      result := '3.10';
+                        LayNfeCancelamento:  result := '3.10';
+                        LayNfeInutilizacao:  result := '3.10';
+                        LayNfeCadastro:      result := '2.00';
+                        LayNfeEnvDPEC:       result := '1.01';
+                        LayNfeConsultaDPEC:  result := '1.01';
+                        LayNFeCCe:           result := '1.00';
+                        LayNFeEvento:        result := '1.00';
+                        LayNFeConsNFeDest:   result := '1.01';
+                        LayNFeDownloadNFe:   result := '1.00';
+                       end;
+                     end;
+             end;
+           end;
+  end;
 end;
 
 end.
