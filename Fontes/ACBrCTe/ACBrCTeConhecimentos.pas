@@ -477,11 +477,11 @@ begin
      if not(CTeUtil.Valida(('<CTe xmlns' + RetornarConteudoEntre(Self.Items[i].XML, '<CTe xmlns', '</CTe>')+ '</CTe>'),
                             FMsg, Self.FConfiguracoes.Geral.PathSchemas)) then
       begin
-        Self.Items[i].ErroValidacaoCompleto := 'Falha na validação dos dados da nota '+
+        Self.Items[i].ErroValidacaoCompleto := 'Falha na validação dos dados do Conhecimento '+
                                                IntToStr(Self.Items[i].CTe.Ide.nCT)+sLineBreak+
                                                Self.Items[i].Alertas+
                                                FMsg;
-        Self.Items[i].ErroValidacao := 'Falha na validação dos dados da nota '+
+        Self.Items[i].ErroValidacao := 'Falha na validação dos dados do conhecimento '+
                                        IntToStr(Self.Items[i].CTe.Ide.nCT)+sLineBreak+
                                        Self.Items[i].Alertas+
                                        IfThen(Self.FConfiguracoes.Geral.ExibirErroSchema,FMsg,'');
