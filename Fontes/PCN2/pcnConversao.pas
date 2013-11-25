@@ -288,7 +288,12 @@ const
   MDFeModalFerro   = '1.00';
   MDFeModalDuto    = '1.00';
 
-{$IFDEF PL_103}
+  // Incluido por Claudemir em 13/03/2013
+  GNREEnviGNRE     = '1.00';
+  GNREConsConfigUF = '1.00';
+  GNREConsResLote  = '1.00';
+
+  {$IFDEF PL_103}
   CTecabMsg       = '1.02';
   CTeconsStatServ = '1.03';
   CTeenviCTe      = '1.03';
