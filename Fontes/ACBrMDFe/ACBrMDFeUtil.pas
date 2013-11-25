@@ -88,7 +88,8 @@ type
 
   public
 {$IFDEF ACBrMDFeOpenSSL}
-    class function sign_file(const Axml: PAnsiChar; const key_file: PChar; const senha: PChar): AnsiString;
+    class function sign_file(const Axml: PAnsiChar; const key_file: PAnsiChar; const senha: PAnsiChar): AnsiString;
+    class function sign_memory(const Axml: PAnsiChar; const key_file: PAnsichar; const senha: PAnsiChar; Size: Cardinal; Ponteiro: Pointer): AnsiString;
     class procedure InitXmlSec;
     class procedure ShutDownXmlSec;
 {$ENDIF}
@@ -420,7 +421,7 @@ begin
     exit;
   end;
 
-  schema_doc := xmlReadFile(PAnsiChar(schema_filename), nil, XML_DETECT_IDS);
+  schema_doc := xmlReadFile(PAnsiChar(AnsiToUtf8(schema_filename)), nil, XML_DETECT_IDS);
   //  the schema cannot be loaded or is not well-formed
   if (schema_doc = nil) then
   begin
@@ -769,6 +770,8 @@ var
   I, J, PosIni, PosFim : Integer;
   URI, AStr, XmlAss    : AnsiString;
   Tipo                 : Integer;  // 1 - MDFe 2 - Cancelamento 3 - Inutilizacao
+  Cert: TMemoryStream;
+  Cert2: TStringStream;
 begin
   AStr := AXML;
 
@@ -849,8 +852,20 @@ begin
     else AStr := '';
   end;
 
-  XmlAss := MDFeUtil.sign_file(PAnsiChar(AStr), PChar(ArqPFX), PChar(PFXSenha));
-
+  if FileExists(ArqPFX) then
+    XmlAss := MDFeUtil.sign_file(PAnsiChar(AStr), PAnsiChar(ArqPFX), PAnsiChar(PFXSenha))
+  else
+   begin
+    Cert := TMemoryStream.Create;
+    Cert2 := TStringStream.Create(ArqPFX);
+    try
+      Cert.LoadFromStream(Cert2);
+      XmlAss := MDFeUtil.sign_memory(PAnsiChar(AStr), PAnsiChar(ArqPFX), PAnsiChar(PFXSenha), Cert.Size, Cert.Memory) ;
+    finally
+      Cert2.Free;
+      Cert.Free;
+    end;
+  end;
   // Removendo quebras de linha //
   XmlAss := StringReplace(XmlAss, #10, '', [rfReplaceAll]);
   XmlAss := StringReplace(XmlAss, #13, '', [rfReplaceAll]);
@@ -1018,14 +1033,15 @@ end;
 
 {$IFDEF ACBrMDFeOpenSSL}
 
-class function MDFeUtil.sign_file(const Axml: PAnsiChar; const key_file: PChar; const senha: PChar): AnsiString;
+class function MDFeUtil.sign_file(const Axml: PAnsiChar; const key_file: PAnsiChar; const senha: PAnsiChar): AnsiString;
 var
-  doc               : xmlDocPtr;
-  node              : xmlNodePtr;
-  dsigCtx           : xmlSecDSigCtxPtr;
-  buffer            : PChar;
-  bufSize           : integer;
-label done;
+  doc     : xmlDocPtr;
+  node    : xmlNodePtr;
+  dsigCtx : xmlSecDSigCtxPtr;
+  buffer  : PAnsiChar;
+  bufSize : integer;
+label
+  done;
 begin
   doc := nil;
   node := nil;
@@ -1051,7 +1067,7 @@ begin
       raise Exception.Create('Error :failed to create signature context');
 
     // { load private key}
-    dsigCtx^.signKey := xmlSecCryptoAppKeyLoad(PAnsiChar(key_file), xmlSecKeyDataFormatPkcs12, PAnsiChar(senha), nil, nil);
+    dsigCtx^.signKey := xmlSecCryptoAppKeyLoad(key_file, xmlSecKeyDataFormatPkcs12, senha, nil, nil);
     if (dsigCtx^.signKey = nil) then
       raise Exception.Create('Error: failed to load private pem key from "' + key_file + '"');
 
@@ -1079,6 +1095,70 @@ begin
     if (doc <> nil) then
       xmlFreeDoc(doc);
   end;
+end;
+
+class function MDFeUtil.sign_memory(const Axml: PAnsiChar; const key_file: PAnsichar; const senha: PAnsiChar; Size: Cardinal; Ponteiro: Pointer): AnsiString;
+var
+  doc     : xmlDocPtr;
+  node    : xmlNodePtr;
+  dsigCtx : xmlSecDSigCtxPtr;
+  buffer  : PAnsiChar;
+  bufSize : integer;
+label
+ done;
+begin
+    doc := nil;
+    //node := nil;
+    dsigCtx := nil;
+    result := '';
+
+    if (Axml = nil) or (key_file = nil) then Exit;
+    try
+       { load template }
+       doc := xmlParseDoc(Axml);
+       if ((doc = nil) or (xmlDocGetRootElement(doc) = nil)) then
+         raise Exception.Create('Error: unable to parse');
+
+       { find start node }
+       node := xmlSecFindNode(xmlDocGetRootElement(doc), PAnsiChar(xmlSecNodeSignature), PAnsiChar(xmlSecDSigNs));
+       if (node = nil) then
+         raise Exception.Create('Error: start node not found');
+
+       { create signature context, we don't need keys manager in this example }
+       dsigCtx := xmlSecDSigCtxCreate(nil);
+       if (dsigCtx = nil) then
+         raise Exception.Create('Error :failed to create signature context');
+
+       // { load private key, assuming that there is not password }
+       dsigCtx^.signKey := xmlSecCryptoAppKeyLoadMemory(Ponteiro, size, xmlSecKeyDataFormatPkcs12, senha, nil, nil);
+
+       if (dsigCtx^.signKey = nil) then
+          raise Exception.Create('Error: failed to load private pem key from "' + key_file + '"');
+
+       { set key name to the file name, this is just an example! }
+       if (xmlSecKeySetName(dsigCtx^.signKey, key_file) < 0) then
+         raise Exception.Create('Error: failed to set key name for key from "' + key_file + '"');
+
+       { sign the template }
+       if (xmlSecDSigCtxSign(dsigCtx, node) < 0) then
+         raise Exception.Create('Error: signature failed');
+
+       { print signed document to stdout }
+       // xmlDocDump(stdout, doc);
+       // Can't use "stdout" from Delphi, so we'll use xmlDocDumpMemory instead...
+       buffer := nil;
+       xmlDocDumpMemory(doc, @buffer, @bufSize);
+       if (buffer <> nil) then
+          { success }
+          result := buffer ;
+   finally
+       { cleanup }
+       if (dsigCtx <> nil) then
+         xmlSecDSigCtxDestroy(dsigCtx);
+
+       if (doc <> nil) then
+         xmlFreeDoc(doc);
+   end ;
 end;
 {$ENDIF}
 

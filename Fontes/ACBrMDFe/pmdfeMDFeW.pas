@@ -462,13 +462,15 @@ begin
         if not ValidarUF(MDFe.Rodo.veicReboque[i].Prop.UF) then
          Gerador.wAlerta('#38', 'UF', DSC_UF, ERR_MSG_INVALIDO);
         Gerador.wCampo(tcStr, '#39', 'tpProp ', 01, 01, 1, TpPropToStr(MDFe.Rodo.veicReboque[i].Prop.tpProp), DSC_TPPROP);
-       end;
+      end;
 
       Gerador.wGrupo('/prop');
     end;
-
-    Gerador.wCampo(tcStr, '#38', 'tpCar   ', 02, 02, 1, TpCarroceriaToStr(MDFe.Rodo.veicReboque[i].tpCar), '');
-    Gerador.wCampo(tcStr, '#39', 'UF      ', 02, 02, 1, MDFe.Rodo.veicReboque[i].UF, DSC_CUF);
+    if VersaoDF = ve100a then
+    begin
+      Gerador.wCampo(tcStr, '#38', 'tpCar   ', 02, 02, 1, TpCarroceriaToStr(MDFe.Rodo.veicReboque[i].tpCar), '');
+      Gerador.wCampo(tcStr, '#39', 'UF      ', 02, 02, 1, MDFe.Rodo.veicReboque[i].UF, DSC_CUF);
+    end;
 
     Gerador.wGrupo('/veicReboque');
   end;
