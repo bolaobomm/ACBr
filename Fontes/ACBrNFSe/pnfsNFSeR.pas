@@ -1355,6 +1355,7 @@ end;
 
 procedure TNFSeR.NFSe_ProvedorGoiania;
 var
+  strTxt : String;
  	item: Integer;
  	ok  : Boolean;
 begin
@@ -1436,17 +1437,27 @@ begin
       NFSe.Servico.Valores.IssRetido := StrToSituacaoTributaria(ok, Leitor.rCampo(tcStr, 'IssRetido'));
       NFSe.Servico.ItemListaServico  := DFeUtil.LimpaNumero(Leitor.rCampo(tcStr, 'ItemListaServico'));
 
-      Item := StrToInt(SomenteNumeros(Nfse.Servico.ItemListaServico));
-      if Item<100 then Item:=Item*100+1;
+      // Alterado Cleiver em 22/11/2013
+      if NFSe.Servico.ItemListaServico <> '' then
+      begin
+        Item := StrToInt(SomenteNumeros(Nfse.Servico.ItemListaServico));
+        if Item<100 then Item:=Item*100+1;
 
-      NFSe.Servico.ItemListaServico := FormatFloat('0000', Item);
-      NFSe.Servico.ItemListaServico := Copy(NFSe.Servico.ItemListaServico, 1, 2) + '.' +
-                                       Copy(NFSe.Servico.ItemListaServico, 3, 2);
+        NFSe.Servico.ItemListaServico := FormatFloat('0000', Item);
+        NFSe.Servico.ItemListaServico := Copy(NFSe.Servico.ItemListaServico, 1, 2) + '.' +
+                                         Copy(NFSe.Servico.ItemListaServico, 3, 2);
 
-      NFSe.Servico.xItemListaServico := CodigoToDesc(SomenteNumeros(NFSe.Servico.ItemListaServico));
+        NFSe.Servico.xItemListaServico := CodigoToDesc(SomenteNumeros(NFSe.Servico.ItemListaServico));
+      end;
 
       NFSe.Servico.CodigoTributacaoMunicipio := Leitor.rCampo(tcStr, 'CodigoTributacaoMunicipio');
       NFSe.Servico.Discriminacao             := Leitor.rCampo(tcStr, 'Discriminacao');
+
+      // Alterado Cleiver em 22/11/2013
+      if pos('\s\n', NFSe.Servico.Discriminacao ) > 0 then
+        NFSe.Servico.Discriminacao := Copy(NFSe.Servico.Discriminacao,1,pos('\s\n', NFSe.Servico.Discriminacao)-1) + #13#10
+                                     + Copy(NFSe.Servico.Discriminacao,pos('\s\n', NFSe.Servico.Discriminacao)+5,Length(NFSe.Servico.Discriminacao));
+
       NFSe.Servico.Descricao                 := '';
       NFSe.Servico.CodigoMunicipio           := Leitor.rCampo(tcStr, 'CodigoMunicipio');
       NFSe.Servico.ExigibilidadeISS          := StrToExigibilidadeISS(ok, Leitor.rCampo(tcStr, 'ExigibilidadeISS'));
