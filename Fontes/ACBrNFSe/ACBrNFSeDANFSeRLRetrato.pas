@@ -360,6 +360,24 @@ begin
  rllOutrasRetencoes.Caption     := DFeUtil.FormatFloat( FNFSe.Servico.Valores.OutrasRetencoes );//Astrogildo em 13/12/12
  rllValorIssRetido.Caption      := DFeUtil.FormatFloat( FNFSe.Servico.Valores.ValorIssRetido );//Astrogildo em 13/12/12
 
+ // Roberto Godinho 25/11/2013
+ // Provedor Betha não possui o campo "ValorLiquidoNfse" na NFSe, sendo assim, quando é carregado
+ // um XML de nfse para gerar a DANFE o campo vem zerado. Se isto acontecer, é feito o calculo do
+ // valor para ser apresentado no DANFE. O mesmo não acontece se for carregaddo um RPS.
+ if FNFSe.Servico.Valores.ValorLiquidoNfse = 0 then
+ begin
+   FNFSe.Servico.Valores.ValorLiquidoNfse := FNFSe.Servico.Valores.ValorServicos -
+                                             FNFSe.Servico.Valores.DescontoIncondicionado -
+                                             FNFSe.Servico.Valores.DescontoCondicionado -
+                                             FNFSe.Servico.Valores.ValorPis -
+                                             FNFSe.Servico.Valores.ValorCofins -
+                                             FNFSe.Servico.Valores.ValorInss -
+                                             FNFSe.Servico.Valores.ValorIr -
+                                             FNFSe.Servico.Valores.ValorCsll -
+                                             FNFSe.Servico.Valores.OutrasRetencoes -
+                                             FNFSe.Servico.Valores.ValorIssRetido;
+
+ end;
  rllValorLiquido.Caption := DFeUtil.FormatFloat( FNFSe.Servico.Valores.ValorLiquidoNfse );//Astrogildo em 13/12/12
 
  // TnfseNaturezaOperacao = ( noTributacaoNoMunicipio, noTributacaoForaMunicipio, noIsencao, noImune, noSuspensaDecisaoJudicial, noSuspensaProcedimentoAdministrativo )
