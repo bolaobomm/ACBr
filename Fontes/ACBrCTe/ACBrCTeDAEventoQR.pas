@@ -1,0 +1,279 @@
+{******************************************************************************}
+{ Projeto: Componente ACBrCTe                                                  }
+{  Biblioteca multiplataforma de componentes Delphi para emissão de Conhecimen-}
+{ to de Transporte eletrônico - CTe - http://www.cte.fazenda.gov.br            }
+{                                                                              }
+{ Direitos Autorais Reservados (c) 2008 Wemerson Souto                         }
+{                                       Daniel Simoes de Almeida               }
+{                                       André Ferreira de Moraes               }
+{                                                                              }
+{ Colaboradores nesse arquivo:                                                 }
+{                                                                              }
+{  Você pode obter a última versão desse arquivo na pagina do Projeto ACBr     }
+{ Componentes localizado em http://www.sourceforge.net/projects/acbr           }
+{                                                                              }
+{                                                                              }
+{  Esta biblioteca é software livre; você pode redistribuí-la e/ou modificá-la }
+{ sob os termos da Licença Pública Geral Menor do GNU conforme publicada pela  }
+{ Free Software Foundation; tanto a versão 2.1 da Licença, ou (a seu critério) }
+{ qualquer versão posterior.                                                   }
+{                                                                              }
+{  Esta biblioteca é distribuída na expectativa de que seja útil, porém, SEM   }
+{ NENHUMA GARANTIA; nem mesmo a garantia implícita de COMERCIABILIDADE OU      }
+{ ADEQUAÇÃO A UMA FINALIDADE ESPECÍFICA. Consulte a Licença Pública Geral Menor}
+{ do GNU para mais detalhes. (Arquivo LICENÇA.TXT ou LICENSE.TXT)              }
+{                                                                              }
+{  Você deve ter recebido uma cópia da Licença Pública Geral Menor do GNU junto}
+{ com esta biblioteca; se não, escreva para a Free Software Foundation, Inc.,  }
+{ no endereço 59 Temple Street, Suite 330, Boston, MA 02111-1307 USA.          }
+{ Você também pode obter uma copia da licença em:                              }
+{ http://www.opensource.org/licenses/lgpl-license.php                          }
+{                                                                              }
+{ Daniel Simões de Almeida  -  daniel@djsystem.com.br  -  www.djsystem.com.br  }
+{              Praça Anita Costa, 34 - Tatuí - SP - 18270-410                  }
+{                                                                              }
+{******************************************************************************}
+
+{******************************************************************************
+|* Historico
+|*
+******************************************************************************}
+
+{$I ACBr.inc}
+
+unit ACBrCTeDAEventoQR;
+
+// Atenção todos os comiters
+// Quando enviar os fontes referentes ao DAEvento favor alterar
+// a data e o nome da linha abaixo.
+// Última liberação:
+// 26/11/2013 por Italo Jurisato Junior
+
+interface
+
+uses
+  Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
+  Dialogs, ExtCtrls, QuickRpt, QRCtrls,
+  {$IFDEF QReport_PDF}
+     QRPDFFilt, QRPrntr,
+  {$ENDIF}
+  ACBrCTeQRCodeBar, pcteCTe, ACBrCTe, ACBrCTeUtil, Printers, pcnConversao,
+  pcteEnvEventoCTe;
+
+type
+
+  TfrmDAEventoQR = class(TForm)
+    QREvento: TQuickRep;
+    procedure FormDestroy(Sender: TObject);
+  private
+
+  protected
+    //BarCode : TBarCode128c;
+    FACBrCTe            : TACBrCTe;
+    FCTe                : TCTe;
+    FEventoCTe          : TInfEventoCollectionItem;
+    FLogo               : String;
+    FNumCopias          : Integer;
+    FSistema            : String;
+    FUsuario            : String;
+    FMostrarPreview     : Boolean;
+    FMargemSuperior     : Double;
+    FMargemInferior     : Double;
+    FMargemEsquerda     : Double;
+    FMargemDireita      : Double;
+    FImpressora         : String;
+
+    procedure SetBarCodeImage(ACode: string; QRImage: TQRImage);
+  public
+    class procedure Imprimir(AEventoCTe: TInfEventoCollectionItem;
+                             ALogo: String = '';
+                             ANumCopias: Integer = 1;
+                             ASistema: String = '';
+                             AUsuario: String = '';
+                             AMostrarPreview: Boolean = True;
+                             AMargemSuperior: Double = 0.7;
+                             AMargemInferior: Double = 0.7;
+                             AMargemEsquerda: Double = 0.7;
+                             AMargemDireita: Double = 0.7;
+                             AImpressora: String = '';
+                             ACTe: TCTe = nil);
+
+    class procedure SavePDF(AEventoCTe: TInfEventoCollectionItem;
+                            ALogo: String = '';
+                            AFile: String = '';
+                            ASistema: String = '';
+                            AUsuario: String = '';
+                            AMargemSuperior: Double = 0.7;
+                            AMargemInferior: Double = 0.7;
+                            AMargemEsquerda: Double = 0.7;
+                            AMargemDireita: Double = 0.7;
+                            ACTe: TCTe = nil);
+  end;
+
+implementation
+
+uses
+  MaskUtils;
+
+var
+  Printer: TPrinter;
+
+{$R *.dfm}
+
+class procedure TfrmDAEventoQR.Imprimir(AEventoCTe: TInfEventoCollectionItem;
+                                        ALogo: String = '';
+                                        ANumCopias: Integer = 1;
+                                        ASistema: String = '';
+                                        AUsuario: String = '';
+                                        AMostrarPreview: Boolean = True;
+                                        AMargemSuperior: Double = 0.7;
+                                        AMargemInferior: Double = 0.7;
+                                        AMargemEsquerda: Double = 0.7;
+                                        AMargemDireita: Double = 0.7;
+                                        AImpressora: String = '';
+                                        ACTe: TCTe = nil);
+begin
+  with Create ( nil ) do
+     try
+        FEventoCTe      := AEventoCTe;
+        FLogo           := ALogo;
+        FNumCopias      := ANumCopias;
+        FSistema        := ASistema;
+        FUsuario        := AUsuario;
+        FMostrarPreview := AMostrarPreview;
+        FMargemSuperior := AMargemSuperior;
+        FMargemInferior := AMargemInferior;
+        FMargemEsquerda := AMargemEsquerda;
+        FMargemDireita  := AMargemDireita;
+        FImpressora     := AImpressora;
+
+        if ACTe <> nil then
+         FCTe := ACTe;
+
+        Printer := TPrinter.Create;
+
+        if FImpressora > '' then
+          QREvento.PrinterSettings.PrinterIndex := Printer.Printers.IndexOf(FImpressora);
+
+        if AMostrarPreview then
+         begin
+           QREvento.PrinterSettings.Copies := FNumCopias;
+
+         {$IFDEF QReport_PDF}
+           QREvento.PrevShowSearch      := False;
+           QREvento.PrevShowThumbs      := False;
+           QREvento.PreviewInitialState := wsMaximized;
+           QREvento.PrevInitialZoom     := qrZoomToWidth;
+
+           // Incluido por Italo em 14/02/2012
+           // QREvento.PreviewDefaultSaveType := stPDF;
+           // Incluido por Italo em 16/02/2012
+           QRExportFilterLibrary.AddFilter(TQRPDFDocumentFilter);
+         {$ENDIF}
+
+           QREvento.Prepare;
+//           FTotalPages := QREvento.QRPrinter.PageCount;
+           QREvento.Preview;
+           // Incluido por Italo em 11/04/2013
+           // Segundo o Rodrigo Chiva resolveu o problema de travamento
+           // após o fechamento do Preview
+           Application.ProcessMessages;
+         end else
+         begin
+           FMostrarPreview := True;
+           QREvento.PrinterSettings.Copies := FNumCopias;
+           QREvento.Prepare;
+//           FTotalPages := QREvento.QRPrinter.PageCount;
+           QREvento.Print;
+         end;
+     finally
+        // Incluido por Rodrigo Fernandes em 17/06/2013
+        // QREvento.QRPrinter.Free;
+        // QREvento.QRPrinter:=nil;
+
+        // Incluido por Italo em 21/08/2013
+        QREvento.Free;
+        QREvento := nil;
+
+        // Incluido por Rodrigo Fernandes em 11/03/2013
+        // Liberando o objeto Printer da memoria
+        Printer.Free;
+        Free;
+     end;
+end;
+
+class procedure TfrmDAEventoQR.SavePDF(AEventoCTe: TInfEventoCollectionItem;
+                                       ALogo: String = '';
+                                       AFile: String = '';
+                                       ASistema: String = '';
+                                       AUsuario: String = '';
+                                       AMargemSuperior: Double = 0.7;
+                                       AMargemInferior: Double = 0.7;
+                                       AMargemEsquerda: Double = 0.7;
+                                       AMargemDireita: Double = 0.7;
+                                       ACTe: TCTe = nil);
+{$IFDEF QReport_PDF}
+ var
+  qf : TQRPDFDocumentFilter;
+  i  : Integer;
+{$ENDIF}
+begin
+{$IFDEF QReport_PDF}
+  with Create ( nil ) do
+     try
+        FEventoCTe      := AEventoCTe;
+        FLogo           := ALogo;
+        FSistema        := ASistema;
+        FUsuario        := AUsuario;
+        FMargemSuperior := AMargemSuperior;
+        FMargemInferior := AMargemInferior;
+        FMargemEsquerda := AMargemEsquerda;
+        FMargemDireita  := AMargemDireita;
+
+        if ACTe <> nil then
+          FCTe := ACTe;
+
+        for i := 0 to ComponentCount -1 do
+          begin
+            if (Components[i] is TQRShape) and (TQRShape(Components[i]).Shape = qrsRoundRect) then
+              begin
+                TQRShape(Components[i]).Shape := qrsRectangle;
+                TQRShape(Components[i]).Pen.Width := 1;
+              end;
+          end;
+
+        FMostrarPreview := True;
+        QREvento.Prepare;
+        // Incluido por Italo em 27/08/2013
+//        FTotalPages := QREvento.QRPrinter.PageCount;
+
+        qf := TQRPDFDocumentFilter.Create(AFile);
+        qf.CompressionOn := False;
+        QREvento.QRPrinter.ExportToFilter( qf );
+        qf.Free;
+     finally
+        Free;
+     end;
+{$ENDIF}
+end;
+
+procedure TfrmDAEventoQR.SetBarCodeImage(ACode: string; QRImage: TQRImage);
+var
+  b : TBarCode128c;
+begin
+  b := TBarCode128c.Create;
+  //      Width  := QRImage.Width;
+  b.Code := ACode;
+  b.PaintCodeToCanvas(ACode, QRImage.Canvas, QRImage.ClientRect);
+  b.free;
+end;
+
+// Incluido por Rodrigo Fernandes em 11/03/2013
+procedure TfrmDAEventoQR.FormDestroy(Sender: TObject);
+begin
+  QREvento.QRPrinter.Free;
+  QREvento.Free;
+end;
+
+end.
+

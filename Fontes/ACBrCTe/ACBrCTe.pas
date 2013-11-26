@@ -1,7 +1,7 @@
 {******************************************************************************}
 { Projeto: Componente ACBrCTe                                                  }
-{  Biblioteca multiplataforma de componentes Delphi para emissão de Nota Fiscal}
-{ eletrônica - CTe - http://www.CTe.fazenda.gov.br                             }
+{  Biblioteca multiplataforma de componentes Delphi para emissão de Conhecimen-}
+{ to de Transporte eletrônico - CTe - http://www.cte.fazenda.gov.br            }
 {                                                                              }
 { Direitos Autorais Reservados (c) 2008 Wemerson Souto                         }
 {                                       Wiliam Zacarias da Silva Rosa          }

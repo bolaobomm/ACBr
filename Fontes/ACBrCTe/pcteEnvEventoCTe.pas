@@ -1,12 +1,12 @@
 ////////////////////////////////////////////////////////////////////////////////
 //                                                                            //
-//              PCN - Projeto Cooperar NFe                                    //
+//              PCN - Projeto Cooperar CTe                                    //
 //                                                                            //
-//   Descrição: Classes para geração/leitura dos arquivos xml da NFe          //
+//   Descrição: Classes para geração/leitura dos arquivos xml da CTe          //
 //                                                                            //
-//        site: www.projetocooperar.org/nfe                                   //
+//        site: www.projetocooperar.org/cte                                   //
 //       email: projetocooperar@zipmail.com.br                                //
-//       forum: http://br.groups.yahoo.com/group/projeto_cooperar_nfe/        //
+//       forum: http://br.groups.yahoo.com/group/projeto_cooperar_cte/        //
 //     projeto: http://code.google.com/p/projetocooperar/                     //
 //         svn: http://projetocooperar.googlecode.com/svn/trunk/              //
 //                                                                            //
@@ -95,6 +95,7 @@ type
     destructor Destroy; override;
     function GerarXML: boolean;
     function LerXML(CaminhoArquivo: string): boolean;
+    function LerXMLFromString(const AXML: String): boolean;
     function ObterNomeArquivo(tpEvento: TpcnTpEvento): string;
   published
     property Gerador: TGerador             read FGerador write FGerador;
@@ -269,41 +270,60 @@ end;
 
 function TEventoCTe.LerXML(CaminhoArquivo: string): boolean;
 var
-  ArqEvento    : TStringList;
-  RetEventoCTe : TRetEventoCTe;
+  ArqEvento : TStringList;
 begin
   ArqEvento := TStringList.Create;
-  RetEventoCTe := TRetEventoCTe.Create;
-  Result := False;
   try
      ArqEvento.LoadFromFile(CaminhoArquivo);
-     RetEventoCTe.Leitor.Arquivo := ArqEvento.Text;
-     RetEventoCTe.LerXml;
+     Result := LerXMLFromString(ArqEvento.Text);
+  finally
+     ArqEvento.Free;
+  end;
+end;
+
+function TEventoCTe.LerXMLFromString(const AXML: String): boolean;
+var
+  RetEventoCTe : TRetEventoCTe;
+  i: Integer;
+begin
+  RetEventoCTe := TRetEventoCTe.Create;
+  try
+     RetEventoCTe.Leitor.Arquivo := AXML;
+     Result := RetEventoCTe.LerXml;
      with FEvento.Add do
       begin
-         infEvento.ID         := RetEventoCTe.InfEvento.id;
-         InfEvento.cOrgao     := RetEventoCTe.InfEvento.cOrgao;
-         infEvento.tpAmb      := RetEventoCTe.InfEvento.tpAmb;
-         infEvento.CNPJ       := RetEventoCTe.InfEvento.CNPJ;
-         infEvento.chCTe      := RetEventoCTe.InfEvento.chCTe;
-         infEvento.dhEvento   := RetEventoCTe.InfEvento.dhEvento;
-         infEvento.tpEvento   := RetEventoCTe.InfEvento.tpEvento;
-         infEvento.nSeqEvento := RetEventoCTe.InfEvento.nSeqEvento;
+        infEvento.ID         := RetEventoCTe.InfEvento.id;
+        InfEvento.cOrgao     := RetEventoCTe.InfEvento.cOrgao;
+        infEvento.tpAmb      := RetEventoCTe.InfEvento.tpAmb;
+        infEvento.CNPJ       := RetEventoCTe.InfEvento.CNPJ;
+        infEvento.chCTe      := RetEventoCTe.InfEvento.chCTe;
+        infEvento.dhEvento   := RetEventoCTe.InfEvento.dhEvento;
+        infEvento.tpEvento   := RetEventoCTe.InfEvento.tpEvento;
+        infEvento.nSeqEvento := RetEventoCTe.InfEvento.nSeqEvento;
 
-         infEvento.VersaoEvento         := RetEventoCTe.InfEvento.VersaoEvento;
-         infEvento.detEvento.descEvento := RetEventoCTe.InfEvento.detEvento.descEvento;
-         infEvento.detEvento.nProt      := RetEventoCTe.InfEvento.detEvento.nProt;
-         infEvento.detEvento.xJust      := RetEventoCTe.InfEvento.DetEvento.xJust;
-         infEvento.detEvento.vICMS      := RetEventoCTe.InfEvento.DetEvento.vICMS;
-         infEvento.detEvento.vTPrest    := RetEventoCTe.InfEvento.DetEvento.vTPrest;
-         infEvento.detEvento.vCarga     := RetEventoCTe.InfEvento.DetEvento.vCarga;
-         infEvento.detEvento.toma       := RetEventoCTe.InfEvento.DetEvento.toma;
-         infEvento.detEvento.UF         := RetEventoCTe.InfEvento.DetEvento.UF;
-         infEvento.detEvento.CNPJCPF    := RetEventoCTe.InfEvento.DetEvento.CNPJCPF;
-         infEvento.detEvento.IE         := RetEventoCTe.InfEvento.DetEvento.IE;
-         infEvento.detEvento.modal      := RetEventoCTe.InfEvento.DetEvento.modal;
-         infEvento.detEvento.UFIni      := RetEventoCTe.InfEvento.DetEvento.UFIni;
-         infEvento.detEvento.UFFim      := RetEventoCTe.InfEvento.DetEvento.UFFim;
+        infEvento.VersaoEvento         := RetEventoCTe.InfEvento.VersaoEvento;
+        infEvento.detEvento.descEvento := RetEventoCTe.InfEvento.detEvento.descEvento;
+        infEvento.detEvento.nProt      := RetEventoCTe.InfEvento.detEvento.nProt;
+        infEvento.detEvento.xJust      := RetEventoCTe.InfEvento.DetEvento.xJust;
+        infEvento.detEvento.vICMS      := RetEventoCTe.InfEvento.DetEvento.vICMS;
+        infEvento.detEvento.vTPrest    := RetEventoCTe.InfEvento.DetEvento.vTPrest;
+        infEvento.detEvento.vCarga     := RetEventoCTe.InfEvento.DetEvento.vCarga;
+        infEvento.detEvento.toma       := RetEventoCTe.InfEvento.DetEvento.toma;
+        infEvento.detEvento.UF         := RetEventoCTe.InfEvento.DetEvento.UF;
+        infEvento.detEvento.CNPJCPF    := RetEventoCTe.InfEvento.DetEvento.CNPJCPF;
+        infEvento.detEvento.IE         := RetEventoCTe.InfEvento.DetEvento.IE;
+        infEvento.detEvento.modal      := RetEventoCTe.InfEvento.DetEvento.modal;
+        infEvento.detEvento.UFIni      := RetEventoCTe.InfEvento.DetEvento.UFIni;
+        infEvento.detEvento.UFFim      := RetEventoCTe.InfEvento.DetEvento.UFFim;
+
+        for i := 0 to RetEventoCTe.InfEvento.detEvento.infCorrecao.Count -1 do
+         begin
+          infEvento.detEvento.infCorrecao.Add;
+          infEvento.detEvento.infCorrecao[i].grupoAlterado   := RetEventoCTe.InfEvento.detEvento.infCorrecao[i].grupoAlterado;
+          infEvento.detEvento.infCorrecao[i].campoAlterado   := RetEventoCTe.InfEvento.detEvento.infCorrecao[i].campoAlterado;
+          infEvento.detEvento.infCorrecao[i].valorAlterado   := RetEventoCTe.InfEvento.detEvento.infCorrecao[i].valorAlterado;
+          infEvento.detEvento.infCorrecao[i].nroItemAlterado := RetEventoCTe.InfEvento.detEvento.infCorrecao[i].nroItemAlterado;
+         end;
 
         if RetEventoCTe.retEvento.Count > 0 then
          begin
@@ -323,9 +343,7 @@ begin
            FRetInfEvento.nProt       := RetEventoCTe.retEvento.Items[0].RetInfEvento.nProt;
          end;
       end;
-     Result := True;
   finally
-     ArqEvento.Free;
      RetEventoCTe.Free;
   end;
 end;

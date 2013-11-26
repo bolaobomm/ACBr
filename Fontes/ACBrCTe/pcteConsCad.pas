@@ -1,12 +1,12 @@
 ////////////////////////////////////////////////////////////////////////////////
 //                                                                            //
-//              PCN - Projeto Cooperar NFe                                    //
+//              PCN - Projeto Cooperar CTe                                    //
 //                                                                            //
-//   Descrição: Classes para geração/leitura dos arquivos xml da NFe          //
+//   Descrição: Classes para geração/leitura dos arquivos xml da CTe          //
 //                                                                            //
-//        site: www.projetocooperar.org/nfe                                   //
+//        site: www.projetocooperar.org/cte                                   //
 //       email: projetocooperar@zipmail.com.br                                //
-//       forum: http://br.groups.yahoo.com/group/projeto_cooperar_nfe/        //
+//       forum: http://br.groups.yahoo.com/group/projeto_cooperar_cte/        //
 //     projeto: http://code.google.com/p/projetocooperar/                     //
 //         svn: http://projetocooperar.googlecode.com/svn/trunk/              //
 //                                                                            //

@@ -1,7 +1,7 @@
 {******************************************************************************}
-{ Projeto: Componente ACBrNFe                                                  }
-{  Biblioteca multiplataforma de componentes Delphi para emissão de Nota Fiscal}
-{ eletrônica - NFe - http://www.nfe.fazenda.gov.br                             }
+{ Projeto: Componente ACBrCTe                                                  }
+{  Biblioteca multiplataforma de componentes Delphi para emissão de Conhecimen-}
+{ to de Transporte eletrônico - CTe - http://www.cte.fazenda.gov.br            }
 {                                                                              }
 { Direitos Autorais Reservados (c) 2008 Wemerson Souto                         }
 {                                       Daniel Simoes de Almeida               }
@@ -52,8 +52,9 @@ interface
 
 uses
  Forms, SysUtils, Classes, QRPrntr,
- pcnConversao, pcteCTe, ACBrCTeDACTeQR, ACBrCTeDACTeClass,
- ACBrCTeDACTeQRRetrato, ACBrCTeDACTeQRRetratoA5;
+ pcnConversao, pcteCTe, ACBrCTeDACTeClass,
+ ACBrCTeDACTeQR, ACBrCTeDACTeQRRetrato, ACBrCTeDACTeQRRetratoA5,
+ ACBrCTeDAEventoQR, ACBrCTeDAEventoQRRetrato;
 
 type
   TACBrCTeDACTeQR = class(TACBrCTeDACTeClass)
@@ -64,6 +65,8 @@ type
     destructor Destroy; override;
     procedure ImprimirDACTe(CTe: TCTe = nil); override;
     procedure ImprimirDACTePDF(CTe: TCTe = nil); override;
+    procedure ImprimirEVENTO(CTe : TCTe = nil); override ;
+    procedure ImprimirEVENTOPDF(CTe : TCTe = nil); override ;
 //    procedure SetTamanhoPapel(Value: TpcnTamanhoPapel); virtual;
   published
     property PosRecibo: TPosRecibo read FPosRecibo write FPosRecibo default prCabecalho;
@@ -72,7 +75,11 @@ type
 
 implementation
 
-uses StrUtils, Dialogs, ACBrUtil, ACBrCTe, ACBrCteUtil;
+uses
+ StrUtils, Dialogs, ACBrUtil, ACBrCTe, ACBrCteUtil;
+
+var
+ frmDAEventoQR : TfrmDAEventoQR;
 
 constructor TACBrCTeDACTeQR.Create(AOwner: TComponent);
 begin
@@ -257,5 +264,147 @@ begin
   FTamanhoPapel := Value;
 end;
 *)
+procedure TACBrCTeDACTeQR.ImprimirEVENTO(CTe: TCTe);
+var
+ i, j: Integer;
+ Impresso: Boolean;
+
+begin
+  frmDAEventoQR := TfrmDAEventoQRRetrato.Create(Self);
+
+  if TACBrCTe(ACBrCTe).Conhecimentos.Count > 0 then
+    begin
+      for i := 0 to (TACBrCTe(ACBrCTe).EventoCTe.Evento.Count - 1) do
+        begin
+          Impresso := False;
+          for j := 0 to (TACBrCTe(ACBrCTe).Conhecimentos.Count - 1) do
+            begin
+              if Copy(TACBrCTe(ACBrCTe).Conhecimentos.Items[j].CTe.infCTe.ID, 4, 44) = TACBrCTe(ACBrCTe).EventoCTe.Evento.Items[i].InfEvento.chCTe then
+                begin
+                  frmDAEventoQR.Imprimir(TACBrCTe(ACBrCTe).EventoCTe.Evento.Items[i],
+                                         FLogo,
+                                         FNumCopias,
+                                         FSistema,
+                                         FUsuario,
+                                         FMostrarPreview,
+                                         FMargemSuperior,
+                                         FMargemInferior,
+                                         FMargemEsquerda,
+                                         FMargemDireita,
+                                         FImpressora,
+                                         TACBrCTe(ACBrCTe).Conhecimentos.Items[j].CTe);
+                  Impresso := True;
+                  Break;
+                end;
+            end;
+
+          if Impresso = False then
+            begin
+              frmDAEventoQR.Imprimir(TACBrCTe(ACBrCTe).EventoCTe.Evento.Items[i],
+                                     FLogo,
+                                     FNumCopias,
+                                     FSistema,
+                                     FUsuario,
+                                     FMostrarPreview,
+                                     FMargemSuperior,
+                                     FMargemInferior,
+                                     FMargemEsquerda,
+                                     FMargemDireita,
+                                     FImpressora);
+            end;
+        end;
+    end
+  else
+    begin
+      for i := 0 to (TACBrCTe(ACBrCTe).EventoCTe.Evento.Count - 1) do
+        begin
+          frmDAEventoQR.Imprimir(TACBrCTe(ACBrCTe).EventoCTe.Evento.Items[i],
+                                 FLogo,
+                                 FNumCopias,
+                                 FSistema,
+                                 FUsuario,
+                                 FMostrarPreview,
+                                 FMargemSuperior,
+                                 FMargemInferior,
+                                 FMargemEsquerda,
+                                 FMargemDireita,
+                                 FImpressora);
+        end;
+    end;
+
+  FreeAndNil(frmDAEventoQR);
+end;
+
+procedure TACBrCTeDACTeQR.ImprimirEVENTOPDF(CTe: TCTe);
+var
+ i, j: Integer;
+ sFile: String;
+ Impresso: Boolean;
+begin
+  frmDAEventoQR := TfrmDAEventoQRRetrato.Create(Self);
+
+  if TACBrCTe(ACBrCTe).Conhecimentos.Count > 0 then
+    begin
+      for i := 0 to (TACBrCTe(ACBrCTe).EventoCTe.Evento.Count - 1) do
+        begin
+          sFile := TACBrCTe(ACBrCTe).DACTE.PathPDF +
+                   Copy(TACBrCTe(ACBrCTe).EventoCTe.Evento.Items[i].InfEvento.id, 3, 52) + 'evento.pdf';
+          Impresso := False;
+
+          for j := 0 to (TACBrCTe(ACBrCTe).Conhecimentos.Count - 1) do
+            begin
+              if Copy(TACBrCTe(ACBrCTe).Conhecimentos.Items[j].CTe.infCTe.ID, 4, 44) = TACBrCTe(ACBrCTe).EventoCTe.Evento.Items[i].InfEvento.chCTe then
+                begin
+                  frmDAEventoQR.SavePDF(TACBrCTe(ACBrCTe).EventoCTe.Evento.Items[i],
+                                        FLogo,
+                                        sFile,
+                                        FSistema,
+                                        FUsuario,
+                                        FMargemSuperior,
+                                        FMargemInferior,
+                                        FMargemEsquerda,
+                                        FMargemDireita,
+                                        TACBrCTe(ACBrCTe).Conhecimentos.Items[j].CTe);
+                  Impresso := True;
+                  Break;
+                end;
+            end; 
+
+          if Impresso = False then
+            begin
+              frmDAEventoQR.SavePDF(TACBrCTe(ACBrCTe).EventoCTe.Evento.Items[i],
+                                    FLogo,
+                                    sFile,
+                                    FSistema,
+                                    FUsuario,
+                                    FMargemSuperior,
+                                    FMargemInferior,
+                                    FMargemEsquerda,
+                                    FMargemDireita);
+            end;
+        end;
+    end
+  else
+    begin
+      for i := 0 to (TACBrCTe(ACBrCTe).EventoCTe.Evento.Count - 1) do
+        begin
+          sFile := TACBrCTe(ACBrCTe).DACTE.PathPDF +
+                   Copy(TACBrCTe(ACBrCTe).EventoCTe.Evento.Items[i].InfEvento.id, 3, 52) + 'evento.pdf';
+
+          frmDAEventoQR.SavePDF(TACBrCTe(ACBrCTe).EventoCTe.Evento.Items[i],
+                                FLogo,
+                                sFile,
+                                FSistema,
+                                FUsuario,
+                                FMargemSuperior,
+                                FMargemInferior,
+                                FMargemEsquerda,
+                                FMargemDireita);
+        end;
+    end;
+
+  FreeAndNil(frmDAEventoQR);
+end;
+
 end.
 
