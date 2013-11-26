@@ -804,7 +804,7 @@ object frmDemo_ACBrCTe: TfrmDemo_ACBrCTe
       TabOrder = 0
       object btnImprimir: TButton
         Left = 192
-        Top = 156
+        Top = 124
         Width = 177
         Height = 25
         Caption = 'Imprimir DACTe'
@@ -822,7 +822,7 @@ object frmDemo_ACBrCTe: TfrmDemo_ACBrCTe
       end
       object btnValidarXML: TButton
         Left = 377
-        Top = 126
+        Top = 94
         Width = 177
         Height = 25
         Caption = 'Validar XML'
@@ -848,7 +848,7 @@ object frmDemo_ACBrCTe: TfrmDemo_ACBrCTe
         OnClick = btnCancCTeClick
       end
       object btnCriarEnviar: TButton
-        Left = 8
+        Left = 192
         Top = 36
         Width = 177
         Height = 25
@@ -866,8 +866,8 @@ object frmDemo_ACBrCTe: TfrmDemo_ACBrCTe
         OnClick = btnInutilizarClick
       end
       object btnGerarCTe: TButton
-        Left = 192
-        Top = 96
+        Left = 376
+        Top = 6
         Width = 177
         Height = 25
         Caption = 'Gerar CTe'
@@ -875,8 +875,8 @@ object frmDemo_ACBrCTe: TfrmDemo_ACBrCTe
         OnClick = btnGerarCTeClick
       end
       object btnConsCad: TButton
-        Left = 193
-        Top = 66
+        Left = 9
+        Top = 34
         Width = 177
         Height = 25
         Caption = 'Consulta Cadastro'
@@ -884,8 +884,8 @@ object frmDemo_ACBrCTe: TfrmDemo_ACBrCTe
         OnClick = btnConsCadClick
       end
       object btnGerarPDF: TButton
-        Left = 192
-        Top = 126
+        Left = 8
+        Top = 94
         Width = 177
         Height = 25
         Caption = 'Gerar PDF'
@@ -893,7 +893,7 @@ object frmDemo_ACBrCTe: TfrmDemo_ACBrCTe
         OnClick = btnGerarPDFClick
       end
       object btnEnviarEmail: TButton
-        Left = 377
+        Left = 193
         Top = 156
         Width = 177
         Height = 25
@@ -902,7 +902,7 @@ object frmDemo_ACBrCTe: TfrmDemo_ACBrCTe
         OnClick = btnEnviarEmailClick
       end
       object btnConsultarRecibo: TButton
-        Left = 192
+        Left = 376
         Top = 36
         Width = 177
         Height = 25
@@ -912,24 +912,24 @@ object frmDemo_ACBrCTe: TfrmDemo_ACBrCTe
       end
       object btnEnvEPEC: TButton
         Left = 377
-        Top = 6
+        Top = 64
         Width = 177
         Height = 25
         Caption = 'Enviar EPEC'
         TabOrder = 12
         OnClick = btnEnvEPECClick
       end
-      object btnConsultarDPEC: TButton
+      object btnImprimirEvento: TButton
         Left = 377
-        Top = 36
+        Top = 124
         Width = 177
         Height = 25
-        Caption = '...'
+        Caption = 'Imprimir Evento'
         TabOrder = 13
-        OnClick = btnConsultarDPECClick
+        OnClick = btnImprimirEventoClick
       end
       object btnImportarXML: TButton
-        Left = 377
+        Left = 193
         Top = 96
         Width = 177
         Height = 25
@@ -938,8 +938,8 @@ object frmDemo_ACBrCTe: TfrmDemo_ACBrCTe
         OnClick = btnImportarXMLClick
       end
       object btnConsultarChave: TButton
-        Left = 8
-        Top = 96
+        Left = 192
+        Top = 64
         Width = 177
         Height = 25
         Caption = 'Consultar pela Chave'
@@ -954,6 +954,15 @@ object frmDemo_ACBrCTe: TfrmDemo_ACBrCTe
         Caption = 'Cancelamento CTe pela Chave'
         TabOrder = 16
         OnClick = btnCancelarChaveClick
+      end
+      object btnEnviarEventoEmail: TButton
+        Left = 377
+        Top = 156
+        Width = 177
+        Height = 25
+        Caption = 'Enviar Evento Email'
+        TabOrder = 17
+        OnClick = btnEnviarEventoEmailClick
       end
     end
     object PageControl2: TPageControl
@@ -1062,10 +1071,13 @@ object frmDemo_ACBrCTe: TfrmDemo_ACBrCTe
     Configuracoes.WebServices.AguardarConsultaRet = 0
     Configuracoes.WebServices.IntervaloTentativas = 0
     Configuracoes.WebServices.AjustaAguardaConsultaRet = False
+    DACTe = ACBrCTeDACTeQR1
     Left = 232
     Top = 400
   end
   object ACBrCTeDACTeQR1: TACBrCTeDACTeQR
+    ACBrCTE = ACBrCTe1
+    PathPDF = 'C:\Arquivos de programas\Borland\Delphi7\Bin\'
     ImprimirHoraSaida = False
     MostrarPreview = True
     MostrarStatus = True

@@ -7,8 +7,7 @@ interface
 uses IniFiles, ShellAPI,
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
   Dialogs, ComCtrls, OleCtrls, SHDocVw, StdCtrls, Buttons, ExtCtrls,
-  pcnConversao, {ACBrUtil,}
-  ACBrCTeDACTEClass, ACBrCTeDACTeQRClass, ACBrCTe;
+  pcnConversao, ACBrCTe, ACBrCTeDACTEClass, ACBrCTeDACTeQRClass;
 
 type
   TfrmDemo_ACBrCTe = class(TForm)
@@ -112,7 +111,7 @@ type
     btnEnviarEmail: TButton;
     btnConsultarRecibo: TButton;
     btnEnvEPEC: TButton;
-    btnConsultarDPEC: TButton;
+    btnImprimirEvento: TButton;
     btnImportarXML: TButton;
     btnConsultarChave: TButton;
     btnCancelarChave: TButton;
@@ -132,6 +131,7 @@ type
     OpenDialog1: TOpenDialog;
     ACBrCTe1: TACBrCTe;
     ACBrCTeDACTeQR1: TACBrCTeDACTeQR;
+    btnEnviarEventoEmail: TButton;
     procedure sbtnCaminhoCertClick(Sender: TObject);
     procedure sbtnGetCertClick(Sender: TObject);
     procedure sbtnLogoMarcaClick(Sender: TObject);
@@ -154,12 +154,13 @@ type
     procedure btnGerarPDFClick(Sender: TObject);
     procedure btnImprimirClick(Sender: TObject);
     procedure btnEnvEPECClick(Sender: TObject);
-    procedure btnConsultarDPECClick(Sender: TObject);
+    procedure btnImprimirEventoClick(Sender: TObject);
     procedure btnImportarXMLClick(Sender: TObject);
     procedure btnValidarXMLClick(Sender: TObject);
     procedure btnEnviarEmailClick(Sender: TObject);
     procedure ACBrCTe1StatusChange(Sender: TObject);
     procedure ACBrCTe1GerarLog(const Mensagem: String);
+    procedure btnEnviarEventoEmailClick(Sender: TObject);
     {
     procedure lblMouseEnter(Sender: TObject);
     procedure lblMouseLeave(Sender: TObject);
@@ -182,7 +183,6 @@ implementation
 uses
  FileCtrl, DateUtils,
  ufrmStatus,
- {pcnNFe, }
  ACBrCTeConhecimentos, ACBrDFeUtil, ACBrCTeUtil;
 
 const
@@ -1169,6 +1169,93 @@ begin
  ShellExecute(0, Nil, 'http://acbr.sourceforge.net/drupal/?q=node/14', Nil, Nil, SW_NORMAL);
 end;
 
+procedure TfrmDemo_ACBrCTe.ACBrCTe1StatusChange(Sender: TObject);
+begin
+ case ACBrCTe1.Status of
+  stCTeIdle : begin
+               if ( frmStatus <> nil ) then frmStatus.Hide;
+              end;
+  stCTeStatusServico : begin
+                        if ( frmStatus = nil )
+                         then frmStatus := TfrmStatus.Create(Application);
+                        frmStatus.lblStatus.Caption := 'Verificando Status do servico...';
+                        frmStatus.Show;
+                        frmStatus.BringToFront;
+                       end;
+  stCTeRecepcao : begin
+                   if ( frmStatus = nil )
+                    then frmStatus := TfrmStatus.Create(Application);
+                   frmStatus.lblStatus.Caption := 'Enviando dados do CTe...';
+                   frmStatus.Show;
+                   frmStatus.BringToFront;
+                  end;
+  stCTeRetRecepcao : begin
+                      if ( frmStatus = nil )
+                       then frmStatus := TfrmStatus.Create(Application);
+                      frmStatus.lblStatus.Caption := 'Recebendo dados do CTe...';
+                      frmStatus.Show;
+                      frmStatus.BringToFront;
+                     end;
+  stCTeConsulta : begin
+                   if ( frmStatus = nil )
+                    then frmStatus := TfrmStatus.Create(Application);
+                   frmStatus.lblStatus.Caption := 'Consultando CTe...';
+                   frmStatus.Show;
+                   frmStatus.BringToFront;
+                  end;
+  stCTeCancelamento : begin
+                       if ( frmStatus = nil )
+                        then frmStatus := TfrmStatus.Create(Application);
+                       frmStatus.lblStatus.Caption := 'Enviando cancelamento de CTe...';
+                       frmStatus.Show;
+                       frmStatus.BringToFront;
+                      end;
+  stCTeInutilizacao : begin
+                       if ( frmStatus = nil )
+                        then frmStatus := TfrmStatus.Create(Application);
+                       frmStatus.lblStatus.Caption := 'Enviando pedido de Inutilização...';
+                       frmStatus.Show;
+                       frmStatus.BringToFront;
+                      end;
+  stCTeRecibo : begin
+                 if ( frmStatus = nil )
+                  then frmStatus := TfrmStatus.Create(Application);
+                 frmStatus.lblStatus.Caption := 'Consultando Recibo de Lote...';
+                 frmStatus.Show;
+                 frmStatus.BringToFront;
+                end;
+  stCTeCadastro : begin
+                   if ( frmStatus = nil )
+                    then frmStatus := TfrmStatus.Create(Application);
+                   frmStatus.lblStatus.Caption := 'Consultando Cadastro...';
+                   frmStatus.Show;
+                   frmStatus.BringToFront;
+                  end;
+  {
+  stCTeEnvDPEC : begin
+                  if ( frmStatus = nil )
+                   then frmStatus := TfrmStatus.Create(Application);
+                  frmStatus.lblStatus.Caption := 'Enviando DPEC...';
+                  frmStatus.Show;
+                  frmStatus.BringToFront;
+                 end;
+  }
+  stCTeEmail : begin
+                if ( frmStatus = nil )
+                 then frmStatus := TfrmStatus.Create(Application);
+                frmStatus.lblStatus.Caption := 'Enviando Email...';
+                frmStatus.Show;
+                frmStatus.BringToFront;
+               end;
+ end;
+ Application.ProcessMessages;
+end;
+
+procedure TfrmDemo_ACBrCTe.ACBrCTe1GerarLog(const Mensagem: String);
+begin
+ memoLog.Lines.Add(Mensagem);
+end;
+
 procedure TfrmDemo_ACBrCTe.btnStatusServClick(Sender: TObject);
 begin
  ACBrCTe1.WebServices.StatusServico.Executar;
@@ -1188,6 +1275,73 @@ begin
  MemoDados.Lines.Add('tMed: '     +IntToStr(ACBrCTe1.WebServices.StatusServico.TMed));
  MemoDados.Lines.Add('dhRetorno: '+DateTimeToStr(ACBrCTe1.WebServices.StatusServico.dhRetorno));
  MemoDados.Lines.Add('xObs: '     +ACBrCTe1.WebServices.StatusServico.xObs);
+end;
+
+procedure TfrmDemo_ACBrCTe.btnInutilizarClick(Sender: TObject);
+var
+ Modelo, Serie, Ano, NumeroInicial, NumeroFinal, Justificativa : String;
+begin
+ if not(InputQuery('WebServices Inutilização ', 'Ano',    Ano))
+  then exit;
+ if not(InputQuery('WebServices Inutilização ', 'Modelo', Modelo))
+  then exit;
+ if not(InputQuery('WebServices Inutilização ', 'Serie',  Serie))
+  then exit;
+ if not(InputQuery('WebServices Inutilização ', 'Número Inicial', NumeroInicial))
+  then exit;
+ if not(InputQuery('WebServices Inutilização ', 'Número Inicial', NumeroFinal))
+  then exit;
+ if not(InputQuery('WebServices Inutilização ', 'Justificativa', Justificativa))
+  then exit;
+ ACBrCTe1.WebServices.Inutiliza(edtEmitCNPJ.Text, Justificativa, StrToInt(Ano),
+                                StrToInt(Modelo), StrToInt(Serie),
+                                StrToInt(NumeroInicial), StrToInt(NumeroFinal));
+ MemoResp.Lines.Text   := UTF8Encode(ACBrCTe1.WebServices.Inutilizacao.RetWS);
+ memoRespWS.Lines.Text := UTF8Encode(ACBrCTe1.WebServices.Inutilizacao.RetWS);
+ LoadXML(MemoResp, WBResposta);
+end;
+
+procedure TfrmDemo_ACBrCTe.btnGerarCTeClick(Sender: TObject);
+var
+ vAux : String;
+begin
+ if not(InputQuery('WebServices Enviar', 'Numero do Conhecimento', vAux))
+  then exit;
+
+ ACBrCTe1.Conhecimentos.Clear;
+ GerarCTe(vAux);
+ ACBrCTe1.Conhecimentos.Items[0].SaveToFile;
+
+ ShowMessage('Arquivo gerado em: '+ACBrCTe1.Conhecimentos.Items[0].NomeArq);
+ MemoDados.Lines.Add('Arquivo gerado em: '+ACBrCTe1.Conhecimentos.Items[0].NomeArq);
+ MemoResp.Lines.LoadFromFile(ACBrCTe1.Conhecimentos.Items[0].NomeArq);
+ LoadXML(MemoResp, WBResposta);
+ PageControl2.ActivePageIndex := 1;
+end;
+
+procedure TfrmDemo_ACBrCTe.btnConsCadClick(Sender: TObject);
+var
+ UF, Documento : String;
+begin
+ if not(InputQuery('WebServices Consulta Cadastro ', 'UF do Documento a ser Consultado:', UF))
+  then exit;
+ if not(InputQuery('WebServices Consulta Cadastro ', 'Documento(CPF/CNPJ)', Documento))
+  then exit;
+
+ Documento := Trim(DFeUtil.LimpaNumero(Documento));
+
+ ACBrCTe1.WebServices.ConsultaCadastro.UF := UF;
+ if Length(Documento) > 11
+  then ACBrCTe1.WebServices.ConsultaCadastro.CNPJ := Documento
+  else ACBrCTe1.WebServices.ConsultaCadastro.CPF := Documento;
+ ACBrCTe1.WebServices.ConsultaCadastro.Executar;
+
+ MemoResp.Lines.Text   := UTF8Encode(ACBrCTe1.WebServices.ConsultaCadastro.RetWS);
+ memoRespWS.Lines.Text := UTF8Encode(ACBrCTe1.WebServices.ConsultaCadastro.RetWS);
+ LoadXML(MemoResp, WBResposta);
+
+ ShowMessage(ACBrCTe1.WebServices.ConsultaCadastro.xMotivo);
+ ShowMessage(ACBrCTe1.WebServices.ConsultaCadastro.RetConsCad.InfCad.Items[0].xNome);
 end;
 
 procedure TfrmDemo_ACBrCTe.btnCriarEnviarClick(Sender: TObject);
@@ -1221,6 +1375,21 @@ begin
  MemoDados.Lines.Add('Protocolo: '+ ACBrCTe1.WebServices.Retorno.Protocolo);
 
  ACBrCTe1.Conhecimentos.Clear;
+end;
+
+procedure TfrmDemo_ACBrCTe.btnConsultarReciboClick(Sender: TObject);
+var
+ aux : String;
+begin
+ if not(InputQuery('Consultar Recibo Lote', 'Número do Recibo', aux))
+  then exit;
+
+  ACBrCTe1.WebServices.Recibo.Recibo := aux;
+  ACBrCTe1.WebServices.Recibo.Executar;
+
+  MemoResp.Lines.Text   := UTF8Encode(ACBrCTe1.WebServices.Recibo.RetWS);
+  memoRespWS.Lines.Text := UTF8Encode(ACBrCTe1.WebServices.Recibo.RetWS);
+  LoadXML(MemoResp, WBResposta);
 end;
 
 procedure TfrmDemo_ACBrCTe.btnConsultarClick(Sender: TObject);
@@ -1258,116 +1427,11 @@ begin
   LoadXML(MemoResp, WBResposta);
 end;
 
-procedure TfrmDemo_ACBrCTe.btnCancCTeClick(Sender: TObject);
+procedure TfrmDemo_ACBrCTe.btnEnvEPECClick(Sender: TObject);
 var
  vAux : String;
 begin
- OpenDialog1.Title := 'Selecione o CTe';
- OpenDialog1.DefaultExt := '*-cte.xml';
- OpenDialog1.Filter := 'Arquivos CTe (*-cte.xml)|*-cte.xml|Arquivos XML (*.xml)|*.xml|Todos os Arquivos (*.*)|*.*';
- OpenDialog1.InitialDir := ACBrCTe1.Configuracoes.Geral.PathSalvar;
-
- if OpenDialog1.Execute then
-  begin
-   ACBrCTe1.Conhecimentos.Clear;
-   ACBrCTe1.Conhecimentos.LoadFromFile(OpenDialog1.FileName);
-   if not(InputQuery('WebServices Cancelamento', 'Justificativa', vAux))
-    then exit;
-
-   ACBrCTe1.Cancelamento(vAux);
-   MemoResp.Lines.Text :=  UTF8Encode(ACBrCTe1.WebServices.Cancelamento.RetWS);
-   memoRespWS.Lines.Text :=  UTF8Encode(ACBrCTe1.WebServices.Cancelamento.RetWS);
-   LoadXML(MemoResp, WBResposta);
-   ShowMessage(IntToStr(ACBrCTe1.WebServices.Cancelamento.cStat));
-   ShowMessage(ACBrCTe1.WebServices.Cancelamento.Protocolo);
-  end;
-end;
-
-procedure TfrmDemo_ACBrCTe.btnCancelarChaveClick(Sender: TObject);
-begin
- ShowMessage('Opção não Implementada!');
-end;
-
-procedure TfrmDemo_ACBrCTe.btnInutilizarClick(Sender: TObject);
-var
- Modelo, Serie, Ano, NumeroInicial, NumeroFinal, Justificativa : String;
-begin
- if not(InputQuery('WebServices Inutilização ', 'Ano',    Ano))
-  then exit;
- if not(InputQuery('WebServices Inutilização ', 'Modelo', Modelo))
-  then exit;
- if not(InputQuery('WebServices Inutilização ', 'Serie',  Serie))
-  then exit;
- if not(InputQuery('WebServices Inutilização ', 'Número Inicial', NumeroInicial))
-  then exit;
- if not(InputQuery('WebServices Inutilização ', 'Número Inicial', NumeroFinal))
-  then exit;
- if not(InputQuery('WebServices Inutilização ', 'Justificativa', Justificativa))
-  then exit;
- ACBrCTe1.WebServices.Inutiliza(edtEmitCNPJ.Text, Justificativa, StrToInt(Ano),
-                                StrToInt(Modelo), StrToInt(Serie),
-                                StrToInt(NumeroInicial), StrToInt(NumeroFinal));
- MemoResp.Lines.Text   := UTF8Encode(ACBrCTe1.WebServices.Inutilizacao.RetWS);
- memoRespWS.Lines.Text := UTF8Encode(ACBrCTe1.WebServices.Inutilizacao.RetWS);
- LoadXML(MemoResp, WBResposta);
-end;
-
-procedure TfrmDemo_ACBrCTe.btnConsultarReciboClick(Sender: TObject);
-var
- aux : String;
-begin
- if not(InputQuery('Consultar Recibo Lote', 'Número do Recibo', aux))
-  then exit;
-
-  ACBrCTe1.WebServices.Recibo.Recibo := aux;
-  ACBrCTe1.WebServices.Recibo.Executar;
-
-  MemoResp.Lines.Text   := UTF8Encode(ACBrCTe1.WebServices.Recibo.RetWS);
-  memoRespWS.Lines.Text := UTF8Encode(ACBrCTe1.WebServices.Recibo.RetWS);
-  LoadXML(MemoResp, WBResposta);
-end;
-
-procedure TfrmDemo_ACBrCTe.btnConsCadClick(Sender: TObject);
-var
- UF, Documento : String;
-begin
- if not(InputQuery('WebServices Consulta Cadastro ', 'UF do Documento a ser Consultado:', UF))
-  then exit;
- if not(InputQuery('WebServices Consulta Cadastro ', 'Documento(CPF/CNPJ)', Documento))
-  then exit;
-
- Documento := Trim(DFeUtil.LimpaNumero(Documento));
-
- ACBrCTe1.WebServices.ConsultaCadastro.UF := UF;
- if Length(Documento) > 11
-  then ACBrCTe1.WebServices.ConsultaCadastro.CNPJ := Documento
-  else ACBrCTe1.WebServices.ConsultaCadastro.CPF := Documento;
- ACBrCTe1.WebServices.ConsultaCadastro.Executar;
-
- MemoResp.Lines.Text   := UTF8Encode(ACBrCTe1.WebServices.ConsultaCadastro.RetWS);
- memoRespWS.Lines.Text := UTF8Encode(ACBrCTe1.WebServices.ConsultaCadastro.RetWS);
- LoadXML(MemoResp, WBResposta);
-
- ShowMessage(ACBrCTe1.WebServices.ConsultaCadastro.xMotivo);
- ShowMessage(ACBrCTe1.WebServices.ConsultaCadastro.RetConsCad.InfCad.Items[0].xNome);
-end;
-
-procedure TfrmDemo_ACBrCTe.btnGerarCTeClick(Sender: TObject);
-var
- vAux : String;
-begin
- if not(InputQuery('WebServices Enviar', 'Numero do Conhecimento', vAux))
-  then exit;
-
- ACBrCTe1.Conhecimentos.Clear;
- GerarCTe(vAux);
- ACBrCTe1.Conhecimentos.Items[0].SaveToFile;
-
- ShowMessage('Arquivo gerado em: '+ACBrCTe1.Conhecimentos.Items[0].NomeArq);
- MemoDados.Lines.Add('Arquivo gerado em: '+ACBrCTe1.Conhecimentos.Items[0].NomeArq);
- MemoResp.Lines.LoadFromFile(ACBrCTe1.Conhecimentos.Items[0].NomeArq);
- LoadXML(MemoResp, WBResposta);
- PageControl2.ActivePageIndex := 1;
+ ShowMessage('Opção não Implementada, no programa exemplo!');
 end;
 
 procedure TfrmDemo_ACBrCTe.btnGerarPDFClick(Sender: TObject);
@@ -1383,33 +1447,6 @@ begin
    ACBrCTe1.Conhecimentos.LoadFromFile(OpenDialog1.FileName);
    ACBrCTe1.Conhecimentos.ImprimirPDF;
   end;
-end;
-
-procedure TfrmDemo_ACBrCTe.btnImprimirClick(Sender: TObject);
-begin
- OpenDialog1.Title := 'Selecione o CTe';
- OpenDialog1.DefaultExt := '*-cte.xml';
- OpenDialog1.Filter := 'Arquivos CTe (*-cte.xml)|*-cte.xml|Arquivos XML (*.xml)|*.xml|Todos os Arquivos (*.*)|*.*';
- OpenDialog1.InitialDir := ACBrCTe1.Configuracoes.Geral.PathSalvar;
-
- if OpenDialog1.Execute then
-  begin
-   ACBrCTe1.Conhecimentos.Clear;
-   ACBrCTe1.Conhecimentos.LoadFromFile(OpenDialog1.FileName);
-   ACBrCTe1.Conhecimentos.Imprimir;
-  end;
-end;
-
-procedure TfrmDemo_ACBrCTe.btnEnvEPECClick(Sender: TObject);
-var
- vAux : String;
-begin
- ShowMessage('Opção não Implementada, no programa exemplo!');
-end;
-
-procedure TfrmDemo_ACBrCTe.btnConsultarDPECClick(Sender: TObject);
-begin
- {a}
 end;
 
 procedure TfrmDemo_ACBrCTe.btnImportarXMLClick(Sender: TObject);
@@ -2121,6 +2158,51 @@ begin
   end;
 end;
 
+procedure TfrmDemo_ACBrCTe.btnCancCTeClick(Sender: TObject);
+var
+ vAux : String;
+begin
+ OpenDialog1.Title := 'Selecione o CTe';
+ OpenDialog1.DefaultExt := '*-cte.xml';
+ OpenDialog1.Filter := 'Arquivos CTe (*-cte.xml)|*-cte.xml|Arquivos XML (*.xml)|*.xml|Todos os Arquivos (*.*)|*.*';
+ OpenDialog1.InitialDir := ACBrCTe1.Configuracoes.Geral.PathSalvar;
+
+ if OpenDialog1.Execute then
+  begin
+   ACBrCTe1.Conhecimentos.Clear;
+   ACBrCTe1.Conhecimentos.LoadFromFile(OpenDialog1.FileName);
+   if not(InputQuery('WebServices Cancelamento', 'Justificativa', vAux))
+    then exit;
+
+   ACBrCTe1.Cancelamento(vAux);
+   MemoResp.Lines.Text :=  UTF8Encode(ACBrCTe1.WebServices.Cancelamento.RetWS);
+   memoRespWS.Lines.Text :=  UTF8Encode(ACBrCTe1.WebServices.Cancelamento.RetWS);
+   LoadXML(MemoResp, WBResposta);
+   ShowMessage(IntToStr(ACBrCTe1.WebServices.Cancelamento.cStat));
+   ShowMessage(ACBrCTe1.WebServices.Cancelamento.Protocolo);
+  end;
+end;
+
+procedure TfrmDemo_ACBrCTe.btnCancelarChaveClick(Sender: TObject);
+begin
+ ShowMessage('Opção não Implementada!');
+end;
+
+procedure TfrmDemo_ACBrCTe.btnImprimirClick(Sender: TObject);
+begin
+ OpenDialog1.Title := 'Selecione o CTe';
+ OpenDialog1.DefaultExt := '*-cte.xml';
+ OpenDialog1.Filter := 'Arquivos CTe (*-cte.xml)|*-cte.xml|Arquivos XML (*.xml)|*.xml|Todos os Arquivos (*.*)|*.*';
+ OpenDialog1.InitialDir := ACBrCTe1.Configuracoes.Geral.PathSalvar;
+
+ if OpenDialog1.Execute then
+  begin
+   ACBrCTe1.Conhecimentos.Clear;
+   ACBrCTe1.Conhecimentos.LoadFromFile(OpenDialog1.FileName);
+   ACBrCTe1.Conhecimentos.Imprimir;
+  end;
+end;
+
 procedure TfrmDemo_ACBrCTe.btnEnviarEmailClick(Sender: TObject);
 var
  Para : String;
@@ -2158,98 +2240,83 @@ begin
   end;
 end;
 
-procedure TfrmDemo_ACBrCTe.ACBrCTe1StatusChange(Sender: TObject);
+procedure TfrmDemo_ACBrCTe.btnImprimirEventoClick(Sender: TObject);
 begin
- case ACBrCTe1.Status of
-  stCTeIdle : begin
-               if ( frmStatus <> nil ) then frmStatus.Hide;
-              end;
-  stCTeStatusServico : begin
-                        if ( frmStatus = nil )
-                         then frmStatus := TfrmStatus.Create(Application);
-                        frmStatus.lblStatus.Caption := 'Verificando Status do servico...';
-                        frmStatus.Show;
-                        frmStatus.BringToFront;
-                       end;
-  stCTeRecepcao : begin
-                   if ( frmStatus = nil )
-                    then frmStatus := TfrmStatus.Create(Application);
-                   frmStatus.lblStatus.Caption := 'Enviando dados do CTe...';
-                   frmStatus.Show;
-                   frmStatus.BringToFront;
-                  end;
-  stCTeRetRecepcao : begin
-                      if ( frmStatus = nil )
-                       then frmStatus := TfrmStatus.Create(Application);
-                      frmStatus.lblStatus.Caption := 'Recebendo dados do CTe...';
-                      frmStatus.Show;
-                      frmStatus.BringToFront;
-                     end;
-  stCTeConsulta : begin
-                   if ( frmStatus = nil )
-                    then frmStatus := TfrmStatus.Create(Application);
-                   frmStatus.lblStatus.Caption := 'Consultando CTe...';
-                   frmStatus.Show;
-                   frmStatus.BringToFront;
-                  end;
-  stCTeCancelamento : begin
-                       if ( frmStatus = nil )
-                        then frmStatus := TfrmStatus.Create(Application);
-                       frmStatus.lblStatus.Caption := 'Enviando cancelamento de CTe...';
-                       frmStatus.Show;
-                       frmStatus.BringToFront;
-                      end;
-  stCTeInutilizacao : begin
-                       if ( frmStatus = nil )
-                        then frmStatus := TfrmStatus.Create(Application);
-                       frmStatus.lblStatus.Caption := 'Enviando pedido de Inutilização...';
-                       frmStatus.Show;
-                       frmStatus.BringToFront;
-                      end;
-  stCTeRecibo : begin
-                 if ( frmStatus = nil )
-                  then frmStatus := TfrmStatus.Create(Application);
-                 frmStatus.lblStatus.Caption := 'Consultando Recibo de Lote...';
-                 frmStatus.Show;
-                 frmStatus.BringToFront;
-                end;
-  stCTeCadastro : begin
-                   if ( frmStatus = nil )
-                    then frmStatus := TfrmStatus.Create(Application);
-                   frmStatus.lblStatus.Caption := 'Consultando Cadastro...';
-                   frmStatus.Show;
-                   frmStatus.BringToFront;
-                  end;
-  {
-  stCTeEnvDPEC : begin
-                  if ( frmStatus = nil )
-                   then frmStatus := TfrmStatus.Create(Application);
-                  frmStatus.lblStatus.Caption := 'Enviando DPEC...';
-                  frmStatus.Show;
-                  frmStatus.BringToFront;
-                 end;
-  stCTeConsultaDPEC : begin
-                       if ( frmStatus = nil )
-                        then frmStatus := TfrmStatus.Create(Application);
-                       frmStatus.lblStatus.Caption := 'Consultando DPEC...';
-                       frmStatus.Show;
-                       frmStatus.BringToFront;
-                      end;
-  }
-  stCTeEmail : begin
-                if ( frmStatus = nil )
-                 then frmStatus := TfrmStatus.Create(Application);
-                frmStatus.lblStatus.Caption := 'Enviando Email...';
-                frmStatus.Show;
-                frmStatus.BringToFront;
-               end;
- end;
- Application.ProcessMessages;
+  OpenDialog1.Title := 'Selecione o CTe';
+  OpenDialog1.DefaultExt := '*-cte.xml';
+  OpenDialog1.Filter := 'Arquivos CTe (*-cte.xml)|*-cte.xml|Arquivos XML (*.xml)|*.xml|Todos os Arquivos (*.*)|*.*';
+  OpenDialog1.InitialDir := ACBrCTe1.Configuracoes.Geral.PathSalvar;
+
+  ACBrCTe1.Conhecimentos.Clear;
+  if OpenDialog1.Execute then
+  begin
+    ACBrCTe1.Conhecimentos.LoadFromFile(OpenDialog1.FileName);
+  end;
+
+  OpenDialog1.Title := 'Selecione o Evento';
+  OpenDialog1.DefaultExt := '*-procEventoCTe.xml';
+  OpenDialog1.Filter := 'Arquivos Evento (*-procEventoCTe.xml)|*-procEventoCTe.xml|Arquivos XML (*.xml)|*.xml|Todos os Arquivos (*.*)|*.*';
+  OpenDialog1.InitialDir := ACBrCTe1.Configuracoes.Geral.PathSalvar;
+
+  if OpenDialog1.Execute then
+  begin
+    ACBrCTe1.EventoCTe.Evento.Clear;
+    ACBrCTe1.EventoCTe.LerXML(OpenDialog1.FileName) ;
+    ACBrCTe1.ImprimirEvento;
+  end;
 end;
 
-procedure TfrmDemo_ACBrCTe.ACBrCTe1GerarLog(const Mensagem: String);
+procedure TfrmDemo_ACBrCTe.btnEnviarEventoEmailClick(Sender: TObject);
+var
+ Para : String;
+ CC, Evento: Tstrings;
 begin
- memoLog.Lines.Add(Mensagem);
+  if not(InputQuery('Enviar Email', 'Email de destino', Para)) then
+    exit;
+
+  OpenDialog1.Title := 'Selecione o CTe';
+  OpenDialog1.DefaultExt := '*-cte.xml';
+  OpenDialog1.Filter := 'Arquivos CTe (*-cte.xml)|*-cte.xml|Arquivos XML (*.xml)|*.xml|Todos os Arquivos (*.*)|*.*';
+  OpenDialog1.InitialDir := ACBrCTe1.Configuracoes.Geral.PathSalvar;
+  if OpenDialog1.Execute then
+  begin
+    ACBrCTe1.Conhecimentos.Clear;
+    ACBrCTe1.Conhecimentos.LoadFromFile(OpenDialog1.FileName);
+  end;
+
+  OpenDialog1.Title := 'Selecione o Evento';
+  OpenDialog1.DefaultExt := '*-procEventoCTe.xml';
+  OpenDialog1.Filter := 'Arquivos Evento (*-procEventoCTe.xml)|*-procEventoCTe.xml|Arquivos XML (*.xml)|*.xml|Todos os Arquivos (*.*)|*.*';
+  OpenDialog1.InitialDir := ACBrCTe1.Configuracoes.Geral.PathSalvar;
+  if OpenDialog1.Execute then
+  begin
+    Evento := TStringList.Create;
+    Evento.Clear;
+    Evento.Add(OpenDialog1.FileName);
+    ACBrCTe1.EventoCTe.Evento.Clear;
+    ACBrCTe1.EventoCTe.LerXML(OpenDialog1.FileName) ;
+    CC:=TstringList.Create;
+    CC.Add('andrefmoraes@gmail.com'); //especifique um email válido
+    CC.Add('anfm@zipmail.com.br');    //especifique um email válido
+    ACBrCTe1.EnviarEmailEvento(edtSmtpHost.Text
+                             , edtSmtpPort.Text
+                             , edtSmtpUser.Text
+                             , edtSmtpPass.Text
+                             , edtSmtpUser.Text
+                             , Para
+                             , edtEmailAssunto.Text
+                             , mmEmailMsg.Lines
+                             , cbEmailSSL.Checked // SSL - Conexão Segura
+                             , True //Enviar PDF junto
+                             , CC //Lista com emails que serão enviado cópias - TStrings
+                             , Evento // Lista de anexos - TStrings
+                             , False  //Pede confirmação de leitura do email
+                             , False  //Aguarda Envio do Email(não usa thread)
+                             , 'ACBrCTe' // Nome do Rementente
+                             , cbEmailSSL.Checked ); // Auto TLS
+    CC.Free;
+    Evento.Free;
+  end;
 end;
 
 end.
