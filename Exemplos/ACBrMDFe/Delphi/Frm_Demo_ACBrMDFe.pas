@@ -127,6 +127,7 @@ type
     ACBrMDFe1: TACBrMDFe;
     DAMDFE: TACBrMDFeDAMDFEQR;
     rgVersaoDF: TRadioGroup;
+    btnImprimirEvento: TButton;
     procedure sbtnCaminhoCertClick(Sender: TObject);
     procedure sbtnGetCertClick(Sender: TObject);
     procedure sbtnLogoMarcaClick(Sender: TObject);
@@ -149,6 +150,7 @@ type
     procedure btnValidarXMLClick(Sender: TObject);
     procedure ACBrMDFe1StatusChange(Sender: TObject);
     procedure ACBrMDFe1GerarLog(const Mensagem: String);
+    procedure btnImprimirEventoClick(Sender: TObject);
     {
     procedure lblMouseEnter(Sender: TObject);
     procedure lblMouseLeave(Sender: TObject);
@@ -680,240 +682,6 @@ begin
  ShellExecute(0, Nil, 'http://acbr.sourceforge.net/drupal/?q=node/14', Nil, Nil, SW_NORMAL);
 end;
 
-procedure TfrmDemo_ACBrMDFe.btnStatusServClick(Sender: TObject);
-begin
- ACBrMDFe1.WebServices.StatusServico.Executar;
- MemoResp.Lines.Text := UTF8Encode(ACBrMDFe1.WebServices.StatusServico.RetWS);
- memoRespWS.Lines.Text := UTF8Encode(ACBrMDFe1.WebServices.StatusServico.RetWS);
- LoadXML(MemoResp, WBResposta);
-
- PageControl2.ActivePageIndex := 5;
- MemoDados.Lines.Add('');
- MemoDados.Lines.Add('Status Serviço');
- MemoDados.Lines.Add('tpAmb: '    +TpAmbToStr(ACBrMDFe1.WebServices.StatusServico.tpAmb));
- MemoDados.Lines.Add('verAplic: ' +ACBrMDFe1.WebServices.StatusServico.verAplic);
- MemoDados.Lines.Add('cStat: '    +IntToStr(ACBrMDFe1.WebServices.StatusServico.cStat));
- MemoDados.Lines.Add('xMotivo: '  +ACBrMDFe1.WebServices.StatusServico.xMotivo);
- MemoDados.Lines.Add('cUF: '      +IntToStr(ACBrMDFe1.WebServices.StatusServico.cUF));
- MemoDados.Lines.Add('dhRecbto: ' +DateTimeToStr(ACBrMDFe1.WebServices.StatusServico.dhRecbto));
- MemoDados.Lines.Add('tMed: '     +IntToStr(ACBrMDFe1.WebServices.StatusServico.TMed));
- MemoDados.Lines.Add('dhRetorno: '+DateTimeToStr(ACBrMDFe1.WebServices.StatusServico.dhRetorno));
- MemoDados.Lines.Add('xObs: '     +ACBrMDFe1.WebServices.StatusServico.xObs);
-end;
-
-procedure TfrmDemo_ACBrMDFe.btnCriarEnviarClick(Sender: TObject);
-var
- vAux, vNumLote : String;
-begin
- if not(InputQuery('WebServices Enviar', 'Numero do Manifesto', vAux))
-  then exit;
-
- if not(InputQuery('WebServices Enviar', 'Numero do Lote', vNumLote))
-  then exit;
-
- ACBrMDFe1.Manifestos.Clear;
- GerarMDFe(vAux);
- ACBrMDFe1.Enviar(StrToInt(vNumLote));
-
- MemoResp.Lines.Text   := UTF8Encode(ACBrMDFe1.WebServices.Retorno.RetWS);
- memoRespWS.Lines.Text := UTF8Encode(ACBrMDFe1.WebServices.Retorno.RetWS);
- LoadXML(MemoResp, WBResposta);
-
- PageControl2.ActivePageIndex := 5;
- MemoDados.Lines.Add('');
- MemoDados.Lines.Add('Envio MDFe');
- MemoDados.Lines.Add('tpAmb: '+ TpAmbToStr(ACBrMDFe1.WebServices.Retorno.TpAmb));
- MemoDados.Lines.Add('verAplic: '+ ACBrMDFe1.WebServices.Retorno.verAplic);
- MemoDados.Lines.Add('cStat: '+ IntToStr(ACBrMDFe1.WebServices.Retorno.cStat));
- MemoDados.Lines.Add('cUF: '+ IntToStr(ACBrMDFe1.WebServices.Retorno.cUF));
- MemoDados.Lines.Add('xMotivo: '+ ACBrMDFe1.WebServices.Retorno.xMotivo);
- MemoDados.Lines.Add('xMsg: '+ ACBrMDFe1.WebServices.Retorno.Msg);
- MemoDados.Lines.Add('Recibo: '+ ACBrMDFe1.WebServices.Retorno.Recibo);
- MemoDados.Lines.Add('Protocolo: '+ ACBrMDFe1.WebServices.Retorno.Protocolo);
-
- ACBrMDFe1.Manifestos.Clear;
-end;
-
-procedure TfrmDemo_ACBrMDFe.btnConsultarClick(Sender: TObject);
-begin
- OpenDialog1.Title := 'Selecione o MDFe';
- OpenDialog1.DefaultExt := '*-MDFe.xml';
- OpenDialog1.Filter := 'Arquivos MDFe (*-MDFe.xml)|*-MDFe.xml|Arquivos XML (*.xml)|*.xml|Todos os Arquivos (*.*)|*.*';
- OpenDialog1.InitialDir := ACBrMDFe1.Configuracoes.Geral.PathSalvar;
-
- if OpenDialog1.Execute then
-  begin
-   ACBrMDFe1.Manifestos.Clear;
-   ACBrMDFe1.Manifestos.LoadFromFile(OpenDialog1.FileName);
-   ACBrMDFe1.Consultar;
-
-   ShowMessage(ACBrMDFe1.WebServices.Consulta.Protocolo);
-   MemoResp.Lines.Text := UTF8Encode(ACBrMDFe1.WebServices.Consulta.RetWS);
-   memoRespWS.Lines.Text := UTF8Encode(ACBrMDFe1.WebServices.Consulta.RetWS);
-   LoadXML(MemoResp, WBResposta);
- end;
-end;
-
-procedure TfrmDemo_ACBrMDFe.btnConsultarChaveClick(Sender: TObject);
-begin
- ShowMessage('Opção não Implementada!');
-end;
-
-procedure TfrmDemo_ACBrMDFe.btnCancelamentoClick(Sender: TObject);
-var
- vAux : String;
-begin
- OpenDialog1.Title := 'Selecione o MDFe';
- OpenDialog1.DefaultExt := '*-MDFe.xml';
- OpenDialog1.Filter := 'Arquivos MDFe (*-MDFe.xml)|*-MDFe.xml|Arquivos XML (*.xml)|*.xml|Todos os Arquivos (*.*)|*.*';
- OpenDialog1.InitialDir := ACBrMDFe1.Configuracoes.Geral.PathSalvar;
-
- if OpenDialog1.Execute then
-  begin
-   ACBrMDFe1.Manifestos.Clear;
-   ACBrMDFe1.Manifestos.LoadFromFile(OpenDialog1.FileName);
-   if not(InputQuery('WebServices Cancelamento', 'Justificativa', vAux))
-    then exit;
-
-   with ACBrMDFe1.EventoMDFe.Evento.Add do
-    begin
-     infEvento.chMDFe   := Copy(ACBrMDFe1.Manifestos.Items[0].MDFe.infMDFe.ID, 5, 44);
-     infEvento.CNPJ     := edtEmitCNPJ.Text;
-     infEvento.dhEvento := now;
-//  TpcnTpEvento = (teCCe, teCancelamento, teManifDestConfirmacao, teManifDestCiencia,
-//                  teManifDestDesconhecimento, teManifDestOperNaoRealizada,
-//                  teEncerramento);
-     infEvento.tpEvento   := teCancelamento;
-     infEvento.nSeqEvento := 1;
-
-     infEvento.detEvento.nProt := ACBrMDFe1.Manifestos.Items[0].MDFe.procMDFe.nProt;
-     infEvento.detEvento.xJust := trim(vAux);
-    end;
-
-   ACBrMDFe1.EnviarEventoMDFe( 1 ); // 1 = Numero do Lote
-
-   MemoResp.Lines.Text   := UTF8Encode(ACBrMDFe1.WebServices.EnvEvento.RetWS);
-   memoRespWS.Lines.Text := UTF8Encode(ACBrMDFe1.WebServices.EnvEvento.RetWS);
-   LoadXML(MemoResp, WBResposta);
-  end;
-end;
-
-procedure TfrmDemo_ACBrMDFe.btnEncerramentoClick(Sender: TObject);
-begin
- OpenDialog1.Title := 'Selecione o MDFe';
- OpenDialog1.DefaultExt := '*-MDFe.xml';
- OpenDialog1.Filter := 'Arquivos MDFe (*-MDFe.xml)|*-MDFe.xml|Arquivos XML (*.xml)|*.xml|Todos os Arquivos (*.*)|*.*';
- OpenDialog1.InitialDir := ACBrMDFe1.Configuracoes.Geral.PathSalvar;
-
- if OpenDialog1.Execute then
-  begin
-   ACBrMDFe1.Manifestos.Clear;
-   ACBrMDFe1.Manifestos.LoadFromFile(OpenDialog1.FileName);
-
-   with ACBrMDFe1.EventoMDFe.Evento.Add do
-    begin
-     infEvento.chMDFe   := Copy(ACBrMDFe1.Manifestos.Items[0].MDFe.infMDFe.ID, 5, 44);
-     infEvento.CNPJ     := edtEmitCNPJ.Text;
-     infEvento.dhEvento := now;
-//  TpcnTpEvento = (teCCe, teCancelamento, teManifDestConfirmacao, teManifDestCiencia,
-//                  teManifDestDesconhecimento, teManifDestOperNaoRealizada,
-//                  teEncerramento);
-     infEvento.tpEvento   := teEncerramento;
-     infEvento.nSeqEvento := 1;
-
-     infEvento.detEvento.nProt := ACBrMDFe1.Manifestos.Items[0].MDFe.procMDFe.nProt;
-     infEvento.detEvento.dtEnc := Date;
-     infEvento.detEvento.cUF   := StrToInt(Copy(IntToStr(ACBrMDFe1.Manifestos.Items[0].MDFe.infDoc.infMunDescarga.Items[0].cMunDescarga),1,2));
-     infEvento.detEvento.cMun  := ACBrMDFe1.Manifestos.Items[0].MDFe.infDoc.infMunDescarga.Items[0].cMunDescarga;
-    end;
-
-   ACBrMDFe1.EnviarEventoMDFe( 1 ); // 1 = Numero do Lote
-
-   MemoResp.Lines.Text   := UTF8Encode(ACBrMDFe1.WebServices.EnvEvento.RetWS);
-   memoRespWS.Lines.Text := UTF8Encode(ACBrMDFe1.WebServices.EnvEvento.RetWS);
-   LoadXML(MemoResp, WBResposta);
-  end;
-end;
-
-procedure TfrmDemo_ACBrMDFe.btnConsultarReciboClick(Sender: TObject);
-var
- aux : String;
-begin
-  if not(InputQuery('Consultar Recibo Lote', 'Número do Recibo', aux))
-   then exit;
-
-  ACBrMDFe1.WebServices.Recibo.Recibo := aux;
-  ACBrMDFe1.WebServices.Recibo.Executar;
-
-  MemoResp.Lines.Text   := UTF8Encode(ACBrMDFe1.WebServices.Recibo.RetWS);
-  memoRespWS.Lines.Text := UTF8Encode(ACBrMDFe1.WebServices.Recibo.RetWS);
-  LoadXML(MemoResp, WBResposta);
-end;
-
-procedure TfrmDemo_ACBrMDFe.btnGerarMDFeClick(Sender: TObject);
-var
- vAux : String;
-begin
- if not(InputQuery('WebServices Enviar', 'Numero do Manifesto', vAux))
-  then exit;
-
- ACBrMDFe1.Manifestos.Clear;
- GerarMDFe(vAux);
- ACBrMDFe1.Manifestos.Items[0].SaveToFile('');
-
- ShowMessage('Arquivo gerado em: '+ACBrMDFe1.Manifestos.Items[0].NomeArq);
- MemoDados.Lines.Add('Arquivo gerado em: '+ACBrMDFe1.Manifestos.Items[0].NomeArq);
- MemoResp.Lines.LoadFromFile(ACBrMDFe1.Manifestos.Items[0].NomeArq);
- LoadXML(MemoResp, WBResposta);
- PageControl2.ActivePageIndex := 1;
-end;
-
-procedure TfrmDemo_ACBrMDFe.btnGerarPDFClick(Sender: TObject);
-begin
- OpenDialog1.Title := 'Selecione o MDFe';
- OpenDialog1.DefaultExt := '*-MDFe.xml';
- OpenDialog1.Filter := 'Arquivos MDFe (*-MDFe.xml)|*-MDFe.xml|Arquivos XML (*.xml)|*.xml|Todos os Arquivos (*.*)|*.*';
- OpenDialog1.InitialDir := ACBrMDFe1.Configuracoes.Geral.PathSalvar;
-
- if OpenDialog1.Execute
-  then begin
-   ACBrMDFe1.Manifestos.Clear;
-   ACBrMDFe1.Manifestos.LoadFromFile(OpenDialog1.FileName);
-   ACBrMDFe1.Manifestos.ImprimirPDF;
-  end;
-end;
-
-procedure TfrmDemo_ACBrMDFe.btnImprimirClick(Sender: TObject);
-begin
- OpenDialog1.Title := 'Selecione o MDFe';
- OpenDialog1.DefaultExt := '*-MDFe.xml';
- OpenDialog1.Filter := 'Arquivos MDFe (*-MDFe.xml)|*-MDFe.xml|Arquivos XML (*.xml)|*.xml|Todos os Arquivos (*.*)|*.*';
- OpenDialog1.InitialDir := ACBrMDFe1.Configuracoes.Geral.PathSalvar;
-
- if OpenDialog1.Execute then
-  begin
-   ACBrMDFe1.Manifestos.Clear;
-   ACBrMDFe1.Manifestos.LoadFromFile(OpenDialog1.FileName);
-   ACBrMDFe1.Manifestos.Imprimir;
-  end;
-end;
-
-procedure TfrmDemo_ACBrMDFe.btnValidarXMLClick(Sender: TObject);
-begin
- OpenDialog1.Title := 'Selecione o MDFe';
- OpenDialog1.DefaultExt := '*-MDFe.xml';
- OpenDialog1.Filter := 'Arquivos MDFe (*-MDFe.xml)|*-MDFe.xml|Arquivos XML (*.xml)|*.xml|Todos os Arquivos (*.*)|*.*';
- OpenDialog1.InitialDir := ACBrMDFe1.Configuracoes.Geral.PathSalvar;
-
- if OpenDialog1.Execute then
-  begin
-   ACBrMDFe1.Manifestos.Clear;
-   ACBrMDFe1.Manifestos.LoadFromFile(OpenDialog1.FileName);
-   ACBrMDFe1.Manifestos.Valida;
-   showmessage('Manifesto Eletrônico de Documentos Fiscais Valido');
-  end;
-end;
-
 procedure TfrmDemo_ACBrMDFe.ACBrMDFe1StatusChange(Sender: TObject);
 begin
  case ACBrMDFe1.Status of
@@ -969,6 +737,266 @@ end;
 procedure TfrmDemo_ACBrMDFe.ACBrMDFe1GerarLog(const Mensagem: String);
 begin
  memoLog.Lines.Add(Mensagem);
+end;
+
+procedure TfrmDemo_ACBrMDFe.btnStatusServClick(Sender: TObject);
+begin
+ ACBrMDFe1.WebServices.StatusServico.Executar;
+ MemoResp.Lines.Text := UTF8Encode(ACBrMDFe1.WebServices.StatusServico.RetWS);
+ memoRespWS.Lines.Text := UTF8Encode(ACBrMDFe1.WebServices.StatusServico.RetWS);
+ LoadXML(MemoResp, WBResposta);
+
+ PageControl2.ActivePageIndex := 5;
+ MemoDados.Lines.Add('');
+ MemoDados.Lines.Add('Status Serviço');
+ MemoDados.Lines.Add('tpAmb: '    +TpAmbToStr(ACBrMDFe1.WebServices.StatusServico.tpAmb));
+ MemoDados.Lines.Add('verAplic: ' +ACBrMDFe1.WebServices.StatusServico.verAplic);
+ MemoDados.Lines.Add('cStat: '    +IntToStr(ACBrMDFe1.WebServices.StatusServico.cStat));
+ MemoDados.Lines.Add('xMotivo: '  +ACBrMDFe1.WebServices.StatusServico.xMotivo);
+ MemoDados.Lines.Add('cUF: '      +IntToStr(ACBrMDFe1.WebServices.StatusServico.cUF));
+ MemoDados.Lines.Add('dhRecbto: ' +DateTimeToStr(ACBrMDFe1.WebServices.StatusServico.dhRecbto));
+ MemoDados.Lines.Add('tMed: '     +IntToStr(ACBrMDFe1.WebServices.StatusServico.TMed));
+ MemoDados.Lines.Add('dhRetorno: '+DateTimeToStr(ACBrMDFe1.WebServices.StatusServico.dhRetorno));
+ MemoDados.Lines.Add('xObs: '     +ACBrMDFe1.WebServices.StatusServico.xObs);
+end;
+
+procedure TfrmDemo_ACBrMDFe.btnGerarMDFeClick(Sender: TObject);
+var
+ vAux : String;
+begin
+ if not(InputQuery('WebServices Enviar', 'Numero do Manifesto', vAux))
+  then exit;
+
+ ACBrMDFe1.Manifestos.Clear;
+ GerarMDFe(vAux);
+ ACBrMDFe1.Manifestos.Items[0].SaveToFile('');
+
+ ShowMessage('Arquivo gerado em: '+ACBrMDFe1.Manifestos.Items[0].NomeArq);
+ MemoDados.Lines.Add('Arquivo gerado em: '+ACBrMDFe1.Manifestos.Items[0].NomeArq);
+ MemoResp.Lines.LoadFromFile(ACBrMDFe1.Manifestos.Items[0].NomeArq);
+ LoadXML(MemoResp, WBResposta);
+ PageControl2.ActivePageIndex := 1;
+end;
+
+procedure TfrmDemo_ACBrMDFe.btnValidarXMLClick(Sender: TObject);
+begin
+ OpenDialog1.Title := 'Selecione o MDFe';
+ OpenDialog1.DefaultExt := '*-MDFe.xml';
+ OpenDialog1.Filter := 'Arquivos MDFe (*-MDFe.xml)|*-MDFe.xml|Arquivos XML (*.xml)|*.xml|Todos os Arquivos (*.*)|*.*';
+ OpenDialog1.InitialDir := ACBrMDFe1.Configuracoes.Geral.PathSalvar;
+
+ if OpenDialog1.Execute then
+  begin
+   ACBrMDFe1.Manifestos.Clear;
+   ACBrMDFe1.Manifestos.LoadFromFile(OpenDialog1.FileName);
+   ACBrMDFe1.Manifestos.Valida;
+   showmessage('Manifesto Eletrônico de Documentos Fiscais Valido');
+  end;
+end;
+
+procedure TfrmDemo_ACBrMDFe.btnCriarEnviarClick(Sender: TObject);
+var
+ vAux, vNumLote : String;
+begin
+ if not(InputQuery('WebServices Enviar', 'Numero do Manifesto', vAux))
+  then exit;
+
+ if not(InputQuery('WebServices Enviar', 'Numero do Lote', vNumLote))
+  then exit;
+
+ ACBrMDFe1.Manifestos.Clear;
+ GerarMDFe(vAux);
+ ACBrMDFe1.Enviar(StrToInt(vNumLote));
+
+ MemoResp.Lines.Text   := UTF8Encode(ACBrMDFe1.WebServices.Retorno.RetWS);
+ memoRespWS.Lines.Text := UTF8Encode(ACBrMDFe1.WebServices.Retorno.RetWS);
+ LoadXML(MemoResp, WBResposta);
+
+ PageControl2.ActivePageIndex := 5;
+ MemoDados.Lines.Add('');
+ MemoDados.Lines.Add('Envio MDFe');
+ MemoDados.Lines.Add('tpAmb: '+ TpAmbToStr(ACBrMDFe1.WebServices.Retorno.TpAmb));
+ MemoDados.Lines.Add('verAplic: '+ ACBrMDFe1.WebServices.Retorno.verAplic);
+ MemoDados.Lines.Add('cStat: '+ IntToStr(ACBrMDFe1.WebServices.Retorno.cStat));
+ MemoDados.Lines.Add('cUF: '+ IntToStr(ACBrMDFe1.WebServices.Retorno.cUF));
+ MemoDados.Lines.Add('xMotivo: '+ ACBrMDFe1.WebServices.Retorno.xMotivo);
+ MemoDados.Lines.Add('xMsg: '+ ACBrMDFe1.WebServices.Retorno.Msg);
+ MemoDados.Lines.Add('Recibo: '+ ACBrMDFe1.WebServices.Retorno.Recibo);
+ MemoDados.Lines.Add('Protocolo: '+ ACBrMDFe1.WebServices.Retorno.Protocolo);
+
+ ACBrMDFe1.Manifestos.Clear;
+end;
+
+procedure TfrmDemo_ACBrMDFe.btnConsultarReciboClick(Sender: TObject);
+var
+ aux : String;
+begin
+  if not(InputQuery('Consultar Recibo Lote', 'Número do Recibo', aux))
+   then exit;
+
+  ACBrMDFe1.WebServices.Recibo.Recibo := aux;
+  ACBrMDFe1.WebServices.Recibo.Executar;
+
+  MemoResp.Lines.Text   := UTF8Encode(ACBrMDFe1.WebServices.Recibo.RetWS);
+  memoRespWS.Lines.Text := UTF8Encode(ACBrMDFe1.WebServices.Recibo.RetWS);
+  LoadXML(MemoResp, WBResposta);
+end;
+
+procedure TfrmDemo_ACBrMDFe.btnConsultarClick(Sender: TObject);
+begin
+ OpenDialog1.Title := 'Selecione o MDFe';
+ OpenDialog1.DefaultExt := '*-MDFe.xml';
+ OpenDialog1.Filter := 'Arquivos MDFe (*-MDFe.xml)|*-MDFe.xml|Arquivos XML (*.xml)|*.xml|Todos os Arquivos (*.*)|*.*';
+ OpenDialog1.InitialDir := ACBrMDFe1.Configuracoes.Geral.PathSalvar;
+
+ if OpenDialog1.Execute then
+  begin
+   ACBrMDFe1.Manifestos.Clear;
+   ACBrMDFe1.Manifestos.LoadFromFile(OpenDialog1.FileName);
+   ACBrMDFe1.Consultar;
+
+   ShowMessage(ACBrMDFe1.WebServices.Consulta.Protocolo);
+   MemoResp.Lines.Text := UTF8Encode(ACBrMDFe1.WebServices.Consulta.RetWS);
+   memoRespWS.Lines.Text := UTF8Encode(ACBrMDFe1.WebServices.Consulta.RetWS);
+   LoadXML(MemoResp, WBResposta);
+ end;
+end;
+
+procedure TfrmDemo_ACBrMDFe.btnConsultarChaveClick(Sender: TObject);
+begin
+ ShowMessage('Opção não Implementada!');
+end;
+
+procedure TfrmDemo_ACBrMDFe.btnEncerramentoClick(Sender: TObject);
+begin
+ OpenDialog1.Title := 'Selecione o MDFe';
+ OpenDialog1.DefaultExt := '*-MDFe.xml';
+ OpenDialog1.Filter := 'Arquivos MDFe (*-MDFe.xml)|*-MDFe.xml|Arquivos XML (*.xml)|*.xml|Todos os Arquivos (*.*)|*.*';
+ OpenDialog1.InitialDir := ACBrMDFe1.Configuracoes.Geral.PathSalvar;
+
+ if OpenDialog1.Execute then
+  begin
+   ACBrMDFe1.Manifestos.Clear;
+   ACBrMDFe1.Manifestos.LoadFromFile(OpenDialog1.FileName);
+
+   with ACBrMDFe1.EventoMDFe.Evento.Add do
+    begin
+     infEvento.chMDFe   := Copy(ACBrMDFe1.Manifestos.Items[0].MDFe.infMDFe.ID, 5, 44);
+     infEvento.CNPJ     := edtEmitCNPJ.Text;
+     infEvento.dhEvento := now;
+//  TpcnTpEvento = (teCCe, teCancelamento, teManifDestConfirmacao, teManifDestCiencia,
+//                  teManifDestDesconhecimento, teManifDestOperNaoRealizada,
+//                  teEncerramento);
+     infEvento.tpEvento   := teEncerramento;
+     infEvento.nSeqEvento := 1;
+
+     infEvento.detEvento.nProt := ACBrMDFe1.Manifestos.Items[0].MDFe.procMDFe.nProt;
+     infEvento.detEvento.dtEnc := Date;
+     infEvento.detEvento.cUF   := StrToInt(Copy(IntToStr(ACBrMDFe1.Manifestos.Items[0].MDFe.infDoc.infMunDescarga.Items[0].cMunDescarga),1,2));
+     infEvento.detEvento.cMun  := ACBrMDFe1.Manifestos.Items[0].MDFe.infDoc.infMunDescarga.Items[0].cMunDescarga;
+    end;
+
+   ACBrMDFe1.EnviarEventoMDFe( 1 ); // 1 = Numero do Lote
+
+   MemoResp.Lines.Text   := UTF8Encode(ACBrMDFe1.WebServices.EnvEvento.RetWS);
+   memoRespWS.Lines.Text := UTF8Encode(ACBrMDFe1.WebServices.EnvEvento.RetWS);
+   LoadXML(MemoResp, WBResposta);
+  end;
+end;
+
+procedure TfrmDemo_ACBrMDFe.btnCancelamentoClick(Sender: TObject);
+var
+ vAux : String;
+begin
+ OpenDialog1.Title := 'Selecione o MDFe';
+ OpenDialog1.DefaultExt := '*-MDFe.xml';
+ OpenDialog1.Filter := 'Arquivos MDFe (*-MDFe.xml)|*-MDFe.xml|Arquivos XML (*.xml)|*.xml|Todos os Arquivos (*.*)|*.*';
+ OpenDialog1.InitialDir := ACBrMDFe1.Configuracoes.Geral.PathSalvar;
+
+ if OpenDialog1.Execute then
+  begin
+   ACBrMDFe1.Manifestos.Clear;
+   ACBrMDFe1.Manifestos.LoadFromFile(OpenDialog1.FileName);
+   if not(InputQuery('WebServices Cancelamento', 'Justificativa', vAux))
+    then exit;
+
+   with ACBrMDFe1.EventoMDFe.Evento.Add do
+    begin
+     infEvento.chMDFe   := Copy(ACBrMDFe1.Manifestos.Items[0].MDFe.infMDFe.ID, 5, 44);
+     infEvento.CNPJ     := edtEmitCNPJ.Text;
+     infEvento.dhEvento := now;
+//  TpcnTpEvento = (teCCe, teCancelamento, teManifDestConfirmacao, teManifDestCiencia,
+//                  teManifDestDesconhecimento, teManifDestOperNaoRealizada,
+//                  teEncerramento);
+     infEvento.tpEvento   := teCancelamento;
+     infEvento.nSeqEvento := 1;
+
+     infEvento.detEvento.nProt := ACBrMDFe1.Manifestos.Items[0].MDFe.procMDFe.nProt;
+     infEvento.detEvento.xJust := trim(vAux);
+    end;
+
+   ACBrMDFe1.EnviarEventoMDFe( 1 ); // 1 = Numero do Lote
+
+   MemoResp.Lines.Text   := UTF8Encode(ACBrMDFe1.WebServices.EnvEvento.RetWS);
+   memoRespWS.Lines.Text := UTF8Encode(ACBrMDFe1.WebServices.EnvEvento.RetWS);
+   LoadXML(MemoResp, WBResposta);
+  end;
+end;
+
+procedure TfrmDemo_ACBrMDFe.btnGerarPDFClick(Sender: TObject);
+begin
+ OpenDialog1.Title := 'Selecione o MDFe';
+ OpenDialog1.DefaultExt := '*-MDFe.xml';
+ OpenDialog1.Filter := 'Arquivos MDFe (*-MDFe.xml)|*-MDFe.xml|Arquivos XML (*.xml)|*.xml|Todos os Arquivos (*.*)|*.*';
+ OpenDialog1.InitialDir := ACBrMDFe1.Configuracoes.Geral.PathSalvar;
+
+ if OpenDialog1.Execute
+  then begin
+   ACBrMDFe1.Manifestos.Clear;
+   ACBrMDFe1.Manifestos.LoadFromFile(OpenDialog1.FileName);
+   ACBrMDFe1.Manifestos.ImprimirPDF;
+  end;
+end;
+
+procedure TfrmDemo_ACBrMDFe.btnImprimirClick(Sender: TObject);
+begin
+ OpenDialog1.Title := 'Selecione o MDFe';
+ OpenDialog1.DefaultExt := '*-MDFe.xml';
+ OpenDialog1.Filter := 'Arquivos MDFe (*-MDFe.xml)|*-MDFe.xml|Arquivos XML (*.xml)|*.xml|Todos os Arquivos (*.*)|*.*';
+ OpenDialog1.InitialDir := ACBrMDFe1.Configuracoes.Geral.PathSalvar;
+
+ if OpenDialog1.Execute then
+  begin
+   ACBrMDFe1.Manifestos.Clear;
+   ACBrMDFe1.Manifestos.LoadFromFile(OpenDialog1.FileName);
+   ACBrMDFe1.Manifestos.Imprimir;
+  end;
+end;
+
+procedure TfrmDemo_ACBrMDFe.btnImprimirEventoClick(Sender: TObject);
+begin
+  OpenDialog1.Title := 'Selecione o MDFe';
+  OpenDialog1.DefaultExt := '*-mdfe.xml';
+  OpenDialog1.Filter := 'Arquivos MDFe (*-mdfe.xml)|*-mdfe.xml|Arquivos XML (*.xml)|*.xml|Todos os Arquivos (*.*)|*.*';
+  OpenDialog1.InitialDir := ACBrMDFe1.Configuracoes.Geral.PathSalvar;
+
+  ACBrMDFe1.Manifestos.Clear;
+  if OpenDialog1.Execute then
+  begin
+    ACBrMDFe1.Manifestos.LoadFromFile(OpenDialog1.FileName);
+  end;
+
+  OpenDialog1.Title := 'Selecione o Evento';
+  OpenDialog1.DefaultExt := '*-procEventoMDFe.xml';
+  OpenDialog1.Filter := 'Arquivos Evento (*-procEventoMDFe.xml)|*-procEventoMDFe.xml|Arquivos XML (*.xml)|*.xml|Todos os Arquivos (*.*)|*.*';
+  OpenDialog1.InitialDir := ACBrMDFe1.Configuracoes.Geral.PathSalvar;
+
+  if OpenDialog1.Execute then
+  begin
+    ACBrMDFe1.EventoMDFe.Evento.Clear;
+    ACBrMDFe1.EventoMDFe.LerXML(OpenDialog1.FileName) ;
+    ACBrMDFe1.ImprimirEvento;
+  end;
 end;
 
 end.

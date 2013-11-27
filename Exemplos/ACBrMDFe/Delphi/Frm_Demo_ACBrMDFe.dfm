@@ -19,7 +19,7 @@ object frmDemo_ACBrMDFe: TfrmDemo_ACBrMDFe
     Left = 0
     Top = 0
     Width = 297
-    Height = 534
+    Height = 530
     Align = alLeft
     TabOrder = 0
     object lblColaborador: TLabel
@@ -802,19 +802,19 @@ object frmDemo_ACBrMDFe: TfrmDemo_ACBrMDFe
   object Panel2: TPanel
     Left = 297
     Top = 0
-    Width = 566
-    Height = 534
+    Width = 558
+    Height = 530
     Align = alClient
     TabOrder = 1
     object Panel3: TPanel
       Left = 1
       Top = 1
-      Width = 564
+      Width = 556
       Height = 136
       Align = alTop
       TabOrder = 0
       object btnImprimir: TButton
-        Left = 376
+        Left = 192
         Top = 104
         Width = 177
         Height = 25
@@ -823,8 +823,8 @@ object frmDemo_ACBrMDFe: TfrmDemo_ACBrMDFe
         OnClick = btnImprimirClick
       end
       object btnConsultar: TButton
-        Left = 8
-        Top = 72
+        Left = 376
+        Top = 40
         Width = 177
         Height = 25
         Caption = 'Consultar carregando XML'
@@ -832,8 +832,8 @@ object frmDemo_ACBrMDFe: TfrmDemo_ACBrMDFe
         OnClick = btnConsultarClick
       end
       object btnValidarXML: TButton
-        Left = 192
-        Top = 40
+        Left = 376
+        Top = 8
         Width = 177
         Height = 25
         Caption = 'Validar XML'
@@ -850,8 +850,8 @@ object frmDemo_ACBrMDFe: TfrmDemo_ACBrMDFe
         OnClick = btnStatusServClick
       end
       object btnCancelamento: TButton
-        Left = 192
-        Top = 104
+        Left = 376
+        Top = 72
         Width = 177
         Height = 25
         Caption = 'Cancelamento'
@@ -859,8 +859,8 @@ object frmDemo_ACBrMDFe: TfrmDemo_ACBrMDFe
         OnClick = btnCancelamentoClick
       end
       object btnCriarEnviar: TButton
-        Left = 192
-        Top = 8
+        Left = 8
+        Top = 40
         Width = 177
         Height = 25
         Caption = 'Criar e Enviar'
@@ -868,8 +868,8 @@ object frmDemo_ACBrMDFe: TfrmDemo_ACBrMDFe
         OnClick = btnCriarEnviarClick
       end
       object btnGerarMDFe: TButton
-        Left = 8
-        Top = 40
+        Left = 192
+        Top = 8
         Width = 177
         Height = 25
         Caption = 'Gerar MDFe'
@@ -877,8 +877,8 @@ object frmDemo_ACBrMDFe: TfrmDemo_ACBrMDFe
         OnClick = btnGerarMDFeClick
       end
       object btnGerarPDF: TButton
-        Left = 376
-        Top = 72
+        Left = 8
+        Top = 104
         Width = 177
         Height = 25
         Caption = 'Gerar PDF'
@@ -886,8 +886,8 @@ object frmDemo_ACBrMDFe: TfrmDemo_ACBrMDFe
         OnClick = btnGerarPDFClick
       end
       object btnConsultarRecibo: TButton
-        Left = 376
-        Top = 8
+        Left = 192
+        Top = 40
         Width = 177
         Height = 25
         Caption = 'Consultar Recibo Lote'
@@ -895,7 +895,7 @@ object frmDemo_ACBrMDFe: TfrmDemo_ACBrMDFe
         OnClick = btnConsultarReciboClick
       end
       object btnConsultarChave: TButton
-        Left = 192
+        Left = 8
         Top = 72
         Width = 177
         Height = 25
@@ -904,20 +904,29 @@ object frmDemo_ACBrMDFe: TfrmDemo_ACBrMDFe
         OnClick = btnConsultarChaveClick
       end
       object btnEncerramento: TButton
-        Left = 8
-        Top = 104
+        Left = 192
+        Top = 72
         Width = 177
         Height = 25
         Caption = 'Encerramento'
         TabOrder = 10
         OnClick = btnEncerramentoClick
       end
+      object btnImprimirEvento: TButton
+        Left = 376
+        Top = 103
+        Width = 177
+        Height = 25
+        Caption = 'Imprimir Evento'
+        TabOrder = 11
+        OnClick = btnImprimirEventoClick
+      end
     end
     object PageControl2: TPageControl
       Left = 1
       Top = 137
-      Width = 564
-      Height = 396
+      Width = 556
+      Height = 392
       ActivePage = TabSheet5
       Align = alClient
       TabOrder = 1
@@ -926,8 +935,8 @@ object frmDemo_ACBrMDFe: TfrmDemo_ACBrMDFe
         object MemoResp: TMemo
           Left = 0
           Top = 0
-          Width = 556
-          Height = 368
+          Width = 548
+          Height = 364
           Align = alClient
           TabOrder = 0
         end
@@ -969,8 +978,8 @@ object frmDemo_ACBrMDFe: TfrmDemo_ACBrMDFe
         object trvwMDFe: TTreeView
           Left = 0
           Top = 0
-          Width = 556
-          Height = 368
+          Width = 548
+          Height = 364
           Align = alClient
           Indent = 19
           TabOrder = 0
@@ -1013,6 +1022,8 @@ object frmDemo_ACBrMDFe: TfrmDemo_ACBrMDFe
   end
   object ACBrMDFe1: TACBrMDFe
     Configuracoes.Geral.PathSalvar = 'C:\Arquivos de programas\Borland\Delphi7\Bin\'
+    Configuracoes.Geral.ExibirErroSchema = True
+    Configuracoes.Geral.FormatoAlerta = 'TAG:%TAGNIVEL% ID:%ID%/%TAG%(%DESCRICAO%) - %MSG%.'
     Configuracoes.WebServices.UF = 'SP'
     Configuracoes.WebServices.AguardarConsultaRet = 0
     Configuracoes.WebServices.IntervaloTentativas = 0
