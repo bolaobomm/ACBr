@@ -1,4 +1,4 @@
-inherited frmDAEventoQRRetrato: TfrmDAEventoQRRetrato
+inherited frmMDFeDAEventoQRRetrato: TfrmMDFeDAEventoQRRetrato
   Left = 207
   Top = 135
   Width = 835
@@ -10,7 +10,7 @@ inherited frmDAEventoQRRetrato: TfrmDAEventoQRRetrato
   OldCreateOrder = True
   PixelsPerInch = 96
   TextHeight = 10
-  inherited QREvento: TQuickRep
+  inherited QRMDFeEvento: TQuickRep
     Left = 3
     Top = 3
     BeforePrint = QREventoBeforePrint
@@ -1714,7 +1714,7 @@ inherited frmDAEventoQRRetrato: TfrmDAEventoQRRetrato
           23.812500000000000000
           10.583333333333330000
           222.250000000000000000
-          97.895833333333320000)
+          97.895833333333340000)
         XLColumn = 0
         Alignment = taLeftJustify
         AlignToBand = False
@@ -2329,7 +2329,7 @@ inherited frmDAEventoQRRetrato: TfrmDAEventoQRRetrato
           23.812500000000000000
           10.583333333333330000
           222.250000000000000000
-          97.895833333333320000)
+          97.895833333333340000)
         XLColumn = 0
         Alignment = taLeftJustify
         AlignToBand = False
@@ -2395,7 +2395,7 @@ inherited frmDAEventoQRRetrato: TfrmDAEventoQRRetrato
           23.812500000000000000
           1608.666666666667000000
           50.270833333333330000
-          97.895833333333320000)
+          97.895833333333340000)
         XLColumn = 0
         Alignment = taLeftJustify
         AlignToBand = False
@@ -3380,7 +3380,7 @@ inherited frmDAEventoQRRetrato: TfrmDAEventoQRRetrato
         Frame.DrawRight = False
         Size.Values = (
           23.812500000000000000
-          724.958333333333200000
+          724.958333333333400000
           47.625000000000000000
           66.145833333333340000)
         XLColumn = 0

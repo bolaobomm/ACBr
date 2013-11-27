@@ -1,9 +1,9 @@
-object frmDAEventoQR: TfrmDAEventoQR
+object frmMDFeDAEventoQR: TfrmMDFeDAEventoQR
   Left = 194
   Top = 125
   Width = 880
   Height = 675
-  Caption = 'frmDAEventoQR'
+  Caption = 'frmMDFeDAEventoQR'
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -14,7 +14,7 @@ object frmDAEventoQR: TfrmDAEventoQR
   Scaled = False
   PixelsPerInch = 96
   TextHeight = 13
-  object QREvento: TQuickRep
+  object QRMDFeEvento: TQuickRep
     Left = 2
     Top = 2
     Width = 794

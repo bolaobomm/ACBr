@@ -51,7 +51,7 @@ uses
   DBClient, ACBrMDFeDAEventoQR;
 
 type
-  TfrmDAEventoQRRetrato = class(TfrmDAEventoQR)
+  TfrmMDFeDAEventoQRRetrato = class(TfrmMDFeDAEventoQR)
     qrb_09_Itens: TQRBand;
     qrdbtTpDoc1: TQRDBText;
     cdsDocumentos: TClientDataSet;
@@ -226,31 +226,31 @@ uses
 var
   FProtocoloMDFe : string;
 
-procedure TfrmDAEventoQRRetrato.Itens;
+procedure TfrmMDFeDAEventoQRRetrato.Itens;
 begin
  // Itens
 end;
 
-procedure TfrmDAEventoQRRetrato.ProtocoloMDFe(const sProtocolo: string);
+procedure TfrmMDFeDAEventoQRRetrato.ProtocoloMDFe(const sProtocolo: string);
 begin
   FProtocoloMDFe := sProtocolo;
 end;
 
-procedure TfrmDAEventoQRRetrato.QREventoBeforePrint(Sender: TCustomQuickRep; var PrintReport: Boolean);
+procedure TfrmMDFeDAEventoQRRetrato.QREventoBeforePrint(Sender: TCustomQuickRep; var PrintReport: Boolean);
 begin
   inherited;
 
   Itens;
 
-  QREvento.ReportTitle:='Evento: ' + FormatFloat( '000,000,000', FEventoMDFe.InfEvento.nSeqEvento );
+  QRMDFeEvento.ReportTitle:='Evento: ' + FormatFloat( '000,000,000', FEventoMDFe.InfEvento.nSeqEvento );
 
-  QREvento.Page.TopMargin    := FMargemSuperior * 100;
-  QREvento.Page.BottomMargin := FMargemInferior * 100;
-  QREvento.Page.LeftMargin   := FMargemEsquerda * 100;
-  QREvento.Page.RightMargin  := FMargemDireita  * 100;
+  QRMDFeEvento.Page.TopMargin    := FMargemSuperior * 100;
+  QRMDFeEvento.Page.BottomMargin := FMargemInferior * 100;
+  QRMDFeEvento.Page.LeftMargin   := FMargemEsquerda * 100;
+  QRMDFeEvento.Page.RightMargin  := FMargemDireita  * 100;
 end;
 
-procedure TfrmDAEventoQRRetrato.qrb_01_TituloBeforePrint(Sender: TQRCustomBand; var PrintBand: Boolean);
+procedure TfrmMDFeDAEventoQRRetrato.qrb_01_TituloBeforePrint(Sender: TQRCustomBand; var PrintBand: Boolean);
 begin
   inherited;
 
@@ -271,7 +271,7 @@ begin
   end;
 end;
 
-procedure TfrmDAEventoQRRetrato.qrb_03_DocumentoBeforePrint(
+procedure TfrmMDFeDAEventoQRRetrato.qrb_03_DocumentoBeforePrint(
   Sender: TQRCustomBand; var PrintBand: Boolean);
 begin
   inherited;
@@ -291,7 +291,7 @@ begin
    end;
 end;
 
-procedure TfrmDAEventoQRRetrato.qrb_04_EventoBeforePrint(Sender: TQRCustomBand; var PrintBand: Boolean);
+procedure TfrmMDFeDAEventoQRRetrato.qrb_04_EventoBeforePrint(Sender: TQRCustomBand; var PrintBand: Boolean);
 begin
   inherited;
 
@@ -318,7 +318,7 @@ begin
     end;
 end;
 
-procedure TfrmDAEventoQRRetrato.qrb_02_EmitenteBeforePrint(
+procedure TfrmMDFeDAEventoQRRetrato.qrb_02_EmitenteBeforePrint(
   Sender: TQRCustomBand; var PrintBand: Boolean);
 begin
   inherited;
@@ -340,7 +340,7 @@ begin
    end;
 end;
 
-procedure TfrmDAEventoQRRetrato.qrb_05_TomadorBeforePrint(
+procedure TfrmMDFeDAEventoQRRetrato.qrb_05_TomadorBeforePrint(
   Sender: TQRCustomBand; var PrintBand: Boolean);
 begin
   inherited;
@@ -414,7 +414,7 @@ begin
    end;
 end;
 
-procedure TfrmDAEventoQRRetrato.qrb_06_CondicoesBeforePrint(
+procedure TfrmMDFeDAEventoQRRetrato.qrb_06_CondicoesBeforePrint(
   Sender: TQRCustomBand; var PrintBand: Boolean);
 var
  i: Integer;
@@ -443,7 +443,7 @@ begin
   qrmCondicoes.Lines.Add('III - a data de emissao ou de saida.');
 end;
 
-procedure TfrmDAEventoQRRetrato.qrb_07_CorrecaoBeforePrint(
+procedure TfrmMDFeDAEventoQRRetrato.qrb_07_CorrecaoBeforePrint(
   Sender: TQRCustomBand; var PrintBand: Boolean);
 var
  i: Integer;
@@ -467,14 +467,14 @@ begin
  *)  
 end;
 
-procedure TfrmDAEventoQRRetrato.qrb_08_HeaderItensBeforePrint(
+procedure TfrmMDFeDAEventoQRRetrato.qrb_08_HeaderItensBeforePrint(
   Sender: TQRCustomBand; var PrintBand: Boolean);
 begin
   inherited;
   // Imprime os Documentos Originários se o Tipo de MDFe for Normal
 end;
 
-procedure TfrmDAEventoQRRetrato.qrb_09_ItensBeforePrint(Sender: TQRCustomBand; var PrintBand: Boolean);
+procedure TfrmMDFeDAEventoQRRetrato.qrb_09_ItensBeforePrint(Sender: TQRCustomBand; var PrintBand: Boolean);
 var
   i : integer;
 begin
@@ -490,7 +490,7 @@ begin
   *)
 end;
 
-procedure TfrmDAEventoQRRetrato.qrb_10_SistemaBeforePrint(
+procedure TfrmMDFeDAEventoQRRetrato.qrb_10_SistemaBeforePrint(
   Sender: TQRCustomBand; var PrintBand: Boolean);
 begin
   inherited;
