@@ -179,7 +179,7 @@ begin
   begin
      if Value <> nil then
         if not (Value is TACBrMDFe) then
-           raise Exception.Create('ACBrDAMDFe.MDFe deve ser do tipo TACBrMDFe');
+           raise Exception.Create('DAMDFe deve ser do tipo TACBrMDFe');
 
      if Assigned(FACBrMDFe) then
         FACBrMDFe.RemoveFreeNotification(Self);
