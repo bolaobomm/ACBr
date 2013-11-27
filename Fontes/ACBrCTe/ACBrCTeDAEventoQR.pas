@@ -62,8 +62,8 @@ uses
 
 type
 
-  TfrmDAEventoQR = class(TForm)
-    QREvento: TQuickRep;
+  TfrmCTeDAEventoQR = class(TForm)
+    QRCTeEvento: TQuickRep;
     procedure FormDestroy(Sender: TObject);
   private
 
@@ -120,7 +120,7 @@ var
 
 {$R *.dfm}
 
-class procedure TfrmDAEventoQR.Imprimir(AEventoCTe: TInfEventoCollectionItem;
+class procedure TfrmCTeDAEventoQR.Imprimir(AEventoCTe: TInfEventoCollectionItem;
                                         ALogo: String = '';
                                         ANumCopias: Integer = 1;
                                         ASistema: String = '';
@@ -153,27 +153,27 @@ begin
         Printer := TPrinter.Create;
 
         if FImpressora > '' then
-          QREvento.PrinterSettings.PrinterIndex := Printer.Printers.IndexOf(FImpressora);
+          QRCTeEvento.PrinterSettings.PrinterIndex := Printer.Printers.IndexOf(FImpressora);
 
         if AMostrarPreview then
          begin
-           QREvento.PrinterSettings.Copies := FNumCopias;
+           QRCTeEvento.PrinterSettings.Copies := FNumCopias;
 
          {$IFDEF QReport_PDF}
-           QREvento.PrevShowSearch      := False;
-           QREvento.PrevShowThumbs      := False;
-           QREvento.PreviewInitialState := wsMaximized;
-           QREvento.PrevInitialZoom     := qrZoomToWidth;
+           QRCTeEvento.PrevShowSearch      := False;
+           QRCTeEvento.PrevShowThumbs      := False;
+           QRCTeEvento.PreviewInitialState := wsMaximized;
+           QRCTeEvento.PrevInitialZoom     := qrZoomToWidth;
 
            // Incluido por Italo em 14/02/2012
-           // QREvento.PreviewDefaultSaveType := stPDF;
+           // QRCTeEvento.PreviewDefaultSaveType := stPDF;
            // Incluido por Italo em 16/02/2012
            QRExportFilterLibrary.AddFilter(TQRPDFDocumentFilter);
          {$ENDIF}
 
-           QREvento.Prepare;
-//           FTotalPages := QREvento.QRPrinter.PageCount;
-           QREvento.Preview;
+           QRCTeEvento.Prepare;
+//           FTotalPages := QRCTeEvento.QRPrinter.PageCount;
+           QRCTeEvento.Preview;
            // Incluido por Italo em 11/04/2013
            // Segundo o Rodrigo Chiva resolveu o problema de travamento
            // após o fechamento do Preview
@@ -181,19 +181,19 @@ begin
          end else
          begin
            FMostrarPreview := True;
-           QREvento.PrinterSettings.Copies := FNumCopias;
-           QREvento.Prepare;
-//           FTotalPages := QREvento.QRPrinter.PageCount;
-           QREvento.Print;
+           QRCTeEvento.PrinterSettings.Copies := FNumCopias;
+           QRCTeEvento.Prepare;
+//           FTotalPages := QRCTeEvento.QRPrinter.PageCount;
+           QRCTeEvento.Print;
          end;
      finally
         // Incluido por Rodrigo Fernandes em 17/06/2013
-        // QREvento.QRPrinter.Free;
-        // QREvento.QRPrinter:=nil;
+        // QRCTeEvento.QRPrinter.Free;
+        // QRCTeEvento.QRPrinter:=nil;
 
         // Incluido por Italo em 21/08/2013
-        QREvento.Free;
-        QREvento := nil;
+        QRCTeEvento.Free;
+        QRCTeEvento := nil;
 
         // Incluido por Rodrigo Fernandes em 11/03/2013
         // Liberando o objeto Printer da memoria
@@ -202,7 +202,7 @@ begin
      end;
 end;
 
-class procedure TfrmDAEventoQR.SavePDF(AEventoCTe: TInfEventoCollectionItem;
+class procedure TfrmCTeDAEventoQR.SavePDF(AEventoCTe: TInfEventoCollectionItem;
                                        ALogo: String = '';
                                        AFile: String = '';
                                        ASistema: String = '';
@@ -243,13 +243,13 @@ begin
           end;
 
         FMostrarPreview := True;
-        QREvento.Prepare;
+        QRCTeEvento.Prepare;
         // Incluido por Italo em 27/08/2013
-//        FTotalPages := QREvento.QRPrinter.PageCount;
+//        FTotalPages := QRCTeEvento.QRPrinter.PageCount;
 
         qf := TQRPDFDocumentFilter.Create(AFile);
         qf.CompressionOn := False;
-        QREvento.QRPrinter.ExportToFilter( qf );
+        QRCTeEvento.QRPrinter.ExportToFilter( qf );
         qf.Free;
      finally
         Free;
@@ -257,7 +257,7 @@ begin
 {$ENDIF}
 end;
 
-procedure TfrmDAEventoQR.SetBarCodeImage(ACode: string; QRImage: TQRImage);
+procedure TfrmCTeDAEventoQR.SetBarCodeImage(ACode: string; QRImage: TQRImage);
 var
   b : TBarCode128c;
 begin
@@ -269,10 +269,10 @@ begin
 end;
 
 // Incluido por Rodrigo Fernandes em 11/03/2013
-procedure TfrmDAEventoQR.FormDestroy(Sender: TObject);
+procedure TfrmCTeDAEventoQR.FormDestroy(Sender: TObject);
 begin
-  QREvento.QRPrinter.Free;
-  QREvento.Free;
+  QRCTeEvento.QRPrinter.Free;
+  QRCTeEvento.Free;
 end;
 
 end.

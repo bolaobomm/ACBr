@@ -79,7 +79,7 @@ uses
  StrUtils, Dialogs, ACBrUtil, ACBrCTe, ACBrCteUtil;
 
 var
- frmDAEventoQR : TfrmDAEventoQR;
+ frmCTeDAEventoQR : TfrmCTeDAEventoQR;
 
 constructor TACBrCTeDACTeQR.Create(AOwner: TComponent);
 begin
@@ -269,7 +269,7 @@ var
  i, j: Integer;
  Impresso: Boolean;
 begin
-  frmDAEventoQR := TfrmDAEventoQRRetrato.Create(Self);
+  frmCTeDAEventoQR := TfrmCTeDAEventoQRRetrato.Create(Self);
 
   if TACBrCTe(ACBrCTe).Conhecimentos.Count > 0 then
     begin
@@ -280,7 +280,7 @@ begin
             begin
               if Copy(TACBrCTe(ACBrCTe).Conhecimentos.Items[j].CTe.infCTe.ID, 4, 44) = TACBrCTe(ACBrCTe).EventoCTe.Evento.Items[i].InfEvento.chCTe then
                 begin
-                  frmDAEventoQR.Imprimir(TACBrCTe(ACBrCTe).EventoCTe.Evento.Items[i],
+                  frmCTeDAEventoQR.Imprimir(TACBrCTe(ACBrCTe).EventoCTe.Evento.Items[i],
                                          FLogo,
                                          FNumCopias,
                                          FSistema,
@@ -299,7 +299,7 @@ begin
 
           if Impresso = False then
             begin
-              frmDAEventoQR.Imprimir(TACBrCTe(ACBrCTe).EventoCTe.Evento.Items[i],
+              frmCTeDAEventoQR.Imprimir(TACBrCTe(ACBrCTe).EventoCTe.Evento.Items[i],
                                      FLogo,
                                      FNumCopias,
                                      FSistema,
@@ -317,7 +317,7 @@ begin
     begin
       for i := 0 to (TACBrCTe(ACBrCTe).EventoCTe.Evento.Count - 1) do
         begin
-          frmDAEventoQR.Imprimir(TACBrCTe(ACBrCTe).EventoCTe.Evento.Items[i],
+          frmCTeDAEventoQR.Imprimir(TACBrCTe(ACBrCTe).EventoCTe.Evento.Items[i],
                                  FLogo,
                                  FNumCopias,
                                  FSistema,
@@ -331,7 +331,7 @@ begin
         end;
     end;
 
-  FreeAndNil(frmDAEventoQR);
+  FreeAndNil(frmCTeDAEventoQR);
 end;
 
 procedure TACBrCTeDACTeQR.ImprimirEVENTOPDF(CTe: TCTe);
@@ -340,7 +340,7 @@ var
  sFile: String;
  Impresso: Boolean;
 begin
-  frmDAEventoQR := TfrmDAEventoQRRetrato.Create(Self);
+  frmCTeDAEventoQR := TfrmCTeDAEventoQRRetrato.Create(Self);
 
   if TACBrCTe(ACBrCTe).Conhecimentos.Count > 0 then
     begin
@@ -354,7 +354,7 @@ begin
             begin
               if Copy(TACBrCTe(ACBrCTe).Conhecimentos.Items[j].CTe.infCTe.ID, 4, 44) = TACBrCTe(ACBrCTe).EventoCTe.Evento.Items[i].InfEvento.chCTe then
                 begin
-                  frmDAEventoQR.SavePDF(TACBrCTe(ACBrCTe).EventoCTe.Evento.Items[i],
+                  frmCTeDAEventoQR.SavePDF(TACBrCTe(ACBrCTe).EventoCTe.Evento.Items[i],
                                         FLogo,
                                         sFile,
                                         FSistema,
@@ -371,7 +371,7 @@ begin
 
           if Impresso = False then
             begin
-              frmDAEventoQR.SavePDF(TACBrCTe(ACBrCTe).EventoCTe.Evento.Items[i],
+              frmCTeDAEventoQR.SavePDF(TACBrCTe(ACBrCTe).EventoCTe.Evento.Items[i],
                                     FLogo,
                                     sFile,
                                     FSistema,
@@ -390,7 +390,7 @@ begin
           sFile := TACBrCTe(ACBrCTe).DACTE.PathPDF +
                    Copy(TACBrCTe(ACBrCTe).EventoCTe.Evento.Items[i].InfEvento.id, 3, 52) + 'evento.pdf';
 
-          frmDAEventoQR.SavePDF(TACBrCTe(ACBrCTe).EventoCTe.Evento.Items[i],
+          frmCTeDAEventoQR.SavePDF(TACBrCTe(ACBrCTe).EventoCTe.Evento.Items[i],
                                 FLogo,
                                 sFile,
                                 FSistema,
@@ -402,7 +402,7 @@ begin
         end;
     end;
 
-  FreeAndNil(frmDAEventoQR);
+  FreeAndNil(frmCTeDAEventoQR);
 end;
 
 end.

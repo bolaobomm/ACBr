@@ -58,7 +58,7 @@ uses
   DBClient, ACBrCTeDAEventoQR;
 
 type
-  TfrmDAEventoQRRetrato = class(TfrmDAEventoQR)
+  TfrmCTeDAEventoQRRetrato = class(TfrmCTeDAEventoQR)
     qrb_09_Itens: TQRBand;
     qrdbtTpDoc1: TQRDBText;
     cdsDocumentos: TClientDataSet;
@@ -233,31 +233,31 @@ uses
 var
   FProtocoloCTe : string;
 
-procedure TfrmDAEventoQRRetrato.Itens;
+procedure TfrmCTeDAEventoQRRetrato.Itens;
 begin
  // Itens
 end;
 
-procedure TfrmDAEventoQRRetrato.ProtocoloCTe(const sProtocolo: string);
+procedure TfrmCTeDAEventoQRRetrato.ProtocoloCTe(const sProtocolo: string);
 begin
   FProtocoloCTe := sProtocolo;
 end;
 
-procedure TfrmDAEventoQRRetrato.QREventoBeforePrint(Sender: TCustomQuickRep; var PrintReport: Boolean);
+procedure TfrmCTeDAEventoQRRetrato.QREventoBeforePrint(Sender: TCustomQuickRep; var PrintReport: Boolean);
 begin
   inherited;
 
   Itens;
 
-  QREvento.ReportTitle:='Evento: ' + FormatFloat( '000,000,000', FEventoCTe.InfEvento.nSeqEvento );
+  QRCTeEvento.ReportTitle:='Evento: ' + FormatFloat( '000,000,000', FEventoCTe.InfEvento.nSeqEvento );
 
-  QREvento.Page.TopMargin    := FMargemSuperior * 100;
-  QREvento.Page.BottomMargin := FMargemInferior * 100;
-  QREvento.Page.LeftMargin   := FMargemEsquerda * 100;
-  QREvento.Page.RightMargin  := FMargemDireita  * 100;
+  QRCTeEvento.Page.TopMargin    := FMargemSuperior * 100;
+  QRCTeEvento.Page.BottomMargin := FMargemInferior * 100;
+  QRCTeEvento.Page.LeftMargin   := FMargemEsquerda * 100;
+  QRCTeEvento.Page.RightMargin  := FMargemDireita  * 100;
 end;
 
-procedure TfrmDAEventoQRRetrato.qrb_01_TituloBeforePrint(Sender: TQRCustomBand; var PrintBand: Boolean);
+procedure TfrmCTeDAEventoQRRetrato.qrb_01_TituloBeforePrint(Sender: TQRCustomBand; var PrintBand: Boolean);
 begin
   inherited;
 
@@ -278,7 +278,7 @@ begin
   end;
 end;
 
-procedure TfrmDAEventoQRRetrato.qrb_02_DocumentoBeforePrint(
+procedure TfrmCTeDAEventoQRRetrato.qrb_02_DocumentoBeforePrint(
   Sender: TQRCustomBand; var PrintBand: Boolean);
 begin
   inherited;
@@ -298,7 +298,7 @@ begin
    end;
 end;
 
-procedure TfrmDAEventoQRRetrato.qrb_03_EventoBeforePrint(Sender: TQRCustomBand; var PrintBand: Boolean);
+procedure TfrmCTeDAEventoQRRetrato.qrb_03_EventoBeforePrint(Sender: TQRCustomBand; var PrintBand: Boolean);
 begin
   inherited;
 
@@ -325,7 +325,7 @@ begin
     end;
 end;
 
-procedure TfrmDAEventoQRRetrato.qrb_04_EmitenteBeforePrint(
+procedure TfrmCTeDAEventoQRRetrato.qrb_04_EmitenteBeforePrint(
   Sender: TQRCustomBand; var PrintBand: Boolean);
 begin
   inherited;
@@ -347,7 +347,7 @@ begin
    end;
 end;
 
-procedure TfrmDAEventoQRRetrato.qrb_05_TomadorBeforePrint(
+procedure TfrmCTeDAEventoQRRetrato.qrb_05_TomadorBeforePrint(
   Sender: TQRCustomBand; var PrintBand: Boolean);
 begin
   inherited;
@@ -420,7 +420,7 @@ begin
    end;
 end;
 
-procedure TfrmDAEventoQRRetrato.qrb_06_CondicoesBeforePrint(
+procedure TfrmCTeDAEventoQRRetrato.qrb_06_CondicoesBeforePrint(
   Sender: TQRCustomBand; var PrintBand: Boolean);
 var
  i: Integer;
@@ -449,7 +449,7 @@ begin
   qrmCondicoes.Lines.Add('III - a data de emissao ou de saida.');
 end;
 
-procedure TfrmDAEventoQRRetrato.qrb_07_CorrecaoBeforePrint(
+procedure TfrmCTeDAEventoQRRetrato.qrb_07_CorrecaoBeforePrint(
   Sender: TQRCustomBand; var PrintBand: Boolean);
 var
  i: Integer;
@@ -472,14 +472,14 @@ begin
    end;
 end;
 
-procedure TfrmDAEventoQRRetrato.qrb_08_HeaderItensBeforePrint(
+procedure TfrmCTeDAEventoQRRetrato.qrb_08_HeaderItensBeforePrint(
   Sender: TQRCustomBand; var PrintBand: Boolean);
 begin
   inherited;
   // Imprime os Documentos Originários se o Tipo de CTe for Normal
 end;
 
-procedure TfrmDAEventoQRRetrato.qrb_09_ItensBeforePrint(Sender: TQRCustomBand; var PrintBand: Boolean);
+procedure TfrmCTeDAEventoQRRetrato.qrb_09_ItensBeforePrint(Sender: TQRCustomBand; var PrintBand: Boolean);
 var
   i : integer;
 begin
@@ -495,7 +495,7 @@ begin
   *)
 end;
 
-procedure TfrmDAEventoQRRetrato.qrb_10_SistemaBeforePrint(
+procedure TfrmCTeDAEventoQRRetrato.qrb_10_SistemaBeforePrint(
   Sender: TQRCustomBand; var PrintBand: Boolean);
 begin
   inherited;

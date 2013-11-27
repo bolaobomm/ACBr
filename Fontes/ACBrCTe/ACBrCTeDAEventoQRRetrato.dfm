@@ -1,4 +1,4 @@
-inherited frmDAEventoQRRetrato: TfrmDAEventoQRRetrato
+inherited frmCTeDAEventoQRRetrato: TfrmCTeDAEventoQRRetrato
   Left = 197
   Top = 124
   Width = 835
@@ -10,7 +10,7 @@ inherited frmDAEventoQRRetrato: TfrmDAEventoQRRetrato
   OldCreateOrder = True
   PixelsPerInch = 96
   TextHeight = 10
-  inherited QREvento: TQuickRep
+  inherited QRCTeEvento: TQuickRep
     Left = 3
     Top = 3
     BeforePrint = QREventoBeforePrint
