@@ -202,6 +202,21 @@ begin
            infEvento.detEvento.modal      := StrToTpModal(ok, Leitor.rCampo(tcStr, 'modal'));
            infEvento.detEvento.UFIni      := Leitor.rCampo(tcStr, 'UFIni');
            infEvento.detEvento.UFFim      := Leitor.rCampo(tcStr, 'UFFim');
+
+           // Carrega os dados da informação da Correção aplicada
+           i := 0 ;
+           while Leitor.rExtrai(4, 'infCorrecao', '', i + 1) <> '' do
+           begin
+             with infEvento.detEvento.infCorrecao.Add do
+             begin
+               grupoAlterado   := Leitor.rCampo(tcStr, 'grupoAlterado');
+               campoAlterado   := Leitor.rCampo(tcStr, 'campoAlterado');
+               valorAlterado   := Leitor.rCampo(tcStr, 'valorAlterado');
+               nroItemAlterado := Leitor.rCampo(tcInt, 'nroItemAlterado');
+             end;
+             inc(i) ;
+           end;
+
          end;
       end;
     end;
