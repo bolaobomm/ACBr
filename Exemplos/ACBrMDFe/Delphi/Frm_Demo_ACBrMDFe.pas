@@ -128,6 +128,9 @@ type
     DAMDFE: TACBrMDFeDAMDFEQR;
     rgVersaoDF: TRadioGroup;
     btnImprimirEvento: TButton;
+    btnEnviarEventoEmail: TButton;
+    btnEnviarMDFeEmail: TButton;
+    btnGerarPDFEvento: TButton;
     procedure sbtnCaminhoCertClick(Sender: TObject);
     procedure sbtnGetCertClick(Sender: TObject);
     procedure sbtnLogoMarcaClick(Sender: TObject);
@@ -151,6 +154,9 @@ type
     procedure ACBrMDFe1StatusChange(Sender: TObject);
     procedure ACBrMDFe1GerarLog(const Mensagem: String);
     procedure btnImprimirEventoClick(Sender: TObject);
+    procedure btnEnviarEventoEmailClick(Sender: TObject);
+    procedure btnEnviarMDFeEmailClick(Sender: TObject);
+    procedure btnGerarPDFEventoClick(Sender: TObject);
     {
     procedure lblMouseEnter(Sender: TObject);
     procedure lblMouseLeave(Sender: TObject);
@@ -943,6 +949,21 @@ begin
   end;
 end;
 
+procedure TfrmDemo_ACBrMDFe.btnImprimirClick(Sender: TObject);
+begin
+ OpenDialog1.Title := 'Selecione o MDFe';
+ OpenDialog1.DefaultExt := '*-MDFe.xml';
+ OpenDialog1.Filter := 'Arquivos MDFe (*-MDFe.xml)|*-MDFe.xml|Arquivos XML (*.xml)|*.xml|Todos os Arquivos (*.*)|*.*';
+ OpenDialog1.InitialDir := ACBrMDFe1.Configuracoes.Geral.PathSalvar;
+
+ if OpenDialog1.Execute then
+  begin
+   ACBrMDFe1.Manifestos.Clear;
+   ACBrMDFe1.Manifestos.LoadFromFile(OpenDialog1.FileName);
+   ACBrMDFe1.Manifestos.Imprimir;
+  end;
+end;
+
 procedure TfrmDemo_ACBrMDFe.btnGerarPDFClick(Sender: TObject);
 begin
  OpenDialog1.Title := 'Selecione o MDFe';
@@ -958,18 +979,40 @@ begin
   end;
 end;
 
-procedure TfrmDemo_ACBrMDFe.btnImprimirClick(Sender: TObject);
+procedure TfrmDemo_ACBrMDFe.btnEnviarMDFeEmailClick(Sender: TObject);
+var
+ Para : String;
+ CC   : Tstrings;
 begin
- OpenDialog1.Title := 'Selecione o MDFe';
- OpenDialog1.DefaultExt := '*-MDFe.xml';
- OpenDialog1.Filter := 'Arquivos MDFe (*-MDFe.xml)|*-MDFe.xml|Arquivos XML (*.xml)|*.xml|Todos os Arquivos (*.*)|*.*';
- OpenDialog1.InitialDir := ACBrMDFe1.Configuracoes.Geral.PathSalvar;
+ if not(InputQuery('Enviar Email', 'Email de destino', Para))
+  then exit;
 
- if OpenDialog1.Execute then
+  OpenDialog1.Title := 'Selecione o MDFe';
+  OpenDialog1.DefaultExt := '*-mdfe.xml';
+  OpenDialog1.Filter := 'Arquivos MDFe (*-mdfe.xml)|*-mdfe.xml|Arquivos XML (*.xml)|*.xml|Todos os Arquivos (*.*)|*.*';
+  OpenDialog1.InitialDir := ACBrMDFe1.Configuracoes.Geral.PathSalvar;
+
+  if OpenDialog1.Execute then
   begin
    ACBrMDFe1.Manifestos.Clear;
    ACBrMDFe1.Manifestos.LoadFromFile(OpenDialog1.FileName);
-   ACBrMDFe1.Manifestos.Imprimir;
+   CC:=TstringList.Create;
+   CC.Add('email_1@provedor.com'); //especifique um email válido
+   CC.Add('email_2@provedor.com.br'); //especifique um email válido
+   ACBrMDFe1.Manifestos.Items[0].EnviarEmail(edtSmtpHost.Text
+                                             , edtSmtpPort.Text
+                                             , edtSmtpUser.Text
+                                             , edtSmtpPass.Text
+                                             , edtSmtpUser.Text
+                                             , Para
+                                             , edtEmailAssunto.Text
+                                             , mmEmailMsg.Lines
+                                             , cbEmailSSL.Checked
+                                             , False //Enviar PDF junto
+                                             , nil //Lista com emails que serão enviado cópias - TStrings
+                                             , nil // Lista de anexos - TStrings
+                                             , False ); //Pede confirmação de leitura do email
+   CC.Free;
   end;
 end;
 
@@ -994,8 +1037,89 @@ begin
   if OpenDialog1.Execute then
   begin
     ACBrMDFe1.EventoMDFe.Evento.Clear;
-    ACBrMDFe1.EventoMDFe.LerXML(OpenDialog1.FileName) ;
+    ACBrMDFe1.EventoMDFe.LerXML(OpenDialog1.FileName);
     ACBrMDFe1.ImprimirEvento;
+  end;
+end;
+
+procedure TfrmDemo_ACBrMDFe.btnGerarPDFEventoClick(Sender: TObject);
+begin
+  OpenDialog1.Title := 'Selecione o MDFe';
+  OpenDialog1.DefaultExt := '*-mdfe.xml';
+  OpenDialog1.Filter := 'Arquivos MDFe (*-mdfe.xml)|*-mdfe.xml|Arquivos XML (*.xml)|*.xml|Todos os Arquivos (*.*)|*.*';
+  OpenDialog1.InitialDir := ACBrMDFe1.Configuracoes.Geral.PathSalvar;
+
+  ACBrMDFe1.Manifestos.Clear;
+  if OpenDialog1.Execute then
+  begin
+    ACBrMDFe1.Manifestos.LoadFromFile(OpenDialog1.FileName);
+  end;
+
+  OpenDialog1.Title := 'Selecione o Evento';
+  OpenDialog1.DefaultExt := '*-procEventoMDFe.xml';
+  OpenDialog1.Filter := 'Arquivos Evento (*-procEventoMDFe.xml)|*-procEventoMDFe.xml|Arquivos XML (*.xml)|*.xml|Todos os Arquivos (*.*)|*.*';
+  OpenDialog1.InitialDir := ACBrMDFe1.Configuracoes.Geral.PathSalvar;
+
+  if OpenDialog1.Execute then
+  begin
+    ACBrMDFe1.EventoMDFe.Evento.Clear;
+    ACBrMDFe1.EventoMDFe.LerXML(OpenDialog1.FileName);
+    ACBrMDFe1.ImprimirEventoPDF;
+  end;
+end;
+
+procedure TfrmDemo_ACBrMDFe.btnEnviarEventoEmailClick(Sender: TObject);
+var
+ Para : String;
+ CC, Evento: Tstrings;
+begin
+  if not(InputQuery('Enviar Email', 'Email de destino', Para)) then
+    exit;
+
+  OpenDialog1.Title := 'Selecione o MDFe';
+  OpenDialog1.DefaultExt := '*-mdfe.xml';
+  OpenDialog1.Filter := 'Arquivos MDFe (*-mdfe.xml)|*-mdfe.xml|Arquivos XML (*.xml)|*.xml|Todos os Arquivos (*.*)|*.*';
+  OpenDialog1.InitialDir := ACBrMDFe1.Configuracoes.Geral.PathSalvar;
+
+  ACBrMDFe1.Manifestos.Clear;
+  if OpenDialog1.Execute then
+  begin
+    ACBrMDFe1.Manifestos.LoadFromFile(OpenDialog1.FileName);
+  end;
+
+  OpenDialog1.Title := 'Selecione o Evento';
+  OpenDialog1.DefaultExt := '*-procEventoMDFe.xml';
+  OpenDialog1.Filter := 'Arquivos Evento (*-procEventoMDFe.xml)|*-procEventoMDFe.xml|Arquivos XML (*.xml)|*.xml|Todos os Arquivos (*.*)|*.*';
+  OpenDialog1.InitialDir := ACBrMDFe1.Configuracoes.Geral.PathSalvar;
+
+  if OpenDialog1.Execute then
+  begin
+    Evento := TStringList.Create;
+    Evento.Clear;
+    Evento.Add(OpenDialog1.FileName);
+    ACBrMDFe1.EventoMDFe.Evento.Clear;
+    ACBrMDFe1.EventoMDFe.LerXML(OpenDialog1.FileName);
+    CC:=TstringList.Create;
+    CC.Add('andrefmoraes@gmail.com'); //especifique um email válido
+    CC.Add('anfm@zipmail.com.br');    //especifique um email válido
+    ACBrMDFe1.EnviarEmailEvento(edtSmtpHost.Text
+                             , edtSmtpPort.Text
+                             , edtSmtpUser.Text
+                             , edtSmtpPass.Text
+                             , edtSmtpUser.Text
+                             , Para
+                             , edtEmailAssunto.Text
+                             , mmEmailMsg.Lines
+                             , cbEmailSSL.Checked // SSL - Conexão Segura
+                             , True //Enviar PDF junto
+                             , CC //Lista com emails que serão enviado cópias - TStrings
+                             , Evento // Lista de anexos - TStrings
+                             , False  //Pede confirmação de leitura do email
+                             , False  //Aguarda Envio do Email(não usa thread)
+                             , 'ACBrMDFe' // Nome do Rementente
+                             , cbEmailSSL.Checked ); // Auto TLS
+    CC.Free;
+    Evento.Free;
   end;
 end;
 

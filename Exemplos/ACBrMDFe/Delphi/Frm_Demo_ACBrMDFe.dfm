@@ -19,7 +19,7 @@ object frmDemo_ACBrMDFe: TfrmDemo_ACBrMDFe
     Left = 0
     Top = 0
     Width = 297
-    Height = 530
+    Height = 534
     Align = alLeft
     TabOrder = 0
     object lblColaborador: TLabel
@@ -802,19 +802,19 @@ object frmDemo_ACBrMDFe: TfrmDemo_ACBrMDFe
   object Panel2: TPanel
     Left = 297
     Top = 0
-    Width = 558
-    Height = 530
+    Width = 566
+    Height = 534
     Align = alClient
     TabOrder = 1
     object Panel3: TPanel
       Left = 1
       Top = 1
-      Width = 556
-      Height = 136
+      Width = 564
+      Height = 176
       Align = alTop
       TabOrder = 0
       object btnImprimir: TButton
-        Left = 192
+        Left = 8
         Top = 104
         Width = 177
         Height = 25
@@ -877,7 +877,7 @@ object frmDemo_ACBrMDFe: TfrmDemo_ACBrMDFe
         OnClick = btnGerarMDFeClick
       end
       object btnGerarPDF: TButton
-        Left = 8
+        Left = 192
         Top = 104
         Width = 177
         Height = 25
@@ -913,20 +913,47 @@ object frmDemo_ACBrMDFe: TfrmDemo_ACBrMDFe
         OnClick = btnEncerramentoClick
       end
       object btnImprimirEvento: TButton
-        Left = 376
-        Top = 103
+        Left = 8
+        Top = 135
         Width = 177
         Height = 25
         Caption = 'Imprimir Evento'
         TabOrder = 11
         OnClick = btnImprimirEventoClick
       end
+      object btnEnviarEventoEmail: TButton
+        Left = 376
+        Top = 135
+        Width = 177
+        Height = 25
+        Caption = 'Enviar Evento Email'
+        TabOrder = 12
+        OnClick = btnEnviarEventoEmailClick
+      end
+      object btnEnviarMDFeEmail: TButton
+        Left = 376
+        Top = 103
+        Width = 177
+        Height = 25
+        Caption = 'Enviar MDF-e Email'
+        TabOrder = 13
+        OnClick = btnEnviarMDFeEmailClick
+      end
+      object btnGerarPDFEvento: TButton
+        Left = 192
+        Top = 136
+        Width = 177
+        Height = 25
+        Caption = 'Gerar PDF Evento'
+        TabOrder = 14
+        OnClick = btnGerarPDFEventoClick
+      end
     end
     object PageControl2: TPageControl
       Left = 1
-      Top = 137
-      Width = 556
-      Height = 392
+      Top = 177
+      Width = 564
+      Height = 356
       ActivePage = TabSheet5
       Align = alClient
       TabOrder = 1
@@ -935,8 +962,8 @@ object frmDemo_ACBrMDFe: TfrmDemo_ACBrMDFe
         object MemoResp: TMemo
           Left = 0
           Top = 0
-          Width = 548
-          Height = 364
+          Width = 556
+          Height = 328
           Align = alClient
           TabOrder = 0
         end
@@ -978,8 +1005,8 @@ object frmDemo_ACBrMDFe: TfrmDemo_ACBrMDFe
         object trvwMDFe: TTreeView
           Left = 0
           Top = 0
-          Width = 548
-          Height = 364
+          Width = 556
+          Height = 328
           Align = alClient
           Indent = 19
           TabOrder = 0

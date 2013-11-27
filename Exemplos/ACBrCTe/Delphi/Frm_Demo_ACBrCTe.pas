@@ -132,6 +132,7 @@ type
     ACBrCTe1: TACBrCTe;
     ACBrCTeDACTeQR1: TACBrCTeDACTeQR;
     btnEnviarEventoEmail: TButton;
+    btnGerarPDFEvento: TButton;
     procedure sbtnCaminhoCertClick(Sender: TObject);
     procedure sbtnGetCertClick(Sender: TObject);
     procedure sbtnLogoMarcaClick(Sender: TObject);
@@ -161,6 +162,7 @@ type
     procedure ACBrCTe1StatusChange(Sender: TObject);
     procedure ACBrCTe1GerarLog(const Mensagem: String);
     procedure btnEnviarEventoEmailClick(Sender: TObject);
+    procedure btnGerarPDFEventoClick(Sender: TObject);
     {
     procedure lblMouseEnter(Sender: TObject);
     procedure lblMouseLeave(Sender: TObject);
@@ -1434,21 +1436,6 @@ begin
  ShowMessage('Opção não Implementada, no programa exemplo!');
 end;
 
-procedure TfrmDemo_ACBrCTe.btnGerarPDFClick(Sender: TObject);
-begin
- OpenDialog1.Title := 'Selecione o CTe';
- OpenDialog1.DefaultExt := '*-cte.xml';
- OpenDialog1.Filter := 'Arquivos CTe (*-cte.xml)|*-cte.xml|Arquivos XML (*.xml)|*.xml|Todos os Arquivos (*.*)|*.*';
- OpenDialog1.InitialDir := ACBrCTe1.Configuracoes.Geral.PathSalvar;
-
- if OpenDialog1.Execute
-  then begin
-   ACBrCTe1.Conhecimentos.Clear;
-   ACBrCTe1.Conhecimentos.LoadFromFile(OpenDialog1.FileName);
-   ACBrCTe1.Conhecimentos.ImprimirPDF;
-  end;
-end;
-
 procedure TfrmDemo_ACBrCTe.btnImportarXMLClick(Sender: TObject);
 var
  i, j, k, n  : integer;
@@ -2203,6 +2190,21 @@ begin
   end;
 end;
 
+procedure TfrmDemo_ACBrCTe.btnGerarPDFClick(Sender: TObject);
+begin
+ OpenDialog1.Title := 'Selecione o CTe';
+ OpenDialog1.DefaultExt := '*-cte.xml';
+ OpenDialog1.Filter := 'Arquivos CTe (*-cte.xml)|*-cte.xml|Arquivos XML (*.xml)|*.xml|Todos os Arquivos (*.*)|*.*';
+ OpenDialog1.InitialDir := ACBrCTe1.Configuracoes.Geral.PathSalvar;
+
+ if OpenDialog1.Execute
+  then begin
+   ACBrCTe1.Conhecimentos.Clear;
+   ACBrCTe1.Conhecimentos.LoadFromFile(OpenDialog1.FileName);
+   ACBrCTe1.Conhecimentos.ImprimirPDF;
+  end;
+end;
+
 procedure TfrmDemo_ACBrCTe.btnEnviarEmailClick(Sender: TObject);
 var
  Para : String;
@@ -2261,8 +2263,34 @@ begin
   if OpenDialog1.Execute then
   begin
     ACBrCTe1.EventoCTe.Evento.Clear;
-    ACBrCTe1.EventoCTe.LerXML(OpenDialog1.FileName) ;
+    ACBrCTe1.EventoCTe.LerXML(OpenDialog1.FileName);
     ACBrCTe1.ImprimirEvento;
+  end;
+end;
+
+procedure TfrmDemo_ACBrCTe.btnGerarPDFEventoClick(Sender: TObject);
+begin
+  OpenDialog1.Title := 'Selecione o CTe';
+  OpenDialog1.DefaultExt := '*-cte.xml';
+  OpenDialog1.Filter := 'Arquivos CTe (*-cte.xml)|*-cte.xml|Arquivos XML (*.xml)|*.xml|Todos os Arquivos (*.*)|*.*';
+  OpenDialog1.InitialDir := ACBrCTe1.Configuracoes.Geral.PathSalvar;
+
+  ACBrCTe1.Conhecimentos.Clear;
+  if OpenDialog1.Execute then
+  begin
+    ACBrCTe1.Conhecimentos.LoadFromFile(OpenDialog1.FileName);
+  end;
+
+  OpenDialog1.Title := 'Selecione o Evento';
+  OpenDialog1.DefaultExt := '*-procEventoCTe.xml';
+  OpenDialog1.Filter := 'Arquivos Evento (*-procEventoCTe.xml)|*-procEventoCTe.xml|Arquivos XML (*.xml)|*.xml|Todos os Arquivos (*.*)|*.*';
+  OpenDialog1.InitialDir := ACBrCTe1.Configuracoes.Geral.PathSalvar;
+
+  if OpenDialog1.Execute then
+  begin
+    ACBrCTe1.EventoCTe.Evento.Clear;
+    ACBrCTe1.EventoCTe.LerXML(OpenDialog1.FileName);
+    ACBrCTe1.ImprimirEventoPDF;
   end;
 end;
 
@@ -2294,7 +2322,7 @@ begin
     Evento.Clear;
     Evento.Add(OpenDialog1.FileName);
     ACBrCTe1.EventoCTe.Evento.Clear;
-    ACBrCTe1.EventoCTe.LerXML(OpenDialog1.FileName) ;
+    ACBrCTe1.EventoCTe.LerXML(OpenDialog1.FileName);
     CC:=TstringList.Create;
     CC.Add('andrefmoraes@gmail.com'); //especifique um email válido
     CC.Add('anfm@zipmail.com.br');    //especifique um email válido
