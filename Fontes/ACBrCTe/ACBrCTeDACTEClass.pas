@@ -187,7 +187,7 @@ begin
   begin
      if Value <> nil then
         if not (Value is TACBrCTE) then
-           raise Exception.Create('ACBrDACTE.CTE deve ser do tipo TACBrCTE');
+           raise Exception.Create('DACTE deve ser do tipo TACBrCTE');
 
      if Assigned(FACBrCTE) then
         FACBrCTE.RemoveFreeNotification(Self);

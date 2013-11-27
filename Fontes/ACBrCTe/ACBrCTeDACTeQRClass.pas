@@ -65,8 +65,8 @@ type
     destructor Destroy; override;
     procedure ImprimirDACTe(CTe: TCTe = nil); override;
     procedure ImprimirDACTePDF(CTe: TCTe = nil); override;
-    procedure ImprimirEVENTO(CTe : TCTe = nil); override ;
-    procedure ImprimirEVENTOPDF(CTe : TCTe = nil); override ;
+    procedure ImprimirEVENTO(CTe : TCTe = nil); override;
+    procedure ImprimirEVENTOPDF(CTe : TCTe = nil); override;
 //    procedure SetTamanhoPapel(Value: TpcnTamanhoPapel); virtual;
   published
     property PosRecibo: TPosRecibo read FPosRecibo write FPosRecibo default prCabecalho;
@@ -268,7 +268,6 @@ procedure TACBrCTeDACTeQR.ImprimirEVENTO(CTe: TCTe);
 var
  i, j: Integer;
  Impresso: Boolean;
-
 begin
   frmDAEventoQR := TfrmDAEventoQRRetrato.Create(Self);
 
@@ -368,7 +367,7 @@ begin
                   Impresso := True;
                   Break;
                 end;
-            end; 
+            end;
 
           if Impresso = False then
             begin
