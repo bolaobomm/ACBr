@@ -1,7 +1,7 @@
 {******************************************************************************}
 { Projeto: Componente ACBrNFe                                                  }
 {  Biblioteca multiplataforma de componentes Delphi para emissão de Nota Fiscal}
-{ eletrônica - NFe - http://www.nfe.fazenda.gov.br                          }
+{ eletrônica - NFe - http://www.nfe.fazenda.gov.br                             }
 {                                                                              }
 { Direitos Autorais Reservados (c) 2008 Wemerson Souto                         }
 {                                       Daniel Simoes de Almeida               }
@@ -56,7 +56,8 @@ interface
 
 uses
  Forms, SysUtils, Classes,
- ACBrNFeDANFeQR, ACBrNFeDANFEClass, pcnNFe, pcnConversao;
+ ACBrNFeDANFeQR, ACBrNFeDANFEClass, pcnNFe, pcnConversao,
+ ACBrNFeDAEventoQR, ACBrNFeDAEventoQRRetrato;
 
 type
   TACBrNFeDANFEQR = class( TACBrNFeDANFEClass )
@@ -64,8 +65,10 @@ type
    public
     constructor Create(AOwner: TComponent); override;
     destructor Destroy; override;
-    procedure ImprimirDANFE(NFE : TNFe = nil); override ;
-    procedure ImprimirDANFEPDF(NFE : TNFe = nil); override ;
+    procedure ImprimirDANFE(NFE : TNFe = nil); override;
+    procedure ImprimirDANFEPDF(NFE : TNFe = nil); override;
+    procedure ImprimirEVENTO(NFe : TNFe = nil); override;
+    procedure ImprimirEVENTOPDF(NFe : TNFe = nil); override;
   end;
 
 implementation
@@ -74,6 +77,9 @@ uses
  StrUtils, Dialogs,
  ACBrNFe, ACBrNFeUtil, ACBrUtil, ACBrNFeDANFeQRRetrato{, ACBrNFeDANFeQRNFCe};
 
+var
+ frmNFeDAEventoQR : TfrmNFeDAEventoQR;
+
 constructor TACBrNFeDANFEQR.Create(AOwner: TComponent);
 begin
   inherited create( AOwner );
@@ -81,9 +87,8 @@ end;
 
 destructor TACBrNFeDANFEQR.Destroy;
 begin
-  inherited Destroy ;
+  inherited Destroy;
 end;
-
 
 procedure TACBrNFeDANFEQR.ImprimirDANFE(NFE : TNFe = nil);
 var
@@ -101,8 +106,8 @@ begin
 //  end;
 
 //  fqrDANFeQRRetrato := TfqrDANFeQRRetrato.Create(Self);
-  sProt := TACBrNFe(ACBrNFe).DANFE.ProtocoloNFe ;
-//  fqrDANFeQRRetrato.ProtocoloNFE( sProt ) ;
+  sProt := TACBrNFe(ACBrNFe).DANFE.ProtocoloNFe;
+//  fqrDANFeQRRetrato.ProtocoloNFE( sProt );
 
   if NFE = nil then
    begin
@@ -174,8 +179,8 @@ begin
 //  end;
 
 //  fqrDANFeQRRetrato := TfqrDANFeQRRetrato.Create(Self);
-  sProt := TACBrNFe(ACBrNFe).DANFE.ProtocoloNFe ;
-//  fqrDANFeQRRetrato.ProtocoloNFE( sProt ) ;
+  sProt := TACBrNFe(ACBrNFe).DANFE.ProtocoloNFe;
+//  fqrDANFeQRRetrato.ProtocoloNFE( sProt );
 
   if NFE = nil then
    begin
@@ -233,6 +238,147 @@ begin
    end;
 
   fqrDANFeQRRetrato.Free;
+end;
+
+procedure TACBrNFeDANFEQR.ImprimirEVENTO(NFe: TNFe);
+var
+ i, j: Integer;
+ Impresso: Boolean;
+begin
+  frmNFeDAEventoQR := TfrmNFeDAEventoQRRetrato.Create(Self);
+
+  if TACBrNFe(ACBrNFe).NotasFiscais.Count > 0 then
+    begin
+      for i := 0 to (TACBrNFe(ACBrNFe).EventoNFe.Evento.Count - 1) do
+        begin
+          Impresso := False;
+          for j := 0 to (TACBrNFe(ACBrNFe).NotasFiscais.Count - 1) do
+            begin
+              if Copy(TACBrNFe(ACBrNFe).NotasFiscais.Items[j].NFe.infNFe.ID, 4, 44) = TACBrNFe(ACBrNFe).EventoNFe.Evento.Items[i].InfEvento.chNFe then
+                begin
+                  frmNFeDAEventoQR.Imprimir(TACBrNFe(ACBrNFe).EventoNFe.Evento.Items[i],
+                                         FLogo,
+                                         FNumCopias,
+                                         FSistema,
+                                         FUsuario,
+                                         FMostrarPreview,
+                                         FMargemSuperior,
+                                         FMargemInferior,
+                                         FMargemEsquerda,
+                                         FMargemDireita,
+                                         FImpressora,
+                                         TACBrNFe(ACBrNFe).NotasFiscais.Items[j].NFe);
+                  Impresso := True;
+                  Break;
+                end;
+            end;
+
+          if Impresso = False then
+            begin
+              frmNFeDAEventoQR.Imprimir(TACBrNFe(ACBrNFe).EventoNFe.Evento.Items[i],
+                                     FLogo,
+                                     FNumCopias,
+                                     FSistema,
+                                     FUsuario,
+                                     FMostrarPreview,
+                                     FMargemSuperior,
+                                     FMargemInferior,
+                                     FMargemEsquerda,
+                                     FMargemDireita,
+                                     FImpressora);
+            end;
+        end;
+    end
+  else
+    begin
+      for i := 0 to (TACBrNFe(ACBrNFe).EventoNFe.Evento.Count - 1) do
+        begin
+          frmNFeDAEventoQR.Imprimir(TACBrNFe(ACBrNFe).EventoNFe.Evento.Items[i],
+                                 FLogo,
+                                 FNumCopias,
+                                 FSistema,
+                                 FUsuario,
+                                 FMostrarPreview,
+                                 FMargemSuperior,
+                                 FMargemInferior,
+                                 FMargemEsquerda,
+                                 FMargemDireita,
+                                 FImpressora);
+        end;
+    end;
+
+  FreeAndNil(frmNFeDAEventoQR);
+end;
+
+procedure TACBrNFeDANFEQR.ImprimirEVENTOPDF(NFe: TNFe);
+var
+ i, j: Integer;
+ sFile: String;
+ Impresso: Boolean;
+begin
+  frmNFeDAEventoQR := TfrmNFeDAEventoQRRetrato.Create(Self);
+
+  if TACBrNFe(ACBrNFe).NotasFiscais.Count > 0 then
+    begin
+      for i := 0 to (TACBrNFe(ACBrNFe).EventoNFe.Evento.Count - 1) do
+        begin
+          sFile := TACBrNFe(ACBrNFe).DANFe.PathPDF +
+                   Copy(TACBrNFe(ACBrNFe).EventoNFe.Evento.Items[i].InfEvento.id, 3, 52) + 'evento.pdf';
+          Impresso := False;
+
+          for j := 0 to (TACBrNFe(ACBrNFe).NotasFiscais.Count - 1) do
+            begin
+              if Copy(TACBrNFe(ACBrNFe).NotasFiscais.Items[j].NFe.infNFe.ID, 4, 44) = TACBrNFe(ACBrNFe).EventoNFe.Evento.Items[i].InfEvento.chNFe then
+                begin
+                  frmNFeDAEventoQR.SavePDF(TACBrNFe(ACBrNFe).EventoNFe.Evento.Items[i],
+                                        FLogo,
+                                        sFile,
+                                        FSistema,
+                                        FUsuario,
+                                        FMargemSuperior,
+                                        FMargemInferior,
+                                        FMargemEsquerda,
+                                        FMargemDireita,
+                                        TACBrNFe(ACBrNFe).NotasFiscais.Items[j].NFe);
+                  Impresso := True;
+                  Break;
+                end;
+            end;
+
+          if Impresso = False then
+            begin
+              frmNFeDAEventoQR.SavePDF(TACBrNFe(ACBrNFe).EventoNFe.Evento.Items[i],
+                                    FLogo,
+                                    sFile,
+                                    FSistema,
+                                    FUsuario,
+                                    FMargemSuperior,
+                                    FMargemInferior,
+                                    FMargemEsquerda,
+                                    FMargemDireita);
+            end;
+        end;
+    end
+  else
+    begin
+      for i := 0 to (TACBrNFe(ACBrNFe).EventoNFe.Evento.Count - 1) do
+        begin
+          sFile := TACBrNFe(ACBrNFe).DANFe.PathPDF +
+                   Copy(TACBrNFe(ACBrNFe).EventoNFe.Evento.Items[i].InfEvento.id, 3, 52) + 'evento.pdf';
+
+          frmNFeDAEventoQR.SavePDF(TACBrNFe(ACBrNFe).EventoNFe.Evento.Items[i],
+                                FLogo,
+                                sFile,
+                                FSistema,
+                                FUsuario,
+                                FMargemSuperior,
+                                FMargemInferior,
+                                FMargemEsquerda,
+                                FMargemDireita);
+        end;
+    end;
+
+  FreeAndNil(frmNFeDAEventoQR);
 end;
 
 end.
