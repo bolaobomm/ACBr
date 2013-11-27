@@ -212,7 +212,7 @@ type
   private
     procedure Itens;
   public
-    procedure ProtocoloCTe(const sProtocolo: string);
+    procedure ProtocoloMDFe(const sProtocolo: string);
   end;
 
 implementation
@@ -224,16 +224,16 @@ uses
 {$R *.dfm}
 
 var
-  FProtocoloCTe : string;
+  FProtocoloMDFe : string;
 
 procedure TfrmDAEventoQRRetrato.Itens;
 begin
  // Itens
 end;
 
-procedure TfrmDAEventoQRRetrato.ProtocoloCTe(const sProtocolo: string);
+procedure TfrmDAEventoQRRetrato.ProtocoloMDFe(const sProtocolo: string);
 begin
-  FProtocoloCTe := sProtocolo;
+  FProtocoloMDFe := sProtocolo;
 end;
 
 procedure TfrmDAEventoQRRetrato.QREventoBeforePrint(Sender: TCustomQuickRep; var PrintReport: Boolean);
