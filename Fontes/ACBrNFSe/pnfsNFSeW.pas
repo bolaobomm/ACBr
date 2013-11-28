@@ -393,7 +393,7 @@ begin
            Gerador.wCampoNFSe(tcDe2, '#23', 'OutrasRetencoes', 01, 15, 0, NFSe.Servico.Valores.OutrasRetencoes, '');
          end;
 
-       if FProvedor in [pro4R, proISSDigital, proISSe, proFiorilli, proSaatri, proFreire, proLink3]
+       if FProvedor in [pro4R, proISSDigital, proISSe, proFiorilli, proSaatri, proLink3]
          then Gerador.wCampoNFSe(tcDe2, '#21', 'ValorIss', 01, 15, 1, NFSe.Servico.Valores.ValorIss, '')
          else Gerador.wCampoNFSe(tcDe2, '#21', 'ValorIss', 01, 15, 0, NFSe.Servico.Valores.ValorIss, '');
       end;
@@ -410,7 +410,7 @@ begin
             if NFSe.OptanteSimplesNacional = snSim
               then Gerador.wCampoNFSe(tcDe4, '#25', 'Aliquota', 01, 05, 0, NFSe.Servico.Valores.Aliquota, '');
           end
-          else if FProvedor = proFiorilli
+          else if FProvedor in [proFiorilli, proFreire]
           then Gerador.wCampoNFSe(tcDe2, '#25', 'Aliquota', 01, 05, 1, NFSe.Servico.Valores.Aliquota, '')
           else Gerador.wCampoNFSe(tcDe4, '#25', 'Aliquota', 01, 05, 0, NFSe.Servico.Valores.Aliquota, '');
       end;
