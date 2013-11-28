@@ -101,7 +101,7 @@ type
     QRLabel38: TQRLabel;
     qrmCorrecao: TQRMemo;
     QRShape17: TQRShape;
-    QRLabel59: TQRLabel;
+    lblTitulo_06: TQRLabel;
     QRShape5: TQRShape;
     qrmCondicoes: TQRMemo;
     qrsQuadro01: TQRShape;
@@ -354,19 +354,19 @@ begin
     qrlBairroTomador.Caption   := FNFe.Dest.EnderDest.xBairro;
     qrlCEPTomador.Caption      := DFeUtil.FormatarCEP(FormatFloat( '00000000', FNFe.Dest.EnderDest.CEP));
     qrlMunTomador.Caption      := FNFe.Dest.EnderDest.xMun+' - '+FNFe.Dest.EnderDest.UF;
-    qrlFoneTomador.Caption     := ''; // DFeUtil.FormatarFone(FNFe.Dest.fone);
+    qrlFoneTomador.Caption     := DFeUtil.FormatarFone(FNFe.Dest.EnderDest.fone);
     qrlInscEstTomador.Caption  := FNFe.Dest.IE;
    end;
 end;
 
 procedure TfrmNFeDAEventoQRRetrato.qrb_06_CondicoesBeforePrint(
   Sender: TQRCustomBand; var PrintBand: Boolean);
-var
- i: Integer;
 begin
   inherited;
 
-  PrintBand := (FEventoNFe.InfEvento.tpEvento = teCCe) or (FEventoNFe.InfEvento.tpAmb = taHomologacao);
+  PrintBand := (FEventoNFe.InfEvento.tpEvento = teCCe) or
+               (FEventoNFe.InfEvento.tpEvento = teCancelamento) or
+               (FEventoNFe.InfEvento.tpAmb = taHomologacao);
 
   qrlMsgTeste.Visible := False;
   qrlMsgTeste.Enabled := False;
@@ -378,20 +378,32 @@ begin
     qrlMsgTeste.Enabled := True;
    end;
 
-  qrmCondicoes.Visible := (FEventoNFe.InfEvento.tpEvento = teCCe);
-  qrmCondicoes.Enabled := (FEventoNFe.InfEvento.tpEvento = teCCe);
-  qrmCondicoes.Lines.Clear;
-  qrmCondicoes.Lines.Add('A Carta de Correcao e disciplinada pelo paragrafo 1o-A do art. 7o do Convenio S/N, de 15 de dezembro de 1970 e pode ser utilizada para regularizacao');
-  qrmCondicoes.Lines.Add('de erro ocorrido na emissao de documento fiscal, desde que o erro nao esteja relacionado com:');
-  qrmCondicoes.Lines.Add('I - as variaveis que determinam o valor do imposto tais como: base de calculo, aliquota, diferenca de preco, quantidade, valor da operacao ou da prestacao;');
-  qrmCondicoes.Lines.Add('II - a correcao de dados cadastrais que implique mudanca do remetente ou do destinatario;');
-  qrmCondicoes.Lines.Add('III - a data de emissao ou de saida.');
+  qrmCondicoes.Visible := (FEventoNFe.InfEvento.tpEvento = teCCe) or
+                          (FEventoNFe.InfEvento.tpEvento = teCancelamento);
+  qrmCondicoes.Enabled := (FEventoNFe.InfEvento.tpEvento = teCCe) or
+                          (FEventoNFe.InfEvento.tpEvento = teCancelamento);
+
+  case FEventoNFe.InfEvento.tpEvento of
+   teCCe: begin
+           lblTitulo_06.Caption := 'CONDIÇÕES DE USO';
+           qrmCondicoes.Lines.Clear;
+           qrmCondicoes.Lines.Add('A Carta de Correcao e disciplinada pelo paragrafo 1o-A do art. 7o do Convenio S/N, de 15 de dezembro de 1970 e pode ser utilizada para regularizacao');
+           qrmCondicoes.Lines.Add('de erro ocorrido na emissao de documento fiscal, desde que o erro nao esteja relacionado com:');
+           qrmCondicoes.Lines.Add('I - as variaveis que determinam o valor do imposto tais como: base de calculo, aliquota, diferenca de preco, quantidade, valor da operacao ou da prestacao;');
+           qrmCondicoes.Lines.Add('II - a correcao de dados cadastrais que implique mudanca do remetente ou do destinatario;');
+           qrmCondicoes.Lines.Add('III - a data de emissao ou de saida.');
+          end;
+   teCancelamento: begin
+           lblTitulo_06.Caption := 'DESCRIÇÃO';
+           qrmCondicoes.Lines.Clear;
+           qrmCondicoes.Lines.Add('Protocolo da NFe Cancelada: ' + FEventoNFe.InfEvento.detEvento.nProt);
+           qrmCondicoes.Lines.Add('Motivo do Cancelamento    : ' + FEventoNFe.InfEvento.detEvento.xJust);
+          end;
+  end;
 end;
 
 procedure TfrmNFeDAEventoQRRetrato.qrb_07_CorrecaoBeforePrint(
   Sender: TQRCustomBand; var PrintBand: Boolean);
-var
- i: Integer;
 begin
   inherited;
 
@@ -409,8 +421,8 @@ begin
 end;
 
 procedure TfrmNFeDAEventoQRRetrato.qrb_09_ItensBeforePrint(Sender: TQRCustomBand; var PrintBand: Boolean);
-var
-  i : integer;
+//var
+//  i : integer;
 begin
   inherited;
 
