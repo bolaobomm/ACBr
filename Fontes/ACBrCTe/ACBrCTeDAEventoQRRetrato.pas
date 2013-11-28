@@ -111,7 +111,7 @@ type
     QRShape17: TQRShape;
     QRShape15: TQRShape;
     QRShape19: TQRShape;
-    QRLabel59: TQRLabel;
+    lblTitulo_06: TQRLabel;
     QRShape5: TQRShape;
     qrmCondicoes: TQRMemo;
     qrsQuadro01: TQRShape;
@@ -422,12 +422,12 @@ end;
 
 procedure TfrmCTeDAEventoQRRetrato.qrb_06_CondicoesBeforePrint(
   Sender: TQRCustomBand; var PrintBand: Boolean);
-var
- i: Integer;
 begin
   inherited;
 
-  PrintBand := (FEventoCTe.InfEvento.tpEvento = teCCe) or (FEventoCTe.InfEvento.tpAmb = taHomologacao);
+  PrintBand := (FEventoCTe.InfEvento.tpEvento = teCCe) or
+               (FEventoCTe.InfEvento.tpEvento = teCancelamento) or
+               (FEventoCTe.InfEvento.tpAmb = taHomologacao);
 
   qrlMsgTeste.Visible := False;
   qrlMsgTeste.Enabled := False;
@@ -439,14 +439,28 @@ begin
     qrlMsgTeste.Enabled := True;
    end;
 
-  qrmCondicoes.Visible := (FEventoCTe.InfEvento.tpEvento = teCCe);
-  qrmCondicoes.Enabled := (FEventoCTe.InfEvento.tpEvento = teCCe);
-  qrmCondicoes.Lines.Clear;
-  qrmCondicoes.Lines.Add('A Carta de Correcao e disciplinada pelo Art. 58-B do CONVENIO/SINIEF 06/89: Fica permitida a utilizacao de carta de correcao, para regularizacao');
-  qrmCondicoes.Lines.Add('de erro ocorrido na emissao de documentos fiscais relativos a prestacao de servico de transporte, desde que o erro nao esteja relacionado com:');
-  qrmCondicoes.Lines.Add('I - as variaveis que determinam o valor do imposto tais como: base de calculo, aliquota, diferenca de preco, quantidade, valor da prestacao;');
-  qrmCondicoes.Lines.Add('II - a correcao de dados cadastrais que implique mudanca do emitente, tomador, remetente ou do destinatario;');
-  qrmCondicoes.Lines.Add('III - a data de emissao ou de saida.');
+  qrmCondicoes.Visible := (FEventoCTe.InfEvento.tpEvento = teCCe) or
+                          (FEventoCTe.InfEvento.tpEvento = teCancelamento);
+  qrmCondicoes.Enabled := (FEventoCTe.InfEvento.tpEvento = teCCe) or
+                          (FEventoCTe.InfEvento.tpEvento = teCancelamento);
+
+  case FEventoCTe.InfEvento.tpEvento of
+   teCCe: begin
+           lblTitulo_06.Caption := 'CONDIÇÕES DE USO';
+           qrmCondicoes.Lines.Clear;
+           qrmCondicoes.Lines.Add('A Carta de Correcao e disciplinada pelo Art. 58-B do CONVENIO/SINIEF 06/89: Fica permitida a utilizacao de carta de correcao, para regularizacao');
+           qrmCondicoes.Lines.Add('de erro ocorrido na emissao de documentos fiscais relativos a prestacao de servico de transporte, desde que o erro nao esteja relacionado com:');
+           qrmCondicoes.Lines.Add('I - as variaveis que determinam o valor do imposto tais como: base de calculo, aliquota, diferenca de preco, quantidade, valor da prestacao;');
+           qrmCondicoes.Lines.Add('II - a correcao de dados cadastrais que implique mudanca do emitente, tomador, remetente ou do destinatario;');
+           qrmCondicoes.Lines.Add('III - a data de emissao ou de saida.');
+          end;
+   teCancelamento: begin
+           lblTitulo_06.Caption := 'DESCRIÇÃO';
+           qrmCondicoes.Lines.Clear;
+           qrmCondicoes.Lines.Add('Protocolo do CTe Cancelado: ' + FEventoCTe.InfEvento.detEvento.nProt);
+           qrmCondicoes.Lines.Add('Motivo do Cancelamento    : ' + FEventoCTe.InfEvento.detEvento.xJust);
+          end;
+  end;
 end;
 
 procedure TfrmCTeDAEventoQRRetrato.qrb_07_CorrecaoBeforePrint(
@@ -480,8 +494,8 @@ begin
 end;
 
 procedure TfrmCTeDAEventoQRRetrato.qrb_09_ItensBeforePrint(Sender: TQRCustomBand; var PrintBand: Boolean);
-var
-  i : integer;
+//var
+// i : integer;
 begin
   inherited;
 

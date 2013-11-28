@@ -1821,8 +1821,10 @@ end;
 
 procedure TfrmDACTeQRRetrato.qrb_05_ComplementoBeforePrint(
   Sender: TQRCustomBand; var PrintBand: Boolean);
+{$IFNDEF PL_200}
 var
  i: Integer;
+{$ENDIF}
 begin
   inherited;
   PrintBand := QRCTe.PageNumber = 1;

@@ -1914,8 +1914,8 @@ begin
 end;
 
 procedure TCTeW.GerarInfCTeComp;
-var
-  i: integer;
+//var
+//  i: integer;
 begin
   if (CTe.Ide.tpCTe = tcComplemento) then
   begin
