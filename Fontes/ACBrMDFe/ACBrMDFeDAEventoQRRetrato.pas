@@ -90,7 +90,7 @@ type
     QRLabel98: TQRLabel;
     qrb_03_Emitente: TQRChildBand;
     qrb_04_Tomador: TQRChildBand;
-    qrb_06_Condicoes: TQRChildBand;
+    qrb_06_Descricao: TQRChildBand;
     QRLabel38: TQRLabel;
     QRLabel44: TQRLabel;
     qrmGrupoAlterado: TQRMemo;
@@ -106,7 +106,7 @@ type
     QRShape19: TQRShape;
     QRLabel59: TQRLabel;
     QRShape5: TQRShape;
-    qrmCondicoes: TQRMemo;
+    qrmDescricao: TQRMemo;
     qrsQuadro01: TQRShape;
     qrsQuadro02: TQRShape;
     qrsQuadro04: TQRShape;
@@ -204,7 +204,7 @@ type
     procedure qrb_05_EventoBeforePrint(Sender: TQRCustomBand; var PrintBand: Boolean);
     procedure qrb_03_EmitenteBeforePrint(Sender: TQRCustomBand; var PrintBand: Boolean);
     procedure qrb_04_TomadorBeforePrint(Sender: TQRCustomBand; var PrintBand: Boolean);
-    procedure qrb_06_CondicoesBeforePrint(Sender: TQRCustomBand; var PrintBand: Boolean);
+    procedure qrb_06_DescricaoBeforePrint(Sender: TQRCustomBand; var PrintBand: Boolean);
     procedure qrb_07_CorrecaoBeforePrint(Sender: TQRCustomBand; var PrintBand: Boolean);
     procedure qrb_08_HeaderItensBeforePrint(Sender: TQRCustomBand; var PrintBand: Boolean);
     procedure qrb_09_ItensBeforePrint(Sender: TQRCustomBand; var PrintBand: Boolean);
@@ -258,16 +258,21 @@ begin
 //                  teManifDestDesconhecimento, teManifDestOperNaoRealizada,
 //                  teEncerramento, teEPEC, teInclusaoCondutor, teMultiModal);
   case FEventoMDFe.InfEvento.tpEvento of
-   teEncerramento: begin
-                    qrlLinha1.Caption := 'ENCERRAMENTO';
-                    qrlLinha2.Caption := 'Não possui valor fiscal, simples representação do Encerramento indicado abaixo.';
-                    qrlLinha3.Caption := 'CONSULTE A AUTENTICIDADE DO ENCERRAMENTO NO SITE DA SEFAZ AUTORIZADORA.';
-                   end;
    teCancelamento: begin
                     qrlLinha1.Caption := 'CANCELAMENTO';
                     qrlLinha2.Caption := 'Não possui valor fiscal, simples representação do Cancelamento indicado abaixo.';
                     qrlLinha3.Caption := 'CONSULTE A AUTENTICIDADE DO CANCELAMENTO NO SITE DA SEFAZ AUTORIZADORA.';
                    end;
+   teEncerramento: begin
+                    qrlLinha1.Caption := 'ENCERRAMENTO';
+                    qrlLinha2.Caption := 'Não possui valor fiscal, simples representação do Encerramento indicado abaixo.';
+                    qrlLinha3.Caption := 'CONSULTE A AUTENTICIDADE DO ENCERRAMENTO NO SITE DA SEFAZ AUTORIZADORA.';
+                   end;
+   teInclusaoCondutor: begin
+                        qrlLinha1.Caption := 'INCLUSÃO DE CONDUTOR';
+                        qrlLinha2.Caption := 'Não possui valor fiscal, simples representação da Inclusão de Condutor indicada abaixo.';
+                        qrlLinha3.Caption := 'CONSULTE A AUTENTICIDADE DA INCLUSÃO DE CONDUTOR NO SITE DA SEFAZ AUTORIZADORA.';
+                       end;
   end;
 end;
 
@@ -298,8 +303,9 @@ begin
   with FEventoMDFe do
     begin
       case InfEvento.tpEvento of
-       teEncerramento: qrlTituloEvento.Caption := 'ENCERRAMENTO';
        teCancelamento: qrlTituloEvento.Caption := 'CANCELAMENTO';
+       teEncerramento: qrlTituloEvento.Caption := 'ENCERRAMENTO';
+       teInclusaoCondutor: qrlTituloEvento.Caption := 'INCLUSÃO DE CONDUTOR';
       end;
 
       qrlOrgao.Caption := IntToStr(InfEvento.cOrgao);
@@ -414,14 +420,15 @@ begin
    end;
 end;
 
-procedure TfrmMDFeDAEventoQRRetrato.qrb_06_CondicoesBeforePrint(
+procedure TfrmMDFeDAEventoQRRetrato.qrb_06_DescricaoBeforePrint(
   Sender: TQRCustomBand; var PrintBand: Boolean);
-var
- i: Integer;
 begin
   inherited;
 
-  PrintBand := (FEventoMDFe.InfEvento.tpEvento = teCCe) or (FEventoMDFe.InfEvento.tpAmb = taHomologacao);
+  PrintBand := (FEventoMDFe.InfEvento.tpEvento = teCancelamento) or
+               (FEventoMDFe.InfEvento.tpEvento = teEncerramento) or
+               (FEventoMDFe.InfEvento.tpEvento = teInclusaoCondutor) or
+               (FEventoMDFe.InfEvento.tpAmb = taHomologacao);
 
   qrlMsgTeste.Visible := False;
   qrlMsgTeste.Enabled := False;
@@ -433,38 +440,39 @@ begin
     qrlMsgTeste.Enabled := True;
    end;
 
-  qrmCondicoes.Visible := (FEventoMDFe.InfEvento.tpEvento = teCCe);
-  qrmCondicoes.Enabled := (FEventoMDFe.InfEvento.tpEvento = teCCe);
-  qrmCondicoes.Lines.Clear;
-  qrmCondicoes.Lines.Add('A Carta de Correcao e disciplinada pelo Art. 58-B do CONVENIO/SINIEF 06/89: Fica permitida a utilizacao de carta de correcao, para regularizacao');
-  qrmCondicoes.Lines.Add('de erro ocorrido na emissao de documentos fiscais relativos a prestacao de servico de transporte, desde que o erro nao esteja relacionado com:');
-  qrmCondicoes.Lines.Add('I - as variaveis que determinam o valor do imposto tais como: base de calculo, aliquota, diferenca de preco, quantidade, valor da prestacao;');
-  qrmCondicoes.Lines.Add('II - a correcao de dados cadastrais que implique mudanca do emitente, tomador, remetente ou do destinatario;');
-  qrmCondicoes.Lines.Add('III - a data de emissao ou de saida.');
+  qrmDescricao.Visible := (FEventoMDFe.InfEvento.tpEvento = teCancelamento) or
+                          (FEventoMDFe.InfEvento.tpEvento = teEncerramento) or
+                          (FEventoMDFe.InfEvento.tpEvento = teInclusaoCondutor);
+  qrmDescricao.Enabled := (FEventoMDFe.InfEvento.tpEvento = teCancelamento) or
+                          (FEventoMDFe.InfEvento.tpEvento = teEncerramento) or
+                          (FEventoMDFe.InfEvento.tpEvento = teInclusaoCondutor);
+
+  qrmDescricao.Lines.Clear;
+  case FEventoMDFe.InfEvento.tpEvento of
+  teCancelamento: begin
+                   qrmDescricao.Lines.Add('Protocolo do MDFe Cancelado: ' + FEventoMDFe.InfEvento.detEvento.nProt);
+                   qrmDescricao.Lines.Add('Motivo do Cancelamento     : ' + FEventoMDFe.InfEvento.detEvento.xJust);
+                  end;
+  teEncerramento: begin
+                   qrmDescricao.Lines.Add('Protocolo do MDFe Encerrado: ' + FEventoMDFe.InfEvento.detEvento.nProt);
+                   qrmDescricao.Lines.Add('Data do Encerramento       : ' + DateToStr(FEventoMDFe.InfEvento.detEvento.dtEnc));
+                   qrmDescricao.Lines.Add('Código da UF               : ' + IntToStr(FEventoMDFe.InfEvento.detEvento.cUF));
+                   qrmDescricao.Lines.Add('Código do Município        : ' + IntToStr(FEventoMDFe.InfEvento.detEvento.cMun));
+                  end;
+  teInclusaoCondutor: begin
+                       qrmDescricao.Lines.Add('Dados do Motorista');
+                       qrmDescricao.Lines.Add('CPF : ' + FEventoMDFe.InfEvento.detEvento.CPF);
+                       qrmDescricao.Lines.Add('Nome: ' + FEventoMDFe.InfEvento.detEvento.xNome);
+                      end;
+  end;
 end;
 
 procedure TfrmMDFeDAEventoQRRetrato.qrb_07_CorrecaoBeforePrint(
   Sender: TQRCustomBand; var PrintBand: Boolean);
-var
- i: Integer;
 begin
   inherited;
 
-  PrintBand := FEventoMDFe.InfEvento.tpEvento = teCCe;
-  (*
-  qrmNumItemAlterado.Lines.Clear;
-  qrmGrupoAlterado.Lines.Clear;
-  qrmCampoAlterado.Lines.Clear;
-  qrmValorAlterado.Lines.Clear;
-
-  for i := 0 to (FEventoMDFe.InfEvento.detEvento.infCorrecao.Count -1) do
-   begin
-    qrmNumItemAlterado.Lines.Add(IntToStr(FEventoMDFe.InfEvento.detEvento.infCorrecao[i].nroItemAlterado));
-    qrmGrupoAlterado.Lines.Add(FEventoMDFe.InfEvento.detEvento.infCorrecao[i].grupoAlterado);
-    qrmCampoAlterado.Lines.Add(FEventoMDFe.InfEvento.detEvento.infCorrecao[i].campoAlterado);
-    qrmValorAlterado.Lines.Add(FEventoMDFe.InfEvento.detEvento.infCorrecao[i].valorAlterado);
-   end;
- *)  
+  PrintBand := False;
 end;
 
 procedure TfrmMDFeDAEventoQRRetrato.qrb_08_HeaderItensBeforePrint(
@@ -475,8 +483,8 @@ begin
 end;
 
 procedure TfrmMDFeDAEventoQRRetrato.qrb_09_ItensBeforePrint(Sender: TQRCustomBand; var PrintBand: Boolean);
-var
-  i : integer;
+//var
+//  i : integer;
 begin
   inherited;
 

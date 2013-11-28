@@ -209,8 +209,8 @@ end;
 
 procedure TfqrDAMDFEQRRetrato.QRMDFeBeforePrint(Sender: TCustomQuickRep;
   var PrintReport: Boolean);
-var
-  nRestItens : Integer;
+//var
+//  nRestItens : Integer;
 begin
   inherited;
    Itens;

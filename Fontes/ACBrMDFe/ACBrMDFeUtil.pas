@@ -1221,10 +1221,11 @@ class function MDFeUtil.GerarChaveContingencia(FMDFe:TMDFe): string;
 
 var
    wchave: string;
-   wicms_s, wicms_p: string;
-   wd,wm,wa: word;
-   Digito: integer;
+//   wicms_s, wicms_p: string;
+//   wd,wm,wa: word;
+//   Digito: integer;
 begin
+   wchave := '';
    //UF
    (*
    if FMDFe.Dest.EnderDest.UF = 'EX'

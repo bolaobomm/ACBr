@@ -222,6 +222,7 @@ begin
   GerarInfDoc;
   GerarTot;
   GerarLacres;
+  GerarautXML;
   GerarInfAdic;
 end;
 
