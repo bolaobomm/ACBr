@@ -1,46 +1,5 @@
-{******************************************************************************}
-{ Projeto: Componente ACBrNFe                                                  }
-{  Biblioteca multiplataforma de componentes Delphi para emissão de Nota Fiscal}
-{ eletrônica - NFe - http://www.nfe.fazenda.gov.br                             }
-{                                                                              }
-{ Direitos Autorais Reservados (c) 2008 Wemerson Souto                         }
-{                                       Daniel Simoes de Almeida               }
-{                                       André Ferreira de Moraes               }
-{                                                                              }
-{ Colaboradores nesse arquivo:                                                 }
-{                                                                              }
-{  Você pode obter a última versão desse arquivo na pagina do Projeto ACBr     }
-{ Componentes localizado em http://www.sourceforge.net/projects/acbr           }
-{                                                                              }
-{                                                                              }
-{  Esta biblioteca é software livre; você pode redistribuí-la e/ou modificá-la }
-{ sob os termos da Licença Pública Geral Menor do GNU conforme publicada pela  }
-{ Free Software Foundation; tanto a versão 2.1 da Licença, ou (a seu critério) }
-{ qualquer versão posterior.                                                   }
-{                                                                              }
-{  Esta biblioteca é distribuída na expectativa de que seja útil, porém, SEM   }
-{ NENHUMA GARANTIA; nem mesmo a garantia implícita de COMERCIABILIDADE OU      }
-{ ADEQUAÇÃO A UMA FINALIDADE ESPECÍFICA. Consulte a Licença Pública Geral Menor}
-{ do GNU para mais detalhes. (Arquivo LICENÇA.TXT ou LICENSE.TXT)              }
-{                                                                              }
-{  Você deve ter recebido uma cópia da Licença Pública Geral Menor do GNU junto}
-{ com esta biblioteca; se não, escreva para a Free Software Foundation, Inc.,  }
-{ no endereço 59 Temple Street, Suite 330, Boston, MA 02111-1307 USA.          }
-{ Você também pode obter uma copia da licença em:                              }
-{ http://www.opensource.org/licenses/lgpl-license.php                          }
-{                                                                              }
-{ Daniel Simões de Almeida  -  daniel@djsystem.com.br  -  www.djsystem.com.br  }
-{              Praça Anita Costa, 34 - Tatuí - SP - 18270-410                  }
-{                                                                              }
-{******************************************************************************}
-{******************************************************************************
-|* Historico
-|*
-|* 10/10/2013: Juliomar Marchetti
-|*  - Compatibilização para Lazarus da DANFSe em Fortes Report
-******************************************************************************}
-//{$WARNINGS OFF}
-//{$HINTS OFF}
+{$WARNINGS OFF}
+{$HINTS OFF}
 {$I ACBr.inc}
 
 unit ACBrNFSeDANFSeRLRetrato;
@@ -48,18 +7,14 @@ unit ACBrNFSeDANFSeRLRetrato;
 interface
 
 uses
-  SysUtils, Variants, Classes, StrUtils,
-  {$IFDEF CLX}
-  QGraphics, QControls, QForms, QDialogs, QExtCtrls, Qt,
-  {$ELSE}
-    {$IFDEF MSWINDOWS}Windows, Messages, {$ENDIF}
-      Graphics, Controls, Forms, Dialogs, ExtCtrls,
-  {$ENDIF}  
-  ACBrNFSeDANFSeRL, RLFilters, RLPDFFilter, RLReport, DB, 
+  Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
+  Dialogs, ExtCtrls, ACBrNFSeDANFSeRL, RLFilters, RLPDFFilter, RLReport, DB, DBClient,
   pnfsConversao, ACBrNFSeDANFSEClass, ACBrNFSeDANFSeRLClass;
 
 type
   TfrlDANFSeRLRetrato = class(TfrlDANFSeRL)
+    cdsItens: TClientDataSet;
+    cdsItensDISCRIMINACAO: TStringField;
     rlbCabecalho: TRLBand;
     rllNumNF0: TRLLabel;
     RLLabel13: TRLLabel;
@@ -197,6 +152,19 @@ type
     rllDataHoraImpressao: TRLLabel;
     rllSistema: TRLLabel;
     RLLabel6: TRLLabel;
+    dsItens: TDataSource;
+    rlbCanhoto: TRLBand;
+    RLLabel26: TRLLabel;
+    rllPrestNomeEnt: TRLLabel;
+    RLLabel28: TRLLabel;
+    RLDraw1: TRLDraw;
+    rllNumNF0Ent: TRLLabel;
+    RLLabel57: TRLLabel;
+    RLLabel33: TRLLabel;
+    RLDraw5: TRLDraw;
+    RLLabel58: TRLLabel;
+    RLLabel59: TRLLabel;
+    RLDraw7: TRLDraw;
     procedure rlbCabecalhoBeforePrint(Sender: TObject; var PrintIt: Boolean);
     procedure rlbPrestadorBeforePrint(Sender: TObject; var PrintIt: Boolean);
     procedure rlbTomadorBeforePrint(Sender: TObject; var PrintIt: Boolean);
@@ -218,15 +186,17 @@ var
 implementation
 
 uses
- DateUtils, ACBrUtil, pnfsNFSe, ACBrNFSeUtil, ACBrDFeUtil; //Astrogildo em 13/12/12
+ StrUtils, DateUtils, ACBrUtil, pnfsNFSe, ACBrNFSeUtil, ACBrDFeUtil; //Astrogildo em 13/12/12
 
 {$R *.dfm}
 
+{ TfrlDANFSeRLRetrato }
+
 procedure TfrlDANFSeRLRetrato.Itens;
 begin
- //cdsItens.Close;
- //cdsItens.CreateDataSet;
- //cdsItens.Open;
+ cdsItens.Close;
+ cdsItens.CreateDataSet;
+ cdsItens.Open;
 
  cdsItens.Append;
  cdsItens.FieldByName('DISCRIMINACAO').AsString := FNFSe.Servico.Discriminacao;
@@ -290,10 +260,7 @@ begin
        begin
          vStringStream := TStringStream.Create(FLogo);
          try
-           try
-             rliLogo.Picture.Bitmap.LoadFromStream(vStringStream);
-           except
-           end;
+           rliLogo.Picture.Bitmap.LoadFromStream(vStringStream);
          finally
            vStringStream.Free;
          end;
@@ -360,24 +327,6 @@ begin
  rllOutrasRetencoes.Caption     := DFeUtil.FormatFloat( FNFSe.Servico.Valores.OutrasRetencoes );//Astrogildo em 13/12/12
  rllValorIssRetido.Caption      := DFeUtil.FormatFloat( FNFSe.Servico.Valores.ValorIssRetido );//Astrogildo em 13/12/12
 
- // Roberto Godinho 25/11/2013
- // Provedor Betha não possui o campo "ValorLiquidoNfse" na NFSe, sendo assim, quando é carregado
- // um XML de nfse para gerar a DANFE o campo vem zerado. Se isto acontecer, é feito o calculo do
- // valor para ser apresentado no DANFE. O mesmo não acontece se for carregaddo um RPS.
- if FNFSe.Servico.Valores.ValorLiquidoNfse = 0 then
- begin
-   FNFSe.Servico.Valores.ValorLiquidoNfse := FNFSe.Servico.Valores.ValorServicos -
-                                             FNFSe.Servico.Valores.DescontoIncondicionado -
-                                             FNFSe.Servico.Valores.DescontoCondicionado -
-                                             FNFSe.Servico.Valores.ValorPis -
-                                             FNFSe.Servico.Valores.ValorCofins -
-                                             FNFSe.Servico.Valores.ValorInss -
-                                             FNFSe.Servico.Valores.ValorIr -
-                                             FNFSe.Servico.Valores.ValorCsll -
-                                             FNFSe.Servico.Valores.OutrasRetencoes -
-                                             FNFSe.Servico.Valores.ValorIssRetido;
-
- end;
  rllValorLiquido.Caption := DFeUtil.FormatFloat( FNFSe.Servico.Valores.ValorLiquidoNfse );//Astrogildo em 13/12/12
 
  // TnfseNaturezaOperacao = ( noTributacaoNoMunicipio, noTributacaoForaMunicipio, noIsencao, noImune, noSuspensaDecisaoJudicial, noSuspensaProcedimentoAdministrativo )
@@ -448,14 +397,14 @@ var
   vStringStream: TStringStream;
 begin
   inherited;
-(*
- if (FPrestLogo <> '') and FilesExists(FPrestLogo)
-  then begin
+
+ if (FPrestLogo <> '') and FilesExists(FPrestLogo) then
+ begin
    rliPrestLogo.Picture.LoadFromFile(FPrestLogo);
-  end;
- *)
+ end;
+
  // Alterado por Augusto Fontana - 18/09/2013
- if (FPrestLogo <> '') then
+(* if (FPrestLogo <> '') then
    begin
      if FilesExists(FPrestLogo) then
        rliPrestLogo.Picture.LoadFromFile(FPrestLogo)
@@ -463,15 +412,13 @@ begin
        begin
          vStringStream := TStringStream.Create(FPrestLogo);
          try
-           try
-             rliPrestLogo.Picture.Bitmap.LoadFromStream(vStringStream);
-           except
-           end;
+           rliPrestLogo.Picture.Bitmap.LoadFromStream(vStringStream);
          finally
            vStringStream.Free;
          end;
        end;
    end;
+*)
 
  rllPrestCNPJ.Caption := DFeUtil.FormatarCNPJ( FNFSe.PrestadorServico.IdentificacaoPrestador.Cnpj );//Astrogildo em 13/12/12
  rllPrestInscMunicipal.Caption := FNFSe.PrestadorServico.IdentificacaoPrestador.InscricaoMunicipal;
@@ -487,6 +434,10 @@ begin
   ' - ' + FNFSe.PrestadorServico.Endereco.xMunicipio;
  rllPrestUF.Caption := FNFSe.PrestadorServico.Endereco.UF;
  rllPrestEmail.Caption := FNFSe.PrestadorServico.Contato.Email;
+
+ // Comprovante de Entrega - Márcio Lopes em 27/11/2013
+ rllPrestNomeEnt.Caption := FNFSe.PrestadorServico.RazaoSocial;
+ rllNumNF0Ent.Caption  := FormatFloat('00000000000', StrToFloat(FNFSe.Numero));
 
 end;
 
@@ -576,5 +527,5 @@ begin
 end;
 
 end.
-//{$HINTS ON}
-//{$WARNINGS ON}
+{$HINTS ON}
+{$WARNINGS ON}
