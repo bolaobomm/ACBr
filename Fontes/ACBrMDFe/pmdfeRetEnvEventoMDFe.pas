@@ -186,6 +186,8 @@ begin
            infEvento.detEvento.cUF        := Leitor.rCampo(tcInt, 'cUF');
            infEvento.detEvento.cMun       := Leitor.rCampo(tcInt, 'cMun');
            infEvento.detEvento.xJust      := Leitor.rCampo(tcStr, 'xJust');
+           infEvento.detEvento.xNome      := Leitor.rCampo(tcStr, 'xNome');
+           infEvento.detEvento.CPF        := Leitor.rCampo(tcStr, 'CPF');
          end;
       end;
     end;

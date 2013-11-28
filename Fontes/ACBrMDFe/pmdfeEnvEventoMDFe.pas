@@ -193,10 +193,10 @@ begin
      begin
        Gerador.wGrupo('evIncCondutorMDFe');
        Gerador.wCampo(tcStr, 'EP02', 'descEvento', 05, 12, 1, Evento.Items[0].InfEvento.DescEvento);
-       Gerador.wGrupo('Condutor');
+       Gerador.wGrupo('condutor');
        Gerador.wCampo(tcStr, 'EP04', 'xNome     ', 01, 60, 1, Evento.Items[0].InfEvento.detEvento.xNome);
        Gerador.wCampo(tcStr, 'EP05', 'CPF       ', 11, 11, 1, Evento.Items[0].InfEvento.detEvento.CPF);
-       Gerador.wGrupo('/Condutor');
+       Gerador.wGrupo('/condutor');
        Gerador.wGrupo('/evIncCondutorMDFe');
      end;
   end;
