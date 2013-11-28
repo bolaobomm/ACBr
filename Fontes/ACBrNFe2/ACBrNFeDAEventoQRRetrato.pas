@@ -82,7 +82,7 @@ type
     qrlDescricaoEvento: TQRLabel;
     qrb_08_HeaderItens: TQRBand;
     qrb_10_Sistema: TQRBand;
-    qrb_03_Evento: TQRChildBand;
+    qrb_05_Evento: TQRChildBand;
     QRLabel13: TQRLabel;
     QRLabel16: TQRLabel;
     QRLabel22: TQRLabel;
@@ -95,22 +95,12 @@ type
     qrlInscEstEmitente: TQRLabel;
     qrlCEPEmitente: TQRLabel;
     QRLabel98: TQRLabel;
-    qrb_04_Emitente: TQRChildBand;
-    qrb_05_Tomador: TQRChildBand;
+    qrb_03_Emitente: TQRChildBand;
+    qrb_04_Destinatario: TQRChildBand;
     qrb_06_Condicoes: TQRChildBand;
     QRLabel38: TQRLabel;
-    QRLabel44: TQRLabel;
-    qrmGrupoAlterado: TQRMemo;
-    QRLabel46: TQRLabel;
-    qrmCampoAlterado: TQRMemo;
-    QRLabel42: TQRLabel;
-    qrmValorAlterado: TQRMemo;
-    QRLabel45: TQRLabel;
-    qrmNumItemAlterado: TQRMemo;
-    QRShape18: TQRShape;
+    qrmCorrecao: TQRMemo;
     QRShape17: TQRShape;
-    QRShape15: TQRShape;
-    QRShape19: TQRShape;
     QRLabel59: TQRLabel;
     QRShape5: TQRShape;
     qrmCondicoes: TQRMemo;
@@ -208,9 +198,9 @@ type
     procedure QREventoBeforePrint(Sender: TCustomQuickRep; var PrintReport: Boolean);
     procedure qrb_01_TituloBeforePrint(Sender: TQRCustomBand; var PrintBand: Boolean);
     procedure qrb_02_DocumentoBeforePrint(Sender: TQRCustomBand; var PrintBand: Boolean);
-    procedure qrb_03_EventoBeforePrint(Sender: TQRCustomBand; var PrintBand: Boolean);
-    procedure qrb_04_EmitenteBeforePrint(Sender: TQRCustomBand; var PrintBand: Boolean);
-    procedure qrb_05_TomadorBeforePrint(Sender: TQRCustomBand; var PrintBand: Boolean);
+    procedure qrb_05_EventoBeforePrint(Sender: TQRCustomBand; var PrintBand: Boolean);
+    procedure qrb_03_EmitenteBeforePrint(Sender: TQRCustomBand; var PrintBand: Boolean);
+    procedure qrb_04_DestinatarioBeforePrint(Sender: TQRCustomBand; var PrintBand: Boolean);
     procedure qrb_06_CondicoesBeforePrint(Sender: TQRCustomBand; var PrintBand: Boolean);
     procedure qrb_07_CorrecaoBeforePrint(Sender: TQRCustomBand; var PrintBand: Boolean);
     procedure qrb_08_HeaderItensBeforePrint(Sender: TQRCustomBand; var PrintBand: Boolean);
@@ -298,7 +288,7 @@ begin
    end;
 end;
 
-procedure TfrmNFeDAEventoQRRetrato.qrb_03_EventoBeforePrint(Sender: TQRCustomBand; var PrintBand: Boolean);
+procedure TfrmNFeDAEventoQRRetrato.qrb_05_EventoBeforePrint(Sender: TQRCustomBand; var PrintBand: Boolean);
 begin
   inherited;
 
@@ -325,7 +315,7 @@ begin
     end;
 end;
 
-procedure TfrmNFeDAEventoQRRetrato.qrb_04_EmitenteBeforePrint(
+procedure TfrmNFeDAEventoQRRetrato.qrb_03_EmitenteBeforePrint(
   Sender: TQRCustomBand; var PrintBand: Boolean);
 begin
   inherited;
@@ -347,7 +337,7 @@ begin
    end;
 end;
 
-procedure TfrmNFeDAEventoQRRetrato.qrb_05_TomadorBeforePrint(
+procedure TfrmNFeDAEventoQRRetrato.qrb_04_DestinatarioBeforePrint(
   Sender: TQRCustomBand; var PrintBand: Boolean);
 begin
   inherited;
@@ -406,20 +396,9 @@ begin
   inherited;
 
   PrintBand := FEventoNFe.InfEvento.tpEvento = teCCe;
-  (*
-  qrmNumItemAlterado.Lines.Clear;
-  qrmGrupoAlterado.Lines.Clear;
-  qrmCampoAlterado.Lines.Clear;
-  qrmValorAlterado.Lines.Clear;
 
-  for i := 0 to (FEventoNFe.InfEvento.detEvento.infCorrecao.Count -1) do
-   begin
-    qrmNumItemAlterado.Lines.Add(IntToStr(FEventoNFe.InfEvento.detEvento.infCorrecao[i].nroItemAlterado));
-    qrmGrupoAlterado.Lines.Add(FEventoNFe.InfEvento.detEvento.infCorrecao[i].grupoAlterado);
-    qrmCampoAlterado.Lines.Add(FEventoNFe.InfEvento.detEvento.infCorrecao[i].campoAlterado);
-    qrmValorAlterado.Lines.Add(FEventoNFe.InfEvento.detEvento.infCorrecao[i].valorAlterado);
-   end;
-  *)
+  qrmCorrecao.Lines.Clear;
+  qrmCorrecao.Lines.Add(FEventoNFe.InfEvento.detEvento.xCorrecao);
 end;
 
 procedure TfrmNFeDAEventoQRRetrato.qrb_08_HeaderItensBeforePrint(
