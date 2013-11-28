@@ -82,7 +82,7 @@ type
     qrlDescricaoEvento: TQRLabel;
     qrb_08_HeaderItens: TQRBand;
     qrb_10_Sistema: TQRBand;
-    qrb_03_Evento: TQRChildBand;
+    qrb_05_Evento: TQRChildBand;
     QRLabel13: TQRLabel;
     QRLabel16: TQRLabel;
     QRLabel22: TQRLabel;
@@ -95,8 +95,8 @@ type
     qrlInscEstEmitente: TQRLabel;
     qrlCEPEmitente: TQRLabel;
     QRLabel98: TQRLabel;
-    qrb_04_Emitente: TQRChildBand;
-    qrb_05_Tomador: TQRChildBand;
+    qrb_03_Emitente: TQRChildBand;
+    qrb_04_Tomador: TQRChildBand;
     qrb_06_Condicoes: TQRChildBand;
     QRLabel38: TQRLabel;
     QRLabel44: TQRLabel;
@@ -208,9 +208,9 @@ type
     procedure QREventoBeforePrint(Sender: TCustomQuickRep; var PrintReport: Boolean);
     procedure qrb_01_TituloBeforePrint(Sender: TQRCustomBand; var PrintBand: Boolean);
     procedure qrb_02_DocumentoBeforePrint(Sender: TQRCustomBand; var PrintBand: Boolean);
-    procedure qrb_03_EventoBeforePrint(Sender: TQRCustomBand; var PrintBand: Boolean);
-    procedure qrb_04_EmitenteBeforePrint(Sender: TQRCustomBand; var PrintBand: Boolean);
-    procedure qrb_05_TomadorBeforePrint(Sender: TQRCustomBand; var PrintBand: Boolean);
+    procedure qrb_05_EventoBeforePrint(Sender: TQRCustomBand; var PrintBand: Boolean);
+    procedure qrb_03_EmitenteBeforePrint(Sender: TQRCustomBand; var PrintBand: Boolean);
+    procedure qrb_04_TomadorBeforePrint(Sender: TQRCustomBand; var PrintBand: Boolean);
     procedure qrb_06_CondicoesBeforePrint(Sender: TQRCustomBand; var PrintBand: Boolean);
     procedure qrb_07_CorrecaoBeforePrint(Sender: TQRCustomBand; var PrintBand: Boolean);
     procedure qrb_08_HeaderItensBeforePrint(Sender: TQRCustomBand; var PrintBand: Boolean);
@@ -298,7 +298,7 @@ begin
    end;
 end;
 
-procedure TfrmCTeDAEventoQRRetrato.qrb_03_EventoBeforePrint(Sender: TQRCustomBand; var PrintBand: Boolean);
+procedure TfrmCTeDAEventoQRRetrato.qrb_05_EventoBeforePrint(Sender: TQRCustomBand; var PrintBand: Boolean);
 begin
   inherited;
 
@@ -325,7 +325,7 @@ begin
     end;
 end;
 
-procedure TfrmCTeDAEventoQRRetrato.qrb_04_EmitenteBeforePrint(
+procedure TfrmCTeDAEventoQRRetrato.qrb_03_EmitenteBeforePrint(
   Sender: TQRCustomBand; var PrintBand: Boolean);
 begin
   inherited;
@@ -347,7 +347,7 @@ begin
    end;
 end;
 
-procedure TfrmCTeDAEventoQRRetrato.qrb_05_TomadorBeforePrint(
+procedure TfrmCTeDAEventoQRRetrato.qrb_04_TomadorBeforePrint(
   Sender: TQRCustomBand; var PrintBand: Boolean);
 begin
   inherited;
