@@ -101,7 +101,7 @@ type
     procedure ExportarHTML(const AArquivo: String);
     procedure ExportarXML(const AArquivo: String);
     procedure ExportarTXT(const AArquivo: String);
-    procedure PopularItens;
+    function PopularItens: Integer;
     procedure EventoErroImportacao(const Alinha, AErro: String);
   public
     destructor Destroy; override;
@@ -110,6 +110,7 @@ type
     function DownloadTabela: Boolean;
     function AbrirTabela(const AFileName: TFileName): Boolean; overload;
     function AbrirTabela(const AConteudoArquivo: TStream): Boolean; overload;
+    function AbrirTabela(const AConteudoArquivo: TStringList): Boolean; overload;
     procedure Exportar(const AArquivo: String; ATipo: TACBrIBPTaxExporta); overload;
     procedure Exportar(const AArquivo, ADelimitador: String; const AQuoted: Boolean); overload;
     function Procurar(const ACodigo: String; var ex, descricao: String;
@@ -194,7 +195,7 @@ begin
   inherited;
 end;
 
-procedure TACBrIBPTax.PopularItens;
+function TACBrIBPTax.PopularItens: Integer;
 var
   Item: TStringList;
   I: Integer;
@@ -244,6 +245,8 @@ begin
   finally
     Item.Free;
   end;
+
+  Result := Itens.Count;
 end;
 
 function TACBrIBPTax.DownloadTabela: Boolean;
@@ -292,9 +295,20 @@ begin
   Arquivo.Clear;
   Arquivo.LoadFromStream(AConteudoArquivo);
 
-  PopularItens;
+  Result := PopularItens > 0;
+end;
 
-  Result := Itens.Count > 0;
+function TACBrIBPTax.AbrirTabela(const AConteudoArquivo: TStringList): Boolean;
+begin
+  if Assigned(AConteudoArquivo) then
+  begin
+    Arquivo.Clear;
+    Arquivo.Text := AConteudoArquivo.Text;
+  end
+  else
+    raise EFilerError.Create('TStringList não pode ser vazio!');
+
+  Result := PopularItens > 0;
 end;
 
 function TACBrIBPTax.Procurar(const ACodigo: String; var ex, descricao: String;
