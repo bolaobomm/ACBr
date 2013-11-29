@@ -108,25 +108,25 @@ begin
  case ACodCidade of
   2919553: begin // Luís Eduardo Magalhães / BA
             ConfigURL.HomNomeCidade := 'nfselem';
-            ConfigURL.ProNomeCidade := 'nfselem';
+            ConfigURL.ProNomeCidade := 'wslem';
            end;
  end;
 
- ConfigURL.HomRecepcaoLoteRPS    := 'http://' + ConfigURL.HomNomeCidade + '.freireinformatica.com.br:5554/webrun/webservices/NFEServices.jws';
- ConfigURL.HomConsultaLoteRPS    := 'http://' + ConfigURL.HomNomeCidade + '.freireinformatica.com.br:5554/webrun/webservices/NFEServices.jws';
- ConfigURL.HomConsultaNFSeRPS    := 'http://' + ConfigURL.HomNomeCidade + '.freireinformatica.com.br:5554/webrun/webservices/NFEServices.jws';
- ConfigURL.HomConsultaSitLoteRPS := 'http://' + ConfigURL.HomNomeCidade + '.freireinformatica.com.br:5554/webrun/webservices/NFEServices.jws';
- ConfigURL.HomConsultaNFSe       := 'http://' + ConfigURL.HomNomeCidade + '.freireinformatica.com.br:5554/webrun/webservices/NFEServices.jws';
- ConfigURL.HomCancelaNFSe        := 'http://' + ConfigURL.HomNomeCidade + '.freireinformatica.com.br:5554/webrun/webservices/NFEServices.jws';
- ConfigURL.HomGerarNFSe          := 'http://' + ConfigURL.HomNomeCidade + '.freireinformatica.com.br:5554/webrun/webservices/NFEServices.jws';
+ ConfigURL.HomRecepcaoLoteRPS    := 'http://' + ConfigURL.HomNomeCidade + '.freireinformatica.com.br:5554/webrun/webservices/NFEServices.jws?wsdl';
+ ConfigURL.HomConsultaLoteRPS    := 'http://' + ConfigURL.HomNomeCidade + '.freireinformatica.com.br:5554/webrun/webservices/NFEServices.jws?wsdl';
+ ConfigURL.HomConsultaNFSeRPS    := 'http://' + ConfigURL.HomNomeCidade + '.freireinformatica.com.br:5554/webrun/webservices/NFEServices.jws?wsdl';
+ ConfigURL.HomConsultaSitLoteRPS := 'http://' + ConfigURL.HomNomeCidade + '.freireinformatica.com.br:5554/webrun/webservices/NFEServices.jws?wsdl';
+ ConfigURL.HomConsultaNFSe       := 'http://' + ConfigURL.HomNomeCidade + '.freireinformatica.com.br:5554/webrun/webservices/NFEServices.jws?wsdl';
+ ConfigURL.HomCancelaNFSe        := 'http://' + ConfigURL.HomNomeCidade + '.freireinformatica.com.br:5554/webrun/webservices/NFEServices.jws?wsdl';
+ ConfigURL.HomGerarNFSe          := 'http://' + ConfigURL.HomNomeCidade + '.freireinformatica.com.br:5554/webrun/webservices/NFEServices.jws?wsdl';
 
- ConfigURL.ProRecepcaoLoteRPS    := 'http://' + ConfigURL.ProNomeCidade + '.freireinformatica.com.br:4554/webrun/webservices/NFEServices.jws';
- ConfigURL.ProConsultaLoteRPS    := 'http://' + ConfigURL.ProNomeCidade + '.freireinformatica.com.br:4554/webrun/webservices/NFEServices.jws';
- ConfigURL.ProConsultaNFSeRPS    := 'http://' + ConfigURL.ProNomeCidade + '.freireinformatica.com.br:4554/webrun/webservices/NFEServices.jws';
- ConfigURL.ProConsultaSitLoteRPS := 'http://' + ConfigURL.ProNomeCidade + '.freireinformatica.com.br:4554/webrun/webservices/NFEServices.jws';
- ConfigURL.ProConsultaNFSe       := 'http://' + ConfigURL.ProNomeCidade + '.freireinformatica.com.br:4554/webrun/webservices/NFEServices.jws';
- ConfigURL.ProCancelaNFSe        := 'http://' + ConfigURL.ProNomeCidade + '.freireinformatica.com.br:4554/webrun/webservices/NFEServices.jws';
- ConfigURL.ProGerarNFSe          := 'http://' + ConfigURL.ProNomeCidade + '.freireinformatica.com.br:4554/webrun/webservices/NFEServices.jws';
+ ConfigURL.ProRecepcaoLoteRPS    := 'http://' + ConfigURL.ProNomeCidade + '.freireinformatica.com.br:6554/webrun/webservices/NFEServices.jws?wsdl';
+ ConfigURL.ProConsultaLoteRPS    := 'http://' + ConfigURL.ProNomeCidade + '.freireinformatica.com.br:6554/webrun/webservices/NFEServices.jws?wsdl';
+ ConfigURL.ProConsultaNFSeRPS    := 'http://' + ConfigURL.ProNomeCidade + '.freireinformatica.com.br:6554/webrun/webservices/NFEServices.jws?wsdl';
+ ConfigURL.ProConsultaSitLoteRPS := 'http://' + ConfigURL.ProNomeCidade + '.freireinformatica.com.br:6554/webrun/webservices/NFEServices.jws?wsdl';
+ ConfigURL.ProConsultaNFSe       := 'http://' + ConfigURL.ProNomeCidade + '.freireinformatica.com.br:6554/webrun/webservices/NFEServices.jws?wsdl';
+ ConfigURL.ProCancelaNFSe        := 'http://' + ConfigURL.ProNomeCidade + '.freireinformatica.com.br:6554/webrun/webservices/NFEServices.jws?wsdl';
+ ConfigURL.ProGerarNFSe          := 'http://' + ConfigURL.ProNomeCidade + '.freireinformatica.com.br:6554/webrun/webservices/NFEServices.jws?wsdl';
 
  Result := ConfigURL;
 end;
