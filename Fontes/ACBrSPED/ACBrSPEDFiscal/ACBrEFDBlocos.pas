@@ -157,7 +157,8 @@ type
                              vlVersao103,  // Código 004 - Versão 103 Ato COTEPE 01/01/2011
                              vlVersao104,  // Código 005 - Versão 104 Ato COTEPE 01/01/2012
                              vlVersao105,  // Código 006 - Versão 105 Ato COTEPE 01/07/2012
-                             vlVersao106   // Código 007
+                             vlVersao106,  // Código 007
+                             vlVersao107   // Código 008 - Válido a partir de 01/01/2014
                              );
   /// Código da finalidade do arquivo - TRegistro0000
   TACBrCodFinalidade      = (raOriginal,     // 0 - Remessa do arquivo original
@@ -484,6 +485,9 @@ begin
    if AValue = '007' then
       Result := vlVersao106
    else
+   if AValue = '008' then
+      Result := vlVersao107
+   else
      raise Exception.CreateFmt('Versão desconhecida. Versao "%s" não é um valor válido.', [AValue]);
 end;
 
@@ -509,6 +513,9 @@ begin
    else
    if AValue = vlVersao106 then
       Result := '007'
+   else
+   if AValue = vlVersao107 then
+      Result := '008'
       ;
 
 end;

@@ -385,15 +385,8 @@ begin
         pfPerfilB: strIND_PERFIL := 'B';
         pfPerfilC: strIND_PERFIL := 'C';
        end;
-       case COD_VER of
-         vlVersao100: strCOD_VER := '001';
-         vlVersao101: strCOD_VER := '002';
-         vlVersao102: strCOD_VER := '003';
-         vlVersao103: strCOD_VER := '004';
-         vlVersao104: strCOD_VER := '005';
-         vlVersao105: strCOD_VER := '006';
-         vlVersao106: strCOD_VER := '007';
-       end;
+
+       strCOD_VER := ACBrEFDBlocos.CodVerToStr(COD_VER);
 
        Check(funChecaCNPJ(CNPJ), '(0-0000) ENTIDADE: O CNPJ "%s" digitado é inválido!', [CNPJ]);
        Check(funChecaCPF(CPF), '(0-0000) ENTIDADE: O CPF "%s" digitado é inválido!', [CPF]);
