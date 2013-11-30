@@ -87,7 +87,7 @@ type
     function DFill(Value: Double;
                    Decimal: Integer = 2;
                    Nulo: Boolean = false): String;
-    function LFill(Value: Currency;
+    function LFill(Value: Extended;
                    Size: Integer;
                    Decimal: Integer = 2;
                    Nulo: Boolean = false;
@@ -250,7 +250,7 @@ begin
   Result := FDelimitador + Result;
 end;
 
-function TACBrTXTClass.LFill(Value: Currency;
+function TACBrTXTClass.LFill(Value: Extended;
                         Size: Integer;
                         Decimal: Integer = 2;
                         Nulo: Boolean = false;
