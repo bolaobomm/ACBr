@@ -571,7 +571,7 @@ begin
     LayCTeConsultaCT:    Result := DFeUtil.SeSenao(AAmbiente = 1, 'https://cte.sefaz.mt.gov.br/ctews/services/CteConsulta'            , 'https://homologacao.sefaz.mt.gov.br/ctews/services/CteConsulta');
     LayCTeStatusServico: Result := DFeUtil.SeSenao(AAmbiente = 1, 'https://cte.sefaz.mt.gov.br/ctews/services/CteStatusServico'       , 'https://homologacao.sefaz.mt.gov.br/ctews/services/CteStatusServico'); //?WSDL
     LayCTeCadastro:      Result := DFeUtil.SeSenao(AAmbiente = 1, 'https://nfe.sefaz.mt.gov.br/nfews/v2/services/CadConsultaCadastro2', 'https://homologacao.sefaz.mt.gov.br/nfews/v2/services/CadConsultaCadastro2');
-    LayCTeEvento:        Result := DFeUtil.SeSenao(AAmbiente = 1, 'https://cte.sefaz.mt.gov.br/ctews/services/cteRecepcaoEvento'      , 'https://homologacao.sefaz.mt.gov.br/ctews/services/cteRecepcaoEvento');
+    LayCTeEvento:        Result := DFeUtil.SeSenao(AAmbiente = 1, 'https://cte.sefaz.mt.gov.br/ctews/services/cteRecepcaoEvento'      , 'https://homologacao.sefaz.mt.gov.br/ctews2/services/CteRecepcaoEvento');
   end;
 end;
 
