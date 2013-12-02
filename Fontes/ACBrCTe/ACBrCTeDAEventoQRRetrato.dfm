@@ -2919,7 +2919,7 @@ inherited frmCTeDAEventoQRRetrato: TfrmCTeDAEventoQRRetrato
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clWindowText
         Font.Height = -11
-        Font.Name = 'Times New Roman'
+        Font.Name = 'Lucida Console'
         Font.Style = []
         Lines.Strings = (
           'qrmCondicoes')
