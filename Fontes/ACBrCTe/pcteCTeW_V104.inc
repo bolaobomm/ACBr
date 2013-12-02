@@ -1433,7 +1433,7 @@ begin
    then begin
     Gerador.wGrupo('natCarga', '#11');
     Gerador.wCampo(tcStr, '#12', 'xDime   ', 05, 14, 0, CTe.Aereo.natCarga.xDime, '');
-    Gerador.wCampo(tcInt, '#13', 'cInfManu', 02, 02, 0, CTe.Aereo.natCarga.cinfManu, '');
+    Gerador.wCampo(tcInt, '#13', 'cInfManu', 01, 02, 0, CTe.Aereo.natCarga.cinfManu, '');
     Gerador.wCampo(tcStr, '#14', 'cIMP    ', 03, 03, 0, CTe.Aereo.natCarga.cIMP, '');
     Gerador.wGrupo('/natCarga');
    end;
