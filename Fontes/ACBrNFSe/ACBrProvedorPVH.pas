@@ -108,7 +108,7 @@ var
 begin
  case ACodCidade of
  1100205: begin // Porto Velho/RO
-            ConfigURL.HomNomeCidade         := 'http://www.semfazonline.com:7070/nfse/NfseWSService?wsdl';
+            ConfigURL.HomNomeCidade         := '';
             ConfigURL.HomRecepcaoLoteRPS    := 'http://www.semfazonline.com:7070/nfse/NfseWSService?wsdl';
             ConfigURL.HomConsultaLoteRPS    := 'http://www.semfazonline.com:7070/nfse/NfseWSService?wsdl';
             ConfigURL.HomConsultaNFSeRPS    := 'http://www.semfazonline.com:7070/nfse/NfseWSService?wsdl';

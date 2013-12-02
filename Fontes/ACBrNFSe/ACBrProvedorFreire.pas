@@ -280,14 +280,14 @@ begin
 //              DadosSenha +
 //            '</S:Header>' +
             '<S:Body>' +
-             '<nfse:ConsultarNfsePorRpsRequest>' +
+             '<nfse:ConsultarNfsePorRps>' +
               '<nfseCabecMsg>' +
                '<![CDATA[' + CabMsg + ']]>' +
               '</nfseCabecMsg>' +
               '<nfseDadosMsg>' +
                '<![CDATA[' + DadosMsg + ']]>' +
               '</nfseDadosMsg>' +
-             '</nfse:ConsultarNfsePorRpsRequest>' +
+             '</nfse:ConsultarNfsePorRps>' +
             '</S:Body>' +
            '</S:Envelope>';
 end;
@@ -324,14 +324,14 @@ begin
 //              DadosSenha +
 //            '</S:Header>' +
             '<S:Body>' +
-             '<nfse:CancelarNfseRequest>' +
+             '<nfse:CancelarNfse>' +
               '<nfseCabecMsg>' +
                '<![CDATA[' + CabMsg + ']]>' +
               '</nfseCabecMsg>' +
               '<nfseDadosMsg>' +
                '<![CDATA[' + DadosMsg + ']]>' +
               '</nfseDadosMsg>' +
-             '</nfse:CancelarNfseRequest>' +
+             '</nfse:CancelarNfse>' +
             '</S:Body>' +
            '</S:Envelope>';
 end;
@@ -382,10 +382,10 @@ begin
    acRecepcionar: Result := SeparaDados( RetornoWS, 'outputXML' );
    acConsSit:     Result := RetornoWS;
    acConsLote:    Result := SeparaDados( RetornoWS, 'outputXML' );
-   acConsNFSeRps: Result := SeparaDados( RetornoWS, 'outputXML' );
+   acConsNFSeRps: Result := RetornoWS; //SeparaDados( RetornoWS, 'outputXML' );
    acConsNFSe:    Result := SeparaDados( RetornoWS, 'outputXML' );
-   acCancelar:    Result := SeparaDados( RetornoWS, 'outputXML' );
-   acGerar:       Result := RetornoWS; //SeparaDados( RetornoWS, 'outputXML' );
+   acCancelar:    Result := RetornoWS; //SeparaDados( RetornoWS, 'outputXML' );
+   acGerar:       Result := RetornoWS;
    acRecSincrono: Result := SeparaDados( RetornoWS, 'outputXML' );
  end;
 end;
@@ -403,16 +403,17 @@ function TProvedorFreire.GetLinkNFSe(ACodMunicipio, ANumeroNFSe: Integer;
   ACodVerificacao, AInscricaoM: String; AAmbiente: Integer): String;
 begin
 //
- if AAmbiente = 1
-  then begin
-   case ACodMunicipio of
-    2919553: Result := 'http://nfselem.freireinformatica.ba.gov.br/webrun/open.do?sys=NFE&action=openform&formID='+
-					'{1733636A-6A4B-46A6-BD46-193A27C60B03}&align=0&mode=-1&goto=-1&filter=NFE_NFSE.NFS_COD_VERIFICACAO=' +
-                    ACodVerificacao;
-    else Result := '';
-   end;
-  end
-  else Result := '';
+ case ACodMunicipio of
+  2919553:
+   begin
+    if AAmbiente = 1
+    then Result := 'http://wslem.freireinformatica.com.br:6554/webrun/open.do?sys=NFE&action=openform&formID='+
+					    '{1733636A-6A4B-46A6-BD46-193A27C60B03}&align=0&mode=-1&goto=-1&filter=NFE_NFSE.NFS_COD_VERIFICACAO=' +ACodVerificacao
+    else Result := 'http://nfselem.freireinformatica.com.br:5554/webrun/open.do?sys=NFE&action=openform&formID='+
+                   '{1733636A-6A4B-46A6-BD46-193A27C60B03}&align=0&mode=-1&goto=-1&filter=NFE_NFSE.NFS_COD_VERIFICACAO=' +ACodVerificacao;
+   end
+   else Result := '';
+ end;
 end;
 
 end.

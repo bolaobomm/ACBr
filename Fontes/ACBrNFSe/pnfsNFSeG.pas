@@ -102,6 +102,9 @@ type
      class function Gera_DadosMsgConsSitLoteEquiplano(CodCidade: Integer;
                                                       CNPJ, IM, Protocolo, NumeroLote: String;
                                                       TagI, TagF: AnsiString): AnsiString;
+     class function Gera_DadosMsgCancelarNFSeFreire(Prefixo4, NameSpaceDad, NumeroNFSe, CNPJ, IM,
+                                                    CodMunicipio, CodCancelamento, MotivoCancelamento: String;
+                                                    TagI, TagF: AnsiString): AnsiString;
 
    published
 
@@ -752,6 +755,39 @@ begin
              '<nrNfse>' + NumeroNFSe + '</nrNfse>' +
              '<dsMotivoCancelamento>' + MotivoCancelamento + '</dsMotivoCancelamento>' +
            TagF;
+end;
+
+class function TNFSeG.Gera_DadosMsgCancelarNFSeFreire(Prefixo4, NameSpaceDad, NumeroNFSe, CNPJ, IM, CodMunicipio, CodCancelamento,
+  MotivoCancelamento: String; TagI, TagF: AnsiString): AnsiString;
+var
+ DadosMsg: AnsiString;
+begin
+
+   DadosMsg := '<' + Prefixo4 + 'IdentificacaoNfse>' +
+           '<' + Prefixo4 + 'Numero>' +
+             NumeroNFse +
+           '</' + Prefixo4 + 'Numero>' +
+           '<' + Prefixo4 + 'CpfCnpj>' +
+            '<' + Prefixo4 + 'Cnpj>' +
+             Cnpj +
+            '</' + Prefixo4 + 'Cnpj>' +
+           '</' + Prefixo4 + 'CpfCnpj>' +
+           '<' + Prefixo4 + 'InscricaoMunicipal>' +
+             IM +
+           '</' + Prefixo4 + 'InscricaoMunicipal>' +
+           '<' + Prefixo4 + 'CodigoMunicipio>' +
+             CodMunicipio +
+           '</' + Prefixo4 + 'CodigoMunicipio>' +
+          '</' + Prefixo4 + 'IdentificacaoNfse>' +
+          '<' + Prefixo4 + 'CodigoCancelamento>' +
+            CodCancelamento +
+          '</' + Prefixo4 + 'CodigoCancelamento>' +
+          '<' + Prefixo4 + 'MotivoCancelamento>' +
+            MotivoCancelamento +
+          '</' + Prefixo4 + 'MotivoCancelamento>'+
+         '</' + Prefixo4 + 'InfPedidoCancelamento>';
+
+   Result := TagI + DadosMsg + TagF;
 end;
 
 class function TNFSeG.Gera_DadosMsgConsSitLoteEquiplano(CodCidade: Integer;

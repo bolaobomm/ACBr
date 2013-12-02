@@ -545,7 +545,7 @@ begin
 
  if not (FProvedor in [proGovBr, proSimplISS, proAbaco, proISSNet, pro4R,
                        proFiorilli, proProdata, proThema, proVirtual,
-                       proPVH])
+                       proPVH, proFreire])
   then begin
    if not InternetSetOption(Data, INTERNET_OPTION_CLIENT_CERT_CONTEXT, PCertContext, Sizeof(CERT_CONTEXT)*5)
     then begin
@@ -1782,7 +1782,16 @@ begin
                                                                 TNFSeCancelarNfse(Self).FNumeroNFSe,
                                                                 TNFSeCancelarNfse(Self).FMotivoCancelamento,
                                                                 TagI, TagF)
-
+   else if (FProvedor = proFreire)
+    then FDadosMsg := TNFSeG.Gera_DadosMsgCancelarNFSeFreire(Prefixo4,
+                                                              NameSpaceDad,
+                                                              TNFSeCancelarNfse(Self).FNumeroNFSe,
+                                                              TNFSeCancelarNfse(Self).FCnpj,
+                                                              TNFSeCancelarNfse(Self).FIM,
+                                                              TNFSeCancelarNfse(Self).FCodigoMunicipio,
+                                                              TNFSeCancelarNfse(Self).FCodigoCancelamento,
+                                                              TNFSeCancelarNfse(Self).FMotivoCancelamento,
+                                                              TagI, TagF)
    else FDadosMsg := TNFSeG.Gera_DadosMsgCancelarNFSe(Prefixo4,
                                                        NameSpaceDad,
                                                        TNFSeCancelarNfse(Self).FNumeroNFSe,
@@ -4159,7 +4168,7 @@ begin
 
   case FProvedor of
    proBetha: Prefixo3 := '';
-   proFreire: Prefixo3 := 'ns1';
+   //proFreire: Prefixo3 := 'ns1';
   end;
 
   NFSeRetorno.Leitor.Arquivo := FRetWS;

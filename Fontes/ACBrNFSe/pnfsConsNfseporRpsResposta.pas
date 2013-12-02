@@ -242,7 +242,8 @@ begin
     // Alterado por Akai - L. Massao Aihara 31/10/2013
     if (leitor.rExtrai(1, 'ConsultarNfseRpsResposta') <> '') or
        (leitor.rExtrai(1, 'Consultarnfserpsresposta') <> '') or
-       (leitor.rExtrai(1, 'ConsultarNfsePorRpsResult') <> '')
+       (leitor.rExtrai(1, 'Consultarnfserpsresposta') <> '') or
+       (leitor.rExtrai(1, 'GerarNfseResposta') <> '')
        then
     begin
       // Ler a NFSe
@@ -267,7 +268,9 @@ begin
             ListaNfse.FCompNfse[i].FNfse.InfID.ID          := Leitor.rCampo(tcStr, 'Numero');
             ListaNfse.FCompNfse[i].FNFSe.Numero            := Leitor.rCampo(tcStr, 'Numero');
             ListaNfse.FCompNfse[i].FNFSe.CodigoVerificacao := Leitor.rCampo(tcStr, 'CodigoVerificacao');
-            ListaNfse.FCompNfse[i].FNFSe.DataEmissao       := Leitor.rCampo(tcDatHor, 'DataEmissao');
+            if FProvedor = proFreire
+               then ListaNfse.FCompNfse[i].FNFSe.DataEmissao := Leitor.rCampo(tcDat, 'DataEmissao')
+               else ListaNfse.FCompNfse[i].FNFSe.DataEmissao       := Leitor.rCampo(tcDatHor, 'DataEmissao');
 
             ListaNfse.FCompNfse[i].FNFSe.ValoresNfse.BaseCalculo            := Leitor.rCampo(tcDe2, 'BaseCalculo');
             ListaNfse.FCompNfse[i].FNFSe.ValoresNfse.Aliquota               := Leitor.rCampo(tcDe3, 'Aliquota');

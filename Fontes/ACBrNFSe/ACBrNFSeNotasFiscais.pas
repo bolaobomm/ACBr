@@ -795,6 +795,8 @@ var
  LocNFSeR : TNFSeR;
  ArquivoXML: TStringList;
  StreamText: TStringStream;
+ CNPJ, IM, NumeroRPS, SerieRPS, TipoRPS: String;
+ ok: Boolean;
 begin
  try
   Result     := True;
@@ -805,7 +807,39 @@ begin
    ArquivoXML.Text := LocNFSeR.Leitor.Arquivo;
    ArquivoXML.Text := StringReplace(StringReplace( ArquivoXML.Text, '&lt;', '<', [rfReplaceAll]), '&gt;', '>', [rfReplaceAll]);
    ArquivoXML.Text := NotaUtil.RetirarPrefixos(ArquivoXML.Text);
+   
+   NumeroRPS := Copy(ArquivoXML.Text,
+                Pos('<Numero>', ArquivoXML.Text) + 8,
+                Pos('</Numero>',ArquivoXML.Text) - (Pos('<Numero>', ArquivoXML.Text) + 8));
 
+   SerieRPS := Copy(ArquivoXML.Text,
+               Pos('<Serie>', ArquivoXML.Text) + 7,
+               Pos('</Serie>',ArquivoXML.Text) - (Pos('<Serie>', ArquivoXML.Text) + 7));
+
+   TipoRPS := Copy(ArquivoXML.Text,
+              Pos('<Tipo>', ArquivoXML.Text) + 6,
+              Pos('</Tipo>',ArquivoXML.Text) - (Pos('<Tipo>', ArquivoXML.Text) + 6));
+
+   CNPJ := Copy(ArquivoXML.Text,
+           Pos('<CpfCnpj><Cnpj>', ArquivoXML.Text) + 15,
+           Pos('</Cnpj></CpfCnpj>',ArquivoXML.Text) - (Pos('<CpfCnpj><Cnpj>', ArquivoXML.Text) + 15));
+
+   if Trim(CNPJ) = '' then
+      CNPJ:= Copy(ArquivoXML.Text,
+                  Pos('<CpfCnpj><Cpf>', ArquivoXML.Text) + 14,
+                  Pos('</Cpf></CpfCnpj>',ArquivoXML.Text) - (Pos('<CpfCnpj><Cpf>', ArquivoXML.Text) + 14));
+
+   IM := Copy(ArquivoXML.Text,
+              Pos('<InscricaoMunicipal>', ArquivoXML.Text) + 20,
+              Pos('</InscricaoMunicipal>',ArquivoXML.Text) - (Pos('<InscricaoMunicipal>', ArquivoXML.Text) + 20));
+
+
+   LocNFSeR.NFSe.IdentificacaoRps.Numero := NumeroRPS;
+   LocNFSeR.NFSe.IdentificacaoRps.Serie := SerieRPS;
+   LocNFSeR.NFSe.IdentificacaoRps.Tipo := StrToTipoRPS(ok, TipoRPS);
+   LocNFSeR.NFSe.Prestador.Cnpj:= CNPJ;
+   LocNFSeR.NFSe.Prestador.InscricaoMunicipal:= IM;
+   
    StreamText := TStringStream.Create(ArquivoXML.Text);
    try
     LocNFSeR.VersaoXML := NotaUtil.VersaoXML(ArquivoXML.Text);
