@@ -4042,19 +4042,24 @@ begin
   if fpMFD then
   begin
     RetCmd := RetornaInfoECF('070');
-    OldShortDateFormat := ShortDateFormat;
-    try
-      ShortDateFormat := 'dd/mm/yyyy';
-      Result := StrToDate( copy(RetCmd,1,2) + DateSeparator +
-                           copy(RetCmd,3,2) + DateSeparator +
-                           copy(RetCmd,5,4) );
-    finally
-      ShortDateFormat := OldShortDateFormat;
+
+    // Daruma MFD retorna 01012000 quando não tem movimento
+    if RetCmd <> '01012000' then
+    begin
+      OldShortDateFormat := ShortDateFormat;
+      try
+        ShortDateFormat := 'dd/mm/yyyy';
+        Result := StrToDate( copy(RetCmd,1,2) + DateSeparator +
+                             copy(RetCmd,3,2) + DateSeparator +
+                             copy(RetCmd,5,4) );
+      finally
+        ShortDateFormat := OldShortDateFormat;
+      end;
     end;
   end
   else if fsNumVersao = '2000' then
   begin
-    Result := Date; // Falta Implementar
+    Result := 0; // Falta Implementar
   end
   else if StrToInt(fsNumVersao) >= 345 then
   begin
@@ -4069,7 +4074,7 @@ begin
                                     copy(RetCmd,4,2) + DateSeparator +
                                     copy(RetCmd,6,2) );
         Except
-          Result := Date;
+          Result := 0;
         end;
       finally
         ShortDateFormat := OldShortDateFormat;
