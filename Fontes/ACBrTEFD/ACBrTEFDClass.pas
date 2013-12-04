@@ -59,7 +59,7 @@ type TModalResult = (mrNone = 0, mrYes = 6, mrNo = 7, mrOK = 1, mrCancel = 2, mr
 {$ENDIF}
 
 const
-   CACBrTEFD_Versao      = '4.3.6' ;
+   CACBrTEFD_Versao      = '4.3.7' ;
    CACBrTEFD_EsperaSTS   = 7 ;
    CACBrTEFD_EsperaSleep = 250 ;
    CACBrTEFD_NumVias     = 2 ;
@@ -1399,7 +1399,11 @@ begin
    case fpTipoTransacao of
      10,20,23    : fpTipoOperacao:= opAvista;
      11,12,22    : fpTipoOperacao:= opParcelado;
-     21,24,25    : fpTipoOperacao:= opPreDatado;
+     21,24,25    :
+       begin
+         fpTipoOperacao := opPreDatado;
+         fpDataPreDatado:= LeInformacao(24).AsDate;
+       end;
      40 :
        begin
           fpTipoOperacao:= opParcelado;

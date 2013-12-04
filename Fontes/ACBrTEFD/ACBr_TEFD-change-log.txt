@@ -47,6 +47,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+Data: 04/12/2013 - 4.3.7
+-- ACBrTEFDClass --
+[*] Ajuste na função ConteudoToProperty() para preencher o campo DataPreDatado
+    nas operações com Débito Pré-Datado. (Juliana)
+
 Data:  19/08/2013 - 4.3.6
 -- ACBrTEFDClass --
 [*] Ajuste para retorno fora do padrão em Cancelamento de ADM no AMEX  (por:DSA)
