@@ -3038,7 +3038,7 @@ begin
     for i:=0 to NFSeRetorno.InfSit.MsgRetorno.Count - 1 do
      begin
       FMsg := FMsg + NFSeRetorno.infSit.MsgRetorno.Items[i].Mensagem + IfThen(FMsg = '', '', ' / ');
-      
+
       aMsg := aMsg + 'Código Erro : ' + NFSeRetorno.InfSit.MsgRetorno.Items[i].Codigo + LineBreak +
                      'Mensagem... : ' + NFSeRetorno.infSit.MsgRetorno.Items[i].Mensagem + LineBreak+
                      'Correção... : ' + NFSeRetorno.InfSit.MsgRetorno.Items[i].Correcao + LineBreak+
@@ -3067,7 +3067,7 @@ begin
          slrProcessadoSucesso: xSituacao := 'Processado com Sucesso.';
         end;
       end;
-    aMsg := 'Numero do Lote : ' + NFSeRetorno.InfSit.NumeroLote + LineBreak +
+    aMsg := 'Numero do Lote : ' + FNumeroLote {NFSeRetorno.InfSit.NumeroLote} + LineBreak +
             'Situação...... : ' + FSituacao + '-' + xSituacao + LineBreak;
    end;
 

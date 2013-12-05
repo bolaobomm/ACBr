@@ -412,7 +412,7 @@ begin
    acConsSit:     begin
                    Result := SeparaDados( RetornoWS, 'return' );
                    if Result = ''
-                    then Result := SeparaDados( RetornoWS, 'ConsultarSituacaoRpsResposta' );
+                    then Result := SeparaDados( RetornoWS, 'ConsultarSituacaoLoteRpsResposta' );
                   end;
    acConsLote:    begin
                    Result := SeparaDados( RetornoWS, 'return' );
