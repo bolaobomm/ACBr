@@ -3267,7 +3267,7 @@ try
   if (FProvedor = proEquiplano) then
     begin
       FRetListaNfse := '';
-    
+
       if (FNotasFiscais.Count > 0) then
         begin
           for iNFRetorno:= 0 to NFSeRetorno.ListaNfse.CompNfse.Count - 1 do
@@ -3324,6 +3324,7 @@ try
        begin
         if FNotasFiscais.Items[iNF].NFSe.IdentificacaoRps.Numero = NFSeRetorno.ListaNfse.CompNfse.Items[iNFRetorno].Nfse.IdentificacaoRps.Numero
          then begin
+          FNotasFiscais.Items[iNF].Confirmada             := True;
           FNotasFiscais.Items[iNF].NFSe.CodigoVerificacao := NFSeRetorno.ListaNfse.CompNfse.Items[iNFRetorno].Nfse.CodigoVerificacao;
           FNotasFiscais.Items[iNF].NFSe.Numero            := NFSeRetorno.ListaNfse.CompNfse.Items[iNFRetorno].Nfse.Numero;
           FNotasFiscais.Items[iNF].NFSe.Competencia       := NFSeRetorno.ListaNfse.CompNfse.Items[iNFRetorno].Nfse.Competencia;
@@ -3631,6 +3632,7 @@ begin
                                                 NFSeRetorno.ListaNfse.CompNfse.Items[i].Nfse.Numero + '-nfse.xml';
 //       end;
 
+      FNotasFiscais.Items[i].Confirmada             := True;
       FNotasFiscais.Items[i].NFSe.Protocolo         := NFSeRetorno.ListaNfse.CompNfse.Items[i].Nfse.Protocolo;
       //FNotasFiscais.Items[i].NFSe.IdentificacaoRps  := NFSeRetorno.ListaNfse.CompNfse.Items[i].Nfse.IdentificacaoRps;
       FNotasFiscais.Items[i].NFSe.IdentificacaoRps.Numero:= NFSeRetorno.ListaNfse.CompNfse.Items[i].Nfse.IdentificacaoRps.Numero;
@@ -4447,6 +4449,7 @@ begin
        begin
         if FNotasFiscais.Items[ii].NFSe.IdentificacaoRps.Numero = NFSeRetorno.ListaNfse.CompNfse.Items[i].Nfse.IdentificacaoRps.Numero
          then begin
+          FNotasFiscais.Items[ii].Confirmada             := True;
           FNotasFiscais.Items[ii].NFSe.CodigoVerificacao := NFSeRetorno.ListaNfse.CompNfse.Items[i].Nfse.CodigoVerificacao;
           FNotasFiscais.Items[ii].NFSe.Numero            := NFSeRetorno.ListaNfse.CompNfse.Items[i].Nfse.Numero;
           FNotasFiscais.Items[ii].NFSe.Competencia       := NFSeRetorno.ListaNfse.CompNfse.Items[i].Nfse.Competencia;
