@@ -754,22 +754,25 @@ end;
 class function DFeUtil.ValidaDIDSI(AValue: string): Boolean;
 var
  ano: Integer;
+ sValue: String;
 begin
  // AValue = TAANNNNNNND
  // Onde: T Identifica o tipo de documento ( 2 = DI e 4 = DSI )
  //       AA Ano corrente da geração do documento
- //       NNNNNNN Número sequencial dentro do Ano ( 7 dígitos )
+ //       NNNNNNN Número sequencial dentro do Ano ( 7 ou 8 dígitos )
  //       D Dígito Verificador, Módulo 11, Pesos de 2 a 9
  AValue := LimpaNumero(AValue);
  ano := StrToInt(Copy(IntToStr(YearOf(Date)), 3, 2));
- if length(AValue) <> 11 then
+ if (length(AValue) < 11) or (length(AValue) > 12) then
    Result := False
  else if (copy(Avalue, 1, 1) <> '2') and (copy(Avalue, 1, 1) <> '4') then
         Result := False
       else if not ((StrToInt(copy(Avalue, 2, 2)) >= ano -1) and (StrToInt(copy(Avalue, 2, 2)) <= ano +1)) then
              Result := False
-           else
-             Result := copy(AValue, 11, 1) = Modulo11(AValue);
+           else begin
+             sValue := copy(AValue, 1, length(AValue)- 1);
+             Result := copy(AValue, length(AValue), 1) = Modulo11(sValue);
+           end;
 end;
 
 class function DFeUtil.ValidaDIRE(AValue: string): Boolean;
