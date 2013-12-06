@@ -208,7 +208,7 @@ begin
 
  if AProvedor in [proNenhum, pro4R, proAgili, proCoplan, profintelISS, proFiorilli,
                   proGoiania, proGovDigital, proISSDigital, proISSe, proProdata, proVirtual,
-                  proSaatri, proFreire, proPVH] then Result := '';
+                  proSaatri, proFreire, proPVH, proVitoria] then Result := '';
 end;
 
 class function TNFSeG.Gera_DadosMsgConsLote(Prefixo3, Prefixo4,
@@ -424,7 +424,7 @@ begin
 
                     // alterado por Akai - L. Massao Aihara 12/11/2013
                    DFeUtil.SeSenao(AProvedor in [pro4R, proISSe, profintelISS, proFiorilli,proDigifred,
-                                                 proVirtual, proISSDigital, proSaatri],
+                                                 proVirtual, proISSDigital, proSaatri, proVitoria],
 
                     '<' + Prefixo4 + 'CpfCnpj>' +
                      '<' + Prefixo4 + 'Cnpj>' +
@@ -477,6 +477,7 @@ begin
   proIssDigital,
   proISSe,
   proProdata,
+  proVitoria,
   proPVH,
   proAgili,
   proVirtual,

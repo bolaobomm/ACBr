@@ -40,7 +40,7 @@ uses
     ACBrProvedorFiorilli, ACBrProvedorIssDsf, ACBrProvedorCoplan,
     ACBrProvedorProdata, ACBrProvedorAgili, ACBrProvedorFISSLex,
     ACBrProvedorVirtual, ACBrProvedorPVH, ACBrProvedorFreire,
-    ACBrProvedorLink3, ACBrProvedorSpeedGov;
+    ACBrProvedorLink3, ACBrProvedorSpeedGov, ACBrProvedorVitoria;
 
 type
 
@@ -634,6 +634,7 @@ begin
   proFreire:      FProvedorClass := TProvedorFreire.Create;
   proLink3:       FProvedorClass := TProvedorLink3.Create;
   proSpeedGov:    FProvedorClass := TProvedorSpeedGov.Create;
+  proVitoria:     FProvedorClass := TProvedorVitoria.Create;
  end;
 
  FPrefixo2     := FConfiguracoes.WebServices.Prefixo2;
@@ -800,6 +801,7 @@ begin
       proISSDigital,
       proISSe,
       proProdata,
+      proVitoria,
       proPVH,
       proSaatri,
       proFreire,
@@ -851,7 +853,7 @@ begin
    for i := 0 to TNFSeEnviarLoteRPS(Self).FNotasFiscais.Count-1 do
     begin
      if (FProvedor in [profintelISS, proSaatri, proGoiania, proISSDigital,
-                       proISSe, pro4R, proFiorilli, proProdata, proPVH, proAgili, proVirtual, proFreire, proLink3])
+                       proISSe, pro4R, proFiorilli, proProdata, proVitoria, proPVH, proAgili, proVirtual, proFreire, proLink3])
       then vNotas := vNotas + '<' + Prefixo4 + 'Rps>' +
                                '<' + Prefixo4 + 'InfDeclaracaoPrestacaoServico' +
                                  RetornarConteudoEntre(TNFSeEnviarLoteRPS(Self).FNotasFiscais.Items[I].XML_Rps,
@@ -1870,6 +1872,7 @@ begin
       pro4R,
       proFiorilli,
       proProdata,
+      proVitoria,
       proPVH,
       proAgili,
       proVirtual,
@@ -1935,6 +1938,7 @@ begin
            pro4R,
            proFiorilli,
            proProdata,
+           proVitoria,
            proPVH,
            proAgili,
            proLink3,
@@ -2090,6 +2094,7 @@ begin
       pro4R,
       proFiorilli,
       proProdata,
+      proVitoria,
       proPVH,
       proAgili,
       proVirtual,
@@ -2124,7 +2129,7 @@ begin
    for i := 0 to TNFSeGerarLoteRPS(Self).FNotasFiscais.Count-1 do
     begin
      if (FProvedor in [profintelISS, proSaatri, proGoiania, proISSDigital, proISSe,
-                       pro4R, proFiorilli, proProdata, proPVH, proAgili, proVirtual, proFreire, proLink3])
+                       pro4R, proFiorilli, proProdata, proVitoria, proPVH, proAgili, proVirtual, proFreire, proLink3])
       then vNotas := vNotas + '<' + Prefixo4 + 'Rps>' +
                                '<' + Prefixo4 + 'InfDeclaracaoPrestacaoServico' +
                                  RetornarConteudoEntre(TNFSeGerarLoteRPS(Self).FNotasFiscais.Items[I].XML_Rps,
@@ -2279,6 +2284,7 @@ begin
       pro4R,
       proFiorilli,
       proProdata,
+      proVitoria,
       proPVH,
       proAgili,
       proVirtual,
@@ -2310,7 +2316,7 @@ begin
    for i := 0 to TNFSeEnviarSincrono(Self).FNotasFiscais.Count-1 do
     begin
      if (FProvedor in [profintelISS, proSaatri, proGoiania, proISSDigital, proISSe,
-                       pro4R, proFiorilli, proProdata, proPVH, proAgili, proVirtual, proFreire, proLink3])
+                       pro4R, proFiorilli, proProdata, proVitoria, proPVH, proAgili, proVirtual, proFreire, proLink3])
       then vNotas := vNotas + '<' + Prefixo4 + 'Rps>' +
                                '<' + Prefixo4 + 'InfDeclaracaoPrestacaoServico' +
                                  RetornarConteudoEntre(TNFSeEnviarSincrono(Self).FNotasFiscais.Items[I].XML_Rps,
@@ -2446,7 +2452,7 @@ begin
 
  if (TACBrNFSe( FACBrNFSe ).Configuracoes.WebServices.ConsultaLoteAposEnvio) and (Result) then begin
    //Alterado por Cleiver em 10-10-2013
-   if not (TACBrNFSe( FACBrNFSe ).Configuracoes.WebServices.Provedor in [proDigifred, proProdata, proPVH, profintelISS, proSaatri, proISSDigital, proFiorilli, proFreire]) then begin
+   if not (TACBrNFSe( FACBrNFSe ).Configuracoes.WebServices.Provedor in [proDigifred, proProdata, proVitoria, proPVH, profintelISS, proSaatri, proISSDigital, proFiorilli, proFreire]) then begin
      Result := Self.ConsSitLote.Executar;
 
      if not (Result)
@@ -3038,7 +3044,7 @@ begin
     for i:=0 to NFSeRetorno.InfSit.MsgRetorno.Count - 1 do
      begin
       FMsg := FMsg + NFSeRetorno.infSit.MsgRetorno.Items[i].Mensagem + IfThen(FMsg = '', '', ' / ');
-
+      
       aMsg := aMsg + 'Código Erro : ' + NFSeRetorno.InfSit.MsgRetorno.Items[i].Codigo + LineBreak +
                      'Mensagem... : ' + NFSeRetorno.infSit.MsgRetorno.Items[i].Mensagem + LineBreak+
                      'Correção... : ' + NFSeRetorno.InfSit.MsgRetorno.Items[i].Correcao + LineBreak+
@@ -3067,7 +3073,7 @@ begin
          slrProcessadoSucesso: xSituacao := 'Processado com Sucesso.';
         end;
       end;
-    aMsg := 'Numero do Lote : ' + FNumeroLote {NFSeRetorno.InfSit.NumeroLote} + LineBreak +
+    aMsg := 'Numero do Lote : ' + NFSeRetorno.InfSit.NumeroLote + LineBreak +
             'Situação...... : ' + FSituacao + '-' + xSituacao + LineBreak;
    end;
 

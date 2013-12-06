@@ -466,6 +466,7 @@ begin
       proFiorilli,
       proCoplan,
       proProdata,
+      proVitoria,
       proPVH,
       proAgili,
       ProVirtual,
@@ -477,7 +478,7 @@ begin
                      AStr := AStr + Assinatura;
                      AStr := AStr + '</Rps>';
                      // Alterado por Cleiver em 26/02/2013
-                     if (AProvedor in [proGoiania, proProdata])
+                     if (AProvedor in [proGoiania, proProdata, proVitoria])
                       then AStr := AStr + '</GerarNfseEnvio>';
                     end;
       else begin
@@ -485,7 +486,7 @@ begin
             AStr := AStr + Assinatura;
             AStr := AStr + '</Rps>';
             // Alterado por Cleiver em 26/02/2013
-            if (AProvedor in [proGoiania, proProdata])
+            if (AProvedor in [proGoiania, proProdata, proVitoria])
              then AStr := AStr + '</GerarNfseEnvio>';
            end;
      end;
@@ -708,6 +709,7 @@ begin
       proFiorilli,
       proCoplan,
       proProdata,
+      proVitoria,
       proPVH,
       proAgili,
       proVirtual,
@@ -719,7 +721,7 @@ begin
                      AXML := AXML + Assinatura;
                      AXML := AXML + '</Rps>';
                      // Alterado por Cleiver em 26/02/2013
-                     if (AProvedor in [proGoiania, proProdata])
+                     if (AProvedor in [proGoiania, proProdata, proVitoria])
                       then AXML := AXML + '</GerarNfseEnvio>';
                     end;
       else begin
@@ -727,7 +729,7 @@ begin
             AXML := AXML + Assinatura;
             AXML := AXML + '</Rps>';
             // Alterado por Cleiver em 26/02/2013
-            if (AProvedor in [proGoiania, proProdata])
+            if (AProvedor in [proGoiania, proProdata, proVitoria])
              then AXML := AXML + '</GerarNfseEnvio>';
            end;
      end;
@@ -819,6 +821,7 @@ begin
     pro4R,
     proCoplan,
     proProdata,
+    proVitoria,
     proPVH,
     proAgili,
     proVirtual,
@@ -849,7 +852,7 @@ begin
                    AXML := AXML + '</Rps>';
 
                    // Alterado por Cleiver em 26/02/2013
-                   if (AProvedor in [proGoiania, proProdata])
+                   if (AProvedor in [proGoiania, proProdata, proVitoria])
                     then AXML := AXML + '</GerarNfseEnvio>';
 
                    XMLAssinado := AXML;

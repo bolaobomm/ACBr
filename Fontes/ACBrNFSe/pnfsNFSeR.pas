@@ -973,7 +973,9 @@ begin
 
    if (CM = '2919553') then
     FProvedor := proFreire;
-   
+
+   if (CM = '3205309') then
+    FProvedor := proVitoria;
   end;
 
  if (FProvedor = proEquiplano) and (Leitor.rExtrai(1, 'rps') <> '') then 
@@ -982,8 +984,11 @@ begin
   then begin
    case FProvedor of
     proSaatri:  Rps_ProvedorSaatri;
+
     proGoiania,
-    proProdata: Rps_ProvedorGoiania;
+    proProdata,
+    proVitoria: Rps_ProvedorGoiania;
+
     proIssDsf:  Rps_ProvedorIssDsf;
     else Rps_Demais;
    end;
@@ -3063,7 +3068,9 @@ begin
 
    if (CM = '2919553') then
     FProvedor := proFreire;
-   
+
+   if (CM = '3205309') then
+    FProvedor := proVitoria;
   end;
 
  if (Leitor.rExtrai(1, 'Nfse') <> '') or (Pos('Nfse versao="2.01"', Leitor.Arquivo) > 0) then // alterado por Joel Takei 24/06/2013
@@ -3072,7 +3079,7 @@ begin
     then begin
      NFSe.Numero                   := Leitor.rCampo(tcStr, 'Numero');
      NFSe.CodigoVerificacao        := Leitor.rCampo(tcStr, 'CodigoVerificacao');
-     if FProvedor = proFreire
+     if FProvedor in [proFreire, proVitoria]
       then NFSe.DataEmissao              := Leitor.rCampo(tcDat, 'DataEmissao')
       else NFSe.DataEmissao              := Leitor.rCampo(tcDatHor, 'DataEmissao');
      NFSe.DataEmissaoRps           := Leitor.rCampo(tcDat, 'DataEmissaoRps');
@@ -3095,13 +3102,21 @@ begin
 
      case FProvedor of
       proSaatri:    NFSe_ProvedorSaatri;
+
       profintelISS: NFSe_ProvedorfintelISS;
+
       proGoiania,
-      proProdata:   NFSe_ProvedorGoiania;
+      proProdata,
+      proVitoria:   NFSe_ProvedorGoiania;
+
       pro4R:        NFSe_Provedor4R;
+
       proISSe:      NFSe_ProvedorISSe; // alterado por Joel Takei 24/06/2013
+
       proTiplan:    NFSe_ProvedorTiplan;
+
       proSimplISS:  NFSe_ProvedorSimplISS;
+      
       proVirtual:   NFSe_ProvedorVirtual;
       else          NFSe_Demais;
      end;
