@@ -1720,7 +1720,14 @@ begin
       FConfiguracoes.Geral.Save(FPathArqEnv, FDadosMsg);
 
     if FConfiguracoes.Arquivos.Salvar then
-      FConfiguracoes.Geral.Save(FPathArqEnv, FDadosMsg, FConfiguracoes.Arquivos.GetPathMDFe);
+     begin
+       if (FEvento.Evento.Items[0].InfEvento.tpEvento = teEncerramento) and not FConfiguracoes.Arquivos.SalvarEvento then
+          FConfiguracoes.Geral.Save(FPathArqEnv, FDadosMsg, FConfiguracoes.Arquivos.GetPathMDFe(0))
+       else if (FEvento.Evento.Items[0].InfEvento.tpEvento = teCancelamento) and not FConfiguracoes.Arquivos.SalvarEvento then
+          FConfiguracoes.Geral.Save(FPathArqEnv, FDadosMsg, FConfiguracoes.Arquivos.GetPathMDFe(0))
+       else
+          FConfiguracoes.Geral.Save(FPathArqEnv, FDadosMsg, FConfiguracoes.Arquivos.GetPathEvento(FEvento.Evento.Items[0].InfEvento.tpEvento));
+     end;
 
     {$IFDEF ACBrMDFeOpenSSL}
        HTTP.Document.LoadFromStream(Stream);
@@ -1746,7 +1753,14 @@ begin
       FConfiguracoes.Geral.Save(FPathArqResp, FRetWS);
 
     if FConfiguracoes.Arquivos.Salvar then
-      FConfiguracoes.Geral.Save(FPathArqResp, FRetWS, FConfiguracoes.Arquivos.GetPathMDFe);
+     begin
+       if (FEvento.Evento.Items[0].InfEvento.tpEvento = teEncerramento) and not FConfiguracoes.Arquivos.SalvarEvento then
+          FConfiguracoes.Geral.Save(FPathArqResp, FRetWS, FConfiguracoes.Arquivos.GetPathMDFe(0))
+       else if (FEvento.Evento.Items[0].InfEvento.tpEvento = teCancelamento) and not FConfiguracoes.Arquivos.SalvarEvento then
+          FConfiguracoes.Geral.Save(FPathArqResp, FRetWS, FConfiguracoes.Arquivos.GetPathMDFe(0))
+       else
+          FConfiguracoes.Geral.Save(FPathArqResp, FRetWS, FConfiguracoes.Arquivos.GetPathEvento(FEvento.Evento.Items[0].InfEvento.tpEvento));
+     end;
 
     FEventoRetorno                := TRetEventoMDFe.Create;
     FEventoRetorno.Leitor.Arquivo := FRetWS;
@@ -1775,14 +1789,14 @@ begin
     FTpAmb   := EventoRetorno.retEvento.Items[0].RetInfEvento.tpAmb;
 
     Result   := (FcStat = 128) or (FcStat = 135) or (FcStat = 136);
-
+    (*
     FPathArqResp := IntToStr(FEvento.idLote) + '-eve.xml';
     if FConfiguracoes.Geral.Salvar then
       FConfiguracoes.Geral.Save(FPathArqResp, FRetWS);
 
     if FConfiguracoes.Arquivos.Salvar then
       FConfiguracoes.Geral.Save(FPathArqResp, FRetWS, FConfiguracoes.Arquivos.GetPathMDFe);
-
+    *)
     //gerar arquivo proc de evento
     if Result then
     begin
@@ -1870,7 +1884,14 @@ begin
                  FConfiguracoes.Geral.Save(NomeArq, Texto {wProc.Text});
 
               if FConfiguracoes.Arquivos.Salvar then
-                 FConfiguracoes.Geral.Save(NomeArq, Texto {wProc.Text}, FConfiguracoes.Arquivos.GetPathMDFe);
+               begin
+                 if (FEvento.Evento.Items[0].InfEvento.tpEvento = teEncerramento) and not FConfiguracoes.Arquivos.SalvarEvento then
+                    FConfiguracoes.Geral.Save(NomeArq, Texto, FConfiguracoes.Arquivos.GetPathMDFe(0))
+                 else if (FEvento.Evento.Items[0].InfEvento.tpEvento = teCancelamento) and not FConfiguracoes.Arquivos.SalvarEvento then
+                    FConfiguracoes.Geral.Save(NomeArq, Texto, FConfiguracoes.Arquivos.GetPathMDFe(0))
+                 else
+                    FConfiguracoes.Geral.Save(NomeArq, Texto, FConfiguracoes.Arquivos.GetPathEvento(FEvento.Evento.Items[0].InfEvento.tpEvento));
+               end;
 
 //              wProc.Free;
               break;
