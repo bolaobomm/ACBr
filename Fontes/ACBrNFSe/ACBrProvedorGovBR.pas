@@ -282,6 +282,23 @@ begin
             ConfigURL.ProConsultaNFSe       := 'http://mail.presidentevenceslau.sp.gov.br/NFSEWS/Services.svc';
             ConfigURL.ProCancelaNFSe        := 'http://mail.presidentevenceslau.sp.gov.br/NFSEWS/Services.svc';
            end;
+  4101408: begin // Apucarana/PR
+            ConfigURL.HomNomeCidade         := '';
+            ConfigURL.HomRecepcaoLoteRPS    := '';
+            ConfigURL.HomConsultaLoteRPS    := '';
+            ConfigURL.HomConsultaNFSeRPS    := '';
+            ConfigURL.HomConsultaSitLoteRPS := '';
+            ConfigURL.HomConsultaNFSe       := '';
+            ConfigURL.HomCancelaNFSe        := '';
+
+            ConfigURL.ProNomeCidade         := '';
+            ConfigURL.ProRecepcaoLoteRPS    := 'http://cetil.apucarana.pr.gov.br/NFSEWS/Services.svc';
+            ConfigURL.ProConsultaLoteRPS    := 'http://cetil.apucarana.pr.gov.br/NFSEWS/Services.svc';
+            ConfigURL.ProConsultaNFSeRPS    := 'http://cetil.apucarana.pr.gov.br/NFSEWS/Services.svc';
+            ConfigURL.ProConsultaSitLoteRPS := 'http://cetil.apucarana.pr.gov.br/NFSEWS/Services.svc';
+            ConfigURL.ProConsultaNFSe       := 'http://cetil.apucarana.pr.gov.br/NFSEWS/Services.svc';
+            ConfigURL.ProCancelaNFSe        := 'http://cetil.apucarana.pr.gov.br/NFSEWS/Services.svc';
+           end;
   4205902: begin // Gaspar/SC
             ConfigURL.HomNomeCidade         := '';
             ConfigURL.HomRecepcaoLoteRPS    := 'http://nfse.gaspar.sc.gov.br/NFSEWSTESTE/Services.svc';
