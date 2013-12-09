@@ -1,0 +1,68 @@
+package ACBr_GNRE;
+
+{$R *.res}
+{$IFDEF IMPLICITBUILDING This IFDEF should not be used by users}
+{$ALIGN 8}
+{$ASSERTIONS ON}
+{$BOOLEVAL OFF}
+{$DEBUGINFO ON}
+{$EXTENDEDSYNTAX ON}
+{$IMPORTEDDATA ON}
+{$IOCHECKS ON}
+{$LOCALSYMBOLS ON}
+{$LONGSTRINGS ON}
+{$OPENSTRINGS ON}
+{$OPTIMIZATION OFF}
+{$OVERFLOWCHECKS OFF}
+{$RANGECHECKS OFF}
+{$REFERENCEINFO ON}
+{$SAFEDIVIDE OFF}
+{$STACKFRAMES ON}
+{$TYPEDADDRESS OFF}
+{$VARSTRINGCHECKS ON}
+{$WRITEABLECONST OFF}
+{$MINENUMSIZE 1}
+{$IMAGEBASE $400000}
+{$DEFINE DEBUG}
+{$ENDIF IMPLICITBUILDING}
+{$DESCRIPTION 'ACBrGNREPCN - (http://acbr.sourceforge.net/)'}
+{$IMPLICITBUILD OFF}
+
+requires
+  ACBrComum,
+  synapse,
+  ACBrCapicom,
+  ACBrOpenSSL,
+  PCN2,
+  rtl,
+  vcl,
+  designide,
+  vclactnband,
+  vclx,
+  soaprtl,
+  xmlrtl,
+  inet,
+  dbrtl;
+
+contains
+  ACBrGNRE in '..\..\..\Fontes\ACBrGNRE\ACBrGNRE.pas',
+  ACBrGNREConfiguracoes in '..\..\..\Fontes\ACBrGNRE\ACBrGNREConfiguracoes.pas',
+  ACBrGNREGuias in '..\..\..\Fontes\ACBrGNRE\ACBrGNREGuias.pas',
+  ACBrGNREReg in '..\..\..\Fontes\ACBrGNRE\ACBrGNREReg.pas',
+  ACBrGNREUtil in '..\..\..\Fontes\ACBrGNRE\ACBrGNREUtil.pas',
+  ACBrGNREWebServices in '..\..\..\Fontes\ACBrGNRE\ACBrGNREWebServices.pas',
+  pgnreConfigUF in '..\..\..\Fontes\ACBrGNRE\pgnreConfigUF.pas',
+  pgnreConsConfigUF in '..\..\..\Fontes\ACBrGNRE\pgnreConsConfigUF.pas',
+  pgnreConversao in '..\..\..\Fontes\ACBrGNRE\pgnreConversao.pas',
+  pgnreGNRE in '..\..\..\Fontes\ACBrGNRE\pgnreGNRE.pas',
+  pgnreRetCampoAdicional in '..\..\..\Fontes\ACBrGNRE\pgnreRetCampoAdicional.pas',
+  pgnreRetConsConfigUF in '..\..\..\Fontes\ACBrGNRE\pgnreRetConsConfigUF.pas',
+  pgnreRetDetalhamentoReceita in '..\..\..\Fontes\ACBrGNRE\pgnreRetDetalhamentoReceita.pas',
+  pgnreRetPeriodoApuracao in '..\..\..\Fontes\ACBrGNRE\pgnreRetPeriodoApuracao.pas',
+  pgnreRetProduto in '..\..\..\Fontes\ACBrGNRE\pgnreRetProduto.pas',
+  pgnreRetReceita in '..\..\..\Fontes\ACBrGNRE\pgnreRetReceita.pas',
+  pgnreRetTipoDocumentoOrigem in '..\..\..\Fontes\ACBrGNRE\pgnreRetTipoDocumentoOrigem.pas',
+  pgnreRetConsResLoteGNRE in '..\..\..\Fontes\ACBrGNRE\pgnreRetConsResLoteGNRE.pas',
+  pgnreRetEnvLoteGNRE in '..\..\..\Fontes\ACBrGNRE\pgnreRetEnvLoteGNRE.pas';
+
+end.
