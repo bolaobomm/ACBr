@@ -50,7 +50,17 @@ unit ACBrConvenio115;
 interface
 
 uses
-  SysUtils, Classes, Contnrs, ACBrBase, ACBrConsts, StrUtils;
+  SysUtils, Classes, Contnrs, ACBrBase, ACBrConsts, StrUtils,
+{$IFDEF FPC}
+   LResources, LazarusPackageIntf, PropEdits, componenteditors
+{$ELSE}
+  {$IFNDEF COMPILER6_UP}
+     DsgnIntf
+  {$ELSE}
+     DesignIntf,
+     DesignEditors
+  {$ENDIF}
+{$ENDIF} ;
 
 {$R ACBrConvenio115.dcr}
 
@@ -549,7 +559,9 @@ var
   I: Integer;
   OStr: TStringList;
 begin
+  {$IFNDEF FPC}
   Mestre.Sort(SortMestre);
+  {$ENDIF}
   OStr := TStringList.Create;
   try
     for I := 0 to FMestre.Count - 1 do
@@ -797,4 +809,8 @@ begin
   end;
 end;
 
+initialization
+{$IFDEF FPC}
+//   {$i ACBrConvenio115.lrs}
+{$ENDIF}
 end.
