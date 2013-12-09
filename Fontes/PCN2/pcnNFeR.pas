@@ -273,7 +273,15 @@ begin
       (*C12*)NFe.Emit.enderEmit.UF      := Leitor.rCampo(tcStr, 'UF');
       (*C13*)NFe.Emit.enderEmit.CEP     := Leitor.rCampo(tcInt, 'CEP');
       (*C14*)NFe.Emit.enderEmit.cPais   := Leitor.rCampo(tcInt, 'cPais');
+
+      if NFe.Emit.enderEmit.cPais = 0 then
+        NFe.Emit.enderEmit.cPais := 1058;
+
       (*C15*)NFe.Emit.enderEmit.xPais   := Leitor.rCampo(tcStr, 'xPais');
+
+      if NFe.Emit.enderEmit.xPais = '' then
+        NFe.Emit.enderEmit.xPais := 'BRASIL';
+        
       (*C16*)NFe.Emit.enderEmit.fone    := Leitor.rCampo(tcStr, 'fone');
     end;
   end;
@@ -330,7 +338,15 @@ begin
       (*E12*)NFe.Dest.enderDest.UF      := Leitor.rCampo(tcStr, 'UF');
       (*E13*)NFe.Dest.enderDest.CEP     := Leitor.rCampo(tcInt, 'CEP');
       (*E14*)NFe.Dest.enderDest.cPais   := Leitor.rCampo(tcInt, 'cPais');
+
+      if NFe.Dest.enderDest.cPais = 0 then
+        NFe.Dest.enderDest.cPais := 1058;
+
       (*E15*)NFe.Dest.enderDest.xPais   := Leitor.rCampo(tcStr, 'xPais');
+
+      if NFe.Dest.enderDest.xPais = '' then
+        NFe.Dest.enderDest.xPais := 'BRASIL';
+
       (*E16*)NFe.Dest.enderDest.fone    := Leitor.rCampo(tcStr, 'fone');
     end;
   end;
@@ -693,6 +709,19 @@ begin
       (*U05*)NFe.Det[i].Imposto.ISSQN.cMunFG    := Leitor.rCampo(tcInt, 'cMunFG');
       (*U06*)NFe.Det[i].Imposto.ISSQN.cListServ := Leitor.rCampo(tcStr, 'cListServ');
       (*U07*)NFe.Det[i].Imposto.ISSQN.cSitTrib  := StrToISSQNcSitTrib( ok,  Leitor.rCampo(tcStr, 'cSitTrib') ) ;
+      // Italo
+      (*U07*)NFe.Det[i].Imposto.ISSQN.vDeducao     := Leitor.rCampo(tcDe2, 'vDeducao');
+      (*U08*)NFe.Det[i].Imposto.ISSQN.vOutro       := Leitor.rCampo(tcDe2, 'vOutro');
+      (*U09*)NFe.Det[i].Imposto.ISSQN.vDescIncond  := Leitor.rCampo(tcDe2, 'vDescIncond');
+      (*U10*)NFe.Det[i].Imposto.ISSQN.vDescCond    := Leitor.rCampo(tcDe2, 'vDescCond');
+      (*U11*)NFe.Det[i].Imposto.ISSQN.indISSRet    := StrToindISSRet(Ok, Leitor.rCampo(tcStr, 'indISSRet'));
+      (*U12*)NFe.Det[i].Imposto.ISSQN.vISSRet      := Leitor.rCampo(tcDe2, 'vISSRet');
+      (*U13*)NFe.Det[i].Imposto.ISSQN.indISS       := StrToindISS(Ok, Leitor.rCampo(tcStr, 'indISS'));
+      (*U14*)NFe.Det[i].Imposto.ISSQN.cServico     := Leitor.rCampo(tcStr, 'cServico');
+      (*U15*)NFe.Det[i].Imposto.ISSQN.cMun         := Leitor.rCampo(tcInt, 'cMun');
+      (*U16*)NFe.Det[i].Imposto.ISSQN.cPais        := Leitor.rCampo(tcInt, 'cPais');
+      (*U17*)NFe.Det[i].Imposto.ISSQN.nProcesso    := Leitor.rCampo(tcStr, 'nProcesso');
+      (*U18*)NFe.Det[i].Imposto.ISSQN.indIncentivo := StrToindIncentivo(Ok, Leitor.rCampo(tcStr, 'indIncentivo'));
     end;
 
     (* Grupo da TAG <det><impostoDevol> *)
@@ -750,20 +779,23 @@ begin
         end;
 
         (*W22b*)NFe.Total.ISSQNtot.vDeducao     := Leitor.rCampo(tcDe2, 'vDeducao');
-        (*W22c*)NFe.Total.ISSQNtot.vINSS        := Leitor.rCampo(tcDe2, 'vINSS');
-        (*W22d*)NFe.Total.ISSQNtot.vIR          := Leitor.rCampo(tcDe2, 'vIR');
-        (*W22e*)NFe.Total.ISSQNtot.vCSLL        := Leitor.rCampo(tcDe2, 'vCSLL');
-        (*W22f*)NFe.Total.ISSQNtot.vOutro       := Leitor.rCampo(tcDe2, 'vOutro');
-        (*W22g*)NFe.Total.ISSQNtot.vDescIncond  := Leitor.rCampo(tcDe2, 'vDescIncond');
-        (*W22h*)NFe.Total.ISSQNtot.vDescCond    := Leitor.rCampo(tcDe2, 'vDescCond');
-        (*W22i*)NFe.Total.ISSQNtot.indISSRet    := StrToindISSRet(Ok, Leitor.rCampo(tcStr, 'indISSRet'));
-        (*W22j*)NFe.Total.ISSQNtot.indISS       := StrToindISS(Ok, Leitor.rCampo(tcStr, 'indISS'));
-        (*W22k*)NFe.Total.ISSQNtot.cServico     := Leitor.rCampo(tcStr, 'cServico');
-        (*W22l*)NFe.Total.ISSQNtot.cMun         := Leitor.rCampo(tcInt, 'cMun');
-        (*W22m*)NFe.Total.ISSQNtot.cPais        := Leitor.rCampo(tcInt, 'cPais');
-        (*W22n*)NFe.Total.ISSQNtot.nProcesso    := Leitor.rCampo(tcStr, 'nProcesso');
-        (*W22o*)NFe.Total.ISSQNtot.cRegTrib     := StrToRegTribISSQN(Ok, Leitor.rCampo(tcStr, 'cRegTrib'));
-        (*W22p*)NFe.Total.ISSQNtot.indIncentivo := StrToindIncentivo(Ok, Leitor.rCampo(tcStr, 'indIncentivo'));
+//        (*W22c*)NFe.Total.ISSQNtot.vINSS        := Leitor.rCampo(tcDe2, 'vINSS');
+//        (*W22d*)NFe.Total.ISSQNtot.vIR          := Leitor.rCampo(tcDe2, 'vIR');
+//        (*W22e*)NFe.Total.ISSQNtot.vCSLL        := Leitor.rCampo(tcDe2, 'vCSLL');
+        (*W22c*)NFe.Total.ISSQNtot.vOutro       := Leitor.rCampo(tcDe2, 'vOutro');
+        (*W22d*)NFe.Total.ISSQNtot.vDescIncond  := Leitor.rCampo(tcDe2, 'vDescIncond');
+        (*W22e*)NFe.Total.ISSQNtot.vDescCond    := Leitor.rCampo(tcDe2, 'vDescCond');
+//        (*W22i*)NFe.Total.ISSQNtot.indISSRet    := StrToindISSRet(Ok, Leitor.rCampo(tcStr, 'indISSRet'));
+//        (*W22j*)NFe.Total.ISSQNtot.indISS       := StrToindISS(Ok, Leitor.rCampo(tcStr, 'indISS'));
+//        (*W22k*)NFe.Total.ISSQNtot.cServico     := Leitor.rCampo(tcStr, 'cServico');
+//        (*W22l*)NFe.Total.ISSQNtot.cMun         := Leitor.rCampo(tcInt, 'cMun');
+//        (*W22m*)NFe.Total.ISSQNtot.cPais        := Leitor.rCampo(tcInt, 'cPais');
+//        (*W22n*)NFe.Total.ISSQNtot.nProcesso    := Leitor.rCampo(tcStr, 'nProcesso');
+
+        // Italo
+        (*W22f*)NFe.Total.ISSQNtot.vISSRet      := Leitor.rCampo(tcDe2, 'vISSRet');
+        (*W22g*)NFe.Total.ISSQNtot.cRegTrib     := StrToRegTribISSQN(Ok, Leitor.rCampo(tcStr, 'cRegTrib'));
+//        (*W22p*)NFe.Total.ISSQNtot.indIncentivo := StrToindIncentivo(Ok, Leitor.rCampo(tcStr, 'indIncentivo'));
       end;
     end;
     if Leitor.rExtrai(2, 'retTrib') <> '' then

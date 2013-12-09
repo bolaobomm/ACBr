@@ -1256,7 +1256,7 @@ begin
     if FNFe.Ide.tpEmis = teDPEC then
       vTpEmissao:=4
     else
-    if FNFe.Ide.tpEmis = teFSDA then
+    if FNFe.Ide.tpEmis in [teFSDA, teSVCAN, teSVCRS] then
       vTpEmissao:=5;
 
     case vTpEmissao of
@@ -1427,7 +1427,7 @@ begin
             end;
         end;
 
-        if FNFe.Ide.tpEmis in [teContingencia, teFSDA] then
+        if FNFe.Ide.tpEmis in [teContingencia, teFSDA, teSVCAN, teSVCRS] then
             qrmDadosAdicionais.Lines.Add('DANFE em Contingência - Impresso em decorrência de problemas técnicos.');
         if FNFe.Ide.tpEmis = teDPEC then
             qrmDadosAdicionais.Lines.Add('DANFE em Contingência - DPEC regularmente recebida pela Receita Federal do Brasil');
@@ -1566,7 +1566,7 @@ begin
             qrlMsgAutorizado.Enabled        := True;
         end;
         // Contingencia ********************************************************
-        if FNFe.Ide.tpEmis in [teContingencia, teFSDA] then
+        if FNFe.Ide.tpEmis in [teContingencia, teFSDA, teSVCAN, teSVCRS] then
         begin
             strChaveContingencia:= NotaUtil.GerarChaveContingencia(FNFe);
             SetBarCodeImage(strChaveContingencia,qriBarCodeContingencia);

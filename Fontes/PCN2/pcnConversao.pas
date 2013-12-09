@@ -244,35 +244,35 @@ const
   // -----------------------------
   // As constantes abaixo futuramente não vão mais ser necessárias
   // -----------------------------
-  NFecabMsg       = '2.00';
-  NFeconsStatServ = '2.00';
-  NFenviNFe       = '2.00';
-  NFeconsReciNFe  = '2.00';
-  NFeconsSitNFe   = '2.01';
-  NFecancNFe      = '2.00';
-  NFeinutNFe      = '2.00';
-  NFeconsCad      = '2.00';
-  NFeEnvDPEC      = '1.01';
-  NFeConsDPEC     = '1.01';
-  NFeCCeNFe       = '1.00';
-  NFeEventoNFe    = '1.00';
-  NFeConsNFeDest  = '1.01';
-  NFeDownloadNFe  = '1.00';
+//  NFecabMsg       = '2.00';
+//  NFeconsStatServ = '2.00';
+//  NFenviNFe       = '2.00';
+//  NFeconsReciNFe  = '2.00';
+//  NFeconsSitNFe   = '2.01';
+//  NFecancNFe      = '2.00';
+//  NFeinutNFe      = '2.00';
+//  NFeconsCad      = '2.00';
+//  NFeEnvDPEC      = '1.01';
+//  NFeConsDPEC     = '1.01';
+//  NFeCCeNFe       = '1.00';
+//  NFeEventoNFe    = '1.00';
+//  NFeConsNFeDest  = '1.01';
+//  NFeDownloadNFe  = '1.00';
 
-  NFCeCabMsg       = '2.00';
-  NFCeConsStatServ = '3.00';
-  NFCeEnvi         = '3.00';
-  NFCeConsReci     = '3.00';
-  NFCeConsSit      = '3.00';
-  NFCeCanc         = '3.00';
-  NFCeInut         = '3.00';
-  NFCeConsCad      = '2.00';
-  NFCeEnvDPEC      = '1.01';
-  NFCeConsDPEC     = '1.01';
-  NFCeCCe          = '1.00';
-  NFCeEvento       = '1.00';
-  NFCeConsNFeDest  = '1.01';
-  NFCeDownloadNFe  = '1.00';
+//  NFCeCabMsg       = '2.00';
+//  NFCeConsStatServ = '3.00';
+//  NFCeEnvi         = '3.00';
+//  NFCeConsReci     = '3.00';
+//  NFCeConsSit      = '3.00';
+//  NFCeCanc         = '3.00';
+//  NFCeInut         = '3.00';
+//  NFCeConsCad      = '2.00';
+//  NFCeEnvDPEC      = '1.01';
+//  NFCeConsDPEC     = '1.01';
+//  NFCeCCe          = '1.00';
+//  NFCeEvento       = '1.00';
+//  NFCeConsNFeDest  = '1.01';
+//  NFCeDownloadNFe  = '1.00';
   // -----------------------------
 
   MDFeCabMsg       = '1.00';

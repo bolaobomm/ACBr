@@ -84,8 +84,8 @@ function TProvedorPVH.GetConfigSchema(ACodCidade: Integer): TConfigSchema;
 var
  ConfigSchema: TConfigSchema;
 begin
- ConfigSchema.VersaoCabecalho       := '1.00';
- ConfigSchema.VersaoDados           := '1.00';
+ ConfigSchema.VersaoCabecalho       := '2.00';
+ ConfigSchema.VersaoDados           := '2.00';
  ConfigSchema.VersaoXML             := '2';
  ConfigSchema.NameSpaceXML          := 'http://www.abrasf.org.br/';
  ConfigSchema.Cabecalho             := 'nfse.xsd';
@@ -218,7 +218,7 @@ begin
             '<S:Body>' +
              '<ns2:RecepcionarLoteRpsRequest xmlns:ns2="' + URLNS + '">' +
               '<nfseCabecMsg>' +
-                '&lt;?xml version="1.0" encoding="UTF-8"?&gt;' +
+//                '&lt;?xml version="1.0" encoding="UTF-8"?&gt;' +
                 StringReplace(StringReplace(CabMsg, '<', '&lt;', [rfReplaceAll]), '>', '&gt;', [rfReplaceAll]) +
               '</nfseCabecMsg>' +
               '<nfseDadosMsg>' +
@@ -240,7 +240,7 @@ begin
             '<s:Body>' +
              '<ns2:ConsultarSituacaoLoteRpsRequest xmlns:ns2="' + URLNS + '">' +
               '<nfseCabecMsg>' +
-                '&lt;?xml version="1.0" encoding="UTF-8"?&gt;' +
+//                '&lt;?xml version="1.0" encoding="UTF-8"?&gt;' +
                 StringReplace(StringReplace(CabMsg, '<', '&lt;', [rfReplaceAll]), '>', '&gt;', [rfReplaceAll]) +
               '</nfseCabecMsg>' +
               '<nfseDadosMsg>' +
@@ -262,7 +262,7 @@ begin
             '<s:Body>' +
              '<ns2:ConsultarLoteRpsRequest xmlns:ns2="' + URLNS + '">' +
               '<nfseCabecMsg>' +
-                '&lt;?xml version="1.0" encoding="UTF-8"?&gt;' +
+//                '&lt;?xml version="1.0" encoding="UTF-8"?&gt;' +
                 StringReplace(StringReplace(CabMsg, '<', '&lt;', [rfReplaceAll]), '>', '&gt;', [rfReplaceAll]) +
               '</nfseCabecMsg>' +
               '<nfseDadosMsg>' +
@@ -284,7 +284,7 @@ begin
             '<s:Body>' +
              '<ns2:ConsultarNfsePorRpsRequest xmlns:ns2="' + URLNS + '">' +
               '<nfseCabecMsg>' +
-                '&lt;?xml version="1.0" encoding="UTF-8"?&gt;' +
+//                '&lt;?xml version="1.0" encoding="UTF-8"?&gt;' +
                 StringReplace(StringReplace(CabMsg, '<', '&lt;', [rfReplaceAll]), '>', '&gt;', [rfReplaceAll]) +
               '</nfseCabecMsg>' +
               '<nfseDadosMsg>' +
@@ -306,7 +306,7 @@ begin
             '<s:Body>' +
              '<ns2:ConsultarNfsePorFaixaRequest xmlns:ns2="' + URLNS + '">' +
                '<nfseCabecMsg>' +
-                '&lt;?xml version="1.0" encoding="UTF-8"?&gt;' +
+//                '&lt;?xml version="1.0" encoding="UTF-8"?&gt;' +
                  StringReplace(StringReplace(CabMsg, '<', '&lt;', [rfReplaceAll]), '>', '&gt;', [rfReplaceAll]) +
                '</nfseCabecMsg>' +
                '<nfseDadosMsg>' +
@@ -328,7 +328,7 @@ begin
             '<s:Body>' +
              '<ns2:CancelarNfseRequest xmlns:ns2="' + URLNS + '">' +
               '<nfseCabecMsg>' +
-                '&lt;?xml version="1.0" encoding="UTF-8"?&gt;' +
+//                '&lt;?xml version="1.0" encoding="UTF-8"?&gt;' +
                 StringReplace(StringReplace(CabMsg, '<', '&lt;', [rfReplaceAll]), '>', '&gt;', [rfReplaceAll]) +
               '</nfseCabecMsg>' +
               '<nfseDadosMsg>' +
@@ -350,7 +350,7 @@ begin
             '<S:Body>' +
              '<ns2:GerarNfseRequest xmlns:ns2="' + URLNS + '">' +
               '<nfseCabecMsg>' +
-                '&lt;?xml version="1.0" encoding="UTF-8"?&gt;' +
+//                '&lt;?xml version="1.0" encoding="UTF-8"?&gt;' +
                 StringReplace(StringReplace(CabMsg, '<', '&lt;', [rfReplaceAll]), '>', '&gt;', [rfReplaceAll]) +
               '</nfseCabecMsg>' +
               '<nfseDadosMsg>' +
@@ -372,7 +372,7 @@ begin
             '<S:Body>' +
              '<ns2:RecepcionarLoteRpsSincronoRequest xmlns:ns2="' + URLNS + '">' +
               '<nfseCabecMsg>' +
-                '&lt;?xml version="1.0" encoding="UTF-8"?&gt;' +
+//                '&lt;?xml version="1.0" encoding="UTF-8"?&gt;' +
                 StringReplace(StringReplace(CabMsg, '<', '&lt;', [rfReplaceAll]), '>', '&gt;', [rfReplaceAll]) +
               '</nfseCabecMsg>' +
               '<nfseDadosMsg>' +

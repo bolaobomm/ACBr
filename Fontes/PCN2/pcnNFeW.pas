@@ -1655,6 +1655,24 @@ begin
 
     if (NFe.infNFe.Versao >= 2) and (NFe.infNFe.Versao < 3) then
        Gerador.wCampo(tcStr, 'U07', 'cSitTrib', 01, 01, 1, ISSQNcSitTribToStr( nfe.Det[i].Imposto.ISSQN.cSitTrib ) , DSC_CSITTRIB);
+
+    // Italo
+    if NFe.infNFe.Versao >= 3.10 then
+    begin
+      Gerador.wCampo(tcDe2, 'U07', 'vDeducao    ', 01, 15, 0, nfe.Det[i].Imposto.ISSQN.vDeducao, DSC_VDEDUCAO);
+      Gerador.wCampo(tcDe2, 'U08', 'vOutro      ', 01, 15, 0, nfe.Det[i].Imposto.ISSQN.vOutro, DSC_VOUTRODED);
+      Gerador.wCampo(tcDe2, 'U09', 'vDescIncond ', 01, 15, 0, nfe.Det[i].Imposto.ISSQN.vDescIncond, DSC_VDESCINCOND);
+      Gerador.wCampo(tcDe2, 'U10', 'vDescCond   ', 01, 15, 0, nfe.Det[i].Imposto.ISSQN.vDescCond, DSC_VDESCCOND);
+      Gerador.wCampo(tcStr, 'U11', 'indISSRet   ', 01, 01, 1, indISSRetToStr( nfe.Det[i].Imposto.ISSQN.indISSRet ) , DSC_INDISSRET);
+      Gerador.wCampo(tcDe2, 'U12', 'vISSRet     ', 01, 15, 0, nfe.Det[i].Imposto.ISSQN.vISSRet, DSC_VISSRET);
+      Gerador.wCampo(tcStr, 'U13', 'indISS      ', 01, 01, 1, indISSToStr( nfe.Det[i].Imposto.ISSQN.indISS ) , DSC_INDISS);
+      Gerador.wCampo(tcStr, 'U14', 'cServico    ', 01, 20, 0, nfe.Det[i].Imposto.ISSQN.cServico , DSC_CSERVICO);
+      Gerador.wCampo(tcInt, 'U15', 'cMun        ', 01, 07, 0, nfe.Det[i].Imposto.ISSQN.cMun, DSC_CMUN);
+      Gerador.wCampo(tcInt, 'U16', 'cPais       ', 01, 04, 0, nfe.Det[i].Imposto.ISSQN.cPais, DSC_CPAIS);
+      Gerador.wCampo(tcStr, 'U17', 'nProcesso   ', 01, 30, 0, nfe.Det[i].Imposto.ISSQN.nProcesso , DSC_NPROCESSO);
+      Gerador.wCampo(tcStr, 'U18', 'indIncentivo', 01, 01, 1, indIncentivoToStr( nfe.Det[i].Imposto.ISSQN.indIncentivo ) , DSC_INDINCENTIVO);
+    end;
+
     Gerador.wGrupo('/ISSQN');
   end;
 end;
@@ -1720,20 +1738,23 @@ begin
     begin
       Gerador.wCampo(tcStr, 'W22a', 'dCompet     ', 10, 10, 1, FormatDateTime('YYYYMMDD', nfe.Total.ISSQNtot.dCompet), DSC_DCOMPET);
       Gerador.wCampo(tcDe2, 'W22b', 'vDeducao    ', 01, 15, 0, nfe.Total.ISSQNtot.vDeducao, DSC_VDEDUCAO);
-      Gerador.wCampo(tcDe2, 'W22c', 'vINSS       ', 01, 15, 0, nfe.Total.ISSQNtot.vINSS, DSC_VINSS);
-      Gerador.wCampo(tcDe2, 'W22d', 'vIR         ', 01, 15, 0, nfe.Total.ISSQNtot.vIR, DSC_VIR);
-      Gerador.wCampo(tcDe2, 'W22e', 'vCSLL       ', 01, 15, 0, nfe.Total.ISSQNtot.vCSLL, DSC_VCSLL);
-      Gerador.wCampo(tcDe2, 'W22f', 'vOutro      ', 01, 15, 0, nfe.Total.ISSQNtot.vOutro, DSC_VOUTRODED);
-      Gerador.wCampo(tcDe2, 'W22g', 'vDescIncond ', 01, 15, 0, nfe.Total.ISSQNtot.vDescIncond, DSC_VDESCINCOND);
-      Gerador.wCampo(tcDe2, 'W22h', 'vDescCond   ', 01, 15, 0, nfe.Total.ISSQNtot.vDescCond, DSC_VDESCCOND);
-      Gerador.wCampo(tcStr, 'W22i', 'indISSRet   ', 01, 01, 1, indISSRetToStr( nfe.Total.ISSQNtot.indISSRet ) , DSC_INDISSRET);
-      Gerador.wCampo(tcStr, 'W22j', 'indISS      ', 01, 01, 1, indISSToStr( nfe.Total.ISSQNtot.indISS ) , DSC_INDISS);
-      Gerador.wCampo(tcStr, 'W22k', 'cServico    ', 01, 20, 0, nfe.Total.ISSQNtot.cServico , DSC_CSERVICO);
-      Gerador.wCampo(tcInt, 'W22l', 'cMun        ', 01, 07, 0, nfe.Total.ISSQNtot.cMun, DSC_CMUN);
-      Gerador.wCampo(tcInt, 'W22m', 'cPais       ', 01, 04, 0, nfe.Total.ISSQNtot.cPais, DSC_CPAIS);
-      Gerador.wCampo(tcStr, 'W22n', 'nProcesso   ', 01, 30, 0, nfe.Total.ISSQNtot.nProcesso , DSC_NPROCESSO);
-      Gerador.wCampo(tcStr, 'W22o', 'cRegTrib    ', 01, 01, 1, RegTribISSQNToStr( nfe.Total.ISSQNtot.cRegTrib ) , DSC_CREGTRIB);
-      Gerador.wCampo(tcStr, 'W22p', 'indIncentivo', 01, 01, 1, indIncentivoToStr( nfe.Total.ISSQNtot.indIncentivo ) , DSC_INDINCENTIVO);
+//      Gerador.wCampo(tcDe2, 'W22c', 'vINSS       ', 01, 15, 0, nfe.Total.ISSQNtot.vINSS, DSC_VINSS);
+//      Gerador.wCampo(tcDe2, 'W22d', 'vIR         ', 01, 15, 0, nfe.Total.ISSQNtot.vIR, DSC_VIR);
+//      Gerador.wCampo(tcDe2, 'W22e', 'vCSLL       ', 01, 15, 0, nfe.Total.ISSQNtot.vCSLL, DSC_VCSLL);
+      Gerador.wCampo(tcDe2, 'W22c', 'vOutro      ', 01, 15, 0, nfe.Total.ISSQNtot.vOutro, DSC_VOUTRODED);
+      Gerador.wCampo(tcDe2, 'W22d', 'vDescIncond ', 01, 15, 0, nfe.Total.ISSQNtot.vDescIncond, DSC_VDESCINCOND);
+      Gerador.wCampo(tcDe2, 'W22e', 'vDescCond   ', 01, 15, 0, nfe.Total.ISSQNtot.vDescCond, DSC_VDESCCOND);
+//      Gerador.wCampo(tcStr, 'W22i', 'indISSRet   ', 01, 01, 1, indISSRetToStr( nfe.Total.ISSQNtot.indISSRet ) , DSC_INDISSRET);
+//      Gerador.wCampo(tcStr, 'W22j', 'indISS      ', 01, 01, 1, indISSToStr( nfe.Total.ISSQNtot.indISS ) , DSC_INDISS);
+//      Gerador.wCampo(tcStr, 'W22k', 'cServico    ', 01, 20, 0, nfe.Total.ISSQNtot.cServico , DSC_CSERVICO);
+//      Gerador.wCampo(tcInt, 'W22l', 'cMun        ', 01, 07, 0, nfe.Total.ISSQNtot.cMun, DSC_CMUN);
+//      Gerador.wCampo(tcInt, 'W22m', 'cPais       ', 01, 04, 0, nfe.Total.ISSQNtot.cPais, DSC_CPAIS);
+//      Gerador.wCampo(tcStr, 'W22n', 'nProcesso   ', 01, 30, 0, nfe.Total.ISSQNtot.nProcesso , DSC_NPROCESSO);
+
+      // Italo
+      Gerador.wCampo(tcDe2, 'W22f', 'vISSRet     ', 01, 15, 0, nfe.Total.ISSQNtot.vISSRet, DSC_VISSRET);
+      Gerador.wCampo(tcStr, 'W22g', 'cRegTrib    ', 01, 01, 1, RegTribISSQNToStr( nfe.Total.ISSQNtot.cRegTrib ) , DSC_CREGTRIB);
+//      Gerador.wCampo(tcStr, 'W22p', 'indIncentivo', 01, 01, 1, indIncentivoToStr( nfe.Total.ISSQNtot.indIncentivo ) , DSC_INDINCENTIVO);
     end;
 
     Gerador.wGrupo('/ISSQNtot');

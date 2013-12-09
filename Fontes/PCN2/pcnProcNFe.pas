@@ -99,6 +99,8 @@ uses pcnLeitor;
 constructor TProcNFe.Create;
 begin
   FGerador := TGerador.Create;
+  // Incluido por Italo em 22/10/2013
+  FnProt := '';
 end;
 
 destructor TProcNFe.Destroy;
@@ -130,6 +132,7 @@ var
   XMLinfProt2: TstringList;
   wCstat: string;
   xProtNFe: string;
+  nProtLoc: string;
   LocLeitor: TLeitor;
   i : Integer;
   ProtLido : Boolean; //Protocolo lido do arquivo
@@ -209,10 +212,11 @@ begin
         else
            XMLinfProt2.Text:=RetornarConteudoEntre(XMLinfProt.text, '<infProt', '</infProt>');
 
-        // Alterado por Italo em 28/09/2012
+        nProtLoc := RetornarConteudoEntre(XMLinfProt2.text, '<nProt>', '</nProt>');
+
         xProtNFe :=
           '<protNFe versao="' + Versao + '">' +
-        (******)'<infProt>'+// + RetornarConteudoEntre(XMLinfProt.text, '<infProt', '<tpAmb>') +
+        (******)'<infProt Id="ID'+ nProtLoc +'">'+
         (*********)PreencherTAG('tpAmb', XMLinfProt.text) +
         (*********)PreencherTAG('verAplic', XMLinfProt.text) +
         (*********)PreencherTAG('chNFe', XMLinfProt.text) +
@@ -230,7 +234,7 @@ begin
      begin
         xProtNFe :=
           '<protNFe versao="' + Versao + '">' +
-        (******)'<infProt>'+
+        (******)'<infProt Id="'+ IIf( Pos('ID', FnProt) > 0, FnProt, 'ID'+ FnProt ) +'">'+
         (*********)'<tpAmb>'+TpAmbToStr(FtpAmb)+'</tpAmb>'+
         (*********)'<verAplic>'+FverAplic+'</verAplic>'+
         (*********)'<chNFe>'+FchNFe+'</chNFe>'+

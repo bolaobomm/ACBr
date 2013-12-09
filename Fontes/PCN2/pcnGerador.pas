@@ -140,12 +140,15 @@ const
 
   CODIGO_BRASIL = 1058;
 
-  ENCODING_UTF8 = '?xml version="1.0" encoding="UTF-8"?';
+  ENCODING_UTF8     = '?xml version="1.0" encoding="UTF-8"?';
   ENCODING_UTF8_STD = '?xml version="1.0" encoding="UTF-8" standalone="no"?';
-  NAME_SPACE = 'xmlns="http://www.portalfiscal.inf.br/nfe"';
-  NAME_SPACE_CTE = 'xmlns="http://www.portalfiscal.inf.br/cte"';
-  NAME_SPACE_CFE = 'xmlns="http://www.fazenda.sp.gov.br/sat"';
+
+  NAME_SPACE      = 'xmlns="http://www.portalfiscal.inf.br/nfe"';
+  NAME_SPACE_CTE  = 'xmlns="http://www.portalfiscal.inf.br/cte"';
+  NAME_SPACE_CFE  = 'xmlns="http://www.fazenda.sp.gov.br/sat"';
   NAME_SPACE_MDFE = 'xmlns="http://www.portalfiscal.inf.br/mdfe"';
+ // Incluido por Claudemir em 13/03/2013
+  NAME_SPACE_GNRE = 'xmlns="http://www.gnre.pe.gov.br"';
 
   V0_02 = 'versao="0.02"';
   V1_00 = 'versao="1.00"';
@@ -451,6 +454,7 @@ const
   DSC_VDESCINCOND = 'Valor Desconto Incondicionado';
   DSC_VDESCCOND = 'Valor Desconto Condicionado';
   DSC_INDISSRET = 'Indicador de ISS Retido';
+  DSC_VISSRET = 'Valor Retenção ISS';
   DSC_INDISS = 'Indicador da Exigibilidade do ISS';
   DSC_CSERVICO = 'Código do Serviço';
   DSC_NPROCESSO = 'Número do Processo';

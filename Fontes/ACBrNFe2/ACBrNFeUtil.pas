@@ -1,7 +1,7 @@
 {******************************************************************************}
 { Projeto: Componente ACBrNFe                                                  }
 {  Biblioteca multiplataforma de componentes Delphi para emissão de Nota Fiscal}
-{ eletrônica - NFe - http://www.nfe.fazenda.gov.br                          }
+{ eletrônica - NFe - http://www.nfe.fazenda.gov.br                             }
 {                                                                              }
 { Direitos Autorais Reservados (c) 2008 Wemerson Souto                         }
 {                                       Daniel Simoes de Almeida               }
@@ -160,7 +160,8 @@ type
     class function FormatarChaveAcesso(AValue : String ): String;
     class function GetURL(Const AUF, AAmbiente, FormaEmissao: Integer; ALayOut: TLayOut; AModeloDF: TpcnModeloDF = moNFe): WideString;
     class function IdentificaTipoSchema(Const AXML: AnsiString; var I: Integer): integer; {eventos_juaumkiko}
-    class function Valida(Const AXML: AnsiString; var AMsg: AnsiString; const APathSchemas: string = ''; AModeloDF: TpcnModeloDF = moNFe): Boolean;
+    class function Valida(Const AXML: AnsiString; var AMsg: AnsiString; const APathSchemas: string = '';
+                          AModeloDF: TpcnModeloDF = moNFe; AVersaoDF: TpcnVersaoDF = ve200): Boolean;
     class function ValidaAssinatura(const AXML: AnsiString;  var AMsg: AnsiString): Boolean;
 {$IFDEF ACBrNFeOpenSSL}
     class function Assinar(const AXML, ArqPFX, PFXSenha: AnsiString; out AXMLAssinado, FMensagem: AnsiString): Boolean;
@@ -874,7 +875,7 @@ begin
             copy(AValue,25,4) + ' ' + copy(AValue,29,4) + ' ' +
             copy(AValue,33,4) + ' ' + copy(AValue,37,4) + ' ' +
             copy(AValue,41,4) ;
-end;       
+end;
 
 class function NotaUtil.GetURL(const AUF, AAmbiente, FormaEmissao : Integer;
   ALayOut: TLayOut; AModeloDF: TpcnModeloDF = moNFe): WideString;
@@ -883,7 +884,7 @@ begin
 //  (12,27,16,13,29,23,53,32,52,21,51,50,31,15,25,41,26,22,33,24,43,11,14,42,35,28,17);
 
 case FormaEmissao of
-  1,2,4,5 : begin
+  1,2,4,5,9 : begin
        case ALayOut of
          LayNfeEnvDPEC      : Result := DFeUtil.SeSenao(AAmbiente=1, 'https://www.nfe.fazenda.gov.br/SCERecepcaoRFB/SCERecepcaoRFB.asmx','https://hom.nfe.fazenda.gov.br/SCERecepcaoRFB/SCERecepcaoRFB.asmx');
          LayNfeConsultaDPEC : Result := DFeUtil.SeSenao(AAmbiente=1, 'https://www.nfe.fazenda.gov.br/SCEConsultaRFB/SCEConsultaRFB.asmx','https://hom.nfe.fazenda.gov.br/SCEConsultaRFB/SCEConsultaRFB.asmx');
@@ -922,8 +923,8 @@ case FormaEmissao of
          35: Result := NotaUtil.GetURLSP(AAmbiente,ALayOut, AModeloDF); //SP
          28: Result := NotaUtil.GetURLSVRS(AAmbiente,ALayOut, AModeloDF); //SE
          17: Result := NotaUtil.GetURLSVRS(AAmbiente,ALayOut, AModeloDF); //TO
+       end;
       end;
-     end;
   3 : begin
        case ALayOut of
          LayNfeRecepcao      : Result := DFeUtil.SeSenao(AAmbiente=1, 'https://www.scan.fazenda.gov.br/NfeRecepcao2/NfeRecepcao2.asmx','https://hom.nfe.fazenda.gov.br/SCAN/NfeRecepcao2/NfeRecepcao2.asmx');
@@ -934,7 +935,35 @@ case FormaEmissao of
          LayNfeStatusServico : Result := DFeUtil.SeSenao(AAmbiente=1, 'https://www.scan.fazenda.gov.br/NFeStatusServico2/NFeStatusServico2.asmx','https://hom.nfe.fazenda.gov.br/SCAN/NfeStatusServico2/NfeStatusServico2.asmx');
          LayNFeCCe,LayNFeEvento : Result := DFeUtil.SeSenao(AAmbiente=1, 'https://www.scan.fazenda.gov.br/RecepcaoEvento/RecepcaoEvento.asmx', 'https://hom.nfe.fazenda.gov.br/SCAN/RecepcaoEvento/RecepcaoEvento.asmx');
        end;
-     end;
+      end;
+  6 : begin
+       // SVC-AN SEFAZ VIRTUAL DE CONTINGENCIA - AMBIENTE NACIONAL
+       // Utilizado pelas UF: AC, AL, AP, MG, PB, RJ, RS, RO, RR, SC, SE, SP, TO, DF
+       case ALayOut of
+         LayNfeRecepcao      : Result := DFeUtil.SeSenao(AAmbiente=1, 'https://hom.nfe.fazenda.gov.br/SVC/NfeRecepcao/NfeRecepcao2.asmx',           'https://hom.nfe.fazenda.gov.br/SVC/NfeRecepcao/NfeRecepcao2.asmx');
+         LayNfeRetRecepcao   : Result := DFeUtil.SeSenao(AAmbiente=1, 'https://hom.nfe.fazenda.gov.br/SVC/NfeRetRecepcao/NfeRetRecepcao2.asmx',     'https://hom.nfe.fazenda.gov.br/SVC/NfeRetRecepcao/NfeRetRecepcao2.asmx');
+         LayNfeCancelamento  : Result := DFeUtil.SeSenao(AAmbiente=1, 'https://hom.nfe.fazenda.gov.br/SVC/NfeCancelamento/NfeCancelamento2.asmx',   'https://hom.nfe.fazenda.gov.br/SVC/NfeCancelamento/NfeCancelamento2.asmx');
+         LayNfeInutilizacao  : Result := DFeUtil.SeSenao(AAmbiente=1, '', '');
+         LayNfeConsulta      : Result := DFeUtil.SeSenao(AAmbiente=1, 'https://hom.nfe.fazenda.gov.br/SVC/NfeConsulta/NfeConsulta2.asmx',           'https://hom.nfe.fazenda.gov.br/SVC/NfeConsulta/NfeConsulta2.asmx');
+         LayNfeStatusServico : Result := DFeUtil.SeSenao(AAmbiente=1, 'https://hom.nfe.fazenda.gov.br/SVC/NfeStatusServico/NfeStatusServico2.asmx', 'https://hom.nfe.fazenda.gov.br/SVC/NfeStatusServico/NfeStatusServico2.asmx');
+         LayNFeCCe,
+         LayNFeEvento        : Result := DFeUtil.SeSenao(AAmbiente=1, '', '');
+       end;
+      end;
+  7 : begin
+       // SVC-RS SEFAZ VIRTUAL DE CONTINGENCIA - RIO GRANDE DO SUL
+       // Utilizado pelas UF: AM, BA, CE, ES, GO, MA, MT, MS, PA, PE, PI, PR, RN
+       case ALayOut of
+         LayNfeRecepcao      : Result := DFeUtil.SeSenao(AAmbiente=1, 'https://nfe.sefazvirtual.rs.gov.br/ws/Nferecepcao/NFeRecepcao2.asmx',           'https://homologacao.nfe.sefazvirtual.rs.gov.br/ws/Nferecepcao/NFeRecepcao2.asmx');
+         LayNfeRetRecepcao   : Result := DFeUtil.SeSenao(AAmbiente=1, 'https://nfe.sefazvirtual.rs.gov.br/ws/NfeRetRecepcao/NfeRetRecepcao2.asmx',     'https://homologacao.nfe.sefazvirtual.rs.gov.br/ws/NfeRetRecepcao/NfeRetRecepcao2.asmx');
+         LayNfeCancelamento  : Result := DFeUtil.SeSenao(AAmbiente=1, 'https://nfe.sefazvirtual.rs.gov.br/ws/NfeCancelamento/NfeCancelamento2.asmx',   'https://homologacao.nfe.sefazvirtual.rs.gov.br/ws/NfeCancelamento/NfeCancelamento2.asmx');
+         LayNfeInutilizacao  : Result := DFeUtil.SeSenao(AAmbiente=1, '', '');
+         LayNfeConsulta      : Result := DFeUtil.SeSenao(AAmbiente=1, 'https://nfe.sefazvirtual.rs.gov.br/ws/NfeConsulta/NfeConsulta2.asmx',           'https://homologacao.nfe.sefazvirtual.rs.gov.br/ws/NfeConsulta/NfeConsulta2.asmx');
+         LayNfeStatusServico : Result := DFeUtil.SeSenao(AAmbiente=1, 'https://nfe.sefazvirtual.rs.gov.br/ws/NfeStatusServico/NfeStatusServico2.asmx', 'https://homologacao.nfe.sefazvirtual.rs.gov.br/ws/NfeStatusServico/NfeStatusServico2.asmx');
+         LayNFeCCe,
+         LayNFeEvento        : Result := DFeUtil.SeSenao(AAmbiente=1, '', '');
+       end;
+      end;
   end;
   if Result = '' then
      raise EACBrNFeException.Create('URL não disponível para o estado solicitado.');
@@ -1317,16 +1346,16 @@ begin
       LayNFeEvento        : Result := DFeUtil.SeSenao(AAmbiente=1, 'https://nfe.sefaz.rs.gov.br/ws/recepcaoevento/recepcaoevento.asmx', 'https://homologacao.nfe.sefaz.rs.gov.br/ws/recepcaoevento/recepcaoevento.asmx');
     end;
    end
-  else 
+  else
    begin
     case ALayOut of
-      LayNfeRecepcao      : Result := DFeUtil.SeSenao(AAmbiente=1, 'https://nfe.sefaz.rs.gov.br/ws/Nfeautorizacao/NFeautorizacao.asmx', 'https://homologacao.nfe.sefaz.rs.gov.br/ws/Nfeautorizacao/NFeautorizacao.asmx');
-      LayNfeRetRecepcao   : Result := DFeUtil.SeSenao(AAmbiente=1, 'https://nfe.sefaz.rs.gov.br/ws/NferetAutorizacao/NFeretAutorizacao.asmx', 'https://homologacao.nfe.sefaz.rs.gov.br/ws/NferetAutorizacao/NFeretAutorizacao.asmx');
-      LayNfeInutilizacao  : Result := DFeUtil.SeSenao(AAmbiente=1, '', '');
-      LayNfeConsulta      : Result := DFeUtil.SeSenao(AAmbiente=1, '', '');
-      LayNfeStatusServico : Result := DFeUtil.SeSenao(AAmbiente=1, '', '');
+      LayNfeRecepcao      : Result := DFeUtil.SeSenao(AAmbiente=1, 'https://nfe.sefaz.rs.gov.br/ws/NfeAutorizacao/NFeAutorizacao.asmx', 'https://homologacao.nfe.sefaz.rs.gov.br/ws/NfeAutorizacao/NFeAutorizacao.asmx');
+      LayNfeRetRecepcao   : Result := DFeUtil.SeSenao(AAmbiente=1, 'https://nfe.sefaz.rs.gov.br/ws/NfeRetAutorizacao/NFeRetAutorizacao.asmx', 'https://homologacao.nfe.sefaz.rs.gov.br/ws/NfeRetAutorizacao/NFeRetAutorizacao.asmx');
+      LayNfeInutilizacao  : Result := DFeUtil.SeSenao(AAmbiente=1, 'https://nfe.sefaz.rs.gov.br/ws/nfeinutilizacao/nfeinutilizacao2.asmx', 'https://homologacao.nfe.sefaz.rs.gov.br/ws/nfeinutilizacao/nfeinutilizacao2.asmx');
+      LayNfeConsulta      : Result := DFeUtil.SeSenao(AAmbiente=1, 'https://nfe.sefaz.rs.gov.br/ws/NfeConsulta/NfeConsulta2.asmx', 'https://homologacao.nfe.sefaz.rs.gov.br/ws/NfeConsulta/NfeConsulta2.asmx');
+      LayNfeStatusServico : Result := DFeUtil.SeSenao(AAmbiente=1, 'https://nfe.sefaz.rs.gov.br/ws/NfeStatusServico/NfeStatusServico2.asmx', 'https://homologacao.nfe.sefaz.rs.gov.br/ws/NfeStatusServico/NfeStatusServico2.asmx');
       LayNFeCCe,
-      LayNFeEvento        : Result := DFeUtil.SeSenao(AAmbiente=1, '', '');
+      LayNFeEvento        : Result := DFeUtil.SeSenao(AAmbiente=1, 'https://nfe.sefaz.rs.gov.br/ws/recepcaoevento/recepcaoevento.asmx', 'https://homologacao.nfe.sefaz.rs.gov.br/ws/recepcaoevento/recepcaoevento.asmx');
     end;
    end;
 end;
@@ -1364,7 +1393,8 @@ end;
 
 {$IFDEF ACBrNFeOpenSSL}
 function ValidaLibXML(const AXML: AnsiString;
-  var AMsg: AnsiString; const APathSchemas: string = ''; AModeloDF: TpcnModeloDF = moNFe): Boolean;
+  var AMsg: AnsiString; const APathSchemas: string = ''; AModeloDF: TpcnModeloDF = moNFe;
+  AVersaoDF: TpcnVersaoDF = ve200): Boolean;
 var
  doc, schema_doc : xmlDocPtr;
  parser_ctxt : xmlSchemaParserCtxtPtr;
@@ -1385,19 +1415,26 @@ begin
    begin
     case Tipo of
       1: schema_filename := DFeUtil.SeSenao(DFeUtil.EstaVazio(APathSchemas),PathWithDelim(ExtractFileDir(DFeUtil.PathAplication))+
-                                             'Schemas\',PathWithDelim(APathSchemas))+'nfe_v' + NFenviNFe + '.xsd';
+                                             'Schemas\',PathWithDelim(APathSchemas))+'nfe_v' +
+                                             GetVersaoNFe(AModeloDF, AVersaoDF, LayNfeRecepcao) + '.xsd';
       2: schema_filename := DFeUtil.SeSenao(DFeUtil.EstaVazio(APathSchemas),PathWithDelim(ExtractFileDir(DFeUtil.PathAplication))+
-                                             'Schemas\',PathWithDelim(APathSchemas))+'cancNFe_v' + NFecancNFe + '.xsd';
+                                             'Schemas\',PathWithDelim(APathSchemas))+'cancNFe_v' +
+                                             GetVersaoNFe(AModeloDF, AVersaoDF, LayNfeCancelamento) + '.xsd';
       3: schema_filename := DFeUtil.SeSenao(DFeUtil.EstaVazio(APathSchemas),PathWithDelim(ExtractFileDir(DFeUtil.PathAplication))+
-                                             'Schemas\',PathWithDelim(APathSchemas))+'inutNFe_v' + NFeinutNFe + '.xsd';
+                                             'Schemas\',PathWithDelim(APathSchemas))+'inutNFe_v' +
+                                             GetVersaoNFe(AModeloDF, AVersaoDF, LayNfeInutilizacao) + '.xsd';
       4: schema_filename := DFeUtil.SeSenao(DFeUtil.EstaVazio(APathSchemas),PathWithDelim(ExtractFileDir(DFeUtil.PathAplication))+
-                                             'Schemas\',PathWithDelim(APathSchemas))+'envDPEC_v' + NFeEnvDPEC + '.xsd';
+                                             'Schemas\',PathWithDelim(APathSchemas))+'envDPEC_v' +
+                                             GetVersaoNFe(AModeloDF, AVersaoDF, LayNfeEnvDPEC) + '.xsd';
       5: schema_filename := DFeUtil.SeSenao(DFeUtil.EstaVazio(APathSchemas),PathWithDelim(ExtractFileDir(DFeUtil.PathAplication))+
-                                             'Schemas\',PathWithDelim(APathSchemas))+'envCCe_v' + NFeCCeNFe + '.xsd';
+                                             'Schemas\',PathWithDelim(APathSchemas))+'envCCe_v' +
+                                             GetVersaoNFe(AModeloDF, AVersaoDF, LayNfeCCe) + '.xsd';
       6: schema_filename := DFeUtil.SeSenao(DFeUtil.EstaVazio(APathSchemas),PathWithDelim(ExtractFileDir(DFeUtil.PathAplication))+
-                                             'Schemas\',PathWithDelim(APathSchemas))+'envEventoCancNFe_v' + NFeEventoNFe + '.xsd';
+                                             'Schemas\',PathWithDelim(APathSchemas))+'envEventoCancNFe_v' +
+                                             GetVersaoNFe(AModeloDF, AVersaoDF, LayNfeEvento) + '.xsd';
       7..10: schema_filename := DFeUtil.SeSenao(DFeUtil.EstaVazio(APathSchemas),PathWithDelim(ExtractFileDir(DFeUtil.PathAplication))+
-                                                 'Schemas\',PathWithDelim(APathSchemas))+'envConfRecebto_v' + NFeEventoNFe + '.xsd';
+                                                 'Schemas\',PathWithDelim(APathSchemas))+'envConfRecebto_v' +
+                                                 GetVersaoNFe(AModeloDF, AVersaoDF, LayNfeEvento) + '.xsd';
       else schema_filename := '';
     end;
    end
@@ -1405,19 +1442,26 @@ begin
    begin
     case Tipo of
       1: schema_filename := DFeUtil.SeSenao(DFeUtil.EstaVazio(APathSchemas),PathWithDelim(ExtractFileDir(DFeUtil.PathAplication))+
-                                             'Schemas\',PathWithDelim(APathSchemas))+'nfe_v' + NFCeEnvi + '.xsd';
+                                             'Schemas\',PathWithDelim(APathSchemas))+'nfe_v' +
+                                             GetVersaoNFe(AModeloDF, AVersaoDF, LayNfeRecepcao) + '.xsd';
       2: schema_filename := DFeUtil.SeSenao(DFeUtil.EstaVazio(APathSchemas),PathWithDelim(ExtractFileDir(DFeUtil.PathAplication))+
-                                             'Schemas\',PathWithDelim(APathSchemas))+'cancNFe_v' + NFCeCanc + '.xsd';
+                                             'Schemas\',PathWithDelim(APathSchemas))+'cancNFe_v' +
+                                             GetVersaoNFe(AModeloDF, AVersaoDF, LayNfeCancelamento) + '.xsd';
       3: schema_filename := DFeUtil.SeSenao(DFeUtil.EstaVazio(APathSchemas),PathWithDelim(ExtractFileDir(DFeUtil.PathAplication))+
-                                             'Schemas\',PathWithDelim(APathSchemas))+'inutNFe_v' + NFCeInut + '.xsd';
+                                             'Schemas\',PathWithDelim(APathSchemas))+'inutNFe_v' +
+                                             GetVersaoNFe(AModeloDF, AVersaoDF, LayNfeInutilizacao) + '.xsd';
       4: schema_filename := DFeUtil.SeSenao(DFeUtil.EstaVazio(APathSchemas),PathWithDelim(ExtractFileDir(DFeUtil.PathAplication))+
-                                             'Schemas\',PathWithDelim(APathSchemas))+'envDPEC_v' + NFCeEnvDPEC + '.xsd';
+                                             'Schemas\',PathWithDelim(APathSchemas))+'envDPEC_v' +
+                                             GetVersaoNFe(AModeloDF, AVersaoDF, LayNfeEnvDPEC) + '.xsd';
       5: schema_filename := DFeUtil.SeSenao(DFeUtil.EstaVazio(APathSchemas),PathWithDelim(ExtractFileDir(DFeUtil.PathAplication))+
-                                             'Schemas\',PathWithDelim(APathSchemas))+'envCCe_v' + NFCeCCe + '.xsd';
+                                             'Schemas\',PathWithDelim(APathSchemas))+'envCCe_v' +
+                                             GetVersaoNFe(AModeloDF, AVersaoDF, LayNfeCCe) + '.xsd';
       6: schema_filename := DFeUtil.SeSenao(DFeUtil.EstaVazio(APathSchemas),PathWithDelim(ExtractFileDir(DFeUtil.PathAplication))+
-                                             'Schemas\',PathWithDelim(APathSchemas))+'envEventoCancNFe_v' + NFCeEvento + '.xsd';
+                                             'Schemas\',PathWithDelim(APathSchemas))+'envEventoCancNFe_v' +
+                                             GetVersaoNFe(AModeloDF, AVersaoDF, LayNfeEvento) + '.xsd';
       7..10: schema_filename := DFeUtil.SeSenao(DFeUtil.EstaVazio(APathSchemas),PathWithDelim(ExtractFileDir(DFeUtil.PathAplication))+
-                                                 'Schemas\',PathWithDelim(APathSchemas))+'envConfRecebto_v' + NFCeEvento + '.xsd';
+                                                 'Schemas\',PathWithDelim(APathSchemas))+'envConfRecebto_v' +
+                                                 GetVersaoNFe(AModeloDF, AVersaoDF, LayNfeEvento) + '.xsd';
       else schema_filename := '';
     end;
    end;
@@ -1608,13 +1652,14 @@ begin
   xmlFreeDoc(doc);}
 end;
 {$ELSE}
-function ValidaMSXML(XML: AnsiString; out Msg: AnsiString; const APathSchemas: string = ''; AModeloDF: TpcnModeloDF = moNFe): Boolean;
+function ValidaMSXML(XML: AnsiString; out Msg: AnsiString; const APathSchemas: string = '';
+                     AModeloDF: TpcnModeloDF = moNFe; AVersaoDF: TpcnVersaoDF = ve200): Boolean;
 var
   DOMDocument: IXMLDOMDocument2;
   ParseError: IXMLDOMParseError;
   Schema: XMLSchemaCache;
   Tipo,I: Integer;
-  schema_filename : String;
+  schema_filename: String;
 begin
   Tipo := NotaUtil.IdentificaTipoSchema(XML,I) ;
 
@@ -1630,23 +1675,30 @@ begin
      raise EACBrNFeException.Create('Diretório de Schemas não encontrado'+sLineBreak+
                            DFeUtil.SeSenao(DFeUtil.EstaVazio(APathSchemas),PathWithDelim(ExtractFileDir(application.ExeName))+'Schemas',PathWithDelim(APathSchemas)));
 
-  if AModeloDF = moNFe then 
+  if AModeloDF = moNFe then
    begin
     case Tipo of
       1: schema_filename := DFeUtil.SeSenao(DFeUtil.EstaVazio(APathSchemas),PathWithDelim(ExtractFileDir(application.ExeName))+
-                                             'Schemas\',PathWithDelim(APathSchemas))+'nfe_v' + NFenviNFe + '.xsd';
+                                             'Schemas\',PathWithDelim(APathSchemas))+'nfe_v' +
+                                             GetVersaoNFe(AModeloDF, AVersaoDF, LayNfeRecepcao) + '.xsd';
       2: schema_filename := DFeUtil.SeSenao(DFeUtil.EstaVazio(APathSchemas),PathWithDelim(ExtractFileDir(application.ExeName))+
-                                             'Schemas\',PathWithDelim(APathSchemas))+'cancNFe_v' + NFecancNFe + '.xsd';
+                                             'Schemas\',PathWithDelim(APathSchemas))+'cancNFe_v' +
+                                             GetVersaoNFe(AModeloDF, AVersaoDF, LayNfeCancelamento) + '.xsd';
       3: schema_filename := DFeUtil.SeSenao(DFeUtil.EstaVazio(APathSchemas),PathWithDelim(ExtractFileDir(application.ExeName))+
-                                             'Schemas\',PathWithDelim(APathSchemas))+'inutNFe_v' + NFeinutNFe + '.xsd';
+                                             'Schemas\',PathWithDelim(APathSchemas))+'inutNFe_v' +
+                                             GetVersaoNFe(AModeloDF, AVersaoDF, LayNfeInutilizacao) + '.xsd';
       4: schema_filename := DFeUtil.SeSenao(DFeUtil.EstaVazio(APathSchemas),PathWithDelim(ExtractFileDir(application.ExeName))+
-                                             'Schemas\',PathWithDelim(APathSchemas))+'envDPEC_v' + NFeEnvDPEC + '.xsd';
+                                             'Schemas\',PathWithDelim(APathSchemas))+'envDPEC_v' +
+                                             GetVersaoNFe(AModeloDF, AVersaoDF, LayNfeEnvDPEC) + '.xsd';
       5: schema_filename := DFeUtil.SeSenao(DFeUtil.EstaVazio(APathSchemas),PathWithDelim(ExtractFileDir(application.ExeName))+
-                                             'Schemas\',PathWithDelim(APathSchemas))+'envCCe_v' + NFeCCeNFe + '.xsd';
+                                             'Schemas\',PathWithDelim(APathSchemas))+'envCCe_v' +
+                                             GetVersaoNFe(AModeloDF, AVersaoDF, LayNfeCCe) + '.xsd';
       6: schema_filename := DFeUtil.SeSenao(DFeUtil.EstaVazio(APathSchemas),PathWithDelim(ExtractFileDir(application.ExeName))+
-                                             'Schemas\',PathWithDelim(APathSchemas))+'envEventoCancNFe_v' + NFeEventoNFe + '.xsd';
+                                             'Schemas\',PathWithDelim(APathSchemas))+'envEventoCancNFe_v' +
+                                             GetVersaoNFe(AModeloDF, AVersaoDF, LayNfeEvento) + '.xsd';
       7..10: schema_filename := DFeUtil.SeSenao(DFeUtil.EstaVazio(APathSchemas),PathWithDelim(ExtractFileDir(application.ExeName))+
-                                                 'Schemas\',PathWithDelim(APathSchemas))+'envConfRecebto_v' + NFeEventoNFe + '.xsd';
+                                                 'Schemas\',PathWithDelim(APathSchemas))+'envConfRecebto_v' +
+                                                 GetVersaoNFe(AModeloDF, AVersaoDF, LayNfeEvento) + '.xsd';
       else schema_filename := '';
     end;
    end
@@ -1654,19 +1706,26 @@ begin
    begin
     case Tipo of
       1: schema_filename := DFeUtil.SeSenao(DFeUtil.EstaVazio(APathSchemas),PathWithDelim(ExtractFileDir(application.ExeName))+
-                                             'Schemas\',PathWithDelim(APathSchemas))+'nfe_v' + NFCeEnvi + '.xsd';
+                                             'Schemas\',PathWithDelim(APathSchemas))+'nfe_v' +
+                                             GetVersaoNFe(AModeloDF, AVersaoDF, LayNfeRecepcao) + '.xsd';
       2: schema_filename := DFeUtil.SeSenao(DFeUtil.EstaVazio(APathSchemas),PathWithDelim(ExtractFileDir(application.ExeName))+
-                                             'Schemas\',PathWithDelim(APathSchemas))+'cancNFe_v' + NFCeCanc + '.xsd';
+                                             'Schemas\',PathWithDelim(APathSchemas))+'cancNFe_v' +
+                                             GetVersaoNFe(AModeloDF, AVersaoDF, LayNfeCancelamento) + '.xsd';
       3: schema_filename := DFeUtil.SeSenao(DFeUtil.EstaVazio(APathSchemas),PathWithDelim(ExtractFileDir(application.ExeName))+
-                                             'Schemas\',PathWithDelim(APathSchemas))+'inutNFe_v' + NFCeInut + '.xsd';
+                                             'Schemas\',PathWithDelim(APathSchemas))+'inutNFe_v' +
+                                             GetVersaoNFe(AModeloDF, AVersaoDF, LayNfeInutilizacao) + '.xsd';
       4: schema_filename := DFeUtil.SeSenao(DFeUtil.EstaVazio(APathSchemas),PathWithDelim(ExtractFileDir(application.ExeName))+
-                                             'Schemas\',PathWithDelim(APathSchemas))+'envDPEC_v' + NFCeEnvDPEC + '.xsd';
+                                             'Schemas\',PathWithDelim(APathSchemas))+'envDPEC_v' +
+                                             GetVersaoNFe(AModeloDF, AVersaoDF, LayNfeEnvDPEC) + '.xsd';
       5: schema_filename := DFeUtil.SeSenao(DFeUtil.EstaVazio(APathSchemas),PathWithDelim(ExtractFileDir(application.ExeName))+
-                                             'Schemas\',PathWithDelim(APathSchemas))+'envCCe_v' + NFCeCCe + '.xsd';
+                                             'Schemas\',PathWithDelim(APathSchemas))+'envCCe_v' +
+                                             GetVersaoNFe(AModeloDF, AVersaoDF, LayNfeCCe) + '.xsd';
       6: schema_filename := DFeUtil.SeSenao(DFeUtil.EstaVazio(APathSchemas),PathWithDelim(ExtractFileDir(application.ExeName))+
-                                             'Schemas\',PathWithDelim(APathSchemas))+'envEventoCancNFe_v' + NFCeEvento + '.xsd';
+                                             'Schemas\',PathWithDelim(APathSchemas))+'envEventoCancNFe_v' +
+                                             GetVersaoNFe(AModeloDF, AVersaoDF, LayNfeEvento) + '.xsd';
       7..10: schema_filename := DFeUtil.SeSenao(DFeUtil.EstaVazio(APathSchemas),PathWithDelim(ExtractFileDir(application.ExeName))+
-                                                 'Schemas\',PathWithDelim(APathSchemas))+'envConfRecebto_v' + NFCeEvento + '.xsd';
+                                                 'Schemas\',PathWithDelim(APathSchemas))+'envConfRecebto_v' +
+                                                 GetVersaoNFe(AModeloDF, AVersaoDF, LayNfeEvento) + '.xsd';
       else schema_filename := '';
     end;
    end;
@@ -1788,12 +1847,13 @@ begin
 end;
 
 class function NotaUtil.Valida(const AXML: AnsiString;
-  var AMsg: AnsiString; const APathSchemas: string = ''; AModeloDF: TpcnModeloDF = moNFe): Boolean;
+  var AMsg: AnsiString; const APathSchemas: string = '';
+  AModeloDF: TpcnModeloDF = moNFe; AVersaoDF: TpcnVersaoDF = ve200): Boolean;
 begin
 {$IFDEF ACBrNFeOpenSSL}
-  Result := ValidaLibXML(AXML,AMsg,APathSchemas, AModeloDF);
+  Result := ValidaLibXML(AXML,AMsg,APathSchemas, AModeloDF, AVersaoDF);
 {$ELSE}
-  Result := ValidaMSXML(AXML,AMsg,APathSchemas, AModeloDF);
+  Result := ValidaMSXML(AXML,AMsg,APathSchemas, AModeloDF, AVersaoDF);
 {$ENDIF}
 end;
 
@@ -2216,8 +2276,12 @@ begin
       wchave:=wchave+'2'
    else if FNFe.Ide.tpEmis=teFSDA then
       wchave:=wchave+'5'
+   else if FNFe.Ide.tpEmis=teSVCAN then
+      wchave:=wchave+'6'
+   else if FNFe.Ide.tpEmis=teSVCRS then
+      wchave:=wchave+'7'
    else
-      wchave:=wchave+'0'; //esta valor caracteriza ERRO, valor tem q ser  2 ou 5
+      wchave:=wchave+'0'; //este valor caracteriza ERRO, valor tem q ser  2, 5, 6 ou 7
 
    //CNPJ OU CPF
    if (FNFe.Dest.EnderDest.UF='EX') then

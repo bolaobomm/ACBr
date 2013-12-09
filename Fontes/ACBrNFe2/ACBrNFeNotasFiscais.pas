@@ -1,7 +1,7 @@
 {******************************************************************************}
 { Projeto: Componente ACBrNFe                                                  }
 {  Biblioteca multiplataforma de componentes Delphi para emissão de Nota Fiscal}
-{ eletrônica - NFe - http://www.nfe.fazenda.gov.br                          }
+{ eletrônica - NFe - http://www.nfe.fazenda.gov.br                             }
 {                                                                              }
 { Direitos Autorais Reservados (c) 2008 Wemerson Souto                         }
 {                                       Daniel Simoes de Almeida               }
@@ -175,18 +175,25 @@ begin
   inherited Create(Collection2);
   FNFe := TNFe.Create;
 
-  FNFe.infNFe.Versao := 2;
+  case TACBrNFe( TNotasFiscais( Collection ).ACBrNFe ).Configuracoes.Geral.ModeloDF of
+   moNFe:  FNFe.Ide.modelo := 55;
+   moNFCe: FNFe.Ide.modelo := 65;
+  end;
 
-  FNFe.Ide.tpNF   := tnSaida;
-  FNFe.Ide.modelo := 55;
+  case TACBrNFe( TNotasFiscais( Collection ).ACBrNFe ).Configuracoes.Geral.VersaoDF of
+   ve200: FNFe.infNFe.Versao := 2;
+   ve300: FNFe.infNFe.Versao := 3;
+   ve310: FNFe.infNFe.Versao := 3.1;
+  end;
 
-  FNFe.Ide.tpNF      := tnSaida;
-  FNFe.Ide.indPag    := ipVista;
-  FNFe.Ide.verProc   := 'ACBrNFe2';
-  FNFe.Ide.tpAmb     := TACBrNFe( TNotasFiscais( Collection ).ACBrNFe ).Configuracoes.WebServices.Ambiente  ;
-  FNFe.Ide.tpEmis    := TACBrNFe( TNotasFiscais( Collection ).ACBrNFe ).Configuracoes.Geral.FormaEmissao ;
+  FNFe.Ide.tpNF    := tnSaida;
+  FNFe.Ide.indPag  := ipVista;
+  FNFe.Ide.verProc := 'ACBrNFe2';
+  FNFe.Ide.tpAmb   := TACBrNFe( TNotasFiscais( Collection ).ACBrNFe ).Configuracoes.WebServices.Ambiente  ;
+  FNFe.Ide.tpEmis  := TACBrNFe( TNotasFiscais( Collection ).ACBrNFe ).Configuracoes.Geral.FormaEmissao ;
+
   if Assigned(TACBrNFe( TNotasFiscais( Collection ).ACBrNFe ).DANFE) then
-     FNFe.Ide.tpImp     := TACBrNFe( TNotasFiscais( Collection ).ACBrNFe ).DANFE.TipoDANFE ;
+     FNFe.Ide.tpImp := TACBrNFe( TNotasFiscais( Collection ).ACBrNFe ).DANFE.TipoDANFE ;
 
   FNFe.Emit.EnderEmit.xPais := 'BRASIL';
   FNFe.Emit.EnderEmit.cPais := 1058;
@@ -195,12 +202,6 @@ begin
   FNFe.Dest.EnderDest.xPais := 'BRASIL';
   FNFe.Dest.EnderDest.cPais := 1058;
   FNFe.Dest.EnderDest.nro   := 'SEM NUMERO';
-
-  if (TACBrNFe( TNotasFiscais( Collection ).ACBrNFe ).Configuracoes.Geral.ModeloDF = moNFCe)
-   then begin
-    FNFe.infNFe.Versao := 3;
-    FNFe.Ide.modelo    := 65;
-   end;
 
 end;
 
@@ -237,10 +238,14 @@ begin
         LocNFeW.schema := TsPL005c;
         LocNFeW.Opcoes.GerarTXTSimultaneamente := SalvaTXT;
 
-        if (TACBrNFe( TNotasFiscais( Collection ).ACBrNFe ).Configuracoes.Geral.ModeloDF = moNFCe) then
-           NFe.infNFe.Versao := DFeUtil.StringToFloat(NFCeEnvi)
-        else
-           NFe.infNFe.Versao := DFeUtil.StringToFloat(NFenviNFe);
+        NFe.infNFe.Versao := DFeUtil.StringToFloat(GetVersaoNFe(TACBrNFe( TNotasFiscais( Collection ).ACBrNFe ).Configuracoes.Geral.ModeloDF,
+                                              TACBrNFe( TNotasFiscais( Collection ).ACBrNFe ).Configuracoes.Geral.VersaoDF,
+                                              LayNfeRecepcao));
+
+//        if (TACBrNFe( TNotasFiscais( Collection ).ACBrNFe ).Configuracoes.Geral.ModeloDF = moNFCe) then
+//           NFe.infNFe.Versao := DFeUtil.StringToFloat(NFCeEnvi)
+//        else
+//           NFe.infNFe.Versao := DFeUtil.StringToFloat(NFenviNFe);
 
         LocNFeW.Gerador.Opcoes.FormatoAlerta := TACBrNFe( TNotasFiscais( Collection ).ACBrNFe ).Configuracoes.Geral.FormatoAlerta;
         LocNFeW.GerarXml;
@@ -273,11 +278,14 @@ begin
      try
         LocNFeW.schema := TsPL005c;
 
-        
-        if (TACBrNFe( TNotasFiscais( Collection ).ACBrNFe ).Configuracoes.Geral.ModeloDF = moNFCe) then
-           NFe.infNFe.Versao := DFeUtil.StringToFloat(NFCeEnvi)
-        else
-           NFe.infNFe.Versao := DFeUtil.StringToFloat(NFenviNFe);
+        NFe.infNFe.Versao := DFeUtil.StringToFloat(GetVersaoNFe(TACBrNFe( TNotasFiscais( Collection ).ACBrNFe ).Configuracoes.Geral.ModeloDF,
+                                              TACBrNFe( TNotasFiscais( Collection ).ACBrNFe ).Configuracoes.Geral.VersaoDF,
+                                              LayNfeRecepcao));
+
+//        if (TACBrNFe( TNotasFiscais( Collection ).ACBrNFe ).Configuracoes.Geral.ModeloDF = moNFCe) then
+//           NFe.infNFe.Versao := DFeUtil.StringToFloat(NFCeEnvi)
+//        else
+//           NFe.infNFe.Versao := DFeUtil.StringToFloat(NFenviNFe);
 
         LocNFeW.Gerador.Opcoes.FormatoAlerta := TACBrNFe( TNotasFiscais( Collection ).ACBrNFe ).Configuracoes.Geral.FormatoAlerta;
         LocNFeW.GerarXml;
@@ -369,10 +377,14 @@ begin
  try
     LocNFeW.schema := TsPL005c;
 
-    if (TACBrNFe( TNotasFiscais( Collection ).ACBrNFe ).Configuracoes.Geral.ModeloDF = moNFCe) then
-       Self.NFe.infNFe.Versao := DFeUtil.StringToFloat(NFCeEnvi)
-    else
-       Self.NFe.infNFe.Versao := DFeUtil.StringToFloat(NFenviNFe);
+    NFe.infNFe.Versao := DFeUtil.StringToFloat(GetVersaoNFe(TACBrNFe( TNotasFiscais( Collection ).ACBrNFe ).Configuracoes.Geral.ModeloDF,
+                                              TACBrNFe( TNotasFiscais( Collection ).ACBrNFe ).Configuracoes.Geral.VersaoDF,
+                                              LayNfeRecepcao));
+
+//    if (TACBrNFe( TNotasFiscais( Collection ).ACBrNFe ).Configuracoes.Geral.ModeloDF = moNFCe) then
+//       Self.NFe.infNFe.Versao := DFeUtil.StringToFloat(NFCeEnvi)
+//    else
+//       Self.NFe.infNFe.Versao := DFeUtil.StringToFloat(NFenviNFe);
 
     LocNFeW.Gerador.Opcoes.FormatoAlerta := TACBrNFe( TNotasFiscais( Collection ).ACBrNFe ).Configuracoes.Geral.FormatoAlerta;       
     LocNFeW.GerarXml;
@@ -434,10 +446,14 @@ begin
      try
         LocNFeW.schema := TsPL005c;
 
-        if (FConfiguracoes.Geral.ModeloDF = moNFCe) then
-           Self.Items[i].NFe.infNFe.Versao := DFeUtil.StringToFloat(NFCeEnvi)
-        else
-           Self.Items[i].NFe.infNFe.Versao := DFeUtil.StringToFloat(NFenviNFe);
+        Self.Items[i].NFe.infNFe.Versao := DFeUtil.StringToFloat(GetVersaoNFe(FConfiguracoes.Geral.ModeloDF,
+                                              FConfiguracoes.Geral.VersaoDF,
+                                              LayNfeRecepcao));
+
+//        if (FConfiguracoes.Geral.ModeloDF = moNFCe) then
+//           Self.Items[i].NFe.infNFe.Versao := DFeUtil.StringToFloat(NFCeEnvi)
+//        else
+//           Self.Items[i].NFe.infNFe.Versao := DFeUtil.StringToFloat(NFenviNFe);
 
         LocNFeW.Gerador.Opcoes.FormatoAlerta := FConfiguracoes.Geral.FormatoAlerta;
         LocNFeW.GerarXml;
@@ -487,10 +503,15 @@ begin
     try
        LocNFeW.schema := TsPL006;
 
-       if (FConfiguracoes.Geral.ModeloDF = moNFCe) then
-          Self.Items[i].NFe.infNFe.Versao := DFeUtil.StringToFloat(NFCeEnvi)
-       else
-          Self.Items[i].NFe.infNFe.Versao := DFeUtil.StringToFloat(NFenviNFe);
+       Self.Items[i].NFe.infNFe.Versao := DFeUtil.StringToFloat(GetVersaoNFe(FConfiguracoes.Geral.ModeloDF,
+                                              FConfiguracoes.Geral.VersaoDF,
+                                              LayNfeRecepcao));
+
+//       if (FConfiguracoes.Geral.ModeloDF = moNFCe) then
+//          Self.Items[i].NFe.infNFe.Versao := DFeUtil.StringToFloat(NFCeEnvi)
+//       else
+//          Self.Items[i].NFe.infNFe.Versao := DFeUtil.StringToFloat(NFenviNFe);
+
        LocNFeW.Gerador.Opcoes.FormatoAlerta := FConfiguracoes.Geral.FormatoAlerta;
        LocNFeW.GerarXml;
        Self.Items[i].XML := LocNFeW.Gerador.ArquivoFormatoXML;
@@ -547,7 +568,9 @@ begin
      if pos('<Signature',Self.Items[i].XML) = 0 then
         Assinar;
      if not(NotaUtil.Valida(('<NFe xmlns' + RetornarConteudoEntre(Self.Items[i].XML, '<NFe xmlns', '</NFe>')+ '</NFe>'),
-                            FMsg, Self.FConfiguracoes.Geral.PathSchemas, Self.FConfiguracoes.Geral.ModeloDF)) then
+                            FMsg, Self.FConfiguracoes.Geral.PathSchemas,
+                            Self.FConfiguracoes.Geral.ModeloDF,
+                            Self.FConfiguracoes.Geral.VersaoDF)) then
       begin
         Self.Items[i].ErroValidacaoCompleto := 'Falha na validação dos dados da nota '+
                                                IntToStr(Self.Items[i].NFe.Ide.nNF)+sLineBreak+
@@ -759,10 +782,14 @@ begin
         LocNFeW.schema := TsPL006;
         LocNFeW.Opcoes.GerarTXTSimultaneamente:=true;
 
-        if (FConfiguracoes.Geral.ModeloDF= moNFCe) then
-           Self.Items[i].NFe.infNFe.Versao := DFeUtil.StringToFloat(NFCeEnvi)
-        else
-           Self.Items[i].NFe.infNFe.Versao := DFeUtil.StringToFloat(NFenviNFe);
+        Self.Items[i].NFe.infNFe.Versao := DFeUtil.StringToFloat(GetVersaoNFe(FConfiguracoes.Geral.ModeloDF,
+                                              FConfiguracoes.Geral.VersaoDF,
+                                              LayNfeRecepcao));
+
+//        if (FConfiguracoes.Geral.ModeloDF= moNFCe) then
+//           Self.Items[i].NFe.infNFe.Versao := DFeUtil.StringToFloat(NFCeEnvi)
+//        else
+//           Self.Items[i].NFe.infNFe.Versao := DFeUtil.StringToFloat(NFenviNFe);
 
         LocNFeW.Gerador.Opcoes.FormatoAlerta := FConfiguracoes.Geral.FormatoAlerta;
         LocNFeW.GerarXml;

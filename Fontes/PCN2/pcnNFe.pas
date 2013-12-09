@@ -1141,20 +1141,23 @@ type
     FvCOFINS: Currency;
     FdCompet: TDateTime;
     FvDeducao: Currency;
-    FvINSS: Currency;
-    FvIR: Currency;
-    FvCSLL: Currency;
+//    FvINSS: Currency;
+//    FvIR: Currency;
+//    FvCSLL: Currency;
     FvOutro: Currency;
     FvDescIncond: Currency;
     FvDescCond: Currency;
-    FindISSRet: TpcnindISSRet;
-    FindISS: TpcnindISS;
-    FcServico: String;
-    FcMun: integer;
-    FcPais: integer;
-    FnProcesso: String;
+//    FindISSRet: TpcnindISSRet;
+//    FindISS: TpcnindISS;
+//    FcServico: String;
+//    FcMun: integer;
+//    FcPais: integer;
+//    FnProcesso: String;
+
+    // Italo
+    FvISSRet: currency;
     FcRegTrib: TpcnRegTribISSQN;
-    FindIncentivo: TpcnindIncentivo;
+//    FindIncentivo: TpcnindIncentivo;
   published
     property vServ: Currency read FvServ write FvServ;
     property vBC: Currency read FvBC write FvBC;
@@ -1163,21 +1166,23 @@ type
     property vCOFINS: Currency read FvCOFINS write FvCOFINS;
     property dCompet: TDateTime read FdCompet write FdCompet;
     property vDeducao: Currency read FvDeducao write FvDeducao;
-    property vINSS: Currency read FvINSS write FvINSS;
-    property vIR: Currency read FvIR write FvIR;
-    property vCSLL: Currency read FvCSLL write FvCSLL;
+//    property vINSS: Currency read FvINSS write FvINSS;
+//    property vIR: Currency read FvIR write FvIR;
+//    property vCSLL: Currency read FvCSLL write FvCSLL;
     property vOutro: Currency read FvOutro write FvOutro;
     property vDescIncond: Currency read FvDescIncond write FvDescIncond;
     property vDescCond: Currency read FvDescCond write FvDescCond;
-    property indISSRet: TpcnindISSRet read FindISSRet write FindISSRet;
-    property indISS: TpcnindISS read FindISS write FindISS;
-    property cServico: String read FcServico write FcServico;
-    property cMun: integer read FcMun write FcMun;
-    property cPais: integer read FcPais write FcPais;
-    property nProcesso: String read FnProcesso write FnProcesso;
-    property cRegTrib: TpcnRegTribISSQN read FcRegTrib write FcRegTrib;
-    property indIncentivo: TpcnindIncentivo read FindIncentivo write FindIncentivo;
+//    property indISSRet: TpcnindISSRet read FindISSRet write FindISSRet;
+//    property indISS: TpcnindISS read FindISS write FindISS;
+//    property cServico: String read FcServico write FcServico;
+//    property cMun: integer read FcMun write FcMun;
+//    property cPais: integer read FcPais write FcPais;
+//    property nProcesso: String read FnProcesso write FnProcesso;
 
+    // Italo
+    property vISSRet: currency read FvISSRet write FvISSRet;
+    property cRegTrib: TpcnRegTribISSQN read FcRegTrib write FcRegTrib;
+//    property indIncentivo: TpcnindIncentivo read FindIncentivo write FindIncentivo;
   end;
 
   TretTrib = class(TPersistent)
@@ -1223,6 +1228,20 @@ type
     FcMunFG: integer;
     FcListServ: String;
     FcSitTrib: TpcnISSQNcSitTrib;
+    // italo
+    FvDeducao: currency;
+    FvOutro: currency;
+    FvDescIncond: currency;
+    FvDescCond: currency;
+    FindISSRet: TpcnindISSRet;
+    FvISSRet: currency;
+    FindISS: TpcnindISS;
+    FcServico: String;
+    FcMun: integer;
+    FcPais: integer;
+    FnProcesso: String;
+    FindIncentivo: TpcnindIncentivo;
+
   public
   published
     property vBC: currency read FvBC write FvBC;
@@ -1231,6 +1250,19 @@ type
     property cMunFG: integer read FcMunFG write FcMunFG;
     property cListServ: String read FcListServ write FcListServ;
     property cSitTrib: TpcnISSQNcSitTrib read FcSitTrib write FcSitTrib default ISSQNcSitTribVazio;
+    // italo
+    property vDeducao: currency read FvDeducao write FvDeducao;
+    property vOutro: currency read FvOutro write FvOutro;
+    property vDescIncond: currency read FvDescIncond write FvDescIncond;
+    property vDescCond: currency read FvDescCond write FvDescCond;
+    property indISSRet: TpcnindISSRet read FindISSRet write FindISSRet;
+    property vISSRet: currency read FvISSRet write FvISSRet;
+    property indISS: TpcnindISS read FindISS write FindISS;
+    property cServico: String read FcServico write FcServico;
+    property cMun: integer read FcMun write FcMun;
+    property cPais: integer read FcPais write FcPais;
+    property nProcesso: String read FnProcesso write FnProcesso;
+    property indIncentivo: TpcnindIncentivo read FindIncentivo write FindIncentivo;
   end;
 
   TTransp = class(TPersistent)

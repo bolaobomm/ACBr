@@ -161,9 +161,13 @@ begin
   if i = 0 then
     exit;
   Texto := copy(Texto, i, maxInt);
-  j:=pos('</' + Trim(TagFim) + '>',Texto);
+
+  // Alterado por Claudemir em 13/03/2013: j:=pos('</' + Trim(TagFim) + '>',Texto);
+  j:=pos('</' + Trim(TagFim) + '>',Texto) + length(Trim(TagFim)) + 3;
+
   if j=0 then
    j:=pos('</' + Trim(TagFim) + ':',Texto); //correção para webservice do Ceará
+
   Result := TrimRight(copy(Texto, 1, j - 1));
   FNivel.strings[nivel] := Result;
   FGrupo := result;

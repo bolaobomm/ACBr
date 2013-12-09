@@ -135,11 +135,14 @@ type
        FIniFinXMLSECAutomatico: boolean;
     {$ENDIF}
     FModeloDF: TpcnModeloDF;
-    FModeloDFCodigo: Integer; //Verificar
+    FVersaoDF: TpcnVersaoDF;
+    FModeloDFCodigo: Integer;  //Verificar
+
     procedure SetFormaEmissao(AValue: TpcnTipoEmissao);
     function GetPathSalvar: String;
     procedure SetModeloDF(AValue: TpcnModeloDF);
     function GetFormatoAlerta: string;
+    procedure SetVersaoDF(const Value: TpcnVersaoDF);
   public
     constructor Create(AOwner: TComponent); override ;
     function Save(AXMLName: String; AXMLFile: WideString; aPath: String = ''): Boolean;
@@ -157,6 +160,7 @@ type
        property IniFinXMLSECAutomatico: Boolean read FIniFinXMLSECAutomatico write FIniFinXMLSECAutomatico;
     {$ENDIF}
     property ModeloDF: TpcnModeloDF read FModeloDF write SetModeloDF default moNFe;
+    property VersaoDF: TpcnVersaoDF read FVersaoDF write SetVersaoDF default ve200;
     property ModeloDFCodigo: Integer read FModeloDFCodigo;
   end;
 
@@ -282,6 +286,8 @@ begin
      FIniFinXMLSECAutomatico:=True;
   {$ENDIF}
   FModeloDF           := moNFe;
+  FModeloDFCodigo     := StrToInt(ModeloDFToStr(FModeloDF));
+  FVersaoDF           := ve200;
 end;
 
 function TGeralConf.GetFormatoAlerta: string;
@@ -352,6 +358,18 @@ procedure TGeralConf.SetModeloDF(AValue: TpcnModeloDF);
 begin
   FModeloDF := AValue;
   FModeloDFCodigo := StrToInt(ModeloDFToStr(FModeloDF));
+
+  if FModeloDF = moNFe then
+    SetVersaoDF(ve200)
+  else
+    SetVersaoDF(ve300);
+end;
+
+procedure TGeralConf.SetVersaoDF(const Value: TpcnVersaoDF);
+begin
+  FVersaoDF := Value;
+  if (FModeloDF = moNFe) and (FVersaoDF = ve300) then FVersaoDF := ve200;
+  if (FModeloDF = moNFCe) and (FVersaoDF = ve200) then FVersaoDF := ve300;
 end;
 
 { TWebServicesConf }
