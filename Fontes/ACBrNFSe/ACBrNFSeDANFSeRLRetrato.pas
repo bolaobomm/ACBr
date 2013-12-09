@@ -8,13 +8,11 @@ interface
 
 uses
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
-  Dialogs, ExtCtrls, ACBrNFSeDANFSeRL, RLFilters, RLPDFFilter, RLReport, DB, DBClient,
+  Dialogs, ExtCtrls, ACBrNFSeDANFSeRL, RLFilters, RLPDFFilter, RLReport, DB,
   pnfsConversao, ACBrNFSeDANFSEClass, ACBrNFSeDANFSeRLClass;
 
 type
   TfrlDANFSeRLRetrato = class(TfrlDANFSeRL)
-    cdsItens: TClientDataSet;
-    cdsItensDISCRIMINACAO: TStringField;
     rlbCabecalho: TRLBand;
     rllNumNF0: TRLLabel;
     RLLabel13: TRLLabel;
