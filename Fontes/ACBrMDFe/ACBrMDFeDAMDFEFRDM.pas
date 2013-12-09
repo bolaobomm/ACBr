@@ -552,7 +552,7 @@ begin
     Clear;
     Add('Id', ftString, 44);
     Add('Chave', ftString, 60);
-    Add('Protocolo', ftString, 60);
+    Add('Protocolo', ftString, 120);
     Add('tpAmb', ftInteger);
     Add('tpEmit', ftInteger);
     Add('Modelo', ftString, 5);

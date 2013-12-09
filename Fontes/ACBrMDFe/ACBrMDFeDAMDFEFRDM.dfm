@@ -129,7 +129,7 @@ object DMACBrMDFeDAMDFEFR: TDMACBrMDFeDAMDFEFR
     DataSet = CDSModalFerrov
     BCDToCurrency = False
     Left = 392
-    Top = 146
+    Top = 154
   end
   object CDSModalFerrov: TClientDataSet
     Aggregates = <>
