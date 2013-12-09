@@ -736,9 +736,11 @@ begin
 //  2910727, // Eunapolis/BA
   2933307, // Vitoria da Conquista/BA
   3101607, // Alfenas/MG
+  3104007, // Araxá/MG
   3106705, // Betim/MG
   3115300, // Cataguases/MG
   3117504, // Conceicao do Mato Dentro/MG
+  3131703, // Itabira/MG
   3137601, // Lagoa Santa/MG
   3143906, // Muriae/MG
   3145604, // Oliveira/MG
@@ -798,8 +800,7 @@ begin
   4128104, // Umuarama/PR
   4202404, // Blumenau/SC
   4309308, // Guaiba/RS
-  4314407, // Pelotas/RS
-  3104007  // Araxá/MG
+  4314407 // Pelotas/RS
          : Provedor := 'GINFES';
 
     25300, // Goiânia/GO
