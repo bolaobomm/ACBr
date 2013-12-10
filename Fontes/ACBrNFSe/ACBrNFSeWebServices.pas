@@ -40,7 +40,8 @@ uses
     ACBrProvedorFiorilli, ACBrProvedorIssDsf, ACBrProvedorCoplan,
     ACBrProvedorProdata, ACBrProvedorAgili, ACBrProvedorFISSLex,
     ACBrProvedorVirtual, ACBrProvedorPVH, ACBrProvedorFreire,
-    ACBrProvedorLink3, ACBrProvedorSpeedGov, ACBrProvedorVitoria;
+    ACBrProvedorLink3, ACBrProvedorSpeedGov, ACBrProvedorVitoria,
+    ACBrProvedorMitra;
 
 type
 
@@ -635,6 +636,7 @@ begin
   proLink3:       FProvedorClass := TProvedorLink3.Create;
   proSpeedGov:    FProvedorClass := TProvedorSpeedGov.Create;
   proVitoria:     FProvedorClass := TProvedorVitoria.Create;
+  proMitra:       FProvedorClass := TProvedorMitra.Create;
  end;
 
  FPrefixo2     := FConfiguracoes.WebServices.Prefixo2;
@@ -2109,6 +2111,15 @@ begin
                                    '<' + Prefixo4 + 'InfDeclaracaoPrestacaoServico', '</Signature>') +
                                '</Signature>'+
                               '</' + Prefixo4 + 'Rps>';
+
+      proMitra: vNotas := vNotas +
+                              '<' + Prefixo4 + 'Rps>' +
+                               '<' + Prefixo4 + 'InfDeclaracaoPrestacaoServico' +
+                                 RetornarConteudoEntre(TNFSeGerarLoteRPS(Self).FNotasFiscais.Items[I].XML_Rps_Ass,
+                                   '<' + Prefixo4 + 'InfDeclaracaoPrestacaoServico', '</Signature>') +
+                               '</Signature>'+
+                              '</' + Prefixo4 + 'Rps>';
+
       proDigifred,
       proCoplan: vNotas := vNotas +
                               '<' + Prefixo4 + 'Rps ' +
@@ -2129,7 +2140,8 @@ begin
    for i := 0 to TNFSeGerarLoteRPS(Self).FNotasFiscais.Count-1 do
     begin
      if (FProvedor in [profintelISS, proSaatri, proGoiania, proISSDigital, proISSe,
-                       pro4R, proFiorilli, proProdata, proVitoria, proPVH, proAgili, proVirtual, proFreire, proLink3])
+                       pro4R, proFiorilli, proProdata, proVitoria, proPVH, proAgili,
+                       proVirtual, proFreire, proLink3, proMitra])
       then vNotas := vNotas + '<' + Prefixo4 + 'Rps>' +
                                '<' + Prefixo4 + 'InfDeclaracaoPrestacaoServico' +
                                  RetornarConteudoEntre(TNFSeGerarLoteRPS(Self).FNotasFiscais.Items[I].XML_Rps,

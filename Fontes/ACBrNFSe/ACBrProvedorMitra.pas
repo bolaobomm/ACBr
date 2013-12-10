@@ -1,6 +1,6 @@
 {$I ACBr.inc}
 
-unit ACBrProvedorNatal;
+unit ACBrProvedorMitra;
 
 interface
 
@@ -11,9 +11,9 @@ uses
   {$IFDEF COMPILER6_UP} DateUtils {$ELSE} ACBrD5, FileCtrl {$ENDIF};
 
 type
-  { TACBrProvedorNatal }
+  { TACBrProvedorMitra }
 
- TProvedorNatal = class(TProvedorClass)
+ TProvedorMitra = class(TProvedorClass)
   protected
    { protected }
   private
@@ -52,14 +52,14 @@ type
 
 implementation
 
-{ TProvedorNatal }
+{ TProvedorMitra }
 
-constructor TProvedorNatal.Create;
+constructor TProvedorMitra.Create;
 begin
  {----}
 end;
 
-function TProvedorNatal.GetConfigCidade(ACodCidade,
+function TProvedorMitra.GetConfigCidade(ACodCidade,
   AAmbiente: Integer): TConfigCidade;
 var
  ConfigCidade: TConfigCidade;
@@ -70,37 +70,35 @@ begin
  ConfigCidade.Prefixo4      := '';
  ConfigCidade.Identificador := 'Id';
 
- if AAmbiente = 1
-  then ConfigCidade.NameSpaceEnvelope := 'http://www.abrasf.org.br/ABRASF/arquivos/nfse.xsd'
-  else ConfigCidade.NameSpaceEnvelope := 'http://www.abrasf.org.br/ABRASF/arquivos/nfse.xsd';
+ ConfigCidade.NameSpaceEnvelope := 'https://nfe.progam.com.br/cruzeiro/nfse/xsd/rps_importacao_manual.xsd';
 
  ConfigCidade.AssinaRPS  := True;
- ConfigCidade.AssinaLote := True;
+ ConfigCidade.AssinaLote := False;
 
  Result := ConfigCidade;
 end;
 
-function TProvedorNatal.GetConfigSchema(ACodCidade: Integer): TConfigSchema;
+function TProvedorMitra.GetConfigSchema(ACodCidade: Integer): TConfigSchema;
 var
  ConfigSchema: TConfigSchema;
 begin
- ConfigSchema.VersaoCabecalho := '1.00';
- ConfigSchema.VersaoDados     := '1.00';
- ConfigSchema.VersaoXML       := '1';
- ConfigSchema.NameSpaceXML    := 'http://www.abrasf.org.br/ABRASF/arquivos/';
- ConfigSchema.Cabecalho       := 'nfse.xsd';
- ConfigSchema.ServicoEnviar   := 'nfse.xsd';
- ConfigSchema.ServicoConSit   := 'nfse.xsd';
- ConfigSchema.ServicoConLot   := 'nfse.xsd';
- ConfigSchema.ServicoConRps   := 'nfse.xsd';
- ConfigSchema.ServicoConNfse  := 'nfse.xsd';
- ConfigSchema.ServicoCancelar := 'nfse.xsd';
+ ConfigSchema.VersaoCabecalho := '2.00';
+ ConfigSchema.VersaoDados     := '2.00';
+ ConfigSchema.VersaoXML       := '2';
+ ConfigSchema.NameSpaceXML    := 'https://nfe.progam.com.br/cruzeiro/nfse/xsd/';
+ ConfigSchema.Cabecalho       := 'rps_importacao_manual.xsd';
+ ConfigSchema.ServicoEnviar   := 'rps_importacao_manual.xsd';
+ ConfigSchema.ServicoConSit   := 'rps_importacao_manual.xsd';
+ ConfigSchema.ServicoConLot   := 'rps_importacao_manual.xsd';
+ ConfigSchema.ServicoConRps   := 'rps_importacao_manual.xsd';
+ ConfigSchema.ServicoConNfse  := 'rps_importacao_manual.xsd';
+ ConfigSchema.ServicoCancelar := 'rps_importacao_manual.xsd';
  ConfigSchema.DefTipos        := '';
 
  Result := ConfigSchema;
 end;
 
-function TProvedorNatal.GetConfigURL(ACodCidade: Integer): TConfigURL;
+function TProvedorMitra.GetConfigURL(ACodCidade: Integer): TConfigURL;
 var
  ConfigURL: TConfigURL;
 begin
@@ -123,12 +121,12 @@ begin
  Result := ConfigURL;
 end;
 
-function TProvedorNatal.GetURI(URI: String): String;
+function TProvedorMitra.GetURI(URI: String): String;
 begin
  Result := URI;
 end;
 
-function TProvedorNatal.GetAssinarXML(Acao: TnfseAcao): Boolean;
+function TProvedorMitra.GetAssinarXML(Acao: TnfseAcao): Boolean;
 begin
  case Acao of
    acRecepcionar: Result := True;
@@ -142,16 +140,16 @@ begin
  end;
 end;
 
-function TProvedorNatal.GetValidarLote: Boolean;
+function TProvedorMitra.GetValidarLote: Boolean;
 begin
  Result := True;
 end;
 
-function TProvedorNatal.Gera_TagI(Acao: TnfseAcao; Prefixo3, Prefixo4,
+function TProvedorMitra.Gera_TagI(Acao: TnfseAcao; Prefixo3, Prefixo4,
   NameSpaceDad, Identificador, URI: String): AnsiString;
 begin
  case Acao of
-   acRecepcionar: Result := '<' + Prefixo3 + 'EnviarLoteRpsEnvio' + NameSpaceDad;
+   acRecepcionar: Result := '<' + Prefixo3 + 'EnviarLoteRps' + NameSpaceDad;
    acConsSit:     Result := '<' + Prefixo3 + 'ConsultarSituacaoLoteRpsEnvio' + NameSpaceDad;
    acConsLote:    Result := '<' + Prefixo3 + 'ConsultarLoteRpsEnvio' + NameSpaceDad;
    acConsNFSeRps: Result := '<' + Prefixo3 + 'ConsultarNfseRpsEnvio' + NameSpaceDad;
@@ -164,7 +162,7 @@ begin
  end;
 end;
 
-function TProvedorNatal.Gera_CabMsg(Prefixo2, VersaoLayOut, VersaoDados,
+function TProvedorMitra.Gera_CabMsg(Prefixo2, VersaoLayOut, VersaoDados,
   NameSpaceCab: String; ACodCidade: Integer): AnsiString;
 begin
  Result := '<' + Prefixo2 + 'cabecalho versao="'  + VersaoLayOut + '"' + NameSpaceCab +
@@ -172,15 +170,15 @@ begin
            '</' + Prefixo2 + 'cabecalho>';
 end;
 
-function TProvedorNatal.Gera_DadosSenha(CNPJ, Senha: String): AnsiString;
+function TProvedorMitra.Gera_DadosSenha(CNPJ, Senha: String): AnsiString;
 begin
  Result := '';
 end;
 
-function TProvedorNatal.Gera_TagF(Acao: TnfseAcao; Prefixo3: String): AnsiString;
+function TProvedorMitra.Gera_TagF(Acao: TnfseAcao; Prefixo3: String): AnsiString;
 begin
  case Acao of
-   acRecepcionar: Result := '</' + Prefixo3 + 'EnviarLoteRpsEnvio>';
+   acRecepcionar: Result := '</' + Prefixo3 + 'EnviarLoteRps>';
    acConsSit:     Result := '</' + Prefixo3 + 'ConsultarSituacaoLoteRpsEnvio>';
    acConsLote:    Result := '</' + Prefixo3 + 'ConsultarLoteRpsEnvio>';
    acConsNFSeRps: Result := '</' + Prefixo3 + 'ConsultarNfseRpsEnvio>';
@@ -191,7 +189,7 @@ begin
  end;
 end;
 
-function TProvedorNatal.GeraEnvelopeRecepcionarLoteRPS(URLNS: String;
+function TProvedorMitra.GeraEnvelopeRecepcionarLoteRPS(URLNS: String;
   CabMsg, DadosMsg, DadosSenha: AnsiString): AnsiString;
 begin
  Result := '';
@@ -212,7 +210,7 @@ begin
 }
 end;
 
-function TProvedorNatal.GeraEnvelopeConsultarSituacaoLoteRPS(
+function TProvedorMitra.GeraEnvelopeConsultarSituacaoLoteRPS(
   URLNS: String; CabMsg, DadosMsg, DadosSenha: AnsiString): AnsiString;
 begin
  Result := '';
@@ -233,7 +231,7 @@ begin
 *)
 end;
 
-function TProvedorNatal.GeraEnvelopeConsultarLoteRPS(URLNS: String;
+function TProvedorMitra.GeraEnvelopeConsultarLoteRPS(URLNS: String;
   CabMsg, DadosMsg, DadosSenha: AnsiString): AnsiString;
 begin
  Result := '';
@@ -254,7 +252,7 @@ begin
 *)
 end;
 
-function TProvedorNatal.GeraEnvelopeConsultarNFSeporRPS(URLNS: String;
+function TProvedorMitra.GeraEnvelopeConsultarNFSeporRPS(URLNS: String;
   CabMsg, DadosMsg, DadosSenha: AnsiString): AnsiString;
 begin
  Result := '';
@@ -275,7 +273,7 @@ begin
 *)
 end;
 
-function TProvedorNatal.GeraEnvelopeConsultarNFSe(URLNS: String; CabMsg,
+function TProvedorMitra.GeraEnvelopeConsultarNFSe(URLNS: String; CabMsg,
   DadosMsg, DadosSenha: AnsiString): AnsiString;
 begin
  Result := '';
@@ -296,7 +294,7 @@ begin
 *)
 end;
 
-function TProvedorNatal.GeraEnvelopeCancelarNFSe(URLNS: String; CabMsg,
+function TProvedorMitra.GeraEnvelopeCancelarNFSe(URLNS: String; CabMsg,
   DadosMsg, DadosSenha: AnsiString): AnsiString;
 begin
  Result := '';
@@ -317,63 +315,47 @@ begin
 *)           
 end;
 
-function TProvedorNatal.GeraEnvelopeGerarNFSe(URLNS: String; CabMsg,
+function TProvedorMitra.GeraEnvelopeGerarNFSe(URLNS: String; CabMsg,
   DadosMsg, DadosSenha: AnsiString): AnsiString;
 begin
  Result := '';
 end;
 
-function TProvedorNatal.GeraEnvelopeRecepcionarSincrono(URLNS: String;
+function TProvedorMitra.GeraEnvelopeRecepcionarSincrono(URLNS: String;
   CabMsg, DadosMsg, DadosSenha: AnsiString): AnsiString;
 begin
  Result := '';
 end;
 
-function TProvedorNatal.GetSoapAction(Acao: TnfseAcao; NomeCidade: String): String;
+function TProvedorMitra.GetSoapAction(Acao: TnfseAcao; NomeCidade: String): String;
 begin
  case Acao of
-   acRecepcionar: Result := 'http://www.abrasf.org.br/ABRASF/arquivos/nfse.xsd/WSNacional/RecepcionarLoteRps';
-   acConsSit:     Result := 'http://www.abrasf.org.br/ABRASF/arquivos/nfse.xsd/WSNacional/ConsultarSituacaoLoteRps';
-   acConsLote:    Result := 'http://www.abrasf.org.br/ABRASF/arquivos/nfse.xsd/WSNacional/ConsultarLoteRps';
-   acConsNFSeRps: Result := 'http://www.abrasf.org.br/ABRASF/arquivos/nfse.xsd/WSNacional/ConsultarNfsePorRps';
-   acConsNFSe:    Result := 'http://www.abrasf.org.br/ABRASF/arquivos/nfse.xsd/WSNacional/ConsultarNfse';
-   acCancelar:    Result := 'http://www.abrasf.org.br/ABRASF/arquivos/nfse.xsd/WSNacional/CancelarNfse';
+   acRecepcionar: Result := '';
+   acConsSit:     Result := '';
+   acConsLote:    Result := '';
+   acConsNFSeRps: Result := '';
+   acConsNFSe:    Result := '';
+   acCancelar:    Result := '';
    acGerar:       Result := '';
  end;
 end;
 
-function TProvedorNatal.GetRetornoWS(Acao: TnfseAcao; RetornoWS: AnsiString): AnsiString;
+function TProvedorMitra.GetRetornoWS(Acao: TnfseAcao; RetornoWS: AnsiString): AnsiString;
 var
  RetWS: AnsiString;
 begin
  case Acao of
-   acRecepcionar: begin
-                   RetWS := SeparaDados( RetornoWS, 'EnviarLoteRpsResposta>' );
-                   RetWS := RetWS + '</EnviarLoteRpsResposta>';
-                   Result := RetWS;
-                  end;
-   acConsSit:     Result := SeparaDados( RetornoWS, 'ConsultarSituacaoLoteRpsResposta' );
-   acConsLote:    Result := SeparaDados( RetornoWS, 'ConsultarLoteRpsRpsResposta' );
-   acConsNFSeRps: begin
-                   RetWS := SeparaDados( RetornoWS, 'ConsultarNfseRpsResposta>' );
-                   RetWS := RetWS + '</ConsultarNfseRpsResposta>';
-                   Result := RetWS;
-                  end;
-   acConsNFSe:    begin
-                   RetWS := SeparaDados( RetornoWS, 'ConsultarNfseResposta>' );
-                   RetWS := RetWS + '</ConsultarNfseResposta>';
-                   Result := RetWS;
-                  end;
-   acCancelar:    begin
-                   RetWS := SeparaDados( RetornoWS, 'CancelarNfseResposta>' );
-                   RetWS := RetWS + '</CancelarNfseResposta>';
-                   Result := RetWS;
-                  end;
+   acRecepcionar: Result := '';
+   acConsSit:     Result := '';
+   acConsLote:    Result := '';
+   acConsNFSeRps: Result := '';
+   acConsNFSe:    Result := '';
+   acCancelar:    Result := '';
    acGerar:       Result := '';
  end;
 end;
 
-function TProvedorNatal.GeraRetornoNFSe(Prefixo: String;
+function TProvedorMitra.GeraRetornoNFSe(Prefixo: String;
   RetNFSe: AnsiString; NomeCidade: String): AnsiString;
 begin
  Result := '<?xml version="1.0" encoding="utf-8"?>' +
@@ -382,7 +364,7 @@ begin
            '</' + Prefixo + 'CompNfse>';
 end;
 
-function TProvedorNatal.GetLinkNFSe(ACodMunicipio, ANumeroNFSe: Integer;
+function TProvedorMitra.GetLinkNFSe(ACodMunicipio, ANumeroNFSe: Integer;
   ACodVerificacao, AInscricaoM: String; AAmbiente: Integer): String;
 begin
  Result := '';

@@ -11,7 +11,7 @@ uses
   {$IFDEF COMPILER6_UP} DateUtils {$ELSE} ACBrD5, FileCtrl {$ENDIF};
 
 type
-  { TACBrProvedorGinfes }
+  { TACBrProvedorGoiania }
 
  TProvedorGoiania = class(TProvedorClass)
   protected
@@ -52,7 +52,7 @@ type
 
 implementation
 
-{ TProvedorGinfes }
+{ TProvedorGoiania }
 
 constructor TProvedorGoiania.Create;
 begin
