@@ -2,19 +2,13 @@
   This source is only used to compile and install the package.
  }
 
-unit ACBrOpenSSL ;
+unit ACBrOpenSSL;
 
 interface
 
 uses
-  libxml2, libxmlsec, libxslt, LazarusPackageIntf;
+  libxml2, libxmlsec, libxslt;
 
 implementation
 
-procedure Register ;
-begin
-end ;
-
-initialization
-  RegisterPackage('ACBrOpenSSL', @Register) ;
 end.

@@ -8,8 +8,8 @@
       <Version Value="11"/>
       <PathDelim Value="\"/>
       <SearchPaths>
-        <OtherUnitFiles Value="..\..\Fontes\ACBrTEFD"/>
-        <UnitOutputDirectory Value="..\..\Fontes\ACBrTEFD\lib\$(TargetCPU)-$(TargetOS)"/>
+        <OtherUnitFiles Value="..\..\..\Fontes\ACBrTEFD"/>
+        <UnitOutputDirectory Value="..\..\..\Lib\Lazarus\ACBrTEFD\$(TargetCPU)-$(TargetOS)"/>
       </SearchPaths>
       <Parsing>
         <SyntaxOptions>
@@ -29,36 +29,36 @@
     <Version Major="4" Minor="3" Release="6"/>
     <Files Count="8">
       <Item1>
-        <Filename Value="..\..\Fontes\ACBrTEFD\ACBrTEFDClass.pas"/>
+        <Filename Value="..\..\..\Fontes\ACBrTEFD\ACBrTEFDClass.pas"/>
         <UnitName Value="ACBrTEFDClass"/>
       </Item1>
       <Item2>
-        <Filename Value="..\..\Fontes\ACBrTEFD\ACBrTEFD.pas"/>
+        <Filename Value="..\..\..\Fontes\ACBrTEFD\ACBrTEFD.pas"/>
         <HasRegisterProc Value="True"/>
         <UnitName Value="ACBrTEFD"/>
       </Item2>
       <Item3>
-        <Filename Value="..\..\Fontes\ACBrTEFD\ACBrTEFDHiper.pas"/>
+        <Filename Value="..\..\..\Fontes\ACBrTEFD\ACBrTEFDHiper.pas"/>
         <UnitName Value="ACBrTEFDHiper"/>
       </Item3>
       <Item4>
-        <Filename Value="..\..\Fontes\ACBrTEFD\ACBrTEFDCliSiTef.pas"/>
+        <Filename Value="..\..\..\Fontes\ACBrTEFD\ACBrTEFDCliSiTef.pas"/>
         <UnitName Value="ACBrTEFDCliSiTef"/>
       </Item4>
       <Item5>
-        <Filename Value="..\..\Fontes\ACBrTEFD\ACBrTEFDDial.pas"/>
+        <Filename Value="..\..\..\Fontes\ACBrTEFD\ACBrTEFDDial.pas"/>
         <UnitName Value="ACBrTEFDDial"/>
       </Item5>
       <Item6>
-        <Filename Value="..\..\Fontes\ACBrTEFD\ACBrTEFDDisc.pas"/>
+        <Filename Value="..\..\..\Fontes\ACBrTEFD\ACBrTEFDDisc.pas"/>
         <UnitName Value="ACBrTEFDDisc"/>
       </Item6>
       <Item7>
-        <Filename Value="..\..\Fontes\ACBrTEFD\ACBrTEFDVeSPague.pas"/>
+        <Filename Value="..\..\..\Fontes\ACBrTEFD\ACBrTEFDVeSPague.pas"/>
         <UnitName Value="ACBrTEFDVeSPague"/>
       </Item7>
       <Item8>
-        <Filename Value="..\..\Fontes\ACBrTEFD\ACBrTEFDBanese.pas"/>
+        <Filename Value="..\..\..\Fontes\ACBrTEFD\ACBrTEFDBanese.pas"/>
         <UnitName Value="ACBrTEFDBanese"/>
       </Item8>
     </Files>

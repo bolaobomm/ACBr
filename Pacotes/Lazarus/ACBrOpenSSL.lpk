@@ -1,19 +1,18 @@
-<?xml version="1.0"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <CONFIG>
   <Package Version="4">
     <PathDelim Value="\"/>
     <Name Value="ACBrOpenSSL"/>
     <Author Value="Daniel Simoes de Almeida"/>
     <CompilerOptions>
-      <Version Value="1"/>
+      <Version Value="11"/>
       <PathDelim Value="\"/>
       <SearchPaths>
         <OtherUnitFiles Value="..\..\Fontes\ACBrNFe2"/>
-        <UnitOutputDirectory Value="..\..\Fontes\ACBrNFe2\lib\$(TargetCPU)-$(TargetOS)"/>
+        <UnitOutputDirectory Value="..\..\Lib\Lazarus\ACBrNFe2\$(TargetCPU)-$(TargetOS)"/>
       </SearchPaths>
       <Parsing>
         <SyntaxOptions>
-          <CStyleOperator Value="False"/>
           <UseAnsiStrings Value="False"/>
         </SyntaxOptions>
       </Parsing>
@@ -24,7 +23,7 @@
         <CompilerPath Value="$(CompPath)"/>
       </Other>
     </CompilerOptions>
-    <Description Value="Package para uso de ACBrNFe2 com OpenSSL através do LibXMLSec
+    <Description Value="Package para uso de ACBrNFe2 com OpenSSL atravÃ©s do LibXMLSec
 "/>
     <License Value="LGPL
 "/>
@@ -43,7 +42,6 @@
         <UnitName Value="libxslt"/>
       </Item3>
     </Files>
-    <Type Value="RunAndDesignTime"/>
     <RequiredPkgs Count="1">
       <Item1>
         <PackageName Value="FCL"/>

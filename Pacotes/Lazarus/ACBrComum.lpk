@@ -1,4 +1,4 @@
-<?xml version="1.0"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <CONFIG>
   <Package Version="4">
     <PathDelim Value="\"/>
@@ -10,7 +10,7 @@
       <SearchPaths>
         <IncludeFiles Value="..\..\Fontes\ACBrComum"/>
         <OtherUnitFiles Value="..\..\Fontes\ACBrComum"/>
-        <UnitOutputDirectory Value="..\..\Fontes\ACBrComum\lib\$(TargetCPU)-$(TargetOS)"/>
+        <UnitOutputDirectory Value="..\..\Lib\Lazarus\ACBrComum\$(TargetCPU)-$(TargetOS)"/>
       </SearchPaths>
       <Parsing>
         <SyntaxOptions>

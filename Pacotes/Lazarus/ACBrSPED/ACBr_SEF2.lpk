@@ -1,4 +1,4 @@
-<?xml version="1.0"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <CONFIG>
   <Package Version="4">
     <PathDelim Value="\"/>
@@ -7,8 +7,8 @@
       <Version Value="11"/>
       <PathDelim Value="\"/>
       <SearchPaths>
-        <OtherUnitFiles Value="..\..\Fontes\ACBrSEF2"/>
-        <UnitOutputDirectory Value="..\..\Fontes\ACBrSEF2\lib\$(TargetCPU)-$(TargetOS)"/>
+        <OtherUnitFiles Value="..\..\..\Fontes\ACBrSEF2"/>
+        <UnitOutputDirectory Value="..\..\..\Lib\Lazarus\ACBrSEF2\$(TargetCPU)-$(TargetOS)"/>
       </SearchPaths>
       <Other>
         <CompilerMessages>
@@ -19,46 +19,46 @@
     </CompilerOptions>
     <Files Count="32">
       <Item1>
-        <Filename Value="..\..\Fontes\ACBrSEF2\ACBrSEF2Conversao.pas"/>
+        <Filename Value="..\..\..\Fontes\ACBrSEF2\ACBrSEF2Conversao.pas"/>
         <UnitName Value="ACBrSEF2Conversao"/>
       </Item1>
       <Item2>
-        <Filename Value="..\..\Fontes\ACBrSEF2\ACBrSEF2_Bloco0.pas"/>
+        <Filename Value="..\..\..\Fontes\ACBrSEF2\ACBrSEF2_Bloco0.pas"/>
         <UnitName Value="ACBrSEF2_Bloco0"/>
       </Item2>
       <Item3>
-        <Filename Value="..\..\Fontes\ACBrSEF2\ACBrSEF2_Bloco0_1.pas"/>
+        <Filename Value="..\..\..\Fontes\ACBrSEF2\ACBrSEF2_Bloco0_1.pas"/>
         <UnitName Value="ACBrSEF2_Bloco0_1"/>
       </Item3>
       <Item4>
-        <Filename Value="..\..\Fontes\ACBrSEF2\ACBrSEF2_eDoc_BlocoC.pas"/>
+        <Filename Value="..\..\..\Fontes\ACBrSEF2\ACBrSEF2_eDoc_BlocoC.pas"/>
         <UnitName Value="ACBrSEF2_eDoc_BlocoC"/>
       </Item4>
       <Item5>
-        <Filename Value="..\..\Fontes\ACBrSEF2\ACBrSEF2_eDoc_BlocoC_Class.pas"/>
+        <Filename Value="..\..\..\Fontes\ACBrSEF2\ACBrSEF2_eDoc_BlocoC_Class.pas"/>
         <UnitName Value="ACBrSEF2_eDoc_BlocoC_Class"/>
       </Item5>
       <Item6>
-        <Filename Value="..\..\Fontes\ACBrSEF2\ACBrSEF2.pas"/>
+        <Filename Value="..\..\..\Fontes\ACBrSEF2\ACBrSEF2.pas"/>
         <HasRegisterProc Value="True"/>
         <UnitName Value="ACBrSEF2"/>
       </Item6>
       <Item7>
-        <Filename Value="..\..\Fontes\ACBrSEF2\ACBrSEF2_BlocoE_1.pas"/>
+        <Filename Value="..\..\..\Fontes\ACBrSEF2\ACBrSEF2_BlocoE_1.pas"/>
         <UnitName Value="ACBrSEF2_BlocoE_1"/>
       </Item7>
       <Item8>
-        <Filename Value="..\..\Fontes\ACBrSEF2\ACBrSEF2_Bloco9.pas"/>
+        <Filename Value="..\..\..\Fontes\ACBrSEF2\ACBrSEF2_Bloco9.pas"/>
         <UnitName Value="ACBrSEF2_Bloco9"/>
       </Item8>
       <Item9>
-        <Filename Value="..\..\Fontes\ACBrSEF2\ACBrSEF2_BlocoE.pas"/>
+        <Filename Value="..\..\..\Fontes\ACBrSEF2\ACBrSEF2_BlocoE.pas"/>
         <UnitName Value="ACBrSEF2_BlocoE"/>
       </Item9>
       <Item10>
-        <Filename Value="..\..\Fontes\ACBrSEF2\ACBrSEF2_blocoH.pas"/>
+        <Filename Value="..\..\..\Fontes\ACBrSEF2\ACBrSEF2_blocoH.pas"/>
         <UnitName Value="ACBrSEF2_blocoH"/>
-      </Item10>      
+      </Item10>
     </Files>
     <Type Value="RunAndDesignTime"/>
     <RequiredPkgs Count="2">
