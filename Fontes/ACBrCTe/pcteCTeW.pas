@@ -2108,16 +2108,19 @@ begin
     if FileExists(PathArquivo) then
     begin
       List := TstringList.Create;
-      List.LoadFromFile(PathArquivo);
-      Codigo := IntToStr(cMun);
-      i := 0;
-      while (i < list.count) and (result = '') do
-      begin
-        if pos(Codigo, List[i]) > 0 then
-          result := Trim(stringReplace(list[i], codigo, '', []));
-        inc(i);
+      try
+        List.LoadFromFile(PathArquivo);
+        Codigo := IntToStr(cMun);
+        i := 0;
+        while (i < list.count) and (result = '') do
+        begin
+          if pos(Codigo, List[i]) > 0 then
+            result := Trim(stringReplace(list[i], codigo, '', []));
+          inc(i);
+        end;
+      finally
+        List.free;
       end;
-      List.free;
     end;
   end;
   if result = '' then

@@ -378,12 +378,15 @@ begin
         Self.Items[i].XML := vAssinada;
 
         Leitor := TLeitor.Create;
-        leitor.Grupo := vAssinada;
-        Self.Items[i].CTe.signature.URI := Leitor.rAtributo('Reference URI=');
-        Self.Items[i].CTe.signature.DigestValue := Leitor.rCampo(tcStr, 'DigestValue');
-        Self.Items[i].CTe.signature.SignatureValue := Leitor.rCampo(tcStr, 'SignatureValue');
-        Self.Items[i].CTe.signature.X509Certificate := Leitor.rCampo(tcStr, 'X509Certificate');
-        Leitor.Free;
+        try
+          leitor.Grupo := vAssinada;
+          Self.Items[i].CTe.signature.URI := Leitor.rAtributo('Reference URI=');
+          Self.Items[i].CTe.signature.DigestValue := Leitor.rCampo(tcStr, 'DigestValue');
+          Self.Items[i].CTe.signature.SignatureValue := Leitor.rCampo(tcStr, 'SignatureValue');
+          Self.Items[i].CTe.signature.X509Certificate := Leitor.rCampo(tcStr, 'X509Certificate');
+        finally
+          Leitor.Free;
+        end;
 
         if FConfiguracoes.Geral.Salvar then
            FConfiguracoes.Geral.Save(StringReplace(Self.Items[i].CTe.infCTe.ID, 'CTe', '', [rfIgnoreCase])+'-cte.xml', vAssinada);

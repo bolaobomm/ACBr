@@ -317,9 +317,12 @@ begin
         FTotalPages := QRCTe.QRPrinter.PageCount;
 
         qf := TQRPDFDocumentFilter.Create(AFile);
-        qf.CompressionOn := False;
-        QRCTe.QRPrinter.ExportToFilter( qf );
-        qf.Free;
+        try
+          qf.CompressionOn := False;
+          QRCTe.QRPrinter.ExportToFilter( qf );
+        finally
+          qf.Free;
+        end;
      finally
         Free;
      end;
@@ -339,10 +342,13 @@ var
   b : TBarCode128c;
 begin
   b := TBarCode128c.Create;
-  //      Width  := QRImage.Width;
-  b.Code := ACode;
-  b.PaintCodeToCanvas(ACode, QRImage.Canvas, QRImage.ClientRect);
-  b.free;
+  try
+    //      Width  := QRImage.Width;
+    b.Code := ACode;
+    b.PaintCodeToCanvas(ACode, QRImage.Canvas, QRImage.ClientRect);
+  finally
+    b.free;
+  end;
 end;
 
 // Incluido por Rodrigo Fernandes em 11/03/2013
