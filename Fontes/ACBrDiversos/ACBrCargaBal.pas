@@ -75,6 +75,7 @@ type
   TACBrCargaBalNutricional = class
   private
     fCodigo: Integer;
+    FDescricao : String;
     FQtd: Integer;
     FUndPorcao: TACBrCargaBalNutriUndPorcao;
     FPartInteira: Integer;
@@ -91,7 +92,8 @@ type
 
   public
     constructor Create;
-    property Codigo: Integer read FCodigo write FCodigo;    
+    property Codigo: Integer read FCodigo write FCodigo;
+    property Descricao: String read FDescricao write FDescricao;
     property Qtd: Integer read FQtd write FQtd;
     property UndPorcao: TACBrCargaBalNutriUndPorcao read FUndPorcao write FUndPorcao;
     property PartInteira: Integer read FPartInteira write FPartInteira;
@@ -171,7 +173,7 @@ type
     function CalcularSoma(const xStr: string): integer;
     function GetModeloStr: string;
 
-    procedure PreencherFilizola(Arquivo, Setor: TStringList);
+    procedure PreencherFilizola(Arquivo, Setor, Nutricional, Receita: TStringList);
     procedure PreencherToledo(Arquivo, Nutricional, Receita: TStringList; Versao: integer = 0);
     procedure PreencherUrano(Arquivo: TStringList);
 
@@ -442,10 +444,11 @@ end;
 
 function TACBrCargaBal.GetNomeArquivoNutricional: String;
 begin
-  // A filizola e urano nao possuem arquivo nutricional a parte das informações
+  // A urano nao possuem arquivo nutricional a parte das informações
   // são incluídas no mesmo arquivo de itens.
   case FModelo of
-    modToledo, modToledoMGV5 : Result := 'INFNUTRI.TXT';
+    modToledoMGV5 : Result := 'INFNUTRI.TXT';
+    modFilizola : Result := 'NUTRI.TXT';
   end;
 end;
 
@@ -464,9 +467,11 @@ begin
   result:=Vl;
 end;
 
-procedure TACBrCargaBal.PreencherFilizola(Arquivo, Setor: TStringList);
+
+procedure TACBrCargaBal.PreencherFilizola(Arquivo, Setor, Nutricional, Receita: TStringList);
 var
   i, Total: Integer;
+  areceita:string;
 begin
   Total := Produtos.Count;
 
@@ -486,6 +491,36 @@ begin
       LFIll(i + 1, 4) +
       LFill(Produtos[i].Tecla, 3)
     );
+
+    Nutricional.Add(LFIll(Produtos[i].Codigo,6) +
+     RFill(Produtos[i].Nutricional.Descricao,35) +
+     LFIll(Produtos[i].Nutricional.ValorEnergetico,5) +
+     LFIll(0,4) +
+     LFIll(Produtos[i].Nutricional.Carboidrato,5,1) +
+     LFIll(0,4) +
+     LFIll(Produtos[i].Nutricional.Proteina,5,1) +
+     LFIll(0,4) +
+     LFIll(Produtos[i].Nutricional.GorduraTotal,5,1) +
+     LFIll(0,4) +
+     LFIll(Produtos[i].Nutricional.GorduraSaturada,5,1)+
+     LFIll(0,4)+
+     LFIll(Produtos[i].Nutricional.GorduraTrans,5,1) +
+     LFIll(0,4)+
+     LFIll(Produtos[i].Nutricional.Fibra,5,1)+
+     LFIll(0,4)+
+     RFill('*****',5)+
+     RFill('****',4) +
+     RFill('*****',5) +
+     RFill('****',4) +
+     LFIll(Produtos[i].Nutricional.Sodio,5,1)+
+     LFIll(0,4)
+
+     );
+
+    // receita
+    areceita:=RFill(' ',12)+LFIll(Produtos[i].Codigo,6)+LFIll(Produtos[i].Codigo,6)+RFill(Produtos[i].Receita,840)+'@';
+    if (Length(Produtos[i].Receita)>2) and (Receita.IndexOf(areceita)<0) then
+       Receita.Add(areceita);
 
     Progresso(Format('Gerando produto %6.6d %s', [Produtos[i].Codigo, Produtos[i].Descricao]), i, Total);
   end;
@@ -545,9 +580,9 @@ begin
     if (Length(Produtos[i].Receita)>2) and (Receita.IndexOf(areceita)<0) then
        Receita.Add(areceita);
 
-    Anutri:= 'N'+ LFIll(Produtos[i].Nutricional.Codigo,6)+'0'+LFIll(Produtos[i].FNutricional.Qtd,3)+
+    Anutri:= 'N'+ LFIll(Produtos[i].Nutricional.Codigo,6)+'0'+LFIll(Produtos[i].Nutricional.Qtd,3)+
     GetNutriUndPorcaoToledo(Produtos[i].Nutricional.UndPorcao)+
-    LFIll(Produtos[i].Nutricional.FPartInteira,2)+
+    LFIll(Produtos[i].Nutricional.PartInteira,2)+
     GetNutriPartDecimalToledo(Produtos[i].Nutricional.PartDecimal)+
     GetNutriMedCaseiraToledo(Produtos[i].Nutricional.MedCaseira)+
     LFIll(Produtos[i].Nutricional.ValorEnergetico,4)+
@@ -686,7 +721,7 @@ begin
 
     // Varre os registros gerando o arquivo em lista
     case FModelo of
-      modFilizola: PreencherFilizola(Produto, Setor);
+      modFilizola: PreencherFilizola(Produto, Setor, Nutricional, Receita);
       modToledo  : PreencherToledo(Produto, Nutricional, Receita);
       modUrano   : PreencherUrano(Produto);
       modToledoMGV5  : PreencherToledo(Produto, Nutricional, Receita ,1);
@@ -735,6 +770,7 @@ begin
    modFilizola : result := 'Filizola';
    modToledo : result := 'Toledo';
    modUrano : result := 'Urano';
+   modToledoMGV5 : result :='ToledoMGV5';
  end;
 end;
 
