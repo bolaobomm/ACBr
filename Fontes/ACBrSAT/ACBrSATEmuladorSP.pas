@@ -128,7 +128,7 @@ Var
 begin
   Resp := xSAT_AssociarAssinatura( numeroSessao, PAnsiChar(codigoDeAtivacao),
                                      PAnsiChar(CNPJvalue), PAnsiChar(assinaturaCNPJs) ) ;
-  Result := ACBrStr( String( Resp ) );
+  Result := String( Resp );
 end ;
 
 function TACBrSATEmuladorSP.AtivarSAT(subComando : Integer ;
@@ -140,7 +140,7 @@ begin
                           PAnsiChar(codigoDeAtivacao), PAnsiChar(CNPJ), cUF);}
   Resp := ACBrSATEmuladorSPstatic.AtivarSAT( numeroSessao, subComando,
                           PAnsiChar(codigoDeAtivacao), PAnsiChar(CNPJ), cUF);
-  Result := ACBrStr( String( Resp ) );
+  Result := String( Resp );
 end ;
 
 function TACBrSATEmuladorSP.AtualizarSoftwareSAT : String ;
@@ -148,7 +148,7 @@ Var
   Resp : PAnsiChar;
 begin
   Resp := xSAT_AtualizarSoftwareSAT( numeroSessao, PAnsiChar(codigoDeAtivacao) ) ;
-  Result := ACBrStr( String( Resp ) );
+  Result := String( Resp );
 end ;
 
 function TACBrSATEmuladorSP.BloquearSAT : String ;
@@ -156,7 +156,7 @@ Var
   Resp : PAnsiChar;
 begin
   Resp := xSAT_BloquearSAT( numeroSessao, PAnsiChar(codigoDeAtivacao) ) ;
-  Result := ACBrStr( String( Resp ) );
+  Result := String( Resp );
 end ;
 
 function TACBrSATEmuladorSP.CancelarUltimaVenda(chave,
@@ -166,7 +166,7 @@ Var
 begin
   Resp := xSAT_CancelarUltimaVenda( numeroSessao, PAnsiChar(codigoDeAtivacao),
                                       PAnsiChar(chave), PAnsiChar(dadosCancelamento) ) ;
-  Result := ACBrStr( String( Resp ) );
+  Result := String( Resp );
 end ;
 
 function TACBrSATEmuladorSP.ComunicarCertificadoICPBRASIL(
@@ -176,7 +176,7 @@ Var
 begin
   Resp := xSAT_ComunicarCertificadoICPBRASIL( numeroSessao,
                   PAnsiChar(codigoDeAtivacao), PAnsiChar(certificado) ) ;
-  Result := ACBrStr( String( Resp ) );
+  Result := String( Resp );
 end ;
 
 function TACBrSATEmuladorSP.ConfigurarInterfaceDeRede(
@@ -186,7 +186,7 @@ Var
 begin
   Resp := xSAT_ConfigurarInterfaceDeRede( numeroSessao,
                  PAnsiChar(codigoDeAtivacao), PAnsiChar(dadosConfiguracao) ) ;
-  Result := ACBrStr( String( Resp ) );
+  Result := String( Resp );
 end ;
 
 function TACBrSATEmuladorSP.ConsultarNumeroSessao(cNumeroDeSessao : Integer
@@ -196,7 +196,7 @@ Var
 begin
   Resp := xSAT_ConsultarNumeroSessao( numeroSessao, PAnsiChar(codigoDeAtivacao),
                                         cNumeroDeSessao) ;
-  Result := ACBrStr( String( Resp ) );
+  Result := String( Resp );
 end ;
 
 function TACBrSATEmuladorSP.ConsultarSAT : String ;
@@ -204,7 +204,7 @@ Var
   Resp : PAnsiChar;
 begin
   Resp := xSAT_ConsultarSAT( numeroSessao ) ;
-  Result := ACBrStr( String( Resp ) );
+  Result := String( Resp );
 end ;
 
 function TACBrSATEmuladorSP.ConsultarStatusOperacional : String ;
@@ -214,7 +214,7 @@ begin
   //Resp := xSAT_ConsultarStatusOperacional( numeroSessao, PAnsiChar(codigoDeAtivacao) ) ;
   Resp := ACBrSATEmuladorSPstatic.ConsultarStatusOperacional( numeroSessao, PAnsiChar(codigoDeAtivacao) ) ;
 
-  Result := ACBrStr( String( Resp ) );
+  Result := String( Resp );
 end ;
 
 function TACBrSATEmuladorSP.DesbloquearSAT : String ;
@@ -222,7 +222,7 @@ Var
   Resp : PAnsiChar;
 begin
   Resp := xSAT_DesbloquearSAT( numeroSessao, PAnsiChar(codigoDeAtivacao) );
-  Result := ACBrStr( String( Resp ) );
+  Result := String( Resp );
 end ;
 
 function TACBrSATEmuladorSP.DesligarSAT : String ;
@@ -230,7 +230,7 @@ Var
   Resp : PAnsiChar;
 begin
   Resp := xSAT_DesligarSAT ;
-  Result := ACBrStr( String( Resp ) );
+  Result := String( Resp );
 end ;
 
 function TACBrSATEmuladorSP.EnviarDadosVenda(dadosVenda : AnsiString) : String ;
@@ -241,7 +241,7 @@ begin
                                    PAnsiChar(dadosVenda) ) ;}
   Resp := ACBrSATEmuladorSPstatic.EnviarDadosVenda( numeroSessao, PAnsiChar(codigoDeAtivacao),
                                    PAnsiChar(dadosVenda) ) ;
-  Result := ACBrStr( String( Resp ) );
+  Result := String( Resp );
 end ;
 
 function TACBrSATEmuladorSP.ExtrairLogs : String ;
@@ -249,7 +249,7 @@ Var
   Resp : PAnsiChar;
 begin
   Resp := xSAT_ExtrairLogs( numeroSessao, PAnsiChar(codigoDeAtivacao) ) ;
-  Result := ACBrStr( String( Resp ) );
+  Result := String( Resp );
 end ;
 
 function TACBrSATEmuladorSP.TesteFimAFim(dadosVenda : AnsiString) : String ;
@@ -260,7 +260,7 @@ begin
                                PAnsiChar(dadosVenda) ); }
   Resp := ACBrSATEmuladorSPstatic.TesteFimAFim( numeroSessao, PAnsiChar(codigoDeAtivacao),
                                PAnsiChar(dadosVenda) );
-  Result := ACBrStr( String( Resp ) );
+  Result := String( Resp );
 end ;
 
 function TACBrSATEmuladorSP.TrocarCodigoDeAtivacao(opcao : Integer ;
@@ -270,7 +270,7 @@ Var
 begin
   Resp := xSAT_TrocarCodigoDeAtivacao( numeroSessao, PAnsiChar(codigoDeAtivacao),
                  opcao, PAnsiChar(novoCodigo), PAnsiChar(confNovoCodigo) ) ;
-  Result := ACBrStr( String( Resp ) );
+  Result := String( Resp );
 end ;
 
 procedure TACBrSATEmuladorSP.LoadDLLFunctions;

@@ -44,7 +44,6 @@ interface
 
 uses SysUtils,
      Classes,
-     ACBrDevice,
      pcnCFe, pcnCFeCanc;
 
 type

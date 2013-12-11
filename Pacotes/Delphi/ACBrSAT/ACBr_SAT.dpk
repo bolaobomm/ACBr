@@ -30,17 +30,20 @@ requires
   rtl,
   PCN2,
   designide,
-  ACBrSerial;
+  ACBrSerial,
+  ACBrComum;
 
 contains
   ACBrSAT in '..\..\..\Fontes\ACBrSAT\ACBrSAT.pas',
   ACBrSATClass in '..\..\..\Fontes\ACBrSAT\ACBrSATClass.pas',
-  ACBrSATEmuladorSP in '..\..\..\Fontes\ACBrSAT\ACBrSATEmuladorSP.pas',
   pcnCFe in '..\..\..\Fontes\ACBrSAT\pcnCFe.pas',
   pcnCFeR in '..\..\..\Fontes\ACBrSAT\pcnCFeR.pas',
   pcnCFeW in '..\..\..\Fontes\ACBrSAT\pcnCFeW.pas',
-  ACBrSATEmuladorSPstatic in '..\..\..\Fontes\ACBrSAT\ACBrSATEmuladorSPstatic.pas',
   ACBrSATExtratoClass in '..\..\..\Fontes\ACBrSAT\ACBrSATExtratoClass.pas',
-  ACBrSATExtratoESCPOS in '..\..\..\Fontes\ACBrSAT\ACBrSATExtratoESCPOS.pas';
+  ACBrSATExtratoESCPOS in '..\..\..\Fontes\ACBrSAT\ACBrSATExtratoESCPOS.pas',
+  ACBrSATDinamico_cdecl in '..\..\..\Fontes\ACBrSAT\ACBrSATDinamico_cdecl.pas',
+  pcnCFeCanc in '..\..\..\Fontes\ACBrSAT\pcnCFeCanc.pas',
+  pcnCFeCancR in '..\..\..\Fontes\ACBrSAT\pcnCFeCancR.pas',
+  pcnCFeCancW in '..\..\..\Fontes\ACBrSAT\pcnCFeCancW.pas';
 
 end.

@@ -49,7 +49,7 @@ uses
 
 const
   cACBrSAT_Versao      = '0.1.0' ;
-  cLIBSAT              = 'c:\SAT\SAT.DLL';
+  cLIBSAT              = 'SAT.DLL';
   cversaoDadosEnt      = 0.03;
 
   cACBrSATClassCreateException = 'Essa Classe deve ser instanciada por TACBrSAT' ;
@@ -63,7 +63,7 @@ const
                                  'Acesse nosso Forum em: http://projetoacbr.com.br/' ;
 type
 
-  TACBrSATModelo = ( satNenhum, satEmuladorSP ) ;
+  TACBrSATModelo = ( satNenhum, satEmuladorSP, satDinamico_cdecl ) ;
 
   { EACBrSATErro }
 
@@ -90,6 +90,9 @@ type
     fside_numeroCaixa : Integer ;
     fsinfCFe_versaoDadosEnt : Real ;
     fside_tpAmb : TpcnTipoAmbiente ;
+    fsPaginaDeCodigo: Word;
+    function GetEhUTF8: Boolean;
+    procedure SetEhUTF8(AValue: Boolean);
   public
     constructor Create;
     destructor Destroy; override;
@@ -112,6 +115,8 @@ type
        write fsemit_cRegTribISSQN ;
     property emit_indRatISSQN: TpcnindRatISSQN read fsemit_indRatISSQN
        write fsemit_indRatISSQN;
+    property EhUTF8: Boolean read GetEhUTF8 write SetEhUTF8;
+    property PaginaDeCodigo : Word read fsPaginaDeCodigo write fsPaginaDeCodigo;
   end;
 
   { TACBrSATRespostaClass }
@@ -125,7 +130,7 @@ type
     procedure SetRetornoStr(AValue : String) ;
   public
     constructor Create ;
-    Destructor Destroy ;
+    Destructor Destroy ; override ;
     procedure Clear ;
 
     property numeroSessao : Integer read fnumeroSessao ;
@@ -240,6 +245,23 @@ end ;
 
 { TACBrSATConfig }
 
+function TACBrSATConfig.GetEhUTF8: Boolean;
+begin
+  Result := (fsPaginaDeCodigo = 65001);
+end;
+
+procedure TACBrSATConfig.SetEhUTF8(AValue: Boolean);
+begin
+   if AValue then
+     fsPaginaDeCodigo := 65001
+   else
+   begin
+     if fsPaginaDeCodigo = 65001 then
+       fsPaginaDeCodigo := 0;
+   end ;
+
+end;
+
 constructor TACBrSATConfig.Create ;
 begin
   inherited Create;
@@ -303,7 +325,7 @@ end ;
 
 function TACBrSATClass.GetPathDLL : string ;
 begin
-  Result := TACBrSAT(fpOwner).PathDLL;
+  Result := PathWithDelim( TACBrSAT(fpOwner).PathDLL );
 end;
 
 procedure TACBrSATClass.ErroAbstract(NomeProcedure : String) ;
@@ -324,7 +346,7 @@ end;
 
 function TACBrSATClass.GetNomeDLL : String ;
 begin
-  Result := fpNomeDLL;;
+  Result := fpNomeDLL;
 end;
 
 function TACBrSATClass.GetnumeroSessao : Integer ;
@@ -457,7 +479,7 @@ var
 begin
   if not Assigned( LibPointer )  then
   begin
-    sLibName := NomeDLL;
+    sLibName := PathDLL + NomeDLL;
 
     if not FunctionDetect( sLibName, FuncName, LibPointer) then
     begin

@@ -38,7 +38,8 @@ unit ACBrSAT;
 interface
 
 uses
-  Classes, SysUtils, pcnCFe, pcnCFeR, pcnCFeCanc, pcnCFeCancR, ACBrSATClass, ACBrSATExtratoClass, synacode
+  Classes, SysUtils, pcnCFe, pcnCFeR, pcnCFeCanc, pcnCFeCancR, ACBrSATClass,
+  ACBrSATExtratoClass, synacode
   {$IFNDEF NOGUI}
     {$IFDEF FPC} ,LResources {$ENDIF}
   {$ENDIF};
@@ -54,17 +55,20 @@ type
      fsOnGetcodigoDeAtivacao : TACBrSATGetChave ;
      fsOnGetsignAC : TACBrSATGetChave ;
      fsOnLog : TACBrSATDoLog ;
-     fsPathDLL : string ;
+     fsPathDLL : String ;
      fsResposta : TACBrSATResposta ;
      fsRespostaComando : String ;
      fsSATClass : TACBrSATClass ;
      fsExtrato : TACBrSATExtratoClass;
 
-     fsArqLOG: string;
+     fsArqLOG: String;
      fsComandoLog: String;
      fsInicializado : Boolean ;
      fsModelo : TACBrSATModelo ;
      fsConfig : TACBrSATConfig ;
+
+     function CodificarPaginaDeCodigoSAT(ATexto: String): AnsiString;
+     function DecodificarPaginaDeCodigoSAT(ATexto: AnsiString): String;
 
      function GetAbout : String;
      function GetcodigoDeAtivacao : String ;
@@ -78,7 +82,7 @@ type
 
      procedure VerificaInicializado ;
      procedure IniciaComando ;
-     procedure FinalizaComando ;
+     function FinalizaComando(AResult: String): String;
 
      procedure GravaLog(AString : AnsiString ) ;
      procedure SetExtrato(const Value: TACBrSATExtratoClass);
@@ -111,7 +115,7 @@ type
 
      procedure InicializaCFe( ACFe : TCFe = nil );
 
-     procedure DoLog(AString : AnsiString ) ;
+     procedure DoLog(AString : String ) ;
 
      function AssociarAssinatura( CNPJvalue, assinaturaCNPJs : String ): String ;
      function AtivarSAT(subComando : Integer ; CNPJ : String ; cUF : Integer
@@ -164,7 +168,7 @@ procedure Register;
 
 implementation
 
-Uses ACBrUtil, ACBrSATEmuladorSP, pcnCFeW, pcnCFeCancW, ACBrSATExtratoESCPOS;
+Uses ACBrUtil, {ACBrSATEmuladorSP,} ACBrSATDinamico_cdecl, ACBrSATExtratoESCPOS;
 
 {$IFNDEF FPC}
    {$R ACBrSAT.dcr}
@@ -253,10 +257,13 @@ begin
   DoLog( AStr );
 end ;
 
-procedure TACBrSAT.FinalizaComando ;
+function TACBrSAT.FinalizaComando( AResult : String ) : String ;
 var
   AStr : String ;
 begin
+  fsRespostaComando := DecodificarPaginaDeCodigoSAT( AResult );
+  Result := fsRespostaComando;
+
   fsComandoLog := '';
   AStr := '   '+FormatDateTime('hh:nn:ss:zzz',now) +
           ' - numeroSessao: '+IntToStr(numeroSessao) ;
@@ -268,7 +275,7 @@ begin
   DoLog( AStr );
 end ;
 
-procedure TACBrSAT.DoLog(AString : AnsiString) ;
+procedure TACBrSAT.DoLog(AString : String) ;
 begin
   GravaLog(AString);
 
@@ -320,9 +327,7 @@ function TACBrSAT.AssociarAssinatura(CNPJvalue, assinaturaCNPJs : String
 begin
   fsComandoLog := 'AssociarAssinatura( '+CNPJvalue+', '+assinaturaCNPJs+' )';
   IniciaComando;
-  Result := fsSATClass.AssociarAssinatura( CNPJvalue, assinaturaCNPJs );
-  fsRespostaComando := Result;
-  FinalizaComando ;
+  Result := FinalizaComando( fsSATClass.AssociarAssinatura( CNPJvalue, assinaturaCNPJs ) );
 end ;
 
 function TACBrSAT.AtivarSAT(subComando : Integer ; CNPJ : String ;
@@ -330,27 +335,21 @@ function TACBrSAT.AtivarSAT(subComando : Integer ; CNPJ : String ;
 begin
   fsComandoLog := 'AtivarSAT( '+IntToStr(subComando)+', '+CNPJ+', '+IntToStr(cUF)+' )';
   IniciaComando;
-  Result := fsSATClass.AtivarSAT( subComando, CNPJ, cUF );
-  fsRespostaComando := Result;
-  FinalizaComando ;
+  Result := FinalizaComando( fsSATClass.AtivarSAT( subComando, CNPJ, cUF ) );
 end ;
 
 function TACBrSAT.AtualizarSoftwareSAT : String ;
 begin
   fsComandoLog := 'AtualizarSoftwareSAT';
   IniciaComando;
-  Result := fsSATClass.AtualizarSoftwareSAT ;
-  fsRespostaComando := Result;
-  FinalizaComando ;
+  Result := FinalizaComando( fsSATClass.AtualizarSoftwareSAT );
 end ;
 
 function TACBrSAT.BloquearSAT : String ;
 begin
   fsComandoLog := 'BloquearSAT';
   IniciaComando;
-  Result := fsSATClass.BloquearSAT ;
-  fsRespostaComando := Result;
-  FinalizaComando ;
+  Result := FinalizaComando( fsSATClass.BloquearSAT );
 end ;
 
 function TACBrSAT.CancelarUltimaVenda: String ;
@@ -377,9 +376,7 @@ function TACBrSAT.CancelarUltimaVenda(chave, dadosCancelamento : String
 begin
   fsComandoLog := 'CancelarUltimaVenda( '+chave+', '+dadosCancelamento+' )';
   IniciaComando;
-  Result := fsSATClass.CancelarUltimaVenda(chave, dadosCancelamento) ;
-  fsRespostaComando := Result;
-  FinalizaComando ;
+  Result := FinalizaComando( fsSATClass.CancelarUltimaVenda(chave, dadosCancelamento) ) ;
 end ;
 
 function TACBrSAT.ComunicarCertificadoICPBRASIL(certificado : AnsiString
@@ -387,9 +384,7 @@ function TACBrSAT.ComunicarCertificadoICPBRASIL(certificado : AnsiString
 begin
   fsComandoLog := 'ComunicarCertificadoICPBRASIL( '+certificado+' )';
   IniciaComando;
-  Result := fsSATClass.ComunicarCertificadoICPBRASIL( certificado ) ;
-  fsRespostaComando := Result;
-  FinalizaComando ;
+  Result := FinalizaComando( fsSATClass.ComunicarCertificadoICPBRASIL( certificado ) );
 end ;
 
 function TACBrSAT.ConfigurarInterfaceDeRede(dadosConfiguracao : AnsiString
@@ -397,9 +392,7 @@ function TACBrSAT.ConfigurarInterfaceDeRede(dadosConfiguracao : AnsiString
 begin
   fsComandoLog := 'ConfigurarInterfaceDeRede( '+dadosConfiguracao+' )';
   IniciaComando;
-  Result := fsSATClass.ConfigurarInterfaceDeRede( dadosConfiguracao ) ;
-  fsRespostaComando := Result;
-  FinalizaComando ;
+  Result := FinalizaComando( fsSATClass.ConfigurarInterfaceDeRede( dadosConfiguracao ) );
 end ;
 
 function TACBrSAT.ConsultarNumeroSessao(cNumeroDeSessao : Integer
@@ -407,45 +400,35 @@ function TACBrSAT.ConsultarNumeroSessao(cNumeroDeSessao : Integer
 begin
   fsComandoLog := 'ConsultarNumeroSessao( '+IntToStr(cNumeroDeSessao)+' )';
   IniciaComando;
-  Result := fsSATClass.ConsultarNumeroSessao( cNumeroDeSessao ) ;
-  fsRespostaComando := Result;
-  FinalizaComando ;
+  Result := FinalizaComando( fsSATClass.ConsultarNumeroSessao( cNumeroDeSessao ) );
 end ;
 
 function TACBrSAT.ConsultarSAT : String ;
 begin
   fsComandoLog := 'ConsultarSAT';
   IniciaComando;
-  Result := fsSATClass.ConsultarSAT ;
-  fsRespostaComando := Result;
-  FinalizaComando ;
+  Result := FinalizaComando( fsSATClass.ConsultarSAT );
 end ;
 
 function TACBrSAT.ConsultarStatusOperacional : String ;
 begin
   fsComandoLog := 'ConsultarStatusOperacional';
   IniciaComando;
-  Result := fsSATClass.ConsultarStatusOperacional ;
-  fsRespostaComando := Result;
-  FinalizaComando ;
+  Result := FinalizaComando( fsSATClass.ConsultarStatusOperacional ) ;
 end ;
 
 function TACBrSAT.DesbloquearSAT : String ;
 begin
   fsComandoLog := 'DesbloquearSAT';
   IniciaComando;
-  Result := fsSATClass.DesbloquearSAT ;
-  fsRespostaComando := Result;
-  FinalizaComando ;
+  Result := FinalizaComando( fsSATClass.DesbloquearSAT );
 end ;
 
 function TACBrSAT.DesligarSAT : String ;
 begin
   fsComandoLog := 'DesligarSAT';
   IniciaComando;
-  Result := fsSATClass.DesligarSAT ;
-  fsRespostaComando := Result;
-  FinalizaComando ;
+  Result := FinalizaComando( fsSATClass.DesligarSAT );
 end ;
 
 function TACBrSAT.EnviarDadosVenda(dadosVenda : AnsiString) : String ;
@@ -454,9 +437,7 @@ var
 begin
   fsComandoLog := 'EnviarDadosVenda( '+dadosVenda+' )';
   IniciaComando;
-  Result := fsSATClass.EnviarDadosVenda( dadosVenda ) ;
-  fsRespostaComando := Result;
-  FinalizaComando ;
+  Result := FinalizaComando( fsSATClass.EnviarDadosVenda( dadosVenda ) );
 
   if fsResposta.codigoDeRetorno = 6000 then
    begin
@@ -475,18 +456,14 @@ function TACBrSAT.ExtrairLogs : String ;
 begin
   fsComandoLog := 'ExtrairLogs';
   IniciaComando;
-  Result := fsSATClass.ExtrairLogs ;
-  fsRespostaComando := Result;
-  FinalizaComando ;
+  Result := FinalizaComando( fsSATClass.ExtrairLogs );
 end ;
 
 function TACBrSAT.TesteFimAFim(dadosVenda : AnsiString) : String ;
 begin
   fsComandoLog := 'TesteFimAFim(' +dadosVenda+' )';
   IniciaComando;
-  Result := fsSATClass.TesteFimAFim( dadosVenda ) ;
-  fsRespostaComando := Result;
-  FinalizaComando ;
+  Result := FinalizaComando( fsSATClass.TesteFimAFim( dadosVenda ) );
 end ;
 
 function TACBrSAT.TrocarCodigoDeAtivacao(opcao : Integer ; novoCodigo,
@@ -495,9 +472,7 @@ begin
   fsComandoLog := 'TrocarCodigoDeAtivacao(' +IntToStr(opcao)+', '+novoCodigo+
                   ', '+confNovoCodigo+' )';
   IniciaComando;
-  Result := fsSATClass.TrocarCodigoDeAtivacao( opcao, novoCodigo, confNovoCodigo ) ;
-  fsRespostaComando := Result;
-  FinalizaComando ;
+  Result := FinalizaComando( fsSATClass.TrocarCodigoDeAtivacao( opcao, novoCodigo, confNovoCodigo ) );
 end ;
 
 function TACBrSAT.GetAbout : String ;
@@ -567,7 +542,8 @@ begin
 
   { Instanciando uma nova classe de acordo com AValue }
   case AValue of
-    satEmuladorSP  : fsSATClass := TACBrSATEmuladorSP.Create( Self ) ;
+//  satEmuladorSP     : fsSATClass := TACBrSATEmuladorSP.Create( Self ) ;
+    satDinamico_cdecl : fsSATClass := TACBrSATDinamico_cdecl.Create( Self ) ;
   else
     fsSATClass := TACBrSATClass.Create( Self ) ;
   end;
@@ -640,6 +616,23 @@ begin
 
    Extrato.ImprimirExtratoResumido;
 end;
+
+function TACBrSAT.CodificarPaginaDeCodigoSAT(ATexto: String): AnsiString;
+begin
+  if fsConfig.PaginaDeCodigo > 0 then
+     Result := TranslateString( ACBrStrToAnsi( ATexto ), fsConfig.PaginaDeCodigo )
+  else
+     Result := TiraAcentos( ATexto );
+end ;
+
+function TACBrSAT.DecodificarPaginaDeCodigoSAT(ATexto : AnsiString
+   ) : String ;
+begin
+  if fsConfig.PaginaDeCodigo > 0 then
+     Result := ACBrStr( TranslateString( ATexto, 0, fsConfig.PaginaDeCodigo ) )
+  else
+     Result := ACBrStr( ATexto ) ;
+end ;
 
 {$IFDEF FPC}
 {$IFNDEF NOGUI}

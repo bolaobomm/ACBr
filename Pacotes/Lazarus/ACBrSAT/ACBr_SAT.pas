@@ -2,22 +2,22 @@
   This source is only used to compile and install the package.
  }
 
-unit ACBr_SAT ;
+unit ACBr_SAT;
 
 interface
 
 uses
-  ACBrSAT, ACBrSATClass, pcnCFe, pcnCFeR, pcnCFeW, ACBrSATEmuladorSP, 
-  ACBrSATEmuladorSPstatic, ACBrSATExtratoClass, ACBrSATExtratoESCPOS, 
-  pcnCFeCanc, pcnCFeCancR, pcnCFeCancW, LazarusPackageIntf;
+  ACBrSAT, ACBrSATClass, ACBrSATDinamico_cdecl, ACBrSATEmuladorSP, 
+  ACBrSATEmuladorSPstatic, ACBrSATExtratoClass, ACBrSATExtratoESCPOS, pcnCFe, 
+  pcnCFeR, pcnCFeW, pcnCFeCanc, pcnCFeCancR, pcnCFeCancW, LazarusPackageIntf;
 
 implementation
 
-procedure Register ;
+procedure Register;
 begin
-  RegisterUnit('ACBrSAT', @ACBrSAT.Register) ;
-end ;
+  RegisterUnit('ACBrSAT', @ACBrSAT.Register);
+end;
 
 initialization
-  RegisterPackage('ACBr_SAT', @Register) ;
+  RegisterPackage('ACBr_SAT', @Register);
 end.

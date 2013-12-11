@@ -110,6 +110,9 @@ type
     wbCupom: TWebBrowser;
     Label17: TLabel;
     cbxRegTributario: TComboBox;
+    cbxUTF8: TCheckBox;
+    Label8: TLabel;
+    sePagCod: TSpinEdit;
     procedure ACBrSAT1GetcodigoDeAtivacao(var Chave : String) ;
     procedure ACBrSAT1GetsignAC(var Chave : String) ;
     procedure ACBrSAT1Log(const AString : String) ;
@@ -139,6 +142,8 @@ type
     procedure ImprimirExtratoVendaResumido1Click(Sender: TObject);
     procedure ImprimirExtratoCancelamento1Click(Sender: TObject);
     procedure Limpar1Click(Sender: TObject);
+    procedure cbxUTF8Click(Sender: TObject);
+    procedure sePagCodChange(Sender: TObject);
   private
     procedure TrataErros(Sender : TObject ; E : Exception) ;
     procedure AjustaACBrSAT ;
@@ -229,6 +234,8 @@ begin
     Config.emit_cRegTrib      := TpcnRegTrib( cbxRegTributario.ItemIndex ) ;
     Config.emit_cRegTribISSQN := TpcnRegTribISSQN( cbxRegTribISSQN.ItemIndex ) ;
     Config.emit_indRatISSQN   := TpcnindRatISSQN( cbxIndRatISSQN.ItemIndex ) ;
+    Config.PaginaDeCodigo     := sePagCod.Value;
+    Config.EhUTF8             := cbxUTF8.Checked;
   end
 end ;
 
@@ -279,6 +286,7 @@ begin
     edtCodUF.Text          := INI.ReadString('SAT','CodigoUF','35');
     seNumeroCaixa.Value    := INI.ReadInteger('SAT','NumeroCaixa',1);
     cbxAmbiente.ItemIndex  := INI.ReadInteger('SAT','Ambiente',1);
+    sePagCod.Value         := INI.ReadInteger('SAT','PaginaDeCodigo',0);
 
     edtEmitCNPJ.Text := INI.ReadString('Emit','CNPJ','');
     edtEmitIE.Text   := INI.ReadString('Emit','IE','');
@@ -310,6 +318,7 @@ begin
     INI.WriteString('SAT','CodigoUF',edtCodUF.Text);
     INI.WriteInteger('SAT','NumeroCaixa',seNumeroCaixa.Value);
     INI.WriteInteger('SAT','Ambiente',cbxAmbiente.ItemIndex);
+    INI.WriteInteger('SAT','PaginaDeCodigo',sePagCod.Value);
 
     INI.WriteString('Emit','CNPJ',edtEmitCNPJ.Text);
     INI.WriteString('Emit','IE',edtEmitIE.Text);
@@ -718,6 +727,18 @@ procedure TForm1.LoadXML(MyMemo: TMemo; MyWebBrowser: TWebBrowser);
 begin
   MyMemo.Lines.SaveToFile(PathWithDelim(ExtractFileDir(application.ExeName))+'temp.xml');
   MyWebBrowser.Navigate(PathWithDelim(ExtractFileDir(application.ExeName))+'temp.xml');
+end;
+
+procedure TForm1.cbxUTF8Click(Sender: TObject);
+begin
+  ACBrSAT1.Config.EhUTF8 := cbxUTF8.Checked;
+  sePagCod.Value := ACBrSAT1.Config.PaginaDeCodigo;
+end;
+
+procedure TForm1.sePagCodChange(Sender: TObject);
+begin
+  ACBrSAT1.Config.PaginaDeCodigo := sePagCod.Value;
+  cbxUTF8.Checked := ACBrSAT1.Config.EhUTF8;
 end;
 
 end.

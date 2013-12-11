@@ -5,9 +5,9 @@ unit Unit1 ;
 interface
 
 uses
-  Classes, SysUtils, FileUtil, Forms, Controls, Graphics, Dialogs, StdCtrls,
-  ActnList, Menus, ExtCtrls, Buttons, ComCtrls, Spin, ACBrSAT, ACBrSATClass,
-  ACBrSATExtratoESCPOS;
+  Classes, SysUtils, FileUtil, SynMemo, SynHighlighterXML, Forms, Controls,
+  Graphics, Dialogs, StdCtrls, ActnList, Menus, ExtCtrls, Buttons, ComCtrls,
+  Spin, ACBrSAT, ACBrSATClass, ACBrSATExtratoESCPOS;
 
 {function ConsultarStatusOperacional( numeroSessao : Longint; codigoDeAtivacao : PChar ) : PChar ; cdecl;
   External 'C:\SAT\SAT.DLL';
@@ -35,10 +35,12 @@ type
     cbxIndRatISSQN : TComboBox ;
     cbxRegTribISSQN : TComboBox ;
     cbxRegTributario : TComboBox ;
+    cbxUTF8: TCheckBox;
     edLog : TEdit ;
     edtPorta : TEdit ;
     Label17 : TLabel ;
     Label7 : TLabel ;
+    Label8: TLabel;
     MenuItem10 : TMenuItem ;
     mLimpar : TMenuItem ;
     mImprimirExtratoVendaResumido : TMenuItem ;
@@ -92,18 +94,20 @@ type
     MenuItem9 : TMenuItem ;
     mExtrairLogs : TMenuItem ;
     mResposta : TMemo ;
-    mVenda : TMemo ;
     mTesteFimAFim : TMenuItem ;
     mEnviarVenda : TMenuItem ;
     mGerarVenda : TMenuItem ;
-    mCupom : TMemo ;
     OpenDialog1 : TOpenDialog ;
     PageControl1 : TPageControl ;
     PageControl2 : TPageControl ;
     Panel1 : TPanel ;
     SbArqLog : TSpeedButton ;
+    sePagCod: TSpinEdit;
     Splitter1 : TSplitter ;
     StatusBar1 : TStatusBar ;
+    mVenda: TSynMemo;
+    mCupom: TSynMemo;
+    SynXMLSyn1: TSynXMLSyn;
     tsDadosEmit : TTabSheet ;
     tsDadosSAT : TTabSheet ;
     tsDadosSwHouse : TTabSheet ;
@@ -112,11 +116,12 @@ type
     tsGerado : TTabSheet ;
     procedure ACBrSAT1GetcodigoDeAtivacao(var Chave : String) ;
     procedure ACBrSAT1GetsignAC(var Chave : String) ;
-    procedure ACBrSAT1Log(const AString : AnsiString) ;
+    procedure ACBrSAT1Log(const AString: String);
     procedure bInicializarClick(Sender : TObject) ;
     procedure btLerParamsClick(Sender : TObject) ;
     procedure btSalvarParamsClick(Sender : TObject) ;
     procedure cbxModeloChange(Sender : TObject) ;
+    procedure cbxUTF8Change(Sender: TObject);
     procedure FormCreate(Sender : TObject) ;
     procedure mAssociarAssinaturaClick(Sender : TObject) ;
     procedure mAtaulizarSoftwareSATClick(Sender : TObject) ;
@@ -139,6 +144,7 @@ type
     procedure mImprimirExtratoVendaResumidoClick(Sender : TObject) ;
     procedure mLimparClick(Sender : TObject) ;
     procedure SbArqLogClick(Sender : TObject) ;
+    procedure sePagCodChange(Sender: TObject);
   private
     procedure TrataErros(Sender : TObject ; E : Exception) ;
     procedure AjustaACBrSAT ;
@@ -191,6 +197,9 @@ begin
   PageControl1.ActivePageIndex := 0;
   PageControl2.ActivePageIndex := 0;
 
+  ACBrSAT1.CFe.IdentarXML := True;
+  ACBrSAT1.CFe.TamanhoIdentacao := 4;
+
   btLerParams.Click;
 end;
 
@@ -209,7 +218,7 @@ var
   Erro : String ;
 begin
   Erro := Trim(E.Message) ;
-  ACBrSAT1.DoLog( E.ClassName+' - '+E.Message);
+  ACBrSAT1.DoLog( E.ClassName+' - '+Erro);
 end ;
 
 procedure TForm1.AjustaACBrSAT ;
@@ -228,15 +237,10 @@ begin
     Config.emit_cRegTrib      := TpcnRegTrib( cbxRegTributario.ItemIndex ) ;
     Config.emit_cRegTribISSQN := TpcnRegTribISSQN( cbxRegTribISSQN.ItemIndex ) ;
     Config.emit_indRatISSQN   := TpcnindRatISSQN( cbxIndRatISSQN.ItemIndex ) ;
+    Config.PaginaDeCodigo     := sePagCod.Value;
+    Config.EhUTF8             := cbxUTF8.Checked;
   end
 end ;
-
-procedure TForm1.ACBrSAT1Log(const AString : AnsiString) ;
-begin
-  mResposta.Lines.Add(AString);
-  StatusBar1.Panels[0].Text := IntToStr( ACBrSAT1.Resposta.numeroSessao );
-  StatusBar1.Panels[1].Text := IntToStr( ACBrSAT1.Resposta.codigoDeRetorno );
-end;
 
 procedure TForm1.ACBrSAT1GetcodigoDeAtivacao(var Chave : String) ;
 begin
@@ -246,6 +250,13 @@ end;
 procedure TForm1.ACBrSAT1GetsignAC(var Chave : String) ;
 begin
   Chave := edtSwHAssinatura.Text;
+end;
+
+procedure TForm1.ACBrSAT1Log(const AString: String);
+begin
+  mResposta.Lines.Add(AString);
+  StatusBar1.Panels[0].Text := IntToStr( ACBrSAT1.Resposta.numeroSessao );
+  StatusBar1.Panels[1].Text := IntToStr( ACBrSAT1.Resposta.codigoDeRetorno );
 end;
 
 procedure TForm1.bInicializarClick(Sender : TObject) ;
@@ -276,6 +287,8 @@ begin
     edtCodUF.Text          := INI.ReadString('SAT','CodigoUF','35');
     seNumeroCaixa.Value    := INI.ReadInteger('SAT','NumeroCaixa',1);
     cbxAmbiente.ItemIndex  := INI.ReadInteger('SAT','Ambiente',1);
+    sePagCod.Value         := INI.ReadInteger('SAT','PaginaDeCodigo',0);
+    sePagCodChange(Sender);
 
     edtEmitCNPJ.Text := INI.ReadString('Emit','CNPJ','');
     edtEmitIE.Text   := INI.ReadString('Emit','IE','');
@@ -307,6 +320,7 @@ begin
     INI.WriteString('SAT','CodigoUF',edtCodUF.Text);
     INI.WriteInteger('SAT','NumeroCaixa',seNumeroCaixa.Value);
     INI.WriteInteger('SAT','Ambiente',cbxAmbiente.ItemIndex);
+    INI.WriteInteger('SAT','PaginaDeCodigo',sePagCod.Value);
 
     INI.WriteString('Emit','CNPJ',edtEmitCNPJ.Text);
     INI.WriteString('Emit','IE',edtEmitIE.Text);
@@ -330,6 +344,12 @@ begin
     cbxModelo.ItemIndex := Integer( ACBrSAT1.Modelo ) ;
     raise ;
   end ;
+end;
+
+procedure TForm1.cbxUTF8Change(Sender: TObject);
+begin
+  ACBrSAT1.Config.EhUTF8 := cbxUTF8.Checked;
+  sePagCod.Value := ACBrSAT1.Config.PaginaDeCodigo;
 end;
 
 procedure TForm1.mAtivarSATClick(Sender : TObject) ;
@@ -709,6 +729,12 @@ end;
 procedure TForm1.SbArqLogClick(Sender : TObject) ;
 begin
   OpenURL( ExtractFilePath( Application.ExeName ) + edLog.Text);
+end;
+
+procedure TForm1.sePagCodChange(Sender: TObject);
+begin
+  ACBrSAT1.Config.PaginaDeCodigo := sePagCod.Value;
+  cbxUTF8.Checked := ACBrSAT1.Config.EhUTF8;
 end;
 
 

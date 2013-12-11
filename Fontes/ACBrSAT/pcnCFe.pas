@@ -50,7 +50,7 @@ uses
 {$IFNDEF VER130}
   Variants,
 {$ENDIF}
-  pcnConversao, pcnSignature;
+  pcnConversao, pcnSignature, pcnGerador;
 
 type
 
@@ -87,12 +87,14 @@ type
 
   TCFe = class
   private
+    FIdentarXML: boolean;
     FinfCFe: TinfCFe;
     Fide: Tide;
     FEmit: TEmit;
     FDest: TDest;
     FEntrega: TEntrega;
     FDet: TDetCollection;
+    FTamanhoIdentacao: integer;
     FTotal: TTotal;
     fPagto: TMPCollection;
     FInfAdic: TInfAdic;
@@ -122,6 +124,9 @@ type
     property Pagto: TMPCollection read fPagto write fPagto;
     property InfAdic: TInfAdic read FInfAdic write FInfAdic;
     property signature: Tsignature read Fsignature write Fsignature;
+
+    property IdentarXML: boolean read FIdentarXML write FIdentarXML;
+    property TamanhoIdentacao: integer read FTamanhoIdentacao write FTamanhoIdentacao;
   end;
 
   { TinfCFe }
@@ -1247,6 +1252,9 @@ begin
   FinfAdic := TinfAdic.Create(self);
   Fsignature := Tsignature.create;
 
+  FIdentarXML := False;
+  FTamanhoIdentacao := 4;
+
   Clear;
 end;
 
@@ -1327,6 +1335,9 @@ begin
   Result  := '';
   LocCFeW := TCFeW.Create(Self);
   try
+    LocCFeW.Gerador.Opcoes.IdentarXML := FIdentarXML;
+    LocCFeW.Gerador.Opcoes.TamanhoIdentacao := FTamanhoIdentacao;
+
     LocCFeW.GerarXml;
     Result := LocCFeW.Gerador.ArquivoFormatoXML;
   finally

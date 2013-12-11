@@ -1,8 +1,8 @@
 object Form1: TForm1
   Left = 406
   Top = 154
-  Width = 698
-  Height = 460
+  Width = 738
+  Height = 486
   Caption = 'SAT Teste - Projeto ACBr'
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
@@ -18,7 +18,7 @@ object Form1: TForm1
   object Splitter1: TSplitter
     Left = 0
     Top = 184
-    Width = 682
+    Width = 722
     Height = 5
     Cursor = crVSplit
     Align = alTop
@@ -26,8 +26,8 @@ object Form1: TForm1
   object PageControl1: TPageControl
     Left = 0
     Top = 189
-    Width = 682
-    Height = 213
+    Width = 722
+    Height = 239
     ActivePage = tsRecebido
     Align = alClient
     TabOrder = 1
@@ -74,8 +74,8 @@ object Form1: TForm1
       Caption = 'XML Recebido'
       object mCupom: TMemo
         Left = 0
-        Top = 160
-        Width = 674
+        Top = 186
+        Width = 714
         Height = 25
         Align = alBottom
         ScrollBars = ssVertical
@@ -84,12 +84,12 @@ object Form1: TForm1
       object wbCupom: TWebBrowser
         Left = 0
         Top = 0
-        Width = 674
-        Height = 160
+        Width = 714
+        Height = 186
         Align = alClient
         TabOrder = 1
         ControlData = {
-          4C000000A9450000891000000000000000000000000000000000000000000000
+          4C000000CB490000391300000000000000000000000000000000000000000000
           000000004C000000000000000000000001000000E0D057007335CF11AE690800
           2B2E126208000000000000004C0000000114020000000000C000000000000046
           8000000000000000000000000000000000000000000000000000000000000000
@@ -100,7 +100,7 @@ object Form1: TForm1
   object Panel1: TPanel
     Left = 0
     Top = 0
-    Width = 682
+    Width = 722
     Height = 184
     Align = alTop
     TabOrder = 0
@@ -153,7 +153,7 @@ object Form1: TForm1
     object GroupBox1: TGroupBox
       Left = 146
       Top = 1
-      Width = 535
+      Width = 575
       Height = 182
       Align = alClient
       Caption = 'Configura'#231#227'o'
@@ -161,7 +161,7 @@ object Form1: TForm1
       object PageControl2: TPageControl
         Left = 2
         Top = 15
-        Width = 531
+        Width = 571
         Height = 165
         ActivePage = tsDadosSAT
         Align = alClient
@@ -169,11 +169,11 @@ object Form1: TForm1
         object tsDadosSAT: TTabSheet
           Caption = 'Dados do SAT CFe'
           DesignSize = (
-            523
+            563
             137)
           object Label9: TLabel
             Left = 26
-            Top = 15
+            Top = 7
             Width = 42
             Height = 13
             Alignment = taRightJustify
@@ -183,7 +183,7 @@ object Form1: TForm1
           end
           object SbArqLog: TSpeedButton
             Left = 192
-            Top = 32
+            Top = 24
             Width = 24
             Height = 22
             Caption = '...'
@@ -191,7 +191,7 @@ object Form1: TForm1
           end
           object Label10: TLabel
             Left = 233
-            Top = 15
+            Top = 7
             Width = 46
             Height = 13
             Alignment = taRightJustify
@@ -201,7 +201,7 @@ object Form1: TForm1
           end
           object Label1: TLabel
             Left = 23
-            Top = 64
+            Top = 56
             Width = 93
             Height = 13
             Caption = 'C'#243'digo de Ativa'#231#227'o'
@@ -210,7 +210,7 @@ object Form1: TForm1
           end
           object Label4: TLabel
             Left = 200
-            Top = 64
+            Top = 56
             Width = 36
             Height = 13
             Caption = 'C'#243'd.UF'
@@ -219,7 +219,7 @@ object Form1: TForm1
           end
           object Label3: TLabel
             Left = 262
-            Top = 64
+            Top = 56
             Width = 52
             Height = 13
             Caption = 'Num.Caixa'
@@ -227,8 +227,8 @@ object Form1: TForm1
             ParentColor = False
           end
           object Label6: TLabel
-            Left = 357
-            Top = 64
+            Left = 341
+            Top = 56
             Width = 45
             Height = 13
             Caption = 'Ambiente'
@@ -236,15 +236,25 @@ object Form1: TForm1
             ParentColor = False
           end
           object Label7: TLabel
-            Left = 357
-            Top = 16
+            Left = 399
+            Top = 8
             Width = 26
             Height = 13
+            Anchors = [akTop, akRight]
             Caption = 'Porta'
+          end
+          object Label8: TLabel
+            Left = 127
+            Top = 106
+            Width = 68
+            Height = 13
+            Caption = 'P'#225'gina C'#243'digo'
+            Color = clBtnFace
+            ParentColor = False
           end
           object edLog: TEdit
             Left = 24
-            Top = 32
+            Top = 24
             Width = 163
             Height = 21
             Cursor = crIBeam
@@ -252,8 +262,8 @@ object Form1: TForm1
           end
           object edPathDLL: TEdit
             Left = 230
-            Top = 32
-            Width = 115
+            Top = 24
+            Width = 156
             Height = 21
             Cursor = crIBeam
             Anchors = [akLeft, akTop, akRight]
@@ -261,21 +271,21 @@ object Form1: TForm1
           end
           object edtCodigoAtivacao: TEdit
             Left = 23
-            Top = 80
+            Top = 72
             Width = 164
             Height = 21
             TabOrder = 2
           end
           object edtCodUF: TEdit
             Left = 200
-            Top = 80
+            Top = 72
             Width = 49
             Height = 21
             TabOrder = 3
           end
           object seNumeroCaixa: TSpinEdit
             Left = 262
-            Top = 80
+            Top = 72
             Width = 58
             Height = 22
             MaxValue = 999
@@ -284,21 +294,43 @@ object Form1: TForm1
             Value = 1
           end
           object cbxAmbiente: TComboBox
-            Left = 357
-            Top = 80
-            Width = 132
+            Left = 341
+            Top = 72
+            Width = 190
             Height = 21
             Style = csDropDownList
+            Anchors = [akLeft, akTop, akRight]
             ItemHeight = 13
             TabOrder = 5
           end
           object edtPorta: TEdit
-            Left = 357
-            Top = 32
+            Left = 399
+            Top = 24
             Width = 132
             Height = 21
+            Anchors = [akTop, akRight]
             TabOrder = 6
             Text = 'COM7'
+          end
+          object cbxUTF8: TCheckBox
+            Left = 24
+            Top = 106
+            Width = 73
+            Height = 17
+            Caption = 'UTF8'
+            TabOrder = 7
+            OnClick = cbxUTF8Click
+          end
+          object sePagCod: TSpinEdit
+            Left = 200
+            Top = 102
+            Width = 83
+            Height = 22
+            MaxValue = 65001
+            MinValue = 0
+            TabOrder = 8
+            Value = 0
+            OnChange = sePagCodChange
           end
         end
         object tsDadosEmit: TTabSheet
@@ -412,7 +444,7 @@ object Form1: TForm1
         object tsDadosSwHouse: TTabSheet
           Caption = 'Dados Sw.House'
           DesignSize = (
-            523
+            563
             137)
           object Label2: TLabel
             Left = 10
@@ -435,7 +467,7 @@ object Form1: TForm1
           object edtSwHCNPJ: TEdit
             Left = 10
             Top = 31
-            Width = 208
+            Width = 248
             Height = 21
             Anchors = [akLeft, akTop, akRight]
             TabOrder = 0
@@ -443,7 +475,7 @@ object Form1: TForm1
           object edtSwHAssinatura: TEdit
             Left = 10
             Top = 89
-            Width = 473
+            Width = 513
             Height = 21
             Anchors = [akLeft, akTop, akRight]
             TabOrder = 1
@@ -580,15 +612,17 @@ object Form1: TForm1
     Config.emit_cRegTrib = RTSimplesNacional
     Config.emit_cRegTribISSQN = RTISSMicroempresaMunicipal
     Config.emit_indRatISSQN = irSim
+    Config.EhUTF8 = False
+    Config.PaginaDeCodigo = 0
     OnGetcodigoDeAtivacao = ACBrSAT1GetcodigoDeAtivacao
     OnGetsignAC = ACBrSAT1GetsignAC
-    Left = 24
-    Top = 330
+    Left = 58
+    Top = 234
   end
   object ACBrSATExtratoESCPOS1: TACBrSATExtratoESCPOS
     ACBrSAT = ACBrSAT1
     ImprimeQRCode = False
-    Left = 140
-    Top = 325
+    Left = 57
+    Top = 269
   end
 end
