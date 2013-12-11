@@ -1253,7 +1253,7 @@ begin
   Fsignature := Tsignature.create;
 
   FIdentarXML := False;
-  FTamanhoIdentacao := 4;
+  FTamanhoIdentacao := 3;
 
   Clear;
 end;

@@ -80,7 +80,6 @@ type
      procedure SetModelo(AValue : TACBrSATModelo) ;
      procedure SetPathDLL(AValue : string) ;
 
-     procedure VerificaInicializado ;
      procedure IniciaComando ;
      function FinalizaComando(AResult: String): String;
 
@@ -97,6 +96,7 @@ type
      Procedure Inicializar;
      Procedure DesInicializar;
      property Inicializado : Boolean read fsInicializado write SetInicializado ;
+     procedure VerificaInicializado ;
 
      Property ModeloStr : String  read GetModeloStrClass;
      Property NomeDLL   : String  read GetNomeDLL;
@@ -309,7 +309,7 @@ begin
   with wCFe do
   begin
     Clear;
-    infCFe.versaoDadosEnt := fsConfig.infCFe_versaoDadosEnt;
+    infCFe.versaoDadosEnt := cversaoDadosEnt;
     ide.CNPJ              := fsConfig.ide_CNPJ;
     ide.tpAmb             := fsConfig.ide_tpAmb;
     ide.numeroCaixa       := fsConfig.ide_numeroCaixa;
@@ -319,6 +319,7 @@ begin
     Emit.IM               := fsConfig.emit_IM;
     Emit.cRegTribISSQN    := fsConfig.emit_cRegTribISSQN;
     Emit.indRatISSQN      := fsConfig.emit_indRatISSQN;
+    infCFe.versaoDadosEnt := fsConfig.infCFe_versaoDadosEnt;
   end ;
 end ;
 

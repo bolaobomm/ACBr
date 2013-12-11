@@ -154,20 +154,20 @@ end;
 procedure TCFeW.GerarIde;
 begin
   Gerador.wGrupo('ide', 'B01');
-  Gerador.wCampo(tcInt, 'B02', 'cUF    ', 02, 02, 1, CFe.ide.cUF, DSC_CUF);
+  Gerador.wCampo(tcInt, 'B02', 'cUF    ', 02, 02, 0, CFe.ide.cUF, DSC_CUF);
   if not ValidarCodigoUF(CFe.ide.cUF) then
      Gerador.wAlerta('B02', 'cUF', DSC_CUF, ERR_MSG_INVALIDO);
-  Gerador.wCampo(tcStr, 'B03', 'cNF    ', 06, 06, 1, IntToStrZero(CFe.ide.cNF, 6), DSC_CNF);
-  Gerador.wCampo(tcInt, 'B04', 'mod    ', 02, 02, 1, CFe.ide.modelo, DSC_MOD);
-  Gerador.wCampo(tcInt, 'B05', 'nserieSAT', 09, 09, 1, CFe.ide.nserieSAT, DSC_SERIE);
-  Gerador.wCampo(tcInt, 'B06', 'nCFe   ', 06, 06, 1, IntToStrZero(CFe.ide.nCFe,6), DSC_NCFE);
-  Gerador.wCampo(tcDatCFe, 'B07', 'dEmi   ', 10, 10, 1, CFe.ide.dEmi, DSC_DEMI);
+  Gerador.wCampo(tcInt, 'B03', 'cNF    ', 06, 06, 0, CFe.ide.cNF, DSC_CNF);
+  Gerador.wCampo(tcInt, 'B04', 'mod    ', 02, 02, 0, CFe.ide.modelo, DSC_MOD);
+  Gerador.wCampo(tcInt, 'B05', 'nserieSAT', 09, 09, 0, CFe.ide.nserieSAT, DSC_SERIE);
+  Gerador.wCampo(tcInt, 'B06', 'nCFe   ', 06, 06, 0, IntToStrZero(CFe.ide.nCFe,6), DSC_NCFE);
+  Gerador.wCampo(tcDatCFe, 'B07', 'dEmi   ', 10, 10, 0, CFe.ide.dEmi, DSC_DEMI);
   Gerador.wCampo(tcHorCFe, 'B08', 'hEmi   ', 08, 08, 0, CFe.ide.hEmi, DSC_HEMI);
-  Gerador.wCampo(tcInt, 'B09', 'cDV    ', 01, 01, 1, CFe.Ide.cDV, DSC_CDV);
-  Gerador.wCampo(tcStr, 'B10', 'tpAmb  ', 01, 01, 1, tpAmbToStr(CFe.Ide.tpAmb), DSC_TPAMB);
+  Gerador.wCampo(tcInt, 'B09', 'cDV    ', 01, 01, 0, CFe.Ide.cDV, DSC_CDV);
+  Gerador.wCampo(tcStr, 'B10', 'tpAmb  ', 01, 01, 0, tpAmbToStr(CFe.Ide.tpAmb), DSC_TPAMB);
   Gerador.wCampoCNPJCPF('B11', 'B11', CFe.Ide.CNPJ, 1058);
   Gerador.wCampo(tcStr, 'B12', 'signAC ',344, 344, 1, CFe.Ide.signAC, DSC_SIGNAC);
-  Gerador.wCampo(tcStr, 'B13', 'assinaturaQRCODE', 441, 441, 1, CFe.Ide.assinaturaQRCODE, DSC_QRCODE);
+  Gerador.wCampo(tcStr, 'B13', 'assinaturaQRCODE', 441, 441, 0, CFe.Ide.assinaturaQRCODE, DSC_QRCODE);
   Gerador.wCampo(tcInt, 'B14', 'numeroCaixa', 03, 03, 1, CFe.ide.numeroCaixa, DSC_NUMEROCAIXA);
   Gerador.wGrupo('/ide');
 end;
@@ -176,13 +176,13 @@ procedure TCFeW.GerarEmit;
 begin
   Gerador.wGrupo('emit', 'C01');
   Gerador.wCampoCNPJCPF('C02', 'C02', CFe.Emit.CNPJCPF, 1058);
-  Gerador.wCampo(tcStr, 'C03', 'xNome  ', 01, 60, 1, CFe.Emit.xNome, DSC_XNOME);
+  Gerador.wCampo(tcStr, 'C03', 'xNome  ', 01, 60, 0, CFe.Emit.xNome, DSC_XNOME);
   Gerador.wCampo(tcStr, 'C04', 'xFant  ', 01, 60, 0, CFe.Emit.xFant, DSC_XNOME);
   (**)GerarEmitEnderEmit;
   Gerador.wCampo(tcStr, 'C12', 'IE      ', 12, 12, 1, SomenteNumeros(CFe.Emit.IE), DSC_IE);
-  Gerador.wCampo(tcStr, 'C13', 'IM      ', 01, 15, 0, CFe.Emit.IM, DSC_IM);
+  Gerador.wCampo(tcStr, 'C13', 'IM      ', 01, 15, 1, CFe.Emit.IM, DSC_IM);
   Gerador.wCampo(tcInt, 'C14', 'cRegTrib', 01, 01, 1, RegTribToStr(CFe.Emit.cRegTrib), DSC_REGTRIB);
-  Gerador.wCampo(tcInt, 'C15', 'cRegTribISSQN', 01, 02, 0, RegTribISSQNToStr(CFe.Emit.cRegTribISSQN), DSC_REGISSQN);
+  Gerador.wCampo(tcInt, 'C15', 'cRegTribISSQN', 01, 02, 1, RegTribISSQNToStr(CFe.Emit.cRegTribISSQN), DSC_REGISSQN);
   Gerador.wCampo(tcStr, 'C16', 'indRatISSQN', 01, 01, 1, indRatISSQNToStr(CFe.Emit.indRatISSQN), DSC_RATISSQN);
 
   Gerador.wGrupo('/emit');
@@ -191,12 +191,12 @@ end;
 procedure TCFeW.GerarEmitEnderEmit;
 begin
   Gerador.wGrupo('enderEmit', 'C05');
-  Gerador.wCampo(tcStr, 'C06', 'xLgr    ', 02, 60, 1, CFe.Emit.EnderEmit.xLgr, DSC_XLGR);
-  Gerador.wCampo(tcStr, 'C07', 'nro     ', 01, 60, 1, ExecutarAjusteTagNro(FOpcoes.FAjustarTagNro, CFe.Emit.enderEmit.nro), DSC_NRO);
+  Gerador.wCampo(tcStr, 'C06', 'xLgr    ', 02, 60, 0, CFe.Emit.EnderEmit.xLgr, DSC_XLGR);
+  Gerador.wCampo(tcStr, 'C07', 'nro     ', 01, 60, 0, ExecutarAjusteTagNro(FOpcoes.FAjustarTagNro, CFe.Emit.enderEmit.nro), DSC_NRO);
   Gerador.wCampo(tcStr, 'C08', 'xCpl    ', 01, 60, 0, CFe.Emit.enderEmit.xCpl, DSC_XCPL);
-  Gerador.wCampo(tcStr, 'C09', 'xBairro ', 02, 60, 1, CFe.Emit.enderEmit.xBairro, DSC_XBAIRRO);
-  Gerador.wCampo(tcStr, 'C10', 'xMun    ', 02, 60, 1, CFe.Emit.enderEmit.xMun, DSC_XMUN);
-  Gerador.wCampo(tcInt, 'C11', 'CEP     ', 08, 08, 1, CFe.Emit.enderEmit.CEP, DSC_CEP);
+  Gerador.wCampo(tcStr, 'C09', 'xBairro ', 02, 60, 0, CFe.Emit.enderEmit.xBairro, DSC_XBAIRRO);
+  Gerador.wCampo(tcStr, 'C10', 'xMun    ', 02, 60, 0, CFe.Emit.enderEmit.xMun, DSC_XMUN);
+  Gerador.wCampo(tcInt, 'C11', 'CEP     ', 08, 08, 0, CFe.Emit.enderEmit.CEP, DSC_CEP);
   Gerador.wGrupo('/enderEmit');
 end;
 
@@ -666,14 +666,25 @@ var
 begin
   Gerador.LayoutArquivoTXT.Clear;
 
-  Gerador.ArquivoFormatoXML := '';
+  {$IFDEF UNICODE}
+   Gerador.ArquivoFormatoXML := '<'+ENCODING_UTF8+'>';
+   if Gerador.Opcoes.IdentarXML then
+     Gerador.ArquivoFormatoXML := Gerador.ArquivoFormatoXML + #13#10 ;
+  {$ELSE}
+   Gerador.ArquivoFormatoXML := '';
+  {$ENDIF}
+
   Gerador.ArquivoFormatoTXT := '';
 
   Gerador.wGrupo('CFe ' + NAME_SPACE_CFE);
-  Gerador.wGrupo('infCFe Id="' + CFe.infCFe.ID + '" '
-                 + V0_02 +
-                 ' versaoDadosEnt="'+ StringReplace(FormatFloat('0.00',CFe.infCFe.versaoDadosEnt),',','.',[rfReplaceAll]) +
-                 '" versaoSB="'+IntToStrZero(CFe.infCFe.versaoSB,6) + '"' );
+  Gerador.wGrupo('infCFe '+
+                 ' versaoDadosEnt="'+ StringReplace(FormatFloat('0.00',CFe.infCFe.versaoDadosEnt),',','.',[rfReplaceAll])+'"' );
+
+  //Gerador.wGrupo('infCFe Id="' + CFe.infCFe.ID + '" '
+  //               + V0_02 +
+  //               ' versaoDadosEnt="'+ StringReplace(FormatFloat('0.00',CFe.infCFe.versaoDadosEnt),',','.',[rfReplaceAll]) +
+  //               '" versaoSB="'+IntToStrZero(CFe.infCFe.versaoSB,6) + '"' );
+
   (**)GerarInfCFe;
   Gerador.wGrupo('/infCFe');
   //

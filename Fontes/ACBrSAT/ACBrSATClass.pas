@@ -48,9 +48,9 @@ uses
   Classes, SysUtils, pcnCFe, pcnConversao ;
 
 const
-  cACBrSAT_Versao      = '0.1.0' ;
+  cACBrSAT_Versao      = '0.1.1' ;
   cLIBSAT              = 'SAT.DLL';
-  cversaoDadosEnt      = 0.03;
+  cversaoDadosEnt      = 0.05;
 
   cACBrSATClassCreateException = 'Essa Classe deve ser instanciada por TACBrSAT' ;
   cACBrSATSetModeloException   = 'Não é possível mudar o Modelo com o SAT Inicializado' ;
@@ -99,8 +99,7 @@ type
     procedure Clear;
   published
     property infCFe_versaoDadosEnt : Real read fsinfCFe_versaoDadosEnt
-       write fsinfCFe_versaoDadosEnt ;
-
+        write fsinfCFe_versaoDadosEnt ;
     property ide_CNPJ : String  read fside_CNPJ write fside_CNPJ;
     property ide_numeroCaixa : Integer read fside_numeroCaixa
        write fside_numeroCaixa ;
