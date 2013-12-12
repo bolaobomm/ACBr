@@ -95,30 +95,19 @@ type
 {$ENDIF}
     class function GetURL(const AUF, AAmbiente, FormaEmissao: Integer; ALayOut: TLayOut): WideString;
     class function Valida(const AXML: AnsiString; var AMsg: AnsiString; const APathSchemas: string = ''): Boolean;
-
-//    class function ValidaUFCidade(const UF, Cidade: Integer): Boolean; overload;
-//    class procedure ValidaUFCidade(const UF, Cidade: Integer; const AMensagem: string); overload;
-    // Alterado por Italo em 17/05/2011
     class function FormatarChaveAcesso(AValue : String; Mascara: Boolean = False ): String;
     class function FormatarNumMDFe(const AValue: Integer): string;
     class function FormatarValor(mask: TpcteMask; const AValue: real): string;
-    // Incluido por Italo em 28/01/2011
     class function GerarChaveContingencia(FMDFe:TMDFe): String;
     class function FormatarChaveContingencia(AValue: String): String;
-    // Incluido por Italo em 10/02/2012
     class function ValidaAssinatura(const AXML: AnsiString;  var AMsg: AnsiString): Boolean;
-
 {$IFDEF ACBrMDFeOpenSSL}
     class function Assinar(const AXML, ArqPFX, PFXSenha: AnsiString; out AXMLAssinado, FMensagem: AnsiString): Boolean;
 {$ELSE}
     class function Assinar(const AXML: AnsiString; Certificado: ICertificate2; out AXMLAssinado, FMensagem: AnsiString): Boolean;
 {$ENDIF}
-
-//    class function PathAplication: String;
-//    class procedure ConfAmbiente;
     class function UFtoCUF(UF : String): Integer;
     class function IdentificaTipoSchema(Const AXML: AnsiString; var I: Integer): integer;
-//    class function FormatarPlaca(AValue: string): string;
   end;
 
 implementation
@@ -319,28 +308,6 @@ begin
   result := FormatFloat(TpMaskToStrText(mask), AValue);
 end;
 
-(*
-class procedure MDFeUtil.ConfAmbiente;
-begin
-  DecimalSeparator := ',';
-end;
-*)
-
-(*
-class function MDFeUtil.ValidaUFCidade(const UF, Cidade: Integer): Boolean;
-begin
-  Result := (Copy(IntToStr(UF), 1, 2) = Copy(IntToStr(Cidade), 1, 2));
-end;
-*)
-
-(*
-class procedure MDFeUtil.ValidaUFCidade(const UF, Cidade: Integer; const AMensagem: string);
-begin
-  if not (ValidaUFCidade(UF, Cidade)) then
-    raise Exception.Create(AMensagem);
-end;
-*)
-
 class function MDFeUtil.FormatarChaveAcesso(AValue: String; Mascara: Boolean = False ): String;
 begin
   AValue := DFeUtil.LimpaNumero(AValue);
@@ -361,13 +328,6 @@ begin
                   copy(AValue,33,4) + ' ' + copy(AValue,37,4) + ' ' +
                   copy(AValue,41,4);
 end;
-
-(*
-class function MDFeUtil.PathAplication: String;
-begin
-  Result := ExtractFilePath(Application.ExeName);
-end;
-*)
 
 {$IFDEF ACBrMDFeOpenSSL}
 
@@ -530,7 +490,6 @@ begin
   Schema              := nil;
 end;
 
-// Incluido por Italo em 16/03/2012
 function ValidaModalMSXML(XML: AnsiString; out Msg: AnsiString;
  const APathSchemas: string = ''): Boolean;
 var
@@ -582,7 +541,6 @@ begin
            '</rodo>';
    end;
 
-  // Incluido por Italo em 02/10/2012
   // Eventos
   if pos( '<evEncMDFe>', XML) <> 0
    then begin
@@ -663,7 +621,6 @@ begin
           PathWithDelim(ExtractFileDir(application.ExeName))+'Schemas\',
           PathWithDelim(APathSchemas))+'MDFeModalRodoviario_v' + MDFeModalRodo + '.xsd');
       end;
-   // Incluido por Italo em 02/10/2012
    6: begin
        Schema.add('http://www.portalfiscal.inf.br/mdfe',
           DFeUtil.SeSenao(DFeUtil.EstaVazio(APathSchemas),
@@ -769,7 +726,7 @@ function AssinarLibXML(const AXML, ArqPFX, PFXSenha: AnsiString;
 var
   I, J, PosIni, PosFim : Integer;
   URI, AStr, XmlAss    : AnsiString;
-  Tipo                 : Integer;  // 1 - MDFe 2 - Cancelamento 3 - Inutilizacao
+  Tipo                 : Integer;  // 1 - MDFe 2 - Cancelamento 
   Cert: TMemoryStream;
   Cert2: TStringStream;
 begin
@@ -812,7 +769,6 @@ begin
     end;
     2..4:
     begin
-      // Alterado por Italo em 02/10/2012
       I := pos('</eventoMDFe>',AStr);
       if I = 0 then
         raise Exception.Create('Não encontrei final do XML: </eventoMDFe>');
@@ -845,7 +801,6 @@ begin
       '</KeyInfo>' +
     '</Signature>';
 
-  // Alterado por Italo em 02/10/2012
   case Tipo of
     1: AStr := AStr + '</MDFe>';
     2..4: AStr := AStr + '</eventoMDFe>';
@@ -916,7 +871,6 @@ begin
 
     URI := copy(XML, I + 1, J - I - 1);
 
-    // Alterado por Italo em 02/10/2012
     case Tipo of
       1: XML := copy(XML,1,pos('</MDFe>',XML)-1);
       2..4: XML := copy(XML,1,pos('</eventoMDFe>',XML)-1);
@@ -928,7 +882,6 @@ begin
     XML := XML + '<Transforms><Transform Algorithm="http://www.w3.org/2000/09/xmldsig#enveloped-signature" /><Transform Algorithm="http://www.w3.org/TR/2001/REC-xml-c14n-20010315" /></Transforms><DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" />';
     XML := XML + '<DigestValue></DigestValue></Reference></SignedInfo><SignatureValue></SignatureValue><KeyInfo></KeyInfo></Signature>';
 
-    // Alterado por Italo em 02/10/2012
     case Tipo of
       1: XML := XML + '</MDFe>';
       2..4: XML := XML + '</eventoMDFe>';
@@ -1163,10 +1116,8 @@ end;
 {$ENDIF}
 
 {$IFDEF ACBrMDFeOpenSSL}
-
 class function MDFeUtil.Assinar(const AXML, ArqPFX, PFXSenha: AnsiString; out AXMLAssinado, FMensagem: AnsiString): Boolean;
 {$ELSE}
-
 class function MDFeUtil.Assinar(const AXML: AnsiString; Certificado: ICertificate2; out AXMLAssinado, FMensagem: AnsiString): Boolean;
 {$ENDIF}
 begin
@@ -1269,7 +1220,7 @@ begin
    wchave := wchave + inttostr(digito);
 *)
    //RETORNA A CHAVE DE CONTINGENCIA
-   result:=wchave;
+   result := wchave;
 end;
 
 class function MDFeUtil.FormatarChaveContingencia(AValue: String): String;
@@ -1309,11 +1260,5 @@ begin
    end;
 end;
 
-(*
-class function MDFeUtil.FormatarPlaca(AValue: string): string;
-begin
- Result := Copy(AValue, 1, 3) + '-' + Copy(AValue, 4, 4);
-end;
-*)
 end.
 

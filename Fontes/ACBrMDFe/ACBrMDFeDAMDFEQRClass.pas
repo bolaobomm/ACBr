@@ -83,49 +83,50 @@ var
  sProt: String;
 begin
   fqrDAMDFEQRRetrato := TfqrDAMDFEQRRetrato.Create(Self);
+  try
+    sProt := TACBrMDFe(ACBrMDFe).DAMDFE.ProtocoloMDFe;
+    fqrDAMDFEQRRetrato.ProtocoloMDFe( sProt );
 
-  sProt := TACBrMDFe(ACBrMDFe).DAMDFE.ProtocoloMDFe;
-  fqrDAMDFEQRRetrato.ProtocoloMDFe( sProt );
-
-  if MDFe = nil then
-   begin
-     for i:= 0 to TACBrMDFe(ACBrMDFe).Manifestos.Count-1 do
-      begin
-        fqrDAMDFEQRRetrato.Imprimir( TACBrMDFe(ACBrMDFe).Manifestos.Items[i].MDFe
-                                   , Logo
-                                   , Email
-                                   , ExpandirLogoMarca
-                                   , Fax
-                                   , NumCopias
-                                   , Sistema
-                                   , Site
-                                   , Usuario
-                                   , MostrarPreview
-                                   , MargemSuperior
-                                   , MargemInferior
-                                   , MargemEsquerda
-                                   , MargemDireita
-                                   , Impressora );
-      end;
-   end
-  else
-     fqrDAMDFEQRRetrato.Imprimir( MDFe
-                                , Logo
-                                , Email
-                                , ExpandirLogoMarca
-                                , Fax
-                                , NumCopias
-                                , Sistema
-                                , Site
-                                , Usuario
-                                , MostrarPreview
-                                , MargemSuperior
-                                , MargemInferior
-                                , MargemEsquerda
-                                , MargemDireita
-                                , Impressora );
-
-  fqrDAMDFEQRRetrato.Free;
+    if MDFe = nil then
+     begin
+       for i:= 0 to TACBrMDFe(ACBrMDFe).Manifestos.Count-1 do
+        begin
+          fqrDAMDFEQRRetrato.Imprimir( TACBrMDFe(ACBrMDFe).Manifestos.Items[i].MDFe
+                                     , Logo
+                                     , Email
+                                     , ExpandirLogoMarca
+                                     , Fax
+                                     , NumCopias
+                                     , Sistema
+                                     , Site
+                                     , Usuario
+                                     , MostrarPreview
+                                     , MargemSuperior
+                                     , MargemInferior
+                                     , MargemEsquerda
+                                     , MargemDireita
+                                     , Impressora );
+        end;
+     end
+    else
+       fqrDAMDFEQRRetrato.Imprimir( MDFe
+                                  , Logo
+                                  , Email
+                                  , ExpandirLogoMarca
+                                  , Fax
+                                  , NumCopias
+                                  , Sistema
+                                  , Site
+                                  , Usuario
+                                  , MostrarPreview
+                                  , MargemSuperior
+                                  , MargemInferior
+                                  , MargemEsquerda
+                                  , MargemDireita
+                                  , Impressora );
+  finally
+    fqrDAMDFEQRRetrato.Free;
+  end;
 end;
 
 procedure TACBrMDFeDAMDFEQR.ImprimirDAMDFEPDF(MDFe: TMDFe = nil);
@@ -136,54 +137,56 @@ var
  sProt: String;
 begin
   fqrDAMDFEQRRetrato := TfqrDAMDFEQRRetrato.Create(Self);
+  try
+    sProt := TACBrMDFe(ACBrMDFe).DAMDFe.ProtocoloMDFe;
+    fqrDAMDFEQRRetrato.ProtocoloMDFe( sProt );
 
-  sProt := TACBrMDFe(ACBrMDFe).DAMDFe.ProtocoloMDFe;
-  fqrDAMDFEQRRetrato.ProtocoloMDFe( sProt );
-  if MDFe = nil then
-  begin
-    for i:= 0 to TACBrMDFe(ACBrMDFe).Manifestos.Count-1 do
+    if MDFe = nil then
     begin
-      NomeArq := StringReplace(TACBrMDFe(ACBrMDFe).Manifestos.Items[i].MDFe.infMDFe.ID,'MDFe', '', [rfIgnoreCase]);
+      for i:= 0 to TACBrMDFe(ACBrMDFe).Manifestos.Count-1 do
+      begin
+        NomeArq := StringReplace(TACBrMDFe(ACBrMDFe).Manifestos.Items[i].MDFe.infMDFe.ID,'MDFe', '', [rfIgnoreCase]);
+        NomeArq := PathWithDelim(Self.PathPDF)+NomeArq+'.pdf';
+
+        fqrDAMDFEQRRetrato.SavePDF( NomeArq
+                                  , TACBrMDFe(ACBrMDFe).Manifestos.Items[i].MDFe
+                                  , Logo
+                                  , Email
+                                  , ExpandirLogoMarca
+                                  , Fax
+                                  , NumCopias
+                                  , Sistema
+                                  , Site
+                                  , Usuario
+                                  , MargemSuperior
+                                  , MargemInferior
+                                  , MargemEsquerda
+                                  , MargemDireita );
+      end;
+    end
+    else
+    begin
+      NomeArq := StringReplace(MDFe.infMDFe.ID,'MDFe', '', [rfIgnoreCase]);
       NomeArq := PathWithDelim(Self.PathPDF)+NomeArq+'.pdf';
 
       fqrDAMDFEQRRetrato.SavePDF( NomeArq
-                                 ,TACBrMDFe(ACBrMDFe).Manifestos.Items[i].MDFe
-                                 , Logo
-                                 , Email
-                                 , ExpandirLogoMarca
-                                 , Fax
-                                 , NumCopias
-                                 , Sistema
-                                 , Site
-                                 , Usuario
-                                 , MargemSuperior
-                                 , MargemInferior
-                                 , MargemEsquerda
-                                 , MargemDireita );
+                                , MDFe
+                                , Logo
+                                , Email
+                                , ExpandirLogoMarca
+                                , Fax
+                                , NumCopias
+                                , Sistema
+                                , Site
+                                , Usuario
+                                , MargemSuperior
+                                , MargemInferior
+                                , MargemEsquerda
+                                , MargemDireita );
     end;
-  end
-  else
-  begin
-    NomeArq := StringReplace(MDFe.infMDFe.ID,'MDFe', '', [rfIgnoreCase]);
-    NomeArq := PathWithDelim(Self.PathPDF)+NomeArq+'.pdf';
-
-    fqrDAMDFEQRRetrato.SavePDF( NomeArq
-                              , MDFe
-                              , Logo
-                              , Email
-                              , ExpandirLogoMarca
-                              , Fax
-                              , NumCopias
-                              , Sistema
-                              , Site
-                              , Usuario
-                              , MargemSuperior
-                              , MargemInferior
-                              , MargemEsquerda
-                              , MargemDireita );
+  finally
+    fqrDAMDFEQRRetrato.Free;
   end;
-
-  fqrDAMDFEQRRetrato.Free;
 end;
 
 procedure TACBrMDFeDAMDFEQR.ImprimirEVENTO(MDFe: TMDFe);
@@ -192,68 +195,69 @@ var
  Impresso: Boolean;
 begin
   frmMDFeDAEventoQR := TfrmMDFeDAEventoQRRetrato.Create(Self);
+  try
+    if TACBrMDFe(ACBrMDFe).Manifestos.Count > 0 then
+      begin
+        for i := 0 to (TACBrMDFe(ACBrMDFe).EventoMDFe.Evento.Count - 1) do
+          begin
+            Impresso := False;
+            for j := 0 to (TACBrMDFe(ACBrMDFe).Manifestos.Count - 1) do
+              begin
+                if Copy(TACBrMDFe(ACBrMDFe).Manifestos.Items[j].MDFe.infMDFe.ID, 5, 44) = TACBrMDFe(ACBrMDFe).EventoMDFe.Evento.Items[i].InfEvento.chMDFe then
+                  begin
+                    frmMDFeDAEventoQR.Imprimir(TACBrMDFe(ACBrMDFe).EventoMDFe.Evento.Items[i],
+                                           FLogo,
+                                           FNumCopias,
+                                           FSistema,
+                                           FUsuario,
+                                           FMostrarPreview,
+                                           FMargemSuperior,
+                                           FMargemInferior,
+                                           FMargemEsquerda,
+                                           FMargemDireita,
+                                           FImpressora,
+                                           TACBrMDFe(ACBrMDFe).Manifestos.Items[j].MDFe);
+                    Impresso := True;
+                    Break;
+                  end;
+              end;
 
-  if TACBrMDFe(ACBrMDFe).Manifestos.Count > 0 then
-    begin
-      for i := 0 to (TACBrMDFe(ACBrMDFe).EventoMDFe.Evento.Count - 1) do
-        begin
-          Impresso := False;
-          for j := 0 to (TACBrMDFe(ACBrMDFe).Manifestos.Count - 1) do
-            begin
-              if Copy(TACBrMDFe(ACBrMDFe).Manifestos.Items[j].MDFe.infMDFe.ID, 5, 44) = TACBrMDFe(ACBrMDFe).EventoMDFe.Evento.Items[i].InfEvento.chMDFe then
-                begin
-                  frmMDFeDAEventoQR.Imprimir(TACBrMDFe(ACBrMDFe).EventoMDFe.Evento.Items[i],
-                                         FLogo,
-                                         FNumCopias,
-                                         FSistema,
-                                         FUsuario,
-                                         FMostrarPreview,
-                                         FMargemSuperior,
-                                         FMargemInferior,
-                                         FMargemEsquerda,
-                                         FMargemDireita,
-                                         FImpressora,
-                                         TACBrMDFe(ACBrMDFe).Manifestos.Items[j].MDFe);
-                  Impresso := True;
-                  Break;
-                end;
-            end;
-
-          if Impresso = False then
-            begin
-              frmMDFeDAEventoQR.Imprimir(TACBrMDFe(ACBrMDFe).EventoMDFe.Evento.Items[i],
-                                     FLogo,
-                                     FNumCopias,
-                                     FSistema,
-                                     FUsuario,
-                                     FMostrarPreview,
-                                     FMargemSuperior,
-                                     FMargemInferior,
-                                     FMargemEsquerda,
-                                     FMargemDireita,
-                                     FImpressora);
-            end;
-        end;
-    end
-  else
-    begin
-      for i := 0 to (TACBrMDFe(ACBrMDFe).EventoMDFe.Evento.Count - 1) do
-        begin
-          frmMDFeDAEventoQR.Imprimir(TACBrMDFe(ACBrMDFe).EventoMDFe.Evento.Items[i],
-                                 FLogo,
-                                 FNumCopias,
-                                 FSistema,
-                                 FUsuario,
-                                 FMostrarPreview,
-                                 FMargemSuperior,
-                                 FMargemInferior,
-                                 FMargemEsquerda,
-                                 FMargemDireita,
-                                 FImpressora);
-        end;
-    end;
-
-  FreeAndNil(frmMDFeDAEventoQR);
+            if Impresso = False then
+              begin
+                frmMDFeDAEventoQR.Imprimir(TACBrMDFe(ACBrMDFe).EventoMDFe.Evento.Items[i],
+                                       FLogo,
+                                       FNumCopias,
+                                       FSistema,
+                                       FUsuario,
+                                       FMostrarPreview,
+                                       FMargemSuperior,
+                                       FMargemInferior,
+                                       FMargemEsquerda,
+                                       FMargemDireita,
+                                       FImpressora);
+              end;
+          end;
+      end
+    else
+      begin
+        for i := 0 to (TACBrMDFe(ACBrMDFe).EventoMDFe.Evento.Count - 1) do
+          begin
+            frmMDFeDAEventoQR.Imprimir(TACBrMDFe(ACBrMDFe).EventoMDFe.Evento.Items[i],
+                                   FLogo,
+                                   FNumCopias,
+                                   FSistema,
+                                   FUsuario,
+                                   FMostrarPreview,
+                                   FMargemSuperior,
+                                   FMargemInferior,
+                                   FMargemEsquerda,
+                                   FMargemDireita,
+                                   FImpressora);
+          end;
+      end;
+  finally
+    FreeAndNil(frmMDFeDAEventoQR);
+  end;
 end;
 
 procedure TACBrMDFeDAMDFEQR.ImprimirEVENTOPDF(MDFe: TMDFe);
@@ -263,68 +267,69 @@ var
  Impresso: Boolean;
 begin
   frmMDFeDAEventoQR := TfrmMDFeDAEventoQRRetrato.Create(Self);
+  try
+    if TACBrMDFe(ACBrMDFe).Manifestos.Count > 0 then
+      begin
+        for i := 0 to (TACBrMDFe(ACBrMDFe).EventoMDFe.Evento.Count - 1) do
+          begin
+            sFile := TACBrMDFe(ACBrMDFe).DAMDFe.PathPDF +
+                     Copy(TACBrMDFe(ACBrMDFe).EventoMDFe.Evento.Items[i].InfEvento.id, 3, 52) + 'evento.pdf';
+            Impresso := False;
 
-  if TACBrMDFe(ACBrMDFe).Manifestos.Count > 0 then
-    begin
-      for i := 0 to (TACBrMDFe(ACBrMDFe).EventoMDFe.Evento.Count - 1) do
-        begin
-          sFile := TACBrMDFe(ACBrMDFe).DAMDFe.PathPDF +
-                   Copy(TACBrMDFe(ACBrMDFe).EventoMDFe.Evento.Items[i].InfEvento.id, 3, 52) + 'evento.pdf';
-          Impresso := False;
+            for j := 0 to (TACBrMDFe(ACBrMDFe).Manifestos.Count - 1) do
+              begin
+                if Copy(TACBrMDFe(ACBrMDFe).Manifestos.Items[j].MDFe.infMDFe.ID, 4, 44) = TACBrMDFe(ACBrMDFe).EventoMDFe.Evento.Items[i].InfEvento.chMDFe then
+                  begin
+                    frmMDFeDAEventoQR.SavePDF(TACBrMDFe(ACBrMDFe).EventoMDFe.Evento.Items[i],
+                                          FLogo,
+                                          sFile,
+                                          FSistema,
+                                          FUsuario,
+                                          FMargemSuperior,
+                                          FMargemInferior,
+                                          FMargemEsquerda,
+                                          FMargemDireita,
+                                          TACBrMDFe(ACBrMDFe).Manifestos.Items[j].MDFe);
+                    Impresso := True;
+                    Break;
+                  end;
+              end;
 
-          for j := 0 to (TACBrMDFe(ACBrMDFe).Manifestos.Count - 1) do
-            begin
-              if Copy(TACBrMDFe(ACBrMDFe).Manifestos.Items[j].MDFe.infMDFe.ID, 4, 44) = TACBrMDFe(ACBrMDFe).EventoMDFe.Evento.Items[i].InfEvento.chMDFe then
-                begin
-                  frmMDFeDAEventoQR.SavePDF(TACBrMDFe(ACBrMDFe).EventoMDFe.Evento.Items[i],
-                                        FLogo,
-                                        sFile,
-                                        FSistema,
-                                        FUsuario,
-                                        FMargemSuperior,
-                                        FMargemInferior,
-                                        FMargemEsquerda,
-                                        FMargemDireita,
-                                        TACBrMDFe(ACBrMDFe).Manifestos.Items[j].MDFe);
-                  Impresso := True;
-                  Break;
-                end;
-            end;
+            if Impresso = False then
+              begin
+                frmMDFeDAEventoQR.SavePDF(TACBrMDFe(ACBrMDFe).EventoMDFe.Evento.Items[i],
+                                      FLogo,
+                                      sFile,
+                                      FSistema,
+                                      FUsuario,
+                                      FMargemSuperior,
+                                      FMargemInferior,
+                                      FMargemEsquerda,
+                                      FMargemDireita);
+              end;
+          end;
+      end
+    else
+      begin
+        for i := 0 to (TACBrMDFe(ACBrMDFe).EventoMDFe.Evento.Count - 1) do
+          begin
+            sFile := TACBrMDFe(ACBrMDFe).DAMDFe.PathPDF +
+                     Copy(TACBrMDFe(ACBrMDFe).EventoMDFe.Evento.Items[i].InfEvento.id, 3, 52) + 'evento.pdf';
 
-          if Impresso = False then
-            begin
-              frmMDFeDAEventoQR.SavePDF(TACBrMDFe(ACBrMDFe).EventoMDFe.Evento.Items[i],
-                                    FLogo,
-                                    sFile,
-                                    FSistema,
-                                    FUsuario,
-                                    FMargemSuperior,
-                                    FMargemInferior,
-                                    FMargemEsquerda,
-                                    FMargemDireita);
-            end;
-        end;
-    end
-  else
-    begin
-      for i := 0 to (TACBrMDFe(ACBrMDFe).EventoMDFe.Evento.Count - 1) do
-        begin
-          sFile := TACBrMDFe(ACBrMDFe).DAMDFe.PathPDF +
-                   Copy(TACBrMDFe(ACBrMDFe).EventoMDFe.Evento.Items[i].InfEvento.id, 3, 52) + 'evento.pdf';
-
-          frmMDFeDAEventoQR.SavePDF(TACBrMDFe(ACBrMDFe).EventoMDFe.Evento.Items[i],
-                                FLogo,
-                                sFile,
-                                FSistema,
-                                FUsuario,
-                                FMargemSuperior,
-                                FMargemInferior,
-                                FMargemEsquerda,
-                                FMargemDireita);
-        end;
-    end;
-
-  FreeAndNil(frmMDFeDAEventoQR);
+            frmMDFeDAEventoQR.SavePDF(TACBrMDFe(ACBrMDFe).EventoMDFe.Evento.Items[i],
+                                  FLogo,
+                                  sFile,
+                                  FSistema,
+                                  FUsuario,
+                                  FMargemSuperior,
+                                  FMargemInferior,
+                                  FMargemEsquerda,
+                                  FMargemDireita);
+          end;
+      end;
+  finally
+    FreeAndNil(frmMDFeDAEventoQR);
+  end;
 end;
 
 end.

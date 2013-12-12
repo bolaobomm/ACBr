@@ -375,13 +375,15 @@ begin
         Self.Items[i].XML := vAssinada;
 
         Leitor := TLeitor.Create;
-        leitor.Grupo := vAssinada;
-        Self.Items[i].MDFe.signature.URI := Leitor.rAtributo('Reference URI=');
-        Self.Items[i].MDFe.signature.DigestValue := Leitor.rCampo(tcStr, 'DigestValue');
-        Self.Items[i].MDFe.signature.SignatureValue := Leitor.rCampo(tcStr, 'SignatureValue');
-        Self.Items[i].MDFe.signature.X509Certificate := Leitor.rCampo(tcStr, 'X509Certificate');
-        Leitor.Free;
-
+        try
+          leitor.Grupo := vAssinada;
+          Self.Items[i].MDFe.signature.URI := Leitor.rAtributo('Reference URI=');
+          Self.Items[i].MDFe.signature.DigestValue := Leitor.rCampo(tcStr, 'DigestValue');
+          Self.Items[i].MDFe.signature.SignatureValue := Leitor.rCampo(tcStr, 'SignatureValue');
+          Self.Items[i].MDFe.signature.X509Certificate := Leitor.rCampo(tcStr, 'X509Certificate');
+        finally
+          Leitor.Free;
+        end;
         if FConfiguracoes.Geral.Salvar then
            FConfiguracoes.Geral.Save(StringReplace(Self.Items[i].MDFe.infMDFe.ID, 'MDFe', '', [rfIgnoreCase])+'-mdfe.xml', vAssinada);
 

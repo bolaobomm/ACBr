@@ -327,7 +327,7 @@ var
  p: TMimepart;
  i: Integer;
 begin
- m:=TMimemess.create;
+ m := TMimemess.create;
 
  ThreadSMTP := TSendMailThread.Create;  // Não Libera, pois usa FreeOnTerminate := True;
  try
@@ -414,7 +414,7 @@ begin
   msg_lines := TStringList.Create;
   CorpoEmail := TStringList.Create;
   smtp := TSMTPSend.Create;
-  m:=TMimemess.create;
+  m := TMimemess.create;
   try
      p := m.AddPartMultipart('mixed', nil);
      if sMensagem <> nil then
