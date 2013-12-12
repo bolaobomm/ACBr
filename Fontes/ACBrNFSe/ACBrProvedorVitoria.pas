@@ -357,7 +357,8 @@ end;
 function TProvedorVitoria.GetLinkNFSe(ACodMunicipio, ANumeroNFSe: Integer;
   ACodVerificacao, AInscricaoM: String; AAmbiente: Integer): String;
 begin
- Result := '';
+  Result := 'http://sistemas3.vitoria.es.gov.br/isiss/Aberto/exibenfe.cfm?key=' +
+           ACodVerificacao + '&num=' + IntToStr(ANumeroNFSe);
 end;
 
 end.
