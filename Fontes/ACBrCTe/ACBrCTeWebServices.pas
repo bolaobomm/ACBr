@@ -2974,23 +2974,23 @@ begin
                 Texto := Texto + '<eventoCTe versao="' + CTeEventoCTe + '">';
                 Leitor.Arquivo := FDadosMSG;
                 Texto := Texto + UTF8Encode(Leitor.rExtrai(1, 'infEvento', '', i + 1));
-                Texto := Texto + '</infEvento>';
+//                Texto := Texto + '</infEvento>';
                 Texto := Texto + '<Signature xmlns="http://www.w3.org/2000/09/xmldsig#">';
                 Leitor.Arquivo := FDadosMSG;
                 Texto := Texto + UTF8Encode(Leitor.rExtrai(1, 'SignedInfo', '', i + 1));
-                Texto := Texto + '</SignedInfo>';
+//                Texto := Texto + '</SignedInfo>';
                 Leitor.Arquivo := FDadosMSG;
                 Texto := Texto + UTF8Encode(Leitor.rExtrai(1, 'SignatureValue', '', i + 1));
-                Texto := Texto + '</SignatureValue>';
+//                Texto := Texto + '</SignatureValue>';
                 Leitor.Arquivo := FDadosMSG;
                 Texto := Texto + UTF8Encode(Leitor.rExtrai(1, 'KeyInfo', '', i + 1));
-                Texto := Texto + '</KeyInfo>';
+//                Texto := Texto + '</KeyInfo>';
                 Texto := Texto + '</Signature>';
                 Texto := Texto + '</eventoCTe>';
                 Texto := Texto + '<retEventoCTe versao="' + CTeEventoCTe + '">';
                 Leitor.Arquivo := FRetWS;
                 Texto := Texto + UTF8Encode(Leitor.rExtrai(1, 'infEvento', '', j + 1));
-                Texto := Texto + '</infEvento>';
+//                Texto := Texto + '</infEvento>';
                 Texto := Texto + '</retEventoCTe>';
                 Texto := Texto + '</procEventoCTe>';
 

@@ -3934,18 +3934,18 @@ begin
 //              wProc.Add('<evento versao="' + NFeCCeNFe + '">');
               Leitor.Arquivo := FDadosMSG;
               wProc.Add(UTF8Encode(Leitor.rExtrai(1, 'infEvento', '', i + 1)));
-              wProc.Add('</infEvento>');
+//              wProc.Add('</infEvento>');
 
               wProc.Add('<Signature xmlns="http://www.w3.org/2000/09/xmldsig#">');
               Leitor.Arquivo := FDadosMSG;
               wProc.Add(UTF8Encode(Leitor.rExtrai(1, 'SignedInfo', '', i + 1)));
-              wProc.Add('</SignedInfo>');
+//              wProc.Add('</SignedInfo>');
               Leitor.Arquivo := FDadosMSG;
               wProc.Add(UTF8Encode(Leitor.rExtrai(1, 'SignatureValue', '', i + 1)));
-              wProc.Add('</SignatureValue>');
+//              wProc.Add('</SignatureValue>');
               Leitor.Arquivo := FDadosMSG;
               wProc.Add(UTF8Encode(Leitor.rExtrai(1, 'KeyInfo', '', i + 1)));
-              wProc.Add('</KeyInfo>');
+//              wProc.Add('</KeyInfo>');
               wProc.Add('</Signature>');
 
               wProc.Add('</evento>');
@@ -3956,7 +3956,7 @@ begin
 //              wProc.Add('<retEvento versao="' + NFeCCeNFe + '">');
               Leitor.Arquivo := FRetWS;
               wProc.Add(UTF8Encode(Leitor.rExtrai(1, 'infEvento', '', j + 1)));
-              wProc.Add('</infEvento>');
+//              wProc.Add('</infEvento>');
               wProc.Add('</retEvento>');
               wProc.Add('</procEventoNFe>');
 
@@ -4181,18 +4181,18 @@ begin
 //                 wProc.Add('<evento versao="' + NFeEventoNFe + '">');
                  Leitor.Arquivo := FDadosMSG;
                  wProc.Add(UTF8Encode(Leitor.rExtrai(1, 'infEvento', '', i + 1)));
-                 wProc.Add('</infEvento>');
+//                 wProc.Add('</infEvento>');
 
                  wProc.Add('<Signature xmlns="http://www.w3.org/2000/09/xmldsig#">');
                  Leitor.Arquivo := FDadosMSG;
                  wProc.Add(UTF8Encode(Leitor.rExtrai(1, 'SignedInfo', '', i + 1)));
-                 wProc.Add('</SignedInfo>');
+//                 wProc.Add('</SignedInfo>');
                  Leitor.Arquivo := FDadosMSG;
                  wProc.Add(UTF8Encode(Leitor.rExtrai(1, 'SignatureValue', '', i + 1)));
-                 wProc.Add('</SignatureValue>');
+//                 wProc.Add('</SignatureValue>');
                  Leitor.Arquivo := FDadosMSG;
                  wProc.Add(UTF8Encode(Leitor.rExtrai(1, 'KeyInfo', '', i + 1)));
-                 wProc.Add('</KeyInfo>');
+//                 wProc.Add('</KeyInfo>');
                  wProc.Add('</Signature>');
 
                  wProc.Add('</evento>');
@@ -4203,7 +4203,7 @@ begin
 //                 wProc.Add('<retEvento versao="' + NFeEventoNFe + '">');
                  Leitor.Arquivo := FRetWS;
                  wProc.Add(UTF8Encode(Leitor.rExtrai(1, 'infEvento', '', j + 1)));
-                 wProc.Add('</infEvento>');
+//                 wProc.Add('</infEvento>');
                  wProc.Add('</retEvento>');
                  wProc.Add('</procEventoNFe>');
 
