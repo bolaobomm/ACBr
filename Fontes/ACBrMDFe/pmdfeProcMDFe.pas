@@ -167,7 +167,7 @@ begin
              if trim(FnProt) = ''
               then Gerador.wAlerta('XR01', 'PROTOCOLO/MDFe', 'Numero do protocolo', ERR_MSG_VAZIO)
               else begin
-               xProtMDFe := LocLeitor.rExtrai(1, 'protMDFe', '', i + 1)+'</protMDFe>';
+               xProtMDFe := LocLeitor.rExtrai(1, 'protMDFe', '', i + 1); // +'</protMDFe>';
                Gerador.ListaDeAlertas.Clear;
                break;
               end;

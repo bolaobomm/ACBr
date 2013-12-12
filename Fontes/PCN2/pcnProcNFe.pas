@@ -185,7 +185,7 @@ begin
              Gerador.wAlerta('XR01', 'PROTOCOLO/NFe', 'Numero do protocolo', ERR_MSG_VAZIO)
            else
             begin
-             xProtNFe := LocLeitor.rExtrai(1, 'protNFe', '', i + 1)+'</protNFe>';
+             xProtNFe := LocLeitor.rExtrai(1, 'protNFe', '', i + 1); // +'</protNFe>';
              Gerador.ListaDeAlertas.Clear;
              break;
             end;

@@ -174,7 +174,7 @@ begin
              if trim(FnProt) = ''
               then Gerador.wAlerta('XR01', 'PROTOCOLO/CTe', 'Numero do protocolo', ERR_MSG_VAZIO)
               else begin
-               xProtCTe := LocLeitor.rExtrai(1, 'protCTe', '', i + 1)+'</protCTe>';
+               xProtCTe := LocLeitor.rExtrai(1, 'protCTe', '', i + 1); // +'</protCTe>';
                Gerador.ListaDeAlertas.Clear;
                break;
               end;
