@@ -87,15 +87,31 @@ begin
  ConfigSchema.VersaoCabecalho := '1.00';
  ConfigSchema.VersaoDados     := '1.00';
  ConfigSchema.VersaoXML       := '1';
- ConfigSchema.NameSpaceXML    := 'http://www.abrasf.org.br/ABRASF/arquivos/';
- ConfigSchema.Cabecalho       := 'nfse.xsd';
- ConfigSchema.ServicoEnviar   := 'nfse.xsd';
- ConfigSchema.ServicoConSit   := 'nfse.xsd';
- ConfigSchema.ServicoConLot   := 'nfse.xsd';
- ConfigSchema.ServicoConRps   := 'nfse.xsd';
- ConfigSchema.ServicoConNfse  := 'nfse.xsd';
- ConfigSchema.ServicoCancelar := 'nfse.xsd';
- ConfigSchema.DefTipos        := '';
+
+ case ACodCidade of
+  4321709: begin // Tres Coroas/RS
+            ConfigSchema.NameSpaceXML    := 'http://tempuri.org/';
+            ConfigSchema.Cabecalho       := '';
+            ConfigSchema.ServicoEnviar   := 'servico_enviar_lote_rps_envio.xsd';
+            ConfigSchema.ServicoConSit   := 'servico_consultar_situacao_lote_rps_envio.xsd';
+            ConfigSchema.ServicoConLot   := 'servico_consultar_lote_rps_envio.xsd';
+            ConfigSchema.ServicoConRps   := 'servico_consultar_nfse_rps_envio';
+            ConfigSchema.ServicoConNfse  := 'servico_consultar_nfse_envio';
+            ConfigSchema.ServicoCancelar := 'servico_cancelar_nfse_envio';
+            ConfigSchema.DefTipos        := '';
+           end;
+  else     begin
+            ConfigSchema.NameSpaceXML    := 'http://www.abrasf.org.br/ABRASF/arquivos/';
+            ConfigSchema.Cabecalho       := 'nfse.xsd';
+            ConfigSchema.ServicoEnviar   := 'nfse.xsd';
+            ConfigSchema.ServicoConSit   := 'nfse.xsd';
+            ConfigSchema.ServicoConLot   := 'nfse.xsd';
+            ConfigSchema.ServicoConRps   := 'nfse.xsd';
+            ConfigSchema.ServicoConNfse  := 'nfse.xsd';
+            ConfigSchema.ServicoCancelar := 'nfse.xsd';
+            ConfigSchema.DefTipos        := '';
+           end;
+ end;
 
  Result := ConfigSchema;
 end;
@@ -308,6 +324,23 @@ begin
             ConfigURL.ProConsultaSitLoteRPS := 'http://server21.ijui.rs.gov.br/nfsews/Services.svc';
             ConfigURL.ProConsultaNFSe       := 'http://server21.ijui.rs.gov.br/nfsews/Services.svc';
             ConfigURL.ProCancelaNFSe        := 'http://server21.ijui.rs.gov.br/nfsews/Services.svc';
+           end;
+  4321709: begin // Tres Coroas/RS
+            ConfigURL.HomNomeCidade         := '';
+            ConfigURL.HomRecepcaoLoteRPS    := 'http://nfseteste.pmtcoroas.com.br/nfsewsteste/Services.svc';
+            ConfigURL.HomConsultaLoteRPS    := 'http://nfseteste.pmtcoroas.com.br/nfsewsteste/Services.svc';
+            ConfigURL.HomConsultaNFSeRPS    := 'http://nfseteste.pmtcoroas.com.br/nfsewsteste/Services.svc';
+            ConfigURL.HomConsultaSitLoteRPS := 'http://nfseteste.pmtcoroas.com.br/nfsewsteste/Services.svc';
+            ConfigURL.HomConsultaNFSe       := 'http://nfseteste.pmtcoroas.com.br/nfsewsteste/Services.svc';
+            ConfigURL.HomCancelaNFSe        := 'http://nfseteste.pmtcoroas.com.br/nfsewsteste/Services.svc';
+
+            ConfigURL.ProNomeCidade         := '';
+            ConfigURL.ProRecepcaoLoteRPS    := 'http://nfse.pmtcoroas.com.br/nfsews/Services.svc';
+            ConfigURL.ProConsultaLoteRPS    := 'http://nfse.pmtcoroas.com.br/nfsews/Services.svc';
+            ConfigURL.ProConsultaNFSeRPS    := 'http://nfse.pmtcoroas.com.br/nfsews/Services.svc';
+            ConfigURL.ProConsultaSitLoteRPS := 'http://nfse.pmtcoroas.com.br/nfsews/Services.svc';
+            ConfigURL.ProConsultaNFSe       := 'http://nfse.pmtcoroas.com.br/nfsews/Services.svc';
+            ConfigURL.ProCancelaNFSe        := 'http://nfse.pmtcoroas.com.br/nfsews/Services.svc';
            end;
  end;
 

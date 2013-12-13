@@ -820,7 +820,8 @@ begin
   4101408, // Apucarana/PR
   4205902, // Gaspar/SC
   4309407, // Guapore/RS
-  4310207  // Ijui/RS
+  4310207, // Ijui/RS
+  4321709  // Tres Coroas/RS
          : Provedor := 'GovBR';
 
   3132404, // Itajubá/MG
