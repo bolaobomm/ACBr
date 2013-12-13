@@ -367,7 +367,10 @@ begin
 
   Gerador.wCampo(tcInt, 'B12', 'cMunFG ', 07, 07, 1, nfe.ide.cMunFG, DSC_CMUNFG);
   if not ValidarMunicipio(nfe.ide.cMunFG) then Gerador.wAlerta('B12', 'cMunFG', DSC_CMUNFG, ERR_MSG_INVALIDO);
+
+  if nfe.infNFe.Versao < 3 then
   (**)GerarIdeNFref;
+
   Gerador.IDNivel := 'B01';
   Gerador.wCampo(tcStr, 'B21', 'tpImp  ', 01, 01, 1, tpImpToStr(nfe.Ide.tpImp), DSC_TPIMP);
   Gerador.wCampo(tcStr, 'B22', 'tpEmis ', 01, 01, 1, tpEmisToStr(nfe.Ide.tpEmis), DSC_TPEMIS);
@@ -393,6 +396,9 @@ begin
 
     Gerador.wCampo(tcStr, 'B29', 'xJust  ', 01,256, 1, nfe.ide.xJust, DSC_XJUSTCONT);
    end;
+
+  if nfe.infNFe.Versao >= 3 then
+  (**)GerarIdeNFref;
 
   Gerador.wGrupo('/ide');
 end;
