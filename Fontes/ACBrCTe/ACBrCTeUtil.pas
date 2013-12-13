@@ -332,7 +332,7 @@ begin
     LayCTeConsultaCT:    Result := DFeUtil.SeSenao(AAmbiente = 1, 'https://cte.sefaz.rs.gov.br/ws/cteconsulta/cteconsulta.asmx'            , 'https://homologacao.cte.sefaz.rs.gov.br/ws/cteconsulta/cteconsulta.asmx');
     LayCTeStatusServico: Result := DFeUtil.SeSenao(AAmbiente = 1, 'https://cte.sefaz.rs.gov.br/ws/ctestatusservico/ctestatusservico.asmx'  , 'https://homologacao.cte.sefaz.rs.gov.br/ws/ctestatusservico/ctestatusservico.asmx');
     LayCTeCadastro:      Result := DFeUtil.SeSenao(AAmbiente = 1, '', '');
-    LayCTeEvento:        Result := DFeUtil.SeSenao(AAmbiente = 1, 'https://cte.sefaz.rs.gov.br/ws/cteRecepcaoEvento/cteRecepcaoEvento.asmx', 'https://homologacao.cte.sefaz.rs.gov.br/ws/cteRecepcaoEvento/cteRecepcaoEvento.asmx');
+    LayCTeEvento:        Result := DFeUtil.SeSenao(AAmbiente = 1, 'https://cte.sefaz.rs.gov.br/ws/cteRecepcaoEvento/cteRecepcaoEvento.asmx', 'https://homologacao.cte.sefaz.rs.gov.br/ws/cterecepcaoevento/cterecepcaoevento.asmx');
   end;
 end;
 
@@ -528,7 +528,7 @@ begin
     LayCTeConsultaCT:    Result := DFeUtil.SeSenao(AAmbiente = 1, 'https://cte.sefaz.rs.gov.br/ws/cteconsulta/CteConsulta.asmx'                 , 'https://homologacao.cte.sefaz.rs.gov.br/ws/cteconsulta/CteConsulta.asmx');
     LayCTeStatusServico: Result := DFeUtil.SeSenao(AAmbiente = 1, 'https://cte.sefaz.rs.gov.br/ws/ctestatusservico/CteStatusServico.asmx'       , 'https://homologacao.cte.sefaz.rs.gov.br/ws/ctestatusservico/CteStatusServico.asmx');
     LayCTeCadastro:      Result := DFeUtil.SeSenao(AAmbiente = 1, 'https://sef.sefaz.rs.gov.br/ws/cadconsultacadastro/cadconsultacadastro2.asmx', 'https://sef.sefaz.rs.gov.br/ws/cadconsultacadastro/cadconsultacadastro2.asmx');
-    LayCTeEvento:        Result := DFeUtil.SeSenao(AAmbiente = 1, 'https://cte.sefaz.rs.gov.br/ws/cteRecepcaoEvento/cteRecepcaoEvento.asmx'     , 'https://homologacao.cte.sefaz.rs.gov.br/ws/cteRecepcaoEvento/cteRecepcaoEvento.asmx');
+    LayCTeEvento:        Result := DFeUtil.SeSenao(AAmbiente = 1, 'https://cte.sefaz.rs.gov.br/ws/cteRecepcaoEvento/cteRecepcaoEvento.asmx'     , 'https://homologacao.cte.sefaz.rs.gov.br/ws/cterecepcaoevento/cterecepcaoevento.asmx');
   end;
 end;
 
@@ -543,7 +543,7 @@ begin
     LayCTeConsultaCT:    Result := DFeUtil.SeSenao(AAmbiente = 1, 'https://nfe.fazenda.sp.gov.br/cteWEB/services/cteConsulta.asmx'         , 'https://homologacao.nfe.fazenda.sp.gov.br/cteWEB/services/cteConsulta.asmx');
     LayCTeStatusServico: Result := DFeUtil.SeSenao(AAmbiente = 1, 'https://nfe.fazenda.sp.gov.br/cteWEB/services/cteStatusServico.asmx'    , 'https://homologacao.nfe.fazenda.sp.gov.br/cteWEB/services/cteStatusServico.asmx');
     LayCTeCadastro:      Result := DFeUtil.SeSenao(AAmbiente = 1, 'https://nfe.fazenda.sp.gov.br/nfeweb/services/cadconsultacadastro2.asmx', 'https://homologacao.nfe.fazenda.sp.gov.br/nfeweb/services/cadconsultacadastro2.asmx');
-    LayCTeEvento:        Result := DFeUtil.SeSenao(AAmbiente = 1, 'https://nfe.fazenda.sp.gov.br/cteWEB/services/cteRecepcaoEvento.asmx'   , 'https://homologacao.nfe.fazenda.sp.gov.br/cteWEB/services/cteRecepcaoEvento.asmx');
+    LayCTeEvento:        Result := DFeUtil.SeSenao(AAmbiente = 1, 'https://nfe.fazenda.sp.gov.br/cteWEB/services/cteRecepcaoEvento.asmx'   , 'https://homologacao.nfe.fazenda.sp.gov.br/cteweb/services/cteRecepcaoEvento.asmx');
   end;
 end;
 
@@ -557,7 +557,7 @@ begin
     LayCTeConsultaCT:    Result := DFeUtil.SeSenao(AAmbiente = 1, 'https://producao.cte.ms.gov.br/cteWEB/CteConsulta.asmx'        , 'https://homologacao.cte.ms.gov.br/cteWEB/CteConsulta.asmx');
     LayCTeStatusServico: Result := DFeUtil.SeSenao(AAmbiente = 1, 'https://producao.cte.ms.gov.br/cteWEB/CteStatusServico.asmx'   , 'https://homologacao.cte.ms.gov.br/cteWEB/CteStatusServico.asmx');
     LayCTeCadastro:      Result := DFeUtil.SeSenao(AAmbiente = 1, 'https://producao.cte.ms.gov.br/cteWEB/CadConsultaCadastro.asmx', 'https://homologacao.cte.ms.gov.br/cteWEB/CadConsultaCadastro.asmx');
-    LayCTeEvento:        Result := DFeUtil.SeSenao(AAmbiente = 1, 'https://producao.cte.ms.gov.br/cteWEB/cteRecepcaoEvento.asmx'  , 'https://homologacao.cte.ms.gov.br/cteWEB/cteRecepcaoEvento.asmx');
+    LayCTeEvento:        Result := DFeUtil.SeSenao(AAmbiente = 1, 'https://producao.cte.ms.gov.br/cteWEB/cteRecepcaoEvento.asmx'  , 'https://homologacao.cte.ms.gov.br/cteWEB/CteRecepcaoEvento.asmx');
   end;
 end;
 

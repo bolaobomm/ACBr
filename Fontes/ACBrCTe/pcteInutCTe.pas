@@ -54,7 +54,8 @@ uses
 {$IFNDEF VER130}
   Variants,
 {$ENDIF}
-  pcnAuxiliar, pcnConversao, pcnGerador;
+  pcnAuxiliar, pcnConversao, pcnGerador, pcteRetInutCTe;
+
 
 type
 
@@ -71,10 +72,13 @@ type
     FnCTFin: integer;
     FxJust: string;
     FIDInutilizacao: string;
+    FInutCTe: TRetInutCTe;
   public
     constructor Create;
     destructor Destroy; override;
     function GerarXML: boolean;
+    function LerXML(CaminhoArquivo: string): boolean;
+    function LerXMLFromString(const AXML: String): boolean;
     function ObterNomeArquivo: string;
   published
     property Gerador: TGerador read FGerador write FGerador;
@@ -88,6 +92,7 @@ type
     property nCTFin: integer read FnCTFin write FnCTFin;
     property xJust: string read FxJust write FxJust;
     property ID: string read FIDInutilizacao;
+    property InutCTe: TRetInutCTe read FInutCTe write FInutCTe;
   end;
 
 implementation
@@ -97,11 +102,13 @@ implementation
 constructor TinutCTe.Create;
 begin
   FGerador := TGerador.Create;
+  FInutCTe := TRetInutCTe.Create;
 end;
 
 destructor TinutCTe.Destroy;
 begin
   FGerador.Free;
+  FInutCTe.Free;
   inherited;
 end;
 
@@ -142,6 +149,50 @@ begin
   Gerador.wGrupo('/inutCTe');
 
   Result := (Gerador.ListaDeAlertas.Count = 0);
+end;
+
+function TinutCTe.LerXML(CaminhoArquivo: string): boolean;
+var
+  ArqInut : TStringList;
+begin
+  ArqInut := TStringList.Create;
+  try
+     ArqInut.LoadFromFile(CaminhoArquivo);
+     Result := LerXMLFromString(ArqInut.Text);
+  finally
+     ArqInut.Free;
+  end;
+end;
+
+function TinutCTe.LerXMLFromString(const AXML: String): boolean;
+var
+  RetInutCTe : TRetInutCTe;
+begin
+  RetInutCTe := TRetInutCTe.Create;
+  try
+    RetInutCTe.Leitor.Arquivo := AXML;
+    Result := RetInutCTe.LerXml;
+
+    with FInutCTe do
+     begin
+      tpAmb    := RetInutCTe.tpAmb;
+      verAplic := RetInutCTe.verAplic;
+      cStat    := RetInutCTe.cStat;
+      xMotivo  := RetInutCTe.xMotivo;
+      cUF      := RetInutCTe.cUF;
+
+      ano      := RetInutCTe.ano;
+      CNPJ     := RetInutCTe.CNPJ;
+      Modelo   := RetInutCTe.Modelo;
+      Serie    := RetInutCTe.Serie;
+      nCTIni   := RetInutCTe.nCTIni;
+      nCTFin   := RetInutCTe.nCTFin;
+      dhRecbto := RetInutCTe.dhRecbto;
+      nProt    := RetInutCTe.nProt;
+     end;
+  finally
+     RetInutCTe.Free;
+  end;
 end;
 
 end.

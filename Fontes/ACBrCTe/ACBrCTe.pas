@@ -59,7 +59,7 @@ uses
   smtpsend, ssl_openssl, mimemess, mimepart, // units para enviar email
   pcteCTe, pcnConversao, pcteEnvEventoCTe, pcteRetEnvEventoCTe,
   ACBrUtil, ACBrDFeUtil, ACBrCTeUtil, ACBrCTeConhecimentos, ACBrCTeConfiguracoes,
-  ACBrCTeWebServices, ACBrCTeDACTeClass;
+  ACBrCTeWebServices, ACBrCTeDACTeClass, pcteInutCTe, pcteRetInutCTe;
 
 {$IFDEF PL_103}
 const
@@ -87,12 +87,14 @@ type
     fsAbout: TACBrCTeAboutInfo;
     FDACTe : TACBrCTeDACTeClass;
     FConhecimentos: TConhecimentos;
-    FEventoCTe: TEventoCTe;
     FWebServices: TWebServices;
     FConfiguracoes: TConfiguracoes;
+    FEventoCTe: TEventoCTe;
+    FInutCTe: TInutCTe;
     FStatus : TStatusACBrCTe;
     FOnStatusChange: TNotifyEvent;
     FOnGerarLog : TACBrCTeLog;
+
   	procedure SetDACTe(const Value: TACBrCTeDACTeClass);
     procedure EnviaEmailThread(const sSmtpHost, sSmtpPort, sSmtpUser,
       sSmtpPasswd, sFrom, sTo, sAssunto: String; sMensagem: TStrings;
@@ -117,6 +119,7 @@ type
     property WebServices: TWebServices read FWebServices write FWebServices;
     property Conhecimentos: TConhecimentos read FConhecimentos write FConhecimentos;
     property EventoCTe: TEventoCTe read FEventoCTe write FEventoCTe;
+    property InutCTe: TInutCTe read FInutCTe write FInutCTe;
     property Status: TStatusACBrCTe read FStatus;
     procedure SetStatus( const stNewStatus : TStatusACBrCTe );
 
@@ -200,6 +203,7 @@ begin
   FConhecimentos      := TConhecimentos.Create(Self,Conhecimento);
   FConhecimentos.Configuracoes := FConfiguracoes;
   FEventoCTe         := TEventoCTe.Create;
+  FInutCTe           := TInutCTe.Create;
   FWebServices       := TWebServices.Create(Self);
 
   if FConfiguracoes.WebServices.Tentativas <= 0 then
@@ -216,6 +220,7 @@ begin
   FConfiguracoes.Free;
   FConhecimentos.Free;
   FEventoCTe.Free;
+  FInutCTe.Free;
   FWebServices.Free;
 {$IFDEF ACBrCTeOpenSSL}
   if FConfiguracoes.Geral.IniFinXMLSECAutomatico then
