@@ -591,7 +591,7 @@ begin
   else nfe.Dest.indIEDest := inContribuinte;
 
   // Alterado por Italo em 13/12/2013
-  if nfe.Dest.indIEDest <> inNaoContribuinte then
+  if nfe.Dest.indIEDest <> inIsento then
    begin
      // Inscrição Estadual
      if nfe.Dest.IE = 'ISENTO' then
