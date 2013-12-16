@@ -57,7 +57,7 @@ interface uses
 {$IFNDEF VER130}
   Variants,
 {$ENDIF}
-  pcnAuxiliar, pcnConversao, pcnGerador;
+  pcnAuxiliar, pcnConversao, pcnGerador, pcnRetInutNFe;
 
 type
 
@@ -76,10 +76,13 @@ type
     FxJust: string;
     FIDInutilizacao: string;
     FVersao: String;
+    FInutNFe: TRetInutNFe;
   public
     constructor Create;
     destructor Destroy; override;
     function GerarXML: boolean;
+    function LerXML(CaminhoArquivo: string): boolean;
+    function LerXMLFromString(const AXML: String): boolean;
     function ObterNomeArquivo: string;
   published
     property Gerador: TGerador read FGerador write FGerador;
@@ -95,6 +98,7 @@ type
     property xJust: string read FxJust write FxJust;
     property ID: string read FIDInutilizacao;
     property Versao: String read FVersao write FVersao;
+    property InutNFe: TRetInutNFe read FInutNFe write FInutNFe;
   end;
 
 implementation
@@ -104,11 +108,13 @@ implementation
 constructor TinutNFe.Create;
 begin
   FGerador := TGerador.Create;
+  FInutNFe := TRetInutNFe.Create;
 end;
 
 destructor TinutNFe.Destroy;
 begin
   FGerador.Free;
+  FInutNFe.Free;
   inherited;
 end;
 
@@ -149,6 +155,50 @@ begin
 
   Result := (Gerador.ListaDeAlertas.Count = 0);
 
+end;
+
+function TinutNFe.LerXML(CaminhoArquivo: string): boolean;
+var
+  ArqInut : TStringList;
+begin
+  ArqInut := TStringList.Create;
+  try
+     ArqInut.LoadFromFile(CaminhoArquivo);
+     Result := LerXMLFromString(ArqInut.Text);
+  finally
+     ArqInut.Free;
+  end;
+end;
+
+function TinutNFe.LerXMLFromString(const AXML: String): boolean;
+var
+  RetInutNFe : TRetInutNFe;
+begin
+  RetInutNFe := TRetInutNFe.Create;
+  try
+    RetInutNFe.Leitor.Arquivo := AXML;
+    Result := RetInutNFe.LerXml;
+
+    with FInutNFe do
+     begin
+      tpAmb    := RetInutNFe.tpAmb;
+      verAplic := RetInutNFe.verAplic;
+      cStat    := RetInutNFe.cStat;
+      xMotivo  := RetInutNFe.xMotivo;
+      cUF      := RetInutNFe.cUF;
+
+      ano      := RetInutNFe.ano;
+      CNPJ     := RetInutNFe.CNPJ;
+      Modelo   := RetInutNFe.Modelo;
+      Serie    := RetInutNFe.Serie;
+      nCTIni   := RetInutNFe.nCTIni;
+      nCTFin   := RetInutNFe.nCTFin;
+      dhRecbto := RetInutNFe.dhRecbto;
+      nProt    := RetInutNFe.nProt;
+     end;
+  finally
+     RetInutNFe.Free;
+  end;
 end;
 
 end.

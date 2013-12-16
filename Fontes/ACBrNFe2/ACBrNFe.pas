@@ -51,7 +51,7 @@ interface
 uses
   Classes, Sysutils,
   pcnNFe, pcnConversao, pcnCCeNFe, pcnRetCCeNFe,
-  pcnEnvEventoNFe, pcnRetEnvEventoNFe,
+  pcnEnvEventoNFe, pcnRetEnvEventoNFe, pcnInutNFe, pcnRetInutNFe,
   pcnDownloadNFe,
   {$IFDEF CLX} QDialogs,{$ELSE} Dialogs,{$ENDIF}
   ACBrNFeNotasFiscais,
@@ -100,12 +100,14 @@ type
     FNotasFiscais: TNotasFiscais;
     FCartaCorrecao: TCartaCorrecao;
     FEventoNFe: TEventoNFe;
+    FInutNFe: TInutNFe;
     FDownloadNFe: TDownload;
     FWebServices: TWebServices;
     FConfiguracoes: TConfiguracoes;
     FStatus : TStatusACBrNFe;
     FOnStatusChange: TNotifyEvent;
     FOnGerarLog : TACBrNFeLog;
+
     procedure SetDANFE(const Value: TACBrNFeDANFEClass);
     procedure EnviaEmailThread(const sSmtpHost, sSmtpPort, sSmtpUser,
       sSmtpPasswd, sFrom, sTo, sAssunto: String; sMensagem: TStrings;
@@ -137,7 +139,8 @@ type
     property NotasFiscais: TNotasFiscais read FNotasFiscais write FNotasFiscais;
     property CartaCorrecao: TCartaCorrecao read FCartaCorrecao write FCartaCorrecao;
     property EventoNFe: TEventoNFe read FEventoNFe write FEventoNFe;
-    property DownloadNFe: TDownload read FDownloadNFe write FDownloadNFe; 
+    property InutNFe: TInutNFe read FInutNFe write FInutNFe;
+    property DownloadNFe: TDownload read FDownloadNFe write FDownloadNFe;
     property Status: TStatusACBrNFe read FStatus;
     procedure SetStatus( const stNewStatus : TStatusACBrNFe );
 
@@ -221,6 +224,7 @@ begin
   FNotasFiscais.Configuracoes := FConfiguracoes;
   FCartaCorrecao     := TCartaCorrecao.Create(Self);
   FEventoNFe         := TEventoNFe.Create;
+  FInutNFe           := TInutNFe.Create;
   FDownloadNFe       := TDownload.Create(Self);
   FWebServices       := TWebServices.Create(Self);
 
@@ -243,6 +247,7 @@ begin
   FNotasFiscais.Free;
   FCartaCorrecao.Free;
   FEventoNFe.Free;
+  FInutNFe.Free;
   FDownloadNFe.Free;
   FWebServices.Free;
   inherited;

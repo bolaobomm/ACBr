@@ -933,21 +933,23 @@ case FormaEmissao of
          LayNfeInutilizacao  : Result := DFeUtil.SeSenao(AAmbiente=1, 'https://www.scan.fazenda.gov.br/NfeInutilizacao2/NfeInutilizacao2.asmx','https://hom.nfe.fazenda.gov.br/SCAN/NfeInutilizacao2/NfeInutilizacao2.asmx');
          LayNfeConsulta      : Result := DFeUtil.SeSenao(AAmbiente=1, 'https://www.scan.fazenda.gov.br/NfeConsulta2/NfeConsulta2.asmx','https://hom.nfe.fazenda.gov.br/SCAN/NfeConsulta2/NfeConsulta2.asmx');
          LayNfeStatusServico : Result := DFeUtil.SeSenao(AAmbiente=1, 'https://www.scan.fazenda.gov.br/NFeStatusServico2/NFeStatusServico2.asmx','https://hom.nfe.fazenda.gov.br/SCAN/NfeStatusServico2/NfeStatusServico2.asmx');
-         LayNFeCCe,LayNFeEvento : Result := DFeUtil.SeSenao(AAmbiente=1, 'https://www.scan.fazenda.gov.br/RecepcaoEvento/RecepcaoEvento.asmx', 'https://hom.nfe.fazenda.gov.br/SCAN/RecepcaoEvento/RecepcaoEvento.asmx');
+         LayNFeCCe,
+         LayNFeEvento        : Result := DFeUtil.SeSenao(AAmbiente=1, 'https://www.scan.fazenda.gov.br/RecepcaoEvento/RecepcaoEvento.asmx', 'https://hom.nfe.fazenda.gov.br/SCAN/RecepcaoEvento/RecepcaoEvento.asmx');
        end;
       end;
   6 : begin
        // SVC-AN SEFAZ VIRTUAL DE CONTINGENCIA - AMBIENTE NACIONAL
        // Utilizado pelas UF: AC, AL, AP, MG, PB, RJ, RS, RO, RR, SC, SE, SP, TO, DF
        case ALayOut of
-         LayNfeRecepcao      : Result := DFeUtil.SeSenao(AAmbiente=1, 'https://hom.nfe.fazenda.gov.br/SVC/NfeRecepcao/NfeRecepcao2.asmx',           'https://hom.nfe.fazenda.gov.br/SVC/NfeRecepcao/NfeRecepcao2.asmx');
-         LayNfeRetRecepcao   : Result := DFeUtil.SeSenao(AAmbiente=1, 'https://hom.nfe.fazenda.gov.br/SVC/NfeRetRecepcao/NfeRetRecepcao2.asmx',     'https://hom.nfe.fazenda.gov.br/SVC/NfeRetRecepcao/NfeRetRecepcao2.asmx');
-         LayNfeCancelamento  : Result := DFeUtil.SeSenao(AAmbiente=1, 'https://hom.nfe.fazenda.gov.br/SVC/NfeCancelamento/NfeCancelamento2.asmx',   'https://hom.nfe.fazenda.gov.br/SVC/NfeCancelamento/NfeCancelamento2.asmx');
-         LayNfeInutilizacao  : Result := DFeUtil.SeSenao(AAmbiente=1, '', '');
-         LayNfeConsulta      : Result := DFeUtil.SeSenao(AAmbiente=1, 'https://hom.nfe.fazenda.gov.br/SVC/NfeConsulta/NfeConsulta2.asmx',           'https://hom.nfe.fazenda.gov.br/SVC/NfeConsulta/NfeConsulta2.asmx');
-         LayNfeStatusServico : Result := DFeUtil.SeSenao(AAmbiente=1, 'https://hom.nfe.fazenda.gov.br/SVC/NfeStatusServico/NfeStatusServico2.asmx', 'https://hom.nfe.fazenda.gov.br/SVC/NfeStatusServico/NfeStatusServico2.asmx');
+         LayNfeRecepcao      : Result := DFeUtil.SeSenao(AAmbiente=1, 'https://www.svc.fazenda.gov.br/NfeRecepcao2/NfeRecepcao2.asmx',           'https://hom.svc.fazenda.gov.br/NfeRecepcao2/NfeRecepcao2.asmx');
+         LayNfeRetRecepcao   : Result := DFeUtil.SeSenao(AAmbiente=1, 'https://www.svc.fazenda.gov.br/NfeRetRecepcao2/NfeRetRecepcao2.asmx',     'https://hom.svc.fazenda.gov.br/NfeRetRecepcao2/NfeRetRecepcao2.asmx');
+//         LayNfeCancelamento  : Result := DFeUtil.SeSenao(AAmbiente=1, 'https://hom.nfe.fazenda.gov.br/SVC/NfeCancelamento/NfeCancelamento2.asmx',   'https://hom.svc.fazenda.gov.br/NfeCancelamento/NfeCancelamento2.asmx');
+         LayNfeCancelamento  : Result := DFeUtil.SeSenao(AAmbiente=1, '', '');
+         LayNfeInutilizacao  : Result := DFeUtil.SeSenao(AAmbiente=1, 'https://www.svc.fazenda.gov.br/NfeInutilizacao2/NfeInutilizacao2.asmx',   'https://hom.svc.fazenda.gov.br/NfeInutilizacao2/NfeInutilizacao2.asmx');
+         LayNfeConsulta      : Result := DFeUtil.SeSenao(AAmbiente=1, 'https://www.svc.fazenda.gov.br/NfeConsulta2/NfeConsulta2.asmx',           'https://hom.svc.fazenda.gov.br/NfeConsulta2/NfeConsulta2.asmx');
+         LayNfeStatusServico : Result := DFeUtil.SeSenao(AAmbiente=1, 'https://www.svc.fazenda.gov.br/NfeStatusServico2/NfeStatusServico2.asmx', 'https://hom.svc.fazenda.gov.br/NfeStatusServico2/NfeStatusServico2.asmx');
          LayNFeCCe,
-         LayNFeEvento        : Result := DFeUtil.SeSenao(AAmbiente=1, '', '');
+         LayNFeEvento        : Result := DFeUtil.SeSenao(AAmbiente=1, 'https://www.svc.fazenda.gov.br/RecepcaoEvento/RecepcaoEvento.asmx',       'https://hom.svc.fazenda.gov.br/RecepcaoEvento/RecepcaoEvento.asmx');
        end;
       end;
   7 : begin
@@ -956,12 +958,13 @@ case FormaEmissao of
        case ALayOut of
          LayNfeRecepcao      : Result := DFeUtil.SeSenao(AAmbiente=1, 'https://nfe.sefazvirtual.rs.gov.br/ws/Nferecepcao/NFeRecepcao2.asmx',           'https://homologacao.nfe.sefazvirtual.rs.gov.br/ws/Nferecepcao/NFeRecepcao2.asmx');
          LayNfeRetRecepcao   : Result := DFeUtil.SeSenao(AAmbiente=1, 'https://nfe.sefazvirtual.rs.gov.br/ws/NfeRetRecepcao/NfeRetRecepcao2.asmx',     'https://homologacao.nfe.sefazvirtual.rs.gov.br/ws/NfeRetRecepcao/NfeRetRecepcao2.asmx');
-         LayNfeCancelamento  : Result := DFeUtil.SeSenao(AAmbiente=1, 'https://nfe.sefazvirtual.rs.gov.br/ws/NfeCancelamento/NfeCancelamento2.asmx',   'https://homologacao.nfe.sefazvirtual.rs.gov.br/ws/NfeCancelamento/NfeCancelamento2.asmx');
+//         LayNfeCancelamento  : Result := DFeUtil.SeSenao(AAmbiente=1, 'https://nfe.sefazvirtual.rs.gov.br/ws/NfeCancelamento/NfeCancelamento2.asmx',   'https://homologacao.nfe.sefazvirtual.rs.gov.br/ws/NfeCancelamento/NfeCancelamento2.asmx');
+         LayNfeCancelamento  : Result := DFeUtil.SeSenao(AAmbiente=1, '', '');
          LayNfeInutilizacao  : Result := DFeUtil.SeSenao(AAmbiente=1, '', '');
          LayNfeConsulta      : Result := DFeUtil.SeSenao(AAmbiente=1, 'https://nfe.sefazvirtual.rs.gov.br/ws/NfeConsulta/NfeConsulta2.asmx',           'https://homologacao.nfe.sefazvirtual.rs.gov.br/ws/NfeConsulta/NfeConsulta2.asmx');
          LayNfeStatusServico : Result := DFeUtil.SeSenao(AAmbiente=1, 'https://nfe.sefazvirtual.rs.gov.br/ws/NfeStatusServico/NfeStatusServico2.asmx', 'https://homologacao.nfe.sefazvirtual.rs.gov.br/ws/NfeStatusServico/NfeStatusServico2.asmx');
          LayNFeCCe,
-         LayNFeEvento        : Result := DFeUtil.SeSenao(AAmbiente=1, '', '');
+         LayNFeEvento        : Result := DFeUtil.SeSenao(AAmbiente=1, 'https://nfe.sefazvirtual.rs.gov.br/ws/recepcaoevento/recepcaoevento.asmx',      'https://homologacao.nfe.sefazvirtual.rs.gov.br/ws/recepcaoevento/recepcaoevento.asmx');
        end;
       end;
   end;
