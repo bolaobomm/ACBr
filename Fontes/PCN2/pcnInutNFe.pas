@@ -191,8 +191,8 @@ begin
       CNPJ     := RetInutNFe.CNPJ;
       Modelo   := RetInutNFe.Modelo;
       Serie    := RetInutNFe.Serie;
-      nCTIni   := RetInutNFe.nCTIni;
-      nCTFin   := RetInutNFe.nCTFin;
+      nNFIni   := RetInutNFe.nNFIni;
+      nNFFin   := RetInutNFe.nNFFin;
       dhRecbto := RetInutNFe.dhRecbto;
       nProt    := RetInutNFe.nProt;
      end;
