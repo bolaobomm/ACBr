@@ -5592,9 +5592,9 @@ begin
     P        := 1 ;
     if LeftStr(MD5Texto,5) = 'MD-5:' then
        P := 6
-    else if LeftStr(MD5Texto,4) = 'MD5:' then
+    else if LeftStr(MD5Texto,4) = 'MD-5:' then
        P := 5
-    else if LeftStr(MD5Texto,3) = 'MD5' then
+    else if LeftStr(MD5Texto,3) = 'MD-5' then
        P := 4 ;
 
     // acertar para que saia o texto "MD-5" antes do numero
@@ -6126,7 +6126,7 @@ begin
     Relatorio.Add('Versao......: ' + IdentificacaoPaf.Paf.Versao);
 //    Relatorio.Add('Laudo.......: ' + IdentificacaoPaf.NumeroLaudo);
     Relatorio.Add('Princ. Exec.: ' + IdentificacaoPaf.Paf.PrincipalExe.Nome);
-    Relatorio.Add('MD5.........: ' + IdentificacaoPaf.Paf.PrincipalExe.MD5);
+    Relatorio.Add('MD-5........: ' + IdentificacaoPaf.Paf.PrincipalExe.MD5);
 
     Relatorio.Add('');
     Relatorio.Add('<n>OUTROS ARQUIVOS UTILIZADOS</n>');
@@ -6134,14 +6134,15 @@ begin
     for I := 0 to IdentificacaoPaf.OutrosArquivos.Count - 1 do
     begin
       Relatorio.Add(ExtractFileName(IdentificacaoPaf.OutrosArquivos[I].Nome));
-      Relatorio.Add('MD5: ' + IdentificacaoPaf.OutrosArquivos[I].MD5);
+      Relatorio.Add('MD-5: ' + IdentificacaoPaf.OutrosArquivos[I].MD5);
+      Relatorio.Add('');
     end;
 
     Relatorio.Add('');
     Relatorio.Add('<n>ARQ. LISTA AUTENTICADOS</n>');
     Relatorio.Add('</linha_simples>');
     Relatorio.Add(ExtractFileName(IdentificacaoPaf.ArquivoListaAutenticados.Nome));
-    Relatorio.Add('MD5: ' + IdentificacaoPaf.ArquivoListaAutenticados.MD5);
+    Relatorio.Add('MD-5: ' + IdentificacaoPaf.ArquivoListaAutenticados.MD5);
 
     Relatorio.Add('');
     Relatorio.Add('<n>VERSAO ER-PAF-ECF</n>');
