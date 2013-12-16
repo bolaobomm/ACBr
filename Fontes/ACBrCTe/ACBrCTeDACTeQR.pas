@@ -324,6 +324,8 @@ begin
           qf.Free;
         end;
      finally
+        // Gustavo Kato 16/12/2013
+        QRCTe.QRPrinter.Free;
         Free;
      end;
 {$ENDIF}
