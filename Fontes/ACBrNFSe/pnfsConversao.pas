@@ -578,8 +578,8 @@ begin
   5107602  // Rondonopolis/MT
          : Provedor := 'Abaco';
 
-  5105150, // Juina/MT
-  5106224  // Nova Mutum/MT
+  5105150 // Juina/MT
+//  5106224  // Nova Mutum/MT
          : Provedor := 'Agili';
 
   3302254, // Itatiaia/RJ
@@ -674,6 +674,7 @@ begin
   5104542, // Itanhanga/MT
   5105606, // Matupá/MT
   5106208, // Nova Brasilândia/MT
+  5106224, // Nova Mutum/MT
   5106307, // Paranatinga/MT
   5106455, // Planalto da Serra/MT
   5108006  // Tapurah/MT

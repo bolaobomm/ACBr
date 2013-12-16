@@ -545,7 +545,7 @@ begin
  CertContext.Get_CertContext(Integer(PCertContext));
 
  if not (FProvedor in [proGovBr, proSimplISS, proAbaco, proISSNet, pro4R,
-                       proFiorilli, proProdata, proThema, proVirtual,
+                       proFiorilli, proProdata, proCoplan, proThema, proVirtual,
                        proPVH, proFreire])
   then begin
    if not InternetSetOption(Data, INTERNET_OPTION_CLIENT_CERT_CONTEXT, PCertContext, Sizeof(CERT_CONTEXT)*5)
@@ -802,6 +802,7 @@ begin
       proGoiania,
       proISSDigital,
       proISSe,
+      proCoplan,
       proProdata,
       proVitoria,
       proPVH,
@@ -816,8 +817,7 @@ begin
                                '</Signature>'+
                               '</' + Prefixo4 + 'Rps>';
 
-      proDigifred,
-      proCoplan: vNotas := vNotas +
+      proDigifred: vNotas := vNotas +
                               '<' + Prefixo4 + 'Rps ' +
                                  RetornarConteudoEntre(TNFSeEnviarLoteRPS(Self).FNotasFiscais.Items[I].XML_Rps_Ass,
                                    '<' + Prefixo4 + 'Rps', '</Signature>') +
@@ -854,7 +854,7 @@ begin
   else begin
    for i := 0 to TNFSeEnviarLoteRPS(Self).FNotasFiscais.Count-1 do
     begin
-     if (FProvedor in [profintelISS, proSaatri, proGoiania, proISSDigital,
+     if (FProvedor in [profintelISS, proSaatri, proCoplan, proGoiania, proISSDigital,
                        proISSe, pro4R, proFiorilli, proProdata, proVitoria, proPVH, proAgili, proVirtual, proFreire, proLink3])
       then vNotas := vNotas + '<' + Prefixo4 + 'Rps>' +
                                '<' + Prefixo4 + 'InfDeclaracaoPrestacaoServico' +
@@ -1877,6 +1877,7 @@ begin
       proVitoria,
       proPVH,
       proAgili,
+      proCoplan,
       proVirtual,
       proLink3,
       proGoiania: vNotas := vNotas +
@@ -1895,8 +1896,7 @@ begin
                                '</Signature>'+
                               '</' + Prefixo4 + 'Rps>';
 
-      proDigifred,
-      proCoplan: vNotas := vNotas +
+      proDigifred: vNotas := vNotas +
                               '<' + Prefixo4 + 'Rps ' +
                                  RetornarConteudoEntre(TNFSeGerarNFSe(Self).FNotasFiscais.Items[I].XML_Rps_Ass,
                                    '<' + Prefixo4 + 'Rps', '</Signature>') +
@@ -1943,6 +1943,7 @@ begin
            proVitoria,
            proPVH,
            proAgili,
+           proCoplan,
            proLink3,
            proVirtual: vNotas := vNotas + '<' + Prefixo4 + 'Rps>' +
                                '<' + Prefixo4 + 'InfDeclaracaoPrestacaoServico' +
@@ -2099,6 +2100,7 @@ begin
       proVitoria,
       proPVH,
       proAgili,
+      proCoplan,
       proVirtual,
       proFreire,
       proLink3,
@@ -2120,8 +2122,7 @@ begin
                                '</Signature>'+
                               '</' + Prefixo4 + 'Rps>';
 
-      proDigifred,
-      proCoplan: vNotas := vNotas +
+      proDigifred: vNotas := vNotas +
                               '<' + Prefixo4 + 'Rps ' +
                                  RetornarConteudoEntre(TNFSeGerarLoteRPS(Self).FNotasFiscais.Items[I].XML_Rps_Ass,
                                    '<' + Prefixo4 + 'Rps', '</Signature>') +
@@ -2141,7 +2142,7 @@ begin
     begin
      if (FProvedor in [profintelISS, proSaatri, proGoiania, proISSDigital, proISSe,
                        pro4R, proFiorilli, proProdata, proVitoria, proPVH, proAgili,
-                       proVirtual, proFreire, proLink3, proMitra])
+                       proCoplan, proVirtual, proFreire, proLink3, proMitra])
       then vNotas := vNotas + '<' + Prefixo4 + 'Rps>' +
                                '<' + Prefixo4 + 'InfDeclaracaoPrestacaoServico' +
                                  RetornarConteudoEntre(TNFSeGerarLoteRPS(Self).FNotasFiscais.Items[I].XML_Rps,
@@ -2299,6 +2300,7 @@ begin
       proVitoria,
       proPVH,
       proAgili,
+      proCoplan,
       proVirtual,
       proFreire,
       proLink3,
@@ -2309,8 +2311,7 @@ begin
                                    '<' + Prefixo4 + 'InfDeclaracaoPrestacaoServico', '</Signature>') +
                                '</Signature>'+
                               '</' + Prefixo4 + 'Rps>';
-      proDigifred,
-      proCoplan: vNotas := vNotas +
+      proDigifred: vNotas := vNotas +
                               '<' + Prefixo4 + 'Rps ' +
                                  RetornarConteudoEntre(TNFSeEnviarSincrono(Self).FNotasFiscais.Items[I].XML_Rps_Ass,
                                    '<' + Prefixo4 + 'Rps', '</Signature>') +
@@ -2328,7 +2329,7 @@ begin
    for i := 0 to TNFSeEnviarSincrono(Self).FNotasFiscais.Count-1 do
     begin
      if (FProvedor in [profintelISS, proSaatri, proGoiania, proISSDigital, proISSe,
-                       pro4R, proFiorilli, proProdata, proVitoria, proPVH, proAgili, proVirtual, proFreire, proLink3])
+                       pro4R, proFiorilli, proProdata, proVitoria, proPVH, proAgili, proCoplan, proVirtual, proFreire, proLink3])
       then vNotas := vNotas + '<' + Prefixo4 + 'Rps>' +
                                '<' + Prefixo4 + 'InfDeclaracaoPrestacaoServico' +
                                  RetornarConteudoEntre(TNFSeEnviarSincrono(Self).FNotasFiscais.Items[I].XML_Rps,
@@ -2464,7 +2465,7 @@ begin
 
  if (TACBrNFSe( FACBrNFSe ).Configuracoes.WebServices.ConsultaLoteAposEnvio) and (Result) then begin
    //Alterado por Cleiver em 10-10-2013
-   if not (TACBrNFSe( FACBrNFSe ).Configuracoes.WebServices.Provedor in [proDigifred, proProdata, proVitoria, proPVH, profintelISS, proSaatri, proISSDigital, proFiorilli, proFreire]) then begin
+   if not (TACBrNFSe( FACBrNFSe ).Configuracoes.WebServices.Provedor in [proDigifred, proProdata, proVitoria, proPVH, profintelISS, proSaatri, proCoplan, proISSDigital, proFiorilli, proFreire]) then begin
      Result := Self.ConsSitLote.Executar;
 
      if not (Result)

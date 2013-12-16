@@ -424,7 +424,7 @@ begin
 
                     // alterado por Akai - L. Massao Aihara 12/11/2013
                    DFeUtil.SeSenao(AProvedor in [pro4R, proISSe, profintelISS, proFiorilli,proDigifred,
-                                                 proVirtual, proISSDigital, proSaatri, proVitoria],
+                                                 proVirtual, proISSDigital, proSaatri, proCoplan, proVitoria],
 
                     '<' + Prefixo4 + 'CpfCnpj>' +
                      '<' + Prefixo4 + 'Cnpj>' +
@@ -480,6 +480,7 @@ begin
   proVitoria,
   proPVH,
   proAgili,
+  proCoplan,
   proVirtual,
   proFreire,
   proSaatri: Result := TagI + Notas + TagF;
@@ -525,7 +526,7 @@ begin
  if AProvedor in [proNenhum, proAbaco, proBetha, proBetim, proBHIss, proDigifred,
   proEquiplano, proFiorilli, proFIssLex, proGinfes, proGovBR, proIssCuritiba,
   proIssIntel, proIssNet, proNatal, proProdemge, proPublica, proRecife, proRJ,
-  proSimplIss, proThema, proTiplan, proCoplan, proIssDSF, proAgili, proSpeedGov] then Result := '';
+  proSimplIss, proThema, proTiplan, proIssDSF, proAgili, proSpeedGov] then Result := '';
 end;
 
 class function TNFSeG.Gera_DadosMsgEnviarSincrono(Prefixo3, Prefixo4,

@@ -74,8 +74,8 @@ begin
   then ConfigCidade.NameSpaceEnvelope := 'http://nfse.abrasf.org.br'
   else ConfigCidade.NameSpaceEnvelope := 'http://nfse.abrasf.org.br';
 
- ConfigCidade.AssinaRPS  := True;
- ConfigCidade.AssinaLote := True;
+ ConfigCidade.AssinaRPS  := False;
+ ConfigCidade.AssinaLote := False;
 
  Result := ConfigCidade;
 end;
@@ -84,8 +84,8 @@ function TProvedorCoplan.GetConfigSchema(ACodCidade: Integer): TConfigSchema;
 var
  ConfigSchema: TConfigSchema;
 begin
- ConfigSchema.VersaoCabecalho := '2.00';
- ConfigSchema.VersaoDados     := '2.00';
+ ConfigSchema.VersaoCabecalho := '2.01';
+ ConfigSchema.VersaoDados     := '2.01';
  ConfigSchema.VersaoXML       := '2';
  ConfigSchema.NameSpaceXML    := 'http://www.abrasf.org.br/';
  ConfigSchema.Cabecalho       := 'nfse.xsd';
@@ -105,51 +105,25 @@ var
  ConfigURL: TConfigURL;
 begin
  case ACodCidade of
-  5102678: begin // Campo Verde/MT
-            ConfigURL.HomNomeCidade := 'campoverde';
-            ConfigURL.ProNomeCidade := 'campoverde';
-           end;
-  5103205: begin // Colider/MT
-            ConfigURL.HomNomeCidade := 'colider';
-            ConfigURL.ProNomeCidade := 'colider';
-           end;
-  5104104: begin // Guarantã Do Norte/MT
-            ConfigURL.HomNomeCidade := 'guarantadonorte';
-            ConfigURL.ProNomeCidade := 'guarantadonorte';
-           end;
-  5104542 : begin // Itanhanga/MT
-            ConfigURL.HomNomeCidade := 'itanhanga';
-            ConfigURL.ProNomeCidade := 'itanhanga';
-           end;
-  5105606 : begin // Matupá/MT
-            ConfigURL.HomNomeCidade := 'matupa';
-            ConfigURL.ProNomeCidade := 'matupa';
-           end;
-  5106208 : begin // Nova Brasilandia/MT
-            ConfigURL.HomNomeCidade := 'novabrasilandia';
-            ConfigURL.ProNomeCidade := 'novabrasilandia';
-           end;
-  5106307 : begin // Paranatinga/MT
-            ConfigURL.HomNomeCidade := 'paranatinga';
-            ConfigURL.ProNomeCidade := 'paranatinga';
-           end;
-  5106455 : begin // Planalto da Serra/MT
-            ConfigURL.HomNomeCidade := 'planaltodaserra';
-            ConfigURL.ProNomeCidade := 'planaltodaserra';
-           end;
-  5108006 : begin // Tapurah/MT
-            ConfigURL.HomNomeCidade := 'tapurah';
-            ConfigURL.ProNomeCidade := 'tapurah';
-           end;
+  5102678: ConfigURL.ProNomeCidade := 'campoverde';      // Campo Verde/MT
+  5103205: ConfigURL.ProNomeCidade := 'colider';         // Colider/MT
+  5104104: ConfigURL.ProNomeCidade := 'guarantadonorte'; // Guarantã Do Norte/MT
+  5104542: ConfigURL.ProNomeCidade := 'itanhanga';       // Itanhanga/MT
+  5105606: ConfigURL.ProNomeCidade := 'matupa';          // Matupá/MT
+  5106208: ConfigURL.ProNomeCidade := 'novabrasilandia'; // Nova Brasilandia/MT
+  5106224: ConfigURL.ProNomeCidade := 'novamutum';       // Nova Mutum/MT
+  5106307: ConfigURL.ProNomeCidade := 'paranatinga';     // Paranatinga/MT
+  5106455: ConfigURL.ProNomeCidade := 'planaltodaserra'; // Planalto da Serra/MT
+  5108006: ConfigURL.ProNomeCidade := 'tapurah';         // Tapurah/MT
  end;
 
- ConfigURL.HomRecepcaoLoteRPS    := 'https://' + ConfigURL.HomNomeCidade + '.issqn.srv.br/webservice/NfseWSService';
- ConfigURL.HomConsultaLoteRPS    := 'https://' + ConfigURL.HomNomeCidade + '.issqn.srv.br/webservice/NfseWSService';
- ConfigURL.HomConsultaNFSeRPS    := 'https://' + ConfigURL.HomNomeCidade + '.issqn.srv.br/webservice/NfseWSService';
- ConfigURL.HomConsultaSitLoteRPS := 'https://' + ConfigURL.HomNomeCidade + '.issqn.srv.br/webservice/NfseWSService';
- ConfigURL.HomConsultaNFSe       := 'https://' + ConfigURL.HomNomeCidade + '.issqn.srv.br/webservice/NfseWSService';
- ConfigURL.HomCancelaNFSe        := 'https://' + ConfigURL.HomNomeCidade + '.issqn.srv.br/webservice/NfseWSService';
- ConfigURL.HomGerarNFSe          := 'https://' + ConfigURL.HomNomeCidade + '.issqn.srv.br/webservice/NfseWSService';
+ ConfigURL.HomRecepcaoLoteRPS    := 'http://ws.municipioweb.com.br:8080/webservice/NfseWSService?wsdl';
+ ConfigURL.HomConsultaLoteRPS    := 'http://ws.municipioweb.com.br:8080/webservice/NfseWSService?wsdl';
+ ConfigURL.HomConsultaNFSeRPS    := 'http://ws.municipioweb.com.br:8080/webservice/NfseWSService?wsdl';
+ ConfigURL.HomConsultaSitLoteRPS := 'http://ws.municipioweb.com.br:8080/webservice/NfseWSService?wsdl';
+ ConfigURL.HomConsultaNFSe       := 'http://ws.municipioweb.com.br:8080/webservice/NfseWSService?wsdl';
+ ConfigURL.HomCancelaNFSe        := 'http://ws.municipioweb.com.br:8080/webservice/NfseWSService?wsdl';
+ ConfigURL.HomGerarNFSe          := 'http://ws.municipioweb.com.br:8080/webservice/NfseWSService?wsdl';
 
  ConfigURL.ProRecepcaoLoteRPS    := 'https://' + ConfigURL.ProNomeCidade + '.issqn.srv.br/webservice/NfseWSService';
  ConfigURL.ProConsultaLoteRPS    := 'https://' + ConfigURL.ProNomeCidade + '.issqn.srv.br/webservice/NfseWSService';
@@ -170,13 +144,13 @@ end;
 function TProvedorCoplan.GetAssinarXML(Acao: TnfseAcao): Boolean;
 begin
  case Acao of
-   acRecepcionar: Result := True;
-   acConsSit:     Result := True;
-   acConsLote:    Result := True;
-   acConsNFSeRps: Result := True;
-   acConsNFSe:    Result := True;
-   acCancelar:    Result := True;
-   acGerar:       Result := True;
+   acRecepcionar: Result := False;
+   acConsSit:     Result := False;
+   acConsLote:    Result := False;
+   acConsNFSeRps: Result := False;
+   acConsNFSe:    Result := False;
+   acCancelar:    Result := False;
+   acGerar:       Result := False;
    else           Result := False;
  end;
 end;
@@ -188,25 +162,33 @@ end;
 
 function TProvedorCoplan.Gera_TagI(Acao: TnfseAcao; Prefixo3, Prefixo4,
   NameSpaceDad, Identificador, URI: String): AnsiString;
+var
+ xmlns: String;
 begin
+ xmlns := ' xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"' +
+          ' xmlns:xsd="http://www.w3.org/2001/XMLSchema"';
+
  case Acao of
-   acRecepcionar: Result := '<' + Prefixo3 + 'EnviarLoteRpsEnvio' + NameSpaceDad;
-   acConsSit:     Result := '<' + Prefixo3 + 'ConsultarSituacaoLoteRpsEnvio' + NameSpaceDad;
-   acConsLote:    Result := '<' + Prefixo3 + 'ConsultarLoteRpsEnvio' + NameSpaceDad;
-   acConsNFSeRps: Result := '<' + Prefixo3 + 'ConsultarNfseRpsEnvio' + NameSpaceDad;
-   acConsNFSe:    Result := '<' + Prefixo3 + 'ConsultarNfseEnvio' + NameSpaceDad;
-   acCancelar:    Result := '<' + Prefixo3 + 'CancelarNfseEnvio' + NameSpaceDad +
+   acRecepcionar: Result := '<' + Prefixo3 + 'EnviarLoteRpsEnvio' + xmlns + NameSpaceDad;
+   acConsSit:     Result := '<' + Prefixo3 + 'ConsultarSituacaoLoteRpsEnvio' + xmlns + NameSpaceDad;
+   acConsLote:    Result := '<' + Prefixo3 + 'ConsultarLoteRpsEnvio' + xmlns + NameSpaceDad;
+   acConsNFSeRps: Result := '<' + Prefixo3 + 'ConsultarNfseRpsEnvio' + xmlns + NameSpaceDad;
+   acConsNFSe:    Result := '<' + Prefixo3 + 'ConsultarNfseServicoPrestadoEnvio' + xmlns + NameSpaceDad;
+   acCancelar:    Result := '<' + Prefixo3 + 'CancelarNfseEnvio' + xmlns + NameSpaceDad +
                              '<' + Prefixo3 + 'Pedido>' +
                               '<' + Prefixo4 + 'InfPedidoCancelamento' +
                                  DFeUtil.SeSenao(Identificador <> '', ' ' + Identificador + '="' + URI + '"', '') + '>';
-   acGerar:       Result := '<' + Prefixo3 + 'GerarNfseEnvio' + NameSpaceDad;
+   acGerar:       Result := '<' + Prefixo3 + 'GerarNfseEnvio' + xmlns + NameSpaceDad;
  end;
 end;
 
 function TProvedorCoplan.Gera_CabMsg(Prefixo2, VersaoLayOut, VersaoDados,
   NameSpaceCab: String; ACodCidade: Integer): AnsiString;
 begin
- Result := '<' + Prefixo2 + 'cabecalho versao="'  + VersaoLayOut + '"' + NameSpaceCab +
+ Result := '<' + Prefixo2 + 'cabecalho' +
+            ' versao="'  + VersaoLayOut + '"' +
+            ' xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"' +
+            ' xmlns:xsd="http://www.w3.org/2001/XMLSchema"' + NameSpaceCab +
             '<versaoDados>' + VersaoDados + '</versaoDados>'+
            '</' + Prefixo2 + 'cabecalho>';
 end;
@@ -223,7 +205,7 @@ begin
    acConsSit:     Result := '</' + Prefixo3 + 'ConsultarSituacaoLoteRpsEnvio>';
    acConsLote:    Result := '</' + Prefixo3 + 'ConsultarLoteRpsEnvio>';
    acConsNFSeRps: Result := '</' + Prefixo3 + 'ConsultarNfseRpsEnvio>';
-   acConsNFSe:    Result := '</' + Prefixo3 + 'ConsultarNfseEnvio>';
+   acConsNFSe:    Result := '</' + Prefixo3 + 'ConsultarNfseServicoPrestadoEnvio>';
    acCancelar:    Result := '</' + Prefixo3 + 'Pedido>' +
                             '</' + Prefixo3 + 'CancelarNfseEnvio>';
    acGerar:       Result := '</' + Prefixo3 + 'GerarNfseEnvio>';
@@ -234,144 +216,139 @@ function TProvedorCoplan.GeraEnvelopeRecepcionarLoteRPS(URLNS: String;
   CabMsg, DadosMsg, DadosSenha: AnsiString): AnsiString;
 begin
  result := '<?xml version="1.0" encoding="UTF-8"?>' +
-           '<s:Envelope xmlns:s="http://schemas.xmlsoap.org/soap/envelope/"' +
-                      ' xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"' +
-                      ' xmlns:xsd="http://www.w3.org/2001/XMLSchema">' +
-            '<s:Body>' +
-             '<ns2:RecepcionarLoteRpsRequest xmlns:ns2="' + URLNS + '">' +
+           '<S:Envelope xmlns:S="http://schemas.xmlsoap.org/soap/envelope/"' +
+                      ' xmlns:nfse="http://nfse.abrasf.org.br">' +
+            '<S:Header>' +
+              DadosSenha +
+            '</S:Header>' +
+            '<S:Body>' +
+             '<nfse:RecepcionarLoteRpsRequest>' +
               '<nfseCabecMsg>' +
-                '&lt;?xml version="1.0" encoding="UTF-8"?&gt;' +
-                StringReplace(StringReplace(CabMsg, '<', '&lt;', [rfReplaceAll]), '>', '&gt;', [rfReplaceAll]) +
+               '<![CDATA[' + CabMsg + ']]>' +
               '</nfseCabecMsg>' +
               '<nfseDadosMsg>' +
-                '&lt;?xml version="1.0" encoding="UTF-8"?&gt;' +
-                 StringReplace(StringReplace(DadosMsg, '<', '&lt;', [rfReplaceAll]), '>', '&gt;', [rfReplaceAll]) +
+               '<![CDATA[' + DadosMsg + ']]>' +
               '</nfseDadosMsg>' +
-             '</ns2:RecepcionarLoteRpsRequest>' +
-            '</s:Body>' +
-           '</s:Envelope>';
+             '</nfse:RecepcionarLoteRpsRequest>' +
+            '</S:Body>' +
+           '</S:Envelope>';
 end;
 
 function TProvedorCoplan.GeraEnvelopeConsultarSituacaoLoteRPS(
   URLNS: String; CabMsg, DadosMsg, DadosSenha: AnsiString): AnsiString;
 begin
- result := '<?xml version="1.0" encoding="UTF-8"?>' +
-           '<s:Envelope xmlns:s="http://schemas.xmlsoap.org/soap/envelope/"' +
-                      ' xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"' +
-                      ' xmlns:xsd="http://www.w3.org/2001/XMLSchema">' +
-            '<s:Body>' +
-             '<ns2:ConsultarSituacaoLoteRpsRequest xmlns:ns2="' + URLNS + '">' +
-              '<nfseCabecMsg>' +
-                StringReplace(StringReplace(CabMsg, '<', '&lt;', [rfReplaceAll]), '>', '&gt;', [rfReplaceAll]) +
-              '</nfseCabecMsg>' +
-              '<nfseDadosMsg>' +
-                StringReplace(StringReplace(DadosMsg, '<', '&lt;', [rfReplaceAll]), '>', '&gt;', [rfReplaceAll]) +
-              '</nfseDadosMsg>' +
-             '</ns2:ConsultarSituacaoLoteRpsRequest>' +
-            '</s:Body>' +
-           '</s:Envelope>';
+ result := '';
+ raise Exception.Create( 'Opção não implementada para este provedor.' );
 end;
 
 function TProvedorCoplan.GeraEnvelopeConsultarLoteRPS(URLNS: String;
   CabMsg, DadosMsg, DadosSenha: AnsiString): AnsiString;
 begin
  result := '<?xml version="1.0" encoding="UTF-8"?>' +
-           '<s:Envelope xmlns:s="http://schemas.xmlsoap.org/soap/envelope/"' +
-                      ' xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"' +
-                      ' xmlns:xsd="http://www.w3.org/2001/XMLSchema">' +
-            '<s:Body>' +
-             '<ns2:ConsultarLoteRpsRequest xmlns:ns2="' + URLNS + '">' +
+           '<S:Envelope xmlns:S="http://schemas.xmlsoap.org/soap/envelope/"' +
+                      ' xmlns:nfse="http://nfse.abrasf.org.br">' +
+            '<S:Header>' +
+              DadosSenha +
+            '</S:Header>' +
+            '<S:Body>' +
+             '<nfse:ConsultarLoteRpsRequest>' +
               '<nfseCabecMsg>' +
-                StringReplace(StringReplace(CabMsg, '<', '&lt;', [rfReplaceAll]), '>', '&gt;', [rfReplaceAll]) +
+               '<![CDATA[' + CabMsg + ']]>' +
               '</nfseCabecMsg>' +
               '<nfseDadosMsg>' +
-                StringReplace(StringReplace(DadosMsg, '<', '&lt;', [rfReplaceAll]), '>', '&gt;', [rfReplaceAll]) +
+               '<![CDATA[' + DadosMsg + ']]>' +
               '</nfseDadosMsg>' +
-             '</ns2:ConsultarLoteRpsRequest>' +
-            '</s:Body>' +
-           '</s:Envelope>';
+             '</nfse:ConsultarLoteRpsRequest>' +
+            '</S:Body>' +
+           '</S:Envelope>';
 end;
 
 function TProvedorCoplan.GeraEnvelopeConsultarNFSeporRPS(URLNS: String;
   CabMsg, DadosMsg, DadosSenha: AnsiString): AnsiString;
 begin
  result := '<?xml version="1.0" encoding="UTF-8"?>' +
-           '<s:Envelope xmlns:s="http://schemas.xmlsoap.org/soap/envelope/"' +
-                      ' xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"' +
-                      ' xmlns:xsd="http://www.w3.org/2001/XMLSchema">' +
-            '<s:Body>' +
-             '<ns2:ConsultarNfsePorRpsRequest xmlns:ns2="' + URLNS + '">' +
+           '<S:Envelope xmlns:S="http://schemas.xmlsoap.org/soap/envelope/"' +
+                      ' xmlns:nfse="http://nfse.abrasf.org.br">' +
+            '<S:Header>' +
+              DadosSenha +
+            '</S:Header>' +
+            '<S:Body>' +
+             '<nfse:ConsultarNfsePorRpsRequest>' +
               '<nfseCabecMsg>' +
-                StringReplace(StringReplace(CabMsg, '<', '&lt;', [rfReplaceAll]), '>', '&gt;', [rfReplaceAll]) +
+               '<![CDATA[' + CabMsg + ']]>' +
               '</nfseCabecMsg>' +
               '<nfseDadosMsg>' +
-                StringReplace(StringReplace(DadosMsg, '<', '&lt;', [rfReplaceAll]), '>', '&gt;', [rfReplaceAll]) +
+               '<![CDATA[' + DadosMsg + ']]>' +
               '</nfseDadosMsg>' +
-             '</ns2:ConsultarNfsePorRpsRequest>' +
-            '</s:Body>' +
-           '</s:Envelope>';
+             '</nfse:ConsultarNfsePorRpsRequest>' +
+            '</S:Body>' +
+           '</S:Envelope>';
 end;
 
 function TProvedorCoplan.GeraEnvelopeConsultarNFSe(URLNS: String; CabMsg,
   DadosMsg, DadosSenha: AnsiString): AnsiString;
 begin
  result := '<?xml version="1.0" encoding="UTF-8"?>' +
-           '<s:Envelope xmlns:s="http://schemas.xmlsoap.org/soap/envelope/"' +
-                      ' xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"' +
-                      ' xmlns:xsd="http://www.w3.org/2001/XMLSchema">' +
-            '<s:Body>' +
-             '<ns2:ConsultarNfseRequest xmlns:ns2="' + URLNS + '">' +
+           '<S:Envelope xmlns:S="http://schemas.xmlsoap.org/soap/envelope/"' +
+                      ' xmlns:nfse="http://nfse.abrasf.org.br">' +
+            '<S:Header>' +
+              DadosSenha +
+            '</S:Header>' +
+            '<S:Body>' +
+             '<nfse:ConsultarNfseServicoPrestadoRequest>' +
               '<nfseCabecMsg>' +
-                StringReplace(StringReplace(CabMsg, '<', '&lt;', [rfReplaceAll]), '>', '&gt;', [rfReplaceAll]) +
+               '<![CDATA[' + CabMsg + ']]>' +
               '</nfseCabecMsg>' +
               '<nfseDadosMsg>' +
-                StringReplace(StringReplace(DadosMsg, '<', '&lt;', [rfReplaceAll]), '>', '&gt;', [rfReplaceAll]) +
+               '<![CDATA[' + DadosMsg + ']]>' +
               '</nfseDadosMsg>' +
-             '</ns2:ConsultarNfseRequest>' +
-            '</s:Body>' +
-           '</s:Envelope>';
+             '</nfse:ConsultarNfseServicoPrestadoRequest>' +
+            '</S:Body>' +
+           '</S:Envelope>';
 end;
 
 function TProvedorCoplan.GeraEnvelopeCancelarNFSe(URLNS: String; CabMsg,
   DadosMsg, DadosSenha: AnsiString): AnsiString;
 begin
  result := '<?xml version="1.0" encoding="UTF-8"?>' +
-           '<s:Envelope xmlns:s="http://schemas.xmlsoap.org/soap/envelope/"' +
-                      ' xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"' +
-                      ' xmlns:xsd="http://www.w3.org/2001/XMLSchema">' +
-            '<s:Body>' +
-             '<ns2:CancelarNfseRequest xmlns:ns2="' + URLNS + '">' +
+           '<S:Envelope xmlns:S="http://schemas.xmlsoap.org/soap/envelope/"' +
+                      ' xmlns:nfse="http://nfse.abrasf.org.br">' +
+            '<S:Header>' +
+              DadosSenha +
+            '</S:Header>' +
+            '<S:Body>' +
+             '<nfse:CancelarNfseRequest>' +
               '<nfseCabecMsg>' +
-                StringReplace(StringReplace(CabMsg, '<', '&lt;', [rfReplaceAll]), '>', '&gt;', [rfReplaceAll]) +
+               '<![CDATA[' + CabMsg + ']]>' +
               '</nfseCabecMsg>' +
               '<nfseDadosMsg>' +
-                StringReplace(StringReplace(DadosMsg, '<', '&lt;', [rfReplaceAll]), '>', '&gt;', [rfReplaceAll]) +
+               '<![CDATA[' + DadosMsg + ']]>' +
               '</nfseDadosMsg>' +
-             '</ns2:CancelarNfseRequest>' +
-            '</s:Body>' +
-           '</s:Envelope>';
+             '</nfse:CancelarNfseRequest>' +
+            '</S:Body>' +
+           '</S:Envelope>';
 end;
 
 function TProvedorCoplan.GeraEnvelopeGerarNFSe(URLNS: String; CabMsg,
   DadosMsg, DadosSenha: AnsiString): AnsiString;
 begin
  result := '<?xml version="1.0" encoding="UTF-8"?>' +
-           '<s:Envelope xmlns:s="http://schemas.xmlsoap.org/soap/envelope/"' +
-                      ' xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"' +
-                      ' xmlns:xsd="http://www.w3.org/2001/XMLSchema">' +
-            '<s:Body>' +
-             '<ns2:RecepcionarLoteRpsRequest xmlns:ns2="' + URLNS + '">' +
+           '<S:Envelope xmlns:S="http://schemas.xmlsoap.org/soap/envelope/"' +
+                      ' xmlns:nfse="http://nfse.abrasf.org.br">' +
+            '<S:Header>' +
+              DadosSenha +
+            '</S:Header>' +
+            '<S:Body>' +
+             '<nfse:GerarNfseRequest>' +
               '<nfseCabecMsg>' +
-                '&lt;?xml version="1.0" encoding="UTF-8"?&gt;' +
-                StringReplace(StringReplace(CabMsg, '<', '&lt;', [rfReplaceAll]), '>', '&gt;', [rfReplaceAll]) +
+               '<![CDATA[' + CabMsg + ']]>' +
               '</nfseCabecMsg>' +
               '<nfseDadosMsg>' +
-                '&lt;?xml version="1.0" encoding="UTF-8"?&gt;' +
-                 StringReplace(StringReplace(DadosMsg, '<', '&lt;', [rfReplaceAll]), '>', '&gt;', [rfReplaceAll]) +
+               '<![CDATA[' + DadosMsg + ']]>' +
               '</nfseDadosMsg>' +
-             '</ns2:RecepcionarLoteRpsRequest>' +
-            '</s:Body>' +
-           '</s:Envelope>';
+             '</nfse:GerarNfseRequest>' +
+            '</S:Body>' +
+           '</S:Envelope>';
 end;
 
 function TProvedorCoplan.GeraEnvelopeRecepcionarSincrono(URLNS: String;
@@ -383,13 +360,13 @@ end;
 function TProvedorCoplan.GetSoapAction(Acao: TnfseAcao; NomeCidade: String): String;
 begin
  case Acao of
-   acRecepcionar: Result := 'http://nfse.abrasf.org.br/RecepcionarLoteRps';
-   acConsSit:     Result := 'http://nfse.abrasf.org.br/ConsultarSituacaoLoteRps';
-   acConsLote:    Result := 'http://nfse.abrasf.org.br/ConsultarLoteRps';
-   acConsNFSeRps: Result := 'http://nfse.abrasf.org.br/ConsultarNfsePorRps';
-   acConsNFSe:    Result := 'http://nfse.abrasf.org.br/ConsultarNfseServicoPrestado';
-   acCancelar:    Result := 'http://nfse.abrasf.org.br/CancelarNfse';
-   acGerar:       Result := 'http://nfse.abrasf.org.br/GerarNfse';
+   acRecepcionar: Result := 'http://nfse.abrasf.org.br/Infse/RecepcionarLoteRps';
+   acConsSit:     Result := '';
+   acConsLote:    Result := 'http://nfse.abrasf.org.br/Infse/ConsultarLoteRps';
+   acConsNFSeRps: Result := 'http://nfse.abrasf.org.br/Infse/ConsultarNfsePorRps';
+   acConsNFSe:    Result := 'http://nfse.abrasf.org.br/Infse/ConsultarNfseServicoPrestado';
+   acCancelar:    Result := 'http://nfse.abrasf.org.br/Infse/CancelarNfse';
+   acGerar:       Result := 'http://nfse.abrasf.org.br/Infse/GerarNfse';
  end;
 end;
 
