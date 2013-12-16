@@ -593,17 +593,21 @@ begin
   // Alterado por Italo em 13/12/2013
   if nfe.Dest.indIEDest <> inIsento then
    begin
-     // Inscrição Estadual
-     if nfe.Dest.IE = 'ISENTO' then
-       Gerador.wCampo(tcStr, 'E17', 'IE ', 00, 14, 1, nfe.Dest.IE, DSC_IE)
-     else if (trim(nfe.Dest.IE) <> '') or (nfe.Ide.modelo <> 65)  then
-     Gerador.wCampo(tcStr, 'E17', 'IE     ', 00, 14, 1, SomenteNumeros(nfe.Dest.IE), DSC_IE);
+     // Alterado por Italo em 16/12/2013
+     if nfe.Dest.IE <> '' then
+      begin
+        // Inscrição Estadual
+        if nfe.Dest.IE = 'ISENTO' then
+          Gerador.wCampo(tcStr, 'E17', 'IE ', 00, 14, 1, nfe.Dest.IE, DSC_IE)
+        else if (trim(nfe.Dest.IE) <> '') or (nfe.Ide.modelo <> 65)  then
+        Gerador.wCampo(tcStr, 'E17', 'IE     ', 00, 14, 1, SomenteNumeros(nfe.Dest.IE), DSC_IE);
 
-   //  if (length(nfe.Dest.CNPJCPF) = 11) and (SomenteNumeros(nfe.Dest.IE) <> '') then
-   //    Gerador.wAlerta('E17', 'IE', DSC_IE, ERR_MSG_INVALIDO); // Para MG produtor rural possui CPF e IE
-     if (FOpcoes.ValidarInscricoes) and (nfe.Dest.IE <> '') and (nfe.Dest.IE <> 'ISENTO') then
-       if not ValidarIE(nfe.Dest.IE, UF) then
-         Gerador.wAlerta('E17', 'IE', DSC_IE, ERR_MSG_INVALIDO);
+      //  if (length(nfe.Dest.CNPJCPF) = 11) and (SomenteNumeros(nfe.Dest.IE) <> '') then
+      //    Gerador.wAlerta('E17', 'IE', DSC_IE, ERR_MSG_INVALIDO); // Para MG produtor rural possui CPF e IE
+        if (FOpcoes.ValidarInscricoes) and (nfe.Dest.IE <> '') and (nfe.Dest.IE <> 'ISENTO') then
+          if not ValidarIE(nfe.Dest.IE, UF) then
+            Gerador.wAlerta('E17', 'IE', DSC_IE, ERR_MSG_INVALIDO);
+      end;
    end;
 
   Gerador.wCampo(tcStr, 'E18', 'ISUF   ', 08, 09, 0, nfe.Dest.ISUF, DSC_ISUF);
