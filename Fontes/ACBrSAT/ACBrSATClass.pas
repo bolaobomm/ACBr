@@ -209,10 +209,25 @@ Uses ACBrSAT, ACBrUtil ;
 { TACBrSATRespostaClass }
 
 procedure TACBrSATResposta.SetRetornoStr(AValue : String) ;
+var
+  I: Integer;
 begin
   Clear;
   fRetornoLst.Text := StringReplace( AValue, '|', sLineBreak, [rfReplaceAll] );
   fRetornoStr      := AValue;
+
+  // Apaga as linhas em Branco, o que ocorre quando o SAT responde com CR ou LF antes ou após o Pipe
+  I := 0;
+  while I < fRetornoLst.Count-1 do
+  begin
+    if fRetornoLst[I] = '' then
+      fRetornoLst.Delete( I )
+    else
+      Inc( I );
+  end;
+
+  //DEBUG:
+  //fRetornoLst.SaveToFile('c:\temp\ret.txt');
 
   if fRetornoLst.Count > 1 then
   begin

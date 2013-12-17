@@ -99,8 +99,7 @@ type
     fPagto: TMPCollection;
     FInfAdic: TInfAdic;
     FSignature: TSignature;
-    function GetAsXMLString : String ;
-    procedure SetAsXMLString(AValue : String) ;
+    function GetAsXMLString: String;
     procedure SetDet(Value: TDetCollection);
     procedure SetPagto(Value: TMPCollection);
   public
@@ -111,8 +110,10 @@ type
 
     function LoadFromFile(AFileName : String): boolean;
     function SaveToFile(AFileName : String): boolean;
+    function GetXMLString( ApenasTagsAplicacao: Boolean = false) : String ;
+    procedure SetXMLString(AValue : String) ;
 
-    property AsXMLString : String read GetAsXMLString write SetAsXMLString ;
+    property AsXMLString : String read GetAsXMLString write SetXMLString ;
   published
     property infCFe: TinfCFe read FinfCFe write FinfCFe;
     property ide: Tide read Fide write Fide;
@@ -1328,7 +1329,12 @@ begin
   FDet.Assign(Value);
 end;
 
-function TCFe.GetAsXMLString : String ;
+function TCFe.GetAsXMLString: String;
+begin
+  GetXMLString( false ) ;
+end;
+
+function TCFe.GetXMLString(ApenasTagsAplicacao: Boolean): String;
 var
   LocCFeW : TCFeW ;
 begin
@@ -1338,14 +1344,14 @@ begin
     LocCFeW.Gerador.Opcoes.IdentarXML := FIdentarXML;
     LocCFeW.Gerador.Opcoes.TamanhoIdentacao := FTamanhoIdentacao;
 
-    LocCFeW.GerarXml;
+    LocCFeW.GerarXml( ApenasTagsAplicacao );
     Result := LocCFeW.Gerador.ArquivoFormatoXML;
   finally
     LocCFeW.Free;
   end ;
 end;
 
-procedure TCFe.SetAsXMLString(AValue : String) ;
+procedure TCFe.SetXMLString(AValue : String) ;
 var
  LocCFeR : TCFeR;
 begin

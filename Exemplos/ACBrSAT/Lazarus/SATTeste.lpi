@@ -67,7 +67,7 @@
         <PackageName Value="LCL"/>
       </Item3>
     </RequiredPackages>
-    <Units Count="2">
+    <Units Count="3">
       <Unit0>
         <Filename Value="SATTeste.lpr"/>
         <IsPartOfProject Value="True"/>
@@ -81,6 +81,12 @@
         <ResourceBaseClass Value="Form"/>
         <UnitName Value="Unit1"/>
       </Unit1>
+      <Unit2>
+        <Filename Value="configuraserial.pas"/>
+        <IsPartOfProject Value="True"/>
+        <HasResources Value="True"/>
+        <UnitName Value="configuraserial"/>
+      </Unit2>
     </Units>
   </ProjectOptions>
   <CompilerOptions>

@@ -122,6 +122,7 @@ type
        ) : String ;
      function AtualizarSoftwareSAT : String ;
      function BloquearSAT : String ;
+     procedure CFe2CFeCanc;
      function CancelarUltimaVenda :String ; overload;
      function CancelarUltimaVenda( chave, dadosCancelamento : String ) :
        String ; overload;
@@ -134,7 +135,8 @@ type
      function ConsultarStatusOperacional : String ;
      function DesbloquearSAT : String ;
      function DesligarSAT : String ;
-     function EnviarDadosVenda( dadosVenda : AnsiString ) : String ;
+     function EnviarDadosVenda : String ; overload;
+     function EnviarDadosVenda( dadosVenda : AnsiString ) : String ; overload;
      function ExtrairLogs : String ;
      function TesteFimAFim( dadosVenda : AnsiString) : String ;
      function TrocarCodigoDeAtivacao( opcao : Integer; novoCodigo,
@@ -317,6 +319,7 @@ begin
     Emit.CNPJCPF          := fsConfig.emit_CNPJ;
     Emit.IE               := fsConfig.emit_IE;
     Emit.IM               := fsConfig.emit_IM;
+    Emit.cRegTrib         := fsConfig.emit_cRegTrib;
     Emit.cRegTribISSQN    := fsConfig.emit_cRegTribISSQN;
     Emit.indRatISSQN      := fsConfig.emit_indRatISSQN;
     infCFe.versaoDadosEnt := fsConfig.infCFe_versaoDadosEnt;
@@ -357,18 +360,12 @@ function TACBrSAT.CancelarUltimaVenda: String ;
 var
   dadosCancelamento : string;
 begin
-  CFeCanc.Clear;
-  CFeCanc.infCFe.chCanc   := CFe.infCFe.ID;
-  CFeCanc.infCFe.dEmi     := CFe.ide.dEmi;
-  CFeCanc.infCFe.hEmi     := CFe.ide.hEmi;
-  CFeCanc.ide.CNPJ        := CFe.ide.CNPJ;
-  CFeCanc.ide.signAC      := CFe.ide.signAC;
-  CFeCanc.ide.numeroCaixa := CFe.ide.numeroCaixa;
-  CFeCanc.Dest.CNPJCPF    := CFe.Dest.CNPJCPF;
+  if CFeCanc.infCFe.chCanc = '' then
+     CFe2CFeCanc;
 
   dadosCancelamento := CFeCanc.AsXMLString;
 
-  Result := CancelarUltimaVenda(CFe.infCFe.ID, dadosCancelamento);
+  Result := CancelarUltimaVenda( CFeCanc.infCFe.chCanc, dadosCancelamento);
 end ;
 
 
@@ -431,6 +428,11 @@ begin
   IniciaComando;
   Result := FinalizaComando( fsSATClass.DesligarSAT );
 end ;
+
+function TACBrSAT.EnviarDadosVenda: String;
+begin
+  EnviarDadosVenda( CFe.GetXMLString( True ) );  // True = Gera apenas as TAGs da aplicação
+end;
 
 function TACBrSAT.EnviarDadosVenda(dadosVenda : AnsiString) : String ;
 var
@@ -593,6 +595,18 @@ begin
   if (Operation = opRemove) and (fsExtrato <> nil) and (AComponent is TACBrSATExtratoClass) then
      fsExtrato := nil ;
 end ;
+
+procedure TACBrSAT.CFe2CFeCanc;
+begin
+  CFeCanc.Clear;
+  CFeCanc.infCFe.chCanc   := CFe.infCFe.ID;
+  CFeCanc.infCFe.dEmi     := CFe.ide.dEmi;
+  CFeCanc.infCFe.hEmi     := CFe.ide.hEmi;
+  CFeCanc.ide.CNPJ        := CFe.ide.CNPJ;
+  CFeCanc.ide.signAC      := CFe.ide.signAC;
+  CFeCanc.ide.numeroCaixa := CFe.ide.numeroCaixa;
+  CFeCanc.Dest.CNPJCPF    := CFe.Dest.CNPJCPF;
+end;
 
 procedure TACBrSAT.ImprimirExtrato;
 begin

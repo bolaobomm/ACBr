@@ -89,17 +89,19 @@ begin
 
   i := 0;
   i := RetornarPosEx('Id=', Leitor.Arquivo, i + 6);
-  if i = 0 then
-    raise Exception.Create('Não encontrei inicio do URI: Id=');
-  i := RetornarPosEx('"', Leitor.Arquivo, i + 2);
-  if i = 0 then
-    raise Exception.Create('Não encontrei inicio do URI: aspas inicial');
-  j := RetornarPosEx('"', Leitor.Arquivo, i + 1);
-  if j = 0 then
-    raise Exception.Create('Não encontrei inicio do URI: aspas final');
-
-  CFeCanc.infCFe.ID := copy(Leitor.Arquivo, I+1, J - (I+1));
-  CFeCanc.infCFe.ID := StringReplace( UpperCase(CFeCanc.infCFe.ID), 'CFE', '', [rfReplaceAll] ) ;
+  if i > 0 then
+  begin
+    i := RetornarPosEx('"', Leitor.Arquivo, i + 2);
+    if i > 0 then
+    begin
+      j := RetornarPosEx('"', Leitor.Arquivo, i + 1);
+      if j > 0 then
+      begin
+        CFeCanc.infCFe.ID := copy(Leitor.Arquivo, I+1, J - (I+1));
+        CFeCanc.infCFe.ID := StringReplace( UpperCase(CFeCanc.infCFe.ID), 'CFE', '', [rfReplaceAll] ) ;
+      end;
+    end;
+  end;
 
   (* Grupo da TAG <ide> *******************************************************)
   if Leitor.rExtrai(1, 'infCFe') <> '' then
