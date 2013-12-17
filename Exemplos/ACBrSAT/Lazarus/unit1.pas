@@ -401,7 +401,7 @@ begin
     ACBrSAT1.CFe.LoadFromFile( OpenDialog1.FileName );
     ACBrSAT1.CFe2CFeCanc;
 
-    mCancelado.Lines.Text := ACBrSAT1.CFeCanc.AsXMLString ;
+    mCancelado.Lines.Text := ACBrSAT1.CFeCanc.GetXMLString( True ) ;  // True = Gera apenas as TAGs da aplicação
     edChaveCancelamento.Text := ACBrSAT1.CFeCanc.infCFe.chCanc;
     PageControl1.ActivePage := tsCancelamento;
   end ;

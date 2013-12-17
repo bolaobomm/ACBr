@@ -283,7 +283,7 @@ begin
       Gerador.ArquivoFormatoXML := Gerador.ArquivoFormatoXML + FCFeCanc.signature.Gerador.ArquivoFormatoXML;
     end;
   end;
-  Gerador.wGrupo('/CFe');
+  Gerador.wGrupo('/CFeCanc');
 
   Result := (Gerador.ListaDeAlertas.Count = 0);
 end;

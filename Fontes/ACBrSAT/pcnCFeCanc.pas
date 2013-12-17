@@ -79,7 +79,6 @@ type
     FInfAdic: TInfAdic;
     FSignature: TSignature;
     function GetAsXMLString : String ;
-    procedure SetAsXMLString(AValue : String) ;
   public
     constructor Create;
     destructor Destroy; override;
@@ -88,8 +87,10 @@ type
 
     function LoadFromFile(AFileName : String): boolean;
     function SaveToFile(AFileName : String): boolean;
+    function GetXMLString( ApenasTagsAplicacao: Boolean = false) : String ;
+    procedure SetXMLString(AValue : String) ;
 
-    property AsXMLString : String read GetAsXMLString write SetAsXMLString ;
+    property AsXMLString : String read GetAsXMLString write SetXMLString ;
   published
     property infCFe: TinfCFe read FinfCFe write FinfCFe;
     property ide: Tide read Fide write Fide;
@@ -476,20 +477,26 @@ end ;
 { TCFeTCFeCanc }
 
 function TCFeCanc.GetAsXMLString : String ;
+begin
+  GetXMLString( false ) ;
+end;
+
+function TCFeCanc.GetXMLString( ApenasTagsAplicacao: Boolean ): String;
 var
   LocCFeCancW : TCFeCancW ;
 begin
   Result  := '';
   LocCFeCancW := TCFeCancW.Create(Self);
   try
-    LocCFeCancW.GerarXml;
+    LocCFeCancW.GerarXml( ApenasTagsAplicacao );
     Result := LocCFeCancW.Gerador.ArquivoFormatoXML;
   finally
     LocCFeCancW.Free;
   end ;
 end;
 
-procedure TCFeCanc.SetAsXMLString(AValue : String) ;
+
+procedure TCFeCanc.SetXMLString(AValue : String) ;
 var
  LocCFeCancR : TCFeCancR;
 begin
