@@ -248,7 +248,14 @@ begin
   FApenasTagsAplicacao := ApenasTagsAplicacao;
   Gerador.LayoutArquivoTXT.Clear;
 
-  Gerador.ArquivoFormatoXML := '';
+  {$IFDEF UNICODE}
+   Gerador.ArquivoFormatoXML := '<'+ENCODING_UTF8+'>';
+   if Gerador.Opcoes.IdentarXML then
+     Gerador.ArquivoFormatoXML := Gerador.ArquivoFormatoXML + #13#10 ;
+  {$ELSE}
+   Gerador.ArquivoFormatoXML := '';
+  {$ENDIF}
+
   Gerador.ArquivoFormatoTXT := '';
 
   Gerador.wGrupo('CFeCanc');
