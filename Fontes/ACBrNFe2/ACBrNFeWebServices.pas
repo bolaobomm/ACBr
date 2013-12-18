@@ -1055,7 +1055,7 @@ var
   vNotas: WideString;
   indSinc, Versao: String;
 begin
-  if (FConfiguracoes.Geral.ModeloDF = moNFCe) then
+  if (FConfiguracoes.Geral.ModeloDF = moNFCe) or (FConfiguracoes.Geral.VersaoDF = ve310) then
    begin
     if (TNFeRecepcao(Self).Sincrono) then
        indSinc := '<indSinc>1</indSinc>'
@@ -1069,9 +1069,13 @@ begin
 //    Versao := NFenviNFe;
    end;
 
-  Versao := GetVersaoNFe(FConfiguracoes.Geral.ModeloDF,
-                         FConfiguracoes.Geral.VersaoDF,
-                         LayNfeRecepcao);
+  if FConfiguracoes.Geral.VersaoDF = ve310 then
+    Versao := GetVersaoNFe(FConfiguracoes.Geral.ModeloDF,
+                           FConfiguracoes.Geral.VersaoDF,
+                           LayNfeAutorizacao)
+  else Versao := GetVersaoNFe(FConfiguracoes.Geral.ModeloDF,
+                              FConfiguracoes.Geral.VersaoDF,
+                              LayNfeRecepcao);
 
   vNotas := '';
   for i := 0 to TNFeRecepcao(Self).FNotasFiscais.Count-1 do
@@ -1101,9 +1105,14 @@ begin
   ConsReciNFe.tpAmb  := TpcnTipoAmbiente(FConfiguracoes.WebServices.AmbienteCodigo-1);
   ConsReciNFe.nRec   := TNFeRetRecepcao(Self).Recibo;
 
-  ConsReciNFe.Versao := GetVersaoNFe(FConfiguracoes.Geral.ModeloDF,
-                                     FConfiguracoes.Geral.VersaoDF,
-                                     LayNfeRetRecepcao);
+  if FConfiguracoes.Geral.VersaoDF = ve310 then
+    ConsReciNFe.Versao := GetVersaoNFe(FConfiguracoes.Geral.ModeloDF,
+                                       FConfiguracoes.Geral.VersaoDF,
+                                       LayNfeRetAutorizacao)
+  else
+    ConsReciNFe.Versao := GetVersaoNFe(FConfiguracoes.Geral.ModeloDF,
+                                       FConfiguracoes.Geral.VersaoDF,
+                                       LayNfeRetRecepcao);
 
 //  if (FConfiguracoes.Geral.ModeloDF = moNFCe) then
 //     ConsReciNFe.Versao := NFCeConsReci
@@ -1129,9 +1138,14 @@ begin
   ConsReciNFe.tpAmb  := TpcnTipoAmbiente(FConfiguracoes.WebServices.AmbienteCodigo-1);
   ConsReciNFe.nRec   := TNFeRecibo(Self).Recibo;
 
-  ConsReciNFe.Versao := GetVersaoNFe(FConfiguracoes.Geral.ModeloDF,
-                                     FConfiguracoes.Geral.VersaoDF,
-                                     LayNfeRetRecepcao);
+  if FConfiguracoes.Geral.VersaoDF = ve310 then
+    ConsReciNFe.Versao := GetVersaoNFe(FConfiguracoes.Geral.ModeloDF,
+                                       FConfiguracoes.Geral.VersaoDF,
+                                       LayNfeRetAutorizacao)
+  else
+    ConsReciNFe.Versao := GetVersaoNFe(FConfiguracoes.Geral.ModeloDF,
+                                       FConfiguracoes.Geral.VersaoDF,
+                                       LayNfeRetRecepcao);
 
 //  if (FConfiguracoes.Geral.ModeloDF = moNFCe) then
 //     ConsReciNFe.Versao := NFCeConsReci
@@ -1361,9 +1375,17 @@ begin
   if self is TNFeStatusServico then
     FURL  := NotaUtil.GetURL(FConfiguracoes.WebServices.UFCodigo, FConfiguracoes.WebServices.AmbienteCodigo, FConfiguracoes.Geral.FormaEmissaoCodigo, LayNfeStatusServico, FConfiguracoes.Geral.ModeloDF)
   else if self is TNFeRecepcao then
-    FURL  := NotaUtil.GetURL(FConfiguracoes.WebServices.UFCodigo, FConfiguracoes.WebServices.AmbienteCodigo, FConfiguracoes.Geral.FormaEmissaoCodigo, LayNfeRecepcao, FConfiguracoes.Geral.ModeloDF)
+  begin
+    if FConfiguracoes.Geral.VersaoDF = ve310 then
+      FURL  := NotaUtil.GetURL(FConfiguracoes.WebServices.UFCodigo, FConfiguracoes.WebServices.AmbienteCodigo, FConfiguracoes.Geral.FormaEmissaoCodigo, LayNfeAutorizacao, FConfiguracoes.Geral.ModeloDF)
+    else FURL  := NotaUtil.GetURL(FConfiguracoes.WebServices.UFCodigo, FConfiguracoes.WebServices.AmbienteCodigo, FConfiguracoes.Geral.FormaEmissaoCodigo, LayNfeRecepcao, FConfiguracoes.Geral.ModeloDF);
+  end
   else if (self is TNFeRetRecepcao) or (self is TNFeRecibo) then
-    FURL  := NotaUtil.GetURL(FConfiguracoes.WebServices.UFCodigo, FConfiguracoes.WebServices.AmbienteCodigo, FConfiguracoes.Geral.FormaEmissaoCodigo, LayNfeRetRecepcao, FConfiguracoes.Geral.ModeloDF)
+  begin
+    if FConfiguracoes.Geral.VersaoDF = ve310 then
+      FURL  := NotaUtil.GetURL(FConfiguracoes.WebServices.UFCodigo, FConfiguracoes.WebServices.AmbienteCodigo, FConfiguracoes.Geral.FormaEmissaoCodigo, LayNfeRetAutorizacao, FConfiguracoes.Geral.ModeloDF)
+    else FURL  := NotaUtil.GetURL(FConfiguracoes.WebServices.UFCodigo, FConfiguracoes.WebServices.AmbienteCodigo, FConfiguracoes.Geral.FormaEmissaoCodigo, LayNfeRetRecepcao, FConfiguracoes.Geral.ModeloDF);
+  end
   else if self is TNFeConsulta then
     FURL  := NotaUtil.GetURL(FConfiguracoes.WebServices.UFCodigo, FConfiguracoes.WebServices.AmbienteCodigo, FConfiguracoes.Geral.FormaEmissaoCodigo, LayNfeConsulta, FConfiguracoes.Geral.ModeloDF)
   else if self is TNFeCancelamento then
@@ -1799,7 +1821,7 @@ begin
   Acao := TStringList.Create;
   Stream := TMemoryStream.Create;
 
-  if (FConfiguracoes.Geral.ModeloDF = moNFCe) and
+  if ((FConfiguracoes.Geral.ModeloDF = moNFCe) or (FConfiguracoes.Geral.VersaoDF = ve310)) and
      (FConfiguracoes.WebServices.UFCodigo <> 13)  then
    begin
      SoapAction := 'http://www.portalfiscal.inf.br/nfe/wsdl/NfeAutorizacao';
@@ -1818,10 +1840,16 @@ begin
   Texto := Texto +     '<nfeCabecMsg xmlns="'+SoapAction+'">';
   Texto := Texto +       '<cUF>'+IntToStr(FConfiguracoes.WebServices.UFCodigo)+'</cUF>';
 
-  Texto := Texto + '<versaoDados>' + GetVersaoNFe(FConfiguracoes.Geral.ModeloDF,
-                                                  FConfiguracoes.Geral.VersaoDF,
-                                                  LayNfeRecepcao) +
-                   '</versaoDados>';
+  if nfeAutorizacaoLote then
+    Texto := Texto + '<versaoDados>' + GetVersaoNFe(FConfiguracoes.Geral.ModeloDF,
+                                                    FConfiguracoes.Geral.VersaoDF,
+                                                    LayNfeAutorizacao) +
+                     '</versaoDados>'
+  else
+    Texto := Texto + '<versaoDados>' + GetVersaoNFe(FConfiguracoes.Geral.ModeloDF,
+                                                    FConfiguracoes.Geral.VersaoDF,
+                                                    LayNfeRecepcao) +
+                     '</versaoDados>';
 
 //  if (FConfiguracoes.Geral.ModeloDF = moNFCe) then
 //     Texto := Texto + '<versaoDados>' + NFCeEnvi + '</versaoDados>'
@@ -1885,7 +1913,7 @@ begin
        StrStream.Free;
     {$ENDIF}
 
-    if (FConfiguracoes.Geral.ModeloDF = moNFCe) and FSincrono then
+    if ((FConfiguracoes.Geral.ModeloDF = moNFCe)  or (FConfiguracoes.Geral.VersaoDF = ve310)) and FSincrono then
      begin
        NFeRetornoSincrono := TRetConsSitNFe.Create;
 
@@ -1968,9 +1996,14 @@ begin
 
 //                   AProcNFe.PathRetConsSitNFe:=PathWithDelim(FConfiguracoes.Geral.PathSalvar) + chNFe + '-sit.xml';
 
-                   AProcNFe.Versao := GetVersaoNFe(FConfiguracoes.Geral.ModeloDF,
-                                                   FConfiguracoes.Geral.VersaoDF,
-                                                   LayNfeRecepcao);
+                   if nfeAutorizacaoLote then
+                     AProcNFe.Versao := GetVersaoNFe(FConfiguracoes.Geral.ModeloDF,
+                                                     FConfiguracoes.Geral.VersaoDF,
+                                                     LayNfeAutorizacao)
+                   else
+                     AProcNFe.Versao := GetVersaoNFe(FConfiguracoes.Geral.ModeloDF,
+                                                     FConfiguracoes.Geral.VersaoDF,
+                                                     LayNfeRecepcao);
 
 //                   if (FConfiguracoes.Geral.ModeloDF = moNFCe) then
 //                      AProcNFe.Versao := NFCeEnvi
@@ -2107,9 +2140,14 @@ begin
                AProcNFe.PathNFe:=PathWithDelim(FConfiguracoes.Geral.PathSalvar)+AInfProt.Items[i].chNFe+'-nfe.xml';
                AProcNFe.PathRetConsReciNFe:=PathWithDelim(FConfiguracoes.Geral.PathSalvar)+FNFeRetorno.nRec+'-pro-rec.xml';
 
-               AProcNFe.Versao := GetVersaoNFe(FConfiguracoes.Geral.ModeloDF,
-                                               FConfiguracoes.Geral.VersaoDF,
-                                               LayNfeRecepcao);
+               if FConfiguracoes.Geral.VersaoDF = ve310 then
+                 AProcNFe.Versao := GetVersaoNFe(FConfiguracoes.Geral.ModeloDF,
+                                                 FConfiguracoes.Geral.VersaoDF,
+                                                 LayNfeAutorizacao)
+               else
+                 AProcNFe.Versao := GetVersaoNFe(FConfiguracoes.Geral.ModeloDF,
+                                                 FConfiguracoes.Geral.VersaoDF,
+                                                 LayNfeRecepcao);
 
 //               if (FConfiguracoes.Geral.ModeloDF = moNFCe) then
 //                  AProcNFe.Versao := NFCeEnvi
@@ -2201,7 +2239,7 @@ function TNFeRetRecepcao.Executar: Boolean;
     if assigned(FNFeRetorno) then
        FNFeRetorno.Free;
 
-    if (FConfiguracoes.Geral.ModeloDF = moNFCe) and
+    if ((FConfiguracoes.Geral.ModeloDF = moNFCe) or (FConfiguracoes.Geral.VersaoDF = ve310)) and
        (FConfiguracoes.WebServices.UFCodigo <> 13)  then
      begin
        SoapAction := 'http://www.portalfiscal.inf.br/nfe/wsdl/NfeRetAutorizacao';
@@ -2220,10 +2258,16 @@ function TNFeRetRecepcao.Executar: Boolean;
     Texto := Texto +     '<nfeCabecMsg xmlns="'+SoapAction+'">';
     Texto := Texto +       '<cUF>'+IntToStr(FConfiguracoes.WebServices.UFCodigo)+'</cUF>';
 
-    Texto := Texto + '<versaoDados>' + GetVersaoNFe(FConfiguracoes.Geral.ModeloDF,
-                                                    FConfiguracoes.Geral.VersaoDF,
-                                                    LayNfeRetRecepcao) +
-                     '</versaoDados>';
+    if nfeAutorizacaoLote then
+      Texto := Texto + '<versaoDados>' + GetVersaoNFe(FConfiguracoes.Geral.ModeloDF,
+                                                      FConfiguracoes.Geral.VersaoDF,
+                                                      LayNfeRetAutorizacao) +
+                       '</versaoDados>'
+    else
+      Texto := Texto + '<versaoDados>' + GetVersaoNFe(FConfiguracoes.Geral.ModeloDF,
+                                                      FConfiguracoes.Geral.VersaoDF,
+                                                      LayNfeRetRecepcao) +
+                       '</versaoDados>';
 
 //    if (FConfiguracoes.Geral.ModeloDF = moNFCe) then
 //       Texto := Texto + '<versaoDados>' + NFCeConsReci + '</versaoDados>'
@@ -2413,10 +2457,16 @@ begin
   Texto := Texto +     '<nfeCabecMsg xmlns="http://www.portalfiscal.inf.br/nfe/wsdl/NfeRetRecepcao2">';
   Texto := Texto +       '<cUF>'+IntToStr(FConfiguracoes.WebServices.UFCodigo)+'</cUF>';
 
-  Texto := Texto +       '<versaoDados>' + GetVersaoNFe(FConfiguracoes.Geral.ModeloDF,
-                                                        FConfiguracoes.Geral.VersaoDF,
-                                                        LayNfeRetRecepcao) +
-                         '</versaoDados>';
+  if FConfiguracoes.Geral.VersaoDF = ve310 then
+    Texto := Texto +       '<versaoDados>' + GetVersaoNFe(FConfiguracoes.Geral.ModeloDF,
+                                                          FConfiguracoes.Geral.VersaoDF,
+                                                          LayNfeRetAutorizacao) +
+                           '</versaoDados>'
+  else
+    Texto := Texto +       '<versaoDados>' + GetVersaoNFe(FConfiguracoes.Geral.ModeloDF,
+                                                          FConfiguracoes.Geral.VersaoDF,
+                                                          LayNfeRetRecepcao) +
+                           '</versaoDados>';
 
 //  Texto := Texto +       '<versaoDados>'+NFeconsReciNFe+'</versaoDados>';
   Texto := Texto +     '</nfeCabecMsg>';
@@ -2816,9 +2866,14 @@ begin
                 AProcNFe.PathNFe:=PathWithDelim(FConfiguracoes.Geral.PathSalvar)+FNFeChave+'-nfe.xml';
              AProcNFe.PathRetConsSitNFe:=PathWithDelim(FConfiguracoes.Geral.PathSalvar)+FNFeChave+'-sit.xml';
 
-             AProcNFe.Versao := GetVersaoNFe(FConfiguracoes.Geral.ModeloDF,
-                                             FConfiguracoes.Geral.VersaoDF,
-                                             LayNfeRecepcao);
+             if FConfiguracoes.Geral.VersaoDF = ve310 then
+               AProcNFe.Versao := GetVersaoNFe(FConfiguracoes.Geral.ModeloDF,
+                                               FConfiguracoes.Geral.VersaoDF,
+                                               LayNfeAutorizacao)
+             else
+               AProcNFe.Versao := GetVersaoNFe(FConfiguracoes.Geral.ModeloDF,
+                                               FConfiguracoes.Geral.VersaoDF,
+                                               LayNfeRecepcao);
 
 //             if (FConfiguracoes.Geral.ModeloDF = moNFCe) then
 //                AProcNFe.Versao := NFCeEnvi
@@ -2857,9 +2912,14 @@ begin
              AProcNFe.PathNFe:=PathWithDelim(FConfiguracoes.Geral.PathSalvar)+FNFeChave+'-nfe.xml';
              AProcNFe.PathRetConsSitNFe:=PathWithDelim(FConfiguracoes.Geral.PathSalvar)+FNFeChave+'-sit.xml';
 
-             AProcNFe.Versao := GetVersaoNFe(FConfiguracoes.Geral.ModeloDF,
-                                             FConfiguracoes.Geral.VersaoDF,
-                                             LayNfeRecepcao);
+             if FConfiguracoes.Geral.VersaoDF = ve310 then
+               AProcNFe.Versao := GetVersaoNFe(FConfiguracoes.Geral.ModeloDF,
+                                               FConfiguracoes.Geral.VersaoDF,
+                                               LayNfeAutorizacao)
+             else
+               AProcNFe.Versao := GetVersaoNFe(FConfiguracoes.Geral.ModeloDF,
+                                               FConfiguracoes.Geral.VersaoDF,
+                                               LayNfeRecepcao);
 
 //             if (FConfiguracoes.Geral.ModeloDF = moNFCe) then
 //                AProcNFe.Versao := NFCeEnvi

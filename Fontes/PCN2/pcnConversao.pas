@@ -80,22 +80,12 @@ type
   TLayOut = (LayNfeRecepcao, LayNfeRetRecepcao, LayNfeCancelamento, LayNfeInutilizacao,
              LayNfeConsulta, LayNfeStatusServico, LayNfeCadastro, LayNfeEnvDPEC,
              LayNfeConsultaDPEC, LayNFeCCe, LayNFeEvento, LayNFeEventoAN,
-             LayNFeConsNFeDest, LayNFeDownloadNFe,
+             LayNFeConsNFeDest, LayNFeDownloadNFe, LayNfeAutorizacao, LayNfeRetAutorizacao,
              LayCTeRecepcao, LayCTeRetRecepcao, LayCTeCancelamento, LayCTeInutilizacao,
              LayCTeConsultaCT, LayCTeStatusServico, LayCTeCadastro, LayCTeEvento,
              LayCTeEventoEPEC,
              LayMDFeRecepcao, LayMDFeRetRecepcao, LayMDFeConsulta, LayMDFeStatusServico,
              LayMDFeEvento);
-
-(*
-  TLayOut = (LayNfeRecepcao,LayNfeRetRecepcao,LayNfeCancelamento,LayNfeInutilizacao,
-             LayNfeConsulta,LayNfeStatusServico,LayNfeCadastro, LayNfeEnvDPEC,
-             LayNfeConsultaDPEC, LayCTeRecepcao,LayCTeRetRecepcao,LayCTeCancelamento,
-             LayCTeInutilizacao,LayCTeConsultaCT,LayCTeStatusServico,LayCTeCadastro,
-             LayNFeCCe,LayNFeEvento, LayNFeEventoAN, LayNFeConsNFeDest, LayNFeDownloadNFe,
-             LayMDFeRecepcao, LayMDFeRetRecepcao, LayMDFeConsulta,
-             LayMDFeStatusServico, LayMDFeEvento);
-*)
 
   TpcnSchema = (TsPL005c, TsPL006,
                 TsPL_CTe_103, TsPL_CTe_104,
@@ -111,8 +101,6 @@ type
                     tlEnvCTe, tlProcCancCTe, tlEnvDPEC, tlConsDPEC, tlConsStatServCTe,
                     tlCCeNFe, tlEnvCCeNFe, tlRetEnvCCeNFe, tlEnvEventoNFe, tlRetEnvEventoNFe,
                     tlConsNFeDest, tlDownloadNFe);
-//                    , tlProcMDFe);
-
 
   TpcnTipoCampo = (tcStr, tcInt, tcDat, tcDatHor, tcEsp, tcDe2, tcDe3, tcDe4, tcDe10,
                    tcHor, tcDe6, tcDatCFe, tcHorCFe ); // tcEsp = String: somente numeros;
@@ -1778,36 +1766,40 @@ begin
              case AVersaoDF of
               ve200: begin
                        case ALayOut of
-                        LayNfeStatusServico: result := '2.00';
-                        LayNfeRecepcao:      result := '2.00';
-                        LayNfeRetRecepcao:   result := '2.00';
-                        LayNfeConsulta:      result := '2.01';
-                        LayNfeCancelamento:  result := '2.00';
-                        LayNfeInutilizacao:  result := '2.00';
-                        LayNfeCadastro:      result := '2.00';
-                        LayNfeEnvDPEC:       result := '1.01';
-                        LayNfeConsultaDPEC:  result := '1.01';
-                        LayNFeCCe:           result := '1.00';
-                        LayNFeEvento:        result := '1.00';
-                        LayNFeConsNFeDest:   result := '1.01';
-                        LayNFeDownloadNFe:   result := '1.00';
+                        LayNfeStatusServico:  result := '2.00';
+                        LayNfeRecepcao:       result := '2.00';
+                        LayNfeRetRecepcao:    result := '2.00';
+                        LayNfeConsulta:       result := '2.01';
+                        LayNfeCancelamento:   result := '2.00';
+                        LayNfeInutilizacao:   result := '2.00';
+                        LayNfeCadastro:       result := '2.00';
+                        LayNfeEnvDPEC:        result := '1.01';
+                        LayNfeConsultaDPEC:   result := '1.01';
+                        LayNFeCCe:            result := '1.00';
+                        LayNFeEvento:         result := '1.00';
+                        LayNFeConsNFeDest:    result := '1.01';
+                        LayNFeDownloadNFe:    result := '1.00';
+                        LayNfeAutorizacao:    result := '2.00';
+                        LayNfeRetAutorizacao: result := '2.00';
                        end;
                      end;
               ve310: begin
                        case ALayOut of
-                        LayNfeStatusServico: result := '3.10';
-                        LayNfeRecepcao:      result := '3.10';
-                        LayNfeRetRecepcao:   result := '3.10';
-                        LayNfeConsulta:      result := '3.10';
-                        LayNfeCancelamento:  result := '3.10';
-                        LayNfeInutilizacao:  result := '3.10';
-                        LayNfeCadastro:      result := '2.00';
-                        LayNfeEnvDPEC:       result := '1.01';
-                        LayNfeConsultaDPEC:  result := '1.01';
-                        LayNFeCCe:           result := '1.00';
-                        LayNFeEvento:        result := '1.00';
-                        LayNFeConsNFeDest:   result := '1.01';
-                        LayNFeDownloadNFe:   result := '1.00';
+                        LayNfeStatusServico:  result := '3.10';
+                        LayNfeRecepcao:       result := '3.10';
+                        LayNfeRetRecepcao:    result := '3.10';
+                        LayNfeConsulta:       result := '3.10';
+                        LayNfeCancelamento:   result := '3.10';
+                        LayNfeInutilizacao:   result := '3.10';
+                        LayNfeCadastro:       result := '2.00';
+                        LayNfeEnvDPEC:        result := '1.01';
+                        LayNfeConsultaDPEC:   result := '1.01';
+                        LayNFeCCe:            result := '1.00';
+                        LayNFeEvento:         result := '1.00';
+                        LayNFeConsNFeDest:    result := '1.01';
+                        LayNFeDownloadNFe:    result := '1.00';
+                        LayNfeAutorizacao:    result := '3.10';
+                        LayNfeRetAutorizacao: result := '3.10';
                        end;
                      end;
              end;
@@ -1816,36 +1808,40 @@ begin
              case AVersaoDF of
               ve300: begin
                        case ALayOut of
-                        LayNfeStatusServico: result := '3.00';
-                        LayNfeRecepcao:      result := '3.00';
-                        LayNfeRetRecepcao:   result := '3.00';
-                        LayNfeConsulta:      result := '3.00';
-                        LayNfeCancelamento:  result := '3.00';
-                        LayNfeInutilizacao:  result := '3.00';
-                        LayNfeCadastro:      result := '2.00';
-                        LayNfeEnvDPEC:       result := '1.01';
-                        LayNfeConsultaDPEC:  result := '1.01';
-                        LayNFeCCe:           result := '1.00';
-                        LayNFeEvento:        result := '1.00';
-                        LayNFeConsNFeDest:   result := '1.01';
-                        LayNFeDownloadNFe:   result := '1.00';
+                        LayNfeStatusServico:  result := '3.00';
+                        LayNfeRecepcao:       result := '3.00';
+                        LayNfeRetRecepcao:    result := '3.00';
+                        LayNfeConsulta:       result := '3.00';
+                        LayNfeCancelamento:   result := '3.00';
+                        LayNfeInutilizacao:   result := '3.00';
+                        LayNfeCadastro:       result := '2.00';
+                        LayNfeEnvDPEC:        result := '1.01';
+                        LayNfeConsultaDPEC:   result := '1.01';
+                        LayNFeCCe:            result := '1.00';
+                        LayNFeEvento:         result := '1.00';
+                        LayNFeConsNFeDest:    result := '1.01';
+                        LayNFeDownloadNFe:    result := '1.00';
+                        LayNfeAutorizacao:    result := '3.00';
+                        LayNfeRetAutorizacao: result := '3.00';
                        end;
                      end;
               ve310: begin
                        case ALayOut of
-                        LayNfeStatusServico: result := '3.10';
-                        LayNfeRecepcao:      result := '3.10';
-                        LayNfeRetRecepcao:   result := '3.10';
-                        LayNfeConsulta:      result := '3.10';
-                        LayNfeCancelamento:  result := '3.10';
-                        LayNfeInutilizacao:  result := '3.10';
-                        LayNfeCadastro:      result := '2.00';
-                        LayNfeEnvDPEC:       result := '1.01';
-                        LayNfeConsultaDPEC:  result := '1.01';
-                        LayNFeCCe:           result := '1.00';
-                        LayNFeEvento:        result := '1.00';
-                        LayNFeConsNFeDest:   result := '1.01';
-                        LayNFeDownloadNFe:   result := '1.00';
+                        LayNfeStatusServico:  result := '3.10';
+                        LayNfeRecepcao:       result := '3.10';
+                        LayNfeRetRecepcao:    result := '3.10';
+                        LayNfeConsulta:       result := '3.10';
+                        LayNfeCancelamento:   result := '3.10';
+                        LayNfeInutilizacao:   result := '3.10';
+                        LayNfeCadastro:       result := '2.00';
+                        LayNfeEnvDPEC:        result := '1.01';
+                        LayNfeConsultaDPEC:   result := '1.01';
+                        LayNFeCCe:            result := '1.00';
+                        LayNFeEvento:         result := '1.00';
+                        LayNFeConsNFeDest:    result := '1.01';
+                        LayNFeDownloadNFe:    result := '1.00';
+                        LayNfeAutorizacao:    result := '3.10';
+                        LayNfeRetAutorizacao: result := '3.10';
                        end;
                      end;
              end;
