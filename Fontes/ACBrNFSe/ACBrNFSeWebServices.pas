@@ -4216,6 +4216,8 @@ begin
 
       FRetNFSe := FProvedorClass.GeraRetornoNFSe(Prefixo3, FRetNFSe, FNomeCidade);
 
+      FNotasFiscais.Items[i].NFSe.CodigoVerificacao := NFSeRetorno.ListaNfse.CompNfse.Items[i].NFSe.CodigoVerificacao;
+
 //      if FConfiguracoes.Geral.Salvar
 //       then begin
         if FConfiguracoes.Arquivos.EmissaoPathNFSe then
