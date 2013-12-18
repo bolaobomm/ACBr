@@ -1861,7 +1861,7 @@ end;
 
 procedure TCTeW.GerarInfCTeSub;  // S
 begin
- if CTe.infCTeNorm.infCTeSub.chCte<>''
+ if CTe.Ide.tpCTe = tcSubstituto //CTe.infCTeNorm.infCTeSub.chCte<>''
   then begin
    Gerador.wGrupo('infCteSub', '#394');
    Gerador.wCampo(tcEsp, '#395', 'chCte ', 44, 44, 1, SomenteNumeros(CTe.infCTeNorm.infCTeSub.chCte), DSC_CHCTE);
