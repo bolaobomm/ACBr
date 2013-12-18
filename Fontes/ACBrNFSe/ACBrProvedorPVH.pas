@@ -182,7 +182,8 @@ end;
 function TProvedorPVH.Gera_CabMsg(Prefixo2, VersaoLayOut, VersaoDados,
   NameSpaceCab: String; ACodCidade: Integer): AnsiString;
 begin
- Result := '<' + Prefixo2 + 'cabecalho versao="'  + VersaoLayOut + '"' + NameSpaceCab +
+ Result := '<?xml version="1.0" encoding="UTF-8"?>' +
+           '<' + Prefixo2 + 'cabecalho xmlns="http://www.abrasf.org.br/nfse.xsd" versao="'  + VersaoLayOut + '">' +
             '<versaoDados>' + VersaoDados + '</versaoDados>'+
            '</' + Prefixo2 + 'cabecalho>';
 end;
@@ -202,8 +203,8 @@ begin
    acConsNFSe:    Result := '</' + Prefixo3 + 'ConsultarNfseFaixaEnvio>';
    acCancelar:    Result := '</' + Prefixo3 + 'Pedido>' +
                             '</' + Prefixo3 + 'CancelarNfseEnvio>';
-   acGerar:       Result := '</' + Prefixo3 + 'GerarNfseEnvio';
-   acRecSincrono: Result := '</' + Prefixo3 + 'EnviarLoteRpsSincronoEnvio';
+   acGerar:       Result := '</' + Prefixo3 + 'GerarNfseEnvio>';
+   acRecSincrono: Result := '</' + Prefixo3 + 'EnviarLoteRpsSincronoEnvio>';
    else           Result := '';
  end;
 end;
@@ -211,6 +212,27 @@ end;
 function TProvedorPVH.GeraEnvelopeRecepcionarLoteRPS(URLNS: String;
   CabMsg, DadosMsg, DadosSenha: AnsiString): AnsiString;
 begin
+ CabMsg   := StringReplace(StringReplace(CabMsg, '<', '&lt;', [rfReplaceAll]), '>', '&gt;', [rfReplaceAll]);
+ DadosMsg := StringReplace(StringReplace('<?xml version="1.0" encoding="UTF-8"?>' +DadosMsg, '<', '&lt;', [rfReplaceAll]), '>', '&gt;', [rfReplaceAll]);
+
+ result := '<?xml version="1.0" encoding="UTF-8"?>' +
+           '<S:Envelope xmlns:S="http://schemas.xmlsoap.org/soap/envelope/" ' +
+                       'xmlns:nfse="http://nfse.abrasf.org.br" ' +
+                       'xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" ' +
+                       'xmlns:xsd="http://www.w3.org/2001/XMLSchema">' +
+            '<S:Header />' +
+            '<S:Body>' +
+             '<nfse:RecepcionarLoteRpsRequest xmlns="http://nfse.abrasf.org.br">' +
+              '<nfseCabecMsg xmlns="">' +
+                CabMsg +
+              '</nfseCabecMsg>' +
+              '<nfseDadosMsg xmlns="">' +
+                DadosMsg +
+              '</nfseDadosMsg>' +
+             '</nfse:RecepcionarLoteRpsRequest>' +
+            '</S:Body>' +
+           '</S:Envelope>';
+(*
  result := '<?xml version="1.0" encoding="UTF-8"?>' +
            '<S:Envelope xmlns:S="http://schemas.xmlsoap.org/soap/envelope/" ' +
                        'xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" ' +
@@ -228,11 +250,33 @@ begin
              '</ns2:RecepcionarLoteRpsRequest>' +
             '</S:Body>' +
            '</S:Envelope>';
+*)
 end;
 
 function TProvedorPVH.GeraEnvelopeConsultarSituacaoLoteRPS(
   URLNS: String; CabMsg, DadosMsg, DadosSenha: AnsiString): AnsiString;
 begin
+ CabMsg   := StringReplace(StringReplace(CabMsg, '<', '&lt;', [rfReplaceAll]), '>', '&gt;', [rfReplaceAll]);
+ DadosMsg := StringReplace(StringReplace('<?xml version="1.0" encoding="UTF-8"?>' +DadosMsg, '<', '&lt;', [rfReplaceAll]), '>', '&gt;', [rfReplaceAll]);
+
+ result := '<?xml version="1.0" encoding="UTF-8"?>' +
+           '<S:Envelope xmlns:S="http://schemas.xmlsoap.org/soap/envelope/" ' +
+                       'xmlns:nfse="http://nfse.abrasf.org.br" ' +
+                       'xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" ' +
+                       'xmlns:xsd="http://www.w3.org/2001/XMLSchema">' +
+            '<S:Header />' +
+            '<S:Body>' +
+             '<nfse:ConsultarSituacaoLoteRpsRequest xmlns="http://nfse.abrasf.org.br">' +
+              '<nfseCabecMsg xmlns="">' +
+                CabMsg +
+              '</nfseCabecMsg>' +
+              '<nfseDadosMsg xmlns="">' +
+                DadosMsg +
+              '</nfseDadosMsg>' +
+             '</nfse:ConsultarSituacaoLoteRpsRequest>' +
+            '</S:Body>' +
+           '</S:Envelope>';
+(*
  result := '<?xml version="1.0" encoding="UTF-8"?>' +
            '<s:Envelope xmlns:s="http://schemas.xmlsoap.org/soap/envelope/" ' +
                        'xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" ' +
@@ -250,11 +294,33 @@ begin
              '</ns2:ConsultarSituacaoLoteRpsRequest>' +
              '</s:Body>' +
            '</s:Envelope>';
+*)
 end;
 
 function TProvedorPVH.GeraEnvelopeConsultarLoteRPS(URLNS: String;
   CabMsg, DadosMsg, DadosSenha: AnsiString): AnsiString;
 begin
+ CabMsg   := StringReplace(StringReplace(CabMsg, '<', '&lt;', [rfReplaceAll]), '>', '&gt;', [rfReplaceAll]);
+ DadosMsg := StringReplace(StringReplace('<?xml version="1.0" encoding="UTF-8"?>' +DadosMsg, '<', '&lt;', [rfReplaceAll]), '>', '&gt;', [rfReplaceAll]);
+
+ result := '<?xml version="1.0" encoding="UTF-8"?>' +
+           '<S:Envelope xmlns:S="http://schemas.xmlsoap.org/soap/envelope/" ' +
+                       'xmlns:nfse="http://nfse.abrasf.org.br" ' +
+                       'xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" ' +
+                       'xmlns:xsd="http://www.w3.org/2001/XMLSchema">' +
+            '<S:Header />' +
+            '<S:Body>' +
+             '<nfse:ConsultarLoteRpsRequest xmlns="http://nfse.abrasf.org.br">' +
+              '<nfseCabecMsg xmlns="">' +
+                CabMsg +
+              '</nfseCabecMsg>' +
+              '<nfseDadosMsg xmlns="">' +
+                DadosMsg +
+              '</nfseDadosMsg>' +
+             '</nfse:ConsultarLoteRpsRequest>' +
+            '</S:Body>' +
+           '</S:Envelope>';
+(*
  result := '<?xml version="1.0" encoding="UTF-8"?>' +
            '<s:Envelope xmlns:s="http://schemas.xmlsoap.org/soap/envelope/" ' +
                        'xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" ' +
@@ -272,11 +338,33 @@ begin
              '</ns2:ConsultarLoteRpsRequest>' +
             '</s:Body>' +
            '</s:Envelope>';
+*)
 end;
 
 function TProvedorPVH.GeraEnvelopeConsultarNFSeporRPS(URLNS: String;
   CabMsg, DadosMsg, DadosSenha: AnsiString): AnsiString;
 begin
+ CabMsg   := StringReplace(StringReplace(CabMsg, '<', '&lt;', [rfReplaceAll]), '>', '&gt;', [rfReplaceAll]);
+ DadosMsg := StringReplace(StringReplace('<?xml version="1.0" encoding="UTF-8"?>' +DadosMsg, '<', '&lt;', [rfReplaceAll]), '>', '&gt;', [rfReplaceAll]);
+
+ result := '<?xml version="1.0" encoding="UTF-8"?>' +
+           '<S:Envelope xmlns:S="http://schemas.xmlsoap.org/soap/envelope/" ' +
+                       'xmlns:nfse="http://nfse.abrasf.org.br" ' +
+                       'xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" ' +
+                       'xmlns:xsd="http://www.w3.org/2001/XMLSchema">' +
+            '<S:Header />' +
+            '<S:Body>' +
+             '<nfse:ConsultarNfsePorRpsRequest xmlns="http://nfse.abrasf.org.br">' +
+              '<nfseCabecMsg xmlns="">' +
+                CabMsg +
+              '</nfseCabecMsg>' +
+              '<nfseDadosMsg xmlns="">' +
+                DadosMsg +
+              '</nfseDadosMsg>' +
+             '</nfse:ConsultarNfsePorRpsRequest>' +
+            '</S:Body>' +
+           '</S:Envelope>';
+(*
  result := '<?xml version="1.0" encoding="UTF-8"?>' +
            '<s:Envelope xmlns:s="http://schemas.xmlsoap.org/soap/envelope/" ' +
                        'xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" ' +
@@ -294,11 +382,33 @@ begin
              '</ns2:ConsultarNfsePorRpsRequest>' +
             '</s:Body>' +
            '</s:Envelope>';
+*)
 end;
 
 function TProvedorPVH.GeraEnvelopeConsultarNFSe(URLNS: String; CabMsg,
   DadosMsg, DadosSenha: AnsiString): AnsiString;
 begin
+ CabMsg   := StringReplace(StringReplace(CabMsg, '<', '&lt;', [rfReplaceAll]), '>', '&gt;', [rfReplaceAll]);
+ DadosMsg := StringReplace(StringReplace('<?xml version="1.0" encoding="UTF-8"?>' +DadosMsg, '<', '&lt;', [rfReplaceAll]), '>', '&gt;', [rfReplaceAll]);
+
+ result := '<?xml version="1.0" encoding="UTF-8"?>' +
+           '<S:Envelope xmlns:S="http://schemas.xmlsoap.org/soap/envelope/" ' +
+                       'xmlns:nfse="http://nfse.abrasf.org.br" ' +
+                       'xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" ' +
+                       'xmlns:xsd="http://www.w3.org/2001/XMLSchema">' +
+            '<S:Header />' +
+            '<S:Body>' +
+             '<nfse:ConsultarNfsePorFaixaRequest xmlns="http://nfse.abrasf.org.br">' +
+              '<nfseCabecMsg xmlns="">' +
+                CabMsg +
+              '</nfseCabecMsg>' +
+              '<nfseDadosMsg xmlns="">' +
+                DadosMsg +
+              '</nfseDadosMsg>' +
+             '</nfse:ConsultarNfsePorFaixaRequest>' +
+            '</S:Body>' +
+           '</S:Envelope>';
+(*
  result := '<?xml version="1.0" encoding="UTF-8"?>' +
            '<s:Envelope xmlns:s="http://schemas.xmlsoap.org/soap/envelope/" ' +
                        'xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" ' +
@@ -316,11 +426,33 @@ begin
               '</ns2:ConsultarNfsePorFaixaRequest>' +
             '</s:Body>' +
            '</s:Envelope>';
+*)
 end;
 
 function TProvedorPVH.GeraEnvelopeCancelarNFSe(URLNS: String; CabMsg,
   DadosMsg, DadosSenha: AnsiString): AnsiString;
 begin
+ CabMsg   := StringReplace(StringReplace(CabMsg, '<', '&lt;', [rfReplaceAll]), '>', '&gt;', [rfReplaceAll]);
+ DadosMsg := StringReplace(StringReplace('<?xml version="1.0" encoding="UTF-8"?>' +DadosMsg, '<', '&lt;', [rfReplaceAll]), '>', '&gt;', [rfReplaceAll]);
+
+ result := '<?xml version="1.0" encoding="UTF-8"?>' +
+           '<S:Envelope xmlns:S="http://schemas.xmlsoap.org/soap/envelope/" ' +
+                       'xmlns:nfse="http://nfse.abrasf.org.br" ' +
+                       'xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" ' +
+                       'xmlns:xsd="http://www.w3.org/2001/XMLSchema">' +
+            '<S:Header />' +
+            '<S:Body>' +
+             '<nfse:CancelarNfseRequest xmlns="http://nfse.abrasf.org.br">' +
+              '<nfseCabecMsg xmlns="">' +
+                CabMsg +
+              '</nfseCabecMsg>' +
+              '<nfseDadosMsg xmlns="">' +
+                DadosMsg +
+              '</nfseDadosMsg>' +
+             '</nfse:CancelarNfseRequest>' +
+            '</S:Body>' +
+           '</S:Envelope>';
+(*
  result := '<?xml version="1.0" encoding="UTF-8"?>' +
            '<s:Envelope xmlns:s="http://schemas.xmlsoap.org/soap/envelope/" ' +
                        'xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" ' +
@@ -338,11 +470,33 @@ begin
              '</ns2:CancelarNfseRequest>' +
             '</s:Body>' +
            '</s:Envelope>';
+*)
 end;
 
 function TProvedorPVH.GeraEnvelopeGerarNFSe(URLNS: String; CabMsg,
   DadosMsg, DadosSenha: AnsiString): AnsiString;
 begin
+ CabMsg   := StringReplace(StringReplace(CabMsg, '<', '&lt;', [rfReplaceAll]), '>', '&gt;', [rfReplaceAll]);
+ DadosMsg := StringReplace(StringReplace('<?xml version="1.0" encoding="UTF-8"?>' +DadosMsg, '<', '&lt;', [rfReplaceAll]), '>', '&gt;', [rfReplaceAll]);
+
+ result := '<?xml version="1.0" encoding="UTF-8"?>' +
+           '<S:Envelope xmlns:S="http://schemas.xmlsoap.org/soap/envelope/" ' +
+                       'xmlns:nfse="http://nfse.abrasf.org.br" ' +
+                       'xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" ' +
+                       'xmlns:xsd="http://www.w3.org/2001/XMLSchema">' +
+            '<S:Header />' +
+            '<S:Body>' +
+             '<nfse:GerarNfseRequest xmlns="http://nfse.abrasf.org.br">' +
+              '<nfseCabecMsg xmlns="">' +
+                CabMsg +
+              '</nfseCabecMsg>' +
+              '<nfseDadosMsg xmlns="">' +
+                DadosMsg +
+              '</nfseDadosMsg>' +
+             '</nfse:GerarNfseRequest>' +
+            '</S:Body>' +
+           '</S:Envelope>';
+(*
  result := '<?xml version="1.0" encoding="UTF-8"?>' +
            '<S:Envelope xmlns:S="http://schemas.xmlsoap.org/soap/envelope/" ' +
                        'xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" ' +
@@ -360,26 +514,30 @@ begin
              '</ns2:GerarNfseRequest>' +
             '</S:Body>' +
            '</S:Envelope>';
+*)
 end;
 
 function TProvedorPVH.GeraEnvelopeRecepcionarSincrono(URLNS: String;
   CabMsg, DadosMsg, DadosSenha: AnsiString): AnsiString;
 begin
+ CabMsg   := StringReplace(StringReplace(CabMsg, '<', '&lt;', [rfReplaceAll]), '>', '&gt;', [rfReplaceAll]);
+ DadosMsg := StringReplace(StringReplace('<?xml version="1.0" encoding="UTF-8"?>' +DadosMsg, '<', '&lt;', [rfReplaceAll]), '>', '&gt;', [rfReplaceAll]);
+
  result := '<?xml version="1.0" encoding="UTF-8"?>' +
            '<S:Envelope xmlns:S="http://schemas.xmlsoap.org/soap/envelope/" ' +
+                       'xmlns:nfse="http://nfse.abrasf.org.br" ' +
                        'xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" ' +
                        'xmlns:xsd="http://www.w3.org/2001/XMLSchema">' +
+            '<S:Header />' +
             '<S:Body>' +
-             '<ns2:RecepcionarLoteRpsSincronoRequest xmlns:ns2="' + URLNS + '">' +
-              '<nfseCabecMsg>' +
-//                '&lt;?xml version="1.0" encoding="UTF-8"?&gt;' +
-                StringReplace(StringReplace(CabMsg, '<', '&lt;', [rfReplaceAll]), '>', '&gt;', [rfReplaceAll]) +
+             '<nfse:RecepcionarLoteRpsSincronoRequest xmlns="http://nfse.abrasf.org.br">' +
+              '<nfseCabecMsg xmlns="">' +
+                CabMsg +
               '</nfseCabecMsg>' +
-              '<nfseDadosMsg>' +
-                '&lt;?xml version="1.0" encoding="UTF-8"?&gt;' +
-                StringReplace(StringReplace(DadosMsg, '<', '&lt;', [rfReplaceAll]), '>', '&gt;', [rfReplaceAll]) +
+              '<nfseDadosMsg xmlns="">' +
+                DadosMsg +
               '</nfseDadosMsg>' +
-             '</ns2:RecepcionarLoteRpsSincronoRequest>' +
+             '</nfse:RecepcionarLoteRpsSincronoRequest>' +
             '</S:Body>' +
            '</S:Envelope>';
 end;
