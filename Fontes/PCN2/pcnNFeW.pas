@@ -594,7 +594,7 @@ begin
   if nfe.Dest.indIEDest <> inIsento then
    begin
      // Alterado por Italo em 16/12/2013
-     if nfe.Dest.IE <> '' then
+     if (nfe.Dest.IE <> '') or (nfe.infNFe.Versao < 3) then
       begin
         // Inscrição Estadual
         if nfe.Dest.IE = 'ISENTO' then
