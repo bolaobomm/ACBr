@@ -714,7 +714,7 @@ begin
       (*U08*)NFe.Det[i].Imposto.ISSQN.vOutro       := Leitor.rCampo(tcDe2, 'vOutro');
       (*U09*)NFe.Det[i].Imposto.ISSQN.vDescIncond  := Leitor.rCampo(tcDe2, 'vDescIncond');
       (*U10*)NFe.Det[i].Imposto.ISSQN.vDescCond    := Leitor.rCampo(tcDe2, 'vDescCond');
-      (*U11*)NFe.Det[i].Imposto.ISSQN.indISSRet    := StrToindISSRet(Ok, Leitor.rCampo(tcStr, 'indISSRet'));
+//      (*U11*)NFe.Det[i].Imposto.ISSQN.indISSRet    := StrToindISSRet(Ok, Leitor.rCampo(tcStr, 'indISSRet'));
       (*U12*)NFe.Det[i].Imposto.ISSQN.vISSRet      := Leitor.rCampo(tcDe2, 'vISSRet');
       (*U13*)NFe.Det[i].Imposto.ISSQN.indISS       := StrToindISS(Ok, Leitor.rCampo(tcStr, 'indISS'));
       (*U14*)NFe.Det[i].Imposto.ISSQN.cServico     := Leitor.rCampo(tcStr, 'cServico');

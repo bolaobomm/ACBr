@@ -1680,7 +1680,7 @@ begin
       Gerador.wCampo(tcDe2, 'U08', 'vOutro      ', 01, 15, 0, nfe.Det[i].Imposto.ISSQN.vOutro, DSC_VOUTRODED);
       Gerador.wCampo(tcDe2, 'U09', 'vDescIncond ', 01, 15, 0, nfe.Det[i].Imposto.ISSQN.vDescIncond, DSC_VDESCINCOND);
       Gerador.wCampo(tcDe2, 'U10', 'vDescCond   ', 01, 15, 0, nfe.Det[i].Imposto.ISSQN.vDescCond, DSC_VDESCCOND);
-      Gerador.wCampo(tcStr, 'U11', 'indISSRet   ', 01, 01, 1, indISSRetToStr( nfe.Det[i].Imposto.ISSQN.indISSRet ) , DSC_INDISSRET);
+//      Gerador.wCampo(tcStr, 'U11', 'indISSRet   ', 01, 01, 1, indISSRetToStr( nfe.Det[i].Imposto.ISSQN.indISSRet ) , DSC_INDISSRET);
       Gerador.wCampo(tcDe2, 'U12', 'vISSRet     ', 01, 15, 0, nfe.Det[i].Imposto.ISSQN.vISSRet, DSC_VISSRET);
       Gerador.wCampo(tcStr, 'U13', 'indISS      ', 01, 01, 1, indISSToStr( nfe.Det[i].Imposto.ISSQN.indISS ) , DSC_INDISS);
       Gerador.wCampo(tcStr, 'U14', 'cServico    ', 01, 20, 0, nfe.Det[i].Imposto.ISSQN.cServico , DSC_CSERVICO);
