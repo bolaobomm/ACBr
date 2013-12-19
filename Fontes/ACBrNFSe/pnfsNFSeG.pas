@@ -28,11 +28,11 @@ type
 
      class function Gera_DadosMsgConsLote(Prefixo3, Prefixo4, NameSpaceDad,
                                   VersaoXML, Protocolo, CNPJ, IM, senha, frase_secreta: String;
-                                  TagI, TagF: AnsiString; AProvedor: TnfseProvedor = proNenhum): AnsiString;
+                                  TagI, TagF: AnsiString; AProvedor: TnfseProvedor = proNenhum; ARazaoSocial: String = ''): AnsiString;
 
      class function Gera_DadosMsgConsNFSeRPS(Prefixo3, Prefixo4, NameSpaceDad, VersaoXML,
                                      NumeroRps, SerieRps, TipoRps, CNPJ, IM, senha, frase_secreta: String;
-                                     TagI, TagF: AnsiString; AProvedor: TnfseProvedor = proNenhum): AnsiString;
+                                     TagI, TagF: AnsiString; AProvedor: TnfseProvedor = proNenhum; ARazaoSocial: String = ''): AnsiString;
 
      class function Gera_DadosMsgConsNFSe(Prefixo3, Prefixo4, NameSpaceDad, VersaoXML,
                                   CNPJ, IM: String;
@@ -126,7 +126,8 @@ begin
 
  DadosMsg := '<' + Prefixo3 + 'LoteRps'+
                DFeUtil.SeSenao(AProvedor = proISSDigital, '',
-                               DFeUtil.SeSenao(Identificador <> '', ' ' + Identificador + '="' + NumeroLote + '"', '')) +
+                               DFeUtil.SeSenao(Identificador <> '', ' ' + Identificador + '="' +
+                               DFeUtil.SeSenao(AProvedor = proTecnos, Copy(Notas, Pos('<Rps Id="', Notas) + 9, 35), NumeroLote) + '"', '')) +
                DFeUtil.SeSenao(AProvedor = proSimplISS, NameSpaceDad, '') +
                DFeUtil.SeSenao(AProvedor in [proAbaco, proBetha, proGinfes, proGoiania, proGovBR,
                                              {proISSDigital, }proIssCuritiba, proISSNET, proNatal,
@@ -213,7 +214,7 @@ end;
 
 class function TNFSeG.Gera_DadosMsgConsLote(Prefixo3, Prefixo4,
   NameSpaceDad, VersaoXML, Protocolo, CNPJ, IM, senha, frase_secreta: String; TagI,
-  TagF: AnsiString; AProvedor: TnfseProvedor = proNenhum): AnsiString;
+  TagF: AnsiString; AProvedor: TnfseProvedor = proNenhum; ARazaoSocial: String = ''): AnsiString;
 var
  DadosMsg: AnsiString;
 begin
@@ -237,7 +238,7 @@ begin
                  '<' + Prefixo4 + 'Cnpj>' +
                    Cnpj +
                  '</' + Prefixo4 + 'Cnpj>') +
-
+               DFeUtil.SeSenao(AProvedor = proTecnos, '<RazaoSocial>' + ARazaoSocial + '</RazaoSocial>' , '') +
                '<' + Prefixo4 + 'InscricaoMunicipal>' +
                  IM +
                '</' + Prefixo4 + 'InscricaoMunicipal>' +
@@ -264,7 +265,7 @@ end;
 class function TNFSeG.Gera_DadosMsgConsNFSeRPS(Prefixo3, Prefixo4,
   NameSpaceDad, VersaoXML, NumeroRps, SerieRps, TipoRps, CNPJ, IM,
   senha, frase_secreta: String;
-  TagI, TagF: AnsiString; AProvedor: TnfseProvedor = proNenhum): AnsiString;
+  TagI, TagF: AnsiString; AProvedor: TnfseProvedor = proNenhum; ARazaoSocial: String = ''): AnsiString;
 var
  DadosMsg: AnsiString;
 begin
@@ -300,7 +301,7 @@ begin
                 '<' + Prefixo4 + 'Cnpj>' +
                   Cnpj +
                 '</' + Prefixo4 + 'Cnpj>') +
-
+              DFeUtil.SeSenao(AProvedor = proTecnos, '<RazaoSocial>' + ARazaoSocial + '</RazaoSocial>', '') +
               '<' + Prefixo4 + 'InscricaoMunicipal>' +
                 IM +
               '</' + Prefixo4 + 'InscricaoMunicipal>' +
@@ -424,7 +425,7 @@ begin
 
                     // alterado por Akai - L. Massao Aihara 12/11/2013
                    DFeUtil.SeSenao(AProvedor in [pro4R, proISSe, profintelISS, proFiorilli,proDigifred,
-                                                 proVirtual, proISSDigital, proSaatri, proCoplan, proVitoria],
+                                                 proVirtual, proISSDigital, proSaatri, proCoplan, proVitoria, proTecnos],
 
                     '<' + Prefixo4 + 'CpfCnpj>' +
                      '<' + Prefixo4 + 'Cnpj>' +
@@ -453,6 +454,7 @@ begin
                      CodCancelamento +
 
                    '</' + Prefixo4 + 'CodigoCancelamento>' +
+                   DFeUtil.SeSenao(AProvedor = proTecnos, '<Id>' + CNPJ + IM + IntToStrZero(StrToInt(NumeroNFse), 16) + '</Id>', '') +
                   '</' + Prefixo4 + 'InfPedidoCancelamento>';
  end;
 

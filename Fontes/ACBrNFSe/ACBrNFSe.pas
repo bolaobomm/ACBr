@@ -46,9 +46,9 @@ type
                                const ANumLote: String = ''): Boolean;
     function ConsultarLoteRps(ANumLote, AProtocolo: string; ACNPJ: String = ''; AInscricaoMunicipal: String = '';
                               ASenha: string = ''; AFraseSecreta: string ='';
-                              Mes: Integer = 0; Ano: Integer = 0): Boolean;
+                              Mes: Integer = 0; Ano: Integer = 0; ARazaoSocial: string = ''): Boolean;
     function ConsultarNFSeporRps(ANumero, ASerie, ATipo, ACnpj, AInscricaoMunicipal: String;
-                                 ASenha: String = ''; AFraseSecreta: String = ''): Boolean;
+                                 ASenha: String = ''; AFraseSecreta: String = ''; ARazaoSocial: String = ''): Boolean;
     function ConsultarNFSe(ACnpj, AInscricaoMunicipal: String; ADataInicial, ADataFinal: TDateTime; NumeroNFSe: String = '';
                            APagina: Integer = 1; ASenha : String = ''; AFraseSecreta : String = ''): Boolean;
     function ConsultarSequencialRPS(ACidade, ACnpj, AInscricaoMunicipal, ASeriePrestacao: String):Boolean;
@@ -212,7 +212,7 @@ end;
 
 function TACBrNFSe.ConsultarLoteRps(ANumLote, AProtocolo: String; ACNPJ: string = ''; AInscricaoMunicipal: string = '';
                                     ASenha: string = ''; AFraseSecreta: string ='';
-                                    Mes: Integer = 0; Ano: Integer = 0): Boolean;
+                                    Mes: Integer = 0; Ano: Integer = 0; ARazaoSocial: string = ''): Boolean;
 var
  aPath: String;
  wAno, wMes, wDia: Word;
@@ -252,11 +252,11 @@ begin
   if (Trim(Self.WebServices.ConsLote.NumeroLote) = '') then 
     Self.WebServices.ConsLote.NumeroLote:= ANumLote;
 
- Result := WebServices.ConsultaLoteRps(AProtocolo, ACNPJ, AInscricaoMunicipal, ASenha, AFraseSecreta);
+ Result := WebServices.ConsultaLoteRps(AProtocolo, ACNPJ, AInscricaoMunicipal, ASenha, AFraseSecreta, ARazaoSocial);
 end;
 
 function TACBrNFSe.ConsultarNFSeporRps(ANumero, ASerie, ATipo, ACnpj,
-  AInscricaoMunicipal: String; ASenha: String = ''; AFraseSecreta: String = ''): Boolean;
+  AInscricaoMunicipal: String; ASenha: String = ''; AFraseSecreta: String = ''; ARazaoSocial: string = ''): Boolean;
 begin
  if NotasFiscais.Count <= 0
   then begin
@@ -267,7 +267,7 @@ begin
   end;
 
  Result := WebServices.ConsultaNFSeporRps(ANumero, ASerie, ATipo, ACnpj,
-                AInscricaoMunicipal, ASenha, AFraseSecreta);
+                AInscricaoMunicipal, ASenha, AFraseSecreta, ARazaoSocial);
 end;
 
 function TACBrNFSe.ConsultarNFSe(ACnpj, AInscricaoMunicipal: String;

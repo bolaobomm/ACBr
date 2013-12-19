@@ -41,7 +41,7 @@ uses
     ACBrProvedorProdata, ACBrProvedorAgili, ACBrProvedorFISSLex,
     ACBrProvedorVirtual, ACBrProvedorPVH, ACBrProvedorFreire,
     ACBrProvedorLink3, ACBrProvedorSpeedGov, ACBrProvedorVitoria,
-    ACBrProvedorMitra;
+    ACBrProvedorMitra, ACBrProvedorTecnos;
 
 type
 
@@ -220,6 +220,7 @@ type
     FSenha: string;
     FFraseSecreta: string;
     FArquivoRetorno: WideString;
+    FRazaoSocial: string;
   public
     function Executar: Boolean; override;
     constructor Create(AOwner : TComponent; ANotasFiscais : TNotasFiscais); reintroduce;
@@ -234,6 +235,8 @@ type
     property Senha: string read FSenha write FSenha;
     property FraseSecreta: string read FFraseSecreta write FFraseSecreta;
     property ArquivoRetorno: WideString read FArquivoRetorno write FArquivoRetorno;
+    //usado pelo provedor Tecnos
+    property RazaoSocial: string read FRazaoSocial write FRazaoSocial;
   end;
 
   TNFSeConsultarNfseRPS = Class(TWebServicesBase)
@@ -247,6 +250,7 @@ type
     FFraseSecreta: string;
     FNFSeRetorno: TRetNfseRps;
     FNotasFiscais : TNotasFiscais;
+    FRazaoSocial: string;
   public
     function Executar: Boolean; override;
     constructor Create(AOwner : TComponent; ANotasFiscais : TNotasFiscais); reintroduce;
@@ -259,6 +263,7 @@ type
     property Senha: string read FSenha write FSenha;
     property FraseSecreta: string read FFraseSecreta write FFraseSecreta;
     property NFSeRetorno: TRetNfseRps read FNFSeRetorno write FNFSeRetorno;
+    property RazaoSocial: string read FRazaoSocial write FRazaoSocial;
   end;
 
   TNFSeConsultarNfse = Class(TWebServicesBase)
@@ -419,10 +424,12 @@ type
     function ConsultaLoteRps(AProtocolo,
                              ACNPJ, AInscricaoMunicipal: string;
                              const ASenha: string = '';
-                             const AFraseSecreta: string = ''): Boolean; overload;
+                             const AFraseSecreta: string = '';
+                             const ARazaoSocial: string = ''): Boolean; overload;
     function ConsultaNFSeporRps(ANumero, ASerie, ATipo, ACnpj, AInscricaoMunicipal: String;
                                 const ASenha: string = '';
-                                const AFraseSecreta: string = ''): Boolean;
+                                const AFraseSecreta: string = '';
+                                const ARazaoSocial: string = ''): Boolean;
     function ConsultaNFSe(ACnpj, AInscricaoMunicipal: String; ADataInicial, ADataFinal: TDateTime;
                           NumeroNFSe: string = ''; APagina: Integer = 1;
                           const ASenha: string = '';
@@ -546,7 +553,7 @@ begin
 
  if not (FProvedor in [proGovBr, proSimplISS, proAbaco, proISSNet, pro4R,
                        proFiorilli, proProdata, proCoplan, proThema, proVirtual,
-                       proPVH, proFreire])
+                       proPVH, proFreire, proTecnos])
   then begin
    if not InternetSetOption(Data, INTERNET_OPTION_CLIENT_CERT_CONTEXT, PCertContext, Sizeof(CERT_CONTEXT)*5)
     then begin
@@ -637,6 +644,7 @@ begin
   proSpeedGov:    FProvedorClass := TProvedorSpeedGov.Create;
   proVitoria:     FProvedorClass := TProvedorVitoria.Create;
   proMitra:       FProvedorClass := TProvedorMitra.Create;
+  proTecnos:      FProvedorClass := TProvedorTecnos.Create;
  end;
 
  FPrefixo2     := FConfiguracoes.WebServices.Prefixo2;
@@ -814,6 +822,14 @@ begin
                                '<' + Prefixo4 + 'InfDeclaracaoPrestacaoServico' +
                                  RetornarConteudoEntre(TNFSeEnviarLoteRPS(Self).FNotasFiscais.Items[I].XML_Rps_Ass,
                                    '<' + Prefixo4 + 'InfDeclaracaoPrestacaoServico', '</Signature>') +
+                               '</Signature>'+
+                              '</' + Prefixo4 + 'Rps>';
+
+      proTecnos: vNotas := vNotas +
+                              '<' + Prefixo4 + 'Rps>' +
+                               '<' + Prefixo4 + 'tcDeclaracaoPrestacaoServico' +
+                                 RetornarConteudoEntre(TNFSeEnviarLoteRPS(Self).FNotasFiscais.Items[I].XML_Rps_Ass,
+                                   '<' + Prefixo4 + 'tcDeclaracaoPrestacaoServico', '</Signature>') +
                                '</Signature>'+
                               '</' + Prefixo4 + 'Rps>';
 
@@ -1138,6 +1154,8 @@ begin
     TNFSeConsultarLoteRPS(Self).FCNPJ:=SomenteNumeros(TNFSeConsultarLoteRPS(Self).FNotasFiscais.Items[0].NFSe.Prestador.Cnpj);
  if (TNFSeConsultarLoteRPS(Self).FIM = '') then
     TNFSeConsultarLoteRPS(Self).FIM:=TNFSeConsultarLoteRPS(Self).FNotasFiscais.Items[0].NFSe.Prestador.InscricaoMunicipal;
+ if (TNFSeConsultarLoteRPS(Self).FRazaoSocial = '') then
+    TNFSeConsultarLoteRPS(Self).FRazaoSocial:=TNFSeConsultarLoteRPS(Self).FNotasFiscais.Items[0].NFSe.PrestadorServico.RazaoSocial;
 
  FDadosSenha := FProvedorClass.Gera_DadosSenha(FConfiguracoes.WebServices.UserWeb,
                                                FConfiguracoes.WebServices.SenhaWeb);
@@ -1207,8 +1225,10 @@ begin
                                                   TNFSeConsultarLoteRPS(Self).FIM,
                                                   TNFSeConsultarLoteRPS(Self).FSenha,
                                                   TNFSeConsultarLoteRPS(Self).FFraseSecreta,
-                                                  FTagI, FTagF, FProvedor);
+                                                  FTagI, FTagF, FProvedor,
+                                                  TNFSeConsultarLoteRPS(Self).FRazaoSocial);
   end;
+
   if FDadosMsg = '' then
    raise Exception.Create('A funcionalidade [Consultar Lote] não foi disponibilizada pelo provedor: ' + FxProvedor);
 end;
@@ -1364,8 +1384,10 @@ begin
                                                       TNFSeConsultarNfseRPS(Self).InscricaoMunicipal,
                                                       TNFSeConsultarNfseRPS(Self).Senha,
                                                       TNFSeConsultarNfseRPS(Self).FraseSecreta,
-                                                      FTagI, FTagF, FProvedor);
+                                                      FTagI, FTagF, FProvedor,
+                                                      TNFSeConsultarNfseRPS(Self).RazaoSocial);
   end;
+
   if FDadosMsg = '' then
    raise Exception.Create('A funcionalidade [Consultar NFSe por RPS] não foi disponibilizada pelo provedor: ' + FxProvedor);
 end;
@@ -1690,6 +1712,7 @@ begin
               URISig := '';
               URIRef := 'http://www.w3.org/TR/2000/REC-xhtml1-20000126/';
              end;
+  proTecnos: URISig := TNFSeCancelarNfse(Self).FCnpj + TNFSeCancelarNfse(Self).FIM + IntToStrZero(StrToInt(TNFSeCancelarNfse(Self).FNumeroNFSe), 16);
  else        URISig := 'pedidoCancelamento_' + TNFSeCancelarNfse(Self).FCnpj +
                     TNFSeCancelarNfse(Self).FIM + TNFSeCancelarNfse(Self).FNumeroNFSe;
  end;
@@ -2418,7 +2441,7 @@ begin
  Self.ConsSitLote.InscricaoMunicipal := TACBrNFSe( FACBrNFSe ).NotasFiscais.Items[0].NFSe.Prestador.InscricaoMunicipal;
  Self.ConsSitLote.Protocolo          := Self.Enviar.Protocolo;
 
- if (TACBrNFSe( FACBrNFSe ).Configuracoes.WebServices.Provedor in [ proISSDigital] ) then
+ if (TACBrNFSe( FACBrNFSe ).Configuracoes.WebServices.Provedor in [proISSDigital] ) then
  begin
    Self.ConsSitLote.Senha        := TACBrNFSe( FACBrNFSe ).NotasFiscais.Items[0].NFSe.Prestador.Senha;
    Self.ConsSitLote.FraseSecreta := TACBrNFSe( FACBrNFSe ).NotasFiscais.Items[0].NFSe.Prestador.FraseSecreta;
@@ -2426,7 +2449,7 @@ begin
 
  Self.ConsLote.Protocolo := Self.Enviar.Protocolo;
 
- if (TACBrNFSe( FACBrNFSe ).Configuracoes.WebServices.Provedor in [ proISSDigital] ) then
+ if (TACBrNFSe( FACBrNFSe ).Configuracoes.WebServices.Provedor in [proISSDigital, proTecnos] ) then
  begin
    Self.ConsLote.Senha        := TACBrNFSe( FACBrNFSe ).NotasFiscais.Items[0].NFSe.Prestador.Senha;
    Self.ConsLote.FraseSecreta := TACBrNFSe( FACBrNFSe ).NotasFiscais.Items[0].NFSe.Prestador.FraseSecreta;
@@ -2434,7 +2457,8 @@ begin
 
  if (TACBrNFSe( FACBrNFSe ).Configuracoes.WebServices.ConsultaLoteAposEnvio) and (Result) then begin
    //Alterado por Cleiver em 10-10-2013
-   if not (TACBrNFSe( FACBrNFSe ).Configuracoes.WebServices.Provedor in [proDigifred, proProdata, proVitoria, proPVH, profintelISS, proSaatri, proCoplan, proISSDigital, proFiorilli, proFreire]) then begin
+   if not (TACBrNFSe( FACBrNFSe ).Configuracoes.WebServices.Provedor in [proDigifred, proProdata,
+          proVitoria, proPVH, profintelISS, proSaatri, proCoplan, proISSDigital, proFiorilli, proFreire, proTecnos]) then begin
      Result := Self.ConsSitLote.Executar;
 
      if not (Result)
@@ -2504,7 +2528,8 @@ begin
 end;
 
 function TWebServices.ConsultaNFSeporRps(ANumero, ASerie, ATipo, ACnpj,
-  AInscricaoMunicipal: String; const ASenha : String = ''; const AFraseSecreta : String = ''): Boolean;
+  AInscricaoMunicipal: String; const ASenha : String = '';
+  const AFraseSecreta : String = ''; const ARazaoSocial: String = ''): Boolean;
 begin
  ACnpj := OnlyNumber(ACnpj);
  if not ValidarCNPJ(ACnpj) then
@@ -2517,6 +2542,7 @@ begin
  Self.ConsNfseRps.InscricaoMunicipal := AInscricaoMunicipal;
  Self.ConsNfseRps.Senha              := ASenha;
  Self.ConsNfseRps.FraseSecreta       := AFraseSecreta;
+ Self.ConsNfseRps.RazaoSocial        := ARazaoSocial;
 
  // Alterado por Rosemir Zeferino em 24/05/2013
  Result := Self.ConsNfseRps.Executar;
@@ -2532,12 +2558,13 @@ begin
 end;
 
 function TWebServices.ConsultaLoteRps(AProtocolo, ACNPJ,
-  AInscricaoMunicipal: string; const ASenha, AFraseSecreta: string): Boolean;
+  AInscricaoMunicipal: string; const ASenha, AFraseSecreta, ARazaoSocial: String): Boolean;
 begin
  Self.ConsLote.CNPJ         := ACNPJ;
  Self.ConsLote.IM           := AInscricaoMunicipal;
  Self.ConsLote.Senha        := ASenha;
  Self.ConsLote.FraseSecreta := AFraseSecreta;
+ Self.ConsLote.RazaoSocial  := ARazaoSocial;
 
  Result := ConsultaLoteRPS(AProtocolo, False);
 end;
@@ -2635,6 +2662,7 @@ begin
    Self.ConsNfseRps.Tipo               := TipoRPSToStr(TACBrNFSe( FACBrNFSe ).NotasFiscais.Items[0].NFSe.IdentificacaoRps.Tipo);
    Self.ConsNfseRps.Cnpj               := TACBrNFSe( FACBrNFSe ).NotasFiscais.Items[0].NFSe.PrestadorServico.IdentificacaoPrestador.Cnpj;
    Self.ConsNfseRps.InscricaoMunicipal := TACBrNFSe( FACBrNFSe ).NotasFiscais.Items[0].NFSe.PrestadorServico.IdentificacaoPrestador.InscricaoMunicipal;
+   Self.ConsNfseRps.RazaoSocial        := TACBrNFSe( FACBrNFSe ).NotasFiscais.Items[0].NFSe.PrestadorServico.RazaoSocial;
 
    Result := Self.ConsNfseRps.Executar;
 

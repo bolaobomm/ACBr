@@ -554,7 +554,7 @@ begin
     EnviarLoteRps := 'enviarLoteRpsEnvio';
     LoteURI := 'lote';
  end else begin
-    if ASincrono
+    if (ASincrono) or (AProvedor = proTecnos) //Tecnos utiliza apenas metodo sincrono com mesmo mais de 3 notas
      then EnviarLoteRps := 'EnviarLoteRpsSincronoEnvio'
      else EnviarLoteRps := 'EnviarLoteRpsEnvio';
     LoteURI := 'LoteRps';
@@ -672,7 +672,7 @@ begin
       else URI := '';
 
      // Alterado por Italo em 10/05/2013 - incluido na lista o proRJ
-     if (URI = '') or (AProvedor in [profintelISS, proRecife, proNatal, proRJ, proGovBR])
+     if (URI = '') or (AProvedor in [profintelISS, proRecife, proNatal, proRJ, proGovBR, proTecnos])
       then AID := '>'
       else AID := ' ' + Identificador + '="Ass_' + URI + '">';
 
@@ -725,6 +725,12 @@ begin
                      // Alterado por Cleiver em 26/02/2013
                      if (AProvedor in [proGoiania, proProdata, proVitoria])
                       then AXML := AXML + '</GerarNfseEnvio>';
+                    end;
+      proTecnos:    begin
+                     AXML := copy(AXML, 1, pos('</tcDeclaracaoPrestacaoServico>', AXML) - 1);
+                     AXML := AXML + '</tcDeclaracaoPrestacaoServico>';
+                     AXML := AXML + Assinatura;
+                     AXML := AXML + '</Rps>';
                     end;
       else begin
             AXML := copy(AXML, 1, pos('</Rps>', AXML) - 1);
