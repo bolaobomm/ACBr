@@ -67,10 +67,8 @@ type
     procedure ImprimirDACTePDF(CTe: TCTe = nil); override;
     procedure ImprimirEVENTO(CTe : TCTe = nil); override;
     procedure ImprimirEVENTOPDF(CTe : TCTe = nil); override;
-//    procedure SetTamanhoPapel(Value: TpcnTamanhoPapel); virtual;
   published
     property PosRecibo: TPosRecibo read FPosRecibo write FPosRecibo default prCabecalho;
-//    property TamanhoPapel: TpcnTamanhoPapel read FTamanhoPapel write SetTamanhoPapel;
   end;
 
 implementation
@@ -258,12 +256,7 @@ begin
   if frmDACTeQRRetrato.QRCTe <> nil then
     frmDACTeQRRetrato.Free;
 end;
-(*
-procedure TACBrCTeDACTeQR.SetTamanhoPapel(Value: TpcnTamanhoPapel);
-begin
-  FTamanhoPapel := Value;
-end;
-*)
+
 procedure TACBrCTeDACTeQR.ImprimirEVENTO(CTe: TCTe);
 var
  i, j: Integer;
