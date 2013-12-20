@@ -597,6 +597,9 @@ begin
      if (nfe.Dest.IE <> '') or (nfe.infNFe.Versao < 3) then
       begin
         // Inscrição Estadual
+        if nfe.Dest.IE = '' then
+          Gerador.wCampo(tcStr, 'E17', 'IE ', 00, 14, 1, '', DSC_IE)
+        else
         if nfe.Dest.IE = 'ISENTO' then
           Gerador.wCampo(tcStr, 'E17', 'IE ', 00, 14, 1, nfe.Dest.IE, DSC_IE)
         else if (trim(nfe.Dest.IE) <> '') or (nfe.Ide.modelo <> 65)  then
