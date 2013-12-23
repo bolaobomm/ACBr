@@ -94,7 +94,7 @@ begin
   end;
 
  	ConfigCidade.AssinaRPS  := True;
- 	ConfigCidade.AssinaLote := False;
+ 	ConfigCidade.AssinaLote := True;
 
  	Result := ConfigCidade;
 end;
@@ -103,8 +103,8 @@ function TProvedorGovDigital.GetConfigSchema(ACodCidade: Integer): TConfigSchema
 var
  ConfigSchema: TConfigSchema;
 begin
- ConfigSchema.VersaoCabecalho := '2.0';
- ConfigSchema.VersaoDados     := '2.0';
+ ConfigSchema.VersaoCabecalho := '2.00';
+ ConfigSchema.VersaoDados     := '2.00';
  ConfigSchema.VersaoXML       := '2';
  ConfigSchema.NameSpaceXML    := 'http://www.abrasf.org.br/';
  ConfigSchema.Cabecalho       := 'nfse.xsd';
