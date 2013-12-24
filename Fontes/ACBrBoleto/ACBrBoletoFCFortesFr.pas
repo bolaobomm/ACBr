@@ -52,7 +52,7 @@ uses
   ACBrBoleto, ACBrBarCode ;
 
 const
-  CACBrBoletoFCFortes_Versao = '0.0.22a' ;
+  CACBrBoletoFCFortes_Versao = '0.0.23a' ;
 
 type
 
@@ -411,6 +411,7 @@ type
     procedure RLBand2BeforePrint(Sender: TObject; var PrintIt: boolean);
     procedure RLBand3BeforePrint ( Sender: TObject; var PrintIt: boolean ) ;
     procedure RLBand4BeforePrint(Sender: TObject; var PrintIt: Boolean);
+    procedure RLLabel82AfterPrint(Sender: TObject);
   private
      MensagemPadrao: TStringList;
      fBoletoFC: TACBrBoletoFCFortes;
@@ -557,8 +558,8 @@ begin
    MensagemPadrao.Free;
 end;
 
-procedure TACBRBoletoFCFortesFr.BoletoCarneBeforePrint ( Sender: TObject;
-   var PrintIt: boolean ) ;
+procedure TACBrBoletoFCFortesFr.BoletoCarneBeforePrint(Sender: TObject;
+  var PrintIt: boolean);
 begin
 
    fIndice := 0;
@@ -566,15 +567,15 @@ begin
 
 end;
 
-procedure TACBRBoletoFCFortesFr.BoletoCarneDataCount ( Sender: TObject;
-   var DataCount: integer ) ;
+procedure TACBrBoletoFCFortesFr.BoletoCarneDataCount(Sender: TObject;
+  var DataCount: integer);
 begin
    DataCount := fBoletoFC.ACBrBoleto.ListadeBoletos.Count ;
 end;
 
-procedure TACBRBoletoFCFortesFr.BoletoCarneDataRecord ( Sender: TObject;
-   RecNo: integer; CopyNo: integer; var Eof: boolean;
-   var RecordAction: TRLRecordAction ) ;
+procedure TACBrBoletoFCFortesFr.BoletoCarneDataRecord(Sender: TObject;
+  RecNo: integer; CopyNo: integer; var Eof: boolean;
+  var RecordAction: TRLRecordAction);
 begin
    fIndice := RecNo - 1 ;
 
@@ -710,8 +711,8 @@ begin
    end;
 end;
 
-procedure TACBRBoletoFCFortesFr.RLBand3BeforePrint ( Sender: TObject;
-   var PrintIt: boolean ) ;
+procedure TACBrBoletoFCFortesFr.RLBand3BeforePrint(Sender: TObject;
+  var PrintIt: boolean);
 Var
    NossoNum,LinhaDigitavel,CodBarras,CodCedente: String;
 begin
@@ -808,6 +809,11 @@ begin
       txtValorDocumento4.Caption      := FormatFloat('###,###,##0.00',Titulo.ValorDocumento);
       txtNomeSacado4.Caption          := Titulo.Sacado.NomeSacado;
    end;
+end;
+
+procedure TACBrBoletoFCFortesFr.RLLabel82AfterPrint(Sender: TObject);
+begin
+
 end;
 
 {$ifdef FPC}

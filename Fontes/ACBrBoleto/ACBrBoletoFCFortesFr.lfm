@@ -16,7 +16,7 @@ object ACBRBoletoFCFortesFr: TACBRBoletoFCFortesFr
   object LayoutBoleto: TRLReport
     Left = 24
     Height = 1123
-    Top = -144
+    Top = -8
     Width = 794
     Margins.LeftMargin = 4
     Margins.TopMargin = 5
@@ -233,8 +233,8 @@ object ACBRBoletoFCFortesFr: TACBRBoletoFCFortesFr
         Left = 4
         Height = 10
         Top = 46
-        Width = 30
-        Caption = 'Cedente'
+        Width = 42
+        Caption = 'Beneficiario'
         Font.Color = clBlack
         Font.Height = -8
         Font.Name = 'Arial'
@@ -264,8 +264,8 @@ object ACBRBoletoFCFortesFr: TACBRBoletoFCFortesFr
         Left = 289
         Height = 10
         Top = 46
-        Width = 91
-        Caption = 'Agencia / Codigo Cedente'
+        Width = 103
+        Caption = 'Agencia / Codigo Beneficiario'
         Font.Color = clBlack
         Font.Height = -8
         Font.Name = 'Arial'
@@ -595,8 +595,8 @@ object ACBRBoletoFCFortesFr: TACBRBoletoFCFortesFr
         Left = 4
         Height = 10
         Top = 73
-        Width = 27
-        Caption = 'Sacado'
+        Width = 31
+        Caption = 'Pagador'
         Font.Color = clBlack
         Font.Height = -8
         Font.Name = 'Arial'
@@ -1589,8 +1589,8 @@ object ACBRBoletoFCFortesFr: TACBRBoletoFCFortesFr
         Left = 574
         Height = 10
         Top = 69
-        Width = 91
-        Caption = 'Agência / Código Cedente'
+        Width = 103
+        Caption = 'Agência / Código Beneficiário'
         Font.Color = clBlack
         Font.Height = -8
         Font.Name = 'Arial'
@@ -1599,6 +1599,7 @@ object ACBRBoletoFCFortesFr: TACBRBoletoFCFortesFr
         RealBounds.Top = 0
         RealBounds.Width = 0
         RealBounds.Height = 0
+        AfterPrint = RLLabel82AfterPrint
       end
       object txtCodigoCedente2: TRLLabel
         Left = 573
@@ -2481,8 +2482,8 @@ object ACBRBoletoFCFortesFr: TACBRBoletoFCFortesFr
         Left = 550
         Height = 10
         Top = 84
-        Width = 91
-        Caption = 'Agência / Código Cedente'
+        Width = 103
+        Caption = 'Agência / Código Beneficiário'
         Font.Color = clBlack
         Font.Height = -8
         Font.Name = 'Arial'
@@ -3384,9 +3385,9 @@ object ACBRBoletoFCFortesFr: TACBRBoletoFCFortesFr
     end
   end
   object BoletoCarne: TRLReport
-    Left = 832
+    Left = 848
     Height = 1123
-    Top = 128
+    Top = 64
     Width = 794
     Font.Color = clBlack
     Font.Height = -13
@@ -3691,8 +3692,8 @@ object ACBRBoletoFCFortesFr: TACBRBoletoFCFortesFr
         Left = 572
         Height = 10
         Top = 71
-        Width = 91
-        Caption = 'Agência / Código Cedente'
+        Width = 103
+        Caption = 'Agência / Código Beneficiário'
         Font.Color = clBlack
         Font.Height = -8
         Font.Name = 'Arial'
@@ -4160,8 +4161,8 @@ object ACBRBoletoFCFortesFr: TACBRBoletoFCFortesFr
         Left = 0
         Height = 10
         Top = 71
-        Width = 91
-        Caption = 'Agência / Código Cedente'
+        Width = 103
+        Caption = 'Agência / Código Beneficiario'
         Font.Color = clBlack
         Font.Height = -8
         Font.Name = 'Arial'
