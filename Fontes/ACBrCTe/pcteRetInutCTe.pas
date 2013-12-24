@@ -108,7 +108,7 @@ var
 begin
   Result := False;
   try
-    if leitor.rExtrai(1, 'infInut') <> '' then
+    if (leitor.rExtrai(1, 'retInutCTe') <> '') or (leitor.rExtrai(1, 'infInut') <> '') then
     begin
       (*DR05 *)FtpAmb    := StrToTpAmb(ok, Leitor.rCampo(tcStr, 'tpAmb'));
       (*DR06 *)FverAplic := Leitor.rCampo(tcStr, 'verAplic');
