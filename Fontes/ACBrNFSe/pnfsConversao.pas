@@ -819,6 +819,7 @@ begin
   3530300, // Mirassol/SP'
   3541505, // Presidente Venceslau/SP
   4101408, // Apucarana/PR
+  4102000, // Assis Chateaubriand/PR
   4205902, // Gaspar/SC
   4309407, // Guapore/RS
   4310207, // Ijui/RS

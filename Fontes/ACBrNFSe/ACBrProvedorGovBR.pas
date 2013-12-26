@@ -89,6 +89,7 @@ begin
  ConfigSchema.VersaoXML       := '1';
 
  case ACodCidade of
+//  4102000,       // Assis Chateaubriand/PR
   4321709: begin // Tres Coroas/RS
             ConfigSchema.NameSpaceXML    := 'http://tempuri.org/';
             ConfigSchema.Cabecalho       := '';
@@ -273,6 +274,23 @@ begin
             ConfigURL.ProConsultaSitLoteRPS := 'http://cetil.apucarana.pr.gov.br/NFSEWS/Services.svc';
             ConfigURL.ProConsultaNFSe       := 'http://cetil.apucarana.pr.gov.br/NFSEWS/Services.svc';
             ConfigURL.ProCancelaNFSe        := 'http://cetil.apucarana.pr.gov.br/NFSEWS/Services.svc';
+           end;
+  4102000: begin // Assis Chateaubriand/PR
+            ConfigURL.HomNomeCidade         := '';
+            ConfigURL.HomRecepcaoLoteRPS    := 'http://201.89.84.202:8184/nfsewsteste/Services.svc';
+            ConfigURL.HomConsultaLoteRPS    := 'http://201.89.84.202:8184/nfsewsteste/Services.svc';
+            ConfigURL.HomConsultaNFSeRPS    := 'http://201.89.84.202:8184/nfsewsteste/Services.svc';
+            ConfigURL.HomConsultaSitLoteRPS := 'http://201.89.84.202:8184/nfsewsteste/Services.svc';
+            ConfigURL.HomConsultaNFSe       := 'http://201.89.84.202:8184/nfsewsteste/Services.svc';
+            ConfigURL.HomCancelaNFSe        := 'http://201.89.84.202:8184/nfsewsteste/Services.svc';
+
+            ConfigURL.ProNomeCidade         := '';
+            ConfigURL.ProRecepcaoLoteRPS    := 'http://201.89.84.202:8184/nfsews/Services.svc';
+            ConfigURL.ProConsultaLoteRPS    := 'http://201.89.84.202:8184/nfsews/Services.svc';
+            ConfigURL.ProConsultaNFSeRPS    := 'http://201.89.84.202:8184/nfsews/Services.svc';
+            ConfigURL.ProConsultaSitLoteRPS := 'http://201.89.84.202:8184/nfsews/Services.svc';
+            ConfigURL.ProConsultaNFSe       := 'http://201.89.84.202:8184/nfsews/Services.svc';
+            ConfigURL.ProCancelaNFSe        := 'http://201.89.84.202:8184/nfsews/Services.svc';
            end;
   4205902: begin // Gaspar/SC
             ConfigURL.HomNomeCidade         := '';
