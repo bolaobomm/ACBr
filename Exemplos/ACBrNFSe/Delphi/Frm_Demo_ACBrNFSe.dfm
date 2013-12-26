@@ -306,6 +306,7 @@ object frmDemo_ACBrNFSe: TfrmDemo_ACBrNFSe
               'Araras/3503307/SP'
               'Araxa/3104007/MG'
               'Arcos/3104205/MG'
+              'Assis Chateaubriand/4102000/PR'
               'Bage/4301602/RS'
               'Barbacena/3105608/MG'
               'Bariri/3505203/SP'
