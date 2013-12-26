@@ -1090,7 +1090,7 @@ object frmDemo_ACBrCTe: TfrmDemo_ACBrCTe
     ImprimirHoraSaida = False
     MostrarPreview = True
     MostrarStatus = True
-    TipoDACTE = tiSemGeracao
+    TipoDACTE = tiRetrato
     TamanhoPapel = tpA4
     NumCopias = 1
     ImprimirDescPorc = False
