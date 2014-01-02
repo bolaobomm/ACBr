@@ -91,6 +91,15 @@ const
   DSC_CAERDES     = 'Aeródromo de Destino';
   DSC_DVOO        = 'Data do Vôo';
   // Aquaviário
+  DSC_CNPJAGENAV  = 'CNPJ da Agência de Navegação';
+  DSC_TPEMB       = 'Tipo de Embarcação';
+  DSC_CEMBAR      = 'Código da Embarcação';
+  DSC_NVIAG       = 'Número da Viagem';
+  DSC_CPRTEMB     = 'Código do Porto de Embarque';
+  DSC_CPRTDEST    = 'Código do Porto de Destino';
+  DSC_CTERMCARREG = 'Código do Terminal de Carregamento';
+  DSC_CTERMDESCAR = 'Código do Terminal de Descarregamento';
+  DSC_CEMBCOMB    = 'Código da Embarcação do comboio';
   // Ferroviário
   DSC_XPREF       = 'Prefixo do Trem';
   DSC_DHTREM      = 'Data e Hora de liberação do Trem na origem';

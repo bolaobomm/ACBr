@@ -262,7 +262,7 @@ begin
        MDFe.aquav.CNPJAgeNav := Leitor.rCampo(tcStr,'CNPJAgeNav');
        MDFe.aquav.tpEmb      := Leitor.rCampo(tcStr,'tpEmb');
        MDFe.aquav.cEmbar     := Leitor.rCampo(tcStr,'cEmbar');
-       MDFe.aquav.nViagem    := Leitor.rCampo(tcStr,'nViagem');
+       MDFe.aquav.nViagem    := Leitor.rCampo(tcStr,'nViag');
        MDFe.aquav.cPrtEmb    := Leitor.rCampo(tcStr,'cPrtEmb');
        MDFe.aquav.cPrtDest   := Leitor.rCampo(tcStr,'cPrtDest');
 

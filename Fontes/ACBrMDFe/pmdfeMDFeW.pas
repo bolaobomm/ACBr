@@ -516,17 +516,17 @@ var
   i: integer;
 begin
   Gerador.wGrupo('aquav', '#01');
-  Gerador.wCampo(tcStr, '#02', 'CNPJAgeNav', 14, 14, 1, MDFe.aquav.CNPJAgeNav, '*erro*');
-  Gerador.wCampo(tcStr, '#03', 'tpEmb     ', 02, 02, 1, MDFe.aquav.tpEmb, '*erro*');
-  Gerador.wCampo(tcStr, '#04', 'cEmbar    ', 10, 10, 1, MDFe.aquav.cEmbar, '*erro*');
-  Gerador.wCampo(tcStr, '#05', 'nViagem   ', 10, 10, 1, MDFe.aquav.nViagem, '*erro*');
-  Gerador.wCampo(tcStr, '#06', 'cPrtEmb   ', 05, 05, 1, MDFe.aquav.cPrtEmb, '*erro*');
-  Gerador.wCampo(tcStr, '#07', 'cPrtDest  ', 05, 05, 1, MDFe.aquav.cPrtDest, '*erro*');
+  Gerador.wCampo(tcStr, '#02', 'CNPJAgeNav', 14, 14, 1, MDFe.aquav.CNPJAgeNav, DSC_CNPJAGENAV);
+  Gerador.wCampo(tcStr, '#03', 'tpEmb     ', 02, 02, 1, MDFe.aquav.tpEmb, DSC_TPEMB);
+  Gerador.wCampo(tcStr, '#04', 'cEmbar    ', 01, 10, 1, MDFe.aquav.cEmbar, DSC_CEMBAR);
+  Gerador.wCampo(tcStr, '#05', 'nViag     ', 01, 10, 1, MDFe.aquav.nViagem, DSC_NVIAG);
+  Gerador.wCampo(tcStr, '#06', 'cPrtEmb   ', 01, 05, 1, MDFe.aquav.cPrtEmb, DSC_CPRTEMB);
+  Gerador.wCampo(tcStr, '#07', 'cPrtDest  ', 01, 05, 1, MDFe.aquav.cPrtDest, DSC_CPRTDEST);
 
   for i := 0 to MDFe.aquav.infTermCarreg.Count - 1 do
   begin
     Gerador.wGrupo('infTermCarreg', '#08');
-    Gerador.wCampo(tcInt, '#09', 'cTermCarreg', 8, 8, 1, MDFe.aquav.infTermCarreg[i].cTermCarreg, '*erro*');
+    Gerador.wCampo(tcInt, '#09', 'cTermCarreg', 1, 8, 1, MDFe.aquav.infTermCarreg[i].cTermCarreg, DSC_CTERMCARREG);
     Gerador.wGrupo('/infTermCarreg');
   end;
   if MDFe.aquav.infTermCarreg.Count > 5 then
@@ -535,7 +535,7 @@ begin
   for i := 0 to MDFe.aquav.infTermDescarreg.Count - 1 do
   begin
     Gerador.wGrupo('infTermDescarreg', '#10');
-    Gerador.wCampo(tcInt, '#11', 'cTermDescarreg', 8, 8, 1, MDFe.aquav.infTermDescarreg[i].cTermDescarreg, '*erro*');
+    Gerador.wCampo(tcInt, '#11', 'cTermDescarreg', 1, 8, 1, MDFe.aquav.infTermDescarreg[i].cTermDescarreg, DSC_CTERMDESCAR);
     Gerador.wGrupo('/infTermDescarreg');
   end;
   if MDFe.aquav.infTermDescarreg.Count > 5 then
@@ -544,7 +544,7 @@ begin
   for i := 0 to MDFe.aquav.infEmbComb.Count - 1 do
   begin
     Gerador.wGrupo('infEmbComb', '#12');
-    Gerador.wCampo(tcInt, '#13', 'cEmbComb', 8, 8, 1, MDFe.aquav.infEmbComb[i].cEmbComb, '*erro*');
+    Gerador.wCampo(tcInt, '#13', 'cEmbComb', 01, 10, 1, MDFe.aquav.infEmbComb[i].cEmbComb, DSC_CEMBCOMB);
     Gerador.wGrupo('/infEmbComb');
   end;
   if MDFe.aquav.infEmbComb.Count > 30 then
