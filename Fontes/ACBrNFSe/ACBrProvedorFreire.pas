@@ -105,12 +105,12 @@ function TProvedorFreire.GetConfigURL(ACodCidade: Integer): TConfigURL;
 var
  ConfigURL: TConfigURL;
 begin
- case ACodCidade of
-  2919553: begin // Luís Eduardo Magalhães / BA
-            ConfigURL.HomNomeCidade := 'nfselem';
-            ConfigURL.ProNomeCidade := 'wslem';
-           end;
- end;
+// case ACodCidade of
+//  2919553: begin // Luís Eduardo Magalhães / BA
+//            ConfigURL.HomNomeCidade := 'nfselem';
+//            ConfigURL.ProNomeCidade := 'wslem';
+//           end;
+// end;
 
  ConfigURL.HomRecepcaoLoteRPS    := 'http://' + ConfigURL.HomNomeCidade + '.freireinformatica.com.br:5554/webrun/webservices/NFEServices.jws?wsdl';
  ConfigURL.HomConsultaLoteRPS    := 'http://' + ConfigURL.HomNomeCidade + '.freireinformatica.com.br:5554/webrun/webservices/NFEServices.jws?wsdl';
@@ -403,17 +403,16 @@ function TProvedorFreire.GetLinkNFSe(ACodMunicipio, ANumeroNFSe: Integer;
   ACodVerificacao, AInscricaoM: String; AAmbiente: Integer): String;
 begin
 //
- case ACodMunicipio of
-  2919553:
-   begin
-    if AAmbiente = 1
-    then Result := 'http://wslem.freireinformatica.com.br:6554/webrun/open.do?sys=NFE&action=openform&formID='+
-					    '{1733636A-6A4B-46A6-BD46-193A27C60B03}&align=0&mode=-1&goto=-1&filter=NFE_NFSE.NFS_COD_VERIFICACAO=' +ACodVerificacao
-    else Result := 'http://nfselem.freireinformatica.com.br:5554/webrun/open.do?sys=NFE&action=openform&formID='+
-                   '{1733636A-6A4B-46A6-BD46-193A27C60B03}&align=0&mode=-1&goto=-1&filter=NFE_NFSE.NFS_COD_VERIFICACAO=' +ACodVerificacao;
-   end
-   else Result := '';
- end;
+// case ACodMunicipio of
+//   begin
+//    if AAmbiente = 1
+//    then Result := 'http://wslem.freireinformatica.com.br:6554/webrun/open.do?sys=NFE&action=openform&formID='+
+//					    '{1733636A-6A4B-46A6-BD46-193A27C60B03}&align=0&mode=-1&goto=-1&filter=NFE_NFSE.NFS_COD_VERIFICACAO=' +ACodVerificacao
+//    else Result := 'http://nfselem.freireinformatica.com.br:5554/webrun/open.do?sys=NFE&action=openform&formID='+
+//                   '{1733636A-6A4B-46A6-BD46-193A27C60B03}&align=0&mode=-1&goto=-1&filter=NFE_NFSE.NFS_COD_VERIFICACAO=' +ACodVerificacao;
+//   end
+//   else Result := '';
+// end;
 end;
 
 end.

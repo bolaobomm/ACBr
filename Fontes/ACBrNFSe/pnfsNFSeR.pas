@@ -972,7 +972,7 @@ begin
     FProvedor := proProdata;
 
    if (CM = '2919553') then
-    FProvedor := proFreire;
+    FProvedor := proWebISS;
 
    if (CM = '3205309') then
     FProvedor := proVitoria;
@@ -3067,7 +3067,7 @@ begin
     FProvedor := proProdata;
 
    if (CM = '2919553') then
-    FProvedor := proFreire;
+    FProvedor := proWebISS;
 
    if (CM = '3205309') then
     FProvedor := proVitoria;

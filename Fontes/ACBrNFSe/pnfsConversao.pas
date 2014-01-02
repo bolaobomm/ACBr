@@ -649,12 +649,13 @@ begin
   4217907, // Tangará/SC
   4218004, // Tijucas/SC
   4219002, // Urussanga/SC
-  4219507, // Xanxere/SC 
+  4219507, // Xanxere/SC
   4219606, // Xavantina/SC
   4219705, // Xaxim/SC
   4302105, // Bento Gonçalves/RS
   4305801, // Constantina/RS
   4318002, // São Borja/RS
+  4321907, // Tres Passos/RS
   5006200, // Nova Andradina/MS
   5100201, // Água Boa/MT
   5102686, // Campos de Júlio/MT
@@ -719,8 +720,8 @@ begin
 //  5107958  // Tangara da Serra/MT
          : Provedor := 'FISSLEX';
 
-  2919553  // Luis Eduardo Magalhaes/BA
-         : Provedor := 'Freire';
+//  2919553  // Luis Eduardo Magalhaes/BA
+//         : Provedor := 'Freire';
 
   1302603, // Manaus/AM
   1500800, // Ananindeua/PA
@@ -1037,6 +1038,7 @@ begin
   2901106, // Amelia Rodrigues/BA
   2907509, // Catu/BA
   2910800, // Feira de Santana/BA
+  2919553, // Luis Eduardo Magalhaes/BA
 //  2925204, // Pojuca/BA
   3101508, // Alem Paraiba/MG
   3104205, // Arcos/MG

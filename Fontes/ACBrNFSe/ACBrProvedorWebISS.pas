@@ -326,6 +326,10 @@ begin
             ConfigURL.HomNomeCidade := 'caldasnovasgo';
             ConfigURL.ProNomeCidade := 'caldasnovasgo';
            end;
+  2919553: begin // Luiz Eduardo Magalhães/BA
+            ConfigURL.HomNomeCidade := 'luiseduardomagalhaesba';
+            ConfigURL.ProNomeCidade := 'luiseduardomagalhaesba';
+           end;
  end;
 
  case ACodCidade of
@@ -340,7 +344,8 @@ begin
   3301306,
   5101308,
   5101704,
-  5107958: begin
+  5107958,
+  2919553: begin
             ConfigURL.HomRecepcaoLoteRPS    := 'https://www4.webiss.com.br/' + ConfigURL.HomNomeCidade + '_wsnfse_homolog/NfseServices.svc';
             ConfigURL.HomConsultaLoteRPS    := 'https://www4.webiss.com.br/' + ConfigURL.HomNomeCidade + '_wsnfse_homolog/NfseServices.svc';
             ConfigURL.HomConsultaNFSeRPS    := 'https://www4.webiss.com.br/' + ConfigURL.HomNomeCidade + '_wsnfse_homolog/NfseServices.svc';
