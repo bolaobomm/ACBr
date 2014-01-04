@@ -59,7 +59,7 @@ type TModalResult = (mrNone = 0, mrYes = 6, mrNo = 7, mrOK = 1, mrCancel = 2, mr
 {$ENDIF}
 
 const
-   CACBrTEFD_Versao      = '4.3.7' ;
+   CACBrTEFD_Versao      = '4.3.8' ;
    CACBrTEFD_EsperaSTS   = 7 ;
    CACBrTEFD_EsperaSleep = 250 ;
    CACBrTEFD_NumVias     = 2 ;
@@ -1335,15 +1335,16 @@ begin
        707 : fpValorOriginal         := Linha.Informacao.AsFloat;
        708 : fpSaque                 := Linha.Informacao.AsFloat;
        709 : fpDesconto              := Linha.Informacao.AsFloat;
-
        710 :
          begin
-           TemReduzido := True;
-           fpImagemComprovante1aVia.Clear;
-           fpQtdLinhasComprovante := Linha.Informacao.AsInteger;
+           if Linha.Informacao.AsInteger > 0 then
+           begin
+              TemReduzido := True;
+              fpImagemComprovante1aVia.Clear;
+              fpQtdLinhasComprovante := Linha.Informacao.AsInteger;
+           end;
          end;
        711 : fpImagemComprovante1aVia.Add( AjustaLinhaImagemComprovante( Linha.Informacao.AsString ) );
-
        712 :
          begin
            if not TemReduzido then
@@ -1352,13 +1353,11 @@ begin
               fpQtdLinhasComprovante := Linha.Informacao.AsInteger;
            end;
          end;
-
        713 :
          begin
            if not TemReduzido then
               fpImagemComprovante1aVia.Add( AjustaLinhaImagemComprovante( Linha.Informacao.AsString ) );
          end ;
-
        714 : fpImagemComprovante2aVia.Clear;
        715 : fpImagemComprovante2aVia.Add( AjustaLinhaImagemComprovante( Linha.Informacao.AsString ) );
 
