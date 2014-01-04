@@ -52,6 +52,11 @@ Data: 04/01/2014 - 4.3.8
 [*] Ajuste na interpretação do campo 710 com conteúdo zerado   (por: DSA)
     http://www.projetoacbr.com.br/forum/index.php?/topic/13679-adm-cancelamento/
 
+-- ACBrTEFDVeSPague --
+[*] Ajuste para interepretação da Resposta contendo um pulo de Linha no inicio
+    da String   (por: DSA)
+    http://www.projetoacbr.com.br/forum/index.php?/topic/10926-problema-no-retorno-de-requisição-do-vpague
+
 Data: 04/12/2013 - 4.3.7
 -- ACBrTEFDClass --
 [*] Ajuste na função ConteudoToProperty() para preencher o campo DataPreDatado

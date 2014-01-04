@@ -391,9 +391,11 @@ begin
   fsParams.Clear;
   fsSequencial := 0 ;
 
-  Buffer := StringReplace(AValue,'"'+#10,'[LineBreak]',[rfReplaceAll]);
+  Buffer := StringReplace(AValue, CR+LF, LF, [rfReplaceAll]);
+  Buffer := StringReplace(Buffer, '="'+LF, '="\x0A', [rfReplaceAll]);
+  Buffer := StringReplace(Buffer,'"'+LF,'"[LineBreak]', [rfReplaceAll]);
   Buffer := BinaryStringToString(Buffer);
-  Buffer := StringReplace(Buffer,'[LineBreak]','"'+sLineBreak,[rfReplaceAll]);
+  Buffer := StringReplace(Buffer,'[LineBreak]',sLineBreak,[rfReplaceAll]);
 
   fsParams.Text := Buffer;
   fsIsColeta    := (GetParamInteger('automacao_coleta_sequencial') > 0);
