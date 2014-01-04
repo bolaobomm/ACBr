@@ -3027,7 +3027,7 @@ begin
     begin
       AliqZ := TACBrECFAliquota.Create ;
       AliqZ.Assign( fpAliquotas[I] );
-      AliqZ.Total := RoundTo( StrToFloatDef( copy(S,((I+1)*14)+1,14),0) / 100, -2);
+      AliqZ.Total := RoundTo( StrToFloatDef( copy(S,(I*14)+1,14),0) / 100, -2);
       AdicionaAliquota( AliqZ );
     end ;
 
