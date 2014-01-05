@@ -2772,6 +2772,12 @@ begin
      else
         cFinalidade := 'MFD';
 
+     if (Finalidade = finNFPTDM) then
+     begin
+        if Length(Trim(ExtractFileName(NomeArquivo))) = 0 then
+           NomeArquivo := NomeArquivo + NomeArqCAT52( RFDID, NumSerie, DataInicial )
+     end;
+
      if pos(fsMarcaECF, 'dataregis|termoprinter') > 0 then
       begin
         DiaIni := FormatDateTime('dd/mm/yyyy', DataInicial);
@@ -2823,15 +2829,6 @@ begin
       end
      else    // Urano e demais
       begin
-        if (Finalidade = finNFPTDM) then
-        begin
-           //TODO: gerar o "nome do arquivo" no padrão CAT-52
-           //Geralmente as DLL's precisam somente do diretório, o nome do arquivo é gerado automaticamente.
-           //No caso da Urano você deve especificar o nome do arquivo (ACBr tem alguma função pra gerar esse nome no padrão cat?)
-           if Length(Trim(ExtractFileName(NomeArquivo))) = 0 then
-              NomeArquivo := NomeArquivo + 'CAT52.txt';
-        end;
-
         ArqTmp := ExtractFilePath( NomeArquivo ) + 'ACBr.TDM' ;
         if FileExists( NomeArquivo ) then
            DeleteFile( NomeArquivo ) ;

@@ -97,6 +97,13 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+Data: 05/01/2014
+-- ACBrECF --
+[*] Ajuste no método PafMF_GerarCAT52 para utilizar a nomenclatura de arquivos
+    conforme definido na lei, o que deve corrigir a geração deste formato de
+    arquivo para alguns modelos de ECF    (por:DSA)
+
+
 Data: 04/01/2014
 -- ACBrECFFiscNET --
 [-] Correção da captura dos Valores das Aliquotas no método: DadosUltimaReducaoZ

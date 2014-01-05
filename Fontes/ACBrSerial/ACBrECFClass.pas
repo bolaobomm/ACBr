@@ -4202,8 +4202,19 @@ end ;
 
 procedure TACBrECFClass.PafMF_GerarCAT52(const DataInicial,
   DataFinal: TDateTime; const DirArquivos: String);
+var
+  NomeArquivo, NumSer: String;
+  DataArquivo: TDateTime;
 begin
-  Self.ArquivoMFD_DLL(DataInicial, DataFinal, DirArquivos, [docTodos], finNFPTDM);
+  NumSer      := NumSerie;
+  DataArquivo := DataInicial;
+  repeat
+    NomeArquivo := IncludeTrailingPathDelimiter( DirArquivos ) +
+                   NomeArqCAT52( RFDID, NumSer, DataArquivo );
+    Self.ArquivoMFD_DLL(DataArquivo, DataArquivo, NomeArquivo, [docTodos], finNFPTDM);
+
+    DataArquivo := IncDay( DataArquivo, 1 );
+  until DataArquivo > DataFinal;
 end;
 
 

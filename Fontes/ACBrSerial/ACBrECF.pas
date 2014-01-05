@@ -39,7 +39,8 @@
 Unit ACBrECF ;
 
 interface
-uses ACBrBase, ACBrDevice, ACBrECFClass, ACBrPAFClass, ACBrRFD, ACBrAAC, ACBrEAD,{Units da ACBr}
+uses ACBrBase, ACBrDevice, ACBrECFClass, {ACBrECFVirtual,} ACBrPAFClass, ACBrRFD,
+     ACBrAAC, ACBrEAD,{Units da ACBr}
      SysUtils , ACBrConsts, Classes
      {$IFNDEF NOGUI}
         {$IFDEF VisualCLX}, QControls, QForms, QDialogs, QGraphics, QStdCtrls{$ENDIF}
@@ -62,7 +63,7 @@ type
 TACBrECFModelo = (ecfNenhum, ecfNaoFiscal, ecfBematech, ecfSweda, ecfDaruma,
                   ecfSchalter, ecfMecaf, ecfYanco, ecfDataRegis, ecfUrano,
                   ecfICash, ecfQuattro, ecfFiscNET, ecfEpson, ecfNCR,
-                  ecfSwedaSTX, ecfEscECF );
+                  ecfSwedaSTX, ecfEscECF, ecfECFVirtual );
                   
 TACBrECFEventoOnError = procedure( var Tratado : Boolean) of object ;
 TACBrECFOnAbreCupom = procedure(const CPF_CNPJ, Nome, Endereco : String ) of object ;
@@ -132,6 +133,7 @@ TACBrECF = class( TACBrComponent )
     {$ENDIF}
 
     fsECF : TACBrECFClass ;  { Classe com instancia do ECF de fsModelo }
+    //fsECFVirtual : TACBrECFVirtual;
     fsRFD : TACBrRFD ;
     fsAAC : TACBrAAC ;
     fsEADInterno : TACBrEAD ;
@@ -373,6 +375,7 @@ TACBrECF = class( TACBrComponent )
     function GetNumUltimoItemClass: Integer;
     function GetConsumidorClass: TACBrECFConsumidor;
     function GetDadosReducaoZClass: TACBrECFDadosRZ;
+    //procedure SetECFVirtual(AValue: TACBrECFVirtual);
     procedure SetRFD(const AValue: TACBrRFD);
     procedure SetAAC(const AValue: TACBrAAC);
     procedure SetEAD(const AValue: TACBrEAD);
@@ -1024,15 +1027,19 @@ TACBrECF = class( TACBrComponent )
           read  fsOnBobinaAdicionaLinhas write fsOnBobinaAdicionaLinhas ;
     {$ENDIF}
      { Instancia do Componente ACBrDevice, será passada para fsECF.create }
-     property Device : TACBrDevice read fsDevice ;
-     property RFD    : TACBrRFD    read fsRFD     write SetRFD ;
-     property AAC    : TACBrAAC    read fsAAC     write SetAAC ;
-     property EAD    : TACBrEAD    read fsEAD     write SetEAD ;
+     property Device     : TACBrDevice     read fsDevice ;
+     property RFD        : TACBrRFD        read fsRFD        write SetRFD ;
+     property AAC        : TACBrAAC        read fsAAC        write SetAAC ;
+     property EAD        : TACBrEAD        read fsEAD        write SetEAD ;
+     //property ECFVirtual : TACBrECFVirtual read fsECFVirtual write SetECFVirtual ;
+
      property ArqLOG : String      read GetArqLOG write SetArqLOG ;
      property ConfigBarras: TACBrECFConfigBarras read fsConfigBarras write fsConfigBarras;
 
      property InfoRodapeCupom: TACBrECFRodape read GetInfoRodapeCupom write SetInfoRodapeCupom;
 end ;
+
+Function NomeArqCAT52( CAT52ID, NumSerie: String; DtMov : TDatetime ) : String ;
 
 implementation
 Uses ACBrUtil, ACBrECFBematech, ACBrECFNaoFiscal, ACBrECFDaruma, ACBrECFSchalter,
@@ -1041,6 +1048,25 @@ Uses ACBrUtil, ACBrECFBematech, ACBrECFNaoFiscal, ACBrECFDaruma, ACBrECFSchalter
      ACBrECFSwedaSTX, ACBrECFEscECF,
     {$IFDEF COMPILER6_UP} StrUtils {$ELSE}ACBrD5 ,Windows {$ENDIF}, Math,
     IniFiles ;
+
+function NomeArqCAT52(CAT52ID, NumSerie: String; DtMov: TDatetime): String;
+  function IntToLetra(AInt : Integer): Char ;
+  begin
+     if AInt < 10 then
+        Result := IntToStr(AInt)[1]
+     else
+        Result := Chr( 55 + Min(AInt,35) ) ; // 55+10=chr(65)=>'A' ; 55+35 => Máximo Z
+  end ;
+Var
+  DtStr, DirECFMes : String ;
+begin
+  DtStr  := FormatDateTime('ddmmyy', DtMov) ;
+  Result := padL(CAT52ID,3,'1')+
+            Poem_Zeros( RightStr(NumSerie,5), 5 )+'.'+
+            IntToLetra(StrToInt(copy(DtStr,1,2)))+
+            IntToLetra(StrToInt(copy(DtStr,3,2)))+
+            IntToLetra(StrToInt(copy(DtStr,5,2))) ;
+end;
 
 { TACBrECF }
 constructor TACBrECF.Create(AOwner: TComponent);
@@ -1062,6 +1088,7 @@ begin
   FDAVItemCount := 0;
   FDAVTotal     := 0.00;
 
+  //fsECFVirtual     := nil;
   fsEADInterno     := nil;
   fsEAD            := nil;
   fsAAC            := nil;
@@ -1207,6 +1234,9 @@ begin
   if fsAtivo then
      raise EACBrECFErro.Create( ACBrStr(cACBrECFSetModeloException));
 
+  //if (AValue = ecfECFVirtual) and (not Assigned( fsECFVirtual) ) then
+  //   raise EACBrECFErro.Create( ACBrStr(cACBrECFSemECFVirtualException));
+
   wRetentar             := ReTentar ;
   wTimeOut              := TimeOut ;
   wIntervaloAposComando := IntervaloAposComando ;
@@ -1261,8 +1291,9 @@ begin
     ecfNCR       : fsECF := TACBrECFNCR.create( Self ) ;
     ecfSwedaSTX  : fsECF := TACBrECFSwedaSTX.Create( self );
     ecfEscECF    : fsECF := TACBrECFEscECF.Create( self );
+    //ecfECFVirtual: fsECF := fsECFVirtual.ECFClass;
   else
-     fsECF := TACBrECFClass.create( Self ) ;
+    fsECF := TACBrECFClass.create( Self ) ;
   end;
 
   { Passando propriedades da Classe anterior para a Nova Classe }
@@ -5397,6 +5428,9 @@ begin
   if (Operation = opRemove) and (AComponent is TACBrAAC) and (fsAAC <> nil) then
      fsAAC := nil ;
 
+  //if (Operation = opRemove) and (AComponent is TACBrECFVirtual) and (fsECFVirtual <> nil) then
+  //   fsECFVirtual := nil ;
+
 end;
 
 procedure TACBrECF.DoVerificaValorGT ;
@@ -5459,6 +5493,33 @@ begin
      Result := fsEADInterno;
    end ;
 end ;
+
+//procedure TACBrECF.SetECFVirtual(AValue: TACBrECFVirtual);
+//Var
+//  OldValue: TACBrECFVirtual ;
+//begin
+//  if fsAtivo then
+//     raise EACBrECFErro.Create( ACBrStr(cACBrECFSetECFVirtualException));
+//
+//  if AValue <> fsECFVirtual then
+//  begin
+//     if Assigned(fsECFVirtual) then
+//        fsECFVirtual.RemoveFreeNotification(Self);
+//
+//     OldValue     := fsECFVirtual ;   // Usa outra variavel para evitar Loop Infinito
+//     fsECFVirtual := AValue;          // na remoção da associação dos componentes
+//
+//     if Assigned(OldValue) then
+//        if Assigned(OldValue.ECF) then
+//           OldValue.ECF := nil ;
+//
+//     if AValue <> nil then
+//     begin
+//        AValue.FreeNotification(self);
+//        AValue.ECF := Self ;
+//     end ;
+//  end ;
+//end;
 
 procedure TACBrECF.SetRFD(const AValue: TACBrRFD);
 Var
@@ -5652,44 +5713,29 @@ end;
 
 procedure TACBrECF.PafMF_LX_Impressao;
 begin
-  fsNumSerieCache := '' ;  // Isso força a Leitura do Numero de Série
-  //DoVerificaValorGT ;
-
   Self.LeituraX;
 end;
 
 procedure TACBrECF.PafMF_LMFC_Impressao(const CRZInicial, CRZFinal: Integer);
 begin
-  fsNumSerieCache := '' ;  // Isso força a Leitura do Numero de Série
-  //DoVerificaValorGT ;
-
   Self.LeituraMemoriaFiscal(CRZInicial, CRZFinal, False);
 end;
 
 procedure TACBrECF.PafMF_LMFC_Impressao(const DataInicial,
   DataFinal: TDateTime);
 begin
-  fsNumSerieCache := '' ;  // Isso força a Leitura do Numero de Série
-  //DoVerificaValorGT ;
-
   Self.LeituraMemoriaFiscal(DataInicial, DataFinal, False);
 end;
 
 procedure TACBrECF.PafMF_LMFC_Espelho(const CRZInicial, CRZFinal: Integer;
   const PathArquivo: String);
 begin
-  fsNumSerieCache := '' ;  // Isso força a Leitura do Numero de Série
-  //DoVerificaValorGT ;
-
   Self.LeituraMemoriaFiscalSerial(CRZInicial, CRZFinal, PathArquivo, False);
   Self.AssinaArquivoComEAD(PathArquivo);
 end;
 
 procedure TACBrECF.PafMF_Binario(const PathArquivo: String);
 begin
-  fsNumSerieCache := '' ;  // Isso força a Leitura do Numero de Série
-  //DoVerificaValorGT ;
-
   Self.ArquivoMF_DLL(PathArquivo);
   Self.AssinaArquivoComEAD(PathArquivo);
 end;
@@ -5697,9 +5743,6 @@ end;
 procedure TACBrECF.PafMF_LMFC_Espelho(const DataInicial, DataFinal: TDateTime;
   const PathArquivo: String);
 begin
-  fsNumSerieCache := '' ;  // Isso força a Leitura do Numero de Série
-  //DoVerificaValorGT ;
-
   Self.LeituraMemoriaFiscalSerial(DataInicial, DataFinal, PathArquivo, False);
   Self.AssinaArquivoComEAD(PathArquivo);
 end;
@@ -5707,9 +5750,6 @@ end;
 procedure TACBrECF.PafMF_LMFC_Cotepe1704(const CRZInicial, CRZFinal: Integer;
   const PathArquivo: String);
 begin
-  fsNumSerieCache := '' ;  // Isso força a Leitura do Numero de Série
-  //DoVerificaValorGT ;
-
   Self.ArquivoMFD_DLL(CRZInicial, CRZFinal, PathArquivo, [docTodos], finMF, tpcCRZ);
   Self.AssinaArquivoComEAD(PathArquivo);
 end;
@@ -5717,42 +5757,39 @@ end;
 procedure TACBrECF.PafMF_GerarCAT52(const DataInicial, DataFinal: TDateTime;
   const DirArquivos: String);
 begin
+  { ATENÇÃO !!  Para geração de arquivos programas de cidadania, como Nota
+    Fiscal Paulista, Nota Alogoana, etc.. se o seu ECF é MFD (termico), utilize
+    o método  ** PafMF_MFD_Cotepe1704 **...
+    O Layout de arquivo CAT52 foi criado pelo governo de SP, para ser utilizado
+    somente nas seguintes situações:
+    - ECF sem MFD (as antigas matriciais)
+    - Geração do arquivo com base nas informações do Banco de Dados e não da MFD
+    }
+
   fsECF.PafMF_GerarCAT52(DataInicial, DataFinal, IncludeTrailingPathDelimiter(DirArquivos));
 end;
 
 procedure TACBrECF.PafMF_LMFC_Cotepe1704(const DataInicial, DataFinal: TDateTime;
   const PathArquivo: String);
 begin
-  fsNumSerieCache := '' ;  // Isso força a Leitura do Numero de Série
-  //DoVerificaValorGT ;
-
   Self.ArquivoMFD_DLL(DataInicial, DataFinal, PathArquivo, [docTodos], finMF);
   Self.AssinaArquivoComEAD(PathArquivo);
 end;
 
 procedure TACBrECF.PafMF_LMFS_Impressao(const CRZInicial, CRZFinal: Integer);
 begin
-  fsNumSerieCache := '' ;  // Isso força a Leitura do Numero de Série
-  //DoVerificaValorGT ;
-
   Self.LeituraMemoriaFiscal(CRZInicial, CRZFinal, True);
 end;
 
 procedure TACBrECF.PafMF_LMFS_Impressao(const DataInicial,
   DataFinal: TDateTime);
 begin
-  fsNumSerieCache := '' ;  // Isso força a Leitura do Numero de Série
-  //DoVerificaValorGT ;
-
   Self.LeituraMemoriaFiscal(DataInicial, DataFinal, True);
 end;
 
 procedure TACBrECF.PafMF_LMFS_Espelho(const CRZInicial, CRZFinal: Integer;
   const PathArquivo: String);
 begin
-  fsNumSerieCache := '' ;  // Isso força a Leitura do Numero de Série
-  //DoVerificaValorGT ;
-
   Self.LeituraMemoriaFiscalSerial(CRZInicial, CRZFinal, PathArquivo, True);
   Self.AssinaArquivoComEAD(PathArquivo);
 end;
@@ -5760,9 +5797,6 @@ end;
 procedure TACBrECF.PafMF_LMFS_Espelho(const DataInicial, DataFinal: TDateTime;
   const PathArquivo: String);
 begin
-  fsNumSerieCache := '' ;  // Isso força a Leitura do Numero de Série
-  //DoVerificaValorGT ;
-
   Self.LeituraMemoriaFiscalSerial(DataInicial, DataFinal, PathArquivo, True);
   Self.AssinaArquivoComEAD(PathArquivo);
 end;
@@ -5770,9 +5804,6 @@ end;
 procedure TACBrECF.PafMF_MFD_Espelho(const COOInicial, COOFinal: Integer;
   const PathArquivo: String);
 begin
-  fsNumSerieCache := '' ;  // Isso força a Leitura do Numero de Série
-  //DoVerificaValorGT ;
-
   Self.EspelhoMFD_DLL(CooInicial, CooFinal, PathArquivo, [docTodos]);
   Self.AssinaArquivoComEAD(PathArquivo);
 end;
@@ -5780,9 +5811,6 @@ end;
 procedure TACBrECF.PafMF_MFD_Espelho(const DataInicial, DataFinal: TDateTime;
   const PathArquivo: String);
 begin
-  fsNumSerieCache := '' ;  // Isso força a Leitura do Numero de Série
-  //DoVerificaValorGT ;
-
   Self.EspelhoMFD_DLL(DataInicial, DataFinal, PathArquivo, [docTodos]);
   Self.AssinaArquivoComEAD(PathArquivo);
 end;
@@ -5790,9 +5818,6 @@ end;
 procedure TACBrECF.PafMF_MFD_Cotepe1704(const COOInicial, COOFinal: Integer;
   const PathArquivo: String);
 begin
-  fsNumSerieCache := '' ;  // Isso força a Leitura do Numero de Série
-  //DoVerificaValorGT ;
-
   Self.ArquivoMFD_DLL(CooInicial, CooFinal, PathArquivo, [docTodos], finMFD, tpcCOO);
   Self.AssinaArquivoComEAD(PathArquivo);
 end;
@@ -5800,9 +5825,6 @@ end;
 procedure TACBrECF.PafMF_MFD_Cotepe1704(const DataInicial, DataFinal: TDateTime;
   const PathArquivo: String);
 begin
-  fsNumSerieCache := '' ;  // Isso força a Leitura do Numero de Série
-  //DoVerificaValorGT ;
-
   Self.ArquivoMFD_DLL(DataInicial, DataFinal, PathArquivo, [docTodos], finMFD);
   Self.AssinaArquivoComEAD(PathArquivo);
 end;

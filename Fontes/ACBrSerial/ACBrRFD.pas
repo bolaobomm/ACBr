@@ -1754,25 +1754,12 @@ begin
 end;
 
 function TACBrRFD.NomeArqRFD( DtMov : TDatetime ): String;
-  function IntToLetra(AInt : Integer): Char ;
-  begin
-     if AInt < 10 then
-        Result := IntToStr(AInt)[1]
-     else
-        Result := Chr( 55 + Min(AInt,35) ) ; // 55+10=chr(65)=>'A' ; 55+35 => Máximo Z
-  end ;
-
-  Var DtStr, DirECFMes : String ;
+Var
+  DirECFMes : String ;
 begin
-   DtStr     := FormatDateTime('ddmmyy', DtMov) ;
    DirECFMes := fsDirECF + PathDelim + FormatDateTime('yyyymm',DtMov) ;
-
-   Result := DirECFMes + PathDelim +
-             padL(fsECF_RFDID,3,'1')+
-             Poem_Zeros( RightStr(fsECF_NumSerie,5), 5 )+'.'+
-             IntToLetra(StrToInt(copy(DtStr,1,2)))+
-             IntToLetra(StrToInt(copy(DtStr,3,2)))+
-             IntToLetra(StrToInt(copy(DtStr,5,2))) ;
+   Result    := DirECFMes + PathDelim +
+                NomeArqCAT52( fsECF_RFDID, fsECF_NumSerie, DtMov);
 end;
 
 
