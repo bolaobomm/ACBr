@@ -43,7 +43,7 @@ object Form1: TForm1
     Top = 0
     Width = 790
     Height = 330
-    ActivePage = tbsMenuFiscal
+    ActivePage = TabSheet4
     Align = alClient
     TabOrder = 1
     object TabSheet4: TTabSheet
@@ -851,7 +851,7 @@ object Form1: TForm1
       end
       object Button2: TButton
         Left = 11
-        Top = -367
+        Top = -387
         Width = 108
         Height = 25
         Anchors = [akLeft, akBottom]

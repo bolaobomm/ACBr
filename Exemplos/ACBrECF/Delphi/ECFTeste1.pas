@@ -598,6 +598,7 @@ begin
   cbxPorta.Items.Clear;
   ACBrECF1.Device.AcharPortasSeriais( cbxPorta.Items );
   cbxPorta.Items.Insert(0,'Procurar') ;
+  cbxPorta.Items.Add('USB') ;
   cbxPorta.Items.Add('LPT1') ;
   cbxPorta.Items.Add('LPT2') ;
   cbxPorta.Items.Add('LPT3') ;
