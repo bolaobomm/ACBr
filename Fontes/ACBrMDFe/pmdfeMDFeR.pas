@@ -262,6 +262,7 @@ begin
        MDFe.aquav.CNPJAgeNav := Leitor.rCampo(tcStr,'CNPJAgeNav');
        MDFe.aquav.tpEmb      := Leitor.rCampo(tcStr,'tpEmb');
        MDFe.aquav.cEmbar     := Leitor.rCampo(tcStr,'cEmbar');
+       MDFe.aquav.xEmbar     := Leitor.rCampo(tcStr,'xEmbar');
        MDFe.aquav.nViagem    := Leitor.rCampo(tcStr,'nViag');
        MDFe.aquav.cPrtEmb    := Leitor.rCampo(tcStr,'cPrtEmb');
        MDFe.aquav.cPrtDest   := Leitor.rCampo(tcStr,'cPrtDest');
@@ -271,6 +272,7 @@ begin
        begin
          MDFe.aquav.infTermCarreg.Add;
          MDFe.aquav.infTermCarreg[i01].cTermCarreg := Leitor.rCampo(tcStr, 'cTermCarreg');
+         MDFe.aquav.infTermCarreg[i01].xTermCarreg := Leitor.rCampo(tcStr, 'xTermCarreg');
          inc(i01);
        end;
 
@@ -279,6 +281,7 @@ begin
        begin
          MDFe.aquav.infTermDescarreg.Add;
          MDFe.aquav.infTermDescarreg[i01].cTermDescarreg := Leitor.rCampo(tcStr, 'cTermDescarreg');
+         MDFe.aquav.infTermDescarreg[i01].xTermDescarreg := Leitor.rCampo(tcStr, 'xTermDescarreg');
          inc(i01);
        end;
 

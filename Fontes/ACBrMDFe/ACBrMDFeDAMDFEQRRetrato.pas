@@ -162,6 +162,25 @@ type
     QRLabel109: TQRLabel;
     QRLabel106: TQRLabel;
     QRLabel100: TQRLabel;
+    QRShape20: TQRShape;
+    QRLabel24: TQRLabel;
+    QRLabel26: TQRLabel;
+    QRShape21: TQRShape;
+    QRShape22: TQRShape;
+    qrlCodEmbar: TQRLabel;
+    qrlNomeEmbar: TQRLabel;
+    QRShape23: TQRShape;
+    QRShape24: TQRShape;
+    QRShape25: TQRShape;
+    QRShape26: TQRShape;
+    QRLabel27: TQRLabel;
+    QRLabel28: TQRLabel;
+    QRLabel29: TQRLabel;
+    QRLabel30: TQRLabel;
+    qrmCodCarreg: TQRMemo;
+    qrmCodDescarreg: TQRMemo;
+    qrmNomeCarreg: TQRMemo;
+    qrmNomeDescarreg: TQRMemo;
     procedure QRMDFeBeforePrint(Sender: TCustomQuickRep;
       var PrintReport: Boolean);
     procedure qrb_1_DadosManifestoBeforePrint(Sender: TQRCustomBand;
@@ -299,7 +318,8 @@ begin
   qrlEmissao.Caption    := DFeUtil.FormatDateTime(DateTimeToStr(FMDFe.Ide.dhEmi));
   qrlUFCarrega.Caption  := FMDFe.Ide.UFIni;
 
-  // TMDFeModal      = ( moRodoviario, moAereo, moAquaviario, moFerroviario );
+  qrlCIOT.Caption := '';
+  // TMDFeModal = ( moRodoviario, moAereo, moAquaviario, moFerroviario );
   case FMDFe.Ide.modal of
    moRodoviario:  begin
                    qrlModal.Caption := 'MODAL RODOVIÁRIO DE CARGA';
@@ -386,11 +406,33 @@ end;
 
 procedure TfqrDAMDFEQRRetrato.qrb_4_AquavBeforePrint(Sender: TQRCustomBand;
   var PrintBand: Boolean);
+var
+ i: Integer;
 begin
   inherited;
 
 //  PrintBand := QRMDFe.PageNumber = 1;
   qrb_4_Aquav.Enabled := (FMDFe.Ide.modal = moAquaviario);
+
+  qrlCodEmbar.Caption  := FMDFe.aquav.cEmbar;
+  qrlNomeEmbar.Caption := FMDFe.aquav.xEmbar;
+
+  qrmCodCarreg.Lines.Clear;
+  qrmNomeCarreg.Lines.Clear;
+  qrmCodDescarreg.Lines.Clear;
+  qrmNomeDescarreg.Lines.Clear;
+
+  for i := 0 to FMDFe.aquav.infTermCarreg.Count -1 do
+   begin
+    qrmCodCarreg.Lines.Add(FMDFe.aquav.infTermCarreg.Items[i].cTermCarreg);
+    qrmNomeCarreg.Lines.Add(FMDFe.aquav.infTermCarreg.Items[i].xTermCarreg);
+   end;
+
+  for i := 0 to FMDFe.aquav.infTermDescarreg.Count -1 do
+   begin
+    qrmCodDescarreg.Lines.Add(FMDFe.aquav.infTermDescarreg.Items[i].cTermDescarreg);
+    qrmNomeDescarreg.Lines.Add(FMDFe.aquav.infTermDescarreg.Items[i].xTermDescarreg);
+   end;
 end;
 
 procedure TfqrDAMDFEQRRetrato.qrb_5_FerrovBeforePrint(

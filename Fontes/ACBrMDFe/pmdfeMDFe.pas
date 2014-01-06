@@ -447,13 +447,14 @@ type
     FCNPJAgeNav: String;
     FtpEmb: String;
     FcEmbar: String;
+    FxEmbar: String;
     FnViagem: String;
     FcPrtEmb: String;
     FcPrtDest: String;
     FinfTermCarreg: TinfTermCarregCollection;
     FinfTermDescarreg: TinfTermDescarregCollection;
     FinfEmbComb: TinfEmbCombCollection;
-    
+
     procedure SetinfTermCarreg(const Value: TinfTermCarregCollection);
     procedure SetinfTermDescarreg(const Value: TinfTermDescarregCollection);
     procedure SetinfEmbComb(const Value: TinfEmbCombCollection);
@@ -464,6 +465,7 @@ type
     property CNPJAgeNav: String read FCNPJAgeNav write FCNPJAgeNav;
     property tpEmb: String read FtpEmb write FtpEmb;
     property cEmbar: String read FcEmbar write FcEmbar;
+    property xEmbar: String read FxEmbar write FxEmbar;
     property nViagem: String read FnViagem write FnViagem;
     property cPrtEmb: String read FcPrtEmb write FcPrtEmb;
     property cPrtDest: String read FcPrtDest write FcPrtDest;
@@ -485,11 +487,13 @@ type
   TinfTermCarregCollectionItem = class(TCollectionItem)
   private
     FcTermCarreg: String;
+    FxTermCarreg: String;
   public
     constructor Create; reintroduce;
     destructor Destroy; override;
   published
     property cTermCarreg: String read FcTermCarreg write FcTermCarreg;
+    property xTermCarreg: String read FxTermCarreg write FxTermCarreg;
   end;
 
   TinfTermDescarregCollection = class(TCollection)
@@ -505,11 +509,13 @@ type
   TinfTermDescarregCollectionItem = class(TCollectionItem)
   private
     FcTermDescarreg: String;
+    FxTermDescarreg: String;
   public
     constructor Create; reintroduce;
     destructor Destroy; override;
   published
     property cTermDescarreg: String read FcTermDescarreg write FcTermDescarreg;
+    property xTermDescarreg: String read FxTermDescarreg write FxTermDescarreg;
   end;
 
   TinfEmbCombCollection = class(TCollection)
