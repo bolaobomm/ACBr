@@ -360,6 +360,23 @@ begin
             ConfigURL.ProConsultaNFSe       := 'http://nfse.pmtcoroas.com.br/nfsews/Services.svc';
             ConfigURL.ProCancelaNFSe        := 'http://nfse.pmtcoroas.com.br/nfsews/Services.svc';
            end;
+  3304706: begin // Santo Antonio de Padua/RJ
+            ConfigURL.HomNomeCidade         := '';
+            ConfigURL.HomRecepcaoLoteRPS    := 'http://177.67.128.86/NFSEWSTESTE/Services.svc';
+            ConfigURL.HomConsultaLoteRPS    := 'http://177.67.128.86/NFSEWSTESTE/Services.svc';
+            ConfigURL.HomConsultaNFSeRPS    := 'http://177.67.128.86/NFSEWSTESTE/Services.svc';
+            ConfigURL.HomConsultaSitLoteRPS := 'http://177.67.128.86/NFSEWSTESTE/Services.svc';
+            ConfigURL.HomConsultaNFSe       := 'http://177.67.128.86/NFSEWSTESTE/Services.svc';
+            ConfigURL.HomCancelaNFSe        := 'http://177.67.128.86/NFSEWSTESTE/Services.svc';
+
+            ConfigURL.ProNomeCidade         := '';
+            ConfigURL.ProRecepcaoLoteRPS    := 'http://177.67.128.86/NFSEWS/Services.svc';
+            ConfigURL.ProConsultaLoteRPS    := 'http://177.67.128.86/NFSEWS/Services.svc';
+            ConfigURL.ProConsultaNFSeRPS    := 'http://177.67.128.86/NFSEWS/Services.svc';
+            ConfigURL.ProConsultaSitLoteRPS := 'http://177.67.128.86/NFSEWS/Services.svc';
+            ConfigURL.ProConsultaNFSe       := 'http://177.67.128.86/NFSEWS/Services.svc';
+            ConfigURL.ProCancelaNFSe        := 'http://177.67.128.86/NFSEWS/Services.svc';
+           end;
  end;
 
  Result := ConfigURL;

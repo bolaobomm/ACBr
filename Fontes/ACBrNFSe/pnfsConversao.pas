@@ -824,7 +824,8 @@ begin
   4205902, // Gaspar/SC
   4309407, // Guapore/RS
   4310207, // Ijui/RS
-  4321709  // Tres Coroas/RS
+  4321709, // Tres Coroas/RS
+  3304706  // Sto Antonio de Padua/RJ
          : Provedor := 'GovBR';
 
   3132404, // Itajubá/MG
