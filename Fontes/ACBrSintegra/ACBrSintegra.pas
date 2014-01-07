@@ -479,6 +479,7 @@ type
     FMesAno: string;
     FCNPJ: string;
     FUF: string;
+    FUFFavorecida: string;
     FNumero: string;
     FDataPagamento: TDateTime;
     FVencimento: TDateTime;
@@ -488,7 +489,7 @@ type
     property Inscricao: string read FInscricao write FInscricao;
     property DataPagamento: TDateTime read FDataPagamento write FDataPagamento;
     property UF: string read FUF write FUF;
-    property UFFavorecida: string read FUF write FUF;
+    property UFFavorecida: string read FUFFavorecida write FUFFavorecida;
     property Banco: Integer read FBanco write FBanco;
     property Agencia: Integer read FAgencia write FAgencia;
     property Numero: string read FNumero write FNumero;
