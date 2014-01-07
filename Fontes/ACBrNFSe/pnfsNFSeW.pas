@@ -285,7 +285,7 @@ begin
   Gerador.wGrupoNFSe('Servico');
    Gerador.wGrupoNFSe('Valores');
     Gerador.wCampoNFSe(tcDe2, '#13', 'ValorServicos', 01, 15, 1, NFSe.Servico.Valores.ValorServicos, '');
-    if FProvedor in [proGinfes, proRecife, proFreire]
+    if FProvedor in [proGinfes, proRecife, proFreire, proGovBR]
       then begin
         Gerador.wCampoNFSe(tcDe2, '#14', 'ValorDeducoes', 01, 15, 1, NFSe.Servico.Valores.ValorDeducoes, '');
         Gerador.wCampoNFSe(tcDe2, '#15', 'ValorPis     ', 01, 15, 1, NFSe.Servico.Valores.ValorPis, '');
