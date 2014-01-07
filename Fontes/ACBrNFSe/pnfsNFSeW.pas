@@ -640,7 +640,7 @@ begin
        Gerador.wCampoNFSe(tcStr, '#47', 'Email   ', 01, 80, 0, NFSe.Tomador.Contato.Email, '');
       Gerador.wGrupoNFSe('/Contato');
      end;
-     
+
     if (VersaoXML = '1') or
        (FProvedor in [pro4R, proAgili, proCoplan, proDigifred, proFiorilli,
                       proGoiania, proGovDigital, proISSDigital, proISSe,
@@ -648,6 +648,16 @@ begin
                       proLink3, proVitoria, proMitra, proTecnos])
       then Gerador.wGrupoNFSe('/Tomador')
       else Gerador.wGrupoNFSe('/TomadorServico');
+   end
+   else begin
+    // Gera a TAG vazia quando nenhum dado do tomador for informado. 
+    if (VersaoXML = '1') or
+       (FProvedor in [pro4R, proAgili, proCoplan, proDigifred, proFiorilli,
+                      proGoiania, proGovDigital, proISSDigital, proISSe,
+                      proProdata, proPVH, proSaatri, proVirtual, proFreire,
+                      proLink3, proVitoria, proMitra, proTecnos])
+      then Gerador.wCampoNFSe(tcStr, '#', 'Tomador', 0, 1, 1, '', '')
+      else Gerador.wCampoNFSe(tcStr, '#', 'TomadorServico', 0, 1, 1, '', '');
    end;
 end;
 
