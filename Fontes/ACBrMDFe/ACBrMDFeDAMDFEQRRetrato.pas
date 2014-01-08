@@ -286,8 +286,10 @@ begin
       qrmDadosEmitente.Lines.Add('INSCRIÇÃO ESTADUAL: ' + IE);
       qrmDadosEmitente.Lines.Add('TELEFONE: ' + DFeUtil.FormatarFone(EnderEmit.Fone));
 
-//      if Trim(FUrl) <> '' then
-//        qrmDadosEmitente.Lines.Add(FUrl);
+      if Trim(FSite) <> '' then
+        qrmDadosEmitente.Lines.Add('SITE: ' + FSite);
+      if Trim(FEmail) <> '' then
+        qrmDadosEmitente.Lines.Add('E-MAIL: ' + FEmail);
     end;
    end;
 
