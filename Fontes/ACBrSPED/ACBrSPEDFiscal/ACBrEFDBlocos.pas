@@ -249,7 +249,8 @@ type
                              );
   /// Indicador de período de apuração do IPI
   TACBrApuracaoIPI = (iaMensal,               // 0 - Mensal
-                      iaDecendial             // 1 - Decendial
+                      iaDecendial,             // 1 - Decendial
+                      iaNenhum                // Vazio
                       );
   /// Indicador de tipo de referência da base de cálculo do ICMS (ST) do produto farmacêutico
   TACBrTipoBaseMedicamento = (bmCalcTabeladoSugerido,           // 0 - Base de cálculo referente ao preço tabelado ou preço máximo sugerido;

@@ -1547,6 +1547,7 @@ end;
 procedure TBloco_C.WriteRegistroC170(RegC100: TRegistroC100);
 var
   intFor: integer;
+  strIND_APUR : AnsiString;
   //strCST_IPI: AnsiString;
   //strCST_PIS: AnsiString;
   //strCST_COFINS: AnsiString;
@@ -1565,6 +1566,11 @@ begin
 
      for intFor := 0 to RegC100.RegistroC170.Count - 1 do
      begin
+        case IND_APUR of
+          iaMensal    : strIND_APUR := '0';
+          iaDecendial : strIND_APUR := '1';
+          iaNenhum    : strIND_APUR := ' ';
+        end;
         with RegC100.RegistroC170.Items[intFor] do
         begin
           strLinha :=  LFill('C170') +
@@ -1585,7 +1591,8 @@ begin
                        LFill( VL_BC_ICMS_ST, 0, 2 ) +
                        LFill( ALIQ_ST, 0, 2 ) +
                        LFill( VL_ICMS_ST, 0, 2 ) +
-                       LFill( Integer(IND_APUR), 0 ) +
+                       LFill( strIND_APUR ) +
+                       //LFill( Integer(IND_APUR), 0 ) +
                        // LFill( strCST_IPI ) +
                        LFill( CST_IPI ) +
                        LFill( COD_ENQ ) +
