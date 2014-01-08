@@ -146,7 +146,7 @@ begin
   (* Grupo da TAG <emit> ******************************************************)
   if Leitor.rExtrai(1, 'emit') <> '' then
   begin
-    MDFe.emit.CNPJ  := Leitor.rCampo(tcStr,'CNPJ');
+    MDFe.emit.CNPJ  := Leitor.rCampo(tcStr, 'CNPJ');
     MDFe.emit.IE    := Leitor.rCampo(tcStr, 'IE');
     MDFe.emit.xNome := Leitor.rCampo(tcStr, 'xNome');
     MDFe.emit.xFant := Leitor.rCampo(tcStr, 'xFant');
@@ -171,7 +171,7 @@ begin
   begin
     if Leitor.rExtrai(2, 'rodo') <> '' then
      begin
-      MDFe.Rodo.RNTRC := Leitor.rCampo(tcStr,'RNTRC');
+      MDFe.Rodo.RNTRC := Leitor.rCampo(tcStr, 'RNTRC', 'prop');
       MDFe.Rodo.CIOT  := Leitor.rCampo(tcStr, 'CIOT');
 
       if Leitor.rExtrai(3, 'veicTracao') <> '' then
@@ -248,24 +248,24 @@ begin
     (* Grupo da TAG <aereo> *****************************************************)
     if Leitor.rExtrai(2, 'aereo') <> '' then
      begin
-       MDFe.Aereo.nac     := Leitor.rCampo(tcInt,'nac');
-       MDFe.Aereo.matr    := Leitor.rCampo(tcInt,'matr');
-       MDFe.Aereo.nVoo    := Leitor.rCampo(tcStr,'nVoo');
-       MDFe.Aereo.cAerEmb := Leitor.rCampo(tcStr,'cAerEmb');
-       MDFe.Aereo.cAerDes := Leitor.rCampo(tcStr,'cAerDes');
-       MDFe.Aereo.dVoo    := Leitor.rCampo(tcDat,'dVoo');
+       MDFe.Aereo.nac     := Leitor.rCampo(tcInt, 'nac');
+       MDFe.Aereo.matr    := Leitor.rCampo(tcInt, 'matr');
+       MDFe.Aereo.nVoo    := Leitor.rCampo(tcStr, 'nVoo');
+       MDFe.Aereo.cAerEmb := Leitor.rCampo(tcStr, 'cAerEmb');
+       MDFe.Aereo.cAerDes := Leitor.rCampo(tcStr, 'cAerDes');
+       MDFe.Aereo.dVoo    := Leitor.rCampo(tcDat, 'dVoo');
      end; // fim das informações do modal Aéreo
 
     (* Grupo da TAG <aquav> *****************************************************)
     if Leitor.rExtrai(2, 'aquav') <> '' then
      begin
-       MDFe.aquav.CNPJAgeNav := Leitor.rCampo(tcStr,'CNPJAgeNav');
-       MDFe.aquav.tpEmb      := Leitor.rCampo(tcStr,'tpEmb');
-       MDFe.aquav.cEmbar     := Leitor.rCampo(tcStr,'cEmbar');
-       MDFe.aquav.xEmbar     := Leitor.rCampo(tcStr,'xEmbar');
-       MDFe.aquav.nViagem    := Leitor.rCampo(tcStr,'nViag');
-       MDFe.aquav.cPrtEmb    := Leitor.rCampo(tcStr,'cPrtEmb');
-       MDFe.aquav.cPrtDest   := Leitor.rCampo(tcStr,'cPrtDest');
+       MDFe.aquav.CNPJAgeNav := Leitor.rCampo(tcStr, 'CNPJAgeNav');
+       MDFe.aquav.tpEmb      := Leitor.rCampo(tcStr, 'tpEmb');
+       MDFe.aquav.cEmbar     := Leitor.rCampo(tcStr, 'cEmbar');
+       MDFe.aquav.xEmbar     := Leitor.rCampo(tcStr, 'xEmbar');
+       MDFe.aquav.nViagem    := Leitor.rCampo(tcStr, 'nViag');
+       MDFe.aquav.cPrtEmb    := Leitor.rCampo(tcStr, 'cPrtEmb');
+       MDFe.aquav.cPrtDest   := Leitor.rCampo(tcStr, 'cPrtDest');
 
        i01 := 0;
        while Leitor.rExtrai(3, 'infTermCarreg', '', i01 + 1) <> '' do
@@ -300,11 +300,11 @@ begin
      begin
        if Leitor.rExtrai(3, 'trem') <> '' then
         begin
-         MDFe.ferrov.xPref  := Leitor.rCampo(tcStr,'xPref');
+         MDFe.ferrov.xPref  := Leitor.rCampo(tcStr, 'xPref');
          MDFe.ferrov.dhTrem := Leitor.rCampo(tcDatHor, 'dhTrem');
-         MDFe.ferrov.xOri   := Leitor.rCampo(tcStr,'xOri');
-         MDFe.ferrov.xDest  := Leitor.rCampo(tcStr,'xDest');
-         MDFe.ferrov.qVag   := Leitor.rCampo(tcInt,'qVag');
+         MDFe.ferrov.xOri   := Leitor.rCampo(tcStr, 'xOri');
+         MDFe.ferrov.xDest  := Leitor.rCampo(tcStr, 'xDest');
+         MDFe.ferrov.qVag   := Leitor.rCampo(tcInt, 'qVag');
         end;
 
        i01 := 0;
@@ -585,14 +585,14 @@ begin
   (* Grupo da TAG <tot> *******************************************************)
   if Leitor.rExtrai(1, 'tot') <> '' then
   begin
-   MDFe.tot.qCTe   := Leitor.rCampo(tcInt,'qCTe');
-   MDFe.tot.qCT    := Leitor.rCampo(tcInt,'qCT');
-   MDFe.tot.qNFe   := Leitor.rCampo(tcInt,'qNFe');
-   MDFe.tot.qNF    := Leitor.rCampo(tcInt,'qNF');
-   MDFe.tot.qMDFe  := Leitor.rCampo(tcInt,'qMDFe');
-   MDFe.tot.vCarga := Leitor.rCampo(tcDe2,'vCarga');
-   MDFe.tot.cUnid  := StrToUnidMed(Ok, Leitor.rCampo(tcStr,'cUnid'));
-   MDFe.tot.qCarga := Leitor.rCampo(tcDe4,'qCarga');
+   MDFe.tot.qCTe   := Leitor.rCampo(tcInt, 'qCTe');
+   MDFe.tot.qCT    := Leitor.rCampo(tcInt, 'qCT');
+   MDFe.tot.qNFe   := Leitor.rCampo(tcInt, 'qNFe');
+   MDFe.tot.qNF    := Leitor.rCampo(tcInt, 'qNF');
+   MDFe.tot.qMDFe  := Leitor.rCampo(tcInt, 'qMDFe');
+   MDFe.tot.vCarga := Leitor.rCampo(tcDe2, 'vCarga');
+   MDFe.tot.cUnid  := StrToUnidMed(Ok, Leitor.rCampo(tcStr, 'cUnid'));
+   MDFe.tot.qCarga := Leitor.rCampo(tcDe4, 'qCarga');
   end;
 
   (* Grupo da TAG <lacres> ****************************************************)
@@ -616,8 +616,8 @@ begin
   (* Grupo da TAG <infAdic> ***************************************************)
   if Leitor.rExtrai(1, 'infAdic') <> '' then
   begin
-   MDFe.infAdic.infAdFisco := Leitor.rCampo(tcStr,'infAdFisco');
-   MDFe.infAdic.infCpl     := Leitor.rCampo(tcStr,'infCpl');
+   MDFe.infAdic.infAdFisco := Leitor.rCampo(tcStr, 'infAdFisco');
+   MDFe.infAdic.infCpl     := Leitor.rCampo(tcStr, 'infCpl');
   end;
 
   (* Grupo da TAG <signature> *************************************************)
