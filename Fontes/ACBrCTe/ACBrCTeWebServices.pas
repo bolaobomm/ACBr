@@ -1944,6 +1944,7 @@ begin
 
     CTCancelado := False;
 
+    if Assigned(CTeRetorno.procEventoCTe) then // Incluido por Italo em 08/01/2014 - resolver problema de violação de acesso
     if CTeRetorno.procEventoCTe.Count > 0 then
       aEventos := '=====================================================' +
                   LineBreak +
@@ -1999,6 +2000,7 @@ begin
     FprotCTe.cStat              := CTeRetorno.protCTe.cStat;
     FprotCTe.xMotivo            := CTeRetorno.protCTe.xMotivo;
 
+    if Assigned(CTeRetorno.procEventoCTe) then begin // Incluido por Italo em 08/01/2014 - resolver problema de violação de acesso
     FprocEventoCTe.Clear;
     for I := 0 to CTeRetorno.procEventoCTe.Count -1 do
     begin
@@ -2069,6 +2071,7 @@ begin
           end;
       end;
     end;
+    end;
 
 //    FProtocolo := DFeUtil.SeSenao(DFeUtil.NaoEstaVazio(CTeRetorno.retCancCTe.nProt),CTeRetorno.retCancCTe.nProt,CTeRetorno.protCTe.nProt);
 //    FDhRecbto  := DFeUtil.SeSenao(CTeRetorno.retCancCTe.dhRecbto <> 0,CTeRetorno.retCancCTe.dhRecbto,CTeRetorno.protCTe.dhRecbto);
@@ -2093,6 +2096,7 @@ begin
             'Protocolo : '+FProtocolo+LineBreak+
             'Digest Value : '+CTeRetorno.protCTe.digVal+LineBreak;
 
+    if Assigned(CTeRetorno.procEventoCTe) then // Incluido por Italo em 08/01/2014 - resolver problema de violação de acesso
     if CTeRetorno.procEventoCTe.Count > 0 then
       aMsg := aMsg + LineBreak + aEventos;
 

@@ -1429,6 +1429,7 @@ begin
 
     MDFeCancelada := False;
 
+    if Assigned(MDFeRetorno.procEventoMDFe) then // Incluido por Italo em 08/01/2014 - resolver problema de violação de acesso
     if MDFeRetorno.procEventoMDFe.Count > 0 then
       aEventos := '=====================================================' +
                   LineBreak +
@@ -1464,6 +1465,7 @@ begin
     FprotMDFe.cStat               := MDFeRetorno.protMDFe.cStat;
     FprotMDFe.xMotivo             := MDFeRetorno.protMDFe.xMotivo;
 
+    if Assigned(MDFeRetorno.procEventoMDFe) then begin // Incluido por Italo em 08/01/2014 - resolver problema de violação de acesso
     FprocEventoMDFe.Clear;
     for I := 0 to MDFeRetorno.procEventoMDFe.Count -1 do
     begin
@@ -1530,6 +1532,7 @@ begin
           end;
       end;
     end;
+    end;
 
     if MDFeCancelada = False then
       begin
@@ -1554,6 +1557,7 @@ begin
             'Protocolo : ' + FProtocolo + LineBreak +
             'Digest Value : ' + MDFeRetorno.protMDFe.digVal + LineBreak;
 
+    if Assigned(MDFeRetorno.procEventoMDFe) then // Incluido por Italo em 08/01/2014 - resolver problema de violação de acesso
     if MDFeRetorno.procEventoMDFe.Count > 0 then
       aMsg := aMsg + LineBreak + aEventos;
 

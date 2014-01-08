@@ -2681,6 +2681,7 @@ begin
 
     NFCancelada := False;
 
+    if Assigned(NFeRetorno.procEventoNFe) then // Incluido por Leonardo Gregianin em 08/01/2014 - resolver problema de violação de acesso
     if NFeRetorno.procEventoNFe.Count > 0 then
       aEventos := '=====================================================' +
                   LineBreak +
@@ -2736,6 +2737,7 @@ begin
     FprotNFe.xMotivo            := NFeRetorno.protNFe.xMotivo;
 
     //{eventos_juaumkiko}
+    if Assigned(NFeRetorno.procEventoNFe) then begin // Incluido por Leonardo Gregianin em 08/01/2014 - resolver problema de violação de acesso
     FprocEventoNFe.Clear;
     for I := 0 to NFeRetorno.procEventoNFe.Count -1 do
     begin
@@ -2796,6 +2798,7 @@ begin
           end;
       end;
     end;
+    end;
 
     //FProtocolo  := DFeUtil.SeSenao(DFeUtil.NaoEstaVazio(NFeRetorno.retCancNFe.nProt),NFeRetorno.retCancNFe.nProt,NFeRetorno.protNFe.nProt);
     //FDhRecbto   := DFeUtil.SeSenao(NFeRetorno.retCancNFe.dhRecbto <> 0,NFeRetorno.retCancNFe.dhRecbto,NFeRetorno.protNFe.dhRecbto);
@@ -2822,6 +2825,7 @@ begin
             'Protocolo : '         + FProtocolo + LineBreak +
             'Digest Value : '      + NFeRetorno.protNFe.digVal + LineBreak;
 
+    if Assigned(NFeRetorno.procEventoNFe) then // Incluido por Leonardo Gregianin em 08/01/2014 - resolver problema de violação de acesso
     if NFeRetorno.procEventoNFe.Count > 0 then
       aMsg := aMsg + LineBreak + aEventos;
 
