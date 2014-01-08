@@ -1566,13 +1566,14 @@ begin
 
      for intFor := 0 to RegC100.RegistroC170.Count - 1 do
      begin
-        case IND_APUR of
-          iaMensal    : strIND_APUR := '0';
-          iaDecendial : strIND_APUR := '1';
-          iaNenhum    : strIND_APUR := ' ';
-        end;
         with RegC100.RegistroC170.Items[intFor] do
         begin
+          case IND_APUR of
+            iaMensal    : strIND_APUR := '0';
+            iaDecendial : strIND_APUR := '1';
+            iaNenhum    : strIND_APUR := ' ';
+          end;
+
           strLinha :=  LFill('C170') +
                        LFill( NUM_ITEM ) +
                        LFill( COD_ITEM ) +
