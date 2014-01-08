@@ -1209,7 +1209,9 @@ begin
       qrmDadosEmitente.Lines.Add('TELEFONE: ' + DFeUtil.FormatarFone(EnderEmit.Fone));
 
       if Trim(FUrl) <> '' then
-        qrmDadosEmitente.Lines.Add(FUrl);
+        qrmDadosEmitente.Lines.Add('SITE: ' + FUrl);
+      if Trim(FEmail) <> '' then
+        qrmDadosEmitente.Lines.Add('E-MAIL: ' + FEmail);
     end;
    end;
 
