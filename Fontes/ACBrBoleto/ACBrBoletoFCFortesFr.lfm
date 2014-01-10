@@ -14,9 +14,9 @@ object ACBRBoletoFCFortesFr: TACBRBoletoFCFortesFr
   OnDestroy = FormDestroy
   LCLVersion = '1.1'
   object LayoutBoleto: TRLReport
-    Left = 24
+    Left = 32
     Height = 1123
-    Top = -8
+    Top = -136
     Width = 794
     Margins.LeftMargin = 4
     Margins.TopMargin = 5
@@ -1518,8 +1518,8 @@ object ACBRBoletoFCFortesFr: TACBRBoletoFCFortesFr
         Left = 4
         Height = 10
         Top = 157
-        Width = 325
-        Caption = 'Instruções (Todas as informações deste bloqueto são de exclusiva responsabilidade do cedente.)'
+        Width = 338
+        Caption = 'Instruções (Todas as informações deste bloqueto são de exclusiva responsabilidade do beneficiário.)'
         Font.Color = clBlack
         Font.Height = -8
         Font.Name = 'Arial'
@@ -2898,8 +2898,8 @@ object ACBRBoletoFCFortesFr: TACBRBoletoFCFortesFr
         Left = 4
         Height = 10
         Top = 174
-        Width = 171
-        Caption = 'Instruções - Texto de responsabilidade do cedente.'
+        Width = 184
+        Caption = 'Instruções - Texto de responsabilidade do beneficiário.'
         Font.Color = clBlack
         Font.Height = -8
         Font.Name = 'Arial'
@@ -3385,9 +3385,9 @@ object ACBRBoletoFCFortesFr: TACBRBoletoFCFortesFr
     end
   end
   object BoletoCarne: TRLReport
-    Left = 848
+    Left = 712
     Height = 1123
-    Top = 64
+    Top = 56
     Width = 794
     Font.Color = clBlack
     Font.Height = -13
@@ -3904,8 +3904,8 @@ object ACBRBoletoFCFortesFr: TACBRBoletoFCFortesFr
         Left = 152
         Height = 10
         Top = 146
-        Width = 325
-        Caption = 'Instruções (Todas as informações deste bloqueto são de exclusiva responsabilidade do cedente.)'
+        Width = 338
+        Caption = 'Instruções (Todas as informações deste bloqueto são de exclusiva responsabilidade do beneficiário.)'
         Font.Color = clBlack
         Font.Height = -8
         Font.Name = 'Arial'
