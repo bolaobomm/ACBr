@@ -37,10 +37,35 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+
+30/12/2013
+-- ACBrMail --
+[*] A procedure Clear agora é publica;
+[*] Agora, quando ocorre um erro durante o envio, a procedure Clear é chamada
+    antes da exceção ser disparada;
+[-] Corrigido bug que não enviava o Assunto do e-mail ao alterar o
+    DefaultCharset para um valor diferente de ISO_8859_1;
+    (Por: Jean Patrick)
+
+04/11/2013
+-- ACBrMail --
+[-] Corrigido bug em charset's ao usar letras acentuadas nas mensagens
+    (Por: Jean Patrick)
+
+23/10/2013
+-- ACBrMail --
+[*] Pequenos acertos no enviador de e-mails de exemplo    (Por: Jean Patrick)
+
+22/10/2013
+-- ACBrMail --
+[+] Criado um completo enviador de e-mails como exemplo de uso do componente
+    para Lazarus  (Por: Jean Patrick)
+
 11/10/2013
 -- ACBrMail --
 [+] Adicionado novo componente ACBrMail, que é um completo Cliente SMTP
     (Por: Jean Patrick)
+[+] Criado simples exemplo de uso
 
 28/09/2013
 -- ACBrCNIEE --

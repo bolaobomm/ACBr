@@ -116,7 +116,7 @@ type
 
     procedure SetBody(const aValue : TStringList);
     procedure SetAltBody(const aValue : TStringList);
-    procedure Clear;
+    procedure SmtpError(const pMsgError: string);
 
   protected
 
@@ -125,6 +125,7 @@ type
     destructor Destroy; override;
     procedure MailProcess(const aStatus: TMailStatus);
     procedure Send;
+    procedure Clear;
 
     procedure AddAttachment(aFileName: string; aNameRef: string); overload;
     procedure AddAttachment(aFileName: string); overload;
@@ -241,6 +242,12 @@ end;
 procedure TACBrMail.SetAltBody(const aValue: TStringList);
 begin
   fAltBody.Assign( aValue );
+end;
+
+procedure TACBrMail.SmtpError(const pMsgError: string);
+begin
+  Clear;
+  raise Exception.Create(pMsgError);
 end;
 
 procedure TACBrMail.Clear;
@@ -489,7 +496,9 @@ begin
   fMIMEMess.Header.CharsetCode := fDefaultCharsetCode;
 
   if fDefaultCharsetCode <> UTF_8 then
-    fMIMEMess.Header.Subject := CharsetConversion(fSubject, UTF_8, fDefaultCharsetCode);
+    fMIMEMess.Header.Subject := CharsetConversion(fSubject, UTF_8, fDefaultCharsetCode)
+  else
+    fMIMEMess.Header.Subject := fSubject;
 
   if Trim(fFromName) <> '' then
     fMIMEMess.Header.From := '"' + fFromName + ' <' + From + '>"'
@@ -513,7 +522,7 @@ begin
     if fSMTP.Login then
       Break;
     if vAttempts >= fAttempts then
-      raise Exception.Create('SMTP Error: Unable to Login.');
+      SmtpError('SMTP Error: Unable to Login.');
   end;
 
   MailProcess(pmsStartSends);
@@ -523,7 +532,7 @@ begin
     if fSMTP.MailFrom(fFrom, Length(fFrom)) then
       Break;
     if vAttempts >= fAttempts then
-      raise Exception.Create('SMTP Error: Unable to send MailFrom.');
+      SmtpError('SMTP Error: Unable to send MailFrom.');
   end;
 
   MailProcess(pmsSendTo);
@@ -534,7 +543,7 @@ begin
       if fSMTP.MailTo(GetEmailAddr(fMIMEMess.Header.ToList.Strings[i]))then
         Break;
       if vAttempts >= fAttempts then
-        raise Exception.Create('SMTP Error: Unable to send MailTo.');
+        SmtpError('SMTP Error: Unable to send MailTo.');
     end;
 
   c := fMIMEMess.Header.CCList.Count;
@@ -548,7 +557,7 @@ begin
       if fSMTP.MailTo(GetEmailAddr(fMIMEMess.Header.CCList.Strings[i])) then
         Break;
       if vAttempts >= fAttempts then
-        raise Exception.Create('SMTP Error: Unable to send CC list.');
+        SmtpError('SMTP Error: Unable to send CC list.');
     end;
 
   c := fBCC.Count;
@@ -562,7 +571,7 @@ begin
       if fSMTP.MailTo(GetEmailAddr(fBCC.Strings[I])) then
         Break;
       if vAttempts >= fAttempts then
-        raise Exception.Create('SMTP Error: Unable to send BCC list.');
+        SmtpError('SMTP Error: Unable to send BCC list.');
     end;
 
   c := fReplyTo.Count;
@@ -576,7 +585,7 @@ begin
       if fSMTP.MailTo(GetEmailAddr(fReplyTo.Strings[I])) then
         Break;
       if vAttempts >= fAttempts then
-        raise Exception.Create('SMTP Error: Unable to send ReplyTo list.');
+        SmtpError('SMTP Error: Unable to send ReplyTo list.');
     end;
 
   MailProcess(pmsSendData);
@@ -586,7 +595,7 @@ begin
     if fSMTP.MailData(fMIMEMess.Lines) then
       Break;
     if vAttempts >= fAttempts then
-      raise Exception.Create('SMTP Error: Unable to send Mail data.');
+      SmtpError('SMTP Error: Unable to send Mail data.');
   end;
 
   MailProcess(pmsLogoutSMTP);
@@ -596,7 +605,7 @@ begin
     if fSMTP.Logout then
       Break;
     if vAttempts >= fAttempts then
-      raise Exception.Create('SMTP Error: Unable to Logout.');
+      SmtpError('SMTP Error: Unable to Logout.');
   end;
 
   Clear;
