@@ -563,7 +563,7 @@ begin
 
   LoadDLLFunctions;
 
-  ParamAdic := StringReplace( ParametrosAdicionais.Text, sLineBreak, ';',
+  ParamAdic := StringReplace( Trim(ParametrosAdicionais.Text), sLineBreak, ';',
                               [rfReplaceAll] ) ;
 
   if (pos('VersaoAutomacaoCielo',ParamAdic) = 0) then

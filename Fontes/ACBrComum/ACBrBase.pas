@@ -427,6 +427,7 @@ end;
 function TACBrInformacoes.AddField(const ANome,
   AValor: String): TACBrInformacao;
 begin
+  {
   try
      Result := FieldByName(ANome);
      Result.AsString := AValor;
@@ -437,6 +438,20 @@ begin
        Nome     := AnsiString(ANome);
        AsString := AnsiString(AValor);
      end;
+  end;
+  }
+
+  Result := FieldByName(ANome);
+  if Result <> nil then
+    Result.AsString := AValor
+  else
+  begin
+    Result := Self.Add;
+    with Result do
+    begin
+      Nome     := AnsiString(ANome);
+      AsString := AnsiString(AValor);
+    end;
   end;
 end;
 
@@ -454,8 +469,9 @@ begin
     end;
   end;
 
-  if Result = nil then
-    raise Exception.CreateFmt('Resposta "%s" não encontrada.', [AName]);
+  // removido porque o check deveria ser feito ao usar o método
+  //if Result = nil then
+  //  raise Exception.CreateFmt('Resposta "%s" não encontrada.', [AName]);
 end;
 
 procedure TACBrInformacoes.SaveToFile(AFileName : String) ;

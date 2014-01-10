@@ -822,7 +822,9 @@ end;
 procedure TACBrTEFDArquivo.GravarArquivo(const NomeArquivo : String;
    DoFlushToDisk : Boolean = False );
 begin
-  fStringList.SaveToFile(NomeArquivo);
+  //fStringList.SaveToFile(NomeArquivo);
+  // em discos SD o arquivo se perdia ao reiniciar a maquina
+  WriteToTXT(NomeArquivo, fStringList.Text);
 
   if DoFlushToDisk then
      FlushFileToDisk( NomeArquivo );
