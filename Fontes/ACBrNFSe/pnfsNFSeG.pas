@@ -543,7 +543,7 @@ begin
      proEquiplano, profintelISS, proFISSLex, proGinfes, proGoiania, proGovBR,
      proGovDigital, proIssCuritiba, proISSDigital, proISSIntel, proISSNet, proNatal,
      proProdemge, proPublica, proRecife, proRJ, proSaatri, proFreire, proSimplISS, proThema,
-     proTiplan, proWebISS, proCoplan, proProdata, proAgili, proSpeedGov] then Result := '';
+     proTiplan, proWebISS, proProdata, proAgili, proSpeedGov] then Result := '';
 end;
 
 //-------------------------------------------------------------------------

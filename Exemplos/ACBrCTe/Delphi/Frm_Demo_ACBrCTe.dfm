@@ -1080,6 +1080,7 @@ object frmDemo_ACBrCTe: TfrmDemo_ACBrCTe
     Configuracoes.WebServices.AguardarConsultaRet = 0
     Configuracoes.WebServices.IntervaloTentativas = 0
     Configuracoes.WebServices.AjustaAguardaConsultaRet = False
+    OnStatusChange = ACBrCTe1StatusChange
     DACTe = ACBrCTeDACTeQR1
     Left = 232
     Top = 400

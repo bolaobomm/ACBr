@@ -3082,7 +3082,9 @@ begin
      if FProvedor in [proFreire, proVitoria]
       then NFSe.DataEmissao              := Leitor.rCampo(tcDat, 'DataEmissao')
       else NFSe.DataEmissao              := Leitor.rCampo(tcDatHor, 'DataEmissao');
-     NFSe.DataEmissaoRps           := Leitor.rCampo(tcDat, 'DataEmissaoRps');
+     // Alterado por Leonardo Gregianin 11/01/2014: Tratar erro de conversão de tipo no Provedor Ábaco
+	 if Leitor.rCampo(tcStr, 'DataEmissaoRps') <> '0000-00-00' then
+	    NFSe.DataEmissaoRps           := Leitor.rCampo(tcDat, 'DataEmissaoRps');
 
      if FProvedor = proISSNet
       then FNFSe.NfseSubstituida := ''

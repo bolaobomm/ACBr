@@ -1156,7 +1156,7 @@ begin
     TNFSeConsultarLoteRPS(Self).FCNPJ:=SomenteNumeros(TNFSeConsultarLoteRPS(Self).FNotasFiscais.Items[0].NFSe.Prestador.Cnpj);
  if (TNFSeConsultarLoteRPS(Self).FIM = '') then
     TNFSeConsultarLoteRPS(Self).FIM:=TNFSeConsultarLoteRPS(Self).FNotasFiscais.Items[0].NFSe.Prestador.InscricaoMunicipal;
- if (TNFSeConsultarLoteRPS(Self).FRazaoSocial = '') then
+ if (TNFSeConsultarLoteRPS(Self).FRazaoSocial = '') and (FProvedor = proTecnos) then
     TNFSeConsultarLoteRPS(Self).FRazaoSocial:=TNFSeConsultarLoteRPS(Self).FNotasFiscais.Items[0].NFSe.PrestadorServico.RazaoSocial;
 
  FDadosSenha := FProvedorClass.Gera_DadosSenha(FConfiguracoes.WebServices.UserWeb,

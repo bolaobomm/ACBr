@@ -95,6 +95,7 @@ begin
  ConfigSchema.ServicoConRps   := 'nfse.xsd';
  ConfigSchema.ServicoConNfse  := 'nfse.xsd';
  ConfigSchema.ServicoCancelar := 'nfse.xsd';
+ ConfigSchema.ServicoEnviarSincrono := 'nfse.xsd';
  ConfigSchema.DefTipos        := '';
 
  Result := ConfigSchema;
@@ -124,6 +125,7 @@ begin
  ConfigURL.HomConsultaNFSe       := 'http://ws.municipioweb.com.br:8080/webservice/NfseWSService?wsdl';
  ConfigURL.HomCancelaNFSe        := 'http://ws.municipioweb.com.br:8080/webservice/NfseWSService?wsdl';
  ConfigURL.HomGerarNFSe          := 'http://ws.municipioweb.com.br:8080/webservice/NfseWSService?wsdl';
+ ConfigURL.HomRecepcaoSincrono   := 'http://ws.municipioweb.com.br:8080/webservice/NfseWSService?wsdl';
 
  ConfigURL.ProRecepcaoLoteRPS    := 'https://' + ConfigURL.ProNomeCidade + '.issqn.srv.br/webservice/NfseWSService';
  ConfigURL.ProConsultaLoteRPS    := 'https://' + ConfigURL.ProNomeCidade + '.issqn.srv.br/webservice/NfseWSService';
@@ -132,6 +134,7 @@ begin
  ConfigURL.ProConsultaNFSe       := 'https://' + ConfigURL.ProNomeCidade + '.issqn.srv.br/webservice/NfseWSService';
  ConfigURL.ProCancelaNFSe        := 'https://' + ConfigURL.ProNomeCidade + '.issqn.srv.br/webservice/NfseWSService';
  ConfigURL.ProGerarNFSe          := 'https://' + ConfigURL.ProNomeCidade + '.issqn.srv.br/webservice/NfseWSService';
+ ConfigURL.ProRecepcaoSincrono   := 'https://' + ConfigURL.ProNomeCidade + '.issqn.srv.br/webservice/NfseWSService';
 
  Result := ConfigURL;
 end;
@@ -151,6 +154,7 @@ begin
    acConsNFSe:    Result := False;
    acCancelar:    Result := False;
    acGerar:       Result := False;
+   acRecSincrono: Result := False;
    else           Result := False;
  end;
 end;
@@ -179,6 +183,7 @@ begin
                               '<' + Prefixo4 + 'InfPedidoCancelamento' +
                                  DFeUtil.SeSenao(Identificador <> '', ' ' + Identificador + '="' + URI + '"', '') + '>';
    acGerar:       Result := '<' + Prefixo3 + 'GerarNfseEnvio' + xmlns + NameSpaceDad;
+   acRecSincrono: Result := '<' + Prefixo3 + 'EnviarLoteRpsSincronoEnvio' + NameSpaceDad;
  end;
 end;
 
@@ -209,6 +214,7 @@ begin
    acCancelar:    Result := '</' + Prefixo3 + 'Pedido>' +
                             '</' + Prefixo3 + 'CancelarNfseEnvio>';
    acGerar:       Result := '</' + Prefixo3 + 'GerarNfseEnvio>';
+   acRecSincrono: Result := '</' + Prefixo3 + 'EnviarLoteRpsSincronoEnvio>';
  end;
 end;
 
@@ -354,7 +360,23 @@ end;
 function TProvedorCoplan.GeraEnvelopeRecepcionarSincrono(URLNS: String;
   CabMsg, DadosMsg, DadosSenha: AnsiString): AnsiString;
 begin
- Result := '';
+ result := '<?xml version="1.0" encoding="UTF-8"?>' +
+           '<S:Envelope xmlns:S="http://schemas.xmlsoap.org/soap/envelope/"' +
+                      ' xmlns:nfse="http://nfse.abrasf.org.br">' +
+            '<S:Header>' +
+              DadosSenha +
+            '</S:Header>' +
+            '<S:Body>' +
+             '<nfse:RecepcionarLoteRpsSincronoRequest>' +
+              '<nfseCabecMsg>' +
+               '<![CDATA[' + CabMsg + ']]>' +
+              '</nfseCabecMsg>' +
+              '<nfseDadosMsg>' +
+               '<![CDATA[' + DadosMsg + ']]>' +
+              '</nfseDadosMsg>' +
+             '</nfse:RecepcionarLoteRpsSincronoRequest>' +
+            '</S:Body>' +
+           '</S:Envelope>';
 end;
 
 function TProvedorCoplan.GetSoapAction(Acao: TnfseAcao; NomeCidade: String): String;
@@ -367,6 +389,7 @@ begin
    acConsNFSe:    Result := 'http://nfse.abrasf.org.br/Infse/ConsultarNfseServicoPrestado';
    acCancelar:    Result := 'http://nfse.abrasf.org.br/Infse/CancelarNfse';
    acGerar:       Result := 'http://nfse.abrasf.org.br/Infse/GerarNfse';
+   acRecSincrono: Result := 'http://nfse.abrasf.org.br/Infse/RecepcionarLoteRpsSincrono';
  end;
 end;
 
@@ -380,6 +403,7 @@ begin
    acConsNFSe:    Result := SeparaDados( RetornoWS, 'outputXML' );
    acCancelar:    Result := SeparaDados( RetornoWS, 'outputXML' );
    acGerar:       Result := SeparaDados( RetornoWS, 'outputXML' );
+   acRecSincrono: Result := SeparaDados( RetornoWS, 'outputXML' );
  end;
 end;
 

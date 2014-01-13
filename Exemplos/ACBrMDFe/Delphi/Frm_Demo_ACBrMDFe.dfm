@@ -1055,6 +1055,7 @@ object frmDemo_ACBrMDFe: TfrmDemo_ACBrMDFe
     Configuracoes.WebServices.AguardarConsultaRet = 0
     Configuracoes.WebServices.IntervaloTentativas = 0
     Configuracoes.WebServices.AjustaAguardaConsultaRet = False
+    OnStatusChange = ACBrMDFe1StatusChange
     DAMDFe = DAMDFE
     Left = 526
     Top = 257
