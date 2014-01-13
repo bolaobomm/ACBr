@@ -72,7 +72,7 @@ begin
 
  ConfigCidade.NameSpaceEnvelope := 'https://nfe.progam.com.br/cruzeiro/nfse/xsd/rps_importacao_manual.xsd';
 
- ConfigCidade.AssinaRPS  := True;
+ ConfigCidade.AssinaRPS  := False;
  ConfigCidade.AssinaLote := False;
 
  Result := ConfigCidade;
@@ -129,7 +129,7 @@ end;
 function TProvedorMitra.GetAssinarXML(Acao: TnfseAcao): Boolean;
 begin
  case Acao of
-   acRecepcionar: Result := True;
+   acRecepcionar: Result := False;
    acConsSit:     Result := False;
    acConsLote:    Result := False;
    acConsNFSeRps: Result := False;

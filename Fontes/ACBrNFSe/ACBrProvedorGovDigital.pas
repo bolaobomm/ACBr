@@ -75,6 +75,11 @@ begin
               then ConfigCidade.NameSpaceEnvelope := 'https://www.govdigital.com.br/ws/itj'
               else ConfigCidade.NameSpaceEnvelope := 'https://homolog.govdigital.com.br/ws/itj';
             end;
+   3138203: begin // Lavras/MG
+             if AAmbiente = 1
+              then ConfigCidade.NameSpaceEnvelope := 'https://www.govdigital.com.br/ws/lavras'
+              else ConfigCidade.NameSpaceEnvelope := 'https://homolog.govdigital.com.br/ws/lavras';
+            end;
    3147006: begin // Paracatu/MG
              if AAmbiente = 1
               then ConfigCidade.NameSpaceEnvelope := 'https://www.govdigital.com.br/ws/pctu'
@@ -130,6 +135,11 @@ begin
              ConfigURL.HomNomeCidade := 'itj';
              ConfigURL.ProNomeCidade := 'itj';
              Porta := '80';
+            end;
+   3138203: begin // Lavras/MG
+             ConfigURL.HomNomeCidade := 'lavras';
+             ConfigURL.ProNomeCidade := 'lavras';
+             Porta := '443';
             end;
    3147006: begin // Paracatu/MG
              ConfigURL.HomNomeCidade := 'pctu';
