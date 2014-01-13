@@ -1471,12 +1471,11 @@ begin
   Gerador.wCampo(tcStr, '#05', 'CIOT  ', 12, 12, 0, CTe.infCTeNorm.rodo.CIOT, DSC_CIOT);
 
   GerarOCC;
+  GerarValePed;
 
-  if CTe.infCTeNorm.rodo.Lota = ltSim
-   then begin
-    GerarValePed;
-    GerarVeic;
-   end;
+  if CTe.infCTeNorm.rodo.Lota = ltSim then
+   GerarVeic;
+
   GerarLacre;
 
   if CTe.infCTeNorm.rodo.Lota = ltSim then
