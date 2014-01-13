@@ -3128,7 +3128,12 @@ begin
     begin
       wProc := TStringList.Create;
       wProc.Add('<?xml version="1.0" encoding="UTF-8" ?>');
-      wProc.Add('<procCancNFe versao="2.00" xmlns="http://www.portalfiscal.inf.br/nfe">');
+//      wProc.Add('<procCancNFe versao="2.00" xmlns="http://www.portalfiscal.inf.br/nfe">');
+
+      wProc.Add('<procCancNFe versao="' + GetVersaoNFe(FConfiguracoes.Geral.ModeloDF,
+                                                       FConfiguracoes.Geral.VersaoDF,
+                                                       LayNfeCancelamento)+
+                               '" xmlns="http://www.portalfiscal.inf.br/nfe">');
       wProc.Add(FDadosMSG);
       wProc.Add(FRetWS);
       wProc.Add('</procCancNFe>');
@@ -3305,7 +3310,13 @@ begin
     begin
       wProc := TStringList.Create;
       wProc.Add('<?xml version="1.0" encoding="UTF-8" ?>');
-      wProc.Add('<ProcInutNFe versao="2.00" xmlns="http://www.portalfiscal.inf.br/nfe">');
+//      wProc.Add('<ProcInutNFe versao="2.00" xmlns="http://www.portalfiscal.inf.br/nfe">');
+
+      wProc.Add('<ProcInutNFe versao="' + GetVersaoNFe(FConfiguracoes.Geral.ModeloDF,
+                                                       FConfiguracoes.Geral.VersaoDF,
+                                                       LayNfeInutilizacao) +
+                               '" xmlns="http://www.portalfiscal.inf.br/nfe">');
+
       wProc.Add(FDadosMSG);
       wProc.Add(FRetWS);
       wProc.Add('</ProcInutNFe>');
