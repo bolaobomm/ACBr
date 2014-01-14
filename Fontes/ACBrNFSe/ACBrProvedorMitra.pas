@@ -82,8 +82,8 @@ function TProvedorMitra.GetConfigSchema(ACodCidade: Integer): TConfigSchema;
 var
  ConfigSchema: TConfigSchema;
 begin
- ConfigSchema.VersaoCabecalho := '2.00';
- ConfigSchema.VersaoDados     := '2.00';
+ ConfigSchema.VersaoCabecalho := '2.01';
+ ConfigSchema.VersaoDados     := '2.01';
  ConfigSchema.VersaoXML       := '2';
  ConfigSchema.NameSpaceXML    := 'https://nfe.progam.com.br/cruzeiro/nfse/xsd/';
  ConfigSchema.Cabecalho       := 'rps_importacao_manual.xsd';
