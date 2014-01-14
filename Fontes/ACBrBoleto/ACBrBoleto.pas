@@ -416,6 +416,7 @@ type
     fCidade: String;
     fCodigoCedente: String;
     fComplemento: String;
+    fTelefone: String;
     fNomeCedente   : String;
     fAgencia       : String;
     fAgenciaDigito : String;
@@ -457,6 +458,7 @@ type
     property Cidade      : String  read fCidade      write fCidade;
     property UF          : String  read fUF          write fUF;
     property CEP         : String  read fCEP         write fCEP;
+    property Telefone    : String  read fTelefone    write fTelefone;
     property ACBrBoleto  : TACBrBoleto read fACBrBoleto;
   end;
 

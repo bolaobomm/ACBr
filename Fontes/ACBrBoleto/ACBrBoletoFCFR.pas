@@ -166,6 +166,7 @@ begin
      FieldDefs.Add('Cidade', ftString, 100);
      FieldDefs.Add('UF', ftString, 2);
      FieldDefs.Add('CEP', ftString, 8);
+     FieldDefs.Add('Telefone', ftString, 10);
      CreateDataSet;
    end;
    // Titulo
@@ -365,6 +366,7 @@ begin
          FieldByName('Cidade').AsString            := Cedente.Cidade;
          FieldByName('UF').AsString                := Cedente.UF;
          FieldByName('CEP').AsString               := Cedente.CEP;
+         FieldByName('Telefone').AsString          := Cedente.Telefone;
          Post;
       end;
       // Titulos
