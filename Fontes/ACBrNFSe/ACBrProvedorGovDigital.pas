@@ -72,25 +72,25 @@ begin
   case ACodCidade of
    3132404: begin // Itajubá/MG
              if AAmbiente = 1
-              then ConfigCidade.NameSpaceEnvelope := 'https://www.govdigital.com.br/ws/itj'
+              then ConfigCidade.NameSpaceEnvelope := 'https://ws.govdigital.com.br/ws/itj'
               else ConfigCidade.NameSpaceEnvelope := 'https://homolog.govdigital.com.br/ws/itj';
             end;
    3138203: begin // Lavras/MG
              if AAmbiente = 1
-              then ConfigCidade.NameSpaceEnvelope := 'https://www.govdigital.com.br/ws/lavras'
-              else ConfigCidade.NameSpaceEnvelope := 'https://homolog.govdigital.com.br/ws/lavras';
+              then ConfigCidade.NameSpaceEnvelope := 'https://ws.govdigital.com.br/ws/lavr'
+              else ConfigCidade.NameSpaceEnvelope := 'https://homolog.govdigital.com.br/ws/lavr';
             end;
    3147006: begin // Paracatu/MG
              if AAmbiente = 1
-              then ConfigCidade.NameSpaceEnvelope := 'https://www.govdigital.com.br/ws/pctu'
+              then ConfigCidade.NameSpaceEnvelope := 'https://ws.govdigital.com.br/ws/pctu'
               else ConfigCidade.NameSpaceEnvelope := 'https://homolog.govdigital.com.br/ws/pctu';
             end;
    3151800: begin // Poços de Caldas/MG
              if AAmbiente = 1
-              then ConfigCidade.NameSpaceEnvelope := 'https://www.govdigital.com.br/ws/pocos'
+              then ConfigCidade.NameSpaceEnvelope := 'https://ws.govdigital.com.br/ws/pocos'
               else ConfigCidade.NameSpaceEnvelope := 'https://homolog.govdigital.com.br/ws/pocos';
             end;
-   // A Cidade de Itapetininga/SP trocou o provedor de GovDigital para ISSNet         
+   // A Cidade de Itapetininga/SP trocou o provedor de GovDigital para ISSNet
 //   3522307: begin // Itapetininga/SP
 //             if AAmbiente = 1
 //              then ConfigCidade.NameSpaceEnvelope := 'https://www.govdigital.com.br/ws/itapetininga'
@@ -134,11 +134,11 @@ begin
    3132404: begin
              ConfigURL.HomNomeCidade := 'itj';
              ConfigURL.ProNomeCidade := 'itj';
-             Porta := '80';
+             Porta := '443';
             end;
    3138203: begin // Lavras/MG
-             ConfigURL.HomNomeCidade := 'lavras';
-             ConfigURL.ProNomeCidade := 'lavras';
+             ConfigURL.HomNomeCidade := 'lavr';
+             ConfigURL.ProNomeCidade := 'lavr';
              Porta := '443';
             end;
    3147006: begin // Paracatu/MG
@@ -149,7 +149,7 @@ begin
    3151800: begin
              ConfigURL.HomNomeCidade := 'pocos';
              ConfigURL.ProNomeCidade := 'pocos';
-             Porta := '80';
+             Porta := '443';
             end;
 //   3522307: begin // Itapetininga/SP
 //             ConfigURL.HomNomeCidade := 'itapetininga';
@@ -157,21 +157,21 @@ begin
 //            end;
   end;
 
- 	ConfigURL.HomRecepcaoLoteRPS    := 'http://homolog.govdigital.com.br:' + Porta + '/ws/' + ConfigURL.HomNomeCidade;
- 	ConfigURL.HomConsultaLoteRPS    := 'http://homolog.govdigital.com.br:' + Porta + '/ws/' + ConfigURL.HomNomeCidade;
- 	ConfigURL.HomConsultaNFSeRPS    := 'http://homolog.govdigital.com.br:' + Porta + '/ws/' + ConfigURL.HomNomeCidade;
- 	ConfigURL.HomConsultaSitLoteRPS := 'http://homolog.govdigital.com.br:' + Porta + '/ws/' + ConfigURL.HomNomeCidade;
- 	ConfigURL.HomConsultaNFSe       := 'http://homolog.govdigital.com.br:' + Porta + '/ws/' + ConfigURL.HomNomeCidade;
- 	ConfigURL.HomCancelaNFSe        := 'http://homolog.govdigital.com.br:' + Porta + '/ws/' + ConfigURL.HomNomeCidade;
- 	ConfigURL.HomGerarNFSe          := 'http://homolog.govdigital.com.br:' + Porta + '/ws/' + ConfigURL.HomNomeCidade;
+ 	ConfigURL.HomRecepcaoLoteRPS    := 'https://homolog.govdigital.com.br:' + Porta + '/ws/' + ConfigURL.HomNomeCidade;
+ 	ConfigURL.HomConsultaLoteRPS    := 'https://homolog.govdigital.com.br:' + Porta + '/ws/' + ConfigURL.HomNomeCidade;
+ 	ConfigURL.HomConsultaNFSeRPS    := 'https://homolog.govdigital.com.br:' + Porta + '/ws/' + ConfigURL.HomNomeCidade;
+ 	ConfigURL.HomConsultaSitLoteRPS := 'https://homolog.govdigital.com.br:' + Porta + '/ws/' + ConfigURL.HomNomeCidade;
+ 	ConfigURL.HomConsultaNFSe       := 'https://homolog.govdigital.com.br:' + Porta + '/ws/' + ConfigURL.HomNomeCidade;
+ 	ConfigURL.HomCancelaNFSe        := 'https://homolog.govdigital.com.br:' + Porta + '/ws/' + ConfigURL.HomNomeCidade;
+ 	ConfigURL.HomGerarNFSe          := 'https://homolog.govdigital.com.br:' + Porta + '/ws/' + ConfigURL.HomNomeCidade;
 
- 	ConfigURL.ProRecepcaoLoteRPS    := 'http://www.govdigital.com.br:' + Porta + '/ws/' + ConfigURL.ProNomeCidade;
- 	ConfigURL.ProConsultaLoteRPS    := 'http://www.govdigital.com.br:' + Porta + '/ws/' + ConfigURL.ProNomeCidade;
- 	ConfigURL.ProConsultaNFSeRPS    := 'http://www.govdigital.com.br:' + Porta + '/ws/' + ConfigURL.ProNomeCidade;
- 	ConfigURL.ProConsultaSitLoteRPS := 'http://www.govdigital.com.br:' + Porta + '/ws/' + ConfigURL.ProNomeCidade;
- 	ConfigURL.ProConsultaNFSe       := 'http://www.govdigital.com.br:' + Porta + '/ws/' + ConfigURL.ProNomeCidade;
- 	ConfigURL.ProCancelaNFSe        := 'http://www.govdigital.com.br:' + Porta + '/ws/' + ConfigURL.ProNomeCidade;
-  ConfigURL.ProGerarNFSe          := 'http://www.govdigital.com.br:' + Porta + '/ws/' + ConfigURL.ProNomeCidade;
+ 	ConfigURL.ProRecepcaoLoteRPS    := 'https://ws.govdigital.com.br:' + Porta + '/ws/' + ConfigURL.ProNomeCidade;
+ 	ConfigURL.ProConsultaLoteRPS    := 'https://ws.govdigital.com.br:' + Porta + '/ws/' + ConfigURL.ProNomeCidade;
+ 	ConfigURL.ProConsultaNFSeRPS    := 'https://ws.govdigital.com.br:' + Porta + '/ws/' + ConfigURL.ProNomeCidade;
+ 	ConfigURL.ProConsultaSitLoteRPS := 'https://ws.govdigital.com.br:' + Porta + '/ws/' + ConfigURL.ProNomeCidade;
+ 	ConfigURL.ProConsultaNFSe       := 'https://ws.govdigital.com.br:' + Porta + '/ws/' + ConfigURL.ProNomeCidade;
+ 	ConfigURL.ProCancelaNFSe        := 'https://ws.govdigital.com.br:' + Porta + '/ws/' + ConfigURL.ProNomeCidade;
+  ConfigURL.ProGerarNFSe          := 'https://ws.govdigital.com.br:' + Porta + '/ws/' + ConfigURL.ProNomeCidade;
 
  	Result := ConfigURL;
 end;
