@@ -1,12 +1,13 @@
 {******************************************************************************}
 { Projeto: Componente ACBrGNRE                                                 }
-{ Biblioteca multiplataforma de componentes Delphi para emissão de Guia 	   }
-{ Nacional de Recolhimento de Tributos Estaduais - GNRE -                      }
-{ http://www.gnre.pe.gov.br                                                    }
+{  Biblioteca multiplataforma de componentes Delphi/Lazarus para emissão da    }
+{  Guia Nacional de Recolhimento de Tributos Estaduais                         }
+{  http://www.gnre.pe.gov.br/                                                  }
 {                                                                              }
-{ Direitos Autorais Reservados (c) 2008 Wemerson Souto                         }
+{ Direitos Autorais Reservados (c) 2013 Claudemir Vitor Pereira                }
 {                                       Daniel Simoes de Almeida               }
 {                                       André Ferreira de Moraes               }
+{                                       Juliomar Marchetti                     }
 {                                                                              }
 { Colaboradores nesse arquivo:                                                 }
 {                                                                              }
@@ -38,8 +39,8 @@
 {******************************************************************************
 |* Historico
 |*
-|* 01/04/2013: Claudemir Vitor Pereira
-|*  - Inicio do desenvolvimento GNRE Guia FastReport
+|* 09/12/2013 - Claudemir Vitor Pereira
+|*  - Doação do componente para o Projeto ACBr
 ******************************************************************************}
 {$I ACBr.inc}
 

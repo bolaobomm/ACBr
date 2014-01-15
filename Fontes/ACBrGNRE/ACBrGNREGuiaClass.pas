@@ -1,14 +1,15 @@
 {******************************************************************************}
 { Projeto: Componente ACBrGNRE                                                 }
-{ Biblioteca multiplataforma de componentes Delphi para emissão de Guia 	   }
-{ Nacional de Recolhimento de Tributos Estaduais - GNRE -                      }
-{ http://www.gnre.pe.gov.br                                                    }
+{  Biblioteca multiplataforma de componentes Delphi/Lazarus para emissão da    }
+{  Guia Nacional de Recolhimento de Tributos Estaduais                         }
+{  http://www.gnre.pe.gov.br/                                                  }
 {                                                                              }
-{ Direitos Autorais Reservados (c) 2008 Wemerson Souto                         }
-{                                       Wiliam Zacarias da Silva Rosa          }
+{ Direitos Autorais Reservados (c) 2013 Claudemir Vitor Pereira                }
 {                                       Daniel Simoes de Almeida               }
 {                                       André Ferreira de Moraes               }
+{                                       Juliomar Marchetti                     }
 {                                                                              }
+{ Colaboradores nesse arquivo:                                                 }
 {                                                                              }
 {  Você pode obter a última versão desse arquivo na pagina do Projeto ACBr     }
 { Componentes localizado em http://www.sourceforge.net/projects/acbr           }
@@ -30,7 +31,6 @@
 { Você também pode obter uma copia da licença em:                              }
 { http://www.opensource.org/licenses/lgpl-license.php                          }
 {                                                                              }
-{ Wiliam Zacarias da Silva Rosa - wiliamzsr@motta.com.br                       }
 { Daniel Simões de Almeida  -  daniel@djsystem.com.br  -  www.djsystem.com.br  }
 {              Praça Anita Costa, 34 - Tatuí - SP - 18270-410                  }
 {                                                                              }
@@ -39,8 +39,8 @@
 {******************************************************************************
 |* Historico
 |*
-|* 01/04/2013: Claudemir Vitor Pereira
-|*  - Definição de classes para impressão do Guia da GNRE
+|* 09/12/2013 - Claudemir Vitor Pereira
+|*  - Doação do componente para o Projeto ACBr
 ******************************************************************************}
 {$I ACBr.inc}
 
@@ -100,7 +100,7 @@ type
 
 implementation
 
-uses ACBrGNRE, ACBrGNREUtil, ACBrUtil, ACBrDFeUtil ;
+uses ACBrGNRE2, ACBrGNREUtil, ACBrUtil, ACBrDFeUtil ;
 
 constructor TACBrGNREGuiaClass.Create(AOwner: TComponent);
 begin

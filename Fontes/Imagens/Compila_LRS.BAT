@@ -103,6 +103,19 @@ echo "* Arquivo    ACBrNFe.lrs     gerado    *"
 echo "****************************************"
 echo.
 
+:GNRE
+%1\tools\lazres.exe ACBrGNRE.lrs TACBrGNRE.bmp 
+move ACBrGNRE.lrs ..\ACBrGNRE
+
+%1\tools\lazres.exe ACBrGNREGuiaFR.lrs TACBrGNREGuiaFR.bmp 
+move ACBrGNREGuiaFR.lrs ..\ACBrGNRE
+
+echo.
+echo "****************************************"
+echo "* Arquivo    ACBrGNRE.lrs     gerado    *"
+echo "****************************************"
+echo.
+
 :NFSe
 %1\tools\lazres.exe ACBrNFSe.lrs TACBrNFSe.bmp 
 move ACBrNFSe.lrs ..\ACBrNFSe
