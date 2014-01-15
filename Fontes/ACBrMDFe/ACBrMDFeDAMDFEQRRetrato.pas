@@ -246,13 +246,34 @@ end;
 
 procedure TfqrDAMDFEQRRetrato.qrb_1_DadosManifestoBeforePrint(Sender: TQRCustomBand;
   var PrintBand: Boolean);
+var
+ vStringStream: TStringStream;
 begin
   inherited;
 
-  if Trim(FLogo) <> '' then
-   begin
-    qriLogo.Picture.LoadFromFile(FLogo);
-   end;
+//  if Trim(FLogo) <> '' then
+//   begin
+//    qriLogo.Picture.LoadFromFile(FLogo);
+//   end;
+
+  // Alterado por Italo em 15/01/2014
+  if (FLogo <> '') then
+    begin
+      if FilesExists(FLogo) then
+        qriLogo.Picture.LoadFromFile(FLogo)
+      else
+        begin
+          vStringStream := TStringStream.Create(FLogo);
+          try
+            try
+              qriLogo.Picture.Bitmap.LoadFromStream(vStringStream);
+            except
+            end;
+          finally
+            vStringStream.Free;
+          end;
+        end;
+    end;
 
   if FExpandirLogoMarca then
    begin

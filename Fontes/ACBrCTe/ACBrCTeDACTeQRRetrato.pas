@@ -640,7 +640,7 @@ implementation
 
 uses
   StrUtils, DateUtils,
-  ACBrDFeUtil, ACBrCTeUtil;
+  ACBrUtil, ACBrDFeUtil, ACBrCTeUtil;
 
 {$R *.dfm}
 
@@ -1157,13 +1157,34 @@ end;
 procedure TfrmDACTeQRRetrato.qrb_02_CabecalhoBeforePrint(Sender: TQRCustomBand; var PrintBand: Boolean);
 var
  strChaveContingencia: string;
+ vStringStream: TStringStream;
 begin
   inherited;
 
-  if Trim(FLogo) <> '' then
-   begin
-   qriLogo.Picture.LoadFromFile(FLogo);
-   end;
+//  if Trim(FLogo) <> '' then
+//   begin
+//   qriLogo.Picture.LoadFromFile(FLogo);
+//   end;
+
+  // Alterado por Italo em 15/01/2014
+  if (FLogo <> '') then
+    begin
+      if FilesExists(FLogo) then
+        qriLogo.Picture.LoadFromFile(FLogo)
+      else
+        begin
+          vStringStream := TStringStream.Create(FLogo);
+          try
+            try
+              qriLogo.Picture.Bitmap.LoadFromStream(vStringStream);
+            except
+            end;
+          finally
+            vStringStream.Free;
+          end;
+        end;
+    end;
+
   // Alterado por Italo em 17/05/2012
   if FExpandirLogoMarca then
    begin
