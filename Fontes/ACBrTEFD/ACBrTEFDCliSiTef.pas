@@ -339,6 +339,7 @@ begin
        156 : fpRede                        := LinStr;
        501 : fpTipoPessoa                  := AnsiChar(IfThen(Linha.Informacao.AsInteger = 0,'J','F')[1]);
        502 : fpDocumentoPessoa             := LinStr ;
+       504 : fpTaxaServico                 := Linha.Informacao.AsFloat ;
        505 : fpQtdParcelas                 := Linha.Informacao.AsInteger ;
        506 : fpDataPreDatado               := Linha.Informacao.AsDate;
        511 : fpQtdParcelas                 := Linha.Informacao.AsInteger;  {Parcelas CDC - Neste caso o campo 505 não é retornado}
@@ -630,6 +631,8 @@ begin
 
   fpInicializado := True ;
 
+  TACBrTEFD(Owner).GPAtual := gpCliSiTef;
+
   // Cupom Ficou aberto ?? Se SIM, Cancele tudo... //
   if (Est in ['V','P','N','O']) then
      CancelarTransacoesPendentesClass
@@ -697,6 +700,10 @@ var
 begin
   VerificarTransacaoPagamento( Valor );
 
+  Req.DocumentoVinculado  := DocumentoVinculado;
+  Req.ValorTotal          := Valor;
+  Req.Moeda               := Moeda;
+
   Restr := fRestricoes;
   if Restr = '' then
      Restr := '[10]' ;     // 10 - Cheques
@@ -730,6 +737,9 @@ var
 
 begin
   VerificarTransacaoPagamento( Valor );
+
+  Req.DocumentoVinculado  := DocumentoVinculado;
+  Req.ValorTotal          := Valor;
 
   Respostas.Values['501'] := ifthen(TipoPessoa = 'J','1','0');
 

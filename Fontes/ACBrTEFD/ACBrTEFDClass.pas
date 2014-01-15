@@ -394,6 +394,7 @@ type
      fpValorOriginal: Double;
      fpSaque: Double;
      fpDesconto: Double;
+     fpTaxaServico: Double;
      fpDocumentoVinculado : String;
      fpTipoParcelamento : Integer;
      fpParcelas : TACBrTEFDRespParcelas ;
@@ -441,6 +442,7 @@ type
      property ValorOriginal               : Double    read fpValorOriginal ;
      property Saque                       : Double    read fpSaque ;
      property Desconto                    : Double    read fpDesconto ;
+     property TaxaServico                 : Double    read fpTaxaServico ;
      property Moeda                       : Integer   read fpMoeda ;
      property CMC7                        : String    read fpCMC7 ;
      property TipoPessoa                  : AnsiChar  read fpTipoPessoa ;
@@ -1188,6 +1190,7 @@ begin
    fpValorOriginal                := 0 ;
    fpSaque                        := 0 ;
    fpDesconto                     := 0 ;
+   fpTaxaServico                  := 0 ;
    fpDocumentoVinculado           := '' ;
    fpTipoParcelamento             := 0 ;
    fpValorEntradaCDC              := 0;
