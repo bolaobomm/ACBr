@@ -816,6 +816,7 @@ begin
 //  3205309, // Vitória/ES
   3305505, // Saquarema/RJ
   3504008, // Assis/SP
+  3304706, // Sto Antonio de Padua/RJ
   3511102, // Catanduva/SP
   3530300, // Mirassol/SP'
   3541505, // Presidente Venceslau/SP
@@ -825,7 +826,7 @@ begin
   4309407, // Guapore/RS
   4310207, // Ijui/RS
   4321709, // Tres Coroas/RS
-  3304706  // Sto Antonio de Padua/RJ
+  4322400  // Uruguaiana/RS
          : Provedor := 'GovBR';
 
   3132404, // Itajubá/MG
