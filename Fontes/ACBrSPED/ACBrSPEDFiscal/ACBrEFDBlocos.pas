@@ -138,20 +138,26 @@ Const
 
 type
   /// Indicador de movimento - TOpenBlocos
-  TACBrIndicadorMovimento = (imComDados, // 0- Bloco com dados informados;
-                             imSemDados  // 1- Bloco sem dados informados.
+  TACBrIndMov = (imComDados, // 0- Bloco com dados informados;
+                 imSemDados  // 1- Bloco sem dados informados.
                              );
+  TACBrIndicadorMovimento = TACBrIndMov;
+
   /// Perfil de apresentação do arquivo fiscal - TRegistro0000
-  TACBrPerfil             = (pfPerfilA, // A – Perfil A
-                             pfPerfilB, // B – Perfil B
-                             pfPerfilC  // C – Perfil C
-                             );
+  TACBrIndPerfil             = (pfPerfilA, // A – Perfil A
+                                pfPerfilB, // B – Perfil B
+                                pfPerfilC  // C – Perfil C
+                                );
+  TACBrPerfil = TACBrIndPerfil;
+
   /// Indicador de tipo de atividade - TRegistro0000
-  TACBrAtividade          = (atIndustrial, // 0 – Industrial ou equiparado a industrial
+  TACBrIndAtiv            = (atIndustrial, // 0 – Industrial ou equiparado a industrial
                              atOutros      // 1 – Outros.
                              );
+  TACBrAtividade = TACBrIndAtiv;
+
   /// Versão do Leiaute do arquivo - TRegistro0000
-  TACBrVersaoLeiaute      = (vlVersao100,  // Código 001 - Versão 100 Ato COTEPE 01/01/2008
+  TACBrCodVer             = (vlVersao100,  // Código 001 - Versão 100 Ato COTEPE 01/01/2008
                              vlVersao101,  // Código 002 - Versão 101 Ato COTEPE 01/01/2009
                              vlVersao102,  // Código 003 - Versão 102 Ato COTEPE 01/01/2010
                              vlVersao103,  // Código 004 - Versão 103 Ato COTEPE 01/01/2011
@@ -160,10 +166,14 @@ type
                              vlVersao106,  // Código 007
                              vlVersao107   // Código 008 - Válido a partir de 01/01/2014
                              );
+  TACBrVersaoLeiaute = TACBrCodVer;
+
   /// Código da finalidade do arquivo - TRegistro0000
-  TACBrCodFinalidade      = (raOriginal,     // 0 - Remessa do arquivo original
-                             raSubstituto    // 1 - Remessa do arquivo substituto
+  TACBrCodFin           = (raOriginal,     // 0 - Remessa do arquivo original
+                           raSubstituto    // 1 - Remessa do arquivo substituto
                              );
+  TACBrCodFinalidade = TACBrCodFin;
+
   /// Tipo do item – Atividades Industriais, Comerciais e Serviços:
   TACBrTipoItem = (tiMercadoriaRevenda,    // 00 – Mercadoria para Revenda
                    tiMateriaPrima,         // 01 – Matéria-Prima;
@@ -179,26 +189,34 @@ type
                    tiOutras                // 99 – Outras
                    );
   /// Indicador do tipo de operação:
-  TACBrTipoOperacao = (tpEntradaAquisicao, // 0 - Entrada
+  TACBrIndOper      = (tpEntradaAquisicao, // 0 - Entrada
                        tpSaidaPrestacao    // 1 - Saída
                        );
+  TACBrTipoOperacao = TACBrIndOper;
+
   /// Indicador do emitente do documento fiscal
-  TACBrEmitente = (edEmissaoPropria,         // 0 - Emissão própria
-                   edTerceiros               // 1 - Terceiro
-                   );
+  TACBrIndEmit = (edEmissaoPropria,         // 0 - Emissão própria
+                  edTerceiros               // 1 - Terceiro
+                  );
+  TACBrEmitente = TACBrIndEmit;
+
   /// Indicador do tipo de pagamento
-  TACBrTipoPagamento = (tpVista,             // 0 - À Vista
-                        tpPrazo,             // 1 - A Prazo
-                        tpSemPagamento,      // 9 - Sem pagamento
-                        tpNenhum             // Preencher vazio
-                        );
+  TACBrIndPgto = (tpVista,             // 0 - À Vista
+                  tpPrazo,             // 1 - A Prazo
+                  tpOutros,            // 2 - Outros
+                  tpSemPagamento,      // 9 - Sem pagamento
+                  tpNenhum             // Preencher vazio
+                  );
+  TACBrTipoPagamento = TACBrIndPgto;
+
   /// Indicador do tipo do frete
-  TACBrTipoFrete = (tfPorContaTerceiros,     // 0 - Por conta de terceiros
-                    tfPorContaEmitente,      // 1 - Por conta do emitente
-                    tfPorContaDestinatario,  // 2 - Por conta do destinatário
-                    tfSemCobrancaFrete,      // 9 - Sem cobrança de frete
-                    tfNenhum                 // Preencher vazio
-                    );
+  TACBrIndFrt = (tfPorContaTerceiros,     // 0 - Por conta de terceiros
+                 tfPorContaEmitente,      // 1 - Por conta do emitente
+                 tfPorContaDestinatario,  // 2 - Por conta do destinatário
+                 tfSemCobrancaFrete,      // 9 - Sem cobrança de frete
+                 tfNenhum                 // Preencher vazio
+                 );
+  TACBrTipoFrete = TACBrIndFrt;
 
   /// Indicador do tipo do frete da operação de redespacho
   TACBrTipoFreteRedespacho = (frSemRedespacho,         // 0 – Sem redespacho
@@ -216,9 +234,11 @@ type
                          opNenhum           // Preencher vazio
                          );
   /// Indicador do tipo de operação
-  TACBrTipoOperacaoST = (toCombustiveisLubrificantes, // 0 - Combustíveis e Lubrificantes
+  TACBrIndOperST      = (toCombustiveisLubrificantes, // 0 - Combustíveis e Lubrificantes
                          toLeasingVeiculos            // 1 - leasing de veículos ou faturamento direto
                          );
+  TACBrTipoOperacaoST = TACBrIndOperST;
+
   TACBrDoctoArrecada = (daEstadualArrecadacao,  // 0 - Documento Estadual de Arrecadação
                         daGNRE                  // 1 - GNRE
                         );
@@ -244,9 +264,11 @@ type
                      );
 
   /// Movimentação física do ITEM/PRODUTO:
-  TACBrMovimentacaoFisica = (mfSim,           // 0 - Sim
-                             mfNao            // 1 - Não
-                             );
+  TACBrIndMovFisica = (mfSim,           // 0 - Sim
+                       mfNao            // 1 - Não
+                      );
+  TACBrMovimentacaoFisica = TACBrIndMovFisica;
+
   /// Indicador de período de apuração do IPI
   TACBrApuracaoIPI = (iaMensal,               // 0 - Mensal
                       iaDecendial,             // 1 - Decendial
@@ -269,12 +291,14 @@ type
                        tafRestrito       // 1 - Restrito
                        );
   /// Indicador do tipo de operação com veículo
-  TACBrTipoOperacaoVeiculo = (tovVendaPConcess,   // 0 - Venda para concessionária
+  TACBrIndVeicOper         = (tovVendaPConcess,   // 0 - Venda para concessionária
                               tovFaturaDireta,    // 1 - Faturamento direto
                               tovVendaDireta,     // 2 - Venda direta
                               tovVendaDConcess,   // 3 - Venda da concessionária
                               tovVendaOutros      // 9 - Outros
                               );
+  TACBrTipoOperacaoVeiculo = TACBrIndVeicOper;
+
   /// Indicador do tipo de receita
   TACBrTipoReceita = (trPropria,   // 0 - Receita própria
                       trTerceiro   // 1 - Receita de terceiros
@@ -288,7 +312,7 @@ type
                         tnCabotagem
                         );
   /// Situação do Documento
-  TACBrSituacaoDocto = (sdRegular,                 // 00 - Documento regular
+  TACBrCodSit = (sdRegular,                 // 00 - Documento regular
                         sdExtempRegular,           // 01 - Escrituração extemporânea de documento regular
                         sdCancelado,               // 02 - Documento cancelado
                         sdCanceladoExtemp,         // 03 - Escrituração extemporânea de documento cancelado
@@ -298,6 +322,8 @@ type
                         sdExtempCompl,             // 07 - Escrituração extemporânea de documento complementar
                         sdRegimeEspecNEsp          // 08 - Documento Fiscal emitido com base em Regime Especial ou Norma Específica
                         );
+  TACBrSituacaoDocto = TACBrCodSit;
+
   /// Indicador do tipo de tarifa aplicada:
   TACBrTipoTarifa = (tipExp,     // 0 - Exp
                      tipEnc,     // 1 - Enc
@@ -438,7 +464,7 @@ type
                         assResidencial,            // 3 - Residencial/Pessoa física
                         assPublico,                // 4 - Público
                         assSemiPublico,            // 5 - Semi-Público
-                        assOutros,                 // 6 - Outros    
+                        assOutros,                 // 6 - Outros
                         assNenhum                  // Preencher vazio
                         );
   /// Motivo do Inventário
@@ -448,22 +474,146 @@ type
                            miRegimePagamento,
                            miDeterminacaoFiscos
                            );
+  ///Código da Situação Tributária referente ao ICMS.
+  TACBrCstIcms = (
+                   sticmsTributadaIntegralmente                              , // '000' //	Tributada integralmente
+                   sticmsTributadaComCobracaPorST                            , // '010' //	Tributada e com cobrança do ICMS por substituição tributária
+                   sticmsComReducao                                          , // '020' //	Com redução de base de cálculo
+                   sticmsIsentaComCobracaPorST                               , // '030' //	Isenta ou não tributada e com cobrança do ICMS por substituição tributária
+                   sticmsIsenta                                              , // '040' //	Isenta
+                   sticmsNaoTributada                                        , // '041' //	Não tributada
+                   sticmsSuspensao                                           , // '050' //	Suspensão
+                   sticmsDiferimento                                         , // '051' //	Diferimento
+                   sticmsCobradoAnteriormentePorST                           , // '060' //	ICMS cobrado anteriormente por substituição tributária
+                   sticmsComReducaoPorST                                     , // '070' //	Com redução de base de cálculo e cobrança do ICMS por substituição tributária
+                   sticmsOutros                                              , // '090' //	Outros
+                   sticmsEstrangeiraImportacaoDiretaTributadaIntegralmente   , // '100' // Estrangeira - Importação direta - Tributada integralmente
+                   sticmsEstrangeiraImportacaoDiretaTributadaComCobracaPorST , // '110' // Estrangeira - Importação direta - Tributada e com cobrança do ICMS por substituição tributária
+                   sticmsEstrangeiraImportacaoDiretaComReducao               , // '120' // Estrangeira - Importação direta - Com redução de base de cálculo
+                   sticmsEstrangeiraImportacaoDiretaIsentaComCobracaPorST    , // '130' // Estrangeira - Importação direta - Isenta ou não tributada e com cobrança do ICMS por substituição tributária
+                   sticmsEstrangeiraImportacaoDiretaIsenta                   , // '140' // Estrangeira - Importação direta - Isenta
+                   sticmsEstrangeiraImportacaoDiretaNaoTributada             , // '141' // Estrangeira - Importação direta - Não tributada
+                   sticmsEstrangeiraImportacaoDiretaSuspensao                , // '150' // Estrangeira - Importação direta - Suspensão
+                   sticmsEstrangeiraImportacaoDiretaDiferimento              , // '151' // Estrangeira - Importação direta - Diferimento
+                   sticmsEstrangeiraImportacaoDiretaCobradoAnteriormentePorST, // '160' // Estrangeira - Importação direta - ICMS cobrado anteriormente por substituição tributária
+                   sticmsEstrangeiraImportacaoDiretaComReducaoPorST          , // '170' // Estrangeira - Importação direta - Com redução de base de cálculo e cobrança do ICMS por substituição tributária
+                   sticmsEstrangeiraImportacaoDiretaOutros                   , // '190' // Estrangeira - Importação direta - Outras
+                   sticmsEstrangeiraAdqMercIntTributadaIntegralmente         , // '200' // Estrangeira - Adquirida no mercado interno - Tributada integralmente
+                   sticmsEstrangeiraAdqMercIntTributadaComCobracaPorST       , // '210' // Estrangeira - Adquirida no mercado interno - Tributada e com cobrança do ICMS por substituição tributária
+                   sticmsEstrangeiraAdqMercIntComReducao                     , // '220' // Estrangeira - Adquirida no mercado interno - Com redução de base de cálculo
+                   sticmsEstrangeiraAdqMercIntIsentaComCobracaPorST          , // '230' // Estrangeira - Adquirida no mercado interno - Isenta ou não tributada e com cobrança do ICMS por substituição tributária
+                   sticmsEstrangeiraAdqMercIntIsenta                         , // '240' // Estrangeira - Adquirida no mercado interno - Isenta
+                   sticmsEstrangeiraAdqMercIntNaoTributada                   , // '241' // Estrangeira - Adquirida no mercado interno - Não tributada
+                   sticmsEstrangeiraAdqMercIntSuspensao                      , // '250' // Estrangeira - Adquirida no mercado interno - Suspensão
+                   sticmsEstrangeiraAdqMercIntDiferimento                    , // '251' // Estrangeira - Adquirida no mercado interno - Diferimento
+                   sticmsEstrangeiraAdqMercIntCobradoAnteriormentePorST      , // '260' // Estrangeira - Adquirida no mercado interno - ICMS cobrado anteriormente por substituição tributária
+                   sticmsEstrangeiraAdqMercIntComReducaoPorST                , // '270' // Estrangeira - Adquirida no mercado interno - Com redução de base de cálculo e cobrança do ICMS por substituição tributária
+                   sticmsEstrangeiraAdqMercIntOutros                         , // '290' // Estrangeira - Adquirida no mercado interno - Outras
+                   csticms300, // '300' // Estrangeira - Adquirida no mercado interno - Tributada integralmente
+                   csticms310, // '310' // Estrangeira - Adquirida no mercado interno - Tributada e com cobrança do ICMS por substituição tributária
+                   csticms320, // '320' // Estrangeira - Adquirida no mercado interno - Com redução de base de cálculo
+                   csticms330, // '330' // Estrangeira - Adquirida no mercado interno - Isenta ou não tributada e com cobrança do ICMS por substituição tributária
+                   csticms340, // '340' // Estrangeira - Adquirida no mercado interno - Isenta
+                   csticms341, // '341' // Estrangeira - Adquirida no mercado interno - Não tributada
+                   csticms350, // '350' // Estrangeira - Adquirida no mercado interno - Suspensão
+                   csticms351, // '351' // Estrangeira - Adquirida no mercado interno - Diferimento
+                   csticms360, // '360' // Estrangeira - Adquirida no mercado interno - ICMS cobrado anteriormente por substituição tributária
+                   csticms370, // '370' // Estrangeira - Adquirida no mercado interno - Com redução de base de cálculo e cobrança do ICMS por substituição tributária
+                   csticms390, // '390' // Estrangeira - Adquirida no mercado interno - Outras
+                   csticms400, // '400' // Estrangeira - Adquirida no mercado interno - Tributada integralmente
+                   csticms410, // '410' // Estrangeira - Adquirida no mercado interno - Tributada e com cobrança do ICMS por substituição tributária
+                   csticms420, // '420' // Estrangeira - Adquirida no mercado interno - Com redução de base de cálculo
+                   csticms430, // '430' // Estrangeira - Adquirida no mercado interno - Isenta ou não tributada e com cobrança do ICMS por substituição tributária
+                   csticms440, // '440' // Estrangeira - Adquirida no mercado interno - Isenta
+                   csticms441, // '441' // Estrangeira - Adquirida no mercado interno - Não tributada
+                   csticms450, // '450' // Estrangeira - Adquirida no mercado interno - Suspensão
+                   csticms451, // '451' // Estrangeira - Adquirida no mercado interno - Diferimento
+                   csticms460, // '460' // Estrangeira - Adquirida no mercado interno - ICMS cobrado anteriormente por substituição tributária
+                   csticms470, // '470' // Estrangeira - Adquirida no mercado interno - Com redução de base de cálculo e cobrança do ICMS por substituição tributária
+                   csticms490, // '490' // Estrangeira - Adquirida no mercado interno - Outras
+                   csticms500, // '500' // Estrangeira - Adquirida no mercado interno - Tributada integralmente
+                   csticms510, // '510' // Estrangeira - Adquirida no mercado interno - Tributada e com cobrança do ICMS por substituição tributária
+                   csticms520, // '520' // Estrangeira - Adquirida no mercado interno - Com redução de base de cálculo
+                   csticms530, // '530' // Estrangeira - Adquirida no mercado interno - Isenta ou não tributada e com cobrança do ICMS por substituição tributária
+                   csticms540, // '540' // Estrangeira - Adquirida no mercado interno - Isenta
+                   csticms541, // '541' // Estrangeira - Adquirida no mercado interno - Não tributada
+                   csticms550, // '550' // Estrangeira - Adquirida no mercado interno - Suspensão
+                   csticms551, // '551' // Estrangeira - Adquirida no mercado interno - Diferimento
+                   csticms560, // '560' // Estrangeira - Adquirida no mercado interno - ICMS cobrado anteriormente por substituição tributária
+                   csticms570, // '570' // Estrangeira - Adquirida no mercado interno - Com redução de base de cálculo e cobrança do ICMS por substituição tributária
+                   csticms590, // '590' // Estrangeira - Adquirida no mercado interno - Outras
+                   csticms600, // '600' // Estrangeira - Adquirida no mercado interno - Tributada integralmente
+                   csticms610, // '610' // Estrangeira - Adquirida no mercado interno - Tributada e com cobrança do ICMS por substituição tributária
+                   csticms620, // '620' // Estrangeira - Adquirida no mercado interno - Com redução de base de cálculo
+                   csticms630, // '630' // Estrangeira - Adquirida no mercado interno - Isenta ou não tributada e com cobrança do ICMS por substituição tributária
+                   csticms640, // '640' // Estrangeira - Adquirida no mercado interno - Isenta
+                   csticms641, // '641' // Estrangeira - Adquirida no mercado interno - Não tributada
+                   csticms650, // '650' // Estrangeira - Adquirida no mercado interno - Suspensão
+                   csticms651, // '651' // Estrangeira - Adquirida no mercado interno - Diferimento
+                   csticms660, // '660' // Estrangeira - Adquirida no mercado interno - ICMS cobrado anteriormente por substituição tributária
+                   csticms670, // '670' // Estrangeira - Adquirida no mercado interno - Com redução de base de cálculo e cobrança do ICMS por substituição tributária
+                   csticms690, // '690' // Estrangeira - Adquirida no mercado interno - Outras
+                   csticms700, // '700' // Estrangeira - Adquirida no mercado interno - Tributada integralmente
+                   csticms710, // '710' // Estrangeira - Adquirida no mercado interno - Tributada e com cobrança do ICMS por substituição tributária
+                   csticms720, // '720' // Estrangeira - Adquirida no mercado interno - Com redução de base de cálculo
+                   csticms730, // '730' // Estrangeira - Adquirida no mercado interno - Isenta ou não tributada e com cobrança do ICMS por substituição tributária
+                   csticms740, // '740' // Estrangeira - Adquirida no mercado interno - Isenta
+                   csticms741, // '741' // Estrangeira - Adquirida no mercado interno - Não tributada
+                   csticms750, // '750' // Estrangeira - Adquirida no mercado interno - Suspensão
+                   csticms751, // '751' // Estrangeira - Adquirida no mercado interno - Diferimento
+                   csticms760, // '760' // Estrangeira - Adquirida no mercado interno - ICMS cobrado anteriormente por substituição tributária
+                   csticms770, // '770' // Estrangeira - Adquirida no mercado interno - Com redução de base de cálculo e cobrança do ICMS por substituição tributária
+                   csticms790, // '790' // Estrangeira - Adquirida no mercado interno - Outras
+
+                   sticmsSimplesNacionalTributadaComPermissaoCredito         , // '101' // Simples Nacional - Tributada pelo Simples Nacional com permissão de crédito
+                   sticmsSimplesNacionalTributadaSemPermissaoCredito         , // '102' // Simples Nacional - Tributada pelo Simples Nacional sem permissão de crédito
+                   sticmsSimplesNacionalIsencaoPorFaixaReceitaBruta          , // '103' // Simples Nacional - Isenção do ICMS no Simples Nacional para faixa de receita bruta
+                   sticmsSimplesNacionalTributadaComPermissaoCreditoComST    , // '201' // Simples Nacional - Tributada pelo Simples Nacional com permissão de crédito e com cobrança do ICMS por substituição tributária
+                   sticmsSimplesNacionalTributadaSemPermissaoCreditoComST    , // '202' // Simples Nacional - Tributada pelo Simples Nacional sem permissão de crédito e com cobrança do ICMS por substituição tributária
+                   sticmsSimplesNacionalIsencaoPorFaixaReceitaBrutaComST     , // '203' // Simples Nacional - Isenção do ICMS no Simples Nacional para faixa de receita bruta e com cobrança do ICMS por substituição tributária
+                   sticmsSimplesNacionalImune                                , // '300' // Simples Nacional - Imune
+                   sticmsSimplesNacionalNaoTributada                         , // '400' // Simples Nacional - Não tributada pelo Simples Nacional
+                   sticmsSimplesNacionalCobradoAnteriormentePorST            , // '500' // Simples Nacional - ICMS cobrado anteriormente por substituição tributária (substituído) ou por antecipação
+                   sticmsSimplesNacionalOutros                                 // '900' // Simples Nacional - Outros
+                );
+  TACBrSituacaoTribICMS = TACBrCstIcms;
+
+
+
 
   TOpenBlocos = class
   private
-    FIND_MOV: TACBrIndicadorMovimento;    /// Indicador de movimento: 0- Bloco com dados informados, 1- Bloco sem dados informados.
+    FIND_MOV: TACBrIndMov;    /// Indicador de movimento: 0- Bloco com dados informados, 1- Bloco sem dados informados.
   public
-    property IND_MOV: TACBrIndicadorMovimento read FIND_MOV write FIND_MOV;
+    property IND_MOV: TACBrIndMov read FIND_MOV write FIND_MOV;
   end;
-  // Fuções do ACBrEPCBlocos.
-  Function StrToCodVer(AValue: string): TACBrVersaoLeiaute;
-  Function CodVerToStr(AValue: TACBrVersaoLeiaute): string;
+
+  // Fuções do ACBrEFDBlocos.
+  function StrToCodVer(AValue: string): TACBrCodVer;
+  function CodVerToStr(AValue: TACBrCodVer): string;
+
+  function IndOperToStr(AVAlue: TACBrIndOper): string;
+  function StrToIndOper(AVAlue: string): TACBrIndOper;
+  function TipoItemToStr(AValue: TACBrTipoItem): string;
+  function StrToTipoItem(AValue: string): TACBrTipoItem;
+  function IndEmitToStr(AValue: TACBrIndEmit): string;
+  function StrToIndEmit(AValue: string): TACBrIndEmit;
+  function CodSitToStr(AValue: TACBrCodSit): string;
+  function StrToCodSit(AValue: string): TACBrCodSit;
+  function IndPgtoToStr(AValue: TACBrIndPgto): string;
+  function StrToIndPgto(AValue: string): TACBrIndPgto;
+  function IndFrtToStr(AValue: TACBrIndFrt): string;
+  function StrToIndFrt(AValue: string): TACBrIndFrt;
+  function IndMovFisicaToStr(AValue: TACBrIndMovFisica): string;
+  function StrToIndMovFisica(AValue: string): TACBrIndMovFisica;
+//  function CstIcmsToStr(AValue: TACBrCstIcms): string;
+//  function StrToCstIcms(AValue: String): TACBrCstIcms;
 
 implementation
 
 { TOpenBlocos }
 
-function StrToCodVer(AValue: string): TACBrVersaoLeiaute;
+function StrToCodVer(AValue: string): TACBrCodVer;
 begin
    if AValue = '001' then
       Result := vlVersao100
@@ -492,7 +642,7 @@ begin
      raise Exception.CreateFmt('Versão desconhecida. Versao "%s" não é um valor válido.', [AValue]);
 end;
 
-function CodVerToStr(AValue: TACBrVersaoLeiaute): string;
+function CodVerToStr(AValue: TACBrCodVer): string;
 begin
    if AValue = vlVersao100 then
       Result := '001'
@@ -518,8 +668,159 @@ begin
    if AValue = vlVersao107 then
       Result := '008'
       ;
-
 end;
 
+function IndOperToStr(AValue: TACBrIndOper): string;
+begin
+   Result := IntToStr( Integer( AValue ) );
+end;
 
+function StrToIndOper(AValue: string): TACBrIndOper;
+begin
+   Result := TACBrIndOper( StrToIntDef( AValue, 0) );
+end;
+
+function TipoItemToStr(AValue: TACBrTipoItem): string;
+begin
+   if AValue = tiOutras then
+      Result := '99'
+   else
+      Result := FormatFloat('00', Integer( AValue ));
+end;
+
+function StrToTipoItem(AValue: string): TACBrTipoItem;
+begin
+   if AValue = '99' then
+      Result := tiOutras
+   else
+      Result := TACBrTipoItem( StrToIntDef( AValue, 0) );
+end;
+
+function IndEmitToStr(AValue: TACBrIndEmit): string;
+begin
+   Result := IntToStr( Integer( AValue ) + 1 );
+end;
+
+function StrToIndEmit(AValue: string): TACBrIndEmit;
+begin
+   Result := TACBrIndEmit( StrToIntDef( AValue, 0) );
+end;
+
+function CodSitToStr(AValue: TACBrCodSit): string;
+begin
+   Result := FormatFloat('00', Integer( AValue ) );
+end;
+
+function StrToCodSit(AValue: string): TACBrCodSit;
+begin
+   Result := TACBrCodSit( StrToIntDef( AValue, 0) );
+end;
+
+function IndPgtoToStr(AValue: TACBrIndPgto): string;
+begin
+   if AValue = tpSemPagamento then
+      Result := '9'
+   else
+   if AValue = tpNenhum then
+      Result := ''
+   else
+      Result := IntToStr( Integer( AValue ) );
+end;
+
+function StrToIndPgto(AValue: string): TACBrIndPgto;
+begin
+   if AValue = '9' then
+      Result := tpSemPagamento
+   else
+   if AValue = ''  then
+      Result := tpNenhum
+   else
+      Result := TACBrIndPgto( StrToIntDef( AValue, 9) );
+end;
+
+function IndFrtToStr(AValue: TACBrIndFrt): string;
+begin
+{
+  TACBrIndFrt = (
+                 tfPorContaEmitente,     // 0 - Por conta de terceiros
+                 tfPorContaDestinatario, // 1 - Por conta do emitente
+                 tfPorContaTerceiros,    // 2 - Por conta do destinatário
+                 tfSemCobrancaFrete,     // 9 - Sem cobrança de frete
+                 tfNenhum
+Indicador do tipo do frete:
+0- Por conta de terceiros;
+1- Por conta do emitente;
+2- Por conta do destinatário;
+9- Sem cobrança de frete.
+17  IND_FRT
+Obs.: A partir de 01/01/2012 passará a ser:
+Indicador do tipo do frete:
+0- Por conta do emitente;
+1- Por conta do destinatário/remetente;
+2- Por conta de terceiros;
+9- Sem cobrança de frete.
+
+   if DT_INI >= EncodeDate(2012,01,01) then
+   begin
+}
+      if AValue = tfSemCobrancaFrete then
+      begin
+         Result := '9';
+         Exit;
+      end
+      else
+      if AValue = tfNenhum then
+      begin
+         Result := '';
+         Exit;
+      end;
+      Result := IntToStr( Integer( AValue ) );
+//   end;
+end;
+
+function StrToIndFrt(AValue: string): TACBrIndFrt;
+begin
+   if AValue = '9' then
+   begin
+      Result := tfSemCobrancaFrete;
+      Exit;
+   end
+   else
+   if AValue = '' then
+   begin
+      Result := tfNenhum;
+      Exit;
+   end;
+   Result := TACBrIndFrt( StrToIntDef( AValue, 0) );
+end;
+
+function IndMovFisicaToStr(AValue: TACBrIndMovFisica): string;
+begin
+   Result := IntToStr( Integer( AValue ) );
+end;
+
+function StrToIndMovFisica(AValue: string): TACBrIndMovFisica;
+begin
+   Result := TACBrIndMovFisica( StrToIntDef( AValue, 0) );
+end;
+{
+function CstIcmsToStr(AValue: TACBrCstIcms): string;
+begin
+   Result := CstIcms[ Integer( AValue ) ];
+end;
+
+function StrToCstIcms(AValue: String): TACBrCstIcms;
+var
+ifor: Integer;
+begin
+   for ifor := 0 to High(CstIcms) do
+   begin
+      if AValue = CstIcms[ifor] then
+      begin
+         Result := TACBrCstIcms( ifor );
+         Break;
+      end;
+   end;
+end;
+}
 end.

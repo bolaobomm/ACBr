@@ -664,7 +664,7 @@ type
     fIND_EMIT: String;                   /// Indicador do emitente do documento fiscal:
     fCOD_PART: String;                   /// Código do participante (campo 02 do Registro 0150):
     fCOD_MOD: String;                    /// Código do modelo do documento fiscal conforme a Tabela 4.1.1
-    fCOD_SIT: TACBrSituacaoDocto;        /// Código da situação do documento fiscal conforme a Tabela 4.1.2
+    fCOD_SIT: TACBrCodSit;               /// Código da situação do documento fiscal conforme a Tabela 4.1.2
     fSER: String;                        /// Série do documento fiscal
     fSUB: String;                        /// Subsérie do documento fiscal
     fCOD_CONS: TACBrClasseConsumo;       /// Código de classe de consumo de energia elétrica conforme a Tabela 4.4.5 ou Código da classe de consumo de gás canalizado conforme Tabela 4.4.3.
@@ -696,7 +696,7 @@ type
     property IND_EMIT: String read FIND_EMIT write FIND_EMIT;
     property COD_PART: String read FCOD_PART write FCOD_PART;
     property COD_MOD: String read FCOD_MOD write FCOD_MOD;
-    property COD_SIT: TACBrSituacaoDocto read FCOD_SIT write FCOD_SIT;
+    property COD_SIT: TACBrCodSit read FCOD_SIT write FCOD_SIT;
     property SER: String read FSER write FSER;
     property SUB: String read FSUB write FSUB;
     property COD_CONS: TACBrClasseConsumo read FCOD_CONS write FCOD_CONS;

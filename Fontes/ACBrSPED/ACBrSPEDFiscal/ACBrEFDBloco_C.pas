@@ -141,22 +141,22 @@ type
 
   TRegistroC100 = class
   private
-    fIND_OPER: TACBrTipoOperacao;       /// Indicador do tipo de operação: 0- Entrada; 1- Saída
-    fIND_EMIT: TACBrEmitente;           /// Indicador do emitente do documento fiscal: 0- Emissão própria; 1- Terceiros
+    fIND_OPER: TACBrIndOper;            /// Indicador do tipo de operação: 0- Entrada; 1- Saída
+    fIND_EMIT: TACBrIndEmit;            /// Indicador do emitente do documento fiscal: 0- Emissão própria; 1- Terceiros
     fCOD_PART: String;                  /// Código do participante (campo 02 do Registro 0150):
     fCOD_MOD: String;                   /// Código do modelo do documento fiscal, conforme a Tabela 4.1.1
-    fCOD_SIT: TACBrSituacaoDocto;       /// Código da situação do documento fiscal, conforme a Tabela 4.1.2
+    fCOD_SIT: TACBrCodSit;              /// Código da situação do documento fiscal, conforme a Tabela 4.1.2
     fSER: String;                       /// Série do documento fiscal
     fNUM_DOC: String;                   /// Número do documento fiscal
     fCHV_NFE: String;                   /// Chave da Nota Fiscal Eletrônica
     fDT_DOC: TDateTime;                 /// Data da emissão do documento fiscal
     fDT_E_S: TDateTime;                 /// Data da entrada ou da saída
     fVL_DOC: currency;                  /// Valor total do documento fiscal
-    fIND_PGTO: TACBrTipoPagamento;      /// Indicador do tipo de pagamento:
+    fIND_PGTO: TACBrIndPgto;            /// Indicador do tipo de pagamento:
     fVL_DESC: currency;                 /// Valor total do desconto // Prates
     fVL_ABAT_NT: currency;              /// Abatimento não tributado e não comercial Ex. desconto ICMS nas remessas para ZFM: // Prates
     fVL_MERC: currency;                 /// Valor das mercadorias constantes no documento fiscal
-    fIND_FRT: TACBrTipoFrete;           /// Indicador do tipo do frete:
+    fIND_FRT: TACBrIndFrt;              /// Indicador do tipo do frete:
     fVL_FRT: currency;                  /// Valor do frete indicado no documento fiscal
     fVL_SEG: currency;                  /// Valor do seguro indicado no documento fiscal
     fVL_OUT_DA: currency;               /// Valor de outras despesas acessórias
@@ -184,22 +184,22 @@ type
     constructor Create(AOwner: TRegistroC001); virtual; /// Create
     destructor Destroy; override; /// Destroy
 
-    property IND_OPER: TACBrTipoOperacao read FIND_OPER write FIND_OPER;
-    property IND_EMIT: TACBrEmitente read FIND_EMIT write FIND_EMIT;
+    property IND_OPER: TACBrIndOper read FIND_OPER write FIND_OPER;
+    property IND_EMIT: TACBrIndEmit read FIND_EMIT write FIND_EMIT;
     property COD_PART: String read FCOD_PART write FCOD_PART;
     property COD_MOD: String read FCOD_MOD write FCOD_MOD;
-    property COD_SIT: TACBrSituacaoDocto read FCOD_SIT write FCOD_SIT;
+    property COD_SIT: TACBrCodSit read FCOD_SIT write FCOD_SIT;
     property SER: String read FSER write FSER;
     property NUM_DOC: String read FNUM_DOC write FNUM_DOC;
     property CHV_NFE: String read FCHV_NFE write FCHV_NFE;
     property DT_DOC: TDateTime read FDT_DOC write FDT_DOC;
     property DT_E_S: TDateTime read FDT_E_S write FDT_E_S;
     property VL_DOC: currency read FVL_DOC write FVL_DOC;
-    property IND_PGTO: TACBrTipoPagamento read FIND_PGTO write FIND_PGTO;
+    property IND_PGTO: TACBrIndPgto read FIND_PGTO write FIND_PGTO;
     property VL_DESC: currency read FVL_DESC write FVL_DESC; // prates
     property VL_ABAT_NT: currency read FVL_ABAT_NT write FVL_ABAT_NT; // Prates
     property VL_MERC: currency read FVL_MERC write FVL_MERC;
-    property IND_FRT: TACBrTipoFrete read FIND_FRT write FIND_FRT;
+    property IND_FRT: TACBrIndFrt read FIND_FRT write FIND_FRT;
     property VL_FRT: currency read FVL_FRT write FVL_FRT;
     property VL_SEG: currency read FVL_SEG write FVL_SEG;
     property VL_OUT_DA: currency read FVL_OUT_DA write FVL_OUT_DA;
@@ -240,12 +240,12 @@ type
 
   TRegistroC105 = class
   private
-    fOPER: TACBrTipoOperacaoST; /// Indicador do tipo de operação. 0- Combustíveis e Lubrificantes; 1- leasing de veículos ou faturamento direto.
+    fOPER: TACBrIndOperST; /// Indicador do tipo de operação. 0- Combustíveis e Lubrificantes; 1- leasing de veículos ou faturamento direto.
     fUF: String;                /// Sigla da UF de destino do ICMS_ST
   public
     constructor Create(AOwner: TRegistroC100); virtual; /// Create
 
-    property OPER: TACBrTipoOperacaoST read fOPER write fOPER;
+    property OPER: TACBrIndOperST read fOPER write fOPER;
     property UF: String read fUF write fUF;
   end;
 
@@ -357,8 +357,8 @@ type
 
   TRegistroC113 = class
   private
-    fIND_OPER: TACBrTipoOperacao;   /// Indicador do tipo de operação: 0 - Entrada/aquisição; 1- Saída/prestação
-    fIND_EMIT: TACBrEmitente;       /// Indicador do emitente do título: 0 - Emissão própria; 1- Terceiros
+    fIND_OPER: TACBrIndOper;   /// Indicador do tipo de operação: 0 - Entrada/aquisição; 1- Saída/prestação
+    fIND_EMIT: TACBrIndEmit;       /// Indicador do emitente do título: 0 - Emissão própria; 1- Terceiros
     fCOD_PART: String;              /// Código do participante emitente (campo 02 do Registro 0150)  do documento referenciado.
     fCOD_MOD: String;               /// Código do documento fiscal, conforme a Tabela 4.1.1
     fSER: String;                   /// Série do documento fiscal
@@ -366,8 +366,8 @@ type
     fNUM_DOC: String;               /// Número do documento fiscal
     fDT_DOC: TDateTime;             /// Data da emissão do documento fiscal.
   public
-    property IND_OPER: TACBrTipoOperacao read fIND_OPER write fIND_OPER;
-    property IND_EMIT: TACBrEmitente read fIND_EMIT write fIND_EMIT;
+    property IND_OPER: TACBrIndOper read fIND_OPER write fIND_OPER;
+    property IND_EMIT: TACBrIndEmit read fIND_EMIT write fIND_EMIT;
     property COD_PART: String read fCOD_PART write fCOD_PART;
     property COD_MOD: String read fCOD_MOD write fCOD_MOD;
     property SER: String read fSER write fSER;
@@ -543,7 +543,7 @@ type
 
   TRegistroC140 = class
   private
-    fIND_EMIT: TACBrEmitente;  /// Indicador do emitente do título: 0- Emissão própria; 1- Terceiros
+    fIND_EMIT: TACBrIndEmit;  /// Indicador do emitente do título: 0- Emissão própria; 1- Terceiros
     fIND_TIT: TACBrTipoTitulo; /// Indicador do tipo de título de crédito: 00- Duplicata; 01- Cheque; 02- Promissória; 03- Recibo; 99- Outros (descrever)
     fDESC_TIT: String;         /// Descrição complementar do título de crédito
     fNUM_TIT: String;          /// Número ou código identificador do título de crédito
@@ -555,7 +555,7 @@ type
     constructor Create; virtual; /// Create
     destructor Destroy; override; /// Destroy
 
-    property IND_EMIT: TACBrEmitente read FIND_EMIT write FIND_EMIT;
+    property IND_EMIT: TACBrIndEmit read FIND_EMIT write FIND_EMIT;
     property IND_TIT: TACBrTipoTitulo read FIND_TIT write FIND_TIT;
     property DESC_TIT: String read FDESC_TIT write FDESC_TIT;
     property NUM_TIT: String read FNUM_TIT write FNUM_TIT;
@@ -897,12 +897,12 @@ type
 
   TRegistroC175 = class
   private
-    fIND_VEIC_OPER: TACBrTipoOperacaoVeiculo; /// Indicador do tipo de operação com veículo: 0- Venda para concessionária; 1- Faturamento direto; 2- Venda direta; 3- Venda da concessionária; 9- Outros
-    fCNPJ: String;                            /// CNPJ da Concessionária
-    fUF: String;                              /// Sigla da unidade da federação da Concessionária
-    fCHASSI_VEIC: String;                     /// Chassi do veículo
+    fIND_VEIC_OPER: TACBrIndVeicOper; /// Indicador do tipo de operação com veículo: 0- Venda para concessionária; 1- Faturamento direto; 2- Venda direta; 3- Venda da concessionária; 9- Outros
+    fCNPJ: String;                    /// CNPJ da Concessionária
+    fUF: String;                      /// Sigla da unidade da federação da Concessionária
+    fCHASSI_VEIC: String;             /// Chassi do veículo
   public
-    property IND_VEIC_OPER: TACBrTipoOperacaoVeiculo read FIND_VEIC_OPER write FIND_VEIC_OPER;
+    property IND_VEIC_OPER: TACBrIndVeicOper read FIND_VEIC_OPER write FIND_VEIC_OPER;
     property CNPJ: String read FCNPJ write FCNPJ;
     property UF: String read FUF write FUF;
     property CHASSI_VEIC: String read FCHASSI_VEIC write FCHASSI_VEIC;
@@ -1552,7 +1552,7 @@ type
   TRegistroC460 = class
   private
     fCOD_MOD: String;             /// Código do modelo do documento fiscal, conforme a Tabela 4.1.1
-    fCOD_SIT: TACBrSituacaoDocto; /// Código da situação do documento fiscal, conforme a Tabela 4.1.2
+    fCOD_SIT: TACBrCodSit;        /// Código da situação do documento fiscal, conforme a Tabela 4.1.2
     fNUM_DOC: String;             /// Número do documento fiscal (COO)
     fDT_DOC: TDateTime;           /// Data da emissão do documento fiscal
     fVL_DOC: currency;            /// Valor total do documento fiscal
@@ -1567,7 +1567,7 @@ type
     destructor Destroy; override; /// Destroy
 
     property COD_MOD: String read fCOD_MOD write fCOD_MOD;
-    property COD_SIT: TACBrSituacaoDocto read fCOD_SIT write fCOD_SIT;
+    property COD_SIT: TACBrCodSit read fCOD_SIT write fCOD_SIT;
     property NUM_DOC: String read fNUM_DOC write fNUM_DOC;
     property DT_DOC: TDateTime read fDT_DOC write fDT_DOC;
     property VL_DOC: currency read fVL_DOC write fVL_DOC;
@@ -1710,11 +1710,11 @@ type
 
   TRegistroC500 = class
   private
-    fIND_OPER: TACBrTipoOperacao;        /// Indicador do tipo de operação: 0 - Entrada; 1- Saída
-    fIND_EMIT: TACBrEmitente;            /// Indicador do emitente do documento fiscal: 0- Emissão própria; 1- Terceiros
+    fIND_OPER: TACBrIndOper;             /// Indicador do tipo de operação: 0 - Entrada; 1- Saída
+    fIND_EMIT: TACBrIndEmit;             /// Indicador do emitente do documento fiscal: 0- Emissão própria; 1- Terceiros
     fCOD_PART: String;                   /// Código do participante (campo 02 do Registro 0150): - do adquirente, no caso das saídas; - do fornecedor no caso de entradas
     fCOD_MOD: String;                    /// Código do modelo do documento fiscal, conforme a Tabela 4.1.1
-    fCOD_SIT: TACBrSituacaoDocto;        /// Código da situação do documento fiscal, conforme a Tabela 4.1.2
+    fCOD_SIT: TACBrCodSit;               /// Código da situação do documento fiscal, conforme a Tabela 4.1.2
     fSER: String;                        /// Série do documento fiscal
     fSUB: String;                        /// Subsérie do documento fiscal
 //    fCOD_CONS: TACBrClasseConsumo;       /// Código de classe de consumo de energia elétrica, conforme a Tabela 4.4.5 ou Código da classe de consumo de gás canalizado conforme Tabela 4.4.3.
@@ -1745,11 +1745,11 @@ type
     constructor Create; virtual; /// Create
     destructor Destroy; override; /// Destroy
 
-    property IND_OPER: TACBrTipoOperacao read fIND_OPER write fIND_OPER;
-    property IND_EMIT: TACBrEmitente read fIND_EMIT write fIND_EMIT;
+    property IND_OPER: TACBrIndOper read fIND_OPER write fIND_OPER;
+    property IND_EMIT: TACBrIndEmit read fIND_EMIT write fIND_EMIT;
     property COD_PART: String read fCOD_PART write fCOD_PART;
     property COD_MOD: String read fCOD_MOD write fCOD_MOD;
-    property COD_SIT: TACBrSituacaoDocto read fCOD_SIT write fCOD_SIT;
+    property COD_SIT: TACBrCodSit read fCOD_SIT write fCOD_SIT;
     property SER: String read fSER write fSER;
     property SUB: String read fSUB write fSUB;
 //    property COD_CONS: TACBrClasseConsumo read fCOD_CONS write fCOD_CONS;
@@ -2178,7 +2178,7 @@ type
   TRegistroC800 = class
   private
     fCOD_MOD: String;                   /// Código do modelo do documento fiscal, conforme a Tabela 4.1.1
-    fCOD_SIT: TACBrSituacaoDocto;       /// Código da situação do documento fiscal, conforme a Tabela 4.1.2
+    fCOD_SIT: TACBrCodSit;              /// Código da situação do documento fiscal, conforme a Tabela 4.1.2
     fNUM_CFE: String;                   /// Número do Cupom Fiscal Eletrônico
     fDT_DOC: TDateTime;                 /// Data da emissão do documento fiscal Eletrônico
     fVL_CFE: currency;                  /// Valor total do Cupom Fiscal Eletrônico
@@ -2200,7 +2200,7 @@ type
     destructor Destroy; override; /// Destroy
 
     property COD_MOD: String read FCOD_MOD write FCOD_MOD;
-    property COD_SIT: TACBrSituacaoDocto read FCOD_SIT write FCOD_SIT;
+    property COD_SIT: TACBrCodSit read FCOD_SIT write FCOD_SIT;
     property NUM_CFE: String read FNUM_CFE write FNUM_CFE;
     property DT_DOC: TDateTime read FDT_DOC write FDT_DOC;
     property VL_CFE: currency read FVL_CFE write FVL_CFE;

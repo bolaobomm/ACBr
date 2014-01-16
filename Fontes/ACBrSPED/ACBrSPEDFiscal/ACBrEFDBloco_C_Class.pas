@@ -954,7 +954,6 @@ begin
      begin
         with RegC001.RegistroC100.Items[intFor] do
         begin
-		
           Check(not((COD_MOD = '55') and (COD_SIT <> sdDoctoNumInutilizada) and (Trim(CHV_NFE) = '')),
                                                                 '(C-C100) Nota: %s' +sLineBreak+
                                                                 '         Série: %s'+sLineBreak+
@@ -1031,36 +1030,73 @@ begin
             end;
           end;
 
-
-          Add( LFill('C100') +
-               LFill( Integer(IND_OPER), 0 ) +
-               LFill( Integer(IND_EMIT), 0 ) +
-               LFill( COD_PART ) +
-               LFill( COD_MOD  ) +
-               LFill( strCOD_SIT  ) +
-               LFill( SER  ) +
-               LFill( NUM_DOC  ) +
-               LFill( CHV_NFE  ) +
-               LFill( DT_DOC, 'ddmmyyyy' ) +
-               LFill( DT_E_S, 'ddmmyyyy' ) +
-               LFill( VL_DOC , 0 , 2 , booNFCancelada ) +
-               LFill( strIND_PGTO ) +
-               LFill( VL_DESC,0,2, booNFCancelada ) +
-               LFill( VL_ABAT_NT,0,2, booNFCancelada ) +
-               LFill( VL_MERC,0,2, booNFCancelada ) +
-               LFill( strIND_FRT ) +
-               LFill( VL_FRT,0,2, booNFCancelada ) +
-               LFill( VL_SEG,0,2, booNFCancelada ) +
-               LFill( VL_OUT_DA,0,2, booNFCancelada ) +
-               LFill( VL_BC_ICMS,0,2, booNFCancelada ) +
-               LFill( VL_ICMS,0,2, booNFCancelada ) +
-               LFill( VL_BC_ICMS_ST,0,2, booNFCancelada ) +
-               LFill( VL_ICMS_ST,0,2, booNFCancelada ) +
-               LFill( VL_IPI,0,2, booNFCancelada ) +
-               LFill( VL_PIS,0,2, booNFCancelada ) +
-               LFill( VL_COFINS,0,2, booNFCancelada ) +
-               LFill( VL_PIS_ST,0,2, booNFCancelada ) +
-               LFill( VL_COFINS_ST,0,2, booNFCancelada ) ) ;
+          /// Para nota fiscal de consumidor final (COD_MOD = '65') não devem ser
+          /// informafo os campo:
+          /// COD_PAR, VL_BC_ICMS_ST, VL_ICMS_ST, VL_IPI, VL_PIS, VL_COFINS, VL_PIS_ST, VL_COFINS_ST.
+          if COD_MOD = '65' then
+          begin
+             Add( LFill('C100') +
+                  LFill( Integer(IND_OPER), 0 ) +
+                  LFill( Integer(IND_EMIT), 0 ) +
+                  LFill( COD_PART ) +
+                  LFill( COD_MOD  ) +
+                  LFill( strCOD_SIT  ) +
+                  LFill( SER  ) +
+                  LFill( NUM_DOC  ) +
+                  LFill( CHV_NFE  ) +
+                  LFill( DT_DOC, 'ddmmyyyy' ) +
+                  LFill( DT_E_S, 'ddmmyyyy' ) +
+                  LFill( VL_DOC , 0 , 2 , booNFCancelada ) +
+                  LFill( strIND_PGTO ) +
+                  LFill( VL_DESC,0,2, booNFCancelada ) +
+                  LFill( VL_ABAT_NT,0,2, booNFCancelada ) +
+                  LFill( VL_MERC,0,2, booNFCancelada ) +
+                  LFill( strIND_FRT ) +
+                  LFill( VL_FRT,0,2, booNFCancelada ) +
+                  LFill( VL_SEG,0,2, booNFCancelada ) +
+                  LFill( VL_OUT_DA,0,2, booNFCancelada ) +
+                  LFill( VL_BC_ICMS,0,2, booNFCancelada ) +
+                  LFill( VL_ICMS,0,2, booNFCancelada ) +
+                  LFill( VL_BC_ICMS_ST,0,2, true ) +
+                  LFill( VL_ICMS_ST,0,2, true ) +
+                  LFill( VL_IPI,0,2, true ) +
+                  LFill( VL_PIS,0,2, true ) +
+                  LFill( VL_COFINS,0,2, true ) +
+                  LFill( VL_PIS_ST,0,2, true ) +
+                  LFill( VL_COFINS_ST,0,2, true ) ) ;
+          end
+          else
+          begin
+             Add( LFill('C100') +
+                  LFill( Integer(IND_OPER), 0 ) +
+                  LFill( Integer(IND_EMIT), 0 ) +
+                  LFill( COD_PART ) +
+                  LFill( COD_MOD  ) +
+                  LFill( strCOD_SIT  ) +
+                  LFill( SER  ) +
+                  LFill( NUM_DOC  ) +
+                  LFill( CHV_NFE  ) +
+                  LFill( DT_DOC, 'ddmmyyyy' ) +
+                  LFill( DT_E_S, 'ddmmyyyy' ) +
+                  LFill( VL_DOC , 0 , 2 , booNFCancelada ) +
+                  LFill( strIND_PGTO ) +
+                  LFill( VL_DESC,0,2, booNFCancelada ) +
+                  LFill( VL_ABAT_NT,0,2, booNFCancelada ) +
+                  LFill( VL_MERC,0,2, booNFCancelada ) +
+                  LFill( strIND_FRT ) +
+                  LFill( VL_FRT,0,2, booNFCancelada ) +
+                  LFill( VL_SEG,0,2, booNFCancelada ) +
+                  LFill( VL_OUT_DA,0,2, booNFCancelada ) +
+                  LFill( VL_BC_ICMS,0,2, booNFCancelada ) +
+                  LFill( VL_ICMS,0,2, booNFCancelada ) +
+                  LFill( VL_BC_ICMS_ST,0,2, booNFCancelada ) +
+                  LFill( VL_ICMS_ST,0,2, booNFCancelada ) +
+                  LFill( VL_IPI,0,2, booNFCancelada ) +
+                  LFill( VL_PIS,0,2, booNFCancelada ) +
+                  LFill( VL_COFINS,0,2, booNFCancelada ) +
+                  LFill( VL_PIS_ST,0,2, booNFCancelada ) +
+                  LFill( VL_COFINS_ST,0,2, booNFCancelada ) ) ;
+          end;
         end;
         /// Registros FILHOS
         WriteRegistroC105( RegC001.RegistroC100.Items[intFor] ) ;
@@ -1578,7 +1614,7 @@ begin
                        LFill( NUM_ITEM ) +
                        LFill( COD_ITEM ) +
                        LFill( DESCR_COMPL ) +
-                       LFILL(QTD, 0, 4, False, '0', '#0.00000') +
+                       LFILL( QTD, 0, 4, False, '0', '#0.00000') +
                        LFill( UNID ) +
                        LFill( VL_ITEM, 0, 2 ) +
                        LFill( VL_DESC, 0, 2 ) +
@@ -1594,25 +1630,22 @@ begin
                        LFill( VL_ICMS_ST, 0, 2 ) +
                        LFill( strIND_APUR ) +
                        //LFill( Integer(IND_APUR), 0 ) +
-                       // LFill( strCST_IPI ) +
                        LFill( CST_IPI ) +
                        LFill( COD_ENQ ) +
                        LFill( VL_BC_IPI, 0, 2 ) +
                        LFill( ALIQ_IPI,  0, 2 ) +
                        LFill( VL_IPI, 0, 2 ) +
-                       // LFill( strCST_PIS ) +
                        LFill( CST_PIS ) +
                        LFill( VL_BC_PIS, 0, 2 ) +
                        LFill( ALIQ_PIS_PERC, 0, 4, False, '0', '#0.0000' ) +
-                       LFill( QUANT_BC_PIS,  0, 3, False, '0', '#0.000' ) + 
-                       LFill( ALIQ_PIS_R, 0, 4, False, '0', '#0.0000' ) + 
+                       LFill( QUANT_BC_PIS,  0, 3, False, '0', '#0.000' ) +
+                       LFill( ALIQ_PIS_R, 0, 4, False, '0', '#0.0000' ) +
                        LFill( VL_PIS, 0, 2 ) +
-                       // LFill( strCST_COFINS ) +
                        LFill( CST_COFINS ) +
                        LFill( VL_BC_COFINS, 0, 2 ) +
-                       LFill( ALIQ_COFINS_PERC, 0, 4, False, '0', '#0.0000' ) + 
-                       LFill( QUANT_BC_COFINS,  0, 3, False, '0', '#0.000' ) + 
-                       LFill( ALIQ_COFINS_R, 0, 4, False, '0', '#0.0000' ) + 
+                       LFill( ALIQ_COFINS_PERC, 0, 4, False, '0', '#0.0000' ) +
+                       LFill( QUANT_BC_COFINS,  0, 3, False, '0', '#0.000' ) +
+                       LFill( ALIQ_COFINS_R, 0, 4, False, '0', '#0.0000' ) +
                        LFill( VL_COFINS, 0, 2 ) +
                        LFill( COD_CTA );
           //-- Write

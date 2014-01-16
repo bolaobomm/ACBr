@@ -72,8 +72,8 @@ type
 
   TRegistro0000 = class
   private
-    fCOD_VER: TACBrVersaoLeiaute; /// Código da versão do leiaute: 100, 101, 102
-    fCOD_FIN: TACBrCodFinalidade; /// Código da finalidade do arquivo: 0 - Remessa do arquivo original / 1 - Remessa do arquivo substituto.
+    fCOD_VER: TACBrCodVer;        /// Código da versão do leiaute: 100, 101, 102
+    fCOD_FIN: TACBrCodFin;        /// Código da finalidade do arquivo: 0 - Remessa do arquivo original / 1 - Remessa do arquivo substituto.
     fDT_INI: TDateTime;           /// Data inicial das informações contidas no arquivo
     fDT_FIN: TDateTime;           /// Data final das informações contidas no arquivo
     fNOME: String;                /// Nome empresarial do contribuinte:
@@ -85,10 +85,10 @@ type
     fIM: String;                  /// Inscrição Municipal do contribuinte:
     fSUFRAMA: String;             /// Número de inscrição do contribuinte:
     fIND_PERFIL: TACBrPerfil;     /// Perfil de apresentação do arquivo fiscal: A - Perfil A / B - Perfil B / C - Perfil C
-    fIND_ATIV: TACBrAtividade;    /// Indicador de tipo de atividade: 0 - Industrial ou equiparado a industrial; 1 - Outros.
+    fIND_ATIV: TACBrIndAtiv;      /// Indicador de tipo de atividade: 0 - Industrial ou equiparado a industrial; 1 - Outros.
   public
-    property COD_VER: TACBrVersaoLeiaute read FCOD_VER write FCOD_VER;
-    property COD_FIN: TACBrCodFinalidade read FCOD_FIN write FCOD_FIN;
+    property COD_VER: TACBrCodVer read FCOD_VER write FCOD_VER;
+    property COD_FIN: TACBrCodFin read FCOD_FIN write FCOD_FIN;
     property DT_INI: TDateTime read FDT_INI write FDT_INI;
     property DT_FIN: TDateTime read FDT_FIN write FDT_FIN;
     property NOME: String read FNOME write FNOME;
@@ -100,7 +100,7 @@ type
     property IM: String read FIM write FIM;
     property SUFRAMA: String read FSUFRAMA write FSUFRAMA;
     property IND_PERFIL: TACBrPerfil read FIND_PERFIL write FIND_PERFIL;
-    property IND_ATIV: TACBrAtividade read FIND_ATIV write FIND_ATIV;
+    property IND_ATIV: TACBrIndAtiv read FIND_ATIV write FIND_ATIV;
   end;
 
   /// Registro 0001 - ABERTURA DO BLOCO 0

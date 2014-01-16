@@ -193,7 +193,7 @@ type
 
   TRegistroG130 = class
   private
-    fIND_EMIT: TACBrEmitente;     /// Código do ajuste da apuração e dedução, conforme a Tabela indicada no item 5.1.1.
+    fIND_EMIT: TACBrIndEmit;     /// Código do ajuste da apuração e dedução, conforme a Tabela indicada no item 5.1.1.
     fCOD_PART: String;            /// Descrição complementar do ajuste da apuração.
     fCOD_MOD: String;             /// Valor do ajuste da apuração
     fSERIE: String;
@@ -206,7 +206,7 @@ type
     constructor Create(AOwner: TRegistroG125); virtual; /// Create
     destructor Destroy; override; /// Destroy
 
-    property IND_EMIT: TACBrEmitente read fIND_EMIT write fIND_EMIT;
+    property IND_EMIT: TACBrIndEmit read fIND_EMIT write fIND_EMIT;
     property COD_PART: String read fCOD_PART write fCOD_PART;
     property COD_MOD: String read fCOD_MOD write fCOD_MOD;
     property SERIE: String read fSERIE write fSERIE;
