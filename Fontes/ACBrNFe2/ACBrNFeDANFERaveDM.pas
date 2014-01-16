@@ -1005,6 +1005,8 @@ begin
      Connection.WriteStrData('', 'V.DESC.');
 
    if ((FNFe.Ide.tpEmis=teNormal) or
+       (FNFe.Ide.tpEmis=teSVCAN) or
+       (FNFe.Ide.tpEmis=teSVCRS) or
        (FNFe.Ide.tpEmis=teSCAN)) then
    begin
       Connection.WriteStrData('', 'CHAVE DE ACESSO');
@@ -1302,6 +1304,8 @@ begin
     begin
        if ((FNFe.Ide.tpEmis=teContingencia) or
            (FNFe.Ide.tpEmis=teFSDA) or
+           (FNFe.Ide.tpEmis=teSVCAN) or
+           (FNFe.Ide.tpEmis=teSVCRS) or
            (FNFe.Ide.tpEmis=teSCAN)) then
           wcontingencia:='DANFE EM CONTINGÊNCIA, IMPRESSO EM DECORRÊNCIA DE PROBLEMAS TÉCNICOS'
        else if (FNFe.Ide.tpEmis=teDPEC) then

@@ -48,7 +48,7 @@ unit ACBrDANFeCBRavePaisagem;
 interface
 
 uses Graphics, Forms, Windows, SysUtils, Classes,
-     Variants, Math, StdCtrls, DB, Dialogs,
+     Variants, DBClient, Math, StdCtrls, DB, Dialogs,
      Controls, ExtCtrls, Mask, MaskUtils,
      {$IFNDEF COMPILER16} JPEG, {$ELSE} Vcl.Imaging.jpeg, {$ENDIF}
      RpDefine, RpBase, RpSystem, RpBars, RpMemo,
@@ -220,6 +220,8 @@ begin
                 end;
         teFSDA,
         teContingencia,
+        teSVCAN,
+        teSVCRS,
         teSCAN:
                 begin
                   PrintCenter('DANFE em Contingência - impresso em',CenterX);
@@ -434,7 +436,7 @@ begin
         aTituloChave:=' ';
       Box([fsLeft,fsTop],PosX,YPos,aWidth,aHeigthPadrao,aTituloChave,aChaveAcesso,taCenter,True);
 
-      if ACBrNFe.NotasFiscais.Items[FNFIndex].NFe.Ide.tpEmis in [teContingencia,teFSDA] then
+      if ACBrNFe.NotasFiscais.Items[FNFIndex].NFe.Ide.tpEmis in [teContingencia, teFSDA, teSVCAN, teSVCRS] then
          aChaveContigencia:=NotaUtil.GerarChaveContingencia(ACBrNFe.NotasFiscais.Items[FNFIndex].NFe)
       else
          aChaveContigencia:='';
@@ -447,7 +449,7 @@ begin
       else
       begin
          aProtocolo := ProtocoloNFe;
-         if (ACBrNFe.NotasFiscais.Items[FNFIndex].NFe.Ide.tpEmis in [teNormal,teSCAN]) then
+         if (ACBrNFe.NotasFiscais.Items[FNFIndex].NFe.Ide.tpEmis in [teNormal,teSCAN,teSVCAN,teSVCRS]) then  
          begin
             if DFeUtil.EstaVazio(aProtocolo) then
                aProtocolo:=Trim(procNFe.nProt)+' '+DFeUtil.SeSenao(procNFe.dhRecbto<>0,DateTimeToStr(procNFe.dhRecbto),'');
@@ -1401,6 +1403,8 @@ begin
                    end;
            teFSDA,
            teContingencia,
+           teSVCAN,
+           teSVCRS,
            teSCAN:
                    begin
                      wInfCpl:='DANFE em Contingência - impresso em decorrência de problemas técnicos';

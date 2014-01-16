@@ -1472,7 +1472,7 @@ begin
   rlmDadosAdicionaisAuxiliar.Lines.Clear;
 
   // Protocolo de autorização, nos casos de emissão em contingência
-  if (FNFe.Ide.tpEmis in [teContingencia, teFSDA, teDPEC]) and
+  if (FNFe.Ide.tpEmis in [teContingencia, teFSDA, teDPEC, teSVCAN, teSVCRS]) and
                                               (FNFe.procNFe.cStat = 100) then
     begin
       sProtocolo := 'PROTOCOLO DE AUTORIZAÇÃO DE USO: ' +

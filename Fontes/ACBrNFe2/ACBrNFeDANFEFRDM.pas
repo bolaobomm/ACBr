@@ -1030,13 +1030,22 @@ begin
         wContingencia := ''
       else
       begin
-        if (FNFe.Ide.tpEmis = teContingencia) or (FNFe.Ide.tpEmis = teFSDA) or (FNFe.Ide.tpEmis = teSCAN) then
-          wContingencia := 'DANFE EM CONTINGÊNCIA, IMPRESSO EM DECORRÊNCIA DE PROBLEMAS TÉCNICOS'
-        else if FNFe.Ide.tpEmis = teDPEC then
-          wContingencia := 'DANFE IMPRESSO EM CONTINGÊNCIA - DPEC REGULARMENTE RECEBIDA PELA RECEITA FEDERAL DO BRASIL';
-          wContingencia := wContingencia + ';' +
-                           'DATA/HORA INÍCIO: ' + DFeUtil.SeSenao(FNFe.ide.dhCont = 0, ' ', DateTimeToStr(FNFe.ide.dhCont)) + ';'+
-                           'MOTIVO CONTINGÊNCIA: ' + DFeUtil.SeSenao(DFeUtil.EstaVazio(FNFe.ide.xJust), ' ', FNFe.ide.xJust);
+        case FNFe.Ide.tpEmis of
+          teContingencia,
+          teFSDA,
+          teSCAN,
+          teSVCAN,
+          teSVCRS:
+            wContingencia := 'DANFE EM CONTINGÊNCIA, IMPRESSO EM DECORRÊNCIA DE PROBLEMAS TÉCNICOS';
+
+          teDPEC:
+          begin
+            wContingencia := 'DANFE IMPRESSO EM CONTINGÊNCIA - DPEC REGULARMENTE RECEBIDA PELA RECEITA FEDERAL DO BRASIL';
+            wContingencia := wContingencia + ';' +
+                             'DATA/HORA INÍCIO: ' + DFeUtil.SeSenao(FNFe.ide.dhCont = 0, ' ', DateTimeToStr(FNFe.ide.dhCont)) + ';'+
+                             'MOTIVO CONTINGÊNCIA: ' + DFeUtil.SeSenao(DFeUtil.EstaVazio(FNFe.ide.xJust), ' ', FNFe.ide.xJust);
+          end;
+        end;
       end;
       if Length(wObs) > 0 then
         wObs := wObs + ';';
@@ -1188,7 +1197,7 @@ begin
     if (FNFe.Ide.TpAmb = taHomologacao) then
     begin
       //Modificado em 22/05/2013 - Fábio Gabriel
-      if (FNFe.Ide.tpEmis in [teContingencia, teFSDA, teSCAN, teDPEC]) then
+      if (FNFe.Ide.tpEmis in [teContingencia, teFSDA, teSCAN, teDPEC, teSVCAN, teSVCRS]) then
       begin
         if (FNFe.procNFe.cStat in [101, 151, 155]) then
           FieldByName('Mensagem0').AsString := 'NFe sem Valor Fiscal - HOMOLOGAÇÃO'+
@@ -1202,7 +1211,7 @@ begin
     end
     else
     begin
-      if not (FNFe.Ide.tpEmis in [teContingencia, teFSDA]) then
+      if not (FNFe.Ide.tpEmis in [teContingencia, teFSDA, teSVCAN, teSVCRS]) then
       begin
         //prioridade para opção NFeCancelada
         if (FDANFEClassOwner.NFeCancelada) or
