@@ -47,8 +47,13 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+Versão 1.02  16/01/2014
+-- ACBrSPEDFiscal --
+[+] Foram criados novos tipos para as propriedades para compatibilizar melhor com os nomes, 
+    mas os tipos antigos continuam existindo.
+    Foi criado funções de conversão de TipoToStr e StrToTipo, para várias propriedades.
 
-Versão 1.01  08/02/2013
+Versão 1.02  08/02/2013
 -- ACBrSPEDFiscal --
 [+] Modificado campo COD_GEN do registro 0200 para ter o mesmo comportamento
     do campo NCM.(Juliana Tamizou)
