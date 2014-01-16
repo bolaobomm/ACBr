@@ -48,7 +48,7 @@ unit ACBrDANFeCBRaveRetrato;
 interface
 
 uses Graphics, Forms, Windows, SysUtils, Classes,
-     Variants, DBClient, Math, StdCtrls, DB, Dialogs,
+     Variants, Math, StdCtrls, DB, Dialogs,
      Controls, ExtCtrls, Mask, MaskUtils,
      {$IFNDEF COMPILER16} JPEG, {$ELSE} Vcl.Imaging.jpeg, {$ENDIF}
      RpDefine, RpBase, RpSystem, RpBars, RpMemo,
@@ -122,17 +122,17 @@ begin
           end
           else
           begin
-             if Length(vEnd)>122 then
+			 if Length(vEnd)>100 then
              begin
                 vEnd:='Recebemos de '+Emit.XNome;
-                PrintCenter(vEnd,PosX+(aWidthOutros/2));
+				PrintLeft(vEnd,PosX+1);
                 NewLine;
                 vEnd:='os produtos/serviços constantes da NFe indicada ao lado';
-                PrintCenter(vEnd,PosX+(aWidthOutros/2));
+				PrintLeft(vEnd,PosX+1);
              end
              else
              begin
-                PrintCenter(vEnd,PosX+(aWidthOutros/2));
+				PrintLeft(vEnd,PosX+1);
                 NewLine;
                 if ExibirResumoCanhoto then
                 begin
@@ -234,8 +234,6 @@ begin
                 end;
         teFSDA,
         teContingencia,
-        teSVCAN,
-        teSVCRS,
         teSCAN:
                 begin
                   PrintCenter('DANFE em Contingência - impresso em',CenterX);
@@ -473,7 +471,7 @@ begin
       else
       begin
          aProtocolo := ProtocoloNFe;
-         if (ACBrNFe.NotasFiscais.Items[FNFIndex].NFe.Ide.tpEmis in [teNormal,teSCAN,teSVCAN,teSVCRS]) then
+         if (ACBrNFe.NotasFiscais.Items[FNFIndex].NFe.Ide.tpEmis in [teNormal,teSCAN]) then
          begin
             if DFeUtil.EstaVazio(aProtocolo) then
                aProtocolo:=Trim(procNFe.nProt)+' '+DFeUtil.SeSenao(procNFe.dhRecbto<>0,DateTimeToStr(procNFe.dhRecbto),'');
@@ -1378,8 +1376,6 @@ begin
                    end;
            teFSDA,
            teContingencia,
-           teSVCAN,
-           teSVCRS,
            teSCAN:
                    begin
                      wInfCpl:='DANFE em Contingência - impresso em decorrência de problemas técnicos';
