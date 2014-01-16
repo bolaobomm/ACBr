@@ -61,7 +61,7 @@ uses
   ACBrEFDBloco_E_Events;
 
 const
-  CACBrSpedFiscal_Versao = '1.01';
+  CACBrSpedFiscal_Versao = '1.02';
 
 type
   /// ACBrSpedFiscal - Sitema Publico de Escrituração Digital Fiscal
