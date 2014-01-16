@@ -2253,7 +2253,6 @@ function TNFeRetRecepcao.Executar: Boolean;
        nfeAutorizacaoLote := False;
      end;
 
-
     Texto := '<?xml version="1.0" encoding="utf-8"?>';
     Texto := Texto + '<soap12:Envelope xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap12="http://www.w3.org/2003/05/soap-envelope">';
     Texto := Texto +   '<soap12:Header>';
@@ -2434,9 +2433,9 @@ end;
 
 function TNFeRecibo.Executar: Boolean;
 var
- aMsg: string;
- Texto : String;
- Acao  : TStringList ;
+ aMsg, Texto, SoapAction: string;
+ nfeAutorizacaoLote : boolean;
+ Acao  : TStringList;
  Stream: TMemoryStream;
  StrStream: TStringStream;
  {$IFDEF ACBrNFeOpenSSL}
@@ -2447,19 +2446,32 @@ var
 begin
   if assigned(FNFeRetorno) then
     FNFeRetorno.Free;
-    
+
   inherited Executar;
 
   Acao := TStringList.Create;
   Stream := TMemoryStream.Create;
 
+  // Alterado por Italo em 13/01/2014
+  if ((FConfiguracoes.Geral.ModeloDF = moNFCe) or (FConfiguracoes.Geral.VersaoDF = ve310)) and not
+     (FConfiguracoes.WebServices.UFCodigo in [13, 29, 23, 52, 31, 50, 26, 41, 35])  then
+   begin
+     SoapAction := 'http://www.portalfiscal.inf.br/nfe/wsdl/NfeRetAutorizacao';
+     nfeAutorizacaoLote := True;
+   end
+  else
+   begin
+     SoapAction := 'http://www.portalfiscal.inf.br/nfe/wsdl/NfeRetRecepcao2';
+     nfeAutorizacaoLote := False;
+   end;
+
   Texto := '<?xml version="1.0" encoding="utf-8"?>';
   Texto := Texto + '<soap12:Envelope xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap12="http://www.w3.org/2003/05/soap-envelope">';
   Texto := Texto +   '<soap12:Header>';
-  Texto := Texto +     '<nfeCabecMsg xmlns="http://www.portalfiscal.inf.br/nfe/wsdl/NfeRetRecepcao2">';
+  Texto := Texto +     '<nfeCabecMsg xmlns="' + SoapAction + '">';
   Texto := Texto +       '<cUF>'+IntToStr(FConfiguracoes.WebServices.UFCodigo)+'</cUF>';
 
-  if FConfiguracoes.Geral.VersaoDF = ve310 then
+  if nfeAutorizacaoLote then
     Texto := Texto +       '<versaoDados>' + GetVersaoNFe(FConfiguracoes.Geral.ModeloDF,
                                                           FConfiguracoes.Geral.VersaoDF,
                                                           LayNfeRetAutorizacao) +
@@ -2474,7 +2486,7 @@ begin
   Texto := Texto +     '</nfeCabecMsg>';
   Texto := Texto +   '</soap12:Header>';
   Texto := Texto +   '<soap12:Body>';
-  Texto := Texto +     '<nfeDadosMsg xmlns="http://www.portalfiscal.inf.br/nfe/wsdl/NfeRetRecepcao2">';
+  Texto := Texto +     '<nfeDadosMsg xmlns="' + SoapAction + '">';
   Texto := Texto + FDadosMsg;
   Texto := Texto +     '</nfeDadosMsg>';
   Texto := Texto +   '</soap12:Body>';
@@ -2490,7 +2502,7 @@ begin
      ConfiguraReqResp( ReqResp );
      ReqResp.URL := FURL;
      ReqResp.UseUTF8InHeader := True;
-     ReqResp.SoapAction := 'http://www.portalfiscal.inf.br/nfe/wsdl/NfeRetRecepcao2';
+     ReqResp.SoapAction := SoapAction;
   {$ENDIF}
 
  FNFeRetorno := TRetConsReciNFe.Create;
@@ -2504,20 +2516,26 @@ begin
     end;
    {$IFDEF ACBrNFeOpenSSL}
       HTTP.Document.LoadFromStream(Stream);
-      ConfiguraHTTP(HTTP,'SOAPAction: "http://www.portalfiscal.inf.br/nfe/wsdl/NfeRetRecepcao2"');
+      ConfiguraHTTP(HTTP,'SOAPAction: "' + SoapAction + '"');
       HTTP.HTTPMethod('POST', FURL);
 
       StrStream := TStringStream.Create('');
       StrStream.CopyFrom(HTTP.Document, 0);
       FRetornoWS := TiraAcentos(ParseText(StrStream.DataString, True));
-      FRetWS := SeparaDados( FRetornoWS,'nfeRetRecepcao2Result');
+      if nfeAutorizacaoLote then
+        FRetWS := SeparaDados( FRetornoWS,'nfeRetAutorizacaoLoteResult')
+      else
+        FRetWS := SeparaDados( FRetornoWS,'nfeRetRecepcao2Result');
       StrStream.Free;
    {$ELSE}
       ReqResp.Execute(Acao.Text, Stream);
       StrStream := TStringStream.Create('');
       StrStream.CopyFrom(Stream, 0);
       FRetornoWS := TiraAcentos(ParseText(StrStream.DataString, True));
-      FRetWS := SeparaDados( FRetornoWS,'nfeRetRecepcao2Result');
+      if nfeAutorizacaoLote then
+        FRetWS := SeparaDados( FRetornoWS,'nfeRetAutorizacaoLoteResult')
+      else
+        FRetWS := SeparaDados( FRetornoWS,'nfeRetRecepcao2Result');
       StrStream.Free;
    {$ENDIF}
    if FConfiguracoes.Geral.Salvar then

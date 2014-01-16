@@ -224,8 +224,8 @@ begin
   if NaoEstaVazio(AValue) then
   begin
     // Incluido por Italo em 15/01/2014
-    if copy(AValue, 1, 4) = '0800' then
-      Result := copy(AValue, 1, 4) + '-' + copy(AValue, 5, 3) + '-' + copy(AValue, 8, 4)
+    if copy(AValue, 1, 3) = '800' then
+      Result := '0' + copy(AValue, 1, 3) + '-' + copy(AValue, 4, 3) + '-' + copy(AValue, 7, 4)
     else
     case length(AValue) of
        8: Result := '(  )' + copy(AValue, 1, 4) + '-' + copy(AValue, 5, 4);
