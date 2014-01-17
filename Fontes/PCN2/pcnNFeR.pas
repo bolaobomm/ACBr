@@ -104,7 +104,7 @@ var
   ok: boolean;
   i, j, k, z, nItem: integer;
   Arquivo, Itens, ItensTemp, VersaoInfNFe, Temp_VersaoInfNFe, NumItem: AnsiString;
-  Aspas, dCompet: String;
+  Aspas: String;
 
   Function VerificaParSt(const t: TpcnCSTIcms): TpcnCSTIcms;
   // 	Verifica se existe Partilha ou St
@@ -771,20 +771,22 @@ begin
 
       if NFe.infNFe.Versao >= 3 then
       begin
-        dCompet := trim(Leitor.rCampo(tcStr, 'dCompet'));
-        if dCompet <> '' then
-        begin
-          dCompet := Copy(dCompet, 7, 2) + '/' + Copy(dCompet, 5, 2)+ '/' + Copy(dCompet, 1, 4);
-          (*W22a*)NFe.Total.ISSQNtot.dCompet := StrToDate(dCompet);
-        end;
 
-        (*W22b*)NFe.Total.ISSQNtot.vDeducao     := Leitor.rCampo(tcDe2, 'vDeducao');
+//        dCompet := trim(Leitor.rCampo(tcStr, 'dCompet'));
+//        if dCompet <> '' then
+//        begin
+//          dCompet := Copy(dCompet, 7, 2) + '/' + Copy(dCompet, 5, 2)+ '/' + Copy(dCompet, 1, 4);
+//          (*W22a*)NFe.Total.ISSQNtot.dCompet := StrToDate(dCompet);
+//        end;
+
+        (*W22a*)NFe.Total.ISSQNtot.dCompet     := Leitor.rCampo(tcDat, 'dCompet');
+        (*W22b*)NFe.Total.ISSQNtot.vDeducao    := Leitor.rCampo(tcDe2, 'vDeducao');
 //        (*W22c*)NFe.Total.ISSQNtot.vINSS        := Leitor.rCampo(tcDe2, 'vINSS');
 //        (*W22d*)NFe.Total.ISSQNtot.vIR          := Leitor.rCampo(tcDe2, 'vIR');
 //        (*W22e*)NFe.Total.ISSQNtot.vCSLL        := Leitor.rCampo(tcDe2, 'vCSLL');
-        (*W22c*)NFe.Total.ISSQNtot.vOutro       := Leitor.rCampo(tcDe2, 'vOutro');
-        (*W22d*)NFe.Total.ISSQNtot.vDescIncond  := Leitor.rCampo(tcDe2, 'vDescIncond');
-        (*W22e*)NFe.Total.ISSQNtot.vDescCond    := Leitor.rCampo(tcDe2, 'vDescCond');
+        (*W22c*)NFe.Total.ISSQNtot.vOutro      := Leitor.rCampo(tcDe2, 'vOutro');
+        (*W22d*)NFe.Total.ISSQNtot.vDescIncond := Leitor.rCampo(tcDe2, 'vDescIncond');
+        (*W22e*)NFe.Total.ISSQNtot.vDescCond   := Leitor.rCampo(tcDe2, 'vDescCond');
 //        (*W22i*)NFe.Total.ISSQNtot.indISSRet    := StrToindISSRet(Ok, Leitor.rCampo(tcStr, 'indISSRet'));
 //        (*W22j*)NFe.Total.ISSQNtot.indISS       := StrToindISS(Ok, Leitor.rCampo(tcStr, 'indISS'));
 //        (*W22k*)NFe.Total.ISSQNtot.cServico     := Leitor.rCampo(tcStr, 'cServico');
@@ -793,8 +795,8 @@ begin
 //        (*W22n*)NFe.Total.ISSQNtot.nProcesso    := Leitor.rCampo(tcStr, 'nProcesso');
 
         // Italo
-        (*W22f*)NFe.Total.ISSQNtot.vISSRet      := Leitor.rCampo(tcDe2, 'vISSRet');
-        (*W22g*)NFe.Total.ISSQNtot.cRegTrib     := StrToRegTribISSQN(Ok, Leitor.rCampo(tcStr, 'cRegTrib'));
+        (*W22f*)NFe.Total.ISSQNtot.vISSRet     := Leitor.rCampo(tcDe2, 'vISSRet');
+        (*W22g*)NFe.Total.ISSQNtot.cRegTrib    := StrToRegTribISSQN(Ok, Leitor.rCampo(tcStr, 'cRegTrib'));
 //        (*W22p*)NFe.Total.ISSQNtot.indIncentivo := StrToindIncentivo(Ok, Leitor.rCampo(tcStr, 'indIncentivo'));
       end;
     end;

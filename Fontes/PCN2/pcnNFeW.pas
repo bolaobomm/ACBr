@@ -1756,7 +1756,8 @@ begin
 
     if nfe.infNFe.Versao >= 3.10 then
     begin
-      Gerador.wCampo(tcStr, 'W22a', 'dCompet     ', 10, 10, 1, FormatDateTime('YYYYMMDD', nfe.Total.ISSQNtot.dCompet), DSC_DCOMPET);
+//      Gerador.wCampo(tcStr, 'W22a', 'dCompet     ', 10, 10, 1, FormatDateTime('YYYYMMDD', nfe.Total.ISSQNtot.dCompet), DSC_DCOMPET);
+      Gerador.wCampo(tcDat, 'W22a', 'dCompet     ', 10, 10, 1, nfe.Total.ISSQNtot.dCompet, DSC_DCOMPET);
       Gerador.wCampo(tcDe2, 'W22b', 'vDeducao    ', 01, 15, 0, nfe.Total.ISSQNtot.vDeducao, DSC_VDEDUCAO);
 //      Gerador.wCampo(tcDe2, 'W22c', 'vINSS       ', 01, 15, 0, nfe.Total.ISSQNtot.vINSS, DSC_VINSS);
 //      Gerador.wCampo(tcDe2, 'W22d', 'vIR         ', 01, 15, 0, nfe.Total.ISSQNtot.vIR, DSC_VIR);
