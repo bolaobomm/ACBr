@@ -375,6 +375,7 @@ object frmDemo_ACBrNFSe: TfrmDemo_ACBrNFSe
               'Jundiai/3525904/SP'
               'Lages/4209300/SC'
               'Lagoa Santa/3137601/MG'
+              'Lavras/3138203/MG'
               'Maceio/2704302/AL'
               'Manaus/1302603/AM'
               'Marechal Deodoro/3704708/AL'
