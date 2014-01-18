@@ -417,7 +417,7 @@ begin
 
  with ACBrNFSe1 do
   begin
-   NotasFiscais.NumeroLote:='0001';
+   NotasFiscais.NumeroLote:='1';
 
    with NotasFiscais.Add.NFSe do
     begin
