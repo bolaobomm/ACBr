@@ -168,7 +168,7 @@ begin
   proTecnos: FNFSe.InfID.ID := '1' + //Fixo - Lote Sincrono
                          FormatDateTime('yyyy', FNFSe.DataEmissao) +
                          FNFSe.Prestador.Cnpj +
-                         IntToStrZero(StrToInt(FNFSe.NumeroLote), 16);
+                         IntToStrZero(StrToIntDef(FNFSe.NumeroLote, 1), 16);
 
   proIssDsf: FNFSe.InfID.ID := FNFSe.IdentificacaoRps.Numero;
 
