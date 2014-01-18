@@ -2099,9 +2099,9 @@ begin
       proLink3,
       proGovDigital,
       proGoiania: vNotas := vNotas +
-//                              '<' + Prefixo4 + 'Rps>' +
+                              '<' + Prefixo4 + 'Rps>' +
                                // ManutJonatan
-                              '<' + Prefixo4 + 'Rps Id="' +  TNFSeGerarLoteRPS(Self).FNotasFiscais.Items[I].NFSe.IdentificacaoRps.Numero + '">' +
+//                              '<' + Prefixo4 + 'Rps Id="' +  TNFSeGerarLoteRPS(Self).FNotasFiscais.Items[I].NFSe.IdentificacaoRps.Numero + '">' +
                                '<' + Prefixo4 + 'InfDeclaracaoPrestacaoServico' +
                                  RetornarConteudoEntre(TNFSeGerarLoteRPS(Self).FNotasFiscais.Items[I].XML_Rps_Ass,
                                    '<' + Prefixo4 + 'InfDeclaracaoPrestacaoServico', '</Signature>') +
