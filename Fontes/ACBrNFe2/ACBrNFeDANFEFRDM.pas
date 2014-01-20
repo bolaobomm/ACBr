@@ -884,7 +884,10 @@ begin
       cdsEmitenteDADOS_ENDERECO.AsString :=
         Trim(FieldByName('XLgr').AsString) + ', ' + trim(FieldByName('Nro').AsString) + ' - ' +
         Trim(FieldByName('XBairro').AsString) + ' - ' + Trim(FieldByName('XMun').AsString) + ' - ' + Trim(FieldByName('UF').AsString) + #13 +
-        'Fone: ' + Trim(FieldByName('Fone').AsString) + ' - CEP: ' + Trim(FieldByName('CEP').AsString);
+        'Fone: ' + Trim(FieldByName('Fone').AsString) +
+        DFeUtil.SeSenao(trim(FDANFEClassOwner.Fax) <> '',
+                        ' - FAX: ' + DFeUtil.FormatarFone(trim(FDANFEClassOwner.Fax)),'')+
+        ' - CEP: ' + Trim(FieldByName('CEP').AsString);
       if trim(FDANFEClassOwner.Site) <> '' then
         cdsEmitenteDADOS_ENDERECO.AsString := cdsEmitenteDADOS_ENDERECO.AsString + #13 +
         trim(FDANFEClassOwner.Site);
