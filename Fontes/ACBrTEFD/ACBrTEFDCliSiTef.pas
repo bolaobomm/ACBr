@@ -700,10 +700,6 @@ var
 begin
   VerificarTransacaoPagamento( Valor );
 
-  Req.DocumentoVinculado  := DocumentoVinculado;
-  Req.ValorTotal          := Valor;
-  Req.Moeda               := Moeda;
-
   Restr := fRestricoes;
   if Restr = '' then
      Restr := '[10]' ;     // 10 - Cheques
@@ -737,9 +733,6 @@ var
 
 begin
   VerificarTransacaoPagamento( Valor );
-
-  Req.DocumentoVinculado  := DocumentoVinculado;
-  Req.ValorTotal          := Valor;
 
   Respostas.Values['501'] := ifthen(TipoPessoa = 'J','1','0');
 
@@ -837,6 +830,10 @@ Var
   ValorStr, DataStr, HoraStr : AnsiString;
   ANow : TDateTime ;
 begin
+  Req.DocumentoVinculado  := Documento;
+  Req.ValorTotal          := Valor;
+
+
    if fpAguardandoResposta then
       raise Exception.Create( ACBrStr( CACBrTEFD_CliSiTef_NaoConcluido ) ) ;
 
