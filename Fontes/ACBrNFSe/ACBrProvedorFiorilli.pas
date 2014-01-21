@@ -113,43 +113,37 @@ const
 begin
  // URL de produção 
  case ACodCidade of             
-  3505203 : // Bariri/SP
-    cURL_Producao := 'http://sipweb.bariri.sp.gov.br:8080/IssWeb-ejb/IssWebWS/IssWebWS?wsdl';
-  3540200 : // Pontal/SP
-    cURL_Producao := 'http://177.69.210.132:8080/IssWeb-ejb/IssWebWS/IssWebWS';
+  1100122 : // Ji-Parana/RO
+    cURL_Producao := ''; 
   2103000 : // Caxias/MA
     cURL_Producao := 'http://177.105.209.118:8080/IssWeb-ejb/IssWebWS/IssWebWS';
   3504800 : // Balsamo/SP
     cURL_Producao := 'http://201.28.69.146:5663/IssWeb-ejb/IssWebWS/IssWebWS';
+  3505203 : // Bariri/SP
+    cURL_Producao := 'http://sipweb.bariri.sp.gov.br:8080/IssWeb-ejb/IssWebWS/IssWebWS?wsdl';
+  3540200 : // Pontal/SP
+    cURL_Producao := 'http://177.69.210.132:8080/IssWeb-ejb/IssWebWS/IssWebWS';
  end;
 
- case ACodCidade of
-  2103000, // Caxias/MA
-  3504800, // Balsamo/SP
-  3505203, // Bariri/SP
-  3540200  // Pontal/SP
-         : begin
-            ConfigURL.HomNomeCidade         := '';
-            ConfigURL.HomRecepcaoLoteRPS    := cURL_Homologacao;
-            ConfigURL.HomConsultaLoteRPS    := cURL_Homologacao;
-            ConfigURL.HomConsultaNFSeRPS    := cURL_Homologacao;
-            ConfigURL.HomConsultaSitLoteRPS := cURL_Homologacao;
-            ConfigURL.HomConsultaNFSe       := cURL_Homologacao;
-            ConfigURL.HomCancelaNFSe        := cURL_Homologacao;
-          	ConfigURL.HomGerarNFSe          := cURL_Homologacao;
-           	ConfigURL.HomRecepcaoSincrono   := cURL_Homologacao;
+ ConfigURL.HomNomeCidade         := '';
+ ConfigURL.HomRecepcaoLoteRPS    := cURL_Homologacao;
+ ConfigURL.HomConsultaLoteRPS    := cURL_Homologacao;
+ ConfigURL.HomConsultaNFSeRPS    := cURL_Homologacao;
+ ConfigURL.HomConsultaSitLoteRPS := cURL_Homologacao;
+ ConfigURL.HomConsultaNFSe       := cURL_Homologacao;
+ ConfigURL.HomCancelaNFSe        := cURL_Homologacao;
+ ConfigURL.HomGerarNFSe          := cURL_Homologacao;
+ ConfigURL.HomRecepcaoSincrono   := cURL_Homologacao;
 
-            ConfigURL.ProNomeCidade         := '';
-            ConfigURL.ProRecepcaoLoteRPS    := cURL_Producao;
-            ConfigURL.ProConsultaLoteRPS    := cURL_Producao;
-            ConfigURL.ProConsultaNFSeRPS    := cURL_Producao;
-            ConfigURL.ProConsultaSitLoteRPS := cURL_Producao;
-            ConfigURL.ProConsultaNFSe       := cURL_Producao;
-            ConfigURL.ProCancelaNFSe        := cURL_Producao;
-            ConfigURL.ProGerarNFSe          := cURL_Producao;
-           	ConfigURL.ProRecepcaoSincrono   := cURL_Producao;
-           end;
- end;
+ ConfigURL.ProNomeCidade         := '';
+ ConfigURL.ProRecepcaoLoteRPS    := cURL_Producao;
+ ConfigURL.ProConsultaLoteRPS    := cURL_Producao;
+ ConfigURL.ProConsultaNFSeRPS    := cURL_Producao;
+ ConfigURL.ProConsultaSitLoteRPS := cURL_Producao;
+ ConfigURL.ProConsultaNFSe       := cURL_Producao;
+ ConfigURL.ProCancelaNFSe        := cURL_Producao;
+ ConfigURL.ProGerarNFSe          := cURL_Producao;
+ ConfigURL.ProRecepcaoSincrono   := cURL_Producao;
 
  Result := ConfigURL;
 end;

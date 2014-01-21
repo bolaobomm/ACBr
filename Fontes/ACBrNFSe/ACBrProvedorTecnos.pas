@@ -155,6 +155,8 @@ begin
  ConfigURL.HomConsultaSitLoteRPS := '';
  ConfigURL.HomConsultaNFSe       := 'http://' + ConfigURL.HomNomeCidade + ':9094';
  ConfigURL.HomCancelaNFSe        := 'http://' + ConfigURL.HomNomeCidade + ':9098';
+ ConfigURL.HomGerarNFSe          := 'http://' + ConfigURL.HomNomeCidade + ':9090';
+ ConfigURL.HomRecepcaoSincrono   := 'http://' + ConfigURL.HomNomeCidade + ':9091';
 
  ConfigURL.ProRecepcaoLoteRPS    := sHTTPPro + ConfigURL.ProNomeCidade + '9091';
  ConfigURL.ProConsultaLoteRPS    := sHTTPPro + ConfigURL.ProNomeCidade + '9097';
@@ -162,6 +164,8 @@ begin
  ConfigURL.ProConsultaSitLoteRPS := '';
  ConfigURL.ProConsultaNFSe       := sHTTPPro + ConfigURL.ProNomeCidade + '9094';
  ConfigURL.ProCancelaNFSe        := sHTTPPro + ConfigURL.ProNomeCidade + '9098';
+ ConfigURL.ProGerarNFSe          := sHTTPPro + ConfigURL.ProNomeCidade + '9090';
+ ConfigURL.ProRecepcaoSincrono   := sHTTPPro + ConfigURL.ProNomeCidade + '9091';
 
  Result := ConfigURL;
 end;
@@ -181,6 +185,7 @@ begin
    acConsNFSe:    Result := False;
    acCancelar:    Result := False;
    acGerar:       Result := False;
+   acRecSincrono: Result := False;
    else           Result := False;
  end;
 end;
@@ -203,6 +208,7 @@ begin
                              '<' + Prefixo3 + 'Pedido>' +
                               '<' + Prefixo4 + 'InfPedidoCancelamento ' + Identificador + '="' + URI + '">';
    acGerar:       Result := '';
+   acRecSincrono: Result := '<' + Prefixo3 + 'EnviarLoteRpsSincronoEnvio' + ' xmlns="http://www.abrasf.org.br/nfse.xsd">';
  end;
 end;
 
@@ -230,6 +236,7 @@ begin
    acCancelar:    Result := '</' + Prefixo3 + 'Pedido>' +
                             '</' + Prefixo3 + 'CancelarNfseEnvio>';
    acGerar:       Result := '';
+   acRecSincrono: Result := '</' + Prefixo3 + 'EnviarLoteRpsSincronoEnvio>';
  end;
 end;
 
@@ -358,7 +365,7 @@ end;
 function TProvedorTecnos.GeraEnvelopeRecepcionarSincrono(URLNS: String;
   CabMsg, DadosMsg, DadosSenha: AnsiString): AnsiString;
 begin
- Result := '';
+ Result := GeraEnvelopeRecepcionarLoteRPS(URLNS, CabMsg, DadosMsg, DadosSenha);
 end;
 
 function TProvedorTecnos.GetSoapAction(Acao: TnfseAcao; NomeCidade: String): String;
@@ -371,6 +378,7 @@ begin
    acConsNFSe:    Result := '';
    acCancelar:    Result := 'http://tempuri.org/mCancelamentoNFSe';
    acGerar:       Result := '';
+   acRecSincrono: Result := 'http://tempuri.org/' + FMetodoRecepcionar;
  end;
 end;
 
@@ -396,6 +404,9 @@ begin
                    Result := SeparaDados( RetornoWS, 'mCancelamentoNFSeResponse');
                   end;
    acGerar:       Result := '';
+   acRecSincrono: begin
+                   Result := SeparaDados( RetornoWS, 'mEnvioLoteRPSSincronoResponse');
+                  end;
  end;
 end;
 

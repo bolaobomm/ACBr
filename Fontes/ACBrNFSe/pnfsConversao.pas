@@ -701,6 +701,7 @@ begin
   4119905  // Ponta Grossa/PR
          : Provedor := 'fintelISS';
 
+  1100122, // Ji-Parana/RO
   2103000, // Caxias/MA
   3504800, // Balsamo/SP
   3505203, // Bariri/SP
