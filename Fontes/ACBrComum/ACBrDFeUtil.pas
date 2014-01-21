@@ -206,7 +206,7 @@ begin
      Result := AValue
   else
    begin
-      AValue := LimpaNumero(AValue);
+     AValue := LimpaNumero(AValue);
      Result := copy(AValue,1,3) + '.' + copy(AValue,4 ,3) + '.' +
                copy(AValue,7,3) + '-' + copy(AValue,10,2) ;
    end;
@@ -216,10 +216,17 @@ class function DFeUtil.FormatarFone(AValue: String): String;
 var
   lTemp: string;
 begin
-  // Proposta de Italo
-  AValue := IntToStr(StrToInt64Def(LimpaNumero(AValue), 0));
-  Result := AValue;
-  lTemp  := '';
+  // Alterado por Italo em 21/01/2014
+  AValue := LimpaNumero(AValue);
+
+  if Length(AValue) = 0 then
+     Result := AValue
+  else
+   begin
+     AValue := IntToStr(StrToInt64Def(AValue, 0));
+     Result := AValue;
+     lTemp  := '';
+   end;
 
   if NaoEstaVazio(AValue) then
   begin
