@@ -1364,7 +1364,6 @@ end;
 
 procedure TNFSeR.NFSe_ProvedorGoiania;
 var
-  strTxt : String;
  	item: Integer;
  	ok  : Boolean;
 begin
@@ -1916,6 +1915,7 @@ procedure TNFSeR.NFSe_ProvedorISSe;
 var
  	ok  : Boolean;
   dt, d, m , a : string;
+  Item: Integer;
 begin
  	if Leitor.rExtrai(2, 'ValoresNfse') <> '' then
 	begin
@@ -2017,6 +2017,13 @@ begin
         NFSe.Servico.ItemListaServico  := Leitor.rCampo(tcStr, 'ItemListaServico');
         NFSe.Servico.Discriminacao     := Leitor.rCampo(tcStr, 'Discriminacao');
         NFSe.Servico.Descricao         := '';
+
+        Item := StrToInt(SomenteNumeros(Nfse.Servico.ItemListaServico));
+        if Item<100 then Item:=Item*100+1;
+
+        NFSe.Servico.ItemListaServico := FormatFloat('0000', Item);
+        NFSe.Servico.ItemListaServico := Copy(NFSe.Servico.ItemListaServico, 1, 2) + '.' +
+                                         Copy(NFSe.Servico.ItemListaServico, 3, 2);
 
         NFSe.Servico.xItemListaServico := CodigoToDesc(SomenteNumeros(NFSe.Servico.ItemListaServico));
 
@@ -2496,6 +2503,7 @@ end;
 procedure TNFSeR.NFSe_ProvedorVirtual;
 var
  ok  : Boolean;
+ Item: Integer;
 begin
  	if Leitor.rExtrai(3, 'ValoresNfse') <> '' then
 	begin
@@ -2553,6 +2561,16 @@ begin
 		begin
        NFSe.Servico.Valores.IssRetido         := StrToSituacaoTributaria(ok, Leitor.rCampo(tcStr, 'IssRetido'));
        NFSe.Servico.ItemListaServico          := DFeUtil.LimpaNumero(Leitor.rCampo(tcStr, 'ItemListaServico'));
+
+       Item := StrToInt(SomenteNumeros(Nfse.Servico.ItemListaServico));
+       if Item<100 then Item:=Item*100+1;
+
+       NFSe.Servico.ItemListaServico := FormatFloat('0000', Item);
+       NFSe.Servico.ItemListaServico := Copy(NFSe.Servico.ItemListaServico, 1, 2) + '.' +
+                                        Copy(NFSe.Servico.ItemListaServico, 3, 2);
+
+       NFSe.Servico.xItemListaServico := CodigoToDesc(SomenteNumeros(NFSe.Servico.ItemListaServico));
+
        NFSe.Servico.CodigoTributacaoMunicipio := Leitor.rCampo(tcStr, 'CodigoTributacaoMunicipio');
        NFSe.Servico.Discriminacao             := Leitor.rCampo(tcStr, 'Discriminacao');
        NFSe.Servico.Descricao                 := '';
@@ -3120,6 +3138,9 @@ begin
       proSimplISS:  NFSe_ProvedorSimplISS;
       
       proVirtual:   NFSe_ProvedorVirtual;
+
+      proISSDigital: NFSe_ProvedorISSDigital;
+
       else          NFSe_Demais;
      end;
 
@@ -3170,6 +3191,7 @@ end;
 procedure TNFSeR.Rps_ProvedorEquiplano;
 var
   ok: Boolean;
+  Item: Integer;
 begin
   NFSe.IdentificacaoRps.Numero:= Leitor.rCampo(tcStr, 'nrRps');
   NFSe.IdentificacaoRps.Serie := Leitor.rCampo(tcStr, 'nrEmissorRps');
@@ -3202,6 +3224,16 @@ begin
     begin
       NFSe.Servico.ItemListaServico            := Poem_Zeros( Leitor.rCampo(tcStr, 'nrServicoItem'), 2) +
                                                   Poem_Zeros( Leitor.rCampo(tcStr, 'nrServicoSubItem'), 2);
+
+      Item := StrToInt(SomenteNumeros(Nfse.Servico.ItemListaServico));
+      if Item<100 then Item:=Item*100+1;
+
+      NFSe.Servico.ItemListaServico := FormatFloat('0000', Item);
+      NFSe.Servico.ItemListaServico := Copy(NFSe.Servico.ItemListaServico, 1, 2) + '.' +
+                                       Copy(NFSe.Servico.ItemListaServico, 3, 2);
+
+      NFSe.Servico.xItemListaServico := CodigoToDesc(SomenteNumeros(NFSe.Servico.ItemListaServico));
+
       NFSe.Servico.Valores.ValorServicos       := Leitor.rCampo(tcDe2, 'vlServico');
       NFSe.Servico.Valores.Aliquota            := Leitor.rCampo(tcDe2, 'vlAliquota');
       NFSe.Servico.Valores.ValorDeducoes       := Leitor.rCampo(tcDe2, 'vlDeducao');
