@@ -948,7 +948,9 @@ begin
      begin
        if Assigned(TACBrCTe( FACBrCTe ).OnGerarLog) then
           TACBrCTe( FACBrCTe ).OnGerarLog(Self.Consulta.Msg);
-       raise Exception.Create(Self.Consulta.Msg);
+       if Self.Consulta.Msg <> ''
+        then raise Exception.Create(Self.Consulta.Msg)
+        else raise Exception.Create('Erro Desconhecido ao Consultar um CT-e!')
      end;
 
   Self.Cancelamento.CTeChave      := Self.Consulta.CTeChave;
@@ -958,7 +960,9 @@ begin
      begin
        if Assigned(TACBrCTe( FACBrCTe ).OnGerarLog) then
           TACBrCTe( FACBrCTe ).OnGerarLog(Self.Cancelamento.Msg);
-       raise Exception.Create(Self.Cancelamento.Msg);
+       if Self.Cancelamento.Msg <> ''
+        then raise Exception.Create(Self.Cancelamento.Msg)
+        else raise Exception.Create('Erro Desconhecido ao Cancelar um CT-e!')
      end;
 end;
 
@@ -993,7 +997,9 @@ begin
      begin
        if Assigned(TACBrCTe( FACBrCTe ).OnGerarLog) then
           TACBrCTe( FACBrCTe ).OnGerarLog(Self.Inutilizacao.Msg);
-       raise Exception.Create(Self.Inutilizacao.Msg);
+       if Self.Inutilizacao.Msg <> ''
+        then raise Exception.Create(Self.Inutilizacao.Msg)
+        else raise Exception.Create('Erro Desconhecido ao Inutilizar numeração de CT-e!')
      end;
 end;
 
@@ -1046,7 +1052,9 @@ begin
      begin
        if Assigned(TACBrCTe( FACBrCTe ).OnGerarLog) then
           TACBrCTe( FACBrCTe ).OnGerarLog(Self.Enviar.Msg);
-       raise Exception.Create(Self.Enviar.Msg);
+       if Self.Enviar.Msg <> ''
+        then raise Exception.Create(Self.Enviar.Msg)
+        else raise Exception.Create('Erro Desconhecido ao Enviar Lote de CT-e!')
      end;
 
   Self.Retorno.Recibo := Self.Enviar.Recibo;
@@ -1054,7 +1062,9 @@ begin
      begin
        if Assigned(TACBrCTe( FACBrCTe ).OnGerarLog) then
           TACBrCTe( FACBrCTe ).OnGerarLog(Self.Retorno.Msg);
-       raise Exception.Create(Self.Retorno.Msg);
+       if Self.Retorno.Msg <> ''
+        then raise Exception.Create(Self.Retorno.Msg)
+        else raise Exception.Create('Erro Desconhecido ao Consultar Lote Pelo numero do Recibo!')
      end;
 
   Result := true;

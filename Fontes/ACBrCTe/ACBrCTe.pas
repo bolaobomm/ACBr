@@ -621,7 +621,9 @@ begin
   begin
     if Assigned(Self.OnGerarLog) then
       Self.OnGerarLog(WebServices.EnvEvento.Msg);
-    raise EACBrCTeException.Create(WebServices.EnvEvento.Msg);
+    if WebServices.EnvEvento.Msg <> ''
+     then raise EACBrCTeException.Create(WebServices.EnvEvento.Msg)
+     else raise EACBrCTeException.Create('Erro Desconhecido ao Enviar Evento de CT-e!')
   end;
 end;
 
