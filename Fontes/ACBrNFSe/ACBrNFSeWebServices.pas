@@ -2441,7 +2441,7 @@ begin
     then TACBrNFSe( FACBrNFSe ).OnGerarLog(Self.Enviar.Msg);
    if Self.Enviar.Msg <> ''
     then raise Exception.Create(Self.Enviar.Msg)
-    else raise Exception.Create('Erro Desconhecido!')
+    else raise Exception.Create('Erro Desconhecido ao Enviar o Lote!')
   end;
 
  Self.ConsSitLote.Cnpj               := TACBrNFSe( FACBrNFSe ).NotasFiscais.Items[0].NFSe.Prestador.Cnpj;
@@ -2472,7 +2472,9 @@ begin
       then begin
        if Assigned(TACBrNFSe( FACBrNFSe ).OnGerarLog)
         then TACBrNFSe( FACBrNFSe ).OnGerarLog(Self.ConsSitLote.Msg);
-       raise Exception.Create(Self.ConsSitLote.Msg);
+       if Self.ConsSitLote.Msg <> ''
+        then raise Exception.Create(Self.ConsSitLote.Msg)
+        else raise Exception.Create('Erro Desconhecido ao Consultar a Situação do Lote!')
       end;
     end;
 
@@ -2482,7 +2484,9 @@ begin
     then begin
      if Assigned(TACBrNFSe( FACBrNFSe ).OnGerarLog)
       then TACBrNFSe( FACBrNFSe ).OnGerarLog(Self.ConsLote.Msg);
-     raise Exception.Create(Self.ConsLote.Msg);
+     if Self.ConsLote.Msg <> ''
+      then raise Exception.Create(Self.ConsLote.Msg)
+      else raise Exception.Create('Erro Desconhecidoa ao Consultar o Lote!')
     end;
  end;
 end;
@@ -2507,7 +2511,7 @@ begin
     then TACBrNFSe( FACBrNFSe ).OnGerarLog(Self.ConsSitLote.Msg);
    if Self.ConsSitLote.Msg <> ''
     then raise Exception.Create(Self.ConsSitLote.Msg)
-    else raise Exception.Create('Erro Desconhecido!')
+    else raise Exception.Create('Erro Desconhecido ao Consultar a Situação do Lote!')
   end;
 end;
 
@@ -2530,7 +2534,7 @@ begin
     then TACBrNFSe( FACBrNFSe ).OnGerarLog(Self.ConsLote.Msg);
    if Self.ConsLote.Msg <> ''
     then raise Exception.Create(Self.ConsLote.Msg)
-    else raise Exception.Create('Erro Desconhecido!')
+    else raise Exception.Create('Erro Desconhecido ao Consultar o Lote!')
   end;
 end;
 
@@ -2560,7 +2564,7 @@ begin
     then TACBrNFSe( FACBrNFSe ).OnGerarLog(Self.ConsNfseRps.Msg);
    if Self.ConsNfseRps.Msg <> ''
     then raise Exception.Create(Self.ConsNfseRps.Msg)
-    else raise Exception.Create('Erro Desconhecido!')
+    else raise Exception.Create('Erro Desconhecido ao Consultar a NFS-e por RPS!')
   end;
 end;
 
@@ -2602,7 +2606,7 @@ begin
     then TACBrNFSe( FACBrNFSe ).OnGerarLog(Self.ConsNfse.Msg);
    if Self.ConsNfse.Msg <> ''
     then raise Exception.Create(Self.ConsNfse.Msg)
-    else raise Exception.Create('Erro Desconhecido!')
+    else raise Exception.Create('Erro Desconhecido ao Consultar a NFS-e!')
   end;
 end;
 
@@ -2625,7 +2629,7 @@ begin
     then TACBrNFSe( FACBrNFSe ).OnGerarLog(Self.ConsSeqRPS.Msg);
    if Self.ConsSeqRPS.Msg <> ''
     then raise Exception.Create(Self.ConsSeqRPS.Msg)
-    else raise Exception.Create('Erro Desconhecido!')
+    else raise Exception.Create('Erro Desconhecido ao Consultar a Sequencia de RPS!')
   end;
 
 end;
@@ -2659,7 +2663,7 @@ begin
     then TACBrNFSe( FACBrNFSe ).OnGerarLog(Self.CancNfse.Msg);
    if Self.CancNfse.Msg <> ''
     then raise Exception.Create(Self.CancNfse.Msg)
-    else raise Exception.Create('Erro Desconhecido!')
+    else raise Exception.Create('Erro Desconhecido ao Cancelar a NFS-e!')
   end;
 
  if not (TACBrNFSe( FACBrNFSe ).Configuracoes.WebServices.Provedor in [proISSNet])
@@ -2679,7 +2683,7 @@ begin
       then TACBrNFSe( FACBrNFSe ).OnGerarLog(Self.ConsNfseRps.Msg);
      if Self.ConsNfseRps.Msg <> ''
       then raise Exception.Create(Self.ConsNfseRps.Msg)
-      else raise Exception.Create('Erro Desconhecido!')
+      else raise Exception.Create('Erro Desconhecido ao Consultar a NFS-e por RPS!')
     end;
   end;
 end;
@@ -2707,7 +2711,7 @@ begin
     then TACBrNFSe( FACBrNFSe ).OnGerarLog(Self.GerarNfse.Msg);
    if Self.GerarNfse.Msg <> ''
     then raise Exception.Create(Self.GerarNfse.Msg)
-    else raise Exception.Create('Erro Desconhecido!')
+    else raise Exception.Create('Erro Desconhecido ao Gerar NFS-e!')
   end;
 end;
 
@@ -2724,7 +2728,7 @@ begin
     then TACBrNFSe( FACBrNFSe ).OnGerarLog(Self.LinkNfse.Msg);
    if Self.LinkNfse.Msg <> ''
     then raise Exception.Create(Self.LinkNfse.Msg)
-    else raise Exception.Create('Erro Desconhecido!')
+    else raise Exception.Create('Erro Desconhecido ao Gerar o Link da NFS-e!')
   end;
 
  Result := self.LinkNFSe.FLink;
@@ -2746,7 +2750,7 @@ begin
     then TACBrNFSe( FACBrNFSe ).OnGerarLog(Self.GerarLoteRPs.Msg);
    if Self.GerarLoteRPs.Msg <> ''
     then raise Exception.Create(Self.GerarLoteRPs.Msg)
-    else raise Exception.Create('Erro Desconhecido!')
+    else raise Exception.Create('Erro Desconhecido ao Gerar o Lote de RPS!')
   end;
 end;
 
@@ -2767,7 +2771,7 @@ begin
     then TACBrNFSe( FACBrNFSe ).OnGerarLog(Self.EnviarSincrono.Msg);
    if Self.EnviarSincrono.Msg <> ''
     then raise Exception.Create(Self.EnviarSincrono.Msg)
-    else raise Exception.Create('Erro Desconhecido!')
+    else raise Exception.Create('Erro Desconhecido ao Enviar o Lote modo Sincrono!')
   end;
 end;
 
