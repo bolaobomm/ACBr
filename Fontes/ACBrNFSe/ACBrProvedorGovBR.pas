@@ -360,6 +360,23 @@ begin
             ConfigURL.ProConsultaNFSe       := 'http://server21.ijui.rs.gov.br/nfsews/Services.svc';
             ConfigURL.ProCancelaNFSe        := 'http://server21.ijui.rs.gov.br/nfsews/Services.svc';
            end;
+  4320800: begin // Soledade/RS
+            ConfigURL.HomNomeCidade         := '';
+            ConfigURL.HomRecepcaoLoteRPS    := '';
+            ConfigURL.HomConsultaLoteRPS    := '';
+            ConfigURL.HomConsultaNFSeRPS    := '';
+            ConfigURL.HomConsultaSitLoteRPS := '';
+            ConfigURL.HomConsultaNFSe       := '';
+            ConfigURL.HomCancelaNFSe        := '';
+
+            ConfigURL.ProNomeCidade         := '';
+            ConfigURL.ProRecepcaoLoteRPS    := 'http://177.101.230.30/nfsews/services.svc';
+            ConfigURL.ProConsultaLoteRPS    := 'http://177.101.230.30/nfsews/services.svc';
+            ConfigURL.ProConsultaNFSeRPS    := 'http://177.101.230.30/nfsews/services.svc';
+            ConfigURL.ProConsultaSitLoteRPS := 'http://177.101.230.30/nfsews/services.svc';
+            ConfigURL.ProConsultaNFSe       := 'http://177.101.230.30/nfsews/services.svc';
+            ConfigURL.ProCancelaNFSe        := 'http://177.101.230.30/nfsews/services.svc';
+           end;
   4321709: begin // Tres Coroas/RS
             ConfigURL.HomNomeCidade         := '';
             ConfigURL.HomRecepcaoLoteRPS    := 'http://nfseteste.pmtcoroas.com.br/nfsewsteste/Services.svc';

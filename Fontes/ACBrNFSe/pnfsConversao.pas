@@ -827,6 +827,7 @@ begin
   4205902, // Gaspar/SC
   4309407, // Guapore/RS
   4310207, // Ijui/RS
+  4320800, // Soledade/RS
   4321709, // Tres Coroas/RS
   4322400  // Uruguaiana/RS
          : Provedor := 'GovBR';
