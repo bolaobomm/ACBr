@@ -869,8 +869,18 @@ begin
 end;
 
 procedure TfrmDemo_ACBrMDFe.btnConsultarChaveClick(Sender: TObject);
+var
+ vChave : String;
 begin
- ShowMessage('Opção não Implementada!');
+  if not(InputQuery('WebServices Consultar', 'Chave do MDF-e:', vChave)) then
+    exit;
+
+  ACBrMDFe1.WebServices.Consulta.MDFeChave := vChave;
+  ACBrMDFe1.WebServices.Consulta.Executar;
+
+  MemoResp.Lines.Text :=  UTF8Encode(ACBrMDFe1.WebServices.Consulta.RetWS);
+  memoRespWS.Lines.Text :=  UTF8Encode(ACBrMDFe1.WebServices.Consulta.RetornoWS);
+  LoadXML(MemoResp, WBResposta);
 end;
 
 procedure TfrmDemo_ACBrMDFe.btnEncerramentoClick(Sender: TObject);
