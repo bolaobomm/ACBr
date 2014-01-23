@@ -383,9 +383,20 @@ begin
    aCodCedente:= padR(RightStr(ACBrTitulo.ACBrBoleto.Cedente.CodigoCedente,11),11,'0');
 
    {Montando Campo Livre}
-   CampoLivre := ANossoNumero +
-                 RightStr(ACBrTitulo.ACBrBoleto.Cedente.Agencia, 4) +
-                 aCodCedente;
+   if Length(ANossoNumero) > 11 then
+   begin                                                                  //                     Tamanho
+     CampoLivre := RightStr(aCodCedente, 5) +                             // Código do Cedende - 05
+                   RightStr(ACBrTitulo.ACBrBoleto.Cedente.Agencia, 4) +   // Agência           - 04
+                   '87' +                                                 // Constante         - 02
+                   RightStr(ANossoNumero, 14);                            // Nosso Número      - 14
+   end
+   else
+   begin
+     CampoLivre := ANossoNumero +
+                   RightStr(ACBrTitulo.ACBrBoleto.Cedente.Agencia, 4) +
+                   aCodCedente;
+   end;
+
 
    {Codigo de Barras}
    with ACBrTitulo.ACBrBoleto do
