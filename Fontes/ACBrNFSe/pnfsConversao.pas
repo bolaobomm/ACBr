@@ -25,7 +25,8 @@ type
                             noTributacaoNoMunicipio51, noTributacaoNoMunicipioSemISS52, noNaoTributa58,
                             noSimplesNacional59, noTributacaoNoMunicipio61, noTributacaoNoMunicipioSemISS62,
                             noTributacaoForaMunicipio63, noTributacaoForaMunicipioSemISS64,
-                            noNaoTributa68, noSimplesNacional69, noNaoTributa78 );
+                            noNaoTributa68, noSimplesNacional69, noNaoTributa78,
+                            no50, no57, no60, no67, no70, no79);
 
   TnfseExigibilidadeISS = ( exiExigivel, exiNaoIncidencia, exiIsencao, exiExportacao, exiImunidade,
                             exiSuspensaDecisaoJudicial, exiSuspensaProcessoAdministrativo );
@@ -155,8 +156,9 @@ end;
 function NaturezaOperacaoToStr(const t: TnfseNaturezaOperacao):string;
 begin
   result := EnumeradoToStr(t,
-                           ['1','2','3','4','5','6','7',
-                            '51','52','58','59','61','62','63','64','68','69','78'],
+                           ['1', '2', '3', '4', '5', '6', '7',
+                            '51', '52', '58', '59', '61', '62', '63', '64', '68', '69', '78',
+                            '50', '57', '60', '67', '70', '79'],
                            [noTributacaoNoMunicipio, noTributacaoForaMunicipio,
                             noIsencao, noImune, noSuspensaDecisaoJudicial,
                             noSuspensaProcedimentoAdministrativo,
@@ -165,14 +167,16 @@ begin
                             noNaoTributa58, noSimplesNacional59, noTributacaoNoMunicipio61,
                             noTributacaoNoMunicipioSemISS62, noTributacaoForaMunicipio63,
                             noTributacaoForaMunicipioSemISS64,
-                            noNaoTributa68, noSimplesNacional69, noNaoTributa78]);
+                            noNaoTributa68, noSimplesNacional69, noNaoTributa78,
+                            no50, no57, no60, no67, no70, no79]);
 end;
 
 function StrToNaturezaOperacao(var ok: boolean; const s: string):TnfseNaturezaOperacao;
 begin
   result := StrToEnumerado(ok, s,
-                          ['1','2','3','4','5','6','7',
-                           '51','52','58','59','61','62','63','64','68','69','78'],
+                          ['1', '2', '3', '4', '5', '6', '7',
+                           '51', '52', '58', '59', '61', '62', '63', '64', '68', '69', '78',
+                           '50', '57', '60', '67', '70', '79'],
                           [noTributacaoNoMunicipio, noTributacaoForaMunicipio,
                            noIsencao, noImune, noSuspensaDecisaoJudicial,
                            noSuspensaProcedimentoAdministrativo,
@@ -181,7 +185,8 @@ begin
                            noNaoTributa58, noSimplesNacional59, noTributacaoNoMunicipio61,
                            noTributacaoNoMunicipioSemISS62, noTributacaoForaMunicipio63,
                            noTributacaoForaMunicipioSemISS64,
-                           noNaoTributa68, noSimplesNacional69, noNaoTributa78]);
+                           noNaoTributa68, noSimplesNacional69, noNaoTributa78,
+                           no50, no57, no60, no67, no70, no79]);
 end;
 
 // Exigibilidade ISS ***********************************************************
