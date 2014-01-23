@@ -65,6 +65,7 @@ type
      FMostrarSetup: boolean;
      FTributosFonte: string;
      FTributosPercentual: TpcnPercentualTributos;
+     FMarcaDaguaMSG: string;
 
      function SeSenaoJPEG(ACondicao: Boolean; ATrue, AFalse: TJPEGImage): TJPEGImage;
    public
@@ -82,7 +83,7 @@ type
      property MostrarSetup: boolean read FMostrarSetup write FMostrarSetup;
      property TributosFonte: string read FTributosFonte write FTributosFonte;
      property TributosPercentual: TpcnPercentualTributos read FTributosPercentual write FTributosPercentual;
-
+     property MarcaDaguaMSG: string read FMarcaDaguaMSG write FMarcaDaguaMSG;
   end;
 
 implementation
@@ -170,6 +171,7 @@ begin
                        NFeCancelada,
                        TributosFonte,
                        TributosPercentual,
+                       MarcaDaguaMSG,
                        NFe);
     finally
       LogoMarcaEmpresa.Free;
@@ -248,6 +250,7 @@ begin
                        NFeCancelada,
                        TributosFonte,
                        TributosPercentual,
+                       MarcaDaguaMSG,
                        NFE);
     finally
       LogoMarcaEmpresa.Free;

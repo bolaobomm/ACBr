@@ -130,10 +130,12 @@ type
     FDANFEClassOwner : TACBrNFeDANFEClass ;
     FNFe : TNFe;
     FTributosPercentual: TpcnPercentualTributos;
+    FMarcaDaguaMSG: string;
   public
     property NFe : TNFe read FNFe write FNFe;
     property DANFEClassOwner : TACBrNFeDANFEClass read FDANFEClassOwner ;
     property TributosPercentual: TpcnPercentualTributos read FTributosPercentual write FTributosPercentual;
+    property MarcaDaguaMSG: string read FMarcaDaguaMSG write FMarcaDaguaMSG;
   end;
 
 implementation
@@ -930,32 +932,37 @@ begin
   end;
   Connection.WriteStrData('', vResumo);
 
-  if (FNFe.Ide.TpAmb = taHomologacao) then
-     Connection.WriteStrData('', 'NFe sem Valor Fiscal - HOMOLOGAÇÃO')
+  if Trim(MarcaDaguaMSG) <> '' then
+    Connection.WriteStrData('', MarcaDaguaMSG)
   else
   begin
-     if not (FNFe.Ide.tpEmis in [teContingencia, teFSDA]) then
-     begin
-        if ((DFeUtil.EstaVazio(FDANFEClassOwner.ProtocoloNFe)) and
-            (DFeUtil.EstaVazio(FNFe.procNFe.nProt))) then
-         Connection.WriteStrData('', 'NFe sem Autorização de Uso da SEFAZ')
-       else
-         if (not ((DFeUtil.EstaVazio(FDANFEClassOwner.ProtocoloNFe)) and
-                  (DFeUtil.EstaVazio(FNFe.procNFe.nProt)))) and
-            (FNFe.procNFe.cStat in [101,151]) then
-            Connection.WriteStrData('', 'NFe Cancelada')
+    if (FNFe.Ide.TpAmb = taHomologacao) then
+       Connection.WriteStrData('', 'NFe sem Valor Fiscal - HOMOLOGAÇÃO')
+    else
+    begin
+       if not (FNFe.Ide.tpEmis in [teContingencia, teFSDA]) then
+       begin
+          if ((DFeUtil.EstaVazio(FDANFEClassOwner.ProtocoloNFe)) and
+              (DFeUtil.EstaVazio(FNFe.procNFe.nProt))) then
+           Connection.WriteStrData('', 'NFe sem Autorização de Uso da SEFAZ')
          else
-         begin
-            if FDANFEClassOwner.NFeCancelada then
-               Connection.WriteStrData('', 'NFe Cancelada')
-            else if (FNFe.procNFe.cStat = 110) then
-              Connection.WriteStrData('', 'NFe com Uso Denegado')
-            else
-               Connection.WriteStrData('', '');
-         end;
-     end
-     else
-        Connection.WriteStrData('', '');
+           if (not ((DFeUtil.EstaVazio(FDANFEClassOwner.ProtocoloNFe)) and
+                    (DFeUtil.EstaVazio(FNFe.procNFe.nProt)))) and
+              (FNFe.procNFe.cStat in [101,151]) then
+              Connection.WriteStrData('', 'NFe Cancelada')
+           else
+           begin
+              if FDANFEClassOwner.NFeCancelada then
+                 Connection.WriteStrData('', 'NFe Cancelada')
+              else if (FNFe.procNFe.cStat = 110) then
+                Connection.WriteStrData('', 'NFe com Uso Denegado')
+              else
+                 Connection.WriteStrData('', '');
+           end;
+       end
+       else
+          Connection.WriteStrData('', '');
+    end;
   end;
 
   vStream := TMemoryStream.Create;

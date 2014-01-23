@@ -72,6 +72,7 @@ type
     FTributosFonte: string;
     FTributosPercentual: TpcnPercentualTributos;
     FTributosPercentualPersonalizado: double;
+    FMarcaDaguaMSG: string;
     function GetPreparedReport: TfrxReport;
     function GetPreparedReportEvento: TfrxReport;
     function PrepareReport(NFE: TNFe = nil): Boolean;
@@ -98,6 +99,7 @@ type
     property TributosFonte: string read FTributosFonte write FTributosFonte;
     property TributosPercentual: TpcnPercentualTributos read FTributosPercentual write setTributosPercentual;
     property TributosPercentualPersonalizado: double read FTributosPercentualPersonalizado write setTributosPercentualPersonalizado;
+    property MarcaDaguaMSG: string read FMarcaDaguaMSG write FMarcaDaguaMSG;
   end;
 
 implementation
@@ -115,6 +117,7 @@ begin
   FTributosFonte := '';
   FTributosPercentual := ptValorProdutos;
   FTributosPercentualPersonalizado := 0;
+  FMarcaDaguaMSG:='';
 end;
 
 destructor TACBrNFeDANFEFR.Destroy;
@@ -160,6 +163,7 @@ begin
   dmDanfe.TributosFonte :=  FTributosFonte;
   dmDanfe.TributosPercentual :=  FTributosPercentual;
   dmDanfe.TributosPercentualPersonalizado :=  FTributosPercentualPersonalizado;
+  dmDanfe.MarcaDaguaMSG :=  FMarcaDaguaMSG;
 
   if Trim(FastFile) <> '' then
   begin

@@ -221,6 +221,17 @@ begin
            Print(IntToStr(procNFe.cStat) + '-' +procNFe.xMotivo);
       end;
 
+      //Marca Dagua
+      begin
+        SetFont(FontNameUsed,25);
+        FontColor:=clSilver;
+        Bold:=True;
+        Underline:=True;
+        GotoXY(FFirstX+15,YY+10);
+        FontRotation:=45;
+        PrintCenter(MarcaDaguaMSG,CenterX);
+      end;
+
      SetFont(FontNameUsed,22);
      FontColor:=clSilver;
      Bold:=True;
@@ -243,6 +254,7 @@ begin
                   PrintCenter('decorrência de problemas técnicos',CenterX);
                 end;
      end;
+
     FontRotation:=0;
   end;
 end;

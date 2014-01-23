@@ -291,6 +291,7 @@ type
     FTributosFonte: string;
     FTributosPercentual: TpcnPercentualTributos;
     FTributosPercentualPersonalizado: double;
+    FMarcaDaguaMSG: string;
     procedure CarregaIdentificacao;
     procedure CarregaEmitente;
     procedure CarregaDestinatario;
@@ -315,6 +316,7 @@ type
     property TributosFonte: string read FTributosFonte write FTributosFonte;
     property TributosPercentual: TpcnPercentualTributos read FTributosPercentual write FTributosPercentual;
     property TributosPercentualPersonalizado: double read FTributosPercentualPersonalizado write FTributosPercentualPersonalizado;
+    property MarcaDaguaMSG: string read FMarcaDaguaMSG write FMarcaDaguaMSG;
     procedure CarregaDadosNFe;
     procedure CarregaDadosEventos;
   end;
@@ -1232,6 +1234,12 @@ begin
       else
         FieldByName('Mensagem0').AsString := '';
     end;
+
+    //Marca Dagua
+    FieldByName('Mensagem0').AsString := DFeUtil.SeSenao(trim(FieldByName('Mensagem0').AsString) = '',
+                                                         '',
+                                                         FieldByName('Mensagem0').AsString+#10#13)+
+                                         MarcaDaguaMSG;
 
     // Carregamento da imagem
     if DFeUtil.NaoEstaVazio(DANFEClassOwner.Logo) then

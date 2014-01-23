@@ -70,6 +70,7 @@ type
     FTamanhoFonte_ANTT: Integer;
     FTributosFonte: string;
     FTributosPercentual: TpcnPercentualTributos;
+    FMarcaDaguaMSG: string;
     procedure ExecutaReport;
    public
     constructor Create(AOwner: TComponent); override;
@@ -85,6 +86,7 @@ type
     property TamanhoFonte_ANTT: Integer read FTamanhoFonte_ANTT write FTamanhoFonte_ANTT;
     property TributosFonte: string read FTributosFonte write FTributosFonte;
     property TributosPercentual: TpcnPercentualTributos read FTributosPercentual write FTributosPercentual;
+    property MarcaDaguaMSG: string read FMarcaDaguaMSG write FMarcaDaguaMSG;
   end;
 
 implementation
@@ -100,6 +102,7 @@ begin
   FTamanhoFonte_RazaoSocial := 12;
   FTamanhoFonte_ANTT := 10;
   FTributosPercentual := ptValorProdutos;
+  FMarcaDaguaMSG:='';
 end;
 
 destructor TACBrNFeDANFERave.Destroy;
@@ -822,6 +825,7 @@ begin
       end;
    finally
       dmDanfe.TributosPercentual := FtributosPercentual;
+      dmDanfe.MarcaDaguaMSG := FMarcaDaguaMSG;
       dmDanfe.RvProject.ExecuteReport('DANFE1');
       dmDanfe.RvProject.Close;
       ProtocoloNFe:='';
