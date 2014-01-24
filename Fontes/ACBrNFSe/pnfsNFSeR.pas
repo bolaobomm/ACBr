@@ -3040,8 +3040,13 @@ var
  ok  : Boolean;
  CM: String;
 begin
- FProvedor := proNenhum;
-
+ if (Leitor.rExtrai(1, 'OrgaoGerador') <> '')
+  then begin
+   CM:= Leitor.rCampo(tcStr, 'CodigoMunicipio');
+   FProvedor := StrToProvedor(Ok, CodCidadeToProvedor(StrToIntDef(CM, 0)));
+  end
+  else FProvedor := proNenhum;
+  (*
 	// Alterado por - Cleiver
  	if Pos('<DeclaracaoPrestacaoServico', Leitor.Arquivo) > 0 then
 	begin
@@ -3090,19 +3095,21 @@ begin
    if (CM = '3205309') then
     FProvedor := proVitoria;
   end;
-
+ *)
  if (Leitor.rExtrai(1, 'Nfse') <> '') or (Pos('Nfse versao="2.01"', Leitor.Arquivo) > 0) then // alterado por Joel Takei 24/06/2013
  begin
    if (Leitor.rExtrai(2, 'InfNfse') <> '') or (Leitor.rExtrai(1, 'InfNfse') <> '') // alterado por Joel Takei 24/06/2013
     then begin
-     NFSe.Numero                   := Leitor.rCampo(tcStr, 'Numero');
-     NFSe.CodigoVerificacao        := Leitor.rCampo(tcStr, 'CodigoVerificacao');
+     NFSe.Numero            := Leitor.rCampo(tcStr, 'Numero');
+     NFSe.CodigoVerificacao := Leitor.rCampo(tcStr, 'CodigoVerificacao');
+
      if FProvedor in [proFreire, proVitoria]
-      then NFSe.DataEmissao              := Leitor.rCampo(tcDat, 'DataEmissao')
-      else NFSe.DataEmissao              := Leitor.rCampo(tcDatHor, 'DataEmissao');
+      then NFSe.DataEmissao := Leitor.rCampo(tcDat, 'DataEmissao')
+      else NFSe.DataEmissao := Leitor.rCampo(tcDatHor, 'DataEmissao');
+
      // Alterado por Leonardo Gregianin 11/01/2014: Tratar erro de conversão de tipo no Provedor Ábaco
-	 if Leitor.rCampo(tcStr, 'DataEmissaoRps') <> '0000-00-00' then
-	    NFSe.DataEmissaoRps           := Leitor.rCampo(tcDat, 'DataEmissaoRps');
+  	 if Leitor.rCampo(tcStr, 'DataEmissaoRps') <> '0000-00-00' then
+	     NFSe.DataEmissaoRps := Leitor.rCampo(tcDat, 'DataEmissaoRps');
 
      if FProvedor = proISSNet
       then FNFSe.NfseSubstituida := ''
@@ -3111,14 +3118,17 @@ begin
        if NFSe.NfseSubstituida = ''
         then NFSe.NfseSubstituida := Leitor.rCampo(tcStr, 'NfseSubstituta');
       end;
-      
+
      NFSe.OutrasInformacoes        := Leitor.rCampo(tcStr, 'OutrasInformacoes');
      NFSe.ValorCredito             := Leitor.rCampo(tcDe2, 'ValorCredito');
      NFSe.NaturezaOperacao         := StrToNaturezaOperacao(ok, Leitor.rCampo(tcStr, 'NaturezaOperacao'));
      NFSe.RegimeEspecialTributacao := StrToRegimeEspecialTributacao(ok, Leitor.rCampo(tcStr, 'RegimeEspecialTributacao'));
      NFSe.OptanteSimplesNacional   := StrToSimNao(ok, Leitor.rCampo(tcStr, 'OptanteSimplesNacional'));
-     NFSe.IncentivadorCultural     := StrToSimNao(ok, Leitor.rCampo(tcStr, 'IncentivadorCultural'));
      NFSe.Competencia              := Leitor.rCampo(tcStr, 'Competencia');
+
+     if FProvedor = proVitoria
+      then NFSe.IncentivadorCultural := StrToSimNao(ok, Leitor.rCampo(tcStr, 'IncentivoFiscal'))
+      else NFSe.IncentivadorCultural := StrToSimNao(ok, Leitor.rCampo(tcStr, 'IncentivadorCultural'));
 
      case FProvedor of
       proSaatri:    NFSe_ProvedorSaatri;
@@ -3136,7 +3146,7 @@ begin
       proTiplan:    NFSe_ProvedorTiplan;
 
       proSimplISS:  NFSe_ProvedorSimplISS;
-      
+
       proVirtual:   NFSe_ProvedorVirtual;
 
       proISSDigital: NFSe_ProvedorISSDigital;
