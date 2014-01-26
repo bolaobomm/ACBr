@@ -1331,7 +1331,7 @@ end;
 
 function TCFe.GetAsXMLString: String;
 begin
-  GetXMLString( false ) ;
+  Result := GetXMLString( false ) ;
 end;
 
 function TCFe.GetXMLString(ApenasTagsAplicacao: Boolean): String;

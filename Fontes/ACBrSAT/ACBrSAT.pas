@@ -139,8 +139,8 @@ type
      function EnviarDadosVenda( dadosVenda : AnsiString ) : String ; overload;
      function ExtrairLogs : String ;
      function TesteFimAFim( dadosVenda : AnsiString) : String ;
-     function TrocarCodigoDeAtivacao( opcao : Integer; novoCodigo,
-        confNovoCodigo : String ) : String ;
+     function TrocarCodigoDeAtivacao(codigoDeAtivacaoOuEmergencia: String; opcao: Integer;
+       novoCodigo: String): String;
 
     procedure ImprimirExtrato;
     procedure ImprimirExtratoResumido;
@@ -170,7 +170,7 @@ procedure Register;
 
 implementation
 
-Uses ACBrUtil, {ACBrSATEmuladorSP,} ACBrSATDinamico_cdecl, ACBrSATExtratoESCPOS;
+Uses ACBrUtil, ACBrSATDinamico_cdecl, ACBrSATExtratoESCPOS;
 
 {$IFNDEF FPC}
    {$R ACBrSAT.dcr}
@@ -311,7 +311,6 @@ begin
   with wCFe do
   begin
     Clear;
-    infCFe.versaoDadosEnt := cversaoDadosEnt;
     ide.CNPJ              := fsConfig.ide_CNPJ;
     ide.tpAmb             := fsConfig.ide_tpAmb;
     ide.numeroCaixa       := fsConfig.ide_numeroCaixa;
@@ -469,13 +468,14 @@ begin
   Result := FinalizaComando( fsSATClass.TesteFimAFim( dadosVenda ) );
 end ;
 
-function TACBrSAT.TrocarCodigoDeAtivacao(opcao : Integer ; novoCodigo,
-  confNovoCodigo : String) : String ;
+function TACBrSAT.TrocarCodigoDeAtivacao(codigoDeAtivacaoOuEmergencia: String;
+  opcao: Integer; novoCodigo: String): String;
 begin
-  fsComandoLog := 'TrocarCodigoDeAtivacao(' +IntToStr(opcao)+', '+novoCodigo+
-                  ', '+confNovoCodigo+' )';
+  fsComandoLog := 'TrocarCodigoDeAtivacao('+ codigoDeAtivacao+', '+IntToStr(opcao)+
+                  ', '+novoCodigo+' )';
   IniciaComando;
-  Result := FinalizaComando( fsSATClass.TrocarCodigoDeAtivacao( opcao, novoCodigo, confNovoCodigo ) );
+  Result := FinalizaComando( fsSATClass.TrocarCodigoDeAtivacao(
+                                codigoDeAtivacaoOuEmergencia, opcao, novoCodigo ));
 end ;
 
 function TACBrSAT.GetAbout : String ;
@@ -545,7 +545,6 @@ begin
 
   { Instanciando uma nova classe de acordo com AValue }
   case AValue of
-//  satEmuladorSP     : fsSATClass := TACBrSATEmuladorSP.Create( Self ) ;
     satDinamico_cdecl : fsSATClass := TACBrSATDinamico_cdecl.Create( Self ) ;
   else
     fsSATClass := TACBrSATClass.Create( Self ) ;
@@ -599,7 +598,7 @@ end ;
 procedure TACBrSAT.CFe2CFeCanc;
 begin
   CFeCanc.Clear;
-  CFeCanc.infCFe.chCanc   := CFe.infCFe.ID;
+  CFeCanc.infCFe.chCanc   := 'CFe'+CFe.infCFe.ID;
   CFeCanc.infCFe.dEmi     := CFe.ide.dEmi;
   CFeCanc.infCFe.hEmi     := CFe.ide.hEmi;
   CFeCanc.ide.CNPJ        := CFe.ide.CNPJ;

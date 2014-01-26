@@ -63,7 +63,7 @@ const
                                  'Acesse nosso Forum em: http://projetoacbr.com.br/' ;
 type
 
-  TACBrSATModelo = ( satNenhum, satEmuladorSP, satDinamico_cdecl ) ;
+  TACBrSATModelo = ( satNenhum, satDinamico_cdecl ) ;
 
   { EACBrSATErro }
 
@@ -197,8 +197,8 @@ type
      function EnviarDadosVenda( dadosVenda : AnsiString ) : String ; virtual;
      function ExtrairLogs : String ; virtual;
      function TesteFimAFim( dadosVenda : AnsiString) : String ; virtual;
-     function TrocarCodigoDeAtivacao( opcao : Integer; novoCodigo,
-        confNovoCodigo : String ) : String ; virtual;
+     function TrocarCodigoDeAtivacao( codigoDeAtivacaoOuEmergencia: String;
+       opcao : Integer; novoCodigo: String ) : String ; virtual;
 
    end;
 
@@ -474,8 +474,9 @@ begin
   Result := '';
 end ;
 
-function TACBrSATClass.TrocarCodigoDeAtivacao(opcao : Integer ; novoCodigo,
-  confNovoCodigo : String) : String ;
+function TACBrSATClass.TrocarCodigoDeAtivacao(
+  codigoDeAtivacaoOuEmergencia: String; opcao: Integer; novoCodigo: String
+  ): String;
 begin
   ErroAbstract('TrocarCodigoDeAtivacao');
   Result := '';

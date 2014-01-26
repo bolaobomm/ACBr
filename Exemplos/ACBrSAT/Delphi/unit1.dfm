@@ -419,7 +419,7 @@ object Form1: TForm1
             Width = 134
             Height = 21
             Style = csDropDownList
-            ItemHeight = 13
+            ItemHeight = 0
             TabOrder = 4
           end
           object cbxIndRatISSQN: TComboBox
@@ -428,7 +428,7 @@ object Form1: TForm1
             Width = 134
             Height = 21
             Style = csDropDownList
-            ItemHeight = 13
+            ItemHeight = 0
             TabOrder = 5
           end
           object cbxRegTributario: TComboBox
@@ -437,7 +437,7 @@ object Form1: TForm1
             Width = 166
             Height = 21
             Style = csDropDownList
-            ItemHeight = 13
+            ItemHeight = 0
             TabOrder = 3
           end
         end
@@ -603,7 +603,6 @@ object Form1: TForm1
     Top = 328
   end
   object ACBrSAT1: TACBrSAT
-    Modelo = satEmuladorSP
     Extrato = ACBrSATExtratoESCPOS1
     OnLog = ACBrSAT1Log
     Config.infCFe_versaoDadosEnt = 0.030000000000000000

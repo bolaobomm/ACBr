@@ -1,7 +1,7 @@
 object Form1: TForm1
-  Left = 323
+  Left = 338
   Height = 501
-  Top = 130
+  Top = 132
   Width = 725
   Caption = 'SAT Teste - Projeto ACBr'
   ClientHeight = 481
@@ -30,13 +30,13 @@ object Form1: TForm1
     TabOrder = 1
     object tsLog: TTabSheet
       Caption = 'Log de Comandos'
-      ClientHeight = 176
-      ClientWidth = 640
+      ClientHeight = 222
+      ClientWidth = 717
       object mResposta: TMemo
         Left = 0
-        Height = 176
+        Height = 222
         Top = 0
-        Width = 640
+        Width = 717
         Align = alBottom
         Anchors = [akTop, akLeft, akRight, akBottom]
         ScrollBars = ssAutoBoth
@@ -46,13 +46,13 @@ object Form1: TForm1
     object tsGerado: TTabSheet
       Caption = 'XML Gerado'
       ClientHeight = 222
-      ClientWidth = 720
+      ClientWidth = 717
       inline mVenda: TSynMemo
         Cursor = crIBeam
         Left = 0
         Height = 222
         Top = 0
-        Width = 720
+        Width = 717
         Align = alClient
         Font.Height = -13
         Font.Name = 'Courier New'
@@ -538,13 +538,13 @@ object Form1: TForm1
     object tsRecebido: TTabSheet
       Caption = 'XML Recebido'
       ClientHeight = 222
-      ClientWidth = 720
+      ClientWidth = 717
       inline mCupom: TSynMemo
         Cursor = crIBeam
         Left = 0
         Height = 222
         Top = 0
-        Width = 720
+        Width = 717
         Align = alClient
         Font.Height = -13
         Font.Name = 'Courier New'
@@ -1656,9 +1656,9 @@ object Form1: TForm1
         Height = 182
         Top = 0
         Width = 550
-        ActivePage = tsDadosEmit
+        ActivePage = tsDadosSAT
         Align = alClient
-        TabIndex = 1
+        TabIndex = 0
         TabOrder = 0
         object tsDadosSAT: TTabSheet
           Caption = 'Dados do SAT CFe'
@@ -2150,6 +2150,7 @@ object Form1: TForm1
       Caption = 'Diversos'
       object mTesteFimAFim: TMenuItem
         Caption = 'Teste Fim a Fim'
+        OnClick = mTesteFimAFimClick
       end
       object mExtrairLogs: TMenuItem
         Caption = 'Extrair Logs'

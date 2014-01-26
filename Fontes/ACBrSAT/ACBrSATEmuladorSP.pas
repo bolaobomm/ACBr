@@ -106,8 +106,8 @@ type
      function EnviarDadosVenda( dadosVenda : AnsiString ) : String ; override;
      function ExtrairLogs : String ; override;
      function TesteFimAFim( dadosVenda : AnsiString) : String ; override;
-     function TrocarCodigoDeAtivacao( opcao : Integer; novoCodigo,
-        confNovoCodigo : String ) : String ; override;
+     function TrocarCodigoDeAtivacao( codigoDeAtivacaoOuEmergencia: String;
+       opcao : Integer; novoCodigo: String ) : String ; override;
    end;
 
 implementation
@@ -263,13 +263,20 @@ begin
   Result := String( Resp );
 end ;
 
-function TACBrSATEmuladorSP.TrocarCodigoDeAtivacao(opcao : Integer ;
-  novoCodigo, confNovoCodigo : String) : String ;
+function TACBrSATEmuladorSP.TrocarCodigoDeAtivacao(
+  codigoDeAtivacaoOuEmergencia: String; opcao: Integer; novoCodigo: String
+  ): String;
 Var
   Resp : PAnsiChar;
 begin
-  Resp := xSAT_TrocarCodigoDeAtivacao( numeroSessao, PAnsiChar(codigoDeAtivacao),
-                 opcao, PAnsiChar(novoCodigo), PAnsiChar(confNovoCodigo) ) ;
+  if codigoDeAtivacaoOuEmergencia = '' then
+    codigoDeAtivacaoOuEmergencia := codigoDeAtivacao;
+
+  Resp := xSAT_TrocarCodigoDeAtivacao( numeroSessao,
+                                       PAnsiChar(codigoDeAtivacaoOuEmergencia),
+                                       opcao,
+                                       PAnsiChar(novoCodigo),
+                                       PAnsiChar(novoCodigo) ) ;
   Result := String( Resp );
 end ;
 

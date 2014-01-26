@@ -441,23 +441,34 @@ end;
 
 procedure TForm1.MenuItem5Click(Sender : TObject) ;
 Var
-  strCod: String ;
+  CodNovo, CodAtual, tipoCodigo: String;
 begin
-  strCod := '';
+  CodNovo    := '';
+  CodAtual   := edtCodigoAtivacao.Text;
+  tipoCodigo := '1';
+
   if not InputQuery('Trocar Código de Ativação',
-                    'Entre com o Número do Novo Código de Ativação:', strCod ) then
+                    'Entre com o Código de Ativação ou de Emergência:', CodAtual ) then
     Exit;
 
-  {
-    1 – Código de Ativação
-    2 – Código de Ativação de Emergência
-  }
-  ACBrSAT1.TrocarCodigoDeAtivacao(1,strCod,strCod);
+  if not InputQuery('Trocar Código de Ativação',
+                    'Qual o Tipo do Código Informado anteriormente ?'+sLineBreak+
+                    '1 - Código de Ativação'+sLineBreak+
+                    '2 - Código de Ativação de Emergência'+sLineBreak,
+                    tipoCodigo ) then
+    Exit;
+
+  if not InputQuery('Trocar Código de Ativação',
+                    'Entre com o Número do Novo Código de Ativação:', CodNovo ) then
+    Exit;
+
+  ACBrSAT1.TrocarCodigoDeAtivacao( CodAtual, StrToInt(tipoCodigo), CodNovo );
 
   if ACBrSAT1.Resposta.codigoDeRetorno = 1800 then
   begin
-    edtCodigoAtivacao.Text := strCod;
+    edtCodigoAtivacao.Text := CodNovo;
     mResposta.Lines.Add('Código de Ativação trocado com sucesso');
+    btSalvarParams.Click;
   end ;
 end;
 
@@ -676,7 +687,7 @@ begin
                       'Precisa de um PAF-ECF homologado?;Conheça o DJPDV - www.djpdv.com.br'
   end;
 
-  mVenda.Lines.Text := ACBrSAT1.CFe.AsXMLString;
+  mVenda.Lines.Text := ACBrSAT1.CFe.GetXMLString( True ) ;
   
   LoadXML(mVenda, wbVenda);
   mResposta.Lines.Add('Venda Gerada');
