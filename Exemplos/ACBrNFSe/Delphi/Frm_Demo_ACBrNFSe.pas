@@ -537,6 +537,7 @@ begin
      Servico.CodigoPais := 1058; // Brasil
      Servico.MunicipioIncidencia := StrToIntDef(edtCodCidade.Text, 0);
      
+    // Somente o provedor SimplISS permite infomar mais de 1 serviço
      with Servico.ItemServico.Add do
       begin
        Descricao     := 'SERVICO 1';
