@@ -149,23 +149,23 @@ begin
            end;
  end;
 
- ConfigURL.HomRecepcaoLoteRPS    := 'http://' + ConfigURL.HomNomeCidade + ':9091';
- ConfigURL.HomConsultaLoteRPS    := 'http://' + ConfigURL.HomNomeCidade + ':9097';
- ConfigURL.HomConsultaNFSeRPS    := 'http://' + ConfigURL.HomNomeCidade + ':9095';
+ ConfigURL.HomRecepcaoLoteRPS    := 'http://' + ConfigURL.HomNomeCidade + ':9087/RecepcaoLoteRPS.asmx';
+ ConfigURL.HomConsultaLoteRPS    := 'http://' + ConfigURL.HomNomeCidade + ':9097/ConsultaLoteRPS.asmx';
+ ConfigURL.HomConsultaNFSeRPS    := 'http://' + ConfigURL.HomNomeCidade + ':9095/ConsultaNFSePorRPS.asmx';
  ConfigURL.HomConsultaSitLoteRPS := '';
- ConfigURL.HomConsultaNFSe       := 'http://' + ConfigURL.HomNomeCidade + ':9094';
- ConfigURL.HomCancelaNFSe        := 'http://' + ConfigURL.HomNomeCidade + ':9098';
- ConfigURL.HomGerarNFSe          := 'http://' + ConfigURL.HomNomeCidade + ':9090';
- ConfigURL.HomRecepcaoSincrono   := 'http://' + ConfigURL.HomNomeCidade + ':9091';
+ ConfigURL.HomConsultaNFSe       := 'http://' + ConfigURL.HomNomeCidade + ':9096/ConsultaNFSePorFaixa.asmx';
+ ConfigURL.HomCancelaNFSe        := 'http://' + ConfigURL.HomNomeCidade + ':9098/CancelamentoNFSe.asmx';
+ ConfigURL.HomGerarNFSe          := 'http://' + ConfigURL.HomNomeCidade + ':9090/GeracaoNFSe.asmx';
+ ConfigURL.HomRecepcaoSincrono   := 'http://' + ConfigURL.HomNomeCidade + ':9091/EnvioLoteRPSSincrono.asmx';
 
- ConfigURL.ProRecepcaoLoteRPS    := sHTTPPro + ConfigURL.ProNomeCidade + '9091';
- ConfigURL.ProConsultaLoteRPS    := sHTTPPro + ConfigURL.ProNomeCidade + '9097';
- ConfigURL.ProConsultaNFSeRPS    := sHTTPPro + ConfigURL.ProNomeCidade + '9095';
+ ConfigURL.ProRecepcaoLoteRPS    := sHTTPPro + ConfigURL.ProNomeCidade + ':9087/RecepcaoLoteRPS.asmx';
+ ConfigURL.ProConsultaLoteRPS    := sHTTPPro + ConfigURL.ProNomeCidade + ':9097/ConsultaLoteRPS.asmx';
+ ConfigURL.ProConsultaNFSeRPS    := sHTTPPro + ConfigURL.ProNomeCidade + ':9095/ConsultaNFSePorRPS.asmx';
  ConfigURL.ProConsultaSitLoteRPS := '';
- ConfigURL.ProConsultaNFSe       := sHTTPPro + ConfigURL.ProNomeCidade + '9094';
- ConfigURL.ProCancelaNFSe        := sHTTPPro + ConfigURL.ProNomeCidade + '9098';
- ConfigURL.ProGerarNFSe          := sHTTPPro + ConfigURL.ProNomeCidade + '9090';
- ConfigURL.ProRecepcaoSincrono   := sHTTPPro + ConfigURL.ProNomeCidade + '9091';
+ ConfigURL.ProConsultaNFSe       := sHTTPPro + ConfigURL.ProNomeCidade + ':9096/ConsultaNFSePorFaixa.asmx';
+ ConfigURL.ProCancelaNFSe        := sHTTPPro + ConfigURL.ProNomeCidade + ':9098/CancelamentoNFSe.asmx';
+ ConfigURL.ProGerarNFSe          := sHTTPPro + ConfigURL.ProNomeCidade + ':9090/GeracaoNFSe.asmx';
+ ConfigURL.ProRecepcaoSincrono   := sHTTPPro + ConfigURL.ProNomeCidade + ':9091/EnvioLoteRPSSincrono.asmx';
 
  Result := ConfigURL;
 end;
@@ -199,15 +199,15 @@ function TProvedorTecnos.Gera_TagI(Acao: TnfseAcao; Prefixo3, Prefixo4,
   NameSpaceDad, Identificador, URI: String): AnsiString;
 begin
  case Acao of
-   acRecepcionar: Result := '<' + Prefixo3 + 'EnviarLoteRpsSincronoEnvio' + ' xmlns="http://www.abrasf.org.br/nfse.xsd">';
+   acRecepcionar: Result := '<' + Prefixo3 + 'EnviarLoteRpsEnvio' + ' xmlns="http://www.abrasf.org.br/nfse.xsd">';
    acConsSit:     Result := '';
    acConsLote:    Result := '<' + Prefixo3 + 'ConsultarLoteRpsEnvio' + ' xmlns="http://www.abrasf.org.br/nfse.xsd">';
    acConsNFSeRps: Result := '<' + Prefixo3 + 'ConsultarNfseRpsEnvio' + ' xmlns="http://www.abrasf.org.br/nfse.xsd">';
-   acConsNFSe:    Result := '';
+   acConsNFSe:    Result := '<' + Prefixo3 + 'ConsultarNfseFaixaEnvio' + ' xmlns="http://www.abrasf.org.br/nfse.xsd">';
    acCancelar:    Result := '<' + Prefixo3 + 'CancelarNfseEnvio' + ' xmlns="http://www.abrasf.org.br/nfse.xsd">' +
                              '<' + Prefixo3 + 'Pedido>' +
                               '<' + Prefixo4 + 'InfPedidoCancelamento ' + Identificador + '="' + URI + '">';
-   acGerar:       Result := '';
+   acGerar:       Result := '<' + Prefixo3 + 'GerarNfseEnvio' + ' xmlns="http://www.abrasf.org.br/nfse.xsd">';
    acRecSincrono: Result := '<' + Prefixo3 + 'EnviarLoteRpsSincronoEnvio' + ' xmlns="http://www.abrasf.org.br/nfse.xsd">';
  end;
 end;
@@ -228,55 +228,34 @@ end;
 function TProvedorTecnos.Gera_TagF(Acao: TnfseAcao; Prefixo3: String): AnsiString;
 begin
  case Acao of
-   acRecepcionar: Result := '</' + Prefixo3 + 'EnviarLoteRpsSincronoEnvio>';
+   acRecepcionar: Result := '</' + Prefixo3 + 'EnviarLoteRpsEnvio>';
    acConsSit:     Result := '';
    acConsLote:    Result := '</' + Prefixo3 + 'ConsultarLoteRpsEnvio>';
    acConsNFSeRps: Result := '</' + Prefixo3 + 'ConsultarNfseRpsEnvio>';
-   acConsNFSe:    Result := '';
+   acConsNFSe:    Result := '</' + Prefixo3 + 'ConsultarNfseFaixaEnvio>';
    acCancelar:    Result := '</' + Prefixo3 + 'Pedido>' +
                             '</' + Prefixo3 + 'CancelarNfseEnvio>';
-   acGerar:       Result := '';
+   acGerar:       Result := '</' + Prefixo3 + 'GerarNfseEnvio>';
    acRecSincrono: Result := '</' + Prefixo3 + 'EnviarLoteRpsSincronoEnvio>';
  end;
 end;
 
 function TProvedorTecnos.GeraEnvelopeRecepcionarLoteRPS(URLNS: String;
   CabMsg, DadosMsg, DadosSenha: AnsiString): AnsiString;
-var
-   LoteRps      : string;
-   Leitor       : TLeitor;
-   QuantidadeRps: Integer;
 begin
-{ - Incluído por Márcio Teixeira em 05/03/2013 -
-    O provedor permite o envio de até 3 rps por
-    lote no modo síncrono, então verifico a
-    quantidade de Rps no lote e valido qual
-    médoto posso utilizar. Coloco numa variável
-    privada porque na ação ele também deve ir
-    o mesmo nome.
-  }
-Leitor := TLeitor.Create;
-
-try
- Leitor.Arquivo := DadosMsg;
- Leitor.Grupo   := Leitor.Arquivo;
- LoteRps        := Leitor.rExtrai(1, 'LoteRps');
- QuantidadeRps  := Leitor.rCampo(tcInt, 'QuantidadeRps');
- FMetodoRecepcionar := 'mEnvioLoteRPSSincrono';
-finally
- FreeAndNil(Leitor);
-end;
-
  result := '<?xml version="1.0" encoding="UTF-8"?>' +
            '<S:Envelope xmlns:S="http://schemas.xmlsoap.org/soap/envelope/" ' +
                        'xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" ' +
                        'xmlns:xsd="http://www.w3.org/2001/XMLSchema">' +
             '<S:Body>' +
-             '<' + FMetodoRecepcionar + ' xmlns="' + URLNS + '">' +
+             '<mRecepcaoLoteRPS xmlns="' + URLNS + '">' +
               '<remessa>' +
                 StringReplace(StringReplace(DadosMsg, '<', '&lt;', [rfReplaceAll]), '>', '&gt;', [rfReplaceAll]) +
               '</remessa>' +
-             '</' + FMetodoRecepcionar + '>' +
+              '<cabecalho>' +
+                StringReplace(StringReplace(CabMsg, '<', '&lt;', [rfReplaceAll]), '>', '&gt;', [rfReplaceAll]) +
+              '</cabecalho>' +
+             '</mRecepcaoLoteRPS>' +
             '</S:Body>' +
            '</S:Envelope>';
 end;
@@ -299,6 +278,9 @@ begin
               '<remessa>' +
                 StringReplace(StringReplace(DadosMsg, '<', '&lt;', [rfReplaceAll]), '>', '&gt;', [rfReplaceAll]) +
               '</remessa>' +
+              '<cabecalho>' +
+                StringReplace(StringReplace(CabMsg, '<', '&lt;', [rfReplaceAll]), '>', '&gt;', [rfReplaceAll]) +
+              '</cabecalho>' +
              '</mConsultaLoteRPS>' +
             '</S:Body>' +
            '</S:Envelope>';
@@ -316,6 +298,9 @@ begin
               '<remessa>' +
                 StringReplace(StringReplace(DadosMsg, '<', '&lt;', [rfReplaceAll]), '>', '&gt;', [rfReplaceAll]) +
               '</remessa>' +
+              '<cabecalho>' +
+                StringReplace(StringReplace(CabMsg, '<', '&lt;', [rfReplaceAll]), '>', '&gt;', [rfReplaceAll]) +
+              '</cabecalho>' +
              '</mConsultaNFSePorRPS>' +
             '</S:Body>' +
            '</S:Envelope>';
@@ -329,12 +314,14 @@ begin
                        'xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" ' +
                        'xmlns:xsd="http://www.w3.org/2001/XMLSchema">' +
             '<S:Body>' +
-             '<consultarNfse xmlns="' + URLNS + '">' +
-              '<xml>' +
-                '&lt;?xml version="1.0" encoding="UTF-8"?&gt;' +
+             '<mConsultaNFSePorFaixa xmlns="' + URLNS + '">' +
+              '<remessa>' +
                 StringReplace(StringReplace(DadosMsg, '<', '&lt;', [rfReplaceAll]), '>', '&gt;', [rfReplaceAll]) +
-              '</xml>' +
-             '</consultarNfse>' +
+              '</remessa>' +
+              '<cabecalho>' +
+                StringReplace(StringReplace(CabMsg, '<', '&lt;', [rfReplaceAll]), '>', '&gt;', [rfReplaceAll]) +
+              '</cabecalho>' +
+             '</mConsultaNFSePorFaixa>' +
             '</S:Body>' +
            '</S:Envelope>';
 end;
@@ -351,6 +338,9 @@ begin
               '<remessa>' +
                 StringReplace(StringReplace(DadosMsg, '<', '&lt;', [rfReplaceAll]), '>', '&gt;', [rfReplaceAll]) +
               '</remessa>' +
+              '<cabecalho>' +
+                StringReplace(StringReplace(CabMsg, '<', '&lt;', [rfReplaceAll]), '>', '&gt;', [rfReplaceAll]) +
+              '</cabecalho>' +
              '</mCancelamentoNFSe>' +
             '</S:Body>' +
            '</S:Envelope>';
@@ -359,54 +349,68 @@ end;
 function TProvedorTecnos.GeraEnvelopeGerarNFSe(URLNS: String; CabMsg,
   DadosMsg, DadosSenha: AnsiString): AnsiString;
 begin
- Result := '';
+ result := '<?xml version="1.0" encoding="UTF-8"?>' +
+           '<S:Envelope xmlns:S="http://schemas.xmlsoap.org/soap/envelope/" ' +
+                       'xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" ' +
+                       'xmlns:xsd="http://www.w3.org/2001/XMLSchema">' +
+            '<S:Body>' +
+             '<mGeracaoNFSe xmlns="' + URLNS + '">' +
+              '<remessa>' +
+                StringReplace(StringReplace(DadosMsg, '<', '&lt;', [rfReplaceAll]), '>', '&gt;', [rfReplaceAll]) +
+              '</remessa>' +
+              '<cabecalho>' +
+                StringReplace(StringReplace(CabMsg, '<', '&lt;', [rfReplaceAll]), '>', '&gt;', [rfReplaceAll]) +
+              '</cabecalho>' +
+             '</mGeracaoNFSe>' +
+            '</S:Body>' +
+           '</S:Envelope>';
 end;
 
 function TProvedorTecnos.GeraEnvelopeRecepcionarSincrono(URLNS: String;
   CabMsg, DadosMsg, DadosSenha: AnsiString): AnsiString;
 begin
- Result := GeraEnvelopeRecepcionarLoteRPS(URLNS, CabMsg, DadosMsg, DadosSenha);
+ result := '<?xml version="1.0" encoding="UTF-8"?>' +
+           '<S:Envelope xmlns:S="http://schemas.xmlsoap.org/soap/envelope/" ' +
+                       'xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" ' +
+                       'xmlns:xsd="http://www.w3.org/2001/XMLSchema">' +
+            '<S:Body>' +
+             '<mEnvioLoteRPSSincrono xmlns="' + URLNS + '">' +
+              '<remessa>' +
+                StringReplace(StringReplace(DadosMsg, '<', '&lt;', [rfReplaceAll]), '>', '&gt;', [rfReplaceAll]) +
+              '</remessa>' +
+              '<cabecalho>' +
+                StringReplace(StringReplace(CabMsg, '<', '&lt;', [rfReplaceAll]), '>', '&gt;', [rfReplaceAll]) +
+              '</cabecalho>' +
+             '</mEnvioLoteRPSSincrono>' +
+            '</S:Body>' +
+           '</S:Envelope>';
 end;
 
 function TProvedorTecnos.GetSoapAction(Acao: TnfseAcao; NomeCidade: String): String;
 begin
  case Acao of
-   acRecepcionar: Result := 'http://tempuri.org/' + FMetodoRecepcionar;
+   acRecepcionar: Result := 'http://tempuri.org/mRecepcaoLoteRPS';
    acConsSit:     Result := '';
    acConsLote:    Result := 'http://tempuri.org/mConsultaLoteRPS';
    acConsNFSeRps: Result := 'http://tempuri.org/mConsultaNFSePorRPS';
-   acConsNFSe:    Result := '';
+   acConsNFSe:    Result := 'http://tempuri.org/mConsultaNFSePorFaixa';
    acCancelar:    Result := 'http://tempuri.org/mCancelamentoNFSe';
-   acGerar:       Result := '';
-   acRecSincrono: Result := 'http://tempuri.org/' + FMetodoRecepcionar;
+   acGerar:       Result := 'http://tempuri.org/mGeracaoNFSe';
+   acRecSincrono: Result := 'http://tempuri.org/mEnvioLoteRPSSincrono';
  end;
 end;
 
 function TProvedorTecnos.GetRetornoWS(Acao: TnfseAcao; RetornoWS: AnsiString): AnsiString;
 begin
  case Acao of
-   acRecepcionar: begin
-                   Result := SeparaDados( RetornoWS, 'mEnvioLoteRPSSincronoResponse');
-                  end;
-   acConsSit:     begin
-                   Result := SeparaDados( RetornoWS, '');
-                  end;
-   acConsLote:    begin
-                   Result := SeparaDados( RetornoWS, 'mConsultaLoteRPSResponse');
-                  end;
-   acConsNFSeRps: begin
-                   Result := SeparaDados( RetornoWS, 'mConsultaNFSePorRPSResponse');
-                  end;
-   acConsNFSe:    begin
-                   Result := '';
-                  end;
-   acCancelar:    begin
-                   Result := SeparaDados( RetornoWS, 'mCancelamentoNFSeResponse');
-                  end;
-   acGerar:       Result := '';
-   acRecSincrono: begin
-                   Result := SeparaDados( RetornoWS, 'mEnvioLoteRPSSincronoResponse');
-                  end;
+   acRecepcionar: Result := SeparaDados( RetornoWS, 'mRecepcaoLoteRPSResponse');
+   acConsSit:     Result := SeparaDados( RetornoWS, '');
+   acConsLote:    Result := SeparaDados( RetornoWS, 'mConsultaLoteRPSResponse');
+   acConsNFSeRps: Result := SeparaDados( RetornoWS, 'mConsultaNFSePorRPSResponse');
+   acConsNFSe:    Result := SeparaDados( RetornoWS, 'mConsultaNFSePorFaixaResponse');
+   acCancelar:    Result := SeparaDados( RetornoWS, 'mCancelamentoNFSeResponse');
+   acGerar:       Result := SeparaDados( RetornoWS, 'mGeracaoNFSeResponse');
+   acRecSincrono: Result := SeparaDados( RetornoWS, 'mEnvioLoteRPSSincronoResponse');
  end;
 end;
 
