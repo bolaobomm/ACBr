@@ -115,6 +115,7 @@ type
       fChaveAcesso: String;
       fUsuario : String;
       fSenha : String;
+      FPesquisarIBGE: Boolean;
       function GetURL : String ;
       procedure SetWebService(const AValue : TACBrCEPWebService) ;
     public
@@ -133,6 +134,7 @@ type
       property ChaveAcesso: String read fChaveAcesso write fChaveAcesso ;
       property Usuario: String read fUsuario write fUsuario ;
       property Senha: String read fSenha write fSenha ;
+      property PesquisarIBGE: Boolean read FPesquisarIBGE write FPesquisarIBGE; // Válido somente para wsCorreios
 
       property OnBuscaEfetuada : TNotifyEvent read fOnBuscaEfetuada
          write fOnBuscaEfetuada ;
@@ -344,6 +346,7 @@ begin
   fEnderecos  := TACBrCEPEnderecos.create( True );
   fACBrCEPWS  := TACBrCEPWSClass.Create( Self );
   fWebService := wsNenhum ;
+  FPesquisarIBGE := True;
 end ;
 
 destructor TACBrCEP.Destroy ;
@@ -1231,7 +1234,8 @@ begin
 
             // Correios não retornam informação do IBGE, Fazendo busca do IBGE com ACBrIBGE //
             IBGE_Municipio := '';
-            if (Municipio <> '') then
+            if (Municipio <> '') and
+               (fOwner.PesquisarIBGE) then
             begin
               if (sMun <> Municipio) then  // Evita buscar municipio já encontrado
               begin
