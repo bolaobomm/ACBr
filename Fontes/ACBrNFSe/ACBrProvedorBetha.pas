@@ -88,7 +88,7 @@ begin
  ConfigSchema.VersaoDados     := '1.00';
  ConfigSchema.VersaoXML       := '1';
  ConfigSchema.NameSpaceXML    := 'http://www.betha.com.br/e-nota-contribuinte-ws';
- ConfigSchema.Cabecalho       := 'nfse_v01.xsd';
+ ConfigSchema.Cabecalho       := ''; //'nfse_v01.xsd';
  ConfigSchema.ServicoEnviar   := 'servico_enviar_lote_rps_envio_v01.xsd';
  ConfigSchema.ServicoConSit   := 'servico_consultar_situacao_lote_rps_envio_v01.xsd';
  ConfigSchema.ServicoConLot   := 'servico_consultar_lote_rps_envio_v01.xsd';
