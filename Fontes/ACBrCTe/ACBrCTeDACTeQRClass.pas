@@ -128,7 +128,7 @@ begin
                                     , ImprimirHoraSaida
                                     , ExpandirLogoMarca
                                     , ImprimirHoraSaida_Hora
-                                    , false
+                                    , ResumoCanhoto
                                     , Fax
                                     , NumCopias
                                     , Sistema
@@ -141,7 +141,8 @@ begin
                                     , MargemDireita
                                     , Impressora
                                     , PosRecibo
-                                    , CTeCancelada); // Incluido por Italo em 12/04/2013
+                                    , CTeCancelada
+                                    , EPECEnviado);
   end
   else
     frmDACTeQRRetrato.Imprimir(CTe
@@ -150,7 +151,7 @@ begin
                                 , ImprimirHoraSaida
                                 , ExpandirLogoMarca
                                 , ImprimirHoraSaida_Hora
-                                , False
+                                , ResumoCanhoto
                                 , Fax
                                 , NumCopias
                                 , Sistema
@@ -163,7 +164,8 @@ begin
                                 , MargemDireita
                                 , Impressora
                                 , PosRecibo
-                                , CTeCancelada); // Incluido por Italo em 12/04/2013
+                                , CTeCancelada
+                                , EPECEnviado);
 
   if frmDACTeQRRetrato.QRCTe <> nil then
     frmDACTeQRRetrato.Free;
@@ -214,7 +216,7 @@ begin
                                     , ImprimirHoraSaida
                                     , ExpandirLogoMarca
                                     , ImprimirHoraSaida_Hora
-                                    , false
+                                    , ResumoCanhoto
                                     , Fax
                                     , NumCopias
                                     , Sistema
@@ -225,7 +227,8 @@ begin
                                     , MargemEsquerda
                                     , MargemDireita
                                     , PosRecibo
-                                    , CTeCancelada); // Incluido por Italo em 12/04/2013
+                                    , CTeCancelada
+                                    , EPECEnviado);
       end;
    end
   else
@@ -239,7 +242,7 @@ begin
                                 , ImprimirHoraSaida
                                 , ExpandirLogoMarca
                                 , ImprimirHoraSaida_Hora
-                                , False
+                                , ResumoCanhoto
                                 , Fax
                                 , NumCopias
                                 , Sistema
@@ -250,7 +253,8 @@ begin
                                 , MargemEsquerda
                                 , MargemDireita
                                 , PosRecibo
-                                , CTeCancelada); // Incluido por Italo em 12/04/2013
+                                , CTeCancelada
+                                , EPECEnviado); 
   end;
 
   if frmDACTeQRRetrato.QRCTe <> nil then

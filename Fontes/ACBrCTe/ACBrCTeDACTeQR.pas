@@ -61,6 +61,7 @@ unit ACBrCTeDACTeQR;
 // 27/08/2013 por Italo Jurisato Junior
 // 21/08/2013 por Italo Jurisato Junior
 // 06/08/2013 por Italo Jurisato Junior
+// 28/01/2014 por Italo Jurisato Junior
 
 interface
 
@@ -105,9 +106,11 @@ type
     FPosRecibo          : TPosRecibo;
     FCTeCancelada       : Boolean; //Incluido por Italo em  12/04/2013
     FTotalPages         : integer;
+    FEPECEnviado        : Boolean;
 
     procedure qrlSemValorFiscalPrint(sender: TObject; var Value: string);
     procedure SetBarCodeImage(ACode: string; QRImage: TQRImage);
+    function getTextoResumoCanhoto:String;
   public
     class procedure Imprimir(ACTe                : TCTe;
                              ALogo               : String    = '';
@@ -128,7 +131,8 @@ type
                              AMargemDireita      : Double    = 0.51;
                              AImpressora         : String    = '';
                              APosRecibo          : TPosRecibo = prCabecalho;
-                             ACTeCancelada       : Boolean   = False);
+                             ACTeCancelada       : Boolean   = False;
+                             AEPECEnviado        : Boolean   = False);
 
     class procedure SavePDF(AFile: String;
                             ACTe                : TCTe;
@@ -148,13 +152,14 @@ type
                             AMargemEsquerda     : Double    = 0.6;
                             AMargemDireita      : Double    = 0.51;
                             APosRecibo          : TPosRecibo = prCabecalho;
-                            ACTeCancelada       : Boolean   = False);
+                            ACTeCancelada       : Boolean   = False;
+                            AEPECEnviado        : Boolean   = False);
 
   end;
 
 implementation
 
-uses MaskUtils;
+uses MaskUtils, ACBrDFeUtil;
 
 var
   Printer: TPrinter;
@@ -180,7 +185,8 @@ class procedure TfrmDACTeQR.Imprimir(ACTe               : TCTe;
                                     AMargemDireita      : Double    = 0.51;
                                     AImpressora         : String    = '';
                                     APosRecibo          : TPosRecibo = prCabecalho;
-                                    ACTeCancelada       : Boolean   = False);
+                                    ACTeCancelada       : Boolean   = False;
+                                    AEPECEnviado        : Boolean   = False);
 begin
   with Create ( nil ) do
      try
@@ -203,6 +209,7 @@ begin
         FImpressora         := AImpressora;
         FPosRecibo          := APosRecibo;
         FCTeCancelada       := ACTeCancelada;
+        FEPECEnviado        := AEPECEnviado;
 
         Printer := TPrinter.Create;
 
@@ -274,7 +281,8 @@ class procedure TfrmDACTeQR.SavePDF(AFile               : String;
                                     AMargemEsquerda     : Double    = 0.6;
                                     AMargemDireita      : Double    = 0.51;
                                     APosRecibo          : TPosRecibo = prCabecalho;
-                                    ACTeCancelada       : Boolean   = False);
+                                    ACTeCancelada       : Boolean   = False;
+                                    AEPECEnviado        : Boolean   = False);
 {$IFDEF QReport_PDF}
  var
   qf : TQRPDFDocumentFilter;
@@ -302,6 +310,7 @@ begin
         FExpandirLogoMarca  := AExpandirLogoMarca;
         FPosRecibo          := APosRecibo;
         FCTeCancelada       := ACTeCancelada;
+        FEPECEnviado        := AEPECEnviado;
 
         for i := 0 to ComponentCount -1 do
           begin
@@ -358,6 +367,24 @@ procedure TfrmDACTeQR.FormDestroy(Sender: TObject);
 begin
   QRCTe.QRPrinter.Free;
   QRCTe.Free;
+end;
+
+function TfrmDACTeQR.getTextoResumoCanhoto: String;
+begin
+  Result := 'EMIT: '+FCTe.Emit.xNome+' - '+
+            'EMISSÃO: ' + FormatDateTime('DD/MM/YYYY',FCTe.Ide.dhEmi) + '  -  TOMADOR: ';
+  if FCTe.Ide.Toma4.xNome = ''
+  then begin
+    case FCTe.Ide.Toma03.Toma of
+    tmRemetente: Result := Result + FCTe.Rem.xNome;
+  	tmExpedidor: Result := Result + FCTe.Exped.xNome;
+    tmRecebedor: Result := Result + FCTe.Receb.xNome;
+  	tmDestinatario: Result := Result + FCTe.Dest.xNome;
+    end
+  end
+  else
+    Result := Result + FCTe.Ide.Toma4.xNome;
+  Result := Result + ' - VALOR A RECEBER: R$ ' + DFeUtil.FormatFloat(FCTe.vPrest.vRec, '###,###,###,##0.00');
 end;
 
 end.

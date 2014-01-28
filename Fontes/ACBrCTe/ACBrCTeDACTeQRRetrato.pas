@@ -53,6 +53,7 @@ unit ACBrCTeDACTeQRRetrato;
 // 21/08/2013 por Italo Jurisato Junior
 // 20/08/2013 por André F. Moraes
 // 06/08/2013 por Italo Jurisato Junior
+// 28/01/2014 por Italo Jurisato Junior
 
 interface
 
@@ -593,6 +594,8 @@ type
     qrmGrupoEmbalagem: TQRMemo;
     qrmQtdeProduto: TQRMemo;
     QRShape107: TQRShape;
+    qrlResumoCanhotoCTe: TQRLabel;
+    qrlResumoCanhotoCTe2: TQRLabel;
     procedure QRCTeBeforePrint(Sender: TCustomQuickRep; var PrintReport: Boolean);
     procedure qrb_01_ReciboBeforePrint(Sender: TQRCustomBand; var PrintBand: Boolean);
     procedure qrb_02_CabecalhoBeforePrint(Sender: TQRCustomBand; var PrintBand: Boolean);
@@ -1138,6 +1141,11 @@ procedure TfrmDACTeQRRetrato.qrb_01_ReciboBeforePrint(Sender: TQRCustomBand; var
 begin
   inherited;
   PrintBand := (QRCTe.PageNumber = 1) and (FCTe.Ide.modal <> mdAereo) and (FPosRecibo = prCabecalho);
+  //Rodrigo DSP 22/01/2014 11:22:47: impressao do canhoto - Cabecalho.
+  if (FResumoCanhoto) then
+    qrlResumoCanhotoCTe.Caption := getTextoResumoCanhoto
+  else
+    qrlResumoCanhotoCTe.Caption := '';
 
   qrlSerie2.Caption  := IntToStr(FCTe.Ide.serie); // FormatFloat( '000', FCTe.Ide.serie);
   qrlNumCte2.Caption := FormatFloat( '000,000,000', FCTe.Ide.nCT );
@@ -1302,10 +1310,9 @@ begin
      end;
    end;
 
-  // DPEC ****************************************************************
+  // EPEC ****************************************************************
   if FCTe.Ide.tpEmis = teDPEC then
    begin
-    // Alterado por Italo em 14/10/2013
       qrlVariavel1.Enabled := False;
       qriBarCode2.Enabled  := True;
 
@@ -1313,9 +1320,6 @@ begin
       SetBarCodeImage(strChaveContingencia, qriBarCode2);
       qrlDescricao.Caption := 'DADOS DO CT-E';
       qrlProtocolo.Caption := CTeUtil.FormatarChaveContingencia(strChaveContingencia);
-
-//    qrlDescricao.Caption := 'NÚMERO DE REGISTRO EPEC';
-//    qrlProtocolo.Caption := FProtocoloCTE;
    end;
 
   qrlInscSuframa.Caption := FCTe.Dest.ISUF;
@@ -1941,15 +1945,15 @@ begin
 //                       StringReplace( xTexto, '&lt;BR&gt;', #13#10, [rfReplaceAll,rfIgnoreCase] ) );
 //    end;
 
-  if FCTe.Ide.tpEmis in [teContingencia, teFSDA]
+  if FCTe.Ide.tpEmis in [teContingencia, teFSDA, teDPEC]
    then begin
     // Incluido por Italo em 20/04/2012
     if not (FCTe.procCTe.cStat in [100, 101, 110])
      then qrmObs.Lines.Add('DACTE em Contingência - Impresso em decorrência de problemas técnicos.');
    end;
 
-  if FCTe.Ide.tpEmis = teDPEC
-   then qrmObs.Lines.Add('DACTE em Contingência - DPEC regularmente recebida pela Receita Federal do Brasil');
+  if (FCTe.Ide.tpEmis = teDPEC) and (FEPECEnviado)
+   then qrmObs.Lines.Add('EPEC regularmente recebida pela Receita Federal do Brasil');
 
   qrmObs.Lines.Text:=StringReplace(qrmObs.Lines.Text,';',#13,[rfReplaceAll]);
   qrmObs.Lines.EndUpdate;
@@ -2412,6 +2416,12 @@ begin
   inherited;
   PrintBand := (QRCTe.PageNumber = 1);
 
+  //Rodrigo DSP 22/01/2014 11:22:47: impressao do canhoto - Rodape.
+  if (FResumoCanhoto) then
+    qrlResumoCanhotoCTe2.Caption := getTextoResumoCanhoto
+  else
+    qrlResumoCanhotoCTe2.Caption := '';
+    
   qrlSerie3.Caption  := IntToStr(FCTe.Ide.serie); // FormatFloat( '000', FCTe.Ide.serie);
   qrlNumCte3.Caption := FormatFloat( '000,000,000', FCTe.Ide.nCT );
 

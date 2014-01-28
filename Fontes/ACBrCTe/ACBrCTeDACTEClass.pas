@@ -84,6 +84,9 @@ type
     FMargemEsquerda: Double;
     FMargemDireita: Double;
     FCTeCancelada : boolean;
+    FResumoCanhoto : Boolean;//Rodrigo DSP 22/01/2014 10:43:44:
+    FEPECEnviado: Boolean;
+
     procedure Notification(AComponent: TComponent; Operation: TOperation); override;
   public
     constructor Create(AOwner: TComponent); override;
@@ -117,6 +120,8 @@ type
     property MargemDireita: Double read FMargemDireita write FMargemDireita;
     property ExpandirLogoMarca: Boolean read FExpandirLogoMarca write FExpandirLogoMarca default false;
     property CTeCancelada: Boolean read FCTeCancelada write FCTeCancelada;
+    property ResumoCanhoto: Boolean read FResumoCanhoto write FResumoCanhoto;//Rodrigo DSP 22/01/2014 10:43:51:
+    property EPECEnviado: Boolean read FEPECEnviado write FEPECEnviado;
   end;
 
 implementation
@@ -153,6 +158,9 @@ begin
   FMargemEsquerda := 0.6;
   FMargemDireita  := 0.51;
   FCTeCancelada   := False;
+
+  FResumoCanhoto := False;//Rodrigo DSP 22/01/2014 10:43:37:
+  FEPECEnviado   := False;
 end;
 
 destructor TACBrCteDACTEClass.Destroy;
