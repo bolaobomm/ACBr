@@ -134,7 +134,8 @@ begin
  if (FProvedor in [pro4R, proAgili, proBHISS, proCoplan, proDigifred,
                    profintelISS, proFiorilli, proGoiania, proGovBR,
                    proISSDigital, proNatal, proProdata, proProdemge, proPVH,
-                   proSaatri, proVirtual, proFreire, proLink3, proVitoria, proTecnos])
+                   proSaatri, proVirtual, proFreire, proLink3, proVitoria,
+                   proTecnos, proPronim])
    then FDefTipos := FServicoEnviar;
 
  if (RightStr(FURL, 1) <> '/') and (FDefTipos <> '')
@@ -195,6 +196,7 @@ begin
   proThema,
   proTiplan,
   proSpeedGov,
+  proPronim,
   proWebISS: GerarXML_ABRASF_V1;
 
   pro4R,
@@ -285,7 +287,7 @@ begin
   Gerador.wGrupoNFSe('Servico');
    Gerador.wGrupoNFSe('Valores');
     Gerador.wCampoNFSe(tcDe2, '#13', 'ValorServicos', 01, 15, 1, NFSe.Servico.Valores.ValorServicos, '');
-    if FProvedor in [proGinfes, proRecife, proFreire, proGovBR]
+    if FProvedor in [proGinfes, proRecife, proFreire, proPronim]
       then begin
         Gerador.wCampoNFSe(tcDe2, '#14', 'ValorDeducoes', 01, 15, 1, NFSe.Servico.Valores.ValorDeducoes, '');
         Gerador.wCampoNFSe(tcDe2, '#15', 'ValorPis     ', 01, 15, 1, NFSe.Servico.Valores.ValorPis, '');
@@ -307,22 +309,22 @@ begin
         Gerador.wCampoNFSe(tcDe2, '#21', 'ValorIss     ', 01, 15, 0, NFSe.Servico.Valores.ValorIss, '');
       end;
 
-    if FProvedor <> proGovBR
-      then Gerador.wCampoNFSe(tcDe2, '#22', 'ValorIssRetido', 01, 15, 0, NFSe.Servico.Valores.ValorIssRetido, '')
-      else Gerador.wCampoNFSe(tcDe2, '#22', 'ValorIssRetido', 01, 15, 1, NFSe.Servico.Valores.ValorIssRetido, '');
+    if FProvedor <> proPronim
+      then Gerador.wCampoNFSe(tcDe2, '#22', 'ValorIssRetido', 01, 15, 0, NFSe.Servico.Valores.ValorIssRetido, '');
 
-    if FProvedor in [proFreire, proGovBR] then
+    if FProvedor in [proFreire, proPronim] then
        Gerador.wCampoNFSe(tcDe2, '#23', 'OutrasRetencoes', 01, 15, 1, NFSe.Servico.Valores.OutrasRetencoes, '')
     else
        Gerador.wCampoNFSe(tcDe2, '#23', 'OutrasRetencoes', 01, 15, 0, NFSe.Servico.Valores.OutrasRetencoes, '');
 
-    if FProvedor = proGovBR then
+    if FProvedor = proPronim then
        Gerador.wCampoNFSe(tcDe2, '#24', 'BaseCalculo    ', 01, 15, 1, NFSe.Servico.Valores.BaseCalculo, '')
     else
        Gerador.wCampoNFSe(tcDe2, '#24', 'BaseCalculo    ', 01, 15, 0, NFSe.Servico.Valores.BaseCalculo, '');
 
     case FProvedor of
      proGovBR,
+     proPronim,
      proGINFES,
      proISSNet:   Gerador.wCampoNFSe(tcDe4, '#25', 'Aliquota', 01, 05, 1, NFSe.Servico.Valores.Aliquota, '');
 
@@ -331,7 +333,6 @@ begin
                     else Gerador.wCampoNFSe(tcDe2, '#25', 'Aliquota', 01, 05, 1, NFSe.Servico.Valores.Aliquota, '');
 
      proSimplISS: Gerador.wCampoNFSe(tcDe2, '#25', 'Aliquota', 01, 05, 0, NFSe.Servico.Valores.Aliquota, '');
-//     proGINFES:   Gerador.wCampoNFSe(tcDe4, '#25', 'Aliquota', 01, 05, 1, NFSe.Servico.Valores.Aliquota, '');
 
      else         Gerador.wCampoNFSe(tcDe4, '#25', 'Aliquota', 01, 05, 0, NFSe.Servico.Valores.Aliquota, '');
     end;
@@ -341,7 +342,7 @@ begin
     if FProvedor = proGovBR
       then Gerador.wCampoNFSe(tcDe2, '#22', 'ValorIssRetido', 01, 15, 0, NFSe.Servico.Valores.ValorIssRetido, '');
 
-    if FProvedor in [proFreire, proGovBR]
+    if FProvedor in [proFreire]
      then begin
        Gerador.wCampoNFSe(tcDe2, '#27', 'DescontoIncondicionado', 01, 15, 1, NFSe.Servico.Valores.DescontoIncondicionado, '');
        Gerador.wCampoNFSe(tcDe2, '#28', 'DescontoCondicionado  ', 01, 15, 1, NFSe.Servico.Valores.DescontoCondicionado, '');
@@ -350,6 +351,7 @@ begin
        Gerador.wCampoNFSe(tcDe2, '#27', 'DescontoIncondicionado', 01, 15, 0, NFSe.Servico.Valores.DescontoIncondicionado, '');
        Gerador.wCampoNFSe(tcDe2, '#28', 'DescontoCondicionado  ', 01, 15, 0, NFSe.Servico.Valores.DescontoCondicionado, '');
      end;
+
 
    Gerador.wGrupoNFSe('/Valores');
 

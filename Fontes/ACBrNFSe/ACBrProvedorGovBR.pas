@@ -88,9 +88,9 @@ begin
  ConfigSchema.VersaoDados     := '1.00';
  ConfigSchema.VersaoXML       := '1';
 
- case ACodCidade of
+// case ACodCidade of
 //  4102000,       // Assis Chateaubriand/PR
-  4321709: begin // Tres Coroas/RS
+//  4321709: begin // Tres Coroas/RS
             ConfigSchema.NameSpaceXML    := 'http://tempuri.org/';
             ConfigSchema.Cabecalho       := '';
             ConfigSchema.ServicoEnviar   := 'servico_enviar_lote_rps_envio.xsd';
@@ -100,6 +100,7 @@ begin
             ConfigSchema.ServicoConNfse  := 'servico_consultar_nfse_envio';
             ConfigSchema.ServicoCancelar := 'servico_cancelar_nfse_envio';
             ConfigSchema.DefTipos        := '';
+(*
            end;
   else     begin
             ConfigSchema.NameSpaceXML    := 'http://www.abrasf.org.br/ABRASF/arquivos/';
@@ -113,7 +114,7 @@ begin
             ConfigSchema.DefTipos        := '';
            end;
  end;
-
+*)
  Result := ConfigSchema;
 end;
 
@@ -224,6 +225,7 @@ begin
             ConfigURL.ProConsultaNFSe       := 'http://nfse.assis.sp.gov.br/NFSEWS/Services.svc';
             ConfigURL.ProCancelaNFSe        := 'http://nfse.assis.sp.gov.br/NFSEWS/Services.svc';
            end;
+           (*
   3511102: begin // Catanduva/SP por fnietto
             ConfigURL.HomNomeCidade         := '';
             ConfigURL.HomRecepcaoLoteRPS    := 'http://nfse.catanduva.sp.gov.br/NFSEWSTESTE/Services.svc';
@@ -241,6 +243,7 @@ begin
             ConfigURL.ProConsultaNFSe       := 'http://nfse.catanduva.sp.gov.br/NFSEWS/Services.svc';
             ConfigURL.ProCancelaNFSe        := 'http://nfse.catanduva.sp.gov.br/NFSEWS/Services.svc';
            end;
+           *)
   3530300: begin // Mirassol/SP por Daniel Junior
             ConfigURL.HomNomeCidade         := '';
             ConfigURL.HomRecepcaoLoteRPS    := 'http://nfse.mirassol.sp.gov.br:5555/NFSEWSteste/Services.svc';

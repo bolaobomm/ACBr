@@ -48,7 +48,7 @@ type
                     proGoiania, proIssCuritiba, proBHISS, proNatal, proISSDigital,
                     proISSe, pro4R, proGovDigital, proFiorilli, proCoplan, proProdata,
                     proAgili, proVirtual, proPVH, proFreire, proLink3, proSpeedGov,
-                    proVitoria, proMitra, ProTecnos );
+                    proVitoria, proMitra, ProTecnos, proPronim );
 
   TnfseAcao = ( acRecepcionar, acConsSit, acConsLote, acConsNFSeRps, acConsNFSe, acCancelar, acGerar, acRecSincrono, acConsSecRps );
 
@@ -303,13 +303,14 @@ begin
                             'SimplISS', 'Thema', 'RJ', 'Publica', 'fintelISS', 'Digifred', 'Betim', 'Saatri',
                             'FISSLEX', 'Goiania', 'IssCuritiba', 'BHISS', 'Natal', 'ISSDigital', 'ISSe',
                             '4R', 'GovDigital', 'Fiorilli', 'Coplan', 'Prodata', 'Agili', 'Virtual', 'PVH',
-                            'Freire', 'Link3', 'SpeedGov', 'Vitoria', 'Mitra', 'Tecnos'],
+                            'Freire', 'Link3', 'SpeedGov', 'Vitoria', 'Mitra', 'Tecnos', 'Pronim'],
                            [proNenhum, proTiplan, proISSNET, proWebISS, proGINFES, proIssDSF, proProdemge, proAbaco,
                             proBetha, proEquiplano, proISSIntel, proProdam, proGovBR, proRecife,
                             proSimplISS, proThema, proRJ, proPublica, profintelISS, proDigifred, proBetim,
                             proSaatri, proFISSLEX, proGoiania, proIssCuritiba, proBHISS, proNatal,
                             proISSDigital, proISSe, pro4R, proGovDigital, proFiorilli, proCoplan, proProdata,
-                            proAgili, proVirtual, proPVH, proFreire, proLink3, proSpeedGov, proVitoria, proMitra, proTecnos]);
+                            proAgili, proVirtual, proPVH, proFreire, proLink3, proSpeedGov, proVitoria, proMitra,
+                            proTecnos, proPronim]);
 end;
 
 function StrToProvedor(var ok: boolean; const s: string):TnfseProvedor;
@@ -320,13 +321,14 @@ begin
                             'SimplISS', 'Thema', 'RJ', 'Publica', 'fintelISS', 'Digifred', 'Betim', 'Saatri',
                             'FISSLEX', 'Goiania', 'IssCuritiba', 'BHISS', 'Natal', 'ISSDigital', 'ISSe',
                             '4R', 'GovDigital', 'Fiorilli', 'Coplan', 'Prodata', 'Agili', 'Virtual', 'PVH',
-                            'Freire', 'Link3', 'SpeedGov', 'Vitoria', 'Mitra', 'Tecnos'],
+                            'Freire', 'Link3', 'SpeedGov', 'Vitoria', 'Mitra', 'Tecnos', 'Pronim'],
                            [proNenhum, proTiplan, proISSNET, proWebISS, proGINFES, proIssDSF, proProdemge, proAbaco,
                             proBetha, proEquiplano, proISSIntel, proProdam, proGovBR, proRecife,
                             proSimplISS, proThema, proRJ, proPublica, profintelISS, proDigifred, proBetim,
                             proSaatri, proFISSLEX, proGoiania, proIssCuritiba, proBHISS, proNatal,
                             proISSDigital, proISSe, pro4R, proGovDigital, proFiorilli, proCoplan, proProdata,
-                            proAgili, proVirtual, proPVH, proFreire, proLink3, proSpeedGov, proVitoria, proMitra, proTecnos]);
+                            proAgili, proVirtual, proPVH, proFreire, proLink3, proSpeedGov, proVitoria, proMitra,
+                            proTecnos, proPronim]);
 end;
 
 // Descrição do Serviço ********************************************************
@@ -824,7 +826,7 @@ begin
   3305505, // Saquarema/RJ
   3504008, // Assis/SP
   3304706, // Sto Antonio de Padua/RJ
-  3511102, // Catanduva/SP
+//  3511102, // Catanduva/SP
   3530300, // Mirassol/SP'
   3541505, // Presidente Venceslau/SP
   4101408, // Apucarana/PR
@@ -836,6 +838,9 @@ begin
   4321709, // Tres Coroas/RS
   4322400  // Uruguaiana/RS
          : Provedor := 'GovBR';
+
+  3511102  // Catanduva/SP
+         : Provedor := 'Pronim';
 
   3132404, // Itajubá/MG
   3138203, // Lavras/MG

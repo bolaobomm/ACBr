@@ -122,7 +122,7 @@ var
  DadosMsg: AnsiString;
 begin
  if AProvedor = proBetha then Prefixo3 := '';
- if AProvedor = proGovBR then Identificador := '';
+ if AProvedor in [proGovBR, proPronim] then Identificador := '';
 
  DadosMsg := '<' + Prefixo3 + 'LoteRps'+
                DFeUtil.SeSenao(AProvedor = proISSDigital, '',
@@ -132,7 +132,7 @@ begin
                DFeUtil.SeSenao(AProvedor in [proAbaco, proBetha, proGinfes, proGoiania, proGovBR,
                                              {proISSDigital, }proIssCuritiba, proISSNET, proNatal,
                                              proRecife, proRJ, proSimplISS, proThema, proTiplan,
-                                             proAgili, proFISSLex, proSpeedGov{, proWebISS}], '',
+                                             proAgili, proFISSLex, proSpeedGov{, proWebISS}, proPronim], '',
                 DFeUtil.SeSenao(VersaoDados <> '', ' versao="' + VersaoDados + '"', '')) + '>' +
               '<' + Prefixo4 + 'NumeroLote>' +
                 NumeroLote +
@@ -528,7 +528,7 @@ begin
  if AProvedor in [proNenhum, proAbaco, proBetha, proBetim, proBHIss, proDigifred,
   proEquiplano, proFiorilli, proFIssLex, proGinfes, proGovBR, proIssCuritiba,
   proIssIntel, proIssNet, proNatal, proProdemge, proPublica, proRecife, proRJ,
-  proSimplIss, proThema, proTiplan, proIssDSF, proAgili, proSpeedGov] then Result := '';
+  proSimplIss, proThema, proTiplan, proIssDSF, proAgili, proSpeedGov, proPronim] then Result := '';
 end;
 
 class function TNFSeG.Gera_DadosMsgEnviarSincrono(Prefixo3, Prefixo4,
@@ -543,7 +543,7 @@ begin
      proEquiplano, profintelISS, proFISSLex, proGinfes, proGoiania, proGovBR,
      proGovDigital, proIssCuritiba, proISSDigital, proISSIntel, proISSNet, proNatal,
      proProdemge, proPublica, proRecife, proRJ, proSaatri, proFreire, proSimplISS, proThema,
-     proTiplan, proWebISS, proProdata, proAgili, proSpeedGov] then Result := '';
+     proTiplan, proWebISS, proProdata, proAgili, proSpeedGov, proPronim] then Result := '';
 end;
 
 //-------------------------------------------------------------------------

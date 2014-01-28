@@ -41,7 +41,7 @@ uses
     ACBrProvedorProdata, ACBrProvedorAgili, ACBrProvedorFISSLex,
     ACBrProvedorVirtual, ACBrProvedorPVH, ACBrProvedorFreire,
     ACBrProvedorLink3, ACBrProvedorSpeedGov, ACBrProvedorVitoria,
-    ACBrProvedorMitra, ACBrProvedorTecnos;
+    ACBrProvedorMitra, ACBrProvedorTecnos, ACBrProvedorPronim;
 
 type
 
@@ -553,7 +553,7 @@ begin
 
  if not (FProvedor in [proGovBr, proSimplISS, proAbaco, proISSNet, pro4R,
                        proFiorilli, proProdata, proCoplan, proThema, proVirtual,
-                       proPVH, proFreire, proTecnos])
+                       proPVH, proFreire, proTecnos, proPronim])
   then begin
    if not InternetSetOption(Data, INTERNET_OPTION_CLIENT_CERT_CONTEXT, PCertContext, Sizeof(CERT_CONTEXT)*5)
     then begin
@@ -645,6 +645,7 @@ begin
   proVitoria:     FProvedorClass := TProvedorVitoria.Create;
   proMitra:       FProvedorClass := TProvedorMitra.Create;
   proTecnos:      FProvedorClass := TProvedorTecnos.Create;
+  proPronim:      FProvedorClass := TProvedorPronim.Create;
  end;
 
  FPrefixo2     := FConfiguracoes.WebServices.Prefixo2;
