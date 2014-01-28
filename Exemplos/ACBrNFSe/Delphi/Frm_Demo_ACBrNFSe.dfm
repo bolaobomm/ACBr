@@ -310,6 +310,7 @@ object frmDemo_ACBrNFSe: TfrmDemo_ACBrNFSe
               'Bage/4301602/RS'
               'Barbacena/3105608/MG'
               'Bariri/3505203/SP'
+              'Barra do Garcas/5101803/MT'
               'Barroso/3105905/MG'
               'Barreiras/2903201/BA'
               'Belford Roxo/3300456/RJ'
