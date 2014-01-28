@@ -105,20 +105,20 @@ var
  ConfigURL: TConfigURL;
 begin
  ConfigURL.HomNomeCidade         := '';
- ConfigURL.HomRecepcaoLoteRPS    := 'https://nfse.recife.pe.gov.br/WSNacional/nfse.asmx';
- ConfigURL.HomConsultaLoteRPS    := 'https://nfse.recife.pe.gov.br/WSNacional/nfse.asmx';
- ConfigURL.HomConsultaNFSeRPS    := 'https://nfse.recife.pe.gov.br/WSNacional/nfse.asmx';
- ConfigURL.HomConsultaSitLoteRPS := 'https://nfse.recife.pe.gov.br/WSNacional/nfse.asmx';
- ConfigURL.HomConsultaNFSe       := 'https://nfse.recife.pe.gov.br/WSNacional/nfse.asmx';
- ConfigURL.HomCancelaNFSe        := 'https://nfse.recife.pe.gov.br/WSNacional/nfse.asmx';
+ ConfigURL.HomRecepcaoLoteRPS    := 'https://nfse.recife.pe.gov.br/WSNacional/nfse_v01.asmx';
+ ConfigURL.HomConsultaLoteRPS    := 'https://nfse.recife.pe.gov.br/WSNacional/nfse_v01.asmx';
+ ConfigURL.HomConsultaNFSeRPS    := 'https://nfse.recife.pe.gov.br/WSNacional/nfse_v01.asmx';
+ ConfigURL.HomConsultaSitLoteRPS := 'https://nfse.recife.pe.gov.br/WSNacional/nfse_v01.asmx';
+ ConfigURL.HomConsultaNFSe       := 'https://nfse.recife.pe.gov.br/WSNacional/nfse_v01.asmx';
+ ConfigURL.HomCancelaNFSe        := 'https://nfse.recife.pe.gov.br/WSNacional/nfse_v01.asmx';
 
  ConfigURL.ProNomeCidade         := '';
- ConfigURL.ProRecepcaoLoteRPS    := 'https://nfse.recife.pe.gov.br/WSNacional/nfse.asmx';
- ConfigURL.ProConsultaLoteRPS    := 'https://nfse.recife.pe.gov.br/WSNacional/nfse.asmx';
- ConfigURL.ProConsultaNFSeRPS    := 'https://nfse.recife.pe.gov.br/WSNacional/nfse.asmx';
- ConfigURL.ProConsultaSitLoteRPS := 'https://nfse.recife.pe.gov.br/WSNacional/nfse.asmx';
- ConfigURL.ProConsultaNFSe       := 'https://nfse.recife.pe.gov.br/WSNacional/nfse.asmx';
- ConfigURL.ProCancelaNFSe        := 'https://nfse.recife.pe.gov.br/WSNacional/nfse.asmx';
+ ConfigURL.ProRecepcaoLoteRPS    := 'https://nfse.recife.pe.gov.br/WSNacional/nfse_v01.asmx';
+ ConfigURL.ProConsultaLoteRPS    := 'https://nfse.recife.pe.gov.br/WSNacional/nfse_v01.asmx';
+ ConfigURL.ProConsultaNFSeRPS    := 'https://nfse.recife.pe.gov.br/WSNacional/nfse_v01.asmx';
+ ConfigURL.ProConsultaSitLoteRPS := 'https://nfse.recife.pe.gov.br/WSNacional/nfse_v01.asmx';
+ ConfigURL.ProConsultaNFSe       := 'https://nfse.recife.pe.gov.br/WSNacional/nfse_v01.asmx';
+ ConfigURL.ProCancelaNFSe        := 'https://nfse.recife.pe.gov.br/WSNacional/nfse_v01.asmx';
 
  Result := ConfigURL;
 end;
