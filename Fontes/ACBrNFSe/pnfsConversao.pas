@@ -819,7 +819,7 @@ begin
   5208707  // Goiania/GO
          : Provedor := 'Goiania';
 
-  3118601, // Contagem/MG
+//  3118601, // Contagem/MG
   3143302, // Montes Claros/MG
   3202405, // Guarapari/ES
 //  3205309, // Vitória/ES
@@ -839,6 +839,7 @@ begin
   4322400  // Uruguaiana/RS
          : Provedor := 'GovBR';
 
+  3118601, // Contagem/MG
   3511102  // Catanduva/SP
          : Provedor := 'Pronim';
 
