@@ -480,7 +480,7 @@ begin
                      AStr := AStr + Assinatura;
                      AStr := AStr + '</Rps>';
                      // Alterado por Cleiver em 26/02/2013
-                     if (AProvedor in [proGoiania, proProdata, proVitoria])
+                     if (AProvedor in [proGoiania, proProdata, proVitoria, proVirtual])
                       then AStr := AStr + '</GerarNfseEnvio>';
                     end;
       else begin
@@ -725,7 +725,7 @@ begin
                      AXML := AXML + Assinatura;
                      AXML := AXML + '</Rps>';
                      // Alterado por Cleiver em 26/02/2013
-                     if (AProvedor in [proGoiania, proProdata, proVitoria])
+                     if (AProvedor in [proGoiania, proProdata, proVitoria, proVirtual])
                       then AXML := AXML + '</GerarNfseEnvio>';
                     end;
       proTecnos:    begin
@@ -864,7 +864,7 @@ begin
                    AXML := AXML + '</Rps>';
 
                    // Alterado por Cleiver em 26/02/2013
-                   if (AProvedor in [proGoiania, proProdata, proVitoria])
+                   if (AProvedor in [proGoiania, proProdata, proVitoria, proVirtual])
                     then AXML := AXML + '</GerarNfseEnvio>';
 
                    XMLAssinado := AXML;

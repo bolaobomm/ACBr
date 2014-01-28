@@ -151,7 +151,7 @@ begin
 
  if (FProvedor <> proIssDsf) and (FProvedor <> proEquiplano) then
    // Alterado Por Cleiver em 01/02/2013
-   if (FProvedor in [proGoiania, proProdata, proVitoria])
+   if (FProvedor in [proGoiania, proProdata, proVitoria, proVirtual])
      then begin
       Gerador.wGrupo('GerarNfseEnvio' + Atributo);
 	    Gerador.wGrupo('Rps');
@@ -246,7 +246,7 @@ begin
 
  if (FProvedor <> proIssDsf) and (FProvedor <> proEquiplano) then
    // Alterado por Cleiver em 01/02/2013
-   if (FProvedor in [proGoiania, proProdata, proVitoria])
+   if (FProvedor in [proGoiania, proProdata, proVitoria, proVirtual])
      then begin
       Gerador.wGrupo('/Rps');
       Gerador.wGrupo('/GerarNfseEnvio');
@@ -446,7 +446,7 @@ begin
 
     if not (FProvedor in [pro4R, profinteliSS, proFiorilli, proGoiania, proISSDigital,
                           proISSe, proProdata, proVitoria, proPVH, proSaatri, proCoplan, proFreire,
-                          proLink3, proMitra, proGovDigital])
+                          proLink3, proMitra, proGovDigital, proVirtual])
       then Gerador.wCampoNFSe(tcDe2, '#24', 'BaseCalculo', 01, 15, 0, NFSe.Servico.Valores.BaseCalculo, '');
 
     if FProvedor in [pro4R, profintelISS, proISSDigital, proISSe, proSaatri, proCoplan,
@@ -628,7 +628,7 @@ begin
      Gerador.wCampoNFSe(tcStr, '#41', 'Complemento', 001, 060, 0, NFSe.Tomador.Endereco.Complemento, '');
      Gerador.wCampoNFSe(tcStr, '#42', 'Bairro     ', 001, 060, 0, NFSe.Tomador.Endereco.Bairro, '');
 
-     if FProvedor in [proEquiplano, proISSNet, proVirtual]
+     if FProvedor in [proEquiplano, proISSNet]
       then begin
         Gerador.wCampoNFSe(tcStr, '#43', 'Cidade', 007, 007, 0, SomenteNumeros(NFSe.Tomador.Endereco.CodigoMunicipio), '');
         Gerador.wCampoNFSe(tcStr, '#44', 'Estado', 002, 002, 0, NFSe.Tomador.Endereco.UF, '');
