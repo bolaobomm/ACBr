@@ -115,8 +115,8 @@ begin
  	 ConfigURL.ProConsultaNFSeRPS    := '';
  	 ConfigURL.ProConsultaSitLoteRPS := '';
  	 ConfigURL.ProConsultaNFSe       := '';
- 	 ConfigURL.ProCancelaNFSe        := 'http://financas.barradogarcas.com:8080/SCEM/servlet/anfse_barradogarcas?wsdl';
-   ConfigURL.ProGerarNFSe          := 'http://financas.barradogarcas.com:8080/SCEM/servlet/agerarnfse_barradogarcas?wsdl';
+ 	 ConfigURL.ProCancelaNFSe        := 'http://financas2.barradogarcas.mt.gov.br:8080/SCEM/servlet/anfse_barradogarcas?wsdl';
+   ConfigURL.ProGerarNFSe          := 'http://financas2.barradogarcas.mt.gov.br:8080/SCEM/servlet/agerarnfse_barradogarcas?wsdl';
  	 ConfigURL.ProRecepcaoSincrono   := '';
 
   	Result := ConfigURL;
@@ -149,11 +149,7 @@ end;
 
 function TProvedorVirtual.Gera_TagI(Acao: TnfseAcao; Prefixo3, Prefixo4,
   NameSpaceDad, Identificador, URI: String): AnsiString;
-var
- xmlns: String;
 begin
- xmlns := ' xmlns="http://www.abrasf.org.br/nfse.xsd"';
-
  case Acao of
    acRecepcionar: Result := '<' + Prefixo3 + 'EnviarLoteRpsEnvio' + NameSpaceDad;
    acConsSit:     Result := '<' + Prefixo3 + 'ConsultarSituacaoLoteRpsEnvio' + NameSpaceDad;
@@ -212,35 +208,13 @@ end;
 function TProvedorVirtual.GeraEnvelopeConsultarLoteRPS(URLNS: String;
   CabMsg, DadosMsg, DadosSenha: AnsiString): AnsiString;
 begin
- result := '<?xml version="1.0" encoding="UTF-8"?>' +
-            '<S:Envelope xmlns:S="http://schemas.xmlsoap.org/soap/envelope/" ' +
-                        'xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" ' +
-                        'xmlns:xsd="http://www.w3.org/2001/XMLSchema">' +
-            '<S:Body>' +
-             '<ConsultarLoteRps.Execute xmlns="http://tempuri.org/">' +
-              '<Entrada>' +
-                StringReplace(StringReplace(DadosMsg, '<', '&lt;', [rfReplaceAll]), '>', '&gt;', [rfReplaceAll]) +
-              '</Entrada>' +
-             '</ConsultarLoteRps.Execute>' +
-            '</S:Body>' +
-           '</S:Envelope>';
+ result := '';
 end;
 
 function TProvedorVirtual.GeraEnvelopeConsultarNFSeporRPS(URLNS: String;
   CabMsg, DadosMsg, DadosSenha: AnsiString): AnsiString;
 begin
- result := '<?xml version="1.0" encoding="UTF-8"?>' +
-            '<S:Envelope xmlns:S="http://schemas.xmlsoap.org/soap/envelope/" ' +
-                        'xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" ' +
-                        'xmlns:xsd="http://www.w3.org/2001/XMLSchema">' +
-            '<S:Body>' +
-             '<ConsultarNfsePorRps.Execute xmlns="Abrasf2">' +
-              '<Entrada>' +
-                StringReplace(StringReplace(DadosMsg, '<', '&lt;', [rfReplaceAll]), '>', '&gt;', [rfReplaceAll]) +
-              '</Entrada>' +
-             '</ConsultarNfsePorRps.Execute>' +
-            '</S:Body>' +
-           '</S:Envelope>';
+ result := '';
 end;
 
 function TProvedorVirtual.GeraEnvelopeConsultarNFSe(URLNS: String; CabMsg,
@@ -257,11 +231,14 @@ begin
                        'xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" ' +
                        'xmlns:xsd="http://www.w3.org/2001/XMLSchema">' +
             '<S:Body>' +
-             '<CancelarNfse.Execute xmlns="Abrasf2">' +
-              '<Entrada>' +
+//             '<CancelarNfse.Execute xmlns="Abrasf2">' +
+             '<nfse_barradogarcas.CANCELARNFSE>' +
+//              '<Entrada>' +
+              '<Cancelarnfseenvio>' +
                 StringReplace(StringReplace(DadosMsg, '<', '&lt;', [rfReplaceAll]), '>', '&gt;', [rfReplaceAll]) +
-              '</Entrada>' +
-             '</CancelarNfse.Execute>' +
+//              '</Entrada>' +
+              '</Cancelarnfseenvio>' +
+             '</nfse_barradogarcas.CANCELARNFSE>' +
             '</S:Body>' +
            '</S:Envelope>';
 end;
@@ -274,11 +251,12 @@ begin
                        'xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" ' +
                        'xmlns:xsd="http://www.w3.org/2001/XMLSchema">' +
             '<S:Body>' +
-             '<GerarNfse.Execute xmlns="http://tempuri.org/">' +
+//             '<GerarNfse.Execute xmlns="http://tempuri.org/">' +
+             '<gerarnfse_barradogarcas.Execute>' +
               '<Entrada>' +
                 StringReplace(StringReplace(DadosMsg, '<', '&lt;', [rfReplaceAll]), '>', '&gt;', [rfReplaceAll]) +
               '</Entrada>' +
-             '</GerarNfse.Execute>' +
+             '</gerarnfse_barradogarcas.Execute>' +
             '</S:Body>' +
            '</S:Envelope>';
 end;
@@ -310,27 +288,12 @@ begin
  case Acao of
    acRecepcionar: Result := RetornoWS;
    acConsSit:     Result := RetornoWS;
-   acConsLote:    begin
-                   RetWS := SeparaDados( RetornoWS, 'Resposta' );
-                   Result := RetWS;
-                  end;
-   acConsNFSeRps: begin
-                   RetWS := SeparaDados( RetornoWS, 'Resposta' );
-                   Result := RetWS;
-                  end;
+   acConsLote:    Result := RetornoWS;
+   acConsNFSeRps: Result := RetornoWS;
    acConsNFSe:    Result := RetornoWS;
-   acCancelar:    begin
-                   RetWS := SeparaDados( RetornoWS, 'Resposta' );
-                   Result := RetWS;
-                  end;
-   acGerar:       begin
-                   RetWS := SeparaDados( RetornoWS, 'Resposta' );
-                   Result := RetWS;
-                  end;
-   acRecSincrono: begin
-                   RetWS := SeparaDados( RetornoWS, 'Resposta' );
-                   Result := RetWS;
-                  end;
+   acCancelar:    Result := SeparaDados( RetornoWS, 'nfse_barradogarcas.CANCELARNFSEResponse' );
+   acGerar:       Result := SeparaDados( RetornoWS, 'Saida' );
+   acRecSincrono: Result := RetornoWS;
  end;
 end;
 
