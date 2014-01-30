@@ -127,14 +127,14 @@ begin
  ConfigURL.HomGerarNFSe          := 'http://ws.municipioweb.com.br:8080/webservice/NfseWSService?wsdl';
  ConfigURL.HomRecepcaoSincrono   := 'http://ws.municipioweb.com.br:8080/webservice/NfseWSService?wsdl';
 
- ConfigURL.ProRecepcaoLoteRPS    := 'https://' + ConfigURL.ProNomeCidade + '.issqn.srv.br/webservice/NfseWSService';
- ConfigURL.ProConsultaLoteRPS    := 'https://' + ConfigURL.ProNomeCidade + '.issqn.srv.br/webservice/NfseWSService';
- ConfigURL.ProConsultaNFSeRPS    := 'https://' + ConfigURL.ProNomeCidade + '.issqn.srv.br/webservice/NfseWSService';
- ConfigURL.ProConsultaSitLoteRPS := 'https://' + ConfigURL.ProNomeCidade + '.issqn.srv.br/webservice/NfseWSService';
- ConfigURL.ProConsultaNFSe       := 'https://' + ConfigURL.ProNomeCidade + '.issqn.srv.br/webservice/NfseWSService';
- ConfigURL.ProCancelaNFSe        := 'https://' + ConfigURL.ProNomeCidade + '.issqn.srv.br/webservice/NfseWSService';
- ConfigURL.ProGerarNFSe          := 'https://' + ConfigURL.ProNomeCidade + '.issqn.srv.br/webservice/NfseWSService';
- ConfigURL.ProRecepcaoSincrono   := 'https://' + ConfigURL.ProNomeCidade + '.issqn.srv.br/webservice/NfseWSService';
+ ConfigURL.ProRecepcaoLoteRPS    := 'http://webservice.issqn.srv.br:49611/' + ConfigURL.ProNomeCidade + '/NfseWSService?wsdl';
+ ConfigURL.ProConsultaLoteRPS    := 'http://webservice.issqn.srv.br:49611/' + ConfigURL.ProNomeCidade + '/NfseWSService?wsdl';
+ ConfigURL.ProConsultaNFSeRPS    := 'http://webservice.issqn.srv.br:49611/' + ConfigURL.ProNomeCidade + '/NfseWSService?wsdl';
+ ConfigURL.ProConsultaSitLoteRPS := 'http://webservice.issqn.srv.br:49611/' + ConfigURL.ProNomeCidade + '/NfseWSService?wsdl';
+ ConfigURL.ProConsultaNFSe       := 'http://webservice.issqn.srv.br:49611/' + ConfigURL.ProNomeCidade + '/NfseWSService?wsdl';
+ ConfigURL.ProCancelaNFSe        := 'http://webservice.issqn.srv.br:49611/' + ConfigURL.ProNomeCidade + '/NfseWSService?wsdl';
+ ConfigURL.ProGerarNFSe          := 'http://webservice.issqn.srv.br:49611/' + ConfigURL.ProNomeCidade + '/NfseWSService?wsdl';
+ ConfigURL.ProRecepcaoSincrono   := 'http://webservice.issqn.srv.br:49611/' + ConfigURL.ProNomeCidade + '/NfseWSService?wsdl';
 
  Result := ConfigURL;
 end;

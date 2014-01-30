@@ -140,6 +140,23 @@ begin
             ConfigURL.ProConsultaNFSe       := 'http://nfse.catanduva.sp.gov.br/NFSEWS/Services.svc';
             ConfigURL.ProCancelaNFSe        := 'http://nfse.catanduva.sp.gov.br/NFSEWS/Services.svc';
            end;
+  4310207: begin // Ijui/RS
+            ConfigURL.HomNomeCidade         := '';
+            ConfigURL.HomRecepcaoLoteRPS    := 'http://ambienteteste.ijui.rs.gov.br/nfsewsteste/Services.svc';
+            ConfigURL.HomConsultaLoteRPS    := 'http://ambienteteste.ijui.rs.gov.br/nfsewsteste/Services.svc';
+            ConfigURL.HomConsultaNFSeRPS    := 'http://ambienteteste.ijui.rs.gov.br/nfsewsteste/Services.svc';
+            ConfigURL.HomConsultaSitLoteRPS := 'http://ambienteteste.ijui.rs.gov.br/nfsewsteste/Services.svc';
+            ConfigURL.HomConsultaNFSe       := 'http://ambienteteste.ijui.rs.gov.br/nfsewsteste/Services.svc';
+            ConfigURL.HomCancelaNFSe        := 'http://ambienteteste.ijui.rs.gov.br/nfsewsteste/Services.svc';
+
+            ConfigURL.ProNomeCidade         := '';
+            ConfigURL.ProRecepcaoLoteRPS    := 'http://server21.ijui.rs.gov.br/nfsews/Services.svc';
+            ConfigURL.ProConsultaLoteRPS    := 'http://server21.ijui.rs.gov.br/nfsews/Services.svc';
+            ConfigURL.ProConsultaNFSeRPS    := 'http://server21.ijui.rs.gov.br/nfsews/Services.svc';
+            ConfigURL.ProConsultaSitLoteRPS := 'http://server21.ijui.rs.gov.br/nfsews/Services.svc';
+            ConfigURL.ProConsultaNFSe       := 'http://server21.ijui.rs.gov.br/nfsews/Services.svc';
+            ConfigURL.ProCancelaNFSe        := 'http://server21.ijui.rs.gov.br/nfsews/Services.svc';
+           end;
  end;
 
  Result := ConfigURL;

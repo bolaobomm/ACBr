@@ -348,6 +348,7 @@ begin
             ConfigURL.ProConsultaNFSe       := 'http://177.20.255.244/NFSEWS/Services.svc';
             ConfigURL.ProCancelaNFSe        := 'http://177.20.255.244/NFSEWS/Services.svc';
            end;
+           (*
   4310207: begin // Ijui/RS
             ConfigURL.HomNomeCidade         := '';
             ConfigURL.HomRecepcaoLoteRPS    := 'http://ambienteteste.ijui.rs.gov.br/nfsewsteste/Services.svc';
@@ -365,6 +366,7 @@ begin
             ConfigURL.ProConsultaNFSe       := 'http://server21.ijui.rs.gov.br/nfsews/Services.svc';
             ConfigURL.ProCancelaNFSe        := 'http://server21.ijui.rs.gov.br/nfsews/Services.svc';
            end;
+           *)
   4320800: begin // Soledade/RS
             ConfigURL.HomNomeCidade         := '';
             ConfigURL.HomRecepcaoLoteRPS    := '';

@@ -122,6 +122,11 @@ begin
             ConfigURL.ProNomeCidade := 'nfse.lajeado.rs.gov.br/thema-nfse';
             sHTTPPro := 'http://';
            end;
+  4312658: begin // Nao-Me-Toque/RS
+            ConfigURL.HomNomeCidade := 'nfsehml.naometoquers.com.br/thema-nfse';
+            ConfigURL.ProNomeCidade := 'nfse.naometoquers.com.br/thema-nfse';
+            sHTTPPro := 'http://';
+           end;
   4314100: begin // Passo Fundo/RS
             ConfigURL.HomNomeCidade := 'nfsehomologacao.pmpf.rs.gov.br/nfse';
             ConfigURL.ProNomeCidade := 'nfse.pmpf.rs.gov.br/thema-nfse';

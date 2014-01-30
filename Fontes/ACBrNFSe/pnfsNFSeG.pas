@@ -454,7 +454,7 @@ begin
                      CodCancelamento +
 
                    '</' + Prefixo4 + 'CodigoCancelamento>' +
-                   DFeUtil.SeSenao(AProvedor = proTecnos, '<Id>' + CNPJ + IM + IntToStrZero(StrToInt(NumeroNFse), 16) + '</Id>', '') +
+                   DFeUtil.SeSenao(AProvedor = proTecnos, '<Id>' + CNPJ + IM + IntToStrZero(StrToInt64(NumeroNFse), 16) + '</Id>', '') +
                   '</' + Prefixo4 + 'InfPedidoCancelamento>';
  end;
 

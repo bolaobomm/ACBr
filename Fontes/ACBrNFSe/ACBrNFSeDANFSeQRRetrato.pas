@@ -303,7 +303,7 @@ begin
                          ';', #13#10, [rfReplaceAll,rfIgnoreCase] ) );
 
  qrlNumNF0.Caption   := FormatFloat('00000000000', StrToFloatDef(FNFSe.Numero, 0));
- qrlDataServ.Caption := '';
+ qrlDataServ.Caption := DFeUtil.FormatDateTime(DateTimeToStr(FNFSe.DataEmissaoRps));
 
  // Alterado em 27/12/2012  Daniel Jr -> passando parâmetro para Comprovante de Entrega.
  qrlNumeroNotaCompEnt.Caption := FormatFloat('00000000000', StrToFloatDef(FNFSe.Numero, 0));

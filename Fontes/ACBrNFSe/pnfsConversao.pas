@@ -833,14 +833,15 @@ begin
   4102000, // Assis Chateaubriand/PR
   4205902, // Gaspar/SC
   4309407, // Guapore/RS
-  4310207, // Ijui/RS
+//  4310207, // Ijui/RS
   4320800, // Soledade/RS
   4321709, // Tres Coroas/RS
   4322400  // Uruguaiana/RS
          : Provedor := 'GovBR';
 
   3118601, // Contagem/MG
-  3511102  // Catanduva/SP
+  3511102, // Catanduva/SP
+  4310207  // Ijui/RS
          : Provedor := 'Pronim';
 
   3132404, // Itajubá/MG
@@ -1023,6 +1024,7 @@ begin
 
   4303103, // Cachoeirinha/RS
   4311403, // Lajeado/RS
+  4312658, // Nao-Me-Toque/RS
   4314100, // Passo Fundo/RS
   4316808, // Santa Cruz Do Sul/RS
   4318705, // Sao Leopoldo/RS
