@@ -1159,6 +1159,21 @@ object frmDemo_ACBrNFSe: TfrmDemo_ACBrNFSe
         TabOrder = 12
         OnClick = btnGerarEnviarSincronoClick
       end
+      object Button1: TButton
+        Left = 192
+        Top = 135
+        Width = 361
+        Height = 25
+        Caption = 'Verifica se uma cidade '#233' atendida pelo componente ou n'#227'o'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWindowText
+        Font.Height = -11
+        Font.Name = 'MS Sans Serif'
+        Font.Style = [fsBold]
+        ParentFont = False
+        TabOrder = 13
+        OnClick = Button1Click
+      end
     end
     object PageControl2: TPageControl
       Left = 1

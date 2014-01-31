@@ -140,6 +140,7 @@ type
     btnLinkNFSe: TButton;
     btnGerarLoteRPS: TButton;
     btnGerarEnviarSincrono: TButton;
+    Button1: TButton;
     procedure sbtnCaminhoCertClick(Sender: TObject);
     procedure sbtnGetCertClick(Sender: TObject);
     procedure sbtnLogoMarcaClick(Sender: TObject);
@@ -168,6 +169,7 @@ type
     procedure btnLinkNFSeClick(Sender: TObject);
     procedure btnGerarLoteRPSClick(Sender: TObject);
     procedure btnGerarEnviarSincronoClick(Sender: TObject);
+    procedure Button1Click(Sender: TObject);
     {
     procedure lblMouseEnter(Sender: TObject);
     procedure lblMouseLeave(Sender: TObject);
@@ -1081,6 +1083,18 @@ begin
  ACBrNFSe1.EnviarSincrono(vNumLote);
 
  ACBrNFSe1.NotasFiscais.Clear;
+end;
+
+procedure TfrmDemo_ACBrNFSe.Button1Click(Sender: TObject);
+var
+ vAux, provedor : String;
+begin
+ if not(InputQuery('Informe o código IBGE da cidade com 7 digitos', 'Código:', vAux))
+  then exit;
+
+ provedor := CodCidadeToProvedor(StrToIntDef(vAux, 0));
+
+ ShowMessage('Provedor: ' + provedor);
 end;
 
 end.
