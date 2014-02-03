@@ -9,7 +9,7 @@
       <PathDelim Value="\"/>
       <SearchPaths>
         <OtherUnitFiles Value="..\..\..\Fontes\ACBrGNRE"/>
-        <UnitOutputDirectory Value="..\..\..\Fontes\ACBrGNRE\lib\$(TargetCPU)-$(TargetOS)\"/>
+        <UnitOutputDirectory Value="..\..\..\Lib\Lazarus\ACBrGNRE\$(TargetCPU)-$(TargetOS)"/>
       </SearchPaths>
       <Other>
         <CompilerMessages>
@@ -23,7 +23,7 @@ Guia Nacional de Recolhimento de Tributos Estaduais"/>
     <Files Count="19">
       <Item1>
         <Filename Value="..\..\..\Fontes\ACBrGNRE\ACBrGNRE2.pas"/>
-        <UnitName Value="ACBrGNRE"/>
+        <UnitName Value="ACBrGNRE2"/>
       </Item1>
       <Item2>
         <Filename Value="..\..\..\Fontes\ACBrGNRE\ACBrGNREConfiguracoes.pas"/>
