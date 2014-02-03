@@ -213,7 +213,7 @@ procedure TForm1.GerarNFe(NumNFe : String);
 begin
   with ACBrNFe1.NotasFiscais.Add.NFe do
    begin
-     Ide.cNF       := StrToInt(NumNFe); //Caso n√£o seja preenchido ser√° gerado um n√∫mero aleat√≥rio pelo componente
+     Ide.cNF       := StrToInt(NumNFe); //Caso n„o seja preenchido ser· gerado um n˙mero aleatÛrio pelo componente
      Ide.natOp     := 'VENDA PRODUCAO DO ESTAB.';
      Ide.indPag    := ipVista;
      Ide.modelo    := 55;
@@ -224,8 +224,8 @@ begin
      Ide.hSaiEnt   := Now;
      Ide.tpNF      := tnSaida;
      Ide.tpEmis    := teNormal;
-     Ide.tpAmb     := taProducao;  //Lembre-se de trocar esta vari√°vel quando for para ambiente de produ√ß√£o
-     Ide.verProc   := '1.0.0.0'; //Vers√£o do seu sistema
+     Ide.tpAmb     := taProducao;  //Lembre-se de trocar esta vari·vel quando for para ambiente de produÁ„o
+     Ide.verProc   := '1.0.0.0'; //Vers„o do seu sistema
      Ide.cUF       := NotaUtil.UFtoCUF(edtEmitUF.Text);
      Ide.cMunFG    := StrToInt(edtEmitCodCidade.Text);
      Ide.finNFe    := fnNormal;
@@ -276,9 +276,9 @@ begin
       Emit.enderEmit.xPais   := 'BRASIL';
 
       Emit.IEST              := '';
-      Emit.IM                := '2648800'; // Preencher no caso de existir servi√ßos na nota
-      Emit.CNAE              := '6201500'; // Verifique na cidade do emissor da NFe se √© permitido
-                                    // a inclus√£o de servi√ßos na NFe
+      Emit.IM                := '2648800'; // Preencher no caso de existir serviÁos na nota
+      Emit.CNAE              := '6201500'; // Verifique na cidade do emissor da NFe se È permitido
+                                    // a inclus„o de serviÁos na NFe
       Emit.CRT               := crtRegimeNormal;// (1-crtSimplesNacional, 2-crtSimplesExcessoReceita, 3-crtRegimeNormal)
 
 //Para NFe Avulsa preencha os campos abaixo
@@ -297,7 +297,7 @@ begin
       Dest.CNPJCPF           := '05481336000137';
       Dest.IE                := 'ISENTO';
       Dest.ISUF              := '';
-      Dest.xNome             := 'D.J. COM. E LOCA√á√ÉO DE SOFTWARES LTDA - ME';
+      Dest.xNome             := 'D.J. COM. E LOCA«√O DE SOFTWARES LTDA - ME';
 
       Dest.EnderDest.Fone    := '1532599600';
       Dest.EnderDest.CEP     := 18270170;
@@ -306,12 +306,12 @@ begin
       Dest.EnderDest.xCpl    := '';
       Dest.EnderDest.xBairro := 'Centro';
       Dest.EnderDest.cMun    := 3554003;
-      Dest.EnderDest.xMun    := 'Tatu√≠';
+      Dest.EnderDest.xMun    := 'TatuÌ';
       Dest.EnderDest.UF      := 'SP';
       Dest.EnderDest.cPais   := 1058;
       Dest.EnderDest.xPais   := 'BRASIL';
 
-//Use os campos abaixo para informar o endere√ßo de retirada quando for diferente do Remetente/Destinat√°rio
+//Use os campos abaixo para informar o endereÁo de retirada quando for diferente do Remetente/Destinat·rio
 {      Retirada.CNPJCPF := '';
       Retirada.xLgr    := '';
       Retirada.nro     := '';
@@ -321,7 +321,7 @@ begin
       Retirada.xMun    := '';
       Retirada.UF      := '';}
 
-//Use os campos abaixo para informar o endere√ßo de entrega quando for diferente do Remetente/Destinat√°rio
+//Use os campos abaixo para informar o endereÁo de entrega quando for diferente do Remetente/Destinat·rio
 {      Entrega.CNPJCPF := '';
       Entrega.xLgr    := '';
       Entrega.nro     := '';
@@ -334,11 +334,11 @@ begin
 //Adicionando Produtos
       with Det.Add do
        begin
-         Prod.nItem    := 1; // N√∫mero sequencial, para cada item deve ser incrementado
+         Prod.nItem    := 1; // N˙mero sequencial, para cada item deve ser incrementado
          Prod.cProd    := '123456';
          Prod.cEAN     := '7896523206646';
-         Prod.xProd    := 'Descri√ß√£o do Produto';
-         Prod.NCM      := '94051010'; // Tabela NCM dispon√≠vel em  http://www.receita.fazenda.gov.br/Aliquotas/DownloadArqTIPI.htm
+         Prod.xProd    := 'DescriÁ„o do Produto';
+         Prod.NCM      := '94051010'; // Tabela NCM disponÌvel em  http://www.receita.fazenda.gov.br/Aliquotas/DownloadArqTIPI.htm
          Prod.EXTIPI   := '';
          Prod.CFOP     := '5101';
          Prod.uCom     := 'UN';
@@ -356,9 +356,9 @@ begin
          Prod.vSeg      := 0;
          Prod.vDesc     := 0;
 
-         infAdProd      := 'Informa√ß√£o Adicional do Produto';
+         infAdProd      := 'InformaÁ„o Adicional do Produto';
 
-//Declara√ß√£o de Importa√ß√£o. Pode ser adicionada v√°rias atrav√©s do comando Prod.DI.Add
+//DeclaraÁ„o de ImportaÁ„o. Pode ser adicionada v·rias atravÈs do comando Prod.DI.Add
 {         with Prod.DI.Add do
           begin
             nDi         := '';
@@ -377,7 +377,7 @@ begin
              end;
           end;
 }
-//Campos para venda de ve√≠culos novos
+//Campos para venda de veÌculos novos
 {         with Prod.veicProd do
           begin
             tpOP    := toVendaConcessionaria;
@@ -404,7 +404,7 @@ begin
             cMod    := '';
           end;
 }
-//Campos espec√≠ficos para venda de medicamentos
+//Campos especÌficos para venda de medicamentos
 {         with Prod.med.Add do
           begin
             nLote := '';
@@ -413,7 +413,7 @@ begin
             dVal  := now ;
             vPMC  := 0 ;
           end;  }
-//Campos espec√≠ficos para venda de armamento
+//Campos especÌficos para venda de armamento
 {         with Prod.arma.Add do
           begin
             nSerie := 0;
@@ -421,7 +421,7 @@ begin
             nCano  := 0 ;
             descr  := '' ;
           end;      }
-//Campos espec√≠ficos para venda de combust√≠vel(distribuidoras)
+//Campos especÌficos para venda de combustÌvel(distribuidoras)
 {         with Prod.comb do
           begin
             cProdANP := 0;
@@ -530,26 +530,26 @@ begin
                vCOFINS   := 0;
              end;
 } }
-//Grupo para servi√ßos
+//Grupo para serviÁos
 {            with ISSQN do
              begin
                vBC       := 0;
                vAliq     := 0;
                vISSQN    := 0;
                cMunFG    := 0;
-               cListServ := 1402; // Preencha este campo usando a tabela dispon√≠vel
+               cListServ := 1402; // Preencha este campo usando a tabela disponÌvel
                                // em http://www.planalto.gov.br/Ccivil_03/LEIS/LCP/Lcp116.htm
              end;}
       {    end;
        end ;         }
 
-//Adicionando Servi√ßos
+//Adicionando ServiÁos
       with Det.Add do
        begin
-         Prod.nItem    := 1; // N√∫mero sequencial, para cada item deve ser incrementado
+         Prod.nItem    := 1; // N˙mero sequencial, para cada item deve ser incrementado
          Prod.cProd    := '123457';
          Prod.cEAN     := '';
-         Prod.xProd    := 'Descri√ß√£o do Servi√ßo';
+         Prod.xProd    := 'DescriÁ„o do ServiÁo';
          Prod.NCM      := '99';
          Prod.EXTIPI   := '';
          Prod.CFOP     := '6102';
@@ -567,9 +567,9 @@ begin
          Prod.vSeg      := 0;
          Prod.vDesc     := 0;
 
-         infAdProd      := 'Informa√ß√£o Adicional do Servi√ßo';
+         infAdProd      := 'InformaÁ„o Adicional do ServiÁo';
 
-//Grupo para servi√ßos
+//Grupo para serviÁos
             with Imposto.ISSQN do
              begin
                cSitTrib  := ISSQNcSitTribNORMAL;
@@ -577,7 +577,7 @@ begin
                vAliq     := 2;
                vISSQN    := 2;
                cMunFG    := 3554003;
-               cListServ := 1402; // Preencha este campo usando a tabela dispon√≠vel
+               cListServ := '1402'; // Preencha este campo usando a tabela disponÌvel
                                // em http://www.planalto.gov.br/Ccivil_03/LEIS/LCP/Lcp116.htm
              end;
        end ;
@@ -646,7 +646,7 @@ begin
          pesoL := 100;
          pesoB := 110;
 
-         //Lacres do volume. Pode ser adicionado v√°rios
+         //Lacres do volume. Pode ser adicionado v·rios
          //Lacres.Add.nLacre := '';
        end;
 
@@ -913,7 +913,7 @@ begin
 
  if Trim(vNumLote) = '' then
   begin
-    MessageDlg('N√∫mero do Lote inv√°lido.',mtError,[mbok],0);
+    MessageDlg('N˙mero do Lote inv·lido.',mtError,[mbok],0);
     exit;
   end;
 
@@ -957,7 +957,7 @@ begin
    ACBrNFe1.NotasFiscais.SaveToFile();
    if ACBrNFe1.WebServices.EnviarDPEC.Executar then
     begin
-      //protocolo de envio ao DPEC e impress√£o do DANFE
+      //protocolo de envio ao DPEC e impress„o do DANFE
       ACBrNFe1.DANFE.ProtocoloNFe:=ACBrNFe1.WebServices.EnviarDPEC.nRegDPEC+' '+
                                    DateTimeToStr(ACBrNFe1.WebServices.EnviarDPEC.DhRegDPEC);
       ACBrNFe1.NotasFiscais.Imprimir;
@@ -990,8 +990,8 @@ begin
      ACBrNFe1.NotasFiscais.Clear;
      ACBrNFe1.NotasFiscais.LoadFromFile(OpenDialog1.FileName);
      CC:=TstringList.Create;
-     CC.Add('andrefmoraes@gmail.com'); //especifique um email v√°lido
-     CC.Add('anfm@zipmail.com.br');    //especifique um email v√°lido
+     CC.Add('andrefmoraes@gmail.com'); //especifique um email v·lido
+     CC.Add('anfm@zipmail.com.br');    //especifique um email v·lido
      ACBrNFe1.NotasFiscais.Items[0].EnviarEmail(edtSmtpHost.Text
                                               , edtSmtpPort.Text
                                               , edtSmtpUser.Text
@@ -1000,12 +1000,12 @@ begin
                                               , Para
                                               , edtEmailAssunto.Text
                                               , mmEmailMsg.Lines
-                                              , cbEmailSSL.Checked // SSL - Conex√£o Segura
+                                              , cbEmailSSL.Checked // SSL - Conex„o Segura
                                               , True //Enviar PDF junto
-                                              , CC //Lista com emails que ser√£o enviado c√≥pias - TStrings
+                                              , CC //Lista com emails que ser„o enviado cÛpias - TStrings
                                               , nil // Lista de anexos - TStrings
-                                              , False  //Pede confirma√ß√£o de leitura do email
-                                              , False  //Aguarda Envio do Email(n√£o usa thread)
+                                              , False  //Pede confirmaÁ„o de leitura do email
+                                              , False  //Aguarda Envio do Email(n„o usa thread)
                                               , 'ACBrNFe2' // Nome do Rementente
                                               , cbEmailSSL.Checked ); // Auto TLS
      CC.Free;
@@ -1061,7 +1061,7 @@ begin
 
   if Trim(vNumLote) = '' then
    begin
-     MessageDlg('N√∫mero do Lote inv√°lido.',mtError,[mbok],0);
+     MessageDlg('N˙mero do Lote inv·lido.',mtError,[mbok],0);
      exit;
    end;
 
@@ -1100,7 +1100,7 @@ begin
       try
          ACBrNFe1.NotasFiscais.LoadFromFile(OpenDialog1.FileName);
       except
-         ShowMessage('Arquivo NFe Inv√°lido');
+         ShowMessage('Arquivo NFe Inv·lido');
          exit;
       end;
    end;
@@ -1451,7 +1451,7 @@ begin
                        trvwNFe.Items.AddChild(Node,'vAliq='     +FloatToStr(vAliq));
                        trvwNFe.Items.AddChild(Node,'vISSQN='    +FloatToStr(vISSQN));
                        trvwNFe.Items.AddChild(Node,'cMunFG='    +IntToStr(cMunFG));
-                       trvwNFe.Items.AddChild(Node,'cListServ=' +IntToStr(cListServ));
+                       trvwNFe.Items.AddChild(Node,'cListServ=' +cListServ);
                      end;
                   end;
 
@@ -1774,7 +1774,7 @@ procedure TForm1.btnConsultarReciboClick(Sender: TObject);
 var
   aux : String;
 begin
- if not(InputQuery('Consultar Recibo Lote', 'N√∫mero do Recibo', aux)) then
+ if not(InputQuery('Consultar Recibo Lote', 'N˙mero do Recibo', aux)) then
    exit;
  ACBrNFe1.WebServices.Recibo.Recibo := aux;;
  ACBrNFe1.WebServices.Recibo.Executar;
@@ -1853,9 +1853,9 @@ begin
        Emit.enderEmit.xPais   := 'BRASIL';
 
        Emit.IEST              := '';
-       Emit.IM                := ''; // Preencher no caso de existir servi√ßos na nota
-       Emit.CNAE              := ''; // Verifique na cidade do emissor da NFe se √© permitido
-                                    // a inclus√£o de servi√ßos na NFe
+       Emit.IM                := ''; // Preencher no caso de existir serviÁos na nota
+       Emit.CNAE              := ''; // Verifique na cidade do emissor da NFe se È permitido
+                                    // a inclus„o de serviÁos na NFe
        Emit.CRT               := crtRegimeNormal;// (1-crtSimplesNacional, 2-crtSimplesExcessoReceita, 3-crtRegimeNormal)
     end;}
     ACBrNFe1.NotasFiscais.GerarNFe;
@@ -1884,28 +1884,28 @@ procedure TForm1.btnCartadeCorrecaoClick(Sender: TObject);
 var
  Chave, idLote, codOrgao, CNPJ, nSeqEvento, Correcao : string;
 begin
-  if not(InputQuery('WebServices Carta de Corre√ß√£o', 'Chave da NF-e', Chave)) then
+  if not(InputQuery('WebServices Carta de CorreÁ„o', 'Chave da NF-e', Chave)) then
      exit;
   Chave := Trim(OnlyNumber(Chave));
 {  if not ValidarChave(Chave) then
    begin
-     MessageDlg('Chave Inv√°lida.',mtError,[mbok],0);
+     MessageDlg('Chave Inv·lida.',mtError,[mbok],0);
      exit;
    end;   }
   idLote := '1';
-  if not(InputQuery('WebServices Carta de Corre√ß√£o', 'Identificador de controle do Lote de envio do Evento', idLote)) then
+  if not(InputQuery('WebServices Carta de CorreÁ„o', 'Identificador de controle do Lote de envio do Evento', idLote)) then
      exit;
   codOrgao := copy(Chave,1,2);
-  if not(InputQuery('WebServices Carta de Corre√ß√£o', 'C√≥digo do √≥rg√£o de recep√ß√£o do Evento', codOrgao)) then
+  if not(InputQuery('WebServices Carta de CorreÁ„o', 'CÛdigo do Ûrg„o de recepÁ„o do Evento', codOrgao)) then
      exit;
   CNPJ := copy(Chave,7,14);
-  if not(InputQuery('WebServices Carta de Corre√ß√£o', 'CNPJ ou o CPF do autor do Evento', CNPJ)) then
+  if not(InputQuery('WebServices Carta de CorreÁ„o', 'CNPJ ou o CPF do autor do Evento', CNPJ)) then
      exit;
   nSeqEvento := '1';
-  if not(InputQuery('WebServices Carta de Corre√ß√£o', 'Sequencial do evento para o mesmo tipo de evento', nSeqEvento)) then
+  if not(InputQuery('WebServices Carta de CorreÁ„o', 'Sequencial do evento para o mesmo tipo de evento', nSeqEvento)) then
      exit;
-  Correcao := 'Corre√ß√£o a ser considerada, texto livre. A corre√ß√£o mais recente substitui as anteriores.';
-  if not(InputQuery('WebServices Carta de Corre√ß√£o', 'Corre√ß√£o a ser considerada', Correcao)) then
+  Correcao := 'CorreÁ„o a ser considerada, texto livre. A correÁ„o mais recente substitui as anteriores.';
+  if not(InputQuery('WebServices Carta de CorreÁ„o', 'CorreÁ„o a ser considerada', Correcao)) then
      exit;
   ACBrNFe1.CartaCorrecao.CCe.Evento.Clear;
    ACBrNFe1.CartaCorrecao.CCe.idLote := StrToInt(idLote) ;
@@ -1918,7 +1918,7 @@ begin
      infEvento.tpEvento := 110110;
      infEvento.nSeqEvento := StrToInt(nSeqEvento);
      infEvento.versaoEvento := '1.00';
-     infEvento.detEvento.descEvento := 'Carta de Corre√ß√£o';
+     infEvento.detEvento.descEvento := 'Carta de CorreÁ„o';
      infEvento.detEvento.xCorrecao := Correcao;
      infEvento.detEvento.xCondUso := ''; //Texto fixo conforme NT 2011.003 -  http://www.nfe.fazenda.gov.br/portal/exibirArquivo.aspx?conteudo=tsiloeZ6vBw=
    end;
@@ -1961,7 +1961,7 @@ var
 begin
  if not(InputQuery('WebServices Cancelamento', 'Chave da NF-e', Chave)) then
     exit;
- if not(InputQuery('WebServices Cancelamento', 'Protocolo de Autoriza√ß√£o', Protocolo)) then
+ if not(InputQuery('WebServices Cancelamento', 'Protocolo de AutorizaÁ„o', Protocolo)) then
     exit;
  if not(InputQuery('WebServices Cancelamento', 'Justificativa', Justificativa)) then
     exit;
@@ -2053,7 +2053,7 @@ begin
    begin
      if ( frmStatus = nil ) then
        frmStatus := TfrmStatus.Create(Application);
-     frmStatus.lblStatus.Caption := 'Enviando pedido de Inutiliza√ß√£o...';
+     frmStatus.lblStatus.Caption := 'Enviando pedido de InutilizaÁ„o...';
      frmStatus.Show;
      frmStatus.BringToFront;
    end;
@@ -2101,7 +2101,7 @@ begin
    begin
      if ( frmStatus = nil ) then
        frmStatus := TfrmStatus.Create(Application);
-     frmStatus.lblStatus.Caption := 'Enviando Carta de Corre√ß√£o...';
+     frmStatus.lblStatus.Caption := 'Enviando Carta de CorreÁ„o...';
      frmStatus.Show;
      frmStatus.BringToFront;
    end;
@@ -2140,17 +2140,17 @@ procedure TForm1.btnInutilizarClick(Sender: TObject);
 var
  Modelo, Serie, Ano, NumeroInicial, NumeroFinal, Justificativa : String;
 begin
- if not(InputQuery('WebServices Inutiliza√ß√£o ', 'Ano',    Ano)) then
+ if not(InputQuery('WebServices InutilizaÁ„o ', 'Ano',    Ano)) then
     exit;
- if not(InputQuery('WebServices Inutiliza√ß√£o ', 'Modelo', Modelo)) then
+ if not(InputQuery('WebServices InutilizaÁ„o ', 'Modelo', Modelo)) then
     exit;
- if not(InputQuery('WebServices Inutiliza√ß√£o ', 'Serie',  Serie)) then
+ if not(InputQuery('WebServices InutilizaÁ„o ', 'Serie',  Serie)) then
     exit;
- if not(InputQuery('WebServices Inutiliza√ß√£o ', 'N√∫mero Inicial', NumeroInicial)) then
+ if not(InputQuery('WebServices InutilizaÁ„o ', 'N˙mero Inicial', NumeroInicial)) then
     exit;
- if not(InputQuery('WebServices Inutiliza√ß√£o ', 'N√∫mero Inicial', NumeroFinal)) then
+ if not(InputQuery('WebServices InutilizaÁ„o ', 'N˙mero Inicial', NumeroFinal)) then
     exit;
- if not(InputQuery('WebServices Inutiliza√ß√£o ', 'Justificativa', Justificativa)) then
+ if not(InputQuery('WebServices InutilizaÁ„o ', 'Justificativa', Justificativa)) then
     exit;
   ACBrNFe1.WebServices.Inutiliza(edtEmitCNPJ.Text, Justificativa, StrToInt(Ano), StrToInt(Modelo), StrToInt(Serie), StrToInt(NumeroInicial), StrToInt(NumeroFinal));
   MemoResp.Lines.Text :=  UTF8Encode(ACBrNFe1.WebServices.Inutilizacao.RetWS);
@@ -2217,35 +2217,35 @@ var
  ok: boolean;
 begin
   CNPJ := '';
-  if not(InputQuery('WebServices Consulta NFe Destinadas', 'CNPJ do destinat√°rio da NFe', CNPJ)) then
+  if not(InputQuery('WebServices Consulta NFe Destinadas', 'CNPJ do destinat·rio da NFe', CNPJ)) then
      exit;
 
-  (*veja NT 2012/002 p√°g. 11 para identificar os valores poss√≠veis
+  (*veja NT 2012/002 p·g. 11 para identificar os valores possÌveis
   Indicador de NF-e consultada:
   0=Todas as NF-e;
-  1=Somente as NF-e que ainda n√£o tiveram manifesta√ß√£o do destinat√°rio
-    (Desconhecimento da opera√ß√£o, Opera√ß√£o n√£o Realizada ou Confirma√ß√£o da Opera√ß√£o);
-  2=Idem anterior, incluindo as NF-e que tamb√©m n√£o tiveram a Ci√™ncia da Opera√ß√£o.*)
+  1=Somente as NF-e que ainda n„o tiveram manifestaÁ„o do destinat·rio
+    (Desconhecimento da operaÁ„o, OperaÁ„o n„o Realizada ou ConfirmaÁ„o da OperaÁ„o);
+  2=Idem anterior, incluindo as NF-e que tambÈm n„o tiveram a CiÍncia da OperaÁ„o.*)
   indNFe := '0';
   if not(InputQuery('WebServices Consulta NFe Destinadas', 'Indicador de NF-e consultada', indNFe)) then
      exit;
 
-  (*veja NT 2012/002 p√°g. 11 para identificar os valores poss√≠veis
+  (*veja NT 2012/002 p·g. 11 para identificar os valores possÌveis
   Indicador do Emissor da NF-e:
   0=Todos os Emitentes / Remetentes;
-  1=Somente as NF-e emitidas por emissores / remetentes que n√£o tenham a mesma
-    raiz do CNPJ do destinat√°rio (para excluir as notas fiscais de transfer√™ncia
+  1=Somente as NF-e emitidas por emissores / remetentes que n„o tenham a mesma
+    raiz do CNPJ do destinat·rio (para excluir as notas fiscais de transferÍncia
     entre filiais).*)
   IndEmi := '0';
   if not(InputQuery('WebServices Consulta NFe Destinadas', 'Indicador do Emissor da NF-e', IndEmi)) then
      exit;
 
-  (*veja NT 2012/002 p√°g. 11 para identificar os valores poss√≠veis
-   √öltimo NSU recebido pela Empresa.
-   Caso seja informado com zero, ou com um NSU muito antigo, a consulta retornar√°
-   unicamente as notas fiscais que tenham sido recepcionadas nos √∫ltimos 15 dias.*)
+  (*veja NT 2012/002 p·g. 11 para identificar os valores possÌveis
+   ⁄ltimo NSU recebido pela Empresa.
+   Caso seja informado com zero, ou com um NSU muito antigo, a consulta retornar·
+   unicamente as notas fiscais que tenham sido recepcionadas nos ˙ltimos 15 dias.*)
   ultNSU := '0';
-  if not(InputQuery('WebServices Consulta NFe Destinadas', '√öltimo NSU recebido pela Empresa', ultNSU)) then
+  if not(InputQuery('WebServices Consulta NFe Destinadas', '⁄ltimo NSU recebido pela Empresa', ultNSU)) then
      exit;
 
   ACBrNFe1.ConsultaNFeDest(CNPJ,
@@ -2272,7 +2272,7 @@ begin
  PageControl2.ActivePageIndex := 1;
 
  MemoDados.Lines.Add('');
- MemoDados.Lines.Add('Status Servi√ßo');
+ MemoDados.Lines.Add('Status ServiÁo');
  MemoDados.Lines.Add('tpAmb: '    +TpAmbToStr(ACBrNFe1.WebServices.StatusServico.tpAmb));
  MemoDados.Lines.Add('verAplic: ' +ACBrNFe1.WebServices.StatusServico.verAplic);
  MemoDados.Lines.Add('cStat: '    +IntToStr(ACBrNFe1.WebServices.StatusServico.cStat));
@@ -2300,7 +2300,7 @@ begin
    if not ACBrNFe1.NotasFiscais.ValidaAssinatura(Msg) then
      MemoDados.Lines.Add('Erro: '+Msg)
    else
-     ShowMessage('Assinatura V√°lida');
+     ShowMessage('Assinatura V·lida');
  end;
 end;
 
@@ -2317,7 +2317,7 @@ begin
    ACBrNFe1.NotasFiscais.Valida;
    if ACBrNFe1.NotasFiscais.Items[0].Alertas <> '' then
      MemoDados.Lines.Add('Alertas: '+ACBrNFe1.NotasFiscais.Items[0].Alertas);
-   showmessage('Nota Fiscal Eletr√¥nica Valida');
+   showmessage('Nota Fiscal EletrÙnica Valida');
  end;
 
 end;
@@ -2377,8 +2377,8 @@ begin
     ACBrNFe1.EventoNFe.Evento.Clear;
     ACBrNFe1.EventoNFe.LerXML(OpenDialog1.FileName) ;
     CC:=TstringList.Create;
-    CC.Add('andrefmoraes@gmail.com'); //especifique um email v√°lido
-    CC.Add('anfm@zipmail.com.br');    //especifique um email v√°lido
+    CC.Add('andrefmoraes@gmail.com'); //especifique um email v·lido
+    CC.Add('anfm@zipmail.com.br');    //especifique um email v·lido
     ACBrNFe1.EnviarEmailEvento(edtSmtpHost.Text
                              , edtSmtpPort.Text
                              , edtSmtpUser.Text
@@ -2387,12 +2387,12 @@ begin
                              , Para
                              , edtEmailAssunto.Text
                              , mmEmailMsg.Lines
-                             , cbEmailSSL.Checked // SSL - Conex√£o Segura
+                             , cbEmailSSL.Checked // SSL - Conex„o Segura
                              , True //Enviar PDF junto
-                             , CC //Lista com emails que ser√£o enviado c√≥pias - TStrings
+                             , CC //Lista com emails que ser„o enviado cÛpias - TStrings
                              , Evento // Lista de anexos - TStrings
-                             , False  //Pede confirma√ß√£o de leitura do email
-                             , False  //Aguarda Envio do Email(n√£o usa thread)
+                             , False  //Pede confirmaÁ„o de leitura do email
+                             , False  //Aguarda Envio do Email(n„o usa thread)
                              , 'ACBrNFe2' // Nome do Rementente
                              , cbEmailSSL.Checked ); // Auto TLS
     CC.Free;
