@@ -48,6 +48,10 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 
+Data: 03/02/2014
+-- ACBrBancoBradescoSICOOB.pas
+[+] Adição CNAB 400 (Filippe Maymone)
+
 Data: 13/11/2013
 -- ACBrBoleto ver. 0.0.90 --
 
