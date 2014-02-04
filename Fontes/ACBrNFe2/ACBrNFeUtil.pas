@@ -911,8 +911,8 @@ case FormaEmissao of
          23: Result := NotaUtil.GetURLCE(AAmbiente,ALayOut, AModeloDF);   //CE
          53: Result := NotaUtil.GetURLSVRS(AAmbiente,ALayOut, AModeloDF); //DF
 
-         32: Result := NotaUtil.GetURLSVAN(AAmbiente,ALayOut, AModeloDF); //ES
-//         32: Result := NotaUtil.GetURLSVRS(AAmbiente,ALayOut, AModeloDF); //ES
+//         32: Result := NotaUtil.GetURLSVAN(AAmbiente,ALayOut, AModeloDF); //ES
+         32: Result := NotaUtil.GetURLSVRS(AAmbiente,ALayOut, AModeloDF); //ES
 
          52: Result := NotaUtil.GetURLGO(AAmbiente,ALayOut, AModeloDF);   //GO
 //         21: Result := NotaUtil.GetURLSVAN(AAmbiente,ALayOut, AModeloDF); //MA
