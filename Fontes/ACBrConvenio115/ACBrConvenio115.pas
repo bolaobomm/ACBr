@@ -11,9 +11,9 @@
 {           comunicação ou ao fornecimento de energia elétrica.                }
 {                                                                              }
 {         As informações do referido convênio pode ser encontrada em:          }
-{         www.fazenda.gov.br/confaz/confaz/convenios/icms/2003/CV115_03.htm    }
+{         http://www1.fazenda.gov.br/confaz/confaz/convenios/ICMS/1998/..%5C2003%5CCV115_03.htm }
 {                                                                              }
-{         Programa validador e demais informaçÕes podem ser acessadas em:      }
+{         Programa validador e demais informações podem ser acessadas em:      }
 {         www.fazenda.sp.gov.br/download/comunica_energia.shtm                 }
 {                                                                              }
 {  Esta biblioteca é software livre; você pode redistribuí-la e/ou modificá-la }
@@ -756,7 +756,7 @@ begin
     // Serviço não medido
     '1001', '1002', '1003', '1004', '1005', '1099',
     // Cessão de Meios de Rede
-    '1101', '1102', '1103', '1104', '1199'
+    '1101', '1102', '1103', '1104', '1105', '1106', '1107', '1199'
     ])) then
     raise Exception.Create('Classificação do ítem inválida');
   FClassificacaoItem := Value;

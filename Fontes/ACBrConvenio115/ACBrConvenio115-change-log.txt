@@ -40,5 +40,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+04/02/2014
+[*] Acréscimos de códigos para validação na Tabela de Classificação 
+    Ítem Documento Fiscal - Tabela 11.5 do Convênio 115
+	
 19/02/2013
 [+] Adição do componente ao projeto ACBr
+
+
