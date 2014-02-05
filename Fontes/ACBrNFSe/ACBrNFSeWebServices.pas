@@ -1188,7 +1188,8 @@ begin
                                                   TNFSeConsultarLoteRPS(Self).FIM,
                                                   TNFSeConsultarLoteRPS(Self).FSenha,
                                                   TNFSeConsultarLoteRPS(Self).FFraseSecreta,
-                                                  '', '', FProvedor);
+                                                  '', '', FProvedor,
+                                                  TNFSeConsultarLoteRPS(Self).FRazaoSocial);
    if FDadosMsg <> ''
     then begin
     {$IFDEF ACBrNFSeOpenSSL}
@@ -1344,7 +1345,8 @@ begin
                                                      TNFSeConsultarNfseRPS(Self).InscricaoMunicipal,
                                                      TNFSeConsultarNfseRPS(Self).Senha,
                                                      TNFSeConsultarNfseRPS(Self).FraseSecreta,
-                                                     '', '', FProvedor);
+                                                     '', '', FProvedor,
+                                                     TNFSeConsultarNfseRPS(Self).RazaoSocial);
    if FDadosMsg <> ''
     then begin
     {$IFDEF ACBrNFSeOpenSSL}
