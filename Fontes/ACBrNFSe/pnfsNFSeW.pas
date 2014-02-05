@@ -132,7 +132,7 @@ begin
  Gerador.Prefixo           := FPrefixo4;
 
  if (FProvedor in [pro4R, proAgili, proBHISS, proCoplan, proDigifred,
-                   profintelISS, proFiorilli, proGoiania, proGovBR,
+                   profintelISS, proFiorilli, proGoiania, {proGovBR,}
                    proISSDigital, proNatal, proProdata, proProdemge, proPVH,
                    proSaatri, proVirtual, proFreire, proLink3, proVitoria,
                    proTecnos, proPronim])

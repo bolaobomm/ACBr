@@ -67,7 +67,7 @@ begin
  ConfigCidade.VersaoSoap    := '1.1';
  ConfigCidade.Prefixo2      := '';
  ConfigCidade.Prefixo3      := '';
- ConfigCidade.Prefixo4      := '';
+ ConfigCidade.Prefixo4      := 'tc:'; // Alterado por Italo em 05/02/2014
  ConfigCidade.Identificador := 'id';
 
  if AAmbiente = 1
@@ -99,7 +99,7 @@ begin
             ConfigSchema.ServicoConRps   := 'servico_consultar_nfse_rps_envio';
             ConfigSchema.ServicoConNfse  := 'servico_consultar_nfse_envio';
             ConfigSchema.ServicoCancelar := 'servico_cancelar_nfse_envio';
-            ConfigSchema.DefTipos        := '';
+            ConfigSchema.DefTipos        := 'tipos_complexos.xsd'; // Alterado por Italo em 05/02/2014
 (*
            end;
   else     begin
