@@ -790,6 +790,7 @@ begin
    MemoDados.Lines.Add('Arquivo Carregado de: '+ACBrNFSe1.NotasFiscais.Items[0].NomeArq);
    MemoDados.Lines.Add('Nota Numero: '+ACBrNFSe1.NotasFiscais.Items[0].NFSe.Numero);
    MemoDados.Lines.Add('Código de Verificação: '+ACBrNFSe1.NotasFiscais.Items[0].NFSe.CodigoVerificacao);
+   MemoDados.Lines.Add('Data de Emissão: '+DateToStr(ACBrNFSe1.NotasFiscais.Items[0].NFSe.DataEmissao));
    MemoResp.Lines.LoadFromFile(ACBrNFSe1.NotasFiscais.Items[0].NomeArq);
    LoadXML(MemoResp, WBResposta);
    PageControl2.ActivePageIndex := 1;
