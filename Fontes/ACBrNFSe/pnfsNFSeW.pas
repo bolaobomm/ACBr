@@ -287,7 +287,8 @@ begin
   Gerador.wGrupoNFSe('Servico');
    Gerador.wGrupoNFSe('Valores');
     Gerador.wCampoNFSe(tcDe2, '#13', 'ValorServicos', 01, 15, 1, NFSe.Servico.Valores.ValorServicos, '');
-    if FProvedor in [proGinfes, proRecife, proFreire, proPronim]
+    //Alterado por JuaumKiko em 05/02/2014
+    if FProvedor in [{proGinfes,} proRecife, proFreire, proPronim]
       then begin
         Gerador.wCampoNFSe(tcDe2, '#14', 'ValorDeducoes', 01, 15, 1, NFSe.Servico.Valores.ValorDeducoes, '');
         Gerador.wCampoNFSe(tcDe2, '#15', 'ValorPis     ', 01, 15, 1, NFSe.Servico.Valores.ValorPis, '');
@@ -322,10 +323,11 @@ begin
     else
        Gerador.wCampoNFSe(tcDe2, '#24', 'BaseCalculo    ', 01, 15, 0, NFSe.Servico.Valores.BaseCalculo, '');
 
+    //Alterado por JuaumKiko em 05/02/2014
     case FProvedor of
      proGovBR,
      proPronim,
-     proGINFES,
+     {proGINFES,}
      proISSNet:   Gerador.wCampoNFSe(tcDe4, '#25', 'Aliquota', 01, 05, 1, NFSe.Servico.Valores.Aliquota, '');
 
      proRecife:   if NFSe.OptanteSimplesNacional = snSim
