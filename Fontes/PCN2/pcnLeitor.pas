@@ -152,7 +152,14 @@ begin
     if i < item then
       Texto := copy(Texto, pos('</' + Trim(TagFim) + '>', Texto) + length(Trim(TagFim)) + 3, maxInt);
 
-  Texto := copy(Texto, 1,pos('</' + Trim(TagFim) + '>', Texto) + length(Trim(TagFim)) + 3);   //Correção para leitura de tags em que a primeira é diferente da segunda Ex: <infProt id=XXX> e a segunda apenas <infProt>   
+  j := pos('</' + Trim(TagFim) + '>', Texto);
+  if j = 0 then
+    j := pos('</' + Trim(TagFim) + ':', Texto); // Correção para WebServices do Ceará/MG
+
+  //Correção para leitura de tags em que a primeira é diferente da segunda Ex: <infProt id=XXX> e a segunda apenas <infProt>
+//  Texto := copy(Texto, 1, pos('</' + Trim(TagFim) + '>', Texto) + length(Trim(TagFim)) + 3);
+  Texto := copy(Texto, 1, j + length(Trim(TagFim)) + 3);
+
   i := pos('<' + Trim(TagInicio) + '>', Texto);
   if i = 0 then
     i := pos('<' + Trim(TagInicio) + ' ', Texto);
@@ -163,12 +170,14 @@ begin
   Texto := copy(Texto, i, maxInt);
 
   // Alterado por Claudemir em 13/03/2013: j:=pos('</' + Trim(TagFim) + '>',Texto);
-  j:=pos('</' + Trim(TagFim) + '>',Texto) + length(Trim(TagFim)) + 3;
+//  j:=pos('</' + Trim(TagFim) + '>', Texto) + length(Trim(TagFim)) + 3;
+  j:=pos('</' + Trim(TagFim) + '>', Texto);
 
   if j=0 then
-   j:=pos('</' + Trim(TagFim) + ':',Texto); //correção para webservice do Ceará
+   j:=pos('</' + Trim(TagFim) + ':', Texto); //correção para webservice do Ceará
 
-  Result := TrimRight(copy(Texto, 1, j - 1));
+//  Result := TrimRight(copy(Texto, 1, j - 1));
+  Result := TrimRight(copy(Texto, 1, j - 1 + (length(Trim(TagFim)) + 3)));
   FNivel.strings[nivel] := Result;
   FGrupo := result;
 end;
@@ -241,7 +250,7 @@ begin
     tcDe2,
     tcDe3,
     tcDe4,
-    tcDe6,  
+    tcDe6,
     tcDe10    : result := StrToFloatDef(StringReplace(ConteudoTag, '.', DecimalSeparator, []),0);
     tcEsp     : result := ConteudoTag;
     tcInt     : result := StrToIntDef(Trim(SomenteNumeros(ConteudoTag)),0);
