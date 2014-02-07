@@ -310,7 +310,7 @@ begin
         Gerador.wCampoNFSe(tcDe2, '#21', 'ValorIss     ', 01, 15, 0, NFSe.Servico.Valores.ValorIss, '');
       end;
 
-    if FProvedor <> proPronim
+    if not (FProvedor in [proPronim, proBetha])
       then Gerador.wCampoNFSe(tcDe2, '#22', 'ValorIssRetido', 01, 15, 0, NFSe.Servico.Valores.ValorIssRetido, '');
 
     if FProvedor in [proFreire, proPronim] then
@@ -341,7 +341,7 @@ begin
 
     Gerador.wCampoNFSe(tcDe2, '#26', 'ValorLiquidoNfse', 01, 15, 0, NFSe.Servico.Valores.ValorLiquidoNfse, '');
 
-    if FProvedor = proGovBR
+    if (FProvedor in [proPronim, proBetha])
       then Gerador.wCampoNFSe(tcDe2, '#22', 'ValorIssRetido', 01, 15, 0, NFSe.Servico.Valores.ValorIssRetido, '');
 
     if FProvedor in [proFreire]
