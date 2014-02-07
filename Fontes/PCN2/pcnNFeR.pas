@@ -460,9 +460,9 @@ begin
       (*I22*)NFe.Det[i].Prod.DI[j].UFDesemb   := Leitor.rCampo(tcStr, 'UFDesemb');
       (*I23*)NFe.Det[i].Prod.DI[j].dDesemb    := Leitor.rCampo(tcDat, 'dDesemb');
 
-      (*I23a*)NFe.Det[i].Prod.DI[j].tpViaTransp  := StrToTipoViaTransp(Ok, Leitor.rCampo(tcDat, 'tpViaTransp'));
+      (*I23a*)NFe.Det[i].Prod.DI[j].tpViaTransp  := StrToTipoViaTransp(Ok, Leitor.rCampo(tcInt, 'tpViaTransp'));
       (*I23b*)NFe.Det[i].Prod.DI[j].vAFRMM       := Leitor.rCampo(tcDe2, 'vAFRMM');
-      (*I23c*)NFe.Det[i].Prod.DI[j].tpIntermedio := StrToTipoIntermedio(Ok, Leitor.rCampo(tcDat, 'tpIntermedio'));
+      (*I23c*)NFe.Det[i].Prod.DI[j].tpIntermedio := StrToTipoIntermedio(Ok, Leitor.rCampo(tcInt, 'tpIntermedio'));
       (*I23d*)NFe.Det[i].Prod.DI[j].CNPJ         := Leitor.rCampoCNPJCPF;;
       (*I23e*)NFe.Det[i].Prod.DI[j].UFTerceiro   := Leitor.rCampo(tcStr, 'UFTerceiro');
 
