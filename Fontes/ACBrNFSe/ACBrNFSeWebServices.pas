@@ -553,7 +553,7 @@ begin
 
  if not (FProvedor in [proGovBr, proSimplISS, proAbaco, proISSNet, pro4R,
                        proFiorilli, proProdata, proCoplan, proThema, proVirtual,
-                       proPVH, proFreire, proTecnos, proPronim])
+                       proPVH, proFreire, proTecnos, proPronim, proPublica])
   then begin
    if not InternetSetOption(Data, INTERNET_OPTION_CLIENT_CERT_CONTEXT, PCertContext, Sizeof(CERT_CONTEXT)*5)
     then begin

@@ -70,7 +70,7 @@ begin
  ConfigCidade.Prefixo4      := '';
  ConfigCidade.Identificador := '';
 
- if AAmbiente = 1
+ if AAmbiente = 1                         
   then ConfigCidade.NameSpaceEnvelope := 'http://service.nfse.integracao.ws.publica/'
   else ConfigCidade.NameSpaceEnvelope := 'http://service.nfse.integracao.ws.publica/';
 
@@ -104,21 +104,43 @@ function TProvedorPublica.GetConfigURL(ACodCidade: Integer): TConfigURL;
 var
  ConfigURL: TConfigURL;
 begin
- ConfigURL.HomNomeCidade         := '';
- ConfigURL.HomRecepcaoLoteRPS    := 'http://servicos.publicainformatica.com.br:8080/nfse_integracao/Services';
- ConfigURL.HomConsultaLoteRPS    := 'http://servicos.publicainformatica.com.br:8080/nfse_integracao/Services';
- ConfigURL.HomConsultaNFSeRPS    := 'http://servicos.publicainformatica.com.br:8080/nfse_integracao/Services';
- ConfigURL.HomConsultaSitLoteRPS := 'http://servicos.publicainformatica.com.br:8080/nfse_integracao/Services';
- ConfigURL.HomConsultaNFSe       := 'http://servicos.publicainformatica.com.br:8080/nfse_integracao/Services';
- ConfigURL.HomCancelaNFSe        := 'http://servicos.publicainformatica.com.br:8080/nfse_integracao/Services';
+ // Alterado por Akai - Lutzem Massao Aihara - 07/02/2014
+ if ACodCidade = 4208203  // Itajaí/SC
+  then begin
+   ConfigURL.HomNomeCidade         := '';
+   ConfigURL.HomRecepcaoLoteRPS    := 'http://servicos.publicainformatica.com.br:8080/itajai_nfse_integracao/Services';
+   ConfigURL.HomConsultaLoteRPS    := 'http://servicos.publicainformatica.com.br:8080/itajai_nfse_integracao/Services';
+   ConfigURL.HomConsultaNFSeRPS    := 'http://servicos.publicainformatica.com.br:8080/itajai_nfse_integracao/Services';
+   ConfigURL.HomConsultaSitLoteRPS := 'http://servicos.publicainformatica.com.br:8080/itajai_nfse_integracao/Services';
+   ConfigURL.HomConsultaNFSe       := 'http://servicos.publicainformatica.com.br:8080/itajai_nfse_integracao/Services';
+   ConfigURL.HomCancelaNFSe        := 'http://servicos.publicainformatica.com.br:8080/itajai_nfse_integracao/Services';
 
- ConfigURL.ProNomeCidade         := '';
- ConfigURL.ProRecepcaoLoteRPS    := 'http://nfse.itajai.sc.gov.br/nfse_integracao/Services';
- ConfigURL.ProConsultaLoteRPS    := 'http://nfse.itajai.sc.gov.br/nfse_integracao/Services';
- ConfigURL.ProConsultaNFSeRPS    := 'http://nfse.itajai.sc.gov.br/nfse_integracao/Services';
- ConfigURL.ProConsultaSitLoteRPS := 'http://nfse.itajai.sc.gov.br/nfse_integracao/Services';
- ConfigURL.ProConsultaNFSe       := 'http://nfse.itajai.sc.gov.br/nfse_integracao/Services';
- ConfigURL.ProCancelaNFSe        := 'http://nfse.itajai.sc.gov.br/nfse_integracao/Services';
+   ConfigURL.ProNomeCidade         := '';
+   ConfigURL.ProRecepcaoLoteRPS    := 'http://nfse.itajai.sc.gov.br/nfse_integracao/Services';
+   ConfigURL.ProConsultaLoteRPS    := 'http://nfse.itajai.sc.gov.br/nfse_integracao/Services';
+   ConfigURL.ProConsultaNFSeRPS    := 'http://nfse.itajai.sc.gov.br/nfse_integracao/Services';
+   ConfigURL.ProConsultaSitLoteRPS := 'http://nfse.itajai.sc.gov.br/nfse_integracao/Services';
+   ConfigURL.ProConsultaNFSe       := 'http://nfse.itajai.sc.gov.br/nfse_integracao/Services';
+   ConfigURL.ProCancelaNFSe        := 'http://nfse.itajai.sc.gov.br/nfse_integracao/Services';
+  end
+  else
+  begin // Não sei como é o das outras cidades, e se tem outras cidades...
+   ConfigURL.HomNomeCidade         := '';
+   ConfigURL.HomRecepcaoLoteRPS    := '';
+   ConfigURL.HomConsultaLoteRPS    := '';
+   ConfigURL.HomConsultaNFSeRPS    := '';
+   ConfigURL.HomConsultaSitLoteRPS := '';
+   ConfigURL.HomConsultaNFSe       := '';
+   ConfigURL.HomCancelaNFSe        := '';
+
+   ConfigURL.ProNomeCidade         := '';
+   ConfigURL.ProRecepcaoLoteRPS    := 'http://nfse.itajai.sc.gov.br/nfse_integracao/Services';
+   ConfigURL.ProConsultaLoteRPS    := 'http://nfse.itajai.sc.gov.br/nfse_integracao/Services';
+   ConfigURL.ProConsultaNFSeRPS    := 'http://nfse.itajai.sc.gov.br/nfse_integracao/Services';
+   ConfigURL.ProConsultaSitLoteRPS := 'http://nfse.itajai.sc.gov.br/nfse_integracao/Services';
+   ConfigURL.ProConsultaNFSe       := 'http://nfse.itajai.sc.gov.br/nfse_integracao/Services';
+   ConfigURL.ProCancelaNFSe        := 'http://nfse.itajai.sc.gov.br/nfse_integracao/Services';
+  end;
 
  Result := ConfigURL;
 end;
@@ -131,14 +153,14 @@ end;
 function TProvedorPublica.GetAssinarXML(Acao: TnfseAcao): Boolean;
 begin
  case Acao of
-   acRecepcionar: Result := False;
-   acConsSit:     Result := False;
-   acConsLote:    Result := False;
-   acConsNFSeRps: Result := False;
-   acConsNFSe:    Result := False;
-   acCancelar:    Result := False;
-   acGerar:       Result := False;
-   else           Result := False;
+   acRecepcionar: Result := True;
+   acConsSit:     Result := True;
+   acConsLote:    Result := True;
+   acConsNFSeRps: Result := True;
+   acConsNFSe:    Result := True;
+   acCancelar:    Result := True;
+   acGerar:       Result := True;
+   else           Result := True;
  end;
 end;
 

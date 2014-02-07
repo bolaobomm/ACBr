@@ -362,10 +362,11 @@ begin
      then Gerador.wCampoNFSe(tcStr, '#29', 'ItemListaServico', 01, 05, 1, SomenteNumeros(NFSe.Servico.ItemListaServico), '')
      else Gerador.wCampoNFSe(tcStr, '#29', 'ItemListaServico', 01, 05, 1, NFSe.Servico.ItemListaServico, '');
 
-   Gerador.wCampoNFSe(tcStr, '#30', 'CodigoCnae', 01, 0007, 0, SomenteNumeros(NFSe.Servico.CodigoCnae), '');
-
    if FProvedor <> proPublica
-     then Gerador.wCampoNFSe(tcStr, '#31', 'CodigoTributacaoMunicipio', 01, 0020, 0, NFSe.Servico.CodigoTributacaoMunicipio, '');
+     then begin
+       Gerador.wCampoNFSe(tcStr, '#30', 'CodigoCnae', 01, 0007, 0, SomenteNumeros(NFSe.Servico.CodigoCnae), '');
+       Gerador.wCampoNFSe(tcStr, '#31', 'CodigoTributacaoMunicipio', 01, 0020, 0, NFSe.Servico.CodigoTributacaoMunicipio, '');
+     end;
 
    Gerador.wCampoNFSe(tcStr, '#32', 'Discriminacao', 01, 2000, 1, NFSe.Servico.Discriminacao, '');
 
