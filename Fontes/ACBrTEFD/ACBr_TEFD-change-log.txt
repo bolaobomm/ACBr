@@ -47,6 +47,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+Data: 09/02/2014
+[-] Correção em TACBrTEFDArquivo.GravarArquivo, para criar corretamente os
+    arquivos em disco.                                       (por: DSA)
+    http://www.projetoacbr.com.br/forum/index.php?/topic/14257-erro-ao-ativar-o-tefatv/
+
 Data: 04/01/2014 - 4.3.8
 -- ACBrTEFDClass --
 [*] Ajuste na interpretação do campo 710 com conteúdo zerado   (por: DSA)

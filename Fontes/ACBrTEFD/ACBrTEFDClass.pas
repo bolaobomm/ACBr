@@ -826,7 +826,7 @@ procedure TACBrTEFDArquivo.GravarArquivo(const NomeArquivo : String;
 begin
   //fStringList.SaveToFile(NomeArquivo);
   // em discos SD o arquivo se perdia ao reiniciar a maquina
-  WriteToTXT(NomeArquivo, fStringList.Text);
+  WriteToTXT(NomeArquivo, fStringList.Text, False, False);
 
   if DoFlushToDisk then
      FlushFileToDisk( NomeArquivo );
