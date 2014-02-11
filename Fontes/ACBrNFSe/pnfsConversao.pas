@@ -616,6 +616,7 @@ begin
   4203600, // Campos Novos/SC
   4203808, // Canoinhas/SC
   4204202, // Chapecó/SC
+  4204251, // Cocal Do Sul/SC
   4204350, // Cordilheira Alta/SC
   4204509, // Corupá/SC
   4204608, // Criciúma/SC
