@@ -486,7 +486,10 @@ begin
         FieldByName('ChaveAcesso').AsString := chave;
         FieldByName('NotaFiscal').AsString := '';
         { Alterado por Jose Nilton Pace em 16/05/2013 }
-        FieldByName('TextoImpressao').AsString := 'NF-e                '+chave;
+       // FieldByName('TextoImpressao').AsString := 'NF-e                '+chave;
+
+        FieldByName('TextoImpressao').AsString := 'NF-e                '+chave+
+                             '          '+copy(chave,23,3)+'/'+copy(chave,26,9);
 (*
         FieldByName('TextoImpressao').AsString := 'NF-e            ' + chave;
 *)
