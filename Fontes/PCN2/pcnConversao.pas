@@ -212,7 +212,7 @@ type
   TpcnindIncentivo = (iiSim, iiNao);
 
 const
-  TpcnTpEventoString : array[0..9] of String =( '110110',
+  TpcnTpEventoString : array[0..11] of String =( '110110',
                                                 '110111',
                                                 '210200',
                                                 '210210',
