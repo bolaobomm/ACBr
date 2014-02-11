@@ -296,10 +296,12 @@ end;
 function TInfEvento.getDescEvento: string;
 begin
   case FTpEvento of
-    teCCe         : Result := 'Carta de Correcao';
-    teCancelamento: Result := 'Cancelamento';
-    teEPEC        : Result := 'EPEC';
-    teMultiModal  : Result := 'Ocorrencias de Transito';
+    teCCe                 : Result := 'Carta de Correcao';
+    teCancelamento        : Result := 'Cancelamento';
+    teEPEC                : Result := 'EPEC';
+    teMultiModal          : Result := 'Ocorrencias de Transito';
+    teRegistroPassagem    : Result := 'Registro de Passagem';
+    teRegistroPassagemBRId: Result := 'Registro de Passagem BRId';
   else
     raise EventoException.Create('Descrição do Evento não Implementado!');
   end;
@@ -308,10 +310,12 @@ end;
 function TInfEvento.getTipoEvento: string;
 begin
   case FTpEvento of
-    teCCe         : Result := '110110'; // Somete para a versão 2.0
-    teCancelamento: Result := '110111'; // Somete para a versão 2.0
-    teEPEC        : Result := '110113';
-    teMultiModal  : Result := '110160'; // Somete para a versão 2.0
+    teCCe                 : Result := '110110'; // Somete para a versão 2.0
+    teCancelamento        : Result := '110111'; // Somete para a versão 2.0
+    teEPEC                : Result := '110113';
+    teMultiModal          : Result := '110160'; // Somete para a versão 2.0
+    teRegistroPassagem    : Result := '310620'; // Somete para a versão 2.0
+    teRegistroPassagemBRId: Result := '510620'; // Somete para a versão 2.0
   else
     raise EventoException.Create('Tipo do Evento não Implementado!');
   end;
@@ -325,10 +329,12 @@ end;
 function TInfEvento.DescricaoTipoEvento(TipoEvento: TpcnTpEvento): String;
 begin
   case TipoEvento of
-    teCCe         : Result := 'CARTA DE CORREÇÃO ELETRÔNICA';
-    teCancelamento: Result := 'CANCELAMENTO DO CT-e';
-    teEPEC        : Result := 'EPEC';
-    teMultiModal  : Result := 'OCORRÊNCIAS DE TRÂNSITO';
+    teCCe                 : Result := 'CARTA DE CORREÇÃO ELETRÔNICA';
+    teCancelamento        : Result := 'CANCELAMENTO DO CT-e';
+    teEPEC                : Result := 'EPEC';
+    teMultiModal          : Result := 'OCORRÊNCIAS DE TRÂNSITO';
+    teRegistroPassagem    : Result := 'REGISTRO DE PASSAGEM';
+    teRegistroPassagemBRId: Result := 'REGISTRO DE PASSAGEM BRId';
   else
     Result := 'Não Definido';
   end;

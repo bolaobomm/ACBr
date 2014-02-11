@@ -175,7 +175,8 @@ type
   // Alterado por Italo em 20/05/2013
   TpcnTpEvento = (teCCe, teCancelamento, teManifDestConfirmacao, teManifDestCiencia,
                   teManifDestDesconhecimento, teManifDestOperNaoRealizada,
-                  teEncerramento, teEPEC, teInclusaoCondutor, teMultiModal);
+                  teEncerramento, teEPEC, teInclusaoCondutor, teMultiModal,
+                  teRegistroPassagem, teRegistroPassagemBRId);
   TpcnIndicadorNFe = (inTodas, inSemManifestacaoComCiencia, inSemManifestacaoSemCiencia);
   TpcnIndicadorEmissor = (ieTodos, ieRaizCNPJDiferente);
   TpcnIndicadorContinuacao = (icNaoPossuiMaisDocumentos, icPossuiMaisDocumentos);
@@ -220,7 +221,9 @@ const
                                                 '110112',
                                                 '110113',
                                                 '110114',
-                                                '110160' );
+                                                '110160',
+                                                '310620',
+                                                '510620' );
 
   NFeUF: array[0..26] of String =
   ('AC','AL','AP','AM','BA','CE','DF','ES','GO','MA','MT','MS','MG','PA',

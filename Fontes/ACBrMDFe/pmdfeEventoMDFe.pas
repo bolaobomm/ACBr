@@ -178,9 +178,11 @@ end;
 function TInfEvento.getDescEvento: string;
 begin
   case fTpEvento of
-    teCancelamento:     Result := 'Cancelamento';
-    teEncerramento:     Result := 'Encerramento';
-    teInclusaoCondutor: Result := 'Inclusao Condutor';
+    teCancelamento        : Result := 'Cancelamento';
+    teEncerramento        : Result := 'Encerramento';
+    teInclusaoCondutor    : Result := 'Inclusao Condutor';
+    teRegistroPassagem    : Result := 'Registro de Passagem';
+    teRegistroPassagemBRId: Result := 'Registro de Passagem BRId';
   else
     raise EventoException.Create('Descrição do Evento não Implementado!');
   end;
@@ -189,9 +191,11 @@ end;
 function TInfEvento.getTipoEvento: string;
 begin
   case FTpEvento of
-    teCancelamento:     Result := '110111';
-    teEncerramento:     Result := '110112';
-    teInclusaoCondutor: Result := '110114';
+    teCancelamento        : Result := '110111';
+    teEncerramento        : Result := '110112';
+    teInclusaoCondutor    : Result := '110114';
+    teRegistroPassagem    : Result := '310620';
+    teRegistroPassagemBRId: Result := '510620';
   else
     raise EventoException.Create('Tipo do Evento não Implementado!');
   end;
@@ -205,9 +209,11 @@ end;
 function TInfEvento.DescricaoTipoEvento(TipoEvento: TpcnTpEvento): String;
 begin
   case TipoEvento of
-    teCancelamento:     Result := 'CANCELAMENTO';
-    teEncerramento:     Result := 'ENCERRAMENTO';
-    teInclusaoCondutor: Result := 'INCLUSAO CONDUTOR';
+    teCancelamento        : Result := 'CANCELAMENTO';
+    teEncerramento        : Result := 'ENCERRAMENTO';
+    teInclusaoCondutor    : Result := 'INCLUSAO CONDUTOR';
+    teRegistroPassagem    : Result := 'REGISTRO DE PASSAGEM';
+    teRegistroPassagemBRId: Result := 'REGISTRO DE PASSAGEM BRId';
   else
     Result := 'Não Definido';
   end;
