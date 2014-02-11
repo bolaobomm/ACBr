@@ -322,8 +322,12 @@ begin
     begin
       for i := 0 to (TACBrNFe(ACBrNFe).EventoNFe.Evento.Count - 1) do
         begin
+//          sFile := TACBrNFe(ACBrNFe).DANFe.PathPDF +
+//                   Copy(TACBrNFe(ACBrNFe).EventoNFe.Evento.Items[i].InfEvento.id, 3, 52) + 'evento.pdf';
           sFile := TACBrNFe(ACBrNFe).DANFe.PathPDF +
-                   Copy(TACBrNFe(ACBrNFe).EventoNFe.Evento.Items[i].InfEvento.id, 3, 52) + 'evento.pdf';
+                   Copy(TACBrNFe(ACBrNFe).EventoNFe.Evento.Items[i].InfEvento.id, 09, 44) +
+                   Copy(TACBrNFe(ACBrNFe).EventoNFe.Evento.Items[i].InfEvento.id, 03, 06) +
+                   Copy(TACBrNFe(ACBrNFe).EventoNFe.Evento.Items[i].InfEvento.id, 33, 02) + 'evento.pdf';
           Impresso := False;
 
           for j := 0 to (TACBrNFe(ACBrNFe).NotasFiscais.Count - 1) do

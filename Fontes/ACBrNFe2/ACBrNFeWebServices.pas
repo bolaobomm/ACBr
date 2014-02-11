@@ -4304,9 +4304,13 @@ begin
 
                  EventoRetorno.retEvento.Items[j].RetInfEvento.XML:=wProc.Text;
 
+//                 NomeArq := FEvento.Evento.Items[i].InfEvento.chNFe +
+//                            FEvento.Evento.Items[i].InfEvento.TipoEvento +
+//                            IntToStr(FEvento.Evento.Items[i].InfEvento.nSeqEvento) +
+//                            '-procEventoNFe.xml';
                  NomeArq := FEvento.Evento.Items[i].InfEvento.chNFe +
                             FEvento.Evento.Items[i].InfEvento.TipoEvento +
-                            IntToStr(FEvento.Evento.Items[i].InfEvento.nSeqEvento) +
+                            Format('%.2d', [FEvento.Evento.Items[i].InfEvento.nSeqEvento]) +
                             '-procEventoNFe.xml';
 
               {   NomeArq := FEvento.Evento.Items[i].InfEvento.id +

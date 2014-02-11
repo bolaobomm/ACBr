@@ -3012,9 +3012,13 @@ begin
 
                 FEvento.Evento.Items[i].RetInfEvento.XML := Texto;
 
+//                NomeArq := FEvento.Evento.Items[i].InfEvento.chCTe +
+//                           FEvento.Evento.Items[i].InfEvento.TipoEvento +
+//                           IntToStr(FEvento.Evento.Items[i].InfEvento.nSeqEvento) +
+//                           '-procEventoCTe.xml';
                 NomeArq := FEvento.Evento.Items[i].InfEvento.chCTe +
                            FEvento.Evento.Items[i].InfEvento.TipoEvento +
-                           IntToStr(FEvento.Evento.Items[i].InfEvento.nSeqEvento) +
+                           Format('%.2d', [FEvento.Evento.Items[i].InfEvento.nSeqEvento]) +
                            '-procEventoCTe.xml';
 
                 if FConfiguracoes.Geral.Salvar then
