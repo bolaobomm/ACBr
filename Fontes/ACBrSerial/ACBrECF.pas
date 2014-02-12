@@ -3036,14 +3036,11 @@ begin
   if Trim(InfoRodapeCupom.Dav) <> EmptyStr then
     Result := Result + 'DAV' + Trim(InfoRodapeCupom.Dav);
 
-  // atende ao requisito do paf-ECF XLI item 1
+  // atende ao requisito do paf-ECF LI item 1
   if Trim(InfoRodapeCupom.DavOs) <> EmptyStr then
     Result := Result + 'DAV-OS' + Trim(InfoRodapeCupom.DavOs);
 
   // atende ao requisito do paf-ECF XXVIII item 8
-  if Trim(InfoRodapeCupom.DavOs) <> EmptyStr then
-    Result := Result + 'DAV-OS' + Trim(InfoRodapeCupom.DavOs);
-
   if Trim(InfoRodapeCupom.NF) <> EmptyStr then
     Result := Result + 'NF:' + Trim(InfoRodapeCupom.NF);
 
