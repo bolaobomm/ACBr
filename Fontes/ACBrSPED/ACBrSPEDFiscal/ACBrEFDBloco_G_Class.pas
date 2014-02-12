@@ -235,7 +235,7 @@ begin
                    LFill( SOM_PARC, 0, 2 ) +
                    LFill( VL_TRIB_EXP, 0, 2 ) +
                    LFill( VL_TOTAL, 0, 2 ) +
-                   DFill( IND_PER_SAI, 4 ) +
+                   DFill( IND_PER_SAI, 8 ) +
                    LFill( ICMS_APROP, 0, 2 )+
                    LFill( SOM_ICMS_OC, 0, 2) );
            end
@@ -249,7 +249,7 @@ begin
                    LFill( SOM_PARC, 0, 2 ) +
                    LFill( VL_TRIB_EXP, 0, 2 ) +
                    LFill( VL_TOTAL, 0, 2 ) +
-                   DFill( IND_PER_SAI, 4 ) +
+                   DFill( IND_PER_SAI, 8 ) +
                    LFill( ICMS_APROP, 0, 2 )+
                    LFill( SOM_ICMS_OC, 0, 2) );
            end;
@@ -425,7 +425,7 @@ begin
                LFill( VL_PARC_PASS, 0, 2 )+
                LFill( VL_TRIB_OC, 0, 2 ) +
                LFill( VL_TOTAL, 0, 2 ) +
-               DFill( IND_PER_SAI, 4 ) +
+               DFill( IND_PER_SAI, 8 ) +
                LFill( VL_PARC_APROP, 0, 2 )) ;
         end;
         RegistroG990.QTD_LIN_G := RegistroG990.QTD_LIN_G + 1;

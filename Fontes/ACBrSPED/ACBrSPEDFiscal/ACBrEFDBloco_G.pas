@@ -163,7 +163,7 @@ type
     FVL_PARC_PASS : Currency;
     FVL_TRIB_OC   : Currency;
     FVL_TOTAL     : Currency;
-    FIND_PER_SAI  : Double;
+    FIND_PER_SAI  : Extended;
     FVL_PARC_APROP: Currency;
   public
     constructor Create(AOwner: TRegistroG125); virtual; /// Create
@@ -174,7 +174,7 @@ type
     property VL_PARC_PASS: Currency   read FVL_PARC_PASS  write FVL_PARC_PASS;
     property VL_TRIB_OC: Currency     read FVL_TRIB_OC    write FVL_TRIB_OC;
     property VL_TOTAL: Currency       read FVL_TOTAL      write FVL_TOTAL;
-    property IND_PER_SAI: Double      read FIND_PER_SAI   write FIND_PER_SAI;
+    property IND_PER_SAI: Extended    read FIND_PER_SAI   write FIND_PER_SAI;
     property VL_PARC_APROP: Currency  read FVL_PARC_APROP write FVL_PARC_APROP;
   end;
 
