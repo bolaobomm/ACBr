@@ -2001,7 +2001,7 @@ begin
    if FConfiguracoes.WebServices.Salvar
     then FConfiguracoes.Geral.Save('-xxx1.xml', FDadosMsg);
 
-   if not (FProvedor in [profintelISS, proVitoria]) then
+   if not (FProvedor in [profintelISS, proVitoria, proPublica]) then
     FDadosMsg := TNFSeGerarNFSe(Self).FNotasFiscais.AssinarLoteRps(IntToStr(TNFSeGerarNFSe(Self).NumeroRps), FDadosMSg);
 
    if FConfiguracoes.WebServices.Salvar

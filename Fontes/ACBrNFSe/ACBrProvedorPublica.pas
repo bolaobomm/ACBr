@@ -74,7 +74,7 @@ begin
   then ConfigCidade.NameSpaceEnvelope := 'http://service.nfse.integracao.ws.publica/'
   else ConfigCidade.NameSpaceEnvelope := 'http://service.nfse.integracao.ws.publica/';
 
- ConfigCidade.AssinaRPS  := False;
+ ConfigCidade.AssinaRPS  := True;
  ConfigCidade.AssinaLote := True;
 
  Result := ConfigCidade;
@@ -95,6 +95,7 @@ begin
  ConfigSchema.ServicoConRps   := 'schema_nfse_v03.xsd';
  ConfigSchema.ServicoConNfse  := 'schema_nfse_v03.xsd';
  ConfigSchema.ServicoCancelar := 'schema_nfse_v03.xsd';
+ ConfigSchema.ServicoGerar    := 'schema_nfse_v03.xsd';
  ConfigSchema.DefTipos        := '';
 
  Result := ConfigSchema;
@@ -114,6 +115,7 @@ begin
    ConfigURL.HomConsultaSitLoteRPS := 'http://servicos.publicainformatica.com.br:8080/itajai_nfse_integracao/Services';
    ConfigURL.HomConsultaNFSe       := 'http://servicos.publicainformatica.com.br:8080/itajai_nfse_integracao/Services';
    ConfigURL.HomCancelaNFSe        := 'http://servicos.publicainformatica.com.br:8080/itajai_nfse_integracao/Services';
+   ConfigURL.HomGerarNFSe          := 'http://servicos.publicainformatica.com.br:8080/itajai_nfse_integracao/Services';
 
    ConfigURL.ProNomeCidade         := '';
    ConfigURL.ProRecepcaoLoteRPS    := 'http://nfse.itajai.sc.gov.br/nfse_integracao/Services';
@@ -122,6 +124,7 @@ begin
    ConfigURL.ProConsultaSitLoteRPS := 'http://nfse.itajai.sc.gov.br/nfse_integracao/Services';
    ConfigURL.ProConsultaNFSe       := 'http://nfse.itajai.sc.gov.br/nfse_integracao/Services';
    ConfigURL.ProCancelaNFSe        := 'http://nfse.itajai.sc.gov.br/nfse_integracao/Services';
+   ConfigURL.ProGerarNFSe          := 'http://nfse.itajai.sc.gov.br/nfse_integracao/Services';
   end
   else
   begin // Não sei como é o das outras cidades, e se tem outras cidades...
@@ -185,7 +188,7 @@ begin
                              '<' + Prefixo3 + 'Pedido>' +
                               '<' + Prefixo4 + 'InfPedidoCancelamento' +
                                  DFeUtil.SeSenao(Identificador <> '', ' ' + Identificador + '="' + URI + '"', '') + '>';
-   acGerar:       Result := '';
+   acGerar:       Result := '<' + Prefixo3 + 'GerarNfseEnvio xmlns="http://www.publica.inf.br">';
  end;
 end;
 
@@ -212,7 +215,7 @@ begin
    acConsNFSe:    Result := '</' + Prefixo3 + 'ConsultarNfseEnvio>';
    acCancelar:    Result := '</' + Prefixo3 + 'Pedido>' +
                             '</' + Prefixo3 + 'CancelarNfseEnvio>';
-   acGerar:       Result := '';
+   acGerar:       Result := '</' + Prefixo3 + 'GerarNfseEnvio>';
  end;
 end;
 
@@ -309,7 +312,16 @@ end;
 function TProvedorPublica.GeraEnvelopeGerarNFSe(URLNS: String; CabMsg,
   DadosMsg, DadosSenha: AnsiString): AnsiString;
 begin
- Result := '';
+ result := '<?xml version="1.0" encoding="UTF-8"?>' +
+           '<S:Envelope xmlns:S="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ns2="' + URLNS + '">' +
+            '<S:Body>' +
+             '<ns2:GerarNfse>' +
+              '<XML>' +
+               '<![CDATA[ '+ DadosMsg + ' ]]>' +
+              '</XML>' +
+             '</ns2:GerarNfse>' +
+            '</S:Body>' +
+           '</S:Envelope>';
 end;
 
 function TProvedorPublica.GeraEnvelopeRecepcionarSincrono(URLNS: String;
@@ -340,7 +352,7 @@ begin
    acConsNFSeRps: Result := SeparaDados( RetornoWS, 'ConsultarNfsePorRpsResponse' );
    acConsNFSe:    Result := SeparaDados( RetornoWS, 'ConsultarNfseFaixaResponse' );
    acCancelar:    Result := SeparaDados( RetornoWS, 'CancelarNfseResponse' );
-   acGerar:       Result := '';
+   acGerar:       Result := SeparaDados( RetornoWS, 'GerarNfseResponse' );
  end;
 end;
 
@@ -348,7 +360,7 @@ function TProvedorPublica.GeraRetornoNFSe(Prefixo: String;
   RetNFSe: AnsiString; NomeCidade: String): AnsiString;
 begin
  Result := '<?xml version="1.0" encoding="UTF-8"?>' +
-           '<CompNfse xmlns:ns4="http://www.ginfes.com.br/tipos_v03.xsd">' +
+           '<CompNfse xmlns:ns4="http://fazenda.itajai.sc.gov.br/nfse/schema_nfse_v03.xsd">' +
             RetNFSe +
            '</CompNfse>';
 end;

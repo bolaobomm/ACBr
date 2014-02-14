@@ -151,7 +151,7 @@ begin
 
  if (FProvedor <> proIssDsf) and (FProvedor <> proEquiplano) then
    // Alterado Por Cleiver em 01/02/2013
-   if (FProvedor in [proGoiania, proProdata, proVitoria, proVirtual])
+   if (FProvedor in [proGoiania, proProdata, proVitoria, proVirtual, proPublica])
      then begin
       Gerador.wGrupo('GerarNfseEnvio' + Atributo);
 	    Gerador.wGrupo('Rps');
@@ -246,7 +246,7 @@ begin
 
  if (FProvedor <> proIssDsf) and (FProvedor <> proEquiplano) then
    // Alterado por Cleiver em 01/02/2013
-   if (FProvedor in [proGoiania, proProdata, proVitoria, proVirtual])
+   if (FProvedor in [proGoiania, proProdata, proVitoria, proVirtual, proPublica])
      then begin
       Gerador.wGrupo('/Rps');
       Gerador.wGrupo('/GerarNfseEnvio');
