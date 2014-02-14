@@ -852,6 +852,9 @@ begin
      Gerador.wCampoNFSe(tcStr, '#8', 'IncentivoFiscal       ', 01, 01, 1, SimNaoToStr(NFSe.IncentivadorCultural), '');
     end;
 
+  if FProvedor = proTecnos
+    then Gerador.wCampoNFSe(tcStr, '#9', 'OutrasInformacoes', 00, 255, 0, NFSe.OutrasInformacoes);
+
   if FProvedor = profintelISS
     then GerarValoresServico;
 

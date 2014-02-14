@@ -867,6 +867,15 @@ begin
       else if (FProvedor = proIssDSF ) or (FProvedor = proEquiplano ) then
        vNotas :=  vNotas + TNFSeEnviarLoteRPS(Self).FNotasFiscais.Items[I].XML_Rps
 
+      else if (FProvedor = proTecnos)
+      then vNotas := vNotas +
+                              '<' + Prefixo4 + 'Rps>' +
+                               '<' + Prefixo4 + 'tcDeclaracaoPrestacaoServico' +
+                                 RetornarConteudoEntre(TNFSeEnviarLoteRPS(Self).FNotasFiscais.Items[I].XML_Rps_Ass,
+                                   '<' + Prefixo4 + 'tcDeclaracaoPrestacaoServico', '</tcDeclaracaoPrestacaoServico>') +
+                               '</tcDeclaracaoPrestacaoServico>'+
+                              '</' + Prefixo4 + 'Rps>'
+
       else vNotas := vNotas + '<' + Prefixo4 + 'Rps>' +
                                '<' + Prefixo4 + 'InfRps' +
                                  RetornarConteudoEntre(TNFSeEnviarLoteRPS(Self).FNotasFiscais.Items[I].XML_Rps,
@@ -2126,6 +2135,16 @@ begin
                                '</Signature>'+
                               '</' + Prefixo4 + 'Rps>';
       proIssDSF : vNotas :=  vNotas + TNFSeGerarLoteRPS(Self).FNotasFiscais.Items[I].XML_Rps;//.XML_Rps_Ass;
+
+      proTecnos: vNotas := vNotas +
+                              '<' + Prefixo4 + 'Rps>' +
+                               '<' + Prefixo4 + 'tcDeclaracaoPrestacaoServico' +
+                                 RetornarConteudoEntre(TNFSeEnviarLoteRPS(Self).FNotasFiscais.Items[I].XML_Rps_Ass,
+                                   '<' + Prefixo4 + 'tcDeclaracaoPrestacaoServico', '</Signature>') +
+                               '</Signature>'+
+                              '</' + Prefixo4 + 'Rps>';
+
+
       else vNotas := vNotas + '<' + Prefixo4 + 'Rps>' +
                                '<' + Prefixo4 + 'InfRps' +
                                  RetornarConteudoEntre(TNFSeGerarLoteRPS(Self).FNotasFiscais.Items[I].XML_Rps_Ass,
@@ -2148,6 +2167,16 @@ begin
                               '</' + Prefixo4 + 'Rps>'
       else if (FProvedor = proIssDSF ) then
        vNotas :=  vNotas + TNFSeGerarLoteRPS(Self).FNotasFiscais.Items[I].XML_Rps
+
+      else if (FProvedor = proTecnos)
+      then vNotas := vNotas +
+                              '<' + Prefixo4 + 'Rps>' +
+                               '<' + Prefixo4 + 'tcDeclaracaoPrestacaoServico' +
+                                 RetornarConteudoEntre(TNFSeEnviarLoteRPS(Self).FNotasFiscais.Items[I].XML_Rps_Ass,
+                                   '<' + Prefixo4 + 'tcDeclaracaoPrestacaoServico', '</tcDeclaracaoPrestacaoServico>') +
+                               '</tcDeclaracaoPrestacaoServico>'+
+                              '</' + Prefixo4 + 'Rps>'
+
       else vNotas := vNotas + '<' + Prefixo4 + 'Rps>' +
                                '<' + Prefixo4 + 'InfRps' +
                                  RetornarConteudoEntre(TNFSeGerarLoteRPS(Self).FNotasFiscais.Items[I].XML_Rps,
