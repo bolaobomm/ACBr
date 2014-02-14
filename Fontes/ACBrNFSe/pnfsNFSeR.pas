@@ -1364,6 +1364,7 @@ end;
 
 procedure TNFSeR.NFSe_ProvedorGoiania;
 var
+  strTxt: String;
  	item: Integer;
  	ok  : Boolean;
 begin
@@ -1423,6 +1424,9 @@ begin
       else
 			begin
        	NFSe.PrestadorServico.IdentificacaoPrestador.Cnpj := Leitor.rCampo(tcStr, 'Cnpj');
+        //No XML de Vitória-ES, Versão 2, tem a tag cpf quando o prestador é pessoa física (Cartório) Eduardo Silva dos Santos - DRD SISTEMAS - 11/01/2014
+        if NFSe.PrestadorServico.IdentificacaoPrestador.Cnpj = '' then
+         NFSe.PrestadorServico.IdentificacaoPrestador.Cnpj := Leitor.rCampo(tcStr, 'Cpf');
       end;
     end;
   end; // fim PrestadorServico

@@ -427,11 +427,19 @@ begin
                    DFeUtil.SeSenao(AProvedor in [pro4R, proISSe, profintelISS, proFiorilli,proDigifred,
                                                  proVirtual, proISSDigital, proSaatri, proCoplan, proVitoria, proTecnos],
 
+                    //Adicionei o SeSenao para poder cancelar nota onde o pretador é pessoa física (Cartório em Vitória-ES). - Eduardo Silva dos Santos - 11/01/2014 - DRD SISTEMAS                             
+                    DFeUtil.SeSenao( length(Cnpj)=14,
                     '<' + Prefixo4 + 'CpfCnpj>' +
                      '<' + Prefixo4 + 'Cnpj>' +
                       Cnpj +
                      '</' + Prefixo4 + 'Cnpj>' +
                     '</' + Prefixo4 + 'CpfCnpj>',
+                    ('<' + Prefixo4 + 'CpfCnpj>' +
+                     '<' + Prefixo4 + 'Cpf>' +
+                      Cnpj +
+                     '</' + Prefixo4 + 'Cpf>' +
+                    '</' + Prefixo4 + 'CpfCnpj>'),
+                    ),
 
                     '<' + Prefixo4 + 'Cnpj>' +
                       Cnpj +

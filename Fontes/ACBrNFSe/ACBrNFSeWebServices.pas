@@ -2575,8 +2575,12 @@ function TWebServices.ConsultaNFSeporRps(ANumero, ASerie, ATipo, ACnpj,
   const AFraseSecreta : String = ''; const ARazaoSocial: String = ''): Boolean;
 begin
  ACnpj := OnlyNumber(ACnpj);
- if not ValidarCNPJ(ACnpj) then
+
+ if not ValidarCNPJ(ACnpj) and (Length(ACnpj) = 14) then //Eduardo Silva dos Santos - DRD SISTEMAS, testar somente CNPJ
   raise Exception.Create('CNPJ '+ACnpj+' inválido.');
+
+ if not ValidarCPF(ACnpj) and (Length(ACnpj) = 11) then //Eduardo Silva dos Santos - DRD SISTEMAS, testar somente CPF
+  raise Exception.Create('CPF '+ACnpj+' inválido.');
 
  Self.ConsNfseRps.Numero             := ANumero;
  Self.ConsNfseRps.Serie              := ASerie;
@@ -3699,7 +3703,10 @@ begin
       FNotasFiscais.Items[i].NFSe.IdentificacaoRps.Tipo  := NFSeRetorno.ListaNfse.CompNfse.Items[i].Nfse.IdentificacaoRps.Tipo;
       FNotasFiscais.Items[i].NFSe.CodigoVerificacao := NFSeRetorno.ListaNfse.CompNfse.Items[i].Nfse.CodigoVerificacao;
       FNotasFiscais.Items[i].NFSe.Numero            := NFSeRetorno.ListaNfse.CompNfse.Items[i].Nfse.Numero;
-//      FNotasFiscais.Items[i].XML_NFSe               := FRetNfse;
+      FNotasFiscais.Items[i].XML_NFSe               := FRetNfse;
+      //Eduardo - DRD, adicionei
+      FNotasFiscais.Items[i].NFSe.InfID.ID          := NFSeRetorno.ListaNfse.CompNfse.Items[i].NFSe.InfID.ID +
+                                                       NFSeRetorno.ListaNfse.CompNfse.Items[i].Nfse.IdentificacaoRps.Serie;
       // alterado por joel takei 12/08/2013
       FNotasFiscais.Items[i].XML                    := FRetNfse;
 
