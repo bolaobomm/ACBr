@@ -1373,47 +1373,47 @@ end;
 procedure TWebServicesBase.LoadURL;
 begin
   if self is TNFeStatusServico then
-    FURL  := NotaUtil.GetURL(FConfiguracoes.WebServices.UFCodigo, FConfiguracoes.WebServices.AmbienteCodigo, FConfiguracoes.Geral.FormaEmissaoCodigo, LayNfeStatusServico, FConfiguracoes.Geral.ModeloDF)
+    FURL  := NotaUtil.GetURL(FConfiguracoes.WebServices.UFCodigo, FConfiguracoes.WebServices.AmbienteCodigo, FConfiguracoes.Geral.FormaEmissaoCodigo, LayNfeStatusServico, FConfiguracoes.Geral.ModeloDF, FConfiguracoes.Geral.VersaoDF)
   else if self is TNFeRecepcao then
   begin
     if FConfiguracoes.Geral.VersaoDF = ve310 then
-      FURL  := NotaUtil.GetURL(FConfiguracoes.WebServices.UFCodigo, FConfiguracoes.WebServices.AmbienteCodigo, FConfiguracoes.Geral.FormaEmissaoCodigo, LayNfeAutorizacao, FConfiguracoes.Geral.ModeloDF)
-    else FURL  := NotaUtil.GetURL(FConfiguracoes.WebServices.UFCodigo, FConfiguracoes.WebServices.AmbienteCodigo, FConfiguracoes.Geral.FormaEmissaoCodigo, LayNfeRecepcao, FConfiguracoes.Geral.ModeloDF);
+      FURL  := NotaUtil.GetURL(FConfiguracoes.WebServices.UFCodigo, FConfiguracoes.WebServices.AmbienteCodigo, FConfiguracoes.Geral.FormaEmissaoCodigo, LayNfeAutorizacao, FConfiguracoes.Geral.ModeloDF, FConfiguracoes.Geral.VersaoDF)
+    else FURL  := NotaUtil.GetURL(FConfiguracoes.WebServices.UFCodigo, FConfiguracoes.WebServices.AmbienteCodigo, FConfiguracoes.Geral.FormaEmissaoCodigo, LayNfeRecepcao, FConfiguracoes.Geral.ModeloDF, FConfiguracoes.Geral.VersaoDF);
   end
   else if (self is TNFeRetRecepcao) or (self is TNFeRecibo) then
   begin
     if FConfiguracoes.Geral.VersaoDF = ve310 then
-      FURL  := NotaUtil.GetURL(FConfiguracoes.WebServices.UFCodigo, FConfiguracoes.WebServices.AmbienteCodigo, FConfiguracoes.Geral.FormaEmissaoCodigo, LayNfeRetAutorizacao, FConfiguracoes.Geral.ModeloDF)
-    else FURL  := NotaUtil.GetURL(FConfiguracoes.WebServices.UFCodigo, FConfiguracoes.WebServices.AmbienteCodigo, FConfiguracoes.Geral.FormaEmissaoCodigo, LayNfeRetRecepcao, FConfiguracoes.Geral.ModeloDF);
+      FURL  := NotaUtil.GetURL(FConfiguracoes.WebServices.UFCodigo, FConfiguracoes.WebServices.AmbienteCodigo, FConfiguracoes.Geral.FormaEmissaoCodigo, LayNfeRetAutorizacao, FConfiguracoes.Geral.ModeloDF, FConfiguracoes.Geral.VersaoDF)
+    else FURL  := NotaUtil.GetURL(FConfiguracoes.WebServices.UFCodigo, FConfiguracoes.WebServices.AmbienteCodigo, FConfiguracoes.Geral.FormaEmissaoCodigo, LayNfeRetRecepcao, FConfiguracoes.Geral.ModeloDF, FConfiguracoes.Geral.VersaoDF);
   end
   else if self is TNFeConsulta then
-    FURL  := NotaUtil.GetURL(FConfiguracoes.WebServices.UFCodigo, FConfiguracoes.WebServices.AmbienteCodigo, FConfiguracoes.Geral.FormaEmissaoCodigo, LayNfeConsulta, FConfiguracoes.Geral.ModeloDF)
+    FURL  := NotaUtil.GetURL(FConfiguracoes.WebServices.UFCodigo, FConfiguracoes.WebServices.AmbienteCodigo, FConfiguracoes.Geral.FormaEmissaoCodigo, LayNfeConsulta, FConfiguracoes.Geral.ModeloDF, FConfiguracoes.Geral.VersaoDF)
   else if self is TNFeCancelamento then
-    FURL  := NotaUtil.GetURL(FConfiguracoes.WebServices.UFCodigo, FConfiguracoes.WebServices.AmbienteCodigo, FConfiguracoes.Geral.FormaEmissaoCodigo, LayNfeCancelamento, FConfiguracoes.Geral.ModeloDF)
+    FURL  := NotaUtil.GetURL(FConfiguracoes.WebServices.UFCodigo, FConfiguracoes.WebServices.AmbienteCodigo, FConfiguracoes.Geral.FormaEmissaoCodigo, LayNfeCancelamento, FConfiguracoes.Geral.ModeloDF, FConfiguracoes.Geral.VersaoDF)
   else if self is TNFeInutilizacao then
-    FURL  := NotaUtil.GetURL(FConfiguracoes.WebServices.UFCodigo, FConfiguracoes.WebServices.AmbienteCodigo, FConfiguracoes.Geral.FormaEmissaoCodigo, LayNfeInutilizacao, FConfiguracoes.Geral.ModeloDF)
+    FURL  := NotaUtil.GetURL(FConfiguracoes.WebServices.UFCodigo, FConfiguracoes.WebServices.AmbienteCodigo, FConfiguracoes.Geral.FormaEmissaoCodigo, LayNfeInutilizacao, FConfiguracoes.Geral.ModeloDF, FConfiguracoes.Geral.VersaoDF)
   else if self is TNFeConsultaCadastro then
-    FURL  := NotaUtil.GetURL(UFparaCodigo(TNFeConsultaCadastro(Self).UF), FConfiguracoes.WebServices.AmbienteCodigo, FConfiguracoes.Geral.FormaEmissaoCodigo, LayNfeCadastro, FConfiguracoes.Geral.ModeloDF)
+    FURL  := NotaUtil.GetURL(UFparaCodigo(TNFeConsultaCadastro(Self).UF), FConfiguracoes.WebServices.AmbienteCodigo, FConfiguracoes.Geral.FormaEmissaoCodigo, LayNfeCadastro, FConfiguracoes.Geral.ModeloDF, FConfiguracoes.Geral.VersaoDF)
   else if self is TNFeEnvDPEC then
-    FURL  := NotaUtil.GetURL(FConfiguracoes.WebServices.UFCodigo, FConfiguracoes.WebServices.AmbienteCodigo, FConfiguracoes.Geral.FormaEmissaoCodigo, LayNfeEnvDPEC, FConfiguracoes.Geral.ModeloDF)
+    FURL  := NotaUtil.GetURL(FConfiguracoes.WebServices.UFCodigo, FConfiguracoes.WebServices.AmbienteCodigo, FConfiguracoes.Geral.FormaEmissaoCodigo, LayNfeEnvDPEC, FConfiguracoes.Geral.ModeloDF, FConfiguracoes.Geral.VersaoDF)
   else if self is TNFeConsultaDPEC then
-    FURL  := NotaUtil.GetURL(FConfiguracoes.WebServices.UFCodigo, FConfiguracoes.WebServices.AmbienteCodigo, FConfiguracoes.Geral.FormaEmissaoCodigo, LayNfeConsultaDPEC, FConfiguracoes.Geral.ModeloDF)
+    FURL  := NotaUtil.GetURL(FConfiguracoes.WebServices.UFCodigo, FConfiguracoes.WebServices.AmbienteCodigo, FConfiguracoes.Geral.FormaEmissaoCodigo, LayNfeConsultaDPEC, FConfiguracoes.Geral.ModeloDF, FConfiguracoes.Geral.VersaoDF)
   else if self is TNFeCartaCorrecao then
-    FURL  := NotaUtil.GetURL(FConfiguracoes.WebServices.UFCodigo, FConfiguracoes.WebServices.AmbienteCodigo, FConfiguracoes.Geral.FormaEmissaoCodigo, LayNFeCCe, FConfiguracoes.Geral.ModeloDF)
+    FURL  := NotaUtil.GetURL(FConfiguracoes.WebServices.UFCodigo, FConfiguracoes.WebServices.AmbienteCodigo, FConfiguracoes.Geral.FormaEmissaoCodigo, LayNFeCCe, FConfiguracoes.Geral.ModeloDF, FConfiguracoes.Geral.VersaoDF)
   else if self is TNFeEnvEvento then
   begin
     //Verificação necessária pois somente os eventos de Cancelamento e CCe serão tratados pela SEFAZ do estado
     //os outros eventos como manifestacao de destinatários serão tratados diretamente pela RFB
     if not ((self as TNFeEnvEvento).FEvento.Evento.Items[0].InfEvento.tpEvento
             in [teCCe,teCancelamento]) then
-      FURL  := NotaUtil.GetURL(FConfiguracoes.WebServices.UFCodigo, FConfiguracoes.WebServices.AmbienteCodigo, FConfiguracoes.Geral.FormaEmissaoCodigo, LayNFeEventoAN, FConfiguracoes.Geral.ModeloDF)
+      FURL  := NotaUtil.GetURL(FConfiguracoes.WebServices.UFCodigo, FConfiguracoes.WebServices.AmbienteCodigo, FConfiguracoes.Geral.FormaEmissaoCodigo, LayNFeEventoAN, FConfiguracoes.Geral.ModeloDF, FConfiguracoes.Geral.VersaoDF)
     else
-      FURL  := NotaUtil.GetURL(FConfiguracoes.WebServices.UFCodigo, FConfiguracoes.WebServices.AmbienteCodigo, FConfiguracoes.Geral.FormaEmissaoCodigo, LayNFeEvento, FConfiguracoes.Geral.ModeloDF)
+      FURL  := NotaUtil.GetURL(FConfiguracoes.WebServices.UFCodigo, FConfiguracoes.WebServices.AmbienteCodigo, FConfiguracoes.Geral.FormaEmissaoCodigo, LayNFeEvento, FConfiguracoes.Geral.ModeloDF, FConfiguracoes.Geral.VersaoDF)
   end
   else if self is TNFeConsNFeDest then
-    FURL  := NotaUtil.GetURL(FConfiguracoes.WebServices.UFCodigo, FConfiguracoes.WebServices.AmbienteCodigo, FConfiguracoes.Geral.FormaEmissaoCodigo, LayNFeConsNFeDest, FConfiguracoes.Geral.ModeloDF)
-  else if self is TNFeDownloadNFe then 
-    FURL  := NotaUtil.GetURL(FConfiguracoes.WebServices.UFCodigo, FConfiguracoes.WebServices.AmbienteCodigo, FConfiguracoes.Geral.FormaEmissaoCodigo, LayNFeDownloadNFe, FConfiguracoes.Geral.ModeloDF)
+    FURL  := NotaUtil.GetURL(FConfiguracoes.WebServices.UFCodigo, FConfiguracoes.WebServices.AmbienteCodigo, FConfiguracoes.Geral.FormaEmissaoCodigo, LayNFeConsNFeDest, FConfiguracoes.Geral.ModeloDF, FConfiguracoes.Geral.VersaoDF)
+  else if self is TNFeDownloadNFe then
+    FURL  := NotaUtil.GetURL(FConfiguracoes.WebServices.UFCodigo, FConfiguracoes.WebServices.AmbienteCodigo, FConfiguracoes.Geral.FormaEmissaoCodigo, LayNFeDownloadNFe, FConfiguracoes.Geral.ModeloDF, FConfiguracoes.Geral.VersaoDF)
 end;
 
 procedure TWebServicesBase.DoNFeConsNFeDest;

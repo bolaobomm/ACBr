@@ -93,19 +93,19 @@ type
 //Estados Emissores pela Sefaz Virtual RS (Rio Grande do Sul): AC, AL, AM, AP, MS, PB, RJ, RR, SC, SE e TO.
 //Estados Emissores pela Sefaz Virtual AN (Ambiente Nacional): ES, MA, PA, PI e RN.
 
-    class function GetURLSVRS(AAmbiente: Integer; ALayOut: TLayOut; AModeloDF: TpcnModeloDF = moNFe): WideString; //atualizado 2.0 Homologação e Produção
-    class function GetURLSVAN(AAmbiente: Integer; ALayOut: TLayOut; AModeloDF: TpcnModeloDF = moNFe): WideString; //atualizado 2.0 Homologação e Produção
-    class function GetURLAM(AAmbiente: Integer; ALayOut: TLayOut; AModeloDF: TpcnModeloDF = moNFe): WideString;   //atualizado 2.0 Homologação e Produção
-    class function GetURLBA(AAmbiente: Integer; ALayOut: TLayOut; AModeloDF: TpcnModeloDF = moNFe): WideString;   //atualizado 2.0 Homologação e Produção
-    class function GetURLCE(AAmbiente: Integer; ALayOut: TLayOut; AModeloDF: TpcnModeloDF = moNFe): WideString;   //atualizado 2.0 Homologação e Produção
-    class function GetURLGO(AAmbiente: Integer; ALayOut: TLayOut; AModeloDF: TpcnModeloDF = moNFe): WideString;   //atualizado 2.0 Homologação e Produção
-    class function GetURLMT(AAmbiente: Integer; ALayOut: TLayOut; AModeloDF: TpcnModeloDF = moNFe): WideString;   //atualizado 2.0 Homologação e Produção
-    class function GetURLMS(AAmbiente: Integer; ALayOut: TLayOut; AModeloDF: TpcnModeloDF = moNFe): WideString;   //atualizado 2.0 Homologação e Produção
-    class function GetURLMG(AAmbiente: Integer; ALayOut: TLayOut; AModeloDF: TpcnModeloDF = moNFe): WideString;   //atualizado 2.0 Homologação e Produção
-    class function GetURLPR(AAmbiente: Integer; ALayOut: TLayOut; AModeloDF: TpcnModeloDF = moNFe): WideString;   //atualizado 2.0 Homologação e Produção
-    class function GetURLPE(AAmbiente: Integer; ALayOut: TLayOut; AModeloDF: TpcnModeloDF = moNFe): WideString;   //atualizado 2.0 Homologação e Produção
-    class function GetURLRS(AAmbiente: Integer; ALayOut: TLayOut; AModeloDF: TpcnModeloDF = moNFe): WideString;   //atualizado 2.0 Homologação e Produção
-    class function GetURLSP(AAmbiente: Integer; ALayOut: TLayOut; AModeloDF: TpcnModeloDF = moNFe): WideString;   //atualizado 2.0 Homologação e Produção
+    class function GetURLSVRS(AAmbiente: Integer; ALayOut: TLayOut; AModeloDF: TpcnModeloDF; AVersaoDF: TpcnVersaoDF): WideString; //atualizado 2.0 Homologação e Produção
+    class function GetURLSVAN(AAmbiente: Integer; ALayOut: TLayOut; AModeloDF: TpcnModeloDF; AVersaoDF: TpcnVersaoDF): WideString; //atualizado 2.0 Homologação e Produção
+    class function GetURLAM(AAmbiente: Integer; ALayOut: TLayOut; AModeloDF: TpcnModeloDF; AVersaoDF: TpcnVersaoDF): WideString;   //atualizado 2.0 Homologação e Produção
+    class function GetURLBA(AAmbiente: Integer; ALayOut: TLayOut; AModeloDF: TpcnModeloDF; AVersaoDF: TpcnVersaoDF): WideString;   //atualizado 2.0 Homologação e Produção
+    class function GetURLCE(AAmbiente: Integer; ALayOut: TLayOut; AModeloDF: TpcnModeloDF; AVersaoDF: TpcnVersaoDF): WideString;   //atualizado 2.0 Homologação e Produção
+    class function GetURLGO(AAmbiente: Integer; ALayOut: TLayOut; AModeloDF: TpcnModeloDF; AVersaoDF: TpcnVersaoDF): WideString;   //atualizado 2.0 Homologação e Produção
+    class function GetURLMT(AAmbiente: Integer; ALayOut: TLayOut; AModeloDF: TpcnModeloDF; AVersaoDF: TpcnVersaoDF): WideString;   //atualizado 2.0 Homologação e Produção
+    class function GetURLMS(AAmbiente: Integer; ALayOut: TLayOut; AModeloDF: TpcnModeloDF; AVersaoDF: TpcnVersaoDF): WideString;   //atualizado 2.0 Homologação e Produção
+    class function GetURLMG(AAmbiente: Integer; ALayOut: TLayOut; AModeloDF: TpcnModeloDF; AVersaoDF: TpcnVersaoDF): WideString;   //atualizado 2.0 Homologação e Produção
+    class function GetURLPR(AAmbiente: Integer; ALayOut: TLayOut; AModeloDF: TpcnModeloDF; AVersaoDF: TpcnVersaoDF): WideString;   //atualizado 2.0 Homologação e Produção
+    class function GetURLPE(AAmbiente: Integer; ALayOut: TLayOut; AModeloDF: TpcnModeloDF; AVersaoDF: TpcnVersaoDF): WideString;   //atualizado 2.0 Homologação e Produção
+    class function GetURLRS(AAmbiente: Integer; ALayOut: TLayOut; AModeloDF: TpcnModeloDF; AVersaoDF: TpcnVersaoDF): WideString;   //atualizado 2.0 Homologação e Produção
+    class function GetURLSP(AAmbiente: Integer; ALayOut: TLayOut; AModeloDF: TpcnModeloDF; AVersaoDF: TpcnVersaoDF): WideString;   //atualizado 2.0 Homologação e Produção
   protected
 
   public
@@ -158,7 +158,7 @@ type
     class function FormatarFone(AValue : String ): String;
 //    class function FormatarNumeroDocumentoFiscal(AValue : String ): String;
     class function FormatarChaveAcesso(AValue : String ): String;
-    class function GetURL(Const AUF, AAmbiente, FormaEmissao: Integer; ALayOut: TLayOut; AModeloDF: TpcnModeloDF = moNFe): WideString;
+    class function GetURL(Const AUF, AAmbiente, FormaEmissao: Integer; ALayOut: TLayOut; AModeloDF: TpcnModeloDF; AVersaoDF: TpcnVersaoDF): WideString;
     class function IdentificaTipoSchema(Const AXML: AnsiString; var I: Integer): integer; {eventos_juaumkiko}
     class function Valida(Const AXML: AnsiString; var AMsg: AnsiString; const APathSchemas: string = '';
                           AModeloDF: TpcnModeloDF = moNFe; AVersaoDF: TpcnVersaoDF = ve200): Boolean;
@@ -878,7 +878,7 @@ begin
 end;
 
 class function NotaUtil.GetURL(const AUF, AAmbiente, FormaEmissao : Integer;
-  ALayOut: TLayOut; AModeloDF: TpcnModeloDF = moNFe): WideString;
+  ALayOut: TLayOut; AModeloDF: TpcnModeloDF; AVersaoDF: TpcnVersaoDF): WideString;
 begin
 //  (AC,AL,AP,AM,BA,CE,DF,ES,GO,MA,MT,MS,MG,PA,PB,PR,PE,PI,RJ,RN,RS,RO,RR,SC,SP,SE,TO);
 //  (12,27,16,13,29,23,53,32,52,21,51,50,31,15,25,41,26,22,33,24,43,11,14,42,35,28,17);
@@ -903,42 +903,42 @@ case FormaEmissao of
        // 04/02/2014 - Espirito Santo
 
        case AUF of
-         12: Result := NotaUtil.GetURLSVRS(AAmbiente,ALayOut, AModeloDF); //AC
-         27: Result := NotaUtil.GetURLSVRS(AAmbiente,ALayOut, AModeloDF); //AL
-         16: Result := NotaUtil.GetURLSVRS(AAmbiente,ALayOut, AModeloDF); //AP
-         13: Result := NotaUtil.GetURLAM(AAmbiente,ALayOut, AModeloDF);   //AM
-         29: Result := NotaUtil.GetURLBA(AAmbiente,ALayOut, AModeloDF);   //BA
-         23: Result := NotaUtil.GetURLCE(AAmbiente,ALayOut, AModeloDF);   //CE
-         53: Result := NotaUtil.GetURLSVRS(AAmbiente,ALayOut, AModeloDF); //DF
+         12: Result := NotaUtil.GetURLSVRS(AAmbiente,ALayOut, AModeloDF, AVersaoDF); //AC
+         27: Result := NotaUtil.GetURLSVRS(AAmbiente,ALayOut, AModeloDF, AVersaoDF); //AL
+         16: Result := NotaUtil.GetURLSVRS(AAmbiente,ALayOut, AModeloDF, AVersaoDF); //AP
+         13: Result := NotaUtil.GetURLAM(AAmbiente,ALayOut, AModeloDF, AVersaoDF);   //AM
+         29: Result := NotaUtil.GetURLBA(AAmbiente,ALayOut, AModeloDF, AVersaoDF);   //BA
+         23: Result := NotaUtil.GetURLCE(AAmbiente,ALayOut, AModeloDF, AVersaoDF);   //CE
+         53: Result := NotaUtil.GetURLSVRS(AAmbiente,ALayOut, AModeloDF, AVersaoDF); //DF
 
-//         32: Result := NotaUtil.GetURLSVAN(AAmbiente,ALayOut, AModeloDF); //ES
-         32: Result := NotaUtil.GetURLSVRS(AAmbiente,ALayOut, AModeloDF); //ES
+//         32: Result := NotaUtil.GetURLSVAN(AAmbiente,ALayOut, AModeloDF, AVersaoDF); //ES
+         32: Result := NotaUtil.GetURLSVRS(AAmbiente,ALayOut, AModeloDF, AVersaoDF); //ES
 
-         52: Result := NotaUtil.GetURLGO(AAmbiente,ALayOut, AModeloDF);   //GO
-//         21: Result := NotaUtil.GetURLSVAN(AAmbiente,ALayOut, AModeloDF); //MA
+         52: Result := NotaUtil.GetURLGO(AAmbiente,ALayOut, AModeloDF, AVersaoDF);   //GO
+//         21: Result := NotaUtil.GetURLSVAN(AAmbiente,ALayOut, AModeloDF, AVersaoDF); //MA
          21: begin
                if AModeloDF = moNFCe then
-                 Result := NotaUtil.GetURLSVRS(AAmbiente,ALayOut, AModeloDF)  //MA
+                 Result := NotaUtil.GetURLSVRS(AAmbiente,ALayOut, AModeloDF, AVersaoDF)  //MA
                else
-                 Result := NotaUtil.GetURLSVAN(AAmbiente,ALayOut, AModeloDF); //MA
+                 Result := NotaUtil.GetURLSVAN(AAmbiente,ALayOut, AModeloDF, AVersaoDF); //MA
              end;
-         51: Result := NotaUtil.GetURLMT(AAmbiente,ALayOut, AModeloDF);   //MT
-         50: Result := NotaUtil.GetURLMS(AAmbiente,ALayOut, AModeloDF);   //MS
-         31: Result := NotaUtil.GetURLMG(AAmbiente,ALayOut, AModeloDF);   //MG
-         15: Result := NotaUtil.GetURLSVAN(AAmbiente,ALayOut, AModeloDF); //PA
-         25: Result := NotaUtil.GetURLSVRS(AAmbiente,ALayOut, AModeloDF); //PB
-         41: Result := NotaUtil.GetURLPR(AAmbiente,ALayOut, AModeloDF);   //PR
-         26: Result := NotaUtil.GetURLPE(AAmbiente,ALayOut, AModeloDF);   //PE
-         22: Result := NotaUtil.GetURLSVAN(AAmbiente,ALayOut, AModeloDF); //PI
-         33: Result := NotaUtil.GetURLSVRS(AAmbiente,ALayOut, AModeloDF); //RJ
-         24: Result := NotaUtil.GetURLSVRS(AAmbiente,ALayOut, AModeloDF); //RN
-         43: Result := NotaUtil.GetURLRS(AAmbiente,ALayOut, AModeloDF);   //RS
-         11: Result := NotaUtil.GetURLSVRS(AAmbiente,ALayOut, AModeloDF); //RO
-         14: Result := NotaUtil.GetURLSVRS(AAmbiente,ALayOut, AModeloDF); //RR
-         42: Result := NotaUtil.GetURLSVRS(AAmbiente,ALayOut, AModeloDF); //SC
-         35: Result := NotaUtil.GetURLSP(AAmbiente,ALayOut, AModeloDF);   //SP
-         28: Result := NotaUtil.GetURLSVRS(AAmbiente,ALayOut, AModeloDF); //SE
-         17: Result := NotaUtil.GetURLSVRS(AAmbiente,ALayOut, AModeloDF); //TO
+         51: Result := NotaUtil.GetURLMT(AAmbiente,ALayOut, AModeloDF, AVersaoDF);   //MT
+         50: Result := NotaUtil.GetURLMS(AAmbiente,ALayOut, AModeloDF, AVersaoDF);   //MS
+         31: Result := NotaUtil.GetURLMG(AAmbiente,ALayOut, AModeloDF, AVersaoDF);   //MG
+         15: Result := NotaUtil.GetURLSVAN(AAmbiente,ALayOut, AModeloDF, AVersaoDF); //PA
+         25: Result := NotaUtil.GetURLSVRS(AAmbiente,ALayOut, AModeloDF, AVersaoDF); //PB
+         41: Result := NotaUtil.GetURLPR(AAmbiente,ALayOut, AModeloDF, AVersaoDF);   //PR
+         26: Result := NotaUtil.GetURLPE(AAmbiente,ALayOut, AModeloDF, AVersaoDF);   //PE
+         22: Result := NotaUtil.GetURLSVAN(AAmbiente,ALayOut, AModeloDF, AVersaoDF); //PI
+         33: Result := NotaUtil.GetURLSVRS(AAmbiente,ALayOut, AModeloDF, AVersaoDF); //RJ
+         24: Result := NotaUtil.GetURLSVRS(AAmbiente,ALayOut, AModeloDF, AVersaoDF); //RN
+         43: Result := NotaUtil.GetURLRS(AAmbiente,ALayOut, AModeloDF, AVersaoDF);   //RS
+         11: Result := NotaUtil.GetURLSVRS(AAmbiente,ALayOut, AModeloDF, AVersaoDF); //RO
+         14: Result := NotaUtil.GetURLSVRS(AAmbiente,ALayOut, AModeloDF, AVersaoDF); //RR
+         42: Result := NotaUtil.GetURLSVRS(AAmbiente,ALayOut, AModeloDF, AVersaoDF); //SC
+         35: Result := NotaUtil.GetURLSP(AAmbiente,ALayOut, AModeloDF, AVersaoDF);   //SP
+         28: Result := NotaUtil.GetURLSVRS(AAmbiente,ALayOut, AModeloDF, AVersaoDF); //SE
+         17: Result := NotaUtil.GetURLSVRS(AAmbiente,ALayOut, AModeloDF, AVersaoDF); //TO
        end;
       end;
   3 : begin
@@ -999,7 +999,7 @@ end;
 //Estados Emissores pela Sefaz Virtual AN (Ambiente Nacional): ES, MA, PA, PI, PR e RN.
 
 class function NotaUtil.GetURLSVRS(AAmbiente: Integer;
-  ALayOut: TLayOut; AModeloDF: TpcnModeloDF = moNFe): WideString;
+  ALayOut: TLayOut; AModeloDF: TpcnModeloDF; AVersaoDF: TpcnVersaoDF): WideString;
 begin
   if AModeloDF = moNFe then
    begin
@@ -1035,7 +1035,7 @@ begin
 end;
 
 class function NotaUtil.GetURLSVAN(AAmbiente: Integer;
-  ALayOut: TLayOut; AModeloDF: TpcnModeloDF = moNFe): WideString;
+  ALayOut: TLayOut; AModeloDF: TpcnModeloDF; AVersaoDF: TpcnVersaoDF): WideString;
 begin
   if AModeloDF = moNFe then
    begin
@@ -1070,7 +1070,7 @@ begin
 end;
 
 class function NotaUtil.GetURLAM(AAmbiente: Integer;
-  ALayOut: TLayOut; AModeloDF: TpcnModeloDF = moNFe): WideString;
+  ALayOut: TLayOut; AModeloDF: TpcnModeloDF; AVersaoDF: TpcnVersaoDF): WideString;
 begin
   if AModeloDF = moNFe then
    begin
@@ -1119,7 +1119,7 @@ begin
 end;
 
 class function NotaUtil.GetURLBA(AAmbiente: Integer;
-  ALayOut: TLayOut; AModeloDF: TpcnModeloDF = moNFe): WideString;
+  ALayOut: TLayOut; AModeloDF: TpcnModeloDF; AVersaoDF: TpcnVersaoDF): WideString;
 begin
   if AModeloDF = moNFe then
    begin
@@ -1154,7 +1154,7 @@ begin
 end;
 
 class function NotaUtil.GetURLCE(AAmbiente: Integer;
-  ALayOut: TLayOut; AModeloDF: TpcnModeloDF = moNFe): WideString;
+  ALayOut: TLayOut; AModeloDF: TpcnModeloDF; AVersaoDF: TpcnVersaoDF): WideString;
 begin
   if AModeloDF = moNFe then 
    begin
@@ -1189,7 +1189,7 @@ begin
 end;
 
 class function NotaUtil.GetURLGO(AAmbiente: Integer;
-  ALayOut: TLayOut; AModeloDF: TpcnModeloDF = moNFe): WideString;
+  ALayOut: TLayOut; AModeloDF: TpcnModeloDF; AVersaoDF: TpcnVersaoDF): WideString;
 begin
   if AModeloDF = moNFe then
    begin
@@ -1224,7 +1224,7 @@ begin
 end;
 
 class function NotaUtil.GetURLMT(AAmbiente: Integer;
-  ALayOut: TLayOut; AModeloDF: TpcnModeloDF = moNFe): WideString;
+  ALayOut: TLayOut; AModeloDF: TpcnModeloDF; AVersaoDF: TpcnVersaoDF): WideString;
 begin
   if AModeloDF = moNFe then
    begin
@@ -1259,7 +1259,7 @@ begin
 end;
 
 class function NotaUtil.GetURLMS(AAmbiente: Integer;
-  ALayOut: TLayOut; AModeloDF: TpcnModeloDF = moNFe): WideString;
+  ALayOut: TLayOut; AModeloDF: TpcnModeloDF; AVersaoDF: TpcnVersaoDF): WideString;
 begin
   if AModeloDF = moNFe then
    begin
@@ -1294,7 +1294,7 @@ begin
 end;
 
 class function NotaUtil.GetURLMG(AAmbiente: Integer;
-  ALayOut: TLayOut; AModeloDF: TpcnModeloDF = moNFe): WideString;
+  ALayOut: TLayOut; AModeloDF: TpcnModeloDF; AVersaoDF: TpcnVersaoDF): WideString;
 begin
   if AModeloDF = moNFe then
    begin
@@ -1329,7 +1329,7 @@ begin
 end;
 
 class function NotaUtil.GetURLPR(AAmbiente: Integer;
-  ALayOut: TLayOut; AModeloDF: TpcnModeloDF = moNFe): WideString;
+  ALayOut: TLayOut; AModeloDF: TpcnModeloDF; AVersaoDF: TpcnVersaoDF): WideString;
 begin
   if AModeloDF = moNFe then
    begin
@@ -1364,7 +1364,7 @@ begin
 end;
 
 class function NotaUtil.GetURLPE(AAmbiente: Integer;
-  ALayOut: TLayOut; AModeloDF: TpcnModeloDF = moNFe): WideString;
+  ALayOut: TLayOut; AModeloDF: TpcnModeloDF; AVersaoDF: TpcnVersaoDF): WideString;
 begin
   if AModeloDF = moNFe then
    begin
@@ -1399,7 +1399,7 @@ begin
 end;
 
 class function NotaUtil.GetURLRS(AAmbiente: Integer;
-  ALayOut: TLayOut; AModeloDF: TpcnModeloDF = moNFe): WideString;
+  ALayOut: TLayOut; AModeloDF: TpcnModeloDF; AVersaoDF: TpcnVersaoDF): WideString;
 begin
   if AModeloDF = moNFe then
    begin
@@ -1435,23 +1435,36 @@ begin
 end;
 
 class function NotaUtil.GetURLSP(AAmbiente: Integer;
-  ALayOut: TLayOut; AModeloDF: TpcnModeloDF = moNFe): WideString;
+  ALayOut: TLayOut; AModeloDF: TpcnModeloDF; AVersaoDF: TpcnVersaoDF): WideString;
 begin
   if AModeloDF = moNFe then
    begin
-    case ALayOut of
-      LayNfeRecepcao,
-      LayNfeAutorizacao    : Result := DFeUtil.SeSenao(AAmbiente=1, 'https://nfe.fazenda.sp.gov.br/nfeweb/services/nferecepcao2.asmx',         'https://homologacao.nfe.fazenda.sp.gov.br/nfeweb/services/NfeRecepcao2.asmx');
-      LayNfeRetRecepcao,
-      LayNfeRetAutorizacao : Result := DFeUtil.SeSenao(AAmbiente=1, 'https://nfe.fazenda.sp.gov.br/nfeweb/services/nferetrecepcao2.asmx',      'https://homologacao.nfe.fazenda.sp.gov.br/nfeweb/services/NfeRetRecepcao2.asmx');
-      LayNfeCancelamento   : Result := DFeUtil.SeSenao(AAmbiente=1, 'https://nfe.fazenda.sp.gov.br/nfeweb/services/nfecancelamento2.asmx',     'https://homologacao.nfe.fazenda.sp.gov.br/nfeweb/services/NfeCancelamento2.asmx');
-      LayNfeInutilizacao   : Result := DFeUtil.SeSenao(AAmbiente=1, 'https://nfe.fazenda.sp.gov.br/nfeweb/services/nfeinutilizacao2.asmx',     'https://homologacao.nfe.fazenda.sp.gov.br/nfeweb/services/NfeInutilizacao2.asmx');
-      LayNfeConsulta       : Result := DFeUtil.SeSenao(AAmbiente=1, 'https://nfe.fazenda.sp.gov.br/nfeweb/services/nfeconsulta2.asmx',         'https://homologacao.nfe.fazenda.sp.gov.br/nfeweb/services/NfeConsulta2.asmx');
-      LayNfeStatusServico  : Result := DFeUtil.SeSenao(AAmbiente=1, 'https://nfe.fazenda.sp.gov.br/nfeweb/services/nfestatusservico2.asmx',    'https://homologacao.nfe.fazenda.sp.gov.br/nfeweb/services/NfeStatusServico2.asmx');
-      LayNfeCadastro       : Result := DFeUtil.SeSenao(AAmbiente=1, 'https://nfe.fazenda.sp.gov.br/nfeweb/services/cadconsultacadastro2.asmx', 'https://homologacao.nfe.fazenda.sp.gov.br/nfeWEB/services/cadconsultacadastro2.asmx');
-      LayNFeCCe,
-      LayNFeEvento         : Result := DFeUtil.SeSenao(AAmbiente=1, 'https://nfe.fazenda.sp.gov.br/eventosWEB/services/RecepcaoEvento.asmx',   'https://homologacao.nfe.fazenda.sp.gov.br/eventosWEB/services/RecepcaoEvento.asmx');
-    end;
+    if AVersaoDF = ve200 then
+     begin
+      case ALayOut of
+        LayNfeRecepcao       : Result := DFeUtil.SeSenao(AAmbiente=1, 'https://nfe.fazenda.sp.gov.br/nfeweb/services/nferecepcao2.asmx',         'https://homologacao.nfe.fazenda.sp.gov.br/nfeweb/services/NfeRecepcao2.asmx');
+        LayNfeRetRecepcao    : Result := DFeUtil.SeSenao(AAmbiente=1, 'https://nfe.fazenda.sp.gov.br/nfeweb/services/nferetrecepcao2.asmx',      'https://homologacao.nfe.fazenda.sp.gov.br/nfeweb/services/NfeRetRecepcao2.asmx');
+        LayNfeCancelamento   : Result := DFeUtil.SeSenao(AAmbiente=1, 'https://nfe.fazenda.sp.gov.br/nfeweb/services/nfecancelamento2.asmx',     'https://homologacao.nfe.fazenda.sp.gov.br/nfeweb/services/NfeCancelamento2.asmx');
+        LayNfeInutilizacao   : Result := DFeUtil.SeSenao(AAmbiente=1, 'https://nfe.fazenda.sp.gov.br/nfeweb/services/nfeinutilizacao2.asmx',     'https://homologacao.nfe.fazenda.sp.gov.br/nfeweb/services/NfeInutilizacao2.asmx');
+        LayNfeConsulta       : Result := DFeUtil.SeSenao(AAmbiente=1, 'https://nfe.fazenda.sp.gov.br/nfeweb/services/nfeconsulta2.asmx',         'https://homologacao.nfe.fazenda.sp.gov.br/nfeweb/services/NfeConsulta2.asmx');
+        LayNfeStatusServico  : Result := DFeUtil.SeSenao(AAmbiente=1, 'https://nfe.fazenda.sp.gov.br/nfeweb/services/nfestatusservico2.asmx',    'https://homologacao.nfe.fazenda.sp.gov.br/nfeweb/services/NfeStatusServico2.asmx');
+        LayNfeCadastro       : Result := DFeUtil.SeSenao(AAmbiente=1, 'https://nfe.fazenda.sp.gov.br/nfeweb/services/cadconsultacadastro2.asmx', 'https://homologacao.nfe.fazenda.sp.gov.br/nfeWEB/services/cadconsultacadastro2.asmx');
+        LayNFeCCe,
+        LayNFeEvento         : Result := DFeUtil.SeSenao(AAmbiente=1, 'https://nfe.fazenda.sp.gov.br/eventosWEB/services/RecepcaoEvento.asmx',   'https://homologacao.nfe.fazenda.sp.gov.br/eventosWEB/services/RecepcaoEvento.asmx');
+      end;
+     end
+     else begin
+      case ALayOut of
+        LayNfeAutorizacao    : Result := DFeUtil.SeSenao(AAmbiente=1, 'https://nfe.fazenda.sp.gov.br/ws/nfeautorizacao.asmx',       'https://homologacao.nfe.fazenda.sp.gov.br/ws/nfeautorizacao.asmx');
+        LayNfeRetAutorizacao : Result := DFeUtil.SeSenao(AAmbiente=1, 'https://nfe.fazenda.sp.gov.br/ws/nferetautorizacao.asmx',    'https://homologacao.nfe.fazenda.sp.gov.br/ws/nferetautorizacao.asmx');
+        LayNfeInutilizacao   : Result := DFeUtil.SeSenao(AAmbiente=1, 'https://nfe.fazenda.sp.gov.br/ws/nfeinutilizacao2.asmx',     'https://homologacao.nfe.fazenda.sp.gov.br/ws/nfeinutilizacao2.asmx');
+        LayNfeConsulta       : Result := DFeUtil.SeSenao(AAmbiente=1, 'https://nfe.fazenda.sp.gov.br/ws/nfeconsulta2.asmx',         'https://homologacao.nfe.fazenda.sp.gov.br/ws/nfeconsulta2.asmx');
+        LayNFeCCe,
+        LayNFeEvento         : Result := DFeUtil.SeSenao(AAmbiente=1, 'https://nfe.fazenda.sp.gov.br/ws/recepcaoevento.asmx',       'https://homologacao.nfe.fazenda.sp.gov.br/ws/recepcaoevento.asmx');
+        LayNfeCadastro       : Result := DFeUtil.SeSenao(AAmbiente=1, 'https://nfe.fazenda.sp.gov.br/ws/cadconsultacadastro2.asmx', 'https://homologacao.nfe.fazenda.sp.gov.br/ws/cadconsultacadastro2.asmx');
+        LayNfeStatusServico  : Result := DFeUtil.SeSenao(AAmbiente=1, 'https://nfe.fazenda.sp.gov.br/ws/nfestatusservico2.asmx',    'https://homologacao.nfe.fazenda.sp.gov.br/ws/nfestatusservico2.asmx');
+      end;
+     end;
    end
   else
    begin
