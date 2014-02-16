@@ -483,7 +483,7 @@ begin
     Gerador.wGrupo('COFINSAliq', 'S02');
     Gerador.wCampo(tcStr, 'S07', 'CST      ', 02, 02, 1, CSTCOFINSTOStr(CFe.Det[i].Imposto.COFINS.CST), DSC_CST);
     Gerador.wCampo(tcDe2, 'S08', 'vBC      ', 01, 15, 1, CFe.Det[i].Imposto.COFINS.vBC, DSC_VBC);
-    Gerador.wCampo(tcDe2, 'S09', 'pCOFINS  ', 01, 05, 1, CFe.Det[i].Imposto.COFINS.pCOFINS, DSC_PCOFINS);
+    Gerador.wCampo(tcDe4, 'S09', 'pCOFINS  ', 01, 05, 1, CFe.Det[i].Imposto.COFINS.pCOFINS, DSC_PCOFINS);
     if not FApenasTagsAplicacao then
        Gerador.wCampo(tcDe2, 'S10', 'vCOFINS  ', 01, 15, 1, CFe.Det[i].Imposto.COFINS.vCOFINS, DSC_VCOFINS);
     Gerador.wGrupo('/COFINSAliq');
@@ -525,7 +525,7 @@ begin
       Gerador.wGrupo('COFINSOutr', 'S05');
       Gerador.wCampo(tcStr, 'S07', 'CST      ', 02, 02, 1, CSTCOFINSTOStr(CFe.Det[i].Imposto.COFINS.CST), DSC_CST);
       Gerador.wCampo(tcDe2, 'S08', 'vBC      ', 01, 15, 1, CFe.Det[i].Imposto.COFINS.vBC, DSC_VBC);
-      Gerador.wCampo(tcDe2, 'S09', 'pCOFINS  ', 01, 05, 1, CFe.Det[i].Imposto.COFINS.pCOFINS, DSC_PCOFINS);
+      Gerador.wCampo(tcDe4, 'S09', 'pCOFINS  ', 01, 05, 1, CFe.Det[i].Imposto.COFINS.pCOFINS, DSC_PCOFINS);
       if not FApenasTagsAplicacao then
          Gerador.wCampo(tcDe2, 'S10', 'vCOFINS  ', 01, 15, 1, CFe.Det[i].Imposto.COFINS.vCOFINS, DSC_VCOFINS);
       Gerador.wGrupo('/COFINSOutr');
@@ -552,7 +552,7 @@ begin
      else
       begin
         Gerador.wCampo(tcDe2, 'T02', 'vBC        ', 01, 15, 0, CFe.Det[i].Imposto.COFINSST.vBC, DSC_VBC);
-        Gerador.wCampo(tcDe2, 'T03', 'pCOFINS    ', 01, 05, 0, CFe.Det[i].Imposto.COFINSST.pCOFINS, DSC_PCOFINS);
+        Gerador.wCampo(tcDe4, 'T03', 'pCOFINS    ', 01, 05, 0, CFe.Det[i].Imposto.COFINSST.pCOFINS, DSC_PCOFINS);
       end;
 
      if not FApenasTagsAplicacao then

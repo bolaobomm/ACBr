@@ -1,9 +1,3 @@
-*** Muitos problemas no uso do emulador e da DLL
-    - Emulador para de responder ocasionalmente
-	- Emulador Não retem as informações de Ativação
-	- DLL sem descrição da assinatura dos métodos
-	- DLL não funciona corretamente (AV) quando carregada de forma dinâmica
-	
 *** Campos que devem ter na configuração
 
 infCFe
