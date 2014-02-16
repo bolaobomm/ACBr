@@ -478,7 +478,7 @@ end ;
 
 function TCFeCanc.GetAsXMLString : String ;
 begin
-  GetXMLString( false ) ;
+  Result := GetXMLString( false ) ;
 end;
 
 function TCFeCanc.GetXMLString( ApenasTagsAplicacao: Boolean ): String;
