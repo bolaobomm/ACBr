@@ -97,6 +97,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+Data: 16/02/2014
+-- ACBrBase.pas --
+[-] Correção no método TACBrInformacoes.FieldByName, para evitar A.V. em rotinas
+    chamadoras, e compatibilização com TDataset.FieldByName   (por: DSA)
+
 Data: 05/01/2014
 -- ACBrECF --
 [*] Ajuste no método PafMF_GerarCAT52 para utilizar a nomenclatura de arquivos

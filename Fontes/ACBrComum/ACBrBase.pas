@@ -127,8 +127,8 @@ TACBrThreadTimer = class(TThread)
 de campos quando necessário}
   TACBrInformacao = class
   private
-    fInformacao : AnsiString;
-    FNome: AnsiString;
+    fInfo: AnsiString;
+    fName: String;
     function GetAsDate : TDateTime;
     function GetAsFloat : Double;
     function GetAsInteger : Integer;
@@ -145,14 +145,14 @@ de campos quando necessário}
     procedure SetAsTimeStamp(const AValue : TDateTime);
     procedure SetAsTimeStampSQL(const AValue : TDateTime);
   public
-    property Nome       : AnsiString read FNome          write FNome;
-    property AsString   : AnsiString read GetAsString    write SetAsString ;
-    property AsDate     : TDateTime  read GetAsDate      write SetAsDate ;
-    property AsTime     : TDateTime  read GetAsTime      write SetAsTime ;
-    property AsTimeStamp: TDateTime  read GetAsTimeStamp write SetAsTimeStamp ;
+    property Nome          : String     read fName             write fName;
+    property AsString      : AnsiString read GetAsString       write SetAsString ;
+    property AsDate        : TDateTime  read GetAsDate         write SetAsDate ;
+    property AsTime        : TDateTime  read GetAsTime         write SetAsTime ;
+    property AsTimeStamp   : TDateTime  read GetAsTimeStamp    write SetAsTimeStamp ;
     property AsTimeStampSQL: TDateTime  read GetAsTimeStampSQL write SetAsTimeStampSQL ;
-    property AsInteger  : Integer    read GetAsInteger   write SetAsInteger ;
-    property AsFloat    : Double     read GetAsFloat     write SetAsFloat ;
+    property AsInteger     : Integer    read GetAsInteger      write SetAsInteger ;
+    property AsFloat       : Double     read GetAsFloat        write SetAsFloat ;
   end ;
 
   { TACBrInformacoes }
@@ -162,9 +162,11 @@ de campos quando necessário}
     function GetItem(Index: Integer): TACBrInformacao;
     procedure SetItem(Index: Integer; const Value: TACBrInformacao);
     function GetFields(Index: String): TAcbrInformacao;
+  protected
+    function FindFieldByName(const AName: String): TACBrInformacao;
   public
     function Add: TACBrInformacao;
-    function AddField(const ANome, AValor: String): TACBrInformacao;
+    function AddField(const AName: String; AValue: AnsiString): TACBrInformacao;
     function FieldByName(const AName: String): TACBrInformacao;
 
     procedure SaveToFile( AFileName: String) ;
@@ -278,7 +280,7 @@ function TACBrInformacao.GetAsDate : TDateTime;
 var
    DataStr : String;
 begin
-  DataStr := String( OnlyNumber(AnsiString( Trim(String(fInformacao)) )) );
+  DataStr := String( OnlyNumber(AnsiString( Trim(String(fInfo)) )) );
 
   try
      Result := EncodeDate( StrToInt(copy(DataStr,5,4)),
@@ -293,7 +295,7 @@ function TACBrInformacao.GetAsFloat : Double;
 Var
   Info : String ;
 begin
-  Info := StringReplace( Trim(String(fInformacao)), ',','',[rfReplaceAll] );
+  Info := StringReplace( Trim(String(fInfo)), ',','',[rfReplaceAll] );
   Info := StringReplace( Info             , '.','',[rfReplaceAll] );
 
   Result := StrToIntDef( Info ,0) / 100 ;
@@ -301,19 +303,19 @@ end;
 
 function TACBrInformacao.GetAsInteger : Integer;
 begin
-  Result := StrToIntDef(Trim(String(fInformacao)),0);
+  Result := StrToIntDef(Trim(String(fInfo)),0);
 end;
 
 function TACBrInformacao.GetAsString: AnsiString;
 begin
-   Result := fInformacao ;
+   Result := fInfo ;
 end;
 
 function TACBrInformacao.GetAsTime : TDateTime;
 var
    TimeStr : String;
 begin
-  TimeStr := OnlyNumber(AnsiString( Trim(String(fInformacao))) );
+  TimeStr := OnlyNumber(AnsiString( Trim(String(fInfo))) );
 
   try
      Result := EncodeTime( StrToInt(copy(TimeStr,1,2)),
@@ -328,7 +330,7 @@ function TACBrInformacao.GetAsTimeStamp : TDateTime;
 var
    DateTimeStr : String;
 begin
-  DateTimeStr := OnlyNumber(AnsiString( Trim(String(fInformacao))) );
+  DateTimeStr := OnlyNumber(AnsiString( Trim(String(fInfo))) );
 
   try
      Result := EncodeDateTime( YearOf(now),
@@ -346,7 +348,7 @@ function TACBrInformacao.GetAsTimeStampSQL : TDateTime;
 var
    DateTimeStr : String;
 begin
-  DateTimeStr := OnlyNumber(AnsiString( Trim(String(fInformacao))) );
+  DateTimeStr := OnlyNumber(AnsiString( Trim(String(fInfo))) );
 
   try
      Result := EncodeDateTime( StrToInt(copy(DateTimeStr,1,4)),
@@ -368,110 +370,100 @@ end;
 procedure TACBrInformacao.SetAsDate(const AValue : TDateTime);
 begin
   if AValue = 0 then
-     fInformacao := ''
+     fInfo := ''
   else
-     fInformacao := AnsiString( FormatDateTime('DDMMYYYY',AValue) );
+     fInfo := AnsiString( FormatDateTime('DDMMYYYY',AValue) );
 end;
 
 procedure TACBrInformacao.SetAsFloat(const AValue : Double);
 begin
   if AValue = 0 then
-     fInformacao := ''
+     fInfo := ''
   else
    begin
-     fInformacao := AnsiString( IntToStr(Trunc(SimpleRoundTo( AValue * 100 ,0))) );
-     if Length(fInformacao) < 3 then
-        fInformacao := PadR(fInformacao,3,'0') ;
+     fInfo := AnsiString( IntToStr(Trunc(SimpleRoundTo( AValue * 100 ,0))) );
+     if Length(fInfo) < 3 then
+        fInfo := PadR(fInfo,3,'0') ;
    end ;
 end;
 
 procedure TACBrInformacao.SetAsInteger(const AValue : Integer);
 begin
   if AValue = 0 then
-     fInformacao := ''
+     fInfo := ''
   else
-     fInformacao := AnsiString( IntToStr( AValue ) );
+     fInfo := AnsiString( IntToStr( AValue ) );
 end;
 
 procedure TACBrInformacao.SetAsString(const AValue: AnsiString);
 begin
-   fInformacao := AValue;
+   fInfo := AValue;
 end;
 
 procedure TACBrInformacao.SetAsTime(const AValue : TDateTime);
 begin
   if AValue = 0 then
-     fInformacao := ''
+     fInfo := ''
   else
-     fInformacao := AnsiString(FormatDateTime('HHNNSS', AValue));
+     fInfo := AnsiString(FormatDateTime('HHNNSS', AValue));
 end;
 
 procedure TACBrInformacao.SetAsTimeStamp(const AValue : TDateTime);
 begin
   if AValue = 0 then
-     fInformacao := ''
+     fInfo := ''
   else
-     fInformacao := AnsiString(FormatDateTime('DDMMHHNNSS', AValue));
+     fInfo := AnsiString(FormatDateTime('DDMMHHNNSS', AValue));
 end;
 
 procedure TACBrInformacao.SetAsTimeStampSQL(const AValue : TDateTime);
 begin
   if AValue = 0 then
-     fInformacao := ''
+     fInfo := ''
   else
-     fInformacao := AnsiString(FormatDateTime('YYYYMMDDHHNNSS', AValue));
+     fInfo := AnsiString(FormatDateTime('YYYYMMDDHHNNSS', AValue));
 end;
 
 { TACBrInformacoes }
 
-function TACBrInformacoes.AddField(const ANome,
-  AValor: String): TACBrInformacao;
+function TACBrInformacoes.AddField(const AName: String; AValue: AnsiString
+  ): TACBrInformacao;
 begin
-  {
-  try
-     Result := FieldByName(ANome);
-     Result.AsString := AValor;
-  except
-     Result := Self.Add;
-     with Result do
-     begin
-       Nome     := AnsiString(ANome);
-       AsString := AnsiString(AValor);
-     end;
-  end;
-  }
-
-  Result := FieldByName(ANome);
+  Result := FindFieldByName(AName);
   if Result <> nil then
-    Result.AsString := AValor
+    Result.AsString := AValue
   else
   begin
     Result := Self.Add;
     with Result do
     begin
-      Nome     := AnsiString(ANome);
-      AsString := AnsiString(AValor);
+      Nome     := AName;
+      AsString := AValue;
     end;
   end;
 end;
 
 function TACBrInformacoes.FieldByName(const AName: String): TACBrInformacao;
+begin
+  Result := FindFieldByName( AName );
+
+  if Result = nil then
+    raise Exception.CreateFmt('Campo "%s" não encontrado.', [AName]);
+end;
+
+function TACBrInformacoes.FindFieldByName(const AName: String): TACBrInformacao;
 var
   I: Integer;
 begin
   Result := nil;
   for I := 0 to Self.Count - 1 do
   begin
-    if AnsiSameText(String(Self.Items[I].Nome), String(AName)) then
+    if AnsiSameText(Self.Items[I].Nome, AName) then
     begin
       Result := Self.Items[I];
       Exit;
     end;
   end;
-
-  // removido porque o check deveria ser feito ao usar o método
-  //if Result = nil then
-  //  raise Exception.CreateFmt('Resposta "%s" não encontrada.', [AName]);
 end;
 
 procedure TACBrInformacoes.SaveToFile(AFileName : String) ;
