@@ -284,6 +284,7 @@ begin
             fiPDF:
             begin
                frxPDFExport.FileName := NomeArquivo;
+               frxPDFExport.ShowDialog := MostrarSetup;
                frxReport.Export(DmBoleto.frxPDFExport);
 			   if frxPDFExport.FileName <> NomeArquivo then
 					NomeArquivo := frxPDFExport.FileName;
@@ -291,6 +292,7 @@ begin
             fiHTML:
             begin
                frxHTMLExport.FileName := NomeArquivo;
+               frxHTMLExport.ShowDialog := MostrarSetup;
                frxReport.Export(DmBoleto.frxHTMLExport);
 			   if frxHTMLExport.FileName <> NomeArquivo then
 					NomeArquivo := frxHTMLExport.FileName;
