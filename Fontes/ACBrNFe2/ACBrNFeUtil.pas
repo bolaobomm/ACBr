@@ -56,7 +56,7 @@ interface
 uses {$IFNDEF ACBrNFeOpenSSL}ACBrCAPICOM_TLB, ACBrMSXML2_TLB, JwaWinCrypt, {$ENDIF}
   Classes, Forms, TypInfo,
   {$IFDEF FPC}
-     LResources, Controls, Graphics, Dialogs,
+     LResources, Controls, Graphics, Dialogs, strutils,
   {$ELSE}
      StrUtils,
   {$ENDIF}
@@ -93,19 +93,19 @@ type
 //Estados Emissores pela Sefaz Virtual RS (Rio Grande do Sul): AC, AL, AM, AP, MS, PB, RJ, RR, SC, SE e TO.
 //Estados Emissores pela Sefaz Virtual AN (Ambiente Nacional): ES, MA, PA, PI e RN.
 
-    class function GetURLSVRS(AAmbiente: Integer; ALayOut: TLayOut; AModeloDF: TpcnModeloDF; AVersaoDF: TpcnVersaoDF): WideString; //atualizado 2.0 Homologação e Produção
-    class function GetURLSVAN(AAmbiente: Integer; ALayOut: TLayOut; AModeloDF: TpcnModeloDF; AVersaoDF: TpcnVersaoDF): WideString; //atualizado 2.0 Homologação e Produção
-    class function GetURLAM(AAmbiente: Integer; ALayOut: TLayOut; AModeloDF: TpcnModeloDF; AVersaoDF: TpcnVersaoDF): WideString;   //atualizado 2.0 Homologação e Produção
-    class function GetURLBA(AAmbiente: Integer; ALayOut: TLayOut; AModeloDF: TpcnModeloDF; AVersaoDF: TpcnVersaoDF): WideString;   //atualizado 2.0 Homologação e Produção
-    class function GetURLCE(AAmbiente: Integer; ALayOut: TLayOut; AModeloDF: TpcnModeloDF; AVersaoDF: TpcnVersaoDF): WideString;   //atualizado 2.0 Homologação e Produção
-    class function GetURLGO(AAmbiente: Integer; ALayOut: TLayOut; AModeloDF: TpcnModeloDF; AVersaoDF: TpcnVersaoDF): WideString;   //atualizado 2.0 Homologação e Produção
-    class function GetURLMT(AAmbiente: Integer; ALayOut: TLayOut; AModeloDF: TpcnModeloDF; AVersaoDF: TpcnVersaoDF): WideString;   //atualizado 2.0 Homologação e Produção
-    class function GetURLMS(AAmbiente: Integer; ALayOut: TLayOut; AModeloDF: TpcnModeloDF; AVersaoDF: TpcnVersaoDF): WideString;   //atualizado 2.0 Homologação e Produção
-    class function GetURLMG(AAmbiente: Integer; ALayOut: TLayOut; AModeloDF: TpcnModeloDF; AVersaoDF: TpcnVersaoDF): WideString;   //atualizado 2.0 Homologação e Produção
-    class function GetURLPR(AAmbiente: Integer; ALayOut: TLayOut; AModeloDF: TpcnModeloDF; AVersaoDF: TpcnVersaoDF): WideString;   //atualizado 2.0 Homologação e Produção
-    class function GetURLPE(AAmbiente: Integer; ALayOut: TLayOut; AModeloDF: TpcnModeloDF; AVersaoDF: TpcnVersaoDF): WideString;   //atualizado 2.0 Homologação e Produção
-    class function GetURLRS(AAmbiente: Integer; ALayOut: TLayOut; AModeloDF: TpcnModeloDF; AVersaoDF: TpcnVersaoDF): WideString;   //atualizado 2.0 Homologação e Produção
-    class function GetURLSP(AAmbiente: Integer; ALayOut: TLayOut; AModeloDF: TpcnModeloDF; AVersaoDF: TpcnVersaoDF): WideString;   //atualizado 2.0 Homologação e Produção
+    class function GetURLSVRS(AAmbiente: Integer; ALayOut: TLayOut; AModeloDF: TpcnModeloDF = moNFe; AVersaoDF: TpcnVersaoDF = ve200): WideString; //atualizado 2.0 Homologação e Produção
+    class function GetURLSVAN(AAmbiente: Integer; ALayOut: TLayOut; AModeloDF: TpcnModeloDF = moNFe; AVersaoDF: TpcnVersaoDF = ve200): WideString; //atualizado 2.0 Homologação e Produção
+    class function GetURLAM(AAmbiente: Integer; ALayOut: TLayOut; AModeloDF: TpcnModeloDF = moNFe; AVersaoDF: TpcnVersaoDF = ve200): WideString;   //atualizado 2.0 Homologação e Produção
+    class function GetURLBA(AAmbiente: Integer; ALayOut: TLayOut; AModeloDF: TpcnModeloDF = moNFe; AVersaoDF: TpcnVersaoDF = ve200): WideString;   //atualizado 2.0 Homologação e Produção
+    class function GetURLCE(AAmbiente: Integer; ALayOut: TLayOut; AModeloDF: TpcnModeloDF = moNFe; AVersaoDF: TpcnVersaoDF = ve200): WideString;   //atualizado 2.0 Homologação e Produção
+    class function GetURLGO(AAmbiente: Integer; ALayOut: TLayOut; AModeloDF: TpcnModeloDF = moNFe; AVersaoDF: TpcnVersaoDF = ve200): WideString;   //atualizado 2.0 Homologação e Produção
+    class function GetURLMT(AAmbiente: Integer; ALayOut: TLayOut; AModeloDF: TpcnModeloDF = moNFe; AVersaoDF: TpcnVersaoDF = ve200): WideString;   //atualizado 2.0 Homologação e Produção
+    class function GetURLMS(AAmbiente: Integer; ALayOut: TLayOut; AModeloDF: TpcnModeloDF = moNFe; AVersaoDF: TpcnVersaoDF = ve200): WideString;   //atualizado 2.0 Homologação e Produção
+    class function GetURLMG(AAmbiente: Integer; ALayOut: TLayOut; AModeloDF: TpcnModeloDF = moNFe; AVersaoDF: TpcnVersaoDF = ve200): WideString;   //atualizado 2.0 Homologação e Produção
+    class function GetURLPR(AAmbiente: Integer; ALayOut: TLayOut; AModeloDF: TpcnModeloDF = moNFe; AVersaoDF: TpcnVersaoDF = ve200): WideString;   //atualizado 2.0 Homologação e Produção
+    class function GetURLPE(AAmbiente: Integer; ALayOut: TLayOut; AModeloDF: TpcnModeloDF = moNFe; AVersaoDF: TpcnVersaoDF = ve200): WideString;   //atualizado 2.0 Homologação e Produção
+    class function GetURLRS(AAmbiente: Integer; ALayOut: TLayOut; AModeloDF: TpcnModeloDF = moNFe; AVersaoDF: TpcnVersaoDF = ve200): WideString;   //atualizado 2.0 Homologação e Produção
+    class function GetURLSP(AAmbiente: Integer; ALayOut: TLayOut; AModeloDF: TpcnModeloDF = moNFe; AVersaoDF: TpcnVersaoDF = ve200): WideString;   //atualizado 2.0 Homologação e Produção
   protected
 
   public
@@ -158,7 +158,7 @@ type
     class function FormatarFone(AValue : String ): String;
 //    class function FormatarNumeroDocumentoFiscal(AValue : String ): String;
     class function FormatarChaveAcesso(AValue : String ): String;
-    class function GetURL(Const AUF, AAmbiente, FormaEmissao: Integer; ALayOut: TLayOut; AModeloDF: TpcnModeloDF; AVersaoDF: TpcnVersaoDF): WideString;
+    class function GetURL(Const AUF, AAmbiente, FormaEmissao: Integer; ALayOut: TLayOut; AModeloDF: TpcnModeloDF = moNFe; AVersaoDF: TpcnVersaoDF = ve200): WideString;
     class function IdentificaTipoSchema(Const AXML: AnsiString; var I: Integer): integer; {eventos_juaumkiko}
     class function Valida(Const AXML: AnsiString; var AMsg: AnsiString; const APathSchemas: string = '';
                           AModeloDF: TpcnModeloDF = moNFe; AVersaoDF: TpcnVersaoDF = ve200): Boolean;
@@ -878,7 +878,7 @@ begin
 end;
 
 class function NotaUtil.GetURL(const AUF, AAmbiente, FormaEmissao : Integer;
-  ALayOut: TLayOut; AModeloDF: TpcnModeloDF; AVersaoDF: TpcnVersaoDF): WideString;
+  ALayOut: TLayOut; AModeloDF: TpcnModeloDF = moNFe; AVersaoDF: TpcnVersaoDF = ve200): WideString;
 begin
 //  (AC,AL,AP,AM,BA,CE,DF,ES,GO,MA,MT,MS,MG,PA,PB,PR,PE,PI,RJ,RN,RS,RO,RR,SC,SP,SE,TO);
 //  (12,27,16,13,29,23,53,32,52,21,51,50,31,15,25,41,26,22,33,24,43,11,14,42,35,28,17);
@@ -999,7 +999,7 @@ end;
 //Estados Emissores pela Sefaz Virtual AN (Ambiente Nacional): ES, MA, PA, PI, PR e RN.
 
 class function NotaUtil.GetURLSVRS(AAmbiente: Integer;
-  ALayOut: TLayOut; AModeloDF: TpcnModeloDF; AVersaoDF: TpcnVersaoDF): WideString;
+  ALayOut: TLayOut; AModeloDF: TpcnModeloDF = moNFe; AVersaoDF: TpcnVersaoDF = ve200): WideString;
 begin
   if AModeloDF = moNFe then
    begin
@@ -1035,7 +1035,7 @@ begin
 end;
 
 class function NotaUtil.GetURLSVAN(AAmbiente: Integer;
-  ALayOut: TLayOut; AModeloDF: TpcnModeloDF; AVersaoDF: TpcnVersaoDF): WideString;
+  ALayOut: TLayOut; AModeloDF: TpcnModeloDF = moNFe; AVersaoDF: TpcnVersaoDF = ve200): WideString;
 begin
   if AModeloDF = moNFe then
    begin
@@ -1070,7 +1070,7 @@ begin
 end;
 
 class function NotaUtil.GetURLAM(AAmbiente: Integer;
-  ALayOut: TLayOut; AModeloDF: TpcnModeloDF; AVersaoDF: TpcnVersaoDF): WideString;
+  ALayOut: TLayOut; AModeloDF: TpcnModeloDF = moNFe; AVersaoDF: TpcnVersaoDF = ve200): WideString;
 begin
   if AModeloDF = moNFe then
    begin
@@ -1119,7 +1119,7 @@ begin
 end;
 
 class function NotaUtil.GetURLBA(AAmbiente: Integer;
-  ALayOut: TLayOut; AModeloDF: TpcnModeloDF; AVersaoDF: TpcnVersaoDF): WideString;
+  ALayOut: TLayOut; AModeloDF: TpcnModeloDF = moNFe; AVersaoDF: TpcnVersaoDF = ve200): WideString;
 begin
   if AModeloDF = moNFe then
    begin
@@ -1154,7 +1154,7 @@ begin
 end;
 
 class function NotaUtil.GetURLCE(AAmbiente: Integer;
-  ALayOut: TLayOut; AModeloDF: TpcnModeloDF; AVersaoDF: TpcnVersaoDF): WideString;
+  ALayOut: TLayOut; AModeloDF: TpcnModeloDF = moNFe; AVersaoDF: TpcnVersaoDF = ve200): WideString;
 begin
   if AModeloDF = moNFe then 
    begin
@@ -1189,7 +1189,7 @@ begin
 end;
 
 class function NotaUtil.GetURLGO(AAmbiente: Integer;
-  ALayOut: TLayOut; AModeloDF: TpcnModeloDF; AVersaoDF: TpcnVersaoDF): WideString;
+  ALayOut: TLayOut; AModeloDF: TpcnModeloDF = moNFe; AVersaoDF: TpcnVersaoDF = ve200): WideString;
 begin
   if AModeloDF = moNFe then
    begin
@@ -1224,7 +1224,7 @@ begin
 end;
 
 class function NotaUtil.GetURLMT(AAmbiente: Integer;
-  ALayOut: TLayOut; AModeloDF: TpcnModeloDF; AVersaoDF: TpcnVersaoDF): WideString;
+  ALayOut: TLayOut; AModeloDF: TpcnModeloDF = moNFe; AVersaoDF: TpcnVersaoDF = ve200): WideString;
 begin
   if AModeloDF = moNFe then
    begin
@@ -1259,7 +1259,7 @@ begin
 end;
 
 class function NotaUtil.GetURLMS(AAmbiente: Integer;
-  ALayOut: TLayOut; AModeloDF: TpcnModeloDF; AVersaoDF: TpcnVersaoDF): WideString;
+  ALayOut: TLayOut; AModeloDF: TpcnModeloDF = moNFe; AVersaoDF: TpcnVersaoDF = ve200): WideString;
 begin
   if AModeloDF = moNFe then
    begin
@@ -1294,7 +1294,7 @@ begin
 end;
 
 class function NotaUtil.GetURLMG(AAmbiente: Integer;
-  ALayOut: TLayOut; AModeloDF: TpcnModeloDF; AVersaoDF: TpcnVersaoDF): WideString;
+  ALayOut: TLayOut; AModeloDF: TpcnModeloDF = moNFe; AVersaoDF: TpcnVersaoDF = ve200): WideString;
 begin
   if AModeloDF = moNFe then
    begin
@@ -1329,7 +1329,7 @@ begin
 end;
 
 class function NotaUtil.GetURLPR(AAmbiente: Integer;
-  ALayOut: TLayOut; AModeloDF: TpcnModeloDF; AVersaoDF: TpcnVersaoDF): WideString;
+  ALayOut: TLayOut; AModeloDF: TpcnModeloDF = moNFe; AVersaoDF: TpcnVersaoDF = ve200): WideString;
 begin
   if AModeloDF = moNFe then
    begin
@@ -1364,7 +1364,7 @@ begin
 end;
 
 class function NotaUtil.GetURLPE(AAmbiente: Integer;
-  ALayOut: TLayOut; AModeloDF: TpcnModeloDF; AVersaoDF: TpcnVersaoDF): WideString;
+  ALayOut: TLayOut; AModeloDF: TpcnModeloDF = moNFe; AVersaoDF: TpcnVersaoDF = ve200): WideString;
 begin
   if AModeloDF = moNFe then
    begin
@@ -1399,7 +1399,7 @@ begin
 end;
 
 class function NotaUtil.GetURLRS(AAmbiente: Integer;
-  ALayOut: TLayOut; AModeloDF: TpcnModeloDF; AVersaoDF: TpcnVersaoDF): WideString;
+  ALayOut: TLayOut; AModeloDF: TpcnModeloDF = moNFe; AVersaoDF: TpcnVersaoDF = ve200): WideString;
 begin
   if AModeloDF = moNFe then
    begin
@@ -1435,7 +1435,7 @@ begin
 end;
 
 class function NotaUtil.GetURLSP(AAmbiente: Integer;
-  ALayOut: TLayOut; AModeloDF: TpcnModeloDF; AVersaoDF: TpcnVersaoDF): WideString;
+  ALayOut: TLayOut; AModeloDF: TpcnModeloDF = moNFe; AVersaoDF: TpcnVersaoDF = ve200): WideString;
 begin
   if AModeloDF = moNFe then
    begin
@@ -2533,4 +2533,4 @@ class function NotaUtil.GetURLConsultaNFCe(const AUF, AAmbiente : Integer) : Str
 begin
 end;
 
-end.
+end.
