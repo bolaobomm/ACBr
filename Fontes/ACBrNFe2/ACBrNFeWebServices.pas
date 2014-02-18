@@ -1823,7 +1823,7 @@ begin
 
   // Alterado por Italo em 13/01/2014
   if ((FConfiguracoes.Geral.ModeloDF = moNFCe) or (FConfiguracoes.Geral.VersaoDF = ve310)) and not
-     (FConfiguracoes.WebServices.UFCodigo in [13, 29, 23, 52, 31, 50, 26, 41, 35])  then
+     (FConfiguracoes.WebServices.UFCodigo in [13, 29, 23, 52, 31, 50, 26, 41])  then
    begin
      SoapAction := 'http://www.portalfiscal.inf.br/nfe/wsdl/NfeAutorizacao';
      nfeAutorizacaoLote := True;
@@ -2242,7 +2242,7 @@ function TNFeRetRecepcao.Executar: Boolean;
 
     // Alterado por Italo em 13/01/2014
     if ((FConfiguracoes.Geral.ModeloDF = moNFCe) or (FConfiguracoes.Geral.VersaoDF = ve310)) and not
-       (FConfiguracoes.WebServices.UFCodigo in [13, 29, 23, 52, 31, 50, 26, 41, 35])  then
+       (FConfiguracoes.WebServices.UFCodigo in [13, 29, 23, 52, 31, 50, 26, 41])  then
      begin
        SoapAction := 'http://www.portalfiscal.inf.br/nfe/wsdl/NfeRetAutorizacao';
        nfeAutorizacaoLote := True;
@@ -2454,7 +2454,7 @@ begin
 
   // Alterado por Italo em 13/01/2014
   if ((FConfiguracoes.Geral.ModeloDF = moNFCe) or (FConfiguracoes.Geral.VersaoDF = ve310)) and not
-     (FConfiguracoes.WebServices.UFCodigo in [13, 29, 23, 52, 31, 50, 26, 41, 35])  then
+     (FConfiguracoes.WebServices.UFCodigo in [13, 29, 23, 52, 31, 50, 26, 41])  then
    begin
      SoapAction := 'http://www.portalfiscal.inf.br/nfe/wsdl/NfeRetAutorizacao';
      nfeAutorizacaoLote := True;
