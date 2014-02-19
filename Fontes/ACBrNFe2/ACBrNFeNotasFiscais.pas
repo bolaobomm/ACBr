@@ -134,9 +134,11 @@ type
     property Configuracoes: TConfiguracoes read FConfiguracoes  write FConfiguracoes;
 
     function GetNamePath: string; override ;
-    function LoadFromFile(CaminhoArquivo: string): boolean;
-    function LoadFromStream(Stream: TStringStream): boolean;
-    function LoadFromString(AString: String): boolean;
+    // Incluido o Parametro AGerarNFe que determina se após carregar os dados da NFe
+    // para o componente, será gerado ou não novamente o XML da NFe.
+    function LoadFromFile(CaminhoArquivo: string; AGerarNFe: Boolean = True): boolean;
+    function LoadFromStream(Stream: TStringStream; AGerarNFe: Boolean = True): boolean;
+    function LoadFromString(AString: String; AGerarNFe: Boolean = True): boolean;
     function SaveToFile(PathArquivo: string = ''; SalvaTXT : Boolean = False): boolean;
     function SaveToTXT(PathArquivo: string = ''): boolean;
 
@@ -659,7 +661,7 @@ begin
   end;
 end;
 
-function TNotasFiscais.LoadFromFile(CaminhoArquivo: string): boolean;
+function TNotasFiscais.LoadFromFile(CaminhoArquivo: string; AGerarNFe: Boolean = True): boolean;
 var
  LocNFeR : TNFeR;
  ArquivoXML: TStringList;
@@ -690,7 +692,8 @@ begin
             Items[Self.Count-1].XML := LocNFeR.Leitor.Arquivo;
             Items[Self.Count-1].XMLOriginal := XMLOriginal;
             Items[Self.Count-1].NomeArq := CaminhoArquivo;
-            GerarNFe;
+            if AGerarNFe then
+               GerarNFe;
          finally
             LocNFeR.Free;
          end;
@@ -704,7 +707,7 @@ begin
  end;
 end;
 
-function TNotasFiscais.LoadFromStream(Stream: TStringStream): boolean;
+function TNotasFiscais.LoadFromStream(Stream: TStringStream; AGerarNFe: Boolean = True): boolean;
 var
  LocNFeR : TNFeR;
 begin
@@ -716,7 +719,8 @@ begin
        LocNFeR.LerXml;
        Items[Self.Count-1].XMLOriginal := Stream.DataString;
        Items[Self.Count-1].XML := LocNFeR.Leitor.Arquivo;
-       GerarNFe;
+       if AGerarNFe then
+          GerarNFe;
     finally
        LocNFeR.Free
     end;
@@ -725,7 +729,7 @@ begin
   end;
 end;
 
-function TNotasFiscais.LoadFromString(AString: String): boolean;
+function TNotasFiscais.LoadFromString(AString: String; AGerarNFe: Boolean = True): boolean;
 var
   XMLNFe: TStringStream;
 begin
@@ -735,7 +739,7 @@ begin
     XMLNFe := TStringStream.Create(AString);
     try
       XMLNFe.WriteString(AString);
-      Result := LoadFromStream(XMLNFe);
+      Result := LoadFromStream(XMLNFe, AGerarNFe);
     finally
       XMLNFe.Free;
     end;
