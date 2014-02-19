@@ -401,7 +401,7 @@ begin
             ConfigURL.ProConsultaNFSe       := 'http://nfse.pmtcoroas.com.br/nfsews/Services.svc';
             ConfigURL.ProCancelaNFSe        := 'http://nfse.pmtcoroas.com.br/nfsews/Services.svc';
            end;
-  4322400: begin // Uruguaiana/RS
+  {4322400: begin // Uruguaiana/RS
             ConfigURL.HomNomeCidade         := '';
             ConfigURL.HomRecepcaoLoteRPS    := 'http://dueto-web.uruguaiana.rs.gov.br:7778/NFSEWSTESTE/Services.svc';
             ConfigURL.HomConsultaLoteRPS    := 'http://dueto-web.uruguaiana.rs.gov.br:7778/NFSEWSTESTE/Services.svc';
@@ -417,7 +417,7 @@ begin
             ConfigURL.ProConsultaSitLoteRPS := 'http://dueto-web.uruguaiana.rs.gov.br:7778/NFSEWS/Services.svc';
             ConfigURL.ProConsultaNFSe       := 'http://dueto-web.uruguaiana.rs.gov.br:7778/NFSEWS/Services.svc';
             ConfigURL.ProCancelaNFSe        := 'http://dueto-web.uruguaiana.rs.gov.br:7778/NFSEWS/Services.svc';
-           end;
+           end;}
  end;
 
  Result := ConfigURL;

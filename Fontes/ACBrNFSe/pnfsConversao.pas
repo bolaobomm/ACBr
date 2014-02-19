@@ -37,7 +37,7 @@ type
                             exiSuspensaDecisaoJudicial, exiSuspensaProcessoAdministrativo );
 
   TnfseRegimeEspecialTributacao = ( retNenhum, retMicroempresaMunicipal, retEstimativa, retSociedadeProfissionais, retCooperativa,
-                                    retMicroempresarioIndividual, retMicroempresarioEmpresaPP );
+                                    retMicroempresarioIndividual, retMicroempresarioEmpresaPP, retLucroReal, retLucroPresumido );
   TnfseSimNao = ( snSim, snNao );
   TnfseTipoRPS = ( trRPS, trNFConjugada, trCupom );
   TnfseIndicacaoCpfCnpj = ( iccCPF, iccCNPJ, iccNaoInformado );
@@ -228,19 +228,21 @@ end;
 function RegimeEspecialTributacaoToStr(const t: TnfseRegimeEspecialTributacao):string;
 begin
   result := EnumeradoToStr(t,
-                           ['0','1','2','3','4','5','6'],
+                           ['0','1','2','3','4','5','6','7','8'],
                            [retNenhum, retMicroempresaMunicipal, retEstimativa,
                             retSociedadeProfissionais, retCooperativa,
-                            retMicroempresarioIndividual, retMicroempresarioEmpresaPP]);
+                            retMicroempresarioIndividual, retMicroempresarioEmpresaPP,
+                            retLucroReal, retLucroPresumido]);
 end;
 
 function StrToRegimeEspecialTributacao(var ok: boolean; const s: string):TnfseRegimeEspecialTributacao;
 begin
   result := StrToEnumerado(ok, s,
-                          ['0','1','2','3','4','5','6'],
+                          ['0','1','2','3','4','5','6','7','8'],
                           [retNenhum, retMicroempresaMunicipal, retEstimativa,
                            retSociedadeProfissionais, retCooperativa,
-                           retMicroempresarioIndividual, retMicroempresarioEmpresaPP]);
+                           retMicroempresarioIndividual, retMicroempresarioEmpresaPP,
+                           retLucroReal, retLucroPresumido]);
 end;
 
 // Sim/Nao *********************************************************************
@@ -852,13 +854,14 @@ begin
   4309407, // Guapore/RS
 //  4310207, // Ijui/RS
   4320800, // Soledade/RS
-  4321709, // Tres Coroas/RS
-  4322400  // Uruguaiana/RS
+  4321709  // Tres Coroas/RS
+//  4322400  // Uruguaiana/RS
          : Provedor := 'GovBR';
 
   3118601, // Contagem/MG
   3511102, // Catanduva/SP
-  4310207  // Ijui/RS
+  4310207, // Ijui/RS
+  4322400  // Uruguaiana/RS
          : Provedor := 'Pronim';
 
   3132404, // Itajubá/MG

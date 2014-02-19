@@ -287,7 +287,7 @@ begin
    acConsNFSeRps: Result := 'http://nfse.goiania.go.gov.br/ws/ConsultarNfseRps';
    acConsNFSe:    Result := 'http://www.abrasf.org.br/ABRASF/arquivos/nfse.xsd/WSNacional/ConsultarNfse';
    acCancelar:    Result := 'http://www.abrasf.org.br/ABRASF/arquivos/nfse.xsd/WSNacional/CancelarNfse';
-   acGerar:       Result := 'http://nfse.goiania.go.gov.br/ws/GerarNfse';
+   acGerar:       Result := 'https://nfse.goiania.go.gov.br/ws/nfse.asmx?op=GerarNfse';
  end;
 end;
 

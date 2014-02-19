@@ -243,6 +243,7 @@ begin
     if (leitor.rExtrai(1, 'ConsultarNfseRpsResposta') <> '') or
        (leitor.rExtrai(1, 'Consultarnfserpsresposta') <> '') or
        (leitor.rExtrai(1, 'Consultarnfserpsresposta') <> '') or
+       (leitor.rExtrai(1, 'ConsultarNfseResposta') <> '') or // acrescentado para corrigir no GINFES
        (leitor.rExtrai(1, 'GerarNfseResposta') <> '')
        then
     begin

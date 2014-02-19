@@ -609,14 +609,34 @@ begin
          (leitor.rExtrai(iNivel + 1, 'ListaMensagemRetornoLote') <> '') then
       begin
         i := 0;
-        while Leitor.rExtrai(iNivel + 2, 'MensagemRetorno', '', i + 1) <> '' do
-        begin
+        while Leitor.rExtrai(iNivel + 2, 'MensagemRetorno', '', i + 1) <> '' do begin
           ListaNfse.FMsgRetorno.Add;
           ListaNfse.FMsgRetorno[i].FCodigo   := Leitor.rCampo(tcStr, 'Codigo');
           ListaNfse.FMsgRetorno[i].FMensagem := Leitor.rCampo(tcStr, 'Mensagem');
           ListaNfse.FMsgRetorno[i].FCorrecao := Leitor.rCampo(tcStr, 'Correcao');
 
           inc(i);
+        end;
+
+        if (ListaNfse.FMsgRetorno.Count <= 0) and (FProvedor = proDigifred) then begin
+          i := 0;
+          while Leitor.rExtrai(iNivel + 2, 'Codigo', '', i + 1) <> '' do begin
+            ListaNfse.FMsgRetorno.Add;
+            ListaNfse.FMsgRetorno[i].FCodigo := Leitor.rCampo(tcStr, 'Codigo');
+            inc(i);
+          end;
+
+          i := 0;
+          while Leitor.rExtrai(iNivel + 2, 'Mensagem', '', i + 1) <> '' do begin
+            ListaNfse.FMsgRetorno[i].FMensagem := Leitor.rCampo(tcStr, 'Mensagem');
+            inc(i);
+          end;
+
+          i := 0;
+          while Leitor.rExtrai(iNivel + 2, 'Correcao', '', i + 1) <> '' do begin
+            ListaNfse.FMsgRetorno[i].FCorrecao := Leitor.rCampo(tcStr, 'Correcao');
+            inc(i);
+          end;
         end;
       end;
 

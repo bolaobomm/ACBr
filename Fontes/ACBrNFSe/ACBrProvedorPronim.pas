@@ -157,6 +157,23 @@ begin
             ConfigURL.ProConsultaNFSe       := 'http://server21.ijui.rs.gov.br/nfsews/Services.svc';
             ConfigURL.ProCancelaNFSe        := 'http://server21.ijui.rs.gov.br/nfsews/Services.svc';
            end;
+    4322400: begin // Uruguaiana/RS
+            ConfigURL.HomNomeCidade         := '';
+            ConfigURL.HomRecepcaoLoteRPS    := 'http://dueto-web.uruguaiana.rs.gov.br:7778/NFSEWSTESTE/Services.svc';
+            ConfigURL.HomConsultaLoteRPS    := 'http://dueto-web.uruguaiana.rs.gov.br:7778/NFSEWSTESTE/Services.svc';
+            ConfigURL.HomConsultaNFSeRPS    := 'http://dueto-web.uruguaiana.rs.gov.br:7778/NFSEWSTESTE/Services.svc';
+            ConfigURL.HomConsultaSitLoteRPS := 'http://dueto-web.uruguaiana.rs.gov.br:7778/NFSEWSTESTE/Services.svc';
+            ConfigURL.HomConsultaNFSe       := 'http://dueto-web.uruguaiana.rs.gov.br:7778/NFSEWSTESTE/Services.svc';
+            ConfigURL.HomCancelaNFSe        := 'http://dueto-web.uruguaiana.rs.gov.br:7778/NFSEWSTESTE/Services.svc';
+
+            ConfigURL.ProNomeCidade         := '';
+            ConfigURL.ProRecepcaoLoteRPS    := 'http://dueto-web.uruguaiana.rs.gov.br:7778/NFSEWS/Services.svc';
+            ConfigURL.ProConsultaLoteRPS    := 'http://dueto-web.uruguaiana.rs.gov.br:7778/NFSEWS/Services.svc';
+            ConfigURL.ProConsultaNFSeRPS    := 'http://dueto-web.uruguaiana.rs.gov.br:7778/NFSEWS/Services.svc';
+            ConfigURL.ProConsultaSitLoteRPS := 'http://dueto-web.uruguaiana.rs.gov.br:7778/NFSEWS/Services.svc';
+            ConfigURL.ProConsultaNFSe       := 'http://dueto-web.uruguaiana.rs.gov.br:7778/NFSEWS/Services.svc';
+            ConfigURL.ProCancelaNFSe        := 'http://dueto-web.uruguaiana.rs.gov.br:7778/NFSEWS/Services.svc';
+           end;
  end;
 
  Result := ConfigURL;
