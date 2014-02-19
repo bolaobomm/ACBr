@@ -846,7 +846,7 @@ begin
   3504008, // Assis/SP
   3304706, // Sto Antonio de Padua/RJ
 //  3511102, // Catanduva/SP
-  3530300, // Mirassol/SP'
+//  3530300, // Mirassol/SP'
   3541505, // Presidente Venceslau/SP
   4101408, // Apucarana/PR
   4102000, // Assis Chateaubriand/PR
@@ -860,6 +860,7 @@ begin
 
   3118601, // Contagem/MG
   3511102, // Catanduva/SP
+  3530300, // Mirassol/SP'
   4310207, // Ijui/RS
   4322400  // Uruguaiana/RS
          : Provedor := 'Pronim';
