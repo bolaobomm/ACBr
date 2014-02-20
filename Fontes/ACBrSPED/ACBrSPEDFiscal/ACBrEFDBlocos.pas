@@ -366,10 +366,11 @@ type
                       odOutros            //9 – Outros.
                       );
   /// Indicador de propriedade/posse do item
-  TACBrPosseItem = (piInformante,           // 0- Item de propriedade do informante e em seu poder;
-                    piInformanteNoTerceiro, // 1- Item de propriedade do informante em posse de terceiros;
-                    piTerceiroNoInformante  // 2- Item de propriedade de terceiros em posse do informante
-                    );
+  TACBrIndProp = (piInformante,           // 0- Item de propriedade do informante e em seu poder;
+                  piInformanteNoTerceiro, // 1- Item de propriedade do informante em posse de terceiros;
+                  piTerceiroNoInformante  // 2- Item de propriedade de terceiros em posse do informante
+                 );
+  TACBrPosseItem = TACBrIndProp;
   /// Informe o tipo de documento
   TACBrTipoDocto = (docDeclaracaoExportacao,           // 0 - Declaração de Exportação;
                     docDeclaracaoSimplesExportacao     // 1 - Declaração Simplificada de Exportação.
@@ -473,12 +474,14 @@ type
                         assNenhum                  // Preencher vazio
                         );
   /// Motivo do Inventário
-  TACBrMotivoInventario = (miFinalPeriodo,
-                           miMudancaTributacao,
-                           miBaixaCadastral,
-                           miRegimePagamento,
-                           miDeterminacaoFiscos
-                           );
+  TACBrMotInv = (miFinalPeriodo,
+                 miMudancaTributacao,
+                 miBaixaCadastral,
+                 miRegimePagamento,
+                 miDeterminacaoFiscos
+                );
+  TACBrMotivoInventario = TACBrMotInv;
+
   ///Código da Situação Tributária referente ao ICMS.
   TACBrCstIcms = (
                    sticmsTributadaIntegralmente                              , // '000' //	Tributada integralmente
@@ -613,6 +616,10 @@ type
   function StrToIndMovFisica(AValue: string): TACBrIndMovFisica;
 //  function CstIcmsToStr(AValue: TACBrCstIcms): string;
 //  function StrToCstIcms(AValue: String): TACBrCstIcms;
+  function StrToMotInv(AValue: string): TACBrMotInv;
+  function MotInvToStr(AValue: TACBrMotInv): string;
+  function IndPropToStr(AValue: TACBrIndProp): string;
+  function StrToIndProp(AValue: string): TACBrIndProp;
 
 implementation
 
@@ -828,4 +835,53 @@ begin
    end;
 end;
 }
+
+function StrToMotInv(AValue: string): TACBrMotInv;
+begin
+   if AValue = '01' then
+      Result := miFinalPeriodo
+   else
+   if AValue = '02' then
+      Result := miMudancaTributacao
+   else
+   if AValue = '03' then
+      Result := miBaixaCadastral
+   else
+   if AValue = '04' then
+      Result := miRegimePagamento
+   else
+   if AValue = '05' then
+      Result := miDeterminacaoFiscos
+   else
+     raise Exception.CreateFmt('O motivo do inventário "%s" não é um valor válido.', [AValue]);
+end;
+
+function MotInvToStr(AValue: TACBrMotInv): string;
+begin
+   if AValue = miFinalPeriodo then
+      Result := '01'
+   else
+   if AValue = miMudancaTributacao then
+      Result := '02'
+   else
+   if AValue = miBaixaCadastral then
+      Result := '03'
+   else
+   if AValue = miRegimePagamento then
+      Result := '04'
+   else
+   if AValue = miDeterminacaoFiscos then
+      Result := '05';
+end;
+
+function IndPropToStr(AValue: TACBrIndProp): string;
+begin
+   Result := FormatFloat('00', Integer( AValue ) );
+end;
+
+function StrToIndProp(AValue: string): TACBrIndProp;
+begin
+   Result := TACBrIndProp( StrToIntDef( AValue, 0) );
+end;
+
 end.
