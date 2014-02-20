@@ -59,6 +59,7 @@ type
   TRegistro0200List = class;
   TRegistro0205List = class;
   TRegistro0206List = class;
+  TRegistro0210List = class;
   TRegistro0220List = class;
   TRegistro0300List = class;
   TRegistro0305 = class;
@@ -326,12 +327,15 @@ type
 
   /// Registro 0200 - TABELA DE IDENTIFICAÇÃO DO ITEM (PRODUTO E SERVIÇOS)
 
+  { TRegistro0200 }
+
   TRegistro0200 = class
   private
     fCOD_ITEM: String;         /// Código do item:
     fDESCR_ITEM: String;       /// Descrição do item:
     fCOD_BARRA: String;        /// Código de barra do produto, se houver:
     fCOD_ANT_ITEM: String;     /// Código anterior do item (ultima apresentado):
+    FRegistro0210: TRegistro0210List;
     fUNID_INV: String;         /// Unidade de medida do estoque:
     fTIPO_ITEM: TACBrTipoItem; /// Tipo do item - Atividades Industriais, Comerciais e Serviços: 00 - Mercadoria para Revenda, 01 - Matéria-Prima,  02 - Embalagem, 03 - Produto em Processo, 04 - Produto Acabado, 05 - Subproduto, 06 - Produto Intermediário, 07 - Material de Uso e Consumo, 08 - Ativo Imobilizado, 09 - Serviços, 10 - Outros insumos, 99 - Outras
     fCOD_NCM: String;          /// Código da Nomenclatura Comum do Mercosul:
@@ -361,6 +365,7 @@ type
     /// Registros FILHOS
     property Registro0205: TRegistro0205List read FRegistro0205 write FRegistro0205;
     property Registro0206: TRegistro0206List read FRegistro0206 write FRegistro0206;
+    property Registro0210: TRegistro0210List read FRegistro0210 write FRegistro0210;
     property Registro0220: TRegistro0220List read FRegistro0220 write FRegistro0220;
   end;
 
@@ -425,6 +430,36 @@ type
     function New(AOwner: TRegistro0200): TRegistro0206;
     function LocalizaRegistro(pCOD_COMB: string): boolean;{:ANP - Localiza :AJ-13/9/2011 05:34:36:}
     property Items[Index: Integer]: TRegistro0206 read GetItem write SetItem;
+  end;
+
+  /// Registro 0210 - CONSUMO ESPECIFICO PADRONIZADO
+
+  { TRegistro0210 }
+
+  TRegistro0210 = class
+  private
+    fCOD_ITEM_COMP: string;
+    fPERDA: Double;
+    fQTD_COMP: Double;
+  public
+    constructor Create(AOwner: TRegistro0200); virtual; /// Create
+
+    property COD_ITEM_COMP: string read fCOD_ITEM_COMP write fCOD_ITEM_COMP;
+    property QTD_COMP : Double read fQTD_COMP write fQTD_COMP;
+    property PERDA: Double read fPERDA write fPERDA;
+  end;
+
+  /// Registro 0210 - Lista
+
+  { TRegistro0210List }
+
+  TRegistro0210List = class(TObjectList)
+  private
+    function GetItem(Index: Integer): TRegistro0210;
+    procedure SetItem(Index: Integer; const Value: TRegistro0210);
+  public
+    function New(AOwner: TRegistro0200): TRegistro0210;
+    property Items[Index: Integer]: TRegistro0210 read GetItem write SetItem;
   end;
 
   /// Registro 0220 - FATORES DE CONVERSÃO DE UNIDADES
@@ -642,6 +677,30 @@ type
   end;
 
 implementation
+
+{ TRegistro0210List }
+
+function TRegistro0210List.GetItem(Index: Integer): TRegistro0210;
+begin
+  Result := TRegistro0210(Inherited Items[Index]);
+end;
+
+procedure TRegistro0210List.SetItem(Index: Integer; const Value: TRegistro0210);
+begin
+  Put(Index, Value);
+end;
+
+function TRegistro0210List.New(AOwner: TRegistro0200): TRegistro0210;
+begin
+  Result := TRegistro0210.Create(AOwner);
+  Add(Result);
+end;
+
+{ TRegistro0210 }
+
+constructor TRegistro0210.Create(AOwner: TRegistro0200);
+begin
+end;
 
 { TRegistro0001 }
 

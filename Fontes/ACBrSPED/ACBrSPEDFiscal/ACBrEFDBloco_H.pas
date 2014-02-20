@@ -100,6 +100,8 @@ type
 
   /// Registro H010 - INVENTÁRIO
 
+  { TRegistroH010 }
+
   TRegistroH010 = class
   private
     fCOD_ITEM: String;         /// Código do item (campo 02 do Registro 0200)
@@ -111,6 +113,7 @@ type
     fCOD_PART: String;         /// Código do participante (campo 02 do Registro 0150): proprietário/possuidor que não seja o informante do arquivo
     fTXT_COMPL: String;        /// Descrição complementar
     fCOD_CTA: String;          /// Código da conta analítica contábil debitada/creditada
+    fVL_ITEM_IR: Double;       /// Valor do item para efeitos do Imposto de Renda.
 
     FRegistroH020: TRegistroH020List;  /// BLOCO H - Lista de RegistroH020 (FILHO)
   public
@@ -126,6 +129,7 @@ type
     property COD_PART: String read FCOD_PART write FCOD_PART;
     property TXT_COMPL: String read FTXT_COMPL write FTXT_COMPL;
     property COD_CTA: String read FCOD_CTA write FCOD_CTA;
+    property VL_ITEM_IR : Double read fVL_ITEM_IR write fVL_ITEM_IR;
     /// Registros FILHOS
     property RegistroH020: TRegistroH020List read FRegistroH020 write FRegistroH020;
   end;

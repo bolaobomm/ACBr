@@ -378,6 +378,11 @@ type
   TACBrExportacao = (exDireta,             // 0 - Exportação Direta
                      exIndireta            // 1 - Exportação Indireta
                      );
+  /// Indicador Tipo de Estoque K200
+  TACBrIndEstoque = ( estPropInformantePoder, // 0 = Estoque de propriedade do informante e em seu poder
+                      estPropInformanteTerceiros,// 1 = Estoque de propriedade do informante e em posse de terceiros;
+                      estPropTerceirosInformante // 2 = Estoque de propriedade de terceiros e em posse do informante
+                    );
   /// Informação do tipo de conhecimento de embarque
   TACBrConhecEmbarque = (ceAWB,            //01 – AWB;
                          ceMAWB,           //02 – MAWB;

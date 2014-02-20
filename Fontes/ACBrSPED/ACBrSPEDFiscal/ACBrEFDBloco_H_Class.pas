@@ -42,7 +42,7 @@ unit ACBrEFDBloco_H_Class;
 
 interface
 
-uses SysUtils, Classes, DateUtils, ACBrSped, ACBrEFDBloco_H,
+uses SysUtils, Classes, DateUtils, ACBrSped, ACBrEFDBloco_H, StrUtils,
      ACBrEFDBloco_0_Class, ACBrEFDBlocos;
 
 type
@@ -260,7 +260,8 @@ begin
                LFill( Integer(IND_PROP), 0 ) +
                LFill( COD_PART ) +
                LFill( TXT_COMPL ) +
-               LFill( COD_CTA ) ) ;
+               LFill( COD_CTA ) +
+               IfThen( DT_INI >= EncodeDate(2015,01,01), LFill(VL_ITEM_IR, 0, 2), EmptyStr )) ;/// campo somente inserido a partir de janeiro 2015
         end;
 
         /// Registros FILHOS

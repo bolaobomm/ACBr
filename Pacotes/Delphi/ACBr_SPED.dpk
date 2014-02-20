@@ -65,6 +65,8 @@ contains
   ACBrEFDBloco_G_Class in '..\..\Fontes\ACBrSPED\ACBrSPEDFiscal\ACBrEFDBloco_G_Class.pas',
   ACBrEFDBloco_H in '..\..\Fontes\ACBrSPED\ACBrSPEDFiscal\ACBrEFDBloco_H.pas',
   ACBrEFDBloco_H_Class in '..\..\Fontes\ACBrSPED\ACBrSPEDFiscal\ACBrEFDBloco_H_Class.pas',
+  ACBrEFDBloco_K in '..\..\Fontes\ACBrSPED\ACBrSPEDFiscal\ACBrEFDBloco_K.pas',
+  ACBrEFDBloco_K_Class in '..\..\Fontes\ACBrSPED\ACBrSPEDFiscal\ACBrEFDBloco_K_Class.pas',
   ACBrEFDBlocos in '..\..\Fontes\ACBrSPED\ACBrSPEDFiscal\ACBrEFDBlocos.pas',
   ACBrSpedFiscal in '..\..\Fontes\ACBrSPED\ACBrSPEDFiscal\ACBrSpedFiscal.pas',
   ACBrEPCBloco_0 in '..\..\Fontes\ACBrSPED\ACBrSPEDPisCofins\ACBrEPCBloco_0.pas',
