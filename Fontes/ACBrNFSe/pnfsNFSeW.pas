@@ -161,14 +161,14 @@ begin
  case FProvedor of
   proISSDigital: FNFSe.InfID.ID := NotaUtil.ChaveAcesso(FNFSe.Prestador.cUF,
                          FNFSe.DataEmissao,
-                         FNFSe.Prestador.Cnpj,
+                         SomenteNumeros(FNFSe.Prestador.Cnpj),
                          0, // Serie
                          StrToInt(SomenteNumeros(FNFSe.IdentificacaoRps.Numero)),
                          StrToInt(SomenteNumeros(FNFSe.IdentificacaoRps.Numero)));
 
   proTecnos: FNFSe.InfID.ID := '1' + //Fixo - Lote Sincrono
                          FormatDateTime('yyyy', FNFSe.DataEmissao) +
-                         FNFSe.Prestador.Cnpj +
+                         SomenteNumeros(FNFSe.Prestador.Cnpj) +
                          IntToStrZero(StrToIntDef(FNFSe.NumeroLote, 1), 16);
 
   proIssDsf: FNFSe.InfID.ID := FNFSe.IdentificacaoRps.Numero;
