@@ -209,14 +209,6 @@ type
 
 
 
-
-  /// Perfil de apresentação do arquivo fiscal - TRegistro0000
-//  TACBrPerfil  = (
-//                   pfPerfilA , // A – Perfil A
-//                   pfPerfilB , // B – Perfil B
-//                   pfPerfilC   // C – Perfil C
-//                  );
-
   /// Indicador de tipo de atividade - TRegistro0000
 //  TACBrAtividade   = (
 //                       atIndustrial,         // 0 – Industrial ou equiparado a industrial
@@ -1249,17 +1241,11 @@ end;
 function TipoEscritToStr(AValue: TACBrTipoEscrit): string;
 begin
    Result := IntToStr( Integer( AValue ) + 1 );
-
-//   Result := EnumeradoToStr(AValue, ['0', '1'], [tpEscrOriginal,
-//                                                 tpEscrRetificadora]);
 end;
 
 function StrToTipoEscrit(AValue: string): TACBrTipoEscrit;
 begin
    Result := TACBrTipoEscrit( StrToIntDef( AValue, 0) );
-
-//   Result := StrToEnumerado(AValue, ['0', '1'], [tpEscrOriginal,
-//                                                 tpEscrRetificadora]);
 end;
 
 function IndSitEspToStr(AValue: TACBrIndSitEsp): String;
@@ -1268,43 +1254,21 @@ begin
       Result := ''
    else
       Result := IntToStr( Integer( AValue ) + 1 );
-
-//   Result := EnumeradoToStr(AValue, ['0', '1', '2', '3', '4', ''], [indSitAbertura,
-//                                                                    indSitCisao,
-//                                                                    indSitFusao,
-//                                                                    indSitIncorporacao,
-//                                                                    indSitEncerramento,
-//                                                                    indNenhum]);
 end;
 
 function StrToIndSitEsp(AValue: string): TACBrIndSitEsp;
 begin
    Result := TACBrIndSitEsp( StrToIntDef( AValue, 0) );
-
-//   Result := StrToEnumerado(AValue, ['0', '1', '2', '3', '4', ''], [indSitAbertura,
-//                                                                    indSitCisao,
-//                                                                    indSitFusao,
-//                                                                    indSitIncorporacao,
-//                                                                    indSitEncerramento,
-//                                                                    indNenhum]);
 end;
 
 function IndNatPJToStr(AValue: TACBrIndNatPJ): string;
 begin
    Result := IntToStr( Integer( AValue ) + 1 );
-
-//   Result := EnumeradoToStr(AValue, ['0', '1', '2'], [indNatPJSocEmpresariaGeral,
-//                                                      indNatPJSocCooperativa,
-//                                                      indNatPJEntExclusivaFolhaSal]);
 end;
 
 function StrToIndNatPJ(AValue: string): TACBrIndNatPJ;
 begin
    Result := TACBrIndNatPJ( StrToIntDef( AValue, 0) );
-
-//   Result := StrToEnumerado(AValue, ['0', '1', '2'], [indNatPJSocEmpresariaGeral,
-//                                                      indNatPJSocCooperativa,
-//                                                      indNatPJEntExclusivaFolhaSal]);
 end;
 
 function IndAtivToStr(AValue: TACBrIndAtiv): string;
@@ -1313,13 +1277,6 @@ begin
       Result := '9'
    else
       Result := IntToStr( Integer( AValue ) + 1 );
-
-//   Result := EnumeradoToStr(AValue, ['0', '1', '2', '3', '4', '9'], [indAtivIndustrial,
-//                                                                     indAtivPrestadorServico,
-//                                                                     indAtivComercio,
-//                                                                     indAtivoFincanceira,
-//                                                                     indAtivoImobiliaria,
-//                                                                     indAtivoOutros]);
 end;
 
 function StrToIndAtiv(AValue: string): TACBrIndAtiv;
@@ -1333,35 +1290,21 @@ end;
 function CodIncTribToStr(AValue: TACBrCodIncTrib): string;
 begin
    Result := IntToStr( Integer( AValue ) + 1 );
-
-//   Result := EnumeradoToStr(AValue, ['1', '2', '3'], [codEscrOpIncNaoCumulativo,
-//                                                      codEscrOpIncCumulativo,
-//                                                      codEscrOpIncAmbos]);
 end;
 
 function StrToCodIncTrib(AValue: string): TACBrCodIncTrib;
 begin
    Result := TACBrCodIncTrib( StrToIntDef( AValue, 1) -1 );
-
-//   Result := StrToEnumerado(AValue, ['1', '2', '3'], [codEscrOpIncNaoCumulativo,
-//                                                      codEscrOpIncCumulativo,
-//                                                      codEscrOpIncAmbos]);
 end;
 
 function IndAproCredToStr(AValue: TACBrIndAproCred): string;
 begin
    Result := IntToStr( Integer( AValue ) + 1 );
-
-//   Result := EnumeradoToStr(AValue, ['1', '2'], [indMetodoApropriacaoDireta,
-//                                                 indMetodoDeRateioProporcional]);
 end;
 
 function StrToIndAproCred(AValue: string): TACBrIndAproCred;
 begin
    Result := TACBrIndAproCred( StrToIntDef( AValue, 1) -1 );
-
-//   Result := StrToEnumerado(AValue, ['1', '2'], [indMetodoApropriacaoDireta,
-//                                                 indMetodoDeRateioProporcional]);
 end;
 
 function CodTipoContToStr(AValue: TACBrCodTipoCont): string;
@@ -1380,10 +1323,6 @@ begin
       Result := '9'
    else
       Result := IntToStr( Integer( AValue ) + 1 );
-
-//   Result := EnumeradoToStr(AValue, ['1', '2', '9'], [codRegimeCaixa,
-//                                                      codRegimeCompetEscritConsolidada,
-//                                                      codRegimeCompetEscritDetalhada]);
 end;
 
 function StrToIndRegCum(AValue: string): TACBrIndRegCum;
@@ -1392,10 +1331,6 @@ begin
       Result := codRegimeCompetEscritDetalhada
    else
       Result := TACBrIndRegCum( StrToIntDef( AValue, 1) -1 );
-
-//   Result := StrToEnumerado(AValue, ['1', '2', '9'], [codRegimeCaixa,
-//                                                      codRegimeCompetEscritConsolidada,
-//                                                      codRegimeCompetEscritDetalhada]);
 end;
 
 function TipoItemToStr(AValue: TACBrTipoItem): string;
@@ -1404,20 +1339,6 @@ begin
       Result := '99'
    else
       Result := FormatFloat('00', Integer( AValue ));
-
-//   Result := EnumeradoToStr(AValue, ['00', '01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '99'],
-//                                    [tiMercadoriaRevenda,
-//                                     tiMateriaPrima,
-//                                     tiEmbalagem,
-//                                     tiProdutoProcesso,
-//                                     tiProdutoAcabado,
-//                                     tiSubproduto,
-//                                     tiProdutoIntermediario,
-//                                     tiMaterialConsumo,
-//                                     tiAtivoImobilizado,
-//                                     tiServicos,
-//                                     tiOutrosInsumos,
-//                                     tiOutras]);
 end;
 
 function StrToTipoItem(AValue: string): TACBrTipoItem;
@@ -1426,84 +1347,36 @@ begin
       Result := tiOutras
    else
       Result := TACBrTipoItem( StrToIntDef( AValue, 0) );
-
-//   Result := StrToEnumerado(AValue, ['00', '01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '99'],
-//                                    [tiMercadoriaRevenda,
-//                                     tiMateriaPrima,
-//                                     tiEmbalagem,
-//                                     tiProdutoProcesso,
-//                                     tiProdutoAcabado,
-//                                     tiSubproduto,
-//                                     tiProdutoIntermediario,
-//                                     tiMaterialConsumo,
-//                                     tiAtivoImobilizado,
-//                                     tiServicos,
-//                                     tiOutrosInsumos,
-//                                     tiOutras]);
 end;
 
 function IndOperToStr(AVAlue: TACBrIndOper): string;
 begin
    Result := IntToStr( Integer( AValue ) + 1 );
-
-//   Result := EnumeradoToStr(AVAlue, ['0', '1'], [itoContratado,
-//                                                 itoPrestado]);
 end;
 
 function StrToIndOper(AVAlue: string): TACBrIndOper;
 begin
    Result := TACBrIndOper( StrToIntDef( AValue, 0) );
-
-//   Result := StrToEnumerado(AVAlue, ['0', '1'], [itoContratado,
-//                                                 itoPrestado]);
 end;
 
 function IndEmitToStr(AValue: TACBrIndEmit): string;
 begin
    Result := IntToStr( Integer( AValue ) + 1 );
-
-//   Result := EnumeradoToStr(AValue, ['0', '1'], [iedfProprio,
-//                                                 iedfTerceiro]);
 end;
 
 function StrToIndEmit(AValue: string): TACBrIndEmit;
 begin
    Result := TACBrIndEmit( StrToIntDef( AValue, 0) );
-
-//   Result := StrToEnumerado(AValue, ['0', '1'], [iedfProprio,
-//                                                 iedfTerceiro]);
 end;
 
 function CodSitToStr(AValue: TACBrCodSit): string;
 begin
    Result := FormatFloat('00', Integer( AValue ) );
-
-//   Result := EnumeradoToStr(AValue, ['00', '01', '02', '03', '04', '05', '06', '07', '08'],
-//                                    [sdfRegular,
-//                                     sdfExtRegular,
-//                                     sdfCancelado,
-//                                     sdfExtCancelado,
-//                                     sdfDenegado,
-//                                     sdfInutilizado,
-//                                     sdfComplementar,
-//                                     sdfExtComplementar,
-//                                     sdfEspecial]);
 end;
 
 function StrToCodSit(AValue: string): TACBrCodSit;
 begin
    Result := TACBrCodSit( StrToIntDef( AValue, 0) );
-
-//   Result := StrToEnumerado(AValue, ['00', '01', '02', '03', '04', '05', '06', '07', '08'],
-//                                    [sdfRegular,
-//                                     sdfExtRegular,
-//                                     sdfCancelado,
-//                                     sdfExtCancelado,
-//                                     sdfDenegado,
-//                                     sdfInutilizado,
-//                                     sdfComplementar,
-//                                     sdfExtComplementar,
-//                                     sdfEspecial]);
 end;
 
 function CodSitFToStr(AValue: TACBrCodSitF): string;
@@ -1532,12 +1405,11 @@ end;
 
 function IndPgtoToStr(AValue: TACBrIndPgto): string;
 begin
-{
-Indicador do tipo de pagamento:
+{ Indicador do tipo de pagamento:
 0- À vista;
 1- A prazo;
 9- Sem pagamento.
-13  IND_PGTO
+
 Obs.: A partir de 01/07/2012 passará a ser:
 Indicador do tipo de pagamento:
 0- À vista;
@@ -1570,28 +1442,6 @@ begin
       Result := ''
    else
       Result := FormatFloat('00', Integer( AValue ) + 1 );
-
-//   Result := EnumeradoToStr(AValue, ['', '01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11', '12', '13', '14', '15', '16', '17', '18'],
-//                                    [bccVazio,                         // ''   // vazio.
-//                                     bccAqBensRevenda,                 // '01' // Aquisição de bens para revenda
-//                                     bccAqBensUtiComoInsumo,           // '02' // Aquisição de bens utilizados como insumo
-//                                     bccAqServUtiComoInsumo,           // '03' // Aquisição de serviços utilizados como insumo
-//                                     bccEnergiaEletricaTermica,        // '04' // Energia elétrica e térmica, inclusive sob a forma de vapor
-//                                     bccAluguelPredios,                // '05' // Aluguéis de prédios
-//                                     bccAluguelMaqEquipamentos,        // '06' // Aluguéis de máquinas e equipamentos
-//                                     bccArmazenagemMercadoria,         // '07' // Armazenagem de mercadoria e frete na operação de venda
-//                                     bccConArrendamentoMercantil,      // '08' // Contraprestações de arrendamento mercantil
-//                                     bccMaqCredDepreciacao,            // '09' // Máquinas, equipamentos e outros bens incorporados ao ativo imobilizado (crédito sobre encargos de depreciação).
-//                                     bccMaqCredAquisicao,              // '10' // Máquinas, equipamentos e outros bens incorporados ao ativo imobilizado (crédito com base no valor de aquisição).
-//                                     bccAmortizacaoDepreciacaoImoveis, // '11' // Amortização e Depreciação de edificações e benfeitorias em imóveis
-//                                     bccDevolucaoSujeita,              // '12' // Devolução de Vendas Sujeitas à Incidência Não-Cumulativa
-//                                     bccOutrasOpeComDirCredito,        // '13' // Outras Operações com Direito a Crédito
-//                                     bccAtTransporteSubcontratacao,    // '14' // Atividade de Transporte de Cargas – Subcontratação
-//                                     bccAtImobCustoIncorrido,          // '15' // Atividade Imobiliária – Custo Incorrido de Unidade Imobiliária
-//                                     bccAtImobCustoOrcado,             // '16' // Atividade Imobiliária – Custo Orçado de unidade não concluída
-//                                     bccAtPresServ,                    // '17' // Atividade de Prestação de Serviços de Limpeza, Conservação e Manutenção – vale-transporte, vale-refeição ou vale-alimentação, fardamento ou uniforme.
-//                                     bccEstoqueAberturaBens            // '18' // Estoque de abertura de bens
-//                                     ]);
 end;
 
 function StrToNatBcCred(AValue: string): TACBrNatBcCred;
@@ -1600,28 +1450,6 @@ begin
       Result := bccVazio
    else
       Result := TACBrNatBcCred( StrToIntDef( AValue, 1) );
-
-//   Result := StrToEnumerado(AValue, ['', '01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11', '12', '13', '14', '15', '16', '17', '18'],
-//                                    [bccVazio,                         // ''   // vazio.
-//                                     bccAqBensRevenda,                 // '01' // Aquisição de bens para revenda
-//                                     bccAqBensUtiComoInsumo,           // '02' // Aquisição de bens utilizados como insumo
-//                                     bccAqServUtiComoInsumo,           // '03' // Aquisição de serviços utilizados como insumo
-//                                     bccEnergiaEletricaTermica,        // '04' // Energia elétrica e térmica, inclusive sob a forma de vapor
-//                                     bccAluguelPredios,                // '05' // Aluguéis de prédios
-//                                     bccAluguelMaqEquipamentos,        // '06' // Aluguéis de máquinas e equipamentos
-//                                     bccArmazenagemMercadoria,         // '07' // Armazenagem de mercadoria e frete na operação de venda
-//                                     bccConArrendamentoMercantil,      // '08' // Contraprestações de arrendamento mercantil
-//                                     bccMaqCredDepreciacao,            // '09' // Máquinas, equipamentos e outros bens incorporados ao ativo imobilizado (crédito sobre encargos de depreciação).
-//                                     bccMaqCredAquisicao,              // '10' // Máquinas, equipamentos e outros bens incorporados ao ativo imobilizado (crédito com base no valor de aquisição).
-//                                     bccAmortizacaoDepreciacaoImoveis, // '11' // Amortização e Depreciação de edificações e benfeitorias em imóveis
-//                                     bccDevolucaoSujeita,              // '12' // Devolução de Vendas Sujeitas à Incidência Não-Cumulativa
-//                                     bccOutrasOpeComDirCredito,        // '13' // Outras Operações com Direito a Crédito
-//                                     bccAtTransporteSubcontratacao,    // '14' // Atividade de Transporte de Cargas – Subcontratação
-//                                     bccAtImobCustoIncorrido,          // '15' // Atividade Imobiliária – Custo Incorrido de Unidade Imobiliária
-//                                     bccAtImobCustoOrcado,             // '16' // Atividade Imobiliária – Custo Orçado de unidade não concluída
-//                                     bccAtPresServ,                    // '17' // Atividade de Prestação de Serviços de Limpeza, Conservação e Manutenção – vale-transporte, vale-refeição ou vale-alimentação, fardamento ou uniforme.
-//                                     bccEstoqueAberturaBens            // '18' // Estoque de abertura de bens
-//                                    ]);
 end;
 
 function IndOrigCredToStr(AValue: TACBrIndOrigCred): string;
@@ -1630,12 +1458,6 @@ begin
       Result := ''
    else
       Result := IntToStr( Integer( AValue ) + 1 );
-
-//   Result := EnumeradoToStr(AValue, ['0', '1', ''],
-//                                    [opcMercadoInterno,      // 0 – Operação no Mercado Interno
-//                                     opcImportacao,          // 1 – Operação de Importação
-//                                     opcVazio                // Vazio.
-//                                    ]);
 end;
 
 function StrToIndOrigCred(AValue: String): TACBrIndOrigCred;
@@ -1644,12 +1466,6 @@ begin
       Result := opcVazio
    else
       Result := TACBrIndOrigCred( StrToIntDef( AValue, 0) );
-
-//   Result := StrToEnumerado(AValue, ['0', '1', ''],
-//                                    [opcMercadoInterno,      // 0 – Operação no Mercado Interno
-//                                     opcImportacao,          // 1 – Operação de Importação
-//                                     opcVazio                // Vazio.
-//                                ]);
 end;
 
 function CstPisToStr(AValue: TACBrCstPis): string;

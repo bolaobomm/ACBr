@@ -50,7 +50,8 @@ uses
   DateUtils, ACBrSped, ACBrTXTClass, ACBrEPCBlocos,
   ACBrEPCBloco_0_Class, ACBrEPCBloco_1_Class, ACBrEPCBloco_9_Class,
   ACBrEPCBloco_A_Class, ACBrEPCBloco_C_Class, ACBrEPCBloco_D_Class,
-  ACBrEPCBloco_F_Class, ACBrEPCBloco_M_Class, ACBrEPCBloco_P_Class;
+  ACBrEPCBloco_F_Class, ACBrEPCBloco_M_Class, ACBrEPCBloco_P_Class,
+  ACBrEPCBloco_C_Events;
 
 const
   CACBrSpedPisCofins_Versao = '1.02';
@@ -64,6 +65,8 @@ type
     FArquivo: ansistring;
     FInicializado : boolean;
     FOnError: TErrorEvent;
+
+    FEventsBloco_C: TEventsBloco_C;
 
     FDT_INI: TDateTime;           /// Data inicial das informações contidas no arquivo
     FDT_FIN: TDateTime;           /// Data final das informações contidas no arquivo
@@ -183,6 +186,9 @@ type
     property CurMascara: ansistring read GetCurMascara write SetCurMascara;
 
     property OnError: TErrorEvent read GetOnError write SetOnError;
+
+    // Eventos
+    property EventsBloco_C: TEventsBloco_C read FEventsBloco_C;
   end;
 
 procedure Register;
@@ -238,11 +244,18 @@ begin
   Delimitador := '|';   	//Não chamamos a variável diretamente pois precisa-se alterar os registros filhos também.
   CurMascara := '#0.00';	//Não chamamos a variável diretamente pois precisa-se alterar os registros filhos também.
   TrimString := True;		//Não chamamos a variável diretamente pois precisa-se alterar os registros filhos também.
+
+  FEventsBloco_C := TEventsBloco_C.Create(Self);
+  FEventsBloco_C.Name := 'EventsBloco_C';
+  FEventsBloco_C.SetSubComponent(True);
+
 end;
 
 destructor TACBrSPEDPisCofins.Destroy;
 begin
   FACBrTXT.Free;
+
+  FEventsBloco_C.Free;
 
   FBloco_0.Free;
   FBloco_1.Free;
