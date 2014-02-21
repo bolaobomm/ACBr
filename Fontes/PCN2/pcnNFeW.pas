@@ -489,7 +489,12 @@ begin
   Gerador.wCampo(tcStr, 'C04', 'xFant  ', 01, 60, 0, nfe.Emit.xFant, DSC_XFANT);
   (**)GerarEmitEnderEmit;
   Gerador.IDNivel := 'C01';
-  Gerador.wCampo(tcStr, 'C17', 'IE     ', 00, 14, 1, SomenteNumeros(nfe.Emit.IE), DSC_IE);
+  // Alterado por Italo em 20/02/2014
+  if nfe.Emit.IE = 'ISENTO' then
+    Gerador.wCampo(tcStr, 'C17', 'IE     ', 00, 14, 1, nfe.Emit.IE, DSC_IE)
+  else
+    Gerador.wCampo(tcStr, 'C17', 'IE     ', 00, 14, 1, SomenteNumeros(nfe.Emit.IE), DSC_IE);
+    
   if (FOpcoes.ValidarInscricoes) and (nfe.Ide.procEmi <> peAvulsaFisco) then
   begin
     if Length(nfe.Emit.IE) = 0 then
