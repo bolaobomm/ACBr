@@ -2868,14 +2868,17 @@ begin
    NFSe.Servico.ItemListaServico          := DFeUtil.LimpaNumero(Leitor.rCampo(tcStr, 'ItemListaServico'));
    NFSe.Servico.CodigoTributacaoMunicipio := Leitor.rCampo(tcStr, 'CodigoTributacaoMunicipio');
 
-   Item := StrToInt(SomenteNumeros(Nfse.Servico.ItemListaServico));
-   if Item<100 then Item:=Item*100+1;
+   if NFSe.Servico.ItemListaServico <> '' then
+   begin
+     Item := StrToInt(SomenteNumeros(Nfse.Servico.ItemListaServico));
+     if Item<100 then Item:=Item*100+1;
 
-   NFSe.Servico.ItemListaServico := FormatFloat('0000', Item);
-   NFSe.Servico.ItemListaServico := Copy(NFSe.Servico.ItemListaServico, 1, 2) + '.' +
-                                    Copy(NFSe.Servico.ItemListaServico, 3, 2);
+     NFSe.Servico.ItemListaServico := FormatFloat('0000', Item);
+     NFSe.Servico.ItemListaServico := Copy(NFSe.Servico.ItemListaServico, 1, 2) + '.' +
+                                      Copy(NFSe.Servico.ItemListaServico, 3, 2);
 
-   NFSe.Servico.xItemListaServico := CodigoToDesc(SomenteNumeros(NFSe.Servico.ItemListaServico));
+     NFSe.Servico.xItemListaServico := CodigoToDesc(SomenteNumeros(NFSe.Servico.ItemListaServico));
+   end;
 
    NFSe.Servico.CodigoCnae          := Leitor.rCampo(tcStr, 'CodigoCnae');
    NFSe.Servico.Discriminacao       := Leitor.rCampo(tcStr, 'Discriminacao');
@@ -2885,7 +2888,7 @@ begin
    NFSe.Servico.ExigibilidadeISS    := StrToExigibilidadeISS(ok, Leitor.rCampo(tcStr, 'ExigibilidadeISS'));
    NFSe.Servico.MunicipioIncidencia := Leitor.rCampo(tcInt, 'MunicipioIncidencia');
 
-   if (Leitor.rExtrai(4, 'Valores') <> '')
+   if (Leitor.rExtrai(4, 'Valores') <> '') or (Leitor.rExtrai(3, 'ValoresNfse') <> '')
     then begin
      NFSe.Servico.Valores.ValorServicos          := Leitor.rCampo(tcDe2, 'ValorServicos');
      NFSe.Servico.Valores.ValorDeducoes          := Leitor.rCampo(tcDe2, 'ValorDeducoes');
@@ -2965,7 +2968,7 @@ begin
 
   end; // fim PrestadorServico
 
- if Leitor.rExtrai(3, 'TomadorServico') <> ''
+ if (Leitor.rExtrai(3, 'TomadorServico') <> '') or (Leitor.rExtrai(3, 'Tomador') <> '')
   then begin
    NFSe.Tomador.RazaoSocial := Leitor.rCampo(tcStr, 'RazaoSocial');
 

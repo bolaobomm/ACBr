@@ -612,7 +612,7 @@ begin
     else AID := ' ' + Identificador + '="AssLote_' + URI + '">';
 
    // Incluido por Italo em 07/08/2013
-   if AProvedor in [proAbaco, proIssCuritiba, proFISSLex]
+   if AProvedor in [{proAbaco, }proIssCuritiba, proFISSLex]
     then URI := '';
 
    AXML := AXML + '<Signature xmlns="http://www.w3.org/2000/09/xmldsig#"' + AID +

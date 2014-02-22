@@ -611,6 +611,7 @@ begin
   3303955, // Pinheiral/RJ
   3304508, // Rio das Flores/RJ
   3510104, // Candido Rodrigues/SP
+  3548005, // Santo Antonio De Posse/SP
   4100301, // Agudos do Sul/PR
   4100400, // Almirante Tamandaré/PR
   4101002, // Ampére/PR
