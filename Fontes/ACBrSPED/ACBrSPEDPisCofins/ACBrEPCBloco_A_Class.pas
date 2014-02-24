@@ -170,8 +170,8 @@ begin
 end;
 
 function TBloco_A.RegistroA100New: TRegistroA100;
-  var
-    A010Count : integer;
+var
+   A010Count : integer;
 begin
    A010Count := FRegistroA001.RegistroA010.Count -1;
    //
@@ -179,7 +179,7 @@ begin
 end;
 
 function TBloco_A.RegistroA110New: TRegistroA110;
-  var
+var
     A010Count : integer;
     A100Count : integer;
 begin
@@ -212,7 +212,7 @@ begin
 end;
 
 function TBloco_A.RegistroA170New: TRegistroA170;
-  var
+var
     A010Count : integer;
     A100Count : integer;
 begin
@@ -243,8 +243,8 @@ begin
 end;
 
 procedure TBloco_A.WriteRegistroA010(RegA001: TRegistroA001) ;
-  var
-    intFor : Integer;
+var
+   intFor : Integer;
 begin
   if Assigned(RegA001.RegistroA010) then
   begin
@@ -365,7 +365,7 @@ begin
 end;
 
 procedure TBloco_A.WriteRegistroA110(RegA100: TRegistroA100) ;
-  var
+var
     intFor : integer;
 begin
   if Assigned(RegA100.RegistroA110) then

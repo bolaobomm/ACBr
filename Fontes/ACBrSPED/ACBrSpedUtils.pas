@@ -72,6 +72,8 @@ CstIpi:  array[0..14] of String = ('00', '01', '02', '03', '04', '05',
                                    '49', '50', '51', '52', '53', '54', '55',
                                    '99','');
 
+CstPisCofins : array[0..7] of String = ('01', '06', '07', '08', '09', '49', '99','');
+
 // Funções de checagem de dados
 function funChecaUF(const UF: String): boolean;
 function funChecaMUN(const COD: Integer): Boolean;

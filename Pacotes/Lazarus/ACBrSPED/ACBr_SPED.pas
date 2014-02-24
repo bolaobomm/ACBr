@@ -15,10 +15,11 @@ uses
   ACBrEFDBlocos, ACBrSpedFiscal, ACBrECDBloco_0, ACBrECDBloco_0_Class, 
   ACBrECDBloco_9, ACBrECDBloco_9_Class, ACBrECDBloco_I, ACBrECDBloco_I_Class, 
   ACBrECDBloco_J, ACBrECDBloco_J_Class, ACBrECDBlocos, ACBrSpedContabil, 
-  ACBrEPCBloco_0, ACBrEPCBloco_0_Class, ACBrEPCBloco_1, ACBrEPCBloco_1_Class, 
-  ACBrEPCBloco_9, ACBrEPCBloco_9_Class, ACBrEPCBloco_A, ACBrEPCBloco_A_Class, 
+  ACBrEPCBloco_0, ACBrEPCBloco_0_Class, ACBrEPCBloco_A, ACBrEPCBloco_A_Class, 
   ACBrEPCBloco_C, ACBrEPCBloco_C_Class, ACBrEPCBloco_D, ACBrEPCBloco_D_Class, 
-  ACBrEPCBloco_F, ACBrEPCBloco_F_Class, ACBrEPCBloco_M, ACBrEPCBloco_M_Class, 
+  ACBrEPCBloco_F, ACBrEPCBloco_F_Class, ACBrEPCBloco_I, ACBrEPCBloco_I_Class, 
+  ACBrEPCBloco_M, ACBrEPCBloco_M_Class, ACBrEPCBloco_P, ACBrEPCBloco_P_Class, 
+  ACBrEPCBloco_1, ACBrEPCBloco_1_Class, ACBrEPCBloco_9, ACBrEPCBloco_9_Class, 
   ACBrSpedPisCofins, LazarusPackageIntf;
 
 implementation

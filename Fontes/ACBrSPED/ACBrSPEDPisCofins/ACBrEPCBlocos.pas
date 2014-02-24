@@ -783,6 +783,17 @@ type
                   );
   TACBrSituacaoTribCOFINS = TACBrCstCofins;
 
+  TACBrCstPisCofins = (
+                    stpiscofinsOperTribuComAliqBasica,                     //01 Operação Tributável com Alíquota Básica
+                    stpiscofinsOperTribuAliqZero,                          //06 Operação Tributável a Alíquota Zero
+                    stpiscofinsOperIsentaContribuicao,                     //07 Operação Isenta da Contribuição
+                    stpiscofinsOperSemIncidenciaContribuicao,              //08 Operação sem Incidência da Contribuição
+                    stpiscofinsOperComSuspensaoContribuicao,               //09 Operação com Suspensão da Contribuição
+                    stpiscofinsOutrasOperacoesSaida,                       //49 Outras Operações de Saída
+                    stpiscofinsOutrasDespesas                              //99 Outras Operações
+                  );
+  TACBrSituacaoTribPISCOFINS = TACBrCstPisCofins;
+
   // Local da Execução do Serviço
   TACBrLocalExecServico = (
                             lesExecutPais,     // 0 – Executado no País;
@@ -1157,6 +1168,8 @@ function IndOrigCredToStr(AValue: TACBrIndOrigCred): string;
 function StrToIndOrigCred(AValue: String): TACBrIndOrigCred;
 function CstPisToStr(AValue: TACBrCstPis): string;
 function StrToCstPis(AValue: String): TACBrCstPis;
+function CstPisCofinsToStr(AValue: TACBrCstPisCofins): string;
+function StrToCstPisCofins(AValue: String): TACBrCstPisCofins;
 function CstCofinsToStr(AValue: TACBrCstCofins): string;
 function StrToCstCofins(AValue: String): TACBrCstCofins;
 function CstIcmsToStr(AValue: TACBrCstIcms): string;
@@ -1475,13 +1488,32 @@ end;
 
 function StrToCstPis(AValue: String): TACBrCstPis;
 var
-ifor: Integer;
+   ifor: Integer;
 begin
    for ifor := 0 to High(CstPis) do
    begin
       if AValue = CstPis[ifor] then
       begin
          Result := TACBrCstPis( ifor );
+         Break;
+      end;
+   end;
+end;
+
+function CstPisCofinsToStr(AValue: TACBrCstPisCofins): string;
+begin
+  Result := CstPisCofins[ Integer( AValue ) ];
+end;
+
+function StrToCstPisCofins(AValue: String): TACBrCstPisCofins;
+var
+   ifor: Integer;
+begin
+   for ifor := 0 to High(CstPisCofins) do
+   begin
+      if AValue = CstPisCofins[ifor] then
+      begin
+         Result := TACBrCstPisCofins( ifor );
          Break;
       end;
    end;
