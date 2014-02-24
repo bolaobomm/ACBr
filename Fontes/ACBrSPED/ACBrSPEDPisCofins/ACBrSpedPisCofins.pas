@@ -68,8 +68,8 @@ type
 
     FEventsBloco_C: TEventsBloco_C;
 
-    FDT_INI: TDate;           /// Data inicial das informações contidas no arquivo
-    FDT_FIN: TDate;           /// Data final das informações contidas no arquivo
+    FDT_INI: TDateTime;           /// Data inicial das informações contidas no arquivo
+    FDT_FIN: TDateTime;           /// Data final das informações contidas no arquivo
 
     FPath: ansistring;            /// Path do arquivo a ser gerado
     FDelimitador: ansistring;     /// Caracter delimitador de campos
@@ -94,8 +94,8 @@ type
     function GetLinhasBuffer: Integer;
     function GetTrimString: boolean;
     function GetCurMascara: ansistring;
-    function GetDT_FIN: TDate;
-    function GetDT_INI: TDate;
+    function GetDT_FIN: TDateTime;
+    function GetDT_INI: TDateTime;
     procedure InicializaBloco(Bloco: TACBrSPED);
     procedure SetArquivo(const AValue: ansistring);
     procedure SetDelimitador(const Value: ansistring);
@@ -103,8 +103,8 @@ type
     procedure SetPath(const AValue: ansistring);
     procedure SetTrimString(const Value: boolean);
     procedure SetCurMascara(const Value: ansistring);
-    procedure SetDT_FIN(const Value: TDate);
-    procedure SetDT_INI(const Value: TDate);
+    procedure SetDT_FIN(const Value: TDateTime);
+    procedure SetDT_INI(const Value: TDateTime);
 
     function GetOnError: TErrorEvent; /// Método do evento OnError
     procedure SetOnError(const Value: TErrorEvent); /// Método SetError
@@ -166,8 +166,8 @@ type
 
     property Conteudo: TStringList read GetConteudo;
 
-    property DT_INI: TDate read GetDT_INI write SetDT_INI;
-    property DT_FIN: TDate read GetDT_FIN write SetDT_FIN;
+    property DT_INI: TDateTime read GetDT_INI write SetDT_INI;
+    property DT_FIN: TDateTime read GetDT_FIN write SetDT_FIN;
 
     property Bloco_0: TBloco_0 read FBloco_0 write FBloco_0;
     property Bloco_1: TBloco_1 read FBloco_1 write FBloco_1;
@@ -383,7 +383,7 @@ begin
   FBloco_P.TrimString := Value;
 end;
 
-function TACBrSPEDPisCofins.GetDT_INI: TDate;
+function TACBrSPEDPisCofins.GetDT_INI: TDateTime;
 begin
   Result := FDT_INI;
 end;
@@ -480,7 +480,7 @@ begin
      Path := APath;
 end;
 
-procedure TACBrSPEDPisCofins.SetDT_INI(const Value: TDate);
+procedure TACBrSPEDPisCofins.SetDT_INI(const Value: TDateTime);
 begin
   FDT_INI := Value;
 
@@ -502,12 +502,12 @@ begin
   end;
 end;
 
-function TACBrSPEDPisCofins.GetDT_FIN: TDate;
+function TACBrSPEDPisCofins.GetDT_FIN: TDateTime;
 begin
   Result := FDT_FIN;
 end;
 
-procedure TACBrSPEDPisCofins.SetDT_FIN(const Value: TDate);
+procedure TACBrSPEDPisCofins.SetDT_FIN(const Value: TDateTime);
 begin
   FDT_FIN := Value;
 
