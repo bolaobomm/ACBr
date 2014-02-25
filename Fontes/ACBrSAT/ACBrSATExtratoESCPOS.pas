@@ -487,6 +487,8 @@ begin
   GerarTotais(True);
   GerarRodape(False);
   GerarDadosCancelamento;
+
+  ImprimePorta(FBuffer.Text);
 end;
 
 procedure TACBrSATExtratoESCPOS.ImprimirExtratoResumido(CFe: TCFe);
