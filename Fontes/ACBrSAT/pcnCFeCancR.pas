@@ -42,7 +42,7 @@ interface uses
 {$IFNDEF VER130}
   Variants,
 {$ENDIF}
-  pcnAuxiliar, pcnConversao, pcnLeitor, pcnCFeCanc;
+  pcnConversao, pcnLeitor, pcnCFeCanc;
 
 type
 
@@ -63,7 +63,7 @@ type
 
 implementation
 
-uses ACBrConsts;
+uses ACBrConsts, ACBrUtil;
 
 { TCFeCancR }
 
@@ -81,31 +81,19 @@ end;
 
 function TCFeCancR.LerXml: boolean;
 var
-  ok: boolean;
-  i, j, nItem: integer;
-  Arquivo, Itens, ItensTemp, NumItem: AnsiString;
+  i : integer;
 begin
   Result := False;
-
-  i := 0;
-  i := RetornarPosEx('Id=', Leitor.Arquivo, i + 6);
-  if i > 0 then
-  begin
-    i := RetornarPosEx('"', Leitor.Arquivo, i + 2);
-    if i > 0 then
-    begin
-      j := RetornarPosEx('"', Leitor.Arquivo, i + 1);
-      if j > 0 then
-      begin
-        CFeCanc.infCFe.ID := copy(Leitor.Arquivo, I+1, J - (I+1));
-        CFeCanc.infCFe.ID := StringReplace( UpperCase(CFeCanc.infCFe.ID), 'CFE', '', [rfReplaceAll] ) ;
-      end;
-    end;
-  end;
+  CFeCanc.Clear;
 
   (* Grupo da TAG <ide> *******************************************************)
   if Leitor.rExtrai(1, 'infCFe') <> '' then
   begin
+    CFeCanc.infCFe.ID     := Leitor.rAtributo( 'Id' ) ;
+    CFeCanc.infCFe.ID     := StringReplace( UpperCase(CFeCanc.infCFe.ID), 'CFE', '', [rfReplaceAll] ) ;
+    CFeCanc.infCFe.versao := StrToFloatDef(StringReplace( Leitor.rAtributo( 'versao' ),
+                                              '.', DecimalSeparator, []), 0) ;
+
     (*A06*) CFeCanc.infCFe.chCanc := Leitor.rAtributo('chCanc');
     (*A07*) CFeCanc.infCFe.dEmi := Leitor.rCampo(tcDatCFe, 'dEmi');
     (*A08*) CFeCanc.infCFe.hEmi := Leitor.rCampo(tcHorCFe, 'hEmi');
@@ -114,7 +102,6 @@ begin
   (* Grupo da TAG <ide> *******************************************************)
   if Leitor.rExtrai(1, 'ide') <> '' then
   begin
-    ok := False;
     (*B02*) CFeCanc.ide.cUF := Leitor.rCampo(tcInt, 'cUF');
     (*B03*) CFeCanc.ide.cNF := Leitor.rCampo(tcInt, 'cNF');
     (*B04*) CFeCanc.ide.modelo := Leitor.rCampo(tcInt, 'mod');

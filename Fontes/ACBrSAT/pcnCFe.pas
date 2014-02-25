@@ -50,7 +50,7 @@ uses
 {$IFNDEF VER130}
   Variants,
 {$ENDIF}
-  pcnConversao, pcnSignature, pcnGerador;
+  pcnConversao, pcnSignature;
 
 type
 
@@ -99,7 +99,7 @@ type
     fPagto: TMPCollection;
     FInfAdic: TInfAdic;
     FSignature: TSignature;
-    function GetAsXMLString: String;
+    function GetAsXMLString: AnsiString;
     procedure SetDet(Value: TDetCollection);
     procedure SetPagto(Value: TMPCollection);
   public
@@ -110,10 +110,10 @@ type
 
     function LoadFromFile(AFileName : String): boolean;
     function SaveToFile(AFileName : String): boolean;
-    function GetXMLString( ApenasTagsAplicacao: Boolean = false) : String ;
-    procedure SetXMLString(AValue : String) ;
+    function GetXMLString( ApenasTagsAplicacao: Boolean = false) : AnsiString ;
+    procedure SetXMLString(AValue : AnsiString) ;
 
-    property AsXMLString : String read GetAsXMLString write SetXMLString ;
+    property AsXMLString : AnsiString read GetAsXMLString write SetXMLString ;
   published
     property infCFe: TinfCFe read FinfCFe write FinfCFe;
     property ide: Tide read Fide write Fide;
@@ -1299,8 +1299,8 @@ var
   SL : TStringList;
 begin
   Result := False;
+  SL := TStringList.Create;
   try
-    SL := TStringList.Create;
     SL.LoadFromFile( AFileName );
     AsXMLString := SL.Text;
     Result      := True;
@@ -1329,12 +1329,12 @@ begin
   FDet.Assign(Value);
 end;
 
-function TCFe.GetAsXMLString: String;
+function TCFe.GetAsXMLString: AnsiString;
 begin
   Result := GetXMLString( false ) ;
 end;
 
-function TCFe.GetXMLString(ApenasTagsAplicacao: Boolean): String;
+function TCFe.GetXMLString(ApenasTagsAplicacao: Boolean): AnsiString;
 var
   LocCFeW : TCFeW ;
 begin
@@ -1351,7 +1351,7 @@ begin
   end ;
 end;
 
-procedure TCFe.SetXMLString(AValue : String) ;
+procedure TCFe.SetXMLString(AValue : AnsiString) ;
 var
  LocCFeR : TCFeR;
 begin

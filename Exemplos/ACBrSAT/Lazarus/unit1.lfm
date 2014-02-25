@@ -32,7 +32,7 @@ object Form1: TForm1
       Caption = 'Log de Comandos'
       ClientHeight = 222
       ClientWidth = 717
-      object mResposta: TMemo
+      object mLog: TMemo
         Left = 0
         Height = 222
         Top = 0
@@ -47,7 +47,7 @@ object Form1: TForm1
       Caption = 'XML Gerado'
       ClientHeight = 222
       ClientWidth = 717
-      inline mVenda: TSynMemo
+      inline mVendaEnviar: TSynMemo
         Cursor = crIBeam
         Left = 0
         Height = 222
@@ -539,7 +539,7 @@ object Form1: TForm1
       Caption = 'XML Recebido'
       ClientHeight = 222
       ClientWidth = 717
-      inline mCupom: TSynMemo
+      inline mRecebido: TSynMemo
         Cursor = crIBeam
         Left = 0
         Height = 222
@@ -1031,7 +1031,7 @@ object Form1: TForm1
       Caption = 'XML Cancelamento'
       ClientHeight = 222
       ClientWidth = 717
-      inline mCancelado: TSynMemo
+      inline mCancelamentoEnviar: TSynMemo
         Cursor = crIBeam
         Left = 0
         Height = 197

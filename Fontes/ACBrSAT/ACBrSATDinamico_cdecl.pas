@@ -85,13 +85,13 @@ type
    public
      constructor Create( AOwner : TComponent ) ; override;
 
-     function AssociarAssinatura( CNPJvalue, assinaturaCNPJs : String ):
+     function AssociarAssinatura( CNPJvalue, assinaturaCNPJs : AnsiString ):
        String ; override;
      function AtivarSAT( subComando : Integer; CNPJ: String; cUF : Integer )
        : String ; override;
      function AtualizarSoftwareSAT : String ; override;
      function BloquearSAT : String ; override;
-     function CancelarUltimaVenda( chave, dadosCancelamento : String ) :
+     function CancelarUltimaVenda( chave, dadosCancelamento : AnsiString ) :
        String ; override;
      function ComunicarCertificadoICPBRASIL( certificado : AnsiString ) :
        String ; override;
@@ -106,8 +106,8 @@ type
      function EnviarDadosVenda( dadosVenda : AnsiString ) : String ; override;
      function ExtrairLogs : String ; override;
      function TesteFimAFim( dadosVenda : AnsiString) : String ; override;
-     function TrocarCodigoDeAtivacao( codigoDeAtivacaoOuEmergencia: String;
-       opcao : Integer; novoCodigo: String ) : String ; override;
+     function TrocarCodigoDeAtivacao( codigoDeAtivacaoOuEmergencia: AnsiString;
+       opcao : Integer; novoCodigo: AnsiString ) : String ; override;
    end;
 
 implementation
@@ -122,7 +122,7 @@ begin
 end ;
 
 function TACBrSATDinamico_cdecl.AssociarAssinatura(CNPJvalue,
-  assinaturaCNPJs : String) : String ;
+  assinaturaCNPJs : AnsiString) : String ;
 Var
   Resp : PAnsiChar;
 begin
@@ -160,12 +160,12 @@ begin
 end ;
 
 function TACBrSATDinamico_cdecl.CancelarUltimaVenda(chave,
-  dadosCancelamento : String) : String ;
+  dadosCancelamento : AnsiString) : String ;
 Var
   Resp : PAnsiChar;
 begin
   Resp := xSAT_CancelarUltimaVenda( numeroSessao, PAnsiChar(codigoDeAtivacao),
-                                      PAnsiChar(chave), PAnsiChar(dadosCancelamento) ) ;
+                                    PAnsiChar(chave), PAnsiChar(dadosCancelamento) ) ;
   Result := String( Resp );
 end ;
 
@@ -258,7 +258,7 @@ begin
 end ;
 
 function TACBrSATDinamico_cdecl.TrocarCodigoDeAtivacao(
-  codigoDeAtivacaoOuEmergencia: String; opcao: Integer; novoCodigo: String
+  codigoDeAtivacaoOuEmergencia: AnsiString; opcao: Integer; novoCodigo: AnsiString
   ): String;
 Var
   Resp : PAnsiChar;

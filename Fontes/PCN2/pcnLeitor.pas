@@ -264,21 +264,31 @@ var
   ConteudoTag, Aspas: string;
   inicio, fim: integer;
 begin
+  Result := '';
   Atributo := Trim(Atributo);
-  inicio := pos(Atributo, FGrupo) + Length(Atributo);
-  ConteudoTag := trim(copy(FGrupo, inicio, maxInt));
+  inicio   := pos(Atributo, FGrupo);
+  if inicio > 0 then
+  begin
+     inicio := inicio + Length(Atributo);
+    ConteudoTag := trim(copy(FGrupo, inicio, maxInt));
 
-  // Alterado por Italo em 29/04/2013
-  if Pos('"', ConteudoTag) <> 0 then
-    Aspas := '"'
-   else
-    Aspas := '''';
+    if Pos('"', ConteudoTag) <> 0 then
+      Aspas := '"'
+     else
+      Aspas := '''';
 
-  inicio := pos(Aspas, ConteudoTag) + 1;
-  ConteudoTag := trim(copy(ConteudoTag, inicio, maxInt));
-  fim := pos(Aspas, ConteudoTag) - 1;
-  ConteudoTag := copy(ConteudoTag, 1, fim);
-  result := ReverterFiltroTextoXML(ConteudoTag)
+    inicio := pos(Aspas, ConteudoTag) + 1;
+    if inicio > 0 then
+    begin
+      ConteudoTag := trim(copy(ConteudoTag, inicio, maxInt));
+      fim := pos(Aspas, ConteudoTag) - 1;
+      if fim > 0 then
+      begin
+        ConteudoTag := copy(ConteudoTag, 1, fim);
+        result := ReverterFiltroTextoXML(ConteudoTag)
+      end
+    end ;
+  end ;
 end;
 
 function TLeitor.PosLast(const SubStr, S: AnsiString ): Integer;

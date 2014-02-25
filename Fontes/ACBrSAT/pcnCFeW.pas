@@ -744,7 +744,7 @@ begin
   if not ApenasTagsAplicacao then
   begin
      Grupo := Grupo + ' versaoSB="'+IntToStrZero(CFe.infCFe.versaoSB,6) + '"' +
-                      ' Id="' + CFe.infCFe.ID ;
+                      ' Id="' + CFe.infCFe.ID + '"' ;
   end;
   Gerador.wGrupo( Grupo ) ;
 
@@ -777,4 +777,4 @@ begin
 end;
 
 end.
- 
+

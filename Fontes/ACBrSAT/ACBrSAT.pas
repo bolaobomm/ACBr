@@ -38,7 +38,7 @@ unit ACBrSAT;
 interface
 
 uses
-  Classes, SysUtils, pcnCFe, pcnCFeR, pcnCFeCanc, pcnCFeCancR, ACBrSATClass,
+  Classes, SysUtils, pcnCFe, pcnCFeCanc, ACBrSATClass,
   ACBrSATExtratoClass, synacode
   {$IFNDEF NOGUI}
     {$IFDEF FPC} ,LResources {$ENDIF}
@@ -71,10 +71,10 @@ type
      function DecodificarPaginaDeCodigoSAT(ATexto: AnsiString): String;
 
      function GetAbout : String;
-     function GetcodigoDeAtivacao : String ;
+     function GetcodigoDeAtivacao : AnsiString ;
      function GetModeloStrClass : String ;
      function GetNomeDLL : String ;
-     function GetsignAC : String ;
+     function GetsignAC : AnsiString ;
      procedure SetAbout(const Value: String);{%h-}
      procedure SetInicializado(AValue : Boolean) ;
      procedure SetModelo(AValue : TACBrSATModelo) ;
@@ -104,8 +104,8 @@ type
      property numeroSessao : Integer read fsnumeroSessao write fsnumeroSessao;
      function GerarnumeroSessao : Integer ;
 
-     property codigoDeAtivacao : String read GetcodigoDeAtivacao ;
-     property signAC           : String read GetsignAC ;
+     property codigoDeAtivacao : AnsiString read GetcodigoDeAtivacao ;
+     property signAC           : AnsiString read GetsignAC ;
 
      property RespostaComando: String read fsRespostaComando ;
 
@@ -117,14 +117,14 @@ type
 
      procedure DoLog(AString : String ) ;
 
-     function AssociarAssinatura( CNPJvalue, assinaturaCNPJs : String ): String ;
+     function AssociarAssinatura( CNPJvalue, assinaturaCNPJs : AnsiString ): String ;
      function AtivarSAT(subComando : Integer ; CNPJ : String ; cUF : Integer
        ) : String ;
      function AtualizarSoftwareSAT : String ;
      function BloquearSAT : String ;
      procedure CFe2CFeCanc;
      function CancelarUltimaVenda :String ; overload;
-     function CancelarUltimaVenda( chave, dadosCancelamento : String ) :
+     function CancelarUltimaVenda( chave, dadosCancelamento : AnsiString ) :
        String ; overload;
      function ComunicarCertificadoICPBRASIL( certificado : AnsiString ) :
        String ;
@@ -139,8 +139,8 @@ type
      function EnviarDadosVenda( dadosVenda : AnsiString ) : String ; overload;
      function ExtrairLogs : String ;
      function TesteFimAFim( dadosVenda : AnsiString) : String ;
-     function TrocarCodigoDeAtivacao(codigoDeAtivacaoOuEmergencia: String; opcao: Integer;
-       novoCodigo: String): String;
+     function TrocarCodigoDeAtivacao(codigoDeAtivacaoOuEmergencia: AnsiString;
+       opcao: Integer; novoCodigo: AnsiString): String;
 
     procedure ImprimirExtrato;
     procedure ImprimirExtratoResumido;
@@ -325,7 +325,7 @@ begin
   end ;
 end ;
 
-function TACBrSAT.AssociarAssinatura(CNPJvalue, assinaturaCNPJs : String
+function TACBrSAT.AssociarAssinatura(CNPJvalue, assinaturaCNPJs : AnsiString
   ) : String ;
 begin
   fsComandoLog := 'AssociarAssinatura( '+CNPJvalue+', '+assinaturaCNPJs+' )';
@@ -362,18 +362,33 @@ begin
   if CFeCanc.infCFe.chCanc = '' then
      CFe2CFeCanc;
 
-  dadosCancelamento := CFeCanc.AsXMLString;
+  dadosCancelamento := CFeCanc.GetXMLString( true ); // True = Gera apenas as TAGs da aplicação
 
   Result := CancelarUltimaVenda( CFeCanc.infCFe.chCanc, dadosCancelamento);
 end ;
 
 
-function TACBrSAT.CancelarUltimaVenda(chave, dadosCancelamento : String
+function TACBrSAT.CancelarUltimaVenda(chave, dadosCancelamento : AnsiString
   ) : String ;
+var
+  XMLRecebido: String;
 begin
   fsComandoLog := 'CancelarUltimaVenda( '+chave+', '+dadosCancelamento+' )';
+  if Trim(chave) = '' then
+     raise EACBrSATErro.Create('Parâmetro: "chave" não informado');
+  if Trim(dadosCancelamento) = '' then
+     raise EACBrSATErro.Create('Parâmetro: "dadosCancelamento" não informado');
+
   IniciaComando;
   Result := FinalizaComando( fsSATClass.CancelarUltimaVenda(chave, dadosCancelamento) ) ;
+
+  if fsResposta.codigoDeRetorno = 7000 then
+  begin
+     XMLRecebido := DecodeBase64(fsResposta.RetornoLst[6]);
+     CFeCanc.AsXMLString := XMLRecebido;
+     //DEBUG
+     //WriteToTXT('c:\temp\CancRec.xml',XMLRecebido,False,False);
+  end;
 end ;
 
 function TACBrSAT.ComunicarCertificadoICPBRASIL(certificado : AnsiString
@@ -430,28 +445,27 @@ end ;
 
 function TACBrSAT.EnviarDadosVenda: String;
 begin
-  EnviarDadosVenda( CFe.GetXMLString( True ) );  // True = Gera apenas as TAGs da aplicação
+  Result := EnviarDadosVenda( CFe.GetXMLString( True ) );  // True = Gera apenas as TAGs da aplicação
 end;
 
 function TACBrSAT.EnviarDadosVenda(dadosVenda : AnsiString) : String ;
 var
-  LocCFeR : TCFeR;
+  XMLRecebido: String;
 begin
   fsComandoLog := 'EnviarDadosVenda( '+dadosVenda+' )';
+  if Trim(dadosVenda) = '' then
+     raise EACBrSATErro.Create('Parâmetro: "dadosVenda" não informado');
+
   IniciaComando;
-  Result := FinalizaComando( fsSATClass.EnviarDadosVenda( dadosVenda ) );
+  Result := FinalizaComando( fsSATClass.EnviarDadosVenda( Trim(dadosVenda) ) );
 
   if fsResposta.codigoDeRetorno = 6000 then
-   begin
-     CFe.Clear;
-     LocCFeR := TCFeR.Create(CFe);
-     try
-       LocCFeR.Leitor.Arquivo := DecodeBase64(fsResposta.RetornoLst[6]);
-       LocCFeR.LerXml;
-     finally
-       LocCFeR.Free;
-     end;
-   end;
+  begin
+     XMLRecebido := DecodeBase64(fsResposta.RetornoLst[6]);
+     CFe.AsXMLString := XMLRecebido;
+     //DEBUG
+     //WriteToTXT('c:\temp\VendaRec.xml',XMLRecebido,False,False);
+  end;
 end ;
 
 function TACBrSAT.ExtrairLogs : String ;
@@ -468,8 +482,8 @@ begin
   Result := FinalizaComando( fsSATClass.TesteFimAFim( dadosVenda ) );
 end ;
 
-function TACBrSAT.TrocarCodigoDeAtivacao(codigoDeAtivacaoOuEmergencia: String;
-  opcao: Integer; novoCodigo: String): String;
+function TACBrSAT.TrocarCodigoDeAtivacao(codigoDeAtivacaoOuEmergencia: AnsiString;
+  opcao: Integer; novoCodigo: AnsiString): String;
 begin
   fsComandoLog := 'TrocarCodigoDeAtivacao('+ codigoDeAtivacao+', '+IntToStr(opcao)+
                   ', '+novoCodigo+' )';
@@ -483,9 +497,9 @@ begin
   Result := 'ACBrSAT Ver: '+CACBrSAT_Versao;
 end ;
 
-function TACBrSAT.GetcodigoDeAtivacao : String ;
+function TACBrSAT.GetcodigoDeAtivacao : AnsiString ;
 var
-  AcodigoDeAtivacao : String ;
+  AcodigoDeAtivacao : AnsiString ;
 begin
   AcodigoDeAtivacao := '';
 
@@ -505,9 +519,9 @@ begin
   Result := fsSATClass.NomeDLL;
 end;
 
-function TACBrSAT.GetsignAC : String ;
+function TACBrSAT.GetsignAC : AnsiString ;
 var
-  AsignAC : String ;
+  AsignAC : AnsiString ;
 begin
   AsignAC := '';
 

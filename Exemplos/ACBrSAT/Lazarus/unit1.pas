@@ -40,7 +40,7 @@ type
     GroupBox2: TGroupBox;
     Label18: TLabel;
     Label6: TLabel;
-    mCancelado: TSynMemo;
+    mCancelamentoEnviar: TSynMemo;
     miGerarXMLCancelamento: TMenuItem;
     miEnviarCancelamento: TMenuItem;
     MenuItem12: TMenuItem;
@@ -99,7 +99,7 @@ type
     mConfigurarInterfaceRede : TMenuItem ;
     MenuItem9 : TMenuItem ;
     mExtrairLogs : TMenuItem ;
-    mResposta : TMemo ;
+    mLog : TMemo ;
     mTesteFimAFim : TMenuItem ;
     mEnviarVenda : TMenuItem ;
     mGerarVenda : TMenuItem ;
@@ -111,8 +111,8 @@ type
     sePagCod: TSpinEdit;
     Splitter1 : TSplitter ;
     StatusBar1 : TStatusBar ;
-    mVenda: TSynMemo;
-    mCupom: TSynMemo;
+    mVendaEnviar: TSynMemo;
+    mRecebido: TSynMemo;
     SynXMLSyn1: TSynXMLSyn;
     tsCancelamento: TTabSheet;
     tsDadosEmit : TTabSheet ;
@@ -121,8 +121,8 @@ type
     tsRecebido : TTabSheet ;
     tsLog : TTabSheet ;
     tsGerado : TTabSheet ;
-    procedure ACBrSAT1GetcodigoDeAtivacao(var Chave : String) ;
-    procedure ACBrSAT1GetsignAC(var Chave : String) ;
+    procedure ACBrSAT1GetcodigoDeAtivacao(var Chave: AnsiString);
+    procedure ACBrSAT1GetsignAC(var Chave : AnsiString) ;
     procedure ACBrSAT1Log(const AString: String);
     procedure bInicializarClick(Sender : TObject) ;
     procedure btLerParamsClick(Sender : TObject) ;
@@ -251,19 +251,19 @@ begin
   end
 end ;
 
-procedure TForm1.ACBrSAT1GetcodigoDeAtivacao(var Chave : String) ;
+procedure TForm1.ACBrSAT1GetsignAC(var Chave: AnsiString);
 begin
-  Chave := edtCodigoAtivacao.Text;
+  Chave := AnsiString( edtSwHAssinatura.Text );
 end;
 
-procedure TForm1.ACBrSAT1GetsignAC(var Chave : String) ;
+procedure TForm1.ACBrSAT1GetcodigoDeAtivacao(var Chave: AnsiString);
 begin
-  Chave := edtSwHAssinatura.Text;
+  Chave := AnsiString( edtCodigoAtivacao.Text );
 end;
 
 procedure TForm1.ACBrSAT1Log(const AString: String);
 begin
-  mResposta.Lines.Add(AString);
+  mLog.Lines.Add(AString);
   StatusBar1.Panels[0].Text := IntToStr( ACBrSAT1.Resposta.numeroSessao );
   StatusBar1.Panels[1].Text := IntToStr( ACBrSAT1.Resposta.codigoDeRetorno );
 end;
@@ -398,7 +398,7 @@ begin
     ACBrSAT1.CFe.LoadFromFile( OpenDialog1.FileName );
     ACBrSAT1.CFe2CFeCanc;
 
-    mCancelado.Lines.Text := ACBrSAT1.CFeCanc.GetXMLString( True ) ;  // True = Gera apenas as TAGs da aplicação
+    mCancelamentoEnviar.Lines.Text := ACBrSAT1.CFeCanc.GetXMLString( True ) ;  // True = Gera apenas as TAGs da aplicação
     edChaveCancelamento.Text := ACBrSAT1.CFeCanc.infCFe.chCanc;
     PageControl1.ActivePage := tsCancelamento;
   end ;
@@ -407,13 +407,27 @@ end;
 procedure TForm1.miEnviarCancelamentoClick(Sender: TObject);
 begin
   PageControl1.ActivePage := tsLog;
-  if edChaveCancelamento.Text = '' then
+  if mCancelamentoEnviar.Lines.Count < 1 then
   begin
-    ACBrSAT1.CFeCanc.AsXMLString := mCancelado.Lines.Text;
-    edChaveCancelamento.Text := ACBrSAT1.CFeCanc.infCFe.chCanc;
-  end;
+    ACBrSAT1.CancelarUltimaVenda;
+    mCancelamentoEnviar.Lines.Text := ACBrSAT1.CFeCanc.AsXMLString;
+  end
+  else
+  begin
+    if edChaveCancelamento.Text = '' then
+    begin
+      ACBrSAT1.CFeCanc.AsXMLString := mCancelamentoEnviar.Lines.Text;
+      edChaveCancelamento.Text := ACBrSAT1.CFeCanc.infCFe.chCanc;
+    end;
 
-  ACBrSAT1.CancelarUltimaVenda( edChaveCancelamento.Text, mCancelado.Lines.Text );
+    ACBrSAT1.CancelarUltimaVenda( edChaveCancelamento.Text, mCancelamentoEnviar.Lines.Text );
+  end ;
+
+  if ACBrSAT1.Resposta.codigoDeRetorno = 7000 then
+  begin
+    mRecebido.Lines.Text := ACBrSAT1.CFeCanc.AsXMLString;
+    PageControl1.ActivePage := tsRecebido;
+  end;
 end;
 
 procedure TForm1.miImprimirExtratoCancelamentoClick(Sender: TObject);
@@ -427,16 +441,16 @@ end;
 
 procedure TForm1.mTesteFimAFimClick(Sender: TObject);
 begin
-  if mVenda.Text = '' then
+  if mVendaEnviar.Text = '' then
     mGerarVenda.Click;
 
   PageControl1.ActivePage := tsLog;
 
-  ACBrSAT1.TesteFimAFim( mVenda.Text );
+  ACBrSAT1.TesteFimAFim( mVendaEnviar.Text );
 
   if ACBrSAT1.Resposta.codigoDeRetorno = 6000 then
   begin
-     mCupom.Text := DecodeBase64(ACBrSAT1.Resposta.RetornoLst[6]) ;
+     mRecebido.Text := DecodeBase64(ACBrSAT1.Resposta.RetornoLst[6]) ;
      PageControl1.ActivePage := tsRecebido;
   end;
 end;
@@ -516,7 +530,7 @@ end;
 
 procedure TForm1.mConsultarStatusOperacionalClick(Sender : TObject) ;
 begin
-  //mResposta.Lines.Add( ConsultarStatusOperacional( Random(999999), '123456' ) ) ;
+  //mLog.Lines.Add( ConsultarStatusOperacional( Random(999999), '123456' ) ) ;
 
   ACBrSAT1.ConsultarStatusOperacional;
 end;
@@ -559,7 +573,7 @@ begin
   if ACBrSAT1.Resposta.codigoDeRetorno = 1800 then
   begin
     edtCodigoAtivacao.Text := CodNovo;
-    mResposta.Lines.Add('Código de Ativação trocado com sucesso');
+    mLog.Lines.Add('Código de Ativação trocado com sucesso');
     btSalvarParams.Click;
   end ;
 end;
@@ -569,12 +583,12 @@ Var
   DirEnv, DirResp : String;
   numSessao: Integer;
 begin
-  if mVenda.Text = '' then
+  if mVendaEnviar.Text = '' then
     mGerarVenda.Click;
 
   PageControl1.ActivePage := tsLog;
 
-  ACBrSAT1.EnviarDadosVenda( mVenda.Text );
+  ACBrSAT1.EnviarDadosVenda( mVendaEnviar.Text );
 
   DirEnv := ExtractFilePath(Application.ExeName)+'\Env\';
   DirResp := ExtractFilePath(Application.ExeName)+'\Res\';
@@ -583,14 +597,14 @@ begin
   ForceDirectory( DirEnv );
   ForceDirectory( DirResp );
 
-  mVenda.Lines.SaveToFile(DirEnv + 'CFe-'+IntToStrZero(numSessao,6)+'.xml');
+  mVendaEnviar.Lines.SaveToFile(DirEnv + 'CFe-'+IntToStrZero(numSessao,6)+'.xml');
 
   if ACBrSAT1.Resposta.codigoDeRetorno = 6000 then
   begin
-     mCupom.Text := DecodeBase64(ACBrSAT1.Resposta.RetornoLst[6]) ;
-     mCupom.Lines.SaveToFile(DirResp + 'CFe-'+ACBrSAT1.CFe.infCFe.ID+'-rec.xml');
-     //LoadXML(mCupom, wbCupom);
-     PageControl1.ActivePage := tsRecebido;
+    mRecebido.Lines.Text := ACBrSAT1.CFe.AsXMLString;
+    mRecebido.Lines.SaveToFile(DirResp + 'CFe-'+ACBrSAT1.CFe.infCFe.ID+'-rec.xml');
+     //LoadXML(mRecebido, wbCupom);
+    PageControl1.ActivePage := tsRecebido;
   end;
 end;
 
@@ -608,7 +622,7 @@ begin
   ACBrSAT1.CFe.IdentarXML := cbxFormatXML.Checked;
   ACBrSAT1.CFe.TamanhoIdentacao := 3;
 
-  mVenda.Clear;
+  mVendaEnviar.Clear;
 
   // Trasnferindo Informações de Config para o CFe //
   AjustaACBrSAT;
@@ -776,9 +790,9 @@ begin
                       'Precisa de um PAF-ECF homologado?;Conheça o DJPDV - www.djpdv.com.br'
   end;
 
-  mVenda.Lines.Text := ACBrSAT1.CFe.GetXMLString( True );    // True = Gera apenas as TAGs da aplicação
+  mVendaEnviar.Lines.Text := ACBrSAT1.CFe.GetXMLString( True );    // True = Gera apenas as TAGs da aplicação
 
-  mResposta.Lines.Add('Venda Gerada');
+  mLog.Lines.Add('Venda Gerada');
 end;
 
 procedure TForm1.mImprimirExtratoVendaClick(Sender : TObject) ;
@@ -802,9 +816,9 @@ end;
 
 procedure TForm1.mLimparClick(Sender : TObject) ;
 begin
-  mVenda.Clear;
-  mCupom.Clear;
-  mCancelado.Clear;
+  mVendaEnviar.Clear;
+  mRecebido.Clear;
+  mCancelamentoEnviar.Clear;
 end;
 
 procedure TForm1.SbArqLogClick(Sender : TObject) ;

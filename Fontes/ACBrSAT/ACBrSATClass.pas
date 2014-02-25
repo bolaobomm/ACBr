@@ -45,7 +45,7 @@ unit ACBrSATClass ;
 interface
 
 uses
-  Classes, SysUtils, pcnCFe, pcnConversao ;
+  Classes, SysUtils, pcnConversao ;
 
 const
   cACBrSAT_Versao      = '0.1.1' ;
@@ -73,7 +73,7 @@ type
   end ;
 
   { Eventos do componente }
-  TACBrSATGetChave = procedure(var Chave: String) of object ;
+  TACBrSATGetChave = procedure(var Chave: AnsiString) of object ;
   TACBrSATDoLog = procedure(const AString: String) of object ;
 
   { TACBrSATConfig }
@@ -142,12 +142,12 @@ type
 
    TACBrSATClass = class( TComponent )
    private
-     function GetcodigoDeAtivacao : String ;
+     function GetcodigoDeAtivacao : AnsiString ;
      function GetnumeroSessao : Integer ;
      function GetPathDLL : string ;
 
      procedure ErroAbstract( NomeProcedure : String ) ;
-     function GetsignAC : String ;
+     function GetsignAC : AnsiString ;
    protected
      fpOwner : TComponent ;   { Componente ACBrSAT }
      fpModeloStr: String;
@@ -158,8 +158,8 @@ type
 
      property PathDLL: String read GetPathDLL ;
 
-     property codigoDeAtivacao : String read GetcodigoDeAtivacao ;
-     property signAC : String read GetsignAC ;
+     property codigoDeAtivacao : AnsiString read GetcodigoDeAtivacao ;
+     property signAC : AnsiString read GetsignAC ;
      property numeroSessao : Integer read GetnumeroSessao ;
 
      procedure LoadDLLFunctions ; virtual ;
@@ -176,13 +176,13 @@ type
      Property ModeloStr: String read GetModeloStr ;
      property NomeDLL  : String read GetNomeDLL ;
 
-     function AssociarAssinatura( CNPJvalue, assinaturaCNPJs : String ):
+     function AssociarAssinatura( CNPJvalue, assinaturaCNPJs : AnsiString ):
        String ; virtual;
      function AtivarSAT( subComando : Integer; CNPJ: String; cUF : Integer )
        : String ; virtual;
      function AtualizarSoftwareSAT : String ; virtual;
      function BloquearSAT : String ; virtual;
-     function CancelarUltimaVenda( chave, dadosCancelamento : String ) :
+     function CancelarUltimaVenda( chave, dadosCancelamento : AnsiString ) :
        String ; virtual;
      function ComunicarCertificadoICPBRASIL( certificado : AnsiString ) :
        String ; virtual;
@@ -197,37 +197,29 @@ type
      function EnviarDadosVenda( dadosVenda : AnsiString ) : String ; virtual;
      function ExtrairLogs : String ; virtual;
      function TesteFimAFim( dadosVenda : AnsiString) : String ; virtual;
-     function TrocarCodigoDeAtivacao( codigoDeAtivacaoOuEmergencia: String;
-       opcao : Integer; novoCodigo: String ) : String ; virtual;
+     function TrocarCodigoDeAtivacao( codigoDeAtivacaoOuEmergencia: AnsiString;
+       opcao : Integer; novoCodigo: AnsiString ) : String ; virtual;
 
    end;
 
 implementation
 
-Uses ACBrSAT, ACBrUtil ;
+Uses ACBrSAT, ACBrUtil, ACBrConsts ;
 
 { TACBrSATRespostaClass }
 
 procedure TACBrSATResposta.SetRetornoStr(AValue : String) ;
 var
-  I: Integer;
+  Buffer:String;
 begin
+  fRetornoStr := AValue;
+
+  // Ajuste para Respostas do SAT com CR ou LF antes do Pipe
+  Buffer := StringReplace( AValue, CRLF+'|', '|', [rfReplaceAll] );
+  Buffer := StringReplace( Buffer, LF+'|', '|', [rfReplaceAll] );
+
   Clear;
-  fRetornoLst.Text := StringReplace( AValue, '|', sLineBreak, [rfReplaceAll] );
-  fRetornoStr      := AValue;
-
-  // Apaga as linhas em Branco, o que ocorre quando o SAT responde com CR ou LF antes ou após o Pipe
-  I := 0;
-  while I < fRetornoLst.Count-1 do
-  begin
-    if fRetornoLst[I] = '' then
-      fRetornoLst.Delete( I )
-    else
-      Inc( I );
-  end;
-
-  //DEBUG:
-  //fRetornoLst.SaveToFile('c:\temp\ret.txt');
+  fRetornoLst.Text := StringReplace( Buffer, '|', sLineBreak, [rfReplaceAll] );
 
   if fRetornoLst.Count > 1 then
   begin
@@ -348,12 +340,12 @@ begin
                                      [NomeProcedure, ModeloStr] )) ;
 end ;
 
-function TACBrSATClass.GetsignAC : String ;
+function TACBrSATClass.GetsignAC : AnsiString ;
 begin
   Result := TACBrSAT(fpOwner).signAC;
 end;
 
-function TACBrSATClass.GetcodigoDeAtivacao : String ;
+function TACBrSATClass.GetcodigoDeAtivacao : AnsiString ;
 begin
   Result := TACBrSAT(fpOwner).codigoDeAtivacao;
 end;
@@ -379,7 +371,7 @@ begin
 end ;
 
 function TACBrSATClass.AssociarAssinatura(CNPJvalue,
-  assinaturaCNPJs : String) : String ;
+  assinaturaCNPJs : AnsiString) : String ;
 begin
   ErroAbstract('AssociarAssinatura');
   Result := '';
@@ -404,7 +396,7 @@ begin
   Result := '';
 end ;
 
-function TACBrSATClass.CancelarUltimaVenda(chave, dadosCancelamento : String
+function TACBrSATClass.CancelarUltimaVenda(chave, dadosCancelamento : AnsiString
   ) : String ;
 begin
   ErroAbstract('CancelarUltimaVenda');
@@ -475,7 +467,7 @@ begin
 end ;
 
 function TACBrSATClass.TrocarCodigoDeAtivacao(
-  codigoDeAtivacaoOuEmergencia: String; opcao: Integer; novoCodigo: String
+  codigoDeAtivacaoOuEmergencia: AnsiString; opcao: Integer; novoCodigo: AnsiString
   ): String;
 begin
   ErroAbstract('TrocarCodigoDeAtivacao');

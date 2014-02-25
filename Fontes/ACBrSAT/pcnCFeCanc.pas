@@ -78,7 +78,7 @@ type
     FTotal: TTotal;
     FInfAdic: TInfAdic;
     FSignature: TSignature;
-    function GetAsXMLString : String ;
+    function GetAsXMLString : AnsiString ;
   public
     constructor Create;
     destructor Destroy; override;
@@ -87,10 +87,10 @@ type
 
     function LoadFromFile(AFileName : String): boolean;
     function SaveToFile(AFileName : String): boolean;
-    function GetXMLString( ApenasTagsAplicacao: Boolean = false) : String ;
-    procedure SetXMLString(AValue : String) ;
+    function GetXMLString( ApenasTagsAplicacao: Boolean = false) : AnsiString ;
+    procedure SetXMLString(AValue : AnsiString) ;
 
-    property AsXMLString : String read GetAsXMLString write SetXMLString ;
+    property AsXMLString : AnsiString read GetAsXMLString write SetXMLString ;
   published
     property infCFe: TinfCFe read FinfCFe write FinfCFe;
     property ide: Tide read Fide write Fide;
@@ -476,12 +476,12 @@ end ;
 
 { TCFeTCFeCanc }
 
-function TCFeCanc.GetAsXMLString : String ;
+function TCFeCanc.GetAsXMLString : AnsiString ;
 begin
   Result := GetXMLString( false ) ;
 end;
 
-function TCFeCanc.GetXMLString( ApenasTagsAplicacao: Boolean ): String;
+function TCFeCanc.GetXMLString( ApenasTagsAplicacao: Boolean ): AnsiString;
 var
   LocCFeCancW : TCFeCancW ;
 begin
@@ -496,7 +496,7 @@ begin
 end;
 
 
-procedure TCFeCanc.SetXMLString(AValue : String) ;
+procedure TCFeCanc.SetXMLString(AValue : AnsiString) ;
 var
  LocCFeCancR : TCFeCancR;
 begin
@@ -556,8 +556,8 @@ var
   SL : TStringList;
 begin
   Result := False;
+  SL := TStringList.Create;
   try
-    SL := TStringList.Create;
     SL.LoadFromFile( AFileName );
     AsXMLString := SL.Text;
     Result      := True;

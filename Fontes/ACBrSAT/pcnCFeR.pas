@@ -42,7 +42,7 @@ interface uses
 {$IFNDEF VER130}
   Variants,
 {$ENDIF}
-  pcnAuxiliar, pcnConversao, pcnLeitor, pcnCFe;
+  pcnConversao, pcnLeitor, pcnCFe;
 
 type
 
@@ -86,23 +86,19 @@ var
   Arquivo, Itens, ItensTemp, NumItem: AnsiString;
 begin
   Result := False;
+  CFe.Clear;
 
-  i := 0;
-  i := RetornarPosEx('Id=', Leitor.Arquivo, i + 6);
-  if i > 0 then
+  if Leitor.rExtrai(1, 'infCFe') <> '' then
   begin
-    i := RetornarPosEx('"', Leitor.Arquivo, i + 2);
-    if i > 0 then
-    begin
-      j := RetornarPosEx('"', Leitor.Arquivo, i + 1);
-      if j > 0 then
-      begin
-        CFe.infCFe.ID := copy(Leitor.Arquivo, I+1, J - (I+1));
-        CFe.infCFe.ID := StringReplace( UpperCase(CFe.infCFe.ID), 'CFE', '', [rfReplaceAll] ) ;
-      end;
-    end;
-  end;
-
+    CFe.infCFe.ID             := Leitor.rAtributo( 'Id' ) ;
+    CFe.infCFe.ID             := StringReplace( UpperCase(CFe.infCFe.ID), 'CFE', '', [rfReplaceAll] ) ;
+    CFe.infCFe.versao         := StrToFloatDef(StringReplace( Leitor.rAtributo( 'versao' ),
+                                              '.', DecimalSeparator, []), 0) ;
+    CFe.infCFe.versaoSB       := StrToIntDef(Leitor.rAtributo( 'versaoSB' ), 0) ;
+    CFe.infCFe.versaoDadosEnt := StrToFloatDef(StringReplace( Leitor.rAtributo( 'versaoDadosEnt' ),
+                                              '.', DecimalSeparator, []), 0) ;
+  end ;
+                                            
   (* Grupo da TAG <ide> *******************************************************)
   if Leitor.rExtrai(1, 'ide') <> '' then
   begin
@@ -224,6 +220,7 @@ begin
       CFe.Det[i].Prod.obsFiscoDet.Add;
       (*I18*)CFe.Det[i].Prod.obsFiscoDet[j].xCampoDet := Leitor.rAtributo('xCampoDet');
       (*I19*)CFe.Det[i].Prod.obsFiscoDet[j].xTextoDet := Leitor.rCampo(tcStr, 'xTextoDet');
+      inc(j);
     end;
 
     (* Grupo da TAG <det><imposto> ********************************************)
