@@ -459,7 +459,7 @@ begin
      else
       begin
         Gerador.wCampo(tcDe2, 'R02', 'vBC      ', 01, 15, 0, CFe.Det[i].Imposto.PISST.vBc, DSC_VBC);
-        Gerador.wCampo(tcDe2, 'R03', 'pPIS     ', 01, 05, 0, CFe.Det[i].Imposto.PISST.pPis, DSC_PPIS);
+        Gerador.wCampo(tcDe4, 'R03', 'pPIS     ', 01, 05, 0, CFe.Det[i].Imposto.PISST.pPis, DSC_PPIS);
       end;
 
      if not FApenasTagsAplicacao then

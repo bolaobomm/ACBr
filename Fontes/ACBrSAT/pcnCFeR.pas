@@ -240,7 +240,7 @@ begin
     begin
       (*Q07*)CFe.Det[i].Imposto.PIS.CST := StrToCSTPIS(ok, Leitor.rCampo(tcStr, 'CST'));
       (*Q08*)CFe.Det[i].Imposto.PIS.vBC := Leitor.rCampo(tcDe2, 'vBC');
-      (*Q09*)CFe.Det[i].Imposto.PIS.pPIS := Leitor.rCampo(tcDe2, 'pPIS');
+      (*Q09*)CFe.Det[i].Imposto.PIS.pPIS := Leitor.rCampo(tcDe4, 'pPIS');
       (*Q10*)CFe.Det[i].Imposto.PIS.vPIS := Leitor.rCampo(tcDe2, 'vPIS');
       (*Q11*)CFe.Det[i].Imposto.PIS.qBCProd := Leitor.rCampo(tcDe4, 'qBCProd');
       (*Q12*)CFe.Det[i].Imposto.PIS.vAliqProd := Leitor.rCampo(tcDe4, 'vAliqProd');
@@ -248,7 +248,7 @@ begin
     if Leitor.rExtrai(3, 'PISST') <> '' then
     begin
       (*R02*)CFe.Det[i].Imposto.PISST.vBc := Leitor.rCampo(tcDe2, 'vBC');
-      (*R03*)CFe.Det[i].Imposto.PISST.pPis := Leitor.rCampo(tcDe2, 'pPIS');
+      (*R03*)CFe.Det[i].Imposto.PISST.pPis := Leitor.rCampo(tcDe4, 'pPIS');
       (*R04*)CFe.Det[i].Imposto.PISST.qBCProd := Leitor.rCampo(tcDe4, 'qBCProd');
       (*R05*)CFe.Det[i].Imposto.PISST.vAliqProd := Leitor.rCampo(tcDe4, 'vAliqProd');
       (*R06*)CFe.Det[i].Imposto.PISST.vPIS := Leitor.rCampo(tcDe2, 'vPIS');
@@ -257,7 +257,7 @@ begin
     begin
       (*S07*)CFe.Det[i].Imposto.COFINS.CST := StrToCSTCOFINS(ok, Leitor.rCampo(tcStr, 'CST'));
       (*S08*)CFe.Det[i].Imposto.COFINS.vBC := Leitor.rCampo(tcDe2, 'vBC');
-      (*S09*)CFe.Det[i].Imposto.COFINS.pCOFINS := Leitor.rCampo(tcDe2, 'pCOFINS');
+      (*S09*)CFe.Det[i].Imposto.COFINS.pCOFINS := Leitor.rCampo(tcDe4, 'pCOFINS');
       (*S11*)CFe.Det[i].Imposto.COFINS.qBCProd := Leitor.rCampo(tcDe4, 'qBCProd');
       (*S12*)CFe.Det[i].Imposto.COFINS.vAliqProd := Leitor.rCampo(tcDe4, 'vAliqProd');
       (*S10*)CFe.Det[i].Imposto.COFINS.vCOFINS := Leitor.rCampo(tcDe2, 'vCOFINS');
@@ -265,7 +265,7 @@ begin
     if Leitor.rExtrai(3, 'COFINSST') <> '' then
     begin
       (*T02*)CFe.Det[i].Imposto.COFINSST.vBC := Leitor.rCampo(tcDe2, 'vBC');
-      (*T03*)CFe.Det[i].Imposto.COFINSST.pCOFINS := Leitor.rCampo(tcDe2, 'pCOFINS');
+      (*T03*)CFe.Det[i].Imposto.COFINSST.pCOFINS := Leitor.rCampo(tcDe4, 'pCOFINS');
       (*T04*)CFe.Det[i].Imposto.COFINSST.qBCProd := Leitor.rCampo(tcDe4, 'qBCProd');
       (*T05*)CFe.Det[i].Imposto.COFINSST.vAliqProd := Leitor.rCampo(tcDe4, 'vAliqProd');
       (*T06*)CFe.Det[i].Imposto.COFINSST.vCOFINS := Leitor.rCampo(tcDe2, 'vCOFINS');
