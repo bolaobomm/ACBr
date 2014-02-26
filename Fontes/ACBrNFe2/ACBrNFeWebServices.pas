@@ -1616,7 +1616,8 @@ begin
        raise EACBrNFeException.Create(Self.Enviar.Msg);
      end;
 
-  if (FConfiguracoes.Geral.ModeloDF = moNFe) or (not ASincrono) then 
+  //if (FConfiguracoes.Geral.ModeloDF = moNFe) or (not ASincrono) then
+  if (FConfiguracoes.Geral.ModeloDF = moNFe) and (not ASincrono) then
    begin
     Self.Retorno.Recibo := Self.Enviar.Recibo;
     if not(Self.Retorno.Executar) then
