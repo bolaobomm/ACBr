@@ -1,8 +1,9 @@
 inherited frmCTeDAEventoQRRetrato: TfrmCTeDAEventoQRRetrato
-  Left = 197
-  Top = 124
+  Left = 235
+  Top = 132
   Width = 835
   Height = 784
+  VertScrollBar.Position = 380
   Caption = 'Evento - Retrato'
   Font.Height = -8
   Font.Name = 'Arial'
@@ -12,7 +13,7 @@ inherited frmCTeDAEventoQRRetrato: TfrmCTeDAEventoQRRetrato
   TextHeight = 10
   inherited QRCTeEvento: TQuickRep
     Left = 3
-    Top = 3
+    Top = -377
     BeforePrint = QREventoBeforePrint
     DataSet = cdsDocumentos
     Font.Height = -8
@@ -33,7 +34,7 @@ inherited frmCTeDAEventoQRRetrato: TfrmCTeDAEventoQRRetrato
     Units = Native
     object qrb_09_Itens: TQRBand
       Left = 26
-      Top = 1049
+      Top = 1073
       Width = 741
       Height = 13
       Frame.Color = clBlack
@@ -48,7 +49,7 @@ inherited frmCTeDAEventoQRRetrato: TfrmCTeDAEventoQRRetrato
       ForceNewColumn = False
       ForceNewPage = False
       Size.Values = (
-        34.395833333333340000
+        34.395833333333330000
         1960.562500000000000000)
       PreCaluculateBandHeight = False
       KeepOnOnePage = False
@@ -318,7 +319,7 @@ inherited frmCTeDAEventoQRRetrato: TfrmCTeDAEventoQRRetrato
         Frame.DrawRight = False
         Size.Values = (
           52.916666666666670000
-          608.541666666666800000
+          608.541666666666700000
           5.291666666666667000
           754.062500000000000000)
         XLColumn = 0
@@ -350,7 +351,7 @@ inherited frmCTeDAEventoQRRetrato: TfrmCTeDAEventoQRRetrato
         Frame.DrawLeft = False
         Frame.DrawRight = False
         Size.Values = (
-          42.333333333333340000
+          42.333333333333330000
           476.250000000000000000
           63.500000000000000000
           1005.416666666667000000)
@@ -412,7 +413,7 @@ inherited frmCTeDAEventoQRRetrato: TfrmCTeDAEventoQRRetrato
     end
     object qrb_08_HeaderItens: TQRBand
       Left = 26
-      Top = 1033
+      Top = 1057
       Width = 741
       Height = 16
       Frame.Color = clBlack
@@ -428,7 +429,7 @@ inherited frmCTeDAEventoQRRetrato: TfrmCTeDAEventoQRRetrato
       ForceNewPage = False
       LinkBand = qrb_05_Evento
       Size.Values = (
-        42.333333333333340000
+        42.333333333333330000
         1960.562500000000000000)
       PreCaluculateBandHeight = False
       KeepOnOnePage = False
@@ -436,7 +437,7 @@ inherited frmCTeDAEventoQRRetrato: TfrmCTeDAEventoQRRetrato
     end
     object qrb_10_Sistema: TQRBand
       Left = 26
-      Top = 1062
+      Top = 1086
       Width = 741
       Height = 19
       Frame.Color = clBlack
@@ -691,7 +692,7 @@ inherited frmCTeDAEventoQRRetrato: TfrmCTeDAEventoQRRetrato
           23.812500000000000000
           10.583333333333330000
           47.625000000000000000
-          68.791666666666680000)
+          68.791666666666670000)
         XLColumn = 0
         Alignment = taLeftJustify
         AlignToBand = False
@@ -757,7 +758,7 @@ inherited frmCTeDAEventoQRRetrato: TfrmCTeDAEventoQRRetrato
           23.812500000000000000
           195.791666666666700000
           134.937500000000000000
-          216.958333333333400000)
+          216.958333333333300000)
         XLColumn = 0
         Alignment = taLeftJustify
         AlignToBand = False
@@ -995,7 +996,7 @@ inherited frmCTeDAEventoQRRetrato: TfrmCTeDAEventoQRRetrato
         Size.Values = (
           39.687500000000000000
           132.291666666666700000
-          74.083333333333340000
+          74.083333333333330000
           235.479166666666700000)
         XLColumn = 0
         Alignment = taLeftJustify
@@ -1061,7 +1062,7 @@ inherited frmCTeDAEventoQRRetrato: TfrmCTeDAEventoQRRetrato
         Size.Values = (
           39.687500000000000000
           1582.208333333333000000
-          74.083333333333340000
+          74.083333333333330000
           224.895833333333300000)
         XLColumn = 0
         Alignment = taLeftJustify
@@ -1095,7 +1096,7 @@ inherited frmCTeDAEventoQRRetrato: TfrmCTeDAEventoQRRetrato
           23.812500000000000000
           10.583333333333330000
           134.937500000000000000
-          74.083333333333340000)
+          74.083333333333330000)
         XLColumn = 0
         Alignment = taLeftJustify
         AlignToBand = False
@@ -1549,7 +1550,7 @@ inherited frmCTeDAEventoQRRetrato: TfrmCTeDAEventoQRRetrato
           39.687500000000000000
           1608.666666666667000000
           79.375000000000000000
-          216.958333333333400000)
+          216.958333333333300000)
         XLColumn = 0
         Alignment = taLeftJustify
         AlignToBand = False
@@ -1714,7 +1715,7 @@ inherited frmCTeDAEventoQRRetrato: TfrmCTeDAEventoQRRetrato
           23.812500000000000000
           10.583333333333330000
           222.250000000000000000
-          97.895833333333340000)
+          97.895833333333330000)
         XLColumn = 0
         Alignment = taLeftJustify
         AlignToBand = False
@@ -1927,7 +1928,7 @@ inherited frmCTeDAEventoQRRetrato: TfrmCTeDAEventoQRRetrato
           23.812500000000000000
           1195.916666666667000000
           137.583333333333300000
-          74.083333333333340000)
+          74.083333333333330000)
         XLColumn = 0
         Alignment = taLeftJustify
         AlignToBand = False
@@ -2329,7 +2330,7 @@ inherited frmCTeDAEventoQRRetrato: TfrmCTeDAEventoQRRetrato
           23.812500000000000000
           10.583333333333330000
           222.250000000000000000
-          97.895833333333340000)
+          97.895833333333330000)
         XLColumn = 0
         Alignment = taLeftJustify
         AlignToBand = False
@@ -2395,7 +2396,7 @@ inherited frmCTeDAEventoQRRetrato: TfrmCTeDAEventoQRRetrato
           23.812500000000000000
           1608.666666666667000000
           50.270833333333330000
-          97.895833333333340000)
+          97.895833333333330000)
         XLColumn = 0
         Alignment = taLeftJustify
         AlignToBand = False
@@ -2428,7 +2429,7 @@ inherited frmCTeDAEventoQRRetrato: TfrmCTeDAEventoQRRetrato
           39.687500000000000000
           1608.666666666667000000
           79.375000000000000000
-          216.958333333333400000)
+          216.958333333333300000)
         XLColumn = 0
         Alignment = taLeftJustify
         AlignToBand = False
@@ -2461,7 +2462,7 @@ inherited frmCTeDAEventoQRRetrato: TfrmCTeDAEventoQRRetrato
           23.812500000000000000
           1195.916666666667000000
           137.583333333333300000
-          74.083333333333340000)
+          74.083333333333330000)
         XLColumn = 0
         Alignment = taLeftJustify
         AlignToBand = False
@@ -2856,7 +2857,7 @@ inherited frmCTeDAEventoQRRetrato: TfrmCTeDAEventoQRRetrato
       Left = 26
       Top = 561
       Width = 741
-      Height = 112
+      Height = 144
       Frame.Color = clBlack
       Frame.DrawTop = False
       Frame.DrawBottom = False
@@ -2869,7 +2870,7 @@ inherited frmCTeDAEventoQRRetrato: TfrmCTeDAEventoQRRetrato
       ForceNewColumn = False
       ForceNewPage = False
       Size.Values = (
-        296.333333333333400000
+        381.000000000000000000
         1960.562500000000000000)
       PreCaluculateBandHeight = False
       KeepOnOnePage = False
@@ -2879,14 +2880,14 @@ inherited frmCTeDAEventoQRRetrato: TfrmCTeDAEventoQRRetrato
         Left = 0
         Top = 0
         Width = 741
-        Height = 105
+        Height = 137
         Frame.Color = clBlack
         Frame.DrawTop = False
         Frame.DrawBottom = False
         Frame.DrawLeft = False
         Frame.DrawRight = False
         Size.Values = (
-          277.812500000000000000
+          362.479166666666700000
           0.000000000000000000
           0.000000000000000000
           1960.562500000000000000)
@@ -2899,14 +2900,14 @@ inherited frmCTeDAEventoQRRetrato: TfrmCTeDAEventoQRRetrato
         Left = 5
         Top = 19
         Width = 732
-        Height = 78
+        Height = 110
         Frame.Color = clBlack
         Frame.DrawTop = False
         Frame.DrawBottom = False
         Frame.DrawLeft = False
         Frame.DrawRight = False
         Size.Values = (
-          206.375000000000000000
+          291.041666666666700000
           13.229166666666670000
           50.270833333333330000
           1936.750000000000000000)
@@ -2974,7 +2975,7 @@ inherited frmCTeDAEventoQRRetrato: TfrmCTeDAEventoQRRetrato
         Frame.DrawLeft = False
         Frame.DrawRight = False
         Size.Values = (
-          84.666666666666680000
+          84.666666666666670000
           31.750000000000000000
           113.770833333333300000
           1897.062500000000000000)
@@ -3020,9 +3021,9 @@ inherited frmCTeDAEventoQRRetrato: TfrmCTeDAEventoQRRetrato
     end
     object qrb_07_Correcao: TQRChildBand
       Left = 26
-      Top = 673
+      Top = 705
       Width = 741
-      Height = 360
+      Height = 352
       Frame.Color = clBlack
       Frame.DrawTop = False
       Frame.DrawBottom = False
@@ -3035,7 +3036,7 @@ inherited frmCTeDAEventoQRRetrato: TfrmCTeDAEventoQRRetrato
       ForceNewColumn = False
       ForceNewPage = False
       Size.Values = (
-        952.500000000000000000
+        931.333333333333300000
         1960.562500000000000000)
       PreCaluculateBandHeight = False
       KeepOnOnePage = False
@@ -3045,14 +3046,14 @@ inherited frmCTeDAEventoQRRetrato: TfrmCTeDAEventoQRRetrato
         Left = 0
         Top = 0
         Width = 741
-        Height = 353
+        Height = 345
         Frame.Color = clBlack
         Frame.DrawTop = False
         Frame.DrawBottom = False
         Frame.DrawLeft = False
         Frame.DrawRight = False
         Size.Values = (
-          933.979166666666600000
+          912.812500000000000000
           0.000000000000000000
           0.000000000000000000
           1960.562500000000000000)
@@ -3065,14 +3066,14 @@ inherited frmCTeDAEventoQRRetrato: TfrmCTeDAEventoQRRetrato
         Left = 160
         Top = 15
         Width = 1
-        Height = 338
+        Height = 330
         Frame.Color = clBlack
         Frame.DrawTop = False
         Frame.DrawBottom = False
         Frame.DrawLeft = False
         Frame.DrawRight = False
         Size.Values = (
-          894.291666666666800000
+          873.125000000000000000
           423.333333333333300000
           39.687500000000000000
           2.645833333333333000)
@@ -3085,14 +3086,14 @@ inherited frmCTeDAEventoQRRetrato: TfrmCTeDAEventoQRRetrato
         Left = 270
         Top = 15
         Width = 1
-        Height = 338
+        Height = 330
         Frame.Color = clBlack
         Frame.DrawTop = False
         Frame.DrawBottom = False
         Frame.DrawLeft = False
         Frame.DrawRight = False
         Size.Values = (
-          894.291666666666800000
+          873.125000000000000000
           714.375000000000000000
           39.687500000000000000
           2.645833333333333000)
@@ -3105,14 +3106,14 @@ inherited frmCTeDAEventoQRRetrato: TfrmCTeDAEventoQRRetrato
         Left = 50
         Top = 15
         Width = 1
-        Height = 338
+        Height = 330
         Frame.Color = clBlack
         Frame.DrawTop = False
         Frame.DrawBottom = False
         Frame.DrawLeft = False
         Frame.DrawRight = False
         Size.Values = (
-          894.291666666666800000
+          873.125000000000000000
           132.291666666666700000
           39.687500000000000000
           2.645833333333333000)
@@ -3125,14 +3126,14 @@ inherited frmCTeDAEventoQRRetrato: TfrmCTeDAEventoQRRetrato
         Left = 8
         Top = 27
         Width = 40
-        Height = 318
+        Height = 310
         Frame.Color = clBlack
         Frame.DrawTop = False
         Frame.DrawBottom = False
         Frame.DrawLeft = False
         Frame.DrawRight = False
         Size.Values = (
-          841.375000000000000000
+          820.208333333333300000
           21.166666666666670000
           71.437500000000000000
           105.833333333333300000)
@@ -3162,17 +3163,17 @@ inherited frmCTeDAEventoQRRetrato: TfrmCTeDAEventoQRRetrato
         Left = 164
         Top = 27
         Width = 100
-        Height = 318
+        Height = 310
         Frame.Color = clBlack
         Frame.DrawTop = False
         Frame.DrawBottom = False
         Frame.DrawLeft = False
         Frame.DrawRight = False
         Size.Values = (
-          841.375000000000000000
-          433.916666666666800000
+          820.208333333333300000
+          433.916666666666700000
           71.437500000000000000
-          264.583333333333400000)
+          264.583333333333300000)
         XLColumn = 0
         Alignment = taLeftJustify
         AlignToBand = False
@@ -3199,15 +3200,15 @@ inherited frmCTeDAEventoQRRetrato: TfrmCTeDAEventoQRRetrato
         Left = 274
         Top = 27
         Width = 463
-        Height = 318
+        Height = 310
         Frame.Color = clBlack
         Frame.DrawTop = False
         Frame.DrawBottom = False
         Frame.DrawLeft = False
         Frame.DrawRight = False
         Size.Values = (
-          841.375000000000000000
-          724.958333333333400000
+          820.208333333333300000
+          724.958333333333300000
           71.437500000000000000
           1225.020833333333000000)
         XLColumn = 0
@@ -3236,17 +3237,17 @@ inherited frmCTeDAEventoQRRetrato: TfrmCTeDAEventoQRRetrato
         Left = 54
         Top = 27
         Width = 100
-        Height = 318
+        Height = 310
         Frame.Color = clBlack
         Frame.DrawTop = False
         Frame.DrawBottom = False
         Frame.DrawLeft = False
         Frame.DrawRight = False
         Size.Values = (
-          841.375000000000000000
+          820.208333333333300000
           142.875000000000000000
           71.437500000000000000
-          264.583333333333400000)
+          264.583333333333300000)
         XLColumn = 0
         Alignment = taLeftJustify
         AlignToBand = False
@@ -3283,7 +3284,7 @@ inherited frmCTeDAEventoQRRetrato: TfrmCTeDAEventoQRRetrato
           23.812500000000000000
           433.916666666666700000
           47.625000000000000000
-          68.791666666666680000)
+          68.791666666666670000)
         XLColumn = 0
         Alignment = taLeftJustify
         AlignToBand = False
@@ -3349,7 +3350,7 @@ inherited frmCTeDAEventoQRRetrato: TfrmCTeDAEventoQRRetrato
           23.812500000000000000
           142.875000000000000000
           47.625000000000000000
-          66.145833333333340000)
+          66.145833333333330000)
         XLColumn = 0
         Alignment = taLeftJustify
         AlignToBand = False
@@ -3380,9 +3381,9 @@ inherited frmCTeDAEventoQRRetrato: TfrmCTeDAEventoQRRetrato
         Frame.DrawRight = False
         Size.Values = (
           23.812500000000000000
-          724.958333333333400000
+          724.958333333333300000
           47.625000000000000000
-          66.145833333333340000)
+          66.145833333333330000)
         XLColumn = 0
         Alignment = taLeftJustify
         AlignToBand = False
@@ -3513,7 +3514,7 @@ inherited frmCTeDAEventoQRRetrato: TfrmCTeDAEventoQRRetrato
           39.687500000000000000
           15.875000000000000000
           5.291666666666667000
-          799.041666666666800000)
+          799.041666666666700000)
         XLColumn = 0
         Alignment = taLeftJustify
         AlignToBand = False
@@ -3729,8 +3730,8 @@ inherited frmCTeDAEventoQRRetrato: TfrmCTeDAEventoQRRetrato
         Frame.DrawLeft = False
         Frame.DrawRight = False
         Size.Values = (
-          42.333333333333340000
-          296.333333333333400000
+          42.333333333333330000
+          296.333333333333300000
           71.437500000000000000
           185.208333333333300000)
         XLColumn = 0
