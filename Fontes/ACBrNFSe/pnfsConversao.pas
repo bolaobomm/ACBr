@@ -845,7 +845,7 @@ begin
 //  3205309, // Vitória/ES
   3305505, // Saquarema/RJ
   3504008, // Assis/SP
-  3304706, // Sto Antonio de Padua/RJ
+//  3304706, // Sto Antonio de Padua/RJ
 //  3511102, // Catanduva/SP
 //  3530300, // Mirassol/SP'
   3541505, // Presidente Venceslau/SP
@@ -860,6 +860,7 @@ begin
          : Provedor := 'GovBR';
 
   3118601, // Contagem/MG
+  3304706, // Sto Antonio de Padua/RJ
   3511102, // Catanduva/SP
   3530300, // Mirassol/SP'
   4310207, // Ijui/RS

@@ -176,6 +176,7 @@ begin
             ConfigURL.ProConsultaNFSe       := 'http://nfes.guarapari.es.gov.br/NFSEws/Services.svc';
             ConfigURL.ProCancelaNFSe        := 'http://nfes.guarapari.es.gov.br/NFSEws/Services.svc';
            end;
+           (*
   3304706: begin // Santo Antonio de Padua/RJ
             ConfigURL.HomNomeCidade         := '';
             ConfigURL.HomRecepcaoLoteRPS    := 'http://177.67.128.86/NFSEWSTESTE/Services.svc';
@@ -193,6 +194,7 @@ begin
             ConfigURL.ProConsultaNFSe       := 'http://177.67.128.86/NFSEWS/Services.svc';
             ConfigURL.ProCancelaNFSe        := 'http://177.67.128.86/NFSEWS/Services.svc';
            end;
+           *)
   3305505: begin // Saquarema/RJ
             ConfigURL.HomNomeCidade         := '';
             ConfigURL.HomRecepcaoLoteRPS    := 'http://nfe.saquarema.rj.gov.br/NFSEWSTESTE/Services.svc';
