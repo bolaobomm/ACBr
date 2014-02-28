@@ -150,7 +150,6 @@ type
     rllDataHoraImpressao: TRLLabel;
     rllSistema: TRLLabel;
     RLLabel6: TRLLabel;
-    dsItens: TDataSource;
     rlbCanhoto: TRLBand;
     RLLabel26: TRLLabel;
     rllPrestNomeEnt: TRLLabel;
