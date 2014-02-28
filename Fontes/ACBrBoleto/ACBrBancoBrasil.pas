@@ -336,8 +336,14 @@ begin
       else
          aDV:= CalcularDigitoVerificador(ACBrTitulo);
 
-      aAgencia:= IntToStrZero(StrToIntDef(OnlyNumber(ACBrBoleto.Cedente.Agencia),0),5);
-      aConta  := IntToStrZero(StrToIntDef(OnlyNumber(ACBrBoleto.Cedente.Conta),0),12);
+      if ANossoNumero = '0' then
+        Begin
+          ANossoNumero := '';
+          aDV          := '';
+        End;
+
+      aAgencia       := IntToStrZero(StrToIntDef(OnlyNumber(ACBrBoleto.Cedente.Agencia),0),5);
+      aConta         := IntToStrZero(StrToIntDef(OnlyNumber(ACBrBoleto.Cedente.Conta),0),12);
 
       {SEGMENTO P}
 
@@ -449,12 +455,12 @@ begin
                padL(ANossoNumero+aDV, 20, ' ')                                           + //38 a 57 - Nosso número - identificação do título no banco
                wTipoCarteira                                                             + //58 - Cobrança Simples
                '1'                                                                       + //59 - Forma de cadastramento do título no banco: com cadastramento
-               ACaracTitulo                                                              + //60 - Tipo de documento: Tradicional
+               InttoStr(Integer(ACBrBoleto.Cedente.TipoDocumento))                       + //60 - Tipo de documento: Tradicional
                ATipoBoleto                                                               + //61 a 62 - Quem emite e quem distribui o boleto?
                padL(NumeroDocumento, 15, ' ')                                            + //63 a 77 - Número que identifica o título na empresa [ Alterado conforme instruções da CSO Brasília ] {27-07-09}
                FormatDateTime('ddmmyyyy', Vencimento)                                    + //78 a 85 - Data de vencimento do título
                IntToStrZero( round( ValorDocumento * 100), 15)                           + //86 a 100 - Valor nominal do título
-               '000000'                                                                  + //101 a 105 - Agência cobradora + Digito. Se ficar em branco, a caixa determina automaticamente pelo CEP do sacado
+               '000000'                                                                  + //101 a 106 - Agência cobradora + Digito. Se ficar em branco, a caixa determina automaticamente pelo CEP do sacado
                padL(EspecieDoc,2)                                                        + //107 a 108 - Espécie do documento
                ATipoAceite                                                               + //109 - Identificação de título Aceito / Não aceito
                FormatDateTime('ddmmyyyy', DataDocumento)                                 + //110 a 117 - Data da emissão do documento

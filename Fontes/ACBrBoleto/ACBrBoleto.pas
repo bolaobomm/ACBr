@@ -403,6 +403,7 @@ type
   {Com essa propriedade é possivel ter apenas um cedente para gerar remessa de bloquetos de impressao normal e/ou carne na mesma remessa - Para Sicredi}
   {TipoImpressao}
   TACBrTipoImpressao = (tipCarne, tipNormal);
+  TACBrTipoDocumento = (Tradicional=1, Escritural=2);
 
   { TACBrCedente }
 
@@ -424,6 +425,7 @@ type
     fContaDigito   : String;
     fModalidade    : String;
     fConvenio      : String;
+    fTipoDocumento : TACBrTipoDocumento;
     fResponEmissao : TACBrResponEmissao;
     fCaracTitulo:TACBrCaracTitulo;
     fCNPJCPF       : String;
@@ -447,6 +449,7 @@ type
     property ContaDigito  : String read fContaDigito   write fContaDigito;
     property Modalidade   : String read fModalidade    write fModalidade;
     property Convenio     : String read fConvenio      write fConvenio;
+    property TipoDocumento : TACBrTipoDocumento read fTipoDocumento write fTipoDocumento default Tradicional;
     property ResponEmissao: TACBrResponEmissao read fResponEmissao  write fResponEmissao default tbCliEmite ;
     property CaracTitulo: TACBrCaracTitulo read fCaracTitulo  write fCaracTitulo default tcSimples;
     property CNPJCPF      : String  read fCNPJCPF  write SetCNPJCPF;
