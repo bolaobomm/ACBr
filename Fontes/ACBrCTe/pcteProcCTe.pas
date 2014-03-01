@@ -205,7 +205,8 @@ begin
                 '<protCTe versao="' + CTeenviCTe + '">' +
                   '<infProt>' +
                     PreencherTAG('tpAmb', XMLinfProt.text) +
-                    PreencherTAG('verAplic', XMLinfProt.text) +
+//                    PreencherTAG('verAplic', XMLinfProt.text) +
+                    PreencherTAG('verAplic', XMLinfProt2.text) +
                     PreencherTAG('chCTe', XMLinfProt.text) +
                     PreencherTAG('dhRecbto', XMLinfProt2.text) +
                     PreencherTAG('nProt', XMLinfProt2.text) +
