@@ -34,9 +34,7 @@
 unit DoACBrCTeUnit ;
 
 interface
-Uses Classes, SysUtils, CmdUnitNFe, 
-     
-     ACBrDFeUtil;
+Uses Classes, SysUtils, CmdUnitNFe, ACBrNFeUtil, ACBrDFeUtil;
 
 Procedure DoACBrCTe( Cmd : TACBrNFeCTeCmd ) ;
 procedure GerarIniCTe( AStr: WideString ) ;
