@@ -264,7 +264,10 @@ begin
          (leitor.rExtrai(1, 'CancelarNfseReposta') <> '') or
          (leitor.rExtrai(1, 'CancelarNfseResult') <> '') then
       begin
-        infCanc.DataHora                   := Leitor.rCampo(tcDatHor, 'DataHora');
+        infCanc.DataHora := Leitor.rCampo(tcDatHor, 'DataHora');
+        if infCanc.DataHora = 0 then
+          infCanc.DataHora := Leitor.rCampo(tcDatHor, 'DataHoraCancelamento');
+
         InfCanc.FPedido.InfID.ID           := Leitor.rAtributo('InfPedidoCancelamento Id=');
         InfCanc.FPedido.CodigoCancelamento := Leitor.rCampo(tcStr, 'CodigoCancelamento');
 
