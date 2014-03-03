@@ -324,6 +324,20 @@ end;
 function TProvedorFISSLEX.GeraEnvelopeConsultarNFSeporRPS(URLNS: String;
   CabMsg, DadosMsg, DadosSenha: AnsiString): AnsiString;
 begin
+ DadosMsg := SeparaDados( DadosMsg, 'ConsultarNfseRpsEnvio' );
+
+ result := '<?xml version="1.0" encoding="UTF-8"?>' +
+           '<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:fiss="FISS-LEX">' +
+            '<soapenv:Header/>' +
+            '<soapenv:Body>' +
+             '<fiss:WS_ConsultaNfsePorRps.Execute>' +
+              '<fiss:ConsultarNfseRpsEnvio>' +
+                DadosMsg +
+              '</fiss:ConsultarNfseRpsEnvio>' +
+             '</fiss:WS_ConsultaNfsePorRps.Execute>' +
+            '</soapenv:Body>' +
+           '</soapenv:Envelope>';
+(*
  result := '<?xml version="1.0" encoding="UTF-8"?>' +
            '<s:Envelope xmlns:s="http://schemas.xmlsoap.org/soap/envelope/" ' +
                        'xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" ' +
@@ -336,6 +350,7 @@ begin
              '</WS_ConsultarNfsePorRps.Execute>' +
             '</s:Body>' +
            '</s:Envelope>';
+*)
 end;
 
 function TProvedorFISSLEX.GeraEnvelopeConsultarNFSe(URLNS: String; CabMsg,
