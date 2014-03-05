@@ -1,7 +1,7 @@
 object Form1: TForm1
   Left = 406
   Top = 154
-  Width = 738
+  Width = 755
   Height = 486
   Caption = 'SAT Teste - Projeto ACBr'
   Color = clBtnFace
@@ -18,7 +18,7 @@ object Form1: TForm1
   object Splitter1: TSplitter
     Left = 0
     Top = 184
-    Width = 722
+    Width = 739
     Height = 5
     Cursor = crVSplit
     Align = alTop
@@ -26,7 +26,7 @@ object Form1: TForm1
   object PageControl1: TPageControl
     Left = 0
     Top = 189
-    Width = 722
+    Width = 739
     Height = 239
     ActivePage = tsRecebido
     Align = alClient
@@ -35,9 +35,9 @@ object Form1: TForm1
       Caption = 'Log de Comandos'
       object mResposta: TMemo
         Left = 0
-        Top = 29
-        Width = 674
-        Height = 156
+        Top = 75
+        Width = 714
+        Height = 136
         Align = alBottom
         Anchors = [akLeft, akTop, akRight, akBottom]
         ScrollBars = ssVertical
@@ -48,32 +48,6 @@ object Form1: TForm1
       Caption = 'XML Gerado'
       object mVenda: TMemo
         Left = 0
-        Top = 160
-        Width = 674
-        Height = 25
-        Align = alBottom
-        ScrollBars = ssVertical
-        TabOrder = 0
-      end
-      object wbVenda: TWebBrowser
-        Left = 0
-        Top = 0
-        Width = 674
-        Height = 160
-        Align = alClient
-        TabOrder = 1
-        ControlData = {
-          4C000000A9450000891000000000000000000000000000000000000000000000
-          000000004C000000000000000000000001000000E0D057007335CF11AE690800
-          2B2E126208000000000000004C0000000114020000000000C000000000000046
-          8000000000000000000000000000000000000000000000000000000000000000
-          00000000000000000100000000000000000000000000000000000000}
-      end
-    end
-    object tsRecebido: TTabSheet
-      Caption = 'XML Recebido'
-      object mCupom: TMemo
-        Left = 0
         Top = 186
         Width = 714
         Height = 25
@@ -81,7 +55,7 @@ object Form1: TForm1
         ScrollBars = ssVertical
         TabOrder = 0
       end
-      object wbCupom: TWebBrowser
+      object wbVenda: TWebBrowser
         Left = 0
         Top = 0
         Width = 714
@@ -96,11 +70,37 @@ object Form1: TForm1
           00000000000000000100000000000000000000000000000000000000}
       end
     end
+    object tsRecebido: TTabSheet
+      Caption = 'XML Recebido'
+      object mCupom: TMemo
+        Left = 0
+        Top = 186
+        Width = 731
+        Height = 25
+        Align = alBottom
+        ScrollBars = ssVertical
+        TabOrder = 0
+      end
+      object wbCupom: TWebBrowser
+        Left = 0
+        Top = 0
+        Width = 731
+        Height = 186
+        Align = alClient
+        TabOrder = 1
+        ControlData = {
+          4C0000008D4B0000391300000000000000000000000000000000000000000000
+          000000004C000000000000000000000001000000E0D057007335CF11AE690800
+          2B2E126208000000000000004C0000000114020000000000C000000000000046
+          8000000000000000000000000000000000000000000000000000000000000000
+          00000000000000000100000000000000000000000000000000000000}
+      end
+    end
   end
   object Panel1: TPanel
     Left = 0
     Top = 0
-    Width = 722
+    Width = 739
     Height = 184
     Align = alTop
     TabOrder = 0
@@ -153,7 +153,7 @@ object Form1: TForm1
     object GroupBox1: TGroupBox
       Left = 146
       Top = 1
-      Width = 575
+      Width = 592
       Height = 182
       Align = alClient
       Caption = 'Configura'#231#227'o'
@@ -161,7 +161,7 @@ object Form1: TForm1
       object PageControl2: TPageControl
         Left = 2
         Top = 15
-        Width = 571
+        Width = 588
         Height = 165
         ActivePage = tsDadosSAT
         Align = alClient
@@ -169,7 +169,7 @@ object Form1: TForm1
         object tsDadosSAT: TTabSheet
           Caption = 'Dados do SAT CFe'
           DesignSize = (
-            563
+            580
             137)
           object Label9: TLabel
             Left = 26
@@ -419,7 +419,7 @@ object Form1: TForm1
             Width = 134
             Height = 21
             Style = csDropDownList
-            ItemHeight = 13
+            ItemHeight = 0
             TabOrder = 4
           end
           object cbxIndRatISSQN: TComboBox
@@ -428,7 +428,7 @@ object Form1: TForm1
             Width = 134
             Height = 21
             Style = csDropDownList
-            ItemHeight = 13
+            ItemHeight = 0
             TabOrder = 5
           end
           object cbxRegTributario: TComboBox
@@ -437,14 +437,14 @@ object Form1: TForm1
             Width = 166
             Height = 21
             Style = csDropDownList
-            ItemHeight = 13
+            ItemHeight = 0
             TabOrder = 3
           end
         end
         object tsDadosSwHouse: TTabSheet
           Caption = 'Dados Sw.House'
           DesignSize = (
-            563
+            580
             137)
           object Label2: TLabel
             Left = 10

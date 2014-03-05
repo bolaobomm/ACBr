@@ -142,8 +142,8 @@ type
     procedure Limpar1Click(Sender: TObject);
     procedure cbxUTF8Click(Sender: TObject);
     procedure sePagCodChange(Sender: TObject);
-    procedure ACBrSAT1GetcodigoDeAtivacao(var Chave: String);
-    procedure ACBrSAT1GetsignAC(var Chave: String);
+    procedure ACBrSAT1GetcodigoDeAtivacao(var Chave: AnsiString);
+    procedure ACBrSAT1GetsignAC(var Chave: AnsiString);
   private
     procedure TrataErros(Sender : TObject ; E : Exception) ;
     procedure AjustaACBrSAT ;
@@ -733,12 +733,12 @@ begin
   cbxUTF8.Checked := ACBrSAT1.Config.EhUTF8;
 end;
 
-procedure TForm1.ACBrSAT1GetcodigoDeAtivacao(var Chave: String);
+procedure TForm1.ACBrSAT1GetcodigoDeAtivacao(var Chave: AnsiString);
 begin
   Chave := edtCodigoAtivacao.Text;
 end;
 
-procedure TForm1.ACBrSAT1GetsignAC(var Chave: String);
+procedure TForm1.ACBrSAT1GetsignAC(var Chave: AnsiString);
 begin
   Chave := edtSwHAssinatura.Text;
 end;
