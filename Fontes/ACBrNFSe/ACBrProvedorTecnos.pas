@@ -202,7 +202,7 @@ begin
  xmlns := ' xmlns="http://www.abrasf.org.br/nfse.xsd"' +
           ' xmlns:ds="http://www.w3.org/2000/09/xmldsig#"' +
           ' xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"' +
-          ' xsi:schemaLocation="http://www.abrasf.org.br/nfse.xsd nfse_v2.01.xsd">'
+          ' xsi:schemaLocation="http://www.abrasf.org.br/nfse.xsd nfse_v2.01.xsd">';
 
  case Acao of
    acRecepcionar: Result := '<' + Prefixo3 + 'EnviarLoteRpsSincronoEnvio' + xmlns;
