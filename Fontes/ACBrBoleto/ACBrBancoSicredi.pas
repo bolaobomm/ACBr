@@ -1510,7 +1510,7 @@ begin
              Copy(padR(OnlyNumber(Sacado.CEP),8,'0'),6,3)                   + // 134 a 136 - Sufixo do CEP
              padL(Sacado.Cidade, 15)                                        + // 137 a 151 - Cidade
              padR(UF, 2)                                                    + // 152 a 153 - Unidade da Federação
-             '1'                                                            + // 154 a 154 - Tipo de inscrição
+             TipoSacado                                                     + // 154 a 154 - Tipo de inscrição
              padL('', 15, '0')                                              + // 155 a 169 - Número de inscrição
              Space(40)                                                      + // 170 a 209 - Nome do sacador/avalista
              padL('', 3, '0')                                               + // 210 a 212 - Cód. bco corresp. na compensação
