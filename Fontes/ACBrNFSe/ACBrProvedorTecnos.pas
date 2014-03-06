@@ -183,7 +183,7 @@ begin
    acConsLote:    Result := False;
    acConsNFSeRps: Result := False;
    acConsNFSe:    Result := False;
-   acCancelar:    Result := False;
+   acCancelar:    Result := True;
    acGerar:       Result := False;
    else           Result := False;
  end;
@@ -196,14 +196,21 @@ end;
 
 function TProvedorTecnos.Gera_TagI(Acao: TnfseAcao; Prefixo3, Prefixo4,
   NameSpaceDad, Identificador, URI: String): AnsiString;
+var
+ xmlns: String;
 begin
+ xmlns := ' xmlns="http://www.abrasf.org.br/nfse.xsd"' +
+          ' xmlns:ds="http://www.w3.org/2000/09/xmldsig#"' +
+          ' xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"' +
+          ' xsi:schemaLocation="http://www.abrasf.org.br/nfse.xsd nfse_v2.01.xsd">'
+
  case Acao of
-   acRecepcionar: Result := '<' + Prefixo3 + 'EnviarLoteRpsSincronoEnvio' + ' xmlns="http://www.abrasf.org.br/nfse.xsd">';
+   acRecepcionar: Result := '<' + Prefixo3 + 'EnviarLoteRpsSincronoEnvio' + xmlns;
    acConsSit:     Result := '';
-   acConsLote:    Result := '<' + Prefixo3 + 'ConsultarLoteRpsEnvio' + ' xmlns="http://www.abrasf.org.br/nfse.xsd">';
-   acConsNFSeRps: Result := '<' + Prefixo3 + 'ConsultarNfseRpsEnvio' + ' xmlns="http://www.abrasf.org.br/nfse.xsd">';
-   acConsNFSe:    Result := '<' + Prefixo3 + 'ConsultarNfseFaixaEnvio' + ' xmlns="http://www.abrasf.org.br/nfse.xsd">';
-   acCancelar:    Result := '<' + Prefixo3 + 'CancelarNfseEnvio' + ' xmlns="http://www.abrasf.org.br/nfse.xsd">' +
+   acConsLote:    Result := '<' + Prefixo3 + 'ConsultarLoteRpsEnvio' + xmlns;
+   acConsNFSeRps: Result := '<' + Prefixo3 + 'ConsultarNfseRpsEnvio' + xmlns;
+   acConsNFSe:    Result := '<' + Prefixo3 + 'ConsultarNfseFaixaEnvio' + xmlns;
+   acCancelar:    Result := '<' + Prefixo3 + 'CancelarNfseEnvio' + xmlns+
                              '<' + Prefixo3 + 'Pedido>' +
                              '<' + Prefixo4 + 'InfPedidoCancelamento ' + Identificador + '="' + URI + '">';
    acGerar:       Result := '';
