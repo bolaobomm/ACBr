@@ -335,7 +335,7 @@ begin
      finally
         // Gustavo Kato 16/12/2013
         QRCTe.QRPrinter.Free;
-        Free;
+        // Free;    comentado por Italo em 07/03/2014
      end;
 {$ENDIF}
 end;
