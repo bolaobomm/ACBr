@@ -105,7 +105,9 @@ begin
                                      , MargemInferior
                                      , MargemEsquerda
                                      , MargemDireita
-                                     , Impressora );
+                                     , Impressora
+                                     , MDFeCancelada
+                                     , MDFeEncerrado );
         end;
      end
     else
@@ -123,7 +125,9 @@ begin
                                   , MargemInferior
                                   , MargemEsquerda
                                   , MargemDireita
-                                  , Impressora );
+                                  , Impressora
+                                  , MDFeCancelada
+                                  , MDFeEncerrado );
   finally
     fqrDAMDFEQRRetrato.Free;
   end;
@@ -161,7 +165,9 @@ begin
                                   , MargemSuperior
                                   , MargemInferior
                                   , MargemEsquerda
-                                  , MargemDireita );
+                                  , MargemDireita
+                                  , MDFeCancelada
+                                  , MDFeEncerrado );
       end;
     end
     else
@@ -182,7 +188,9 @@ begin
                                 , MargemSuperior
                                 , MargemInferior
                                 , MargemEsquerda
-                                , MargemDireita );
+                                , MargemDireita
+                                , MDFeCancelada
+                                , MDFeEncerrado );
     end;
   finally
     fqrDAMDFEQRRetrato.Free;

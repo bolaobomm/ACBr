@@ -73,6 +73,8 @@ type
     FMargemEsquerda     : double;
     FMargemDireita      : double;
     FImpressora         : String;
+    FMDFeCancelada      : Boolean;
+    FMDFeEncerrado      : Boolean;
 
     procedure qrlSemValorFiscalPrint(sender: TObject; var Value: String);
     procedure SetBarCodeImage ( ACode : String; QRImage : TQRImage );
@@ -92,7 +94,9 @@ type
                              AMargemInferior    : Double  = 0.8;
                              AMargemEsquerda    : Double  = 0.6;
                              AMargemDireita     : Double  = 0.51;
-                             AImpressora        : String  = '');
+                             AImpressora        : String  = '';
+                             AMDFeCancelada     : Boolean = False;
+                             AMDFeEncerrado     : Boolean = False);
 
     class procedure SavePDF(AFile              : String;
                             AMDFe              : TMDFe;
@@ -107,7 +111,9 @@ type
                             AMargemSuperior    : Double  = 0.8;
                             AMargemInferior    : Double  = 0.8;
                             AMargemEsquerda    : Double  = 0.6;
-                            AMargemDireita     : Double  = 0.51);
+                            AMargemDireita     : Double  = 0.51;
+                            AMDFeCancelada     : Boolean = False;
+                            AMDFeEncerrado     : Boolean = False);
 
   end;
 
@@ -134,7 +140,9 @@ class procedure TfqrDAMDFEQR.Imprimir(AMDFe              : TMDFe;
                                       AMargemInferior    : Double  = 0.8;
                                       AMargemEsquerda    : Double  = 0.6;
                                       AMargemDireita     : Double  = 0.51;
-                                      AImpressora        : String  = '');
+                                      AImpressora        : String  = '';
+                                      AMDFeCancelada     : Boolean = False;
+                                      AMDFeEncerrado     : Boolean = False);
 begin
   with Create ( nil ) do
      try
@@ -152,6 +160,8 @@ begin
         FMargemEsquerda    := AMargemEsquerda;
         FMargemDireita     := AMargemDireita;
         FImpressora        := AImpressora;
+        FMDFeCancelada     := AMDFeCancelada;
+        FMDFeEncerrado     := AMDFeEncerrado;
 
         Printer := TPrinter.Create;
 
@@ -203,7 +213,9 @@ class procedure TfqrDAMDFEQR.SavePDF(AFile              : String;
                                      AMargemSuperior    : Double  = 0.8;
                                      AMargemInferior    : Double  = 0.8;
                                      AMargemEsquerda    : Double  = 0.6;
-                                     AMargemDireita     : Double  = 0.51);
+                                     AMargemDireita     : Double  = 0.51;
+                                     AMDFeCancelada     : Boolean = False;
+                                     AMDFeEncerrado     : Boolean = False);
 {$IFDEF QReport_PDF}
 var
   qf: TQRPDFDocumentFilter;
@@ -226,6 +238,8 @@ begin
         FMargemInferior    := AMargemInferior;
         FMargemEsquerda    := AMargemEsquerda;
         FMargemDireita     := AMargemDireita;
+        FMDFeCancelada     := AMDFeCancelada;
+        FMDFeEncerrado     := AMDFeEncerrado;
 
         for i := 0 to ComponentCount -1 do
           begin

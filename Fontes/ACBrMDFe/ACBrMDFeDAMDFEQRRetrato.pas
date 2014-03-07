@@ -487,8 +487,41 @@ begin
     qrlMsgTeste.Visible := True;
    end
    else begin
-    qrlMsgTeste.Enabled := False;
-    qrlMsgTeste.Visible := False;
+    if FMDFe.procMDFe.cStat > 0 then
+     begin
+      if (FMDFe.procMDFe.cStat = 101) or (FMDFeCancelada) then
+       begin
+        qrlMsgTeste.Caption := 'MDF-e CANCELADO';
+        qrlMsgTeste.Visible := True;
+        qrlMsgTeste.Enabled := True;
+       end;
+
+      if (FMDFe.procMDFe.cStat = 100) and (FMDFeEncerrado) then
+       begin
+        qrlMsgTeste.Caption := 'MDF-e ENCERRADO';
+        qrlMsgTeste.Visible := True;
+        qrlMsgTeste.Enabled := True;
+       end;
+
+      if FMDFe.procMDFe.cStat = 110 then
+       begin
+        qrlMsgTeste.Caption := 'MDF-e DENEGADO';
+        qrlMsgTeste.Visible := True;
+        qrlMsgTeste.Enabled := True;
+       end;
+
+      if not FMDFe.procMDFe.cStat in [101, 110, 100] then
+       begin
+        qrlMsgTeste.Caption := FMDFe.procMDFe.xMotivo;
+        qrlMsgTeste.Visible := True;
+        qrlMsgTeste.Enabled := True;
+       end;
+     end else
+     begin
+      qrlMsgTeste.Caption := 'MDF-E NÃO ENVIADO PARA SEFAZ';
+      qrlMsgTeste.Visible := True;
+      qrlMsgTeste.Enabled := True;
+     end;
    end;
 
   qrlMsgTeste.Repaint;

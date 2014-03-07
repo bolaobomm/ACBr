@@ -74,7 +74,9 @@ type
     FMargemSuperior: Double;
     FMargemEsquerda: Double;
     FMargemDireita: Double;
-    FMDFeCancelada : boolean;
+    FMDFeCancelada: boolean;
+    FMDFeEncerrado: Boolean;
+
     procedure Notification(AComponent: TComponent; Operation: TOperation); override;
   public
     constructor Create(AOwner: TComponent); override;
@@ -108,6 +110,7 @@ type
     property MargemDireita: Double read FMargemDireita write FMargemDireita;
     property ExpandirLogoMarca: Boolean read FExpandirLogoMarca write FExpandirLogoMarca default false;
     property MDFeCancelada: Boolean read FMDFeCancelada write FMDFeCancelada;
+    property MDFeEncerrado: Boolean read FMDFeEncerrado write FMDFeEncerrado;
   end;
 
 implementation
@@ -144,7 +147,8 @@ begin
   FMargemSuperior := 0.8;
   FMargemEsquerda := 0.6;
   FMargemDireita  := 0.51;
-  FMDFeCancelada   := False;
+  FMDFeCancelada  := False;
+  FMDFeEncerrado  := False;
 end;
 
 destructor TACBrMDFeDAMDFeClass.Destroy;
