@@ -277,6 +277,20 @@ begin
  DadosMsg := SeparaDados( DadosMsg, 'ConsultarSituacaoLoteRpsEnvio' );
 
  result := '<?xml version="1.0" encoding="UTF-8"?>' +
+           '<s:Envelope xmlns:s="http://schemas.xmlsoap.org/soap/envelope/" ' +
+                       'xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" ' +
+                       'xmlns:xsd="http://www.w3.org/2001/XMLSchema">' +
+            '<s:Body>' +
+             '<WS_ConsultarSituacaoLoteRps.Execute xmlns="FISS-LEX">' +
+              '<Consultarsituacaoloterpsenvio xmlns="FISS-LEX">' +
+                DadosMsg +
+//                StringReplace(StringReplace(DadosMsg, '<', '&lt;', [rfReplaceAll]), '>', '&gt;', [rfReplaceAll]) +
+              '</Consultarsituacaoloterpsenvio>' +
+             '</WS_ConsultarSituacaoLoteRps.Execute>' +
+            '</s:Body>' +
+           '</s:Envelope>';
+(*
+ result := '<?xml version="1.0" encoding="UTF-8"?>' +
            '<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:fiss="FISS-LEX">' +
             '<soapenv:Header/>' +
             '<soapenv:Body>' +
@@ -287,6 +301,7 @@ begin
              '</fiss:WS_ConsultarSituacaoLoteRps.Execute>' +
             '</soapenv:Body>' +
            '</soapenv:Envelope>';
+*)
 end;
 
 function TProvedorFISSLEX.GeraEnvelopeConsultarLoteRPS(URLNS: String;
@@ -294,6 +309,20 @@ function TProvedorFISSLEX.GeraEnvelopeConsultarLoteRPS(URLNS: String;
 begin
  DadosMsg := SeparaDados( DadosMsg, 'ConsultarLoteRpsEnvio' );
 
+ result := '<?xml version="1.0" encoding="UTF-8"?>' +
+           '<s:Envelope xmlns:s="http://schemas.xmlsoap.org/soap/envelope/" ' +
+                       'xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" ' +
+                       'xmlns:xsd="http://www.w3.org/2001/XMLSchema">' +
+            '<s:Body>' +
+             '<WS_ConsultaLoteRps.Execute xmlns="FISS-LEX">' +
+              '<Consultarloterpsenvio xmlns="FISS-LEX">' +
+                DadosMsg +
+//                StringReplace(StringReplace(DadosMsg, '<', '&lt;', [rfReplaceAll]), '>', '&gt;', [rfReplaceAll]) +
+              '</Consultarloterpsenvio>' +
+             '</WS_ConsultaLoteRps.Execute>' +
+            '</s:Body>' +
+           '</s:Envelope>';
+(*
  result := '<?xml version="1.0" encoding="UTF-8"?>' +
            '<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:fiss="FISS-LEX">' +
             '<soapenv:Header/>' +
@@ -305,25 +334,28 @@ begin
              '</fiss:WS_ConsultaLoteRps.Execute>' +
             '</soapenv:Body>' +
            '</soapenv:Envelope>';
-(*
- result := '<?xml version="1.0" encoding="UTF-8"?>' +
-           '<s:Envelope xmlns:s="http://schemas.xmlsoap.org/soap/envelope/" ' +
-                       'xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" ' +
-                       'xmlns:xsd="http://www.w3.org/2001/XMLSchema">' +
-            '<s:Body>' +
-             '<WS_ConsultaLoteRps.Execute xmlns="FISS-LEX">' +
-              '<Consultarloterpsenvio>' +
-                StringReplace(StringReplace(DadosMsg, '<', '&lt;', [rfReplaceAll]), '>', '&gt;', [rfReplaceAll]) +
-              '</Consultarloterpsenvio>' +
-             '</WS_ConsultaLoteRps.Execute>' +
-            '</s:Body>' +
-           '</s:Envelope>';
 *)
 end;
 
 function TProvedorFISSLEX.GeraEnvelopeConsultarNFSeporRPS(URLNS: String;
   CabMsg, DadosMsg, DadosSenha: AnsiString): AnsiString;
 begin
+ DadosMsg := SeparaDados( DadosMsg, 'ConsultarNfseRpsEnvio' );
+
+ result := '<?xml version="1.0" encoding="UTF-8"?>' +
+           '<s:Envelope xmlns:s="http://schemas.xmlsoap.org/soap/envelope/" ' +
+                       'xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" ' +
+                       'xmlns:xsd="http://www.w3.org/2001/XMLSchema">' +
+            '<s:Body>' +
+             '<WS_ConsultaNfsePorRps.Execute xmlns="FISS-LEX">' +
+              '<Consultarnfserpsenvio xmlns="FISS-LEX">' +
+                DadosMsg +
+//                StringReplace(StringReplace(DadosMsg, '<', '&lt;', [rfReplaceAll]), '>', '&gt;', [rfReplaceAll]) +
+              '</Consultarnfserpsenvio>' +
+             '</WS_ConsultarNfsePorRps.Execute>' +
+            '</s:Body>' +
+           '</s:Envelope>';
+(*
  DadosMsg := SeparaDados( DadosMsg, 'ConsultarNfseRpsEnvio' );
 
  result := '<?xml version="1.0" encoding="UTF-8"?>' +
@@ -337,25 +369,14 @@ begin
              '</fiss:WS_ConsultaNfsePorRps.Execute>' +
             '</soapenv:Body>' +
            '</soapenv:Envelope>';
-(*
- result := '<?xml version="1.0" encoding="UTF-8"?>' +
-           '<s:Envelope xmlns:s="http://schemas.xmlsoap.org/soap/envelope/" ' +
-                       'xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" ' +
-                       'xmlns:xsd="http://www.w3.org/2001/XMLSchema">' +
-            '<s:Body>' +
-             '<WS_ConsultaNfsePorRps.Execute xmlns="FISS-LEX">' +
-              '<Consultarnfserpsenvio xmlns="FISS-LEX">' +
-                StringReplace(StringReplace(DadosMsg, '<', '&lt;', [rfReplaceAll]), '>', '&gt;', [rfReplaceAll]) +
-              '</Consultarnfserpsenvio>' +
-             '</WS_ConsultarNfsePorRps.Execute>' +
-            '</s:Body>' +
-           '</s:Envelope>';
 *)
 end;
 
 function TProvedorFISSLEX.GeraEnvelopeConsultarNFSe(URLNS: String; CabMsg,
   DadosMsg, DadosSenha: AnsiString): AnsiString;
 begin
+ DadosMsg := SeparaDados( DadosMsg, 'ConsultarNfseEnvio' );
+
  result := '<?xml version="1.0" encoding="UTF-8"?>' +
            '<s:Envelope xmlns:s="http://schemas.xmlsoap.org/soap/envelope/" ' +
                        'xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" ' +
@@ -363,7 +384,8 @@ begin
             '<s:Body>' +
              '<WS_ConsultaNfse.Execute xmlns="FISS-LEX">' +
               '<Consultarnfseenvio xmlns="FISS-LEX">' +
-                StringReplace(StringReplace(DadosMsg, '<', '&lt;', [rfReplaceAll]), '>', '&gt;', [rfReplaceAll]) +
+                 DadosMsg +
+//                StringReplace(StringReplace(DadosMsg, '<', '&lt;', [rfReplaceAll]), '>', '&gt;', [rfReplaceAll]) +
               '</Consultarnfseenvio>' +
              '</WS_ConsultaNfse.Execute>' +
             '</s:Body>' +
@@ -379,9 +401,10 @@ begin
                        'xmlns:xsd="http://www.w3.org/2001/XMLSchema">' +
             '<s:Body>' +
              '<WS_CancelarNfse.Execute xmlns="FISS-LEX">' +
-              '<CancelarNfseenvio xmlns="FISS-LEX">' +
+              '<Cancelarnfseenvio xmlns="FISS-LEX">' +
+                '&lt;?xml version="1.0" encoding="UTF-8"?&gt;' +
                 StringReplace(StringReplace(DadosMsg, '<', '&lt;', [rfReplaceAll]), '>', '&gt;', [rfReplaceAll]) +
-              '</CancelarNfseenvio>' +
+              '</Cancelarnfseenvio>' +
              '</WS_CancelarNfse.Execute>' +
             '</s:Body>' +
            '</s:Envelope>';
@@ -404,9 +427,9 @@ begin
  case Acao of
    acRecepcionar: Result := 'FISS-LEXaction/AWS_RECEPCIONARLOTERPS.Execute';
    acConsSit:     Result := 'FISS-LEXaction/AWS_CONSULTARSITUACAOLOTERPS.Execute';
-   acConsLote:    Result := 'FISS-LEXaction/AWS_CONSULTARLOTERPS.Execute';
-   acConsNFSeRps: Result := 'FISS-LEXaction/AWS_CONSULTARNFSEPORRPS.Execute';
-   acConsNFSe:    Result := 'FISS-LEXaction/AWS_CONSULTARNFSE.Execute';
+   acConsLote:    Result := 'FISS-LEXaction/AWS_CONSULTALOTERPS.Execute';
+   acConsNFSeRps: Result := 'FISS-LEXaction/AWS_CONSULTANFSEPORRPS.Execute';
+   acConsNFSe:    Result := 'FISS-LEXaction/AWS_CONSULTANFSE.Execute';
    acCancelar:    Result := 'FISS-LEXaction/AWS_CANCELARNFSE.Execute';
    acGerar:       Result := '';
  end;
