@@ -142,9 +142,14 @@ begin
             ConfigURL.HomNomeCidade := 'nfehomologacao.saoleopoldo.rs.gov.br/thema-nfse';
             ConfigURL.ProNomeCidade := 'nfe.saoleopoldo.rs.gov.br/thema-nfse';
            end;
-  4321204: begin  // Taquara/RS
+  4321204: begin // Taquara/RS
             ConfigURL.HomNomeCidade := 'nfsehomologacao.taquara.rs.gov.br/thema-nfse';
             ConfigURL.ProNomeCidade := 'nfse.taquara.rs.gov.br/thema-nfse';
+            sHTTPPro := 'http://';
+           end;
+  4322608: begin // Venancio Aires/RS
+            ConfigURL.HomNomeCidade := 'nfehml.venancioaires.rs.gov.br/thema-nfse';
+            ConfigURL.ProNomeCidade := 'nfe.venancioaires.rs.gov.br/thema-nfse';
             sHTTPPro := 'http://';
            end;
  end;

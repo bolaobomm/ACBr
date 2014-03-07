@@ -1051,7 +1051,8 @@ begin
   4314100, // Passo Fundo/RS
   4316808, // Santa Cruz Do Sul/RS
   4318705, // Sao Leopoldo/RS
-  4321204  // Taquara/RS
+  4321204, // Taquara/RS
+  4322608  // Venancio Aires/RS
          : Provedor := 'Thema';
 
   3300100, // Angra dos Reis/RJ
