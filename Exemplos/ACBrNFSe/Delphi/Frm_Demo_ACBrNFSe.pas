@@ -1008,7 +1008,9 @@ begin
                                                nil,                  // Anexos
                                                True,                 // Pede Confirmação de Recebimento
                                                True,                 // Aguarda o Envio
-                                               edtEmitRazao.Text);   // Nome do remetente
+                                               edtEmitRazao.Text,    // Nome do remetente
+                                               True,                 // TLS
+                                               True);                // Usar Thread
 
    sCC.Free;
 

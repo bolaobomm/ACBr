@@ -472,7 +472,12 @@ begin
      end;
 
      m.header.tolist.add(sTo);
-     m.header.From := sFrom;
+
+    if Trim(NomeRemetente) <> '' then
+      m.header.From := Format('%s<%s>', [NomeRemetente, sFrom])
+    else
+      m.header.From := sFrom;
+
      m.header.subject := sAssunto;
      m.EncodeMessage;
      msg_lines.Add(m.Lines.Text);

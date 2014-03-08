@@ -416,8 +416,8 @@ begin
   smtp := TSMTPSend.Create;
   m := TMimemess.create;
   try
-     p := m.AddPartMultipart('mixed', nil);
-     if sMensagem <> nil then
+    p := m.AddPartMultipart('mixed', nil);
+    if sMensagem <> nil then
      begin
         CorpoEmail.Text := sMensagem.Text;
         m.AddPartText(CorpoEmail, p);
@@ -426,40 +426,45 @@ begin
     if StreamMDFe <> nil then
       m.AddPartBinary(StreamMDFe, NomeArq, p);
 
-     if assigned(Anexos) then
+    if assigned(Anexos) then
      for i := 0 to Anexos.Count - 1 do
      begin
         m.AddPartBinaryFromFile(Anexos[i], p);
      end;
 
-     m.header.tolist.add(sTo);
-     m.header.From := sFrom;
-     m.header.subject := sAssunto;
-     m.EncodeMessage;
-     msg_lines.Add(m.Lines.Text);
+    m.header.tolist.add(sTo);
 
-     smtp.UserName := sSmtpUser;
-     smtp.Password := sSmtpPasswd;
+    if Trim(NomeRemetente) <> '' then
+      m.header.From := Format('%s<%s>', [NomeRemetente, sFrom])
+    else
+      m.header.From := sFrom;
 
-     smtp.TargetHost := sSmtpHost;
-     smtp.TargetPort := sSmtpPort;
+    m.header.subject := sAssunto;
+    m.EncodeMessage;
+    msg_lines.Add(m.Lines.Text);
 
-     smtp.FullSSL := SSL;
-     smtp.AutoTLS := TLS;
+    smtp.UserName := sSmtpUser;
+    smtp.Password := sSmtpPasswd;
 
-     if (TLS) then
-       smtp.StartTLS;
+    smtp.TargetHost := sSmtpHost;
+    smtp.TargetPort := sSmtpPort;
 
-     if not smtp.Login then
-       raise Exception.Create('SMTP ERROR: Login: ' + smtp.EnhCodeString+sLineBreak+smtp.FullResult.Text);
+    smtp.FullSSL := SSL;
+    smtp.AutoTLS := TLS;
 
-     if not smtp.MailFrom(sFrom, Length(sFrom)) then
-       raise Exception.Create('SMTP ERROR: MailFrom: ' + smtp.EnhCodeString+sLineBreak+smtp.FullResult.Text);
+    if (TLS) then
+      smtp.StartTLS;
 
-     if not smtp.MailTo(sTo) then
-       raise Exception.Create('SMTP ERROR: MailTo: ' + smtp.EnhCodeString+sLineBreak+smtp.FullResult.Text);
+    if not smtp.Login then
+      raise Exception.Create('SMTP ERROR: Login: ' + smtp.EnhCodeString+sLineBreak+smtp.FullResult.Text);
 
-     if sCC <> nil then
+    if not smtp.MailFrom(sFrom, Length(sFrom)) then
+      raise Exception.Create('SMTP ERROR: MailFrom: ' + smtp.EnhCodeString+sLineBreak+smtp.FullResult.Text);
+
+    if not smtp.MailTo(sTo) then
+      raise Exception.Create('SMTP ERROR: MailTo: ' + smtp.EnhCodeString+sLineBreak+smtp.FullResult.Text);
+
+    if sCC <> nil then
      begin
        for I := 0 to sCC.Count - 1 do
        begin
@@ -468,17 +473,17 @@ begin
        end;
      end;
 
-     if not smtp.MailData(msg_lines) then
-       raise Exception.Create('SMTP ERROR: MailData: ' + smtp.EnhCodeString+sLineBreak+smtp.FullResult.Text);
+    if not smtp.MailData(msg_lines) then
+      raise Exception.Create('SMTP ERROR: MailData: ' + smtp.EnhCodeString+sLineBreak+smtp.FullResult.Text);
 
-     if not smtp.Logout then
-       raise Exception.Create('SMTP ERROR: Logout: ' + smtp.EnhCodeString+sLineBreak+smtp.FullResult.Text);
+    if not smtp.Logout then
+      raise Exception.Create('SMTP ERROR: Logout: ' + smtp.EnhCodeString+sLineBreak+smtp.FullResult.Text);
   finally
-     msg_lines.Free;
-     CorpoEmail.Free;
-     smtp.Free;
-     m.free;
-     SetStatus( stMDFeIdle );
+    msg_lines.Free;
+    CorpoEmail.Free;
+    smtp.Free;
+    m.free;
+    SetStatus( stMDFeIdle );
   end;
 end;
 

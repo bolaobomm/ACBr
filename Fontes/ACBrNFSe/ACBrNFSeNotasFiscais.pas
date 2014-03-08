@@ -54,7 +54,8 @@ type
                                 PedeConfirma: Boolean = False;
                                 AguardarEnvio: Boolean = False;
                                 NomeRemetente: String = '';
-                                TLS : Boolean = True);
+                                TLS: Boolean = True;
+                                UsarThread: Boolean = True);
     property NFSe: TNFSe  read FNFSe write FNFSe;
     property XML_Rps: AnsiString read FXML_Rps write FXML_Rps;
     property XML_Rps_Ass: AnsiString read FXML_Rps_Ass write FXML_Rps_Ass;
@@ -120,7 +121,7 @@ type
     sTo : String;
     sCC : TStrings;
     slmsg_Lines : TStrings;
-    constructor Create(AOwner: NotaFiscal);
+    constructor Create{(AOwner: NotaFiscal)};
     destructor Destroy; override;
   protected
     procedure Execute; override;
@@ -151,18 +152,85 @@ begin
  inherited Destroy;
 end;
 
-procedure NotaFiscal.EnviarEmail(const sSmtpHost, sSmtpPort, sSmtpUser,
-  sSmtpPasswd, sFrom, sTo, sAssunto: String; sMensagem: TStrings; SSL,
-  EnviaPDF: Boolean; sCC, Anexos: TStrings; PedeConfirma,
-  AguardarEnvio: Boolean; NomeRemetente: String; TLS: Boolean);
+procedure NotaFiscal.EnviarEmail(const sSmtpHost,
+                                       sSmtpPort,
+                                       sSmtpUser,
+                                       sSmtpPasswd,
+                                       sFrom,
+                                       sTo,
+                                       sAssunto: String;
+                                       sMensagem : TStrings;
+                                       SSL : Boolean;
+                                       EnviaPDF: Boolean = true;
+                                       sCC: TStrings = nil;
+                                       Anexos:TStrings=nil;
+                                       PedeConfirma: Boolean = False;
+                                       AguardarEnvio: Boolean = False;
+                                       NomeRemetente: String = '';
+                                       TLS: Boolean = True;
+                                       UsarThread: Boolean = True);
+
 var
- ThreadSMTP : TSendMailThread;
- m          : TMimemess;
- p          : TMimepart;
- StreamNFSe : TStringStream;
+ NomeArq    : String;
  NomeArqPDF : String;
- i          : Integer;
+ AnexosEmail: TStrings;
+ StreamNFSe : TStringStream;
 begin
+ AnexosEmail := TStringList.Create;
+ StreamNFSe  := TStringStream.Create('');
+ try
+    AnexosEmail.Clear;
+    if Anexos <> nil then
+      AnexosEmail.Text := Anexos.Text;
+    if NomeArq <> '' then
+     begin
+       SaveToFile(NomeArq);
+       AnexosEmail.Add(NomeArq);
+     end
+    else
+     begin
+       SaveToStream(StreamNFSe);
+     end;
+    if (EnviaPDF) then
+    begin
+       if TACBrNFSe( TNotasFiscais( Collection ).ACBrNFSe ).DANFSE <> nil then
+       begin
+          TACBrNFSe( TNotasFiscais( Collection ).ACBrNFSe ).DANFSE.ImprimirDANFSEPDF(NFSe);
+
+          NomeArqPDF := Trim(NomeArq);
+          if NomeArqPDF <> ''
+           then begin
+             NomeArqPDF := StringReplace(NFSe.Numero, 'NFSe', '', [rfIgnoreCase]);
+             NomeArqPDF := PathWithDelim(TACBrNFSe( TNotasFiscais( Collection ).ACBrNFSe ).DANFSE.PathPDF) + NomeArqPDF + '.pdf';
+           end
+           else NomeArqPDF := StringReplace(NomeArqPDF, '-nfse.xml', '.pdf', [rfIgnoreCase]);
+
+          AnexosEmail.Add(NomeArqPDF);
+       end;
+    end;
+    TACBrNFSe( TNotasFiscais( Collection ).ACBrNFSe ).EnviaEmail(sSmtpHost,
+                sSmtpPort,
+                sSmtpUser,
+                sSmtpPasswd,
+                sFrom,
+                sTo,
+                sAssunto,
+                sMensagem,
+                SSL,
+                sCC,
+                AnexosEmail,
+                PedeConfirma,
+                AguardarEnvio,
+                NomeRemetente,
+                TLS,
+                StreamNFSe,
+                copy(NFSe.Numero, (length(NFSe.Numero) - 44) + 1, 44) + '-NFSe.xml',
+                UsarThread);
+ finally
+    AnexosEmail.Free;
+    StreamNFSe.Free;
+ end;
+(*
  m := TMimemess.create;
 
  ThreadSMTP := TSendMailThread.Create(Self);  // Não Libera, pois usa FreeOnTerminate := True ;
@@ -242,6 +310,7 @@ begin
   m.free;
   StreamNFSe.Free;
  end;
+ *)
 end;
 
 function NotaFiscal.GetNFSeXML: AnsiString;
@@ -914,9 +983,8 @@ end;
 
 { TSendMailThread }
 
-constructor TSendMailThread.Create(AOwner: NotaFiscal);
+constructor TSendMailThread.Create{(AOwner: NotaFiscal)};
 begin
- // FOwner      := AOwner;
  smtp        := TSMTPSend.Create;
  slmsg_Lines := TStringList.Create;
  sCC         := TStringList.Create;

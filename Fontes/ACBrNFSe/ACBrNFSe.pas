@@ -13,7 +13,8 @@ uses
   Dialogs,
 {$ENDIF}
   ACBrNFSeNotasFiscais, ACBrNFSeConfiguracoes, ACBrNFSeWebServices,
-  ACBrUtil, ACBrNFSeUtil, ACBrNFSeDANFSeClass;
+  ACBrDFeUtil, ACBrUtil, ACBrNFSeUtil, ACBrNFSeDANFSeClass, Forms,
+  smtpsend, ssl_openssl, mimemess, mimepart; // units para enviar email
 
 const
   ACBrNFSe_VERSAO = '0.2.0';
@@ -34,7 +35,43 @@ type
     FStatus : TStatusACBrNFSe;
     FOnStatusChange: TNotifyEvent;
     FOnGerarLog : TACBrNFSeLog;
+
     procedure SetDANFSe(const Value: TACBrNFSeDANFSeClass);
+    procedure EnviaEmailThread(const sSmtpHost,
+                                     sSmtpPort,
+                                     sSmtpUser,
+                                     sSmtpPasswd,
+                                     sFrom,
+                                     sTo,
+                                     sAssunto: String;
+                                     sMensagem: TStrings;
+                                     SSL: Boolean;
+                                     sCC,
+                                     Anexos: TStrings;
+                                     PedeConfirma,
+                                     AguardarEnvio: Boolean;
+                                     NomeRemetente: String;
+                                     TLS: Boolean;
+                                     StreamNFSe: TStringStream;
+                                     NomeArq: String;
+                                     HTML:Boolean = False);
+    procedure EnviarEmailNormal(const sSmtpHost,
+                                      sSmtpPort,
+                                      sSmtpUser,
+                                      sSmtpPasswd,
+                                      sFrom,
+                                      sTo,
+                                      sAssunto: String;
+                                      sMensagem: TStrings;
+                                      SSL: Boolean;
+                                      sCC,
+                                      Anexos: TStrings;
+                                      PedeConfirma,
+                                      AguardarEnvio: Boolean;
+                                      NomeRemetente: String;
+                                      TLS: Boolean;
+                                      StreamNFSe: TStringStream;
+                                      NomeArq: String);
   protected
     procedure Notification(AComponent: TComponent; Operation: TOperation); override;
   public
@@ -64,6 +101,25 @@ type
     property NotasFiscais: TNotasFiscais read FNotasFiscais write FNotasFiscais;
     property Status: TStatusACBrNFSe     read FStatus;
     procedure SetStatus( const stNewStatus : TStatusACBrNFSe );
+    procedure EnviaEmail(const sSmtpHost,
+                               sSmtpPort,
+                               sSmtpUser,
+                               sSmtpPasswd,
+                               sFrom,
+                               sTo,
+                               sAssunto: String;
+                               sMensagem : TStrings;
+                               SSL : Boolean;
+                               sCC: TStrings = nil;
+                               Anexos:TStrings=nil;
+                               PedeConfirma: Boolean = False;
+                               AguardarEnvio: Boolean = False;
+                               NomeRemetente: String = '';
+                               TLS : Boolean = True;
+                               StreamNFSe : TStringStream = nil;
+                               NomeArq : String = '';
+                               UsarThread: Boolean = True;
+                               HTML: Boolean = False);
   published
     property Configuracoes: TConfiguracoes     read FConfiguracoes  write FConfiguracoes;
     property OnStatusChange: TNotifyEvent      read FOnStatusChange write FOnStatusChange;
@@ -396,6 +452,233 @@ function TACBrNFSe.ConsultarSequencialRPS(ACidade, ACnpj,
   AInscricaoMunicipal, ASeriePrestacao: String): Boolean;
 begin
   Result := WebServices.ConsultaSequencialRPS(ACidade, ACnpj, AInscricaoMunicipal, ASeriePrestacao);
+end;
+
+procedure TACBrNFSe.EnviaEmailThread(const sSmtpHost, sSmtpPort, sSmtpUser,
+  sSmtpPasswd, sFrom, sTo, sAssunto: String; sMensagem: TStrings;
+  SSL: Boolean; sCC, Anexos: TStrings; PedeConfirma,
+  AguardarEnvio: Boolean; NomeRemetente: String; TLS: Boolean;
+  StreamNFSe: TStringStream; NomeArq: String; HTML: Boolean);
+var
+ ThreadSMTP : TSendMailThread;
+ m:TMimemess;
+ p: TMimepart;
+ i: Integer;
+begin
+ m:=TMimemess.create;
+
+ ThreadSMTP := TSendMailThread.Create ;  // Não Libera, pois usa FreeOnTerminate := True ;
+ try
+    p := m.AddPartMultipart('mixed', nil);
+    if sMensagem <> nil then
+    begin
+       if HTML = true then
+          m.AddPartHTML(sMensagem, p)
+       else
+          m.AddPartText(sMensagem, p);
+    end;
+
+    if StreamNFSe <> nil then
+      m.AddPartBinary(StreamNFSe,NomeArq, p);
+
+    if assigned(Anexos) then
+      for i := 0 to Anexos.Count - 1 do
+      begin
+        m.AddPartBinaryFromFile(Anexos[i], p);
+      end;
+
+    m.header.tolist.add(sTo);
+
+    if Trim(NomeRemetente) <> '' then
+      m.header.From := Format('%s<%s>', [NomeRemetente, sFrom])
+    else
+      m.header.From := sFrom;
+
+    m.header.subject:= sAssunto;
+    m.Header.ReplyTo := sFrom;
+    if PedeConfirma then
+       m.Header.CustomHeaders.Add('Disposition-Notification-To: '+sFrom);
+    m.EncodeMessage;
+
+    ThreadSMTP.sFrom := sFrom;
+    ThreadSMTP.sTo   := sTo;
+    if sCC <> nil then
+       ThreadSMTP.sCC.AddStrings(sCC);
+    ThreadSMTP.slmsg_Lines.AddStrings(m.Lines);
+
+    ThreadSMTP.smtp.UserName := sSmtpUser;
+    ThreadSMTP.smtp.Password := sSmtpPasswd;
+
+    ThreadSMTP.smtp.TargetHost := sSmtpHost;
+    if not DFeUtil.EstaVazio( sSmtpPort ) then     // Usa default
+       ThreadSMTP.smtp.TargetPort := sSmtpPort;
+
+    ThreadSMTP.smtp.FullSSL := SSL;
+    ThreadSMTP.smtp.AutoTLS := TLS;
+
+    // ThreadSMTP.smtp.StartTLS; ?
+
+    if(TLS) then
+      ThreadSMTP.smtp.StartTLS;
+
+    SetStatus( stNFSeEmail );
+    ThreadSMTP.Resume; // inicia a thread
+    if AguardarEnvio then
+    begin
+      repeat
+        Sleep(1000);
+        Application.ProcessMessages;
+      until ThreadSMTP.Terminado;
+    end;
+    SetStatus( stNFSeIdle );
+ finally
+    m.free;
+ end;
+end;
+
+procedure TACBrNFSe.EnviarEmailNormal(const sSmtpHost, sSmtpPort,
+  sSmtpUser, sSmtpPasswd, sFrom, sTo, sAssunto: String;
+  sMensagem: TStrings; SSL: Boolean; sCC, Anexos: TStrings; PedeConfirma,
+  AguardarEnvio: Boolean; NomeRemetente: String; TLS: Boolean;
+  StreamNFSe: TStringStream; NomeArq: String);
+var
+  smtp: TSMTPSend;
+  msg_lines: TStringList;
+  m:TMimemess;
+  p: TMimepart;
+  I : Integer;
+  CorpoEmail: TStringList;
+begin
+  SetStatus( stNFSeEmail );
+
+  msg_lines := TStringList.Create;
+  CorpoEmail := TStringList.Create;
+  smtp := TSMTPSend.Create;
+  m:=TMimemess.create;
+  try
+     p := m.AddPartMultipart('mixed', nil);
+     if sMensagem <> nil then
+     begin
+        CorpoEmail.Text := sMensagem.Text;
+        m.AddPartText(CorpoEmail, p);
+     end;
+
+     if StreamNFSe <> nil then
+       m.AddPartBinary(StreamNFSe,NomeArq, p);
+
+     if assigned(Anexos) then
+     for i := 0 to Anexos.Count - 1 do
+     begin
+        m.AddPartBinaryFromFile(Anexos[i], p);
+     end;
+
+     m.header.tolist.add(sTo);
+
+     if Trim(NomeRemetente) <> '' then
+       m.header.From := Format('%s<%s>', [NomeRemetente, sFrom])
+     else
+       m.header.From := sFrom;
+
+     m.header.subject := sAssunto;
+     m.EncodeMessage;
+     msg_lines.Add(m.Lines.Text);
+
+     smtp.UserName := sSmtpUser;
+     smtp.Password := sSmtpPasswd;
+
+     smtp.TargetHost := sSmtpHost;
+     smtp.TargetPort := sSmtpPort;
+
+     smtp.FullSSL := SSL;
+     // smtp.AutoTLS := SSL; ?
+     smtp.AutoTLS := TLS;
+
+     if(TLS) then
+       smtp.StartTLS;
+
+     if not smtp.Login then
+       raise Exception.Create('SMTP ERROR: Login: ' + smtp.EnhCodeString+sLineBreak+smtp.FullResult.Text);
+
+     if not smtp.MailFrom(sFrom, Length(sFrom)) then
+       raise Exception.Create('SMTP ERROR: MailFrom: ' + smtp.EnhCodeString+sLineBreak+smtp.FullResult.Text);
+
+     if not smtp.MailTo(sTo) then
+       raise Exception.Create('SMTP ERROR: MailTo: ' + smtp.EnhCodeString+sLineBreak+smtp.FullResult.Text);
+
+     if sCC <> nil then
+     begin
+       for I := 0 to sCC.Count - 1 do
+       begin
+         if not smtp.MailTo(sCC.Strings[i]) then
+           raise Exception.Create('SMTP ERROR: MailTo: ' + smtp.EnhCodeString+sLineBreak+smtp.FullResult.Text);
+       end;
+     end;
+
+     if not smtp.MailData(msg_lines) then
+       raise Exception.Create('SMTP ERROR: MailData: ' + smtp.EnhCodeString+sLineBreak+smtp.FullResult.Text);
+
+     if not smtp.Logout then
+       raise Exception.Create('SMTP ERROR: Logout: ' + smtp.EnhCodeString+sLineBreak+smtp.FullResult.Text);
+  finally
+     msg_lines.Free;
+     CorpoEmail.Free;
+     smtp.Free;
+     m.free;
+     SetStatus( stNFSeIdle );
+  end;
+end;
+
+procedure TACBrNFSe.EnviaEmail(const sSmtpHost, sSmtpPort, sSmtpUser,
+  sSmtpPasswd, sFrom, sTo, sAssunto: String; sMensagem: TStrings;
+  SSL: Boolean; sCC, Anexos: TStrings; PedeConfirma,
+  AguardarEnvio: Boolean; NomeRemetente: String; TLS: Boolean;
+  StreamNFSe: TStringStream; NomeArq: String; UsarThread, HTML: Boolean);
+begin
+  if UsarThread then
+  begin
+    EnviaEmailThread(
+      sSmtpHost,
+      sSmtpPort,
+      sSmtpUser,
+      sSmtpPasswd,
+      sFrom,
+      sTo,
+      sAssunto,
+      sMensagem,
+      SSL,
+      sCC,
+      Anexos,
+      PedeConfirma,
+      AguardarEnvio,
+      NomeRemetente,
+      TLS,
+      StreamNFSe,
+      NomeArq,
+      HTML
+    );
+  end
+  else
+  begin
+    EnviarEmailNormal(
+      sSmtpHost,
+      sSmtpPort,
+      sSmtpUser,
+      sSmtpPasswd,
+      sFrom,
+      sTo,
+      sAssunto,
+      sMensagem,
+      SSL,
+      sCC,
+      Anexos,
+      PedeConfirma,
+      AguardarEnvio,
+      NomeRemetente,
+      TLS,
+      StreamNFSe,
+      NomeArq
+    );
+  end;
 end;
 
 end.
