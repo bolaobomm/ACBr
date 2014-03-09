@@ -244,7 +244,8 @@ begin
        (leitor.rExtrai(1, 'Consultarnfserpsresposta') <> '') or
        (leitor.rExtrai(1, 'Consultarnfserpsresposta') <> '') or
        (leitor.rExtrai(1, 'ConsultarNfseResposta') <> '') or // acrescentado para corrigir no GINFES
-       (leitor.rExtrai(1, 'GerarNfseResposta') <> '')
+       (leitor.rExtrai(1, 'GerarNfseResposta') <> '') or
+       (leitor.rExtrai(1, 'ConsultarNfsePorRpsResult') <> '')
        then
     begin
       // Ler a NFSe
