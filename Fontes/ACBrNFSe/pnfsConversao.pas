@@ -53,7 +53,7 @@ type
                     proGoiania, proIssCuritiba, proBHISS, proNatal, proISSDigital,
                     proISSe, pro4R, proGovDigital, proFiorilli, proCoplan, proProdata,
                     proAgili, proVirtual, proPVH, proFreire, proLink3, proSpeedGov,
-                    proVitoria, proMitra, ProTecnos, proPronim );
+                    proVitoria, proMitra, ProTecnos, proPronim, proACtCon );
 
   TnfseAcao = ( acRecepcionar, acConsSit, acConsLote, acConsNFSeRps, acConsNFSe, acCancelar, acGerar, acRecSincrono, acConsSecRps );
 

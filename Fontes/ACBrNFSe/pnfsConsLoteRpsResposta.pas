@@ -260,15 +260,23 @@ begin
       begin
         i := 0;
         // Alterado por Rodrigo Cantelli
-        while (Leitor.rExtrai(iNivel + 2, 'CompNfse', '', i + 1) <> '') or
+        while(Leitor.rExtrai(iNivel + 2, 'CompNfse', '', i + 1) <> '') or
               (Leitor.rExtrai(iNivel + 2, 'ComplNfse', '', i + 1) <> '') or
-              (Leitor.rExtrai(iNivel + 2, 'tcCompNfse', '', i + 1) <> '') do
+              (Leitor.rExtrai(iNivel + 2, 'tcCompNfse', '', i + 1) <> '') or
+              ((FProvedor in [ProActCon]) and (Leitor.rExtrai(iNivel + 3, 'Nfse','',i+1)<>''))
+              do
         begin
           ListaNfse.FCompNfse.Add;
 
           // Grupo da TAG <Nfse> *************************************************
-          if Leitor.rExtrai(iNivel + 3, 'Nfse') <> ''
+          if Leitor.rExtrai(iNivel + 3, 'Nfse','') <> ''
            then begin
+
+            if (FProvedor in [ProActCon]) then Leitor.rExtrai(iNivel + 3, 'Nfse','',i+1);
+
+            if Pos('</NFSE>',uppercase(ListaNfse.FCompNfse[i].FNfse.XML))=0 then
+               ListaNfse.FCompNfse[i].FNfse.XML:=ListaNfse.FCompNfse[i].FNfse.XML+'</Nfse>';
+
             ListaNfse.FCompNfse[i].FNfse.XML := {'<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>'+}
                                                 Leitor.Grupo {+
                                                 '</Nfse>'};
