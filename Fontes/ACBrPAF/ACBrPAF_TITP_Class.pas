@@ -70,7 +70,7 @@ uses
   ACBrUtil;
 
 const
-  MASCARA_ITEM = '%s %10.3f %10s %14s %-50s %-4s %s %5.2f %11.2f';
+  MASCARA_ITEM = '%s %10.3f %10s %14s %-50s %-4s %-3s %5.2f %11.2f';
 
 { TPAF_TITP }
 
@@ -129,7 +129,7 @@ begin
   begin
     // titulo
     Result := Result +
-      Format('%s %-10s %-10s %-14s %-50s %-4s %-s %-5s %-9s', [
+      Format('%s %-10s %-10s %-14s %-50s %-4s %-3s %-5s %-9s', [
         'T',
         'Quantidade',
         'Codigo',
