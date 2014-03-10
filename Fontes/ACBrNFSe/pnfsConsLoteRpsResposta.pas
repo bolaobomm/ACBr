@@ -263,7 +263,7 @@ begin
         while(Leitor.rExtrai(iNivel + 2, 'CompNfse', '', i + 1) <> '') or
               (Leitor.rExtrai(iNivel + 2, 'ComplNfse', '', i + 1) <> '') or
               (Leitor.rExtrai(iNivel + 2, 'tcCompNfse', '', i + 1) <> '') or
-              ((FProvedor in [ProActCon]) and (Leitor.rExtrai(iNivel + 3, 'Nfse','',i+1)<>''))
+              ((FProvedor in [ProActcon]) and (Leitor.rExtrai(iNivel + 3, 'Nfse', '', i + 1) <> ''))
               do
         begin
           ListaNfse.FCompNfse.Add;
@@ -272,7 +272,7 @@ begin
           if Leitor.rExtrai(iNivel + 3, 'Nfse','') <> ''
            then begin
 
-            if (FProvedor in [ProActCon]) then Leitor.rExtrai(iNivel + 3, 'Nfse','',i+1);
+            if (FProvedor in [ProActcon]) then Leitor.rExtrai(iNivel + 3, 'Nfse', '' , i + 1);
 
             if Pos('</NFSE>',uppercase(ListaNfse.FCompNfse[i].FNfse.XML))=0 then
                ListaNfse.FCompNfse[i].FNfse.XML:=ListaNfse.FCompNfse[i].FNfse.XML+'</Nfse>';

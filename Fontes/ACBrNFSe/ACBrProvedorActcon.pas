@@ -119,23 +119,21 @@ begin
            end;
  end;
 
- ConfigURL.HomRecepcaoLoteRPS:='http://nfe.'+ConfigURL.HomNomeCidade+'.mg.gov.br/homologacao/webservice/servicos';
- Configurl.HomRecepcaoSincrono:='http://nfe.'+ConfigURL.HomNomeCidade+'.mg.gov.br/homologacao/webservice/servicos';
- Configurl.HomRecepcaoSincrono:='http://nfe.'+ConfigURL.HomNomeCidade+'.mg.gov.br/homologacao/webservice/servicos';
- ConfigURL.HomConsultaLoteRPS:='http://nfe.'+ConfigURL.HomNomeCidade+'.mg.gov.br/homologacao/webservice/servicos';
- ConfigURL.HomConsultaNFSeRPS:='http://nfe.'+ConfigURL.HomNomeCidade+'.mg.gov.br/homologacao/webservice/servicos';
- ConfigURL.HomConsultaSitLoteRPS:='http://nfe.'+ConfigURL.HomNomeCidade+'.mg.gov.br/homologacao/webservice/servicos';
- ConfigURL.HomConsultaNFSe:='http://nfe.'+ConfigURL.HomNomeCidade+'.mg.gov.br/homologacao/webservice/servicos';
- ConfigURL.HomCancelaNFSe:='http://nfe.'+ConfigURL.HomNomeCidade+'.mg.gov.br/homologacao/webservice/servicos';
+ ConfigURL.HomRecepcaoLoteRPS    := 'http://nfe.'+ConfigURL.HomNomeCidade+'.mg.gov.br/homologacao/webservice/servicos';
+ ConfigURL.HomConsultaLoteRPS    := 'http://nfe.'+ConfigURL.HomNomeCidade+'.mg.gov.br/homologacao/webservice/servicos';
+ ConfigURL.HomConsultaNFSeRPS    := 'http://nfe.'+ConfigURL.HomNomeCidade+'.mg.gov.br/homologacao/webservice/servicos';
+ ConfigURL.HomConsultaSitLoteRPS := 'http://nfe.'+ConfigURL.HomNomeCidade+'.mg.gov.br/homologacao/webservice/servicos';
+ ConfigURL.HomConsultaNFSe       := 'http://nfe.'+ConfigURL.HomNomeCidade+'.mg.gov.br/homologacao/webservice/servicos';
+ ConfigURL.HomCancelaNFSe        := 'http://nfe.'+ConfigURL.HomNomeCidade+'.mg.gov.br/homologacao/webservice/servicos';
+ ConfigURL.HomRecepcaoSincrono   := 'http://nfe.'+ConfigURL.HomNomeCidade+'.mg.gov.br/homologacao/webservice/servicos';
 
- ConfigURL.ProRecepcaoLoteRPS:='http://nfe.'+ConfigURL.ProNomeCidade+'.mg.gov.br/nfseserv/webservice/servicos';
- Configurl.ProRecepcaoSincrono:='http://nfe.'+ConfigURL.ProNomeCidade+'.mg.gov.br/nfseserv/webservice/servicos';
- Configurl.ProRecepcaoSincrono:='http://nfe.'+ConfigURL.ProNomeCidade+'.mg.gov.br/nfseserv/webservice/servicos';
- ConfigURL.ProConsultaLoteRPS:='http://nfe.'+ConfigURL.ProNomeCidade+'.mg.gov.br/nfseserv/webservice/servicos';
- ConfigURL.ProConsultaNFSeRPS:='http://nfe.'+ConfigURL.ProNomeCidade+'.mg.gov.br/nfseserv/webservice/servicos';
- ConfigURL.ProConsultaSitLoteRPS:='http://nfe.'+ConfigURL.ProNomeCidade+'.mg.gov.br/s/webservice/servicos';
- ConfigURL.ProConsultaNFSe:='http://nfe.'+ConfigURL.ProNomeCidade+'.mg.gov.br/nfseserv/webservice/servicos';
- ConfigURL.ProCancelaNFSe:='http://nfe.'+ConfigURL.ProNomeCidade+'.mg.gov.br/nfseserv/webservice/servicos';
+ ConfigURL.ProRecepcaoLoteRPS    := 'http://nfe.'+ConfigURL.ProNomeCidade+'.mg.gov.br/nfseserv/webservice/servicos';
+ ConfigURL.ProConsultaLoteRPS    := 'http://nfe.'+ConfigURL.ProNomeCidade+'.mg.gov.br/nfseserv/webservice/servicos';
+ ConfigURL.ProConsultaNFSeRPS    := 'http://nfe.'+ConfigURL.ProNomeCidade+'.mg.gov.br/nfseserv/webservice/servicos';
+ ConfigURL.ProConsultaSitLoteRPS := 'http://nfe.'+ConfigURL.ProNomeCidade+'.mg.gov.br/s/webservice/servicos';
+ ConfigURL.ProConsultaNFSe       := 'http://nfe.'+ConfigURL.ProNomeCidade+'.mg.gov.br/nfseserv/webservice/servicos';
+ ConfigURL.ProCancelaNFSe        := 'http://nfe.'+ConfigURL.ProNomeCidade+'.mg.gov.br/nfseserv/webservice/servicos';
+ ConfigURL.ProRecepcaoSincrono   := 'http://nfe.'+ConfigURL.ProNomeCidade+'.mg.gov.br/nfseserv/webservice/servicos';
 
  Result := ConfigURL;
 end;
@@ -170,7 +168,6 @@ function TProvedorActcon.Gera_TagI(Acao: TnfseAcao; Prefixo3, Prefixo4,
 begin
  case Acao of
    acRecepcionar: Result := '<' + Prefixo3 + 'EnviarLoteRpsEnvio' + NameSpaceDad;
-   acRecSincrono: Result := '<' + Prefixo3 + 'EnviarLoteRpsEnvio' + NameSpaceDad;
    acConsSit:     Result := '<' + Prefixo3 + 'ConsultarSituacaoLoteRpsEnvio' + NameSpaceDad;
    acConsLote:    Result := '<' + Prefixo3 + 'ConsultarLoteRpsEnvio' + NameSpaceDad;
    acConsNFSeRps: Result := '<' + Prefixo3 + 'ConsultarNfseRpsEnvio' + NameSpaceDad;
@@ -180,6 +177,7 @@ begin
                               '<' + Prefixo4 + 'InfPedidoCancelamento' +
                                  DFeUtil.SeSenao(Identificador <> '', ' ' + Identificador + '="' + URI + '"', '') + '>';
    acGerar:       Result := '<' + Prefixo3 + 'GerarNfseEnvio' + NameSpaceDad;
+   acRecSincrono: Result := '<' + Prefixo3 + 'EnviarLoteRpsEnvio' + NameSpaceDad;
  end;
 end;
 
@@ -231,7 +229,7 @@ begin
              '</nfse:RecepcionarLoteRpsSincronoRequest>' +
             '</S:Body>' +
            '</S:Envelope>';
- end;
+end;
 
 function TProvedorActcon.GeraEnvelopeConsultarSituacaoLoteRPS(
   URLNS: String; CabMsg, DadosMsg, DadosSenha: AnsiString): AnsiString;

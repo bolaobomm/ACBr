@@ -130,7 +130,7 @@ begin
                                DFeUtil.SeSenao(AProvedor = proTecnos, Copy(Notas, Pos('<Rps Id="', Notas) + 9, 35), NumeroLote) + '"', '')) +
                DFeUtil.SeSenao(AProvedor = proSimplISS, NameSpaceDad, '') +
                DFeUtil.SeSenao(AProvedor in [proAbaco, proBetha, proGinfes, proGoiania, proGovBR,
-                                             {proISSDigital, }proIssCuritiba, proISSNET, proNatal, proACtCon,
+                                             {proISSDigital, }proIssCuritiba, proISSNET, proNatal, proActcon,
                                              proRecife, proRJ, proSimplISS, proThema, proTiplan,
                                              proAgili, proFISSLex, proSpeedGov{, proWebISS}, proPronim], '',
                 DFeUtil.SeSenao(VersaoDados <> '', ' versao="' + VersaoDados + '"', '')) + '>' +
@@ -180,7 +180,7 @@ begin
 
  DadosMsg := '<' + Prefixo3 + 'Prestador' +
                DFeUtil.SeSenao(AProvedor = proSimplISS, ' ' + NameSpaceDad, '>') +
-               DFeUtil.SeSenao((VersaoXML = '2') or (AProvedor in [proISSNet, proACtCon]),
+               DFeUtil.SeSenao((VersaoXML = '2') or (AProvedor in [proISSNet, proActcon]),
 
                  '<' + Prefixo4 + 'CpfCnpj>' +
                   DFeUtil.SeSenao(Length(OnlyNumber(Cnpj)) <= 11,
@@ -223,7 +223,7 @@ begin
  DadosMsg := '<' + Prefixo3 + 'Prestador' +
                DFeUtil.SeSenao(AProvedor = proSimplISS, ' ' + NameSpaceDad, '>') +
 
-               DFeUtil.SeSenao((VersaoXML = '2') or (AProvedor in [proISSNet, proACtCon]),
+               DFeUtil.SeSenao((VersaoXML = '2') or (AProvedor in [proISSNet, proActcon]),
 
                  '<' + Prefixo4 + 'CpfCnpj>' +
                   DFeUtil.SeSenao(Length(OnlyNumber(Cnpj)) <= 11,
@@ -286,7 +286,7 @@ begin
              '<' + Prefixo3 + 'Prestador' +
                DFeUtil.SeSenao(AProvedor = proSimplISS, ' ' + NameSpaceDad, '>') +
 
-              DFeUtil.SeSenao((VersaoXML = '2') or (AProvedor in [proISSNet, proACtCon]),
+              DFeUtil.SeSenao((VersaoXML = '2') or (AProvedor in [proISSNet, proActcon]),
 
                 '<' + Prefixo4 + 'CpfCnpj>' +
                   DFeUtil.SeSenao(Length(OnlyNumber(Cnpj)) <= 11,
@@ -333,7 +333,7 @@ begin
 
  DadosMsg := '<' + Prefixo3 + 'Prestador' +
                DFeUtil.SeSenao(AProvedor = proSimplISS, ' ' + NameSpaceDad, '>') +
-               DFeUtil.SeSenao((VersaoXML = '2') or (AProvedor in [proISSNet, proACtCon] ),
+               DFeUtil.SeSenao((VersaoXML = '2') or (AProvedor in [proISSNet, proActcon] ),
 
                  '<' + Prefixo4 + 'CpfCnpj>' +
                   DFeUtil.SeSenao(Length(OnlyNumber(Cnpj)) <= 11,
