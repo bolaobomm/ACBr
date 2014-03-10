@@ -132,6 +132,12 @@ begin
            Imprimir(StrToInt(Cmd.Params(0)),   {Copias}
                     StrToInt(Cmd.Params(1)))   {AvancoEtq}
 
+        else if Cmd.Metodo = 'setlimparmemoria' then
+           LimparMemoria := StrToBool( Trim(Cmd.Params(0)))
+
+        else if Cmd.Metodo = 'limparmemoria' then
+           Cmd.Resposta := BoolToStr( LimparMemoria, true )
+
         ELSE
            raise Exception.Create('Comando inválido ('+Cmd.Comando+')') ;
 
