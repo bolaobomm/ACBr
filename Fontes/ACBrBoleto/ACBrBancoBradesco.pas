@@ -350,7 +350,7 @@ begin
    rCodEmpresa:= trim(Copy(ARetorno[0],27,20));
    rCedente   := trim(Copy(ARetorno[0],47,30));
 
-   rAgencia := trim(Copy(ARetorno[1], 26, ACBrBanco.TamanhoAgencia));
+   rAgencia := trim(Copy(ARetorno[1], 25, ACBrBanco.TamanhoAgencia));
    rConta   := trim(Copy(ARetorno[1], 30, ACBrBanco.TamanhoConta));
 
    rDigitoConta := Copy(ARetorno[1],37,1);
