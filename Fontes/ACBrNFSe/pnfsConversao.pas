@@ -736,7 +736,8 @@ begin
   3504800, // Balsamo/SP
   3505203, // Bariri/SP
   3540200, // Pontal/SP
-  3549409  // Sao Joaquim Da Barra/SP
+  3549409, // Sao Joaquim Da Barra/SP
+  5003207  // Corumba/MS
          : Provedor := 'Fiorilli';
 
   1100304, // Vilhena/RO

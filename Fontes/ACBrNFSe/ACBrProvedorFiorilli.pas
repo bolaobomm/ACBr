@@ -123,6 +123,9 @@ begin
     cURL_Producao := 'http://177.69.210.132:8080/IssWeb-ejb/IssWebWS/IssWebWS';
   3549409 : // Sao Joaquim Da Barra/SP
     cURL_Producao := 'http://187.72.128.133:5661/IssWeb-ejb/IssWebWS/IssWebWS';
+  5003207 : // Corumba/MS
+    cURL_Producao := 'http://nfse.corumba.ms.gov.br:8080/IssWeb-ejb/IssWebWS/IssWebWS';
+
  end;
 
  ConfigURL.HomNomeCidade         := '';
