@@ -1313,7 +1313,14 @@ begin
    CM:= Leitor.rCampo(tcStr, 'CodigoMunicipio');
    FProvedor := StrToProvedor(Ok, CodCidadeToProvedor(StrToIntDef(CM, 0)));
   end
-  else FProvedor := proNenhum;
+  else begin
+   if (Leitor.rExtrai(1, 'Servico') <> '')
+    then begin
+     CM:= Leitor.rCampo(tcStr, 'CodigoMunicipio');
+     FProvedor := StrToProvedor(Ok, CodCidadeToProvedor(StrToIntDef(CM, 0)));
+    end
+    else FProvedor := proNenhum;
+  end;
 
  if (Leitor.rExtrai(1, 'Nfse') <> '') or (Pos('Nfse versao="2.01"', Leitor.Arquivo) > 0) then
  begin
