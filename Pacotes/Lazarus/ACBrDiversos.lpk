@@ -28,7 +28,7 @@
 ACBrCalculadora, ACBrExtenso, ACBrValidador, ACBrFala, ACBrCMC7, ACBrGIF, ACBrBarCode, ACBrEnterTab"/>
     <License Value="LGPL"/>
     <Version Minor="9"/>
-    <Files Count="14">
+    <Files Count="15">
       <Item1>
         <Filename Value="..\..\Fontes\ACBrDiversos\ACBrBarCode.pas"/>
         <UnitName Value="ACBrBarCode"/>
@@ -75,17 +75,21 @@ ACBrCalculadora, ACBrExtenso, ACBrValidador, ACBrFala, ACBrCMC7, ACBrGIF, ACBrBa
         <UnitName Value="AJBarcode"/>
       </Item11>
       <Item12>
-        <Filename Value="..\..\Fontes\ACBrDiversos\Gif1.pas"/>
-        <UnitName Value="Gif1"/>
+        <Filename Value="..\..\Fontes\ACBrDiversos\DelphiZXIngQRCode.pas"/>
+        <UnitName Value="DelphiZXingQRCode"/>
       </Item12>
       <Item13>
-        <Filename Value="..\..\Fontes\ACBrDiversos\Gif3.pas"/>
-        <UnitName Value="Gif3"/>
+        <Filename Value="..\..\Fontes\ACBrDiversos\Gif1.pas"/>
+        <UnitName Value="Gif1"/>
       </Item13>
       <Item14>
+        <Filename Value="..\..\Fontes\ACBrDiversos\Gif3.pas"/>
+        <UnitName Value="Gif3"/>
+      </Item14>
+      <Item15>
         <Filename Value="..\..\Fontes\ACBrDiversos\LCalculadora.pas"/>
         <UnitName Value="LCalculadora"/>
-      </Item14>
+      </Item15>
     </Files>
     <Type Value="RunAndDesignTime"/>
     <RequiredPkgs Count="4">

@@ -1,7 +1,7 @@
 object Form1: TForm1
   Left = 406
   Top = 154
-  Width = 755
+  Width = 772
   Height = 486
   Caption = 'SAT Teste - Projeto ACBr'
   Color = clBtnFace
@@ -18,7 +18,7 @@ object Form1: TForm1
   object Splitter1: TSplitter
     Left = 0
     Top = 184
-    Width = 739
+    Width = 756
     Height = 5
     Cursor = crVSplit
     Align = alTop
@@ -26,7 +26,7 @@ object Form1: TForm1
   object PageControl1: TPageControl
     Left = 0
     Top = 189
-    Width = 739
+    Width = 756
     Height = 239
     ActivePage = tsRecebido
     Align = alClient
@@ -35,9 +35,9 @@ object Form1: TForm1
       Caption = 'Log de Comandos'
       object mResposta: TMemo
         Left = 0
-        Top = 75
-        Width = 714
-        Height = 136
+        Top = 95
+        Width = 731
+        Height = 116
         Align = alBottom
         Anchors = [akLeft, akTop, akRight, akBottom]
         ScrollBars = ssVertical
@@ -49,39 +49,13 @@ object Form1: TForm1
       object mVenda: TMemo
         Left = 0
         Top = 186
-        Width = 714
-        Height = 25
-        Align = alBottom
-        ScrollBars = ssVertical
-        TabOrder = 0
-      end
-      object wbVenda: TWebBrowser
-        Left = 0
-        Top = 0
-        Width = 714
-        Height = 186
-        Align = alClient
-        TabOrder = 1
-        ControlData = {
-          4C000000CB490000391300000000000000000000000000000000000000000000
-          000000004C000000000000000000000001000000E0D057007335CF11AE690800
-          2B2E126208000000000000004C0000000114020000000000C000000000000046
-          8000000000000000000000000000000000000000000000000000000000000000
-          00000000000000000100000000000000000000000000000000000000}
-      end
-    end
-    object tsRecebido: TTabSheet
-      Caption = 'XML Recebido'
-      object mCupom: TMemo
-        Left = 0
-        Top = 186
         Width = 731
         Height = 25
         Align = alBottom
         ScrollBars = ssVertical
         TabOrder = 0
       end
-      object wbCupom: TWebBrowser
+      object wbVenda: TWebBrowser
         Left = 0
         Top = 0
         Width = 731
@@ -96,11 +70,37 @@ object Form1: TForm1
           00000000000000000100000000000000000000000000000000000000}
       end
     end
+    object tsRecebido: TTabSheet
+      Caption = 'XML Recebido'
+      object mCupom: TMemo
+        Left = 0
+        Top = 186
+        Width = 748
+        Height = 25
+        Align = alBottom
+        ScrollBars = ssVertical
+        TabOrder = 0
+      end
+      object wbCupom: TWebBrowser
+        Left = 0
+        Top = 0
+        Width = 748
+        Height = 186
+        Align = alClient
+        TabOrder = 1
+        ControlData = {
+          4C0000004F4D0000391300000000000000000000000000000000000000000000
+          000000004C000000000000000000000001000000E0D057007335CF11AE690800
+          2B2E126208000000000000004C0000000114020000000000C000000000000046
+          8000000000000000000000000000000000000000000000000000000000000000
+          00000000000000000100000000000000000000000000000000000000}
+      end
+    end
   end
   object Panel1: TPanel
     Left = 0
     Top = 0
-    Width = 739
+    Width = 756
     Height = 184
     Align = alTop
     TabOrder = 0
@@ -153,7 +153,7 @@ object Form1: TForm1
     object GroupBox1: TGroupBox
       Left = 146
       Top = 1
-      Width = 592
+      Width = 609
       Height = 182
       Align = alClient
       Caption = 'Configura'#231#227'o'
@@ -161,7 +161,7 @@ object Form1: TForm1
       object PageControl2: TPageControl
         Left = 2
         Top = 15
-        Width = 588
+        Width = 605
         Height = 165
         ActivePage = tsDadosSAT
         Align = alClient
@@ -169,7 +169,7 @@ object Form1: TForm1
         object tsDadosSAT: TTabSheet
           Caption = 'Dados do SAT CFe'
           DesignSize = (
-            580
+            597
             137)
           object Label9: TLabel
             Left = 26
@@ -419,7 +419,7 @@ object Form1: TForm1
             Width = 134
             Height = 21
             Style = csDropDownList
-            ItemHeight = 0
+            ItemHeight = 13
             TabOrder = 4
           end
           object cbxIndRatISSQN: TComboBox
@@ -428,7 +428,7 @@ object Form1: TForm1
             Width = 134
             Height = 21
             Style = csDropDownList
-            ItemHeight = 0
+            ItemHeight = 13
             TabOrder = 5
           end
           object cbxRegTributario: TComboBox
@@ -437,14 +437,14 @@ object Form1: TForm1
             Width = 166
             Height = 21
             Style = csDropDownList
-            ItemHeight = 0
+            ItemHeight = 13
             TabOrder = 3
           end
         end
         object tsDadosSwHouse: TTabSheet
           Caption = 'Dados Sw.House'
           DesignSize = (
-            580
+            597
             137)
           object Label2: TLabel
             Left = 10
@@ -603,7 +603,7 @@ object Form1: TForm1
     Top = 328
   end
   object ACBrSAT1: TACBrSAT
-    Extrato = ACBrSATExtratoESCPOS1
+    Extrato = ACBrSATExtratoFortes1
     OnLog = ACBrSAT1Log
     Config.infCFe_versaoDadosEnt = 0.030000000000000000
     Config.ide_numeroCaixa = 0
@@ -619,9 +619,28 @@ object Form1: TForm1
     Top = 234
   end
   object ACBrSATExtratoESCPOS1: TACBrSATExtratoESCPOS
-    ACBrSAT = ACBrSAT1
+    Mask_qCom = '0.0000'
+    Mask_vUnCom = '0.000'
     ImprimeQRCode = False
     Left = 57
+    Top = 269
+  end
+  object ACBrSATExtratoFortes1: TACBrSATExtratoFortes
+    ACBrSAT = ACBrSAT1
+    Mask_qCom = '0.00'
+    Mask_vUnCom = '0.00'
+    PictureLogo.Data = {
+      07544269746D6170FE000000424DFE000000000000003E000000280000003300
+      0000180000000100010000000000C0000000C40E0000C40E0000020000000000
+      000000000000FFFFFF0000000000000000003FFFFFFFFFFF8000600006000000
+      C000407EFFFD6FC04000404F7FFFEFE04000400007C3C00040007FFFFFFFF1FF
+      C0001E3CE1FFADFF00000338C0FFCDC0000003008C7AEDC0000001018CFACDC0
+      000001999FFFDEC0000001919FFDDFC0000000838C7BD540000000C3807DDFC0
+      000000C3C0FFBF000000007FFFFFFE000000007FFFFFFC0000000003FFFFF800
+      00000001FFFFF00000000000FFFFC000000000003FFF8000000000000FFC0000
+      000000003BE000000000}
+    MostrarPreview = True
+    Left = 108
     Top = 269
   end
 end

@@ -7,7 +7,7 @@ interface
 uses
   Classes, SysUtils, FileUtil, SynMemo, SynHighlighterXML, Forms, Controls,
   Graphics, Dialogs, StdCtrls, ActnList, Menus, ExtCtrls, Buttons, ComCtrls,
-  Spin, ACBrSAT, ACBrSATClass, ACBrSATExtratoESCPOS;
+  Spin, ACBrSAT, ACBrSATClass, ACBrSATExtratoESCPOS, ACBrSATExtratoFortesFr;
 
 const
   cAssinatura = '9d4c4eef8c515e2c1269c2e4fff0719d526c5096422bf1defa20df50ba06469'+
@@ -23,6 +23,7 @@ type
   TForm1 = class(TForm)
     ACBrSAT1 : TACBrSAT ;
     ACBrSATExtratoESCPOS1 : TACBrSATExtratoESCPOS ;
+    ACBrSATExtratoFortes1: TACBrSATExtratoFortes;
     bInicializar : TButton ;
     btLerParams: TButton;
     btSalvarParams: TButton;
@@ -157,6 +158,7 @@ type
     procedure SbArqLogClick(Sender : TObject) ;
     procedure sePagCodChange(Sender: TObject);
   private
+    procedure PrepararImpressaoESCPOS;
     procedure TrataErros(Sender : TObject ; E : Exception) ;
     procedure AjustaACBrSAT ;
     { private declarations }
@@ -432,10 +434,7 @@ end;
 
 procedure TForm1.miImprimirExtratoCancelamentoClick(Sender: TObject);
 begin
-  ACBrSATExtratoESCPOS1.Device.Porta := edtPorta.Text;
-  ACBrSATExtratoESCPOS1.Device.Ativar;
-  ACBrSATExtratoESCPOS1.ImprimeQRCode := True;
-
+  PrepararImpressaoESCPOS;
   ACBrSAT1.ImprimirExtratoCancelamento;
 end;
 
@@ -646,14 +645,14 @@ begin
     with Det.Add do
     begin
       nItem := 1;
-      Prod.cProd := 'abc123';
+      Prod.cProd := 'ACBR001';
       Prod.cEAN := '6291041500213';
-      Prod.xProd := 'xis prod';
+      Prod.xProd := 'Assinatura SAC';
       prod.NCM := '99';
       Prod.CFOP := '5500';
-      Prod.uCom := 'horas';
-      Prod.qCom := 1.1205;
-      Prod.vUnCom := 11.210;
+      Prod.uCom := 'mes';
+      Prod.qCom := 1;
+      Prod.vUnCom := 120;
       Prod.indRegra := irTruncamento;
       Prod.vDesc := 1;
 
@@ -664,8 +663,7 @@ begin
       end;
 
       TotalItem := (Prod.qCom * Prod.vUnCom);
-
-      Imposto.vItem12741 := TotalItem * 0.30;
+      Imposto.vItem12741 := TotalItem * 0.12;
 
       Imposto.ICMS.orig := oeNacional;
       Imposto.ICMS.CST := cst00;
@@ -685,36 +683,38 @@ begin
       infAdProd := 'Informacoes adicionais';
     end;
 
-    (*
     with Det.Add do
     begin
       nItem := 2;
-      Prod.cProd := 'abc123';
+      Prod.cProd := '6291041500213';
       Prod.cEAN := '6291041500213';
-      Prod.xProd := 'Nada';
+      Prod.xProd := 'Outro produto Qualquer, com a Descrição Grande';
       Prod.CFOP := '5529';
-      Prod.uCom := 'horas';
+      Prod.uCom := 'un';
       Prod.qCom := 1.1205;
       Prod.vUnCom := 11.210;
       Prod.indRegra := irTruncamento;
       Prod.vOutro := 2;
 
+      TotalItem := (Prod.qCom * Prod.vUnCom);
+      Imposto.vItem12741 := TotalItem * 0.30;
+
       Imposto.ICMS.orig := oeNacional;
       Imposto.ICMS.CST := cst40;
 
       Imposto.PIS.CST := pis03;
-      Imposto.PIS.qBCProd := 1424.8937;
-      Imposto.PIS.vAliqProd := 264.0223;
+      Imposto.PIS.qBCProd := TotalItem;
+      Imposto.PIS.vAliqProd := 1.0223;
 
-      Imposto.PISST.qBCProd := 1424.8937;
-      Imposto.PISST.vAliqProd := 264.0223;
+      Imposto.PISST.qBCProd := TotalItem;
+      Imposto.PISST.vAliqProd := 1.0223;
 
       Imposto.COFINS.CST := cof03;
-      Imposto.COFINS.qBCProd := 1424.8937;
-      Imposto.COFINS.vAliqProd := 264.0223;
+      Imposto.COFINS.qBCProd := TotalItem;
+      Imposto.COFINS.vAliqProd := 1.0223;
 
-      Imposto.COFINSST.qBCProd := 503.6348;
-      Imposto.COFINSST.vAliqProd := 779.4577;
+      //Imposto.COFINSST.qBCProd := 503.6348;
+      //Imposto.COFINSST.vAliqProd := 779.4577;
     end;
 
     with Det.Add do
@@ -722,28 +722,30 @@ begin
       nItem := 3;
       Prod.cProd := 'abc123';
       Prod.cEAN := '6291041500213';
-      Prod.xProd := 'Nada';
+      Prod.xProd := 'ACBrSAT rules';
       Prod.NCM := '99';
       Prod.CFOP := '5844';
-      Prod.uCom := 'horas';
+      Prod.uCom := 'un';
       Prod.qCom := 1.1205;
       Prod.vUnCom := 11.210;
       Prod.indRegra := irTruncamento;
+
+      TotalItem := (Prod.qCom * Prod.vUnCom);
 
       Imposto.ICMS.orig := oeEstrangeiraImportacaoDireta;
       Imposto.ICMS.CSOSN := csosn102;
 
       Imposto.PIS.CST := pis04;
 
-      Imposto.PISST.qBCProd := 227.7313;
-      Imposto.PISST.vAliqProd := 390.1826;
+      Imposto.PISST.qBCProd := TotalItem;
+      Imposto.PISST.vAliqProd := 1.1826;
 
       Imposto.COFINS.CST := cof06;
 
       infAdProd := 'Informacoes adicionais';
     end;
 
-
+    (*
     with Det.Add do
     begin
       nItem := 4;
@@ -777,14 +779,14 @@ begin
     with Pagto.Add do
     begin
       cMP := MPDinheiro;
-      vMP := 9999999.99;
+      vMP := 50;
     end;
 
-    //with Pagto.Add do
-    //begin
-    //  cMP := MPCartaodeCredito;
-    //  vMP := 10;
-    //end;
+    with Pagto.Add do
+    begin
+      cMP := MPCartaodeCredito;
+      vMP := 100;
+    end;
 
     InfAdic.infCpl := 'Acesse www.projetoacbr.com.br para obter mais;informações sobre o componente ACBrSAT;'+
                       'Precisa de um PAF-ECF homologado?;Conheça o DJPDV - www.djpdv.com.br'
@@ -797,20 +799,13 @@ end;
 
 procedure TForm1.mImprimirExtratoVendaClick(Sender : TObject) ;
 begin
-  ACBrSATExtratoESCPOS1.Device.Porta := edtPorta.Text;
-  ACBrSATExtratoESCPOS1.Device.Ativar;
-  ACBrSATExtratoESCPOS1.ImprimeQRCode := True;
-
+  PrepararImpressaoESCPOS;
   ACBrSAT1.ImprimirExtrato;
 end;
 
 procedure TForm1.mImprimirExtratoVendaResumidoClick(Sender : TObject) ;
 begin
-  ACBrSATExtratoESCPOS1.Device.Porta := edtPorta.Text;
-  ACBrSATExtratoESCPOS1.Device.Ativar;
-  ACBrSATExtratoESCPOS1.Device.Serial.Purge;
-  ACBrSATExtratoESCPOS1.ImprimeQRCode := True;
-
+  PrepararImpressaoESCPOS;
   ACBrSAT1.ImprimirExtratoResumido;
 end;
 
@@ -830,6 +825,15 @@ procedure TForm1.sePagCodChange(Sender: TObject);
 begin
   ACBrSAT1.Config.PaginaDeCodigo := sePagCod.Value;
   cbxUTF8.Checked := ACBrSAT1.Config.EhUTF8;
+end;
+
+procedure TForm1.PrepararImpressaoESCPOS;
+begin
+  if ACBrSAT1.Extrato <> ACBrSATExtratoESCPOS1 then exit;
+
+  ACBrSATExtratoESCPOS1.Device.Porta := edtPorta.Text;
+  ACBrSATExtratoESCPOS1.Device.Ativar;
+  ACBrSATExtratoESCPOS1.ImprimeQRCode := True;
 end;
 
 

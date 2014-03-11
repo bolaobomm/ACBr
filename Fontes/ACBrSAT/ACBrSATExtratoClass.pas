@@ -3,7 +3,7 @@
 {  Biblioteca multiplataforma de componentes Delphi para interação com equipa- }
 { mentos de Automação Comercial utilizados no Brasil                           }
 {                                                                              }
-{ Direitos Autorais Reservados (c) 2004 Daniel Simoes de Almeida               }
+{ Direitos Autorais Reservados (c) 2014 Daniel Simoes de Almeida               }
 {                                                                              }
 { Colaboradores nesse arquivo:                                                 }
 {                                                                              }
@@ -38,99 +38,92 @@
 |*   Inicio do desenvolvimento
 ******************************************************************************}
 
+{$I ACBr.inc}
+
 unit ACBrSATExtratoClass;
 
 interface
 
 uses SysUtils,
-     Classes,
+     Classes, Graphics,
+     ACBrBase,
      pcnCFe, pcnCFeCanc;
 
 type
+   TACBrSATExtratoFiltro = (fiNenhum, fiPDF, fiHTML ) ;
 
-  TCasasDecimais = class(TComponent)
-  private
-    FqCom: integer;
-    FvUnCom: integer;
-    FMask_qCom:String;
-    FMask_vUnCom:String;
-
-    procedure Set_qCom(AValue: integer);
-    procedure Set_vUnCom(AValue: integer);
-  public
-    constructor Create(AOwner: TComponent); override ;
-    destructor Destroy; override;
-  published
-    property _qCom: Integer read FQCom write Set_qCom;
-    property _vUnCom: Integer read FvUnCom write Set_vUnCom;
-    property _Mask_qCom: String read FMask_qCom write FMask_qCom;
-    property _Mask_vUnCom: String read FMask_vUnCom write FMask_vUnCom;
-  end;
+   TACBrSATExtratoLayOut = (lCompleto, lResumido, lCancelamento) ;
 
   { TACBrSATExtratoClass }
 
-  TACBrSATExtratoClass = class( TComponent )
+  TACBrSATExtratoClass = class( TACBrComponent )
   private
-    FACBrSAT : TComponent;
-    FCasasDecimais: TCasasDecimais;
+    fACBrSAT : TComponent;
+    fImprimeQRCode: Boolean;
+    fCFe: TCFe;
+    fCFeCanc: TCFeCanc;
+
+    fFiltro: TACBrSATExtratoFiltro;
+    fMask_qCom: String;
+    fMask_vUnCom: String;
+    fMostrarPreview: Boolean;
+    fMostrarSetup: Boolean;
+    fNomeArquivo: String;
+    fNumCopias: Integer;
+    fPictureLogo: TPicture;
+    fSoftwareHouse: String;
 
     procedure ErroAbstract(NomeProcedure : String) ;
+    function GetAbout: String;
+    function GetNomeArquivo: String;
+    procedure SetAbout(AValue: String);
+    procedure SetNumCopias(AValue: Integer);
+    procedure SetPictureLogo(AValue: TPicture);
     procedure SetSAT(const Value: TComponent);
+
+    procedure SetInternalCFe(ACFe: TCFe);
+    procedure SetInternalCFeCanc(ACFeCanc: TCFeCanc);
+    procedure VerificaExisteACBrSAT;
   protected
-    FpImprimeQRCode: Boolean;
-    FpCFe: TCFe;
-    FpCFeCanc: TCFeCanc;
+    fpAbout : String ;
+    fpLayOut: TACBrSATExtratoLayOut;
 
     procedure Notification(AComponent: TComponent; Operation: TOperation); override;
   public
     constructor Create(AOwner: TComponent); override;
     destructor Destroy; override;
-    procedure ImprimirExtrato(CFe : TCFe = nil); virtual;
-    procedure ImprimirExtratoResumido(CFe : TCFe = nil); virtual;
-    procedure ImprimirExtratoCancelamento(CFe : TCFe = nil; CFeCanc: TCFeCanc = nil); virtual;
+
+    property LayOut  : TACBrSATExtratoLayOut read fpLayOut ;
+    property CFe     : TCFe                  read fCFe;
+    property CFeCanc : TCFeCanc              read fCFeCanc;
+
+    procedure ImprimirExtrato(ACFe : TCFe = nil); virtual;
+    procedure ImprimirExtratoResumido(ACFe : TCFe = nil); virtual;
+    procedure ImprimirExtratoCancelamento(ACFe : TCFe = nil; ACFeCanc: TCFeCanc = nil); virtual;
+
+    function CalcularConteudoQRCode(ID: String; dEmi_hEmi: TDateTime;
+      Valor: Double; CNPJCPF: String; assinaturaQRCODE: String): String;
   published
-    property ACBrSAT : TComponent  read FACBrSAT write SetSAT ;
-    property CasasDecimais: TCasasDecimais read FCasasDecimais ;
-    property ImprimeQRCode: Boolean read FpImprimeQRCode write FpImprimeQRCode default True ;
+    property ACBrSAT  : TComponent  read FACBrSAT write SetSAT ;
+
+    property About  : String read GetAbout write SetAbout stored False ;
+
+    property Mask_qCom      : String   read fMask_qCom      write fMask_qCom;
+    property Mask_vUnCom    : String   read fMask_vUnCom    write fMask_vUnCom;
+    property ImprimeQRCode  : Boolean  read fImprimeQRCode  write fImprimeQRCode  default True ;
+    property PictureLogo    : TPicture read fPictureLogo    write SetPictureLogo ;
+    property MostrarPreview : Boolean  read fMostrarPreview write fMostrarPreview default False ;
+    property MostrarSetup   : Boolean  read fMostrarSetup   write fMostrarSetup   default False ;
+    property NumCopias      : Integer  read fNumCopias      write SetNumCopias    default 1;
+    property NomeArquivo    : String   read GetNomeArquivo  write fNomeArquivo ;
+    property SoftwareHouse  : String   read fSoftwareHouse  write fSoftwareHouse;
+    property Filtro         : TACBrSATExtratoFiltro read fFiltro write fFiltro default fiNenhum ;
+
   end ;
 
 implementation
 
-uses ACBrSAT, ACBrSATClass;
-
-{ TCasasDecimais }
-
-constructor TCasasDecimais.Create(AOwner: TComponent);
-begin
-  inherited create( AOwner );
-
-  FQCom := 2;
-  FvUnCom := 2;
-end;
-
-destructor TCasasDecimais.Destroy;
-begin
-
-  inherited Destroy ;
-end;
-
-procedure TCasasDecimais.Set_qCom(AValue: integer);
-begin
-  if ((AValue >= 0) and
-      (AValue <= 4))  then
-    FqCom := AValue
-  else
-    FqCom := 2;
-end;
-
-procedure TCasasDecimais.Set_vUnCom(AValue: integer);
-begin
-  if ((AValue >= 0) and
-      (AValue <= 3))  then
-    FvUnCom := AValue
-  else
-    FvUnCom := 2;
-end;
+uses ACBrSAT, ACBrDFeUtil, ACBrSATClass;
 
 { TACBrSATExtratoClass }
 
@@ -138,33 +131,61 @@ constructor TACBrSATExtratoClass.Create(AOwner: TComponent);
 begin
   inherited create( AOwner );
 
-  FACBrSAT      := nil ;
-  FCasasDecimais := TCasasDecimais.Create(self);
-  FCasasDecimais.Name:= 'CasasDecimais' ;
-  {$IFDEF COMPILER6_UP}
-      FCasasDecimais.SetSubComponent( true );{ para gravar no DFM/XFM }
-  {$ENDIF}
+  fpAbout  := 'ACBrSATExtratoClass' ;
+  fpLayOut := lCompleto;
+
+  fACBrSAT := nil;
+  fCFe     := nil;
+  fCFeCanc := nil;
+
+  fPictureLogo := TPicture.Create;
+
+  fNumCopias      := 1;
+  fMostrarPreview := False;
+  fMostrarSetup   := False;
+  fImprimeQRCode  := True;
+  fFiltro         := fiNenhum;
+  fNomeArquivo    := '' ;
+  fMask_qCom      := '0.0000';
+  fMask_vUnCom    := '0.000';
 end;
 
 destructor TACBrSATExtratoClass.Destroy;
 begin
+  fPictureLogo.Free;
 
   inherited Destroy ;
 end;
 
-procedure TACBrSATExtratoClass.ImprimirExtrato(CFe: TCFe);
+procedure TACBrSATExtratoClass.ImprimirExtrato(ACFe: TCFe);
 begin
-  ErroAbstract('ImprimirExtrato' ) ;
+  SetInternalCFe( ACFe );
+  fpLayOut := lCompleto;
 end;
 
-procedure TACBrSATExtratoClass.ImprimirExtratoCancelamento(CFe: TCFe; CFeCanc: TCFeCanc);
+procedure TACBrSATExtratoClass.ImprimirExtratoCancelamento(ACFe: TCFe;
+  ACFeCanc: TCFeCanc);
 begin
-  ErroAbstract('ImprimirExtratoCancelamento' ) ;
+  SetInternalCFe( ACFe );
+  SetInternalCFeCanc( ACFeCanc );
+  fpLayOut := lCancelamento;
 end;
 
-procedure TACBrSATExtratoClass.ImprimirExtratoResumido(CFe: TCFe);
+function TACBrSATExtratoClass.CalcularConteudoQRCode(ID: String;
+  dEmi_hEmi:TDateTime; Valor: Double; CNPJCPF: String;
+  assinaturaQRCODE: String): String;
 begin
-  ErroAbstract('ImprimirExtratoResumido' ) ;
+  Result := ID + '|' +
+            FormatDateTime('yyyymmddhhmmss',dEmi_hEmi) + '|' +
+            DFeUtil.FormatFloat(Valor,'0.00') + '|' +
+            Trim(CNPJCPF) + '|' +
+            assinaturaQRCODE;
+end;
+
+procedure TACBrSATExtratoClass.ImprimirExtratoResumido(ACFe: TCFe);
+begin
+  SetInternalCFe( ACFe );
+  fpLayOut := lResumido;
 end;
 
 procedure TACBrSATExtratoClass.Notification(AComponent: TComponent;
@@ -182,6 +203,41 @@ begin
                                      ' não implementada para o Extrato: %s' ,
                                      [NomeProcedure, ClassName] )) ;
 end ;
+
+function TACBrSATExtratoClass.GetAbout: String;
+begin
+  Result := fpAbout ;
+end;
+
+function TACBrSATExtratoClass.GetNomeArquivo: String;
+var
+  wPath: String;
+begin
+   wPath  := ExtractFilePath(fNomeArquivo);
+   Result := '';
+
+   if wPath = '' then
+      if not (csDesigning in Self.ComponentState) then
+         Result := ExtractFilePath(ParamStr(0)) ;
+
+   Result := trim(Result + fNomeArquivo);
+end;
+
+procedure TACBrSATExtratoClass.SetAbout(AValue: String);
+begin
+  {}
+end;
+
+procedure TACBrSATExtratoClass.SetNumCopias(AValue: Integer);
+begin
+  if fNumCopias = AValue then Exit;
+  fNumCopias := AValue;
+end;
+
+procedure TACBrSATExtratoClass.SetPictureLogo(AValue: TPicture);
+begin
+  fPictureLogo.Assign( AValue );
+end;
 
 procedure TACBrSATExtratoClass.SetSAT(const Value: TComponent);
 var
@@ -209,6 +265,34 @@ begin
         TACBrSAT(Value).Extrato := self ;
      end ;
   end ;
+end;
+
+procedure TACBrSATExtratoClass.SetInternalCFe(ACFe: TCFe);
+begin
+  if ACFe = nil then
+  begin
+    VerificaExisteACBrSAT;
+    fCFe := TACBrSAT(ACBrSAT).CFe;
+  end
+  else
+    fCFe := ACFe;
+end;
+
+procedure TACBrSATExtratoClass.SetInternalCFeCanc(ACFeCanc: TCFeCanc);
+begin
+  if ACFeCanc = nil then
+  begin
+    VerificaExisteACBrSAT;
+    fCFeCanc := TACBrSAT(ACBrSAT).CFeCanc;
+  end
+  else
+    fCFeCanc := ACFeCanc;
+end;
+
+procedure TACBrSATExtratoClass.VerificaExisteACBrSAT;
+begin
+  if not Assigned(ACBrSAT) then
+     raise Exception.Create('Componente ACBrSAT não atribuído');
 end;
 
 end.

@@ -284,7 +284,7 @@ const
   GNREConsConfigUF = '1.00';
   GNREConsResLote  = '1.00';
 
-  {$IFDEF PL_103}
+{$IFDEF PL_103}
   CTecabMsg       = '1.02';
   CTeconsStatServ = '1.03';
   CTeenviCTe      = '1.03';
@@ -335,6 +335,8 @@ const
   CTeModalDuto    = '2.00';
   CTeMultiModal   = '2.00';
 {$ENDIF}
+
+  Msg_ICMS_123_2006 = 'ICMS a ser recolhido conforme LC 123/2006 - Simples Nacional' ;
 
   LineBreak = #13#10;
 
@@ -1638,7 +1640,14 @@ end;
 
 function CodigoMPToDescricao(const t: TpcnCodigoMP ): string;
 begin
-  result := EnumeradoToStr(t, ['Dinheiro', 'Cheque', 'Cartão de Crédito', 'Cartão de Débito', 'Crédito Loja', 'Vale Alimentação', 'Vale Refeição', 'Vale Presente', 'Vale Combustível', 'Outros'], [MPDinheiro, MPCheque, MPCartaodeCredito, MPCartaodeDebito, MPCreditoLoja, MPValeAlimentacao, MPValeRefeicao, MPValePresente, MPValeCombustivel, MPOutros]);
+  result := EnumeradoToStr(t, ['Dinheiro', 'Cheque', 'Cartão de Crédito',
+                               'Cartão de Débito', 'Crédito Loja', 'Vale Alimentação',
+                               'Vale Refeição', 'Vale Presente', 'Vale Combustível',
+                               'Outros'],
+                               [MPDinheiro, MPCheque, MPCartaodeCredito,
+                               MPCartaodeDebito, MPCreditoLoja, MPValeAlimentacao,
+                               MPValeRefeicao, MPValePresente, MPValeCombustivel,
+                               MPOutros]);
 end;
 
 // Incluido por Italo em 20/05/2013

@@ -98,9 +98,9 @@ move ACBrNFe.lrs ..\ACBrNFe2
 move ACBrNFeDANFeRL.lrs ..\ACBrNFe2
 
 echo.
-echo "****************************************"
-echo "* Arquivo    ACBrNFe.lrs     gerado    *"
-echo "****************************************"
+echo "**************************************************************"
+echo "* Arquivos    ACBrNFe.lrs, ACBrNFeDANFeRL.lrs     gerados    *"
+echo "**************************************************************"
 echo.
 
 :GNRE
@@ -171,11 +171,16 @@ echo.
 :SAT
 %1\tools\lazres.exe ACBrSAT.lrs TACBrSAT.bmp TACBrSATExtratoESCPOS.bmp
 move ACBrSAT.lrs ..\ACBrSAT
+
+%1\tools\lazres.exe ACBrSATExtratoFortes.lrs TACBrSATExtratoFortes.bmp
+move ACBrSATExtratoFortes.lrs ..\ACBrSAT
+
 echo.
-echo "****************************************"
-echo "*   Arquivo   ACBrSAT.lrs   gerado     *"
-echo "****************************************"
+echo "********************************************************************"
+echo "*   Arquivos   ACBrSAT.lrs, ACBrSATExtratoFortes.lrs   gerados     *"
+echo "********************************************************************"
 echo.
+
 
 :SEF2
 %1\tools\lazres.exe ACBrSEF2.lrs TACBrSEF2.png
