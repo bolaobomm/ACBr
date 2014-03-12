@@ -268,7 +268,10 @@ begin
         if infCanc.DataHora = 0 then
           infCanc.DataHora := Leitor.rCampo(tcDatHor, 'DataHoraCancelamento');
 
-        InfCanc.FPedido.InfID.ID           := Leitor.rAtributo('InfPedidoCancelamento Id=');
+        InfCanc.FPedido.InfID.ID := Leitor.rAtributo('InfPedidoCancelamento Id=');
+        if InfCanc.FPedido.InfID.ID = '' then
+          InfCanc.FPedido.InfID.ID := Leitor.rAtributo('InfPedidoCancelamento id=');
+
         InfCanc.FPedido.CodigoCancelamento := Leitor.rCampo(tcStr, 'CodigoCancelamento');
 
 
