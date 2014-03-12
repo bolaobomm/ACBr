@@ -353,7 +353,9 @@ begin
   if nfe.infNFe.Versao >= 3 then
    begin
      Gerador.wCampo(tcStr, 'B09', 'dhEmi   ', 25, 25, 1, DateTimeTodh(nfe.ide.dEmi) + GetUTC(CodigoParaUF(nfe.ide.cUF), nfe.ide.dEmi), DSC_DEMI);
-     if nfe.ide.modelo = 55 then
+
+     // Alterado por Italo em 12/03/2014
+     if (nfe.ide.modelo = 55) and (nfe.ide.dSaiEnt <> 0) then
        Gerador.wCampo(tcStr, 'B10', 'dhSaiEnt', 25, 25, 0, DateTimeTodh(nfe.ide.dSaiEnt) + GetUTC(CodigoParaUF(nfe.ide.cUF), nfe.ide.dSaiEnt), DSC_DSAIENT);
    end
   else
@@ -575,8 +577,11 @@ begin
    begin
     if nfe.Dest.idEstrangeiro <> '' then
        Gerador.wCampo(tcStr, 'E03a', 'idEstrangeiro', 01, 20, 1, nfe.Dest.idEstrangeiro, DSC_IDESTR)
-    else
-       Gerador.wCampoCNPJCPF('E02', 'E03', nfe.Dest.CNPJCPF, nfe.Dest.enderDest.cPais);
+    else begin
+       // Alterado por Italo em 12/03/2014
+       if nfe.Dest.enderDest.cPais = 1058 then
+         Gerador.wCampoCNPJCPF('E02', 'E03', nfe.Dest.CNPJCPF, nfe.Dest.enderDest.cPais);
+    end;
    end
   else
      Gerador.wCampoCNPJCPF('E02', 'E03', nfe.Dest.CNPJCPF, nfe.Dest.enderDest.cPais);

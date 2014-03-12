@@ -464,8 +464,22 @@ end;
 
 function TProvedorPronim.GetLinkNFSe(ACodMunicipio, ANumeroNFSe: Integer;
   ACodVerificacao, AInscricaoM: String; AAmbiente: Integer): String;
+var
+ sCNPJ: String;
 begin
- Result := '';
+
+ sCNPJ := ''; // Incluido somente para poder compilar, deve ser feita uma alteração nessa
+              // function contemplando a passagem do parametro CNPJ
+
+ case ACodMunicipio of
+  4310207: begin // Ijui/RS
+            Result := 'http://server21.ijui.rs.gov.br/nfse/VisualizarXMLdaNota.aspx?Prestador=' + sCNPJ +
+                      '&Numero=' + IntToStr(ANumeroNFSe) +
+                      '&Codigo=' + ACodVerificacao +
+                      '&page=default.aspx&origin=ConAut&pdf=true'
+           end;
+  else Result := '';
+ end;
 end;
 
 end.
