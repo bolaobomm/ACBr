@@ -50,6 +50,7 @@ type
   TRegistroM105List = class;
   TRegistroM110List = class;
   TRegistroM200     = class;
+  TRegistroM205List = class;
   TRegistroM210List = class;
   TRegistroM211     = class;
   TRegistroM220List = class;
@@ -229,7 +230,9 @@ type
     FVL_TOT_CRED_DESC_ANT         : currency;
     FVL_TOT_CONT_CUM_PER          : currency;
 
+    FRegistroM205                 : TRegistroM205List; // NIVEL 3
     FRegistroM210                 : TRegistroM210List; // NIVEL 3
+
   public
     constructor Create;  virtual;                      /// Create
     destructor  Destroy; override;                     /// Destroy
@@ -247,7 +250,33 @@ type
     property VL_CONT_CUM_REC      : currency          read FVL_CONT_CUM_REC      write FVL_CONT_CUM_REC;
     property VL_TOT_CONT_REC      : currency          read FVL_TOT_CONT_REC      write FVL_TOT_CONT_REC;
 
+    property RegistroM205         : TRegistroM205List read FRegistroM205         write FRegistroM205;
     property RegistroM210         : TRegistroM210List read FRegistroM210         write FRegistroM210;
+  end;
+
+  //REGISTRO M205: CONTRIBUIÇÃO PARA O PIS/PASEP A RECOLHER – DETALHAMENTO POR CÓDIGO DE RECEITA
+  TRegistroM205 = class
+  private
+    fCOD_REC: string;
+    fNUM_CAMPO: string;
+    fVL_DEBITO: currency;
+  public
+    constructor Create;  virtual;                      /// Create
+    destructor  Destroy; override;                     /// Destroy
+
+    property NUM_CAMPO: string read fNUM_CAMPO write fNUM_CAMPO;
+    property COD_REC: string read fCOD_REC write fCOD_REC;
+    property VL_DEBITO: currency read fVL_DEBITO write fVL_DEBITO;
+  end;
+
+  // Registro M205 - Lista
+  TRegistroM205List = class(TObjectList)
+  private
+    function  GetItem(Index: Integer): TRegistroM205;
+    procedure SetItem(Index: Integer; const Value: TRegistroM205);
+  public
+    function New: TRegistroM205;
+    property Items[Index: Integer]: TRegistroM205 read GetItem write SetItem;
   end;
 
   //REGISTRO M210: DETALHAMENTO DA CONTRIBUIÇÃO PARA O PIS/PASEP DO PERÍODO
@@ -845,6 +874,36 @@ type
 
 implementation
 
+{ TRegistroM205List }
+
+function TRegistroM205List.GetItem(Index: Integer): TRegistroM205;
+begin
+  Result := TRegistroM205(Inherited Items[Index]);
+end;
+
+procedure TRegistroM205List.SetItem(Index: Integer; const Value: TRegistroM205);
+begin
+  Put(Index, Value);
+end;
+
+function TRegistroM205List.New: TRegistroM205;
+begin
+  Result := TRegistroM205.Create;
+  Add(Result);
+end;
+
+{ TRegistroM205 }
+
+constructor TRegistroM205.Create;
+begin
+
+end;
+
+destructor TRegistroM205.Destroy;
+begin
+  inherited Destroy;
+end;
+
 {TRegistroM001}
 
 constructor TRegistroM001.Create;
@@ -1292,11 +1351,13 @@ end;
 
 constructor TRegistroM200.Create;
 begin
+  FRegistroM205 := TRegistroM205List.Create;
   FRegistroM210 := TRegistroM210List.Create;
 end;
 
 destructor TRegistroM200.Destroy;
 begin
+  FRegistroM205.Free;
   FRegistroM210.Free;
   inherited;
 end;

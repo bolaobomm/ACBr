@@ -59,6 +59,7 @@ type
     FRegistroM105Count                  : integer;
     FRegistroM110Count                  : integer;
     FRegistroM200Count                  : integer;
+    FRegistroM205Count                  : integer;
     FRegistroM210Count                  : integer;
     FRegistroM211Count                  : integer;
     FRegistroM220Count                  : integer;
@@ -84,6 +85,7 @@ type
     procedure WriteRegistroM105(RegM100 : TRegistroM100);
     procedure WriteRegistroM110(RegM100 : TRegistroM100);
     procedure WriteRegistroM200(RegM001 : TRegistroM001);
+    procedure WriteRegistroM205(RegM200 : TRegistroM200);
     procedure WriteRegistroM210(RegM200 : TRegistroM200);
     procedure WriteRegistroM211(RegM210 : TRegistroM210);
     procedure WriteRegistroM220(RegM210 : TRegistroM210);
@@ -116,6 +118,7 @@ type
     function RegistroM105New            : TRegistroM105;
     function RegistroM110New            : TRegistroM110;
     function RegistroM200New            : TRegistroM200;
+    function RegistroM205New            : TRegistroM205;
     function RegistroM210New            : TRegistroM210;
     function RegistroM211New            : TRegistroM211;
     function RegistroM220New            : TRegistroM220;
@@ -147,6 +150,7 @@ type
     property RegistroM105Count          : integer       read FRegistroM105Count write FRegistroM105Count;
     property RegistroM110Count          : integer       read FRegistroM110Count write FRegistroM110Count;
     property RegistroM200Count          : integer       read FRegistroM200Count write FRegistroM200Count;
+    property RegistroM205Count          : integer       read FRegistroM205Count write FRegistroM205Count;
     property RegistroM210Count          : integer       read FRegistroM210Count write FRegistroM210Count;
     property RegistroM211Count          : integer       read FRegistroM211Count write FRegistroM211Count;
     property RegistroM220Count          : integer       read FRegistroM220Count write FRegistroM220Count;
@@ -195,6 +199,7 @@ begin
   FRegistroM105Count      := 0;
   FRegistroM110Count      := 0;
   FRegistroM200Count      := 0;
+  FRegistroM205Count      := 0;
   FRegistroM210Count      := 0;
   FRegistroM211Count      := 0;
   FRegistroM220Count      := 0;
@@ -265,6 +270,11 @@ end;
 function TBloco_M.RegistroM200New: TRegistroM200;
 begin
    Result := FRegistroM001.RegistroM200;
+end;
+
+function TBloco_M.RegistroM205New: TRegistroM205;
+begin
+  Result := FRegistroM001.RegistroM200.RegistroM205.New;
 end;
 
 function TBloco_M.RegistroM210New: TRegistroM210;
@@ -633,6 +643,7 @@ begin
             LFill( VL_TOT_CONT_REC,0,2 ) ) ;
      end;
      // Registros FILHOS
+     WriteRegistroM205( RegM001.RegistroM200 );
      WriteRegistroM210( RegM001.RegistroM200 );
      ///
      RegistroM990.QTD_LIN_M := RegistroM990.QTD_LIN_M + 1;
@@ -641,8 +652,33 @@ begin
   end;
 end;
 
+procedure TBloco_M.WriteRegistroM205(RegM200: TRegistroM200);
+var
+   intFor      : integer;
+   strCOD_CONT : AnsiString;
+begin
+    if Assigned(RegM200.RegistroM205) then
+    begin
+       for intFor := 0 to RegM200.RegistroM205.Count - 1 do
+       begin
+          with RegM200.RegistroM205.Items[intFor] do
+          begin
+            Add( LFill('M205')                  +
+                 LFill( NUM_CAMPO , 2 )         +
+                 LFill( COD_REC , 6 )           +
+                 LFill( VL_DEBITO ,0,2 )) ;
+          end;
+
+          ///
+          RegistroM990.QTD_LIN_M := RegistroM990.QTD_LIN_M + 1;
+       end;
+       /// Variavél para armazenar a quantidade de registro do tipo.
+       FRegistroM205Count := FRegistroM205Count + RegM200.RegistroM205.Count;
+    end;
+end;
+
 procedure TBloco_M.WriteRegistroM210(RegM200: TRegistroM200) ;
-  var
+var
     intFor      : integer;
     strCOD_CONT : AnsiString;
 begin

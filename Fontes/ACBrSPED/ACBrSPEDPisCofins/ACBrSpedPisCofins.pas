@@ -2017,6 +2017,14 @@ begin
                QTD_REG_BLC := Bloco_M.RegistroM200Count;
             end;
          end;
+         if Bloco_M.RegistroM205Count > 0 then
+         begin
+            with New do
+            begin
+               REG_BLC := 'M205';
+               QTD_REG_BLC := Bloco_M.RegistroM205Count;
+            end;
+         end;
          if Bloco_M.RegistroM210Count > 0 then
          begin
             with New do
