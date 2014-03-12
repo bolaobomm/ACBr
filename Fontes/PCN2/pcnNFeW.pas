@@ -825,9 +825,12 @@ begin
       Gerador.wCampo(tcDe2, 'I23b', 'vAFRMM      ', 00, 15, 0, nfe.Det[i].Prod.DI[j].vAFRMM, DSC_VAFRMM);
       Gerador.wCampo(tcStr, 'I23c', 'tpIntermedio', 01, 01, 1, TipoIntermedioToStr(nfe.Det[i].Prod.DI[j].tpIntermedio), DSC_TPINTERMEDIO);
       Gerador.wCampoCNPJCPF('I23d', 'I23d', nfe.Det[i].Prod.DI[j].CNPJ, CODIGO_BRASIL);
-      Gerador.wCampo(tcStr, 'I23e', 'UFTerceiro  ', 02, 02, 1, nfe.Det[i].Prod.DI[j].UFTerceiro, DSC_UF);
-      if not ValidarUF(nfe.Det[i].Prod.DI[j].UFTerceiro) then
-        Gerador.wAlerta('I23e', 'UFTerceiro', DSC_UF, ERR_MSG_INVALIDO);
+
+      // Alterado por Italo em 12/03/2014
+      Gerador.wCampo(tcStr, 'I23e', 'UFTerceiro  ', 02, 02, 0, nfe.Det[i].Prod.DI[j].UFTerceiro, DSC_UF);
+      if nfe.Det[i].Prod.DI[j].UFTerceiro <> '' then
+        if not ValidarUF(nfe.Det[i].Prod.DI[j].UFTerceiro) then
+          Gerador.wAlerta('I23e', 'UFTerceiro', DSC_UF, ERR_MSG_INVALIDO);
     end;
 
     Gerador.wCampo(tcStr, 'I24', 'cExportador', 01, 60, 1, nfe.Det[i].Prod.DI[j].cExportador, DSC_CEXPORTADOR);
