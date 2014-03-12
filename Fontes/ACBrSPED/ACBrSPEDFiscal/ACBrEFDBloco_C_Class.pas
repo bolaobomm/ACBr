@@ -1584,9 +1584,8 @@ procedure TBloco_C.WriteRegistroC170(RegC100: TRegistroC100);
 var
   intFor: integer;
   strIND_APUR : AnsiString;
-  //strCST_IPI: AnsiString;
-  //strCST_PIS: AnsiString;
-  //strCST_COFINS: AnsiString;
+  intDecimaisPercent: integer;
+  strMascaraParcent : string;
   strLinha: AnsiString;
 begin
   if Assigned( RegC100.RegistroC170 ) then
@@ -1598,6 +1597,16 @@ begin
         FOnBeforeWriteRegistroC170(strLinha);
         if strLinha <> EmptyStr then
            Add(strLinha);
+     end;
+     if (DT_INI >= EncodeDate(2012,01,01)) then
+     begin
+       intDecimaisPercent := 4;
+       strMascaraParcent := '#0.0000';
+     end
+     else
+     begin
+       intDecimaisPercent := 2;
+       strMascaraParcent := '#0.00';
      end;
 
      for intFor := 0 to RegC100.RegistroC170.Count - 1 do
@@ -1629,7 +1638,6 @@ begin
                        LFill( ALIQ_ST, 0, 2 ) +
                        LFill( VL_ICMS_ST, 0, 2 ) +
                        LFill( strIND_APUR ) +
-                       //LFill( Integer(IND_APUR), 0 ) +
                        LFill( CST_IPI ) +
                        LFill( COD_ENQ ) +
                        LFill( VL_BC_IPI, 0, 2 ) +
@@ -1637,13 +1645,13 @@ begin
                        LFill( VL_IPI, 0, 2 ) +
                        LFill( CST_PIS ) +
                        LFill( VL_BC_PIS, 0, 2 ) +
-                       LFill( ALIQ_PIS_PERC, 0, 4, False, '0', '#0.0000' ) +
+                       LFill( ALIQ_PIS_PERC, 0, intDecimaisPercent, False, '0', strMascaraParcent ) +
                        LFill( QUANT_BC_PIS,  0, 3, False, '0', '#0.000' ) +
                        LFill( ALIQ_PIS_R, 0, 4, False, '0', '#0.0000' ) +
                        LFill( VL_PIS, 0, 2 ) +
                        LFill( CST_COFINS ) +
                        LFill( VL_BC_COFINS, 0, 2 ) +
-                       LFill( ALIQ_COFINS_PERC, 0, 4, False, '0', '#0.0000' ) +
+                       LFill( ALIQ_COFINS_PERC, 0, intDecimaisPercent, False, '0', strMascaraParcent ) +
                        LFill( QUANT_BC_COFINS,  0, 3, False, '0', '#0.000' ) +
                        LFill( ALIQ_COFINS_R, 0, 4, False, '0', '#0.0000' ) +
                        LFill( VL_COFINS, 0, 2 ) +
