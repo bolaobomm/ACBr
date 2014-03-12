@@ -5,6 +5,10 @@
 {                                                                              }
 { Direitos Autorais Reservados (c) 2014 Daniel Simoes de Almeida               }
 {                                                                              }
+{ This file uses: DelphiZXIngQRCode Copyright 2008 ZXing authors,              }
+{   port to Delphi, by Debenu Pty Ltd                                          }
+{   URL: http://www.debenu.com/open-sourc1e/delphizxingqrcode                  }
+{                                                                              }
 { Colaboradores nesse arquivo:                                                 }
 {                                                                              }
 {  Você pode obter a última versão desse arquivo na pagina do  Projeto ACBr    }

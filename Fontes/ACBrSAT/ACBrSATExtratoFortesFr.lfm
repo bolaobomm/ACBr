@@ -143,6 +143,8 @@ object ACBrSATExtratoFortesFr: TACBrSATExtratoFortesFr
         BarcodeType = bcCode128C
         Caption = '3514031111111111111159'
         CheckSumMethod = cmNone
+        Margins.LeftMargin = 1
+        Margins.RightMargin = 1
         Ratio = 1.6
         RealBounds.Left = 0
         RealBounds.Top = 0
@@ -184,6 +186,8 @@ object ACBrSATExtratoFortesFr: TACBrSATExtratoFortesFr
         BarcodeType = bcCode128C
         Caption = '9000001020002235664805'
         CheckSumMethod = cmNone
+        Margins.LeftMargin = 1
+        Margins.RightMargin = 1
         Ratio = 1.6
         RealBounds.Left = 0
         RealBounds.Top = 0
@@ -1520,6 +1524,8 @@ object ACBrSATExtratoFortesFr: TACBrSATExtratoFortesFr
         BarcodeType = bcCode128C
         Caption = '3514031111111111111159'
         CheckSumMethod = cmNone
+        Margins.LeftMargin = 1
+        Margins.RightMargin = 1
         RealBounds.Left = 0
         RealBounds.Top = 0
         RealBounds.Width = 0
@@ -1666,6 +1672,8 @@ object ACBrSATExtratoFortesFr: TACBrSATExtratoFortesFr
         BarcodeType = bcCode128C
         Caption = '3514031111111111111159'
         CheckSumMethod = cmNone
+        Margins.LeftMargin = 1
+        Margins.RightMargin = 1
         RealBounds.Left = 0
         RealBounds.Top = 0
         RealBounds.Width = 0
@@ -1706,6 +1714,8 @@ object ACBrSATExtratoFortesFr: TACBrSATExtratoFortesFr
         BarcodeType = bcCode128C
         Caption = '9000001020002235664805'
         CheckSumMethod = cmNone
+        Margins.LeftMargin = 1
+        Margins.RightMargin = 1
         RealBounds.Left = 0
         RealBounds.Top = 0
         RealBounds.Width = 0
@@ -1722,6 +1732,8 @@ object ACBrSATExtratoFortesFr: TACBrSATExtratoFortesFr
         BarcodeType = bcCode128C
         Caption = '9000001020002235664805'
         CheckSumMethod = cmNone
+        Margins.LeftMargin = 1
+        Margins.RightMargin = 1
         RealBounds.Left = 0
         RealBounds.Top = 0
         RealBounds.Width = 0
