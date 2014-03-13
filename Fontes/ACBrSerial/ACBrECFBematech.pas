@@ -954,7 +954,7 @@ begin
                  fpDevice.Serial.Purge ;
 
                  Inc( FalhasACK ) ;
-                 GravaLog('Bematech EnviaComando_ECF: ACK = '+IntToStr(ACK)+' Falha: '+IntToStr(FalhasACK) ) ;
+                 GravaLog('                RX <- ACK = '+IntToStr(ACK)+' Falha: '+IntToStr(FalhasACK) ) ;
 
                  if FalhasACK < 3 then
                     Sleep(100)

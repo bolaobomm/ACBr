@@ -482,6 +482,8 @@ begin
             fpDevice.Serial.Purge ;
 
             Inc( FalhasTX ) ;
+            GravaLog('                RX <- ACK = '+IntToStr(ACK_ECF)+' Falha: '+IntToStr(FalhasTX) ) ;
+
             if FalhasTX < CFALHAS then
                Sleep(100)
             else

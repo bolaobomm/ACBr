@@ -1249,6 +1249,8 @@ begin
                begin
                  fpDevice.Serial.Purge ;
 
+                 GravaLog('                RX <- ACK = '+IntToStr(fsByteACK) ) ;
+
                  if not DoOnMsgRetentar( E.Message +sLineBreak+sLineBreak+
                     'Se o problema persistir, verifique os cabos, ou'+sLineBreak+
                     'experimente desligar a impressora durante 5 seg,'+sLineBreak+
