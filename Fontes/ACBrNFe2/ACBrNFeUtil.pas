@@ -943,26 +943,25 @@ case FormaEmissao of
       end;
   3 : begin
        case ALayOut of
-         LayNfeRecepcao,
-         LayNfeAutorizacao    : Result := DFeUtil.SeSenao(AAmbiente=1, 'https://www.scan.fazenda.gov.br/NfeRecepcao2/NfeRecepcao2.asmx',           'https://hom.nfe.fazenda.gov.br/SCAN/NfeRecepcao2/NfeRecepcao2.asmx');
-         LayNfeRetRecepcao,
-         LayNfeRetAutorizacao : Result := DFeUtil.SeSenao(AAmbiente=1, 'https://www.scan.fazenda.gov.br/NfeRetRecepcao2/NfeRetRecepcao2.asmx',     'https://hom.nfe.fazenda.gov.br/SCAN/NfeRetRecepcao2/NfeRetRecepcao2.asmx');
+         LayNfeRecepcao       : Result := DFeUtil.SeSenao(AAmbiente=1, 'https://www.scan.fazenda.gov.br/NfeRecepcao2/NfeRecepcao2.asmx',           'https://hom.nfe.fazenda.gov.br/SCAN/NfeRecepcao2/NfeRecepcao2.asmx');
+         LayNfeRetRecepcao    : Result := DFeUtil.SeSenao(AAmbiente=1, 'https://www.scan.fazenda.gov.br/NfeRetRecepcao2/NfeRetRecepcao2.asmx',     'https://hom.nfe.fazenda.gov.br/SCAN/NfeRetRecepcao2/NfeRetRecepcao2.asmx');
          LayNfeCancelamento   : Result := DFeUtil.SeSenao(AAmbiente=1, 'https://www.scan.fazenda.gov.br/NfeCancelamento2/NfeCancelamento2.asmx',   'https://hom.nfe.fazenda.gov.br/SCAN/NfeCancelamento2/NfeCancelamento2.asmx');
          LayNfeInutilizacao   : Result := DFeUtil.SeSenao(AAmbiente=1, 'https://www.scan.fazenda.gov.br/NfeInutilizacao2/NfeInutilizacao2.asmx',   'https://hom.nfe.fazenda.gov.br/SCAN/NfeInutilizacao2/NfeInutilizacao2.asmx');
          LayNfeConsulta       : Result := DFeUtil.SeSenao(AAmbiente=1, 'https://www.scan.fazenda.gov.br/NfeConsulta2/NfeConsulta2.asmx',           'https://hom.nfe.fazenda.gov.br/SCAN/NfeConsulta2/NfeConsulta2.asmx');
          LayNfeStatusServico  : Result := DFeUtil.SeSenao(AAmbiente=1, 'https://www.scan.fazenda.gov.br/NFeStatusServico2/NFeStatusServico2.asmx', 'https://hom.nfe.fazenda.gov.br/SCAN/NfeStatusServico2/NfeStatusServico2.asmx');
          LayNFeCCe,
          LayNFeEvento         : Result := DFeUtil.SeSenao(AAmbiente=1, 'https://www.scan.fazenda.gov.br/RecepcaoEvento/RecepcaoEvento.asmx',       'https://hom.nfe.fazenda.gov.br/SCAN/RecepcaoEvento/RecepcaoEvento.asmx');
+
+         LayNfeAutorizacao    : Result := DFeUtil.SeSenao(AAmbiente=1, 'https://www.scan.fazenda.gov.br/NfeAutorizacao/NfeAutorizacao.asmx',       'https://hom.nfe.fazenda.gov.br/SCAN/NfeAutorizacao/NfeAutorizacao.asmx');
+         LayNfeRetAutorizacao : Result := DFeUtil.SeSenao(AAmbiente=1, 'https://www.scan.fazenda.gov.br/NfeRetAutorizacao/NfeRetAutorizacao.asmx', 'https://hom.nfe.fazenda.gov.br/SCAN/NfeRetAutorizacao/NfeRetAutorizacao.asmx');
        end;
       end;
   6 : begin
        // SVC-AN SEFAZ VIRTUAL DE CONTINGENCIA - AMBIENTE NACIONAL
        // Utilizado pelas UF: AC, AL, AP, MG, PB, RJ, RS, RO, RR, SC, SE, SP, TO, DF
        case ALayOut of
-         LayNfeRecepcao,
-         LayNfeAutorizacao    : Result := DFeUtil.SeSenao(AAmbiente=1, 'https://www.svc.fazenda.gov.br/NfeRecepcao2/NfeRecepcao2.asmx',           'https://hom.svc.fazenda.gov.br/NfeRecepcao2/NfeRecepcao2.asmx');
-         LayNfeRetRecepcao,
-         LayNfeRetAutorizacao : Result := DFeUtil.SeSenao(AAmbiente=1, 'https://www.svc.fazenda.gov.br/NfeRetRecepcao2/NfeRetRecepcao2.asmx',     'https://hom.svc.fazenda.gov.br/NfeRetRecepcao2/NfeRetRecepcao2.asmx');
+         LayNfeRecepcao       : Result := DFeUtil.SeSenao(AAmbiente=1, 'https://www.svc.fazenda.gov.br/NfeRecepcao2/NfeRecepcao2.asmx',           'https://hom.svc.fazenda.gov.br/NfeRecepcao2/NfeRecepcao2.asmx');
+         LayNfeRetRecepcao    : Result := DFeUtil.SeSenao(AAmbiente=1, 'https://www.svc.fazenda.gov.br/NfeRetRecepcao2/NfeRetRecepcao2.asmx',     'https://hom.svc.fazenda.gov.br/NfeRetRecepcao2/NfeRetRecepcao2.asmx');
 //         LayNfeCancelamento  : Result := DFeUtil.SeSenao(AAmbiente=1, 'https://hom.nfe.fazenda.gov.br/SVC/NfeCancelamento/NfeCancelamento2.asmx',   'https://hom.svc.fazenda.gov.br/NfeCancelamento/NfeCancelamento2.asmx');
          LayNfeCancelamento   : Result := DFeUtil.SeSenao(AAmbiente=1, '', '');
          LayNfeInutilizacao   : Result := DFeUtil.SeSenao(AAmbiente=1, 'https://www.svc.fazenda.gov.br/NfeInutilizacao2/NfeInutilizacao2.asmx',   'https://hom.svc.fazenda.gov.br/NfeInutilizacao2/NfeInutilizacao2.asmx');
@@ -970,6 +969,9 @@ case FormaEmissao of
          LayNfeStatusServico  : Result := DFeUtil.SeSenao(AAmbiente=1, 'https://www.svc.fazenda.gov.br/NfeStatusServico2/NfeStatusServico2.asmx', 'https://hom.svc.fazenda.gov.br/NfeStatusServico2/NfeStatusServico2.asmx');
          LayNFeCCe,
          LayNFeEvento         : Result := DFeUtil.SeSenao(AAmbiente=1, 'https://www.svc.fazenda.gov.br/RecepcaoEvento/RecepcaoEvento.asmx',       'https://hom.svc.fazenda.gov.br/RecepcaoEvento/RecepcaoEvento.asmx');
+
+         LayNfeAutorizacao    : Result := DFeUtil.SeSenao(AAmbiente=1, 'https://www.svc.fazenda.gov.br/NfeAutorizacao/NfeAutorizacao.asmx',       'https://hom.svc.fazenda.gov.br/NfeAutorizacao/NfeAutorizacao.asmx');
+         LayNfeRetAutorizacao : Result := DFeUtil.SeSenao(AAmbiente=1, 'https://www.svc.fazenda.gov.br/NfeRetAutorizacao/NfeRetAutorizacao.asmx', 'https://hom.svc.fazenda.gov.br/NfeRetAutorizacao/NfeRetAutorizacao.asmx');
        end;
       end;
   7 : begin
@@ -1042,10 +1044,8 @@ begin
   if AModeloDF = moNFe then
    begin
     case ALayOut of
-      LayNfeRecepcao,
-      LayNfeAutorizacao    : Result := DFeUtil.SeSenao(AAmbiente=1, 'https://www.sefazvirtual.fazenda.gov.br/NfeRecepcao2/NfeRecepcao2.asmx',           'https://hom.sefazvirtual.fazenda.gov.br/NfeRecepcao2/NfeRecepcao2.asmx');
-      LayNfeRetRecepcao,
-      LayNfeRetAutorizacao : Result := DFeUtil.SeSenao(AAmbiente=1, 'https://www.sefazvirtual.fazenda.gov.br/NFeRetRecepcao2/NFeRetRecepcao2.asmx',     'https://hom.sefazvirtual.fazenda.gov.br/NfeRetRecepcao2/NfeRetRecepcao2.asmx');
+      LayNfeRecepcao       : Result := DFeUtil.SeSenao(AAmbiente=1, 'https://www.sefazvirtual.fazenda.gov.br/NfeRecepcao2/NfeRecepcao2.asmx',           'https://hom.sefazvirtual.fazenda.gov.br/NfeRecepcao2/NfeRecepcao2.asmx');
+      LayNfeRetRecepcao    : Result := DFeUtil.SeSenao(AAmbiente=1, 'https://www.sefazvirtual.fazenda.gov.br/NFeRetRecepcao2/NFeRetRecepcao2.asmx',     'https://hom.sefazvirtual.fazenda.gov.br/NfeRetRecepcao2/NfeRetRecepcao2.asmx');
       LayNfeCancelamento   : Result := DFeUtil.SeSenao(AAmbiente=1, 'https://www.sefazvirtual.fazenda.gov.br/NFeCancelamento2/NFeCancelamento2.asmx',   'https://hom.sefazvirtual.fazenda.gov.br/NfeCancelamento2/NfeCancelamento2.asmx');
       LayNfeInutilizacao   : Result := DFeUtil.SeSenao(AAmbiente=1, 'https://www.sefazvirtual.fazenda.gov.br/NFeInutilizacao2/NFeInutilizacao2.asmx',   'https://hom.sefazvirtual.fazenda.gov.br/NfeInutilizacao2/NfeInutilizacao2.asmx');
       LayNfeConsulta       : Result := DFeUtil.SeSenao(AAmbiente=1, 'https://www.sefazvirtual.fazenda.gov.br/nfeconsulta2/nfeconsulta2.asmx',           'https://hom.sefazvirtual.fazenda.gov.br/NfeConsulta2/NfeConsulta2.asmx');
@@ -1053,6 +1053,9 @@ begin
 //      LayNfeCadastro       : Result := NotaUtil.SeSenao(AAmbiente=1, '', '');
       LayNFeCCe,
       LayNFeEvento         : Result := DFeUtil.SeSenao(AAmbiente=1, 'https://www.sefazvirtual.fazenda.gov.br/RecepcaoEvento/RecepcaoEvento.asmx',       'https://hom.sefazvirtual.fazenda.gov.br/RecepcaoEvento/RecepcaoEvento.asmx');
+
+      LayNfeAutorizacao    : Result := DFeUtil.SeSenao(AAmbiente=1, 'https://www.sefazvirtual.fazenda.gov.br/NfeAutorizacao/NfeAutorizacao.asmx',       'https://hom.sefazvirtual.fazenda.gov.br/NfeAutorizacao/NfeAutorizacao.asmx');
+      LayNfeRetAutorizacao : Result := DFeUtil.SeSenao(AAmbiente=1, 'https://www.sefazvirtual.fazenda.gov.br/NFeRetAutorizacao/NFeRetAutorizacao.asmx', 'https://hom.sefazvirtual.fazenda.gov.br/NfeRetAutorizacao/NfeRetAutorizacao.asmx');
     end;
    end
   else
@@ -1197,10 +1200,8 @@ begin
   if AModeloDF = moNFe then
    begin
     case ALayOut of
-      LayNfeRecepcao,
-      LayNfeAutorizacao    : Result := DFeUtil.SeSenao(AAmbiente=1, 'https://nfe.sefaz.go.gov.br/nfe/services/v2/NfeRecepcao2',         'https://homolog.sefaz.go.gov.br/nfe/services/v2/NfeRecepcao2');
-      LayNfeRetRecepcao,
-      LayNfeRetAutorizacao : Result := DFeUtil.SeSenao(AAmbiente=1, 'https://nfe.sefaz.go.gov.br/nfe/services/v2/NfeRetRecepcao2',      'https://homolog.sefaz.go.gov.br/nfe/services/v2/NfeRetRecepcao2');
+      LayNfeRecepcao       : Result := DFeUtil.SeSenao(AAmbiente=1, 'https://nfe.sefaz.go.gov.br/nfe/services/v2/NfeRecepcao2',         'https://homolog.sefaz.go.gov.br/nfe/services/v2/NfeRecepcao2');
+      LayNfeRetRecepcao    : Result := DFeUtil.SeSenao(AAmbiente=1, 'https://nfe.sefaz.go.gov.br/nfe/services/v2/NfeRetRecepcao2',      'https://homolog.sefaz.go.gov.br/nfe/services/v2/NfeRetRecepcao2');
       LayNfeCancelamento   : Result := DFeUtil.SeSenao(AAmbiente=1, 'https://nfe.sefaz.go.gov.br/nfe/services/v2/NfeCancelamento2',     'https://homolog.sefaz.go.gov.br/nfe/services/v2/NfeCancelamento2');
       LayNfeInutilizacao   : Result := DFeUtil.SeSenao(AAmbiente=1, 'https://nfe.sefaz.go.gov.br/nfe/services/v2/NfeInutilizacao2',     'https://homolog.sefaz.go.gov.br/nfe/services/v2/NfeInutilizacao2');
       LayNfeConsulta       : Result := DFeUtil.SeSenao(AAmbiente=1, 'https://nfe.sefaz.go.gov.br/nfe/services/v2/NfeConsulta2',         'https://homolog.sefaz.go.gov.br/nfe/services/v2/NfeConsulta2');
@@ -1208,6 +1209,9 @@ begin
       LayNfeCadastro       : Result := DFeUtil.SeSenao(AAmbiente=1, 'https://nfe.sefaz.go.gov.br/nfe/services/v2/CadConsultaCadastro2', 'https://homolog.sefaz.go.gov.br/nfe/services/v2/CadConsultaCadastro2');
       LayNFeCCe,
       LayNFeEvento         : Result := DFeUtil.SeSenao(AAmbiente=1, 'https://nfe.sefaz.go.gov.br/nfe/services/v2/NfeRecepcaoEvento',    'https://homolog.sefaz.go.gov.br/nfe/services/v2/NfeRecepcaoEvento');
+
+      LayNfeAutorizacao    : Result := DFeUtil.SeSenao(AAmbiente=1, 'https://nfe.sefaz.go.gov.br/nfe/services/v2/NfeAutorizacao',       'https://homolog.sefaz.go.gov.br/nfe/services/v2/NfeAutorizacao');
+      LayNfeRetAutorizacao : Result := DFeUtil.SeSenao(AAmbiente=1, 'https://nfe.sefaz.go.gov.br/nfe/services/v2/NfeRetAutorizacao',    'https://homolog.sefaz.go.gov.br/nfe/services/v2/NfeRetAutorizacao');
     end;
    end
   else

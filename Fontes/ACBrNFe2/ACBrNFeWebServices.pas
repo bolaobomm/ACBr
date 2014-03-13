@@ -1822,9 +1822,9 @@ begin
   Acao := TStringList.Create;
   Stream := TMemoryStream.Create;
 
-  // Alterado por Italo em 13/01/2014
+  // Alterado por Italo em 13/03/2014
   if ((FConfiguracoes.Geral.ModeloDF = moNFCe) or (FConfiguracoes.Geral.VersaoDF = ve310)) and not
-     (FConfiguracoes.WebServices.UFCodigo in [13, 29, 23, 52, 31, 50, 26, 41])  then
+     (FConfiguracoes.WebServices.UFCodigo in [13, 23, 31, 26, 41])  then // AM, CE, MG, PE, PR
    begin
      SoapAction := 'http://www.portalfiscal.inf.br/nfe/wsdl/NfeAutorizacao';
      nfeAutorizacaoLote := True;
@@ -2241,9 +2241,9 @@ function TNFeRetRecepcao.Executar: Boolean;
     if assigned(FNFeRetorno) then
        FNFeRetorno.Free;
 
-    // Alterado por Italo em 13/01/2014
+    // Alterado por Italo em 13/03/2014
     if ((FConfiguracoes.Geral.ModeloDF = moNFCe) or (FConfiguracoes.Geral.VersaoDF = ve310)) and not
-       (FConfiguracoes.WebServices.UFCodigo in [13, 29, 23, 52, 31, 50, 26, 41])  then
+       (FConfiguracoes.WebServices.UFCodigo in [13, 23, 31, 26, 41])  then // AM, CE, MG, PE, PR
      begin
        SoapAction := 'http://www.portalfiscal.inf.br/nfe/wsdl/NfeRetAutorizacao';
        nfeAutorizacaoLote := True;
@@ -2453,9 +2453,9 @@ begin
   Acao := TStringList.Create;
   Stream := TMemoryStream.Create;
 
-  // Alterado por Italo em 13/01/2014
+  // Alterado por Italo em 13/03/2014
   if ((FConfiguracoes.Geral.ModeloDF = moNFCe) or (FConfiguracoes.Geral.VersaoDF = ve310)) and not
-     (FConfiguracoes.WebServices.UFCodigo in [13, 29, 23, 52, 31, 50, 26, 41])  then
+     (FConfiguracoes.WebServices.UFCodigo in [13, 23, 31, 26, 41])  then // AM, CE, MG, PE, PR
    begin
      SoapAction := 'http://www.portalfiscal.inf.br/nfe/wsdl/NfeRetAutorizacao';
      nfeAutorizacaoLote := True;
