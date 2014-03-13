@@ -2009,6 +2009,14 @@ begin
                QTD_REG_BLC := Bloco_M.RegistroM110Count;
             end;
          end;
+         if Bloco_M.RegistroM115Count > 0 then
+         begin
+            with New do
+            begin
+               REG_BLC := 'M115';
+               QTD_REG_BLC := Bloco_M.RegistroM115Count;
+            end;
+         end;
          if Bloco_M.RegistroM200Count > 0 then
          begin
             with New do
@@ -2047,6 +2055,14 @@ begin
             begin
                REG_BLC := 'M220';
                QTD_REG_BLC := Bloco_M.RegistroM220Count;
+            end;
+         end;
+         if Bloco_M.RegistroM225Count > 0 then
+         begin
+            with New do
+            begin
+               REG_BLC := 'M225';
+               QTD_REG_BLC := Bloco_M.RegistroM225Count;
             end;
          end;
          if Bloco_M.RegistroM230Count > 0 then
@@ -2113,12 +2129,28 @@ begin
                QTD_REG_BLC := Bloco_M.RegistroM510Count;
             end;
          end;
+         if Bloco_M.RegistroM515Count > 0 then
+         begin
+            with New do
+            begin
+               REG_BLC := 'M515';
+               QTD_REG_BLC := Bloco_M.RegistroM515Count;
+            end;
+         end;
          if Bloco_M.RegistroM600Count > 0 then
          begin
             with New do
             begin
                REG_BLC := 'M600';
                QTD_REG_BLC := Bloco_M.RegistroM600Count;
+            end;
+         end;
+         if Bloco_M.RegistroM605Count > 0 then
+         begin
+            with New do
+            begin
+               REG_BLC := 'M605';
+               QTD_REG_BLC := Bloco_M.RegistroM605Count;
             end;
          end;
          if Bloco_M.RegistroM610Count > 0 then
@@ -2143,6 +2175,14 @@ begin
             begin
                REG_BLC := 'M620';
                QTD_REG_BLC := Bloco_M.RegistroM620Count;
+            end;
+         end;
+         if Bloco_M.RegistroM625Count > 0 then
+         begin
+            with New do
+            begin
+               REG_BLC := 'M625';
+               QTD_REG_BLC := Bloco_M.RegistroM625Count;
             end;
          end;
          if Bloco_M.RegistroM630Count > 0 then

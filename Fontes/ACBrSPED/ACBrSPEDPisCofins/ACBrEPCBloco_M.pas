@@ -49,11 +49,13 @@ type
   TRegistroM100List = class;
   TRegistroM105List = class;
   TRegistroM110List = class;
+  TRegistroM115List = class;
   TRegistroM200     = class;
   TRegistroM205List = class;
   TRegistroM210List = class;
   TRegistroM211     = class;
   TRegistroM220List = class;
+  TRegistroM225List = class;
   TRegistroM230List = class;
   TRegistroM300List = class;
   TRegistroM350     = class;
@@ -62,10 +64,13 @@ type
   TRegistroM500List = class;
   TRegistroM505List = class;
   TRegistroM510List = class;
+  TRegistroM515List = class;
   TRegistroM600     = class;
+  TRegistroM605List = class;
   TRegistroM610List = class;
   TRegistroM611     = class;
   TRegistroM620List = class;
+  TRegistroM625List = class;
   TRegistroM630List = class;
   TRegistroM700List = class;
   TRegistroM800List = class;
@@ -187,8 +192,12 @@ type
   end;
 
   //REGISTRO M110: AJUSTES DO CRÉDITO DE PIS/PASEP APURADO
+
+  { TRegistroM110 }
+
   TRegistroM110 = class
   private
+    FRegistroM115: TRegistroM115List;
     FVL_AJ            : currency;
     FNUM_DOC          : string;
     FCOD_AJ           : TACBrCodAj;
@@ -196,12 +205,17 @@ type
     FIND_AJ           : TACBrIndAJ;
     FDT_REF           : TDateTime;
   public
+    constructor Create;  virtual;                      /// Create
+    destructor  Destroy; override;                     /// Destroy
+
     property IND_AJ   : TACBrIndAJ    read FIND_AJ   write FIND_AJ;
     property VL_AJ    : currency      read FVL_AJ    write FVL_AJ;
     property COD_AJ   : TACBrCodAj    read FCOD_AJ   write FCOD_AJ;
     property NUM_DOC  : string        read FNUM_DOC  write FNUM_DOC;
     property DESCR_AJ : string        read FDESCR_AJ write FDESCR_AJ;
     property DT_REF   : TDateTime     read FDT_REF   write FDT_REF;
+
+    property RegistroM115   : TRegistroM115List read FRegistroM115   write FRegistroM115;
   end;
 
   // Registro M110 - Lista
@@ -212,6 +226,38 @@ type
   public
     function New: TRegistroM110;
     property Items[Index: Integer]: TRegistroM110 read GetItem write SetItem;
+  end;
+
+  //REGISTRO M115: DETALHAMENTO DOS AJUSTES DO CRÉDITO DE PIS/PASEP APURADO
+  TRegistroM115 = class
+  private
+    fCOD_CTA: string;
+    fCST_PIS: TACBrCstPis;
+    fDESC_AJ: string;
+    fDET_ALIQ: Currency;
+    fDET_BC_CRED: Currency;
+    fDET_VALOR_AJ: Currency;
+    fDT_OPER_AJ: TDateTime;
+    fINFO_COMPL: string;
+  public
+    property DET_VALOR_AJ    : Currency read fDET_VALOR_AJ write fDET_VALOR_AJ;
+    property CST_PIS         : TACBrCstPis read fCST_PIS write fCST_PIS;
+    property DET_BC_CRED     : Currency read fDET_BC_CRED write fDET_BC_CRED;
+    property DET_ALIQ        : Currency read fDET_ALIQ write fDET_ALIQ;
+    property DT_OPER_AJ      : TDateTime read fDT_OPER_AJ write fDT_OPER_AJ;
+    property DESC_AJ         : string read fDESC_AJ write fDESC_AJ;
+    property COD_CTA         : string read fCOD_CTA write fCOD_CTA;
+    property INFO_COMPL      : string read fINFO_COMPL write fINFO_COMPL;
+  end;
+
+  // Registro M115 - Lista
+  TRegistroM115List = class(TObjectList)
+  private
+    function  GetItem(Index: Integer): TRegistroM115;
+    procedure SetItem(Index: Integer; const Value: TRegistroM115);
+  public
+    function New: TRegistroM115;
+    property Items[Index: Integer]: TRegistroM115 read GetItem write SetItem;
   end;
 
   //REGISTRO M200: CONSOLIDAÇÃO DA CONTRIBUIÇÃO PARA O PIS/PASEP DO PERÍODO
@@ -261,9 +307,6 @@ type
     fNUM_CAMPO: string;
     fVL_DEBITO: currency;
   public
-    constructor Create;  virtual;                      /// Create
-    destructor  Destroy; override;                     /// Destroy
-
     property NUM_CAMPO: string read fNUM_CAMPO write fNUM_CAMPO;
     property COD_REC: string read fCOD_REC write fCOD_REC;
     property VL_DEBITO: currency read fVL_DEBITO write fVL_DEBITO;
@@ -347,8 +390,12 @@ type
   end;
 
   //REGISTRO M220: AJUSTES DA CONTRIBUIÇÃO PARA O PIS/PASEP APURADA
+
+  { TRegistroM220 }
+
   TRegistroM220 = class
   private
+    FRegistroM225: TRegistroM225List;
     FVL_AJ            : currency;
     FNUM_DOC          : string;
     FCOD_AJ           : TACBrCodAj;
@@ -356,12 +403,17 @@ type
     FIND_AJ           : TACBrIndAJ;
     FDT_REF           : TDateTime;
   public
+    constructor Create; virtual;                    /// Create
+    destructor Destroy; override;                   /// Destroy
+
     property IND_AJ   : TACBrIndAJ    read FIND_AJ   write FIND_AJ;
     property VL_AJ    : currency      read FVL_AJ    write FVL_AJ;
     property COD_AJ   : TACBrCodAj    read FCOD_AJ   write FCOD_AJ;
     property NUM_DOC  : string        read FNUM_DOC  write FNUM_DOC;
     property DESCR_AJ : string        read FDESCR_AJ write FDESCR_AJ;
     property DT_REF   : TDateTime     read FDT_REF   write FDT_REF;
+
+    property RegistroM225      : TRegistroM225List read FRegistroM225      write FRegistroM225;
   end;
 
   // Registro M220 - Lista
@@ -372,6 +424,38 @@ type
   public
     function New: TRegistroM220;
     property Items[Index: Integer]: TRegistroM220 read GetItem write SetItem;
+  end;
+
+  //REGISTRO M225: DETALHAMENTO DOS AJUSTES DA CONTRIBUIÇÃO PARA O PIS/PASEP APURADA
+  TRegistroM225 = class
+  private
+    FCOD_CTA: string;
+    FCST_PIS: TACBrCstPis;
+    FDESC_AJ: string;
+    FDET_ALIQ: Currency;
+    FDET_BC_CRED: Currency;
+    FDET_VALOR_AJ: Currency;
+    FDT_OPER_AJ: TDateTime;
+    FINFO_COMPL: string;
+  public
+    property DET_VALOR_AJ : Currency read FDET_VALOR_AJ write FDET_VALOR_AJ;
+    property CST_PIS      : TACBrCstPis read FCST_PIS write FCST_PIS;
+    property DET_BC_CRED  : Currency read FDET_BC_CRED write FDET_BC_CRED;
+    property DET_ALIQ     : Currency read FDET_ALIQ write FDET_ALIQ;
+    property DT_OPER_AJ   : TDateTime read FDT_OPER_AJ write FDT_OPER_AJ;
+    property DESC_AJ      : string read FDESC_AJ write FDESC_AJ;
+    property COD_CTA      : string read FCOD_CTA write FCOD_CTA;
+    property INFO_COMPL   : string read FINFO_COMPL write FINFO_COMPL;
+  end;
+
+  // Registro M225 - Lista
+  TRegistroM225List = class(TObjectList)
+  private
+    function  GetItem(Index: Integer): TRegistroM225;
+    procedure SetItem(Index: Integer; const Value: TRegistroM225);
+  public
+    function New: TRegistroM225;
+    property Items[Index: Integer]: TRegistroM225 read GetItem write SetItem;
   end;
 
   //REGISTRO M230: INFORMAÇÕES ADICIONAIS DE DIFERIMENTO
@@ -593,6 +677,7 @@ type
   //REGISTRO M510: AJUSTES DO CRÉDITO DE COFINS APURADO
   TRegistroM510 = class
   private
+    FRegistroM515: TRegistroM515List;
     FVL_AJ            : currency;
     FNUM_DOC          : string;
     FCOD_AJ           : TACBrCodAj;
@@ -600,12 +685,17 @@ type
     FIND_AJ           : TACBrIndAJ;
     FDT_REF           : TDateTime;
   public
+    constructor Create; virtual; /// Create
+    destructor Destroy; override; /// Destroy
+
     property IND_AJ   : TACBrIndAJ    read FIND_AJ   write FIND_AJ;
     property VL_AJ    : currency      read FVL_AJ    write FVL_AJ;
     property COD_AJ   : TACBrCodAj    read FCOD_AJ   write FCOD_AJ;
     property NUM_DOC  : string        read FNUM_DOC  write FNUM_DOC;
     property DESCR_AJ : string        read FDESCR_AJ write FDESCR_AJ;
     property DT_REF   : TDateTime     read FDT_REF   write FDT_REF;
+
+    property RegistroM515      : TRegistroM515List read FRegistroM515      write FRegistroM515;
   end;
 
   // Registro M510 - Lista
@@ -618,9 +708,42 @@ type
     property Items[Index: Integer]: TRegistroM510 read GetItem write SetItem;
   end;
 
+  //REGISTRO 515: DETALHAMENTO DOS AJUSTES DO CRÉDITO DE COFINS APURADO
+  TRegistroM515 = class
+  private
+    FCOD_CTA: string;
+    FCST_COFINS: TACBrSituacaoTribCOFINS;
+    FDESC_AJ: string;
+    FDET_ALIQ: Currency;
+    FDET_BC_CRED: Currency;
+    FDET_VALOR_AJ: Currency;
+    FDT_OPER_AJ: TDateTime;
+    FINFO_COMPL: string;
+  public
+    property DET_VALOR_AJ : Currency read FDET_VALOR_AJ write FDET_VALOR_AJ;
+    property CST_COFINS   : TACBrCstCofins read FCST_COFINS write FCST_COFINS;
+    property DET_BC_CRED  : Currency read FDET_BC_CRED write FDET_BC_CRED;
+    property DET_ALIQ     : Currency read FDET_ALIQ write FDET_ALIQ;
+    property DT_OPER_AJ   : TDateTime  read FDT_OPER_AJ write FDT_OPER_AJ;
+    property DESC_AJ      : string read FDESC_AJ write FDESC_AJ;
+    property COD_CTA      : string read FCOD_CTA write FCOD_CTA;
+    property INFO_COMPL   : string read FINFO_COMPL write FINFO_COMPL;
+  end;
+
+  // Registro M515 - Lista
+  TRegistroM515List = class(TObjectList)
+  private
+    function  GetItem(Index: Integer): TRegistroM515;
+    procedure SetItem(Index: Integer; const Value: TRegistroM515);
+  public
+    function New: TRegistroM515;
+    property Items[Index: Integer]: TRegistroM515 read GetItem write SetItem;
+  end;
+
   //REGISTRO M600: CONSOLIDAÇÃO DA CONTRIBUIÇÃO PARA A SEGURIDADE SOCIAL - COFINS DO PERÍODO
   TRegistroM600 = class
   private
+    FRegistroM605: TRegistroM605List;
     FVL_TOT_CONT_REC              : currency;
     FVL_TOT_CRED_DESC             : currency;
     FVL_OUT_DED_CUM               : currency;
@@ -652,7 +775,30 @@ type
     property VL_CONT_CUM_REC      : currency          read FVL_CONT_CUM_REC      write FVL_CONT_CUM_REC;
     property VL_TOT_CONT_REC      : currency          read FVL_TOT_CONT_REC      write FVL_TOT_CONT_REC;
 
+    property RegistroM605         : TRegistroM605List read FRegistroM605         write FRegistroM605;
     property RegistroM610         : TRegistroM610List read FRegistroM610         write FRegistroM610;
+  end;
+
+  //REGISTRO M605: COFINS A RECOLHER – DETALHAMENTO POR CÓDIGO DE RECEITA
+  TRegistroM605 = class
+  private
+    FCOD_REC: string;
+    FNUM_CAMPO: string;
+    FVL_DEBITO: Currency;
+  public
+    property NUM_CAMPO : string   read FNUM_CAMPO write FNUM_CAMPO;
+    property COD_REC   : string   read FCOD_REC   write FCOD_REC;
+    property VL_DEBITO : Currency read FVL_DEBITO write FVL_DEBITO;
+  end;
+
+  // Registro M605 - Lista
+  TRegistroM605List = class(TObjectList)
+  private
+    function  GetItem(Index: Integer): TRegistroM605;
+    procedure SetItem(Index: Integer; const Value: TRegistroM605);
+  public
+    function New: TRegistroM605;
+    property Items[Index: Integer]: TRegistroM605 read GetItem write SetItem;
   end;
 
   //REGISTRO M610: DETALHAMENTO DA CONTRIBUIÇÃO PARA A SEGURIDADE SOCIAL - COFINS DO PERÍODO
@@ -723,8 +869,12 @@ type
   end;
 
   //REGISTRO M620: AJUSTES DA COFINS APURADA
+
+  { TRegistroM620 }
+
   TRegistroM620 = class
   private
+    FRegistroM625     : TRegistroM625List;
     FVL_AJ            : currency;
     FNUM_DOC          : string;
     FCOD_AJ           : TACBrCodAj;
@@ -732,12 +882,17 @@ type
     FIND_AJ           : TACBrIndAJ;
     FDT_REF           : TDateTime;
   public
+    constructor Create;  virtual;                   /// Create
+    destructor  Destroy; override;                  /// Destroy
+
     property IND_AJ   : TACBrIndAJ    read FIND_AJ   write FIND_AJ;
     property VL_AJ    : currency      read FVL_AJ    write FVL_AJ;
     property COD_AJ   : TACBrCodAj    read FCOD_AJ   write FCOD_AJ;
     property NUM_DOC  : string        read FNUM_DOC  write FNUM_DOC;
     property DESCR_AJ : string        read FDESCR_AJ write FDESCR_AJ;
     property DT_REF   : TDateTime     read FDT_REF   write FDT_REF;
+
+    property RegistroM625      : TRegistroM625List read FRegistroM625      write FRegistroM625;
   end;
 
   // Registro M620 - Lista
@@ -748,6 +903,38 @@ type
   public
     function New: TRegistroM620;
     property Items[Index: Integer]: TRegistroM620 read GetItem write SetItem;
+  end;
+
+  //REGISTRO M625: DETALHAMENTO DOS AJUSTES DA COFINS APURADA
+  TRegistroM625 = class
+  private
+    FCOD_CTA: string;
+    FCST_COFINS: TACBrCstCofins;
+    FDESC_AJ: string;
+    FDET_ALIQ: Currency;
+    FDET_BC_CRED: Currency;
+    FDET_VALOR_AJ: Currency;
+    FDT_OPER_AJ: TDateTime;
+    FINFO_COMPL: string;
+  public
+    property DET_VALOR_AJ : Currency  read FDET_VALOR_AJ write FDET_VALOR_AJ;
+    property CST_COFINS   : TACBrCstCofins read FCST_COFINS   write FCST_COFINS;
+    property DET_BC_CRED  : Currency  read FDET_BC_CRED  write FDET_BC_CRED;
+    property DET_ALIQ     : Currency  read FDET_ALIQ     write FDET_ALIQ;
+    property DT_OPER_AJ   : TDateTime read FDT_OPER_AJ   write FDT_OPER_AJ;
+    property DESC_AJ      : string    read FDESC_AJ      write FDESC_AJ;
+    property COD_CTA      : string    read FCOD_CTA      write FCOD_CTA;
+    property INFO_COMPL   : string    read FINFO_COMPL   write FINFO_COMPL;
+  end;
+
+  // Registro M625 - Lista
+  TRegistroM625List = class(TObjectList)
+  private
+    function  GetItem(Index: Integer): TRegistroM625;
+    procedure SetItem(Index: Integer; const Value: TRegistroM625);
+  public
+    function New: TRegistroM625;
+    property Items[Index: Integer]: TRegistroM625 read GetItem write SetItem;
   end;
 
   //REGISTRO M630: INFORMAÇÕES ADICIONAIS DE DIFERIMENTO
@@ -874,6 +1061,144 @@ type
 
 implementation
 
+{ TRegistroM620 }
+
+constructor TRegistroM620.Create;
+begin
+  FRegistroM625 := TRegistroM625List.Create;
+end;
+
+destructor TRegistroM620.Destroy;
+begin
+  FRegistroM625.Free;
+end;
+
+{ TRegistroM625List }
+
+function TRegistroM625List.GetItem(Index: Integer): TRegistroM625;
+begin
+  Result := TRegistroM625(Inherited Items[Index]);
+end;
+
+procedure TRegistroM625List.SetItem(Index: Integer; const Value: TRegistroM625);
+begin
+  Put(Index, Value);
+end;
+
+function TRegistroM625List.New: TRegistroM625;
+begin
+  Result := TRegistroM625.Create;
+  Add(Result);
+end;
+
+{ TRegistroM605List }
+
+function TRegistroM605List.GetItem(Index: Integer): TRegistroM605;
+begin
+  Result := TRegistroM605(Inherited Items[Index]);
+end;
+
+procedure TRegistroM605List.SetItem(Index: Integer; const Value: TRegistroM605);
+begin
+  Put(Index, Value);
+end;
+
+function TRegistroM605List.New: TRegistroM605;
+begin
+  Result := TRegistroM605.Create;
+  Add(Result);
+end;
+
+{ TRegistroM510 }
+
+constructor TRegistroM510.Create;
+begin
+  FRegistroM515 := TRegistroM515List.Create;
+end;
+
+destructor TRegistroM510.Destroy;
+begin
+  FRegistroM515.Free;
+end;
+
+{ TRegistroM515List }
+
+function TRegistroM515List.GetItem(Index: Integer): TRegistroM515;
+begin
+  Result := TRegistroM515(Inherited Items[Index]);
+end;
+
+procedure TRegistroM515List.SetItem(Index: Integer; const Value: TRegistroM515);
+begin
+  Put(Index, Value);
+end;
+
+function TRegistroM515List.New: TRegistroM515;
+begin
+  Result := TRegistroM515.Create;
+  Add(Result);
+end;
+
+{ TRegistroM220 }
+
+constructor TRegistroM220.Create;
+begin
+  FRegistroM225 := TRegistroM225List.Create;
+end;
+
+destructor TRegistroM220.Destroy;
+begin
+  FRegistroM225.Free;
+end;
+
+{ TRegistroM225List }
+
+function TRegistroM225List.GetItem(Index: Integer): TRegistroM225;
+begin
+  Result := TRegistroM225(Inherited Items[Index]);
+end;
+
+procedure TRegistroM225List.SetItem(Index: Integer; const Value: TRegistroM225);
+begin
+  Put(Index, Value);
+end;
+
+function TRegistroM225List.New: TRegistroM225;
+begin
+  Result := TRegistroM225.Create;
+  Add(Result);
+end;
+
+{ TRegistroM110 }
+
+constructor TRegistroM110.Create;
+begin
+  FRegistroM115 := TRegistroM115List.Create;
+end;
+
+destructor TRegistroM110.Destroy;
+begin
+  FRegistroM115.Destroy;
+end;
+
+{ TRegistroM115List }
+
+function TRegistroM115List.GetItem(Index: Integer): TRegistroM115;
+begin
+  Result := TRegistroM115(Inherited Items[Index]);
+end;
+
+procedure TRegistroM115List.SetItem(Index: Integer; const Value: TRegistroM115);
+begin
+  Put(Index, Value);
+end;
+
+function TRegistroM115List.New: TRegistroM115;
+begin
+  Result := TRegistroM115.Create;
+  Add(Result);
+end;
+
 { TRegistroM205List }
 
 function TRegistroM205List.GetItem(Index: Integer): TRegistroM205;
@@ -892,20 +1217,8 @@ begin
   Add(Result);
 end;
 
-{ TRegistroM205 }
-
-constructor TRegistroM205.Create;
-begin
-
-end;
-
-destructor TRegistroM205.Destroy;
-begin
-  inherited Destroy;
-end;
 
 {TRegistroM001}
-
 constructor TRegistroM001.Create;
 begin
   FRegistroM100 := TRegistroM100List.Create;
@@ -1366,12 +1679,14 @@ end;
 
 constructor TRegistroM600.Create;
 begin
+  FRegistroM605 := TRegistroM605List.Create;
   FRegistroM610 := TRegistroM610List.Create;
 end;
 
 destructor TRegistroM600.Destroy;
 begin
   FRegistroM610.Free;
+  FRegistroM605.Free;
   inherited;
 end;
 
