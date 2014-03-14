@@ -536,7 +536,7 @@ begin
  end;
 
  if AProvedor in [proNenhum, proAbaco, proBetha, proBetim, proBHIss, proDigifred,
-  proEquiplano, proFiorilli, proFIssLex, proGinfes, proGovBR, proIssCuritiba,
+  proEquiplano, {proFiorilli, }proFIssLex, proGinfes, proGovBR, proIssCuritiba,
   proIssIntel, proIssNet, proNatal, proProdemge, proRecife, proRJ,
   proSimplIss, proThema, proTiplan, proIssDSF, proAgili, proSpeedGov, proPronim, proActcon] then Result := '';
 end;
