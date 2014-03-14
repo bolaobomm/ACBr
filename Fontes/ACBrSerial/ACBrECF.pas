@@ -387,7 +387,6 @@ TACBrECF = class( TACBrComponent )
     function GetInfoRodapeCupom: TACBrECFRodape;
     procedure SetInfoRodapeCupom(const Value: TACBrECFRodape);
     function GetRespostasComandoClass: TACBrInformacoes;
-    function GetRodape: String;
     function GetRodapeRestaurante: String;
     function GetRodapeUF: String;
     function GetRodapeImposto: String;
@@ -568,6 +567,7 @@ TACBrECF = class( TACBrComponent )
 
     { Procedimentos de Cupom Fiscal }
     property Consumidor : TACBrECFConsumidor read GetConsumidorClass ;
+    function GetRodape: String;
     { Grava dados do Consumidor para ser usado na Abertura ou Fechamento do Cupom }
     Procedure IdentificaConsumidor( CPF_CNPJ : String; Nome : String = '';
        Endereco : String = '') ;
@@ -3042,7 +3042,7 @@ begin
 
   // atende ao requisito do paf-ECF XXVIII item 8
   if Trim(InfoRodapeCupom.NF) <> EmptyStr then
-    Result := Result + sLineBreak + 'NF:' + Trim(InfoRodapeCupom.NF);
+    Result := Result + 'NF:' + Trim(InfoRodapeCupom.NF);
 
   Result := Trim(Result) + sLineBreak + Trim(GetRodapeRestaurante);
   Result := Trim(Result) + sLineBreak + Trim(GetRodapeUF);
@@ -3076,12 +3076,12 @@ begin
 
         Rodape := Rodape + #10 + 'ECF:'
         + Format('%3.3d', [InfoRodapeCupom.Restaurante.ECF])
-        + ' - Conferência de Mesa';
+        + ' - Conf. de Mesa';
 
           if InfoRodapeCupom.Restaurante.CER > 0 then
           begin
             Rodape := Rodape + ' - CER:' +
-            Format('%6.6d', [InfoRodapeCupom.Restaurante.CER]);
+            Format('%4.4d', [InfoRodapeCupom.Restaurante.CER]);
           end;
 
         Rodape := Rodape + ' – COO:' +
@@ -3091,7 +3091,7 @@ begin
       else
       begin
 
-        Rodape := Rodape + #10 + 'Consumo da Mesa '
+        Rodape := Rodape + #10 + 'Mesa '
         + InfoRodapeCupom.Restaurante.Mesa
         + ' – SEM EMISSÃO DE CONFERÊNCIA DE MESA'
 
