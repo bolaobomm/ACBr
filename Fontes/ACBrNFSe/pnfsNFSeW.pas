@@ -815,6 +815,7 @@ begin
           proPVH,
           proMitra,
           proGovDigital,
+          proISSDigital,
           proISSe:    Gerador.wCampoNFSe(tcDat,    '#4', 'Competencia', 10, 10, 1, NFSe.Competencia, DSC_DEMI);
           proGoiania,
           proTecnos:  Gerador.wCampoNFSe(tcDatHor, '#4', 'Competencia', 19, 19, 0, NFSe.Competencia, DSC_DEMI);
@@ -823,7 +824,7 @@ begin
         end
         else begin
          if FProvedor in [proPVH, proFreire, proISSe, proFiorilli, proSaatri, proCoplan,
-                          proMitra, proVitoria, proGovDigital]
+                          proISSDigital, proMitra, proVitoria, proGovDigital]
           then Gerador.wCampoNFSe(tcDat,    '#4', 'Competencia', 10, 10, 1, NFSe.DataEmissao, DSC_DEMI)
           else begin
            if not (FProvedor in [proGoiania])
