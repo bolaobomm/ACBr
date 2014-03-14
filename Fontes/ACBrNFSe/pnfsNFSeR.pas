@@ -1379,7 +1379,7 @@ begin
   proSpeedGov, // novo
   proThema,
   proTiplan,
-  proWebISS: Result := LerNFSe_ABRASF_V1;
+  proWebISS,ProActcon: Result := LerNFSe_ABRASF_V1;
 
   pro4R,
   proAgili,

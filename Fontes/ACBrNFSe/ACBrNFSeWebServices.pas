@@ -345,12 +345,18 @@ type
     FNumeroRps: Integer;
     FNFSeRetorno : TGerarretNfse;
     FNotasFiscais : TNotasFiscais;
+    FProtocolo: String;
+    FDataRecebimento: TDateTime;
+    FSituacao: String;
   public
     function Executar: Boolean; override;
     constructor Create(AOwner : TComponent; ANotasFiscais : TNotasFiscais); reintroduce;
     destructor Destroy; override;
     property NumeroRps: integer read FNumeroRps;
     property NFSeRetorno: TGerarretNfse read FNFSeRetorno write FNFSeRetorno;
+    property Protocolo: String read FProtocolo;
+    property DataRecebimento: TDateTime read FDataRecebimento;
+    property Situacao: String read FSituacao;
   end;
 
   TNFSeEnviarSincrono = Class(TWebServicesBase)
@@ -4244,8 +4250,16 @@ begin
 
   NFSeRetorno.Leitor.Arquivo := FRetWS;
   NFSeRetorno.Provedor       := FProvedor;
-  
+
   NFSeRetorno.LerXml;
+
+  FDataRecebimento := NFSeRetorno.ListaNfse.CompNfse[0].Nfse.dhRecebimento;
+  FProtocolo       := NFSeRetorno.ListaNfse.CompNfse[0].Nfse.Protocolo;
+//  FSituacao        := NFSeRetorno.InfSit.Situacao;
+  // FSituacao: 1 = Não Recebido
+  //            2 = Não Processado
+  //            3 = Processado com Erro
+  //            4 = Processado com Sucesso
 
   TACBrNFSe( FACBrNFSe ).SetStatus( stNFSeIdle );
 
