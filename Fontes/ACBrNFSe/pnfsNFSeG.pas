@@ -495,6 +495,7 @@ begin
   proVirtual,
   proFreire,
   proSaatri,
+  proFiorilli,
   proPublica: Result := TagI + Notas + TagF;
   else begin // proWebISS
    DadosMsg := '<' + Prefixo3 + 'LoteRps'+

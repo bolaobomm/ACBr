@@ -480,8 +480,14 @@ begin
                      AStr := AStr + Assinatura;
                      AStr := AStr + '</Rps>';
                      // Alterado por Cleiver em 26/02/2013
-                     if (AProvedor in [proGoiania, proProdata, proVitoria, proVirtual])
+                     if (AProvedor in [proGoiania, proProdata, proVitoria, proFiorilli, proVirtual])
                       then AStr := AStr + '</GerarNfseEnvio>';
+                    end;
+      proTecnos:    begin
+                     AXML := copy(AXML, 1, pos('</tcDeclaracaoPrestacaoServico>', AXML) - 1);
+                     AXML := AXML + '</tcDeclaracaoPrestacaoServico>';
+                     AXML := AXML + Assinatura;
+                     AXML := AXML + '</Rps>';
                     end;
       else begin
             AStr := copy(AStr, 1, pos('</Rps>', AStr) - 1);
