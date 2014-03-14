@@ -108,6 +108,7 @@ type
     FTributosFonte: string;
     FTributosPercentual: TpcnPercentualTributos;
     FMarcaDaguaMSG: string;
+    FTamanhoCampoVlUnit: integer;
   public
      FCurrentPage, FPageNum, FNFIndex, FNumNFe:Integer;
      FChaveNFe, FNumeroNF, FSerie: String;
@@ -146,6 +147,7 @@ type
      property ImprimirValorLiquido:boolean read FImprimirValorLiquido write FImprimirValorLiquido;
      property ImprimirDetalhamentoEspecifico:boolean read FImprimirDetalhamentoEspecifico write FImprimirDetalhamentoEspecifico;
      property TamanhoCampoCodigo:integer read FTamanhoCampoCodigo write FTamanhoCampoCodigo;
+     property TamanhoCampoVlUnit:integer read FTamanhoCampoVlUnit write FTamanhoCampoVlUnit;
      property TamanhoFonte_DemaisCampos:integer read FTamanhoFonte_DemaisCampos write FTamanhoFonte_DemaisCampos;
      property TamanhoFonte_ANTT:integer read FTamanhoFonte_ANTT write FTamanhoFonte_ANTT;
      property LinhasPorPagina:integer read FLinhasPorPagina write FLinhasPorPagina;
@@ -239,6 +241,7 @@ procedure ImprimirDANFeRave(aACBrNFe:TACBrNFe;
                             aMask_qCom:String='';
                             aMask_vUnCom:String='';
                             aTamanhoCampoCodigo:integer=0;
+                            aTamanhoCampoVlUnit:integer=0;
                             aTamanhoFonte_DemaisCampos:integer=10;
                             aTamanhoFonte_ANTT:integer=10;
                             aProdutosPorPagina:integer=0;
@@ -311,6 +314,7 @@ procedure ImprimirDANFeRave(aACBrNFe:TACBrNFe;
                             aMask_qCom:String='';
                             aMask_vUnCom:String='';
                             aTamanhoCampoCodigo:integer=0;
+                            aTamanhoCampoVlUnit:integer=0;
                             aTamanhoFonte_DemaisCampos:integer=10;
                             aTamanhoFonte_ANTT:integer=10;
                             aProdutosPorPagina:integer=0;
@@ -385,6 +389,7 @@ begin
     DANFeRave.Mask_qCom:=aMask_qCom;
     DANFeRave.Mask_vUnCom:=aMask_vUnCom;
     DANFeRave.TamanhoCampoCodigo:=aTamanhoCampoCodigo;
+    DANFeRave.TamanhoCampoVlUnit:=aTamanhoCampoVlUnit;
     DANFeRave.TamanhoFonte_DemaisCampos:=aTamanhoFonte_DemaisCampos;
     DANFeRave.TamanhoFonte_ANTT:=aTamanhoFonte_ANTT;
     DANFeRave.LinhasPorPagina:=aProdutosPorPagina;

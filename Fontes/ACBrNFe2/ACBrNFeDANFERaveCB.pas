@@ -66,6 +66,7 @@ type
      FTributosFonte: string;
      FTributosPercentual: TpcnPercentualTributos;
      FMarcaDaguaMSG: string;
+    FTamanhoCampoVlUnit: integer;
 
      function SeSenaoJPEG(ACondicao: Boolean; ATrue, AFalse: TJPEGImage): TJPEGImage;
    public
@@ -77,6 +78,7 @@ type
     procedure ImprimirEVENTOPDF(NFE : TNFe = nil); override ;
   published
      property TamanhoCampoCodigo:integer read FTamanhoCampoCodigo write FTamanhoCampoCodigo;
+     property TamanhoCampoVlUnit:integer read FTamanhoCampoVlUnit write FTamanhoCampoVlUnit;
      property TamanhoFonte_ANTT:integer read FTamanhoFonte_ANTT write FTamanhoFonte_ANTT;
      property Fonte:TFont read FFonte write FFonte;
      property EspessuraBorda:Integer read FEspessuraBorda write FEspessuraBorda;
@@ -95,6 +97,7 @@ begin
   inherited create( AOwner );
 
   FTamanhoCampoCodigo:=0;
+  FTamanhoCampoVlUnit:=0;
   FTamanhoFonte_ANTT:=10;
   FEspessuraBorda:=2;
   FMostrarSetup:=False;
@@ -157,6 +160,7 @@ begin
                        CasasDecimais._Mask_qCom,
                        CasasDecimais._Mask_vUnCom,
                        TamanhoCampoCodigo,
+                       TamanhoCampoVlUnit,
                        TamanhoFonte_DemaisCampos,
                        TamanhoFonte_ANTT,
                        ProdutosPorPagina,
@@ -236,6 +240,7 @@ begin
                        CasasDecimais._Mask_qCom,
                        CasasDecimais._Mask_vUnCom,
                        TamanhoCampoCodigo,
+                       TamanhoCampoVlUnit,
                        TamanhoFonte_DemaisCampos,
                        TamanhoFonte_ANTT,
                        ProdutosPorPagina,

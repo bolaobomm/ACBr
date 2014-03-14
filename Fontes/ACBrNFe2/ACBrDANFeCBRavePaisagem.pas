@@ -1380,6 +1380,13 @@ begin
       ColsWidth[2]:=ColsWidth[2]+wtemp;
     end;
 
+    if TamanhoCampoVlUnit <> 0 then
+    begin
+      wtemp:=ColsWidth[8]-TamanhoCampoVlUnit;
+      ColsWidth[8]:=ColsWidth[8]-wtemp;
+      ColsWidth[2]:=ColsWidth[2]+wtemp;
+    end;
+
     FDetIndex:=0;
 
     wInfFisco:='';
