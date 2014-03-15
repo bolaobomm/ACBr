@@ -38,7 +38,7 @@ unit ACBrBancoBanrisul;
 interface
 
 uses
-  Classes, SysUtils, ACBrBoleto,
+  Classes, SysUtils, ACBrBoleto, Dialogs,
 {$IFDEF COMPILER6_UP}dateutils{$ELSE}ACBrD5{$ENDIF};
 
 type
@@ -62,8 +62,11 @@ type
     function GerarRegistroTrailler240(ARemessa: TStringList): String; override;
     procedure LerRetorno240(ARetorno: TStringList); override;
 
-    function CodOcorrenciaToTipo(const CodOcorrencia: String): TACBrTipoOcorrencia; overload;
+    function CodOcorrenciaToTipo(const CodOcorrencia:Integer): TACBrTipoOcorrencia; override;
     function CodMotivoRejeicaoToDescricao(const TipoOcorrencia: TACBrTipoOcorrencia; CodMotivo: String): String; overload;
+
+    function TipoOcorrenciaToDescricao(const TipoOcorrencia: TACBrTipoOcorrencia): String; override;
+    function TipoOCorrenciaToCod(const TipoOcorrencia: TACBrTipoOcorrencia): String; override;
   end;
 
 implementation
@@ -86,6 +89,11 @@ begin
   fpTamanhoAgencia:= 4;
   fpTamanhoConta  := 7;
   fpTamanhoCarteira:= 1;
+
+  fpOrientacoesBanco.Clear;
+  fpOrientacoesBanco.Add(ACBrStr('SAC       BANRISUL - 0800 646 1515'+sLineBreak+
+                                 'OUVIDORIA BANRISUL - 0800 644 2200'));
+
 end;
 
 function Modulo11(Valor: string; Base: Integer=9; Resto: boolean=false): string;
@@ -251,25 +259,24 @@ begin
   begin
     cd:= OnlyNumber(CodigoCedente);
 
-    wLinha:= '0'                                   + // ID do Registro
-             '1'                                   + // ID do Arquivo( 1 - Remessa)
-             'REMESSA'                             + // Literal de Remessa
-             space(17)                             + // brancos 17
-             padR(copy(trim(Agencia), 1, 4)+cd, 13, '0') + // Codigo da Empresa no Banco
-             space(7)                              +
-             padR(Nome, 30, ' ')                   + // nome do Cedente
-             '041'                                 + // Número do banco
-             padL('BANRISUL', 8)                   + // Código e Nome do Banco(041 - Banrisul)
-             space(7)                              + //brancos
-             FormatDateTime('ddmmyy', Now)         + // Data de geração do arquivo
-             Space(9)                              + // Filler - Brancos
-             space(4)                              + //8808 teste carteira R S X ou 0808 producao carteira R S X
-             ' '                                   +
-             space(1)                              + //teste X producao P para carteiras R S X
-             ' '                                   +
-            space(10)                              +
-            Space(268)                             + // Filler - Brancos
-            IntToStrZero(1, 6);                     // 395 a 400 - NÚMERO SEQÜENCIAL DO REGISTRO NO ARQUIVO  contante "000001" 
+    wLinha:= '0'                                          + // ID do Registro
+             '1'                                          + // ID do Arquivo( 1 - Remessa)
+             'REMESSA'                                    + // Literal de Remessa
+             space(17)                                    + // Brancos
+             padR(copy(trim(Agencia), 1, 4)+cd, 13, '0')  + // Código Agencia + Cedente AAAACCCCCCCCC
+             space(7)                                     + // Brancos
+             padR(Nome, 30, ' ')                          + // Nome da empresa Cedente
+             padL('041BANRISUL', 11)                      + // Código e Nome do Banco Constante(041Banrisul)
+             space(7)                                     + // Brancos
+             FormatDateTime('ddmmyy', Now)                + // Data de gravação do arquivo
+             Space(9)                                     + // Brancos
+             space(4)                                     + // Código do serviço - Somente para carteiras R, S e X
+             ' '                                          + // Brancos
+             space(1)                                     + // Tipo de processamento - Somente para carteiras R, S e X
+             ' '                                          + // Brancos
+            space(10)                                     + // Código do cliente no Office Banking - Somente para carteiras R, S e X
+            Space(268)                                    + // Brancos
+            IntToStrZero(1, 6);                             // Constante (000001)
 
     aRemessa.Text := aRemessa.Text + UpperCase(wLinha);
   end;
@@ -277,22 +284,22 @@ end;
 
 procedure TACBrBanrisul.GerarRegistroTransacao400(ACBrTitulo: TACBrTitulo; aRemessa: TStringList);
 var
-  Ocorrencia, cd,TipoSacado     :String;
-  aTipoAceite,TipoBoleto,wLinha :String;
+  Ocorrencia, cd, TipoSacado     :String;
+  aTipoAceite , aTipoCobranca, TipoBoleto, wLinha :String;
 begin
   with ACBrTitulo do
   begin
-
-      {Pegando Código da Ocorrencia}
+    {Pegando Código da Ocorrencia}
     case OcorrenciaOriginal.Tipo of
       toRemessaBaixar                        : Ocorrencia:='02'; {Pedido de Baixa}
       toRemessaConcederAbatimento            : Ocorrencia:='04'; {Concessão de Abatimento}
       toRemessaCancelarAbatimento            : Ocorrencia:='05'; {Cancelamento de Abatimento concedido}
       toRemessaAlterarVencimento             : Ocorrencia:='06'; {Alteração de vencimento}
       toRemessaProtestar                     : Ocorrencia:='09'; {Pedido de protesto}
-      toRemessaCancelarInstrucaoProtestoBaixa: Ocorrencia:='18'; {Sustar protesto e baixar}
-      toRemessaCancelarInstrucaoProtesto     : Ocorrencia:='19'; {Sustar protesto e manter na carteira}
-      toRemessaOutrasOcorrencias             : Ocorrencia:='31'; {Alteração de Outros Dados}
+      toRemessaSustarProtesto                : Ocorrencia:='10'; {Sustação de protesto}
+      //toRemessaCancelarInstrucaoProtestoBaixa: Ocorrencia:='18'; {Sustar protesto e baixar} //---Estão erradas essas ocorrencias comentadas
+      //toRemessaCancelarInstrucaoProtesto     : Ocorrencia:='19'; {Sustar protesto e manter na carteira}
+      //toRemessaOutrasOcorrencias             : Ocorrencia:='31'; {Alteração de Outros Dados}
     else
       Ocorrencia:='01'; {Remessa}
     end;
@@ -319,69 +326,86 @@ begin
       TipoSacado:='99';
     end;
 
-    {para manter compatibilidade com versões anteriores}
-    if trim(Instrucao1) = '' then begin
-      // estava fixo "09" para 1ª instrução
-      Instrucao1 := '09';
+    { Pegando Tipo de Cobrança - Tipo de Carteira}
+    case ACBrBoleto.Cedente.CaracTitulo of
+      tcSimples: aTipoCobranca := '1';
+      //tcDescontada: aTipoCobranca:='';
+      tcVendor: aTipoCobranca:='F';
+      tcVinculada: aTipoCobranca:='C';
+    else
+      aTipoCobranca:='1';
     end;
-    if (DataProtesto = 0) then begin
-      // estava fixo "04" para dias de protesto
-      DataProtesto := IncDay(Vencimento, 4);
+
+    if CodigoMora='' then
+      CodigoMora:='0'; //0-Valor Diario, 1-Taxa Mensal
+
+    {Instruções}
+    if ((DataProtesto <> 0) and (DataProtesto > Vencimento)) then //Se tiver protesto
+    begin
+      if (Trim(Instrucao1) = '') then
+        Instrucao1 := '09';  //Protestar caso impago em NN dias após vencimento.
+    end
+    else
+      Instrucao1 := '23'; //Não protestar
+
+    if (PercentualMulta > 0) then
+    begin
+      if (Trim(Instrucao2) = '') then
+        Instrucao2 := '18'; //Apos NN dias vencimento com percentual multa
     end;
 
     with ACBrBoleto do
     begin
       cd:= OnlyNumber(Cedente.CodigoCedente);
 
-      wLinha:= '1'                                                              + // ID Registro
-               space(16)                                                        +
-               padR(copy(trim(Cedente.Agencia), 1, 4)+cd, 13, '0')              + // Codigo da Empresa no Banco
-               space(7)                                                         +
-               space(25)                                                        + // id do título para o cedente (usado no arquivo de retorno)
-               PadL(NossoNumero, 8, '0')+CalculaDigitosChaveASBACE(NossoNumero) +
-               space(32)                                                        + // msg no bloqueto
-               space(3)                                                         +
-               '1'                                                              + // padrão 1 (cobrança simples)
-               Ocorrencia                                                       +     
-               padL(NumeroDocumento, 10)                                        +
-               FormatDateTime('ddmmyy', Vencimento)                             +
-               IntToStrZero(Round(ValorDocumento*100), 13)                      +
-               '041'                                                            +
-               space(5)                                                         +
-               TipoBoleto                                                       + 
-               aTipoAceite                                                      +
-               FormatDateTime('ddmmyy', DataDocumento)                          + // Data de Emissão
-               PadR(trim(Instrucao1), 2)                                        + // 1ª instrução (padrão "09"=Protestar caso impago)
-               PadR(trim(Instrucao2), 2)                                        +
-               PadR(trim(CodigoMora), 1)                                        + // código de mora (0=Valor diário; 1=Taxa Mensal)
-               FormatCurr('000000000000', ValorMoraJuros*100)                   +
-               IfThen(DataDesconto = 0,
-                      '000000',
-                      FormatDateTime('ddmmyy', DataDesconto))                   + // data para concessão de descontos
-               IntToStrZero(Round(ValorDesconto*100), 13)                       + // valor do desconto a ser concedido
-               IntToStrZero(Round(ValorIOF*100), 13)                            + // *valor IOF (para carteira "X" é: taxa juros + IOF + zeros)
-               IntToStrZero(Round(ValorAbatimento*100), 13)                     + // valor do abatimento
-               TipoSacado                                                       +
-               PadR(OnlyNumber(Sacado.CNPJCPF), 14, '0')                        +
-               PadL(Sacado.NomeSacado, 35)                                      +
-               space(5)                                                         +
+      wLinha:= '1'                                                              + // ID Registro(1-Constante)
+               space(16)                                                        + // Brancos
+               padR(copy(trim(Cedente.Agencia), 1, 4) + cd, 13, '0')            + // Codigo da Agencia e Cedente AAAACCCCCCCCC
+               space(7)                                                         + // Brancos
+               space(25)                                                        + // Identificação do título para o cedente (usado no arquivo de retorno)
+               PadL(NossoNumero, 8, '0')+CalculaDigitosChaveASBACE(NossoNumero) + // Nosso Número
+               space(32)                                                        + // Mensagem no bloqueto
+               space(3)                                                         + // Brancos
+               aTipoCobranca                                                    + // Tipo de Carteira (Simples, Vinculada, Descontada, Vendor)
+               Ocorrencia                                                       + // Código de ocorrência
+               padL(NumeroDocumento, 10)                                        + // Seu Número
+               FormatDateTime('ddmmyy', Vencimento)                             + // Data de vencimento do título
+               IntToStrZero(Round(ValorDocumento*100), 13)                      + // Valor do título
+               '041'                                                            + // Constante (041)
+               space(5)                                                         + // Brancos
+               TipoBoleto                                                       + // Tipo de Documento (04-Cobrança Direta, 06-Cobrança Escritural, 08-Cobrança credenciada Banrisul, 09-Títulos de terceiros)
+               aTipoAceite                                                      + // Código de aceite (A, N)
+               FormatDateTime('ddmmyy', DataDocumento)                          + // Data de Emissão do título
+               PadR(trim(Instrucao1), 2)                                        + // 1ª Instrução
+               PadR(trim(Instrucao2), 2)                                        + // 2ª Instrução
+               PadR(trim(CodigoMora), 1)                                        + // Código de mora (0=Valor diário; 1=Taxa Mensal)
+               IntToStrZero(Round(ValorMoraJuros*100), 12)                      + // Valor ao dia ou Taxa Mensal de juros
+               IfThen(DataDesconto = 0, '000000',
+                      FormatDateTime('ddmmyy', DataDesconto))                   + // Data para concessão de desconto
+               IntToStrZero(Round(ValorDesconto*100), 13)                       + // Valor do desconto a ser concedido
+               IntToStrZero(Round(ValorIOF*100), 13)                            + // Valor IOF (para carteira "X" é: taxa juros + IOF + zeros)
+               IntToStrZero(Round(ValorAbatimento*100), 13)                     + // Valor do abatimento
+               TipoSacado                                                       + // Tipo do Sacado (01-CPF, 02-CNPJ, 03-Outros)
+               PadR(OnlyNumber(Sacado.CNPJCPF), 14, '0')                        + // Número da inscrição do Sacado (CPF, CNPJ)
+               PadL(Sacado.NomeSacado, 35)                                      + // Nome do Sacado
+               space(5)                                                         + // Brancos
                PadL(Sacado.Logradouro+' '+
                     Sacado.Numero+' '+
-                    Sacado.Complemento, 40)                                     +
-               space(7)                                                         +
-               '000'                                                            + // taxa para multa após o vencimento
-               '00'                                                             + // dias para multa após o vencimento
-               PadL(OnlyNumber(Sacado.CEP), 8, '0')                             +
-               PadL(Sacado.Cidade, 15)                                          +
-               PadL(Sacado.UF, 2)                                               +
-               '0000'                                                           + // taxa ao dia para pagamento antecipado
-               space(1)                                                         +
-               '0000000000000'                                                  + // valor para cálculo de desconto
+                    Sacado.Complemento, 40)                                     + // Endereço Sacado
+               space(7)                                                         + // Brancos
+               IntToStrZero(Round( PercentualMulta * 10), 3)                    + // Taxa de multa após o Vencimento -- estava '000' é apenas uma casa decimal
+               '00'                                                             + // Nº dias para multa após o vencimento (00 considera-se Após Vencimento)
+               PadL(OnlyNumber(Sacado.CEP), 8, '0')                             + // CEP
+               PadL(Sacado.Cidade, 15)                                          + // Cidade do Sacado
+               PadL(Sacado.UF, 2)                                               + // UF do Sacado
+               '0000'                                                           + // Taxa ao dia para pagamento antecipado
+               space(1)                                                         + // Brancos
+               '0000000000000'                                                  + // Valor para cálculo de desconto
                IfThen((DataProtesto <> 0) and (DataProtesto > Vencimento),
-                      padR(IntToStr(DaysBetween(DataProtesto, Vencimento)), 2, '0'),
-                      '00')                                                     + // dias para protesto/devolução automática
-               space(23)                                                        +
-               IntToStrZero(aRemessa.Count + 1, 6);
+                      padR(IntToStr(DaysBetween(DataProtesto, Vencimento)),
+                      2, '0'), '00')                                            + // Dias para protesto/devolução automática
+               space(23)                                                        + // Brancos
+               IntToStrZero(aRemessa.Count + 1, 6);                               // Número sequencial do registro  
 
       aTotal:=aTotal+ValorDocumento;
 
@@ -394,10 +418,11 @@ procedure TACBrBanrisul.GerarRegistroTrailler400(ARemessa: TStringList);
 var
   wLinha: String;
 begin
-  wLinha:= '9'+ space(26)                          +
-           FormatCurr('0000000000000', aTotal*100) +
-           space(354)                              +
-           IntToStrZero(ARemessa.Count+1, 6);        // Contador de Registros
+  wLinha:= '9'                                     + // Constante (9)
+           space(26)                               + // Brancos
+           FormatCurr('0000000000000', aTotal*100) + // Total Somatório dos valores dos títulos
+           space(354)                              + // Brancos
+           IntToStrZero(ARemessa.Count+1, 6);        // Número sequencial do Registro
 
   ARemessa.Text:= ARemessa.Text + UpperCase(wLinha);
 end;
@@ -758,9 +783,112 @@ begin
 end;
 
 procedure TACBrBanrisul.LerRetorno400(ARetorno: TStringList);
+var Titulo: TACBrTitulo;
+    Linha: String;
+    CodOcorrencia, IdxMotivo, MotivoLinha, codMotivo,  ContLinha: Integer;
+    rCedente,rConvenio: String;
+    rAgencia,rAgenciaDigito: String;
+    rConta,rContaDigito: String;
 begin
-  inherited;
+  if (StrToInt(Copy(ARetorno.Strings[0], 77, 3)) <> Numero) then
+      raise Exception.Create(ACBrStr('"'+ ACBrBanco.ACBrBoleto.NomeArqRetorno +
+                                     '" não é um arquivo de retorno do(a) '+ UpperCase(Nome)));
 
+  ContLinha := 0;
+  fpTamanhoMaximoNossoNum:=10;
+
+  rCedente       := trim(copy(ARetorno[0], 47, 30));   //Nome da Empresa
+  //rConvenio      := ''; //Não possui essa info
+  rAgencia       := Copy(ARetorno.Strings[0], 27, 4);
+  //rAgenciaDigito := ''; //Não possui essa info
+  rConta         := Copy(ARetorno.Strings[0], 31, 9);
+  //rContaDigito   := ''; //Não possui essa info
+
+  ACBrBanco.ACBrBoleto.NumeroArquivo := StrToIntDef(Copy(ARetorno.Strings[0], 386, 9), 0);
+  ACBrBanco.ACBrBoleto.DataArquivo   := StringToDateTimeDef(Copy(ARetorno.Strings[0], 95, 2) +'/'+
+                                                            Copy(ARetorno.Strings[0], 97, 2) +'/'+
+                                                            Copy(ARetorno.Strings[0], 99, 2),
+                                                            0, 'dd/mm/yy');
+
+  with ACBrBanco.ACBrBoleto do
+  begin
+    if (not LeCedenteRetorno) and ((rAgencia <> OnlyNumber(Cedente.Agencia)) or
+    (rConta <> OnlyNumber(Cedente.Conta))) then
+      raise Exception.Create(ACBrStr('Agência\Conta do arquivo inválido'));
+
+    Cedente.Nome   := rCedente;
+    Cedente.CNPJCPF:= '';
+    {case StrToIntDef(Copy(ARetorno.Strings[0], 18, 1),0) of
+      1:
+       Cedente.TipoInscricao := pFisica;
+      else
+       Cedente.TipoInscricao := pJuridica;
+    end;}
+
+    Cedente.Convenio      := rConvenio;
+    Cedente.Agencia       := rAgencia;
+    Cedente.AgenciaDigito := rAgenciaDigito;
+    Cedente.Conta         := rConta;
+    Cedente.ContaDigito   := rContaDigito;
+
+    ListadeBoletos.Clear;
+  end;
+
+  for ContLinha := 1 to ARetorno.Count - 2 do
+  begin
+    Linha := ARetorno[ContLinha];
+
+    if (Copy(Linha,1,1) <> '1') then
+      Continue;
+
+    Titulo := ACBrBanco.ACBrBoleto.CriarTituloNaLista;
+    with Titulo do
+    begin
+      NossoNumero          := Copy(Linha,63,10);
+      SeuNumero            := copy(Linha,117,10);
+      NumeroDocumento      := copy(Linha,117,10);
+
+      ValorDocumento       := StrToFloatDef(Copy(Linha,153,13),0)/100;
+      ValorAbatimento      := StrToFloatDef(Copy(Linha,228,13),0)/100;
+      ValorDesconto        := StrToFloatDef(Copy(Linha,241,13),0)/100;
+      ValorRecebido        := StrToFloatDef(Copy(Linha,254,13),0)/100;
+      ValorMoraJuros       := StrToFloatDef(Copy(Linha,267,13),0)/100;
+      ValorOutrosCreditos  := StrToFloatDef(Copy(Linha,280,13),0)/100;    //Multa estava faltando
+      //Anderson
+      ValorDespesaCobranca := StrToFloatDef(Copy(Linha,176,13),0)/100;
+      ValorOutrasDespesas  := StrToFloatDef(Copy(Linha,189,13),0)/100;
+      if (StrToIntDef(Copy(Linha,247,6),0) <> 0) then
+        Vencimento := StringToDateTimeDef( Copy(Linha,247,2)+'/'+
+                                           Copy(Linha,249,2)+'/'+
+                                           Copy(Linha,151,2),0, 'DD/MM/YY' );
+
+      if StrToIntDef(Copy(Linha,296,6),0) <> 0 then
+        DataCredito:= StringToDateTimeDef( Copy(Linha,296,2)+'/'+
+                                          Copy(Linha,298,2)+'/'+
+                                          Copy(Linha,300,2),0, 'DD/MM/YY' );
+
+      DataOcorrencia := StringToDateTimeDef( Copy(Linha,111,2)+'/'+
+                                            Copy(Linha,113,2)+'/'+
+                                            Copy(Linha,115,2),0, 'DD/MM/YY' );
+
+      OcorrenciaOriginal.Tipo     := CodOcorrenciaToTipo(StrToIntDef(Copy(Linha,109,2),0));
+      CodOcorrencia := StrToIntDef(Copy(Linha,109,2), 0);
+      if ((CodOcorrencia = 3) or (CodOcorrencia = 16) or (CodOcorrencia = 18)) then
+      begin
+        DescricaoMotivoRejeicaoComando.Add(CodMotivoRejeicaoToDescricao(OcorrenciaOriginal.Tipo,CodMotivo));
+        IdxMotivo := 383;
+        while (IdxMotivo < 392) do
+        begin
+          if (Copy(Linha, IdxMotivo, 2) <> '  ') then
+          begin
+            MotivoRejeicaoComando.Add(Copy(Linha, IdxMotivo, 2));
+            DescricaoMotivoRejeicaoComando.Add(CodMotivoRejeicaoToDescricao(OcorrenciaOriginal.Tipo, StrToIntDef(Copy(Linha, IdxMotivo, 2), 0)));
+          end;
+          Inc(IdxMotivo, 2);
+        end;
+      end;
+    end;
+  end;
 end;
 
 function TACBrBanrisul.CodMotivoRejeicaoToDescricao(
@@ -851,48 +979,235 @@ begin
       end;
     end;
 
-    else Result := IntToStrZero(StrToIntDef(CodMotivo, 0), 2) +' - Outros Motivos';
+  else
+    Result := IntToStrZero(StrToIntDef(CodMotivo, 0), 2) +' - Outros Motivos';
   end;
 end;
 
 function TACBrBanrisul.CodOcorrenciaToTipo(
-  const CodOcorrencia: String): TACBrTipoOcorrencia;
+  const CodOcorrencia: Integer): TACBrTipoOcorrencia;
 begin
-  case StrToIntDef(CodOcorrencia, 0) of
-    00:
-    begin
-      if (CodOcorrencia = 'AA') then
-        Result :=  toRetornoOutrasOcorrencias                             //---> Devolução, Liquidado Anteriormente (CCB)
-      else if (CodOcorrencia = 'AB') then
-        Result := toRetornoOutrasOcorrencias                              //---> Cobrança a Creditar
-      else if (CodOcorrencia = 'AC') then
-        Result := toRetornoOutrasOcorrencias                              //---> Situação do Título - Cartório
-      else Result := toRetornoOutrasOcorrencias;
+  case ACBrBanco.ACBrBoleto.LayoutRemessa of
+    {Nem estava sendo utilizada esta função anteriormente, estava implementada
+    //function CodOcorrenciaToTipo(const CodOcorrencia: String): TACBrTipoOcorrencia; overload;}
+    c240 : begin
+      case CodOcorrencia of
+        {00:
+        begin
+          if (CodOcorrencia = 'AA') then
+            Result :=  toRetornoOutrasOcorrencias                             //---> Devolução, Liquidado Anteriormente (CCB)
+          else if (CodOcorrencia = 'AB') then
+            Result := toRetornoOutrasOcorrencias                              //---> Cobrança a Creditar
+          else if (CodOcorrencia = 'AC') then
+            Result := toRetornoOutrasOcorrencias                              //---> Situação do Título - Cartório
+          else Result := toRetornoOutrasOcorrencias;
+        end;}
+        02: Result := toRetornoRegistroConfirmado;
+        03: Result := toRetornoRegistroRecusado;
+        //04: Result :=                                                         ---> Reembolso e Transf. (Desconto-Vendor) ou Transf. de Carteira (Garantia)
+        //05: Result :=                                                         ---> Reembolso e Devolução Desconto e Vendor.
+        06: Result := toRetornoLiquidado;
+        07: Result := toRetornoLiquidadoParcialmente;                  //Liquidação Parcial
+        09: Result := toRetornoBaixado;
+        11: Result := toRetornoTituloEmSer;
+        12: Result := toRetornoRecebimentoInstrucaoConcederAbatimento;
+        13: Result := toRetornoRecebimentoInstrucaoCancelarAbatimento;
+        14: Result := toRetornoRecebimentoInstrucaoAlterarVencimento;
+        //15: Result :=                                                         ---> Confirmação de Protesto Imediato por Falência.
+        17: Result := toRetornoLiquidadoAposBaixaouNaoRegistro;
+        19: Result := toRetornoRecebimentoInstrucaoProtestar;
+        20: Result := toRetornoRecebimentoInstrucaoSustarProtesto;
+        23: Result := toRetornoEncaminhadoACartorio;
+        //24: Result :=                                                         ---> Reservado.
+        25: Result := toRetornoBaixaPorProtesto;
+        26: Result := toRetornoInstrucaoRejeitada;
+        //27: Result :=                                                         ---> Confirmação do pedido de alteração de outros dados.
+        28: Result := toRetornoDebitoTarifas;
+        30: Result := toRetornoAlteracaoDadosRejeitados;
+      else
+        Result := toRetornoOutrasOcorrencias;
+      end;
     end;
-    02: Result := toRetornoRegistroConfirmado;
-    03: Result := toRetornoRegistroRecusado;
-//    04: Result :=                                                         ---> Reembolso e Transf. (Desconto-Vendor) ou Transf. de Carteira (Garantia)
-//    05: Result :=                                                         ---> Reembolso e Devolução Desconto e Vendor.
-    06: Result := toRetornoLiquidado;
-    09: Result := toRetornoBaixado;
-    11: Result := toRetornoTituloEmSer;
-    12: Result := toRetornoRecebimentoInstrucaoConcederAbatimento;
-    13: Result := toRetornoRecebimentoInstrucaoCancelarAbatimento;
-    14: Result := toRetornoRecebimentoInstrucaoAlterarVencimento;
-//    15: Result :=                                                         ---> Confirmação de Protesto Imediato por Falência.
-    17: Result := toRetornoLiquidadoAposBaixaouNaoRegistro;
-    19: Result := toRetornoRecebimentoInstrucaoProtestar;
-    20: Result := toRetornoRecebimentoInstrucaoSustarProtesto;
-    23: Result := toRetornoEncaminhadoACartorio;
-//    24: Result :=                                                         ---> Reservado.
-    25: Result := toRetornoBaixaPorProtesto;
-    26: Result := toRetornoInstrucaoRejeitada;
-//    27: Result :=                                                         ---> Confirmação do pedido de alteração de outros dados.
-    28: Result := toRetornoDebitoTarifas;
-    30: Result := toRetornoAlteracaoDadosRejeitados;
-    else Result := toRetornoOutrasOcorrencias;
+    c400 : begin
+      case CodOcorrencia of
+        02: Result := toRetornoRegistroConfirmado;
+        03: Result := toRetornoRegistroRecusado;
+        06: Result := toRetornoLiquidado;
+        07: Result := toRetornoLiquidadoParcialmente;
+        08: Result := toRetornoBaixadoViaArquivo;
+        //09: Result :=                                                         --->Devolucao automatica
+        10: Result := toRetornoBaixadoInstAgencia;
+        //11 : Result                                                           --->Arquivo Levantamento
+        12: Result := toRetornoAbatimentoConcedido;
+        13: Result := toRetornoAbatimentoCancelado;
+        14: Result := toRetornoVencimentoAlterado;
+        15: Result := toRetornoLiquidadoEmCartorio;
+        //16: Result := toretornoaltera //ver
+        //18: Result := toRetornoalteLiquidadoAposBaixaouNaoRegistro;
+        19: Result := toRetornoRecebimentoInstrucaoProtestar;
+        20: Result := toRetornoRecebimentoInstrucaoSustarProtesto;
+        //21: Result :=
+        //22: Result :=
+        23: Result := toRetornoEntradaEmCartorio;
+        //25: Result :=
+        //26: Result := toretorno
+        //28: Result := toRetornoDebitoTarifas;
+        //29: Result := toRetornoOcorrenciasdoSacado;
+        //30: Result := toRetornoAlteracaoDadosRejeitados;
+        //32: Result := toRetornoInstrucaoRejeitada;
+        //33: Result := toRetornoRecebimentoInstrucaoAlterarDados;
+        //34: Result := toRetornoRetiradoDeCartorio;
+        //35: Result :=  
+        //40: Result :=
+      else
+        Result := toRetornoOutrasOcorrencias;
+      end;
+    end;
   end;
 end;
+
+function TACBrBanrisul.TipoOcorrenciaToDescricao(
+  const TipoOcorrencia: TACBrTipoOcorrencia): String;
+var
+ CodOcorrencia: Integer;
+begin
+  CodOcorrencia := StrToIntDef(TipoOCorrenciaToCod(TipoOcorrencia),0);
+  case ACBrBanco.ACBrBoleto.LayoutRemessa of
+    c240: begin
+      case CodOcorrencia of
+        {Conferir foi usado CNAB400}
+        02: Result:='02-Entrada confirmada';
+        03: Result:='03-Entrada rejeitada';
+        04: Result:='04-Baixa de título liquidado por edital';
+        06: Result:='06-Liquidação normal' ;
+        07: Result:='07-Liquidação parcial';
+        08: Result:='08-Baixa por pagamento, liquidação de saldo';
+        09: Result:='09-Devolução automática' ;
+        10: Result:='10-Baixado conforme instruções da agência' ;
+        11: Result:='11-Arquivo levantamento';
+        12: Result:='12-Abatimento concedido' ;
+        13: Result:='13-Abatimento cancelado' ;
+        14: Result:='14-Vencimento alterado' ;
+        15: Result:='15-Liquidação em cartório' ;
+        16: Result:='16-Alteração de dados';
+        18: Result:='18-Alteração de instruções' ;
+        19: Result:='19-Confirmação recebimento instrução de protesto' ;
+        20: Result:='20-Confirmação recebimento instrução sustação de protesto' ;
+        21: Result:='21-Aguardando autorização para protesto por edital';
+        22: Result:='22-Protesto sustado por alteração de vencimento e prazo de cartório';
+        23: Result:='23-Entrada do título em cartório' ;
+        25: Result:='25-Devolução, liquidado anteriormente' ;
+        26: Result:='26-Devolvido pelo cartório, erro de informação' ;
+        30: Result:='30-Cobrança a creditar(liquidação em trânsito)' ;
+        31: Result:='31-Título em trânsito pago em cartório' ;
+        32: Result:='32-Reembolso e tranferência Desconto e Vendou ou carteira em garantia' ;
+        33: Result:='33-Reembolso e devolução Desconto e Vendor';
+        34: Result:='34-Reembolso não efetuado por falta de saldo' ;
+        40: Result:='40-Baixa de títulos protestados' ;
+        41: Result:='41-Despesa de aponte' ;
+        42: Result:='42-Alteração de título' ;
+        43: Result:='43-Relação de títulos' ;
+        44: Result:='44-Manutenção mensal' ;
+        45: Result:='45-Sustação de cartório e envio de título a cartório' ;
+        46: Result:='46-Fornecimento de formulário pré-impresso' ;
+        47: Result:='47-Confirmação de entrada - Pagador DDA' ;
+        68: Result:='68-Acerto de dados do rateio de crédito' ;
+        69: Result:='69-Cancelamento dos dados do rateio' ;
+      else
+        Result := 'Outras ocorrências';
+      end;
+    end;
+    c400: begin
+      case CodOcorrencia of
+        02: Result:='02-Entrada confirmada';
+        03: Result:='03-Entrada rejeitada';
+        04: Result:='04-Baixa de título liquidado por edital';
+        06: Result:='06-Liquidação normal' ;
+        07: Result:='07-Liquidação parcial';
+        08: Result:='08-Baixa por pagamento, liquidação de saldo';
+        09: Result:='09-Devolução automática' ;
+        10: Result:='10-Baixado conforme instruções da agência' ;
+        11: Result:='11-Arquivo levantamento';
+        12: Result:='12-Abatimento concedido' ;
+        13: Result:='13-Abatimento cancelado' ;
+        14: Result:='14-Vencimento alterado' ;
+        15: Result:='15-Liquidação em cartório' ;
+        16: Result:='16-Alteração de dados';
+        18: Result:='18-Alteração de instruções' ;
+        19: Result:='19-Confirmação recebimento instrução de protesto' ;
+        20: Result:='20-Confirmação recebimento instrução sustação de protesto' ;
+        21: Result:='21-Aguardando autorização para protesto por edital';
+        22: Result:='22-Protesto sustado por alteração de vencimento e prazo de cartório';
+        23: Result:='23-Entrada do título em cartório' ;
+        25: Result:='25-Devolução, liquidado anteriormente' ;
+        26: Result:='26-Devolvido pelo cartório, erro de informação' ;
+        30: Result:='30-Cobrança a creditar(liquidação em trânsito)' ;
+        31: Result:='31-Título em trânsito pago em cartório' ;
+        32: Result:='32-Reembolso e tranferência Desconto e Vendou ou carteira em garantia' ;
+        33: Result:='33-Reembolso e devolução Desconto e Vendor';
+        34: Result:='34-Reembolso não efetuado por falta de saldo' ;
+        40: Result:='40-Baixa de títulos protestados' ;
+        41: Result:='41-Despesa de aponte' ;
+        42: Result:='42-Alteração de título' ;
+        43: Result:='43-Relação de títulos' ;
+        44: Result:='44-Manutenção mensal' ;
+        45: Result:='45-Sustação de cartório e envio de título a cartório' ;
+        46: Result:='46-Fornecimento de formulário pré-impresso' ;
+        47: Result:='47-Confirmação de entrada - Pagador DDA' ;
+        68: Result:='68-Acerto de dados do rateio de crédito' ;
+        69: Result:='69-Cancelamento dos dados do rateio' ;
+      else
+        Result := 'Outras ocorrências';
+      end;
+    end;
+  end;
+end;
+ 
+
+function TACBrBanrisul.TipoOCorrenciaToCod(
+  const TipoOcorrencia: TACBrTipoOcorrencia): String;
+begin
+  case ACBrBanco.ACBrBoleto.LayoutRemessa of
+    c240: begin
+      case TipoOcorrencia of
+        {Conferir com manual pois foi baseado no CNAB400}
+        toRetornoRegistroConfirmado:                 Result := '02';
+        toRetornoRegistroRecusado:                   Result := '03';
+        toRetornoLiquidado:                          Result := '06';
+        toRetornoLiquidadoParcialmente:              Result := '07';
+        toRetornoBaixadoInstAgencia:                 Result := '10';
+        toRetornoAbatimentoConcedido:                Result := '12';
+        toRetornoAbatimentoCancelado:                Result := '13';
+        toRetornoVencimentoAlterado:                 Result := '14';
+        toRetornoLiquidadoEmCartorio:                Result := '15';
+        toRetornoRecebimentoInstrucaoProtestar:      Result := '19';
+        toRetornoRecebimentoInstrucaoSustarProtesto: Result := '20';
+        toRetornoEntradaEmCartorio:                  Result := '23';
+      else
+        Result := '00';
+      end;
+    end;
+    c400:begin
+      case TipoOcorrencia of
+        toRetornoRegistroConfirmado:                 Result := '02';
+        toRetornoRegistroRecusado:                   Result := '03';
+        toRetornoLiquidado:                          Result := '06';
+        toRetornoLiquidadoParcialmente:              Result := '07';
+        toRetornoBaixadoInstAgencia:                 Result := '10';
+        toRetornoAbatimentoConcedido:                Result := '12';
+        toRetornoAbatimentoCancelado:                Result := '13';
+        toRetornoVencimentoAlterado:                 Result := '14';
+        toRetornoLiquidadoEmCartorio:                Result := '15';
+        toRetornoRecebimentoInstrucaoProtestar:      Result := '19';
+        toRetornoRecebimentoInstrucaoSustarProtesto: Result := '20';
+        toRetornoEntradaEmCartorio:                  Result := '23';
+      else
+        Result := '00';
+      end;
+    end;
+  end;
+end;
+
 
 end.
 

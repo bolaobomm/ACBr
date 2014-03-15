@@ -78,7 +78,8 @@ type
     cobBancoDoNordeste,
     cobBRB,
     cobBicBanco,
-    cobBradescoSICOOB
+    cobBradescoSICOOB,
+    cobBancoSafra
     );
 
   TACBrTitulo = class;
@@ -127,10 +128,17 @@ type
     toRemessaCedenteSolicitaDispensaJuros,
     toRemessaOutrasAlteracoes,
     toRemessaAlterarModalidade,
+    toRemessaAlterarExclusivoCliente,
+    toRemessaNaoCobrarJurosMora,
+    toRemessaCobrarJurosMora,
+    toRemessaAlterarValorTitulo,
 
     {Ocorrências para arquivo retorno}
     toRetornoRegistroConfirmado,
     toRetornoTransferenciaCarteira,
+    toRetornoTransferenciaCarteiraEntrada,
+    toRetornoTransferenciaCarteiraBaixa,
+    toRetornoTransferenciaCedente,
     toRetornoRegistroRecusado,
     toRetornoComandoRecusado,
     toRetornoLiquidado,
@@ -174,6 +182,8 @@ type
     toRetornoRecebimentoInstrucaoAlterarNomeSacado,
     toRetornoRecebimentoInstrucaoAlterarEnderecoSacado,
     toRetornoRecebimentoInstrucaoAlterarTipoCobranca,
+    toRetornoRecebimentoInstrucaoAlterarValorTitulo,
+    toRetornoRecebimentoInstrucaoAlterarJuros,
     toRetornoRecebimentoInstrucaoDispensarJuros,
     toRetornoAbatimentoConcedido,
     toRetornoAbatimentoCancelado,
@@ -185,6 +195,10 @@ type
     toRetornoAlteracaoDadosBaixa,
     toRetornoAlteracaoDadosRejeitados,
     toRetornoAlteracaoOutrosDadosRejeitada,
+    toRetornoAlteracaoUsoCedente,
+    toRetornoAlteracaoDataEmissao,
+    toRetornoAlteracaoEspecie,
+    toRetornoAlteracaoSeuNumero,
     toRetornoProtestado,
     toRetornoProtestoSustado,
     toRetornoProtestoOuSustacaoEstornado,
@@ -192,6 +206,8 @@ type
     toRetornoInstrucaoRejeitada,
     toRetornoInstrucaoCancelada,
     toRetornoDebitoEmConta,
+    toRetornoDebitoDiretoAutorizado,
+    toRetornoDebitoDiretoNaoAutorizado,
     toRetornoNomeSacadoAlterado,
     toRetornoEnderecoSacadoAlterado,
     toRetornoEncaminhadoACartorio,
@@ -213,6 +229,7 @@ type
     toRetornoEntradaConfirmadaRateioCredito,
     toRetornoEntradaRegistradaAguardandoAvaliacao,
     toRetornoEntradaRejeitadaCarne,
+    toRetornoEntradaBorderoManual,
     toRetornoDesagendamentoDebitoAutomatico,
     toRetornoEstornoPagamento,
     toRetornoSustadoJudicial,
@@ -248,7 +265,9 @@ type
     toRetornoChequeDevolvido,
     toRetornoChequeCompensado,
     toRetornoConfirmacaoEntradaCobrancaSimples,
-    toRetornoAlegacaoDoSacado
+    toRetornoAlegacaoDoSacado,
+    toRetornoDespesaCartorio,
+    toRetornoEqualizacaoVendor
   );
 
   {TACBrOcorrencia}
@@ -502,6 +521,7 @@ type
   private
     fInstrucao1        : String;
     fInstrucao2        : String;
+    fInstrucao3        : String;
     fLocalPagamento    : String;
     fOcorrenciaOriginal: TACBrOcorrencia;
     fParcela           : Integer;
@@ -527,7 +547,7 @@ type
     fSacado            : TACBrSacado;
 
     fMotivoRejeicaoComando          : TStrings;
-    fDescricaoMotivoRejeicaoComando : TStrings; 
+    fDescricaoMotivoRejeicaoComando : TStrings;
 
     fDataOcorrencia       : TDateTime;
     fDataCredito          : TDateTime;
@@ -575,6 +595,7 @@ type
      property Mensagem          : TStrings    read fMensagem          write fMensagem;
      property Instrucao1        : String      read fInstrucao1        write fInstrucao1;
      property Instrucao2        : String      read fInstrucao2        write fInstrucao2;
+     property Instrucao3        : String      read fInstrucao3        write fInstrucao3;
      property Sacado            : TACBrSacado read fSacado            write fSacado;
      property Parcela           :Integer      read fParcela           write SetParcela default 1;
      property TotalParcelas     :Integer      read fTotalParcelas     write SetTotalParcelas default 1;
@@ -786,7 +807,7 @@ implementation
 Uses ACBrUtil, ACBrBancoBradesco, ACBrBancoBrasil, ACBrBanestes, ACBrBancoItau, ACBrBancoSicredi,
      ACBrBancoMercantil, ACBrCaixaEconomica, ACBrBancoBanrisul, ACBrBancoSantander,
      ACBrBancoob, ACBrCaixaEconomicaSICOB ,ACBrBancoHSBC,ACBrBancoNordeste , ACBrBancoBRB, ACBrBicBanco,
-     ACBrBancoBradescoSICOOB, Forms,
+     ACBrBancoBradescoSICOOB, ACBrBancoSafra, Forms,
      {$IFDEF COMPILER6_UP} StrUtils {$ELSE} ACBrD5 {$ENDIF}, Math, dateutils;
 
 {$IFNDEF FPC}
@@ -1513,6 +1534,7 @@ begin
      cobHSBC           : fBancoClass := TACBrBancoHSBC.create(self);           {399}
      cobBicBanco       : fBancoClass := TACBrBicBanco.create(self);            {237}
      cobBradescoSICOOB : fBancoClass := TAcbrBancoBradescoSICOOB.create(self); {237}
+     cobBancoSafra     : fBancoClass := TACBrBancoSafra.create(Self);          {422}
    else
      fBancoClass := TACBrBancoClass.create(Self);
    end;

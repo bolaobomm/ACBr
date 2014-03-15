@@ -53,6 +53,7 @@ contains
   ACBrBanestes in '..\..\Fontes\ACBrBoleto\ACBrBanestes.pas',
   ACBrBancoNordeste in '..\..\Fontes\ACBrBoleto\ACBrBancoNordeste.pas',
   ACBrBancoBRB in '..\..\Fontes\ACBrBoleto\ACBrBancoBRB.pas',
-  ACBrBicBanco in '..\..\Fontes\ACBrBoleto\ACBrBicBanco.pas';
+  ACBrBicBanco in '..\..\Fontes\ACBrBoleto\ACBrBicBanco.pas',
+  ACBrBancoSafra in '..\..\Fontes\ACBrBoleto\ACBrBancoSafra.pas';
 
 end.
