@@ -813,7 +813,7 @@ TACBrECF = class( TACBrComponent )
     procedure DAV_Abrir(const AEmissao: TDateTime;
       const ADescrDocumento, ANumero, ASituacao, AVendedor, AObservacao,
       ACNPJCPF, ANomeCliente, AEndereco: String; const AIndice: Integer = 0);
-    procedure DAV_Fechar(const AObservacao: String);
+    procedure DAV_Fechar(const AObservacao: String; AVlrDesconto : Double = 0; AVlrAcrescimo: Double = 0);
     procedure DAV_RegistrarItem(const ACodigo, ADescricao, AUnid: String;
       const AQuantidade, AVlrUnitario, AVlrDesconto, AVlrAcrescimo: Double;
       const ACancelado: Boolean);
@@ -6581,7 +6581,7 @@ begin
   end;
 end;
 
-procedure TACBrECF.DAV_Fechar(const AObservacao: String);
+procedure TACBrECF.DAV_Fechar(const AObservacao: String; AVlrDesconto : Double; AVlrAcrescimo: Double);
 var
   DescrItem: String;
   TextoRel: TStringList;
@@ -6603,8 +6603,13 @@ begin
       DescrItem := padL(IntToStr(FDAVItemCount) + ' item', 12, ' ');
 
     TextoRel.Add('</linha_simples>');
-    TextoRel.Add(DescrItem + padR('Valor Total: ' + Format('%11.2f', [FDAVTotal]), 36, ' ')
-    );
+    TextoRel.Add(DescrItem + padR('Valor Total: ' + Format('%11.2f', [FDAVTotal]), 36, ' '));
+
+    if AVlrDesconto > 0 then
+     TextoRel.Add(padR('Total Desc.: ' + Format('%11.2f', [AVlrDesconto]), 48, ' '));
+
+    if AVlrAcrescimo > 0 then
+     TextoRel.Add(padR('Total Acre.: ' + Format('%11.2f', [AVlrAcrescimo]), 48, ' '));
 
     TextoRel.Add('');
     TextoRel.Add('');
