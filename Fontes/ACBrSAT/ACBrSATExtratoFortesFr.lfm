@@ -145,7 +145,6 @@ object ACBrSATExtratoFortesFr: TACBrSATExtratoFortesFr
         CheckSumMethod = cmNone
         Margins.LeftMargin = 1
         Margins.RightMargin = 1
-        Ratio = 1.6
         RealBounds.Left = 0
         RealBounds.Top = 0
         RealBounds.Width = 0
@@ -188,7 +187,6 @@ object ACBrSATExtratoFortesFr: TACBrSATExtratoFortesFr
         CheckSumMethod = cmNone
         Margins.LeftMargin = 1
         Margins.RightMargin = 1
-        Ratio = 1.6
         RealBounds.Left = 0
         RealBounds.Top = 0
         RealBounds.Width = 0
