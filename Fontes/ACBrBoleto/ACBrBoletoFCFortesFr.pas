@@ -3,7 +3,7 @@
 {  Biblioteca multiplataforma de componentes Delphi para interação com equipa- }
 { mentos de Automação Comercial utilizados no Brasil                           }
 {                                                                              }
-{ Direitos Autorais Reservados (c) 2009   http://www.produsys.com.br/          }
+{ Direitos Autorais Reservados (c) 2014   http://www.produsys.com.br/          }
 {                                                                              }
 { Colaboradores nesse arquivo:  Juliana Rodrigues Prado, Daniel Simoes Almeida }
 {                                                                              }
@@ -411,7 +411,6 @@ type
     procedure RLBand2BeforePrint(Sender: TObject; var PrintIt: boolean);
     procedure RLBand3BeforePrint ( Sender: TObject; var PrintIt: boolean ) ;
     procedure RLBand4BeforePrint(Sender: TObject; var PrintIt: Boolean);
-    procedure RLLabel82AfterPrint(Sender: TObject);
   private
      MensagemPadrao: TStringList;
      fBoletoFC: TACBrBoletoFCFortes;
@@ -527,8 +526,8 @@ end;
 { TACBrBoletoFCFortesFr }
 
 procedure TACBrBoletoFCFortesFr.FormCreate(Sender: TObject);
-var
-  I : Integer ;
+//var
+//  I : Integer ;
 begin
    fIndice   := 0 ;
    fBoletoFC := TACBrBoletoFCFortes(Owner) ;  // Link para o Pai
@@ -809,11 +808,6 @@ begin
       txtValorDocumento4.Caption      := FormatFloat('###,###,##0.00',Titulo.ValorDocumento);
       txtNomeSacado4.Caption          := Titulo.Sacado.NomeSacado;
    end;
-end;
-
-procedure TACBrBoletoFCFortesFr.RLLabel82AfterPrint(Sender: TObject);
-begin
-
 end;
 
 {$ifdef FPC}
