@@ -294,7 +294,8 @@ begin
      (*********)'<tpAmb>'+TpAmbToStr(nfe.procNFe.tpAmb)+'</tpAmb>'+
      (*********)'<verAplic>'+nfe.procNFe.verAplic+'</verAplic>'+
      (*********)'<chNFe>'+nfe.procNFe.chNFe+'</chNFe>'+
-     (*********)'<dhRecbto>'+FormatDateTime('yyyy-mm-dd"T"hh:nn:ss',nfe.procNFe.dhRecbto)+'</dhRecbto>'+
+     (*********)'<dhRecbto>'+FormatDateTime('yyyy-mm-dd"T"hh:nn:ss',nfe.procNFe.dhRecbto)+
+                             IIf(FNFe.infNFe.Versao >= 3.10, GetUTC(CodigoParaUF(FNFe.Ide.cUF),nfe.procNFe.dhRecbto),'')+'</dhRecbto>'+
      (*********)'<nProt>'+nfe.procNFe.nProt+'</nProt>'+
      (*********)'<digVal>'+nfe.procNFe.digVal+'</digVal>'+
      (*********)'<cStat>'+IntToStr(nfe.procNFe.cStat)+'</cStat>'+
@@ -400,7 +401,7 @@ begin
   if (nfe.Ide.dhCont > 0) or (nfe.Ide.xJust <> '') then
    begin
     if nfe.infNFe.Versao >= 3 then
-       Gerador.wCampo(tcStr, 'B28', 'dhCont ', 19, 19, 1, DateTimeTodh(nfe.ide.dhCont) + GetUTC(CodigoParaUF(nfe.ide.cUF), nfe.ide.dhCont), DSC_DHCONT)
+       Gerador.wCampo(tcStr, 'B28', 'dhCont ', 25, 25, 1, DateTimeTodh(nfe.ide.dhCont) + GetUTC(CodigoParaUF(nfe.ide.cUF), nfe.ide.dhCont), DSC_DHCONT)
     else
        Gerador.wCampo(tcStr, 'B28', 'dhCont ', 19, 19, 1, DateTimeTodh(nfe.Ide.dhCont), DSC_DHCONT);
 
