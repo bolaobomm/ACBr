@@ -5238,7 +5238,7 @@ const
     Mostrar: AnsiString;
   begin
     Largura := IntToStrZero( max( min( ConfigBarras.LarguraLinha, 5), 2) , 1);
-    Altura  := IntToStrZero( max( min( ConfigBarras.Altura, 200), 50), 2);
+    Altura  := IntToStrZero( max( min( ConfigBarras.Altura, 200), 2), 2);
     Mostrar := IfThen(ConfigBarras.MostrarCodigo, '01', '00');
 
     Result := ACodigo + Largura + Altura + Mostrar;
