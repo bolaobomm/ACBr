@@ -68,6 +68,8 @@
 
 unit pcnAuxiliar;
 
+{$H+}
+
 interface uses
 
   SysUtils, Classes,

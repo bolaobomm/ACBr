@@ -1737,7 +1737,7 @@ begin
 
   dsigCtx^.signKey := xmlSecCryptoAppKeyLoadMemory(Cert.Memory, Cert.Size, xmlSecKeyDataFormatPem, '', nil, nil);
   if (dsigCtx^.signKey = nil) then
-    raise Exception.Create('Error: failed to load public pem key from "' + Axml + '"');
+    raise Exception.Create('Error: failed to load public pem key from "' + Axml + '"');}
 
   { Verify signature }
  { if (xmlSecDSigCtxVerify(dsigCtx, node) < 0) then
