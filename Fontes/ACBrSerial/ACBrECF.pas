@@ -567,7 +567,6 @@ TACBrECF = class( TACBrComponent )
 
     { Procedimentos de Cupom Fiscal }
     property Consumidor : TACBrECFConsumidor read GetConsumidorClass ;
-    function GetRodape: String;
     { Grava dados do Consumidor para ser usado na Abertura ou Fechamento do Cupom }
     Procedure IdentificaConsumidor( CPF_CNPJ : String; Nome : String = '';
        Endereco : String = '') ;
@@ -818,6 +817,8 @@ TACBrECF = class( TACBrComponent )
       const AQuantidade, AVlrUnitario, AVlrDesconto, AVlrAcrescimo: Double;
       const ACancelado: Boolean);
 
+    function GetRodapePaf: String;
+
   published
      property About : String read GetAbout write SetAbout stored False ;
      property Modelo : TACBrECFModelo read fsModelo write SetModelo
@@ -1058,7 +1059,7 @@ function NomeArqCAT52(CAT52ID, NumSerie: String; DtMov: TDatetime): String;
         Result := Chr( 55 + Min(AInt,35) ) ; // 55+10=chr(65)=>'A' ; 55+35 => Máximo Z
   end ;
 Var
-  DtStr, DirECFMes : String ;
+  DtStr : String ;
 begin
   DtStr  := FormatDateTime('ddmmyy', DtMov) ;
   Result := padL(CAT52ID,3,'1')+
@@ -2968,7 +2969,8 @@ begin
   Observacao := StringReplace(Observacao,'|',#10,[rfReplaceAll]) ;
 
   { montar o rodape quando as informações de rodapé forem passadas }
-  RodapePafECF := Trim(GetRodape);
+  RodapePafECF := Trim(GetRodapePaf);
+
   if RodapePafECF <> EmptyStr then
     Observacao := RodapePafECF + #10 + Observacao;
 
@@ -3012,7 +3014,7 @@ begin
   InfoRodapeCupom.Clear;
 end;
 
-function TACBrECF.GetRodape: String;
+function TACBrECF.GetRodapePaf: String;
 begin
   Result := EmptyStr;
 
