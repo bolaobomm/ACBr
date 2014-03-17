@@ -459,9 +459,9 @@ begin
          continue;
 
       try
-         { espera ACK chegar na Porta por 7s }
+         { espera ACK chegar na Porta por TimeOut seg }
          try
-            ACK_ECF := fpDevice.Serial.RecvByte(TimeOut * 1000 ) ;
+            ACK_ECF := fpDevice.Serial.RecvByte( TimeOut * 1000 ) ;
          except
          end ;
 
@@ -482,7 +482,7 @@ begin
             fpDevice.Serial.Purge ;
 
             Inc( FalhasTX ) ;
-            GravaLog('                RX <- ACK = '+IntToStr(ACK_ECF)+' Falha: '+IntToStr(FalhasTX) ) ;
+            GravaLog('   '+FormatDateTime('hh:nn:ss:zzz',now)+' RX <- ACK = '+IntToStr(ACK_ECF)+' Falha: '+IntToStr(FalhasTX) ) ;
 
             if FalhasTX < CFALHAS then
                Sleep(100)

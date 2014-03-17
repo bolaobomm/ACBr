@@ -941,9 +941,9 @@ begin
               continue ;
 
            try
-              { espera ACK chegar na Porta por 4s }
+              { espera ACK chegar na Porta por TimeOut segundos }
               try
-                 fsACK := fpDevice.LeByte( 4000 ) ;
+                 fsACK := fpDevice.LeByte( TimeOut * 1000 ) ;
               except
               end ;
 
@@ -954,7 +954,7 @@ begin
                  fpDevice.Serial.Purge ;
 
                  Inc( FalhasACK ) ;
-                 GravaLog('                RX <- ACK = '+IntToStr(ACK)+' Falha: '+IntToStr(FalhasACK) ) ;
+                 GravaLog('   '+FormatDateTime('hh:nn:ss:zzz',now)+' RX <- ACK = '+IntToStr(ACK)+' Falha: '+IntToStr(FalhasACK) ) ;
 
                  if FalhasACK < 3 then
                     Sleep(100)

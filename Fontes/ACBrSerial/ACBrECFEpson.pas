@@ -1227,9 +1227,9 @@ begin
               fpDevice.Serial.RTS := false ;
 
            try
-              { espera ACK chegar na Porta por 1,5s  }
+              { espera ACK chegar na Porta por TimeOut segundos  }
               try
-                 fsByteACK := fpDevice.Serial.RecvByte( 1500 ) ;
+                 fsByteACK := fpDevice.Serial.RecvByte( TimeOut * 1000 ) ;
               except
               end ;
 
@@ -1249,7 +1249,7 @@ begin
                begin
                  fpDevice.Serial.Purge ;
 
-                 GravaLog('                RX <- ACK = '+IntToStr(fsByteACK) ) ;
+                 GravaLog('   '+FormatDateTime('hh:nn:ss:zzz',now)+' RX <- ACK = '+IntToStr(fsByteACK) ) ;
 
                  if not DoOnMsgRetentar( E.Message +sLineBreak+sLineBreak+
                     'Se o problema persistir, verifique os cabos, ou'+sLineBreak+
