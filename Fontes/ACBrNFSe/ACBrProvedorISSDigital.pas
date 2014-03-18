@@ -117,6 +117,11 @@ begin
             ConfigURL.HomNomeCidade := '_santaluzia';
             ConfigURL.ProNomeCidade := '_santaluzia';
            end;
+  3300704: begin
+            URL := 'http://186.232.160.26/nfe/snissdigitalsvc';
+            ConfigURL.HomNomeCidade := ''; // 'cabo frio/rj';
+            ConfigURL.ProNomeCidade := ''; // 'cabo frio/rj';
+           end;
  end;
 
  ConfigURL.HomRecepcaoLoteRPS    := URL + ConfigURL.HomNomeCidade + '.dll/soap/IuWebServiceIssDigital';
@@ -234,7 +239,7 @@ begin
 //              '</nfseCabecMsg>' +
               '<Value xsi:type="xsd:string">' +
 //               '<![CDATA[' + DadosMsg + ']]>' +
-                 DadosMsg + 
+                 DadosMsg +
               '</Value>' +
              '</NS1:RecepcionarLoteRps>' +
             '</s:Body>' +

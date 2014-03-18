@@ -882,7 +882,8 @@ begin
          : Provedor := 'IssCuritiba';
 
   3144805, // Nova Lima
-  3157807  // Santa Luzia/MG
+  3157807, // Santa Luzia/MG
+  3300704  // Cabo Frio/RJ
          : Provedor := 'ISSDigital';
 
   1501402, // Belem/PA
