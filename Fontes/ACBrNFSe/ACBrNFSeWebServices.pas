@@ -4244,7 +4244,12 @@ begin
   Prefixo4 := FConfiguracoes.WebServices.Prefixo4;
 
   case FProvedor of
-   proBetha: Prefixo3 := '';
+   proBetha:    Prefixo3 := '';
+   // Incluido por Italo em 18/03/2014
+   proFiorilli: begin
+                 Prefixo3 := 'ns2:';
+                 Prefixo4 := 'ns2:';
+                end;
    //proFreire: Prefixo3 := 'ns1';
   end;
 
