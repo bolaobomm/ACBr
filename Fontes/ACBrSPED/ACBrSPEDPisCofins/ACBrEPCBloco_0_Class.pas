@@ -379,6 +379,9 @@ begin
          indNatPJSocEmpresariaGeral   : strIND_NAT_PJ := '00'; //0 - Sociedade empresária geral
          indNatPJSocCooperativa       : strIND_NAT_PJ := '01'; //1 - Sociedade Cooperativa
          indNatPJEntExclusivaFolhaSal : strIND_NAT_PJ := '02'; //2 - Entidade sujeita ao PIS/Pasep exclusivamente com base  na folha de salários
+         indNatPJSocEmpresariaGeralSCP: strIND_NAT_PJ := '03'; //3 - Sociedade empresária geral SCP
+         indNatPJSocCooperativaSCP    : strIND_NAT_PJ := '04'; //4 - Sociedade Cooperativa SCP
+         indNatPJSocContaParticante   : strIND_NAT_PJ := '05'; //5 - SCP
        end;
        case IND_ATIV of
          indAtivIndustrial: strIND_ATIV := '0';

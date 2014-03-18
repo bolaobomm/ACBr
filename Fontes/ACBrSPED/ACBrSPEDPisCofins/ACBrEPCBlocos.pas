@@ -89,9 +89,12 @@ type
 
   // Indicador da natureza da pessoa juridica
   TACBrIndNatPJ = (
-                   indNatPJSocEmpresariaGeral, // 0 - Sociedade empresária geral
-                   indNatPJSocCooperativa,     // 1 - Sociedade Cooperativa
-                   indNatPJEntExclusivaFolhaSal// 2 - Entidade sujeita ao PIS/Pasep exclusivamente com base  na folha de salários
+                   indNatPJSocEmpresariaGeral,    // 0 - Sociedade empresária geral
+                   indNatPJSocCooperativa,        // 1 - Sociedade Cooperativa
+                   indNatPJEntExclusivaFolhaSal,  // 2 - Entidade sujeita ao PIS/Pasep exclusivamente com base  na folha de salários
+                   indNatPJSocEmpresariaGeralSCP, // 3 - Geral participante de SCP
+                   indNatPJSocCooperativaSCP,     // 4 - Sociedade Cooperativa Participante SCP
+                   indNatPJSocContaParticante     // 5 - Sociedade em Conta de Particpante
                  );
   TACBrIndicadorNaturezaPJ = TACBrIndNatPJ;
 
