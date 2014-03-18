@@ -244,9 +244,15 @@ begin
 //      begin
         i := 0;
         ListaNfse.FCompNfse.Add;
-        ListaNfse.FCompNfse[i].FNfse.NumeroLote    := Leitor.rCampo(tcStr, 'NumeroLote');
+        ListaNfse.FCompNfse[i].FNfse.NumeroLote := Leitor.rCampo(tcStr, 'NumeroLote');
+        if trim(ListaNfse.FCompNfse[i].FNfse.NumeroLote) = '' then
+          ListaNfse.FCompNfse[i].FNfse.NumeroLote := '0';
+
         ListaNfse.FCompNfse[i].FNfse.dhRecebimento := Leitor.rCampo(tcDatHor, 'DataRecebimento');
+
         ListaNfse.FCompNfse[i].FNfse.Protocolo     := Leitor.rCampo(tcStr, 'Protocolo');
+        if trim(ListaNfse.FCompNfse[i].FNfse.Protocolo) = '' then
+          ListaNfse.FCompNfse[i].FNfse.Protocolo := '0';
 //      end;
 
       // Ler a Lista de NFSe
@@ -278,8 +284,11 @@ begin
               ListaNfse.FCompNfse[i].FNFSe.Numero            := Leitor.rCampo(tcStr, 'Numero');
               ListaNfse.FCompNfse[i].FNFSe.CodigoVerificacao := Leitor.rCampo(tcStr, 'CodigoVerificacao');
               if FProvedor in [proFreire, proVitoria] 
-                then ListaNfse.FCompNfse[i].FNFSe.DataEmissao       := Leitor.rCampo(tcDat, 'DataEmissao')
-                else ListaNfse.FCompNfse[i].FNFSe.DataEmissao       := Leitor.rCampo(tcDatHor, 'DataEmissao');
+                then ListaNfse.FCompNfse[i].FNFSe.DataEmissao := Leitor.rCampo(tcDat, 'DataEmissao')
+                else ListaNfse.FCompNfse[i].FNFSe.DataEmissao := Leitor.rCampo(tcDatHor, 'DataEmissao');
+
+              if ListaNfse.FCompNfse[i].FNfse.dhRecebimento = 0 then
+                ListaNfse.FCompNfse[i].FNfse.dhRecebimento := ListaNfse.FCompNfse[i].FNFSe.DataEmissao;
 
               ListaNfse.FCompNfse[i].FNFSe.NaturezaOperacao         := StrToNaturezaOperacao(ok, Leitor.rCampo(tcStr, 'NaturezaOperacao'));
               ListaNfse.FCompNfse[i].FNFSe.RegimeEspecialTributacao := StrToRegimeEspecialTributacao(ok, Leitor.rCampo(tcStr, 'RegimeEspecialTributacao'));
