@@ -116,8 +116,6 @@ var
    MudouDados: boolean;
    NumeroBanco: LongInt;
    IndiceACBr: LongInt;
-   teste: LongInt;
-   teste2: TACBrCaracTitulo;
 begin
   MudouDados := False;
   IniBoletos := TMemIniFile.Create('boletos.ini');

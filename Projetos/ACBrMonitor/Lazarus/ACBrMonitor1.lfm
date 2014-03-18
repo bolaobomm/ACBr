@@ -6207,6 +6207,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
       'Ouvidoria: 0800 725 7474 (reclamações não solucionadas e denúncias)'
       '     caixa.gov.br      '
     )
+    Cedente.TipoDocumento = Tradicional
     Cedente.TipoInscricao = pJuridica
     NumeroArquivo = 0
     DataArquivo = 0
@@ -6224,6 +6225,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
   end
   object ACBrCEP1: TACBrCEP
     ProxyPort = '8080'
+    PesquisarIBGE = True
     left = 250
     top = 24
   end
