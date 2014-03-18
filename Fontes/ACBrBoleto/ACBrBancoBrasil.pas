@@ -1424,7 +1424,7 @@ var
   ContLinha, CodOcorrencia, CodMotivo, MotivoLinha : Integer;
   rAgencia, rDigitoAgencia, rConta :String;
   rDigitoConta, rCodigoCedente     :String;
-  Linha, rCedente, rCNPJCPF        :String;
+  Linha, rCedente                  :String;
 begin
    fpTamanhoMaximoNossoNum := 20;
    ContLinha := 0;

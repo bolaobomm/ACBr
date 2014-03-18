@@ -49,7 +49,7 @@ uses
   {$IFDEF FPC}
     LResources, StdCtrls,
   {$ENDIF}
-  ACBrBoleto, ACBrBarCode ;
+  ACBrBoleto ;
 
 const
   CACBrBoletoFCFortes_Versao = '0.0.23a' ;

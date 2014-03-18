@@ -519,7 +519,7 @@ end;
 
 function TACBrCaixaEconomicaSICOB.GerarRegistroHeader240(NumeroRemessa : Integer): String;
 var
-  ATipoInscricao, ACodConvenio: String;
+  ATipoInscricao : String;
   ACodCedenteDV, aCodCedente, ACodCedenteDVAg: String;
 begin
    with ACBrBanco.ACBrBoleto.Cedente do
@@ -531,7 +531,7 @@ begin
 
       ACodCedenteDVAg := CalcularDVCedente(ACBrBanco.ACBrBoleto.ListadeBoletos[0],True);
       ACodCedenteDV   := CalcularDVCedente(ACBrBanco.ACBrBoleto.ListadeBoletos[0]);
-      ACodConvenio    := CodigoCedente + ACodCedenteDVAg;
+      //ACodConvenio    := CodigoCedente + ACodCedenteDVAg;
 
       aCodCedente:= RightStr(CodigoCedente,8);
 
@@ -1267,7 +1267,7 @@ var
   ContLinha, CodOcorrencia, CodMotivo, MotivoLinha : Integer;
   rAgencia, rDigitoAgencia, rConta :String;
   rDigitoConta, rCodigoCedente     :String;
-  Linha, rCedente, rCNPJCPF        :String;
+  Linha, rCedente                  :String;
 begin
    fpTamanhoMaximoNossoNum := 20;
    ContLinha := 0;

@@ -1339,8 +1339,6 @@ begin
 end;
 
 Procedure TACBrBoleto.AdicionarMensagensPadroes( Titulo : TACBrTitulo; AStringList: TStrings );
-var
-  wMsgProtesto: String;
 begin
    if not ImprimirMensagemPadrao  then
       exit;

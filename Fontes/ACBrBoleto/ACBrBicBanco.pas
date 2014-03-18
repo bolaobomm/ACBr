@@ -172,7 +172,7 @@ procedure TACBrBicBanco.GerarRegistroTransacao400(ACBrTitulo :TACBrTitulo; aReme
 var
   DigitoNossoNumero, Ocorrencia, aEspecie, aAgencia, aDiasProtesto :String;
   Protesto, TipoSacado, TipoSacador, TipoSacadorAvalista, MensagemCedente, aConta     :String;
-  aCarteira, wLinha, TipoEmpresa: String;
+  aCarteira, wLinha : String;
   TipoBoleto :Char;
 begin
 

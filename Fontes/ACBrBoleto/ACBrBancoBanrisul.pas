@@ -38,7 +38,7 @@ unit ACBrBancoBanrisul;
 interface
 
 uses
-  Classes, SysUtils, ACBrBoleto, Dialogs,
+  Classes, SysUtils, ACBrBoleto,
 {$IFDEF COMPILER6_UP}dateutils{$ELSE}ACBrD5{$ENDIF};
 
 type
@@ -785,7 +785,7 @@ end;
 procedure TACBrBanrisul.LerRetorno400(ARetorno: TStringList);
 var Titulo: TACBrTitulo;
     Linha: String;
-    CodOcorrencia, IdxMotivo, MotivoLinha, codMotivo,  ContLinha: Integer;
+    CodOcorrencia, IdxMotivo, codMotivo,  ContLinha: Integer;
     rCedente,rConvenio: String;
     rAgencia,rAgenciaDigito: String;
     rConta,rContaDigito: String;
@@ -798,11 +798,12 @@ begin
   fpTamanhoMaximoNossoNum:=10;
 
   rCedente       := trim(copy(ARetorno[0], 47, 30));   //Nome da Empresa
-  //rConvenio      := ''; //Não possui essa info
+  rConvenio      := ''; //Não possui essa info
   rAgencia       := Copy(ARetorno.Strings[0], 27, 4);
-  //rAgenciaDigito := ''; //Não possui essa info
+  rAgenciaDigito := ''; //Não possui essa info
   rConta         := Copy(ARetorno.Strings[0], 31, 9);
-  //rContaDigito   := ''; //Não possui essa info
+  rContaDigito   := ''; //Não possui essa info
+  codMotivo      := 0;
 
   ACBrBanco.ACBrBoleto.NumeroArquivo := StrToIntDef(Copy(ARetorno.Strings[0], 386, 9), 0);
   ACBrBanco.ACBrBoleto.DataArquivo   := StringToDateTimeDef(Copy(ARetorno.Strings[0], 95, 2) +'/'+
