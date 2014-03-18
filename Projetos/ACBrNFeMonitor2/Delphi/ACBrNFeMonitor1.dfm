@@ -26,14 +26,14 @@ object frmAcbrNfeMonitor: TfrmAcbrNfeMonitor
   object pPrincipal: TPanel
     Left = 0
     Top = 0
-    Width = 579
-    Height = 227
+    Width = 571
+    Height = 223
     Align = alClient
     TabOrder = 0
     object Splitter1: TSplitter
       Left = 1
       Top = 89
-      Width = 577
+      Width = 569
       Height = 3
       Cursor = crVSplit
       Align = alTop
@@ -41,14 +41,14 @@ object frmAcbrNfeMonitor: TfrmAcbrNfeMonitor
     object pCmd: TPanel
       Left = 1
       Top = 1
-      Width = 577
+      Width = 569
       Height = 88
       Align = alTop
       TabOrder = 0
       object pTopCmd: TPanel
         Left = 1
         Top = 1
-        Width = 575
+        Width = 567
         Height = 17
         Align = alTop
         Caption = 'Comandos a Processar'
@@ -58,7 +58,7 @@ object frmAcbrNfeMonitor: TfrmAcbrNfeMonitor
       object sbProcessando: TStatusBar
         Left = 1
         Top = 68
-        Width = 575
+        Width = 567
         Height = 19
         Panels = <
           item
@@ -72,7 +72,7 @@ object frmAcbrNfeMonitor: TfrmAcbrNfeMonitor
       object mCmd: TMemo
         Left = 1
         Top = 18
-        Width = 575
+        Width = 567
         Height = 50
         Align = alClient
         Lines.Strings = (
@@ -84,14 +84,14 @@ object frmAcbrNfeMonitor: TfrmAcbrNfeMonitor
     object pResp: TPanel
       Left = 1
       Top = 92
-      Width = 577
-      Height = 134
+      Width = 569
+      Height = 130
       Align = alClient
       TabOrder = 1
       object pTodResp: TPanel
         Left = 1
         Top = 1
-        Width = 575
+        Width = 567
         Height = 17
         Align = alTop
         Caption = 'Respostas Enviadas'
@@ -101,8 +101,8 @@ object frmAcbrNfeMonitor: TfrmAcbrNfeMonitor
       object mResp: TMemo
         Left = 1
         Top = 18
-        Width = 575
-        Height = 115
+        Width = 567
+        Height = 111
         Align = alClient
         Lines.Strings = (
           '')
@@ -116,18 +116,18 @@ object frmAcbrNfeMonitor: TfrmAcbrNfeMonitor
   end
   object pBotoes: TPanel
     Left = 0
-    Top = 490
-    Width = 579
+    Top = 486
+    Width = 571
     Height = 40
     Align = alBottom
     TabOrder = 1
     DesignSize = (
-      579
+      571
       40)
     object Image1: TImage
       Left = 1
       Top = 1
-      Width = 577
+      Width = 569
       Height = 38
       Cursor = crHandPoint
       Align = alClient
@@ -4109,8 +4109,8 @@ object frmAcbrNfeMonitor: TfrmAcbrNfeMonitor
   end
   object StatusBar1: TStatusBar
     Left = 0
-    Top = 530
-    Width = 579
+    Top = 526
+    Width = 571
     Height = 19
     Panels = <
       item
@@ -4122,8 +4122,8 @@ object frmAcbrNfeMonitor: TfrmAcbrNfeMonitor
   end
   object pConfig: TPanel
     Left = 0
-    Top = 227
-    Width = 579
+    Top = 223
+    Width = 571
     Height = 263
     Align = alBottom
     TabOrder = 3
@@ -4131,9 +4131,9 @@ object frmAcbrNfeMonitor: TfrmAcbrNfeMonitor
     object PageControl1: TPageControl
       Left = 1
       Top = 1
-      Width = 577
+      Width = 569
       Height = 261
-      ActivePage = WebService
+      ActivePage = Testes
       Align = alClient
       Style = tsFlatButtons
       TabOrder = 0
@@ -4482,7 +4482,7 @@ object frmAcbrNfeMonitor: TfrmAcbrNfeMonitor
         Caption = 'Certificado'
         ImageIndex = 1
         DesignSize = (
-          569
+          561
           230)
         object Label27: TLabel
           Left = 6
@@ -4571,7 +4571,7 @@ object frmAcbrNfeMonitor: TfrmAcbrNfeMonitor
         object pgTipoWebService: TPageControl
           Left = 0
           Top = 0
-          Width = 569
+          Width = 561
           Height = 230
           ActivePage = tsWSNFeCTe
           Align = alClient
@@ -4872,7 +4872,7 @@ object frmAcbrNfeMonitor: TfrmAcbrNfeMonitor
         Caption = 'Email'
         ImageIndex = 3
         DesignSize = (
-          569
+          561
           230)
         object GroupBox1: TGroupBox
           Left = 6
@@ -5009,7 +5009,7 @@ object frmAcbrNfeMonitor: TfrmAcbrNfeMonitor
         object pgDANFe: TPageControl
           Left = 0
           Top = 0
-          Width = 569
+          Width = 561
           Height = 230
           ActivePage = tsDanfe
           Align = alClient
@@ -5858,7 +5858,7 @@ object frmAcbrNfeMonitor: TfrmAcbrNfeMonitor
         object Panel2: TPanel
           Left = 159
           Top = 0
-          Width = 410
+          Width = 402
           Height = 230
           Align = alClient
           TabOrder = 1
@@ -6456,6 +6456,8 @@ object frmAcbrNfeMonitor: TfrmAcbrNfeMonitor
     MargemEsquerda = 0.600000000000000000
     MargemDireita = 0.510000000000000000
     CTeCancelada = False
+    ResumoCanhoto = False
+    EPECEnviado = False
     Left = 425
     Top = 28
   end

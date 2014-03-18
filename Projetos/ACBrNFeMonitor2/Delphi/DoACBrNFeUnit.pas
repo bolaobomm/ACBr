@@ -76,6 +76,7 @@ var
   SL     : TStringList;
   ChavesNFe: Tstrings;
   Alertas : AnsiString;
+  wDiretorioAtual : String;
 
   Memo   : TStringList ;
   Files  : String ;
@@ -88,6 +89,7 @@ var
 begin
  with frmAcbrNfeMonitor do
   begin
+     wDiretorioAtual := GetCurrentDir;
      try
         if Cmd.Metodo = 'statusservico' then
          begin
@@ -322,7 +324,7 @@ begin
 
            if DFeUtil.NaoEstaVazio(Cmd.Params(1)) then
               ACBrNFe1.DANFE.ProtocoloNFe := Cmd.Params(1);
-              
+
            if (ACBrNFe1.NotasFiscais.Items[0].NFe.Ide.tpEmis = teDPEC) and
               DFeUtil.EstaVazio(ACBrNFe1.DANFE.ProtocoloNFe) then
             begin
@@ -591,7 +593,7 @@ begin
                              'CPF='      +ACBrNFe1.WebServices.ConsultaCadastro.RetConsCad.CPF+sLineBreak+
                              'DhCons='   +DateTimeToStr(ACBrNFe1.WebServices.ConsultaCadastro.DhCons)+sLineBreak+
                              'cUF='      +IntToStr(ACBrNFe1.WebServices.ConsultaCadastro.cUF)+sLineBreak;
-                             
+
             for I:= 0 to ACBrNFe1.WebServices.ConsultaCadastro.RetConsCad.InfCad.Count - 1 do
              begin
               Cmd.Resposta := Cmd.Resposta+sLineBreak+
@@ -989,7 +991,7 @@ begin
                   end;
                end;
 
-              J := 1; 
+              J := 1;
               for i := 0 to AcbrNFe1.WebServices.ConsNFeDest.retConsNFeDest.ret.Count -1 do
                begin
                   if Trim(AcbrNFe1.WebServices.ConsNFeDest.retConsNFeDest.ret.Items[i].resCCe.chNFe) <> '' then
@@ -1033,7 +1035,7 @@ begin
                     begin
                        if not ValidarChave('NFe'+ChavesNFe.Strings[i]) then
                           raise Exception.Create('Chave '+ChavesNFe.Strings[i]+' inválida.');
-                          
+
                        with Download.Chaves.Add do
                        begin
                          chNFe := ChavesNFe.Strings[i];
@@ -1201,7 +1203,7 @@ begin
                 edtSenha.Text   := ACBrNFe1.Configuracoes.Certificados.Senha;
              {$ELSE}
                 ACBrNFe1.Configuracoes.Certificados.NumeroSerie := Cmd.Params(0);
-                ACBrNFe1.Configuracoes.Certificados.Senha       := Cmd.Params(1);                
+                ACBrNFe1.Configuracoes.Certificados.Senha       := Cmd.Params(1);
                 edtCaminho.Text := ACBrNFe1.Configuracoes.Certificados.NumeroSerie;
              {$ENDIF}
                 frmAcbrNfeMonitor.SalvarIni;
@@ -1362,7 +1364,8 @@ begin
            raise Exception.Create('Comando inválido ('+Cmd.Comando+')') ;
 
      finally
-        { Nada a fazer aqui por enquanto... :) }
+         if wDiretorioAtual <> GetCurrentDir then
+           SetCurrentDir(wDiretorioAtual);
      end ;
   end;
 end ;
