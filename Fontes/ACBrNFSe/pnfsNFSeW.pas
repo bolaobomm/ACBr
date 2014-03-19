@@ -156,7 +156,9 @@ begin
       Gerador.wGrupo('GerarNfseEnvio' + Atributo);
 	    Gerador.wGrupo('Rps');
      end
-     else Gerador.wGrupo('Rps' + Atributo);
+     else if (FProvedor = proBetha)
+           then Gerador.wGrupo('Rps')
+           else Gerador.wGrupo('Rps' + Atributo);
 
  case FProvedor of
   proISSDigital: FNFSe.InfID.ID := NotaUtil.ChaveAcesso(FNFSe.Prestador.cUF,
@@ -645,7 +647,7 @@ begin
       end;
 
      if (VersaoXML = '2') and (FProvedor <> proFiorilli)
-       then Gerador.wCampoNFSe(tcInt, '#34', 'CodigoPais ', 04, 04, 0, NFSe.Servico.CodigoPais, '');
+       then Gerador.wCampoNFSe(tcInt, '#34', 'CodigoPais ', 04, 04, 0, NFSe.Tomador.Endereco.CodigoPais, '');
 
      Gerador.wCampoNFSe(tcStr, '#45', 'Cep', 008, 008, 0, SomenteNumeros(NFSe.Tomador.Endereco.CEP), '');
     Gerador.wGrupoNFSe('/Endereco');

@@ -569,14 +569,20 @@ begin
 
  if ALote
   then begin
-   I := pos(EnviarLoteRps +' xmlns=', AXML);
+   if AProvedor = proBetha then
+     I := pos(EnviarLoteRps +' xmlns:ns3=', AXML)
+   else I := pos(EnviarLoteRps +' xmlns=', AXML);
    if I = 0
     then NameSpaceLote := ''
     else begin
      // Diego Gonçalves -- Correção pois estava duplicando o campo xmlns
-     I := I + {25} Length(EnviarLoteRps + ' xmlns=');
+     if AProvedor = proBetha then
+       I := I + {25} Length(EnviarLoteRps + ' xmlns:ns3=')
+     else I := I + {25} Length(EnviarLoteRps + ' xmlns=');
      J := pos('>', AXML);
-     NameSpaceLote := ' xmlns:ds1=' + Copy(AXML, I, J - I);
+     if AProvedor = proBetha then
+       NameSpaceLote := ' xmlns:ns3=' + Copy(AXML, I, J - I)
+     else NameSpaceLote := ' xmlns:ds1=' + Copy(AXML, I, J - I);
     end;
 
    if AProvedor = proIssDsf then begin
@@ -780,8 +786,11 @@ begin
     then xmldsig.signature := xmldoc.selectSingleNode('.//ns1:'+ EnviarLoteRps + '/ds:Signature')
    else if (AProvedor = proEquiplano)
     then xmldsig.signature := xmldoc.selectSingleNode('.//ds:Signature')
-   else if (URI <> '') and not (AProvedor in [proRecife, proRJ, proAbaco, proIssCuritiba, proFISSLex])
+   else if (URI <> '') and not (AProvedor in [proRecife, proRJ, proAbaco, proIssCuritiba, proFISSLex, proBetha])
     then xmldsig.signature := xmldoc.selectSingleNode('.//ds:Signature[@' + Identificador + '="AssLote_' + URI + '"]')
+   else
+   if (URI <> '') and (AProvedor = proBetha)
+    then xmldsig.signature := xmldoc.selectSingleNode('.//ns3:' + EnviarLoteRps + '/ds:Signature')
    else begin
      xmldsig.signature := xmldoc.selectSingleNode('.//ds1:' + EnviarLoteRps + '/ds:Signature');
     end;
