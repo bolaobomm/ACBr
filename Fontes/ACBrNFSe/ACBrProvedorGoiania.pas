@@ -201,18 +201,7 @@ end;
 function TProvedorGoiania.GeraEnvelopeRecepcionarLoteRPS(URLNS: String;
   CabMsg, DadosMsg, DadosSenha: AnsiString): AnsiString;
 begin
- result := '<?xml version="1.0" encoding="utf-8"?>' +
-           '<S:Envelope xmlns:S="http://schemas.xmlsoap.org/soap/envelope/" ' +
-                       'xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" ' +
-                       'xmlns:xsd="http://www.w3.org/2001/XMLSchema">' +
-            '<S:Body>' +
-             '<EnviarLoteRpsEnvio xmlns="' + URLNS + '">' +
-              '<MensagemXML>' +
-                StringReplace(StringReplace(DadosMsg, '<', '&lt;', [rfReplaceAll]), '>', '&gt;', [rfReplaceAll]) +
-              '</MensagemXML>' +
-             '</EnviarLoteRpsEnvio>' +
-            '</S:Body>' +
-           '</S:Envelope>';
+ result := '';
 end;
 
 function TProvedorGoiania.GeraEnvelopeConsultarSituacaoLoteRPS(
@@ -281,13 +270,13 @@ end;
 function TProvedorGoiania.GetSoapAction(Acao: TnfseAcao; NomeCidade: String): String;
 begin
  case Acao of
-   acRecepcionar: Result := 'http://www.abrasf.org.br/ABRASF/arquivos/nfse.xsd/WSNacional/RecepcionarLoteRps';
-   acConsSit:     Result := 'http://www.abrasf.org.br/ABRASF/arquivos/nfse.xsd/WSNacional/ConsultarSituacaoLoteRps';
-   acConsLote:    Result := 'http://www.abrasf.org.br/ABRASF/arquivos/nfse.xsd/WSNacional/ConsultarLoteRps';
+   acRecepcionar: Result := ''; //'http://www.abrasf.org.br/ABRASF/arquivos/nfse.xsd/WSNacional/RecepcionarLoteRps';
+   acConsSit:     Result := ''; //'http://www.abrasf.org.br/ABRASF/arquivos/nfse.xsd/WSNacional/ConsultarSituacaoLoteRps';
+   acConsLote:    Result := ''; //'http://www.abrasf.org.br/ABRASF/arquivos/nfse.xsd/WSNacional/ConsultarLoteRps';
    acConsNFSeRps: Result := 'http://nfse.goiania.go.gov.br/ws/ConsultarNfseRps';
-   acConsNFSe:    Result := 'http://www.abrasf.org.br/ABRASF/arquivos/nfse.xsd/WSNacional/ConsultarNfse';
-   acCancelar:    Result := 'http://www.abrasf.org.br/ABRASF/arquivos/nfse.xsd/WSNacional/CancelarNfse';
-   acGerar:       Result := 'https://nfse.goiania.go.gov.br/ws/nfse.asmx?op=GerarNfse';
+   acConsNFSe:    Result := ''; //'http://www.abrasf.org.br/ABRASF/arquivos/nfse.xsd/WSNacional/ConsultarNfse';
+   acCancelar:    Result := ''; //'http://www.abrasf.org.br/ABRASF/arquivos/nfse.xsd/WSNacional/CancelarNfse';
+   acGerar:       Result := 'http://nfse.goiania.go.gov.br/ws/GerarNfse';
  end;
 end;
 
