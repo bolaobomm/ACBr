@@ -772,13 +772,23 @@ begin
                     Pos('</Tipo>',ArquivoXML.Text) - (Pos('<Tipo>', ArquivoXML.Text) + 6));
 
        CNPJ := Copy(ArquivoXML.Text,
-                    Pos('<CpfCnpj><Cnpj>', ArquivoXML.Text) + 15,
-                    Pos('</Cnpj></CpfCnpj>',ArquivoXML.Text) - (Pos('<CpfCnpj><Cnpj>', ArquivoXML.Text) + 15));
+                    Pos('<Prestador><CpfCnpj><Cnpj>', ArquivoXML.Text) + 26,
+                    Pos('</Cnpj></CpfCnpj>',ArquivoXML.Text) - (Pos('<Prestador><CpfCnpj><Cnpj>', ArquivoXML.Text) + 26));
 
        if Trim(CNPJ) = '' then
           CNPJ:= Copy(ArquivoXML.Text,
-                      Pos('<CpfCnpj><Cpf>', ArquivoXML.Text) + 14,
-                      Pos('</Cpf></CpfCnpj>',ArquivoXML.Text) - (Pos('<CpfCnpj><Cpf>', ArquivoXML.Text) + 14));
+                      Pos('<Prestador><CpfCnpj><Cpf>', ArquivoXML.Text) + 25,
+                      Pos('</Cpf></CpfCnpj>',ArquivoXML.Text) - (Pos('<Prestador><CpfCnpj><Cpf>', ArquivoXML.Text) + 25));
+
+       if Trim(CNPJ) = '' then
+          CNPJ := Copy(ArquivoXML.Text,
+                      Pos('<Prestador><Cnpj>', ArquivoXML.Text) + 17,
+                      Pos('</Cnpj>',ArquivoXML.Text) - (Pos('<Prestador><Cnpj>', ArquivoXML.Text) + 17));
+
+       if Trim(CNPJ) = '' then
+          CNPJ:= Copy(ArquivoXML.Text,
+                      Pos('<Prestador><Cpf>', ArquivoXML.Text) + 16,
+                      Pos('</Cpf>',ArquivoXML.Text) - (Pos('<Prestador><Cpf>', ArquivoXML.Text) + 16));
 
        IM := Copy(ArquivoXML.Text,
                   Pos('<InscricaoMunicipal>', ArquivoXML.Text) + 20,

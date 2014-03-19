@@ -3722,6 +3722,7 @@ begin
       FNotasFiscais.Items[i].NFSe.NfseCancelamento.DataHora := NFSeRetorno.ListaNfse.CompNfse.Items[i].Nfse.NfseCancelamento.DataHora;
       // Incluido por joel takei 12/08/2013
       FNotasFiscais.Items[i].NFSe.NfseCancelamento.Pedido.CodigoCancelamento := NFSeRetorno.ListaNfse.CompNfse.Items[i].Nfse.NfseCancelamento.Pedido.CodigoCancelamento;
+      FNotasFiscais.Items[i].NFSe.Status                                     := NFSeRetorno.ListaNfse.CompNfse.Items[i].NFSe.Status;
 
       FRetCompNfse := '';
       inc(i);

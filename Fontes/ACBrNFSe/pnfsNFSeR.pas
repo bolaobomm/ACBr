@@ -1472,13 +1472,11 @@ begin
  Result := False;
 
  if Pos('<Nfse', Leitor.Arquivo) > 0
-  then Result := LerNFSe;
-
- if (Pos('<Rps', Leitor.Arquivo) > 0) or (Pos('<rps', Leitor.Arquivo) > 0)
-  then Result := LerRPS;
-
- if Pos('<Notas>', Leitor.Arquivo) > 0
-  then Result := LerNFSe_IssDSF;
+  then Result := LerNFSe
+  else if (Pos('<Rps', Leitor.Arquivo) > 0) or (Pos('<rps', Leitor.Arquivo) > 0)
+        then Result := LerRPS
+        else if Pos('<Notas>', Leitor.Arquivo) > 0
+              then Result := LerNFSe_IssDSF;
 
  // Grupo da TAG <signature> ***************************************************
  Leitor.Grupo := Leitor.Arquivo;
