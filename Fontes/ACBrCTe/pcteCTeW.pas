@@ -434,7 +434,7 @@ begin
 
     Gerador.wCampo(tcStr, '#042', 'xNome  ', 01, 60, 1, CTe.Ide.Toma4.xNome, DSC_XNOME);
     Gerador.wCampo(tcStr, '#043', 'xFant  ', 01, 60, 0, CTe.Ide.Toma4.xFant, DSC_XFANT);
-    Gerador.wCampo(tcStr, '#044', 'fone  ', 07, 12, 0, CTe.Ide.Toma4.fone, DSC_FONE);
+    Gerador.wCampo(tcStr, '#044', 'fone  ', 07, 12, 0, somenteNumeros(CTe.Ide.Toma4.fone), DSC_FONE);
 
     GerarEnderToma;
 
