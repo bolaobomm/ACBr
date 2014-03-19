@@ -171,7 +171,7 @@ procedure NotaFiscal.EnviarEmail(const sSmtpHost,
                                        UsarThread: Boolean = True);
 
 var
- NomeArq    : String;
+// NomeArq    : String;
  NomeArqPDF : String;
  AnexosEmail: TStrings;
  StreamNFSe : TStringStream;
