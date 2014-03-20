@@ -127,7 +127,7 @@ begin
       then NFSe.Servico.CodigoMunicipio := Leitor.rCampo(tcStr, 'MunicipioPrestacaoServico')
       else NFSe.Servico.CodigoMunicipio := Leitor.rCampo(tcStr, 'CodigoMunicipio');
 
-     Item := StrToInt(SomenteNumeros(Nfse.Servico.ItemListaServico));
+     Item := StrToIntDef(SomenteNumeros(Nfse.Servico.ItemListaServico), 0);
      if Item<100 then Item:=Item*100+1;
 
      NFSe.Servico.ItemListaServico := FormatFloat('0000', Item);
@@ -264,7 +264,7 @@ begin
      NFSe.Servico.ResponsavelRetencao := StrToResponsavelRetencao(ok, Leitor.rCampo(tcStr, 'ResponsavelRetencao'));
      NFSe.Servico.ItemListaServico    := DFeUtil.LimpaNumero(Leitor.rCampo(tcStr, 'ItemListaServico'));
 
-     Item := StrToInt(SomenteNumeros(Nfse.Servico.ItemListaServico));
+     Item := StrToIntDef(SomenteNumeros(Nfse.Servico.ItemListaServico), 0);
      if Item<100 then Item:=Item*100+1;
 
      NFSe.Servico.ItemListaServico := FormatFloat('0000', Item);
@@ -333,7 +333,7 @@ begin
      NFSe.Servico.ResponsavelRetencao := StrToResponsavelRetencao(ok, Leitor.rCampo(tcStr, 'ResponsavelRetencao'));
      NFSe.Servico.ItemListaServico    := DFeUtil.LimpaNumero(Leitor.rCampo(tcStr, 'ItemListaServico'));
 
-     Item := StrToInt(SomenteNumeros(Nfse.Servico.ItemListaServico));
+     Item := StrToIntDef(SomenteNumeros(Nfse.Servico.ItemListaServico), 0);
      if Item<100 then Item:=Item*100+1;
 
      NFSe.Servico.ItemListaServico := FormatFloat('0000', Item);
@@ -585,7 +585,7 @@ begin
       NFSe.Servico.ItemListaServico            := Poem_Zeros( Leitor.rCampo(tcStr, 'nrServicoItem'), 2) +
                                                   Poem_Zeros( Leitor.rCampo(tcStr, 'nrServicoSubItem'), 2);
 
-      Item := StrToInt(SomenteNumeros(Nfse.Servico.ItemListaServico));
+      Item := StrToIntDef(SomenteNumeros(Nfse.Servico.ItemListaServico), 0);
       if Item<100 then Item:=Item*100+1;
 
       NFSe.Servico.ItemListaServico := FormatFloat('0000', Item);
@@ -638,89 +638,54 @@ begin
   end
  else FProvedor := proNenhum;
 
-(*
-	// Alterado por - Cleiver
- 	if Pos('<InfDeclaracaoPrestacaoServico', Leitor.Arquivo) > 0 then
-	begin
-	 	if Pos('https://nfse.goiania.go.gov.br', Leitor.Arquivo) > 0 then
-			FProvedor := proGoiania
-    else
-			FProvedor := proSaatri;
-  end else
-   if Pos('<codcidade>'{ ou '<transacao>'}, AnsiLowerCase(Leitor.Arquivo)) > 0 then
-      FProvedor := proIssDSF;
-
- if (Leitor.rExtrai(2, 'Servico') <> '')
-  then begin
-   CM:= Leitor.rCampo(tcStr, 'CodigoMunicipio');
-
-   if (CM = '4119905') then
-    FProvedor := profintelISS;
-
-   if (CM = '3127701') or (CM = '3500105') or (CM = '3510203') or
-      (CM = '3523503') or (CM = '3554003') then
-    FProvedor := pro4R;
-
-   if (CM = '5213103') or (CM = '5218805') then
-    FProvedor := proProdata;
-  end;
- if (Leitor.rExtrai(1, 'Rps') <> '')
-  then begin
+ if (Leitor.rExtrai(1, 'Rps') <> '') then
+ begin
    case FProvedor of
-    proSaatri:  Rps_ProvedorSaatri;
-   	proGoiania,
-    proProdata: Rps_ProvedorGoiania;
-    proIssDsf:  Rps_ProvedorIssDsf;
-    else Rps_Demais;
+    proAbaco,
+    proBetha,
+    proBHISS,
+    proFISSLex,
+    proGinfes,
+    proGovBR,
+    proISSCuritiba,
+    proISSIntel,
+    proISSNet,
+    proNatal,
+    proProdemge,
+    proPronim,
+    proPublica,
+    proRecife,
+    proRJ,
+    proSimplISS,
+    proSpeedGov,
+    proThema,
+    proTiplan,
+    proWebISS: Result := LerRPS_ABRASF_V1;
+
+    pro4R,
+    proAgili,
+    proCoplan,
+    proDigifred,
+    proFIntelISS,
+    proFiorilli,
+    proFreire,
+    proGoiania,
+    proGovDigital,
+    proISSDigital,
+    proISSe,
+    proLink3,
+    proMitra,
+    proProdata,
+    proPVH,
+    proSaatri,
+    proTecnos,
+    ProVirtual,
+    proVitoria: Result := LerRPS_ABRASF_V2;
+
+    proIssDsf:  Result := LerRPS_IssDsf;
+
+    proEquiplano: Result := LerRPS_Equiplano;
    end;
-  end; // fim do Rps
-*)
-
- case FProvedor of
-  proAbaco,
-  proBetha,
-  proBHISS,
-  proFISSLex,
-  proGinfes,
-  proGovBR,
-  proISSCuritiba,
-  proISSIntel,
-  proISSNet,
-  proNatal,
-  proProdemge,
-  proPronim,
-  proPublica,
-  proRecife,
-  proRJ,
-  proSimplISS,
-  proSpeedGov,
-  proThema,
-  proTiplan,
-  proWebISS: Result := LerRPS_ABRASF_V1;
-
-  pro4R,
-  proAgili,
-  proCoplan,
-  proDigifred,
-  proFIntelISS,
-  proFiorilli,
-  proFreire,
-  proGoiania,
-  proGovDigital,
-  proISSDigital,
-  proISSe,
-  proLink3,
-  proMitra,
-  proProdata,
-  proPVH,
-  proSaatri,
-  proTecnos,
-  ProVirtual,
-  proVitoria: Result := LerRPS_ABRASF_V2;
-
-  proIssDsf:  Result := LerRPS_IssDsf;
-
-  proEquiplano: Result := LerRPS_Equiplano;
  end;
 
 end;
@@ -747,7 +712,7 @@ begin
    then begin
     NFSe.Servico.ItemListaServico := DFeUtil.LimpaNumero(Leitor.rCampo(tcStr, 'ItemListaServico'));
 
-    Item := StrToInt(SomenteNumeros(Nfse.Servico.ItemListaServico));
+    Item := StrToIntDef(SomenteNumeros(Nfse.Servico.ItemListaServico), 0);
     if Item<100 then Item:=Item*100+1;
 
     NFSe.Servico.ItemListaServico := FormatFloat('0000', Item);
@@ -1035,7 +1000,7 @@ begin
    NFSe.OrgaoGerador.Uf              := Leitor.rCampo(tcStr, 'Uf');
   end; // fim OrgaoGerador
 
- if Leitor.rExtrai(3, 'InfDeclaracaoPrestacaoServico') <> ''
+ if (Leitor.rExtrai(3, 'InfDeclaracaoPrestacaoServico') <> '') or (Leitor.rExtrai(3, 'DeclaracaoPrestacaoServico') <> '')
   then begin
    NFSe.Competencia              := Leitor.rCampo(tcStr, 'Competencia');
    NFSe.RegimeEspecialTributacao := StrToRegimeEspecialTributacao(ok, Leitor.rCampo(tcStr, 'RegimeEspecialTributacao'));
@@ -1061,6 +1026,25 @@ begin
        NFSe.RpsSubstituido.Serie  := Leitor.rCampo(tcStr, 'Serie');
        NFSe.RpsSubstituido.Tipo   := StrToTipoRPS(ok, Leitor.rCampo(tcStr, 'Tipo'));
       end;
+    end
+    else begin
+     NFSe.DataEmissaoRps := Leitor.rCampo(tcDat, 'DataEmissao');
+     NFSe.Status         := StrToStatusRPS(ok, Leitor.rCampo(tcStr, 'Status'));
+
+     if (Leitor.rExtrai(4, 'IdentificacaoRps') <> '')
+      then begin
+       NFSe.IdentificacaoRps.Numero := Leitor.rCampo(tcStr, 'Numero');
+       NFSe.IdentificacaoRps.Serie  := Leitor.rCampo(tcStr, 'Serie');
+       NFSe.IdentificacaoRps.Tipo   := StrToTipoRPS(ok, Leitor.rCampo(tcStr, 'Tipo'));
+       NFSe.InfID.ID                := SomenteNumeros(NFSe.IdentificacaoRps.Numero) + NFSe.IdentificacaoRps.Serie;
+      end;
+
+     if (Leitor.rExtrai(4, 'RpsSubstituido') <> '')
+      then begin
+       NFSe.RpsSubstituido.Numero := Leitor.rCampo(tcStr, 'Numero');
+       NFSe.RpsSubstituido.Serie  := Leitor.rCampo(tcStr, 'Serie');
+       NFSe.RpsSubstituido.Tipo   := StrToTipoRPS(ok, Leitor.rCampo(tcStr, 'Tipo'));
+      end;
     end;
 
    if (Leitor.rExtrai(4, 'Servico') <> '')
@@ -1069,7 +1053,7 @@ begin
      NFSe.Servico.ResponsavelRetencao := StrToResponsavelRetencao(ok, Leitor.rCampo(tcStr, 'ResponsavelRetencao'));
      NFSe.Servico.ItemListaServico    := DFeUtil.LimpaNumero(Leitor.rCampo(tcStr, 'ItemListaServico'));
 
-     Item := StrToInt(SomenteNumeros(Nfse.Servico.ItemListaServico));
+     Item := StrToIntDef(SomenteNumeros(Nfse.Servico.ItemListaServico), 0);
      if Item<100 then Item:=Item*100+1;
 
      NFSe.Servico.ItemListaServico := FormatFloat('0000', Item);
@@ -1112,7 +1096,7 @@ begin
     then begin
      NFSe.Prestador.InscricaoMunicipal := Leitor.rCampo(tcStr, 'InscricaoMunicipal');
 
-     if (VersaoXML = '1') or (FProvedor = proFiorilli)
+     if (VersaoXML = '1') or (FProvedor in [proFiorilli, proGoiania])
       then begin
        if Leitor.rExtrai(5, 'CpfCnpj') <> ''
         then begin
