@@ -173,11 +173,20 @@ procedure NotaFiscal.EnviarEmail(const sSmtpHost,
 var
 // NomeArq    : String;
  NomeArqPDF : String;
+ NomeArqXML : String;
  AnexosEmail: TStrings;
  StreamNFSe : TStringStream;
 begin
  AnexosEmail := TStringList.Create;
  StreamNFSe  := TStringStream.Create('');
+
+ if TACBrNFSe( TNotasFiscais( Collection ).ACBrNFSe ).Configuracoes.Arquivos.NomeLongoNFSe
+  then NomeArqXML := NotaUtil.GerarNomeNFSe(UFparaCodigo(Nfse.PrestadorServico.Endereco.UF),
+                                            Nfse.DataEmissao,
+                                            Nfse.PrestadorServico.IdentificacaoPrestador.Cnpj,
+                                            StrToIntDef(Nfse.Numero, 0))
+  else NomeArqXML := NFSe.Numero;
+
  try
     AnexosEmail.Clear;
     if Anexos <> nil then
@@ -200,7 +209,8 @@ begin
           NomeArqPDF := Trim(NomeArq);
           if NomeArqPDF <> ''
            then begin
-             NomeArqPDF := StringReplace(NFSe.Numero, 'NFSe', '', [rfIgnoreCase]);
+//             NomeArqPDF := StringReplace(NFSe.Numero, 'NFSe', '', [rfIgnoreCase]);
+             NomeArqPDF := NomeArqXML;
              NomeArqPDF := PathWithDelim(TACBrNFSe( TNotasFiscais( Collection ).ACBrNFSe ).DANFSE.PathPDF) + NomeArqPDF + '.pdf';
            end
            else NomeArqPDF := StringReplace(NomeArqPDF, '-nfse.xml', '.pdf', [rfIgnoreCase]);
@@ -224,7 +234,8 @@ begin
                 NomeRemetente,
                 TLS,
                 StreamNFSe,
-                copy(NFSe.Numero, (length(NFSe.Numero) - 44) + 1, 44) + '-NFSe.xml',
+//                copy(NFSe.Numero, (length(NFSe.Numero) - 44) + 1, 44) + '-NFSe.xml',
+                NomeArqXML + '-nfse.xml',
                 UsarThread);
  finally
     AnexosEmail.Free;
