@@ -262,6 +262,7 @@ type
     FPathCan  : String;
     FPathRPS: String;
     FPathGer: String;
+    FNomeLongoNFSe: Boolean;
   public
     constructor Create(AOwner: TComponent); override;
     function GetPathCan: String;
@@ -269,14 +270,15 @@ type
     function GetPathRPS(Data: TDateTime = 0): String;
     function GetPathNFSe(Data : TDateTime = 0): String;
   published
-    property Salvar     : Boolean read FSalvar  write FSalvar  default False;
-    property PastaMensal: Boolean read FMensal  write FMensal  default False;
-    property AdicionarLiteral: Boolean read FLiteral write FLiteral default False;
-    property EmissaoPathNFSe: Boolean read FEmissaoPathNFSe write FEmissaoPathNFSe default False;
-    property PathNFSe : String read FPathNFSe  write FPathNFSe;
-    property PathCan : String read FPathCan  write FPathCan;
-    property PathRPS : String read FPathRPS  write FPathRPS;
-    property PathGer : String read FPathGer  write FPathGer;
+    property Salvar: Boolean           read FSalvar          write FSalvar          default False;
+    property PastaMensal: Boolean      read FMensal          write FMensal          default False;
+    property AdicionarLiteral: Boolean read FLiteral         write FLiteral         default False;
+    property EmissaoPathNFSe: Boolean  read FEmissaoPathNFSe write FEmissaoPathNFSe default False;
+    property PathNFSe: String          read FPathNFSe        write FPathNFSe;
+    property PathCan: String           read FPathCan         write FPathCan;
+    property PathRPS: String           read FPathRPS         write FPathRPS;
+    property PathGer: String           read FPathGer         write FPathGer;
+    property NomeLongoNFSe: Boolean    read FNomeLongoNFSe   write FNomeLongoNFSe   default False;
   end;
 
  TConfiguracoes = class(TComponent)

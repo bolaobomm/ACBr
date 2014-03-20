@@ -510,11 +510,8 @@ begin
    Gerador.wCampoNFSe(tcStr, '#32', 'Discriminacao            ', 01, 2000, 1, NFSe.Servico.Discriminacao, '');
    Gerador.wCampoNFSe(tcStr, '#33', 'CodigoMunicipio          ', 01, 0007, 1, SomenteNumeros(NFSe.Servico.CodigoMunicipio), '');
 
-//   if FProvedor <> proISSDigital
-//     then Gerador.wCampoNFSe(tcInt, '#34', 'CodigoPais', 04, 04,   0, NFSe.Servico.CodigoPais, '');
-
-   if FProvedor <> proFiorilli
-     then Gerador.wCampoNFSe(tcInt, '#34', 'CodigoPais         ', 04, 04,   0, NFSe.Servico.CodigoPais, '');
+//   if FProvedor <> proFiorilli then
+     Gerador.wCampoNFSe(tcInt, '#34', 'CodigoPais         ', 04, 04,   0, NFSe.Servico.CodigoPais, '');
 
    if FProvedor <> proGoiania
     then Gerador.wCampoNFSe(tcStr, '#35', 'ExigibilidadeISS   ', 01, 01, 1, ExigibilidadeISSToStr(NFSe.Servico.ExigibilidadeISS), '');
@@ -646,7 +643,7 @@ begin
         Gerador.wCampoNFSe(tcStr, '#44', 'Uf             ', 2, 2, 0, NFSe.Tomador.Endereco.UF, '');
       end;
 
-     if (VersaoXML = '2') and (FProvedor <> proFiorilli)
+     if (VersaoXML = '2') // and (FProvedor <> proFiorilli)
        then Gerador.wCampoNFSe(tcInt, '#34', 'CodigoPais ', 04, 04, 0, NFSe.Tomador.Endereco.CodigoPais, '');
 
      Gerador.wCampoNFSe(tcStr, '#45', 'Cep', 008, 008, 0, SomenteNumeros(NFSe.Tomador.Endereco.CEP), '');

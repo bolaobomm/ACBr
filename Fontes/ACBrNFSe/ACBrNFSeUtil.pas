@@ -96,10 +96,12 @@ type
     class function ChaveAcesso(AUF:Integer; ADataEmissao:TDateTime; ACNPJ:String; ASerie:Integer;
                                ANumero,ACodigo: Integer; AModelo:Integer=56): String;
     class function ObterNomeMunicipio(const xMun, xUF: string; const cMun: integer): string;
-    class function ObterCodigoMunicipio(const xMun, xUF: string): integer;                               
+    class function ObterCodigoMunicipio(const xMun, xUF: string): integer;
 {$IFDEF DELPHI2009_UP}
     class function LoadXML(CaminhoArquivo: string): TEncoding;
 {$ENDIF}
+    class function GerarNomeNFSe(AUF: Integer; ADataEmissao: TDateTime; ACNPJ: String;
+                                 ANumero:Integer; AModelo: Integer = 56): String;
   published
 
   end;
@@ -1582,5 +1584,18 @@ begin
    ArquivoXML.Free;
 end;
 {$ENDIF}
+
+class function NotaUtil.GerarNomeNFSe(AUF: Integer; ADataEmissao: TDateTime; ACNPJ: String;
+                                 ANumero:Integer; AModelo: Integer = 56): String;
+var
+  vUF, vDataEmissao, vNumero, vModelo: String;
+begin
+  vUF          := DFeUtil.Poem_Zeros(AUF, 2);
+  vDataEmissao := FormatDateTime('YYMM', ADataEmissao);
+  vModelo      := DFeUtil.Poem_Zeros(AModelo, 2);
+  vNumero      := DFeUtil.Poem_Zeros(ANumero, 9);
+
+  Result := vUF + vDataEmissao + ACNPJ + vModelo + vNumero;
+end;
 
 end.
