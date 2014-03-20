@@ -631,7 +631,12 @@ begin
    CM:= Leitor.rCampo(tcStr, 'CodigoMunicipio');
    FProvedor := StrToProvedor(Ok, CodCidadeToProvedor(StrToIntDef(CM, 0)));
   end
-  else FProvedor := proNenhum;
+ else if (Leitor.rExtrai(1, 'Servico') <> '') //Adicionado porque estava pegando o CNPJ do Tomador para ConsultarNFSeporRps
+  then begin
+   CM:= Leitor.rCampo(tcStr, 'CodigoMunicipio');
+   FProvedor := StrToProvedor(Ok, CodCidadeToProvedor(StrToIntDef(CM, 0)));
+  end
+ else FProvedor := proNenhum;
 
 (*
 	// Alterado por - Cleiver
