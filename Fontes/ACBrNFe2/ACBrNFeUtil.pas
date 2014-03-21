@@ -1378,17 +1378,18 @@ begin
   if AModeloDF = moNFe then
    begin
     case ALayOut of
-      LayNfeRecepcao,
-      LayNfeAutorizacao    : Result := DFeUtil.SeSenao(AAmbiente=1, 'https://nfe.sefaz.pe.gov.br/nfe-service/services/NfeRecepcao2',         'https://nfehomolog.sefaz.pe.gov.br/nfe-service/services/NfeRecepcao2');
-      LayNfeRetRecepcao,
-      LayNfeRetAutorizacao : Result := DFeUtil.SeSenao(AAmbiente=1, 'https://nfe.sefaz.pe.gov.br/nfe-service/services/NfeRetRecepcao2',      'https://nfehomolog.sefaz.pe.gov.br/nfe-service/services/NfeRetRecepcao2');
-      LayNfeCancelamento   : Result := DFeUtil.SeSenao(AAmbiente=1, 'https://nfe.sefaz.pe.gov.br/nfe-service/services/NfeCancelamento2',     'https://nfehomolog.sefaz.pe.gov.br/nfe-service/services/NfeCancelamento2');
-      LayNfeInutilizacao   : Result := DFeUtil.SeSenao(AAmbiente=1, 'https://nfe.sefaz.pe.gov.br/nfe-service/services/NfeInutilizacao2',     'https://nfehomolog.sefaz.pe.gov.br/nfe-service/services/NfeInutilizacao2');
-      LayNfeConsulta       : Result := DFeUtil.SeSenao(AAmbiente=1, 'https://nfe.sefaz.pe.gov.br/nfe-service/services/NfeConsulta2',         'https://nfehomolog.sefaz.pe.gov.br/nfe-service/services/NfeConsulta2');
-      LayNfeStatusServico  : Result := DFeUtil.SeSenao(AAmbiente=1, 'https://nfe.sefaz.pe.gov.br/nfe-service/services/NfeStatusServico2',    'https://nfehomolog.sefaz.pe.gov.br/nfe-service/services/NfeStatusServico2');
-      LayNfeCadastro       : Result := DFeUtil.SeSenao(AAmbiente=1, 'https://nfe.sefaz.pe.gov.br/nfe-service/services/CadConsultaCadastro2', 'https://nfehomolog.sefaz.pe.gov.br/nfe-service/services/CadConsultaCadastro2');
+      LayNfeRecepcao       : Result := DFeUtil.SeSenao(AAmbiente=1, 'https://nfe.sefaz.pe.gov.br/nfe-service/services/NfeRecepcao2',           'https://nfehomolog.sefaz.pe.gov.br/nfe-service/services/NfeRecepcao2');
+      LayNfeRetRecepcao    : Result := DFeUtil.SeSenao(AAmbiente=1, 'https://nfe.sefaz.pe.gov.br/nfe-service/services/NfeRetRecepcao2',        'https://nfehomolog.sefaz.pe.gov.br/nfe-service/services/NfeRetRecepcao2');
+      LayNfeCancelamento   : Result := DFeUtil.SeSenao(AAmbiente=1, 'https://nfe.sefaz.pe.gov.br/nfe-service/services/NfeCancelamento2',       'https://nfehomolog.sefaz.pe.gov.br/nfe-service/services/NfeCancelamento2');
+      LayNfeInutilizacao   : Result := DFeUtil.SeSenao(AAmbiente=1, 'https://nfe.sefaz.pe.gov.br/nfe-service/services/NfeInutilizacao2',       'https://nfehomolog.sefaz.pe.gov.br/nfe-service/services/NfeInutilizacao2');
+      LayNfeConsulta       : Result := DFeUtil.SeSenao(AAmbiente=1, 'https://nfe.sefaz.pe.gov.br/nfe-service/services/NfeConsulta2',           'https://nfehomolog.sefaz.pe.gov.br/nfe-service/services/NfeConsulta2');
+      LayNfeStatusServico  : Result := DFeUtil.SeSenao(AAmbiente=1, 'https://nfe.sefaz.pe.gov.br/nfe-service/services/NfeStatusServico2',      'https://nfehomolog.sefaz.pe.gov.br/nfe-service/services/NfeStatusServico2');
+      LayNfeCadastro       : Result := DFeUtil.SeSenao(AAmbiente=1, 'https://nfe.sefaz.pe.gov.br/nfe-service/services/CadConsultaCadastro2',   'https://nfehomolog.sefaz.pe.gov.br/nfe-service/services/CadConsultaCadastro2');
       LayNFeCCe,
-      LayNFeEvento         : Result := DFeUtil.SeSenao(AAmbiente=1, 'https://nfe.sefaz.pe.gov.br/nfe-service/services/RecepcaoEvento?wsdl',  'https://nfehomolog.sefaz.pe.gov.br/nfe-service/services/RecepcaoEvento?wsdl');
+      LayNFeEvento         : Result := DFeUtil.SeSenao(AAmbiente=1, 'https://nfe.sefaz.pe.gov.br/nfe-service/services/RecepcaoEvento?wsdl',    'https://nfehomolog.sefaz.pe.gov.br/nfe-service/services/RecepcaoEvento?wsdl');
+
+      LayNfeAutorizacao    : Result := DFeUtil.SeSenao(AAmbiente=1, 'https://nfe.sefaz.pe.gov.br/nfe-service/services/NfeAutorizacao?wsdl',    'https://nfehomolog.sefaz.pe.gov.br/nfe-service/services/NfeAutorizacao?wsdl');
+      LayNfeRetAutorizacao : Result := DFeUtil.SeSenao(AAmbiente=1, 'https://nfe.sefaz.pe.gov.br/nfe-service/services/NfeRetAutorizacao?wsdl', 'https://nfehomolog.sefaz.pe.gov.br/nfe-service/services/NfeRetAutorizacao?wsdl');
     end;
    end
   else
