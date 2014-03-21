@@ -1342,19 +1342,32 @@ class function NotaUtil.GetURLPR(AAmbiente: Integer;
 begin
   if AModeloDF = moNFe then
    begin
-    case ALayOut of
-      LayNfeRecepcao,
-      LayNfeAutorizacao    : Result := DFeUtil.SeSenao(AAmbiente=1, 'https://nfe2.fazenda.pr.gov.br/nfe/NFeRecepcao2',             'https://homologacao.nfe2.fazenda.pr.gov.br/nfe/NFeRecepcao2');
-      LayNfeRetRecepcao,
-      LayNfeRetAutorizacao : Result := DFeUtil.SeSenao(AAmbiente=1, 'https://nfe2.fazenda.pr.gov.br/nfe/NFeRetRecepcao2',          'https://homologacao.nfe2.fazenda.pr.gov.br/nfe/NFeRetRecepcao2');
-      LayNfeCancelamento   : Result := DFeUtil.SeSenao(AAmbiente=1, 'https://nfe2.fazenda.pr.gov.br/nfe/NFeCancelamento2',         'https://homologacao.nfe2.fazenda.pr.gov.br/nfe/NFeCancelamento2');
-      LayNfeInutilizacao   : Result := DFeUtil.SeSenao(AAmbiente=1, 'https://nfe2.fazenda.pr.gov.br/nfe/NFeInutilizacao2',         'https://homologacao.nfe2.fazenda.pr.gov.br/nfe/NFeInutilizacao2');
-      LayNfeConsulta       : Result := DFeUtil.SeSenao(AAmbiente=1, 'https://nfe2.fazenda.pr.gov.br/nfe/NFeConsulta2',             'https://homologacao.nfe2.fazenda.pr.gov.br/nfe/NFeConsulta2');
-      LayNfeStatusServico  : Result := DFeUtil.SeSenao(AAmbiente=1, 'https://nfe2.fazenda.pr.gov.br/nfe/NFeStatusServico2',        'https://homologacao.nfe2.fazenda.pr.gov.br/nfe/NFeStatusServico2');
-      LayNfeCadastro       : Result := DFeUtil.SeSenao(AAmbiente=1, 'https://nfe2.fazenda.pr.gov.br/nfe/CadConsultaCadastro2',     'https://homologacao.nfe2.fazenda.pr.gov.br/nfe/CadConsultaCadastro2');
-      LayNFeCCe,
-      LayNFeEvento         : Result := DFeUtil.SeSenao(AAmbiente=1, 'https://nfe2.fazenda.pr.gov.br/nfe-evento/NFeRecepcaoEvento', 'https://homologacao.nfe2.fazenda.pr.gov.br/nfe-evento/NFeRecepcaoEvento');
-    end;
+    if AVersaoDF = ve200 then
+     begin
+      case ALayOut of
+        LayNfeRecepcao      : Result := DFeUtil.SeSenao(AAmbiente=1, 'https://nfe2.fazenda.pr.gov.br/nfe/NFeRecepcao2',             'https://homologacao.nfe2.fazenda.pr.gov.br/nfe/NFeRecepcao2');
+        LayNfeRetRecepcao   : Result := DFeUtil.SeSenao(AAmbiente=1, 'https://nfe2.fazenda.pr.gov.br/nfe/NFeRetRecepcao2',          'https://homologacao.nfe2.fazenda.pr.gov.br/nfe/NFeRetRecepcao2');
+        LayNfeCancelamento  : Result := DFeUtil.SeSenao(AAmbiente=1, 'https://nfe2.fazenda.pr.gov.br/nfe/NFeCancelamento2',         'https://homologacao.nfe2.fazenda.pr.gov.br/nfe/NFeCancelamento2');
+        LayNfeInutilizacao  : Result := DFeUtil.SeSenao(AAmbiente=1, 'https://nfe2.fazenda.pr.gov.br/nfe/NFeInutilizacao2',         'https://homologacao.nfe2.fazenda.pr.gov.br/nfe/NFeInutilizacao2');
+        LayNfeConsulta      : Result := DFeUtil.SeSenao(AAmbiente=1, 'https://nfe2.fazenda.pr.gov.br/nfe/NFeConsulta2',             'https://homologacao.nfe2.fazenda.pr.gov.br/nfe/NFeConsulta2');
+        LayNfeStatusServico : Result := DFeUtil.SeSenao(AAmbiente=1, 'https://nfe2.fazenda.pr.gov.br/nfe/NFeStatusServico2',        'https://homologacao.nfe2.fazenda.pr.gov.br/nfe/NFeStatusServico2');
+        LayNfeCadastro      : Result := DFeUtil.SeSenao(AAmbiente=1, 'https://nfe2.fazenda.pr.gov.br/nfe/CadConsultaCadastro2',     'https://homologacao.nfe2.fazenda.pr.gov.br/nfe/CadConsultaCadastro2');
+        LayNFeCCe,
+        LayNFeEvento        : Result := DFeUtil.SeSenao(AAmbiente=1, 'https://nfe2.fazenda.pr.gov.br/nfe-evento/NFeRecepcaoEvento', 'https://homologacao.nfe2.fazenda.pr.gov.br/nfe-evento/NFeRecepcaoEvento');
+      end;
+     end
+     else begin
+      case ALayOut of
+        LayNfeAutorizacao    : Result := DFeUtil.SeSenao(AAmbiente=1, '', 'https://homologacao.nfe.fazenda.pr.gov.br/nfe/NFeAutorizacao3');
+        LayNfeRetAutorizacao : Result := DFeUtil.SeSenao(AAmbiente=1, '', 'https://homologacao.nfe.fazenda.pr.gov.br/nfe/NFeRetAutorizacao3');
+        LayNfeInutilizacao   : Result := DFeUtil.SeSenao(AAmbiente=1, '', 'https://homologacao.nfe.fazenda.pr.gov.br/nfe/NFeInutilizacao3');
+        LayNfeConsulta       : Result := DFeUtil.SeSenao(AAmbiente=1, '', 'https://homologacao.nfe.fazenda.pr.gov.br/nfe/NFeConsulta3');
+        LayNfeStatusServico  : Result := DFeUtil.SeSenao(AAmbiente=1, '', 'https://homologacao.nfe.fazenda.pr.gov.br/nfe/NFeStatusServico3');
+        LayNfeCadastro       : Result := DFeUtil.SeSenao(AAmbiente=1, '', 'https://homologacao.nfe.fazenda.pr.gov.br/nfe/CadConsultaCadastro2');
+        LayNFeCCe,
+        LayNFeEvento         : Result := DFeUtil.SeSenao(AAmbiente=1, '', 'https://homologacao.nfe.fazenda.pr.gov.br/nfe/NFeRecepcaoEvento');
+      end;
+     end;
    end
   else
    begin
