@@ -3186,6 +3186,7 @@ begin
 
   while Processando do  // Enquanto FSituacao = 2 (Não Processado) tenta mais uma vez
   begin
+    TACBrNFSe( FACBrNFSe ).SetStatus( stNFSeAguardaProcesso );
     if TACBrNFSe( FACBrNFSe ).Configuracoes.WebServices.IntervaloTentativas > 0 then
        sleep(TACBrNFSe( FACBrNFSe ).Configuracoes.WebServices.IntervaloTentativas)
     else

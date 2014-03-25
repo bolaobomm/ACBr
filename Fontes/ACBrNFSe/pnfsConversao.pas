@@ -10,7 +10,7 @@ uses
   Classes, pcnConversao;
 
 type
-  TStatusACBrNFSe = ( stNFSeIdle, stNFSeRecepcao, stNFSeConsulta, stNFSeCancelamento, stNFSeEmail );
+  TStatusACBrNFSe = ( stNFSeIdle, stNFSeRecepcao, stNFSeConsulta, stNFSeCancelamento, stNFSeEmail, stNFSeAguardaProcesso);
   TLayOut = (LayNfseRecepcaoLote, LayNfseConsultaLote, LayNfseConsultaNfseRps, LayNfseConsultaSitLoteRps,
              LayNfseConsultaNfse, LayNfseCancelaNfse, LayNfseGerar, LayNfseRecepcaoLoteSincrono);
 
