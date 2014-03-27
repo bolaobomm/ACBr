@@ -124,16 +124,35 @@ begin
  if AProvedor = proBetha then Prefixo3 := '';
  if AProvedor in [proGovBR, proPronim] then Identificador := '';
 
- DadosMsg := '<' + Prefixo3 + 'LoteRps'+
-               DFeUtil.SeSenao(AProvedor = proISSDigital, '',
-                               DFeUtil.SeSenao(Identificador <> '', ' ' + Identificador + '="' +
-                               DFeUtil.SeSenao(AProvedor = proTecnos, Copy(Notas, Pos('<Rps Id="', Notas) + 9, 35), NumeroLote) + '"', '')) +
-               DFeUtil.SeSenao(AProvedor = proSimplISS, NameSpaceDad, '') +
+ DadosMsg := '<' + Prefixo3 + 'LoteRps' +
+
+               // Inclui o Identificador ou não
+               DFeUtil.SeSenao(AProvedor = proISSDigital,
+                               '',
+                               DFeUtil.SeSenao(Identificador <> '',
+                                               ' ' + Identificador + '="' + DFeUtil.SeSenao(AProvedor = proTecnos,
+                                                                                            Copy(Notas, Pos('<Rps Id="', Notas) + 9, 35),
+                                                                                            NumeroLote
+                                                                                           ) + '"',
+                                               ''
+                                              )
+                              ) +
+
+               // Inclui a versão ou não
                DFeUtil.SeSenao(AProvedor in [proAbaco, proBetha, proGinfes, proGoiania, proGovBR,
                                              {proISSDigital, }proIssCuritiba, proISSNET, proNatal, proActcon,
                                              proRecife, proRJ, proSimplISS, proThema, proTiplan,
-                                             proAgili, proFISSLex, proSpeedGov{, proWebISS}, proPronim], '',
-                DFeUtil.SeSenao(VersaoDados <> '', ' versao="' + VersaoDados + '"', '')) + '>' +
+                                             proAgili, proFISSLex, proSpeedGov{, proWebISS}, proPronim],
+                               '',
+                               DFeUtil.SeSenao(VersaoDados <> '', ' versao="' + VersaoDados + '"', '')
+                              ) +
+
+               // Inclui o Name Space ou não
+               DFeUtil.SeSenao(AProvedor = proSimplISS,
+                               ' ' + NameSpaceDad,
+                               '>'
+                              ) +
+                              
               '<' + Prefixo4 + 'NumeroLote>' +
                 NumeroLote +
               '</' + Prefixo4 + 'NumeroLote>' +
