@@ -1356,8 +1356,10 @@ begin
   then begin
    CM:= Leitor.rCampo(tcStr, 'CodigoMunicipio');
    FProvedor := StrToProvedor(Ok, CodCidadeToProvedor(StrToIntDef(CM, 0)));
-  end
-  else begin
+  end;
+
+ if CM = ''
+  then begin
    if (Leitor.rExtrai(1, 'Servico') <> '')
     then begin
      CM:= Leitor.rCampo(tcStr, 'CodigoMunicipio');
