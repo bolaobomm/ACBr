@@ -128,7 +128,7 @@ type
      class function ValidaSUFRAMA(AValue: string): Boolean;
      class function ValidaRECOPI(AValue: string): Boolean;
      class function ValidaNVE(AValue: string): Boolean;
-   published
+//   published
 
    end;
 

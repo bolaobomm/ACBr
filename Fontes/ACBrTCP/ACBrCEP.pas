@@ -976,9 +976,8 @@ var
    TipoLogradouro, Logra, Comp: String;
    i, k : Integer;
 begin
-
-  try
   Buffer := TStringList.Create;
+  try
   ExtractStrings(['|'],[], PChar(fOwner.RespHTTP.Text), Buffer);
 
   i := CompareText(Buffer[1], ACBrStr('Cep '+FCepBusca+' não encontrado'));
@@ -1016,7 +1015,8 @@ begin
     TLog.Free;
   end ;
   finally
-    Buffer.Free;
+    if Assigned(Buffer) then
+      Buffer.Free;
   end;
 
   if Assigned( fOwner.OnBuscaEfetuada ) then
