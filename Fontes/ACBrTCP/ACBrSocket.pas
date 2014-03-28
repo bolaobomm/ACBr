@@ -194,6 +194,7 @@ TACBrHTTP = class( TACBrComponent )
     procedure HTTPGet( AURL : String) ; virtual ;
     Procedure HTTPPost( AURL : String ) ; overload; virtual ;
     Procedure HTTPPost( AURL : String; APostData : String  ) ; overload; virtual ;
+    procedure HTTPPut(AURL: String);
     procedure HTTPMethod( Method, AURL : String ); virtual ;
 
     function GetHeaderValue( AValue : String ) : String ;
@@ -623,6 +624,11 @@ end ;
 procedure TACBrHTTP.HTTPPost(AURL : String) ;
 begin
   HTTPMethod( 'POST', AURL ) ;
+end ;
+
+procedure TACBrHTTP.HTTPPut(AURL : String) ;
+begin
+  HTTPMethod( 'PUT', AURL ) ;
 end ;
 
 procedure TACBrHTTP.HTTPPost(AURL : String ; APostData : String) ;
