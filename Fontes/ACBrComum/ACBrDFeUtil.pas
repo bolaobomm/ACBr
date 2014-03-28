@@ -90,7 +90,8 @@ type
      class function TrataString(const AValue: String; const ATamanho: Integer): String;overload;
      class function CortaD(const AString: string; const ATamanho: Integer): String;
      class function CortaE(const AString: string; const ATamanho: Integer): String;
-     class function FormatDate(const AString: string): String;
+     class function FormatDate(const AString: string): String;overload;
+     class function FormatDate(const AData: TDateTime): String;overload;
      class function FormatDateTime(const AString: string): string;
      class function StringToDate(const AString: string): TDateTime;
      class function StringToTime(const AString: string): TDateTime;
@@ -290,6 +291,30 @@ begin
       Result := ''
     else
       Result := DateToStr(vTemp);
+  except
+    Result := '';
+  end;
+end;
+
+class function DFeUtil.FormatDate(const AData: TDateTime): String;
+var
+{$IFDEF VER140} //delphi6
+{$ELSE}
+  FFormato : TFormatSettings;
+{$ENDIF}
+begin
+  try
+{$IFDEF VER140} //delphi6
+    DateSeparator := '/';
+    ShortDateFormat := 'dd/mm/yyyy';
+{$ELSE}
+    FFormato.DateSeparator   := '-';
+    FFormato.ShortDateFormat := 'yyyy-mm-dd';
+{$ENDIF}
+    if AData = 0 then
+      Result := ''
+    else
+      Result := DateToStr(AData);
   except
     Result := '';
   end;

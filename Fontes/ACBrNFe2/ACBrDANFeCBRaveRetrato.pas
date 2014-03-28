@@ -641,7 +641,7 @@ begin
        Box([fsTop],PosX,YPos,93,aHeigthPadrao,'Endereço',vEnd);
        Box([fsTop,fsLeft],XPos,YPos,50,aHeigthPadrao,'Bairro',XBairro);
        Box([fsTop,fsLeft],XPos,YPos,30,aHeigthPadrao,'CEP',NotaUtil.FormatarCEP(DFeUtil.Poem_Zeros(CEP,8)),taCenter);
-       Box([fsTop,fsLeft],XPos,YPos,21,aHeigthPadrao,'Data de '+vEntSai,DFeUtil.FormatDate(DateToStr(Ide.DSaiEnt)),taCenter,True);
+       Box([fsTop,fsLeft],XPos,YPos,21,aHeigthPadrao,'Data de '+vEntSai,DFeUtil.FormatDate(Ide.DSaiEnt),taCenter,True);
        Box([fsTop],PosX,YPos,85,aHeigthPadrao,'Município',XMun);
        Box([fsTop,fsLeft],XPos,YPos,40,aHeigthPadrao,'Fone / Fax',NotaUtil.FormatarFone(Fone),taCenter);
        Box([fsTop,fsLeft],XPos,YPos,10,aHeigthPadrao,'Estado',UF,taCenter);
@@ -1354,14 +1354,6 @@ begin
       ColsWidth[1]:=ColsWidth[1]-wtemp;
       ColsWidth[2]:=ColsWidth[2]+wtemp;
     end;
-
-    if TamanhoCampoVlUnit <> 0 then
-    begin
-      wtemp:=ColsWidth[8]-TamanhoCampoVlUnit;
-      ColsWidth[8]:=ColsWidth[8]-wtemp;
-      ColsWidth[2]:=ColsWidth[2]+wtemp;
-    end;
-
 
     FDetIndex:=0;
 
