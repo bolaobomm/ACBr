@@ -193,7 +193,7 @@ begin
       AnexosEmail.Text := Anexos.Text;
     if NomeArq <> '' then
      begin
-       SaveToFile(NomeArq);
+//       SaveToFile(NomeArq);
        AnexosEmail.Add(NomeArq);
      end
     else

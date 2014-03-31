@@ -26,7 +26,7 @@ type
                             noSimplesNacional59, noTributacaoNoMunicipio61, noTributacaoNoMunicipioSemISS62,
                             noTributacaoForaMunicipio63, noTributacaoForaMunicipioSemISS64,
                             noNaoTributa68, noSimplesNacional69, noNaoTributa78,
-                            no50, no57, no60, no67, no70, no79,
+                            no50, no53, no57, no60, no67, no70, no79,
                             //Itajai/SC
                             noISSDevidoItajai, noISSDevidoOutroMunicipio, noISSFixo,
                             noISSRetido, noOperacaoImune, noISSDevidoItajaiSN, noISSDevidoOutroMunicipioSN,
@@ -53,7 +53,7 @@ type
                     proGoiania, proIssCuritiba, proBHISS, proNatal, proISSDigital,
                     proISSe, pro4R, proGovDigital, proFiorilli, proCoplan, proProdata,
                     proAgili, proVirtual, proPVH, proFreire, proLink3, proSpeedGov,
-                    proVitoria, proMitra, ProTecnos, proPronim, proActcon );
+                    proVitoria, proMitra, ProTecnos, proPronim, proActcon, proEL );
 
   TnfseAcao = ( acRecepcionar, acConsSit, acConsLote, acConsNFSeRps, acConsNFSe, acCancelar, acGerar, acRecSincrono, acConsSecRps );
 
@@ -163,7 +163,7 @@ begin
   result := EnumeradoToStr(t,
                            ['1', '2', '3', '4', '5', '6', '7',
                             '51', '52', '58', '59', '61', '62', '63', '64', '68', '69', '78',
-                            '50', '57', '60', '67', '70', '79',
+                            '50', '53', '57', '60', '67', '70', '79',
                             '101', '111', '121', '201', '301', '501', '511', '541', '551', '601', '701'
                            ],
 
@@ -176,7 +176,7 @@ begin
                             noTributacaoNoMunicipioSemISS62, noTributacaoForaMunicipio63,
                             noTributacaoForaMunicipioSemISS64,
                             noNaoTributa68, noSimplesNacional69, noNaoTributa78,
-                            no50, no57, no60, no67, no70, no79,
+                            no50, no53, no57, no60, no67, no70, no79,
                             noISSDevidoItajai, noISSDevidoOutroMunicipio, noISSFixo,
                             noISSRetido, noOperacaoImune, noISSDevidoItajaiSN, noISSDevidoOutroMunicipioSN,
                             noMEISN, noEscritorioContabilSN, noISSRetidoSN, noOperacaoImuneSN
@@ -188,7 +188,7 @@ begin
   result := StrToEnumerado(ok, s,
                           ['1', '2', '3', '4', '5', '6', '7',
                            '51', '52', '58', '59', '61', '62', '63', '64', '68', '69', '78',
-                           '50', '57', '60', '67', '70', '79',
+                           '50', '53', '57', '60', '67', '70', '79',
                            '101', '111', '121', '201', '301', '501', '511', '541', '551', '601', '701'],
                           [noTributacaoNoMunicipio, noTributacaoForaMunicipio,
                            noIsencao, noImune, noSuspensaDecisaoJudicial,
@@ -199,7 +199,7 @@ begin
                            noTributacaoNoMunicipioSemISS62, noTributacaoForaMunicipio63,
                            noTributacaoForaMunicipioSemISS64,
                            noNaoTributa68, noSimplesNacional69, noNaoTributa78,
-                           no50, no57, no60, no67, no70, no79,
+                           no50, no53, no57, no60, no67, no70, no79,
                            noISSDevidoItajai, noISSDevidoOutroMunicipio, noISSFixo,
                            noISSRetido, noOperacaoImune, noISSDevidoItajaiSN, noISSDevidoOutroMunicipioSN,
                            noMEISN, noEscritorioContabilSN, noISSRetidoSN, noOperacaoImuneSN]);
@@ -321,14 +321,15 @@ begin
                             'SimplISS', 'Thema', 'RJ', 'Publica', 'fintelISS', 'Digifred', 'Betim', 'Saatri',
                             'FISSLEX', 'Goiania', 'IssCuritiba', 'BHISS', 'Natal', 'ISSDigital', 'ISSe',
                             '4R', 'GovDigital', 'Fiorilli', 'Coplan', 'Prodata', 'Agili', 'Virtual', 'PVH',
-                            'Freire', 'Link3', 'SpeedGov', 'Vitoria', 'Mitra', 'Tecnos', 'Pronim', 'Actcon'],
+                            'Freire', 'Link3', 'SpeedGov', 'Vitoria', 'Mitra', 'Tecnos', 'Pronim', 'Actcon',
+                            'EL'],
                            [proNenhum, proTiplan, proISSNET, proWebISS, proGINFES, proIssDSF, proProdemge, proAbaco,
                             proBetha, proEquiplano, proISSIntel, proProdam, proGovBR, proRecife,
                             proSimplISS, proThema, proRJ, proPublica, profintelISS, proDigifred, proBetim,
                             proSaatri, proFISSLEX, proGoiania, proIssCuritiba, proBHISS, proNatal,
                             proISSDigital, proISSe, pro4R, proGovDigital, proFiorilli, proCoplan, proProdata,
                             proAgili, proVirtual, proPVH, proFreire, proLink3, proSpeedGov, proVitoria, proMitra,
-                            proTecnos, proPronim, proActcon]);
+                            proTecnos, proPronim, proActcon, proEL]);
 end;
 
 function StrToProvedor(var ok: boolean; const s: string):TnfseProvedor;
@@ -339,14 +340,15 @@ begin
                             'SimplISS', 'Thema', 'RJ', 'Publica', 'fintelISS', 'Digifred', 'Betim', 'Saatri',
                             'FISSLEX', 'Goiania', 'IssCuritiba', 'BHISS', 'Natal', 'ISSDigital', 'ISSe',
                             '4R', 'GovDigital', 'Fiorilli', 'Coplan', 'Prodata', 'Agili', 'Virtual', 'PVH',
-                            'Freire', 'Link3', 'SpeedGov', 'Vitoria', 'Mitra', 'Tecnos', 'Pronim', 'Actcon'],
+                            'Freire', 'Link3', 'SpeedGov', 'Vitoria', 'Mitra', 'Tecnos', 'Pronim', 'Actcon',
+                            'EL'],
                            [proNenhum, proTiplan, proISSNET, proWebISS, proGINFES, proIssDSF, proProdemge, proAbaco,
                             proBetha, proEquiplano, proISSIntel, proProdam, proGovBR, proRecife,
                             proSimplISS, proThema, proRJ, proPublica, profintelISS, proDigifred, proBetim,
                             proSaatri, proFISSLEX, proGoiania, proIssCuritiba, proBHISS, proNatal,
                             proISSDigital, proISSe, pro4R, proGovDigital, proFiorilli, proCoplan, proProdata,
                             proAgili, proVirtual, proPVH, proFreire, proLink3, proSpeedGov, proVitoria, proMitra,
-                            proTecnos, proPronim, proActcon]);
+                            proTecnos, proPronim, proActcon, proEL]);
 end;
 
 // Descrição do Serviço ********************************************************
@@ -713,6 +715,9 @@ begin
 
   4308508  // Frederico Westphalen/RS
          : Provedor := 'Digifred';
+
+  3203205  // Linhares/ES
+         : Provedor := 'EL';
 
   4102307, // Balsa Nova/PR
   4104501, // Capanema/PR

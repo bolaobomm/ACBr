@@ -128,8 +128,9 @@ begin
             sHTTPPro := 'http://';
            end;
   4314100: begin // Passo Fundo/RS
-            ConfigURL.HomNomeCidade := 'nfsehomologacao.pmpf.rs.gov.br/nfse';
+            ConfigURL.HomNomeCidade := 'nfsehomologacao.pmpf.rs.gov.br/thema-nfse';
             ConfigURL.ProNomeCidade := 'nfse.pmpf.rs.gov.br/thema-nfse';
+            sHTTPPro := 'http://';
            end;
   4316808: begin // Santa Cruz Do Sul/RS
 //            ConfigURL.HomNomeCidade := 'nfse.santacruz.rs.gov.br/thema-nfse-hml';

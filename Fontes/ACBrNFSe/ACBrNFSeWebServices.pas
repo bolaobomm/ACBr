@@ -42,7 +42,7 @@ uses
     ACBrProvedorVirtual, ACBrProvedorPVH, ACBrProvedorFreire,
     ACBrProvedorLink3, ACBrProvedorSpeedGov, ACBrProvedorVitoria,
     ACBrProvedorMitra, ACBrProvedorTecnos, ACBrProvedorPronim,
-    ACBrProvedorActcon;
+    ACBrProvedorActcon, ACBrProvedorEL;
 
 type
 
@@ -654,6 +654,7 @@ begin
   proTecnos:      FProvedorClass := TProvedorTecnos.Create;
   proPronim:      FProvedorClass := TProvedorPronim.Create;
   proActcon:      FProvedorClass := TProvedorActcon.Create;
+  proEL:          FProvedorClass := TProvedorEL.Create;
  end;
 
  FPrefixo2     := FConfiguracoes.WebServices.Prefixo2;

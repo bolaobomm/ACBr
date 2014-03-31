@@ -68,7 +68,7 @@ begin
  ConfigCidade.Prefixo2      := '';
  ConfigCidade.Prefixo3      := '';
  ConfigCidade.Prefixo4      := '';
- ConfigCidade.Identificador := '';
+ ConfigCidade.Identificador := 'Id';
 
  if AAmbiente = 1                         
   then ConfigCidade.NameSpaceEnvelope := 'http://service.nfse.integracao.ws.publica/'
