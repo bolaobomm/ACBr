@@ -18295,8 +18295,8 @@ end;
 function StrToResponsavelRetencao(var ok: boolean; const s: string):TnfseResponsavelRetencao;
 begin
   result := StrToEnumerado(ok, s,
-                           ['1', '2'],
-                           [ptTomador, rtPrestador]);
+                           ['1', '2', ''],
+                           [ptTomador, rtPrestador, rtPrestador]);
 end;
 
 end.
