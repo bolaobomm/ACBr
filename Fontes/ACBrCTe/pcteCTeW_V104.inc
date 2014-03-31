@@ -1262,10 +1262,10 @@ begin
 
   (**)GerarCTRB;
   (**)GerarOCC;
+  (**)GerarValePed;
 
   if CTe.Rodo.Lota = ltSim
    then begin
-    (**)GerarValePed;
     (**)GerarVeic;
    end;
   (**)GerarLacre;
