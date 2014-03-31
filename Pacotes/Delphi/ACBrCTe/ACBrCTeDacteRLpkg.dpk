@@ -90,7 +90,7 @@ contains
   ACBrCTeDACTeRLClass in '..\..\..\Fontes\ACBrCTe\ACBrCTeDACTeRLClass.pas',
   ACBrCTeDACTeRLReg in '..\..\..\Fontes\ACBrCTe\ACBrCTeDACTeRLReg.pas',
   ACBrCTeDACTeRLRetrato in '..\..\..\Fontes\ACBrCTe\ACBrCTeDACTeRLRetrato.pas' {frmDACTeRLRetrato},
-  ACBrCTeDACTeQRRetratoA5 in '..\..\..\Fontes\ACBrCTe\ACBrCTeDACTeQRRetratoA5.pas' {frmDACTeRLRetratoA5},
+  ACBrCTeDACTeRLRetratoA5 in '..\..\..\Fontes\ACBrCTe\ACBrCTeDACTeRLRetratoA5.pas' {frmDACTeRLRetratoA5},
   ACBrCTeDACTeEventoRL in '..\..\..\Fontes\ACBrCTe\ACBrCTeDACTeEventoRL.pas' {frmCTeDAEventoRL},
   ACBrCTeDACTeEventoRLRetrato in '..\..\..\Fontes\ACBrCTe\ACBrCTeDACTeEventoRLRetrato.pas' {frmCTeDAEventoRLRetrato};
 end.
