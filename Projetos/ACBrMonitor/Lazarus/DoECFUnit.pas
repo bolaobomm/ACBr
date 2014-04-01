@@ -248,6 +248,9 @@ begin
         else if Cmd.Metodo = 'datahorasb' then
            Cmd.Resposta := FormatDateTime('dd/mm/yy hh:nn:ss', DataHoraSB )
 
+        else if Cmd.Metodo = 'datahoraultimareducaoz' then
+           Cmd.Resposta := FormatDateTime('dd/mm/yy hh:nn:ss', DataHoraUltimaReducaoZ )
+
         else if Cmd.Metodo = 'decimaisqtd' then
            Cmd.Resposta := IntToStr( DecimaisQtd )
 
