@@ -668,11 +668,6 @@ begin
                                  FConfiguracoes.Geral.VersaoDF,
                                  LayNfeCancelamento);
 
-//  if (FConfiguracoes.Geral.ModeloDF = moNFCe) then
-//     CancNFe.Versao := NFCeCanc
-//  else
-//     CancNFe.Versao := NFeCancNFe;
-
   CancNFe.GerarXML;
 
 {$IFDEF ACBrNFeOpenSSL}
@@ -710,7 +705,6 @@ procedure TWebServicesBase.DoNFeCartaCorrecao;
 var
   CCeNFe : TCCeNFe;
   i, f : integer;
-  // Incluido por Italo em 21/09/2012
   Eventos, Evento, Lote, EventosAssinados: AnsiString;
 begin
   CCeNFe := TCCeNFe.Create;
@@ -739,15 +733,7 @@ begin
                                 FConfiguracoes.Geral.VersaoDF,
                                 LayNfeCCe);
 
-  // Incluido por Italo em 18/02/2013
-//  if (FConfiguracoes.Geral.ModeloDF = moNFCe) then
-//     CCeNFe.Versao := NFCeCCe
-//  else
-//     CCeNFe.Versao := NFeCCeNFe;
-
   CCeNFe.GerarXML;
-
-  // Incluido por Italo em 21/09/2012
 
   // Separa os grupos <evento> e coloca na variável Eventos
   i       := Pos( '<evento ', CCeNFe.Gerador.ArquivoFormatoXML );
@@ -851,11 +837,6 @@ begin
                                      FConfiguracoes.Geral.VersaoDF,
                                      LayNfeConsulta);
 
-//  if (FConfiguracoes.Geral.ModeloDF = moNFCe) then
-//     ConsSitNFe.Versao := NFCeConsSit
-//  else
-//     ConsSitNFe.Versao := NFeConsSitNFe;
-
   ConsSitNFe.GerarXML;
 
   FDadosMsg := ConsSitNFe.Gerador.ArquivoFormatoXML;
@@ -885,11 +866,6 @@ begin
   InutNFe.Versao := GetVersaoNFe(FConfiguracoes.Geral.ModeloDF,
                                  FConfiguracoes.Geral.VersaoDF,
                                  LayNfeInutilizacao);
-
-//  if (FConfiguracoes.Geral.ModeloDF = moNFCe) then
-//     InutNFe.Versao := NFCeInut
-//  else
-//     InutNFe.Versao := NFeInutNFe;
 
   InutNFe.GerarXML;
 
@@ -932,11 +908,6 @@ begin
   ConCadNFe.Versao := GetVersaoNFe(FConfiguracoes.Geral.ModeloDF,
                                    FConfiguracoes.Geral.VersaoDF,
                                    LayNfeCadastro);
-
-//  if (FConfiguracoes.Geral.ModeloDF = moNFCe) then
-//     ConCadNFe.Versao := NFCeConsCad
-//  else
-//     ConCadNFe.Versao := NFeConsCad;
 
   ConCadNFe.GerarXML;
 
@@ -989,11 +960,6 @@ begin
                                  FConfiguracoes.Geral.VersaoDF,
                                  LayNfeEnvDPEC);
 
-//  if (FConfiguracoes.Geral.ModeloDF = moNFCe) then
-//     EnvDPEC.Versao := NFCeEnvDPEC
-//  else
-//     EnvDPEC.Versao := NFeEnvDPEC;
-
   EnvDPEC.GerarXML;
 
 {$IFDEF ACBrNFeOpenSSL}
@@ -1032,11 +998,6 @@ begin
   ConsDPEC.Versao := GetVersaoNFe(FConfiguracoes.Geral.ModeloDF,
                                  FConfiguracoes.Geral.VersaoDF,
                                  LayNfeConsultaDPEC);
-
-//  if (FConfiguracoes.Geral.ModeloDF = moNFCe) then
-//     ConsDPEC.Versao := NFCeConsDPEC
-//  else
-//     ConsDPEC.Versao := NFeConsDPEC;
 
   ConsDPEC.GerarXML;
 
@@ -1109,11 +1070,6 @@ begin
                                        FConfiguracoes.Geral.VersaoDF,
                                        LayNfeRetRecepcao);
 
-//  if (FConfiguracoes.Geral.ModeloDF = moNFCe) then
-//     ConsReciNFe.Versao := NFCeConsReci
-//  else
-//     ConsReciNFe.Versao := NFeConsReciNFe;
-
   ConsReciNFe.GerarXML;
 
   FDadosMsg := ConsReciNFe.Gerador.ArquivoFormatoXML;
@@ -1142,11 +1098,6 @@ begin
                                        FConfiguracoes.Geral.VersaoDF,
                                        LayNfeRetRecepcao);
 
-//  if (FConfiguracoes.Geral.ModeloDF = moNFCe) then
-//     ConsReciNFe.Versao := NFCeConsReci
-//  else
-//     ConsReciNFe.Versao := NFeConsReciNFe;
-
   ConsReciNFe.GerarXML;
 
   FDadosMsg := ConsReciNFe.Gerador.ArquivoFormatoXML;
@@ -1169,11 +1120,6 @@ begin
   ConsStatServ.Versao := GetVersaoNFe(FConfiguracoes.Geral.ModeloDF,
                                       FConfiguracoes.Geral.VersaoDF,
                                       LayNfeStatusServico);
-
-//  if (FConfiguracoes.Geral.ModeloDF = moNFCe) then
-//     ConsStatServ.Versao := NFCeConsStatServ
-//  else
-//     ConsStatServ.Versao := NFeConsStatServ;
 
   ConsStatServ.GerarXML;
 
@@ -1228,14 +1174,7 @@ begin
                                  FConfiguracoes.Geral.VersaoDF,
                                  LayNfeEvento);
 
-//  if (FConfiguracoes.Geral.ModeloDF = moNFCe) then
-//     EventoNFe.Versao := NFCeEvento
-//  else
-//     EventoNFe.Versao := NFeEventoNFe;
-
   EventoNFe.GerarXML;
-
-  // Incluido por Italo em 14/09/2012
 
   // Separa os grupos <evento> e coloca na variável Eventos
   i       := Pos( '<evento ', EventoNFe.Gerador.ArquivoFormatoXML );
@@ -1427,11 +1366,6 @@ begin
                                      FConfiguracoes.Geral.VersaoDF,
                                      LayNfeConsNFeDest);
 
-//  if (FConfiguracoes.Geral.ModeloDF = moNFCe) then
-//     ConsNFeDest.Versao := NFCeConsNFeDest
-//  else
-//     ConsNFeDest.Versao := NFeConsNFeDest;
-
   ConsNFeDest.GerarXML;
 
   FDadosMsg := ConsNFeDest.Gerador.ArquivoFormatoXML;
@@ -1464,11 +1398,6 @@ begin
   DownloadNFe.Versao := GetVersaoNFe(FConfiguracoes.Geral.ModeloDF,
                                      FConfiguracoes.Geral.VersaoDF,
                                      LayNfeDownloadNFe);
-
-//  if (FConfiguracoes.Geral.ModeloDF = moNFCe) then
-//     DownloadNFe.Versao := NFCeDownloadNFe
-//  else
-//     DownloadNFe.Versao := NFeDownloadNFe;
 
   DownloadNFe.GerarXML;
 
@@ -1660,11 +1589,6 @@ begin
                                                   LayNfeStatusServico) +
                    '</versaoDados>';
 
-//  if (FConfiguracoes.Geral.ModeloDF = moNFCe) then
-//     Texto := Texto + '<versaoDados>' + NFCeConsStatServ + '</versaoDados>'
-//  else
-//     Texto := Texto + '<versaoDados>' + NFeConsStatServ + '</versaoDados>';
-
   Texto := Texto +     '</nfeCabecMsg>';
   Texto := Texto +   '</soap12:Header>';
   Texto := Texto +   '<soap12:Body>';
@@ -1817,7 +1741,39 @@ begin
   Acao := TStringList.Create;
   Stream := TMemoryStream.Create;
 
-  // Alterado por Italo em 13/03/2014
+  // Alterado por Italo em 01/04/2014
+  case FConfiguracoes.Geral.ModeloDF of
+   moNFe:  begin
+            if (FConfiguracoes.Geral.VersaoDF = ve310) and not
+               (FConfiguracoes.WebServices.UFCodigo in [23, 31])  then // CE, MG
+             begin
+               SoapAction := 'http://www.portalfiscal.inf.br/nfe/wsdl/NfeAutorizacao';
+               nfeAutorizacaoLote := True;
+             end
+            else
+             begin
+               SoapAction := 'http://www.portalfiscal.inf.br/nfe/wsdl/NfeRecepcao2';
+               nfeAutorizacaoLote := False;
+             end;
+           end;
+           // Até o momento somente as UF: AC-Acre, AM-Amazonas, MA-Maranhão,
+           // MT-Mato Grosso, RN-Rio Grande do Norte, RS-Rio Grande do Sul e
+           // SE-Sergipe participam do projeto da NFC-e
+   moNFCe: begin
+            if (FConfiguracoes.Geral.VersaoDF = ve310) and not
+               (FConfiguracoes.WebServices.UFCodigo in [13])  then // AM
+             begin
+               SoapAction := 'http://www.portalfiscal.inf.br/nfe/wsdl/NfeAutorizacao';
+               nfeAutorizacaoLote := True;
+             end
+            else
+             begin
+               SoapAction := 'http://www.portalfiscal.inf.br/nfe/wsdl/NfeRecepcao2';
+               nfeAutorizacaoLote := False;
+             end;
+           end;
+  end;
+  (*
   if ((FConfiguracoes.Geral.ModeloDF = moNFCe) or (FConfiguracoes.Geral.VersaoDF = ve310)) and not
      (FConfiguracoes.WebServices.UFCodigo in [23, 31])  then // CE, MG
    begin
@@ -1829,7 +1785,7 @@ begin
      SoapAction := 'http://www.portalfiscal.inf.br/nfe/wsdl/NfeRecepcao2';
      nfeAutorizacaoLote := False;
    end;
-
+  *)
 
   Texto := '<?xml version="1.0" encoding="utf-8"?>';
   Texto := Texto + '<soap12:Envelope xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap12="http://www.w3.org/2003/05/soap-envelope">';
@@ -1847,11 +1803,6 @@ begin
                                                     FConfiguracoes.Geral.VersaoDF,
                                                     LayNfeRecepcao) +
                      '</versaoDados>';
-
-//  if (FConfiguracoes.Geral.ModeloDF = moNFCe) then
-//     Texto := Texto + '<versaoDados>' + NFCeEnvi + '</versaoDados>'
-//  else
-//     Texto := Texto + '<versaoDados>' + NFenviNFe + '</versaoDados>';
 
   Texto := Texto +     '</nfeCabecMsg>';
   Texto := Texto +   '</soap12:Header>';
@@ -1910,7 +1861,7 @@ begin
        StrStream.Free;
     {$ENDIF}
 
-    if ((FConfiguracoes.Geral.ModeloDF = moNFCe)  or (FConfiguracoes.Geral.VersaoDF = ve310)) and FSincrono then
+    if ((FConfiguracoes.Geral.ModeloDF = moNFCe) or (FConfiguracoes.Geral.VersaoDF = ve310)) and FSincrono then
      begin
        NFeRetornoSincrono := TRetConsSitNFe.Create;
 
@@ -1981,7 +1932,6 @@ begin
 
                    AProcNFe.PathRetConsSitNFe  := '';
                    AProcNFe.PathRetConsReciNFe := '';
-                   // Incluido por Italo em 18/10/2013
                    AProcNFe.tpAmb              := NFeRetornoSincrono.protNFe.tpAmb;
                    AProcNFe.verAplic           := NFeRetornoSincrono.protNFe.verAplic;
                    AProcNFe.chNFe              := NFeRetornoSincrono.protNFe.chNFe;
@@ -2001,11 +1951,6 @@ begin
                      AProcNFe.Versao := GetVersaoNFe(FConfiguracoes.Geral.ModeloDF,
                                                      FConfiguracoes.Geral.VersaoDF,
                                                      LayNfeRecepcao);
-
-//                   if (FConfiguracoes.Geral.ModeloDF = moNFCe) then
-//                      AProcNFe.Versao := NFCeEnvi
-//                   else
-//                      AProcNFe.Versao := NFenviNFe;
 
                    AProcNFe.GerarXML;
 
@@ -2146,11 +2091,6 @@ begin
                                                  FConfiguracoes.Geral.VersaoDF,
                                                  LayNfeRecepcao);
 
-//               if (FConfiguracoes.Geral.ModeloDF = moNFCe) then
-//                  AProcNFe.Versao := NFCeEnvi
-//               else
-//                  AProcNFe.Versao := NFenviNFe;
-
                AProcNFe.GerarXML;
 
                if DFeUtil.NaoEstaVazio(AProcNFe.Gerador.ArquivoFormatoXML) then
@@ -2236,7 +2176,39 @@ function TNFeRetRecepcao.Executar: Boolean;
     if assigned(FNFeRetorno) then
        FNFeRetorno.Free;
 
-    // Alterado por Italo em 13/03/2014
+  // Alterado por Italo em 01/04/2014
+  case FConfiguracoes.Geral.ModeloDF of
+   moNFe:  begin
+            if (FConfiguracoes.Geral.VersaoDF = ve310) and not
+               (FConfiguracoes.WebServices.UFCodigo in [23, 31])  then // CE, MG
+             begin
+               SoapAction := 'http://www.portalfiscal.inf.br/nfe/wsdl/NfeAutorizacao';
+               nfeAutorizacaoLote := True;
+             end
+            else
+             begin
+               SoapAction := 'http://www.portalfiscal.inf.br/nfe/wsdl/NfeRecepcao2';
+               nfeAutorizacaoLote := False;
+             end;
+           end;
+           // Até o momento somente as UF: AC-Acre, AM-Amazonas, MA-Maranhão,
+           // MT-Mato Grosso, RN-Rio Grande do Norte, RS-Rio Grande do Sul e
+           // SE-Sergipe participam do projeto da NFC-e
+   moNFCe: begin
+            if (FConfiguracoes.Geral.VersaoDF = ve310) and not
+               (FConfiguracoes.WebServices.UFCodigo in [13])  then // AM
+             begin
+               SoapAction := 'http://www.portalfiscal.inf.br/nfe/wsdl/NfeAutorizacao';
+               nfeAutorizacaoLote := True;
+             end
+            else
+             begin
+               SoapAction := 'http://www.portalfiscal.inf.br/nfe/wsdl/NfeRecepcao2';
+               nfeAutorizacaoLote := False;
+             end;
+           end;
+  end;
+  (*
     if ((FConfiguracoes.Geral.ModeloDF = moNFCe) or (FConfiguracoes.Geral.VersaoDF = ve310)) and not
        (FConfiguracoes.WebServices.UFCodigo in [23, 31])  then // CE, MG
      begin
@@ -2248,7 +2220,7 @@ function TNFeRetRecepcao.Executar: Boolean;
        SoapAction := 'http://www.portalfiscal.inf.br/nfe/wsdl/NfeRetRecepcao2';
        nfeAutorizacaoLote := False;
      end;
-
+  *)
     Texto := '<?xml version="1.0" encoding="utf-8"?>';
     Texto := Texto + '<soap12:Envelope xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap12="http://www.w3.org/2003/05/soap-envelope">';
     Texto := Texto +   '<soap12:Header>';
@@ -2265,11 +2237,6 @@ function TNFeRetRecepcao.Executar: Boolean;
                                                       FConfiguracoes.Geral.VersaoDF,
                                                       LayNfeRetRecepcao) +
                        '</versaoDados>';
-
-//    if (FConfiguracoes.Geral.ModeloDF = moNFCe) then
-//       Texto := Texto + '<versaoDados>' + NFCeConsReci + '</versaoDados>'
-//    else
-//       Texto := Texto + '<versaoDados>' + NFeConsReciNFe + '</versaoDados>';
 
     Texto := Texto +     '</nfeCabecMsg>';
     Texto := Texto +   '</soap12:Header>';
@@ -2448,7 +2415,39 @@ begin
   Acao := TStringList.Create;
   Stream := TMemoryStream.Create;
 
-  // Alterado por Italo em 13/03/2014
+  // Alterado por Italo em 01/04/2014
+  case FConfiguracoes.Geral.ModeloDF of
+   moNFe:  begin
+            if (FConfiguracoes.Geral.VersaoDF = ve310) and not
+               (FConfiguracoes.WebServices.UFCodigo in [23, 31])  then // CE, MG
+             begin
+               SoapAction := 'http://www.portalfiscal.inf.br/nfe/wsdl/NfeAutorizacao';
+               nfeAutorizacaoLote := True;
+             end
+            else
+             begin
+               SoapAction := 'http://www.portalfiscal.inf.br/nfe/wsdl/NfeRecepcao2';
+               nfeAutorizacaoLote := False;
+             end;
+           end;
+           // Até o momento somente as UF: AC-Acre, AM-Amazonas, MA-Maranhão,
+           // MT-Mato Grosso, RN-Rio Grande do Norte, RS-Rio Grande do Sul e
+           // SE-Sergipe participam do projeto da NFC-e
+   moNFCe: begin
+            if (FConfiguracoes.Geral.VersaoDF = ve310) and not
+               (FConfiguracoes.WebServices.UFCodigo in [13])  then // AM
+             begin
+               SoapAction := 'http://www.portalfiscal.inf.br/nfe/wsdl/NfeAutorizacao';
+               nfeAutorizacaoLote := True;
+             end
+            else
+             begin
+               SoapAction := 'http://www.portalfiscal.inf.br/nfe/wsdl/NfeRecepcao2';
+               nfeAutorizacaoLote := False;
+             end;
+           end;
+  end;
+  (*
   if ((FConfiguracoes.Geral.ModeloDF = moNFCe) or (FConfiguracoes.Geral.VersaoDF = ve310)) and not
      (FConfiguracoes.WebServices.UFCodigo in [23, 31])  then // CE, MG
    begin
@@ -2460,7 +2459,7 @@ begin
      SoapAction := 'http://www.portalfiscal.inf.br/nfe/wsdl/NfeRetRecepcao2';
      nfeAutorizacaoLote := False;
    end;
-
+  *)
   Texto := '<?xml version="1.0" encoding="utf-8"?>';
   Texto := Texto + '<soap12:Envelope xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap12="http://www.w3.org/2003/05/soap-envelope">';
   Texto := Texto +   '<soap12:Header>';
@@ -2478,7 +2477,6 @@ begin
                                                           LayNfeRetRecepcao) +
                            '</versaoDados>';
 
-//  Texto := Texto +       '<versaoDados>'+NFeconsReciNFe+'</versaoDados>';
   Texto := Texto +     '</nfeCabecMsg>';
   Texto := Texto +   '</soap12:Header>';
   Texto := Texto +   '<soap12:Body>';
@@ -2632,11 +2630,6 @@ begin
                                                   FConfiguracoes.Geral.VersaoDF,
                                                   LayNfeConsulta) +
                    '</versaoDados>';
-
-//  if (FConfiguracoes.Geral.ModeloDF = moNFCe) then
-//     Texto := Texto + '<versaoDados>' + NFCeConsSit + '</versaoDados>'
-//  else
-//     Texto := Texto + '<versaoDados>' + NFeConsSitNFe + '</versaoDados>';
 
   Texto := Texto +     '</nfeCabecMsg>';
   Texto := Texto +   '</soap12:Header>';
@@ -2895,11 +2888,6 @@ begin
                                                FConfiguracoes.Geral.VersaoDF,
                                                LayNfeRecepcao);
 
-//             if (FConfiguracoes.Geral.ModeloDF = moNFCe) then
-//                AProcNFe.Versao := NFCeEnvi
-//             else
-//                AProcNFe.Versao := NFenviNFe;
-
              AProcNFe.GerarXML;
 
              if DFeUtil.NaoEstaVazio(AProcNFe.Gerador.ArquivoFormatoXML) then
@@ -2940,11 +2928,6 @@ begin
                AProcNFe.Versao := GetVersaoNFe(FConfiguracoes.Geral.ModeloDF,
                                                FConfiguracoes.Geral.VersaoDF,
                                                LayNfeRecepcao);
-
-//             if (FConfiguracoes.Geral.ModeloDF = moNFCe) then
-//                AProcNFe.Versao := NFCeEnvi
-//             else
-//                AProcNFe.Versao := NFenviNFe;
 
              AProcNFe.GerarXML;
 
@@ -3001,11 +2984,6 @@ begin
                                                   FConfiguracoes.Geral.VersaoDF,
                                                   LayNfeCancelamento) +
                    '</versaoDados>';
-
-//  if (FConfiguracoes.Geral.ModeloDF = moNFCe) then
-//     Texto := Texto + '<versaoDados>' + NFCeCanc + '</versaoDados>'
-//  else
-//     Texto := Texto + '<versaoDados>' + NFeCancNFe + '</versaoDados>';
 
   Texto := Texto +     '</nfeCabecMsg>';
   Texto := Texto +   '</soap12:Header>';
@@ -3229,11 +3207,6 @@ begin
                                                   LayNfeInutilizacao) +
                    '</versaoDados>';
 
-//  if (FConfiguracoes.Geral.ModeloDF = moNFCe) then
-//     Texto := Texto + '<versaoDados>' + NFCeInut + '</versaoDados>'
-//  else
-//     Texto := Texto + '<versaoDados>' + NFeInutNFe + '</versaoDados>';
-
   Texto := Texto +     '</nfeCabecMsg>';
   Texto := Texto +   '</soap12:Header>';
   Texto := Texto +   '<soap12:Body>';
@@ -3419,11 +3392,6 @@ begin
                                                   LayNfeCadastro) +
                    '</versaoDados>';
 
-//  if (FConfiguracoes.Geral.ModeloDF = moNFCe) then
-//     Texto := Texto + '<versaoDados>' + NFCeConsCad + '</versaoDados>'
-//  else
-//     Texto := Texto + '<versaoDados>' + NFeConsCad + '</versaoDados>';
-
   Texto := Texto +     '</nfeCabecMsg>';
   Texto := Texto +   '</soap12:Header>';
   Texto := Texto +   '<soap12:Body>';
@@ -3579,7 +3547,6 @@ begin
                                  LayNfeEnvDPEC) +
                      '</versaoDados>';
 
-//  Texto := Texto + '    <versaoDados>'+NFeEnvDPEC+'</versaoDados>';
   Texto := Texto +  '</sceCabecMsg>';
   Texto := Texto + '</soap:Header>';
   Texto := Texto + '<soap:Body>';
@@ -3731,7 +3698,6 @@ begin
                                                      LayNfeConsultaDPEC) +
                       '</versaoDados>';
 
-//  Texto := Texto + '      <versaoDados>'+NFeConsDPEC+'</versaoDados>';
   Texto := Texto +   '</sceCabecMsg>';
   Texto := Texto +  '</soap:Header>';
   Texto := Texto + '<soap:Body>';
@@ -3900,7 +3866,6 @@ begin
                                                         LayNfeCCe) +
                          '</versaoDados>';
 
-//  Texto := Texto +       '<versaoDados>'+NFeCCeNFe+'</versaoDados>';
   Texto := Texto +     '</nfeCabecMsg>';
   Texto := Texto +   '</soap12:Header>';
   Texto := Texto +   '<soap12:Body>';
@@ -4021,8 +3986,6 @@ begin
                                                           FConfiguracoes.Geral.VersaoDF,
                                                           LayNfeCCe) + '">');
 
-//              wProc.Add('<procEventoNFe versao="' + NFeCCeNFe + '" xmlns="http://www.portalfiscal.inf.br/nfe">');
-//              wProc.Add('<evento versao="' + NFeCCeNFe + '">');
               Leitor.Arquivo := FDadosMSG;
               wProc.Add(UTF8Encode(Leitor.rExtrai(1, 'infEvento', '', i + 1)));
 //              wProc.Add('</infEvento>');
@@ -4044,7 +4007,6 @@ begin
                                                              FConfiguracoes.Geral.VersaoDF,
                                                              LayNfeCCe) + '">');
 
-//              wProc.Add('<retEvento versao="' + NFeCCeNFe + '">');
               Leitor.Arquivo := FRetWS;
               wProc.Add(UTF8Encode(Leitor.rExtrai(1, 'infEvento', '', j + 1)));
 //              wProc.Add('</infEvento>');
@@ -4139,7 +4101,6 @@ begin
                                                         LayNfeEvento) +
                          '</versaoDados>';
 
-//  Texto := Texto +       '<versaoDados>'+NFeEventoNFe+'</versaoDados>';
   Texto := Texto +     '</nfeCabecMsg>';
   Texto := Texto +   '</soap12:Header>';
   Texto := Texto +   '<soap12:Body>';
@@ -4268,8 +4229,6 @@ begin
                                                              FConfiguracoes.Geral.VersaoDF,
                                                              LayNfeEvento) + '">');
 
-//                 wProc.Add('<procEventoNFe versao="' + NFeEventoNFe + '" xmlns="http://www.portalfiscal.inf.br/nfe">');
-//                 wProc.Add('<evento versao="' + NFeEventoNFe + '">');
                  Leitor.Arquivo := FDadosMSG;
                  wProc.Add(UTF8Encode(Leitor.rExtrai(1, 'infEvento', '', i + 1)));
 //                 wProc.Add('</infEvento>');
@@ -4291,7 +4250,6 @@ begin
                                                                 FConfiguracoes.Geral.VersaoDF,
                                                                 LayNfeEvento) + '">');
 
-//                 wProc.Add('<retEvento versao="' + NFeEventoNFe + '">');
                  Leitor.Arquivo := FRetWS;
                  wProc.Add(UTF8Encode(Leitor.rExtrai(1, 'infEvento', '', j + 1)));
 //                 wProc.Add('</infEvento>');
@@ -4394,7 +4352,6 @@ begin
                                                         LayNfeConsNFeDest) +
                          '</versaoDados>';
 
-//  Texto := Texto +       '<versaoDados>'+NFeConsNFeDest+'</versaoDados>';
   Texto := Texto +     '</nfeCabecMsg>';
   Texto := Texto +   '</soap12:Header>';
   Texto := Texto +   '<soap12:Body>';
@@ -4553,7 +4510,6 @@ begin
                                                         LayNfeDownloadNFe) +
                          '</versaoDados>';
 
-//  Texto := Texto +       '<versaoDados>'+NFeDownloadNFe+'</versaoDados>';
   Texto := Texto +     '</nfeCabecMsg>';
   Texto := Texto +   '</soap12:Header>';
   Texto := Texto +   '<soap12:Body>';
@@ -4576,14 +4532,12 @@ begin
      ReqResp.SoapAction := 'http://www.portalfiscal.inf.br/nfe/wsdl/NfeDownloadNF/nfeDownloadNF';
   {$ENDIF}
 
-  // Movido para fora do try por Italo em 23/08/2012
   if Assigned(FRetDownloadNFe)
    then FreeAndNil(FRetDownloadNFe);
 
   FRetDownloadNFe := TRetDownloadNFe.Create;
 
   try
-    // Alterado por Italo em 17/07/2012
     TACBrNFe( FACBrNFe ).SetStatus( stDownloadNFe );
     if FConfiguracoes.Geral.Salvar then
      begin
