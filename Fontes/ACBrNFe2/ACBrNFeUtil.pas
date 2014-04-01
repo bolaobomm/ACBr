@@ -179,7 +179,7 @@ type
     class function UpperCase2(Str: String): String;
     class function UFtoCUF(UF : String): Integer;
     class function GetURLConsultaNFCe(const AUF : Integer; AAmbiente : TpcnTipoAmbiente) : String;
-    class function GetURLQRCode(const AUF : Integer; AAmbiente : TpcnTipoAmbiente;
+    class function GetURLQRCode(const AUF : Integer;  AAmbiente : TpcnTipoAmbiente;
                                 AchNFe, AcDest: String;
                                 AdhEmi: TDateTime;
                                 AvNF, AvICMS: Currency;

@@ -108,6 +108,10 @@ type
     FImprimirDetalhamentoEspecifico: boolean;
     FNFeCancelada : boolean;
     FLocalImpCanhoto: integer; // Incluido por Italo em 31/01/2013
+    // Incluido por Italo em 27/03/2014
+    // Destinado exclusivamente ao DANFE da NFC-e
+    FImprimeItens: Boolean;
+
     procedure Notification(AComponent: TComponent; Operation: TOperation); override;
   public
     constructor Create(AOwner: TComponent); override;
@@ -148,6 +152,9 @@ type
     property ImprimirDetalhamentoEspecifico: Boolean read FImprimirDetalhamentoEspecifico write FImprimirDetalhamentoEspecifico ;
     property NFeCancelada: Boolean read FNFeCancelada write FNFeCancelada ;
     property LocalImpCanhoto: Integer read FLocalImpCanhoto write FLocalImpCanhoto; // Incluido por Italo em 31/01/2013
+    // Incluido por Italo em 27/03/2014
+    // Destinado exclusivamente ao DANFE da NFC-e
+    property ImprimeItens: Boolean read FImprimeItens write FImprimeItens;
   end;
 
 implementation
@@ -221,6 +228,9 @@ begin
   FLocalImpCanhoto := 0;  // Incluido por Italo em 31/01/2013
   FCasasDecimais := TCasasDecimais.Create(self);
   FCasasDecimais.Name:= 'CasasDecimais' ;
+
+  FImprimeItens := True;
+
   {$IFDEF COMPILER6_UP}
       FCasasDecimais.SetSubComponent( true );{ para gravar no DFM/XFM }
   {$ENDIF}
