@@ -572,6 +572,17 @@ type
                    csticms760, // '760' // Estrangeira - Adquirida no mercado interno - ICMS cobrado anteriormente por substituição tributária
                    csticms770, // '770' // Estrangeira - Adquirida no mercado interno - Com redução de base de cálculo e cobrança do ICMS por substituição tributária
                    csticms790, // '790' // Estrangeira - Adquirida no mercado interno - Outras
+                   csticms800, // '800' // 
+                   csticms810, // '810' // 
+                   csticms820, // '820' // 
+                   csticms830, // '830' // 
+                   csticms840, // '840' // 
+                   csticms841, // '841' // 
+                   csticms850, // '850' // 
+                   csticms851, // '851' // 
+                   csticms860, // '860' // 
+                   csticms870, // '870' // 
+                   csticms890, // '890' // 
 
                    sticmsSimplesNacionalTributadaComPermissaoCredito         , // '101' // Simples Nacional - Tributada pelo Simples Nacional com permissão de crédito
                    sticmsSimplesNacionalTributadaSemPermissaoCredito         , // '102' // Simples Nacional - Tributada pelo Simples Nacional sem permissão de crédito
