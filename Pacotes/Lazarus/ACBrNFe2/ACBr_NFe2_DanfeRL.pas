@@ -9,13 +9,14 @@ interface
 uses
   ACBrNFeDANFeRL, ACBrNFeDANFeRLClass, ACBrNFeDANFeRLReg, 
   ACBrNFeDANFeRLRetrato, ACBrNFeDANFeRLPaisagem, ACBrNFeDANFeEventoRL, 
-  ACBrNFeDANFeEventoRLRetrato, LazarusPackageIntf;
+  ACBrNFeDANFeEventoRLRetrato, ACBrDANFCeFortesFr, LazarusPackageIntf;
 
 implementation
 
 procedure Register;
 begin
   RegisterUnit('ACBrNFeDANFeRLReg', @ACBrNFeDANFeRLReg.Register);
+  RegisterUnit('ACBrDANFCeFortesFr', @ACBrDANFCeFortesFr.Register);
 end;
 
 initialization
