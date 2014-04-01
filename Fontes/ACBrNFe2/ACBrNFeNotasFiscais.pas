@@ -201,9 +201,12 @@ begin
   FNFe.Emit.EnderEmit.cPais := 1058;
   FNFe.Emit.EnderEmit.nro   := 'SEM NUMERO';
 
-  FNFe.Dest.EnderDest.xPais := 'BRASIL';
-  FNFe.Dest.EnderDest.cPais := 1058;
-  FNFe.Dest.EnderDest.nro   := 'SEM NUMERO';
+  if FNFe.Ide.modelo = 55 then
+   begin
+     FNFe.Dest.EnderDest.xPais := 'BRASIL';
+     FNFe.Dest.EnderDest.cPais := 1058;
+     FNFe.Dest.EnderDest.nro   := 'SEM NUMERO';
+   end;
 
 end;
 
