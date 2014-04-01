@@ -46,7 +46,7 @@ unit ACBrNFeConfiguracoes;
 
 interface
 
-uses {$IFNDEF ACBrNFeOpenSSL} ACBrCAPICOM_TLB, JwaWinCrypt, JwaWinType, ACBrMSXML2_TLB,  {$ENDIF}
+uses {$IFNDEF ACBrNFeOpenSSL} windows, ACBrCAPICOM_TLB, JwaWinCrypt, ACBrMSXML2_TLB,  {$ENDIF}
   Classes, Sysutils, pcnConversao;
 
 {$IFNDEF ACBrNFeOpenSSL}
@@ -63,9 +63,13 @@ type
     {$ELSE}
        FNumeroSerie: AnsiString;
        FDataVenc: TDateTime;
+       FSubjectName : String;
+       FCNPJ : String;
        procedure SetNumeroSerie(const Value: AnsiString);
        function GetNumeroSerie: AnsiString;
     function GetDataVenc: TDateTime;
+    function GetSubjectName: String;
+    function GetCNPJ: String;
     {$ENDIF}
   public
     {$IFNDEF ACBrNFeOpenSSL}
@@ -78,6 +82,8 @@ type
     {$ELSE}
        property NumeroSerie: AnsiString read GetNumeroSerie write SetNumeroSerie;
        property DataVenc: TDateTime read GetDataVenc;
+       property SubjectName: String read GetSubjectName;
+       property CNPJ: String read GetCNPJ;
     {$ENDIF}
        property Senha: AnsiString read FSenhaCert write FSenhaCert;    
   end;
@@ -137,6 +143,8 @@ type
     FModeloDF: TpcnModeloDF;
     FVersaoDF: TpcnVersaoDF;
     FModeloDFCodigo: Integer;  //Verificar
+    FcIdToken : String;
+    FToken : String;
 
     procedure SetFormaEmissao(AValue: TpcnTipoEmissao);
     function GetPathSalvar: String;
@@ -162,6 +170,8 @@ type
     property ModeloDF: TpcnModeloDF read FModeloDF write SetModeloDF default moNFe;
     property VersaoDF: TpcnVersaoDF read FVersaoDF write SetVersaoDF default ve200;
     property ModeloDFCodigo: Integer read FModeloDFCodigo;
+    property cIdToken: String read FcIdToken write FcIdToken;
+    property Token: String read FToken write FToken;
   end;
 
   TArquivosConf = class(TComponent)
@@ -433,15 +443,17 @@ var
   Store        : IStore3;
   Certs        : ICertificates2;
   Cert         : ICertificate2;
-  i            : Integer;
+  Extension    : IExtension;
+  i,j,k        : Integer;
 
   xmldoc  : IXMLDOMDocument3;
   xmldsig : IXMLDigitalSignature;
   dsigKey   : IXMLDSigKey;
   SigKey    : IXMLDSigKeyEx;
   PrivateKey : IPrivateKey;
-  hCryptProvider : HCRYPTPROV;
-  XML : String;
+  hCryptProvider : ULONG_PTR;
+  XML, Propriedades : String;
+  Lista : TStringList;
 begin
 //  CoInitialize(nil); // PERMITE O USO DE THREAD
   if DFeUtil.EstaVazio( FNumeroSerie ) then
@@ -495,7 +507,7 @@ begin
             SigKey.getCSPHandle( hCryptProvider );
 
             try
-               CryptSetProvParam( hCryptProvider , PP_SIGNATURE_PIN, LPBYTE(FSenhaCert), 0 );
+               CryptSetProvParam( hCryptProvider , PP_SIGNATURE_PIN, windows.PBYTE(FSenhaCert), 0 );
             finally
               CryptReleaseContext(hCryptProvider, 0);
             end;
@@ -509,6 +521,30 @@ begin
 
       Result := Cert;
       FDataVenc := Cert.ValidToDate;
+      FSubjectName := Cert.SubjectName;
+
+      for J:=1 to Cert.Extensions.Count do
+       begin
+         Extension := IInterface(Cert.Extensions.Item[J]) as IExtension;
+         Propriedades := Extension.EncodedData.Format(True);
+         if (Pos('2.16.76.1.3.3',Propriedades) > 0) then
+          begin
+            Lista := TStringList.Create;
+            Lista.Text := Propriedades;
+            for K:=0 to Lista.Count-1 do
+             begin
+               if (Pos('2.16.76.1.3.3',Lista.Strings[K]) > 0) then
+                begin
+                  FCNPJ := StringReplace(Lista.Strings[K],'2.16.76.1.3.3=','',[rfIgnoreCase]);
+                  FCNPJ := OnlyNumber(HexToAscii(RemoveString(' ',FCNPJ)));
+                  break;
+                end;
+             end;
+            break;
+          end;
+         Extension := nil;
+       end;
+
       break;
     end;
   end;
@@ -546,6 +582,7 @@ begin
     Cert := IInterface(Certs2.Item[1]) as ICertificate2;
     FNumeroSerie := Cert.SerialNumber;
     FDataVenc    := Cert.ValidToDate;
+    FSubjectName := Cert.SubjectName;
   end;
 
   Result := FNumeroSerie;
@@ -560,8 +597,33 @@ begin
     Result := FDataVenc;
   end
  else
-    Result := 0;  
+    Result := 0;
 end;
+
+function TCertificadosConf.GetSubjectName: String;
+begin
+ if DFeUtil.NaoEstaVazio(FNumeroSerie) then
+  begin
+    if FSubjectName = '' then
+       GetCertificado;
+    Result := FSubjectName;
+  end
+ else
+    Result := '';
+end;
+
+function TCertificadosConf.GetCNPJ: String;
+begin
+ if DFeUtil.NaoEstaVazio(FNumeroSerie) then
+  begin
+    if FCNPJ = '' then
+       GetCertificado;
+    Result := FCNPJ;
+  end
+ else
+    Result := '';
+end;
+
 {$ENDIF}
 
 
