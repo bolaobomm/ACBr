@@ -178,13 +178,18 @@ type
     class function CollateBr(Str: String): String;
     class function UpperCase2(Str: String): String;
     class function UFtoCUF(UF : String): Integer;
-    class function GetURLConsultaNFCe(const AUF, AAmbiente : Integer) : String;
+    class function GetURLConsultaNFCe(const AUF : Integer; AAmbiente : TpcnTipoAmbiente) : String;
+    class function GetURLQRCode(const AUF : Integer; AAmbiente : TpcnTipoAmbiente;
+                                AchNFe, AcDest: String;
+                                AdhEmi: TDateTime;
+                                AvNF, AvICMS: Currency;
+                                AdigVal: String) : String;
   end;
 
 implementation
 
 uses {$IFDEF ACBrNFeOpenSSL}libxml2, libxmlsec, libxslt, {$ELSE} ComObj, {$ENDIF} Sysutils,
-  Variants, ACBrUtil, ACBrConsts, ACBrNFe, pcnAuxiliar;
+  Variants, ACBrUtil, ACBrConsts, ACBrNFe, pcnAuxiliar, ACBrEAD;
 
 { NotaUtil }
 
@@ -1098,13 +1103,13 @@ begin
    begin
     (*
     case ALayOut of
-      LayNfeRecepcao      : Result := DFeUtil.SeSenao(AAmbiente=1, 'https://nfe.sefaz.am.gov.br/nfce-services/services/NfeRecepcao2',      'https://homnfce.sefaz.am.gov.br/nfce-services/services/NfeRecepcao2');
-      LayNfeRetRecepcao   : Result := DFeUtil.SeSenao(AAmbiente=1, 'https://nfe.sefaz.am.gov.br/nfce-services/services/NfeRetRecepcao2',   'https://homnfce.sefaz.am.gov.br/nfce-services/services/NfeRetRecepcao2');
-      LayNfeInutilizacao  : Result := DFeUtil.SeSenao(AAmbiente=1, 'https://nfe.sefaz.am.gov.br/nfce-services/services/NfeInutilizacao2',  'https://homnfce.sefaz.am.gov.br/nfce-services/services/NfeInutilizacao2');
-      LayNfeConsulta      : Result := DFeUtil.SeSenao(AAmbiente=1, 'https://nfe.sefaz.am.gov.br/nfce-services/services/NfeConsulta2',      'https://homnfce.sefaz.am.gov.br/nfce-services/services/NfeConsulta2');
-      LayNfeStatusServico : Result := DFeUtil.SeSenao(AAmbiente=1, 'https://nfe.sefaz.am.gov.br/nfce-services/services/NfeStatusServico2', 'https://homnfce.sefaz.am.gov.br/nfce-services/services/NfeStatusServico2');
+      LayNfeRecepcao      : Result := DFeUtil.SeSenao(AAmbiente=1, 'https://nfce.sefaz.am.gov.br/nfce-services/services/NfeRecepcao2',      'https://homnfce.sefaz.am.gov.br/nfce-services/services/NfeRecepcao2');
+      LayNfeRetRecepcao   : Result := DFeUtil.SeSenao(AAmbiente=1, 'https://nfce.sefaz.am.gov.br/nfce-services/services/NfeRetRecepcao2',   'https://homnfce.sefaz.am.gov.br/nfce-services/services/NfeRetRecepcao2');
+      LayNfeInutilizacao  : Result := DFeUtil.SeSenao(AAmbiente=1, 'https://nfce.sefaz.am.gov.br/nfce-services/services/NfeInutilizacao2',  'https://homnfce.sefaz.am.gov.br/nfce-services/services/NfeInutilizacao2');
+      LayNfeConsulta      : Result := DFeUtil.SeSenao(AAmbiente=1, 'https://nfce.sefaz.am.gov.br/nfce-services/services/NfeConsulta2',      'https://homnfce.sefaz.am.gov.br/nfce-services/services/NfeConsulta2');
+      LayNfeStatusServico : Result := DFeUtil.SeSenao(AAmbiente=1, 'https://nfce.sefaz.am.gov.br/nfce-services/services/NfeStatusServico2', 'https://homnfce.sefaz.am.gov.br/nfce-services/services/NfeStatusServico2');
       LayNFeCCe,
-      LayNFeEvento        : Result := DFeUtil.SeSenao(AAmbiente=1, 'https://nfe.sefaz.am.gov.br/nfce-services/services/RecepcaoEvento',    'https://homnfce.sefaz.am.gov.br/nfce-services/services/RecepcaoEvento');
+      LayNFeEvento        : Result := DFeUtil.SeSenao(AAmbiente=1, 'https://nfce.sefaz.am.gov.br/nfce-services/services/RecepcaoEvento',    'https://homnfce.sefaz.am.gov.br/nfce-services/services/RecepcaoEvento');
     end;
     *)
 
@@ -1309,10 +1314,8 @@ begin
   if AModeloDF = moNFe then
    begin
     case ALayOut of
-      LayNfeRecepcao,
-      LayNfeAutorizacao    : Result := DFeUtil.SeSenao(AAmbiente=1, 'https://nfe.fazenda.mg.gov.br/nfe2/services/NfeRecepcao2',         'https://hnfe.fazenda.mg.gov.br/nfe2/services/NfeRecepcao2');
-      LayNfeRetRecepcao,
-      LayNfeRetAutorizacao : Result := DFeUtil.SeSenao(AAmbiente=1, 'https://nfe.fazenda.mg.gov.br/nfe2/services/NfeRetRecepcao2',      'https://hnfe.fazenda.mg.gov.br/nfe2/services/NfeRetRecepcao2');
+      LayNfeRecepcao       : Result := DFeUtil.SeSenao(AAmbiente=1, 'https://nfe.fazenda.mg.gov.br/nfe2/services/NfeRecepcao2',         'https://hnfe.fazenda.mg.gov.br/nfe2/services/NfeRecepcao2');
+      LayNfeRetRecepcao    : Result := DFeUtil.SeSenao(AAmbiente=1, 'https://nfe.fazenda.mg.gov.br/nfe2/services/NfeRetRecepcao2',      'https://hnfe.fazenda.mg.gov.br/nfe2/services/NfeRetRecepcao2');
       LayNfeCancelamento   : Result := DFeUtil.SeSenao(AAmbiente=1, 'https://nfe.fazenda.mg.gov.br/nfe2/services/NfeCancelamento2',     'https://hnfe.fazenda.mg.gov.br/nfe2/services/NfeCancelamento2');
       LayNfeInutilizacao   : Result := DFeUtil.SeSenao(AAmbiente=1, 'https://nfe.fazenda.mg.gov.br/nfe2/services/NfeInutilizacao2',     'https://hnfe.fazenda.mg.gov.br/nfe2/services/NfeInutilizacao2');
       LayNfeConsulta       : Result := DFeUtil.SeSenao(AAmbiente=1, 'https://nfe.fazenda.mg.gov.br/nfe2/services/NfeConsulta2',         'https://hnfe.fazenda.mg.gov.br/nfe2/services/NfeConsulta2');
@@ -1320,6 +1323,9 @@ begin
       LayNfeCadastro       : Result := DFeUtil.SeSenao(AAmbiente=1, 'https://nfe.fazenda.mg.gov.br/nfe2/services/cadconsultacadastro2', 'https://hnfe.fazenda.mg.gov.br/nfe2/services/cadconsultacadastro2');
       LayNFeCCe,
       LayNFeEvento         : Result := DFeUtil.SeSenao(AAmbiente=1, 'https://nfe.fazenda.mg.gov.br/nfe2/services/RecepcaoEvento',       'https://hnfe.fazenda.mg.gov.br/nfe2/services/RecepcaoEvento');
+
+      LayNfeAutorizacao    : Result := DFeUtil.SeSenao(AAmbiente=1, 'https://nfe.fazenda.mg.gov.br/nfe2/services/NfeAutorizacao',       'https://hnfe.fazenda.mg.gov.br/nfe2/services/NfeAutorizacao');
+      LayNfeRetAutorizacao : Result := DFeUtil.SeSenao(AAmbiente=1, 'https://nfe.fazenda.mg.gov.br/nfe2/services/NfeRetAutorizacao',    'https://hnfe.fazenda.mg.gov.br/nfe2/services/NfeRetAutorizacao');
     end;
    end
   else
@@ -2553,8 +2559,113 @@ begin
      Result := Codigo;
 end;
 
-class function NotaUtil.GetURLConsultaNFCe(const AUF, AAmbiente : Integer) : String;
+class function NotaUtil.GetURLConsultaNFCe(const AUF : Integer; AAmbiente : TpcnTipoAmbiente) : String;
 begin
+  case AUF of
+   12: Result := DFeUtil.SeSenao(AAmbiente = taProducao, 'http://www.sefaznet.ac.gov.br/nfce/', 'http://hml.sefaznet.ac.gov.br/nfce/'); //AC
+   27: Result := DFeUtil.SeSenao(AAmbiente = taProducao, '', ''); //AL
+   16: Result := DFeUtil.SeSenao(AAmbiente = taProducao, '', ''); //AP
+   13: Result := DFeUtil.SeSenao(AAmbiente = taProducao, 'http://sistemas.sefaz.am.gov.br/nfceweb/formConsulta.do', 'http://homnfce.sefaz.am.gov.br/nfceweb/formConsulta.do'); //AM
+   29: Result := DFeUtil.SeSenao(AAmbiente = taProducao, '', ''); //BA
+   23: Result := DFeUtil.SeSenao(AAmbiente = taProducao, '', ''); //CE
+   53: Result := DFeUtil.SeSenao(AAmbiente = taProducao, '', ''); //DF
+   32: Result := DFeUtil.SeSenao(AAmbiente = taProducao, '', ''); //ES
+   52: Result := DFeUtil.SeSenao(AAmbiente = taProducao, '', ''); //GO
+   21: Result := DFeUtil.SeSenao(AAmbiente = taProducao, '', ''); //MA
+   51: Result := DFeUtil.SeSenao(AAmbiente = taProducao, 'http://www.sefaz.mt.gov.br/nfce/consultanfce', 'http://homologacao.sefaz.mt.gov.br/nfce/consultanfce'); //MT
+   50: Result := DFeUtil.SeSenao(AAmbiente = taProducao, '', ''); //MS
+   31: Result := DFeUtil.SeSenao(AAmbiente = taProducao, '', ''); //MG
+   15: Result := DFeUtil.SeSenao(AAmbiente = taProducao, '', ''); //PA
+   25: Result := DFeUtil.SeSenao(AAmbiente = taProducao, '', ''); //PB
+   41: Result := DFeUtil.SeSenao(AAmbiente = taProducao, '', ''); //PR
+   26: Result := DFeUtil.SeSenao(AAmbiente = taProducao, '', ''); //PE
+   22: Result := DFeUtil.SeSenao(AAmbiente = taProducao, '', ''); //PI
+   33: Result := DFeUtil.SeSenao(AAmbiente = taProducao, '', ''); //RJ
+   24: Result := DFeUtil.SeSenao(AAmbiente = taProducao, '', ''); //RN
+   43: Result := DFeUtil.SeSenao(AAmbiente = taProducao, '', ''); //RS
+   11: Result := DFeUtil.SeSenao(AAmbiente = taProducao, '', ''); //RO
+   14: Result := DFeUtil.SeSenao(AAmbiente = taProducao, '', ''); //RR
+   42: Result := DFeUtil.SeSenao(AAmbiente = taProducao, '', ''); //SC
+   35: Result := DFeUtil.SeSenao(AAmbiente = taProducao, '', ''); //SP
+   28: Result := DFeUtil.SeSenao(AAmbiente = taProducao, '', ''); //SE
+   17: Result := DFeUtil.SeSenao(AAmbiente = taProducao, '', ''); //TO
+  end;
+end;
+
+class function NotaUtil.GetURLQRCode(const AUF : Integer; AAmbiente : TpcnTipoAmbiente;
+                                     AchNFe, AcDest: String;
+                                     AdhEmi: TDateTime;
+                                     AvNF, AvICMS: Currency;
+                                     AdigVal: String): String;
+var
+ sdhEmi_HEX, sdigVal_HEX, sNF, sICMS,
+ cIdToken, cTokenHom, cTokenPro, sToken,
+ sEntrada, cHashQRCode, urlUF: String;
+ HashQRCode : TACBrEAD;
+begin
+  case AUF of
+   12: urlUF := DFeUtil.SeSenao(AAmbiente = taProducao, 'http://www.sefaznet.ac.gov.br/nfe', 'http://hml.sefaznet.ac.gov.br/nfce'); //AC
+   27: urlUF := DFeUtil.SeSenao(AAmbiente = taProducao, '', ''); //AL
+   16: urlUF := DFeUtil.SeSenao(AAmbiente = taProducao, '', ''); //AP
+   13: urlUF := DFeUtil.SeSenao(AAmbiente = taProducao, 'http://sistemas.sefaz.am.gov.br/nfceweb/consultarNFCe.jsp', 'http://homnfce.sefaz.am.gov.br/nfceweb/consultarNFCe.jsp'); //AM
+   29: urlUF := DFeUtil.SeSenao(AAmbiente = taProducao, '', ''); //BA
+   23: urlUF := DFeUtil.SeSenao(AAmbiente = taProducao, '', ''); //CE
+   53: urlUF := DFeUtil.SeSenao(AAmbiente = taProducao, '', ''); //DF
+   32: urlUF := DFeUtil.SeSenao(AAmbiente = taProducao, '', ''); //ES
+   52: urlUF := DFeUtil.SeSenao(AAmbiente = taProducao, '', ''); //GO
+   21: urlUF := DFeUtil.SeSenao(AAmbiente = taProducao, 'http://www.nfce.sefaz.ma.gov.br/portal/consultarNFCe.jsp', 'http://www.hom.nfce.sefaz.ma.gov.br/portal/consultarNFCe.jsp'); //MA
+   51: urlUF := DFeUtil.SeSenao(AAmbiente = taProducao, 'http://www.sefaz.mt.gov.br/nfce/consultanfce',             'http://homologacao.sefaz.mt.gov.br/nfce/consultanfce');         //MT
+   50: urlUF := DFeUtil.SeSenao(AAmbiente = taProducao, '', ''); //MS
+   31: urlUF := DFeUtil.SeSenao(AAmbiente = taProducao, '', ''); //MG
+   15: urlUF := DFeUtil.SeSenao(AAmbiente = taProducao, '', ''); //PA
+   25: urlUF := DFeUtil.SeSenao(AAmbiente = taProducao, '', ''); //PB
+   41: urlUF := DFeUtil.SeSenao(AAmbiente = taProducao, '', ''); //PR
+   26: urlUF := DFeUtil.SeSenao(AAmbiente = taProducao, '', ''); //PE
+   22: urlUF := DFeUtil.SeSenao(AAmbiente = taProducao, '', ''); //PI
+   33: urlUF := DFeUtil.SeSenao(AAmbiente = taProducao, '', ''); //RJ
+   24: urlUF := DFeUtil.SeSenao(AAmbiente = taProducao, 'http://nfce.set.rn.gov.br/consultarNFCe.aspx',   'http://nfce.set.rn.gov.br/consultarNFCe.aspx');   //RN
+   43: urlUF := DFeUtil.SeSenao(AAmbiente = taProducao, 'https://www.sefaz.rs.gov.br/NFCE/NFCE-COM.aspx', 'https://www.sefaz.rs.gov.br/NFCE/NFCE-COM.aspx'); //RS
+   11: urlUF := DFeUtil.SeSenao(AAmbiente = taProducao, '', ''); //RO
+   14: urlUF := DFeUtil.SeSenao(AAmbiente = taProducao, '', ''); //RR
+   42: urlUF := DFeUtil.SeSenao(AAmbiente = taProducao, '', ''); //SC
+   35: urlUF := DFeUtil.SeSenao(AAmbiente = taProducao, '', ''); //SP
+   28: urlUF := DFeUtil.SeSenao(AAmbiente = taProducao, 'http://www.nfe.se.gov.br/portal/consultarNFCe.jsp', 'http://www.hom.nfe.se.gov.br/portal/consultarNFCe.jsp'); //SE
+   17: urlUF := DFeUtil.SeSenao(AAmbiente = taProducao, '', ''); //TO
+  end;
+
+  // Passo 1
+  sdhEmi_HEX  := AsciiToHex(DateTimeTodh(AdhEmi) + GetUTC(CodigoParaUF(AUF), AdhEmi));
+
+  // Passo 2
+  sdigVal_HEX := AsciiToHex(AdigVal);
+
+  // Passo 3 e 4
+  // Pegar de uma propriedade do componente
+  cIdToken  := '000001';
+  cTokenHom := Copy(AchNFe, 7, 8) + '20' + Copy(AchNFe, 3, 2) + Copy(cIdToken, 3, 4);
+  // Pegar de uma propriedade do componente
+  cTokenPro := 'C1774291-A86A-4ADA-B247-791207C6CF50';
+
+  sToken    := DFeUtil.SeSenao(AAmbiente = taProducao, cIdToken + cTokenPro, cIdToken + cTokenHom);
+
+  sNF       := StringReplace(FormatFloat('0.00', AvNF), ',', '.', [rfReplaceAll]);
+  sICMS     := StringReplace(FormatFloat('0.00', AvICMS), ',', '.', [rfReplaceAll]);
+
+  sEntrada  := 'chNFe=' + AchNFe + '&nVersao=100&tpAmb=' + TpAmbToStr(AAmbiente) +
+               DFeUtil.SeSenao(AcDest = '', '', '&cDest='+AcDest) +
+               '&dhEmi=' + sdhEmi_HEX + '&vNF=' + sNF + '&vICMS=' + sICMS +
+               '&digVal=' + sdigVal_HEX + '&cIdToken=';
+
+  // Passo 5 calcular o SHA-1 da string sEntrada
+  HashQRCode := TACBrEAD.Create(nil);
+  try
+    cHashQRCode := HashQRCode.CalcularHash(sEntrada + sToken, dgstSHA1);
+  finally
+    HashQRCode.Free;
+  end;
+
+  // Passo 6
+  Result := urlUF + '?'+ sEntrada + cIdToken+ '&cHashQRCode=' + cHashQRCode;
 end;
 
 end.
