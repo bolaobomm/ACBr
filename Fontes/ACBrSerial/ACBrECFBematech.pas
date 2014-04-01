@@ -2921,6 +2921,7 @@ begin
       DHUltZ := DataHoraUltimaReducaoZ;
     end;
 
+    ComandoLOG := 'GetDadosUltimaReducaoZ_MFD';
     BytesResp := 621 ;
     RetCmd    := BcdToAsc(EnviaComando( #88, 5 )) ;
 
@@ -3054,6 +3055,7 @@ begin
       ECFCRO := NumCRO;
     end;
 
+    ComandoLOG := 'GetDadosUltimaReducaoZ';
     BytesResp := 308 ;
     RetCmd    := BcdToAsc(EnviaComando( #62 + #55, 5 )) ;
 
