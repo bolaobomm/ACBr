@@ -102,6 +102,7 @@ type
 {$ENDIF}
     class function GerarNomeNFSe(AUF: Integer; ADataEmissao: TDateTime; ACNPJ: String;
                                  ANumero:Integer; AModelo: Integer = 56): String;
+    class function ObterDescricaoServico(cCodigo: String): AnsiString;
   published
 
   end;
@@ -1596,6 +1597,32 @@ begin
   vNumero      := DFeUtil.Poem_Zeros(ANumero, 9);
 
   Result := vUF + vDataEmissao + ACNPJ + vModelo + vNumero;
+end;
+
+class function NotaUtil.ObterDescricaoServico(cCodigo: String): AnsiString;
+var
+ i           : Integer;
+ PathArquivo : String;
+ List        : TstringList;
+begin
+ result := '';
+ PathArquivo :=  PathWithDelim(ExtractFilePath(Application.ExeName))+ 'TabServicos.txt';
+ if (FileExists(PathArquivo)) and (cCodigo <> '')
+  then begin
+   List := TstringList.Create;
+   try
+    List.LoadFromFile(PathArquivo);
+    i := 0;
+    while (i < list.count) and (result = '') do
+     begin
+      if pos(cCodigo, List[i]) > 0
+       then result := Trim(stringReplace(list[i], ccodigo, '', []));
+      inc(i);
+    end;
+   finally
+    List.free;
+   end;
+  end;
 end;
 
 end.

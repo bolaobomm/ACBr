@@ -82,6 +82,7 @@ type
     FLeitor: TLeitor;
     FListaNfse: TGerarListaNfse;
     FProvedor: TnfseProvedor;
+    FTabServicosExt: Boolean;
   public
     constructor Create;
     destructor Destroy; override;
@@ -92,6 +93,7 @@ type
     property Leitor: TLeitor                read FLeitor                 write FLeitor;
     property ListaNfse: TGerarListaNfse     read FListaNfse              write FListaNfse;
     property Provedor: TnfseProvedor        read FProvedor               write FProvedor;
+    property TabServicosExt: Boolean        read FTabServicosExt         write FTabServicosExt;
   end;
 
 implementation
@@ -340,28 +342,22 @@ begin
                   ListaNfse.FCompNfse[i].FNFSe.Servico.ItemListaServico :=
                       Copy(ListaNfse.FCompNfse[i].FNFSe.Servico.ItemListaServico, 1, 2) + '.' +
                       Copy(ListaNfse.FCompNfse[i].FNFSe.Servico.ItemListaServico, 3, 2);
+
+                  if TabServicosExt
+                   then ListaNfse.FCompNfse[i].FNFSe.Servico.xItemListaServico := NotaUtil.ObterDescricaoServico(SomenteNumeros(ListaNfse.FCompNfse[i].FNFSe.Servico.ItemListaServico))
+                   else ListaNfse.FCompNfse[i].FNFSe.Servico.xItemListaServico := CodigoToDesc(SomenteNumeros(ListaNfse.FCompNfse[i].FNFSe.Servico.ItemListaServico));
                  end;
-
-                (*
-                Item := StrToInt(SomenteNumeros(ListaNfse.FCompNfse[i].FNfse.Servico.ItemListaServico));
-                if Item<100 then Item:=Item*100+1;
-
-                ListaNfse.FCompNfse[i].FNFSe.Servico.ItemListaServico := FormatFloat('0000', Item);
-                ListaNfse.FCompNfse[i].FNFSe.Servico.ItemListaServico :=
-                    Copy(ListaNfse.FCompNfse[i].FNFSe.Servico.ItemListaServico, 1, 2) + '.' +
-                    Copy(ListaNfse.FCompNfse[i].FNFSe.Servico.ItemListaServico, 3, 2);
-                *)
 
                 if length(ListaNfse.FCompNfse[i].FNFSe.Servico.CodigoMunicipio)<7
                  then ListaNfse.FCompNfse[i].FNFSe.Servico.CodigoMunicipio :=
                        Copy(ListaNfse.FCompNfse[i].FNFSe.Servico.CodigoMunicipio, 1, 2) +
                        FormatFloat('00000', StrToIntDef(Copy(ListaNfse.FCompNfse[i].FNFSe.Servico.CodigoMunicipio, 3, 5), 0));
-
+                 (*
                 //Alterado por Cleiver em 26/02/2013
                 if (ListaNfse.FCompNfse[i].FNFSe.Servico.ItemListaServico <> '')
                  then ListaNfse.FCompNfse[i].FNFSe.Servico.xItemListaServico :=
                       CodigoToDesc(SomenteNumeros(ListaNfse.FCompNfse[i].FNFSe.Servico.ItemListaServico));
-
+                *)
                 if Leitor.rExtrai(7, 'Valores') <> ''
                  then begin
                   ListaNfse.FCompNfse[i].FNFSe.Servico.Valores.ValorServicos          := Leitor.rCampo(tcDe2, 'ValorServicos');

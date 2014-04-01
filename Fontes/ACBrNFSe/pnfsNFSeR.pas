@@ -22,6 +22,7 @@ type
     FOpcoes: TLeitorOpcoes;
     FVersaoXML: String;
     FProvedor: TnfseProvedor;
+    FTabServicosExt: Boolean;
 
     function LerRPS_ABRASF_V1: Boolean;
     function LerRPS_ABRASF_V2: Boolean;
@@ -40,12 +41,13 @@ type
     destructor Destroy; override;
     function LerXml: boolean;
   published
-    property Leitor: TLeitor read FLeitor write FLeitor;
-    property NFSe: TNFSe read FNFSe write FNFSe;
-    property schema: TpcnSchema read Fschema write Fschema;
-    property Opcoes: TLeitorOpcoes read FOpcoes write FOpcoes;
-    property VersaoXML: String read FVersaoXML write FVersaoXML;
-    property Provedor: TnfseProvedor read FProvedor write FProvedor;
+    property Leitor: TLeitor         read FLeitor         write FLeitor;
+    property NFSe: TNFSe             read FNFSe           write FNFSe;
+    property schema: TpcnSchema      read Fschema         write Fschema;
+    property Opcoes: TLeitorOpcoes   read FOpcoes         write FOpcoes;
+    property VersaoXML: String       read FVersaoXML      write FVersaoXML;
+    property Provedor: TnfseProvedor read FProvedor       write FProvedor;
+    property TabServicosExt: Boolean read FTabServicosExt write FTabServicosExt;
   end;
 
  TLeitorOpcoes = class(TPersistent)
@@ -138,7 +140,9 @@ begin
      NFSe.Servico.ItemListaServico := Copy(NFSe.Servico.ItemListaServico, 1, 2) + '.' +
                                       Copy(NFSe.Servico.ItemListaServico, 3, 2);
 
-     NFSe.Servico.xItemListaServico := CodigoToDesc(SomenteNumeros(NFSe.Servico.ItemListaServico));
+     if TabServicosExt
+      then NFSe.Servico.xItemListaServico := NotaUtil.ObterDescricaoServico(SomenteNumeros(NFSe.Servico.ItemListaServico))
+      else NFSe.Servico.xItemListaServico := CodigoToDesc(SomenteNumeros(NFSe.Servico.ItemListaServico));
 
      if length(NFSe.Servico.CodigoMunicipio) < 7
       then NFSe.Servico.CodigoMunicipio := Copy(NFSe.Servico.CodigoMunicipio, 1, 2) +
@@ -275,7 +279,9 @@ begin
      NFSe.Servico.ItemListaServico := Copy(NFSe.Servico.ItemListaServico, 1, 2) + '.' +
                                       Copy(NFSe.Servico.ItemListaServico, 3, 2);
 
-     NFSe.Servico.xItemListaServico := CodigoToDesc(SomenteNumeros(NFSe.Servico.ItemListaServico));
+     if TabServicosExt
+      then NFSe.Servico.xItemListaServico := NotaUtil.ObterDescricaoServico(SomenteNumeros(NFSe.Servico.ItemListaServico))
+      else NFSe.Servico.xItemListaServico := CodigoToDesc(SomenteNumeros(NFSe.Servico.ItemListaServico));
 
      //NFSe.Servico.Discriminacao       := Leitor.rCampo(tcStr, 'Discriminacao');
      NFSe.Servico.CodigoMunicipio     := Leitor.rCampo(tcStr, 'CodigoMunicipio');
@@ -344,7 +350,9 @@ begin
      NFSe.Servico.ItemListaServico := Copy(NFSe.Servico.ItemListaServico, 1, 2) + '.' +
                                       Copy(NFSe.Servico.ItemListaServico, 3, 2);
 
-     NFSe.Servico.xItemListaServico := CodigoToDesc(SomenteNumeros(NFSe.Servico.ItemListaServico));
+     if TabServicosExt
+      then NFSe.Servico.xItemListaServico := NotaUtil.ObterDescricaoServico(SomenteNumeros(NFSe.Servico.ItemListaServico))
+      else NFSe.Servico.xItemListaServico := CodigoToDesc(SomenteNumeros(NFSe.Servico.ItemListaServico));
 
      NFSe.Servico.Discriminacao       := Leitor.rCampo(tcStr, 'Discriminacao');
      NFSe.Servico.Descricao           := '';
@@ -596,7 +604,9 @@ begin
       NFSe.Servico.ItemListaServico := Copy(NFSe.Servico.ItemListaServico, 1, 2) + '.' +
                                        Copy(NFSe.Servico.ItemListaServico, 3, 2);
 
-      NFSe.Servico.xItemListaServico := CodigoToDesc(SomenteNumeros(NFSe.Servico.ItemListaServico));
+      if TabServicosExt
+       then NFSe.Servico.xItemListaServico := NotaUtil.ObterDescricaoServico(SomenteNumeros(NFSe.Servico.ItemListaServico))
+       else NFSe.Servico.xItemListaServico := CodigoToDesc(SomenteNumeros(NFSe.Servico.ItemListaServico));
 
       NFSe.Servico.Valores.ValorServicos       := Leitor.rCampo(tcDe2, 'vlServico');
       NFSe.Servico.Valores.Aliquota            := Leitor.rCampo(tcDe2, 'vlAliquota');
@@ -723,7 +733,9 @@ begin
     NFSe.Servico.ItemListaServico := Copy(NFSe.Servico.ItemListaServico, 1, 2) + '.' +
                                      Copy(NFSe.Servico.ItemListaServico, 3, 2);
 
-    NFSe.Servico.xItemListaServico := CodigoToDesc(SomenteNumeros(NFSe.Servico.ItemListaServico));
+    if TabServicosExt
+     then NFSe.Servico.xItemListaServico := NotaUtil.ObterDescricaoServico(SomenteNumeros(NFSe.Servico.ItemListaServico))
+     else NFSe.Servico.xItemListaServico := CodigoToDesc(SomenteNumeros(NFSe.Servico.ItemListaServico));
 
     NFSe.Servico.CodigoCnae                := Leitor.rCampo(tcStr, 'CodigoCnae');
     NFSe.Servico.CodigoTributacaoMunicipio := Leitor.rCampo(tcStr, 'CodigoTributacaoMunicipio');
@@ -1064,7 +1076,9 @@ begin
      NFSe.Servico.ItemListaServico := Copy(NFSe.Servico.ItemListaServico, 1, 2) + '.' +
                                       Copy(NFSe.Servico.ItemListaServico, 3, 2);
 
-     NFSe.Servico.xItemListaServico := CodigoToDesc(SomenteNumeros(NFSe.Servico.ItemListaServico));
+     if TabServicosExt
+      then NFSe.Servico.xItemListaServico := NotaUtil.ObterDescricaoServico(SomenteNumeros(NFSe.Servico.ItemListaServico))
+      else NFSe.Servico.xItemListaServico := CodigoToDesc(SomenteNumeros(NFSe.Servico.ItemListaServico));
 
      NFSe.Servico.CodigoCnae                := Leitor.rCampo(tcStr, 'CodigoCnae');
      NFSe.Servico.CodigoTributacaoMunicipio := Leitor.rCampo(tcStr, 'CodigoTributacaoMunicipio');

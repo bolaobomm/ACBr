@@ -82,7 +82,7 @@ type
     FLeitor: TLeitor;
     FListaNfse: TListaNfse;
     FProvedor: TnfseProvedor;
-//    function ObterNomeMunicipio(xUF: string; const cMun: integer): string;
+    FTabServicosExt: Boolean;
 //    function ObterDescricaoServico(cCodigo: string): string;
   public
     constructor Create;
@@ -96,6 +96,7 @@ type
     property Leitor: TLeitor                read FLeitor                 write FLeitor;
     property ListaNfse: TListaNfse          read FListaNfse              write FListaNfse;
     property Provedor: TnfseProvedor        read FProvedor               write FProvedor;
+    property TabServicosExt: Boolean        read FTabServicosExt         write FTabServicosExt;
   end;
 
 implementation
@@ -332,7 +333,9 @@ begin
                      Copy(ListaNfse.FCompNfse[i].FNFSe.Servico.CodigoMunicipio, 1, 2) +
                      FormatFloat('00000', StrToIntDef(Copy(ListaNfse.FCompNfse[i].FNFSe.Servico.CodigoMunicipio, 3, 5), 0));
 
-              ListaNfse.FCompNfse[i].FNFSe.Servico.xItemListaServico := CodigoToDesc(SomenteNumeros(ListaNfse.FCompNfse[i].FNFSe.Servico.ItemListaServico));
+              if TabServicosExt
+               then ListaNfse.FCompNfse[i].FNFSe.Servico.xItemListaServico := NotaUtil.ObterDescricaoServico(SomenteNumeros(ListaNfse.FCompNfse[i].FNFSe.Servico.ItemListaServico))
+               else ListaNfse.FCompNfse[i].FNFSe.Servico.xItemListaServico := CodigoToDesc(SomenteNumeros(ListaNfse.FCompNfse[i].FNFSe.Servico.ItemListaServico));
 
               if Leitor.rExtrai(6, 'Valores') <> ''
                then begin
@@ -387,8 +390,6 @@ begin
                      FormatFloat('00000', StrToIntDef(Copy(ListaNfse.FCompNfse[i].FNFSe.PrestadorServico.Endereco.CodigoMunicipio, 3, 5), 0));
 
               ListaNfse.FCompNfse[i].FNFSe.PrestadorServico.Endereco.xMunicipio := CodCidadeToCidade(StrToIntDef(ListaNfse.FCompNfse[i].FNFSe.PrestadorServico.Endereco.CodigoMunicipio, 0));
-//              ListaNfse.FCompNfse[i].FNFSe.PrestadorServico.Endereco.xMunicipio := UpperCase(TiraAcentos(Utf8ToAnsi(ObterNomeMunicipio(ListaNfse.FCompNfse[i].FNFSe.PrestadorServico.Endereco.UF,
-//                                                       StrToIntDef(ListaNfse.FCompNfse[i].FNFSe.PrestadorServico.Endereco.CodigoMunicipio, 0)))));
 
               if Leitor.rExtrai(6, 'Contato') <> ''
                then begin
@@ -454,8 +455,6 @@ begin
                then ListaNfse.FCompNfse[i].FNFSe.Tomador.Endereco.UF := ListaNfse.FCompNfse[i].FNFSe.PrestadorServico.Endereco.UF;
 
               ListaNfse.FCompNfse[i].FNFSe.Tomador.Endereco.xMunicipio := CodCidadeToCidade(StrToIntDef(ListaNfse.FCompNfse[i].FNFSe.Tomador.Endereco.CodigoMunicipio, 0));
-//              ListaNfse.FCompNfse[i].FNFSe.Tomador.Endereco.xMunicipio := UpperCase(TiraAcentos(Utf8ToAnsi(ObterNomeMunicipio(ListaNfse.FCompNfse[i].FNFSe.Tomador.Endereco.UF,
-//                                                       StrToIntDef(ListaNfse.FCompNfse[i].FNFSe.Tomador.Endereco.CodigoMunicipio, 0)))));
 
               if Leitor.rExtrai(6, 'Contato') <> ''
                then begin
@@ -510,8 +509,6 @@ begin
                then ListaNfse.FCompNfse[i].FNFSe.Tomador.Endereco.UF := ListaNfse.FCompNfse[i].FNFSe.PrestadorServico.Endereco.UF;
 
               ListaNfse.FCompNfse[i].FNFSe.Tomador.Endereco.xMunicipio := CodCidadeToCidade(StrToIntDef(ListaNfse.FCompNfse[i].FNFSe.Tomador.Endereco.CodigoMunicipio, 0));
-//              ListaNfse.FCompNfse[i].FNFSe.Tomador.Endereco.xMunicipio := UpperCase(TiraAcentos(Utf8ToAnsi(ObterNomeMunicipio(ListaNfse.FCompNfse[i].FNFSe.Tomador.Endereco.UF,
-//                                                       StrToIntDef(ListaNfse.FCompNfse[i].FNFSe.Tomador.Endereco.CodigoMunicipio, 0)))));
 
               if Leitor.rExtrai(6, 'Contato') <> ''
                then begin
@@ -901,36 +898,6 @@ begin
     begin
      if pos(cCodigo, List[i]) > 0
       then result := Trim(stringReplace(list[i], ccodigo, '', []));
-     inc(i);
-   end;
-   List.free;
-  end;
-end;
-
-function TretNfseRps.ObterNomeMunicipio(xUF: string;
-  const cMun: integer): string;
-var
- i            : integer;
- PathArquivo,
- Codigo       : string;
- List         : TstringList;
-begin
- result := '';
-
- if FPathArquivoMunicipios = ''
-  then FPathArquivoMunicipios := NotaUtil.PathWithDelim(ExtractFileDir(application.ExeName)) + 'MunIBGE\';
-
- PathArquivo := FPathArquivoMunicipios + 'MunIBGE-UF' + InttoStr(UFparaCodigo(xUF)) + '.txt';
- if (FileExists(PathArquivo)) and (cMun <> 0)
-  then begin
-   List := TstringList.Create;
-   List.LoadFromFile(PathArquivo);
-   Codigo := IntToStr(cMun);
-   i      := 0;
-   while (i < list.count) and (result = '') do
-    begin
-     if pos(Codigo, List[i]) > 0
-      then result := Trim(stringReplace(list[i], codigo, '', []));
      inc(i);
    end;
    List.free;

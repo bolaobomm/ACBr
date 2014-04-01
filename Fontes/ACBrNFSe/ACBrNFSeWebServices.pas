@@ -3336,6 +3336,7 @@ begin
   try
    NFSeRetorno.Leitor.Arquivo := FRetWS;
    NFSeRetorno.Provedor       := FProvedor;
+   NFSeRetorno.TabServicosExt := FConfiguracoes.Arquivos.TabServicosExt;
 
    if (FProvedor = proIssDsf )then
      NFSeRetorno.LerXml_provedorIssDsf //falta homologar
@@ -3661,6 +3662,7 @@ begin
 
   NFSeRetorno.Leitor.Arquivo := FRetWS;
   NFSeRetorno.Provedor       := FProvedor;
+  NFSeRetorno.TabServicosExt := FConfiguracoes.Arquivos.TabServicosExt;
 
   // Alterado por Rosemir Zeferino em 24/05/2013
   if (FProvedor = proIssDsf )then
@@ -3910,6 +3912,7 @@ begin
 
   NFSeRetorno.Leitor.Arquivo := FRetWS;
   NFSeRetorno.Provedor       := FProvedor;
+  NFSeRetorno.TabServicosExt := FConfiguracoes.Arquivos.TabServicosExt;
 
   if (FProvedor = proIssDsf) then
      NFSeRetorno.LerXml_provedorIssDsf //falta homologar
@@ -4292,7 +4295,8 @@ begin
 
   NFSeRetorno.Leitor.Arquivo := FRetWS;
   NFSeRetorno.Provedor       := FProvedor;
-
+  NFSeRetorno.TabServicosExt := FConfiguracoes.Arquivos.TabServicosExt;
+  
   NFSeRetorno.LerXml;
 
   FDataRecebimento := NFSeRetorno.ListaNfse.CompNfse[0].Nfse.dhRecebimento;

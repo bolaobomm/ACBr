@@ -5417,14 +5417,14 @@ inherited fqrDANFSeQRRetrato: TfqrDANFSeQRRetrato
         Color = clWhite
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clWindowText
-        Font.Height = -11
+        Font.Height = -8
         Font.Name = 'Lucida Console'
         Font.Style = []
         ParentFont = False
         Transparent = True
         WordWrap = True
         FullJustify = False
-        FontSize = 8
+        FontSize = 6
       end
     end
     object qrb_8_Canhoto: TQRChildBand

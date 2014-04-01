@@ -263,6 +263,7 @@ type
     FPathRPS: String;
     FPathGer: String;
     FNomeLongoNFSe: Boolean;
+    FTabServicosExt: Boolean;
   public
     constructor Create(AOwner: TComponent); override;
     function GetPathCan: String;
@@ -279,6 +280,7 @@ type
     property PathRPS: String           read FPathRPS         write FPathRPS;
     property PathGer: String           read FPathGer         write FPathGer;
     property NomeLongoNFSe: Boolean    read FNomeLongoNFSe   write FNomeLongoNFSe   default False;
+    property TabServicosExt: Boolean   read FTabServicosExt  write FTabServicosExt  default False;
   end;
 
  TConfiguracoes = class(TComponent)
