@@ -53,7 +53,7 @@ unit ACBrMSXML2_TLB;
 {$VARPROPSETTER ON}
 interface
 
-uses Windows, ActiveX, Classes, Graphics, OleServer, StdVCL, Variants;
+uses Windows, ActiveX, Classes, Graphics, OleServer, {$IFNDEF FPC} StdVCL, {$ENDIF} Variants;
   
 
 // *********************************************************************//
