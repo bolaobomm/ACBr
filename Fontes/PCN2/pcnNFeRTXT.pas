@@ -461,7 +461,7 @@ begin
    (*I17b*)NFe.Det[i].Prod.IndTot := StrToIndTot(ok, LerCampo(tcStr, 'indTot'));
    (*I28a*)NFe.Det[i].Prod.xPed := LerCampo(tcStr, 'xPed');
    (*I28b*)NFe.Det[i].Prod.nItemPed := LerCampo(tcInt, 'nItemPed');
-   (*I28b*)NFe.Det[i].Prod.nFCI := LerCampo(tcStr, 'nFCI');
+   (*128p*)NFe.Det[i].Prod.nFCI := LerCampo(tcStr, 'nFCI');
   end;
 
   if ID = 'I18' then (* Grupo da TAG <det><prod><DI> **************************)
