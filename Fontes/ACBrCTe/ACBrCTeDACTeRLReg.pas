@@ -74,7 +74,7 @@ end;
 initialization
 
 {$IFDEF FPC}
-//   {$i ACBrCTeDACTeRL.lrs}
+   {$i ACBrCTeDACTeRL.lrs}
 {$ENDIF}
 
 end.

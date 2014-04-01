@@ -133,6 +133,9 @@ echo.
 %1\tools\lazres.exe ACBrCTe.lrs TACBrCTe.bmp 
 move ACBrCTe.lrs ..\ACBrCTe
 
+%1\tools\lazres.exe ACBrCTeDACTeRL.lrs TACBrCTeDACTeRL.png 
+move ACBrCTeDACTeRL.lrs ..\ACBrCTe
+
 echo.
 echo "****************************************"
 echo "* Arquivo    ACBrCTe.lrs     gerado    *"
