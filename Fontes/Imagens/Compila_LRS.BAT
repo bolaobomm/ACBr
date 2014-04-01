@@ -97,6 +97,12 @@ move ACBrNFe.lrs ..\ACBrNFe2
 %1\tools\lazres.exe ACBrNFeDANFeRL.lrs TACBrNFeDANFeRL.bmp 
 move ACBrNFeDANFeRL.lrs ..\ACBrNFe2
 
+%1\tools\lazres.exe ACBrNFeDANFCeFortes.lrs TACBrNFeDANFCeFortes.bmp 
+move ACBrNFeDANFCeFortes.lrs ..\ACBrNFe2
+
+%1\tools\lazres.exe ACBrNFeDANFeESCPOS.lrs TACBrNFeDANFeESCPOS.bmp 
+move ACBrNFeDANFeESCPOS.lrs ..\ACBrNFe2
+
 echo.
 echo "**************************************************************"
 echo "* Arquivos    ACBrNFe.lrs, ACBrNFeDANFeRL.lrs     gerados    *"

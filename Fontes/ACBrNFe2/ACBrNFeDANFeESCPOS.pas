@@ -37,11 +37,15 @@
 |* 04/04/2013:  André Ferreira de Moraes
 |*   Inicio do desenvolvimento
 ******************************************************************************}
+{$I ACBr.inc}
 unit ACBrNFeDANFeESCPOS;
 
 interface
 
 uses Classes, SysUtils,
+     {$IFDEF FPC}
+       LResources,
+     {$ENDIF}
      ACBrNFeDANFEClass, ACBrDevice, ACBrUtil,
      pcnNFe, pcnConversao, pcnAuxiliar, ACBrDFeUtil;
 
@@ -88,9 +92,16 @@ type
     property Device : TACBrDevice read FDevice ;
   end ;
 
+procedure Register;
+
 implementation
 
 uses ACBrNFe, ACBrNFeUtil, StrUtils;
+
+procedure Register;
+begin
+  RegisterComponents('ACBr',[TACBrNFeDANFeESCPOS]);
+end;
 
 function Int2TB(AInteger: Integer): AnsiString;
 var
@@ -249,8 +260,6 @@ begin
 end;
 
 procedure TACBrNFeDANFeESCPOS.GerarObsFisco;
-var
-  i : integer;
 begin
   if FpNFe.ide.tpAmb = taHomologacao then
    begin
@@ -444,6 +453,11 @@ begin
 
   ImprimePorta(FBuffer.Text);
 end;
+
+{$ifdef FPC}
+initialization
+   {$I ACBrNFeDANFeESCPOS.lrs}
+{$endif}
 
 
 end.

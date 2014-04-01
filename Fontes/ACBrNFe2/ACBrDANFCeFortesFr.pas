@@ -1,39 +1,36 @@
 {******************************************************************************}
 { Projeto: Componentes ACBr                                                    }
-{  Biblioteca multiplataforma de componentes Delphi para intera√ß√£o com equipa- }
-{ mentos de Automa√ß√£o Comercial utilizados no Brasil                           }
+{  Biblioteca multiplataforma de componentes Delphi para interaÁ„o com equipa- }
+{ mentos de AutomaÁ„o Comercial utilizados no Brasil                           }
 {                                                                              }
-{ Direitos Autorais Reservados (c) 2014 Daniel Simoes de Almeida               }
-{                                                                              }
-{ This file uses: DelphiZXIngQRCode Copyright 2008 ZXing authors,              }
-{   port to Delphi, by Debenu Pty Ltd                                          }
-{   URL: http://www.debenu.com/open-sourc1e/delphizxingqrcode                  }
+{ Direitos Autorais Reservados (c) 2004 Daniel Simoes de Almeida               }
 {                                                                              }
 { Colaboradores nesse arquivo:                                                 }
 {                                                                              }
-{  Voc√™ pode obter a √∫ltima vers√£o desse arquivo na pagina do  Projeto ACBr    }
+{  VocÍ pode obter a ˙ltima vers„o desse arquivo na pagina do  Projeto ACBr    }
 { Componentes localizado em      http://www.sourceforge.net/projects/acbr      }
 {                                                                              }
-{  Esta biblioteca √© software livre; voc√™ pode redistribu√≠-la e/ou modific√°-la }
-{ sob os termos da Licen√ßa P√∫blica Geral Menor do GNU conforme publicada pela  }
-{ Free Software Foundation; tanto a vers√£o 2.1 da Licen√ßa, ou (a seu crit√©rio) }
-{ qualquer vers√£o posterior.                                                   }
+{  Esta biblioteca È software livre; vocÍ pode redistribuÌ-la e/ou modific·-la }
+{ sob os termos da LicenÁa P˙blica Geral Menor do GNU conforme publicada pela  }
+{ Free Software Foundation; tanto a vers„o 2.1 da LicenÁa, ou (a seu critÈrio) }
+{ qualquer vers„o posterior.                                                   }
 {                                                                              }
-{  Esta biblioteca √© distribu√≠da na expectativa de que seja √∫til, por√©m, SEM   }
-{ NENHUMA GARANTIA; nem mesmo a garantia impl√≠cita de COMERCIABILIDADE OU      }
-{ ADEQUA√á√ÉO A UMA FINALIDADE ESPEC√çFICA. Consulte a Licen√ßa P√∫blica Geral Menor}
-{ do GNU para mais detalhes. (Arquivo LICEN√áA.TXT ou LICENSE.TXT)              }
+{  Esta biblioteca È distribuÌda na expectativa de que seja ˙til, porÈm, SEM   }
+{ NENHUMA GARANTIA; nem mesmo a garantia implÌcita de COMERCIABILIDADE OU      }
+{ ADEQUA«√O A UMA FINALIDADE ESPECÕFICA. Consulte a LicenÁa P˙blica Geral Menor}
+{ do GNU para mais detalhes. (Arquivo LICEN«A.TXT ou LICENSE.TXT)              }
 {                                                                              }
-{  Voc√™ deve ter recebido uma c√≥pia da Licen√ßa P√∫blica Geral Menor do GNU junto}
-{ com esta biblioteca; se n√£o, escreva para a Free Software Foundation, Inc.,  }
-{ no endere√ßo 59 Temple Street, Suite 330, Boston, MA 02111-1307 USA.          }
-{ Voc√™ tamb√©m pode obter uma copia da licen√ßa em:                              }
+{  VocÍ deve ter recebido uma cÛpia da LicenÁa P˙blica Geral Menor do GNU junto}
+{ com esta biblioteca; se n„o, escreva para a Free Software Foundation, Inc.,  }
+{ no endereÁo 59 Temple Street, Suite 330, Boston, MA 02111-1307 USA.          }
+{ VocÍ tambÈm pode obter uma copia da licenÁa em:                              }
 { http://www.opensource.org/licenses/gpl-license.php                           }
 {                                                                              }
-{ Daniel Sim√µes de Almeida  -  daniel@djsystem.com.br  -  www.djsystem.com.br  }
-{              Pra√ßa Anita Costa, 34 - Tatu√≠ - SP - 18270-410                  }
+{ Daniel Simıes de Almeida  -  daniel@djsystem.com.br  -  www.djsystem.com.br  }
+{              PraÁa Anita Costa, 34 - TatuÌ - SP - 18270-410                  }
 {                                                                              }
 {******************************************************************************}
+
 
 {******************************************************************************
 |* Historico
@@ -41,6 +38,7 @@
 |* 04/04/2013:  Andr√© Ferreira de Moraes
 |*   Inicio do desenvolvimento
 ******************************************************************************}
+{$I ACBr.inc}
 unit ACBrDANFCeFortesFr;
 
 interface
@@ -94,9 +92,6 @@ type
     lQtdTotalItensVal: TRLLabel;
     lProtocolo: TRLLabel;
     lCPF_CNPJ1: TRLLabel;
-    lDANFe: TRLLabel;
-    lDANFe1: TRLLabel;
-    lDANFe2: TRLLabel;
     lEmitCNPJ_IE_IM: TRLLabel;
     lEndereco: TRLLabel;
     lMsgDANFCe: TRLLabel;
@@ -128,15 +123,12 @@ type
     lValLei12741: TRLLabel;
     mLinhaItem: TRLMemo;
     pCliche: TRLPanel;
-    pCNPJ_IE_IM: TRLPanel;
     pGap8: TRLPanel;
     rlbDadosCliche: TRLBand;
     rlbLegenda: TRLBand;
-    rlbDadosDANFe: TRLBand;
     rlbConsumidor: TRLBand;
     rlbMensagemFiscal: TRLBand;
     rlbMsgDANFe: TRLBand;
-    rlbTeste: TRLBand;
     rlbLei12741: TRLBand;
     rlbPagamento: TRLBand;
     rlbGap: TRLBand;
@@ -218,7 +210,6 @@ uses ACBrNFe, StrUtils, DelphiZXingQRCode, math;
   {$R *.lfm}
 {$else}
   {$R *.dfm}
-  {$R ACBrDANFCeFortes.dcr}
 {$ENDIF}
 
 procedure Register;
