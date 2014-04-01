@@ -113,6 +113,7 @@ type
     constructor Create(AOwner: TComponent); override;
     destructor Destroy; override;
     procedure ImprimirDANFE(NFE : TNFe = nil); virtual;
+    procedure ImprimirDANFEResumido(NFE : TNFe = nil); virtual;
     procedure ImprimirDANFEPDF(NFE : TNFe = nil); virtual;
     procedure ImprimirEVENTO(NFE : TNFe = nil); virtual;
     procedure ImprimirEVENTOPDF(NFE : TNFe = nil); virtual;
@@ -235,6 +236,11 @@ end;
 procedure TACBrNFeDANFEClass.ImprimirDANFE(NFE : TNFe = nil) ;
 begin
   ErroAbstract('Imprimir');
+end;
+
+procedure TACBrNFeDANFEClass.ImprimirDANFEResumido(NFE : TNFe = nil) ;
+begin
+  ErroAbstract('ImprimirResumido');
 end;
 
 procedure TACBrNFeDANFEClass.ImprimirDANFEPDF(NFE : TNFe = nil) ;
