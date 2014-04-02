@@ -2182,12 +2182,12 @@ function TNFeRetRecepcao.Executar: Boolean;
             if (FConfiguracoes.Geral.VersaoDF = ve310) and not
                (FConfiguracoes.WebServices.UFCodigo in [23, 31])  then // CE, MG
              begin
-               SoapAction := 'http://www.portalfiscal.inf.br/nfe/wsdl/NfeAutorizacao';
+               SoapAction := 'http://www.portalfiscal.inf.br/nfe/wsdl/NfeRetAutorizacao';
                nfeAutorizacaoLote := True;
              end
             else
              begin
-               SoapAction := 'http://www.portalfiscal.inf.br/nfe/wsdl/NfeRecepcao2';
+               SoapAction := 'http://www.portalfiscal.inf.br/nfe/wsdl/NfeRetRecepcao2';
                nfeAutorizacaoLote := False;
              end;
            end;
@@ -2198,12 +2198,12 @@ function TNFeRetRecepcao.Executar: Boolean;
             if (FConfiguracoes.Geral.VersaoDF = ve310) and not
                (FConfiguracoes.WebServices.UFCodigo in [13])  then // AM
              begin
-               SoapAction := 'http://www.portalfiscal.inf.br/nfe/wsdl/NfeAutorizacao';
+               SoapAction := 'http://www.portalfiscal.inf.br/nfe/wsdl/NfeRetAutorizacao';
                nfeAutorizacaoLote := True;
              end
             else
              begin
-               SoapAction := 'http://www.portalfiscal.inf.br/nfe/wsdl/NfeRecepcao2';
+               SoapAction := 'http://www.portalfiscal.inf.br/nfe/wsdl/NfeRetRecepcao2';
                nfeAutorizacaoLote := False;
              end;
            end;
@@ -2421,12 +2421,12 @@ begin
             if (FConfiguracoes.Geral.VersaoDF = ve310) and not
                (FConfiguracoes.WebServices.UFCodigo in [23, 31])  then // CE, MG
              begin
-               SoapAction := 'http://www.portalfiscal.inf.br/nfe/wsdl/NfeAutorizacao';
+               SoapAction := 'http://www.portalfiscal.inf.br/nfe/wsdl/NfeRetAutorizacao';
                nfeAutorizacaoLote := True;
              end
             else
              begin
-               SoapAction := 'http://www.portalfiscal.inf.br/nfe/wsdl/NfeRecepcao2';
+               SoapAction := 'http://www.portalfiscal.inf.br/nfe/wsdl/NfeRetRecepcao2';
                nfeAutorizacaoLote := False;
              end;
            end;
@@ -2437,12 +2437,12 @@ begin
             if (FConfiguracoes.Geral.VersaoDF = ve310) and not
                (FConfiguracoes.WebServices.UFCodigo in [13])  then // AM
              begin
-               SoapAction := 'http://www.portalfiscal.inf.br/nfe/wsdl/NfeAutorizacao';
+               SoapAction := 'http://www.portalfiscal.inf.br/nfe/wsdl/NfeRetAutorizacao';
                nfeAutorizacaoLote := True;
              end
             else
              begin
-               SoapAction := 'http://www.portalfiscal.inf.br/nfe/wsdl/NfeRecepcao2';
+               SoapAction := 'http://www.portalfiscal.inf.br/nfe/wsdl/NfeRetRecepcao2';
                nfeAutorizacaoLote := False;
              end;
            end;
