@@ -1034,6 +1034,7 @@ begin
   4204558  // Correia Pinto/SC
          : Provedor := 'Saatri';
 
+  3137205, // Lagoa Da Prata/MG
   3148103, // Patrocinio/MG
   3503307, // Araras/SP
   3538709, // Piracicaba/SP
