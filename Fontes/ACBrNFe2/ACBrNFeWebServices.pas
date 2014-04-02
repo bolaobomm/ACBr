@@ -1845,7 +1845,12 @@ begin
        StrStream.CopyFrom(HTTP.Document, 0);
        FRetornoWS := TiraAcentos(ParseText(StrStream.DataString, True));
        if nfeAutorizacaoLote then
-          FRetWS := SeparaDados( FRetornoWS,'nfeAutorizacaoLoteResult')
+        begin
+          if FSincrono then
+            FRetWS := SeparaDados( FRetornoWS,'nfeAutorizacaoResult')
+          else
+            FRetWS := SeparaDados( FRetornoWS,'nfeAutorizacaoLoteResult')
+        end
        else
           FRetWS := SeparaDados( FRetornoWS,'nfeRecepcaoLote2Result');
        StrStream.Free;
@@ -1855,7 +1860,12 @@ begin
        StrStream.CopyFrom(Stream, 0);
        FRetornoWS := TiraAcentos(ParseText(StrStream.DataString, True));
        if nfeAutorizacaoLote then
-          FRetWS := SeparaDados( FRetornoWS,'nfeAutorizacaoLoteResult')
+        begin
+          if FSincrono then
+            FRetWS := SeparaDados( FRetornoWS,'nfeAutorizacaoResult')
+          else
+            FRetWS := SeparaDados( FRetornoWS,'nfeAutorizacaoLoteResult')
+        end
        else
           FRetWS := SeparaDados( FRetornoWS,'nfeRecepcaoLote2Result');
        StrStream.Free;
