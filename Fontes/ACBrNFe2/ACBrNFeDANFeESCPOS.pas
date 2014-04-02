@@ -397,6 +397,11 @@ begin
   FBuffer.Add('');
   FBuffer.Add('');
   FBuffer.Add('');
+  FBuffer.Add('');
+  FBuffer.Add('');
+  FBuffer.Add('');
+  FBuffer.Add('');
+  FBuffer.Add('');
 
   if CortaPapel then
      FBuffer.Add(cCmdCortaPapel);

@@ -82,6 +82,7 @@ type
     imgLogo: TRLImage;
     lChaveDeAcesso: TRLLabel;
     lCPF_CNPJ_ID: TRLMemo;
+    lEndereco: TRLMemo;
     lEnderecoConsumidor: TRLMemo;
     lMensagemFiscal: TRLLabel;
     lNumSerieEmissao: TRLLabel;
@@ -93,7 +94,6 @@ type
     lProtocolo: TRLLabel;
     lCPF_CNPJ1: TRLLabel;
     lEmitCNPJ_IE_IM: TRLLabel;
-    lEndereco: TRLLabel;
     lMsgDANFCe: TRLLabel;
     lMsgDANFCe1: TRLLabel;
     lMsgDANFCe2: TRLLabel;
@@ -158,6 +158,7 @@ type
 
     procedure FormDestroy(Sender: TObject);
     procedure pAsteriscoBeforePrint(Sender: TObject; var PrintIt: boolean);
+    procedure pLogoeClicheAfterPrint(Sender: TObject);
     procedure rlbConsumidorBeforePrint(Sender: TObject; var PrintIt: boolean);
     procedure rlbMensagemFiscalBeforePrint(Sender: TObject; var PrintIt: boolean);
     procedure rlbsCabecalhoDataRecord(Sender: TObject; RecNo: integer;
@@ -251,19 +252,19 @@ begin
 
     if Ide.tpAmb = taHomologacao then
      begin
-       lMensagemFiscal.Caption := 'EMITIDA EM AMBIENTE DE HOMOLOGA√á√ÉO - SEM VALOR FISCAL';
+       lMensagemFiscal.Caption := 'EMITIDA EM AMBIENTE DE HOMOLOGA«√O - SEM VALOR FISCAL';
      end
     else
      begin
        if Ide.tpEmis <> teNormal then
-          lMensagemFiscal.Caption := 'EMITIDA EM CONTING√äNCIA'
+          lMensagemFiscal.Caption := 'EMITIDA EM CONTING NCIA'
        else
-          lMensagemFiscal.Caption := '√ÅREA DE MENSAGEM FISCAL';
+          lMensagemFiscal.Caption := '¡REA DE MENSAGEM FISCAL';
      end;
 
-    lNumSerieEmissao.Caption := 'N√∫mero '+IntToStrZero(Ide.nNF,9)+
-                                ' S√©rie '+IntToStrZero(Ide.serie,3)+
-                                ' Emiss√£o '+DateTimeToStr(Ide.dEmi) ;
+    lNumSerieEmissao.Caption := 'N˙mero '+IntToStrZero(Ide.nNF,9)+
+                                ' SÈrie '+IntToStrZero(Ide.serie,3)+
+                                ' Emiss„o '+DateTimeToStr(Ide.dEmi) ;
 
     lTitConsulteChave.Lines.Text := 'Consulte pela Chave de Acesso em '+NotaUtil.GetURLConsultaNFCe(Ide.cUF,Ide.tpAmb);
 
@@ -386,7 +387,7 @@ begin
     lNomeFantasia.Caption   := Emit.xFant ;
     lRazaoSocial.Caption    := Emit.xNome ;
     lEmitCNPJ_IE_IM.Caption := CompoemCliche;
-    lEndereco.Caption       := CompoemEnderecoCFe;
+    lEndereco.Lines.Text    := CompoemEnderecoCFe;
     if TACBrNFe( ACBrNFeDANFCeFortes.ACBrNFe ).DANFE.Logo <> '' then
        imgLogo.Picture.LoadFromFile( TACBrNFe( ACBrNFeDANFCeFortes.ACBrNFe ).DANFE.Logo );
 
@@ -400,7 +401,7 @@ begin
                                      signature.DigestValue );
     PintarQRCode( qrcode, imgQRCode.Picture );
 
-    lProtocolo.Caption := 'Protocolo de Autoriza√ß√£o: '+procNFe.nProt+
+    lProtocolo.Caption := 'Protocolo de AutorizaÁ„o: '+procNFe.nProt+
                            ' '+DFeUtil.SeSenao(procNFe.dhRecbto<>0,DateTimeToStr(procNFe.dhRecbto),'');
   end;
 
@@ -511,6 +512,11 @@ begin
   PrintIt := not Resumido;
 end;
 
+procedure TACBrNFeDANFCeFortesFr.pLogoeClicheAfterPrint(Sender: TObject);
+begin
+
+end;
+
 procedure TACBrNFeDANFCeFortesFr.rlbConsumidorBeforePrint(Sender: TObject;
   var PrintIt: boolean);
 begin
@@ -519,7 +525,7 @@ begin
     if (Dest.idEstrangeiro = '') and
        (Dest.CNPJCPF = '') then
      begin
-        lCPF_CNPJ_ID.Lines.Text := 'CONSUMIDOR N√ÉO IDENTIFICADO';
+        lCPF_CNPJ_ID.Lines.Text := 'CONSUMIDOR N√O IDENTIFICADO';
      end
     else if Dest.idEstrangeiro <> '' then
      begin
@@ -604,7 +610,7 @@ begin
   if NFe = nil then
    begin
      if not Assigned(ACBrNFe) then
-        raise Exception.Create('Componente ACBrNFe n√£o atribu√≠do');
+        raise Exception.Create('Componente ACBrNFe n√o atribuÌ≠do');
 
      FpNFe := TACBrNFe(ACBrNFe).NotasFiscais.Items[0].NFe;
    end
@@ -619,7 +625,7 @@ begin
   if NFe = nil then
    begin
      if not Assigned(ACBrNFe) then
-        raise Exception.Create('Componente ACBrNFe n√£o atribu√≠do');
+        raise Exception.Create('Componente ACBrNFe n„o atribuÌ≠do');
 
      FpNFe := TACBrNFe(ACBrNFe).NotasFiscais.Items[0].NFe;
    end

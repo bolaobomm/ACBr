@@ -642,19 +642,21 @@ object ACBrNFeDANFCeFortesFr: TACBrNFeDANFCeFortesFr
             Align = faClient
             AutoExpand = True
             AutoSize = True
-            object lEndereco: TRLLabel
+            object lEndereco: TRLMemo
               Left = 0
               Top = 43
               Width = 286
               Height = 12
               Align = faTop
               Alignment = taCenter
-              Caption = 'Endere'#231'o'
+              Behavior = [beSiteExpander]
               Font.Charset = DEFAULT_CHARSET
               Font.Color = clBlack
               Font.Height = -9
               Font.Name = 'Arial'
               Font.Style = []
+              Lines.Strings = (
+                'Endere'#231'o')
               ParentFont = False
             end
             object lRazaoSocial: TRLLabel

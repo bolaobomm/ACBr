@@ -801,23 +801,6 @@ object ACBrNFeDANFCeFortesFr: TACBrNFeDANFCeFortesFr
             RealBounds.Top = 0
             RealBounds.Width = 0
             RealBounds.Height = 0
-            object lEndereco: TRLLabel
-              Left = 0
-              Height = 12
-              Top = 43
-              Width = 285
-              Align = faTop
-              Alignment = taCenter
-              Caption = 'Endereço'
-              Font.Color = clBlack
-              Font.Height = -9
-              Font.Name = 'Arial'
-              ParentFont = False
-              RealBounds.Left = 0
-              RealBounds.Top = 0
-              RealBounds.Width = 0
-              RealBounds.Height = 0
-            end
             object lRazaoSocial: TRLLabel
               Left = 0
               Height = 12
@@ -881,6 +864,22 @@ object ACBrNFeDANFCeFortesFr: TACBrNFeDANFCeFortesFr
               Angle = 0
               DrawKind = dkLine
               Pen.Style = psDot
+              RealBounds.Left = 0
+              RealBounds.Top = 0
+              RealBounds.Width = 0
+              RealBounds.Height = 0
+            end
+            object lEndereco: TRLMemo
+              Left = 0
+              Height = 12
+              Top = 43
+              Width = 286
+              Align = faTop
+              Alignment = taCenter
+              Font.Color = clBlack
+              Font.Height = -9
+              Font.Name = 'Arial'
+              ParentFont = False
               RealBounds.Left = 0
               RealBounds.Top = 0
               RealBounds.Width = 0
