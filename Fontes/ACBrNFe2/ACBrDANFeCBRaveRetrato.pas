@@ -49,7 +49,7 @@ interface
 
 uses Graphics, Forms, Windows, SysUtils, Classes,
      Variants, DBClient, Math, StdCtrls, DB, Dialogs,
-     Controls, ExtCtrls, Mask, MaskUtils,
+     Controls, ExtCtrls, Mask, MaskUtils, DateUtils,
      {$IFNDEF COMPILER16} JPEG, {$ELSE} Vcl.Imaging.jpeg, {$ENDIF}
      RpDefine, RpBase, RpSystem, RpBars, RpMemo,
      RpRenderText, RpRenderRTF, RpRenderHTML, RpRender, RpRenderPDF,
@@ -616,6 +616,7 @@ end;
 function ImprimirRemetenteDestinatario(PosX,
   PosY: Double): Double;
 var vEnd:String; vEntSai: string;
+vSaiEnt :string;
 begin
   with DANFeRave, DANFeRave.ACBrNFe.NotasFiscais.Items[DANFeRave.FNFIndex].NFe, DANFeRave.BaseReport do
    begin
