@@ -149,7 +149,7 @@ echo "****************************************"
 echo.
 
 :MDFe
-%1\tools\lazres.exe ACBrMDFe.lrs TACBrMDFe.bmp 
+%1\tools\lazres.exe ACBrMDFe.lrs TACBrMDFe.bmp TACBrMDFeDAMDFeRL.png
 move ACBrMDFe.lrs ..\ACBrMDFe
 
 echo.
