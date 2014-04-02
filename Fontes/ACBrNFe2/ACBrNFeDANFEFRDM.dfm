@@ -373,6 +373,9 @@ object dmACBrNFeFR: TdmACBrNFeFR
       FieldName = 'ChaveNFe'
       Size = 50
     end
+    object cdsDadosProdutosvISSQN: TFloatField
+      FieldName = 'vISSQN'
+    end
   end
   object cdsParametros: TClientDataSet
     Aggregates = <>
@@ -851,7 +854,8 @@ object dmACBrNFeFR: TdmACBrNFeFR
       'PIPI=PIPI'
       'DescricaoProduto=DescricaoProduto'
       'VTotTrib=VTotTrib'
-      'ChaveNFe=ChaveNFe')
+      'ChaveNFe=ChaveNFe'
+      'vISSQN=vISSQN')
     OpenDataSource = False
     DataSet = cdsDadosProdutos
     BCDToCurrency = False
@@ -1009,7 +1013,7 @@ object dmACBrNFeFR: TdmACBrNFeFR
     Top = 148
   end
   object frxReport: TfrxReport
-    Version = '4.14'
+    Version = '4.15'
     DotMatrixReport = False
     EngineOptions.DoublePass = True
     IniFile = '\Software\Fast Reports'
@@ -1019,7 +1023,7 @@ object dmACBrNFeFR: TdmACBrNFeFR
     PrintOptions.Printer = 'Default'
     PrintOptions.PrintOnSheet = 0
     ReportOptions.CreateDate = 40401.475989294000000000
-    ReportOptions.LastChange = 41536.672595069400000000
+    ReportOptions.LastChange = 41730.086785405100000000
     ScriptLanguage = 'PascalScript'
     StoreInDFM = False
     OnReportPrint = 'frxReportOnReportPrint'

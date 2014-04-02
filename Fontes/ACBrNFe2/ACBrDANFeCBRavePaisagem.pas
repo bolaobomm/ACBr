@@ -612,6 +612,7 @@ end;
 function ImprimirRemetenteDestinatario(PosX,
   PosY: Double): Double;
 var vEnd:String; vEntSai: string;
+vSaiEnt :string;
 begin
   with DANFeRave, DANFeRave.ACBrNFe.NotasFiscais.Items[DANFeRave.FNFIndex].NFe, DANFeRave.BaseReport do
    begin
@@ -659,10 +660,15 @@ begin
        Box([fsTop,fsLeft],XPos,YPos,13,aWidthTituloBloco,'Estado',UF,taCenter);
        Box([fsTop,fsLeft],XPos,YPos,38,aWidthTituloBloco,'Inscrição Estadual',Dest.IE,taCenter);
 
-       if ide.hSaiEnt=0 then
-          Box([fsTop,fsLeft],XPos,YPos,21,aWidthTituloBloco,'Hora de '+vEntSai,'',taCenter,True)
-       else
-          Box([fsTop,fsLeft],XPos,YPos,21,aHeigthPadrao,'Hora de '+vEntSai,TimeToStr(ide.hSaiEnt),taCenter,True);
+//       if ide.hSaiEnt=0 then
+//          Box([fsTop,fsLeft],XPos,YPos,21,aWidthTituloBloco,'Hora de '+vEntSai,'',taCenter,True)
+//       else
+//          Box([fsTop,fsLeft],XPos,YPos,21,aHeigthPadrao,'Hora de '+vEntSai,TimeToStr(ide.hSaiEnt),taCenter,True);
+		if infNFe.versao =  '2.00' then
+			vSaiEnt := ifthen(ide.hSaiEnt = 0, '', TimeToStr(ide.hSaiEnt))
+		else
+			vSaiEnt := ifthen(ide.dhSaiEnt = 0, '', TimeToStr(ide.dhSaiEnt));
+		Box([fsTop,fsLeft],XPos,YPos,21,aHeigthPadrao,'Hora de '+vEntSai, vSaiEnt ,taCenter,True);
       end;
      Result:=YPos;
      TituloDoBloco([],PosY,PosX,YPos,'DESTINATÁRIO /','REMETENTE');

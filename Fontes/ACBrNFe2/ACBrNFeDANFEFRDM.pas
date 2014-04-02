@@ -281,6 +281,7 @@ type
     cdsCalculoImpostoVTribPerc: TFloatField;
     cdsCalculoImpostoVTribFonte: TStringField;
     cdsDadosProdutosVOutro: TFloatField;
+    cdsDadosProdutosvISSQN: TFloatField;
     constructor Create(AOwner: TComponent); override;
   private
     FDANFEClassOwner: TACBrNFeDANFEClass;
@@ -646,6 +647,11 @@ begin
         end
         else
           FieldByName('vDesc').AsString := DFeUtil.FormatFloat(vDesc);
+
+        with FNFe.Det.Items[i].Imposto.ISSQN do
+        begin
+          FieldByName('vISSQN').AsFloat := vISSQN;
+        end;
 
         with FNFe.Det.Items[i].Imposto.ICMS do
         begin

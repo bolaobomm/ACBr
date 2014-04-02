@@ -647,10 +647,15 @@ begin
        Box([fsTop,fsLeft],XPos,YPos,10,aHeigthPadrao,'Estado',UF,taCenter);
        Box([fsTop,fsLeft],XPos,YPos,38,aHeigthPadrao,'Inscrição Estadual',Dest.IE,taCenter);
 
-       if ide.hSaiEnt = 0 then
-          Box([fsTop,fsLeft],XPos,YPos,21,aHeigthPadrao,'Hora de '+vEntSai,'',taCenter,True)
-       else
-          Box([fsTop,fsLeft],XPos,YPos,21,aHeigthPadrao,'Hora de '+vEntSai,TimeToStr(ide.hSaiEnt),taCenter,True);
+//       if ide.hSaiEnt = 0 then
+//          Box([fsTop,fsLeft],XPos,YPos,21,aHeigthPadrao,'Hora de '+vEntSai,'',taCenter,True)
+//       else
+//          Box([fsTop,fsLeft],XPos,YPos,21,aHeigthPadrao,'Hora de '+vEntSai,TimeToStr(ide.hSaiEnt),taCenter,True);
+	    if infNFe.versao =  '2.00' then
+			vSaiEnt := ifthen(ide.hSaiEnt = 0, '', TimeToStr(ide.hSaiEnt))
+		else
+			vSaiEnt := ifthen(ide.dhSaiEnt = 0, '', TimeToStr(ide.dhSaiEnt));
+		Box([fsTop,fsLeft],XPos,YPos,21,aHeigthPadrao,'Hora de '+vEntSai, vSaiEnt ,taCenter,True);
      end;
      Result:=YPos;
   end;
