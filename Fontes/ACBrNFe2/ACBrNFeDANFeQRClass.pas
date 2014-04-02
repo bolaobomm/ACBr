@@ -75,7 +75,7 @@ implementation
 
 uses
  StrUtils, Dialogs,
- ACBrNFe, ACBrNFeUtil, ACBrUtil, ACBrNFeDANFeQRRetrato{, ACBrNFeDANFeQRNFCe};
+ ACBrNFe, ACBrNFeUtil, ACBrUtil, ACBrNFeDANFeQRRetrato, ACBrNFeDANFeQRNFCe;
 
 var
  frmNFeDAEventoQR : TfrmNFeDAEventoQR;
@@ -96,14 +96,14 @@ var
   fqrDANFeQRRetrato : TfqrDANFeQR; //TfqrDANFeQRRetrato;
   sProt : String;
 begin
-//  case TipoDANFe of
-//    tiNFCe: begin
-//           fqrDANFeQRRetrato := TfqrDANFeQRNFCe.Create(Self);
-//          end;
-//     else begin // tiRetrato
+  case TipoDANFe of
+    tiNFCe: begin
+           fqrDANFeQRRetrato := TfqrDANFeQRNFCe.Create(Self);
+          end;
+     else begin // tiRetrato
            fqrDANFeQRRetrato := TfqrDANFeQRRetrato.Create(Self);
-//          end;
-//  end;
+          end;
+  end;
 
 //  fqrDANFeQRRetrato := TfqrDANFeQRRetrato.Create(Self);
   sProt := TACBrNFe(ACBrNFe).DANFE.ProtocoloNFe;
@@ -132,8 +132,10 @@ begin
                                     , Impressora
                                     , ExibirResumoCanhoto_Texto
                                     , ExpandirLogoMarca
-                                    , NFeCancelada  //Incluido por Luis Fernando em  22/01/2013
-                                    , LocalImpCanhoto ); //Incluido por Luis Fernando em  22/01/2013);
+                                    , NFeCancelada    //Incluido por Luis Fernando em  22/01/2013
+                                    , LocalImpCanhoto //Incluido por Luis Fernando em  22/01/2013);
+                                    , ImprimeItens
+                                    , vTroco);
       end;
    end
   else
@@ -156,8 +158,10 @@ begin
                                 , Impressora
                                 , ExibirResumoCanhoto_Texto
                                 , ExpandirLogoMarca
-                                , NFeCancelada  //Incluido por Luis Fernando em  22/01/2013
-                                , LocalImpCanhoto ); //Incluido por Luis Fernando em  22/01/2013););
+                                , NFeCancelada     //Incluido por Luis Fernando em  22/01/2013
+                                , LocalImpCanhoto  //Incluido por Luis Fernando em  22/01/2013););
+                                , ImprimeItens
+                                , vTroco);
 
   fqrDANFeQRRetrato.Free;
 end;
@@ -169,14 +173,14 @@ var
   fqrDANFeQRRetrato : TfqrDANFeQR; //TfqrDANFeQRRetrato;
   sProt : String;
 begin
-//  case TipoDANFe of
-//    tiNFCe: begin
-//           fqrDANFeQRRetrato := TfqrDANFeQRNFCe.Create(Self);
-//          end;
-//     else begin // tiRetrato
+  case TipoDANFe of
+    tiNFCe: begin
+           fqrDANFeQRRetrato := TfqrDANFeQRNFCe.Create(Self);
+          end;
+     else begin // tiRetrato
            fqrDANFeQRRetrato := TfqrDANFeQRRetrato.Create(Self);
-//          end;
-//  end;
+          end;
+  end;
 
 //  fqrDANFeQRRetrato := TfqrDANFeQRRetrato.Create(Self);
   sProt := TACBrNFe(ACBrNFe).DANFE.ProtocoloNFe;
@@ -207,8 +211,10 @@ begin
                                     , CasasDecimais._vUnCom
                                     , ExibirResumoCanhoto_Texto
                                     , ExpandirLogoMarca
-                                    , NFeCancelada  //Incluido por Luis Fernando em  22/01/2013
-                                    , LocalImpCanhoto ); //Incluido por Luis Fernando em  22/01/2013););
+                                    , NFeCancelada     //Incluido por Luis Fernando em  22/01/2013
+                                    , LocalImpCanhoto  //Incluido por Luis Fernando em  22/01/2013););
+                                    , ImprimeItens
+                                    , vTroco);
       end;
    end
    else
@@ -233,8 +239,10 @@ begin
                                 , CasasDecimais._vUnCom
                                 , ExibirResumoCanhoto_Texto
                                 , ExpandirLogoMarca
-                                , NFeCancelada  //Incluido por Luis Fernando em  22/01/2013
-                                , LocalImpCanhoto ); //Incluido por Luis Fernando em  22/01/2013););
+                                , NFeCancelada     //Incluido por Luis Fernando em  22/01/2013
+                                , LocalImpCanhoto  //Incluido por Luis Fernando em  22/01/2013););
+                                , ImprimeItens
+                                , vTroco);
    end;
 
   fqrDANFeQRRetrato.Free;

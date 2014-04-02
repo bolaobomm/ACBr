@@ -3,6 +3,7 @@ object fqrDANFeQR: TfqrDANFeQR
   Top = 125
   Width = 897
   Height = 742
+  VertScrollBar.Position = 8
   Caption = 'fqrDANFeQR'
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
@@ -16,7 +17,7 @@ object fqrDANFeQR: TfqrDANFeQR
   TextHeight = 13
   object QRNFe: TQuickRep
     Left = 3
-    Top = 3
+    Top = -5
     Width = 794
     Height = 1123
     Frame.Color = clBlack

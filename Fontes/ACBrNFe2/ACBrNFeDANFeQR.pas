@@ -101,6 +101,10 @@ type
     FResumoCanhoto_Texto: String;
     FNFeCancelada       : Boolean; //Incluido por Luis Fernando em  22/01/2013
     FLocalImpCanhoto    : Integer; //Incluido por Luis Fernando em  22/01/2013
+    // Incluido por Italo em 27/03/2014
+    // Destinado exclusivamente ao DANFE da NFC-e
+    FImprimeItens: Boolean;
+    FvTroco: Currency;
 
     procedure qrlSemValorFiscalPrint(sender: TObject; var Value: String);
     procedure SetBarCodeImage ( ACode : String; QRImage : TQRImage );
@@ -127,7 +131,9 @@ type
                              AResumoCanhoto_Texto: String    = '';
                              AExpandirLogoMarca  : Boolean   = False; // Incluido por Italo em 18/06/2012
                              ANFeCancelada       : Boolean   = False; //Incluido por Luis Fernando em  22/01/2013
-                             ALocalImpCanhoto    : Integer   = 0); //Incluido por Luis Fernando em  22/01/2013
+                             ALocalImpCanhoto    : Integer   = 0;     //Incluido por Luis Fernando em  22/01/2013
+                             AImprimeItens       : Boolean   = True;
+                             AvTroco             : Currency  = 0.0);
 
     class procedure SavePDF(AFile: String;
                             ANFe                : TNFe;
@@ -148,7 +154,9 @@ type
                             AResumoCanhoto_Texto: String    = '';
                             AExpandirLogoMarca  : Boolean   = False; // Incluido por Italo em 18/06/2012
                             ANFeCancelada       : Boolean   = False; //Incluido por Luis Fernando em  22/01/2013
-                            ALocalImpCanhoto    : Integer   = 0); //Incluido por Luis Fernando em  22/01/2013
+                            ALocalImpCanhoto    : Integer   = 0;     //Incluido por Luis Fernando em  22/01/2013
+                            AImprimeItens       : Boolean   = True;
+                            AvTroco             : Currency  = 0.0);
 
   end;
 
@@ -182,7 +190,9 @@ class procedure TfqrDANFeQR.Imprimir(ANFe               : TNFe;
                                     AResumoCanhoto_Texto: String    = '';
                                     AExpandirLogoMarca  : Boolean   = False; // Incluido por Italo em 18/06/2012
                                     ANFeCancelada       : Boolean   = False; //Incluido por Luis Fernando em  22/01/2013
-                                    ALocalImpCanhoto    : Integer   = 0); //Incluido por Luis Fernando em  22/01/2013
+                                    ALocalImpCanhoto    : Integer   = 0;     //Incluido por Luis Fernando em  22/01/2013
+                                    AImprimeItens       : Boolean   = True;
+                                    AvTroco             : Currency  = 0.0);
 begin
   with Create ( nil ) do
      try
@@ -206,6 +216,8 @@ begin
         FExpandirLogoMarca  := AExpandirLogoMarca;  // Incluido por Italo em 18/06/2012
         FNFeCancelada       := ANFeCancelada;//Incluido por Luis Fernando em  22/01/2013
         FLocalImpCanhoto    := ALocalImpCanhoto;//Incluido por Luis Fernando em  22/01/2013
+        FImprimeItens       := AImprimeItens;
+        FvTroco             := AvTroco;
 
         Printer := TPrinter.Create;
 
@@ -267,7 +279,9 @@ class procedure TfqrDANFeQR.SavePDF(AFile               : String;
                                     AResumoCanhoto_Texto: String    = '';
                                     AExpandirLogoMarca  : Boolean   = False; // Incluido por Italo em 18/06/2012
                                     ANFeCancelada       : Boolean   = False; //Incluido por Luis Fernando em  22/01/2013
-                                    ALocalImpCanhoto    : Integer   = 0); //Incluido por Luis Fernando em  22/01/2013
+                                    ALocalImpCanhoto    : Integer   = 0;     //Incluido por Luis Fernando em  22/01/2013
+                                    AImprimeItens       : Boolean   = True;
+                                    AvTroco             : Currency  = 0.0);
 {$IFDEF QReport_PDF}
 var
   qf : TQRPDFDocumentFilter;
@@ -296,6 +310,8 @@ begin
         FExpandirLogoMarca  := AExpandirLogoMarca; // Incluido por Italo em 18/06/2012
         FNFeCancelada       := ANFeCancelada;//Incluido por Luis Fernando em  22/01/2013
         FLocalImpCanhoto    := ALocalImpCanhoto;//Incluido por Luis Fernando em  22/01/2013
+        FImprimeItens       := AImprimeItens;
+        FvTroco             := AvTroco;
 
         for i := 0 to ComponentCount -1 do
           begin

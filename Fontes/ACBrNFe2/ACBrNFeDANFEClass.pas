@@ -111,6 +111,7 @@ type
     // Incluido por Italo em 27/03/2014
     // Destinado exclusivamente ao DANFE da NFC-e
     FImprimeItens: Boolean;
+    FvTroco: Currency;
 
     procedure Notification(AComponent: TComponent; Operation: TOperation); override;
   public
@@ -155,6 +156,7 @@ type
     // Incluido por Italo em 27/03/2014
     // Destinado exclusivamente ao DANFE da NFC-e
     property ImprimeItens: Boolean read FImprimeItens write FImprimeItens;
+    property vTroco: Currency read FvTroco write FvTroco;
   end;
 
 implementation
@@ -230,6 +232,7 @@ begin
   FCasasDecimais.Name:= 'CasasDecimais' ;
 
   FImprimeItens := True;
+  FvTroco       := 0.0;
 
   {$IFDEF COMPILER6_UP}
       FCasasDecimais.SetSubComponent( true );{ para gravar no DFM/XFM }
