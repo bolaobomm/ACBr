@@ -334,7 +334,8 @@ begin
                   IntToStrZero( 0, 5)                                     +  // Código de responsabilidade: "00000"
                   IntToStrZero( 0, 1)                                     +  // DV do código de responsabilidade: "0"
                   IntToStrZero( 0, 6)                                     +  // Numero do borderô: “000000”
-                  Space(5)                                                +  // Brancos
+                  Space(4)                                                +  // Brancos
+                  wRespEntrega                                            +  // Responsabilidade Emissão
                   padR( trim(Cedente.Modalidade), 2, '0')                 +  // Carteira/Modalidade
                   Ocorrencia                                              +  // Ocorrencia (remessa)
                   padL( NumeroDocumento,  10)                             +  // Número do Documento

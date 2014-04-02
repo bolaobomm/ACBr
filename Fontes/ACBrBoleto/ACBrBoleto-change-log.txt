@@ -47,6 +47,10 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+Data: 02/04/2014
+-- ACBrBancoob.pas
+[*] Adequação da remessa CNAB400 para atender as mudanças no layout do arquivo
+    conforme manual fornecido pelo banco datado de 28/03/2014 (Juliana Tamizou)
 
 Data: 03/02/2014
 -- ACBrBancoBradescoSICOOB.pas
