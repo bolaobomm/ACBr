@@ -1102,7 +1102,9 @@ begin
    qrlEmissao.Caption   := DFeUtil.FormatDate(DateToStr(FNFe.Ide.dEmi));
    qrlSaida.Caption     := IfThen( FNFe.Ide.DSaiEnt <> 0, DFeUtil.FormatDate(DateToStr(FNFe.Ide.dSaiEnt)));
    // Alterado por Italo em 22/03/2011
-   qrlHoraSaida.Caption := IfThen( FNFe.Ide.hSaiEnt <> 0, FormatDateTime('hh:mm:ss', FNFe.Ide.hSaiEnt));
+   if FNFe.infNFe.Versao > 3
+    then qrlHoraSaida.Caption := IfThen( FNFe.Ide.dSaiEnt <> 0, FormatDateTime('hh:mm:ss', FNFe.Ide.dSaiEnt))
+    else qrlHoraSaida.Caption := IfThen( FNFe.Ide.hSaiEnt <> 0, FormatDateTime('hh:mm:ss', FNFe.Ide.hSaiEnt));
 
    // Faturas
 
