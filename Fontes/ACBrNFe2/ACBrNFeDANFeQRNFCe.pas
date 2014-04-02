@@ -793,7 +793,7 @@ begin
       // TQRCodeEncoding = (qrAuto, qrNumeric, qrAlphanumeric, qrISO88591, qrUTF8NoBOM, qrUTF8BOM);
       // 0=Auto, 1=Numeric, 2=Alphanumeric, 3=ISO-8859-1, 4=UTF-8 without BOM, 5=UTF-8 with BOM
       QRCode.Encoding     := qrAuto; //TQRCodeEncoding(0);
-      QRCode.QuietZone    := 4;
+      QRCode.QuietZone    := 2; //4;
       QRCodeBitmap.Width  := QRCode.Rows;
       QRCodeBitmap.Height := QRCode.Columns;
 
