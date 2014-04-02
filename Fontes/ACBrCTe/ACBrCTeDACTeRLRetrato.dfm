@@ -11,11 +11,12 @@ inherited frmDACTeRLRetrato: TfrmDACTeRLRetrato
   Font.Name = 'Arial'
   Font.Style = [fsBold]
   inherited RLCTe: TRLReport
-    Left = 8
-    Top = -216
+    Left = 16
+    Top = -728
     Background.Arrange = baDistributed
     Background.Height = 96
     Background.Width = 175
+    DataSource = Datasource1
     Font.Height = -8
     Font.Name = 'Courier New'
     Margins.LeftMargin = 7
@@ -1695,7 +1696,7 @@ inherited frmDACTeRLRetrato: TfrmDACTeRLRetrato
         Height = 29
         Top = 138
         Width = 386
-        Alignment = taCenter
+        Alignment = taJustify
         AutoSize = False
         Caption = 'Consulta de autenticidade no portal nacional do CT-e, no site da Sefaz Autorizadora, ou em http://www.cte.fazenda.gov.br/portal'
         Color = clWhite
@@ -6219,7 +6220,7 @@ inherited frmDACTeRLRetrato: TfrmDACTeRLRetrato
       object RLLabel38: TRLLabel
         Left = 6
         Height = 13
-        Top = 2
+        Top = 3
         Width = 732
         Alignment = taCenter
         AutoSize = False

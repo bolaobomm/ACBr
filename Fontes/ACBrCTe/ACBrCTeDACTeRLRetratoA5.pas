@@ -54,7 +54,7 @@ uses
   Windows, Messages, Graphics, Controls, Forms, Dialogs, ExtCtrls, MaskUtils, StdCtrls,
   {$ENDIF}
   RLReport, RLFilters, RLPDFFilter,
-  pcnConversao, RLBarcode, {$IFDEF BORLAND}jpeg, {$ELSE} JPEGLib, {$ENDIF} DB, StrUtils, RLRichText, ACBrCTeDACTeRL;
+  pcnConversao, RLBarcode,  DB, StrUtils, RLRichText, ACBrCTeDACTeRL;
 
 type
 
