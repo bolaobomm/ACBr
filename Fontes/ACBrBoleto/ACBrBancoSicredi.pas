@@ -121,7 +121,8 @@ begin
                       CalcularDigitoVerificador(ACBrTitulo)   + { Dígito verificador do nosso número }
                       padR(OnlyNumber(Cedente.Agencia),4,'0') + { Código agência (cooperativa) }
                       padR(Cedente.AgenciaDigito,2,'0')       + { Dígito da agência (posto da cooperativa) }
-                      Cedente.Conta                           + { Código cedente = Número da conta }
+//                      padR(OnlyNumber(Cedente.Conta),7,'0')   + { Código cedente = Número da conta } Número da conta é diferente do código do cedente
+                      padR(OnlyNumber(Cedente.CodigoCedente),5,'0')   + { Código cedente }  //  Ver manual página 86 - CNAB240 ou 51 - CNAB400
                       '1'                                     + { Filler - zero. Obs: Será 1 quando o valor do documento for diferente se zero }
                       '0';                                    { Filler - zero }
       { Calcula o dígito do campo livre }
@@ -165,7 +166,12 @@ begin
    ACBrTitulo.ACBrBoleto.Cedente.Conta:= IntToStrZero(StrToInt64(ACBrTitulo.ACBrBoleto.Cedente.Conta), fpTamanhoConta );
    Result := ACBrTitulo.ACBrBoleto.Cedente.Agencia+'.'+
              padR(ACBrTitulo.ACBrBoleto.Cedente.AgenciaDigito,2,'0')+'.'+
-             ACBrTitulo.ACBrBoleto.Cedente.Conta;
+             padR(ACBrTitulo.ACBrBoleto.Cedente.CodigoCedente,5,'0'); // Código do Cedente é diferente do número da conta
+
+//   Result := ACBrTitulo.ACBrBoleto.Cedente.Agencia+'.'+
+//             padR(ACBrTitulo.ACBrBoleto.Cedente.AgenciaDigito,2,'0')+'.'+
+//             ACBrTitulo.ACBrBoleto.Cedente.Conta;}
+
 end;
 
 procedure TACBrBancoSicredi.GerarRegistroHeader400(NumeroRemessa : Integer; aRemessa: TStringList);
