@@ -378,7 +378,7 @@ uses
  ACBrProvedorVirtual, ACBrProvedorPVH, ACBrProvedorFreire,
  ACBrProvedorLink3, ACBrProvedorSpeedGov, ACBrProvedorVitoria,
  ACBrProvedorMitra, ACBrProvedorTecnos, ACBrProvedorPronim,
- ACBrProvedorActcon, ACBrProvedorEL;
+ ACBrProvedorActcon, ACBrProvedorEL, ACBrProvedorEgoverneISS;
 
 { TConfiguracoes }
 
@@ -742,6 +742,7 @@ begin
   proPronim:      FProvedorClass := TProvedorPronim.Create;
   proActcon:      FProvedorClass := TProvedorActcon.Create;
   proEL:          FProvedorClass := TProvedorEL.Create;
+  proEgoverneISS: FProvedorClass := TProvedorEgoverneISS.Create;
  end;
 
  ConfigCidade   := FProvedorClass.GetConfigCidade(FCodigoMunicipio, FAmbienteCodigo);

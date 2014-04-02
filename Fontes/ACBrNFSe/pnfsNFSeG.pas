@@ -515,7 +515,8 @@ begin
   proFreire,
   proSaatri,
   proFiorilli,
-  proPublica: Result := TagI + Notas + TagF;
+  proPublica,
+  proEGoverneISS: Result := TagI + Notas + TagF;
   else begin // proWebISS
    DadosMsg := '<' + Prefixo3 + 'LoteRps'+
                  DFeUtil.SeSenao(Identificador <> '', ' ' + Identificador + '="' + NumeroLote + '"', '') +

@@ -83,6 +83,7 @@ type
     FListaNfse: TGerarListaNfse;
     FProvedor: TnfseProvedor;
     FTabServicosExt: Boolean;
+    FProtocolo: String;
   public
     constructor Create;
     destructor Destroy; override;
@@ -94,6 +95,7 @@ type
     property ListaNfse: TGerarListaNfse     read FListaNfse              write FListaNfse;
     property Provedor: TnfseProvedor        read FProvedor               write FProvedor;
     property TabServicosExt: Boolean        read FTabServicosExt         write FTabServicosExt;
+    property Protocolo: string              read FProtocolo              write FProtocolo;
   end;
 
 implementation
@@ -232,9 +234,7 @@ begin
   try
     Leitor.Arquivo := NotaUtil.RetirarPrefixos(Leitor.Arquivo);
     VersaoXML := NotaUtil.VersaoXML(Leitor.Arquivo);
-
-    k := 0; //length(Prefixo4);
-
+    k := 0;
     Leitor.Grupo := Leitor.Arquivo;
     // Alterado por Cleiver em 26/02/2013
     if (leitor.rExtrai(1, 'GerarNfseResposta') <> '') or (leitor.rExtrai(1, 'GerarNfseResponse') <> '') or
@@ -260,13 +260,9 @@ begin
       // Ler a Lista de NFSe
       if leitor.rExtrai(2, 'ListaNfse') <> '' then
       begin
-//        i := 0;
-        // Alterado por Rodrigo Cantelli
         while (Leitor.rExtrai(3, 'CompNfse', '', i + 1) <> '') or
               (Leitor.rExtrai(3, 'ComplNfse', '', i + 1) <> '') do
         begin
-//          ListaNfse.FCompNfse.Add;
-
           // Grupo da TAG <Nfse> *************************************************
           if Leitor.rExtrai(4, 'Nfse') <> ''
            then begin
@@ -285,7 +281,7 @@ begin
                end;
               ListaNfse.FCompNfse[i].FNFSe.Numero            := Leitor.rCampo(tcStr, 'Numero');
               ListaNfse.FCompNfse[i].FNFSe.CodigoVerificacao := Leitor.rCampo(tcStr, 'CodigoVerificacao');
-              if FProvedor in [proFreire, proVitoria] 
+              if FProvedor in [proFreire, proVitoria]
                 then ListaNfse.FCompNfse[i].FNFSe.DataEmissao := Leitor.rCampo(tcDat, 'DataEmissao')
                 else ListaNfse.FCompNfse[i].FNFSe.DataEmissao := Leitor.rCampo(tcDatHor, 'DataEmissao');
 
@@ -676,14 +672,23 @@ begin
               inc(i);
            end;
            Result := True;
-        end; //fim Fault 
+        end; //fim Fault
 
+        if (Leitor.rExtrai(1, 'EmitirResponse') <> '') then
+        begin
+          if Leitor.rCampo(tcStr, 'Erro') <> 'false' then
+          begin
+            ListaNfse.FCompNfse.Add;
+            ListaNfse.FCompNfse[i].FNfse.Numero    := Leitor.rCampo(tcStr, 'b:Numero');
+            ListaNfse.FCompNfse[i].FNfse.Protocolo := Leitor.rCampo(tcStr, 'b:Autenticador');
+            Protocolo := Leitor.rCampo(tcStr, 'b:Autenticador');
+            Result := True;
+          end;
+        end;
     end;
-
   except
     result := False;
   end;
 end;
-
 end.
 

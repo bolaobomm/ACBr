@@ -9,7 +9,7 @@ uses
     LResources, Controls, Graphics,
   {$ENDIF}
     StrUtils,
-    Classes, SysUtils, 
+    Classes, SysUtils,
   {$IFDEF CLX}
     QDialogs,
   {$ELSE}
@@ -42,7 +42,7 @@ uses
     ACBrProvedorVirtual, ACBrProvedorPVH, ACBrProvedorFreire,
     ACBrProvedorLink3, ACBrProvedorSpeedGov, ACBrProvedorVitoria,
     ACBrProvedorMitra, ACBrProvedorTecnos, ACBrProvedorPronim,
-    ACBrProvedorActcon, ACBrProvedorEL;
+    ACBrProvedorActcon, ACBrProvedorEL, ACBrProvedorEgoverneISS;
 
 type
 
@@ -560,7 +560,7 @@ begin
 
  if not (FProvedor in [proGovBr, proSimplISS, proAbaco, proISSNet, pro4R,
                        proFiorilli, proProdata, proCoplan, proThema, proVirtual,
-                       proPVH, proFreire, proTecnos, proPronim, proPublica])
+                       proPVH, proFreire, proTecnos, proPronim, proPublica, proEgoverneISS])
   then begin
    if not InternetSetOption(Data, INTERNET_OPTION_CLIENT_CERT_CONTEXT, PCertContext, Sizeof(CERT_CONTEXT)*5)
     then begin
@@ -655,6 +655,7 @@ begin
   proPronim:      FProvedorClass := TProvedorPronim.Create;
   proActcon:      FProvedorClass := TProvedorActcon.Create;
   proEL:          FProvedorClass := TProvedorEL.Create;
+  proEgoverneISS: FProvedorClass := TProvedorEgoverneISS.Create;
  end;
 
  FPrefixo2     := FConfiguracoes.WebServices.Prefixo2;
@@ -1978,6 +1979,11 @@ begin
                                    '<' + Prefixo4 + 'InfDeclaracaoPrestacaoServico', '</' + Prefixo4 + 'InfDeclaracaoPrestacaoServico>') +
                                '</' + Prefixo4 + 'InfDeclaracaoPrestacaoServico>'+
                               '</' + Prefixo4 + 'Rps>';
+
+           proEgoverneISS: vNotas := vNotas + '<' + Prefixo4 + 'NotaFiscal>' +
+                                 RetornarConteudoEntre(TNFSeGerarNFSe(Self).FNotasFiscais.Items[I].XML_Rps,
+                                   '<' + Prefixo4 + 'NotaFiscal>', '</' + Prefixo4 + 'NotaFiscal>') +
+                              '</' + Prefixo4 + 'NotaFiscal>';
 
            else vNotas := vNotas + '<' + Prefixo4 + 'Rps>' +
                                '<' + Prefixo4 + 'InfRps' +
@@ -4298,6 +4304,8 @@ begin
   NFSeRetorno.TabServicosExt := FConfiguracoes.Arquivos.TabServicosExt;
   
   NFSeRetorno.LerXml;
+  //Obter o protocolo após leitura do XML
+  FProtocolo                 := NFseRetorno.Protocolo;
 
   FDataRecebimento := NFSeRetorno.ListaNfse.CompNfse[0].Nfse.dhRecebimento;
   FProtocolo       := NFSeRetorno.ListaNfse.CompNfse[0].Nfse.Protocolo;
