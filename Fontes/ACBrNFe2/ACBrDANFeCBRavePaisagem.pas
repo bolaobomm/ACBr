@@ -664,10 +664,10 @@ begin
 //          Box([fsTop,fsLeft],XPos,YPos,21,aWidthTituloBloco,'Hora de '+vEntSai,'',taCenter,True)
 //       else
 //          Box([fsTop,fsLeft],XPos,YPos,21,aHeigthPadrao,'Hora de '+vEntSai,TimeToStr(ide.hSaiEnt),taCenter,True);
-		if infNFe.versao =  '2.00' then
+		if infNFe.versao = 2.00 then
 			vSaiEnt := ifthen(ide.hSaiEnt = 0, '', TimeToStr(ide.hSaiEnt))
 		else
-			vSaiEnt := ifthen(ide.dhSaiEnt = 0, '', TimeToStr(ide.dhSaiEnt));
+			vSaiEnt := ifthen(TimeOf(ide.dSaiEnt)=0, '', TimeToStr(ide.dSaiEnt));
 		Box([fsTop,fsLeft],XPos,YPos,21,aHeigthPadrao,'Hora de '+vEntSai, vSaiEnt ,taCenter,True);
       end;
      Result:=YPos;
