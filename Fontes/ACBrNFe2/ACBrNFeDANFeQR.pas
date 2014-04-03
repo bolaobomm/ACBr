@@ -105,12 +105,16 @@ type
     // Destinado exclusivamente ao DANFE da NFC-e
     FImprimeItens: Boolean;
     FvTroco: Currency;
+    // Incluido por Italo em 03/04/2014
+    FxIdToken: String;
+    FxToken: String;
 
     procedure qrlSemValorFiscalPrint(sender: TObject; var Value: String);
     procedure SetBarCodeImage ( ACode : String; QRImage : TQRImage );
   public
     { Public declarations }
-    HrTotalPages : integer; //hrsoft 4/8/2010
+    HrTotalPages : integer;
+
     class procedure Imprimir(ANFe                : TNFe;
                              ALogo               : String    = '';
                              AEmail              : String    = '';
@@ -133,7 +137,9 @@ type
                              ANFeCancelada       : Boolean   = False; //Incluido por Luis Fernando em  22/01/2013
                              ALocalImpCanhoto    : Integer   = 0;     //Incluido por Luis Fernando em  22/01/2013
                              AImprimeItens       : Boolean   = True;
-                             AvTroco             : Currency  = 0.0);
+                             AvTroco             : Currency  = 0.0;
+                             AxIdToken           : String    = '';
+                             AxToken             : String    = '');
 
     class procedure SavePDF(AFile: String;
                             ANFe                : TNFe;
@@ -156,8 +162,9 @@ type
                             ANFeCancelada       : Boolean   = False; //Incluido por Luis Fernando em  22/01/2013
                             ALocalImpCanhoto    : Integer   = 0;     //Incluido por Luis Fernando em  22/01/2013
                             AImprimeItens       : Boolean   = True;
-                            AvTroco             : Currency  = 0.0);
-
+                            AvTroco             : Currency  = 0.0;
+                            AxIdToken           : String    = '';
+                            AxToken             : String    = '');
   end;
 
 implementation
@@ -192,7 +199,9 @@ class procedure TfqrDANFeQR.Imprimir(ANFe               : TNFe;
                                     ANFeCancelada       : Boolean   = False; //Incluido por Luis Fernando em  22/01/2013
                                     ALocalImpCanhoto    : Integer   = 0;     //Incluido por Luis Fernando em  22/01/2013
                                     AImprimeItens       : Boolean   = True;
-                                    AvTroco             : Currency  = 0.0);
+                                    AvTroco             : Currency  = 0.0;
+                                    AxIdToken           : String    = '';
+                                    AxToken             : String    = '');
 begin
   with Create ( nil ) do
      try
@@ -218,6 +227,8 @@ begin
         FLocalImpCanhoto    := ALocalImpCanhoto;//Incluido por Luis Fernando em  22/01/2013
         FImprimeItens       := AImprimeItens;
         FvTroco             := AvTroco;
+        FxIdToken           := AxIdToken;
+        FxToken             := AxToken;
 
         Printer := TPrinter.Create;
 
@@ -281,7 +292,9 @@ class procedure TfqrDANFeQR.SavePDF(AFile               : String;
                                     ANFeCancelada       : Boolean   = False; //Incluido por Luis Fernando em  22/01/2013
                                     ALocalImpCanhoto    : Integer   = 0;     //Incluido por Luis Fernando em  22/01/2013
                                     AImprimeItens       : Boolean   = True;
-                                    AvTroco             : Currency  = 0.0);
+                                    AvTroco             : Currency  = 0.0;
+                                    AxIdToken           : String    = '';
+                                    AxToken             : String    = '');
 {$IFDEF QReport_PDF}
 var
   qf : TQRPDFDocumentFilter;
@@ -312,6 +325,8 @@ begin
         FLocalImpCanhoto    := ALocalImpCanhoto;//Incluido por Luis Fernando em  22/01/2013
         FImprimeItens       := AImprimeItens;
         FvTroco             := AvTroco;
+        FxIdToken           := AxIdToken;
+        FxToken             := AxToken;
 
         for i := 0 to ComponentCount -1 do
           begin

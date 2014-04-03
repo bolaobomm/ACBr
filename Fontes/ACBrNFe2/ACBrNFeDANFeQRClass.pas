@@ -98,11 +98,11 @@ var
 begin
   case TipoDANFe of
     tiNFCe: begin
-           fqrDANFeQRRetrato := TfqrDANFeQRNFCe.Create(Self);
-          end;
-     else begin // tiRetrato
-           fqrDANFeQRRetrato := TfqrDANFeQRRetrato.Create(Self);
-          end;
+             fqrDANFeQRRetrato := TfqrDANFeQRNFCe.Create(Self);
+            end;
+    else    begin // tiRetrato
+             fqrDANFeQRRetrato := TfqrDANFeQRRetrato.Create(Self);
+            end;
   end;
 
 //  fqrDANFeQRRetrato := TfqrDANFeQRRetrato.Create(Self);
@@ -135,7 +135,9 @@ begin
                                     , NFeCancelada    //Incluido por Luis Fernando em  22/01/2013
                                     , LocalImpCanhoto //Incluido por Luis Fernando em  22/01/2013);
                                     , ImprimeItens
-                                    , vTroco);
+                                    , vTroco
+                                    , TACBrNFe(ACBrNFe).Configuracoes.Geral.IdToken
+                                    , TACBrNFe(ACBrNFe).Configuracoes.Geral.Token);
       end;
    end
   else
@@ -161,7 +163,9 @@ begin
                                 , NFeCancelada     //Incluido por Luis Fernando em  22/01/2013
                                 , LocalImpCanhoto  //Incluido por Luis Fernando em  22/01/2013););
                                 , ImprimeItens
-                                , vTroco);
+                                , vTroco
+                                , TACBrNFe(ACBrNFe).Configuracoes.Geral.IdToken
+                                , TACBrNFe(ACBrNFe).Configuracoes.Geral.Token);
 
   fqrDANFeQRRetrato.Free;
 end;
@@ -175,11 +179,11 @@ var
 begin
   case TipoDANFe of
     tiNFCe: begin
-           fqrDANFeQRRetrato := TfqrDANFeQRNFCe.Create(Self);
-          end;
-     else begin // tiRetrato
-           fqrDANFeQRRetrato := TfqrDANFeQRRetrato.Create(Self);
-          end;
+             fqrDANFeQRRetrato := TfqrDANFeQRNFCe.Create(Self);
+            end;
+    else    begin // tiRetrato
+             fqrDANFeQRRetrato := TfqrDANFeQRRetrato.Create(Self);
+            end;
   end;
 
 //  fqrDANFeQRRetrato := TfqrDANFeQRRetrato.Create(Self);
@@ -214,7 +218,9 @@ begin
                                     , NFeCancelada     //Incluido por Luis Fernando em  22/01/2013
                                     , LocalImpCanhoto  //Incluido por Luis Fernando em  22/01/2013););
                                     , ImprimeItens
-                                    , vTroco);
+                                    , vTroco
+                                    , TACBrNFe(ACBrNFe).Configuracoes.Geral.IdToken
+                                    , TACBrNFe(ACBrNFe).Configuracoes.Geral.Token);
       end;
    end
    else
@@ -242,7 +248,9 @@ begin
                                 , NFeCancelada     //Incluido por Luis Fernando em  22/01/2013
                                 , LocalImpCanhoto  //Incluido por Luis Fernando em  22/01/2013););
                                 , ImprimeItens
-                                , vTroco);
+                                , vTroco
+                                , TACBrNFe(ACBrNFe).Configuracoes.Geral.IdToken
+                                , TACBrNFe(ACBrNFe).Configuracoes.Geral.Token);
    end;
 
   fqrDANFeQRRetrato.Free;

@@ -210,7 +210,7 @@ type
 implementation
 
 uses
- StrUtils, DateUtils,
+ StrUtils, DateUtils, ACBrNFe,
  ACBrUtil, ACBrDFeUtil, ACBrNFeUtil, pcnNFe;
 
 {$R *.dfm}
@@ -787,7 +787,9 @@ begin
                                     FNFe.Ide.dEmi,
                                     FNFe.Total.ICMSTot.vNF,
                                     FNFe.Total.ICMSTot.vICMS,
-                                    FNFe.procNFe.digVal);
+                                    FNFe.procNFe.digVal,
+                                    FxIdToken,
+                                    FxToken);
       QRCode.Data := sURL;
 
       // TQRCodeEncoding = (qrAuto, qrNumeric, qrAlphanumeric, qrISO88591, qrUTF8NoBOM, qrUTF8BOM);
