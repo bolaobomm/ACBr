@@ -369,7 +369,9 @@ begin
                                    DFeUtil.SeSenao(FpNFe.Dest.idEstrangeiro <> '',FpNFe.Dest.idEstrangeiro, FpNFe.Dest.CNPJCPF),
                                    FpNFe.ide.dEmi,
                                    FpNFe.Total.ICMSTot.vNF, FpNFe.Total.ICMSTot.vICMS,
-                                   FpNFe.signature.DigestValue );
+                                   FpNFe.signature.DigestValue ,
+                                   TACBrNFe( ACBrNFe ).Configuracoes.Geral.IdToken,
+                                   TACBrNFe( ACBrNFe ).Configuracoes.Geral.Token);
 
   FLinhaCmd := chr(29)+'(k'+chr(4)+chr(0)+'1A2'+chr(0)+
                chr(29)+'(k'+chr(3)+chr(0)+'1C'+chr(4)+

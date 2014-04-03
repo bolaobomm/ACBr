@@ -143,7 +143,7 @@ type
     FModeloDF: TpcnModeloDF;
     FVersaoDF: TpcnVersaoDF;
     FModeloDFCodigo: Integer;  //Verificar
-    FcIdToken : String;
+    FIdToken : String;
     FToken : String;
 
     procedure SetFormaEmissao(AValue: TpcnTipoEmissao);
@@ -170,7 +170,7 @@ type
     property ModeloDF: TpcnModeloDF read FModeloDF write SetModeloDF default moNFe;
     property VersaoDF: TpcnVersaoDF read FVersaoDF write SetVersaoDF default ve200;
     property ModeloDFCodigo: Integer read FModeloDFCodigo;
-    property cIdToken: String read FcIdToken write FcIdToken;
+    property IdToken: String read FIdToken write FIdToken;
     property Token: String read FToken write FToken;
   end;
 

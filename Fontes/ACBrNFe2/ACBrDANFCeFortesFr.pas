@@ -66,7 +66,7 @@ type
   protected
     FpNFe: TNFe;
 
-    procedure Imprimir(Resumido : Boolean = False);
+    procedure Imprimir(DanfeResumido : Boolean = False);
   public
     constructor Create(AOwner: TComponent); override;
     destructor Destroy; override;
@@ -398,7 +398,9 @@ begin
                                      DFeUtil.SeSenao(Dest.idEstrangeiro <> '',Dest.idEstrangeiro, Dest.CNPJCPF),
                                      ide.dEmi,
                                      Total.ICMSTot.vNF, Total.ICMSTot.vICMS,
-                                     signature.DigestValue );
+                                     signature.DigestValue,
+                                     TACBrNFe( ACBrNFeDANFCeFortes.ACBrNFe ).Configuracoes.Geral.IdToken,
+                                     TACBrNFe( ACBrNFeDANFCeFortes.ACBrNFe ).Configuracoes.Geral.Token);
     PintarQRCode( qrcode, imgQRCode.Picture );
 
     lProtocolo.Caption := 'Protocolo de Autorização: '+procNFe.nProt+
@@ -635,7 +637,7 @@ begin
   Imprimir(True);
 end;
 
-procedure TACBrNFeDANFCeFortes.Imprimir(Resumido : Boolean = False);
+procedure TACBrNFeDANFCeFortes.Imprimir(DanfeResumido : Boolean = False);
 var
   frACBrNFeDANFCeFortesFr: TACBrNFeDANFCeFortesFr;
   RLLayout: TRLReport;
@@ -653,6 +655,7 @@ begin
     with frACBrNFeDANFCeFortesFr do
     begin
       RLLayout := rlVenda;
+      Resumido := DanfeResumido;
 
       RLPrinter.Copies     := NumCopias ;
       RLLayout.PrintDialog := ACBrNFeDANFCeFortes.FMostrarPreview;

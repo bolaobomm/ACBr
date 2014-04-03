@@ -183,7 +183,7 @@ type
                                 AchNFe, AcDest: String;
                                 AdhEmi: TDateTime;
                                 AvNF, AvICMS: Currency;
-                                AdigVal: String) : String;
+                                AdigVal, AidToken, AToken: String) : String;
   end;
 
 implementation
@@ -2596,7 +2596,7 @@ class function NotaUtil.GetURLQRCode(const AUF : Integer; AAmbiente : TpcnTipoAm
                                      AchNFe, AcDest: String;
                                      AdhEmi: TDateTime;
                                      AvNF, AvICMS: Currency;
-                                     AdigVal: String): String;
+                                     AdigVal, AidToken, AToken: String): String;
 var
  sdhEmi_HEX, sdigVal_HEX, sNF, sICMS,
  cIdToken, cTokenHom, cTokenPro, sToken,
@@ -2640,11 +2640,9 @@ begin
   sdigVal_HEX := AsciiToHex(AdigVal);
 
   // Passo 3 e 4
-  // Pegar de uma propriedade do componente
-  cIdToken  := '000001';
+  cIdToken  := AidToken;
   cTokenHom := Copy(AchNFe, 7, 8) + '20' + Copy(AchNFe, 3, 2) + Copy(cIdToken, 3, 4);
-  // Pegar de uma propriedade do componente
-  cTokenPro := 'C1774291-A86A-4ADA-B247-791207C6CF50';
+  cTokenPro := AToken;
 
   sToken    := DFeUtil.SeSenao(AAmbiente = taProducao, cIdToken + cTokenPro, cIdToken + cTokenHom);
 

@@ -127,6 +127,7 @@ type
     function ValidaAssinatura(out Msg : String) : Boolean;
     function ValidaRegrasdeNegocios : Boolean;
     procedure Imprimir;
+    procedure ImprimirResumido;
     procedure ImprimirPDF;
     function  Add: NotaFiscal;
     function Insert(Index: Integer): NotaFiscal;
@@ -543,6 +544,14 @@ begin
      raise EACBrNFeException.Create('Componente DANFE não associado.')
   else
      TACBrNFe( FACBrNFe ).DANFE.ImprimirDANFE(nil);
+end;
+
+procedure TNotasFiscais.ImprimirResumido;
+begin
+  if not Assigned( TACBrNFe( FACBrNFe ).DANFE ) then
+     raise EACBrNFeException.Create('Componente DANFE não associado.')
+  else
+     TACBrNFe( FACBrNFe ).DANFE.ImprimirDANFEResumido(nil);
 end;
 
 procedure TNotasFiscais.ImprimirPDF;
