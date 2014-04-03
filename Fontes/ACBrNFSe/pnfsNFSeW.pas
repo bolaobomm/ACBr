@@ -456,7 +456,7 @@ begin
                           proLink3, proMitra, proGovDigital, proVirtual])
       then Gerador.wCampoNFSe(tcDe2, '#24', 'BaseCalculo', 01, 15, 0, NFSe.Servico.Valores.BaseCalculo, '');
 
-    if FProvedor in [pro4R, profintelISS, proISSDigital, proISSe, proSaatri, proCoplan,
+    if FProvedor in [pro4R, profintelISS, proISSDigital, proISSe, proSaatri, {proCoplan,}
                      proLink3, proGovDigital]
       then Gerador.wCampoNFSe(tcDe4, '#25', 'Aliquota', 01, 05, 1, NFSe.Servico.Valores.Aliquota, '')
       else begin
@@ -470,7 +470,7 @@ begin
                if NFSe.OptanteSimplesNacional = snSim
                  then Gerador.wCampoNFSe(tcDe2, '#25', 'Aliquota', 01, 05, 1, NFSe.Servico.Valores.Aliquota, '');
             end
-          else if FProvedor in [proFiorilli, proTecnos]
+          else if FProvedor in [proFiorilli, proTecnos, proCoplan]
             then Gerador.wCampoNFSe(tcDe2, '#25', 'Aliquota', 01, 05, 1, NFSe.Servico.Valores.Aliquota, '')
           else if FProvedor in [proDigifred]
             then Gerador.wCampoNFSe(tcDe2, '#25', 'Aliquota', 01, 05, 0, NFSe.Servico.Valores.Aliquota, '')
