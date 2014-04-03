@@ -1846,10 +1846,9 @@ begin
        FRetornoWS := TiraAcentos(ParseText(StrStream.DataString, True));
        if nfeAutorizacaoLote then
         begin
-          if FSincrono then
-            FRetWS := SeparaDados( FRetornoWS,'nfeAutorizacaoResult')
-          else
-            FRetWS := SeparaDados( FRetornoWS,'nfeAutorizacaoLoteResult')
+          FRetWS := SeparaDados( FRetornoWS,'nfeAutorizacaoLoteResult');
+          if FRetWS = '' then
+            FRetWS := SeparaDados( FRetornoWS,'nfeAutorizacaoResult');
         end
        else
           FRetWS := SeparaDados( FRetornoWS,'nfeRecepcaoLote2Result');
@@ -1861,10 +1860,9 @@ begin
        FRetornoWS := TiraAcentos(ParseText(StrStream.DataString, True));
        if nfeAutorizacaoLote then
         begin
-          if FSincrono then
-            FRetWS := SeparaDados( FRetornoWS,'nfeAutorizacaoResult')
-          else
-            FRetWS := SeparaDados( FRetornoWS,'nfeAutorizacaoLoteResult')
+          FRetWS := SeparaDados( FRetornoWS,'nfeAutorizacaoLoteResult');
+          if FRetWS = '' then
+            FRetWS := SeparaDados( FRetornoWS,'nfeAutorizacaoResult');
         end
        else
           FRetWS := SeparaDados( FRetornoWS,'nfeRecepcaoLote2Result');
