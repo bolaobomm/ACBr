@@ -12,6 +12,7 @@ object Form1: TForm1
   Font.Style = []
   OldCreateOrder = False
   Position = poDesktopCenter
+  OnCreate = FormCreate
   OnShow = FormShow
   PixelsPerInch = 96
   TextHeight = 13
@@ -98,24 +99,20 @@ object Form1: TForm1
     BevelInner = bvLowered
     TabOrder = 2
     object BtnListar: TBitBtn
-      Left = 40
+      Left = 241
       Top = 5
       Width = 161
       Height = 25
       Caption = 'Listar Tabelas'
-      DoubleBuffered = True
-      ParentDoubleBuffered = False
       TabOrder = 0
       OnClick = BtnListarClick
     end
     object BtnDow: TBitBtn
-      Left = 288
+      Left = 417
       Top = 5
       Width = 161
       Height = 25
       Caption = 'Download Item Selecionado'
-      DoubleBuffered = True
-      ParentDoubleBuffered = False
       TabOrder = 1
       OnClick = BtnDowClick
     end
@@ -125,10 +122,16 @@ object Form1: TForm1
       Width = 161
       Height = 25
       Caption = 'Download Todos'
-      DoubleBuffered = True
-      ParentDoubleBuffered = False
       TabOrder = 2
       OnClick = BtnDowTClick
+    end
+    object ComboBox1: TComboBox
+      Left = 63
+      Top = 7
+      Width = 145
+      Height = 21
+      TabOrder = 3
+      Text = 'ComboBox1'
     end
   end
   object ClientDataSet1: TClientDataSet
