@@ -114,6 +114,7 @@ begin
      for i:= 0 to TACBrNFe(ACBrNFe).NotasFiscais.Count-1 do
       begin
         fqrDANFeQRRetrato.Imprimir(   TACBrNFe(ACBrNFe).NotasFiscais.Items[i].NFe
+                                    , TACBrNFe(ACBrNFe)
                                     , Logo
                                     , Email
                                     , ExibirResumoCanhoto
@@ -132,16 +133,15 @@ begin
                                     , Impressora
                                     , ExibirResumoCanhoto_Texto
                                     , ExpandirLogoMarca
-                                    , NFeCancelada    //Incluido por Luis Fernando em  22/01/2013
-                                    , LocalImpCanhoto //Incluido por Luis Fernando em  22/01/2013);
+                                    , NFeCancelada
+                                    , LocalImpCanhoto 
                                     , ImprimeItens
-                                    , vTroco
-                                    , TACBrNFe(ACBrNFe).Configuracoes.Geral.IdToken
-                                    , TACBrNFe(ACBrNFe).Configuracoes.Geral.Token);
+                                    , vTroco);
       end;
    end
   else
      fqrDANFeQRRetrato.Imprimir(  NFe
+                                , TACBrNFe(ACBrNFe)
                                 , Logo
                                 , Email
                                 , ExibirResumoCanhoto
@@ -160,12 +160,10 @@ begin
                                 , Impressora
                                 , ExibirResumoCanhoto_Texto
                                 , ExpandirLogoMarca
-                                , NFeCancelada     //Incluido por Luis Fernando em  22/01/2013
-                                , LocalImpCanhoto  //Incluido por Luis Fernando em  22/01/2013););
+                                , NFeCancelada
+                                , LocalImpCanhoto  
                                 , ImprimeItens
-                                , vTroco
-                                , TACBrNFe(ACBrNFe).Configuracoes.Geral.IdToken
-                                , TACBrNFe(ACBrNFe).Configuracoes.Geral.Token);
+                                , vTroco);
 
   fqrDANFeQRRetrato.Free;
 end;
@@ -198,29 +196,28 @@ begin
         NomeArq := PathWithDelim(Self.PathPDF)+NomeArq+'.pdf';
 
         fqrDANFeQRRetrato.SavePDF(  NomeArq
-                                    ,TACBrNFe(ACBrNFe).NotasFiscais.Items[i].NFe
-                                    , Logo
-                                    , Email
-                                    , ExibirResumoCanhoto
-                                    , Fax
-                                    , NumCopias
-                                    , Sistema
-                                    , Site
-                                    , Usuario
-                                    , MargemSuperior
-                                    , MargemInferior
-                                    , MargemEsquerda
-                                    , MargemDireita
-                                    , CasasDecimais._qCom
-                                    , CasasDecimais._vUnCom
-                                    , ExibirResumoCanhoto_Texto
-                                    , ExpandirLogoMarca
-                                    , NFeCancelada     //Incluido por Luis Fernando em  22/01/2013
-                                    , LocalImpCanhoto  //Incluido por Luis Fernando em  22/01/2013););
-                                    , ImprimeItens
-                                    , vTroco
-                                    , TACBrNFe(ACBrNFe).Configuracoes.Geral.IdToken
-                                    , TACBrNFe(ACBrNFe).Configuracoes.Geral.Token);
+                                  , TACBrNFe(ACBrNFe).NotasFiscais.Items[i].NFe
+                                  , TACBrNFe(ACBrNFe)
+                                  , Logo
+                                  , Email
+                                  , ExibirResumoCanhoto
+                                  , Fax
+                                  , NumCopias
+                                  , Sistema
+                                  , Site
+                                  , Usuario
+                                  , MargemSuperior
+                                  , MargemInferior
+                                  , MargemEsquerda
+                                  , MargemDireita
+                                  , CasasDecimais._qCom
+                                  , CasasDecimais._vUnCom
+                                  , ExibirResumoCanhoto_Texto
+                                  , ExpandirLogoMarca
+                                  , NFeCancelada
+                                  , LocalImpCanhoto  
+                                  , ImprimeItens
+                                  , vTroco);
       end;
    end
    else
@@ -228,29 +225,28 @@ begin
      NomeArq := StringReplace(NFe.infNFe.ID,'NFe', '', [rfIgnoreCase]);
      NomeArq := PathWithDelim(Self.PathPDF)+NomeArq+'.pdf';
      fqrDANFeQRRetrato.SavePDF( NomeArq
-                                , NFe
-                                , Logo
-                                , Email
-                                , ExibirResumoCanhoto
-                                , Fax
-                                , NumCopias
-                                , Sistema
-                                , Site
-                                , Usuario
-                                , MargemSuperior
-                                , MargemInferior
-                                , MargemEsquerda
-                                , MargemDireita
-                                , CasasDecimais._qCom
-                                , CasasDecimais._vUnCom
-                                , ExibirResumoCanhoto_Texto
-                                , ExpandirLogoMarca
-                                , NFeCancelada     //Incluido por Luis Fernando em  22/01/2013
-                                , LocalImpCanhoto  //Incluido por Luis Fernando em  22/01/2013););
-                                , ImprimeItens
-                                , vTroco
-                                , TACBrNFe(ACBrNFe).Configuracoes.Geral.IdToken
-                                , TACBrNFe(ACBrNFe).Configuracoes.Geral.Token);
+                              , NFe
+                              , TACBrNFe(ACBrNFe)
+                              , Logo
+                              , Email
+                              , ExibirResumoCanhoto
+                              , Fax
+                              , NumCopias
+                              , Sistema
+                              , Site
+                              , Usuario
+                              , MargemSuperior
+                              , MargemInferior
+                              , MargemEsquerda
+                              , MargemDireita
+                              , CasasDecimais._qCom
+                              , CasasDecimais._vUnCom
+                              , ExibirResumoCanhoto_Texto
+                              , ExpandirLogoMarca
+                              , NFeCancelada
+                              , LocalImpCanhoto
+                              , ImprimeItens
+                              , vTroco);
    end;
 
   fqrDANFeQRRetrato.Free;

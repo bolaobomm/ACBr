@@ -788,8 +788,8 @@ begin
                                     FNFe.Total.ICMSTot.vNF,
                                     FNFe.Total.ICMSTot.vICMS,
                                     FNFe.procNFe.digVal,
-                                    FxIdToken,
-                                    FxToken);
+                                    TACBrNFe( FACBrNFe ).Configuracoes.Geral.IdToken,
+                                    TACBrNFe( FACBrNFe ).Configuracoes.Geral.Token);
       QRCode.Data := sURL;
 
       // TQRCodeEncoding = (qrAuto, qrNumeric, qrAlphanumeric, qrISO88591, qrUTF8NoBOM, qrUTF8BOM);

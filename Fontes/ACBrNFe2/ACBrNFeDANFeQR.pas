@@ -64,7 +64,6 @@ uses
   Dialogs, ExtCtrls, QuickRpt, QRCtrls,
   {$IFDEF QReport_PDF}
      QRPDFFilt,
-     // Incluido por Italo em 13/01/2011
      QRPrntr,
   {$ENDIF}
   ACBrNFeQRCodeBar, pcnNFe, ACBrNFe, ACBrNFeUtil, Printers;
@@ -88,7 +87,7 @@ type
     FSite               : String;
     FUsuario            : String;
     AfterPreview        : Boolean;
-    FExpandirLogoMarca  : Boolean; // Incluido por Italo em 18/06/2012
+    FExpandirLogoMarca  : Boolean; 
     ChangedPos          : Boolean;
     FSemValorFiscal     : Boolean;
     FMargemSuperior     : double;
@@ -99,15 +98,13 @@ type
     FCasasDecimaisvUnCom: Integer;
     FImpressora         : String;
     FResumoCanhoto_Texto: String;
-    FNFeCancelada       : Boolean; //Incluido por Luis Fernando em  22/01/2013
-    FLocalImpCanhoto    : Integer; //Incluido por Luis Fernando em  22/01/2013
+    // Incluido por Luis Fernando em  22/01/2013
+    FNFeCancelada       : Boolean;
+    FLocalImpCanhoto    : Integer; 
     // Incluido por Italo em 27/03/2014
     // Destinado exclusivamente ao DANFE da NFC-e
     FImprimeItens: Boolean;
     FvTroco: Currency;
-    // Incluido por Italo em 03/04/2014
-    FxIdToken: String;
-    FxToken: String;
 
     procedure qrlSemValorFiscalPrint(sender: TObject; var Value: String);
     procedure SetBarCodeImage ( ACode : String; QRImage : TQRImage );
@@ -115,56 +112,54 @@ type
     { Public declarations }
     HrTotalPages : integer;
 
-    class procedure Imprimir(ANFe                : TNFe;
-                             ALogo               : String    = '';
-                             AEmail              : String    = '';
-                             AResumoCanhoto      : Boolean   = False;
-                             AFax                : String    = '';
-                             ANumCopias          : Integer   = 1;
-                             ASistema            : String    = '';
-                             ASite               : String    = '';
-                             AUsuario            : String    = '';
-                             APreview            : Boolean   = True;
-                             AMargemSuperior     : Double    = 0.8;
-                             AMargemInferior     : Double    = 0.8;
-                             AMargemEsquerda     : Double    = 0.6;
-                             AMargemDireita      : Double    = 0.51;
-                             ACasasDecimaisqCom  : Integer   = 4;
+    class procedure Imprimir(ANFe                 : TNFe;
+                             AACBrNFe             : TACBrNFe;
+                             ALogo                : String   = '';
+                             AEmail               : String   = '';
+                             AResumoCanhoto       : Boolean  = False;
+                             AFax                 : String   = '';
+                             ANumCopias           : Integer  = 1;
+                             ASistema             : String   = '';
+                             ASite                : String   = '';
+                             AUsuario             : String   = '';
+                             APreview             : Boolean  = True;
+                             AMargemSuperior      : Double   = 0.8;
+                             AMargemInferior      : Double   = 0.8;
+                             AMargemEsquerda      : Double   = 0.6;
+                             AMargemDireita       : Double   = 0.51;
+                             ACasasDecimaisqCom   : Integer  = 4;
                              ACasasDecimaisvUncCom: Integer  = 4;
-                             AImpressora         : String    = '';
-                             AResumoCanhoto_Texto: String    = '';
-                             AExpandirLogoMarca  : Boolean   = False; // Incluido por Italo em 18/06/2012
-                             ANFeCancelada       : Boolean   = False; //Incluido por Luis Fernando em  22/01/2013
-                             ALocalImpCanhoto    : Integer   = 0;     //Incluido por Luis Fernando em  22/01/2013
-                             AImprimeItens       : Boolean   = True;
-                             AvTroco             : Currency  = 0.0;
-                             AxIdToken           : String    = '';
-                             AxToken             : String    = '');
+                             AImpressora          : String   = '';
+                             AResumoCanhoto_Texto : String   = '';
+                             AExpandirLogoMarca   : Boolean  = False;
+                             ANFeCancelada        : Boolean  = False;
+                             ALocalImpCanhoto     : Integer  = 0;
+                             AImprimeItens        : Boolean  = True;
+                             AvTroco              : Currency = 0.0);
 
-    class procedure SavePDF(AFile: String;
-                            ANFe                : TNFe;
-                            ALogo               : String    = '';
-                            AEmail              : String    = '';
-                            AResumoCanhoto      : Boolean   = False;
-                            AFax                : String    = '';
-                            ANumCopias          : Integer   = 1;
-                            ASistema            : String    = '';
-                            ASite               : String    = '';
-                            AUsuario            : String    = '';
-                            AMargemSuperior     : Double    = 0.8;
-                            AMargemInferior     : Double    = 0.8;
-                            AMargemEsquerda     : Double    = 0.6;
-                            AMargemDireita      : Double    = 0.51;
-                            ACasasDecimaisqCom  : Integer   = 4;
+    class procedure SavePDF(AFile                : String;
+                            ANFe                 : TNFe;
+                            AACBrNFe             : TACBrNFe;
+                            ALogo                : String   = '';
+                            AEmail               : String   = '';
+                            AResumoCanhoto       : Boolean  = False;
+                            AFax                 : String   = '';
+                            ANumCopias           : Integer  = 1;
+                            ASistema             : String   = '';
+                            ASite                : String   = '';
+                            AUsuario             : String   = '';
+                            AMargemSuperior      : Double   = 0.8;
+                            AMargemInferior      : Double   = 0.8;
+                            AMargemEsquerda      : Double   = 0.6;
+                            AMargemDireita       : Double   = 0.51;
+                            ACasasDecimaisqCom   : Integer  = 4;
                             ACasasDecimaisvUncCom: Integer  = 4;
-                            AResumoCanhoto_Texto: String    = '';
-                            AExpandirLogoMarca  : Boolean   = False; // Incluido por Italo em 18/06/2012
-                            ANFeCancelada       : Boolean   = False; //Incluido por Luis Fernando em  22/01/2013
-                            ALocalImpCanhoto    : Integer   = 0;     //Incluido por Luis Fernando em  22/01/2013
-                            AImprimeItens       : Boolean   = True;
-                            AvTroco             : Currency  = 0.0;
-                            AxIdToken           : String    = '';
-                            AxToken             : String    = '');
+                            AResumoCanhoto_Texto : String   = '';
+                            AExpandirLogoMarca   : Boolean  = False;
+                            ANFeCancelada        : Boolean  = False;
+                            ALocalImpCanhoto     : Integer  = 0;
+                            AImprimeItens        : Boolean  = True;
+                            AvTroco              : Currency = 0.0);
   end;
 
 implementation
@@ -177,58 +172,56 @@ var
 
 {$R *.dfm}
 
-class procedure TfqrDANFeQR.Imprimir(ANFe               : TNFe;
-                                    ALogo               : String    = '';
-                                    AEmail              : String    = '';
-                                    AResumoCanhoto      : Boolean   = False;
-                                    AFax                : String    = '';
-                                    ANumCopias          : Integer   = 1;
-                                    ASistema            : String    = '';
-                                    ASite               : String    = '';
-                                    AUsuario            : String    = '';
-                                    APreview            : Boolean   = True;
-                                    AMargemSuperior     : Double    = 0.8;
-                                    AMargemInferior     : Double    = 0.8;
-                                    AMargemEsquerda     : Double    = 0.6;
-                                    AMargemDireita      : Double    = 0.51;
-                                    ACasasDecimaisqCom  : Integer   = 4;
-                                    ACasasDecimaisvUncCom: Integer  = 4;
-                                    AImpressora         : String    = '';
-                                    AResumoCanhoto_Texto: String    = '';
-                                    AExpandirLogoMarca  : Boolean   = False; // Incluido por Italo em 18/06/2012
-                                    ANFeCancelada       : Boolean   = False; //Incluido por Luis Fernando em  22/01/2013
-                                    ALocalImpCanhoto    : Integer   = 0;     //Incluido por Luis Fernando em  22/01/2013
-                                    AImprimeItens       : Boolean   = True;
-                                    AvTroco             : Currency  = 0.0;
-                                    AxIdToken           : String    = '';
-                                    AxToken             : String    = '');
+class procedure TfqrDANFeQR.Imprimir(ANFe                 : TNFe;
+                                     AACBrNFe             : TACBrNFe;
+                                     ALogo                : String   = '';
+                                     AEmail               : String   = '';
+                                     AResumoCanhoto       : Boolean  = False;
+                                     AFax                 : String   = '';
+                                     ANumCopias           : Integer  = 1;
+                                     ASistema             : String   = '';
+                                     ASite                : String   = '';
+                                     AUsuario             : String   = '';
+                                     APreview             : Boolean  = True;
+                                     AMargemSuperior      : Double   = 0.8;
+                                     AMargemInferior      : Double   = 0.8;
+                                     AMargemEsquerda      : Double   = 0.6;
+                                     AMargemDireita       : Double   = 0.51;
+                                     ACasasDecimaisqCom   : Integer  = 4;
+                                     ACasasDecimaisvUncCom: Integer  = 4;
+                                     AImpressora          : String   = '';
+                                     AResumoCanhoto_Texto : String   = '';
+                                     AExpandirLogoMarca   : Boolean  = False;
+                                     ANFeCancelada        : Boolean  = False;
+                                     ALocalImpCanhoto     : Integer  = 0;
+                                     AImprimeItens        : Boolean  = True;
+                                     AvTroco              : Currency = 0.0);
 begin
   with Create ( nil ) do
      try
-        FNFe                := ANFe;
-        FLogo               := ALogo;
-        FEmail              := AEmail;
-        FResumoCanhoto      := AResumoCanhoto;
-        FFax                := AFax;
-        FNumCopias          := ANumCopias;
-        FSistema            := ASistema;
-        FSite               := ASite;
-        FUsuario            := AUsuario;
-        FMargemSuperior     := AMargemSuperior;
-        FMargemInferior     := AMargemInferior;
-        FMargemEsquerda     := AMargemEsquerda;
-        FMargemDireita      := AMargemDireita;
-        FCasasDecimaisqCom  := ACasasDecimaisqCom;
+        FNFe                 := ANFe;
+        FACBrNFe             := AACBrNFe;
+        FLogo                := ALogo;
+        FEmail               := AEmail;
+        FResumoCanhoto       := AResumoCanhoto;
+        FFax                 := AFax;
+        FNumCopias           := ANumCopias;
+        FSistema             := ASistema;
+        FSite                := ASite;
+        FUsuario             := AUsuario;
+        FMargemSuperior      := AMargemSuperior;
+        FMargemInferior      := AMargemInferior;
+        FMargemEsquerda      := AMargemEsquerda;
+        FMargemDireita       := AMargemDireita;
+        FCasasDecimaisqCom   := ACasasDecimaisqCom;
         FCasasDecimaisvUnCom := ACasasDecimaisvUncCom;
-        FImpressora         := AImpressora;
-        FResumoCanhoto_Texto:= AResumoCanhoto_Texto;
-        FExpandirLogoMarca  := AExpandirLogoMarca;  // Incluido por Italo em 18/06/2012
-        FNFeCancelada       := ANFeCancelada;//Incluido por Luis Fernando em  22/01/2013
-        FLocalImpCanhoto    := ALocalImpCanhoto;//Incluido por Luis Fernando em  22/01/2013
-        FImprimeItens       := AImprimeItens;
-        FvTroco             := AvTroco;
-        FxIdToken           := AxIdToken;
-        FxToken             := AxToken;
+        FImpressora          := AImpressora;
+        FResumoCanhoto_Texto := AResumoCanhoto_Texto;
+        FExpandirLogoMarca   := AExpandirLogoMarca;
+        FNFeCancelada        := ANFeCancelada;
+        FLocalImpCanhoto     := ALocalImpCanhoto;
+        FImprimeItens        := AImprimeItens;
+        FvTroco              := AvTroco;
 
         Printer := TPrinter.Create;
 
@@ -237,9 +230,8 @@ begin
 
         if APreview
          then begin
-           QRNFe.PrinterSettings.Copies := FNumCopias; // Incluido por Italo em 15/10/2010
+           QRNFe.PrinterSettings.Copies := FNumCopias;
 
-          // Incluido por Italo em 13/01/2011
          {$IFDEF QReport_PDF}
            QRNFe.PrevShowSearch      := False;
            QRNFe.PrevShowThumbs      := False;
@@ -248,7 +240,7 @@ begin
          {$ENDIF}
 
            QRNFe.Prepare;
-           HrTotalPages := QRNFe.QRPrinter.PageCount; //hrsoft 4/8/2010
+           HrTotalPages := QRNFe.QRPrinter.PageCount;
            QRNFe.Preview;
            // Incluido por Italo em 11/04/2013
            // Segundo o Rodrigo Chiva resolveu o problema de travamento
@@ -257,9 +249,9 @@ begin
          end
          else begin
            AfterPreview := True;
-           QRNFe.PrinterSettings.Copies := FNumCopias; // Incluido por Italo em 15/10/2010
+           QRNFe.PrinterSettings.Copies := FNumCopias;
            QRNFe.Prepare;
-           HrTotalPages := QRNFe.QRPrinter.PageCount; //hrsoft 4/8/2010
+           HrTotalPages := QRNFe.QRPrinter.PageCount;
            QRNFe.Print;
          end;
 
@@ -271,30 +263,29 @@ begin
      end;
 end;
 
-class procedure TfqrDANFeQR.SavePDF(AFile               : String;
-                                    ANFe                : TNFe;
-                                    ALogo               : String    = '';
-                                    AEmail              : String    = '';
-                                    AResumoCanhoto      : Boolean   = False;
-                                    AFax                : String    = '';
-                                    ANumCopias          : Integer   = 1;
-                                    ASistema            : String    = '';
-                                    ASite               : String    = '';
-                                    AUsuario            : String    = '';
-                                    AMargemSuperior     : Double    = 0.8;
-                                    AMargemInferior     : Double    = 0.8;
-                                    AMargemEsquerda     : Double    = 0.6;
-                                    AMargemDireita      : Double    = 0.51;
-                                    ACasasDecimaisqCom  : Integer   = 4;
+class procedure TfqrDANFeQR.SavePDF(AFile                : String;
+                                    ANFe                 : TNFe;
+                                    AACBrNFe             : TACBrNFe;
+                                    ALogo                : String   = '';
+                                    AEmail               : String   = '';
+                                    AResumoCanhoto       : Boolean  = False;
+                                    AFax                 : String   = '';
+                                    ANumCopias           : Integer  = 1;
+                                    ASistema             : String   = '';
+                                    ASite                : String   = '';
+                                    AUsuario             : String   = '';
+                                    AMargemSuperior      : Double   = 0.8;
+                                    AMargemInferior      : Double   = 0.8;
+                                    AMargemEsquerda      : Double   = 0.6;
+                                    AMargemDireita       : Double   = 0.51;
+                                    ACasasDecimaisqCom   : Integer  = 4;
                                     ACasasDecimaisvUncCom: Integer  = 4;
-                                    AResumoCanhoto_Texto: String    = '';
-                                    AExpandirLogoMarca  : Boolean   = False; // Incluido por Italo em 18/06/2012
-                                    ANFeCancelada       : Boolean   = False; //Incluido por Luis Fernando em  22/01/2013
-                                    ALocalImpCanhoto    : Integer   = 0;     //Incluido por Luis Fernando em  22/01/2013
-                                    AImprimeItens       : Boolean   = True;
-                                    AvTroco             : Currency  = 0.0;
-                                    AxIdToken           : String    = '';
-                                    AxToken             : String    = '');
+                                    AResumoCanhoto_Texto : String   = '';
+                                    AExpandirLogoMarca   : Boolean  = False;
+                                    ANFeCancelada        : Boolean  = False;
+                                    ALocalImpCanhoto     : Integer  = 0;
+                                    AImprimeItens        : Boolean  = True;
+                                    AvTroco              : Currency = 0.0);
 {$IFDEF QReport_PDF}
 var
   qf : TQRPDFDocumentFilter;
@@ -304,29 +295,28 @@ begin
 {$IFDEF QReport_PDF}
   with Create ( nil ) do
      try
-        FNFe                := ANFe;
-        FLogo               := ALogo;
-        FEmail              := AEmail;
-        FResumoCanhoto      := AResumoCanhoto;
-        FFax                := AFax;
-        FNumCopias          := ANumCopias;
-        FSistema            := ASistema;
-        FSite               := ASite;
-        FUsuario            := AUsuario;
-        FMargemSuperior     := AMargemSuperior;
-        FMargemInferior     := AMargemInferior;
-        FMargemEsquerda     := AMargemEsquerda;
-        FMargemDireita      := AMargemDireita;
-        FCasasDecimaisqCom  := ACasasDecimaisqCom;
+        FNFe                 := ANFe;
+        FACBrNFe             := AACBrNFe;
+        FLogo                := ALogo;
+        FEmail               := AEmail;
+        FResumoCanhoto       := AResumoCanhoto;
+        FFax                 := AFax;
+        FNumCopias           := ANumCopias;
+        FSistema             := ASistema;
+        FSite                := ASite;
+        FUsuario             := AUsuario;
+        FMargemSuperior      := AMargemSuperior;
+        FMargemInferior      := AMargemInferior;
+        FMargemEsquerda      := AMargemEsquerda;
+        FMargemDireita       := AMargemDireita;
+        FCasasDecimaisqCom   := ACasasDecimaisqCom;
         FCasasDecimaisvUnCom := ACasasDecimaisvUncCom;
-        FResumoCanhoto_Texto:= AResumoCanhoto_Texto;
-        FExpandirLogoMarca  := AExpandirLogoMarca; // Incluido por Italo em 18/06/2012
-        FNFeCancelada       := ANFeCancelada;//Incluido por Luis Fernando em  22/01/2013
-        FLocalImpCanhoto    := ALocalImpCanhoto;//Incluido por Luis Fernando em  22/01/2013
-        FImprimeItens       := AImprimeItens;
-        FvTroco             := AvTroco;
-        FxIdToken           := AxIdToken;
-        FxToken             := AxToken;
+        FResumoCanhoto_Texto := AResumoCanhoto_Texto;
+        FExpandirLogoMarca   := AExpandirLogoMarca;
+        FNFeCancelada        := ANFeCancelada;
+        FLocalImpCanhoto     := ALocalImpCanhoto;
+        FImprimeItens        := AImprimeItens;
+        FvTroco              := AvTroco;
 
         for i := 0 to ComponentCount -1 do
           begin
