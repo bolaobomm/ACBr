@@ -134,6 +134,11 @@ var
   i: Integer;
 begin
   Result := False;
+
+  FcStat           := 0;
+  protCTe.cStat    := 0;
+  retCancCTe.cStat := 0;
+
   try
     if leitor.rExtrai(1, 'retConsSitCTe') <> '' then
     begin
@@ -147,6 +152,7 @@ begin
        begin
          if (Leitor.rExtrai(1, 'protCTe') <> '') or (Leitor.rExtrai(1, 'infProt') <> '') then
           begin
+            protCTe.Id       := Leitor.rAtributo('Id=');
             protCTe.tpAmb    := StrToTpAmb(ok, Leitor.rCampo(tcStr, 'tpAmb'));
             protCTe.verAplic := Leitor.rCampo(tcStr, 'verAplic');
             protCTe.chCTe    := Leitor.rCampo(tcStr, 'chCTe');
@@ -163,6 +169,7 @@ begin
        begin
          if Leitor.rExtrai(1, 'infCanc') <> '' then
           begin
+            retCancCTe.Id       := Leitor.rAtributo('Id=');
             retCancCTe.tpAmb    := StrToTpAmb(ok, Leitor.rCampo(tcStr, 'tpAmb'));
             retCancCTe.verAplic := Leitor.rCampo(tcStr, 'verAplic');
             retCancCTe.cStat    := Leitor.rCampo(tcInt, 'cStat');

@@ -70,24 +70,26 @@ type
     FdigVal: string;
     FcStat: integer;
     FxMotivo: string;
+    FId: String;
   public
     constructor Create;
     destructor Destroy; override;
     function GerarXML: boolean;
     function ObterNomeArquivo(const PadraoNome: TPcnPadraoNomeProcCTe = tpnPrivado): string;
   published
-    property Gerador: TGerador read FGerador write FGerador;
-    property PathCTe: string read FPathCTe write FPathCTe;
+    property Gerador: TGerador          read FGerador            write FGerador;
+    property PathCTe: string            read FPathCTe            write FPathCTe;
     property PathRetConsReciCTe: string read FPathRetConsReciCTe write FPathRetConsReciCTe;
-    property PathRetConsSitCTe: string read FPathRetConsSitCTe write FPathRetConsSitCTe;
-    property tpAmb: TpcnTipoAmbiente read FtpAmb write FtpAmb;
-    property verAplic: string read FverAplic write FverAplic;
-    property chCTe: string read FchCTe write FchCTe;
-    property dhRecbto: TDateTime read FdhRecbto write FdhRecbto;
-    property nProt: string read FnProt write FnProt;
-    property digVal: string read FdigVal write FdigVal;
-    property cStat: integer read FcStat write FcStat;
-    property xMotivo: string read FxMotivo write FxMotivo;
+    property PathRetConsSitCTe: string  read FPathRetConsSitCTe  write FPathRetConsSitCTe;
+    property tpAmb: TpcnTipoAmbiente    read FtpAmb              write FtpAmb;
+    property verAplic: string           read FverAplic           write FverAplic;
+    property chCTe: string              read FchCTe              write FchCTe;
+    property dhRecbto: TDateTime        read FdhRecbto           write FdhRecbto;
+    property nProt: string              read FnProt              write FnProt;
+    property digVal: string             read FdigVal             write FdigVal;
+    property cStat: integer             read FcStat              write FcStat;
+    property xMotivo: string            read FxMotivo            write FxMotivo;
+    property Id: String                 read FId                 write FId;
   end;
 
 implementation
@@ -127,6 +129,7 @@ var
   XMLinfProt2: TstringList;
   wCstat: string;
   xProtCTe: string;
+  xId: String;
   LocLeitor: TLeitor;
   i : Integer;
   ProtLido : Boolean; // Protocolo lido do Arquivo
@@ -196,16 +199,30 @@ begin
 
         wCstat:=RetornarConteudoEntre(XMLinfProt.text, '<cStat>', '</cStat>');
         if trim(wCstat) = '101'
-         then //esta cancelada
-             XMLinfProt2.Text:=RetornarConteudoEntre(XMLinfProt.text, '<infCanc', '</infCanc>')
+         then begin //esta cancelada
+             XMLinfProt2.Text := RetornarConteudoEntre(XMLinfProt.text, '<infCanc', '</infCanc>');
+             // Na versão 2.00 pode não constar o grupo infCanc no retConsSitCTe
+             if XMLinfProt2.Text = '' then
+               XMLinfProt2.Text := RetornarConteudoEntre(XMLinfProt.text, '<infProt', '</infProt>');
+         end
          else
-             XMLinfProt2.Text:=RetornarConteudoEntre(XMLinfProt.text, '<infProt', '</infProt>');
+             XMLinfProt2.Text := RetornarConteudoEntre(XMLinfProt.text, '<infProt', '</infProt>');
+
+        xId := RetornarConteudoEntre(XMLinfProt2.text, 'Id="', '">');
 
         xProtCTe :=
                 '<protCTe versao="' + CTeenviCTe + '">' +
-                  '<infProt>' +
+                  '<infProt' + IIf( (xId <> ''), ' Id="' + xId + '">', '>') +
+                    PreencherTAG('tpAmb',    XMLinfProt2.text) +
+                    PreencherTAG('verAplic', XMLinfProt2.text) +
+                    PreencherTAG('chCTe',    XMLinfProt2.text) +
+                    PreencherTAG('dhRecbto', XMLinfProt2.text) +
+                    PreencherTAG('nProt',    XMLinfProt2.text) +
+                    PreencherTAG('digVal',   XMLinfProt2.text) +
+                    PreencherTAG('cStat',    XMLinfProt2.text) +
+                    PreencherTAG('xMotivo',  XMLinfProt2.text) +
+                    (*
                     PreencherTAG('tpAmb', XMLinfProt.text) +
-//                    PreencherTAG('verAplic', XMLinfProt.text) +
                     PreencherTAG('verAplic', XMLinfProt2.text) +
                     PreencherTAG('chCTe', XMLinfProt.text) +
                     PreencherTAG('dhRecbto', XMLinfProt2.text) +
@@ -213,6 +230,7 @@ begin
                     PreencherTAG('digVal', XMLinfProt.text) +
                     PreencherTAG('cStat', XMLinfProt.text) +
                     PreencherTAG('xMotivo', XMLinfProt.text) +
+                    *)
                   '</infProt>' +
                 '</protCTe>';
        end;
@@ -222,16 +240,16 @@ begin
      then begin
       xProtCTe :=
               '<protCTe versao="' + CTeenviCTe + '">' +
-                '<infProt>' +
-                  '<tpAmb>'+TpAmbToStr(FtpAmb)+'</tpAmb>'+
-                  '<verAplic>'+FverAplic+'</verAplic>'+
-                  '<chCTe>'+FchCTe+'</chCTe>'+
-                  '<dhRecbto>'+FormatDateTime('yyyy-mm-dd"T"hh:nn:ss',FdhRecbto)+'</dhRecbto>'+
-                  '<nProt>'+FnProt+'</nProt>'+
-                  '<digVal>'+FdigVal+'</digVal>'+
-                  '<cStat>'+IntToStr(FcStat)+'</cStat>'+
-                  '<xMotivo>'+FxMotivo+'</xMotivo>'+
-                '</infProt>'+
+                '<infProt' + IIf( (FId <> ''), ' Id="' + FId + '">', '>') +
+                  '<tpAmb>' + TpAmbToStr(FtpAmb) + '</tpAmb>' +
+                  '<verAplic>' + FverAplic + '</verAplic>' +
+                  '<chCTe>' + FchCTe + '</chCTe>' +
+                  '<dhRecbto>' + FormatDateTime('yyyy-mm-dd"T"hh:nn:ss', FdhRecbto) + '</dhRecbto>' +
+                  '<nProt>' + FnProt + '</nProt>' +
+                  '<digVal>' + FdigVal + '</digVal>' +
+                  '<cStat>' + IntToStr(FcStat) + '</cStat>' +
+                  '<xMotivo>' + FxMotivo + '</xMotivo>' +
+                '</infProt>' +
               '</protCTe>';
      end;
 

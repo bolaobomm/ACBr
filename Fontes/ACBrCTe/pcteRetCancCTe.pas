@@ -63,20 +63,22 @@ type
     FverAplic: string;
     FnProt: string;
     FxMotivo: string;
+    FId: String;
   public
     constructor Create;
     destructor Destroy; override;
     function LerXml: boolean;
   published
-    property Leitor: TLeitor read FLeitor write FLeitor;
-    property tpAmb: TpcnTipoAmbiente read FtpAmb write FtpAmb;
-    property verAplic: string read FverAplic write FverAplic;
-    property cStat: integer read FcStat write FcStat;
-    property xMotivo: string read FxMotivo write FxMotivo;
-    property cUF: integer read FcUF write FcUF;
-    property chCTe: string read FchCTe write FchCTe;
-    property dhRecbto: TDateTime read FdhRecbto write FdhRecbto;
-    property nProt: string read FnProt write FnProt;
+    property Leitor: TLeitor         read FLeitor   write FLeitor;
+    property tpAmb: TpcnTipoAmbiente read FtpAmb    write FtpAmb;
+    property verAplic: string        read FverAplic write FverAplic;
+    property cStat: integer          read FcStat    write FcStat;
+    property xMotivo: string         read FxMotivo  write FxMotivo;
+    property cUF: integer            read FcUF      write FcUF;
+    property chCTe: string           read FchCTe    write FchCTe;
+    property dhRecbto: TDateTime     read FdhRecbto write FdhRecbto;
+    property nProt: string           read FnProt    write FnProt;
+    property Id: String              read FId       write FId;
   end;
 
 implementation
@@ -102,6 +104,7 @@ begin
   try
     if Leitor.rExtrai(1, 'infCanc') <> '' then
     begin
+      (*CR04 *)FId       := Leitor.rAtributo('Id=');
       (*CR05 *)FtpAmb    := StrToTpAmb(ok, Leitor.rCampo(tcStr, 'tpAmb'));
       (*CR06 *)FverAplic := Leitor.rCampo(tcStr, 'verAplic');
       (*CR07 *)FcStat    := Leitor.rCampo(tcInt, 'cStat');

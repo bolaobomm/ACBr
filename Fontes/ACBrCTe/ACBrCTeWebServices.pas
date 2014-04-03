@@ -1424,6 +1424,8 @@ begin
          FCTes.Items[j].CTe.procCTe.digVal   := AInfProt.Items[i].digVal;
          FCTes.Items[j].CTe.procCTe.cStat    := AInfProt.Items[i].cStat;
          FCTes.Items[j].CTe.procCTe.xMotivo  := AInfProt.Items[i].xMotivo;
+         // Incluido por Italo em 03/04/2014
+         FCTes.Items[j].CTe.procCTe.Id       := AInfProt.Items[i].Id;
 
          if FConfiguracoes.Geral.Salvar or DFeUtil.NaoEstaVazio(FCTes.Items[j].NomeArq) then
           begin
@@ -2136,9 +2138,21 @@ begin
             TACBrCTe( FACBrCTe ).Conhecimentos.Items[i].Confirmada := (CTeRetorno.cStat = 100); // 100 = Autorizado o Uso
             if wAtualiza then
             begin
+              // Alterado por Italo em 03/04/2014
+              // Atualiza o XML sempre com o protocolo de Autorização
+              TACBrCTe( FACBrCTe ).Conhecimentos.Items[i].Msg                  := CTeRetorno.protCTe.xMotivo;
+              TACBrCTe( FACBrCTe ).Conhecimentos.Items[i].CTe.procCTe.Id       := CTeRetorno.protCTe.Id;
+              TACBrCTe( FACBrCTe ).Conhecimentos.Items[i].CTe.procCTe.tpAmb    := CTeRetorno.protCTe.tpAmb;
+              TACBrCTe( FACBrCTe ).Conhecimentos.Items[i].CTe.procCTe.verAplic := CTeRetorno.protCTe.verAplic;
+              TACBrCTe( FACBrCTe ).Conhecimentos.Items[i].CTe.procCTe.chCTe    := FCTeChave;
+              TACBrCTe( FACBrCTe ).Conhecimentos.Items[i].CTe.procCTe.dhRecbto := CTeRetorno.protCTe.dhRecbto;
+              TACBrCTe( FACBrCTe ).Conhecimentos.Items[i].CTe.procCTe.nProt    := CTeRetorno.protCTe.nProt;
+              TACBrCTe( FACBrCTe ).Conhecimentos.Items[i].CTe.procCTe.digVal   := CTeRetorno.protCTe.digVal;
+              TACBrCTe( FACBrCTe ).Conhecimentos.Items[i].CTe.procCTe.cStat    := CTeRetorno.protCTe.cStat;
+              TACBrCTe( FACBrCTe ).Conhecimentos.Items[i].CTe.procCTe.xMotivo  := CTeRetorno.protCTe.xMotivo;
+             (*
               TACBrCTe( FACBrCTe ).Conhecimentos.Items[i].Msg                  := CTeRetorno.xMotivo;
               TACBrCTe( FACBrCTe ).Conhecimentos.Items[i].CTe.procCTe.tpAmb    := CTeRetorno.tpAmb;
-//              TACBrCTe( FACBrCTe ).Conhecimentos.Items[i].CTe.procCTe.verAplic := CTeRetorno.verAplic;
               TACBrCTe( FACBrCTe ).Conhecimentos.Items[i].CTe.procCTe.verAplic := CTeRetorno.protCTe.verAplic;
               TACBrCTe( FACBrCTe ).Conhecimentos.Items[i].CTe.procCTe.chCTe    := FCTeChave;
               TACBrCTe( FACBrCTe ).Conhecimentos.Items[i].CTe.procCTe.dhRecbto := FDhRecbto;
@@ -2146,6 +2160,7 @@ begin
               TACBrCTe( FACBrCTe ).Conhecimentos.Items[i].CTe.procCTe.digVal   := CTeRetorno.protCTe.digVal;
               TACBrCTe( FACBrCTe ).Conhecimentos.Items[i].CTe.procCTe.cStat    := CTeRetorno.cStat;
               TACBrCTe( FACBrCTe ).Conhecimentos.Items[i].CTe.procCTe.xMotivo  := CTeRetorno.xMotivo;
+             *)
             end;
 
             if ((FileExists(PathWithDelim(FConfiguracoes.Geral.PathSalvar)+FCTeChave+'-cte.xml') or DFeUtil.NaoEstaVazio(TACBrCTe( FACBrCTe ).Conhecimentos.Items[i].NomeArq))
