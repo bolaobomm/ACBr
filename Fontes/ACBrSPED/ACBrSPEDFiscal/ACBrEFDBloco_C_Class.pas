@@ -2391,7 +2391,7 @@ begin
           Add( LFill('C460') +
                LFill( COD_MOD ) +
                LFill( strCOD_SIT ) +
-               LFill( NUM_DOC,6 ) +
+               LFill( NUM_DOC, 9 ) +
                LFill( DT_DOC, 'ddmmyyyy' ) +
                LFill( VL_DOC,0,2, true ) +
                LFill( VL_PIS,0,2, true ) +
