@@ -6,9 +6,9 @@ uses
 {$IFDEF FPC}
   LResources, Controls, Graphics, Dialogs,
 {$ELSE}
-  StrUtils,
+  
 {$ENDIF}
-  SysUtils, Classes,
+  SysUtils, Classes, StrUtils,
   pcnAuxiliar, pcnConversao, pcnGerador,
   pnfsNFSe, pnfsConversao,
   ACBrNFSeConfiguracoes, synacode;
