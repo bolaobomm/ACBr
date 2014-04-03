@@ -298,6 +298,7 @@ end;
 
 class function DFeUtil.FormatDate(const AData: TDateTime): String;
 var
+  vTemp: String;
 {$IFDEF VER140} //delphi6
 {$ELSE}
   FFormato : TFormatSettings;
@@ -311,10 +312,11 @@ begin
     FFormato.DateSeparator   := '-';
     FFormato.ShortDateFormat := 'yyyy-mm-dd';
 {$ENDIF}
+	vTemp := DateToStr(AData);
     if AData = 0 then
       Result := ''
     else
-      Result := DateToStr(AData);
+      Result := vTemp;
   except
     Result := '';
   end;
