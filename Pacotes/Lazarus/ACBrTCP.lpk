@@ -29,7 +29,7 @@
     <License Value="LGPL
 "/>
     <Version Minor="10"/>
-    <Files Count="14">
+    <Files Count="15">
       <Item1>
         <Filename Value="..\..\Fontes\ACBrTCP\ACBrSocket.pas"/>
         <UnitName Value="ACBrSocket"/>
@@ -87,6 +87,10 @@
         <Filename Value="..\..\Fontes\ACBrTCP\ACBrConsultaCPF.pas"/>
         <UnitName Value="ACBrConsultaCPF"/>
       </Item14>
+      <Item15>
+        <Filename Value="..\..\Fontes\ACBrTCP\ACBrTabelasSped.pas"/>
+        <UnitName Value="ACBrTabelasSped"/>
+      </Item15>
     </Files>
     <Type Value="RunAndDesignTime"/>
     <RequiredPkgs Count="4">
