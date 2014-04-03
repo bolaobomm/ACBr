@@ -42,7 +42,7 @@ unit ACBrSEF2_BlocoE;
 
 interface
 
-Uses Classes, Contnrs, SysUtils, ACBrSEF2Conversao;
+Uses Classes, Contnrs, SysUtils, ACBrSEF2Conversao, Controls;
 
 type
   TRegistroSEFE003List = class;
@@ -56,6 +56,12 @@ type
   TRegistroSEFE085List = class;
   TRegistroSEFE300List = class;
   TRegistroSEFE305List = class;
+  TRegistroSEFE310List = class;
+  TRegistroSEFE330List = class;
+  TRegistroSEFE340 = class;
+  TRegistroSEFE350List = class;
+  TRegistroSEFE360List = class;
+
 
  //LINHA E001: ABERTURA DO BLOCO E
 
@@ -493,15 +499,26 @@ type
   //LINHA E300: APURAÇÃO DO ICMS
   TRegistroSEFE300 = class
   private
-    fDT_INI : Integer;
-    fDT_FIN : Integer;
+    fDT_INI : TDateTime;
+    fDT_FIN : TDateTime;
     fRegistroE305: TRegistroSEFE305List;
+    fRegistroE310: TRegistroSEFE310List;
+    fRegistroE330: TRegistroSEFE330List;
+    fRegistroE340: TRegistroSEFE340;
+    fRegistroE350: TRegistroSEFE350List;
+    fRegistroE360: TRegistroSEFE360List;
   public
     constructor Create; virtual;
     destructor Destroy; override;
-    property DT_INI : Integer read	fDT_INI write fDT_INI;
-    property DT_FIN : Integer read fDT_FIN write fDT_FIN;
+    property DT_INI : TDateTime read	fDT_INI write fDT_INI;
+    property DT_FIN : TDateTime read  fDT_FIN write fDT_FIN;
     property RegistroE305: TRegistroSEFE305List read fRegistroE305 write fRegistroE305;
+    property RegistroE310: TRegistroSEFE310List read fRegistroE310 write fRegistroE310;
+    property RegistroE330: TRegistroSEFE330List read fRegistroE330 write fRegistroE330;
+    property RegistroE340: TRegistroSEFE340 read fRegistroE340 write fRegistroE340;
+    property RegistroE350: TRegistroSEFE350List read fRegistroE350 write fRegistroE350;
+    property RegistroE360: TRegistroSEFE360List read fRegistroE360 write fRegistroE360;
+    
   end;
 
   TRegistroSEFE300List = class(TACBrSEFIIRegistros)
@@ -526,7 +543,7 @@ type
     fVL_OP_ISS   : Double;
     fVL_BC_ICMS  : Double;
     fVL_ICMS     : Double;
-    fVL_ST       : Double;
+    fVL_ICMS_ST  : Double;
     fVL_ST_ENT   : Double;
     fVL_ST_FNT   : Double;
     fVL_ST_UF    : Double;
@@ -548,8 +565,8 @@ type
     property VL_CONT     : Double  read	fVL_CONT      write fVL_CONT;      // Valor da venda líquida
     property VL_OP_ISS   : Double  read	fVL_OP_ISS    write fVL_OP_ISS;    // Valor das operações tributado pelo ISS
     property VL_BC_ICMS  : Double  read	fVL_BC_ICMS   write fVL_BC_ICMS;   // Valor da base de cálculo do ICMS
-    property VL_ICMS     : Double  read	fVL_ICMS      write fVL_ICMS;      // Valor do ICMS debitado
-    property VL_ST       : Double  read	fVL_ST        write fVL_ST;        // Valor das operações com mercadorias adquiridas com substituição tributária do ICMS
+    property VL_ICMS     : Double  read	fVL_ICMS      write fVL_ICMS;      // Valor do ICMS creditado/debitado
+    property VL_ICMS_ST  : Double  read	fVL_ICMS_ST   write fVL_ICMS_ST;  // Valor total do ICMS da substituição tributária original registrado nos documentos
     property VL_ST_ENT   : Double  read	fVL_ST_ENT    write fVL_ST_ENT;    // Valor total do ICMS da substituição tributária pelas entradas, creditado e devido pelo alienante nas operações de entrada, registrado em documentos de emissão própria
     property VL_ST_FNT   : Double  read	fVL_ST_FNT    write fVL_ST_FNT;    // Valor total do ICMS da substituição tributária devido pelo alienante, registrado nas operações de saídas internas
     property VL_ST_UF    : Double  read	fVL_ST_UF     write fVL_ST_UF;     // Valor total do ICMS da substituição tributária devido pelo alienante, registrado nas operações de saídas internas
@@ -570,6 +587,210 @@ type
   public
     function New(AOwner: TRegistroSEFE300): TRegistroSEFE305;
     property notas[Index: Integer]: TRegistroSEFE305 read Getnotas write SetNotas;
+  end;
+
+   //LINHA E310: CONSOLIDAÇÃO PR CFOP DOS VALORES DO ICMS
+
+  TRegistroSEFE310 = class
+  private
+    fVL_CONT : Double;
+    fVL_OP_ISS : Double;
+    fCFOP : Integer;
+    fVL_BC_ICMS: Double;
+    fVL_ICMS : Double;
+    fVL_ICMS_ST : Double;
+    fVL_ISNT_ICMS : Double;
+    fVL_OUT_ICMS : Double;
+    fIND_IMUN : Integer;
+  public
+    property VL_CONT      : Double    read fVL_CONT      write fVL_CONT;       // Valor contábil, consolidado por CFOP
+    property VL_OP_ISS    : Double    read fVL_OP_ISS    write fVL_OP_ISS;     // Valor das operações tributado pelo ISS, consolidado por CFOP
+    property CFOP         : Integer   read fCFOP         write fCFOP;          // Código Fiscal de Operações e Prestações, conforme a tabela externa indicada no item 3.3.1
+    property VL_BC_ICMS   : Double    read fVL_BC_ICMS   write fVL_BC_ICMS;    // Valor da base de cálculo do ICMS, consolidado por CFOP
+    property VL_ICMS      : Double    read fVL_ICMS      write fVL_ICMS;       // Valor do ICMS creditado/debitado, consolidado por CFOP
+    property VL_ICMS_ST   : Double    read fVL_ICMS_ST   write fVL_ICMS_ST;    // Valor do ICMS da substituição tributária, consolidado por CFOP
+    property VL_ISNT_ICMS : Double    read fVL_ISNT_ICMS write fVL_ISNT_ICMS;  // Valor das operações isentas ou não tributadas pelo ICMS, consolidado por CFOP
+    property VL_OUT_ICMS  : Double    read fVL_OUT_ICMS  write fVL_OUT_ICMS;   // Valor das outras operações do ICMS, consolidado por CFOP
+    property IND_IMUN     : Integer   read fIND_IMUN     write fIND_IMUN;      // Indicador da operação: 0- Sem envolver item imune do ICMS ou IPI 1- Envolvendo livro, jornal, periódico ou com o papel destinado à impressão destes (imunes do ICMS e do IPI) 2- Envolvendo mineral (imune do IPI)
+  end;
+
+  // Registro E310 - Lista
+  TRegistroSEFE310List = class(TACBrSEFIIRegistros)
+  private
+    function GetNotas(Index: Integer): TRegistroSEFE310;
+    procedure SetNotas(Index: Integer;  const Value: TRegistroSEFE310);
+  public
+    function New(AOwner: TRegistroSEFE300): TRegistroSEFE310;
+    property notas[Index: Integer]: TRegistroSEFE310 read Getnotas write SetNotas;
+  end;
+
+   //LINHA E330: TOTALIZAÇÃO DAS OPERAÇÕES DO ICMS
+
+  TRegistroSEFE330 = class
+  private
+    fIND_TOT : integer;
+    fVL_CONT : Double;
+    fVL_OP_ISS : Double;
+    fVL_BC_ICMS : Double;
+    fVL_ICMS : Double;
+    fVL_ICMS_ST : Double;
+    fVL_ST_ENT : Double;
+    fVL_ST_FNT : Double;
+    fVL_ST_UF  : Double;
+    fVL_ST_OE  : Double;
+    fVL_AT : Double;
+    fVL_ISNT_ICMS : Double;
+    fVL_OUT_ICMS : Double;
+    public
+      property IND_TOT        : integer read fIND_TOT       write fIND_TOT;       // Indicador de totalização: 1- Entradas internas, 2- Entradas interestaduais, 3- Entradas do exterior, 4- Entradas do período (1 + 2 + 3), 5- Saídas internas, 6- Saídas interestaduais, 7- Saídas para o exterior, 8- Saídas do período (5 + 6 + 7)
+      property VL_CONT        : Double  read fVL_CONT       write fVL_CONT;       // Valor contábil
+      property VL_OP_ISS      : Double  read fVL_OP_ISS     write fVL_OP_ISS;     // Valor das operações tributado pelo ISS
+      property VL_BC_ICMS     : Double  read fVL_BC_ICMS    write fVL_BC_ICMS;    // Valor da base de cálculo do ICMS
+      property VL_ICMS        : Double  read fVL_ICMS       write fVL_ICMS;       // Valor do ICMS creditado/debitado
+      property VL_ICMS_ST     : Double  read fVL_ICMS_ST    write fVL_ICMS_ST;    // Valor total do ICMS da substituição tributária original registrado nos documentos
+      property VL_ST_ENT      : Double  read fVL_ST_ENT     write fVL_ST_ENT;     // Valor  total  do  ICMS  da  substituição  tributária  pelas  entradas, creditado e devido pelo alienante nas operações de entrada, regis-trado em documentos de emissão própria
+      property VL_ST_FNT      : Double  read fVL_ST_FNT     write fVL_ST_FNT;     // Valor  total  do  ICMS  da  substituição  tributária  retido  na  fonte, creditado  nas  operações  de  entrada,  registrado  em  documentos emitidos por terceiros
+      property VL_ST_UF       : Double  read fVL_ST_UF      write fVL_ST_UF;      // Valor  total  do  ICMS  da  substituição  tributária  devido  pelo  alie-nante, registrado nas operações de saídas internas
+      property VL_ST_OE       : Double  read fVL_ST_OE      write fVL_ST_OE;      // Valor  total  do  ICMS  da  substituição  tributária  devido  pelo  alie-nante, registrado nas operações de saídas interestaduais
+      property VL_AT          : Double  read fVL_AT         write fVL_AT;         // Valor total do ICMS da antecipação tributária creditado
+      property VL_ISNT_ICMS   : Double  read fVL_ISNT_ICMS  write fVL_ISNT_ICMS;  // Valor das operações isentas ou não tributadas pelo ICMS
+      property VL_OUT_ICMS    : Double  read fVL_OUT_ICMS   write fVL_OUT_ICMS;   // Valor das outras operações do ICMS
+    end;
+
+  // Registro E330 - Lista
+  TRegistroSEFE330List = class(TACBrSEFIIRegistros)
+  private
+    function GetNotas(Index: Integer): TRegistroSEFE330;
+    procedure SetNotas(Index: Integer;  const Value: TRegistroSEFE330);
+  public
+    function New(AOwner: TRegistroSEFE300): TRegistroSEFE330;
+    property notas[Index: Integer]: TRegistroSEFE330 read Getnotas write SetNotas;
+  end;
+
+     //LINHA E340:  SALDOS DA APURAÇÃO DO ICMS
+
+  TRegistroSEFE340 = class
+  private
+    fVL_01 : Double;
+    fVL_02 : Double;
+    fVL_03 : Double;
+    fVL_04 : Double;
+    fVL_05 : Double;
+    fVL_06 : Double;
+    fVL_07 : Double;
+    fVL_08 : Double;
+    fVL_09 : Double;
+    fVL_10 : Double;
+    fVL_11 : Double;
+    fVL_12 : Double;
+    fVL_13 : Double;
+    fVL_14 : Double;
+    fVL_15 : Double;
+    fVL_16 : Double;
+    fVL_17 : Double;
+    fVL_18 : Double;
+    fVL_19 : Double;
+    fVL_20 : Double;
+    fVL_21 : Double;
+    fVL_22 : Double;
+    fVL_99 : Double;
+    public
+      property VL_01  : Double  read fVL_01 write fVL_01;    //  01- Valor do crédito do ICMS das entradas e aquisições
+      property VL_02  : Double  read fVL_02 write fVL_02;    //  02- Valor do crédito do ICMS da substituição tributária pelas en-tradas
+      property VL_03  : Double  read fVL_03 write fVL_03;    //  03- Valor do crédito do ICMS da substituição tributária na fonte
+      property VL_04  : Double  read fVL_04 write fVL_04;    //  04-  Valor  do  crédito  do  ICMS  da  antecipação  tributária  nas  en-tradas
+      property VL_05  : Double  read fVL_05 write fVL_05;    //  05- Valor dos outros créditos
+      property VL_06  : Double  read fVL_06 write fVL_06;    //  06- Valor dos estornos de débito
+      property VL_07  : Double  read fVL_07 write fVL_07;    //  07- Valor do saldo credor do período anterior
+      property VL_08  : Double  read fVL_08 write fVL_08;    //  08- Valor total dos créditos (01 + 02 + 03 + 04 + 05 + 06 + 07)
+      property VL_09  : Double  read fVL_09 write fVL_09;    //  09- Valor do débito do ICMS das saídas e prestações
+      property VL_10  : Double  read fVL_10 write fVL_10;    //  10- Valor dos outros débitos
+      property VL_11  : Double  read fVL_11 write fVL_11;    //  11- Valor dos estornos de crédito
+      property VL_12  : Double  read fVL_12 write fVL_12;    //  12- Valor total dos débitos (09 + 10 + 11)
+      property VL_13  : Double  read fVL_13 write fVL_13;    //  13-  Valor  do  saldo  credor  a  transportar  para  o  período  seguinte(08 – 12)
+      property VL_14  : Double  read fVL_14 write fVL_14;    //  14- Valor do saldo devedor (12 – 08)
+      property VL_15  : Double  read fVL_15 write fVL_15;    //  15- Valor das deduções
+      property VL_16  : Double  read fVL_16 write fVL_16;    //  16- Valor do ICMS normal a recolher (14 – 15)
+      property VL_17  : Double  read fVL_17 write fVL_17;    //  17- Valor do ICMS da substituição tributária pelas entradas
+      property VL_18  : Double  read fVL_18 write fVL_18;    //  18- Valor do ICMS da antecipação tributária nas entradas
+      property VL_19  : Double  read fVL_19 write fVL_19;    //  19- Valor do ICMS da substituição tributária nas saídas para o  Estado
+      property VL_20  : Double  read fVL_20 write fVL_20;    //  20- Valor do ICMS da importação
+      property VL_21  : Double  read fVL_21 write fVL_21;    //  21- Valor das outras obrigações a recolher para o Estado
+      property VL_22  : Double  read fVL_22 write fVL_22;    //  22- Valor total das obrigações a recolher para o Estado (16 + 17 + 18 + 19 + 20 + 21)
+      property VL_99  : Double  read fVL_99 write fVL_99;    //  99- Valor total do ICMS da substituição tributária nas saídas para outros estados
+    end;
+
+      //LINHA E350: AJUSTES DA APURAÇÃO DO ICMS
+
+  TRegistroSEFE350 = class
+  private
+    fUF_AJ : String;
+    fCOD_AJ : Integer;
+    fVL_AJ : Double;
+    fNUM_DA : String;
+    fNUM_PROC : String;
+    fIND_PROC : Integer;
+    fDESC_PROC : String;
+    fCOD_INF_OBS : String;
+    fIND_AP : Integer;
+  public
+    property UF_AJ        : String   read fUF_AJ        write fUF_AJ;         //  Sigla da unidade da Federação a que se refere o ajuste
+    property COD_AJ       : Integer  read fCOD_AJ       write fCOD_AJ;        //  Código do ajuste da apuração do ICMS, conforme a tabela indi-cada no item 5.2.1
+    property VL_AJ        : Double   read fVL_AJ        write fVL_AJ;         //  Valor do ajuste da apuração
+    property NUM_DA       : String   read fNUM_DA       write fNUM_DA;        //  Número do documento de arrecadação estadual, se houver
+    property NUM_PROC     : String   read fNUM_PROC     write fNUM_PROC;      //  Número do processo vinculado ao ajuste, se houver
+    property IND_PROC     : Integer  read fIND_PROC     write fIND_PROC;      //  Indicador da origem do processo: 0- Administração estadual 1- Justiça Federal 2- Justiça Estadual 9- Outros
+    property DESC_PROC    : String   read fDESC_PROC    write fDESC_PROC;     //  Descrição do processo que embasou o lançamento
+    property COD_INF_OBS  : String   read fCOD_INF_OBS  write fCOD_INF_OBS;   //  Código de referência à observação (campo 02 da Linha 0450)
+    property IND_AP       : Integer  read fIND_AP       write fIND_AP;        //  Indicador da sub-apuração do Prodepe: 1- item não incentivado (sub-apuração 1) 2- item incentivado (sub-apuração 2) 3- item incentivado (sub-apuração 3) ... _9- item incentivado (sub-apuração _9)
+  end;
+
+  // Registro E350 - Lista
+  TRegistroSEFE350List = class(TACBrSEFIIRegistros)
+  private
+    function GetNotas(Index: Integer): TRegistroSEFE350;
+    procedure SetNotas(Index: Integer;  const Value: TRegistroSEFE350);
+  public
+    function New(AOwner: TRegistroSEFE300): TRegistroSEFE350;
+    property notas[Index: Integer]: TRegistroSEFE350 read Getnotas write SetNotas;
+  end;
+
+
+   //LINHA E360: OBRIGAÇÕES DO ICMS A RECOLHER
+
+  TRegistroSEFE360 = class
+  private
+    fUF_OR : String;
+    fCOD_OR : Integer;
+    fPER_REF : String;
+    fCOD_REC : String;
+    fVL_ICMS_REC : Double;
+    fDT_VCTO : TDateTime;
+    fNUM_PROC : String;
+    fIND_PROC : Integer;
+    fDESCR_PROC : String;
+    fCOD_INF_OBS : String;
+   public
+      property UF_OR       : String      read fUF_OR          write fUF_OR;         // Sigla da unidade da Federação a que se destina a obrigação
+      property COD_OR      : Integer     read fCOD_OR         write fCOD_OR;        // Código da obrigação do ICMS a recolher, conforme a tabela in-dicada no item 5.3.1
+      property PER_REF     : String      read fPER_REF        write fPER_REF;       // Período fiscal de referência
+      property COD_REC     : String      read fCOD_REC        write fCOD_REC;       // Código de receita referente à obrigação a recolher para o Estado
+      property VL_ICMS_REC : Double      read fVL_ICMS_REC    write fVL_ICMS_REC;   // Valor da obrigação a recolher
+      property DT_VCTO     : TDateTime   read fDT_VCTO        write fDT_VCTO ;      // Data de vencimento da obrigação
+      property NUM_PROC    : String      read fNUM_PROC       write fNUM_PROC ;     // Número do processo vinculado à obrigação, se houver
+      property IND_PROC    : Integer     read fIND_PROC       write fIND_PROC ;     // Indicador da origem do processo: 0- Administração estadual 1- Justiça Federal 2- Justiça Estadual 9- Outros
+      property DESCR_PROC  : String      read fDESCR_PROC     write fDESCR_PROC ;   // Descrição do processo que embasou o lançamento
+      property COD_INF_OBS : String      read fCOD_INF_OBS    write fCOD_INF_OBS;   // Código de referência à observação (campo 02 da Linha 0450)
+    end;
+
+  // Registro E360 - Lista
+  TRegistroSEFE360List = class(TACBrSEFIIRegistros)
+  private
+    function GetNotas(Index: Integer): TRegistroSEFE360;
+    procedure SetNotas(Index: Integer;  const Value: TRegistroSEFE360);
+  public
+    function New(AOwner: TRegistroSEFE300): TRegistroSEFE360;
+    property notas[Index: Integer]: TRegistroSEFE360 read Getnotas write SetNotas;
   end;
 
 
@@ -650,6 +871,30 @@ begin
   Put(Index, Value);
 end;
 
+procedure TRegistroSEFE310List.SetNotas(Index: Integer;
+  const Value: TRegistroSEFE310);
+begin
+  Put(Index, Value);
+end;
+
+procedure TRegistroSEFE330List.SetNotas(Index: Integer;
+  const Value: TRegistroSEFE330);
+begin
+  Put(Index, Value);
+end;
+
+procedure TRegistroSEFE350List.SetNotas(Index: Integer;
+  const Value: TRegistroSEFE350);
+begin
+  Put(Index, Value);
+end;
+
+procedure TRegistroSEFE360List.SetNotas(Index: Integer;
+  const Value: TRegistroSEFE360);
+begin
+  Put(Index, Value);
+end;
+
 function TRegistroSEFE003List.GetItem(Index: Integer): TRegistroSEFE003;
 begin
   Result := TRegistroSEFE003(Get(Index));
@@ -706,6 +951,25 @@ begin
   Result := TRegistroSEFE305(Get(Index));
 end;
 
+function TRegistroSEFE310List.GetNotas(Index: Integer): TRegistroSEFE310;
+begin
+  Result := TRegistroSEFE310(Get(Index));
+end;
+
+function TRegistroSEFE330List.GetNotas(Index: Integer): TRegistroSEFE330;
+begin
+  Result := TRegistroSEFE330(Get(Index));
+end;
+
+function TRegistroSEFE350List.GetNotas(Index: Integer): TRegistroSEFE350;
+begin
+  Result := TRegistroSEFE350(Get(Index));
+end;
+
+function TRegistroSEFE360List.GetNotas(Index: Integer): TRegistroSEFE360;
+begin
+  Result := TRegistroSEFE360(Get(Index));
+end;
 
 function TRegistroSEFE003List.New(AOwner: TRegistroSEFE001): TRegistroSEFE003;
 begin
@@ -769,6 +1033,30 @@ end;
 function TRegistroSEFE305List.New(AOwner: TRegistroSEFE300): TRegistroSEFE305;
 begin
    Result := TRegistroSEFE305.Create;
+   Add(Result);
+end;
+
+function TRegistroSEFE310List.New(AOwner: TRegistroSEFE300): TRegistroSEFE310;
+begin
+   Result := TRegistroSEFE310.Create;
+   Add(Result);
+end;
+
+function TRegistroSEFE330List.New(AOwner: TRegistroSEFE300): TRegistroSEFE330;
+begin
+   Result := TRegistroSEFE330.Create;
+   Add(Result);
+end;
+
+function TRegistroSEFE350List.New(AOwner: TRegistroSEFE300): TRegistroSEFE350;
+begin
+   Result := TRegistroSEFE350.Create;
+   Add(Result);
+end;
+
+function TRegistroSEFE360List.New(AOwner: TRegistroSEFE300): TRegistroSEFE360;
+begin
+   Result := TRegistroSEFE360.Create;
    Add(Result);
 end;
 
@@ -852,11 +1140,21 @@ end;
 constructor TRegistroSEFE300.Create;
 begin
    FRegistroE305 := TRegistroSEFE305List.Create;
+   FRegistroE310 := TRegistroSEFE310List.Create;
+   FRegistroE330 := TRegistroSEFE330List.Create;
+   FRegistroE340 := TRegistroSEFE340.Create;
+   FRegistroE350 := TRegistroSEFE350List.Create;
+   FRegistroE360 := TRegistroSEFE360List.Create;
 end;
 
 destructor TRegistroSEFE300.Destroy;
 begin
    FRegistroE305.Free;
+   FRegistroE310.Free;
+   FRegistroE330.Free;
+   FRegistroE340.Free;
+   FRegistroE350.Free;
+   FRegistroE360.Free;
    inherited Destroy;
 end;
 
