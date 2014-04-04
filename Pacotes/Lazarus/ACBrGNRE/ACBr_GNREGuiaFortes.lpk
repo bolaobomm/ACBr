@@ -9,7 +9,7 @@
       <PathDelim Value="\"/>
       <SearchPaths>
         <OtherUnitFiles Value="..\..\..\Fontes\ACBrGNRE"/>
-        <UnitOutputDirectory Value="..\..\..\Fontes\ACBrGNRE\lib\$(TargetCPU)-$(TargetOS)\"/>
+        <UnitOutputDirectory Value="..\..\..\Lib\Lazarus\ACBrGNRE\$(TargetCPU)-$(TargetOS)"/>
       </SearchPaths>
       <Other>
         <CompilerMessages>
