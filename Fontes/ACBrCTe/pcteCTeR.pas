@@ -667,7 +667,7 @@ begin
       end;
 
       i01 := 0;
-      while Leitor.rExtrai(2, 'infNFe', '', i01 + 1) <> '' do
+      while Leitor.rExtrai(3, 'infNFe', '', i01 + 1) <> '' do
       begin
         CTe.infCTeNorm.infDoc.InfNFE.Add;
         CTe.infCTeNorm.infDoc.InfNFE[i01].chave := Leitor.rCampo(tcStr, 'chave');
@@ -735,7 +735,7 @@ begin
       end;
 
       i01 := 0;
-      while Leitor.rExtrai(2, 'infOutros', '', i01 + 1) <> '' do
+      while Leitor.rExtrai(3, 'infOutros', '', i01 + 1) <> '' do
       begin
         CTe.infCTeNorm.infDoc.InfOutros.Add;
         CTe.infCTeNorm.infDoc.InfOutros[i01].tpDoc      := StrToTpDocumento(ok, Leitor.rCampo(tcStr, 'tpDoc'));
