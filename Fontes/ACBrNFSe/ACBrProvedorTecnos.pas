@@ -73,19 +73,8 @@ begin
  ConfigCidade.Prefixo3      := '';
  ConfigCidade.Prefixo4      := '';
  ConfigCidade.Identificador := 'Id';
- //Tecnos ainda não colocou a assinatura em produção em Estrela/RS
- //Alterar este trecho confome sua necessidade.
- if AAmbiente = 1 then
- begin
-   ConfigCidade.NameSpaceEnvelope := 'http://tempuri.org/';
-   ConfigCidade.AssinaRPS  := false;
- end
- else
- begin
-   ConfigCidade.NameSpaceEnvelope := 'http://tempuri.org/';
-   ConfigCidade.AssinaRPS  := true;
- end;
-
+ ConfigCidade.NameSpaceEnvelope := 'http://tempuri.org/';
+ ConfigCidade.AssinaRPS  := true;
  ConfigCidade.AssinaLote := False;
  Result := ConfigCidade;
 end;
@@ -152,6 +141,12 @@ begin
             ConfigURL.ProNomeCidade := 'veranopolis.nfse-tecnos.com.br';
             sHTTPPro := 'http://';
            end;
+  4306403: begin //Dois Irmãos/RS
+            ConfigURL.HomNomeCidade := 'homologadoi.nfse-tecnos.com.br';
+            ConfigURL.ProNomeCidade := 'dois.nfse-tecnos.com.br';
+            sHTTPPro := 'http://';
+           end;
+
  end;
 
  ConfigURL.HomRecepcaoLoteRPS    := 'http://' + ConfigURL.HomNomeCidade + ':9091';

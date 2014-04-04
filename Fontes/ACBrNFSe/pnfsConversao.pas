@@ -1057,7 +1057,8 @@ begin
   4310801, // Ivoti/RS
   4313300, // Nova Prata/RS
   4314803, // Portao/RS
-  4322806  // Veranopolis/RS
+  4322806, // Veranopolis/RS
+  4306403  //Dois Irmãos/RS
          : Provedor := 'Tecnos';
 
   4303103, // Cachoeirinha/RS
