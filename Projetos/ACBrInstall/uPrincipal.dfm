@@ -1513,8 +1513,8 @@ object frmPrincipal: TfrmPrincipal
       object Label3: TLabel
         Left = 39
         Top = 58
-        Width = 377
-        Height = 19
+        Width = 339
+        Height = 38
         Caption = 'A instala'#231#227'o do projeto ACBr foi conclu'#237'da com '#234'xito.'
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clMaroon
@@ -1664,7 +1664,7 @@ object frmPrincipal: TfrmPrincipal
         Cursor = crHandPoint
         Animate = True
         Center = True
-        FrameIndex = 5
+        FrameIndex = 3
         Image.Data = {
           688B00004749463839613F012800F70000FFFFFFFFFFE5FFFFCCF7FAFDFFFF99
           FFF7B9FFF9A9FFFA84EAFA9EFFF573FFF74AFFFF00FFF268F2F478FFF456E9F5
