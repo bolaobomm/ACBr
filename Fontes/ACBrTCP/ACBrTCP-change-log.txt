@@ -37,6 +37,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+04/04/2014
+-- ACBrSpedTabelas --
+[+] Doação do componente por (datilas)
+    http://www.projetoacbr.com.br/forum/index.php?/topic/13345-novo-componete-acbrtabelassped/#entry80872
+[+] Ajuste para o padrão dos componentes do projeto ACBr
+    (por: Isaque Pinheiro/Juliomar Marchetti)
 
 27/01/2013
 -- ACBrCEP --
