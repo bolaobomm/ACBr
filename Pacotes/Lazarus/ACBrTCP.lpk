@@ -88,8 +88,8 @@
         <UnitName Value="ACBrConsultaCPF"/>
       </Item14>
       <Item15>
-        <Filename Value="..\..\Fontes\ACBrTCP\ACBrTabelasSped.pas"/>
-        <UnitName Value="ACBrTabelasSped"/>
+        <Filename Value="..\..\Fontes\ACBrTCP\ACBrSpedTabelas.pas"/>
+        <UnitName Value="ACBrSpedTabelas"/>
       </Item15>
     </Files>
     <Type Value="RunAndDesignTime"/>
