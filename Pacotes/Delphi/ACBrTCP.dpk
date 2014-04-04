@@ -49,7 +49,6 @@ contains
   ACBrCotacao in '..\..\Fontes\ACBrTCP\ACBrCotacao.pas',
   ACBrMail in '..\..\Fontes\ACBrTCP\ACBrMail.pas',
   ACBrNFPws in '..\..\Fontes\ACBrTCP\ACBrNFPws.pas',
-  ACBrTabelasSped in '..\..\Fontes\ACBrTCP\ACBrTabelasSped.pas';
-
+  ACBrSpedTabelas in '..\..\Fontes\ACBrTCP\ACBrSpedTabelas.pas';
 end.
 
