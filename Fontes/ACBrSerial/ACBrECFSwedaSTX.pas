@@ -2623,10 +2623,11 @@ begin
    CNF := AchaCNFIndice(IntToStrZero(P,2));
    if CNF = nil then
       raise EACBrECFERRO.Create('Indice não encontrado!');
-   sDescricao :=CNF.Descricao;
+
+   sDescricao := Trim(CodificarPaginaDeCodigoECF( CNF.Descricao ));
 //   {Remove o sinal da descrição}
 //   sDescricao[1]:= ' ';
-   EnviaComando('21|'+Trim(sDescricao)+'|'+FormatFloat('#0.00',Valor));
+   EnviaComando('21|'+sDescricao+'|'+FormatFloat('#0.00',Valor));
 end;
 
 function TACBrECFSwedaSTX.RemoveNulos(Str: AnsiString): AnsiString;

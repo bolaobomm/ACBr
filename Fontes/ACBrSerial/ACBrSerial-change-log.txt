@@ -97,6 +97,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+Data: 04/04/2014
+-- ACBrECFSwedaSTX --
+[-] Corrigido Bug em RegistraItemNaoFiscal, que não conseguia intrepretar Acentos
+    (por: DSA)
+
 Data: 31/03/2014
 [-] Corrigido Bug em VerificaFimImpressao, onde na impressão de comandos lentos,
     como no caso da ReduçãoZ, o ECF acusava TimeOut muito antes do estabelecido
