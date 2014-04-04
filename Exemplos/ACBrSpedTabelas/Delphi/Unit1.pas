@@ -26,6 +26,8 @@ type
     BtnDow: TBitBtn;
     BtnDowT: TBitBtn;
     ACBrSpedTabelas1: TACBrSpedTabelas;
+    ComboBox1: TComboBox;
+    Label1: TLabel;
     procedure FormShow(Sender: TObject);
     procedure BtnListarClick(Sender: TObject);
     procedure BtnDowClick(Sender: TObject);
@@ -84,6 +86,9 @@ procedure TForm1.BtnListarClick(Sender: TObject);
 Var
 I:Integer;
 begin
+ClientDataSet1.EmptyDataSet;
+
+ACBrSpedTabelas1.CodSistema := TACBrCodSistema( ComboBox1.ItemIndex ) ;
 ACBrSpedTabelas1.ListarTabelas;
 for I := 0 to ACBrSpedTabelas1.Tabelas.Count -1 do
  Begin
@@ -107,9 +112,7 @@ end;
 
 procedure TForm1.FormCreate(Sender: TObject);
 begin
-    ACBrSpedTabelas1 := TACBrSpedTabelas.Create(Self);
-    ACBrSpedTabelas1.CodSistema := csSpedFiscal;
-
+  ComboBox1.ItemIndex := 0 ;
 end;
 
 procedure TForm1.FormShow(Sender: TObject);

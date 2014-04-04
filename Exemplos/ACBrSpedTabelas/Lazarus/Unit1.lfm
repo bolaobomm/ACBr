@@ -117,13 +117,21 @@ object Form1: TForm1
     end
   end
   object ComboBox1: TComboBox
-    Left = 69
+    Left = 40
     Height = 21
-    Top = 416
+    Top = 440
     Width = 164
     ItemHeight = 13
     TabOrder = 3
     Text = 'ComboBox1'
+  end
+  object Label1: TLabel
+    Left = 40
+    Height = 13
+    Top = 424
+    Width = 77
+    Caption = 'Selecione o Tipo'
+    ParentColor = False
   end
   object BufDataset1: TBufDataset
     FieldDefs = <>

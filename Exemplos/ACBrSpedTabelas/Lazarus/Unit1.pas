@@ -28,6 +28,7 @@ type
     BufDataset1DtCriacao: TDateField;
     BufDataset1DtVersao: TDateField;
     BufDataset1Hash: TStringField;
+    Label1: TLabel;
     Panel1: TPanel;
     BtnListar: TBitBtn;
     BtnDow: TBitBtn;

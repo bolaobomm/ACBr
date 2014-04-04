@@ -16,6 +16,15 @@ object Form1: TForm1
   OnShow = FormShow
   PixelsPerInch = 96
   TextHeight = 13
+  object Label1: TLabel
+    Left = 40
+    Top = 418
+    Width = 77
+    Height = 13
+    Caption = 'Selecione o Tipo'
+    Color = clBtnFace
+    ParentColor = False
+  end
   object DBGrid1: TDBGrid
     Left = 0
     Top = 0
@@ -125,6 +134,18 @@ object Form1: TForm1
       TabOrder = 2
       OnClick = BtnDowTClick
     end
+  end
+  object ComboBox1: TComboBox
+    Left = 40
+    Top = 434
+    Width = 164
+    Height = 21
+    TabOrder = 3
+    Text = 'ComboBox1'
+    Items.Strings = (
+      'csSpedFiscal'
+      'csSpedPisCofins'
+      'csSpedContabil')
   end
   object ClientDataSet1: TClientDataSet
     Aggregates = <>
