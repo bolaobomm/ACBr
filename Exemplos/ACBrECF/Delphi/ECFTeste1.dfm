@@ -557,7 +557,7 @@ object Form1: TForm1
         Left = 0
         Top = 55
         Width = 782
-        Height = 247
+        Height = 267
         ActivePage = TabSheet6
         Align = alClient
         TabOrder = 1
@@ -836,35 +836,30 @@ object Form1: TForm1
     object TabSheet9: TTabSheet
       Caption = 'Dados RZ'
       ImageIndex = 6
-      DesignSize = (
-        782
-        302)
       object Label37: TLabel
         Left = 0
-        Top = 0
+        Top = 31
         Width = 782
         Height = 21
-        Align = alTop
         AutoSize = False
         Caption = 'Resposta'
         Layout = tlBottom
       end
       object Button2: TButton
         Left = 11
-        Top = -387
+        Top = 3
         Width = 108
         Height = 25
-        Anchors = [akLeft, akBottom]
         Caption = 'Ler Dados RZ'
         TabOrder = 0
         OnClick = Button2Click
       end
       object mRZ: TMemo
         Left = 0
-        Top = 21
+        Top = 55
         Width = 782
-        Height = 281
-        Align = alClient
+        Height = 247
+        Align = alBottom
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
         Font.Height = 13
@@ -885,7 +880,7 @@ object Form1: TForm1
         Left = 0
         Top = 0
         Width = 782
-        Height = 234
+        Height = 254
         Align = alClient
         Caption = 'Op'#231#245'es do Menu fiscal'
         TabOrder = 0
@@ -1014,7 +1009,7 @@ object Form1: TForm1
       end
       object pgcMenuFiscalTipo: TPageControl
         Left = 0
-        Top = 234
+        Top = 254
         Width = 782
         Height = 68
         ActivePage = tbsMenuFiscalTipoData
