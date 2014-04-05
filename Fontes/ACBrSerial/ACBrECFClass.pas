@@ -1799,21 +1799,22 @@ begin
 
         if now > TempoLimite then       { TimeOut }
         begin
-           {$IFNDEF NOGUI}
+
              if Retentar then
              begin
+               {$IFNDEF NOGUI}
                 if ProcessaFormMsg then
                 begin
                    fsFormMsg.Width  := 0 ;  { Escondendo o Form da Msg }
                    fsFormMsg.Height := 0 ;
                 end ;
-
+                {$ENDIF}
                 if DoOnMsgRetentar( Format(cACBrECFDoOnMsgSemRespostaRetentar,
                                           [ ModeloStr ]),
                     'LerResposta') then
                    TempoLimite := IncSecond( now, TimeOut)  ;
              end ;
-           {$ENDIF}
+
 
            if now > TempoLimite then      { Respondeu Nao a Retentar }
            begin
@@ -1912,12 +1913,11 @@ procedure TACBrECFClass.VerificaEmLinha(TimeOut : Integer) ;
 begin
   while not EmLinha( TimeOut ) do  { Impressora está em-linha ? }
   begin
-     {$IFNDEF NOGUI}
+
        if Retentar and
           DoOnMsgRetentar(Format(cACBrECFVerificaEmLinhaMsgRetentar,
                            [ ModeloStr ]), 'VerEmLinha') then
           Continue ;
-     {$ENDIF}
 
      raise EACBrECFSemResposta.create(Format(ACBrStr(cACBrECFVerificaEmLinhaException),
                                      [ ModeloStr ])) ;
@@ -3027,6 +3027,8 @@ begin
         (MessageDlg( ACBrStr( Mensagem+sLineBreak+sLineBreak + cACBrECFDoOnMsgRetentar ),
                      mtConfirmation,[mbYes,mbNo],0) = mrYes) then
         Result := True ;
+     {$else}
+       Result := Retentar;
      {$ENDIF}
    end ;
 

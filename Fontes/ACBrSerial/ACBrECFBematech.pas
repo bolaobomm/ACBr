@@ -298,7 +298,11 @@ const
 {$IFNDEF MSWINDOWS}
  cLIB_Bema = 'linuxmfd';
 {$ELSE}
- cLIB_Bema = 'Bemafi32.dll';
+ {$IFDEF CPU64}
+  cLIB_Bema = 'Bemafi64.dll';
+ {$ELSE}
+  cLIB_Bema = 'Bemafi32.dll';
+ {$ENDIF}
  cLIB_VersaoMinima = '6.1.1.6';
 {$ENDIF}
 
@@ -3357,7 +3361,11 @@ begin
   Ativo := False ;
   Sleep( 300 ) ;
 
-  IniFile := ExtractFilePath( ParamStr(0) )+'BemaFi32.INI' ;
+  {$IFDEF CPU64}
+   IniFile := ExtractFilePath( ParamStr(0) )+'BemaFi64.INI' ;
+  {$ELSE}
+   IniFile := ExtractFilePath( ParamStr(0) )+'BemaFi32.INI' ;
+  {$ENDIF}
   if FileExists( IniFile ) then
      ConfiguraBemaFI32ini(aPorta, aPath);
 
