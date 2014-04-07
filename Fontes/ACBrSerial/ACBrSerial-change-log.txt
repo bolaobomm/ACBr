@@ -97,6 +97,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+Data: 07/04/2014
+-- ACBrECFEpson --
+[*] Adicionada verificação para evitar erro de Impressão em Linha de CCD ou
+    Gerencial, pois o ECF não suporta o caracter "FF" ou #12  (por: DSA)
+
 Data: 04/04/2014
 -- ACBrECFSwedaSTX --
 [-] Corrigido Bug em RegistraItemNaoFiscal, que não conseguia intrepretar Acentos

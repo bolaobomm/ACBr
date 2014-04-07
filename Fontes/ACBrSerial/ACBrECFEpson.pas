@@ -2424,6 +2424,7 @@ end;
 procedure TACBrECFEpson.LinhaRelatorioGerencial(Linha: AnsiString; IndiceBMP: Integer);
 Var I  : Integer ;
     SL : TStringList ;
+    L: String;
 begin
   Linha := AjustaLinhas( Linha, Colunas );  { Formata as Linhas de acordo com "Coluna" }
 
@@ -2432,8 +2433,11 @@ begin
      SL.Text := Linha ;
      For I := 0 to SL.Count-1 do
      begin
+        // Epson não consegue imprimir FF em Linha de Gerencial o CCD, retorna Erro //
+        L := StringReplace( SL[I], FF, '', [rfReplaceAll] ) ;
+
         EpsonComando.Comando  := '0E02' ;
-        EpsonComando.AddParamString( SL[I] ) ;
+        EpsonComando.AddParamString( L ) ;
         EnviaComando ;
      end ;
   finally
