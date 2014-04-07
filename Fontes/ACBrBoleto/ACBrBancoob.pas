@@ -235,8 +235,8 @@ end;
 
 procedure TACBrBancoob.GerarRegistroTransacao400(ACBrTitulo :TACBrTitulo; aRemessa: TStringList);
 var
-  DigitoNossoNumero, Ocorrencia,aEspecie :String;
-  TipoSacado, ATipoAceite,MensagemCedente:String;
+  DigitoNossoNumero, Ocorrencia,aEspecie, AInstrucao1, AInstrucao2 :String;
+  TipoSacado, ATipoAceite,MensagemCedente, DiasProtesto :String;
   TipoCedente, wLinha :String;
   I: Integer;
   wRespEntrega: Char;
@@ -269,6 +269,10 @@ begin
          atSim :  ATipoAceite := '1';
          atNao :  ATipoAceite := '0';
       end;
+
+      {INstrucao}
+      AInstrucao1 := padR(Trim(Instrucao1),2,'0');
+      AInstrucao2 := padR(Trim(Instrucao2),2,'0');
 
       {Pegando Especie}
       if trim(EspecieDoc) = 'DM' then
@@ -335,7 +339,7 @@ begin
                   IntToStrZero( 0, 1)                                     +  // DV do código de responsabilidade: "0"
                   IntToStrZero( 0, 6)                                     +  // Numero do borderô: “000000”
                   Space(4)                                                +  // Brancos
-                  wRespEntrega                                            +  // Responsabilidade Emissão
+                  wRespEntrega                                            +  // Tipo de Emissão 1-Cooperativa - 2-Cliente
                   padR( trim(Cedente.Modalidade), 2, '0')                 +  // Carteira/Modalidade
                   Ocorrencia                                              +  // Ocorrencia (remessa)
                   padL( NumeroDocumento,  10)                             +  // Número do Documento
@@ -347,10 +351,10 @@ begin
                   padL(aEspecie,2)                                        +  // Espécie do Título
                   ATipoAceite                                             +  // Identificação
                   FormatDateTime( 'ddmmyy', DataDocumento )               +  // 32 Data de Emissão
-                  IntToStrZero( 0, 2)                                     +  // 33 Primeira instrução (SEQ 34) = 00 e segunda (SEQ 35) = 00, não imprime nada.
-                  IntToStrZero( 1, 2)                                     +  // 34 Primeira instrução (SEQ 34) = 00 e segunda (SEQ 35) = 00, não imprime nada.
-                  IntToStrZero( 0, 6)                                     +  // Taxa de mora mês
-                  IntToStrZero( 0, 6)                                     +  // Taxa de multa
+                  padR(AInstrucao1, 2, '0')                               +  // 33 Primeira instrução (SEQ 34) = 00 e segunda (SEQ 35) = 00, não imprime nada.
+                  padR(AInstrucao2, 2, '0')                               +  // 34 Primeira instrução (SEQ 34) = 00 e segunda (SEQ 35) = 00, não imprime nada.
+                  IntToStrZero( Round( ValorMoraJuros * 100 ), 6)         +  // Taxa de mora mês
+                  IntToStrZero( Round( PercentualMulta * 100 ), 6)        +  // Taxa de multa
                   wRespEntrega                                            +  // Responsabilidade Distribuição
                   IntToStrZero( 0, 6)                                     +  // Preencher com zeros quando não for concedido nenhum desconto.
                   IntToStrZero( 0, 13)                                    +  // Preencher com zeros quando não for concedido nenhum desconto.
