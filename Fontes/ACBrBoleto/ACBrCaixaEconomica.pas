@@ -64,7 +64,7 @@ type
     function GerarRegistroTrailler240(ARemessa : TStringList): String;  override;
     procedure LerRetorno240(ARetorno: TStringList); override;
     function CodMotivoRejeicaoToDescricao(const TipoOcorrencia: TACBrTipoOcorrencia; CodMotivo: Integer): string; override;
-
+    function TipoOcorrenciaToDescricao(const TipoOcorrencia: TACBrTipoOcorrencia): String; override;
     function CodOcorrenciaToTipo(const CodOcorrencia: Integer): TACBrTipoOcorrencia; override;
     function TipoOCorrenciaToCod(const TipoOcorrencia: TACBrTipoOcorrencia): String; override;
    end;
@@ -208,18 +208,18 @@ function TACBrCaixaEconomica.TipoOCorrenciaToCod(
 begin
 //escol
   case TipoOcorrencia of
-    toRetornoRegistroConfirmado: Result := '02';
-    toRetornoRegistroRecusado: Result := '03';
-    toRetornoLiquidado: Result := '06';
-    toRetornoAbatimentoConcedido: Result := '12';
-    toRetornoAbatimentoCancelado: Result := '13';
-    toRetornoVencimentoAlterado: Result := '14';
-    toRetornoRecebimentoInstrucaoProtestar: Result := '19';
-    toRetornoRecebimentoInstrucaoSustarProtesto: Result := '20';
-    toRetornoInstrucaoRejeitada: Result := '26';
-    toRetornoDebitoTarifas: Result := '28';
-    toRetornoALteracaoOutrosDadosRejeitada: Result := '30';
-    toRetornoRecebimentoInstrucaoAlterarDados: Result := '45';
+    toRetornoRegistroConfirmado                 : Result := '02';
+    toRetornoRegistroRecusado                   : Result := '03';
+    toRetornoLiquidado                          : Result := '06';
+    toRetornoAbatimentoConcedido                : Result := '12';
+    toRetornoAbatimentoCancelado                : Result := '13';
+    toRetornoVencimentoAlterado                 : Result := '14';
+    toRetornoRecebimentoInstrucaoProtestar      : Result := '19';
+    toRetornoRecebimentoInstrucaoSustarProtesto : Result := '20';
+    toRetornoInstrucaoRejeitada                 : Result:=  '26';
+    toRetornoDebitoTarifas                      : Result := '28';
+    toRetornoALteracaoOutrosDadosRejeitada      : Result := '30';
+    toRetornoRecebimentoInstrucaoAlterarDados   : Result := '45';
   else
     Result := '00';
   end;
@@ -343,8 +343,24 @@ begin
       case Aceite of
          atSim :  ATipoAceite := 'A';
          atNao :  ATipoAceite := 'N';
-      end;
-
+      end;        
+    { Pegando o tipo de EspecieDoc }
+    if EspecieDoc = 'DM' then
+      EspecieDoc := '02'
+    else if EspecieDoc = 'NP' then
+      EspecieDoc := '12'
+    else if EspecieDoc = 'NS' then
+      EspecieDoc := '16'
+    else if EspecieDoc = 'RC' then
+      EspecieDoc := '17'
+    else if EspecieDoc = 'LC' then
+      EspecieDoc := '07'
+    else if EspecieDoc = 'DS' then
+      EspecieDoc := '04'
+    else if EspecieDoc = 'ND' then
+      EspecieDoc := '19'
+    else
+      EspecieDoc := '02';
       {Pegando Tipo de Boleto} //Quem emite e quem distribui o boleto?
       case ACBrBoleto.Cedente.ResponEmissao of
          tbBancoEmite      : ATipoBoleto := '1' + '1';
@@ -563,8 +579,8 @@ begin
           begin
             SeuNumero                   := copy(Linha,59,11);
             NumeroDocumento             := copy(Linha,59,11);
-            OcorrenciaOriginal.Tipo     := CodOcorrenciaToTipo(StrToIntDef(
-                                        copy(Linha,16,2),0));
+            OcorrenciaOriginal.Tipo     := CodOcorrenciaToTipo(StrToIntDef(copy(Linha,16,2),0));
+
             //05 = Liquidação Sem Registro
             Vencimento := StringToDateTimeDef( Copy(Linha,74,2)+'/'+
                                                Copy(Linha,76,2)+'/'+
@@ -750,4 +766,39 @@ begin
   end;
 end;
 
+function TACBrCaixaEconomica.TipoOcorrenciaToDescricao(const TipoOcorrencia: TACBrTipoOcorrencia): String;
+var
+  CodOcorrencia: Integer;
+begin
+  CodOcorrencia := StrToIntDef(TipoOCorrenciaToCod(TipoOcorrencia),0);
+  case CodOcorrencia of
+    02: Result := '02-Entrada Confirmada';
+    03: Result := '03-Entrada Rejeitada';
+    04: Result := '04-Transferência de Carteira/Entrada';
+    05: Result := '05-Transferência de Carteira/Baixa';
+    06: Result := '06-Liquidação';
+    09: Result := '09-Baixa';
+    12: Result := '12-Confirmação Recebimento Instrução de Abatimento';
+    13: Result := '13-Confirmação Recebimento Instrução de Cancelamento Abatimento';
+    14: Result := '14-Confirmação Recebimento Instrução Alteração de Vencimento';
+    17: Result := '17-Liquidação Após Baixa ou Liquidação Título Não Registrado';
+    19: Result := '19-Confirmação Recebimento Instrução de Protesto';
+    20: Result := '20-Confirmação Recebimento Instrução de Sustação/Cancelamento de Protesto';
+    23: Result := '23-Remessa a Cartório (Aponte em Cartório)';
+    24: Result := '24-Retirada de Cartório e Manutenção em Carteira';
+    25: Result := '25-Protestado e Baixado (Baixa por Ter Sido Protestado)';
+    26: Result := '26-Instrução Rejeitada';
+    27: Result := '27-Confirmação do Pedido de Alteração de Outros Dados';
+    28: Result := '28-Débito de Tarifas/Custas';
+    30: Result := '30-Alteração de Dados Rejeitada';
+    36: Result := '36-Confirmação de envio de e-mail/SMS';
+    37: Result := '37-Envio de e-mail/SMS rejeitado';
+    43: Result := '43-Estorno de Protesto/Sustação';
+    44: Result := '44-Estorno de Baixa/Liquidação';
+    45: Result := '45-Alteração de dados';
+    51: Result := '51-Título DDA reconhecido pelo sacado';
+    52: Result := '52-Título DDA não reconhecido pelo sacado';
+    53: Result := '53-Título DDA recusado pela CIP';
+  end;
+end;
 end.
