@@ -412,7 +412,8 @@ begin
      if copy(RetCmd,11,1) = 'S' then
         fpDecimaisPreco := fpDecimaisPreco + 1 ;
 
-     fpDecimaisQtd := StrToIntDef(copy( TACBrECF(fpOwner).RetornaInfoECF( 'U2' ),  1, 1), 2 ) ;
+     fpDecimaisQtd := StrToIntDef(copy( TACBrECF(fpOwner).RetornaInfoECF( 'U2' ),  1, 1), fpDecimaisQtd ) ;
+
 
      try
         // Tentando calcular o numero de Colunas //
