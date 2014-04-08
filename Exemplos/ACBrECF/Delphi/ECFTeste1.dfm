@@ -557,7 +557,7 @@ object Form1: TForm1
         Left = 0
         Top = 55
         Width = 782
-        Height = 267
+        Height = 247
         ActivePage = TabSheet6
         Align = alClient
         TabOrder = 1
@@ -845,14 +845,14 @@ object Form1: TForm1
         Caption = 'Resposta'
         Layout = tlBottom
       end
-      object Button2: TButton
+      object btnDadosRZ: TButton
         Left = 11
         Top = 3
         Width = 108
         Height = 25
         Caption = 'Ler Dados RZ'
         TabOrder = 0
-        OnClick = Button2Click
+        OnClick = btnDadosRZClick
       end
       object mRZ: TMemo
         Left = 0
@@ -872,6 +872,15 @@ object Form1: TForm1
         WantReturns = False
         WordWrap = False
       end
+      object btnDadosUltimaRZ: TButton
+        Left = 152
+        Top = 3
+        Width = 129
+        Height = 25
+        Caption = 'Ler Dados '#218'ltima RZ'
+        TabOrder = 2
+        OnClick = btnDadosUltimaRZClick
+      end
     end
     object tbsMenuFiscal: TTabSheet
       Caption = 'Menu Fiscal'
@@ -880,7 +889,7 @@ object Form1: TForm1
         Left = 0
         Top = 0
         Width = 782
-        Height = 254
+        Height = 234
         Align = alClient
         Caption = 'Op'#231#245'es do Menu fiscal'
         TabOrder = 0
@@ -1009,7 +1018,7 @@ object Form1: TForm1
       end
       object pgcMenuFiscalTipo: TPageControl
         Left = 0
-        Top = 254
+        Top = 234
         Width = 782
         Height = 68
         ActivePage = tbsMenuFiscalTipoData
