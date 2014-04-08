@@ -118,8 +118,8 @@ achadas em: http://kylixlibs.sourceforge.net
 
 --------------------------------------------------------------------------------
 
-5. INSTALAÇÃO no DELPHI / KYLIX
-===============================
+5. INSTALAÇÃO no DELPHI / KYLIX / Lazarus
+===========================================
 
 ATENÇAO - Caso tenha o pacote ACBr_CLX ou ACBr_VCL já instalado no Delphi, REMOVA TODOS 
 os componentes do ACBr e TODAS as pastas do ACBr do Library Path, pois a partir de Maio 
@@ -129,28 +129,30 @@ de existir sendo divididos em pacotes com os nomes ACBrDiversos, ACBrSerial, ACB
   1. Descompacte o arquivo .ZIP na pasta de sua preferência ou faça o checkout
      via SVN - http://acbr.sourceforge.net/drupal/?q=node/37
 
-  2. Adicionando os diretórios no LibPath  (não é necessário no Lazarus)
-       Adicione os diretórios " Fontes\ACBrComum ", " Fontes\ACBrSerial " e os
+  2. Caso esteja usando o Delphi ou o Kylix,
+     adicione os diretórios " Fontes\ACBrComum ", " Fontes\ACBrSerial " e os
      demais subdiretórios da pasta Fontes dos componentes que deseja utilizar no
-     "Library Path".
+     "Library Path". Não é necessário fazer isso no Lazarus.
        Na IDE do Delphi acione  "Tools, Enviroment Options" selecione a guia
      "Library", clique no botão elíptico (...) de "Library Path", clique no botão
      elíptico (...) à frente da caixa de texto, localize a pasta " Fontes\ACBrComum"
      no diretório de instalação da Biblioteca, clique em "OK", e em "Add".
      Repita o mesmo processo com as demais pastas. Click em "OK" para finalizar.
 
-
-  3.1 Procure pela pasta Pacotes\Delphi e abra o arquivo synapse.dpk e clique em
-      Compile.
-  3.2 Procure pela pasta Pacotes\Delphi e abra o arquivo ACBrComum.dpk e clique em 
-      Compile e depois em Install.
-  3.3 Procure pela pasta Pacotes\Delphi e abra o arquivo ACBrDiversos.dpk e
-      clique em Compile e depois em Install.
-  3.4 Procure pela pasta Pacotes\Delphi e abra o arquivo ACBrSerial.dpk e clique
-      em Compile e depois em Install.
-  3.5 Repita esses passos para os demais componentes que deseja instalar,
-      lembrando que alguns pacotes são apenas de Run-time, e por isso não devem
-      ser Instalados na IDE, mas apenas Compilados a fim de gerar o arquivo BPL.
+  3.1 Procure pela pasta Pacotes\Delphi ou Pacotes\Lazarus conforme sua IDE e 
+      abra o arquivo synapse.dpk e clique em Compile.
+  3.2 Procure pela pasta Pacotes\Delphi ou Pacotes\Lazarus conforme sua IDE e 
+      abra o arquivo ACBrComum.dpk e clique em Compile e depois em Install 
+	  (botão Usar->Instalar no Lazarus).
+  3.3 Procure pela pasta Pacotes\Delphi ou Pacotes\Lazarus conforme sua IDE e 
+      abra o arquivo ACBrDiversos.dpk e clique em Compile e depois em Install 
+	  (botão Usar->Instalar no Lazarus).
+  3.4 Procure pela pasta Pacotes\Delphi ou Pacotes\Lazarus conforme sua IDE e 
+      abra o arquivo ACBrSerial.dpk e clique em Compile e depois em Install 
+	  (botão Usar->Instalar no Lazarus).
+  3.5 Repita esses passos para os demais pacotes que contenha os componentes que 
+      deseja instalar. Lembramos que alguns pacotes são apenas de Run-time, e assim
+	  não devem ser Instalados na IDE, apenas compilados a fim de gerar o arquivo BPL.
       São eles: synapse.dpk, PCN.dpk, ACBrOpenSSL.dpk, ACBrCapicom.dpk
 
   4. Na IDE do Delphi, clique em "File - Close All"
