@@ -704,6 +704,7 @@ type
 
     function GerarRemessa(NumeroRemessa : Integer) : String;
     procedure LerRetorno();
+    procedure ChecarDadosObrigatorios;
 
   published
     property About : String read GetAbout write SetAbout stored False ;
@@ -721,7 +722,6 @@ type
     property LayoutRemessa  : TACBrLayoutRemessa read fLayoutRemessa          write fLayoutRemessa default c400;
     property ImprimirMensagemPadrao : Boolean    read fImprimirMensagemPadrao write fImprimirMensagemPadrao default True;
     property ACBrBoletoFC : TACBrBoletoFCClass   read fACBrBoletoFC           write SetACBrBoletoFC;
-    procedure ChecarDadosObrigatorios;
   end;
 
  {TACBrBoletoFCClass}
@@ -1974,9 +1974,9 @@ end;
 
 procedure TACBrBoleto.ChecarDadosObrigatorios;
 begin
-   if (Cedente.Nome= '') or (cedente.Conta = '') or (Cedente.ContaDigito ='') or
-      (Cedente.Agencia = '') or (Cedente.AgenciaDigito = '') then
-     raise Exception.Create(ACBrStr('Informações do Cedente incompletas'));
+   if (Cedente.Nome= '') or (cedente.Conta = '') or ((Cedente.ContaDigito ='') and (Banco.TipoCobranca <> cobBanestes)) or
+      (Cedente.Agencia = '') or ((Cedente.AgenciaDigito = '') and (Banco.TipoCobranca <> cobBanestes)) then
+        raise Exception.Create(ACBrStr('Informações do Cedente incompletas'));
 end;
 
 { TACBrBoletoFCClass }
