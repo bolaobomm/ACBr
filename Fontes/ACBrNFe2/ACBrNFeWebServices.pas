@@ -1561,7 +1561,7 @@ var
   NFeRetorno: TRetConsStatServ;
   aMsg: string;
   Texto : String;
-  Acao  : TStringList ;
+  Acao  : TStringList;
   Stream: TMemoryStream;
   StrStream: TStringStream;
 
@@ -1581,7 +1581,12 @@ begin
   Texto := '<?xml version="1.0" encoding="utf-8"?>';
   Texto := Texto + '<soap12:Envelope xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap12="http://www.w3.org/2003/05/soap-envelope">';
   Texto := Texto +   '<soap12:Header>';
-  Texto := Texto +     '<nfeCabecMsg xmlns="http://www.portalfiscal.inf.br/nfe/wsdl/NfeStatusServico2">';
+
+  // Alterado por Italo em 15/04/2014
+  if (FConfiguracoes.Geral.ModeloDF = moNFe) and (FConfiguracoes.Geral.VersaoDF = ve310) and (FConfiguracoes.WebServices.UFCodigo = 29)
+   then Texto := Texto +     '<nfeCabecMsg xmlns="http://www.portalfiscal.inf.br/nfe/wsdl/NfeStatusServico">'
+   else Texto := Texto +     '<nfeCabecMsg xmlns="http://www.portalfiscal.inf.br/nfe/wsdl/NfeStatusServico2">';
+
   Texto := Texto +       '<cUF>'+IntToStr(FConfiguracoes.WebServices.UFCodigo)+'</cUF>';
 
   Texto := Texto + '<versaoDados>' + GetVersaoNFe(FConfiguracoes.Geral.ModeloDF,
@@ -1592,7 +1597,12 @@ begin
   Texto := Texto +     '</nfeCabecMsg>';
   Texto := Texto +   '</soap12:Header>';
   Texto := Texto +   '<soap12:Body>';
-  Texto := Texto +     '<nfeDadosMsg xmlns="http://www.portalfiscal.inf.br/nfe/wsdl/NfeStatusServico2">';
+
+  // Alterado por Italo em 15/04/2014
+  if (FConfiguracoes.Geral.ModeloDF = moNFe) and (FConfiguracoes.Geral.VersaoDF = ve310) and (FConfiguracoes.WebServices.UFCodigo = 29)
+   then Texto := Texto +     '<nfeDadosMsg xmlns="http://www.portalfiscal.inf.br/nfe/wsdl/NfeStatusServico">'
+   else Texto := Texto +     '<nfeDadosMsg xmlns="http://www.portalfiscal.inf.br/nfe/wsdl/NfeStatusServico2">';
+
   Texto := Texto + FDadosMsg;
   Texto := Texto +     '</nfeDadosMsg>';
   Texto := Texto +   '</soap12:Body>';
@@ -1612,7 +1622,11 @@ begin
 {     if FConfiguracoes.WebServices.UFCodigo = 29 then //Bahia está usando SOAP ACTION diferente
         ReqResp.SoapAction := 'http://www.portalfiscal.inf.br/nfe/wsdl/NfeStatusServico2/nfeStatusServicoNF2'
      else}
-     ReqResp.SoapAction := 'http://www.portalfiscal.inf.br/nfe/wsdl/NfeStatusServico2';
+
+     // Alterado por Italo em 15/04/2014
+     if (FConfiguracoes.Geral.ModeloDF = moNFe) and (FConfiguracoes.Geral.VersaoDF = ve310) and (FConfiguracoes.WebServices.UFCodigo = 29)
+      then ReqResp.SoapAction := 'http://www.portalfiscal.inf.br/nfe/wsdl/NfeStatusServico/NfeStatusServicoNF'
+      else ReqResp.SoapAction := 'http://www.portalfiscal.inf.br/nfe/wsdl/NfeStatusServico2';
   {$ENDIF}
 
   try
@@ -1626,12 +1640,20 @@ begin
     try
       {$IFDEF ACBrNFeOpenSSL}
          HTTP.Document.LoadFromStream(Stream);
-         ConfiguraHTTP(HTTP,'SOAPAction: "http://www.portalfiscal.inf.br/nfe/wsdl/NfeStatusServico2"');
+
+         // Alterado por Italo em 15/04/2014
+         if (FConfiguracoes.Geral.ModeloDF = moNFe) and (FConfiguracoes.Geral.VersaoDF = ve310) and (FConfiguracoes.WebServices.UFCodigo = 29)
+          then ConfiguraHTTP(HTTP,'SOAPAction: "http://www.portalfiscal.inf.br/nfe/wsdl/NfeStatusServico/NfeStatusServicoNF"')
+          else ConfiguraHTTP(HTTP,'SOAPAction: "http://www.portalfiscal.inf.br/nfe/wsdl/NfeStatusServico2"');
+
          HTTP.HTTPMethod('POST', FURL);
          StrStream := TStringStream.Create('');
          StrStream.CopyFrom(HTTP.Document, 0);
          FRetornoWS := TiraAcentos(ParseText(StrStream.DataString, True));
          FRetWS := SeparaDados( FRetornoWS,'nfeStatusServicoNF2Result');
+         // Incluido por Italo em 15/04/2014
+         if FRetWS = '' then
+           FRetWS := SeparaDados( FRetornoWS,'NfeStatusServicoNFResult');
          StrStream.Free;
       {$ELSE}
          ReqResp.Execute(Acao.Text, Stream);
@@ -1639,6 +1661,9 @@ begin
          StrStream.CopyFrom(Stream, 0);
          FRetornoWS := TiraAcentos(ParseText(StrStream.DataString, True));
          FRetWS := SeparaDados( FRetornoWS,'nfeStatusServicoNF2Result');
+         // Incluido por Italo em 15/04/2014
+         if FRetWS = '' then
+           FRetWS := SeparaDados( FRetornoWS,'NfeStatusServicoNFResult');
          StrStream.Free;
       {$ENDIF}
       NFeRetorno := TRetConsStatServ.Create;
