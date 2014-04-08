@@ -133,10 +133,10 @@ begin
             sHTTPPro := 'http://';
            end;
   4316808: begin // Santa Cruz Do Sul/RS
-//            ConfigURL.HomNomeCidade := 'nfse.santacruz.rs.gov.br/thema-nfse-hml';
-//            ConfigURL.ProNomeCidade := 'nfse.santacruz.rs.gov.br/thema-nfse';
-            ConfigURL.HomNomeCidade := 'grphml.santacruz.rs.gov.br/thema-nfse-hml';
-            ConfigURL.ProNomeCidade := 'pmsc.server.01.solidit.com.br:7082/thema-nfse';
+            ConfigURL.HomNomeCidade := 'nfse.santacruz.rs.gov.br/thema-nfse-hml';
+            ConfigURL.ProNomeCidade := 'nfse.santacruz.rs.gov.br/thema-nfse';
+//            ConfigURL.HomNomeCidade := 'grphml.santacruz.rs.gov.br/thema-nfse-hml';
+//            ConfigURL.ProNomeCidade := 'pmsc.server.01.solidit.com.br:7082/thema-nfse';
             sHTTPPro := 'http://';
            end;
   4318705: begin // Sao Leopoldo/RS
