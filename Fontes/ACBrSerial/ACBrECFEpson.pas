@@ -3127,7 +3127,8 @@ begin
 end;
 
 procedure TACBrECFEpson.IdentificaOperador(Nome: String);
- Var RetCmd : AnsiString ;
+Var
+  RetCmd : AnsiString ;
 begin
   // Lendo Operador atual //
   try
@@ -3142,6 +3143,7 @@ begin
   begin
      try
         EpsonComando.Comando  := '0550' ;
+        EpsonComando.Extensao := '0001';
         EpsonComando.AddParamString( LeftStr(Nome,20) );
         EnviaComando ;
 

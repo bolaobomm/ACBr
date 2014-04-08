@@ -97,6 +97,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+Data: 08/04/2014
+-- ACBrECFEpson --
+[*] IdentificaOperador modificado para não imprimir Relatório Gerencial após a
+    sua execução  (por: DSA)
+
 Data: 07/04/2014
 -- ACBrECFEpson --
 [*] Adicionada verificação para evitar erro de Impressão em Linha de CCD ou
