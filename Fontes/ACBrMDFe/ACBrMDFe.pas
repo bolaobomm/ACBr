@@ -612,9 +612,9 @@ begin
       begin
         ImprimirEventoPDF;
 //        NomeArq := StringReplace(EventoMDFe.Evento[0].InfEvento.id,'ID', '', [rfIgnoreCase]);
-        NomeArq := Copy(EventoCTe.Evento[0].InfEvento.id, 09, 44) +
-                   Copy(EventoCTe.Evento[0].InfEvento.id, 03, 06) +
-                   Copy(EventoCTe.Evento[0].InfEvento.id, 53, 02);
+        NomeArq := Copy(EventoMDFe.Evento[0].InfEvento.id, 09, 44) +
+                   Copy(EventoMDFe.Evento[0].InfEvento.id, 03, 06) +
+                   Copy(EventoMDFe.Evento[0].InfEvento.id, 53, 02);
         NomeArq := PathWithDelim(DAMDFE.PathPDF)+NomeArq+'evento.pdf';
         AnexosEmail.Add(NomeArq);
       end;
