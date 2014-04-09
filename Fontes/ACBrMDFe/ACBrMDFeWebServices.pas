@@ -1867,7 +1867,7 @@ begin
 
                 NomeArq := FEvento.Evento.Items[i].InfEvento.chMDFe +
                            FEvento.Evento.Items[i].InfEvento.TipoEvento +
-                           IntToStr(FEvento.Evento.Items[i].InfEvento.nSeqEvento) +
+                           Format('%.2d', [FEvento.Evento.Items[i].InfEvento.nSeqEvento]) +
                            '-procEventoMDFe.xml';
 
                 if FConfiguracoes.Geral.Salvar then
