@@ -75,7 +75,8 @@ implementation
 
 uses
  StrUtils, Dialogs,
- ACBrNFe, ACBrNFeUtil, ACBrUtil, ACBrNFeDANFeQRRetrato, ACBrNFeDANFeQRNFCe;
+ ACBrNFe, ACBrNFeUtil, ACBrUtil,
+ ACBrNFeDANFeQRRetrato, ACBrNFeDANFeQRPaisagem, ACBrNFeDANFeQRNFCe;
 
 var
  frmNFeDAEventoQR : TfrmNFeDAEventoQR;
@@ -97,12 +98,15 @@ var
   sProt : String;
 begin
   case TipoDANFe of
-    tiNFCe: begin
-             fqrDANFeQRRetrato := TfqrDANFeQRNFCe.Create(Self);
-            end;
-    else    begin // tiRetrato
-             fqrDANFeQRRetrato := TfqrDANFeQRRetrato.Create(Self);
-            end;
+    tiNFCe:     begin
+                 fqrDANFeQRRetrato := TfqrDANFeQRNFCe.Create(Self);
+                end;
+    tiPaisagem: begin
+                 fqrDANFeQRRetrato := TfqrDANFeQRPaisagem.Create(Self);
+                end;
+    else        begin // tiRetrato
+                 fqrDANFeQRRetrato := TfqrDANFeQRRetrato.Create(Self);
+                end;
   end;
 
 //  fqrDANFeQRRetrato := TfqrDANFeQRRetrato.Create(Self);
@@ -176,12 +180,15 @@ var
   sProt : String;
 begin
   case TipoDANFe of
-    tiNFCe: begin
-             fqrDANFeQRRetrato := TfqrDANFeQRNFCe.Create(Self);
-            end;
-    else    begin // tiRetrato
-             fqrDANFeQRRetrato := TfqrDANFeQRRetrato.Create(Self);
-            end;
+    tiNFCe:     begin
+                 fqrDANFeQRRetrato := TfqrDANFeQRNFCe.Create(Self);
+                end;
+    tiPaisagem: begin
+                 fqrDANFeQRRetrato := TfqrDANFeQRPaisagem.Create(Self);
+                end;
+    else        begin // tiRetrato
+                 fqrDANFeQRRetrato := TfqrDANFeQRRetrato.Create(Self);
+                end;
   end;
 
 //  fqrDANFeQRRetrato := TfqrDANFeQRRetrato.Create(Self);
