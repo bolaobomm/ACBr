@@ -585,6 +585,7 @@ begin
     044 : Result := 'Valor efetivado é insuficiente para o pagamento!' ;
     050 : Result := 'Campo de Descrição não informado' ;
     058 : Result := 'Comando ou operação inválida!' ;
+    059 : Result := 'As operação de circulação de mercadoria e operações não fiscais na data atual já estão encerradas!';
     060 : Result := 'É necessária a emissão do documento de Redução Z!' ;
     061 : Result := 'O ECF está em Modo de Intervenção Técnica!';
     062 : Result := 'O ECF está inativo!';
