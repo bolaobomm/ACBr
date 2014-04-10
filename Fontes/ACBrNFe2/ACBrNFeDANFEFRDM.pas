@@ -71,7 +71,7 @@ interface
 uses
   pcnEnvEventoNFe,
   SysUtils, Classes, ACBrNFeDANFEClass, pcnNFe, frxClass, frxExportPDF, DB,
-  DBClient, frxDBSet, pcnConversao, frxBarcode;
+  DBClient, frxDBSet, pcnConversao, frxBarcode, dialogs;
 
 type
   TdmACBrNFeFR = class(TDataModule)
@@ -979,10 +979,11 @@ begin
       FieldByName('VerProc').AsString := VerProc;
     end;
 
-    if FNFe.Ide.hSaiEnt = 0 then
+    //..Rodrigo - substitui campo hSaiEnt por DSaiEnt
+    if FNFe.Ide.DSaiEnt = 0 then
       FieldByName('HoraSaida').AsString := ''
     else
-      FieldByName('HoraSaida').AsString := TimeToStr(FNFe.Ide.hSaiEnt);
+      FieldByName('HoraSaida').AsString := TimeToStr(FNFe.Ide.DSaiEnt);
 
     Post;
   end;

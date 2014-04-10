@@ -466,18 +466,6 @@ type
     rlmDescricaoProduto: TRLMemo;
     rlmCodProd: TRLMemo;
     rlmSiteEmail: TRLMemo;
-    rlbReciboHeader: TRLBand;
-    rliCanhoto: TRLDraw;
-    rliCanhoto1: TRLDraw;
-    rliCanhoto2: TRLDraw;
-    rllRecebemosDe: TRLLabel;
-    rllDataRecebimento: TRLLabel;
-    rllIdentificacao: TRLLabel;
-    rliCanhoto3: TRLDraw;
-    rllNFe: TRLLabel;
-    rllNumNF0: TRLLabel;
-    rllSERIE0: TRLLabel;
-    rllResumo: TRLLabel;
     rlbDivisaoRecibo: TRLBand;
     rliDivisao: TRLDraw;
     rllUsuario: TRLLabel;
@@ -650,6 +638,20 @@ type
     rliDivImposto5: TRLDraw;
     rllTituloTotalTributos: TRLLabel;
     rllTotalTributos: TRLLabel;
+    rlbReciboHeader: TRLBand;
+    rlPainelRecibo: TRLPanel;
+    rliCanhoto: TRLDraw;
+    rliCanhoto1: TRLDraw;
+    rliCanhoto2: TRLDraw;
+    rllRecebemosDe: TRLLabel;
+    rllDataRecebimento: TRLLabel;
+    rllIdentificacao: TRLLabel;
+    rliCanhoto3: TRLDraw;
+    rllNFe: TRLLabel;
+    rllNumNF0: TRLLabel;
+    rllSERIE0: TRLLabel;
+    rllResumo: TRLLabel;
+    RLMemo1: TRLMemo;
     procedure RLNFeBeforePrint(Sender: TObject; var PrintIt: Boolean);
     procedure rlbEmitenteBeforePrint(Sender: TObject;
       var PrintIt: Boolean);
@@ -719,7 +721,7 @@ end;
 procedure TfrlDANFeRLRetrato.rlbEmitenteBeforePrint(Sender: TObject;
   var PrintIt: Boolean);
 begin
-  rlbCodigoBarras.BringToFront;
+{  rlbCodigoBarras.BringToFront;
   if RLNFe.PageNumber > 1 then
     begin
       rlbISSQN.Visible := False;
@@ -735,7 +737,26 @@ begin
       else
         rlbCabecalhoItens.Visible := False;
 
+    end;}
+  rlbCodigoBarras.BringToFront;
+  if RLNFe.PageNumber > 1 then
+    begin
+      rlbISSQN.Visible := False;
+      rlbDadosAdicionais.Visible := False;
+//      rlbReciboHeader.Visible := False;   --> Silvio (Retirado por causa do controle de formulário da EIBrasil) - 30-08-2012
+      rlPainelRecibo.Visible:= False;  //--> Silvio (O painel foi criado para poder controlar o Saldo do Recibo) - 30-08-2012
+      rlbReciboHeader.Height:= 66;   //--> Silvio (O painel foi criado para poder controlar o Saldo do Recibo) - 30-08-2012
+      rlbDivisaoRecibo.Visible := False;
+      if iQuantItens > q then
+        begin
+          rlbCabecalhoItens.Visible := True;
+          lblDadosDoProduto.Caption := 'CONTINUAÇÃO DOS DADOS DO PRODUTO / SERVIÇOS';
+          rliMarcaDagua1.Top := 300;
+        end
+      else
+        rlbCabecalhoItens.Visible := False;
     end;
+
 end;
 
 procedure TfrlDANFeRLRetrato.InitDados;
@@ -1109,7 +1130,8 @@ begin
     rllEmissao.Caption   := DFeUtil.FormatDate(DateToStr(dEmi));
     rllSaida.Caption     := IfThen(DSaiEnt <> 0,
                                       DFeUtil.FormatDate(DateToStr(dSaiEnt)));
-    rllHoraSaida.Caption := IfThen(hSaiEnt <> 0, FormatDateTime('hh:nn:ss', hSaiEnt));
+//    rllHoraSaida.Caption := IfThen(hSaiEnt <> 0, FormatDateTime('hh:nn:ss', hSaiEnt));
+    rllHoraSaida.Caption := IfThen(dSaiEnt <> 0, FormatDateTime('hh:nn:ss', dSaiEnt));     //..Rodrigo - substitui campo hSaiEnt por DSaiEnt
 
     if FNFe.Ide.tpEmis in [teNormal, teSCAN] then
       begin
@@ -2240,7 +2262,7 @@ end;
 procedure TfrlDANFeRLRetrato.rlbDadosAdicionaisBeforePrint(Sender: TObject;
   var PrintIt: Boolean);
 begin
-  if FPosCanhoto = pcCabecalho then
+{  if FPosCanhoto = pcCabecalho then
     begin
       rlbReciboHeader.Visible := False;
       rlbDivisaoRecibo.Visible := False;
@@ -2249,7 +2271,20 @@ begin
   // Posiciona a Marca D'água
   rliMarcaDagua1.Top := rlbCabecalhoItens.Top +
                      ((rlbDadosAdicionais.Top - rlbCabecalhoItens.Top) div 2) -
-                     (rliMarcaDagua1.Height div 2);
+                     (rliMarcaDagua1.Height div 2);}
+
+  if FPosCanhoto = pcCabecalho then
+    begin
+//      rlbReciboHeader.Visible := False;    --> Silvio (Retirado por causa do controle de formulário da EIBrasil - 30-08-2012
+      rlPainelRecibo.Visible:= False;   //--> Silvio (O painel foi criado para poder controlar o Saldo do Recibo) - 30-08-2012
+      rlbReciboHeader.Height:= 66;    //--> Silvio (O painel foi criado para poder controlar o Saldo do Recibo) - 30-08-2012
+      rlbDivisaoRecibo.Visible := False;
+    end;
+
+  // Posiciona a Marca D'água
+  rliMarcaDagua1.Top := rlbCabecalhoItens.Top +
+                     ((rlbDadosAdicionais.Top - rlbCabecalhoItens.Top) div 2) -
+                     (rliMarcaDagua1.Height div 2);                     
     
 end;
 
@@ -2257,7 +2292,7 @@ procedure TfrlDANFeRLRetrato.rlbItensBeforePrint(Sender: TObject;
   var PrintIt: Boolean);
 begin
   // Controla os itens por página
-  iItemAtual := iItemAtual + 1;
+{  iItemAtual := iItemAtual + 1;
 
   if FProdutosPorPagina = 0 then
     rlbItens.PageBreaking := pbNone
@@ -2268,6 +2303,34 @@ begin
       else
         rlbItens.PageBreaking := pbNone;
     end; // if FProdutosPorPagina = 0
+}
+
+//..silvio
+  if RLNFe.PageNumber >= 2 then
+    FProdutosPorPagina := 60
+  else
+    FProdutosPorPagina := 20;
+  // Controla os itens por página
+  if rlmDescricao.Height > 10 then
+    iItemAtual := iItemAtual + 2
+  else
+    iItemAtual := iItemAtual + 1;
+
+  if FProdutosPorPagina = 0 then
+    rlbItens.PageBreaking := pbNone
+  else
+  begin
+    if iItemAtual = FProdutosPorPagina then
+      begin
+        if RLNFe.PageNumber >= 2 then
+          rlbItens.PageBreaking := pbAfterPrint
+        else
+          rlbItens.PageBreaking := pbBeforePrint;
+      end
+    else
+      rlbItens.PageBreaking := pbNone;
+  end;
+
 end;
 
 procedure TfrlDANFeRLRetrato.rlbEmitenteAfterPrint(Sender: TObject);

@@ -1054,7 +1054,8 @@ begin
     rllEmissao.Caption   := DFeUtil.FormatDate(DateToStr(dEmi));
     rllSaida.Caption     := IfThen(DSaiEnt <> 0,
                                       DFeUtil.FormatDate(DateToStr(dSaiEnt)));
-    rllHoraSaida.Caption := IfThen(hSaiEnt <> 0, FormatDateTime('hh:nn:ss', hSaiEnt));
+//    rllHoraSaida.Caption := IfThen(hSaiEnt <> 0, FormatDateTime('hh:nn:ss', hSaiEnt));                                      
+    rllHoraSaida.Caption := IfThen(dSaiEnt <> 0, FormatDateTime('hh:nn:ss', dSaiEnt));     //..Rodrigo - substitui campo hSaiEnt por DSaiEnt
 
     if FNFe.Ide.tpEmis in [teNormal, teSCAN] then
       begin
