@@ -54,7 +54,7 @@ type
                     proISSe, pro4R, proGovDigital, proFiorilli, proCoplan, proProdata,
                     proAgili, proVirtual, proPVH, proFreire, proLink3, proSpeedGov,
                     proVitoria, proMitra, ProTecnos, proPronim, proActcon, proEL,
-                    proEgoverneISS );
+                    proEgoverneISS, proSisPMJP );
 
   TnfseAcao = ( acRecepcionar, acConsSit, acConsLote, acConsNFSeRps, acConsNFSe, acCancelar, acGerar, acRecSincrono, acConsSecRps );
 
@@ -323,14 +323,14 @@ begin
                             'FISSLEX', 'Goiania', 'IssCuritiba', 'BHISS', 'Natal', 'ISSDigital', 'ISSe',
                             '4R', 'GovDigital', 'Fiorilli', 'Coplan', 'Prodata', 'Agili', 'Virtual', 'PVH',
                             'Freire', 'Link3', 'SpeedGov', 'Vitoria', 'Mitra', 'Tecnos', 'Pronim', 'Actcon',
-                            'EL', 'EgoverneISS'],
+                            'EL', 'EgoverneISS', 'SisPMJP'],
                            [proNenhum, proTiplan, proISSNET, proWebISS, proGINFES, proIssDSF, proProdemge, proAbaco,
                             proBetha, proEquiplano, proISSIntel, proProdam, proGovBR, proRecife,
                             proSimplISS, proThema, proRJ, proPublica, profintelISS, proDigifred, proBetim,
                             proSaatri, proFISSLEX, proGoiania, proIssCuritiba, proBHISS, proNatal,
                             proISSDigital, proISSe, pro4R, proGovDigital, proFiorilli, proCoplan, proProdata,
                             proAgili, proVirtual, proPVH, proFreire, proLink3, proSpeedGov, proVitoria, proMitra,
-                            proTecnos, proPronim, proActcon, proEL, proEgoverneISS]);
+                            proTecnos, proPronim, proActcon, proEL, proEgoverneISS, proSisPMJP]);
 end;
 
 function StrToProvedor(var ok: boolean; const s: string):TnfseProvedor;
@@ -342,14 +342,14 @@ begin
                             'FISSLEX', 'Goiania', 'IssCuritiba', 'BHISS', 'Natal', 'ISSDigital', 'ISSe',
                             '4R', 'GovDigital', 'Fiorilli', 'Coplan', 'Prodata', 'Agili', 'Virtual', 'PVH',
                             'Freire', 'Link3', 'SpeedGov', 'Vitoria', 'Mitra', 'Tecnos', 'Pronim', 'Actcon',
-                            'EL', 'proEgoverneISS'],
+                            'EL', 'proEgoverneISS', 'SisPMJP'],
                            [proNenhum, proTiplan, proISSNET, proWebISS, proGINFES, proIssDSF, proProdemge, proAbaco,
                             proBetha, proEquiplano, proISSIntel, proProdam, proGovBR, proRecife,
                             proSimplISS, proThema, proRJ, proPublica, profintelISS, proDigifred, proBetim,
                             proSaatri, proFISSLEX, proGoiania, proIssCuritiba, proBHISS, proNatal,
                             proISSDigital, proISSe, pro4R, proGovDigital, proFiorilli, proCoplan, proProdata,
                             proAgili, proVirtual, proPVH, proFreire, proLink3, proSpeedGov, proVitoria, proMitra,
-                            proTecnos, proPronim, proActcon, proEL, proEgoverneISS]);
+                            proTecnos, proPronim, proActcon, proEL, proEgoverneISS, proSisPMJP]);
 end;
 
 // Descrição do Serviço ********************************************************
@@ -773,7 +773,7 @@ begin
   2304285, // Eusebio/PA
   2304400, // Fortaleza/CE
   2307650, // Maracanau/CE
-  2507507, // Joao Pessoa/PB
+//  2507507, // Joao Pessoa/PB
   2513653, // Santarem/PB
   2604106, // Caruaru/PE
   2700300, // Arapiraca/AL
@@ -861,7 +861,7 @@ begin
   3504008, // Assis/SP
 //  3304706, // Sto Antonio de Padua/RJ
 //  3511102, // Catanduva/SP
-//  3530300, // Mirassol/SP'
+//  3530300, // Mirassol/SP
   3541505, // Presidente Venceslau/SP
   4101408, // Apucarana/PR
   4102000, // Assis Chateaubriand/PR
@@ -876,7 +876,7 @@ begin
   3118601, // Contagem/MG
   3304706, // Sto Antonio de Padua/RJ
   3511102, // Catanduva/SP
-  3530300, // Mirassol/SP'
+  3530300, // Mirassol/SP
   4310207, // Ijui/RS
   4322400  // Uruguaiana/RS
          : Provedor := 'Pronim';
@@ -1038,6 +1038,9 @@ begin
   4201653, // Arvoredo/SC
   4204558  // Correia Pinto/SC
          : Provedor := 'Saatri';
+
+  2507507  // Joao Pessoa/PB
+         : Provedor := 'SisPMJP';
 
   3137205, // Lagoa Da Prata/MG
   3148103, // Patrocinio/MG

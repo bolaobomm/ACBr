@@ -692,6 +692,7 @@ begin
     proProdata,
     proPVH,
     proSaatri,
+    proSisPMJP,
     proTecnos,
     ProVirtual,
     proVitoria: Result := LerRPS_ABRASF_V2;
@@ -1458,6 +1459,7 @@ begin
   proProdata,
   proPVH,
   proSaatri,
+  proSisPMJP,
   proTecnos,
   ProVirtual,
   proVitoria: Result := LerNFSe_ABRASF_V2;

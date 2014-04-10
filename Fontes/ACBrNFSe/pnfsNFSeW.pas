@@ -215,6 +215,7 @@ begin
   proVitoria,
   proPVH,
   proSaatri,
+  proSisPMJP,
   proFreire,
   proLink3,
   proMitra,
