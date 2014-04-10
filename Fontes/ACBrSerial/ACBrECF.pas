@@ -3415,7 +3415,6 @@ begin
   if CNF = nil then
      raise EACBrECFErro.Create( Format(ACBrStr(cACBrECFRegistraItemNaoFiscalException), [CodCNF] )) ;
 
-  { Tirando os Acentos de OBS }
   Obs := TrimRight(Obs) ;
   { Ajustando valores acima de 2 Decimais }
   Valor := RoundTo( Valor, -2) ;

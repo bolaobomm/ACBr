@@ -357,6 +357,7 @@ TACBrECFBematech = class( TACBrECFClass )
 
     {$IFDEF MSWINDOWS}
      procedure LoadDLLFunctions;
+     procedure UnLoadDLLFunctions;
      procedure AbrePortaSerialDLL(const aPath: String='');
      procedure FechaPortaSerialDLL(const OldAtivo : Boolean) ;
      function AnalisarRetornoDll(const ARetorno: Integer): String;
@@ -3289,7 +3290,7 @@ procedure TACBrECFBematech.LoadDLLFunctions;
  procedure BematechFunctionDetect( FuncName: String; var LibPointer: Pointer;
     LibName : String = cLIB_Bema ) ;
  var
- sLibName: string;
+   sLibName: string;
  begin
    if not Assigned( LibPointer )  then
    begin
@@ -3332,6 +3333,28 @@ begin
    BematechFunctionDetect( 'Bematech_FI_DownloadMF',@xBematech_FI_DownloadMF );
 end;
 
+procedure TACBrECFBematech.UnLoadDLLFunctions;
+var
+  sLibName: String;
+begin
+  // Verifica se exite o caminho das DLLs
+  if Length(PathDLL) > 0 then
+     sLibName := PathWithDelim(PathDLL);
+
+  // Concatena o caminho se exitir mais o nome da DLL.
+  sLibName := sLibName + cLIB_Bema;
+
+  UnLoadLibrary(cLIB_Bema);
+
+  xBematech_FI_AbrePortaSerial       := Nil;
+  xBematech_FI_FechaPortaSerial      := Nil;
+  xBematech_FI_ArquivoMFDPath        := Nil;
+  xBematech_FI_EspelhoMFD            := Nil;
+  xBematech_FI_GeraRegistrosCAT52MFD := Nil;
+  xBematech_FI_DownloadMFD           := Nil;
+  xBematech_FI_DownloadMF            := Nil;
+end;
+
 procedure TACBrECFBematech.AbrePortaSerialDLL(const aPath: String);
 Var
   Resp : Integer ;
@@ -3369,6 +3392,8 @@ begin
   if FileExists( IniFile ) then
      ConfiguraBemaFI32ini(aPorta, aPath);
 
+  LoadDLLFunctions;
+
   GravaLog( '   xBematech_FI_AbrePortaSerial' );
   Resp := xBematech_FI_AbrePortaSerial();
 {
@@ -3404,10 +3429,9 @@ Var
   Resp: Integer;
 begin
   GravaLog( '   xBematech_FI_FechaPortaSerial' ) ;
-  Resp := xBematech_FI_FechaPortaSerial ;
-  if Resp <> 1 then
-     raise EACBrECFErro.Create( ACBrStr( 'Erro ao executar xBematech_FI_FechaPortaSerial.'+sLineBreak+
-                                AnalisarRetornoDll(Resp) )) ;
+  xBematech_FI_FechaPortaSerial ;
+
+  UnloadDLLFunctions;
 
   GravaLog( '   Ativar ACBr: '+ifthen(OldAtivo,'SIM','NAO') ) ;
   if OldAtivo then
@@ -3492,8 +3516,6 @@ begin
      Ativo := OldAtivo ;
   end;
  {$ELSE}
-  LoadDLLFunctions;
-
   DiaIni   := FormatDateTime('dd"/"mm"/"yyyy', DataInicial) ;
   DiaFim   := FormatDateTime('dd"/"mm"/"yyyy', DataFinal) ;
   OldAtivo := Ativo ;
@@ -3555,8 +3577,6 @@ begin
      Ativo := OldAtivo ;
   end;
  {$ELSE}
-  LoadDLLFunctions;
-
   OldAtivo := Ativo ;
   try
      DeleteFile(NomeArquivo);
@@ -3590,8 +3610,6 @@ begin
  {$IFNDEF MSWINDOWS}
   inherited PafMF_GerarCAT52( DataInicial, DataFinal, DirArquivos);
  {$ELSE}
-  LoadDLLFunctions;
-
   DiaIni   := FormatDateTime('dd/mm/yyyy', DataInicial);
   DiaFim   := FormatDateTime('dd/mm/yyyy', DataFinal);
 
@@ -3654,7 +3672,6 @@ begin
    inherited ArquivoMFD_DLL( NomeArquivo );
   {$ELSE}
   FilePath := ExtractFilePath( NomeArquivo );
-  LoadDLLFunctions;
   OldAtivo := Ativo ;
   try
      DeleteFile( NomeArquivo );
@@ -3684,7 +3701,6 @@ begin
    inherited ArquivoMF_DLL( NomeArquivo );
   {$ELSE}
   FilePath := ExtractFilePath( NomeArquivo );
-  LoadDLLFunctions;
   OldAtivo := Ativo ;
   try
      DeleteFile( NomeArquivo );
@@ -3748,8 +3764,6 @@ begin
      Ativo := OldAtivo ;
   end;
  {$ELSE}
-  LoadDLLFunctions;
-
   DiaIni   := FormatDateTime('dd"/"mm"/"yyyy', DataInicial) ;
   DiaFim   := FormatDateTime('dd"/"mm"/"yyyy', DataFinal) ;
   OldAtivo := Ativo ;
@@ -3836,8 +3850,6 @@ begin
     DadoFinal    := IntToStrZero( ContFinal, 6 ) ;
     TipoDownload := 'C';
   end ;
-
-  LoadDLLFunctions;
 
   OldAtivo := Ativo ;
   try

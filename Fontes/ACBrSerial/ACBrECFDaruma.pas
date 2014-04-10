@@ -4687,22 +4687,27 @@ begin
 end;
 
 procedure TACBrECFDaruma.UnloadDLLFunctions;
+var
+  sLibName: String;
 begin
-  {  Comentado por DSA.
-     - Problemas ao executar os métodos várias vezes
-     - Seria necessário incluir código para liberar a DLL da Memoria,
-       (apenas atribuir Nil não libera a DLL da memória)
-     - Sleep(300) evita falhas na re-ativação do ECF pelo ACBrECF
+  // Verifica se existe o caminho das DLLs
+  if Length(PathDLL) > 0 then
+    sLibName := PathWithDelim(PathDLL);
 
-  xeCarregarBitmapPromocional_ECF_Daruma := NIL;
-  xeDefinirModoRegistro_Daruma := NIL;
-  xeDefinirProduto := NIL;
-  xregAlterarValor_Daruma := NIL;
-  xrGerarEspelhoMFD_ECF_Daruma := NIL;
-  xrGerarRelatorio_ECF_Daruma := NIL;
-  xrGerarRelatorioOffline_ECF_Daruma := NIL;
-  }
+  // Concatena o caminho se exitir mais o nome da DLL.
+  sLibName := sLibName + cLIB_Daruma;
 
+  UnLoadLibrary(sLibName);
+
+  xeCarregarBitmapPromocional_ECF_Daruma := Nil;
+  xeDefinirModoRegistro_Daruma           := Nil;
+  xeDefinirProduto                       := Nil;
+  xregAlterarValor_Daruma                := Nil;
+  xrGerarEspelhoMFD_ECF_Daruma           := Nil;
+  xrGerarRelatorio_ECF_Daruma            := Nil;
+  xrGerarRelatorioOffline_ECF_Daruma     := Nil;
+
+  // Sleep(300) evita falhas na re-ativação do ECF pelo ACBrECF
   Sleep(300);
 end;
 

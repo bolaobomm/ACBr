@@ -97,6 +97,15 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+Data: 10/04/2014
+-- ACBrECFBematech --
+[*] Melhorada rotina de Leitura da DLL, para conseguir configurar a Porta Serial
+    no arquivo .INI corretamente  (por:DSA)
+[*] Implementada rotina de descarga da DLL  (por: DSA)
+
+-- ACBrECFDaruma --
+[*] Implementada rotina de descarga da DLL  (por: DSA)
+
 Data: 08/04/2014
 -- ACBrECFEpson --
 [*] IdentificaOperador modificado para não imprimir Relatório Gerencial após a
