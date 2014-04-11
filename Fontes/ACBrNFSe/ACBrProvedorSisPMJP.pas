@@ -159,10 +159,13 @@ function TProvedorSisPMJP.Gera_TagI(Acao: TnfseAcao; Prefixo3, Prefixo4,
 var
  xmlns: String;
 begin
+(*
  xmlns := ' xmlns:ds="http://www.w3.org/2000/09/xmldsig#"' +
           ' xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"' +
           ' xsi:schemaLocation="http://www.abrasf.org.br/nfse.xsd nfse_v2.01.xsd"' +
           NameSpaceDad;
+*)
+ xmlns := NameSpaceDad;
 
  case Acao of
    acRecepcionar: Result := '<' + Prefixo3 + 'EnviarLoteRpsEnvio' + xmlns;
@@ -184,8 +187,9 @@ function TProvedorSisPMJP.Gera_CabMsg(Prefixo2, VersaoLayOut, VersaoDados,
 begin
  Result := '<' + Prefixo2 + 'cabecalho' +
             ' versao="'  + VersaoLayOut + '"' +
-            ' xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"' +
-            ' xmlns:xsd="http://www.w3.org/2001/XMLSchema"' + NameSpaceCab +
+//            ' xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"' +
+//            ' xmlns:xsd="http://www.w3.org/2001/XMLSchema"' +
+            NameSpaceCab +
             '<versaoDados>' + VersaoDados + '</versaoDados>'+
            '</' + Prefixo2 + 'cabecalho>';
 end;

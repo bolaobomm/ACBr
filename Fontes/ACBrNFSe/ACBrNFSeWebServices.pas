@@ -828,6 +828,7 @@ begin
       proVitoria,
       proPVH,
       proSaatri,
+      proSisPMJP,
       proFreire,
       proLink3,
       proGovDigital,
@@ -867,7 +868,7 @@ begin
   else begin
    for i := 0 to TNFSeEnviarLoteRPS(Self).FNotasFiscais.Count-1 do
     begin
-     if (FProvedor in [profintelISS, proSaatri, proCoplan, proGoiania, proISSDigital,
+     if (FProvedor in [profintelISS, proSaatri, proSisPMJP, proCoplan, proGoiania, proISSDigital,
                        proISSe, pro4R, proFiorilli, proProdata, proVitoria, proPVH,
                        proAgili, proVirtual, proFreire, proLink3, proGovDigital])
       then vNotas := vNotas + '<' + Prefixo4 + 'Rps>' +
@@ -1907,6 +1908,7 @@ begin
      case FProvedor of
       profintelISS,
       proSaatri,
+      proSisPMJP,
       proISSDigital,
       proISSe,
       pro4R,
@@ -1956,6 +1958,7 @@ begin
       case FProvedor of
            profintelISS,
            proSaatri,
+           proSisPMJP,
            proGoiania,
            proISSDigital,
            proISSe,
@@ -2120,6 +2123,7 @@ begin
      case FProvedor of
       profintelISS,
       proSaatri,
+      proSisPMJP,
       proISSDigital,
       proISSe,
       pro4R,
@@ -2179,7 +2183,7 @@ begin
   else begin
    for i := 0 to TNFSeGerarLoteRPS(Self).FNotasFiscais.Count-1 do
     begin
-     if (FProvedor in [profintelISS, proSaatri, proGoiania, proISSDigital, proISSe,
+     if (FProvedor in [profintelISS, proSaatri, proSisPMJP, proGoiania, proISSDigital, proISSe,
                        pro4R, proFiorilli, proProdata, proVitoria, proPVH, proAgili,
                        proCoplan, proVirtual, proFreire, proLink3, proMitra, proGovDigital])
       then vNotas := vNotas + '<' + Prefixo4 + 'Rps>' +
@@ -2341,6 +2345,7 @@ begin
      case FProvedor of
       profintelISS,
       proSaatri,
+      proSisPMJP,
       proISSDigital,
       proISSe,
       pro4R,
@@ -2380,7 +2385,7 @@ begin
   else begin
    for i := 0 to TNFSeEnviarSincrono(Self).FNotasFiscais.Count-1 do
     begin
-     if (FProvedor in [profintelISS, proSaatri, proGoiania, proISSDigital, proISSe,
+     if (FProvedor in [profintelISS, proSaatri, proSisPMJP, proGoiania, proISSDigital, proISSe,
                        pro4R, proFiorilli, proProdata, proVitoria, proPVH, proAgili,
                        proCoplan, proVirtual, proFreire, proLink3, proGovDigital])
       then vNotas := vNotas + '<' + Prefixo4 + 'Rps>' +
@@ -2520,7 +2525,8 @@ begin
  if (TACBrNFSe( FACBrNFSe ).Configuracoes.WebServices.ConsultaLoteAposEnvio) and (Result) then begin
    //Alterado por Cleiver em 10-10-2013
    if not (TACBrNFSe( FACBrNFSe ).Configuracoes.WebServices.Provedor in [proDigifred, proProdata,
-          proVitoria, proPVH, profintelISS, proSaatri, proCoplan, proISSDigital, proFiorilli, proFreire, proTecnos]) then begin
+          proVitoria, proPVH, profintelISS, proSaatri, proSisPMJP, proCoplan, proISSDigital,
+          proFiorilli, proFreire, proTecnos]) then begin
      Result := Self.ConsSitLote.Executar;
 
      if not (Result)
