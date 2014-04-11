@@ -649,7 +649,17 @@ uses
 
 var
   FProtocoloCTe : string;
-  Versao        : Integer;
+
+const
+{$IFDEF PL_103}
+  Versao = 103;
+{$ENDIF}
+{$IFDEF PL_104}
+  Versao = 104;
+{$ENDIF}
+{$IFDEF PL_200}
+  Versao = 200;
+{$ENDIF}
 
 procedure TfrmDACTeQRRetrato.Itens;
 var
@@ -1061,24 +1071,25 @@ procedure TfrmDACTeQRRetrato.QRCTeBeforePrint(Sender: TCustomQuickRep; var Print
 begin
   inherited;
 
-{$IFDEF PL_103}
-  Versao := 103;
-{$ENDIF}
-{$IFDEF PL_104}
-  Versao := 104;
-{$ENDIF}
-{$IFDEF PL_200}
-  Versao := 200;
-{$ENDIF}
-
   Itens;
 
+  qrb_01_Recibo.Enabled := (FCTe.Ide.tpCTe = tcNormal) or (FCTe.Ide.tpCTe = tcComplemento);
+  qrb_01_Recibo_Aereo.Enabled := (FCTe.Ide.tpCTe = tcNormal) or (FCTe.Ide.tpCTe = tcComplemento);
+  qrb_18_Recibo.Enabled := ((FCTe.Ide.tpCTe = tcNormal) or (FCTe.Ide.tpCTe = tcComplemento)) and
+                             (FCTe.Ide.modal <> mdAereo) and (FPosRecibo = prRodape);
+
+  qrb_05_Complemento.Height := 0;
+
+  if FCTe.Ide.tpCTe = tcComplemento
+   then qrb_05_Complemento.Height := 87;
+
+  qrb_06_ProdutosPerigosos.Height := 0;
 {$IFDEF PL_200}
-  if FCTe.infCTeNorm.peri.Count = 0
-   then qrb_06_ProdutosPerigosos.Height := 0;
+  if FCTe.infCTeNorm.peri.Count > 0
+   then qrb_06_ProdutosPerigosos.Height := 82;
 {$ELSE}
-  if FCTe.peri.Count = 0
-   then qrb_06_ProdutosPerigosos.Height := 0;
+  if FCTe.peri.Count > 0
+   then qrb_06_ProdutosPerigosos.Height := 82;
 {$ENDIF}
 
   qrb_10_ModRodFracionado.Height := 0;
@@ -1091,6 +1102,19 @@ begin
 
   case FCTe.Ide.modal of
    mdRodoviario: begin
+                   qrb_10_ModRodFracionado.Height := 44;
+                 {$IFDEF PL_200}
+                   if FCTe.infCTeNorm.rodo.lota = ltSim
+                 {$ELSE}
+                   if FCTe.Rodo.Lota = ltSim
+                 {$ENDIF}
+                    then begin
+                      if Versao = 103 then
+                        qrb_11_ModRodLot103.Height := 108
+                      else
+                        qrb_11_ModRodLot104.Height := 105;
+                    end;
+   (*
                  {$IFDEF PL_200}
                    if FCTe.infCTeNorm.rodo.lota = ltNao
                     then begin
@@ -1114,6 +1138,7 @@ begin
                       qrb_11_ModRodLot104.Height := 105;
                    end;
                  {$ENDIF}
+*)
                  end;
    mdAereo: begin
              qrb_12_ModAereo.Height := 97;
@@ -1128,7 +1153,7 @@ begin
                   qrb_15_ModDutoviario.Height    := 0;
                  end;
   end;
-
+  
   QRCTe.ReportTitle:='CT-e: ' + FormatFloat( '000,000,000', FCTe.Ide.nCT );
 
   QRCTe.Page.TopMargin    := FMargemSuperior * 100;
