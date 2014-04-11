@@ -452,6 +452,13 @@ end;
 function TProvedorGinfesV3.GetLinkNFSe(ACodMunicipio, ANumeroNFSe: Integer;
   ACodVerificacao, AInscricaoM: String; AAmbiente: Integer): String;
 begin
+ if AAmbiente = 1 then
+   Result := 'http://visualizar.ginfes.com.br/report/consultarNota?__report=nfs_ver4&cdVerificacao=' +
+             ACodVerificacao + '&numNota=' + IntToStr(ANumeroNFSe) + '&cnpjPrestador=null'
+ else
+   Result := 'http://visualizar.ginfesh.com.br/report/consultarNota?__report=nfs_ver4&cdVerificacao=' +
+             ACodVerificacao + '&numNota=' + IntToStr(ANumeroNFSe) + '&cnpjPrestador=null';
+(*
  if AAmbiente = 1
   then begin
    case ACodMunicipio of
@@ -495,6 +502,7 @@ begin
    else Result := '';
    end;
   end;
+*)
 end;
 
 end.

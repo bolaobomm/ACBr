@@ -284,7 +284,6 @@ begin
              '<WS_ConsultarSituacaoLoteRps.Execute xmlns="FISS-LEX">' +
               '<Consultarsituacaoloterpsenvio xmlns="FISS-LEX">' +
                 DadosMsg +
-//                StringReplace(StringReplace(DadosMsg, '<', '&lt;', [rfReplaceAll]), '>', '&gt;', [rfReplaceAll]) +
               '</Consultarsituacaoloterpsenvio>' +
              '</WS_ConsultarSituacaoLoteRps.Execute>' +
             '</s:Body>' +
