@@ -221,14 +221,14 @@ begin
            '<S:Envelope xmlns:S="http://schemas.xmlsoap.org/soap/envelope/"' +
                       ' xmlns:nfse="http://nfse.abrasf.org.br">' +
             '<S:Body>' +
-             '<RecepcionarLoteRpsReques>' +
+             '<RecepcionarLoteRpsRequest>' +
               '<nfseCabecMsg>' +
                '<![CDATA[' + CabMsg + ']]>' +
               '</nfseCabecMsg>' +
               '<nfseDadosMsg>' +
                '<![CDATA[' + DadosMsg + ']]>' +
               '</nfseDadosMsg>' +
-             '</RecepcionarLoteRpsReques>' +
+             '</RecepcionarLoteRpsRequest>' +
             '</S:Body>' +
            '</S:Envelope>';
 end;
