@@ -2873,6 +2873,12 @@ var
 begin
  {Result :=} inherited Executar;
 
+ // O número do protocolo deve ser inicializado antes do processo de transmissão.
+ // Ao se transmitir pode ocorrer erro e este campo ficaria com o número de protocolo
+ // do lote anterior
+ FDataRecebimento := 0;
+ FProtocolo       := '';
+
  if Assigned(NFSeRetorno)
   then NFSeRetorno.Free;
 
