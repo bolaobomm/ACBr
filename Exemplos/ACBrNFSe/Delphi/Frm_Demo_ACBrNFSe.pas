@@ -420,6 +420,7 @@ begin
  with ACBrNFSe1 do
   begin
    NotasFiscais.NumeroLote:='1';
+   NotasFiscais.Transacao := True;
 
    with NotasFiscais.Add.NFSe do
     begin
@@ -554,6 +555,9 @@ begin
      Prestador.Senha        := 'senha';
      Prestador.FraseSecreta := 'frase secreta';
      Prestador.cUF          := 33;
+
+     PrestadorServico.Endereco.CodigoMunicipio := edtCodCidade.Text;
+     PrestadorServico.RazaoSocial := edtEmitRazao.Text;
 
      Tomador.IdentificacaoTomador.CpfCnpj            := '99999999000191';
      Tomador.IdentificacaoTomador.InscricaoMunicipal := '1733160024';
