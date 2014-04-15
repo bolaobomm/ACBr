@@ -1651,7 +1651,6 @@ begin
          StrStream.CopyFrom(HTTP.Document, 0);
          FRetornoWS := TiraAcentos(ParseText(StrStream.DataString, True));
          FRetWS := SeparaDados( FRetornoWS,'nfeStatusServicoNF2Result');
-         // Incluido por Italo em 15/04/2014
          if FRetWS = '' then
            FRetWS := SeparaDados( FRetornoWS,'NfeStatusServicoNFResult');
          StrStream.Free;
@@ -1661,7 +1660,6 @@ begin
          StrStream.CopyFrom(Stream, 0);
          FRetornoWS := TiraAcentos(ParseText(StrStream.DataString, True));
          FRetWS := SeparaDados( FRetornoWS,'nfeStatusServicoNF2Result');
-         // Incluido por Italo em 15/04/2014
          if FRetWS = '' then
            FRetWS := SeparaDados( FRetornoWS,'NfeStatusServicoNFResult');
          StrStream.Free;
@@ -1869,6 +1867,7 @@ begin
        StrStream := TStringStream.Create('');
        StrStream.CopyFrom(HTTP.Document, 0);
        FRetornoWS := TiraAcentos(ParseText(StrStream.DataString, True));
+       // Incluido por Italo em 15/04/2014
        if nfeAutorizacaoLote then
         begin
           FRetWS := SeparaDados( FRetornoWS,'nfeAutorizacaoLoteResult');
@@ -1883,6 +1882,7 @@ begin
        StrStream := TStringStream.Create('');
        StrStream.CopyFrom(Stream, 0);
        FRetornoWS := TiraAcentos(ParseText(StrStream.DataString, True));
+       // Incluido por Italo em 15/04/2014
        if nfeAutorizacaoLote then
         begin
           FRetWS := SeparaDados( FRetornoWS,'nfeAutorizacaoLoteResult');
@@ -2310,8 +2310,12 @@ function TNFeRetRecepcao.Executar: Boolean;
          StrStream := TStringStream.Create('');
          StrStream.CopyFrom(HTTP.Document, 0);
          FRetornoWS := TiraAcentos(ParseText(StrStream.DataString, True));
-         if nfeAutorizacaoLote then
-           FRetWS := SeparaDados( FRetornoWS,'nfeRetAutorizacaoLoteResult')
+         // Alterado por Italo em 15/04/2014
+         if nfeAutorizacaoLote then begin
+           FRetWS := SeparaDados( FRetornoWS,'nfeRetAutorizacaoResult');
+           if FRetWS = '' then
+             FRetWS := SeparaDados( FRetornoWS,'nfeRetAutorizacaoLoteResult');
+         end
          else
            FRetWS := SeparaDados( FRetornoWS,'nfeRetRecepcao2Result');
          StrStream.Free;
@@ -2320,8 +2324,12 @@ function TNFeRetRecepcao.Executar: Boolean;
          StrStream := TStringStream.Create('');
          StrStream.CopyFrom(Stream, 0);
          FRetornoWS := TiraAcentos(ParseText(StrStream.DataString, True));
-         if nfeAutorizacaoLote then
-           FRetWS := SeparaDados( FRetornoWS,'nfeRetAutorizacaoLoteResult')
+         // Alterado por Italo em 15/04/2014
+         if nfeAutorizacaoLote then begin
+           FRetWS := SeparaDados( FRetornoWS,'nfeRetAutorizacaoResult');
+           if FRetWS = '' then
+             FRetWS := SeparaDados( FRetornoWS,'nfeRetAutorizacaoLoteResult');
+         end
          else
            FRetWS := SeparaDados( FRetornoWS,'nfeRetRecepcao2Result');
          StrStream.Free;
@@ -2549,8 +2557,12 @@ begin
       StrStream := TStringStream.Create('');
       StrStream.CopyFrom(HTTP.Document, 0);
       FRetornoWS := TiraAcentos(ParseText(StrStream.DataString, True));
-      if nfeAutorizacaoLote then
-        FRetWS := SeparaDados( FRetornoWS,'nfeRetAutorizacaoLoteResult')
+      // Alterado por Italo em 15/04/2014
+      if nfeAutorizacaoLote then begin
+        FRetWS := SeparaDados( FRetornoWS,'nfeRetAutorizacaoResult');
+        if FRetWS = '' then
+          FRetWS := SeparaDados( FRetornoWS,'nfeRetAutorizacaoLoteResult');
+      end
       else
         FRetWS := SeparaDados( FRetornoWS,'nfeRetRecepcao2Result');
       StrStream.Free;
@@ -2559,8 +2571,12 @@ begin
       StrStream := TStringStream.Create('');
       StrStream.CopyFrom(Stream, 0);
       FRetornoWS := TiraAcentos(ParseText(StrStream.DataString, True));
-      if nfeAutorizacaoLote then
-        FRetWS := SeparaDados( FRetornoWS,'nfeRetAutorizacaoLoteResult')
+      // Alterado por Italo em 15/04/2014
+      if nfeAutorizacaoLote then begin
+        FRetWS := SeparaDados( FRetornoWS,'nfeRetAutorizacaoResult');
+        if FRetWS = '' then
+          FRetWS := SeparaDados( FRetornoWS,'nfeRetAutorizacaoLoteResult');
+      end
       else
         FRetWS := SeparaDados( FRetornoWS,'nfeRetRecepcao2Result');
       StrStream.Free;

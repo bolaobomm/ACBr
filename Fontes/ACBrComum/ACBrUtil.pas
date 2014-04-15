@@ -2537,7 +2537,9 @@ end;
 function SeparaDados( Texto : AnsiString; Chave : String; MantemChave : Boolean = False ) : AnsiString;
 var
   PosIni, PosFim : Integer;
+  UTexto, UChave :string;
 begin
+  (*
   if MantemChave then
    begin
      PosIni := Pos(String(Chave),String(Texto))-1;
@@ -2560,7 +2562,36 @@ begin
         PosFim := Pos('/ns2:'+String(Chave),String(Texto));
       end;
    end;
-  Result := AnsiString(copy(String(Texto),PosIni,PosFim-(PosIni+1)));
+   *)
+  // Alterado por Italo em 15/04/2014
+  // Conforme proposta feita por Jairo - Microns 
+  UTexto := AnsiUpperCase(string(Texto));
+  UChave := AnsiUpperCase(string(Chave));
+
+  if MantemChave then
+   begin
+     PosIni := Pos(UChave, UTexto)-1;
+     PosFim := Pos('/' + UChave, UTexto) + length(UChave) + 3;
+
+     if (PosIni = 0) or (PosFim = 0) then
+      begin
+        PosIni := Pos('NS2:' + UChave, UTexto) - 1;
+        PosFim := Pos('/NS2:' + UChave, UTexto) + length(UChave) + 3;
+      end;
+   end
+  else
+   begin
+     PosIni := Pos(UChave, UTexto) + Pos('>', copy(UTexto, Pos(UChave, UTexto), length(UTexto)));
+     PosFim := Pos('/' + UChave, UTexto);
+
+     if (PosIni = 0) or (PosFim = 0) then
+      begin
+        PosIni := Pos('NS2:' + UChave, UTexto) + Pos('>', copy(UTexto, Pos('NS2:' + UChave, UTexto), length(UTexto)));
+        PosFim := Pos('/NS2:' + UChave, UTexto);
+      end;
+   end;
+
+  Result := AnsiString(copy(String(Texto), PosIni, PosFim - (PosIni + 1)));
 end;
 
 function ParseText( Texto : AnsiString; Decode : Boolean = True;
