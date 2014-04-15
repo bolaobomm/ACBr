@@ -277,6 +277,19 @@ begin
  DadosMsg := SeparaDados( DadosMsg, 'ConsultarSituacaoLoteRpsEnvio' );
 
  result := '<?xml version="1.0" encoding="UTF-8"?>' +
+           '<s:Envelope xmlns:s="http://schemas.xmlsoap.org/soap/envelope/" xmlns:fiss="FISS-LEX">' +
+            '<s:Header/>' +
+            '<s:Body>' +
+             '<fiss:WS_ConsultarSituacaoLoteRps.Execute>' +
+              '<fiss:Consultarsituacaoloterpsenvio>' +
+                DadosMsg +
+              '</fiss:Consultarsituacaoloterpsenvio>' +
+             '</fiss:WS_ConsultarSituacaoLoteRps.Execute>' +
+            '</s:Body>' +
+           '</s:Envelope>';
+
+(*
+ result := '<?xml version="1.0" encoding="UTF-8"?>' +
            '<s:Envelope xmlns:s="http://schemas.xmlsoap.org/soap/envelope/" ' +
                        'xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" ' +
                        'xmlns:xsd="http://www.w3.org/2001/XMLSchema">' +
@@ -288,18 +301,6 @@ begin
              '</WS_ConsultarSituacaoLoteRps.Execute>' +
             '</s:Body>' +
            '</s:Envelope>';
-(*
- result := '<?xml version="1.0" encoding="UTF-8"?>' +
-           '<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:fiss="FISS-LEX">' +
-            '<soapenv:Header/>' +
-            '<soapenv:Body>' +
-             '<fiss:WS_ConsultarSituacaoLoteRps.Execute>' +
-              '<fiss:Consultarsituacaoloterpsenvio>' +
-                DadosMsg +
-              '</fiss:Consultarsituacaoloterpsenvio>' +
-             '</fiss:WS_ConsultarSituacaoLoteRps.Execute>' +
-            '</soapenv:Body>' +
-           '</soapenv:Envelope>';
 *)
 end;
 
