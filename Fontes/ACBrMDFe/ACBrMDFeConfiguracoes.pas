@@ -60,10 +60,14 @@ type
     {$ELSE}
        FNumeroSerie: AnsiString;
        FDataVenc: TDateTime;
-       
+       FSubjectName : String;
+       FCNPJ : String;
+
        procedure SetNumeroSerie(const Value: AnsiString);
        function GetNumeroSerie: AnsiString;
        function GetDataVenc: TDateTime;
+       function GetSubjectName: String;
+       function GetCNPJ: String;
     {$ENDIF}
   public
     {$IFNDEF ACBrMDFeOpenSSL}
@@ -76,6 +80,8 @@ type
     {$ELSE}
        property NumeroSerie: AnsiString read GetNumeroSerie write SetNumeroSerie;
        property DataVenc: TDateTime read GetDataVenc;
+       property SubjectName: String read GetSubjectName;
+       property CNPJ: String read GetCNPJ;
     {$ENDIF}
        property Senha: AnsiString read FSenhaCert write FSenhaCert;
   end;
@@ -392,7 +398,8 @@ var
   Store : IStore3;
   Certs : ICertificates2;
   Cert  : ICertificate2;
-  i     : Integer;
+  Extension : IExtension;
+  i,j,k     : Integer;
 
   xmldoc  : IXMLDOMDocument3;
   xmldsig : IXMLDigitalSignature;
@@ -402,7 +409,8 @@ var
   PrivateKey     : IPrivateKey;
   hCryptProvider : HCRYPTPROV;
 
-  XML : String;
+  XML, Propriedades : String;
+  Lista : TStringList;
 begin
   CoInitialize(nil); // PERMITE O USO DE THREAD
   if DFeUtil.EstaVazio( FNumeroSerie ) then
@@ -469,13 +477,37 @@ begin
 
       Result    := Cert;
       FDataVenc := Cert.ValidToDate;
+      FSubjectName := Cert.SubjectName;
+
+      for J := 1 to Cert.Extensions.Count do
+       begin
+         Extension    := IInterface(Cert.Extensions.Item[J]) as IExtension;
+         Propriedades := Extension.EncodedData.Format(True);
+         if (Pos('2.16.76.1.3.3', Propriedades) > 0) then
+          begin
+            Lista      := TStringList.Create;
+            Lista.Text := Propriedades;
+            for K := 0 to Lista.Count-1 do
+             begin
+               if (Pos('2.16.76.1.3.3', Lista.Strings[K]) > 0) then
+                begin
+                  FCNPJ := StringReplace(Lista.Strings[K], '2.16.76.1.3.3=', '', [rfIgnoreCase]);
+                  FCNPJ := OnlyNumber(HexToAscii(RemoveString(' ', FCNPJ)));
+                  break;
+                end;
+             end;
+            break;
+          end;
+         Extension := nil;
+       end;
+
       break;
     end;
   end;
 
   if not(Assigned(Result)) then
     raise Exception.Create('Certificado Digital não encontrado!');
-   CoUninitialize;
+  CoUninitialize;
 end;
 
 function TCertificadosConf.GetNumeroSerie: AnsiString;
@@ -507,6 +539,7 @@ begin
     Cert         := IInterface(Certs2.Item[1]) as ICertificate2;
     FNumeroSerie := Cert.SerialNumber;
     FDataVenc    := Cert.ValidToDate;
+    FSubjectName := Cert.SubjectName;
   end;
 
   Result := FNumeroSerie;
@@ -523,6 +556,30 @@ begin
   end
  else
     Result := 0;
+end;
+
+function TCertificadosConf.GetSubjectName: String;
+begin
+ if DFeUtil.NaoEstaVazio(FNumeroSerie) then
+  begin
+    if FSubjectName = '' then
+       GetCertificado;
+    Result := FSubjectName;
+  end
+ else
+    Result := '';
+end;
+
+function TCertificadosConf.GetCNPJ: String;
+begin
+ if DFeUtil.NaoEstaVazio(FNumeroSerie) then
+  begin
+    if FCNPJ = '' then
+       GetCertificado;
+    Result := FCNPJ;
+  end
+ else
+    Result := '';
 end;
 {$ENDIF}
 
@@ -588,8 +645,9 @@ begin
    end;
 
   case tipoEvento of
-    teEncerramento: Dir := PathWithDelim(Dir)+'Encerramento';
-    teCancelamento: Dir := PathWithDelim(Dir)+'Cancelamento';
+    teEncerramento    : Dir := PathWithDelim(Dir)+'Encerramento';
+    teCancelamento    : Dir := PathWithDelim(Dir)+'Cancelamento';
+    teInclusaoCondutor: Dir := PathWithDelim(Dir)+'IncCondutor';
   end;
 
   if not DirectoryExists(Dir) then
