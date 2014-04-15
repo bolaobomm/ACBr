@@ -84,8 +84,8 @@ function TProvedorSisPMJP.GetConfigSchema(ACodCidade: Integer): TConfigSchema;
 var
  ConfigSchema: TConfigSchema;
 begin
- ConfigSchema.VersaoCabecalho       := '2.01';
- ConfigSchema.VersaoDados           := '2.01';
+ ConfigSchema.VersaoCabecalho       := '2.02';
+ ConfigSchema.VersaoDados           := '2.02';
  ConfigSchema.VersaoXML             := '2';
  ConfigSchema.NameSpaceXML          := 'http://www.abrasf.org.br/';
  ConfigSchema.Cabecalho             := 'nfse.xsd';
