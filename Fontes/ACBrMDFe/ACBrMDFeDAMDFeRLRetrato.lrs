@@ -1,0 +1,708 @@
+{ This is an automatically generated lazarus resource file }
+
+LazarusResources.Add('TfrlDAMDFeRLRetrato','FORMDATA',[
+  'TPF0'#241#19'TfrlDAMDFeRLRetrato'#18'frlDAMDFeRLRetrato'#4'Left'#3#3#1#6'Hei'
+  +'ght'#3'}'#2#3'Top'#3#148#0#5'Width'#3'F'#3#7'Caption'#6#19'Manifesto - Retr'
+  +'ato'#12'ClientHeight'#3'}'#2#11'ClientWidth'#3'F'#3#11'Font.Height'#2#248#9
+  +'Font.Name'#6#5'Arial'#10'Font.Style'#11#6'fsBold'#0#0#241#9'TRLReport'#6'RL'
+  +'MDFe'#3'Tag'#2#1#4'Left'#2#8#3'Top'#2#8#11'Font.Height'#2#248#9'Font.Name'#6
+  +#11'Courier New'#18'Margins.LeftMargin'#5#0#0#0#0#0#0#0#224#1'@'#17'Margins.'
+  +'TopMargin'#5#0#0#0#0#0#0#0#224#1'@'#19'Margins.RightMargin'#5#0#0#0#0#0#0#0
+  +#224#1'@'#20'Margins.BottomMargin'#5#0#0#0#0#0#0#0#224#1'@'#11'BeforePrint'#7
+  +#17'rlMDFeBeforePrint'#0#242#2#0#7'TRLBand'#20'rlb_1_DadosManifesto'#4'Left'
+  +#2#26#6'Height'#3#11#1#3'Top'#2#26#5'Width'#3#230#2#8'BandType'#7#7'btTitle'
+  +#5'Color'#7#7'clWhite'#11'ParentColor'#8#15'RealBounds.Left'#5#0#0#0#0#0#0#0
+  +#0#0#0#14'RealBounds.Top'#5#0#0#0#0#0#0#0#0#0#0#16'RealBounds.Width'#5#0#0#0
+  +#0#0#0#0#0#0#0#17'RealBounds.Height'#5#0#0#0#0#0#0#0#0#0#0#11'BeforePrint'#7
+  +#31'rlb_1_DadosManifestoBeforePrint'#0#7'TRLDraw'#10'rlsQuadro4'#4'Left'#2#0
+  +#6'Height'#2'>'#3'Top'#3#200#0#5'Width'#3#240#2#5'Angle'#5#0#0#0#0#0#0#0#0#0
+  +#0#11'Brush.Style'#7#7'bsClear'#15'RealBounds.Left'#5#0#0#0#0#0#0#0#0#0#0#14
+  +'RealBounds.Top'#5#0#0#0#0#0#0#0#0#0#0#16'RealBounds.Width'#5#0#0#0#0#0#0#0#0
+  +#0#0#17'RealBounds.Height'#5#0#0#0#0#0#0#0#0#0#0#0#0#7'TRLDraw'#10'rlsQuadro'
+  +'3'#4'Left'#3'`'#1#6'Height'#3#169#0#3'Top'#2#0#5'Width'#3#144#1#5'Angle'#5#0
+  +#0#0#0#0#0#0#0#0#0#11'Brush.Style'#7#7'bsClear'#15'RealBounds.Left'#5#0#0#0#0
+  +#0#0#0#0#0#0#14'RealBounds.Top'#5#0#0#0#0#0#0#0#0#0#0#16'RealBounds.Width'#5
+  +#0#0#0#0#0#0#0#0#0#0#17'RealBounds.Height'#5#0#0#0#0#0#0#0#0#0#0#0#0#7'TRLDr'
+  +'aw'#10'rlsQuadro2'#4'Left'#2#0#6'Height'#2'!'#3'Top'#3#168#0#5'Width'#3#240
+  +#2#5'Angle'#5#0#0#0#0#0#0#0#0#0#0#11'Brush.Style'#7#7'bsClear'#15'RealBounds'
+  +'.Left'#5#0#0#0#0#0#0#0#0#0#0#14'RealBounds.Top'#5#0#0#0#0#0#0#0#0#0#0#16'Re'
+  +'alBounds.Width'#5#0#0#0#0#0#0#0#0#0#0#17'RealBounds.Height'#5#0#0#0#0#0#0#0
+  +#0#0#0#0#0#7'TRLDraw'#10'rlsQuadro1'#4'Left'#2#0#6'Height'#3#169#0#3'Top'#2#0
+  +#5'Width'#3'a'#1#5'Angle'#5#0#0#0#0#0#0#0#0#0#0#11'Brush.Style'#7#7'bsClear'
+  +#15'RealBounds.Left'#5#0#0#0#0#0#0#0#0#0#0#14'RealBounds.Top'#5#0#0#0#0#0#0#0
+  +#0#0#0#16'RealBounds.Width'#5#0#0#0#0#0#0#0#0#0#0#17'RealBounds.Height'#5#0#0
+  +#0#0#0#0#0#0#0#0#0#0#7'TRLDraw'#14'rlsHorizontal1'#4'Left'#2#0#6'Height'#2#1
+  +#3'Top'#3#218#0#5'Width'#3#240#2#5'Angle'#5#0#0#0#0#0#0#0#0#0#0#15'RealBound'
+  +'s.Left'#5#0#0#0#0#0#0#0#0#0#0#14'RealBounds.Top'#5#0#0#0#0#0#0#0#0#0#0#16'R'
+  +'ealBounds.Width'#5#0#0#0#0#0#0#0#0#0#0#17'RealBounds.Height'#5#0#0#0#0#0#0#0
+  +#0#0#0#0#0#8'TRLLabel'#8'rlLabel8'#4'Left'#3#200#1#6'Height'#2#29#3'Top'#2#4
+  +#5'Width'#3#17#1#8'AutoSize'#8#7'Caption'#6'ADocumento Auxiliar de Manifesto'
+  +' Eletr'#195#180'nico de Documentos Fiscais'#5'Color'#7#7'clWhite'#10'Font.C'
+  +'olor'#7#12'clWindowText'#11'Font.Height'#2#243#9'Font.Name'#6#15'Times New '
+  +'Roman'#11'ParentColor'#8#10'ParentFont'#8#15'RealBounds.Left'#5#0#0#0#0#0#0
+  +#0#0#0#0#14'RealBounds.Top'#5#0#0#0#0#0#0#0#0#0#0#16'RealBounds.Width'#5#0#0
+  +#0#0#0#0#0#0#0#0#17'RealBounds.Height'#5#0#0#0#0#0#0#0#0#0#0#0#0#8'TRLLabel'
+  +#9'rlLabel17'#4'Left'#3'd'#1#6'Height'#2#22#3'Top'#2#6#5'Width'#2'Y'#7'Capti'
+  +'on'#6#6'DAMDFE'#5'Color'#7#7'clWhite'#10'Font.Color'#7#12'clWindowText'#11
+  +'Font.Height'#2#237#9'Font.Name'#6#15'Times New Roman'#10'Font.Style'#11#6'f'
+  +'sBold'#0#11'ParentColor'#8#10'ParentFont'#8#15'RealBounds.Left'#5#0#0#0#0#0
+  +#0#0#0#0#0#14'RealBounds.Top'#5#0#0#0#0#0#0#0#0#0#0#16'RealBounds.Width'#5#0
+  +#0#0#0#0#0#0#0#0#0#17'RealBounds.Height'#5#0#0#0#0#0#0#0#0#0#0#0#0#8'TRLImag'
+  +'e'#7'rliLogo'#4'Left'#2#9#6'Height'#2'`'#3'Top'#2'9'#5'Width'#2'`'#6'Center'
+  +#9#15'RealBounds.Left'#5#0#0#0#0#0#0#0#0#0#0#14'RealBounds.Top'#5#0#0#0#0#0#0
+  +#0#0#0#0#16'RealBounds.Width'#5#0#0#0#0#0#0#0#0#0#0#17'RealBounds.Height'#5#0
+  +#0#0#0#0#0#0#0#0#0#7'Stretch'#9#0#0#7'TRLMemo'#11'rlmEmitente'#4'Left'#2#7#6
+  +'Height'#2''''#3'Top'#2#10#5'Width'#3'R'#1#9'Alignment'#7#8'taCenter'#8'Auto'
+  +'Size'#8#5'Color'#7#7'clWhite'#10'Font.Color'#7#12'clWindowText'#11'Font.Hei'
+  +'ght'#2#245#9'Font.Name'#6#15'Times New Roman'#10'Font.Style'#11#6'fsBold'#0
+  +#11'ParentColor'#8#10'ParentFont'#8#15'RealBounds.Left'#5#0#0#0#0#0#0#0#0#0#0
+  +#14'RealBounds.Top'#5#0#0#0#0#0#0#0#0#0#0#16'RealBounds.Width'#5#0#0#0#0#0#0
+  +#0#0#0#0#17'RealBounds.Height'#5#0#0#0#0#0#0#0#0#0#0#11'Transparent'#8#0#0#7
+  +'TRLMemo'#16'rlmDadosEmitente'#4'Left'#2'q'#6'Height'#2'l'#3'Top'#2'5'#5'Wid'
+  +'th'#3#232#0#8'AutoSize'#8#5'Color'#7#7'clWhite'#10'Font.Color'#7#12'clWindo'
+  +'wText'#11'Font.Height'#2#247#9'Font.Name'#6#15'Times New Roman'#13'Lines.St'
+  +'rings'#1#6'+1 Linha - LOGRADOURO - COMPLEMENTO - BAIRRO'#6#30'2 Linha - CEP'
+  +' - MUNICIPIO - UF'#6'!3 Linha - CNPJ INSCRICAO ESTADUAL'#6#18'4 Linha - TEL'
+  +'EFONE'#6#13'5 Linha - URL'#0#11'ParentColor'#8#10'ParentFont'#8#15'RealBoun'
+  +'ds.Left'#5#0#0#0#0#0#0#0#0#0#0#14'RealBounds.Top'#5#0#0#0#0#0#0#0#0#0#0#16
+  ,'RealBounds.Width'#5#0#0#0#0#0#0#0#0#0#0#17'RealBounds.Height'#5#0#0#0#0#0#0
+  +#0#0#0#0#11'Transparent'#8#0#0#7'TRLDraw'#8'rlShape1'#4'Left'#3'`'#1#6'Heigh'
+  +'t'#2#1#3'Top'#2'#'#5'Width'#3#144#1#5'Angle'#5#0#0#0#0#0#0#0#0#0#0#15'RealB'
+  +'ounds.Left'#5#0#0#0#0#0#0#0#0#0#0#14'RealBounds.Top'#5#0#0#0#0#0#0#0#0#0#0
+  +#16'RealBounds.Width'#5#0#0#0#0#0#0#0#0#0#0#17'RealBounds.Height'#5#0#0#0#0#0
+  +#0#0#0#0#0#0#0#8'TRLLabel'#9'rlLabel74'#4'Left'#3#254#1#6'Height'#2#11#3'Top'
+  +#2'&'#5'Width'#2'?'#7'Caption'#6#17'Controle do Fisco'#5'Color'#7#7'clWhite'
+  +#10'Font.Color'#7#12'clWindowText'#11'Font.Height'#2#248#9'Font.Name'#6#15'T'
+  +'imes New Roman'#10'Font.Style'#11#6'fsBold'#0#11'ParentColor'#8#10'ParentFo'
+  +'nt'#8#15'RealBounds.Left'#5#0#0#0#0#0#0#0#0#0#0#14'RealBounds.Top'#5#0#0#0#0
+  +#0#0#0#0#0#0#16'RealBounds.Width'#5#0#0#0#0#0#0#0#0#0#0#17'RealBounds.Height'
+  +#5#0#0#0#0#0#0#0#0#0#0#11'Transparent'#8#0#0#7'TRLDraw'#8'rlShape2'#4'Left'#3
+  +'`'#1#6'Height'#2#1#3'Top'#2'x'#5'Width'#3#144#1#5'Angle'#5#0#0#0#0#0#0#0#0#0
+  +#0#15'RealBounds.Left'#5#0#0#0#0#0#0#0#0#0#0#14'RealBounds.Top'#5#0#0#0#0#0#0
+  +#0#0#0#0#16'RealBounds.Width'#5#0#0#0#0#0#0#0#0#0#0#17'RealBounds.Height'#5#0
+  +#0#0#0#0#0#0#0#0#0#0#0#8'TRLLabel'#8'rlLabel1'#4'Left'#3'f'#1#6'Height'#2#11
+  +#3'Top'#2'~'#5'Width'#2':'#7'Caption'#6#15'Chave de acesso'#5'Color'#7#7'clW'
+  +'hite'#10'Font.Color'#7#12'clWindowText'#11'Font.Height'#2#248#9'Font.Name'#6
+  +#15'Times New Roman'#10'Font.Style'#11#6'fsBold'#0#11'ParentColor'#8#10'Pare'
+  +'ntFont'#8#15'RealBounds.Left'#5#0#0#0#0#0#0#0#0#0#0#14'RealBounds.Top'#5#0#0
+  +#0#0#0#0#0#0#0#0#16'RealBounds.Width'#5#0#0#0#0#0#0#0#0#0#0#17'RealBounds.He'
+  +'ight'#5#0#0#0#0#0#0#0#0#0#0#11'Transparent'#8#0#0#8'TRLLabel'#8'rllChave'#4
+  +'Left'#3'f'#1#6'Height'#2#14#3'Top'#3#148#0#5'Width'#3#130#1#9'Alignment'#7#8
+  +'taCenter'#8'AutoSize'#8#5'Color'#7#7'clWhite'#10'Font.Color'#7#12'clWindowT'
+  +'ext'#11'Font.Height'#2#245#9'Font.Name'#6#15'Times New Roman'#10'Font.Style'
+  +#11#6'fsBold'#0#11'ParentColor'#8#10'ParentFont'#8#15'RealBounds.Left'#5#0#0
+  +#0#0#0#0#0#0#0#0#14'RealBounds.Top'#5#0#0#0#0#0#0#0#0#0#0#16'RealBounds.Widt'
+  +'h'#5#0#0#0#0#0#0#0#0#0#0#17'RealBounds.Height'#5#0#0#0#0#0#0#0#0#0#0#11'Tra'
+  +'nsparent'#8#0#0#8'TRLLabel'#8'rlLabel2'#4'Left'#2#5#6'Height'#2#8#3'Top'#3
+  +#171#0#5'Width'#2' '#9'Alignment'#7#8'taCenter'#7'Caption'#6#6'MODELO'#5'Col'
+  +'or'#7#7'clWhite'#10'Font.Color'#7#12'clWindowText'#11'Font.Height'#2#249#9
+  +'Font.Name'#6#15'Times New Roman'#11'ParentColor'#8#10'ParentFont'#8#15'Real'
+  +'Bounds.Left'#5#0#0#0#0#0#0#0#0#0#0#14'RealBounds.Top'#5#0#0#0#0#0#0#0#0#0#0
+  +#16'RealBounds.Width'#5#0#0#0#0#0#0#0#0#0#0#17'RealBounds.Height'#5#0#0#0#0#0
+  +#0#0#0#0#0#11'Transparent'#8#0#0#8'TRLLabel'#9'rllModelo'#4'Left'#2#6#6'Heig'
+  +'ht'#2#15#3'Top'#3#182#0#5'Width'#2#30#9'Alignment'#7#8'taCenter'#8'AutoSize'
+  +#8#5'Color'#7#7'clWhite'#10'Font.Color'#7#12'clWindowText'#11'Font.Height'#2
+  +#245#9'Font.Name'#6#15'Times New Roman'#10'Font.Style'#11#6'fsBold'#0#11'Par'
+  +'entColor'#8#10'ParentFont'#8#15'RealBounds.Left'#5#0#0#0#0#0#0#0#0#0#0#14'R'
+  +'ealBounds.Top'#5#0#0#0#0#0#0#0#0#0#0#16'RealBounds.Width'#5#0#0#0#0#0#0#0#0
+  +#0#0#17'RealBounds.Height'#5#0#0#0#0#0#0#0#0#0#0#11'Transparent'#8#0#0#8'TRL'
+  +'Label'#8'rlLabel3'#4'Left'#2''''#6'Height'#2#8#3'Top'#3#171#0#5'Width'#2#22
+  +#9'Alignment'#7#8'taCenter'#7'Caption'#6#6'S'#195#137'RIE'#5'Color'#7#7'clWh'
+  +'ite'#10'Font.Color'#7#12'clWindowText'#11'Font.Height'#2#249#9'Font.Name'#6
+  +#15'Times New Roman'#11'ParentColor'#8#10'ParentFont'#8#15'RealBounds.Left'#5
+  +#0#0#0#0#0#0#0#0#0#0#14'RealBounds.Top'#5#0#0#0#0#0#0#0#0#0#0#16'RealBounds.'
+  +'Width'#5#0#0#0#0#0#0#0#0#0#0#17'RealBounds.Height'#5#0#0#0#0#0#0#0#0#0#0#11
+  +'Transparent'#8#0#0#8'TRLLabel'#8'rllSerie'#4'Left'#2'('#6'Height'#2#15#3'To'
+  +'p'#3#182#0#5'Width'#2#20#9'Alignment'#7#8'taCenter'#8'AutoSize'#8#5'Color'#7
+  +#7'clWhite'#10'Font.Color'#7#12'clWindowText'#11'Font.Height'#2#245#9'Font.N'
+  +'ame'#6#15'Times New Roman'#10'Font.Style'#11#6'fsBold'#0#11'ParentColor'#8
+  +#10'ParentFont'#8#15'RealBounds.Left'#5#0#0#0#0#0#0#0#0#0#0#14'RealBounds.To'
+  +'p'#5#0#0#0#0#0#0#0#0#0#0#16'RealBounds.Width'#5#0#0#0#0#0#0#0#0#0#0#17'Real'
+  +'Bounds.Height'#5#0#0#0#0#0#0#0#0#0#0#11'Transparent'#8#0#0#8'TRLLabel'#8'rl'
+  +'Label4'#4'Left'#2'@'#6'Height'#2#9#3'Top'#3#171#0#5'Width'#2'F'#9'Alignment'
+  +#7#8'taCenter'#8'AutoSize'#8#7'Caption'#6#7'N'#195#154'MERO'#5'Color'#7#7'cl'
+  +'White'#10'Font.Color'#7#12'clWindowText'#11'Font.Height'#2#249#9'Font.Name'
+  +#6#15'Times New Roman'#11'ParentColor'#8#10'ParentFont'#8#15'RealBounds.Left'
+  +#5#0#0#0#0#0#0#0#0#0#0#14'RealBounds.Top'#5#0#0#0#0#0#0#0#0#0#0#16'RealBound'
+  +'s.Width'#5#0#0#0#0#0#0#0#0#0#0#17'RealBounds.Height'#5#0#0#0#0#0#0#0#0#0#0
+  +#11'Transparent'#8#0#0#8'TRLLabel'#10'rllNumMDFe'#4'Left'#2'>'#6'Height'#2#15
+  +#3'Top'#3#182#0#5'Width'#2'H'#9'Alignment'#7#14'taRightJustify'#7'Caption'#6
+  +#11'999.999.999'#5'Color'#7#7'clWhite'#10'Font.Color'#7#12'clWindowText'#11
+  +'Font.Height'#2#243#9'Font.Name'#6#15'Times New Roman'#10'Font.Style'#11#6'f'
+  ,'sBold'#0#11'ParentColor'#8#10'ParentFont'#8#15'RealBounds.Left'#5#0#0#0#0#0
+  +#0#0#0#0#0#14'RealBounds.Top'#5#0#0#0#0#0#0#0#0#0#0#16'RealBounds.Width'#5#0
+  +#0#0#0#0#0#0#0#0#0#17'RealBounds.Height'#5#0#0#0#0#0#0#0#0#0#0#11'Transparen'
+  +'t'#8#0#0#8'TRLLabel'#9'rlLabel25'#4'Left'#3#138#0#6'Height'#2#9#3'Top'#3#171
+  +#0#5'Width'#2'*'#9'Alignment'#7#8'taCenter'#8'AutoSize'#8#7'Caption'#6#5'FOL'
+  +'HA'#5'Color'#7#7'clWhite'#10'Font.Color'#7#12'clWindowText'#11'Font.Height'
+  +#2#249#9'Font.Name'#6#15'Times New Roman'#11'ParentColor'#8#10'ParentFont'#8
+  +#15'RealBounds.Left'#5#0#0#0#0#0#0#0#0#0#0#14'RealBounds.Top'#5#0#0#0#0#0#0#0
+  +#0#0#0#16'RealBounds.Width'#5#0#0#0#0#0#0#0#0#0#0#17'RealBounds.Height'#5#0#0
+  +#0#0#0#0#0#0#0#0#11'Transparent'#8#0#0#8'TRLLabel'#13'rllPageNumber'#4'Left'
+  +#3#138#0#6'Height'#2#15#3'Top'#3#182#0#5'Width'#2'*'#9'Alignment'#7#8'taCent'
+  +'er'#8'AutoSize'#8#7'Caption'#6#5'00/00'#5'Color'#7#7'clWhite'#10'Font.Color'
+  +#7#12'clWindowText'#11'Font.Height'#2#245#9'Font.Name'#6#15'Times New Roman'
+  +#10'Font.Style'#11#6'fsBold'#0#11'ParentColor'#8#10'ParentFont'#8#15'RealBou'
+  +'nds.Left'#5#0#0#0#0#0#0#0#0#0#0#14'RealBounds.Top'#5#0#0#0#0#0#0#0#0#0#0#16
+  +'RealBounds.Width'#5#0#0#0#0#0#0#0#0#0#0#17'RealBounds.Height'#5#0#0#0#0#0#0
+  +#0#0#0#0#11'Transparent'#8#0#0#8'TRLLabel'#9'rlLabel33'#4'Left'#3#182#0#6'He'
+  +'ight'#2#9#3'Top'#3#171#0#5'Width'#2'|'#9'Alignment'#7#8'taCenter'#8'AutoSiz'
+  +'e'#8#7'Caption'#6#23'DATA E HORA DE EMISS'#195#131'O'#5'Color'#7#7'clWhite'
+  +#10'Font.Color'#7#12'clWindowText'#11'Font.Height'#2#249#9'Font.Name'#6#15'T'
+  +'imes New Roman'#11'ParentColor'#8#10'ParentFont'#8#15'RealBounds.Left'#5#0#0
+  +#0#0#0#0#0#0#0#0#14'RealBounds.Top'#5#0#0#0#0#0#0#0#0#0#0#16'RealBounds.Widt'
+  +'h'#5#0#0#0#0#0#0#0#0#0#0#17'RealBounds.Height'#5#0#0#0#0#0#0#0#0#0#0#11'Tra'
+  +'nsparent'#8#0#0#8'TRLLabel'#10'rllEmissao'#4'Left'#3#182#0#6'Height'#2#15#3
+  +'Top'#3#182#0#5'Width'#2'|'#9'Alignment'#7#8'taCenter'#8'AutoSize'#8#5'Color'
+  +#7#7'clWhite'#10'Font.Color'#7#12'clWindowText'#11'Font.Height'#2#245#9'Font'
+  +'.Name'#6#15'Times New Roman'#10'Font.Style'#11#6'fsBold'#0#11'ParentColor'#8
+  +#10'ParentFont'#8#15'RealBounds.Left'#5#0#0#0#0#0#0#0#0#0#0#14'RealBounds.To'
+  +'p'#5#0#0#0#0#0#0#0#0#0#0#16'RealBounds.Width'#5#0#0#0#0#0#0#0#0#0#0#17'Real'
+  +'Bounds.Height'#5#0#0#0#0#0#0#0#0#0#0#11'Transparent'#8#0#0#8'TRLLabel'#9'rl'
+  +'Label77'#4'Left'#3'8'#1#6'Height'#2#8#3'Top'#3#171#0#5'Width'#2'#'#7'Captio'
+  +'n'#6#10'UF Carrega'#5'Color'#7#7'clWhite'#10'Font.Color'#7#12'clWindowText'
+  +#11'Font.Height'#2#249#9'Font.Name'#6#15'Times New Roman'#11'ParentColor'#8
+  +#10'ParentFont'#8#15'RealBounds.Left'#5#0#0#0#0#0#0#0#0#0#0#14'RealBounds.To'
+  +'p'#5#0#0#0#0#0#0#0#0#0#0#16'RealBounds.Width'#5#0#0#0#0#0#0#0#0#0#0#17'Real'
+  +'Bounds.Height'#5#0#0#0#0#0#0#0#0#0#0#11'Transparent'#8#0#0#8'TRLLabel'#12'r'
+  +'llUFCarrega'#4'Left'#3'8'#1#6'Height'#2#15#3'Top'#3#182#0#5'Width'#2'"'#9'A'
+  +'lignment'#7#8'taCenter'#8'AutoSize'#8#5'Color'#7#7'clWhite'#10'Font.Color'#7
+  +#12'clWindowText'#11'Font.Height'#2#247#9'Font.Name'#6#15'Times New Roman'#10
+  +'Font.Style'#11#6'fsBold'#0#11'ParentColor'#8#10'ParentFont'#8#15'RealBounds'
+  +'.Left'#5#0#0#0#0#0#0#0#0#0#0#14'RealBounds.Top'#5#0#0#0#0#0#0#0#0#0#0#16'Re'
+  +'alBounds.Width'#5#0#0#0#0#0#0#0#0#0#0#17'RealBounds.Height'#5#0#0#0#0#0#0#0
+  +#0#0#0#0#0#7'TRLDraw'#11'rlsLinhaV09'#4'Left'#3'4'#1#6'Height'#2'!'#3'Top'#3
+  +#168#0#5'Width'#2#1#5'Angle'#5#0#0#0#0#0#0#0#0#0#0#11'Brush.Style'#7#7'bsCle'
+  +'ar'#15'RealBounds.Left'#5#0#0#0#0#0#0#0#0#0#0#14'RealBounds.Top'#5#0#0#0#0#0
+  +#0#0#0#0#0#16'RealBounds.Width'#5#0#0#0#0#0#0#0#0#0#0#17'RealBounds.Height'#5
+  +#0#0#0#0#0#0#0#0#0#0#0#0#7'TRLDraw'#11'rlsLinhaV08'#4'Left'#3#180#0#6'Height'
+  +#2'!'#3'Top'#3#168#0#5'Width'#2#1#5'Angle'#5#0#0#0#0#0#0#0#0#0#0#11'Brush.St'
+  +'yle'#7#7'bsClear'#15'RealBounds.Left'#5#0#0#0#0#0#0#0#0#0#0#14'RealBounds.T'
+  +'op'#5#0#0#0#0#0#0#0#0#0#0#16'RealBounds.Width'#5#0#0#0#0#0#0#0#0#0#0#17'Rea'
+  +'lBounds.Height'#5#0#0#0#0#0#0#0#0#0#0#0#0#7'TRLDraw'#11'rlsLinhaV07'#4'Left'
+  +#3#136#0#6'Height'#2'!'#3'Top'#3#168#0#5'Width'#2#1#5'Angle'#5#0#0#0#0#0#0#0
+  +#0#0#0#11'Brush.Style'#7#7'bsClear'#15'RealBounds.Left'#5#0#0#0#0#0#0#0#0#0#0
+  +#14'RealBounds.Top'#5#0#0#0#0#0#0#0#0#0#0#16'RealBounds.Width'#5#0#0#0#0#0#0
+  +#0#0#0#0#17'RealBounds.Height'#5#0#0#0#0#0#0#0#0#0#0#0#0#7'TRLDraw'#11'rlsLi'
+  +'nhaV06'#4'Left'#2'>'#6'Height'#2'!'#3'Top'#3#168#0#5'Width'#2#1#5'Angle'#5#0
+  +#0#0#0#0#0#0#0#0#0#11'Brush.Style'#7#7'bsClear'#15'RealBounds.Left'#5#0#0#0#0
+  +#0#0#0#0#0#0#14'RealBounds.Top'#5#0#0#0#0#0#0#0#0#0#0#16'RealBounds.Width'#5
+  +#0#0#0#0#0#0#0#0#0#0#17'RealBounds.Height'#5#0#0#0#0#0#0#0#0#0#0#0#0#7'TRLDr'
+  +'aw'#11'rlsLinhaV05'#4'Left'#2'&'#6'Height'#2'!'#3'Top'#3#168#0#5'Width'#2#1
+  +#5'Angle'#5#0#0#0#0#0#0#0#0#0#0#11'Brush.Style'#7#7'bsClear'#15'RealBounds.L'
+  +'eft'#5#0#0#0#0#0#0#0#0#0#0#14'RealBounds.Top'#5#0#0#0#0#0#0#0#0#0#0#16'Real'
+  +'Bounds.Width'#5#0#0#0#0#0#0#0#0#0#0#17'RealBounds.Height'#5#0#0#0#0#0#0#0#0
+  +#0#0#0#0#7'TRLDraw'#11'rlsLinhaV10'#4'Left'#3'`'#1#6'Height'#2'!'#3'Top'#3
+  ,#168#0#5'Width'#2#1#5'Angle'#5#0#0#0#0#0#0#0#0#0#0#11'Brush.Style'#7#7'bsCle'
+  +'ar'#15'RealBounds.Left'#5#0#0#0#0#0#0#0#0#0#0#14'RealBounds.Top'#5#0#0#0#0#0
+  +#0#0#0#0#0#16'RealBounds.Width'#5#0#0#0#0#0#0#0#0#0#0#17'RealBounds.Height'#5
+  +#0#0#0#0#0#0#0#0#0#0#0#0#8'TRLLabel'#12'rllDescricao'#4'Left'#3'f'#1#6'Heigh'
+  +'t'#2#8#3'Top'#3#171#0#5'Width'#3#141#0#7'Caption'#6'!PROTOCOLO DE AUTORIZA'
+  +#195#135#195#131'O DE USO'#5'Color'#7#7'clWhite'#10'Font.Color'#7#12'clWindo'
+  +'wText'#11'Font.Height'#2#249#9'Font.Name'#6#15'Times New Roman'#10'Font.Sty'
+  +'le'#11#6'fsBold'#0#11'ParentColor'#8#10'ParentFont'#8#15'RealBounds.Left'#5
+  +#0#0#0#0#0#0#0#0#0#0#14'RealBounds.Top'#5#0#0#0#0#0#0#0#0#0#0#16'RealBounds.'
+  +'Width'#5#0#0#0#0#0#0#0#0#0#0#17'RealBounds.Height'#5#0#0#0#0#0#0#0#0#0#0#11
+  +'Transparent'#8#0#0#8'TRLLabel'#12'rllProtocolo'#4'Left'#3'f'#1#6'Height'#2
+  +#19#3'Top'#3#180#0#5'Width'#3#130#1#9'Alignment'#7#8'taCenter'#8'AutoSize'#8
+  +#5'Color'#7#7'clWhite'#10'Font.Color'#7#12'clWindowText'#11'Font.Height'#2
+  +#245#9'Font.Name'#6#15'Times New Roman'#10'Font.Style'#11#6'fsBold'#0#11'Par'
+  +'entColor'#8#10'ParentFont'#8#15'RealBounds.Left'#5#0#0#0#0#0#0#0#0#0#0#14'R'
+  +'ealBounds.Top'#5#0#0#0#0#0#0#0#0#0#0#16'RealBounds.Width'#5#0#0#0#0#0#0#0#0
+  +#0#0#17'RealBounds.Height'#5#0#0#0#0#0#0#0#0#0#0#0#0#8'TRLLabel'#8'rllModal'
+  +#4'Left'#2#8#6'Height'#2#15#3'Top'#3#202#0#5'Width'#3#226#2#9'Alignment'#7#8
+  +'taCenter'#8'AutoSize'#8#7'Caption'#6#26'Modal Rodovi'#195#161'rio de Carga'
+  +#5'Color'#7#7'clWhite'#10'Font.Color'#7#12'clWindowText'#11'Font.Height'#2
+  +#245#9'Font.Name'#6#15'Times New Roman'#11'ParentColor'#8#10'ParentFont'#8#15
+  +'RealBounds.Left'#5#0#0#0#0#0#0#0#0#0#0#14'RealBounds.Top'#5#0#0#0#0#0#0#0#0
+  +#0#0#16'RealBounds.Width'#5#0#0#0#0#0#0#0#0#0#0#17'RealBounds.Height'#5#0#0#0
+  +#0#0#0#0#0#0#0#0#0#8'TRLLabel'#8'rlLabel6'#4'Left'#2#4#6'Height'#2#15#3'Top'
+  +#3#222#0#5'Width'#2'u'#8'AutoSize'#8#7'Caption'#6#4'CIOT'#5'Color'#7#7'clWhi'
+  +'te'#10'Font.Color'#7#12'clWindowText'#11'Font.Height'#2#245#9'Font.Name'#6
+  +#15'Times New Roman'#11'ParentColor'#8#10'ParentFont'#8#15'RealBounds.Left'#5
+  +#0#0#0#0#0#0#0#0#0#0#14'RealBounds.Top'#5#0#0#0#0#0#0#0#0#0#0#16'RealBounds.'
+  +'Width'#5#0#0#0#0#0#0#0#0#0#0#17'RealBounds.Height'#5#0#0#0#0#0#0#0#0#0#0#0#0
+  +#8'TRLLabel'#8'rlLabel5'#4'Left'#3#130#0#6'Height'#2#15#3'Top'#3#222#0#5'Wid'
+  +'th'#2'W'#8'AutoSize'#8#7'Caption'#6#9'QTDE CT-e'#5'Color'#7#7'clWhite'#10'F'
+  +'ont.Color'#7#12'clWindowText'#11'Font.Height'#2#245#9'Font.Name'#6#15'Times'
+  +' New Roman'#11'ParentColor'#8#10'ParentFont'#8#15'RealBounds.Left'#5#0#0#0#0
+  +#0#0#0#0#0#0#14'RealBounds.Top'#5#0#0#0#0#0#0#0#0#0#0#16'RealBounds.Width'#5
+  +#0#0#0#0#0#0#0#0#0#0#17'RealBounds.Height'#5#0#0#0#0#0#0#0#0#0#0#0#0#8'TRLLa'
+  +'bel'#8'rlLabel7'#4'Left'#3#224#0#6'Height'#2#15#3'Top'#3#222#0#5'Width'#2'W'
+  +#8'AutoSize'#8#7'Caption'#6#9'QTDE CTRC'#5'Color'#7#7'clWhite'#10'Font.Color'
+  +#7#12'clWindowText'#11'Font.Height'#2#245#9'Font.Name'#6#15'Times New Roman'
+  +#11'ParentColor'#8#10'ParentFont'#8#15'RealBounds.Left'#5#0#0#0#0#0#0#0#0#0#0
+  +#14'RealBounds.Top'#5#0#0#0#0#0#0#0#0#0#0#16'RealBounds.Width'#5#0#0#0#0#0#0
+  +#0#0#0#0#17'RealBounds.Height'#5#0#0#0#0#0#0#0#0#0#0#0#0#8'TRLLabel'#9'rlLab'
+  +'el10'#4'Left'#3'>'#1#6'Height'#2#15#3'Top'#3#222#0#5'Width'#2'W'#8'AutoSize'
+  +#8#7'Caption'#6#9'QTDE NF-e'#5'Color'#7#7'clWhite'#10'Font.Color'#7#12'clWin'
+  +'dowText'#11'Font.Height'#2#245#9'Font.Name'#6#15'Times New Roman'#11'Parent'
+  +'Color'#8#10'ParentFont'#8#15'RealBounds.Left'#5#0#0#0#0#0#0#0#0#0#0#14'Real'
+  +'Bounds.Top'#5#0#0#0#0#0#0#0#0#0#0#16'RealBounds.Width'#5#0#0#0#0#0#0#0#0#0#0
+  +#17'RealBounds.Height'#5#0#0#0#0#0#0#0#0#0#0#0#0#8'TRLLabel'#9'rlLabel11'#4
+  +'Left'#3#156#1#6'Height'#2#15#3'Top'#3#222#0#5'Width'#2'W'#8'AutoSize'#8#7'C'
+  +'aption'#6#7'QTDE NF'#5'Color'#7#7'clWhite'#10'Font.Color'#7#12'clWindowText'
+  +#11'Font.Height'#2#245#9'Font.Name'#6#15'Times New Roman'#11'ParentColor'#8
+  +#10'ParentFont'#8#15'RealBounds.Left'#5#0#0#0#0#0#0#0#0#0#0#14'RealBounds.To'
+  +'p'#5#0#0#0#0#0#0#0#0#0#0#16'RealBounds.Width'#5#0#0#0#0#0#0#0#0#0#0#17'Real'
+  +'Bounds.Height'#5#0#0#0#0#0#0#0#0#0#0#0#0#8'TRLLabel'#9'rlLabel12'#4'Left'#3
+  +'X'#2#6'Height'#2#14#3'Top'#3#222#0#5'Width'#2'`'#7'Caption'#6#15'PESO TOTAL'
+  +' (Kg)'#5'Color'#7#7'clWhite'#10'Font.Color'#7#12'clWindowText'#11'Font.Heig'
+  +'ht'#2#245#9'Font.Name'#6#15'Times New Roman'#11'ParentColor'#8#10'ParentFon'
+  +'t'#8#15'RealBounds.Left'#5#0#0#0#0#0#0#0#0#0#0#14'RealBounds.Top'#5#0#0#0#0
+  +#0#0#0#0#0#0#16'RealBounds.Width'#5#0#0#0#0#0#0#0#0#0#0#17'RealBounds.Height'
+  +#5#0#0#0#0#0#0#0#0#0#0#0#0#7'TRLDraw'#8'rlShape3'#4'Left'#2'~'#6'Height'#2','
+  +#3'Top'#3#218#0#5'Width'#2#1#5'Angle'#5#0#0#0#0#0#0#0#0#0#0#11'Brush.Style'#7
+  +#7'bsClear'#15'RealBounds.Left'#5#0#0#0#0#0#0#0#0#0#0#14'RealBounds.Top'#5#0
+  +#0#0#0#0#0#0#0#0#0#16'RealBounds.Width'#5#0#0#0#0#0#0#0#0#0#0#17'RealBounds.'
+  +'Height'#5#0#0#0#0#0#0#0#0#0#0#0#0#7'TRLDraw'#8'rlShape4'#4'Left'#3#220#0#6
+  +'Height'#2','#3'Top'#3#218#0#5'Width'#2#1#5'Angle'#5#0#0#0#0#0#0#0#0#0#0#11
+  ,'Brush.Style'#7#7'bsClear'#15'RealBounds.Left'#5#0#0#0#0#0#0#0#0#0#0#14'Real'
+  +'Bounds.Top'#5#0#0#0#0#0#0#0#0#0#0#16'RealBounds.Width'#5#0#0#0#0#0#0#0#0#0#0
+  +#17'RealBounds.Height'#5#0#0#0#0#0#0#0#0#0#0#0#0#7'TRLDraw'#8'rlShape5'#4'Le'
+  +'ft'#3':'#1#6'Height'#2','#3'Top'#3#218#0#5'Width'#2#1#5'Angle'#5#0#0#0#0#0#0
+  +#0#0#0#0#11'Brush.Style'#7#7'bsClear'#15'RealBounds.Left'#5#0#0#0#0#0#0#0#0#0
+  +#0#14'RealBounds.Top'#5#0#0#0#0#0#0#0#0#0#0#16'RealBounds.Width'#5#0#0#0#0#0
+  +#0#0#0#0#0#17'RealBounds.Height'#5#0#0#0#0#0#0#0#0#0#0#0#0#7'TRLDraw'#8'rlSh'
+  +'ape6'#4'Left'#3#152#1#6'Height'#2','#3'Top'#3#218#0#5'Width'#2#1#5'Angle'#5
+  +#0#0#0#0#0#0#0#0#0#0#11'Brush.Style'#7#7'bsClear'#15'RealBounds.Left'#5#0#0#0
+  +#0#0#0#0#0#0#0#14'RealBounds.Top'#5#0#0#0#0#0#0#0#0#0#0#16'RealBounds.Width'
+  +#5#0#0#0#0#0#0#0#0#0#0#17'RealBounds.Height'#5#0#0#0#0#0#0#0#0#0#0#0#0#7'TRL'
+  +'Draw'#8'rlShape7'#4'Left'#3'T'#2#6'Height'#2','#3'Top'#3#218#0#5'Width'#2#1
+  +#5'Angle'#5#0#0#0#0#0#0#0#0#0#0#11'Brush.Style'#7#7'bsClear'#15'RealBounds.L'
+  +'eft'#5#0#0#0#0#0#0#0#0#0#0#14'RealBounds.Top'#5#0#0#0#0#0#0#0#0#0#0#16'Real'
+  +'Bounds.Width'#5#0#0#0#0#0#0#0#0#0#0#17'RealBounds.Height'#5#0#0#0#0#0#0#0#0
+  +#0#0#0#0#8'TRLLabel'#7'rllCIOT'#4'Left'#2#4#6'Height'#2#16#3'Top'#3#240#0#5
+  +'Width'#2'v'#9'Alignment'#7#8'taCenter'#8'AutoSize'#8#5'Color'#7#7'clWhite'
+  +#10'Font.Color'#7#12'clWindowText'#11'Font.Height'#2#243#9'Font.Name'#6#15'T'
+  +'imes New Roman'#11'ParentColor'#8#10'ParentFont'#8#15'RealBounds.Left'#5#0#0
+  +#0#0#0#0#0#0#0#0#14'RealBounds.Top'#5#0#0#0#0#0#0#0#0#0#0#16'RealBounds.Widt'
+  +'h'#5#0#0#0#0#0#0#0#0#0#0#17'RealBounds.Height'#5#0#0#0#0#0#0#0#0#0#0#0#0#8
+  +'TRLLabel'#7'rllqCTe'#4'Left'#3#130#0#6'Height'#2#16#3'Top'#3#240#0#5'Width'
+  +#2'X'#9'Alignment'#7#8'taCenter'#8'AutoSize'#8#5'Color'#7#7'clWhite'#10'Font'
+  +'.Color'#7#12'clWindowText'#11'Font.Height'#2#243#9'Font.Name'#6#15'Times Ne'
+  +'w Roman'#11'ParentColor'#8#10'ParentFont'#8#15'RealBounds.Left'#5#0#0#0#0#0
+  +#0#0#0#0#0#14'RealBounds.Top'#5#0#0#0#0#0#0#0#0#0#0#16'RealBounds.Width'#5#0
+  +#0#0#0#0#0#0#0#0#0#17'RealBounds.Height'#5#0#0#0#0#0#0#0#0#0#0#0#0#8'TRLLabe'
+  +'l'#6'rllqCT'#4'Left'#3#224#0#6'Height'#2#16#3'Top'#3#240#0#5'Width'#2'X'#9
+  +'Alignment'#7#8'taCenter'#8'AutoSize'#8#5'Color'#7#7'clWhite'#10'Font.Color'
+  +#7#12'clWindowText'#11'Font.Height'#2#243#9'Font.Name'#6#15'Times New Roman'
+  +#11'ParentColor'#8#10'ParentFont'#8#15'RealBounds.Left'#5#0#0#0#0#0#0#0#0#0#0
+  +#14'RealBounds.Top'#5#0#0#0#0#0#0#0#0#0#0#16'RealBounds.Width'#5#0#0#0#0#0#0
+  +#0#0#0#0#17'RealBounds.Height'#5#0#0#0#0#0#0#0#0#0#0#0#0#8'TRLLabel'#7'rllqN'
+  +'Fe'#4'Left'#3'>'#1#6'Height'#2#16#3'Top'#3#240#0#5'Width'#2'X'#9'Alignment'
+  +#7#8'taCenter'#8'AutoSize'#8#5'Color'#7#7'clWhite'#10'Font.Color'#7#12'clWin'
+  +'dowText'#11'Font.Height'#2#243#9'Font.Name'#6#15'Times New Roman'#11'Parent'
+  +'Color'#8#10'ParentFont'#8#15'RealBounds.Left'#5#0#0#0#0#0#0#0#0#0#0#14'Real'
+  +'Bounds.Top'#5#0#0#0#0#0#0#0#0#0#0#16'RealBounds.Width'#5#0#0#0#0#0#0#0#0#0#0
+  +#17'RealBounds.Height'#5#0#0#0#0#0#0#0#0#0#0#0#0#8'TRLLabel'#6'rllqNF'#4'Lef'
+  +'t'#3#156#1#6'Height'#2#16#3'Top'#3#240#0#5'Width'#2'X'#9'Alignment'#7#8'taC'
+  +'enter'#8'AutoSize'#8#5'Color'#7#7'clWhite'#10'Font.Color'#7#12'clWindowText'
+  +#11'Font.Height'#2#243#9'Font.Name'#6#15'Times New Roman'#11'ParentColor'#8
+  +#10'ParentFont'#8#15'RealBounds.Left'#5#0#0#0#0#0#0#0#0#0#0#14'RealBounds.To'
+  +'p'#5#0#0#0#0#0#0#0#0#0#0#16'RealBounds.Width'#5#0#0#0#0#0#0#0#0#0#0#17'Real'
+  +'Bounds.Height'#5#0#0#0#0#0#0#0#0#0#0#0#0#8'TRLLabel'#12'rllPesoTotal'#4'Lef'
+  +'t'#3'X'#2#6'Height'#2#16#3'Top'#3#240#0#5'Width'#3#146#0#9'Alignment'#7#8't'
+  +'aCenter'#8'AutoSize'#8#5'Color'#7#7'clWhite'#10'Font.Color'#7#12'clWindowTe'
+  +'xt'#11'Font.Height'#2#243#9'Font.Name'#6#15'Times New Roman'#11'ParentColor'
+  +#8#10'ParentFont'#8#15'RealBounds.Left'#5#0#0#0#0#0#0#0#0#0#0#14'RealBounds.'
+  +'Top'#5#0#0#0#0#0#0#0#0#0#0#16'RealBounds.Width'#5#0#0#0#0#0#0#0#0#0#0#17'Re'
+  +'alBounds.Height'#5#0#0#0#0#0#0#0#0#0#0#0#0#8'TRLLabel'#9'rlLabel23'#4'Left'
+  +#3#250#1#6'Height'#2#15#3'Top'#3#222#0#5'Width'#2'W'#8'AutoSize'#8#7'Caption'
+  +#6#10'QTDE MDF-e'#5'Color'#7#7'clWhite'#10'Font.Color'#7#12'clWindowText'#11
+  +'Font.Height'#2#245#9'Font.Name'#6#15'Times New Roman'#11'ParentColor'#8#10
+  +'ParentFont'#8#15'RealBounds.Left'#5#0#0#0#0#0#0#0#0#0#0#14'RealBounds.Top'#5
+  +#0#0#0#0#0#0#0#0#0#0#16'RealBounds.Width'#5#0#0#0#0#0#0#0#0#0#0#17'RealBound'
+  +'s.Height'#5#0#0#0#0#0#0#0#0#0#0#0#0#8'TRLLabel'#8'rllqMDFe'#4'Left'#3#250#1
+  +#6'Height'#2#16#3'Top'#3#240#0#5'Width'#2'X'#9'Alignment'#7#8'taCenter'#8'Au'
+  +'toSize'#8#5'Color'#7#7'clWhite'#10'Font.Color'#7#12'clWindowText'#11'Font.H'
+  +'eight'#2#243#9'Font.Name'#6#15'Times New Roman'#11'ParentColor'#8#10'Parent'
+  +'Font'#8#15'RealBounds.Left'#5#0#0#0#0#0#0#0#0#0#0#14'RealBounds.Top'#5#0#0#0
+  +#0#0#0#0#0#0#0#16'RealBounds.Width'#5#0#0#0#0#0#0#0#0#0#0#17'RealBounds.Heig'
+  +'ht'#5#0#0#0#0#0#0#0#0#0#0#0#0#7'TRLDraw'#9'rlShape19'#4'Left'#3#246#1#6'Hei'
+  +'ght'#2','#3'Top'#3#218#0#5'Width'#2#1#5'Angle'#5#0#0#0#0#0#0#0#0#0#0#11'Bru'
+  ,'sh.Style'#7#7'bsClear'#15'RealBounds.Left'#5#0#0#0#0#0#0#0#0#0#0#14'RealBou'
+  +'nds.Top'#5#0#0#0#0#0#0#0#0#0#0#16'RealBounds.Width'#5#0#0#0#0#0#0#0#0#0#0#17
+  +'RealBounds.Height'#5#0#0#0#0#0#0#0#0#0#0#0#0#10'TRLBarcode'#10'RLBarcode1'#4
+  +'Left'#3'h'#1#6'Height'#2'9'#3'Top'#2'5'#5'Width'#2'c'#11'BarcodeType'#7#10
+  +'bcCode128C'#18'Margins.LeftMargin'#5#0#0#0#0#0#0#0#128#255'?'#19'Margins.Ri'
+  +'ghtMargin'#5#0#0#0#0#0#0#0#128#255'?'#15'RealBounds.Left'#5#0#0#0#0#0#0#0#0
+  +#0#0#14'RealBounds.Top'#5#0#0#0#0#0#0#0#0#0#0#16'RealBounds.Width'#5#0#0#0#0
+  +#0#0#0#0#0#0#17'RealBounds.Height'#5#0#0#0#0#0#0#0#0#0#0#0#0#0#242#2#1#7'TRL'
+  +'Band'#10'rlb_2_Rodo'#4'Left'#2#26#6'Height'#3#208#0#3'Top'#3'%'#1#5'Width'#3
+  +#230#2#8'BandType'#7#7'btTitle'#5'Color'#7#7'clWhite'#11'ParentColor'#8#15'R'
+  +'ealBounds.Left'#5#0#0#0#0#0#0#0#0#0#0#14'RealBounds.Top'#5#0#0#0#0#0#0#0#0#0
+  +#0#16'RealBounds.Width'#5#0#0#0#0#0#0#0#0#0#0#17'RealBounds.Height'#5#0#0#0#0
+  +#0#0#0#0#0#0#11'BeforePrint'#7#21'rlb_2_RodoBeforePrint'#0#7'TRLDraw'#8'rlSh'
+  +'ape8'#4'Left'#2#0#6'Height'#3#201#0#3'Top'#2#0#5'Width'#3#240#2#5'Angle'#5#0
+  +#0#0#0#0#0#0#0#0#0#11'Brush.Style'#7#7'bsClear'#15'RealBounds.Left'#5#0#0#0#0
+  +#0#0#0#0#0#0#14'RealBounds.Top'#5#0#0#0#0#0#0#0#0#0#0#16'RealBounds.Width'#5
+  +#0#0#0#0#0#0#0#0#0#0#17'RealBounds.Height'#5#0#0#0#0#0#0#0#0#0#0#0#0#8'TRLLa'
+  +'bel'#9'rlLabel35'#4'Left'#2#4#6'Height'#2#14#3'Top'#2#4#5'Width'#2'%'#7'Cap'
+  +'tion'#6#8'Ve'#195#173'culo'#5'Color'#7#7'clWhite'#10'Font.Color'#7#12'clWin'
+  +'dowText'#11'Font.Height'#2#245#9'Font.Name'#6#15'Times New Roman'#11'Parent'
+  +'Color'#8#10'ParentFont'#8#15'RealBounds.Left'#5#0#0#0#0#0#0#0#0#0#0#14'Real'
+  +'Bounds.Top'#5#0#0#0#0#0#0#0#0#0#0#16'RealBounds.Width'#5#0#0#0#0#0#0#0#0#0#0
+  +#17'RealBounds.Height'#5#0#0#0#0#0#0#0#0#0#0#0#0#8'TRLLabel'#8'rlLabel9'#4'L'
+  +'eft'#3'>'#1#6'Height'#2#14#3'Top'#2#4#5'Width'#2'.'#7'Caption'#6#8'Condutor'
+  +#5'Color'#7#7'clWhite'#10'Font.Color'#7#12'clWindowText'#11'Font.Height'#2
+  +#245#9'Font.Name'#6#15'Times New Roman'#11'ParentColor'#8#10'ParentFont'#8#15
+  +'RealBounds.Left'#5#0#0#0#0#0#0#0#0#0#0#14'RealBounds.Top'#5#0#0#0#0#0#0#0#0
+  +#0#0#16'RealBounds.Width'#5#0#0#0#0#0#0#0#0#0#0#17'RealBounds.Height'#5#0#0#0
+  +#0#0#0#0#0#0#0#0#0#7'TRLDraw'#8'rlShape9'#4'Left'#2#0#6'Height'#2#1#3'Top'#2
+  +#20#5'Width'#3#240#2#5'Angle'#5#0#0#0#0#0#0#0#0#0#0#15'RealBounds.Left'#5#0#0
+  +#0#0#0#0#0#0#0#0#14'RealBounds.Top'#5#0#0#0#0#0#0#0#0#0#0#16'RealBounds.Widt'
+  +'h'#5#0#0#0#0#0#0#0#0#0#0#17'RealBounds.Height'#5#0#0#0#0#0#0#0#0#0#0#0#0#8
+  +'TRLLabel'#9'rlLabel13'#4'Left'#2#4#6'Height'#2#14#3'Top'#2#24#5'Width'#2#28
+  +#7'Caption'#6#5'Placa'#5'Color'#7#7'clWhite'#10'Font.Color'#7#12'clWindowTex'
+  +'t'#11'Font.Height'#2#245#9'Font.Name'#6#15'Times New Roman'#11'ParentColor'
+  +#8#10'ParentFont'#8#15'RealBounds.Left'#5#0#0#0#0#0#0#0#0#0#0#14'RealBounds.'
+  +'Top'#5#0#0#0#0#0#0#0#0#0#0#16'RealBounds.Width'#5#0#0#0#0#0#0#0#0#0#0#17'Re'
+  +'alBounds.Height'#5#0#0#0#0#0#0#0#0#0#0#0#0#8'TRLLabel'#9'rlLabel14'#4'Left'
+  +#2'|'#6'Height'#2#14#3'Top'#2#24#5'Width'#2'('#7'Caption'#6#5'RNTRC'#5'Color'
+  +#7#7'clWhite'#10'Font.Color'#7#12'clWindowText'#11'Font.Height'#2#245#9'Font'
+  +'.Name'#6#15'Times New Roman'#11'ParentColor'#8#10'ParentFont'#8#15'RealBoun'
+  +'ds.Left'#5#0#0#0#0#0#0#0#0#0#0#14'RealBounds.Top'#5#0#0#0#0#0#0#0#0#0#0#16
+  +'RealBounds.Width'#5#0#0#0#0#0#0#0#0#0#0#17'RealBounds.Height'#5#0#0#0#0#0#0
+  +#0#0#0#0#0#0#8'TRLLabel'#9'rlLabel15'#4'Left'#3'>'#1#6'Height'#2#14#3'Top'#2
+  +#24#5'Width'#2#23#7'Caption'#6#3'CPF'#5'Color'#7#7'clWhite'#10'Font.Color'#7
+  +#12'clWindowText'#11'Font.Height'#2#245#9'Font.Name'#6#15'Times New Roman'#11
+  +'ParentColor'#8#10'ParentFont'#8#15'RealBounds.Left'#5#0#0#0#0#0#0#0#0#0#0#14
+  +'RealBounds.Top'#5#0#0#0#0#0#0#0#0#0#0#16'RealBounds.Width'#5#0#0#0#0#0#0#0#0
+  +#0#0#17'RealBounds.Height'#5#0#0#0#0#0#0#0#0#0#0#0#0#8'TRLLabel'#9'rlLabel16'
+  +#4'Left'#3#156#1#6'Height'#2#14#3'Top'#2#24#5'Width'#2#31#7'Caption'#6#4'Nom'
+  +'e'#5'Color'#7#7'clWhite'#10'Font.Color'#7#12'clWindowText'#11'Font.Height'#2
+  +#245#9'Font.Name'#6#15'Times New Roman'#11'ParentColor'#8#10'ParentFont'#8#15
+  +'RealBounds.Left'#5#0#0#0#0#0#0#0#0#0#0#14'RealBounds.Top'#5#0#0#0#0#0#0#0#0
+  +#0#0#16'RealBounds.Width'#5#0#0#0#0#0#0#0#0#0#0#17'RealBounds.Height'#5#0#0#0
+  +#0#0#0#0#0#0#0#0#0#7'TRLDraw'#9'rlShape10'#4'Left'#2#0#6'Height'#2#1#3'Top'#2
+  +'('#5'Width'#3#240#2#5'Angle'#5#0#0#0#0#0#0#0#0#0#0#15'RealBounds.Left'#5#0#0
+  +#0#0#0#0#0#0#0#0#14'RealBounds.Top'#5#0#0#0#0#0#0#0#0#0#0#16'RealBounds.Widt'
+  +'h'#5#0#0#0#0#0#0#0#0#0#0#17'RealBounds.Height'#5#0#0#0#0#0#0#0#0#0#0#0#0#7
+  +'TRLDraw'#9'rlShape11'#4'Left'#3':'#1#6'Height'#3#200#0#3'Top'#2#0#5'Width'#2
+  +#1#5'Angle'#5#0#0#0#0#0#0#0#0#0#0#15'RealBounds.Left'#5#0#0#0#0#0#0#0#0#0#0
+  +#14'RealBounds.Top'#5#0#0#0#0#0#0#0#0#0#0#16'RealBounds.Width'#5#0#0#0#0#0#0
+  +#0#0#0#0#17'RealBounds.Height'#5#0#0#0#0#0#0#0#0#0#0#0#0#7'TRLDraw'#9'rlShap'
+  +'e12'#4'Left'#2'x'#6'Height'#2'P'#3'Top'#2#20#5'Width'#2#1#5'Angle'#5#0#0#0#0
+  +#0#0#0#0#0#0#15'RealBounds.Left'#5#0#0#0#0#0#0#0#0#0#0#14'RealBounds.Top'#5#0
+  ,#0#0#0#0#0#0#0#0#0#16'RealBounds.Width'#5#0#0#0#0#0#0#0#0#0#0#17'RealBounds.'
+  +'Height'#5#0#0#0#0#0#0#0#0#0#0#0#0#7'TRLMemo'#8'rlmPlaca'#4'Left'#2#4#6'Heig'
+  +'ht'#2'4'#3'Top'#2'-'#5'Width'#2'm'#8'AutoSize'#8#5'Color'#7#7'clWhite'#10'F'
+  +'ont.Color'#7#12'clWindowText'#11'Font.Height'#2#247#9'Font.Name'#6#15'Times'
+  +' New Roman'#13'Lines.Strings'#1#6#7'1 Linha'#6#7'2 Linha'#6#7'3 Linha'#6#7
+  +'4 Linha'#0#11'ParentColor'#8#10'ParentFont'#8#15'RealBounds.Left'#5#0#0#0#0
+  +#0#0#0#0#0#0#14'RealBounds.Top'#5#0#0#0#0#0#0#0#0#0#0#16'RealBounds.Width'#5
+  +#0#0#0#0#0#0#0#0#0#0#17'RealBounds.Height'#5#0#0#0#0#0#0#0#0#0#0#11'Transpar'
+  +'ent'#8#0#0#7'TRLMemo'#8'rlmRNTRC'#4'Left'#2'|'#6'Height'#2'4'#3'Top'#2'-'#5
+  +'Width'#3#141#0#8'AutoSize'#8#5'Color'#7#7'clWhite'#10'Font.Color'#7#12'clWi'
+  +'ndowText'#11'Font.Height'#2#247#9'Font.Name'#6#15'Times New Roman'#13'Lines'
+  +'.Strings'#1#6#7'1 Linha'#6#7'2 Linha'#6#7'3 Linha'#6#7'4 Linha'#0#11'Parent'
+  +'Color'#8#10'ParentFont'#8#15'RealBounds.Left'#5#0#0#0#0#0#0#0#0#0#0#14'Real'
+  +'Bounds.Top'#5#0#0#0#0#0#0#0#0#0#0#16'RealBounds.Width'#5#0#0#0#0#0#0#0#0#0#0
+  +#17'RealBounds.Height'#5#0#0#0#0#0#0#0#0#0#0#11'Transparent'#8#0#0#7'TRLMemo'
+  +#6'rlmCPF'#4'Left'#3'>'#1#6'Height'#3#148#0#3'Top'#2'-'#5'Width'#2'U'#8'Auto'
+  +'Size'#8#5'Color'#7#7'clWhite'#10'Font.Color'#7#12'clWindowText'#11'Font.Hei'
+  +'ght'#2#247#9'Font.Name'#6#15'Times New Roman'#13'Lines.Strings'#1#6#7'1 Lin'
+  +'ha'#6#7'2 Linha'#6#7'3 Linha'#6#7'4 Linha'#0#11'ParentColor'#8#10'ParentFon'
+  +'t'#8#15'RealBounds.Left'#5#0#0#0#0#0#0#0#0#0#0#14'RealBounds.Top'#5#0#0#0#0
+  +#0#0#0#0#0#0#16'RealBounds.Width'#5#0#0#0#0#0#0#0#0#0#0#17'RealBounds.Height'
+  +#5#0#0#0#0#0#0#0#0#0#0#11'Transparent'#8#0#0#7'TRLDraw'#9'rlShape13'#4'Left'
+  +#3#152#1#6'Height'#3#180#0#3'Top'#2#20#5'Width'#2#1#5'Angle'#5#0#0#0#0#0#0#0
+  +#0#0#0#15'RealBounds.Left'#5#0#0#0#0#0#0#0#0#0#0#14'RealBounds.Top'#5#0#0#0#0
+  +#0#0#0#0#0#0#16'RealBounds.Width'#5#0#0#0#0#0#0#0#0#0#0#17'RealBounds.Height'
+  +#5#0#0#0#0#0#0#0#0#0#0#0#0#7'TRLMemo'#11'rlmCondutor'#4'Left'#3#156#1#6'Heig'
+  +'ht'#3#148#0#3'Top'#2'-'#5'Width'#3'M'#1#8'AutoSize'#8#5'Color'#7#7'clWhite'
+  +#10'Font.Color'#7#12'clWindowText'#11'Font.Height'#2#247#9'Font.Name'#6#15'T'
+  +'imes New Roman'#13'Lines.Strings'#1#6#7'1 Linha'#6#7'2 Linha'#6#7'3 Linha'#6
+  +#7'4 Linha'#0#11'ParentColor'#8#10'ParentFont'#8#15'RealBounds.Left'#5#0#0#0
+  +#0#0#0#0#0#0#0#14'RealBounds.Top'#5#0#0#0#0#0#0#0#0#0#0#16'RealBounds.Width'
+  +#5#0#0#0#0#0#0#0#0#0#0#17'RealBounds.Height'#5#0#0#0#0#0#0#0#0#0#0#11'Transp'
+  +'arent'#8#0#0#7'TRLDraw'#9'rlShape14'#4'Left'#2#0#6'Height'#2#1#3'Top'#2'd'#5
+  +'Width'#3':'#1#5'Angle'#5#0#0#0#0#0#0#0#0#0#0#15'RealBounds.Left'#5#0#0#0#0#0
+  +#0#0#0#0#0#14'RealBounds.Top'#5#0#0#0#0#0#0#0#0#0#0#16'RealBounds.Width'#5#0
+  +#0#0#0#0#0#0#0#0#0#17'RealBounds.Height'#5#0#0#0#0#0#0#0#0#0#0#0#0#8'TRLLabe'
+  +'l'#9'rlLabel18'#4'Left'#2#4#6'Height'#2#14#3'Top'#2'h'#5'Width'#2'>'#7'Capt'
+  +'ion'#6#13'Vale Ped'#195#161'gio'#5'Color'#7#7'clWhite'#10'Font.Color'#7#12
+  +'clWindowText'#11'Font.Height'#2#245#9'Font.Name'#6#15'Times New Roman'#11'P'
+  +'arentColor'#8#10'ParentFont'#8#15'RealBounds.Left'#5#0#0#0#0#0#0#0#0#0#0#14
+  +'RealBounds.Top'#5#0#0#0#0#0#0#0#0#0#0#16'RealBounds.Width'#5#0#0#0#0#0#0#0#0
+  +#0#0#17'RealBounds.Height'#5#0#0#0#0#0#0#0#0#0#0#0#0#7'TRLDraw'#9'rlShape15'
+  +#4'Left'#2#0#6'Height'#2#1#3'Top'#2'x'#5'Width'#3':'#1#5'Angle'#5#0#0#0#0#0#0
+  +#0#0#0#0#15'RealBounds.Left'#5#0#0#0#0#0#0#0#0#0#0#14'RealBounds.Top'#5#0#0#0
+  +#0#0#0#0#0#0#0#16'RealBounds.Width'#5#0#0#0#0#0#0#0#0#0#0#17'RealBounds.Heig'
+  +'ht'#5#0#0#0#0#0#0#0#0#0#0#0#0#8'TRLLabel'#9'rlLabel19'#4'Left'#2#4#6'Height'
+  +#2#14#3'Top'#2'z'#5'Width'#2'Y'#7'Caption'#6#17'Respons'#195#161'vel CNPJ'#5
+  +'Color'#7#7'clWhite'#10'Font.Color'#7#12'clWindowText'#11'Font.Height'#2#245
+  +#9'Font.Name'#6#15'Times New Roman'#11'ParentColor'#8#10'ParentFont'#8#15'Re'
+  +'alBounds.Left'#5#0#0#0#0#0#0#0#0#0#0#14'RealBounds.Top'#5#0#0#0#0#0#0#0#0#0
+  +#0#16'RealBounds.Width'#5#0#0#0#0#0#0#0#0#0#0#17'RealBounds.Height'#5#0#0#0#0
+  +#0#0#0#0#0#0#0#0#8'TRLLabel'#9'rlLabel20'#4'Left'#2'b'#6'Height'#2#14#3'Top'
+  +#2'z'#5'Width'#2'T'#7'Caption'#6#15'Fornecedor CNPJ'#5'Color'#7#7'clWhite'#10
+  +'Font.Color'#7#12'clWindowText'#11'Font.Height'#2#245#9'Font.Name'#6#15'Time'
+  +'s New Roman'#11'ParentColor'#8#10'ParentFont'#8#15'RealBounds.Left'#5#0#0#0
+  +#0#0#0#0#0#0#0#14'RealBounds.Top'#5#0#0#0#0#0#0#0#0#0#0#16'RealBounds.Width'
+  +#5#0#0#0#0#0#0#0#0#0#0#17'RealBounds.Height'#5#0#0#0#0#0#0#0#0#0#0#0#0#8'TRL'
+  +'Label'#9'rlLabel21'#4'Left'#3#196#0#6'Height'#2#14#3'Top'#2'z'#5'Width'#2'Q'
+  +#7'Caption'#6#14'N. Comprovante'#5'Color'#7#7'clWhite'#10'Font.Color'#7#12'c'
+  +'lWindowText'#11'Font.Height'#2#245#9'Font.Name'#6#15'Times New Roman'#11'Pa'
+  +'rentColor'#8#10'ParentFont'#8#15'RealBounds.Left'#5#0#0#0#0#0#0#0#0#0#0#14
+  +'RealBounds.Top'#5#0#0#0#0#0#0#0#0#0#0#16'RealBounds.Width'#5#0#0#0#0#0#0#0#0
+  +#0#0#17'RealBounds.Height'#5#0#0#0#0#0#0#0#0#0#0#0#0#7'TRLDraw'#9'rlShape16'
+  +#4'Left'#2'^'#6'Height'#2'P'#3'Top'#2'x'#5'Width'#2#1#5'Angle'#5#0#0#0#0#0#0
+  ,#0#0#0#0#15'RealBounds.Left'#5#0#0#0#0#0#0#0#0#0#0#14'RealBounds.Top'#5#0#0#0
+  +#0#0#0#0#0#0#0#16'RealBounds.Width'#5#0#0#0#0#0#0#0#0#0#0#17'RealBounds.Heig'
+  +'ht'#5#0#0#0#0#0#0#0#0#0#0#0#0#7'TRLDraw'#9'rlShape17'#4'Left'#3#192#0#6'Hei'
+  +'ght'#2'P'#3'Top'#2'x'#5'Width'#2#1#5'Angle'#5#0#0#0#0#0#0#0#0#0#0#15'RealBo'
+  +'unds.Left'#5#0#0#0#0#0#0#0#0#0#0#14'RealBounds.Top'#5#0#0#0#0#0#0#0#0#0#0#16
+  +'RealBounds.Width'#5#0#0#0#0#0#0#0#0#0#0#17'RealBounds.Height'#5#0#0#0#0#0#0
+  +#0#0#0#0#0#0#7'TRLMemo'#11'rlmRespCNPJ'#4'Left'#2#4#6'Height'#2'4'#3'Top'#3
+  +#141#0#5'Width'#2'V'#8'AutoSize'#8#5'Color'#7#7'clWhite'#10'Font.Color'#7#12
+  +'clWindowText'#11'Font.Height'#2#247#9'Font.Name'#6#15'Times New Roman'#13'L'
+  +'ines.Strings'#1#6#7'1 Linha'#6#7'2 Linha'#6#7'3 Linha'#6#7'4 Linha'#0#11'Pa'
+  +'rentColor'#8#10'ParentFont'#8#15'RealBounds.Left'#5#0#0#0#0#0#0#0#0#0#0#14
+  +'RealBounds.Top'#5#0#0#0#0#0#0#0#0#0#0#16'RealBounds.Width'#5#0#0#0#0#0#0#0#0
+  +#0#0#17'RealBounds.Height'#5#0#0#0#0#0#0#0#0#0#0#11'Transparent'#8#0#0#7'TRL'
+  +'Memo'#11'rlmFornCNPJ'#4'Left'#2'd'#6'Height'#2'4'#3'Top'#3#141#0#5'Width'#2
+  +'V'#8'AutoSize'#8#5'Color'#7#7'clWhite'#10'Font.Color'#7#12'clWindowText'#11
+  +'Font.Height'#2#247#9'Font.Name'#6#15'Times New Roman'#13'Lines.Strings'#1#6
+  +#7'1 Linha'#6#7'2 Linha'#6#7'3 Linha'#6#7'4 Linha'#0#11'ParentColor'#8#10'Pa'
+  +'rentFont'#8#15'RealBounds.Left'#5#0#0#0#0#0#0#0#0#0#0#14'RealBounds.Top'#5#0
+  +#0#0#0#0#0#0#0#0#0#16'RealBounds.Width'#5#0#0#0#0#0#0#0#0#0#0#17'RealBounds.'
+  +'Height'#5#0#0#0#0#0#0#0#0#0#0#11'Transparent'#8#0#0#7'TRLMemo'#17'rlmNumCom'
+  +'provante'#4'Left'#3#196#0#6'Height'#2'4'#3'Top'#3#141#0#5'Width'#2'r'#8'Aut'
+  +'oSize'#8#5'Color'#7#7'clWhite'#10'Font.Color'#7#12'clWindowText'#11'Font.He'
+  +'ight'#2#247#9'Font.Name'#6#15'Times New Roman'#13'Lines.Strings'#1#6#7'1 Li'
+  +'nha'#6#7'2 Linha'#6#7'3 Linha'#6#7'4 Linha'#0#11'ParentColor'#8#10'ParentFo'
+  +'nt'#8#15'RealBounds.Left'#5#0#0#0#0#0#0#0#0#0#0#14'RealBounds.Top'#5#0#0#0#0
+  +#0#0#0#0#0#0#16'RealBounds.Width'#5#0#0#0#0#0#0#0#0#0#0#17'RealBounds.Height'
+  +#5#0#0#0#0#0#0#0#0#0#0#11'Transparent'#8#0#0#0#242#2#2#7'TRLBand'#11'rlb_3_A'
+  +'ereo'#4'Left'#2#26#6'Height'#2'('#3'Top'#3#245#1#5'Width'#3#230#2#8'BandTyp'
+  +'e'#7#14'btColumnHeader'#5'Color'#7#7'clWhite'#11'ParentColor'#8#15'RealBoun'
+  +'ds.Left'#5#0#0#0#0#0#0#0#0#0#0#14'RealBounds.Top'#5#0#0#0#0#0#0#0#0#0#0#16
+  +'RealBounds.Width'#5#0#0#0#0#0#0#0#0#0#0#17'RealBounds.Height'#5#0#0#0#0#0#0
+  +#0#0#0#0#11'BeforePrint'#7#22'rlb_3_AereoBeforePrint'#0#0#242#2#3#7'TRLBand'
+  +#11'rlb_4_Aquav'#4'Left'#2#26#6'Height'#2'x'#3'Top'#3#29#2#5'Width'#3#230#2#8
+  +'BandType'#7#14'btColumnHeader'#5'Color'#7#7'clWhite'#11'ParentColor'#8#15'R'
+  +'ealBounds.Left'#5#0#0#0#0#0#0#0#0#0#0#14'RealBounds.Top'#5#0#0#0#0#0#0#0#0#0
+  +#0#16'RealBounds.Width'#5#0#0#0#0#0#0#0#0#0#0#17'RealBounds.Height'#5#0#0#0#0
+  +#0#0#0#0#0#0#11'BeforePrint'#7#22'rlb_4_AquavBeforePrint'#0#7'TRLDraw'#9'rlS'
+  +'hape20'#4'Left'#2#0#6'Height'#2'q'#3'Top'#2#0#5'Width'#3#240#2#5'Angle'#5#0
+  +#0#0#0#0#0#0#0#0#0#11'Brush.Style'#7#7'bsClear'#15'RealBounds.Left'#5#0#0#0#0
+  +#0#0#0#0#0#0#14'RealBounds.Top'#5#0#0#0#0#0#0#0#0#0#0#16'RealBounds.Width'#5
+  +#0#0#0#0#0#0#0#0#0#0#17'RealBounds.Height'#5#0#0#0#0#0#0#0#0#0#0#0#0#8'TRLLa'
+  +'bel'#9'rlLabel24'#4'Left'#2#4#6'Height'#2#14#3'Top'#2#4#5'Width'#2'k'#7'Cap'
+  +'tion'#6#23'C'#195#179'digo da Embarca'#195#167#195#163'o'#5'Color'#7#7'clWh'
+  +'ite'#10'Font.Color'#7#12'clWindowText'#11'Font.Height'#2#245#9'Font.Name'#6
+  +#15'Times New Roman'#11'ParentColor'#8#10'ParentFont'#8#15'RealBounds.Left'#5
+  +#0#0#0#0#0#0#0#0#0#0#14'RealBounds.Top'#5#0#0#0#0#0#0#0#0#0#0#16'RealBounds.'
+  +'Width'#5#0#0#0#0#0#0#0#0#0#0#17'RealBounds.Height'#5#0#0#0#0#0#0#0#0#0#0#0#0
+  +#8'TRLLabel'#9'rlLabel26'#4'Left'#3#214#0#6'Height'#2#14#3'Top'#2#4#5'Width'
+  +#2'g'#7'Caption'#6#20'Nome da Embarca'#195#167#195#163'o'#5'Color'#7#7'clWhi'
+  +'te'#10'Font.Color'#7#12'clWindowText'#11'Font.Height'#2#245#9'Font.Name'#6
+  +#15'Times New Roman'#11'ParentColor'#8#10'ParentFont'#8#15'RealBounds.Left'#5
+  +#0#0#0#0#0#0#0#0#0#0#14'RealBounds.Top'#5#0#0#0#0#0#0#0#0#0#0#16'RealBounds.'
+  +'Width'#5#0#0#0#0#0#0#0#0#0#0#17'RealBounds.Height'#5#0#0#0#0#0#0#0#0#0#0#0#0
+  +#7'TRLDraw'#9'rlShape21'#4'Left'#3#206#0#6'Height'#2#20#3'Top'#2#0#5'Width'#2
+  +#1#5'Angle'#5#0#0#0#0#0#0#0#0#0#0#15'RealBounds.Left'#5#0#0#0#0#0#0#0#0#0#0
+  +#14'RealBounds.Top'#5#0#0#0#0#0#0#0#0#0#0#16'RealBounds.Width'#5#0#0#0#0#0#0
+  +#0#0#0#0#17'RealBounds.Height'#5#0#0#0#0#0#0#0#0#0#0#0#0#7'TRLDraw'#9'rlShap'
+  +'e22'#4'Left'#2#0#6'Height'#2#1#3'Top'#2#20#5'Width'#3#240#2#5'Angle'#5#0#0#0
+  +#0#0#0#0#0#0#0#15'RealBounds.Left'#5#0#0#0#0#0#0#0#0#0#0#14'RealBounds.Top'#5
+  +#0#0#0#0#0#0#0#0#0#0#16'RealBounds.Width'#5#0#0#0#0#0#0#0#0#0#0#17'RealBound'
+  +'s.Height'#5#0#0#0#0#0#0#0#0#0#0#0#0#8'TRLLabel'#11'rllCodEmbar'#4'Left'#2't'
+  +#6'Height'#2#16#3'Top'#2#2#5'Width'#2'U'#8'AutoSize'#8#5'Color'#7#7'clWhite'
+  +#10'Font.Color'#7#12'clWindowText'#11'Font.Height'#2#243#9'Font.Name'#6#15'T'
+  +'imes New Roman'#11'ParentColor'#8#10'ParentFont'#8#15'RealBounds.Left'#5#0#0
+  ,#0#0#0#0#0#0#0#0#14'RealBounds.Top'#5#0#0#0#0#0#0#0#0#0#0#16'RealBounds.Widt'
+  +'h'#5#0#0#0#0#0#0#0#0#0#0#17'RealBounds.Height'#5#0#0#0#0#0#0#0#0#0#0#0#0#8
+  +'TRLLabel'#12'rllNomeEmbar'#4'Left'#3'B'#1#6'Height'#2#16#3'Top'#2#2#5'Width'
+  +#3#167#1#8'AutoSize'#8#5'Color'#7#7'clWhite'#10'Font.Color'#7#12'clWindowTex'
+  +'t'#11'Font.Height'#2#243#9'Font.Name'#6#15'Times New Roman'#11'ParentColor'
+  +#8#10'ParentFont'#8#15'RealBounds.Left'#5#0#0#0#0#0#0#0#0#0#0#14'RealBounds.'
+  +'Top'#5#0#0#0#0#0#0#0#0#0#0#16'RealBounds.Width'#5#0#0#0#0#0#0#0#0#0#0#17'Re'
+  +'alBounds.Height'#5#0#0#0#0#0#0#0#0#0#0#0#0#7'TRLDraw'#9'rlShape23'#4'Left'#3
+  +'x'#1#6'Height'#2'\'#3'Top'#2#20#5'Width'#2#1#5'Angle'#5#0#0#0#0#0#0#0#0#0#0
+  +#15'RealBounds.Left'#5#0#0#0#0#0#0#0#0#0#0#14'RealBounds.Top'#5#0#0#0#0#0#0#0
+  +#0#0#0#16'RealBounds.Width'#5#0#0#0#0#0#0#0#0#0#0#17'RealBounds.Height'#5#0#0
+  +#0#0#0#0#0#0#0#0#0#0#7'TRLDraw'#9'rlShape24'#4'Left'#2'F'#6'Height'#2'\'#3'T'
+  +'op'#2#20#5'Width'#2#1#5'Angle'#5#0#0#0#0#0#0#0#0#0#0#15'RealBounds.Left'#5#0
+  +#0#0#0#0#0#0#0#0#0#14'RealBounds.Top'#5#0#0#0#0#0#0#0#0#0#0#16'RealBounds.Wi'
+  +'dth'#5#0#0#0#0#0#0#0#0#0#0#17'RealBounds.Height'#5#0#0#0#0#0#0#0#0#0#0#0#0#7
+  +'TRLDraw'#9'rlShape25'#4'Left'#3#190#1#6'Height'#2'\'#3'Top'#2#20#5'Width'#2
+  +#1#5'Angle'#5#0#0#0#0#0#0#0#0#0#0#15'RealBounds.Left'#5#0#0#0#0#0#0#0#0#0#0
+  +#14'RealBounds.Top'#5#0#0#0#0#0#0#0#0#0#0#16'RealBounds.Width'#5#0#0#0#0#0#0
+  +#0#0#0#0#17'RealBounds.Height'#5#0#0#0#0#0#0#0#0#0#0#0#0#7'TRLDraw'#9'rlShap'
+  +'e26'#4'Left'#2#0#6'Height'#2#1#3'Top'#2'('#5'Width'#3#240#2#5'Angle'#5#0#0#0
+  +#0#0#0#0#0#0#0#15'RealBounds.Left'#5#0#0#0#0#0#0#0#0#0#0#14'RealBounds.Top'#5
+  +#0#0#0#0#0#0#0#0#0#0#16'RealBounds.Width'#5#0#0#0#0#0#0#0#0#0#0#17'RealBound'
+  +'s.Height'#5#0#0#0#0#0#0#0#0#0#0#0#0#8'TRLLabel'#9'rlLabel27'#4'Left'#2#6#6
+  +'Height'#2#14#3'Top'#2#24#5'Width'#2'#'#7'Caption'#6#7'C'#195#179'digo'#5'Co'
+  +'lor'#7#7'clWhite'#10'Font.Color'#7#12'clWindowText'#11'Font.Height'#2#245#9
+  +'Font.Name'#6#15'Times New Roman'#11'ParentColor'#8#10'ParentFont'#8#15'Real'
+  +'Bounds.Left'#5#0#0#0#0#0#0#0#0#0#0#14'RealBounds.Top'#5#0#0#0#0#0#0#0#0#0#0
+  +#16'RealBounds.Width'#5#0#0#0#0#0#0#0#0#0#0#17'RealBounds.Height'#5#0#0#0#0#0
+  +#0#0#0#0#0#0#0#8'TRLLabel'#9'rlLabel28'#4'Left'#2'N'#6'Height'#2#14#3'Top'#2
+  +#24#5'Width'#3#172#0#7'Caption'#6' Nome do Terminal de Carregamento'#5'Color'
+  +#7#7'clWhite'#10'Font.Color'#7#12'clWindowText'#11'Font.Height'#2#245#9'Font'
+  +'.Name'#6#15'Times New Roman'#11'ParentColor'#8#10'ParentFont'#8#15'RealBoun'
+  +'ds.Left'#5#0#0#0#0#0#0#0#0#0#0#14'RealBounds.Top'#5#0#0#0#0#0#0#0#0#0#0#16
+  +'RealBounds.Width'#5#0#0#0#0#0#0#0#0#0#0#17'RealBounds.Height'#5#0#0#0#0#0#0
+  +#0#0#0#0#0#0#8'TRLLabel'#9'rlLabel29'#4'Left'#3'~'#1#6'Height'#2#14#3'Top'#2
+  +#24#5'Width'#2'#'#7'Caption'#6#7'C'#195#179'digo'#5'Color'#7#7'clWhite'#10'F'
+  +'ont.Color'#7#12'clWindowText'#11'Font.Height'#2#245#9'Font.Name'#6#15'Times'
+  +' New Roman'#11'ParentColor'#8#10'ParentFont'#8#15'RealBounds.Left'#5#0#0#0#0
+  +#0#0#0#0#0#0#14'RealBounds.Top'#5#0#0#0#0#0#0#0#0#0#0#16'RealBounds.Width'#5
+  +#0#0#0#0#0#0#0#0#0#0#17'RealBounds.Height'#5#0#0#0#0#0#0#0#0#0#0#0#0#8'TRLLa'
+  +'bel'#9'rlLabel30'#4'Left'#3#198#1#6'Height'#2#14#3'Top'#2#24#5'Width'#3#187
+  +#0#7'Caption'#6'#Nome do Terminal de Descarregamento'#5'Color'#7#7'clWhite'
+  +#10'Font.Color'#7#12'clWindowText'#11'Font.Height'#2#245#9'Font.Name'#6#15'T'
+  +'imes New Roman'#11'ParentColor'#8#10'ParentFont'#8#15'RealBounds.Left'#5#0#0
+  +#0#0#0#0#0#0#0#0#14'RealBounds.Top'#5#0#0#0#0#0#0#0#0#0#0#16'RealBounds.Widt'
+  +'h'#5#0#0#0#0#0#0#0#0#0#0#17'RealBounds.Height'#5#0#0#0#0#0#0#0#0#0#0#0#0#7
+  +'TRLMemo'#12'rlmCodCarreg'#4'Left'#2#6#6'Height'#2'>'#3'Top'#2'-'#5'Width'#2
+  +';'#8'AutoSize'#8#5'Color'#7#7'clWhite'#10'Font.Color'#7#12'clWindowText'#11
+  +'Font.Height'#2#247#9'Font.Name'#6#15'Times New Roman'#13'Lines.Strings'#1#6
+  +#7'1 Linha'#6#7'2 Linha'#6#7'3 Linha'#6#7'4 Linha'#6#7'5 Linha'#0#11'ParentC'
+  +'olor'#8#10'ParentFont'#8#15'RealBounds.Left'#5#0#0#0#0#0#0#0#0#0#0#14'RealB'
+  +'ounds.Top'#5#0#0#0#0#0#0#0#0#0#0#16'RealBounds.Width'#5#0#0#0#0#0#0#0#0#0#0
+  +#17'RealBounds.Height'#5#0#0#0#0#0#0#0#0#0#0#11'Transparent'#8#0#0#7'TRLMemo'
+  +#15'rlmCodDescarreg'#4'Left'#3'~'#1#6'Height'#2'>'#3'Top'#2'-'#5'Width'#2';'
+  +#8'AutoSize'#8#5'Color'#7#7'clWhite'#10'Font.Color'#7#12'clWindowText'#11'Fo'
+  +'nt.Height'#2#247#9'Font.Name'#6#15'Times New Roman'#13'Lines.Strings'#1#6#7
+  +'1 Linha'#6#7'2 Linha'#6#7'3 Linha'#6#7'4 Linha'#0#11'ParentColor'#8#10'Pare'
+  +'ntFont'#8#15'RealBounds.Left'#5#0#0#0#0#0#0#0#0#0#0#14'RealBounds.Top'#5#0#0
+  +#0#0#0#0#0#0#0#0#16'RealBounds.Width'#5#0#0#0#0#0#0#0#0#0#0#17'RealBounds.He'
+  +'ight'#5#0#0#0#0#0#0#0#0#0#0#11'Transparent'#8#0#0#7'TRLMemo'#13'rlmNomeCarr'
+  +'eg'#4'Left'#2'N'#6'Height'#2'>'#3'Top'#2'-'#5'Width'#3'#'#1#8'AutoSize'#8#5
+  +'Color'#7#7'clWhite'#10'Font.Color'#7#12'clWindowText'#11'Font.Height'#2#247
+  +#9'Font.Name'#6#15'Times New Roman'#13'Lines.Strings'#1#6#7'1 Linha'#6#7'2 L'
+  +'inha'#6#7'3 Linha'#6#7'4 Linha'#0#11'ParentColor'#8#10'ParentFont'#8#15'Rea'
+  ,'lBounds.Left'#5#0#0#0#0#0#0#0#0#0#0#14'RealBounds.Top'#5#0#0#0#0#0#0#0#0#0#0
+  +#16'RealBounds.Width'#5#0#0#0#0#0#0#0#0#0#0#17'RealBounds.Height'#5#0#0#0#0#0
+  +#0#0#0#0#0#11'Transparent'#8#0#0#7'TRLMemo'#16'rlmNomeDescarreg'#4'Left'#3
+  +#198#1#6'Height'#2'>'#3'Top'#2'-'#5'Width'#3'#'#1#8'AutoSize'#8#5'Color'#7#7
+  +'clWhite'#10'Font.Color'#7#12'clWindowText'#11'Font.Height'#2#247#9'Font.Nam'
+  +'e'#6#15'Times New Roman'#13'Lines.Strings'#1#6#7'1 Linha'#6#7'2 Linha'#6#7
+  +'3 Linha'#6#7'4 Linha'#0#11'ParentColor'#8#10'ParentFont'#8#15'RealBounds.Le'
+  +'ft'#5#0#0#0#0#0#0#0#0#0#0#14'RealBounds.Top'#5#0#0#0#0#0#0#0#0#0#0#16'RealB'
+  +'ounds.Width'#5#0#0#0#0#0#0#0#0#0#0#17'RealBounds.Height'#5#0#0#0#0#0#0#0#0#0
+  +#0#11'Transparent'#8#0#0#0#242#2#4#7'TRLBand'#12'rlb_5_Ferrov'#4'Left'#2#26#6
+  +'Height'#2'('#3'Top'#3#149#2#5'Width'#3#230#2#8'BandType'#7#14'btColumnHeade'
+  +'r'#5'Color'#7#7'clWhite'#11'ParentColor'#8#15'RealBounds.Left'#5#0#0#0#0#0#0
+  +#0#0#0#0#14'RealBounds.Top'#5#0#0#0#0#0#0#0#0#0#0#16'RealBounds.Width'#5#0#0
+  +#0#0#0#0#0#0#0#0#17'RealBounds.Height'#5#0#0#0#0#0#0#0#0#0#0#11'BeforePrint'
+  +#7#23'rlb_5_FerrovBeforePrint'#0#0#242#2#5#7'TRLBand'#16'rlb_6_Observacao'#4
+  +'Left'#2#26#6'Height'#3#152#0#3'Top'#3#189#2#5'Width'#3#230#2#8'BandType'#7
+  +#14'btColumnHeader'#5'Color'#7#7'clWhite'#11'ParentColor'#8#15'RealBounds.Le'
+  +'ft'#5#0#0#0#0#0#0#0#0#0#0#14'RealBounds.Top'#5#0#0#0#0#0#0#0#0#0#0#16'RealB'
+  +'ounds.Width'#5#0#0#0#0#0#0#0#0#0#0#17'RealBounds.Height'#5#0#0#0#0#0#0#0#0#0
+  +#0#11'BeforePrint'#7#27'rlb_6_ObservacaoBeforePrint'#0#7'TRLDraw'#9'rlShape1'
+  +'8'#4'Left'#2#0#6'Height'#3#137#0#3'Top'#2#0#5'Width'#3#240#2#5'Angle'#5#0#0
+  +#0#0#0#0#0#0#0#0#11'Brush.Style'#7#7'bsClear'#15'RealBounds.Left'#5#0#0#0#0#0
+  +#0#0#0#0#0#14'RealBounds.Top'#5#0#0#0#0#0#0#0#0#0#0#16'RealBounds.Width'#5#0
+  +#0#0#0#0#0#0#0#0#0#17'RealBounds.Height'#5#0#0#0#0#0#0#0#0#0#0#0#0#8'TRLLabe'
+  +'l'#9'rlLabel22'#4'Left'#2#4#6'Height'#2#14#3'Top'#2#4#5'Width'#2'8'#7'Capti'
+  +'on'#6#12'Observa'#195#167#195#163'o'#5'Color'#7#7'clWhite'#10'Font.Color'#7
+  +#12'clWindowText'#11'Font.Height'#2#245#9'Font.Name'#6#15'Times New Roman'#11
+  +'ParentColor'#8#10'ParentFont'#8#15'RealBounds.Left'#5#0#0#0#0#0#0#0#0#0#0#14
+  +'RealBounds.Top'#5#0#0#0#0#0#0#0#0#0#0#16'RealBounds.Width'#5#0#0#0#0#0#0#0#0
+  +#0#0#17'RealBounds.Height'#5#0#0#0#0#0#0#0#0#0#0#0#0#7'TRLMemo'#13'rlmObserv'
+  +'acao'#4'Left'#2#4#6'Height'#2'l'#3'Top'#2#21#5'Width'#3#229#2#8'AutoSize'#8
+  +#5'Color'#7#7'clWhite'#10'Font.Color'#7#12'clWindowText'#11'Font.Height'#2
+  +#247#9'Font.Name'#6#15'Times New Roman'#13'Lines.Strings'#1#6#7'1 Linha'#6#7
+  +'2 Linha'#6#7'3 Linha'#6#7'4 Linha'#0#11'ParentColor'#8#10'ParentFont'#8#15
+  +'RealBounds.Left'#5#0#0#0#0#0#0#0#0#0#0#14'RealBounds.Top'#5#0#0#0#0#0#0#0#0
+  +#0#0#16'RealBounds.Width'#5#0#0#0#0#0#0#0#0#0#0#17'RealBounds.Height'#5#0#0#0
+  +#0#0#0#0#0#0#0#0#0#8'TRLLabel'#11'rllMsgTeste'#4'Left'#2#14#6'Height'#2#31#3
+  +'Top'#2'&'#5'Width'#3#206#2#9'Alignment'#7#8'taCenter'#7'Caption'#6',AMBIENT'
+  +'E DE HOMOLOGA'#195#135#195#131'O - SEM VALOR FISCAL'#5'Color'#7#7'clWhite'
+  +#10'Font.Color'#7#6'clGray'#11'Font.Height'#2#229#9'Font.Name'#6#15'Times Ne'
+  +'w Roman'#10'Font.Style'#11#6'fsBold'#0#11'ParentColor'#8#10'ParentFont'#8#15
+  +'RealBounds.Left'#5#0#0#0#0#0#0#0#0#0#0#14'RealBounds.Top'#5#0#0#0#0#0#0#0#0
+  +#0#0#16'RealBounds.Width'#5#0#0#0#0#0#0#0#0#0#0#17'RealBounds.Height'#5#0#0#0
+  +#0#0#0#0#0#0#0#0#0#8'TRLLabel'#20'rllDataHoraImpressao'#4'Left'#2#2#6'Height'
+  +#2#10#3'Top'#3#138#0#5'Width'#2'M'#5'Color'#7#7'clWhite'#10'Font.Color'#7#12
+  +'clWindowText'#11'Font.Height'#2#248#9'Font.Name'#6#15'Times New Roman'#11'P'
+  +'arentColor'#8#10'ParentFont'#8#15'RealBounds.Left'#5#0#0#0#0#0#0#0#0#0#0#14
+  +'RealBounds.Top'#5#0#0#0#0#0#0#0#0#0#0#16'RealBounds.Width'#5#0#0#0#0#0#0#0#0
+  +#0#0#17'RealBounds.Height'#5#0#0#0#0#0#0#0#0#0#0#11'Transparent'#8#0#0#8'TRL'
+  +'Label'#10'rllSistema'#4'Left'#3'd'#1#6'Height'#2#11#3'Top'#3#139#0#5'Width'
+  +#3#136#1#9'Alignment'#7#14'taRightJustify'#8'AutoSize'#8#5'Color'#7#7'clWhit'
+  +'e'#10'Font.Color'#7#12'clWindowText'#11'Font.Height'#2#248#9'Font.Name'#6#15
+  +'Times New Roman'#11'ParentColor'#8#10'ParentFont'#8#15'RealBounds.Left'#5#0
+  +#0#0#0#0#0#0#0#0#0#14'RealBounds.Top'#5#0#0#0#0#0#0#0#0#0#0#16'RealBounds.Wi'
+  +'dth'#5#0#0#0#0#0#0#0#0#0#0#17'RealBounds.Height'#5#0#0#0#0#0#0#0#0#0#0#11'T'
+  +'ransparent'#8#0#0#0#242#2#6#7'TRLBand'#22'rlb_8_Documentos_Lista'#4'Left'#2
+  +#26#6'Height'#2#24#3'Top'#3'w'#3#5'Width'#3#230#2#8'BandType'#7#14'btColumnH'
+  +'eader'#5'Color'#7#7'clWhite'#11'ParentColor'#8#15'RealBounds.Left'#5#0#0#0#0
+  +#0#0#0#0#0#0#14'RealBounds.Top'#5#0#0#0#0#0#0#0#0#0#0#16'RealBounds.Width'#5
+  +#0#0#0#0#0#0#0#0#0#0#17'RealBounds.Height'#5#0#0#0#0#0#0#0#0#0#0#0#9'TRLDBTe'
+  +'xt'#9'rlmChave1'#4'Left'#2#3#6'Height'#2#16#3'Top'#2#4#5'Width'#3'n'#1#8'Au'
+  +'toSize'#8#5'Color'#7#7'clWhite'#9'DataField'#6#7'Chave_1'#10'Font.Color'#7
+  +#12'clWindowText'#11'Font.Height'#2#247#9'Font.Name'#6#15'Times New Roman'#11
+  +'ParentColor'#8#10'ParentFont'#8#15'RealBounds.Left'#5#0#0#0#0#0#0#0#0#0#0#14
+  ,'RealBounds.Top'#5#0#0#0#0#0#0#0#0#0#0#16'RealBounds.Width'#5#0#0#0#0#0#0#0#0
+  +#0#0#17'RealBounds.Height'#5#0#0#0#0#0#0#0#0#0#0#0#0#7'TRLDraw'#4'rls2'#4'Le'
+  +'ft'#3'v'#1#6'Height'#2#22#3'Top'#2#0#5'Width'#2#1#5'Angle'#5#0#0#0#0#0#0#0#0
+  +#0#0#15'RealBounds.Left'#5#0#0#0#0#0#0#0#0#0#0#14'RealBounds.Top'#5#0#0#0#0#0
+  +#0#0#0#0#0#16'RealBounds.Width'#5#0#0#0#0#0#0#0#0#0#0#17'RealBounds.Height'#5
+  +#0#0#0#0#0#0#0#0#0#0#0#0#9'TRLDBText'#9'rlmChave2'#4'Left'#3'|'#1#6'Height'#2
+  +#16#3'Top'#2#4#5'Width'#3'n'#1#8'AutoSize'#8#5'Color'#7#7'clWhite'#9'DataFie'
+  +'ld'#6#7'Chave_2'#10'Font.Color'#7#12'clWindowText'#11'Font.Height'#2#247#9
+  +'Font.Name'#6#15'Times New Roman'#11'ParentColor'#8#10'ParentFont'#8#15'Real'
+  +'Bounds.Left'#5#0#0#0#0#0#0#0#0#0#0#14'RealBounds.Top'#5#0#0#0#0#0#0#0#0#0#0
+  +#16'RealBounds.Width'#5#0#0#0#0#0#0#0#0#0#0#17'RealBounds.Height'#5#0#0#0#0#0
+  +#0#0#0#0#0#0#0#0#242#2#7#7'TRLBand'#24'rlb_7_Documentos_Titulos'#4'Left'#2#26
+  +#6'Height'#2'"'#3'Top'#3'U'#3#5'Width'#3#230#2#8'BandType'#7#14'btColumnHead'
+  +'er'#5'Color'#7#7'clWhite'#11'ParentColor'#8#15'RealBounds.Left'#5#0#0#0#0#0
+  +#0#0#0#0#0#14'RealBounds.Top'#5#0#0#0#0#0#0#0#0#0#0#16'RealBounds.Width'#5#0
+  +#0#0#0#0#0#0#0#0#0#17'RealBounds.Height'#5#0#0#0#0#0#0#0#0#0#0#0#7'TRLDraw'
+  +#12'rlsQuadrado5'#4'Left'#2#0#6'Height'#2#20#3'Top'#2#0#5'Width'#3#240#2#5'A'
+  +'ngle'#5#0#0#0#0#0#0#0#0#0#0#11'Brush.Style'#7#7'bsClear'#15'RealBounds.Left'
+  +#5#0#0#0#0#0#0#0#0#0#0#14'RealBounds.Top'#5#0#0#0#0#0#0#0#0#0#0#16'RealBound'
+  +'s.Width'#5#0#0#0#0#0#0#0#0#0#0#17'RealBounds.Height'#5#0#0#0#0#0#0#0#0#0#0#0
+  +#0#8'TRLLabel'#10'rlLabel141'#4'Left'#3#254#0#6'Height'#2#12#3'Top'#2#4#5'Wi'
+  +'dth'#3#244#0#9'Alignment'#7#8'taCenter'#7'Caption'#6'-RELA'#195#135#195#131
+  +'O DOS DOCUMENTOS FISCAIS ELETR'#195#148'NICOS'#5'Color'#7#7'clWhite'#10'Fon'
+  +'t.Color'#7#12'clWindowText'#11'Font.Height'#2#247#9'Font.Name'#6#15'Times N'
+  +'ew Roman'#10'Font.Style'#11#6'fsBold'#0#11'ParentColor'#8#10'ParentFont'#8
+  +#15'RealBounds.Left'#5#0#0#0#0#0#0#0#0#0#0#14'RealBounds.Top'#5#0#0#0#0#0#0#0
+  +#0#0#0#16'RealBounds.Width'#5#0#0#0#0#0#0#0#0#0#0#17'RealBounds.Height'#5#0#0
+  +#0#0#0#0#0#0#0#0#11'Transparent'#8#0#0#8'TRLLabel'#9'rlLabel91'#4'Left'#2#5#6
+  +'Height'#2#8#3'Top'#2#22#5'Width'#2#29#7'Caption'#6#7'TP DOC.'#5'Color'#7#7
+  +'clWhite'#10'Font.Color'#7#12'clWindowText'#11'Font.Height'#2#249#9'Font.Nam'
+  +'e'#6#15'Times New Roman'#11'ParentColor'#8#10'ParentFont'#8#15'RealBounds.L'
+  +'eft'#5#0#0#0#0#0#0#0#0#0#0#14'RealBounds.Top'#5#0#0#0#0#0#0#0#0#0#0#16'Real'
+  +'Bounds.Width'#5#0#0#0#0#0#0#0#0#0#0#17'RealBounds.Height'#5#0#0#0#0#0#0#0#0
+  +#0#0#11'Transparent'#8#0#0#8'TRLLabel'#9'rlLabel92'#4'Left'#2'X'#6'Height'#2
+  +#8#3'Top'#2#22#5'Width'#2'E'#7'Caption'#6#17'CNPJ/CPF EMITENTE'#5'Color'#7#7
+  +'clWhite'#10'Font.Color'#7#12'clWindowText'#11'Font.Height'#2#249#9'Font.Nam'
+  +'e'#6#15'Times New Roman'#11'ParentColor'#8#10'ParentFont'#8#15'RealBounds.L'
+  +'eft'#5#0#0#0#0#0#0#0#0#0#0#14'RealBounds.Top'#5#0#0#0#0#0#0#0#0#0#0#16'Real'
+  +'Bounds.Width'#5#0#0#0#0#0#0#0#0#0#0#17'RealBounds.Height'#5#0#0#0#0#0#0#0#0
+  +#0#0#11'Transparent'#8#0#0#8'TRLLabel'#9'rlLabel96'#4'Left'#3#174#0#6'Height'
+  +#2#8#3'Top'#2#22#5'Width'#2'V'#7'Caption'#6#21'S'#195#137'RIE/NRO. DOCUMENTO'
+  +#5'Color'#7#7'clWhite'#10'Font.Color'#7#12'clWindowText'#11'Font.Height'#2
+  +#249#9'Font.Name'#6#15'Times New Roman'#11'ParentColor'#8#10'ParentFont'#8#15
+  +'RealBounds.Left'#5#0#0#0#0#0#0#0#0#0#0#14'RealBounds.Top'#5#0#0#0#0#0#0#0#0
+  +#0#0#16'RealBounds.Width'#5#0#0#0#0#0#0#0#0#0#0#17'RealBounds.Height'#5#0#0#0
+  +#0#0#0#0#0#0#0#11'Transparent'#8#0#0#8'TRLLabel'#10'rlLabel109'#4'Left'#3'}'
+  +#1#6'Height'#2#8#3'Top'#2#22#5'Width'#2#29#7'Caption'#6#7'TP DOC.'#5'Color'#7
+  +#7'clWhite'#10'Font.Color'#7#12'clWindowText'#11'Font.Height'#2#249#9'Font.N'
+  +'ame'#6#15'Times New Roman'#11'ParentColor'#8#10'ParentFont'#8#15'RealBounds'
+  +'.Left'#5#0#0#0#0#0#0#0#0#0#0#14'RealBounds.Top'#5#0#0#0#0#0#0#0#0#0#0#16'Re'
+  +'alBounds.Width'#5#0#0#0#0#0#0#0#0#0#0#17'RealBounds.Height'#5#0#0#0#0#0#0#0
+  +#0#0#0#11'Transparent'#8#0#0#8'TRLLabel'#10'rlLabel106'#4'Left'#3#208#1#6'He'
+  +'ight'#2#8#3'Top'#2#22#5'Width'#2'E'#7'Caption'#6#17'CNPJ/CPF EMITENTE'#5'Co'
+  +'lor'#7#7'clWhite'#10'Font.Color'#7#12'clWindowText'#11'Font.Height'#2#249#9
+  +'Font.Name'#6#15'Times New Roman'#11'ParentColor'#8#10'ParentFont'#8#15'Real'
+  +'Bounds.Left'#5#0#0#0#0#0#0#0#0#0#0#14'RealBounds.Top'#5#0#0#0#0#0#0#0#0#0#0
+  +#16'RealBounds.Width'#5#0#0#0#0#0#0#0#0#0#0#17'RealBounds.Height'#5#0#0#0#0#0
+  +#0#0#0#0#0#11'Transparent'#8#0#0#8'TRLLabel'#10'rlLabel100'#4'Left'#3'&'#2#6
+  +'Height'#2#8#3'Top'#2#22#5'Width'#2'V'#7'Caption'#6#21'S'#195#137'RIE/NRO. D'
+  +'OCUMENTO'#5'Color'#7#7'clWhite'#10'Font.Color'#7#12'clWindowText'#11'Font.H'
+  +'eight'#2#249#9'Font.Name'#6#15'Times New Roman'#11'ParentColor'#8#10'Parent'
+  +'Font'#8#15'RealBounds.Left'#5#0#0#0#0#0#0#0#0#0#0#14'RealBounds.Top'#5#0#0#0
+  +#0#0#0#0#0#0#0#16'RealBounds.Width'#5#0#0#0#0#0#0#0#0#0#0#17'RealBounds.Heig'
+  +'ht'#5#0#0#0#0#0#0#0#0#0#0#11'Transparent'#8#0#0#0#0#0
+]);
