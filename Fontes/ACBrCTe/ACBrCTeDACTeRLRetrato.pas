@@ -63,6 +63,7 @@ type
   { TfrmDACTeRLRetrato }
 
   TfrmDACTeRLRetrato = class(TfrmDACTeRL)
+    RLBarcode1: TRLBarcode;
     rlbCodigoBarras: TRLBarcode;
     rlb_08_Itens: TRLBand;
     rldbtTpDoc1: TRLDBText;
@@ -552,7 +553,6 @@ type
     rlmCNPJPg: TRLMemo;
     RLDraw88: TRLDraw;
     rllVariavel1: TRLLabel;
-    rliBarCode2: TRLImage;
     RLDraw99: TRLDraw;
     rlmQtdUnidMedida4: TRLMemo;
     rlLabel73: TRLLabel;
@@ -1148,7 +1148,7 @@ begin
   if FCTe.Ide.tpEmis in [teNormal, teSCAN, teSVCSP, teSVCRS] then
   begin
     rllVariavel1.Enabled := True;
-    rliBarCode2.Enabled := False;
+    RLBarcode1.Enabled := False;
     if FCTe.procCTe.cStat = 100 then
       rllDescricao.Caption := 'PROTOCOLO DE AUTORIZAÇÃO DE USO';
 
@@ -1172,7 +1172,7 @@ begin
     if FCTe.procCTe.cStat in [100, 101, 110] then
     begin
       rllVariavel1.Enabled := True;
-      rliBarCode2.Enabled := False;
+      RLBarcode1.Enabled := False;
       if FCTe.procCTe.cStat = 100 then
         rllDescricao.Caption := 'PROTOCOLO DE AUTORIZAÇÃO DE USO';
 
@@ -1192,10 +1192,10 @@ begin
     else
     begin
       rllVariavel1.Enabled := False;
-      rliBarCode2.Enabled := True;
+      RLBarcode1.Enabled := True;
 
       strChaveContingencia := CTeUtil.GerarChaveContingencia(FCTe);
-      SetBarCodeImage(strChaveContingencia, rliBarCode2);
+      RLBarcode1.Caption := strChaveContingencia;
       rllDescricao.Caption := 'DADOS DO CT-E';
       rllProtocolo.Caption := CTeUtil.FormatarChaveContingencia(strChaveContingencia);
     end;
@@ -1205,10 +1205,10 @@ begin
   if FCTe.Ide.tpEmis = teDPEC then
   begin
     rllVariavel1.Enabled := False;
-    rliBarCode2.Enabled := True;
+    RLBarcode1.Enabled := True;
 
     strChaveContingencia := CTeUtil.GerarChaveContingencia(FCTe);
-    SetBarCodeImage(strChaveContingencia, rliBarCode2);
+    RLBarcode1.Caption := strChaveContingencia;
     rllDescricao.Caption := 'DADOS DO CT-E';
     rllProtocolo.Caption := CTeUtil.FormatarChaveContingencia(strChaveContingencia);
   end;

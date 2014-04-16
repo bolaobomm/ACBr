@@ -10,8 +10,8 @@ inherited frmMDFeDAEventoRLRetrato: TfrmMDFeDAEventoRLRetrato
   Font.Name = 'Arial'
   Font.Style = [fsBold]
   inherited RLMDFeEvento: TRLReport
-    Left = 8
-    Top = -647
+    Left = 32
+    Top = 0
     DataSource = Datasource1
     Font.Height = -8
     Font.Name = 'Courier New'
@@ -2236,7 +2236,7 @@ inherited frmMDFeDAEventoRLRetrato: TfrmMDFeDAEventoRLRetrato
         Left = 375
         Height = 49
         Top = 25
-        Width = 361
+        Width = 87
         Margins.LeftMargin = 1
         Margins.RightMargin = 1
         RealBounds.Left = 0

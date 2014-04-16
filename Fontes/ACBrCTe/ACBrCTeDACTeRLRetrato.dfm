@@ -11,8 +11,8 @@ inherited frmDACTeRLRetrato: TfrmDACTeRLRetrato
   Font.Name = 'Arial'
   Font.Style = [fsBold]
   inherited RLCTe: TRLReport
-    Left = 16
-    Top = -728
+    Left = 8
+    Top = 32
     Background.Arrange = baDistributed
     Background.Height = 96
     Background.Width = 175
@@ -1724,17 +1724,6 @@ inherited frmDACTeRLRetrato: TfrmDACTeRLRetrato
         RealBounds.Width = 0
         RealBounds.Height = 0
       end
-      object rliBarCode2: TRLImage
-        Left = 357
-        Height = 33
-        Top = 136
-        Width = 361
-        Center = True
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
-      end
       object RLDraw99: TRLDraw
         Left = 332
         Height = 1
@@ -1742,6 +1731,20 @@ inherited frmDACTeRLRetrato: TfrmDACTeRLRetrato
         Width = 408
         Angle = 0
         Brush.Style = bsClear
+        RealBounds.Left = 0
+        RealBounds.Top = 0
+        RealBounds.Width = 0
+        RealBounds.Height = 0
+      end
+      object RLBarcode1: TRLBarcode
+        Left = 350
+        Height = 34
+        Top = 135
+        Width = 376
+        AutoSize = False
+        BarcodeType = bcCode128C
+        Margins.LeftMargin = 1
+        Margins.RightMargin = 1
         RealBounds.Left = 0
         RealBounds.Top = 0
         RealBounds.Width = 0
@@ -8893,11 +8896,12 @@ inherited frmDACTeRLRetrato: TfrmDACTeRLRetrato
     end
   end
   object rlbCodigoBarras: TRLBarcode[1]
-    Left = 496
+    Left = 372
     Height = 32
-    Top = 320
-    Width = 132
+    Top = 350
+    Width = 396
     Alignment = taCenter
+    AutoSize = False
     BarcodeType = bcCode128C
     Margins.LeftMargin = 1
     Margins.RightMargin = 1

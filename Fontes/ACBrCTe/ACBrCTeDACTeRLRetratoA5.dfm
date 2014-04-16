@@ -1929,17 +1929,6 @@ inherited frmDACTeRLRetratoA5: TfrmDACTeRLRetratoA5
         RealBounds.Width = 0
         RealBounds.Height = 0
       end
-      object rliBarCode2: TRLImage
-        Left = 357
-        Height = 33
-        Top = 115
-        Width = 361
-        Center = True
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
-      end
       object RLDraw99: TRLDraw
         Left = 332
         Height = 1
@@ -1965,10 +1954,25 @@ inherited frmDACTeRLRetratoA5: TfrmDACTeRLRetratoA5
         RealBounds.Height = 0
       end
       object rliBarCode: TRLBarcode
-        Left = 476
+        Left = 337
         Height = 32
         Top = 56
-        Width = 99
+        Width = 398
+        AutoSize = False
+        BarcodeType = bcCode128C
+        Margins.LeftMargin = 1
+        Margins.RightMargin = 1
+        RealBounds.Left = 0
+        RealBounds.Top = 0
+        RealBounds.Width = 0
+        RealBounds.Height = 0
+      end
+      object RLBarcode1: TRLBarcode
+        Left = 346
+        Height = 28
+        Top = 117
+        Width = 381
+        AutoSize = False
         BarcodeType = bcCode128C
         Margins.LeftMargin = 1
         Margins.RightMargin = 1

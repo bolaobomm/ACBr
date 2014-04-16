@@ -104,7 +104,6 @@ type
     procedure ConfigDataSet;
 
     procedure rllSemValorFiscalPrint(Sender: TObject; var Value: string);
-    procedure SetBarCodeImage(ACode: string; RLImage: TRLImage);
     function getTextoResumoCanhoto: string;
   public
     class procedure Imprimir(ACTe: TCTe; ALogo: string = ''; AEmail: string = '';
@@ -231,19 +230,6 @@ begin
   inherited;
   if FSemValorFiscal then
     Value := '';
-end;
-
-procedure TfrmDACTeRL.SetBarCodeImage(ACode: string; RLImage: TRLImage);
-//var
-//  b: TRLBarcode;
-begin
-  //b := TRLBarcode.Create;
-  //try
-  //  b.Code := ACode;
-  //  b.PaintCodeToCanvas(ACode, RLImage.Canvas, RLImage.ClientRect);
-  //finally
-  //  b.Free;
-  //end;
 end;
 
 procedure TfrmDACTeRL.FormDestroy(Sender: TObject);
