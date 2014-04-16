@@ -55,7 +55,8 @@ type
                                 AguardarEnvio: Boolean = False;
                                 NomeRemetente: String = '';
                                 TLS: Boolean = True;
-                                UsarThread: Boolean = True);
+                                UsarThread: Boolean = True;
+                                FormatoEmHTML: Boolean = False);
     property NFSe: TNFSe  read FNFSe write FNFSe;
     property XML_Rps: AnsiString read FXML_Rps write FXML_Rps;
     property XML_Rps_Ass: AnsiString read FXML_Rps_Ass write FXML_Rps_Ass;
@@ -168,7 +169,8 @@ procedure NotaFiscal.EnviarEmail(const sSmtpHost,
                                        AguardarEnvio: Boolean = False;
                                        NomeRemetente: String = '';
                                        TLS: Boolean = True;
-                                       UsarThread: Boolean = True);
+                                       UsarThread: Boolean = True;
+                                       HTML: Boolean = False);
 
 var
 // NomeArq    : String;
@@ -194,7 +196,7 @@ begin
     if NomeArq <> '' then
      begin
 //       SaveToFile(NomeArq);
-       AnexosEmail.Add(NomeArq);
+//       AnexosEmail.Add(NomeArq);
      end
     else
      begin
@@ -236,7 +238,8 @@ begin
                 StreamNFSe,
 //                copy(NFSe.Numero, (length(NFSe.Numero) - 44) + 1, 44) + '-NFSe.xml',
                 NomeArqXML + '-nfse.xml',
-                UsarThread);
+                UsarThread,
+                FormatoEmHTML);
  finally
     AnexosEmail.Free;
     StreamNFSe.Free;
