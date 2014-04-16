@@ -1206,7 +1206,10 @@ begin
            FiscNETComando.TimeOut     := 5 ;
            FiscNETComando.AddParamString('Operador',Operador) ;
            EnviaComando ;
-        end ;
+        end else
+        begin
+          raise;
+        end;
      end ;
   end ;
 
