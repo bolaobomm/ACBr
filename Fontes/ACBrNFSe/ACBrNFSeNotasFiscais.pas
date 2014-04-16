@@ -170,7 +170,7 @@ procedure NotaFiscal.EnviarEmail(const sSmtpHost,
                                        NomeRemetente: String = '';
                                        TLS: Boolean = True;
                                        UsarThread: Boolean = True;
-                                       HTML: Boolean = False);
+                                       FormatoEmHTML: Boolean = False);
 
 var
 // NomeArq    : String;
