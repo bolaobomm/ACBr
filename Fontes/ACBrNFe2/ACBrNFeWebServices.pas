@@ -2015,7 +2015,12 @@ begin
 
       if  FConfiguracoes.Geral.Salvar then
        begin
-         FPathArqResp := FRecibo+'-pro-rec.xml';
+         // Alterado por Italo em 16/04/2014 
+         if FRecibo <> '' then
+           FPathArqResp := FRecibo+'-pro-rec.xml'
+         else
+           FPathArqResp := Lote+'-pro-lot.xml';
+
          FConfiguracoes.Geral.Save(FPathArqResp, FRetWS);
        end;
      end
