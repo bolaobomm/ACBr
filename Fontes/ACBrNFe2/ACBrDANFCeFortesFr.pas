@@ -205,7 +205,7 @@ procedure Register;
 
 implementation
 
-uses ACBrNFe, StrUtils, DelphiZXingQRCode, math;
+uses ACBrNFe, StrUtils, ACBrDelphiZXingQRCode, math;
 
 {$ifdef FPC}
   {$R *.lfm}

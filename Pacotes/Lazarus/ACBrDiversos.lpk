@@ -75,8 +75,8 @@ ACBrCalculadora, ACBrExtenso, ACBrValidador, ACBrFala, ACBrCMC7, ACBrGIF, ACBrBa
         <UnitName Value="AJBarcode"/>
       </Item11>
       <Item12>
-        <Filename Value="..\..\Fontes\ACBrDiversos\DelphiZXingQRCode.pas"/>
-        <UnitName Value="DelphiZXingQRCode"/>
+        <Filename Value="..\..\Fontes\ACBrDiversos\ACBrDelphiZXingQRCode.pas"/>
+        <UnitName Value="ACBrDelphiZXingQRCode"/>
       </Item12>
       <Item13>
         <Filename Value="..\..\Fontes\ACBrDiversos\Gif1.pas"/>

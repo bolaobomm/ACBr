@@ -101,7 +101,7 @@ uses
      QRPDFFilt,
   {$ENDIF}
   DBClient, ACBrNFeDANFEClass, ACBrNFeDANFeQRClass,
-  DelphiZXIngQRCode;
+  ACBrDelphiZXingQRCode;
 
 type
 

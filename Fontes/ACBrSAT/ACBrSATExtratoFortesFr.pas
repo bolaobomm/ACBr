@@ -284,7 +284,7 @@ procedure Register;
 
 implementation
 
-uses ACBrSAT, DelphiZXingQRCode, math;
+uses ACBrSAT, ACBrDelphiZXingQRCode, math;
 
 {$ifdef FPC}
   {$R *.lfm}

@@ -1,6 +1,6 @@
 {$I ACBr.inc}
 
-unit DelphiZXingQRCode;
+unit ACBrDelphiZXingQRCode;
 
 // ZXing QRCode port to Delphi, by Debenu Pty Ltd
 // www.debenu.com

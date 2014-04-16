@@ -453,8 +453,8 @@
         <UsageCount Value="5"/>
       </Unit51>
       <Unit52>
-        <Filename Value="..\..\..\Fontes\ACBrDiversos\DelphiZXIngQRCode.pas"/>
-        <UnitName Value="DelphiZXingQRCode"/>
+        <Filename Value="..\..\..\Fontes\ACBrDiversos\ACBrDelphiZXingQRCode.pas"/>
+        <UnitName Value="ACBrDelphiZXingQRCode"/>
         <WindowIndex Value="0"/>
         <TopLine Value="38"/>
         <CursorPos X="25" Y="47"/>
