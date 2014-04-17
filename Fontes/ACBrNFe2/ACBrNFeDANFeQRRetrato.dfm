@@ -1,8 +1,8 @@
 inherited fqrDANFeQRRetrato: TfqrDANFeQRRetrato
-  Left = 196
+  Left = 193
   Width = 845
   Height = 784
-  VertScrollBar.Position = 83
+  VertScrollBar.Position = 20
   Caption = 'DANFe - Retrato'
   Font.Height = -8
   Font.Name = 'Arial'
@@ -12,7 +12,7 @@ inherited fqrDANFeQRRetrato: TfqrDANFeQRRetrato
   TextHeight = 10
   inherited QRNFe: TQuickRep
     Tag = 1
-    Top = -80
+    Top = -17
     BeforePrint = QRNFeBeforePrint
     DataSet = cdsItens
     Font.Height = -8

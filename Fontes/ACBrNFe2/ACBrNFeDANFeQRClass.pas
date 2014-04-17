@@ -56,8 +56,8 @@ interface
 
 uses
  Forms, SysUtils, Classes,
- ACBrNFeDANFeQR, ACBrNFeDANFEClass, pcnNFe, pcnConversao,
- ACBrNFeDAEventoQR, ACBrNFeDAEventoQRRetrato;
+ pcnNFe, pcnConversao, ACBrNFeDANFEClass,
+ ACBrNFeDANFeQR, ACBrNFeDAEventoQR;
 
 type
   TACBrNFeDANFEQR = class( TACBrNFeDANFEClass )
@@ -75,8 +75,9 @@ implementation
 
 uses
  StrUtils, Dialogs,
- ACBrNFe, ACBrNFeUtil, ACBrUtil,
- ACBrNFeDANFeQRRetrato, ACBrNFeDANFeQRPaisagem, ACBrNFeDANFeQRNFCe;
+ ACBrUtil, ACBrNFe, ACBrNFeUtil,
+ ACBrNFeDANFeQRRetrato, ACBrNFeDANFeQRPaisagem, ACBrNFeDANFeQRSimplificado,
+ ACBrNFeDANFeQRNFCe, ACBrNFeDAEventoQRRetrato;
 
 var
  frmNFeDAEventoQR : TfrmNFeDAEventoQR;
@@ -98,15 +99,21 @@ var
   sProt : String;
 begin
   case TipoDANFe of
-    tiNFCe:     begin
-                 fqrDANFeQRRetrato := TfqrDANFeQRNFCe.Create(Self);
-                end;
-    tiPaisagem: begin
-                 fqrDANFeQRRetrato := TfqrDANFeQRPaisagem.Create(Self);
-                end;
-    else        begin // tiRetrato
-                 fqrDANFeQRRetrato := TfqrDANFeQRRetrato.Create(Self);
-                end;
+    tiRetrato:      begin
+                     fqrDANFeQRRetrato := TfqrDANFeQRRetrato.Create(Self);
+                    end;
+    tiPaisagem:     begin
+                     fqrDANFeQRRetrato := TfqrDANFeQRPaisagem.Create(Self);
+                    end;
+    tiSimplificado: begin
+                     fqrDANFeQRRetrato := TfqrDANFeQRSimplificado.Create(Self);
+                    end;
+    tiNFCe:         begin
+                     fqrDANFeQRRetrato := TfqrDANFeQRNFCe.Create(Self);
+                    end;
+    else            begin // tiRetrato
+                     fqrDANFeQRRetrato := TfqrDANFeQRRetrato.Create(Self);
+                    end;
   end;
 
 //  fqrDANFeQRRetrato := TfqrDANFeQRRetrato.Create(Self);
@@ -180,15 +187,21 @@ var
   sProt : String;
 begin
   case TipoDANFe of
-    tiNFCe:     begin
-                 fqrDANFeQRRetrato := TfqrDANFeQRNFCe.Create(Self);
-                end;
-    tiPaisagem: begin
-                 fqrDANFeQRRetrato := TfqrDANFeQRPaisagem.Create(Self);
-                end;
-    else        begin // tiRetrato
-                 fqrDANFeQRRetrato := TfqrDANFeQRRetrato.Create(Self);
-                end;
+    tiRetrato:      begin
+                     fqrDANFeQRRetrato := TfqrDANFeQRRetrato.Create(Self);
+                    end;
+    tiPaisagem:     begin
+                     fqrDANFeQRRetrato := TfqrDANFeQRPaisagem.Create(Self);
+                    end;
+    tiSimplificado: begin
+                     fqrDANFeQRRetrato := TfqrDANFeQRSimplificado.Create(Self);
+                    end;
+    tiNFCe:         begin
+                     fqrDANFeQRRetrato := TfqrDANFeQRNFCe.Create(Self);
+                    end;
+    else            begin // tiRetrato
+                     fqrDANFeQRRetrato := TfqrDANFeQRRetrato.Create(Self);
+                    end;
   end;
 
 //  fqrDANFeQRRetrato := TfqrDANFeQRRetrato.Create(Self);

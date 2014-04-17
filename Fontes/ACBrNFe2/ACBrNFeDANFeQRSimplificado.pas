@@ -89,7 +89,7 @@
 ******************************************************************************}
 {$I ACBr.inc}
 
-unit ACBrNFeDANFeQRNFCe;
+unit ACBrNFeDANFeQRSimplificado;
 
 interface
 
@@ -100,12 +100,11 @@ uses
   {$IFDEF QReport_PDF}
      QRPDFFilt,
   {$ENDIF}
-  DBClient, ACBrNFeDANFEClass, ACBrNFeDANFeQRClass,
-  ACBrDelphiZXingQRCode;
+  DBClient, ACBrNFeDANFEClass, ACBrNFeDANFeQRClass;
 
 type
 
-  TfqrDANFeQRNFCe = class(TfqrDANFeQR)
+  TfqrDANFeQRSimplificado = class(TfqrDANFeQR)
     cdsItens: TClientDataSet;
     cdsItensCODIGO: TStringField;
     cdsItensDESCRICAO: TStringField;
@@ -121,80 +120,75 @@ type
     cdsItensVALORICMS: TStringField;
     cdsItensALIQIPI: TStringField;
     cdsItensVALORIPI: TStringField;
-    qrb01_Emitente: TQRBand;
-    qrb02_DadosFixosDanfe: TQRChildBand;
-    qrb03a_Cab_Itens: TQRBand;
-    qrb04_Totais: TQRBand;
-    qrb07_Consumidor: TQRChildBand;
-    QRLabel17: TQRLabel;
-    qrlURLSefaz: TQRLabel;
-    QRLabel19: TQRLabel;
+    qrb01_Chave: TQRBand;
+    qrb02_Emitente: TQRChildBand;
+    qrb05a_Cab_Itens: TQRBand;
+    qrb06a_Totais: TQRBand;
     QRLabel142: TQRLabel;
     QRLabel143: TQRLabel;
     QRLabel147: TQRLabel;
     QRLabel148: TQRLabel;
     QRLabel149: TQRLabel;
     QRLabel150: TQRLabel;
-    qrb03b_Desc_Itens: TQRBand;
+    qrb05b_Desc_Itens: TQRBand;
     qrmProdutoCodigo: TQRDBText;
     qrmProdutoDescricao: TQRDBText;
     qrmProdutoUnidade: TQRDBText;
     qrmProdutoQTDE: TQRDBText;
     qrmProdutoValor: TQRDBText;
     qrmProdutoTotal: TQRDBText;
-    qrb03c_Lin_Itens: TQRChildBand;
+    qrb05c_Lin_Itens: TQRChildBand;
     QRShape68: TQRShape;
     cdsItensXPROD: TStringField;
     cdsItensINFADIPROD: TStringField;
     cdsItensCSOSN: TStringField;
-    qriLogo: TQRImage;
-    qrmEmitente: TQRMemo;
-    qrb08_QRCode: TQRChildBand;
-    qrb05_Tributos: TQRChildBand;
+    qrb06b_Tributos: TQRChildBand;
     qrlTributos: TQRLabel;
-    qrb06_Chave: TQRChildBand;
-    QRLabel9: TQRLabel;
-    qrlChave: TQRLabel;
-    qrlTipoEmissao: TQRLabel;
-    lblNumero: TQRLabel;
-    qrlSiteConsulta: TQRLabel;
-    QRLabel10: TQRLabel;
     qrmPagDesc: TQRMemo;
     qrmPagValor: TQRMemo;
-    QRLabel1: TQRLabel;
-    qrlDestCNPJ: TQRLabel;
-    qrlDescricao: TQRLabel;
-    qrlProtocolo: TQRLabel;
-    qrlMsgTipoEmissao: TQRLabel;
-    QRLabel2: TQRLabel;
-    qriQRCode: TQRImage;
-    qrlEmissao: TQRLabel;
     QRLabel3: TQRLabel;
     cdsItensITEM: TStringField;
     qrmProdutoItem: TQRDBText;
+    qriLogo: TQRImage;
+    qrmEmitente: TQRMemo;
+    QRLabel17: TQRLabel;
+    qriBarCode: TQRImage;
+    QRLabel9: TQRLabel;
+    qrlChave: TQRLabel;
+    qrlDescricao: TQRLabel;
+    qrlProtocolo: TQRLabel;
+    qrb03_DadosGerais: TQRChildBand;
+    qrlTipoEmissao: TQRLabel;
+    lblNumero: TQRLabel;
+    qrlEmissao: TQRLabel;
+    qrb04_Destinatario: TQRChildBand;
+    QRLabel1: TQRLabel;
+    qrlMsgTipoEmissao: TQRLabel;
+    qrmDestinatario: TQRMemo;
+    QRLabel27: TQRLabel;
+    QRShape102: TQRShape;
+    qrlEntradaSaida: TQRLabel;
     procedure QRNFeBeforePrint(Sender: TCustomQuickRep;
       var PrintReport: Boolean);
     procedure qrmProdutoDescricaoPrint(sender: TObject; var Value: string);
 
-    procedure qrb01_EmitenteBeforePrint(Sender: TQRCustomBand;
+    procedure qrb01_ChaveBeforePrint(Sender: TQRCustomBand;
       var PrintBand: Boolean);
-    procedure qrb02_DadosFixosDanfeBeforePrint(Sender: TQRCustomBand;
+    procedure qrb02_EmitenteBeforePrint(Sender: TQRCustomBand;
       var PrintBand: Boolean);
-    procedure qrb03a_Cab_ItensBeforePrint(Sender: TQRCustomBand;
+    procedure qrb03_DadosGeraisBeforePrint(Sender: TQRCustomBand;
       var PrintBand: Boolean);
-    procedure qrb03b_Desc_ItensBeforePrint(Sender: TQRCustomBand;
+    procedure qrb04_DestinatarioBeforePrint(Sender: TQRCustomBand;
       var PrintBand: Boolean);
-    procedure qrb03c_Lin_ItensBeforePrint(Sender: TQRCustomBand;
+    procedure qrb05a_Cab_ItensBeforePrint(Sender: TQRCustomBand;
       var PrintBand: Boolean);
-    procedure qrb04_TotaisBeforePrint(Sender: TQRCustomBand;
+    procedure qrb05b_Desc_ItensBeforePrint(Sender: TQRCustomBand;
       var PrintBand: Boolean);
-    procedure qrb05_TributosBeforePrint(Sender: TQRCustomBand;
+    procedure qrb05c_Lin_ItensBeforePrint(Sender: TQRCustomBand;
       var PrintBand: Boolean);
-    procedure qrb06_ChaveBeforePrint(Sender: TQRCustomBand;
+    procedure qrb06a_TotaisBeforePrint(Sender: TQRCustomBand;
       var PrintBand: Boolean);
-    procedure qrb07_ConsumidorBeforePrint(Sender: TQRCustomBand;
-      var PrintBand: Boolean);
-    procedure qrb08_QRCodeBeforePrint(Sender: TQRCustomBand;
+    procedure qrb06b_TributosBeforePrint(Sender: TQRCustomBand;
       var PrintBand: Boolean);
   private
     { Private declarations }
@@ -205,7 +199,6 @@ type
     { Public declarations }
     procedure ProtocoloNFE( const sProtocolo : String );
   end;
-
 
 implementation
 
@@ -223,16 +216,16 @@ var
    FProtocoloNFE: String;
    nItemControle: Integer;
 
-procedure TfqrDANFeQRNFCe.QRNFeBeforePrint(Sender: TCustomQuickRep;
+procedure TfqrDANFeQRSimplificado.QRNFeBeforePrint(Sender: TCustomQuickRep;
   var PrintReport: Boolean);
 var
  nRestItens: Integer;
 begin
   inherited;
 
-  qrb03a_Cab_Itens.Enabled := FImprimeItens;
-  qrb03b_Desc_Itens.Enabled := FImprimeItens;
-  qrb03c_Lin_Itens.Enabled := FImprimeItens;
+  qrb05a_Cab_Itens.Enabled := FImprimeItens;
+  qrb05b_Desc_Itens.Enabled := FImprimeItens;
+  qrb05c_Lin_Itens.Enabled := FImprimeItens;
 
   Itens;
   nItemControle := 0;
@@ -259,7 +252,7 @@ begin
   QRNFe.Page.RightMargin  := FMargemDireita  * 100;
 end;
 
-procedure TfqrDANFeQRNFCe.qrmProdutoDescricaoPrint(sender: TObject;
+procedure TfqrDANFeQRSimplificado.qrmProdutoDescricaoPrint(sender: TObject;
   var Value: string);
 var
  intTamanhoDescricao,
@@ -297,7 +290,7 @@ begin
    then Value := Value + #13 + 'InfAd: ' + cdsItensINFADIPROD.AsString;
 end;
 
-procedure TfqrDANFeQRNFCe.Itens;
+procedure TfqrDANFeQRSimplificado.Itens;
 var
  nItem: Integer;
  sCST, sBCICMS, sALIQICMS, sVALORICMS, sALIQIPI, sVALORIPI: String;
@@ -481,13 +474,47 @@ begin
   cdsItens.First;
 end;
 
-procedure TfqrDANFeQRNFCe.ProtocoloNFE( const sProtocolo : String );
+procedure TfqrDANFeQRSimplificado.ProtocoloNFE( const sProtocolo : String );
 begin
   FProtocoloNFE := sProtocolo;
 end;
 
-procedure TfqrDANFeQRNFCe.qrb01_EmitenteBeforePrint(Sender: TQRCustomBand;
+procedure TfqrDANFeQRSimplificado.qrb01_ChaveBeforePrint(Sender: TQRCustomBand;
   var PrintBand: Boolean);
+begin
+  inherited;
+
+  PrintBand := QRNFe.PageNumber = 1;
+
+  SetBarCodeImage( Copy ( FNFe.InfNFe.Id, 4, 44 ), qriBarCode );
+
+  qrlChave.Caption := NotaUtil.FormatarChaveAcesso(Copy(FNFe.InfNFe.Id, 4, 44));
+
+  // Normal **************************************************************
+  if FNFe.Ide.tpEmis in [teNormal, teSCAN]
+   then begin
+    if FNFe.procNFe.cStat = 100
+     then qrlDescricao.Caption := 'Protocolo de Autorização';
+
+    if FNFe.procNFe.cStat in [101, 151, 155]
+     then qrlDescricao.Caption:= 'Protocolo de Homologação de Cancelamento';
+
+    if FNFe.procNFe.cStat = 110
+     then qrlDescricao.Caption:= 'Protocolo de Denegação de Uso';
+   end;
+
+  if FProtocoloNFE <> ''
+   then qrlProtocolo.Caption := FProtocoloNFE
+   else qrlProtocolo.Caption := FNFe.procNFe.nProt + ' ' +
+                                DFeUtil.SeSenao(FNFe.procNFe.dhRecbto <> 0, DateTimeToStr(FNFe.procNFe.dhRecbto), '');
+
+  FTotalPages := HrTotalPages;
+end;
+
+procedure TfqrDANFeQRSimplificado.qrb02_EmitenteBeforePrint(Sender: TQRCustomBand;
+  var PrintBand: Boolean);
+var
+ strChaveContingencia: String;
 begin
   inherited;
 
@@ -526,173 +553,44 @@ begin
    end;
 end;
 
-procedure TfqrDANFeQRNFCe.qrb02_DadosFixosDanfeBeforePrint(Sender: TQRCustomBand;
-  var PrintBand: Boolean);
-var
- strChaveContingencia: String;
-begin
-  inherited;
-
-  PrintBand := QRNFe.PageNumber = 1;
-
-  FTotalPages := HrTotalPages;
-end;
-
-procedure TfqrDANFeQRNFCe.qrb03a_Cab_ItensBeforePrint(
+procedure TfqrDANFeQRSimplificado.qrb03_DadosGeraisBeforePrint(
   Sender: TQRCustomBand; var PrintBand: Boolean);
 begin
   inherited;
-
-//  PrintBand := QRNFe.PageNumber = 1;
-
-end;
-
-procedure TfqrDANFeQRNFCe.qrb03b_Desc_ItensBeforePrint(Sender: TQRCustomBand;
-  var PrintBand: Boolean);
-begin
-  inherited;
-
-//  Inc( nItemControle );
-//  if QRNFe.PageNumber = 1 then
-//     if QRNFe.RecordCount < _NUM_ITEMS_PAGE1 then
-//        qrsFimItens.Enabled := ( nItemControle = QRNFe.RecordCount   )
-//     else
-//        qrsFimItens.Enabled := ( nItemControle = _NUM_ITEMS_PAGE1    )
-//  else
-//  begin
-//     qrsFimItens.Enabled := ( nItemControle = _NUM_ITEMS_OTHERPAGES  ) or
-//                            ( QRNFe.RecordNumber = QRNFe.RecordCount ) or
-//                            ( cdsItens.Eof                           );
-//  end;
-//  if qrsFimItens.Enabled then
-//     nItemControle := 0;
-end;
-
-procedure TfqrDANFeQRNFCe.qrb03c_Lin_ItensBeforePrint(
-  Sender: TQRCustomBand; var PrintBand: Boolean);
-begin
-  inherited;
-
-//  qrb03c_Lin_Itens.Enabled := FImprimeItens;
-end;
-
-procedure TfqrDANFeQRNFCe.qrb04_TotaisBeforePrint(Sender: TQRCustomBand;
-  var PrintBand: Boolean);
-var
- i: Integer;
-begin
-  inherited;
-
-//  PrintBand := QRNFe.PageNumber = 1;
-
-  qrmPagDesc.Lines.Clear;
-  qrmPagValor.Lines.Clear;
-
-  qrmPagDesc.Lines.Add('Qtde Total de Itens');
-  qrmPagValor.Lines.Add(IntToStr(TotalItens));
-
-  qrmPagDesc.Lines.Add('Valor Total');
-  qrmPagValor.Lines.Add(DFeUtil.FormatFloat(FNFE.Total.ICMSTot.vNF));
-
-  if FNFE.Total.ICMSTot.vDesc > 0.0
-   then begin
-     qrmPagDesc.Lines.Add('Total Descontos');
-     qrmPagValor.Lines.Add(DFeUtil.FormatFloat(FNFE.Total.ICMSTot.vDesc));
-   end;
-
-  if FvTroco > 0.0
-   then begin
-     qrmPagDesc.Lines.Add('Troco');
-     qrmPagValor.Lines.Add(DFeUtil.FormatFloat(FvTroco));
-   end;
-
-  qrmPagDesc.Lines.Add('Forma de Pagamento');
-  qrmPagValor.Lines.Add('Valor Pago');
-
-  for i := 0 to FNFE.pag.Count -1 do
-   begin
-//  TpcnFormaPagamento = (fpDinheiro, fpCheque, fpCartaoCredito, fpCartaoDebito, fpCreditoLoja,
-//                        fpValeAlimentacao, fpValeRefeicao, fpValePresente, fpValeCombustivel,
-//                        fpOutro);
-    case FNFE.pag.Items[i].tPag of
-     fpDinheiro:        qrmPagDesc.Lines.Add('Dinheiro');
-     fpCheque:          qrmPagDesc.Lines.Add('Cheque');
-     fpCartaoCredito:   qrmPagDesc.Lines.Add('Cartão de Crédito');
-     fpCartaoDebito:    qrmPagDesc.Lines.Add('Cartão de Débito');
-     fpCreditoLoja:     qrmPagDesc.Lines.Add('Crédito Loja');
-     fpValeAlimentacao: qrmPagDesc.Lines.Add('Vale Alimentação');
-     fpValeRefeicao:    qrmPagDesc.Lines.Add('Vale Refeição');
-     fpValePresente:    qrmPagDesc.Lines.Add('Vale Presente');
-     fpValeCombustivel: qrmPagDesc.Lines.Add('Vale Combustível');
-     fpOutro:           qrmPagDesc.Lines.Add('Outro');
-    end;
-
-    qrmPagValor.Lines.Add(DFeUtil.FormatFloat(FNFE.pag.Items[i].vPag));
-   end;
-end;
-
-procedure TfqrDANFeQRNFCe.qrb05_TributosBeforePrint(Sender: TQRCustomBand;
-  var PrintBand: Boolean);
-var
- Perc: Double;
-begin
-  inherited;
-//  PrintBand := QRNFe.PageNumber = 1;
-
-  Perc := (FNFE.Total.ICMSTot.vTotTrib / FNFE.Total.ICMSTot.vNF) * 100;
-  qrlTributos.Caption := 'Valor aprox. dos tributos: ' +
-                         DFeUtil.FormatFloat(FNFE.Total.ICMSTot.vTotTrib) +
-                         '(' + DFeUtil.FormatFloat(Perc) + '%)(Fonte: IBPT)';
-end;
-
-procedure TfqrDANFeQRNFCe.qrb06_ChaveBeforePrint(Sender: TQRCustomBand;
-  var PrintBand: Boolean);
-begin
-  inherited;
-//  PrintBand := QRNFe.PageNumber = 1;
-
-  lblNumero.Caption := 'Número: ' + FormatFloat('000,000,000', FNFe.Ide.nNF) +
-                       ' - Série: '+ FormatFloat('000', FNFe.Ide.serie);
-
-  qrlEmissao.Caption := 'Emissão: ' + DFeUtil.FormatDateTime(DateToStr(FNFe.Ide.dEmi)) +
-                       ' - Via do Consumidor';
-  qrlSiteConsulta.Caption := NotaUtil.GetURLConsultaNFCe(FNFE.Ide.cUF, FNFe.Ide.tpAmb);
-
-  qrlChave.Caption := NotaUtil.FormatarChaveAcesso(Copy(FNFe.InfNFe.Id, 4, 44));
-end;
-
-procedure TfqrDANFeQRNFCe.qrb07_ConsumidorBeforePrint(Sender: TQRCustomBand;
-  var PrintBand: Boolean);
-var
- vTpEmissao: Integer;
-begin
-  inherited;
-//  PrintBand := QRNFe.PageNumber = 1;
-
-  if FNFE.Dest.CNPJCPF <> ''
-   then qrlDestCNPJ.Caption := 'CPF/CNPJ: ' + DFeUtil.FormatarCNPJCPF(FNFE.Dest.CNPJCPF)
-   else if FNFE.Dest.idEstrangeiro <> ''
-         then qrlDestCNPJ.Caption := 'ID Estrangeiro: ' + FNFE.Dest.idEstrangeiro
-         else qrlDestCNPJ.Caption := 'CONSUMINDOR NÃO IDENTIFICADO';
-
-  // Mensagem
-
-  // Normal **************************************************************
-  if FNFe.Ide.tpEmis in [teNormal, teSCAN]
-   then begin
-    if FNFe.procNFe.cStat = 100
-     then qrlDescricao.Caption := 'Protocolo de Autorização';
-
-    if FNFe.procNFe.cStat in [101, 151, 155]
-     then qrlDescricao.Caption:= 'Protocolo de Homologação de Cancelamento';
-
-    if FNFe.procNFe.cStat = 110
-     then qrlDescricao.Caption:= 'Protocolo de Denegação de Uso';
-   end;
 
   // Contingencia ********************************************************
   if FNFe.Ide.tpEmis in [teContingencia, teFSDA]
    then qrlTipoEmissao.Caption := 'CONTINGENCIA FS-DA';
+
+  qrlEntradaSaida.Caption := tpNFToStr( FNFe.Ide.tpNF );
+
+  lblNumero.Caption := 'Número: ' + FormatFloat('000,000,000', FNFe.Ide.nNF) +
+                       ' - Série: '+ FormatFloat('000', FNFe.Ide.serie);
+
+  qrlEmissao.Caption := 'Emissão: ' + DFeUtil.FormatDateTime(DateToStr(FNFe.Ide.dEmi));
+end;
+
+procedure TfqrDANFeQRSimplificado.qrb04_DestinatarioBeforePrint(
+  Sender: TQRCustomBand; var PrintBand: Boolean);
+var
+ vTpEmissao: Integer;
+begin
+  inherited;
+
+  qrmDestinatario.Lines.Clear;
+  with FNFe.Dest do
+   begin
+    qrmDestinatario.Lines.Add(XNome);
+    with EnderDest do
+     begin
+      qrmDestinatario.Lines.Add(XLgr + IfThen(Nro = '0', '', ', ' + Nro) +
+                            IfThen(XCpl = '', '', ', ' + XCpl) +
+                            IfThen(XBairro = '', '', ', ' + XBairro) +
+                            ', ' + XMun + '/ ' + UF);
+     end;
+    qrmDestinatario.Lines.Add('CPF/CNPJ: ' + DFeUtil.FormatarCNPJCPF(CNPJCPF) +
+                              ' IE: ' + IE);
+   end;
 
   if FNFe.Ide.tpAmb = taHomologacao then
    begin
@@ -753,88 +651,76 @@ begin
  qrlMsgTipoEmissao.Repaint;
 end;
 
-procedure TfqrDANFeQRNFCe.qrb08_QRCodeBeforePrint(Sender: TQRCustomBand;
-  var PrintBand: Boolean);
-var
- QRCodeBitmap: TBitmap;
- QRCode: TDelphiZXingQRCode;
- Row, Column: Integer;
- Scale: Double;
- cDest, sURL: String;
+procedure TfqrDANFeQRSimplificado.qrb05a_Cab_ItensBeforePrint(
+  Sender: TQRCustomBand; var PrintBand: Boolean);
 begin
   inherited;
 
 //  PrintBand := QRNFe.PageNumber = 1;
 
-  QRCodeBitmap := TBitmap.Create;
-  try
-    QRCode := TDelphiZXingQRCode.Create;
-    try
-      if FNFe.Dest.idEstrangeiro <> ''
-       then cDest := FNFe.Dest.idEstrangeiro
-       else cDest := FNFe.Dest.CNPJCPF;
+end;
 
-      sURL := NotaUtil.GetURLQRCode(FNFE.Ide.cUF,
-                                    FNFe.Ide.tpAmb,
-                                    Copy(FNFe.InfNFe.Id, 4, 44),
-                                    cDest,
-                                    FNFe.Ide.dEmi,
-                                    FNFe.Total.ICMSTot.vNF,
-                                    FNFe.Total.ICMSTot.vICMS,
-                                    FNFe.procNFe.digVal,
-                                    TACBrNFe( FACBrNFe ).Configuracoes.Geral.IdToken,
-                                    TACBrNFe( FACBrNFe ).Configuracoes.Geral.Token);
-      QRCode.Data := sURL;
+procedure TfqrDANFeQRSimplificado.qrb05b_Desc_ItensBeforePrint(Sender: TQRCustomBand;
+  var PrintBand: Boolean);
+begin
+  inherited;
 
-      // TQRCodeEncoding = (qrAuto, qrNumeric, qrAlphanumeric, qrISO88591, qrUTF8NoBOM, qrUTF8BOM);
-      // 0=Auto, 1=Numeric, 2=Alphanumeric, 3=ISO-8859-1, 4=UTF-8 without BOM, 5=UTF-8 with BOM
-      QRCode.Encoding     := qrAuto; //TQRCodeEncoding(0);
-      QRCode.QuietZone    := 2; //4;
-      QRCodeBitmap.Width  := QRCode.Rows;
-      QRCodeBitmap.Height := QRCode.Columns;
+//  Inc( nItemControle );
+//  if QRNFe.PageNumber = 1 then
+//     if QRNFe.RecordCount < _NUM_ITEMS_PAGE1 then
+//        qrsFimItens.Enabled := ( nItemControle = QRNFe.RecordCount   )
+//     else
+//        qrsFimItens.Enabled := ( nItemControle = _NUM_ITEMS_PAGE1    )
+//  else
+//  begin
+//     qrsFimItens.Enabled := ( nItemControle = _NUM_ITEMS_OTHERPAGES  ) or
+//                            ( QRNFe.RecordNumber = QRNFe.RecordCount ) or
+//                            ( cdsItens.Eof                           );
+//  end;
+//  if qrsFimItens.Enabled then
+//     nItemControle := 0;
+end;
 
-      for Row := 0 to QRCode.Rows - 1 do
-      begin
-        for Column := 0 to QRCode.Columns - 1 do
-        begin
-          if (QRCode.IsBlack[Row, Column]) then
-          begin
-            QRCodeBitmap.Canvas.Pixels[Column, Row] := clBlack;
-          end else
-          begin
-            QRCodeBitmap.Canvas.Pixels[Column, Row] := clWhite;
-          end;
-        end;
-      end;
+procedure TfqrDANFeQRSimplificado.qrb05c_Lin_ItensBeforePrint(
+  Sender: TQRCustomBand; var PrintBand: Boolean);
+begin
+  inherited;
 
-    finally
-      QRCode.Free;
-    end;
+//  PrintBand := QRNFe.PageNumber = 1;
 
-    qriQRCode.Canvas.Brush.Color := clWhite;
-    qriQRCode.Canvas.FillRect(Rect(0, 0, qriQRCode.Width, qriQRCode.Height));
-    if ((QRCodeBitmap.Width > 0) and (QRCodeBitmap.Height > 0)) then
-    begin
-      if (qriQRCode.Width < qriQRCode.Height) then
-      begin
-        Scale := qriQRCode.Width / QRCodeBitmap.Width;
-      end else
-      begin
-        Scale := qriQRCode.Height / QRCodeBitmap.Height;
-      end;
+end;
 
-//      Scale := 1;
-      qriQRCode.Canvas.StretchDraw(Rect(0, 0, Trunc(Scale * QRCodeBitmap.Width), Trunc(Scale * QRCodeBitmap.Height)), QRCodeBitmap);
-    end;
+procedure TfqrDANFeQRSimplificado.qrb06a_TotaisBeforePrint(Sender: TQRCustomBand;
+  var PrintBand: Boolean);
+var
+ i: Integer;
+begin
+  inherited;
 
-  finally
-    QRCodeBitmap.Free;
-  end;
+//  PrintBand := QRNFe.PageNumber = 1;
 
-  if FProtocoloNFE <> ''
-   then qrlProtocolo.Caption := FProtocoloNFE
-   else qrlProtocolo.Caption := FNFe.procNFe.nProt + ' ' +
-                                DFeUtil.SeSenao(FNFe.procNFe.dhRecbto <> 0, DateTimeToStr(FNFe.procNFe.dhRecbto), '');
+  qrmPagDesc.Lines.Clear;
+  qrmPagValor.Lines.Clear;
+
+  qrmPagDesc.Lines.Add('Qtde Total de Itens');
+  qrmPagValor.Lines.Add(IntToStr(TotalItens));
+
+  qrmPagDesc.Lines.Add('Valor Total');
+  qrmPagValor.Lines.Add(DFeUtil.FormatFloat(FNFE.Total.ICMSTot.vNF));
+end;
+
+procedure TfqrDANFeQRSimplificado.qrb06b_TributosBeforePrint(Sender: TQRCustomBand;
+  var PrintBand: Boolean);
+var
+ Perc: Double;
+begin
+  inherited;
+//  PrintBand := QRNFe.PageNumber = 1;
+
+  Perc := (FNFE.Total.ICMSTot.vTotTrib / FNFE.Total.ICMSTot.vNF) * 100;
+  qrlTributos.Caption := 'Valor aprox. dos tributos: ' +
+                         DFeUtil.FormatFloat(FNFE.Total.ICMSTot.vTotTrib) +
+                         '(' + DFeUtil.FormatFloat(Perc) + '%)(Fonte: IBPT)';
 end;
 
 end.
