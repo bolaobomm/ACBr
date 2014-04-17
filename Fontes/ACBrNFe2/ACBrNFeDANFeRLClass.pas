@@ -180,7 +180,7 @@ implementation
 uses ACBrNFe, ACBrNFeUtil, ACBrUtil,
      ACBrNFeDANFeRL, ACBrNFeDANFeEventoRL,
      ACBrNFeDANFeRLRetrato, ACBrNFeDANFeRLPaisagem,
-     ACBrNFeDANFeEventoRLRetrato;
+     ACBrNFeDANFeEventoRLRetrato, ACBrNFeDANFeRLSimplificado;
 
 var
   i, j: Integer;
@@ -232,8 +232,9 @@ end;
 procedure TACBrNFeDANFeRL.ImprimirDANFE(NFE: TNFe = nil);
 begin
   case FTipoDANFE of
-    tiRetrato:   frlDANFeRL := TfrlDANFeRLRetrato.Create(Self);
-    tiPaisagem:  frlDANFeRL := TfrlDANFeRLPaisagem.Create(Self);
+    tiRetrato      : frlDANFeRL := TfrlDANFeRLRetrato.Create(Self);
+    tiPaisagem     : frlDANFeRL := TfrlDANFeRLPaisagem.Create(Self);
+    tiSimplificado : frlDANFeRL := TfrlDANFeRLSimplificado.Create(Self);
   else
     frlDANFeRL := TfrlDANFeRLRetrato.Create(Self);
   end;
@@ -275,8 +276,9 @@ procedure TACBrNFeDANFeRL.ImprimirDANFEPDF(NFE : TNFe = nil);
 var sFile: String;
 begin
   case FTipoDANFE of
-    tiRetrato:   frlDANFeRL := TfrlDANFeRLRetrato.Create(Self);
-    tiPaisagem:  frlDANFeRL := TfrlDANFeRLPaisagem.Create(Self);
+    tiRetrato      : frlDANFeRL := TfrlDANFeRLRetrato.Create(Self);
+    tiPaisagem     : frlDANFeRL := TfrlDANFeRLPaisagem.Create(Self);
+    tiSimplificado : frlDANFeRL := TfrlDANFeRLSimplificado.Create(Self);
   else
     frlDANFeRL := TfrlDANFeRLRetrato.Create(Self);
   end;

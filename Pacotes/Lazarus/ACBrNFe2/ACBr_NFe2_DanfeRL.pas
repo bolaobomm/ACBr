@@ -9,7 +9,8 @@ interface
 uses
   ACBrNFeDANFeRL, ACBrNFeDANFeRLClass, ACBrNFeDANFeRLReg, 
   ACBrNFeDANFeRLRetrato, ACBrNFeDANFeRLPaisagem, ACBrNFeDANFeEventoRL, 
-  ACBrNFeDANFeEventoRLRetrato, ACBrDANFCeFortesFr, LazarusPackageIntf;
+  ACBrNFeDANFeEventoRLRetrato, ACBrDANFCeFortesFr, ACBrNFeDANFeRLSimplificado, 
+  LazarusPackageIntf;
 
 implementation
 

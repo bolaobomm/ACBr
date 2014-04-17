@@ -302,6 +302,10 @@ begin
     FieldDefs.Add('VALORICMSST',ftString,18);
     FieldDefs.Add('ALIQIPI',ftString,6);
     FieldDefs.Add('VALORIPI',ftString,18);
+    FieldDefs.Add('XPROD',ftString,200);
+    FieldDefs.Add('INFADIPROD',ftString,200);
+    FieldDefs.Add('ITEM',ftString,3);
+
 
    {$IFDEF BORLAND}
     if cdsItens is TClientDataSet then
