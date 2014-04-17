@@ -65,9 +65,9 @@ var
  ConfigCidade: TConfigCidade;
 begin
  ConfigCidade.VersaoSoap    := '1.1';
- ConfigCidade.Prefixo2      := '';
- ConfigCidade.Prefixo3      := '';
- ConfigCidade.Prefixo4      := '';
+ ConfigCidade.Prefixo2      := 'nfse:';
+ ConfigCidade.Prefixo3      := 'nfse:';
+ ConfigCidade.Prefixo4      := 'nfse:';
  ConfigCidade.Identificador := 'Id';
 
  if AAmbiente = 1
