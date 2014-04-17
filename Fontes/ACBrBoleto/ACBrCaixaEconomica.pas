@@ -152,8 +152,10 @@ begin
       if (ACBrTitulo.Carteira = 'RG') then         {carterira registrada}
          ANossoNumero := '14' + padR(ANossoNumero, 15, '0')
       else if (ACBrTitulo.Carteira = 'SR')then     {carteira 2 sem registro}
-         // Alterado de 24 para 21
-         ANossoNumero := '21'+padR(ANossoNumero, 15, '0')
+         // Juliomar Marchetti
+		 //	Voltei para 24 mas tem que ver alguma forma para tratar isso e saber qual 
+		 //	deve ser usado não pode ser fixo nesse caso	 {Alterado de 24 para 21}
+         ANossoNumero := '24'+padR(ANossoNumero, 15, '0')
       else
          raise Exception.Create( ACBrStr('Carteira Inválida.'+sLineBreak+'Utilize "RG" ou "SR"') ) ;
    end;
