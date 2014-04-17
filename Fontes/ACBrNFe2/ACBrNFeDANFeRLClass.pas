@@ -158,6 +158,7 @@ type
     procedure ImprimirEVENTO(NFE : TNFe = nil); override ;
     procedure ImprimirEVENTOPDF(NFE : TNFe = nil); override ;
     procedure SetExibirEAN(Value: Boolean); virtual;
+    procedure SetTipoDANFE(Value: TpcnTipoImpressao); virtual;
   published
     property MarcadAgua : String read FMarcadagua write FMarcadagua ;
     property LarguraCodProd: Integer read FLarguraCodProd write FLarguraCodProd;
@@ -183,7 +184,6 @@ uses ACBrNFe, ACBrNFeUtil, ACBrUtil,
      ACBrNFeDANFeEventoRLRetrato, ACBrNFeDANFeRLSimplificado;
 
 var
-  i, j: Integer;
   frlDANFeRL: TfrlDANFeRL;
   frlDANFeEventoRL: TfrlDANFeEventoRL;
 
@@ -230,8 +230,11 @@ begin
 end;
 
 procedure TACBrNFeDANFeRL.ImprimirDANFE(NFE: TNFe = nil);
+var
+ i : Integer;
 begin
-  case FTipoDANFE of
+try
+  case TipoDANFE of
     tiRetrato      : frlDANFeRL := TfrlDANFeRLRetrato.Create(Self);
     tiPaisagem     : frlDANFeRL := TfrlDANFeRLPaisagem.Create(Self);
     tiSimplificado : frlDANFeRL := TfrlDANFeRLSimplificado.Create(Self);
@@ -243,7 +246,7 @@ begin
     begin
       for i:= 0 to TACBrNFe(ACBrNFe).NotasFiscais.Count - 1 do
         begin
-          frlDANFeRL.Imprimir(TACBrNFe(ACBrNFe).NotasFiscais.Items[i].NFe,
+          frlDANFeRL.Imprimir( Self, TACBrNFe(ACBrNFe).NotasFiscais.Items[i].NFe,
           FLogo, FMarcaDagua, FLarguraCodProd, FEmail, FExibeResumoCanhoto, FFax,
           FNumCopias, FSistema, FSite, FUsuario, FPosCanhoto, FFormularioContinuo,
           FExpandirLogoMarca, FMostrarPreview, FFonte.FNome, FFonte.FNegrito, FMargemSuperior,
@@ -257,7 +260,7 @@ begin
     end
   else
     begin
-      frlDANFeRL.Imprimir(NFE,
+      frlDANFeRL.Imprimir( Self, NFE,
       FLogo, FMarcaDagua, FLarguraCodProd, FEmail, FExibeResumoCanhoto, FFax,
       FNumCopias, FSistema, FSite, FUsuario, FPosCanhoto, FFormularioContinuo,
       FExpandirLogoMarca, FMostrarPreview, FFonte.FNome, FFonte.FNegrito, FMargemSuperior,
@@ -269,13 +272,18 @@ begin
       FDetVeiculos, FDetMedicamentos, FDetArmamentos, FDetCombustiveis);
     end;
 
+  finally  
   FreeAndNil(frlDANFeRL);
+  end;
 end;
 
 procedure TACBrNFeDANFeRL.ImprimirDANFEPDF(NFE : TNFe = nil);
 var sFile: String;
+var
+  i : Integer;
 begin
-  case FTipoDANFE of
+  try
+  case TipoDANFE of
     tiRetrato      : frlDANFeRL := TfrlDANFeRLRetrato.Create(Self);
     tiPaisagem     : frlDANFeRL := TfrlDANFeRLPaisagem.Create(Self);
     tiSimplificado : frlDANFeRL := TfrlDANFeRLSimplificado.Create(Self);
@@ -316,8 +324,9 @@ begin
       FImprimirDetalhamentoEspecifico, FImprimeDescPorc,
       FDetVeiculos, FDetMedicamentos, FDetArmamentos, FDetCombustiveis);
     end;
-
+ finally 
   FreeAndNil(frlDANFeRL);
+ end;
 end;
 
 procedure TACBrNFeDANFeRL.SetExibirEAN(Value: Boolean);
@@ -328,10 +337,22 @@ begin
     FExibirEAN := Value;
 end;
 
+procedure TACBrNFeDANFeRL.SetTipoDANFE(Value: TpcnTipoImpressao);
+begin
+  if Value = tiRetrato then
+    begin
+      FExibirEAN := False;
+    end;
+
+  FTipoDANFE := Value;
+end;
+
 procedure TACBrNFeDANFeRL.ImprimirEVENTO(NFE: TNFe);
 var Impresso: Boolean;
+I, J : Integer;
 begin
-  case FTipoDANFE of
+try
+  case TipoDANFE of
     tiRetrato,
     tiPaisagem: frlDANFeEventoRL := TfrlDANFeEventoRLRetrato.Create(Self);
   else
@@ -347,7 +368,7 @@ begin
             begin
               if Copy(TACBrNFe(ACBrNFe).NotasFiscais.Items[j].NFe.infNFe.ID, 4, 44) = TACBrNFe(ACBrNFe).EventoNFe.Evento.Items[i].InfEvento.chNFe then
                 begin
-                  frlDANFeEventoRL.Imprimir(TACBrNFe(ACBrNFe).EventoNFe.Evento.Items[i],
+                  frlDANFeEventoRL.Imprimir(Self, TACBrNFe(ACBrNFe).EventoNFe.Evento.Items[i],
                   FLogo, FMarcadagua, FNumCopias, FSistema, FUsuario, FMostrarPreview,
                   FFonte.FNome, FFonte.FNegrito, FMargemSuperior, FMargemInferior,
                   FMargemEsquerda, FMargemDireita, FImpressora,
@@ -359,7 +380,7 @@ begin
 
           if Impresso = False then
             begin
-              frlDANFeEventoRL.Imprimir(TACBrNFe(ACBrNFe).EventoNFe.Evento.Items[i],
+              frlDANFeEventoRL.Imprimir(Self, TACBrNFe(ACBrNFe).EventoNFe.Evento.Items[i],
               FLogo, FMarcadagua, FNumCopias, FSistema, FUsuario, FMostrarPreview,
               FFonte.FNome, FFonte.FNegrito, FMargemSuperior, FMargemInferior,
               FMargemEsquerda, FMargemDireita, FImpressora);
@@ -370,21 +391,25 @@ begin
     begin
       for i := 0 to (TACBrNFe(ACBrNFe).EventoNFe.Evento.Count - 1) do
         begin
-          frlDANFeEventoRL.Imprimir(TACBrNFe(ACBrNFe).EventoNFe.Evento.Items[i],
+          frlDANFeEventoRL.Imprimir(Self, TACBrNFe(ACBrNFe).EventoNFe.Evento.Items[i],
           FLogo, FMarcadagua, FNumCopias, FSistema, FUsuario, FMostrarPreview,
           FFonte.FNome, FFonte.FNegrito, FMargemSuperior, FMargemInferior,
           FMargemEsquerda, FMargemDireita, FImpressora);
         end;
     end;
 
+ finally
   FreeAndNil(frlDANFeEventoRL);
+ end;
 end;
 
 procedure TACBrNFeDANFeRL.ImprimirEVENTOPDF(NFE: TNFe);
 var sFile: String;
 Impresso: Boolean;
+I, J : Integer;
 begin
-  case FTipoDANFE of
+try
+  case TipoDANFE of
     tiRetrato,
     tiPaisagem: frlDANFeEventoRL := TfrlDANFeEventoRLRetrato.Create(Self);
   else
@@ -403,7 +428,7 @@ begin
             begin
               if Copy(TACBrNFe(ACBrNFe).NotasFiscais.Items[j].NFe.infNFe.ID, 4, 44) = TACBrNFe(ACBrNFe).EventoNFe.Evento.Items[i].InfEvento.chNFe then
                 begin
-                  frlDANFeEventoRL.SavePDF(TACBrNFe(ACBrNFe).EventoNFe.Evento.Items[i],
+                  frlDANFeEventoRL.SavePDF(Self, TACBrNFe(ACBrNFe).EventoNFe.Evento.Items[i],
                   FLogo, FMarcadagua, sFile, FSistema, FUsuario, FFonte.FNome, FFonte.FNegrito,
                   FMargemSuperior, FMargemInferior, FMargemEsquerda, FMargemDireita,
                   TACBrNFe(ACBrNFe).NotasFiscais.Items[j].NFe);
@@ -414,7 +439,7 @@ begin
 
           if Impresso = False then
             begin
-              frlDANFeEventoRL.SavePDF(TACBrNFe(ACBrNFe).EventoNFe.Evento.Items[i],
+              frlDANFeEventoRL.SavePDF(Self, TACBrNFe(ACBrNFe).EventoNFe.Evento.Items[i],
               FLogo, FMarcadagua, sFile, FSistema, FUsuario, FFonte.FNome, FFonte.FNegrito,
               FMargemSuperior, FMargemInferior, FMargemEsquerda, FMargemDireita);
             end;
@@ -427,13 +452,14 @@ begin
           sFile := TACBrNFe(ACBrNFe).DANFE.PathPDF +
           Copy(TACBrNFe(ACBrNFe).EventoNFe.Evento.Items[i].InfEvento.id, 3, 52) + 'evento.pdf';
 
-          frlDANFeEventoRL.SavePDF(TACBrNFe(ACBrNFe).EventoNFe.Evento.Items[i],
+          frlDANFeEventoRL.SavePDF(Self, TACBrNFe(ACBrNFe).EventoNFe.Evento.Items[i],
           FLogo, FMarcadagua, sFile, FSistema, FUsuario, FFonte.FNome, FFonte.FNegrito,
           FMargemSuperior, FMargemInferior, FMargemEsquerda, FMargemDireita);
         end;
     end;
-
+ finally
   FreeAndNil(frlDANFeEventoRL);
+ end; 
 end;
 
 end.

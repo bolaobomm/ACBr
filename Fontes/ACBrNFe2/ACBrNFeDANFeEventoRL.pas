@@ -84,7 +84,7 @@ type
 
   public
     { Public declarations }
-    class procedure Imprimir(AEventoNFe: TInfEventoCollectionItem; ALogo: String = '';
+    class procedure Imprimir(ASender : TComponent; AEventoNFe: TInfEventoCollectionItem; ALogo: String = '';
                     AMarcaDagua: String = ''; ANumCopias: Integer = 1;
                     ASistema: String = ''; AUsuario: String = '';
                     AMostrarPreview: Boolean = True;
@@ -97,7 +97,7 @@ type
                     AImpressora: String = '';
                     ANFe: TNFe = nil);
 
-    class procedure SavePDF(AEventoNFe: TInfEventoCollectionItem; ALogo: String = '';
+    class procedure SavePDF(ASender : TComponent; AEventoNFe: TInfEventoCollectionItem; ALogo: String = '';
                     AMarcaDagua: String = ''; AFile: String = '';
                     ASistema: String = ''; AUsuario: String = '';
                     ANomeFonte: TNomeFonte = nfTimesNewRoman;
@@ -114,7 +114,7 @@ implementation
 
 {$R *.dfm}
 
-class procedure TfrlDANFeEventoRL.Imprimir(AEventoNFe: TInfEventoCollectionItem; ALogo: String = '';
+class procedure TfrlDANFeEventoRL.Imprimir(ASender : TComponent; AEventoNFe: TInfEventoCollectionItem; ALogo: String = '';
                     AMarcaDagua: String = ''; ANumCopias: Integer = 1;
                     ASistema: String = ''; AUsuario: String = '';
                     AMostrarPreview: Boolean = True;
@@ -128,7 +128,7 @@ class procedure TfrlDANFeEventoRL.Imprimir(AEventoNFe: TInfEventoCollectionItem;
                     ANFe: TNFe = nil);
 
 begin
-  with Create ( nil ) do
+  with Create ( ASender ) do
     try
       FEventoNFe := AEventoNFe;
       FLogo := ALogo;
@@ -166,7 +166,7 @@ begin
     end ;
 end;
 
-class procedure TfrlDANFeEventoRL.SavePDF(AEventoNFe: TInfEventoCollectionItem; ALogo: String = '';
+class procedure TfrlDANFeEventoRL.SavePDF(ASender : TComponent; AEventoNFe: TInfEventoCollectionItem; ALogo: String = '';
                     AMarcaDagua: String = ''; AFile: String = '';
                     ASistema: String = ''; AUsuario: String = '';
                     ANomeFonte: TNomeFonte = nfTimesNewRoman;
@@ -178,7 +178,7 @@ class procedure TfrlDANFeEventoRL.SavePDF(AEventoNFe: TInfEventoCollectionItem; 
                     ANFe: TNFe = nil);
 
 begin
-  with Create ( nil ) do
+  with Create ( ASender ) do
     try
       FEventoNFe := AEventoNFe;
       FLogo := ALogo;

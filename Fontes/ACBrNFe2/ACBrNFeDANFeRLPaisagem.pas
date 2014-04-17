@@ -587,10 +587,6 @@ implementation
 
 uses ACBrNFeUtil, ACBrDFeUtil, pcnNFe, ACBrNFeDANFeRLClass;
 
-var
-q, iQuantItens, iItemAtual: Integer;
-sRetirada, sEntrega: WideString;
-
 {$R *.dfm}
 
 procedure TfrlDANFeRLPaisagem.RLNFeBeforePrint(Sender: TObject;

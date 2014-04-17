@@ -51,98 +51,58 @@ type
   { TfrlDANFeRLSimplificado }
 
   TfrlDANFeRLSimplificado = class(TfrlDANFeRL)
-    qrb02_Emitente: TRLBand;
-    qrb03_DadosGerais: TRLBand;
-    qrb04_Destinatario: TRLBand;
-    qrb05a_Cab_Itens: TRLBand;
-    qrb05b_Desc_Itens: TRLBand;
-    qrb05c_Lin_Itens: TRLBand;
-    qrb06a_Totais: TRLBand;
-    qrb06b_Tributos: TRLBand;
-    qriLogo: TRLImage;
-    QRLabel1: TRLLabel;
-    QRLabel142: TRLLabel;
-    QRLabel143: TRLLabel;
-    QRLabel147: TRLLabel;
-    QRLabel148: TRLLabel;
-    QRLabel149: TRLLabel;
-    QRLabel150: TRLLabel;
-    QRLabel27: TRLLabel;
-    QRLabel3: TRLLabel;
-    QRLabel9: TRLLabel;
-    qrlChave: TRLLabel;
-    qrlDescricao: TRLLabel;
-    qrlEmissao: TRLLabel;
-    qrlEntradaSaida: TRLLabel;
-    qrlMsgTipoEmissao: TRLLabel;
-    qrlProtocolo: TRLLabel;
-    qrlTipoEmissao: TRLLabel;
-    qrlTributos: TRLLabel;
-    qrmDestinatario: TRLMemo;
-    qrmEmitente: TRLMemo;
-    qrmPagDesc: TRLMemo;
-    qrmPagValor: TRLMemo;
-    qrmProdutoCodigo: TRLDBText;
-    qrmProdutoDescricao: TRLDBText;
-    qrmProdutoItem: TRLDBText;
-    qrmProdutoQTDE: TRLDBText;
-    qrmProdutoTotal: TRLDBText;
-    qrmProdutoUnidade: TRLDBText;
-    qrmProdutoValor: TRLDBText;
-    QRShape102: TRLDraw;
-    QRShape68: TRLDraw;
-    rlb01_Chave: TRLBand;
-    rlb02_Emitente: TRLBand;
-    rlb05a_Cab_Itens: TRLBand;
-    rlb06a_Totais: TRLBand;
-    RLBarcode1: TRLBarcode;
+    RLb02_Emitente: TRLBand;
+    RLb03_DadosGerais: TRLBand;
+    RLb04_Destinatario: TRLBand;
+    RLb05a_Cab_Itens: TRLBand;
+    RLb05b_Desc_Itens: TRLBand;
+    RLb05c_Lin_Itens: TRLBand;
+    RLb06a_Totais: TRLBand;
+    RLb06b_Tributos: TRLBand;
+    RLiLogo: TRLImage;
+    RLLabel1: TRLLabel;
     RLLabel142: TRLLabel;
     RLLabel143: TRLLabel;
     RLLabel147: TRLLabel;
     RLLabel148: TRLLabel;
     RLLabel149: TRLLabel;
     RLLabel150: TRLLabel;
-    rlb05b_Desc_Itens: TRLBand;
-    rlmProdutoCodigo: TRLDBText;
-    rlmProdutoDescricao: TRLDBText;
-    rlmProdutoUnidade: TRLDBText;
-    rlmProdutoQTDE: TRLDBText;
-    rlmProdutoValor: TRLDBText;
-    rlmProdutoTotal: TRLDBText;
-    rlb05c_Lin_Itens: TRLBand;
-    RLShape68: TRLDraw;
-    rlb06b_Tributos: TRLBand;
-    rllTributos: TRLLabel;
-    rlmPagDesc: TRLMemo;
-    rlmPagValor: TRLMemo;
+    RLLabel27: TRLLabel;
     RLLabel3: TRLLabel;
-    rlmProdutoItem: TRLDBText;
-    rliLogo: TRLImage;
-    rlmEmitente: TRLMemo;
+    RLLabel9: TRLLabel;
+    RLlChave: TRLLabel;
+    RLlDescricao: TRLLabel;
+    RLlEmissao: TRLLabel;
+    RLlEntradaSaida: TRLLabel;
+    RLlMsgTipoEmissao: TRLLabel;
+    RLlProtocolo: TRLLabel;
+    RLlTipoEmissao: TRLLabel;
+    RLlTributos: TRLLabel;
+    RLmDestinatario: TRLMemo;
+    RLmEmitente: TRLMemo;
+    RLmPagDesc: TRLMemo;
+    RLmPagValor: TRLMemo;
+    RLmProdutoCodigo: TRLDBText;
+    RLmProdutoDescricao: TRLDBText;
+    RLmProdutoItem: TRLDBText;
+    RLmProdutoQTDE: TRLDBText;
+    RLmProdutoTotal: TRLDBText;
+    RLmProdutoUnidade: TRLDBText;
+    RLmProdutoValor: TRLDBText;
+    RLShape102: TRLDraw;
+    RLShape68: TRLDraw;
+    rlb01_Chave: TRLBand;
+    RLBarcode1: TRLBarcode;
     RLLabel17: TRLLabel;
     rliBarCode: TRLImage;
-    RLLabel9: TRLLabel;
-    rllChave: TRLLabel;
-    rllDescricao: TRLLabel;
-    rllProtocolo: TRLLabel;
-    rlb03_DadosGerais: TRLBand;
-    rllTipoEmissao: TRLLabel;
     lblNumero: TRLLabel;
-    rllEmissao: TRLLabel;
-    rlb04_Destinatario: TRLBand;
-    RLLabel1: TRLLabel;
-    rllMsgTipoEmissao: TRLLabel;
-    rlmDestinatario: TRLMemo;
-    RLLabel27: TRLLabel;
-    RLShape102: TRLDraw;
-    rllEntradaSaida: TRLLabel;
-    procedure qrb02_EmitenteBeforePrint(Sender: TObject; var PrintIt: boolean);
-    procedure qrb03_DadosGeraisBeforePrint(Sender: TObject; var PrintIt: boolean
+    procedure RLb02_EmitenteBeforePrint(Sender: TObject; var PrintIt: boolean);
+    procedure RLb03_DadosGeraisBeforePrint(Sender: TObject; var PrintIt: boolean
       );
-    procedure qrb04_DestinatarioBeforePrint(Sender: TObject;
+    procedure RLb04_DestinatarioBeforePrint(Sender: TObject;
       var PrintIt: boolean);
-    procedure qrb06a_TotaisBeforePrint(Sender: TObject; var PrintIt: boolean);
-    procedure qrb06b_TributosBeforePrint(Sender: TObject; var PrintIt: boolean);
+    procedure RLb06a_TotaisBeforePrint(Sender: TObject; var PrintIt: boolean);
+    procedure RLb06b_TributosBeforePrint(Sender: TObject; var PrintIt: boolean);
     procedure RLNFeBeforePrint(Sender: TObject;
       var PrintReport: Boolean);
     procedure rlmProdutoDescricaoPrint(sender: TObject; var Value: string);
@@ -214,7 +174,7 @@ begin
   end;
 end;
 
-procedure TfrlDANFeRLSimplificado.qrb02_EmitenteBeforePrint(Sender: TObject;
+procedure TfrlDANFeRLSimplificado.RLb02_EmitenteBeforePrint(Sender: TObject;
   var PrintIt: boolean);
 var
  strChaveContingencia: String;
@@ -256,7 +216,7 @@ begin
    end;
 end;
 
-procedure TfrlDANFeRLSimplificado.qrb03_DadosGeraisBeforePrint(Sender: TObject;
+procedure TfrlDANFeRLSimplificado.RLb03_DadosGeraisBeforePrint(Sender: TObject;
   var PrintIt: boolean);
 begin
   // Contingencia ********************************************************
@@ -271,7 +231,7 @@ begin
   rllEmissao.Caption := 'Emissão: ' + DFeUtil.FormatDateTime(DateToStr(FNFe.Ide.dEmi));
 end;
 
-procedure TfrlDANFeRLSimplificado.qrb04_DestinatarioBeforePrint(
+procedure TfrlDANFeRLSimplificado.RLb04_DestinatarioBeforePrint(
   Sender: TObject; var PrintIt: boolean);
 var
  vTpEmissao: Integer;
@@ -352,7 +312,7 @@ begin
  rllMsgTipoEmissao.Repaint;
 end;
 
-procedure TfrlDANFeRLSimplificado.qrb06a_TotaisBeforePrint(Sender: TObject;
+procedure TfrlDANFeRLSimplificado.RLb06a_TotaisBeforePrint(Sender: TObject;
   var PrintIt: boolean);
 var
  i: Integer;
@@ -371,7 +331,7 @@ begin
   rlmPagValor.Lines.Add(DFeUtil.FormatFloat(FNFE.Total.ICMSTot.vNF));
 end;
 
-procedure TfrlDANFeRLSimplificado.qrb06b_TributosBeforePrint(Sender: TObject;
+procedure TfrlDANFeRLSimplificado.RLb06b_TributosBeforePrint(Sender: TObject;
   var PrintIt: boolean);
 var
  Perc: Double;

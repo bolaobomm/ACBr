@@ -160,6 +160,15 @@ type
     FResumoCanhoto_Texto: String;
     FNFeCancelada: Boolean; // Incluido em 22/02/2013 por Jorge Henrique
     FImprimirDetalhamentoEspecifico: Boolean;
+    iLimiteLinhas : Integer;
+    iLinhasUtilizadas : Integer;
+    iLimiteCaracteresLinha : Integer;
+    iLimiteCaracteresContinuacao : Integer;
+    q : Integer;
+    iQuantItens : Integer;
+    iItemAtual : Integer;
+    sRetirada : String;
+    sEntrega : String;
     FImprimirDescPorc: Boolean;
     FDetVeiculos: TDetVeiculos;
     FDetMedicamentos: TDetMedicamentos;
@@ -167,10 +176,11 @@ type
     FDetCombustiveis: TDetCombustiveis;
 
     cdsItens:  {$IFDEF BORLAND} TClientDataSet {$ELSE} TBufDataset{$ENDIF};
+    procedure ConfigureVariavies(ATipoDANFE: TpcnTipoImpressao);
     procedure ConfigDataSet;
   public
     { Public declarations }
-    class procedure Imprimir(ANFe: TNFe; ALogo: String = '';
+    class procedure Imprimir(AOwner: TComponent; ANFe: TNFe; ALogo: String = '';
                     AMarcaDagua: String = ''; ALarguraCodProd: Integer = 54;
                     AEmail: String = ''; AResumoCanhoto: Boolean = False;
                     AFax: String = ''; ANumCopias: Integer = 1;
@@ -236,10 +246,6 @@ type
 
    const
     sDisplayFormat = '###,###,###,##0.%.*d';
-
-var
-  iLimiteLinhas, iLinhasUtilizadas, iLimiteCaracteresLinha,
-  iLimiteCaracteresContinuacao: Integer;
 
 implementation
 
@@ -334,7 +340,7 @@ begin
 
 end;
 
-class procedure TfrlDANFeRL.Imprimir(ANFe: TNFe; ALogo: String = '';
+class procedure TfrlDANFeRL.Imprimir(AOwner: TComponent; ANFe: TNFe; ALogo: String = '';
                 AMarcaDagua: String = ''; ALarguraCodProd: Integer = 54;
                 AEmail: String = ''; AResumoCanhoto: Boolean = False;
                 AFax: String = ''; ANumCopias: Integer = 1;
@@ -367,7 +373,7 @@ class procedure TfrlDANFeRL.Imprimir(ANFe: TNFe; ALogo: String = '';
                 ADetCombustiveis: TDetCombustiveis = []);
 
 begin
-  with Create ( nil ) do
+  with Create ( AOwner ) do
     try
       FNFe := ANFe;
       FLogo := ALogo;
@@ -420,7 +426,7 @@ begin
         RLNFe.Print;
 
     finally
-      Free ;
+      Destroy;
     end ;
 end;
 
@@ -505,7 +511,7 @@ begin
 
       RLNFe.SaveToFile(AFile);
     finally
-      Free ;
+     Destroy;
     end ;
 end;
 
@@ -517,6 +523,23 @@ end;
 procedure TfrlDANFeRL.FormCreate(Sender: TObject);
 begin
   ConfigDataSet;
+end;
+
+procedure TfrlDANFeRL.ConfigureVariavies(ATipoDANFE: TpcnTipoImpressao);
+begin
+   case ATipoDANFE of
+   tiRetrato    :  begin
+                    iLimiteLinhas                := 10;
+                    iLimiteCaracteresLinha       := 81;
+                    iLimiteCaracteresContinuacao := 129;
+                   end;
+   tiPaisagem   :  begin
+                    iLimiteLinhas                := 12;
+                    iLimiteCaracteresLinha       := 142;
+                    iLimiteCaracteresContinuacao := 204;
+                   end;
+  end;
+
 end;
 
 function TfrlDANFeRL.BuscaDireita(Busca, Text: String): Integer;

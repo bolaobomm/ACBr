@@ -639,7 +639,6 @@ type
     rllTituloTotalTributos: TRLLabel;
     rllTotalTributos: TRLLabel;
     rlbReciboHeader: TRLBand;
-    rlPainelRecibo: TRLPanel;
     rliCanhoto: TRLDraw;
     rliCanhoto1: TRLDraw;
     rliCanhoto2: TRLDraw;
@@ -651,7 +650,6 @@ type
     rllNumNF0: TRLLabel;
     rllSERIE0: TRLLabel;
     rllResumo: TRLLabel;
-    RLMemo1: TRLMemo;
     procedure RLNFeBeforePrint(Sender: TObject; var PrintIt: Boolean);
     procedure rlbEmitenteBeforePrint(Sender: TObject;
       var PrintIt: Boolean);
@@ -684,13 +682,7 @@ type
   end;
 
 implementation
-
-uses ACBrNFeUtil, ACBrDFeUtil, pcnNFe, ACBrNFeDANFeRLClass;
-
-var
-q, iQuantItens, iItemAtual: Integer;
-sRetirada, sEntrega: WideString;
-
+ uses ACBrNFeUtil, ACBrDFeUtil, pcnNFe, ACBrNFeDANFeRLClass;
 
 {$R *.dfm}
 
@@ -698,6 +690,9 @@ procedure TfrlDANFeRLRetrato.RLNFeBeforePrint(Sender: TObject;
   var PrintIt: Boolean);
 begin
   q := 0;
+
+  ConfigureVariavies(tiRetrato);
+
   with RLNFe.Margins do
     begin
       TopMargin := FMargemSuperior * 10;
@@ -743,8 +738,8 @@ begin
     begin
       rlbISSQN.Visible := False;
       rlbDadosAdicionais.Visible := False;
-//      rlbReciboHeader.Visible := False;   --> Silvio (Retirado por causa do controle de formulário da EIBrasil) - 30-08-2012
-      rlPainelRecibo.Visible:= False;  //--> Silvio (O painel foi criado para poder controlar o Saldo do Recibo) - 30-08-2012
+      rlbReciboHeader.Visible := False;  // --> Silvio (Retirado por causa do controle de formulário da EIBrasil) - 30-08-2012
+//      rlPainelRecibo.Visible:= False;  // não existe no dfm revisão 6628--> Silvio (O painel foi criado para poder controlar o Saldo do Recibo) - 30-08-2012
       rlbReciboHeader.Height:= 66;   //--> Silvio (O painel foi criado para poder controlar o Saldo do Recibo) - 30-08-2012
       rlbDivisaoRecibo.Visible := False;
       if iQuantItens > q then
@@ -1513,7 +1508,6 @@ begin
   if FNFe.Retirada.xLgr > '' then
     begin
       EnderecoRetirada;
-      sRetirada := sRetirada;
       InsereLinhas(sRetirada, iLimiteCaracteresLinha, rlmDadosAdicionaisAuxiliar);
     end;
 
@@ -1521,7 +1515,6 @@ begin
   if FNFe.Entrega.xLgr > '' then
     begin
       EnderecoEntrega;
-      sEntrega := sEntrega;
       InsereLinhas(sEntrega, iLimiteCaracteresLinha, rlmDadosAdicionaisAuxiliar);
     end;
 
@@ -2275,8 +2268,8 @@ begin
 
   if FPosCanhoto = pcCabecalho then
     begin
-//      rlbReciboHeader.Visible := False;    --> Silvio (Retirado por causa do controle de formulário da EIBrasil - 30-08-2012
-      rlPainelRecibo.Visible:= False;   //--> Silvio (O painel foi criado para poder controlar o Saldo do Recibo) - 30-08-2012
+      rlbReciboHeader.Visible := False;   // --> Silvio (Retirado por causa do controle de formulário da EIBrasil - 30-08-2012
+//      rlPainelRecibo.Visible:= False;   // não existe no dfm revisão 6628- --> Silvio (O painel foi criado para poder controlar o Saldo do Recibo) - 30-08-2012
       rlbReciboHeader.Height:= 66;    //--> Silvio (O painel foi criado para poder controlar o Saldo do Recibo) - 30-08-2012
       rlbDivisaoRecibo.Visible := False;
     end;

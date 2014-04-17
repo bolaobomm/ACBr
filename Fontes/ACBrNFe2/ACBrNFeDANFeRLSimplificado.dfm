@@ -56,7 +56,7 @@ inherited frlDANFeRLSimplificado: TfrlDANFeRLSimplificado
         RealBounds.Width = 0
         RealBounds.Height = 0
       end
-      object QRLabel9: TRLLabel
+      object RLLabel9: TRLLabel
         Left = 75
         Height = 15
         Top = 58
@@ -75,7 +75,7 @@ inherited frlDANFeRLSimplificado: TfrlDANFeRLSimplificado
         RealBounds.Width = 0
         RealBounds.Height = 0
       end
-      object qrlChave: TRLLabel
+      object rllChave: TRLLabel
         Left = 0
         Height = 16
         Top = 76
@@ -94,7 +94,7 @@ inherited frlDANFeRLSimplificado: TfrlDANFeRLSimplificado
         RealBounds.Height = 0
         Transparent = False
       end
-      object qrlDescricao: TRLLabel
+      object rllDescricao: TRLLabel
         Left = 2
         Height = 16
         Top = 94
@@ -114,7 +114,7 @@ inherited frlDANFeRLSimplificado: TfrlDANFeRLSimplificado
         RealBounds.Height = 0
         Transparent = False
       end
-      object qrlProtocolo: TRLLabel
+      object rllProtocolo: TRLLabel
         Left = 2
         Height = 16
         Top = 112
@@ -147,7 +147,7 @@ inherited frlDANFeRLSimplificado: TfrlDANFeRLSimplificado
         RealBounds.Height = 0
       end
     end
-    object qrb02_Emitente: TRLBand[1]
+    object rlb02_Emitente: TRLBand[1]
       Left = 38
       Height = 145
       Top = 166
@@ -163,8 +163,8 @@ inherited frlDANFeRLSimplificado: TfrlDANFeRLSimplificado
       RealBounds.Top = 0
       RealBounds.Width = 0
       RealBounds.Height = 0
-      BeforePrint = qrb02_EmitenteBeforePrint
-      object qriLogo: TRLImage
+      BeforePrint = rlb02_EmitenteBeforePrint
+      object rliLogo: TRLImage
         Left = 89
         Height = 65
         Top = 1
@@ -527,7 +527,7 @@ inherited frlDANFeRLSimplificado: TfrlDANFeRLSimplificado
         RealBounds.Height = 0
         Stretch = True
       end
-      object qrmEmitente: TRLMemo
+      object rlmEmitente: TRLMemo
         Left = 2
         Height = 76
         Top = 69
@@ -546,7 +546,7 @@ inherited frlDANFeRLSimplificado: TfrlDANFeRLSimplificado
         Transparent = False
       end
     end
-    object qrb05a_Cab_Itens: TRLBand[2]
+    object rlb05a_Cab_Itens: TRLBand[2]
       Left = 38
       Height = 33
       Top = 527
@@ -559,7 +559,7 @@ inherited frlDANFeRLSimplificado: TfrlDANFeRLSimplificado
       RealBounds.Top = 0
       RealBounds.Width = 0
       RealBounds.Height = 0
-      object QRLabel142: TRLLabel
+      object RLLabel142: TRLLabel
         Left = 2
         Height = 14
         Top = 2
@@ -577,7 +577,7 @@ inherited frlDANFeRLSimplificado: TfrlDANFeRLSimplificado
         RealBounds.Height = 0
         Transparent = False
       end
-      object QRLabel143: TRLLabel
+      object RLLabel143: TRLLabel
         Left = 120
         Height = 14
         Top = 2
@@ -595,7 +595,7 @@ inherited frlDANFeRLSimplificado: TfrlDANFeRLSimplificado
         RealBounds.Height = 0
         Transparent = False
       end
-      object QRLabel147: TRLLabel
+      object RLLabel147: TRLLabel
         Left = 78
         Height = 14
         Top = 18
@@ -613,7 +613,7 @@ inherited frlDANFeRLSimplificado: TfrlDANFeRLSimplificado
         RealBounds.Height = 0
         Transparent = False
       end
-      object QRLabel148: TRLLabel
+      object RLLabel148: TRLLabel
         Left = 24
         Height = 15
         Top = 18
@@ -633,7 +633,7 @@ inherited frlDANFeRLSimplificado: TfrlDANFeRLSimplificado
         RealBounds.Height = 0
         Transparent = False
       end
-      object QRLabel149: TRLLabel
+      object RLLabel149: TRLLabel
         Left = 114
         Height = 14
         Top = 18
@@ -652,7 +652,7 @@ inherited frlDANFeRLSimplificado: TfrlDANFeRLSimplificado
         RealBounds.Height = 0
         Transparent = False
       end
-      object QRLabel150: TRLLabel
+      object RLLabel150: TRLLabel
         Left = 186
         Height = 14
         Top = 18
@@ -671,7 +671,7 @@ inherited frlDANFeRLSimplificado: TfrlDANFeRLSimplificado
         RealBounds.Height = 0
         Transparent = False
       end
-      object QRLabel3: TRLLabel
+      object RLLabel3: TRLLabel
         Left = 34
         Height = 14
         Top = 2
@@ -690,7 +690,7 @@ inherited frlDANFeRLSimplificado: TfrlDANFeRLSimplificado
         Transparent = False
       end
     end
-    object qrb06a_Totais: TRLBand[3]
+    object rlb06a_Totais: TRLBand[3]
       Left = 38
       Height = 57
       Top = 560
@@ -703,8 +703,8 @@ inherited frlDANFeRLSimplificado: TfrlDANFeRLSimplificado
       RealBounds.Top = 0
       RealBounds.Width = 0
       RealBounds.Height = 0
-      BeforePrint = qrb06a_TotaisBeforePrint
-      object qrmPagDesc: TRLMemo
+      BeforePrint = rlb06a_TotaisBeforePrint
+      object rlmPagDesc: TRLMemo
         Left = 2
         Height = 57
         Top = 0
@@ -722,7 +722,7 @@ inherited frlDANFeRLSimplificado: TfrlDANFeRLSimplificado
         RealBounds.Height = 0
         Transparent = False
       end
-      object qrmPagValor: TRLMemo
+      object rlmPagValor: TRLMemo
         Left = 150
         Height = 57
         Top = 0
@@ -742,7 +742,7 @@ inherited frlDANFeRLSimplificado: TfrlDANFeRLSimplificado
         Transparent = False
       end
     end
-    object qrb05b_Desc_Itens: TRLBand[4]
+    object rlb05b_Desc_Itens: TRLBand[4]
       Left = 38
       Height = 33
       Top = 494
@@ -759,7 +759,7 @@ inherited frlDANFeRLSimplificado: TfrlDANFeRLSimplificado
       RealBounds.Top = 0
       RealBounds.Width = 0
       RealBounds.Height = 0
-      object qrmProdutoCodigo: TRLDBText
+      object rlmProdutoCodigo: TRLDBText
         Left = 34
         Height = 16
         Top = 2
@@ -777,7 +777,7 @@ inherited frlDANFeRLSimplificado: TfrlDANFeRLSimplificado
         RealBounds.Width = 0
         RealBounds.Height = 0
       end
-      object qrmProdutoDescricao: TRLDBText
+      object rlmProdutoDescricao: TRLDBText
         Left = 96
         Height = 16
         Top = 2
@@ -795,7 +795,7 @@ inherited frlDANFeRLSimplificado: TfrlDANFeRLSimplificado
         RealBounds.Width = 0
         RealBounds.Height = 0
       end
-      object qrmProdutoUnidade: TRLDBText
+      object rlmProdutoUnidade: TRLDBText
         Left = 78
         Height = 15
         Top = 18
@@ -814,7 +814,7 @@ inherited frlDANFeRLSimplificado: TfrlDANFeRLSimplificado
         RealBounds.Width = 0
         RealBounds.Height = 0
       end
-      object qrmProdutoQTDE: TRLDBText
+      object rlmProdutoQTDE: TRLDBText
         Left = 24
         Height = 15
         Top = 18
@@ -833,7 +833,7 @@ inherited frlDANFeRLSimplificado: TfrlDANFeRLSimplificado
         RealBounds.Width = 0
         RealBounds.Height = 0
       end
-      object qrmProdutoValor: TRLDBText
+      object rlmProdutoValor: TRLDBText
         Left = 116
         Height = 15
         Top = 18
@@ -852,7 +852,7 @@ inherited frlDANFeRLSimplificado: TfrlDANFeRLSimplificado
         RealBounds.Width = 0
         RealBounds.Height = 0
       end
-      object qrmProdutoTotal: TRLDBText
+      object rlmProdutoTotal: TRLDBText
         Left = 188
         Height = 15
         Top = 18
@@ -871,7 +871,7 @@ inherited frlDANFeRLSimplificado: TfrlDANFeRLSimplificado
         RealBounds.Width = 0
         RealBounds.Height = 0
       end
-      object qrmProdutoItem: TRLDBText
+      object rlmProdutoItem: TRLDBText
         Left = 2
         Height = 16
         Top = 2
@@ -890,7 +890,7 @@ inherited frlDANFeRLSimplificado: TfrlDANFeRLSimplificado
         RealBounds.Height = 0
       end
     end
-    object qrb05c_Lin_Itens: TRLBand[5]
+    object rlb05c_Lin_Itens: TRLBand[5]
       Left = 38
       Height = 1
       Top = 635
@@ -902,7 +902,7 @@ inherited frlDANFeRLSimplificado: TfrlDANFeRLSimplificado
       RealBounds.Top = 0
       RealBounds.Width = 0
       RealBounds.Height = 0
-      object QRShape68: TRLDraw
+      object RLShape68: TRLDraw
         Left = 0
         Height = 1
         Top = 0
@@ -914,7 +914,7 @@ inherited frlDANFeRLSimplificado: TfrlDANFeRLSimplificado
         RealBounds.Height = 0
       end
     end
-    object qrb06b_Tributos: TRLBand[6]
+    object rlb06b_Tributos: TRLBand[6]
       Left = 38
       Height = 18
       Top = 617
@@ -927,12 +927,12 @@ inherited frlDANFeRLSimplificado: TfrlDANFeRLSimplificado
       RealBounds.Top = 0
       RealBounds.Width = 0
       RealBounds.Height = 0
-      BeforePrint = qrb06b_TributosBeforePrint
-      object qrlTributos: TRLLabel
+      BeforePrint = rlb06b_TributosBeforePrint
+      object rllTributos: TRLLabel
         Left = 2
         Height = 14
         Top = 4
-        Width = 54
+        Width = 52
         Color = clWhite
         Font.Color = clWindowText
         Font.Height = -11
@@ -945,7 +945,7 @@ inherited frlDANFeRLSimplificado: TfrlDANFeRLSimplificado
         RealBounds.Height = 0
       end
     end
-    object qrb03_DadosGerais: TRLBand[7]
+    object rlb03_DadosGerais: TRLBand[7]
       Left = 38
       Height = 86
       Top = 311
@@ -958,8 +958,8 @@ inherited frlDANFeRLSimplificado: TfrlDANFeRLSimplificado
       RealBounds.Top = 0
       RealBounds.Width = 0
       RealBounds.Height = 0
-      BeforePrint = qrb03_DadosGeraisBeforePrint
-      object qrlTipoEmissao: TRLLabel
+      BeforePrint = rlb03_DadosGeraisBeforePrint
+      object rllTipoEmissao: TRLLabel
         Left = 56
         Height = 19
         Top = 3
@@ -995,7 +995,7 @@ inherited frlDANFeRLSimplificado: TfrlDANFeRLSimplificado
         RealBounds.Width = 0
         RealBounds.Height = 0
       end
-      object qrlEmissao: TRLLabel
+      object rllEmissao: TRLLabel
         Left = 2
         Height = 16
         Top = 70
@@ -1013,7 +1013,7 @@ inherited frlDANFeRLSimplificado: TfrlDANFeRLSimplificado
         RealBounds.Width = 0
         RealBounds.Height = 0
       end
-      object QRLabel27: TRLLabel
+      object RLLabel27: TRLLabel
         Left = 88
         Height = 12
         Top = 34
@@ -1030,7 +1030,7 @@ inherited frlDANFeRLSimplificado: TfrlDANFeRLSimplificado
         RealBounds.Width = 0
         RealBounds.Height = 0
       end
-      object QRShape102: TRLDraw
+      object RLShape102: TRLDraw
         Left = 60
         Height = 22
         Top = 30
@@ -1042,14 +1042,14 @@ inherited frlDANFeRLSimplificado: TfrlDANFeRLSimplificado
         RealBounds.Width = 0
         RealBounds.Height = 0
       end
-      object qrlEntradaSaida: TRLLabel
+      object rllEntradaSaida: TRLLabel
         Left = 64
         Height = 15
         Top = 34
         Width = 14
         Alignment = taCenter
         AutoSize = False
-        Caption = 'qrlTransModFrete'
+        Caption = 'rllTransModFrete'
         Color = clWhite
         Font.Color = clWindowText
         Font.Height = -11
@@ -1063,7 +1063,7 @@ inherited frlDANFeRLSimplificado: TfrlDANFeRLSimplificado
         RealBounds.Height = 0
       end
     end
-    object qrb04_Destinatario: TRLBand[8]
+    object rlb04_Destinatario: TRLBand[8]
       Left = 38
       Height = 97
       Top = 397
@@ -1076,8 +1076,8 @@ inherited frlDANFeRLSimplificado: TfrlDANFeRLSimplificado
       RealBounds.Top = 0
       RealBounds.Width = 0
       RealBounds.Height = 0
-      BeforePrint = qrb04_DestinatarioBeforePrint
-      object QRLabel1: TRLLabel
+      BeforePrint = rlb04_DestinatarioBeforePrint
+      object RLLabel1: TRLLabel
         Left = 79
         Height = 15
         Top = 3
@@ -1096,7 +1096,7 @@ inherited frlDANFeRLSimplificado: TfrlDANFeRLSimplificado
         RealBounds.Width = 0
         RealBounds.Height = 0
       end
-      object qrmDestinatario: TRLMemo
+      object rlmDestinatario: TRLMemo
         Left = 2
         Height = 76
         Top = 21
@@ -1114,7 +1114,7 @@ inherited frlDANFeRLSimplificado: TfrlDANFeRLSimplificado
         RealBounds.Height = 0
         Transparent = False
       end
-      object qrlMsgTipoEmissao: TRLLabel
+      object rllMsgTipoEmissao: TRLLabel
         Left = 8
         Height = 15
         Top = 42
