@@ -56,6 +56,7 @@ type
     FRegistro0001: TRegistro0001;      /// BLOCO 0 - Registro0001
     FRegistro0990: TRegistro0990;      /// BLOCO 0 - Registro0990
 
+    FRegistro0035Count: Integer;
     FRegistro0100Count: Integer;
     FRegistro0110Count: Integer;
     FRegistro0111Count: Integer;
@@ -73,6 +74,7 @@ type
     FRegistro0500Count: Integer;
     FRegistro0600Count: Integer;
 
+    procedure WriteRegistro0035(Reg0001: TRegistro0001);
     procedure WriteRegistro0100(Reg0001: TRegistro0001);
     procedure WriteRegistro0110(Reg0001: TRegistro0001);
     procedure WriteRegistro0111(Reg0110: TRegistro0110);
@@ -99,6 +101,7 @@ type
 
     function Registro0000New: TRegistro0000;
     function Registro0001New: TRegistro0001;
+    function Registro0035New: TRegistro0035;
     function Registro0100New: TRegistro0100;
     function Registro0110New: TRegistro0110;
     function Registro0111New: TRegistro0111;
@@ -124,6 +127,7 @@ type
     property Registro0001: TRegistro0001 read FRegistro0001 write FRegistro0001;
     property Registro0990: TRegistro0990 read FRegistro0990 write FRegistro0990;
 
+    property Registro0035Count: Integer read FRegistro0035Count write FRegistro0035Count;
     property Registro0100Count: Integer read FRegistro0100Count write FRegistro0100Count;
     property Registro0110Count: Integer read FRegistro0110Count write FRegistro0110Count;
     property Registro0111Count: Integer read FRegistro0111Count write FRegistro0111Count;
@@ -166,6 +170,7 @@ begin
   FRegistro0001 := TRegistro0001.Create;
   FRegistro0990 := TRegistro0990.Create;
 
+  FRegistro0035Count := 0;
   FRegistro0100Count := 0;
   FRegistro0110Count := 0;
   FRegistro0111Count := 0;
@@ -211,6 +216,11 @@ end;
 function TBloco_0.Registro0001New: TRegistro0001;
 begin
    Result := FRegistro0001;
+end;
+
+function TBloco_0.Registro0035New: TRegistro0035;
+begin
+  Result := FRegistro0001.Registro0035.New(FRegistro0001);
 end;
 
 function TBloco_0.Registro0100New: TRegistro0100;
@@ -444,9 +454,33 @@ begin
   end;
 end;
 
+procedure TBloco_0.WriteRegistro0035(Reg0001: TRegistro0001);
+var
+  intFor: Integer;
+begin
+  if Self.DT_INI >= EncodeDate(2014,03,01) then
+    if Assigned(Reg0001.Registro0035) then
+    begin
+       for intFor := 0 to Reg0001.Registro0035.Count - 1 do
+       begin
+          with Reg0001.Registro0035.Items[intFor] do
+          begin
+            ///
+            Add( LFill('0035')   +
+                 LFill(COD_SCP)  +
+                 LFill(DESC_SCP) +
+                 LFill(INF_COMP) ) ;
+          end;
+          Registro0990.QTD_LIN_0 := Registro0990.QTD_LIN_0 + 1;
+       end;
+       /// Variavél para armazenar a quantidade de registro do tipo.
+       FRegistro0035Count := FRegistro0035Count + Reg0001.Registro0035.Count;
+    end;
+end;
+
 procedure TBloco_0.WriteRegistro0100(Reg0001: TRegistro0001) ;
 var
-intFor: Integer;
+  intFor: Integer;
 begin
   if Assigned(Reg0001.Registro0100) then
   begin

@@ -46,6 +46,7 @@ uses
   SysUtils, Classes, Contnrs, DateUtils, ACBrEPCBlocos;
 
 type
+  TRegistro0035List = class;
   TRegistro0100List = class;
   TRegistro0110     = class;
   TRegistro0111     = class;
@@ -98,6 +99,7 @@ type
   //REGISTRO 0001: ABERTURA DO BLOCO 0
   TRegistro0001 = class(TOpenBlocos)
   private
+    FRegistro0035 : TRegistro0035List ;
     FRegistro0100 : TRegistro0100List;
     FRegistro0110 : TRegistro0110;
     FRegistro0120 : TRegistro0120List;     //Implementado por Fábio Gabriel - 29/11/2012
@@ -108,12 +110,43 @@ type
     constructor Create; virtual;   // Create
     destructor  Destroy; override; // Destroy
 
+    property Registro0035 : TRegistro0035List read FRegistro0035 write FRegistro0035;
     property Registro0100 : TRegistro0100List read FRegistro0100 write FRegistro0100;
     property Registro0110 : TRegistro0110     read FRegistro0110 write FRegistro0110;
     property Registro0120 : TRegistro0120List read FRegistro0120 write FRegistro0120;  //Implementado por Fábio Gabriel - 29/11/2012
     property Registro0140 : TRegistro0140List read FRegistro0140 write FRegistro0140;
     property Registro0500 : TRegistro0500List read FRegistro0500 write FRegistro0500;
     property Registro0600 : TRegistro0600List read FRegistro0600 write FRegistro0600;
+  end;
+
+  //REGISTRO 0035: IDENTIFICAÇÃO DE SOCIEDADE EM CONTA DE PARTICIPAÇÃO – SCP
+
+  { TRegistro0035 }
+
+  TRegistro0035 = class
+  private
+    FCOD_SCP: integer;//Identificação da SCP
+    FDESC_SCP: string;//Descrição da SCP
+    FINF_COMP: string;//Informação Complementar
+  public
+    constructor Create(AOwner: TRegistro0001); virtual; /// Create
+
+    property COD_SCP : integer read FCOD_SCP write FCOD_SCP;
+    property DESC_SCP: string  read FDESC_SCP write FDESC_SCP;
+    property INF_COMP: string read FINF_COMP write FINF_COMP;
+  end;
+
+  // Registro 0035 - Lista
+
+  { TRegistro0035List }
+
+  TRegistro0035List = class(TObjectList)
+  private
+    function GetItem(Index: Integer): TRegistro0035;
+    procedure SetItem(Index: Integer; const Value: TRegistro0035);
+  public
+    function New(AOwner: TRegistro0001): TRegistro0035;
+    property Items[Index: Integer]: TRegistro0035 read GetItem write SetItem;
   end;
 
   //REGISTRO 0100: DADOS DO CONTABILISTA
@@ -566,6 +599,31 @@ type
   end;
 
 implementation
+
+{ TRegistro0035 }
+
+constructor TRegistro0035.Create(AOwner: TRegistro0001);
+begin
+
+end;
+
+{ TRegistro0035List }
+
+function TRegistro0035List.GetItem(Index: Integer): TRegistro0035;
+begin
+  Result := TRegistro0035(Inherited Items[Index]);
+end;
+
+procedure TRegistro0035List.SetItem(Index: Integer; const Value: TRegistro0035);
+begin
+  Put(Index, Value);
+end;
+
+function TRegistro0035List.New(AOwner: TRegistro0001): TRegistro0035;
+begin
+  Result := TRegistro0035.Create(AOwner);
+  Add(Result);
+end;
 
 { TRegistro0001 }
 
