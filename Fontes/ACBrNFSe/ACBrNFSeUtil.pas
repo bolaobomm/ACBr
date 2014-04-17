@@ -746,10 +746,10 @@ begin
                       then AXML := AXML + '</GerarNfseEnvio>';
                     end;
       proTecnos:    begin
-                     AXML := copy(AXML, 1, pos('</tcDeclaracaoPrestacaoServico>', AXML) - 1);
-                     AXML := AXML + '</tcDeclaracaoPrestacaoServico>';
+                     AXML := copy(AXML, 1, pos('</InfDeclaracaoPrestacaoServico>', AXML) - 1);
+                     AXML := AXML + '</InfDeclaracaoPrestacaoServico>';
                      AXML := AXML + Assinatura;
-                     AXML := AXML + '</Rps>';
+                     AXML := AXML + '</tcDeclaracaoPrestacaoServico></Rps>';
                     end;
       else begin
             AXML := copy(AXML, 1, pos('</Rps>', AXML) - 1);

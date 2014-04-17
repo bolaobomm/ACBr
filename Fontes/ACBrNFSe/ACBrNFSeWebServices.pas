@@ -844,8 +844,8 @@ begin
                               '<' + Prefixo4 + 'Rps>' +
                                '<' + Prefixo4 + 'tcDeclaracaoPrestacaoServico' +
                                  RetornarConteudoEntre(TNFSeEnviarLoteRPS(Self).FNotasFiscais.Items[I].XML_Rps_Ass,
-                                   '<' + Prefixo4 + 'tcDeclaracaoPrestacaoServico', '</Signature>') +
-                               '</Signature>'+
+                                   '<' + Prefixo4 + 'tcDeclaracaoPrestacaoServico', '</' + Prefixo4 + 'tcDeclaracaoPrestacaoServico>') +
+                                   '</' + Prefixo4 + 'tcDeclaracaoPrestacaoServico>' +
                               '</' + Prefixo4 + 'Rps>';
 
       proDigifred: vNotas := vNotas +
@@ -1745,7 +1745,7 @@ begin
               URISig := '';
               URIRef := 'http://www.w3.org/TR/2000/REC-xhtml1-20000126/';
              end;
-  proTecnos: URISig := TNFSeCancelarNfse(Self).FCnpj + TNFSeCancelarNfse(Self).FIM + IntToStrZero(StrToInt(TNFSeCancelarNfse(Self).FNumeroNFSe), 16);
+  proTecnos: URISig := '2' + TNFSeCancelarNfse(Self).FCnpj + IntToStrZero(StrToInt(TNFSeCancelarNfse(Self).FNumeroNFSe), 16);
  else        URISig := 'pedidoCancelamento_' + TNFSeCancelarNfse(Self).FCnpj +
                     TNFSeCancelarNfse(Self).FIM + TNFSeCancelarNfse(Self).FNumeroNFSe;
  end;

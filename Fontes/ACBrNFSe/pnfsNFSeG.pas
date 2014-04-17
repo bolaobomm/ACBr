@@ -7,7 +7,7 @@ uses
 {$IFNDEF VER130}
   Variants,
 {$ENDIF}
-  pnfsNFSe, pnfsConversao, ACBrUtil, ACBrDFeUtil, StrUtils;
+  pnfsNFSe, pnfsConversao, ACBrUtil, ACBrDFeUtil, StrUtils, DateUtils;
 
 type
 
@@ -130,8 +130,11 @@ begin
                DFeUtil.SeSenao(AProvedor = proISSDigital,
                                '',
                                DFeUtil.SeSenao(Identificador <> '',
-                                               ' ' + Identificador + '="' + DFeUtil.SeSenao(AProvedor = proTecnos,
-                                                                                            Copy(Notas, Pos('<Rps Id="', Notas) + 9, 35),
+                                               ' ' + Identificador + '="' +
+                                               DFeUtil.SeSenao(AProvedor = proTecnos,
+                                                   '1' + IntToStrZero(YearOf(Date), 4) +
+                                                   Copy(Notas, Pos('<InfDeclaracaoPrestacaoServico Id="', Notas) + 36, 14) +
+                                                                    IntToStrZero(StrToIntDef(NumeroLote, 1), 16),
                                                                                             NumeroLote
                                                                                            ) + '"',
                                                ''
@@ -482,7 +485,6 @@ begin
                      CodCancelamento +
 
                    '</' + Prefixo4 + 'CodigoCancelamento>' +
-                   DFeUtil.SeSenao(AProvedor = proTecnos, '<Id>' + CNPJ + IM + IntToStrZero(StrToInt64(NumeroNFse), 16) + '</Id>', '') +
                   '</' + Prefixo4 + 'InfPedidoCancelamento>';
  end;
 

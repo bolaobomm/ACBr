@@ -74,6 +74,12 @@ begin
  ConfigCidade.Prefixo4      := '';
  ConfigCidade.Identificador := 'Id';
  ConfigCidade.NameSpaceEnvelope := 'http://tempuri.org/';
+  {
+ if AAmbiente = 1 then
+   ConfigCidade.AssinaRPS  := false
+ else
+   ConfigCidade.AssinaRPS  := true;
+}   
  ConfigCidade.AssinaRPS  := true;
  ConfigCidade.AssinaLote := False;
  Result := ConfigCidade;
@@ -194,11 +200,7 @@ function TProvedorTecnos.Gera_TagI(Acao: TnfseAcao; Prefixo3, Prefixo4,
 var
  xmlns: String;
 begin
- xmlns := ' xmlns="http://www.abrasf.org.br/nfse.xsd"' +
-          ' xmlns:ds="http://www.w3.org/2000/09/xmldsig#"' +
-          ' xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"' +
-          ' xsi:schemaLocation="http://www.abrasf.org.br/nfse.xsd nfse_v2.01.xsd">';
-
+ xmlns := ' xmlns="http://www.abrasf.org.br/nfse.xsd">';
  case Acao of
    acRecepcionar: Result := '<' + Prefixo3 + 'EnviarLoteRpsSincronoEnvio' + xmlns;
    acConsSit:     Result := '';
@@ -207,7 +209,7 @@ begin
    acConsNFSe:    Result := '<' + Prefixo3 + 'ConsultarNfseFaixaEnvio' + xmlns;
    acCancelar:    Result := '<' + Prefixo3 + 'CancelarNfseEnvio' + xmlns+
                              '<' + Prefixo3 + 'Pedido>' +
-                             '<' + Prefixo4 + 'InfPedidoCancelamento ' + Identificador + '="' + URI + '">';
+                             '<' + Prefixo4 + 'InfPedidoCancelamento ' + Identificador + '="' + URI + '"' + xmlns + '>';
    acGerar:       Result := '';
    acRecSincrono: Result := '';
  end;

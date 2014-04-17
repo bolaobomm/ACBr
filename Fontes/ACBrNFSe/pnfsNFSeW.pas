@@ -169,9 +169,8 @@ begin
                          StrToInt(SomenteNumeros(FNFSe.IdentificacaoRps.Numero)));
 
   proTecnos: FNFSe.InfID.ID := '1' + //Fixo - Lote Sincrono
-                         FormatDateTime('yyyy', FNFSe.DataEmissao) +
                          SomenteNumeros(FNFSe.Prestador.Cnpj) +
-                         IntToStrZero(StrToIntDef(FNFSe.NumeroLote, 1), 16);
+                         IntToStrZero(StrToIntDef(FNFSe.IdentificacaoRps.Numero, 1), 16);
 
   proIssDsf: FNFSe.InfID.ID := FNFSe.IdentificacaoRps.Numero;
 
@@ -587,7 +586,13 @@ begin
    Gerador.wGrupoNFSe('/CpfCnpj');
   end;
 
- Gerador.wCampoNFSe(tcStr, '#35', 'InscricaoMunicipal', 01, 15, 0, NFSe.Prestador.InscricaoMunicipal, '');
+ if (FProvedor = proTecnos) then
+ begin
+   Gerador.wCampoNFSe(tcStr, '#35', 'RazaoSocial', 01, 15, 1, NFSe.PrestadorServico.RazaoSocial, '');
+   Gerador.wCampoNFSe(tcStr, '#36', 'InscricaoMunicipal', 01, 15, 0, NFSe.Prestador.InscricaoMunicipal, '');
+ end
+ else
+   Gerador.wCampoNFSe(tcStr, '#35', 'InscricaoMunicipal', 01, 15, 0, NFSe.Prestador.InscricaoMunicipal, '');
 
  if (FProvedor in [proISSDigital, proAgili])
   then begin
@@ -770,9 +775,10 @@ begin
     end
     else if FProvedor = proTecnos
       then begin
+       //Rodrigo Crovador - Adicionado o xmlns na tag InfDeclaracaoPrestacaoServico. Se removido, o provedor não reconhece a ass. digital
        Gerador.WGrupoNFSe('tcDeclaracaoPrestacaoServico');
-       Gerador.wGrupoNFSe('InfDeclaracaoPrestacaoServico');
-       Gerador.wGrupoNFSe('Rps ' + FIdentificador + '="' + NFSe.InfID.ID + '"');
+       Gerador.wGrupoNFSe('InfDeclaracaoPrestacaoServico ' + FIdentificador + '="' + NFSe.InfID.ID + '"' + ' xmlns="http://www.abrasf.org.br/nfse.xsd"');
+       Gerador.wGrupoNFSe('Rps');
       end
       else begin
         Gerador.wGrupoNFSe('InfDeclaracaoPrestacaoServico');
@@ -795,11 +801,6 @@ begin
 
   Gerador.wGrupoNFSe('/Rps');
 
-  if FProvedor in [proTecnos]
-    then begin
-//      Gerador.wCampoNFSe(tcStr, '#4', 'SiglaUF', 2, 2, 1, NFSe.Prestador.cUF);
-      Gerador.wCampoNFSe(tcStr, '#4', 'IdCidade', 7, 7, 1, NFSe.Servico.CodigoMunicipio);
-    end;
 
   if FProvedor = profintelISS
     then begin
@@ -832,6 +833,12 @@ begin
             then Gerador.wCampoNFSe(tcDatHor, '#4', 'Competencia', 19, 19, 0, NFSe.DataEmissao, DSC_DEMI);
           end;
         end;
+
+  if FProvedor in [proTecnos]
+    then begin
+      Gerador.wCampoNFSe(tcStr, '#4', 'IdCidade', 7, 7, 1, NFSe.Servico.CodigoMunicipio);
+    end;
+
         GerarServicoValores_V2;
     end;
 
