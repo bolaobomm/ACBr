@@ -1235,6 +1235,8 @@ begin
         else if ((DFeUtil.EstaVazio(FDANFEClassOwner.ProtocoloNFe)) and
                  (DFeUtil.EstaVazio(FNFe.procNFe.nProt))) then
           FieldByName('Mensagem0').AsString := 'NFe sem Autorização de Uso da SEFAZ'
+        else if (FNFe.Ide.tpImp = tiSimplificado) then
+           FieldByName('Mensagem0').AsString := 'EMISSÃO NORMAL'
         else
           FieldByName('Mensagem0').AsString := '';
       end
