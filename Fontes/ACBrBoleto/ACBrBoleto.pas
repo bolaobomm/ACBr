@@ -424,6 +424,9 @@ type
   TACBrTipoImpressao = (tipCarne, tipNormal);
   TACBrTipoDocumento = (Tradicional=1, Escritural=2);
 
+  {Definir como o boleto vai ser gerado/enviado pelo Cedente ou pelo Banco }
+  TACBrCarteiraEnvio = (tceCedente, tceBanco);
+
   { TACBrCedente }
 
   TACBrCedente = class(TComponent)
@@ -570,6 +573,9 @@ type
     fTextoLivre           : String;
     fCodigoMora           : String;
     fpLinhaDigitada       : String;
+    fCodigoLiquidacao     : String;
+    fCodigoLiquidacaoDescricao: String;
+    fCarteiraEnvio        : TACBrCarteiraEnvio;
 
     procedure SetCarteira(const AValue: String);
     procedure SetNossoNumero ( const AValue: String ) ;
@@ -590,6 +596,7 @@ type
      property NossoNumero       : String      read fNossoNumero       write SetNossoNumero;
      property UsoBanco          : String      read fUsoBanco          write fUsoBanco;
      property Carteira          : String      read fCarteira          write SetCarteira;
+     property CarteiraEnvio     : TACBrCarteiraEnvio read fCarteiraEnvio write fCarteiraEnvio default tceCedente;
      property EspecieMod        : String      read fEspecieMod        write fEspecieMod;
      property ValorDocumento    : Currency    read fValorDocumento    write fValorDocumento;
      property Mensagem          : TStrings    read fMensagem          write fMensagem;
@@ -599,6 +606,8 @@ type
      property Sacado            : TACBrSacado read fSacado            write fSacado;
      property Parcela           :Integer      read fParcela           write SetParcela default 1;
      property TotalParcelas     :Integer      read fTotalParcelas     write SetTotalParcelas default 1;
+     property CodigoLiquidacao  : String      read fCodigoLiquidacao  write fCodigoLiquidacao;
+     property CodigoLiquidacaoDescricao : String read fCodigoLiquidacaoDescricao write fCodigoLiquidacaoDescricao;
 
      property OcorrenciaOriginal : TACBrOcorrencia read  fOcorrenciaOriginal write fOcorrenciaOriginal;
 

@@ -67,6 +67,7 @@ type
     function TipoOcorrenciaToDescricao(const TipoOcorrencia: TACBrTipoOcorrencia): String; override;
     function CodOcorrenciaToTipo(const CodOcorrencia: Integer): TACBrTipoOcorrencia; override;
     function TipoOCorrenciaToCod(const TipoOcorrencia: TACBrTipoOcorrencia): String; override;
+    function CodigoLiquidacao_Descricao( CodLiquidacao : Integer) : String;
    end;
 
 implementation
@@ -104,10 +105,12 @@ begin
       raise Exception.Create( ACBrStr('Carteira Inválida.'+sLineBreak+'Utilize "RG" ou "SR"') ) ;
 
    ANossoNumero := OnlyNumber(ACBrTitulo.NossoNumero);
-   
-   Num := ACarteira + '4' + PadR(ANossoNumero, 15, '0');
-   
-   
+
+   if ACBrTitulo.CarteiraEnvio = tceCedente then //O Cedente é quem envia o boleto
+      Num := ACarteira + '4' + PadR(ANossoNumero, 15, '0')
+   else
+      Num := ACarteira + '1' + PadR(ANossoNumero, 15, '0'); //o Banco é quem Envia
+
    Modulo.CalculoPadrao;
    Modulo.MultiplicadorFinal   := 2;
    Modulo.MultiplicadorInicial := 9;
@@ -149,13 +152,20 @@ begin
    begin
       ANossoNumero := OnlyNumber(NossoNumero);
 
-      if (ACBrTitulo.Carteira = 'RG') then         {carterira registrada}
-         ANossoNumero := '14' + padR(ANossoNumero, 15, '0')
+      if (ACBrTitulo.Carteira = 'RG') then
+      begin         {carterira registrada}
+        if ACBrTitulo.CarteiraEnvio = tceCedente then
+          ANossoNumero := '14'+padR(ANossoNumero, 15, '0')
+        else
+          ANossoNumero := '11'+padR(ANossoNumero, 15, '0')
+      end
       else if (ACBrTitulo.Carteira = 'SR')then     {carteira 2 sem registro}
-         // Juliomar Marchetti
-		 //	Voltei para 24 mas tem que ver alguma forma para tratar isso e saber qual 
-		 //	deve ser usado não pode ser fixo nesse caso	 {Alterado de 24 para 21}
-         ANossoNumero := '24'+padR(ANossoNumero, 15, '0')
+      begin
+        if ACBrTitulo.CarteiraEnvio = tceCedente then
+          ANossoNumero := '24'+padR(ANossoNumero, 15, '0')
+        else
+          ANossoNumero := '21'+padR(ANossoNumero, 15, '0')
+      end
       else
          raise Exception.Create( ACBrStr('Carteira Inválida.'+sLineBreak+'Utilize "RG" ou "SR"') ) ;
    end;
@@ -205,8 +215,7 @@ begin
     Result:= copy( CodigoBarras, 1, 4) + DigitoCodBarras + copy( CodigoBarras, 5, 44);
 end;
 
-function TACBrCaixaEconomica.TipoOCorrenciaToCod(
-  const TipoOcorrencia: TACBrTipoOcorrencia): String;
+function TACBrCaixaEconomica.TipoOCorrenciaToCod(const TipoOcorrencia: TACBrTipoOcorrencia): String;
 begin
 //escol
   case TipoOcorrencia of
@@ -803,4 +812,18 @@ begin
     53: Result := '53-Título DDA recusado pela CIP';
   end;
 end;
+
+function TACBrCaixaEconomica.CodigoLiquidacao_Descricao(CodLiquidacao: Integer): String;
+begin
+  case CodLiquidacao of
+    02 : result := 'Casa Lotérica';
+    03 : result := 'Agências CAIXA';
+    04 : result := 'Compensação Eletrônica';
+    05 : result := 'Compensação Convencional';
+    06 : result := 'Internet Banking';
+    07 : result := 'Correspondente Bancário';
+    08 : result := 'Em Cartório'
+  end;
+end;
+
 end.
