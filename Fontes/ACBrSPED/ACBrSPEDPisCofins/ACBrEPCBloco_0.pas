@@ -629,6 +629,7 @@ end;
 
 constructor TRegistro0001.Create;
 begin
+  FRegistro0035 := TRegistro0035List.Create;
   FRegistro0110 := TRegistro0110.Create(Self);
   FRegistro0100 := TRegistro0100List.Create;
   FRegistro0120 := TRegistro0120List.Create;    //Implementado por Fábio Gabriel - 29/11/2012
@@ -639,6 +640,7 @@ end;
 
 destructor TRegistro0001.Destroy;
 begin
+  FRegistro0035.Free;
   FRegistro0100.Free;
   FRegistro0110.Free;
   FRegistro0120.Free;  //Implementado por Fábio Gabriel - 29/11/2012
