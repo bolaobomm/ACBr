@@ -1281,10 +1281,16 @@ end;
 
 
 procedure TBloco_E.WriteRegistroE340(RegE300: TRegistroSEFE300);
+var
+ intFor : Integer;
+ RegE340: TRegistroSEFE340;
 begin
-   if Assigned(RegE300.RegistroE340) then
-   begin
-     with RegE300.RegistroE340  do
+  if Assigned(RegE300.RegistroE340) then
+  begin
+  for intFor := 0 to RegE300.RegistroE340.Count - 1 do
+    begin
+     RegE340:= TRegistroSEFE340(RegE300.RegistroE340.Items[intFor]);
+     with RegE340  do
         begin
           Add( LFill('E340')    +
                LFill(VL_01, 2)  +
@@ -1314,6 +1320,7 @@ begin
      RegistroE990.QTD_LIN_E := RegistroE990.QTD_LIN_E + 1;
      /// Variavel para armazenar a quantidade de registro do tipo.
      FRegistroE340Count := FRegistroE340Count + 1;
+    end;
   end;
 end;
 

@@ -58,7 +58,7 @@ type
   TRegistroSEFE305List = class;
   TRegistroSEFE310List = class;
   TRegistroSEFE330List = class;
-  TRegistroSEFE340 = class;
+  TRegistroSEFE340List = class;
   TRegistroSEFE350List = class;
   TRegistroSEFE360List = class;
 
@@ -504,7 +504,7 @@ type
     fRegistroE305: TRegistroSEFE305List;
     fRegistroE310: TRegistroSEFE310List;
     fRegistroE330: TRegistroSEFE330List;
-    fRegistroE340: TRegistroSEFE340;
+    fRegistroE340: TRegistroSEFE340List;
     fRegistroE350: TRegistroSEFE350List;
     fRegistroE360: TRegistroSEFE360List;
   public
@@ -515,7 +515,7 @@ type
     property RegistroE305: TRegistroSEFE305List read fRegistroE305 write fRegistroE305;
     property RegistroE310: TRegistroSEFE310List read fRegistroE310 write fRegistroE310;
     property RegistroE330: TRegistroSEFE330List read fRegistroE330 write fRegistroE330;
-    property RegistroE340: TRegistroSEFE340 read fRegistroE340 write fRegistroE340;
+    property RegistroE340: TRegistroSEFE340List read fRegistroE340 write fRegistroE340;
     property RegistroE350: TRegistroSEFE350List read fRegistroE350 write fRegistroE350;
     property RegistroE360: TRegistroSEFE360List read fRegistroE360 write fRegistroE360;
     
@@ -694,33 +694,46 @@ type
     fVL_21 : Double;
     fVL_22 : Double;
     fVL_99 : Double;
-    public
-      property VL_01  : Double  read fVL_01 write fVL_01;    //  01- Valor do crédito do ICMS das entradas e aquisições
-      property VL_02  : Double  read fVL_02 write fVL_02;    //  02- Valor do crédito do ICMS da substituição tributária pelas en-tradas
-      property VL_03  : Double  read fVL_03 write fVL_03;    //  03- Valor do crédito do ICMS da substituição tributária na fonte
-      property VL_04  : Double  read fVL_04 write fVL_04;    //  04-  Valor  do  crédito  do  ICMS  da  antecipação  tributária  nas  en-tradas
-      property VL_05  : Double  read fVL_05 write fVL_05;    //  05- Valor dos outros créditos
-      property VL_06  : Double  read fVL_06 write fVL_06;    //  06- Valor dos estornos de débito
-      property VL_07  : Double  read fVL_07 write fVL_07;    //  07- Valor do saldo credor do período anterior
-      property VL_08  : Double  read fVL_08 write fVL_08;    //  08- Valor total dos créditos (01 + 02 + 03 + 04 + 05 + 06 + 07)
-      property VL_09  : Double  read fVL_09 write fVL_09;    //  09- Valor do débito do ICMS das saídas e prestações
-      property VL_10  : Double  read fVL_10 write fVL_10;    //  10- Valor dos outros débitos
-      property VL_11  : Double  read fVL_11 write fVL_11;    //  11- Valor dos estornos de crédito
-      property VL_12  : Double  read fVL_12 write fVL_12;    //  12- Valor total dos débitos (09 + 10 + 11)
-      property VL_13  : Double  read fVL_13 write fVL_13;    //  13-  Valor  do  saldo  credor  a  transportar  para  o  período  seguinte(08 – 12)
-      property VL_14  : Double  read fVL_14 write fVL_14;    //  14- Valor do saldo devedor (12 – 08)
-      property VL_15  : Double  read fVL_15 write fVL_15;    //  15- Valor das deduções
-      property VL_16  : Double  read fVL_16 write fVL_16;    //  16- Valor do ICMS normal a recolher (14 – 15)
-      property VL_17  : Double  read fVL_17 write fVL_17;    //  17- Valor do ICMS da substituição tributária pelas entradas
-      property VL_18  : Double  read fVL_18 write fVL_18;    //  18- Valor do ICMS da antecipação tributária nas entradas
-      property VL_19  : Double  read fVL_19 write fVL_19;    //  19- Valor do ICMS da substituição tributária nas saídas para o  Estado
-      property VL_20  : Double  read fVL_20 write fVL_20;    //  20- Valor do ICMS da importação
-      property VL_21  : Double  read fVL_21 write fVL_21;    //  21- Valor das outras obrigações a recolher para o Estado
-      property VL_22  : Double  read fVL_22 write fVL_22;    //  22- Valor total das obrigações a recolher para o Estado (16 + 17 + 18 + 19 + 20 + 21)
-      property VL_99  : Double  read fVL_99 write fVL_99;    //  99- Valor total do ICMS da substituição tributária nas saídas para outros estados
-    end;
+  public
+    property VL_01  : Double  read fVL_01 write fVL_01;    //  01- Valor do crédito do ICMS das entradas e aquisições
+    property VL_02  : Double  read fVL_02 write fVL_02;    //  02- Valor do crédito do ICMS da substituição tributária pelas en-tradas
+    property VL_03  : Double  read fVL_03 write fVL_03;    //  03- Valor do crédito do ICMS da substituição tributária na fonte
+    property VL_04  : Double  read fVL_04 write fVL_04;    //  04-  Valor  do  crédito  do  ICMS  da  antecipação  tributária  nas  en-tradas
+    property VL_05  : Double  read fVL_05 write fVL_05;    //  05- Valor dos outros créditos
+    property VL_06  : Double  read fVL_06 write fVL_06;    //  06- Valor dos estornos de débito
+    property VL_07  : Double  read fVL_07 write fVL_07;    //  07- Valor do saldo credor do período anterior
+    property VL_08  : Double  read fVL_08 write fVL_08;    //  08- Valor total dos créditos (01 + 02 + 03 + 04 + 05 + 06 + 07)
+    property VL_09  : Double  read fVL_09 write fVL_09;    //  09- Valor do débito do ICMS das saídas e prestações
+    property VL_10  : Double  read fVL_10 write fVL_10;    //  10- Valor dos outros débitos
+    property VL_11  : Double  read fVL_11 write fVL_11;    //  11- Valor dos estornos de crédito
+    property VL_12  : Double  read fVL_12 write fVL_12;    //  12- Valor total dos débitos (09 + 10 + 11)
+    property VL_13  : Double  read fVL_13 write fVL_13;    //  13-  Valor  do  saldo  credor  a  transportar  para  o  período  seguinte(08 – 12)
+    property VL_14  : Double  read fVL_14 write fVL_14;    //  14- Valor do saldo devedor (12 – 08)
+    property VL_15  : Double  read fVL_15 write fVL_15;    //  15- Valor das deduções
+    property VL_16  : Double  read fVL_16 write fVL_16;    //  16- Valor do ICMS normal a recolher (14 – 15)
+    property VL_17  : Double  read fVL_17 write fVL_17;    //  17- Valor do ICMS da substituição tributária pelas entradas
+    property VL_18  : Double  read fVL_18 write fVL_18;    //  18- Valor do ICMS da antecipação tributária nas entradas
+    property VL_19  : Double  read fVL_19 write fVL_19;    //  19- Valor do ICMS da substituição tributária nas saídas para o  Estado
+    property VL_20  : Double  read fVL_20 write fVL_20;    //  20- Valor do ICMS da importação
+    property VL_21  : Double  read fVL_21 write fVL_21;    //  21- Valor das outras obrigações a recolher para o Estado
+    property VL_22  : Double  read fVL_22 write fVL_22;    //  22- Valor total das obrigações a recolher para o Estado (16 + 17 + 18 + 19 + 20 + 21)
+    property VL_99  : Double  read fVL_99 write fVL_99;    //  99- Valor total do ICMS da substituição tributária nas saídas para outros estados
+  end;
 
-      //LINHA E350: AJUSTES DA APURAÇÃO DO ICMS
+    // Registro E330 - Lista
+
+  { TRegistroSEFE340List }
+
+  TRegistroSEFE340List = class(TACBrSEFIIRegistros)
+  private
+    function GetNotas(Index: Integer): TRegistroSEFE340;
+    procedure SetNotas(Index: Integer;  const Value: TRegistroSEFE340);
+  public
+    function New(AOwner: TRegistroSEFE300): TRegistroSEFE340;
+    property notas[Index: Integer]: TRegistroSEFE340 read Getnotas write SetNotas;
+  end;
+
+  //LINHA E350: AJUSTES DA APURAÇÃO DO ICMS
 
   TRegistroSEFE350 = class
   private
@@ -805,6 +818,27 @@ type
   end;
 
 implementation
+
+{ TRegistroSEFE340List }
+
+function TRegistroSEFE340List.GetNotas(Index: Integer): TRegistroSEFE340;
+begin
+  Result := TRegistroSEFE340(Get(Index));
+end;
+
+procedure TRegistroSEFE340List.SetNotas(Index: Integer;
+  const Value: TRegistroSEFE340);
+begin
+  Put(Index, Value);
+end;
+
+function TRegistroSEFE340List.New(AOwner: TRegistroSEFE300): TRegistroSEFE340;
+begin
+  if Self.Count <> 0 then
+     raise Exception.Create('Já existe o registro E340 para o periodo!' );
+  Result := TRegistroSEFE340.Create;
+  Add(Result);
+end;
 
 constructor TRegistroSEFE020.Create(AOwner: TRegistroSEFE001);
 begin
@@ -1142,7 +1176,7 @@ begin
    FRegistroE305 := TRegistroSEFE305List.Create;
    FRegistroE310 := TRegistroSEFE310List.Create;
    FRegistroE330 := TRegistroSEFE330List.Create;
-   FRegistroE340 := TRegistroSEFE340.Create;
+//   FRegistroE340 := TRegistroSEFE340.Create;
    FRegistroE350 := TRegistroSEFE350List.Create;
    FRegistroE360 := TRegistroSEFE360List.Create;
 end;
@@ -1152,7 +1186,7 @@ begin
    FRegistroE305.Free;
    FRegistroE310.Free;
    FRegistroE330.Free;
-   FRegistroE340.Free;
+//   FRegistroE340.Free;
    FRegistroE350.Free;
    FRegistroE360.Free;
    inherited Destroy;
