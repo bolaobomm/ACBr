@@ -1480,7 +1480,7 @@ begin
     case FCTe.Ide.Toma4.Toma of
       tmOutros:
         begin
-          FieldByName('CNPJ').AsString := FCTe.Ide.Toma4.CNPJCPF;
+          FieldByName('CNPJ').AsString := DFeUtil.FormatarCNPJCPF(FCTe.Ide.Toma4.CNPJCPF);
           FieldByName('XNome').AsString := FCTe.Ide.Toma4.xNome;
           FieldByName('IE').AsString := FCTe.Ide.Toma4.IE;
           //
