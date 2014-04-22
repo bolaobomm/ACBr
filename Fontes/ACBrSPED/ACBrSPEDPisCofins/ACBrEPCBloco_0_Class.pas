@@ -442,6 +442,7 @@ begin
 
         if IND_MOV = imComDados then
         begin
+          WriteRegistro0035(FRegistro0001) ;
           WriteRegistro0100(FRegistro0001) ;
           WriteRegistro0110(FRegistro0001) ;
           WriteRegistro0120(FRegistro0001) ;   //Implementado por Fábio Gabriel
