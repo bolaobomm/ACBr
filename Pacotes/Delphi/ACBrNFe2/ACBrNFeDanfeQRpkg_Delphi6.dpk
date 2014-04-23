@@ -43,6 +43,7 @@ requires
   {$IFDEF VER240} QR5RunDXE3, vclimg; {$ENDIF} //XE3
   {$IFDEF VER250} QR5RunDXE4, vclimg; {$ENDIF} //XE4
   {$IFDEF VER260} QR5RunDXE5, vclimg; {$ENDIF} //XE5
+  {$IFDEF VER270} QR5RunDXE6, vclimg; {$ENDIF} //XE6
 
 contains
   ACBrNFeDANFeQR in '..\..\..\Fontes\ACBrNFe2\ACBrNFeDANFeQR.pas' {fqrDANFeQR},
