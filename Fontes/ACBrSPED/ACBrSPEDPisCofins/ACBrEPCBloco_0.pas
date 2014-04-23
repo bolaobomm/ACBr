@@ -125,13 +125,13 @@ type
 
   TRegistro0035 = class
   private
-    FCOD_SCP: integer;//Identificação da SCP
+    FCOD_SCP : string ;//Identificação da SCP
     FDESC_SCP: string;//Descrição da SCP
     FINF_COMP: string;//Informação Complementar
   public
     constructor Create(AOwner: TRegistro0001); virtual; /// Create
 
-    property COD_SCP : integer read FCOD_SCP write FCOD_SCP;
+    property COD_SCP : string read FCOD_SCP write FCOD_SCP;
     property DESC_SCP: string  read FDESC_SCP write FDESC_SCP;
     property INF_COMP: string read FINF_COMP write FINF_COMP;
   end;
