@@ -479,36 +479,34 @@ begin
      // TnfseSituacaoTributaria = ( stRetencao, stNormal, stSubstituicao );
      // stRetencao = snSim
      // stNormal   = snNao
+
+     // Neste exemplo não temos ISS Retido ( stNormal = Não )
+     // Logo o valor do ISS Retido é igual a zero.
      Servico.Valores.IssRetido              := stNormal;
+     Servico.Valores.ValorIssRetido         := 0.00;
 
      Servico.Valores.OutrasRetencoes        := 0.00;
      Servico.Valores.DescontoIncondicionado := 0.00;
      Servico.Valores.DescontoCondicionado   := 0.00;
 
-     Servico.Valores.BaseCalculo            := Servico.Valores.ValorServicos -
-                                               Servico.Valores.ValorDeducoes -
-                                               Servico.Valores.DescontoIncondicionado;
-     Servico.Valores.Aliquota               := 0.03;
+     Servico.Valores.BaseCalculo := Servico.Valores.ValorServicos -
+                                    Servico.Valores.ValorDeducoes -
+                                    Servico.Valores.DescontoIncondicionado;
+     // No caso do provedor Ginfes devemos informar a aliquota já dividida por 100
+     // para outros provedores devemos informar por exemplo 3, mas ao fazer o calculo
+     // do valor do ISS devemos dividir por 100                               
+     Servico.Valores.Aliquota    := 0.03;
 
-     if Servico.Valores.IssRetido = stNormal
-      then begin
-       ValorISS := Servico.Valores.BaseCalculo * Servico.Valores.Aliquota;
+     // Valor do ISS calculado multiplicando-se a base de calculo pela aliquota
+     ValorISS := Servico.Valores.BaseCalculo * Servico.Valores.Aliquota;
 
-       // A função RoundTo5 é usada para arredondar valores, sendo que o segundo
-       // parametro se refere ao numero de casas decimais.
-       // exemplos: RoundTo5(50.532, -2) ==> 50.53
-       // exemplos: RoundTo5(50.535, -2) ==> 50.54
-       // exemplos: RoundTo5(50.536, -2) ==> 50.54
+     // A função RoundTo5 é usada para arredondar valores, sendo que o segundo
+     // parametro se refere ao numero de casas decimais.
+     // exemplos: RoundTo5(50.532, -2) ==> 50.53
+     // exemplos: RoundTo5(50.535, -2) ==> 50.54
+     // exemplos: RoundTo5(50.536, -2) ==> 50.54
 
-       Servico.Valores.ValorIss       := RoundTo5(ValorISS, -2);
-       Servico.Valores.ValorIssRetido := 0.00;
-      end
-      else begin
-       ValorISS := Servico.Valores.BaseCalculo * Servico.Valores.Aliquota;
-
-       Servico.Valores.ValorIss       := 0.00;
-       Servico.Valores.ValorIssRetido := RoundTo5(ValorISS, -2);
-      end;
+     Servico.Valores.ValorIss       := RoundTo5(ValorISS, -2);
 
      Servico.Valores.ValorLiquidoNfse := Servico.Valores.ValorServicos -
                                          Servico.Valores.ValorPis -
