@@ -710,7 +710,7 @@ begin
      if VersionNumberStr = 'd16' then
         Sender.Options.Add('-NSData.Win;Datasnap.Win;Web.Win;Soap.Win;Xml.Win;Bde;Vcl;Vcl.Imaging;Vcl.Touch;Vcl.Samples;Vcl.Shell;System;Xml;Data;Datasnap;Web;Soap;Winapi;System.Win');
 
-     if MatchText(VersionNumberStr, ['d17','d18','d19']) then
+     if MatchText(VersionNumberStr, ['d17','d18','d19','d20']) then
         Sender.Options.Add('-NSWinapi;System.Win;Data.Win;Datasnap.Win;Web.Win;Soap.Win;Xml.Win;Bde;System;Xml;Data;Datasnap;Web;Soap;Vcl;Vcl.Imaging;Vcl.Touch;Vcl.Samples;Vcl.Shell');
   end;
 end;
@@ -760,7 +760,9 @@ begin
     else if oACBr.Installations[iFor].VersionNumberStr = 'd18' then
       edtDelphiVersion.Items.Add('Delphi XE4')
     else if oACBr.Installations[iFor].VersionNumberStr = 'd19' then
-      edtDelphiVersion.Items.Add('Delphi XE5');
+      edtDelphiVersion.Items.Add('Delphi XE5')
+    else if oACBr.Installations[iFor].VersionNumberStr = 'd20' then
+      edtDelphiVersion.Items.Add('Delphi XE6');
 
     // -- Evento disparado antes de iniciar a execução do processo.
     oACBr.Installations[iFor].DCC32.OnBeforeExecute := BeforeExecute;
