@@ -103,49 +103,55 @@ var
  	ConfigURL: TConfigURL;
 begin
   case ACodCidade of
+   3127701:
+     begin
+         ConfigURL.ProNomeCidade := 'valadares';
+         ConfigURL.HomNomeCidade := 'valadares';
+	   end;
+   3500105:
+     begin
+         ConfigURL.ProNomeCidade := 'adamantina';
+         ConfigURL.HomNomeCidade := 'adamantina';
+	   end;
+   3510203:
+     begin
+	     ConfigURL.ProNomeCidade := 'capaobonito';
+       ConfigURL.HomNomeCidade := 'capaobonito';
+   	 end;
+   3522109:
+     begin
+	     ConfigURL.ProNomeCidade := 'itanhaem';
+       ConfigURL.HomNomeCidade := 'itanhaem';
+	   end;
+   3523503:
+     begin
+	     ConfigURL.ProNomeCidade := 'itatinga';
+       ConfigURL.HomNomeCidade := 'itatinga';
+	   end;
    3554003:
      begin
-    	 ConfigURL.HomNomeCidade         := 'tatui';
-
-    	 ConfigURL.HomRecepcaoLoteRPS    := '';
-    	 ConfigURL.HomConsultaLoteRPS    := 'http://abrasf.sistemas4r.com.br/aconsultarloterps.aspx?wsdl';
-    	 ConfigURL.HomConsultaNFSeRPS    := 'http://tatui.sistemas4r.com.br/abrasf/ahconsultarnfseporrps.aspx?wsdl';
-    	 ConfigURL.HomConsultaSitLoteRPS := '';
-       ConfigURL.HomConsultaNFSe       := '';
-       ConfigURL.HomCancelaNFSe        := 'http://tatui.sistemas4r.com.br/abrasf/ahcancelarnfse.aspx?wsdl';
-    	 ConfigURL.HomGerarNFSe          := 'http://abrasf.sistemas4r.com.br/agerarnfse.aspx?wsdl';
-    	 ConfigURL.HomRecepcaoSincrono   := 'http://tatui.sistemas4r.com.br/abrasf/ahrecepcionarloterpssincrono.aspx?wsdl';
-    end;
-  else
-    	ConfigURL.HomNomeCidade         := '';
-
-    	ConfigURL.HomRecepcaoLoteRPS    := '';
-    	ConfigURL.HomConsultaLoteRPS    := 'http://abrasf.sistemas4r.com.br/aconsultarloterps.aspx?wsdl';
-    	ConfigURL.HomConsultaNFSeRPS    := 'http://abrasf.sistemas4r.com.br/aconsultarnfseporrps.aspx?wsdl';
-    	ConfigURL.HomConsultaSitLoteRPS := '';
-    	ConfigURL.HomConsultaNFSe       := '';
-    	ConfigURL.HomCancelaNFSe        := 'http://abrasf.sistemas4r.com.br/acancelarnfse.aspx';
-    	ConfigURL.HomGerarNFSe          := 'http://abrasf.sistemas4r.com.br/agerarnfse.aspx?wsdl';
-    	ConfigURL.HomRecepcaoSincrono   := 'http://abrasf.sistemas4r.com.br/arecepcionarloterpssincrono.aspx?wsdl';
+	     ConfigURL.ProNomeCidade := 'tatui';
+       ConfigURL.HomNomeCidade := 'tatui';
+	   end;
   end;
 
-  case ACodCidade of
-   3127701: ConfigURL.ProNomeCidade := 'valadares';
-   3500105: ConfigURL.ProNomeCidade := 'adamantina';
-   3510203: ConfigURL.ProNomeCidade := 'capaobonito';
-   3522109: ConfigURL.ProNomeCidade := 'itanhaem';
-   3523503: ConfigURL.ProNomeCidade := 'itatinga';
-   3554003: ConfigURL.ProNomeCidade := 'tatui';
-  end;
+  ConfigURL.ProRecepcaoLoteRPS    := '';
+  ConfigURL.ProConsultaLoteRPS    := Format('http://%s.sistemas4r.com.br/aconsultarloterps.aspx?wsdl',[ConfigURL.ProNomeCidade]);
+  ConfigURL.ProConsultaNFSeRPS    := Format('http://%s.sistemas4r.com.br/abrasf/aconsultarnfseporrps.aspx?wsdl',[ConfigURL.ProNomeCidade]);
+  ConfigURL.ProConsultaSitLoteRPS := '';
+  ConfigURL.ProConsultaNFSe       := '';
+  ConfigURL.ProCancelaNFSe        := Format('http://%s.sistemas4r.com.br/abrasf/acancelarnfse.aspx',[ConfigURL.ProNomeCidade]);
+  ConfigURL.ProGerarNFSe          := Format('http://%s.sistemas4r.com.br/abrasf/agerarnfse.aspx?wsdl',[ConfigURL.ProNomeCidade]);
+  ConfigURL.ProRecepcaoSincrono   := Format('http://%s.sistemas4r.com.br/abrasf/arecepcionarloterpssincrono.aspx?wsdl',[ConfigURL.ProNomeCidade]);
 
- 	ConfigURL.ProRecepcaoLoteRPS    := '';
- 	ConfigURL.ProConsultaLoteRPS    := 'http://' + ConfigURL.ProNomeCidade + '.sistemas4r.com.br/aconsultarloterps.aspx?wsdl';
- 	ConfigURL.ProConsultaNFSeRPS    := 'http://' + ConfigURL.ProNomeCidade + '.sistemas4r.com.br/abrasf/aconsultarnfseporrps.aspx?wsdl';
- 	ConfigURL.ProConsultaSitLoteRPS := '';
- 	ConfigURL.ProConsultaNFSe       := '';
- 	ConfigURL.ProCancelaNFSe        := 'http://' + ConfigURL.ProNomeCidade + '.sistemas4r.com.br/abrasf/acancelarnfse.aspx';
-  ConfigURL.ProGerarNFSe          := 'http://' + ConfigURL.ProNomeCidade + '.sistemas4r.com.br/abrasf/agerarnfse.aspx?wsdl';
- 	ConfigURL.ProRecepcaoSincrono   := 'http://' + ConfigURL.ProNomeCidade + '.sistemas4r.com.br/abrasf/arecepcionarloterpssincrono.aspx?wsdl';
+  ConfigURL.HomRecepcaoLoteRPS    := '';
+  ConfigURL.HomConsultaLoteRPS    := Format('http://%s.sistemas4r.com.br/aconsultarloterps.aspx?wsdl',[ConfigURL.HomNomeCidade]);
+  ConfigURL.HomConsultaNFSeRPS    := Format('http://%s.sistemas4r.com.br/abrasf/aconsultarnfseporrps.aspx?wsdl',[ConfigURL.HomNomeCidade]);
+  ConfigURL.HomConsultaSitLoteRPS := '';
+  ConfigURL.HomConsultaNFSe       := '';
+  ConfigURL.HomCancelaNFSe        := Format('http://%s.sistemas4r.com.br/abrasf/acancelarnfse.aspx',[ConfigURL.HomNomeCidade]);
+  ConfigURL.HomGerarNFSe          := Format('http://%s.sistemas4r.com.br/abrasf/agerarnfse.aspx?wsdl',[ConfigURL.HomNomeCidade]);
+  ConfigURL.HomRecepcaoSincrono   := Format('http://%s.sistemas4r.com.br/abrasf/arecepcionarloterpssincrono.aspx?wsdl',[ConfigURL.HomNomeCidade]);
 
  	Result := ConfigURL;
 end;
@@ -344,34 +350,16 @@ begin
 end;
 
 function TProvedor4R.GetRetornoWS(Acao: TnfseAcao; RetornoWS: AnsiString): AnsiString;
-var
- RetWS: AnsiString;
 begin
  case Acao of
    acRecepcionar: Result := RetornoWS;
    acConsSit:     Result := RetornoWS;
-   acConsLote:    begin
-                   RetWS := SeparaDados( RetornoWS, 'Resposta' );
-                   Result := RetWS;
-                  end;
-   acConsNFSeRps: begin
-                   RetWS := SeparaDados( RetornoWS, 'Resposta' );
-                   Result := RetWS;
-                  end;
+   acConsLote:    Result := SeparaDados( RetornoWS, 'Resposta' );
+   acConsNFSeRps: Result := SeparaDados( RetornoWS, 'Resposta' );
    acConsNFSe:    Result := RetornoWS;
-   acCancelar:    begin
-                   RetWS := SeparaDados( RetornoWS, 'Resposta' );
-                   Result := RetWS;
-                  end;
-   acGerar:       begin
-                   RetWS := SeparaDados( RetornoWS, 'Resposta' );
-                   Result := RetWS;
-                  end;
-   acRecSincrono: begin
-                   // Incluido por João Paulo Delboni em 22/04/2013
-                   RetWS := SeparaDados( RetornoWS, 'Resposta' );
-                   Result := RetWS;
-                  end;
+   acCancelar:    Result := SeparaDados( RetornoWS, 'Resposta' );
+   acGerar:       Result := SeparaDados( RetornoWS, 'Resposta' );
+   acRecSincrono: Result := SeparaDados( RetornoWS, 'Resposta' );
  end;
 end;
 
@@ -386,31 +374,24 @@ end;
 
 function TProvedor4R.GetLinkNFSe(ACodMunicipio, ANumeroNFSe: Integer;
   ACodVerificacao, AInscricaoM: String; AAmbiente: Integer): String;
+var
+ NomeMunicipio: String;
 begin
- if AAmbiente = 1 then
-  begin
-   case ACodMunicipio of
-     3127701: Result := 'https://valadares.sistemas4r.com.br/CS/Em_Impressao_Nfe.aspx?id=' + ACodVerificacao;
-     3500105: Result := 'https://adamantina.sistemas4r.com.br/CS/Em_Impressao_Nfe.aspx?id=' + ACodVerificacao;
-     3510203: Result := 'https://capaobonito.sistemas4r.com.br/CS/Em_Impressao_Nfe.aspx?id=' + ACodVerificacao;
-     3523503: Result := 'https://itatinga.sistemas4r.com.br/CS/Em_Impressao_Nfe.aspx?id=' + ACodVerificacao;
-     3554003: Result := 'https://tatui.sistemas4r.com.br/CS/Em_Impressao_Nfe.aspx?id=' + ACodVerificacao;
-   else
-     Result := '';
-   end;
-  end
+ case ACodMunicipio of
+   3127701: NomeMunicipio := 'valadares';
+   3500105: NomeMunicipio := 'adamantina';
+   3510203: NomeMunicipio := 'capaobonito';
+   3522109: NomeMunicipio := 'itanhaem';
+   3523503: NomeMunicipio := 'itatinga';
+   3554003: NomeMunicipio := 'tatui';
  else
-  begin
-   case ACodMunicipio of
-     3127701: Result := 'https://valadares.sistemas4r.com.br/CS/Em_Impressao_NfeHomologa.aspx?id=' + ACodVerificacao;
-     3500105: Result := 'https://adamantina.sistemas4r.com.br/CS/Em_Impressao_NfeHomologa.aspx?id=' + ACodVerificacao;
-     3510203: Result := 'https://capaobonito.sistemas4r.com.br/CS/Em_Impressao_NfeHomologa.aspx?id=' + ACodVerificacao;
-     3523503: Result := 'https://itatinga.sistemas4r.com.br/CS/Em_Impressao_NfeHomologa.aspx?id=' + ACodVerificacao;
-     3554003: Result := 'https://tatui.sistemas4r.com.br/CS/Em_Impressao_NfeHomologa.aspx?id=' + ACodVerificacao;
-   else
-     Result := '';
-   end;     
-  end;
+   NomeMunicipio := '';
+ end;
+
+ if AAmbiente = 1 then
+   Result := 'https://' + NomeMunicipio + '.sistemas4r.com.br/CS/Em_Impressao_Nfe.aspx?id=' + ACodVerificacao
+ else
+   Result := 'https://' + NomeMunicipio + '.sistemas4r.com.br/CS/Em_Impressao_NfeHomologa.aspx?id=' + ACodVerificacao;
 
 end;
 
