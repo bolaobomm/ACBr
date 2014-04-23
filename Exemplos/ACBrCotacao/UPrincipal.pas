@@ -32,7 +32,7 @@ var
 implementation
 
 uses
-  ShellAPI;
+  ShellAPI, ACBrUtil;
 
 {$R *.dfm}
 
@@ -48,14 +48,14 @@ begin
     for I := 0 to ACBrCotacao1.Tabela.Count - 1 do
     begin
       ListBox1.Items.Add(
-        Format('%s  %3.3d  %s  %s  %-20s  %5.5d  %-30s  %10s  %10s  %10s  %10s', [
+        Format('%s  %3.3d  %s  %s  %s  %5.5d  %s  %10s  %10s  %10s  %10s', [
           DateToStr(ACBrCotacao1.Tabela[I].DataCotacao),
           ACBrCotacao1.Tabela[I].CodigoMoeda,
           ACBrCotacao1.Tabela[I].Tipo,
           ACBrCotacao1.Tabela[I].Moeda,
-          ACBrCotacao1.Tabela[I].Nome,
+          PadL(ACBrCotacao1.Tabela[I].Nome, 20, ' '),
           ACBrCotacao1.Tabela[I].CodPais,
-          ACBrCotacao1.Tabela[I].Pais,
+          PadL(ACBrCotacao1.Tabela[I].Pais, 30, ' '),
           FloatTostr(ACBrCotacao1.Tabela[I].TaxaCompra),
           FloatTostr(ACBrCotacao1.Tabela[I].TaxaVenda),
           FloatTostr(ACBrCotacao1.Tabela[I].ParidadeCompra),

@@ -53,7 +53,6 @@ object frmPrincipal: TfrmPrincipal
     ItemHeight = 14
     ParentFont = False
     TabOrder = 1
-    ExplicitHeight = 452
   end
   object GroupBox2: TGroupBox
     Left = 0
@@ -85,9 +84,6 @@ object frmPrincipal: TfrmPrincipal
       Font.Name = 'Tahoma'
       Font.Style = []
       ParentFont = False
-      ExplicitTop = 15
-      ExplicitWidth = 658
-      ExplicitHeight = 78
     end
     object Label2: TLabel
       Left = 2
@@ -105,7 +101,6 @@ object frmPrincipal: TfrmPrincipal
       Font.Style = [fsUnderline]
       ParentFont = False
       OnClick = Label2Click
-      ExplicitLeft = 3
     end
   end
   object ACBrCotacao1: TACBrCotacao

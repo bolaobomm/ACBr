@@ -152,7 +152,11 @@ var
   StrTmp: String;
   PosCp: Integer;
 begin
-  Self.HTTPGet('http://www4.bcb.gov.br/pec/taxas/batch/tabmoedas.asp');
+  // alterado pois o endereço antigo começou a utilizar frame
+  // então agora abrimos direto o frame
+  //Self.HTTPGet('http://www4.bcb.gov.br/pec/taxas/batch/tabmoedas.asp');
+
+  Self.HTTPGet('https://www3.bcb.gov.br/ptax_internet/consultarTabelaMoedas.do?method=consultaTabelaMoedas');
   StrTmp := Self.RespHTTP.Text;
 
   PosCp := Pos('http://www4.bcb.gov.br/Download/fechamento/', StrTmp);
@@ -169,7 +173,11 @@ var
   StrTmp: String;
   PosCp: Integer;
 begin
-  Self.HTTPGet('http://www4.bcb.gov.br/pec/taxas/batch/cotacaomoedas.asp');
+  // alterado pois o endereço antigo começou a utilizar frame
+  // então agora abrimos direto o frame
+  //Self.HTTPGet('http://www4.bcb.gov.br/pec/taxas/batch/cotacaomoedas.asp');
+
+  Self.HTTPGet('https://www3.bcb.gov.br/ptax_internet/consultarTodasAsMoedas.do?method=consultaTodasMoedas');
   StrTmp := Self.RespHTTP.Text;
 
   PosCp := Pos('http://www4.bcb.gov.br/Download/fechamento/', StrTmp);
@@ -250,20 +258,20 @@ begin
         with Tabela.New do
         begin
           // dados da cotação
-          DataCotacao    := StrToDate(ItemCotacao[0]);
-          CodigoMoeda    := StrToInt(ItemCotacao[1]);
+          DataCotacao    := StrToDateDef(ItemCotacao[0], 0.0);
+          CodigoMoeda    := StrToIntDef(ItemCotacao[1], 0);
           Tipo           := ItemCotacao[2];
           Moeda          := ItemCotacao[3];
-          TaxaCompra     := StrToFloat(ItemCotacao[4]);
-          TaxaVenda      := StrToFloat(ItemCotacao[5]);
-          ParidadeCompra := StrToFloat(ItemCotacao[6]);
-          ParidadeVenda  := StrToFloat(ItemCotacao[7]);
+          TaxaCompra     := StrToFloatDef(ItemCotacao[4], 0);
+          TaxaVenda      := StrToFloatDef(ItemCotacao[5], 0);
+          ParidadeCompra := StrToFloatDef(ItemCotacao[6], 0);
+          ParidadeVenda  := StrToFloatDef(ItemCotacao[7], 0);
 
           // dados da moeda
           if ItemMoeda.Count = 7 then
           begin
             Nome        := ItemMoeda[1];
-            CodPais     := StrToInt(ItemMoeda[3]);
+            CodPais     := StrToIntDef(ItemMoeda[3], 0);
             Pais        := ItemMoeda[4];
           end;
         end;
