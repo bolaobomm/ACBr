@@ -2359,7 +2359,7 @@ object Form1: TForm1
       'LIN001=QTD         x UNITARIO       Aliq     VALOR (R$)'
       'LIN002=<hr>'
       
-        'MascaraItem=III CCCCCCCCCCCCC DDDDDDDDDDDDDDDDDDDDDDDDDDDDDDQQQQ' +
+        'MascaraItem=III CCCCCCCCCCCCCC DDDDDDDDDDDDDDDDDDDDDDDDDDDDDQQQQ' +
         'QQQQ UU x VVVVVVVVVVVVV AAAAAA TTTTTTTTTTTTT'
       ''
       '[Rodape]'
