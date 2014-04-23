@@ -168,6 +168,7 @@ type
       const ARegister: Boolean): Boolean;
     procedure CopiarArquivoTo(ADestino : TDestino; const ANomeArquivo: String);//    procedure CopiarArquivoToSystem(const ANomeArquivo: String);
     procedure ConfigurarParaUtilizarOpenSSL(const AUtilizar: Boolean);
+    function ExtrairDiretorioPacote(NomePacote: string): string;
   public
 
   end;
@@ -234,6 +235,21 @@ begin
   finally
     F.Free;
   end;
+end;
+
+function TfrmPrincipal.ExtrairDiretorioPacote(NomePacote: string): string;
+begin
+  // adicionar o nível do diretório da nota eletronica
+  if frameDpk.IsPacoteNF2(NomePacote) then
+    Result := '\Pacotes\Delphi\ACBrNFe2\'
+  else if frameDpk.IsPacoteCTe(NomePacote) then
+    Result := '\Pacotes\Delphi\ACBrCTe\'
+  else if frameDpk.IsPacoteNFSe(NomePacote) then
+    Result := '\Pacotes\Delphi\ACBrNFSe\'
+  else if frameDpk.IsPacoteMDFe(NomePacote) then
+    Result := '\Pacotes\Delphi\ACBrMDFe\'
+  else
+    Result := '\Pacotes\Delphi\';
 end;
 
 // retornar o path do aplicativo
@@ -882,10 +898,8 @@ begin
     begin
       NomePacote := frameDpk.Pacotes[iDpk].Caption;
 
-      if frameDpk.IsPacoteNF2(NomePacote) then
-        sDirPackage := sDirRoot + '\Pacotes\Delphi\ACBrNFe2\'
-      else
-        sDirPackage := sDirRoot + '\Pacotes\Delphi\';
+      // Busca diretório do pacote
+      sDirPackage := sDirRoot + ExtrairDiretorioPacote(NomePacote);
 
       if (IsDelphiPackage(NomePacote)) and (frameDpk.Pacotes[iDpk].Checked) then
       begin
@@ -924,10 +938,8 @@ begin
         begin
           NomePacote := frameDpk.Pacotes[iDpk].Caption;
 
-          if frameDpk.IsPacoteNF2(NomePacote) then
-            sDirPackage := sDirRoot + '\Pacotes\Delphi\ACBrNFe2\'
-          else
-            sDirPackage := sDirRoot + '\Pacotes\Delphi\';
+          // Busca diretório do pacote
+          sDirPackage := sDirRoot + ExtrairDiretorioPacote(NomePacote);
 
           if IsDelphiPackage(NomePacote) then
           begin
@@ -1311,12 +1323,8 @@ begin
     begin
       sDirRoot := edtDirDestino.Text;
       NomePacote := frameDpk.Pacotes[I].Caption;
-
-      // adicionar o nível do diretório da nota eletronica
-      if frameDpk.IsPacoteNF2(NomePacote) then
-        sDirPackage := sDirRoot + '\Pacotes\Delphi\ACBrNFe2\'
-      else
-        sDirPackage := sDirRoot + '\Pacotes\Delphi\';
+      // Busca diretório do pacote
+      sDirPackage := sDirRoot + ExtrairDiretorioPacote(NomePacote);
 
       if IsDelphiPackage(NomePacote) then
       begin

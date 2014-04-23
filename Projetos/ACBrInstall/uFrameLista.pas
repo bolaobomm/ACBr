@@ -118,6 +118,9 @@ type
     destructor Destroy; override;
 
     function IsPacoteNF2(const ANomePacote: String): Boolean;
+    function IsPacoteCTe(const ANomePacote: String): Boolean;
+    function IsPacoteNFSe(const ANomePacote: String): Boolean;
+    function IsPacoteMDFe(const ANomePacote: String): Boolean;
 
     property Pacotes: TPacotes read FPacotes write FPacotes;
   end;
@@ -163,24 +166,44 @@ begin
   inherited;
 end;
 
+function TframePacotes.IsPacoteCTe(const ANomePacote: String): Boolean;
+const
+  PACOTES_CTe: array [0..2] of String =
+    ('ACBr_CTe.dpk',
+     'ACBrCTeDacteFRpkg.dpk',
+     'ACBrCTeDacteQRpkg.dpk');
+begin
+  Result := MatchText(ANomePacote, PACOTES_CTe);
+end;
+
+function TframePacotes.IsPacoteNFSe(const ANomePacote: String): Boolean;
+const
+  PACOTES_NFSe: array [0..3] of String =
+    ('ACBr_NFSe.dpk',
+     'ACBrNFSeDanfseFRpkg.dpk',
+     'ACBrNFSeDanfseRLpkg.dpk',
+     'ACBrNFSeDanfseQRpkg.dpk');
+begin
+  Result := MatchText(ANomePacote, PACOTES_NFSe);
+end;
+
+function TframePacotes.IsPacoteMDFe(const ANomePacote: String): Boolean;
+const
+  PACOTES_MDFe: array [0..0] of String =
+    ('ACBr_MDFe.dpk');
+begin
+  Result := MatchText(ANomePacote, PACOTES_MDFe);
+end;
+
 function TframePacotes.IsPacoteNF2(const ANomePacote: String): Boolean;
 const
-  PACOTES_NF2: array [0..14] of String =
-    ('PCN2.dpk',
-     'ACBr_NFe2.dpk',
-     'ACBr_CTe.dpk',
-     'ACBr_NFSe.dpk',
-     'ACBr_MDFe.dpk',
+  PACOTES_NF2: array [0..5] of String =
+    ('ACBr_NFe2.dpk',
      'ACBrNFeDanfeFRpkg.dpk',
-     'ACBrCTeDacteFRpkg.dpk',
-     'ACBrNFSeDanfseFRpkg.dpk',
      'ACBrNFeDanfeRV.dpk',
      'ACBrNFeDanfeRVCodeBase.dpk',
      'ACBrNFeDanfeRLpkg.dpk',
-     'ACBrNFSeDanfseRLpkg.dpk',
-     'ACBrNFeDanfeQRpkg.dpk',
-     'ACBrCTeDacteQRpkg.dpk',
-     'ACBrNFSeDanfseQRpkg.dpk');
+     'ACBrNFeDanfeQRpkg.dpk');
 begin
   Result := MatchText(ANomePacote, PACOTES_NF2);
 end;
