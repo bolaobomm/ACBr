@@ -122,7 +122,7 @@ var
  DadosMsg: AnsiString;
 begin
  if AProvedor = proBetha then Prefixo3 := '';
- if AProvedor in [proGovBR, proPronim, proPublica] then Identificador := '';
+ if AProvedor in [proGovBR, proPronim{, proPublica}] then Identificador := '';
 
  DadosMsg := '<' + Prefixo3 + 'LoteRps' +
 

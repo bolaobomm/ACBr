@@ -627,12 +627,12 @@ begin
    AXML := copy(AXML, 1, pos('</'+ APrefixo3 + EnviarLoteRps + '>', AXML) - 1);
 
    // Alterado por Italo em 07/08/2013 - incluido na lista o proAbaco
-   if (URI = '') or (AProvedor in [proRecife, proRJ, proAbaco, proIssDSF, proIssCuritiba, proFISSLex, proGovBR])
+   if (URI = '') or (AProvedor in [proRecife, proRJ, proAbaco, proIssDSF, proIssCuritiba, proFISSLex, proGovBR, proPublica])
     then AID := '>'
     else AID := ' ' + Identificador + '="AssLote_' + URI + '">';
 
    // Incluido por Italo em 07/08/2013
-   if AProvedor in [proAbaco, proIssCuritiba, proFISSLex]
+   if AProvedor in [proAbaco, proIssCuritiba, proFISSLex, proPublica]
     then URI := '';
 
    AXML := AXML + '<Signature xmlns="http://www.w3.org/2000/09/xmldsig#"' + AID +
@@ -693,9 +693,13 @@ begin
       else URI := '';
 
      // Alterado por Italo em 10/05/2013 - incluido na lista o proRJ
-     if (URI = '') or (AProvedor in [profintelISS, proRecife, proNatal, proRJ, proGovBR, proTecnos])
+     if (URI = '') or (AProvedor in [profintelISS, proRecife, proNatal, proRJ, proGovBR, proTecnos, proPublica])
       then AID := '>'
       else AID := ' ' + Identificador + '="Ass_' + URI + '">';
+
+     // Incluido por Italo em 23/04/2013
+     if AProvedor in [proAbaco, proIssCuritiba, proFISSLex, proPublica]
+      then URI := '';
 
      Assinatura := '<Signature xmlns="http://www.w3.org/2000/09/xmldsig#"' + AID +
                     '<SignedInfo>' +
@@ -760,7 +764,7 @@ begin
             AXML := AXML + Assinatura;
             AXML := AXML + '</Rps>';
             // Alterado por Cleiver em 26/02/2013
-            if (AProvedor in [proGoiania, proProdata, proVitoria, proPublica])
+            if (AProvedor in [proGoiania, proProdata, proVitoria{, proPublica}])
              then AXML := AXML + '</GerarNfseEnvio>';
            end;
      end;
@@ -795,7 +799,7 @@ begin
     then xmldsig.signature := xmldoc.selectSingleNode('.//ns1:'+ EnviarLoteRps + '/ds:Signature')
    else if (AProvedor = proEquiplano)
     then xmldsig.signature := xmldoc.selectSingleNode('.//ds:Signature')
-   else if (URI <> '') and not (AProvedor in [proRecife, proRJ, proAbaco, proIssCuritiba, proFISSLex, proBetha])
+   else if (URI <> '') and not (AProvedor in [proRecife, proRJ, proAbaco, proIssCuritiba, proFISSLex, proBetha, proPublica])
     then xmldsig.signature := xmldoc.selectSingleNode('.//ds:Signature[@' + Identificador + '="AssLote_' + URI + '"]')
    else
    if (URI <> '') and (AProvedor = proBetha)

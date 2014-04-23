@@ -68,14 +68,14 @@ begin
  ConfigCidade.Prefixo2      := '';
  ConfigCidade.Prefixo3      := '';
  ConfigCidade.Prefixo4      := '';
- ConfigCidade.Identificador := 'Id';
+ ConfigCidade.Identificador := 'id';
 
  if AAmbiente = 1                         
   then ConfigCidade.NameSpaceEnvelope := 'http://service.nfse.integracao.ws.publica/'
   else ConfigCidade.NameSpaceEnvelope := 'http://service.nfse.integracao.ws.publica/';
 
  ConfigCidade.AssinaRPS  := True;
- ConfigCidade.AssinaLote := True;
+ ConfigCidade.AssinaLote := False;
 
  Result := ConfigCidade;
 end;
@@ -156,7 +156,7 @@ end;
 function TProvedorPublica.GetAssinarXML(Acao: TnfseAcao): Boolean;
 begin
  case Acao of
-   acRecepcionar: Result := True;
+   acRecepcionar: Result := False;
    acConsSit:     Result := True;
    acConsLote:    Result := True;
    acConsNFSeRps: Result := True;
@@ -176,7 +176,8 @@ function TProvedorPublica.Gera_TagI(Acao: TnfseAcao; Prefixo3, Prefixo4,
   NameSpaceDad, Identificador, URI: String): AnsiString;
 begin
  NameSpaceDad := ' xmlns="http://www.publica.inf.br"' +
-                 ' xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">';
+//                 ' xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"' +
+                 '>';
 //                  + ' xsi:schemaLocation="http://www.publica.inf.br schema_nfse_v03.xsd">';
  case Acao of
    acRecepcionar: Result := '<' + Prefixo3 + 'EnviarLoteRpsEnvio' + NameSpaceDad;
@@ -188,7 +189,7 @@ begin
                              '<' + Prefixo3 + 'Pedido>' +
                               '<' + Prefixo4 + 'InfPedidoCancelamento' +
                                  DFeUtil.SeSenao(Identificador <> '', ' ' + Identificador + '="' + URI + '"', '') + '>';
-   acGerar:       Result := '<' + Prefixo3 + 'GerarNfseEnvio xmlns="http://www.publica.inf.br">';
+   acGerar:       Result := '<' + Prefixo3 + 'GerarNfseEnvio' + NameSpaceDad;
  end;
 end;
 
