@@ -607,7 +607,7 @@ begin
           FieldByName('Protocolo').AsString := 'MDFe sem Autorização de Uso da SEFAZ';
       end
       else
-        FieldByName('Protocolo').AsString := 'Impressão em contingência. Obrigatória a autorização em 186 horas' +
+        FieldByName('Protocolo').AsString := 'Impressão em contingência. Obrigatória a autorização em 168 horas' +
           ' após esta impressão (' + DFeUtil.FormatDateTime(DateTimeToStr(dhEmi)) + ')';
 
     end;
