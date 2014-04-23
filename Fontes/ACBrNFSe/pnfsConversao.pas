@@ -596,6 +596,7 @@ begin
   3127701, // Governador Valadares/MG
   3500105, // Adamantina/SP
   3510203, // Capão Bonito/SP
+  3522109, // Itanhaem/SP
   3523503, // Itatinga/SP
   3554003  // Tatui/SP
          : Provedor := '4R';
@@ -720,7 +721,7 @@ begin
   3203205  // Linhares/ES
          : Provedor := 'EL';
 
-  3534401
+  3534401  // Osasco/SP
          : Provedor := 'EgoverneISS';
 
   4102307, // Balsa Nova/PR
@@ -16226,7 +16227,7 @@ begin
       6537: CodCidade := 3521804 ; //Itai/SP  
       6539: CodCidade := 3521903 ; //Itajobi/SP  
       6541: CodCidade := 3522000 ; //Itaju/SP  
-      6543: CodCidade := 3522109 ; //Itanhaem/SP  
+      6543: CodCidade := 3522109 ; //Itanhaem/SP
       3053: CodCidade := 3522158 ; //Itaoca/SP  
       6545: CodCidade := 3522208 ; //Itapecerica Da Serra/SP  
       6547: CodCidade := 3522307 ; //Itapetininga/SP  
