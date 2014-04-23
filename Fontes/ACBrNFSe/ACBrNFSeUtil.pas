@@ -358,9 +358,13 @@ begin
 
    AStr := copy(AStr, 1, pos('</'+ APrefixo3 + EnviarLoteRps + '>', AStr) - 1);
 
-   if (URI = '') or (AProvedor in [proRecife, {proRJ,} proAbaco, proIssCuritiba, proFISSLex, proGovBR])
+   if (URI = '') or (AProvedor in [proRecife, proRJ, proAbaco, proIssDSF, proIssCuritiba, proFISSLex, proGovBR])
     then AID := '>'
     else AID := ' ' + Identificador + '="AssLote_' + URI + '">';
+
+   // Incluido por Italo em 23/04/2014
+   if AProvedor in [proAbaco, proIssCuritiba, proFISSLex]
+    then URI := '';
 
    //// Adicionando Cabeçalho DTD, necessário para xmlsec encontrar o ID ////
    I    := pos('?>', AStr);
@@ -425,7 +429,7 @@ begin
       end
       else URI := '';
 
-     if (URI = '') or (AProvedor in [profintelISS, proRecife, proNatal, proGovBR{, proRJ}])
+     if (URI = '') or (AProvedor in [profintelISS, proRecife, proNatal, proRJ, proGovBR, proTecnos])
       then AID := '>'
       else AID := ' ' + Identificador + '="Ass_' + URI + '">';
 
@@ -628,7 +632,7 @@ begin
     else AID := ' ' + Identificador + '="AssLote_' + URI + '">';
 
    // Incluido por Italo em 07/08/2013
-   if AProvedor in [{proAbaco, }proIssCuritiba, proFISSLex]
+   if AProvedor in [proAbaco, proIssCuritiba, proFISSLex]
     then URI := '';
 
    AXML := AXML + '<Signature xmlns="http://www.w3.org/2000/09/xmldsig#"' + AID +
