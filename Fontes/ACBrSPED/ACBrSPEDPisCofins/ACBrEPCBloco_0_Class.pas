@@ -468,7 +468,7 @@ begin
           begin
             ///
             Add( LFill('0035')   +
-                 LFill(COD_SCP)  +
+                 LFill(COD_SCP, 14)  +
                  LFill(DESC_SCP) +
                  LFill(INF_COMP) ) ;
           end;
