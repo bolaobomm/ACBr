@@ -300,9 +300,11 @@ type
   TACBrTipoOperacaoVeiculo = TACBrIndVeicOper;
 
   /// Indicador do tipo de receita
-  TACBrTipoReceita = (trPropria,   // 0 - Receita própria
-                      trTerceiro   // 1 - Receita de terceiros
-                      );
+  TACBrIndRec = (trPropria,   // 0 - Receita própria
+                 trTerceiro   // 1 - Receita de terceiros
+                );
+  TACBrTipoReceita = TACBrIndRec;
+
   /// Indicador do tipo do veículo transportador
   TACBrTipoVeiculo = (tvEmbarcacao,
                       tvEmpuradorRebocador
@@ -313,15 +315,15 @@ type
                         );
   /// Situação do Documento
   TACBrCodSit = (sdRegular,                 // 00 - Documento regular
-                        sdExtempRegular,           // 01 - Escrituração extemporânea de documento regular
-                        sdCancelado,               // 02 - Documento cancelado
-                        sdCanceladoExtemp,         // 03 - Escrituração extemporânea de documento cancelado
-                        sdDoctoDenegado,           // 04 - NF-e ou CT-e - denegado
-                        sdDoctoNumInutilizada,     // 05 - NF-e ou CT-e - Numeração inutilizada
-                        sdFiscalCompl,             // 06 - Documento Fiscal Complementar
-                        sdExtempCompl,             // 07 - Escrituração extemporânea de documento complementar
-                        sdRegimeEspecNEsp          // 08 - Documento Fiscal emitido com base em Regime Especial ou Norma Específica
-                        );
+                 sdExtempRegular,           // 01 - Escrituração extemporânea de documento regular
+                 sdCancelado,               // 02 - Documento cancelado
+                 sdCanceladoExtemp,         // 03 - Escrituração extemporânea de documento cancelado
+                 sdDoctoDenegado,           // 04 - NF-e ou CT-e - denegado
+                 sdDoctoNumInutilizada,     // 05 - NF-e ou CT-e - Numeração inutilizada
+                 sdFiscalCompl,             // 06 - Documento Fiscal Complementar
+                 sdExtempCompl,             // 07 - Escrituração extemporânea de documento complementar
+                 sdRegimeEspecNEsp          // 08 - Documento Fiscal emitido com base em Regime Especial ou Norma Específica
+                 );
   TACBrSituacaoDocto = TACBrCodSit;
 
   /// Indicador do tipo de tarifa aplicada:
@@ -335,14 +337,16 @@ type
                         nfNaoNegociavel    // 1 - Não Negociavel
                         );
   /// Indicador do tipo de receita
-  TACBrIndTipoReceita = (recServicoPrestado,          // 0 - Receita própria - serviços prestados;
-                         recCobrancaDebitos,          // 1 - Receita própria - cobrança de débitos;
-                         recVendaMerc,                // 2 - Receita própria - venda de mercadorias;
-                         recServicoPrePago,           // 3 - Receita própria - venda de serviço pré-pago;
-                         recOutrasProprias,           // 4 - Outras receitas próprias;
-                         recTerceiroCoFaturamento,    // 5 - Receitas de terceiros (co-faturamento);
-                         recTerceiroOutras            // 9 - Outras receitas de terceiros
-                         );
+  TACBrIndReceita = (recServicoPrestado,          // 0 - Receita própria - serviços prestados;
+                     recCobrancaDebitos,          // 1 - Receita própria - cobrança de débitos;
+                     recVendaMerc,                // 2 - Receita própria - venda de mercadorias;
+                     recServicoPrePago,           // 3 - Receita própria - venda de serviço pré-pago;
+                     recOutrasProprias,           // 4 - Outras receitas próprias;
+                     recTerceiroCoFaturamento,    // 5 - Receitas de terceiros (co-faturamento);
+                     recTerceiroOutras            // 9 - Outras receitas de terceiros
+                     );
+  TACBrIndTipoReceita = TACBrIndReceita;
+
   /// Indicador do tipo de serviço prestado
   TACBrServicoPrestado = (spTelefonia,                // 0- Telefonia;
                           spComunicacaoDados,         // 1- Comunicação de dados;
@@ -451,11 +455,13 @@ type
                         ccServicoPublico     // 08 -Serviço Público
                         );
   /// Código de tipo de Ligação
-  TACBrTipoLigacao = (tlNenhum,              // '' - Para uso quando o documento for cancelado
-                      tlMonofasico,          // 1 - Monofásico
-                      tlBifasico,            // 2 - Bifásico
-                      tlTrifasico            // 3 - Trifásico
-                      );
+  TACBrTpLigacao = (tlNenhum,              // '' - Para uso quando o documento for cancelado
+                    tlMonofasico,          // 1 - Monofásico
+                    tlBifasico,            // 2 - Bifásico
+                    tlTrifasico            // 3 - Trifásico
+                    );
+  TACBrTipoLigacao = TACBrTpLigacao;
+
   /// Código dispositivo autorizado
   TACBrDispositivo = (cdaFormSeguranca,  // 00 - Formulário de Segurança
                       cdaFSDA,           // 01 - FS-DA – Formulário de Segurança para Impressão de DANFE
@@ -465,14 +471,16 @@ type
                       cdaJogosSoltos     // 05 - Jogos Soltos
                       );
   /// Código do Tipo de Assinante
-  TACBrTipoAssinante = (assComercialIndustrial,    // 1 - Comercial/Industrial
-                        assPodrPublico,            // 2 - Poder Público
-                        assResidencial,            // 3 - Residencial/Pessoa física
-                        assPublico,                // 4 - Público
-                        assSemiPublico,            // 5 - Semi-Público
-                        assOutros,                 // 6 - Outros
-                        assNenhum                  // Preencher vazio
-                        );
+  TACBrTpAssinante = (assComercialIndustrial,    // 1 - Comercial/Industrial
+                      assPodrPublico,            // 2 - Poder Público
+                      assResidencial,            // 3 - Residencial/Pessoa física
+                      assPublico,                // 4 - Público
+                      assSemiPublico,            // 5 - Semi-Público
+                      assOutros,                 // 6 - Outros
+                      assNenhum                  // Preencher vazio
+                      );
+  TACBrTipoAssinante = TACBrTpAssinante;
+
   /// Motivo do Inventário
   TACBrMotInv = (miFinalPeriodo,
                  miMudancaTributacao,
@@ -631,6 +639,16 @@ type
   function MotInvToStr(AValue: TACBrMotInv): string;
   function IndPropToStr(AValue: TACBrIndProp): string;
   function StrToIndProp(AValue: string): TACBrIndProp;
+  function TpLigacaoToStr(AValue: TACBrTpLigacao): string;
+  function StrToTpLigacao(AValue: string): TACBrTpLigacao;
+  function GrupoTensaoToStr(AValue: TACBrGrupoTensao): string;
+  function StrToGrupoTensao(AValue: string): TACBrGrupoTensao;
+  function IndRecToStr(AValue: TACBrIndRec): string;
+  function StrToIndRec(AValue: string): TACBrIndRec;
+  function TpAssinanteToStr(AValue: TACBrTpAssinante): string;
+  function StrToTpAssinante(AValue: string): TACBrTpAssinante;
+  function IndReceitaToStr(AValue: TACBrIndReceita): string;
+  function StrToIndReceita(AValue: string): TACBrIndReceita;
 
 implementation
 
@@ -893,6 +911,71 @@ end;
 function StrToIndProp(AValue: string): TACBrIndProp;
 begin
    Result := TACBrIndProp( StrToIntDef( AValue, 0) );
+end;
+
+function TpLigacaoToStr(AValue: TACBrTpLigacao): string;
+begin
+   Result := IntToStr( Integer( AValue ) + 1 );
+end;
+
+function StrToTpLigacao(AValue: string): TACBrTpLigacao;
+begin
+   Result := TACBrTpLigacao( StrToIntDef( AValue, 0) );
+end;
+
+function GrupoTensaoToStr(AValue: TACBrGrupoTensao): string;
+begin
+   if AValue = gtNenhum then
+      Result := ''
+   else
+      Result := FormatFloat('00', Integer( AValue ) + 1 );
+end;
+
+function StrToGrupoTensao(AValue: string): TACBrGrupoTensao;
+begin
+   if AValue = '' then
+      Result := gtNenhum
+   else
+      Result := TACBrGrupoTensao( StrToIntDef( AValue, 0) );
+end;
+
+function IndRecToStr(AValue: TACBrIndRec): string;
+begin
+   Result := IntToStr( Integer( AValue ) );
+end;
+
+function StrToIndRec(AValue: string): TACBrIndRec;
+begin
+   Result := TACBrIndRec( StrToIntDef( AValue, 0) );
+end;
+
+function TpAssinanteToStr(AValue: TACBrTpAssinante): string;
+begin
+   Result := IntToStr( Integer( AValue ) );
+end;
+
+function StrToTpAssinante(AValue: string): TACBrTpAssinante;
+begin
+   if AValue = '' then
+      Result := assNenhum
+   else
+      Result := TACBrTpAssinante( StrToIntDef( AValue, 6) );
+end;
+
+function IndReceitaToStr(AValue: TACBrIndReceita): string;
+begin
+   if AValue = recTerceiroOutras then
+      Result := '9'
+   else
+      Result := IntToStr( Integer( AValue ) );
+end;
+
+function StrToIndReceita(AValue: string): TACBrIndReceita;
+begin
+   if AValue = '9' then
+      Result := recTerceiroOutras
+   else
+      Result := TACBrIndReceita( StrToIntDef( AValue, 6) );
 end;
 
 end.
