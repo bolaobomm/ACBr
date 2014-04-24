@@ -121,6 +121,12 @@ type
     function IsPacoteCTe(const ANomePacote: String): Boolean;
     function IsPacoteNFSe(const ANomePacote: String): Boolean;
     function IsPacoteMDFe(const ANomePacote: String): Boolean;
+    function IsPacoteBoleto(const ANomePacote: String): Boolean;
+    function IsPacoteSped(const ANomePacote: String): Boolean;
+    function IsPacoteSintegra(const ANomePacote: String): Boolean;
+    function IsPacotePaf(const ANomePacote: String): Boolean;
+    function IsPacoteSerial(const ANomePacote: String): Boolean;
+    function IsPacoteTEFD(const ANomePacote: String): Boolean;
 
     property Pacotes: TPacotes read FPacotes write FPacotes;
   end;
@@ -166,6 +172,17 @@ begin
   inherited;
 end;
 
+function TframePacotes.IsPacoteBoleto(const ANomePacote: String): Boolean;
+const
+  PACOTES_BLT: array [0..3] of String =
+    ('ACBr_Boleto.dpk',
+     'ACBr_BoletoFC_Fortes.dpk',
+     'ACBr_BoletoFC_Quick.dpk',
+     'ACBr_BoletoFC_FR.dpk');
+begin
+  Result := MatchText(ANomePacote, PACOTES_BLT);
+end;
+
 function TframePacotes.IsPacoteCTe(const ANomePacote: String): Boolean;
 const
   PACOTES_CTe: array [0..2] of String =
@@ -185,6 +202,50 @@ const
      'ACBrNFSeDanfseQRpkg.dpk');
 begin
   Result := MatchText(ANomePacote, PACOTES_NFSe);
+end;
+
+function TframePacotes.IsPacoteSerial(const ANomePacote: String): Boolean;
+const
+  PACOTES_SERIAL: array [0..1] of String =
+    ('ACBrSerial.dpk',
+     'ACBrTCP.dpk');
+begin
+  Result := MatchText(ANomePacote, PACOTES_SERIAL);
+end;
+
+function TframePacotes.IsPacoteSintegra(const ANomePacote: String): Boolean;
+const
+  PACOTES_STG: array [0..0] of String =
+    ('ACBr_Sintegra.dpk');
+begin
+  Result := MatchText(ANomePacote, PACOTES_STG);
+end;
+
+function TframePacotes.IsPacotePaf(const ANomePacote: String): Boolean;
+const
+  PACOTES_PAF: array [0..0] of String =
+    ('ACBr_PAF.dpk');
+begin
+  Result := MatchText(ANomePacote, PACOTES_PAF);
+end;
+
+function TframePacotes.IsPacoteSped(const ANomePacote: String): Boolean;
+const
+  PACOTES_SPED: array [0..3] of String =
+    ('ACBr_SPED.dpk',
+     'ACBr_LFD.dpk',
+     'ACBr_SEF2.dpk',
+     'ACBr_Convenio115.dpk');
+begin
+  Result := MatchText(ANomePacote, PACOTES_SPED);
+end;
+
+function TframePacotes.IsPacoteTEFD(const ANomePacote: String): Boolean;
+const
+  PACOTES_TEFD: array [0..0] of String =
+    ('ACBr_TEFD.dpk');
+begin
+  Result := MatchText(ANomePacote, PACOTES_TEFD);
 end;
 
 function TframePacotes.IsPacoteMDFe(const ANomePacote: String): Boolean;

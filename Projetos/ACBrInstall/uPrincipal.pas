@@ -248,6 +248,18 @@ begin
     Result := '\Pacotes\Delphi\ACBrNFSe\'
   else if frameDpk.IsPacoteMDFe(NomePacote) then
     Result := '\Pacotes\Delphi\ACBrMDFe\'
+  else if frameDpk.IsPacoteBoleto(NomePacote) then
+    Result := '\Pacotes\Delphi\ACBrBoleto\'
+  else if frameDpk.IsPacoteSped(NomePacote) then
+    Result := '\Pacotes\Delphi\ACBrSPED\'
+  else if frameDpk.IsPacoteSintegra(NomePacote) then
+    Result := '\Pacotes\Delphi\ACBrSintegra\'
+  else if frameDpk.IsPacotePaf(NomePacote) then
+    Result := '\Pacotes\Delphi\ACBrPAF\'
+  else if frameDpk.IsPacoteSerial(NomePacote) then
+    Result := '\Pacotes\Delphi\ACBrSerial\'
+  else if frameDpk.IsPacoteTEFD(NomePacote) then
+    Result := '\Pacotes\Delphi\ACBrTEFD\'
   else
     Result := '\Pacotes\Delphi\';
 end;
