@@ -64,6 +64,7 @@ type
   private
     { Private declarations }
     fFastReportFile: String;
+    FImpressora: String;
     function PrepareBoletos(const DmBoleto: TdmACBrBoletoFCFR): Boolean;
     function PrepareReport(const DmBoleto: TdmACBrBoletoFCFR): Boolean;
   public
@@ -74,6 +75,7 @@ type
     function PreparedReport: TfrxReport;
   published
     property FastReportFile: String read FFastReportFile write FFastReportFile;
+    property Impressora: String read FImpressora write FImpressora;
   end;
 
   { TdmACbrBoletoFCFR }
@@ -228,6 +230,7 @@ begin
   inherited Create(AOwner);
   fpAbout := 'ACBRBoletoFCFR ver: ' + CACBrBoletoFCFR_Versao;
   fFastReportFile := '' ;
+  fImpressora := '';
 end;
 
 function TACBrBoletoFCFR.PreparedReport: TfrxReport;
@@ -272,6 +275,9 @@ begin
        if PrepareReport(DmBoleto) then
        begin
           frxReport.PrintOptions.ShowDialog := MostrarSetup;
+
+          if Length(Impressora) > 0 then
+              frxReport.PrintOptions.Printer := Impressora;
 
           case Filtro of
             fiNenhum:
