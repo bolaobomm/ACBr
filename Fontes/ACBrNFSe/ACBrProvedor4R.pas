@@ -115,45 +115,45 @@ begin
 	   end;
    3510203:
      begin
-	     ConfigURL.ProNomeCidade := 'capaobonito';
-       ConfigURL.HomNomeCidade := 'capaobonito';
+	       ConfigURL.ProNomeCidade := 'capaobonito';
+         ConfigURL.HomNomeCidade := 'capaobonito';
    	 end;
    3522109:
      begin
-	     ConfigURL.ProNomeCidade := 'itanhaem';
-       ConfigURL.HomNomeCidade := 'itanhaem';
+	       ConfigURL.ProNomeCidade := 'itanhaem';
+         ConfigURL.HomNomeCidade := 'itanhaem';
 	   end;
    3523503:
      begin
-	     ConfigURL.ProNomeCidade := 'itatinga';
-       ConfigURL.HomNomeCidade := 'itatinga';
+	       ConfigURL.ProNomeCidade := 'itatinga';
+         ConfigURL.HomNomeCidade := 'itatinga';
 	   end;
    3554003:
      begin
-	     ConfigURL.ProNomeCidade := 'tatui';
-       ConfigURL.HomNomeCidade := 'tatui';
+	       ConfigURL.ProNomeCidade := 'tatui';
+         ConfigURL.HomNomeCidade := 'tatui';
 	   end;
   end;
 
   ConfigURL.ProRecepcaoLoteRPS    := '';
-  ConfigURL.ProConsultaLoteRPS    := Format('http://%s.sistemas4r.com.br/aconsultarloterps.aspx?wsdl',[ConfigURL.ProNomeCidade]);
+  ConfigURL.ProConsultaLoteRPS    := '';
   ConfigURL.ProConsultaNFSeRPS    := Format('http://%s.sistemas4r.com.br/abrasf/aconsultarnfseporrps.aspx?wsdl',[ConfigURL.ProNomeCidade]);
   ConfigURL.ProConsultaSitLoteRPS := '';
   ConfigURL.ProConsultaNFSe       := '';
-  ConfigURL.ProCancelaNFSe        := Format('http://%s.sistemas4r.com.br/abrasf/acancelarnfse.aspx',[ConfigURL.ProNomeCidade]);
-  ConfigURL.ProGerarNFSe          := Format('http://%s.sistemas4r.com.br/abrasf/agerarnfse.aspx?wsdl',[ConfigURL.ProNomeCidade]);
+  ConfigURL.ProCancelaNFSe        := Format('http://%s.sistemas4r.com.br/abrasf/acancelarnfse.aspx?wsdl',[ConfigURL.ProNomeCidade]);
+  ConfigURL.ProGerarNFSe          := '';
   ConfigURL.ProRecepcaoSincrono   := Format('http://%s.sistemas4r.com.br/abrasf/arecepcionarloterpssincrono.aspx?wsdl',[ConfigURL.ProNomeCidade]);
 
   ConfigURL.HomRecepcaoLoteRPS    := '';
-  ConfigURL.HomConsultaLoteRPS    := Format('http://%s.sistemas4r.com.br/aconsultarloterps.aspx?wsdl',[ConfigURL.HomNomeCidade]);
-  ConfigURL.HomConsultaNFSeRPS    := Format('http://%s.sistemas4r.com.br/abrasf/aconsultarnfseporrps.aspx?wsdl',[ConfigURL.HomNomeCidade]);
+  ConfigURL.HomConsultaLoteRPS    := '';
+  ConfigURL.HomConsultaNFSeRPS    := Format('http://%s.sistemas4r.com.br/abrasf/ahconsultarnfseporrps.aspx?wsdl',[ConfigURL.HomNomeCidade]);
   ConfigURL.HomConsultaSitLoteRPS := '';
   ConfigURL.HomConsultaNFSe       := '';
-  ConfigURL.HomCancelaNFSe        := Format('http://%s.sistemas4r.com.br/abrasf/acancelarnfse.aspx',[ConfigURL.HomNomeCidade]);
-  ConfigURL.HomGerarNFSe          := Format('http://%s.sistemas4r.com.br/abrasf/agerarnfse.aspx?wsdl',[ConfigURL.HomNomeCidade]);
-  ConfigURL.HomRecepcaoSincrono   := Format('http://%s.sistemas4r.com.br/abrasf/arecepcionarloterpssincrono.aspx?wsdl',[ConfigURL.HomNomeCidade]);
+  ConfigURL.HomCancelaNFSe        := Format('http://%s.sistemas4r.com.br/abrasf/ahcancelarnfse.aspx?wsdl',[ConfigURL.HomNomeCidade]);
+  ConfigURL.HomGerarNFSe          := '';
+  ConfigURL.HomRecepcaoSincrono   := Format('http://%s.sistemas4r.com.br/abrasf/ahrecepcionarloterpssincrono.aspx?wsdl',[ConfigURL.HomNomeCidade]);
 
- 	Result := ConfigURL;
+  Result := ConfigURL;
 end;
 
 function TProvedor4R.GetURI(URI: String): String;
