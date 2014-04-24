@@ -601,7 +601,8 @@ begin
             ValorDespesaCobranca := StrToFloatDef(Copy(Linha,199,15),0)/100;
             NossoNumero          := Copy(Linha,42,15);  
             Carteira             := Copy(Linha,40,2);
-
+            CodigoLiquidacao     := Copy(Linha,214,02);
+            CodigoLiquidacaoDescricao := CodigoLiquidacao_Descricao( StrToIntDef(CodigoLiquidacao,0) );
           end
          {Ssegmento U}
          else if Copy(Linha,14,1)= 'U' then
