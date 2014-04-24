@@ -23,7 +23,7 @@ package ACBrDiversos;
 {$MINENUMSIZE 1}
 {$IMAGEBASE $400000}                                               
 {$DESCRIPTION 'ACBr Automação Comercial Brasil - ACBrDiversos (http://acbr.sourceforge.net/)'}
-{$IMPLICITBUILD ON}
+{$IMPLICITBUILD OFF}
 
 requires
   rtl,
