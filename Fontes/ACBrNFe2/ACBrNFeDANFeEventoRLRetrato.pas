@@ -270,7 +270,10 @@ begin
 
               // 2.) Preenche os campos do Destinatário
               rllDestNome.Caption := Dest.xNome;
-              rllDestCNPJ.Caption := DFeUtil.FormatarCNPJ(Dest.CNPJCPF);
+              if Length(Dest.CNPJCPF)=11 then
+                rllDestCNPJ.Caption := DFeUtil.FormatarCPF(Dest.CNPJCPF)
+              else
+                rllDestCNPJ.Caption := DFeUtil.FormatarCNPJ(Dest.CNPJCPF);
               if Dest.EnderDest.xCpl > '' then
                 rllDestEndereco.Caption := Dest.EnderDest.xLgr + ', ' + Dest.EnderDest.nro + ' ' + Dest.EnderDest.xCpl
               else
