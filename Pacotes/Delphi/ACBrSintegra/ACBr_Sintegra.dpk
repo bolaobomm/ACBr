@@ -31,7 +31,7 @@ requires
   ACBrComum;
 
 contains
-  ACBrSintegra in '..\..\Fontes\ACBrSintegra\ACBrSintegra.pas',
-  ACBrSintegraReg in '..\..\Fontes\ACBrSintegra\ACBrSintegraReg.pas';
+  ACBrSintegra in '..\..\..\Fontes\ACBrSintegra\ACBrSintegra.pas',
+  ACBrSintegraReg in '..\..\..\Fontes\ACBrSintegra\ACBrSintegraReg.pas';
 
 end.
