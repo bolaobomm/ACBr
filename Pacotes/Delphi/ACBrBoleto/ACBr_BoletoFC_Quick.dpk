@@ -28,7 +28,7 @@ package ACBr_BoletoFC_Quick;
 requires
   rtl,
   vcl,
-  ACBrDiversos,
+  ACBr_Boleto,
   {$IFDEF VER150} QR5RunD7, vcljpg, visualclx; {$ENDIF} // D7
   {$IFDEF VER170} QR5RunD2005, vcljpg; {$ENDIF} // D2005
   {$IFDEF VER180}
