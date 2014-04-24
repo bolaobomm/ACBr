@@ -46,8 +46,8 @@ requires
   {$IFDEF VER270} QR5RunDXE6, vclimg; {$ENDIF} //XE6
 
 contains
-  ACBrBoletoFCQuickFr in '..\..\Fontes\ACBrBoleto\ACBrBoletoFCQuickFr.pas',
-  QRMultiExport in '..\..\Fontes\ACBrBoleto\QRMultiExport.pas',
-  tnpdf in '..\..\Fontes\ACBrBoleto\TnPDF.pas';
+  ACBrBoletoFCQuickFr in '..\Fontes\ACBrBoleto\ACBrBoletoFCQuickFr.pas',
+  QRMultiExport in '..\Fontes\ACBrBoleto\QRMultiExport.pas',
+  tnpdf in '..\Fontes\ACBrBoleto\TnPDF.pas';
 
 end.

@@ -45,6 +45,6 @@ requires
   {$IFDEF VER270} RLibWinDXE6, vclimg;{$ENDIF} //XE6
 
 contains
-  ACBrBoletoFCFortesFr in '..\..\Fontes\ACBrBoleto\ACBrBoletoFCFortesFr.pas';
+  ACBrBoletoFCFortesFr in '..\Fontes\ACBrBoleto\ACBrBoletoFCFortesFr.pas';
 
 end.

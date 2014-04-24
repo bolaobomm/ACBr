@@ -35,14 +35,14 @@ requires
 
 contains
 
-  ACBrSEF2 in             '..\..\Fontes\ACBrSEF2\ACBrSEF2.pas',
-  ACBrSEF2Conversao in    '..\..\Fontes\ACBrSEF2\ACBrSEF2Conversao.pas',
-  ACBrSEF2_Bloco0_1 in    '..\..\Fontes\ACBrSEF2\ACBrSEF2_Bloco0_1.pas',
-  ACBrSEF2_Bloco0 in      '..\..\Fontes\ACBrSEF2\ACBrSEF2_Bloco0.pas',
-  ACBrSEF2_BlocoE in      '..\..\Fontes\ACBrSEF2\ACBrSEF2_BlocoE.pas',
-  ACBrSEF2_BlocoE_1 in    '..\..\Fontes\ACBrSEF2\ACBrSEF2_BlocoE_1.pas',
-  ACBrSEF2_blocoH in      '..\..\Fontes\ACBrSEF2\ACBrSEF2_blocoH.pas',
-  ACBrSEF2_eDoc_BlocoC in '..\..\Fontes\ACBrSEF2\ACBrSEF2_eDoc_BlocoC.pas',
-  ACBrSEF2_eDoc_BlocoC_Class in '..\..\Fontes\ACBrSEF2\ACBrSEF2_eDoc_BlocoC_Class.pas',
-  ACBrSEF2_Bloco9 in      '..\..\Fontes\ACBrSEF2\ACBRSEF2_Bloco9.pas';
+  ACBrSEF2 in             '..\..\..\Fontes\ACBrSEF2\ACBrSEF2.pas',
+  ACBrSEF2Conversao in    '..\..\..\Fontes\ACBrSEF2\ACBrSEF2Conversao.pas',
+  ACBrSEF2_Bloco0_1 in    '..\..\..\Fontes\ACBrSEF2\ACBrSEF2_Bloco0_1.pas',
+  ACBrSEF2_Bloco0 in      '..\..\..\Fontes\ACBrSEF2\ACBrSEF2_Bloco0.pas',
+  ACBrSEF2_BlocoE in      '..\..\..\Fontes\ACBrSEF2\ACBrSEF2_BlocoE.pas',
+  ACBrSEF2_BlocoE_1 in    '..\..\..\Fontes\ACBrSEF2\ACBrSEF2_BlocoE_1.pas',
+  ACBrSEF2_blocoH in      '..\..\..\Fontes\ACBrSEF2\ACBrSEF2_blocoH.pas',
+  ACBrSEF2_eDoc_BlocoC in '..\..\..\Fontes\ACBrSEF2\ACBrSEF2_eDoc_BlocoC.pas',
+  ACBrSEF2_eDoc_BlocoC_Class in '..\..\..\Fontes\ACBrSEF2\ACBrSEF2_eDoc_BlocoC_Class.pas',
+  ACBrSEF2_Bloco9 in      '..\..\..\Fontes\ACBrSEF2\ACBRSEF2_Bloco9.pas';
 end.

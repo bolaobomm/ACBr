@@ -53,7 +53,7 @@ requires
   ACBr_Boleto;
 
 contains
-  ACBrBoletoFCFR in '..\..\Fontes\ACBrBoleto\ACBrBoletoFCFR.pas' {dmACBrBoletoFCFR: TDataModule},
-  ACBrBoletoFCFRReg in '..\..\Fontes\ACBrBoleto\ACBrBoletoFCFRReg.pas';
+  ACBrBoletoFCFR in '..\Fontes\ACBrBoleto\ACBrBoletoFCFR.pas' {dmACBrBoletoFCFR: TDataModule},
+  ACBrBoletoFCFRReg in '..\Fontes\ACBrBoleto\ACBrBoletoFCFRReg.pas';
   
 end.
