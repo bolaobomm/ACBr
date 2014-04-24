@@ -28,7 +28,7 @@ package ACBr_BoletoFC_Quick;
 requires
   rtl,
   vcl,
-  ACBr_Boleto,
+  ACBrDiversos,
   {$IFDEF VER150} QR5RunD7, vcljpg, visualclx; {$ENDIF} // D7
   {$IFDEF VER170} QR5RunD2005, vcljpg; {$ENDIF} // D2005
   {$IFDEF VER180}
@@ -46,8 +46,8 @@ requires
   {$IFDEF VER270} QR5RunDXE6, vclimg; {$ENDIF} //XE6
 
 contains
-  ACBrBoletoFCQuickFr in '..\Fontes\ACBrBoleto\ACBrBoletoFCQuickFr.pas',
-  QRMultiExport in '..\Fontes\ACBrBoleto\QRMultiExport.pas',
-  tnpdf in '..\Fontes\ACBrBoleto\TnPDF.pas';
+  ACBrBoletoFCQuickFr in '..\..\..\Fontes\ACBrBoleto\ACBrBoletoFCQuickFr.pas',
+  QRMultiExport in '..\..\..\Fontes\ACBrBoleto\QRMultiExport.pas',
+  tnpdf in '..\..\..\Fontes\ACBrBoleto\TnPDF.pas';
 
 end.

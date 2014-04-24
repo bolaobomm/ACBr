@@ -24,8 +24,6 @@ package ACBr_Boleto;
 {$IMAGEBASE $400000}
 {$DESCRIPTION 'ACBr Automação Comercial Brasil - ACBrBoleto - (http://acbr.sourceforge.net/)'}
 {$IMPLICITBUILD ON}
-{$DEFINE DEBUG}
-{$DEFINE DEBUG}
 
 requires
   rtl,

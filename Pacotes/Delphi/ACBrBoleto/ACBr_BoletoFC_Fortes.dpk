@@ -32,8 +32,8 @@ requires
   rtl,
   vcl,  
   dbrtl,
-  vcldb,
-  ACBr_Boleto,
+  vcldb,  
+  ACBrDiversos,
   {$IFDEF VER150} RLibWinD7vcl, vcljpg;{$ENDIF} // D7
   {$IFDEF VER200} RLibWinD2009, vclimg;{$ENDIF} // D2009
   {$IFDEF VER210} RLibWinD2010, vclimg;{$ENDIF} // D2010
@@ -45,6 +45,6 @@ requires
   {$IFDEF VER270} RLibWinDXE6, vclimg;{$ENDIF} //XE6
 
 contains
-  ACBrBoletoFCFortesFr in '..\Fontes\ACBrBoleto\ACBrBoletoFCFortesFr.pas';
+  ACBrBoletoFCFortesFr in '..\..\..\Fontes\ACBrBoleto\ACBrBoletoFCFortesFr.pas';
 
 end.

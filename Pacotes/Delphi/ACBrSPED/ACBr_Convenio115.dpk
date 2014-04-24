@@ -33,6 +33,6 @@ requires
   vcl;
 
 contains
-  ACBrConvenio115 in '..\..\Fontes\ACBrConvenio115\ACBrConvenio115.pas';
+  ACBrConvenio115 in '..\..\..\Fontes\ACBrConvenio115\ACBrConvenio115.pas';
 
 end.
