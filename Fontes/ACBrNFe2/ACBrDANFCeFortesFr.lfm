@@ -133,7 +133,7 @@ object ACBrNFeDANFCeFortesFr: TACBrNFeDANFCeFortesFr
     end
     object rlsbDetItem: TRLSubDetail
       Left = 8
-      Height = 80
+      Height = 45
       Top = 148
       Width = 286
       AllowedBands = [btDetail, btSummary]

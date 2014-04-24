@@ -71,6 +71,8 @@ type
     property _Mask_vUnCom: String read FMask_vUnCom write FMask_vUnCom;
   end;
 
+  { TACBrNFeDANFEClass }
+
   TACBrNFeDANFEClass = class( TComponent )
    private
     procedure SetNFE(const Value: TComponent);
@@ -120,6 +122,7 @@ type
     procedure ImprimirDANFE(NFE : TNFe = nil); virtual;
     procedure ImprimirDANFEResumido(NFE : TNFe = nil); virtual;
     procedure ImprimirDANFEPDF(NFE : TNFe = nil); virtual;
+    procedure ImprimirDANFEResumidoPDF(NFE : TNFe = nil); virtual;
     procedure ImprimirEVENTO(NFE : TNFe = nil); virtual;
     procedure ImprimirEVENTOPDF(NFE : TNFe = nil); virtual;
   published
@@ -259,6 +262,11 @@ end;
 procedure TACBrNFeDANFEClass.ImprimirDANFEPDF(NFE : TNFe = nil) ;
 begin
   ErroAbstract('ImprimirPDF');
+end;
+
+procedure TACBrNFeDANFEClass.ImprimirDANFEResumidoPDF(NFE: TNFe);
+begin
+  ErroAbstract('ImprimirDANFEResumidoPDF');
 end;
 
 procedure TACBrNFeDANFEClass.Notification(AComponent: TComponent;

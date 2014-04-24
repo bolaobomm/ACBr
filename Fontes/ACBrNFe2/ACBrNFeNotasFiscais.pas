@@ -111,6 +111,8 @@ type
     property NomeArq: String read FNomeArq write FNomeArq;
   end;
 
+  { TNotasFiscais }
+
   TNotasFiscais = class(TOwnedCollection)
   private
     FConfiguracoes : TConfiguracoes;
@@ -129,6 +131,7 @@ type
     procedure Imprimir;
     procedure ImprimirResumido;
     procedure ImprimirPDF;
+    procedure ImprimirResumidoPDF;
     function  Add: NotaFiscal;
     function Insert(Index: Integer): NotaFiscal;
     property Items[Index: Integer]: NotaFiscal read GetItem  write SetItem; default;
@@ -560,6 +563,14 @@ begin
      raise EACBrNFeException.Create('Componente DANFE não associado.')
   else
      TACBrNFe( FACBrNFe ).DANFE.ImprimirDANFEPDF(nil);
+end;
+
+procedure TNotasFiscais.ImprimirResumidoPDF;
+begin
+  if not Assigned( TACBrNFe( FACBrNFe ).DANFE ) then
+     raise EACBrNFeException.Create('Componente DANFE não associado.')
+  else
+     TACBrNFe( FACBrNFe ).DANFE.ImprimirDANFEResumidoPDF(nil);
 end;
 
 function TNotasFiscais.Insert(Index: Integer): NotaFiscal;

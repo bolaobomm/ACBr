@@ -66,13 +66,15 @@ type
   protected
     FpNFe: TNFe;
 
-    procedure Imprimir(DanfeResumido : Boolean = False);
+    procedure Imprimir(const DanfeResumido : Boolean = False; const AFiltro : TACBrSATExtratoFiltro = fiNenhum);
   public
     constructor Create(AOwner: TComponent); override;
     destructor Destroy; override;
 
     procedure ImprimirDANFE(NFE : TNFe = nil); override ;
     procedure ImprimirDANFEResumido(NFE : TNFe = nil); override ;
+    procedure ImprimirDANFEPDF(NFE : TNFe = nil); override;
+    procedure ImprimirDANFEResumidoPDF(NFE : TNFe = nil);override;
   published
   end ;
 
@@ -252,21 +254,21 @@ begin
 
     if Ide.tpAmb = taHomologacao then
      begin
-       lMensagemFiscal.Caption := 'EMITIDA EM AMBIENTE DE HOMOLOGAÇÃO - SEM VALOR FISCAL';
+       lMensagemFiscal.Caption := ACBrStr( 'EMITIDA EM AMBIENTE DE HOMOLOGAÇÃO - SEM VALOR FISCAL');
      end
     else
      begin
        if Ide.tpEmis <> teNormal then
-          lMensagemFiscal.Caption := 'EMITIDA EM CONTINGÊNCIA'
+          lMensagemFiscal.Caption := ACBrStr('EMITIDA EM CONTINGÊNCIA')
        else
-          lMensagemFiscal.Caption := 'ÁREA DE MENSAGEM FISCAL';
+          lMensagemFiscal.Caption := ACBrStr('ÁREA DE MENSAGEM FISCAL');
      end;
 
-    lNumSerieEmissao.Caption := 'Número '+IntToStrZero(Ide.nNF,9)+
+    lNumSerieEmissao.Caption := ACBrStr('Número '+IntToStrZero(Ide.nNF,9)+
                                 ' Série '+IntToStrZero(Ide.serie,3)+
-                                ' Emissão '+DateTimeToStr(Ide.dEmi) ;
+                                ' Emissão '+DateTimeToStr(Ide.dEmi) );
 
-    lTitConsulteChave.Lines.Text := 'Consulte pela Chave de Acesso em '+NotaUtil.GetURLConsultaNFCe(Ide.cUF,Ide.tpAmb);
+    lTitConsulteChave.Lines.Text := ACBrStr('Consulte pela Chave de Acesso em '+NotaUtil.GetURLConsultaNFCe(Ide.cUF,Ide.tpAmb));
 
     lChaveDeAcesso.Caption := DFeUtil.FormatarChaveAcesso(OnlyNumber(infNFe.ID));
   end;
@@ -403,8 +405,8 @@ begin
                                      TACBrNFe( ACBrNFeDANFCeFortes.ACBrNFe ).Configuracoes.Geral.Token);
     PintarQRCode( qrcode, imgQRCode.Picture );
 
-    lProtocolo.Caption := 'Protocolo de Autorização: '+procNFe.nProt+
-                           ' '+DFeUtil.SeSenao(procNFe.dhRecbto<>0,DateTimeToStr(procNFe.dhRecbto),'');
+    lProtocolo.Caption := ACBrStr('Protocolo de Autorização: '+procNFe.nProt+
+                           ' '+DFeUtil.SeSenao(procNFe.dhRecbto<>0,DateTimeToStr(procNFe.dhRecbto),''));
   end;
 
 
@@ -637,7 +639,39 @@ begin
   Imprimir(True);
 end;
 
-procedure TACBrNFeDANFCeFortes.Imprimir(DanfeResumido : Boolean = False);
+procedure TACBrNFeDANFCeFortes.ImprimirDANFEPDF(NFE: TNFe);
+begin
+//  inherited ImprimirDANFEPDF(NFE);
+  if NFe = nil then
+   begin
+     if not Assigned(ACBrNFe) then
+        raise Exception.Create('Componente ACBrNFe nÃo atribuí­do');
+
+     FpNFe := TACBrNFe(ACBrNFe).NotasFiscais.Items[0].NFe;
+   end
+  else
+    FpNFe := NFE;
+  Imprimir(False, fiPDF);
+end;
+
+procedure TACBrNFeDANFCeFortes.ImprimirDANFEResumidoPDF(NFE: TNFe);
+begin
+  //  inherited ImprimirDANFEPDF(NFE);
+    if NFe = nil then
+     begin
+       if not Assigned(ACBrNFe) then
+          raise Exception.Create('Componente ACBrNFe nÃo atribuí­do');
+
+       FpNFe := TACBrNFe(ACBrNFe).NotasFiscais.Items[0].NFe;
+     end
+    else
+      FpNFe := NFE;
+
+    Imprimir(True, fiPDF);
+end;
+
+procedure TACBrNFeDANFCeFortes.Imprimir(const DanfeResumido: Boolean;
+  const AFiltro: TACBrSATExtratoFiltro);
 var
   frACBrNFeDANFCeFortesFr: TACBrNFeDANFCeFortesFr;
   RLLayout: TRLReport;
@@ -654,11 +688,12 @@ begin
   try
     with frACBrNFeDANFCeFortesFr do
     begin
+      Filtro := AFiltro;
       RLLayout := rlVenda;
       Resumido := DanfeResumido;
 
       RLPrinter.Copies     := NumCopias ;
-      RLLayout.PrintDialog := ACBrNFeDANFCeFortes.FMostrarPreview;
+      RLLayout.PrintDialog := ACBrNFeDANFCeFortes.MostrarPreview;
       RLLayout.ShowProgress:= False ;
 
       if Filtro = fiNenhum then
@@ -682,13 +717,17 @@ begin
           {$IFDEF FPC}
             RLFiltro.Copies := NumCopias ;
           {$ENDIF}
-//          RLFiltro.FileName := NomeArquivo ;
-
+          RLFiltro.ShowProgress := ACBrNFeDANFCeFortes.MostrarStatus;
+          //RLFiltro.FileName := NomeArquivo ;
+          RLFiltro.FileName := ACBrNFeDANFCeFortes.PathPDF +
+                               Copy(ACBrNFeDANFCeFortes.FpNFe.infNFe.ID, 4, 44) + '.pdf';
           {$IFDEF FPC}
             RLFiltro.Pages := RLLayout.Pages ;
             RLFiltro.FirstPage := 1;
             RLFiltro.LastPage := RLLayout.Pages.PageCount;
             RLFiltro.Run;
+            //RLLayout.SaveToFile(PathPDF +
+                               //Copy(TACBrNFe(ACBrNFe).NotasFiscais.Items[0].NFe.infNFe.ID, 4, 44) + '.pdf');
           {$ELSE}
             RLFiltro.FilterPages( RLLayout.Pages );
           {$ENDIF}
