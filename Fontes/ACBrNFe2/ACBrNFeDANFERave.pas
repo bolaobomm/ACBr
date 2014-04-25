@@ -907,6 +907,13 @@ begin
   dmDanfe.RvSystem1.SystemPreview.FormState:=wsMaximized;
   dmDanfe.RvSystem1.SystemPreview.ZoomFactor:=100;
   dmDanfe.RvSystem1.SystemPrinter.Copies:=NumCopias;
+
+  // DONE -oJacinto Junior: Ajustar a orientação de impressão conforme tipo do DANFe.
+  if FTipoDANFE = tiRetrato then
+    dmDanfe.RvSystem1.SystemPrinter.Orientation := poPortrait
+  else if FTipoDANFE = tiPaisagem then
+    dmDanfe.RvSystem1.SystemPrinter.Orientation := poLandScape;
+
   dmDanfe.RvSystem1.SystemPrinter.LinesPerInch:=8;
   dmDanfe.RvSystem1.SystemPrinter.StatusFormat:='Imprimindo página %p';
   dmDanfe.RvSystem1.SystemPrinter.Title:= 'NFe - Impressão do DANFE';
