@@ -2507,6 +2507,7 @@ begin
  Self.ConsSitLote.Cnpj               := TACBrNFSe( FACBrNFSe ).NotasFiscais.Items[0].NFSe.Prestador.Cnpj;
  Self.ConsSitLote.InscricaoMunicipal := TACBrNFSe( FACBrNFSe ).NotasFiscais.Items[0].NFSe.Prestador.InscricaoMunicipal;
  Self.ConsSitLote.Protocolo          := Self.Enviar.Protocolo;
+ Self.ConsSitLote.NumeroLote         := Self.Enviar.NumeroLote;
 
  if (TACBrNFSe( FACBrNFSe ).Configuracoes.WebServices.Provedor in [proISSDigital] ) then
  begin

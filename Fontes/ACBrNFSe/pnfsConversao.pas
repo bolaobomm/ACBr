@@ -1050,7 +1050,8 @@ begin
   3541406, // Presidente Prudente/SP
   3549102, // São João da Boa Vista/SP
   3549706, // São José do Rio Pardo/SP
-  3556404  // Vargem Grande do Sul/SP
+  3556404, // Vargem Grande do Sul/SP
+  4202008  // Balneario Camboriu/SC
          : Provedor := 'SimplISS';
 
   2301000  // Aquiraz/CE
