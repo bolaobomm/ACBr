@@ -244,7 +244,7 @@ object Form1: TForm1
         MaxValue = 100
         MinValue = 1
         TabOrder = 2
-        Value = 3
+        Value = 10
         OnChange = seTimeOutChange
       end
       object seIntervaloAposComando: TSpinEdit
