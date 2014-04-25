@@ -142,7 +142,7 @@ object dmACBrCTeFR: TdmACBrCTeFR
     PrintOptions.Printer = 'Default'
     PrintOptions.PrintOnSheet = 0
     ReportOptions.CreateDate = 40401.475989294000000000
-    ReportOptions.LastChange = 41075.662367303240000000
+    ReportOptions.LastChange = 41725.704970335600000000
     ScriptLanguage = 'PascalScript'
     StoreInDFM = False
     Left = 48
@@ -312,5 +312,35 @@ object dmACBrCTeFR: TdmACBrCTeFR
     BCDToCurrency = False
     Left = 480
     Top = 124
+  end
+  object frxDocAnterior: TfrxDBDataset
+    UserName = 'DocAnterior'
+    CloseDataSource = False
+    OpenDataSource = False
+    DataSet = cdsDocAnterior
+    BCDToCurrency = False
+    Left = 484
+    Top = 188
+  end
+  object cdsDocAnterior: TClientDataSet
+    Aggregates = <>
+    Params = <>
+    Left = 448
+    Top = 188
+  end
+  object cdsAnuladoComple: TClientDataSet
+    Aggregates = <>
+    Params = <>
+    Left = 448
+    Top = 272
+  end
+  object frxcdsAnuladoComple: TfrxDBDataset
+    UserName = 'AnuladoComple'
+    CloseDataSource = False
+    OpenDataSource = False
+    DataSet = cdsAnuladoComple
+    BCDToCurrency = False
+    Left = 484
+    Top = 272
   end
 end

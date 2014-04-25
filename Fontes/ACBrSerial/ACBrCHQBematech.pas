@@ -40,6 +40,8 @@
 |*
 |* 24/08/2004: Daniel Simoes de Almeida
 |*  - Primeira Versao ACBrCHQBematech
+|* 25/04/2014 : William Duarte
+|*  - Segunda Versao ACBrCHQBematech
 ******************************************************************************}
 
 {$I ACBr.inc}
@@ -53,6 +55,7 @@ uses ACBrCHQClass,
 
 type TACBrCHQBematech = class( TACBrCHQClass )
   private
+    FImprimeVerso: boolean;
 
   protected
 
@@ -64,6 +67,7 @@ type TACBrCHQBematech = class( TACBrCHQClass )
     procedure ImprimirCheque ; Override ;
     Procedure TravarCheque ;  Override ;
     Procedure DestravarCheque ;  Override ;
+    Procedure ImprimirVerso(AStringList : TStrings); Override;
 end ;
 
 implementation
@@ -93,16 +97,34 @@ end;
 
 procedure TACBrCHQBematech.TravarCheque;
 begin
-  fpDevice.EnviaString( #27 + #177 );
-//  fpDevice.EnviaString( #27 + #119 + #1 ) ;
+  if FImprimeVerso then
+    fpDevice.EnviaString( #27 + #119 + #1 )
+  else
+    fpDevice.EnviaString( #27 + #177 );
   Sleep(100);
 end;
 
 procedure TACBrCHQBematech.DestravarCheque;
 begin
-  fpDevice.EnviaString( #27 + #176 );
-//  fpDevice.EnviaString( #27 + #119 + #0 ) ;
+  if FImprimeVerso then
+    fpDevice.EnviaString( #27 + #119 + #0 )
+  else
+    fpDevice.EnviaString( #27 + #176 );
   Sleep(100);
+end;
+
+procedure TACBrCHQBematech.ImprimirVerso(AStringList : TStrings);
+var
+  A : integer;
+begin
+  FImprimeVerso := True;
+
+  TravarCheque ;
+
+  For A := 0 to AStringList.Count - 1 do
+     ImprimirLinha( StringOfChar(' ',10) + TiraAcentos( AStringList[A] ) );
+
+  DestravarCheque ;
 end;
 
 procedure TACBrCHQBematech.ImprimirCheque;
@@ -111,6 +133,7 @@ begin
   if not fpDevice.EmLinha( 3 ) then  { Impressora está em-linha ? }
     raise Exception.Create(ACBrStr('A impressora de Cheques '+fpModeloStr+
                            ' não está pronta.')) ;
+  FImprimeVerso := False;
 
   TravarCheque ;
 
