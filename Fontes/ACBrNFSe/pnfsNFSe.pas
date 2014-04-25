@@ -160,6 +160,12 @@ type
     FDescontoIncondicionado: currency;
     FDiscriminacao: string;
     FTributavel : TnfseSimNao;
+    //Provedor: SystemPro
+    FValorCsll: currency;
+    FValorPis: currency;
+    FValorCofins: currency;
+    FValorInss: currency;
+    FValorIr: currency;
   public
     constructor Create; reintroduce;
     destructor Destroy; override;
@@ -177,6 +183,13 @@ type
     property DescontoIncondicionado: currency read FDescontoIncondicionado write FDescontoIncondicionado;
     property Discriminacao: string read FDiscriminacao write FDiscriminacao;
     property Tributavel : TnfseSimNao read FTributavel write FTributavel;
+    //Provedor: SystemPro
+    property ValorPis: currency read FValorPis write FValorPis;
+    property ValorCofins: currency read FValorCofins write FValorCofins;
+    property ValorInss: currency read FValorInss write FValorInss;
+    property ValorIr: currency read FValorIr write FValorIr;
+    property ValorCsll: currency read FValorCsll write FValorCsll;
+
   end;
 
  TDeducaoCollection = class(TCollection)

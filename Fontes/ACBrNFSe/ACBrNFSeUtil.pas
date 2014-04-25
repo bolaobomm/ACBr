@@ -482,6 +482,7 @@ begin
       proMitra,
       proGovDigital,
       proSisPMJP,
+      proSystemPro,
       proSaatri:    begin
                      AStr := copy(AStr, 1, pos('</InfDeclaracaoPrestacaoServico>', AStr) - 1);
                      AStr := AStr + '</InfDeclaracaoPrestacaoServico>';
@@ -744,6 +745,7 @@ begin
       proMitra,
       proGovDigital,
       proSisPMJP,
+      proSystemPro,
       proSaatri:    begin
                      AXML := copy(AXML, 1, pos('</InfDeclaracaoPrestacaoServico>', AXML) - 1);
                      AXML := AXML + '</InfDeclaracaoPrestacaoServico>';
@@ -868,6 +870,7 @@ begin
     proMitra,
     proGovDigital,
     proSisPMJP,
+    proSystemPro,
     proSaatri: begin
                  //By Akai - L. Massao Aihara ==================================
                  //MUDA A ASSINATURA...

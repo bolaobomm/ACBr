@@ -43,7 +43,7 @@ uses
     ACBrProvedorLink3, ACBrProvedorSpeedGov, ACBrProvedorVitoria,
     ACBrProvedorMitra, ACBrProvedorTecnos, ACBrProvedorPronim,
     ACBrProvedorActcon, ACBrProvedorEL, ACBrProvedorEgoverneISS,
-    ACBrProvedorSisPMJP;
+    ACBrProvedorSisPMJP, ACBrProvedorSystemPro;
 
 type
 
@@ -563,11 +563,24 @@ begin
                        proFiorilli, proProdata, proCoplan, proThema, proVirtual,
                        proPVH, proFreire, proTecnos, proPronim, proPublica, proEgoverneISS])
   then begin
+
+    if FProvedor = proSystemPro then
+    begin
+      if not InternetSetOption(Data, INTERNET_OPTION_CLIENT_CERT_CONTEXT, PCertContext, Sizeof(CERT_CONTEXT)) then
+      begin
+        if Assigned(TACBrNFSe( FACBrNFSe ).OnGerarLog) then
+          TACBrNFSe( FACBrNFSe ).OnGerarLog('ERRO: Erro OnBeforePost: ' + IntToStr(GetLastError));
+        raise Exception.Create( 'Erro OnBeforePost: ' + GetLastErrorText {IntToStr(GetLastError)} );
+      end;
+    end
+    else
+    begin
    if not InternetSetOption(Data, INTERNET_OPTION_CLIENT_CERT_CONTEXT, PCertContext, Sizeof(CERT_CONTEXT)*5)
     then begin
      if Assigned(TACBrNFSe( FACBrNFSe ).OnGerarLog)
       then TACBrNFSe( FACBrNFSe ).OnGerarLog('ERRO: Erro OnBeforePost: ' + IntToStr(GetLastError));
      raise Exception.Create( 'Erro OnBeforePost: ' + GetLastErrorText {IntToStr(GetLastError)} );
+      end;
     end;
   end;
 
@@ -637,6 +650,7 @@ begin
   proNatal:       FProvedorClass := TProvedorNatal.Create;
   proISSDigital:  FProvedorClass := TProvedorISSDigital.Create;
   proISSe:        FProvedorClass := TProvedorISSe.Create;
+  proSystemPro:   FProvedorClass := TProvedorSystemPro.Create;
   pro4R:          FProvedorClass := TProvedor4R.Create;
   proGovDigital:  FProvedorClass := TProvedorGovDigital.Create;
   proFiorilli:    FProvedorClass := TProvedorFiorilli.Create;
@@ -823,6 +837,7 @@ begin
       proGoiania,
       proISSDigital,
       proISSe,
+      proSystemPro,
       proCoplan,
       proProdata,
       proVitoria,
@@ -869,7 +884,7 @@ begin
    for i := 0 to TNFSeEnviarLoteRPS(Self).FNotasFiscais.Count-1 do
     begin
      if (FProvedor in [profintelISS, proSaatri, proSisPMJP, proCoplan, proGoiania, proISSDigital,
-                       proISSe, pro4R, proFiorilli, proProdata, proVitoria, proPVH,
+                       proISSe, proSystemPro, pro4R, proFiorilli, proProdata, proVitoria, proPVH,
                        proAgili, proVirtual, proFreire, proLink3, proGovDigital])
       then vNotas := vNotas + '<' + Prefixo4 + 'Rps>' +
                                '<' + Prefixo4 + 'InfDeclaracaoPrestacaoServico' +
@@ -1911,6 +1926,7 @@ begin
       proSisPMJP,
       proISSDigital,
       proISSe,
+      proSystemPro,
       pro4R,
       proFiorilli,
       proProdata,
@@ -1962,6 +1978,7 @@ begin
            proGoiania,
            proISSDigital,
            proISSe,
+           proSystemPro,
            pro4R,
            proFiorilli,
            proProdata,
@@ -2126,6 +2143,7 @@ begin
       proSisPMJP,
       proISSDigital,
       proISSe,
+      proSystemPro,
       pro4R,
       proFiorilli,
       proProdata,
@@ -2183,7 +2201,7 @@ begin
   else begin
    for i := 0 to TNFSeGerarLoteRPS(Self).FNotasFiscais.Count-1 do
     begin
-     if (FProvedor in [profintelISS, proSaatri, proSisPMJP, proGoiania, proISSDigital, proISSe,
+     if (FProvedor in [profintelISS, proSaatri, proSisPMJP, proGoiania, proISSDigital, proISSe, proSystemPro,
                        pro4R, proFiorilli, proProdata, proVitoria, proPVH, proAgili,
                        proCoplan, proVirtual, proFreire, proLink3, proMitra, proGovDigital])
       then vNotas := vNotas + '<' + Prefixo4 + 'Rps>' +
@@ -2348,6 +2366,7 @@ begin
       proSisPMJP,
       proISSDigital,
       proISSe,
+      proSystemPro,
       pro4R,
       proFiorilli,
       proProdata,
@@ -2385,7 +2404,7 @@ begin
   else begin
    for i := 0 to TNFSeEnviarSincrono(Self).FNotasFiscais.Count-1 do
     begin
-     if (FProvedor in [profintelISS, proSaatri, proSisPMJP, proGoiania, proISSDigital, proISSe,
+     if (FProvedor in [profintelISS, proSaatri, proSisPMJP, proGoiania, proISSDigital, proISSe, proSystemPro,
                        pro4R, proFiorilli, proProdata, proVitoria, proPVH, proAgili,
                        proCoplan, proVirtual, proFreire, proLink3, proGovDigital])
       then vNotas := vNotas + '<' + Prefixo4 + 'Rps>' +
@@ -2734,14 +2753,24 @@ begin
 
  if not (TACBrNFSe( FACBrNFSe ).Configuracoes.WebServices.Provedor in [proISSNet])
   then begin
-   Self.ConsNfseRps.Numero             := TACBrNFSe( FACBrNFSe ).NotasFiscais.Items[0].NFSe.IdentificacaoRps.Numero;
-   Self.ConsNfseRps.Serie              := TACBrNFSe( FACBrNFSe ).NotasFiscais.Items[0].NFSe.IdentificacaoRps.Serie;
-   Self.ConsNfseRps.Tipo               := TipoRPSToStr(TACBrNFSe( FACBrNFSe ).NotasFiscais.Items[0].NFSe.IdentificacaoRps.Tipo);
-   Self.ConsNfseRps.Cnpj               := TACBrNFSe( FACBrNFSe ).NotasFiscais.Items[0].NFSe.PrestadorServico.IdentificacaoPrestador.Cnpj;
-   Self.ConsNfseRps.InscricaoMunicipal := TACBrNFSe( FACBrNFSe ).NotasFiscais.Items[0].NFSe.PrestadorServico.IdentificacaoPrestador.InscricaoMunicipal;
-   Self.ConsNfseRps.RazaoSocial        := TACBrNFSe( FACBrNFSe ).NotasFiscais.Items[0].NFSe.PrestadorServico.RazaoSocial;
 
-   Result := Self.ConsNfseRps.Executar;
+   if TACBrNFSe( FACBrNFSe ).Configuracoes.WebServices.Provedor in [proSystemPro] then
+   begin
+     Self.ConsNfse.NumeroNFSe         := TACBrNFSe( FACBrNFSe ).NotasFiscais.Items[0].NFSe.Numero;
+     Self.ConsNfse.Cnpj               := TACBrNFSe( FACBrNFSe ).NotasFiscais.Items[0].NFSe.PrestadorServico.IdentificacaoPrestador.Cnpj;
+     Self.ConsNfse.InscricaoMunicipal := TACBrNFSe( FACBrNFSe ).NotasFiscais.Items[0].NFSe.PrestadorServico.IdentificacaoPrestador.InscricaoMunicipal;
+     Result := Self.ConsNfse.Executar;
+   end
+   else
+   begin
+     Self.ConsNfseRps.Numero             := TACBrNFSe( FACBrNFSe ).NotasFiscais.Items[0].NFSe.IdentificacaoRps.Numero;
+     Self.ConsNfseRps.Serie              := TACBrNFSe( FACBrNFSe ).NotasFiscais.Items[0].NFSe.IdentificacaoRps.Serie;
+     Self.ConsNfseRps.Tipo               := TipoRPSToStr(TACBrNFSe( FACBrNFSe ).NotasFiscais.Items[0].NFSe.IdentificacaoRps.Tipo);
+     Self.ConsNfseRps.Cnpj               := TACBrNFSe( FACBrNFSe ).NotasFiscais.Items[0].NFSe.PrestadorServico.IdentificacaoPrestador.Cnpj;
+     Self.ConsNfseRps.InscricaoMunicipal := TACBrNFSe( FACBrNFSe ).NotasFiscais.Items[0].NFSe.PrestadorServico.IdentificacaoPrestador.InscricaoMunicipal;
+     Self.ConsNfseRps.RazaoSocial        := TACBrNFSe( FACBrNFSe ).NotasFiscais.Items[0].NFSe.PrestadorServico.RazaoSocial;
+     Result := Self.ConsNfseRps.Executar;
+   end;
 
    if not(Result)
     then begin

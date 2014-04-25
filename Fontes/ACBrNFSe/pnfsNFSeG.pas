@@ -231,7 +231,7 @@ begin
 
  if AProvedor in [proNenhum, pro4R, proAgili, proCoplan, profintelISS, proFiorilli,
                   proGoiania, proGovDigital, proISSDigital, proISSe, proProdata, proVirtual,
-                  proSaatri, proFreire, proPVH, proVitoria, proTecnos, proSisPMJP] then Result := '';
+                  proSaatri, proFreire, proPVH, proVitoria, proTecnos, proSisPMJP, proSystemPro] then Result := '';
 end;
 
 class function TNFSeG.Gera_DadosMsgConsLote(Prefixo3, Prefixo4,
@@ -446,7 +446,7 @@ begin
                     '</' + Prefixo4 + 'Numero>' +
 
                     // alterado por Akai - L. Massao Aihara 12/11/2013
-                   DFeUtil.SeSenao(AProvedor in [pro4R, proISSe, profintelISS, proFiorilli,proDigifred,
+                   DFeUtil.SeSenao(AProvedor in [pro4R, proISSe, profintelISS, proFiorilli,proDigifred, proSystempro,
                                                  proVirtual, proISSDigital, proSaatri, proCoplan, proVitoria, proTecnos],
 
                     //Adicionei o SeSenao para poder cancelar nota onde o pretador é pessoa física (Cartório em Vitória-ES). - Eduardo Silva dos Santos - 11/01/2014 - DRD SISTEMAS
@@ -519,6 +519,7 @@ begin
   proSisPMJP,
   proFiorilli,
   proPublica,
+  proSystemPro,
   proEGoverneISS: Result := TagI + Notas + TagF;
   else begin // proWebISS
    DadosMsg := '<' + Prefixo3 + 'LoteRps'+
