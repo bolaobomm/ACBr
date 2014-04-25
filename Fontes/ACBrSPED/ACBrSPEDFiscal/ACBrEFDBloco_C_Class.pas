@@ -1016,7 +1016,7 @@ begin
             case IND_PGTO of
              tpVista:        strIND_PGTO := '0';
              tpPrazo:        strIND_PGTO := '1';
-             tpSemPagamento: strIND_PGTO := '2';
+             tpOutros:       strIND_PGTO := '2';
              tpNenhum:       strIND_PGTO := '';
             end
           end
