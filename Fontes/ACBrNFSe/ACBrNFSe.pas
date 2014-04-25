@@ -244,7 +244,7 @@ begin
    exit;
   end;
 
- NotasFiscais.Assinar; // Assina os Rps
+ NotasFiscais.Assinar(FConfiguracoes.WebServices.Provedor <> proPublica); // Assina os Rps
 
  Result := WebServices.Envia(ALote);
 
@@ -376,7 +376,7 @@ begin
    exit;
   end;
 
- NotasFiscais.Assinar; // Assina os Rps
+ NotasFiscais.Assinar(True); // Assina os Rps
 
  Result := WebServices.Gera(ARps);
 end;
@@ -412,7 +412,7 @@ begin
    exit;
   end;
 
- NotasFiscais.Assinar; // Assina os Rps
+ NotasFiscais.Assinar(FConfiguracoes.WebServices.Provedor <> proPublica); // Assina os Rps
 
  Result := WebServices.GeraLote(ALote);
 
@@ -443,7 +443,7 @@ begin
    exit;
   end;
 
- NotasFiscais.Assinar; // Assina os Rps
+ NotasFiscais.Assinar(FConfiguracoes.WebServices.Provedor <> proPublica); // Assina os Rps
 
  Result := WebServices.EnviaSincrono(ALote);
 end;

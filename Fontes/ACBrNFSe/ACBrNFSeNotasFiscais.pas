@@ -86,7 +86,7 @@ type
     constructor Create(AOwner: TPersistent; ItemClass: TCollectionItemClass);
 
     procedure GerarRPS;
-    procedure Assinar;
+    procedure Assinar(AssinaRPS: Boolean = True);
     function AssinarLoteRps(nLote:String; vLote: WideString; ASincrono: Boolean = False): WideString;
     procedure Valida;
     procedure Imprimir;
@@ -443,7 +443,7 @@ begin
  Result := NotaFiscal(inherited Add);
 end;
 
-procedure TNotasFiscais.Assinar;
+procedure TNotasFiscais.Assinar(AssinaRPS: Boolean = True);
 var
  i         : Integer;
  vAssinada : AnsiString;
@@ -476,7 +476,7 @@ begin
        FConfiguracoes.Geral.Save(NotaUtil.PathWithDelim(CaminhoArquivo) + Self.Items[i].NFSe.InfID.ID+'-Rps2.xml', LocNFSeW.Gerador.ArquivoFormatoXML);
      end;
 
-    if self.Configuracoes.Certificados.AssinaRPS
+    if self.Configuracoes.Certificados.AssinaRPS and AssinaRPS
      then begin
       {$IFDEF ACBrNFSeOpenSSL}
         if not(NotaUtil.Assinar(LocNFSeW.Gerador.ArquivoFormatoXML,
