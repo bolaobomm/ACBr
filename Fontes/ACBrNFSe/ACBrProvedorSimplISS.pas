@@ -161,6 +161,15 @@ begin
             ConfigURL.ProConsultaNFSe       := 'http://200.144.16.82:8080/ws_' + ConfigURL.ProNomeCidade + '/nfseservice.svc';
             ConfigURL.ProCancelaNFSe        := 'http://200.144.16.82:8080/ws_' + ConfigURL.ProNomeCidade + '/nfseservice.svc';
            end;
+  3524808: begin // Jales/SP
+            ConfigURL.ProNomeCidade := 'jales';
+            ConfigURL.ProRecepcaoLoteRPS    := 'http://187.45.245.217/ws_' + ConfigURL.ProNomeCidade + '/nfseservice.svc';
+            ConfigURL.ProConsultaLoteRPS    := 'http://187.45.245.217/ws_' + ConfigURL.ProNomeCidade + '/nfseservice.svc';
+            ConfigURL.ProConsultaNFSeRPS    := 'http://187.45.245.217/ws_' + ConfigURL.ProNomeCidade + '/nfseservice.svc';
+            ConfigURL.ProConsultaSitLoteRPS := 'http://187.45.245.217/ws_' + ConfigURL.ProNomeCidade + '/nfseservice.svc';
+            ConfigURL.ProConsultaNFSe       := 'http://187.45.245.217/ws_' + ConfigURL.ProNomeCidade + '/nfseservice.svc';
+            ConfigURL.ProCancelaNFSe        := 'http://187.45.245.217/ws_' + ConfigURL.ProNomeCidade + '/nfseservice.svc';
+           end;
   3538709: begin // Piracicaba/SP
             ConfigURL.ProNomeCidade := 'piracicaba';
             ConfigURL.ProRecepcaoLoteRPS    := 'http://www.sistemas.piracicaba.sp.gov.br/semfi/simpliss/ws_nfse/nfseservice.svc';

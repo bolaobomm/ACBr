@@ -1051,6 +1051,7 @@ begin
   3137205, // Lagoa Da Prata/MG
   3148103, // Patrocinio/MG
   3503307, // Araras/SP
+  3524808, // Jales/SP
   3538709, // Piracicaba/SP
   3541406, // Presidente Prudente/SP
   3549102, // São João da Boa Vista/SP
@@ -16250,7 +16251,7 @@ begin
       6567: CodCidade := 3523305 ; //Itariri/SP  
       6569: CodCidade := 3523404 ; //Itatiba/SP  
       6571: CodCidade := 3523503 ; //Itatinga/SP  
-      6573: CodCidade := 3523602 ; //Itirapina/SP  
+      6573: CodCidade := 3523602 ; //Itirapina/SP
       6575: CodCidade := 3523701 ; //Itirapua/SP  
       6577: CodCidade := 3523800 ; //Itobi/SP  
       6579: CodCidade := 3523909 ; //Itu/SP  
@@ -16262,7 +16263,7 @@ begin
       6591: CodCidade := 3524501 ; //Jaci/SP  
       6593: CodCidade := 3524600 ; //Jacupiranga/SP  
       6595: CodCidade := 3524709 ; //Jaguariuna/SP  
-      6597: CodCidade := 3524808 ; //Jales/SP  
+      6597: CodCidade := 3524808 ; //Jales/SP
       6599: CodCidade := 3524907 ; //Jambeiro/SP  
       6601: CodCidade := 3525003 ; //Jandira/SP  
       6603: CodCidade := 3525102 ; //Jardinopolis/SP
