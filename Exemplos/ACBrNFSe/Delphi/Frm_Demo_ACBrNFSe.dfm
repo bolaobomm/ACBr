@@ -308,6 +308,7 @@ object frmDemo_ACBrNFSe: TfrmDemo_ACBrNFSe
               'Arcos/3104205/MG'
               'Assis Chateaubriand/4102000/PR'
               'Bage/4301602/RS'
+              'Bambui/3105103/MG'
               'Barbacena/3105608/MG'
               'Bariri/3505203/SP'
               'Barra do Garcas/5101803/MT'

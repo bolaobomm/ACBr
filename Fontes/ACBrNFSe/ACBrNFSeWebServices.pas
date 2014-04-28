@@ -1752,7 +1752,8 @@ begin
  FCabMsg := FProvedorClass.Gera_CabMsg(Prefixo2, FVersaoLayOut, FVersaoDados, NameSpaceCab, FConfiguracoes.WebServices.CodigoMunicipio);
 
  case FProvedor of
-  proEquiplano: URISig:= '';
+  // Alterado por Augusto Fontana - 28/04/2014
+  proEquiplano, proPublica: URISig:= '';
   proDigifred:  URISig := 'CANC' + TNFSeCancelarNfse(Self).FNumeroNFSe;
   proSaatri: URISig := 'Cancelamento_' + TNFSeCancelarNfse(Self).FCnpj;
   proIssIntel,
@@ -1805,7 +1806,7 @@ begin
                                                       TNFSeCancelarNfse(Self).FIM,
                                                       TNFSeCancelarNfse(Self).FCodigoMunicipio,
                                                       TNFSeCancelarNfse(Self).FCodigoCancelamento,
-                                                      '', '', FProvedor);
+                                                      '', '', FProvedor, TNFSeCancelarNfse(Self).FMotivoCancelamento);
    if FDadosMsg <> ''
     then begin
     {$IFDEF ACBrNFSeOpenSSL}

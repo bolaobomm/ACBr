@@ -41,10 +41,11 @@ type
                                   Senha : string = ''; FraseSecreta : string = '';
                                   AProvedor: TnfseProvedor = proNenhum;
                                   APagina: Integer = 1): AnsiString;
-
+     // Alterado por Augusto Fontana - 28/04/2014. Inclusão do parametromo motivo do cancelamento
      class function Gera_DadosMsgCancelarNFSe(Prefixo4, NameSpaceDad, NumeroNFSe, CNPJ, IM,
                                       CodMunicipio, CodCancelamento: String;
-                                      TagI, TagF: AnsiString; AProvedor: TnfseProvedor = proNenhum): AnsiString;
+                                      TagI, TagF: AnsiString; AProvedor: TnfseProvedor = proNenhum;
+                                      MotivoCancelamento: String = ''): AnsiString;
 
      class function Gera_DadosMsgGerarNFSe(Prefixo3, Prefixo4, Identificador,
                                    NameSpaceDad, VersaoDados, VersaoXML,
@@ -412,7 +413,7 @@ end;
 
 class function TNFSeG.Gera_DadosMsgCancelarNFSe(Prefixo4, NameSpaceDad, NumeroNFSe,
   CNPJ, IM, CodMunicipio, CodCancelamento: String; TagI,
-  TagF: AnsiString; AProvedor: TnfseProvedor = proNenhum): AnsiString;
+  TagF: AnsiString; AProvedor: TnfseProvedor = proNenhum; MotivoCancelamento: String = ''): AnsiString;
 var
  DadosMsg: AnsiString;
 begin
@@ -440,7 +441,9 @@ begin
                               '</InfPedidoCancelamento>';
 
 
-  else DadosMsg := '<' + Prefixo4 + 'IdentificacaoNfse>' +
+  else
+    begin
+      DadosMsg :=  '<' + Prefixo4 + 'IdentificacaoNfse>' +
                     '<' + Prefixo4 + 'Numero>' +
                       NumeroNFse +
                     '</' + Prefixo4 + 'Numero>' +
@@ -484,8 +487,16 @@ begin
 
                      CodCancelamento +
 
-                   '</' + Prefixo4 + 'CodigoCancelamento>' +
-                  '</' + Prefixo4 + 'InfPedidoCancelamento>';
+                   '</' + Prefixo4 + 'CodigoCancelamento>';
+                  // Alterado por Augusto Fontana - 28/04/2014. Incluir do motivo do cancelamento
+                  if (AProvedor = proPublica) and (MotivoCancelamento <> '') then
+                    begin
+                      DadosMsg := DadosMsg + '<' + Prefixo4 + 'MotivoCancelamento>';
+                      DadosMsg := DadosMsg + MotivoCancelamento;
+                      DadosMsg := DadosMsg + '</' + Prefixo4 + 'MotivoCancelamento>';
+                    end;
+                  DadosMsg := DadosMsg + '</' + Prefixo4 + 'InfPedidoCancelamento>';
+    end;
  end;
 
  Result := TagI + DadosMsg + TagF;
