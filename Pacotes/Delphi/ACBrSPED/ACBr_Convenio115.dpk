@@ -31,6 +31,8 @@ package ACBr_Convenio115;
 requires
   rtl,
   vcl,
+  ACBrComum,
+  ACBrDiversos,
   designide;
 
 contains
