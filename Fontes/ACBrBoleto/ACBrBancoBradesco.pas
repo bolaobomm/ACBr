@@ -78,7 +78,9 @@ begin
    fpNome:= 'Bradesco';
    fpNumero := 237;
    fpTamanhoMaximoNossoNum := 11;
-   fpTamanhoAgencia := 5;
+   // DONE -oJacinto Junior: Ajustar o tamanho da agência para 4 (quatro) algarismos conforme padrão do Bacen.
+//   fpTamanhoAgencia := 5;
+   fpTamanhoAgencia := 4;
    fpTamanhoConta   := 7;
    fpTamanhoCarteira:= 2;
 end;
@@ -106,7 +108,9 @@ begin
 
       CodigoBarras := IntToStr( Numero )+'9'+ FatorVencimento +
                       IntToStrZero(Round(ACBrTitulo.ValorDocumento*100),10) +
-                      padR(OnlyNumber(Cedente.Agencia),4,'0') +
+                      // DONE -oJacinto Junior: Ajustar para utilizar o tamanho definido em fpTamanhoAgencia.
+//                      padR(OnlyNumber(Cedente.Agencia),4,'0') +
+                      padR(OnlyNumber(Cedente.Agencia), fpTamanhoAgencia, '0') +
                       ACBrTitulo.Carteira +
                       ACBrTitulo.NossoNumero +
                       padR(RightStr(Cedente.Conta,7),7,'0') + '0';
@@ -350,7 +354,11 @@ begin
    rCodEmpresa:= trim(Copy(ARetorno[0],27,20));
    rCedente   := trim(Copy(ARetorno[0],47,30));
 
-   rAgencia := trim(Copy(ARetorno[1], 25, ACBrBanco.TamanhoAgencia));
+   // DONE -oJacinto Junior: Ajustar para fazer a leitura do código da agência a partir da posição 26.
+   // A leitura deverá ser feita a partir da posição 26 devido ao fato de não
+   // existirem agências bancárias com mais de 4 (quatro) algarismos.
+//   rAgencia := trim(Copy(ARetorno[1], 25, ACBrBanco.TamanhoAgencia));
+   rAgencia := trim(Copy(ARetorno[1], 26, ACBrBanco.TamanhoAgencia));
    rConta   := trim(Copy(ARetorno[1], 30, ACBrBanco.TamanhoConta));
 
    rDigitoConta := Copy(ARetorno[1],37,1);
