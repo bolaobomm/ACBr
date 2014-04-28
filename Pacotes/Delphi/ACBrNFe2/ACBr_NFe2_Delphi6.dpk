@@ -67,7 +67,7 @@ package ACBr_NFe2_Delphi6;
 {$WRITEABLECONST OFF}
 {$MINENUMSIZE 1}
 {$IMAGEBASE $400000}
-{$DESCRIPTION 'ACBrNFePCN2 - (http://acbr.sourceforge.net/)'}
+{$DESCRIPTION 'ACBr Automação Comercial Brasil - ACBrNFePCN2 - (http://acbr.sourceforge.net/)'}
 {$IMPLICITBUILD ON}
 
 requires

@@ -65,7 +65,7 @@ package ACBrCTeDacteFRpkg;
 {$WRITEABLECONST OFF}
 {$MINENUMSIZE 1}
 {$IMAGEBASE $400000}
-{$DESCRIPTION 'ACBrCTeDacteFR - (http://acbr.sourceforge.net/)'}
+{$DESCRIPTION 'ACBr Automação Comercial Brasil - ACBrCTeDacteFR - (http://acbr.sourceforge.net/)'}
 {$IMPLICITBUILD ON}
 
 requires
@@ -86,7 +86,7 @@ requires
 {$IFDEF VER240} fs17, frx17, frxe17, frxDB17, {$ENDIF} // XE3
 {$IFDEF VER250} fs18, frx18, frxe18, frxDB18, {$ENDIF} // XE4
 {$IFDEF VER260} fs19, frx19, frxe19, frxDB19, {$ENDIF} // XE5
-{$IFDEF VER270} fs20, frx20, frxe20, frxDB20, {$ENDIF} // XE6
+{$IFDEF VER270} fs20, frx20, frxe20, frxDB20,  dsnap,{$ENDIF} // XE6
   ACBr_CTe;
 
 contains

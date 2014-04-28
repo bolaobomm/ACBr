@@ -1,7 +1,6 @@
 package ACBr_Convenio115;
 
 {$R *.res}
-{$IFDEF IMPLICITBUILDING This IFDEF should not be used by users}
 {$ALIGN 8}
 {$ASSERTIONS ON}
 {$BOOLEVAL OFF}
@@ -23,8 +22,6 @@ package ACBr_Convenio115;
 {$WRITEABLECONST OFF}
 {$MINENUMSIZE 1}
 {$IMAGEBASE $400000}
-{$DEFINE DEBUG}
-{$ENDIF IMPLICITBUILDING}
 {$DESCRIPTION 'ACBr Automação Comercial Brasil - ACBrConvenio115 (http://acbr.sf.net/)'}
 {$IMPLICITBUILD ON}
 

@@ -22,7 +22,7 @@ package ACBrMDFeDAMDFEQRpkg;
 {$WRITEABLECONST OFF}
 {$MINENUMSIZE 1}
 {$IMAGEBASE $400000}
-{$DESCRIPTION 'ACBrMDFeDAMDFEQR - (http://acbr.sourceforge.net/)'}
+{$DESCRIPTION 'ACBr Automação Comercial Brasil - ACBrMDFeDAMDFEQR - (http://acbr.sourceforge.net/)'}
 {$IMPLICITBUILD OFF}
 
 requires
@@ -58,7 +58,7 @@ requires
   {$IFDEF VER240} QR5RunDXE3, vclimg; {$ENDIF} //XE3
   {$IFDEF VER250} QR5RunDXE4, vclimg; {$ENDIF} //XE4
   {$IFDEF VER260} QR5RunDXE5, vclimg; {$ENDIF} //XE5
-  {$IFDEF VER270} QR5RunDXE6, vclimg; {$ENDIF} //XE6
+  {$IFDEF VER270} QR5RunDXE6, vclimg,  dsnap; {$ENDIF} //XE6
 
 contains
   ACBrMDFeDAMDFEQRClass in '..\..\..\Fontes\ACBrMDFe\ACBrMDFeDAMDFEQRClass.pas',

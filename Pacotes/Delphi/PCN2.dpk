@@ -1,7 +1,6 @@
 package PCN2;
 
 {$R *.res}
-{$IFDEF IMPLICITBUILDING This IFDEF should not be used by users}
 {$ALIGN 8}
 {$ASSERTIONS ON}
 {$BOOLEVAL OFF}
@@ -23,9 +22,7 @@ package PCN2;
 {$WRITEABLECONST OFF}
 {$MINENUMSIZE 1}
 {$IMAGEBASE $400000}
-{$DEFINE DEBUG}
-{$ENDIF IMPLICITBUILDING}
-{$DESCRIPTION 'Projeto Cooperar (http://br.groups.yahoo.com/group/projeto_cooperar_nfe/)'}
+{$DESCRIPTION 'ACBr Automação Comercial Brasil - Projeto Cooperar (http://br.groups.yahoo.com/group/projeto_cooperar_nfe/)'}
 {$RUNONLY}
 {$IMPLICITBUILD OFF}
 

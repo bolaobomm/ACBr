@@ -22,7 +22,7 @@ package ACBrNFeDanfeQRpkg_Delphi6;
 {$WRITEABLECONST OFF}
 {$MINENUMSIZE 1}
 {$IMAGEBASE $400000}
-{$DESCRIPTION 'ACBrNFeDanfeQR - (http://acbr.sourceforge.net/)'}
+{$DESCRIPTION 'ACBr Automação Comercial Brasil - ACBrNFeDanfeQR - (http://acbr.sourceforge.net/)'}
 {$IMPLICITBUILD ON}
 
 requires

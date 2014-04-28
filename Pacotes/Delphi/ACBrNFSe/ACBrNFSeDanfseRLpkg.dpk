@@ -22,7 +22,7 @@ package ACBrNFSeDanfseRLpkg;
 {$WRITEABLECONST OFF}
 {$MINENUMSIZE 1}
 {$IMAGEBASE $400000}
-{$DESCRIPTION 'ACBrNFSeDANFSeQR - (http://acbr.sourceforge.net/)'}
+{$DESCRIPTION 'ACBr Automação Comercial Brasil - ACBrNFSeDANFSeRL - (http://acbr.sourceforge.net/)'}
 {$IMPLICITBUILD ON}
 
 requires
@@ -42,8 +42,7 @@ requires
   {$IFDEF VER240} RLibWinDXE3, vclimg, {$ENDIF} //XE3  
   {$IFDEF VER250} RLibWinDXE4, vclimg, {$ENDIF} //XE4
   {$IFDEF VER260} RLibWinDXE5, vclimg, {$ENDIF} //XE5
-  {$IFDEF VER270} RLibWinDXE6, vclimg, {$ENDIF} //XE6
-  dsnap,
+  {$IFDEF VER270} RLibWinDXE6, vclimg,  dsnap,{$ENDIF} //XE6  
   vcldb,
   designide,
   vclactnband,
