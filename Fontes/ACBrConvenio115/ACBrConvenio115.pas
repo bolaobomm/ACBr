@@ -44,6 +44,7 @@
 |* 19/02/2013: Jéter Rabelo Ferreira
 |*  - Disponibilização do componente para o projeto ACBr
 *******************************************************************************}
+{$I ACBr.inc}
 
 unit ACBrConvenio115;
 
