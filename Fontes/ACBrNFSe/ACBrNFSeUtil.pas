@@ -766,7 +766,7 @@ begin
             AXML := AXML + Assinatura;
             AXML := AXML + '</Rps>';
             // Alterado por Cleiver em 26/02/2013
-            if (AProvedor in [proGoiania, proProdata, proVitoria{, proPublica}])
+            if (AProvedor in [proGoiania, proProdata, proVitoria, proPublica])
              then AXML := AXML + '</GerarNfseEnvio>';
            end;
      end;
