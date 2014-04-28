@@ -518,15 +518,23 @@ begin
 
 //    if FConfiguracoes.Geral.Salvar
 //     then
-    if FConfiguracoes.Arquivos.EmissaoPathNFSe then
-      CaminhoArquivo := FConfiguracoes.Arquivos.GetPathRPS(Self.Items[i].NFSe.DataEmissao)
-    else
-      CaminhoArquivo := FConfiguracoes.Arquivos.GetPathRPS(0);
+//    if FConfiguracoes.Arquivos.EmissaoPathNFSe then
+//      CaminhoArquivo := FConfiguracoes.Arquivos.GetPathRPS(Self.Items[i].NFSe.DataEmissao)
+//    else
+//      CaminhoArquivo := FConfiguracoes.Arquivos.GetPathRPS(0);
 
-    FConfiguracoes.Geral.Save(NotaUtil.PathWithDelim(CaminhoArquivo) + Self.Items[i].NFSe.InfID.ID+'-Rps.xml', vAssinada);
+//    FConfiguracoes.Geral.Save(NotaUtil.PathWithDelim(CaminhoArquivo) + Self.Items[i].NFSe.InfID.ID+'-Rps.xml', vAssinada);
 
     if DFeUtil.NaoEstaVazio(Self.Items[i].NomeArq)
-     then FConfiguracoes.Geral.Save(ExtractFileName(Self.Items[i].NomeArq), vAssinada, ExtractFilePath(Self.Items[i].NomeArq));
+     then FConfiguracoes.Geral.Save(ExtractFileName(Self.Items[i].NomeArq), vAssinada, ExtractFilePath(Self.Items[i].NomeArq))
+     else begin
+       if FConfiguracoes.Arquivos.EmissaoPathNFSe then
+         CaminhoArquivo := FConfiguracoes.Arquivos.GetPathRPS(Self.Items[i].NFSe.DataEmissao)
+       else
+         CaminhoArquivo := FConfiguracoes.Arquivos.GetPathRPS(0);
+
+       FConfiguracoes.Geral.Save(NotaUtil.PathWithDelim(CaminhoArquivo) + Self.Items[i].NFSe.InfID.ID+'-Rps.xml', vAssinada);
+     end;
 
    finally
     LocNFSeW.Free;
