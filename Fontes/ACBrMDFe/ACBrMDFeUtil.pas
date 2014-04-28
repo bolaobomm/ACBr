@@ -437,6 +437,225 @@ begin
   xmlFreeDoc(schema_doc);
   Result := True;
 end;
+
+function ValidaModalLibXML(XML: AnsiString; var Msg: AnsiString;
+ const APathSchemas: string = ''): Boolean;
+var
+  doc, schema_doc : xmlDocPtr;
+  parser_ctxt     : xmlSchemaParserCtxtPtr;
+  schema          : xmlSchemaPtr;
+  valid_ctxt      : xmlSchemaValidCtxtPtr;
+  schemError      : xmlErrorPtr;
+  schema_filename : String; // PChar;
+  Tipo            : Integer;
+  AXML            : AnsiString;
+begin
+  Tipo := 0;
+
+  if pos( '<aereo>', XML ) <> 0
+   then begin
+    Tipo := 1;
+    AXML := SeparaDados( XML, 'aereo' );
+    AXML := '<aereo xmlns="http://www.portalfiscal.inf.br/mdfe">' +
+            AXML +
+           '</aereo>';
+   end;
+  if pos( '<aquav>', XML) <> 0
+   then begin
+    Tipo := 2;
+    AXML := SeparaDados( XML, 'aquav' );
+    AXML := '<aquav xmlns="http://www.portalfiscal.inf.br/mdfe">' +
+            AXML +
+           '</aquav>';
+   end;
+  if pos( '<duto>', XML) <> 0
+   then begin
+    Tipo := 3;
+    AXML := SeparaDados( XML, 'duto' );
+    AXML := '<duto xmlns="http://www.portalfiscal.inf.br/mdfe">' +
+            AXML +
+           '</duto>';
+   end;
+  if pos( '<ferrov>', XML) <> 0
+   then begin
+    Tipo := 4;
+    AXML := SeparaDados( XML, 'ferrov' );
+    AXML := '<ferrov xmlns="http://www.portalfiscal.inf.br/mdfe">' +
+            AXML +
+           '</ferrov>';
+   end;
+  if pos( '<rodo>', XML) <> 0
+   then begin
+    Tipo := 5;
+    AXML := SeparaDados( XML, 'rodo' );
+    AXML := '<rodo xmlns="http://www.portalfiscal.inf.br/mdfe">' +
+            AXML +
+           '</rodo>';
+   end;
+
+  // Eventos
+  if pos( '<evEncMDFe>', XML) <> 0
+   then begin
+    Tipo := 6;
+    AXML := SeparaDados( XML, 'evEncMDFe' );
+    AXML := '<evEncMDFe xmlns="http://www.portalfiscal.inf.br/mdfe">' +
+            AXML +
+           '</evEncMDFe>';
+   end;
+  if pos( '<evCancMDFe>', XML) <> 0
+   then begin
+    Tipo := 7;
+    AXML := SeparaDados( XML, 'evCancMDFe' );
+    AXML := '<evCancMDFe xmlns="http://www.portalfiscal.inf.br/mdfe">' +
+            AXML +
+           '</evCancMDFe>';
+   end;
+  if pos( '<evIncCondutorMDFe>', XML) <> 0
+   then begin
+    Tipo := 8;
+    AXML := SeparaDados( XML, 'evIncCondutorMDFe' );
+    AXML := '<evIncCondutorMDFe xmlns="http://www.portalfiscal.inf.br/mdfe">' +
+            AXML +
+           '</evIncCondutorMDFe>';
+   end;
+
+  AXML := '<?xml version="1.0" encoding="UTF-8" ?>' + AXML;
+
+  if Tipo = 0 then
+    raise Exception.Create('Modal não encontrado no XML.');
+
+  if not DirectoryExists(DFeUtil.SeSenao(DFeUtil.EstaVazio(APathSchemas),
+                  PathWithDelim(ExtractFileDir(application.ExeName))+'Schemas',
+                  PathWithDelim(APathSchemas))) then
+    raise Exception.Create('Diretório de Schemas não encontrado'+sLineBreak+
+                            DFeUtil.SeSenao(DFeUtil.EstaVazio(APathSchemas),
+                            PathWithDelim(ExtractFileDir(application.ExeName))+
+                            'Schemas',PathWithDelim(APathSchemas)));
+
+  Schema.remove('http://www.portalfiscal.inf.br/mdfe');
+
+  case Tipo of
+   1: begin
+       Schema.add('http://www.portalfiscal.inf.br/mdfe',
+          DFeUtil.SeSenao(DFeUtil.EstaVazio(APathSchemas),
+          PathWithDelim(ExtractFileDir(application.ExeName))+'Schemas\',
+          PathWithDelim(APathSchemas))+'MDFeModalAereo_v' + MDFeModalAereo + '.xsd');
+      end;
+   2: begin
+       Schema.add('http://www.portalfiscal.inf.br/mdfe',
+          DFeUtil.SeSenao(DFeUtil.EstaVazio(APathSchemas),
+          PathWithDelim(ExtractFileDir(application.ExeName))+'Schemas\',
+          PathWithDelim(APathSchemas))+'MDFeModalAquaviario_v' + MDFeModalAqua + '.xsd');
+      end;
+   3: begin
+       Schema.add('http://www.portalfiscal.inf.br/mdfe',
+          DFeUtil.SeSenao(DFeUtil.EstaVazio(APathSchemas),
+          PathWithDelim(ExtractFileDir(application.ExeName))+'Schemas\',
+          PathWithDelim(APathSchemas))+'MDFeModalDutoviario_v' + MDFeModalDuto + '.xsd');
+      end;
+   4: begin
+       Schema.add('http://www.portalfiscal.inf.br/mdfe',
+          DFeUtil.SeSenao(DFeUtil.EstaVazio(APathSchemas),
+          PathWithDelim(ExtractFileDir(application.ExeName))+'Schemas\',
+          PathWithDelim(APathSchemas))+'MDFeModalFerroviario_v' + MDFeModalFerro + '.xsd');
+      end;
+   5: begin
+       Schema.add('http://www.portalfiscal.inf.br/mdfe',
+          DFeUtil.SeSenao(DFeUtil.EstaVazio(APathSchemas),
+          PathWithDelim(ExtractFileDir(application.ExeName))+'Schemas\',
+          PathWithDelim(APathSchemas))+'MDFeModalRodoviario_v' + MDFeModalRodo + '.xsd');
+      end;
+   6: begin
+       Schema.add('http://www.portalfiscal.inf.br/mdfe',
+          DFeUtil.SeSenao(DFeUtil.EstaVazio(APathSchemas),
+          PathWithDelim(ExtractFileDir(application.ExeName))+'Schemas\',
+          PathWithDelim(APathSchemas))+'evEncMDFe_v' + MDFeModalRodo + '.xsd');
+      end;
+   7: begin
+       Schema.add('http://www.portalfiscal.inf.br/mdfe',
+          DFeUtil.SeSenao(DFeUtil.EstaVazio(APathSchemas),
+          PathWithDelim(ExtractFileDir(application.ExeName))+'Schemas\',
+          PathWithDelim(APathSchemas))+'evCancMDFe_v' + MDFeModalRodo + '.xsd');
+      end;
+   8: begin
+       Schema.add('http://www.portalfiscal.inf.br/mdfe',
+          DFeUtil.SeSenao(DFeUtil.EstaVazio(APathSchemas),
+          PathWithDelim(ExtractFileDir(application.ExeName))+'Schemas\',
+          PathWithDelim(APathSchemas))+'evIncCondutorMDFe_v' + MDFeModalRodo + '.xsd');
+      end;
+  end;
+
+  doc         := nil;
+  schema_doc  := nil;
+  parser_ctxt := nil;
+  schema      := nil;
+  valid_ctxt  := nil;
+  doc         := xmlParseDoc(PAnsiChar(AXML));
+
+  if ((doc = nil) or (xmlDocGetRootElement(doc) = nil)) then
+  begin
+    Msg := 'Erro: unable to parse';
+    Result := False;
+    exit;
+  end;
+
+  schema_doc := xmlReadFile(PAnsiChar(AnsiToUtf8(schema_filename)), nil, XML_DETECT_IDS);
+
+  //  the schema cannot be loaded or is not well-formed
+  if (schema_doc = nil) then
+  begin
+    Msg := 'Erro: Schema não pode ser carregado ou está corrompido';
+    Result := False;
+    exit;
+  end;
+
+  parser_ctxt := xmlSchemaNewDocParserCtxt(schema_doc);
+  // unable to create a parser context for the schema */
+  if (parser_ctxt = nil) then
+  begin
+    xmlFreeDoc(schema_doc);
+    Msg := 'Erro: unable to create a parser context for the schema';
+    Result := False;
+    exit;
+  end;
+
+  schema := xmlSchemaParse(parser_ctxt);
+  // the schema itself is not valid
+  if (schema = nil) then
+  begin
+    xmlSchemaFreeParserCtxt(parser_ctxt);
+    xmlFreeDoc(schema_doc);
+    Msg := 'Error: the schema itself is not valid';
+    Result := False;
+    exit;
+  end;
+
+  valid_ctxt := xmlSchemaNewValidCtxt(schema);
+  //   unable to create a validation context for the schema */
+  if (valid_ctxt = nil) then
+  begin
+    xmlSchemaFree(schema);
+    xmlSchemaFreeParserCtxt(parser_ctxt);
+    xmlFreeDoc(schema_doc);
+    Msg := 'Error: unable to create a validation context for the schema';
+    Result := False;
+    exit;
+  end;
+
+  if (xmlSchemaValidateDoc(valid_ctxt, doc) <> 0) then
+  begin
+    schemError := xmlGetLastError();
+    Msg := IntToStr(schemError^.code) + ' - ' + schemError^.message;
+    Result := False;
+    exit;
+  end;
+
+  xmlSchemaFreeValidCtxt(valid_ctxt);
+  xmlSchemaFree(schema);
+  xmlSchemaFreeParserCtxt(parser_ctxt);
+  xmlFreeDoc(schema_doc);
+  Result := True;
+end;
 {$ELSE}
 
 function ValidaMSXML(XML: AnsiString; out Msg: AnsiString;
@@ -702,7 +921,8 @@ class function MDFeUtil.Valida(const AXML: AnsiString;
   var AMsg: AnsiString; const APathSchemas: string = ''): Boolean;
 begin
 {$IFDEF ACBrMDFeOpenSSL}
-  Result := ValidaLibXML(AXML, AMsg, APathSchemas);
+  Result := ValidaLibXML(AXML, AMsg, APathSchemas) and
+            ValidaModalLibXML(AXML, AMsg, APathSchemas);
 {$ELSE}
   Result := ValidaMSXML(AXML, AMsg, APathSchemas) and
             ValidaModalMSXML(AXML, AMsg, APathSchemas)
