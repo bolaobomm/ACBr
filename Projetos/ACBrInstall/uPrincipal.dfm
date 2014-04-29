@@ -1307,6 +1307,50 @@ object frmPrincipal: TfrmPrincipal
             ExplicitLeft = 484
           end
         end
+        inherited PageControl1: TPageControl
+          inherited tsNFe: TTabSheet
+            ExplicitLeft = 4
+            ExplicitTop = 27
+            ExplicitWidth = 417
+            ExplicitHeight = 121
+          end
+          inherited tsCTe: TTabSheet
+            ExplicitLeft = 4
+            ExplicitTop = 27
+            ExplicitWidth = 417
+            ExplicitHeight = 121
+          end
+          inherited tsNFSe: TTabSheet
+            ExplicitLeft = 4
+            ExplicitTop = 27
+            ExplicitWidth = 417
+            ExplicitHeight = 121
+          end
+          inherited tsBoletos: TTabSheet
+            ExplicitLeft = 4
+            ExplicitTop = 27
+            ExplicitWidth = 417
+            ExplicitHeight = 121
+          end
+          inherited tsMDFe: TTabSheet
+            ExplicitLeft = 4
+            ExplicitTop = 27
+            ExplicitWidth = 417
+            ExplicitHeight = 121
+          end
+          inherited tsSAT: TTabSheet
+            ExplicitLeft = 4
+            ExplicitTop = 27
+            ExplicitWidth = 417
+            ExplicitHeight = 121
+          end
+          inherited tsGNRE: TTabSheet
+            ExplicitLeft = 4
+            ExplicitTop = 27
+            ExplicitWidth = 417
+            ExplicitHeight = 121
+          end
+        end
       end
     end
     object wizPgObterFontes: TJvWizardInteriorPage
@@ -1660,7 +1704,7 @@ object frmPrincipal: TfrmPrincipal
         Cursor = crHandPoint
         Animate = True
         Center = True
-        FrameIndex = 2
+        FrameIndex = 3
         Image.Data = {
           688B00004749463839613F012800F70000FFFFFFFFFFE5FFFFCCF7FAFDFFFF99
           FFF7B9FFF9A9FFFA84EAFA9EFFF573FFF74AFFFF00FFF268F2F478FFF456E9F5

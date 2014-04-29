@@ -1126,7 +1126,7 @@ begin
     edtPlatform.ItemIndex := 0;
 
   // C++ Builder a partir do D2006, versões anteriores tem IDE independentes.
-  ckbBCB.Enabled := MatchText(oACBr.Installations[iVersion].VersionNumberStr, ['d10','d11','d12','d14','d15','d16','d17','d18','d19']);
+  ckbBCB.Enabled := MatchText(oACBr.Installations[iVersion].VersionNumberStr, ['d10','d11','d12','d14','d15','d16','d17','d18','d19','d20']);
   if not ckbBCB.Enabled then
      ckbBCB.Checked := False;
 end;
@@ -1157,7 +1157,6 @@ begin
       MB_ICONERROR + MB_OK
     );
   end;
-
   // Verificar se o tortoise está instalado
   if not TSVN_Class.IsTortoiseInstalado then
   begin

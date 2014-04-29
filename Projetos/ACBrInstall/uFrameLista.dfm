@@ -823,6 +823,10 @@ object framePacotes: TframePacotes
     object tsCTe: TTabSheet
       Caption = 'CT-e'
       ImageIndex = 1
+      ExplicitLeft = 0
+      ExplicitTop = 0
+      ExplicitWidth = 0
+      ExplicitHeight = 0
       object ACBrCTeDacteFR_dpk: TCheckBox
         AlignWithMargins = True
         Left = 20
@@ -887,6 +891,10 @@ object framePacotes: TframePacotes
     object tsNFSe: TTabSheet
       Caption = 'NFS-e'
       ImageIndex = 2
+      ExplicitLeft = 0
+      ExplicitTop = 0
+      ExplicitWidth = 0
+      ExplicitHeight = 0
       object CheckBox2: TCheckBox
         AlignWithMargins = True
         Left = 20
@@ -951,6 +959,10 @@ object framePacotes: TframePacotes
     object tsBoletos: TTabSheet
       Caption = 'Boletos'
       ImageIndex = 3
+      ExplicitLeft = 0
+      ExplicitTop = 0
+      ExplicitWidth = 0
+      ExplicitHeight = 0
       object ACBr_BoletoFC_FR_dpk: TCheckBox
         AlignWithMargins = True
         Left = 20
@@ -1015,6 +1027,10 @@ object framePacotes: TframePacotes
     object tsMDFe: TTabSheet
       Caption = 'MDF-e'
       ImageIndex = 4
+      ExplicitLeft = 0
+      ExplicitTop = 0
+      ExplicitWidth = 0
+      ExplicitHeight = 0
       object ACBrMDFeDAMDFEFRpkg_dpk: TCheckBox
         AlignWithMargins = True
         Left = 20
@@ -1079,6 +1095,10 @@ object framePacotes: TframePacotes
     object tsSAT: TTabSheet
       Caption = 'SAT'
       ImageIndex = 5
+      ExplicitLeft = 0
+      ExplicitTop = 0
+      ExplicitWidth = 0
+      ExplicitHeight = 0
       object ACBr_SAT_Extrato_Fortes_dpk: TCheckBox
         AlignWithMargins = True
         Left = 20
@@ -1103,6 +1123,10 @@ object framePacotes: TframePacotes
     object tsGNRE: TTabSheet
       Caption = 'GNRE'
       ImageIndex = 6
+      ExplicitLeft = 0
+      ExplicitTop = 0
+      ExplicitWidth = 0
+      ExplicitHeight = 0
       object ACBrGNREGuiaFRpkg_dpk: TCheckBox
         AlignWithMargins = True
         Left = 20

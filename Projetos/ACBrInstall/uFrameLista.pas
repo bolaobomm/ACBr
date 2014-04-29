@@ -45,7 +45,7 @@ uses
   Generics.Collections,
   
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms, 
-  Dialogs, Buttons, ExtCtrls, StdCtrls, Vcl.ComCtrls;
+  Dialogs, Buttons, ExtCtrls, StdCtrls, ComCtrls;
 
 type
   TPacotes = TList<TCheckBox>;
