@@ -562,6 +562,11 @@ begin
                               ASincrono))
        then raise Exception.Create('Falha ao assinar o Lote de RPS, '+ nLote + FMsg);
     {$ELSE}
+
+      // {Dalvan}
+      if FConfiguracoes.WebServices.Provedor in [proPronim] then
+        vLote :=StringReplace(vLote, ' xmlns="http://www.abrasf.org.br/ABRASF/arquivos/nfse.xsd"', '', [rfReplaceAll]);
+
       // Alterado por Italo em 24/07/2012
       if not(NotaUtil.Assinar(vLote,
                               FConfiguracoes.Certificados.GetCertificado,

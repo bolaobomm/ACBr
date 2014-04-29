@@ -869,7 +869,7 @@ begin
   4101408, // Apucarana/PR
   4102000, // Assis Chateaubriand/PR
   4205902, // Gaspar/SC
-  4309407, // Guapore/RS
+//  4309407, // Guapore/RS
 //  4310207, // Ijui/RS
   4320800, // Soledade/RS
   4321709  // Tres Coroas/RS
@@ -880,6 +880,7 @@ begin
   3304706, // Sto Antonio de Padua/RJ
   3511102, // Catanduva/SP
   3530300, // Mirassol/SP
+  4309407, // Guapore/RS
   4310207, // Ijui/RS
   4322400  // Uruguaiana/RS
          : Provedor := 'Pronim';

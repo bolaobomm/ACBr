@@ -75,7 +75,10 @@ begin
   else ConfigCidade.NameSpaceEnvelope := 'http://tempuri.org';
 
  ConfigCidade.AssinaRPS  := False;
- ConfigCidade.AssinaLote := False;
+ case ACodCidade of
+  4309407: ConfigCidade.AssinaLote := True; {Dalvan}
+ else      ConfigCidade.AssinaLote := False;
+ end;
 
  Result := ConfigCidade;
 end;
@@ -106,6 +109,23 @@ var
  ConfigURL: TConfigURL;
 begin
  case ACodCidade of
+  4309407: begin // Guapore/RS
+            ConfigURL.HomNomeCidade         := '';
+            ConfigURL.HomRecepcaoLoteRPS    := 'http://177.20.255.245/NFSEWSTESTE/Services.svc';
+            ConfigURL.HomConsultaLoteRPS    := 'http://177.20.255.245/NFSEWSTESTE/Services.svc';
+            ConfigURL.HomConsultaNFSeRPS    := 'http://177.20.255.245/NFSEWSTESTE/Services.svc';
+            ConfigURL.HomConsultaSitLoteRPS := 'http://177.20.255.245/NFSEWSTESTE/Services.svc';
+            ConfigURL.HomConsultaNFSe       := 'http://177.20.255.245/NFSEWSTESTE/Services.svc';
+            ConfigURL.HomCancelaNFSe        := 'http://177.20.255.245/NFSEWSTESTE/Services.svc';
+
+            ConfigURL.ProNomeCidade         := '';
+            ConfigURL.ProRecepcaoLoteRPS    := 'http://177.20.255.244/NFSEWS/Services.svc';
+            ConfigURL.ProConsultaLoteRPS    := 'http://177.20.255.244/NFSEWS/Services.svc';
+            ConfigURL.ProConsultaNFSeRPS    := 'http://177.20.255.244/NFSEWS/Services.svc';
+            ConfigURL.ProConsultaSitLoteRPS := 'http://177.20.255.244/NFSEWS/Services.svc';
+            ConfigURL.ProConsultaNFSe       := 'http://177.20.255.244/NFSEWS/Services.svc';
+            ConfigURL.ProCancelaNFSe        := 'http://177.20.255.244/NFSEWS/Services.svc';
+           end;
   3118601: begin // Contagem/MG
             ConfigURL.HomNomeCidade         := '';
             ConfigURL.HomRecepcaoLoteRPS    := 'http://teste.contagem.mg.gov.br/NFSEWSTESTE/Services.svc';
@@ -235,7 +255,7 @@ end;
 
 function TProvedorPronim.GetValidarLote: Boolean;
 begin
- Result := True;
+ Result := False; {Dalvan}
 end;
 
 function TProvedorPronim.Gera_TagI(Acao: TnfseAcao; Prefixo3, Prefixo4,
@@ -289,7 +309,7 @@ function TProvedorPronim.GeraEnvelopeRecepcionarLoteRPS(URLNS: String;
 begin
  DadosMsg :=StringReplace(DadosMsg, '<', '&lt;', [rfReplaceAll]);
  DadosMsg :=StringReplace(DadosMsg, '>', '&gt;', [rfReplaceAll]);
- DadosMsg :=StringReplace(DadosMsg, ' xmlns="http://www.abrasf.org.br/ABRASF/arquivos/nfse.xsd"', '', [rfReplaceAll]);
+ //{Dalvan} - DadosMsg :=StringReplace(DadosMsg, ' xmlns="http://www.abrasf.org.br/ABRASF/arquivos/nfse.xsd"', '', [rfReplaceAll]);
 
  result := '<?xml version="1.0" encoding="UTF-8"?>' +
            '<s:Envelope xmlns:s="http://schemas.xmlsoap.org/soap/envelope/" ' +
