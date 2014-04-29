@@ -386,10 +386,18 @@ begin
 
               '</' + Prefixo3 + 'Prestador>';
 
- if NumeroNFSe <> ''
-  then DadosMsg := DadosMsg + '<' + Prefixo3 + 'NumeroNfse>' +
-                               NumeroNFSe +
-                              '</' + Prefixo3 + 'NumeroNfse>';
+ if NumeroNFSe <> '' then
+ begin
+  if AProvedor in [proPVH] then
+    DadosMsg := DadosMsg + '<Faixa>'+
+                             '<NumeroNfseInicial>'+NumeroNFSe+'</NumeroNfseInicial>'+
+                             '<NumeroNfseFinal>'+NumeroNFSe+'</NumeroNfseFinal>'+
+                           '</Faixa>'
+  else
+    DadosMsg := DadosMsg + '<' + Prefixo3 + 'NumeroNfse>' +
+                             NumeroNFSe +
+                           '</' + Prefixo3 + 'NumeroNfse>';
+ end;
 
  if (DataInicial>0) and (DataFinal>0)
   then DadosMsg := DadosMsg + '<' + Prefixo3 + 'PeriodoEmissao>' +
@@ -401,7 +409,7 @@ begin
                                '</' + Prefixo3 + 'DataFinal>' +
                               '</' + Prefixo3 + 'PeriodoEmissao>';
 
- if AProvedor in [proFiorilli, profintelISS]
+ if AProvedor in [proFiorilli, profintelISS, proPVH]
   then DadosMsg := DadosMsg + '<' + Prefixo3 + 'Pagina>' +
                                 IntToStr(APagina) +
                               '</' + Prefixo3 + 'Pagina>';
@@ -450,7 +458,7 @@ begin
 
                     // alterado por Akai - L. Massao Aihara 12/11/2013
                    DFeUtil.SeSenao(AProvedor in [pro4R, proISSe, profintelISS, proFiorilli,proDigifred, proSystempro,
-                                                 proVirtual, proISSDigital, proSaatri, proCoplan, proVitoria, proTecnos],
+                                                 proVirtual, proISSDigital, proSaatri, proCoplan, proVitoria, proTecnos, proPVH],
 
                     //Adicionei o SeSenao para poder cancelar nota onde o pretador é pessoa física (Cartório em Vitória-ES). - Eduardo Silva dos Santos - 11/01/2014 - DRD SISTEMAS
                     DFeUtil.SeSenao( length(Cnpj)=14,

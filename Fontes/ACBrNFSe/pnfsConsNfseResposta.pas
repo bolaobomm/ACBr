@@ -244,6 +244,7 @@ begin
     // Alterado por Akai - L. Massao Aihara 31/10/2013
     if (leitor.rExtrai(1, 'ConsultarNfseResposta') <> '') or
        (leitor.rExtrai(1, 'Consultarnfseresposta') <> '') or
+       (leitor.rExtrai(1, 'ConsultarNfseFaixaResposta') <> '') or
        (leitor.rExtrai(1, 'ConsultarNfseServicoPrestadoResposta') <> '') or
        (leitor.rExtrai(1, 'ConsultarNfseResult') <> '') then
     begin
