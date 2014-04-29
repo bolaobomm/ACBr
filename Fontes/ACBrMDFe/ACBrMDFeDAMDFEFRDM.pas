@@ -40,7 +40,7 @@ unit ACBrMDFeDAMDFEFRDM;
 interface
 
 uses
-  System.SysUtils, System.Classes, frxBarcode, frxClass, frxExportPDF, frxDBSet, Data.DB, Datasnap.DBClient,
+  SysUtils, Classes, frxBarcode, frxClass, frxExportPDF, frxDBSet, DB, DBClient,
   ACBrMDFeDAMDFeClass, pmdfeMDFe, ACBrMDFe, ACBrMDFeUtil, pcnConversao, pmdfeConversao, Dialogs, pmdfeEnvEventoMDFe;
 
 type
@@ -116,7 +116,7 @@ end;
 procedure TDMACBrMDFeDAMDFEFR.CarregaModal;
 begin
 
-{$REGION 'Modal Rodoviario'}
+//{$REGION 'Modal Rodoviario'}
 
   with cdsModalRodo, FieldDefs do
   begin
@@ -137,7 +137,7 @@ begin
     CreateDataSet;
   end;
 
-{$ENDREGION}
+//{$ENDREGION}
 
   with CDSModalAereo, FieldDefs do
   begin
