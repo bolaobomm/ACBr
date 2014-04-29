@@ -184,7 +184,7 @@ begin
     LoadLayout('<G01>   G02|CNPJ¨'); //ok
     LoadLayout('<G01>  G02a|CPF¨');  //ok
     LoadLayout('<H01>     H|NItem¨|InfAdProd¨'); //ok
-    LoadLayout('<I01>     I|CProd¨|CEAN¨|XProd¨|NCM¨|EXTIPI¨|CFOP¨|UCom¨|QCom¨|VUnCom¨|VProd¨|CEANTrib¨|UTrib¨|QTrib¨|VUnTrib¨|VFrete¨|VSeg¨|VDesc¨|VOutro¨|indTot¨|xPed¨|nItemPed¨'); //ok
+    LoadLayout('<I01>     I|CProd¨|CEAN¨|XProd¨|NCM¨|EXTIPI¨|CFOP¨|UCom¨|QCom¨|VUnCom¨|VProd¨|CEANTrib¨|UTrib¨|QTrib¨|VUnTrib¨|VFrete¨|VSeg¨|VDesc¨|VOutro¨|indTot¨|xPed¨|nItemPed¨|nFCI¨'); //ok
     LoadLayout('<I18>   I18|NDI¨|DDI¨|XLocDesemb¨|UFDesemb¨|DDesemb¨|CExportador¨'); //ok
     LoadLayout('<I25>   I25|NAdicao¨|NSeqAdic¨|CFabricante¨|VDescDI¨'); //ok
     LoadLayout('<J01>     J|tpOp¨|chassi¨|cCor¨|xCor¨|pot¨|Cilin¨|pesoL¨|pesoB¨|NSerie¨|TpComb¨|NMotor¨|CMT¨|Dist¨|AnoMod¨|AnoFab¨|TpPint¨|TpVeic¨|EspVeic¨|VIN¨|CondVeic¨|CMod¨|cCorDENATRAN¨|lota¨|tpRest¨'); //NFe 2.0
