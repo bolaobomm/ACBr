@@ -182,12 +182,12 @@ type
     FPathEvento     : String;
   public
     constructor Create(AOwner: TComponent); override ;
-    function GetPathCan: String;
-    function GetPathCCe: String;
-    function GetPathEPEC: String;
-    function GetPathInu: String;
+    function GetPathCan(Data : TDateTime = 0): String;
+    function GetPathCCe(Data : TDateTime = 0): String;
+    function GetPathEPEC(Data : TDateTime = 0): String;
+    function GetPathInu(Data : TDateTime = 0): String;
     function GetPathCTe(Data : TDateTime = 0): String;
-    function GetPathEvento(tipoEvento : TpcnTpEvento): String;
+    function GetPathEvento(tipoEvento : TpcnTpEvento; Data : TDateTime = 0): String;
   published
     property Salvar     : Boolean read FSalvar  write FSalvar  default False ;
     property PastaMensal: Boolean read FMensal  write FMensal  default False ;
@@ -604,7 +604,7 @@ begin
   inherited;
 end;
 
-function TArquivosConf.GetPathCan: String;
+function TArquivosConf.GetPathCan(Data : TDateTime = 0): String;
 var
   wDia, wMes, wAno : Word;
   Dir : String;
@@ -616,7 +616,9 @@ begin
 
   if FMensal then
    begin
-     DecodeDate(Now, wAno, wMes, wDia);
+     if Data = 0 then
+        Data := Now;
+     DecodeDate(Data, wAno, wMes, wDia);
      if Pos(IntToStr(wAno)+IntToStrZero(wMes,2),Dir) <= 0 then
         Dir := PathWithDelim(Dir)+IntToStr(wAno)+IntToStrZero(wMes,2);
    end;
@@ -633,7 +635,7 @@ begin
   Result  := Dir;
 end;
 
-function TArquivosConf.GetPathCCe: String;
+function TArquivosConf.GetPathCCe(Data : TDateTime = 0): String;
 var
   wDia, wMes, wAno : Word;
   Dir : String;
@@ -645,7 +647,9 @@ begin
 
   if FMensal then
    begin
-     DecodeDate(Now, wAno, wMes, wDia);
+     if Data = 0 then
+        Data := Now;
+     DecodeDate(Data, wAno, wMes, wDia);
      if Pos(IntToStr(wAno)+IntToStrZero(wMes,2),Dir) <= 0 then
         Dir := PathWithDelim(Dir)+IntToStr(wAno)+IntToStrZero(wMes,2);
    end;
@@ -662,7 +666,7 @@ begin
   Result  := Dir;
 end;
 
-function TArquivosConf.GetPathEPEC: String;
+function TArquivosConf.GetPathEPEC(Data : TDateTime = 0): String;
 var
   wDia, wMes, wAno : Word;
   Dir : String;
@@ -674,7 +678,9 @@ begin
 
   if FMensal then
    begin
-     DecodeDate(Now, wAno, wMes, wDia);
+     if Data = 0 then
+        Data := Now;
+     DecodeDate(Data, wAno, wMes, wDia);
      if Pos(IntToStr(wAno)+IntToStrZero(wMes,2),Dir) <= 0 then
         Dir := PathWithDelim(Dir)+IntToStr(wAno)+IntToStrZero(wMes,2);
    end;
@@ -691,7 +697,7 @@ begin
   Result := Dir;
 end;
 
-function TArquivosConf.GetPathInu: String;
+function TArquivosConf.GetPathInu(Data : TDateTime = 0): String;
 var
   wDia, wMes, wAno : Word;
   Dir : String;
@@ -703,7 +709,9 @@ begin
 
   if FMensal then
    begin
-     DecodeDate(Now, wAno, wMes, wDia);
+     if Data = 0 then
+        Data := Now;
+     DecodeDate(Data, wAno, wMes, wDia);
      if Pos(IntToStr(wAno)+IntToStrZero(wMes,2),Dir) <= 0 then
         Dir := PathWithDelim(Dir)+IntToStr(wAno)+IntToStrZero(wMes,2);
    end;
@@ -751,7 +759,7 @@ begin
   Result := Dir;
 end;
 
-function TArquivosConf.GetPathEvento(tipoEvento : TpcnTpEvento): String;
+function TArquivosConf.GetPathEvento(tipoEvento : TpcnTpEvento; Data : TDateTime = 0): String;
 var
   wDia, wMes, wAno : Word;
   Dir : String;
@@ -763,7 +771,9 @@ begin
 
   if FMensal then
    begin
-     DecodeDate(Now, wAno, wMes, wDia);
+     if Data = 0 then
+        Data := Now;
+     DecodeDate(Data, wAno, wMes, wDia);
      if Pos(IntToStr(wAno) + IntToStrZero(wMes, 2), Dir) <= 0 then
         Dir := PathWithDelim(Dir) + IntToStr(wAno) + IntToStrZero(wMes, 2);
    end;

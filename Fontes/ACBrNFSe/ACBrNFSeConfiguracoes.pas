@@ -266,8 +266,8 @@ type
     FTabServicosExt: Boolean;
   public
     constructor Create(AOwner: TComponent); override;
-    function GetPathCan: String;
-    function GetPathGer: String;
+    function GetPathCan(Data: TDateTime = 0): String;
+    function GetPathGer(Data: TDateTime = 0): String;
     function GetPathRPS(Data: TDateTime = 0): String;
     function GetPathNFSe(Data : TDateTime = 0): String;
   published
@@ -822,7 +822,7 @@ begin
 
 end;
 
-function TArquivosConf.GetPathCan: String;
+function TArquivosConf.GetPathCan(Data: TDateTime = 0): String;
 var
  wDia, wMes, wAno : Word;
  Dir : String;
@@ -833,7 +833,9 @@ begin
 
  if FMensal
   then begin
-   DecodeDate(Now, wAno, wMes, wDia);
+   if Data = 0
+    then Data := Now;
+   DecodeDate(Data, wAno, wMes, wDia);
    if Pos(IntToStr(wAno)+IntToStrZero(wMes,2),Dir) <= 0
     then Dir := PathWithDelim(Dir)+IntToStr(wAno)+IntToStrZero(wMes,2);
   end;
@@ -910,7 +912,7 @@ begin
  Result := Dir;
 end;
 
-function TArquivosConf.GetPathGer: String;
+function TArquivosConf.GetPathGer(Data: TDateTime = 0): String;
 var
  wDia, wMes, wAno : Word;
  Dir : String;
@@ -921,7 +923,9 @@ begin
 
  if FMensal
   then begin
-   DecodeDate(Now, wAno, wMes, wDia);
+   if Data = 0
+    then Data := Now;
+   DecodeDate(Data, wAno, wMes, wDia);
    if Pos(IntToStr(wAno)+IntToStrZero(wMes,2),Dir) <= 0
     then Dir := PathWithDelim(Dir)+IntToStr(wAno)+IntToStrZero(wMes,2);
   end;

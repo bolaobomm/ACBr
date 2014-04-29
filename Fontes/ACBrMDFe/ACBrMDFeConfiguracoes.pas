@@ -175,7 +175,7 @@ type
   public
     constructor Create(AOwner: TComponent); override;
     function GetPathMDFe(Data : TDateTime = 0): String;
-    function GetPathEvento(tipoEvento : TpcnTpEvento): String;
+    function GetPathEvento(tipoEvento : TpcnTpEvento; Data : TDateTime = 0): String;
   published
     property Salvar     : Boolean read FSalvar  write FSalvar  default False;
     property PastaMensal: Boolean read FMensal  write FMensal  default False;
@@ -621,7 +621,7 @@ begin
   Result := Dir;
 end;
 
-function TArquivosConf.GetPathEvento(tipoEvento: TpcnTpEvento): String;
+function TArquivosConf.GetPathEvento(tipoEvento: TpcnTpEvento; Data : TDateTime = 0): String;
 var
   wDia, wMes, wAno : Word;
   Dir : String;
@@ -633,7 +633,9 @@ begin
 
   if FMensal then
    begin
-     DecodeDate(Now, wAno, wMes, wDia);
+     if Data = 0 then
+        Data := Now;
+     DecodeDate(Data, wAno, wMes, wDia);
      if Pos(IntToStr(wAno)+IntToStrZero(wMes,2),Dir) <= 0 then
         Dir := PathWithDelim(Dir)+IntToStr(wAno)+IntToStrZero(wMes,2);
    end;
