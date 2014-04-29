@@ -260,6 +260,10 @@ begin
     Result := '\Pacotes\Delphi\ACBrSerial\'
   else if frameDpk.IsPacoteTEFD(NomePacote) then
     Result := '\Pacotes\Delphi\ACBrTEFD\'
+  else if frameDpk.IsPacoteSAT(NomePacote) then
+    Result := '\Pacotes\Delphi\ACBrSAT\'
+  else if frameDpk.IsPacoteGNRE(NomePacote) then
+    Result := '\Pacotes\Delphi\ACBrGNRE\'
   else
     Result := '\Pacotes\Delphi\';
 end;
@@ -740,6 +744,7 @@ begin
 
      if MatchText(VersionNumberStr, ['d17','d18','d19','d20']) then
         Sender.Options.Add('-NSWinapi;System.Win;Data.Win;Datasnap.Win;Web.Win;Soap.Win;Xml.Win;Bde;System;Xml;Data;Datasnap;Web;Soap;Vcl;Vcl.Imaging;Vcl.Touch;Vcl.Samples;Vcl.Shell');
+
   end;
 end;
 

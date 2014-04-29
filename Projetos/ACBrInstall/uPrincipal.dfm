@@ -1203,7 +1203,7 @@ object frmPrincipal: TfrmPrincipal
         Width = 97
         Height = 17
         Caption = 'Instalar Capicom'
-        TabOrder = 4
+        TabOrder = 5
       end
       object ckbInstalarOpenSSL: TCheckBox
         Left = 17
@@ -1211,7 +1211,7 @@ object frmPrincipal: TfrmPrincipal
         Width = 97
         Height = 17
         Caption = 'Instalar OpenSSL'
-        TabOrder = 5
+        TabOrder = 6
       end
       object ckbUtilizarOpenSSL: TCheckBox
         Left = 17
@@ -1219,7 +1219,7 @@ object frmPrincipal: TfrmPrincipal
         Width = 304
         Height = 17
         Caption = 'Utilizar o OpenSSL ao inv'#233's da Capicom na NF-e e similares'
-        TabOrder = 3
+        TabOrder = 4
         OnClick = ckbUtilizarOpenSSLClick
       end
       object rdgDLL: TRadioGroup
@@ -1233,7 +1233,7 @@ object frmPrincipal: TfrmPrincipal
           'Diret'#243'rio system do Windows (Recomendado)'
           'Diret'#243'rio bin'#225'rio do Delphi'
           'N'#227'o copiar (N'#227'o recomendado)')
-        TabOrder = 7
+        TabOrder = 8
         OnClick = rdgDLLClick
       end
       object ckbCopiarTodasDll: TCheckBox
@@ -1243,7 +1243,7 @@ object frmPrincipal: TfrmPrincipal
         Height = 17
         Hint = 'Copia todas as DLL'#180's "Extras" para o destino selecionado'
         Caption = 'Copiar Todas as DLL'#39's (CLX, Diversos, MSVCR, XMLSec)'
-        TabOrder = 6
+        TabOrder = 7
       end
       object ckbBCB: TCheckBox
         Left = 17
@@ -1251,7 +1251,7 @@ object frmPrincipal: TfrmPrincipal
         Width = 278
         Height = 17
         Caption = 'Generate all C++Builder files (including package libs) '
-        TabOrder = 8
+        TabOrder = 3
       end
     end
     object wizPgPacotes: TJvWizardInteriorPage
@@ -1274,10 +1274,6 @@ object frmPrincipal: TfrmPrincipal
       Header.Subtitle.Font.Name = 'Tahoma'
       Header.Subtitle.Font.Style = []
       Caption = 'Pacotes'
-      ExplicitLeft = 0
-      ExplicitTop = 0
-      ExplicitWidth = 0
-      ExplicitHeight = 0
       inline frameDpk: TframePacotes
         Left = 0
         Top = 0
@@ -1639,7 +1635,7 @@ object frmPrincipal: TfrmPrincipal
       BevelOuter = bvNone
       Color = 8404992
       ParentBackground = False
-      TabOrder = 13
+      TabOrder = 0
       object Label9: TLabel
         Left = 14
         Top = 19
@@ -1664,7 +1660,7 @@ object frmPrincipal: TfrmPrincipal
         Cursor = crHandPoint
         Animate = True
         Center = True
-        FrameIndex = 4
+        FrameIndex = 2
         Image.Data = {
           688B00004749463839613F012800F70000FFFFFFFFFFE5FFFFCCF7FAFDFFFF99
           FFF7B9FFF9A9FFFA84EAFA9EFFF573FFF74AFFFF00FFF268F2F478FFF456E9F5

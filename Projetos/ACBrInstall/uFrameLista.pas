@@ -45,7 +45,7 @@ uses
   Generics.Collections,
   
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms, 
-  Dialogs, Buttons, ExtCtrls, StdCtrls;
+  Dialogs, Buttons, ExtCtrls, StdCtrls, Vcl.ComCtrls;
 
 type
   TPacotes = TList<TCheckBox>;
@@ -73,40 +73,47 @@ type
     PCN2_dpk: TCheckBox;
     ACBr_NFe2_dpk: TCheckBox;
     ACBr_CTe_dpk: TCheckBox;
-    Label5: TLabel;
-    ACBrNFeDanfeFR_dpk: TCheckBox;
-    ACBr_BoletoFC_FR_dpk: TCheckBox;
-    Label6: TLabel;
-    ACBrCTeDacteFR_dpk: TCheckBox;
-    Label7: TLabel;
-    ACBrNFeDanfeQR_dpk: TCheckBox;
-    ACBrNFeDanfeRV_dpk: TCheckBox;
-    ACBrCTeDacteQR_dpk: TCheckBox;
-    ACBr_BoletoFC_Quick_dpk: TCheckBox;
     ACBrNFeDanfeRVCodeBase_dpk: TCheckBox;
     Label8: TLabel;
     ACBr_NFSe_dpk: TCheckBox;
-    Label9: TLabel;
-    Label10: TLabel;
-    Label12: TLabel;
-    Label13: TLabel;
-    Label14: TLabel;
-    Label15: TLabel;
-    Label16: TLabel;
     Label18: TLabel;
     ACBr_MDFe_dpk: TCheckBox;
     ACBr_LFD_dpk: TCheckBox;
-    Label11: TLabel;
-    Label17: TLabel;
+    PageControl1: TPageControl;
+    tsNFe: TTabSheet;
+    tsCTe: TTabSheet;
+    tsNFSe: TTabSheet;
+    tsBoletos: TTabSheet;
+    tsMDFe: TTabSheet;
+    tsSAT: TTabSheet;
+    tsGNRE: TTabSheet;
+    ACBrNFeDanfeFR_dpk: TCheckBox;
+    ACBrNFeDanfeQR_dpk: TCheckBox;
+    ACBrNFeDanfeRV_dpk: TCheckBox;
     ACBrNFeDanfeRL_dpk: TCheckBox;
-    ACBr_BoletoFC_Fortes_dpk: TCheckBox;
-    Label19: TLabel;
-    Label21: TLabel;
+    ACBrCTeDacteFR_dpk: TCheckBox;
+    ACBrCTeDacteQR_dpk: TCheckBox;
+    ACBrCTeDacteRLpkg: TCheckBox;
     CheckBox2: TCheckBox;
-    Label23: TLabel;
     CheckBox4: TCheckBox;
-    Label24: TLabel;
     CheckBox5: TCheckBox;
+    ACBr_BoletoFC_FR_dpk: TCheckBox;
+    ACBr_BoletoFC_Quick_dpk: TCheckBox;
+    ACBr_BoletoFC_Fortes_dpk: TCheckBox;
+    Label9: TLabel;
+    Label11: TLabel;
+    Label10: TLabel;
+    Label12: TLabel;
+    ACBr_GNRE_dpk: TCheckBox;
+    ACBr_Convenio115_dpk: TCheckBox;
+    ACBr_SEF2_dpk: TCheckBox;
+    ACBr_SAT_dpk: TCheckBox;
+    ACBrMDFeDAMDFEFRpkg_dpk: TCheckBox;
+    ACBrMDFeDAMDFeRLpkg_dpk: TCheckBox;
+    ACBrMDFeDAMDFEQRpkg_dpk: TCheckBox;
+    ACBr_SAT_Extrato_Fortes_dpk: TCheckBox;
+    ACBrGNREGuiaFRpkg_dpk: TCheckBox;
+    ACBrNFeDanfeESCPOS_dpk: TCheckBox;
     procedure btnPacotesMarcarTodosClick(Sender: TObject);
     procedure btnPacotesDesmarcarTodosClick(Sender: TObject);
     procedure VerificarCheckboxes(Sender: TObject);
@@ -127,6 +134,8 @@ type
     function IsPacotePaf(const ANomePacote: String): Boolean;
     function IsPacoteSerial(const ANomePacote: String): Boolean;
     function IsPacoteTEFD(const ANomePacote: String): Boolean;
+    function IsPacoteSAT(const ANomePacote: String): Boolean;
+    function IsPacoteGNRE(const ANomePacote: String): Boolean;
 
     property Pacotes: TPacotes read FPacotes write FPacotes;
   end;
@@ -185,12 +194,22 @@ end;
 
 function TframePacotes.IsPacoteCTe(const ANomePacote: String): Boolean;
 const
-  PACOTES_CTe: array [0..2] of String =
+  PACOTES_CTe: array [0..3] of String =
     ('ACBr_CTe.dpk',
      'ACBrCTeDacteFRpkg.dpk',
-     'ACBrCTeDacteQRpkg.dpk');
+     'ACBrCTeDacteQRpkg.dpk',
+     'ACBrCTeDacteRLpkg.dpk');
 begin
   Result := MatchText(ANomePacote, PACOTES_CTe);
+end;
+
+function TframePacotes.IsPacoteGNRE(const ANomePacote: String): Boolean;
+const
+  PACOTES_GNRE: array [0..1] of String =
+    ('ACBr_GNRE.dpk',
+    'ACBrGNREGuiaFRpkg.dpk');
+begin
+  Result := MatchText(ANomePacote, PACOTES_GNRE);
 end;
 
 function TframePacotes.IsPacoteNFSe(const ANomePacote: String): Boolean;
@@ -202,6 +221,15 @@ const
      'ACBrNFSeDanfseQRpkg.dpk');
 begin
   Result := MatchText(ANomePacote, PACOTES_NFSe);
+end;
+
+function TframePacotes.IsPacoteSAT(const ANomePacote: String): Boolean;
+const
+  PACOTES_SAT: array [0..1] of String =
+    ('ACBr_SAT.dpk',
+    'ACBr_SAT_Extrato_Fortes.dpk');
+begin
+  Result := MatchText(ANomePacote, PACOTES_SAT);
 end;
 
 function TframePacotes.IsPacoteSerial(const ANomePacote: String): Boolean;
@@ -250,21 +278,25 @@ end;
 
 function TframePacotes.IsPacoteMDFe(const ANomePacote: String): Boolean;
 const
-  PACOTES_MDFe: array [0..0] of String =
-    ('ACBr_MDFe.dpk');
+  PACOTES_MDFe: array [0..3] of String =
+    ('ACBr_MDFe.dpk',
+     'ACBrMDFeDAMDFEFRpkg.dpk',
+     'ACBrMDFeDAMDFEQRpkg.dpk',
+     'ACBrMDFeDAMDFeRLpkg.dpk');
 begin
   Result := MatchText(ANomePacote, PACOTES_MDFe);
 end;
 
 function TframePacotes.IsPacoteNF2(const ANomePacote: String): Boolean;
 const
-  PACOTES_NF2: array [0..5] of String =
+  PACOTES_NF2: array [0..6] of String =
     ('ACBr_NFe2.dpk',
      'ACBrNFeDanfeFRpkg.dpk',
      'ACBrNFeDanfeRV.dpk',
      'ACBrNFeDanfeRVCodeBase.dpk',
      'ACBrNFeDanfeRLpkg.dpk',
-     'ACBrNFeDanfeQRpkg.dpk');
+     'ACBrNFeDanfeQRpkg.dpk',
+     'ACBrNFeDanfeESCPOS.dpk');
 begin
   Result := MatchText(ANomePacote, PACOTES_NF2);
 end;
@@ -322,6 +354,10 @@ begin
 
   if not FUtilizarBotoesMarcar then
   begin
+      // dependencia do NFe
+    if ACBrNFeDanfeESCPOS_dpk.Checked and not (ACBr_NFe2_dpk.Checked) then
+    ACBr_NFe2_dpk.Checked := true;
+
     // dependencias da NFe e CTe
     if (ACBr_NFe2_dpk.Checked) or (ACBr_CTe_dpk.Checked) or (ACBr_NFSe_dpk.Checked) or (ACBr_MDFe_dpk.Checked) then
     begin
