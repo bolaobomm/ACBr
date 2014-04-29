@@ -2276,6 +2276,10 @@ object Form1: TForm1
         Caption = 'Programa Unidade Medida'
         OnClick = ProgramaUnidadeMedida1Click
       end
+      object ProgramaIdentificaoPafECF1: TMenuItem
+        Caption = 'Programa Identifica'#231#227'o Paf-ECF'
+        OnClick = ProgramaIdentificaoPafECF1Click
+      end
       object N32: TMenuItem
         Caption = '-'
       end

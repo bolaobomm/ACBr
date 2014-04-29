@@ -346,6 +346,7 @@ type
     btnArqMFNovo: TButton;
     btnArqMFDNovo: TButton;
     btnDadosUltimaRZ: TButton;
+    ProgramaIdentificaoPafECF1: TMenuItem;
     procedure cbxModeloChange(Sender: TObject);
     procedure Sair1Click(Sender: TObject);
     procedure bAtivarClick(Sender: TObject);
@@ -553,6 +554,7 @@ type
     procedure btnArqMFNovoClick(Sender: TObject);
     procedure btnArqMFDNovoClick(Sender: TObject);
     procedure btnDadosUltimaRZClick(Sender: TObject);
+    procedure ProgramaIdentificaoPafECF1Click(Sender: TObject);
   private
     { Private declarations }
     Function Converte( cmd : String) : String;
@@ -1659,6 +1661,19 @@ begin
 
   ACBrECF1.ProgramaFormaPagamento(cDescricao,Vinculado);
   FormasdePagamento1Click(Sender);
+end;
+
+procedure TForm1.ProgramaIdentificaoPafECF1Click(Sender: TObject);
+var
+  Nome, MD5: String;
+begin
+  if not InputQuery('Nome', 'Informe o nome e versão do aplicativo:', Nome) then
+    Exit;
+
+  if not InputQuery('MD5', 'Informe o MD5 do aplicativo:', Nome) then
+    Exit;
+
+  ACBrECF1.IdentificaPAF(Nome, MD5);
 end;
 
 procedure TForm1.ProgramaComprovanteNAOFiscal1Click(Sender: TObject);
