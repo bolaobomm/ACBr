@@ -743,6 +743,7 @@ begin
          : Provedor := 'fintelISS';
 
   1100122, // Ji-Parana/RO
+  1508407, // Xinguara/PA
   2103000, // Caxias/MA
   3504800, // Balsamo/SP
   3505203, // Bariri/SP

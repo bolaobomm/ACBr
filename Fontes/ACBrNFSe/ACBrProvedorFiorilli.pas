@@ -113,6 +113,8 @@ begin
  case ACodCidade of
   1100122 : // Ji-Parana/RO
     cURL_Producao := 'http://177.124.184.59:5660/IssWeb-ejb/IssWebWS/IssWebWS';
+  1508407 : // Xinguara/PA
+    cURL_Producao := 'http://177.23.231.79:5661/IssWeb-ejb/IssWebWS/IssWebWS?wsdl';
   2103000 : // Caxias/MA
     cURL_Producao := 'http://177.105.209.118:8080/IssWeb-ejb/IssWebWS/IssWebWS';
   3504800 : // Balsamo/SP
@@ -129,7 +131,6 @@ begin
     cURL_Producao := 'http://187.72.128.133:5661/IssWeb-ejb/IssWebWS/IssWebWS';
   5003207 : // Corumba/MS
     cURL_Producao := 'http://nfse.corumba.ms.gov.br:8080/IssWeb-ejb/IssWebWS/IssWebWS';
-
  end;
 
  ConfigURL.HomNomeCidade         := '';
