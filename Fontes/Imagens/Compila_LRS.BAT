@@ -192,7 +192,7 @@ echo.
 
 
 :SEF2
-%1\tools\lazres.exe ACBrSEF2.lrs TACBrSEF2.png
+%1\tools\lazres.exe ACBrSEF2.lrs TACBrSEF2.bmp
 move ACBrSEF2.lrs ..\ACBrSEF2
 echo.
 echo "****************************************"
