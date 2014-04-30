@@ -2704,6 +2704,10 @@ Var
   CNFZ  : TACBrECFComprovanteNaoFiscal ;
   RGZ   : TACBrECFRelatorioGerencial ;
 begin
+
+  if (not fpDevice.Ativo) then
+    raise EACBrECFNaoInicializado.create( ACBrStr(cACBrECFNaoInicializadoException) );
+
   { Alimenta a class com os dados atuais do ECF }
   with fpDadosReducaoZClass do
   begin
