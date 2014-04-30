@@ -125,7 +125,16 @@ const
   cACBrDeviceSetPortaException       = 'Não é possível mudar a Porta com o Dispositivo Ativo' ;
   cACBrDeviceEnviaStrThreadException = 'Erro gravando em: %s ' ;
 
-
+  { constantes para exibição na inicialização e no sobre do delphi a partir da versão 2009 }
+  cACBrSobreDialogoTitulo = 'Projeto ACBr';
+  cACBrSobreTitulo = 'Projeto ACBr VCL';
+  cACBrSobreDescricao = 'ACBr VCL http://www.projetoacbr.com.br/' + #13#10 +
+                        'Componentes para Automação Comercial' + #13#10 +                        
+                        'Lesser General Public License version 2.0';					
+  cACBrSobreLicencaStatus = 'LGPLv2';
+  
+  {****                                  *}
+  
   {* Unit ACBrECFClass *}
   cACBrTempoInicioMsg                  = 3 ;  { Tempo para iniciar a exibiçao da mensagem Aguardando a Resposta da Impressora' }
   cACBrMsgAguardando                   = 'Aguardando a resposta da Impressora: %d segundos' ;

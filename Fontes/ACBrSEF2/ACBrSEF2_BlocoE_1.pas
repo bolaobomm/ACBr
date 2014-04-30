@@ -933,7 +933,7 @@ begin
                  LFill(VL_ISNT_IPI_P, 2)         +
                  LFill(VL_OUT_IPI_P, 2, 2, True) +
                  LFill(IND_PETR, 1)                 +
-                 LFill(IND_IMUN, 1));
+                 LFill(IND_IMUN, 1, True));
          end;
          RegistroE990.QTD_LIN_E := RegistroE990.QTD_LIN_E + 1;
       end;

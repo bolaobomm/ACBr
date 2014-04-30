@@ -74,14 +74,39 @@ Uses ACBrUtil, ACBrEAD, ACBrAAC ;
    {$R ACBrComum.dcr}
 {$ENDIF}
 
-{$IFDEF  DELPHI9_UP}
+{$IFDEF  RTL170_UP}
+var
+  AboutBoxServices: IOTAAboutBoxServices = nil;
+  AboutBoxIndex: Integer = 0;
+
+procedure RegisterAboutBox;
+var
+  ProductImage: HBITMAP;
+begin
+  Supports(BorlandIDEServices,IOTAAboutBoxServices, AboutBoxServices);
+  Assert(Assigned(AboutBoxServices), '');
+  ProductImage := LoadBitmap(FindResourceHInstance(HInstance), 'ACBR');
+  AboutBoxIndex := AboutBoxServices.AddPluginInfo(cACBrSobreTitulo , cACBrSobreDescricao,
+    ProductImage, False, cACBrSobreLicencaStatus);
+end;
+
+procedure UnregisterAboutBox;
+begin
+  if (AboutBoxIndex <> 0) and Assigned(AboutBoxServices) then
+  begin
+    AboutBoxServices.RemovePluginInfo(AboutBoxIndex);
+    AboutBoxIndex := 0;
+    AboutBoxServices := nil;
+  end;
+end;
+
 procedure AddSplash;
 var
   bmp: TBitmap;
 begin
   bmp := TBitmap.Create;
   bmp.LoadFromResourceName(HInstance, 'ACBR');
-  SplashScreenServices.AddPluginBitmap('Projeto ACBr - Automação Comercial Brasil',bmp.Handle,false,'GNU Library or Lesser General Public License version 2.0 (LGPLv2)','');
+  SplashScreenServices.AddPluginBitmap(cACBrSobreDialogoTitulo,bmp.Handle,false,cACBrSobreLicencaStatus,'');
   bmp.Free;
 end;
 {$ENDIF}
@@ -107,12 +132,16 @@ end;
 
 function TACBrAboutDialogProperty.GetValue: string;
 begin
-  Result := 'http://acbr.sf.net' ;  //ACBrStr( 'Versão: ' + ACBR_VERSAO ) ;
+  Result := 'http://acbr.sf.net' ;  
 end;
 
-{$IFDEF DELPHI9_UP}
+{$IFDEF RTL170_UP}
 initialization
 	AddSplash;
+	RegisterAboutBox;
+	
+finalization
+	UnregisterAboutBox;
 {$ENDIF}
 
 {$IFDEF FPC}

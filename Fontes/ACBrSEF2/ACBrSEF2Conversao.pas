@@ -56,7 +56,8 @@ Uses SysUtils, Classes, ACBrTXTClass, contnrs;
   /// Tabela Conteúdo do Arquivo-texto - TRegistro0000
   TSEFIIConteudArquivo = (
                          caLancOpResultFiscal,  // Código 20 - Lançamentos de operações e resultados fiscais
-                         caExtratodocfiscais
+                         caLancControlesFiscais, // Código 21 - Lançamentos de controles fiscais
+                         caExtratodocfiscais  // Código 91 - Lançamentos de controles fiscais 
                          );
 
   ///Indicador de Conteudo TRegistro001

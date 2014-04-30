@@ -47,6 +47,7 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
-Data: 03/09/2013
--- ACBrBoleto ver. 0.0.20 --
-[-] Aplicadas diversas correções e melhorias. (Juliana Tamizou)
+Data: 30/04/2014
+-- ACBrSEF2
+[+] Adicionado o Bloco H para o SEF2 (Marcelo Santos)
+[*] Correções em outros blocos (Marcelo Santos)

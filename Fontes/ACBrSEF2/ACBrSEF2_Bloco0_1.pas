@@ -182,6 +182,18 @@ begin
   end;
 end;
 
+function ConvertSEFIIConteudoArquivo(SEFIIConteudoArquivo : TSEFIIConteudArquivo) : string;
+begin
+  case SEFIIConteudoArquivo of
+     caLancOpResultFiscal     : Result := '20';
+     caLancControlesFiscais   : Result := '21';
+     caExtratodocfiscais      : Result := '91';
+
+  end;
+end;
+
+
+
 function ConvertSEFIIIndicadorDocArregadacao(SEFIIIndicadorDocArregadacao :  TSEFIIIndicadorDocArregadacao) : string;
 begin
   case SEFIIIndicadorDocArregadacao of
@@ -269,16 +281,12 @@ end;
 procedure TBloco_0.WriteRegistro0000;
 var cCOD_CTD : string;
 begin
-   if FRegistro0000.COD_CTD = caLancOpResultFiscal then
-      cCOD_CTD := '20'
-   else if FRegistro0000.COD_CTD = caExtratodocfiscais then
-      cCOD_CTD := '91';
-
 
   if Assigned(Registro0000) then
   begin
      with Registro0000 do
      begin
+       cCOD_CTD :=  ConvertSEFIIConteudoArquivo(COD_CTD);
         Add( LFill( '0000' )     +
              LFill( 'LFPD' )     +
              LFill( DT_INI )     +
@@ -791,7 +799,7 @@ end;
 procedure TBloco_0.WriteRegistro0030(Reg0001: TRegistroSEF0001);
 var
   wPRF_ISS, wPRF_ICMS:Integer;
-  wIND_EC,wIND_RI,wPRF_RIDF,wPRF_RUDF,wPRF_LMC,wPRF_RV,wPRF_RI: String;
+  wIND_RT, wIND_EC,wIND_RI,wPRF_RIDF,wPRF_RUDF,wPRF_LMC,wPRF_RV,wPRF_RI: String;
 begin
    if Assigned(Reg0001.Registro030) then
    begin
@@ -850,6 +858,12 @@ begin
          else
             wPRF_RI := IntToStr(Integer(PRF_RI));
 
+         if (Integer(IND_RT) > 1) then
+            wIND_RT := ''
+         else
+            wIND_RT := IntToStr(Integer(IND_RT));
+
+
          Add( LFill('0030')              +
               LFill(Integer(IND_ED),0)   +
               LFill(Integer(IND_ARQ),0)  +
@@ -862,7 +876,7 @@ begin
               LFill(wPRF_RI, 0)  +
               LFill(wIND_EC,0)           +
               LFill(Integer(IND_ISS), 0) +
-              LFill(Integer(IND_RT), 1)  +
+              LFill(Integer(wIND_RT), 0, true)  +
               LFill(Integer(IND_ICMS),0) +
               LFill(Integer(IND_ST),0)   +
               LFill(Integer(IND_AT),0)   +
