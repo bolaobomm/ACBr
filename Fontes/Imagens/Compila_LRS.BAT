@@ -17,7 +17,7 @@ echo "****************************************"
 echo.
 
 :Diversos
-%1\tools\lazres.exe ACBrDiversos.lrs TACBrCalculadora.bmp TACBrExtenso.bmp TACBrValidador.bmp TACBrTroco.bmp TACBrCMC7.bmp TACBrFala.bmp TACBrGIF.bmp TACBrBarCode.bmp TACBrEnterTab.bmp TACBrCargaBal.png TACBrCotacao.png TACBrInStore.png
+%1\tools\lazres.exe ACBrDiversos.lrs TACBrCalculadora.bmp TACBrExtenso.bmp TACBrValidador.bmp TACBrTroco.bmp TACBrCMC7.bmp TACBrFala.bmp TACBrGIF.bmp TACBrBarCode.bmp TACBrEnterTab.bmp TACBrCargaBal.png TACBrCotacao.bmp TACBrInStore.png
 move ACBrDiversos.lrs ..\ACBrDiversos
 echo.
 echo "****************************************"
