@@ -106,6 +106,8 @@ type
     ckMinasLegal: TCheckBox;
     edCNIEE: TEdit;
     Label21: TLabel;
+    edtPerfilRequisitos: TEdit;
+    lblPerfilRequisitos: TLabel;
     procedure btnSairAplicativoClick(Sender: TObject);
     procedure btnECFCapturarDadosClick(Sender: TObject);
     procedure btnAdicionarECFClick(Sender: TObject);
@@ -245,6 +247,7 @@ begin
     ACBrAAC1.IdentPAF.Paf.Versao             := edVersaoPAF.Text;
     ACBrAAC1.IdentPAF.Paf.PrincipalExe.Nome  := edExecutavel.Text;
     ACBrAAC1.IdentPAF.Paf.PrincipalExe.MD5   := edMD5Paf.Text;
+    ACBrAAC1.IdentPAF.Paf.PerfilRequisitos   := edtPerfilRequisitos.Text;
 
     //funcionalidades
     ACBrAAC1.IdentPAF.Paf.TipoFuncionamento   := TACBrPAFTipoFuncionamento(cbxTipoFuncionamento.ItemIndex);
@@ -330,6 +333,7 @@ begin
   edSistemaOperacional.Text := ACBrAAC1.IdentPAF.Paf.SistemaOperacional;
   edExecutavel.Text         := ACBrAAC1.IdentPAF.Paf.PrincipalExe.Nome;
   edMD5Paf.Text             := ACBrAAC1.IdentPAF.Paf.PrincipalExe.MD5;
+  edtPerfilRequisitos.Text  := ACBrAAC1.IdentPAF.Paf.PerfilRequisitos;
 
   cbxTipoFuncionamento.ItemIndex   := Integer(ACBrAAC1.IdentPAF.Paf.TipoFuncionamento);
   cbxTipoDesenvolvimento.ItemIndex := Integer(ACBrAAC1.IdentPAF.Paf.TipoDesenvolvimento);

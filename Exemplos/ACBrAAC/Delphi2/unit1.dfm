@@ -621,6 +621,14 @@ object Form1: TForm1
           Height = 13
           Caption = 'Tipo de funcionamento'
         end
+        object lblPerfilRequisitos: TLabel
+          Left = 12
+          Top = 72
+          Width = 133
+          Height = 13
+          Caption = 'Perfil de Requisitos Utilizado'
+          FocusControl = edtPerfilRequisitos
+        end
         object cbxTipoFuncionamento: TComboBox
           Left = 12
           Top = 38
@@ -644,6 +652,15 @@ object Form1: TForm1
           Height = 21
           Style = csDropDownList
           TabOrder = 1
+        end
+        object edtPerfilRequisitos: TEdit
+          Left = 12
+          Top = 89
+          Width = 121
+          Height = 21
+          MaxLength = 1
+          TabOrder = 3
+          Text = 'W'
         end
       end
     end
@@ -1283,9 +1300,13 @@ object Form1: TForm1
     IdentPAF.Paf.TransfPreVenda = False
     IdentPAF.Paf.TransfDAV = False
     IdentPAF.Paf.RecompoeGT = False
+    IdentPAF.Paf.RecompoeNumSerie = False
     IdentPAF.Paf.EmitePED = False
     IdentPAF.Paf.CupomMania = False
     IdentPAF.Paf.MinasLegal = False
+    IdentPAF.Paf.NotaLegalDF = False
+    IdentPAF.Paf.ParaibaLegal = False
+    IdentPAF.Paf.TrocoEmCartao = False
     OnGetChave = ACBrAAC1GetChave
     Left = 474
     Top = 3
