@@ -624,9 +624,6 @@ begin
     end;
   end;
 
-
-
-
   ACBrPAF.SaveFileTXT_H('PAF_H.txt');
 end;
 
