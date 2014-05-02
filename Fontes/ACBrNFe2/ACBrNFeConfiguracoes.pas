@@ -534,16 +534,20 @@ begin
          if (Pos('2.16.76.1.3.3',Propriedades) > 0) then
           begin
             Lista := TStringList.Create;
+			try
             Lista.Text := Propriedades;
-            for K:=0 to Lista.Count-1 do
-             begin
+             for K:=0 to Lista.Count-1 do
+              begin
                if (Pos('2.16.76.1.3.3',Lista.Strings[K]) > 0) then
                 begin
                   FCNPJ := StringReplace(Lista.Strings[K],'2.16.76.1.3.3=','',[rfIgnoreCase]);
                   FCNPJ := OnlyNumber(HexToAscii(RemoveString(' ',FCNPJ)));
                   break;
                 end;
-             end;
+              end;
+			finally
+			  Lista.free;
+			end;
             break;
           end;
          Extension := nil;
