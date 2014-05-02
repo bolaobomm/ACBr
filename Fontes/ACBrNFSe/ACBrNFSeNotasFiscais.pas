@@ -173,12 +173,81 @@ procedure NotaFiscal.EnviarEmail(const sSmtpHost,
                                        FormatoEmHTML: Boolean = False);
 
 var
-// NomeArq    : String;
+ NomeArq    : String;
  NomeArqPDF : String;
  NomeArqXML : String;
  AnexosEmail: TStrings;
  StreamNFSe : TStringStream;
 begin
+  AnexosEmail := TStringList.Create;
+  StreamNFSe  := TStringStream.Create('');
+
+  if TACBrNFSe( TNotasFiscais( Collection ).ACBrNFSe ).Configuracoes.Arquivos.NomeLongoNFSe
+  then NomeArqXML := NotaUtil.GerarNomeNFSe(UFparaCodigo(Nfse.PrestadorServico.Endereco.UF),
+                                            Nfse.DataEmissao,
+                                            Nfse.PrestadorServico.IdentificacaoPrestador.Cnpj,
+                                            StrToIntDef(Nfse.Numero, 0))
+  else NomeArqXML := NFSe.Numero;
+
+  try
+    AnexosEmail.Clear;
+    if Anexos <> nil then
+      AnexosEmail.Text := Anexos.Text;
+    if NomeArq <> '' then
+     begin
+       SaveToFile(NomeArq); // removido o comentario por ala em 02/04/2014,
+       AnexosEmail.Add(NomeArq);
+     end
+    else
+     begin
+       SaveToStream(StreamNFSe);
+     end;
+    if (EnviaPDF) then
+    begin
+       if TACBrNFSe( TNotasFiscais( Collection ).ACBrNFSe ).DANFSE <> nil then
+       begin
+          TACBrNFSe( TNotasFiscais( Collection ).ACBrNFSe ).DANFSE.ImprimirDANFSEPDF(NFSe);
+
+          // removido por ala NomeArqPDF := Trim(NomeArq);
+          // removido por ala if NomeArqPDF <> ''
+           // removido por ala then begin
+             NomeArqPDF := StringReplace(NFSe.Numero, 'NFSe', '', [rfIgnoreCase]); // // removido o comentario por ala em 02/04/2014,
+             NomeArqPDF := NomeArqXML;
+             NomeArqPDF := PathWithDelim(TACBrNFSe( TNotasFiscais( Collection ).ACBrNFSe ).DANFSE.PathPDF) + NomeArqPDF + '.pdf';
+           // removido o comentario por ala em 02/04/2014,  end
+           // removido o comentario por ala em 02/04/2014,   else NomeArqPDF := StringReplace(NomeArqPDF, '-nfse.xml', '.pdf', [rfIgnoreCase]);
+
+          AnexosEmail.Add(NomeArqPDF);
+       end;
+    end;
+    TACBrNFSe( TNotasFiscais( Collection ).ACBrNFSe ).EnviaEmail(sSmtpHost,
+                sSmtpPort,
+                sSmtpUser,
+                sSmtpPasswd,
+                sFrom,
+                sTo,
+                sAssunto,
+                sMensagem,
+                SSL,
+                sCC,
+                AnexosEmail,
+                PedeConfirma,
+                AguardarEnvio,
+                NomeRemetente,
+                TLS,
+                StreamNFSe,
+//                copy(NFSe.Numero, (length(NFSe.Numero) - 44) + 1, 44) + '-NFSe.xml',
+                NomeArqXML + '-nfse.xml',
+                UsarThread);
+
+// Mantive a linha NomeArqXML + '-nfse.xml', para que o desenvolvedor escolha a forma
+// que o componente vai gerar o nome do arquivo xml da NFS-e
+ 
+  finally
+    AnexosEmail.Free;
+    StreamNFSe.Free;
+  end;
+(*
  AnexosEmail := TStringList.Create;
  StreamNFSe  := TStringStream.Create('');
 
@@ -244,6 +313,7 @@ begin
     AnexosEmail.Free;
     StreamNFSe.Free;
  end;
+*)
 (*
  m := TMimemess.create;
 
