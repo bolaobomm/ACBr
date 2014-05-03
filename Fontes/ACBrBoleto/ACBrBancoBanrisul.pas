@@ -861,7 +861,7 @@ begin
       if (StrToIntDef(Copy(Linha,247,6),0) <> 0) then
         Vencimento := StringToDateTimeDef( Copy(Linha,247,2)+'/'+
                                            Copy(Linha,249,2)+'/'+
-                                           Copy(Linha,151,2),0, 'DD/MM/YY' );
+                                           Copy(Linha,251,2),0, 'DD/MM/YY' );
 
       if StrToIntDef(Copy(Linha,296,6),0) <> 0 then
         DataCredito:= StringToDateTimeDef( Copy(Linha,296,2)+'/'+
