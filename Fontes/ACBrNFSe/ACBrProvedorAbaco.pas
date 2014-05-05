@@ -119,13 +119,22 @@ begin
            end;
  end;
 
+ ConfigURL.HomRecepcaoLoteRPS    := 'http://186.233.149.102/'+ ConfigURL.HomNomeCidade +'_homologa/servlet/arecepcionarloterps?wsdl';
+ ConfigURL.HomConsultaLoteRPS    := 'http://186.233.149.102/'+ ConfigURL.HomNomeCidade +'_homologa/servlet/aconsultarloterps?wsdl';
+ ConfigURL.HomConsultaNFSeRPS    := 'http://186.233.149.102/'+ ConfigURL.HomNomeCidade +'_homologa/servlet/aconsultarnfseporrps?wsdl';
+ ConfigURL.HomConsultaSitLoteRPS := 'http://186.233.149.102/'+ ConfigURL.HomNomeCidade +'_homologa/servlet/aconsultarsituacaoloterps?wsdl';
+ ConfigURL.HomConsultaNFSe       := 'http://186.233.149.102/'+ ConfigURL.HomNomeCidade +'_homologa/servlet/aconsultarnfse?wsdl';
+ ConfigURL.HomCancelaNFSe        := 'http://186.233.149.102/'+ ConfigURL.HomNomeCidade +'_homologa/servlet/acancelarnfse?wsdl';
+
+ (*
  ConfigURL.HomRecepcaoLoteRPS    := 'http://www.e-nfs.com.br/'+ ConfigURL.HomNomeCidade +'_homologa/servlet/arecepcionarloterps?wsdl';
  ConfigURL.HomConsultaLoteRPS    := 'http://www.e-nfs.com.br/'+ ConfigURL.HomNomeCidade +'_homologa/servlet/aconsultarloterps?wsdl';
  ConfigURL.HomConsultaNFSeRPS    := 'http://www.e-nfs.com.br/'+ ConfigURL.HomNomeCidade +'_homologa/servlet/aconsultarnfseporrps?wsdl';
  ConfigURL.HomConsultaSitLoteRPS := 'http://www.e-nfs.com.br/'+ ConfigURL.HomNomeCidade +'_homologa/servlet/aconsultarsituacaoloterps?wsdl';
  ConfigURL.HomConsultaNFSe       := 'http://www.e-nfs.com.br/'+ ConfigURL.HomNomeCidade +'_homologa/servlet/aconsultarnfse?wsdl';
  ConfigURL.HomCancelaNFSe        := 'http://www.e-nfs.com.br/'+ ConfigURL.HomNomeCidade +'_homologa/servlet/acancelarnfse?wsdl';
-
+ *)
+ 
  ConfigURL.ProRecepcaoLoteRPS    := 'https://www.e-nfs.com.br/'+ ConfigURL.ProNomeCidade +'/servlet/arecepcionarloterps?wsdl';
  ConfigURL.ProConsultaLoteRPS    := 'https://www.e-nfs.com.br/'+ ConfigURL.ProNomeCidade +'/servlet/aconsultarloterps?wsdl';
  ConfigURL.ProConsultaNFSeRPS    := 'https://www.e-nfs.com.br/'+ ConfigURL.ProNomeCidade +'/servlet/aconsultarnfseporrps?wsdl';
