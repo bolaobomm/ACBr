@@ -47,6 +47,13 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+Versão 1.02 05/05/2015
+-- ACBrSPEDPisCofins --
+[+] Implementado Before Eventos nos registros C491 e C195 do Bloco_C.
+[*] O Objeto do Registro agora é passado como parâmetro nos eventos, para que possa
+    ser lido alguma informação do registro atual a que o evento for disparado.
+    (por Isaque Pinheiro)
+
 Versão 1.02  16/01/2014
 -- ACBrSPEDFiscal --
 [+] Foram criados novos tipos para as propriedades para compatibilizar melhor com os nomes, 
