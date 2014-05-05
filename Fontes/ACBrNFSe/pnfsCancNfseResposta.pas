@@ -267,6 +267,7 @@ begin
         infCanc.DataHora := Leitor.rCampo(tcDatHor, 'DataHora');
         if infCanc.DataHora = 0 then
           infCanc.DataHora := Leitor.rCampo(tcDatHor, 'DataHoraCancelamento');
+        InfCanc.Sucesso  := Leitor.rCampo(tcStr,    'Sucesso');  // Incluido por Glecio 09/05/2013
 
         InfCanc.FPedido.InfID.ID := Leitor.rAtributo('InfPedidoCancelamento Id=');
         if InfCanc.FPedido.InfID.ID = '' then

@@ -3382,6 +3382,11 @@ begin
 
   case FProvedor of
    proBetha: Prefixo3 := '';
+   proSpeedGov:
+     begin
+       Prefixo3 := '';
+       Prefixo4 := '';
+     end;
   end;
 
   try

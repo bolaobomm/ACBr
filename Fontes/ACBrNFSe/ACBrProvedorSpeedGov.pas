@@ -112,16 +112,20 @@ begin
             ConfigURL.HomNomeCidade := 'aqz';
             ConfigURL.ProNomeCidade := 'aqz';
            end;
+  2611101: begin // Petrolina
+            ConfigURL.HomNomeCidade := 'pet';
+            ConfigURL.ProNomeCidade := 'pet';
+           end;
  end;
 
- ConfigURL.HomRecepcaoLoteRPS    := 'http://hmg.speedgov.com.br/wsmod/Nfes';
- ConfigURL.HomConsultaLoteRPS    := 'http://hmg.speedgov.com.br/wsmod/Nfes';
- ConfigURL.HomConsultaNFSeRPS    := 'http://hmg.speedgov.com.br/wsmod/Nfes';
- ConfigURL.HomConsultaSitLoteRPS := 'http://hmg.speedgov.com.br/wsmod/Nfes';
- ConfigURL.HomConsultaNFSe       := 'http://hmg.speedgov.com.br/wsmod/Nfes';
- ConfigURL.HomCancelaNFSe        := 'http://hmg.speedgov.com.br/wsmod/Nfes';
- ConfigURL.HomGerarNFSe          := 'http://hmg.speedgov.com.br/wsmod/Nfes';
- ConfigURL.HomRecepcaoSincrono   := 'http://hmg.speedgov.com.br/wsmod/Nfes';
+ ConfigURL.HomRecepcaoLoteRPS    := 'http://speedgov.com.br/wsmod/Nfes';
+ ConfigURL.HomConsultaLoteRPS    := 'http://speedgov.com.br/wsmod/Nfes';
+ ConfigURL.HomConsultaNFSeRPS    := 'http://speedgov.com.br/wsmod/Nfes';
+ ConfigURL.HomConsultaSitLoteRPS := 'http://speedgov.com.br/wsmod/Nfes';
+ ConfigURL.HomConsultaNFSe       := 'http://speedgov.com.br/wsmod/Nfes';
+ ConfigURL.HomCancelaNFSe        := 'http://speedgov.com.br/wsmod/Nfes';
+ ConfigURL.HomGerarNFSe          := 'http://speedgov.com.br/wsmod/Nfes';
+ ConfigURL.HomRecepcaoSincrono   := 'http://speedgov.com.br/wsmod/Nfes';
 
  ConfigURL.ProRecepcaoLoteRPS    := 'http://www.speedgov.com.br/ws' + ConfigURL.ProNomeCidade + '/Nfes';
  ConfigURL.ProConsultaLoteRPS    := 'http://www.speedgov.com.br/ws' + ConfigURL.ProNomeCidade + '/Nfes';
@@ -149,9 +153,9 @@ begin
    acConsLote:    Result := False;
    acConsNFSeRps: Result := False;
    acConsNFSe:    Result := False;
-   acCancelar:    Result := True;
+   acCancelar:    Result := False;
    acGerar:       Result := False;
-   acRecSincrono: Result := True;
+   acRecSincrono: Result := False;
  end;
 end;
 
@@ -174,8 +178,8 @@ begin
    acConsNFSeRps: Result := '<' + Prefixo3 + 'ConsultarNfseRpsEnvio' + xmlns;
    acConsNFSe:    Result := '<' + Prefixo3 + 'ConsultarNfseServicoPrestadoEnvio' + xmlns;
    acCancelar:    Result := '<' + Prefixo3 + 'CancelarNfseEnvio' + xmlns +
-                             '<' + Prefixo3 + 'Pedido>' +
-                              '<' + Prefixo4 + 'InfPedidoCancelamento';
+                             '<' + 'Pedido>' +
+                              '<' + Prefixo4 + 'InfPedidoCancelamento>';
    acGerar:       Result := '<' + Prefixo3 + 'GerarNfseEnvio' + xmlns;
    acRecSincrono: Result := '<' + Prefixo3 + 'EnviarLoteRpsSincronoEnvio' + xmlns;
  end;
@@ -207,7 +211,7 @@ begin
    acConsLote:    Result := '</' + Prefixo3 + 'ConsultarLoteRpsEnvio>';
    acConsNFSeRps: Result := '</' + Prefixo3 + 'ConsultarNfseRpsEnvio>';
    acConsNFSe:    Result := '</' + Prefixo3 + 'ConsultarNfseServicoPrestadoEnvio>';
-   acCancelar:    Result := '</' + Prefixo3 + 'Pedido>' +
+   acCancelar:    Result := '</' + 'Pedido>' +
                             '</' + Prefixo3 + 'CancelarNfseEnvio>';
    acGerar:       Result := '</' + Prefixo3 + 'GerarNfseEnvio>';
    acRecSincrono: Result := '</' + Prefixo3 + 'EnviarLoteRpsSincronoEnvio>';

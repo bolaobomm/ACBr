@@ -1391,7 +1391,7 @@ begin
      NFSe.Numero            := Leitor.rCampo(tcStr, 'Numero');
      NFSe.CodigoVerificacao := Leitor.rCampo(tcStr, 'CodigoVerificacao');
 
-     if FProvedor in [proFreire, proVitoria]
+     if FProvedor in [proFreire, proSpeedGov, proVitoria]
       then NFSe.DataEmissao := Leitor.rCampo(tcDat, 'DataEmissao')
       else NFSe.DataEmissao := Leitor.rCampo(tcDatHor, 'DataEmissao');
 

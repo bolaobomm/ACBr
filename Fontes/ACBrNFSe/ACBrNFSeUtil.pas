@@ -1447,10 +1447,10 @@ begin
  XML := StringReplace( AXML, 'ns2:', '', [rfReplaceAll] );
  XML := StringReplace( XML, 'ns3:', '', [rfReplaceAll] );
  XML := StringReplace( XML, 'ns4:', '', [rfReplaceAll] );
- XML := StringReplace( XML, 'ns5:', '', [rfReplaceAll] );  //Incluido por jrJunior82 09/05/2013
+ XML := StringReplace( XML, 'ns5:', '', [rfReplaceAll] );
  XML := StringReplace( XML, 'tc:', '', [rfReplaceAll] );
- // Incluido por Ricardo Miranda em 14/03/2013
  XML := StringReplace( XML, 'ii:', '', [rfReplaceAll] );
+ XML := StringReplace( XML, 'p1:', '', [rfReplaceAll] );
 
  result := XML;
 end;

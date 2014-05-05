@@ -287,7 +287,7 @@ begin
               ListaNfse.FCompNfse[i].FNfse.InfID.ID          := Leitor.rCampo(tcStr, 'Numero');
               ListaNfse.FCompNfse[i].FNFSe.Numero            := Leitor.rCampo(tcStr, 'Numero');
               ListaNfse.FCompNfse[i].FNFSe.CodigoVerificacao := Leitor.rCampo(tcStr, 'CodigoVerificacao');
-              if FProvedor = proVitoria then
+              if FProvedor in [proSpeedGov, proVitoria] then
                 ListaNfse.FCompNfse[i].FNFSe.DataEmissao       := Leitor.rCampo(tcDat, 'DataEmissao')
               else
                 ListaNfse.FCompNfse[i].FNFSe.DataEmissao       := Leitor.rCampo(tcDatHor, 'DataEmissao');

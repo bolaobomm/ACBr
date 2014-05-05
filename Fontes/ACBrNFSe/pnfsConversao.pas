@@ -1064,7 +1064,8 @@ begin
   4202008  // Balneario Camboriu/SC
          : Provedor := 'SimplISS';
 
-  2301000  // Aquiraz/CE
+  2301000, // Aquiraz/CE
+  2611101  // Petrolina/PE
          : Provedor := 'SpeedGov';
 
   4307609, // Estância Velha/RS
