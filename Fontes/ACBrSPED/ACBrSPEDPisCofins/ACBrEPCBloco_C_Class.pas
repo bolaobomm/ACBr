@@ -47,12 +47,26 @@ uses SysUtils, Classes, DateUtils, ACBrSped, ACBrEPCBloco_C, ACBrEPCBlocos,
      ACBrTXTClass, ACBrEPCBloco_0_Class;
 
 type
-  TWriteRegistroC481Event = procedure(var ANullVL_BC_PIS,
+  TWriteRegistroC481Event = procedure(const AC481: TObject;
+                                      var ANullVL_BC_PIS,
                                           ANullALIQ_PIS,
                                           ANullQUANT_BC_PIS,
                                           ANullALIQ_PIS_QUANT,
                                           ANullVL_PIS: Boolean) of object;
-  TWriteRegistroC485Event = procedure(var ANullVL_BC_COFINS,
+  TWriteRegistroC485Event = procedure(const AC485: TObject;
+                                      var ANullVL_BC_COFINS,
+                                          ANullALIQ_COFINS,
+                                          ANullQUANT_BC_COFINS,
+                                          ANullALIQ_COFINS_QUANT,
+                                          ANullVL_COFINS: Boolean) of object;
+  TWriteRegistroC491Event = procedure(const AC491: TObject;
+                                      var ANullVL_BC_PIS,
+                                          ANullALIQ_PIS,
+                                          ANullQUANT_BC_PIS,
+                                          ANullALIQ_PIS_QUANT,
+                                          ANullVL_PIS: Boolean) of object;
+  TWriteRegistroC495Event = procedure(const AC495: TObject;
+                                      var ANullVL_BC_COFINS,
                                           ANullALIQ_COFINS,
                                           ANullQUANT_BC_COFINS,
                                           ANullALIQ_COFINS_QUANT,
@@ -60,9 +74,6 @@ type
   { TBloco_C }
   TBloco_C = class(TACBrSPED)
   private
-    FOnBeforeWriteRegistroC481: TWriteRegistroC481Event;
-    FOnBeforeWriteRegistroC485: TWriteRegistroC485Event;
-
     FRegistroC001: TRegistroC001;      /// BLOCO 0 - Registro0001
     FRegistroC990: TRegistroC990;      /// BLOCO 0 - Registro0990
 
@@ -145,6 +156,11 @@ type
 
     procedure CriaRegistros;
     procedure LiberaRegistros;
+  protected
+    FOnBeforeWriteRegistroC481: TWriteRegistroC481Event;
+    FOnBeforeWriteRegistroC485: TWriteRegistroC485Event;
+    FOnBeforeWriteRegistroC491: TWriteRegistroC491Event;
+    FOnBeforeWriteRegistroC495: TWriteRegistroC495Event;
   public
     constructor Create ;          /// Create
     destructor Destroy; override; /// Destroy
@@ -236,9 +252,13 @@ type
 
     property OnBeforeWriteRegistroC481: TWriteRegistroC481Event read FOnBeforeWriteRegistroC481 write FOnBeforeWriteRegistroC481;
     property OnBeforeWriteRegistroC485: TWriteRegistroC485Event read FOnBeforeWriteRegistroC485 write FOnBeforeWriteRegistroC485;
+    property OnBeforeWriteRegistroC491: TWriteRegistroC491Event read FOnBeforeWriteRegistroC491 write FOnBeforeWriteRegistroC491;
+    property OnBeforeWriteRegistroC495: TWriteRegistroC495Event read FOnBeforeWriteRegistroC495 write FOnBeforeWriteRegistroC495;
 
     property OnAfterWriteRegistroC481: TWriteRegistroC481Event read FOnBeforeWriteRegistroC481 write FOnBeforeWriteRegistroC481;
     property OnAfterWriteRegistroC485: TWriteRegistroC485Event read FOnBeforeWriteRegistroC485 write FOnBeforeWriteRegistroC485;
+    property OnAfterWriteRegistroC491: TWriteRegistroC491Event read FOnBeforeWriteRegistroC491 write FOnBeforeWriteRegistroC491;
+    property OnAfterWriteRegistroC495: TWriteRegistroC495Event read FOnBeforeWriteRegistroC495 write FOnBeforeWriteRegistroC495;
   end;
 
 implementation
@@ -1565,7 +1585,8 @@ begin
       begin
         if Assigned(FOnBeforeWriteRegistroC481) then
         begin
-           FOnBeforeWriteRegistroC481(NullVL_BC_PIS,
+           FOnBeforeWriteRegistroC481(RegC405.RegistroC481.Items[intFor],
+                                      NullVL_BC_PIS,
                                       NullALIQ_PIS,
                                       NullQUANT_BC_PIS,
                                       NullALIQ_PIS_QUANT,
@@ -1613,7 +1634,8 @@ begin
       begin
         if Assigned(FOnBeforeWriteRegistroC485) then
         begin
-           FOnBeforeWriteRegistroC485(NullVL_BC_COFINS,
+           FOnBeforeWriteRegistroC485(RegC405.RegistroC485.Items[intFor],
+                                      NullVL_BC_COFINS,
                                       NullALIQ_COFINS,
                                       NullQUANT_BC_COFINS,
                                       NullALIQ_COFINS_QUANT,
@@ -1701,13 +1723,33 @@ begin
 end;
 
 procedure TBloco_C.WriteRegistroC491(RegC490: TRegistroC490);
-  var
-    intFor     : integer;
+var
+  intFor: integer;
+  NullVL_BC_PIS: Boolean;
+  NullALIQ_PIS: Boolean;
+  NullQUANT_BC_PIS: Boolean;
+  NullALIQ_PIS_QUANT: Boolean;
+  NullVL_PIS: Boolean;
 begin
+  NullVL_BC_PIS := False;
+  NullALIQ_PIS  := False;
+  NullQUANT_BC_PIS := False;
+  NullALIQ_PIS_QUANT := False;
+  NullVL_PIS := False;
+
   if Assigned(RegC490.RegistroC491) then
   begin
     for intFor := 0 to RegC490.RegistroC491.Count - 1 do
     begin
+      if Assigned(FOnBeforeWriteRegistroC491) then
+      begin
+         FOnBeforeWriteRegistroC491(RegC490.RegistroC491.Items[intFor],
+                                    NullVL_BC_PIS,
+                                    NullALIQ_PIS,
+                                    NullQUANT_BC_PIS,
+                                    NullALIQ_PIS_QUANT,
+                                    NullVL_PIS);
+      end;
       with RegC490.RegistroC491.Items[intFor] do
       begin
         Add( LFill('C491')             +
@@ -1715,11 +1757,11 @@ begin
              LFill(CstPisToStr(CST_PIS)) +
              LFill(CFOP,4)             +
              LFill(VL_ITEM,0,2)        +
-             DFill(VL_BC_PIS,      2, True) +
-             DFill(ALIQ_PIS,       4, True) +
-             DFill(QUANT_BC_PIS,   3, True) +
-             DFill(ALIQ_PIS_QUANT, 4, True) +
-             LFill(VL_PIS,0,2)         +
+             DFill(VL_BC_PIS,      2, NullVL_BC_PIS) +
+             DFill(ALIQ_PIS,       4, NullALIQ_PIS) +
+             DFill(QUANT_BC_PIS,   3, NullQUANT_BC_PIS) +
+             DFill(ALIQ_PIS_QUANT, 4, NullALIQ_PIS_QUANT) +
+             LFill(VL_PIS,0,       2, NullVL_PIS)         +
              LFill(COD_CTA) ) ;
         //
         RegistroC990.QTD_LIN_C := RegistroC990.QTD_LIN_C + 1;
@@ -1731,13 +1773,33 @@ begin
 end;
 
 procedure TBloco_C.WriteRegistroC495(RegC490: TRegistroC490);
-  var
-    intFor        : integer;
+var
+  intFor: integer;
+  NullVL_BC_COFINS: Boolean;
+  NullALIQ_COFINS: Boolean;
+  NullQUANT_BC_COFINS: Boolean;
+  NullALIQ_COFINS_QUANT: Boolean;
+  NullVL_COFINS: Boolean;
 begin
+  NullVL_BC_COFINS := False;
+  NullALIQ_COFINS  := False;
+  NullQUANT_BC_COFINS := False;
+  NullALIQ_COFINS_QUANT := False;
+  NullVL_COFINS := False;
+  //--
   if Assigned(RegC490.RegistroC495) then
   begin
     for intFor := 0 to RegC490.RegistroC495.Count - 1 do
     begin
+      if Assigned(FOnBeforeWriteRegistroC495) then
+      begin
+         FOnBeforeWriteRegistroC485(RegC490.RegistroC495.Items[intFor],
+                                    NullVL_BC_COFINS,
+                                    NullALIQ_COFINS,
+                                    NullQUANT_BC_COFINS,
+                                    NullALIQ_COFINS_QUANT,
+                                    NullVL_COFINS);
+      end;
       with RegC490.RegistroC495.Items[intFor] do
       begin
         Add( LFill('C495')                +
@@ -1745,11 +1807,11 @@ begin
              LFill(CstCofinsToStr(CST_COFINS) ) +
              LFill(CFOP,4)                +
              LFill(VL_ITEM,0,2)           +
-             DFill(VL_BC_COFINS,      2, True) +
-             DFill(ALIQ_COFINS,       4, True) +
-             DFill(QUANT_BC_COFINS,   3, True) +
-             DFill(ALIQ_COFINS_QUANT, 4, True) +
-             LFill(VL_COFINS,0,2)         +
+             DFill(VL_BC_COFINS,      2, NullVL_BC_COFINS) +
+             DFill(ALIQ_COFINS,       4, NullALIQ_COFINS) +
+             DFill(QUANT_BC_COFINS,   3, NullQUANT_BC_COFINS) +
+             DFill(ALIQ_COFINS_QUANT, 4, NullALIQ_COFINS_QUANT) +
+             LFill(VL_COFINS,0,       2, NullVL_COFINS) +
              LFill(COD_CTA) ) ;
         //
         RegistroC990.QTD_LIN_C := RegistroC990.QTD_LIN_C + 1;

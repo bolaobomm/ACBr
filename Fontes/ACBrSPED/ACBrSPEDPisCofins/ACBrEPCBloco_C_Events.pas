@@ -50,14 +50,14 @@ type
   TEventsBloco_C = class(TComponent)
   private
     FOwner: TComponent;
-
-    FOnBeforeWriteRegistroC481: TWriteRegistroC481Event;
-    FOnBeforeWriteRegistroC485: TWriteRegistroC485Event;
-
     function GetOnBeforeWriteRegistroC481: TWriteRegistroC481Event;
     function GetOnBeforeWriteRegistroC485: TWriteRegistroC485Event;
     procedure SetOnBeforeWriteRegistroC481(const Value: TWriteRegistroC481Event);
     procedure SetOnBeforeWriteRegistroC485(const Value: TWriteRegistroC485Event);
+    function GetOnBeforeWriteRegistroC491: TWriteRegistroC491Event;
+    function GetOnBeforeWriteRegistroC495: TWriteRegistroC495Event;
+    procedure SetOnBeforeWriteRegistroC491(const Value: TWriteRegistroC491Event);
+    procedure SetOnBeforeWriteRegistroC495(const Value: TWriteRegistroC495Event);
 
   public
     constructor Create(AOwner: TComponent); override;
@@ -65,6 +65,8 @@ type
   published
     property OnBeforeWriteRegistroC481: TWriteRegistroC481Event read GetOnBeforeWriteRegistroC481 write SetOnBeforeWriteRegistroC481;
     property OnBeforeWriteRegistroC485: TWriteRegistroC485Event read GetOnBeforeWriteRegistroC485 write SetOnBeforeWriteRegistroC485;
+    property OnBeforeWriteRegistroC491: TWriteRegistroC491Event read GetOnBeforeWriteRegistroC491 write SetOnBeforeWriteRegistroC491;
+    property OnBeforeWriteRegistroC495: TWriteRegistroC495Event read GetOnBeforeWriteRegistroC495 write SetOnBeforeWriteRegistroC495;
   end;
 
 implementation
@@ -87,28 +89,46 @@ end;
 
 function TEventsBloco_C.GetOnBeforeWriteRegistroC481: TWriteRegistroC481Event;
 begin
-   Result := FOnBeforeWriteRegistroC481;
+   Result := TACBrSPEDPisCofins(FOwner).Bloco_C.OnBeforeWriteRegistroC481;
 end;
 
 function TEventsBloco_C.GetOnBeforeWriteRegistroC485: TWriteRegistroC485Event;
 begin
-   Result := FOnBeforeWriteRegistroC485;
+   Result := TACBrSPEDPisCofins(FOwner).Bloco_C.OnBeforeWriteRegistroC485;
+end;
+
+function TEventsBloco_C.GetOnBeforeWriteRegistroC491: TWriteRegistroC491Event;
+begin
+   Result := TACBrSPEDPisCofins(FOwner).Bloco_C.OnBeforeWriteRegistroC491;
+end;
+
+function TEventsBloco_C.GetOnBeforeWriteRegistroC495: TWriteRegistroC495Event;
+begin
+   Result := TACBrSPEDPisCofins(FOwner).Bloco_C.OnBeforeWriteRegistroC495;
 end;
 
 procedure TEventsBloco_C.SetOnBeforeWriteRegistroC481(
   const Value: TWriteRegistroC481Event);
 begin
-  FOnBeforeWriteRegistroC481 := Value;
-
   TACBrSPEDPisCofins(FOwner).Bloco_C.OnBeforeWriteRegistroC481 := Value;
 end;
 
 procedure TEventsBloco_C.SetOnBeforeWriteRegistroC485(
   const Value: TWriteRegistroC485Event);
 begin
-  FOnBeforeWriteRegistroC485 := Value;
-
   TACBrSPEDPisCofins(FOwner).Bloco_C.OnBeforeWriteRegistroC485 := Value;
+end;
+
+procedure TEventsBloco_C.SetOnBeforeWriteRegistroC491(
+  const Value: TWriteRegistroC491Event);
+begin
+  TACBrSPEDPisCofins(FOwner).Bloco_C.OnBeforeWriteRegistroC491 := Value;
+end;
+
+procedure TEventsBloco_C.SetOnBeforeWriteRegistroC495(
+  const Value: TWriteRegistroC495Event);
+begin
+  TACBrSPEDPisCofins(FOwner).Bloco_C.OnBeforeWriteRegistroC495 := Value;
 end;
 
 end.
