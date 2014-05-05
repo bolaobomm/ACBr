@@ -1380,6 +1380,17 @@ begin
     then begin
      CM:= Leitor.rCampo(tcStr, 'CodigoMunicipio');
      FProvedor := StrToProvedor(Ok, CodCidadeToProvedor(StrToIntDef(CM, 0)));
+    end;
+  end;
+
+ if CM = ''
+  then begin
+   if (Leitor.rExtrai(1, 'PrestadorServico') <> '')
+    then begin
+     CM:= Leitor.rCampo(tcStr, 'CodigoMunicipio');
+     if CM = '' then
+       CM:= Leitor.rCampo(tcStr, 'Cidade');
+     FProvedor := StrToProvedor(Ok, CodCidadeToProvedor(StrToIntDef(CM, 0)));
     end
     else FProvedor := proNenhum;
   end;
@@ -1552,7 +1563,6 @@ begin
        NFSe.PrestadorServico.IdentificacaoPrestador.Cnpj := Leitor.rCampo(tcStr, 'Cnpj');
     end; // fim Prestador
 
-
    if (Leitor.rExtrai(1, 'ValoresNfse') <> '') then
    begin
      NFSe.Servico.Valores.ValorServicos    := Leitor.rCampo(tcDe2, 'ValorServicos');
@@ -1640,7 +1650,6 @@ begin
      end;
 
    end; // fim lista serviço
-
 
    if (Leitor.rExtrai(1, 'Tomador') <> '')
     then begin
