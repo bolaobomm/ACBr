@@ -388,7 +388,7 @@ begin
 
  if NumeroNFSe <> '' then
  begin
-  if AProvedor in [proPVH] then
+  if AProvedor in [proPVH, proSystemPro] then
     DadosMsg := DadosMsg + '<Faixa>'+
                              '<NumeroNfseInicial>'+NumeroNFSe+'</NumeroNfseInicial>'+
                              '<NumeroNfseFinal>'+NumeroNFSe+'</NumeroNfseFinal>'+
@@ -409,7 +409,7 @@ begin
                                '</' + Prefixo3 + 'DataFinal>' +
                               '</' + Prefixo3 + 'PeriodoEmissao>';
 
- if AProvedor in [proFiorilli, profintelISS, proPVH]
+ if AProvedor in [proFiorilli, profintelISS, proPVH, proSystemPro]
   then DadosMsg := DadosMsg + '<' + Prefixo3 + 'Pagina>' +
                                 IntToStr(APagina) +
                               '</' + Prefixo3 + 'Pagina>';
