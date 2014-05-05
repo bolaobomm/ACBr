@@ -884,7 +884,8 @@ begin
   4309407, // Guapore/RS
   4310207, // Ijui/RS
   4320800, // Soledade/RS
-  4322400  // Uruguaiana/RS
+  4322400, // Uruguaiana/RS
+  4201307  // Araquari/SC
          : Provedor := 'Pronim';
 
   3132404, // Itajubá/MG

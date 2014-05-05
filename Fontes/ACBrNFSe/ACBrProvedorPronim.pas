@@ -247,6 +247,23 @@ begin
             ConfigURL.ProConsultaNFSe       := 'http://dueto-web.uruguaiana.rs.gov.br:7778/NFSEWS/Services.svc';
             ConfigURL.ProCancelaNFSe        := 'http://dueto-web.uruguaiana.rs.gov.br:7778/NFSEWS/Services.svc';
            end;
+  4201307: begin // Araquari/SC
+            ConfigURL.HomNomeCidade         := '';
+            ConfigURL.HomRecepcaoLoteRPS    := 'http://201.14.131.162:8288/NFSEWSTESTE/Services.svc';
+            ConfigURL.HomConsultaLoteRPS    := 'http://201.14.131.162:8288/NFSEWSTESTE/Services.svc';
+            ConfigURL.HomConsultaNFSeRPS    := 'http://201.14.131.162:8288/NFSEWSTESTE/Services.svc'; 
+            ConfigURL.HomConsultaSitLoteRPS := 'http://201.14.131.162:8288/NFSEWSTESTE/Services.svc';
+            ConfigURL.HomConsultaNFSe       := 'http://201.14.131.162:8288/NFSEWSTESTE/Services.svc';
+            ConfigURL.HomCancelaNFSe        := 'http://201.14.131.162:8288/NFSEWSTESTE/Services.svc';
+
+            ConfigURL.ProNomeCidade         := '';
+            ConfigURL.ProRecepcaoLoteRPS    := 'http://201.14.131.162:8288/NFSEWS/Services.svc';
+            ConfigURL.ProConsultaLoteRPS    := 'http://201.14.131.162:8288/NFSEWS/Services.svc';
+            ConfigURL.ProConsultaNFSeRPS    := 'http://201.14.131.162:8288/NFSEWS/Services.svc';
+            ConfigURL.ProConsultaSitLoteRPS := 'http://201.14.131.162:8288/NFSEWS/Services.svc';
+            ConfigURL.ProConsultaNFSe       := 'http://201.14.131.162:8288/NFSEWS/Services.svc';
+            ConfigURL.ProCancelaNFSe        := 'http://201.14.131.162:8288/NFSEWS/Services.svc';
+           end;         
  end;
 
  Result := ConfigURL;
@@ -328,7 +345,7 @@ function TProvedorPronim.GeraEnvelopeRecepcionarLoteRPS(URLNS: String;
 begin
  DadosMsg :=StringReplace(DadosMsg, '<', '&lt;', [rfReplaceAll]);
  DadosMsg :=StringReplace(DadosMsg, '>', '&gt;', [rfReplaceAll]);
- //{Dalvan} - DadosMsg :=StringReplace(DadosMsg, ' xmlns="http://www.abrasf.org.br/ABRASF/arquivos/nfse.xsd"', '', [rfReplaceAll]);
+ DadosMsg :=StringReplace(DadosMsg, ' xmlns="http://www.abrasf.org.br/ABRASF/arquivos/nfse.xsd"', '', [rfReplaceAll]);
 
  result := '<?xml version="1.0" encoding="utf-8"?>' +
            '<soap:Envelope xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" ' +
