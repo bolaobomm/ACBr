@@ -45,11 +45,13 @@ uses
   JclIDEUtils, JclCompilerUtils,
 
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
-  Dialogs, ComCtrls, StdCtrls, ExtCtrls, Buttons, pngimage,
+  Dialogs, ComCtrls, StdCtrls, ExtCtrls, Buttons, pngimage, ShlObj,
   JvExControls, JvAnimatedImage, JvGIFCtrl, JvWizard, JvWizardRouteMapNodes,
   JvExComCtrls, JvComCtrls, JvCheckTreeView, uFrameLista;
 
 type
+  ToACBr = TJclBorRADToolInstallation;
+
   TDestino = (tdSystem, tdDelphi, tdNone);
 
   TfrmPrincipal = class(TForm)
@@ -169,6 +171,7 @@ type
     procedure CopiarArquivoTo(ADestino : TDestino; const ANomeArquivo: String);//    procedure CopiarArquivoToSystem(const ANomeArquivo: String);
     procedure ConfigurarParaUtilizarOpenSSL(const AUtilizar: Boolean);
     function ExtrairDiretorioPacote(NomePacote: string): string;
+    function GetDefaultBDSCommonDir: string;
   public
 
   end;
@@ -568,20 +571,6 @@ begin
 
   with oACBr.Installations[iVersion] do
   begin
-    sDirBPLPath := BPLOutputPath[tPlatform];
-    sDirDCPpath := DCPOutputPath[tPlatform];
-
-    if VersionNumberStr = 'd9' then
-    begin
-      sDirBPLPath := sDirBPLPath + '\3.0\';
-      sDirDCPpath := sDirDCPpath + '\3.0\';
-    end
-    else if VersionNumberStr = 'd10' then
-    begin
-      sDirBPLPath := sDirBPLPath + '\4.0\';
-      sDirDCPpath := sDirDCPpath + '\4.0\';
-    end;
-
     // Checa se existe diretório da plataforma
     if not DirectoryExists(sDirBPLPath) then
       ForceDirectories(sDirBPLPath);
@@ -664,6 +653,24 @@ begin
   else
   if edtPlatform.ItemIndex = 1 then // Win64
     tPlatform := bpWin64;
+
+  with oACBr.Installations[iVersion] do
+  begin
+    sDirBPLPath := GetDefaultBDSCommonDir; //BPLOutputPath[tPlatform];
+    sDirDCPpath := GetDefaultBDSCommonDir; //DCPOutputPath[tPlatform];
+    if VersionNumberStr = 'd9' then
+    begin
+      sDirBPLPath := sDirBPLPath + '\3.0';
+      sDirDCPpath := sDirDCPpath + '\3.0';
+    end
+    else if VersionNumberStr = 'd10' then
+    begin
+      sDirBPLPath := sDirBPLPath + '\4.0';
+      sDirDCPpath := sDirDCPpath + '\4.0';
+    end;
+    sDirBPLPath := sDirBPLPath + '\Bpl';
+    sDirDCPpath := sDirDCPpath + '\Dcp';
+  end;
 end;
 
 // Evento disparado a cada ação do instalador
@@ -1157,6 +1164,7 @@ begin
       MB_ICONERROR + MB_OK
     );
   end;
+
   // Verificar se o tortoise está instalado
   if not TSVN_Class.IsTortoiseInstalado then
   begin
@@ -1186,7 +1194,8 @@ begin
   lblInfoCompilacao.Caption :=
     edtDelphiVersion.Text + ' ' + edtPlatform.Text + sLineBreak +
     'Dir. Instalação: ' + edtDirDestino.Text + sLineBreak +
-    'Dir. BPL: ' + oACBr.Installations[iVersion].BPLOutputPath[tPlatform];
+    'Dir. BPL: ' + sDirBPLPath + sLineBreak +
+    'Dir. DCP: ' + sDirDCPPath;
 end;
 
 procedure TfrmPrincipal.wizPgInstalacaoNextButtonClick(Sender: TObject;
@@ -1375,5 +1384,22 @@ procedure TfrmPrincipal.wizPrincipalFinishButtonClick(Sender: TObject);
 begin
   Self.Close;
 end;
+
+function TfrmPrincipal.GetDefaultBDSCommonDir: string;
+const
+  CSIDL_COMMON_DOCUMENTS = $002E; // All Users\Documents
+var
+  CommonDocuments: array[0..MAX_PATH] of Char;
+begin
+  Result := GetEnvironmentVariable('BDSCOMMONDIR');
+  if (oACBr.Installations[iVersion].RadToolKind = brBorlandDevStudio) and
+     SHGetSpecialFolderPath(GetActiveWindow, CommonDocuments, CSIDL_COMMON_DOCUMENTS, False) then
+    if oACBr.Installations[iVersion].VersionNumber >= 14 then
+      Result := IncludeTrailingPathDelimiter(CommonDocuments) + 'Embarcardero\Studio'  + PathDelim + Format('%d.0', [oACBr.Installations[iVersion].VersionNumber])
+    else if oACBr.Installations[iVersion].VersionNumber >= 6 then
+      Result := IncludeTrailingPathDelimiter(CommonDocuments) + 'RAD Studio'  + PathDelim + Format('%d.0', [oACBr.Installations[iVersion].VersionNumber]);
+end;
+
+
 
 end.
