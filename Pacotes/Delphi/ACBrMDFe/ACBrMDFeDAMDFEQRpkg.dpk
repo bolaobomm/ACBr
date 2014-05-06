@@ -41,7 +41,6 @@ requires
   synapse,
   ACBrCapicom,
   PCN2,
-  visualclx,
   bdertl,
   vcldb,
   {$IFDEF VER150} QR5RunD7, vcljpg, visualclx; {$ENDIF} // D7
