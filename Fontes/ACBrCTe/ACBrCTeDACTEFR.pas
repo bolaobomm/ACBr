@@ -107,18 +107,18 @@ procedure TACBrCTeDACTEFR.ImprimirDACTE(CTE: TCTe);
 begin
   if PrepareReport(CTE) then
   begin
+    dmDacte.frxReport.PrintOptions.Copies := NumCopias;
     if MostrarPreview then
       dmDacte.frxReport.ShowPreparedReport
     else
       begin
       // dmDacte.frxReport.PrepareReport(false);
-       if MostrarStatus then
+        if MostrarStatus then
           dmDacte.frxReport.PrintOptions.ShowDialog := True
-       else
-        dmDacte.frxReport.PrintOptions.ShowDialog := False;
-       dmDacte.frxReport.PrintOptions.Printer    := Impressora;
-       dmDacte.frxReport.PrintOptions.Copies     := 1;
-       dmDacte.frxReport.Print;
+        else
+          dmDacte.frxReport.PrintOptions.ShowDialog := False;
+        dmDacte.frxReport.PrintOptions.Printer := Impressora;
+        dmDacte.frxReport.Print;
       end;
   end;
 end;
