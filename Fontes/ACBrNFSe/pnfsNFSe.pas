@@ -30,6 +30,9 @@ type
  TIdentificacaoIntermediarioServico = class;
  TIdentificacaoOrgaoGerador         = class;
  TDadosConstrucaoCivil              = class;
+ TParcelasCollectionItem            = class;
+ TParcelasCollection                = class;
+ TCondicaoPagamento                 = class;
 
  TNFSe                              = class;
 
@@ -396,6 +399,42 @@ type
     property Art: string read FArt write FArt;
   end;
 
+  TParcelasCollectionItem = class(TCollectionItem)
+  private
+    FParcela: Integer;
+    FDataVencimento: TDateTime;
+    FValor: Currency;
+  published
+    property Parcela: Integer read FParcela write FParcela;
+    property DataVencimento: TDateTime read FDataVencimento write FDataVencimento;
+    property Valor: Currency read FValor write FValor;
+  end;
+
+  TParcelasCollection = class(TCollection)
+  private
+    function GetItem(Index: Integer): TParcelasCollectionItem;
+    procedure SetItem(Index: Integer; Value: TParcelasCollectionItem);
+  public
+    constructor Create(AOwner: TCondicaoPagamento);
+
+    function Add: TParcelasCollectionItem;
+    property Items[Index: Integer]: TParcelasCollectionItem read GetItem write SetItem; default;
+  end;
+
+  TCondicaoPagamento = class(TPersistent)
+  private
+    FCondicao: string;
+    FQtdParcela: Integer;
+    FParcelas: TParcelasCollection;
+  public
+    constructor Create;
+    destructor Destroy; override;
+  published
+    property Condicao: string read FCondicao write FCondicao;
+    property QtdParcela: Integer read FQtdParcela write FQtdParcela;
+    property Parcelas: TParcelasCollection read FParcelas write FParcelas;
+  end;
+
  TNFSe = class(TPersistent)
   private
     // RPS e NFSe
@@ -418,6 +457,7 @@ type
     FIntermediarioServico: TIdentificacaoIntermediarioServico;
     FConstrucaoCivil: TDadosConstrucaoCivil;
     FDeducaoMateriais: TnfseSimNao;
+    FCondicaoPagamento: TCondicaoPagamento;
     // NFSe
     FNumero: String;
     FCodigoVerificacao: String;
@@ -466,6 +506,7 @@ type
     property IntermediarioServico: TIdentificacaoIntermediarioServico read FIntermediarioServico write FIntermediarioServico;
     property ConstrucaoCivil: TDadosConstrucaoCivil read FConstrucaoCivil write FConstrucaoCivil;
     property DeducaoMateriais: TnfseSimNao read FDeducaoMateriais write FDeducaoMateriais;
+    property CondicaoPagamento: TCondicaoPagamento read FCondicaoPagamento write FCondicaoPagamento;
     // NFSe
     property Numero: String read FNumero write FNumero;
     property CodigoVerificacao: String read FCodigoVerificacao write FCodigoVerificacao;
@@ -681,6 +722,7 @@ begin
  FTomador                      := TDadosTomador.Create;
  FIntermediarioServico         := TIdentificacaoIntermediarioServico.Create;
  FConstrucaoCivil              := TDadosConstrucaoCivil.Create;
+ FCondicaoPagamento            := TCondicaoPagamento.Create;
  // NFSe
  FNumero                       := '';
  FCodigoVerificacao            := '';
@@ -710,6 +752,7 @@ begin
  FTomador.Free;
  FIntermediarioServico.Free;
  FConstrucaoCivil.Free;
+ FCondicaoPagamento.Free; 
  // NFSe
  FPrestadorServico.Free;
  FOrgaoGerador.Free;
@@ -866,6 +909,41 @@ end;
 destructor TDeducaoCollectionItem.Destroy;
 begin
 
+  inherited;
+end;
+
+{ TParcelasCollection }
+function TParcelasCollection.Add: TParcelasCollectionItem;
+begin
+  Result := TParcelasCollectionItem(inherited Add);
+end;
+
+constructor TParcelasCollection.Create(AOwner: TCondicaoPagamento);
+begin
+  inherited Create(TParcelasCollectionItem);
+end;
+
+function TParcelasCollection.GetItem(Index: Integer): TParcelasCollectionItem;
+begin
+  Result := TParcelasCollectionItem(inherited GetItem(Index));
+end;
+
+procedure TParcelasCollection.SetItem(Index: Integer;
+  Value: TParcelasCollectionItem);
+begin
+  inherited SetItem(Index, Value);
+end;
+
+{ TCondicaoPagamento }
+constructor TCondicaoPagamento.Create;
+begin
+  inherited Create;
+  FParcelas := TParcelasCollection.Create(Self);
+end;
+
+destructor TCondicaoPagamento.Destroy;
+begin
+  FParcelas.Free;
   inherited;
 end;
 

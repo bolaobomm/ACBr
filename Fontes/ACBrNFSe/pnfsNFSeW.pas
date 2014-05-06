@@ -43,6 +43,7 @@ type
     procedure GerarTomador;
     procedure GerarIntermediarioServico;
     procedure GerarConstrucaoCivil;
+    procedure GerarCondicaoPagamento;
 
     procedure GerarXML_ABRASF_V1;
     procedure GerarXML_ABRASF_V2;
@@ -798,6 +799,8 @@ begin
    GerarTomador;
    GerarIntermediarioServico;
    GerarConstrucaoCivil;
+   if (FProvedor = proBetha) then 
+     GerarCondicaoPagamento;
 
   Gerador.wGrupoNFSe('/InfRps');
 end;
@@ -1297,6 +1300,27 @@ begin
       Gerador.wCampoNFSe(tcDe2, '', 'vlAliquotaPis   ', 01, 02, 1, NFSe.Servico.Valores.AliquotaPis, '');
     Gerador.wGrupoNFSe('/retencoes');  
   Gerador.wGrupoNFSe('/rps');
+end;
+
+procedure TNFSeW.GerarCondicaoPagamento;
+var
+  i: Integer;
+begin
+  if (NFSe.CondicaoPagamento.QtdParcela > 0) then 
+    begin
+      Gerador.wGrupoNFSe('CondicaoPagamento');
+        Gerador.wCampoNFSe(tcStr, '#53', 'Condicao  ', 01, 20, 1, NFSe.CondicaoPagamento.Condicao, '');
+        Gerador.wCampoNFSe(tcInt, '#54', 'QtdParcela', 01, 15, 1, NFSe.CondicaoPagamento.QtdParcela, '');
+        for i := 0 to NFSe.CondicaoPagamento.Parcelas.Count - 1 do
+          begin
+            Gerador.wGrupoNFSe('Parcelas');
+              Gerador.wCampoNFSe(tcInt, '#55', 'Parcela       ', 01, 15, 1, NFSe.CondicaoPagamento.Parcelas.Items[i].Parcela, '');
+              Gerador.wCampoNFSe(tcStr, '#56', 'DataVencimento', 01, 10, 1, NFSe.CondicaoPagamento.Parcelas.Items[i].DataVencimento, '');
+              Gerador.wCampoNFSe(tcDe2, '#57', 'Valor         ', 01, 15, 1, NFSe.CondicaoPagamento.Parcelas.Items[i].Valor, '');
+            Gerador.wGrupoNFSe('/Parcelas');
+          end;
+      Gerador.wGrupoNFSe('/CondicaoPagamento');
+    end;
 end;
 
 end.
