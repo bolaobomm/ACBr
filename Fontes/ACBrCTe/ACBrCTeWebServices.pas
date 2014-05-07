@@ -2017,12 +2017,14 @@ begin
     for I := 0 to CTeRetorno.procEventoCTe.Count -1 do
     begin
       FprocEventoCTe.Add;
-      FprocEventoCTe.Items[I].RetEventoCTe.idLote                       := CTeRetorno.procEventoCTe.Items[I].RetEventoCTe.idLote;
-      FprocEventoCTe.Items[I].RetEventoCTe.tpAmb                        := CTeRetorno.procEventoCTe.Items[I].RetEventoCTe.tpAmb;
-      FprocEventoCTe.Items[I].RetEventoCTe.verAplic                     := CTeRetorno.procEventoCTe.Items[I].RetEventoCTe.verAplic;
-      FprocEventoCTe.Items[I].RetEventoCTe.cOrgao                       := CTeRetorno.procEventoCTe.Items[I].RetEventoCTe.cOrgao;
-      FprocEventoCTe.Items[I].RetEventoCTe.cStat                        := CTeRetorno.procEventoCTe.Items[I].RetEventoCTe.cStat;
-      FprocEventoCTe.Items[I].RetEventoCTe.xMotivo                      := CTeRetorno.procEventoCTe.Items[I].RetEventoCTe.xMotivo;
+      FprocEventoCTe.Items[I].RetEventoCTe.idLote   := CTeRetorno.procEventoCTe.Items[I].RetEventoCTe.idLote;
+      FprocEventoCTe.Items[I].RetEventoCTe.tpAmb    := CTeRetorno.procEventoCTe.Items[I].RetEventoCTe.tpAmb;
+      FprocEventoCTe.Items[I].RetEventoCTe.verAplic := CTeRetorno.procEventoCTe.Items[I].RetEventoCTe.verAplic;
+      FprocEventoCTe.Items[I].RetEventoCTe.cOrgao   := CTeRetorno.procEventoCTe.Items[I].RetEventoCTe.cOrgao;
+      FprocEventoCTe.Items[I].RetEventoCTe.cStat    := CTeRetorno.procEventoCTe.Items[I].RetEventoCTe.cStat;
+      FprocEventoCTe.Items[I].RetEventoCTe.xMotivo  := CTeRetorno.procEventoCTe.Items[I].RetEventoCTe.xMotivo;
+      FprocEventoCTe.Items[I].RetEventoCTe.XML      := CTeRetorno.procEventoCTe.Items[I].RetEventoCTe.XML; 
+
       FprocEventoCTe.Items[I].RetEventoCTe.Infevento.ID                 := CTeRetorno.procEventoCTe.Items[I].RetEventoCTe.InfEvento.ID;
       FprocEventoCTe.Items[I].RetEventoCTe.Infevento.tpAmb              := CTeRetorno.procEventoCTe.Items[I].RetEventoCTe.InfEvento.tpAmb;
       FprocEventoCTe.Items[I].RetEventoCTe.InfEvento.CNPJ               := CTeRetorno.procEventoCTe.Items[I].RetEventoCTe.InfEvento.CNPJ;

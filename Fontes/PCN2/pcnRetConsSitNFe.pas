@@ -196,6 +196,7 @@ begin
       begin
         procEventoNFe.Add;
         procEventoNFe.Items[i].RetEventoNFe.Leitor.Arquivo := Leitor.Grupo;
+        procEventoNFe.Items[i].RetEventoNFe.XML := Leitor.Grupo; 
         procEventoNFe.Items[i].RetEventoNFe.LerXml;
         inc(i);
       end;

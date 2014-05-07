@@ -1476,6 +1476,7 @@ begin
       FprocEventoMDFe.Items[I].RetEventoMDFe.cOrgao   := MDFeRetorno.procEventoMDFe.Items[I].RetEventoMDFe.cOrgao;
       FprocEventoMDFe.Items[I].RetEventoMDFe.cStat    := MDFeRetorno.procEventoMDFe.Items[I].RetEventoMDFe.cStat;
       FprocEventoMDFe.Items[I].RetEventoMDFe.xMotivo  := MDFeRetorno.procEventoMDFe.Items[I].RetEventoMDFe.xMotivo;
+      FprocEventoMDFe.Items[I].RetEventoMDFe.XML      := MDFeRetorno.procEventoMDFe.Items[I].RetEventoMDFe.XML; //Gustavo Kato XML Completo do evento
 
       FprocEventoMDFe.Items[I].RetEventoMDFe.InfEvento.ID           := MDFeRetorno.procEventoMDFe.Items[I].RetEventoMDFe.InfEvento.ID;
       FprocEventoMDFe.Items[I].RetEventoMDFe.InfEvento.tpAmb        := MDFeRetorno.procEventoMDFe.Items[I].RetEventoMDFe.InfEvento.tpAmb;

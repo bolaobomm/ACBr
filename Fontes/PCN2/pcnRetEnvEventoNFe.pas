@@ -88,6 +88,7 @@ type
     FxMotivo: string;
     FretEvento: TRetInfEventoCollection;
     FInfEvento: TInfEvento;
+    FXML: AnsiString;
   public
     constructor Create;
     destructor Destroy; override;
@@ -102,6 +103,7 @@ type
     property xMotivo: string read FxMotivo write FxMotivo;
     property InfEvento: TInfEvento read FInfEvento write FInfEvento;
     property retEvento: TRetInfEventoCollection read FretEvento write FretEvento;
+    property XML: AnsiString                    read FXML       write FXML;
   end;
 
 

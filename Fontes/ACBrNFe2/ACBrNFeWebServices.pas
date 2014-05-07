@@ -2805,12 +2805,14 @@ begin
     for I := 0 to NFeRetorno.procEventoNFe.Count -1 do
     begin
       FprocEventoNFe.Add;
-      FprocEventoNFe.Items[I].RetEventoNFe.idLote := NFeRetorno.procEventoNFe.Items[I].RetEventoNFe.idLote;
-      FprocEventoNFe.Items[I].RetEventoNFe.tpAmb := NFeRetorno.procEventoNFe.Items[I].RetEventoNFe.tpAmb;
+      FprocEventoNFe.Items[I].RetEventoNFe.idLote   := NFeRetorno.procEventoNFe.Items[I].RetEventoNFe.idLote;
+      FprocEventoNFe.Items[I].RetEventoNFe.tpAmb    := NFeRetorno.procEventoNFe.Items[I].RetEventoNFe.tpAmb;
       FprocEventoNFe.Items[I].RetEventoNFe.verAplic := NFeRetorno.procEventoNFe.Items[I].RetEventoNFe.verAplic;
-      FprocEventoNFe.Items[I].RetEventoNFe.cOrgao := NFeRetorno.procEventoNFe.Items[I].RetEventoNFe.cOrgao;
-      FprocEventoNFe.Items[I].RetEventoNFe.cStat := NFeRetorno.procEventoNFe.Items[I].RetEventoNFe.cStat;
-      FprocEventoNFe.Items[I].RetEventoNFe.xMotivo := NFeRetorno.procEventoNFe.Items[I].RetEventoNFe.xMotivo;
+      FprocEventoNFe.Items[I].RetEventoNFe.cOrgao   := NFeRetorno.procEventoNFe.Items[I].RetEventoNFe.cOrgao;
+      FprocEventoNFe.Items[I].RetEventoNFe.cStat    := NFeRetorno.procEventoNFe.Items[I].RetEventoNFe.cStat;
+      FprocEventoNFe.Items[I].RetEventoNFe.xMotivo  := NFeRetorno.procEventoNFe.Items[I].RetEventoNFe.xMotivo;
+      FprocEventoNFe.Items[I].RetEventoNFe.XML      := NFeRetorno.procEventoNFe.Items[I].RetEventoNFe.XML;
+
       FprocEventoNFe.Items[I].RetEventoNFe.InfEvento.ID := NFeRetorno.procEventoNFe.Items[I].RetEventoNFe.InfEvento.ID;
       FprocEventoNFe.Items[I].RetEventoNFe.InfEvento.tpAmb := NFeRetorno.procEventoNFe.Items[I].RetEventoNFe.InfEvento.tpAmb;
       FprocEventoNFe.Items[I].RetEventoNFe.InfEvento.CNPJ := NFeRetorno.procEventoNFe.Items[I].RetEventoNFe.InfEvento.CNPJ;

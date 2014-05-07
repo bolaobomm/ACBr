@@ -191,6 +191,7 @@ begin
       begin
         procEventoCTe.Add;
         procEventoCTe.Items[i].RetEventoCTe.Leitor.Arquivo := Leitor.Grupo;
+        procEventoCTe.Items[i].RetEventoCTe.XML := Leitor.Grupo;
         procEventoCTe.Items[i].RetEventoCTe.LerXml;
         inc(i);
       end;
