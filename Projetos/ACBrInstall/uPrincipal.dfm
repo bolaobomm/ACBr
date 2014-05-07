@@ -1,7 +1,7 @@
 object frmPrincipal: TfrmPrincipal
   Left = 359
   Top = 202
-  ActiveControl = lstMsgInstalacao
+  ActiveControl = wizPgInicio
   BorderIcons = [biSystemMenu, biMinimize]
   BorderStyle = bsSingle
   Caption = 'Instalador ACBr'
@@ -24,7 +24,7 @@ object frmPrincipal: TfrmPrincipal
     Top = 0
     Width = 720
     Height = 612
-    ActivePage = wizPgInstalacao
+    ActivePage = wizPgInicio
     ButtonBarHeight = 42
     ButtonStart.Caption = 'Para o in'#237'cio'
     ButtonStart.NumGlyphs = 1
@@ -1065,6 +1065,10 @@ object frmPrincipal: TfrmPrincipal
       Header.Subtitle.Font.Style = []
       Caption = 'Configura'#231#245'es'
       OnNextButtonClick = wizPgConfiguracaoNextButtonClick
+      ExplicitLeft = 0
+      ExplicitTop = 0
+      ExplicitWidth = 0
+      ExplicitHeight = 0
       object Label4: TLabel
         Left = 17
         Top = 68
@@ -1373,6 +1377,10 @@ object frmPrincipal: TfrmPrincipal
       Caption = 'Reposit'#243'rio'
       OnEnterPage = wizPgObterFontesEnterPage
       OnNextButtonClick = wizPgObterFontesNextButtonClick
+      ExplicitLeft = 0
+      ExplicitTop = 0
+      ExplicitWidth = 0
+      ExplicitHeight = 0
       object Label1: TLabel
         Left = 77
         Top = 177
@@ -1457,6 +1465,10 @@ object frmPrincipal: TfrmPrincipal
       Caption = 'Instala'#231#227'o'
       OnEnterPage = wizPgInstalacaoEnterPage
       OnNextButtonClick = wizPgInstalacaoNextButtonClick
+      ExplicitLeft = 0
+      ExplicitTop = 0
+      ExplicitWidth = 0
+      ExplicitHeight = 0
       object btnInstalarACBr: TSpeedButton
         Left = 430
         Top = 463
@@ -1540,6 +1552,10 @@ object frmPrincipal: TfrmPrincipal
       VisibleButtons = [bkFinish]
       Color = clWhite
       Caption = 'Fim'
+      ExplicitLeft = 0
+      ExplicitTop = 0
+      ExplicitWidth = 0
+      ExplicitHeight = 0
       object Label3: TLabel
         Left = 39
         Top = 58

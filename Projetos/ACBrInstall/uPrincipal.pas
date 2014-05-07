@@ -1395,7 +1395,7 @@ begin
   if (oACBr.Installations[iVersion].RadToolKind = brBorlandDevStudio) and
      SHGetSpecialFolderPath(GetActiveWindow, CommonDocuments, CSIDL_COMMON_DOCUMENTS, False) then
     if oACBr.Installations[iVersion].VersionNumber >= 14 then
-      Result := IncludeTrailingPathDelimiter(CommonDocuments) + 'Embarcardero\Studio'  + PathDelim + Format('%d.0', [oACBr.Installations[iVersion].VersionNumber])
+      Result := IncludeTrailingPathDelimiter(CommonDocuments) + 'Embarcadero\Studio'  + PathDelim + Format('%d.0', [oACBr.Installations[iVersion].VersionNumber])
     else if oACBr.Installations[iVersion].VersionNumber >= 6 then
       Result := IncludeTrailingPathDelimiter(CommonDocuments) + 'RAD Studio'  + PathDelim + Format('%d.0', [oACBr.Installations[iVersion].VersionNumber]);
 end;
