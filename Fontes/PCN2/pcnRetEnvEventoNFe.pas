@@ -205,6 +205,10 @@ begin
       while Leitor.rExtrai(2, 'infEvento', '', i + 1) <> '' do
        begin
          FretEvento.Add;
+
+         // Incluido por Italo em 07/05/2014
+         FretEvento.Items[i].FRetInfEvento.XML := Leitor.Grupo;
+
 //         (*HR10 *)FretEvento.versao               := Leitor.rCampo(tcStr, 'versao');
          (*HR12 *)FretEvento.Items[i].FRetInfEvento.Id       := Leitor.rAtributo('Id');
          (*HR13 *)FretEvento.Items[i].FRetInfEvento.tpAmb    := StrToTpAmb(ok, Leitor.rCampo(tcStr, 'tpAmb'));
