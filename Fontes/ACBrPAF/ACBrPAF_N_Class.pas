@@ -194,9 +194,9 @@ begin
       Result :=
              LFill('N1') +
              LFill(CNPJ, 14) +
-             RFill(IE, 14) +
-             RFill(IM, 14) +
-             RFill(RAZAOSOCIAL, 50) +
+             RFill(UpperCase(IE), 14) +
+             RFill(UpperCase(IM), 14) +
+             RFill(UpperCase(TiraAcentos(RAZAOSOCIAL)), 50) +
              #13#10;
       end;
     end;
@@ -210,9 +210,9 @@ begin
         begin
         Result :=
                LFill('N2') +
-               RFill(LAUDO, 10) +
-               RFill(NOME, 50) +
-               RFill(VERSAO, 10) +
+               RFill(UpperCase(LAUDO), 10) +
+               RFill(UpperCase(TiraAcentos(NOME)), 50) +
+               RFill(UpperCase(VERSAO), 10) +
                #13#10;
         end;
       end;
@@ -282,7 +282,7 @@ begin
            Result :=
            LFill('N9') +
            LFill(FRegistroN1.CNPJ, 14) +
-           RFill(FRegistroN1.IE, 14) +
+           RFill(UpperCase(FRegistroN1.IE), 14) +
            LFill(TOT_REG, 6, 0) +
            #13#10;
       end;
