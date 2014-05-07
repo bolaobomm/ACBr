@@ -292,6 +292,13 @@ begin
                frxPDFExport.FileName := NomeArquivo;
                frxPDFExport.ShowDialog := MostrarSetup;
 			   frxPDFExport.ShowProgress := MostrarSetup;
+               frxPDFExport.Author     := SoftwareHouse;
+               frxPDFExport.Creator    := SoftwareHouse;
+               frxPDFExport.Producer   := SoftwareHouse;
+               frxPDFExport.Title      := 'Boleto';
+               frxPDFExport.Subject    := frxPDFExport.Title;
+               frxPDFExport.Keywords   := frxPDFExport.Title;
+               frxPDFExport.Background := false; // isso faz diminuir 70% do tamanho do pdf
                frxReport.Export(DmBoleto.frxPDFExport);
 			   if frxPDFExport.FileName <> NomeArquivo then
 					NomeArquivo := frxPDFExport.FileName;

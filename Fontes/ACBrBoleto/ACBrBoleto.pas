@@ -79,7 +79,8 @@ type
     cobBRB,
     cobBicBanco,
     cobBradescoSICOOB,
-    cobBancoSafra
+    cobBancoSafra,
+    cobSafraBradesco
     );
 
   TACBrTitulo = class;
@@ -816,7 +817,7 @@ implementation
 Uses ACBrUtil, ACBrBancoBradesco, ACBrBancoBrasil, ACBrBanestes, ACBrBancoItau, ACBrBancoSicredi,
      ACBrBancoMercantil, ACBrCaixaEconomica, ACBrBancoBanrisul, ACBrBancoSantander,
      ACBrBancoob, ACBrCaixaEconomicaSICOB ,ACBrBancoHSBC,ACBrBancoNordeste , ACBrBancoBRB, ACBrBicBanco,
-     ACBrBancoBradescoSICOOB, ACBrBancoSafra, Forms,
+     ACBrBancoBradescoSICOOB, ACBrBancoSafra, ACBrBancoSafraBradesco, Forms,
      {$IFDEF COMPILER6_UP} StrUtils {$ELSE} ACBrD5 {$ENDIF}, Math, dateutils;
 
 {$IFNDEF FPC}
@@ -1542,6 +1543,7 @@ begin
      cobBicBanco       : fBancoClass := TACBrBicBanco.create(self);            {237}
      cobBradescoSICOOB : fBancoClass := TAcbrBancoBradescoSICOOB.create(self); {237}
      cobBancoSafra     : fBancoClass := TACBrBancoSafra.create(Self);          {422}
+     cobSafraBradesco  : fBancoClass := TACBrBancoSafraBradesco.Create(Self);  {422 + 237}
    else
      fBancoClass := TACBrBancoClass.create(Self);
    end;
