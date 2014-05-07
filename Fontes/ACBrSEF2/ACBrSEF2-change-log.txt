@@ -51,3 +51,8 @@ Data: 30/04/2014
 -- ACBrSEF2
 [+] Adicionado o Bloco H para o SEF2 (Marcelo Santos)
 [*] Correções em outros blocos (Marcelo Santos)
+
+Data: 06/05/2014
+-- ACBrSEF2
+[+] Adicionado o Registro E120 no Bloco E para o SEF2 (Juliano Rosa)
+[*] Correções de LFill no Bloco 0 (Juliano Rosa)

@@ -36,6 +36,8 @@
 |*
 |* 23/08/2013: Juliana Tamizou
 |*  - Distribuição da Primeira Versao
+|* 06/05/2013: Juliano Rosa
+|*  - Inclusão Registro E120           
 *******************************************************************************}
 
 unit ACBrSEF2_BlocoE;
@@ -54,6 +56,7 @@ type
   TRegistroSEFE065List = class;
   TRegistroSEFE080List = class;
   TRegistroSEFE085List = class;
+  TRegistroSEFE120List = class;  
   TRegistroSEFE300List = class;
   TRegistroSEFE305List = class;
   TRegistroSEFE310List = class;
@@ -75,6 +78,7 @@ type
     fRegistroE050: TRegistroSEFE050List;
     fRegistroE060: TRegistroSEFE060List;
     fRegistroE080: TRegistroSEFE080List;
+    fRegistroE120: TRegistroSEFE120List;
     fRegistroE300: TRegistroSEFE300List;
   public
     constructor Create; virtual; /// Create
@@ -84,6 +88,7 @@ type
     property RegistroE050: TRegistroSEFE050List read fRegistroE050 write fRegistroE050;
     property RegistroE060: TRegistroSEFE060List read fRegistroE060 write fRegistroE060;
     property RegistroE080: TRegistroSEFE080List read fRegistroE080 write fRegistroE080;
+    property RegistroE120: TRegistroSEFE120List read fRegistroE120 write fRegistroE120; 
     property RegistroE300: TRegistroSEFE300List read fRegistroE300 write fRegistroE300;
   end;
 
@@ -496,6 +501,73 @@ type
     property notas[Index: Integer]: TRegistroSEFE085 read Getnotas write SetNotas;
   end;
 
+  //Juliano Rosa 06/05/2014
+  //LINHA E120: LANÇAMENTO - NOTA FISCAL DE SERVIÇO DE TRANSPORTE (CÓDIGO 07), CONHECIMENTOS DE TRANSPORTE RODOVIÁRIO DE CARGAS (CÓDIGO 08), AQUAVIÁRIO DE CARGAS (CÓDIGO 09), AÉREO (CÓDIGO 10), FERROVIÁRIO DE CARGAS (CÓDIGO 11), MULTIMODAL DE CARGAS (CÓDIGO 26), ELETRÔNICO (CÓDIGO 57), NOTA FISCAL DE SERVIÇO DE TRANSPORTE FERROVIÁRIO (CÓDIGO 27) E RESUMO DE MOVIMENTO DIÁRIO (CÓDIGO 18)
+  TRegistroSEFE120 = class
+  private
+    fIND_OPER    : TIndiceOperacao;
+    fIND_EMIT    : TIndiceEmissao;
+    fCOD_PART    : String;
+    fCOD_MUN_SERV: Integer;
+    fCOD_MOD     : TSEFIIDocFiscalReferenciado;
+    fCOD_SIT     : TCodigoSituacao;
+    fSER         : String;
+    fSUB         : integer;
+    fNUM_DOC     : Integer;
+    fCHV_CTE     : String;
+    fDT_EMIS     : TDateTime;
+    fDT_DOC      : TDateTime;
+    fNUM_LCTO    : String;
+    fIND_PGTO    : TIndicePagamento;
+    fVL_CONT     : Double;
+    fCOD_NAT     : String;
+    fVL_BC_ICMS  : Double;
+    fAL_ICMS     : Double;
+    fVL_ICMS     : Double;
+    fVL_ICMS_ST  : Double;
+    fVL_ISNT_ICMS: Double;
+    fVL_OUT_ICMS : Double;
+    fCOD_INF_OBS : String;
+  public
+    constructor Create(AOwner: TRegistroSEFE001); virtual;
+    destructor Destroy; override;
+
+    property IND_OPER   : TIndiceOperacao  read	fIND_OPER write fIND_OPER;           //Indicador de operação: 0- Entrada ou aquisição1- Saída ou prestação
+    property IND_EMIT   : TIndiceEmissao   read	fIND_EMIT write fIND_EMIT;           // Indicador do emitente do documento fiscal: 0- Emissão própria 1- Emissão por terceiros
+    property COD_PART   : String  read  fCOD_PART     write fCOD_PART;               // Código do participante (campo 02 da Linha 0150): - do prestador do serviço, no caso das aquisições - do tomador no caso das prestações - filial, agência, estação, posto ou congênere (código 18)
+    property COD_MUN_SERV : Integer read	fCOD_MUN_SERV      write fCOD_MUN_SERV;   //Código do município definido como local prestação do serviço, conforme a tabela externa indicada no item 3.3.1
+    property COD_MOD    : TSEFIIDocFiscalReferenciado read	fCOD_MOD write fCOD_MOD; // Código do modelo do documento fiscal, conforme a tabela indicada no item 4.1.1
+    property COD_SIT    : TCodigoSituacao  read	fCOD_SIT  write fCOD_SIT;            // Código da situação do lançamento, conforme a tabela indicada no item 4.1.3
+    property SER        : String  read	fSER          write fSER;                    // Série do documento fiscal
+    property SUB        : integer  read	fSUB          write fSUB;                    // Subsérie do documento fiscal
+    property NUM_DOC    : Integer read	fNUM_DOC      write fNUM_DOC;                // Número do documento fiscal
+    property CHV_CTE    : String  read	fCHV_CTE      write fCHV_CTE;                // Chave de acesso do Conhecimento de Transporte Eletrônico (CT-e, modelo 57)
+    property DT_EMIS    : TDateTime read	fDT_EMIS    write fDT_EMIS;                // DATA DE EMISSAO
+    property DT_DOC     : TDateTime read	fDT_DOC     write fDT_DOC;                 // Na entrada ou aquisição: data da entrada da mercadoria, da aquisição do serviço ou do desembaraço aduaneiro; na saída ou prestação: data da emissão do documento fiscal
+    property NUM_LCTO   : String  read	fNUM_LCTO     write fNUM_LCTO;               // Número ou código de identificação única do lançamento contábil
+    property IND_PGTO   : TIndicePagamento read	fIND_PGTO write fIND_PGTO;           // Indicador do pagamento: 0- Operação à vista 1- Operação a prazo 2- Operação não onerosa
+    property VL_CONT    : Double  read	fVL_CONT      write fVL_CONT;                // Valor contábil (valor do documento)
+    property COD_NAT    : String  read	fCOD_NAT      write fCOD_NAT;                // Código da natureza da operação ou prestação (campo 02 da Linha 0400)
+    property VL_BC_ICMS : Double  read	fVL_BC_ICMS   write fVL_BC_ICMS;             // Valor da base de cálculo do ICMS
+    property AL_ICMS    : Double  read	fAL_ICMS      write fAL_ICMS;                // Alíquota do ICMS
+    property VL_ICMS    : Double  read	fVL_ICMS      write fVL_ICMS;                // Valor do ICMS creditado/debitado
+    property VL_ICMS_ST : Double  read	fVL_ICMS_ST   write fVL_ICMS_ST;             // Valor original do ICMS da substituição tributária registrado no documento
+    property VL_ISNT_ICMS: Double read	fVL_ISNT_ICMS write fVL_ISNT_ICMS;           // Valor das operações isentas ou não-tributadas pelo ICMS
+    property VL_OUT_ICMS: Double  read	fVL_OUT_ICMS  write fVL_OUT_ICMS;            // Valor das outras operações do ICMS
+    property COD_INF_OBS: String  read	fCOD_INF_OBS  write fCOD_INF_OBS;            // Código de referência à observação (campo 02 da Linha 0450)
+  end;
+
+  TRegistroSEFE120List = class(TACBrSEFIIRegistros)
+  private
+    function GetItem(Index: Integer): TRegistroSEFE120;
+    procedure SetItem(Index: Integer; const Value: TRegistroSEFE120);
+  public
+    function New(AOwner: TRegistroSEFE001): TRegistroSEFE120;
+    property Itens[Index: Integer]: TRegistroSEFE120 read GetItem write SetItem;
+  end;
+  ///////////////////////// 
+
+
   //LINHA E300: APURAÇÃO DO ICMS
   TRegistroSEFE300 = class
   private
@@ -518,7 +590,7 @@ type
     property RegistroE340: TRegistroSEFE340List read fRegistroE340 write fRegistroE340;
     property RegistroE350: TRegistroSEFE350List read fRegistroE350 write fRegistroE350;
     property RegistroE360: TRegistroSEFE360List read fRegistroE360 write fRegistroE360;
-    
+
   end;
 
   TRegistroSEFE300List = class(TACBrSEFIIRegistros)
@@ -851,6 +923,17 @@ begin
    inherited Destroy;
 end;
 
+constructor TRegistroSEFE120.Create(AOwner: TRegistroSEFE001);
+begin
+ 
+end;
+
+destructor TRegistroSEFE120.Destroy;
+begin
+ 
+end;
+
+
 procedure TRegistroSEFE003List.SetItem(Index: Integer;
   const Value: TRegistroSEFE003);
 begin
@@ -892,6 +975,14 @@ procedure TRegistroSEFE085List.SetNotas(Index: Integer;
 begin
   Put(Index, Value);
 end;
+
+ 
+procedure TRegistroSEFE120List.SetItem(Index: Integer;
+  const Value: TRegistroSEFE120);
+begin
+  Put(Index, Value);
+end;
+
 
 procedure TRegistroSEFE300List.SetNotas(Index: Integer;
   const Value: TRegistroSEFE300);
@@ -974,6 +1065,13 @@ function TRegistroSEFE085List.GetNotas(Index: Integer): TRegistroSEFE085;
 begin
   Result := TRegistroSEFE085(Get(Index));
 end;
+
+ 
+function TRegistroSEFE120List.GetItem(Index: Integer): TRegistroSEFE120;
+begin
+  Result := TRegistroSEFE120(Get(Index));
+end;
+
 
 function TRegistroSEFE300List.GetNotas(Index: Integer): TRegistroSEFE300;
 begin
@@ -1058,6 +1156,14 @@ begin
    Add(Result);
 end;
 
+ 
+function TRegistroSEFE120List.New(AOwner: TRegistroSEFE001): TRegistroSEFE120;
+begin
+   Result := TRegistroSEFE120.Create(AOwner);
+   Add(Result);
+end;
+
+
 function TRegistroSEFE300List.New(AOwner: TRegistroSEFE001): TRegistroSEFE300;
 begin
    Result := TRegistroSEFE300.Create;
@@ -1116,6 +1222,7 @@ begin
    fRegistroE050 := TRegistroSEFE050List.Create;
    fRegistroE060 := TRegistroSEFE060List.Create;
    fRegistroE080 := TRegistroSEFE080List.Create;
+   fRegistroE120 := TRegistroSEFE120List.Create; 
    fRegistroE300 := TRegistroSEFE300List.Create;
    IND_MOV := icSemConteudo;
 end;
@@ -1127,6 +1234,7 @@ begin
    fRegistroE050.Free;
    fRegistroE060.Free;
    fRegistroE080.Free;
+   fRegistroE120.Free;
    fRegistroE300.Free;
    inherited;
 end;

@@ -36,6 +36,8 @@
 |*
 |* 23/08/2013: Juliana Tamizou
 |*  - Distribuição da Primeira Versao
+|* 06/05/2013: Juliano Rosa
+|*  - Inclusão Registro E120
 *******************************************************************************}
 
 unit ACBrSEF2_BlocoE_1;
@@ -61,6 +63,7 @@ type
     FRegistroE065Count: Integer;
     FRegistroE080Count: Integer;
     FRegistroE085Count: Integer;
+    FRegistroE120Count: Integer; 
     FRegistroE300Count: Integer;
     FRegistroE305Count: Integer;
     FRegistroE310Count: Integer;
@@ -79,6 +82,7 @@ type
     procedure WriteRegistroE065(RegE060: TRegistroSEFE060);
     procedure WriteRegistroE080(RegE001: TRegistroSEFE001);
     procedure WriteRegistroE085(RegE080: TRegistroSEFE080);
+    procedure WriteRegistroE120(RegE001: TRegistroSEFE001); 
     procedure WriteRegistroE300(RegE001: TRegistroSEFE001);
     procedure WriteRegistroE305(RegE300: TRegistroSEFE300);
     procedure WriteRegistroE310(RegE300: TRegistroSEFE300);
@@ -104,6 +108,7 @@ type
     function RegistroE065New : TRegistroSEFE065;
     function RegistroE080New : TRegistroSEFE080;
     function RegistroE085New : TRegistroSEFE085;
+    function RegistroE120New : TRegistroSEFE120; 
     function RegistroE300New : TRegistroSEFE300;
     function RegistroE305New : TRegistroSEFE305;
     function RegistroE310New : TRegistroSEFE310;
@@ -125,6 +130,7 @@ type
     property RegistroE065Count: Integer read FRegistroE065Count write FRegistroE065Count;
     property RegistroE080Count: Integer read FRegistroE080Count write FRegistroE080Count;
     property RegistroE085Count: Integer read FRegistroE085Count write FRegistroE085Count;
+    property RegistroE120Count: Integer read FRegistroE120Count write FRegistroE120Count; 
     property RegistroE300Count: Integer read FRegistroE300Count write FRegistroE300Count;
     property RegistroE305Count: Integer read FRegistroE305Count write FRegistroE305Count;
     property RegistroE310Count: Integer read FRegistroE310Count write FRegistroE310Count;
@@ -838,6 +844,7 @@ begin
          WriteRegistroE050(FRegistroE001);
          WriteRegistroE060(FRegistroE001);
          WriteRegistroE080(FRegistroE001);
+         WriteRegistroE120(FRegistroE001); 
          WriteRegistroE300(FRegistroE001);
          //WriteRegistroE500(FRegistroE001);
       end;
@@ -1144,6 +1151,53 @@ begin
    end;
 end;
 
+procedure TBloco_E.WriteRegistroE120(RegE001: TRegistroSEFE001);
+ 
+var
+  intFor : Integer;
+  RegE120: TRegistroSEFE120;
+  wCOP: String;
+begin
+   for intFor := 0 to RegE001.RegistroE120.Count - 1 do
+   begin
+      RegE120 := TRegistroSEFE120(RegE001.RegistroE120.Items[intFor]);
+      with RegE120 do
+      begin
+          wCOP := CalculaCOP(COD_NAT);
+          Add( LFill('E120')                                     +
+               LFill(ConvertIndiceOperacao(IND_OPER))            +
+               LFill(ConvertTIndiceEmissao(IND_EMIT))            +
+               LFill(COD_PART)                                   +
+               LFill(COD_MUN_SERV)                               +
+               LFill(ConvertSEFIIDocFiscalReferenciado(COD_MOD)) +
+               LFill(ConvertCodigoSituacao(COD_SIT))             +
+               LFill(SER)                                        +
+               LFill(SUB,2)                                      +
+               LFill(NUM_DOC,0)                                  +
+               LFill(CHV_CTE)                                    +
+               LFill(DT_EMIS)                                    +
+               LFill(DT_DOC)                                     +
+               LFill(wCOP)                                       +
+               LFill(NUM_LCTO,0)                                 +
+               LFill(ConvertIndicePagamento(IND_PGTO))           +
+               LFill(VL_CONT,2)                                  +
+               LFill(COD_NAT)                                    +
+               LFill(VL_BC_ICMS,2)                               +
+               LFill(AL_ICMS,2)                                  +
+               LFill(VL_ICMS,2)                                  +
+               LFill(VL_ICMS_ST,2, 2, True)                      +
+               LFill(VL_ISNT_ICMS,2)                             +
+               LFill(VL_OUT_ICMS,2)                              +
+               LFill(COD_INF_OBS));
+      end;
+
+      RegistroE990.QTD_LIN_E := RegistroE990.QTD_LIN_E + 1;
+   end;
+
+   FRegistroE120Count := FRegistroE120Count + RegE001.RegistroE120.Count;
+end;
+
+
 procedure TBloco_E.WriteRegistroE300(RegE001: TRegistroSEFE001);
 var
   intFor : Integer;
@@ -1415,6 +1469,7 @@ begin
    FRegistroE060Count := 0;
    FRegistroE080Count := 0;
    FRegistroE085Count := 0;
+   FRegistroE120Count := 0; 
    FRegistroE300Count := 0;
    FRegistroE990.QTD_LIN_E := 0;
 end;
@@ -1433,6 +1488,12 @@ end;
 function TBloco_E.RegistroE020New: TRegistroSEFE020;
 begin
    Result := FRegistroE001.RegistroE020.New(FRegistroE001);
+end;
+
+ 
+function TBloco_E.RegistroE120New: TRegistroSEFE120;
+begin
+   Result := FRegistroE001.RegistroE120.New(FRegistroE001);
 end;
 
 procedure TBloco_E.LimpaRegistros;

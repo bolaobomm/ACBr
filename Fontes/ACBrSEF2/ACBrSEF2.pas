@@ -36,6 +36,8 @@
 |*
 |* 23/08/2013: Juliana Tamizou
 |*  - Distribuição da Primeira Versao
+|* 06/05/2013: Juliano Rosa
+|*  - Inclusão Registro E120
 *******************************************************************************}
 
 unit ACBrSEF2;
@@ -850,6 +852,16 @@ begin
         begin
           REG_BLC := 'E085';
           QTD_REG_BLC := Bloco_E.RegistroE085Count;
+        end;
+      end;
+
+
+      if Bloco_E.RegistroE120Count > 0 then
+      begin
+        with New do
+        begin
+          REG_BLC := 'E120';
+          QTD_REG_BLC := Bloco_E.RegistroE120Count;
         end;
       end;
 
