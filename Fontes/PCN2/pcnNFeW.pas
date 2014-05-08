@@ -2104,7 +2104,7 @@ begin
       if not ValidarUF(nfe.exporta.UFSaidaPais) then
         Gerador.wAlerta('ZA02', 'UFSaidaPais', DSC_UFEMBARQ, ERR_MSG_INVALIDO);
       Gerador.wCampo(tcStr, 'ZA03', 'xLocExporta ', 01, 60, 1, nfe.exporta.xLocExporta, DSC_XLOCEMBARQ);
-      Gerador.wCampo(tcStr, 'ZA04', 'xLocDespacho', 01, 60, 1, nfe.exporta.xLocDespacho, DSC_XLOCDESP);
+      Gerador.wCampo(tcStr, 'ZA04', 'xLocDespacho', 01, 60, 0, nfe.exporta.xLocDespacho, DSC_XLOCDESP);
       Gerador.wGrupo('/exporta');
     end;
   end
