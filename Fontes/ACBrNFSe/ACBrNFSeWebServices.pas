@@ -1726,15 +1726,19 @@ begin
  if (TNFSeCancelarNfse(Self).FNumeroNFSe = '') then
    TNFSeCancelarNfse(Self).FNumeroNFSe      := TNFSeCancelarNfse(Self).FNotasFiscais.Items[0].NFSe.Numero;
  if (TNFSeCancelarNfse(Self).FCNPJ = '') then
-   if FProvedor = proDigifred then
+ begin
+   if (FProvedor = proDigifred) or (FProvedor = pro4R) then
     TNFSeCancelarNfse(Self).FCNPJ            := SomenteNumeros(TNFSeCancelarNfse(Self).FNotasFiscais.Items[0].NFSe.Prestador.Cnpj)
    else
     TNFSeCancelarNfse(Self).FCNPJ            := SomenteNumeros(TNFSeCancelarNfse(Self).FNotasFiscais.Items[0].NFSe.PrestadorServico.IdentificacaoPrestador.Cnpj);
+ end;
  if (TNFSeCancelarNfse(Self).FIM = '') then
-  if FProvedor = proDigifred then
+ begin
+  if (FProvedor = proDigifred) or (FProvedor = pro4R) then
     TNFSeCancelarNfse(Self).FIM              := TNFSeCancelarNfse(Self).FNotasFiscais.Items[0].NFSe.Prestador.InscricaoMunicipal
   else
     TNFSeCancelarNfse(Self).FIM              := TNFSeCancelarNfse(Self).FNotasFiscais.Items[0].NFSe.PrestadorServico.IdentificacaoPrestador.InscricaoMunicipal;
+ end;
  if (TNFSeCancelarNfse(Self).MotivoCancelamento = '') then
    TNFSeCancelarNfse(Self).MotivoCancelamento:= TNFSeCancelarNfse(Self).FNotasFiscais.Items[0].NFSe.MotivoCancelamento;
 
