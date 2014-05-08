@@ -138,6 +138,21 @@ begin
         else if Cmd.Metodo = 'limparmemoria' then
            Cmd.Resposta := BoolToStr( LimparMemoria, true )
 
+        else if Cmd.Metodo = 'carregarimagem'  then
+        begin
+           CarregarImagem(Cmd.Params(0),
+                          Cmd.Params(1),
+                          StrToBoolDef(Trim(Cmd.Params(2)),true));
+        end
+
+        else if Cmd.Metodo = 'imprimirimagem'  then
+        begin
+           ImprimirImagem(StrToInt(Cmd.Params(0)),
+                          StrToInt(Cmd.Params(1)),
+                          StrToInt(Cmd.Params(2)),
+                          Cmd.Params(3));
+        end
+
         ELSE
            raise Exception.Create('Comando inválido ('+Cmd.Comando+')') ;
 
