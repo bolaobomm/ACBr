@@ -635,7 +635,7 @@ begin
      begin
         with RegD001.RegistroD100.Items[intFor] do
         begin
-          if DT_INI < EncodeDate(2011,07,01) then
+          if DT_INI < EncodeDate(2012,07,01) then
           begin
              case IND_FRT of
                tfPorContaTerceiros:    strIND_FRT := '0';
@@ -674,7 +674,7 @@ begin
           booConsiderarComoValorNuloParaInutilizado := (strCOD_SIT = '05');
           ChaveEletronicaCTe := IfThen(booConsiderarComoValorNuloParaInutilizado, '', CHV_CTE);
 
-          strLinha := LFill('D100') +
+          strLinha := LFill('+') +
                       LFill( Integer(IND_OPER), 0 ) +
                       LFill( Integer(IND_EMIT), 0 ) +
                       LFill( COD_PART ) +
