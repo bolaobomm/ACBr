@@ -36,7 +36,11 @@
 
 {******************************************************************************
 |* Historico
-|*
+|
+|* 0.0.13b - 07/05/2014: Paulo Monteiro
+|*  [*] Adicionado algumas propriedades na exportação para pdf seguindo o padrão
+|*      dos outros componentes e setando o frxPDFExport.Background := false;
+|*      isso faz diminuir 70% do tamanho do pdf
 |* 31/07/2011: Isaque Pinheiro
 |*  - Inicio do desenvolvimento
 |*
@@ -52,7 +56,7 @@ uses
   frxClass, frxDBSet, frxBarcode, frxExportHTML, frxExportPDF;
 
 const
-  CACBrBoletoFCFR_Versao = '0.0.13a';
+  CACBrBoletoFCFR_Versao = '0.0.13b';
 
 type
   EACBrBoletoFCFR = class(Exception);
