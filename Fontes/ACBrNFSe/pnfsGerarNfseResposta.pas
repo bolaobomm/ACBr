@@ -241,21 +241,18 @@ begin
        (leitor.rExtrai(1, 'EnviarLoteRpsSincronoResposta') <> '') then
     begin
 
-      // alterado por joel takei 04/07/2013
-//      if leitor.rExtrai(1, 'EnviarLoteRpsSincronoResposta') <> '' then
-//      begin
-        i := 0;
-        ListaNfse.FCompNfse.Add;
-        ListaNfse.FCompNfse[i].FNfse.NumeroLote := Leitor.rCampo(tcStr, 'NumeroLote');
-        if trim(ListaNfse.FCompNfse[i].FNfse.NumeroLote) = '' then
-          ListaNfse.FCompNfse[i].FNfse.NumeroLote := '0';
+      i := 0;
+      ListaNfse.FCompNfse.Add;
 
-        ListaNfse.FCompNfse[i].FNfse.dhRecebimento := Leitor.rCampo(tcDatHor, 'DataRecebimento');
+      ListaNfse.FCompNfse[i].FNfse.NumeroLote := Leitor.rCampo(tcStr, 'NumeroLote');
+      if trim(ListaNfse.FCompNfse[i].FNfse.NumeroLote) = '' then
+        ListaNfse.FCompNfse[i].FNfse.NumeroLote := '0';
 
-        ListaNfse.FCompNfse[i].FNfse.Protocolo     := Leitor.rCampo(tcStr, 'Protocolo');
-        if trim(ListaNfse.FCompNfse[i].FNfse.Protocolo) = '' then
-          ListaNfse.FCompNfse[i].FNfse.Protocolo := '0';
-//      end;
+      ListaNfse.FCompNfse[i].FNfse.dhRecebimento := Leitor.rCampo(tcDatHor, 'DataRecebimento');
+
+      ListaNfse.FCompNfse[i].FNfse.Protocolo     := Leitor.rCampo(tcStr, 'Protocolo');
+      if trim(ListaNfse.FCompNfse[i].FNfse.Protocolo) = '' then
+        ListaNfse.FCompNfse[i].FNfse.Protocolo := '0';
 
       // Ler a Lista de NFSe
       if leitor.rExtrai(2, 'ListaNfse') <> '' then
@@ -263,6 +260,9 @@ begin
         while (Leitor.rExtrai(3, 'CompNfse', '', i + 1) <> '') or
               (Leitor.rExtrai(3, 'ComplNfse', '', i + 1) <> '') do
         begin
+          if I > 0 then
+            ListaNfse.FCompNfse.Add;
+
           // Grupo da TAG <Nfse> *************************************************
           if Leitor.rExtrai(4, 'Nfse') <> ''
            then begin
