@@ -2264,7 +2264,7 @@ begin
                LFill( DT_DOC ) +
                LFill( CRO,3 ) +
                LFill( CRZ,6 ) +
-               LFill( NUM_COO_FIN,6  ) +
+               IfThen( DT_INI >= EncodeDate(2013,10,01), LFill( NUM_COO_FIN, 9) , LFill( NUM_COO_FIN, 6) ) +
                LFill( GT_FIN,0,2  ) +
                LFill( VL_BRT,0,2  ) ) ;
         end;
@@ -2391,7 +2391,7 @@ begin
           Add( LFill('C460') +
                LFill( COD_MOD ) +
                LFill( strCOD_SIT ) +
-               LFill( NUM_DOC) +
+               IfThen( DT_INI >= EncodeDate(2013,10,01), LFill( NUM_DOC, 9) , LFill( NUM_DOC, 6) ) +
                LFill( DT_DOC, 'ddmmyyyy' ) +
                LFill( VL_DOC,0,2, true ) +
                LFill( VL_PIS,0,2, true ) +
@@ -2497,6 +2497,10 @@ var
 begin
   if Assigned( RegC001.RegistroC495 ) then
   begin
+     if (DT_INI >= EncodeDate(2014,01,01)) and
+     ( FBloco_0.Registro0000.UF = 'BA') then
+       Check(False, 'A partir de 01/01/2014, os contribuintes situados na Bahia obrigados a este registro devem apresentar o registro C425.');
+                        ;
      for intFor := 0 to RegC001.RegistroC495.Count - 1 do
      begin
         with RegC001.RegistroC495.Items[intFor] do
@@ -2592,7 +2596,7 @@ begin
                 LFill( SER ) +
                 LFill( SUB ) +
                 LFill( COD_CONS ) +
-                LFill( NUM_DOC ) +
+                LFill( NUM_DOC, 9 ) +
                 LFill( DT_DOC ) +
                 LFill( DT_E_S ) +
                 LFill( VL_DOC,0,2 ) +
