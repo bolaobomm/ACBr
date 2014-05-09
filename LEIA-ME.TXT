@@ -121,10 +121,24 @@ achadas em: http://kylixlibs.sourceforge.net
 5. INSTALAÇÃO no DELPHI / KYLIX / Lazarus
 ===========================================
 
-ATENÇAO - Caso tenha o pacote ACBr_CLX ou ACBr_VCL já instalado no Delphi, REMOVA TODOS 
+  ## PRÉ-INSTALAÇÃO 
+- ATENÇÃO - Caso tenha o pacote ACBr_CLX ou ACBr_VCL já instalado no Delphi, REMOVA TODOS 
 os componentes do ACBr e TODAS as pastas do ACBr do Library Path, pois a partir de Maio 
 de 2010 a estrutura de pastas do componente mudou e os pacotes ACBr_CLX e ACBr_VCL deixaram 
-de existir sendo divididos em pacotes com os nomes ACBrDiversos, ACBrSerial, ACBrTCP, etc.
+de existir sendo divididos em pacotes com nomes como ACBrDiversos, ACBrSerial, ACBrTCP, etc.
+
+  ## INSTALAÇÃO AUTOMÁTICA
+  Se estiver utilizando o Delphi numa versão igual ou superior ao 7 incentivamos que use o 
+programa ACBrInstall para fazer a instalação automática. Ele se encontra na pasta trunk, 
+raiz do projeto. Um tópico falando sobre suas características se encontra no seguinte endereço:
+http://www.projetoacbr.com.br/forum/index.php?/files/file/7-acbrinstall-for/
+  Pedimos no entanto que, caso tenha problemas ao instalar, não utilize esse tópico para
+tirar dúvidas, mas crie novos tópicos no fórum com o seu problema específico.
+
+  Em alguns casos, pode ser que seja sugerido fazer a instalação manual. Neste caso, abaixo
+estão as orientações para como se deve proceder.
+
+  ## INSTALAÇÃO MANUAL
 
   1. Descompacte o arquivo .ZIP na pasta de sua preferência ou faça o checkout
      via SVN - http://acbr.sourceforge.net/drupal/?q=node/37
