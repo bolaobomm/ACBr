@@ -38,6 +38,8 @@
 |*  - Distribuição da Primeira Versao
 |* 06/05/2013: Juliano Rosa
 |*  - Inclusão Registro E120
+|* 09/05/2013: Juliano Rosa
+|*  - Ajustes Registro E120
 *******************************************************************************}
 
 unit ACBrSEF2_BlocoE_1;
@@ -1172,7 +1174,7 @@ begin
                LFill(ConvertSEFIIDocFiscalReferenciado(COD_MOD)) +
                LFill(ConvertCodigoSituacao(COD_SIT))             +
                LFill(SER)                                        +
-               LFill(SUB,2)                                      +
+               LFill(SUB,0,true)                                 +
                LFill(NUM_DOC,0)                                  +
                LFill(CHV_CTE)                                    +
                LFill(DT_EMIS)                                    +
@@ -1183,7 +1185,7 @@ begin
                LFill(VL_CONT,2)                                  +
                LFill(COD_NAT)                                    +
                LFill(VL_BC_ICMS,2)                               +
-               LFill(AL_ICMS,2)                                  +
+               LFill(AL_ICMS,2,2,true)                           +
                LFill(VL_ICMS,2)                                  +
                LFill(VL_ICMS_ST,2, 2, True)                      +
                LFill(VL_ISNT_ICMS,2)                             +

@@ -36,6 +36,10 @@
 |*
 |* 23/08/2013: Juliana Tamizou
 |*  - Distribuição da Primeira Versao
+|* 09/05/2014: Juliano Rosa
+|*  - Ajuste COD_PAIS para 5 posições (Registro0150)
+|*  - Ajuste StrToIntDef(COD_BF_ISS) (Registro0025)
+|*  - Ajuste StrToIntDef(wIND_RT,0)  (Registro0030)
 *******************************************************************************}
 
 unit ACBrSEF2_Bloco0_1;
@@ -399,7 +403,7 @@ begin
             Add( LFill('0150')    +
                  LFill(COD_PART)  +
                  LFill(NOME)      +
-                 LFill(COD_PAIS)  +
+                 LFill(COD_PAIS,5)  +
                  LFill(CNPJ)      +
                  LFill(CPF)       +
                  LFill('')        +
@@ -739,7 +743,8 @@ begin
       begin
          Add( LFill('0025')     +
               LFill(ConvertSEFIIBeniFiscalICMS(COD_BF_ICMS))+
-              LFill(Integer(COD_BF_ISS),0) );
+              LFill(StrToIntDef(COD_BF_ISS,0),0) //LFill(Integer(COD_BF_ISS),0)
+             );
 
          Registro0990.QTD_LIN_0 := Registro0990.QTD_LIN_0 + 1;
       end;
@@ -876,7 +881,7 @@ begin
               LFill(wPRF_RI, 0)  +
               LFill(wIND_EC,0)           +
               LFill(Integer(IND_ISS), 0) +
-              LFill(Integer(wIND_RT), 0, true)  +
+              LFill(StrToIntDef(wIND_RT,0), 0, true)  +//LFill(Integer(wIND_RT), 0, true)
               LFill(Integer(IND_ICMS),0) +
               LFill(Integer(IND_ST),0)   +
               LFill(Integer(IND_AT),0)   +
