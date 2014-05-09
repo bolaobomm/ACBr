@@ -345,7 +345,7 @@ type
 
 implementation
 
-uses ACBrSpedUtils, ACBrUtil;
+uses ACBrSpedUtils, ACBrUtil, strutils;
 
 { TBloco_C }
 
