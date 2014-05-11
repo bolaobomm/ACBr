@@ -37,7 +37,9 @@
 |* 23/08/2013: Juliana Tamizou
 |*  - Distribuição da Primeira Versao
 |* 06/05/2013: Juliano Rosa
-|*  - Inclusão Registro E120           
+|*  - Inclusão Registro E120
+|* 09/05/2013: Juliano Rosa
+|*  - Inclusão Registros APURAÇÃO DO IPI E500, E520, E525, E540, E560
 *******************************************************************************}
 
 unit ACBrSEF2_BlocoE;
@@ -64,8 +66,12 @@ type
   TRegistroSEFE340List = class;
   TRegistroSEFE350List = class;
   TRegistroSEFE360List = class;
-
-
+  TRegistroSEFE500List = class;
+  TRegistroSEFE520List = class;
+  TRegistroSEFE525List = class;
+  TRegistroSEFE540List = class;
+  TRegistroSEFE560List = class;
+                 
  //LINHA E001: ABERTURA DO BLOCO E
 
   { TRegistroSEFE001 }
@@ -80,6 +86,7 @@ type
     fRegistroE080: TRegistroSEFE080List;
     fRegistroE120: TRegistroSEFE120List;
     fRegistroE300: TRegistroSEFE300List;
+    fRegistroE500: TRegistroSEFE500List;  
   public
     constructor Create; virtual; /// Create
     destructor Destroy; override; /// Destroy
@@ -88,8 +95,9 @@ type
     property RegistroE050: TRegistroSEFE050List read fRegistroE050 write fRegistroE050;
     property RegistroE060: TRegistroSEFE060List read fRegistroE060 write fRegistroE060;
     property RegistroE080: TRegistroSEFE080List read fRegistroE080 write fRegistroE080;
-    property RegistroE120: TRegistroSEFE120List read fRegistroE120 write fRegistroE120; 
+    property RegistroE120: TRegistroSEFE120List read fRegistroE120 write fRegistroE120;
     property RegistroE300: TRegistroSEFE300List read fRegistroE300 write fRegistroE300;
+    property RegistroE500: TRegistroSEFE500List read fRegistroE500 write fRegistroE500;
   end;
 
   TRegistroSEFE003 = class
@@ -792,8 +800,6 @@ type
     property VL_99  : Double  read fVL_99 write fVL_99;    //  99- Valor total do ICMS da substituição tributária nas saídas para outros estados
   end;
 
-    // Registro E330 - Lista
-
   { TRegistroSEFE340List }
 
   TRegistroSEFE340List = class(TACBrSEFIIRegistros)
@@ -878,6 +884,171 @@ type
     property notas[Index: Integer]: TRegistroSEFE360 read Getnotas write SetNotas;
   end;
 
+  //LINHA E500: APURAÇÃO DO IPI (MODELO 8)
+  TRegistroSEFE500 = class
+  private
+    fDT_INI : TDateTime;
+    fDT_FIN : TDateTime;
+    fRegistroE520: TRegistroSEFE520List;
+    fRegistroE525: TRegistroSEFE525List;
+    fRegistroE540: TRegistroSEFE540List;
+    fRegistroE560: TRegistroSEFE560List;
+  public
+    constructor Create; virtual;
+    destructor Destroy; override;
+    property DT_INI : TDateTime read	fDT_INI write fDT_INI;
+    property DT_FIN : TDateTime read  fDT_FIN write fDT_FIN;
+    property RegistroE520: TRegistroSEFE520List read fRegistroE520 write fRegistroE520;
+    property RegistroE525: TRegistroSEFE525List read fRegistroE525 write fRegistroE525;
+    property RegistroE540: TRegistroSEFE540List read fRegistroE540 write fRegistroE540;
+    property RegistroE560: TRegistroSEFE560List read fRegistroE560 write fRegistroE560;
+  end;
+
+  TRegistroSEFE500List = class(TACBrSEFIIRegistros)
+  private
+    function GetNotas(Index: Integer): TRegistroSEFE500;
+    procedure SetNotas(Index: Integer; const Value: TRegistroSEFE500);
+  public
+    function New(AOwner: TRegistroSEFE001): TRegistroSEFE500;
+    property notas[Index: Integer]: TRegistroSEFE500 read Getnotas write SetNotas;
+  end;
+
+  //LINHA E520: CONSOLIDAÇÃO POR CFOP DOS VALORES DO IPI
+  TRegistroSEFE520 = class
+  private
+     fVL_CONT	    : Double; //Valor contábil, consolidado por CFOP	N	-	2				valor contábil
+     fCFOP	      : integer;//Código Fiscal de Operações e Prestações, conforme a tabela externa indicada no item 3.3.1	N	4	-		O	C	CFOP
+     fVL_BC_IPI   : Double; //Valor da base de cálculo do IPI, consolidado por CFOP	N	-	2				IPI - Base de Cálculo
+     fVL_IPI	    : Double; //Valor do IPI creditado/debitado, consolidado por CFOP	N	-	2				IPI - Creditado
+     fVL_ISNT_IPI	: Double; //Valor das operações isentas ou não-tributadas pelo IPI, consolidado por CFOP	N	-	2
+     fVL_OUT_IPI	: Double; //Valor das outras operações do IPI, consolidado por CFOP	N	-	2
+  public
+    property VL_CONT     : Double  read	fVL_CONT      write fVL_CONT;
+    property CFOP        : integer read	fCFOP         write fCFOP;
+    property VL_BC_IPI   : Double  read	fVL_BC_IPI    write fVL_BC_IPI;
+    property VL_IPI      : Double  read	fVL_IPI       write fVL_IPI;
+    property VL_ISNT_IPI : Double  read	fVL_ISNT_IPI  write fVL_ISNT_IPI;
+    property VL_OUT_IPI  : Double  read	fVL_OUT_IPI   write fVL_OUT_IPI ;
+  end;
+
+  TRegistroSEFE520List = class(TACBrSEFIIRegistros)
+  private
+    function GetNotas(Index: Integer): TRegistroSEFE520;
+    procedure SetNotas(Index: Integer; const Value: TRegistroSEFE520);
+  public
+    function New(AOwner: TRegistroSEFE500): TRegistroSEFE520;
+    property notas[Index: Integer]: TRegistroSEFE520 read Getnotas write SetNotas;
+  end;
+
+//LINHA E525: TOTALIZAÇÃO DAS OPERAÇÕES DO IPI
+  TRegistroSEFE525 = class
+  private
+    fIND_TOT	   : integer;//"Indicador de totalização: 1- Entradas internas 2- Entradas interestaduais 3- Entradas do exterior 4- Entradas do período (1 + 2 + 3) 5- Saídas internas 6- Saídas interestaduais 7- Saídas para o exterior 8- Saídas do período (5 + 6 + 7)"	N	1	-		O	C
+    fVL_CONT	   : Double;//Valor contábil	N	-	2				valor contábil
+    fVL_BC_IPI   : Double;//	Valor da base de cálculo do IPI	N	-	2				Base de Cálculo
+    fVL_IPI	     : Double;//Valor do IPI creditado/debitado	N	-	2				IPI Creditado
+    fVL_ISNT_IPI : Double;//	Valor das operações isentas ou não-tributadas pelo IPI	N	-	2				Operações/Prestações Isentas/não-Tributadas
+    fVL_OUT_IPI	 : Double;//Valor das outras operações do IPI	N	-	2				Outras
+    public
+      property IND_TOT        : integer read fIND_TOT       write fIND_TOT;
+      property VL_CONT        : Double  read fVL_CONT       write fVL_CONT;
+      property VL_BC_IPI      : Double  read fVL_BC_IPI     write fVL_BC_IPI;
+      property VL_IPI         : Double  read fVL_IPI        write fVL_IPI;
+      property VL_ISNT_IPI    : Double  read fVL_ISNT_IPI   write fVL_ISNT_IPI;
+      property VL_OUT_IPI     : Double  read fVL_OUT_IPI    write fVL_OUT_IPI;
+    end;
+
+  // Registro E525 - Lista
+  TRegistroSEFE525List = class(TACBrSEFIIRegistros)
+  private
+    function GetNotas(Index: Integer): TRegistroSEFE525;
+    procedure SetNotas(Index: Integer;  const Value: TRegistroSEFE525);
+  public
+    function New(AOwner: TRegistroSEFE500): TRegistroSEFE525;
+    property notas[Index: Integer]: TRegistroSEFE525 read Getnotas write SetNotas;
+  end;
+
+  //LINHA E540: SALDOS DA APURAÇÃO DO IPI
+  TRegistroSEFE540 = class
+  private
+    fVL_01 : Double;
+    fVL_02 : Double;
+    fVL_03 : Double;
+    fVL_04 : Double;
+    fVL_05 : Double;
+    fVL_06 : Double;
+    fVL_07 : Double;
+    fVL_09 : Double;
+    fVL_10 : Double;
+    fVL_11 : Double;
+    fVL_12 : Double;
+    fVL_13 : Double;
+    fVL_08 : Double;
+    fVL_16 : Double;
+    fVL_17 : Double;
+  public
+    property VL_01  : Double  read fVL_01 write fVL_01;    // 001- Valor dos créditos por entradas do mercado nacional
+    property VL_02  : Double  read fVL_02 write fVL_02;    // 002- Valor dos créditos por entradas do mercado externo
+    property VL_03  : Double  read fVL_03 write fVL_03;    // 003- Valor dos créditos por saídas para o mercado externo
+    property VL_04  : Double  read fVL_04 write fVL_04;    // 004- Valor dos estornos de débitos
+    property VL_05  : Double  read fVL_05 write fVL_05;    // 005- Valor dos outros créditos
+    property VL_06  : Double  read fVL_06 write fVL_06;    // 006- Valor subtotal (001 + 002 + 003 + 004 + 005)
+    property VL_07  : Double  read fVL_07 write fVL_07;    // 007- Saldo credor do período anterior
+    property VL_09  : Double  read fVL_09 write fVL_09;    // 009- Valor dos débitos por saídas para o mercado nacional
+    property VL_10  : Double  read fVL_10 write fVL_10;    // 010- Valor dos estornos de créditos
+    property VL_11  : Double  read fVL_11 write fVL_11;    // 011- Valor dos ressarcimentos de créditos
+    property VL_12  : Double  read fVL_12 write fVL_12;    // 012- Valor dos outros débitos
+    property VL_13  : Double  read fVL_13 write fVL_13;    // 014- Débito total (= 013), onde '013- Valor total dos débitos (009 + 010 + 011 + 012)'
+    property VL_08  : Double  read fVL_08 write fVL_08;    // 015- Crédito total (= 008), onde '008- Valor total dos créditos (006 + 007)'
+    property VL_16  : Double  read fVL_16 write fVL_16;    // 016- Saldo devedor (014 – 015)
+    property VL_17  : Double  read fVL_17 write fVL_17;    // 017- Saldo credor (015 – 014)
+  end;
+
+  { TRegistroSEFE540List }
+
+  TRegistroSEFE540List = class(TACBrSEFIIRegistros)
+  private
+    function GetNotas(Index: Integer): TRegistroSEFE540;
+    procedure SetNotas(Index: Integer;  const Value: TRegistroSEFE540);
+  public
+    function New(AOwner: TRegistroSEFE500): TRegistroSEFE540;
+    property notas[Index: Integer]: TRegistroSEFE540 read Getnotas write SetNotas;
+  end;
+
+  TRegistroSEFE560 = class
+  private
+    fCOD_OR_IPI  : Integer;   //Código da obrigação do IPI a recolher	C	4	-
+    fPER_REF     : String;    //PER_REF	Período fiscal de referência	N	6	-		O
+    fCOD_REC_IPI : string;    //Código de receita do IPI, conforme a tabela externa indicada no item 3.3.1	N	4	-		O
+    fVL_IPI_REC	 : Double;    //Valor da obrigação a recolher	N	-	2		O
+    fDT_VCTO     : TDateTime;	//Data de vencimento da obrigação	N	8	-
+    fIND_DOC	   : integer;   //"Indicador da origem do processo vinculado à obrigação: 0- Processo judicial 1- Processo administrativo 2- PER/DCOMP 9- Outros"	N	1	-
+    fNUM_DOC	   : string;    //Número do documento, processo ou declaração vinculada à obrigação, se houver	C	-	-	25
+    fDESCR_AJ    : string;    //Descrição detalhada do ajuste	C	-	-	60
+    fCOD_INF_OBS : string;    //Código de referência à observação (campo 02 da Linha 0450)	C	-	-	9
+   public
+      property COD_OR_IPI  : Integer     read fCOD_OR_IPI     write fCOD_OR_IPI;
+      property PER_REF     : String      read fPER_REF        write fPER_REF;
+      property COD_REC_IPI : String      read fCOD_REC_IPI    write fCOD_REC_IPI;
+      property VL_IPI_REC  : Double      read fVL_IPI_REC     write fVL_IPI_REC;
+      property DT_VCTO     : TDateTime   read fDT_VCTO        write fDT_VCTO;
+      property IND_DOC     : Integer     read fIND_DOC        write fIND_DOC;
+      property NUM_DOC     : String      read fNUM_DOC        write fNUM_DOC;
+      property DESCR_AJ    : String      read fDESCR_AJ       write fDESCR_AJ;
+      property COD_INF_OBS : String      read fCOD_INF_OBS    write fCOD_INF_OBS;
+    end;
+
+  // Registro E560 - Lista
+  TRegistroSEFE560List = class(TACBrSEFIIRegistros)
+  private
+    function GetNotas(Index: Integer): TRegistroSEFE560;
+    procedure SetNotas(Index: Integer;  const Value: TRegistroSEFE560);
+  public
+    function New(AOwner: TRegistroSEFE500): TRegistroSEFE560;
+    property notas[Index: Integer]: TRegistroSEFE560 read Getnotas write SetNotas;
+  end;
+
+  ////////////////////////////////////////////////////
 
   { TRegistroSEFE990 }
 
@@ -925,12 +1096,12 @@ end;
 
 constructor TRegistroSEFE120.Create(AOwner: TRegistroSEFE001);
 begin
- 
+
 end;
 
 destructor TRegistroSEFE120.Destroy;
 begin
- 
+
 end;
 
 
@@ -976,7 +1147,7 @@ begin
   Put(Index, Value);
 end;
 
- 
+
 procedure TRegistroSEFE120List.SetItem(Index: Integer;
   const Value: TRegistroSEFE120);
 begin
@@ -1019,6 +1190,82 @@ procedure TRegistroSEFE360List.SetNotas(Index: Integer;
 begin
   Put(Index, Value);
 end;
+
+procedure TRegistroSEFE500List.SetNotas(Index: Integer;
+  const Value: TRegistroSEFE500);
+begin
+  Put(Index, Value);
+end;
+
+function TRegistroSEFE500List.GetNotas(Index: Integer): TRegistroSEFE500;
+begin
+  Result := TRegistroSEFE500(Get(Index));
+end;
+
+function TRegistroSEFE520List.GetNotas(Index: Integer): TRegistroSEFE520;
+begin
+  Result := TRegistroSEFE520(Get(Index));
+end;
+
+procedure TRegistroSEFE520List.SetNotas(Index: Integer;
+  const Value: TRegistroSEFE520);
+begin
+  Put(Index, Value);
+end;
+
+function TRegistroSEFE520List.New(AOwner: TRegistroSEFE500): TRegistroSEFE520;
+begin
+   Result := TRegistroSEFE520.Create;
+   Add(Result);
+end;
+
+function TRegistroSEFE525List.GetNotas(Index: Integer): TRegistroSEFE525;
+begin
+  Result := TRegistroSEFE525(Get(Index));
+end;
+
+procedure TRegistroSEFE525List.SetNotas(Index: Integer;
+  const Value: TRegistroSEFE525);
+begin
+  Put(Index, Value);
+end;
+
+function TRegistroSEFE525List.New(AOwner: TRegistroSEFE500): TRegistroSEFE525;
+begin
+   Result := TRegistroSEFE525.Create;
+   Add(Result);
+end;
+
+function TRegistroSEFE540List.GetNotas(Index: Integer): TRegistroSEFE540;
+begin
+  Result := TRegistroSEFE540(Get(Index));
+end;
+
+procedure TRegistroSEFE540List.SetNotas(Index: Integer;
+  const Value: TRegistroSEFE540);
+begin
+  Put(Index, Value);
+end;
+
+function TRegistroSEFE540List.New(AOwner: TRegistroSEFE500): TRegistroSEFE540;
+begin
+  if Self.Count <> 0 then
+     raise Exception.Create('Já existe o registro E540 para o periodo!' );
+  Result := TRegistroSEFE540.Create;
+  Add(Result);
+end;
+
+procedure TRegistroSEFE560List.SetNotas(Index: Integer;
+  const Value: TRegistroSEFE560);
+begin
+  Put(Index, Value);
+end;
+
+function TRegistroSEFE560List.GetNotas(Index: Integer): TRegistroSEFE560;
+begin
+  Result := TRegistroSEFE560(Get(Index));
+end;
+
 
 function TRegistroSEFE003List.GetItem(Index: Integer): TRegistroSEFE003;
 begin
@@ -1066,7 +1313,7 @@ begin
   Result := TRegistroSEFE085(Get(Index));
 end;
 
- 
+
 function TRegistroSEFE120List.GetItem(Index: Integer): TRegistroSEFE120;
 begin
   Result := TRegistroSEFE120(Get(Index));
@@ -1156,7 +1403,7 @@ begin
    Add(Result);
 end;
 
- 
+
 function TRegistroSEFE120List.New(AOwner: TRegistroSEFE001): TRegistroSEFE120;
 begin
    Result := TRegistroSEFE120.Create(AOwner);
@@ -1200,6 +1447,19 @@ begin
    Add(Result);
 end;
 
+function TRegistroSEFE500List.New(AOwner: TRegistroSEFE001): TRegistroSEFE500;
+begin
+   Result := TRegistroSEFE500.Create;
+   Add(Result);
+end;
+
+function TRegistroSEFE560List.New(AOwner: TRegistroSEFE500): TRegistroSEFE560;
+begin
+   Result := TRegistroSEFE560.Create;
+   Add(Result);
+end;
+
+
 { TRegistroSEFE060 }
 
 constructor TRegistroSEFE060.Create;
@@ -1224,6 +1484,7 @@ begin
    fRegistroE080 := TRegistroSEFE080List.Create;
    fRegistroE120 := TRegistroSEFE120List.Create; 
    fRegistroE300 := TRegistroSEFE300List.Create;
+   fRegistroE500 := TRegistroSEFE500List.Create;    
    IND_MOV := icSemConteudo;
 end;
 
@@ -1236,6 +1497,7 @@ begin
    fRegistroE080.Free;
    fRegistroE120.Free;
    fRegistroE300.Free;
+   fRegistroE500.Free;
    inherited;
 end;
 
@@ -1284,7 +1546,7 @@ begin
    FRegistroE305 := TRegistroSEFE305List.Create;
    FRegistroE310 := TRegistroSEFE310List.Create;
    FRegistroE330 := TRegistroSEFE330List.Create;
-//   FRegistroE340 := TRegistroSEFE340.Create;
+   FRegistroE340 := TRegistroSEFE340List.Create;
    FRegistroE350 := TRegistroSEFE350List.Create;
    FRegistroE360 := TRegistroSEFE360List.Create;
 end;
@@ -1294,7 +1556,7 @@ begin
    FRegistroE305.Free;
    FRegistroE310.Free;
    FRegistroE330.Free;
-//   FRegistroE340.Free;
+   FRegistroE340.Free;
    FRegistroE350.Free;
    FRegistroE360.Free;
    inherited Destroy;
@@ -1313,6 +1575,24 @@ constructor TRegistroSEFE003.Create(AOwner: TRegistroSEFE001);
 begin
 
 end;
+
+constructor TRegistroSEFE500.Create;
+begin
+   FRegistroE520 := TRegistroSEFE520List.Create;
+   FRegistroE525 := TRegistroSEFE525List.Create;
+   FRegistroE540 := TRegistroSEFE540List.Create;
+   FRegistroE560 := TRegistroSEFE560List.Create;
+end;
+
+destructor TRegistroSEFE500.Destroy;
+begin
+   FRegistroE520.Free;
+   FRegistroE525.Free;
+   FRegistroE540.Free;
+   FRegistroE560.Free;
+   inherited Destroy;
+end;
+
 
 end.
 

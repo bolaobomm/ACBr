@@ -30,7 +30,7 @@
 {              Praça Anita Costa, 34 - Tatuí - SP - 18270-410                  }
 {                                                                              }
 {******************************************************************************}
-
+                                                                     
 {******************************************************************************
 |* Historico
 |*
@@ -38,6 +38,9 @@
 |*  - Distribuição da Primeira Versao
 |* 06/05/2013: Juliano Rosa
 |*  - Inclusão Registro E120
+|* 09/05/2013: Juliano Rosa
+|*  - Só grava Bloco H se existir registro de inventário
+|*  - Correção contagem dos registros do Bloco E no Registro 9900
 *******************************************************************************}
 
 unit ACBrSEF2;
@@ -332,7 +335,8 @@ begin
     if fTipoArquivo = aSEF then
     begin
       WriteBloco_E;
-      WriteBloco_H;
+      if Bloco_H.RegistroH020Count > 0 then
+        WriteBloco_H;
     end;
     WriteBloco_9;
   finally
@@ -855,7 +859,6 @@ begin
         end;
       end;
 
-
       if Bloco_E.RegistroE120Count > 0 then
       begin
         with New do
@@ -865,12 +868,100 @@ begin
         end;
       end;
 
+      if Bloco_E.RegistroE300Count > 0 then
+      begin
+        with New do
+        begin
+          REG_BLC := 'E300';
+          QTD_REG_BLC := Bloco_E.RegistroE300Count;
+        end;
+      end;
+      if Bloco_E.RegistroE305Count > 0 then
+      begin
+        with New do
+        begin
+          REG_BLC := 'E305';
+          QTD_REG_BLC := Bloco_E.RegistroE305Count;
+        end;
+      end;
       if Bloco_E.RegistroE310Count > 0 then
       begin
         with New do
         begin
           REG_BLC := 'E310';
           QTD_REG_BLC := Bloco_E.RegistroE310Count;
+        end;
+      end;
+      if Bloco_E.RegistroE330Count > 0 then
+      begin
+        with New do
+        begin
+          REG_BLC := 'E330';
+          QTD_REG_BLC := Bloco_E.RegistroE330Count;
+        end;
+      end;
+      if Bloco_E.RegistroE340Count > 0 then
+      begin
+        with New do
+        begin
+          REG_BLC := 'E340';
+          QTD_REG_BLC := Bloco_E.RegistroE340Count;
+        end;
+      end;
+      if Bloco_E.RegistroE350Count > 0 then
+      begin
+        with New do
+        begin
+          REG_BLC := 'E350';
+          QTD_REG_BLC := Bloco_E.RegistroE350Count;
+        end;
+      end;
+      if Bloco_E.RegistroE360Count > 0 then
+      begin
+        with New do
+        begin
+          REG_BLC := 'E360';
+          QTD_REG_BLC := Bloco_E.RegistroE360Count;
+        end;
+      end;
+      if Bloco_E.RegistroE500Count > 0 then
+      begin
+        with New do
+        begin
+          REG_BLC := 'E500';
+          QTD_REG_BLC := Bloco_E.RegistroE500Count;
+        end;
+      end;
+      if Bloco_E.RegistroE520Count > 0 then
+      begin
+        with New do
+        begin
+          REG_BLC := 'E520';
+          QTD_REG_BLC := Bloco_E.RegistroE520Count;
+        end;
+      end;
+      if Bloco_E.RegistroE525Count > 0 then
+      begin
+        with New do
+        begin
+          REG_BLC := 'E525';
+          QTD_REG_BLC := Bloco_E.RegistroE525Count;
+        end;
+      end;
+      if Bloco_E.RegistroE540Count > 0 then
+      begin
+        with New do
+        begin
+          REG_BLC := 'E540';
+          QTD_REG_BLC := Bloco_E.RegistroE540Count;
+        end;
+      end;
+      if Bloco_E.RegistroE560Count > 0 then
+      begin
+        with New do
+        begin
+          REG_BLC := 'E560';
+          QTD_REG_BLC := Bloco_E.RegistroE560Count;
         end;
       end;
     end;

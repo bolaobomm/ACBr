@@ -40,6 +40,9 @@
 |*  - Inclusão Registro E120
 |* 09/05/2013: Juliano Rosa
 |*  - Ajustes Registro E120
+|*  - Inclusão Registros APURAÇÃO DO IPI E500, E520, E525, E540, E560 
+|*  - Correção RegistroE340New
+|*  - Ajustes WriteRegistroE305 wCOP e LFill nos campos IND_MRO, IND_OPER, QTD_LCTO
 *******************************************************************************}
 
 unit ACBrSEF2_BlocoE_1;
@@ -74,6 +77,11 @@ type
     FRegistroE350Count: Integer;
     FRegistroE360Count: Integer;
 
+    FRegistroE500Count: Integer;
+    FRegistroE520Count: Integer;
+    FRegistroE525Count: Integer;
+    FRegistroE540Count: Integer;
+    FRegistroE560Count: Integer;
 
     //procedure WriteRegistroE003(RegE001: TRegistroSEFE001);
     procedure WriteRegistroE020(RegE001: TRegistroSEFE001);
@@ -84,7 +92,8 @@ type
     procedure WriteRegistroE065(RegE060: TRegistroSEFE060);
     procedure WriteRegistroE080(RegE001: TRegistroSEFE001);
     procedure WriteRegistroE085(RegE080: TRegistroSEFE080);
-    procedure WriteRegistroE120(RegE001: TRegistroSEFE001); 
+    procedure WriteRegistroE120(RegE001: TRegistroSEFE001);
+
     procedure WriteRegistroE300(RegE001: TRegistroSEFE001);
     procedure WriteRegistroE305(RegE300: TRegistroSEFE300);
     procedure WriteRegistroE310(RegE300: TRegistroSEFE300);
@@ -92,6 +101,12 @@ type
     procedure WriteRegistroE340(RegE300: TRegistroSEFE300);
     procedure WriteRegistroE350(RegE300: TRegistroSEFE300);
     procedure WriteRegistroE360(RegE300: TRegistroSEFE300);
+
+    procedure WriteRegistroE500(RegE001: TRegistroSEFE001);
+    procedure WriteRegistroE520(RegE500: TRegistroSEFE500);
+    procedure WriteRegistroE525(RegE500: TRegistroSEFE500);
+    procedure WriteRegistroE540(RegE500: TRegistroSEFE500);
+    procedure WriteRegistroE560(RegE500: TRegistroSEFE500);
 
     procedure CriaRegistros;
     procedure LiberaRegistros;
@@ -110,13 +125,20 @@ type
     function RegistroE065New : TRegistroSEFE065;
     function RegistroE080New : TRegistroSEFE080;
     function RegistroE085New : TRegistroSEFE085;
-    function RegistroE120New : TRegistroSEFE120; 
+    function RegistroE120New : TRegistroSEFE120;
     function RegistroE300New : TRegistroSEFE300;
     function RegistroE305New : TRegistroSEFE305;
     function RegistroE310New : TRegistroSEFE310;
     function RegistroE330New : TRegistroSEFE330;
+    function RegistroE340New : TRegistroSEFE340;
     function RegistroE350New : TRegistroSEFE350;
     function RegistroE360New : TRegistroSEFE360;
+
+    function RegistroE500New : TRegistroSEFE500;
+    function RegistroE520New : TRegistroSEFE520;
+    function RegistroE525New : TRegistroSEFE525;
+    function RegistroE540New : TRegistroSEFE540;
+    function RegistroE560New : TRegistroSEFE560;
 
     procedure WriteRegistroE001;
     procedure WriteRegistroE990;
@@ -140,6 +162,12 @@ type
     property RegistroE340Count: Integer read FRegistroE340Count write FRegistroE340Count;
     property RegistroE350Count: Integer read FRegistroE350Count write FRegistroE350Count;
     property RegistroE360Count: Integer read FRegistroE360Count write FRegistroE360Count;
+
+    property RegistroE500Count: Integer read FRegistroE500Count write FRegistroE500Count;
+    property RegistroE520Count: Integer read FRegistroE520Count write FRegistroE520Count;
+    property RegistroE525Count: Integer read FRegistroE525Count write FRegistroE525Count;
+    property RegistroE540Count: Integer read FRegistroE540Count write FRegistroE540Count;
+    property RegistroE560Count: Integer read FRegistroE560Count write FRegistroE560Count;
   end;
 
 
@@ -848,7 +876,7 @@ begin
          WriteRegistroE080(FRegistroE001);
          WriteRegistroE120(FRegistroE001); 
          WriteRegistroE300(FRegistroE001);
-         //WriteRegistroE500(FRegistroE001);
+         WriteRegistroE500(FRegistroE001);
       end;
 
       RegistroE990.QTD_LIN_E := RegistroE990.QTD_LIN_E + 1;
@@ -1222,7 +1250,6 @@ begin
       WriteRegistroE350(RegE300);
       WriteRegistroE360(RegE300);
 
-
       RegistroE990.QTD_LIN_E := RegistroE990.QTD_LIN_E + 1;
    end;
 
@@ -1233,6 +1260,7 @@ procedure TBloco_E.WriteRegistroE305(RegE300: TRegistroSEFE300);
 var
    intFor : Integer;
    RegE305: TRegistroSEFE305;
+   wCOP : string;
 begin
    if Assigned(RegE300.RegistroE305) then
    begin
@@ -1241,13 +1269,14 @@ begin
          RegE305:= TRegistroSEFE305(RegE300.RegistroE305.Items[intFor]);
          with RegE305  do
          begin
+           wCOP := CalculaCOP(COP);
             Add( LFill('E305')         +
-                 LFill(IND_MRO)        +
-                 LFill(IND_OPER)       +
+                 LFill(IND_MRO,1)      +
+                 LFill(IND_OPER,1)     +
                  LFill(DT_DOC)         +
-                 LFill(COP)            +
+                 LFill(wCOP)           +
                  LFill(NUM_LCTO)       +
-                 LFill(QTD_LCTO)       +
+                 LFill(QTD_LCTO,1)     +
                  LFill(VL_CONT, 2)     +
                  LFill(VL_OP_ISS, 2)   +
                  LFill(VL_BC_ICMS, 2)  +
@@ -1398,10 +1427,10 @@ begin
                    LFill(VL_AJ, 2)    +
                    LFill(NUM_DA)      +
                    LFill(NUM_PROC)    +
-                   LFill(IND_PROC)    +
+                   LFill(IND_PROC,1)    +
                    LFill(DESC_PROC)   +
                    Lfill(COD_INF_OBS) +
-                   LFill(IND_AP));
+                   LFill(IND_AP,1));
               end;
          RegistroE990.QTD_LIN_E := RegistroE990.QTD_LIN_E + 1;
          end;
@@ -1441,6 +1470,150 @@ begin
   end;
 end;
 
+procedure TBloco_E.WriteRegistroE500(RegE001: TRegistroSEFE001);
+var
+  intFor : Integer;
+  RegE500: TRegistroSEFE500;
+begin
+   for intFor := 0 to RegE001.RegistroE500.Count - 1 do
+   begin
+      RegE500 := TRegistroSEFE500(RegE001.RegistroE500.Items[intFor]);
+      with RegE500 do
+      begin
+         Add( LFill('E500')         +
+              LFill(DT_INI)         +
+              LFill(DT_FIN));
+      end;
+
+      WriteRegistroE520(RegE500);
+      WriteRegistroE525(RegE500);
+      WriteRegistroE540(RegE500);
+      WriteRegistroE560(RegE500);
+
+      RegistroE990.QTD_LIN_E := RegistroE990.QTD_LIN_E + 1;
+   end;
+
+   FRegistroE500Count := FRegistroE500Count + RegE001.RegistroE500.Count;
+end;
+
+procedure TBloco_E.WriteRegistroE520(RegE500: TRegistroSEFE500);
+var
+   intFor : Integer;
+   RegE520: TRegistroSEFE520;
+begin
+   if Assigned(RegE500.RegistroE520) then
+   begin
+      for intFor := 0 to RegE500.RegistroE520.Count - 1 do
+      begin
+         RegE520:= TRegistroSEFE520(RegE500.RegistroE520.Items[intFor]);
+         with RegE520  do
+         begin
+            Add( LFill('E520')         +
+                 LFill(VL_CONT, 2)     +
+                 LFill(CFOP,4)         +
+                 LFill(VL_BC_IPI, 2)   +
+                 LFill(VL_IPI, 2)      +
+                 LFill(VL_ISNT_IPI, 2) +
+                 LFill(VL_OUT_IPI, 2)  );
+         end;
+         RegistroE990.QTD_LIN_E := RegistroE990.QTD_LIN_E + 1;
+      end;
+      FRegistroE520Count := FRegistroE520Count + RegE500.RegistroE520.Count;
+   end;
+end;
+
+procedure TBloco_E.WriteRegistroE525(RegE500: TRegistroSEFE500);
+var
+   intFor : Integer;
+   RegE525: TRegistroSEFE525;
+begin
+   if Assigned(RegE500.RegistroE525) then
+   begin
+      for intFor := 0 to RegE500.RegistroE525.Count - 1 do
+      begin
+         RegE525:= TRegistroSEFE525(RegE500.RegistroE525.Items[intFor]);
+         with RegE525  do
+         begin
+            Add( LFill('E525')         +
+                 LFill(IND_TOT, 1)      +
+                 LFill(VL_CONT, 2)      +
+                 LFill(VL_BC_IPI, 2)   +
+                 LFill(VL_IPI, 2)      +
+                 LFill(VL_ISNT_IPI, 2) +
+                 LFill(VL_OUT_IPI, 2));
+         end;
+         RegistroE990.QTD_LIN_E := RegistroE990.QTD_LIN_E + 1;
+      end;
+      FRegistroE525Count := FRegistroE525Count + RegE500.RegistroE525.Count;
+   end;
+end;
+procedure TBloco_E.WriteRegistroE540(RegE500: TRegistroSEFE500);
+var
+   intFor : Integer;
+   RegE540: TRegistroSEFE540;
+begin
+   if Assigned(RegE500.RegistroE540) then
+   begin
+      for intFor := 0 to RegE500.RegistroE540.Count - 1 do
+      begin
+         RegE540:= TRegistroSEFE540(RegE500.RegistroE540.Items[intFor]);
+         with RegE540  do
+         begin
+            Add( LFill('E540')         +
+               LFill(VL_01, 2)  +
+               LFill(VL_02, 2)  +
+               LFill(VL_03, 2)  +
+               LFill(VL_04, 2)  +
+               LFill(VL_05, 2)  +
+               LFill(VL_06, 2)  +
+               LFill(VL_07, 2)  +
+               LFill(VL_09, 2)  +
+               LFill(VL_10, 2)  +
+               LFill(VL_11, 2)  +
+               LFill(VL_12, 2)  +
+               LFill(VL_13, 2)  +
+               LFill(VL_08, 2)  +
+               LFill(VL_16, 2)  +
+               LFill(VL_17, 2)  );
+         end;
+         RegistroE990.QTD_LIN_E := RegistroE990.QTD_LIN_E + 1;
+      end;
+      FRegistroE540Count := FRegistroE540Count + RegE500.RegistroE540.Count;
+   end;
+end;
+
+procedure TBloco_E.WriteRegistroE560(RegE500: TRegistroSEFE500);
+var
+ intFor : Integer;
+ RegE560: TRegistroSEFE560;
+begin
+   if Assigned(RegE500.RegistroE560) then
+   begin
+      for intFor := 0 to RegE500.RegistroE560.Count - 1 do
+        begin
+         RegE560:= TRegistroSEFE560(RegE500.RegistroE560.Items[intFor]);
+         with RegE560  do
+            begin
+              Add( LFill('E560')          +
+                   LFill(COD_OR_IPI) +
+                   LFill(PER_REF, 6) +
+                   LFill(COD_REC_IPI,4) +
+                   LFill(VL_IPI_REC, 2) +
+                   LFill(DT_VCTO) +
+                   LFill(IND_DOC) +
+                   LFill(NUM_DOC) +
+                   LFill(DESCR_AJ) +
+                   LFill(COD_INF_OBS));
+            end;
+         RegistroE990.QTD_LIN_E := RegistroE990.QTD_LIN_E + 1;
+         end;
+     /// Variavé¬ para armazenar a quantidade de registro do tipo.
+     FRegistroE560Count := FRegistroE560Count + RegE500.RegistroE560.Count;
+  end;
+end;
+
+//
+
 procedure TBloco_E.WriteRegistroE990;
 var
   strLinha : String;
@@ -1473,6 +1646,7 @@ begin
    FRegistroE085Count := 0;
    FRegistroE120Count := 0; 
    FRegistroE300Count := 0;
+   FRegistroE500Count := 0;
    FRegistroE990.QTD_LIN_E := 0;
 end;
 
@@ -1597,6 +1771,16 @@ begin
    Result := E300.RegistroE330.New(E300);
 end;
 
+function TBloco_E.RegistroE340New: TRegistroSEFE340;
+var
+  E300: TRegistroSEFE300;
+begin
+   with FRegistroE001.RegistroE300 do
+      E300 := TRegistroSEFE300(Items[ AchaUltimoPai('E300', 'E340') ]);
+
+   Result := E300.RegistroE340.New(E300);
+end;
+
 function TBloco_E.RegistroE350New: TRegistroSEFE350;
 var
   E300: TRegistroSEFE300;
@@ -1616,6 +1800,52 @@ begin
 
    Result := E300.RegistroE360.New(E300);
 end;
+
+function TBloco_E.RegistroE500New: TRegistroSEFE500;
+begin
+   Result := FRegistroE001.RegistroE500.New(FRegistroE001);
+end;
+
+function TBloco_E.RegistroE520New: TRegistroSEFE520;
+var
+  E500: TRegistroSEFE500;
+begin
+   with FRegistroE001.RegistroE500 do
+      E500 := TRegistroSEFE500(Items[ AchaUltimoPai('E500', 'E520') ]);
+
+   Result := E500.RegistroE520.New(E500);
+end;
+
+function TBloco_E.RegistroE525New: TRegistroSEFE525;
+var
+  E500: TRegistroSEFE500;
+begin
+   with FRegistroE001.RegistroE500 do
+      E500 := TRegistroSEFE500(Items[ AchaUltimoPai('E500', 'E525') ]);
+
+   Result := E500.RegistroE525.New(E500);
+end;
+
+function TBloco_E.RegistroE540New: TRegistroSEFE540;
+var
+  E500: TRegistroSEFE500;
+begin
+   with FRegistroE001.RegistroE500 do
+      E500 := TRegistroSEFE500(Items[ AchaUltimoPai('E500', 'E540') ]);
+
+   Result := E500.RegistroE540.New(E500);
+end;
+
+function TBloco_E.RegistroE560New: TRegistroSEFE560;
+var
+  E500: TRegistroSEFE500;
+begin
+   with FRegistroE001.RegistroE500 do
+      E500 := TRegistroSEFE500(Items[ AchaUltimoPai('E500', 'E560') ]);
+
+   Result := E500.RegistroE560.New(E500);
+end;
+
 
 function TBloco_E.RegistroE001New: TRegistroSEFE001;
 begin
