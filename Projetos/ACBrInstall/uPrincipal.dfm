@@ -1065,10 +1065,6 @@ object frmPrincipal: TfrmPrincipal
       Header.Subtitle.Font.Style = []
       Caption = 'Configura'#231#245'es'
       OnNextButtonClick = wizPgConfiguracaoNextButtonClick
-      ExplicitLeft = 0
-      ExplicitTop = 0
-      ExplicitWidth = 0
-      ExplicitHeight = 0
       object Label4: TLabel
         Left = 17
         Top = 68
@@ -1129,18 +1125,6 @@ object frmPrincipal: TfrmPrincipal
         Caption = 
           'Experimental : A suite ACBr n'#227'o est'#225' 100% compativel com o C++ B' +
           'uilder'
-        Font.Charset = DEFAULT_CHARSET
-        Font.Color = clRed
-        Font.Height = -11
-        Font.Name = 'Tahoma'
-        Font.Style = []
-        ParentFont = False
-      end
-      object Label22: TLabel
-        Left = 33
-        Top = 138
-        Width = 3
-        Height = 13
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clRed
         Font.Height = -11
@@ -1284,71 +1268,20 @@ object frmPrincipal: TfrmPrincipal
         ParentBackground = False
         ParentColor = False
         TabOrder = 0
-        ExplicitWidth = 554
-        ExplicitHeight = 499
         inherited Label18: TLabel
           Width = 509
           Caption = 
             'S'#243' selecione os pacotes abaixo, que voc'#234' tenha a suite do gerado' +
             'r instalada no seu delphi.'
-          ExplicitWidth = 509
         end
         inherited pnlBotoesPacotes: TPanel
           Top = 467
           Width = 554
-          ExplicitTop = 467
-          ExplicitWidth = 554
           inherited btnPacotesDesmarcarTodos: TSpeedButton
             Left = 522
-            ExplicitLeft = 516
           end
           inherited btnPacotesMarcarTodos: TSpeedButton
             Left = 490
-            ExplicitLeft = 484
-          end
-        end
-        inherited PageControl1: TPageControl
-          inherited tsNFe: TTabSheet
-            ExplicitLeft = 4
-            ExplicitTop = 27
-            ExplicitWidth = 417
-            ExplicitHeight = 121
-          end
-          inherited tsCTe: TTabSheet
-            ExplicitLeft = 4
-            ExplicitTop = 27
-            ExplicitWidth = 417
-            ExplicitHeight = 121
-          end
-          inherited tsNFSe: TTabSheet
-            ExplicitLeft = 4
-            ExplicitTop = 27
-            ExplicitWidth = 417
-            ExplicitHeight = 121
-          end
-          inherited tsBoletos: TTabSheet
-            ExplicitLeft = 4
-            ExplicitTop = 27
-            ExplicitWidth = 417
-            ExplicitHeight = 121
-          end
-          inherited tsMDFe: TTabSheet
-            ExplicitLeft = 4
-            ExplicitTop = 27
-            ExplicitWidth = 417
-            ExplicitHeight = 121
-          end
-          inherited tsSAT: TTabSheet
-            ExplicitLeft = 4
-            ExplicitTop = 27
-            ExplicitWidth = 417
-            ExplicitHeight = 121
-          end
-          inherited tsGNRE: TTabSheet
-            ExplicitLeft = 4
-            ExplicitTop = 27
-            ExplicitWidth = 417
-            ExplicitHeight = 121
           end
         end
       end
@@ -1377,10 +1310,6 @@ object frmPrincipal: TfrmPrincipal
       Caption = 'Reposit'#243'rio'
       OnEnterPage = wizPgObterFontesEnterPage
       OnNextButtonClick = wizPgObterFontesNextButtonClick
-      ExplicitLeft = 0
-      ExplicitTop = 0
-      ExplicitWidth = 0
-      ExplicitHeight = 0
       object Label1: TLabel
         Left = 77
         Top = 177
@@ -1465,10 +1394,6 @@ object frmPrincipal: TfrmPrincipal
       Caption = 'Instala'#231#227'o'
       OnEnterPage = wizPgInstalacaoEnterPage
       OnNextButtonClick = wizPgInstalacaoNextButtonClick
-      ExplicitLeft = 0
-      ExplicitTop = 0
-      ExplicitWidth = 0
-      ExplicitHeight = 0
       object btnInstalarACBr: TSpeedButton
         Left = 430
         Top = 463
@@ -1484,20 +1409,6 @@ object frmPrincipal: TfrmPrincipal
         Height = 25
         Caption = 'Visualizar log'
         OnClick = btnVisualizarLogCompilacaoClick
-      end
-      object sbBPL: TSpeedButton
-        Left = 513
-        Top = 78
-        Width = 23
-        Height = 22
-        Caption = '...'
-      end
-      object sbDCP: TSpeedButton
-        Left = 513
-        Top = 102
-        Width = 23
-        Height = 22
-        Caption = '...'
       end
       object lstMsgInstalacao: TListBox
         Left = 20
@@ -1537,10 +1448,6 @@ object frmPrincipal: TfrmPrincipal
           Align = alClient
           AutoSize = False
           Caption = 'Linha 1'#13#10'Linha 2'#13#10'Linha 3'#13#10'Linha 4'
-          ExplicitLeft = 4
-          ExplicitTop = 4
-          ExplicitWidth = 508
-          ExplicitHeight = 46
         end
       end
     end
@@ -1566,10 +1473,6 @@ object frmPrincipal: TfrmPrincipal
       VisibleButtons = [bkFinish]
       Color = clWhite
       Caption = 'Fim'
-      ExplicitLeft = 0
-      ExplicitTop = 0
-      ExplicitWidth = 0
-      ExplicitHeight = 0
       object Label3: TLabel
         Left = 39
         Top = 58
@@ -1724,7 +1627,6 @@ object frmPrincipal: TfrmPrincipal
         Cursor = crHandPoint
         Animate = True
         Center = True
-        FrameIndex = 4
         Image.Data = {
           688B00004749463839613F012800F70000FFFFFFFFFFE5FFFFCCF7FAFDFFFF99
           FFF7B9FFF9A9FFFA84EAFA9EFFF573FFF74AFFFF00FFF268F2F478FFF456E9F5
@@ -2860,9 +2762,5 @@ object frmPrincipal: TfrmPrincipal
         OnClick = URLClick
       end
     end
-  end
-  object OpenDialog: TOpenDialog
-    Left = 412
-    Top = 90
   end
 end

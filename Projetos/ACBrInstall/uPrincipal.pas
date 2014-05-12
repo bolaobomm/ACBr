@@ -111,10 +111,6 @@ type
     ckbCopiarTodasDll: TCheckBox;
     Label8: TLabel;
     ckbBCB: TCheckBox;
-    Label22: TLabel;
-    OpenDialog: TOpenDialog;
-    sbBPL: TSpeedButton;
-    sbDCP: TSpeedButton;
     procedure imgPropaganda1Click(Sender: TObject);
     procedure FormCreate(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
@@ -139,7 +135,6 @@ type
       const FromPage: TJvWizardCustomPage);
     procedure rdgDLLClick(Sender: TObject);
     procedure ckbUtilizarOpenSSLClick(Sender: TObject);
-    procedure CopiarArquivosBPLsSystem;
   private
     FCountErros: Integer;
     oACBr: TJclBorRADToolInstallations;
@@ -148,8 +143,6 @@ type
     sDirRoot: string;
     sDirLibrary: string;
     sDirPackage: string;
-    sDirBPLPath: string;
-    sDirDCPPath: string;
     sDestino   : TDestino;
     sPathBin   : String;
     procedure BeforeExecute(Sender: TJclBorlandCommandLineTool);
@@ -175,7 +168,9 @@ type
     procedure CopiarArquivoTo(ADestino : TDestino; const ANomeArquivo: String);//    procedure CopiarArquivoToSystem(const ANomeArquivo: String);
     procedure ConfigurarParaUtilizarOpenSSL(const AUtilizar: Boolean);
     function ExtrairDiretorioPacote(NomePacote: string): string;
-    function GetDefaultBDSCommonDir: string;
+    procedure WriteToTXT( const ArqTXT, AString : AnsiString;
+      const AppendIfExists : Boolean = True; AddLineBreak : Boolean = True );
+    procedure AddLibraryPathToPath(const APath, AProcurarRemover: String);
   public
 
   end;
@@ -186,10 +181,35 @@ var
 implementation
 
 uses
-  SVN_Class, ACBrUtil,
-  {$WARNINGS off} FileCtrl, {$WARNINGS on} ShellApi, IniFiles;
+  SVN_Class,
+  {$WARNINGS off} FileCtrl, {$WARNINGS on} ShellApi, IniFiles, StrUtils, Math,
+  Registry;
 
 {$R *.dfm}
+
+procedure TfrmPrincipal.WriteToTXT(const ArqTXT, AString : AnsiString ;
+   const AppendIfExists: Boolean; AddLineBreak : Boolean) ;
+var
+  FS : TFileStream ;
+  LineBreak : AnsiString ;
+begin
+  FS := TFileStream.Create( ArqTXT,
+               IfThen( AppendIfExists and FileExists(ArqTXT),
+                       Integer(fmOpenReadWrite), Integer(fmCreate)) or fmShareDenyWrite );
+  try
+     FS.Seek(0, soFromEnd);  // vai para EOF
+     FS.Write(Pointer(AString)^,Length(AString));
+
+     if AddLineBreak then
+     begin
+        LineBreak := sLineBreak;
+        FS.Write(Pointer(LineBreak)^,Length(LineBreak));
+     end ;
+  finally
+     FS.Free ;
+  end;
+end;
+
 
 // configuraração para utilizar ou não o openssl ao compilar
 procedure TfrmPrincipal.ConfigurarParaUtilizarOpenSSL(const AUtilizar: Boolean);
@@ -220,9 +240,9 @@ var
     if BuscarTexto(ATextoBusca, Linha) then
     begin
       if AComentar then
-        F.Strings[Linha] := '//' + RemoveString('/', F.Strings[Linha])
+        F.Strings[Linha] := '//' + StringReplace(F.Strings[Linha], '/', '', [rfReplaceAll])
       else
-        F.Strings[Linha] := RemoveString('/', F.Strings[Linha]);
+        F.Strings[Linha] := StringReplace(F.Strings[Linha], '/', '', [rfReplaceAll]);
     end;
   end;
 
@@ -238,7 +258,7 @@ begin
     ComentarLinha('{$DEFINE ACBrCTeOpenSSL}', not(AUtilizar));
     ComentarLinha('{$DEFINE ACBrNFSeOpenSSL}', not(AUtilizar));
 
-    ACBrUtil.WriteToTXT(PathArquivo, F.Text, False, False);
+    WriteToTXT(PathArquivo, F.Text, False, False);
   finally
     F.Free;
   end;
@@ -388,33 +408,6 @@ begin
   end;
 end;
 
-
-procedure TfrmPrincipal.CopiarArquivosBPLsSystem;
-var
-srFiles: TSearchRec;
-iFor: integer;
-sDirLib: string;
-sDirSystem: string;
-sDirDestino: string;
-begin
-   sDirDestino := Trim(PathSystem);
-   iFor := FindFirst(PathWithDelim(sDirBPLPath) + '*.bpl', faAnyFile, srFiles);
-   while iFor = 0 do
-   begin
-      if (srFiles.Attr and faDirectory) <> faDirectory then
-      begin
-         sDirLib    := sDirBPLPath + srFiles.Name;
-         sDirSystem := sDirDestino + srFiles.Name;
-         if not CopyFile(PChar(sDirLib), PChar(sDirSystem), true) then
-            raise EFilerError.CreateFmt(
-              'Ocorreu o seguinte erro ao tentar copiar o arquivo "%s": %d - %s', [
-              srFiles.Name, GetLastError, SysErrorMessage(GetLastError)
-            ]);
-      end;
-      iFor := FindNext(srFiles);
-   end;
-end;
-
 procedure TfrmPrincipal.CopiarArquivoTo(ADestino : TDestino; const ANomeArquivo: String);
 var
   PathOrigem: String;
@@ -439,7 +432,7 @@ begin
 
   if FileExists(PathOrigem) and not(FileExists(PathDestino)) then
   begin
-    if not CopyFileTo(PathOrigem, PathDestino, True) then
+    if not CopyFile(PWideChar(PathOrigem), PWideChar(PathDestino), True) then
     begin
       raise EFilerError.CreateFmt(
         'Ocorreu o seguinte erro ao tentar copiar o arquivo "%s": %d - %s', [
@@ -578,39 +571,67 @@ end;
 
 // criação dos diretórios necessários
 procedure TfrmPrincipal.CreateDirectoryLibrarysNotExist;
-var
-  sVersion: string;
 begin
-  sVersion := oACBr.Installations[iVersion].VersionNumberStr;
-  sVersion := UpperCase(Copy(sVersion, 1, 1)) + LowerCase(Copy(sVersion, 2, Length(sVersion)));
-
-  // Guarda na VAR o diretório da instalação do ACBr
-  sDirRoot    := edtDirDestino.Text;
-  sDirLibrary := sDirRoot + '\Lib\Delphi\';
-
-  // Plataforma
-  if edtPlatform.ItemIndex = 0 then // bpWin32
-    sDirLibrary := sDirLibrary + 'Lib' + sVersion
-  else
-  if edtPlatform.ItemIndex = 1 then // bpWin64
-    sDirLibrary := sDirLibrary + 'Lib' + sVersion + 'x64';
-
   // Checa se existe diretório da plataforma
   if not DirectoryExists(sDirLibrary) then
     ForceDirectories(sDirLibrary);
+end;
 
-  with oACBr.Installations[iVersion] do
-  begin
-    // Checa se existe diretório da plataforma
-    if not DirectoryExists(sDirBPLPath) then
-      ForceDirectories(sDirBPLPath);
+procedure TfrmPrincipal.AddLibraryPathToPath(const APath: String; const AProcurarRemover: String);
+const
+  cs: PChar = 'Environment';
+var
+  s: String;
+  lParam, wParam: Integer;
+  aResult: Cardinal;
+  ListaPaths: TStringList;
+  I: Integer;
+begin
+  ListaPaths := TStringList.Create;
+  try
+    ListaPaths.Delimiter := ';';
+    ListaPaths.StrictDelimiter := True;
+    ListaPaths.DelimitedText := GetEnvironmentVariable('PATH');
 
-    // Checa se existe diretório da plataforma
-    if not DirectoryExists(sDirDCPpath) then
-      ForceDirectories(sDirDCPpath);
+    // verificar se existe algo do ACBr e remover
+    if Trim(AProcurarRemover) <> '' then
+    begin
+      for I := ListaPaths.Count - 1 downto 0 do
+      begin
+       if Pos(AnsiUpperCase(AProcurarRemover), AnsiUpperCase(ListaPaths[I])) > 0 then
+         ListaPaths.Delete(I);
+      end;
+    end;
 
-    AddToLibrarySearchPath(sDirBPLPath, tPlatform);
-    AddToLibrarySearchPath(sDirDCPpath, tPlatform);
+    // adicionar o path
+    ListaPaths.Add(APath);
+
+    with TRegistry.Create do
+    try
+      RootKey :=  HKEY_LOCAL_MACHINE;
+      if OpenKey('SYSTEM\CurrentControlSet\Control\Session Manager\Environment\', False) then
+      begin
+        if ValueExists('Path') then
+        begin
+          s := ReadString('Path');
+          WriteString('Path', ListaPaths.DelimitedText);
+        end;
+      end;
+    finally
+      CloseKey;
+      Free;
+    end;
+
+    wParam := 0;
+    lParam := LongInt(cs);
+
+    SendMessageTimeout(HWND_BROADCAST, WM_SETTINGCHANGE, wParam, lParam, SMTO_NORMAL, 4000, aResult);
+    if aResult <> 0 then
+      SysErrorMessage(aResult);
+
+    ShowMessage('Added PATH (' + APath + ') and Broadcast changes!');
+  finally
+    ListaPaths.Free;
   end;
 end;
 
@@ -653,12 +674,15 @@ begin
   // -- Adiciona todos os paths dos fontes na versão do delphi selecionada
   // -- se os paths já existirem não serão duplicados.
   FindDirs(IncludeTrailingPathDelimiter(sDirRoot) + 'Fontes');
+
   // --
   with oACBr.Installations[iVersion] do
   begin
-//    AddToDebugDCUPath(sDirLibrary, tPlatform);
     AddToLibraryBrowsingPath(sDirLibrary, tPlatform);
   end;
+
+  // -- adicionar a library path ao path do windows
+  AddLibraryPathToPath(sDirLibrary, 'acbr');
 
   //-- ************ C++ Builder *************** //
   if ckbBCB.Checked then
@@ -675,37 +699,29 @@ end;
 
 // setar a plataforma de compilação
 procedure TfrmPrincipal.SetPlatformSelected;
+var
+  sVersao: String;
+  sTipo: String;
 begin
   iVersion := edtDelphiVersion.ItemIndex;
+  sVersao  := AnsiUpperCase(oACBr.Installations[iVersion].VersionNumberStr);
+  sDirRoot := IncludeTrailingPathDelimiter(edtDirDestino.Text);
+
+  if ckbBCB.Checked then
+    sTipo := 'Lib\BCB\'
+  else
+    sTipo := 'Lib\Delphi\';
 
   if edtPlatform.ItemIndex = 0 then // Win32
-    tPlatform := bpWin32
+  begin
+    tPlatform   := bpWin32;
+    sDirLibrary := sDirRoot + sTipo + 'Lib' + sVersao;
+  end
   else
   if edtPlatform.ItemIndex = 1 then // Win64
-    tPlatform := bpWin64;
-
-  with oACBr.Installations[iVersion] do
   begin
-//    sDirBPLPath := PathWithDelim(edtDirDestino.Text) + 'Lib' + UpperCase(VersionNumberStr); // BPLOutputPath[tPlatform];
-//    sDirDCPpath := sDirBPLPath; // DCPOutputPath[tPlatform];
-    sDirBPLPath := BPLOutputPath[tPlatform];
-    sDirDCPpath := DCPOutputPath[tPlatform];
-
-    if VersionNumberStr = 'd9' then
-    begin
-      sDirBPLPath := sDirBPLPath + '\3.0';
-      sDirDCPpath := sDirDCPpath + '\3.0';
-    end
-    else if VersionNumberStr = 'd10' then
-    begin
-      sDirBPLPath := sDirBPLPath + '\4.0';
-      sDirDCPpath := sDirDCPpath + '\4.0';
-    end
-    else if VersionNumberStr = 'd14' then
-    begin
-      sDirBPLPath := GetDefaultBDSCommonDir + '\Bpl';
-      sDirDCPpath := GetDefaultBDSCommonDir + '\Dcp';
-    end;
+    tPlatform   := bpWin64;
+    sDirLibrary := sDirRoot + sTipo + 'Lib' + sVersao + 'x64';
   end;
 end;
 
@@ -715,7 +731,7 @@ begin
   // remover a warnings de conversão de string (delphi 2010 em diante)
   // as diretivas -W e -H não removem estas mensagens
   if (pos('Warning: W1057', Text) <= 0) and ((pos('Warning: W1058', Text) <= 0)) then
-    ACBrUtil.WriteToTXT(AnsiString(PathArquivoLog), AnsiString(Text));
+    WriteToTXT(AnsiString(PathArquivoLog), AnsiString(Text));
 end;
 
 // evento para setar os parâmetros do compilador antes de compilar
@@ -756,9 +772,8 @@ begin
   Sender.AddPathOption('R', oACBr.Installations[iVersion].LibrarySearchPath[tPlatform]);
   // -N0<path> = unit .dcu output directory
   Sender.AddPathOption('N0', sDirLibrary);
-  //
-  Sender.AddPathOption('LE', sDirBPLPath);
-  Sender.AddPathOption('LN', sDirDCPPath);
+  Sender.AddPathOption('LE', sDirLibrary);
+  Sender.AddPathOption('LN', sDirLibrary);
 
   //-- ************ C++ Builder *************** //
   if ckbBCB.Checked then
@@ -766,9 +781,9 @@ begin
      // -JL compila c++ builder
      Sender.AddPathOption('JL', sDirLibrary);
      // -NO compila .dpi output directory c++ builder
-     Sender.AddPathOption('NO', sDirDCPPath);
+     Sender.AddPathOption('NO', sDirLibrary);
      // -NB compila .lib output directory c++ builder
-     Sender.AddPathOption('NB', sDirDCPPath);
+     Sender.AddPathOption('NB', sDirLibrary);
      // -NH compila .hpp output directory c++ builder
      Sender.AddPathOption('NH', sDirLibrary);
   end;
@@ -799,8 +814,6 @@ begin
   sDirRoot    := '';
   sDirLibrary := '';
   sDirPackage := '';
-  sDirBPLPath := '';
-  sDirDCPPath := '';
 
   oACBr := TJclBorRADToolInstallations.Create;
 
@@ -893,8 +906,8 @@ var
       end;
     end;
 
-    ACBrUtil.WriteToTXT(AnsiString(PathArquivoLog), AnsiString(''));
-    ACBrUtil.WriteToTXT(AnsiString(PathArquivoLog), Msg);
+    WriteToTXT(AnsiString(PathArquivoLog), AnsiString(''));
+    WriteToTXT(AnsiString(PathArquivoLog), Msg);
 
     lstMsgInstalacao.Items.Add(Msg);
     lstMsgInstalacao.ItemIndex := lstMsgInstalacao.Count - 1;
@@ -916,7 +929,7 @@ begin
 
     // limpar o log
     lstMsgInstalacao.Clear;
-    ACBrUtil.WriteToTXT(AnsiString(PathArquivoLog), AnsiString(Cabecalho), False);
+    WriteToTXT(AnsiString(PathArquivoLog), AnsiString(Cabecalho), False);
 
     // setar barra de progresso
     pgbInstalacao.Position := 0;
@@ -927,14 +940,14 @@ begin
     pgbInstalacao.Position := pgbInstalacao.Position + 1;
     lstMsgInstalacao.Items.Add('Setando parâmetros de plataforma...');
     Application.ProcessMessages;
-    ACBrUtil.WriteToTXT(AnsiString(PathArquivoLog), AnsiString('Setando parâmetros de plataforma...'));
+    WriteToTXT(AnsiString(PathArquivoLog), AnsiString('Setando parâmetros de plataforma...'));
 
     // configurar o ACBr para utilizar o OpenSSL
     ConfigurarParaUtilizarOpenSSL(ckbUtilizarOpenSSL.Checked);
     pgbInstalacao.Position := pgbInstalacao.Position + 1;
     lstMsgInstalacao.Items.Add('Configurando a utilização do OpenSSL...');
     Application.ProcessMessages;
-    ACBrUtil.WriteToTXT(AnsiString(PathArquivoLog), AnsiString('Setando parâmetros de plataforma...'));
+    WriteToTXT(AnsiString(PathArquivoLog), AnsiString('Setando parâmetros de plataforma...'));
 
     // Cria diretório de biblioteca da versão do delphi selecionada,
     // só será criado se não existir
@@ -942,14 +955,14 @@ begin
     pgbInstalacao.Position := pgbInstalacao.Position + 1;
     lstMsgInstalacao.Items.Add('Criando diretórios de bibliotecas...');
     Application.ProcessMessages;
-    ACBrUtil.WriteToTXT(AnsiString(PathArquivoLog), AnsiString('Criando diretórios de bibliotecas...'));
+    WriteToTXT(AnsiString(PathArquivoLog), AnsiString('Criando diretórios de bibliotecas...'));
 
     // Adiciona os paths dos fontes na versão do delphi selecionada
     AddLibrarySearchPath;
     pgbInstalacao.Position := pgbInstalacao.Position + 1;
     lstMsgInstalacao.Items.Add('Adicionando libray paths...');
     Application.ProcessMessages;
-    ACBrUtil.WriteToTXT(AnsiString(PathArquivoLog), AnsiString('Adicionando libray paths...'));
+    WriteToTXT(AnsiString(PathArquivoLog), AnsiString('Adicionando libray paths...'));
 
     // compilar os pacotes primeiramente
     lstMsgInstalacao.Items.Add('');
@@ -963,12 +976,9 @@ begin
 
       if (IsDelphiPackage(NomePacote)) and (frameDpk.Pacotes[iDpk].Checked) then
       begin
-        ACBrUtil.WriteToTXT(AnsiString(PathArquivoLog), AnsiString(''));
+        WriteToTXT(AnsiString(PathArquivoLog), AnsiString(''));
 
-        if oACBr.Installations[iVersion].CompilePackage(
-          sDirPackage + NomePacote,
-          sDirBPLPath,
-          sDirDCPpath) then
+        if oACBr.Installations[iVersion].CompilePackage(sDirPackage + NomePacote, sDirLibrary, sDirLibrary) then
         begin
           lstMsgInstalacao.Items.Add(Format('Pacote "%s" compilado com sucesso.', [NomePacote]));
           lstMsgInstalacao.ItemIndex := lstMsgInstalacao.Count - 1;
@@ -1010,12 +1020,9 @@ begin
               // se o pacote estiver marcado instalar, senão desinstalar
               if frameDpk.Pacotes[iDpk].Checked then
               begin
-                ACBrUtil.WriteToTXT(AnsiString(PathArquivoLog), AnsiString(''));
+                WriteToTXT(AnsiString(PathArquivoLog), AnsiString(''));
 
-                if oACBr.Installations[iVersion].InstallPackage(
-                  sDirPackage + NomePacote,
-                  sDirBPLPath,
-                  sDirDCPpath) then
+                if oACBr.Installations[iVersion].InstallPackage(sDirPackage + NomePacote, sDirLibrary, sDirLibrary) then
                 begin
                   lstMsgInstalacao.Items.Add(Format('Pacote "%s" instalado com sucesso.', [NomePacote]));
                   lstMsgInstalacao.ItemIndex := lstMsgInstalacao.Count - 1;
@@ -1029,12 +1036,9 @@ begin
               end
               else
               begin
-                ACBrUtil.WriteToTXT(AnsiString(PathArquivoLog), AnsiString(''));
+                WriteToTXT(AnsiString(PathArquivoLog), AnsiString(''));
 
-                if oACBr.Installations[iVersion].UninstallPackage(
-                  sDirPackage + NomePacote,
-                  sDirBPLPath,
-                  sDirDCPpath) then
+                if oACBr.Installations[iVersion].UninstallPackage(sDirPackage + NomePacote, sDirLibrary, sDirLibrary) then
                 begin
                   lstMsgInstalacao.Items.Add(Format('Pacote "%s" removido com sucesso...', [NomePacote]));
                   lstMsgInstalacao.ItemIndex := lstMsgInstalacao.Count - 1;
@@ -1195,6 +1199,7 @@ procedure TfrmPrincipal.wizPgInicioNextButtonClick(Sender: TObject;
   var Stop: Boolean);
 begin
   // Verificar se o delphi está aberto
+  {
   if oACBr.AnyInstanceRunning then
   begin
     Stop := True;
@@ -1204,7 +1209,7 @@ begin
       MB_ICONERROR + MB_OK
     );
   end;
-
+  }
   // Verificar se o tortoise está instalado
   if not TSVN_Class.IsTortoiseInstalado then
   begin
@@ -1234,8 +1239,7 @@ begin
   lblInfoCompilacao.Caption :=
     edtDelphiVersion.Text + ' ' + edtPlatform.Text + sLineBreak +
     'Dir. Instalação: ' + edtDirDestino.Text + sLineBreak +
-    'Dir. BPL: ' + sDirBPLPath + sLineBreak +
-    'Dir. DCP: ' + sDirDCPPath;
+    'Dir. Bibliotecas:' + sDirLibrary;
 end;
 
 procedure TfrmPrincipal.wizPgInstalacaoNextButtonClick(Sender: TObject;
@@ -1388,6 +1392,7 @@ begin
     begin
       sDirRoot := edtDirDestino.Text;
       NomePacote := frameDpk.Pacotes[I].Caption;
+
       // Busca diretório do pacote
       sDirPackage := sDirRoot + ExtrairDiretorioPacote(NomePacote);
 
@@ -1423,21 +1428,6 @@ end;
 procedure TfrmPrincipal.wizPrincipalFinishButtonClick(Sender: TObject);
 begin
   Self.Close;
-end;
-
-function TfrmPrincipal.GetDefaultBDSCommonDir: string;
-const
-  CSIDL_COMMON_DOCUMENTS = $002E; // All Users\Documents
-var
-  CommonDocuments: array[0..MAX_PATH] of Char;
-begin
-  Result := GetEnvironmentVariable('BDSCOMMONDIR');
-  if (oACBr.Installations[iVersion].RadToolKind = brBorlandDevStudio) and
-     SHGetSpecialFolderPath(GetActiveWindow, CommonDocuments, CSIDL_COMMON_DOCUMENTS, False) then
-    if oACBr.Installations[iVersion].VersionNumber >= 14 then
-      Result := IncludeTrailingPathDelimiter(CommonDocuments) + 'Embarcadero\Studio'  + PathDelim + Format('%d.0', [oACBr.Installations[iVersion].VersionNumber])
-    else if oACBr.Installations[iVersion].VersionNumber >= 6 then
-      Result := IncludeTrailingPathDelimiter(CommonDocuments) + 'RAD Studio'  + PathDelim + Format('%d.0', [oACBr.Installations[iVersion].VersionNumber]);
 end;
 
 end.
