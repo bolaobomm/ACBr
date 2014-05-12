@@ -77,7 +77,7 @@ var
 
 implementation
 
-uses ACBrGNRE, ACBrGNREUtil, ACBrDFeUtil, StrUtils, Math,
+uses ACBrGNRE2, ACBrGNREUtil, ACBrDFeUtil, StrUtils, Math,
   pgnreRetConsResLoteGNRE;
 
 {$R *.dfm}
