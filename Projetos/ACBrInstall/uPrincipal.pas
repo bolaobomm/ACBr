@@ -112,6 +112,9 @@ type
     Label8: TLabel;
     ckbBCB: TCheckBox;
     Label22: TLabel;
+    OpenDialog: TOpenDialog;
+    sbBPL: TSpeedButton;
+    sbDCP: TSpeedButton;
     procedure imgPropaganda1Click(Sender: TObject);
     procedure FormCreate(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
@@ -136,6 +139,7 @@ type
       const FromPage: TJvWizardCustomPage);
     procedure rdgDLLClick(Sender: TObject);
     procedure ckbUtilizarOpenSSLClick(Sender: TObject);
+    procedure CopiarArquivosBPLsSystem;
   private
     FCountErros: Integer;
     oACBr: TJclBorRADToolInstallations;
@@ -384,6 +388,32 @@ begin
   end;
 end;
 
+
+procedure TfrmPrincipal.CopiarArquivosBPLsSystem;
+var
+srFiles: TSearchRec;
+iFor: integer;
+sDirLib: string;
+sDirSystem: string;
+sDirDestino: string;
+begin
+   sDirDestino := Trim(PathSystem);
+   iFor := FindFirst(PathWithDelim(sDirBPLPath) + '*.bpl', faAnyFile, srFiles);
+   while iFor = 0 do
+   begin
+      if (srFiles.Attr and faDirectory) <> faDirectory then
+      begin
+         sDirLib    := sDirBPLPath + srFiles.Name;
+         sDirSystem := sDirDestino + srFiles.Name;
+         if not CopyFile(PChar(sDirLib), PChar(sDirSystem), true) then
+            raise EFilerError.CreateFmt(
+              'Ocorreu o seguinte erro ao tentar copiar o arquivo "%s": %d - %s', [
+              srFiles.Name, GetLastError, SysErrorMessage(GetLastError)
+            ]);
+      end;
+      iFor := FindNext(srFiles);
+   end;
+end;
 
 procedure TfrmPrincipal.CopiarArquivoTo(ADestino : TDestino; const ANomeArquivo: String);
 var
@@ -656,8 +686,11 @@ begin
 
   with oACBr.Installations[iVersion] do
   begin
-    sDirBPLPath := GetDefaultBDSCommonDir; //BPLOutputPath[tPlatform];
-    sDirDCPpath := GetDefaultBDSCommonDir; //DCPOutputPath[tPlatform];
+//    sDirBPLPath := PathWithDelim(edtDirDestino.Text) + 'Lib' + UpperCase(VersionNumberStr); // BPLOutputPath[tPlatform];
+//    sDirDCPpath := sDirBPLPath; // DCPOutputPath[tPlatform];
+    sDirBPLPath := BPLOutputPath[tPlatform];
+    sDirDCPpath := DCPOutputPath[tPlatform];
+
     if VersionNumberStr = 'd9' then
     begin
       sDirBPLPath := sDirBPLPath + '\3.0';
@@ -667,9 +700,12 @@ begin
     begin
       sDirBPLPath := sDirBPLPath + '\4.0';
       sDirDCPpath := sDirDCPpath + '\4.0';
+    end
+    else if VersionNumberStr = 'd14' then
+    begin
+      sDirBPLPath := GetDefaultBDSCommonDir + '\Bpl';
+      sDirDCPpath := GetDefaultBDSCommonDir + '\Dcp';
     end;
-    sDirBPLPath := sDirBPLPath + '\Bpl';
-    sDirDCPpath := sDirDCPpath + '\Dcp';
   end;
 end;
 
@@ -1108,6 +1144,10 @@ begin
       btnVisualizarLogCompilacao.Click;
     end;
   end;
+  //-- Copiar todas as BPLs para a pasta SYSTEM do windows, isso é necessário
+  //-- por motivo do delphi ao iniciar buscar as BPLs nas pastas SYSTEM
+  //-- se não tiver na poasta padrão dele.
+//  CopiarArquivosBPLsSystem;
 end;
 
 // chama a caixa de dialogo para selecionar o diretório de instalação
@@ -1399,7 +1439,5 @@ begin
     else if oACBr.Installations[iVersion].VersionNumber >= 6 then
       Result := IncludeTrailingPathDelimiter(CommonDocuments) + 'RAD Studio'  + PathDelim + Format('%d.0', [oACBr.Installations[iVersion].VersionNumber]);
 end;
-
-
 
 end.

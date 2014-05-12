@@ -1485,11 +1485,25 @@ object frmPrincipal: TfrmPrincipal
         Caption = 'Visualizar log'
         OnClick = btnVisualizarLogCompilacaoClick
       end
+      object sbBPL: TSpeedButton
+        Left = 513
+        Top = 78
+        Width = 23
+        Height = 22
+        Caption = '...'
+      end
+      object sbDCP: TSpeedButton
+        Left = 513
+        Top = 102
+        Width = 23
+        Height = 22
+        Caption = '...'
+      end
       object lstMsgInstalacao: TListBox
         Left = 20
-        Top = 82
+        Top = 79
         Width = 516
-        Height = 353
+        Height = 355
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clWindowText
         Font.Height = -11
@@ -1710,6 +1724,7 @@ object frmPrincipal: TfrmPrincipal
         Cursor = crHandPoint
         Animate = True
         Center = True
+        FrameIndex = 4
         Image.Data = {
           688B00004749463839613F012800F70000FFFFFFFFFFE5FFFFCCF7FAFDFFFF99
           FFF7B9FFF9A9FFFA84EAFA9EFFF573FFF74AFFFF00FFF268F2F478FFF456E9F5
@@ -2845,5 +2860,9 @@ object frmPrincipal: TfrmPrincipal
         OnClick = URLClick
       end
     end
+  end
+  object OpenDialog: TOpenDialog
+    Left = 412
+    Top = 90
   end
 end
