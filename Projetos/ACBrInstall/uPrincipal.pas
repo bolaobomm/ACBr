@@ -627,9 +627,7 @@ begin
 
     SendMessageTimeout(HWND_BROADCAST, WM_SETTINGCHANGE, wParam, lParam, SMTO_NORMAL, 4000, aResult);
     if aResult <> 0 then
-      SysErrorMessage(aResult);
-
-    ShowMessage('Added PATH (' + APath + ') and Broadcast changes!');
+      raise Exception.create('Ocorreu um erro ao tentar configurar o path: ' + SysErrorMessage(aResult));
   finally
     ListaPaths.Free;
   end;
