@@ -674,7 +674,7 @@ begin
           booConsiderarComoValorNuloParaInutilizado := (strCOD_SIT = '05');
           ChaveEletronicaCTe := IfThen(booConsiderarComoValorNuloParaInutilizado, '', CHV_CTE);
 
-          strLinha := LFill('+') +
+          strLinha := LFill('D100') +
                       LFill( Integer(IND_OPER), 0 ) +
                       LFill( Integer(IND_EMIT), 0 ) +
                       LFill( COD_PART ) +
