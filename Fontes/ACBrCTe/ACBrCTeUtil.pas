@@ -1027,6 +1027,12 @@ begin
   Result := True;
 {$ENDIF}
 end;
+
+function ValidaAssinaturaLibXML(const Axml: PAnsiChar; out Msg: AnsiString): Boolean;
+begin
+  Result := False;
+end;
+
 {$ELSE}
 
 function ValidaMSXML(XML: AnsiString; out Msg: AnsiString;
@@ -1397,7 +1403,7 @@ class function CTeUtil.ValidaAssinatura(const AXML: AnsiString;
   var AMsg: AnsiString): Boolean;
 begin
 {$IFDEF ACBrCTeOpenSSL}
-  Result := False;
+  Result := ValidaAssinaturaLibXML(PAnsiChar(AXML),AMsg);
 {$ELSE}
   Result := ValidaAssinaturaMSXML(AXML,AMsg);
 {$ENDIF}

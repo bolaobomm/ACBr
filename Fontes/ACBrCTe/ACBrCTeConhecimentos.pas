@@ -67,6 +67,8 @@ type
     FErroValidacao: AnsiString;
     FErroValidacaoCompleto: AnsiString;
     FNomeArq: String;
+    FRegrasdeNegocios: AnsiString;
+
     function GetCTeXML: AnsiString;
   public
     constructor Create(Collection2: TCollection); override;
@@ -92,6 +94,8 @@ type
                                 NomeRemetente: String = '';
                                 TLS : Boolean = True;
                                 UsarThread: Boolean = True);
+    function ValidarConcatChave : Boolean;
+
     property CTe: TCTe  read FCTe write FCTe;
     property XML: AnsiString  read GetCTeXML write FXML;
     property XMLOriginal: AnsiString  read FXMLOriginal write FXMLOriginal;
@@ -101,12 +105,13 @@ type
     property ErroValidacao: AnsiString read FErroValidacao write FErroValidacao;
     property ErroValidacaoCompleto: AnsiString read FErroValidacaoCompleto write FErroValidacaoCompleto;    
     property NomeArq: String read FNomeArq write FNomeArq;
+    property RegrasdeNegocios: AnsiString read FRegrasdeNegocios write FRegrasdeNegocios;
   end;
 
   TConhecimentos = class(TOwnedCollection)
   private
     FConfiguracoes : TConfiguracoes;
-    FACBrCTe : TComponent ;
+    FACBrCTe : TComponent;
 
     function GetItem(Index: Integer): Conhecimento;
     procedure SetItem(Index: Integer; const Value: Conhecimento);
@@ -117,12 +122,11 @@ type
     procedure Assinar;
     procedure Valida;
     function ValidaAssinatura(out Msg : String) : Boolean;
+    function ValidaRegrasdeNegocios : Boolean;
     procedure Imprimir;
     procedure ImprimirPDF;
     function  Add: Conhecimento;
     function Insert(Index: Integer): Conhecimento;
-    property Items[Index: Integer]: Conhecimento read GetItem  write SetItem;
-    property Configuracoes: TConfiguracoes read FConfiguracoes  write FConfiguracoes;
 
     function GetNamePath: string; override ;
     // Incluido o Parametro AGerarCTe que determina se após carregar os dados do CTe
@@ -132,6 +136,8 @@ type
     function LoadFromString(AString: String; AGerarCTe: Boolean = True): boolean;
     function SaveToFile(PathArquivo: string = ''): boolean;
 
+    property Items[Index: Integer]: Conhecimento read GetItem  write SetItem;
+    property Configuracoes: TConfiguracoes read FConfiguracoes  write FConfiguracoes;
     property ACBrCTe : TComponent read FACBrCTe ;
   end;
 
@@ -327,6 +333,25 @@ begin
     LocCTeW.Free;
  end;
 // Result := FXML;
+end;
+
+function Conhecimento.ValidarConcatChave: Boolean;
+var
+  wAno, wMes, wDia: Word;
+begin
+  DecodeDate(CTe.ide.dhEmi, wAno, wMes, wDia);
+  if (Copy(CTe.infCTe.ID,4,2) <> IntToStrZero(CTe.ide.cUF, 2)) or
+     (Copy(CTe.infCTe.ID,6,2) <> Copy(FormatFloat('0000', wAno), 3, 2)) or
+     (Copy(CTe.infCTe.ID,8,2) <> FormatFloat('00', wMes)) or
+     (Copy(CTe.infCTe.ID,10,14) <> copy(SomenteNumeros(CTe.Emit.CNPJ) + '00000000000000', 1, 14)) or
+     (Copy(CTe.infCTe.ID,24,2) <> CTe.ide.modelo) or
+     (Copy(CTe.infCTe.ID,26,3) <> IntToStrZero(CTe.ide.serie, 3)) or
+     (Copy(CTe.infCTe.ID,29,9) <> IntToStrZero(CTe.ide.nCT, 9)) or
+     (Copy(CTe.infCTe.ID,38,1) <> TpEmisToStr(CTe.ide.tpEmis)) or
+     (Copy(CTe.infCTe.ID,39,8) <> IntToStrZero(CTe.ide.cCT, 8)) then
+    Result := False
+  else
+    Result := True;
 end;
 
 { TConhecimentos }
@@ -613,6 +638,34 @@ begin
     end;
   except
     Result := False;
+  end;
+end;
+
+function TConhecimentos.ValidaRegrasdeNegocios: Boolean;
+var
+ i: Integer;
+ Erros : AnsiString;
+begin
+  Result := True;
+  for i:= 0 to Self.Count-1 do
+  begin
+    Erros := '';
+    if not Self.Items[i].ValidarConcatChave then
+       Erros := 'Rejeição: Erro na Chave de Acesso - Campo Id não corresponde à concatenação dos campos correspondentes'+sLineBreak;
+
+    if (Self.Items[i].CTe.ide.tpAmb <> FConfiguracoes.WebServices.Ambiente) then
+       Erros := Erros + '252-Rejeição: Tipo do ambiente do CT-e difere do ambiente do Web Service'+sLineBreak;
+
+    if (Self.Items[i].CTe.Ide.serie > 889) then
+       Erros := Erros + '670-Rejeição: Série utilizada fora da faixa permitida no Web Service (0-889)'+sLineBreak;
+
+    if copy(IntToStr(Self.Items[i].CTe.Emit.EnderEmit.cMun),1,2) <> IntToStr(FConfiguracoes.WebServices.UFCodigo) then
+       Erros := Erros + '226-Rejeição: Código da UF do Emitente diverge da UF autorizadora'+sLineBreak;
+
+
+    Self.Items[i].RegrasdeNegocios := Erros;
+    if Erros <> '' then
+      Result := False;
   end;
 end;
 
