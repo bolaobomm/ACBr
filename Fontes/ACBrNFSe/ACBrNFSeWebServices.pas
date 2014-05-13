@@ -1931,7 +1931,6 @@ begin
       proSisPMJP,
       proISSDigital,
       proISSe,
-      proSystemPro,
       pro4R,
       proFiorilli,
       proProdata,
@@ -1964,6 +1963,8 @@ begin
                                    '<' + Prefixo4 + 'Rps', '</Signature>') +
                                '</Signature>'+
                               '</' + Prefixo4 + 'Rps>';
+
+      proSystemPro: vNotas := vNotas + TNFSeGerarNFSe(Self).FNotasFiscais.Items[I].XML_Rps_Ass;
 
       else vNotas := vNotas + '<' + Prefixo4 + 'Rps>' +
                                '<' + Prefixo4 + 'InfRps' +

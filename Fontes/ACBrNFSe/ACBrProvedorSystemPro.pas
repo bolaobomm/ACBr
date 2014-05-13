@@ -111,7 +111,7 @@ var
  ConfigURL: TConfigURL;
 begin
  case ACodCidade of
-  4307005: begin // Erechim
+  4307005: begin // Erechim/RS
             Endereco := 'www.nfse.erechim.rs.gov.br:8182';
             ConfigURL.HomNomeCidade := Endereco + '/NfseService_Homolog/NfseService_Homolog';
             ConfigURL.ProNomeCidade := Endereco + '/NfseService/NfseService';
@@ -183,8 +183,6 @@ function TProvedorSystemPro.Gera_TagI(Acao: TnfseAcao; Prefixo3, Prefixo4,
 var
  xmlns: String;
 begin
- //xmlns := ' xmlns:ns2="http://www.w3.org/2000/09/xmldsig#"' +
- //         ' xmlns="http://www.abrasf.org.br/nfse.xsd" >';
  xmlns := ' xmlns="http://www.abrasf.org.br/nfse.xsd">';
                     
  case Acao of
@@ -197,7 +195,7 @@ begin
                              '<' + Prefixo3 + 'Pedido>' +
                               '<' + Prefixo4 + 'InfPedidoCancelamento' +
                                  DFeUtil.SeSenao(Identificador <> '', ' ' + Identificador + '="' + URI + '"', '') + '>';
-   acGerar:       Result := '<' + Prefixo3 + 'GerarNfseEnvio' + xmlns;
+   acGerar:       Result := ''; //'<' + Prefixo3 + 'GerarNfseEnvio' + xmlns;
    acRecSincrono: Result := '<' + Prefixo3 + '' + xmlns; //???
  end;
  
@@ -228,7 +226,7 @@ begin
    acConsNFSe:    Result := '</' + Prefixo3 + 'ConsultarNfseFaixaEnvio>';
    acCancelar:    Result := '</' + Prefixo3 + 'Pedido>' +
                             '</' + Prefixo3 + 'CancelarNfseEnvio>';
-   acGerar:       Result := '</' + Prefixo3 + 'GerarNfseEnvio>';
+   acGerar:       Result := ''; //'</' + Prefixo3 + 'GerarNfseEnvio>';
    acRecSincrono: Result := '';
  end;
 end;

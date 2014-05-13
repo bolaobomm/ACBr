@@ -136,7 +136,7 @@ begin
                    profintelISS, proFiorilli, proGoiania, {proGovBR,}
                    proISSDigital, proNatal, proProdata, proProdemge, proPVH,
                    proSaatri, proVirtual, proFreire, proLink3, proVitoria,
-                   proTecnos, proPronim])
+                   proTecnos, proPronim, proSystemPro])
    then FDefTipos := FServicoEnviar;
 
  if (RightStr(FURL, 1) <> '/') and (FDefTipos <> '')
@@ -152,12 +152,12 @@ begin
 
  if (FProvedor <> proIssDsf) and (FProvedor <> proEquiplano) and (FProvedor <> proEgoverneISS) then
    // Alterado Por Cleiver em 01/02/2013
-   if (FProvedor in [proGoiania, proProdata, proVitoria, proVirtual, proPublica])
+   if (FProvedor in [proGoiania, proProdata, proVitoria, proVirtual, proPublica, proSystemPro])
      then begin
       Gerador.wGrupo('GerarNfseEnvio' + Atributo);
 	    Gerador.wGrupo('Rps');
      end
-     else if (FProvedor in [proBetha,proSystemPro])
+     else if (FProvedor in [proBetha])
            then Gerador.wGrupo('Rps')
            else Gerador.wGrupo('Rps' + Atributo);
 
@@ -253,7 +253,7 @@ begin
 
  if (FProvedor <> proIssDsf) and (FProvedor <> proEquiplano) and (FProvedor <> proEgoverneISS) then
    // Alterado por Cleiver em 01/02/2013
-   if (FProvedor in [proGoiania, proProdata, proVitoria, proVirtual, proPublica])
+   if (FProvedor in [proGoiania, proProdata, proVitoria, proVirtual, proPublica, proSystemPro])
      then begin
       Gerador.wGrupo('/Rps');
       Gerador.wGrupo('/GerarNfseEnvio');
