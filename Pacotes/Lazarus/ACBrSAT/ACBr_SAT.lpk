@@ -22,52 +22,28 @@
     <Description Value="Componente para comunicação com equipamentos SAT
 http://www.fazenda.sp.gov.br/sat/"/>
     <Version Minor="1"/>
-    <Files Count="11">
+    <Files Count="5">
       <Item1>
         <Filename Value="..\..\..\Fontes\ACBrSAT\ACBrSAT.pas"/>
-        <HasRegisterProc Value="True"/>
         <UnitName Value="ACBrSAT"/>
       </Item1>
       <Item2>
-        <Filename Value="..\..\..\Fontes\ACBrSAT\ACBrSATClass.pas"/>
-        <UnitName Value="ACBrSATClass"/>
-      </Item2>
-      <Item3>
-        <Filename Value="..\..\..\Fontes\ACBrSAT\ACBrSATDinamico_cdecl.pas"/>
-        <UnitName Value="ACBrSATDinamico_cdecl"/>
-      </Item3>
-      <Item4>
-        <Filename Value="..\..\..\Fontes\ACBrSAT\ACBrSATExtratoClass.pas"/>
-        <UnitName Value="ACBrSATExtratoClass"/>
-      </Item4>
-      <Item5>
-        <Filename Value="..\..\..\Fontes\ACBrSAT\ACBrSATExtratoESCPOS.pas"/>
-        <UnitName Value="ACBrSATExtratoESCPOS"/>
-      </Item5>
-      <Item6>
-        <Filename Value="..\..\..\Fontes\ACBrSAT\pcnCFe.pas"/>
-        <UnitName Value="pcnCFe"/>
-      </Item6>
-      <Item7>
-        <Filename Value="..\..\..\Fontes\ACBrSAT\pcnCFeR.pas"/>
-        <UnitName Value="pcnCFeR"/>
-      </Item7>
-      <Item8>
-        <Filename Value="..\..\..\Fontes\ACBrSAT\pcnCFeW.pas"/>
-        <UnitName Value="pcnCFeW"/>
-      </Item8>
-      <Item9>
         <Filename Value="..\..\..\Fontes\ACBrSAT\pcnCFeCanc.pas"/>
         <UnitName Value="pcnCFeCanc"/>
-      </Item9>
-      <Item10>
-        <Filename Value="..\..\..\Fontes\ACBrSAT\pcnCFeCancR.pas"/>
-        <UnitName Value="pcnCFeCancR"/>
-      </Item10>
-      <Item11>
+      </Item2>
+      <Item3>
         <Filename Value="..\..\..\Fontes\ACBrSAT\pcnCFeCancW.pas"/>
         <UnitName Value="pcnCFeCancW"/>
-      </Item11>
+      </Item3>
+      <Item4>
+        <Filename Value="..\..\..\Fontes\ACBrSAT\pcnCFeW.pas"/>
+        <UnitName Value="pcnCFeW"/>
+      </Item4>
+      <Item5>
+        <Filename Value="..\..\..\Fontes\ACBrSAT\ACBrSATReg.pas"/>
+        <HasRegisterProc Value="True"/>
+        <UnitName Value="ACBrSATReg"/>
+      </Item5>
     </Files>
     <Type Value="RunAndDesignTime"/>
     <RequiredPkgs Count="3">

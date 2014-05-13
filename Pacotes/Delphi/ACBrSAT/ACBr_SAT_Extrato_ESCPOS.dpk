@@ -1,4 +1,4 @@
-package ACBr_SAT_Extrato_Fortes;
+package ACBr_SAT_Extrato_ESCPOS;
 
 {$R *.res}
 {$ALIGN 8}
@@ -22,7 +22,7 @@ package ACBr_SAT_Extrato_Fortes;
 {$WRITEABLECONST OFF}
 {$MINENUMSIZE 1}
 {$IMAGEBASE $400000}
-{$DESCRIPTION 'ACBr Automação Comercial Brasil - ACBrSATExtratoFortes para Fortes Report'}
+{$DESCRIPTION 'ACBr Automação Comercial Brasil - ACBr_SAT_Extrato_ESCPOS para Serial'}
 {$IMPLICITBUILD ON}
 
 requires
@@ -40,6 +40,6 @@ requires
   ACBr_SAT;
 
 contains
-  ACBrSATExtratoFortesFr in '..\..\..\Fontes\ACBrSAT\ACBrSATExtratoFortesFr.pas';
+  ACBrSATExtratoESCPOS in '..\..\..\Fontes\ACBrSAT\ACBrSATExtratoESCPOS.pas';
 
 end.

@@ -114,9 +114,11 @@ type
     ACBr_SAT_Extrato_Fortes_dpk: TCheckBox;
     ACBrGNREGuiaFRpkg_dpk: TCheckBox;
     ACBrNFeDanfeESCPOS_dpk: TCheckBox;
+	ACBr_SAT_Extrato_ESCPOS_dpk: TCheckBox;
     procedure btnPacotesMarcarTodosClick(Sender: TObject);
     procedure btnPacotesDesmarcarTodosClick(Sender: TObject);
     procedure VerificarCheckboxes(Sender: TObject);
+    procedure tsNFeHide(Sender: TObject);
   private
     FPacotes: TPacotes;
     FUtilizarBotoesMarcar: Boolean;
@@ -225,8 +227,9 @@ end;
 
 function TframePacotes.IsPacoteSAT(const ANomePacote: String): Boolean;
 const
-  PACOTES_SAT: array [0..1] of String =
+  PACOTES_SAT: array [0..2] of String =
     ('ACBr_SAT.dpk',
+	'ACBr_SAT_Extrato_ESCPOS.dpk',
     'ACBr_SAT_Extrato_Fortes.dpk');
 begin
   Result := MatchText(ANomePacote, PACOTES_SAT);
@@ -274,6 +277,15 @@ const
     ('ACBr_TEFD.dpk');
 begin
   Result := MatchText(ANomePacote, PACOTES_TEFD);
+end;
+
+procedure TframePacotes.tsNFeHide(Sender: TObject);
+var
+  i :integer;
+begin
+  for i := 0 to TTabSheet(Sender).ComponentCount -1 do
+    if (TTabSheet(Sender).Components[i] is TCheckBox) then
+      (TTabSheet(Sender).Components[i] as TCheckBox).Checked := false;
 end;
 
 function TframePacotes.IsPacoteMDFe(const ANomePacote: String): Boolean;
@@ -355,8 +367,21 @@ begin
   if not FUtilizarBotoesMarcar then
   begin
       // dependencia do NFe
-    if ACBrNFeDanfeESCPOS_dpk.Checked and not (ACBr_NFe2_dpk.Checked) then
-    ACBr_NFe2_dpk.Checked := true;
+    if ACBrNFeDanfeESCPOS_dpk.Checked and (not (ACBr_NFe2_dpk.Checked) or not(ACBrSerial_dpk.Checked))  then
+	  begin
+	    ACBrSerial_dpk.Checked := true;
+      ACBr_NFe2_dpk.Checked := true;
+	  end;
+
+	  // dependencia do SAT
+	  if ACBr_SAT_Extrato_ESCPOS_dpk.Checked and (not(ACBr_SAT_dpk.Checked) or not(ACBrSerial_dpk.Checked)) then
+	  begin
+	    ACBrSerial_dpk.Checked := true;
+	    ACBr_SAT_dpk.Checked := true;
+	  end;
+
+	  if (ACBr_SAT_Extrato_Fortes_dpk.Checked) and not(ACBr_SAT_dpk.Checked) then
+	    ACBr_SAT_dpk.Checked := true;
 
     // dependencias da NFe e CTe
     if (ACBr_NFe2_dpk.Checked) or (ACBr_CTe_dpk.Checked) or (ACBr_NFSe_dpk.Checked) or (ACBr_MDFe_dpk.Checked) then
@@ -377,6 +402,14 @@ begin
     // Dependencia
     ACBrNFeDanfeRVCodeBase_dpk.Checked := ACBrNFeDanfeRV_dpk.Checked;
   end;
+  tsNFe.TabVisible := ACBr_NFe2_dpk.Checked;
+  tsCTe.TabVisible := ACBr_CTe_dpk.Checked;
+  tsNFSe.TabVisible := ACBr_NFSe_dpk.Checked;
+  tsBoletos.TabVisible := ACBr_Boleto_dpk.Checked;
+  tsMDFe.TabVisible := ACBr_MDFe_dpk.Checked;
+  tsSAT.TabVisible := ACBr_SAT_dpk.Checked;
+  tsGNRE.TabVisible := ACBr_GNRE_dpk.Checked;
+
 end;
 
 end.

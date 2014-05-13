@@ -44,6 +44,9 @@ unit ACBrSATExtratoESCPOS;
 interface
 
 uses Classes, SysUtils,
+	 {$IFDEF FPC}
+       LResources,
+     {$ENDIF} 
      ACBrSATExtratoClass, ACBrDevice, ACBrUtil,
      pcnCFe, pcnCFeCanc, pcnConversao, ACBrDFeUtil;
 
@@ -94,9 +97,20 @@ type
     property Device : TACBrDevice read FDevice ;
   end ;
 
+procedure Register;
+
 implementation
 
 uses ACBrSAT;
+
+{$IFNDEF FPC}
+   {$R ACBrSAT.dcr}
+{$ENDIF}
+
+procedure Register;
+begin
+  RegisterComponents('ACBr',[TACBrSATExtratoESCPOS]);
+end;
 
 function Int2TB(AInteger: Integer): AnsiString;
 var
@@ -509,5 +523,12 @@ begin
 
   ImprimePorta(FBuffer.Text);
 end;
+
+{$IFDEF FPC}
+{$IFNDEF NOGUI}
+initialization
+   {$I ACBrSAT.lrs}
+{$ENDIF}
+{$ENDIF}
 
 end.

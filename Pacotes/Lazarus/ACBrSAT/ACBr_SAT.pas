@@ -7,15 +7,13 @@ unit ACBr_SAT;
 interface
 
 uses
-  ACBrSAT, ACBrSATClass, ACBrSATDinamico_cdecl, ACBrSATExtratoClass, 
-  ACBrSATExtratoESCPOS, pcnCFe, pcnCFeR, pcnCFeW, pcnCFeCanc, pcnCFeCancR, 
-  pcnCFeCancW, LazarusPackageIntf;
+  ACBrSAT, pcnCFeCanc, pcnCFeCancW, pcnCFeW, ACBrSATReg, LazarusPackageIntf;
 
 implementation
 
 procedure Register;
 begin
-  RegisterUnit('ACBrSAT', @ACBrSAT.Register);
+  RegisterUnit('ACBrSATReg', @ACBrSATReg.Register);
 end;
 
 initialization

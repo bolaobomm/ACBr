@@ -24,26 +24,14 @@ package ACBr_SAT;
 {$IMAGEBASE $400000}
 {$DESCRIPTION 'ACBr Automação Comercial Brasil - ACBrSAT (http://acbr.sourceforge.net/)'}
 {$IMPLICITBUILD ON}
-{$DEFINE DEBUG}
 
 requires
   rtl,
   PCN2,
   designide,
-  ACBrSerial,
   ACBrComum;
 
 contains
-  ACBrSAT in '..\..\..\Fontes\ACBrSAT\ACBrSAT.pas',
-  ACBrSATClass in '..\..\..\Fontes\ACBrSAT\ACBrSATClass.pas',
-  pcnCFe in '..\..\..\Fontes\ACBrSAT\pcnCFe.pas',
-  pcnCFeR in '..\..\..\Fontes\ACBrSAT\pcnCFeR.pas',
-  pcnCFeW in '..\..\..\Fontes\ACBrSAT\pcnCFeW.pas',
-  ACBrSATExtratoClass in '..\..\..\Fontes\ACBrSAT\ACBrSATExtratoClass.pas',
-  ACBrSATExtratoESCPOS in '..\..\..\Fontes\ACBrSAT\ACBrSATExtratoESCPOS.pas',
-  ACBrSATDinamico_cdecl in '..\..\..\Fontes\ACBrSAT\ACBrSATDinamico_cdecl.pas',
-  pcnCFeCanc in '..\..\..\Fontes\ACBrSAT\pcnCFeCanc.pas',
-  pcnCFeCancR in '..\..\..\Fontes\ACBrSAT\pcnCFeCancR.pas',
-  pcnCFeCancW in '..\..\..\Fontes\ACBrSAT\pcnCFeCancW.pas';
+  ACBrSATReg in '..\..\..\Fontes\ACBrSAT\ACBrSATReg.pas';
 
 end.

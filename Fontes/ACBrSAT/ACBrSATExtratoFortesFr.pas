@@ -49,7 +49,7 @@ uses Classes, SysUtils,
      {$IFDEF FPC}
        LResources,
      {$ENDIF}
-     Forms, Graphics,
+     Forms, Graphics, ACBrSAT,
      ACBrSATExtratoClass, ACBrUtil,
      pcnCFe, pcnCFeCanc, pcnConversao, ACBrDFeUtil,
      RLConsts, RLReport, RLBarcode, RLPDFFilter, RLHTMLFilter, RLPrintDialog,
@@ -284,7 +284,7 @@ procedure Register;
 
 implementation
 
-uses ACBrSAT, ACBrDelphiZXingQRCode, math;
+uses  ACBrDelphiZXingQRCode, math;
 
 {$ifdef FPC}
   {$R *.lfm}

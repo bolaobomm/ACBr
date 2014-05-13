@@ -166,20 +166,10 @@ type
 
    end;
 
-procedure Register;
 
 implementation
 
-Uses ACBrUtil, ACBrSATDinamico_cdecl, ACBrSATExtratoESCPOS;
-
-{$IFNDEF FPC}
-   {$R ACBrSAT.dcr}
-{$ENDIF}
-
-procedure Register;
-begin
-  RegisterComponents('ACBr', [TACBrSAT,TACBrSATExtratoESCPOS]);
-end;
+Uses ACBrUtil, ACBrSATDinamico_cdecl;
 
 { TACBrSAT }
 
@@ -661,13 +651,6 @@ begin
   else
      Result := ACBrStr( ATexto ) ;
 end ;
-
-{$IFDEF FPC}
-{$IFNDEF NOGUI}
-initialization
-   {$I ACBrSAT.lrs}
-{$ENDIF}
-{$ENDIF}
 
 end.
 
