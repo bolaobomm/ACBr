@@ -1634,7 +1634,10 @@ begin
     case FCTe.Ide.Toma03.Toma of
       tmRemetente:
         begin
-          FieldByName('CNPJ').AsString := FCTe.Rem.CNPJCPF;
+          if Length(FCTe.Rem.CNPJCPF) > 11 then
+            FieldByName('CNPJ').AsString := DFeUtil.FormatarCNPJ(FCTe.Rem.CNPJCPF)
+          else
+            FieldByName('CNPJ').AsString := DFeUtil.FormatarCPF(FCTe.Rem.CNPJCPF);
           FieldByName('XNome').AsString := FCTe.Rem.xNome;
           FieldByName('XFant').AsString := FCTe.Rem.xFant;
           FieldByName('IE').AsString := FCTe.Rem.IE;
@@ -1658,7 +1661,10 @@ begin
 
       tmDestinatario:
         begin
-          FieldByName('CNPJ').AsString := FCTe.Dest.CNPJCPF;
+          if Length(FCTe.Dest.CNPJCPF) > 11 then
+            FieldByName('CNPJ').AsString := DFeUtil.FormatarCNPJ(FCTe.Dest.CNPJCPF)
+          else
+            FieldByName('CNPJ').AsString := DFeUtil.FormatarCPF(FCTe.Dest.CNPJCPF);
           FieldByName('XNome').AsString := FCTe.Dest.xNome;
           FieldByName('IE').AsString := FCTe.Dest.IE;
           //
@@ -1680,7 +1686,10 @@ begin
 
       tmExpedidor:
         begin
-          FieldByName('CNPJ').AsString := FCTe.Exped.CNPJCPF;
+          if Length(FCTe.Exped.CNPJCPF) > 11 then
+            FieldByName('CNPJ').AsString := DFeUtil.FormatarCNPJ(FCTe.Exped.CNPJCPF)
+          else
+            FieldByName('CNPJ').AsString := DFeUtil.FormatarCPF(FCTe.Exped.CNPJCPF);
           FieldByName('XNome').AsString := FCTe.Exped.xNome;
           FieldByName('IE').AsString := FCTe.Exped.IE;
           //
@@ -1702,7 +1711,10 @@ begin
 
       tmRecebedor:
         begin
-          FieldByName('CNPJ').AsString := FCTe.Receb.CNPJCPF;
+          if Length(FCTe.Receb.CNPJCPF) > 11 then
+            FieldByName('CNPJ').AsString := DFeUtil.FormatarCNPJ(FCTe.Receb.CNPJCPF)
+          else
+            FieldByName('CNPJ').AsString := DFeUtil.FormatarCPF(FCTe.Receb.CNPJCPF);
           FieldByName('XNome').AsString := FCTe.Receb.xNome;
           FieldByName('IE').AsString := FCTe.Receb.IE;
           //
@@ -1726,7 +1738,10 @@ begin
     case FCTe.Ide.Toma4.Toma of
       tmOutros:
         begin
-          FieldByName('CNPJ').AsString := FCTe.Ide.Toma4.CNPJCPF;
+          if Length(FCTe.Ide.Toma4.CNPJCPF) > 11 then
+            FieldByName('CNPJ').AsString := DFeUtil.FormatarCNPJ(FCTe.Ide.Toma4.CNPJCPF)
+          else
+            FieldByName('CNPJ').AsString := DFeUtil.FormatarCPF(FCTe.Ide.Toma4.CNPJCPF);
           FieldByName('XNome').AsString := FCTe.Ide.Toma4.xNome;
           FieldByName('IE').AsString := FCTe.Ide.Toma4.IE;
           //
