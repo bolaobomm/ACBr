@@ -170,7 +170,7 @@ type
     function ExtrairDiretorioPacote(NomePacote: string): string;
     procedure WriteToTXT( const ArqTXT, AString : AnsiString;
       const AppendIfExists : Boolean = True; AddLineBreak : Boolean = True );
-    procedure AddLibraryPathToPath(const APath, AProcurarRemover: String);
+    procedure AddLibraryPathToDelphiPath(const APath, AProcurarRemover: String);
   public
 
   end;
@@ -577,60 +577,59 @@ begin
     ForceDirectories(sDirLibrary);
 end;
 
-procedure TfrmPrincipal.AddLibraryPathToPath(const APath: String; const AProcurarRemover: String);
+procedure TfrmPrincipal.AddLibraryPathToDelphiPath(const APath: String; const AProcurarRemover: String);
 const
-  cs: PChar = 'Environment';
+  cs: PChar = 'Environment Variables';
 var
-  s: String;
   lParam, wParam: Integer;
   aResult: Cardinal;
   ListaPaths: TStringList;
   I: Integer;
+  PathsAtuais: String;
 begin
-  ListaPaths := TStringList.Create;
-  try
-    ListaPaths.Delimiter := ';';
-    ListaPaths.StrictDelimiter := True;
-    ListaPaths.DelimitedText := GetEnvironmentVariable('PATH');
+  with oACBr.Installations[iVersion] do
+  begin
+    // tentar ler o path configurado na ide do delphi, se não existir ler
+    // a atual para complementar e fazer o override
+    PathsAtuais := Trim(EnvironmentVariables.Values['PATH']);
+    if PathsAtuais = '' then
+      PathsAtuais := GetEnvironmentVariable('PATH');
 
-    // verificar se existe algo do ACBr e remover
-    if Trim(AProcurarRemover) <> '' then
-    begin
-      for I := ListaPaths.Count - 1 downto 0 do
-      begin
-       if Pos(AnsiUpperCase(AProcurarRemover), AnsiUpperCase(ListaPaths[I])) > 0 then
-         ListaPaths.Delete(I);
-      end;
-    end;
-
-    // adicionar o path
-    ListaPaths.Add(APath);
-
-    with TRegistry.Create do
+    // manipular as strings
+    ListaPaths := TStringList.Create;
     try
-      RootKey :=  HKEY_LOCAL_MACHINE;
-      if OpenKey('SYSTEM\CurrentControlSet\Control\Session Manager\Environment\', False) then
+      ListaPaths.Delimiter       := ';';
+      ListaPaths.StrictDelimiter := True;
+      ListaPaths.DelimitedText   := PathsAtuais;
+
+      // verificar se existe algo do ACBr e remover
+      if Trim(AProcurarRemover) <> '' then
       begin
-        if ValueExists('Path') then
+        for I := ListaPaths.Count - 1 downto 0 do
         begin
-          s := ReadString('Path');
-          WriteString('Path', ListaPaths.DelimitedText);
+         if Pos(AnsiUpperCase(AProcurarRemover), AnsiUpperCase(ListaPaths[I])) > 0 then
+           ListaPaths.Delete(I);
         end;
       end;
+
+      // adicionar o path
+      ListaPaths.Add(APath);
+
+      // escrever a variavel no override da ide
+      ConfigData.WriteString('Environment Variables', 'PATH', ListaPaths.DelimitedText);
+
+      // enviar um broadcast de atualização para o windows
+      wParam := 0;
+      lParam := LongInt(cs);
+      SendMessageTimeout(HWND_BROADCAST, WM_SETTINGCHANGE, wParam, lParam, SMTO_NORMAL, 4000, aResult);
+      if aResult <> 0 then
+        raise Exception.create('Ocorreu um erro ao tentar configurar o path: ' + SysErrorMessage(aResult));
     finally
-      CloseKey;
-      Free;
+      ListaPaths.Free;
     end;
-
-    wParam := 0;
-    lParam := LongInt(cs);
-
-    SendMessageTimeout(HWND_BROADCAST, WM_SETTINGCHANGE, wParam, lParam, SMTO_NORMAL, 4000, aResult);
-    if aResult <> 0 then
-      raise Exception.create('Ocorreu um erro ao tentar configurar o path: ' + SysErrorMessage(aResult));
-  finally
-    ListaPaths.Free;
   end;
+
+
 end;
 
 // adicionar o paths ao library path do delphi
@@ -680,7 +679,7 @@ begin
   end;
 
   // -- adicionar a library path ao path do windows
-  AddLibraryPathToPath(sDirLibrary, 'acbr');
+  AddLibraryPathToDelphiPath(sDirLibrary, 'acbr');
 
   //-- ************ C++ Builder *************** //
   if ckbBCB.Checked then
@@ -1197,7 +1196,6 @@ procedure TfrmPrincipal.wizPgInicioNextButtonClick(Sender: TObject;
   var Stop: Boolean);
 begin
   // Verificar se o delphi está aberto
-  {
   if oACBr.AnyInstanceRunning then
   begin
     Stop := True;
@@ -1207,7 +1205,7 @@ begin
       MB_ICONERROR + MB_OK
     );
   end;
-  }
+
   // Verificar se o tortoise está instalado
   if not TSVN_Class.IsTortoiseInstalado then
   begin

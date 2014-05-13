@@ -7,13 +7,8 @@ uses
   uFrameLista in 'uFrameLista.pas' {framePacotes: TFrame};
 
 {$R *.res}
-{$R UAC.res}
 
 begin
-  {$IFDEF VER230} // XE2
-  ReportMemoryLeaksOnShutdown := DebugHook <> 0;
-  {$ENDIF}
-  //
   Application.Initialize;
   Application.MainFormOnTaskbar := True;
   Application.Title := 'Instalação do Projeto ACBr';
