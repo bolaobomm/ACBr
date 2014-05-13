@@ -29,6 +29,7 @@ requires
   rtl,
   PCN2,
   designide,
+  synapse,
   ACBrComum;
 
 contains
