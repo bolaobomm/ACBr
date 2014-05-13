@@ -106,8 +106,10 @@ var
  ConfigURL: TConfigURL;
 begin
  case ACodCidade of
-
-
+  5208004: begin // Formosa/GO
+            ConfigURL.HomNomeCidade := '189.75.118.162:8181';
+            ConfigURL.ProNomeCidade := '189.75.118.162:8181';
+           end;
   5213103: begin // Mineiros/GO
             ConfigURL.HomNomeCidade := 'homologacao.mineiros.gdc.net.br:90';
             ConfigURL.ProNomeCidade := 'mineiros.gdc.net.br';

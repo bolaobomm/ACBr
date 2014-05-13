@@ -1000,6 +1000,7 @@ begin
   2408102  // Natal/RN
          : Provedor := 'Natal';
 
+  5208004, // Formosa/GO
   5213103, // Mineiros/GO
   5218805  // Rio Verde/GO
          : Provedor := 'Prodata';
