@@ -334,8 +334,12 @@ begin
         end;
      finally
         // Gustavo Kato 16/12/2013
-        QRCTe.QRPrinter.Free;
-        // Free;    comentado por Italo em 07/03/2014
+//        QRCTe.QRPrinter.Free;
+
+        // Incluido por Italo em 13/05/2014
+        QRCTe.Free;
+        QRCTe := nil;
+        Free;    // removido o comentado por Italo em 07/03/2014
      end;
 {$ENDIF}
 end;
