@@ -27,7 +27,7 @@ object frmAcbrNfeMonitor: TfrmAcbrNfeMonitor
     Left = 0
     Top = 0
     Width = 571
-    Height = 223
+    Height = 222
     Align = alClient
     TabOrder = 0
     object Splitter1: TSplitter
@@ -85,7 +85,7 @@ object frmAcbrNfeMonitor: TfrmAcbrNfeMonitor
       Left = 1
       Top = 92
       Width = 569
-      Height = 130
+      Height = 129
       Align = alClient
       TabOrder = 1
       object pTodResp: TPanel
@@ -102,7 +102,7 @@ object frmAcbrNfeMonitor: TfrmAcbrNfeMonitor
         Left = 1
         Top = 18
         Width = 567
-        Height = 111
+        Height = 110
         Align = alClient
         Lines.Strings = (
           '')
@@ -116,7 +116,7 @@ object frmAcbrNfeMonitor: TfrmAcbrNfeMonitor
   end
   object pBotoes: TPanel
     Left = 0
-    Top = 486
+    Top = 485
     Width = 571
     Height = 40
     Align = alBottom
@@ -4109,7 +4109,7 @@ object frmAcbrNfeMonitor: TfrmAcbrNfeMonitor
   end
   object StatusBar1: TStatusBar
     Left = 0
-    Top = 526
+    Top = 525
     Width = 571
     Height = 19
     Panels = <
@@ -4122,7 +4122,7 @@ object frmAcbrNfeMonitor: TfrmAcbrNfeMonitor
   end
   object pConfig: TPanel
     Left = 0
-    Top = 223
+    Top = 222
     Width = 571
     Height = 263
     Align = alBottom
@@ -4133,7 +4133,7 @@ object frmAcbrNfeMonitor: TfrmAcbrNfeMonitor
       Top = 1
       Width = 569
       Height = 261
-      ActivePage = Testes
+      ActivePage = WebService
       Align = alClient
       Style = tsFlatButtons
       TabOrder = 0
@@ -4573,7 +4573,7 @@ object frmAcbrNfeMonitor: TfrmAcbrNfeMonitor
           Top = 0
           Width = 561
           Height = 230
-          ActivePage = tsWSNFeCTe
+          ActivePage = tsWSNFCe
           Align = alClient
           Style = tsFlatButtons
           TabOrder = 0
@@ -4619,6 +4619,13 @@ object frmAcbrNfeMonitor: TfrmAcbrNfeMonitor
                   3BB33773333773333773B333333B3333333B7333333733333337}
                 NumGlyphs = 2
                 OnClick = sbPathSalvarClick
+              end
+              object Label48: TLabel
+                Left = 198
+                Top = 54
+                Width = 33
+                Height = 13
+                Caption = 'Vers'#227'o'
               end
               object cbUF: TComboBox
                 Left = 8
@@ -4677,19 +4684,19 @@ object frmAcbrNfeMonitor: TfrmAcbrNfeMonitor
                 Font.Name = 'MS Sans Serif'
                 Font.Style = []
                 ParentFont = False
-                TabOrder = 1
+                TabOrder = 3
               end
               object edtPathLogs: TEdit
                 Left = 8
                 Top = 106
                 Width = 249
                 Height = 21
-                TabOrder = 2
+                TabOrder = 4
               end
               object rgTipoAmb: TRadioGroup
                 Left = 8
                 Top = 54
-                Width = 273
+                Width = 182
                 Height = 35
                 Caption = 'Selecione o Ambiente de Destino'
                 Columns = 2
@@ -4697,7 +4704,21 @@ object frmAcbrNfeMonitor: TfrmAcbrNfeMonitor
                 Items.Strings = (
                   'Produ'#231#227'o'
                   'Homologa'#231#227'o')
-                TabOrder = 3
+                TabOrder = 1
+              end
+              object cbVersaoWS: TComboBox
+                Left = 196
+                Top = 67
+                Width = 86
+                Height = 21
+                ItemHeight = 13
+                ItemIndex = 0
+                TabOrder = 2
+                Text = '2.00'
+                Items.Strings = (
+                  '2.00'
+                  '3.00'
+                  '3.10')
               end
             end
             object gbxProxy: TGroupBox
@@ -4860,6 +4881,38 @@ object frmAcbrNfeMonitor: TfrmAcbrNfeMonitor
                 'Por Evento'
                 'Anterior')
               TabOrder = 4
+            end
+          end
+          object tsWSNFCe: TTabSheet
+            Caption = 'NFC-e'
+            ImageIndex = 2
+            object Label49: TLabel
+              Left = 0
+              Top = 0
+              Width = 40
+              Height = 13
+              Caption = 'IdToken'
+            end
+            object Label50: TLabel
+              Left = 0
+              Top = 40
+              Width = 31
+              Height = 13
+              Caption = 'Token'
+            end
+            object edtToken: TEdit
+              Left = 0
+              Top = 16
+              Width = 169
+              Height = 21
+              TabOrder = 0
+            end
+            object edtIdToken: TEdit
+              Left = 0
+              Top = 56
+              Width = 169
+              Height = 21
+              TabOrder = 1
             end
           end
           object tsWSNFSe: TTabSheet
@@ -5084,7 +5137,7 @@ object frmAcbrNfeMonitor: TfrmAcbrNfeMonitor
               Top = 50
               Width = 219
               Height = 21
-              ItemHeight = 0
+              ItemHeight = 13
               TabOrder = 2
             end
             object cbxImpDescPorc: TCheckBox
@@ -5391,6 +5444,24 @@ object frmAcbrNfeMonitor: TfrmAcbrNfeMonitor
               Width = 258
               Height = 21
               TabOrder = 3
+            end
+          end
+          object TabSheet1: TTabSheet
+            Caption = 'NFC-e'
+            ImageIndex = 2
+            object rgModeloDANFeNFCE: TRadioGroup
+              Left = 6
+              Top = -2
+              Width = 187
+              Height = 33
+              Caption = 'Modelo'
+              Columns = 2
+              ItemIndex = 0
+              Items.Strings = (
+                'Fortes'
+                'ESC-POS')
+              TabOrder = 0
+              OnClick = rgModeloDanfeClick
             end
           end
         end
@@ -6460,5 +6531,53 @@ object frmAcbrNfeMonitor: TfrmAcbrNfeMonitor
     EPECEnviado = False
     Left = 425
     Top = 28
+  end
+  object ACBrNFeDANFCeFortes1: TACBrNFeDANFCeFortes
+    MostrarPreview = True
+    MostrarStatus = True
+    TipoDANFE = tiSemGeracao
+    NumCopias = 1
+    ImprimirDescPorc = False
+    ImprimirTotalLiquido = False
+    MargemInferior = 0.800000000000000000
+    MargemSuperior = 0.800000000000000000
+    MargemEsquerda = 0.600000000000000000
+    MargemDireita = 0.510000000000000000
+    CasasDecimais._qCom = 2
+    CasasDecimais._vUnCom = 2
+    ExibirResumoCanhoto = False
+    FormularioContinuo = False
+    TamanhoFonte_DemaisCampos = 10
+    ProdutosPorPagina = 0
+    ImprimirDetalhamentoEspecifico = True
+    NFeCancelada = False
+    LocalImpCanhoto = 0
+    ImprimeItens = True
+    Left = 169
+    Top = 60
+  end
+  object ACBrNFeDANFeESCPOS1: TACBrNFeDANFeESCPOS
+    MostrarPreview = True
+    MostrarStatus = True
+    TipoDANFE = tiSemGeracao
+    NumCopias = 1
+    ImprimirDescPorc = False
+    ImprimirTotalLiquido = False
+    MargemInferior = 0.800000000000000000
+    MargemSuperior = 0.800000000000000000
+    MargemEsquerda = 0.600000000000000000
+    MargemDireita = 0.510000000000000000
+    CasasDecimais._qCom = 2
+    CasasDecimais._vUnCom = 2
+    ExibirResumoCanhoto = False
+    FormularioContinuo = False
+    TamanhoFonte_DemaisCampos = 10
+    ProdutosPorPagina = 0
+    ImprimirDetalhamentoEspecifico = True
+    NFeCancelada = False
+    LocalImpCanhoto = 0
+    ImprimeItens = True
+    Left = 201
+    Top = 60
   end
 end

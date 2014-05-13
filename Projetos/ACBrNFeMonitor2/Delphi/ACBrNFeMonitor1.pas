@@ -42,7 +42,8 @@ uses IniFiles, CmdUnitNFe, FileCtrl, Printers,
   Dialogs, StdCtrls, ComCtrls, ExtCtrls, Buttons, Spin, Menus, ImgList,
   ACBrNFe, ACBrNFeDANFEClass, ACBrNFeDANFERave, pcnConversao, OleCtrls,
   SHDocVw, ACBrNFeUtil, ACBrDFeUtil, ACBrNFeDANFERaveCB, ACBrGIF,
-  ACBrCTeDACTEClass, ACBrCTeDACTeQRClass, ACBrCTe;
+  ACBrCTeDACTEClass, ACBrCTeDACTeQRClass, ACBrCTe, ACBrNFeDANFeESCPOS,
+  ACBrDANFCeFortesFr;
 
 const
    BufferMemoResposta = 10000 ;              { Maximo de Linhas no MemoResposta }
@@ -276,6 +277,17 @@ type
     edtIntervalo: TEdit;
     edtAguardar: TEdit;
     rgTipoCancelamento: TRadioGroup;
+    TabSheet1: TTabSheet;
+    rgModeloDANFeNFCE: TRadioGroup;
+    ACBrNFeDANFCeFortes1: TACBrNFeDANFCeFortes;
+    ACBrNFeDANFeESCPOS1: TACBrNFeDANFeESCPOS;
+    Label48: TLabel;
+    cbVersaoWS: TComboBox;
+    tsWSNFCe: TTabSheet;
+    Label49: TLabel;
+    Label50: TLabel;
+    edtToken: TEdit;
+    edtIdToken: TEdit;
     procedure DoACBrTimer(Sender: TObject);
     procedure edOnlyNumbers(Sender: TObject; var Key: Char);
     procedure FormCreate(Sender: TObject);
@@ -364,6 +376,7 @@ type
     procedure LerIni ;
     procedure SalvarIni ;
     procedure VerificaDiretorios ;
+    procedure ConfiguraDANFe;
   end;
 
 var
@@ -801,13 +814,18 @@ begin
 
      cbUF.ItemIndex       := cbUF.Items.IndexOf(Ini.ReadString( 'WebService','UF','SP')) ;
      rgTipoAmb.ItemIndex  := Ini.ReadInteger( 'WebService','Ambiente'  ,0) ;
+     cbVersaoWS.ItemIndex := cbVersaoWS.Items.IndexOf(Ini.ReadString( 'WebService','Vesao','2.00')) ;
      ACBrNFe1.Configuracoes.WebServices.UF         := cbUF.Text;
      ACBrNFe1.Configuracoes.WebServices.Ambiente   := StrToTpAmb(Ok,IntToStr(rgTipoAmb.ItemIndex+1));
+     ACBrNFe1.Configuracoes.Geral.VersaoDF  := StrToVersaoDF(ok,cbVersaoWS.Text);
 
      ACBrCTe1.Configuracoes.WebServices.UF         := cbUF.Text;
      ACBrCTe1.Configuracoes.WebServices.Ambiente   := StrToTpAmb(Ok,IntToStr(rgTipoAmb.ItemIndex+1));
 
      rgTipoCancelamento.ItemIndex := Ini.ReadInteger( 'WebService','TipoCancelamento',IfThen((pos('|'+UpperCase(ACBrNFe1.Configuracoes.WebServices.UF)+'|', '|PR|ES|MA|PA|PI|RN|') <= 0),0,1)) ;
+
+     edtIdToken.Text := Ini.ReadString( 'NFCe', 'IdToken', '') ;     
+     edtToken.Text := Ini.ReadString( 'NFCe', 'Token', '') ;
 
      {$IFDEF ACBrNFeOpenSSL}
      lblCaminho.Caption := 'Arquivo PFX';
@@ -876,45 +894,9 @@ begin
      else
         ACBrNFe1.DANFE := ACBrNFeDANFERaveCB1;
 
-     if ACBrNFe1.DANFE <> nil then
-      begin
-        ACBrNFe1.DANFE.TipoDANFE  := StrToTpImp(OK,IntToStr(rgTipoDanfe.ItemIndex+1));
-        ACBrNFe1.DANFE.Logo       := edtLogoMarca.Text;
-        ACBrNFe1.DANFE.Sistema := edtSoftwareHouse.Text;
-        ACBrNFe1.DANFE.Site    := edtSiteEmpresa.Text;
-        ACBrNFe1.DANFE.Email   := edtEmailEmpresa.Text;
-        ACBrNFe1.DANFE.Fax     := edtFaxEmpresa.Text;
-        ACBrNFe1.DANFE.ImprimirDescPorc  := cbxImpDescPorc.Checked;
-        ACBrNFe1.DANFE.MostrarPreview    := cbxMostrarPreview.Checked;
-        ACBrNFe1.DANFE.Impressora := cbxImpressora.Text;
-        ACBrNFe1.DANFE.NumCopias  := StrToIntDef(edtNumCopia.Text, 1);
-        ACBrNFe1.DANFE.ProdutosPorPagina := StrToIntDef(edtProdPag.Text, 0);
-        ACBrNFe1.DANFE.MargemInferior  := StrToFloatDef(edtMargemInf.Text,0.8);
-        ACBrNFe1.DANFE.MargemSuperior  := StrToFloatDef(edtMargemSup.Text,0.8);
-        ACBrNFe1.DANFE.MargemDireita   := StrToFloatDef(edtMargemDir.Text,0.51);
-        ACBrNFe1.DANFE.MargemEsquerda  := StrToFloatDef(edtMargemEsq.Text,0.6);
-        ACBrNFe1.DANFE.PathPDF    := edtPathPDF.Text;
-        ACBrNFe1.DANFE.CasasDecimais._qCom   := rgCasasDecimaisQtd.ItemIndex+2;
-        ACBrNFe1.DANFE.CasasDecimais._vUnCom := spedtDecimaisVUnit.Value;
-        ACBrNFe1.DANFE.ExibirResumoCanhoto  :=  cbxExibeResumo.Checked;
-        ACBrNFe1.DANFE.ImprimirTotalLiquido := cbxImpValLiq.Checked;
-        ACBrNFe1.DANFE.FormularioContinuo   := cbxFormCont.Checked;
-        ACBrNFe1.DANFE.MostrarStatus        := cbxMostraStatus.Checked;
-        ACBrNFe1.DANFE.ExpandirLogoMarca    := cbxExpandirLogo.Checked;
-        ACBrNFe1.DANFE.TamanhoFonte_DemaisCampos := StrToIntDef(edtFonteCampos.Text, 10);
+     rgModeloDANFeNFCE.ItemIndex   := Ini.ReadInteger('NFCe','Modelo'   ,0) ;
 
-        if ACBrNFe1.DANFE = ACBrNFeDANFERave1 then
-         begin
-           ACBrNFeDANFERave1.EspessuraBorda := StrToIntDef(edtEspBorda.Text, 1);
-           ACBrNFeDANFERave1.TamanhoFonte_RazaoSocial := StrToIntDef(edtFonteRazao.Text, 12);
-           ACBrNFeDANFERave1.RavFile := PathWithDelim(ExtractFilePath(Application.ExeName))+'Report\DANFE_Rave513.rav'; //NotaFiscalEletronica
-         end
-        else
-         begin
-           ACBrNFeDANFERaveCB1.EspessuraBorda := StrToIntDef(edtEspBorda.Text, 1);
-           ACBrNFeDANFERaveCB1.Fonte  := DFeUtil.SeSenao(rgTipoFonte.ItemIndex=0,ftTimes,ftCourier);
-         end;
-      end;
+     ConfiguraDANFe;
 
      ACBrCTe1.DACTe := ACBrCTeDACTeQR1;
      ACBrCTe1.DACTe.TipoDACTE  := StrToTpImp(OK,IntToStr(rgTipoDanfe.ItemIndex+1));
@@ -1045,6 +1027,7 @@ begin
 
      Ini.WriteString( 'WebService','UF'         ,cbUF.Text) ;
      Ini.WriteInteger('WebService','Ambiente'   ,rgTipoAmb.ItemIndex) ;
+     Ini.WriteString( 'WebService','Vesao'      ,cbVersaoWS.Text) ;
      Ini.WriteBool(   'WebService','AjustarAut' ,cbxAjustarAut.Checked) ;
      Ini.WriteString( 'WebService','Aguardar'   ,edtAguardar.Text) ;
      Ini.WriteString( 'WebService','Tentativas' ,edtTentativas.Text) ;
@@ -1055,6 +1038,9 @@ begin
      Ini.WriteString( 'Proxy','Porta'  ,edtProxyPorta.Text) ;
      Ini.WriteString( 'Proxy','User'   ,edtProxyUser.Text) ;
      GravaINICrypt( INI, 'Proxy','Pass',edtProxySenha.Text, _C) ;
+
+     Ini.WriteString( 'NFCe', 'IdToken', edtIdToken.Text) ;
+     Ini.WriteString( 'NFCe', 'Token', edtToken.Text) ;
 
      Ini.WriteString( 'Email','Host'    ,edtSmtpHost.Text) ;
      Ini.WriteString( 'Email','Port'    ,edtSmtpPort.Text) ;
@@ -1095,6 +1081,8 @@ begin
      Ini.WriteBool(   'DANFE','MostrarStatus' ,cbxMostraStatus.Checked) ;
      Ini.WriteBool(   'DANFE','ExpandirLogo'  ,cbxExpandirLogo.Checked) ;
      Ini.WriteInteger('DANFE','Fonte'         ,rgTipoFonte.ItemIndex) ;
+
+     Ini.WriteInteger('NFCe','Modelo'   ,rgModeloDANFeNFCE.ItemIndex) ;
 
      Ini.WriteBool(   'Arquivos','Salvar'     ,cbxSalvarArqs.Checked);
      Ini.WriteBool(   'Arquivos','PastaMensal',cbxPastaMensal.Checked);
@@ -2086,7 +2074,70 @@ begin
         mtConfirmation,[mbYes, mbNo], 0) = mrYes then
         cbMonitorarPasta.Checked := True
      else
-        cbMonitorarPasta.Checked := False;        
+        cbMonitorarPasta.Checked := False;
+   end;
+end;
+
+procedure TfrmAcbrNfeMonitor.ConfiguraDANFe;
+var
+  OK : Boolean;
+begin
+  if ACBrNFe1.NotasFiscais.Count > 0 then
+   begin
+     if ACBrNFe1.NotasFiscais.Items[0].NFe.Ide.modelo = 55 then
+      begin
+        if rgModeloDanfe.ItemIndex = 0 then
+           ACBrNFe1.DANFE := ACBrNFeDANFERave1
+        else
+           ACBrNFe1.DANFE := ACBrNFeDANFERaveCB1;
+      end
+     else
+      begin
+        if rgModeloDANFeNFCE.ItemIndex = 0 then
+           ACBrNFe1.DANFE := ACBrNFeDANFCeFortes1
+        else
+           ACBrNFe1.DANFE := ACBrNFeDANFeESCPOS1;
+      end
+   end;
+
+  if ACBrNFe1.DANFE <> nil then
+   begin
+     ACBrNFe1.DANFE.TipoDANFE  := StrToTpImp(OK,IntToStr(rgTipoDanfe.ItemIndex+1));
+     ACBrNFe1.DANFE.Logo       := edtLogoMarca.Text;
+     ACBrNFe1.DANFE.Sistema := edtSoftwareHouse.Text;
+     ACBrNFe1.DANFE.Site    := edtSiteEmpresa.Text;
+     ACBrNFe1.DANFE.Email   := edtEmailEmpresa.Text;
+     ACBrNFe1.DANFE.Fax     := edtFaxEmpresa.Text;
+     ACBrNFe1.DANFE.ImprimirDescPorc  := cbxImpDescPorc.Checked;
+     ACBrNFe1.DANFE.MostrarPreview    := cbxMostrarPreview.Checked;
+     ACBrNFe1.DANFE.Impressora := cbxImpressora.Text;
+     ACBrNFe1.DANFE.NumCopias  := StrToIntDef(edtNumCopia.Text, 1);
+     ACBrNFe1.DANFE.ProdutosPorPagina := StrToIntDef(edtProdPag.Text, 0);
+     ACBrNFe1.DANFE.MargemInferior  := StrToFloatDef(edtMargemInf.Text,0.8);
+     ACBrNFe1.DANFE.MargemSuperior  := StrToFloatDef(edtMargemSup.Text,0.8);
+     ACBrNFe1.DANFE.MargemDireita   := StrToFloatDef(edtMargemDir.Text,0.51);
+     ACBrNFe1.DANFE.MargemEsquerda  := StrToFloatDef(edtMargemEsq.Text,0.6);
+     ACBrNFe1.DANFE.PathPDF    := edtPathPDF.Text;
+     ACBrNFe1.DANFE.CasasDecimais._qCom   := rgCasasDecimaisQtd.ItemIndex+2;
+     ACBrNFe1.DANFE.CasasDecimais._vUnCom := spedtDecimaisVUnit.Value;
+     ACBrNFe1.DANFE.ExibirResumoCanhoto  :=  cbxExibeResumo.Checked;
+     ACBrNFe1.DANFE.ImprimirTotalLiquido := cbxImpValLiq.Checked;
+     ACBrNFe1.DANFE.FormularioContinuo   := cbxFormCont.Checked;
+     ACBrNFe1.DANFE.MostrarStatus        := cbxMostraStatus.Checked;
+     ACBrNFe1.DANFE.ExpandirLogoMarca    := cbxExpandirLogo.Checked;
+     ACBrNFe1.DANFE.TamanhoFonte_DemaisCampos := StrToIntDef(edtFonteCampos.Text, 10);
+
+     if ACBrNFe1.DANFE = ACBrNFeDANFERave1 then
+      begin
+        ACBrNFeDANFERave1.EspessuraBorda := StrToIntDef(edtEspBorda.Text, 1);
+        ACBrNFeDANFERave1.TamanhoFonte_RazaoSocial := StrToIntDef(edtFonteRazao.Text, 12);
+        ACBrNFeDANFERave1.RavFile := PathWithDelim(ExtractFilePath(Application.ExeName))+'Report\DANFE_Rave513.rav'; //NotaFiscalEletronica
+      end
+     else
+      begin
+        ACBrNFeDANFERaveCB1.EspessuraBorda := StrToIntDef(edtEspBorda.Text, 1);
+        ACBrNFeDANFERaveCB1.Fonte  := DFeUtil.SeSenao(rgTipoFonte.ItemIndex=0,ftTimes,ftCourier);
+      end;
    end;
 end;
 
