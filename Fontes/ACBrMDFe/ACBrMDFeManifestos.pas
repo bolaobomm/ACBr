@@ -90,7 +90,9 @@ type
                                 AguardarEnvio: Boolean = False;
                                 NomeRemetente: String = '';
                                 TLS : Boolean = True;
-                                UsarThread: Boolean = True);
+                                UsarThread: Boolean = True;
+                                HTML:Boolean = False);
+
     property MDFe: TMDFe  read FMDFe write FMDFe;
     property XML: AnsiString  read GetMDFeXML write FXML;
     property XMLOriginal: AnsiString  read FXMLOriginal write FXMLOriginal;
@@ -256,7 +258,8 @@ procedure Manifesto.EnviarEmail(const sSmtpHost,
                                       AguardarEnvio: Boolean = False;
                                       NomeRemetente: String = '';
                                       TLS : Boolean = True;
-                                      UsarThread: Boolean = True);
+                                      UsarThread: Boolean = True;
+                                      HTML:Boolean = False);
 var
  NomeArq : String;
  AnexosEmail:TStrings;
@@ -304,7 +307,8 @@ begin
                 TLS,
                 StreamMDFe,
                 copy(MDFe.infMDFe.ID, (length(MDFe.infMDFe.ID)-44)+1, 44)+'-MDFe.xml',
-                UsarThread);
+                UsarThread,
+                HTML);
  finally
     AnexosEmail.Free ;
     StreamMDFe.Free ;

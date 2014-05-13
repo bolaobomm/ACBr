@@ -95,7 +95,8 @@ type
                                 AguardarEnvio: Boolean = False;
                                 NomeRemetente: String = '';
                                 TLS : Boolean = True;
-                                UsarThread: Boolean = True);
+                                UsarThread: Boolean = True;
+                                HTML:Boolean = False);
     //Funções para validar Regras de Negócios
     function ValidarConcatChave : Boolean;
 
@@ -323,7 +324,8 @@ procedure NotaFiscal.EnviarEmail(const sSmtpHost,
                                       AguardarEnvio: Boolean = False;
                                       NomeRemetente: String = '';
                                       TLS : Boolean = True;
-                                      UsarThread: Boolean = True);
+                                      UsarThread: Boolean = True;
+                                      HTML:Boolean = False);
 var
  NomeArq : String;
  AnexosEmail:TStrings ;
@@ -371,7 +373,8 @@ begin
                 TLS,
                 StreamNFe,
                 copy(NFe.infNFe.ID, (length(NFe.infNFe.ID)-44)+1, 44)+'-NFe.xml',
-                UsarThread);
+                UsarThread,
+                HTML);
  finally
     AnexosEmail.Free ;
     StreamNFe.Free ;

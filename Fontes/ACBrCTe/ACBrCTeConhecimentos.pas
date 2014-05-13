@@ -93,7 +93,8 @@ type
                                 AguardarEnvio: Boolean = False;
                                 NomeRemetente: String = '';
                                 TLS : Boolean = True;
-                                UsarThread: Boolean = True);
+                                UsarThread: Boolean = True;
+                                HTML:Boolean = False);
     function ValidarConcatChave : Boolean;
 
     property CTe: TCTe  read FCTe write FCTe;
@@ -265,7 +266,8 @@ procedure Conhecimento.EnviarEmail(const sSmtpHost,
                                       AguardarEnvio: Boolean = False;
                                       NomeRemetente: String = '';
                                       TLS : Boolean = True;
-                                      UsarThread: Boolean = True);
+                                      UsarThread: Boolean = True;
+                                      HTML:Boolean = False);
 var
  NomeArq : String;
  AnexosEmail:TStrings ;
@@ -313,7 +315,8 @@ begin
                 TLS,
                 StreamCTe,
                 copy(CTe.infCTe.ID, (length(CTe.infCTe.ID)-44)+1, 44)+'-CTe.xml',
-                UsarThread);
+                UsarThread,
+                HTML);
  finally
     AnexosEmail.Free ;
     StreamCTe.Free ;

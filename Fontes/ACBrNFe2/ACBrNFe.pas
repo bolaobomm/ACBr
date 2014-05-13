@@ -113,12 +113,12 @@ type
       sSmtpPasswd, sFrom, sTo, sAssunto: String; sMensagem: TStrings;
       SSL: Boolean; sCC, Anexos: TStrings; PedeConfirma, AguardarEnvio: Boolean;
       NomeRemetente: String; TLS: Boolean; StreamNFe: TStringStream;
-      NomeArq: String;HTML:Boolean=false);
+      NomeArq: String; HTML:Boolean=false);
     procedure EnviarEmailNormal(const sSmtpHost, sSmtpPort, sSmtpUser,
       sSmtpPasswd, sFrom, sTo, sAssunto: String; sMensagem: TStrings;
       SSL: Boolean; sCC, Anexos: TStrings; PedeConfirma, AguardarEnvio: Boolean;
       NomeRemetente: String; TLS: Boolean; StreamNFe: TStringStream;
-      NomeArq: String);
+      NomeArq: String; HTML:Boolean=false);
   protected
     procedure Notification(AComponent: TComponent; Operation: TOperation); override;
   public
@@ -519,7 +519,7 @@ procedure TACBrNFe.EnviarEmailNormal(const sSmtpHost, sSmtpPort, sSmtpUser,
       sSmtpPasswd, sFrom, sTo, sAssunto: String; sMensagem: TStrings;
       SSL: Boolean; sCC, Anexos: TStrings; PedeConfirma, AguardarEnvio: Boolean;
       NomeRemetente: String; TLS: Boolean; StreamNFe: TStringStream;
-      NomeArq: String);
+      NomeArq: String; HTML:Boolean);
 var
   smtp: TSMTPSend;
   msg_lines: TStringList;
@@ -538,8 +538,12 @@ begin
      p := m.AddPartMultipart('mixed', nil);
      if sMensagem <> nil then
      begin
-        CorpoEmail.Text := sMensagem.Text;
-        m.AddPartText(CorpoEmail, p);
+//        CorpoEmail.Text := sMensagem.Text;
+//        m.AddPartText(CorpoEmail, p);
+       if HTML = true then
+         m.AddPartHTML(sMensagem, p)
+       else
+         m.AddPartText(sMensagem, p);
      end;
 
      if StreamNFe <> nil then
@@ -737,7 +741,8 @@ begin
       NomeRemetente,
       TLS,
       StreamNFe,
-      NomeArq
+      NomeArq,
+      HTML
     );
   end;
 end;
