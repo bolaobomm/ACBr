@@ -28,6 +28,7 @@ package ACBr_SAT_Extrato_ESCPOS;
 requires
   rtl,
   vcl,
+  ACBrSerial,
   {$IFDEF VER150} RLibWinD7vcl, vcljpg, {$ENDIF} // D7
   {$IFDEF VER200} RLibWinD2009, vclimg, {$ENDIF} // D2009
   {$IFDEF VER210} RLibWinD2010, vclimg, {$ENDIF} // D2010
