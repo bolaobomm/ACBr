@@ -48,7 +48,14 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 
-Data: 15/05/2014
+Data: 15/05/2014 ver. 0.0.93
+-- ACBrBoleto --
+[*] Ajuste para definir por banco a forma permitida de informar os Juros de Mora,
+    por Percentual ou Valor, onde 1-Valor e 2-Percentual). (JUliana Tamizou)
+
+-- ACBrBancoob.pas
+[-] Ajuste para que ao gerar a remessa seja calculado o % Mensal da Mora Diária,
+    uma vez que esta informação é por dia no componente, (Juliana Tamizou)
 -- ACBrBancoHSB.pas
 [-] Correção montagem Código Barras Cobrança registrada. (Juliana Tamizou)
 
