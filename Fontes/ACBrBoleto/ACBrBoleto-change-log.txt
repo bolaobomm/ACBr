@@ -47,6 +47,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+
+Data: 15/05/2014
+-- ACBrBancoHSB.pas
+[-] Correção montagem Código Barras Cobrança registrada. (Juliana Tamizou)
+
+
 Data: 02/04/2014
 -- ACBrBancoob.pas
 [*] Adequação da remessa CNAB400 para atender as mudanças no layout do arquivo
