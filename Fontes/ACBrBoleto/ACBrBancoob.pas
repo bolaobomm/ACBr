@@ -81,10 +81,11 @@ begin
    inherited create(AOwner);
    fpDigito := 0;
    fpNome   := 'SICOOB';
-   fpNumero:= 756;
+   fpNumero := 756;
    fpTamanhoMaximoNossoNum := 7;
-   fpTamanhoCarteira := 1;
-   fpTamanhoConta   := 8;
+   fpTamanhoCarteira   := 1;
+   fpTamanhoConta      := 8;
+   fpCodigosMoraAceitos:= '2';
 end;
 
 function TACBrBancoob.CalcularDigitoVerificador(const ACBrTitulo: TACBrTitulo ): String;
@@ -353,7 +354,7 @@ begin
                   FormatDateTime( 'ddmmyy', DataDocumento )               +  // 32 Data de Emissão
                   padR(AInstrucao1, 2, '0')                               +  // 33 Primeira instrução (SEQ 34) = 00 e segunda (SEQ 35) = 00, não imprime nada.
                   padR(AInstrucao2, 2, '0')                               +  // 34 Primeira instrução (SEQ 34) = 00 e segunda (SEQ 35) = 00, não imprime nada.
-                  IntToStrZero( Round( ValorMoraJuros * 100 ), 6)         +  // Taxa de mora mês
+                  IntToStrZero( Round( (ValorMoraJuros * 30) *100 ), 6)   +  // Taxa de mora mês
                   IntToStrZero( Round( PercentualMulta * 100 ), 6)        +  // Taxa de multa
                   wRespEntrega                                            +  // Responsabilidade Distribuição
                   IntToStrZero( 0, 6)                                     +  // Preencher com zeros quando não for concedido nenhum desconto.

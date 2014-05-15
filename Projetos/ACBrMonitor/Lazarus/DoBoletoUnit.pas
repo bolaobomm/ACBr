@@ -94,15 +94,16 @@ begin
         else if Cmd.Params(1)= 'P' then
           GerarPDF;
        end
-
       else if cmd.Metodo = 'listabancos' then
        begin
          Cmd.Resposta := ListaBancos();
        end
       else if cmd.Metodo = 'tamnossonumero' then
          Cmd.Resposta :=  IntToStr(Banco.CalcularTamMaximoNossoNumero(Cmd.Params(0)))
+      else if cmd.Metodo = 'codigosmoraaceitos' then
+         Cmd.Resposta :=  Banco.CodigosMoraAceitos(Cmd.Params(0))
       else
-         raise Exception.Create(ACBrStr('Comando inválido ('+Cmd.Comando+')')) ;
+         raise Exception.Create(ACBrStr('Comando inválido ('+Cmd.Comando+')'));
    end;
 
 end;
@@ -194,7 +195,6 @@ begin
               edtBOLCEP.Text          := Cedente.CEP;
            end;
         end;
-
 
         if IniBoletos.SectionExists('Banco') then
         begin
@@ -364,6 +364,7 @@ begin
          ValorOutrasDespesas := aIni.ReadFloat(Sessao,'ValorOutrasDespesas',ValorOutrasDespesas);
          SeuNumero           := aIni.ReadString(Sessao,'SeuNumero',SeuNumero);
          PercentualMulta     := aIni.ReadFloat(Sessao,'PercentualMulta',PercentualMulta);
+         CodigoMora          := aIni.ReadFloat(Sessao,'CodigoMora','1');
       end;
    end;
 end;

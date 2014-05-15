@@ -58,7 +58,7 @@ uses  ACBrBase,  {Units da ACBr}
      Graphics, Contnrs, Classes;
 
 const
-  CACBrBoleto_Versao = '0.0.92a' ;
+  CACBrBoleto_Versao = '0.0.93a' ;
 
 type
   TACBrTipoCobranca =
@@ -301,6 +301,7 @@ type
     fpAOwner: TACBrBanco;
     fpTamanhoMaximoNossoNum: Integer;
     fpOrientacoesBanco: TStringList;
+    fpCodigosMoraAceitos: String;
     function CalcularFatorVencimento(const DataVencimento: TDateTime): String; virtual;
     function CalcularDigitoCodigoBarras(const CodigoBarras: String): String; virtual;
   public
@@ -317,6 +318,7 @@ type
     property TamanhoConta    :Integer read fpTamanhoConta;
     property TamanhoCarteira :Integer read fpTamanhoCarteira;
     property OrientacoesBanco: TStringList read fpOrientacoesBanco;
+    property CodigosMoraAceitos: String read fpCodigosMoraAceitos;
 
     function CalcularDigitoVerificador(const ACBrTitulo : TACBrTitulo): String; virtual;
     function CalcularTamMaximoNossoNumero(const Carteira : String; NossoNumero : String = ''): Integer; virtual;
@@ -360,6 +362,7 @@ type
     function GetTamanhoCarteira: Integer;
     function GetTamanhoConta: Integer;
     function GetTamanhoMaximoNossoNum : Integer;
+    function GetCodigosMoraAceitos: String;
     procedure SetDigito(const AValue: Integer);
     procedure SetNome(const AValue: String);
     procedure SetTipoCobranca(const AValue: TACBrTipoCobranca);
@@ -375,6 +378,7 @@ type
     property TamanhoAgencia        :Integer read GetTamanhoAgencia;
     property TamanhoConta          :Integer read GetTamanhoConta;
     property TamanhoCarteira       :Integer read GetTamanhoCarteira;
+    property CodigosMoraAceitos    :String  read GetCodigosMoraAceitos;
 
     function TipoOcorrenciaToDescricao(const TipoOcorrencia: TACBrTipoOcorrencia): String;
     function CodOcorrenciaToTipo(const CodOcorrencia:Integer): TACBrTipoOcorrencia;
@@ -579,6 +583,7 @@ type
     fCarteiraEnvio        : TACBrCarteiraEnvio;
 
     procedure SetCarteira(const AValue: String);
+    procedure SetCodigoMora(AValue: String);
     procedure SetNossoNumero ( const AValue: String ) ;
     procedure SetParcela ( const AValue: Integer ) ;
     procedure SetTotalParcelas ( const AValue: Integer );
@@ -637,7 +642,7 @@ type
      property PercentualMulta      : Double   read fPercentualMulta       write fPercentualMulta;
      property ValorDescontoAntDia  : Currency read fValorDescontoAntDia  write  fValorDescontoAntDia;
      property TextoLivre : String read fTextoLivre write fTextoLivre;
-     property CodigoMora : String read fCodigoMora write fCodigoMora;
+     property CodigoMora : String read fCodigoMora write SetCodigoMora;
      property TipoDiasProtesto     : TACBrTipoDiasIntrucao read fTipoDiasProtesto write fTipoDiasProtesto;
      property TipoImpressao        : TACBrTipoImpressao read fTipoImpressao write fTipoImpressao;
      property LinhaDigitada : String read fpLinhaDigitada;
@@ -965,6 +970,24 @@ begin
    end;
 end;
 
+procedure TACBrTitulo.SetCodigoMora(AValue: String);
+var
+  teste: Integer;
+  testea: String;
+begin
+  if fCodigoMora = AValue then
+      exit;
+
+  testea:= ACBrBoleto.Banco.CodigosMoraAceitos;
+  teste:= Pos(fCodigoMora,ACBrBoleto.Banco.CodigosMoraAceitos);
+
+  if Pos(AValue,ACBrBoleto.Banco.CodigosMoraAceitos) = 0 then
+     raise Exception.Create( ACBrStr('Código de Mora/Juros informado não é permitido ' +
+                                     'para este banco!') );
+
+  fCodigoMora := AValue;
+end;
+
 procedure TACBrTitulo.SetParcela ( const AValue: Integer ) ;
 begin
    if (AValue > TotalParcelas) and (ACBrBoleto.ACBrBoletoFC.LayOut = lCarne) then
@@ -1027,7 +1050,7 @@ begin
    fReferencia           := '';
    fVersao               := '';
 
-   fCodigoMora := '0';
+   fCodigoMora := '12';
 end;
 
 destructor TACBrTitulo.Destroy;
@@ -1391,14 +1414,16 @@ begin
       if ValorMoraJuros <> 0 then
       begin
          if DataMoraJuros <> 0 then
-            AStringList.Add(ACBrStr('Cobrar juros de '                               +
-                             FormatCurr('R$ #,##0.00',ValorMoraJuros)         +
+            AStringList.Add(ACBrStr('Cobrar juros de '                        +
+                            ifthen(CodigoMora = '2', FloatToStr(ValorMoraJuros) + '%',
+                                   FormatCurr('R$ #,##0.00',ValorMoraJuros))         +
                              ' por dia de atraso para pagamento a partir de ' +
                              FormatDateTime('dd/mm/yyyy',ifthen(Vencimento = DataMoraJuros,
                                                                 IncDay(DataMoraJuros,1),DataMoraJuros))))
          else
-            AStringList.Add(ACBrStr('Cobrar juros de '                       +
-                             FormatCurr('R$ #,##0.00',ValorMoraJuros) +
+            AStringList.Add(ACBrStr('Cobrar juros de '                +
+                                    ifthen(CodigoMora = '2', FloatToStr(ValorMoraJuros) + '%',
+                                           FormatCurr('R$ #,##0.00',ValorMoraJuros))         +
                              ' por dia de atraso'));
       end;
 
@@ -1490,6 +1515,11 @@ end;
 function TACBrBanco.GetTamanhoMaximoNossoNum: Integer;
 begin
    Result := BancoClass.TamanhoMaximoNossoNum;
+end;
+
+function TACBrBanco.GetCodigosMoraAceitos: String;
+begin
+  Result := BancoClass.CodigosMoraAceitos;
 end;
 
 procedure TACBrBanco.SetDigito(const AValue: Integer);
@@ -1666,6 +1696,7 @@ begin
    fpTamanhoMaximoNossoNum := 10;
    fpTamanhoAgencia        := 4;
    fpTamanhoConta          := 10;
+   fpCodigosMoraAceitos    := '12';
    fpModulo := TACBrCalcDigito.Create;
    fpOrientacoesBanco := TStringList.Create;
 end;
