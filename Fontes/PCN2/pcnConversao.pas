@@ -538,6 +538,7 @@ function StrToindISS(var ok: boolean; const s: string): TpcnindISS;
 function indIncentivoToStr(const t: TpcnindIncentivo ): string;
 function StrToindIncentivo(var ok: boolean; const s: string): TpcnindIncentivo;
 
+function StrToVersaoDF(var ok: boolean; const s: string): TpcnVersaoDF;
 function GetVersaoNFe(AModeloDF: TpcnModeloDF; AVersaoDF: TpcnVersaoDF; ALayOut: TLayOut): string;
 
 implementation
@@ -1768,6 +1769,13 @@ begin
   result := StrToEnumerado(ok, s, ['1', '2'],
                                   [iiSim, iiNao]);
 end;
+
+function StrToVersaoDF(var ok: boolean; const s: string): TpcnVersaoDF;
+begin
+  result := StrToEnumerado(ok, s, ['2.00', '3.00', '3.10'],
+                                  [ve200, ve300, ve310]);
+end;
+
 
 function GetVersaoNFe(AModeloDF: TpcnModeloDF; AVersaoDF: TpcnVersaoDF; ALayOut: TLayOut): string;
 begin
