@@ -5,7 +5,7 @@
 <!--  PL_006f versao com correcoes no xServ para tornar a literal CONSULTAR obrigatoria 21/05/2010 -->
 <!--  PL_006c versao com correcoes 24/12/2009 -->
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="http://www.portalfiscal.inf.br/nfe" xmlns:ds="http://www.w3.org/2000/09/xmldsig#" targetNamespace="http://www.portalfiscal.inf.br/nfe" elementFormDefault="qualified" attributeFormDefault="unqualified">
-	<xs:include schemaLocation="tiposBasico_v1.03.xsd"/>
+	<xs:include schemaLocation="tiposBasico_v3.00.xsd"/>
 	<xs:import namespace="http://www.w3.org/2000/09/xmldsig#" schemaLocation="xmldsig-core-schema_v1.01.xsd"/>
 	<xs:complexType name="TConsSitNFe">
 		<xs:annotation>
@@ -69,6 +69,11 @@
 					<xs:documentation>código da UF de atendimento</xs:documentation>
 				</xs:annotation>
 			</xs:element>
+			<xs:element name="dhRecbto" type="TDateTimeUTC">
+				<xs:annotation>
+					<xs:documentation>AAAA-MM-DDTHH:MM:SSTZD</xs:documentation>
+				</xs:annotation>
+			</xs:element>
 			<xs:element name="chNFe" type="TChNFe">
 				<xs:annotation>
 					<xs:documentation>Chaves de acesso da NF-e consultada</xs:documentation>
@@ -79,7 +84,7 @@
 					<xs:documentation>Protocolo de autorização de uso da NF-e</xs:documentation>
 				</xs:annotation>
 			</xs:element>
-			<xs:element name="retCancNFe" type="TRetCancNFe_v200107" minOccurs="0">
+			<xs:element name="retCancNFe" type="TRetCancNFe" minOccurs="0">
 				<xs:annotation>
 					<xs:documentation>Protocolo de homologação de cancelamento de uso da NF-e</xs:documentation>
 				</xs:annotation>
@@ -122,7 +127,7 @@
 						</xs:element>
 						<xs:element name="dhRecbto" type="xs:dateTime">
 							<xs:annotation>
-								<xs:documentation>Data e hora de processamento, no formato AAAA-MM-DDTHH:MM:SS. Deve ser preenchida com data e hora da gravação no Banco em caso de Confirmação. Em caso de Rejeição, com data e hora do recebimento do Lote de NF-e enviado.</xs:documentation>
+								<xs:documentation>Data e hora de processamento, no formato AAAA-MM-DDTHH:MM:SS (AAAA-MM-DDTHH:MM:SSTZD versões superiores à 2.00). Deve ser preenchida com data e hora da gravação no Banco em caso de Confirmação. Em caso de Rejeição, com data e hora do recebimento do Lote de NF-e enviado.</xs:documentation>
 							</xs:annotation>
 						</xs:element>
 						<xs:element name="nProt" type="TProt" minOccurs="0">
@@ -153,7 +158,7 @@
 		</xs:sequence>
 		<xs:attribute name="versao" type="TVerNFe" use="required"/>
 	</xs:complexType>
-	<xs:complexType name="TRetCancNFe_v200107">
+	<xs:complexType name="TRetCancNFe">
 		<xs:annotation>
 			<xs:documentation>Tipo retorno Pedido de Cancelamento da Nota Fiscal Eletrônica</xs:documentation>
 		</xs:annotation>
@@ -212,7 +217,7 @@
 			</xs:element>
 			<xs:element ref="ds:Signature" minOccurs="0"/>
 		</xs:sequence>
-		<xs:attribute name="versao" type="TVerCancNFe_v200107" use="required"/>
+		<xs:attribute name="versao" type="TVerCancNFe" use="required"/>
 	</xs:complexType>
 	<xs:complexType name="TEvento">
 		<xs:annotation>
@@ -453,7 +458,7 @@
 			</xs:element>
 			<xs:element ref="ds:Signature" minOccurs="0"/>
 		</xs:sequence>
-		<xs:attribute name="versao" type="TVerEvento" use="required"/>
+		<xs:attribute name="versao" type="TRetVerEvento" use="required"/>
 	</xs:complexType>
 	<xs:complexType name="TProcEvento">
 		<xs:annotation>
@@ -467,39 +472,43 @@
 	</xs:complexType>
 	<xs:simpleType name="TVerNFe">
 		<xs:annotation>
-			<xs:documentation> Tipo Versão da NF-e - 2.00/1.10/1.07</xs:documentation>
+			<xs:documentation> Tipo Versão da NF-e</xs:documentation>
 		</xs:annotation>
-		<xs:restriction base="xs:string">
-			<xs:whiteSpace value="preserve"/>
-			<xs:enumeration value="2.00"/>
-			<xs:enumeration value="1.10"/>
-			<xs:enumeration value="1.07"/>
+		<xs:restriction base="TString">
+			<xs:pattern value="[1-9]{1}\.[0-9]{2}"/>
 		</xs:restriction>
 	</xs:simpleType>
-	<xs:simpleType name="TVerCancNFe_v200107">
+	<xs:simpleType name="TVerCancNFe">
 		<xs:annotation>
 			<xs:documentation>Tipo Versão do leiaute de Cancelamento de NF-e - 2.00/1.07</xs:documentation>
 		</xs:annotation>
-		<xs:restriction base="xs:token">
-			<xs:enumeration value="2.00"/>
-			<xs:enumeration value="1.07"/>
+		<xs:restriction base="TString">
+			<xs:pattern value="[1-9]{1}\.[0-9]{2}"/>
 		</xs:restriction>
 	</xs:simpleType>
 	<xs:simpleType name="TVerEvento">
 		<xs:annotation>
 			<xs:documentation>Tipo Versão do Evento 1.00</xs:documentation>
 		</xs:annotation>
-		<xs:restriction base="xs:string">
-			<xs:whiteSpace value="preserve"/>
-			<xs:enumeration value="1.00"/>
+		<xs:restriction base="TString">
+			<xs:pattern value="[1-9]{1}\.[0-9]{2}"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="TRetVerEvento">
+		<xs:annotation>
+			<xs:documentation>Tipo Versão do Evento</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="TString">
+			<xs:pattern value="[1-9]{1}\.[0-9]{2}"/>
 		</xs:restriction>
 	</xs:simpleType>
 	<xs:simpleType name="TVerConsSitNFe">
 		<xs:annotation>
-			<xs:documentation>Tipo Versão do Leiaute da Cosulta situação NF-e - 2.01</xs:documentation>
+			<xs:documentation>Tipo Versão do Leiaute da Cosulta situação NF-e - 3.00</xs:documentation>
 		</xs:annotation>
-		<xs:restriction base="xs:token">
-			<xs:enumeration value="2.01"/>
+		<xs:restriction base="xs:string">
+			<xs:whiteSpace value="preserve"/>
+			<xs:enumeration value="3.00"/>
 		</xs:restriction>
 	</xs:simpleType>
 	<xs:simpleType name="TCOrgaoIBGE">
