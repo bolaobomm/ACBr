@@ -93,7 +93,6 @@ type
     qrlValorTotal: TQRLabel;
     QRShape5: TQRShape;
     QRLabel16: TQRLabel;
-//    qrlCodServico: TQRLabel;
     qrmCodServico: TQRMemo;
     QRLabel3: TQRLabel;
     qrlAliquota: TQRLabel;
@@ -221,7 +220,7 @@ type
 implementation
 
 uses
- StrUtils, DateUtils, 
+ StrUtils, DateUtils,
  ACBrUtil, ACBrDFeUtil, ACBrNFSeUtil, pnfsNFSe;
 
 {$R *.dfm}
@@ -244,7 +243,7 @@ begin
  cdsItens.CreateDataSet;
  cdsItens.Open;
 
- for i :=0 to FNFSe.Servico.ItemServico.Count -1 do
+ for i := 0 to FNFSe.Servico.ItemServico.Count -1 do
   begin
    cdsItens.Append;
    cdsItensCodigo.AsString    := '';
@@ -303,7 +302,10 @@ begin
                          ';', #13#10, [rfReplaceAll,rfIgnoreCase] ) );
 
  qrlNumNF0.Caption   := FormatFloat('00000000000', StrToFloatDef(FNFSe.Numero, 0));
- qrlDataServ.Caption := DFeUtil.FormatDateTime(DateTimeToStr(FNFSe.DataEmissaoRps));
+
+ if FNFSe.DataEmissao > 0
+  then qrlDataServ.Caption := DFeUtil.FormatDateTime(DateTimeToStr(FNFSe.DataEmissao))
+  else qrlDataServ.Caption := DFeUtil.FormatDateTime(DateTimeToStr(FNFSe.DataEmissaoRps));
 
  // Alterado em 27/12/2012  Daniel Jr -> passando parâmetro para Comprovante de Entrega.
  qrlNumeroNotaCompEnt.Caption := FormatFloat('00000000000', StrToFloatDef(FNFSe.Numero, 0));
@@ -409,40 +411,6 @@ begin
    qrlMsgTeste.Enabled := True;
   end;
  qrlMsgTeste.Repaint;
-
-(*
- if FNFSe.Ide.tpAmb = taHomologacao
-  then begin
-   qrlMsgTeste.Caption := 'AMBIENTE DE HOMOLOGAÇÃO - SEM VALOR FISCAL';
-   qrlMsgTeste.Enabled := True;
-   qrlMsgTeste.Visible := True;
-  end
-  else begin
-   if FNFSe.procNFSe.cStat > 0
-    then begin
-
-     if FNFSe.procNFSe.cStat = 102
-      then begin
-       qrlMsgTeste.Caption  := 'NFS-e DENEGADA';
-       qrlMsgTeste.Visible  := True;
-       qrlMsgTeste.Enabled := True;
-      end;
-
-     if not FNFSe.procNFSe.cStat in [101, 102, 100]
-      then begin
-       qrlMsgTeste.Caption:=  FNFSe.procNFSe.xMotivo;
-       qrlMsgTeste.Visible := True;
-       qrlMsgTeste.Enabled := True;
-      end;
-    end
-    else begin
-     qrlMsgTeste.Caption  := 'NF-E NÃO ENVIADA PARA SEFAZ';
-     qrlMsgTeste.Visible  := True;
-     qrlMsgTeste.Enabled  := True;
-    end;
-  end;
-
-*)
 end;
 
 procedure TfqrDANFSeQRRetrato.qrb_5_ItensBeforePrint(Sender: TQRCustomBand;
