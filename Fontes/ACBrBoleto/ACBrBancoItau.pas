@@ -92,16 +92,13 @@ begin
 
    with ACBrTitulo do
    begin
-      Docto := Carteira + padR(NossoNumero,TamanhoMaximoNossoNum,'0');
-      if not (Carteira = '112') then
-         if not ((Carteira = '126') or (Carteira = '131') or (Carteira = '146') or
-                (Carteira = '150') or (Carteira = '168') or (Carteira = '109')or (Carteira = '175')) then
-            Docto := ACBrBoleto.Cedente.Agencia + ACBrBoleto.Cedente.Conta +  docto
+      if Carteira in ['112', '212', '113', '114', '166', '115', '104', '147',
+                      '188', '108', '121', '180', '280', '126', '131', '145',
+                      '150', '168', '109', '110', '111', '121', '221', '175'] then
+            Docto := Carteira + padR(NossoNumero,TamanhoMaximoNossoNum,'0')
          else
-            Docto := ACBrTitulo.ACBrBoleto.Cedente.Agencia +
-                     ACBrTitulo.ACBrBoleto.Cedente.Conta +
-                     ACBrTitulo.Carteira +
-                     padR(ACBrTitulo.NossoNumero,TamanhoMaximoNossoNum,'0')
+            Docto := ACBrBoleto.Cedente.Agencia + ACBrBoleto.Cedente.Conta +
+                     Carteira + padR(ACBrTitulo.NossoNumero,TamanhoMaximoNossoNum,'0')
    end;
 
    Modulo.MultiplicadorInicial := 1;
