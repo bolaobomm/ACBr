@@ -97,6 +97,14 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+Data: 17/05/2014
+-- ACBrECFFiscNET --
+[*] Ajuste para Modelo "URANO/1FIT LOGGER" em 48 col  (por:DSA)
+    www.projetoacbr.com.br/forum/index.php?showtopic=10775
+-- ACBrECFDaruma --
+[-] Correção para impressão de Dados do Consumidor no Rodape do Cupom (por: DSA)
+    www.projetoacbr.com.br/forum/index.php?showtopic=15636
+
 Data: 10/04/2014
 -- ACBrECFBematech --
 [*] Melhorada rotina de Leitura da DLL, para conseguir configurar a Porta Serial

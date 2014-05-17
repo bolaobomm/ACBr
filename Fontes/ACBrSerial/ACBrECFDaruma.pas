@@ -2038,7 +2038,16 @@ begin
   begin
     try
       AguardaImpressao := True ;
-      if fsNumVersao = '2000' then
+      if fpMFD then
+      begin
+        StrConsumidor := LeftStr(Consumidor.Documento,20) + cDELIMITADOR +
+                         LeftStr(Consumidor.Nome,30) + cDELIMITADOR +
+                         LeftStr(Consumidor.Endereco,79) + cDELIMITADOR ;
+
+        EnviaComando( FS + 'F' + #240 + StrConsumidor ) ;
+      end
+
+      else if fsNumVersao = '2000' then
       begin
         StrConsumidor := PadL( PadL(Consumidor.Documento,27) +
                                PadL(Consumidor.Nome,42)+
