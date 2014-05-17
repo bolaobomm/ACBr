@@ -50,7 +50,7 @@ Function PegaUnidadesMedida : String ;
 Procedure StringToMemo( AString : AnsiString; Memo : TStringList );
 
 implementation
-uses ACBrECF, ACBrDevice, ACBrUtil, ACBrECFClass, StrUtils, UtilUnit,
+uses ACBrECF, ACBrDevice, ACBrUtil, ACBrECFClass, StrUtils, UtilUnit, math,
   {$IFNDEF NOGUI}ACBrMonitor1 {$ELSE}ACBrMonitorConsoleDM {$ENDIF} ;
 
 function AjustaNomeArquivoCmd( Cmd : TACBrCmd; Param: Integer = 2 ) : String ;
@@ -72,6 +72,8 @@ Var wDescricao  : AnsiString ;
     REL         : TACBrECFRelatorioGerencial;
     ICMS        : TACBrECFAliquota ;
     CNF         : TACBrECFComprovanteNaoFiscal ;
+    Finalidade  : Integer;
+    sFinalidade : String;
 begin
   with {$IFNDEF NOGUI}FrmACBrMonitor.ACBrECF1 {$ELSE}dm.ACBrECF1 {$ENDIF} do
   begin
@@ -874,17 +876,33 @@ begin
         else if Cmd.Metodo = 'arquivomfd_dll' then
          begin
            NomeArquivo := AjustaNomeArquivoCmd( Cmd ) ;
+           Finalidade  := 2;
+           sFinalidade := Trim(cmd.Params(3));
+           if sFinalidade <> '' then
+           begin
+             if StrIsNumber( sFinalidade ) then
+               Finalidade := StrToInt( sFinalidade )
+             else
+               Finalidade := GetEnumValue(TypeInfo(TACBrECFFinalizaArqMFD), sFinalidade );
+
+             Finalidade := max( Integer(Low(TACBrECFFinalizaArqMFD) ), Finalidade);
+             Finalidade := min( Integer(High(TACBrECFFinalizaArqMFD)), Finalidade);
+           end;
 
            if pos(DateSeparator,Cmd.Params(0)) > 0 then
               ArquivoMFD_DLL(
                   StringToDateTime(Cmd.Params(0)),                { Dt.Inicial }
                   StringToDateTime(Cmd.Params(1)),                  { Dt.Final }
-                  NomeArquivo )                              { Nome do Arquivo }
+                  NomeArquivo,                               { Nome do Arquivo }
+                  [docTodos],
+                  TACBrECFFinalizaArqMFD( Finalidade ) )
            else
               ArquivoMFD_DLL(
                   StrToInt(Trim(Cmd.Params(0))),                  { COOInicial }
                   StrToInt(Trim(Cmd.Params(1))),                    { COOFinal }
-                  NomeArquivo ) ;                            { Nome do Arquivo }
+                  NomeArquivo,                               { Nome do Arquivo }
+                  [docTodos],
+                  TACBrECFFinalizaArqMFD( Finalidade ) );
          end
 
         else if Cmd.Metodo = 'espelhomfd_dll' then
