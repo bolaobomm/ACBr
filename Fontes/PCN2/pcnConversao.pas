@@ -196,7 +196,7 @@ type
   TpcnBandeiraCartao = (bcVisa, bcMasterCard, bcAmericanExpress, bcSorocred, bcOutros);
 
   TpcnRegTrib = (RTSimplesNacional, RTRegimeNormal);
-  TpcnRegTribISSQN = (RTISSMicroempresaMunicipal, RTISSEstimativa, RTISSSociedadeProfissionais, RTISSCooperativa, RTISSMEI, RTISSMEEPP);
+  TpcnRegTribISSQN = (RTISSMicroempresaMunicipal, RTISSEstimativa, RTISSSociedadeProfissionais, RTISSCooperativa, RTISSMEI, RTISSMEEPP, RTISSNenhum);
   TpcnindRatISSQN = (irSim, irNao);
   TpcnindRegra = (irArredondamento, irTruncamento);
   TpcnCodigoMP = (mpDinheiro, mpCheque, mpCartaodeCredito, mpCartaodeDebito, mpCreditoLoja, mpValeAlimentacao, mpValeRefeicao, mpValePresente, mpValeCombustivel, mpOutros);
@@ -1597,15 +1597,15 @@ end;
 
 function RegTribISSQNToStr(const t: TpcnRegTribISSQN ): string;
 begin
-  result := EnumeradoToStr(t, ['1', '2', '3', '4', '5', '6'],
-                              [RTISSMicroempresaMunicipal, RTISSEstimativa, RTISSSociedadeProfissionais,
+  result := EnumeradoToStr(t, ['', '1', '2', '3', '4', '5', '6'],
+                              [ RTISSNenhum, RTISSMicroempresaMunicipal, RTISSEstimativa, RTISSSociedadeProfissionais,
                                RTISSCooperativa, RTISSMEI, RTISSMEEPP]);
 end;
 
 function StrToRegTribISSQN(var ok: boolean; const s: string): TpcnRegTribISSQN ;
 begin
-  result := StrToEnumerado(ok, s, ['1', '2', '3', '4', '5', '6'],
-                                  [RTISSMicroempresaMunicipal, RTISSEstimativa, RTISSSociedadeProfissionais,
+  result := StrToEnumerado(ok, s, ['', '1', '2', '3', '4', '5', '6'],
+                                  [RTISSNenhum, RTISSMicroempresaMunicipal, RTISSEstimativa, RTISSSociedadeProfissionais,
                                    RTISSCooperativa, RTISSMEI, RTISSMEEPP]);
 end;
 
