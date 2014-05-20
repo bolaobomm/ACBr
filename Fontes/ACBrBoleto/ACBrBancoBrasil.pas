@@ -1230,7 +1230,11 @@ begin
         99: Result:='99-Outros motivos' ;
       end;
       //Apartir daqui adicionado por Anderson
-    toRetornoLiquidado: //05,06,07,08,15 ou 46
+    toRetornoLiquidadoSemRegistro, //05-Liquidado sem registro (carteira 17-tipo4)
+    toRetornoLiquidado,            //06-Liquidação Normal
+    toRetornoLiquidadoPorConta,    //07-Liquidação por Conta
+    toRetornoLiquidadoEmCartorio,  //15-Liquidação em Cartório
+    toRetornoTituloPagoEmCheque:   //46–Título pago com cheque, aguardando compensação
       case CodMotivo of
         01: Result:='01-Liquidação normal';
         02: Result:='02-Liquidação parcial';
