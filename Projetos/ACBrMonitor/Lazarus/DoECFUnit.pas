@@ -50,7 +50,7 @@ Function PegaUnidadesMedida : String ;
 Procedure StringToMemo( AString : AnsiString; Memo : TStringList );
 
 implementation
-uses ACBrECF, ACBrDevice, ACBrUtil, ACBrECFClass, StrUtils, UtilUnit, math,
+uses ACBrECF, ACBrDevice, ACBrUtil, ACBrECFClass, StrUtils, UtilUnit,
   {$IFNDEF NOGUI}ACBrMonitor1 {$ELSE}ACBrMonitorConsoleDM {$ENDIF} ;
 
 function AjustaNomeArquivoCmd( Cmd : TACBrCmd; Param: Integer = 2 ) : String ;
@@ -72,8 +72,9 @@ Var wDescricao  : AnsiString ;
     REL         : TACBrECFRelatorioGerencial;
     ICMS        : TACBrECFAliquota ;
     CNF         : TACBrECFComprovanteNaoFiscal ;
-    Finalidade  : Integer;
-    sFinalidade : String;
+    Finalidade  : TACBrECFFinalizaArqMFD;
+    TipoDoc     : TACBrECFTipoDocumento;
+    TipoDocSet  : TACBrECFTipoDocumentoSet;
 begin
   with {$IFNDEF NOGUI}FrmACBrMonitor.ACBrECF1 {$ELSE}dm.ACBrECF1 {$ENDIF} do
   begin
@@ -875,34 +876,31 @@ begin
 
         else if Cmd.Metodo = 'arquivomfd_dll' then
          begin
+
            NomeArquivo := AjustaNomeArquivoCmd( Cmd ) ;
-           Finalidade  := 2;
-           sFinalidade := Trim(cmd.Params(3));
-           if sFinalidade <> '' then
-           begin
-             if StrIsNumber( sFinalidade ) then
-               Finalidade := StrToInt( sFinalidade )
-             else
-               Finalidade := GetEnumValue(TypeInfo(TACBrECFFinalizaArqMFD), sFinalidade );
 
-             Finalidade := max( Integer(Low(TACBrECFFinalizaArqMFD) ), Finalidade);
-             Finalidade := min( Integer(High(TACBrECFFinalizaArqMFD)), Finalidade);
-           end;
+           TipoDoc:= docTodos; { Valor Padrao para Tipo Documento }
+           Finalidade:=finMFD;     { Valor Padrao para Finalidade }
 
-           if pos(DateSeparator,Cmd.Params(0)) > 0 then
-              ArquivoMFD_DLL(
-                  StringToDateTime(Cmd.Params(0)),                { Dt.Inicial }
-                  StringToDateTime(Cmd.Params(1)),                  { Dt.Final }
-                  NomeArquivo,                               { Nome do Arquivo }
-                  [docTodos],
-                  TACBrECFFinalizaArqMFD( Finalidade ) )
-           else
-              ArquivoMFD_DLL(
-                  StrToInt(Trim(Cmd.Params(0))),                  { COOInicial }
-                  StrToInt(Trim(Cmd.Params(1))),                    { COOFinal }
-                  NomeArquivo,                               { Nome do Arquivo }
-                  [docTodos],
-                  TACBrECFFinalizaArqMFD( Finalidade ) );
+           if Cmd.Params(3) > '' then
+              TipoDoc:=TACBrECFTipoDocumento(GetEnumValue(TypeInfo(TACBrECFTipoDocumento),Cmd.Params(3)));   { Tipo de Documento do rquivoMFD }
+           if Cmd.Params(4) > '' then
+             Finalidade:=TACBrECFFinalizaArqMFD(GetEnumValue(TypeInfo(TACBrECFFinalizaArqMFD),Cmd.Params(4)));    { Finalidade do ArquivoMFD }
+
+            if pos(DateSeparator,Cmd.Params(0)) > 0 then
+               ArquivoMFD_DLL(
+                   StringToDateTime(Cmd.Params(0)),                { Dt.Inicial }
+                   StringToDateTime(Cmd.Params(1)),                  { Dt.Final }
+                   NomeArquivo,                               { Nome do Arquivo }
+                   [TipoDoc],                               { Tipo de Documento }
+                   Finalidade)                                     { Finalidade }
+            else
+               ArquivoMFD_DLL(
+                   StrToInt(Trim(Cmd.Params(0))),                  { COOInicial }
+                   StrToInt(Trim(Cmd.Params(1))),                    { COOFinal }
+                   NomeArquivo,                               { Nome do Arquivo }
+                   [TipoDoc],                               { Tipo de Documento }
+                   Finalidade);                                    { Finalidade }
          end
 
         else if Cmd.Metodo = 'espelhomfd_dll' then
@@ -1053,6 +1051,14 @@ begin
         begin
            NomeArquivo := AjustaNomeArquivoCmd( Cmd, 0 ) ;
            AssinaArquivoComEAD(Cmd.Params(0))
+        end
+
+        else if Cmd.Metodo = 'configbarras' then
+        begin
+          if StrToInt(Trim(Cmd.Params(0))) > 0 then
+                    ConfigBarras.Altura:= StrToInt(Trim(Cmd.Params(0)));
+          if StrToInt(Trim(Cmd.Params(1))) > 0 then
+                    ConfigBarras.LarguraLinha := StrToInt(Trim(Cmd.Params(1)));
         end
 
         ELSE
