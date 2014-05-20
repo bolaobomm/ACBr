@@ -3047,8 +3047,7 @@ begin
                 if FConfiguracoes.Arquivos.Salvar then
                  begin
                    if (FEvento.Evento.Items[0].InfEvento.tpEvento = teCCe) and not FConfiguracoes.Arquivos.SalvarCCeCanEvento  then
-                      FConfiguracoes.Geral.Save(NomeArq, Texto,
-                                                FConfiguracoes.Arquivos.GetPathEvento(FEvento.Evento.Items[0].InfEvento.tpEvento))
+                      FConfiguracoes.Geral.Save(NomeArq, Texto, FConfiguracoes.Arquivos.GetPathCCe)
                    else if (FEvento.Evento.Items[0].InfEvento.tpEvento = teCancelamento) and not FConfiguracoes.Arquivos.SalvarCCeCanEvento then
                       FConfiguracoes.Geral.Save(NomeArq, Texto, FConfiguracoes.Arquivos.GetPathCan)
                    else
