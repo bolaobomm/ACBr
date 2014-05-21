@@ -94,7 +94,7 @@ type
                    Caracter: Char = '0';
                    Mascara: String = ''): String; overload;
     function LFill(Value: Integer; Size: Integer; Nulo: Boolean = false; Caracter: Char = '0'): String; overload;
-    function LFill(Value: TDateTime; Mask: String = 'ddmmyyyy'): String; overload;
+    function LFill(Value: TDateTime; Mask: String = 'ddmmyyyy'; Nulo: Boolean = True): String; overload;
     ///
     procedure Check(Condicao: Boolean; const Msg: String); overload;
     procedure Check(Condicao: Boolean; Msg: String; Fmt: array of const); overload;
@@ -307,10 +307,10 @@ begin
   Result := LFill(IntToStr(Value), Size, False, Caracter);
 end;
 
-function TACBrTXTClass.LFill(Value: TDateTime; Mask: String = 'ddmmyyyy'): String;
+function TACBrTXTClass.LFill(Value: TDateTime; Mask: String = 'ddmmyyyy'; Nulo: Boolean = True): String;
 begin
   /// Se o parametro Value = 0, será retornado '|'
-  if (Value = 0) then
+  if (Nulo) and (Value = 0) then
   begin
      Result := FDelimitador;
      Exit;

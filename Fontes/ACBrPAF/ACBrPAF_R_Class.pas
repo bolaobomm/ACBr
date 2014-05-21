@@ -390,7 +390,7 @@ begin
                                              LFill(CRO, 6) +
                                              LFill(DT_MOV, 'yyyymmdd') +
                                              LFill(DT_EMI, 'yyyymmdd') +
-                                             LFill(HR_EMI, 'hhmmss') +
+                                             LFill(HR_EMI, 'hhmmss', False) +
                                              LFill(VL_VBD, 14, 2) +
                                              RFill(PAR_ECF, 1) +
                                              sLineBreak;
