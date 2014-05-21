@@ -335,7 +335,7 @@ begin
         Gerador.wCampoNFSe(tcDe2, '#21', 'ValorIss     ', 01, 15, 0, NFSe.Servico.Valores.ValorIss, '');
       end;
 
-    if not (FProvedor in [proPronim, proBetha])
+    if not (FProvedor in [proPronim, proBetha, proGovBr])
       then Gerador.wCampoNFSe(tcDe2, '#22', 'ValorIssRetido', 01, 15, 0, NFSe.Servico.Valores.ValorIssRetido, '');
 
     if FProvedor in [proFreire, proPronim] then
@@ -367,7 +367,7 @@ begin
 
     Gerador.wCampoNFSe(tcDe2, '#26', 'ValorLiquidoNfse', 01, 15, 0, NFSe.Servico.Valores.ValorLiquidoNfse, '');
 
-    if (FProvedor in [proPronim, proBetha])
+    if (FProvedor in [proPronim, proBetha, proGovBr])
       then Gerador.wCampoNFSe(tcDe2, '#22', 'ValorIssRetido', 01, 15, 0, NFSe.Servico.Valores.ValorIssRetido, '');
 
     if FProvedor in [proFreire]
@@ -658,7 +658,7 @@ begin
       then Gerador.wGrupoNFSe('Tomador')
       else Gerador.wGrupoNFSe('TomadorServico');
 
-    if NFSe.Tomador.Endereco.UF <> 'EX'
+    if (NFSe.Tomador.Endereco.UF <> 'EX') // or (FProvedor = proSimpISS)
       then begin
         Gerador.wGrupoNFSe('IdentificacaoTomador');
          Gerador.wGrupoNFSe('CpfCnpj');

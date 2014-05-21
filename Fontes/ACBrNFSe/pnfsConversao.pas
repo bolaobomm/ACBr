@@ -747,6 +747,7 @@ begin
   2103000, // Caxias/MA
   3504800, // Balsamo/SP
   3505203, // Bariri/SP
+  3512902, // Cosmorama/SP
   3514502, // Duartina/SP
   3516705, // Garca/SP
   3540200, // Pontal/SP
@@ -1151,6 +1152,7 @@ begin
   3305000, // São João da Barra/RJ
   3305604, // Silva Jardim/RJ
   3305802, // Teresópolis/RJ
+  4210100, // Mafra/SC
   4301602, // Bage/RS
   5101308, // Arenapolis/MT
   5101704, // Barra do Bugres/MT
