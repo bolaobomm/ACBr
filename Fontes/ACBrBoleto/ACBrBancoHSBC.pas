@@ -218,8 +218,8 @@ begin
                    IntToStrZero(Round(ValorDocumento * 100), 10) +
                    RightStr(padR(ANossoNumero, 13, '0'),11) +       // precisa passar nosso numero + digito
                    padR(OnlyNumber(ACBrBoleto.Cedente.Agencia), 4, '0') +
-                   padR(OnlyNumber(ACBrBoleto.Cedente.Conta) +
-                        OnlyNumber(ACBrBoleto.Cedente.ContaDigito) , 7, '0')+
+                   padR(IfThen(ACBrBoleto.Cedente.Conta[1] = '0', RightStr(OnlyNumber(ACBrBoleto.Cedente.Conta),6) +
+                        OnlyNumber(ACBrBoleto.Cedente.ContaDigito),OnlyNumber(ACBrBoleto.Cedente.Conta)) , 7, '0')+
                    '00'
 
        end
