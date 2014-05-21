@@ -306,6 +306,17 @@ begin
               ACBrNFe1.DANFE.ProtocoloNFe := ACBrNFe1.WebServices.ConsultaDPEC.nRegDPEC +' '+ DateTimeToStr(ACBrNFe1.WebServices.ConsultaDPEC.dhRegDPEC);
             end;
 
+           if DFeUtil.NaoEstaVazio(Cmd.Params(5)) then
+            begin
+              ACBrNFeDANFERave1.MarcaDaguaMSG := Cmd.Params(5);
+              ACBrNFeDANFERaveCB1.MarcaDaguaMSG := Cmd.Params(5);
+            end
+           else
+            begin
+              ACBrNFeDANFERave1.MarcaDaguaMSG := '';
+              ACBrNFeDANFERaveCB1.MarcaDaguaMSG := '';
+            end
+
            ConfiguraDANFe;  
            ACBrNFe1.NotasFiscais.Imprimir;
            Cmd.Resposta := 'Danfe Impresso com sucesso';
@@ -1500,8 +1511,6 @@ begin
          versao := infNFe.VersaoStr;
          versao := StringReplace(versao,'versao="','',[rfReplaceAll,rfIgnoreCase]);
          versao := StringReplace(versao,'"','',[rfReplaceAll,rfIgnoreCase]);
-
-         ACBrNFe1.Configuracoes.Geral.VersaoDF := StrToVersaoDF(OK,versao);
 
          Ide.cNF        := INIRec.ReadInteger( 'Identificacao','Codigo' ,INIRec.ReadInteger( 'Identificacao','cNF' ,0));
          Ide.natOp      := INIRec.ReadString(  'Identificacao','NaturezaOperacao' ,INIRec.ReadString(  'Identificacao','natOp' ,''));
