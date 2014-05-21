@@ -1069,6 +1069,18 @@ begin
                     ConfigBarras.LarguraLinha := StrToInt(Trim(Cmd.Params(1)));
         end
 
+        else if Cmd.Metodo = 'pafmf_arqmf' then
+        begin
+           NomeArquivo := AjustaNomeArquivoCmd( Cmd, 0 ) ;
+           PafMF_ArqMF(Cmd.Params(0));
+        end
+
+        else if Cmd.Metodo = 'pafmf_arqmfd' then
+        begin
+           NomeArquivo := AjustaNomeArquivoCmd( Cmd, 0 ) ;
+           PafMF_ArqMFD(Cmd.Params(0));
+        end
+
         ELSE
            raise Exception.Create('Comando inválido ('+Cmd.Comando+')') ;
 
