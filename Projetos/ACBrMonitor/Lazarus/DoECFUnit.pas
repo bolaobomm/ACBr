@@ -886,13 +886,13 @@ begin
 			 if StrIsNumber(Cmd.Params(3)) then
 			   TipoDoc := TACBrECFTipoDocumento(StrToIntDef(Cmd.Params(3), 19))
 			 else
-               TipoDoc := TACBrECFTipoDocumento(GetEnumValue(TypeInfo(TACBrECFTipoDocumento),Cmd.Params(4)));   { Tipo de Documento do rquivoMFD }
+               TipoDoc := TACBrECFTipoDocumento(GetEnumValue(TypeInfo(TACBrECFTipoDocumento),Cmd.Params(3)));   { Tipo de Documento do rquivoMFD }
 
 		   if Cmd.Params(4) <> '' then
 		     if StrIsNumber(Cmd.Params(4)) then
  			   Finalidade := TACBrECFFinalizaArqMFD(StrToIntDef( Cmd.Params(4), 1))
 			 else
-               Finalidade := TACBrECFFinalizaArqMFD(GetEnumValue(TypeInfo(TACBrECFFinalizaArqMFD),Cmd.Params(3)));    { Finalidade do ArquivoMFD }
+               Finalidade := TACBrECFFinalizaArqMFD(GetEnumValue(TypeInfo(TACBrECFFinalizaArqMFD),Cmd.Params(4)));    { Finalidade do ArquivoMFD }
            
 
             if pos(DateSeparator,Cmd.Params(0)) > 0 then
