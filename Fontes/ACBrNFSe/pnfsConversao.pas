@@ -1059,6 +1059,7 @@ begin
   3137205, // Lagoa Da Prata/MG
   3148103, // Patrocinio/MG
   3503307, // Araras/SP
+  3511508, // Cerquilho/SP
   3524808, // Jales/SP
   3538709, // Piracicaba/SP
   3541406, // Presidente Prudente/SP
