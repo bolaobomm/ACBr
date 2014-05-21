@@ -879,13 +879,21 @@ begin
 
            NomeArquivo := AjustaNomeArquivoCmd( Cmd ) ;
 
-           TipoDoc:= docTodos; { Valor Padrao para Tipo Documento }
-           Finalidade:=finMFD;     { Valor Padrao para Finalidade }
+           TipoDoc := docTodos; { Valor Padrao para Tipo Documento }
+           Finalidade := finMFD;     { Valor Padrao para Finalidade }
+         
+		   if Cmd.Params(3) <> '' then
+			 if StrIsNumber(Cmd.Params(3)) then
+			   TipoDoc := TACBrECFTipoDocumento(StrToIntDef(Cmd.Params(3), 19))
+			 else
+               TipoDoc := TACBrECFTipoDocumento(GetEnumValue(TypeInfo(TACBrECFTipoDocumento),Cmd.Params(4)));   { Tipo de Documento do rquivoMFD }
 
-           if Cmd.Params(3) > '' then
-              TipoDoc:=TACBrECFTipoDocumento(GetEnumValue(TypeInfo(TACBrECFTipoDocumento),Cmd.Params(3)));   { Tipo de Documento do rquivoMFD }
-           if Cmd.Params(4) > '' then
-             Finalidade:=TACBrECFFinalizaArqMFD(GetEnumValue(TypeInfo(TACBrECFFinalizaArqMFD),Cmd.Params(4)));    { Finalidade do ArquivoMFD }
+		   if Cmd.Params(4) <> '' then
+		     if StrIsNumber(Cmd.Params(4)) then
+ 			   Finalidade := TACBrECFFinalizaArqMFD(StrToIntDef( Cmd.Params(4), 1))
+			 else
+               Finalidade := TACBrECFFinalizaArqMFD(GetEnumValue(TypeInfo(TACBrECFFinalizaArqMFD),Cmd.Params(3)));    { Finalidade do ArquivoMFD }
+           
 
             if pos(DateSeparator,Cmd.Params(0)) > 0 then
                ArquivoMFD_DLL(
@@ -1055,9 +1063,9 @@ begin
 
         else if Cmd.Metodo = 'configbarras' then
         begin
-          if StrToInt(Trim(Cmd.Params(0))) > 0 then
+          if StrToIntDef(Trim(Cmd.Params(0)),0) > 0 then
                     ConfigBarras.Altura:= StrToInt(Trim(Cmd.Params(0)));
-          if StrToInt(Trim(Cmd.Params(1))) > 0 then
+          if StrToIntDef(Trim(Cmd.Params(1)),0) > 0 then
                     ConfigBarras.LarguraLinha := StrToInt(Trim(Cmd.Params(1)));
         end
 
