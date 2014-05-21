@@ -302,12 +302,12 @@ begin
  rllCodART.Caption  := FNFSe.ConstrucaoCivil.Art;
 
  MostrarObra := (rllCodObra.Caption<>'') or (rllCodART.Caption<>'');
- rlsLinhaH1.Enabled:=MostrarObra;
- rllTituloConstCivil.Enabled:=MostrarObra;
- rllCodigoObra.Enabled:=MostrarObra;
- rllCodObra.Enabled:=MostrarObra;
- rllCodigoArt.Enabled:=MostrarObra;
- rllCodART.Enabled:=MostrarObra;
+ rlsLinhaH1.Visible:=MostrarObra;
+ rllTituloConstCivil.Visible:=MostrarObra;
+ rllCodigoObra.Visible:=MostrarObra;
+ rllCodObra.Visible:=MostrarObra;
+ rllCodigoArt.Visible:=MostrarObra;
+ rllCodART.Visible:=MostrarObra;
 
  rllValorPIS.Caption    := DFeUtil.FormatFloat( FNFSe.Servico.Valores.ValorPis );//Astrogildo em 13/12/12
  rllValorCOFINS.Caption := DFeUtil.FormatFloat( FNFSe.Servico.Valores.ValorCofins );//Astrogildo em 13/12/12
