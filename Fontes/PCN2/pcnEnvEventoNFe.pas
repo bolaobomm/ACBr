@@ -54,9 +54,9 @@ uses SysUtils, Classes,
      pcnAuxiliar, pcnConversao, pcnGerador, pcnLeitor, pcnEventoNFe;
 
 type
-  TInfEventoCollection  = class ;
-  TInfEventoCollectionItem = class ;
-  TEventoNFe = class ;
+  TInfEventoCollection  = class;
+  TInfEventoCollectionItem = class;
+  TEventoNFe = class;
   EventoException = class(Exception);
 
   TInfEventoCollection = class(TCollection)
@@ -88,6 +88,7 @@ type
     FidLote: Integer;
     FEvento: TInfEventoCollection;
     FVersao: String;
+
     procedure SetEvento(const Value: TInfEventoCollection);
   public
     constructor Create;
@@ -97,11 +98,11 @@ type
     function LerXMLFromString(const AXML: String): boolean;
     function ObterNomeArquivo(tpEvento: TpcnTpEvento): string;
   published
-    property Gerador: TGerador  read FGerador write FGerador;
-    property schema: TpcnSchema read Fschema write Fschema;
-    property idLote: Integer               read FidLote      write FidLote;
-    property Evento: TInfEventoCollection  read FEvento      write SetEvento;
-    property Versao: String                read FVersao      write FVersao;
+    property Gerador: TGerador            read FGerador write FGerador;
+    property schema: TpcnSchema           read Fschema  write Fschema;
+    property idLote: Integer              read FidLote  write FidLote;
+    property Evento: TInfEventoCollection read FEvento  write SetEvento;
+    property Versao: String               read FVersao  write FVersao;
   end;
 
 implementation
@@ -132,6 +133,7 @@ begin
     teManifDestConfirmacao,
     teManifDestDesconhecimento,
     teManifDestOperNaoRealizada : Result := IntToStr(Self.idLote) + '-man-des.xml'; // Manifestação do Destinatário
+    teEPECNFe                   : Result := Evento.Items[0].InfEvento.chNFe + '-ped-epec.xml'; // EPEC
   else
     raise EventoException.Create('Obter nome do arquivo de Evento não Implementado!');
  end;
@@ -192,17 +194,57 @@ begin
       case Evento.Items[i].InfEvento.tpEvento of
         teCCe:
           begin
-            Gerador.wCampo(tcStr,    'HP20', 'xCorrecao', 015, 1000, 1,  Evento.Items[i].InfEvento.detEvento.xCorrecao);
-            Gerador.wCampo(tcStr,    'HP20a', 'xCondUso', 001, 5000, 1,  Evento.Items[i].InfEvento.detEvento.xCondUso);
+            Gerador.wCampo(tcStr, 'HP20', 'xCorrecao', 015, 1000, 1,  Evento.Items[i].InfEvento.detEvento.xCorrecao);
+            Gerador.wCampo(tcStr, 'HP20a', 'xCondUso', 001, 5000, 1,  Evento.Items[i].InfEvento.detEvento.xCondUso);
           end;
         teCancelamento:
           begin
-            Gerador.wCampo(tcStr,    'HP20', 'nProt', 015, 015, 1,  Evento.Items[i].InfEvento.detEvento.nProt);
-            Gerador.wCampo(tcStr,    'HP21', 'xJust', 015, 255, 1,  Evento.Items[i].InfEvento.detEvento.xJust);
+            Gerador.wCampo(tcStr, 'HP20', 'nProt', 015, 015, 1,  Evento.Items[i].InfEvento.detEvento.nProt);
+            Gerador.wCampo(tcStr, 'HP21', 'xJust', 015, 255, 1,  Evento.Items[i].InfEvento.detEvento.xJust);
           end;
         teManifDestOperNaoRealizada:
           begin
-            Gerador.wCampo(tcStr,    'HP21', 'xJust', 015, 255, 1,  Evento.Items[i].InfEvento.detEvento.xJust);
+            Gerador.wCampo(tcStr, 'HP21', 'xJust', 015, 255, 1,  Evento.Items[i].InfEvento.detEvento.xJust);
+          end;
+        teEPECNFe:
+          begin
+            Gerador.wCampo(tcInt, 'P20', 'cOrgaoAutor', 01, 02, 1, FEvento.Items[i].FInfEvento.detEvento.cOrgaoAutor);
+            Gerador.wCampo(tcStr, 'P21', 'tpAutor',     01, 01, 1, TipoAutorToStr(Evento.Items[i].InfEvento.detEvento.tpAutor));
+            Gerador.wCampo(tcStr, 'P22', 'verAplic',    01, 20, 1, Evento.Items[i].InfEvento.detEvento.verAplic);
+            Gerador.wCampo(tcStr, 'P23', 'dhEmi',       01, 50, 1, FormatDateTime('yyyy-mm-dd"T"hh:nn:ss',Evento.Items[i].InfEvento.detEvento.dhEmi)+
+                                                                   GetUTC(CodigoParaUF(Evento.Items[i].InfEvento.cOrgao), Evento.Items[i].InfEvento.detEvento.dhEmi));
+            Gerador.wCampo(tcStr, 'P24', 'tpNF',        01, 01, 1, tpNFToStr(Evento.Items[i].InfEvento.detEvento.tpNF));
+            Gerador.wCampo(tcStr, 'P25', 'IE',          02, 14, 1, Evento.Items[i].InfEvento.detEvento.IE);
+
+            Gerador.wGrupo('dest');
+            Gerador.wCampo(tcStr, 'P27', 'UF', 02, 02, 1, Evento.Items[i].InfEvento.detEvento.dest.UF);
+
+            if Evento.Items[i].InfEvento.detEvento.dest.idEstrangeiro = ''
+             then begin
+              sDoc := SomenteNumeros( Evento.Items[i].InfEvento.detEvento.dest.CNPJCPF );
+              case Length( sDoc ) of
+               14 : begin
+                      Gerador.wCampo(tcStr, 'P28', 'CNPJ', 014, 014, 1, sDoc , DSC_CNPJ);
+                      if not ValidarCNPJ( sDoc ) then Gerador.wAlerta('P28', 'CNPJ', DSC_CNPJ, ERR_MSG_INVALIDO);
+                    end;
+               11 : begin
+                      Gerador.wCampo(tcStr, 'P29', 'CPF', 011, 011, 1, sDoc, DSC_CPF);
+                      if not ValidarCPF( sDoc ) then Gerador.wAlerta('P29', 'CPF', DSC_CPF, ERR_MSG_INVALIDO);
+                    end;
+              end;
+             end
+             else begin
+              Gerador.wCampo(tcStr, 'P30', 'idEstrangeiro', 05, 20, 1, Evento.Items[i].InfEvento.detEvento.dest.idEstrangeiro);
+             end;
+
+            if Evento.Items[i].InfEvento.detEvento.dest.IE = ''
+             then
+              Gerador.wCampo(tcStr, 'P31', 'IE', 02, 14, 1, Evento.Items[i].InfEvento.detEvento.dest.IE);
+            Gerador.wGrupo('/dest');
+
+            Gerador.wCampo(tcDe2, 'P32', 'vNF',   01, 15, 1, Evento.Items[i].InfEvento.detEvento.vNF, DSC_VNF);
+            Gerador.wCampo(tcDe2, 'P33', 'vICMS', 01, 15, 1, Evento.Items[i].InfEvento.detEvento.vICMS, DSC_VICMS);
+            Gerador.wCampo(tcDe2, 'P34', 'vST',   01, 15, 1, Evento.Items[i].InfEvento.detEvento.vST, DSC_VST);
           end;
       end;
       Gerador.wGrupo('/detEvento');
@@ -244,21 +286,36 @@ begin
      Result := RetEventoNFe.LerXml;
      with FEvento.Add do
       begin
-         infEvento.ID            := RetEventoNFe.InfEvento.id;
-         InfEvento.cOrgao        := RetEventoNFe.InfEvento.cOrgao;
-         infEvento.tpAmb         := RetEventoNFe.InfEvento.tpAmb;
-         infEvento.CNPJ          := RetEventoNFe.InfEvento.CNPJ;
-         infEvento.chNFe         := RetEventoNFe.InfEvento.chNFe;
-         infEvento.dhEvento      := RetEventoNFe.InfEvento.dhEvento;
-         infEvento.tpEvento      := RetEventoNFe.InfEvento.tpEvento;
-         infEvento.nSeqEvento    := RetEventoNFe.InfEvento.nSeqEvento;
-         infEvento.VersaoEvento  := RetEventoNFe.InfEvento.VersaoEvento;
+        infEvento.ID            := RetEventoNFe.InfEvento.id;
+        infEvento.cOrgao        := RetEventoNFe.InfEvento.cOrgao;
+        infEvento.tpAmb         := RetEventoNFe.InfEvento.tpAmb;
+        infEvento.CNPJ          := RetEventoNFe.InfEvento.CNPJ;
+        infEvento.chNFe         := RetEventoNFe.InfEvento.chNFe;
+        infEvento.dhEvento      := RetEventoNFe.InfEvento.dhEvento;
+        infEvento.tpEvento      := RetEventoNFe.InfEvento.tpEvento;
+        infEvento.nSeqEvento    := RetEventoNFe.InfEvento.nSeqEvento;
+        infEvento.VersaoEvento  := RetEventoNFe.InfEvento.VersaoEvento;
 
-         infEvento.DetEvento.xCorrecao := RetEventoNFe.InfEvento.DetEvento.xCorrecao;
-         infEvento.DetEvento.xCondUso  := RetEventoNFe.InfEvento.DetEvento.xCondUso;
-         infEvento.DetEvento.nProt     := RetEventoNFe.InfEvento.DetEvento.nProt;
-         infEvento.DetEvento.xJust     := RetEventoNFe.InfEvento.DetEvento.xJust;
+        infEvento.DetEvento.xCorrecao := RetEventoNFe.InfEvento.DetEvento.xCorrecao;
+        infEvento.DetEvento.xCondUso  := RetEventoNFe.InfEvento.DetEvento.xCondUso;
+        infEvento.DetEvento.nProt     := RetEventoNFe.InfEvento.DetEvento.nProt;
+        infEvento.DetEvento.xJust     := RetEventoNFe.InfEvento.DetEvento.xJust;
 
+        infEvento.detEvento.cOrgaoAutor := RetEventoNFe.InfEvento.detEvento.cOrgaoAutor;
+        infEvento.detEvento.tpAutor     := RetEventoNFe.InfEvento.detEvento.tpAutor;
+        infEvento.detEvento.verAplic    := RetEventoNFe.InfEvento.detEvento.verAplic;
+        infEvento.detEvento.dhEmi       := RetEventoNFe.InfEvento.detEvento.dhEmi;
+        infEvento.detEvento.tpNF        := RetEventoNFe.InfEvento.detEvento.tpNF;
+        infEvento.detEvento.IE          := RetEventoNFe.InfEvento.detEvento.IE;
+
+        infEvento.detEvento.dest.UF            := RetEventoNFe.InfEvento.detEvento.dest.UF;
+        infEvento.detEvento.dest.CNPJCPF       := RetEventoNFe.InfEvento.detEvento.dest.CNPJCPF;
+        infEvento.detEvento.dest.idEstrangeiro := RetEventoNFe.InfEvento.detEvento.dest.idEstrangeiro;
+        infEvento.detEvento.dest.IE            := RetEventoNFe.InfEvento.detEvento.dest.IE;
+
+        infEvento.detEvento.vNF   := RetEventoNFe.InfEvento.detEvento.vNF;
+        infEvento.detEvento.vICMS := RetEventoNFe.InfEvento.detEvento.vICMS;
+        infEvento.detEvento.vST   := RetEventoNFe.InfEvento.detEvento.vST;
 
         if RetEventoNFe.retEvento.Count > 0 then
          begin

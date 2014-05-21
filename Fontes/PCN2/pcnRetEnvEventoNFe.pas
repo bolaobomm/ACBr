@@ -53,9 +53,9 @@ uses SysUtils, Classes,
      pcnAuxiliar, pcnConversao, pcnLeitor, pcnEventoNFe;
 
 type
-  TRetInfEventoCollection  = class ;
-  TRetInfEventoCollectionItem = class ;
-  TRetEventoNFe = class ;  
+  TRetInfEventoCollection  = class;
+  TRetInfEventoCollectionItem = class;
+  TRetEventoNFe = class;
 
   TRetInfEventoCollection = class(TCollection)
   private
@@ -190,6 +190,25 @@ begin
            infEvento.DetEvento.xCondUso  := Leitor.rCampo(tcStr, 'xCondUso');
            infEvento.DetEvento.nProt     := Leitor.rCampo(tcStr, 'nProt');
            infEvento.DetEvento.xJust     := Leitor.rCampo(tcStr, 'xJust');
+
+           InfEvento.detEvento.cOrgaoAutor := Leitor.rCampo(tcInt, 'cOrgaoAutor');
+           infEvento.detEvento.tpAutor     := StrToTipoAutor(ok, Leitor.rCampo(tcStr, 'tpAutor'));
+           infEvento.detEvento.verAplic    := Leitor.rCampo(tcStr, 'verAplic');
+           infEvento.detEvento.dhEmi       := Leitor.rCampo(tcDatHor, 'dhEmi');
+           infEvento.detEvento.tpNF        := StrToTpNF(ok, Leitor.rCampo(tcStr, 'tpNF'));
+           infEvento.detEvento.IE          := Leitor.rCampo(tcStr, 'IE');
+
+           infEvento.detEvento.vNF         := Leitor.rCampo(tcDe2, 'vNF');
+           infEvento.detEvento.vICMS       := Leitor.rCampo(tcDe2, 'vICMS');
+           infEvento.detEvento.vST         := Leitor.rCampo(tcDe2, 'vST');
+
+           if Leitor.rExtrai(4, 'dest', '', i + 1) <> '' then
+           begin
+             infEvento.detEvento.dest.UF            := Leitor.rCampo(tcStr, 'UF');
+             infEvento.detEvento.dest.CNPJCPF       := Leitor.rCampoCNPJCPF;
+             infEvento.detEvento.dest.idEstrangeiro := Leitor.rCampo(tcStr, 'idEstrangeiro');
+             infEvento.detEvento.dest.IE            := Leitor.rCampo(tcStr, 'IE');
+           end;
          end;
       end;
     end;
@@ -226,8 +245,10 @@ begin
          if FretEvento.Items[i].FRetInfEvento.CNPJDest = '' then
            (*HR23 *)FretEvento.Items[i].FRetInfEvento.CNPJDest  := Leitor.rCampo(tcStr, 'CPFDest');
          (*HR24 *)FretEvento.Items[i].FRetInfEvento.emailDest   := Leitor.rCampo(tcStr, 'emailDest');
+                  FretEvento.Items[i].FRetInfEvento.cOrgaoAutor := Leitor.rCampo(tcInt, 'cOrgaoAutor');
          (*HR25 *)FretEvento.Items[i].FRetInfEvento.dhRegEvento := Leitor.rCampo(tcDatHor, 'dhRegEvento');
          (*HR26 *)FretEvento.Items[i].FRetInfEvento.nProt       := Leitor.rCampo(tcStr, 'nProt');
+                  FretEvento.Items[i].FRetInfEvento.chNFePend   := Leitor.rCampo(tcStr, 'chNFePend');
          inc(i);
        end;
       Result := True;

@@ -53,9 +53,10 @@ uses SysUtils, Classes,
      pcnAuxiliar, pcnConversao;
 
 type
-  TInfEvento = class ;
-  TDetEvento = class ;
-  TRetInfEvento = class ;
+  TInfEvento = class;
+  TDestinatario = class;
+  TDetEvento = class;
+  TRetInfEvento = class;
   EventoException = class(Exception);
 
   TInfEvento = class
@@ -80,18 +81,32 @@ type
     destructor Destroy; override;
     function DescricaoTipoEvento(TipoEvento:TpcnTpEvento): String;
 
-    property id: String              read FID         write FID;
-    property cOrgao: integer         read getcOrgao   write FcOrgao;
-    property tpAmb: TpcnTipoAmbiente read FtpAmbiente write FtpAmbiente;
-    property CNPJ: String            read FCNPJ       write FCNPJ;
-    property chNFe: String           read FChave      write FChave;
-    property dhEvento: TDateTime     read FDataEvento write FDataEvento;
-    property tpEvento: TpcnTpEvento  read FTpEvento   write FTpEvento;
-    property nSeqEvento: Integer     read FnSeqEvento write FnSeqEvento;
+    property id: String              read FID             write FID;
+    property cOrgao: integer         read getcOrgao       write FcOrgao;
+    property tpAmb: TpcnTipoAmbiente read FtpAmbiente     write FtpAmbiente;
+    property CNPJ: String            read FCNPJ           write FCNPJ;
+    property chNFe: String           read FChave          write FChave;
+    property dhEvento: TDateTime     read FDataEvento     write FDataEvento;
+    property tpEvento: TpcnTpEvento  read FTpEvento       write FTpEvento;
+    property nSeqEvento: Integer     read FnSeqEvento     write FnSeqEvento;
     property versaoEvento: String    read getVersaoEvento write FversaoEvento;
-    property detEvento: TDetEvento   read FDetEvento  write FDetEvento;
+    property detEvento: TDetEvento   read FDetEvento      write FDetEvento;
     property DescEvento: string      read getDescEvento;
     property TipoEvento: string      read getTipoEvento;
+  end;
+
+  TDestinatario = class(TPersistent)
+  private
+    FUF: String;
+    FCNPJCPF: String;
+    FidEstrangeiro: String;
+    FIE: String;
+
+  public
+    property UF: String              read FUF             write FUF;
+    property CNPJCPF: String         read FCNPJCPF        write FCNPJCPF;
+    property idEstrangeiro: String   read FidEstrangeiro  write FidEstrangeiro;
+    property IE: String              read FIE             write FIE;
   end;
 
   TDetEvento = class
@@ -102,14 +117,38 @@ type
     FCondUso: String; //Carta de Correção
     FnProt: string; //Cancelamento
     FxJust: string; //Cancelamento e Manif. Destinatario
+    FcOrgaoAutor: integer;
+    FtpAutor: TpcnTipoAutor;
+    FverAplic: String;
+    FdhEmi: TDateTime;
+    FtpNF: TpcnTipoNFe;
+    FIE: String;
+    Fdest: TDestinatario;
+    FvNF: Currency;
+    FvICMS: Currency;
+    FvST: Currency;
+
     procedure setCondUso(const Value: String);
   public
+    constructor Create(AOwner: TInfEvento);
+    destructor Destroy; override;
+
     property versao: string           read FVersao      write FVersao;
     property descEvento: string       read FDescEvento  write FDescEvento;
     property xCorrecao: String        read FCorrecao    write FCorrecao;
     property xCondUso: String         read FCondUso     write setCondUso;
     property nProt: String            read FnProt       write FnProt;
     property xJust: String            read FxJust       write FxJust;
+    property cOrgaoAutor: integer     read FcOrgaoAutor write FcOrgaoAutor;
+    property tpAutor: TpcnTipoAutor   read FtpAutor     write FtpAutor;
+    property verAplic: String         read FverAplic    write FverAplic;
+    property dhEmi: TDateTime         read FdhEmi       write FdhEmi;
+    property tpNF: TpcnTipoNFe        read FtpNF        write FtpNF;
+    property IE: String               read FIE          write FIE;
+    property dest: TDestinatario      read Fdest        write Fdest;
+    property vNF: Currency            read FvNF         write FvNF;
+    property vICMS: Currency          read FvICMS       write FvICMS;
+    property vST: Currency            read FvST         write FvST;
   end;
 
   TRetInfEvento = class
@@ -126,26 +165,31 @@ type
     FnSeqEvento: Integer;
     FCNPJDest: String;
     FemailDest: String;
+    FcOrgaoAutor: integer;
     FdhRegEvento: TDateTime;
     FnProt: String;
+    FchNFePend: String;
     FXML: AnsiString;
+
   public
   published
-    property Id: string  read FId write FId;
-    property tpAmb: TpcnTipoAmbiente read FtpAmb write FtpAmb;
-    property verAplic: string  read FverAplic write FverAplic;
-    property cOrgao: Integer read FcOrgao write FcOrgao;
-    property cStat: integer read FcStat write FcStat;
-    property xMotivo: string read FxMotivo write FxMotivo;
-    property chNFe: String read FchNFe write FchNFe;
-    property tpEvento: TpcnTpEvento read FtpEvento write FtpEvento;
-    property xEvento: String read FxEvento write FxEvento;
-    property nSeqEvento: Integer read FnSeqEvento write FnSeqEvento;
-    property CNPJDest: string read FCNPJDest write FCNPJDest;
-    property emailDest: String read FemailDest write FemailDest;
-    property dhRegEvento: TDateTime read FdhRegEvento write FdhRegEvento;
-    property nProt: String read FnProt write FnProt;
-    property XML: AnsiString read FXML write FXML;
+    property Id: string              read FId          write FId;
+    property tpAmb: TpcnTipoAmbiente read FtpAmb       write FtpAmb;
+    property verAplic: string        read FverAplic    write FverAplic;
+    property cOrgao: Integer         read FcOrgao      write FcOrgao;
+    property cStat: integer          read FcStat       write FcStat;
+    property xMotivo: string         read FxMotivo     write FxMotivo;
+    property chNFe: String           read FchNFe       write FchNFe;
+    property tpEvento: TpcnTpEvento  read FtpEvento    write FtpEvento;
+    property xEvento: String         read FxEvento     write FxEvento;
+    property nSeqEvento: Integer     read FnSeqEvento  write FnSeqEvento;
+    property CNPJDest: string        read FCNPJDest    write FCNPJDest;
+    property emailDest: String       read FemailDest   write FemailDest;
+    property cOrgaoAutor: integer    read FcOrgaoAutor write FcOrgaoAutor;
+    property dhRegEvento: TDateTime  read FdhRegEvento write FdhRegEvento;
+    property nProt: String           read FnProt       write FnProt;
+    property chNFePend: String       read FchNFePend   write FchNFePend;
+    property XML: AnsiString         read FXML         write FXML;
   end;
 
 implementation
@@ -155,7 +199,7 @@ implementation
 constructor TInfEvento.Create;
 begin
   inherited Create;
-  FDetEvento := TDetEvento.Create;
+  FDetEvento := TDetEvento.Create(Self);
 end;
 
 destructor TInfEvento.Destroy;
@@ -186,6 +230,7 @@ begin
     teManifDestCiencia         : Result := 'Ciencia da Operacao';
     teManifDestDesconhecimento : Result := 'Desconhecimento da Operacao';
     teManifDestOperNaoRealizada: Result := 'Operação nao Realizada';
+    teEPECNFe                  : Result := 'EPEC';
   else
     raise EventoException.Create('Descrição do Evento não Implementado!');
   end;
@@ -194,12 +239,13 @@ end;
 function TInfEvento.getTipoEvento: string;
 begin
   case FTpEvento of
-    teCCe: Result              := '110110';//CCe
-    teCancelamento: Result     := '110111';//Cancelamento
-    teManifDestConfirmacao     : Result := '210200';//Manif. Destinatario: Confirmacao da Operacao
-    teManifDestCiencia         : Result := '210210';//Manif. Destinatario: Ciencia da Operacao
-    teManifDestDesconhecimento : Result := '210220';//Manif. Destinatario: Desconhecimento da Operacao
-    teManifDestOperNaoRealizada: Result := '210240';//Manif. Destinatario: Operação nao Realizada
+    teCCe                      : Result := '110110'; // CCe
+    teCancelamento             : Result := '110111'; // Cancelamento
+    teManifDestConfirmacao     : Result := '210200'; // Manif. Destinatario: Confirmacao da Operacao
+    teManifDestCiencia         : Result := '210210'; // Manif. Destinatario: Ciencia da Operacao
+    teManifDestDesconhecimento : Result := '210220'; // Manif. Destinatario: Desconhecimento da Operacao
+    teManifDestOperNaoRealizada: Result := '210240'; // Manif. Destinatario: Operação nao Realizada
+    teEPECNFe                  : Result := '110140'; // EPEC
   else
     raise EventoException.Create('Tipo do Evento não Implementado!');
   end;
@@ -219,12 +265,25 @@ begin
     teManifDestCiencia         : Result := 'CIÊNCIA DA OPERAÇÃO';
     teManifDestDesconhecimento : Result := 'DESCONHECIMENTO DA OPERAÇÃO';
     teManifDestOperNaoRealizada: Result := 'OPERAÇÃO NÃO REALIZADA';
+    teEPECNFe                  : Result := 'EPEC';
   else
     Result := 'Não Definido';
   end;
 end;
 
 { TDetEvento }
+
+constructor TDetEvento.Create(AOwner: TInfEvento);
+begin
+  inherited Create;
+  Fdest := TDestinatario.Create;
+end;
+
+destructor TDetEvento.Destroy;
+begin
+  Fdest.Free;
+  inherited;
+end;
 
 procedure TDetEvento.setCondUso(const Value: String);
 begin

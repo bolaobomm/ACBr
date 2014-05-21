@@ -176,7 +176,7 @@ type
   TpcnTpEvento = (teCCe, teCancelamento, teManifDestConfirmacao, teManifDestCiencia,
                   teManifDestDesconhecimento, teManifDestOperNaoRealizada,
                   teEncerramento, teEPEC, teInclusaoCondutor, teMultiModal,
-                  teRegistroPassagem, teRegistroPassagemBRId);
+                  teRegistroPassagem, teRegistroPassagemBRId, teEPECNFe);
   TpcnIndicadorNFe = (inTodas, inSemManifestacaoComCiencia, inSemManifestacaoSemCiencia);
   TpcnIndicadorEmissor = (ieTodos, ieRaizCNPJDiferente);
   TpcnIndicadorContinuacao = (icNaoPossuiMaisDocumentos, icPossuiMaisDocumentos);
@@ -210,9 +210,11 @@ type
   TpcnindISSRet = (iirSim, iirNao);
   TpcnindISS = (iiExigivel, iiNaoIncidencia, iiIsencao, iiExportacao, iiImunidade, iiExigSuspDecisaoJudicial, iiExigSuspProcessoAdm);
   TpcnindIncentivo = (iiSim, iiNao);
+  // Incluido por Italo em 20/05/2014
+  TpcnTipoAutor = (taEmpresaEmitente, taEmpresaDestinataria, taEmpresa, taFisco, taRFB, taOutros);
 
 const
-  TpcnTpEventoString : array[0..11] of String =( '110110',
+  TpcnTpEventoString : array[0..12] of String =('110110',
                                                 '110111',
                                                 '210200',
                                                 '210210',
@@ -223,7 +225,8 @@ const
                                                 '110114',
                                                 '110160',
                                                 '310620',
-                                                '510620' );
+                                                '510620',
+                                                '110140');
 
   NFeUF: array[0..26] of String =
   ('AC','AL','AP','AM','BA','CE','DF','ES','GO','MA','MT','MS','MG','PA',
@@ -540,6 +543,9 @@ function StrToindIncentivo(var ok: boolean; const s: string): TpcnindIncentivo;
 
 function StrToVersaoDF(var ok: boolean; const s: string): TpcnVersaoDF;
 function GetVersaoNFe(AModeloDF: TpcnModeloDF; AVersaoDF: TpcnVersaoDF; ALayOut: TLayOut): string;
+
+function TipoAutorToStr(const t: TpcnTipoAutor ): string;
+function StrToTipoAutor(var ok: boolean; const s: string): TpcnTipoAutor;
 
 implementation
 
@@ -1867,6 +1873,20 @@ begin
              end;
            end;
   end;
+end;
+
+function TipoAutorToStr(const t: TpcnTipoAutor ): string;
+begin
+  result := EnumeradoToStr(t, ['1', '2', '3', '5', '6', '9'],
+                              [taEmpresaEmitente, taEmpresaDestinataria,
+                               taEmpresa, taFisco, taRFB, taOutros]);
+end;
+
+function StrToTipoAutor(var ok: boolean; const s: string): TpcnTipoAutor;
+begin
+  result := StrToEnumerado(ok, s, ['1', '2', '3', '5', '6', '9'],
+                                  [taEmpresaEmitente, taEmpresaDestinataria,
+                                   taEmpresa, taFisco, taRFB, taOutros]);
 end;
 
 end.
