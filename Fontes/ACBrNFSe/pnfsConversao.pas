@@ -752,6 +752,7 @@ begin
   3516705, // Garca/SP
   3540200, // Pontal/SP
   3549409, // Sao Joaquim Da Barra/SP
+  3551603, // Serra Negra/SP
   5003207  // Corumba/MS
          : Provedor := 'Fiorilli';
 

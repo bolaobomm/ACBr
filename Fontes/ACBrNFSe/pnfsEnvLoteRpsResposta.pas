@@ -160,7 +160,9 @@ begin
 //       (leitor.rExtrai(1, 'EnviarLoteRpsSincronoResposta') <> '') then
 //    begin
       infRec.FNumeroLote      := Leitor.rCampo(tcStr, 'NumeroLote');
-      infRec.FDataRecebimento := Leitor.rCampo(tcDatHor, 'DataRecebimento');
+      if Length(Leitor.rCampo(tcStr, 'DataRecebimento')) > 10 then //Alguns provedores retornam apenas a data, sem o horário
+        infRec.FDataRecebimento := Leitor.rCampo(tcDatHor, 'DataRecebimento')
+      else infRec.FDataRecebimento := Leitor.rCampo(tcDat, 'DataRecebimento');
       infRec.FProtocolo       := Leitor.rCampo(tcStr, 'Protocolo');
 
       // Ler a Lista de Mensagens
