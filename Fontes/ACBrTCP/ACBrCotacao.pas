@@ -99,13 +99,13 @@ type
   TACBrCotacao = class(TACBrHTTP)
   private
     FTabela: TACBrCotacaoItens;
-    function GetURLTabela: String;
+    function GetURLTabela(const AData: TDate): String;
     function GetURLMoedas: String;
   public
     constructor Create(AOwner: TComponent); override;
     destructor Destroy; override;
 
-    procedure AtualizarTabela;
+    procedure AtualizarTabela(const AData: TDate);
     function Procurar(const ASimbolo: String): TACBrCotacaoItem;
   published
     property Tabela: TACBrCotacaoItens read FTabela write FTabela;
@@ -168,7 +168,7 @@ begin
   Result := StrTmp;
 end;
 
-function TACBrCotacao.GetURLTabela: String;
+function TACBrCotacao.GetURLTabela(const AData: TDate): String;
 var
   StrTmp: String;
   PosCp: Integer;
@@ -176,17 +176,23 @@ begin
   // alterado pois o endereço antigo começou a utilizar frame
   // então agora abrimos direto o frame
   //Self.HTTPGet('http://www4.bcb.gov.br/pec/taxas/batch/cotacaomoedas.asp');
+  if AData > 0 then
+  begin
+    Result := 'http://www4.bcb.gov.br/Download/fechamento/' + FormatDateTime('yyyymmdd', AData) + '.csv';
+  end
+  else
+  begin
+    Self.HTTPGet('https://www3.bcb.gov.br/ptax_internet/consultarTodasAsMoedas.do?method=consultaTodasMoedas');
+    StrTmp := Self.RespHTTP.Text;
 
-  Self.HTTPGet('https://www3.bcb.gov.br/ptax_internet/consultarTodasAsMoedas.do?method=consultaTodasMoedas');
-  StrTmp := Self.RespHTTP.Text;
+    PosCp := Pos('http://www4.bcb.gov.br/Download/fechamento/', StrTmp);
+    StrTmp := Copy(StrTmp, PosCp, Length(StrTmp) - PosCp);
 
-  PosCp := Pos('http://www4.bcb.gov.br/Download/fechamento/', StrTmp);
-  StrTmp := Copy(StrTmp, PosCp, Length(StrTmp) - PosCp);
+    PosCp := Pos('.csv', strTmp) + 3;
+    StrTmp := Copy(StrTmp, 0, PosCp);
 
-  PosCp := Pos('.csv', strTmp) + 3;
-  StrTmp := Copy(StrTmp, 0, PosCp);
-
-  Result := StrTmp;
+    Result := StrTmp;
+  end;
 end;
 
 function TACBrCotacao.Procurar(const ASimbolo: String): TACBrCotacaoItem;
@@ -203,7 +209,7 @@ begin
   end;
 end;
 
-procedure TACBrCotacao.AtualizarTabela;
+procedure TACBrCotacao.AtualizarTabela(const AData: TDate);
 var
   ItemCotacao: TStringList;
   ItemMoeda: TStringList;
@@ -227,13 +233,23 @@ var
   end;
 
 begin
+  // verificar a data
+  if AData > 0 then
+  begin
+    if DayOfWeek(AData) in [1, 7] then
+      raise Exception.Create('Data informada é um final de semana!');
+  end;
+
+  if AData > Date then
+    raise Exception.Create('Data informado não pode ser maior que a data atual!');
+
   ArqCotacao  := TStringList.Create;
   ArqMoedas   := TStringList.Create;
   ItemCotacao := TStringList.Create;
   ItemMoeda   := TStringList.Create;
   try
     // baixar .csv com dados da cotação
-    HTTPGet(GetURLTabela);
+    HTTPGet(GetURLTabela(AData));
     ArqCotacao.Clear;
     ArqCotacao.Text := RespHTTP.Text;
 

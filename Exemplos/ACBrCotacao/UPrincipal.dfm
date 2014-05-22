@@ -20,6 +20,14 @@ object frmPrincipal: TfrmPrincipal
     Height = 50
     Align = alTop
     TabOrder = 0
+    object Label3: TLabel
+      Left = 420
+      Top = 18
+      Width = 94
+      Height = 13
+      Alignment = taRightJustify
+      Caption = 'Data de refer'#234'ncia:'
+    end
     object btnAtualizarMostrar: TButton
       Left = 13
       Top = 13
@@ -37,6 +45,15 @@ object frmPrincipal: TfrmPrincipal
       Caption = 'Procurar por Simbolo'
       TabOrder = 1
       OnClick = btnProcurarSimboloClick
+    end
+    object DateTimePicker1: TDateTimePicker
+      Left = 520
+      Top = 17
+      Width = 101
+      Height = 21
+      Date = 41781.732459942130000000
+      Time = 41781.732459942130000000
+      TabOrder = 2
     end
   end
   object ListBox1: TListBox

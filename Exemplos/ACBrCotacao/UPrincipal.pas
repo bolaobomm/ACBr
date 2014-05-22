@@ -4,7 +4,7 @@ interface
 
 uses
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
-  Dialogs, StdCtrls, ACBrCotacao, ACBrBase, ACBrSocket;
+  Dialogs, StdCtrls, ACBrCotacao, ACBrBase, ACBrSocket, ComCtrls;
 
 type
 
@@ -17,6 +17,8 @@ type
     GroupBox2: TGroupBox;
     Label1: TLabel;
     Label2: TLabel;
+    DateTimePicker1: TDateTimePicker;
+    Label3: TLabel;
     procedure btnAtualizarMostrarClick(Sender: TObject);
     procedure btnProcurarSimboloClick(Sender: TObject);
     procedure Label2Click(Sender: TObject);
@@ -44,7 +46,7 @@ begin
   try
     ListBox1.Clear;
 
-    ACBrCotacao1.AtualizarTabela;
+    ACBrCotacao1.AtualizarTabela(DateTimePicker1.Date);
     for I := 0 to ACBrCotacao1.Tabela.Count - 1 do
     begin
       ListBox1.Items.Add(
@@ -76,7 +78,7 @@ begin
   if ACBrCotacao1.Tabela.Count = 0 then
   begin
     if Application.MessageBox('Deseja atualizar a tabela de cotações?', 'Atualizar', MB_ICONQUESTION + MB_YESNO) = ID_YES then
-      ACBrCotacao1.AtualizarTabela
+      ACBrCotacao1.AtualizarTabela(DateTimePicker1.Date)
     else
       raise Exception.Create('Antes de continuar atualize a tabela de cotações!');
   end;
