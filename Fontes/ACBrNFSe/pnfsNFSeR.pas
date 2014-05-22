@@ -103,6 +103,7 @@ begin
    NFSe.OptanteSimplesNacional   := StrToSimNao(ok, Leitor.rCampo(tcStr, 'OptanteSimplesNacional'));
    NFSe.IncentivadorCultural     := StrToSimNao(ok, Leitor.rCampo(tcStr, 'IncentivadorCultural'));
    NFSe.Status                   := StrToStatusRPS(ok, Leitor.rCampo(tcStr, 'Status'));
+   NFSe.OutrasInformacoes        := Leitor.rCampo(tcStr, 'OutrasInformacoes');
 
    if (Leitor.rExtrai(3, 'IdentificacaoRps') <> '') or (Leitor.rExtrai(2, 'IdentificacaoRps') <> '')
     then begin
