@@ -18,7 +18,7 @@ object frmDemo_ACBrCTe: TfrmDemo_ACBrCTe
     Left = 0
     Top = 0
     Width = 297
-    Height = 530
+    Height = 534
     Align = alLeft
     TabOrder = 0
     object lblColaborador: TLabel
@@ -791,14 +791,14 @@ object frmDemo_ACBrCTe: TfrmDemo_ACBrCTe
   object Panel2: TPanel
     Left = 297
     Top = 0
-    Width = 558
-    Height = 530
+    Width = 566
+    Height = 534
     Align = alClient
     TabOrder = 1
     object Panel3: TPanel
       Left = 1
       Top = 1
-      Width = 556
+      Width = 564
       Height = 224
       Align = alTop
       TabOrder = 0
@@ -977,8 +977,8 @@ object frmDemo_ACBrCTe: TfrmDemo_ACBrCTe
     object PageControl2: TPageControl
       Left = 1
       Top = 225
-      Width = 556
-      Height = 304
+      Width = 564
+      Height = 308
       ActivePage = TabSheet5
       Align = alClient
       TabOrder = 1
@@ -987,8 +987,8 @@ object frmDemo_ACBrCTe: TfrmDemo_ACBrCTe
         object MemoResp: TMemo
           Left = 0
           Top = 0
-          Width = 548
-          Height = 276
+          Width = 556
+          Height = 280
           Align = alClient
           TabOrder = 0
         end
@@ -1030,8 +1030,8 @@ object frmDemo_ACBrCTe: TfrmDemo_ACBrCTe
         object trvwCTe: TTreeView
           Left = 0
           Top = 0
-          Width = 548
-          Height = 276
+          Width = 556
+          Height = 280
           Align = alClient
           Indent = 19
           TabOrder = 0
@@ -1082,6 +1082,7 @@ object frmDemo_ACBrCTe: TfrmDemo_ACBrCTe
     Configuracoes.WebServices.AjustaAguardaConsultaRet = False
     OnStatusChange = ACBrCTe1StatusChange
     DACTe = ACBrCTeDACTeQR1
+    OnGerarLog = ACBrCTe1GerarLog
     Left = 232
     Top = 400
   end
