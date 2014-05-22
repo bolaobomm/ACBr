@@ -494,7 +494,7 @@ TACBrFormMsgEstado = (fmsNenhum, fmsProcessando, fmsConcluido, fmsAbortado) ;
 TACBrECFClass = class
  private
     fsRetentar     : Boolean;
-
+    fsControlePorta: Boolean;
     fsBloqueiaMouseTeclado: Boolean;
     fsExibeMensagem: Boolean;
     fsTempoInicioMsg: Integer;
@@ -540,6 +540,8 @@ TACBrECFClass = class
     fpInfoRodapeCupom: TACBrECFRodape;
     fpRespostasComando: TACBrInformacoes;
 
+    procedure AtivarPorta;
+    procedure DesativarPorta;
     function GetPathDLL : string ;
     procedure SetAtivo(const Value: Boolean);
     procedure SetTimeOut(const Value: Integer);
@@ -771,8 +773,9 @@ TACBrECFClass = class
     property OnChequeEstado: TACBrECFOnChequeEstado
         read fsOnChequeEstado write fsOnChequeEstado;
 
-    Property TimeOut  : Integer read GetTimeOut write SetTimeOut ;
-    Property Retentar : Boolean read fsRetentar write fsRetentar ;
+    Property TimeOut       : Integer read GetTimeOut      write SetTimeOut ;
+    Property Retentar      : Boolean read fsRetentar      write fsRetentar ;
+    Property ControlePorta : Boolean read fsControlePorta write fsControlePorta ;
 
     property BloqueiaMouseTeclado : Boolean read  fsBloqueiaMouseTeclado
                                             write fsBloqueiaMouseTeclado ;
@@ -1442,7 +1445,8 @@ begin
   {$ENDIF}
 
   { Ajustando variaveis Internas }
-  fsRetentar             := true ;
+  fsRetentar             := True ;
+  fsControlePorta        := False ;
   fsOperador             := '' ;
   fsMsgAguarde           := cACBrMsgAguardando ;
   fsMsgTrabalhando       := cACBrMsgTrabalhando ;
@@ -1557,6 +1561,21 @@ begin
   Result := PathWithDelim(fsPathDLL);
 end;
 
+procedure TACBrECFClass.AtivarPorta;
+begin
+  if not fpDevice.Ativo then
+  begin
+     GravaLog('-- Ativando a porta: ' + fpDevice.Porta);
+     fpDevice.Ativar;
+  end;
+end;
+
+procedure TACBrECFClass.DesativarPorta;
+begin
+  GravaLog('-- Desativando a porta: ' + fpDevice.Porta);
+  fpDevice.Desativar;
+end;
+
 function TACBrECFClass.GetDataHoraUltimaReducaoZ : TDateTime ;
 begin
   Result := 0;
@@ -1631,6 +1650,7 @@ function TACBrECFClass.EnviaComando(cmd: AnsiString = ''): AnsiString;
 begin
   try
     try
+       AtivarPorta;
        GravaLog('-- '+FormatDateTime('hh:nn:ss:zzz',now)+' '+fpComandoLOG,True );
 
        if (not fpDevice.Ativo) then
@@ -1649,6 +1669,9 @@ begin
           AguardandoResposta  := False ;
           IgnorarErroSemPapel := False;
           GravaLog('   '+FormatDateTime('hh:nn:ss:zzz',now)+' RX <- '+fpRespostaComando, True);
+
+          if ControlePorta then
+             DesativarPorta;
        end ;
     except
        On E: Exception do
@@ -1799,22 +1822,20 @@ begin
 
         if now > TempoLimite then       { TimeOut }
         begin
-
-             if Retentar then
-             begin
-               {$IFNDEF NOGUI}
-                if ProcessaFormMsg then
-                begin
-                   fsFormMsg.Width  := 0 ;  { Escondendo o Form da Msg }
-                   fsFormMsg.Height := 0 ;
-                end ;
-                {$ENDIF}
-                if DoOnMsgRetentar( Format(cACBrECFDoOnMsgSemRespostaRetentar,
-                                          [ ModeloStr ]),
-                    'LerResposta') then
-                   TempoLimite := IncSecond( now, TimeOut)  ;
-             end ;
-
+           if Retentar then
+           begin
+             {$IFNDEF NOGUI}
+              if ProcessaFormMsg then
+              begin
+                 fsFormMsg.Width  := 0 ;  { Escondendo o Form da Msg }
+                 fsFormMsg.Height := 0 ;
+              end ;
+              {$ENDIF}
+              if DoOnMsgRetentar( Format(cACBrECFDoOnMsgSemRespostaRetentar,
+                                        [ ModeloStr ]),
+                  'LerResposta') then
+                 TempoLimite := IncSecond( now, TimeOut)  ;
+           end ;
 
            if now > TempoLimite then      { Respondeu Nao a Retentar }
            begin
@@ -1860,6 +1881,7 @@ begin
      until Fim ;
   finally
      AguardaImpressao := False ;
+
      if Assigned( fsOnMsgAguarde ) then
         fsOnMsgAguarde( '' ) ;
   end ;
@@ -1875,8 +1897,9 @@ begin
   Result := True ;
 
   try
-     fpDevice.EnviaString( Cmd );   { Eviando o comando }
+     AtivarPorta;
      GravaLog('                TX -> '+Cmd, True);
+     fpDevice.EnviaString( Cmd );   { Eviando o comando }
   except
      if not DoOnMsgRetentar(Format(cACBrECFCmdSemRespostaException, [ ModeloStr ]),
        'TransmitirComando') then

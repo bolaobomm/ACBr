@@ -85,6 +85,7 @@ type
     chkMenuFiscalGerarArquivo : TCheckBox ;
     chRFD: TCheckBox;
     chTentar: TCheckBox;
+    chControlePorta: TCheckBox;
     CNPJIE1: TMenuItem;
     ComprovantesNaoFiscais1: TMenuItem;
     CorrigeEstadodeErro1: TMenuItem;
@@ -109,6 +110,7 @@ type
     edAAC_SH_IM : TEdit ;
     edAAC_ECF_GT : TDBEdit ;
     edAAC_SH_RazaoSocial : TEdit ;
+    edInfo: TEdit;
     MenuItem31: TMenuItem;
     mDataHoraUltimaReducaoZ : TMenuItem ;
     mTotalTroco: TMenuItem;
@@ -458,6 +460,7 @@ type
     procedure chGavetaSinalInvertidoChange(Sender : TObject) ;
     procedure chIgnorarTagsFormatacaoChange(Sender: TObject);
     procedure chProcessMessagesChange(Sender : TObject) ;
+    procedure chControlePortaChange(Sender: TObject);
     procedure chTentarChange(Sender : TObject) ;
     procedure mAchaCNFDescricaoClick(Sender : TObject) ;
     procedure mAcharAliqPorIndiceClick(Sender : TObject) ;
@@ -1246,10 +1249,10 @@ begin
 end;
 
 procedure TForm1.Button1Click(Sender : TObject) ;
-var
-  I: Extended;
+//var
+//  I: Extended;
 begin
-   ACBrECF1.RetornaInfoECF( edOperador.Text );
+   ACBrECF1.RetornaInfoECF( edInfo.Text );
 
    {
    I := CompareVersions('1.0.3', '01.00.04');    // -1
@@ -1471,6 +1474,11 @@ end;
 procedure TForm1.chProcessMessagesChange(Sender : TObject) ;
 begin
   ACBrECF1.Device.ProcessMessages := chProcessMessages.Checked;
+end;
+
+procedure TForm1.chControlePortaChange(Sender: TObject);
+begin
+  ACBrECF1.ControlePorta := chControlePorta.Checked ;
 end;
 
 procedure TForm1.chTentarChange(Sender : TObject) ;
@@ -4094,6 +4102,7 @@ begin
      INI.WriteInteger('ECF','TimeOut',seTimeOut.Value);
      INI.WriteInteger('ECF','IntervaloAposComando',seIntervaloAposComando.Value);
      INI.WriteBool('ECF','TentarNovamente',chTentar.Checked);
+     INI.WriteBool('ECF','ControlePorta',chControlePorta.Checked);
      INI.WriteBool('ECF','BloqueiaMouseTeclado',chBloqueia.Checked);
      INI.WriteBool('ECF','ExibeMsgAguarde',chExibeMsg.Checked);
      INI.WriteBool('ECF','ArredondaPorQtd',chArredondaPorQtd.Checked);
@@ -4141,6 +4150,7 @@ begin
      seTimeOut.Value := INI.ReadInteger('ECF','TimeOut',seTimeOut.Value);
      seIntervaloAposComando.Value := INI.ReadInteger('ECF','IntervaloAposComando',seIntervaloAposComando.Value);
      chTentar.Checked := INI.ReadBool('ECF','TentarNovamente',chTentar.Checked);
+     chControlePorta.Checked := INI.ReadBool('ECF','ControlePorta',True);
      chBloqueia.Checked := INI.ReadBool('ECF','BloqueiaMouseTeclado',chBloqueia.Checked);
      chExibeMsg.Checked := INI.ReadBool('ECF','ExibeMsgAguarde',chExibeMsg.Checked);
      chArredondaPorQtd.Checked := INI.ReadBool('ECF','ArredondaPorQtd',chArredondaPorQtd.Checked);

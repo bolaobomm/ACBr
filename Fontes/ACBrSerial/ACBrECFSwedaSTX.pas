@@ -466,6 +466,8 @@ begin
          except
          end ;
 
+         GravaLog('   '+FormatDateTime('hh:nn:ss:zzz',now)+' RX <- ACK = '+IntToStr(ACK_ECF)+' Falha: '+IntToStr(FalhasTX) ) ;
+
          if ACK_ECF = 0 then
             raise EACBrECFSemResposta.create( ACBrStr(
                      'Impressora '+fpModeloStr+' não responde (ACK = 0)') )
@@ -483,7 +485,6 @@ begin
             fpDevice.Serial.Purge ;
 
             Inc( FalhasTX ) ;
-            GravaLog('   '+FormatDateTime('hh:nn:ss:zzz',now)+' RX <- ACK = '+IntToStr(ACK_ECF)+' Falha: '+IntToStr(FalhasTX) ) ;
 
             if FalhasTX < CFALHAS then
                Sleep(100)
@@ -724,6 +725,7 @@ begin
 
   { ECF está enviando dados... aumente o TimeOut }
   TempoLimite := IncSecond(now, TimeOut);
+  GravaLog('                TimeOut estendido') ;
 
   { Verificando a Sequencia }
   if Sequencia <> fsSEQ then
@@ -741,15 +743,19 @@ begin
   if Result and
     ( CalcCheckSum(LeftStr(Bloco,Length(Bloco)-1)) <> RightStr(Bloco,1) ) then
   begin
-    ACK_PC := Ord(NAK) ;  // Erro no CheckSum, retornar NACK
+    ACK_PC := Ord(NAK) ;
     if fsFalhasRX > CFALHAS then
        raise EACBrECFERRO( ACBrStr('Erro no digito Verificador da Resposta.'+sLineBreak+
                         'Falha: '+IntToStr(fsFalhasRX)) ) ;
+
+    MsgLog := 'Erro no CheckSum, NACK retornado';
     Inc( fsFalhasRX ) ;  // Incrementa numero de Falhas
     Result := False ;
   end ;
 
   fpDevice.Serial.SendByte(ACK_PC);
+  GravaLog('   '+FormatDateTime('hh:nn:ss:zzz',now)+' RX <- (Bloco) = '+Bloco ) ;
+  GravaLog('                TX -> ACK = '+IntToStr(ACK_PC)+' Falha: '+IntToStr(fsFalhasRX) ) ;
 
   if Result then
      fsRespostasComando := fsRespostasComando + Retorno ;  // Salva este Bloco
@@ -772,9 +778,8 @@ begin
   end ;
 
   if MsgLog <> '' then
-   GravaLog( '         VerificaFimLeitura, '+MsgLog+' Seq:'+IntToStr(Sequencia)+
-           ' Tipo:'+Tipo+' Tarefa:'+Tarefa+' Erro:'+IntToStr(Erro)+
-           ' ACK:'+IntToStr(ACK_PC)+' - Bloco:'+Bloco  ) ;
+     GravaLog( '         VerificaFimLeitura, '+MsgLog+' Seq:'+IntToStr(Sequencia)+
+               ' Tipo:'+Tipo+' Tarefa:'+Tarefa+' Erro:'+IntToStr(Erro)+' - Bloco:'+Bloco  ) ;
 
 end;
 
@@ -802,16 +807,16 @@ begin
      Cmd    := PreparaCmd( '34' ) ;           // Pede Status //
 
      try
-        GravaLog('         VerificaFimImpressao: Pedindo o Status. Seq:'+IntToStr(fsSEQ)) ;
-
         fpDevice.Serial.Purge ;          // Limpa buffer de Entrada e Saida //
         fpDevice.EnviaString( Cmd );     // Envia comando //
+        GravaLog('   '+FormatDateTime('hh:nn:ss:zzz',now)+' TX -> (Status) '+Cmd ) ;
 
         wACK := fpDevice.Serial.RecvByte( TimeOut * 1000 ) ; // espera ACK chegar na Porta  //
+        GravaLog('   '+FormatDateTime('hh:nn:ss:zzz',now)+' RX <- ACK = '+IntToStr(wACK) ) ;
 
         if wACK = 6 then   // ECF Respondeu corretamente, portanto está trabalhando //
         begin
-           GravaLog('         VerificaFimImpressao: ACK = 6, OK... Aguardando Bloco') ;
+           GravaLog('                OK... Aguardando Bloco') ;
 
            // Aguarda por Bloco até 6 seg //
            I := 0 ;
@@ -821,13 +826,14 @@ begin
               TempoLimite := IncSecond(now, TimeOut);
               try
                  Ret := fpDevice.Serial.RecvPacket(200) ;
+                 GravaLog('                RX <- '+IntToStr(I)+' = '+Ret ) ;
               except
               end ;
 
               if Length( Ret ) > 0 then
               begin
                  // DEBUG
-                 //GravaLog('         VerificaFimImpressao: ECF respondeu, continue esperando' ) ;
+                 GravaLog('                RX <- '+IntToStr(I)+' = '+Ret ) ;
                  I := 0 ;
               end ;
 
@@ -835,6 +841,7 @@ begin
 
               // DEBUG
               //GravaLog('         VerificaFimImpressao: I: '+IntToStr(I)+' Bloco Lido: '+RetCmd ) ;
+              // VerificaFimLeitura, aumenta o TimeOut se estiver respondendo OK
               Result :=  VerificaFimLeitura( RetCmd, TempoLimite) ;
            end ;
 
@@ -859,9 +866,9 @@ begin
   if fsSEQ = 255 then
      fsSEQ := 43 ;
 
- cmd := STX + AnsiChar(chr( fsSEQ ))+  cmd + ETX ;   { Prefixo ESC }
- //cmd := #02+chr( fsSEQ )+'15'#03;
-// cmd := #02+chr( fsSEQ )+'34I1'#03;
+  cmd := STX + AnsiChar(chr( fsSEQ )) + cmd + ETX ;
+  // cmd := #02+chr( fsSEQ )+'15'#03;
+  // cmd := #02+chr( fsSEQ )+'34I1'#03;
 
   Result := cmd + CalcCheckSum( cmd ) ;
 end ;

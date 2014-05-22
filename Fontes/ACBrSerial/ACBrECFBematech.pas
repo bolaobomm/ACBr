@@ -867,6 +867,8 @@ begin
            except
            end ;
 
+           GravaLog('   '+FormatDateTime('hh:nn:ss:zzz',now)+' RX <- ACK = '+IntToStr(ACK)+' Falha: '+IntToStr(FalhasACK) ) ;
+
            AnalisaACK;
         except
            on E : EACBrECFSemResposta do
@@ -874,7 +876,6 @@ begin
               fpDevice.Serial.Purge ;
 
               Inc( FalhasACK ) ;
-              GravaLog('   '+FormatDateTime('hh:nn:ss:zzz',now)+' RX <- ACK = '+IntToStr(ACK)+' Falha: '+IntToStr(FalhasACK) ) ;
 
               if FalhasACK < 3 then
                  Sleep(100)
@@ -3425,8 +3426,6 @@ begin
 end ;
 
 procedure TACBrECFBematech.FechaPortaSerialDLL(const OldAtivo: Boolean);
-Var
-  Resp: Integer;
 begin
   GravaLog( '   xBematech_FI_FechaPortaSerial' ) ;
   xBematech_FI_FechaPortaSerial ;

@@ -2321,7 +2321,6 @@ var
   LibHandle: THandle ;
 begin
  Result := True ;
-// LibHandle := 0;
 
 {$IFDEF FPC}
  LibHandle := dynlibs.LoadLibrary( LibName ) ;

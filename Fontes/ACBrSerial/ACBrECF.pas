@@ -223,6 +223,7 @@ TACBrECF = class( TACBrComponent )
     procedure SetModelo(const AValue: TACBrECFModelo);
     procedure SetPorta(const AValue: String);
     procedure SetRetentar(const AValue: Boolean);
+    procedure SetControlePorta(AValue: Boolean);
     procedure SetTimeOut(const AValue: Integer);
     procedure SetIntervaloAposComando(const AValue: Integer);
     procedure SetMsgAguarde(const AValue: String);
@@ -242,6 +243,7 @@ TACBrECF = class( TACBrComponent )
 
     function GetPorta: String;
     function GetRetentar: Boolean;
+    function GetControlePorta: Boolean;
     function GetTimeOut: Integer;
     function GetIntervaloAposComando: Integer ;
     function GetBloqueiaMouseTeclado: Boolean;
@@ -826,6 +828,8 @@ TACBrECF = class( TACBrComponent )
      property Porta : String read GetPorta write SetPorta ;
      property ReTentar : Boolean read GetRetentar write SetRetentar
                  default true;
+     property ControlePorta : Boolean read GetControlePorta write SetControlePorta
+                 default false ;
      property TimeOut : Integer read GetTimeOut write SetTimeOut
                  default cTimeout ;
      property IntervaloAposComando : Integer read GetIntervaloAposComando
@@ -1200,6 +1204,7 @@ var wRetentar : Boolean ;   { Variaveis de Trabalho, usadas para transportar }
     wTimeOut  : Integer ;   { as informações de uma Classe ECF antiga para a }
     wMsgAguarde : String ;  { do novo modelo que será instanciada }
     wMsgTrabalhando : String ;
+    wControlePorta: Boolean;
     wOperador   : String ;
     wMsgRelatorio : String ;
     wPausaRelatorio : Integer ;
@@ -1239,6 +1244,7 @@ begin
   //   raise EACBrECFErro.Create( ACBrStr(cACBrECFSemECFVirtualException));
 
   wRetentar             := ReTentar ;
+  wControlePorta        := ControlePorta;
   wTimeOut              := TimeOut ;
   wIntervaloAposComando := IntervaloAposComando ;
   wBloqueiaMouseTeclado := BloqueiaMouseTeclado ;
@@ -1299,6 +1305,7 @@ begin
 
   { Passando propriedades da Classe anterior para a Nova Classe }
   Retentar             := wRetentar ;
+  ControlePorta        := wControlePorta;
   TimeOut              := wTimeOut ;
   IntervaloAposComando := wIntervaloAposComando ;
   TempoInicioMsg       := wTempoInicioMsg ;
@@ -1463,6 +1470,16 @@ end;
 procedure TACBrECF.SetRetentar(const AValue: Boolean);
 begin
    fsECF.Retentar := AValue ;
+end;
+
+function TACBrECF.GetControlePorta: Boolean;
+begin
+  result := fsECF.ControlePorta ;
+end;
+
+procedure TACBrECF.SetControlePorta(AValue: Boolean);
+begin
+  fsECF.ControlePorta := AValue ;
 end;
 
 function TACBrECF.GetTimeOut: Integer;

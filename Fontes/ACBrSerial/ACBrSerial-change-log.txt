@@ -97,6 +97,15 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+Data: 21/05/2014
+-- ACBrECF --
+[+] Nova Propriedade, ControlePorta: Boolean = false
+    Quando True, faz com que o ACBrECF ative e desative a porta a cada comando
+    enviado. Util para ECFs com Porta Serial Virtual (driver USB)   (por: DSA)
+
+-- ACBrECFBematech, ACBrECFSwedaSTX, ACBrECFEpson --
+[*] Melhoria no registro do Log  (por: DSA)
+
 Data: 17/05/2014
 -- ACBrECFFiscNET --
 [*] Ajuste para Modelo "URANO/1FIT LOGGER" em 48 col  (por:DSA)

@@ -1233,6 +1233,8 @@ begin
               except
               end ;
 
+              GravaLog('   '+FormatDateTime('hh:nn:ss:zzz',now)+' RX <- ACK = '+IntToStr(fsByteACK) ) ;
+
               if fsByteACK = 0 then
                  raise EACBrECFSemResposta.create( ACBrStr(
                        'Impressora '+fpModeloStr+' não responde (ACK = 0)' ))
@@ -1248,8 +1250,6 @@ begin
               on E : EACBrECFSemResposta do
                begin
                  fpDevice.Serial.Purge ;
-
-                 GravaLog('   '+FormatDateTime('hh:nn:ss:zzz',now)+' RX <- ACK = '+IntToStr(fsByteACK) ) ;
 
                  if not DoOnMsgRetentar( E.Message +sLineBreak+sLineBreak+
                     'Se o problema persistir, verifique os cabos, ou'+sLineBreak+

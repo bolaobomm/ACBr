@@ -21,7 +21,7 @@
       <UseVersionInfo Value="True"/>
       <AutoIncrementBuild Value="True"/>
       <MinorVersionNr Value="9"/>
-      <BuildNr Value="42"/>
+      <BuildNr Value="43"/>
       <Language Value="0416"/>
       <CharSet Value="04B0"/>
       <StringTable ProductVersion=""/>
@@ -160,9 +160,12 @@
         <UnitName Value="ECFTeste1"/>
         <EditorIndex Value="0"/>
         <WindowIndex Value="0"/>
-        <TopLine Value="1"/>
-        <CursorPos X="1" Y="1"/>
+        <TopLine Value="4137"/>
+        <CursorPos X="61" Y="4153"/>
         <UsageCount Value="201"/>
+        <Bookmarks Count="1">
+          <Item0 X="39" Y="2340" ID="4"/>
+        </Bookmarks>
         <Loaded Value="True"/>
         <LoadedDesigner Value="True"/>
       </Unit1>
@@ -280,35 +283,42 @@
     </Other>
   </CompilerOptions>
   <Debugging>
-    <BreakPoints Count="4">
+    <BreakPoints Count="5">
       <Item1>
         <Kind Value="bpkSource"/>
         <WatchScope Value="wpsLocal"/>
         <WatchKind Value="wpkWrite"/>
         <Source Value="..\..\..\Fontes\ACBrSerial\ACBrECFEscECF.pas"/>
-        <Line Value="1315"/>
+        <Line Value="1562"/>
       </Item1>
       <Item2>
         <Kind Value="bpkSource"/>
         <WatchScope Value="wpsLocal"/>
         <WatchKind Value="wpkWrite"/>
-        <Source Value="..\..\..\Fontes\ACBrSerial\ACBrECFEscECF.pas"/>
-        <Line Value="1562"/>
+        <Source Value="..\..\..\Fontes\ACBrSerial\ACBrECFDaruma.pas"/>
+        <Line Value="1834"/>
       </Item2>
       <Item3>
         <Kind Value="bpkSource"/>
         <WatchScope Value="wpsLocal"/>
         <WatchKind Value="wpkWrite"/>
-        <Source Value="..\..\..\Fontes\ACBrSerial\ACBrECFEscECF.pas"/>
-        <Line Value="1887"/>
+        <Source Value="..\..\..\Fontes\ACBrSerial\ACBrECFDaruma.pas"/>
+        <Line Value="1828"/>
       </Item3>
       <Item4>
         <Kind Value="bpkSource"/>
         <WatchScope Value="wpsLocal"/>
         <WatchKind Value="wpkWrite"/>
-        <Source Value="..\..\..\Fontes\ACBrSerial\ACBrECFEscECF.pas"/>
-        <Line Value="1906"/>
+        <Source Value="..\..\..\Fontes\ACBrSerial\ACBrECFSwedaSTX.pas"/>
+        <Line Value="1554"/>
       </Item4>
+      <Item5>
+        <Kind Value="bpkSource"/>
+        <WatchScope Value="wpsLocal"/>
+        <WatchKind Value="wpkWrite"/>
+        <Source Value="..\..\..\Fontes\ACBrSerial\ACBrECFDaruma.pas"/>
+        <Line Value="4703"/>
+      </Item5>
     </BreakPoints>
     <Watches Count="1">
       <Item1>
