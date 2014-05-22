@@ -2332,8 +2332,8 @@ object FrmACBrMonitor: TFrmACBrMonitor
               Left = 272
               Height = 21
               Top = 64
-              Width = 187
-              Caption = 'Ignorar Tags de Formatação'
+              Width = 124
+              Caption = 'Controle da Porta'
               OnClick = chECFControlePortaClick
               TabOrder = 5
             end
@@ -6216,7 +6216,6 @@ object FrmACBrMonitor: TFrmACBrMonitor
       'Ouvidoria: 0800 725 7474 (reclamações não solucionadas e denúncias)'
       '     caixa.gov.br      '
     )
-    Cedente.TipoDocumento = Tradicional
     Cedente.TipoInscricao = pJuridica
     NumeroArquivo = 0
     DataArquivo = 0
