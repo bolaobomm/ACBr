@@ -315,7 +315,7 @@ begin
             begin
               ACBrNFeDANFERave1.MarcaDaguaMSG := '';
               ACBrNFeDANFERaveCB1.MarcaDaguaMSG := '';
-            end
+            end ;
 
            ConfiguraDANFe;  
            ACBrNFe1.NotasFiscais.Imprimir;
@@ -2756,7 +2756,9 @@ begin
                       INIRec.WriteFloat( sSecao,'vICMSSTDest',ICMS.vICMSSTDest);
                     end;
 
-                   if (IPI.vBC > 0) then
+                   if (IPI.vBC > 0) or
+                      (IPI.qUnid > 0) or
+                      (IPI.vIPI > 0) then
                     begin
                       sSecao := 'IPI'+IntToStrZero(I+1,3) ;
                       with IPI do
