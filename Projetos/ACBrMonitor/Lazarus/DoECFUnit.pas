@@ -136,6 +136,9 @@ begin
         else if Cmd.Metodo = 'ignorartagsformatacao' then
            Cmd.Resposta := BoolToStr( IgnorarTagsFormatacao, true )
 
+        else if Cmd.Metodo = 'controleporta' then
+           Cmd.Resposta := BoolToStr( ControlePorta, true )
+
         else if Cmd.Metodo = 'operador' then
            Cmd.Resposta := Operador
 

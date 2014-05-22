@@ -130,6 +130,7 @@ type
     chECFArredondaMFD: TCheckBox;
     chECFArredondaPorQtd: TCheckBox;
     chECFDescrGrande: TCheckBox;
+    chECFControlePorta: TCheckBox;
     chECFSinalGavetaInvertido: TCheckBox;
     chECFIgnorarTagsFormatacao: TCheckBox;
     chbArqEntANSI: TCheckBox;
@@ -440,6 +441,7 @@ type
     procedure cbxBOLF_JChange ( Sender: TObject ) ;
     procedure cbCEPWebServiceChange(Sender : TObject) ;
     procedure chECFArredondaMFDClick(Sender: TObject);
+    procedure chECFControlePortaClick(Sender: TObject);
     procedure chECFIgnorarTagsFormatacaoClick(Sender: TObject);
     procedure chRFDChange(Sender : TObject) ;
     procedure deBOLDirArquivoExit ( Sender: TObject ) ;
@@ -1033,6 +1035,11 @@ begin
                                  (chECFArredondaMFD.Checked))
 end;
 
+procedure TFrmACBrMonitor.chECFControlePortaClick(Sender: TObject);
+begin
+  ACBrECF1.ControlePorta := chECFControlePorta.Checked;
+end;
+
 procedure TFrmACBrMonitor.chECFIgnorarTagsFormatacaoClick(Sender: TObject);
 begin
   ACBrECF1.IgnorarTagsFormatacao := chECFIgnorarTagsFormatacao.Checked;
@@ -1438,6 +1445,7 @@ begin
     chECFDescrGrande.Checked := Ini.ReadBool('ECF', 'DescricaoGrande', True);
     chECFSinalGavetaInvertido.Checked := Ini.ReadBool('ECF', 'GavetaSinalInvertido', False);
     chECFIgnorarTagsFormatacao.Checked := Ini.ReadBool('ECF', 'IgnorarTagsFormatacao', False);
+    chECFControlePorta.Checked := Ini.ReadBool('ECF', 'ControlePorta', False);
     edECFLog.Text := Ini.ReadString('ECF', 'ArqLog', '');
 
     { Parametros do CHQ }
@@ -1577,6 +1585,7 @@ begin
     BloqueiaMouseTeclado := False;
     ExibeMensagem := False;
     IgnorarTagsFormatacao := chECFIgnorarTagsFormatacao.Checked;
+    ControlePorta := chECFControlePorta.Checked;
     ArqLOG := edECFLog.Text;
     Ativo := ECFAtivado;
   end;
@@ -1894,6 +1903,7 @@ begin
     Ini.WriteBool(   'ECF', 'DescricaoGrande', chECFDescrGrande.Checked);
     Ini.WriteBool(   'ECF', 'GavetaSinalInvertido', chECFSinalGavetaInvertido.Checked);
     Ini.WriteBool(   'ECF', 'IgnorarTagsFormatacao', chECFIgnorarTagsFormatacao.Checked);
+    Ini.WriteBool(   'ECF', 'ControlePorta', chECFControlePorta.Checked);
     Ini.WriteString( 'ECF', 'ArqLog', edECFLog.Text);
 
     { Parametros do CHQ }
