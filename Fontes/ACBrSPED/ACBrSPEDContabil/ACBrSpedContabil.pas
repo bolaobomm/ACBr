@@ -828,6 +828,30 @@ begin
          QTD_REG_BLC := Bloco_J.RegistroJ150Count;
       end;
    end;
+   if Bloco_J.RegistroJ200Count > 0 then
+   begin
+      with Bloco_9.Registro9900.New do
+      begin
+         REG_BLC := 'J200';
+         QTD_REG_BLC := Bloco_J.RegistroJ200Count;
+      end;
+   end;
+   if Bloco_J.RegistroJ210Count > 0 then
+   begin
+      with Bloco_9.Registro9900.New do
+      begin
+         REG_BLC := 'J210';
+         QTD_REG_BLC := Bloco_J.RegistroJ210Count;
+      end;
+   end;
+   if Bloco_J.RegistroJ215Count > 0 then
+   begin
+      with Bloco_9.Registro9900.New do
+      begin
+         REG_BLC := 'J215';
+         QTD_REG_BLC := Bloco_J.RegistroJ215Count;
+      end;
+   end;
 end;
 
 function TACBrSPEDContabil.WriteRegistroJ800: String;

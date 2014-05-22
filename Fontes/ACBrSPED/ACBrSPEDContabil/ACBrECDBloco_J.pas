@@ -36,6 +36,8 @@
 |*
 |* 10/04/2009: Isaque Pinheiro
 |*  - Criação e distribuição da Primeira Versao
+|* 06/05/2014: Francinaldo A. da Costa
+|*  - Modificações para o layout 2
 *******************************************************************************}
 
 unit ACBrECDBloco_J;
@@ -55,6 +57,9 @@ type
 
   TRegistroJ100List = class;
   TRegistroJ150List = class;
+  TRegistroJ200List = class;
+  TRegistroJ210List = class;
+  TRegistroJ215List = class;
 
   /// Rregistro J005 – DEMONSTRAÇÕES CONTÁBEIS
 
@@ -67,6 +72,8 @@ type
 
     FRegistroJ100: TRegistroJ100List;  /// BLOCO J - Lista de RegistroJ100 (FILHO)
     FRegistroJ150: TRegistroJ150List;  /// BLOCO J - Lista de RegistroJ150 (FILHO)
+    FRegistroJ200: TRegistroJ200List;  /// BLOCO J - Lista de RegistroJ200 (FILHO)
+    FRegistroJ210: TRegistroJ210List;  /// BLOCO J - Lista de RegistroJ210 (FILHO)
   public
     constructor Create; virtual; /// Create
     destructor Destroy; override; /// Destroy
@@ -77,6 +84,8 @@ type
     /// Registros FILHOS
     property RegistroJ100: TRegistroJ100List read FRegistroJ100 write FRegistroJ100;
     property RegistroJ150: TRegistroJ150List read FRegistroJ150 write FRegistroJ150;
+    property RegistroJ200: TRegistroJ200List read FRegistroJ200 write FRegistroJ200;
+    property RegistroJ210: TRegistroJ210List read FRegistroJ210 write FRegistroJ210;
   end;
 
   /// Registro J005 - Lista
@@ -90,7 +99,7 @@ type
     property Items[Index: Integer]: TRegistroJ005 read GetItem write SetItem;
   end;
 
-  /// Rregistro J100 – BALANÇO PATRIMONIAL
+  /// Registro J100 – BALANÇO PATRIMONIAL
 
   TRegistroJ100 = class
   private
@@ -100,6 +109,8 @@ type
     fDESCR_COD_AGL: String;  /// Descrição do Código de aglutinação.
     fVL_CTA: Currency;       /// Valor total do Código de aglutinação no Balanço Patrimonial no exercício informado, ou de período definido em norma específica.
     fIND_DC_BAL: String;     /// Indicador da situação do saldo informado no campo anterior: D - Devedor; C - Credor.
+    fVL_CTA_INI: Currency;   /// Valor inicial do código de aglutinação no Balanço Patrimonial no exercício informado, ou de período definido em norma específica.
+    fIND_DC_BAL_INI: string; /// Indicador da situação do saldo inicial informado no campo anterior: D - Devedor; C – Credor.
   public
     property COD_AGL: String read fCOD_AGL write fCOD_AGL;
     property NIVEL_AGL: String read fNIVEL_AGL write fNIVEL_AGL;
@@ -107,6 +118,8 @@ type
     property DESCR_COD_AGL: String read fDESCR_COD_AGL write fDESCR_COD_AGL;
     property VL_CTA: Currency read fVL_CTA write fVL_CTA;
     property IND_DC_BAL: String read fIND_DC_BAL write fIND_DC_BAL;
+    property VL_CTA_INI: Currency read fVL_CTA_INI write fVL_CTA_INI;
+    property IND_DC_BAL_INI: String read fIND_DC_BAL_INI write fIND_DC_BAL_INI;
   end;
 
   /// Registro J100 - Lista
@@ -121,7 +134,7 @@ type
     property Items[Index: Integer]: TRegistroJ100 read GetItem write SetItem;
   end;
 
-  /// Rregistro J150 – DEMONSTRAÇÃO DO RESULTADO DO EXERCÍCIO
+  /// Registro J150 – DEMONSTRAÇÃO DO RESULTADO DO EXERCÍCIO
 
   TRegistroJ150 = class
   private
@@ -149,6 +162,93 @@ type
     function LocalizaRegistro(pCOD_AGL: String): boolean;
     property Items[Index: Integer]: TRegistroJ150 read GetItem write SetItem;
   end;
+
+  /// Registro J200 - TABELA DE HISTÓRICO DE FATOS CONTÁBEIS QUE MODIFICAM A CONTA LUCROS ACUMULADOS OU A CONTA PREJUÍZOS ACUMULADOS OU TODO O PATRIMÔNIO LÍQUIDO
+
+  TRegistroJ200 = class
+  private
+    fCOD_HIST_FAT: String;    /// Código do histórico do fato contábil.
+    fDESC_FAT: String;  /// Descrição do fato contábil.
+  public
+    property COD_HIST_FAT: String read fCOD_HIST_FAT write fCOD_HIST_FAT;
+    property DESC_FAT: String read fDESC_FAT write fDESC_FAT;
+  end;
+
+  /// Registro J200 - Lista
+
+  TRegistroJ200List = class(TObjectList)
+  private
+    function GetItem(Index: Integer): TRegistroJ200;
+    procedure SetItem(Index: Integer; const Value: TRegistroJ200);
+  public
+    function New: TRegistroJ200;
+    function LocalizaRegistro(pCOD_HIST_FAT: String): boolean;
+    property Items[Index: Integer]: TRegistroJ200 read GetItem write SetItem;
+
+  end;
+
+  /// Registro J210 – DLPA – DEMONSTRAÇÃO DE LUCROS OU PREJUÍZOS ACUMULADOS/DMPL – DEMONSTRAÇÃO DE MUTAÇÕES DO PATRIMÔNIO LÍQUIDO
+  TRegistroJ210 = class
+  private
+    fIND_TIP: String;        /// Indicador do tipo de demonstração: 0 – DLPA, 1 – DMPL
+    fCOD_AGL: String;        /// Código de aglutinação das contas, atribuído pelo empresário ou sociedade empresária.
+    fDESCR_COD_AGL: String;  /// Descrição do Código de aglutinação.
+    fVL_CTA: Currency;       /// Saldo final do código de aglutinação na demonstração do período informado.
+    fIND_DC_CTA: String;     /// Indicador da situação do saldo FINAL informado no campo anterior: D - Devedor; C - Credor.
+    fVL_CTA_INI: Currency;   /// Saldo inicial do código de aglutinação na demonstração do período informado
+    fIND_DC_CTA_INI: String; /// Indicador da situação do saldo inicial informado no campo anterior: D – Devedor C – Credor
+    ///
+    FRegistroJ215: TRegistroJ215List;  /// BLOCO J - Lista de RegistroJ215 (FILHO)
+  public
+    constructor Create; virtual; /// Create
+    destructor Destroy; override; /// Destroy
+
+    property IND_TIP: String read fIND_TIP write fIND_TIP;
+    property COD_AGL: String read fCOD_AGL write fCOD_AGL;
+    property DESCR_COD_AGL: String read fDESCR_COD_AGL write fDESCR_COD_AGL;
+    property VL_CTA: Currency read fVL_CTA write fVL_CTA;
+    property IND_DC_CTA: String read fIND_DC_CTA write fIND_DC_CTA;
+    property VL_CTA_INI: Currency read fVL_CTA_INI write fVL_CTA_INI;
+    property IND_DC_CTA_INI: String read fIND_DC_CTA_INI write fIND_DC_CTA_INI;
+    /// Registros FILHOS
+    property RegistroJ215: TRegistroJ215List read FRegistroJ215 write FRegistroJ215;
+  end;
+
+  /// Registro J210 - Lista
+  TRegistroJ210List = class(TObjectList)
+  private
+    function GetItem(Index: Integer): TRegistroJ210;
+    procedure SetItem(Index: Integer; const Value: TRegistroJ210);
+  public
+    function New: TRegistroJ210;
+    function LocalizaRegistro(pCOD_AGL: String): boolean;
+    property Items[Index: Integer]: TRegistroJ210 read GetItem write SetItem;
+  end;
+
+  /// Registro J215 - FATO CONTÁBIL QUE ALTERA A CONTA LUCROS ACUMULADOS OU A CONTA PREJUÍZOS ACUMULADOS OU TODO O PATRIMÔNIO LÍQUIDO
+  TRegistroJ215 = class
+  private
+    fCOD_HIST_FAT: String;    /// Código do histórico do fato contábil.
+    fVL_FAT_CONT: Currency;   /// Valor do fato contábil.
+    fIND_DC_FAT: String;     /// Indicador de situação do saldo informado no campo anterior
+  public
+    property COD_HIST_FAT: String read fCOD_HIST_FAT write fCOD_HIST_FAT;
+    property VL_FAT_CONT: Currency read fVL_FAT_CONT write fVL_FAT_CONT;
+    property IND_DC_FAT: String read fIND_DC_FAT write fIND_DC_FAT;
+  end;
+
+  /// Registro J215 - Lista
+
+  TRegistroJ215List = class(TObjectList)
+  private
+    function GetItem(Index: Integer): TRegistroJ215;
+    procedure SetItem(Index: Integer; const Value: TRegistroJ215);
+  public
+    function New: TRegistroJ215;
+    function LocalizaRegistro(pCOD_HIST_FAT: String): boolean;
+    property Items[Index: Integer]: TRegistroJ215 read GetItem write SetItem;
+  end;
+
 
   /// Rregistro J800 – OUTRAS INFORMAÇÕES
 
@@ -198,12 +298,22 @@ type
     fIDENT_QUALIF: String;   /// Qualificação do assinante, conforme tabela do Departamento Nacional de Registro do Comércio - DNRC.
     fCOD_ASSIN: String;      /// Código de qualificação do assinante, conforme tabela do Departamento Nacional de Registro do Comércio - DNRC.
     fIND_CRC: String;        /// Número de inscrição do contabilista no Conselho Regional de Contabilidade.
+    fEMAIL: String;          /// Email do signatário
+    fFONE: String;           /// Telefone do signatário.
+    fUF_CRC: String;         /// Indicação da unidade da federação que expediu o CRC.
+    fNUM_SEQ_CRC: String;    /// Número sequencial no seguinte formato: UF/ano/número
+    fDT_CRC: TDateTime;      /// Data de validade do CRC do contador
   public
     property IDENT_NOM: String read fIDENT_NOM write fIDENT_NOM;
     property IDENT_CPF: String read fIDENT_CPF write fIDENT_CPF;
     property IDENT_QUALIF: String read fIDENT_QUALIF write fIDENT_QUALIF;
     property COD_ASSIN: String read fCOD_ASSIN write fCOD_ASSIN;
     property IND_CRC: String read fIND_CRC write fIND_CRC;
+    property EMAIL: String read fEMAIL write fEMAIL;
+    property FONE: String read fFONE write fFONE;
+    property UF_CRC: String read fUF_CRC write fUF_CRC;
+    property NUM_SEQ_CRC: String read fNUM_SEQ_CRC write fNUM_SEQ_CRC;
+    property DT_CRC: TDateTime read fDT_CRC write fDT_CRC;
   end;
 
   /// Registro J930 - Lista
@@ -312,6 +422,105 @@ begin
   Put(Index, Value);
 end;
 
+{ TRegistroJ200List }
+
+function TRegistroJ200List.GetItem(Index: Integer): TRegistroJ200;
+begin
+  Result := TRegistroJ200(Inherited Items[Index]);
+end;
+
+function TRegistroJ200List.LocalizaRegistro(pCOD_HIST_FAT: String): boolean;
+var
+intFor: integer;
+begin
+   Result := false;
+   for intFor := 0 to Self.Count - 1 do
+   begin
+      if Self.Items[intFor].COD_HIST_FAT = pCOD_HIST_FAT then
+      begin
+         Result := true;
+         Break;
+      end;
+   end;
+end;
+
+function TRegistroJ200List.New: TRegistroJ200;
+begin
+  Result := TRegistroJ200.Create;
+  Add(Result);
+end;
+
+procedure TRegistroJ200List.SetItem(Index: Integer; const Value: TRegistroJ200);
+begin
+  Put(Index, Value);
+end;
+
+{ TRegistroJ210List }
+
+function TRegistroJ210List.GetItem(Index: Integer): TRegistroJ210;
+begin
+  Result := TRegistroJ210(Inherited Items[Index]);
+end;
+
+function TRegistroJ210List.LocalizaRegistro(pCOD_AGL: String): boolean;
+var
+intFor: integer;
+begin
+   Result := false;
+   for intFor := 0 to Self.Count - 1 do
+   begin
+      if Self.Items[intFor].COD_AGL = pCOD_AGL then
+      begin
+         Result := true;
+         Break;
+      end;
+   end;
+end;
+
+function TRegistroJ210List.New: TRegistroJ210;
+begin
+  Result := TRegistroJ210.Create;
+  Add(Result);
+end;
+
+procedure TRegistroJ210List.SetItem(Index: Integer; const Value: TRegistroJ210);
+begin
+  Put(Index, Value);
+end;
+
+{ TRegistroJ215List }
+
+function TRegistroJ215List.GetItem(Index: Integer): TRegistroJ215;
+begin
+  Result := TRegistroJ215(Inherited Items[Index]);
+end;
+
+function TRegistroJ215List.New: TRegistroJ215;
+begin
+  Result := TRegistroJ215.Create;
+  Add(Result);
+end;
+
+procedure TRegistroJ215List.SetItem(Index: Integer; const Value: TRegistroJ215);
+begin
+  Put(Index, Value);
+end;
+
+function TRegistroJ215List.LocalizaRegistro(pCOD_HIST_FAT : string): boolean;
+var
+intFor: integer;
+begin
+   Result := false;
+   for intFor := 0 to Self.Count - 1 do
+   begin
+      if Self.Items[intFor].COD_HIST_FAT = pCOD_HIST_FAT then
+      begin
+         Result := true;
+         Break;
+      end;
+   end;
+end;
+
 { TRegistroJ800List }
 
 function TRegistroJ800List.GetItem(Index: Integer): TRegistroJ800;
@@ -354,12 +563,29 @@ constructor TRegistroJ005.Create;
 begin
    FRegistroJ100 := TRegistroJ100List.Create;
    FRegistroJ150 := TRegistroJ150List.Create;
+   FRegistroJ200 := TRegistroJ200List.Create;
+   FRegistroJ210 := TRegistroJ210List.Create;
 end;
 
 destructor TRegistroJ005.Destroy;
 begin
   FRegistroJ100.Free;
   FRegistroJ150.Free;
+  FRegistroJ200.Free;
+  FRegistroJ210.Free;
+  inherited;
+end;
+
+{ TRegistroJ210 }
+
+constructor TRegistroJ210.Create;
+begin
+  FRegistroJ215 := TRegistroJ215List.Create;
+end;
+
+destructor TRegistroJ210.Destroy;
+begin
+  FRegistroJ215.Free;
   inherited;
 end;
 

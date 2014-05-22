@@ -36,6 +36,8 @@
 |*
 |* 10/04/2009: Isaque Pinheiro
 |*  - Criação e distribuição da Primeira Versao
+|* 06/05/2014: Francinaldo A. da Costa
+|*  - Modificações para o layout 2
 *******************************************************************************}
 
 unit ACBrECDBloco_I;
@@ -169,6 +171,9 @@ type
     fDT_ARQ: TDateTime;       /// Data do arquivamento dos atos constitutivos.
     fDT_ARQ_CONV: TDateTime;  /// Data de arquivamento do ato de conversão de sociedade simples em sociedade empresária.
     fDESC_MUN: String;    /// Município.
+    fDT_EX_SOCIAL: TDateTime;  /// Data de encerramento do exercício social
+    fNOME_AUDITOR: String;     /// Nome do auditor independente
+    fCOD_CVM_AUDITOR: string;  /// Registro do auditor independente na CVM
   public
     property NUM_ORD: String read fNUM_ORD write fNUM_ORD;
     property NAT_LIVR: String read fNAT_LIVR write fNAT_LIVR;
@@ -179,6 +184,9 @@ type
     property DT_ARQ: TDateTime read fDT_ARQ write fDT_ARQ;
     property DT_ARQ_CONV: TDateTime read fDT_ARQ_CONV write fDT_ARQ_CONV;
     property DESC_MUN: String read fDESC_MUN write fDESC_MUN;
+    property DT_EX_SOCIAL: TDateTime read fDT_EX_SOCIAL write fDT_EX_SOCIAL;
+    property NOME_AUDITOR: String read fNOME_AUDITOR write fNOME_AUDITOR;
+    property COD_CVM_AUDITOR: string read fCOD_CVM_AUDITOR write fCOD_CVM_AUDITOR;
   end;
 
   /// Registro I050 - PLANO DE CONTAS

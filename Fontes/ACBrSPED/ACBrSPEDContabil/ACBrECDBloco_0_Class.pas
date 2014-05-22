@@ -36,6 +36,8 @@
 |*
 |* 10/04/2009: Isaque Pinheiro
 |*  - Criação e distribuição da Primeira Versao
+|* 06/05/2014: Francinaldo A. da Costa
+|*  - Modificações para o layout 2
 *******************************************************************************}
 
 unit ACBrECDBloco_0_Class;
@@ -133,20 +135,55 @@ begin
        Check(funChecaIE(IE, UF), '(0-0000) A inscrição estadual "%s" digitada é inválida!', [IE]);
        Check(funChecaMUN(StrToInt(COD_MUN)), '(0-0000) O código do município "%s" digitado é inválido!', [COD_MUN]);
        Check(((IND_SIT_ESP >= '0') and (IND_SIT_ESP <= '4')), '(0-0000) O indicador "%s" de situação especial, deve ser informado o número 0 ou 1 ou 2 ou 3 ou 4!', [IND_SIT_ESP]);
-       ///
-       Result := LFill('0000') +
-                 LFill('LECD') +
-                 LFill(DT_INI) +
-                 LFill(DT_FIN) +
-                 LFill(NOME) +
-                 LFill(CNPJ) +
-                 LFill(UF) +
-                 LFill(IE) +
-                 LFill(COD_MUN, 7) +
-                 LFill(IM) +
-                 LFill(IND_SIT_ESP, 1) +
-                 Delimitador +
-                 #13#10;
+       if DT_INI >= EncodeDate(2013,01,01) then
+       begin
+         Check(((IND_SIT_ESP >= '1') and (IND_SIT_ESP <= '6')), '(0-0000) O indicador "%s" de situação especial, deve ser informado o número 1 ou 2 ou 3 ou 4 ou 5 ou 6!', [IND_SIT_ESP]);
+         Check(((IND_SIT_INI_PER >= '0') and (IND_SIT_INI_PER <= '3')), '(0-0000) O indicador "%s" de situação no início do período, deve ser informado o número 0 ou 1 ou 2 ou 3!', [IND_SIT_INI_PER]);
+         Check(((IND_NIRE >= '0') and (IND_NIRE <= '1')), '(0-0000) O indicador "%s" de existência de NIRE, deve ser informado o número 0 ou 1!', [IND_NIRE]);
+         Check(((IND_FIN_ESC >= '0') and (IND_FIN_ESC <= '3')), '(0-0000) O indicador "%s" da finalidade da escrituração, deve ser informado o número 0 ou 1 ou 2 ou 3!', [IND_FIN_ESC]);
+         Check(((IND_EMP_GRD_PRT >= '0') and (IND_EMP_GRD_PRT <= '1')), '(0-0000) O indicador "%s" de empresa de grande porte, deve ser informado o número 0 ou 1!', [IND_EMP_GRD_PRT]);
+       end
+        else
+          Check(((IND_SIT_ESP >= '1') and (IND_SIT_ESP <= '6')), '(0-0000) O indicador "%s" de situação especial, deve ser informado o número 0 ou 1 ou 2 ou 3 ou 4!', [IND_SIT_ESP]);
+       /// Layout 2 a partir da escrituração ano calendário 2013
+       if DT_INI >= EncodeDate(2013,01,01) then
+       begin
+         Result := LFill('0000') +
+                   LFill('LECD') +
+                   LFill(DT_INI) +
+                   LFill(DT_FIN) +
+                   LFill(NOME) +
+                   LFill(CNPJ) +
+                   LFill(UF) +
+                   LFill(IE) +
+                   LFill(COD_MUN, 7) +
+                   LFill(IM) +
+                   LFill(IND_SIT_ESP, 0, True) +
+                   LFill(IND_SIT_INI_PER) +
+                   LFill(IND_NIRE) +
+                   LFill(IND_FIN_ESC) +
+                   LFill(COD_HASH_SUB) +
+                   LFill(NIRE_SUBST) +
+                   LFill(IND_EMP_GRD_PRT) +
+                   Delimitador +
+                   #13#10;
+       end
+        else
+         begin
+           Result := LFill('0000') +
+                     LFill('LECD') +
+                     LFill(DT_INI) +
+                     LFill(DT_FIN) +
+                     LFill(NOME) +
+                     LFill(CNPJ) +
+                     LFill(UF) +
+                     LFill(IE) +
+                     LFill(COD_MUN, 7) +
+                     LFill(IM) +
+                     LFill(IND_SIT_ESP, 0, True) +
+                     Delimitador +
+                     #13#10;
+         end;
        ///
        FRegistro0990.QTD_LIN_0 := FRegistro0990.QTD_LIN_0 + 1;
      end;

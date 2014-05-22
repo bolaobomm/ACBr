@@ -36,6 +36,8 @@
 |*
 |* 10/04/2009: Isaque Pinheiro
 |*  - Criação e distribuição da Primeira Versao
+|* 06/05/2014: Francinaldo A. da Costa
+|*  - Modificações para o layout 2
 *******************************************************************************}
 
 unit ACBrECDBloco_I_Class;
@@ -364,20 +366,42 @@ begin
      with FRegistroI030 do
      begin
        ///
-       Result := LFill('I030') +
-                 LFill('TERMO DE ABERTURA') +
-                 LFill(NUM_ORD) +
-                 LFill(NAT_LIVR) +
-//                 LFill(QTD_LIN, 9, false) +
-                 LFill('[*******]') +
-                 LFill(NOME) +
-                 LFill(NIRE, 11) +
-                 LFill(CNPJ) +
-                 LFill(DT_ARQ) +
-                 LFill(DT_ARQ_CONV, 'ddmmyyyy' ) +
-                 LFill(DESC_MUN) +
-                 Delimitador +
-                 #13#10;
+       /// Layout 2 a partir da escrituração ano calendário 2013
+       if DT_INI >= EncodeDate(2013,01,01) then
+       begin
+         Result := LFill('I030') +
+                   LFill('TERMO DE ABERTURA') +
+                   LFill(NUM_ORD) +
+                   LFill(NAT_LIVR) +
+                   LFill('[*******]') +
+                   LFill(NOME) +
+                   LFill(NIRE, 11) +
+                   LFill(CNPJ) +
+                   LFill(DT_ARQ) +
+                   LFill(DT_ARQ_CONV, 'ddmmyyyy' ) +
+                   LFill(DESC_MUN) +
+                   LFill(DT_EX_SOCIAL, 'ddmmyyyy' ) +
+                   LFill(NOME_AUDITOR) +
+                   LFill(COD_CVM_AUDITOR) +
+                   Delimitador +
+                   #13#10;
+       end
+        else
+         begin
+           Result := LFill('I030') +
+                     LFill('TERMO DE ABERTURA') +
+                     LFill(NUM_ORD) +
+                     LFill(NAT_LIVR) +
+                     LFill('[*******]') +
+                     LFill(NOME) +
+                     LFill(NIRE, 11) +
+                     LFill(CNPJ) +
+                     LFill(DT_ARQ) +
+                     LFill(DT_ARQ_CONV, 'ddmmyyyy' ) +
+                     LFill(DESC_MUN) +
+                     Delimitador +
+                     #13#10;
+         end;
        ///
        FRegistroI990.QTD_LIN_I := FRegistroI990.QTD_LIN_I + 1;
      end;

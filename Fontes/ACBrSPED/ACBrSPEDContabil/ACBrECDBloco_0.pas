@@ -36,6 +36,8 @@
 |*
 |* 10/04/2009: Isaque Pinheiro
 |*  - Criação e distribuição da Primeira Versao
+|* 06/05/2014: Francinaldo A. da Costa
+|*  - Modificações para o layout 2
 *******************************************************************************}
 
 unit ACBrECDBloco_0;
@@ -60,6 +62,12 @@ type
     fCOD_MUN: String;     /// Código do município do domicílio fiscal do empresário ou sociedade empresária, conforme tabela do IBGE - Instituto Brasileiro de Geografia e Estatística.
     fIM: String;          /// Inscrição Municipal do empresário ou sociedade empresária.
     fIND_SIT_ESP: String; /// Indicador de situação especial (conforme tabela publicada pelo Sped).
+    fIND_SIT_INI_PER: String; /// Indicador de situação no início do período (conforme tabela publicada pelo Sped).
+    fIND_NIRE: String;        /// Indicador de existência de NIRE
+    fIND_FIN_ESC: String;     /// Indicador de finalidade da escrituração
+    fCOD_HASH_SUB: String;    /// Hash da escrituração substituída.
+    fNIRE_SUBST: String;      /// NIRE da escrituração substituída.
+    fIND_EMP_GRD_PRT: String; /// Indicador de empresa de grande porte:
   public
     property DT_INI: TDateTime read FDT_INI write FDT_INI;
     property DT_FIN: TDateTime read FDT_FIN write FDT_FIN;
@@ -70,6 +78,12 @@ type
     property COD_MUN: String read fCOD_MUN write fCOD_MUN;
     property IM: String read fIM write fIM;
     property IND_SIT_ESP: String read fIND_SIT_ESP write fIND_SIT_ESP;
+    property IND_SIT_INI_PER: String read fIND_SIT_INI_PER write fIND_SIT_INI_PER;
+    property IND_NIRE: String read fIND_NIRE write fIND_NIRE;
+    property IND_FIN_ESC: String read fIND_FIN_ESC write fIND_FIN_ESC;
+    property COD_HASH_SUB: String read fCOD_HASH_SUB write fCOD_HASH_SUB;
+    property NIRE_SUBST: String read fNIRE_SUBST write fNIRE_SUBST;
+    property IND_EMP_GRD_PRT: String read fIND_EMP_GRD_PRT write fIND_EMP_GRD_PRT;
   end;
 
   /// Registro 0001 - ABERTURA DO BLOCO 0
