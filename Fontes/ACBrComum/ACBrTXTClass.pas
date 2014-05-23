@@ -79,7 +79,9 @@ type
     function Add( const AString : AnsiString; AddDelimiter : Boolean = True ) : Integer;
     function DFill(Value: Double;
                    Decimal: Integer = 2;
-                   Nulo: Boolean = false): String;
+                   Nulo: Boolean = false): String; overload;
+    function DFill(Value: Variant;
+                   Decimal: Integer = 2): String; overload;
     function LFill(Value: String;
                    Size: Integer = 0;
                    Nulo: Boolean = false;
@@ -94,9 +96,9 @@ type
     function LFill(Value: TDateTime; Mask: String = 'ddmmyyyy'; Nulo: Boolean = True): String; overload;
     function LFill(Value: Variant;
                    Size: Integer;
-                   Decimal: Integer;
-                   Caracter: Char;
-                   Mascara: String): String; overload;
+                   Decimal: Integer = 2;
+                   Caracter: Char = '0';
+                   Mascara: String = ''): String; overload;
     function RFill(Value: String;
                    Size: Integer = 0;
                    Caracter: Char = ' '): String; overload;
@@ -294,6 +296,18 @@ function TACBrTXTClass.DFill(Value: Double;
 begin
   /// Se o parametro Nulo = true e Value = 0, será retornado '|'
   if (Nulo) and (Value = 0) then
+  begin
+     Result := FDelimitador;
+     Exit;
+  end;
+  Result := FDelimitador + FormatFloat('#0.' + StringOfChar('0', Decimal), Value); //FormatCurr não permite precisão acima de 4 casas decimais
+end;
+
+function TACBrTXTClass.DFill(Value: Variant;
+                        Decimal: Integer = 2): String;
+begin
+  /// Se o parametro Nulo = true e Value = 0, será retornado '|'
+  if Value = Null then
   begin
      Result := FDelimitador;
      Exit;
