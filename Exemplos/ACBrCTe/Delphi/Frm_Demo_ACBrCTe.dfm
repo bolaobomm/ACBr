@@ -1000,11 +1000,11 @@ object frmDemo_ACBrCTe: TfrmDemo_ACBrCTe
           Left = 0
           Top = 0
           Width = 556
-          Height = 312
+          Height = 280
           Align = alClient
           TabOrder = 0
           ControlData = {
-            4C000000773900003F2000000000000000000000000000000000000000000000
+            4C00000077390000F01C00000000000000000000000000000000000000000000
             000000004C000000000000000000000001000000E0D057007335CF11AE690800
             2B2E126208000000000000004C0000000114020000000000C000000000000046
             8000000000000000000000000000000000000000000000000000000000000000
@@ -1018,7 +1018,7 @@ object frmDemo_ACBrCTe: TfrmDemo_ACBrCTe
           Left = 0
           Top = 0
           Width = 556
-          Height = 312
+          Height = 280
           Align = alClient
           ScrollBars = ssVertical
           TabOrder = 0
@@ -1044,7 +1044,7 @@ object frmDemo_ACBrCTe: TfrmDemo_ACBrCTe
           Left = 0
           Top = 0
           Width = 556
-          Height = 312
+          Height = 280
           Align = alClient
           TabOrder = 0
         end
@@ -1056,7 +1056,7 @@ object frmDemo_ACBrCTe: TfrmDemo_ACBrCTe
           Left = 0
           Top = 0
           Width = 556
-          Height = 312
+          Height = 280
           Align = alClient
           TabOrder = 0
         end

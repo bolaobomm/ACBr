@@ -1411,6 +1411,10 @@ begin
    ShowMessage(ACBrCTe1.WebServices.Consulta.Protocolo);
    MemoResp.Lines.Text := UTF8Encode(ACBrCTe1.WebServices.Consulta.RetWS);
    memoRespWS.Lines.Text := UTF8Encode(ACBrCTe1.WebServices.Consulta.RetWS);
+
+   // Retorno do XML completo: CTe + Eventos vinculados
+   MemoDados.Lines.Text :=  UTF8Encode(ACBrCTe1.WebServices.Consulta.RetCTeDFe);
+   
    LoadXML(MemoResp, WBResposta);
  end;
 end;
