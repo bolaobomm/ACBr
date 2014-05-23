@@ -1872,7 +1872,7 @@ var
   aMsg, aEventos, aCTe, aCTeDFe: WideString;
   AProcCTe: TProcCTe;
   LocCTeW : TCTeW;
-  i, j, k: Integer;
+  i, j, k, Inicio, Fim: Integer;
   Texto : String;
   Acao  : TStringList;
   Stream: TMemoryStream;
@@ -2188,15 +2188,23 @@ begin
                if DFeUtil.NaoEstaVazio(AProcCTe.Gerador.ArquivoFormatoXML) and wAtualiza then
                   AProcCTe.Gerador.SalvarArquivo(AProcCTe.PathCTe);
 
+               FRetCTeDFe := '';
+
                if (DFeUtil.NaoEstaVazio(aCTe)) and (DFeUtil.NaoEstaVazio(SeparaDados(FRetWS, 'procEventoCTe'))) then
                 begin
+                  Inicio := Pos('<procEventoCTe', FRetWS);
+                  Fim    := Pos('</retConsSitCTe', FRetWS) -1;
+
+                  aEventos := Copy(FRetWS, Inicio, Fim - Inicio + 1);
+
                   aCTeDFe := '<?xml version="1.0" encoding="UTF-8" ?>' +
                              '<CTeDFe>' +
                               '<procCTe versao="' + CTeenviCTe + '">' +
                                 SeparaDados(aCTe, 'cteProc') +
                               '</procCTe>' +
                               '<procEventoCTe versao="' + CTeEventoCTe + '">' +
-                                SeparaDados(FRetWS, 'procEventoCTe') +
+                                aEventos +
+//                                SeparaDados(FRetWS, 'procEventoCTe') +
                               '</procEventoCTe>' +
                              '</CTeDFe>';
 
@@ -2213,15 +2221,23 @@ begin
 
                aCTe := LocCTeW.Gerador.ArquivoFormatoXML;
 
+               FRetCTeDFe := '';
+
                if (DFeUtil.NaoEstaVazio(aCTe)) and (DFeUtil.NaoEstaVazio(SeparaDados(FRetWS, 'procEventoCTe'))) then
                 begin
+                  Inicio := Pos('<procEventoCTe', FRetWS);
+                  Fim    := Pos('</retConsSitCTe', FRetWS) -1;
+
+                  aEventos := Copy(FRetWS, Inicio, Fim - Inicio + 1);
+
                   aCTeDFe := '<?xml version="1.0" encoding="UTF-8" ?>' +
                              '<CTeDFe>' +
                               '<procCTe versao="' + CTeenviCTe + '">' +
                                 SeparaDados(aCTe, 'cteProc') +
                               '</procCTe>' +
                               '<procEventoCTe versao="' + CTeEventoCTe + '">' +
-                                SeparaDados(FRetWS, 'procEventoCTe') +
+                                aEventos +
+//                                SeparaDados(FRetWS, 'procEventoCTe') +
                               '</procEventoCTe>' +
                              '</CTeDFe>';
 
@@ -2334,16 +2350,24 @@ begin
             if (FConfiguracoes.Geral.Salvar) and (DFeUtil.NaoEstaVazio(aCTe)) then
               AProcCTe.Gerador.SalvarArquivo(AProcCTe.PathCTe);
 
+            FRetCTeDFe := '';
+
             if (FConfiguracoes.Arquivos.Salvar) and (DFeUtil.NaoEstaVazio(aCTe)) and
                (DFeUtil.NaoEstaVazio(SeparaDados(FRetWS, 'procEventoCTe'))) then
              begin
+               Inicio := Pos('<procEventoCTe', FRetWS);
+               Fim    := Pos('</retConsSitCTe', FRetWS) -1;
+
+               aEventos := Copy(FRetWS, Inicio, Fim - Inicio + 1);
+
                aCTeDFe := '<?xml version="1.0" encoding="UTF-8" ?>' +
                           '<CTeDFe>' +
                            '<procCTe versao="' + CTeenviCTe + '">' +
                              SeparaDados(aCTe, 'cteProc') +
                            '</procCTe>' +
                            '<procEventoCTe versao="' + CTeEventoCTe + '">' +
-                             SeparaDados(FRetWS, 'procEventoCTe') +
+                             aEventos +
+//                             SeparaDados(FRetWS, 'procEventoCTe') +
                            '</procEventoCTe>' +
                           '</CTeDFe>';
 
