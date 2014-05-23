@@ -216,6 +216,7 @@ function DTtoS( ADateTime : TDateTime) : String;
 function StrIsAlpha(const S: AnsiString): Boolean;
 function StrIsAlphaNum(const S: AnsiString): Boolean;
 function StrIsNumber(const S: AnsiString): Boolean;
+function IsNumber(const Value: Variant): Boolean;
 function CharIsAlpha(const C: AnsiChar): Boolean;
 function CharIsAlphaNum(const C: AnsiChar): Boolean;
 function CharIsNum(const C: AnsiChar): Boolean;
@@ -2742,6 +2743,17 @@ begin
   end;
 end;
 
+function IsNumber(const Value: Variant): Boolean;
+var
+valResult: Extended;
+valCode: Integer;
+begin
+  Val(Value, valResult, valCode);
+  if valCode = 0 then
+     Result := True
+  else
+     Result := False;
+end ;
 
 //*****************************************************************************************
 

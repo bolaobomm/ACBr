@@ -45,9 +45,9 @@ unit ACBrTXTClass;
 interface
 
 uses {$IFDEF MSWINDOWS}
-      Windows,
-    {$ENDIF}
-      SysUtils, Classes, DateUtils, Math;
+     Windows,
+     {$ENDIF}
+     SysUtils, Classes, DateUtils, Math, Variants;
 
 type
   TErrorEvent = procedure(const MsnError: AnsiString) of object;
@@ -77,16 +77,13 @@ type
     procedure LoadFromFile ;
     procedure Reset ;
     function Add( const AString : AnsiString; AddDelimiter : Boolean = True ) : Integer;
-    function RFill(Value: String;
-                   Size: Integer = 0;
-                   Caracter: Char = ' '): String; overload;
+    function DFill(Value: Double;
+                   Decimal: Integer = 2;
+                   Nulo: Boolean = false): String;
     function LFill(Value: String;
                    Size: Integer = 0;
                    Nulo: Boolean = false;
                    Caracter: Char = '0'): String; overload;
-    function DFill(Value: Double;
-                   Decimal: Integer = 2;
-                   Nulo: Boolean = false): String;
     function LFill(Value: Extended;
                    Size: Integer;
                    Decimal: Integer = 2;
@@ -95,6 +92,14 @@ type
                    Mascara: String = ''): String; overload;
     function LFill(Value: Integer; Size: Integer; Nulo: Boolean = false; Caracter: Char = '0'): String; overload;
     function LFill(Value: TDateTime; Mask: String = 'ddmmyyyy'; Nulo: Boolean = True): String; overload;
+    function LFill(Value: Variant;
+                   Size: Integer;
+                   Decimal: Integer;
+                   Caracter: Char;
+                   Mascara: String): String; overload;
+    function RFill(Value: String;
+                   Size: Integer = 0;
+                   Caracter: Char = ' '): String; overload;
     ///
     procedure Check(Condicao: Boolean; const Msg: String); overload;
     procedure Check(Condicao: Boolean; Msg: String; Fmt: array of const); overload;
@@ -333,6 +338,42 @@ procedure TACBrTXTClass.SetNomeArquivo(const AValue: String);
 begin
    if FNomeArquivo = AValue then exit;
    FNomeArquivo := AValue;
+end;
+
+function TACBrTXTClass.LFill(Value: Variant;
+                             Size: Integer;
+                             Decimal: Integer;
+                             Caracter: Char;
+                             Mascara: String): String;
+var
+intFor, intP: Integer;
+strCurMascara: string;
+begin
+  strCurMascara := FCurMascara;
+  // Se recebeu uma mascara como parametro substitue a principal
+  if Mascara <> '' then
+     strCurMascara := Mascara;
+
+  // Se o parametro Nulo = true e Value = 0, será retornado '|'
+  if Value = Null then
+  begin
+     Result := FDelimitador;
+     Exit;
+  end;
+  // Checa se é um valor numérico
+  if not IsNumber(Value) then
+     raise Exception.Create( Format('[%a] Não é um valor numérico!', [Value]) );
+
+  intP := 1;
+  for intFor := 1 to Decimal do
+  begin
+     intP := intP * 10;
+  end;
+
+  if (strCurMascara <> '#') and (strCurMascara <> '') then
+     Result := FDelimitador + FormatCurr(strCurMascara, Value)
+  else
+     Result := LFill(Trunc(Value * intP), Size, False, Caracter);
 end;
 
 end.

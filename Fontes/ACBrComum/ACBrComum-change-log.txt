@@ -38,6 +38,23 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+Data: 23/05/2014
+-- ACBrTXT 
+[+] Adicionada a função:
+    LFill(Value: Variant;
+          Size: Integer;
+          Decimal: Integer;
+          Caracter: Char;
+          Mascara: String): String;
+    Função de sobrecarga com parâmetro do tipo Variant para aceitar valor NULL.
+
+Data: 23/05/2014
+-- ACBrUtil
+[+] Adicionada a função:
+    IsNumber(const Value: Variant): Boolean;
+    Função para checar se o conteúdo passado para ela é um valor numérico, usa
+    a função, nativa do delphi e lazaruz, Val() para reconhecimento.
+
 Data: 12/09/2013
 -- ACBrAAC --
 [*] Modificação para não apagar os valores default do componente caso o arquivo
