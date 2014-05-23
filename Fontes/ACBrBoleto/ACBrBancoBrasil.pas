@@ -1153,8 +1153,8 @@ end;
 
 function TACBrBancoBrasil.CodMotivoRejeicaoToDescricao(const TipoOcorrencia: TACBrTipoOcorrencia; CodMotivo: Integer): String;
 begin
-   case TipoOcorrencia of
-    toRetornoRegistroRecusado: //03 (Recusado)
+  case TipoOcorrencia of
+    toRetornoComandoRecusado: //03 (Recusado)
       case CodMotivo of
         01: Result:='01-Identificação inválida' ;
         02: Result:='02-Variação da carteira inválida' ;
