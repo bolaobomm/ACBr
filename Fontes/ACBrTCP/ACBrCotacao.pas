@@ -53,7 +53,7 @@ unit ACBrCotacao;
 interface
 
 uses
-  ACBrSocket, ACBrUtil,
+  ACBrSocket, ACBrUtil, 
   SysUtils, Variants, Classes, Contnrs;
 
 type
@@ -99,13 +99,13 @@ type
   TACBrCotacao = class(TACBrHTTP)
   private
     FTabela: TACBrCotacaoItens;
-    function GetURLTabela(const AData: TDate): String;
+    function GetURLTabela(const AData: TDateTime): String;
     function GetURLMoedas: String;
   public
     constructor Create(AOwner: TComponent); override;
     destructor Destroy; override;
 
-    procedure AtualizarTabela(const AData: TDate);
+    procedure AtualizarTabela(const AData: TDateTime);
     function Procurar(const ASimbolo: String): TACBrCotacaoItem;
   published
     property Tabela: TACBrCotacaoItens read FTabela write FTabela;
@@ -168,7 +168,7 @@ begin
   Result := StrTmp;
 end;
 
-function TACBrCotacao.GetURLTabela(const AData: TDate): String;
+function TACBrCotacao.GetURLTabela(const AData: TDateTime): String;
 var
   StrTmp: String;
   PosCp: Integer;
@@ -209,7 +209,7 @@ begin
   end;
 end;
 
-procedure TACBrCotacao.AtualizarTabela(const AData: TDate);
+procedure TACBrCotacao.AtualizarTabela(const AData: TDateTime);
 var
   ItemCotacao: TStringList;
   ItemMoeda: TStringList;

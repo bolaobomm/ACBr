@@ -47,7 +47,6 @@ Uses SysUtils, Contnrs, Classes, ACBrSEF2Conversao;
 type
   TRegistroSEFC020 = Class;
   TRegistroSEFC020List = Class;
-  TRegistroSEFC040List = Class;
   TRegistroSEFC300List = Class;
   TRegistroSEFC550List = Class;
   TRegistroSEFC560List = Class;
@@ -69,6 +68,23 @@ type
     property RegistrosC550: TRegistroSEFC550List  read fRegistrosC550 write fRegistrosC550;
     property RegistrosC600: TRegistroSEFC600List  read fRegistrosC600 write fRegistrosC600;
   end;
+
+  //LINHA C040: COMPLEMENTO DO DOCUMENTO - ISS
+  TRegistroSEFC040 = Class
+  private
+    fVL_BC_RT_ISS: Currency;
+    fVL_RT_ISS   : Currency;
+    fVL_BC_ISS   : Currency;
+    fVL_ISS      : Currency;
+    fCOD_MUN_SERV: String;
+  public
+    property COD_MUN_SERV : String   read fCOD_MUN_SERV write fCOD_MUN_SERV;
+    property VL_BC_ISS    : Currency read fVL_BC_ISS    write fVL_BC_ISS;
+    property VL_ISS       : Currency read fVL_ISS       write fVL_ISS;
+    property VL_BC_RT_ISS : Currency read fVL_BC_RT_ISS write fVL_BC_RT_ISS;
+    property VL_RT_ISS    : Currency read fVL_RT_ISS    write fVL_RT_ISS ;
+  end;
+  
 
   //LINHA C020: DOCUMENTO - NOTA FISCAL (CÓDIGO 01), NOTA FISCAL DE PRODUTOR (CÓDIGO 04) E NOTA FISCAL ELETRÔNICA (CÓDIGO 55)
   TRegistroSEFC020 = Class
@@ -101,7 +117,7 @@ type
     fIND_PGTO   : TIndicePagamento;
     fCOD_MOD    : TSEFIIDocFiscalReferenciado;
     fRegistroC300: TRegistroSEFC300List;
-    fRegistroC040: TRegistroSEFC040List;
+    fRegistroC040: TRegistroSEFC040;
   public
     constructor Create(AOwner: TRegistroSEFC001); virtual; /// Create
     destructor Destroy; override;
@@ -135,6 +151,7 @@ type
     property VL_IPI     : Currency  read fVL_IPI      write fVL_IPI;
 
     property RegistrosC300: TRegistroSEFC300List read fRegistroC300 write fRegistroC300;
+    property RegistrosC040: TRegistroSEFC040 read fRegistroC040 write fRegistroC040;
   end;
 
   TRegistroSEFC020List = class(TACBrSEFIIRegistros)
@@ -146,30 +163,19 @@ type
     property Itens[Index: Integer]: TRegistroSEFC020 read GetItem write SetItem;
   end;
 
-  //LINHA C040: COMPLEMENTO DO DOCUMENTO - ISS
-  TRegistroSEFC040 = Class
-  private
-    fVL_BC_RT_ISS: Currency;
-    fVL_RT_ISS   : Currency;
-    fVL_BC_ISS   : Currency;
-    fVL_ISS      : Currency;
-    fCOD_MUN_SERV: String;
-  public
-    property COD_MUN_SERV : String   read fCOD_MUN_SERV write fCOD_MUN_SERV;
-    property VL_BC_ISS    : Currency read fVL_BC_ISS    write fVL_BC_ISS;
-    property VL_ISS       : Currency read fVL_ISS       write fVL_ISS;
-    property VL_BC_RT_ISS : Currency read fVL_BC_RT_ISS write fVL_BC_RT_ISS;
-    property VL_RT_ISS    : Currency read fVL_RT_ISS    write fVL_RT_ISS ;
-  end;
 
-  TRegistroSEFC040List = class(TObjectList)
+  TRegistroSEFC310 = Class
   private
-    function GetItem(Index: Integer): TRegistroSEFC040;
-    procedure SetItem(Index: Integer; const Value: TRegistroSEFC040);
+    fALIQ_ISS: Currency;
+    fCTISS: String;
+    fVL_ISS_I: Currency;
+    fVL_BC_ISS_I: Currency;
   public
-    function New: TRegistroSEFC040;
-    property Itens[Index: Integer]: TRegistroSEFC040 read GetItem write SetItem;
-  end;
+    property CTISS        : String   read fCTISS       write fCTISS;
+    property VL_BC_ISS_I  : Currency read fVL_BC_ISS_I write fVL_BC_ISS_I;
+    property ALIQ_ISS     : Currency read fALIQ_ISS    write fALIQ_ISS;
+    property VL_ISS_I     : Currency read fVL_ISS_I    write fVL_ISS_I;
+  End;
 
   //LINHA C300: ITENS DO DOCUMENTO
   TRegistroSEFC300 = Class
@@ -194,8 +200,10 @@ type
     fCST         : String;
     fCOD_NCM     : String;
     fUNID        : String;
+    fRegistroC310: TRegistroSEFC310;
   public
     constructor Create(AOwner: TRegistroSEFC020); virtual; /// Create
+    destructor Destroy; override;
     property NUM_ITEM    : Integer  read fNUM_ITEM     write fNUM_ITEM;
     property CFOP        : Integer  read fCFOP         write FCFOP;
     property UNID        : String   read fUNID         write fUNID;
@@ -216,6 +224,8 @@ type
     property VL_ICMS_ST_I: Currency read fVL_ICMS_ST_I write fVL_ICMS_ST_I;
     property VL_BC_IPI   : Currency read fVL_BC_IPI    write fVL_BC_IPI;
     property VL_IPI_I    : Currency read fVL_IPI_I     write fVL_IPI_I;
+
+    property RegistroC310: TRegistroSEFC310 read fRegistroC310 write fRegistroC310;
   end;
 
   TRegistroSEFC300List = class(TACBrSEFIIRegistros)
@@ -235,16 +245,12 @@ type
   private
     fCNPJ_CONS   : String;
     fCPF_CONS    : String;
-    fCOD_MOD     : String;
-    fSER         : String;
+    fCOD_MOD     : TSEFIIDocFiscalReferenciado;
     FSERIE       : String;
-    fSUBSER      : String;
     fCOP         : String;
     fCOD_INF_OBS : String;
     FSUBSERIE    : String;
     fNUM_DOC     : Integer;
-    FVL_ACMO_ICMS: Currency;
-    FVL_DESC_ICMS: Currency;
     fVL_DOC      : Currency;
     fVL_DESC     : Currency;
     fVL_ACMO     : Currency;
@@ -261,7 +267,7 @@ type
     property COD_SIT     : TCodigoSituacao read FCOD_SIT write FCOD_SIT;
     property CPF_CONS    : String    read FCPF_CONS      write FCPF_CONS;
     property CNPJ_CONS   : String    read FCNPJ_CONS     write FCNPJ_CONS;
-    property COD_MOD     : String    read FCOD_MOD       write FCOD_MOD;
+    property COD_MOD     : TSEFIIDocFiscalReferenciado read FCOD_MOD       write FCOD_MOD;
     property COP         : String    read FCOP           write FCOP;
     property SERIE       : String    read FSERIE         write FSERIE;
     property SUBSERIE    : String    read FSUBSERIE      write FSUBSERIE;
@@ -270,8 +276,8 @@ type
     property DT_DOC      : TDateTime read FDT_DOC        write FDT_DOC;
     property VL_DOC      : Currency  read FVL_DOC        write FVL_DOC;
     property VL_MERC     : Currency  read FVL_MERC       write FVL_MERC;
-    property VL_DESC     : Currency  read FVL_DESC       write FVL_DESC_ICMS;
-    property VL_ACMO     : Currency  read FVL_ACMO       write FVL_ACMO_ICMS;
+    property VL_DESC     : Currency  read FVL_DESC       write FVL_DESC;
+    property VL_ACMO     : Currency  read FVL_ACMO       write FVL_ACMO;
     property VL_BC_ICMS  : Currency  read FVL_BC_ICMS    write FVL_BC_ICMS;
     property VL_ICMS     : Currency  read FVL_ICMS       write FVL_ICMS;
 
@@ -339,6 +345,27 @@ type
   end;
 
 
+  //LINHA C605: COMPLEMENTO DO DOCUMENTO - ISS
+  TRegistroSEFC605 = Class
+  private
+    fVL_ISS: Currency;
+    fVL_BC_ISS: Currency;
+    fVL_DESC_ISS: Currency;
+    fVL_ACMO_ISS: Currency;
+    fVL_ISN_ISS: Currency;
+    fVL_CANC_ISS: Currency;
+    fVL_NT_ISS: Currency;
+  public
+    property VL_CANC_ISS : Currency read fVL_CANC_ISS  write fVL_CANC_ISS;
+    property VL_DESC_ISS : Currency read fVL_DESC_ISS  write fVL_DESC_ISS;
+    property VL_ACMO_ISS : Currency read fVL_ACMO_ISS  write fVL_ACMO_ISS;
+    property VL_BC_ISS   : Currency read fVL_BC_ISS    write fVL_BC_ISS  ;
+    property VL_ISS      : Currency read fVL_ISS       write fVL_ISS     ;
+    property VL_ISN_ISS  : Currency read fVL_ISN_ISS   write fVL_ISN_ISS ;
+    property VL_NT_ISS   : Currency read fVL_NT_ISS    write fVL_NT_ISS  ;
+  end;
+
+
 
   //LINHA C600: DOCUMENTO - CUPOM FISCAL/ICMS (CÓDIGO 2D E CÓDIGO 02)
   TRegistroSEFC600 = Class
@@ -359,12 +386,13 @@ type
     fCRZ         : Integer;
     fCRO         : Integer;
     fCNPJ_CONS   : String;
-    fCOD_MOD     : String;
+    fCOD_MOD     : TSEFIIDocFiscalReferenciado;
     fCPF_CONS    : String;
     fECF_FAB     : String;
     fDT_DOC      : TDateTime;
     fCOD_SIT     : TCodigoSituacao;
     fRegistroC610: TRegistroSEFC610List;
+    FRegistroC605: TRegistroSEFC605;
   public
     constructor Create(AOwner: TRegistroSEFC001); virtual; /// Create
     destructor Destroy; override; /// Destroy;
@@ -372,7 +400,7 @@ type
     property COD_SIT     : TCodigoSituacao read FCOD_SIT write FCOD_SIT;
     property CPF_CONS    : String    read FCPF_CONS     write FCPF_CONS;
     property CNPJ_CONS   : String    read FCNPJ_CONS    write FCNPJ_CONS;
-    property COD_MOD     : String    read FCOD_MOD      write FCOD_MOD;
+    property COD_MOD     : TSEFIIDocFiscalReferenciado  read FCOD_MOD write FCOD_MOD;
     property ECF_FAB     : String    read FECF_FAB      write FECF_FAB;
     property ECF_CX      : Integer   read FECF_CX       write FECF_CX;
     property CRO         : Integer   read FCRO          write FCRO;
@@ -391,6 +419,7 @@ type
     property VL_NT       : Currency  read FVL_NT        write FVL_NT;
     property VL_ST       : Currency  read FVL_ST        write FVL_ST;
 
+    property RegistroC605: TRegistroSEFC605 read FRegistroC605 write FRegistroC605;
     property RegistroC610: TRegistroSEFC610List read FRegistroC610 write FRegistroC610;
   end;
 
@@ -401,6 +430,22 @@ type
   public
     function New(AOwner: TRegistroSEFC001): TRegistroSEFC600;
     property Itens[Index: Integer]: TRegistroSEFC600 read GetItem write SetItem;
+  end;
+
+    //LINHA C615: COMPLEMENTO DO ITEM - ISS
+  TRegistroSEFC615 = Class
+  private
+    fVL_ISN_ISS_I: currency;
+    fVL_NT_ISS_I: currency;
+    fALIQ_ISS: currency;
+    fVL_ISS_I: currency;
+    fVL_BC_ISS_I: currency;
+  public
+    property VL_BC_ISS_I  : currency read fVL_BC_ISS_I  write fVL_BC_ISS_I ;
+    property ALIQ_ISS     : currency read fALIQ_ISS     write fALIQ_ISS    ;
+    property VL_ISS_I     : currency read fVL_ISS_I     write fVL_ISS_I    ;
+    property VL_ISN_ISS_I : currency read fVL_ISN_ISS_I write fVL_ISN_ISS_I;
+    property VL_NT_ISS_I  : currency read fVL_NT_ISS_I  write fVL_NT_ISS_I ;
   end;
 
   //LINHA C610: ITENS DO DOCUMENTO
@@ -422,8 +467,10 @@ type
     fCOD_ITEM    : String;
     fCST         : String;
     fUNID        : String;
+    fRegistroC615: TRegistroSEFC615;
   public
     constructor Create(AOwner: TRegistroSEFC600); virtual; /// Create
+    destructor Destroy; override;
 
     property NUM_ITEM    : Integer  read fNUM_ITEM     write fNUM_ITEM;
     property CFOP        : Integer  read fCFOP         write fCFOP;
@@ -441,6 +488,8 @@ type
     property VL_ISN_I    : Currency read fVL_ISN_I     write fVL_ISN_I;
     property VL_NT_I     : Currency read fVL_NT_I      write fVL_NT_I;
     property VL_ST_I     : Currency read fVL_ST_I      write fVL_ST_I;
+
+    property RegistroC615 : TRegistroSEFC615 read fRegistroC615 write fRegistroC615;
   end;
 
   TRegistroSEFC610List = class(TACBrSEFIIRegistros)
@@ -544,33 +593,13 @@ end;
 constructor TRegistroSEFC020.Create(AOwner: TRegistroSEFC001);
 begin
   FRegistroC300 := TRegistroSEFC300List.Create;
-  FRegistroC040 := TRegistroSEFC040List.Create;
 end;
 
 destructor TRegistroSEFC020.Destroy;
 begin
    fRegistroC300.Free;
-   fRegistroC040.Free;
+   if (assigned(fRegistroC040)) then fRegistroC040.Free;
    inherited;
-end;
-
-{ TRegistroSEFC040List }
-
-function TRegistroSEFC040List.GetItem(Index: Integer): TRegistroSEFC040;
-begin
-  Result := TRegistroSEFC040(Inherited Items[Index]);
-end;
-
-function TRegistroSEFC040List.New: TRegistroSEFC040;
-begin
-  Result := TRegistroSEFC040.Create;
-  Add(Result);
-end;
-
-procedure TRegistroSEFC040List.SetItem(Index: Integer;
-  const Value: TRegistroSEFC040);
-begin
-  Put(Index, Value);
 end;
 
 { TRegistroSEFC300List }
@@ -601,6 +630,8 @@ end;
 
 destructor TRegistroSEFC600.Destroy;
 begin
+  if assigned(FRegistroC605) then FreeAndNil(FRegistroC605);
+
   FRegistroC610.Free;
   inherited;
 end;
@@ -670,11 +701,25 @@ constructor TRegistroSEFC610.Create(AOwner: TRegistroSEFC600);
 begin
 end;
 
+destructor TRegistroSEFC610.Destroy;
+begin
+  if assigned(fRegistroC615) then FreeAndNil(fRegistroC615);  
+
+  inherited;
+end;
+
 { TRegistroSEFC300 }
 
 constructor TRegistroSEFC300.Create(AOwner: TRegistroSEFC020);
 begin
+  inherited Create;
+end;
 
+destructor TRegistroSEFC300.Destroy;
+begin
+  if assigned(fRegistroC310) then fRegistroC310.free;
+
+  inherited;
 end;
 
 end.

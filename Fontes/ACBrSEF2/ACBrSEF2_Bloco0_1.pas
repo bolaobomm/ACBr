@@ -437,7 +437,7 @@ begin
             Add( LFill('0400')      +
                  LFill( COD_NAT )   +
                  LFill( DESCR_NAT ) +
-                 LFill( CFOP)) ;
+                 LFill( COP )) ;
          end;
 
          WriteRegistro0450( Reg0001.Registro0400.Items[intFor] ) ;
@@ -652,7 +652,7 @@ begin
                         LFill( COD_ITEM )   +
                         LFill( DESCR_ITEM ) +
                         LFill( COD_GEN, 2 ) +
-                        LFill( COD_LST );
+                        LFill( COD_LST, 4, True, '0' );
             //-- Write
             {if Assigned(FOnWriteRegistro0200) then
                FOnWriteRegistro0200(strLinha); }
@@ -732,10 +732,6 @@ begin
 end;
 
 procedure TBloco_0.WriteRegistro0025(Reg0001: TRegistroSEF0001);
-var
-  intFor: Integer;
-  strCODBF_ICMS: AnsiString;
-  strCODBF_ISS: AnsiString;
 begin
    if Assigned(Reg0001.Registro025) then
    begin
@@ -802,91 +798,29 @@ begin
 end;
 
 procedure TBloco_0.WriteRegistro0030(Reg0001: TRegistroSEF0001);
-var
-  wPRF_ISS, wPRF_ICMS:Integer;
-  wIND_RT, wIND_EC,wIND_RI,wPRF_RIDF,wPRF_RUDF,wPRF_LMC,wPRF_RV,wPRF_RI: String;
 begin
    if Assigned(Reg0001.Registro030) then
    begin
       with Reg0001.Registro030 do
       begin
-
-         if Integer(PRF_ISS) > 2 then
-            wPRF_ISS:= 9
-         else
-            wPRF_ISS:= Integer(PRF_ISS);
-
-         if Integer(PRF_ICMS) > 2 then
-            wPRF_ICMS:= 9
-         else
-            wPRF_ICMS:= Integer(PRF_ICMS);
-
-         if Integer(IND_EC) > 6 then
-            wIND_EC:= ''
-         else if Integer(IND_EC) > 5 then
-            wIND_EC:= '9'
-         else
-            wIND_EC:= IntToStr(Integer(IND_EC));
-
-         if Integer(IND_RI) > 1 then
-            wIND_RI:= ''
-         else
-            wIND_RI:= IntToStr(Integer(IND_RI));
-
-         if (Integer(PRF_RIDF) > 1) then
-            wPRF_RIDF := ''
-         else
-            wPRF_RIDF := IntToStr(Integer(PRF_RIDF));
-
-         if (Integer(PRF_RUDF) > 1) then
-            wPRF_RUDF := ''
-         else
-            wPRF_RUDF := IntToStr(Integer(PRF_RUDF));
-
-         if (Integer(PRF_LMC) > 1) then
-            wPRF_LMC := ''
-         else
-            wPRF_LMC := IntToStr(Integer(PRF_LMC));
-
-         if (Integer(PRF_RV) > 1) then
-            wPRF_RV := ''
-         else
-            wPRF_RV := IntToStr(Integer(PRF_RV));
-
-         if (Integer(PRF_RIDF) > 1) then
-            wPRF_RIDF := ''
-         else
-            wPRF_RIDF := IntToStr(Integer(PRF_RIDF));
-
-         if (Integer(PRF_RI) > 1) then
-            wPRF_RI := ''
-         else
-            wPRF_RI := IntToStr(Integer(PRF_RI));
-
-         if (Integer(IND_RT) > 1) then
-            wIND_RT := ''
-         else
-            wIND_RT := IntToStr(Integer(IND_RT));
-
-
          Add( LFill('0030')              +
               LFill(Integer(IND_ED),0)   +
               LFill(Integer(IND_ARQ),0)  +
-              LFill(wPRF_ISS,0)          +
-              LFill(wPRF_ICMS,0)         +
-              LFill(wPRF_RIDF,0)   +
-              LFill(wPRF_RUDF,0) +
-              LFill(wPRF_LMC, 0) +
-              LFill(wPRF_RV, 0)  +
-              LFill(wPRF_RI, 0)  +
-              LFill(wIND_EC,0)           +
-              LFill(Integer(IND_ISS), 0) +
-              LFill(StrToIntDef(wIND_RT,0), 0, true)  +//LFill(Integer(wIND_RT), 0, true)
-              LFill(Integer(IND_ICMS),0) +
-              LFill(Integer(IND_ST),0)   +
-              LFill(Integer(IND_AT),0)   +
-              LFill(Integer(IND_IPI),0)  +
-              LFill(wIND_RI) ) ;
+              LFill(IndExigEscrImpostoToStr(PRF_ISS ),0) +
+              LFill(IndExigEscrImpostoToStr(PRF_ICMS),0) +
+              LFill(IndExigDiversaToStr(PRF_RIDF),0) +
+              LFill(IndExigDiversaToStr(PRF_RUDF),0) +
+              LFill(IndExigDiversaToStr(PRF_LMC ),0) +
+              LFill(IndExigDiversaToStr(PRF_RV  ),0) +
+              LFill(IndExigDiversaToStr(PRF_RI  ),0) +
+              LFill(IndEscrContabilToStr(IND_EC ),0) +
+              LFill(IndExigDiversaToStr(IND_ISS ),0) +
+              LFill(IndExigDiversaToStr(IND_RT  ),0, true) +
+              LFill(IndExigDiversaToStr(IND_ICMS),0) +
+              LFill(IndExigDiversaToStr(IND_ST  ),0) +
+              LFill(IndExigDiversaToStr(IND_AT  ),0) +
+              LFill(IndExigDiversaToStr(IND_IPI ),0) +
+              LFill(IndExigDiversaToStr(IND_RI  )) ) ;
 
          Registro0990.QTD_LIN_0 := Registro0990.QTD_LIN_0 + 1;
       end;

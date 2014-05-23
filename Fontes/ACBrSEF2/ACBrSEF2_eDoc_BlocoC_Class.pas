@@ -54,18 +54,26 @@ type
     FRegistroC990 : TRegistroSEFC990;
 
     FRegistroC020Count: Integer;
+    FRegistroC040Count: Integer;
     FRegistroC300Count: Integer;
+    FRegistroC310Count: Integer;
     FRegistroC550Count: Integer;
     FRegistroC560Count: Integer;
     FRegistroC600Count: Integer;
+    FRegistroC605Count: Integer;
     FRegistroC610Count: Integer;
+    FRegistroC615Count: Integer;
 
     procedure WriteRegistroC020(RegC001: TRegistroSEFC001);
+    procedure WriteRegistroC040(RegC020: TRegistroSEFC020);
     procedure WriteRegistroC300(RegC020: TRegistroSEFC020);
+    procedure WriteRegistroC310(RegC300: TRegistroSEFC300);
     procedure WriteRegistroC550(RegC001: TRegistroSEFC001);
     procedure WriteRegistroC560(RegC550: TRegistroSEFC550);
     procedure WriteRegistroC600(RegC001: TRegistroSEFC001);
+    procedure WriteRegistroC605(RegC600: TRegistroSEFC600);
     procedure WriteRegistroC610(RegC600: TRegistroSEFC600);
+    procedure WriteRegistroC615(RegC610: TRegistroSEFC610);
 
     procedure CriaRegistros;
     procedure LiberaRegistros;
@@ -76,11 +84,15 @@ type
 
     function RegistroC001New: TRegistroSEFC001;
     function RegistroC020New: TRegistroSEFC020;
+    function RegistroC040New: TRegistroSEFC040;
     function RegistroC300New: TRegistroSEFC300;
+    function RegistroC310New: TRegistroSEFC310;
     function RegistroC550New: TRegistroSEFC550;
     function RegistroC560New: TRegistroSEFC560;
     function RegistroC600New: TRegistroSEFC600;
+    function RegistroC605New: TRegistroSEFC605;
     function RegistroC610New: TRegistroSEFC610;
+    function RegistroC615New: TRegistroSEFC615;
     function RegistroC990New: TRegistroSEFC990;
 
     procedure WriteRegistroC001;
@@ -90,11 +102,15 @@ type
     property RegistroC990: TRegistroSEFC990 read FRegistroC990 write FRegistroC990;
 
     property RegistroC020Count: Integer read FRegistroC020Count write FRegistroC020Count;
+    property RegistroC040Count: Integer read FRegistroC040Count write FRegistroC040Count;
     property RegistroC300Count: Integer read FRegistroC300Count write FRegistroC300Count;
+    property RegistroC310Count: Integer read FRegistroC310Count write FRegistroC310Count;
     property RegistroC550Count: Integer read FRegistroC550Count write FRegistroC550Count;
     property RegistroC560Count: Integer read FRegistroC560Count write FRegistroC560Count;
     property RegistroC600Count: Integer read FRegistroC600Count write FRegistroC600Count;
+    property RegistroC605Count: Integer read FRegistroC605Count write FRegistroC605Count;
     property RegistroC610Count: Integer read FRegistroC610Count write FRegistroC610Count;
+    property RegistroC615Count: Integer read FRegistroC615Count write FRegistroC615Count;
   end;
 
 
@@ -204,11 +220,14 @@ begin
   FRegistroC990 := TRegistroSEFC990.Create;
 
   FRegistroC020Count := 0;
+  FRegistroC040Count := 0;
   FRegistroC300Count := 0;
   FRegistroC550Count := 0;
   FRegistroC560Count := 0;
   FRegistroC600Count := 0;
+  FRegistroC605Count := 0;
   FRegistroC610Count := 0;
+  FRegistroC615Count := 0;
   FRegistroC990.QTD_LIN_C := 0;
   
 end;
@@ -260,7 +279,7 @@ begin
               LFill(DT_EMIS)                     +
               LFill(DT_DOC)                      +
               LFill(COD_NAT)                     +
-              LFill(Integer(IND_PGTO),0)         +
+              LFill(IndPagamentoToStr(IND_PGTO),0) +
               LFill(VL_DOC, 2)                   +
               LFill(VL_DESC, 2)                  +
               LFill(VL_ACMO, 2)                  +
@@ -278,6 +297,7 @@ begin
               LFill(COD_INF_OBS) );
       end;
 
+      WriteRegistroC040(RegC020);
       WriteRegistroC300(RegC020);
 
       FRegistroC990.QTD_LIN_C := FRegistroC990.QTD_LIN_C + 1;
@@ -286,9 +306,28 @@ begin
    FRegistroC020Count := FRegistroC020Count + RegC001.RegistrosC020.Count;
 end;
 
+procedure TBloco_C.WriteRegistroC040(RegC020: TRegistroSEFC020);
+begin
+   if Assigned(RegC020.RegistrosC040) then
+   begin
+     with RegC020.RegistrosC040 do
+     begin
+        Add( LFill('C040')          +
+             LFill(COD_MUN_SERV)    +
+             DFill(VL_BC_ISS,2, True)     +
+             DFill(VL_ISS,2, True)        +
+             DFill(VL_BC_RT_ISS,2, True)  +
+             DFill(VL_RT_ISS, 2, True));
+     end;
+     FRegistroC990.QTD_LIN_C := FRegistroC990.QTD_LIN_C + 1;
+   end;
+   FRegistroC040Count := FRegistroC040Count + 1;
+end;
+
 procedure TBloco_C.WriteRegistroC600(RegC001: TRegistroSEFC001);
 var
   intFor: Integer;
+  wCOD_MOD : string;
   RegC600: TRegistroSEFC600;
 begin
    for intFor := 0 to RegC001.RegistrosC600.Count - 1 do
@@ -296,10 +335,11 @@ begin
       RegC600 := TRegistroSEFC600(RegC001.RegistrosC600.Items[intFor]);
       with RegC600 do
       begin
+         wCOD_MOD :=  ConvertSEFIIDocFiscalReferenciado(COD_MOD);
          Add( LFill('C600')                         +
               LFill(CPF_CONS)                       +
               LFill(CNPJ_CONS)                      +
-              LFill(COD_MOD)                        +
+              LFill(wCOD_MOD)                       +
               LFill(ConvertCodigoSituacao(COD_SIT)) +
               LFill(ECF_CX, 0)                      +
               LFill(ECF_FAB)                        +
@@ -320,12 +360,36 @@ begin
               LFill(VL_ST, 2) );
       end;
 
+      WriteRegistroC605(RegC600);
       WriteRegistroC610(RegC600);
 
       FRegistroC990.QTD_LIN_C := FRegistroC990.QTD_LIN_C + 1;
    end;
 
    FRegistroC600Count := FRegistroC600Count + RegC001.RegistrosC600.Count;
+end;
+
+procedure TBloco_C.WriteRegistroC605(RegC600: TRegistroSEFC600);
+begin
+   if Assigned(RegC600.RegistroC605) then
+   begin
+      with RegC600.RegistroC605 do
+      begin
+         Add( LFill('C605')          +
+              LFill(VL_CANC_ISS, 2)  +
+              LFill(VL_DESC_ISS, 2)  +
+              LFill(VL_ACMO_ISS, 2)  +
+              LFill(VL_BC_ISS  , 2)  +
+              LFill(VL_ISS     , 2)  +
+              LFill(VL_ISN_ISS , 2)  +
+              LFill(VL_NT_ISS  , 2)
+             );
+
+         FRegistroC990.QTD_LIN_C := FRegistroC990.QTD_LIN_C + 1;
+      end;
+
+      FRegistroC605Count := FRegistroC605Count + 1;
+   end;
 end;
 
 procedure TBloco_C.WriteRegistroC990;
@@ -376,10 +440,32 @@ begin
                  LFill(ALIQ_IPI, 2, 2, True)  +
                  LFill(VL_IPI_I, 2, 2, True));
          end;
+         WriteRegistroC310(C300);
+
          FRegistroC990.QTD_LIN_C := FRegistroC990.QTD_LIN_C + 1;
       end;
    end;
    FRegistroC300Count := FRegistroC300Count + RegC020.RegistrosC300.Count;
+end;
+
+procedure TBloco_C.WriteRegistroC310(RegC300: TRegistroSEFC300);
+begin
+   if Assigned(RegC300.RegistroC310) and (trim(RegC300.RegistroC310.CTISS) <> '') then
+   begin
+      with RegC300.RegistroC310 do
+      begin
+         Add( LFill('C310')          +
+              LFill(CTISS)           +
+              LFill(VL_BC_ISS_I, 2)  +
+              LFill(ALIQ_ISS   , 2)  +
+              LFill(VL_ISS_I   , 2)
+             );
+
+         FRegistroC990.QTD_LIN_C := FRegistroC990.QTD_LIN_C + 1;
+      end;
+
+      FRegistroC310Count := FRegistroC310Count + 1;
+   end;
 end;
 
 procedure TBloco_C.WriteRegistroC550(RegC001: TRegistroSEFC001);
@@ -394,11 +480,12 @@ begin
       RegC550 := TRegistroSEFC550(RegC001.RegistrosC550.Itens[intFor]);
       with RegC550 do
       begin
-         wCOD_SIT :=  ConvertCodigoSituacao(COD_SIT);
+         wCOD_MOD := ConvertSEFIIDocFiscalReferenciado(COD_MOD);
+         wCOD_SIT := ConvertCodigoSituacao(COD_SIT);
          Add( LFill('C550')        +
               LFill(CPF_CONS)      +
               LFill(CNPJ_CONS)     +
-              LFill(COD_MOD)       +
+              LFill(wCOD_MOD)      +
               LFill(wCOD_SIT)      +
               LFill(SERIE)         +
               LFill(SUBSERIE)      +
@@ -478,7 +565,7 @@ begin
                  LFill(VL_ACMO_I, 2) +
                  LFill(VL_ITEM, 2) +
                  LFill(CST) +
-                 LFill(CFOP, 0) +
+                 LFill(CFOP, 0, true) +
                  LFill(VL_BC_ICMS_I, 2) +
                  LFill(ALIQ_ICMS, 2) +
                  LFill(VL_ICMS_I, 2) +
@@ -486,6 +573,9 @@ begin
                  LFill(VL_NT_I, 2) +
                  LFill(VL_ST_I, 2) );
          end;
+
+         WriteRegistroC615(C610);
+
          FRegistroC990.QTD_LIN_C := FRegistroC990.QTD_LIN_C + 1;
       end;
    end;
@@ -493,14 +583,57 @@ begin
    FRegistroC610Count := FRegistroC610Count + RegC600.RegistroC610.Count;
 end;
 
+procedure TBloco_C.WriteRegistroC615(RegC610: TRegistroSEFC610);
+begin
+   if Assigned(RegC610.RegistroC615) then
+   begin
+      with RegC610.RegistroC615 do
+      begin
+         Add( LFill('C615')          +
+              LFill(VL_BC_ISS_I , 2)  +
+              LFill(ALIQ_ISS    , 2)  +
+              LFill(VL_ISS_I    , 2)  +
+              LFill(VL_ISN_ISS_I, 2)  +
+              LFill(VL_NT_ISS_I , 2)
+             );
+
+         FRegistroC990.QTD_LIN_C := FRegistroC990.QTD_LIN_C + 1;
+      end;
+
+      FRegistroC615Count := FRegistroC615Count + 1;
+   end;
+end;
+
 function TBloco_C.RegistroC020New: TRegistroSEFC020;
 begin
    Result := FRegistroC001.RegistrosC020.New(FRegistroC001);
 end;
 
+function TBloco_C.RegistroC040New: TRegistroSEFC040;
+var
+  C020: TRegistroSEFC020;
+begin
+   with FRegistroC001.RegistrosC020 do
+     C020 := TRegistroSEFC020(Items[ AchaUltimoPai('C020', 'C040') ]);
+
+   C020.RegistrosC040 := TRegistroSEFC040.Create;
+   Result := C020.RegistrosC040;
+end;
+
 function TBloco_C.RegistroC600New: TRegistroSEFC600;
 begin
    Result := FRegistroC001.RegistrosC600.New(FRegistroC001);
+end;
+
+function TBloco_C.RegistroC605New: TRegistroSEFC605;
+var
+  C600: TRegistroSEFC600;
+begin
+   with FRegistroC001.RegistrosC600 do
+     C600 := TRegistroSEFC600(Items[ AchaUltimoPai('C600', 'C605') ]);
+
+   C600.RegistroC605 := TRegistroSEFC605.Create;
+   Result := C600.RegistroC605;
 end;
 
 function TBloco_C.RegistroC610New: TRegistroSEFC610;
@@ -513,6 +646,21 @@ begin
    Result := C600.RegistroC610.New(C600);
 end;
 
+function TBloco_C.RegistroC615New: TRegistroSEFC615;
+var
+  C600: TRegistroSEFC600;
+  C610: TRegistroSEFC610;
+begin
+   with FRegistroC001.RegistrosC600 do
+     C600 := TRegistroSEFC600(Items[ AchaUltimoPai('C600', 'C610') ]);
+
+   with C600.RegistroC610 do
+     C610 := TRegistroSEFC610(Items[AchaUltimoPai('C610', 'C315')]);
+
+   C610.RegistroC615 := TRegistroSEFC615.Create;
+   Result := C610.RegistroC615;
+end;
+
 function TBloco_C.RegistroC300New: TRegistroSEFC300;
 var
   C020: TRegistroSEFC020;
@@ -521,6 +669,21 @@ begin
      C020 := TRegistroSEFC020(Items[ AchaUltimoPai('C020', 'C300') ]);
 
    Result := C020.RegistrosC300.New(C020);
+end;
+
+function TBloco_C.RegistroC310New: TRegistroSEFC310;
+var
+  C020: TRegistroSEFC020;
+  C300: TRegistroSEFC300;
+begin
+   with FRegistroC001.RegistrosC020 do
+     C020 := TRegistroSEFC020(Items[ AchaUltimoPai('C020', 'C300') ]);
+
+   with C020.RegistrosC300 do
+     C300 := TRegistroSEFC300(Items[AchaUltimoPai('C300', 'C310')]);
+
+   C300.RegistroC310 := TRegistroSEFC310.Create;
+   Result := C300.RegistroC310;
 end;
 
 function TBloco_C.RegistroC550New: TRegistroSEFC550;
