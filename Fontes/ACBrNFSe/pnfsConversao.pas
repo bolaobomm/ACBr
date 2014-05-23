@@ -938,7 +938,7 @@ begin
   3128006, // Guanhães/MG
   3128105, // Guapé/MG
 //  3131307, // Ipatinga/MG
-  3147907, // Passos/MG
+//  3147907, // Passos/MG
   3148004, // Patos de Minas/MG
   3149903, // Perdões/MG
   3151503, // Piumhi/MG
@@ -1133,6 +1133,7 @@ begin
   3127107, // Frutal/MG
   3133808, // Itaúna/MG
   3136207, // João Monlevade/MG
+  3147907, // Passos/MG
   3150703, // Pirajuba/MG
   3152303, // Porto Firme/MG
 //  3155702, // Rio Piracicaba/MG

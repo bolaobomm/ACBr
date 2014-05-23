@@ -214,6 +214,10 @@ begin
             ConfigURL.HomNomeCidade := 'mgjoaomonlevade';
             ConfigURL.ProNomeCidade := 'mgjoaomonlevade';
            end;
+  3147907: begin // Passos/MG
+            ConfigURL.HomNomeCidade := 'passosmg';
+            ConfigURL.ProNomeCidade := 'passosmg';
+           end;
   3150703: begin // Pirajuba/MG
             ConfigURL.HomNomeCidade := 'pirajubamg';
             ConfigURL.ProNomeCidade := 'pirajubamg';
@@ -449,7 +453,8 @@ begin
             ConfigURL.ProCancelaNFSe        := 'https://www4.webiss.com.br/' + ConfigURL.ProNomeCidade + '_wsnfse/NfseServices.svc';
            end;
 
-  4210100: begin 
+  3147907,
+  4210100: begin
             ConfigURL.HomRecepcaoLoteRPS    := 'https://www5.webiss.com.br/' + ConfigURL.HomNomeCidade + '_wsnfse_homolog/NfseServices.svc';
             ConfigURL.HomConsultaLoteRPS    := 'https://www5.webiss.com.br/' + ConfigURL.HomNomeCidade + '_wsnfse_homolog/NfseServices.svc';
             ConfigURL.HomConsultaNFSeRPS    := 'https://www5.webiss.com.br/' + ConfigURL.HomNomeCidade + '_wsnfse_homolog/NfseServices.svc';

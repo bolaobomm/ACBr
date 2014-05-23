@@ -161,11 +161,11 @@ begin
 //             then ConfigCidade.NameSpaceEnvelope := 'https://santaluzia-mg.issintel.com.br/webservices/abrasf/api'
 //             else ConfigCidade.NameSpaceEnvelope := 'https://santaluzia-mg.treino-issintel.com.br/webservices/abrasf/api';
 //           end;
-  3147907: begin // Passos/MG
-            if AAmbiente = 1
-             then ConfigCidade.NameSpaceEnvelope := 'https://passos-mg.issintel.com.br/webservices/abrasf/api'
-             else ConfigCidade.NameSpaceEnvelope := 'https://passos-mg.treino-issintel.com.br/webservices/abrasf/api';
-           end;
+//  3147907: begin // Passos/MG
+//            if AAmbiente = 1
+//             then ConfigCidade.NameSpaceEnvelope := 'https://passos-mg.issintel.com.br/webservices/abrasf/api'
+//             else ConfigCidade.NameSpaceEnvelope := 'https://passos-mg.treino-issintel.com.br/webservices/abrasf/api';
+//           end;
   3148004: begin // Patos de Minas/MG
             if AAmbiente = 1
              then ConfigCidade.NameSpaceEnvelope := 'https://patosdeminas-mg.issintel.com.br/webservices/abrasf/api'
