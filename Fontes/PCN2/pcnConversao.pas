@@ -1803,6 +1803,7 @@ begin
                         LayNfeConsultaDPEC:   result := '1.01';
                         LayNFeCCe:            result := '1.00';
                         LayNFeEvento:         result := '1.00';
+                        LayNFeEventoAN:       result := '1.00';
                         LayNFeConsNFeDest:    result := '1.01';
                         LayNFeDownloadNFe:    result := '1.00';
                         LayNfeAutorizacao:    result := '2.00';
@@ -1822,6 +1823,7 @@ begin
                         LayNfeConsultaDPEC:   result := '1.01';
                         LayNFeCCe:            result := '1.00';
                         LayNFeEvento:         result := '1.00';
+                        LayNFeEventoAN:       result := '1.00';
                         LayNFeConsNFeDest:    result := '1.01';
                         LayNFeDownloadNFe:    result := '1.00';
                         LayNfeAutorizacao:    result := '3.10';
@@ -1845,6 +1847,7 @@ begin
                         LayNfeConsultaDPEC:   result := '1.01';
                         LayNFeCCe:            result := '1.00';
                         LayNFeEvento:         result := '1.00';
+                        LayNFeEventoAN:       result := '1.00';
                         LayNFeConsNFeDest:    result := '1.01';
                         LayNFeDownloadNFe:    result := '1.00';
                         LayNfeAutorizacao:    result := '3.00';
@@ -1864,6 +1867,7 @@ begin
                         LayNfeConsultaDPEC:   result := '1.01';
                         LayNFeCCe:            result := '1.00';
                         LayNFeEvento:         result := '1.00';
+                        LayNFeEventoAN:       result := '1.00';
                         LayNFeConsNFeDest:    result := '1.01';
                         LayNFeDownloadNFe:    result := '1.00';
                         LayNfeAutorizacao:    result := '3.10';

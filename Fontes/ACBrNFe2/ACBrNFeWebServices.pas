@@ -105,11 +105,13 @@ type
     FACBrNFe : TComponent;
     FPathArqEnv: AnsiString;
     FPathArqResp: AnsiString;
+
     procedure LoadMsgEntrada;
     procedure LoadURL;
   public
     function Executar: Boolean;virtual;
     constructor Create(AOwner : TComponent); virtual;
+
     property CabMsg: WideString read FCabMsg;
     property DadosMsg: AnsiString read FDadosMsg;
     property RetornoWS: AnsiString read FRetornoWS;
@@ -1136,43 +1138,72 @@ var
   EventoNFe : TEventoNFe;
   i, f : integer;
   Eventos, Evento, Lote, EventosAssinados: AnsiString;
+  CCeCan : Boolean;
 begin
   EventoNFe        := TEventoNFe.Create;
   EventoNFe.schema := TsPL006;
   EventoNFe.idLote := TNFeEnvEvento(Self).idLote;
+  CCeCan           := False;
+
   for i := 0 to TNFeEnvEvento(Self).FEvento.Evento.Count-1 do
    begin
      with EventoNFe.Evento.Add do
       begin
-        infEvento.tpAmb                := TpcnTipoAmbiente(FConfiguracoes.WebServices.AmbienteCodigo-1);
-        infEvento.CNPJ                 := TNFeEnvEvento(Self).FEvento.Evento[i].InfEvento.CNPJ;
-        infEvento.cOrgao               := TNFeEnvEvento(Self).FEvento.Evento[i].InfEvento.cOrgao;
-        infEvento.chNFe                := TNFeEnvEvento(Self).FEvento.Evento[i].InfEvento.chNFe;
-        infEvento.dhEvento             := TNFeEnvEvento(Self).FEvento.Evento[i].InfEvento.dhEvento;
-        infEvento.tpEvento             := TNFeEnvEvento(Self).FEvento.Evento[i].InfEvento.tpEvento;
-        infEvento.nSeqEvento           := TNFeEnvEvento(Self).FEvento.Evento[i].InfEvento.nSeqEvento;
+        infEvento.tpAmb      := TpcnTipoAmbiente(FConfiguracoes.WebServices.AmbienteCodigo-1);
+        infEvento.CNPJ       := TNFeEnvEvento(Self).FEvento.Evento[i].InfEvento.CNPJ;
+        infEvento.cOrgao     := TNFeEnvEvento(Self).FEvento.Evento[i].InfEvento.cOrgao;
+        infEvento.chNFe      := TNFeEnvEvento(Self).FEvento.Evento[i].InfEvento.chNFe;
+        infEvento.dhEvento   := TNFeEnvEvento(Self).FEvento.Evento[i].InfEvento.dhEvento;
+        infEvento.tpEvento   := TNFeEnvEvento(Self).FEvento.Evento[i].InfEvento.tpEvento;
+        infEvento.nSeqEvento := TNFeEnvEvento(Self).FEvento.Evento[i].InfEvento.nSeqEvento;
+
         case InfEvento.tpEvento of
           teCCe:
           begin
-            infEvento.detEvento.xCorrecao  := TNFeEnvEvento(Self).FEvento.Evento[i].InfEvento.detEvento.xCorrecao;
-            infEvento.detEvento.xCondUso   := TNFeEnvEvento(Self).FEvento.Evento[i].InfEvento.detEvento.xCondUso;
+            CCeCan := True;
+            infEvento.detEvento.xCorrecao := TNFeEnvEvento(Self).FEvento.Evento[i].InfEvento.detEvento.xCorrecao;
+            infEvento.detEvento.xCondUso  := TNFeEnvEvento(Self).FEvento.Evento[i].InfEvento.detEvento.xCondUso;
           end;
           teCancelamento:
           begin
-            infEvento.detEvento.nProt  := TNFeEnvEvento(Self).FEvento.Evento[i].InfEvento.detEvento.nProt;
-            infEvento.detEvento.xJust  := TNFeEnvEvento(Self).FEvento.Evento[i].InfEvento.detEvento.xJust;
+            CCeCan := True;
+            infEvento.detEvento.nProt := TNFeEnvEvento(Self).FEvento.Evento[i].InfEvento.detEvento.nProt;
+            infEvento.detEvento.xJust := TNFeEnvEvento(Self).FEvento.Evento[i].InfEvento.detEvento.xJust;
           end;
           teManifDestOperNaoRealizada:
           begin
-            infEvento.detEvento.xJust  := TNFeEnvEvento(Self).FEvento.Evento[i].InfEvento.detEvento.xJust;
+            infEvento.detEvento.xJust := TNFeEnvEvento(Self).FEvento.Evento[i].InfEvento.detEvento.xJust;
+          end;
+          teEPECNFe:
+          begin
+            infEvento.detEvento.cOrgaoAutor := TNFeEnvEvento(Self).FEvento.Evento[i].InfEvento.detEvento.cOrgaoAutor;
+            infEvento.detEvento.tpAutor     := TNFeEnvEvento(Self).FEvento.Evento[i].InfEvento.detEvento.tpAutor;
+            infEvento.detEvento.verAplic    := TNFeEnvEvento(Self).FEvento.Evento[i].InfEvento.detEvento.verAplic;
+            infEvento.detEvento.dhEmi       := TNFeEnvEvento(Self).FEvento.Evento[i].InfEvento.detEvento.dhEmi;
+            infEvento.detEvento.tpNF        := TNFeEnvEvento(Self).FEvento.Evento[i].InfEvento.detEvento.tpNF;
+            infEvento.detEvento.IE          := TNFeEnvEvento(Self).FEvento.Evento[i].InfEvento.detEvento.IE;
+
+            infEvento.detEvento.dest.UF            := TNFeEnvEvento(Self).FEvento.Evento[i].InfEvento.detEvento.dest.UF;
+            infEvento.detEvento.dest.CNPJCPF       := TNFeEnvEvento(Self).FEvento.Evento[i].InfEvento.detEvento.dest.CNPJCPF;
+            infEvento.detEvento.dest.idEstrangeiro := TNFeEnvEvento(Self).FEvento.Evento[i].InfEvento.detEvento.dest.idEstrangeiro;
+            infEvento.detEvento.dest.IE            := TNFeEnvEvento(Self).FEvento.Evento[i].InfEvento.detEvento.dest.IE;
+
+            infEvento.detEvento.vNF   := TNFeEnvEvento(Self).FEvento.Evento[i].InfEvento.detEvento.vNF;
+            infEvento.detEvento.vICMS := TNFeEnvEvento(Self).FEvento.Evento[i].InfEvento.detEvento.vICMS;
+            infEvento.detEvento.vST   := TNFeEnvEvento(Self).FEvento.Evento[i].InfEvento.detEvento.vST;
           end;
         end;
       end;
    end;
 
-  EventoNFe.Versao := GetVersaoNFe(FConfiguracoes.Geral.ModeloDF,
-                                 FConfiguracoes.Geral.VersaoDF,
-                                 LayNfeEvento);
+  if CCeCan then
+    EventoNFe.Versao := GetVersaoNFe(FConfiguracoes.Geral.ModeloDF,
+                                     FConfiguracoes.Geral.VersaoDF,
+                                     LayNfeEvento)
+  else
+    EventoNFe.Versao := GetVersaoNFe(FConfiguracoes.Geral.ModeloDF,
+                                     FConfiguracoes.Geral.VersaoDF,
+                                     LayNfeEventoAN);
 
   EventoNFe.GerarXML;
 
@@ -1339,7 +1370,7 @@ begin
     //Verificação necessária pois somente os eventos de Cancelamento e CCe serão tratados pela SEFAZ do estado
     //os outros eventos como manifestacao de destinatários serão tratados diretamente pela RFB
     if not ((self as TNFeEnvEvento).FEvento.Evento.Items[0].InfEvento.tpEvento
-            in [teCCe,teCancelamento]) then
+            in [teCCe, teCancelamento]) then
       FURL  := NotaUtil.GetURL(FConfiguracoes.WebServices.UFCodigo, FConfiguracoes.WebServices.AmbienteCodigo, FConfiguracoes.Geral.FormaEmissaoCodigo, LayNFeEventoAN, FConfiguracoes.Geral.ModeloDF, FConfiguracoes.Geral.VersaoDF)
     else
       FURL  := NotaUtil.GetURL(FConfiguracoes.WebServices.UFCodigo, FConfiguracoes.WebServices.AmbienteCodigo, FConfiguracoes.Geral.FormaEmissaoCodigo, LayNFeEvento, FConfiguracoes.Geral.ModeloDF, FConfiguracoes.Geral.VersaoDF)

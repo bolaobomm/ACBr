@@ -113,11 +113,11 @@ type
   private
     FVersao: String;
     FDescEvento: String;
-    FCorrecao: String; //Carta de Correção
-    FCondUso: String; //Carta de Correção
-    FnProt: string; //Cancelamento
-    FxJust: string; //Cancelamento e Manif. Destinatario
-    FcOrgaoAutor: integer;
+    FCorrecao: String;     // Carta de Correção
+    FCondUso: String;      // Carta de Correção
+    FnProt: string;        // Cancelamento
+    FxJust: string;        // Cancelamento e Manif. Destinatario
+    FcOrgaoAutor: integer; // EPEC
     FtpAutor: TpcnTipoAutor;
     FverAplic: String;
     FdhEmi: TDateTime;

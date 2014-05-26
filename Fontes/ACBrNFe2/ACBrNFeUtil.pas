@@ -889,6 +889,7 @@ begin
 //  (12,27,16,13,29,23,53,32,52,21,51,50,31,15,25,41,26,22,33,24,43,11,14,42,35,28,17);
 
 case FormaEmissao of
+  // 1 = Normal, 2 = Contingência FS-IA, 3 = SCAN, 4 = DPEC / EPEC, 5 = Contingência FS-DA, 9 = Contingência Off-Line (NFC-e)
   1,2,4,5,9 : begin
        case ALayOut of
          LayNfeEnvDPEC      : Result := DFeUtil.SeSenao(AAmbiente=1, 'https://www.nfe.fazenda.gov.br/SCERecepcaoRFB/SCERecepcaoRFB.asmx',   'https://hom.nfe.fazenda.gov.br/SCERecepcaoRFB/SCERecepcaoRFB.asmx');
@@ -902,7 +903,7 @@ case FormaEmissao of
        // e passaram a utilizar o SEFAZ Virtual do Rio Grande do Sul, são eles:
        // Inicio     - Estado
        // ----------   -------------------
-       // 03/09/2009 - Rondoônia
+       // 03/09/2009 - Rondônia
        // 04/10/2009 - Distrito Federal
        // 06/05/2013 - Rio Grande do Norte
        // 04/02/2014 - Espirito Santo
@@ -1569,10 +1570,13 @@ begin
       7..10: schema_filename := DFeUtil.SeSenao(DFeUtil.EstaVazio(APathSchemas),PathWithDelim(ExtractFileDir(DFeUtil.PathAplication))+
                                                  'Schemas\',PathWithDelim(APathSchemas))+'envConfRecebto_v' +
                                                  GetVersaoNFe(AModeloDF, AVersaoDF, LayNfeEvento) + '.xsd';
+      11: schema_filename := DFeUtil.SeSenao(DFeUtil.EstaVazio(APathSchemas),PathWithDelim(ExtractFileDir(DFeUtil.PathAplication))+
+                                             'Schemas\',PathWithDelim(APathSchemas))+'envEPEC_v' +
+                                             GetVersaoNFe(AModeloDF, AVersaoDF, LayNfeEventoAN) + '.xsd';
       else schema_filename := '';
     end;
    end
-  else 
+  else
    begin
     case Tipo of
       1: schema_filename := DFeUtil.SeSenao(DFeUtil.EstaVazio(APathSchemas),PathWithDelim(ExtractFileDir(DFeUtil.PathAplication))+
@@ -1596,6 +1600,9 @@ begin
       7..10: schema_filename := DFeUtil.SeSenao(DFeUtil.EstaVazio(APathSchemas),PathWithDelim(ExtractFileDir(DFeUtil.PathAplication))+
                                                  'Schemas\',PathWithDelim(APathSchemas))+'envConfRecebto_v' +
                                                  GetVersaoNFe(AModeloDF, AVersaoDF, LayNfeEvento) + '.xsd';
+      11: schema_filename := DFeUtil.SeSenao(DFeUtil.EstaVazio(APathSchemas),PathWithDelim(ExtractFileDir(DFeUtil.PathAplication))+
+                                             'Schemas\',PathWithDelim(APathSchemas))+'envEPEC_v' +
+                                             GetVersaoNFe(AModeloDF, AVersaoDF, LayNfeEventoAN) + '.xsd';
       else schema_filename := '';
     end;
    end;
@@ -1833,6 +1840,9 @@ begin
       7..10: schema_filename := DFeUtil.SeSenao(DFeUtil.EstaVazio(APathSchemas),PathWithDelim(ExtractFileDir(application.ExeName))+
                                                  'Schemas\',PathWithDelim(APathSchemas))+'envConfRecebto_v' +
                                                  GetVersaoNFe(AModeloDF, AVersaoDF, LayNfeEvento) + '.xsd';
+      11: schema_filename := DFeUtil.SeSenao(DFeUtil.EstaVazio(APathSchemas),PathWithDelim(ExtractFileDir(application.ExeName))+
+                                             'Schemas\',PathWithDelim(APathSchemas))+'envEPEC_v' +
+                                             GetVersaoNFe(AModeloDF, AVersaoDF, LayNfeEventoAN) + '.xsd';
       else schema_filename := '';
     end;
    end
@@ -1860,6 +1870,9 @@ begin
       7..10: schema_filename := DFeUtil.SeSenao(DFeUtil.EstaVazio(APathSchemas),PathWithDelim(ExtractFileDir(application.ExeName))+
                                                  'Schemas\',PathWithDelim(APathSchemas))+'envConfRecebto_v' +
                                                  GetVersaoNFe(AModeloDF, AVersaoDF, LayNfeEvento) + '.xsd';
+      11: schema_filename := DFeUtil.SeSenao(DFeUtil.EstaVazio(APathSchemas),PathWithDelim(ExtractFileDir(application.ExeName))+
+                                             'Schemas\',PathWithDelim(APathSchemas))+'envEPEC_v' +
+                                             GetVersaoNFe(AModeloDF, AVersaoDF, LayNfeEventoAN) + '.xsd';
       else schema_filename := '';
     end;
    end;
@@ -1963,18 +1976,20 @@ begin
             if lTipoEvento = '110111' then
               Result := 6 // Cancelamento
             else if lTipoEvento = '210200' then
-              Result := 7 //Manif. Destinatario: Confirmação da Operação
+              Result := 7 // Manif. Destinatario: Confirmação da Operação
             else if lTipoEvento = '210210' then
-              Result := 8 //Manif. Destinatario: Ciência da Operação Realizada
+              Result := 8 // Manif. Destinatario: Ciência da Operação Realizada
             else if lTipoEvento = '210220' then
-              Result := 9 //Manif. Destinatario: Desconhecimento da Operação
+              Result := 9 // Manif. Destinatario: Desconhecimento da Operação
             else if lTipoEvento = '210240' then
-              Result := 10 //Manif. Destinatario: Operação não Realizada
+              Result := 10 // Manif. Destinatario: Operação não Realizada
+            else if lTipoEvento = '110140' then
+              Result := 11 // EPEC
             else
-              Result := 5; //Carta de Correção Eletrônica
+              Result := 5; // Carta de Correção Eletrônica
           end
           else
-            Result := 4; //DPEC
+            Result := 4; // DPEC
          end;
      end;
    end;
@@ -2036,7 +2051,7 @@ begin
     3: AStr := copy(AStr,1,StrToInt(VarToStr(DFeUtil.SeSenao(I>0,I+1,I)))) + cDTDInut + Copy(AStr,StrToInt(VarToStr(DFeUtil.SeSenao(I>0,I+2,I))),Length(AStr));
     4: AStr := copy(AStr,1,StrToInt(VarToStr(DFeUtil.SeSenao(I>0,I+1,I)))) + cDTDDpec + Copy(AStr,StrToInt(VarToStr(DFeUtil.SeSenao(I>0,I+2,I))),Length(AStr));
     5: AStr := copy(AStr,1,StrToInt(VarToStr(DFeUtil.SeSenao(I>0,I+1,I)))) + cDTDCCe  + Copy(AStr,StrToInt(VarToStr(DFeUtil.SeSenao(I>0,I+2,I))),Length(AStr));
-    6..10: AStr := copy(AStr,1,StrToInt(VarToStr(DFeUtil.SeSenao(I>0,I+1,I)))) + cDTDEven  + Copy(AStr,StrToInt(VarToStr(DFeUtil.SeSenao(I>0,I+2,I))),Length(AStr));
+    6..11: AStr := copy(AStr,1,StrToInt(VarToStr(DFeUtil.SeSenao(I>0,I+1,I)))) + cDTDEven  + Copy(AStr,StrToInt(VarToStr(DFeUtil.SeSenao(I>0,I+2,I))),Length(AStr));
     else AStr := '';
   end;
 
@@ -2066,7 +2081,7 @@ begin
       if I = 0 then
         raise EACBrNFeException.Create('Não encontrei final do XML: </envDPEC>') ;
     end;
-    5..10:
+    5..11:
     begin
       I := pos('</evento>',AStr) ;
       if I = 0 then
@@ -2106,7 +2121,7 @@ begin
     2: AStr := AStr + '</cancNFe>';
     3: AStr := AStr + '</inutNFe>';
     4: AStr := AStr + '</envDPEC>';
-    5..10: AStr := AStr + '</evento>';
+    5..11: AStr := AStr + '</evento>';
 //    5..10: AStr := AStr + '</evento></envEvento>';
     else AStr := '';
   end;
@@ -2137,7 +2152,7 @@ begin
     3: XmlAss := StringReplace( XmlAss, cDTDInut, '', [] );
     4: XmlAss := StringReplace( XmlAss, cDTDDpec, '', [] );
     5: XmlAss := StringReplace( XmlAss, cDTDCCe, '', [] );
-    6..10: XmlAss := StringReplace( XmlAss, cDTDEven, '', [] );
+    6..11: XmlAss := StringReplace( XmlAss, cDTDEven, '', [] );
     else XmlAss := '';
   end;
 
@@ -2184,7 +2199,7 @@ begin
         2: XML := copy(XML,1,pos('</cancNFe>',XML)-1);
         3: XML := copy(XML,1,pos('</inutNFe>',XML)-1);
         4: XML := copy(XML,1,pos('</envDPEC>',XML)-1);
-        5..10: XML := copy(XML,1,pos('</evento>',XML)-1);
+        5..11: XML := copy(XML,1,pos('</evento>',XML)-1);
         else XML := '';
       end;
 
@@ -2199,7 +2214,7 @@ begin
         2: XML := XML + '</cancNFe>';
         3: XML := XML + '</inutNFe>';
         4: XML := XML + '</envDPEC>';
-        5..10: XML := XML + '</evento>';
+        5..11: XML := XML + '</evento>';
 //        5..10: XML := XML + '</evento></envEvento>';
         else XML := '';
       end;
