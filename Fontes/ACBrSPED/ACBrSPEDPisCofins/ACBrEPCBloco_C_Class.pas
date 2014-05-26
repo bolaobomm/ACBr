@@ -83,6 +83,7 @@ type
     FRegistroC111Count: Integer;
     FRegistroC120Count: Integer;
     FRegistroC170Count: Integer;
+    FRegistroC175Count: Integer;
     FRegistroC180Count: Integer;
     FRegistroC181Count: Integer;
     FRegistroC185Count: Integer;
@@ -122,6 +123,7 @@ type
     procedure WriteRegistroC111(RegC100: TRegistroC100);
     procedure WriteRegistroC120(RegC100: TRegistroC100);
     procedure WriteRegistroC170(RegC100: TRegistroC100);
+    procedure WriteRegistroC175(RegC100: TRegistroC100);
     procedure WriteRegistroC180(RegC010: TRegistroC010);
     procedure WriteRegistroC181(RegC180: TRegistroC180);
     procedure WriteRegistroC185(RegC180: TRegistroC180);
@@ -173,6 +175,7 @@ type
     function RegistroC111New: TRegistroC111;
     function RegistroC120New: TRegistroC120;
     function RegistroC170New: TRegistroC170;
+    function RegistroC175New: TRegistroC175;
     function RegistroC180New: TRegistroC180;
     function RegistroC181New: TRegistroC181;
     function RegistroC185New: TRegistroC185;
@@ -218,6 +221,7 @@ type
     property RegistroC111Count: Integer read FRegistroC111Count write FRegistroC111Count;
     property RegistroC120Count: Integer read FRegistroC120Count write FRegistroC120Count;
     property RegistroC170Count: Integer read FRegistroC170Count write FRegistroC170Count;
+    property RegistroC175Count: Integer read FRegistroC175Count write FRegistroC175Count;
     property RegistroC180Count: Integer read FRegistroC180Count write FRegistroC180Count;
     property RegistroC181Count: Integer read FRegistroC181Count write FRegistroC181Count;
     property RegistroC185Count: Integer read FRegistroC185Count write FRegistroC185Count;
@@ -290,6 +294,7 @@ begin
   FRegistroC111Count      := 0;
   FRegistroC120Count      := 0;
   FRegistroC170Count      := 0;
+  FRegistroC175Count      := 0;
   FRegistroC180Count      := 0;
   FRegistroC181Count      := 0;
   FRegistroC185Count      := 0;
@@ -390,14 +395,25 @@ begin
 end;
 
 function TBloco_C.RegistroC170New: TRegistroC170;
-  var
-    C010Count: integer;
-    C100Count: integer;
+var
+  C010Count: integer;
+  C100Count: integer;
 begin
    C010Count := FRegistroC001.RegistroC010.Count -1;
    C100Count := FRegistroC001.RegistroC010.Items[C010Count].RegistroC100.Count -1;
    //
    Result    := FRegistroC001.RegistroC010.Items[C010Count].RegistroC100.Items[C100Count].RegistroC170.New;
+end;
+
+function TBloco_C.RegistroC175New: TRegistroC175;
+var
+  C010Count: integer;
+  C100Count: integer;
+begin
+   C010Count := FRegistroC001.RegistroC010.Count -1;
+   C100Count := FRegistroC001.RegistroC010.Items[C010Count].RegistroC100.Count -1;
+   //
+   Result    := FRegistroC001.RegistroC010.Items[C010Count].RegistroC100.Items[C100Count].RegistroC175.New;
 end;
 
 function TBloco_C.RegistroC180New: TRegistroC180;
@@ -886,6 +902,7 @@ begin
         WriteRegistroC111( RegC010.RegistroC100.Items[intFor] );
         WriteRegistroC120( RegC010.RegistroC100.Items[intFor] );
         WriteRegistroC170( RegC010.RegistroC100.Items[intFor] );
+        WriteRegistroC175( RegC010.RegistroC100.Items[intFor] );
         ///
         RegistroC990.QTD_LIN_C := RegistroC990.QTD_LIN_C + 1;
      end;
@@ -1046,6 +1063,44 @@ begin
      /// Variavél para armazenar a quantidade de registro do tipo.
      FRegistroC170Count := FRegistroC170Count + RegC100.RegistroC170.Count;
   end;
+end;
+
+procedure TBloco_C.WriteRegistroC175(RegC100: TRegistroC100);
+var
+  intFor        : integer;
+begin
+  if Assigned( RegC100.RegistroC175 ) then
+  begin
+     for intFor := 0 to RegC100.RegistroC175.Count - 1 do
+     begin
+        with RegC100.RegistroC175.Items[intFor] do
+        begin
+          Add(
+              {01} LFill('C175')                   +
+              {02} LFill( CFOP )                   +
+              {03} LFill( VL_OPR, 0, 2 )           +
+              {04} LFill( VL_DESC, 0, 2 )          +
+              {05} DFill( CST_PIS )                +
+              {06} LFill( VL_BC_PIS, 0, 2 )        +
+              {07} LFill( ALIQ_PIS, 8, 4 )         +
+              {08} LFill( QUANT_BC_PIS, 0, 3 )     +
+              {09} LFill( ALIQ_PIS_QUANT, 0, 4 )   +
+              {10} LFill( VL_PIS, 0, 2 )           +
+              {11} LFill( CST_COFINS )             +
+              {12} LFill( VL_BC_COFINS, 0, 2 )     +
+              {13} LFill( ALIQ_COFINS, 8, 4 )      +
+              {14} LFill( QUANT_BC_COFINS, 0, 3 )  +
+              {15} LFill( ALIQ_COFINS_QUANT, 0, 4 )+
+              {16} LFill( VL_COFINS, 0, 2 )        +
+              {17} LFill( COD_CTA )                +
+              {18} LFill( INFO_COMPL)) ;
+        end;
+        RegistroC990.QTD_LIN_C := RegistroC990.QTD_LIN_C + 1;
+     end;
+     /// Variável para armazenar a quantidade de registro do tipo.
+     FRegistroC175Count := FRegistroC175Count + RegC100.RegistroC175.Count;
+  end;
+
 end;
 
 procedure TBloco_C.WriteRegistroC180(RegC010: TRegistroC010);

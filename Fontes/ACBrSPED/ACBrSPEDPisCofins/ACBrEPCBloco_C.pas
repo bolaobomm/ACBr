@@ -52,6 +52,7 @@ type
   TRegistroC111List = class;
   TRegistroC120List = class;
   TRegistroC170List = class;
+  TRegistroC175List = class;
   TRegistroC180List = class;
   TRegistroC181List = class;
   TRegistroC185List = class;
@@ -140,6 +141,9 @@ type
   end;
 
   //REGISTRO C100: DOCUMENTO - NOTA FISCAL (CÓDIGO 01), NOTA FISCAL AVULSA (CÓDIGO 1B), NOTA FISCAL DE PRODUTOR (CÓDIGO 04) e NF-e (CÓDIGO 55)
+
+  { TRegistroC100 }
+
   TRegistroC100 = class
   private
     fIND_OPER              : TACBrTipoOperacao;       /// Indicador do tipo de operação: 0- Entrada; 1- Saída
@@ -175,6 +179,7 @@ type
     FRegistroC111          : TRegistroC111List;       /// BLOCO C - Lista de RegistroC111 (FILHO)
     FRegistroC120          : TRegistroC120List;       /// BLOCO C - Lista de RegistroC120 (FILHO)
     FRegistroC170          : TRegistroC170List;       /// BLOCO C - Lista de RegistroC170 (FILHO)
+    FRegistroC175          : TRegistroC175List;       /// BLOCO C - Lista de RegistroC175 (FILHO)
   public
     constructor Create; virtual;   /// Create
     destructor  Destroy; override; /// Destroy
@@ -212,6 +217,7 @@ type
     property RegistroC111  : TRegistroC111List  read FRegistroC111  write FRegistroC111;
     property RegistroC120  : TRegistroC120List  read FRegistroC120  write FRegistroC120;
     property RegistroC170  : TRegistroC170List  read FRegistroC170  write FRegistroC170;
+    property RegistroC175  : TRegistroC175List  read FRegistroC175  write FRegistroC175;
   end;
 
   /// Registro C100 - Lista
@@ -295,6 +301,9 @@ type
   end;
 
   //REGISTRO C170: COMPLEMENTO DO DOCUMENTO - ITENS DO DOCUMENTO (CÓDIGOS 01, 1B, 04 e 55)
+
+  { TRegistroC170 }
+
   TRegistroC170 = class
   private
     fNUM_ITEM                 : String;                    /// Número seqüencial do item no documento fiscal
@@ -381,6 +390,59 @@ type
   public
     function New: TRegistroC170;
     property Items[Index: Integer]: TRegistroC170 read GetItem write SetItem;
+  end;
+
+  //REGISTRO C175: REGISTRO ANALÍTICO DO DOCUMENTO (CÓDIGO 65)
+
+  TRegistroC175 = class
+  private
+    fALIQ_COFINS       : double;
+    fALIQ_COFINS_QUANT : double;
+    fALIQ_PIS          : Double;
+    fALIQ_PIS_QUANT    : double;
+    fCFOP              : string;
+    fCOD_CTA           : string;
+    fCST_COFINS        : string;
+    fCST_PIS           : string;
+    fINFO_COMPL        : string;
+    fQUANT_BC_COFINS   : double;
+    fQUANT_BC_PIS      : double;
+    fVL_BC_COFINS      : Currency;
+    fVL_BC_PIS         : Currency;
+    fVL_COFINS         : Currency;
+    fVL_DESC           : Currency;
+    fVL_OPR            : Currency;
+    fVL_PIS            : Currency;
+  public
+
+    property CFOP                 : string   read fCFOP                  write fCFOP;
+    property VL_OPR               : Currency read fVL_OPR                write fVL_OPR;
+    property VL_DESC              : Currency read fVL_DESC               write fVL_DESC;
+    property CST_PIS              : string   read fCST_PIS               write fCST_PIS;
+    property VL_BC_PIS            : Currency read fVL_BC_PIS             write fVL_BC_PIS;
+    property ALIQ_PIS             : Double   read fALIQ_PIS              write fALIQ_PIS;
+    property QUANT_BC_PIS         : double   read fQUANT_BC_PIS          write fQUANT_BC_PIS;
+    property ALIQ_PIS_QUANT       : double   read fALIQ_PIS_QUANT        write fALIQ_PIS_QUANT;
+    property VL_PIS               : Currency read fVL_PIS                write fVL_PIS;
+    property CST_COFINS           : string   read fCST_COFINS            write fCST_COFINS;
+    property VL_BC_COFINS         : Currency read fVL_BC_COFINS          write fVL_BC_COFINS;
+    property ALIQ_COFINS          : double   read fALIQ_COFINS           write fALIQ_COFINS;
+    property QUANT_BC_COFINS      : double   read fQUANT_BC_COFINS       write fQUANT_BC_COFINS;
+    property ALIQ_COFINS_QUANT    : double   read fALIQ_COFINS_QUANT     write fALIQ_COFINS_QUANT;
+    property VL_COFINS            : Currency read fVL_COFINS             write fVL_COFINS;
+    property COD_CTA              : string   read fCOD_CTA               write fCOD_CTA;
+    property INFO_COMPL           : string   read fINFO_COMPL            write fINFO_COMPL;
+  end;
+
+  /// Registro C175 - Lista
+
+  TRegistroC175List = class(TObjectList)
+  private
+    function  GetItem(Index: Integer): TRegistroC175;              /// GetItem
+    procedure SetItem(Index: Integer; const Value: TRegistroC175); /// SetItem
+  public
+    function New: TRegistroC175;
+    property Items[Index: Integer]: TRegistroC175 read GetItem write SetItem;
   end;
 
   //REGISTRO C180: CONSOLIDAÇÃO DE NOTAS FISCAIS ELETRÕNICAS EMITIDAS PELA PESSOA JURÍDICA (CÓDIGO 55) – OPERAÇÕES DE VENDAS
@@ -1438,6 +1500,24 @@ type
 
 implementation
 
+{ TRegistroC175List }
+
+function TRegistroC175List.GetItem(Index: Integer): TRegistroC175;
+begin
+  Result := TRegistroC175(Inherited Items[Index]);
+end;
+
+procedure TRegistroC175List.SetItem(Index: Integer; const Value: TRegistroC175);
+begin
+  Put(Index, Value);
+end;
+
+function TRegistroC175List.New: TRegistroC175;
+begin
+  Result := TRegistroC175.Create;
+  Add(Result);
+end;
+
 { TRegistroC001 }
 
 constructor TRegistroC001.Create;
@@ -1524,6 +1604,7 @@ begin
    FRegistroC111 := TRegistroC111List.Create;
    FRegistroC120 := TRegistroC120List.Create;
    FRegistroC170 := TRegistroC170List.Create;
+   FRegistroC175 := TRegistroC175List.Create;
 end;
 
 destructor TRegistroC100.Destroy;
@@ -1532,6 +1613,7 @@ begin
   FRegistroC111.Free;
   FRegistroC120.Free;
   FRegistroC170.Free;
+  FRegistroC175.Free;
   inherited;
 end;
 
