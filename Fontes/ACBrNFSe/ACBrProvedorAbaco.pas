@@ -114,7 +114,7 @@ begin
             ConfigURL.ProNomeCidade := 'e-nfs_primavera';
            end;
   5107602: begin // Rondonopolis/MT
-            ConfigURL.HomNomeCidade := 'roo';
+            ConfigURL.HomNomeCidade := 'rondonopolis';
             ConfigURL.ProNomeCidade := 'e-nfs_roo';
            end;
  end;

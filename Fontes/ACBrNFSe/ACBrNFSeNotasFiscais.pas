@@ -238,7 +238,8 @@ begin
                 StreamNFSe,
 //                copy(NFSe.Numero, (length(NFSe.Numero) - 44) + 1, 44) + '-NFSe.xml',
                 NomeArqXML + '-nfse.xml',
-                UsarThread);
+                UsarThread,
+                FormatoEmHTML);
 
 // Mantive a linha NomeArqXML + '-nfse.xml', para que o desenvolvedor escolha a forma
 // que o componente vai gerar o nome do arquivo xml da NFS-e
