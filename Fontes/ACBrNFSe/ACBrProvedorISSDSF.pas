@@ -133,6 +133,8 @@ begin
   ConfigURL.HomConsultaNFSe       := 'http://treinamento.dsfweb.com.br/WsNFe2/LoteRps.jws?wsdl';
   ConfigURL.HomCancelaNFSe        := 'http://treinamento.dsfweb.com.br/WsNFe2/LoteRps.jws?wsdl';
   }
+
+  ConfigURL.HomNomeCidade         := '';
   ConfigURL.HomRecepcaoLoteRPS    := '';
   ConfigURL.HomConsultaLoteRPS    := '';
   ConfigURL.HomConsultaNFSeRPS    := '';
@@ -172,6 +174,13 @@ begin
      end;
     5002704: // Campo Grande/MS
      begin 
+       ConfigURL.HomRecepcaoLoteRPS    := 'http://treinamento.dsfweb.com.br/WsNFe2/LoteRps.jws?wsdl';
+       ConfigURL.HomConsultaLoteRPS    := 'http://treinamento.dsfweb.com.br/WsNFe2/LoteRps.jws?wsdl';
+       ConfigURL.HomConsultaNFSeRPS    := 'http://treinamento.dsfweb.com.br/WsNFe2/LoteRps.jws?wsdl';
+       ConfigURL.HomConsultaSitLoteRPS := 'http://treinamento.dsfweb.com.br/WsNFe2/LoteRps.jws?wsdl';
+       ConfigURL.HomConsultaNFSe       := 'http://treinamento.dsfweb.com.br/WsNFe2/LoteRps.jws?wsdl';
+       ConfigURL.HomCancelaNFSe        := 'http://treinamento.dsfweb.com.br/WsNFe2/LoteRps.jws?wsdl';
+
        ConfigURL.ProRecepcaoLoteRPS    := 'http://issdigital.pmcg.ms.gov.br/WsNFe2/LoteRps.jws?wsdl';
        ConfigURL.ProConsultaLoteRPS    := 'http://issdigital.pmcg.ms.gov.br/WsNFe2/LoteRps.jws?wsdl';
        ConfigURL.ProConsultaNFSeRPS    := 'http://issdigital.pmcg.ms.gov.br/WsNFe2/LoteRps.jws?wsdl';
