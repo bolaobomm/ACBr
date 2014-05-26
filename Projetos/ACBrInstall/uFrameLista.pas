@@ -366,41 +366,53 @@ begin
 
   if not FUtilizarBotoesMarcar then
   begin
-      // dependencia do NFe
-    if ACBrNFeDanfeESCPOS_dpk.Checked and (not (ACBr_NFe2_dpk.Checked) or not(ACBrSerial_dpk.Checked))  then
-	  begin
-	    ACBrSerial_dpk.Checked := true;
-      ACBr_NFe2_dpk.Checked := true;
-	  end;
+	FUtilizarBotoesMarcar := True;/// caso algum evento abaixo dispare novamente
+	try
+		// quando não for selecionado o Boleto devemos desmarcar
+		if not ACBr_Boleto_dpk.Checked then
+		begin
+		  ACBr_BoletoFC_FR_dpk.Checked := False;
+		  ACBr_BoletoFC_Quick_dpk.Checked := False;
+		  ACBr_BoletoFC_Fortes_dpk.Checked := False;
+		end;
+		  // dependencia do NFe
+		if ACBrNFeDanfeESCPOS_dpk.Checked and (not (ACBr_NFe2_dpk.Checked) or not(ACBrSerial_dpk.Checked))  then
+		begin
+		  ACBrSerial_dpk.Checked := true;
+		  ACBr_NFe2_dpk.Checked := true;
+		end;
 
-	  // dependencia do SAT
-	  if ACBr_SAT_Extrato_ESCPOS_dpk.Checked and (not(ACBr_SAT_dpk.Checked) or not(ACBrSerial_dpk.Checked)) then
-	  begin
-	    ACBrSerial_dpk.Checked := true;
-	    ACBr_SAT_dpk.Checked := true;
-	  end;
+		  // dependencia do SAT
+		if ACBr_SAT_Extrato_ESCPOS_dpk.Checked and (not(ACBr_SAT_dpk.Checked) or not(ACBrSerial_dpk.Checked)) then
+		begin
+		  ACBrSerial_dpk.Checked := true;
+		  ACBr_SAT_dpk.Checked := true;
+		end;
 
-	  if (ACBr_SAT_Extrato_Fortes_dpk.Checked) and not(ACBr_SAT_dpk.Checked) then
-	    ACBr_SAT_dpk.Checked := true;
+		if (ACBr_SAT_Extrato_Fortes_dpk.Checked) and not(ACBr_SAT_dpk.Checked) then
+		  ACBr_SAT_dpk.Checked := true;
 
-    // dependencias da NFe e CTe
-    if (ACBr_NFe2_dpk.Checked) or (ACBr_CTe_dpk.Checked) or (ACBr_NFSe_dpk.Checked) or (ACBr_MDFe_dpk.Checked) then
-    begin
-      PCN2_dpk.Checked        := True;
-      ACBrCapicom_dpk.Checked := True;
-      ACBrOpenSSL_dpk.Checked := True;
-    end;
+		// dependencias da NFe e CTe
+		if (ACBr_NFe2_dpk.Checked) or (ACBr_CTe_dpk.Checked) or (ACBr_NFSe_dpk.Checked) or (ACBr_MDFe_dpk.Checked) then
+		begin
+		  PCN2_dpk.Checked        := True;
+		  ACBrCapicom_dpk.Checked := True;
+		  ACBrOpenSSL_dpk.Checked := True;
+		end;
 
-    // dependencias do ACBrTEFD
-    if not(ACBrTCP_dpk.Checked) and ACBr_TEFD_dpk.Checked  then
-      ACBrTCP_dpk.Checked := True;
+		// dependencias do ACBrTEFD
+		if not(ACBrTCP_dpk.Checked) and ACBr_TEFD_dpk.Checked  then
+		  ACBrTCP_dpk.Checked := True;
 
-    // Dependencias do ACBrPaf
-    if not(ACBr_SPED_dpk.Checked) and ACBr_PAF_dpk.Checked then
-      ACBr_SPED_dpk.Checked := True;
+		// Dependencias do ACBrPaf
+		if not(ACBr_SPED_dpk.Checked) and ACBr_PAF_dpk.Checked then
+		  ACBr_SPED_dpk.Checked := True;
 
-    // Dependencia
-    ACBrNFeDanfeRVCodeBase_dpk.Checked := ACBrNFeDanfeRV_dpk.Checked;
+		// Dependencia
+		ACBrNFeDanfeRVCodeBase_dpk.Checked := ACBrNFeDanfeRV_dpk.Checked;
+	finally
+	  FUtilizarBotoesMarcar := false;
+	end;
   end;
   tsNFe.TabVisible := ACBr_NFe2_dpk.Checked;
   tsCTe.TabVisible := ACBr_CTe_dpk.Checked;
