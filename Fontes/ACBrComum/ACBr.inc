@@ -85,7 +85,11 @@
 //------------------------------------------------------------------------------
 //{$DEFINE CLX}
 
+// Para usar VCL no Windows / Delphi descomente essa linha
 {$DEFINE VCL}
+
+// Para usar FMX (Firemonkey) Windows / Delphi descomente essa linha
+//{$DEFINE FMX}
 
 {$IFDEF BORLAND}
   {$IFDEF LINUX}
