@@ -1829,8 +1829,8 @@ begin
                LFill( DT_ULT_E ) +
                LFill( COD_PART_ULT_E ) +
                DFill( QUANT_ULT_E,3 ) +
-               DFill( VL_UNIT_ULT_E,3 ) +
-               DFill( VL_UNIT_BC_ST,3 ) ) ;
+               LFill( VL_UNIT_ULT_E,0,3 ) +
+               LFill( VL_UNIT_BC_ST,0,3 ) ) ;
         end;
         RegistroC990.QTD_LIN_C := RegistroC990.QTD_LIN_C + 1;
      end;
@@ -2818,7 +2818,7 @@ begin
           Add( LFill('C610') +
                LFill( COD_CLASS,4 ) +
                LFill( COD_ITEM ) +
-               LFill( QTD,3 ) +
+               LFill( QTD,0, 3 ) +
                LFill( UNID ) +
                LFill( VL_ITEM,0,2 ) +
                LFill( VL_DESC,0,2 ) +

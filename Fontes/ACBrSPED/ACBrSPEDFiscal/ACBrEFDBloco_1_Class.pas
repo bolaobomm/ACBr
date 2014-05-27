@@ -639,11 +639,11 @@ begin
         begin
           Add( LFill('1200') +
                LFill( COD_AJ_APUR ) +
-               LFill( SLD_CRED,0 ) +
-               LFill( CRED_APR,0 ) +
-               LFill( CRED_RECEB,0 ) +
-               LFill( CRED_UTIL,0 ) +
-               LFill( SLD_CRED_FIM,0 ) ) ;
+               LFill( SLD_CRED,0,2 ) +
+               LFill( CRED_APR,0,2 ) +
+               LFill( CRED_RECEB,0,2 ) +
+               LFill( CRED_UTIL,0,2 ) +
+               LFill( SLD_CRED_FIM,0,2 ) ) ;
         end;
         // Registros - FILHO
         WriteRegistro1210( Reg1001.Registro1200.Items[intFor] );
@@ -668,7 +668,7 @@ begin
           Add( LFill('1210') +
                LFill( TIPO_UTIL ) +
                LFill( NR_DOC ) +
-               LFill( VL_CRED_UTIL,0 ) ) ;
+               LFill( VL_CRED_UTIL,0,2 ) ) ;
         end;
         Registro1990.QTD_LIN_1 := Registro1990.QTD_LIN_1 + 1;
      end;

@@ -111,20 +111,20 @@ type
 
   TRegistroE110 = class
   private
-    fVL_TOT_DEBITOS: Currency;            /// Valor total dos débitos por "Saídas e prestações com débito do imposto"
-    fVL_AJ_DEBITOS: Currency;             /// Valor total dos ajustes a débito decorrentes do documento fiscal.
-    fVL_TOT_AJ_DEBITOS: Currency;         /// Valor total de "Ajustes a débito"
-    fVL_ESTORNOS_CRED: Currency;          /// Valor total de Ajustes “Estornos de créditos”
-    fVL_TOT_CREDITOS: Currency;           /// Valor total dos créditos por "Entradas e aquisições com crédito do imposto"
-    fVL_AJ_CREDITOS: Currency;            /// Valor total dos ajustes a crédito decorrentes do documento fiscal.
-    fVL_TOT_AJ_CREDITOS: Currency;        /// Valor total de "Ajustes a crédito"
-    fVL_ESTORNOS_DEB: Currency;           /// Valor total de Ajustes “Estornos de Débitos”
-    fVL_SLD_CREDOR_ANT: Currency;         /// Valor total de "Saldo credor do período anterior"
-    fVL_SLD_APURADO: Currency;            /// Valor total de "Saldo devedor (02+03+04+05-06-07-08-09-10) antes das deduções"
-    fVL_TOT_DED: Currency;                /// Valor total de "Deduções"
-    fVL_ICMS_RECOLHER: Currency;          /// Valor total de "ICMS a recolher (11-12)
-    fVL_SLD_CREDOR_TRANSPORTAR: Currency; /// Valor total de "Saldo credor a transportar para o período seguinte”
-    fDEB_ESP: Currency;                   /// Valores recolhidos ou a recolher, extra-apuração.
+    fVL_TOT_DEBITOS: Variant;            /// Valor total dos débitos por "Saídas e prestações com débito do imposto"
+    fVL_AJ_DEBITOS: Variant;             /// Valor total dos ajustes a débito decorrentes do documento fiscal.
+    fVL_TOT_AJ_DEBITOS: Variant;         /// Valor total de "Ajustes a débito"
+    fVL_ESTORNOS_CRED: Variant;          /// Valor total de Ajustes “Estornos de créditos”
+    fVL_TOT_CREDITOS: Variant;           /// Valor total dos créditos por "Entradas e aquisições com crédito do imposto"
+    fVL_AJ_CREDITOS: Variant;            /// Valor total dos ajustes a crédito decorrentes do documento fiscal.
+    fVL_TOT_AJ_CREDITOS: Variant;        /// Valor total de "Ajustes a crédito"
+    fVL_ESTORNOS_DEB: Variant;           /// Valor total de Ajustes “Estornos de Débitos”
+    fVL_SLD_CREDOR_ANT: Variant;         /// Valor total de "Saldo credor do período anterior"
+    fVL_SLD_APURADO: Variant;            /// Valor total de "Saldo devedor (02+03+04+05-06-07-08-09-10) antes das deduções"
+    fVL_TOT_DED: Variant;                /// Valor total de "Deduções"
+    fVL_ICMS_RECOLHER: Variant;          /// Valor total de "ICMS a recolher (11-12)
+    fVL_SLD_CREDOR_TRANSPORTAR: Variant; /// Valor total de "Saldo credor a transportar para o período seguinte”
+    fDEB_ESP: Variant;                   /// Valores recolhidos ou a recolher, extra-apuração.
 
     FRegistroE111: TRegistroE111List;
     FRegistroE115: TRegistroE115List;
@@ -133,20 +133,20 @@ type
     constructor Create(AOwner: TRegistroE100); virtual; /// Create
     destructor Destroy; override; /// Destroy
 
-    property VL_TOT_DEBITOS: Currency read fVL_TOT_DEBITOS write fVL_TOT_DEBITOS;
-    property VL_AJ_DEBITOS: Currency read fVL_AJ_DEBITOS write fVL_AJ_DEBITOS;
-    property VL_TOT_AJ_DEBITOS: Currency read fVL_TOT_AJ_DEBITOS write fVL_TOT_AJ_DEBITOS;
-    property VL_ESTORNOS_CRED: Currency read fVL_ESTORNOS_CRED write fVL_ESTORNOS_CRED;
-    property VL_TOT_CREDITOS: Currency read fVL_TOT_CREDITOS write fVL_TOT_CREDITOS;
-    property VL_AJ_CREDITOS: Currency read fVL_AJ_CREDITOS write fVL_AJ_CREDITOS;
-    property VL_TOT_AJ_CREDITOS: Currency read fVL_TOT_AJ_CREDITOS write fVL_TOT_AJ_CREDITOS;
-    property VL_ESTORNOS_DEB: Currency read fVL_ESTORNOS_DEB write fVL_ESTORNOS_DEB;
-    property VL_SLD_CREDOR_ANT: Currency read fVL_SLD_CREDOR_ANT write fVL_SLD_CREDOR_ANT;
-    property VL_SLD_APURADO: Currency read fVL_SLD_APURADO write fVL_SLD_APURADO;
-    property VL_TOT_DED: Currency read fVL_TOT_DED write fVL_TOT_DED;
-    property VL_ICMS_RECOLHER: Currency read fVL_ICMS_RECOLHER write fVL_ICMS_RECOLHER;
-    property VL_SLD_CREDOR_TRANSPORTAR: Currency read fVL_SLD_CREDOR_TRANSPORTAR write fVL_SLD_CREDOR_TRANSPORTAR;
-    property DEB_ESP: Currency read fDEB_ESP write fDEB_ESP;
+    property VL_TOT_DEBITOS: Variant read fVL_TOT_DEBITOS write fVL_TOT_DEBITOS;
+    property VL_AJ_DEBITOS: Variant read fVL_AJ_DEBITOS write fVL_AJ_DEBITOS;
+    property VL_TOT_AJ_DEBITOS: Variant read fVL_TOT_AJ_DEBITOS write fVL_TOT_AJ_DEBITOS;
+    property VL_ESTORNOS_CRED: Variant read fVL_ESTORNOS_CRED write fVL_ESTORNOS_CRED;
+    property VL_TOT_CREDITOS: Variant read fVL_TOT_CREDITOS write fVL_TOT_CREDITOS;
+    property VL_AJ_CREDITOS: Variant read fVL_AJ_CREDITOS write fVL_AJ_CREDITOS;
+    property VL_TOT_AJ_CREDITOS: Variant read fVL_TOT_AJ_CREDITOS write fVL_TOT_AJ_CREDITOS;
+    property VL_ESTORNOS_DEB: Variant read fVL_ESTORNOS_DEB write fVL_ESTORNOS_DEB;
+    property VL_SLD_CREDOR_ANT: Variant read fVL_SLD_CREDOR_ANT write fVL_SLD_CREDOR_ANT;
+    property VL_SLD_APURADO: Variant read fVL_SLD_APURADO write fVL_SLD_APURADO;
+    property VL_TOT_DED: Variant read fVL_TOT_DED write fVL_TOT_DED;
+    property VL_ICMS_RECOLHER: Variant read fVL_ICMS_RECOLHER write fVL_ICMS_RECOLHER;
+    property VL_SLD_CREDOR_TRANSPORTAR: Variant read fVL_SLD_CREDOR_TRANSPORTAR write fVL_SLD_CREDOR_TRANSPORTAR;
+    property DEB_ESP: Variant read fDEB_ESP write fDEB_ESP;
 
     property RegistroE111: TRegistroE111List read FRegistroE111 write FRegistroE111;
     property RegistroE115: TRegistroE115List read FRegistroE115 write FRegistroE115;
@@ -159,7 +159,7 @@ type
   private
     fCOD_AJ_APUR: String;     /// Código do ajuste da apuração e dedução, conforme a Tabela indicada no item 5.1.1.
     fDESCR_COMPL_AJ: String;  /// Descrição complementar do ajuste da apuração.
-    fVL_AJ_APUR: currency;        /// Valor do ajuste da apuração
+    fVL_AJ_APUR: Variant;        /// Valor do ajuste da apuração
 
     FRegistroE112: TRegistroE112List;
     FRegistroE113: TRegistroE113List;
@@ -169,7 +169,7 @@ type
 
     property COD_AJ_APUR: String read fCOD_AJ_APUR write fCOD_AJ_APUR;
     property DESCR_COMPL_AJ: String read fDESCR_COMPL_AJ write fDESCR_COMPL_AJ;
-    property VL_AJ_APUR: currency read fVL_AJ_APUR write fVL_AJ_APUR;
+    property VL_AJ_APUR: Variant read fVL_AJ_APUR write fVL_AJ_APUR;
 
     property RegistroE112: TRegistroE112List read FRegistroE112 write FRegistroE112;
     property RegistroE113: TRegistroE113List read FRegistroE113 write FRegistroE113;
@@ -228,7 +228,7 @@ type
     fDT_DOC: TDateTime;       /// Data da emissão do documento fiscal
     fCHV_NFE: String;         /// Chave da Nota Fiscal Eletrônica - Versões abaixo de 004
     fCOD_ITEM: String;        /// Código do item (campo 02 do Registro 0200)
-    fVL_AJ_ITEM: currency;    /// Valor do ajuste para a operação/item
+    fVL_AJ_ITEM: Variant;    /// Valor do ajuste para a operação/item
   public
     constructor Create(AOwner: TRegistroE111); virtual; /// Create
 
@@ -240,7 +240,7 @@ type
     property DT_DOC: TDateTime read fDT_DOC write fDT_DOC;
     property CHV_NFE: String read fCHV_NFE write fCHV_NFE;
     property COD_ITEM: String read fCOD_ITEM write fCOD_ITEM;
-    property VL_AJ_ITEM: currency read fVL_AJ_ITEM write fVL_AJ_ITEM;
+    property VL_AJ_ITEM: Variant read fVL_AJ_ITEM write fVL_AJ_ITEM;
   end;
 
   /// Registro E113 - Lista
@@ -259,13 +259,13 @@ type
   TRegistroE115 = class
   private
     fCOD_INF_ADIC: String;    /// Código da informação adicional conforme tabela a ser definida pelas SEFAZ, conforme tabela definida no item 5.2.
-    fVL_INF_ADIC: currency;   /// Valor referente à informação adicional
+    fVL_INF_ADIC: Variant;   /// Valor referente à informação adicional
     fDESCR_COMPL_AJ: String;  /// Descrição complementar do ajuste
   public
     constructor Create(AOwner: TRegistroE110); virtual; /// Create
 
     property COD_INF_ADIC: String read fCOD_INF_ADIC write fCOD_INF_ADIC;
-    property VL_INF_ADIC: currency read fVL_INF_ADIC write fVL_INF_ADIC;
+    property VL_INF_ADIC: Variant read fVL_INF_ADIC write fVL_INF_ADIC;
     property DESCR_COMPL_AJ: String read fDESCR_COMPL_AJ write fDESCR_COMPL_AJ;
   end;
 
@@ -285,7 +285,7 @@ type
   TRegistroE116 = class
   private
     fCOD_OR: String;                /// Código da obrigação a recolher, conforme a Tabela 5.4
-    fVL_OR: currency;               /// Valor da obrigação a recolher
+    fVL_OR: Variant;               /// Valor da obrigação a recolher
     fDT_VCTO: TDateTime;            /// Data de vencimento da obrigação
     fCOD_REC: String;               /// Código de receita referente à obrigação, próprio da unidade da federação, conforme legislação estadual,
     fNUM_PROC: String;              /// Número do processo ou auto de infração ao qual a obrigação está vinculada, se houver.
@@ -297,7 +297,7 @@ type
     constructor Create(AOwner: TRegistroE110); virtual; /// Create
 
     property COD_OR: String read fCOD_OR write fCOD_OR;
-    property VL_OR: currency read fVL_OR write fVL_OR;
+    property VL_OR: Variant read fVL_OR write fVL_OR;
     property DT_VCTO: TDateTime read fDT_VCTO write fDT_VCTO;
     property COD_REC: String read fCOD_REC write fCOD_REC;
     property NUM_PROC: String read fNUM_PROC write fNUM_PROC;
@@ -352,19 +352,19 @@ type
   TRegistroE210 = class
   private
     fIND_MOV_ST: TACBRMovimentoST;           /// Indicador de movimento: 0 - Sem operações com ST 1 - Com operações de ST
-    fVL_SLD_CRED_ANT_ST: currency;           /// Valor do "Saldo credor de período anterior - Substituição Tributária"
-    fVL_DEVOL_ST: currency;                  /// Valor total do ICMS ST de devolução de mercadorias
-    fVL_RESSARC_ST: currency;                /// Valor total do ICMS ST de ressarcimentos
-    fVL_OUT_CRED_ST: currency;               /// Valor total de Ajustes "Outros créditos ST" e “Estorno de débitos ST”
-    fVL_AJ_CREDITOS_ST: currency;            /// Valor total dos ajustes a crédito de ICMS ST, provenientes de ajustes do documento fiscal.
-    fVL_RETENCAO_ST: currency;               /// Valor Total do ICMS retido por Substituição Tributária
-    fVL_OUT_DEB_ST: currency;                /// Valor Total dos ajustes "Outros débitos ST" " e “Estorno de créditos ST”
-    fVL_AJ_DEBITOS_ST: currency;             /// Valor total dos ajustes a débito de ICMS ST, provenientes de ajustes do documento fiscal.
-    fVL_SLD_DEV_ANT_ST: currency;            /// Valor total de "Saldo devedor antes das deduções" = (08+09+10)-(03+04+05+06+07)]
-    fVL_DEDUCOES_ST: currency;               /// Valor total dos ajustes "Deduções ST"
-    fVL_ICMS_RECOL_ST: currency;             /// Imposto a recolher ST (11-12)
-    fVL_SLD_CRED_ST_TRANSPORTAR: currency;   /// Saldo credor de ST a transportar para o período seguinte [(03+04+05+06+07)- (08+09+10)].
-    fDEB_ESP_ST: currency;                   /// Valores recolhidos ou a recolher, extra-apuração.
+    fVL_SLD_CRED_ANT_ST: Variant;           /// Valor do "Saldo credor de período anterior - Substituição Tributária"
+    fVL_DEVOL_ST: Variant;                  /// Valor total do ICMS ST de devolução de mercadorias
+    fVL_RESSARC_ST: Variant;                /// Valor total do ICMS ST de ressarcimentos
+    fVL_OUT_CRED_ST: Variant;               /// Valor total de Ajustes "Outros créditos ST" e “Estorno de débitos ST”
+    fVL_AJ_CREDITOS_ST: Variant;            /// Valor total dos ajustes a crédito de ICMS ST, provenientes de ajustes do documento fiscal.
+    fVL_RETENCAO_ST: Variant;               /// Valor Total do ICMS retido por Substituição Tributária
+    fVL_OUT_DEB_ST: Variant;                /// Valor Total dos ajustes "Outros débitos ST" " e “Estorno de créditos ST”
+    fVL_AJ_DEBITOS_ST: Variant;             /// Valor total dos ajustes a débito de ICMS ST, provenientes de ajustes do documento fiscal.
+    fVL_SLD_DEV_ANT_ST: Variant;            /// Valor total de "Saldo devedor antes das deduções" = (08+09+10)-(03+04+05+06+07)]
+    fVL_DEDUCOES_ST: Variant;               /// Valor total dos ajustes "Deduções ST"
+    fVL_ICMS_RECOL_ST: Variant;             /// Imposto a recolher ST (11-12)
+    fVL_SLD_CRED_ST_TRANSPORTAR: Variant;   /// Saldo credor de ST a transportar para o período seguinte [(03+04+05+06+07)- (08+09+10)].
+    fDEB_ESP_ST: Variant;                   /// Valores recolhidos ou a recolher, extra-apuração.
 
     fRegistroE220: TRegistroE220List;
     fRegistroE250: TRegistroE250List;
@@ -373,19 +373,19 @@ type
     destructor Destroy; override; /// Destroy
 
     property IND_MOV_ST: TACBRMovimentoST read fIND_MOV_ST write fIND_MOV_ST;
-    property VL_SLD_CRED_ANT_ST: currency read fVL_SLD_CRED_ANT_ST write fVL_SLD_CRED_ANT_ST;
-    property VL_DEVOL_ST: currency read fVL_DEVOL_ST write fVL_DEVOL_ST;
-    property VL_RESSARC_ST: currency read fVL_RESSARC_ST write fVL_RESSARC_ST;
-    property VL_OUT_CRED_ST: currency read fVL_OUT_CRED_ST write fVL_OUT_CRED_ST;
-    property VL_AJ_CREDITOS_ST: currency read fVL_AJ_CREDITOS_ST write fVL_AJ_CREDITOS_ST;
-    property VL_RETENCAO_ST: currency read fVL_RETENCAO_ST write fVL_RETENCAO_ST;
-    property VL_OUT_DEB_ST: currency read fVL_OUT_DEB_ST write fVL_OUT_DEB_ST;
-    property VL_AJ_DEBITOS_ST: currency read fVL_AJ_DEBITOS_ST write fVL_AJ_DEBITOS_ST;
-    property VL_SLD_DEV_ANT_ST: currency read fVL_SLD_DEV_ANT_ST write fVL_SLD_DEV_ANT_ST;
-    property VL_DEDUCOES_ST: currency read fVL_DEDUCOES_ST write fVL_DEDUCOES_ST;
-    property VL_ICMS_RECOL_ST: currency read fVL_ICMS_RECOL_ST write fVL_ICMS_RECOL_ST;
-    property VL_SLD_CRED_ST_TRANSPORTAR: currency read fVL_SLD_CRED_ST_TRANSPORTAR write fVL_SLD_CRED_ST_TRANSPORTAR;
-    property DEB_ESP_ST: currency read fDEB_ESP_ST write fDEB_ESP_ST;
+    property VL_SLD_CRED_ANT_ST: Variant read fVL_SLD_CRED_ANT_ST write fVL_SLD_CRED_ANT_ST;
+    property VL_DEVOL_ST: Variant read fVL_DEVOL_ST write fVL_DEVOL_ST;
+    property VL_RESSARC_ST: Variant read fVL_RESSARC_ST write fVL_RESSARC_ST;
+    property VL_OUT_CRED_ST: Variant read fVL_OUT_CRED_ST write fVL_OUT_CRED_ST;
+    property VL_AJ_CREDITOS_ST: Variant read fVL_AJ_CREDITOS_ST write fVL_AJ_CREDITOS_ST;
+    property VL_RETENCAO_ST: Variant read fVL_RETENCAO_ST write fVL_RETENCAO_ST;
+    property VL_OUT_DEB_ST: Variant read fVL_OUT_DEB_ST write fVL_OUT_DEB_ST;
+    property VL_AJ_DEBITOS_ST: Variant read fVL_AJ_DEBITOS_ST write fVL_AJ_DEBITOS_ST;
+    property VL_SLD_DEV_ANT_ST: Variant read fVL_SLD_DEV_ANT_ST write fVL_SLD_DEV_ANT_ST;
+    property VL_DEDUCOES_ST: Variant read fVL_DEDUCOES_ST write fVL_DEDUCOES_ST;
+    property VL_ICMS_RECOL_ST: Variant read fVL_ICMS_RECOL_ST write fVL_ICMS_RECOL_ST;
+    property VL_SLD_CRED_ST_TRANSPORTAR: Variant read fVL_SLD_CRED_ST_TRANSPORTAR write fVL_SLD_CRED_ST_TRANSPORTAR;
+    property DEB_ESP_ST: Variant read fDEB_ESP_ST write fDEB_ESP_ST;
     // Registro FILHO
     property RegistroE220: TRegistroE220List read fRegistroE220 write fRegistroE220;
     property RegistroE250: TRegistroE250List read fRegistroE250 write fRegistroE250;
@@ -408,7 +408,7 @@ type
   private
     fCOD_AJ_APUR: String;     /// Código do ajuste da apuração e dedução, conforme a Tabela indicada no item 5.1.1
     fDESCR_COMPL_AJ: String;  /// Descrição complementar do ajuste da apuração
-    fVL_AJ_APUR: currency;        /// Valor do ajuste da apuração
+    fVL_AJ_APUR: Variant;        /// Valor do ajuste da apuração
 
     FRegistroE230: TRegistroE230List;
     FRegistroE240: TRegistroE240List;
@@ -418,7 +418,7 @@ type
 
     property COD_AJ_APUR: String read fCOD_AJ_APUR write fCOD_AJ_APUR;
     property DESCR_COMPL_AJ: String read fDESCR_COMPL_AJ write fDESCR_COMPL_AJ;
-    property VL_AJ_APUR: currency read fVL_AJ_APUR write fVL_AJ_APUR;
+    property VL_AJ_APUR: Variant read fVL_AJ_APUR write fVL_AJ_APUR;
 
     property RegistroE230: TRegistroE230List read FRegistroE230 write FRegistroE230;
     property RegistroE240: TRegistroE240List read FRegistroE240 write FRegistroE240;
@@ -477,7 +477,7 @@ type
     fDT_DOC: TDateTime;    /// Data da emissão do documento fiscal
     fCHV_NFE: String;      /// Chave da Nota Fiscal Eletrônica
     fCOD_ITEM: String;     /// Código do item (campo 02 do Registro 0200)
-    fVL_AJ_ITEM: currency; /// Valor do ajuste para a operação/item
+    fVL_AJ_ITEM: Variant; /// Valor do ajuste para a operação/item
   public
     constructor Create(AOwner: TRegistroE220); virtual; /// Create
 
@@ -489,7 +489,7 @@ type
     property DT_DOC: TDateTime read fDT_DOC write fDT_DOC;
     property CHV_NFE: String read fCHV_NFE write fCHV_NFE;
     property COD_ITEM: String read fCOD_ITEM write fCOD_ITEM;
-    property VL_AJ_ITEM: currency read fVL_AJ_ITEM write fVL_AJ_ITEM;
+    property VL_AJ_ITEM: Variant read fVL_AJ_ITEM write fVL_AJ_ITEM;
   end;
 
   /// Registro E240 - Lista
@@ -508,7 +508,7 @@ type
   TRegistroE250 = class
   private
     fCOD_OR: String;                /// Código da obrigação a recolher, conforme a Tabela 5.4
-    fVL_OR: currency;               /// Valor da obrigação ICMS ST a recolher
+    fVL_OR: Variant;               /// Valor da obrigação ICMS ST a recolher
     fDT_VCTO: TDateTime;            /// Data de vencimento da obrigação
     fCOD_REC: String;               /// Código de receita referente à obrigação, próprio da unidade da federação
     fNUM_PROC: String;              /// Número do processo ou auto de infração ao qual a obrigação está vinculada, se houver
@@ -520,7 +520,7 @@ type
     constructor Create(AOwner: TRegistroE210); virtual; /// Create
 
     property COD_OR: String read fCOD_OR write fCOD_OR;
-    property VL_OR: currency read fVL_OR write fVL_OR;
+    property VL_OR: Variant read fVL_OR write fVL_OR;
     property DT_VCTO: TDateTime read fDT_VCTO write fDT_VCTO;
     property COD_REC: String read fCOD_REC write fCOD_REC;
     property NUM_PROC: String read fNUM_PROC write fNUM_PROC;
@@ -581,18 +581,18 @@ type
     fCFOP: String;                  /// Código Fiscal de Operação e Prestação do agrupamento de itens
 //    fCST_IPI: TACBrSituacaoTribIPI; /// Código da Situação Tributária referente ao IPI, conforme a Tabela indicada no item 4.3.2.
     fCST_IPI: string;               /// Código da Situação Tributária referente ao IPI, conforme a Tabela indicada no item 4.3.2.
-    fVL_CONT_IPI: currency;         /// Parcela correspondente ao "Valor Contábil" referente ao CFOP e ao Código de Tributação do IPI
-    fVL_BC_IPI: currency;           /// Parcela correspondente ao "Valor da base de cálculo do IPI" referente ao CFOP e ao Código de Tributação do IPI, para operações tributadas
-    fVL_IPI: currency;              /// Parcela correspondente ao "Valor do IPI" referente ao CFOP e ao Código de Tributação do IPI, para operações tributadas
+    fVL_CONT_IPI: Variant;         /// Parcela correspondente ao "Valor Contábil" referente ao CFOP e ao Código de Tributação do IPI
+    fVL_BC_IPI: Variant;           /// Parcela correspondente ao "Valor da base de cálculo do IPI" referente ao CFOP e ao Código de Tributação do IPI, para operações tributadas
+    fVL_IPI: Variant;              /// Parcela correspondente ao "Valor do IPI" referente ao CFOP e ao Código de Tributação do IPI, para operações tributadas
   public
     constructor Create(AOwner: TRegistroE500); virtual; /// Create
 
     property CFOP: String                  read fCFOP        write fCFOP;
 //    property CST_IPI: TACBrSituacaoTribIPI read fCST_IPI     write fCST_IPI;
     property CST_IPI: string               read fCST_IPI     write fCST_IPI;
-    property VL_CONT_IPI: currency         read fVL_CONT_IPI write fVL_CONT_IPI;
-    property VL_BC_IPI: currency           read fVL_BC_IPI   write fVL_BC_IPI;
-    property VL_IPI: currency              read fVL_IPI      write fVL_IPI;
+    property VL_CONT_IPI: Variant         read fVL_CONT_IPI write fVL_CONT_IPI;
+    property VL_BC_IPI: Variant           read fVL_BC_IPI   write fVL_BC_IPI;
+    property VL_IPI: Variant              read fVL_IPI      write fVL_IPI;
   end;
 
   /// Registro E510 - Lista
@@ -610,26 +610,26 @@ type
 
   TRegistroE520 = class
   private
-    fVL_SD_ANT_IPI: currency; /// Saldo credor do IPI transferido do período anterior
-    fVL_DEB_IPI: currency;    /// Valor total dos débitos por "Saídas com débito do imposto"
-    fVL_CRED_IPI: currency;   /// Valor total dos créditos por "Entradas e aquisições com crédito do imposto"
-    fVL_OD_IPI: currency;     /// Valor de "Outros débitos" do IPI (inclusive estornos de crédito)
-    fVL_OC_IPI: currency;     /// Valor de "Outros créditos" do IPI (inclusive estornos de débitos)
-    fVL_SC_IPI: currency;     /// Valor do saldo credor do IPI a transportar para o período seguinte
-    fVL_SD_IPI: currency;     /// Valor do saldo devedor do IPI a recolher
+    fVL_SD_ANT_IPI: Variant; /// Saldo credor do IPI transferido do período anterior
+    fVL_DEB_IPI: Variant;    /// Valor total dos débitos por "Saídas com débito do imposto"
+    fVL_CRED_IPI: Variant;   /// Valor total dos créditos por "Entradas e aquisições com crédito do imposto"
+    fVL_OD_IPI: Variant;     /// Valor de "Outros débitos" do IPI (inclusive estornos de crédito)
+    fVL_OC_IPI: Variant;     /// Valor de "Outros créditos" do IPI (inclusive estornos de débitos)
+    fVL_SC_IPI: Variant;     /// Valor do saldo credor do IPI a transportar para o período seguinte
+    fVL_SD_IPI: Variant;     /// Valor do saldo devedor do IPI a recolher
 
     fRegistroE530: TRegistroE530List;
   public
     constructor Create(AOwner: TRegistroE500); virtual; /// Create
     destructor Destroy; override; /// Destroy
 
-    property VL_SD_ANT_IPI: currency read fVL_SD_ANT_IPI write fVL_SD_ANT_IPI;
-    property VL_DEB_IPI: currency read fVL_DEB_IPI write fVL_DEB_IPI;
-    property VL_CRED_IPI: currency read fVL_CRED_IPI write fVL_CRED_IPI;
-    property VL_OD_IPI: currency read fVL_OD_IPI write fVL_OD_IPI;
-    property VL_OC_IPI: currency read fVL_OC_IPI write fVL_OC_IPI;
-    property VL_SC_IPI: currency read fVL_SC_IPI write fVL_SC_IPI;
-    property VL_SD_IPI: currency read fVL_SD_IPI write fVL_SD_IPI;
+    property VL_SD_ANT_IPI: Variant read fVL_SD_ANT_IPI write fVL_SD_ANT_IPI;
+    property VL_DEB_IPI: Variant read fVL_DEB_IPI write fVL_DEB_IPI;
+    property VL_CRED_IPI: Variant read fVL_CRED_IPI write fVL_CRED_IPI;
+    property VL_OD_IPI: Variant read fVL_OD_IPI write fVL_OD_IPI;
+    property VL_OC_IPI: Variant read fVL_OC_IPI write fVL_OC_IPI;
+    property VL_SC_IPI: Variant read fVL_SC_IPI write fVL_SC_IPI;
+    property VL_SD_IPI: Variant read fVL_SD_IPI write fVL_SD_IPI;
 
     property RegistroE530: TRegistroE530List read FRegistroE530 write FRegistroE530;
   end;
@@ -650,7 +650,7 @@ type
   TRegistroE530 = class
   private
     fIND_AJ: TACBrTipoAjuste;    /// Indicador do tipo de ajuste: 0- Ajuste a débito; 1- Ajuste a crédito
-    fVL_AJ: currency;            /// Valor do ajuste
+    fVL_AJ: Variant;            /// Valor do ajuste
     fCOD_AJ: String;             /// Código do ajuste da apuração, conforme a Tabela indicada no item 4.5.4.
     fIND_DOC: TACBrOrigemDocto;  /// Indicador da origem do documento vinculado ao ajuste: 0 - Processo Judicial; 1 - Processo Administrativo; 2 - PER/DCOMP; 9 - Outros.
     fNUM_DOC: String;            /// Número do documento / processo / declaração ao qual o ajuste está vinculado, se houver
@@ -659,7 +659,7 @@ type
     constructor Create(AOwner: TRegistroE520); virtual; /// Create
 
     property IND_AJ: TACBrTipoAjuste read fIND_AJ write fIND_AJ;
-    property VL_AJ: currency read fVL_AJ write fVL_AJ;
+    property VL_AJ: Variant read fVL_AJ write fVL_AJ;
     property COD_AJ: String read fCOD_AJ write fCOD_AJ;
     property IND_DOC: TACBrOrigemDocto read fIND_DOC write fIND_DOC;
     property NUM_DOC: String read fNUM_DOC write fNUM_DOC;

@@ -248,7 +248,7 @@ type
     fDT_DOC: TDateTime;        /// Data da emissão do documento fiscal recebido com fins específicos de exportação
     fCHV_NFE: String;       /// Chave da Nota Fiscal Eletrônica
     fNR_MEMO: String;           /// Número do Memorando de Exportação
-    fQTD: Double;           /// Quantidade do item efetivamente exportado.
+    fQTD: Variant;           /// Quantidade do item efetivamente exportado.
     fUNID: String;          /// Unidade do item (Campo 02 do registro 0190)
   public
     constructor Create(AOwner: TRegistro1105); virtual; /// Create
@@ -260,7 +260,7 @@ type
     property DT_DOC: TDateTime read FDT_DOC write FDT_DOC;
     property CHV_NFE: String read FCHV_NFE write FCHV_NFE;
     property NR_MEMO: String read FNR_MEMO write FNR_MEMO;
-    property QTD: Double read FQTD write FQTD;
+    property QTD: Variant read FQTD write FQTD;
     property UNID: String read FUNID write FUNID;
   end;
 
@@ -280,11 +280,11 @@ type
   TRegistro1200 = class
   private
     fCOD_AJ_APUR : String;      /// Código de ajuste, conforme informado na Tabela indicada no item 5.1.1.
-    fSLD_CRED    : Currency;        /// Saldo de créditos fiscais de períodos anteriores
-    fCRED_APR    : Currency;        /// Total de crédito apropriado no mês
-    fCRED_RECEB  : Currency;        /// Total de créditos recebidos por transferência
-    fCRED_UTIL   : Currency;        /// Total de créditos utilizados no período
-    fSLD_CRED_FIM: Currency;        /// Saldo de crédito fiscal acumulado a transportar para o período seguinte
+    fSLD_CRED    : Variant;        /// Saldo de créditos fiscais de períodos anteriores
+    fCRED_APR    : Variant;        /// Total de crédito apropriado no mês
+    fCRED_RECEB  : Variant;        /// Total de créditos recebidos por transferência
+    fCRED_UTIL   : Variant;        /// Total de créditos utilizados no período
+    fSLD_CRED_FIM: Variant;        /// Saldo de crédito fiscal acumulado a transportar para o período seguinte
 
     FRegistro1210: TRegistro1210List;
   public
@@ -292,11 +292,11 @@ type
     destructor Destroy; override; /// Destroy
 
     property COD_AJ_APUR : String read FCOD_AJ_APUR  write FCOD_AJ_APUR;
-    property SLD_CRED    : Currency   read FSLD_CRED     write FSLD_CRED;
-    property CRED_APR    : Currency   read FCRED_APR     write FCRED_APR;
-    property CRED_RECEB  : Currency   read FCRED_RECEB   write FCRED_RECEB;
-    property CRED_UTIL   : Currency   read FCRED_UTIL    write FCRED_UTIL;
-    property SLD_CRED_FIM: Currency   read FSLD_CRED_FIM write FSLD_CRED_FIM;
+    property SLD_CRED    : Variant   read FSLD_CRED     write FSLD_CRED;
+    property CRED_APR    : Variant   read FCRED_APR     write FCRED_APR;
+    property CRED_RECEB  : Variant   read FCRED_RECEB   write FCRED_RECEB;
+    property CRED_UTIL   : Variant   read FCRED_UTIL    write FCRED_UTIL;
+    property SLD_CRED_FIM: Variant   read FSLD_CRED_FIM write FSLD_CRED_FIM;
     //
     property Registro1210: TRegistro1210List read FRegistro1210 write FRegistro1210;
   end;
@@ -318,13 +318,13 @@ type
   private
     fTIPO_UTIL: String;        /// Tipo de utilização do crédito:
     fNR_DOC: String;           /// Número do documento utilizado na baixa de créditos
-    fVL_CRED_UTIL: Currency;     /// Total de crédito utilizado
+    fVL_CRED_UTIL: Variant;     /// Total de crédito utilizado
   public
     constructor Create(AOwner: TRegistro1200); virtual; /// Create
 
     property TIPO_UTIL: String read FTIPO_UTIL write FTIPO_UTIL;
     property NR_DOC: String read FNR_DOC write FNR_DOC;
-    property VL_CRED_UTIL: Currency read FVL_CRED_UTIL write FVL_CRED_UTIL;
+    property VL_CRED_UTIL: Variant read FVL_CRED_UTIL write FVL_CRED_UTIL;
   end;
 
   /// Registro 1210 - Lista
@@ -344,14 +344,14 @@ type
   private
     fCOD_ITEM: String;             /// Código do Produto constante do registro 0200
     fDT_FECH: TDateTime;               /// Data do fechamento da movimentação
-    fESTQ_ABERT: Double;               /// Estoque no inicio do dia
-    fVOL_ENTR: Double;                 /// Volume Total das Entradas
-    fVOL_DISP: Double;                 /// Volume Disponível (05 + 06)
-    fVOL_SAIDAS: Double;               /// Volume Total das Saídas (Somatório dos registros de Volume de Vendas)
-    fESTQ_ESCR: Double;                /// Estoque Escritural (07 - 08)
-    fVAL_AJ_PERDA: Double;             /// Valor da Perda
-    fVAL_AJ_GANHO: Double;             /// Valor do ganho
-    fFECH_FISICO:  Double;             /// Volume aferido no tanque, em litros. Estoque de fechamento físico do tanque
+    fESTQ_ABERT: Variant;               /// Estoque no inicio do dia
+    fVOL_ENTR: Variant;                 /// Volume Total das Entradas
+    fVOL_DISP: Variant;                 /// Volume Disponível (05 + 06)
+    fVOL_SAIDAS: Variant;               /// Volume Total das Saídas (Somatório dos registros de Volume de Vendas)
+    fESTQ_ESCR: Variant;                /// Estoque Escritural (07 - 08)
+    fVAL_AJ_PERDA: Variant;             /// Valor da Perda
+    fVAL_AJ_GANHO: Variant;             /// Valor do ganho
+    fFECH_FISICO:  Variant;             /// Volume aferido no tanque, em litros. Estoque de fechamento físico do tanque
 
     FRegistro1310: TRegistro1310List;  /// BLOCO 1 - Lista de Registro1310 (FILHO)
   public
@@ -360,14 +360,14 @@ type
 
     property COD_ITEM: String       read FCOD_ITEM     write FCOD_ITEM;
     property DT_FECH: TDateTime     read FDT_FECH      write FDT_FECH;
-    property ESTQ_ABERT: Double     read FESTQ_ABERT   write FESTQ_ABERT;
-    property VOL_ENTR: Double       read FVOL_ENTR     write FVOL_ENTR;
-    property VOL_DISP: Double       read FVOL_DISP     write FVOL_DISP;
-    property VOL_SAIDAS: Double     read FVOL_SAIDAS   write FVOL_SAIDAS;
-    property ESTQ_ESCR: Double      read FESTQ_ESCR    write FESTQ_ESCR;
-    property VAL_AJ_PERDA: Double   read FVAL_AJ_PERDA write FVAL_AJ_PERDA;
-    property VAL_AJ_GANHO: Double   read FVAL_AJ_GANHO write FVAL_AJ_GANHO;
-    property FECH_FISICO : Double   read fFECH_FISICO  write fFECH_FISICO;
+    property ESTQ_ABERT: Variant     read FESTQ_ABERT   write FESTQ_ABERT;
+    property VOL_ENTR: Variant       read FVOL_ENTR     write FVOL_ENTR;
+    property VOL_DISP: Variant       read FVOL_DISP     write FVOL_DISP;
+    property VOL_SAIDAS: Variant     read FVOL_SAIDAS   write FVOL_SAIDAS;
+    property ESTQ_ESCR: Variant      read FESTQ_ESCR    write FESTQ_ESCR;
+    property VAL_AJ_PERDA: Variant   read FVAL_AJ_PERDA write FVAL_AJ_PERDA;
+    property VAL_AJ_GANHO: Variant   read FVAL_AJ_GANHO write FVAL_AJ_GANHO;
+    property FECH_FISICO : Variant   read fFECH_FISICO  write fFECH_FISICO;
 
     property Registro1310: TRegistro1310List read FRegistro1310 write FRegistro1310;
   end;
@@ -388,14 +388,14 @@ type
   TRegistro1310 = class
   private
     fNUM_TANQUE:   String; /// Tanque onde foi armazenado o combustível
-    fESTQ_ABERT:   Double;     /// Estoque no inicio do dia, em litros
-    fVOL_ENTR:     Double;     /// Volume Recebido no dia (em litros)
-    fVOL_DISP:     Double;     /// Volume Disponível (03 + 04), em litros
-    fVOL_SAIDAS:   Double;     /// Volume Total das Saídas, em litros
-    fESTQ_ESCR :   Double;     /// Estoque Escritural(05 – 06), litros
-    fVAL_AJ_PERDA: Double;     /// Valor da Perda, em litros
-    fVAL_AJ_GANHO: Double;     /// Valor do ganho, em litros
-    fFECH_FISICO:  Double;     /// Volume aferido no tanque, em litros. Estoque de fechamento físico do tanque
+    fESTQ_ABERT:   Variant;     /// Estoque no inicio do dia, em litros
+    fVOL_ENTR:     Variant;     /// Volume Recebido no dia (em litros)
+    fVOL_DISP:     Variant;     /// Volume Disponível (03 + 04), em litros
+    fVOL_SAIDAS:   Variant;     /// Volume Total das Saídas, em litros
+    fESTQ_ESCR :   Variant;     /// Estoque Escritural(05 – 06), litros
+    fVAL_AJ_PERDA: Variant;     /// Valor da Perda, em litros
+    fVAL_AJ_GANHO: Variant;     /// Valor do ganho, em litros
+    fFECH_FISICO:  Variant;     /// Volume aferido no tanque, em litros. Estoque de fechamento físico do tanque
 
     FRegistro1320: TRegistro1320List;  /// BLOCO 1 - Lista de Registro1320 (FILHO)
   public
@@ -403,14 +403,14 @@ type
     destructor Destroy; override; /// Destroy
 
     property NUM_TANQUE  : String   read fNUM_TANQUE   write fNUM_TANQUE;
-    property ESTQ_ABERT  : Double       read fESTQ_ABERT   write fESTQ_ABERT;
-    property VOL_ENTR    : Double       read fVOL_ENTR     write fVOL_ENTR;
-    property VOL_DISP    : Double       read fVOL_DISP     write fVOL_DISP;
-    property VOL_SAIDAS  : Double       read fVOL_SAIDAS   write fVOL_SAIDAS;
-    property ESTQ_ESCR   : Double       read fESTQ_ESCR    write fESTQ_ESCR;
-    property VAL_AJ_PERDA: Double       read fVAL_AJ_PERDA write fVAL_AJ_PERDA;
-    property VAL_AJ_GANHO: Double       read fVAL_AJ_GANHO write fVAL_AJ_GANHO;
-    property FECH_FISICO : Double       read fFECH_FISICO  write fFECH_FISICO;
+    property ESTQ_ABERT  : Variant       read fESTQ_ABERT   write fESTQ_ABERT;
+    property VOL_ENTR    : Variant       read fVOL_ENTR     write fVOL_ENTR;
+    property VOL_DISP    : Variant       read fVOL_DISP     write fVOL_DISP;
+    property VOL_SAIDAS  : Variant       read fVOL_SAIDAS   write fVOL_SAIDAS;
+    property ESTQ_ESCR   : Variant       read fESTQ_ESCR    write fESTQ_ESCR;
+    property VAL_AJ_PERDA: Variant       read fVAL_AJ_PERDA write fVAL_AJ_PERDA;
+    property VAL_AJ_GANHO: Variant       read fVAL_AJ_GANHO write fVAL_AJ_GANHO;
+    property FECH_FISICO : Variant       read fFECH_FISICO  write fFECH_FISICO;
 
     property Registro1320: TRegistro1320List read FRegistro1320 write FRegistro1320;
   end;
@@ -436,10 +436,10 @@ type
     fNOM_INTERV : String;       /// Nome do Interventor
     fCNPJ_INTERV: String;       /// CNPJ da empresa responsável pela intervenção
     fCPF_INTERV : String;       /// CPF do técnico responsável pela intervenção
-    fVAL_FECHA  : Double;       /// Valor da leitura final do contador, no fechamento do bico
-    fVAL_ABERT  : Double;       /// Valor da leitura inicial do contador, na abertura do bico
-    fVOL_AFERI  : Double;       /// Aferições da Bomba, em litros
-    fVOL_VENDAS : Double;       /// Vendas (08 – 09 - 10 ) do bico, em litros
+    fVAL_FECHA  : Variant;       /// Valor da leitura final do contador, no fechamento do bico
+    fVAL_ABERT  : Variant;       /// Valor da leitura inicial do contador, na abertura do bico
+    fVOL_AFERI  : Variant;       /// Aferições da Bomba, em litros
+    fVOL_VENDAS : Variant;       /// Vendas (08 – 09 - 10 ) do bico, em litros
   public
     constructor Create(AOwner: TRegistro1310); virtual; /// Create
 
@@ -449,10 +449,10 @@ type
     property NOM_INTERV:String     read fNOM_INTERV  write fNOM_INTERV  ;
     property CNPJ_INTERV:String    read fCNPJ_INTERV write fCNPJ_INTERV ;
     property CPF_INTERV:String     read fCPF_INTERV  write fCPF_INTERV  ;
-    property VAL_FECHA:Double          read fVAL_FECHA   write fVAL_FECHA   ;
-    property VAL_ABERT:Double          read fVAL_ABERT   write fVAL_ABERT   ;
-    property VOL_AFERI:Double          read fVOL_AFERI   write fVOL_AFERI   ;
-    property VOL_VENDAS:Double         read fVOL_VENDAS  write fVOL_VENDAS  ;
+    property VAL_FECHA:Variant          read fVAL_FECHA   write fVAL_FECHA   ;
+    property VAL_ABERT:Variant          read fVAL_ABERT   write fVAL_ABERT   ;
+    property VOL_AFERI:Variant          read fVOL_AFERI   write fVOL_AFERI   ;
+    property VOL_VENDAS:Variant         read fVOL_VENDAS  write fVOL_VENDAS  ;
   end;
 
   /// Registro 1320 - Lista
@@ -582,39 +582,39 @@ type
   TRegistro1391 = class
   private
     fDT_REGISTRO  : TDateTime;  /// Data de produção (DDMMAAAA)
-    fQTD_MOID     : Currency;   /// Quantidade de cana esmagada (toneladas)
-    fESTQ_INI     : Currency;   /// Estoque inicial (litros / Kg)
-    fQTD_PRODUZ   : Currency;   /// Quantidade produzida (litros / Kg)
-    fENT_ANID_HID : Currency;   /// Entrada de álcool anidro decorrente da transformação do álcool hidratado ou Entrada de álcool hidratado decorrente da transformação do álcool anidro (litros)
-    fOUTR_ENTR    : Currency;   /// Outras entradas (litros / Kg)
-    fPERDA        : Currency;   /// Evaporação (litros) ou Quebra de peso (Kg)
-    fCONS         : Currency;   /// Consumo (litros)
-    fSAI_ANI_HID  : Currency;   /// Saída para transformação (litros).
-    fSAIDAS       : Currency;   /// Saídas (litros / Kg)
-    fESTQ_FIN     : Currency;   /// Estoque final (litros / Kg)
-    fESTQ_INI_MEL : Currency;   /// Estoque inicial de mel residual (Kg)
-    fPROD_DIA_MEL : Currency;   /// Produção de mel residual (Kg) e entradas de mel (Kg)
-    fUTIL_MEL     : Currency;   /// Mel residual utilizado (Kg) e saídas de mel (Kg)
-    fPROD_ALC_MEL : Currency;   /// Produção de álcool (litros) ou açúcar (Kg) proveniente do mel residual.
+    fQTD_MOID     : Variant;   /// Quantidade de cana esmagada (toneladas)
+    fESTQ_INI     : Variant;   /// Estoque inicial (litros / Kg)
+    fQTD_PRODUZ   : Variant;   /// Quantidade produzida (litros / Kg)
+    fENT_ANID_HID : Variant;   /// Entrada de álcool anidro decorrente da transformação do álcool hidratado ou Entrada de álcool hidratado decorrente da transformação do álcool anidro (litros)
+    fOUTR_ENTR    : Variant;   /// Outras entradas (litros / Kg)
+    fPERDA        : Variant;   /// Evaporação (litros) ou Quebra de peso (Kg)
+    fCONS         : Variant;   /// Consumo (litros)
+    fSAI_ANI_HID  : Variant;   /// Saída para transformação (litros).
+    fSAIDAS       : Variant;   /// Saídas (litros / Kg)
+    fESTQ_FIN     : Variant;   /// Estoque final (litros / Kg)
+    fESTQ_INI_MEL : Variant;   /// Estoque inicial de mel residual (Kg)
+    fPROD_DIA_MEL : Variant;   /// Produção de mel residual (Kg) e entradas de mel (Kg)
+    fUTIL_MEL     : Variant;   /// Mel residual utilizado (Kg) e saídas de mel (Kg)
+    fPROD_ALC_MEL : Variant;   /// Produção de álcool (litros) ou açúcar (Kg) proveniente do mel residual.
     fOBS          : String;     /// Observações
   public                        
     constructor Create(AOwner: TRegistro1390); virtual; /// Create
 
     property DT_REGISTRO: TDateTime read fDT_REGISTRO write fDT_REGISTRO;
-    property QTD_MOID: Currency read fQTD_MOID write fQTD_MOID;
-    property ESTQ_INI: Currency read fESTQ_INI write fESTQ_INI;
-    property QTD_PRODUZ: Currency read fQTD_PRODUZ write fQTD_PRODUZ;
-    property ENT_ANID_HID: Currency read fENT_ANID_HID write fENT_ANID_HID;
-    property OUTR_ENTR: Currency read fOUTR_ENTR write fOUTR_ENTR;
-    property PERDA: Currency read fPERDA write fPERDA;
-    property CONS: Currency read fCONS write fCONS;
-    property SAI_ANI_HID: Currency read fSAI_ANI_HID write fSAI_ANI_HID;
-    property SAIDAS: Currency read fSAIDAS write fSAIDAS;
-    property ESTQ_FIN: Currency read fESTQ_FIN write fESTQ_FIN;
-    property ESTQ_INI_MEL: Currency read fESTQ_INI_MEL write fESTQ_INI_MEL;
-    property PROD_DIA_MEL: Currency read fPROD_DIA_MEL write fPROD_DIA_MEL;
-    property UTIL_MEL: Currency read fUTIL_MEL write fUTIL_MEL;
-    property PROD_ALC_MEL: Currency read fPROD_ALC_MEL write fPROD_ALC_MEL;
+    property QTD_MOID: Variant read fQTD_MOID write fQTD_MOID;
+    property ESTQ_INI: Variant read fESTQ_INI write fESTQ_INI;
+    property QTD_PRODUZ: Variant read fQTD_PRODUZ write fQTD_PRODUZ;
+    property ENT_ANID_HID: Variant read fENT_ANID_HID write fENT_ANID_HID;
+    property OUTR_ENTR: Variant read fOUTR_ENTR write fOUTR_ENTR;
+    property PERDA: Variant read fPERDA write fPERDA;
+    property CONS: Variant read fCONS write fCONS;
+    property SAI_ANI_HID: Variant read fSAI_ANI_HID write fSAI_ANI_HID;
+    property SAIDAS: Variant read fSAIDAS write fSAIDAS;
+    property ESTQ_FIN: Variant read fESTQ_FIN write fESTQ_FIN;
+    property ESTQ_INI_MEL: Variant read fESTQ_INI_MEL write fESTQ_INI_MEL;
+    property PROD_DIA_MEL: Variant read fPROD_DIA_MEL write fPROD_DIA_MEL;
+    property UTIL_MEL: Variant read fUTIL_MEL write fUTIL_MEL;
+    property PROD_ALC_MEL: Variant read fPROD_ALC_MEL write fPROD_ALC_MEL;
     property OBS: String read fOBS write fOBS;
   end;
 
@@ -636,13 +636,13 @@ type
   private
     fCOD_ITEM: String;      /// Código do item (campo 02 do Registro 0200)
     fMUN: String;           /// Código do Município de origem
-    fVALOR: Currency;      /// Valor mensal correspondente ao município
+    fVALOR: Variant;      /// Valor mensal correspondente ao município
   public
     constructor Create(AOwner: TRegistro1001); virtual; /// Create
 
     property COD_ITEM: String read FCOD_ITEM write FCOD_ITEM;
     property MUN: String read FMUN write FMUN;
-    property VALOR: Currency read FVALOR write FVALOR;
+    property VALOR: Variant read FVALOR write FVALOR;
   end;
 
   /// Registro 1400 - Lista
@@ -671,19 +671,19 @@ type
     fNUM_DOC: String;                    /// Número do documento fiscal
     fDT_DOC: TDateTime;                  /// Data da emissão do documento fiscal
     fDT_E_S: TDateTime;                  /// Data da entrada ou da saída
-    fVL_DOC: currency;                   /// Valor total do documento fiscal
-    fVL_DESC: currency;                  /// Valor total do desconto
-    fVL_FORN: currency;                  /// Valor total fornecido/consumido
-    fVL_SERV_NT: currency;               /// Valor total dos serviços não-tributados pelo ICMS
-    fVL_TERC: currency;                  /// Valor total cobrado em nome de terceiros
-    fVL_DA: currency;                    /// Valor total de despesas acessórias indicadas no documento fiscal
-    fVL_BC_ICMS: currency;               /// Valor acumulado da base de cálculo do ICMS
-    fVL_ICMS: currency;                  /// Valor acumulado do ICMS
-    fVL_BC_ICMS_ST: currency;            /// Valor acumulado da base de cálculo do ICMS substituição tributária
-    fVL_ICMS_ST: currency;               /// Valor acumulado do ICMS retido por substituição tributária
+    fVL_DOC: Variant;                   /// Valor total do documento fiscal
+    fVL_DESC: Variant;                  /// Valor total do desconto
+    fVL_FORN: Variant;                  /// Valor total fornecido/consumido
+    fVL_SERV_NT: Variant;               /// Valor total dos serviços não-tributados pelo ICMS
+    fVL_TERC: Variant;                  /// Valor total cobrado em nome de terceiros
+    fVL_DA: Variant;                    /// Valor total de despesas acessórias indicadas no documento fiscal
+    fVL_BC_ICMS: Variant;               /// Valor acumulado da base de cálculo do ICMS
+    fVL_ICMS: Variant;                  /// Valor acumulado do ICMS
+    fVL_BC_ICMS_ST: Variant;            /// Valor acumulado da base de cálculo do ICMS substituição tributária
+    fVL_ICMS_ST: Variant;               /// Valor acumulado do ICMS retido por substituição tributária
     fCOD_INF: String;                    /// Código da informação complementar do documento fiscal (campo 02 do Registro 0450)
-    fVL_PIS: currency;                   /// Valor do PIS
-    fVL_COFINS: currency;                /// Valor da COFINS
+    fVL_PIS: Variant;                   /// Valor do PIS
+    fVL_COFINS: Variant;                /// Valor da COFINS
     fTP_LIGACAO: TACBrTipoLigacao;       /// Código de tipo de Ligação [ 1 - Monofásico 2 - Bifásico 3 - Trifásico ]
     fCOD_GRUPO_TENSAO: TACBrGrupoTensao; /// Código de grupo de tensão: Vide Manual Registro C500 Campo 27
 
@@ -703,19 +703,19 @@ type
     property NUM_DOC: String read FNUM_DOC write FNUM_DOC;
     property DT_DOC: TDateTime read FDT_DOC write FDT_DOC;
     property DT_E_S: TDateTime read FDT_E_S write FDT_E_S;
-    property VL_DOC: currency read FVL_DOC write FVL_DOC;
-    property VL_DESC: currency read FVL_DESC write FVL_DESC;
-    property VL_FORN: currency read FVL_FORN write FVL_FORN;
-    property VL_SERV_NT: currency read FVL_SERV_NT write FVL_SERV_NT;
-    property VL_TERC: currency read FVL_TERC write FVL_TERC;
-    property VL_DA: currency read FVL_DA write FVL_DA;
-    property VL_BC_ICMS: currency read FVL_BC_ICMS write FVL_BC_ICMS;
-    property VL_ICMS: currency read FVL_ICMS write FVL_ICMS;
-    property VL_BC_ICMS_ST: currency read FVL_BC_ICMS_ST write FVL_BC_ICMS_ST;
-    property VL_ICMS_ST: currency read FVL_ICMS_ST write FVL_ICMS_ST;
+    property VL_DOC: Variant read FVL_DOC write FVL_DOC;
+    property VL_DESC: Variant read FVL_DESC write FVL_DESC;
+    property VL_FORN: Variant read FVL_FORN write FVL_FORN;
+    property VL_SERV_NT: Variant read FVL_SERV_NT write FVL_SERV_NT;
+    property VL_TERC: Variant read FVL_TERC write FVL_TERC;
+    property VL_DA: Variant read FVL_DA write FVL_DA;
+    property VL_BC_ICMS: Variant read FVL_BC_ICMS write FVL_BC_ICMS;
+    property VL_ICMS: Variant read FVL_ICMS write FVL_ICMS;
+    property VL_BC_ICMS_ST: Variant read FVL_BC_ICMS_ST write FVL_BC_ICMS_ST;
+    property VL_ICMS_ST: Variant read FVL_ICMS_ST write FVL_ICMS_ST;
     property COD_INF: String read FCOD_INF write FCOD_INF;
-    property VL_PIS: currency read FVL_PIS write FVL_PIS;
-    property VL_COFINS: currency read FVL_COFINS write FVL_COFINS;
+    property VL_PIS: Variant read FVL_PIS write FVL_PIS;
+    property VL_COFINS: Variant read FVL_COFINS write FVL_COFINS;
     property TP_LIGACAO:        TACBrTipoLigacao read fTP_LIGACAO       write fTP_LIGACAO;
     property COD_GRUPO_TENSAO:  TACBrGrupoTensao read fCOD_GRUPO_TENSAO write fCOD_GRUPO_TENSAO;
     //
@@ -740,22 +740,22 @@ type
     fNUM_ITEM: String;             /// Número seqüencial do item no documento fiscal
     fCOD_ITEM: String;             /// Código do item (campo 02 do Registro 0200)
     fCOD_CLASS: String;            /// Código de classificação do item de energia elétrica, conforme a Tabela 4.4.1
-    fQTD: Double;                  /// Quantidade do item
+    fQTD: Variant;                  /// Quantidade do item
     fUNID: String;                 /// Unidade do item (Campo 02 do registro 0190)
-    fVL_ITEM: currency;            /// Valor do item
-    fVL_DESC: currency;            /// Valor total do desconto
+    fVL_ITEM: Variant;            /// Valor do item
+    fVL_DESC: Variant;            /// Valor total do desconto
     fCST_ICMS: String;             /// Código da Situação Tributária, conforme a Tabela indicada no item 4.3.1
     fCFOP: String;                 /// Código Fiscal de Operação e Prestação
-    fVL_BC_ICMS: currency;         /// Valor da base de cálculo do ICMS
-    fALIQ_ICMS: currency;          /// Alíquota do ICMS
-    fVL_ICMS: currency;            /// Valor do ICMS creditado/debitado
-    fVL_BC_ICMS_ST: currency;      /// Valor da base de cálculo referente à substituição tributária
-    fALIQ_ST: currency;            /// Alíquota do ICMS da substituição tributária na unidade da federação de destino
-    fVL_ICMS_ST: currency;         /// Valor do ICMS referente à substituição tributária
+    fVL_BC_ICMS: Variant;         /// Valor da base de cálculo do ICMS
+    fALIQ_ICMS: Variant;          /// Alíquota do ICMS
+    fVL_ICMS: Variant;            /// Valor do ICMS creditado/debitado
+    fVL_BC_ICMS_ST: Variant;      /// Valor da base de cálculo referente à substituição tributária
+    fALIQ_ST: Variant;            /// Alíquota do ICMS da substituição tributária na unidade da federação de destino
+    fVL_ICMS_ST: Variant;         /// Valor do ICMS referente à substituição tributária
     fIND_REC: TACBrTipoReceita;    /// Indicador do tipo de receita:
     fCOD_PART: String;             /// Código do participante receptor da receita, terceiro da operação (campo 02 do Registro 0150)
-    fVL_PIS: currency;             /// Valor do PIS
-    fVL_COFINS: currency;          /// Valor da COFINS
+    fVL_PIS: Variant;             /// Valor do PIS
+    fVL_COFINS: Variant;          /// Valor da COFINS
     fCOD_CTA: String;              /// Código da conta analítica contábil debitada/creditada
   public
     constructor Create(AOwner: TRegistro1500); virtual; /// Create
@@ -763,22 +763,22 @@ type
     property NUM_ITEM: String read FNUM_ITEM write FNUM_ITEM;
     property COD_ITEM: String read FCOD_ITEM write FCOD_ITEM;
     property COD_CLASS: String read FCOD_CLASS write FCOD_CLASS;
-    property QTD: Double read FQTD write FQTD;
+    property QTD: Variant read FQTD write FQTD;
     property UNID: String read FUNID write FUNID;
-    property VL_ITEM: currency read FVL_ITEM write FVL_ITEM;
-    property VL_DESC: currency read FVL_DESC write FVL_DESC;
+    property VL_ITEM: Variant read FVL_ITEM write FVL_ITEM;
+    property VL_DESC: Variant read FVL_DESC write FVL_DESC;
     property CST_ICMS: String read FCST_ICMS write FCST_ICMS;
     property CFOP: String read FCFOP write FCFOP;
-    property VL_BC_ICMS: currency read FVL_BC_ICMS write FVL_BC_ICMS;
-    property ALIQ_ICMS: currency read FALIQ_ICMS write FALIQ_ICMS;
-    property VL_ICMS: currency read FVL_ICMS write FVL_ICMS;
-    property VL_BC_ICMS_ST: currency read FVL_BC_ICMS_ST write FVL_BC_ICMS_ST;
-    property ALIQ_ST: currency read FALIQ_ST write FALIQ_ST;
-    property VL_ICMS_ST: currency read FVL_ICMS_ST write FVL_ICMS_ST;
+    property VL_BC_ICMS: Variant read FVL_BC_ICMS write FVL_BC_ICMS;
+    property ALIQ_ICMS: Variant read FALIQ_ICMS write FALIQ_ICMS;
+    property VL_ICMS: Variant read FVL_ICMS write FVL_ICMS;
+    property VL_BC_ICMS_ST: Variant read FVL_BC_ICMS_ST write FVL_BC_ICMS_ST;
+    property ALIQ_ST: Variant read FALIQ_ST write FALIQ_ST;
+    property VL_ICMS_ST: Variant read FVL_ICMS_ST write FVL_ICMS_ST;
     property IND_REC: TACBrTipoReceita read FIND_REC write FIND_REC;
     property COD_PART: String read FCOD_PART write FCOD_PART;
-    property VL_PIS: currency read FVL_PIS write FVL_PIS;
-    property VL_COFINS: currency read FVL_COFINS write FVL_COFINS;
+    property VL_PIS: Variant read FVL_PIS write FVL_PIS;
+    property VL_COFINS: Variant read FVL_COFINS write FVL_COFINS;
     property COD_CTA: String read FCOD_CTA write FCOD_CTA;
   end;
 
@@ -798,14 +798,14 @@ type
   TRegistro1600 = class
   private
     fCOD_PART: String;         /// Número seqüencial do item no documento fiscal
-    fTOT_CREDITO: currency;    /// Valor do item
-    fTOT_DEBITO: currency;     /// Valor total do desconto
+    fTOT_CREDITO: Variant;    /// Valor do item
+    fTOT_DEBITO: Variant;     /// Valor total do desconto
   public
     constructor Create(AOwner: TRegistro1001); virtual; /// Create
 
     property COD_PART: String read FCOD_PART write FCOD_PART;
-    property TOT_CREDITO: currency read FTOT_CREDITO write FTOT_CREDITO;
-    property TOT_DEBITO: currency read FTOT_DEBITO write FTOT_DEBITO;
+    property TOT_CREDITO: Variant read FTOT_CREDITO write FTOT_CREDITO;
+    property TOT_DEBITO: Variant read FTOT_DEBITO write FTOT_DEBITO;
   end;
 
   /// Registro 1600 - Lista
@@ -886,27 +886,27 @@ type
 
   TRegistro1800 = class
   private
-    fVL_CARGA: Currency;        /// Valor Prestacoes Cargas Tributado
-    fVL_PASS: Currency;         /// Valor Prestacoes Cargas Nao Tributado
-    fVL_FAT: Currency;          /// Valor total do faturamento
-    fIND_RAT: Currency;         /// Indice para rateio
-    fVL_ICMS_ANT: Currency;     /// Valor Total Creditos ICMS
-    fVL_BC_ICMS: Currency;      /// Valor Base Calculo ICMS
-    fVL_ICMS_APUR: Currency;    /// Valor ICMS apurado no calculo
-    fVL_BC_ICMS_APUR: Currency; /// Valor base ICMS apurada
-    fVL_DIF: Currency;          /// Valor diferenca a estorno de credito na apuracao
+    fVL_CARGA: Variant;        /// Valor Prestacoes Cargas Tributado
+    fVL_PASS: Variant;         /// Valor Prestacoes Cargas Nao Tributado
+    fVL_FAT: Variant;          /// Valor total do faturamento
+    fIND_RAT: Variant;         /// Indice para rateio
+    fVL_ICMS_ANT: Variant;     /// Valor Total Creditos ICMS
+    fVL_BC_ICMS: Variant;      /// Valor Base Calculo ICMS
+    fVL_ICMS_APUR: Variant;    /// Valor ICMS apurado no calculo
+    fVL_BC_ICMS_APUR: Variant; /// Valor base ICMS apurada
+    fVL_DIF: Variant;          /// Valor diferenca a estorno de credito na apuracao
   public
     constructor Create(AOwner: TRegistro1001); virtual; /// Create
 
-    property VL_CARGA:Currency read fVL_CARGA write fVL_CARGA ;
-    property VL_PASS:Currency read fVL_PASS write fVL_PASS ;
-    property VL_FAT:Currency read fVL_FAT write fVL_FAT ;
-    property IND_RAT:Currency read fIND_RAT write fIND_RAT ;
-    property VL_ICMS_ANT:Currency read fVL_ICMS_ANT write fVL_ICMS_ANT ;
-    property VL_BC_ICMS:Currency read fVL_BC_ICMS write fVL_BC_ICMS ;
-    property VL_ICMS_APUR:Currency read fVL_ICMS_APUR write fVL_ICMS_APUR ;
-    property VL_BC_ICMS_APUR:Currency read fVL_BC_ICMS_APUR write fVL_BC_ICMS_APUR ;
-    property VL_DIF:Currency read fVL_DIF write fVL_DIF ;
+    property VL_CARGA:Variant read fVL_CARGA write fVL_CARGA ;
+    property VL_PASS:Variant read fVL_PASS write fVL_PASS ;
+    property VL_FAT:Variant read fVL_FAT write fVL_FAT ;
+    property IND_RAT:Variant read fIND_RAT write fIND_RAT ;
+    property VL_ICMS_ANT:Variant read fVL_ICMS_ANT write fVL_ICMS_ANT ;
+    property VL_BC_ICMS:Variant read fVL_BC_ICMS write fVL_BC_ICMS ;
+    property VL_ICMS_APUR:Variant read fVL_ICMS_APUR write fVL_ICMS_APUR ;
+    property VL_BC_ICMS_APUR:Variant read fVL_BC_ICMS_APUR write fVL_BC_ICMS_APUR ;
+    property VL_DIF:Variant read fVL_DIF write fVL_DIF ;
   end;
 
  /// Registro 1800 - Lista
@@ -971,36 +971,36 @@ type
   /// Registro 1920 - SUB-APURAÇÃO DO ICMS
   TRegistro1920 = class
   private
-    fVL_TOT_TRANSF_DEBITOS_OA: Currency;
-    fVL_TOT_AJ_DEBITOS_OA: Currency;
-    fVL_ESTORNOS_CRED_OA: Currency;
-    fVL_TOT_TRANSF_CREDITOS_OA: Currency;
-    fVL_TOT_AJ_CREDITOS_OA: Currency;
-    fVL_ESTORNOS_DEB_OA: Currency;
-    fVL_SLD_CREDOR_ANT_OA: Currency;
-    fVL_SLD_APURADO_OA: Currency;
-    fVL_TOT_DED: Currency;
-    fVL_ICMS_RECOLHER_OA: Currency;
-    fVL_SLD_CREDOR_TRANSP_OA: Currency;
-    fDEB_ESP_OA: Currency;
+    fVL_TOT_TRANSF_DEBITOS_OA: Variant;
+    fVL_TOT_AJ_DEBITOS_OA: Variant;
+    fVL_ESTORNOS_CRED_OA: Variant;
+    fVL_TOT_TRANSF_CREDITOS_OA: Variant;
+    fVL_TOT_AJ_CREDITOS_OA: Variant;
+    fVL_ESTORNOS_DEB_OA: Variant;
+    fVL_SLD_CREDOR_ANT_OA: Variant;
+    fVL_SLD_APURADO_OA: Variant;
+    fVL_TOT_DED: Variant;
+    fVL_ICMS_RECOLHER_OA: Variant;
+    fVL_SLD_CREDOR_TRANSP_OA: Variant;
+    fDEB_ESP_OA: Variant;
     FRegistro1921: TRegistro1921List;
     FRegistro1925: TRegistro1925List;
     FRegistro1926: TRegistro1926List;
   public
     constructor Create(AOwner: TRegistro1910); virtual; /// Create
     destructor Destroy; override; /// Destroy
-    property VL_TOT_TRANSF_DEBITOS_OA : Currency read fVL_TOT_TRANSF_DEBITOS_OA  write fVL_TOT_TRANSF_DEBITOS_OA;
-    property VL_TOT_AJ_DEBITOS_OA     : Currency read fVL_TOT_AJ_DEBITOS_OA      write fVL_TOT_AJ_DEBITOS_OA;
-    property VL_ESTORNOS_CRED_OA      : Currency read fVL_ESTORNOS_CRED_OA       write fVL_ESTORNOS_CRED_OA;
-    property VL_TOT_TRANSF_CREDITOS_OA: Currency read fVL_TOT_TRANSF_CREDITOS_OA write fVL_TOT_TRANSF_CREDITOS_OA;
-    property VL_TOT_AJ_CREDITOS_OA    : Currency read fVL_TOT_AJ_CREDITOS_OA     write fVL_TOT_AJ_CREDITOS_OA;
-    property VL_ESTORNOS_DEB_OA       : Currency read fVL_ESTORNOS_DEB_OA        write fVL_ESTORNOS_DEB_OA;
-    property VL_SLD_CREDOR_ANT_OA     : Currency read fVL_SLD_CREDOR_ANT_OA      write fVL_SLD_CREDOR_ANT_OA;
-    property VL_SLD_APURADO_OA        : Currency read fVL_SLD_APURADO_OA         write fVL_SLD_APURADO_OA;
-    property VL_TOT_DED               : Currency read fVL_TOT_DED                write fVL_TOT_DED;
-    property VL_ICMS_RECOLHER_OA      : Currency read fVL_ICMS_RECOLHER_OA       write fVL_ICMS_RECOLHER_OA;
-    property VL_SLD_CREDOR_TRANSP_OA  : Currency read fVL_SLD_CREDOR_TRANSP_OA   write fVL_SLD_CREDOR_TRANSP_OA;
-    property DEB_ESP_OA               : Currency read fDEB_ESP_OA                write fDEB_ESP_OA;
+    property VL_TOT_TRANSF_DEBITOS_OA : Variant read fVL_TOT_TRANSF_DEBITOS_OA  write fVL_TOT_TRANSF_DEBITOS_OA;
+    property VL_TOT_AJ_DEBITOS_OA     : Variant read fVL_TOT_AJ_DEBITOS_OA      write fVL_TOT_AJ_DEBITOS_OA;
+    property VL_ESTORNOS_CRED_OA      : Variant read fVL_ESTORNOS_CRED_OA       write fVL_ESTORNOS_CRED_OA;
+    property VL_TOT_TRANSF_CREDITOS_OA: Variant read fVL_TOT_TRANSF_CREDITOS_OA write fVL_TOT_TRANSF_CREDITOS_OA;
+    property VL_TOT_AJ_CREDITOS_OA    : Variant read fVL_TOT_AJ_CREDITOS_OA     write fVL_TOT_AJ_CREDITOS_OA;
+    property VL_ESTORNOS_DEB_OA       : Variant read fVL_ESTORNOS_DEB_OA        write fVL_ESTORNOS_DEB_OA;
+    property VL_SLD_CREDOR_ANT_OA     : Variant read fVL_SLD_CREDOR_ANT_OA      write fVL_SLD_CREDOR_ANT_OA;
+    property VL_SLD_APURADO_OA        : Variant read fVL_SLD_APURADO_OA         write fVL_SLD_APURADO_OA;
+    property VL_TOT_DED               : Variant read fVL_TOT_DED                write fVL_TOT_DED;
+    property VL_ICMS_RECOLHER_OA      : Variant read fVL_ICMS_RECOLHER_OA       write fVL_ICMS_RECOLHER_OA;
+    property VL_SLD_CREDOR_TRANSP_OA  : Variant read fVL_SLD_CREDOR_TRANSP_OA   write fVL_SLD_CREDOR_TRANSP_OA;
+    property DEB_ESP_OA               : Variant read fDEB_ESP_OA                write fDEB_ESP_OA;
 
     property Registro1921: TRegistro1921List read FRegistro1921 write FRegistro1921;
     property Registro1925: TRegistro1925List read FRegistro1925 write FRegistro1925;
@@ -1021,7 +1021,7 @@ type
   private
     fCOD_AJ_APUR: String;
     fDESCR_COMPL_AJ: String;
-    fVL_AJ_APUR: Currency;
+    fVL_AJ_APUR: Variant;
     FRegistro1922: TRegistro1922List;
     FRegistro1923: TRegistro1923List;
   public
@@ -1029,7 +1029,7 @@ type
     destructor Destroy; override; /// Destroy
     property COD_AJ_APUR    : String   read fCOD_AJ_APUR    write fCOD_AJ_APUR;
     property DESCR_COMPL_AJ : String   read fDESCR_COMPL_AJ write fDESCR_COMPL_AJ;
-    property VL_AJ_APUR     : Currency read fVL_AJ_APUR     write fVL_AJ_APUR;
+    property VL_AJ_APUR     : Variant read fVL_AJ_APUR     write fVL_AJ_APUR;
 
     property Registro1922: TRegistro1922List read FRegistro1922 write FRegistro1922;
     property Registro1923: TRegistro1923List read FRegistro1923 write FRegistro1923;
@@ -1079,7 +1079,7 @@ type
     fNUM_DOC: String;
     fDT_DOC: TDateTime;
     fCOD_ITEM: String;
-    fVL_AJ_ITEM: Currency;
+    fVL_AJ_ITEM: Variant;
   public
     property COD_PART   : String    read fCOD_PART   write fCOD_PART;
     property COD_MOD    : String    read fCOD_MOD    write fCOD_MOD;
@@ -1088,7 +1088,7 @@ type
     property NUM_DOC    : String    read fNUM_DOC    write fNUM_DOC;
     property DT_DOC     : TDateTime read fDT_DOC     write fDT_DOC;
     property COD_ITEM   : String    read fCOD_ITEM   write fCOD_ITEM;
-    property VL_AJ_ITEM : Currency  read fVL_AJ_ITEM write fVL_AJ_ITEM;
+    property VL_AJ_ITEM : Variant  read fVL_AJ_ITEM write fVL_AJ_ITEM;
   end;
 
   TRegistro1923List = class(TObjectList)
@@ -1104,11 +1104,11 @@ type
   TRegistro1925 = class
   private
     fCOD_INF_ADIC: String;
-    fVL_INF_ADIC: Currency;
+    fVL_INF_ADIC: Variant;
     fDESCR_COMPL_AJ: String;
   public
     property COD_INF_ADIC   : String    read fCOD_INF_ADIC   write fCOD_INF_ADIC;
-    property VL_INF_ADIC    : Currency  read fVL_INF_ADIC    write fVL_INF_ADIC;
+    property VL_INF_ADIC    : Variant  read fVL_INF_ADIC    write fVL_INF_ADIC;
     property DESCR_COMPL_AJ : String    read fDESCR_COMPL_AJ write fDESCR_COMPL_AJ;
   end;
 
@@ -1125,7 +1125,7 @@ type
   TRegistro1926 = class
   private
     fCOD_OR: String;
-    fVL_OR: Currency;
+    fVL_OR: Variant;
     fDT_VCTO: TDateTime;
     fCOD_REC: String;
     fNUM_PROC: String;
@@ -1135,7 +1135,7 @@ type
     fMES_REF: String;
   public
     property COD_OR    : String    read fCOD_OR    write fCOD_OR;
-    property VL_OR     : Currency  read fVL_OR     write fVL_OR;
+    property VL_OR     : Variant  read fVL_OR     write fVL_OR;
     property DT_VCTO   : TDateTime read fDT_VCTO   write fDT_VCTO;
     property COD_REC   : String    read fCOD_REC   write fCOD_REC;
     property NUM_PROC  : String    read fNUM_PROC  write fNUM_PROC;
