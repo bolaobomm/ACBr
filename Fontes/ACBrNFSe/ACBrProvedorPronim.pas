@@ -230,6 +230,23 @@ begin
             ConfigURL.ProConsultaNFSe       := 'http://177.101.230.30/nfsews/services.svc';
             ConfigURL.ProCancelaNFSe        := 'http://177.101.230.30/nfsews/services.svc';
            end;
+   4118501: begin // Pato Branco/PR
+            ConfigURL.HomNomeCidade         := '';
+            ConfigURL.HomRecepcaoLoteRPS    := 'http://nfse.patobranco.pr.gov.br/NFSEWSTESTE/Services.svc';
+            ConfigURL.HomConsultaLoteRPS    := 'http://nfse.patobranco.pr.gov.br/NFSEWSTESTE/Services.svc';
+            ConfigURL.HomConsultaNFSeRPS    := 'http://nfse.patobranco.pr.gov.br/NFSEWSTESTE/Services.svc';
+            ConfigURL.HomConsultaSitLoteRPS := 'http://nfse.patobranco.pr.gov.br/NFSEWSTESTE/Services.svc';
+            ConfigURL.HomConsultaNFSe       := 'http://nfse.patobranco.pr.gov.br/NFSEWSTESTE/Services.svc';
+            ConfigURL.HomCancelaNFSe        := 'http://nfse.patobranco.pr.gov.br/NFSEWSTESTE/Services.svc';
+
+            ConfigURL.ProNomeCidade         := '';
+            ConfigURL.ProRecepcaoLoteRPS    := 'http://nfse.patobranco.pr.gov.br/NFSEws/Services.svc';
+            ConfigURL.ProConsultaLoteRPS    := 'http://nfse.patobranco.pr.gov.br/NFSEws/Services.svc';
+            ConfigURL.ProConsultaNFSeRPS    := 'http://nfse.patobranco.pr.gov.br/NFSEws/Services.svc';
+            ConfigURL.ProConsultaSitLoteRPS := 'http://nfse.patobranco.pr.gov.br/NFSEws/Services.svc';
+            ConfigURL.ProConsultaNFSe       := 'http://nfse.patobranco.pr.gov.br/NFSEws/Services.svc';
+            ConfigURL.ProCancelaNFSe        := 'http://nfse.patobranco.pr.gov.br/NFSEws/Services.svc';
+           end;
   4322400: begin // Uruguaiana/RS
             ConfigURL.HomNomeCidade         := '';
             ConfigURL.HomRecepcaoLoteRPS    := 'http://dueto-web.uruguaiana.rs.gov.br:7778/NFSEWSTESTE/Services.svc';

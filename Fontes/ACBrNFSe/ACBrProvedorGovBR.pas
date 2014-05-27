@@ -213,24 +213,6 @@ begin
             ConfigURL.ProCancelaNFSe        := 'http://nfe.saquarema.rj.gov.br/NFSEws/Services.svc';
            end;
 
-   4118501: begin // Pato Branco/PR
-            ConfigURL.HomNomeCidade         := '';
-            ConfigURL.HomRecepcaoLoteRPS    := 'http://nfse.patobranco.pr.gov.br/NFSEWSTESTE/Services.svc';
-            ConfigURL.HomConsultaLoteRPS    := 'http://nfse.patobranco.pr.gov.br/NFSEWSTESTE/Services.svc';
-            ConfigURL.HomConsultaNFSeRPS    := 'http://nfse.patobranco.pr.gov.br/NFSEWSTESTE/Services.svc';
-            ConfigURL.HomConsultaSitLoteRPS := 'http://nfse.patobranco.pr.gov.br/NFSEWSTESTE/Services.svc';
-            ConfigURL.HomConsultaNFSe       := 'http://nfse.patobranco.pr.gov.br/NFSEWSTESTE/Services.svc';
-            ConfigURL.HomCancelaNFSe        := 'http://nfse.patobranco.pr.gov.br/NFSEWSTESTE/Services.svc';
-
-            ConfigURL.ProNomeCidade         := '';
-            ConfigURL.ProRecepcaoLoteRPS    := 'http://nfse.patobranco.pr.gov.br/NFSEws/Services.svc';
-            ConfigURL.ProConsultaLoteRPS    := 'http://nfse.patobranco.pr.gov.br/NFSEws/Services.svc';
-            ConfigURL.ProConsultaNFSeRPS    := 'http://nfse.patobranco.pr.gov.br/NFSEws/Services.svc';
-            ConfigURL.ProConsultaSitLoteRPS := 'http://nfse.patobranco.pr.gov.br/NFSEws/Services.svc';
-            ConfigURL.ProConsultaNFSe       := 'http://nfse.patobranco.pr.gov.br/NFSEws/Services.svc';
-            ConfigURL.ProCancelaNFSe        := 'http://nfse.patobranco.pr.gov.br/NFSEws/Services.svc';
-           end;
-
   3504008: begin // Assis/SP
             ConfigURL.HomNomeCidade         := '';
             ConfigURL.HomRecepcaoLoteRPS    := 'http://nfseteste.assis.sp.gov.br/NFSEWSTESTE/Services.svc';
@@ -303,6 +285,7 @@ begin
             ConfigURL.ProConsultaNFSe       := 'http://mail.presidentevenceslau.sp.gov.br/NFSEWS/Services.svc';
             ConfigURL.ProCancelaNFSe        := 'http://mail.presidentevenceslau.sp.gov.br/NFSEWS/Services.svc';
            end;
+
   4101408: begin // Apucarana/PR
             ConfigURL.HomNomeCidade         := '';
             ConfigURL.HomRecepcaoLoteRPS    := '';
