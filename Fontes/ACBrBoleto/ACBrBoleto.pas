@@ -971,15 +971,9 @@ begin
 end;
 
 procedure TACBrTitulo.SetCodigoMora(AValue: String);
-var
-  teste: Integer;
-  testea: String;
 begin
   if fCodigoMora = AValue then
       exit;
-
-  testea:= ACBrBoleto.Banco.CodigosMoraAceitos;
-  teste:= Pos(fCodigoMora,ACBrBoleto.Banco.CodigosMoraAceitos);
 
   if Pos(AValue,ACBrBoleto.Banco.CodigosMoraAceitos) = 0 then
      raise Exception.Create( ACBrStr('Código de Mora/Juros informado não é permitido ' +
