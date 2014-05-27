@@ -285,7 +285,6 @@ begin
             ConfigURL.ProConsultaNFSe       := 'http://mail.presidentevenceslau.sp.gov.br/NFSEWS/Services.svc';
             ConfigURL.ProCancelaNFSe        := 'http://mail.presidentevenceslau.sp.gov.br/NFSEWS/Services.svc';
            end;
-
   4101408: begin // Apucarana/PR
             ConfigURL.HomNomeCidade         := '';
             ConfigURL.HomRecepcaoLoteRPS    := '';
@@ -320,6 +319,7 @@ begin
             ConfigURL.ProConsultaNFSe       := 'http://201.89.84.202:8184/nfsews/Services.svc';
             ConfigURL.ProCancelaNFSe        := 'http://201.89.84.202:8184/nfsews/Services.svc';
            end;
+           (*
   4205902: begin // Gaspar/SC
             ConfigURL.HomNomeCidade         := '';
             ConfigURL.HomRecepcaoLoteRPS    := 'http://nfse.gaspar.sc.gov.br/NFSEWSTESTE/Services.svc';
@@ -337,6 +337,7 @@ begin
             ConfigURL.ProConsultaNFSe       := 'http://nfse.gaspar.sc.gov.br/NFSEWS/Services.svc';
             ConfigURL.ProCancelaNFSe        := 'http://nfse.gaspar.sc.gov.br/NFSEWS/Services.svc';
            end;
+           *)
   4309407: begin // Guapore/RS
             ConfigURL.HomNomeCidade         := '';
             ConfigURL.HomRecepcaoLoteRPS    := 'http://177.20.255.245/NFSEWSTESTE/Services.svc';

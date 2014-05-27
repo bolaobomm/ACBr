@@ -179,6 +179,57 @@ begin
             ConfigURL.ProConsultaNFSe       := 'http://nfse.mirassol.sp.gov.br:5555/NFSEWS/Services.svc';
             ConfigURL.ProCancelaNFSe        := 'http://nfse.mirassol.sp.gov.br:5555/NFSEWS/Services.svc';
            end;
+  4118501: begin // Pato Branco/PR
+            ConfigURL.HomNomeCidade         := '';
+            ConfigURL.HomRecepcaoLoteRPS    := 'http://nfse.patobranco.pr.gov.br/NFSEWSTESTE/Services.svc';
+            ConfigURL.HomConsultaLoteRPS    := 'http://nfse.patobranco.pr.gov.br/NFSEWSTESTE/Services.svc';
+            ConfigURL.HomConsultaNFSeRPS    := 'http://nfse.patobranco.pr.gov.br/NFSEWSTESTE/Services.svc';
+            ConfigURL.HomConsultaSitLoteRPS := 'http://nfse.patobranco.pr.gov.br/NFSEWSTESTE/Services.svc';
+            ConfigURL.HomConsultaNFSe       := 'http://nfse.patobranco.pr.gov.br/NFSEWSTESTE/Services.svc';
+            ConfigURL.HomCancelaNFSe        := 'http://nfse.patobranco.pr.gov.br/NFSEWSTESTE/Services.svc';
+
+            ConfigURL.ProNomeCidade         := '';
+            ConfigURL.ProRecepcaoLoteRPS    := 'http://nfse.patobranco.pr.gov.br/NFSEws/Services.svc';
+            ConfigURL.ProConsultaLoteRPS    := 'http://nfse.patobranco.pr.gov.br/NFSEws/Services.svc';
+            ConfigURL.ProConsultaNFSeRPS    := 'http://nfse.patobranco.pr.gov.br/NFSEws/Services.svc';
+            ConfigURL.ProConsultaSitLoteRPS := 'http://nfse.patobranco.pr.gov.br/NFSEws/Services.svc';
+            ConfigURL.ProConsultaNFSe       := 'http://nfse.patobranco.pr.gov.br/NFSEws/Services.svc';
+            ConfigURL.ProCancelaNFSe        := 'http://nfse.patobranco.pr.gov.br/NFSEws/Services.svc';
+           end;
+  4201307: begin // Araquari/SC
+            ConfigURL.HomNomeCidade         := '';
+            ConfigURL.HomRecepcaoLoteRPS    := 'http://201.14.131.162:8288/NFSEWSTESTE/Services.svc';
+            ConfigURL.HomConsultaLoteRPS    := 'http://201.14.131.162:8288/NFSEWSTESTE/Services.svc';
+            ConfigURL.HomConsultaNFSeRPS    := 'http://201.14.131.162:8288/NFSEWSTESTE/Services.svc';
+            ConfigURL.HomConsultaSitLoteRPS := 'http://201.14.131.162:8288/NFSEWSTESTE/Services.svc';
+            ConfigURL.HomConsultaNFSe       := 'http://201.14.131.162:8288/NFSEWSTESTE/Services.svc';
+            ConfigURL.HomCancelaNFSe        := 'http://201.14.131.162:8288/NFSEWSTESTE/Services.svc';
+
+            ConfigURL.ProNomeCidade         := '';
+            ConfigURL.ProRecepcaoLoteRPS    := 'http://201.14.131.162:8288/NFSEWS/Services.svc';
+            ConfigURL.ProConsultaLoteRPS    := 'http://201.14.131.162:8288/NFSEWS/Services.svc';
+            ConfigURL.ProConsultaNFSeRPS    := 'http://201.14.131.162:8288/NFSEWS/Services.svc';
+            ConfigURL.ProConsultaSitLoteRPS := 'http://201.14.131.162:8288/NFSEWS/Services.svc';
+            ConfigURL.ProConsultaNFSe       := 'http://201.14.131.162:8288/NFSEWS/Services.svc';
+            ConfigURL.ProCancelaNFSe        := 'http://201.14.131.162:8288/NFSEWS/Services.svc';
+           end;
+  4205902: begin // Gaspar/SC
+            ConfigURL.HomNomeCidade         := '';
+            ConfigURL.HomRecepcaoLoteRPS    := 'http://nfse.gaspar.sc.gov.br/NFSEWSTESTE/Services.svc';
+            ConfigURL.HomConsultaLoteRPS    := 'http://nfse.gaspar.sc.gov.br/NFSEWSTESTE/Services.svc';
+            ConfigURL.HomConsultaNFSeRPS    := 'http://nfse.gaspar.sc.gov.br/NFSEWSTESTE/Services.svc';
+            ConfigURL.HomConsultaSitLoteRPS := 'http://nfse.gaspar.sc.gov.br/NFSEWSTESTE/Services.svc';
+            ConfigURL.HomConsultaNFSe       := 'http://nfse.gaspar.sc.gov.br/NFSEWSTESTE/Services.svc';
+            ConfigURL.HomCancelaNFSe        := 'http://nfse.gaspar.sc.gov.br/NFSEWSTESTE/Services.svc';
+
+            ConfigURL.ProNomeCidade         := '';
+            ConfigURL.ProRecepcaoLoteRPS    := 'http://nfse.gaspar.sc.gov.br/NFSEWS/Services.svc';
+            ConfigURL.ProConsultaLoteRPS    := 'http://nfse.gaspar.sc.gov.br/NFSEWS/Services.svc';
+            ConfigURL.ProConsultaNFSeRPS    := 'http://nfse.gaspar.sc.gov.br/NFSEWS/Services.svc';
+            ConfigURL.ProConsultaSitLoteRPS := 'http://nfse.gaspar.sc.gov.br/NFSEWS/Services.svc';
+            ConfigURL.ProConsultaNFSe       := 'http://nfse.gaspar.sc.gov.br/NFSEWS/Services.svc';
+            ConfigURL.ProCancelaNFSe        := 'http://nfse.gaspar.sc.gov.br/NFSEWS/Services.svc';
+           end;
   4309407: begin // Guapore/RS
             ConfigURL.HomNomeCidade         := '';
             ConfigURL.HomRecepcaoLoteRPS    := 'http://177.20.255.245/NFSEWSTESTE/Services.svc';
@@ -230,23 +281,6 @@ begin
             ConfigURL.ProConsultaNFSe       := 'http://177.101.230.30/nfsews/services.svc';
             ConfigURL.ProCancelaNFSe        := 'http://177.101.230.30/nfsews/services.svc';
            end;
-   4118501: begin // Pato Branco/PR
-            ConfigURL.HomNomeCidade         := '';
-            ConfigURL.HomRecepcaoLoteRPS    := 'http://nfse.patobranco.pr.gov.br/NFSEWSTESTE/Services.svc';
-            ConfigURL.HomConsultaLoteRPS    := 'http://nfse.patobranco.pr.gov.br/NFSEWSTESTE/Services.svc';
-            ConfigURL.HomConsultaNFSeRPS    := 'http://nfse.patobranco.pr.gov.br/NFSEWSTESTE/Services.svc';
-            ConfigURL.HomConsultaSitLoteRPS := 'http://nfse.patobranco.pr.gov.br/NFSEWSTESTE/Services.svc';
-            ConfigURL.HomConsultaNFSe       := 'http://nfse.patobranco.pr.gov.br/NFSEWSTESTE/Services.svc';
-            ConfigURL.HomCancelaNFSe        := 'http://nfse.patobranco.pr.gov.br/NFSEWSTESTE/Services.svc';
-
-            ConfigURL.ProNomeCidade         := '';
-            ConfigURL.ProRecepcaoLoteRPS    := 'http://nfse.patobranco.pr.gov.br/NFSEws/Services.svc';
-            ConfigURL.ProConsultaLoteRPS    := 'http://nfse.patobranco.pr.gov.br/NFSEws/Services.svc';
-            ConfigURL.ProConsultaNFSeRPS    := 'http://nfse.patobranco.pr.gov.br/NFSEws/Services.svc';
-            ConfigURL.ProConsultaSitLoteRPS := 'http://nfse.patobranco.pr.gov.br/NFSEws/Services.svc';
-            ConfigURL.ProConsultaNFSe       := 'http://nfse.patobranco.pr.gov.br/NFSEws/Services.svc';
-            ConfigURL.ProCancelaNFSe        := 'http://nfse.patobranco.pr.gov.br/NFSEws/Services.svc';
-           end;
   4322400: begin // Uruguaiana/RS
             ConfigURL.HomNomeCidade         := '';
             ConfigURL.HomRecepcaoLoteRPS    := 'http://dueto-web.uruguaiana.rs.gov.br:7778/NFSEWSTESTE/Services.svc';
@@ -264,23 +298,6 @@ begin
             ConfigURL.ProConsultaNFSe       := 'http://dueto-web.uruguaiana.rs.gov.br:7778/NFSEWS/Services.svc';
             ConfigURL.ProCancelaNFSe        := 'http://dueto-web.uruguaiana.rs.gov.br:7778/NFSEWS/Services.svc';
            end;
-  4201307: begin // Araquari/SC
-            ConfigURL.HomNomeCidade         := '';
-            ConfigURL.HomRecepcaoLoteRPS    := 'http://201.14.131.162:8288/NFSEWSTESTE/Services.svc';
-            ConfigURL.HomConsultaLoteRPS    := 'http://201.14.131.162:8288/NFSEWSTESTE/Services.svc';
-            ConfigURL.HomConsultaNFSeRPS    := 'http://201.14.131.162:8288/NFSEWSTESTE/Services.svc'; 
-            ConfigURL.HomConsultaSitLoteRPS := 'http://201.14.131.162:8288/NFSEWSTESTE/Services.svc';
-            ConfigURL.HomConsultaNFSe       := 'http://201.14.131.162:8288/NFSEWSTESTE/Services.svc';
-            ConfigURL.HomCancelaNFSe        := 'http://201.14.131.162:8288/NFSEWSTESTE/Services.svc';
-
-            ConfigURL.ProNomeCidade         := '';
-            ConfigURL.ProRecepcaoLoteRPS    := 'http://201.14.131.162:8288/NFSEWS/Services.svc';
-            ConfigURL.ProConsultaLoteRPS    := 'http://201.14.131.162:8288/NFSEWS/Services.svc';
-            ConfigURL.ProConsultaNFSeRPS    := 'http://201.14.131.162:8288/NFSEWS/Services.svc';
-            ConfigURL.ProConsultaSitLoteRPS := 'http://201.14.131.162:8288/NFSEWS/Services.svc';
-            ConfigURL.ProConsultaNFSe       := 'http://201.14.131.162:8288/NFSEWS/Services.svc';
-            ConfigURL.ProCancelaNFSe        := 'http://201.14.131.162:8288/NFSEWS/Services.svc';
-           end;         
  end;
 
  Result := ConfigURL;
