@@ -91,7 +91,7 @@ uses Classes, SysUtils, Contnrs, ACBrConsts,
           ,FMX.Dialogs, System.UITypes
        {$ELSE}
           ,Dialogs
-       {$ENDIF}
+       {$IFEND}
      {$ENDIF};
 type
 
