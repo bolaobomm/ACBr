@@ -86,6 +86,7 @@ var
 begin
  case ACodCidade of
   3303302, // Niteroi/RJ
+  3147907, // Passos/MG
   4301602: // Bage/RS
           begin
            ConfigSchema.VersaoCabecalho := '1.00';
