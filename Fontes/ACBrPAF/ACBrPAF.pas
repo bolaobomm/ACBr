@@ -49,8 +49,15 @@ interface
 uses
    SysUtils, Classes, DateUtils,
    {$IFNDEF NOGUI}
-    {$IFDEF FPC} LResources,{$ENDIF}
-    {$IFDEF CLX} QForms, {$ELSE} Forms, {$ENDIF}
+    {$IFDEF FPC}LResources,{$ENDIF}
+    {$IF DEFINED(CLX)}
+       QForms,
+    {$ELSEIF DEFINED(FMX)}
+       FMX.Forms,
+    {$ELSE}
+       Forms,
+    {$IFEND}
+//    {$IFDEF CLX} QForms, {$ELSE} Forms, {$ENDIF}
    {$ENDIF}
    ACBrTXTClass, ACBrUtil, ACBrEAD, ACBrAAC,
    ACBrPAF_A, ACBrPAF_A_Class,
