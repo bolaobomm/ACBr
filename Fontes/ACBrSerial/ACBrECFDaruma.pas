@@ -648,7 +648,7 @@ const
     { 302 } 'Modalidade de Transporte inválida',
     { 303 } 'Categoria de Transporte inválida',
     { 304 } 'UF incompatível',
-    { 305 } 'Comando disponível apenas em CF genérico');
+    { 305 } 'Comando disponível apenas em CF genérico',
     { 306 } 'Erro não documentado',
     { 307 } 'Erro não documentado',
     { 308 } 'Erro não documentado',
@@ -743,9 +743,9 @@ const
     { 397 } 'Erro não documentado',
     { 398 } 'Erro não documentado',
     { 399 } 'Erro não documentado',
-    { 400 } 'Chave não carregada');
-    { 401 } 'Chave inválida');
-    { 402 } 'Erro na decodificação');
+    { 400 } 'Chave não carregada',
+    { 401 } 'Chave inválida',
+    { 402 } 'Erro na decodificação',
     { 403 } 'Erro na codificação');
 
 constructor TACBrECFDaruma.create( AOwner : TComponent ) ;
