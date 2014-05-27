@@ -1,33 +1,33 @@
-Ôªø{******************************************************************************}
+{******************************************************************************}
 { Projeto: Componentes ACBr                                                    }
-{  Biblioteca multiplataforma de componentes Delphi para intera√ß√£o com equipa- }
-{ mentos de Automa√ß√£o Comercial utilizados no Brasil                           }
+{  Biblioteca multiplataforma de componentes Delphi para interaÁ„o com equipa- }
+{ mentos de AutomaÁ„o Comercial utilizados no Brasil                           }
 {                                                                              }
 { Direitos Autorais Reservados (c) 2009   Isaque Pinheiro                      }
 {                                                                              }
 { Colaboradores nesse arquivo:                                                 }
 {                                                                              }
-{  Voc√™ pode obter a √∫ltima vers√£o desse arquivo na pagina do  Projeto ACBr    }
+{  VocÍ pode obter a ˙ltima vers„o desse arquivo na pagina do  Projeto ACBr    }
 { Componentes localizado em      http://www.sourceforge.net/projects/acbr      }
 {                                                                              }
-{  Esta biblioteca √© software livre; voc√™ pode redistribu√≠-la e/ou modific√°-la }
-{ sob os termos da Licen√ßa P√∫blica Geral Menor do GNU conforme publicada pela  }
-{ Free Software Foundation; tanto a vers√£o 2.1 da Licen√ßa, ou (a seu crit√©rio) }
-{ qualquer vers√£o posterior.                                                   }
+{  Esta biblioteca È software livre; vocÍ pode redistribuÌ-la e/ou modific·-la }
+{ sob os termos da LicenÁa P˙blica Geral Menor do GNU conforme publicada pela  }
+{ Free Software Foundation; tanto a vers„o 2.1 da LicenÁa, ou (a seu critÈrio) }
+{ qualquer vers„o posterior.                                                   }
 {                                                                              }
-{  Esta biblioteca √© distribu√≠da na expectativa de que seja √∫til, por√©m, SEM   }
-{ NENHUMA GARANTIA; nem mesmo a garantia impl√≠cita de COMERCIABILIDADE OU      }
-{ ADEQUA√á√ÉO A UMA FINALIDADE ESPEC√çFICA. Consulte a Licen√ßa P√∫blica Geral Menor}
-{ do GNU para mais detalhes. (Arquivo LICEN√áA.TXT ou LICENSE.TXT)              }
+{  Esta biblioteca È distribuÌda na expectativa de que seja ˙til, porÈm, SEM   }
+{ NENHUMA GARANTIA; nem mesmo a garantia implÌcita de COMERCIABILIDADE OU      }
+{ ADEQUA«√O A UMA FINALIDADE ESPECÕFICA. Consulte a LicenÁa P˙blica Geral Menor}
+{ do GNU para mais detalhes. (Arquivo LICEN«A.TXT ou LICENSE.TXT)              }
 {                                                                              }
-{  Voc√™ deve ter recebido uma c√≥pia da Licen√ßa P√∫blica Geral Menor do GNU junto}
-{ com esta biblioteca; se n√£o, escreva para a Free Software Foundation, Inc.,  }
-{ no endere√ßo 59 Temple Street, Suite 330, Boston, MA 02111-1307 USA.          }
-{ Voc√™ tamb√©m pode obter uma copia da licen√ßa em:                              }
+{  VocÍ deve ter recebido uma cÛpia da LicenÁa P˙blica Geral Menor do GNU junto}
+{ com esta biblioteca; se n„o, escreva para a Free Software Foundation, Inc.,  }
+{ no endereÁo 59 Temple Street, Suite 330, Boston, MA 02111-1307 USA.          }
+{ VocÍ tambÈm pode obter uma copia da licenÁa em:                              }
 { http://www.opensource.org/licenses/lgpl-license.php                          }
 {                                                                              }
-{ Daniel Sim√µes de Almeida  -  daniel@djsystem.com.br  -  www.djsystem.com.br  }
-{              Pra√ßa Anita Costa, 34 - Tatu√≠ - SP - 18270-410                  }
+{ Daniel Simıes de Almeida  -  daniel@djsystem.com.br  -  www.djsystem.com.br  }
+{              PraÁa Anita Costa, 34 - TatuÌ - SP - 18270-410                  }
 {                                                                              }
 {******************************************************************************}
 
@@ -35,7 +35,7 @@
 |* Historico
 |*
 |* 14/02/2014: Juliomar Marchetti
-|*  - Cria√ß√£o Bloco K
+|*  - CriaÁ„o Bloco K - alterado
 *******************************************************************************}
 
 unit ACBrEFDBloco_K;
@@ -72,8 +72,8 @@ type
 
   TRegistroK100 = class
   private
-    fDT_FIN: TDateTime; //Data inicial a que a apura√ß√£o se refere
-    fDT_INI: TDateTime; //Data final a que a apura√ß√£o se refere
+    fDT_FIN: TDateTime; //Data inicial a que a apuraÁ„o se refere
+    fDT_INI: TDateTime; //Data final a que a apuraÁ„o se refere
     FRegistroK200: TRegistroK200List;
     FRegistroK220: TRegistroK220List;
     FRegistroK230: TRegistroK230List;
@@ -133,7 +133,7 @@ type
     property Items[Index: Integer]: TRegistroK200 read GetItem write SetItem;
   end;
 
-  /// Registro K220 - OUTRAS MOVIMENTA√á√ïES INTERNA ENTRE MERCADORIAS
+  /// Registro K220 - OUTRAS MOVIMENTA«’ES INTERNA ENTRE MERCADORIAS
 
   TRegistroK220 = class
   private
@@ -225,7 +225,7 @@ type
     property Items[Index: Integer]: TRegistroK235 read GetItem write SetItem;
   end;
 
-  /// REGISTRO K250 ‚Äì INDUSTRIALIZA√á√ÉO EFETUADA POR TERCEIROS ‚Äì ITENS PRODUZIDOS
+  /// REGISTRO K250 ñ INDUSTRIALIZA«√O EFETUADA POR TERCEIROS ñ ITENS PRODUZIDOS
 
   TRegistroK250 = class
   private
@@ -255,7 +255,7 @@ type
     property Items[Index: Integer]: TRegistroK250 read GetItem write SetItem;
   end;
 
-  /// REGISTRO K255 ‚Äì INDUSTRIALIZA√á√ÉO EM TERCEIROS ‚Äì INSUMOS CONSUMIDOS
+  /// REGISTRO K255 ñ INDUSTRIALIZA«√O EM TERCEIROS ñ INSUMOS CONSUMIDOS
 
   TRegistroK255 = class
   private

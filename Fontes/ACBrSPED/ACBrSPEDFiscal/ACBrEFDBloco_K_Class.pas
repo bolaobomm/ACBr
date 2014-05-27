@@ -1,33 +1,33 @@
 {******************************************************************************}
 { Projeto: Componentes ACBr                                                    }
-{  Biblioteca multiplataforma de componentes Delphi para intera√ß√£o com equipa- }
-{ mentos de Automa√ß√£o Comercial utilizados no Brasil                           }
+{  Biblioteca multiplataforma de componentes Delphi para interaÁ„o com equipa- }
+{ mentos de AutomaÁ„o Comercial utilizados no Brasil                           }
 {                                                                              }
 { Direitos Autorais Reservados (c) 2009   Isaque Pinheiro                      }
 {                                                                              }
 { Colaboradores nesse arquivo:                                                 }
 {                                                                              }
-{  Voc√™ pode obter a √∫ltima vers√£o desse arquivo na pagina do  Projeto ACBr    }
+{  VocÍ pode obter a ˙ltima vers„o desse arquivo na pagina do  Projeto ACBr    }
 { Componentes localizado em      http://www.sourceforge.net/projects/acbr      }
 {                                                                              }
-{  Esta biblioteca √© software livre; voc√™ pode redistribu√≠-la e/ou modific√°-la }
-{ sob os termos da Licen√ßa P√∫blica Geral Menor do GNU conforme publicada pela  }
-{ Free Software Foundation; tanto a vers√£o 2.1 da Licen√ßa, ou (a seu crit√©rio) }
-{ qualquer vers√£o posterior.                                                   }
+{  Esta biblioteca È software livre; vocÍ pode redistribuÌ-la e/ou modific·-la }
+{ sob os termos da LicenÁa P˙blica Geral Menor do GNU conforme publicada pela  }
+{ Free Software Foundation; tanto a vers„o 2.1 da LicenÁa, ou (a seu critÈrio) }
+{ qualquer vers„o posterior.                                                   }
 {                                                                              }
-{  Esta biblioteca √© distribu√≠da na expectativa de que seja √∫til, por√©m, SEM   }
-{ NENHUMA GARANTIA; nem mesmo a garantia impl√≠cita de COMERCIABILIDADE OU      }
-{ ADEQUA√á√ÉO A UMA FINALIDADE ESPEC√çFICA. Consulte a Licen√ßa P√∫blica Geral Menor}
-{ do GNU para mais detalhes. (Arquivo LICEN√áA.TXT ou LICENSE.TXT)              }
+{  Esta biblioteca È distribuÌda na expectativa de que seja ˙til, porÈm, SEM   }
+{ NENHUMA GARANTIA; nem mesmo a garantia implÌcita de COMERCIABILIDADE OU      }
+{ ADEQUA«√O A UMA FINALIDADE ESPECÕFICA. Consulte a LicenÁa P˙blica Geral Menor}
+{ do GNU para mais detalhes. (Arquivo LICEN«A.TXT ou LICENSE.TXT)              }
 {                                                                              }
-{  Voc√™ deve ter recebido uma c√≥pia da Licen√ßa P√∫blica Geral Menor do GNU junto}
-{ com esta biblioteca; se n√£o, escreva para a Free Software Foundation, Inc.,  }
-{ no endere√ßo 59 Temple Street, Suite 330, Boston, MA 02111-1307 USA.          }
-{ Voc√™ tamb√©m pode obter uma copia da licen√ßa em:                              }
+{  VocÍ deve ter recebido uma cÛpia da LicenÁa P˙blica Geral Menor do GNU junto}
+{ com esta biblioteca; se n„o, escreva para a Free Software Foundation, Inc.,  }
+{ no endereÁo 59 Temple Street, Suite 330, Boston, MA 02111-1307 USA.          }
+{ VocÍ tambÈm pode obter uma copia da licenÁa em:                              }
 { http://www.opensource.org/licenses/lgpl-license.php                          }
 {                                                                              }
-{ Daniel Sim√µes de Almeida  -  daniel@djsystem.com.br  -  www.djsystem.com.br  }
-{              Pra√ßa Anita Costa, 34 - Tatu√≠ - SP - 18270-410                  }
+{ Daniel Simıes de Almeida  -  daniel@djsystem.com.br  -  www.djsystem.com.br  }
+{              PraÁa Anita Costa, 34 - TatuÌ - SP - 18270-410                  }
 {                                                                              }
 {******************************************************************************}
 
@@ -35,7 +35,7 @@
 |* Historico
 |*
 |* 14/02/2014: Juliomar Marchetti
-|*  - Cria√ß√£o bloco K
+|*  - CriaÁ„o bloco K - alterado
 *******************************************************************************}
 
 unit ACBrEFDBloco_K_Class;
@@ -120,9 +120,9 @@ begin
         with RegK001.RegistroK100.Items[intFor] do
         begin
           if (DT_INI < Bloco_0.DT_INI)or (DT_INI > Bloco_0.DT_FIN) then
-             raise Exception.Create('A data inicial est√° fora do periodo do EFD!');
+             raise Exception.Create('A data inicial est· fora do periodo do EFD!');
           if (DT_FIN < Bloco_0.DT_INI)or (DT_FIN > Bloco_0.DT_FIN) then
-             raise Exception.Create('A data final est√° fora do periodo do EFD!');
+             raise Exception.Create('A data final est· fora do periodo do EFD!');
 
           Add( LFill('K100') +
                LFill( DT_INI) +
@@ -134,7 +134,7 @@ begin
         end;
         RegistroK990.QTD_LIN_K := RegistroK990.QTD_LIN_K + 1;
      end;
-     /// Variav√©l para armazenar a quantidade de registro do tipo.
+     /// VariavÈl para armazenar a quantidade de registro do tipo.
      FRegistroK100Count := FRegistroK100Count + RegK001.RegistroK100.Count;
   end;
 end;
@@ -150,10 +150,10 @@ begin
         with RegK100.RegistroK200.Items[intFor] do
         begin
           if DT_EST <> DT_FIN then
-             raise Exception.Create('A data do estoque deve ser igual √† data final do per√≠odo de apura√ß√£o ‚Äì campo DT_FIN do Registro K100');
+             raise Exception.Create('A data do estoque deve ser igual ‡ data final do perÌodo de apuraÁ„o ñ campo DT_FIN do Registro K100');
           if IND_EST in [estPropInformanteTerceiros,estPropTerceirosInformante] then
              if Trim(COD_PART) = EmptyStr then
-                raise Exception.Create('O campo COD_PART ser√° obrigat√≥rio conforme informa√ß√£o do campo IND_EST');
+                raise Exception.Create('O campo COD_PART ser· obrigatÛrio conforme informaÁ„o do campo IND_EST');
 
           Add( LFill('K200') +
                LFill( DT_EST ) +
@@ -164,7 +164,7 @@ begin
         end;
         RegistroK990.QTD_LIN_K := RegistroK990.QTD_LIN_K + 1;
      end;
-     /// Variav√©l para armazenar a quantidade de registro do tipo.
+     /// VariavÈl para armazenar a quantidade de registro do tipo.
      FRegistroK200Count := FRegistroK200Count + RegK100.RegistroK200.Count;
   end;
 end;
@@ -180,7 +180,7 @@ begin
         with RegK100.RegistroK220.Items[intFor] do
         begin
           if (DT_MOV < DT_INI) or (DT_MOV > DT_FIN) then
-             raise Exception.Create('A data deve estar compreendida no per√≠odo informado nos campos DT_INI e DT_FIN do Registro K100');
+             raise Exception.Create('A data deve estar compreendida no perÌodo informado nos campos DT_INI e DT_FIN do Registro K100');
 
           Add( LFill('K220') +
                LFill( DT_MOV ) +
@@ -190,7 +190,7 @@ begin
         end;
         RegistroK990.QTD_LIN_K := RegistroK990.QTD_LIN_K + 1;
      end;
-     /// Variav√©l para armazenar a quantidade de registro do tipo.
+     /// VariavÈl para armazenar a quantidade de registro do tipo.
      FRegistroK220Count := FRegistroK220Count + RegK100.RegistroK220.Count;
   end;
 end;
@@ -220,7 +220,7 @@ begin
         end;
         RegistroK990.QTD_LIN_K := RegistroK990.QTD_LIN_K + 1;
      end;
-     /// Variav√©l para armazenar a quantidade de registro do tipo.
+     /// VariavÈl para armazenar a quantidade de registro do tipo.
      FRegistroK230Count := FRegistroK230Count + RegK100.RegistroK230.Count;
   end;
 end;
@@ -243,7 +243,7 @@ begin
         end;
         RegistroK990.QTD_LIN_K := RegistroK990.QTD_LIN_K + 1;
      end;
-     /// Variav√©l para armazenar a quantidade de registro do tipo.
+     /// VariavÈl para armazenar a quantidade de registro do tipo.
      FRegistroK235Count := FRegistroK235Count + RegK230.RegistroK235.Count;
   end;
 end;
@@ -265,7 +265,7 @@ begin
         end;
         RegistroK990.QTD_LIN_K := RegistroK990.QTD_LIN_K + 1;
      end;
-     /// Variav√©l para armazenar a quantidade de registro do tipo.
+     /// VariavÈl para armazenar a quantidade de registro do tipo.
      FRegistroK250Count := FRegistroK250Count + RegK100.RegistroK250.Count;
   end;
 end;
@@ -288,7 +288,7 @@ begin
         end;
         RegistroK990.QTD_LIN_K := RegistroK990.QTD_LIN_K + 1;
      end;
-     /// Variav√©l para armazenar a quantidade de registro do tipo.
+     /// VariavÈl para armazenar a quantidade de registro do tipo.
      FRegistroK255Count := FRegistroK255Count + RegK250.RegistroK255.Count;
   end;
 end;
@@ -354,7 +354,7 @@ var
 begin
    K100Count := FRegistroK001.RegistroK100.Count -1;
    if K100Count = -1 then
-      raise Exception.Create('O registro K200 deve ser filho do registro K100, e n√£o existe nenhum K100 pai!');
+      raise Exception.Create('O registro K200 deve ser filho do registro K100, e n„o existe nenhum K100 pai!');
    //
    K100   := FRegistroK001.RegistroK100.Items[K100Count];
    Result := K100.RegistroK200.New(K100);
@@ -367,7 +367,7 @@ var
 begin
    K100Count := FRegistroK001.RegistroK100.Count -1;
    if K100Count = -1 then
-      raise Exception.Create('O registro K220 deve ser filho do registro K100, e n√£o existe nenhum K100 pai!');
+      raise Exception.Create('O registro K220 deve ser filho do registro K100, e n„o existe nenhum K100 pai!');
    //
    K100   := FRegistroK001.RegistroK100.Items[K100Count];
    Result := K100.RegistroK220.New(K100);
@@ -380,7 +380,7 @@ var
 begin
    K100Count := FRegistroK001.RegistroK100.Count -1;
    if K100Count = -1 then
-      raise Exception.Create('O registro K230 deve ser filho do registro K100, e n√£o existe nenhum K100 pai!');
+      raise Exception.Create('O registro K230 deve ser filho do registro K100, e n„o existe nenhum K100 pai!');
    //
    K100   := FRegistroK001.RegistroK100.Items[K100Count];
    Result := K100.RegistroK230.New(K100);
@@ -395,7 +395,7 @@ begin
    K100Count := FRegistroK001.RegistroK100.Count -1;
    K230Count := FRegistroK001.RegistroK100.Items[K100Count].RegistroK230.Count -1;
    if K230Count = -1 then
-      raise Exception.Create('O registro K235 deve ser filho do registro K230, e n√£o existe nenhum K230 pai!');
+      raise Exception.Create('O registro K235 deve ser filho do registro K230, e n„o existe nenhum K230 pai!');
 
    K230   := FRegistroK001.RegistroK100.Items[K100Count].RegistroK230.Items[K230Count];
    Result := K230.RegistroK235.New(K230);
@@ -408,7 +408,7 @@ var
 begin
    K100Count := FRegistroK001.RegistroK100.Count -1;
    if K100Count = -1 then
-      raise Exception.Create('O registro K250 deve ser filho do registro K100, e n√£o existe nenhum K100 pai!');
+      raise Exception.Create('O registro K250 deve ser filho do registro K100, e n„o existe nenhum K100 pai!');
    //
    K100   := FRegistroK001.RegistroK100.Items[K100Count];
    Result := K100.RegistroK250.New(K100);
@@ -423,7 +423,7 @@ begin
    K100Count := FRegistroK001.RegistroK100.Count -1;
    K250Count := FRegistroK001.RegistroK100.Items[K100Count].RegistroK250.Count -1;
    if K250Count = -1 then
-      raise Exception.Create('O registro K255 deve ser filho do registro K250, e n√£o existe nenhum K250 pai!');
+      raise Exception.Create('O registro K255 deve ser filho do registro K250, e n„o existe nenhum K250 pai!');
 
    K250   := FRegistroK001.RegistroK100.Items[K100Count].RegistroK250.Items[K250Count];
    Result := K250.RegistroK255.New(K250);
