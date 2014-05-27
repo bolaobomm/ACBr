@@ -115,6 +115,8 @@ begin
     cURL_Producao := 'http://177.124.184.59:5660/IssWeb-ejb/IssWebWS/IssWebWS';
   1508407 : // Xinguara/PA
     cURL_Producao := 'http://177.23.231.79:5661/IssWeb-ejb/IssWebWS/IssWebWS?wsdl';
+  2101202 : // Bacabal/MA
+    cURL_Producao := 'http://finanbbl.ddns.us:8080/IssWeb-ejb/IssWebWS/IssWebWS';
   2103000 : // Caxias/MA
     cURL_Producao := 'http://177.105.209.118:8080/IssWeb-ejb/IssWebWS/IssWebWS';
   3504800 : // Balsamo/SP
@@ -135,6 +137,8 @@ begin
     cURL_Producao := 'http://intra.serranegra.sp.gov.br/IssWeb-ejb/IssWebWS/IssWebWS';
   5003207 : // Corumba/MS
     cURL_Producao := 'http://nfse.corumba.ms.gov.br:8080/IssWeb-ejb/IssWebWS/IssWebWS';
+  5102637 : // Campo Novo Do Parecis/MT
+    cURL_Producao := 'http://179.252.22.226:3394/IssWeb-ejb/IssWebWS/IssWebWS';
  end;
 
  ConfigURL.HomNomeCidade         := '';

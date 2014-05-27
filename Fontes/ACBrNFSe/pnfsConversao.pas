@@ -744,6 +744,7 @@ begin
 
   1100122, // Ji-Parana/RO
   1508407, // Xinguara/PA
+  2101202, // Bacabal/MA
   2103000, // Caxias/MA
   3504800, // Balsamo/SP
   3505203, // Bariri/SP
@@ -753,7 +754,8 @@ begin
   3540200, // Pontal/SP
   3549409, // Sao Joaquim Da Barra/SP
   3551603, // Serra Negra/SP
-  5003207  // Corumba/MS
+  5003207, // Corumba/MS
+  5102637  // Campo Novo Do Parecis/MT
          : Provedor := 'Fiorilli';
 
   1100304, // Vilhena/RO
@@ -872,6 +874,7 @@ begin
   3541505, // Presidente Venceslau/SP
   4101408, // Apucarana/PR
   4102000, // Assis Chateaubriand/PR
+  4118501, // Pato Branco/PR
   4205902, // Gaspar/SC
 //  4309407, // Guapore/RS
 //  4310207, // Ijui/RS
