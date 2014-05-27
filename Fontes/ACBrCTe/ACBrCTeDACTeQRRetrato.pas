@@ -115,7 +115,7 @@ type
     qrlFormaPagamento: TQRLabel;
     qrlInscSuframa: TQRLabel;
     qrb_07_HeaderItens: TQRBand;
-    QRLabel20: TQRLabel;
+    qrlDocOrig: TQRLabel;
     QRShape32: TQRShape;
     QRLabel91: TQRLabel;
     QRLabel92: TQRLabel;
@@ -864,7 +864,19 @@ begin
     end;
 
   end;
+
+  // Incluido por Italo em 27/05/2014
+  // Varrendo NFe Anulada
+  if FCTe.infCteAnu.chCTe <> '' then
+  begin
+   cdsDocumentos.Append;
+   cdsDocumentosTIPO_1.AsString := 'NF-E ' + copy(FCTe.infCteAnu.chCTe, 26, 9);
+   cdsDocumentosCNPJCPF_1.AsString := CTeUtil.FormatarChaveAcesso(FCTe.infCteAnu.chCTe, True);
+//   cdsDocumentos.Post;
+  end;
+
 {$ELSE}
+
   //Varrendo NF comum
   for I := 0 to (FCTe.Rem.InfNF.Count - 1) do
   begin
@@ -1055,8 +1067,8 @@ begin
         end;
       end;
     end;
-
   end;
+
 {$ENDIF}
 
   cdsDocumentos.First;
@@ -1923,6 +1935,12 @@ procedure TfrmDACTeQRRetrato.qrb_07_HeaderItensBeforePrint(
   Sender: TQRCustomBand; var PrintBand: Boolean);
 begin
   inherited;
+
+  if (FCTe.Ide.tpCTe = tcAnulacao) then
+    qrlDocOrig.Caption := 'DOCUMENTO ANULADO'
+  else
+    qrlDocOrig.Caption := 'DOCUMENTOS ORIGINÁRIOS';
+
   // Imprime os Documentos Originários se o Tipo de CTe for Normal
 end;
 
@@ -1934,7 +1952,7 @@ begin
 
   // Imprime os Documentos Originários se o Tipo de CTe for Normal
   // TpcteTipoCTe = (tcNormal, tcComplemento, tcAnulacao, tcSubstituto);
-  qrb_08_Itens.Enabled:=(FCTe.Ide.tpCTe = tcNormal) or (FCTe.Ide.tpCTe = tcComplemento) or (FCTe.Ide.tpCTe = tcSubstituto);
+  qrb_08_Itens.Enabled:=(FCTe.Ide.tpCTe = tcNormal) or (FCTe.Ide.tpCTe = tcComplemento) or (FCTe.Ide.tpCTe = tcSubstituto) or (FCTe.Ide.tpCTe = tcAnulacao);
 
   for i := 1 to 2 do
     if Trim(cdsDocumentos.FieldByName('DOCUMENTO_' + IntToStr(i)).AsString) = '' then

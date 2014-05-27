@@ -1156,7 +1156,7 @@ inherited frmDACTeQRRetrato: TfrmDACTeQRRetrato
         ExportAs = exptText
         FontSize = 5
       end
-      object QRLabel20: TQRLabel
+      object qrlDocOrig: TQRLabel
         Left = 6
         Top = 2
         Width = 731
