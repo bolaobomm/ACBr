@@ -84,8 +84,11 @@ uses Classes, SysUtils, Contnrs, ACBrConsts,
         Windows, ACBrD5
      {$ENDIF}
      {$IFNDEF NOGUI}
-       {$IFDEF VisualCLX}
+//       {$IFDEF VisualCLX}
+       {$IF DEFINED(VisualCLX)}
           ,QDialogs
+       {$ELSEIF DEFINED(FMX)}
+          ,FMX.Dialogs, System.UITypes
        {$ELSE}
           ,Dialogs
        {$ENDIF}
@@ -205,7 +208,11 @@ begin
       Msg := ACBrStr( AnsiString( Msg ) ) ;
     {$ENDIF}
 
+    {$IFDEF FMX}
+     MessageDlg(Msg, TMsgDlgType.mtInformation, [TMsgDlgBtn.mbOK],0);
+    {$ELSE}
      MessageDlg(Msg ,mtInformation ,[mbOk],0) ;
+    {$ENDIF}
  {$ENDIF}
 end;
 
