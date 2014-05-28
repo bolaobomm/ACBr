@@ -58,7 +58,7 @@ Const
    CACBrTEFD_CliSiTef_TransacaoEfetuadaReImprimir =
       'Transação TEF efetuada.'        + sLineBreak+
       'Favor reimprimir último Cupom.' + sLineBreak +
-      'NSU: %s'                        + sLineBreak +
+      '%s'                             + sLineBreak +
       '(Para Cielo utilizar os 6 últimos dígitos.)';
    CACBrTEFD_CliSiTef_NaoInicializado = 'CliSiTEF não inicializado' ;
    CACBrTEFD_CliSiTef_NaoConcluido = 'Requisição anterior não concluida' ;
@@ -157,24 +157,39 @@ type
      xContinuaFuncaoSiTefInterativo : function (
                 var ProximoComando: Integer;
                 var TipoCampo: Integer;
-                var TamanhoMinimo: smallint;
-                var TamanhoMaximo: smallint;
+                var TamanhoMinimo: SmallInt;
+                var TamanhoMaximo: SmallInt;
                 pBuffer: PAnsiChar;
                 TamMaxBuffer: Integer;
                 ContinuaNavegacao: Integer ): integer;
                 {$IFDEF LINUX} cdecl {$ELSE} stdcall {$ENDIF} ;
 
      xEscreveMensagemPermanentePinPad: function(Mensagem:PAnsiChar):Integer;
-     {$IFDEF LINUX} cdecl {$ELSE} stdcall {$ENDIF} ;           
+        {$IFDEF LINUX} cdecl {$ELSE} stdcall {$ENDIF} ;
 
      xObtemQuantidadeTransacoesPendentes: function(
         DataFiscal:AnsiString;
         NumeroCupon:AnsiString):Integer;
-     {$IFDEF LINUX} cdecl {$ELSE} stdcall {$ENDIF} ;        
+        {$IFDEF LINUX} cdecl {$ELSE} stdcall {$ENDIF} ;
+
+     xEnviaRecebeSiTefDireto : function (
+        RedeDestino: SmallInt;
+        FuncaoSiTef: SmallInt;
+        OffsetCartao: SmallInt;
+        DadosTx: AnsiString;
+        TamDadosTx: SmallInt;
+        DadosRx: PAnsiChar;
+        TamMaxDadosRx: SmallInt;
+        var CodigoResposta: SmallInt;
+        TempoEsperaRx: SmallInt;
+        CuponFiscal: AnsiString;
+        DataFiscal: AnsiString;
+        Horario: AnsiString;
+        Operador: AnsiString;
+        TipoTransacao: SmallInt): Integer;
+        {$IFDEF LINUX} cdecl {$ELSE} stdcall {$ENDIF} ;
         
      procedure AvaliaErro(Sts : Integer);
-     procedure FinalizarTransacao( Confirma : Boolean;
-        DocumentoVinculado : AnsiString);
      procedure LoadDLLFunctions;
      procedure UnLoadDLLFunctions;
      procedure SetParametrosAdicionais(const AValue : TStringList) ;
@@ -229,6 +244,14 @@ type
      Function DefineMensagemPermanentePinPad(Mensagem:AnsiString):Integer;
      Function ObtemQuantidadeTransacoesPendentes(Data:TDateTime;
         CupomFiscal:AnsiString):Integer;
+     Function EnviaRecebeSiTefDireto( RedeDestino: SmallInt;
+        FuncaoSiTef: SmallInt; OffsetCartao: SmallInt; DadosTx: AnsiString;
+        var DadosRx: AnsiString; var CodigoResposta: SmallInt;
+        TempoEsperaRx: SmallInt; CuponFiscal: AnsiString;
+        Confirmar: Boolean): Integer;
+     procedure FinalizarTransacao( Confirma : Boolean;
+        DocumentoVinculado : AnsiString);
+
    published
      property EnderecoIP     : AnsiString read fEnderecoIP     write fEnderecoIP ;
      property CodigoLoja     : AnsiString read fCodigoLoja     write fCodigoLoja ;
@@ -459,6 +482,7 @@ begin
   xFinalizaTransacaoSiTefInterativo := nil ;
   xEscreveMensagemPermanentePinPad  := nil; 
   xObtemQuantidadeTransacoesPendentes := nil;
+  xEnviaRecebeSiTefDireto := nil;
 
   fOnExibeMenu  := nil ;
   fOnObtemCampo := nil ;
@@ -516,6 +540,7 @@ begin
    CliSiTefFunctionDetect('FinalizaTransacaoSiTefInterativo', @xFinalizaTransacaoSiTefInterativo);
    CliSiTefFunctionDetect('EscreveMensagemPermanentePinPad',@xEscreveMensagemPermanentePinPad);
    CliSiTefFunctionDetect('ObtemQuantidadeTransacoesPendentes',@xObtemQuantidadeTransacoesPendentes);
+   CliSiTefFunctionDetect('EnviaRecebeSiTefDireto',@xEnviaRecebeSiTefDireto);
 end ;
 
 procedure TACBrTEFDCliSiTef.UnLoadDLLFunctions;
@@ -534,6 +559,7 @@ begin
   xFinalizaTransacaoSiTefInterativo   := Nil;
   xEscreveMensagemPermanentePinPad    := Nil;
   xObtemQuantidadeTransacoesPendentes := Nil;
+  xEnviaRecebeSiTefDireto             := Nil;
 end;
 
 procedure TACBrTEFDCliSiTef.SetParametrosAdicionais(const AValue : TStringList
@@ -658,7 +684,7 @@ begin
    {Nada a Fazer}
 end;
 
-Procedure TACBrTEFDCliSiTef.ATV ;
+procedure TACBrTEFDCliSiTef.ATV;
 var
    Sts : Integer;
 begin
@@ -674,7 +700,7 @@ begin
         ProcessarResposta;
 end;
 
-Function TACBrTEFDCliSiTef.ADM : Boolean;
+function TACBrTEFDCliSiTef.ADM: Boolean;
 var
    Sts : Integer;
 begin
@@ -692,8 +718,8 @@ begin
         ProcessarResposta;
 end;
 
-Function TACBrTEFDCliSiTef.CRT( Valor : Double; IndiceFPG_ECF : String;
-   DocumentoVinculado : String = ''; Moeda : Integer = 0 ) : Boolean;
+function TACBrTEFDCliSiTef.CRT(Valor: Double; IndiceFPG_ECF: String;
+  DocumentoVinculado: String; Moeda: Integer): Boolean;
 var
   Sts : Integer;
   Restr : AnsiString ;
@@ -717,11 +743,11 @@ begin
      ProcessarRespostaPagamento( IndiceFPG_ECF, Valor );
 end;
 
-Function TACBrTEFDCliSiTef.CHQ(Valor : Double; IndiceFPG_ECF : String;
-   DocumentoVinculado : String; CMC7 : String; TipoPessoa : AnsiChar;
-   DocumentoPessoa : String; DataCheque : TDateTime; Banco : String;
-   Agencia : String; AgenciaDC : String; Conta : String; ContaDC : String;
-   Cheque : String; ChequeDC : String; Compensacao: String) : Boolean ;
+function TACBrTEFDCliSiTef.CHQ(Valor: Double; IndiceFPG_ECF: String;
+  DocumentoVinculado: String; CMC7: String; TipoPessoa: AnsiChar;
+  DocumentoPessoa: String; DataCheque: TDateTime; Banco: String;
+  Agencia: String; AgenciaDC: String; Conta: String; ContaDC: String;
+  Cheque: String; ChequeDC: String; Compensacao: String): Boolean;
 var
   Sts : Integer;
   Restr : AnsiString ;
@@ -771,16 +797,16 @@ begin
      ProcessarRespostaPagamento( IndiceFPG_ECF, Valor );
 end;
 
-Procedure TACBrTEFDCliSiTef.CNF(Rede, NSU, Finalizacao : String;
-   DocumentoVinculado : String) ;
+procedure TACBrTEFDCliSiTef.CNF(Rede, NSU, Finalizacao: String;
+  DocumentoVinculado: String);
 begin
   // CliSiTEF não usa Rede, NSU e Finalizacao
 
   FinalizarTransacao( True, DocumentoVinculado );
 end;
 
-Function TACBrTEFDCliSiTef.CNC(Rede, NSU : String;
-   DataHoraTransacao : TDateTime; Valor : Double) : Boolean;
+function TACBrTEFDCliSiTef.CNC(Rede, NSU: String; DataHoraTransacao: TDateTime;
+  Valor: Double): Boolean;
 var
    Sts : Integer;
 begin
@@ -803,8 +829,8 @@ begin
         ProcessarResposta;
 end;
 
-Procedure TACBrTEFDCliSiTef.NCN(Rede, NSU, Finalizacao : String;
-   Valor : Double; DocumentoVinculado : String) ;
+procedure TACBrTEFDCliSiTef.NCN(Rede, NSU, Finalizacao: String; Valor: Double;
+  DocumentoVinculado: String);
 begin
   // CliSiTEF não usa Rede, NSU, Finalizacao e Valor
 
@@ -823,9 +849,44 @@ begin
       raise Exception.Create( ACBrStr( CACBrTEFD_CliSiTef_NaoInicializado ) ) ;
 end;
 
-Function TACBrTEFDCliSiTef.FazerRequisicao( Funcao : Integer;
-   AHeader : AnsiString = ''; Valor : Double = 0; Documento : AnsiString = '';
-   ListaRestricoes : AnsiString = '') : Integer ;
+function TACBrTEFDCliSiTef.EnviaRecebeSiTefDireto(RedeDestino: SmallInt;
+  FuncaoSiTef: SmallInt; OffsetCartao: SmallInt; DadosTx: AnsiString;
+  var DadosRx: AnsiString; var CodigoResposta: SmallInt;
+  TempoEsperaRx: SmallInt; CuponFiscal: AnsiString; Confirmar: Boolean
+  ): Integer;
+var
+  Buffer: array [0..20000] of AnsiChar;
+  ANow: TDateTime;
+  DataStr, HoraStr: String;
+begin
+  ANow    := Now ;
+  DataStr := FormatDateTime('YYYYMMDD', ANow );
+  HoraStr := FormatDateTime('HHNNSS', ANow );
+  FillChar(Buffer, SizeOf(Buffer), 0);
+
+  GravaLog( 'EnviaRecebeSiTefDireto -> Rede:' +IntToStr(RedeDestino) +', Funcao:'+
+            IntToStr(FuncaoSiTef)+', OffSetCartao:'+IntToStr(OffsetCartao)+', DadosTX:'+
+            DadosTx+', TimeOut'+IntToStr(TempoEsperaRx)+' Cupom:'+CuponFiscal+', '+
+            ifthen(Confirmar,'Confirmar','NAO Confirmar'), True );
+
+  Result := xEnviaRecebeSiTefDireto( RedeDestino,
+                           FuncaoSiTef,
+                           OffsetCartao,
+                           DadosTx,
+                           Length(DadosTx)+1,
+                           Buffer,
+                           SizeOf(Buffer),
+                           CodigoResposta,
+                           TempoEsperaRx,
+                           CuponFiscal, DataStr, HoraStr, fOperador,
+                           IfThen(Confirmar,1,0) );
+
+  DadosRx := TrimRight( LeftStr(Buffer,max(Result,0)) ) ;
+end;
+
+function TACBrTEFDCliSiTef.FazerRequisicao(Funcao: Integer;
+  AHeader: AnsiString; Valor: Double; Documento: AnsiString;
+  ListaRestricoes: AnsiString): Integer;
 Var
   ValorStr, DataStr, HoraStr : AnsiString;
   ANow : TDateTime ;
@@ -888,8 +949,8 @@ begin
    end;
 end;
 
-Function TACBrTEFDCliSiTef.ContinuarRequisicao( ImprimirComprovantes : Boolean )
-  : Integer;
+function TACBrTEFDCliSiTef.ContinuarRequisicao(ImprimirComprovantes: Boolean
+  ): Integer;
 var
   ProximoComando, TipoCampo, Continua, ItemSelecionado, I: Integer;
   TamanhoMinimo, TamanhoMaximo : SmallInt ;
@@ -1350,8 +1411,8 @@ begin
 *)
 end ;
 
-Function TACBrTEFDCliSiTef.ProcessarRespostaPagamento(
-   const IndiceFPG_ECF : String; const Valor : Double) : Boolean; 
+function TACBrTEFDCliSiTef.ProcessarRespostaPagamento(
+  const IndiceFPG_ECF: String; const Valor: Double): Boolean;
 var
   ImpressaoOk : Boolean;
   RespostaPendente : TACBrTEFDResp ;

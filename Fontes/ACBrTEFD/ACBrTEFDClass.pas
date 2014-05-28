@@ -59,7 +59,7 @@ type TModalResult = (mrNone = 0, mrYes = 6, mrNo = 7, mrOK = 1, mrCancel = 2, mr
 {$ENDIF}
 
 const
-   CACBrTEFD_Versao      = '4.3.8' ;
+   CACBrTEFD_Versao      = '4.3.9' ;
    CACBrTEFD_EsperaSTS   = 7 ;
    CACBrTEFD_EsperaSleep = 250 ;
    CACBrTEFD_NumVias     = 2 ;
@@ -629,7 +629,7 @@ type
 
      property AguardandoResposta : Boolean read fpAguardandoResposta ;
 
-     procedure GravaLog(AString: AnsiString);
+     procedure GravaLog(AString: AnsiString; Traduz: Boolean = False);
 
      property Inicializado : Boolean read fpInicializado write SetInicializado ;
      procedure VerificaInicializado ;
@@ -711,7 +711,7 @@ function NomeCampo(const Identificacao: Integer; const Sequencia: Integer ): Str
 
 implementation
 
-Uses ACBrUtil, ACBrTEFD, dateutils, StrUtils, Math, ACBrTEFDCliSiTef,
+Uses ACBrUtil, ACBrConsts, ACBrTEFD, dateutils, StrUtils, Math, ACBrTEFDCliSiTef,
      ACBrTEFDVeSPague ;
 
 function NomeCampo(const Identificacao: Integer; const Sequencia: Integer): String;
@@ -2457,7 +2457,7 @@ begin
            TACBrTEFD(Owner).RespostasPendentes.Add( RespostaConfirmada );
 
            if Trim(Resp.NSU) <> '' then
-              NSUs := NSUs + Resp.NSU + sLineBreak;
+              NSUs := NSUs + 'NSU: ' + Resp.NSU + sLineBreak;
 
            SysUtils.DeleteFile( ArquivosVerficar[ 0 ] );
            ArquivosVerficar.Delete( 0 );
@@ -2715,14 +2715,52 @@ begin
    fpNumVias := AValue;
 end;
 
-procedure TACBrTEFDClass.GravaLog(AString : AnsiString);
+procedure TACBrTEFDClass.GravaLog(AString : AnsiString; Traduz : Boolean);
+Var Buf, Ch : AnsiString ;
+    I   : Integer ;
+    ASC : Byte ;
 begin
   if fArqLOG = '' then
      exit ;
 
+  if not Traduz then
+     Buf := AString
+  else
+   begin
+     Buf := '' ;
+     For I := 1 to Length(AString) do
+     begin
+        ASC := Ord(AString[I]) ;
+
+        case AString[I] of
+           NUL   : Ch := '[NUL]' ;
+           SOH   : Ch := '[SOH]' ;
+           STX   : Ch := '[STX]' ;
+           ETX   : Ch := '[ETX]' ;
+           ENQ   : Ch := '[ENQ]' ;
+           ACK   : Ch := '[ACK]' ;
+           TAB   : Ch := '[TAB]' ;
+           BS    : Ch := '[BS]' ;
+           LF    : Ch := '[LF]' ;
+           FF    : Ch := '[FF]' ;
+           CR    : Ch := '[CR]' ;
+           WAK   : Ch := '[WAK]' ;
+           NAK   : Ch := '[NAK]' ;
+           ESC   : Ch := '[ESC]' ;
+           FS    : Ch := '[FS]' ;
+           GS    : Ch := '[GS]' ;
+           #32..#126 : Ch := AString[I] ;
+        else ;
+          Ch := '['+IntToStr(ASC)+']'
+        end;
+
+        Buf := Buf + Ch ;
+     end ;
+   end ;
+
   try
      WriteToTXT( fArqLOG, '-- '+FormatDateTime('dd/mm hh:nn:ss:zzz',now) +
-                          ' - ' + AString, True);
+                          ' - ' + Buf, True);
   except
   end ;
 end;

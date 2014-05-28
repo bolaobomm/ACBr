@@ -47,6 +47,13 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+Data: 28/05/2014
+[*] Ajuste solicitado pela Certified para exibição de multiplos NSU
+    www.projetoacbr.com.br/forum/index.php?showtopic=15632
+[*] Adicionada interface para método da CliSiTef "EnviaRecebeSiTefDireto"
+    (por: DSA)
+[*] Melhoria na gravação de caracteres especiais no LOG  (por: DSA)
+
 Data: 09/02/2014
 [-] Correção em TACBrTEFDArquivo.GravarArquivo, para criar corretamente os
     arquivos em disco.                                       (por: DSA)
