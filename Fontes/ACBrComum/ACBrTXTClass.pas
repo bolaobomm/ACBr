@@ -80,8 +80,8 @@ type
     function DFill(Value: Double;
                    Decimal: Integer = 2;
                    Nulo: Boolean = false): String; overload;
-    function DFill(Value: Variant;
-                   Decimal: Integer = 2): String; overload;
+//    function DFill(Value: Variant;
+//                   Decimal: Integer = 2): String; overload;
     function LFill(Value: String;
                    Size: Integer = 0;
                    Nulo: Boolean = false;
@@ -94,11 +94,11 @@ type
                    Mascara: String = ''): String; overload;
     function LFill(Value: Integer; Size: Integer; Nulo: Boolean = false; Caracter: Char = '0'): String; overload;
     function LFill(Value: TDateTime; Mask: String = 'ddmmyyyy'; Nulo: Boolean = True): String; overload;
-    function LFill(Value: Variant;
-                   Size: Integer;
-                   Decimal: Integer = 2;
-                   Caracter: Char = '0';
-                   Mascara: String = ''): String; overload;
+//    function LFill(Value: Variant;
+//                   Size: Integer;
+//                   Decimal: Integer = 2;
+//                   Caracter: Char = '0';
+//                   Mascara: String = ''): String; overload;
     function RFill(Value: String;
                    Size: Integer = 0;
                    Caracter: Char = ' '): String; overload;
@@ -303,6 +303,7 @@ begin
   Result := FDelimitador + FormatFloat('#0.' + StringOfChar('0', Decimal), Value); //FormatCurr não permite precisão acima de 4 casas decimais
 end;
 
+{
 function TACBrTXTClass.DFill(Value: Variant;
                         Decimal: Integer = 2): String;
 begin
@@ -314,6 +315,7 @@ begin
   end;
   Result := FDelimitador + FormatFloat('#0.' + StringOfChar('0', Decimal), Value); //FormatCurr não permite precisão acima de 4 casas decimais
 end;
+}
 
 function TACBrTXTClass.LFill(Value: Integer; Size: Integer; Nulo: Boolean = false; Caracter: Char = '0'): String;
 begin
@@ -354,6 +356,7 @@ begin
    FNomeArquivo := AValue;
 end;
 
+{
 function TACBrTXTClass.LFill(Value: Variant;
                              Size: Integer;
                              Decimal: Integer;
@@ -389,5 +392,6 @@ begin
   else
      Result := LFill(Trunc(Value * intP), Size, False, Caracter);
 end;
+}
 
 end.
