@@ -97,6 +97,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+Data: 28/05/2014
+-- ACBrECFEpson --
+[*] Adicionada verificação para evitar erro de Impressão em Linha de CCD ou
+    Gerencial, pois o ECF não suporta o caracteres inferores a #32  (por: DSA)
+
 Data: 21/05/2014
 -- ACBrECF --
 [+] Nova Propriedade, ControlePorta: Boolean = false

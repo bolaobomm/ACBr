@@ -387,6 +387,7 @@ TACBrECFEpson = class( TACBrECFClass )
 
 function EpsonCheckSum(Dados: AnsiString): AnsiString;
 function RemoveEsc(const Campo : AnsiString) : AnsiString ;
+function RemoveCaracteresNaoImprimiveis(const AString : AnsiString) : AnsiString ;
 Function InsertEsc(const Campo: AnsiString): AnsiString ;
 
 implementation
@@ -433,6 +434,24 @@ begin
        Inc(I);
 
     Result := Result + Campo[I];
+    Inc(I);
+  end ;
+end ;
+
+function RemoveCaracteresNaoImprimiveis(const AString : AnsiString) : AnsiString ;
+Var
+  I, L, A : Integer ;
+begin
+  Result := '' ;
+  L := Length(AString);
+  I := 1 ;
+
+  while I <= L do
+  begin
+    A := Ord(AString[I]) ;
+    if A >= 32 then
+       Result := Result + AString[I];
+
     Inc(I);
   end ;
 end ;
@@ -2433,8 +2452,8 @@ begin
      SL.Text := Linha ;
      For I := 0 to SL.Count-1 do
      begin
-        // Epson não consegue imprimir FF em Linha de Gerencial o CCD, retorna Erro //
-        L := StringReplace( SL[I], FF, '', [rfReplaceAll] ) ;
+        // Epson não consegue imprimir Caracteres abaixo de 32 em Linha de Gerencial ou CCD, retorna Erro //
+        L := RemoveCaracteresNaoImprimiveis( SL[I] );
 
         EpsonComando.Comando  := '0E02' ;
         EpsonComando.AddParamString( L ) ;
