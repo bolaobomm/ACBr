@@ -347,7 +347,7 @@ begin
           FieldByName('TXTSITTRIB').AsString := CSTICMSToStr(cstICMSOutraUF) + '-' + CSTICMSToStrTagPosText(cstICMSOutraUF);
           FieldByName('pRedBC').AsFloat := FCTe.Imp.ICMS.ICMSOutraUF.pRedBCOutraUF;
           FieldByName('vBC').AsFloat := FCTe.Imp.ICMS.ICMSOutraUF.vBCOutraUF;
-          FieldByName('pICMS').AsFloat := FCTe.Imp.ICMS.ICMSOutraUF.pRedBCOutraUF;
+          FieldByName('pICMS').AsFloat := FCTe.Imp.ICMS.ICMSOutraUF.pICMSOutraUF;// pRedBCOutraUF;
           FieldByName('vICMS').AsFloat := FCTe.Imp.ICMS.ICMSOutraUF.vICMSOutraUF;
         end;
       cstICMSSN:
@@ -1103,7 +1103,7 @@ begin
     begin
       wObs:='';
       for I := 0 to FCTe.compl.ObsCont.Count - 1 do
-        wObs:= FCTe.compl.ObsCont[i].xCampo+' : '+FCTe.compl.ObsCont[i].xTexto+';';
+        wObs:= wObs + FCTe.compl.ObsCont[i].xCampo+' : '+FCTe.compl.ObsCont[i].xTexto+';';
 
       vTemp := TStringList.Create;
       try
@@ -1341,11 +1341,11 @@ begin
           if (not ((DFeUtil.EstaVazio(FDACTEClassOwner.ProtocoloCTE)) and
             (DFeUtil.EstaVazio(FCTe.procCTe.nProt)))) and
             (FCTe.procCTe.cStat = 101) then
-            FieldByName('Mensagem0').AsString := 'CTe Cancelada'
+            FieldByName('Mensagem0').AsString := 'CTe Cancelado'
           else
           begin
             if FDACTEClassOwner.CTeCancelada then
-              FieldByName('Mensagem0').AsString := 'CTe Cancelada'
+              FieldByName('Mensagem0').AsString := 'CTe Cancelado'
             else
               FieldByName('Mensagem0').AsString := '';
           end;
