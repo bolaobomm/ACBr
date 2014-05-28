@@ -162,6 +162,9 @@ type
     RLLabel58: TRLLabel;
     RLLabel59: TRLLabel;
     RLDraw7: TRLDraw;
+    RLLabel60: TRLLabel;
+    RLLabel61: TRLLabel;
+    rllTomaInscEstadual: TRLLabel;
     procedure rlbCabecalhoBeforePrint(Sender: TObject; var PrintIt: Boolean);
     procedure rlbPrestadorBeforePrint(Sender: TObject; var PrintIt: Boolean);
     procedure rlbTomadorBeforePrint(Sender: TObject; var PrintIt: Boolean);
@@ -418,6 +421,7 @@ begin
 *)
 
  rllPrestCNPJ.Caption := DFeUtil.FormatarCNPJ( FNFSe.PrestadorServico.IdentificacaoPrestador.Cnpj );//Astrogildo em 13/12/12
+ rllTomaInscEstadual.Caption := FNFSe.Tomador.IdentificacaoTomador.InscricaoEstadual;
  rllPrestInscMunicipal.Caption := FNFSe.PrestadorServico.IdentificacaoPrestador.InscricaoMunicipal;
  rllPrestNome.Caption := FNFSe.PrestadorServico.RazaoSocial;
  rllPrestEndereco.Caption := Trim( FNFSe.PrestadorServico.Endereco.Endereco )+', '+

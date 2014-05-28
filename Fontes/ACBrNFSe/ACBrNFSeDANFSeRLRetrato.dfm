@@ -1,24 +1,27 @@
 inherited frlDANFSeRLRetrato: TfrlDANFSeRLRetrato
   Caption = 'frlDANFSeRLRetrato'
-  ExplicitWidth = 866
-  ExplicitHeight = 576
+  ClientHeight = 698
+  ClientWidth = 1073
+  ExplicitTop = -6
+  ExplicitWidth = 1089
+  ExplicitHeight = 736
   PixelsPerInch = 96
   TextHeight = 13
   inherited RLNFSe: TRLReport
-    Left = 76
-    Top = -528
+    Left = 140
+    Top = -456
     Margins.LeftMargin = 6.000000000000000000
     Margins.TopMargin = 8.000000000000000000
     Margins.RightMargin = 5.099999999999999000
     Margins.BottomMargin = 8.000000000000000000
     BeforePrint = RLNFSeBeforePrint
-    ExplicitLeft = 76
-    ExplicitTop = -528
+    ExplicitLeft = 140
+    ExplicitTop = -456
     object rlbCabecalho: TRLBand
       Left = 23
       Top = 30
       Width = 752
-      Height = 186
+      Height = 187
       BandType = btHeader
       Borders.Sides = sdCustom
       Borders.DrawLeft = True
@@ -603,10 +606,10 @@ inherited frlDANFSeRLRetrato: TfrlDANFSeRLRetrato
         ParentFont = False
       end
       object rlmPrefeitura: TRLMemo
-        Left = 136
-        Top = 40
+        Left = 138
+        Top = 4
         Width = 458
-        Height = 89
+        Height = 92
         Alignment = taCenter
         AutoSize = False
         Behavior = [beSiteExpander]
@@ -618,10 +621,24 @@ inherited frlDANFSeRLRetrato: TfrlDANFSeRLRetrato
         ParentFont = False
         Transparent = False
       end
+      object RLLabel60: TRLLabel
+        Left = 186
+        Top = 114
+        Width = 347
+        Height = 22
+        Caption = 'Nota Fiscal de Servi'#231'o Eletr'#244'nica - NFS-e'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWindowText
+        Font.Height = -19
+        Font.Name = 'Times New Roman'
+        Font.Style = [fsBold]
+        ParentFont = False
+        Transparent = False
+      end
     end
     object rlbPrestador: TRLBand
       Left = 23
-      Top = 216
+      Top = 217
       Width = 752
       Height = 122
       BandType = btTitle
@@ -1248,7 +1265,7 @@ inherited frlDANFSeRLRetrato: TfrlDANFSeRLRetrato
     end
     object rlbTomador: TRLBand
       Left = 23
-      Top = 338
+      Top = 339
       Width = 752
       Height = 122
       BandType = btTitle
@@ -1301,7 +1318,7 @@ inherited frlDANFSeRLRetrato: TfrlDANFSeRLRetrato
         Transparent = False
       end
       object RLLabel11: TRLLabel
-        Left = 430
+        Left = 488
         Top = 54
         Width = 97
         Height = 14
@@ -1315,7 +1332,7 @@ inherited frlDANFSeRLRetrato: TfrlDANFSeRLRetrato
         Transparent = False
       end
       object rllTomaInscMunicipal: TRLLabel
-        Left = 534
+        Left = 592
         Top = 54
         Width = 118
         Height = 13
@@ -1514,12 +1531,39 @@ inherited frlDANFSeRLRetrato: TfrlDANFSeRLRetrato
         ParentFont = False
         Transparent = False
       end
+      object RLLabel61: TRLLabel
+        Left = 252
+        Top = 54
+        Width = 89
+        Height = 14
+        Caption = 'Inscri'#231#227'o Estadual:'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWindowText
+        Font.Height = -11
+        Font.Name = 'Times New Roman'
+        Font.Style = []
+        ParentFont = False
+        Transparent = False
+      end
+      object rllTomaInscEstadual: TRLLabel
+        Left = 356
+        Top = 54
+        Width = 109
+        Height = 13
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWindowText
+        Font.Height = -11
+        Font.Name = 'Times New Roman'
+        Font.Style = [fsBold]
+        ParentFont = False
+        Transparent = False
+      end
     end
     object rlbHeaderItens: TRLBand
       Left = 23
-      Top = 460
+      Top = 461
       Width = 752
-      Height = 29
+      Height = 22
       BandType = btColumnHeader
       Borders.Sides = sdCustom
       Borders.DrawLeft = True
@@ -1532,7 +1576,7 @@ inherited frlDANFSeRLRetrato: TfrlDANFSeRLRetrato
         Width = 204
         Height = 15
         Alignment = taCenter
-        Caption = 'DISCRIMINA'#199#227'O DOS SERVI'#199'OS'
+        Caption = 'DISCRIMINA'#199#195'O DOS SERVI'#199'OS'
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clWindowText
         Font.Height = -13
@@ -1544,9 +1588,9 @@ inherited frlDANFSeRLRetrato: TfrlDANFSeRLRetrato
     end
     object rlbItens: TRLBand
       Left = 23
-      Top = 489
+      Top = 483
       Width = 752
-      Height = 96
+      Height = 101
       Borders.Sides = sdCustom
       Borders.DrawLeft = True
       Borders.DrawTop = False
@@ -1557,21 +1601,21 @@ inherited frlDANFSeRLRetrato: TfrlDANFSeRLRetrato
         Left = 8
         Top = 0
         Width = 737
-        Height = 89
+        Height = 97
         AutoSize = False
         Behavior = [beSiteExpander]
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clWindowText
         Font.Height = -11
         Font.Name = 'Times New Roman'
-        Font.Style = [fsBold]
+        Font.Style = []
         ParentFont = False
         Transparent = False
       end
     end
     object rlbISSQN: TRLBand
       Left = 23
-      Top = 585
+      Top = 584
       Width = 752
       Height = 328
       BandType = btFooter
@@ -1696,15 +1740,15 @@ inherited frlDANFSeRLRetrato: TfrlDANFSeRLRetrato
         DrawKind = dkLine
       end
       object rllValorTotal: TRLLabel
-        Left = 291
-        Top = 304
-        Width = 168
-        Height = 15
+        Left = 300
+        Top = 306
+        Width = 150
+        Height = 13
         Alignment = taCenter
         Caption = 'VALOR TOTAL DA NOTA = '
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clWindowText
-        Font.Height = -13
+        Font.Height = -11
         Font.Name = 'Times New Roman'
         Font.Style = [fsBold]
         ParentFont = False
@@ -2446,7 +2490,7 @@ inherited frlDANFSeRLRetrato: TfrlDANFSeRLRetrato
         AutoSize = False
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clWindowText
-        Font.Height = -11
+        Font.Height = -16
         Font.Name = 'Times New Roman'
         Font.Style = [fsBold]
         ParentFont = False
@@ -2567,7 +2611,7 @@ inherited frlDANFSeRLRetrato: TfrlDANFSeRLRetrato
     end
     object rbOutrasInformacoes: TRLBand
       Left = 23
-      Top = 913
+      Top = 912
       Width = 752
       Height = 103
       BandType = btFooter
@@ -2578,8 +2622,8 @@ inherited frlDANFSeRLRetrato: TfrlDANFSeRLRetrato
       Borders.DrawBottom = True
       BeforePrint = rbOutrasInformacoesBeforePrint
       object rlmDadosAdicionais: TRLMemo
-        Left = 2
-        Top = 20
+        Left = 5
+        Top = 21
         Width = 743
         Height = 64
         AutoSize = False
@@ -2639,7 +2683,7 @@ inherited frlDANFSeRLRetrato: TfrlDANFSeRLRetrato
     end
     object rlbCanhoto: TRLBand
       Left = 23
-      Top = 1016
+      Top = 1015
       Width = 752
       Height = 73
       BandType = btFooter
