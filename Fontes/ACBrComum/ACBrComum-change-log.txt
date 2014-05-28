@@ -38,8 +38,13 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+Data: 28/05/2014
+-- ACBrTXT ( por Isaque Pinheiro)
+[*] Renomeado a função LFill() com o tipo Variant para VLFill() para resolver
+    problemas apresentados em versões adiversas do Delphi.
+
 Data: 23/05/2014
--- ACBrTXT 
+-- ACBrTXT ( por Isaque Pinheiro)
 [+] Adicionada a função:
     LFill(Value: Variant;
           Size: Integer;
