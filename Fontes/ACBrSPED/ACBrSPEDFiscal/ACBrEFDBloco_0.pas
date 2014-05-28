@@ -342,7 +342,7 @@ type
     fEX_IPI: String;           /// Código EX, conforme a TIPI:
     fCOD_GEN: String;          /// Código gênero item, tabela indicada item 4.2.1:
     fCOD_LST: String;          /// Código serviço Anexo I - Lei nº116/03:
-    fALIQ_ICMS: Variant;      /// Alíquota ICMS aplicável (operações internas):
+    fALIQ_ICMS: Currency;      /// Alíquota ICMS aplicável (operações internas):
 
     FRegistro0205: TRegistro0205List;  /// BLOCO C - Lista de Registro0205 (FILHO)
     FRegistro0206: TRegistro0206List;  /// BLOCO C - Lista de Registro0206 (FILHO)
@@ -361,7 +361,7 @@ type
     property EX_IPI: String read FEX_IPI write FEX_IPI;
     property COD_GEN: String read FCOD_GEN write FCOD_GEN;
     property COD_LST: String read FCOD_LST write FCOD_LST;
-    property ALIQ_ICMS: Variant read FALIQ_ICMS write FALIQ_ICMS;
+    property ALIQ_ICMS: Currency read FALIQ_ICMS write FALIQ_ICMS;
     /// Registros FILHOS
     property Registro0205: TRegistro0205List read FRegistro0205 write FRegistro0205;
     property Registro0206: TRegistro0206List read FRegistro0206 write FRegistro0206;
@@ -439,14 +439,14 @@ type
   TRegistro0210 = class
   private
     fCOD_ITEM_COMP: string;
-    fPERDA: Variant;
-    fQTD_COMP: Variant;
+    fPERDA: Double;
+    fQTD_COMP: Double;
   public
     constructor Create(AOwner: TRegistro0200); virtual; /// Create
 
     property COD_ITEM_COMP: string read fCOD_ITEM_COMP write fCOD_ITEM_COMP;
-    property QTD_COMP : Variant read fQTD_COMP write fQTD_COMP;
-    property PERDA: Variant read fPERDA write fPERDA;
+    property QTD_COMP : Double read fQTD_COMP write fQTD_COMP;
+    property PERDA: Double read fPERDA write fPERDA;
   end;
 
   /// Registro 0210 - Lista
@@ -467,12 +467,12 @@ type
   TRegistro0220 = class
   private
     fUNID_CONV: String;  /// Unidade comercial a ser convertida na unidade de estoque, referida em 0200:
-    fFAT_CONV: Variant;   /// Fator de conversão:
+    fFAT_CONV: Double;   /// Fator de conversão:
   public
     constructor Create(AOwner: TRegistro0200); virtual; /// Create
 
     property UNID_CONV: String read FUNID_CONV write FUNID_CONV;
-    property FAT_CONV: Variant read FFAT_CONV write FFAT_CONV;
+    property FAT_CONV: Double read FFAT_CONV write FFAT_CONV;
   end;
 
   /// Registro 0220 - Lista
@@ -495,7 +495,7 @@ type
     FDESCR_ITEM: String;     /// Descrição do bem ou componente (modelo, marca e outras características necessárias a sua individualização)
     FCOD_PRNC: String;       /// Código de cadastro do bem principal nos casos em que o bem ou componente ( campo 02) esteja vinculado a um bem principal.
     FCOD_CTA: String;        /// Código da conta analítica de contabilização do bem ou componente (campo 06 do Registro 0500)
-    FNR_PARC: Variant;        /// Número total de parcelas a serem apropriadas, segundo a legislação de cada unidade federada
+    FNR_PARC: Double;        /// Número total de parcelas a serem apropriadas, segundo a legislação de cada unidade federada
 
     FRegistro0305: TRegistro0305; /// BLOCO 0 - Registro0305 (FILHO)
   public
@@ -507,7 +507,7 @@ type
     property DESCR_ITEM: String  read FDESCR_ITEM  write FDESCR_ITEM;
     property COD_PRNC: String    read FCOD_PRNC    write FCOD_PRNC;
     property COD_CTA: String     read FCOD_CTA     write FCOD_CTA;
-    property NR_PARC: Variant     read FNR_PARC     write FNR_PARC;
+    property NR_PARC: Double     read FNR_PARC     write FNR_PARC;
     /// Registros FILHOS
     property Registro0305: TRegistro0305 read FRegistro0305 write FRegistro0305;
   end;

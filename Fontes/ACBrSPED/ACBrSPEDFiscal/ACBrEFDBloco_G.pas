@@ -69,28 +69,28 @@ type
   TRegistroG110 = class
   private
     fMODO_CIAP: String;         /// Modelo de CIAP adotado C ou D
-    fSALDO_IN_ICMS: Variant;   /// Saldo inicial de ICMS do CIAP Modelo C
-    fSALDO_FN_ICMS: Variant;   /// Saldo Final ICMS do CIAP Modelo C
-    fSOM_PARC: Variant;        /// Somatorio das Parcelas ICMS Passivel de Apropriacao Modelo D
-    fVL_TRIB_EXP: Variant;     /// Valor do somatorio das saidas tributadas e saidas para exportacao
-    fVL_TOTAL: Variant;        /// Valor Total das Saidas
+    fSALDO_IN_ICMS: Currency;   /// Saldo inicial de ICMS do CIAP Modelo C
+    fSALDO_FN_ICMS: Currency;   /// Saldo Final ICMS do CIAP Modelo C
+    fSOM_PARC: Currency;        /// Somatorio das Parcelas ICMS Passivel de Apropriacao Modelo D
+    fVL_TRIB_EXP: Currency;     /// Valor do somatorio das saidas tributadas e saidas para exportacao
+    fVL_TOTAL: Currency;        /// Valor Total das Saidas
     fIND_PER_SAI: Extended;       /// Participacao percentual do valor do somatorio das saidas tributadas e para exportacao
-    fICMS_APROP: Variant;      /// Parcela de ICMS a ser apropriada no Registro de Apuracao do ICMS
-    FSOM_ICMS_OC: Variant;     /// Valor de outros créditos a ser apropriado na Apuração do ICMS, correspondente ao somatório do campo 09 do registro G126
+    fICMS_APROP: Currency;      /// Parcela de ICMS a ser apropriada no Registro de Apuracao do ICMS
+    FSOM_ICMS_OC: Currency;     /// Valor de outros créditos a ser apropriado na Apuração do ICMS, correspondente ao somatório do campo 09 do registro G126
     FRegistroG125: TRegistroG125List;  /// BLOCO G - Lista de RegistroG110 (FILHO fo FILHO)
   public
     constructor Create(AOwner: TRegistroG001); virtual; /// Create
     destructor Destroy; override; /// Destroy
 
     property MODO_CIAP: String read fMODO_CIAP write fMODO_CIAP;                /// Até versão 102
-    property SALDO_IN_ICMS: Variant read fSALDO_IN_ICMS write fSALDO_IN_ICMS;
-    property SALDO_FN_ICMS: Variant read fSALDO_FN_ICMS write fSALDO_FN_ICMS;  /// Até versão 102
-    property SOM_PARC: Variant read fSOM_PARC write fSOM_PARC;
-    property VL_TRIB_EXP: Variant read fVL_TRIB_EXP write fVL_TRIB_EXP;
-    property VL_TOTAL: Variant read fVL_TOTAL write fVL_TOTAL;
+    property SALDO_IN_ICMS: Currency read fSALDO_IN_ICMS write fSALDO_IN_ICMS;
+    property SALDO_FN_ICMS: Currency read fSALDO_FN_ICMS write fSALDO_FN_ICMS;  /// Até versão 102
+    property SOM_PARC: Currency read fSOM_PARC write fSOM_PARC;
+    property VL_TRIB_EXP: Currency read fVL_TRIB_EXP write fVL_TRIB_EXP;
+    property VL_TOTAL: Currency read fVL_TOTAL write fVL_TOTAL;
     property IND_PER_SAI: Extended read fIND_PER_SAI write fIND_PER_SAI;          /// Foi renomeado na versão 103
-    property ICMS_APROP: Variant read fICMS_APROP write fICMS_APROP;
-    property SOM_ICMS_OC: Variant read FSOM_ICMS_OC write FSOM_ICMS_OC;
+    property ICMS_APROP: Currency read fICMS_APROP write fICMS_APROP;
+    property SOM_ICMS_OC: Currency read FSOM_ICMS_OC write FSOM_ICMS_OC;
 
     property RegistroG125: TRegistroG125List read FRegistroG125 write FRegistroG125;
   end;
@@ -113,13 +113,13 @@ type
     fCOD_IND_BEM: String;          /// Codigo individualizado do bem ou componente
     fDT_MOV: TDateTime;            /// Data movimentacao ou saldo inicial
     fTIPO_MOV: TACBrMovimentoBens; /// Tipo de movimentacao do bem ou componente
-    fVL_IMOB_ICMS_OP: Variant;    /// Valor ICMS Operacao Propria na entrada do bem ou componente
-    fVL_IMOB_ICMS_ST: Variant;    /// Valor ICMS Operacao Subst.Trib. na entrada do bem ou componente
-    fVL_IMOB_ICMS_FRT: Variant;   /// Valor ICMS Frete CTC na entrada do bem ou componente
-    fVL_IMOB_ICMS_DIF: Variant;   /// Valor ICMS Diferencial de Aliquota cfe. Doc. arrecadacao na entrada do bem ou componente
+    fVL_IMOB_ICMS_OP: Currency;    /// Valor ICMS Operacao Propria na entrada do bem ou componente
+    fVL_IMOB_ICMS_ST: Currency;    /// Valor ICMS Operacao Subst.Trib. na entrada do bem ou componente
+    fVL_IMOB_ICMS_FRT: Currency;   /// Valor ICMS Frete CTC na entrada do bem ou componente
+    fVL_IMOB_ICMS_DIF: Currency;   /// Valor ICMS Diferencial de Aliquota cfe. Doc. arrecadacao na entrada do bem ou componente
     fNUM_PARC: Integer;            /// Numero da Parcela do ICMS
-    fVL_PARC_PASS: Variant;       /// Valor parcela icms passivel de apropriacao
-    fVL_PARC_APROP: Variant;      /// Valor da parcela apropriada do ICMS
+    fVL_PARC_PASS: Currency;       /// Valor parcela icms passivel de apropriacao
+    fVL_PARC_APROP: Currency;      /// Valor da parcela apropriada do ICMS
 
     FRegistroG130: TRegistroG130List;  /// BLOCO G - Lista de RegistroG130 (FILHO do FILHO)
     FRegistroG126: TRegistroG126List;
@@ -130,13 +130,13 @@ type
     property COD_IND_BEM: String read fCOD_IND_BEM write fCOD_IND_BEM;
     property DT_MOV: TDateTime  read fDT_MOV write fDT_MOV;
     property TIPO_MOV: TACBrMovimentoBens read fTIPO_MOV write fTIPO_MOV;
-    property VL_IMOB_ICMS_OP: Variant    read fVL_IMOB_ICMS_OP write fVL_IMOB_ICMS_OP;
-    property VL_IMOB_ICMS_ST: Variant    read fVL_IMOB_ICMS_ST write fVL_IMOB_ICMS_ST;
-    property VL_IMOB_ICMS_FRT: Variant   read fVL_IMOB_ICMS_FRT write fVL_IMOB_ICMS_FRT;
-    property VL_IMOB_ICMS_DIF: Variant   read fVL_IMOB_ICMS_DIF write fVL_IMOB_ICMS_DIF;
+    property VL_IMOB_ICMS_OP: Currency    read fVL_IMOB_ICMS_OP write fVL_IMOB_ICMS_OP;
+    property VL_IMOB_ICMS_ST: Currency    read fVL_IMOB_ICMS_ST write fVL_IMOB_ICMS_ST;
+    property VL_IMOB_ICMS_FRT: Currency   read fVL_IMOB_ICMS_FRT write fVL_IMOB_ICMS_FRT;
+    property VL_IMOB_ICMS_DIF: Currency   read fVL_IMOB_ICMS_DIF write fVL_IMOB_ICMS_DIF;
     property NUM_PARC: Integer            read fNUM_PARC write fNUM_PARC;
-    property VL_PARC_PASS: Variant       read fVL_PARC_PASS write fVL_PARC_PASS;
-    property VL_PARC_APROP: Variant      read fVL_PARC_APROP write fVL_PARC_APROP;   /// Até versão 102
+    property VL_PARC_PASS: Currency       read fVL_PARC_PASS write fVL_PARC_PASS;
+    property VL_PARC_APROP: Currency      read fVL_PARC_APROP write fVL_PARC_APROP;   /// Até versão 102
 
     property RegistroG130: TRegistroG130List read FRegistroG130 write FRegistroG130;
     property RegistroG126: TRegistroG126List read FRegistroG126 write FRegistroG126;
@@ -160,22 +160,22 @@ type
     FDT_INI       : TDateTime;
     FDT_FIN       : TDateTime;
     FNUM_PARC     : Integer;
-    FVL_PARC_PASS : Variant;
-    FVL_TRIB_OC   : Variant;
-    FVL_TOTAL     : Variant;
+    FVL_PARC_PASS : Currency;
+    FVL_TRIB_OC   : Currency;
+    FVL_TOTAL     : Currency;
     FIND_PER_SAI  : Extended;
-    FVL_PARC_APROP: Variant;
+    FVL_PARC_APROP: Currency;
   public
     constructor Create(AOwner: TRegistroG125); virtual; /// Create
 
     property DT_INI: TDateTime        read fDT_INI        write fDT_INI;
     property DT_FIN: TDateTime        read FDT_FIN        write FDT_FIN;
     property NUM_PARC: Integer        read FNUM_PARC      write FNUM_PARC;
-    property VL_PARC_PASS: Variant   read FVL_PARC_PASS  write FVL_PARC_PASS;
-    property VL_TRIB_OC: Variant     read FVL_TRIB_OC    write FVL_TRIB_OC;
-    property VL_TOTAL: Variant       read FVL_TOTAL      write FVL_TOTAL;
+    property VL_PARC_PASS: Currency   read FVL_PARC_PASS  write FVL_PARC_PASS;
+    property VL_TRIB_OC: Currency     read FVL_TRIB_OC    write FVL_TRIB_OC;
+    property VL_TOTAL: Currency       read FVL_TOTAL      write FVL_TOTAL;
     property IND_PER_SAI: Extended    read FIND_PER_SAI   write FIND_PER_SAI;
-    property VL_PARC_APROP: Variant  read FVL_PARC_APROP write FVL_PARC_APROP;
+    property VL_PARC_APROP: Currency  read FVL_PARC_APROP write FVL_PARC_APROP;
   end;
 
   /// Registro G126 - Lista

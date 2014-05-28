@@ -67,7 +67,7 @@ type
   TRegistroH005 = class
   private
     fDT_INV: TDateTime;    /// Data do inventário:
-    fVL_INV: Variant;     /// Valor total do estoque:
+    fVL_INV: currency;     /// Valor total do estoque:
     fMOT_INV: TACBrMotInv; /// 01 – No final no período;
                            /// 02 – Na mudança de forma de tributação da mercadoria (ICMS);
                            /// 03 – Na solicitação da baixa cadastral, paralisação temporária e outras situações;
@@ -80,7 +80,7 @@ type
     destructor Destroy; override; /// Destroy
 
     property DT_INV: TDateTime read FDT_INV write FDT_INV;
-    property VL_INV: Variant read FVL_INV write FVL_INV;
+    property VL_INV: currency read FVL_INV write FVL_INV;
     property MOT_INV: TACBrMotInv read fMOT_INV write fMOT_INV;
 
     /// Registros FILHOS
@@ -106,14 +106,14 @@ type
   private
     fCOD_ITEM: String;       /// Código do item (campo 02 do Registro 0200)
     fUNID: String;           /// Unidade do item
-    fQTD: Variant;            /// Quantidade do item
-    fVL_UNIT: Variant;        /// Valor unitário do item
-    fVL_ITEM: Variant;      /// Valor do item
+    fQTD: Double;            /// Quantidade do item
+    fVL_UNIT: Double;        /// Valor unitário do item
+    fVL_ITEM: currency;      /// Valor do item
     fIND_PROP: TACBrIndProp; /// Indicador de propriedade/posse do item: 0- Item de propriedade do informante e em seu poder, 1- Item de propriedade do informante em posse de terceiros, 2- Item de propriedade de terceiros em posse do informante
     fCOD_PART: String;       /// Código do participante (campo 02 do Registro 0150): proprietário/possuidor que não seja o informante do arquivo
     fTXT_COMPL: String;      /// Descrição complementar
     fCOD_CTA: String;        /// Código da conta analítica contábil debitada/creditada
-    fVL_ITEM_IR: Variant;       /// Valor do item para efeitos do Imposto de Renda.
+    fVL_ITEM_IR: Double;       /// Valor do item para efeitos do Imposto de Renda.
 
     FRegistroH020: TRegistroH020List;  /// BLOCO H - Lista de RegistroH020 (FILHO)
   public
@@ -122,14 +122,14 @@ type
 
     property COD_ITEM: String read FCOD_ITEM write FCOD_ITEM;
     property UNID: String read FUNID write FUNID;
-    property QTD: Variant read FQTD write FQTD;
-    property VL_UNIT: Variant read FVL_UNIT write FVL_UNIT;
-    property VL_ITEM: Variant read FVL_ITEM write FVL_ITEM;
+    property QTD: Double read FQTD write FQTD;
+    property VL_UNIT: Double read FVL_UNIT write FVL_UNIT;
+    property VL_ITEM: currency read FVL_ITEM write FVL_ITEM;
     property IND_PROP: TACBrIndProp read FIND_PROP write FIND_PROP;
     property COD_PART: String read FCOD_PART write FCOD_PART;
     property TXT_COMPL: String read FTXT_COMPL write FTXT_COMPL;
     property COD_CTA: String read FCOD_CTA write FCOD_CTA;
-    property VL_ITEM_IR : Variant read fVL_ITEM_IR write fVL_ITEM_IR;
+    property VL_ITEM_IR : Double read fVL_ITEM_IR write fVL_ITEM_IR;
     /// Registros FILHOS
     property RegistroH020: TRegistroH020List read FRegistroH020 write FRegistroH020;
   end;
@@ -151,14 +151,14 @@ type
   TRegistroH020 = class
   private
     fCST_ICMS: String;          /// Código da Situação Tributária, conforme a Tabela indicada no item 4.3.1
-    fBC_ICMS: Variant;         /// Informe a base de cálculo do ICMS
-    fVL_ICMS: Variant;         /// Informe o valor do ICMS a ser debitado ou creditado
+    fBC_ICMS: currency;         /// Informe a base de cálculo do ICMS
+    fVL_ICMS: currency;         /// Informe o valor do ICMS a ser debitado ou creditado
   public
     constructor Create(AOwner: TRegistroH010); virtual; /// Create
 
     property CST_ICMS: String read FCST_ICMS write FCST_ICMS;
-    property BC_ICMS: Variant read FBC_ICMS write FBC_ICMS;
-    property VL_ICMS: Variant read FVL_ICMS write FVL_ICMS;
+    property BC_ICMS: currency read FBC_ICMS write FBC_ICMS;
+    property VL_ICMS: currency read FVL_ICMS write FVL_ICMS;
   end;
 
   /// Registro H020 - Lista

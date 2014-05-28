@@ -151,24 +151,24 @@ type
     fCHV_NFE: String;                   /// Chave da Nota Fiscal Eletrônica
     fDT_DOC: TDateTime;                 /// Data da emissão do documento fiscal
     fDT_E_S: TDateTime;                 /// Data da entrada ou da saída
-    fVL_DOC: Variant;                  /// Valor total do documento fiscal
+    fVL_DOC: currency;                  /// Valor total do documento fiscal
     fIND_PGTO: TACBrIndPgto;            /// Indicador do tipo de pagamento:
-    fVL_DESC: Variant;                 /// Valor total do desconto // Prates
-    fVL_ABAT_NT: Variant;              /// Abatimento não tributado e não comercial Ex. desconto ICMS nas remessas para ZFM: // Prates
-    fVL_MERC: Variant;                 /// Valor das mercadorias constantes no documento fiscal
+    fVL_DESC: currency;                 /// Valor total do desconto // Prates
+    fVL_ABAT_NT: currency;              /// Abatimento não tributado e não comercial Ex. desconto ICMS nas remessas para ZFM: // Prates
+    fVL_MERC: currency;                 /// Valor das mercadorias constantes no documento fiscal
     fIND_FRT: TACBrIndFrt;              /// Indicador do tipo do frete:
-    fVL_FRT: Variant;                  /// Valor do frete indicado no documento fiscal
-    fVL_SEG: Variant;                  /// Valor do seguro indicado no documento fiscal
-    fVL_OUT_DA: Variant;               /// Valor de outras despesas acessórias
-    fVL_BC_ICMS: Variant;              /// Valor da base de cálculo do ICMS
-    fVL_ICMS: Variant;                 /// Valor do ICMS
-    fVL_BC_ICMS_ST: Variant;           /// Valor da base de cálculo do ICMS substituição tributária
-    fVL_ICMS_ST: Variant;              /// Valor do ICMS retido por substituição tributária
-    fVL_IPI: Variant;                  /// Valor total do IPI
-    fVL_PIS: Variant;                  /// Valor total do PIS
-    fVL_COFINS: Variant;               /// Valor total da COFINS
-    fVL_PIS_ST: Variant;               /// Valor total do PIS retido por substituição tributária
-    fVL_COFINS_ST: Variant;            /// Valor total da COFINS retido por substituição tributária
+    fVL_FRT: currency;                  /// Valor do frete indicado no documento fiscal
+    fVL_SEG: currency;                  /// Valor do seguro indicado no documento fiscal
+    fVL_OUT_DA: currency;               /// Valor de outras despesas acessórias
+    fVL_BC_ICMS: currency;              /// Valor da base de cálculo do ICMS
+    fVL_ICMS: currency;                 /// Valor do ICMS
+    fVL_BC_ICMS_ST: currency;           /// Valor da base de cálculo do ICMS substituição tributária
+    fVL_ICMS_ST: currency;              /// Valor do ICMS retido por substituição tributária
+    fVL_IPI: currency;                  /// Valor total do IPI
+    fVL_PIS: currency;                  /// Valor total do PIS
+    fVL_COFINS: currency;               /// Valor total da COFINS
+    fVL_PIS_ST: currency;               /// Valor total do PIS retido por substituição tributária
+    fVL_COFINS_ST: currency;            /// Valor total da COFINS retido por substituição tributária
 
     FRegistroC105: TRegistroC105List;  /// BLOCO C - Lista de RegistroC105 (FILHO)
     FRegistroC110: TRegistroC110List;  /// BLOCO C - Lista de RegistroC110 (FILHO)
@@ -194,24 +194,24 @@ type
     property CHV_NFE: String read FCHV_NFE write FCHV_NFE;
     property DT_DOC: TDateTime read FDT_DOC write FDT_DOC;
     property DT_E_S: TDateTime read FDT_E_S write FDT_E_S;
-    property VL_DOC: Variant read FVL_DOC write FVL_DOC;
+    property VL_DOC: currency read FVL_DOC write FVL_DOC;
     property IND_PGTO: TACBrIndPgto read FIND_PGTO write FIND_PGTO;
-    property VL_DESC: Variant read FVL_DESC write FVL_DESC; // prates
-    property VL_ABAT_NT: Variant read FVL_ABAT_NT write FVL_ABAT_NT; // Prates
-    property VL_MERC: Variant read FVL_MERC write FVL_MERC;
+    property VL_DESC: currency read FVL_DESC write FVL_DESC; // prates
+    property VL_ABAT_NT: currency read FVL_ABAT_NT write FVL_ABAT_NT; // Prates
+    property VL_MERC: currency read FVL_MERC write FVL_MERC;
     property IND_FRT: TACBrIndFrt read FIND_FRT write FIND_FRT;
-    property VL_FRT: Variant read FVL_FRT write FVL_FRT;
-    property VL_SEG: Variant read FVL_SEG write FVL_SEG;
-    property VL_OUT_DA: Variant read FVL_OUT_DA write FVL_OUT_DA;
-    property VL_BC_ICMS: Variant read FVL_BC_ICMS write FVL_BC_ICMS;
-    property VL_ICMS: Variant read FVL_ICMS write FVL_ICMS;
-    property VL_BC_ICMS_ST: Variant read FVL_BC_ICMS_ST write FVL_BC_ICMS_ST;
-    property VL_ICMS_ST: Variant read FVL_ICMS_ST write FVL_ICMS_ST;
-    property VL_IPI: Variant read FVL_IPI write FVL_IPI;
-    property VL_PIS: Variant read FVL_PIS write FVL_PIS;
-    property VL_COFINS: Variant read FVL_COFINS write FVL_COFINS;
-    property VL_PIS_ST: Variant read FVL_PIS_ST write FVL_PIS_ST;
-    property VL_COFINS_ST: Variant read FVL_COFINS_ST write FVL_COFINS_ST;
+    property VL_FRT: currency read FVL_FRT write FVL_FRT;
+    property VL_SEG: currency read FVL_SEG write FVL_SEG;
+    property VL_OUT_DA: currency read FVL_OUT_DA write FVL_OUT_DA;
+    property VL_BC_ICMS: currency read FVL_BC_ICMS write FVL_BC_ICMS;
+    property VL_ICMS: currency read FVL_ICMS write FVL_ICMS;
+    property VL_BC_ICMS_ST: currency read FVL_BC_ICMS_ST write FVL_BC_ICMS_ST;
+    property VL_ICMS_ST: currency read FVL_ICMS_ST write FVL_ICMS_ST;
+    property VL_IPI: currency read FVL_IPI write FVL_IPI;
+    property VL_PIS: currency read FVL_PIS write FVL_PIS;
+    property VL_COFINS: currency read FVL_COFINS write FVL_COFINS;
+    property VL_PIS_ST: currency read FVL_PIS_ST write FVL_PIS_ST;
+    property VL_COFINS_ST: currency read FVL_COFINS_ST write FVL_COFINS_ST;
     /// Registros FILHOS
     property RegistroC105: TRegistroC105List read FRegistroC105 write FRegistroC105;
     property RegistroC110: TRegistroC110List read FRegistroC110 write FRegistroC110;
@@ -329,7 +329,7 @@ type
     fUF: String;                   /// Unidade federada beneficiária do recolhimento
     fNUM_DA: String;               /// Número do documento de arrecadação
     fCOD_AUT: String;              /// Código completo da autenticação bancária
-    fVL_DA: Variant;              /// Valor do total do documento de arrecadação (principal, atualização monetária, juros e multa) // Prates
+    fVL_DA: Currency;              /// Valor do total do documento de arrecadação (principal, atualização monetária, juros e multa) // Prates
     fDT_VCTO: TDateTime;           /// Data de vencimento do documento de arrecadação
     fDT_PGTO: TDateTime;           /// Data de pagamento do documento de arrecadação, ou data do vencimento, no caso de ICMS antecipado a recolher.
   public
@@ -337,7 +337,7 @@ type
     property UF: String read FUF write FUF;
     property NUM_DA: String read FNUM_DA write FNUM_DA;
     property COD_AUT: String read FCOD_AUT write FCOD_AUT;
-    property VL_DA: Variant read FVL_DA write FVL_DA; // Prats
+    property VL_DA: currency read FVL_DA write FVL_DA; // Prats
     property DT_VCTO: TDateTime read FDT_VCTO write FDT_VCTO;
     property DT_PGTO: TDateTime read FDT_PGTO write FDT_PGTO;
   end;
@@ -485,14 +485,14 @@ type
   private
     fCOD_DOC_IMP: TACBrDoctoImporta;  /// Documento de importação:
     fNUM_DOC__IMP: String;            /// Número do documento de Importação.
-    fPIS_IMP: Variant;               /// Valor pago de PIS na importação
-    fCOFINS_IMP: Variant;            /// Valor pago de COFINS na importação
+    fPIS_IMP: currency;               /// Valor pago de PIS na importação
+    fCOFINS_IMP: currency;            /// Valor pago de COFINS na importação
     fNUM_ACDRAW: String;              /// Numero do Ato Concessório ro regime Drawback public
   public
     property COD_DOC_IMP: TACBrDoctoImporta read FCOD_DOC_IMP write FCOD_DOC_IMP;
     property NUM_DOC__IMP: String read FNUM_DOC__IMP write FNUM_DOC__IMP;
-    property PIS_IMP: Variant read FPIS_IMP write FPIS_IMP;
-    property COFINS_IMP: Variant read FCOFINS_IMP write FCOFINS_IMP;
+    property PIS_IMP: currency read FPIS_IMP write FPIS_IMP;
+    property COFINS_IMP: currency read FCOFINS_IMP write FCOFINS_IMP;
     property NUM_ACDRAW: String read fNUM_ACDRAW write fNUM_ACDRAW;
   end;
 
@@ -511,21 +511,21 @@ type
 
   TRegistroC130 = class
   private
-    fVL_SERV_NT: Variant;     /// Valor dos serviços sob não-incidência ou não-tributados pelo ICMS
-    fVL_BC_ISSQN: Variant;    /// Valor da base de cálculo do ISSQN
-    fVL_ISSQN: Variant;       /// Valor do ISSQN
-    fVL_BC_IRRF: Variant;     /// Valor da base de cálculo do Imposto de Renda Retido na Fonte
-    fVL_IRRF: Variant;        /// Valor do Imposto de Renda - Retido na Fonte
-    fVL_BC_PREV: Variant;     /// Valor da base de cálculo de retenção da Previdência Social
-    fVL_PREV: Variant;        /// Valor destacado para retenção da Previdência Social
+    fVL_SERV_NT: currency;     /// Valor dos serviços sob não-incidência ou não-tributados pelo ICMS
+    fVL_BC_ISSQN: currency;    /// Valor da base de cálculo do ISSQN
+    fVL_ISSQN: currency;       /// Valor do ISSQN
+    fVL_BC_IRRF: currency;     /// Valor da base de cálculo do Imposto de Renda Retido na Fonte
+    fVL_IRRF: currency;        /// Valor do Imposto de Renda - Retido na Fonte
+    fVL_BC_PREV: currency;     /// Valor da base de cálculo de retenção da Previdência Social
+    fVL_PREV: currency;        /// Valor destacado para retenção da Previdência Social
   public
-    property VL_SERV_NT: Variant read FVL_SERV_NT write FVL_SERV_NT;
-    property VL_BC_ISSQN: Variant read FVL_BC_ISSQN write FVL_BC_ISSQN;
-    property VL_ISSQN: Variant read FVL_ISSQN write FVL_ISSQN;
-    property VL_BC_IRRF: Variant read FVL_BC_IRRF write FVL_BC_IRRF;
-    property VL_IRRF: Variant read FVL_IRRF write FVL_IRRF;
-    property VL_BC_PREV: Variant read FVL_BC_PREV write FVL_BC_PREV;
-    property VL_PREV: Variant read FVL_PREV write FVL_PREV;
+    property VL_SERV_NT: currency read FVL_SERV_NT write FVL_SERV_NT;
+    property VL_BC_ISSQN: currency read FVL_BC_ISSQN write FVL_BC_ISSQN;
+    property VL_ISSQN: currency read FVL_ISSQN write FVL_ISSQN;
+    property VL_BC_IRRF: currency read FVL_BC_IRRF write FVL_BC_IRRF;
+    property VL_IRRF: currency read FVL_IRRF write FVL_IRRF;
+    property VL_BC_PREV: currency read FVL_BC_PREV write FVL_BC_PREV;
+    property VL_PREV: currency read FVL_PREV write FVL_PREV;
   end;
 
   /// Registro C130 - Lista
@@ -548,7 +548,7 @@ type
     fDESC_TIT: String;         /// Descrição complementar do título de crédito
     fNUM_TIT: String;          /// Número ou código identificador do título de crédito
     fQTD_PARC: Integer;        /// Quantidade de parcelas a receber/pagar
-    fVL_TIT: Variant;         /// Valor original do título de crédito
+    fVL_TIT: currency;         /// Valor original do título de crédito
 
     FRegistroC141: TRegistroC141List;  /// BLOCO C - Lista de RegistroC141 (FILHO fo FILHO)
   public
@@ -560,7 +560,7 @@ type
     property DESC_TIT: String read FDESC_TIT write FDESC_TIT;
     property NUM_TIT: String read FNUM_TIT write FNUM_TIT;
     property QTD_PARC: Integer read FQTD_PARC write FQTD_PARC;
-    property VL_TIT: Variant read FVL_TIT write FVL_TIT;
+    property VL_TIT: currency read FVL_TIT write FVL_TIT;
     /// Registros FILHOS
     property RegistroC141: TRegistroC141List read FRegistroC141 write FRegistroC141; {Márcio Lopes 30Nov2009}
   end;
@@ -582,11 +582,11 @@ type
   private
     fNUM_PARC: String;       /// Número da parcela a receber/pagar
     fDT_VCTO: TDateTime;     /// Data de vencimento da parcela
-    fVL_PARC: Variant;      /// Valor da parcela a receber/pagar
+    fVL_PARC: currency;      /// Valor da parcela a receber/pagar
   public
     property NUM_PARC: String read FNUM_PARC write FNUM_PARC;
     property DT_VCTO: TDateTime read FDT_VCTO write FDT_VCTO;
-    property VL_PARC: Variant read FVL_PARC write FVL_PARC;
+    property VL_PARC: currency read FVL_PARC write FVL_PARC;
   end;
 
   /// Registro C141 - Lista
@@ -607,15 +607,15 @@ type
     fCOD_PART: String;      /// Código do participante (campo 02 do Registro 0150):
     fVEIC_ID: String;       /// Placa de identificação do veículo
     fQTD_VOL: Integer;      /// Quantidade de volumes transportados
-    fPESO_BRT: Variant;    /// Peso bruto dos volumes transportados (em Kg)
-    fPESO_LIQ: Variant;    /// Peso líquido dos volumes transportados (em Kg)
+    fPESO_BRT: currency;    /// Peso bruto dos volumes transportados (em Kg)
+    fPESO_LIQ: currency;    /// Peso líquido dos volumes transportados (em Kg)
     fUF_ID: String;         /// Sigla da UF da placa do veículo
   public
     property COD_PART: String read FCOD_PART write FCOD_PART;
     property VEIC_ID: String read FVEIC_ID write FVEIC_ID;
     property QTD_VOL: Integer read FQTD_VOL write FQTD_VOL;
-    property PESO_BRT: Variant read FPESO_BRT write FPESO_BRT;
-    property PESO_LIQ: Variant read FPESO_LIQ write FPESO_LIQ;
+    property PESO_BRT: currency read FPESO_BRT write FPESO_BRT;
+    property PESO_LIQ: currency read FPESO_LIQ write FPESO_LIQ;
     property UF_ID: String read FUF_ID write FUF_ID;
   end;
 
@@ -641,8 +641,8 @@ type
     fHORA: String;          /// Hora da saída das mercadorias
     fTEMPER: String;        /// Temperatura em graus Celsius utilizada para quantificação do volume de combustível
     fQTD_VOL: Integer;      /// Quantidade de volumes transportados
-    fPESO_BRT: Variant;    /// Peso bruto dos volumes transportados (em Kg)
-    fPESO_LIQ: Variant;    /// Peso líquido dos volumes transportados (em Kg)
+    fPESO_BRT: currency;    /// Peso bruto dos volumes transportados (em Kg)
+    fPESO_LIQ: currency;    /// Peso líquido dos volumes transportados (em Kg)
     fNOM_MOT: String;       /// Nome do motorista
     fCPF: String;           /// CPF do motorista
     fUF_ID: String;         /// Sigla da UF da placa do veículo
@@ -654,8 +654,8 @@ type
     property HORA: String read FHORA write FHORA;
     property TEMPER: String read FTEMPER write FTEMPER;
     property QTD_VOL: Integer read FQTD_VOL write FQTD_VOL;
-    property PESO_BRT: Variant read FPESO_BRT write FPESO_BRT;
-    property PESO_LIQ: Variant read FPESO_LIQ write FPESO_LIQ;
+    property PESO_BRT: currency read FPESO_BRT write FPESO_BRT;
+    property PESO_LIQ: currency read FPESO_LIQ write FPESO_LIQ;
     property NOM_MOT: String read FNOM_MOT write FNOM_MOT;
     property CPF: String read FCPF write FCPF;
     property UF_ID: String read FUF_ID write FUF_ID;
@@ -679,41 +679,41 @@ type
     fNUM_ITEM: String;                    /// Número seqüencial do item no documento fiscal
     fCOD_ITEM: String;                    /// Código do item (campo 02 do Registro 0200)
     fDESCR_COMPL: String;                 /// Descrição complementar do item como adotado no documento fiscal
-    fQTD: Variant;                         /// Quantidade do item
+    fQTD: Double;                         /// Quantidade do item
     fUNID: String;                        /// Unidade do item(Campo 02 do registro 0190)
-    fVL_ITEM: Variant;                   /// Valor total do item
-    fVL_DESC: Variant;                   /// Valor do desconto comercial
+    fVL_ITEM: currency;                   /// Valor total do item
+    fVL_DESC: currency;                   /// Valor do desconto comercial
     fIND_MOV: TACBrMovimentacaoFisica;    /// Movimentação física do ITEM/PRODUTO: 0 - SIM; 1- NÃO
     fCST_ICMS: String;                    /// Código da Situação Tributária referente ao ICMS, conforme a Tabela indicada no item 4.3.1
     fCFOP: String;                        /// Código Fiscal de Operação e Prestação
     fCOD_NAT: String;                     /// Código da natureza da operação (campo 02 do Registro 0400)
-    fVL_BC_ICMS: Variant;                /// Valor da base de cálculo do ICMS
-    fALIQ_ICMS: Variant;                 /// Alíquota do ICMS
-    fVL_ICMS: Variant;                   /// Valor do ICMS creditado/debitado
-    fVL_BC_ICMS_ST: Variant;             /// Valor da base de cálculo referente à substituição tributária
-    fALIQ_ST: Variant;                   /// Alíquota do ICMS da substituição tributária na unidade da federação de destino
-    fVL_ICMS_ST: Variant;                /// Valor do ICMS referente à substituição tributária
+    fVL_BC_ICMS: currency;                /// Valor da base de cálculo do ICMS
+    fALIQ_ICMS: currency;                 /// Alíquota do ICMS
+    fVL_ICMS: currency;                   /// Valor do ICMS creditado/debitado
+    fVL_BC_ICMS_ST: currency;             /// Valor da base de cálculo referente à substituição tributária
+    fALIQ_ST: currency;                   /// Alíquota do ICMS da substituição tributária na unidade da federação de destino
+    fVL_ICMS_ST: currency;                /// Valor do ICMS referente à substituição tributária
     fIND_APUR: TACBrApuracaoIPI;          /// Indicador de período de apuração do IPI: 0 - Mensal; 1 - Decendial
 //    fCST_IPI: TACBrSituacaoTribIPI;       /// Código da Situação Tributária referente ao IPI, conforme a Tabela indicada no item 4.3.2.
     fCST_IPI: string;                     /// Código da Situação Tributária referente ao IPI, conforme a Tabela indicada no item 4.3.2.
     fCOD_ENQ: String;                     /// Código de enquadramento legal do IPI, conforme tabela indicada no item 4.5.3.
-    fVL_BC_IPI: Variant;                 /// Valor da base de cálculo do IPI
-    fALIQ_IPI: Variant;                  /// Alíquota do IPI
-    fVL_IPI: Variant;                    /// Valor do IPI creditado/debitado
+    fVL_BC_IPI: currency;                 /// Valor da base de cálculo do IPI
+    fALIQ_IPI: currency;                  /// Alíquota do IPI
+    fVL_IPI: currency;                    /// Valor do IPI creditado/debitado
 //    fCST_PIS: TACBrSituacaoTribPIS;       /// Código da Situação Tributária referente ao PIS.
     fCST_PIS: string;                     /// Código da Situação Tributária referente ao PIS.
-    fVL_BC_PIS: Variant;                 /// Valor da base de cálculo do PIS
-    fALIQ_PIS_PERC: Variant;             /// Alíquota do PIS (em percentual)
-    fQUANT_BC_PIS: Variant;                /// Quantidade - Base de cálculo PIS
-    fALIQ_PIS_R: Variant;                  /// Alíquota do PIS (em reais)
-    fVL_PIS: Variant;                    /// Valor do PIS
+    fVL_BC_PIS: currency;                 /// Valor da base de cálculo do PIS
+    fALIQ_PIS_PERC: currency;             /// Alíquota do PIS (em percentual)
+    fQUANT_BC_PIS: Double;                /// Quantidade - Base de cálculo PIS
+    fALIQ_PIS_R: Double;                  /// Alíquota do PIS (em reais)
+    fVL_PIS: currency;                    /// Valor do PIS
 //    fCST_COFINS: TACBrSituacaoTribCOFINS; /// Código da Situação Tributária referente ao COFINS.
     fCST_COFINS: string;                  /// Código da Situação Tributária referente ao COFINS.
-    fVL_BC_COFINS: Variant;              /// Valor da base de cálculo da COFINS
-    fALIQ_COFINS_PERC: Variant;          /// Alíquota do COFINS (em percentual)
-    fQUANT_BC_COFINS: Variant;             /// Quantidade - Base de cálculo COFINS
-    fALIQ_COFINS_R: Variant;               /// Alíquota da COFINS (em reais)
-    fVL_COFINS: Variant;                 /// Valor da COFINS
+    fVL_BC_COFINS: currency;              /// Valor da base de cálculo da COFINS
+    fALIQ_COFINS_PERC: currency;          /// Alíquota do COFINS (em percentual)
+    fQUANT_BC_COFINS: Double;             /// Quantidade - Base de cálculo COFINS
+    fALIQ_COFINS_R: Double;               /// Alíquota da COFINS (em reais)
+    fVL_COFINS: currency;                 /// Valor da COFINS
     fCOD_CTA: String;                     /// Código da conta analítica contábil debitada/creditada
 
     FRegistroC171: TRegistroC171List;  /// BLOCO C - Lista de RegistroC141 (FILHO fo FILHO)
@@ -732,41 +732,41 @@ type
     property NUM_ITEM: String                    read FNUM_ITEM         write FNUM_ITEM;
     property COD_ITEM: String                    read FCOD_ITEM         write FCOD_ITEM;
     property DESCR_COMPL: String                 read FDESCR_COMPL      write FDESCR_COMPL;
-    property QTD: Variant                         read FQTD              write FQTD;
+    property QTD: Double                         read FQTD              write FQTD;
     property UNID: String                        read FUNID             write FUNID;
-    property VL_ITEM: Variant                   read FVL_ITEM          write FVL_ITEM;
-    property VL_DESC: Variant                   read FVL_DESC          write FVL_DESC;
+    property VL_ITEM: currency                   read FVL_ITEM          write FVL_ITEM;
+    property VL_DESC: currency                   read FVL_DESC          write FVL_DESC;
     property IND_MOV: TACBrMovimentacaoFisica    read FIND_MOV          write FIND_MOV;
     property CST_ICMS: String                    read FCST_ICMS         write FCST_ICMS;
     property CFOP: String                        read FCFOP             write FCFOP;
     property COD_NAT: String                     read FCOD_NAT          write FCOD_NAT;
-    property VL_BC_ICMS: Variant                read FVL_BC_ICMS       write FVL_BC_ICMS;
-    property ALIQ_ICMS: Variant                 read FALIQ_ICMS        write FALIQ_ICMS;
-    property VL_ICMS: Variant                   read FVL_ICMS          write FVL_ICMS;
-    property VL_BC_ICMS_ST: Variant             read FVL_BC_ICMS_ST    write FVL_BC_ICMS_ST;
-    property ALIQ_ST: Variant                   read FALIQ_ST          write FALIQ_ST;
-    property VL_ICMS_ST: Variant                read FVL_ICMS_ST       write FVL_ICMS_ST;
+    property VL_BC_ICMS: currency                read FVL_BC_ICMS       write FVL_BC_ICMS;
+    property ALIQ_ICMS: currency                 read FALIQ_ICMS        write FALIQ_ICMS;
+    property VL_ICMS: currency                   read FVL_ICMS          write FVL_ICMS;
+    property VL_BC_ICMS_ST: currency             read FVL_BC_ICMS_ST    write FVL_BC_ICMS_ST;
+    property ALIQ_ST: currency                   read FALIQ_ST          write FALIQ_ST;
+    property VL_ICMS_ST: currency                read FVL_ICMS_ST       write FVL_ICMS_ST;
     property IND_APUR: TACBrApuracaoIPI          read FIND_APUR         write FIND_APUR;
 //    property CST_IPI: TACBrSituacaoTribIPI       read FCST_IPI          write FCST_IPI;
     property CST_IPI: string                     read FCST_IPI          write FCST_IPI;
     property COD_ENQ: String                     read FCOD_ENQ          write FCOD_ENQ;
-    property VL_BC_IPI: Variant                 read FVL_BC_IPI        write FVL_BC_IPI;
-    property ALIQ_IPI: Variant                  read FALIQ_IPI         write FALIQ_IPI;
-    property VL_IPI: Variant                    read FVL_IPI           write FVL_IPI;
+    property VL_BC_IPI: currency                 read FVL_BC_IPI        write FVL_BC_IPI;
+    property ALIQ_IPI: currency                  read FALIQ_IPI         write FALIQ_IPI;
+    property VL_IPI: currency                    read FVL_IPI           write FVL_IPI;
 //    property CST_PIS: TACBrSituacaoTribPIS       read FCST_PIS          write FCST_PIS;
     property CST_PIS: string                     read FCST_PIS          write FCST_PIS;
-    property VL_BC_PIS: Variant                 read FVL_BC_PIS        write FVL_BC_PIS;
-    property ALIQ_PIS_PERC: Variant             read FALIQ_PIS_PERC    write FALIQ_PIS_PERC;
-    property QUANT_BC_PIS: Variant                read FQUANT_BC_PIS     write FQUANT_BC_PIS;
-    property ALIQ_PIS_R: Variant                  read FALIQ_PIS_R       write FALIQ_PIS_R;
-    property VL_PIS: Variant                    read FVL_PIS           write FVL_PIS;
+    property VL_BC_PIS: currency                 read FVL_BC_PIS        write FVL_BC_PIS;
+    property ALIQ_PIS_PERC: currency             read FALIQ_PIS_PERC    write FALIQ_PIS_PERC;
+    property QUANT_BC_PIS: Double                read FQUANT_BC_PIS     write FQUANT_BC_PIS;
+    property ALIQ_PIS_R: Double                  read FALIQ_PIS_R       write FALIQ_PIS_R;
+    property VL_PIS: currency                    read FVL_PIS           write FVL_PIS;
 //    property CST_COFINS: TACBrSituacaoTribCOFINS read FCST_COFINS       write FCST_COFINS;
     property CST_COFINS: string                  read FCST_COFINS       write FCST_COFINS;
-    property VL_BC_COFINS: Variant              read FVL_BC_COFINS     write FVL_BC_COFINS;
-    property ALIQ_COFINS_PERC: Variant          read FALIQ_COFINS_PERC write FALIQ_COFINS_PERC;
-    property QUANT_BC_COFINS: Variant             read FQUANT_BC_COFINS  write FQUANT_BC_COFINS;
-    property ALIQ_COFINS_R: Variant               read FALIQ_COFINS_R    write FALIQ_COFINS_R;
-    property VL_COFINS: Variant                 read FVL_COFINS        write FVL_COFINS;
+    property VL_BC_COFINS: currency              read FVL_BC_COFINS     write FVL_BC_COFINS;
+    property ALIQ_COFINS_PERC: currency          read FALIQ_COFINS_PERC write FALIQ_COFINS_PERC;
+    property QUANT_BC_COFINS: Double             read FQUANT_BC_COFINS  write FQUANT_BC_COFINS;
+    property ALIQ_COFINS_R: Double               read FALIQ_COFINS_R    write FALIQ_COFINS_R;
+    property VL_COFINS: currency                 read FVL_COFINS        write FVL_COFINS;
     property COD_CTA: String                     read FCOD_CTA          write FCOD_CTA;
     /// Registros FILHOS
     property RegistroC171: TRegistroC171List read FRegistroC171 write FRegistroC171;
@@ -796,10 +796,10 @@ type
   TRegistroC171 = class
   private
     fNUM_TANQUE: String;    /// Tanque onde foi armazenado o combustível
-    fQTDE: Variant;        /// Quantidade ou volume armazenado
+    fQTDE: Double;        /// Quantidade ou volume armazenado
   public
     property NUM_TANQUE: String read FNUM_TANQUE write FNUM_TANQUE;
-    property QTDE: Variant read FQTDE write FQTDE;
+    property QTDE: Double read FQTDE write FQTDE;
   end;
 
   /// Registro C171 - Lista
@@ -817,13 +817,13 @@ type
 
   TRegistroC172 = class
   private
-    fVL_BC_ISSQN: Variant;    /// Valor da base de cálculo do ISSQN
-    fALIQ_ISSQN: Variant;     /// Alíquota do ISSQN
-    fVL_ISSQN: Variant;       /// Valor do ISSQN
+    fVL_BC_ISSQN: currency;    /// Valor da base de cálculo do ISSQN
+    fALIQ_ISSQN: currency;     /// Alíquota do ISSQN
+    fVL_ISSQN: currency;       /// Valor do ISSQN
   public
-    property VL_BC_ISSQN: Variant read FVL_BC_ISSQN write FVL_BC_ISSQN;
-    property ALIQ_ISSQN: Variant read FALIQ_ISSQN write FALIQ_ISSQN;
-    property VL_ISSQN: Variant read FVL_ISSQN write FVL_ISSQN;
+    property VL_BC_ISSQN: currency read FVL_BC_ISSQN write FVL_BC_ISSQN;
+    property ALIQ_ISSQN: currency read FALIQ_ISSQN write FALIQ_ISSQN;
+    property VL_ISSQN: currency read FVL_ISSQN write FVL_ISSQN;
   end;
 
   /// Registro C172 - Lista
@@ -842,20 +842,20 @@ type
   TRegistroC173 = class
   private
     fLOTE_MED: String;                  /// Número do lote de fabricação do medicamento
-    fQTD_ITEM: Variant;                  /// Quantidade de item por lote
+    fQTD_ITEM: Double;                  /// Quantidade de item por lote
     fDT_FAB: TDateTime;                 /// Data de fabricação do medicamento
     fDT_VAL: TDateTime;                 /// Data de expiração da validade do medicamento
     fIND_MED: TACBrTipoBaseMedicamento; /// Indicador de tipo de referência da base de cálculo do ICMS (ST) do produto farmacêutico:
     fTP_PROD: TACBrTipoProduto;         /// Tipo de produto:
-    fVL_TAB_MAX: Variant;              /// Valor do preço tabelado ou valor do preço máximo
+    fVL_TAB_MAX: currency;              /// Valor do preço tabelado ou valor do preço máximo
   public
     property LOTE_MED: String read FLOTE_MED write FLOTE_MED;
-    property QTD_ITEM: Variant read FQTD_ITEM write FQTD_ITEM;
+    property QTD_ITEM: Double read FQTD_ITEM write FQTD_ITEM;
     property DT_FAB: TDateTime read FDT_FAB write FDT_FAB;
     property DT_VAL: TDateTime read FDT_VAL write FDT_VAL;
     property IND_MED: TACBrTipoBaseMedicamento read FIND_MED write FIND_MED;
     property TP_PROD: TACBrTipoProduto read FTP_PROD write FTP_PROD;
-    property VL_TAB_MAX: Variant read FVL_TAB_MAX write FVL_TAB_MAX;
+    property VL_TAB_MAX: currency read FVL_TAB_MAX write FVL_TAB_MAX;
   end;
 
   /// Registro C173 - Lista
@@ -928,18 +928,18 @@ type
     fSER_ULT_E: String;        /// Série do documento fiscal relativa a última entrada
     fDT_ULT_E: TDateTime;      /// Data relativa a última entrada da mercadoria
     fCOD_PART_ULT_E: String;   /// Código do participante (do emitente do documento relativa a última entrada)
-    fQUANT_ULT_E: Variant;    /// Quantidade do item relativa a última entrada
-    fVL_UNIT_ULT_E: Variant;  /// Valor unitário da mercadoria constante na NF relativa a última entrada inclusive despesas acessórias.
-    fVL_UNIT_BC_ST: Variant;  /// Valor unitário da base de cálculo do imposto pago por substituição.
+    fQUANT_ULT_E: Double;    /// Quantidade do item relativa a última entrada
+    fVL_UNIT_ULT_E: Double;  /// Valor unitário da mercadoria constante na NF relativa a última entrada inclusive despesas acessórias.
+    fVL_UNIT_BC_ST: Double;  /// Valor unitário da base de cálculo do imposto pago por substituição.
   public
     property COD_MOD_ULT_E: String read FCOD_MOD_ULT_E write FCOD_MOD_ULT_E;
     property NUM_DOC_ULT_E: String read FNUM_DOC_ULT_E write FNUM_DOC_ULT_E;
     property SER_ULT_E: String read FSER_ULT_E write FSER_ULT_E;
     property DT_ULT_E: TDateTime read FDT_ULT_E write FDT_ULT_E;
     property COD_PART_ULT_E: String read FCOD_PART_ULT_E write FCOD_PART_ULT_E;
-    property QUANT_ULT_E: Variant read FQUANT_ULT_E write FQUANT_ULT_E;
-    property VL_UNIT_ULT_E: Variant read FVL_UNIT_ULT_E write FVL_UNIT_ULT_E;
-    property VL_UNIT_BC_ST: Variant read FVL_UNIT_BC_ST write FVL_UNIT_BC_ST;
+    property QUANT_ULT_E: Double read FQUANT_ULT_E write FQUANT_ULT_E;
+    property VL_UNIT_ULT_E: Double read FVL_UNIT_ULT_E write FVL_UNIT_ULT_E;
+    property VL_UNIT_BC_ST: Double read FVL_UNIT_BC_ST write FVL_UNIT_BC_ST;
   end;
 
   /// Registro C176 - Lista
@@ -958,10 +958,10 @@ type
   TRegistroC177 = class
   private
     fCOD_SELO_IPI: String;  /// Código do selo de controle do IPI, conforme Tabela 4.5.2
-    fQT_SELO_IPI: Variant; /// Quantidade de selo de controle do IPI aplicada
+    fQT_SELO_IPI: currency; /// Quantidade de selo de controle do IPI aplicada
   public
     property COD_SELO_IPI: String read FCOD_SELO_IPI write FCOD_SELO_IPI;
-    property QT_SELO_IPI: Variant read FQT_SELO_IPI write FQT_SELO_IPI;
+    property QT_SELO_IPI: currency read FQT_SELO_IPI write FQT_SELO_IPI;
   end;
 
   /// Registro C177 - Lista
@@ -980,12 +980,12 @@ type
   TRegistroC178 = class
   private
     fCL_ENQ: String;        /// Código da classe de enquadramento do IPI, conforme Tabela 4.5.1.
-    fVL_UNID: Variant;     /// Valor por unidade padrão de tributação
-    fQUANT_PAD: Variant;   /// Quantidade total de produtos na unidade padrão de tributação
+    fVL_UNID: currency;     /// Valor por unidade padrão de tributação
+    fQUANT_PAD: Double;   /// Quantidade total de produtos na unidade padrão de tributação
   public
     property CL_ENQ: String read FCL_ENQ write FCL_ENQ;
-    property VL_UNID: Variant read FVL_UNID write FVL_UNID;
-    property QUANT_PAD: Variant read FQUANT_PAD write FQUANT_PAD;
+    property VL_UNID: currency read FVL_UNID write FVL_UNID;
+    property QUANT_PAD: Double read FQUANT_PAD write FQUANT_PAD;
   end;
 
   /// Registro C178 - Lista
@@ -1003,17 +1003,17 @@ type
 
   TRegistroC179 = class
   private
-    fBC_ST_ORIG_DEST: Variant;   /// Valor da base de cálculo ST na origem/destino em operações interestaduais.
-    fICMS_ST_REP: Variant;       /// Valor do ICMS-ST a repassar/deduzir em operações interestaduais
-    fICMS_ST_COMPL: Variant;     /// Valor do ICMS-ST a complementar à UF de destino
-    fBC_RET: Variant;            /// Valor da BC de retenção em remessa promovida por Substituído intermediário
-    fICMS_RET: Variant;          /// Valor da parcela do imposto retido em remessa promovida por substituído intermediário
+    fBC_ST_ORIG_DEST: currency;   /// Valor da base de cálculo ST na origem/destino em operações interestaduais.
+    fICMS_ST_REP: currency;       /// Valor do ICMS-ST a repassar/deduzir em operações interestaduais
+    fICMS_ST_COMPL: currency;     /// Valor do ICMS-ST a complementar à UF de destino
+    fBC_RET: currency;            /// Valor da BC de retenção em remessa promovida por Substituído intermediário
+    fICMS_RET: currency;          /// Valor da parcela do imposto retido em remessa promovida por substituído intermediário
   public
-    property BC_ST_ORIG_DEST: Variant read FBC_ST_ORIG_DEST write FBC_ST_ORIG_DEST;
-    property ICMS_ST_REP: Variant read FICMS_ST_REP write FICMS_ST_REP;
-    property ICMS_ST_COMPL: Variant read FICMS_ST_COMPL write FICMS_ST_COMPL;
-    property BC_RET: Variant read FBC_RET write FBC_RET;
-    property ICMS_RET: Variant read FICMS_RET write FICMS_RET;
+    property BC_ST_ORIG_DEST: currency read FBC_ST_ORIG_DEST write FBC_ST_ORIG_DEST;
+    property ICMS_ST_REP: currency read FICMS_ST_REP write FICMS_ST_REP;
+    property ICMS_ST_COMPL: currency read FICMS_ST_COMPL write FICMS_ST_COMPL;
+    property BC_RET: currency read FBC_RET write FBC_RET;
+    property ICMS_RET: currency read FICMS_RET write FICMS_RET;
   end;
 
   /// Registro C179 - Lista
@@ -1033,26 +1033,26 @@ type
   private
     fCST_ICMS: String;         /// Código da Situação Tributária, conforme a Tabela indicada no item 4.3.1
     fCFOP: String;             /// Código Fiscal de Operação e Prestação do agrupamento de itens
-    fALIQ_ICMS: Variant;      /// Alíquota do ICMS
-    fVL_OPR: Variant;         /// Valor da operação correspondente à combinação de CST_ICMS, CFOP, e alíquota do ICMS, incluídas as despesas acessórias (frete, seguros e outras despesas acessórias)  e IPI
-    fVL_BC_ICMS: Variant;     /// Parcela correspondente ao "Valor da base de cálculo do ICMS" referente à combinação de CST_ICMS, CFOP e alíquota do ICMS.
-    fVL_ICMS: Variant;        /// Parcela correspondente ao "Valor do ICMS" referente à combinação de CST_ICMS, CFOP e alíquota do ICMS.
-    fVL_BC_ICMS_ST: Variant;  /// Parcela correspondente ao "Valor da base de cálculo do ICMS" da substituição tributária referente à combinação de CST_ICMS, CFOP e alíquota do ICMS.
-    fVL_ICMS_ST: Variant;     /// Parcela correspondente ao valor creditado/debitado do ICMS da substituição tributária, referente à combinação de CST_ICMS, CFOP, e alíquota do ICMS.
-    fVL_RED_BC: Variant;      /// Valor não tributado em função da redução da base de cálculo do ICMS, referente à combinação de CST_ICMS, CFOP e alíquota do ICMS.
-    fVL_IPI: Variant;         /// Parcela correspondente ao "Valor do IPI" referente à combinação CST_ICMS, CFOP e alíquota do ICMS.
+    fALIQ_ICMS: currency;      /// Alíquota do ICMS
+    fVL_OPR: currency;         /// Valor da operação correspondente à combinação de CST_ICMS, CFOP, e alíquota do ICMS, incluídas as despesas acessórias (frete, seguros e outras despesas acessórias)  e IPI
+    fVL_BC_ICMS: currency;     /// Parcela correspondente ao "Valor da base de cálculo do ICMS" referente à combinação de CST_ICMS, CFOP e alíquota do ICMS.
+    fVL_ICMS: currency;        /// Parcela correspondente ao "Valor do ICMS" referente à combinação de CST_ICMS, CFOP e alíquota do ICMS.
+    fVL_BC_ICMS_ST: currency;  /// Parcela correspondente ao "Valor da base de cálculo do ICMS" da substituição tributária referente à combinação de CST_ICMS, CFOP e alíquota do ICMS.
+    fVL_ICMS_ST: currency;     /// Parcela correspondente ao valor creditado/debitado do ICMS da substituição tributária, referente à combinação de CST_ICMS, CFOP, e alíquota do ICMS.
+    fVL_RED_BC: currency;      /// Valor não tributado em função da redução da base de cálculo do ICMS, referente à combinação de CST_ICMS, CFOP e alíquota do ICMS.
+    fVL_IPI: currency;         /// Parcela correspondente ao "Valor do IPI" referente à combinação CST_ICMS, CFOP e alíquota do ICMS.
     fCOD_OBS: String;          /// Código da observação do lançamento fiscal (campo 02 do Registro 0460
   public
     property CST_ICMS: String read FCST_ICMS write FCST_ICMS;
     property CFOP: String read FCFOP write FCFOP;
-    property ALIQ_ICMS: Variant read FALIQ_ICMS write FALIQ_ICMS;
-    property VL_OPR: Variant read FVL_OPR write FVL_OPR;
-    property VL_BC_ICMS: Variant read FVL_BC_ICMS write FVL_BC_ICMS;
-    property VL_ICMS: Variant read FVL_ICMS write FVL_ICMS;
-    property VL_BC_ICMS_ST: Variant read FVL_BC_ICMS_ST write FVL_BC_ICMS_ST;
-    property VL_ICMS_ST: Variant read FVL_ICMS_ST write FVL_ICMS_ST;
-    property VL_RED_BC: Variant read FVL_RED_BC write FVL_RED_BC;
-    property VL_IPI: Variant read FVL_IPI write FVL_IPI;
+    property ALIQ_ICMS: currency read FALIQ_ICMS write FALIQ_ICMS;
+    property VL_OPR: currency read FVL_OPR write FVL_OPR;
+    property VL_BC_ICMS: currency read FVL_BC_ICMS write FVL_BC_ICMS;
+    property VL_ICMS: currency read FVL_ICMS write FVL_ICMS;
+    property VL_BC_ICMS_ST: currency read FVL_BC_ICMS_ST write FVL_BC_ICMS_ST;
+    property VL_ICMS_ST: currency read FVL_ICMS_ST write FVL_ICMS_ST;
+    property VL_RED_BC: currency read FVL_RED_BC write FVL_RED_BC;
+    property VL_IPI: currency read FVL_IPI write FVL_IPI;
     property COD_OBS: String read FCOD_OBS write FCOD_OBS;
   end;
 
@@ -1103,18 +1103,18 @@ type
     fCOD_AJ: String;           /// Código do ajustes/benefício/incentivo, conforme tabela indicada no item 5.3.
     fDESCR_COMPL_AJ: String;   /// Descrição complementar do ajuste da apuração, nos casos em que o código da tabela for “9999”
     fCOD_ITEM: String;         /// Código do item (campo 02 do Registro 0200)
-    fVL_BC_ICMS: Variant;     /// Base de cálculo do ICMS ou do ICMS ST
-    fALIQ_ICMS: Variant;      /// Alíquota do ICMS
-    fVL_ICMS: Variant;        /// Valor do ICMS ou do ICMS ST
-    fVL_OUTROS: Variant;      /// Outros valores
+    fVL_BC_ICMS: currency;     /// Base de cálculo do ICMS ou do ICMS ST
+    fALIQ_ICMS: currency;      /// Alíquota do ICMS
+    fVL_ICMS: currency;        /// Valor do ICMS ou do ICMS ST
+    fVL_OUTROS: currency;      /// Outros valores
   public
     property COD_AJ: String read FCOD_AJ write FCOD_AJ;
     property DESCR_COMPL_AJ: String read FDESCR_COMPL_AJ write FDESCR_COMPL_AJ;
     property COD_ITEM: String read FCOD_ITEM write FCOD_ITEM;
-    property VL_BC_ICMS: Variant read FVL_BC_ICMS write FVL_BC_ICMS;
-    property ALIQ_ICMS: Variant read FALIQ_ICMS write FALIQ_ICMS;
-    property VL_ICMS: Variant read FVL_ICMS write FVL_ICMS;
-    property VL_OUTROS: Variant read FVL_OUTROS write FVL_OUTROS;
+    property VL_BC_ICMS: currency read FVL_BC_ICMS write FVL_BC_ICMS;
+    property ALIQ_ICMS: currency read FALIQ_ICMS write FALIQ_ICMS;
+    property VL_ICMS: currency read FVL_ICMS write FVL_ICMS;
+    property VL_OUTROS: currency read FVL_OUTROS write FVL_OUTROS;
   end;
 
   /// Registro C197 - Lista
@@ -1138,9 +1138,9 @@ type
     fNUM_DOC_INI: String; /// Número do documento fiscal inicial
     fNUM_DOC_FIN: String; /// Número do documento fiscal final
     fDT_DOC: TDateTime;   /// Data da emissão dos documentos fiscais
-    fVL_DOC: Variant;    /// Valor total dos documentos
-    fVL_PIS: Variant;    /// Valor total do PIS
-    fVL_COFINS: Variant; /// Valor total da COFINS
+    fVL_DOC: currency;    /// Valor total dos documentos
+    fVL_PIS: currency;    /// Valor total do PIS
+    fVL_COFINS: currency; /// Valor total da COFINS
     fCOD_CTA: String;     /// Código da conta analítica contábil debitada/creditada
 
     fRegistroC310: TRegistroC310List;
@@ -1155,9 +1155,9 @@ type
     property NUM_DOC_INI: String read fNUM_DOC_INI write fNUM_DOC_INI;
     property NUM_DOC_FIN: String read fNUM_DOC_FIN write fNUM_DOC_FIN;
     property DT_DOC: TDateTime read fDT_DOC write fDT_DOC;
-    property VL_DOC: Variant read fVL_DOC write fVL_DOC;
-    property VL_PIS: Variant read fVL_PIS write fVL_PIS;
-    property VL_COFINS: Variant read fVL_COFINS write fVL_COFINS;
+    property VL_DOC: currency read fVL_DOC write fVL_DOC;
+    property VL_PIS: currency read fVL_PIS write fVL_PIS;
+    property VL_COFINS: currency read fVL_COFINS write fVL_COFINS;
     property COD_CTA: String read fCOD_CTA write fCOD_CTA;
 
     property RegistroC310: TRegistroC310List read FRegistroC310 write FRegistroC310;
@@ -1201,11 +1201,11 @@ type
   private
     fCST_ICMS: String;     /// Código da Situação Tributária, conforme a Tabela indicada no item 4.3.1
     fCFOP: String;         /// Código Fiscal de Operação e Prestação
-    fALIQ_ICMS: Variant;  /// Alíquota do ICMS
-    fVL_OPR: Variant;     /// Valor total acumulado das operações correspondentes à combinação de CST_ICMS, CFOP e alíquota do ICMS, incluídas as despesas acessórias e acréscimos.
-    fVL_BC_ICMS: Variant; /// Valor acumulado da base de cálculo do ICMS, referente à combinação de CST_ICMS, CFOP, e alíquota do ICMS.
-    fVL_ICMS: Variant;    /// Valor acumulado do ICMS, referente à combinação de CST_ICMS, CFOP e alíquota do ICMS.
-    fVL_RED_BC: Variant;  /// Valor não tributado em função da redução da base de cálculo do ICMS, referente à combinação de CST_ICMS, CFOP, e alíquota do ICMS.
+    fALIQ_ICMS: Currency;  /// Alíquota do ICMS
+    fVL_OPR: currency;     /// Valor total acumulado das operações correspondentes à combinação de CST_ICMS, CFOP e alíquota do ICMS, incluídas as despesas acessórias e acréscimos.
+    fVL_BC_ICMS: currency; /// Valor acumulado da base de cálculo do ICMS, referente à combinação de CST_ICMS, CFOP, e alíquota do ICMS.
+    fVL_ICMS: currency;    /// Valor acumulado do ICMS, referente à combinação de CST_ICMS, CFOP e alíquota do ICMS.
+    fVL_RED_BC: currency;  /// Valor não tributado em função da redução da base de cálculo do ICMS, referente à combinação de CST_ICMS, CFOP, e alíquota do ICMS.
     fCOD_OBS: String;      /// Código da observação do lançamento fiscal (campo 02 do Registro 0460)
 
     FRegistroC321: TRegistroC321List;
@@ -1215,11 +1215,11 @@ type
 
     property CST_ICMS: String read fCST_ICMS write fCST_ICMS;
     property CFOP: String read fCFOP write fCFOP;
-    property ALIQ_ICMS: Variant read fALIQ_ICMS write fALIQ_ICMS;
-    property VL_OPR: Variant read fVL_OPR write fVL_OPR;
-    property VL_BC_ICMS: Variant read fVL_BC_ICMS write fVL_BC_ICMS;
-    property VL_ICMS: Variant read fVL_ICMS write fVL_ICMS;
-    property VL_RED_BC: Variant read fVL_RED_BC write fVL_RED_BC;
+    property ALIQ_ICMS: Currency read fALIQ_ICMS write fALIQ_ICMS;
+    property VL_OPR: currency read fVL_OPR write fVL_OPR;
+    property VL_BC_ICMS: currency read fVL_BC_ICMS write fVL_BC_ICMS;
+    property VL_ICMS: currency read fVL_ICMS write fVL_ICMS;
+    property VL_RED_BC: currency read fVL_RED_BC write fVL_RED_BC;
     property COD_OBS: String read fCOD_OBS write fCOD_OBS;
 
     property RegistroC321: TRegistroC321List read FRegistroC321 write FRegistroC321;
@@ -1241,24 +1241,24 @@ type
   TRegistroC321 = class
   private
     fCOD_ITEM: String;     /// Código do item (campo 02 do Registro 0200)
-    fQTD: Variant;          /// Quantidade acumulada do item
+    fQTD: Double;          /// Quantidade acumulada do item
     fUNID: String;         /// Unidade do item (Campo 02 do registro 0190)
-    fVL_ITEM: Variant;    /// Valor acumulado do item
-    fVL_DESC: Variant;    /// Valor do desconto acumulado
-    fVL_BC_ICMS: Variant; /// Valor acumulado da base de cálculo do ICMS
-    fVL_ICMS: Variant;    /// Valor acumulado do ICMS debitado
-    fVL_PIS: Variant;     /// Valor acumulado do PIS
-    fVL_COFINS: Variant;  /// Valor acumulado da COFINS
+    fVL_ITEM: currency;    /// Valor acumulado do item
+    fVL_DESC: currency;    /// Valor do desconto acumulado
+    fVL_BC_ICMS: currency; /// Valor acumulado da base de cálculo do ICMS
+    fVL_ICMS: currency;    /// Valor acumulado do ICMS debitado
+    fVL_PIS: currency;     /// Valor acumulado do PIS
+    fVL_COFINS: currency;  /// Valor acumulado da COFINS
   public
     property COD_ITEM: String read FCOD_ITEM write FCOD_ITEM;
-    property QTD: Variant read FQTD write FQTD;
+    property QTD: Double read FQTD write FQTD;
     property UNID: String read FUNID write FUNID;
-    property VL_ITEM: Variant read FVL_ITEM write FVL_ITEM;
-    property VL_DESC: Variant read FVL_DESC write FVL_DESC;
-    property VL_BC_ICMS: Variant read FVL_BC_ICMS write FVL_BC_ICMS;
-    property VL_ICMS: Variant read FVL_ICMS write FVL_ICMS;
-    property VL_PIS: Variant read FVL_PIS write FVL_PIS;
-    property VL_COFINS: Variant read FVL_COFINS write FVL_COFINS;
+    property VL_ITEM: currency read FVL_ITEM write FVL_ITEM;
+    property VL_DESC: currency read FVL_DESC write FVL_DESC;
+    property VL_BC_ICMS: currency read FVL_BC_ICMS write FVL_BC_ICMS;
+    property VL_ICMS: currency read FVL_ICMS write FVL_ICMS;
+    property VL_PIS: currency read FVL_PIS write FVL_PIS;
+    property VL_COFINS: currency read FVL_COFINS write FVL_COFINS;
   end;
 
   /// Registro C321 - Lista
@@ -1281,11 +1281,11 @@ type
     fNUM_DOC: String;       /// Número do documento fiscal
     fDT_DOC: TDateTime;     /// Data da emissão do documento fiscal
     fCNPJ_CPF: String;      /// CNPJ ou CPF do destinatário
-    fVL_MERC: Variant;     /// Valor das mercadorias constantes no documento fiscal
-    fVL_DOC: Variant;      /// Valor total do documento fiscal
-    fVL_DESC: Variant;     /// Valor total do desconto
-    fVL_PIS: Variant;      /// Valor total do PIS
-    fVL_COFINS: Variant;   /// Valor total da COFINS
+    fVL_MERC: currency;     /// Valor das mercadorias constantes no documento fiscal
+    fVL_DOC: currency;      /// Valor total do documento fiscal
+    fVL_DESC: currency;     /// Valor total do desconto
+    fVL_PIS: currency;      /// Valor total do PIS
+    fVL_COFINS: currency;   /// Valor total da COFINS
     fCOD_CTA: String;       /// Código da conta analítica contábil debitada/creditada
 
     FRegistroC370: TRegistroC370List;  /// BLOCO C - Lista de RegistroC370 (FILHO)
@@ -1299,11 +1299,11 @@ type
     property NUM_DOC: String read FNUM_DOC write FNUM_DOC;
     property DT_DOC: TDateTime read FDT_DOC write FDT_DOC;
     property CNPJ_CPF: String read FCNPJ_CPF write FCNPJ_CPF;
-    property VL_MERC: Variant read FVL_MERC write FVL_MERC;
-    property VL_DOC: Variant read FVL_DOC write FVL_DOC;
-    property VL_DESC: Variant read FVL_DESC write FVL_DESC;
-    property VL_PIS: Variant read FVL_PIS write FVL_PIS;
-    property VL_COFINS: Variant read FVL_COFINS write FVL_COFINS;
+    property VL_MERC: currency read FVL_MERC write FVL_MERC;
+    property VL_DOC: currency read FVL_DOC write FVL_DOC;
+    property VL_DESC: currency read FVL_DESC write FVL_DESC;
+    property VL_PIS: currency read FVL_PIS write FVL_PIS;
+    property VL_COFINS: currency read FVL_COFINS write FVL_COFINS;
     property COD_CTA: String read FCOD_CTA write FCOD_CTA;
 
     property RegistroC370: TRegistroC370List read FRegistroC370 write FRegistroC370;
@@ -1327,17 +1327,17 @@ type
   private
     fNUM_ITEM: String;   /// Número seqüencial do item no documento fiscal
     fCOD_ITEM: String;   /// Código do Item (campo 02 do registro 0200)
-    fQTD: Variant;        /// Quantidade do item
+    fQTD: Double;        /// Quantidade do item
     fUNID: String;       /// Unidade do item (campo 02 do registro 0190)
-    fVL_ITEM: Variant;  /// Valor total do item
-    fVL_DESC: Variant;  /// Valor total do desconto no item
+    fVL_ITEM: currency;  /// Valor total do item
+    fVL_DESC: currency;  /// Valor total do desconto no item
   public
     property NUM_ITEM: String read FNUM_ITEM write FNUM_ITEM;
     property COD_ITEM: String read FCOD_ITEM write FCOD_ITEM;
-    property QTD: Variant read FQTD write FQTD;
+    property QTD: Double read FQTD write FQTD;
     property UNID: String read FUNID write FUNID;
-    property VL_ITEM: Variant read FVL_ITEM write FVL_ITEM;
-    property VL_DESC: Variant read FVL_DESC write FVL_DESC;
+    property VL_ITEM: currency read FVL_ITEM write FVL_ITEM;
+    property VL_DESC: currency read FVL_DESC write FVL_DESC;
   end;
 
   /// Registro C370 - Lista
@@ -1357,20 +1357,20 @@ type
   private
     fCST_ICMS: String;         /// Código da Situação Tributária, conforme a Tabela indicada no item 4.3.1
     fCFOP: String;             /// Código Fiscal de Operação e Prestação
-    fALIQ_ICMS: Variant;      /// Alíquota do ICMS
-    fVL_OPR: Variant;         /// Valor total acumulado das operações correspondentes à combinação de CST_ICMS, CFOP e alíquota do ICMS, incluídas as despesas acessórias e acréscimos.
-    fVL_BC_ICMS: Variant;     /// Valor acumulado da base de cálculo do ICMS, referente à combinação de CST_ICMS, CFOP, e alíquota do ICMS.
-    fVL_ICMS: Variant;        /// Valor acumulado do ICMS, referente à combinação de CST_ICMS, CFOP e alíquota do ICMS.
-    fVL_RED_BC: Variant;      /// Valor não tributado em função da redução da base de cálculo do ICMS, referente à combinação de CST_ICMS, CFOP, e alíquota do ICMS.
+    fALIQ_ICMS: currency;      /// Alíquota do ICMS
+    fVL_OPR: currency;         /// Valor total acumulado das operações correspondentes à combinação de CST_ICMS, CFOP e alíquota do ICMS, incluídas as despesas acessórias e acréscimos.
+    fVL_BC_ICMS: currency;     /// Valor acumulado da base de cálculo do ICMS, referente à combinação de CST_ICMS, CFOP, e alíquota do ICMS.
+    fVL_ICMS: currency;        /// Valor acumulado do ICMS, referente à combinação de CST_ICMS, CFOP e alíquota do ICMS.
+    fVL_RED_BC: currency;      /// Valor não tributado em função da redução da base de cálculo do ICMS, referente à combinação de CST_ICMS, CFOP, e alíquota do ICMS.
     fCOD_OBS: String;          /// Código da observação do lançamento fiscal (campo 02 do Registro 0460)
   public
     property CST_ICMS: String read FCST_ICMS write FCST_ICMS;
     property CFOP: String read FCFOP write FCFOP;
-    property ALIQ_ICMS: Variant read FALIQ_ICMS write FALIQ_ICMS;
-    property VL_OPR: Variant read FVL_OPR write FVL_OPR;
-    property VL_BC_ICMS: Variant read FVL_BC_ICMS write FVL_BC_ICMS;
-    property VL_ICMS: Variant read FVL_ICMS write FVL_ICMS;
-    property VL_RED_BC: Variant read FVL_RED_BC write FVL_RED_BC;
+    property ALIQ_ICMS: currency read FALIQ_ICMS write FALIQ_ICMS;
+    property VL_OPR: currency read FVL_OPR write FVL_OPR;
+    property VL_BC_ICMS: currency read FVL_BC_ICMS write FVL_BC_ICMS;
+    property VL_ICMS: currency read FVL_ICMS write FVL_ICMS;
+    property VL_RED_BC: currency read FVL_RED_BC write FVL_RED_BC;
     property COD_OBS: String read FCOD_OBS write FCOD_OBS;
   end;
 
@@ -1427,8 +1427,8 @@ type
     fCRO: integer;            /// Posição do Contador de Reinício de Operação
     fCRZ: integer;            /// Posição do Contador de Redução Z
     fNUM_COO_FIN: integer;    /// Número do Contador de Ordem de Operação do último documento emitido no dia. (Número do COO na Redução Z)
-    fGT_FIN: Variant;        /// Valor do Grande Total final
-    fVL_BRT: Variant;        /// Valor da venda bruta
+    fGT_FIN: currency;        /// Valor do Grande Total final
+    fVL_BRT: currency;        /// Valor da venda bruta
 
     FRegistroC410: TRegistroC410List;  /// BLOCO C - Lista de RegistroC410 (FILHO)
     FRegistroC420: TRegistroC420List;  /// BLOCO C - Lista de RegistroC420 (FILHO)
@@ -1442,8 +1442,8 @@ type
     property CRO: integer read fCRO write fCRO;
     property CRZ: integer read fCRZ write fCRZ;
     property NUM_COO_FIN: integer read fNUM_COO_FIN write fNUM_COO_FIN;
-    property GT_FIN: Variant read fGT_FIN write fGT_FIN;
-    property VL_BRT: Variant read fVL_BRT write fVL_BRT;
+    property GT_FIN: currency read fGT_FIN write fGT_FIN;
+    property VL_BRT: currency read fVL_BRT write fVL_BRT;
 
     property RegistroC410: TRegistroC410List read FRegistroC410 write FRegistroC410;
     property RegistroC420: TRegistroC420List read FRegistroC420 write FRegistroC420;
@@ -1466,11 +1466,11 @@ type
 
   TRegistroC410 = class
   private
-    fVL_PIS: Variant;      /// 'Valor total do PIS
-    fVL_COFINS: Variant;   /// 'Valor total da COFINS
+    fVL_PIS: currency;      /// 'Valor total do PIS
+    fVL_COFINS: currency;   /// 'Valor total da COFINS
   public
-    property VL_PIS: Variant read FVL_PIS write FVL_PIS;
-    property VL_COFINS: Variant read FVL_COFINS write FVL_COFINS;
+    property VL_PIS: currency read FVL_PIS write FVL_PIS;
+    property VL_COFINS: currency read FVL_COFINS write FVL_COFINS;
   end;
 
   /// Registro C410 - Lista
@@ -1489,7 +1489,7 @@ type
   TRegistroC420 = class
   private
     fCOD_TOT_PAR: String;     /// Código do totalizador, conforme Tabela 4.4.6
-    fVLR_ACUM_TOT: Variant;  /// Valor acumulado no totalizador, relativo à respectiva Redução Z.
+    fVLR_ACUM_TOT: currency;  /// Valor acumulado no totalizador, relativo à respectiva Redução Z.
     fNR_TOT: integer;         /// Número do totalizador quando ocorrer mais de uma situação com a mesma carga tributária efetiva.
     fDESCR_NR_TOT: String;    /// Descrição da situação tributária relativa ao totalizador parcial, quando houver mais de um com a mesma carga tributária efetiva.
 
@@ -1499,7 +1499,7 @@ type
     destructor Destroy; override; /// Destroy
 
     property COD_TOT_PAR: String read fCOD_TOT_PAR write fCOD_TOT_PAR;
-    property VLR_ACUM_TOT: Variant read fVLR_ACUM_TOT write fVLR_ACUM_TOT;
+    property VLR_ACUM_TOT: currency read fVLR_ACUM_TOT write fVLR_ACUM_TOT;
     property NR_TOT: integer read fNR_TOT write fNR_TOT;
     property DESCR_NR_TOT: String read fDESCR_NR_TOT write fDESCR_NR_TOT;
     /// Registros FILHOS
@@ -1522,18 +1522,18 @@ type
   TRegistroC425 = class
   private
     fCOD_ITEM: String;           /// Código do item (campo 02 do Registro 0200):
-    fQTD: Variant;              /// Quantidade acumulada do item:
+    fQTD: Double;              /// Quantidade acumulada do item:
     fUNID: String;               /// Unidade do item (Campo 02 do registro 0190)
-    fVL_ITEM: Variant;          /// Valor acumulado do item:
-    fVL_PIS: Variant;           /// Valor do PIS
-    fVL_COFINS: Variant;        /// Valor da COFINS
+    fVL_ITEM: currency;          /// Valor acumulado do item:
+    fVL_PIS: currency;           /// Valor do PIS
+    fVL_COFINS: currency;        /// Valor da COFINS
   public
     property COD_ITEM: String read FCOD_ITEM write FCOD_ITEM;
-    property QTD: Variant read FQTD write FQTD;
+    property QTD: Double read FQTD write FQTD;
     property UNID: String read FUNID write FUNID;
-    property VL_ITEM: Variant read FVL_ITEM write FVL_ITEM;
-    property VL_PIS: Variant read fVL_PIS write fVL_PIS;
-    property VL_COFINS: Variant read fVL_COFINS write fVL_COFINS;
+    property VL_ITEM: currency read FVL_ITEM write FVL_ITEM;
+    property VL_PIS: currency read fVL_PIS write fVL_PIS;
+    property VL_COFINS: currency read fVL_COFINS write fVL_COFINS;
   end;
 
   /// Registro C425 - Lista
@@ -1555,9 +1555,9 @@ type
     fCOD_SIT: TACBrCodSit;        /// Código da situação do documento fiscal, conforme a Tabela 4.1.2
     fNUM_DOC: String;             /// Número do documento fiscal (COO)
     fDT_DOC: TDateTime;           /// Data da emissão do documento fiscal
-    fVL_DOC: Variant;            /// Valor total do documento fiscal
-    fVL_PIS: Variant;            /// Valor do PIS
-    fVL_COFINS: Variant;         /// Valor da COFINS
+    fVL_DOC: currency;            /// Valor total do documento fiscal
+    fVL_PIS: currency;            /// Valor do PIS
+    fVL_COFINS: currency;         /// Valor da COFINS
     fCPF_CNPJ: String;            /// CPF ou CNPJ do adquirente
     fNOM_ADQ: String;             /// Nome do adquirente
 
@@ -1570,9 +1570,9 @@ type
     property COD_SIT: TACBrCodSit read fCOD_SIT write fCOD_SIT;
     property NUM_DOC: String read fNUM_DOC write fNUM_DOC;
     property DT_DOC: TDateTime read fDT_DOC write fDT_DOC;
-    property VL_DOC: Variant read fVL_DOC write fVL_DOC;
-    property VL_PIS: Variant read fVL_PIS write fVL_PIS;
-    property VL_COFINS: Variant read fVL_COFINS write fVL_COFINS;
+    property VL_DOC: currency read fVL_DOC write fVL_DOC;
+    property VL_PIS: currency read fVL_PIS write fVL_PIS;
+    property VL_COFINS: currency read fVL_COFINS write fVL_COFINS;
     property CPF_CNPJ: String read fCPF_CNPJ write fCPF_CNPJ;
     property NOM_ADQ: String read fNOM_ADQ write fNOM_ADQ;
     /// Registros FILHOS
@@ -1595,26 +1595,26 @@ type
   TRegistroC470 = class
   private
     fCOD_ITEM: String;       /// Código do item (campo 02 do Registro 0200):
-    fQTD: Variant;            /// Quantidade do item
-    fQTD_CANC: Variant;       /// Quantidade cancelada, no caso de cancelamento parcial de item
+    fQTD: Double;            /// Quantidade do item
+    fQTD_CANC: Double;       /// Quantidade cancelada, no caso de cancelamento parcial de item
     fUNID: String;           /// Unidade do item (Campo 02 do registro 0190)
-    fVL_ITEM: Variant;      /// Valor do item:
+    fVL_ITEM: currency;      /// Valor do item:
     fCST_ICMS: String;       /// Código da Situação Tributária, conforme a Tabela indicada no item 4.3.1.
     fCFOP: String;           /// Código Fiscal de Operação e Prestação
-    fALIQ_ICMS: Variant;    /// Alíquota do ICMS - Carga tributária efetiva em percentual
-    fVL_PIS: Variant;       /// Valor do PIS
-    fVL_COFINS: Variant;    /// Valor da COFINS
+    fALIQ_ICMS: Currency;    /// Alíquota do ICMS - Carga tributária efetiva em percentual
+    fVL_PIS: currency;       /// Valor do PIS
+    fVL_COFINS: currency;    /// Valor da COFINS
   public
     property COD_ITEM: String read FCOD_ITEM write FCOD_ITEM;
-    property QTD: Variant read FQTD write FQTD;
-    property QTD_CANC: Variant read FQTD_CANC write FQTD_CANC;
+    property QTD: Double read FQTD write FQTD;
+    property QTD_CANC: Double read FQTD_CANC write FQTD_CANC;
     property UNID: String read FUNID write FUNID;
-    property VL_ITEM: Variant read FVL_ITEM write FVL_ITEM;
+    property VL_ITEM: currency read FVL_ITEM write FVL_ITEM;
     property CST_ICMS: String read fCST_ICMS write fCST_ICMS;
     property CFOP: String read fCFOP write fCFOP;
-    property ALIQ_ICMS: Variant read fALIQ_ICMS write fALIQ_ICMS;
-    property VL_PIS: Variant read fVL_PIS write fVL_PIS;
-    property VL_COFINS: Variant read fVL_COFINS write fVL_COFINS;
+    property ALIQ_ICMS: Currency read fALIQ_ICMS write fALIQ_ICMS;
+    property VL_PIS: currency read fVL_PIS write fVL_PIS;
+    property VL_COFINS: currency read fVL_COFINS write fVL_COFINS;
   end;
 
   /// Registro C470 - Lista
@@ -1634,18 +1634,18 @@ type
   private
     fCST_ICMS: String;     /// Código da Situação Tributária, conforme a Tabela indicada no item 4.3.1
     fCFOP: String;         /// Código Fiscal de Operação e Prestação
-    fALIQ_ICMS: Variant;      /// Alíquota do ICMS
-    fVL_OPR: Variant;         /// Valor da operação correspondente à combinação de CST_ICMS, CFOP, e alíquota do ICMS, incluídas as despesas acessórias e acréscimos
-    fVL_BC_ICMS: Variant;     /// Valor acumulado da base de cálculo do ICMS, referente à combinação de CST_ICMS, CFOP, e alíquota do ICMS.
-    fVL_ICMS: Variant;        /// Valor acumulado do ICMS, referente à combinação de CST_ICMS, CFOP e alíquota do ICMS.
+    fALIQ_ICMS: currency;      /// Alíquota do ICMS
+    fVL_OPR: currency;         /// Valor da operação correspondente à combinação de CST_ICMS, CFOP, e alíquota do ICMS, incluídas as despesas acessórias e acréscimos
+    fVL_BC_ICMS: currency;     /// Valor acumulado da base de cálculo do ICMS, referente à combinação de CST_ICMS, CFOP, e alíquota do ICMS.
+    fVL_ICMS: currency;        /// Valor acumulado do ICMS, referente à combinação de CST_ICMS, CFOP e alíquota do ICMS.
     fCOD_OBS: String;      /// Código da observação do lançamento fiscal (campo 02 do Registro 0460)
   public
     property CST_ICMS: String read FCST_ICMS write FCST_ICMS;
     property CFOP: String read FCFOP write FCFOP;
-    property ALIQ_ICMS: Variant read FALIQ_ICMS write FALIQ_ICMS;
-    property VL_OPR: Variant read FVL_OPR write FVL_OPR;
-    property VL_BC_ICMS: Variant read FVL_BC_ICMS write FVL_BC_ICMS;
-    property VL_ICMS: Variant read FVL_ICMS write FVL_ICMS;
+    property ALIQ_ICMS: currency read FALIQ_ICMS write FALIQ_ICMS;
+    property VL_OPR: currency read FVL_OPR write FVL_OPR;
+    property VL_BC_ICMS: currency read FVL_BC_ICMS write FVL_BC_ICMS;
+    property VL_ICMS: currency read FVL_ICMS write FVL_ICMS;
     property COD_OBS: String read FCOD_OBS write FCOD_OBS;
   end;
 
@@ -1664,35 +1664,35 @@ type
 
   TRegistroC495 = class
   private
-    fALIQ_ICMS: Variant;      /// Alíquota do ICMS
+    fALIQ_ICMS: currency;      /// Alíquota do ICMS
     fCOD_ITEM: String;     /// Código do item (campo 02 do Registro 0200)
-    fQTD: Variant;              /// Quantidade acumulada do item
-    fQTD_CANC: Variant;         /// Quantidade cancelada acumulada, no caso de cancelamento parcial de item
+    fQTD: Double;              /// Quantidade acumulada do item
+    fQTD_CANC: Double;         /// Quantidade cancelada acumulada, no caso de cancelamento parcial de item
     fUNID: String;         /// Unidade do item (Campo 02 do registro 0190)
-    fVL_ITEM: Variant;        /// Valor acumulado do item
-    fVL_DESC: Variant;        /// Valor acumulado dos descontos
-    fVL_CANC: Variant;        /// Valor acumulado dos cancelamentos
-    fVL_ACMO: Variant;        /// Valor acumulado dos acréscimos
-    fVL_BC_ICMS: Variant;     /// Valor acumulado da base de cálculo do ICMS
-    fVL_ICMS: Variant;        /// Valor acumulado do ICMS
-    fVL_ISEN: Variant;        /// Valor das saídas isentas do ICMS
-    fVL_NT: Variant;          /// Valor das saídas sob não-incidência ou não-tributadas pelo ICMS
-    fVL_ICMS_ST: Variant;     /// Valor das saídas de mercadorias adquiridas com substituição tributária do ICMS
+    fVL_ITEM: currency;        /// Valor acumulado do item
+    fVL_DESC: currency;        /// Valor acumulado dos descontos
+    fVL_CANC: currency;        /// Valor acumulado dos cancelamentos
+    fVL_ACMO: currency;        /// Valor acumulado dos acréscimos
+    fVL_BC_ICMS: currency;     /// Valor acumulado da base de cálculo do ICMS
+    fVL_ICMS: currency;        /// Valor acumulado do ICMS
+    fVL_ISEN: currency;        /// Valor das saídas isentas do ICMS
+    fVL_NT: currency;          /// Valor das saídas sob não-incidência ou não-tributadas pelo ICMS
+    fVL_ICMS_ST: currency;     /// Valor das saídas de mercadorias adquiridas com substituição tributária do ICMS
   public
-    property ALIQ_ICMS: Variant read FALIQ_ICMS write FALIQ_ICMS;
+    property ALIQ_ICMS: currency read FALIQ_ICMS write FALIQ_ICMS;
     property COD_ITEM: String read FCOD_ITEM write FCOD_ITEM;
-    property QTD: Variant read FQTD write FQTD;
-    property QTD_CANC: Variant read FQTD_CANC write FQTD_CANC;
+    property QTD: Double read FQTD write FQTD;
+    property QTD_CANC: Double read FQTD_CANC write FQTD_CANC;
     property UNID: String read FUNID write FUNID;
-    property VL_ITEM: Variant read FVL_ITEM write FVL_ITEM;
-    property VL_DESC: Variant read FVL_DESC write FVL_DESC;
-    property VL_CANC: Variant read FVL_CANC write FVL_CANC;
-    property VL_ACMO: Variant read FVL_ACMO write FVL_ACMO;
-    property VL_BC_ICMS: Variant read FVL_BC_ICMS write FVL_BC_ICMS;
-    property VL_ICMS: Variant read FVL_ICMS write FVL_ICMS;
-    property VL_ISEN: Variant read FVL_ISEN write FVL_ISEN;
-    property VL_NT: Variant read FVL_NT write FVL_NT;
-    property VL_ICMS_ST: Variant read FVL_ICMS_ST write FVL_ICMS_ST;
+    property VL_ITEM: currency read FVL_ITEM write FVL_ITEM;
+    property VL_DESC: currency read FVL_DESC write FVL_DESC;
+    property VL_CANC: currency read FVL_CANC write FVL_CANC;
+    property VL_ACMO: currency read FVL_ACMO write FVL_ACMO;
+    property VL_BC_ICMS: currency read FVL_BC_ICMS write FVL_BC_ICMS;
+    property VL_ICMS: currency read FVL_ICMS write FVL_ICMS;
+    property VL_ISEN: currency read FVL_ISEN write FVL_ISEN;
+    property VL_NT: currency read FVL_NT write FVL_NT;
+    property VL_ICMS_ST: currency read FVL_ICMS_ST write FVL_ICMS_ST;
   end;
 
   /// Registro C495 - Lista
@@ -1722,19 +1722,19 @@ type
     fNUM_DOC: String;                    /// Número do documento fiscal
     fDT_DOC: TDateTime;                  /// Data da emissão do documento fiscal
     fDT_E_S: TDateTime;                  /// Data da entrada ou da saída
-    fVL_DOC: Variant;                   /// Valor total do documento fiscal
-    fVL_DESC: Variant;                  /// Valor total do desconto
-    fVL_FORN: Variant;                  /// Valor total fornecido/consumido
-    fVL_SERV_NT: Variant;               /// Valor total dos serviços não-tributados pelo ICMS
-    fVL_TERC: Variant;                  /// Valor total cobrado em nome de terceiros
-    fVL_DA: Variant;                    /// Valor total de despesas acessórias indicadas no documento fiscal
-    fVL_BC_ICMS: Variant;               /// Valor acumulado da base de cálculo do ICMS
-    fVL_ICMS: Variant;                  /// Valor acumulado do ICMS
-    fVL_BC_ICMS_ST: Variant;            /// Valor acumulado da base de cálculo do ICMS substituição tributária
-    fVL_ICMS_ST: Variant;               /// Valor acumulado do ICMS retido por substituição tributária
+    fVL_DOC: currency;                   /// Valor total do documento fiscal
+    fVL_DESC: currency;                  /// Valor total do desconto
+    fVL_FORN: currency;                  /// Valor total fornecido/consumido
+    fVL_SERV_NT: currency;               /// Valor total dos serviços não-tributados pelo ICMS
+    fVL_TERC: currency;                  /// Valor total cobrado em nome de terceiros
+    fVL_DA: currency;                    /// Valor total de despesas acessórias indicadas no documento fiscal
+    fVL_BC_ICMS: currency;               /// Valor acumulado da base de cálculo do ICMS
+    fVL_ICMS: currency;                  /// Valor acumulado do ICMS
+    fVL_BC_ICMS_ST: currency;            /// Valor acumulado da base de cálculo do ICMS substituição tributária
+    fVL_ICMS_ST: currency;               /// Valor acumulado do ICMS retido por substituição tributária
     fCOD_INF: String;                    /// Código da informação complementar do documento fiscal (campo 02 do Registro 0450)
-    fVL_PIS: Variant;                   /// Valor do PIS
-    fVL_COFINS: Variant;                /// Valor da COFINS
+    fVL_PIS: currency;                   /// Valor do PIS
+    fVL_COFINS: currency;                /// Valor da COFINS
     fTP_LIGACAO: TACBrTipoLigacao;       /// Código de tipo de Ligação [ 1 - Monofásico 2 - Bifásico 3 - Trifásico ]
     fCOD_GRUPO_TENSAO: TACBrGrupoTensao; /// Código de grupo de tensão: Vide Manual Registro C500 Campo 27
 
@@ -1757,19 +1757,19 @@ type
     property NUM_DOC: String read fNUM_DOC write fNUM_DOC;
     property DT_DOC: TDateTime read fDT_DOC write fDT_DOC;
     property DT_E_S: TDateTime read fDT_E_S write fDT_E_S;
-    property VL_DOC: Variant read fVL_DOC write fVL_DOC;
-    property VL_DESC: Variant read fVL_DESC write fVL_DESC;
-    property VL_FORN: Variant read fVL_FORN write fVL_FORN;
-    property VL_SERV_NT: Variant read fVL_SERV_NT write fVL_SERV_NT;
-    property VL_TERC: Variant read fVL_TERC write fVL_TERC;
-    property VL_DA: Variant read fVL_DA write fVL_DA;
-    property VL_BC_ICMS: Variant read fVL_BC_ICMS write fVL_BC_ICMS;
-    property VL_ICMS: Variant read fVL_ICMS write fVL_ICMS;
-    property VL_BC_ICMS_ST: Variant read fVL_BC_ICMS_ST write fVL_BC_ICMS_ST;
-    property VL_ICMS_ST: Variant read fVL_ICMS_ST write fVL_ICMS_ST;
+    property VL_DOC: currency read fVL_DOC write fVL_DOC;
+    property VL_DESC: currency read fVL_DESC write fVL_DESC;
+    property VL_FORN: currency read fVL_FORN write fVL_FORN;
+    property VL_SERV_NT: currency read fVL_SERV_NT write fVL_SERV_NT;
+    property VL_TERC: currency read fVL_TERC write fVL_TERC;
+    property VL_DA: currency read fVL_DA write fVL_DA;
+    property VL_BC_ICMS: currency read fVL_BC_ICMS write fVL_BC_ICMS;
+    property VL_ICMS: currency read fVL_ICMS write fVL_ICMS;
+    property VL_BC_ICMS_ST: currency read fVL_BC_ICMS_ST write fVL_BC_ICMS_ST;
+    property VL_ICMS_ST: currency read fVL_ICMS_ST write fVL_ICMS_ST;
     property COD_INF: String read fCOD_INF write fCOD_INF;
-    property VL_PIS: Variant read fVL_PIS write fVL_PIS;
-    property VL_COFINS: Variant read fVL_COFINS write fVL_COFINS;
+    property VL_PIS: currency read fVL_PIS write fVL_PIS;
+    property VL_COFINS: currency read fVL_COFINS write fVL_COFINS;
     property TP_LIGACAO:        TACBrTipoLigacao read fTP_LIGACAO       write fTP_LIGACAO;
     property COD_GRUPO_TENSAO:  TACBrGrupoTensao read fCOD_GRUPO_TENSAO write fCOD_GRUPO_TENSAO;
 
@@ -1797,43 +1797,43 @@ type
     fNUM_ITEM: String;          /// Número seqüencial do item no documento fiscal
     fCOD_ITEM: String;          /// Código do item (campo 02 do Registro 0200)
     fCOD_CLASS: String;         /// Código de classificação do item de energia elétrica, conforme a Tabela 4.4.1
-    fQTD: Variant;               /// Quantidade do item
+    fQTD: Double;               /// Quantidade do item
     fUNID: String;              /// Unidade do item (Campo 02 do registro 0190)
-    fVL_ITEM: Variant;         /// Valor do item
-    fVL_DESC: Variant;         /// Valor total do desconto
+    fVL_ITEM: currency;         /// Valor do item
+    fVL_DESC: currency;         /// Valor total do desconto
     fCST_ICMS: String;          /// Código da Situação Tributária, conforme a Tabela indicada no item 4.3.1
     fCFOP: String;              /// Código Fiscal de Operação e Prestação
-    fVL_BC_ICMS: Variant;      /// Valor da base de cálculo do ICMS
-    fALIQ_ICMS: Variant;       /// Alíquota do ICMS
-    fVL_ICMS: Variant;         /// Valor do ICMS creditado/debitado
-    fVL_BC_ICMS_ST: Variant;   /// Valor da base de cálculo referente à substituição tributária
-    fALIQ_ST: Variant;         /// Alíquota do ICMS da substituição tributária na unidade da federação de destino
-    fVL_ICMS_ST: Variant;      /// Valor do ICMS referente à substituição tributária
+    fVL_BC_ICMS: currency;      /// Valor da base de cálculo do ICMS
+    fALIQ_ICMS: Currency;       /// Alíquota do ICMS
+    fVL_ICMS: currency;         /// Valor do ICMS creditado/debitado
+    fVL_BC_ICMS_ST: currency;   /// Valor da base de cálculo referente à substituição tributária
+    fALIQ_ST: Currency;         /// Alíquota do ICMS da substituição tributária na unidade da federação de destino
+    fVL_ICMS_ST: currency;      /// Valor do ICMS referente à substituição tributária
     fIND_REC: TACBrTipoReceita; /// Indicador do tipo de receita: 0- Receita própria; 1- Receita de terceiros
     fCOD_PART: String;          /// Código do participante receptor da receita, terceiro da operação (campo 02 do Registro 0150)
-    fVL_PIS: Variant;          /// Valor do PIS
-    fVL_COFINS: Variant;       /// Valor da COFINS
+    fVL_PIS: currency;          /// Valor do PIS
+    fVL_COFINS: currency;       /// Valor da COFINS
     fCOD_CTA: String;           /// Código da conta analítica contábil debitada/creditada
   public
     property NUM_ITEM: String read fNUM_ITEM write fNUM_ITEM;
     property COD_ITEM: String read fCOD_ITEM write fCOD_ITEM;
     property COD_CLASS: String read fCOD_CLASS write fCOD_CLASS;
-    property QTD: Variant read fQTD write fQTD;
+    property QTD: Double read fQTD write fQTD;
     property UNID: String read fUNID write fUNID;
-    property VL_ITEM: Variant read fVL_ITEM write fVL_ITEM;
-    property VL_DESC: Variant read fVL_DESC write fVL_DESC;
+    property VL_ITEM: currency read fVL_ITEM write fVL_ITEM;
+    property VL_DESC: currency read fVL_DESC write fVL_DESC;
     property CST_ICMS: String read fCST_ICMS write fCST_ICMS;
     property CFOP: String read fCFOP write fCFOP;
-    property VL_BC_ICMS: Variant read fVL_BC_ICMS write fVL_BC_ICMS;
-    property ALIQ_ICMS: Variant read fALIQ_ICMS write fALIQ_ICMS;
-    property VL_ICMS: Variant read fVL_ICMS write fVL_ICMS;
-    property VL_BC_ICMS_ST: Variant read fVL_BC_ICMS_ST write fVL_BC_ICMS_ST;
-    property ALIQ_ST: Variant read fALIQ_ST write fALIQ_ST;
-    property VL_ICMS_ST: Variant read fVL_ICMS_ST write fVL_ICMS_ST;
+    property VL_BC_ICMS: currency read fVL_BC_ICMS write fVL_BC_ICMS;
+    property ALIQ_ICMS: Currency read fALIQ_ICMS write fALIQ_ICMS;
+    property VL_ICMS: currency read fVL_ICMS write fVL_ICMS;
+    property VL_BC_ICMS_ST: currency read fVL_BC_ICMS_ST write fVL_BC_ICMS_ST;
+    property ALIQ_ST: Currency read fALIQ_ST write fALIQ_ST;
+    property VL_ICMS_ST: currency read fVL_ICMS_ST write fVL_ICMS_ST;
     property IND_REC: TACBrTipoReceita read fIND_REC write fIND_REC;
     property COD_PART: String read fCOD_PART write fCOD_PART;
-    property VL_PIS: Variant read fVL_PIS write fVL_PIS;
-    property VL_COFINS: Variant read fVL_COFINS write fVL_COFINS;
+    property VL_PIS: currency read fVL_PIS write fVL_PIS;
+    property VL_COFINS: currency read fVL_COFINS write fVL_COFINS;
     property COD_CTA: String read fCOD_CTA write fCOD_CTA;
   end;
 
@@ -1854,24 +1854,24 @@ type
   private
     fCST_ICMS: String;        /// Código da Situação Tributária, conforme a Tabela indicada no item 4.3.1.
     fCFOP: String;            /// Código Fiscal de Operação e Prestação do agrupamento de itens
-    fALIQ_ICMS: Variant;     /// Alíquota do ICMS
-    fVL_OPR: Variant;        /// Valor da operação correspondente à combinação de CST_ICMS, CFOP, e alíquota do ICMS.
-    fVL_BC_ICMS: Variant;    /// Parcela correspondente ao "Valor da base de cálculo do ICMS" referente à combinação de CST_ICMS, CFOP e alíquota do ICMS.
-    fVL_ICMS: Variant;       /// Parcela correspondente ao "Valor do ICMS" referente à combinação de CST_ICMS, CFOP e alíquota do ICMS.
-    fVL_BC_ICMS_ST: Variant; /// Parcela correspondente ao "Valor da base de cálculo do ICMS" da substituição tributária referente à combinação de CST_ICMS, CFOP e alíquota do ICMS.
-    fVL_ICMS_ST: Variant;    /// Parcela correspondente ao valor creditado/debitado do ICMS da substituição tributária, referente à combinação de CST_ICMS,  CFOP, e alíquota do ICMS.
-    fVL_RED_BC: Variant;     /// Valor não tributado em função da redução da base de cálculo do ICMS, referente à combinação de CST_ICMS, CFOP e alíquota do ICMS.
+    fALIQ_ICMS: Currency;     /// Alíquota do ICMS
+    fVL_OPR: currency;        /// Valor da operação correspondente à combinação de CST_ICMS, CFOP, e alíquota do ICMS.
+    fVL_BC_ICMS: currency;    /// Parcela correspondente ao "Valor da base de cálculo do ICMS" referente à combinação de CST_ICMS, CFOP e alíquota do ICMS.
+    fVL_ICMS: currency;       /// Parcela correspondente ao "Valor do ICMS" referente à combinação de CST_ICMS, CFOP e alíquota do ICMS.
+    fVL_BC_ICMS_ST: currency; /// Parcela correspondente ao "Valor da base de cálculo do ICMS" da substituição tributária referente à combinação de CST_ICMS, CFOP e alíquota do ICMS.
+    fVL_ICMS_ST: currency;    /// Parcela correspondente ao valor creditado/debitado do ICMS da substituição tributária, referente à combinação de CST_ICMS,  CFOP, e alíquota do ICMS.
+    fVL_RED_BC: currency;     /// Valor não tributado em função da redução da base de cálculo do ICMS, referente à combinação de CST_ICMS, CFOP e alíquota do ICMS.
     fCOD_OBS: String;         /// Código da observação do lançamento fiscal (campo 02 do Registro 0460)
   public
     property CST_ICMS: String read fCST_ICMS write fCST_ICMS;
     property CFOP: String read fCFOP write fCFOP;
-    property ALIQ_ICMS: Variant read fALIQ_ICMS write fALIQ_ICMS;
-    property VL_OPR: Variant read fVL_OPR write fVL_OPR;
-    property VL_BC_ICMS: Variant read fVL_BC_ICMS write fVL_BC_ICMS;
-    property VL_ICMS: Variant read fVL_ICMS write fVL_ICMS;
-    property VL_BC_ICMS_ST: Variant read fVL_BC_ICMS_ST write fVL_BC_ICMS_ST;
-    property VL_ICMS_ST: Variant read fVL_ICMS_ST write fVL_ICMS_ST;
-    property VL_RED_BC: Variant read fVL_RED_BC write fVL_RED_BC;
+    property ALIQ_ICMS: Currency read fALIQ_ICMS write fALIQ_ICMS;
+    property VL_OPR: currency read fVL_OPR write fVL_OPR;
+    property VL_BC_ICMS: currency read fVL_BC_ICMS write fVL_BC_ICMS;
+    property VL_ICMS: currency read fVL_ICMS write fVL_ICMS;
+    property VL_BC_ICMS_ST: currency read fVL_BC_ICMS_ST write fVL_BC_ICMS_ST;
+    property VL_ICMS_ST: currency read fVL_ICMS_ST write fVL_ICMS_ST;
+    property VL_RED_BC: currency read fVL_RED_BC write fVL_RED_BC;
     property COD_OBS: String read fCOD_OBS write fCOD_OBS;
   end;
 
@@ -1895,22 +1895,22 @@ type
     fSER: String;          /// Série do documento fiscal
     fSUB: String;          /// Subsérie do documento fiscal
     fCOD_CONS: String;     /// Código de classe de consumo de energia elétrica, conforme a Tabela 4.4.5, ou Código de Consumo de Fornecimento D’água - Tabela 4.4.2 ou Código da classe de consumo de gás canalizado   conforme Tabela 4.4.3.
-    fQTD_CONS: Variant;   /// Quantidade de documentos consolidados neste registro
-    fQTD_CANC: Variant;   /// Quantidade de documentos cancelados
+    fQTD_CONS: Currency;   /// Quantidade de documentos consolidados neste registro
+    fQTD_CANC: Currency;   /// Quantidade de documentos cancelados
     fDT_DOC: TDateTime;    /// Data dos documentos consolidados
-    fVL_DOC: Variant;     /// Valor total dos documentos
-    fVL_DESC: Variant;    /// Valor acumulado dos descontos
-    fCONS: Variant;       /// Consumo total acumulado, em kWh (Código 06)
-    fVL_FORN: Variant;    /// Valor acumulado do fornecimento
-    fVL_SERV_NT: Variant; /// Valor acumulado dos serviços não-tributados pelo ICMS
-    fVL_TERC: Variant;    /// Valores cobrados em nome de terceiros
-    fVL_DA: Variant;      /// Valor acumulado das despesas acessórias
-    fVL_BC_ICMS: Variant; /// Valor acumulado da base de cálculo do ICMS
-    fVL_ICMS: Variant;    /// Valor acumulado do ICMS
-    fVL_BC_ICMS_ST: Variant;    /// Valor acumulado da base de cálculo do ICMS substituição tributária
-    fVL_ICMS_ST: Variant;       /// Valor acumulado do ICMS retido por substituição tributária
-    fVL_PIS: Variant;           /// Valor acumulado do PIS
-    fVL_COFINS: Variant;        /// Valor acumulado COFINS
+    fVL_DOC: currency;     /// Valor total dos documentos
+    fVL_DESC: currency;    /// Valor acumulado dos descontos
+    fCONS: Currency;       /// Consumo total acumulado, em kWh (Código 06)
+    fVL_FORN: currency;    /// Valor acumulado do fornecimento
+    fVL_SERV_NT: currency; /// Valor acumulado dos serviços não-tributados pelo ICMS
+    fVL_TERC: currency;    /// Valores cobrados em nome de terceiros
+    fVL_DA: currency;      /// Valor acumulado das despesas acessórias
+    fVL_BC_ICMS: currency; /// Valor acumulado da base de cálculo do ICMS
+    fVL_ICMS: currency;    /// Valor acumulado do ICMS
+    fVL_BC_ICMS_ST: currency;    /// Valor acumulado da base de cálculo do ICMS substituição tributária
+    fVL_ICMS_ST: currency;       /// Valor acumulado do ICMS retido por substituição tributária
+    fVL_PIS: currency;           /// Valor acumulado do PIS
+    fVL_COFINS: currency;        /// Valor acumulado COFINS
 
     FRegistroC601: TRegistroC601List;
     FRegistroC610: TRegistroC610List;
@@ -1924,22 +1924,22 @@ type
     property SER: String read fSER write fSER;
     property SUB: String read fSUB write fSUB;
     property COD_CONS: String read fCOD_CONS write fCOD_CONS;
-    property QTD_CONS: Variant read fQTD_CONS write fQTD_CONS;
-    property QTD_CANC: Variant read fQTD_CANC write fQTD_CANC;
+    property QTD_CONS: Currency read fQTD_CONS write fQTD_CONS;
+    property QTD_CANC: Currency read fQTD_CANC write fQTD_CANC;
     property DT_DOC: TDateTime read fDT_DOC write fDT_DOC;
-    property VL_DOC: Variant read fVL_DOC write fVL_DOC;
-    property VL_DESC: Variant read fVL_DESC write fVL_DESC;
-    property CONS: Variant read fCONS write fCONS;
-    property VL_FORN: Variant read fVL_FORN write fVL_FORN;
-    property VL_SERV_NT: Variant read fVL_SERV_NT write fVL_SERV_NT;
-    property VL_TERC: Variant read fVL_TERC write fVL_TERC;
-    property VL_DA: Variant read fVL_DA write fVL_DA;
-    property VL_BC_ICMS: Variant read fVL_BC_ICMS write fVL_BC_ICMS;
-    property VL_ICMS: Variant read fVL_ICMS write fVL_ICMS;
-    property VL_BC_ICMS_ST: Variant read fVL_BC_ICMS_ST write fVL_BC_ICMS_ST;
-    property VL_ICMS_ST: Variant read fVL_ICMS_ST write fVL_ICMS_ST;
-    property VL_PIS: Variant read fVL_PIS write fVL_PIS;
-    property VL_COFINS: Variant read fVL_COFINS write fVL_COFINS;
+    property VL_DOC: currency read fVL_DOC write fVL_DOC;
+    property VL_DESC: currency read fVL_DESC write fVL_DESC;
+    property CONS: Currency read fCONS write fCONS;
+    property VL_FORN: currency read fVL_FORN write fVL_FORN;
+    property VL_SERV_NT: currency read fVL_SERV_NT write fVL_SERV_NT;
+    property VL_TERC: currency read fVL_TERC write fVL_TERC;
+    property VL_DA: currency read fVL_DA write fVL_DA;
+    property VL_BC_ICMS: currency read fVL_BC_ICMS write fVL_BC_ICMS;
+    property VL_ICMS: currency read fVL_ICMS write fVL_ICMS;
+    property VL_BC_ICMS_ST: currency read fVL_BC_ICMS_ST write fVL_BC_ICMS_ST;
+    property VL_ICMS_ST: currency read fVL_ICMS_ST write fVL_ICMS_ST;
+    property VL_PIS: currency read fVL_PIS write fVL_PIS;
+    property VL_COFINS: currency read fVL_COFINS write fVL_COFINS;
 
     property RegistroC601: TRegistroC601List read FRegistroC601 write FRegistroC601;
     property RegistroC610: TRegistroC610List read FRegistroC610 write FRegistroC610;
@@ -1983,36 +1983,36 @@ type
   private
     fCOD_CLASS: String;       /// Código de classificação do item de energia elétrica, conforme Tabela 4.4.1
     fCOD_ITEM: String;        /// Código do item (campo 02 do Registro 0200)
-    fQTD: Variant;                 /// Quantidade acumulada do item
+    fQTD: Double;                 /// Quantidade acumulada do item
     fUNID: String;            /// Unidade do item (Campo 02 do registro 0190)
-    fVL_ITEM: Variant;           /// Valor acumulado do item
-    fVL_DESC: Variant;           /// Valor acumulado dos descontos
+    fVL_ITEM: currency;           /// Valor acumulado do item
+    fVL_DESC: currency;           /// Valor acumulado dos descontos
     fCST_ICMS: String;        /// Código da Situação Tributária, conforme a Tabela indicada no item 4.3.1
     fCFOP: String;            /// Código Fiscal de Operação e Prestação conforme tabela indicada no item 4.2.2
-    fALIQ_ICMS: Variant;         /// Alíquota do ICMS
-    fVL_BC_ICMS: Variant;        /// Valor acumulado da base de cálculo do ICMS
-    fVL_ICMS: Variant;           /// Valor acumulado do ICMS debitado
-    fVL_BC_ICMS_ST: Variant;     /// Valor da base de cálculo do ICMS substituição tributária
-    fVL_ICMS_ST: Variant;        /// Valor do ICMS retido por substituição tributária
-    fVL_PIS: Variant;            /// Valor do PIS
-    fVL_COFINS: Variant;         /// Valor da COFINS
+    fALIQ_ICMS: currency;         /// Alíquota do ICMS
+    fVL_BC_ICMS: currency;        /// Valor acumulado da base de cálculo do ICMS
+    fVL_ICMS: currency;           /// Valor acumulado do ICMS debitado
+    fVL_BC_ICMS_ST: currency;     /// Valor da base de cálculo do ICMS substituição tributária
+    fVL_ICMS_ST: currency;        /// Valor do ICMS retido por substituição tributária
+    fVL_PIS: currency;            /// Valor do PIS
+    fVL_COFINS: currency;         /// Valor da COFINS
     fCOD_CTA: String;         /// Código da conta analítica contábil debitada/creditada
   public
     property COD_CLASS: String read FCOD_CLASS write FCOD_CLASS;
     property COD_ITEM: String read FCOD_ITEM write FCOD_ITEM;
-    property QTD: Variant read FQTD write FQTD;
+    property QTD: Double read FQTD write FQTD;
     property UNID: String read FUNID write FUNID;
-    property VL_ITEM: Variant read FVL_ITEM write FVL_ITEM;
-    property VL_DESC: Variant read FVL_DESC write FVL_DESC;
+    property VL_ITEM: currency read FVL_ITEM write FVL_ITEM;
+    property VL_DESC: currency read FVL_DESC write FVL_DESC;
     property CST_ICMS: String read FCST_ICMS write FCST_ICMS;
     property CFOP: String read FCFOP write FCFOP;
-    property ALIQ_ICMS: Variant read FALIQ_ICMS write FALIQ_ICMS;
-    property VL_BC_ICMS: Variant read FVL_BC_ICMS write FVL_BC_ICMS;
-    property VL_ICMS: Variant read FVL_ICMS write FVL_ICMS;
-    property VL_BC_ICMS_ST: Variant read FVL_BC_ICMS_ST write FVL_BC_ICMS_ST;
-    property VL_ICMS_ST: Variant read FVL_ICMS_ST write FVL_ICMS_ST;
-    property VL_PIS: Variant read FVL_PIS write FVL_PIS;
-    property VL_COFINS: Variant read FVL_COFINS write FVL_COFINS;
+    property ALIQ_ICMS: currency read FALIQ_ICMS write FALIQ_ICMS;
+    property VL_BC_ICMS: currency read FVL_BC_ICMS write FVL_BC_ICMS;
+    property VL_ICMS: currency read FVL_ICMS write FVL_ICMS;
+    property VL_BC_ICMS_ST: currency read FVL_BC_ICMS_ST write FVL_BC_ICMS_ST;
+    property VL_ICMS_ST: currency read FVL_ICMS_ST write FVL_ICMS_ST;
+    property VL_PIS: currency read FVL_PIS write FVL_PIS;
+    property VL_COFINS: currency read FVL_COFINS write FVL_COFINS;
     property COD_CTA: String read FCOD_CTA write FCOD_CTA;
   end;
 
@@ -2033,24 +2033,24 @@ type
   private
     fCST_ICMS: String;            /// Código da Situação Tributária, conforme a tabela indicada no item 4.3.1
     fCFOP: String;                /// Código Fiscal de Operação e Prestação, conforme a tabela indicada no item 4.2.2
-    fALIQ_ICMS: Variant;         /// Alíquota do ICMS
-    fVL_OPR: Variant;            /// Valor da operação correspondente à combinação de CST_ICMS, CFOP, e alíquota do ICMS.
-    fVL_BC_ICMS: Variant;        /// Parcela correspondente ao "Valor da base de cálculo do ICMS" referente à combinação CST_ICMS, CFOP e alíquota do ICMS
-    fVL_ICMS: Variant;           /// Parcela correspondente ao "Valor do ICMS" referente à combinação CST_ICMS, CFOP e alíquota do ICMS
-    fVL_RED_BC: Variant;         /// Valor não tributado em função da redução da base de cálculo do ICMS, referente à combinação de CST_ICMS, CFOP e alíquota do ICMS.
-    fVL_BC_ICMS_ST: Variant;     /// Valor da base de cálculo do ICMS substituição tributária
-    fVL_ICMS_ST: Variant;        /// Valor do ICMS retido por substituição tributária
+    fALIQ_ICMS: currency;         /// Alíquota do ICMS
+    fVL_OPR: currency;            /// Valor da operação correspondente à combinação de CST_ICMS, CFOP, e alíquota do ICMS.
+    fVL_BC_ICMS: currency;        /// Parcela correspondente ao "Valor da base de cálculo do ICMS" referente à combinação CST_ICMS, CFOP e alíquota do ICMS
+    fVL_ICMS: currency;           /// Parcela correspondente ao "Valor do ICMS" referente à combinação CST_ICMS, CFOP e alíquota do ICMS
+    fVL_RED_BC: currency;         /// Valor não tributado em função da redução da base de cálculo do ICMS, referente à combinação de CST_ICMS, CFOP e alíquota do ICMS.
+    fVL_BC_ICMS_ST: currency;     /// Valor da base de cálculo do ICMS substituição tributária
+    fVL_ICMS_ST: currency;        /// Valor do ICMS retido por substituição tributária
     fCOD_OBS: String;             /// Código da observação do lançamento fiscal (campo 02 do Registro 0460)
   public
     property CST_ICMS: String read FCST_ICMS write FCST_ICMS;
     property CFOP: String read FCFOP write FCFOP;
-    property ALIQ_ICMS: Variant read FALIQ_ICMS write FALIQ_ICMS;
-    property VL_OPR: Variant read FVL_OPR write FVL_OPR;
-    property VL_BC_ICMS: Variant read FVL_BC_ICMS write FVL_BC_ICMS;
-    property VL_ICMS: Variant read FVL_ICMS write FVL_ICMS;
-    property VL_RED_BC: Variant read FVL_RED_BC write FVL_RED_BC;
-    property VL_BC_ICMS_ST: Variant read FVL_BC_ICMS_ST write FVL_BC_ICMS_ST;
-    property VL_ICMS_ST: Variant read FVL_ICMS_ST write FVL_ICMS_ST;
+    property ALIQ_ICMS: currency read FALIQ_ICMS write FALIQ_ICMS;
+    property VL_OPR: currency read FVL_OPR write FVL_OPR;
+    property VL_BC_ICMS: currency read FVL_BC_ICMS write FVL_BC_ICMS;
+    property VL_ICMS: currency read FVL_ICMS write FVL_ICMS;
+    property VL_RED_BC: currency read FVL_RED_BC write FVL_RED_BC;
+    property VL_BC_ICMS_ST: currency read FVL_BC_ICMS_ST write FVL_BC_ICMS_ST;
+    property VL_ICMS_ST: currency read FVL_ICMS_ST write FVL_ICMS_ST;
     property COD_OBS: String read FCOD_OBS write FCOD_OBS;
   end;
 
@@ -2111,13 +2111,13 @@ type
   private
     fCST_ICMS: String;            /// Código da Situação Tributária, conforme a tabela indicada no item 4.3.1
     fCFOP: String;                /// Código Fiscal de Operação e Prestação, conforme a tabela indicada no item 4.2.2
-    fALIQ_ICMS: Variant;         /// Alíquota do ICMS
-    fVL_OPR: Variant;            /// Valor da operação correspondente à combinação de CST_ICMS, CFOP, e alíquota do ICMS.
-    fVL_BC_ICMS: Variant;        /// Parcela correspondente ao "Valor da base de cálculo do ICMS" referente à combinação CST_ICMS, CFOP, e alíquota do ICMS
-    fVL_ICMS: Variant;           /// Parcela correspondente ao "Valor do ICMS" referente à combinação CST_ICMS, CFOP e alíquota do ICMS
-    fVL_BC_ICMS_ST: Variant;     /// Valor da base de cálculo do ICMS substituição tributária
-    fVL_ICMS_ST: Variant;        /// Valor do ICMS retido por substituição tributária
-    fVL_RED_BC: Variant;         /// Valor não tributado em função da redução da base de cálculo do ICMS, referente à combinação de CST_ICMS, CFOP e alíquota do ICMS.
+    fALIQ_ICMS: currency;         /// Alíquota do ICMS
+    fVL_OPR: currency;            /// Valor da operação correspondente à combinação de CST_ICMS, CFOP, e alíquota do ICMS.
+    fVL_BC_ICMS: currency;        /// Parcela correspondente ao "Valor da base de cálculo do ICMS" referente à combinação CST_ICMS, CFOP, e alíquota do ICMS
+    fVL_ICMS: currency;           /// Parcela correspondente ao "Valor do ICMS" referente à combinação CST_ICMS, CFOP e alíquota do ICMS
+    fVL_BC_ICMS_ST: currency;     /// Valor da base de cálculo do ICMS substituição tributária
+    fVL_ICMS_ST: currency;        /// Valor do ICMS retido por substituição tributária
+    fVL_RED_BC: currency;         /// Valor não tributado em função da redução da base de cálculo do ICMS, referente à combinação de CST_ICMS, CFOP e alíquota do ICMS.
     fCOD_OBS: String;
     FRegistroC791: TRegistroC791List;             /// Código da observação do lançamento fiscal (campo 02 do Registro 0460)
   public
@@ -2126,13 +2126,13 @@ type
 
     property CST_ICMS: String read FCST_ICMS write FCST_ICMS;
     property CFOP: String read FCFOP write FCFOP;
-    property ALIQ_ICMS: Variant read FALIQ_ICMS write FALIQ_ICMS;
-    property VL_OPR: Variant read FVL_OPR write FVL_OPR;
-    property VL_BC_ICMS: Variant read FVL_BC_ICMS write FVL_BC_ICMS;
-    property VL_ICMS: Variant read FVL_ICMS write FVL_ICMS;
-    property VL_BC_ICMS_ST: Variant read FVL_BC_ICMS_ST write FVL_BC_ICMS_ST;
-    property VL_ICMS_ST: Variant read FVL_ICMS_ST write FVL_ICMS_ST;
-    property VL_RED_BC: Variant read FVL_RED_BC write FVL_RED_BC;
+    property ALIQ_ICMS: currency read FALIQ_ICMS write FALIQ_ICMS;
+    property VL_OPR: currency read FVL_OPR write FVL_OPR;
+    property VL_BC_ICMS: currency read FVL_BC_ICMS write FVL_BC_ICMS;
+    property VL_ICMS: currency read FVL_ICMS write FVL_ICMS;
+    property VL_BC_ICMS_ST: currency read FVL_BC_ICMS_ST write FVL_BC_ICMS_ST;
+    property VL_ICMS_ST: currency read FVL_ICMS_ST write FVL_ICMS_ST;
+    property VL_RED_BC: currency read FVL_RED_BC write FVL_RED_BC;
     property COD_OBS: String read FCOD_OBS write FCOD_OBS;
 
     property RegistroC791: TRegistroC791List read FRegistroC791 write FRegistroC791;
@@ -2154,12 +2154,12 @@ type
   TRegistroC791 = class
   private
     fUF: String;                  /// Sigla da unidade da federação a que se refere a retenção ST
-    fVL_BC_ICMS_ST: Variant;     /// Valor da base de cálculo do ICMS substituição tributária
-    fVL_ICMS_ST: Variant;        /// Valor do ICMS retido por substituição tributária
+    fVL_BC_ICMS_ST: currency;     /// Valor da base de cálculo do ICMS substituição tributária
+    fVL_ICMS_ST: currency;        /// Valor do ICMS retido por substituição tributária
   public
     property UF: String read FUF write FUF;
-    property VL_BC_ICMS_ST: Variant read FVL_BC_ICMS_ST write FVL_BC_ICMS_ST;
-    property VL_ICMS_ST: Variant read FVL_ICMS_ST write FVL_ICMS_ST;
+    property VL_BC_ICMS_ST: currency read FVL_BC_ICMS_ST write FVL_BC_ICMS_ST;
+    property VL_ICMS_ST: currency read FVL_ICMS_ST write FVL_ICMS_ST;
   end;
 
   /// Registro C791 - Lista
@@ -2181,18 +2181,18 @@ type
     fCOD_SIT: TACBrCodSit;              /// Código da situação do documento fiscal, conforme a Tabela 4.1.2
     fNUM_CFE: String;                   /// Número do Cupom Fiscal Eletrônico
     fDT_DOC: TDateTime;                 /// Data da emissão do documento fiscal Eletrônico
-    fVL_CFE: Variant;                  /// Valor total do Cupom Fiscal Eletrônico
-    fVL_PIS: Variant;                  /// Valor total do PIS
-    fVL_COFINS: Variant;               /// Valor total da COFINS
+    fVL_CFE: currency;                  /// Valor total do Cupom Fiscal Eletrônico
+    fVL_PIS: currency;                  /// Valor total do PIS
+    fVL_COFINS: currency;               /// Valor total da COFINS
     fCNPJ_CPF: String;                  /// CNPJ ou CPF do destinatário
     fNR_SAT: String;                    /// Número de Série do equipamento SAT
     fCHV_CFE: String;                   /// Chave do Cupom Fiscal Eletrônico
-    fVL_DESC: Variant;                 /// Valor total do desconto sobre item
-    fVL_MERC: Variant;                 /// Valor das mercadorias e serviço
-    fVL_OUT_DA: Variant;               /// Valor de outras desp. acessórias (acréscimo)
-    fVL_ICMS: Variant;                 /// Valor do ICMS
-    fVL_PIS_ST: Variant;               /// Valor total do PIS retido por substituição tributária
-    fVL_COFINS_ST: Variant;            /// Valor total da COFINS retido por substituição tributária
+    fVL_DESC: currency;                 /// Valor total do desconto sobre item
+    fVL_MERC: currency;                 /// Valor das mercadorias e serviço
+    fVL_OUT_DA: currency;               /// Valor de outras desp. acessórias (acréscimo)
+    fVL_ICMS: currency;                 /// Valor do ICMS
+    fVL_PIS_ST: currency;               /// Valor total do PIS retido por substituição tributária
+    fVL_COFINS_ST: currency;            /// Valor total da COFINS retido por substituição tributária
 
     FRegistroC850: TRegistroC850List;   /// BLOCO C - Lista de RegistroC850 (FILHO)
   public
@@ -2203,18 +2203,18 @@ type
     property COD_SIT: TACBrCodSit read FCOD_SIT write FCOD_SIT;
     property NUM_CFE: String read FNUM_CFE write FNUM_CFE;
     property DT_DOC: TDateTime read FDT_DOC write FDT_DOC;
-    property VL_CFE: Variant read FVL_CFE write FVL_CFE;
-    property VL_PIS: Variant read FVL_PIS write FVL_PIS;
-    property VL_COFINS: Variant read FVL_COFINS write FVL_COFINS;
+    property VL_CFE: currency read FVL_CFE write FVL_CFE;
+    property VL_PIS: currency read FVL_PIS write FVL_PIS;
+    property VL_COFINS: currency read FVL_COFINS write FVL_COFINS;
     property CNPJ_CPF: String read FCNPJ_CPF write FCNPJ_CPF;
     property NR_SAT: String read FNR_SAT write FNR_SAT;
     property CHV_CFE: String read FCHV_CFE write FCHV_CFE;
-    property VL_DESC: Variant read FVL_DESC write FVL_DESC;
-    property VL_MERC: Variant read FVL_MERC write FVL_MERC;
-    property VL_OUT_DA: Variant read FVL_OUT_DA write FVL_OUT_DA;
-    property VL_ICMS: Variant read FVL_ICMS write FVL_ICMS;
-    property VL_PIS_ST: Variant read FVL_PIS_ST write FVL_PIS_ST;
-    property VL_COFINS_ST: Variant read FVL_COFINS_ST write FVL_COFINS_ST;
+    property VL_DESC: currency read FVL_DESC write FVL_DESC;
+    property VL_MERC: currency read FVL_MERC write FVL_MERC;
+    property VL_OUT_DA: currency read FVL_OUT_DA write FVL_OUT_DA;
+    property VL_ICMS: currency read FVL_ICMS write FVL_ICMS;
+    property VL_PIS_ST: currency read FVL_PIS_ST write FVL_PIS_ST;
+    property VL_COFINS_ST: currency read FVL_COFINS_ST write FVL_COFINS_ST;
     /// Registros FILHOS
     property RegistroC850: TRegistroC850List read FRegistroC850 write FRegistroC850;
   end;
@@ -2236,19 +2236,19 @@ type
   private
     fCST_ICMS: String;            /// Código da Situação Tributária, conforme a tabela indicada no item 4.3.1
     fCFOP: String;                /// Código Fiscal de Operação e Prestação do agrupamento de itens
-    fALIQ_ICMS: Variant;         /// Alíquota do ICMS
-    fVL_OPR: Variant;            /// “Valor total do CF-e” na combinação de CST_ICMS, CFOP e alíquota do ICMS, correspondente ao somatório do valor líquido dos itens.
-    fVL_BC_ICMS: Variant;        /// Parcela correspondente ao "Valor da base de cálculo do ICMS" referente à combinação CST_ICMS, CFOP, e alíquota do ICMS
-    fVL_ICMS: Variant;           /// Parcela correspondente ao "Valor do ICMS" referente à combinação CST_ICMS, CFOP e alíquota do ICMS
+    fALIQ_ICMS: currency;         /// Alíquota do ICMS
+    fVL_OPR: currency;            /// “Valor total do CF-e” na combinação de CST_ICMS, CFOP e alíquota do ICMS, correspondente ao somatório do valor líquido dos itens.
+    fVL_BC_ICMS: currency;        /// Parcela correspondente ao "Valor da base de cálculo do ICMS" referente à combinação CST_ICMS, CFOP, e alíquota do ICMS
+    fVL_ICMS: currency;           /// Parcela correspondente ao "Valor do ICMS" referente à combinação CST_ICMS, CFOP e alíquota do ICMS
     fCOD_OBS: String;
   public
 
     property CST_ICMS: String read FCST_ICMS write FCST_ICMS;
     property CFOP: String read FCFOP write FCFOP;
-    property ALIQ_ICMS: Variant read FALIQ_ICMS write FALIQ_ICMS;
-    property VL_OPR: Variant read FVL_OPR write FVL_OPR;
-    property VL_BC_ICMS: Variant read FVL_BC_ICMS write FVL_BC_ICMS;
-    property VL_ICMS: Variant read FVL_ICMS write FVL_ICMS;
+    property ALIQ_ICMS: currency read FALIQ_ICMS write FALIQ_ICMS;
+    property VL_OPR: currency read FVL_OPR write FVL_OPR;
+    property VL_BC_ICMS: currency read FVL_BC_ICMS write FVL_BC_ICMS;
+    property VL_ICMS: currency read FVL_ICMS write FVL_ICMS;
     property COD_OBS: String read FCOD_OBS write FCOD_OBS;
   end;
 
@@ -2303,19 +2303,19 @@ type
   private
     fCST_ICMS: String;            /// Código da Situação Tributária, conforme a tabela indicada no item 4.3.1
     fCFOP: String;                /// Código Fiscal de Operação e Prestação do agrupamento de itens
-    fALIQ_ICMS: Variant;         /// Alíquota do ICMS
-    fVL_OPR: Variant;            /// “Valor total do CF-e” na combinação de CST_ICMS, CFOP e alíquota do ICMS, correspondente ao somatório do valor líquido dos itens.
-    fVL_BC_ICMS: Variant;        /// Parcela correspondente ao "Valor da base de cálculo do ICMS" referente à combinação CST_ICMS, CFOP, e alíquota do ICMS
-    fVL_ICMS: Variant;           /// Parcela correspondente ao "Valor do ICMS" referente à combinação CST_ICMS, CFOP e alíquota do ICMS
+    fALIQ_ICMS: currency;         /// Alíquota do ICMS
+    fVL_OPR: currency;            /// “Valor total do CF-e” na combinação de CST_ICMS, CFOP e alíquota do ICMS, correspondente ao somatório do valor líquido dos itens.
+    fVL_BC_ICMS: currency;        /// Parcela correspondente ao "Valor da base de cálculo do ICMS" referente à combinação CST_ICMS, CFOP, e alíquota do ICMS
+    fVL_ICMS: currency;           /// Parcela correspondente ao "Valor do ICMS" referente à combinação CST_ICMS, CFOP e alíquota do ICMS
     fCOD_OBS: String;             /// Código da observação do lançamento fiscal (campo 02 do registro 0460)
   public
 
     property CST_ICMS: String read FCST_ICMS write FCST_ICMS;
     property CFOP: String read FCFOP write FCFOP;
-    property ALIQ_ICMS: Variant read FALIQ_ICMS write FALIQ_ICMS;
-    property VL_OPR: Variant read FVL_OPR write FVL_OPR;
-    property VL_BC_ICMS: Variant read FVL_BC_ICMS write FVL_BC_ICMS;
-    property VL_ICMS: Variant read FVL_ICMS write FVL_ICMS;
+    property ALIQ_ICMS: currency read FALIQ_ICMS write FALIQ_ICMS;
+    property VL_OPR: currency read FVL_OPR write FVL_OPR;
+    property VL_BC_ICMS: currency read FVL_BC_ICMS write FVL_BC_ICMS;
+    property VL_ICMS: currency read FVL_ICMS write FVL_ICMS;
     property COD_OBS: String read FCOD_OBS write FCOD_OBS;
   end;
 

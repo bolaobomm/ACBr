@@ -1352,7 +1352,7 @@ begin
           Add( LFill('D370') +
                LFill( COD_MUN_ORIG ) +
                LFill( VL_SERV,0,2 ) +
-               LFill( QTD_BILH,0,2 ) +
+               LFill( QTD_BILH,0 ) +
                LFill( VL_BC_ICMS,0,2 ) +
                LFill( VL_ICMS,0,2 ) ) ;
         end;

@@ -110,14 +110,14 @@ type
     fCOD_PART: string;
     fDT_EST: TDateTime;
     fIND_EST: TACBrIndEstoque;
-    fQTD: Variant;
+    fQTD: double;
   public
     constructor Create(AOwner: TRegistroK100); virtual; /// Create
     destructor Destroy; override; /// Destroy
 
     property DT_EST : TDateTime read fDT_EST write fDT_EST;
     property COD_ITEM : string read fCOD_ITEM write fCOD_ITEM;
-    property QTD : Variant read fQTD write fQTD;
+    property QTD : double read fQTD write fQTD;
     property IND_EST : TACBrIndEstoque read fIND_EST write fIND_EST;
     property COD_PART : string read fCOD_PART write fCOD_PART;
   end;
@@ -140,7 +140,7 @@ type
     fCOD_ITEM_DEST: string;
     fCOD_ITEM_ORI: string;
     fDT_MOV: TDateTime;
-    fQTD: Variant;
+    fQTD: double;
   public
     constructor Create(AOwner: TRegistroK100); virtual; /// Create
     destructor Destroy; override; /// Destroy
@@ -148,7 +148,7 @@ type
     property DT_MOV : TDateTime read fDT_MOV write fDT_MOV;
     property COD_ITEM_ORI : string read fCOD_ITEM_ORI write fCOD_ITEM_ORI;
     property COD_ITEM_DEST : string read fCOD_ITEM_DEST write fCOD_ITEM_DEST;
-    property QTD : Variant read fQTD write fQTD;
+    property QTD : double read fQTD write fQTD;
   end;
 
   /// Registro K220 - Lista
@@ -170,7 +170,7 @@ type
     fCOD_ITEM: string;
     fDT_FIN_OP: TDateTime;
     fDT_INI_OP: TDateTime;
-    fQTD_ENC: Variant;
+    fQTD_ENC: double;
     FRegistroK235: TRegistroK235List;
   public
     constructor Create(AOwner: TRegistroK100); virtual; /// Create
@@ -180,7 +180,7 @@ type
     property DT_FIN_OP : TDateTime read fDT_FIN_OP write fDT_FIN_OP;
     property COD_DOC_OP : string read fCOD_DOC_OP write fCOD_DOC_OP;
     property COD_ITEM : string read fCOD_ITEM write fCOD_ITEM;
-    property QTD_ENC : Variant read fQTD_ENC write fQTD_ENC;
+    property QTD_ENC : double read fQTD_ENC write fQTD_ENC;
 
     property RegistroK235: TRegistroK235List read FRegistroK235 write FRegistroK235;
   end;
@@ -203,14 +203,14 @@ type
     fCOD_INS_SUBST: string;
     fCOD_ITEM: string;
     fDT_SAIDA: TDateTime;
-    fQTD: Variant;
+    fQTD: double;
   public
     constructor Create(AOwner: TRegistroK230); virtual; /// Create
     destructor Destroy; override; /// Destroy
 
     property DT_SAIDA : TDateTime  read fDT_SAIDA write fDT_SAIDA;
     property COD_ITEM : string read fCOD_ITEM write fCOD_ITEM;
-    property QTD: Variant read fQTD write fQTD;
+    property QTD: double read fQTD write fQTD;
     property COD_INS_SUBST : string read fCOD_INS_SUBST write fCOD_INS_SUBST;
   end;
 
@@ -231,7 +231,7 @@ type
   private
     fCOD_ITEM: String;
     fDT_PROD: TDateTime;
-    fQTD: Variant;
+    fQTD: double;
     fRegistroK255: TRegistroK255List;
   public
     constructor Create(AOwner: TRegistroK100); virtual; /// Create
@@ -239,7 +239,7 @@ type
 
     property DT_PROD : TDateTime read fDT_PROD write fDT_PROD;
     property COD_ITEM : String  read fCOD_ITEM write fCOD_ITEM;
-    property QTD : Variant read fQTD write fQTD;
+    property QTD : double read fQTD write fQTD;
 
     property RegistroK255 : TRegistroK255List read fRegistroK255 write fRegistroK255;
   end;
@@ -262,14 +262,14 @@ type
     fCOD_INS_SUBST: string;
     fCOD_ITEM: string;
     fDT_CONS: TDateTime;
-    fQTD: Variant;
+    fQTD: double;
   public
     constructor Create(AOwner: TRegistroK250); virtual; /// Create
     destructor Destroy; override; /// Destroy
 
     property DT_CONS : TDateTime read fDT_CONS write fDT_CONS;
     property COD_ITEM : string read fCOD_ITEM write fCOD_ITEM;
-    property QTD : Variant read fQTD write fQTD;
+    property QTD : double read fQTD write fQTD;
     property COD_INS_SUBST : string read fCOD_INS_SUBST write fCOD_INS_SUBST;
 
   end;
