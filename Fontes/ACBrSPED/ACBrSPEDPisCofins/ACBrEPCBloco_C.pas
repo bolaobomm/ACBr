@@ -402,8 +402,8 @@ type
     fALIQ_PIS_QUANT    : double;
     fCFOP              : string;
     fCOD_CTA           : string;
-    fCST_COFINS        : string;
-    fCST_PIS           : string;
+    fCST_COFINS        : TACBrSituacaoTribCOFINS;
+    fCST_PIS           : TACBrCstPis;
     fINFO_COMPL        : string;
     fQUANT_BC_COFINS   : double;
     fQUANT_BC_PIS      : double;
@@ -418,13 +418,13 @@ type
     property CFOP                 : string   read fCFOP                  write fCFOP;
     property VL_OPR               : Currency read fVL_OPR                write fVL_OPR;
     property VL_DESC              : Currency read fVL_DESC               write fVL_DESC;
-    property CST_PIS              : string   read fCST_PIS               write fCST_PIS;
+    property CST_PIS              : TACBrCstPis   read fCST_PIS               write fCST_PIS;
     property VL_BC_PIS            : Currency read fVL_BC_PIS             write fVL_BC_PIS;
     property ALIQ_PIS             : Double   read fALIQ_PIS              write fALIQ_PIS;
     property QUANT_BC_PIS         : double   read fQUANT_BC_PIS          write fQUANT_BC_PIS;
     property ALIQ_PIS_QUANT       : double   read fALIQ_PIS_QUANT        write fALIQ_PIS_QUANT;
     property VL_PIS               : Currency read fVL_PIS                write fVL_PIS;
-    property CST_COFINS           : string   read fCST_COFINS            write fCST_COFINS;
+    property CST_COFINS           : TACBrSituacaoTribCOFINS   read fCST_COFINS            write fCST_COFINS;
     property VL_BC_COFINS         : Currency read fVL_BC_COFINS          write fVL_BC_COFINS;
     property ALIQ_COFINS          : double   read fALIQ_COFINS           write fALIQ_COFINS;
     property QUANT_BC_COFINS      : double   read fQUANT_BC_COFINS       write fQUANT_BC_COFINS;

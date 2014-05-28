@@ -1080,13 +1080,13 @@ begin
               {02} LFill( CFOP )                   +
               {03} LFill( VL_OPR, 0, 2 )           +
               {04} LFill( VL_DESC, 0, 2 )          +
-              {05} DFill( CST_PIS )                +
+              {05} LFill( CstPisToStr(CST_PIS) )                +
               {06} LFill( VL_BC_PIS, 0, 2 )        +
               {07} LFill( ALIQ_PIS, 8, 4 )         +
               {08} LFill( QUANT_BC_PIS, 0, 3 )     +
               {09} LFill( ALIQ_PIS_QUANT, 0, 4 )   +
               {10} LFill( VL_PIS, 0, 2 )           +
-              {11} LFill( CST_COFINS )             +
+              {11} LFill( CstCofinsToStr(CST_COFINS) )             +
               {12} LFill( VL_BC_COFINS, 0, 2 )     +
               {13} LFill( ALIQ_COFINS, 8, 4 )      +
               {14} LFill( QUANT_BC_COFINS, 0, 3 )  +
