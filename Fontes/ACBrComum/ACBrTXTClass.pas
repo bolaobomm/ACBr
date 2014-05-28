@@ -79,7 +79,7 @@ type
     function Add( const AString : AnsiString; AddDelimiter : Boolean = True ) : Integer;
     function DFill(Value: Double;
                    Decimal: Integer = 2;
-                   Nulo: Boolean = false): String; overload;
+                   Nulo: Boolean = false): String;
     function LFill(Value: String;
                    Size: Integer = 0;
                    Nulo: Boolean = false;
@@ -94,15 +94,15 @@ type
     function LFill(Value: TDateTime; Mask: String = 'ddmmyyyy'; Nulo: Boolean = True): String; overload;
     function RFill(Value: String;
                    Size: Integer = 0;
-                   Caracter: Char = ' '): String; overload;
+                   Caracter: Char = ' '): String;
 
     function VDFill(Value: Variant;
-                    Decimal: Integer = 2): String; overload;
+                    Decimal: Integer = 2): String;
     function VLFill(Value: Variant;
                     Size: Integer;
                     Decimal: Integer = 2;
                     Caracter: Char = '0';
-                    Mascara: String = ''): String; overload;
+                    Mascara: String = ''): String;
     ///
     procedure Check(Condicao: Boolean; const Msg: String); overload;
     procedure Check(Condicao: Boolean; Msg: String; Fmt: array of const); overload;
