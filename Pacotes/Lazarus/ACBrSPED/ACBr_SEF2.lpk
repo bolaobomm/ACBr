@@ -3,6 +3,7 @@
   <Package Version="4">
     <PathDelim Value="\"/>
     <Name Value="ACBr_SEF2"/>
+    <Author Value="Juliomar Marchetti"/>
     <CompilerOptions>
       <Version Value="11"/>
       <PathDelim Value="\"/>
@@ -17,6 +18,7 @@
         <CompilerPath Value="$(CompPath)"/>
       </Other>
     </CompilerOptions>
+    <Description Value="ACBr - SEF2 (eDoc e SEF) - (http://www.projetoacbr.com.br/)"/>
     <Files Count="32">
       <Item1>
         <Filename Value="..\..\..\Fontes\ACBrSEF2\ACBrSEF2Conversao.pas"/>

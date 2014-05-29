@@ -3,7 +3,7 @@
   <Package Version="4">
     <PathDelim Value="\"/>
     <Name Value="ACBr_BoletoFC_Fortes"/>
-    <Author Value="Projeto RLBoleto"/>
+    <Author Value="Daniel Simões Almeida"/>
     <CompilerOptions>
       <Version Value="11"/>
       <PathDelim Value="\"/>
@@ -15,7 +15,7 @@
         <CompilerPath Value="$(CompPath)"/>
       </Other>
     </CompilerOptions>
-    <Description Value="Ficha de Compensação ACBrBoleto, para Fortes Report"/>
+    <Description Value="ACBr - Boleto Impressão em FortesReport - (http://www.projectoacbr.com.br/)"/>
     <License Value="LGPL"/>
     <Version Minor="1"/>
     <Files Count="1">

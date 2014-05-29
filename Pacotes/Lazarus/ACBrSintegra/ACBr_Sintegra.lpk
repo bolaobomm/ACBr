@@ -15,7 +15,7 @@
         <CompilerPath Value="$(CompPath)"/>
       </Other>
     </CompilerOptions>
-    <Description Value="Componentes para geração do arquivo do SINTEGRA"/>
+    <Description Value="ACBr - Sintegra (http://www.projectoacbr.com.br/)"/>
     <Files Count="2">
       <Item1>
         <Filename Value="..\..\..\Fontes\ACBrSintegra\ACBrSintegra.pas"/>

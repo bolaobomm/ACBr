@@ -22,7 +22,7 @@ package ACBr_SEF2;
 {$WRITEABLECONST OFF}
 {$MINENUMSIZE 1}
 {$IMAGEBASE $400000}
-{$DESCRIPTION 'ACBr Automação Comercial Brasil - ACBrSEF2 (http://acbr.sf.net/)'}
+{$DESCRIPTION 'ACBr - SEF2 (eDoc e SEF) - (http://www.projetoacbr.com.br/)'}
 {$IMPLICITBUILD ON}
 
 requires

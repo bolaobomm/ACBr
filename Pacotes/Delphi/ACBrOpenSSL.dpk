@@ -22,7 +22,7 @@ package ACBrOpenSSL;
 {$WRITEABLECONST OFF}
 {$MINENUMSIZE 1}
 {$IMAGEBASE $400000}                                                          
-{$DESCRIPTION 'ACBr Automação Comercial Brasil - ACBrOpenSSL (http://acbr.sourceforge.net/)'}
+{$DESCRIPTION 'ACBr - OpenSSL através do LibXMLSec - (http://www.projetoacbr.com.br/)'}
 {$IMPLICITBUILD OFF}
 
 requires

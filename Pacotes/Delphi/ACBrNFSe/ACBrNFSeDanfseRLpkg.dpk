@@ -22,7 +22,7 @@ package ACBrNFSeDanfseRLpkg;
 {$WRITEABLECONST OFF}
 {$MINENUMSIZE 1}
 {$IMAGEBASE $400000}
-{$DESCRIPTION 'ACBr Automação Comercial Brasil - ACBrNFSeDANFSeRL - (http://acbr.sourceforge.net/)'}
+{$DESCRIPTION 'ACBr - DANFSe em FortesReport - (http://www.projetoacbr.com.br/)'}
 {$IMPLICITBUILD ON}
 
 requires

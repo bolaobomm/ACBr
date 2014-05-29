@@ -25,9 +25,7 @@
         <CompilerPath Value="$(CompPath)"/>
       </Other>
     </CompilerOptions>
-    <Description Value="Diversos Componentes para uso de equipamentos ligados a porta Serial / Paralela
-ACBrECF, ACBrRFD, ACBrDIS, ACBrGAV, ACBrCHQ, ACBrETQ, ACBrLCB, ACBrTER
-"/>
+    <Description Value="ACBr - ECF, Balanças, Cheques, Displays, Etiquetas, Gavetas, Terminais, SMS, RFD, Leitores (http://www.projetoacbr.com.br/)"/>
     <License Value="LGPL
 "/>
     <Version Minor="9"/>

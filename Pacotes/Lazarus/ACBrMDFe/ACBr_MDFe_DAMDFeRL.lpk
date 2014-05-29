@@ -18,8 +18,8 @@
         <CompilerPath Value="$(CompPath)"/>
       </Other>
     </CompilerOptions>
-    <Description Value="ACBr
-DAMFe em Fortes Report"/>
+    <Description Value="ACBr - DAMDFe em FortesReport - (http://www.projetoacbr.com.br/)"/>
+    <License Value="LGPL"/>
     <Files Count="6">
       <Item1>
         <Filename Value="..\..\..\Fontes\ACBrMDFe\ACBrMDFeDAMDFeRLRetrato.pas"/>

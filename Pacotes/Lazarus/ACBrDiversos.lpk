@@ -24,8 +24,7 @@
         <CompilerPath Value="$(CompPath)"/>
       </Other>
     </CompilerOptions>
-    <Description Value="Componentes de auxilio a aplicações de Automação Comercial
-ACBrCalculadora, ACBrExtenso, ACBrValidador, ACBrFala, ACBrCMC7, ACBrGIF, ACBrBarCode, ACBrEnterTab"/>
+    <Description Value="ACBr - Calculadora, Extenso, Validador, Troco, CMC7, Fala, BarCode, EnterTab, GIF, QrCode, InStore, CargaBal - (http://www.projetoacbr.com.br/)"/>
     <License Value="LGPL"/>
     <Version Minor="9"/>
     <Files Count="15">

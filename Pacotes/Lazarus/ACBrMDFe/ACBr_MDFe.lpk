@@ -18,8 +18,8 @@
         <CompilerPath Value="$(CompPath)"/>
       </Other>
     </CompilerOptions>
-    <Description Value="ACBrMDFe
-Pacote com o componente de Manifesto Eletrônico de Documentos Fiscais"/>
+    <Description Value="ACBr - Manifesto de Documentos Fiscais Eletrônico - (http://www.projetoacbr.com.br/)"/>
+    <License Value="LGPL"/>
     <Files Count="23">
       <Item1>
         <Filename Value="..\..\..\Fontes\ACBrMDFe\ACBrMDFe.pas"/>

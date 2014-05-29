@@ -22,7 +22,7 @@ package ACBrTCP;
 {$WRITEABLECONST OFF}
 {$MINENUMSIZE 1}
 {$IMAGEBASE $400000}
-{$DESCRIPTION 'ACBr Automação Comercial Brasil - ACBrTCP (http://acbr.sf.net/)'}
+{$DESCRIPTION 'ACBr - Socket, CEP, TCP, IBGE, CNIEE, Suframa, Download, FTP, HTTP, NFPws, IBPTax, CNPJ, CPF, Cotação, E-mail - (http://www.projectoacbr.com.br/)'}
 {$IMPLICITBUILD ON}
 
 requires

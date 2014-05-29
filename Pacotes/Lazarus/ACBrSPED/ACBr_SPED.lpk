@@ -23,9 +23,7 @@
         <CompilerPath Value="$(CompPath)"/>
       </Other>
     </CompilerOptions>
-    <Description Value="SPED Fiscal e SPED Contábil
-
-Componentes para geração do TXT"/>
+    <Description Value="ACBr - EFD ICMS/IPI, EFD Contribuições, FCONT, EFD Contábil - (http://www.projetoacbr.com.br/)"/>
     <License Value="LGPL"/>
     <Version Release="1"/>
     <Files Count="54">

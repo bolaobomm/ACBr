@@ -1,8 +1,9 @@
-<?xml version="1.0"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <CONFIG>
   <Package Version="4">
     <PathDelim Value="\"/>
     <Name Value="ACBr_NFe2_DanfeESCPOS"/>
+    <Author Value="Juliomar Marchetti"/>
     <CompilerOptions>
       <Version Value="11"/>
       <PathDelim Value="\"/>
@@ -18,6 +19,8 @@
         <CompilerPath Value="$(CompPath)"/>
       </Other>
     </CompilerOptions>
+    <Description Value="ACBr - DANFe para NFC-e Impressora Serial - (http://www.projetoacbr.com.br/)"/>
+    <License Value="LGPL"/>
     <Files Count="2">
       <Item1>
         <Filename Value="..\..\..\Fontes\ACBrNFe2\ACBrNFeDANFeESCPOS.lrs"/>

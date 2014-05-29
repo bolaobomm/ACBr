@@ -18,8 +18,8 @@
         <CompilerPath Value="$(CompPath)"/>
       </Other>
     </CompilerOptions>
-    <Description Value="ACBr
-DACTe em Fortes Report"/>
+    <Description Value="ACBr - DACTe em FortesReport - (http://www.projetoacbr.com.br/)"/>
+    <License Value="LGPL"/>
     <Files Count="7">
       <Item1>
         <Filename Value="..\..\..\Fontes\ACBrCTe\ACBrCTeDACTeRLReg.pas"/>

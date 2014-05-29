@@ -3,6 +3,7 @@
   <Package Version="4">
     <PathDelim Value="\"/>
     <Name Value="ACBr_NFe2"/>
+    <Author Value="Juliomar Marchetti"/>
     <CompilerOptions>
       <Version Value="11"/>
       <PathDelim Value="\"/>
@@ -17,6 +18,8 @@
         <CompilerPath Value="$(CompPath)"/>
       </Other>
     </CompilerOptions>
+    <Description Value="ACBr - Nota Fiscal Eletrônica - (http://www.projetoacbr.com.br/)"/>
+    <License Value="LGPL"/>
     <Files Count="7">
       <Item1>
         <Filename Value="..\..\..\Fontes\ACBrNFe2\ACBrNFe.pas"/>

@@ -22,7 +22,7 @@ package ACBr_D5;
 {$WRITEABLECONST OFF}
 {$MINENUMSIZE 1}
 {$IMAGEBASE $400000}
-{$DESCRIPTION 'ACBr Automação Comercial Brasil VCL D5 (http://acbr.sourceforge.net/)'}
+{$DESCRIPTION 'ACBr - VCL Delphi5 - (http://www.projetoacbr.com.br/)'}
 {$IMPLICITBUILD ON}
 
 requires

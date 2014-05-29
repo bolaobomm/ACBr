@@ -15,6 +15,7 @@
         <CompilerPath Value="$(CompPath)"/>
       </Other>
     </CompilerOptions>
+    <Description Value="ACBr - Boleto Impressão em LazReport - (http://www.projectoacbr.com.br/)"/>
     <Version Minor="1"/>
     <Files Count="1">
       <Item1>

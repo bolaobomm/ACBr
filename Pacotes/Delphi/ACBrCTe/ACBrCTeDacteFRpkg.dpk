@@ -65,7 +65,7 @@ package ACBrCTeDacteFRpkg;
 {$WRITEABLECONST OFF}
 {$MINENUMSIZE 1}
 {$IMAGEBASE $400000}
-{$DESCRIPTION 'ACBr Automação Comercial Brasil - ACBrCTeDacteFR - (http://acbr.sourceforge.net/)'}
+{$DESCRIPTION 'ACBr - DACTe em FastReport - (http://www.projetoacbr.com.br/)'}
 {$IMPLICITBUILD ON}
 
 requires

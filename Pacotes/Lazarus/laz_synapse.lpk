@@ -16,7 +16,7 @@
         <CompilerPath Value="$(CompPath)"/>
       </Other>
     </CompilerOptions>
-    <Description Value="Ararat Synapse: network communications suite"/>
+    <Description Value="ACBr - Synapse TCP/IP / Serial library - (http://www.synapse.ararat.cz)"/>
     <Version Major="40" Minor="1"/>
     <Files Count="34">
       <Item1>

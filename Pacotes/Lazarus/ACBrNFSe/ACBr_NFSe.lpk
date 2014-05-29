@@ -18,8 +18,8 @@
         <CompilerPath Value="$(CompPath)"/>
       </Other>
     </CompilerOptions>
-    <Description Value="ACBrNFS-e
-Componente para trabalhar com Nota Fiscal de Serviço Eletronica"/>
+    <Description Value="ACBr - Nota Fiscal Eletrônica de Serviço - (http://www.projetoacbr.com.br/)"/>
+    <License Value="LGPL"/>
     <Files Count="45">
       <Item1>
         <Filename Value="..\..\..\Fontes\ACBrNFSe\ACBrNFSe.pas"/>

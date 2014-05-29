@@ -18,7 +18,7 @@
         <CompilerPath Value="$(CompPath)"/>
       </Other>
     </CompilerOptions>
-    <Description Value="Componentes para geração de arquivos exigidos pelo PAF-ECF"/>
+    <Description Value="ACBr - Programa Aplicativo Fiscal ECF - (http://www.projetoacbr.com.br/)"/>
     <Files Count="18">
       <Item1>
         <Filename Value="..\..\..\Fontes\ACBrPAF\ACBrPAFRegistros.pas"/>

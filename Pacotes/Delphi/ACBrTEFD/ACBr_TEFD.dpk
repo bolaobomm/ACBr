@@ -22,7 +22,7 @@ package ACBr_TEFD;
 {$WRITEABLECONST OFF}
 {$MINENUMSIZE 1}
 {$IMAGEBASE $400000}
-{$DESCRIPTION 'ACBr Automação Comercial Brasil - TEFD (http://acbr.sourceforge.net/)'}
+{$DESCRIPTION 'ACBr - Transferência Eletrônica de Fundos (http://www.projetoacbr.com.br/)'}
 {$IMPLICITBUILD ON}
 
 requires

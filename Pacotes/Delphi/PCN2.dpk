@@ -22,7 +22,7 @@ package PCN2;
 {$WRITEABLECONST OFF}
 {$MINENUMSIZE 1}
 {$IMAGEBASE $400000}
-{$DESCRIPTION 'ACBr Automação Comercial Brasil - Projeto Cooperar (http://br.groups.yahoo.com/group/projeto_cooperar_nfe/)'}
+{$DESCRIPTION 'ACBr - Projeto Cooperar - (http://br.groups.yahoo.com/group/projeto_cooperar_nfe/)'}
 {$RUNONLY}
 {$IMPLICITBUILD OFF}
 

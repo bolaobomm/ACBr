@@ -23,8 +23,7 @@
         <CompilerPath Value="$(CompPath)"/>
       </Other>
     </CompilerOptions>
-    <Description Value="Package para uso de ACBrNFe2 com OpenSSL através do LibXMLSec
-"/>
+    <Description Value="ACBr - OpenSSL através do LibXMLSec - (http://www.projetoacbr.com.br/)"/>
     <License Value="LGPL
 "/>
     <Version Minor="1"/>

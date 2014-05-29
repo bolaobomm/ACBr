@@ -25,7 +25,7 @@
         <CompilerPath Value="$(CompPath)"/>
       </Other>
     </CompilerOptions>
-    <Description Value="Componentes para facilitar o uso das Classes do Projeto Synapse"/>
+    <Description Value="ACBr - Socket, CEP, TCP, IBGE, CNIEE, Suframa, Download, FTP, HTTP, NFPws, IBPTax, CNPJ, CPF, Cotação, E-mail - (http://www.projectoacbr.com.br/)"/>
     <License Value="LGPL
 "/>
     <Version Minor="10"/>

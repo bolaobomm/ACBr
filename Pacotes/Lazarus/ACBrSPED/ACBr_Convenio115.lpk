@@ -18,6 +18,7 @@
         <CompilerPath Value="$(CompPath)"/>
       </Other>
     </CompilerOptions>
+    <Description Value="ACBr - Convênio ICMS 115 - (http://www.projetoacbr.com.br/)"/>
     <Files Count="1">
       <Item1>
         <Filename Value="..\..\..\Fontes\ACBrConvenio115\ACBrConvenio115.pas"/>

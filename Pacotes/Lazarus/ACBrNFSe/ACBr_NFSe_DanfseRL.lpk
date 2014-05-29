@@ -3,6 +3,7 @@
   <Package Version="4">
     <PathDelim Value="\"/>
     <Name Value="ACBr_NFSe_DanfseRL"/>
+    <Author Value="Juliomar Marchetti"/>
     <CompilerOptions>
       <Version Value="11"/>
       <PathDelim Value="\"/>
@@ -17,6 +18,8 @@
         <CompilerPath Value="$(CompPath)"/>
       </Other>
     </CompilerOptions>
+    <Description Value="ACBr - DANFSe em FortesReport - (http://www.projetoacbr.com.br/)"/>
+    <License Value="LGPL"/>
     <Files Count="4">
       <Item1>
         <Filename Value="..\..\..\Fontes\ACBrNFSe\ACBrNFSeDANFSeRL.pas"/>

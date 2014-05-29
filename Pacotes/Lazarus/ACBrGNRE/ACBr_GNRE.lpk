@@ -18,8 +18,8 @@
         <CompilerPath Value="$(CompPath)"/>
       </Other>
     </CompilerOptions>
-    <Description Value="ACBr_GNRE
-Guia Nacional de Recolhimento de Tributos Estaduais"/>
+    <Description Value="ACBr - Guia Nacional de Recolhimento de Tributos Estaduais - (http://www.projetoacbr.com.br/)"/>
+    <License Value="LGPL"/>
     <Files Count="19">
       <Item1>
         <Filename Value="..\..\..\Fontes\ACBrGNRE\ACBrGNRE2.pas"/>

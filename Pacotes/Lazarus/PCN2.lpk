@@ -24,7 +24,7 @@
         <CompilerPath Value="$(CompPath)"/>
       </Other>
     </CompilerOptions>
-    <Description Value="Migrado do Delphi para Lazarus"/>
+    <Description Value="ACBr - Projeto Cooperar - (http://br.groups.yahoo.com/group/projeto_cooperar_nfe/)"/>
     <Files Count="39">
       <Item1>
         <Filename Value="..\..\Fontes\PCN2\pcnAuxiliar.pas"/>
