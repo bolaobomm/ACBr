@@ -388,7 +388,7 @@ begin
 
  if NumeroNFSe <> '' then
  begin
-  if AProvedor in [proPVH, proSystemPro] then
+  if AProvedor in [proPVH, proSystemPro, proPublica] then
     DadosMsg := DadosMsg + '<Faixa>'+
                              '<NumeroNfseInicial>'+NumeroNFSe+'</NumeroNfseInicial>'+
                              '<NumeroNfseFinal>'+NumeroNFSe+'</NumeroNfseFinal>'+
