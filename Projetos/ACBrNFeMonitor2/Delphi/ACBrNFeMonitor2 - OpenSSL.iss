@@ -67,9 +67,7 @@ Source: ..\..\..\DLLs\XMLSec\zlib1.dll; DestDir: {app}; Flags: ; Components: pro
 Source: ..\..\..\DLLs\Diversos\iconv.dll; DestDir: {app}; Flags: ; Components: programa
 Source: ..\..\..\DLLs\MSVCR\msvcr71.dll; DestDir: {app}; Flags: ; Components: programa
 Source: Report\*.*; DestDir: {app}\Report; Components: programa; 
-Source: ..\..\..\Exemplos\ACBrNFe2\Delphi\Schemas\*.*; DestDir: {app}\Schemas; Components: programa; 
-Source: ..\..\..\Exemplos\ACBrMDFe\Delphi\Schemas\*.*; DestDir: {app}\Schemas; Components: programa; 
-Source: ..\..\..\Exemplos\ACBrCTe\Delphi\Schemas\*.*; DestDir: {app}\Schemas; Components: programa; 
+Source: Schemas\*.*; DestDir: {app}\Schemas; Components: programa; 
 Source: MunIBGE\*.*; DestDir: {app}\MunIBGE; Flags: ; Components: programa
 ; NOTE: Don't use "Flags: ignoreversion" on any shared system files
 

@@ -64,9 +64,7 @@ Source: ..\..\..\DLLs\Capicom\instala.bat; DestDir: {app}; Flags: ; Components: 
 Source: ..\..\..\DLLs\OpenSSL\libeay32.dll; DestDir: {app}; Flags: ; Components: programa
 Source: ..\..\..\DLLs\OpenSSL\ssleay32.dll; DestDir: {app}; Flags: ; Components: programa
 Source: Report\*.*; DestDir: {app}\Report; Components: programa; 
-Source: ..\..\..\Exemplos\ACBrNFe2\Delphi\Schemas\*.*; DestDir: {app}\Schemas; Components: programa; 
-Source: ..\..\..\Exemplos\ACBrMDFe\Delphi\Schemas\*.*; DestDir: {app}\Schemas; Components: programa; 
-Source: ..\..\..\Exemplos\ACBrCTe\Delphi\Schemas\*.*; DestDir: {app}\Schemas; Components: programa; 
+Source: Schemas\*.*; DestDir: {app}\Schemas; Components: programa; 
 Source: MunIBGE\*.*; DestDir: {app}\MunIBGE; Flags: ; Components: programa
 ; NOTE: Don't use "Flags: ignoreversion" on any shared system files
 
