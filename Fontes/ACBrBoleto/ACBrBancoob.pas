@@ -310,6 +310,11 @@ begin
       else
          wRespEntrega := '1';
 
+      if (DataProtesto > 0) then
+         DiasProtesto := IntToStrZero(DaysBetween(DataProtesto,Vencimento),2)
+      else
+         DiasProtesto := '00';
+
       with ACBrBoleto do
       begin
          MensagemCedente:= '';
@@ -329,7 +334,7 @@ begin
                   padR( '0', 6, '0')                                      +  // Número do Convênio de Cobrança do Cedente fixo zeros: "000000"
                   Space(25)                                               +  // Brancos
                   padR( NossoNumero + DigitoNossoNumero, 12, '0')         +  // Nosso Número + //nosso numero com digito
-                  '01'                                                    +  // Número da Parcela: "01" se parcela única
+                  IntToStrZero(ifthen(Parcela > 0, Parcela,1),2)          +  // Número da Parcela: "01" se parcela única
                   '00'                                                    +  // Grupo de Valor: "00"
                   Space(3)                                                +  // Brancos
                   Space(1)                                                +  // Indicativo de Mensagem ou Sacador/Avalista:
@@ -343,7 +348,7 @@ begin
                   wRespEntrega                                            +  // Tipo de Emissão 1-Cooperativa - 2-Cliente
                   padR( trim(Cedente.Modalidade), 2, '0')                 +  // Carteira/Modalidade
                   Ocorrencia                                              +  // Ocorrencia (remessa)
-                  padL( NumeroDocumento,  10)                             +  // Número do Documento
+                  padL(trim(NumeroDocumento),  10)                        +  // Número do Documento
                   FormatDateTime( 'ddmmyy', Vencimento)                   +  // Data de Vencimento do Título
                   IntToStrZero( Round( ValorDocumento * 100 ), 13)        +  // Valor do Título
                   IntToStrZero( Banco.Numero, 3)                          +  // Número Banco: "756"
@@ -371,7 +376,7 @@ begin
                   padL( Sacado.Cidade,15,' ')                             +  // Endereço cidade
                   padL( Sacado.UF,2,' ')                                  +  // Endereço uf
                   padL( trim(MensagemCedente) ,40,' ')                    +  // Observações/Mensagem ou Sacador/Avalista:
-                  IntToStrZero( 0, 2)                                     +  // Número de Dias Para Protesto
+                  DiasProtesto                                            +  // Número de Dias Para Protesto
                   Space(1)                                                +  // Brancos
                   IntToStrZero( aRemessa.Count + 1, 6 );                     // Contador de Registros;
 
@@ -551,6 +556,7 @@ function TACBrBancoob.GerarRegistroTransacao240(
   ACBrTitulo: TACBrTitulo): String;
 var AEspecieTitulo, ATipoInscricao, ATipoOcorrencia, ATipoBoleto, ADataMoraJuros,
     ADataDesconto,ATipoAceite,NossoNum : string;
+    DiasProtesto: String;
 begin
   NossoNum  := RemoveString('-', MontarCampoNossoNumero(ACBrTitulo));
   with ACBrTitulo do
@@ -600,6 +606,13 @@ begin
        end
      else
        ADataDesconto := padR('', 8, '0');
+
+     if (DataProtesto > 0) then
+        DiasProtesto := IntToStrZero(DaysBetween(DataProtesto,Vencimento),2)
+     else
+        DiasProtesto := '00';
+
+
       Result:= IntToStrZero(ACBrBanco.Numero, 3)                          + //1 a 3 - Código do banco
                '0001'                                                     + //4 a 7 - Lote de serviço
                '3'                                                        +
@@ -649,7 +662,7 @@ begin
                          IntToStrZero( round(ValorAbatimento * 100), 15)            + //181 a 195 - Valor do abatimento
                          padL(SeuNumero, 25, ' ')                                   + //196 a 220 - Identificação do título na empresa
                          '1'                                                        + //221 - Código de protesto: Protestar em XX dias corridos
-                         '00'                                                        + //222 a 223 - Prazo para protesto (em dias corridos)
+                         DiasProtesto                                               + //222 a 223 - Prazo para protesto (em dias corridos)
                          '0'                                                        + // 224 - Código de Baixa
                          space(3)                                                   + // 225 A 227 - Dias para baixa
                          '09'                                                       +//
