@@ -157,10 +157,13 @@ type
     RLPDFFilter1: TRLPDFFilter;
     rlsbDetItem: TRLSubDetail;
     rlsbPagamentos: TRLSubDetail;
+    rlbMensagemContribuinte: TRLBand;
+    lMensagemContribuinte: TRLLabel;
+    RLDraw3: TRLDraw;
+    lObservacoes: TRLMemo;
 
     procedure FormDestroy(Sender: TObject);
     procedure pAsteriscoBeforePrint(Sender: TObject; var PrintIt: boolean);
-    procedure pLogoeClicheAfterPrint(Sender: TObject);
     procedure rlbConsumidorBeforePrint(Sender: TObject; var PrintIt: boolean);
     procedure rlbMensagemFiscalBeforePrint(Sender: TObject; var PrintIt: boolean);
     procedure rlbsCabecalhoDataRecord(Sender: TObject; RecNo: integer;
@@ -182,6 +185,8 @@ type
       CopyNo: integer; var Eof: boolean; var RecordAction: TRLRecordAction);
     procedure rlsbPagamentosDataRecord(Sender: TObject; RecNo: integer;
       CopyNo: integer; var Eof: boolean; var RecordAction: TRLRecordAction);
+    procedure rlbMensagemContribuinteBeforePrint(Sender: TObject;
+      var PrintIt: Boolean);
   private
     fACBrNFeDANFCeFortes: TACBrNFeDANFCeFortes;
     fNumItem : Integer;
@@ -345,11 +350,15 @@ begin
       Endereco := Endereco + ' - '+Emit.EnderEmit.xBairro;
     if (Emit.EnderEmit.xMun <> '') then
       Endereco := Endereco + ' - '+Emit.EnderEmit.xMun;
+    if (Emit.EnderEmit.UF <> '') then
+      Endereco := Endereco + ' - '+Emit.EnderEmit.UF;
     if (Emit.EnderEmit.CEP <> 0) then
     begin
       CEP := IntToStr(Emit.EnderEmit.CEP);
       Endereco := Endereco + ' - '+copy(CEP,1,5)+'-'+copy(CEP,6,3);
     end;
+    if (Emit.EnderEmit.fone <> '') then
+      Endereco := Endereco + ' - FONE: '+Emit.EnderEmit.fone;
   end;
 
   Result := Endereco;
@@ -407,6 +416,7 @@ begin
 
     lProtocolo.Caption := ACBrStr('Protocolo de Autorização: '+procNFe.nProt+
                            ' '+DFeUtil.SeSenao(procNFe.dhRecbto<>0,DateTimeToStr(procNFe.dhRecbto),''));
+
   end;
 
 
@@ -416,6 +426,7 @@ begin
                       rlbLegenda.Height +
                       rlbPagamento.Height +
                       rlbLei12741.Height +
+                      rlbMensagemContribuinte.Height +
                       rlbMensagemFiscal.Height +
                       rlbConsumidor.Height +
                       Trunc( rlsbDetItem.Height * ACBrNFeDANFCeFortes.FpNFe.Det.Count );
@@ -516,11 +527,6 @@ begin
   PrintIt := not Resumido;
 end;
 
-procedure TACBrNFeDANFCeFortesFr.pLogoeClicheAfterPrint(Sender: TObject);
-begin
-
-end;
-
 procedure TACBrNFeDANFCeFortesFr.rlbConsumidorBeforePrint(Sender: TObject;
   var PrintIt: boolean);
 begin
@@ -561,6 +567,23 @@ begin
 
     if PrintIt then
       lValLei12741.Caption := DFeUtil.FormatFloat(Total.ICMSTot.vTotTrib, '#,###,##0.00');
+  end;
+end;
+
+procedure TACBrNFeDANFCeFortesFr.rlbMensagemContribuinteBeforePrint(
+  Sender: TObject; var PrintIt: Boolean);
+begin
+
+  Printit := False;
+
+  with ACBrNFeDANFCeFortes.FpNFe.InfAdic do
+  begin
+    if infCpl <> '' then
+    begin
+      PrintIt := True ;
+
+      lObservacoes.Lines.Add( infCpl );
+    end;
   end;
 end;
 

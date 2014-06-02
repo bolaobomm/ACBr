@@ -1,8 +1,8 @@
 object ACBrNFeDANFCeFortesFr: TACBrNFeDANFCeFortesFr
-  Left = 557
-  Top = 185
+  Left = 473
+  Top = 85
   Width = 771
-  Height = 991
+  Height = 912
   Caption = 'ACBrNFeDANFCeFortesFr'
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
@@ -39,7 +39,7 @@ object ACBrNFeDANFCeFortesFr: TACBrNFeDANFCeFortesFr
     OnDataRecord = rlVendaDataRecord
     object rlbRodape: TRLBand
       Left = 8
-      Top = 442
+      Top = 486
       Width = 286
       Height = 197
       AutoSize = True
@@ -98,7 +98,7 @@ object ACBrNFeDANFCeFortesFr: TACBrNFeDANFCeFortesFr
         Font.Color = clBlack
         Font.Height = -8
         Font.Name = 'Arial'
-        Font.Style = []
+        Font.Style = [fsBold]
         Layout = tlBottom
         ParentFont = False
       end
@@ -112,7 +112,7 @@ object ACBrNFeDANFCeFortesFr: TACBrNFeDANFCeFortesFr
     end
     object rlsbDetItem: TRLSubDetail
       Left = 8
-      Top = 148
+      Top = 162
       Width = 286
       Height = 80
       AllowedBands = [btDetail, btSummary]
@@ -134,17 +134,16 @@ object ACBrNFeDANFCeFortesFr: TACBrNFeDANFCeFortesFr
         BeforePrint = rlbDetItemBeforePrint
         object lTotalItem: TRLLabel
           Left = 236
-          Top = 0
+          Top = 10
           Width = 34
-          Height = 20
-          Align = faRight
+          Height = 10
           Alignment = taRightJustify
           Caption = '99.999,99'
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
           Font.Height = -8
           Font.Name = 'Arial'
-          Font.Style = []
+          Font.Style = [fsBold]
           Layout = tlBottom
           ParentFont = False
         end
@@ -158,7 +157,7 @@ object ACBrNFeDANFCeFortesFr: TACBrNFeDANFCeFortesFr
           Font.Color = clBlack
           Font.Height = -8
           Font.Name = 'Arial'
-          Font.Style = []
+          Font.Style = [fsBold]
           ParentFont = False
         end
         object mLinhaItem: TRLMemo
@@ -171,7 +170,7 @@ object ACBrNFeDANFCeFortesFr: TACBrNFeDANFCeFortesFr
           Font.Color = clBlack
           Font.Height = -8
           Font.Name = 'Arial'
-          Font.Style = []
+          Font.Style = [fsBold]
           Lines.Strings = (
             '9999999999999 DESCRICAO DO PRODUTO 99,999 UN x 999,999 (99,99)')
           ParentFont = False
@@ -310,7 +309,7 @@ object ACBrNFeDANFCeFortesFr: TACBrNFeDANFCeFortesFr
     end
     object rlsbPagamentos: TRLSubDetail
       Left = 8
-      Top = 228
+      Top = 242
       Width = 286
       Height = 65
       InsideMargins.LeftMargin = 2.000000000000000000
@@ -501,7 +500,7 @@ object ACBrNFeDANFCeFortesFr: TACBrNFeDANFCeFortesFr
     end
     object rlbLei12741: TRLBand
       Left = 8
-      Top = 293
+      Top = 307
       Width = 286
       Height = 28
       AutoSize = True
@@ -563,11 +562,11 @@ object ACBrNFeDANFCeFortesFr: TACBrNFeDANFCeFortesFr
       Left = 8
       Top = 8
       Width = 286
-      Height = 140
+      Height = 154
       OnDataRecord = rlbsCabecalhoDataRecord
       object rlbMsgDANFe: TRLBand
         Left = 0
-        Top = 60
+        Top = 81
         Width = 286
         Height = 42
         AutoSize = True
@@ -624,13 +623,13 @@ object ACBrNFeDANFCeFortesFr: TACBrNFeDANFCeFortesFr
         Left = 0
         Top = 0
         Width = 286
-        Height = 60
+        Height = 81
         AutoSize = True
         object pLogoeCliche: TRLPanel
           Left = 0
           Top = 0
           Width = 286
-          Height = 60
+          Height = 81
           Align = faTop
           AutoExpand = True
           AutoSize = True
@@ -638,7 +637,7 @@ object ACBrNFeDANFCeFortesFr: TACBrNFeDANFCeFortesFr
             Left = 0
             Top = 0
             Width = 286
-            Height = 60
+            Height = 81
             Align = faClient
             AutoExpand = True
             AutoSize = True
@@ -646,7 +645,7 @@ object ACBrNFeDANFCeFortesFr: TACBrNFeDANFCeFortesFr
               Left = 0
               Top = 43
               Width = 286
-              Height = 12
+              Height = 30
               Align = faTop
               Alignment = taCenter
               Behavior = [beSiteExpander]
@@ -710,7 +709,7 @@ object ACBrNFeDANFCeFortesFr: TACBrNFeDANFCeFortesFr
             end
             object RLDraw1: TRLDraw
               Left = 0
-              Top = 52
+              Top = 73
               Width = 286
               Height = 8
               Align = faBottom
@@ -730,7 +729,7 @@ object ACBrNFeDANFCeFortesFr: TACBrNFeDANFCeFortesFr
       end
       object rlbLegenda: TRLBand
         Left = 0
-        Top = 102
+        Top = 123
         Width = 286
         Height = 28
         AutoSize = True
@@ -773,7 +772,7 @@ object ACBrNFeDANFCeFortesFr: TACBrNFeDANFCeFortesFr
     end
     object rlbConsumidor: TRLBand
       Left = 8
-      Top = 387
+      Top = 431
       Width = 286
       Height = 55
       AutoSize = True
@@ -844,7 +843,7 @@ object ACBrNFeDANFCeFortesFr: TACBrNFeDANFCeFortesFr
     end
     object rlbMensagemFiscal: TRLBand
       Left = 8
-      Top = 321
+      Top = 365
       Width = 286
       Height = 66
       AutoSize = True
@@ -941,12 +940,62 @@ object ACBrNFeDANFCeFortesFr: TACBrNFeDANFCeFortesFr
         ParentFont = False
       end
     end
+    object rlbMensagemContribuinte: TRLBand
+      Left = 8
+      Top = 335
+      Width = 286
+      Height = 30
+      AutoSize = True
+      BandType = btSummary
+      Margins.LeftMargin = 2.000000000000000000
+      Margins.RightMargin = 2.000000000000000000
+      BeforePrint = rlbMensagemContribuinteBeforePrint
+      object lMensagemContribuinte: TRLLabel
+        Left = 8
+        Top = 8
+        Width = 270
+        Height = 10
+        Align = faTop
+        Alignment = taCenter
+        Caption = #195#129'REA DE MENSAGEM DE INTERESSE DO CONTRIBUINTE'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clBlack
+        Font.Height = -8
+        Font.Name = 'Arial'
+        Font.Style = [fsBold]
+        ParentFont = False
+      end
+      object RLDraw3: TRLDraw
+        Left = 8
+        Top = 0
+        Width = 270
+        Height = 8
+        Align = faTop
+        DrawKind = dkLine
+        Pen.Style = psDot
+      end
+      object lObservacoes: TRLMemo
+        Left = 8
+        Top = 18
+        Width = 270
+        Height = 12
+        Align = faTop
+        Alignment = taCenter
+        Behavior = [beSiteExpander]
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clBlack
+        Font.Height = -9
+        Font.Name = 'Arial'
+        Font.Style = []
+        ParentFont = False
+      end
+    end
   end
   object RLHTMLFilter1: TRLHTMLFilter
     DocumentStyle = dsCSS2
     DisplayName = 'HTML'
-    Left = 320
-    Top = 88
+    Left = 328
+    Top = 56
   end
   object RLPDFFilter1: TRLPDFFilter
     DocumentInfo.Creator = 
