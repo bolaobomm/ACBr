@@ -109,6 +109,31 @@ var
   i, j, i01, i02, i03, i04: integer;
   sCST, Aspas: String;
 begin
+
+  // Incluido por Thiago Pedro em 02/06/2014
+  if Pos('versao="', Leitor.Arquivo) <> 0 then
+    Aspas := '"'
+   else
+    Aspas := '''';
+
+  I := 0;
+  I := RetornarPosEx('versao=', Leitor.Arquivo, I + 6);
+  if I = 0 then
+    raise Exception.Create('Não encontrei inicio do URI: versao=');
+
+  I := RetornarPosEx(Aspas, Leitor.Arquivo, I + 2);
+  if I = 0 then
+    raise Exception.Create('Não encontrei inicio do URI: aspas inicial');
+
+  J := RetornarPosEx(Aspas, Leitor.Arquivo, I + 1);
+  if J = 0 then
+    raise Exception.Create('Não encontrei inicio do URI: aspas final');
+
+  CTe.infCTe.versao := copy(Leitor.Arquivo, I + 1, J - I -1);
+  //-- Fim inclusão por Thiago Pedro em 02/06/2014
+
+
+
   // Incluido por Italo em 22/04/2013
   if Pos('Id="', Leitor.Arquivo) <> 0 then
     Aspas := '"'
@@ -363,6 +388,20 @@ begin
       CTe.Rem.locColeta.xMun    := Leitor.rCampo(tcStr, 'xMun');
       CTe.Rem.locColeta.UF      := Leitor.rCampo(tcStr, 'UF');
     end;
+
+    // Incluído por Thiago Pedro em 02/06/2014 -- Compatibilidade com CTe 1
+    i01 := 0;
+    if (Copy(CTe.infCTe.versao,1,1)='1') then
+    begin
+      while Leitor.rExtrai(2, 'infNFe', '', i01 + 1) <> '' do
+      begin
+        CTe.infCTeNorm.infDoc.InfNFE.Add;
+        CTe.infCTeNorm.infDoc.InfNFE[i01].chave := Leitor.rCampo(tcStr, 'chave');
+        CTe.infCTeNorm.infDoc.InfNFE[i01].PIN   := Leitor.rCampo(tcStr, 'PIN');
+        inc(i01);
+      end;
+    end;
+    //-- Fim da inclusão por Thiago Pedro em 02/06/2014
   end;
 
   (* Grupo da TAG <exped> *****************************************************)

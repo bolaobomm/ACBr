@@ -316,8 +316,10 @@ type
   TInfCTe = class(TPersistent)
   private
     FId : string;
+    FVersao : string;
   published
     property Id: string read FId write FId;
+    property versao: string read FVersao write FVersao;
   end;
 
   TIde = class(TPersistent)
