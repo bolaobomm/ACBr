@@ -1796,6 +1796,7 @@ begin
                                                           TNFSeCancelarNfse(Self).FNotasFiscais.NumeroLote,
                                                           vNotas,
                                                           TagI, TagF)
+
    else if (FProvedor = proEquiplano)
     then FDadosMsg := TNFSeG.Gera_DadosMsgCancelarNFSeEquiplano(StrToInt(TNFSeCancelarNfse(Self).FCodigoMunicipio),
                                                                 SomenteNumeros(TNFSeCancelarNfse(Self).FCnpj),
@@ -1803,6 +1804,7 @@ begin
                                                                 TNFSeCancelarNfse(Self).FNumeroNFSe,
                                                                 TNFSeCancelarNfse(Self).FMotivoCancelamento,
                                                                 '','')//TagI, TagF)
+
    else FDadosMsg := TNFSeG.Gera_DadosMsgCancelarNFSe(Prefixo4,
                                                       NameSpaceDad,
                                                       TNFSeCancelarNfse(Self).FNumeroNFSe,
@@ -1810,7 +1812,9 @@ begin
                                                       TNFSeCancelarNfse(Self).FIM,
                                                       TNFSeCancelarNfse(Self).FCodigoMunicipio,
                                                       TNFSeCancelarNfse(Self).FCodigoCancelamento,
-                                                      '', '', FProvedor, TNFSeCancelarNfse(Self).FMotivoCancelamento);
+                                                      '', '',
+                                                      FProvedor,
+                                                      TNFSeCancelarNfse(Self).FMotivoCancelamento);
    if FDadosMsg <> ''
     then begin
     {$IFDEF ACBrNFSeOpenSSL}
@@ -1847,22 +1851,25 @@ begin
                                                                 TagI, TagF)
    else if (FProvedor = proFreire)
     then FDadosMsg := TNFSeG.Gera_DadosMsgCancelarNFSeFreire(Prefixo4,
-                                                              NameSpaceDad,
-                                                              TNFSeCancelarNfse(Self).FNumeroNFSe,
-                                                              TNFSeCancelarNfse(Self).FCnpj,
-                                                              TNFSeCancelarNfse(Self).FIM,
-                                                              TNFSeCancelarNfse(Self).FCodigoMunicipio,
-                                                              TNFSeCancelarNfse(Self).FCodigoCancelamento,
-                                                              TNFSeCancelarNfse(Self).FMotivoCancelamento,
-                                                              TagI, TagF)
+                                                             NameSpaceDad,
+                                                             TNFSeCancelarNfse(Self).FNumeroNFSe,
+                                                             TNFSeCancelarNfse(Self).FCnpj,
+                                                             TNFSeCancelarNfse(Self).FIM,
+                                                             TNFSeCancelarNfse(Self).FCodigoMunicipio,
+                                                             TNFSeCancelarNfse(Self).FCodigoCancelamento,
+                                                             TNFSeCancelarNfse(Self).FMotivoCancelamento,
+                                                             TagI, TagF)
+
    else FDadosMsg := TNFSeG.Gera_DadosMsgCancelarNFSe(Prefixo4,
-                                                       NameSpaceDad,
-                                                       TNFSeCancelarNfse(Self).FNumeroNFSe,
-                                                       TNFSeCancelarNfse(Self).FCnpj,
-                                                       TNFSeCancelarNfse(Self).FIM,
-                                                       TNFSeCancelarNfse(Self).FCodigoMunicipio,
-                                                       TNFSeCancelarNfse(Self).FCodigoCancelamento,
-                                                       FTagI, FTagF, FProvedor);
+                                                      NameSpaceDad,
+                                                      TNFSeCancelarNfse(Self).FNumeroNFSe,
+                                                      TNFSeCancelarNfse(Self).FCnpj,
+                                                      TNFSeCancelarNfse(Self).FIM,
+                                                      TNFSeCancelarNfse(Self).FCodigoMunicipio,
+                                                      TNFSeCancelarNfse(Self).FCodigoCancelamento,
+                                                      FTagI, FTagF,
+                                                      FProvedor,
+                                                      TNFSeCancelarNfse(Self).FMotivoCancelamento);
   end;
 
   if DadosMsg = '' then

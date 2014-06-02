@@ -754,6 +754,7 @@ begin
   3540200, // Pontal/SP
   3549409, // Sao Joaquim Da Barra/SP
   3551603, // Serra Negra/SP
+  3555000, // Tupã/SP
   5003207, // Corumba/MS
   5102637  // Campo Novo Do Parecis/MT
          : Provedor := 'Fiorilli';
@@ -1066,6 +1067,7 @@ begin
   3503307, // Araras/SP
   3511508, // Cerquilho/SP
   3524808, // Jales/SP
+  3534609, // Osvaldo Cruz/SP
   3538709, // Piracicaba/SP
   3541406, // Presidente Prudente/SP
   3549102, // São João da Boa Vista/SP

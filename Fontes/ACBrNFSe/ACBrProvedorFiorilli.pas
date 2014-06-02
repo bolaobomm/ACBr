@@ -135,6 +135,8 @@ begin
     cURL_Producao := 'http://187.72.128.133:5661/IssWeb-ejb/IssWebWS/IssWebWS';
   3551603 : // Serra Negra/SP
     cURL_Producao := 'http://intra.serranegra.sp.gov.br/IssWeb-ejb/IssWebWS/IssWebWS';
+  3555000 : // Tupã/SP
+    cURL_Producao := 'http://189.20.219.66:5661/IssWeb-ejb/IssWebWS/IssWebWS';
   5003207 : // Corumba/MS
     cURL_Producao := 'http://nfse.corumba.ms.gov.br:8080/IssWeb-ejb/IssWebWS/IssWebWS';
   5102637 : // Campo Novo Do Parecis/MT
