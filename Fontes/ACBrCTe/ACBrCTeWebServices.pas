@@ -2256,7 +2256,7 @@ begin
                  TACBrCTe( FACBrCTe ).Conhecimentos.Items[i].SaveToFile(PathWithDelim(FConfiguracoes.Arquivos.GetPathCTe)+StringReplace(TACBrCTe( FACBrCTe ).Conhecimentos.Items[i].CTe.InfCTe.Id,'CTe','',[rfIgnoreCase])+'-cte.xml');
             end;
 
-            if FConfiguracoes.Arquivos.Salvar then
+            if FConfiguracoes.Arquivos.Salvar and (FRetCTeDFe <> '') then
             begin
               if FConfiguracoes.Arquivos.EmissaoPathCTe then
                 FConfiguracoes.Geral.Save(FCTeChave+'-CTeDFe.xml', aCTeDFe, PathWithDelim(FConfiguracoes.Arquivos.GetPathCTe(TACBrCTe( FACBrCTe ).Conhecimentos.Items[i].CTe.Ide.dhEmi)))
