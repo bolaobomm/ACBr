@@ -47,6 +47,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+Data: 02/06/2014 ver. 0.0.94
+-- ACBrBancoob.pas
+[-] Adição do envio dos Dias para Protesto e Número da Parcela, além do comando Trim() na
+    propriedade NumeroDocumento na remessa CNAB400.(Juliana Tamizou)
+[-] Adição do envio dos Dias para Protesto na remessa CNAB240. (Juliana Tamizou)	 
+
 
 Data: 15/05/2014 ver. 0.0.93
 -- ACBrBoleto --
