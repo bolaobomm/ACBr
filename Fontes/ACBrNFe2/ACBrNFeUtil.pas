@@ -2656,7 +2656,7 @@ begin
    11: urlUF := DFeUtil.SeSenao(AAmbiente = taProducao, '', ''); //RO
    14: urlUF := DFeUtil.SeSenao(AAmbiente = taProducao, '', ''); //RR
    42: urlUF := DFeUtil.SeSenao(AAmbiente = taProducao, '', ''); //SC
-   35: urlUF := DFeUtil.SeSenao(AAmbiente = taProducao, '', ''); //SP
+   35: urlUF := DFeUtil.SeSenao(AAmbiente = taProducao, '', 'https://homologacao.nfce.fazenda.sp.gov.br/NFCeConsultaPublica/Paginas/ConsultaQRCode.aspx'); //SP
    28: urlUF := DFeUtil.SeSenao(AAmbiente = taProducao, 'http://www.nfe.se.gov.br/portal/consultarNFCe.jsp', 'http://www.hom.nfe.se.gov.br/portal/consultarNFCe.jsp'); //SE
    17: urlUF := DFeUtil.SeSenao(AAmbiente = taProducao, '', ''); //TO
   end;
