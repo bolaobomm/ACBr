@@ -92,9 +92,8 @@ begin
 
    with ACBrTitulo do
    begin
-      if MatchText( Carteira , ['112', '212', '113', '114', '166', '115', '104', '147',
-                      '188', '108', '121', '180', '280', '126', '131', '145',
-                      '150', '168', '109', '110', '111', '121', '221', '175']) then
+      if MatchText( Carteira , ['112', '212', '113', '114', '166', '115', '104', '147', '188',
+                                '131', '145',  '126', '131', '145', '150', '168']) then
             Docto := Carteira + padR(NossoNumero,TamanhoMaximoNossoNum,'0')
          else
             Docto := ACBrBoleto.Cedente.Agencia + ACBrBoleto.Cedente.Conta +
