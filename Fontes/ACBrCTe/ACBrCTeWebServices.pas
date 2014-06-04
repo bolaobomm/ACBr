@@ -3045,20 +3045,40 @@ begin
   Stream := TMemoryStream.Create;
   FcStat := 0;
 
-  Texto := '<?xml version="1.0" encoding="utf-8"?>';
-  Texto := Texto + '<soap12:Envelope xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap12="http://www.w3.org/2003/05/soap-envelope">';
-  Texto := Texto +   '<soap12:Header>';
-  Texto := Texto +     '<cteCabecMsg xmlns="http://www.portalfiscal.inf.br/cte/wsdl/CteRecepcaoEvento">';
-  Texto := Texto +       '<cUF>'+IntToStr(FConfiguracoes.WebServices.UFCodigo)+'</cUF>';
-  Texto := Texto +       '<versaoDados>'+CTeEventoCTe+'</versaoDados>';
-  Texto := Texto +     '</cteCabecMsg>';
-  Texto := Texto +   '</soap12:Header>';
-  Texto := Texto +   '<soap12:Body>';
-  Texto := Texto +     '<cteDadosMsg xmlns="http://www.portalfiscal.inf.br/cte/wsdl/CteRecepcaoEvento">';
-  Texto := Texto +       FDadosMsg;
-  Texto := Texto +     '</cteDadosMsg>';
-  Texto := Texto +   '</soap12:Body>';
-  Texto := Texto +'</soap12:Envelope>';
+  // UF = 51 = MT não esta aceitando SOAP 1.2
+  if FConfiguracoes.WebServices.UFCodigo <> 51 then
+   begin
+    Texto := '<?xml version="1.0" encoding="utf-8"?>';
+    Texto := Texto + '<soap12:Envelope xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap12="http://www.w3.org/2003/05/soap-envelope">';
+    Texto := Texto +   '<soap12:Header>';
+    Texto := Texto +     '<cteCabecMsg xmlns="http://www.portalfiscal.inf.br/cte/wsdl/CteRecepcaoEvento">';
+    Texto := Texto +       '<cUF>'+IntToStr(FConfiguracoes.WebServices.UFCodigo)+'</cUF>';
+    Texto := Texto +       '<versaoDados>'+CTeEventoCTe+'</versaoDados>';
+    Texto := Texto +     '</cteCabecMsg>';
+    Texto := Texto +   '</soap12:Header>';
+    Texto := Texto +   '<soap12:Body>';
+    Texto := Texto +     '<cteDadosMsg xmlns="http://www.portalfiscal.inf.br/cte/wsdl/CteRecepcaoEvento">';
+    Texto := Texto +       FDadosMsg;
+    Texto := Texto +     '</cteDadosMsg>';
+    Texto := Texto +   '</soap12:Body>';
+    Texto := Texto +'</soap12:Envelope>';
+   end
+   else begin
+    Texto := '<?xml version="1.0" encoding="utf-8"?>';
+    Texto := Texto + '<soap:Envelope xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://www.w3.org/2003/05/soap-envelope">';
+    Texto := Texto +   '<soap:Header>';
+    Texto := Texto +     '<cteCabecMsg xmlns="http://www.portalfiscal.inf.br/cte/wsdl/CteRecepcaoEvento">';
+    Texto := Texto +       '<cUF>'+IntToStr(FConfiguracoes.WebServices.UFCodigo)+'</cUF>';
+    Texto := Texto +       '<versaoDados>'+CTeEventoCTe+'</versaoDados>';
+    Texto := Texto +     '</cteCabecMsg>';
+    Texto := Texto +   '</soap:Header>';
+    Texto := Texto +   '<soap:Body>';
+    Texto := Texto +     '<cteDadosMsg xmlns="http://www.portalfiscal.inf.br/cte/wsdl/CteRecepcaoEvento">';
+    Texto := Texto +       FDadosMsg;
+    Texto := Texto +     '</cteDadosMsg>';
+    Texto := Texto +   '</soap:Body>';
+    Texto := Texto +'</soap:Envelope>';
+   end;
 
   Acao.Text := Texto;
 
