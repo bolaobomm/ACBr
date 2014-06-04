@@ -1641,7 +1641,6 @@ begin
           FieldByName('XNome').AsString := FCTe.Rem.xNome;
           FieldByName('XFant').AsString := FCTe.Rem.xFant;
           FieldByName('IE').AsString := FCTe.Rem.IE;
-          //
           FieldByName('Xlgr').AsString := FCTe.Rem.EnderReme.xLgr;
           FieldByName('Nro').AsString := FCTe.Rem.EnderReme.nro;
           FieldByName('XCpl').AsString := FCTe.Rem.EnderReme.xCpl;
@@ -1667,8 +1666,8 @@ begin
             FieldByName('CNPJ').AsString := DFeUtil.FormatarCPF(FCTe.Dest.CNPJCPF);
           FieldByName('XNome').AsString := FCTe.Dest.xNome;
           FieldByName('IE').AsString := FCTe.Dest.IE;
-          //
           FieldByName('Xlgr').AsString := FCTe.Dest.EnderDest.xLgr;
+          FieldByName('Nro').AsString := FCTe.Dest.EnderDest.nro;
           FieldByName('XCpl').AsString := FCTe.Dest.EnderDest.xCpl;
           FieldByName('XBairro').AsString := FCTe.Dest.EnderDest.xBairro;
           FieldByName('CMun').AsString := IntToStr(FCTe.Dest.EnderDest.cMun);
@@ -1692,8 +1691,8 @@ begin
             FieldByName('CNPJ').AsString := DFeUtil.FormatarCPF(FCTe.Exped.CNPJCPF);
           FieldByName('XNome').AsString := FCTe.Exped.xNome;
           FieldByName('IE').AsString := FCTe.Exped.IE;
-          //
           FieldByName('Xlgr').AsString := FCTe.Exped.EnderExped.xLgr;
+          FieldByName('Nro').AsString := FCTe.Exped.EnderExped.nro;
           FieldByName('XCpl').AsString := FCTe.Exped.EnderExped.xCpl;
           FieldByName('XBairro').AsString := FCTe.Exped.EnderExped.xBairro;
           FieldByName('CMun').AsString := IntToStr(FCTe.Exped.EnderExped.cMun);
@@ -1717,8 +1716,8 @@ begin
             FieldByName('CNPJ').AsString := DFeUtil.FormatarCPF(FCTe.Receb.CNPJCPF);
           FieldByName('XNome').AsString := FCTe.Receb.xNome;
           FieldByName('IE').AsString := FCTe.Receb.IE;
-          //
           FieldByName('Xlgr').AsString := FCTe.Receb.EnderReceb.xLgr;
+          FieldByName('Nro').AsString := FCTe.Receb.EnderReceb.nro;
           FieldByName('XCpl').AsString := FCTe.Receb.EnderReceb.xCpl;
           FieldByName('XBairro').AsString := FCTe.Receb.EnderReceb.xBairro;
           FieldByName('CMun').AsString := IntToStr(FCTe.Receb.EnderReceb.cMun);
@@ -1744,8 +1743,8 @@ begin
             FieldByName('CNPJ').AsString := DFeUtil.FormatarCPF(FCTe.Ide.Toma4.CNPJCPF);
           FieldByName('XNome').AsString := FCTe.Ide.Toma4.xNome;
           FieldByName('IE').AsString := FCTe.Ide.Toma4.IE;
-          //
           FieldByName('Xlgr').AsString := FCTe.Ide.Toma4.EnderToma.xLgr;
+          FieldByName('Nro').AsString := FCTe.Ide.Toma4.EnderToma.nro;
           FieldByName('XCpl').AsString := FCTe.Ide.Toma4.EnderToma.xCpl;
           FieldByName('XBairro').AsString := FCTe.Ide.Toma4.EnderToma.xBairro;
           FieldByName('CMun').AsString := IntToStr(FCTe.Ide.Toma4.EnderToma.cMun);
