@@ -374,14 +374,14 @@ begin
 
    AStr := AStr + '<Signature xmlns="http://www.w3.org/2000/09/xmldsig#"'+ AID +
                  '<SignedInfo>'+
-                   DFeUtil.SeSenao((AProvedor = proNatal),
+                   DFeUtil.SeSenao((AProvedor in [proActcon, proNatal]),
                     '<CanonicalizationMethod Algorithm="http://www.w3.org/TR/2001/REC-xml-c14n-20010315#WithComments" />',
                     '<CanonicalizationMethod Algorithm="http://www.w3.org/TR/2001/REC-xml-c14n-20010315" />') +
                   '<SignatureMethod Algorithm="http://www.w3.org/2000/09/xmldsig#rsa-sha1" />'+
                   '<Reference URI="' + DFeUtil.SeSenao(URI = '', '">', '#' + URI + '">') +
                    '<Transforms>'+
                     '<Transform Algorithm="http://www.w3.org/2000/09/xmldsig#enveloped-signature" />'+
-                      DFeUtil.SeSenao((AProvedor in [profintelISS, proGovBr, proISSNet, proNatal]), '',
+                      DFeUtil.SeSenao((AProvedor in [proActcon, profintelISS, proGovBr, proISSNet, proNatal]), '',
                     '<Transform Algorithm="http://www.w3.org/TR/2001/REC-xml-c14n-20010315" />') +
                    '</Transforms>'+
                    '<DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" />'+
@@ -429,7 +429,7 @@ begin
       end
       else URI := '';
 
-     if (URI = '') or (AProvedor in [profintelISS, proRecife, proNatal, proRJ, proGovBR, proTecnos])
+     if (URI = '') or (AProvedor in [proActcon, profintelISS, proRecife, proNatal, proRJ, proGovBR, proTecnos])
       then AID := '>'
       else AID := ' ' + Identificador + '="Ass_' + URI + '">';
 
@@ -441,14 +441,14 @@ begin
 
      Assinatura := '<Signature xmlns="http://www.w3.org/2000/09/xmldsig#"' + AID +
                     '<SignedInfo>' +
-                      DFeUtil.SeSenao((AProvedor = proNatal),
+                      DFeUtil.SeSenao((AProvedor in [proActcon, proNatal]),
                        '<CanonicalizationMethod Algorithm="http://www.w3.org/TR/2001/REC-xml-c14n-20010315#WithComments" />',
                        '<CanonicalizationMethod Algorithm="http://www.w3.org/TR/2001/REC-xml-c14n-20010315" />') +
                      '<SignatureMethod Algorithm="http://www.w3.org/2000/09/xmldsig#rsa-sha1" />' +
                      '<Reference URI="' + DFeUtil.SeSenao(URI = '', '">', '#' + URI + '">') +
                       '<Transforms>' +
                        '<Transform Algorithm="http://www.w3.org/2000/09/xmldsig#enveloped-signature" />' +
-                       DFeUtil.SeSenao((AProvedor in [profintelISS, proGovBr, proISSNet, proNatal]), '',
+                       DFeUtil.SeSenao((AProvedor in [proActcon, profintelISS, proGovBr, proISSNet, proNatal]), '',
                        '<Transform Algorithm="http://www.w3.org/TR/2001/REC-xml-c14n-20010315" />') +
                       '</Transforms>' +
                       '<DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" />' +
@@ -563,17 +563,26 @@ var
 begin
  AXML := XML;
 
- if AProvedor = proIssDsf then begin
-    EnviarLoteRps := 'ReqEnvioLoteRPS';
-    LoteURI := 'Lote';
- end else if AProvedor = proEquiplano then begin
-    EnviarLoteRps := 'enviarLoteRpsEnvio';
-    LoteURI := 'lote';
- end else begin
-    if (ASincrono) or (AProvedor = proTecnos) //Tecnos utiliza apenas metodo sincrono com mesmo mais de 3 notas
-     then EnviarLoteRps := 'EnviarLoteRpsSincronoEnvio'
-     else EnviarLoteRps := 'EnviarLoteRpsEnvio';
-    LoteURI := 'LoteRps';
+ case AProvedor of
+  proActcon:    begin
+                  EnviarLoteRps := 'EnviarLoteRpsEnvio';
+                  LoteURI := 'LoteRps';
+                end;
+  proIssDsf:    begin
+                  EnviarLoteRps := 'ReqEnvioLoteRPS';
+                  LoteURI := 'Lote';
+                end;
+  proEquiplano: begin
+                  EnviarLoteRps := 'enviarLoteRpsEnvio';
+                  LoteURI := 'lote';
+                end;
+  else          begin
+                  // Tecnos utiliza apenas metodo sincrono com mesmo mais de 3 notas
+                  if (ASincrono) or (AProvedor = proTecnos)
+                   then EnviarLoteRps := 'EnviarLoteRpsSincronoEnvio'
+                   else EnviarLoteRps := 'EnviarLoteRpsEnvio';
+                  LoteURI := 'LoteRps';
+                end;
  end;
 
  if ALote
@@ -638,14 +647,14 @@ begin
 
    AXML := AXML + '<Signature xmlns="http://www.w3.org/2000/09/xmldsig#"' + AID +
                  '<SignedInfo>' +
-                   DFeUtil.SeSenao((AProvedor = proNatal),
+                   DFeUtil.SeSenao((AProvedor in [proActcon, proNatal]),
                     '<CanonicalizationMethod Algorithm="http://www.w3.org/TR/2001/REC-xml-c14n-20010315#WithComments" />',
                     '<CanonicalizationMethod Algorithm="http://www.w3.org/TR/2001/REC-xml-c14n-20010315" />') +
                   '<SignatureMethod Algorithm="http://www.w3.org/2000/09/xmldsig#rsa-sha1" />' +
                   '<Reference URI="' + DFeUtil.SeSenao(URI = '', '">', '#' + URI + '">') +
                    '<Transforms>' +
                     '<Transform Algorithm="http://www.w3.org/2000/09/xmldsig#enveloped-signature" />' +
-                      DFeUtil.SeSenao((AProvedor in [profintelISS, proGovBr, proPronim{Dalvan}, proISSNet, proNatal, proIssDSF]), '',
+                      DFeUtil.SeSenao((AProvedor in [proActcon, profintelISS, proGovBr, proPronim{Dalvan}, proISSNet, proNatal, proIssDSF]), '',
                     '<Transform Algorithm="http://www.w3.org/TR/2001/REC-xml-c14n-20010315" />') +
                    '</Transforms>' +
                    '<DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" />' +
@@ -694,7 +703,7 @@ begin
       else URI := '';
 
      // Alterado por Italo em 10/05/2013 - incluido na lista o proRJ
-     if (URI = '') or (AProvedor in [profintelISS, proRecife, proNatal, proRJ, proGovBR, proPronim{Dalvan}, proTecnos, proPublica])
+     if (URI = '') or (AProvedor in [proActcon, profintelISS, proRecife, proNatal, proRJ, proGovBR, proPronim{Dalvan}, proTecnos, proPublica])
       then AID := '>'
       else AID := ' ' + Identificador + '="Ass_' + URI + '">';
 
@@ -704,14 +713,14 @@ begin
 
      Assinatura := '<Signature xmlns="http://www.w3.org/2000/09/xmldsig#"' + AID +
                     '<SignedInfo>' +
-                      DFeUtil.SeSenao((AProvedor = proNatal),
+                      DFeUtil.SeSenao((AProvedor in [proActcon, proNatal]),
                        '<CanonicalizationMethod Algorithm="http://www.w3.org/TR/2001/REC-xml-c14n-20010315#WithComments" />',
                        '<CanonicalizationMethod Algorithm="http://www.w3.org/TR/2001/REC-xml-c14n-20010315" />') +
                      '<SignatureMethod Algorithm="http://www.w3.org/2000/09/xmldsig#rsa-sha1" />' +
                      '<Reference URI="' + DFeUtil.SeSenao(URI = '', '">', '#' + URI + '">') +
                       '<Transforms>' +
                        '<Transform Algorithm="http://www.w3.org/2000/09/xmldsig#enveloped-signature" />' +
-                       DFeUtil.SeSenao((AProvedor in [profintelISS, proGovBr, proPronim{Dalvan}, proISSNet, proNatal]), '',
+                       DFeUtil.SeSenao((AProvedor in [proActcon, profintelISS, proGovBr, proPronim{Dalvan}, proISSNet, proNatal]), '',
                        '<Transform Algorithm="http://www.w3.org/TR/2001/REC-xml-c14n-20010315" />') +
                       '</Transforms>' +
                       '<DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" />' +

@@ -474,7 +474,7 @@ begin
     then ForceDirectories( aPath );
 
    //..SILVIO/RODRIGO estamos trocando o & por causa de erro na abertura do arquivo XML - 06-02-2014
-   vSalvar.Text := StringReplace(vSalvar.Text, '&', '&amp;', [rfReplaceAll]);
+//   vSalvar.Text := StringReplace(vSalvar.Text, '&', '&amp;', [rfReplaceAll]);
    vSalvar.Text := StringReplace(vSalvar.Text, '<-><->', '', [rfReplaceAll]);
    
    vSalvar.SaveToFile( aPath + AXMLName);

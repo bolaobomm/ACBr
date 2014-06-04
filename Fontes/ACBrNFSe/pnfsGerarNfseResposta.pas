@@ -229,6 +229,8 @@ var
   ok: boolean;
   i, k, Item: Integer;
   VersaoXML: String;
+  ProtocoloTemp, NumeroLoteTemp: String;
+  DataRecebimentoTemp:Tdatetime;  
 begin
   result := False;
   try
@@ -240,6 +242,9 @@ begin
     if (leitor.rExtrai(1, 'GerarNfseResposta') <> '') or (leitor.rExtrai(1, 'GerarNfseResponse') <> '') or
        (leitor.rExtrai(1, 'EnviarLoteRpsSincronoResposta') <> '') then
     begin
+      NumeroLoteTemp:= Leitor.rCampo(tcStr, 'NumeroLote');
+      DataRecebimentoTemp:= Leitor.rCampo(tcDatHor, 'DataRecebimento');
+      ProtocoloTemp:= Leitor.rCampo(tcStr, 'Protocolo');
 
       i := 0;
       ListaNfse.FCompNfse.Add;
@@ -258,14 +263,25 @@ begin
       if leitor.rExtrai(2, 'ListaNfse') <> '' then
       begin
         while (Leitor.rExtrai(3, 'CompNfse', '', i + 1) <> '') or
-              (Leitor.rExtrai(3, 'ComplNfse', '', i + 1) <> '') do
+              (Leitor.rExtrai(3, 'ComplNfse', '', i + 1) <> '') or
+              ((provedor in [proActcon]) and (Leitor.rExtrai(4, 'Nfse', '', i + 1) <> '')) do
         begin
-          if I > 0 then
+//          if I > 0 then
             ListaNfse.FCompNfse.Add;
+
+          ListaNfse.FCompNfse[i].FNfse.NumeroLote    := NumeroLoteTemp;
+          ListaNfse.FCompNfse[i].FNfse.dhRecebimento := DataRecebimentoTemp;
+          ListaNfse.FCompNfse[i].FNfse.Protocolo     := ProtocoloTemp;
 
           // Grupo da TAG <Nfse> *************************************************
           if Leitor.rExtrai(4, 'Nfse') <> ''
            then begin
+            if (provedor in [proActcon]) then
+               begin
+                    Leitor.rExtrai(4, 'Nfse', '', i + 1);
+                    ListaNfse.FCompNfse[i].FNfse.XML := Leitor.Grupo;
+               end
+            else
             // alterado por joel takei 04/07/2013
             ListaNfse.FCompNfse[i].FNfse.XML := Leitor.rExtrai(4, 'Nfse');
 

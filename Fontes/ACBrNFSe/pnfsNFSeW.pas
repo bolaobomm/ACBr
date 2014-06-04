@@ -132,7 +132,7 @@ begin
  Gerador.ArquivoFormatoXML := '';
  Gerador.Prefixo           := FPrefixo4;
 
- if (FProvedor in [pro4R, proAgili, proBHISS, proCoplan, proDigifred,
+ if (FProvedor in [proActcon, pro4R, proAgili, proBHISS, proCoplan, proDigifred,
                    profintelISS, proFiorilli, proGoiania, {proGovBR,}
                    proISSDigital, proNatal, proProdata, proProdemge, proPVH,
                    proSaatri, proVirtual, proFreire, proLink3, proVitoria,
@@ -170,8 +170,10 @@ begin
                          StrToInt(SomenteNumeros(FNFSe.IdentificacaoRps.Numero)));
 
   proTecnos: FNFSe.InfID.ID := '1' + //Fixo - Lote Sincrono
+                         FormatDateTime('yyyy', FNFSe.DataEmissao) +
                          SomenteNumeros(FNFSe.Prestador.Cnpj) +
-                         IntToStrZero(StrToIntDef(FNFSe.IdentificacaoRps.Numero, 1), 16);
+                         IntToStrZero(StrToIntDef(FNFSe.NumeroLote, 1), 16);
+//                         IntToStrZero(StrToIntDef(FNFSe.IdentificacaoRps.Numero, 1), 16);
 
   proIssDsf: FNFSe.InfID.ID := FNFSe.IdentificacaoRps.Numero;
 
@@ -182,6 +184,7 @@ begin
 
  case FProvedor of
   proAbaco,
+  proActcon,
   proBetha,
   proBetim,
   proBHISS,
@@ -615,7 +618,7 @@ procedure TNFSeW.GerarPrestador;
 begin
  Gerador.wGrupoNFSe('Prestador');
 
- if (VersaoXML = '1') and (FProvedor <> proISSNet)
+ if (VersaoXML = '1') and (FProvedor <> proISSNet) and (FProvedor <> proActcon)
   then Gerador.wCampoNFSe(tcStr, '#34', 'Cnpj', 14, 14, 1, SomenteNumeros(NFSe.Prestador.Cnpj), '')
   else begin
    Gerador.wGrupoNFSe('CpfCnpj');
