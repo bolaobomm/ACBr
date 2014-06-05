@@ -195,8 +195,8 @@ begin
         procEventoCTe.Items[i].RetEventoCTe.LerXml;
         inc(i);
       end;
-      if i = 0
-       then procEventoCTe.Add;
+//      if i = 0
+//       then procEventoCTe.Add;
 
       Result := True;
     end;
