@@ -2572,7 +2572,7 @@ begin
    begin
      // Alterado por italo em 05/06/2014
 //     PosIni := Pos(UChave, UTexto)-1;
-     PosIni := Pos('<' + UChave, UTexto)-1;
+     PosIni := Pos('<' + UChave, UTexto);
      PosFim := Pos('/' + UChave, UTexto) + length(UChave) + 3;
 
      if (PosIni = 0) or (PosFim = 0) then
