@@ -581,7 +581,7 @@ end;
 
 constructor TRegistroSEF0025.Create(AOwner: TRegistroSEF0001);
 begin
-  AOwner.fRegistro0025 := inherited Create;
+  AOwner.fRegistro0025 := TRegistroSEF0025.Create(AOwner);
 end;
 
 { TRegistroSEF0100 }

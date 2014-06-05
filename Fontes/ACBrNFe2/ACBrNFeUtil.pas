@@ -127,6 +127,8 @@ type
     class function Modulo11(Valor: string): String;
     class function ChaveAcesso(AUF:Integer; ADataEmissao:TDateTime; ACNPJ:String; ASerie:Integer;
                                ANumero,ACodigo: Integer; AModelo:Integer=55): String;
+    class function ExtraiCNPJChaveAcesso(AChaveNFE: String): String;
+
 //    class function LasString(AString: String): String;
 //    class function EstaVazio(const AValue: String): Boolean;overload;
 //    class procedure EstaVazio(const AValue, AMensagem: String);overload;
@@ -388,6 +390,14 @@ begin
 
   Result := vUF+vDataEmissao+ACNPJ+vModelo+vSerie+vNumero+vCodigo;
   Result := Result+NotaUtil.Modulo11(Result);
+end;
+
+class function NotaUtil.ExtraiCNPJChaveAcesso(AChaveNFE: String): String;
+begin
+  if ValidarChave(AChaveNFe) then
+     Result := copy(AChaveNFE,7,14)
+  else
+     Result := '';
 end;
 
 (*
@@ -2660,6 +2670,8 @@ begin
    28: urlUF := DFeUtil.SeSenao(AAmbiente = taProducao, 'http://www.nfe.se.gov.br/portal/consultarNFCe.jsp', 'http://www.hom.nfe.se.gov.br/portal/consultarNFCe.jsp'); //SE
    17: urlUF := DFeUtil.SeSenao(AAmbiente = taProducao, '', ''); //TO
   end;
+
+  AchNFe := OnlyNumber(AchNFe);
 
   // Passo 1
   sdhEmi_HEX  := AsciiToHex(DateTimeTodh(AdhEmi) + GetUTC(CodigoParaUF(AUF), AdhEmi));

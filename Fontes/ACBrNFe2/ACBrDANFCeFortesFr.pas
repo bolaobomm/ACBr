@@ -405,7 +405,7 @@ begin
     // QRCode  //
 
     qrcode := NotaUtil.GetURLQRCode( ide.cUF, ide.tpAmb,
-                                     Copy(InfNFe.Id, 4, 44),  //correcao para pegar somente numeros, estava indo junto o NFE
+                                     OnlyNumber(InfNFe.ID),  //correcao para pegar somente numeros, estava indo junto o NFE
                                      DFeUtil.SeSenao(Dest.idEstrangeiro <> '',Dest.idEstrangeiro, Dest.CNPJCPF),
                                      ide.dEmi,
                                      Total.ICMSTot.vNF, Total.ICMSTot.vICMS,
