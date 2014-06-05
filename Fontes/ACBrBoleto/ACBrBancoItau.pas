@@ -1012,7 +1012,8 @@ begin
   case CodOcorrencia of
     02: Result:='02-Entrada Confirmada' ;
     03: Result:='03-Entrada Rejeitada' ;
-    04: Result:='04-Alteração de Dados - Nova Entrada' ;
+    //04: Result:='04-Alteração de Dados - Nova Entrada' ;
+    04: Result:='04-Alteração de Dados - Nova Entrada ou Alteração/Exclusão de Dados Acatada';
     05: Result:='05-Alteração de Dados - Baixa' ;
     06: Result:='06-Liquidação Normal' ;
     07: Result:='07-Liquidação Parcial - Cobrança Inteligente (B2b)' ;
