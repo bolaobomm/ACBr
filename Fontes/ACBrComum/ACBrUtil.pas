@@ -2570,7 +2570,9 @@ begin
 
   if MantemChave then
    begin
-     PosIni := Pos(UChave, UTexto)-1;
+     // Alterado por italo em 05/06/2014
+//     PosIni := Pos(UChave, UTexto)-1;
+     PosIni := Pos('<' + UChave, UTexto)-1;
      PosFim := Pos('/' + UChave, UTexto) + length(UChave) + 3;
 
      if (PosIni = 0) or (PosFim = 0) then
@@ -2581,7 +2583,9 @@ begin
    end
   else
    begin
-     PosIni := Pos(UChave, UTexto) + Pos('>', copy(UTexto, Pos(UChave, UTexto), length(UTexto)));
+     // Alterado por italo em 05/06/2014
+//     PosIni := Pos(UChave, UTexto) + Pos('>', copy(UTexto, Pos(UChave, UTexto), length(UTexto)));
+     PosIni := Pos('<' + UChave, UTexto) + Pos('>', copy(UTexto, Pos('<' + UChave, UTexto), length(UTexto)));
      PosFim := Pos('/' + UChave, UTexto);
 
      if (PosIni = 0) or (PosFim = 0) then
