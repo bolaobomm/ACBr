@@ -90,7 +90,7 @@ interface
     procedure WriteRegistro0200(Reg0001: TRegistroSEF0001);
     procedure WriteRegistro0205(Reg0200: TRegistroSEF0200);
     procedure WriteRegistro0400(Reg0001: TRegistroSEF0001);
-    procedure WriteRegistro0450(Reg0400: TRegistroSEF0400);
+    procedure WriteRegistro0450(Reg0001: TRegistroSEF0001);
     procedure WriteRegistro0460(Reg0450: TRegistroSEF0450);
     procedure WriteRegistro0465(Reg0450: TRegistroSEF0450);
     procedure WriteRegistro0470(Reg0450: TRegistroSEF0450);
@@ -114,6 +114,8 @@ interface
     function Registro0400New : TRegistroSEF0400;
     function Registro0450New : TRegistroSEF0450;
     function Registro0460New : TRegistroSEF0460;
+    function Registro0465New : TRegistroSEF0465;
+    function Registro0470New : TRegistroSEF0470;
 
 
     procedure WriteRegistro0000;
@@ -345,6 +347,7 @@ begin
             WriteRegistro0150(FRegistro0001) ;
             WriteRegistro0200(FRegistro0001) ; //Somente eDoc
             WriteRegistro0400(FRegistro0001) ;
+            WriteRegistro0450(FRegistro0001) ;
          end;
       end;
 
@@ -439,9 +442,7 @@ begin
                  LFill( DESCR_NAT ) +
                  LFill( COP )) ;
          end;
-
-         WriteRegistro0450( Reg0001.Registro0400.Items[intFor] ) ;
-
+         
          Registro0990.QTD_LIN_0 := Registro0990.QTD_LIN_0 + 1;
      end;
      /// Variavél para armazenar a quantidade de registro do tipo.
@@ -449,29 +450,29 @@ begin
   end;
 end;
 
-procedure TBloco_0.WriteRegistro0450(Reg0400: TRegistroSEF0400);
+procedure TBloco_0.WriteRegistro0450(Reg0001: TRegistroSEF0001);
 var
  intFor : Integer;
 begin
-   if Assigned( Reg0400.Registro0450 ) then
+   if Assigned( Reg0001.Registro0450 ) then
    begin
-      for intFor := 0 to Reg0400.Registro0450.Count - 1 do
+      for intFor := 0 to Reg0001.Registro0450.Count - 1 do
       begin
-         with Reg0400.Registro0450.Items[intFor] do
+         with Reg0001.Registro0450.Items[intFor] do
          begin
             Add( LFill('0450')    +
                  LFill( COD_INF ) +
                  LFill( TXT ) ) ;
          end;
 
-         WriteRegistro0460( Reg0400.Registro0450.Items[intFor] ) ;
-         WriteRegistro0465( Reg0400.Registro0450.Items[intFor] ) ;
-         WriteRegistro0470( Reg0400.Registro0450.Items[intFor] ) ;
+         WriteRegistro0460( Reg0001.Registro0450.Items[intFor] ) ;
+         WriteRegistro0465( Reg0001.Registro0450.Items[intFor] ) ;
+         WriteRegistro0470( Reg0001.Registro0450.Items[intFor] ) ;
          
          Registro0990.QTD_LIN_0 := Registro0990.QTD_LIN_0 + 1;
      end;
      /// Variavél para armazenar a quantidade de registro do tipo.
-     FRegistro0450Count := FRegistro0450Count + Reg0400.Registro0450.Count;
+     FRegistro0450Count := FRegistro0450Count + Reg0001.Registro0450.Count;
   end;
 end;
 
@@ -522,29 +523,29 @@ begin
          begin
 
             Add( LFill('0465')                +
-                 LFill(Integer(IND_OPER), 1)  +
-                 LFill(Integer(IND_EMIT), 1)  +
+                 LFill(IndOperToStr(IND_OPER), 1)  +
+                 LFill(IndEmissaoToStr(IND_EMIT), 1)  +
                  LFill(CNPJ)                  +
                  LFill(CPF)                   +
                  LFill(UF)                    +
                  LFill(IE)                    +
                  LFill(COD_MUN, 7)            +
                  LFill(IM)                    +
-                 LFill(COD_MOD)               +
-                 LFill(COD_SIT)               +
+                 LFill(ModDocumentoToStr(COD_MOD)) +
+                 LFill(CodSituacaoToStr(COD_SIT),2)  +
                  LFill(SER)                   +
                  LFill(SUB)                   +
                  LFill(CHV_NFE_CTE)           +
                  LFill(NUM_DOC)               +
                  LFill(DT_DOC)                +
-                 LFill(VL_DOC)                +
-                 LFill(VL_ISS)                +
-                 LFill(VL_RT)                 +
-                 LFill(VL_ICMS)               +
-                 LFill(VL_ICMS_ST)            +
-                 LFill(VL_AT)                 +
-                 LFill(VL_IPI)                +
-                 LFill(VOL));
+                 LFill(VL_DOC,2)              +
+                 LFill(VL_ISS,0, 2, true)     +
+                 LFill(VL_RT,0, 2, true)      +
+                 LFill(VL_ICMS,2)             +
+                 LFill(VL_ICMS_ST,0, 2, true) +
+                 LFill(VL_AT,0, 2, true)      +
+                 LFill(VL_IPI,2)              +
+                 LFill(VOL,2));
         end;
         Registro0990.QTD_LIN_0 := Registro0990.QTD_LIN_0 + 1;
      end;
@@ -564,16 +565,16 @@ begin
          with Reg0450.Registro0470.Items[intFor] do
          begin
             Add( LFill('0470')   +
-                 LFill(integer(COD_MOD))  +
-                 LFill(ECF_CX)   +
-                 LFill(ECF_FAB)  +
-                 LFill(CRO)      +
-                 LFill(CRZ)      +
-                 LFill(NUM_DOC)  +
+                 LFill(ModDocumentoToStr(COD_MOD))  +
+                 LFill(ECF_CX, 0)   +
+                 LFill(ECF_FAB)     +
+                 LFill(CRO, 0)      +
+                 LFill(CRZ, 0)      +
+                 LFill(NUM_DOC, 0)  +
                  LFill(DT_DOC)   +
-                 LFill(VL_DOC)   +
-                 LFill(VL_ISS)   +
-                 LFill(VL_ICMS));
+                 LFill(VL_DOC, 2)   +
+                 LFill(VL_ISS, 2)   +
+                 LFill(VL_ICMS, 2));
          end;
          Registro0990.QTD_LIN_0 := Registro0990.QTD_LIN_0 + 1;
       end;
@@ -794,6 +795,7 @@ end;
 
 function TBloco_0.Registro0025New: TRegistroSEF0025;
 begin
+   FRegistro0025 := TRegistroSEF0025.Create(FRegistro0001);
    Result := FRegistro0001.Registro025;
 end;
 
@@ -864,21 +866,47 @@ begin
 end;
 
 function TBloco_0.Registro0450New: TRegistroSEF0450;
-var
-  U0400: TRegistroSEF0400;
-  U0400Count: Integer;
 begin
-   U0400Count := FRegistro0001.Registro0400.Count -1;
-   if U0400Count = -1 then
-      raise Exception.Create('O registro 0450 deve ser filho do registro 0400, e não existe nenhum 0400 pai!');
-
-   U0400 := FRegistro0001.Registro0400.Items[U0400Count];
-   Result  := U0400.Registro0450.New(U0400);
+   Result := FRegistro0001.Registro0450.New(FRegistro0001);
 end;
 
 function TBloco_0.Registro0460New: TRegistroSEF0460;
+var
+  U0450: TRegistroSEF0450;
+  U0450Count: Integer;
 begin
+   U0450Count := FRegistro0001.Registro0450.Count -1;
+   if U0450Count = -1 then
+      raise Exception.Create('O registro 0460 deve ser filho do registro 0450, e não existe nenhum 0450 pai!');
 
+   U0450 := FRegistro0001.Registro0450.Items[U0450Count];
+   Result  := U0450.Registro0460.New(U0450);
+end;
+
+function TBloco_0.Registro0465New: TRegistroSEF0465;
+var
+  U0450: TRegistroSEF0450;
+  U0450Count: Integer;
+begin
+   U0450Count := FRegistro0001.Registro0450.Count -1;
+   if U0450Count = -1 then
+      raise Exception.Create('O registro 0465 deve ser filho do registro 0450, e não existe nenhum 0450 pai!');
+
+   U0450 := FRegistro0001.Registro0450.Items[U0450Count];
+   Result  := U0450.Registro0465.New(U0450);
+end;
+
+function TBloco_0.Registro0470New: TRegistroSEF0470;
+var
+  U0450: TRegistroSEF0450;
+  U0450Count: Integer;
+begin
+   U0450Count := FRegistro0001.Registro0450.Count -1;
+   if U0450Count = -1 then
+      raise Exception.Create('O registro 0470 deve ser filho do registro 0450, e não existe nenhum 0450 pai!');
+
+   U0450 := FRegistro0001.Registro0450.Items[U0450Count];
+   Result  := U0450.Registro0470.New(U0450);
 end;
 
 end.

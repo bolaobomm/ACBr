@@ -462,7 +462,7 @@ type
     fVL_ISN_I    : Currency;
     fALIQ_ICMS   : Double;
     fQTD         : Double;
-    fCFOP        : Integer;
+    fCFOP        : String;
     fNUM_ITEM    : Integer;
     fCOD_ITEM    : String;
     fCST         : String;
@@ -473,7 +473,7 @@ type
     destructor Destroy; override;
 
     property NUM_ITEM    : Integer  read fNUM_ITEM     write fNUM_ITEM;
-    property CFOP        : Integer  read fCFOP         write fCFOP;
+    property CFOP        : String   read fCFOP         write fCFOP;
     property COD_ITEM    : String   read fCOD_ITEM     write fCOD_ITEM;
     property UNID        : String   read fUNID         write fUNID;
     property CST         : String   read fCST          write fCST;

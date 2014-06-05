@@ -1,4 +1,4 @@
-{******************************************************************************}
+﻿{******************************************************************************}
 { Projeto: Componentes ACBr                                                    }
 {  Biblioteca multiplataforma de componentes Delphi para interação com equipa- }
 { mentos de Automação Comercial utilizados no Brasil                           }
@@ -559,13 +559,13 @@ begin
                  LFill(NUM_ITEM, 0) +
                  LFill(COD_ITEM) +
                  LFill(UNID) +
-                 LFill(Double(VL_UNIT), 6) +
-                 LFill(Double(QTD), 6) +
+                 LFill(VL_UNIT, 6) +
+                 LFill(QTD, 6) +
                  LFill(VL_DESC_I, 2) +
                  LFill(VL_ACMO_I, 2) +
                  LFill(VL_ITEM, 2) +
                  LFill(CST) +
-                 LFill(CFOP, 0, true) +
+                 LFill(CFOP, 4, true) +
                  LFill(VL_BC_ICMS_I, 2) +
                  LFill(ALIQ_ICMS, 2) +
                  LFill(VL_ICMS_I, 2) +

@@ -41,7 +41,7 @@ unit ACBrSEF2Conversao;
 
 interface
 
-Uses SysUtils, Classes, ACBrTXTClass, Contnrs, PcnConversao;
+Uses SysUtils, Classes, ACBrTXTClass, contnrs, pcnConversao;
 
   /// Código da finalidade do arquivo - TRegistro0000
   type TSEFIICodFinalidade = (raOriginal,     // 0 - Remessa do arquivo original
@@ -66,6 +66,15 @@ Uses SysUtils, Classes, ACBrTXTClass, Contnrs, PcnConversao;
                              icContConteudo,//0- Documento com conteúdo
                              icSemConteudo // 1- Documento sem conteúdo
                              );
+
+  ///Indicador de Conteudo TRegistroE001
+  TSEFIIIndConteudoDocumento = (
+                               idDocEntrSaiAjuste, // 0- Documento com lançamentos de entrada/aquisição, de saída/prestação e de ajuste
+                               idDocSemLancamento, // 1- Documento sem lançamentos e ajustes
+                               idDocEntrAjuste,    // 2- Documento com lançamentos de entrada/aquisição e de ajuste
+                               idDocSaiAjuste,     // 3- Documento com lançamentos de saída/prestação e de ajuste
+                               idDocLancAjuste     // 4- Documento com lançamentos de ajuste
+                               );
 
   /// Tabela Externa 3.3.1 Tabela de Qualificação de Assinantes TRegistro005
   TSEFIIQualiAssinante = (
@@ -278,7 +287,7 @@ Uses SysUtils, Classes, ACBrTXTClass, Contnrs, PcnConversao;
                       SefcsSemrepercussaofiscal       //99
                       );
 
-    TIndicePagamento = (SefNenhum,SefipAVista, SefAPrazao, SefNaoOnerada);
+    TIndicePagamento = (SefNenhum,SefipAVista, SefAPrazo, SefNaoOnerada);
 
     TIndicadorDados = (entDigitacao,entImportacao,entValidacao);
 
@@ -359,13 +368,20 @@ Uses SysUtils, Classes, ACBrTXTClass, Contnrs, PcnConversao;
     function StrToIndPagamento(var ok: boolean; const s: string): TIndicePagamento;
     function ModDocumentoToStr(const t: TSEFIIDocFiscalReferenciado): string;
     function StrToModDocumento(var ok: boolean; const s: string): TSEFIIDocFiscalReferenciado;
-
     function IndExigEscrImpostoToStr(const t: TIndicadorExigeEscrImposto): string;
     function StrToIndExigEscrImposto(var ok: boolean; const s: string): TIndicadorExigeEscrImposto;
     function IndExigDiversaToStr(const t: TIndicadorExigeDiversas): string;
     function StrToIndExigDiversa(var ok: boolean; const s: string): TIndicadorExigeDiversas;
     function IndEscrContabilToStr(const t: TIndicadorEscrContabil): string;
     function StrToIndEscrContabil(var ok: boolean; const s: string): TIndicadorEscrContabil;
+    function IndConteudoToStr(const t: TSEFIIIndicadorConteudo): string;
+    function StrToBenefIndConteudo(var ok: boolean; const s: string): TSEFIIIndicadorConteudo;
+    function IndContDocumentoToStr(const t: TSEFIIIndConteudoDocumento): string;
+    function StrToIndContDocumento(var ok: boolean; const s: string): TSEFIIIndConteudoDocumento;
+    function BenefFiscalICMSToStr(const t: TSEFIIBeniFiscalICMS): string;
+    function StrToBenefFiscalICMS(var ok: boolean; const s: string): TSEFIIBeniFiscalICMS;
+    function IndEntrDadosToStr(const t: TIndicadorDados): string;
+    function StrToIndEntrDados(var ok: boolean; const s: string): TIndicadorDados;
 
     function CFOPToCOP(ACFOP : integer) : string;
 
@@ -460,13 +476,13 @@ end;
 function IndPagamentoToStr(const t: TIndicePagamento): string;
 begin
   result := EnumeradoToStr(t, ['0', '1', '2'],
-                              [SefipAVista, SefAPrazao, SefNaoOnerada]);
+                              [SefipAVista, SefAPrazo, SefNaoOnerada]);
 end;
 
 function StrToIndPagamento(var ok: boolean; const s: string): TIndicePagamento;
 begin
   result := StrToEnumerado(ok, s, ['0', '1', '2'],
-                              [SefipAVista, SefAPrazao, SefNaoOnerada]);
+                              [SefipAVista, SefAPrazo, SefNaoOnerada]);
 end;
 
 function ModDocumentoToStr(const t: TSEFIIDocFiscalReferenciado): string;
@@ -524,6 +540,57 @@ begin
                                   [esCompletaArquivo, esCompletaPapel, esSimplificadaArquivo, esSimplificadaPapel, esLivroCaixaArquivo,
                                    esLivroCaixaPapel, esNaoObrigado  , esVazio]);
 end;
+
+function IndConteudoToStr(const t: TSEFIIIndicadorConteudo): string;
+begin
+  result := EnumeradoToStr(t, ['0','1'],
+                              [icContConteudo, icSemConteudo]);
+end;
+
+function StrToBenefIndConteudo(var ok: boolean; const s: string): TSEFIIIndicadorConteudo;
+begin
+  result := StrToEnumerado(ok, s, ['0','1'],
+                                  [icContConteudo, icSemConteudo]);
+end;
+
+
+function IndContDocumentoToStr(const t: TSEFIIIndConteudoDocumento): string;
+begin
+  result := EnumeradoToStr(t, ['0','1','2','3','4'],
+                              [idDocEntrSaiAjuste, idDocSemLancamento, idDocEntrAjuste, idDocSaiAjuste, idDocLancAjuste]);
+end;
+
+function StrToIndContDocumento(var ok: boolean; const s: string): TSEFIIIndConteudoDocumento;
+begin
+  result := StrToEnumerado(ok, s, ['0','1','2','3','4'],
+                                  [idDocEntrSaiAjuste, idDocSemLancamento, idDocEntrAjuste, idDocSaiAjuste, idDocLancAjuste]);
+end;
+
+function BenefFiscalICMSToStr(const t: TSEFIIBeniFiscalICMS): string;
+begin
+  result := EnumeradoToStr(t, ['','PE001'],
+                              [bfNenhum, bfProdepe]);
+end;
+
+function StrToBenefFiscalICMS(var ok: boolean; const s: string): TSEFIIBeniFiscalICMS;
+begin
+  result := StrToEnumerado(ok, s, ['','PE001'],
+                                  [bfNenhum, bfProdepe]);
+end;
+
+function IndEntrDadosToStr(const t: TIndicadorDados): string;
+begin
+  result := EnumeradoToStr(t, ['0','1','2'],
+                              [iedDigitacaoDados, iedImportacaoArquivo, iedValidacaoArqTexto]);
+
+end;
+
+function StrToIndEntrDados(var ok: boolean; const s: string): TIndicadorDados;
+begin
+  result := StrToEnumerado(ok, s, ['0','1','2'],
+                                  [iedDigitacaoDados, iedImportacaoArquivo, iedValidacaoArqTexto]);
+end;
+
 
 function CFOPToCOP(ACFOP : integer) : string;
 begin

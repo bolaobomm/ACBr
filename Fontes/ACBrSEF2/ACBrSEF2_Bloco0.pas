@@ -41,7 +41,7 @@ unit ACBrSEF2_Bloco0;
 
 interface
 
-Uses SysUtils, Contnrs, Classes , ACBrSEF2Conversao;
+Uses SysUtils, Contnrs, Classes ,ACBrSEF2Conversao;
 
 type
 
@@ -295,6 +295,7 @@ type
     fRegistro0150: TRegistroSEF0150List;
     fRegistro0200: TRegistroSEF0200List;
     fRegistro0400: TRegistroSEF0400List;
+    fRegistro0450: TRegistroSEF0450List;
   public
     constructor Create; virtual; /// Create
     destructor Destroy; override; /// Destroy
@@ -305,6 +306,7 @@ type
     property Registro0150: TRegistroSEF0150List read fRegistro0150 write fRegistro0150;
     property Registro0200: TRegistroSEF0200List read fRegistro0200 write fRegistro0200;
     property Registro0400: TRegistroSEF0400List read fRegistro0400 write fRegistro0400;
+    property Registro0450: TRegistroSEF0450List read fRegistro0450 write fRegistro0450;
   end;
 
   TRegistroSEF0205 = class
@@ -338,14 +340,12 @@ type
     fCOD_NAT     : String; //Código da natureza da operação/prestação
     fDESCR_NAT   : String;
     fCOP         : String;
-    fRegistro0450: TRegistroSEF0450List;
   public
     constructor Create(AOwner: TRegistroSEF0001); virtual; /// Create
     destructor Destroy; override; /// Destroy
     property COD_NAT     : String read fCOD_NAT   write fCOD_NAT;
     property DESCR_NAT   : String read fDESCR_NAT write fDESCR_NAT;
     property COP         : String read fCOP       write fCOP;
-    property Registro0450: TRegistroSEF0450List read fRegistro0450 write fRegistro0450;
   end;
 
   // Registro 0400 - Lista
@@ -367,7 +367,7 @@ type
     fRegistro0465: TRegistroSEF0465List;
     fRegistro0470: TRegistroSEF0470List;
   public
-    constructor Create(AOwner: TRegistroSEF0400); virtual; /// Create
+    constructor Create(AOwner: TRegistroSEF0001); virtual; /// Create
     property COD_INF : String read fCOD_INF write fCOD_INF;
     property TXT     : String read fTXT     write fTXT;
     property Registro0460: TRegistroSEF0460List read fRegistro0460 write fRegistro0460;
@@ -381,7 +381,7 @@ type
     function GetItem(Index: Integer): TRegistroSEF0450;
     procedure SetItem(Index: Integer; const Value: TRegistroSEF0450);
   public
-    function New(AOwner: TRegistroSEF0400): TRegistroSEF0450;
+    function New(AOwner: TRegistroSEF0001): TRegistroSEF0450;
     property Items[Index: Integer]: TRegistroSEF0450 read GetItem write SetItem;
   end;
 
@@ -445,30 +445,30 @@ type
     fIE         : String;
     fNUM_DOC    : String;
     fCHV_NFE_CTE: String;
-    fFIND_EMIT  : String;
+    fIND_EMIT   : TIndiceEmissao;
     fCOD_MUN    : String;
     fCPF        : String;
-    fCOD_MOD    : String;
+    fCOD_MOD    : TSEFIIDocFiscalReferenciado;
     fIM         : String;
     fCNPJ       : String;
-    fCOD_SIT    : String;
-    fFIND_OPER  : String;
+    fCOD_SIT    : TCodigoSituacao;
+    fIND_OPER   : TIndiceOperacao;
     fSER        : String;
     fSUB        : String;
     fUF         : String;
     fDT_DOC     : TDateTime;
   public
     constructor Create(AOwner: TRegistroSEF0450); virtual; /// Create
-    property IND_OPER    : String	read FFIND_OPER   write FFIND_OPER;    // "Indicador de operação:0- Entrada ou aquisição1- Saída ou prestação"
-    property IND_EMIT    : String read FFIND_EMIT   write FFIND_EMIT;  	 // "Indicador de emitente:0- Emissão própria1- Emissão por terceiros"
+    property IND_OPER    : TIndiceOperacao	read FIND_OPER   write FIND_OPER;    // "Indicador de operação:0- Entrada ou aquisição1- Saída ou prestação"
+    property IND_EMIT    : TIndiceEmissao read FIND_EMIT   write FIND_EMIT;  	 // "Indicador de emitente:0- Emissão própria1- Emissão por terceiros"
     property CNPJ        : String read FCNPJ        write FCNPJ;         //	CNPJ : String do contribuinte
     property CPF         : String read FCPF         write FCPF;	         // CPF do contribuinte
     property UF          : String read FUF          write FUF;           // Sigla da unidade da Federação do contribuinte
     property IE          : String read FIE          write FIE;	         // Inscrição estadual do contribuinte
     property COD_MUN     : String	read FCOD_MUN     write FCOD_MUN;      // Código do município do contribuinte, conforme a tabela externa indicada no item 3.3.1
     property IM          : String read FIM          write FIM;	         // Inscrição municipal do contribuinte
-    property COD_MOD     : String	read FCOD_MOD     write FCOD_MOD;      // Código do documento fiscal, conforme a tabela indicada no item 4.1.1 ou no item 4.1.2
-    property COD_SIT     : String	read FCOD_SIT     write FCOD_SIT;      // Código da situação do documento fiscal, conforme a tabela indicada no item 4.1.3
+    property COD_MOD     : TSEFIIDocFiscalReferenciado	read FCOD_MOD     write FCOD_MOD;      // Código do documento fiscal, conforme a tabela indicada no item 4.1.1 ou no item 4.1.2
+    property COD_SIT     : TCodigoSituacao	read FCOD_SIT     write FCOD_SIT;      // Código da situação do documento fiscal, conforme a tabela indicada no item 4.1.3
     property SER         : String	read FSER         write FSER;          // Série do documento fiscal
     property SUB         : String	read FSUB         write FSUB;          // Subsérie do documento fiscal
     property CHV_NFE_CTE : String	read FCHV_NFE_CTE write FCHV_NFE_CTE;  // Chave de acesso da NF-e/CT-e (somente para os documentos código 55 ou 57)
@@ -547,12 +547,12 @@ implementation
 constructor TRegistroSEF0001.Create;
 begin
    FRegistro0005 := TRegistroSEF0005.Create(self);
-   FRegistro0025 := TRegistroSEF0025.Create(self);
    FRegistro0030 := TRegistroSEF0030.Create(self);
    FRegistro0100 := TRegistroSEF0100.Create(self);
    FRegistro0150 := TRegistroSEF0150List.Create;
    FRegistro0200 := TRegistroSEF0200List.Create;
    fRegistro0400 := TRegistroSEF0400List.Create;
+   fRegistro0450 := TRegistroSEF0450List.Create;
 
    IND_MOV := icContConteudo;
 end;
@@ -560,12 +560,13 @@ end;
 destructor TRegistroSEF0001.Destroy;
 begin
    FRegistro0005.Free;
-   FRegistro0025.Free;
+   if (Assigned(FRegistro0025)) then FRegistro0025.Free;
    FRegistro0030.Free;
    FRegistro0100.Free;
    FRegistro0150.Free;
    FRegistro0200.Free;
    fRegistro0400.Free;
+   fRegistro0450.Free;
    inherited;
 end;
 
@@ -580,7 +581,7 @@ end;
 
 constructor TRegistroSEF0025.Create(AOwner: TRegistroSEF0001);
 begin
-
+  AOwner.fRegistro0025 := inherited Create;
 end;
 
 { TRegistroSEF0100 }
@@ -613,12 +614,10 @@ end;
 
 constructor TRegistroSEF0400.Create(AOwner: TRegistroSEF0001);
 begin
-   FRegistro0450 := TRegistroSEF0450List.Create;
 end;
 
 destructor TRegistroSEF0400.Destroy;
 begin
-   FRegistro0450.Free;
    inherited;
 end;
 
@@ -648,7 +647,7 @@ begin
   Result := TRegistroSEF0450(Get(Index));
 end;
 
-function TRegistroSEF0450List.New(AOwner: TRegistroSEF0400): TRegistroSEF0450;
+function TRegistroSEF0450List.New(AOwner: TRegistroSEF0001): TRegistroSEF0450;
 begin
   Result := TRegistroSEF0450.Create(AOwner);
   Add(Result);
@@ -800,7 +799,7 @@ end;
 
 { TRegistroSEF0450 }
 
-constructor TRegistroSEF0450.Create(AOwner: TRegistroSEF0400);
+constructor TRegistroSEF0450.Create(AOwner: TRegistroSEF0001);
 begin
    FRegistro0460 := TRegistroSEF0460List.Create;
    FRegistro0465 := TRegistroSEF0465List.Create;
