@@ -2669,8 +2669,18 @@ begin
 
   // Passo 3 e 4
   cIdToken  := AidToken;
-  cTokenHom := Copy(AchNFe, 7, 8) + '20' + Copy(AchNFe, 3, 2) + Copy(cIdToken, 3, 4);
-  cTokenPro := AToken;
+
+  // Alterado por Italo em 05/06/2014
+  // Essa alteração foi feita, pois algumas UF estão gerando o Token também para o Ambiente de Homologação
+  // Neste caso o mesmo deve ser informado na propriedade Token caso contario deve-se atribuir a
+  // essa propriedade uma string vazia
+  if (AAmbiente = taHomologacao) then
+   begin
+    if (AToken = '')
+      then cTokenHom := Copy(AchNFe, 7, 8) + '20' + Copy(AchNFe, 3, 2) + Copy(cIdToken, 3, 4)
+      else cTokenHom := AToken;
+   end
+   else cTokenPro := AToken;
 
   sToken    := DFeUtil.SeSenao(AAmbiente = taProducao, cIdToken + cTokenPro, cIdToken + cTokenHom);
 
