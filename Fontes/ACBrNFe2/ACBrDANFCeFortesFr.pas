@@ -81,10 +81,8 @@ type
   { TACBrNFeDANFCeFortesFr }
 
   TACBrNFeDANFCeFortesFr = class(TForm)
-    imgLogo: TRLImage;
     lChaveDeAcesso: TRLLabel;
     lCPF_CNPJ_ID: TRLMemo;
-    lEndereco: TRLMemo;
     lEnderecoConsumidor: TRLMemo;
     lMensagemFiscal: TRLLabel;
     lNumSerieEmissao: TRLLabel;
@@ -95,12 +93,9 @@ type
     lQtdTotalItensVal: TRLLabel;
     lProtocolo: TRLLabel;
     lCPF_CNPJ1: TRLLabel;
-    lEmitCNPJ_IE_IM: TRLLabel;
     lMsgDANFCe: TRLLabel;
     lMsgDANFCe1: TRLLabel;
     lMsgDANFCe2: TRLLabel;
-    lNomeFantasia: TRLLabel;
-    lRazaoSocial: TRLLabel;
     lTitLei12741: TRLLabel;
     lTitLei12742: TRLLabel;
     lTitFormaPagto: TRLLabel;
@@ -124,7 +119,6 @@ type
     lTotalItem: TRLLabel;
     lValLei12741: TRLLabel;
     mLinhaItem: TRLMemo;
-    pCliche: TRLPanel;
     pGap8: TRLPanel;
     rlbDadosCliche: TRLBand;
     rlbLegenda: TRLBand;
@@ -140,7 +134,6 @@ type
     rlbDetItem: TRLBand;
     rlbRodape: TRLBand;
     rlbTroco: TRLBand;
-    RLDraw1: TRLDraw;
     RLDraw10: TRLDraw;
     RLDraw12: TRLDraw;
     rlbsCabecalho: TRLSubDetail;
@@ -161,6 +154,12 @@ type
     lMensagemContribuinte: TRLLabel;
     RLDraw3: TRLDraw;
     lObservacoes: TRLMemo;
+    lRazaoSocial: TRLLabel;
+    lEmitCNPJ_IE_IM: TRLLabel;
+    lEndereco: TRLMemo;
+    RLDraw1: TRLDraw;
+    lNomeFantasia: TRLLabel;
+    imgLogo: TRLImage;
 
     procedure FormDestroy(Sender: TObject);
     procedure pAsteriscoBeforePrint(Sender: TObject; var PrintIt: boolean);
