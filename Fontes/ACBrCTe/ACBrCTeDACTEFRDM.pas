@@ -520,9 +520,9 @@ begin
         Append;
         FieldByName('tpDoc').AsString := 'NFe';
         FieldByName('CNPJCPF').AsString := FCTe.Rem.CNPJCPF;
-        FieldByName('Serie').AsString := '';
+        FieldByName('Serie').AsString := copy(chave,23,3);
         FieldByName('ChaveAcesso').AsString := chave;
-        FieldByName('NotaFiscal').AsString := '';
+        FieldByName('NotaFiscal').AsString := copy(chave,26,9);
         { Alterado por Jose Nilton Pace em 16/05/2013 }
         FieldByName('TextoImpressao').AsString := 'NF-e                '+chave;
 (*
