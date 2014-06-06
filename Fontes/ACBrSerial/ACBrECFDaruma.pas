@@ -63,6 +63,7 @@ TACBrECFDaruma = class( TACBrECFClass )
  private
     fsNumVersao   : String ;
     fsNumECF      : String ;
+    fsNumLoja     : String ;
     fsUsuarioAtual: String ;
     fsNumCupom    : String ; //COO
     fsNumCCF      : String ;
@@ -116,6 +117,7 @@ TACBrECFDaruma = class( TACBrECFClass )
     function GetNumCupom: String; override ;
     function GetNumCCF: String; override ;
     function GetNumECF: String; override ;
+    function GetNumLoja: String; override ;
     function GetNumCRO: String; override ;
     function GetNumGNF: String; override ;
     function GetNumGRG: String; override ;
@@ -757,6 +759,7 @@ begin
   fsEmPagamento := false ;
   fsNumVersao   := '' ;
   fsNumECF      := '' ;
+  fsNumLoja     := '' ;
   fsUsuarioAtual:= '' ;
   fsRet244      := '' ;
   fsNumCRO      := '' ;
@@ -845,6 +848,7 @@ begin
 
   fsNumVersao := '' ;
   fsNumECF    := '' ;
+  fsNumLoja   := '' ;
   fsUsuarioAtual:= '' ;
   fsRet244    := '' ;
   fsNumCRO    := ''  ;
@@ -1402,6 +1406,21 @@ begin
   end ;
 
   Result := fsNumECF ;
+end;
+
+function TACBrECFDaruma.GetNumLoja: String;
+Var
+  RetCmd : AnsiString ;
+begin
+  if Trim(fsNumECF) = '' then
+  begin
+    if fpMFD then
+       fsNumLoja := RetornaInfoECF('129')
+    else
+       fsNumLoja := inherited GetNumLoja ;
+  end ;
+
+  Result := fsNumLoja ;
 end;
 
 function TACBrECFDaruma.GetNumCRO: String;
