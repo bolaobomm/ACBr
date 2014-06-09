@@ -843,10 +843,10 @@ begin
                    LFill(VL_AJ, 2)    +
                    LFill(NUM_DA)      +
                    LFill(NUM_PROC)    +
-                   LFill(IND_PROC,1)    +
+                   LFill(IND_PROC)    +
                    LFill(DESC_PROC)   +
                    Lfill(COD_INF_OBS) +
-                   LFill(IND_AP,1));
+                   LFill(IND_AP));
               end;
          RegistroE990.QTD_LIN_E := RegistroE990.QTD_LIN_E + 1;
          end;
