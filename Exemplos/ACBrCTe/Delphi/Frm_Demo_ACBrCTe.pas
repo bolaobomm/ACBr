@@ -114,7 +114,6 @@ type
     btnImprimirEvento: TButton;
     btnImportarXML: TButton;
     btnConsultarChave: TButton;
-    btnCancelarChave: TButton;
     PageControl2: TPageControl;
     TabSheet5: TTabSheet;
     MemoResp: TMemo;
@@ -147,7 +146,6 @@ type
     procedure btnConsultarClick(Sender: TObject);
     procedure btnConsultarChaveClick(Sender: TObject);
     procedure btnCancCTeClick(Sender: TObject);
-    procedure btnCancelarChaveClick(Sender: TObject);
     procedure btnInutilizarClick(Sender: TObject);
     procedure btnConsultarReciboClick(Sender: TObject);
     procedure btnConsCadClick(Sender: TObject);
@@ -2153,8 +2151,9 @@ end;
 procedure TfrmDemo_ACBrCTe.btnCancCTeClick(Sender: TObject);
 var
  vAux : String;
+ iLote: Integer;
 begin
- OpenDialog1.Title := 'Selecione o CTe';
+ OpenDialog1.Title := 'Selecione o CTe a ser Cancelado';
  OpenDialog1.DefaultExt := '*-cte.xml';
  OpenDialog1.Filter := 'Arquivos CTe (*-cte.xml)|*-cte.xml|Arquivos XML (*.xml)|*.xml|Todos os Arquivos (*.*)|*.*';
  OpenDialog1.InitialDir := ACBrCTe1.Configuracoes.Geral.PathSalvar;
@@ -2163,21 +2162,31 @@ begin
   begin
    ACBrCTe1.Conhecimentos.Clear;
    ACBrCTe1.Conhecimentos.LoadFromFile(OpenDialog1.FileName);
-   if not(InputQuery('WebServices Cancelamento', 'Justificativa', vAux))
+   if not(InputQuery('Cancelamento do CTe:', 'Justificativa', vAux))
     then exit;
 
-   ACBrCTe1.Cancelamento(vAux);
-   MemoResp.Lines.Text :=  UTF8Encode(ACBrCTe1.WebServices.Cancelamento.RetWS);
-   memoRespWS.Lines.Text :=  UTF8Encode(ACBrCTe1.WebServices.Cancelamento.RetWS);
-   LoadXML(MemoResp, WBResposta);
-   ShowMessage(IntToStr(ACBrCTe1.WebServices.Cancelamento.cStat));
-   ShowMessage(ACBrCTe1.WebServices.Cancelamento.Protocolo);
-  end;
-end;
+   ACBrCTe1.EventoCTe.Evento.Clear;
 
-procedure TfrmDemo_ACBrCTe.btnCancelarChaveClick(Sender: TObject);
-begin
- ShowMessage('Opção não Implementada!');
+   with ACBrCTe1.EventoCTe.Evento.Add do
+    begin
+     infEvento.nSeqEvento      := 1; // Para o Evento de Cancelamento: nSeqEvento sempre = 1
+     infEvento.chCTe           := Copy(ACBrCTe1.Conhecimentos.Items[0].CTe.infCTe.Id, 4, 44);
+     infEvento.CNPJ            := edtEmitCNPJ.Text;
+     infEvento.dhEvento        := now;
+     infEvento.tpEvento        := teCancelamento;
+     infEvento.detEvento.xJust := trim(vAux);
+     infEvento.detEvento.nProt := ACBrCTe1.Conhecimentos.Items[0].CTe.procCTe.nProt;
+    end;
+
+   iLote := 1; // Numero do Lote do Evento
+   ACBrCTe1.EnviarEventoCTe(iLote);
+
+   MemoResp.Lines.Text :=  UTF8Encode(ACBrCTe1.WebServices.EnvEvento.RetWS);
+   memoRespWS.Lines.Text :=  UTF8Encode(ACBrCTe1.WebServices.EnvEvento.RetWS);
+   LoadXML(MemoResp, WBResposta);
+   ShowMessage(IntToStr(ACBrCTe1.WebServices.EnvEvento.EventoRetorno.retEvento.Items[0].RetInfEvento.cStat));
+   ShowMessage(ACBrCTe1.WebServices.EnvEvento.EventoRetorno.retEvento.Items[0].RetInfEvento.nProt);
+  end;
 end;
 
 procedure TfrmDemo_ACBrCTe.btnImprimirClick(Sender: TObject);

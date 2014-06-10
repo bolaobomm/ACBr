@@ -92,7 +92,7 @@ object frmDemo_ACBrCTe: TfrmDemo_ACBrCTe
         Top = 15
         Width = 277
         Height = 360
-        ActivePage = TabSheet1
+        ActivePage = TabSheet4
         Align = alClient
         MultiLine = True
         TabOrder = 0
@@ -839,11 +839,11 @@ object frmDemo_ACBrCTe: TfrmDemo_ACBrCTe
         OnClick = btnStatusServClick
       end
       object btnCancCTe: TButton
-        Left = 377
-        Top = 94
+        Left = 9
+        Top = 126
         Width = 177
         Height = 25
-        Caption = 'Cancelamento CTe com XML'
+        Caption = 'Cancelamento por Evento'
         TabOrder = 6
         OnClick = btnCancCTeClick
       end
@@ -946,22 +946,13 @@ object frmDemo_ACBrCTe: TfrmDemo_ACBrCTe
         TabOrder = 15
         OnClick = btnConsultarChaveClick
       end
-      object btnCancelarChave: TButton
-        Left = 9
-        Top = 124
-        Width = 177
-        Height = 25
-        Caption = 'Cancelamento CTe pela Chave'
-        TabOrder = 16
-        OnClick = btnCancelarChaveClick
-      end
       object btnEnviarEventoEmail: TButton
         Left = 377
         Top = 188
         Width = 177
         Height = 25
         Caption = 'Enviar Evento Email'
-        TabOrder = 17
+        TabOrder = 16
         OnClick = btnEnviarEventoEmailClick
       end
       object btnGerarPDFEvento: TButton
@@ -970,7 +961,7 @@ object frmDemo_ACBrCTe: TfrmDemo_ACBrCTe
         Width = 177
         Height = 25
         Caption = 'Gerar PDF Evento'
-        TabOrder = 18
+        TabOrder = 17
         OnClick = btnGerarPDFEventoClick
       end
     end
