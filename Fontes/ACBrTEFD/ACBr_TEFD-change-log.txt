@@ -55,7 +55,7 @@ Data: 10/06/2014  (por: DSA)
 
 -- ACBrTEFDCliSiTEF --
 [*] Modificação para permitir o tratamento de Mensagens com o Tipo Definido.
-    Permitindo identificar quais mensagens devem perssistir na tela por mais de
+    Permitindo identificar quais mensagens devem persistir na tela por mais de
     "EsperaMinimaMensagemFinal" segundos (Tipo = 5005).
     IMPORTANTE: Para que essa funcionalidade seja ativada, é necessário modificar
     a CliSiTef.ini, incluindo as linhas:
