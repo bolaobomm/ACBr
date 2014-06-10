@@ -1030,7 +1030,7 @@ begin
     LocNFSeR.Leitor.CarregarArquivo(StreamText);
     LocNFSeR.TabServicosExt := self.Configuracoes.Arquivos.TabServicosExt;
     LocNFSeR.LerXml;
-    Items[Self.Count-1].XML_NFSe := LocNFSeR.Leitor.Arquivo;
+    Items[Self.Count-1].XML_NFSe := Stream.DataString; // LocNFSeR.Leitor.Arquivo;
     Items[Self.Count-1].NomeArq  := '';
 
 //    Items[Self.Count-1].XML_Rps := LocNFSeR.Leitor.Arquivo;

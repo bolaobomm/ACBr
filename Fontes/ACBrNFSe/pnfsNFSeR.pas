@@ -1117,7 +1117,7 @@ begin
     then begin
      NFSe.Prestador.InscricaoMunicipal := Leitor.rCampo(tcStr, 'InscricaoMunicipal');
 
-     if (VersaoXML = '1') or (FProvedor in [proFiorilli, proGoiania, ProTecnos])
+     if (VersaoXML = '1') or (FProvedor in [proFiorilli, proGoiania, ProTecnos, proVirtual])
       then begin
        if (FProvedor = proTecnos)  then
        begin
