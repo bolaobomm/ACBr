@@ -48,6 +48,7 @@ uses
 type
   TRegistroI010List = class;
   TRegistroI100List = class;
+  TRegistroI199List = class;
   TRegistroI200List = class;
   TRegistroI299List = class;
   TRegistroI300List = class;
@@ -98,10 +99,12 @@ type
 
   /// REGISTRO I100: CONSOLIDAÇÃO DAS OPERAÇÕES DO PERÍODO
 
+  { TRegistroI100 }
+
   TRegistroI100 = class
   private
+    FRegistroI199: TRegistroI199List;
     FRegistroI200 : TRegistroI200List;
-    FRegistroI299 : TRegistroI299List;
 
     fVL_REC: Double;                        //02 Valor Total do Faturamento/Receita Bruta no Período N - 02
     fCST_PIS_COFINS: TACBrCstPisCofins;     //03 Código de Situação Tributária referente à Receita informada no Campo 02 (Tabelas 4.3.3 e 4.3.4) N 002* -
@@ -131,8 +134,8 @@ type
     property VL_COFINS : double read fVL_COFINS write fVL_COFINS;
     property INFO_COMPL : string read fINFO_COMPL write fINFO_COMPL;
 
+    property RegistroI199: TRegistroI199List read FRegistroI199 write FRegistroI199;
     property RegistroI200: TRegistroI200List read FRegistroI200 write FRegistroI200;
-    property RegistroI299: TRegistroI299List read FRegistroI299 write FRegistroI299;
   end;
 
   /// Registro I100 - Lista
@@ -146,10 +149,37 @@ type
     property Items[Index: Integer]: TRegistroI100 read GetItem write SetItem;
   end;
 
+  /// REGISTRO I199: PROCESSO REFERENCIADO
+
+  TRegistroI199 = class
+  private
+    fIND_PROC: TACBrOrigemProcesso;
+    fNUM_PROC: string;
+  public
+    property NUM_PROC : string              read fNUM_PROC write fNUM_PROC;
+    property IND_PROC : TACBrOrigemProcesso read fIND_PROC write fIND_PROC;
+  end;
+
+  /// Registro I199 - Lista
+
+  { TRegistroI199List }
+
+  TRegistroI199List = class(TObjectList)
+  private
+    function  GetItem(Index: Integer): TRegistroI199;
+    procedure SetItem(Index: Integer; const Value: TRegistroI199);
+  public
+    function New: TRegistroI199;
+    property Items[Index: Integer]: TRegistroI199 read GetItem write SetItem;
+  end;
+
   /// REGISTRO I200: COMPOSIÇÃO DAS RECEITAS, DEDUÇÕES E/OU EXCLUSÕES DO PERÍODO
 
   TRegistroI200 = class
   private
+    FRegistroI299 : TRegistroI299List;
+    FRegistroI300 : TRegistroI300List;
+
     fNUM_CAMPO: string;                     //02 Informar o número do campo do registro “I100” (Campos 02, 04 ou 05), objeto de informação neste registro.C 002* -
     fCOD_DET: string;                       //03 Código do tipo de detalhamento, conforme Tabelas 7.1.1 e/ou 7.1.2 C 005* -
     fDET_VALOR: double;                     //04 Valor detalhado referente ao campo 03 (COD_DET) deste registro N - 02
@@ -164,6 +194,9 @@ type
     property DET_VALOR : double read fDET_VALOR write fDET_VALOR;
     property COD_CTA : string read fCOD_CTA write fCOD_CTA;
     property INFO_COMPL : string read fINFO_COMPL write fINFO_COMPL;
+
+    property RegistroI299: TRegistroI299List read FRegistroI299 write FRegistroI299;
+    property RegistroI300: TRegistroI300List read FRegistroI300 write FRegistroI300;
   end;
 
   /// Registro I200 - Lista
@@ -181,9 +214,6 @@ type
 
   TRegistroI299 = class
   private
-    FRegistroI300 : TRegistroI300List;
-    FRegistroI399 : TRegistroI399List;
-
     fNUM_PROC: string;                    //02 Identificação do processo ou ato concessório C 020 -
     fIND_PROC: TACBrOrigemProcesso;       //03 Indicador da origem do processo: C 001* -
   public
@@ -192,9 +222,6 @@ type
 
     property NUM_PROC : string read fNUM_PROC write fNUM_PROC;
     property IND_PROC : TACBrOrigemProcesso read fIND_PROC write fIND_PROC;
-
-    property RegistroI300: TRegistroI300List read FRegistroI300 write FRegistroI300;
-    property RegistroI399: TRegistroI399List read FRegistroI399 write FRegistroI399;
   end;
 
   /// Registro I299 - Lista
@@ -212,6 +239,8 @@ type
 
   TRegistroI300 = class
   private
+    FRegistroI399 : TRegistroI399List;
+
     fCOD_COMP: string;                          //02 Código das Tabelas 7.1.3 (Receitas – Visão Analítica/Referenciada) e/ou 7.1.4 (Deduções e exclusões – Visão Analítica/Referenciada), objeto de complemento neste registro C 060 -
     fDET_VALOR: Double;                         //03 Valor da receita, dedução ou exclusão, objeto de complemento/detalhamento neste registro, conforme código informado no campo 02 (especificados nas tabelas analíticas 7.1.3 e 7.1.4) ou no campo 04 (código da conta contábil) N - 02
     fCOD_CTA: string;                           //04 Código da conta contábil referente ao valor informado no campo 03 C 060 -
@@ -224,6 +253,8 @@ type
     property DET_VALOR : Double read fDET_VALOR write fDET_VALOR;
     property COD_CTA : string read fCOD_CTA write fCOD_CTA;
     property INFO_COMPL : string read fINFO_COMPL write fINFO_COMPL;
+
+    property RegistroI399: TRegistroI399List read FRegistroI399 write FRegistroI399;
   end;
 
   /// Registro I300 - Lista
@@ -272,6 +303,24 @@ type
   end;
 
 implementation
+
+{ TRegistroI199List }
+
+function TRegistroI199List.GetItem(Index: Integer): TRegistroI199;
+begin
+  Result := TRegistroI199(Inherited Items[Index]);
+end;
+
+procedure TRegistroI199List.SetItem(Index: Integer; const Value: TRegistroI199);
+begin
+  Put(Index, Value);
+end;
+
+function TRegistroI199List.New: TRegistroI199;
+begin
+  Result := TRegistroI199.Create;
+  Add(Result);
+end;
 
 { TRegistroI399List }
 
@@ -391,46 +440,50 @@ end;
 
 constructor TRegistroI300.Create;
 begin
-
+  FRegistroI399 := TRegistroI399List.Create;
 end;
 
 destructor TRegistroI300.Destroy;
 begin
+  FRegistroI399.Free;
+
   inherited Destroy;
 end;
 
 constructor TRegistroI299.Create;
 begin
-  FRegistroI300 := TRegistroI300List.Create;
-  FRegistroI399 := TRegistroI399List.Create;
+
 end;
 
 destructor TRegistroI299.Destroy;
 begin
-  FRegistroI300.Free;
-  FRegistroI399.Free;
   inherited Destroy;
 end;
 
 constructor TRegistroI200.Create;
 begin
-
+  FRegistroI299 := TRegistroI299List.Create;
+  FRegistroI300 := TRegistroI300List.Create;
 end;
 
 destructor TRegistroI200.Destroy;
 begin
+  FRegistroI299.Free;
+  FRegistroI300.Free;
+
   inherited Destroy;
 end;
 
 constructor TRegistroI100.Create;
 begin
+  FRegistroI199 := TRegistroI199List.Create;
   FRegistroI200 := TRegistroI200List.Create;
-  FRegistroI299 := TRegistroI299List.Create;
+
 end;
 
 destructor TRegistroI100.Destroy;
 begin
-  FRegistroI299.Free;
+  FRegistroI199.Free;
   FRegistroI200.Free;
   inherited Destroy;
 end;

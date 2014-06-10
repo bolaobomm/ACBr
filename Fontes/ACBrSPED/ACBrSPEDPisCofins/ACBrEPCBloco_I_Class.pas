@@ -57,6 +57,7 @@ type
 
     FRegistroI010Count: Integer;
     FRegistroI100Count: Integer;
+    FRegistroI199Count: Integer;
     FRegistroI200Count: Integer;
     FRegistroI299Count: Integer;
     FRegistroI300Count: Integer;
@@ -65,10 +66,11 @@ type
 
     procedure WriteRegistroI010(RegI001: TRegistroI001);
     procedure WriteRegistroI100(RegI010: TRegistroI010);
+    procedure WriteRegistroI199(RegI100: TRegistroI100);
     procedure WriteRegistroI200(RegI100: TRegistroI100);
-    procedure WriteRegistroI299(RegI100: TRegistroI100);
-    procedure WriteRegistroI300(RegI299: TRegistroI299);
-    procedure WriteRegistroI399(RegI299: TRegistroI299);
+    procedure WriteRegistroI299(RegI200: TRegistroI200);
+    procedure WriteRegistroI300(RegI200: TRegistroI200);
+    procedure WriteRegistroI399(RegI300: TRegistroI300);
 
     procedure CriaRegistros;
     procedure LiberaRegistros;
@@ -81,6 +83,7 @@ type
     function RegistroI001New: TRegistroI001;
     function RegistroI010New: TRegistroI010;
     function RegistroI100New: TRegistroI100;
+    function RegistroI199New: TRegistroI199;
     function RegistroI200New: TRegistroI200;
     function RegistroI299New: TRegistroI299;
     function RegistroI300New: TRegistroI300;
@@ -95,6 +98,7 @@ type
 
     property RegistroI010Count: Integer read FRegistroI010Count write FRegistroI010Count;
     property RegistroI100Count: Integer read FRegistroI100Count write FRegistroI100Count;
+    property RegistroI199Count: Integer read FRegistroI199Count write FRegistroI199Count;
     property RegistroI200Count: Integer read FRegistroI200Count write FRegistroI200Count;
     property RegistroI299Count: Integer read FRegistroI299Count write FRegistroI299Count;
     property RegistroI300Count: Integer read FRegistroI300Count write FRegistroI300Count;
@@ -166,10 +170,9 @@ begin
                LFill( VL_COFINS, 0, 2 )                  +
                LFill( INFO_COMPL )) ;
         end;
-
         // Registros FILHOS
+        WriteRegistroI199( RegI010.RegistroI100.Items[intFor] );
         WriteRegistroI200( RegI010.RegistroI100.Items[intFor] );
-        WriteRegistroI299( RegI010.RegistroI100.Items[intFor] );
         ///
         RegistroI990.QTD_LIN_I := RegistroI990.QTD_LIN_I + 1;
      end;
@@ -177,6 +180,38 @@ begin
      FRegistroI100Count := FRegistroI100Count + RegI010.RegistroI100.Count;
      //
      RegI010.RegistroI100.Clear;
+  end;
+end;
+
+procedure TBloco_I.WriteRegistroI199(RegI100: TRegistroI100);
+var
+   intFor : integer;
+   strIND_PROC: string;
+begin
+  if Assigned(RegI100.RegistroI199) then
+  begin
+    for intFor := 0 to RegI100.RegistroI199.Count - 1 do
+    begin
+      with RegI100.RegistroI199.Items[intFor] do
+      begin
+        if IND_PROC = opJusticaFederal then
+           strIND_PROC := '1'
+        else if IND_PROC = opSecexRFB then
+           strIND_PROC := '3'
+        else if IND_PROC = opOutros then
+           strIND_PROC := '9'
+        else
+          strIND_PROC := ' ';
+
+        Add( LFill('I199')  +
+             LFill(NUM_PROC, 20) +
+             LFill(strIND_PROC, 1)) ;
+        //
+        RegistroI990.QTD_LIN_I := RegistroI990.QTD_LIN_I + 1;
+      end;
+   end;
+   // Variavél para armazenar a quantidade de registro do tipo.
+   FRegistroI199Count := FRegistroI199Count + RegI100.RegistroI199.Count;
   end;
 end;
 
@@ -196,6 +231,9 @@ begin
              LFill(DET_VALOR, 0, 2)+
              LFill(COD_CTA, 60) +
              LFill(INFO_COMPL)) ;
+
+        WriteRegistroI299(RegI100.RegistroI200.Items[intFor]);
+        WriteRegistroI300(RegI100.RegistroI200.Items[intFor]);
         //
         RegistroI990.QTD_LIN_I := RegistroI990.QTD_LIN_I + 1;
       end;
@@ -205,16 +243,16 @@ begin
   end;
 end;
 
-procedure TBloco_I.WriteRegistroI299(RegI100: TRegistroI100);
+procedure TBloco_I.WriteRegistroI299(RegI200: TRegistroI200);
 var
    intFor : integer;
    strIND_PROC: string;
 begin
-  if Assigned(RegI100.RegistroI299) then
+  if Assigned(RegI200.RegistroI299) then
   begin
-    for intFor := 0 to RegI100.RegistroI299.Count - 1 do
+    for intFor := 0 to RegI200.RegistroI299.Count - 1 do
     begin
-      with RegI100.RegistroI299.Items[intFor] do
+      with RegI200.RegistroI299.Items[intFor] do
       begin
         if IND_PROC = opJusticaFederal then
            strIND_PROC := '1'
@@ -228,27 +266,24 @@ begin
         Add( LFill('I299')  +
              LFill(NUM_PROC, 20) +
              LFill(strIND_PROC, 1)) ;
-        // Registros FILHOS
-        WriteRegistroI300( RegI100.RegistroI299.Items[intFor] );
-        WriteRegistroI399( RegI100.RegistroI299.Items[intFor] );
         //
         RegistroI990.QTD_LIN_I := RegistroI990.QTD_LIN_I + 1;
       end;
    end;
    // Variavél para armazenar a quantidade de registro do tipo.
-   FRegistroI299Count := FRegistroI299Count + RegI100.RegistroI299.Count;
+   FRegistroI299Count := FRegistroI299Count + RegI200.RegistroI299.Count;
   end;
 end;
 
-procedure TBloco_I.WriteRegistroI300(RegI299: TRegistroI299);
+procedure TBloco_I.WriteRegistroI300(RegI200: TRegistroI200);
 var
   intFor      : integer;
 begin
-  if Assigned(RegI299.RegistroI300) then
+  if Assigned(RegI200.RegistroI300) then
   begin
-     for intFor := 0 to RegI299.RegistroI300.Count - 1 do
+     for intFor := 0 to RegI200.RegistroI300.Count - 1 do
      begin
-        with RegI299.RegistroI300.Items[intFor] do
+        with RegI200.RegistroI300.Items[intFor] do
         begin
           Add( LFill('I300')                             +
                LFill( COD_COMP, 60 )                    +
@@ -256,26 +291,27 @@ begin
                LFill( COD_CTA, 60 )             +
                LFill( INFO_COMPL )) ;
         end;
+        WriteRegistroI399(RegI200.RegistroI300.Items[intFor]);
         ///
         RegistroI990.QTD_LIN_I := RegistroI990.QTD_LIN_I + 1;
      end;
      /// Variavél para armazenar a quantidade de registro do tipo.
-     FRegistroI300Count := FRegistroI300Count + RegI299.RegistroI300.Count;
+     FRegistroI300Count := FRegistroI300Count + RegI200.RegistroI300.Count;
      //
-     RegI299.RegistroI300.Clear;
+     RegI200.RegistroI300.Clear;
   end;
 end;
 
-procedure TBloco_I.WriteRegistroI399(RegI299: TRegistroI299);
+procedure TBloco_I.WriteRegistroI399(RegI300: TRegistroI300);
 var
   intFor      : integer;
   strIND_PROC : string;
 begin
-  if Assigned(RegI299.RegistroI399) then
+  if Assigned(RegI300.RegistroI399) then
   begin
-     for intFor := 0 to RegI299.RegistroI399.Count - 1 do
+     for intFor := 0 to RegI300.RegistroI399.Count - 1 do
      begin
-        with RegI299.RegistroI399.Items[intFor] do
+        with RegI300.RegistroI399.Items[intFor] do
         begin
           if IND_PROC = opJusticaFederal then
              strIND_PROC := '1'
@@ -293,9 +329,9 @@ begin
         RegistroI990.QTD_LIN_I := RegistroI990.QTD_LIN_I + 1;
      end;
      /// Variavél para armazenar a quantidade de registro do tipo.
-     FRegistroI399Count := FRegistroI399Count + RegI299.RegistroI399.Count;
+     FRegistroI399Count := FRegistroI399Count + RegI300.RegistroI399.Count;
      //
-     RegI299.RegistroI399.Clear;
+     RegI300.RegistroI399.Clear;
   end;
 end;
 
@@ -361,6 +397,17 @@ begin
    Result    := FRegistroI001.RegistroI010.Items[I010Count].RegistroI100.New;
 end;
 
+function TBloco_I.RegistroI199New: TRegistroI199;
+var
+   I010Count : integer;
+   I100Count : integer;
+begin
+   I010Count := FRegistroI001.RegistroI010.Count -1;
+   I100Count := FRegistroI001.RegistroI010.Items[I010Count].RegistroI100.Count -1;
+   //
+   Result    := FRegistroI001.RegistroI010.Items[I010Count].RegistroI100.Items[I100Count].RegistroI199.New;
+end;
+
 function TBloco_I.RegistroI200New: TRegistroI200;
 var
    I010Count : integer;
@@ -376,37 +423,41 @@ function TBloco_I.RegistroI299New: TRegistroI299;
 var
    I010Count : integer;
    I100Count : integer;
+   I200Count : integer;
 begin
    I010Count := FRegistroI001.RegistroI010.Count -1;
    I100Count := FRegistroI001.RegistroI010.Items[I010Count].RegistroI100.Count -1;
+   I200Count := FRegistroI001.RegistroI010.Items[I010Count].RegistroI100.Items[I100Count].RegistroI200.Count -1;
    //
-   Result    := FRegistroI001.RegistroI010.Items[I010Count].RegistroI100.Items[I100Count].RegistroI299.New;
+   Result    := FRegistroI001.RegistroI010.Items[I010Count].RegistroI100.Items[I100Count].RegistroI200.Items[I200Count].RegistroI299.New;
 end;
 
 function TBloco_I.RegistroI300New: TRegistroI300;
 var
    I010Count : integer;
    I100Count : integer;
-   I299Count : integer;
+   I200Count : integer;
 begin
    I010Count := FRegistroI001.RegistroI010.Count -1;
    I100Count := FRegistroI001.RegistroI010.Items[I010Count].RegistroI100.Count -1;
-   I299Count := FRegistroI001.RegistroI010.Items[I010Count].RegistroI100.Items[I100Count].RegistroI299.Count -1;
+   I200Count := FRegistroI001.RegistroI010.Items[I010Count].RegistroI100.Items[I100Count].RegistroI200.Count -1;
    //
-   Result    := FRegistroI001.RegistroI010.Items[I010Count].RegistroI100.Items[I100Count].RegistroI299.Items[I299Count].RegistroI300.New;
+   Result    := FRegistroI001.RegistroI010.Items[I010Count].RegistroI100.Items[I100Count].RegistroI200.Items[I200Count].RegistroI300.New;
 end;
 
 function TBloco_I.RegistroI399New: TRegistroI399;
 var
    I010Count : integer;
    I100Count : integer;
-   I299Count : integer;
+   I200Count : integer;
+   I300Count : integer;
 begin
    I010Count := FRegistroI001.RegistroI010.Count -1;
    I100Count := FRegistroI001.RegistroI010.Items[I010Count].RegistroI100.Count -1;
-   I299Count := FRegistroI001.RegistroI010.Items[I010Count].RegistroI100.Items[I100Count].RegistroI299.Count -1;
+   I200Count := FRegistroI001.RegistroI010.Items[I010Count].RegistroI100.Items[I100Count].RegistroI200.Count -1;
+   I300Count := FRegistroI001.RegistroI010.Items[I010Count].RegistroI100.Items[I100Count].RegistroI200.Items[I200Count].RegistroI300.Count -1;
    //
-   Result    := FRegistroI001.RegistroI010.Items[I010Count].RegistroI100.Items[I100Count].RegistroI299.Items[I299Count].RegistroI399.New;
+   Result    := FRegistroI001.RegistroI010.Items[I010Count].RegistroI100.Items[I100Count].RegistroI200.Items[I200Count].RegistroI300.Items[I300Count].RegistroI399.New;
 end;
 
 procedure TBloco_I.WriteRegistroI001;
