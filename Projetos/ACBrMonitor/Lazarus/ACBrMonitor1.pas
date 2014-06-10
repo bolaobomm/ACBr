@@ -656,7 +656,9 @@ var
   AppDir : String ;
   ILayout: TACBrBolLayOut;
 begin
+  {$IFDEF MSWINDOWS}
   WindowState := wsMinimized;
+  {$ENDIF}
   {$IFDEF LINUX}
    FpUmask(0);
   {$ENDIF}
@@ -4070,4 +4072,4 @@ begin
 end;
 
 end.
-
+
