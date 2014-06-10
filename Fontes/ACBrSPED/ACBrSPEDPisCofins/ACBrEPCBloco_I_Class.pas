@@ -204,7 +204,7 @@ begin
           strIND_PROC := ' ';
 
         Add( LFill('I199')  +
-             LFill(NUM_PROC, 20) +
+             LFill(NUM_PROC) +
              LFill(strIND_PROC, 1)) ;
         //
         RegistroI990.QTD_LIN_I := RegistroI990.QTD_LIN_I + 1;
@@ -229,7 +229,7 @@ begin
              LFill(NUM_CAMPO, 2) +
              LFill(COD_DET, 5)   +
              LFill(DET_VALOR, 0, 2)+
-             LFill(COD_CTA, 60) +
+             LFill(COD_CTA) +
              LFill(INFO_COMPL)) ;
 
         WriteRegistroI299(RegI100.RegistroI200.Items[intFor]);
@@ -264,7 +264,7 @@ begin
           strIND_PROC := ' ';
 
         Add( LFill('I299')  +
-             LFill(NUM_PROC, 20) +
+             LFill(NUM_PROC) +
              LFill(strIND_PROC, 1)) ;
         //
         RegistroI990.QTD_LIN_I := RegistroI990.QTD_LIN_I + 1;
@@ -286,9 +286,9 @@ begin
         with RegI200.RegistroI300.Items[intFor] do
         begin
           Add( LFill('I300')                             +
-               LFill( COD_COMP, 60 )                    +
+               LFill( COD_COMP )                    +
                LFill( DET_VALOR, 0 , 2 )+
-               LFill( COD_CTA, 60 )             +
+               LFill( COD_CTA )             +
                LFill( INFO_COMPL )) ;
         end;
         WriteRegistroI399(RegI200.RegistroI300.Items[intFor]);
@@ -322,7 +322,7 @@ begin
           else
             strIND_PROC := ' ';
           Add( LFill('I399')                             +
-               LFill( NUM_PROC, 20 )                    +
+               LFill( NUM_PROC )                    +
                LFill( strIND_PROC, 1 )) ;
         end;
         ///
