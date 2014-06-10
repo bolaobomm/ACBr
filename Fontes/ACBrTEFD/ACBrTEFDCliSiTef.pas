@@ -1086,7 +1086,7 @@ begin
                                            begin
                                              ComandarECF( opePulaLinhas ) ;
                                              DoExibeMsg( opmDestaqueVia,
-                                                         Format(CACBrTEFD_DestaqueVia, [1]) ) ;
+                                                Format(CACBrTEFD_DestaqueVia, [1]) ) ;
                                            end;
 
                                           ECFImprimeVia( trGerencial, I-120, SL );
@@ -1130,21 +1130,21 @@ begin
                  1 :
                    begin
                      MensagemOperador := ProcessaMensagemTela( Mensagem );
-                     DoExibeMsg( opmExibirMsgOperador, MensagemOperador ) ;
+                     DoExibeMsg( opmExibirMsgOperador, MensagemOperador, (TipoCampo=5005) ) ;
                    end ;
 
                  2 :
                    begin
                      MensagemCliente := ProcessaMensagemTela( Mensagem );
-                     DoExibeMsg( opmExibirMsgCliente, MensagemCliente ) ;
+                     DoExibeMsg( opmExibirMsgCliente, MensagemCliente, (TipoCampo=5005) ) ;
                    end;
 
                  3 :
                    begin
                      MensagemOperador := ProcessaMensagemTela( Mensagem );
                      MensagemCliente  := MensagemOperador;
-                     DoExibeMsg( opmExibirMsgOperador, MensagemOperador ) ;
-                     DoExibeMsg( opmExibirMsgCliente, MensagemCliente ) ;
+                     DoExibeMsg( opmExibirMsgOperador, MensagemOperador, (TipoCampo=5005) ) ;
+                     DoExibeMsg( opmExibirMsgCliente, MensagemCliente, (TipoCampo=5005) ) ;
                    end ;
 
                  4 : CaptionMenu := ACBrStr( Mensagem ) ;
@@ -1376,9 +1376,7 @@ begin
   if not Confirma then
   begin
      if fCancelamento  then
-        TACBrTEFD(Owner).DoExibeMsg( opmOK,
-                    Format( CACBrTEFD_CliSiTef_TransacaoEfetuadaReImprimir,
-                            [Resp.NSU]) )
+        TACBrTEFD(Owner).DoExibeMsg( opmOK, Format( CACBrTEFD_CliSiTef_TransacaoEfetuadaReImprimir, [Resp.NSU]) )
      else
         TACBrTEFD(Owner).DoExibeMsg( opmOK, CACBrTEFD_CliSiTef_TransacaoNaoEfetuada );
   end;

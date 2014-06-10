@@ -125,6 +125,8 @@ type
      fTecladoBloqueado : Boolean;
      fSuportaDesconto : Boolean;
      fSuportaSaque : Boolean;
+     fTempoInicialMensagemOperador: TDateTime;
+     fTempoInicialMensagemCliente: TDateTime;
 
      fTefClass     : TACBrTEFDClass ;
      fTefDial      : TACBrTEFDDial ;
@@ -144,6 +146,7 @@ type
      fTefConvCard  : TACBrTEFDConvCard ;     
 
      fEsperaSTS    : Integer;
+     fEsperaMinimaMensagemFinal: Integer;
      fTEFList      : TACBrTEFDClassList ;
      fpRespostasPendentes : TACBrTEFDRespostasPendentes;
      fArqLOG: string;
@@ -171,13 +174,14 @@ type
      procedure SetAbout(const Value: String);{%h-}
      procedure SetArqLOG(const AValue : String);
 
+     procedure AguardarTempoMinimoDeExibicao(const TempoInicial: TDateTime);
    public
      Function InfoECFAsString( Operacao : TACBrTEFDInfoECF ) : String ;
      Function InfoECFAsDouble( Operacao : TACBrTEFDInfoECF;
         DefaultValue: Integer = -98787158) : Double ;
      Function EstadoECF : AnsiChar ;
      function DoExibeMsg( Operacao : TACBrTEFDOperacaoMensagem;
-        Mensagem : String ) : TModalResult;
+        Mensagem : String; ManterTempoMinimo : Boolean = False ) : TModalResult;
      function ComandarECF(Operacao : TACBrTEFDOperacaoECF) : Integer;
      function ECFSubtotaliza(DescAcres: Double) : Integer;
      function ECFPagamento(Indice : String; Valor : Double) : Integer;
@@ -271,6 +275,8 @@ type
         default CACBrTEFD_EsperaSleep ;
      property EsperaSleep : Integer read fEsperaSleep write SetEsperaSleep
         default CACBrTEFD_EsperaSleep ;
+     property EsperaMinimaMensagemFinal : Integer read fEsperaMinimaMensagemFinal
+        write fEsperaMinimaMensagemFinal default CACBrTEFD_EsperaMinimaMensagemFinal;
      property PathBackup : String read GetPathBackup write SetPathBackup ;
      property ArqLOG : String read fArqLOG write SetArqLOG ;
      property CHQEmGerencial : Boolean read fCHQEmGerencial
@@ -402,12 +408,16 @@ begin
   fNumVias              := CACBrTEFD_NumVias ;
   fEsperaSTS            := CACBrTEFD_EsperaSTS ;
   fEsperaSleep          := CACBrTEFD_EsperaSleep ;
+  fEsperaMinimaMensagemFinal := CACBrTEFD_EsperaMinimaMensagemFinal;
   fTecladoBloqueado     := False ;
   fArqLOG               := '' ;
   fCHQEmGerencial       := False;
   fTrocoMaximo          := 0;
   fSuportaDesconto      := True;
   fSuportaSaque         := True;
+
+  fTempoInicialMensagemCliente  := 0;
+  fTempoInicialMensagemOperador := 0;
 
   fOnAguardaResp              := nil ;
   fOnAntesFinalizarRequisicao := nil ;
@@ -705,7 +715,7 @@ begin
   fTefClass.ATV;
 end;
 
-Function TACBrTEFD.ADM( GP : TACBrTEFDTipo = gpNenhum ) : Boolean ;
+function TACBrTEFD.ADM(GP: TACBrTEFDTipo): Boolean;
 begin
   if GP <> gpNenhum then
      GPAtual := GP ;
@@ -713,20 +723,19 @@ begin
   Result := fTefClass.ADM;
 end;
 
-Function TACBrTEFD.CRT(const Valor : Double; const IndiceFPG_ECF : String;
-   const DocumentoVinculado : String; const Moeda : Integer) : Boolean ;
+function TACBrTEFD.CRT(const Valor: Double; const IndiceFPG_ECF: String;
+  const DocumentoVinculado: String; const Moeda: Integer): Boolean;
 begin
    Result := fTefClass.CRT( Valor, IndiceFPG_ECF, DocumentoVinculado, Moeda );
 end;
 
-Function TACBrTEFD.CHQ( const Valor : Double; const IndiceFPG_ECF : String;
-        const DocumentoVinculado : String = ''; const CMC7 : String = '';
-        const TipoPessoa : AnsiChar = 'F'; const DocumentoPessoa : String = '';
-        const DataCheque : TDateTime = 0; const Banco   : String = '';
-        const Agencia    : String = ''; const AgenciaDC : String = '';
-        const Conta      : String = ''; const ContaDC   : String = '';
-        const Cheque     : String = ''; const ChequeDC  : String = '';
-        const Compensacao: String = '' ) : Boolean ;
+function TACBrTEFD.CHQ(const Valor: Double; const IndiceFPG_ECF: String;
+  const DocumentoVinculado: String; const CMC7: String;
+  const TipoPessoa: AnsiChar; const DocumentoPessoa: String;
+  const DataCheque: TDateTime; const Banco: String; const Agencia: String;
+  const AgenciaDC: String; const Conta: String; const ContaDC: String;
+  const Cheque: String; const ChequeDC: String; const Compensacao: String
+  ): Boolean;
 begin
    Result := fTefClass.CHQ( Valor, IndiceFPG_ECF, DocumentoVinculado, CMC7,
                             TipoPessoa,  DocumentoPessoa, DataCheque,
@@ -734,8 +743,8 @@ begin
                             Conta, ContaDC, Cheque, ChequeDC, Compensacao);
 end;
 
-Function TACBrTEFD.CNC(const Rede, NSU : String;
-   const DataHoraTransacao : TDateTime; const Valor : Double) : Boolean;
+function TACBrTEFD.CNC(const Rede, NSU: String;
+  const DataHoraTransacao: TDateTime; const Valor: Double): Boolean;
 begin
   Result := fTefClass.CNC( Rede, NSU, DataHoraTransacao, Valor);
 end;
@@ -941,15 +950,7 @@ begin
                        { Removendo a mensagem do Operador }
                        if RemoverMsg then
                        begin
-                          { Verifica se Mensagem Ficou pelo menos por 5 segundos }
-                          while SecondsBetween(now,TempoInicio) < 5 do
-                          begin
-                             Sleep(EsperaSTS) ;
-                             {$IFNDEF NOGUI}
-                             Application.ProcessMessages;
-                             {$ENDIF}
-                          end;
-
+                          AguardarTempoMinimoDeExibicao( TempoInicio );
                           DoExibeMsg( opmRemoverMsgOperador, '' ) ;
                           DoExibeMsg( opmRemoverMsgCliente, '' ) ;
                           RemoverMsg := False ;
@@ -1069,15 +1070,7 @@ begin
                           { Removendo a mensagem do Operador }
                           if RemoverMsg then
                           begin
-                             { Verifica se Mensagem Ficou pelo menos por 5 segundos }
-                             while SecondsBetween(now,TempoInicio) < 5 do
-                             begin
-                                Sleep(EsperaSTS);
-                                {$IFNDEF NOGUI}
-                                Application.ProcessMessages;
-                                {$ENDIF}
-                             end;
-
+                             AguardarTempoMinimoDeExibicao( TempoInicio );
                              DoExibeMsg( opmRemoverMsgOperador, '' ) ;
                              DoExibeMsg( opmRemoverMsgCliente, '' ) ;
                              RemoverMsg := False ;
@@ -1150,14 +1143,23 @@ begin
   RespostasPendentes.Clear;
 end;
 
-Function TACBrTEFD.DoExibeMsg( Operacao : TACBrTEFDOperacaoMensagem;
-   Mensagem : String) : TModalResult ;
+function TACBrTEFD.DoExibeMsg(Operacao: TACBrTEFDOperacaoMensagem;
+  Mensagem: String; ManterTempoMinimo: Boolean): TModalResult;
 var
-   OldTecladoBloqueado : Boolean;
+  OldTecladoBloqueado : Boolean;
+  TempoInicial : TDateTime;
 begin
   fTefClass.GravaLog( fTefClass.Name +' DoExibeMsg: Oper: '+
-    GetEnumName(TypeInfo(TACBrTEFDOperacaoMensagem), Integer(Operacao) )+
-    ' Mensagem: '+Mensagem ) ;
+     GetEnumName(TypeInfo(TACBrTEFDOperacaoMensagem), Integer(Operacao) )+
+     ' Mensagem: '+Mensagem ) ;
+
+  if Operacao = opmExibirMsgCliente then
+     TempoInicial := fTempoInicialMensagemCliente
+  else
+     TempoInicial := fTempoInicialMensagemOperador;
+
+  if TempoInicial > 0 then    // A mensagem anterior fixou um Tempo mínimo de exibição ?
+     AguardarTempoMinimoDeExibicao( TempoInicial );
 
   if (Operacao in [opmOK, opmYesNo, opmDestaqueVia]) then
      RestaurarFocoAplicacao ;
@@ -1172,9 +1174,19 @@ begin
 
   if OldTecladoBloqueado and ( Operacao in [opmOK, opmYesNo] ) then
      BloquearMouseTeclado( True ) ;
+
+  if ManterTempoMinimo then
+     TempoInicial := Now
+  else
+     TempoInicial := 0;
+
+  if Operacao = opmExibirMsgCliente then
+     fTempoInicialMensagemCliente  := TempoInicial
+  else
+     fTempoInicialMensagemOperador := TempoInicial ;
 end;
 
-Function TACBrTEFD.ComandarECF( Operacao : TACBrTEFDOperacaoECF ) : Integer ;
+function TACBrTEFD.ComandarECF(Operacao: TACBrTEFDOperacaoECF): Integer;
 var
    OpName, Erro : String;
 begin
@@ -1231,7 +1243,7 @@ begin
 
 end;
 
-Function TACBrTEFD.ECFPagamento( Indice: String; Valor: Double ) : Integer ;
+function TACBrTEFD.ECFPagamento(Indice: String; Valor: Double): Integer;
 Var
    Erro : String ;
 begin
@@ -1667,6 +1679,34 @@ begin
    Result := 'ACBrTEFD Ver: '+CACBrTEFD_Versao;
 end;
 
+procedure TACBrTEFD.AguardarTempoMinimoDeExibicao(const TempoInicial: TDateTime
+  );
+var
+  Interromper: Boolean;
+  TempoCorrido: Int64;
+begin
+
+  { Verifica se Mensagem Ficou pelo menos por 5 segundos }
+  TempoCorrido := SecondsBetween(now,TempoInicial);
+
+  while TempoCorrido < fEsperaMinimaMensagemFinal do
+  begin
+     fTefClass.GravaLog( fTefClass.Name + ' AguardarTempoMinimoDeExibicao: ' +
+                         FormatFloat('###.##', TempoCorrido) + ' segundos' );
+
+     // Avisa a aplicação, que está em Espera //
+     Interromper := False;
+     OnAguardaResp( 'TempoMinimoMensagemFinal', TempoCorrido, Interromper ) ;
+
+     Sleep(EsperaSleep) ;
+     {$IFNDEF NOGUI}
+      Application.ProcessMessages;
+     {$ENDIF}
+
+     TempoCorrido := SecondsBetween(now,TempoInicial);
+  end;
+end;
+
 function TACBrTEFD.GetAguardandoResposta: Boolean;
 begin
   Result := fTefClass.AguardandoResposta ;
@@ -1730,7 +1770,7 @@ begin
          GetEnumName(TypeInfo(TACBrTEFDInfoECF), Integer(Operacao)) + ')' ) );
 end;
 
-function TACBrTEFD.getArqResp : String;
+function TACBrTEFD.GetArqResp: String;
 begin
   if fTefClass is TACBrTEFDClassTXT then
      Result := TACBrTEFDClassTXT(fTefClass).ArqResp

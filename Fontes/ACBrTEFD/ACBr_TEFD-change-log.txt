@@ -47,6 +47,21 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+Data: 10/06/2014  (por: DSA)
+-- ACBrTEFD --
+[+] Adicionada nova propriedade "EsperaMinimaMensagemFinal: Integer = 5"
+[+] Criado novo mecanismo em DoExibeMsg que permite especificar quais mensagens
+    devem permanecer na tela por pelo menos "EsperaMinimaMensagemFinal" segundos
+
+-- ACBrTEFDCliSiTEF --
+[*] Modificação para permitir o tratamento de Mensagens com o Tipo Definido.
+    Permitindo identificar quais mensagens devem perssistir na tela por mais de
+    "EsperaMinimaMensagemFinal" segundos (Tipo = 5005).
+    IMPORTANTE: Para que essa funcionalidade seja ativada, é necessário modificar
+    a CliSiTef.ini, incluindo as linhas:
+    [Geral]
+    IdentificaMensagens=1
+
 Data: 28/05/2014
 [*] Ajuste solicitado pela Certified para exibição de multiplos NSU
     www.projetoacbr.com.br/forum/index.php?showtopic=15632

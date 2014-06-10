@@ -61,6 +61,7 @@ type TModalResult = (mrNone = 0, mrYes = 6, mrNo = 7, mrOK = 1, mrCancel = 2, mr
 const
    CACBrTEFD_Versao      = '4.3.9' ;
    CACBrTEFD_EsperaSTS   = 7 ;
+   CACBrTEFD_EsperaMinimaMensagemFinal = 5 ;
    CACBrTEFD_EsperaSleep = 250 ;
    CACBrTEFD_NumVias     = 2 ;
    CACBrTEFD_DestaqueVia = 'Destaque a %dª Via' ;
