@@ -711,8 +711,8 @@ function NomeCampo(const Identificacao: Integer; const Sequencia: Integer ): Str
 
 implementation
 
-Uses ACBrUtil, ACBrConsts, ACBrTEFD, dateutils, StrUtils, Math, ACBrTEFDCliSiTef,
-     ACBrTEFDVeSPague ;
+Uses ACBrUtil, ACBrConsts, ACBrTEFD, dateutils, StrUtils, Math, types,
+  ACBrTEFDCliSiTef, ACBrTEFDVeSPague ;
 
 function NomeCampo(const Identificacao: Integer; const Sequencia: Integer): String;
 var
@@ -2658,7 +2658,7 @@ begin
      end
     else
      begin
-       if (Valor > RespostasPendentes.SaldoRestante + TrocoMaximo ) then
+       if CompareValue(Valor, RespostasPendentes.SaldoRestante + TrocoMaximo ) = GreaterThanValue then
           raise Exception.Create( ACBrStr( 'Operação TEF permite '+
                                            'Troco Máximo de R$ '+FormatCurr('0.00',TrocoMaximo) ) );
      end ;
