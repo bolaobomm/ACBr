@@ -336,6 +336,7 @@ TACBrECFBematech = class( TACBrECFClass )
 
     fsModelosCheque : TACBrCHQModelos ;
 
+    xBematech_FI_ReloadINIFile:Function:Integer;StdCall;
     xBematech_FI_AbrePortaSerial:Function:Integer;StdCall;
     xBematech_FI_VersaoDll:Function( cVersao: AnsiString ): Integer; StdCall;
     xBematech_FI_FechaPortaSerial:Function:Integer;StdCall;
@@ -3325,6 +3326,8 @@ begin
                                            'Você deve atualizar para no mímimo: '+cLIB_VersaoMinima)   );
    end;
 
+
+   BematechFunctionDetect( 'Bematech_FI_ReloadINIFile',@xBematech_FI_ReloadINIFile );
    BematechFunctionDetect( 'Bematech_FI_AbrePortaSerial',@xBematech_FI_AbrePortaSerial );
    BematechFunctionDetect( 'Bematech_FI_FechaPortaSerial',@xBematech_FI_FechaPortaSerial );
    BematechFunctionDetect( 'Bematech_FI_ArquivoMFDPath',@xBematech_FI_ArquivoMFDPath );
@@ -3347,6 +3350,7 @@ begin
 
   UnLoadLibrary(cLIB_Bema);
 
+  xBematech_FI_ReloadINIFile         := Nil;
   xBematech_FI_AbrePortaSerial       := Nil;
   xBematech_FI_FechaPortaSerial      := Nil;
   xBematech_FI_ArquivoMFDPath        := Nil;
@@ -3394,6 +3398,8 @@ begin
      ConfiguraBemaFI32ini(aPorta, aPath);
 
   LoadDLLFunctions;
+
+  xBematech_FI_ReloadINIFile;
 
   GravaLog( '   xBematech_FI_AbrePortaSerial' );
   Resp := xBematech_FI_AbrePortaSerial();
