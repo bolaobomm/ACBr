@@ -9815,10 +9815,4 @@ inherited fqrDANFeQRPaisagem: TfqrDANFeQRPaisagem
       FieldName = 'BCOFINS'
     end
   end
-  object QRPDFFilter1: TQRPDFFilter
-    CompressionOn = False
-    FontHandling = fhSubstitute
-    Left = 784
-    Top = 416
-  end
 end

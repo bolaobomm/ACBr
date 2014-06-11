@@ -428,7 +428,6 @@ type
     QRDBText6: TQRDBText;
     QRDBText7: TQRDBText;
     QRShape84: TQRShape;
-    QRPDFFilter1: TQRPDFFilter;
     procedure QRNFeBeforePrint(Sender: TCustomQuickRep;
       var PrintReport: Boolean);
     procedure qrbReciboBeforePrint(Sender: TQRCustomBand;
