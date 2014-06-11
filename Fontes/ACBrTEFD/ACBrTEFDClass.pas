@@ -561,6 +561,7 @@ type
      fEsperaSTS : Integer;
      fGPExeName : String;
      fHabilitado : Boolean;
+     fLogDebug: Boolean;
 
      procedure SetArqReq(const AValue : String);
      procedure SetArqResp(const AValue : String);
@@ -668,6 +669,7 @@ type
         Valor : Double) : Boolean; overload; virtual;
    published
      property ArqLOG : String read fArqLOG write fArqLOG ;
+     property LogDebug : Boolean read fLogDebug write fLogDebug default false;
 
      Property Habilitado: Boolean read fHabilitado write fHabilitado
        default False ;
@@ -1260,7 +1262,7 @@ var
    Linha : TACBrTEFDLinha ;
    I     : Integer;
    Parc  : TACBrTEFDRespParcela;
-   TemReduzido, TemParcelas : Boolean ;
+   Usar711, Usar713, Usar715, TemParcelas : Boolean ;
 
    function AjustaLinhaImagemComprovante( Linha: AnsiString ) : AnsiString;
    begin
@@ -1276,7 +1278,9 @@ begin
    fpDataHoraTransacaoComprovante := 0 ;
    fpImagemComprovante1aVia.Clear;
    fpImagemComprovante2aVia.Clear;
-   TemReduzido := False;
+   Usar711     := False;
+   Usar713     := False;
+   Usar715     := False;
    TemParcelas := False;
 
    for I := 0 to Conteudo.Count - 1 do
@@ -1323,10 +1327,23 @@ begin
        27  : fpFinalizacao                := Linha.Informacao.AsString;
        28  :
          begin
-           fpImagemComprovante1aVia.Clear;
-           fpQtdLinhasComprovante := Linha.Informacao.AsInteger;
+           if not (Usar711 or Usar713) then
+           begin
+              fpImagemComprovante1aVia.Clear;
+              fpQtdLinhasComprovante := Linha.Informacao.AsInteger;
+           end;
+
+           if not Usar715 then
+              fpImagemComprovante2aVia.Clear;
          end;
-       29  : fpImagemComprovante1aVia.Add( AjustaLinhaImagemComprovante( Linha.Informacao.AsString ) );
+       29  :
+         begin
+            if not (Usar711 or Usar713) then
+               fpImagemComprovante1aVia.Add( AjustaLinhaImagemComprovante( Linha.Informacao.AsString ) );
+
+            if not Usar715 then
+               fpImagemComprovante2aVia.Add( AjustaLinhaImagemComprovante( Linha.Informacao.AsString ) );
+         end;
        30  : fpTextoEspecialOperador := Linha.Informacao.AsString;
        31  : fpTextoEspecialCliente  := Linha.Informacao.AsString;
        32  : fpAutenticacao          := Linha.Informacao.AsString;
@@ -1345,28 +1362,41 @@ begin
          begin
            if Linha.Informacao.AsInteger > 0 then
            begin
-              TemReduzido := True;
+              Usar711 := True;
               fpImagemComprovante1aVia.Clear;
               fpQtdLinhasComprovante := Linha.Informacao.AsInteger;
            end;
          end;
-       711 : fpImagemComprovante1aVia.Add( AjustaLinhaImagemComprovante( Linha.Informacao.AsString ) );
+       711 :
+         begin
+            if Usar711 then
+               fpImagemComprovante1aVia.Add( AjustaLinhaImagemComprovante( Linha.Informacao.AsString ) );
+         end;
        712 :
          begin
-           if not TemReduzido then
+           if not Usar711 then
            begin
+              Usar713 := True;
               fpImagemComprovante1aVia.Clear;
               fpQtdLinhasComprovante := Linha.Informacao.AsInteger;
            end;
          end;
        713 :
          begin
-           if not TemReduzido then
+           if Usar713 then
               fpImagemComprovante1aVia.Add( AjustaLinhaImagemComprovante( Linha.Informacao.AsString ) );
          end ;
-       714 : fpImagemComprovante2aVia.Clear;
-       715 : fpImagemComprovante2aVia.Add( AjustaLinhaImagemComprovante( Linha.Informacao.AsString ) );
-
+       714 :
+         if Linha.Informacao.AsInteger > 0 then
+         begin
+            Usar715 := True;
+            fpImagemComprovante2aVia.Clear;
+         end;
+       715 :
+         begin
+           if Usar715 then
+              fpImagemComprovante2aVia.Add( AjustaLinhaImagemComprovante( Linha.Informacao.AsString ) );
+         end;
        899 :  // Tipos de Uso Interno do ACBrTEFD
         begin
           case Linha.Sequencia of
@@ -1378,10 +1408,6 @@ begin
        999 : fpTrailer           := Linha.Informacao.AsString ;
      end;
    end ;
-
-   // TEF Discado, nem sempre a 2a via é enviada //
-   if fpImagemComprovante2aVia.Count = 0 then
-      fpImagemComprovante2aVia.AddStrings( fpImagemComprovante1aVia );
 
    fpParcelas.Clear;
    if TemParcelas then
@@ -1489,6 +1515,7 @@ begin
   inherited Create(AOwner);
 
   fAutoAtivarGP := True ;
+  fLogDebug     := False;
   fArqLOG       := '' ;
   fArqReq       := '' ;
   fArqTmp       := '' ;
@@ -1587,13 +1614,13 @@ begin
   end;
 end;
 
-Procedure TACBrTEFDClass.ATV ;
+procedure TACBrTEFDClass.ATV;
 begin
   IniciarRequisicao('ATV');
   FinalizarRequisicao;
 end;
 
-Function TACBrTEFDClass.ADM : Boolean;
+function TACBrTEFDClass.ADM: Boolean;
 begin
   Result := False ;
 
@@ -1610,8 +1637,8 @@ begin
   end;
 end;
 
-Function TACBrTEFDClass.CRT( Valor : Double; IndiceFPG_ECF : String;
-   DocumentoVinculado: String = ''; Moeda : Integer = 0 ) : Boolean;
+function TACBrTEFDClass.CRT(Valor: Double; IndiceFPG_ECF: String;
+  DocumentoVinculado: String; Moeda: Integer): Boolean;
 begin
   Result := False ;
   VerificarTransacaoPagamento( Valor );
@@ -1626,14 +1653,11 @@ begin
   Result := ProcessarRespostaPagamento( IndiceFPG_ECF, Valor);
 end;
 
-Function TACBrTEFDClass.CHQ( Valor : Double; IndiceFPG_ECF : String;
-   DocumentoVinculado : String = ''; CMC7 : String = '';
-   TipoPessoa : AnsiChar = 'F'; DocumentoPessoa : String = '';
-   DataCheque : TDateTime = 0; Banco   : String = '';
-   Agencia    : String = ''; AgenciaDC : String = '';
-   Conta      : String = ''; ContaDC   : String = '';
-   Cheque     : String = ''; ChequeDC  : String = '';
-   Compensacao: String = '' ) : Boolean ;
+function TACBrTEFDClass.CHQ(Valor: Double; IndiceFPG_ECF: String;
+  DocumentoVinculado: String; CMC7: String; TipoPessoa: AnsiChar;
+  DocumentoPessoa: String; DataCheque: TDateTime; Banco: String;
+  Agencia: String; AgenciaDC: String; Conta: String; ContaDC: String;
+  Cheque: String; ChequeDC: String; Compensacao: String): Boolean;
 begin
   // Compensacao não é utilizado em TEF discado //
 
@@ -1669,7 +1693,7 @@ begin
   end;
 end;
 
-Function TACBrTEFDClass.CNC : Boolean ;
+function TACBrTEFDClass.CNC: Boolean;
 Var
   OldResp : TACBrTEFDRespTXT ;
 begin
@@ -1713,8 +1737,8 @@ begin
   end;
 end;
 
-Function TACBrTEFDClass.CNC( Rede, NSU : String; DataHoraTransacao :
-   TDateTime; Valor : Double) : Boolean;
+function TACBrTEFDClass.CNC(Rede, NSU: String; DataHoraTransacao: TDateTime;
+  Valor: Double): Boolean;
 begin
   Result := False ;
 
@@ -1735,13 +1759,13 @@ begin
   end;
 end;
 
-Procedure TACBrTEFDClass.CNF ;
+procedure TACBrTEFDClass.CNF;
 begin
   CNF( Resp.Rede, Resp.NSU, Resp.Finalizacao, Resp.DocumentoVinculado ) ;
 end;
 
-Procedure TACBrTEFDClass.CNF( Rede, NSU, Finalizacao : String;
-  DocumentoVinculado : String = '') ;
+procedure TACBrTEFDClass.CNF(Rede, NSU, Finalizacao: String;
+  DocumentoVinculado: String);
 begin
   IniciarRequisicao('CNF');
   Req.DocumentoVinculado := DocumentoVinculado;
@@ -1864,8 +1888,8 @@ begin
   Req.Conteudo.GravaInformacao(999,999,'0');
   Req.Conteudo.GravarArquivo( ArqTemp, True ); { True = DoFlushToDisk }
 
-  // DEBUG, ATIVE o Log abaixo para gravar no Log uma copia do Arq.de Requisicao //
-  //GravaLog( Req.Conteudo.Conteudo.Text );
+  if fLogDebug then
+     GravaLog( Req.Conteudo.Conteudo.Text );
 
   GravaLog( Name +' FinalizarRequisicao: '+Req.Header+', Renomeando: '+ArqTemp+' para: '+ArqReq);
   if not RenameFile( ArqTemp, ArqReq ) then
@@ -1965,7 +1989,7 @@ begin
   end;
 end;
 
-Function TACBrTEFDClass.VerificarRespostaRequisicao : Boolean ;
+function TACBrTEFDClass.VerificarRespostaRequisicao: Boolean;
 begin
   Result := True ;
   if Resp is TACBrTEFDRespTXT then
@@ -2036,9 +2060,8 @@ begin
            DeleteFile( ArqResp );
         end ;
 
-        // DEBUG, ATIVE o Log abaixo para gravar no Log uma copia do Arq.Recebido //
-        //GravaLog( Resp.Conteudo.Conteudo.Text );
-
+        if fLogDebug then
+           GravaLog( Resp.Conteudo.Conteudo.Text );
      end ;
   finally
     Resp.TipoGP := Tipo;
@@ -2486,7 +2509,7 @@ begin
   end;
 end;
 
-Function TACBrTEFDClass.CopiarResposta : String;
+function TACBrTEFDClass.CopiarResposta: String;
 Var
    I : Integer ;
 begin
@@ -2510,8 +2533,8 @@ begin
   end;
 end;
 
-Function TACBrTEFDClass.ProcessarRespostaPagamento( const IndiceFPG_ECF : String;
-   const Valor : Double) : Boolean ;
+function TACBrTEFDClass.ProcessarRespostaPagamento(const IndiceFPG_ECF: String;
+  const Valor: Double): Boolean;
 var
   UltimaTransacao, ImpressaoOk, TecladoEstavaLivre : Boolean;
   RespostaPendente : TACBrTEFDRespTXT;
@@ -2631,7 +2654,7 @@ begin
      raise EACBrTEFDErro.Create( ACBrStr( CACBrTEFD_Erro_SemRequisicao ) ) ;
 end;
 
-Procedure TACBrTEFDClass.VerificarTransacaoPagamento(Valor : Double );
+procedure TACBrTEFDClass.VerificarTransacaoPagamento(Valor: Double);
 var
   SaldoAPagar : Double ;
 begin
@@ -2659,7 +2682,7 @@ begin
      end
     else
      begin
-       if CompareValue(Valor, RespostasPendentes.SaldoRestante + TrocoMaximo ) = GreaterThanValue then
+       if CompareValue(Valor, RespostasPendentes.SaldoRestante + TrocoMaximo, 0.01) = GreaterThanValue then
           raise Exception.Create( ACBrStr( 'Operação TEF permite '+
                                            'Troco Máximo de R$ '+FormatCurr('0.00',TrocoMaximo) ) );
      end ;

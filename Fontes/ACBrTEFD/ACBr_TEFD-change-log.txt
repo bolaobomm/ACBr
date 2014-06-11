@@ -47,6 +47,14 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+Data: 11/06/2014  (por: DSA)
+-- ACBrTEFDClass --
+[+] Adicionada nova propriedade "LogDebug : Boolean = false".
+    Quando "True", irá gravar no Log todo o conteúdo dos arquivos de requisição
+    e resposta.
+[-] Correção de Bug no calculo da Via do Estabelecimento, de acordo com Fluxo do
+    Pay&Go
+
 Data: 10/06/2014  (por: DSA)
 -- ACBrTEFD --
 [+] Adicionada nova propriedade "EsperaMinimaMensagemFinal: Integer = 5"
