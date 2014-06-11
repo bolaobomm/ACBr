@@ -266,7 +266,7 @@ begin
 
   Gerador.wGrupo(ENCODING_UTF8, '', False);
 
-  if CTe.procCTe.nProt <> ''
+  if trim(CTe.procCTe.nProt) <> ''
    then Gerador.wGrupo('cteProc versao="' + CTeenviCTe + '" ' + NAME_SPACE_CTE, '');
   Gerador.wGrupo('CTe ' + NAME_SPACE_CTE);
   Gerador.wGrupo('infCte versao="' + CTeenviCTe + '" Id="' + CTe.infCTe.ID + '"');
@@ -278,9 +278,13 @@ begin
   begin
     Gerar := true;
     if FOpcoes.GerarTagAssinatura = taSomenteSeAssinada then
-      Gerar := ((CTe.signature.DigestValue <> '') and (CTe.signature.SignatureValue <> '') and (CTe.signature.X509Certificate <> ''));
+      Gerar := ((trim(CTe.signature.DigestValue) <> '') and
+                (trim(CTe.signature.SignatureValue) <> '') and
+                (trim(CTe.signature.X509Certificate) <> ''));
     if FOpcoes.GerarTagAssinatura = taSomenteParaNaoAssinada then
-      Gerar := ((CTe.signature.DigestValue = '') and (CTe.signature.SignatureValue = '') and (CTe.signature.X509Certificate = ''));
+      Gerar := ((trim(CTe.signature.DigestValue) = '') and
+                (trim(CTe.signature.SignatureValue) = '') and
+                (trim(CTe.signature.X509Certificate) = ''));
     if Gerar then
     begin
       FCTe.signature.URI := somenteNumeros(CTe.infCTe.ID);
@@ -291,7 +295,7 @@ begin
   end;
   Gerador.wGrupo('/CTe');
 
-  if CTe.procCTe.nProt <> '' then
+  if trim(CTe.procCTe.nProt) <> '' then
    begin
      xProtCTe :=
            '<protCTe versao="' + CTeenviCTe + '">' +
@@ -399,7 +403,7 @@ end;
 
 procedure TCTeW.GerarToma03;
 begin
-  if (CTe.Ide.Toma4.xNome = '') then
+  if (trim(CTe.Ide.Toma4.xNome) = '') then
   begin
     Gerador.wGrupo('toma03', '#035');
     Gerador.wCampo(tcStr, '#036', 'toma ', 01, 01, 1, TpTomadorToStr(CTe.ide.Toma03.Toma), DSC_TOMA);
@@ -409,8 +413,8 @@ end;
 
 procedure TCTeW.GerarToma4;
 begin
-  if (CTe.Ide.Toma4.IE <> '') or
-     (CTe.Ide.Toma4.xNome <> '') then
+  if (trim(CTe.Ide.Toma4.IE) <> '') or
+     (trim(CTe.Ide.Toma4.xNome) <> '') then
   begin
     Gerador.wGrupo('toma4', '#037');
     Gerador.wCampo(tcStr, '#038', 'toma ', 01, 01, 1, TpTomadorToStr(CTe.ide.Toma4.Toma), DSC_TOMA);
@@ -420,7 +424,7 @@ begin
      else
       Gerador.wCampo(tcStr, '#039', 'CNPJ', 00, 14, 1, '00000000000000', DSC_CNPJ);
 
-    if CTe.Ide.Toma4.IE <> ''
+    if trim(CTe.Ide.Toma4.IE) <> ''
      then begin
       if Trim(CTe.Ide.Toma4.IE) = 'ISENTO' then
         Gerador.wCampo(tcStr, '#041', 'IE ', 00, 14, 1, CTe.Ide.Toma4.IE, DSC_IE)
@@ -499,8 +503,8 @@ procedure TCTeW.GerarFluxo;
 var
   i: integer;
 begin
- if (CTe.Compl.fluxo.xOrig<>'') or (CTe.Compl.fluxo.pass.Count>0) or
-    (CTe.Compl.fluxo.xDest<>'') or (CTe.Compl.fluxo.xRota<>'')
+ if (trim(CTe.Compl.fluxo.xOrig) <> '') or (CTe.Compl.fluxo.pass.Count > 0) or
+    (trim(CTe.Compl.fluxo.xDest) <> '') or (trim(CTe.Compl.fluxo.xRota) <> '')
   then begin
    Gerador.wGrupo('fluxo', '#063');
    Gerador.wCampo(tcStr, '#064', 'xOrig ', 01, 15, 0, CTe.Compl.fluxo.xOrig, DSC_XORIG);
@@ -642,8 +646,8 @@ end;
 
 procedure TCTeW.GerarRem;
 begin
-  if (CTe.Rem.CNPJCPF <> '') or
-     (CTe.Rem.xNome <> '') then
+  if (trim(CTe.Rem.CNPJCPF) <> '') or
+     (trim(CTe.Rem.xNome) <> '') then
     begin
       Gerador.wGrupo('rem', '#112');
 
@@ -704,8 +708,8 @@ end;
 
 procedure TCTeW.GerarLocColeta;
 begin
-  if (CTe.Rem.locColeta.CNPJCPF <> '') or
-     (CTe.Rem.locColeta.xNome <> '') then
+  if (trim(CTe.Rem.locColeta.CNPJCPF) <> '') or
+     (trim(CTe.Rem.locColeta.xNome) <> '') then
   begin
     Gerador.wGrupo('locColeta', '#131');
     Gerador.wCampoCNPJCPF('#132', '#133', CTe.Rem.locColeta.CNPJCPF, CODIGO_BRASIL);
@@ -727,8 +731,8 @@ end;
 
 procedure TCTeW.GerarExped;
 begin
-  if (CTe.Exped.CNPJCPF <> '') or
-     (CTe.Exped.xNome <> '') then
+  if (trim(CTe.Exped.CNPJCPF) <> '') or
+     (trim(CTe.Exped.xNome) <> '') then
   begin
     Gerador.wGrupo('exped', '#142');
 
@@ -786,8 +790,8 @@ end;
 
 procedure TCTeW.GerarReceb;
 begin
-  if (CTe.Receb.CNPJCPF <> '') or
-     (CTe.Receb.xNome <> '') then
+  if (trim(CTe.Receb.CNPJCPF) <> '') or
+     (trim(CTe.Receb.xNome) <> '') then
   Begin
     Gerador.wGrupo('receb', '#160');
 
@@ -845,8 +849,8 @@ end;
 
 procedure TCTeW.GerarDest;
 begin
-  if (CTe.Dest.CNPJCPF <> '') or
-     (CTe.Dest.xNome <> '') then
+  if (trim(CTe.Dest.CNPJCPF) <> '') or
+     (trim(CTe.Dest.xNome) <> '') then
     begin
       Gerador.wGrupo('dest', '#178');
 
@@ -855,7 +859,7 @@ begin
        else
         Gerador.wCampo(tcStr, '#179', 'CNPJ', 00, 14, 1, '00000000000000', DSC_CNPJ);
 
-      if CTe.Dest.IE <> ''
+      if trim(CTe.Dest.IE) <> ''
        then begin
         if Trim(CTe.Dest.IE) = 'ISENTO'
          then Gerador.wCampo(tcStr, '#181', 'IE ', 00, 14, 1, CTe.Dest.IE, DSC_IE)
@@ -872,7 +876,7 @@ begin
 
       Gerador.wCampo(tcStr, '#183', 'fone   ', 07, 12, 0, somenteNumeros(CTe.Dest.fone), DSC_FONE);
       Gerador.wCampo(tcStr, '#184', 'ISUF   ', 08, 09, 0, CTe.Dest.ISUF, DSC_ISUF);
-      if (FOpcoes.ValidarInscricoes) and (CTe.Dest.ISUF <> '') then
+      if (FOpcoes.ValidarInscricoes) and (trim(CTe.Dest.ISUF) <> '') then
         if not ValidarISUF(CTe.Dest.ISUF) then
           Gerador.wAlerta('#184', 'ISUF', DSC_ISUF, ERR_MSG_INVALIDO);
 
@@ -913,8 +917,8 @@ end;
 
 procedure TCTeW.GerarLocEnt;
 begin
-  if (CTe.Dest.locEnt.CNPJCPF <> '') or
-     (CTe.Dest.locEnt.xNome <> '') then
+  if (trim(CTe.Dest.locEnt.CNPJCPF) <> '') or
+     (trim(CTe.Dest.locEnt.xNome) <> '') then
   begin
     Gerador.wGrupo('locEnt', '#197');
     Gerador.wCampoCNPJCPF('#198', '#199', CTe.Dest.locEnt.CNPJCPF, CODIGO_BRASIL);
@@ -950,8 +954,8 @@ var
 begin
   for i := 0 to CTe.vPrest.comp.Count - 1 do
   begin
-    if (CTe.vPrest.comp[i].xNome <> '') and
-      (CTe.vPrest.comp[i].vComp <> 0) then
+    if (trim(CTe.vPrest.comp[i].xNome) <> '') and
+       (CTe.vPrest.comp[i].vComp <> 0) then
       begin
         Gerador.wGrupo('Comp', '#211');
         Gerador.wCampo(tcStr, '#212', 'xNome ', 01, 15, 1, CTe.vPrest.comp[i].xNome, DSC_XNOMEC);
@@ -1169,7 +1173,7 @@ begin
     Gerador.wCampo(tcInt, '#275', 'nCFOP ', 04, 04, 1, CTe.infCTeNorm.infDoc.InfNF[i].nCFOP, DSC_CFOP);
     Gerador.wCampo(tcDe3, '#276', 'nPeso ', 01, 15, 0, CTe.infCTeNorm.infDoc.InfNF[i].nPeso, DSC_PESO);
     Gerador.wCampo(tcStr, '#277', 'PIN   ', 02, 09, 0, CTe.infCTeNorm.infDoc.InfNF[i].PIN, DSC_ISUF);
-    if (FOpcoes.ValidarInscricoes) and (CTe.infCTeNorm.infDoc.InfNF[i].PIN <> '') then
+    if (FOpcoes.ValidarInscricoes) and (trim(CTe.infCTeNorm.infDoc.InfNF[i].PIN) <> '') then
       if not ValidarISUF(CTe.infCTeNorm.infDoc.InfNF[i].PIN) then
         Gerador.wAlerta('#277', 'PIN', DSC_ISUF, ERR_MSG_INVALIDO);
     Gerador.wCampo(tcDat, '#278', 'dPrev ', 10, 10, 0, CTe.infCTeNorm.infDoc.InfNF[i].dPrev, DSC_DPREV);
@@ -1243,7 +1247,7 @@ begin
      if not ValidarChave('NFe' + SomenteNumeros(CTe.infCTeNorm.infDoc.InfNFe[i].chave)) then
       Gerador.wAlerta('#298', 'chave', DSC_REFNFE, ERR_MSG_INVALIDO);
     Gerador.wCampo(tcStr, '#299', 'PIN   ', 02, 09, 0, CTe.infCTeNorm.infDoc.InfNFe[i].PIN, DSC_ISUF);
-    if (FOpcoes.ValidarInscricoes) and (CTe.infCTeNorm.infDoc.InfNFe[i].PIN <> '') then
+    if (FOpcoes.ValidarInscricoes) and (trim(CTe.infCTeNorm.infDoc.InfNFe[i].PIN) <> '') then
       if not ValidarISUF(CTe.infCTeNorm.infDoc.InfNFe[i].PIN) then
         Gerador.wAlerta('#299', 'PIN', DSC_ISUF, ERR_MSG_INVALIDO);
     Gerador.wCampo(tcDat, '#300', 'dPrev ', 10, 10, 0, CTe.infCTeNorm.infDoc.InfNFe[i].dPrev, DSC_DPREV);
@@ -1555,9 +1559,9 @@ begin
     if not ValidarUF(CTe.infCTeNorm.rodo.veic[i].UF) then
       Gerador.wAlerta('#32', 'UF', DSC_UF, ERR_MSG_INVALIDO);
 
-    if (CTe.infCTeNorm.rodo.veic[i].prop.CNPJCPF <> '') or
-       (CTe.infCTeNorm.rodo.veic[i].prop.RNTRC <> '') or
-       (CTe.infCTeNorm.rodo.veic[i].prop.xNome <> '') then
+    if (trim(CTe.infCTeNorm.rodo.veic[i].prop.CNPJCPF) <> '') or
+       (trim(CTe.infCTeNorm.rodo.veic[i].prop.RNTRC) <> '') or
+       (trim(CTe.infCTeNorm.rodo.veic[i].prop.xNome) <> '') then
     begin
       Gerador.wGrupo('prop', '#33');
       Gerador.wCampoCNPJCPF('#34', '#35', CTe.infCTeNorm.rodo.veic[i].prop.CNPJCPF, CODIGO_BRASIL);
@@ -1566,7 +1570,7 @@ begin
        else Gerador.wCampo(tcStr, '#36', 'RNTRC ', 08, 08, 1, SomenteNumeros(CTe.infCTeNorm.rodo.veic[i].prop.RNTRC), DSC_RNTRC);
       Gerador.wCampo(tcStr, '#37', 'xNome ', 01, 60, 1, CTe.infCTeNorm.rodo.veic[i].prop.xNome, DSC_XNOME);
 
-      if CTe.infCTeNorm.rodo.veic[i].prop.IE <> ''
+      if trim(CTe.infCTeNorm.rodo.veic[i].prop.IE) <> ''
        then begin
         if CTe.infCTeNorm.rodo.veic[i].prop.IE = 'ISENTO'
          then Gerador.wCampo(tcStr, '#38', 'IE ', 00, 14, 1, CTe.infCTeNorm.rodo.veic[i].prop.IE, DSC_IE)
@@ -1633,8 +1637,8 @@ begin
   Gerador.wCampo(tcDe2, '#10', 'vTar   ', 01, 15, 0, CTe.infCTeNorm.aereo.tarifa.vTar, DSC_VTAR);
   Gerador.wGrupo('/tarifa');
 
-  if (CTe.infCTeNorm.aereo.natCarga.xDime<>'') or (CTe.infCTeNorm.aereo.natCarga.cinfManu<>0) or
-     (CTe.infCTeNorm.aereo.natCarga.cImp<>'')
+  if (trim(CTe.infCTeNorm.aereo.natCarga.xDime) <> '') or (CTe.infCTeNorm.aereo.natCarga.cinfManu <> 0) or
+     (trim(CTe.infCTeNorm.aereo.natCarga.cImp) <> '')
    then begin
     Gerador.wGrupo('natCarga', '#11');
     Gerador.wCampo(tcStr, '#12', 'xDime   ', 05, 14, 0, CTe.infCTeNorm.aereo.natCarga.xDime, DSC_XDIME);
@@ -1700,14 +1704,14 @@ var
 begin
   for i := 0 to CTe.infCTeNorm.ferrov.ferroEnv.Count - 1 do
    begin
-    if (CTe.infCTeNorm.ferrov.ferroEnv[i].CNPJ <> '') or
-       (CTe.infCTeNorm.ferrov.ferroEnv[i].xNome <> '') then
+    if (trim(CTe.infCTeNorm.ferrov.ferroEnv[i].CNPJ) <> '') or
+       (trim(CTe.infCTeNorm.ferrov.ferroEnv[i].xNome) <> '') then
     begin
       Gerador.wGrupo('ferroEnv', '#09');
       Gerador.wCampoCNPJ('#10', CTe.infCTeNorm.ferrov.ferroEnv[i].CNPJ, CODIGO_BRASIL, True);
       Gerador.wCampo(tcStr, '#11', 'cInt ', 01, 10, 0, CTe.infCTeNorm.ferrov.ferroEnv[i].cInt, DSC_CINTF);
 
-      if CTe.infCTeNorm.ferrov.ferroEnv[i].IE <> ''
+      if trim(CTe.infCTeNorm.ferrov.ferroEnv[i].IE) <> ''
        then begin
         Gerador.wCampo(tcStr, '#12', 'IE ', 02, 14, 1, SomenteNumeros(CTe.infCTeNorm.ferrov.ferroEnv[i].IE), DSC_IE);
 
@@ -1868,10 +1872,10 @@ begin
     if not ValidarChave('NFe' + SomenteNumeros(CTe.infCTeNorm.infCTeSub.chCte)) then
      Gerador.wAlerta('#395', 'chCte', DSC_REFNFE, ERR_MSG_INVALIDO);
 
-   if (CTe.infCTeNorm.infCTeSub.tomaNaoICMS.refCteAnu='')
+   if (trim(CTe.infCTeNorm.infCTeSub.tomaNaoICMS.refCteAnu) = '')
     then begin
      Gerador.wGrupo('tomaICMS', '#396');
-     if (CTe.infCTeNorm.infCTeSub.tomaICMS.refNFe<>'')
+     if (trim(CTe.infCTeNorm.infCTeSub.tomaICMS.refNFe) <> '')
       then begin
        Gerador.wCampo(tcEsp, '#397', 'refNFe ', 44, 44, 1, SomenteNumeros(CTe.infCTeNorm.infCTeSub.tomaICMS.refNFe), DSC_CHAVE);
        if SomenteNumeros(CTe.infCTeNorm.infCTeSub.tomaICMS.refNFe) <> '' then
@@ -1879,7 +1883,7 @@ begin
          Gerador.wAlerta('#397', 'refNFe', DSC_REFNFE, ERR_MSG_INVALIDO);
       end
       else begin
-       if (CTe.infCTeNorm.infCTeSub.tomaICMS.refNF.CNPJCPF<>'')
+       if (trim(CTe.infCTeNorm.infCTeSub.tomaICMS.refNF.CNPJCPF) <> '')
         then begin
          Gerador.wGrupo('refNF', '#398');
          Gerador.wCampoCNPJCPF('#399', '#400', CTe.infCTeNorm.infCTeSub.tomaICMS.refNF.CNPJCPF, CODIGO_BRASIL);
