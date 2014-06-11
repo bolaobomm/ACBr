@@ -238,12 +238,20 @@ begin
     case length(AValue) of
        8: Result := '(  )' + copy(AValue, 1, 4) + '-' + copy(AValue, 5, 4);
        9: begin
-            if copy(AValue, 1, 1) = '9' // Celulares da Municipio de São Paulo tem 9 Digitos e o primeiro é 9
+            if copy(AValue, 1, 1) = '9' // Celulares do Municipio de São Paulo tem 9 Digitos e o primeiro é 9
               then Result := '(  )' + copy(AValue, 1, 5) + '-' + copy(AValue, 6, 4)
               else begin
                ltemp := '0' + copy(AValue, 1, 1);
-               Result := '(' + lTemp + ')' + copy(AValue, 2, 4) + '-' + copy(AValue, 6, 4);;
+               Result := '(' + lTemp + ')' + copy(AValue, 2, 4) + '-' + copy(AValue, 6, 4);
               end;
+         end;
+       12: begin // Exemplo: 551133220000
+             ltemp := copy(AValue, 1, 4);
+             Result := '(' + lTemp + ')' + copy(AValue, 5, 4) + '-' + copy(AValue, 9, 4);
+         end;
+       13: begin // Exemplo: 5511999220000
+             ltemp := copy(AValue, 1, 4);
+             Result := '(' + lTemp + ')' + copy(AValue, 5, 5) + '-' + copy(AValue, 10, 4);
          end;
        else
        begin
@@ -251,11 +259,11 @@ begin
          if (copy(AValue, 1, 1) = '0') and (copy(AValue, 2, 1) = '0')
            then begin
              ltemp := copy(AValue, 3, 2);
-             Result := '(' + lTemp + ')' + copy(AValue, 5, 4) + '-' + copy(AValue, 9, 4);;
+             Result := '(' + lTemp + ')' + copy(AValue, 5, 4) + '-' + copy(AValue, 9, 4);
            end
            else begin
              ltemp := copy(AValue, 2, 2);
-             Result := '(' + lTemp + ')' + copy(AValue, 4, 5) + '-' + copy(AValue, 9, 4);;
+             Result := '(' + lTemp + ')' + copy(AValue, 4, 5) + '-' + copy(AValue, 9, 4);
            end;
        end;
     end;
