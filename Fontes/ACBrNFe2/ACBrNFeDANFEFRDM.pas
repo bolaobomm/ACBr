@@ -980,10 +980,20 @@ begin
     end;
 
     //..Rodrigo - substitui campo hSaiEnt por DSaiEnt
+//    if FNFe.Ide.DSaiEnt = 0 then
+//      FieldByName('HoraSaida').AsString := ''
+//    else
+//      FieldByName('HoraSaida').AsString := TimeToStr(FNFe.Ide.DSaiEnt);
+
+
+    //Alteração realizada por: Jocimar Sartori
     if FNFe.Ide.DSaiEnt = 0 then
-      FieldByName('HoraSaida').AsString := ''
+      FieldByName('HoraSaida').AsString := EmptyStr
     else
-      FieldByName('HoraSaida').AsString := TimeToStr(FNFe.Ide.DSaiEnt);
+      if FNFe.Ide.hSaiEnt <> 0 then
+        FieldByName('HoraSaida').AsString := TimeToStr(FNFe.Ide.hSaiEnt)
+      else
+        FieldByName('HoraSaida').AsString := EmptyStr;
 
     Post;
   end;
