@@ -626,7 +626,7 @@ begin
 end;
 
 procedure TdmACBrCTeFR.CarregaDocumentoAnterior;    // Adicionado por NCC - 04/04/2014
-var i,ii:integer;
+var i,ii,iii:integer;
 begin
   with cdsDocAnterior do
   begin
@@ -649,109 +649,63 @@ begin
     begin
       with CTe.infCTeNorm.docAnt.emiDocAnt.Items[i] do
       begin
-        for ii := 0 to idDocAnt.Items[i].idDocAntPap.Count-1 do
-        begin
-          with idDocAnt.Items[i].idDocAntPap.Items[ii] do
-          begin
-            Append;
-            FieldByName('CNPJCPF').AsString:=CNPJCPF;
-            FieldByName('xNome').AsString:=xNome;
-            FieldByName('UF').AsString:=UF;
-            case tpDoc of
-              daCTRC: FieldByName('Tipo').AsString:='CTRC';
-              daCTAC: FieldByName('Tipo').AsString:='CTAC';
-              daACT: FieldByName('Tipo').AsString:='ACT';
-              daNF7: FieldByName('Tipo').AsString:='NF 7';
-              daNF27: FieldByName('Tipo').AsString:='NF 27';
-              daCAN: FieldByName('Tipo').AsString:='CAN';
-              daCTMC: FieldByName('Tipo').AsString:='CTMC';
-              daATRE: FieldByName('Tipo').AsString:='ATRE';
-              daDTA: FieldByName('Tipo').AsString:='DTA';
-              daCAI: FieldByName('Tipo').AsString:='CAI';
-              daCCPI: FieldByName('Tipo').AsString:='CCPI';
-              daCA: FieldByName('Tipo').AsString:='CA';
-              daTIF: FieldByName('Tipo').AsString:='TIF';
-              daOutros: FieldByName('Tipo').AsString:='OUTROS';
-            end;
-            FieldByName('Serie').AsString:=idDocAnt.Items[i].idDocAntPap.Items[ii].serie;
-            FieldByName('nDoc').AsString:=intToStr(idDocAnt.Items[i].idDocAntPap.Items[ii].nDoc);
-            FieldByName('dEmi').AsString:=FormatDateTime('dd/mm/yyyy',idDocAnt.Items[i].idDocAntPap.Items[ii].dEmi);
-          end;
-          post;
-        end;
-        for ii := 0 to idDocAnt.Items[i].idDocAntEle.Count-1 do
-        begin
-          Append;
-          FieldByName('CNPJCPF').AsString:=CNPJCPF;
-          FieldByName('xNome').AsString:=xNome;
-          FieldByName('UF').AsString:=UF;
-          with idDocAnt.Items[i].idDocAntEle.Items[ii] do
-          begin
-            FieldByName('Tipo').AsString:='CT-e';
-            FieldByName('Chave').AsString:=chave;
-            FieldByName('Serie').AsString:=copy(chave,23,3);
-            FieldByName('nDoc').AsString:=copy(chave,26,9);
-            FieldByName('dEmi').AsString:=copy(chave,5,2)+'/'+copy(chave,3,2);
-          end;
-          post;
-        end;
-      end;
-    end;
   {$ELSE}
     for i := 0 to CTe.infCTeNorm.emiDocAnt.Count - 1 do
     begin
       with CTe.infCTeNorm.emiDocAnt.Items[i] do
       begin
-        for ii := 0 to idDocAnt.Items[i].idDocAntPap.Count-1 do
+  {$ENDIF}
+        for ii := 0 to idDocAnt.Count - 1 do
         begin
-          with idDocAnt.Items[i].idDocAntPap.Items[ii] do
+          for iii := 0 to idDocAnt.Items[ii].idDocAntPap.Count-1 do
+          begin
+            with idDocAnt.Items[ii].idDocAntPap.Items[iii] do
+            begin
+              Append;
+              FieldByName('CNPJCPF').AsString:=CNPJCPF;
+              FieldByName('xNome').AsString:=xNome;
+              FieldByName('UF').AsString:=UF;
+              case tpDoc of
+                daCTRC: FieldByName('Tipo').AsString:='CTRC';
+                daCTAC: FieldByName('Tipo').AsString:='CTAC';
+                daACT: FieldByName('Tipo').AsString:='ACT';
+                daNF7: FieldByName('Tipo').AsString:='NF 7';
+                daNF27: FieldByName('Tipo').AsString:='NF 27';
+                daCAN: FieldByName('Tipo').AsString:='CAN';
+                daCTMC: FieldByName('Tipo').AsString:='CTMC';
+                daATRE: FieldByName('Tipo').AsString:='ATRE';
+                daDTA: FieldByName('Tipo').AsString:='DTA';
+                daCAI: FieldByName('Tipo').AsString:='CAI';
+                daCCPI: FieldByName('Tipo').AsString:='CCPI';
+                daCA: FieldByName('Tipo').AsString:='CA';
+                daTIF: FieldByName('Tipo').AsString:='TIF';
+                daOutros: FieldByName('Tipo').AsString:='OUTROS';
+              end;
+              FieldByName('Serie').AsString:=idDocAnt.Items[i].idDocAntPap.Items[ii].serie;
+              FieldByName('nDoc').AsString:=intToStr(idDocAnt.Items[i].idDocAntPap.Items[ii].nDoc);
+              FieldByName('dEmi').AsString:=FormatDateTime('dd/mm/yyyy',idDocAnt.Items[i].idDocAntPap.Items[ii].dEmi);
+            end;
+            post;
+          end;
+          for iii := 0 to idDocAnt.Items[ii].idDocAntEle.Count-1 do
           begin
             Append;
             FieldByName('CNPJCPF').AsString:=CNPJCPF;
             FieldByName('xNome').AsString:=xNome;
             FieldByName('UF').AsString:=UF;
-            case tpDoc of
-              daCTRC: FieldByName('Tipo').AsString:='CTRC';
-              daCTAC: FieldByName('Tipo').AsString:='CTAC';
-              daACT: FieldByName('Tipo').AsString:='ACT';
-              daNF7: FieldByName('Tipo').AsString:='NF 7';
-              daNF27: FieldByName('Tipo').AsString:='NF 27';
-              daCAN: FieldByName('Tipo').AsString:='CAN';
-              daCTMC: FieldByName('Tipo').AsString:='CTMC';
-              daATRE: FieldByName('Tipo').AsString:='ATRE';
-              daDTA: FieldByName('Tipo').AsString:='DTA';
-              daCAI: FieldByName('Tipo').AsString:='CAI';
-              daCCPI: FieldByName('Tipo').AsString:='CCPI';
-              daCA: FieldByName('Tipo').AsString:='CA';
-              daTIF: FieldByName('Tipo').AsString:='TIF';
-              daOutros: FieldByName('Tipo').AsString:='OUTROS';
+            with idDocAnt.Items[ii].idDocAntEle.Items[iii] do
+            begin
+              FieldByName('Tipo').AsString:='CT-e';
+              FieldByName('Chave').AsString:=chave;
+              FieldByName('Serie').AsString:=copy(chave,23,3);
+              FieldByName('nDoc').AsString:=copy(chave,26,9);
+              FieldByName('dEmi').AsString:=copy(chave,5,2)+'/'+copy(chave,3,2);
             end;
-            FieldByName('Serie').AsString:=idDocAnt.Items[i].idDocAntPap.Items[ii].serie;
-            FieldByName('nDoc').AsString:=intToStr(idDocAnt.Items[i].idDocAntPap.Items[ii].nDoc);
-            FieldByName('dEmi').AsString:=FormatDateTime('dd/mm/yyyy',idDocAnt.Items[i].idDocAntPap.Items[ii].dEmi);
+            post;
           end;
-          post;
-        end;
-        for ii := 0 to idDocAnt.Items[i].idDocAntEle.Count-1 do
-        begin
-          Append;
-          FieldByName('CNPJCPF').AsString:=CNPJCPF;
-          FieldByName('xNome').AsString:=xNome;
-          FieldByName('UF').AsString:=UF;
-          with idDocAnt.Items[i].idDocAntEle.Items[ii] do
-          begin
-            FieldByName('Tipo').AsString:='CT-e';
-            FieldByName('Chave').AsString:=chave;
-            FieldByName('Serie').AsString:=copy(chave,23,3);
-            FieldByName('nDoc').AsString:=copy(chave,26,9);
-            FieldByName('dEmi').AsString:=copy(chave,5,2)+'/'+copy(chave,3,2);
-          end;
-          post;
         end;
       end;
     end;
-
-  {$ENDIF}
   end;
 end;
 
