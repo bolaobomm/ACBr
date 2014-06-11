@@ -116,6 +116,11 @@ begin
             ConfigURL.HomNomeCidade := Endereco + '/NfseService_Homolog/NfseService_Homolog';
             ConfigURL.ProNomeCidade := Endereco + '/NfseService/NfseService';
            end;
+  4304408: begin // Canela/RS
+            Endereco := 'www.nfse.canela.rs.gov.br:8182';
+            ConfigURL.HomNomeCidade := Endereco + '/NfseService_Homolog/NfseService_Homolog';
+            ConfigURL.ProNomeCidade := Endereco + '/NfseService/NfseService';
+           end;
  end;
 
  ConfigURL.HomRecepcaoLoteRPS    := '';

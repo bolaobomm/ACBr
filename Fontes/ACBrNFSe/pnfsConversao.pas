@@ -924,7 +924,8 @@ begin
   4115200  // Maringa/PR
          : Provedor := 'ISSe';
 
-  4307005  // Erechim/RS
+  4307005, // Erechim/RS
+  4304408  // Canela/RS
          : Provedor := 'SystemPro';
 
   1709500, // Gurupi/TO
