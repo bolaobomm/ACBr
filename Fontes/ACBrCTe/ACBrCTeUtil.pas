@@ -1091,32 +1091,67 @@ begin
    1: begin
        Schema.remove('http://www.portalfiscal.inf.br/cte');
 
+       if not FileExists(DFeUtil.SeSenao(DFeUtil.EstaVazio(APathSchemas),
+                         PathWithDelim(ExtractFileDir(application.ExeName)) + 'Schemas\',
+                         PathWithDelim(APathSchemas)) + 'cte_v' + CTeenviCTe + '.xsd') then
+         raise Exception.Create('Arquivo de Schema não encontrado' + sLineBreak +
+                                DFeUtil.SeSenao(DFeUtil.EstaVazio(APathSchemas),
+                                PathWithDelim(ExtractFileDir(application.ExeName)) + 'Schemas\',
+                                PathWithDelim(APathSchemas)) + 'cte_v' + CTeenviCTe + '.xsd');
+
        Schema.add('http://www.portalfiscal.inf.br/cte',
         DFeUtil.SeSenao(DFeUtil.EstaVazio(APathSchemas),
-        PathWithDelim(ExtractFileDir(application.ExeName))+'Schemas\',
-        PathWithDelim(APathSchemas))+'cte_v' + CTeenviCTe + '.xsd');
+        PathWithDelim(ExtractFileDir(application.ExeName)) + 'Schemas\',
+        PathWithDelim(APathSchemas)) + 'cte_v' + CTeenviCTe + '.xsd');
       end;
    2: begin
        Schema.remove('http://www.portalfiscal.inf.br/cte');
+
+       if not FileExists(DFeUtil.SeSenao(DFeUtil.EstaVazio(APathSchemas),
+                         PathWithDelim(ExtractFileDir(application.ExeName)) + 'Schemas\',
+                         PathWithDelim(APathSchemas)) + 'cancCte_v' + CTecancCTe + '.xsd') then
+         raise Exception.Create('Arquivo de Schema não encontrado' + sLineBreak +
+                                DFeUtil.SeSenao(DFeUtil.EstaVazio(APathSchemas),
+                                PathWithDelim(ExtractFileDir(application.ExeName)) + 'Schemas\',
+                                PathWithDelim(APathSchemas)) + 'cancCte_v' + CTecancCTe + '.xsd');
+
        Schema.add('http://www.portalfiscal.inf.br/cte',
         DFeUtil.SeSenao(DFeUtil.EstaVazio(APathSchemas),
-        PathWithDelim(ExtractFileDir(application.ExeName))+'Schemas\',
-        PathWithDelim(APathSchemas))+'cancCte_v' + CTecancCTe + '.xsd');
+        PathWithDelim(ExtractFileDir(application.ExeName)) + 'Schemas\',
+        PathWithDelim(APathSchemas)) + 'cancCte_v' + CTecancCTe + '.xsd');
       end;
    3: begin
        Schema.remove('http://www.portalfiscal.inf.br/cte');
+
+       if not FileExists(DFeUtil.SeSenao(DFeUtil.EstaVazio(APathSchemas),
+                         PathWithDelim(ExtractFileDir(application.ExeName)) + 'Schemas\',
+                         PathWithDelim(APathSchemas)) + 'inutCte_v' + CTeinutCTe + '.xsd') then
+         raise Exception.Create('Arquivo de Schema não encontrado' + sLineBreak +
+                                DFeUtil.SeSenao(DFeUtil.EstaVazio(APathSchemas),
+                                PathWithDelim(ExtractFileDir(application.ExeName)) + 'Schemas\',
+                                PathWithDelim(APathSchemas)) + 'inutCte_v' + CTeinutCTe + '.xsd');
+
        Schema.add('http://www.portalfiscal.inf.br/cte',
         DFeUtil.SeSenao(DFeUtil.EstaVazio(APathSchemas),
-        PathWithDelim(ExtractFileDir(application.ExeName))+'Schemas\',
-        PathWithDelim(APathSchemas))+'inutCte_v' + CTeinutCTe + '.xsd');
+        PathWithDelim(ExtractFileDir(application.ExeName)) + 'Schemas\',
+        PathWithDelim(APathSchemas)) + 'inutCte_v' + CTeinutCTe + '.xsd');
       end;
     5..11:
       begin
        Schema.remove('http://www.portalfiscal.inf.br/cte');
+
+       if not FileExists(DFeUtil.SeSenao(DFeUtil.EstaVazio(APathSchemas),
+                         PathWithDelim(ExtractFileDir(application.ExeName)) + 'Schemas\',
+                         PathWithDelim(APathSchemas)) + 'eventoCTe_v' + CTeEventoCTe + '.xsd') then
+         raise Exception.Create('Arquivo de Schema não encontrado' + sLineBreak +
+                                DFeUtil.SeSenao(DFeUtil.EstaVazio(APathSchemas),
+                                PathWithDelim(ExtractFileDir(application.ExeName)) + 'Schemas\',
+                                PathWithDelim(APathSchemas)) + 'eventoCTe_v' + CTeEventoCTe + '.xsd');
+
        Schema.add( 'http://www.portalfiscal.inf.br/cte',
         DFeUtil.SeSenao(DFeUtil.EstaVazio(APathSchemas),
-        PathWithDelim(ExtractFileDir(application.ExeName))+'Schemas\',
-        PathWithDelim(APathSchemas))+'eventoCTe_v' + CTeEventoCTe + '.xsd');
+        PathWithDelim(ExtractFileDir(application.ExeName)) + 'Schemas\',
+        PathWithDelim(APathSchemas)) + 'eventoCTe_v' + CTeEventoCTe + '.xsd');
       end;
   end;
 {$ENDIF}
@@ -1263,60 +1298,150 @@ begin
 
   case Tipo of
    1: begin
+
+       if not FileExists(DFeUtil.SeSenao(DFeUtil.EstaVazio(APathSchemas),
+                         PathWithDelim(ExtractFileDir(application.ExeName)) + 'Schemas\',
+                         PathWithDelim(APathSchemas)) + 'cteModalAereo_v' + CTeModalAereo + '.xsd') then
+         raise Exception.Create('Arquivo de Schema não encontrado' + sLineBreak +
+                                DFeUtil.SeSenao(DFeUtil.EstaVazio(APathSchemas),
+                                PathWithDelim(ExtractFileDir(application.ExeName)) + 'Schemas\',
+                                PathWithDelim(APathSchemas)) + 'cteModalAereo_v' + CTeModalAereo + '.xsd');
+
        Schema.add('http://www.portalfiscal.inf.br/cte',
           DFeUtil.SeSenao(DFeUtil.EstaVazio(APathSchemas),
           PathWithDelim(ExtractFileDir(application.ExeName))+'Schemas\',
           PathWithDelim(APathSchemas))+'cteModalAereo_v' + CTeModalAereo + '.xsd');
       end;
    2: begin
+
+       if not FileExists(DFeUtil.SeSenao(DFeUtil.EstaVazio(APathSchemas),
+                         PathWithDelim(ExtractFileDir(application.ExeName)) + 'Schemas\',
+                         PathWithDelim(APathSchemas)) + 'cteModalAquaviario_v' + CTeModalAqua + '.xsd') then
+         raise Exception.Create('Arquivo de Schema não encontrado' + sLineBreak +
+                                DFeUtil.SeSenao(DFeUtil.EstaVazio(APathSchemas),
+                                PathWithDelim(ExtractFileDir(application.ExeName)) + 'Schemas\',
+                                PathWithDelim(APathSchemas)) + 'cteModalAquaviario_v' + CTeModalAqua + '.xsd');
+
        Schema.add('http://www.portalfiscal.inf.br/cte',
           DFeUtil.SeSenao(DFeUtil.EstaVazio(APathSchemas),
           PathWithDelim(ExtractFileDir(application.ExeName))+'Schemas\',
           PathWithDelim(APathSchemas))+'cteModalAquaviario_v' + CTeModalAqua + '.xsd');
       end;
    3: begin
+
+       if not FileExists(DFeUtil.SeSenao(DFeUtil.EstaVazio(APathSchemas),
+                         PathWithDelim(ExtractFileDir(application.ExeName)) + 'Schemas\',
+                         PathWithDelim(APathSchemas)) + 'cteModalDutoviario_v' + CTeModalDuto + '.xsd') then
+         raise Exception.Create('Arquivo de Schema não encontrado' + sLineBreak +
+                                DFeUtil.SeSenao(DFeUtil.EstaVazio(APathSchemas),
+                                PathWithDelim(ExtractFileDir(application.ExeName)) + 'Schemas\',
+                                PathWithDelim(APathSchemas)) + 'cteModalDutoviario_v' + CTeModalDuto + '.xsd');
+
        Schema.add('http://www.portalfiscal.inf.br/cte',
           DFeUtil.SeSenao(DFeUtil.EstaVazio(APathSchemas),
           PathWithDelim(ExtractFileDir(application.ExeName))+'Schemas\',
           PathWithDelim(APathSchemas))+'cteModalDutoviario_v' + CTeModalDuto + '.xsd');
       end;
    4: begin
+
+       if not FileExists(DFeUtil.SeSenao(DFeUtil.EstaVazio(APathSchemas),
+                         PathWithDelim(ExtractFileDir(application.ExeName)) + 'Schemas\',
+                         PathWithDelim(APathSchemas)) + 'cteModalFerroviario_v' + CTeModalFerro + '.xsd') then
+         raise Exception.Create('Arquivo de Schema não encontrado' + sLineBreak +
+                                DFeUtil.SeSenao(DFeUtil.EstaVazio(APathSchemas),
+                                PathWithDelim(ExtractFileDir(application.ExeName)) + 'Schemas\',
+                                PathWithDelim(APathSchemas)) + 'cteModalFerroviario_v' + CTeModalFerro + '.xsd');
+
        Schema.add('http://www.portalfiscal.inf.br/cte',
           DFeUtil.SeSenao(DFeUtil.EstaVazio(APathSchemas),
           PathWithDelim(ExtractFileDir(application.ExeName))+'Schemas\',
           PathWithDelim(APathSchemas))+'cteModalFerroviario_v' + CTeModalFerro + '.xsd');
       end;
    5: begin
+
+       if not FileExists(DFeUtil.SeSenao(DFeUtil.EstaVazio(APathSchemas),
+                         PathWithDelim(ExtractFileDir(application.ExeName)) + 'Schemas\',
+                         PathWithDelim(APathSchemas)) + 'cteModalRodoviario_v' + CTeModalRodo + '.xsd') then
+         raise Exception.Create('Arquivo de Schema não encontrado' + sLineBreak +
+                                DFeUtil.SeSenao(DFeUtil.EstaVazio(APathSchemas),
+                                PathWithDelim(ExtractFileDir(application.ExeName)) + 'Schemas\',
+                                PathWithDelim(APathSchemas)) + 'cteModalRodoviario_v' + CTeModalRodo + '.xsd');
+
        Schema.add('http://www.portalfiscal.inf.br/cte',
           DFeUtil.SeSenao(DFeUtil.EstaVazio(APathSchemas),
           PathWithDelim(ExtractFileDir(application.ExeName))+'Schemas\',
           PathWithDelim(APathSchemas))+'cteModalRodoviario_v' + CTeModalRodo + '.xsd');
       end;
    6: begin
+
+       if not FileExists(DFeUtil.SeSenao(DFeUtil.EstaVazio(APathSchemas),
+                         PathWithDelim(ExtractFileDir(application.ExeName)) + 'Schemas\',
+                         PathWithDelim(APathSchemas)) + 'cteMultiModal_v' + CTeMultiModal + '.xsd') then
+         raise Exception.Create('Arquivo de Schema não encontrado' + sLineBreak +
+                                DFeUtil.SeSenao(DFeUtil.EstaVazio(APathSchemas),
+                                PathWithDelim(ExtractFileDir(application.ExeName)) + 'Schemas\',
+                                PathWithDelim(APathSchemas)) + 'cteMultiModal_v' + CTeMultiModal + '.xsd');
+
        Schema.add('http://www.portalfiscal.inf.br/cte',
           DFeUtil.SeSenao(DFeUtil.EstaVazio(APathSchemas),
           PathWithDelim(ExtractFileDir(application.ExeName))+'Schemas\',
           PathWithDelim(APathSchemas))+'cteMultiModal_v' + CTeMultiModal + '.xsd');
       end;
    7: begin
+
+       if not FileExists(DFeUtil.SeSenao(DFeUtil.EstaVazio(APathSchemas),
+                         PathWithDelim(ExtractFileDir(application.ExeName)) + 'Schemas\',
+                         PathWithDelim(APathSchemas)) + 'evEPECCTe_v' + CTeEventoCTe + '.xsd') then
+         raise Exception.Create('Arquivo de Schema não encontrado' + sLineBreak +
+                                DFeUtil.SeSenao(DFeUtil.EstaVazio(APathSchemas),
+                                PathWithDelim(ExtractFileDir(application.ExeName)) + 'Schemas\',
+                                PathWithDelim(APathSchemas)) + 'evEPECCTe_v' + CTeEventoCTe + '.xsd');
+
        Schema.add('http://www.portalfiscal.inf.br/cte',
           DFeUtil.SeSenao(DFeUtil.EstaVazio(APathSchemas),
           PathWithDelim(ExtractFileDir(application.ExeName))+'Schemas\',
           PathWithDelim(APathSchemas))+'evEPECCTe_v' + CTeEventoCTe + '.xsd');
       end;
    8: begin
+
+       if not FileExists(DFeUtil.SeSenao(DFeUtil.EstaVazio(APathSchemas),
+                         PathWithDelim(ExtractFileDir(application.ExeName)) + 'Schemas\',
+                         PathWithDelim(APathSchemas)) + 'evCancCTe_v' + CTeEventoCTe + '.xsd') then
+         raise Exception.Create('Arquivo de Schema não encontrado' + sLineBreak +
+                                DFeUtil.SeSenao(DFeUtil.EstaVazio(APathSchemas),
+                                PathWithDelim(ExtractFileDir(application.ExeName)) + 'Schemas\',
+                                PathWithDelim(APathSchemas)) + 'evCancCTe_v' + CTeEventoCTe + '.xsd');
+
        Schema.add('http://www.portalfiscal.inf.br/cte',
           DFeUtil.SeSenao(DFeUtil.EstaVazio(APathSchemas),
           PathWithDelim(ExtractFileDir(application.ExeName))+'Schemas\',
           PathWithDelim(APathSchemas))+'evCancCTe_v' + CTeEventoCTe + '.xsd');
       end;
    9: begin
+
+       if not FileExists(DFeUtil.SeSenao(DFeUtil.EstaVazio(APathSchemas),
+                         PathWithDelim(ExtractFileDir(application.ExeName)) + 'Schemas\',
+                         PathWithDelim(APathSchemas)) + 'evMultimodal_v' + CTeEventoCTe + '.xsd') then
+         raise Exception.Create('Arquivo de Schema não encontrado' + sLineBreak +
+                                DFeUtil.SeSenao(DFeUtil.EstaVazio(APathSchemas),
+                                PathWithDelim(ExtractFileDir(application.ExeName)) + 'Schemas\',
+                                PathWithDelim(APathSchemas)) + 'evMultimodal_v' + CTeEventoCTe + '.xsd');
+
        Schema.add('http://www.portalfiscal.inf.br/cte',
           DFeUtil.SeSenao(DFeUtil.EstaVazio(APathSchemas),
           PathWithDelim(ExtractFileDir(application.ExeName))+'Schemas\',
           PathWithDelim(APathSchemas))+'evMultimodal_v' + CTeEventoCTe + '.xsd');
       end;
   10: begin
+
+       if not FileExists(DFeUtil.SeSenao(DFeUtil.EstaVazio(APathSchemas),
+                         PathWithDelim(ExtractFileDir(application.ExeName)) + 'Schemas\',
+                         PathWithDelim(APathSchemas)) + 'evCCeCTe_v' + CTeEventoCTe + '.xsd') then
+         raise Exception.Create('Arquivo de Schema não encontrado' + sLineBreak +
+                                DFeUtil.SeSenao(DFeUtil.EstaVazio(APathSchemas),
+                                PathWithDelim(ExtractFileDir(application.ExeName)) + 'Schemas\',
+                                PathWithDelim(APathSchemas)) + 'evCCeCTe_v' + CTeEventoCTe + '.xsd');
+
        Schema.add('http://www.portalfiscal.inf.br/cte',
           DFeUtil.SeSenao(DFeUtil.EstaVazio(APathSchemas),
           PathWithDelim(ExtractFileDir(application.ExeName))+'Schemas\',
