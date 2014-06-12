@@ -1412,7 +1412,7 @@ function TACBrECFDaruma.GetNumLoja: String;
 Var
   RetCmd : AnsiString ;
 begin
-  if Trim(fsNumECF) = '' then
+  if Trim(fsNumLoja) = '' then
   begin
     if fpMFD then
        fsNumLoja := RetornaInfoECF('129')
