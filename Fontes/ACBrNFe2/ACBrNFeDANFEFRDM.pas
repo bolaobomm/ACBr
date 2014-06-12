@@ -327,7 +327,7 @@ var
 
 implementation
 
-uses ACBrNFe, ACBrNFeUtil, ACBrDFeUtil, StrUtils, Math;
+uses ACBrNFe, ACBrNFeUtil, ACBrDFeUtil, StrUtils, Math, DateUtils;
 
 {$R *.dfm}
 
@@ -978,22 +978,10 @@ begin
       FieldByName('ProcEmi').AsString := DFeUtil.SeSenao(ProcEmi = peAplicativoContribuinte, '0', '');
       FieldByName('VerProc').AsString := VerProc;
     end;
-
-    //..Rodrigo - substitui campo hSaiEnt por DSaiEnt
-//    if FNFe.Ide.DSaiEnt = 0 then
-//      FieldByName('HoraSaida').AsString := ''
-//    else
-//      FieldByName('HoraSaida').AsString := TimeToStr(FNFe.Ide.DSaiEnt);
-
-
-    //Alteração realizada por: Jocimar Sartori
-    if FNFe.Ide.DSaiEnt = 0 then
-      FieldByName('HoraSaida').AsString := EmptyStr
+    if FNFe.infNFe.versao = 2.00 then
+      FieldByName('HoraSaida').AsString := ifthen(FNFe.ide.hSaiEnt = 0, '', TimeToStr(FNFe.ide.hSaiEnt))
     else
-      if FNFe.Ide.hSaiEnt <> 0 then
-        FieldByName('HoraSaida').AsString := TimeToStr(FNFe.Ide.hSaiEnt)
-      else
-        FieldByName('HoraSaida').AsString := EmptyStr;
+      FieldByName('HoraSaida').AsString := ifthen(TimeOf(FNFe.ide.dSaiEnt)=0, '', TimeToStr(FNFe.ide.dSaiEnt));
 
     Post;
   end;

@@ -140,7 +140,7 @@ type
 
 implementation
 
-uses ACBrNFe, ACBrNFeUtil, ACBrDFeUtil, StrUtils , Math;
+uses ACBrNFe, ACBrNFeUtil, ACBrDFeUtil, StrUtils , Math, DateUtils;
 
 {$R *.dfm}
 
@@ -1109,7 +1109,7 @@ begin
     Connection.WriteStrData('', inttostr(Serie));
     Connection.WriteStrData('', DFeUtil.FormatarNumeroDocumentoFiscal(inttostr(NNF)));
     Connection.WriteStrData('', DFeUtil.FormatDate(datetostr(DEmi)));
-    Connection.WriteStrData('', IfThen(DSaiEnt<>0, DFeUtil.FormatDate(datetostr(DSaiEnt))));
+    Connection.WriteStrData('', IfThen(DSaiEnt <> 0, DFeUtil.FormatDate(datetostr(DSaiEnt))));
     Connection.WriteStrData('', DFeUtil.SeSenao(TpNF=tnEntrada,'0','1'));
     Connection.WriteStrData('', inttostr(CMunFG));
     Connection.WriteStrData('', DFeUtil.SeSenao(TpImp=tiRetrato,'1','2'));
@@ -1121,10 +1121,10 @@ begin
     Connection.WriteStrData('', VerProc);
   end;
 
-  if FNFe.Ide.hSaiEnt = 0 then
-     Connection.WriteStrData('', '')
+  if FNFe.infNFe.versao = 2.00 then
+    Connection.WriteStrData('',ifthen(FNFe.ide.hSaiEnt = 0, '', TimeToStr(FNFe.ide.hSaiEnt)))
   else
-     Connection.WriteStrData('', TimeToStr(FNFe.Ide.hSaiEnt));
+    Connection.WriteStrData('',ifthen(TimeOf(FNFe.ide.dSaiEnt)=0, '', TimeToStr(FNFe.ide.dSaiEnt)));
 end;
 
 procedure TdmACBrNFeRave.CustomIdentificacaoCXNOpen(
