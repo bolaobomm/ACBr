@@ -80,7 +80,7 @@ begin
    begin
      aWidthNFe:=35;
      aHeigth:=18;
-     aHeigthReceb:=8;
+     aHeigthReceb:=10;
      aWidthOutros:=FLastX-FFirstX-aWidthNFe;
      aWidthData:=40;
      if FPageNum=1 then
@@ -110,38 +110,30 @@ begin
              else
              begin
                 PrintCenter(vEnd,PosX+(aWidthOutros/2));
-                NewLine;
-                if ExibirResumoCanhoto then
-                begin
-                   if DFeUtil.EstaVazio(ExibirResumoCanhoto_Texto) then
-                      PrintCenter('Emissão:'+DFeUtil.FormatDate(DateToStr(Ide.DEmi))+' Dest/Rem:'+Dest.XNome+' Total:'+DFeUtil.FormatFloat(Total.ICMSTot.VNF),PosX+(aWidthOutros/2))
-                   else
-                      PrintCenter(ExibirResumoCanhoto_Texto,PosX+(aWidthOutros/2));
-                end;
              end;
           end
           else
           begin
-			 if Length(vEnd)>100 then
+			       if Length(vEnd)>100 then
              begin
                 vEnd:='Recebemos de '+Emit.XNome;
-				PrintLeft(vEnd,PosX+1);
+                PrintCenter(vEnd,PosX+(aWidthOutros/2));
                 NewLine;
                 vEnd:='os produtos/serviços constantes da NFe indicada ao lado';
-				PrintLeft(vEnd,PosX+1);
+                PrintCenter(vEnd,PosX+(aWidthOutros/2));
              end
              else
              begin
-				PrintLeft(vEnd,PosX+1);
-                NewLine;
-                if ExibirResumoCanhoto then
-                begin
-                   if DFeUtil.EstaVazio(ExibirResumoCanhoto_Texto) then
-                      PrintCenter('Emissão:'+DFeUtil.FormatDate(DateToStr(Ide.DEmi))+' Dest/Rem:'+Dest.XNome+' Total:'+DFeUtil.FormatFloat(Total.ICMSTot.VNF),PosX+(aWidthOutros/2))
-                   else
-                      PrintCenter(ExibirResumoCanhoto_Texto,PosX+(aWidthOutros/2));
-                end;
+                PrintCenter(vEnd,PosX+(aWidthOutros/2));
              end;
+          end;
+          if ExibirResumoCanhoto then
+          begin
+             NewLine;
+             if DFeUtil.EstaVazio(ExibirResumoCanhoto_Texto) then
+                PrintCenter('Emissão:'+DFeUtil.FormatDate(DateToStr(Ide.DEmi))+' Dest/Rem:'+Dest.XNome+' Total:'+DFeUtil.FormatFloat(Total.ICMSTot.VNF),PosX+(aWidthOutros/2))
+             else
+                PrintCenter(ExibirResumoCanhoto_Texto,PosX+(aWidthOutros/2));
           end;
         end;
 
@@ -642,7 +634,7 @@ begin
        Box([fsTop],PosX,YPos,93,aHeigthPadrao,'Endereço',vEnd);
        Box([fsTop,fsLeft],XPos,YPos,50,aHeigthPadrao,'Bairro',XBairro);
        Box([fsTop,fsLeft],XPos,YPos,30,aHeigthPadrao,'CEP',NotaUtil.FormatarCEP(DFeUtil.Poem_Zeros(CEP,8)),taCenter);
-       Box([fsTop,fsLeft],XPos,YPos,21,aHeigthPadrao,'Data de '+vEntSai,DFeUtil.FormatDate(Ide.DSaiEnt),taCenter,True);
+       Box([fsTop,fsLeft],XPos,YPos,21,aHeigthPadrao,'Data de '+vEntSai,DFeUtil.FormatDate(DateTimeToStr(Ide.DSaiEnt)),taCenter,True);
        Box([fsTop],PosX,YPos,85,aHeigthPadrao,'Município',XMun);
        Box([fsTop,fsLeft],XPos,YPos,40,aHeigthPadrao,'Fone / Fax',NotaUtil.FormatarFone(Fone),taCenter);
        Box([fsTop,fsLeft],XPos,YPos,10,aHeigthPadrao,'Estado',UF,taCenter);

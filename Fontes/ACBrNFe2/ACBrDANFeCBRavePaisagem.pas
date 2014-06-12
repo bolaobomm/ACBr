@@ -83,7 +83,7 @@ begin
      aHeigthNumSerie:=35;
      aHeigthIdent:=122;
      aWidth:=16;
-     aWidthReceb:=6;
+     aWidthReceb:=8;
      if (FPageNum=1) then
       begin
         if (not FormularioContinuo) then
@@ -131,15 +131,17 @@ begin
           else
           begin
              Print(vEnd);
-             GotoXY(PosX+FontHeight+FontHeight+0.5,FLastY-2);
+          end;
+
              if ExibirResumoCanhoto then
              begin
+                GotoXY(PosX+2.5+FontHeight+FontHeight+0.5,FLastY-2);
                 if DFeUtil.EstaVazio(ExibirResumoCanhoto_Texto) then
                    Print('Emissão:'+DFeUtil.FormatDate(DateToStr(Ide.DEmi))+' Dest/Rem:'+Dest.XNome+' Total:'+DFeUtil.FormatFloat(Total.ICMSTot.VNF))
                 else
                    Print(ExibirResumoCanhoto_Texto);
              end;
-          end;
+
           Bold:=False;
           GotoXY(PosX+aWidthReceb+LineHeight,PosY+aHeigthNumSerie+aHeigthIdent-1);
           Print('Identificação e Assinatura do Recebedor');
@@ -654,7 +656,7 @@ begin
        Box([fsTop],PosX,YPos,136,aWidthTituloBloco,'Endereço',vEnd);
        Box([fsTop,fsLeft],XPos,YPos,56,aWidthTituloBloco,'Bairro',XBairro);
        Box([fsTop,fsLeft],XPos,YPos,38,aWidthTituloBloco,'CEP',NotaUtil.FormatarCEP(DFeUtil.Poem_Zeros(CEP,8)),taCenter);
-       Box([fsTop,fsLeft],XPos,YPos,21,aWidthTituloBloco,'Data de '+vEntSai,DFeUtil.FormatDate(Ide.DSaiEnt),taCenter,True);
+       Box([fsTop,fsLeft],XPos,YPos,21,aWidthTituloBloco,'Data de '+vEntSai,DFeUtil.FormatDate(DateTimeToStr(Ide.DSaiEnt)),taCenter,True);
        Box([fsTop],PosX,YPos,136,aWidthTituloBloco,'Município',XMun);
        Box([fsTop,fsLeft],XPos,YPos,43,aWidthTituloBloco,'Fone / Fax',NotaUtil.FormatarFone(FONE),taCenter);
        Box([fsTop,fsLeft],XPos,YPos,13,aWidthTituloBloco,'Estado',UF,taCenter);
