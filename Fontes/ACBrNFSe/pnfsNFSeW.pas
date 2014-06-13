@@ -660,8 +660,8 @@ begin
                       proLink3, proVitoria, proMitra, proTecnos])
       then Gerador.wGrupoNFSe('Tomador')
       else Gerador.wGrupoNFSe('TomadorServico');
-
-    if (NFSe.Tomador.Endereco.UF <> 'EX') // or (FProvedor = proSimpISS)
+    // Alterado por Augusto Fontana em 12/06/2014
+    if (NFSe.Tomador.Endereco.UF <> 'EX') or (FProvedor = proSimplISS)
       then begin
         Gerador.wGrupoNFSe('IdentificacaoTomador');
          Gerador.wGrupoNFSe('CpfCnpj');
