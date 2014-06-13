@@ -280,6 +280,10 @@ begin
 
            if DFeUtil.NaoEstaVazio(Cmd.Params(3)) then
               ACBrCTe1.DACTe.ProtocoloCTE := Cmd.Params(3);
+			  
+		   if Cmd.Params(4) = '1' then
+		     ACBrCTe1.DACTe.CTeCancelada := True;
+			 
            ACBrCTe1.Conhecimentos.Imprimir;
            Cmd.Resposta := 'Dacte Impresso com sucesso';
            if ACBrCTe1.DACTe.MostrarPreview then
@@ -298,6 +302,9 @@ begin
               ACBrCTe1.DACTe.ProtocoloCTE := Cmd.Params(1);
 
            try
+		      if Cmd.Params(2) = '1' then
+		        ACBrCTe1.DACTe.CTeCancelada := True;
+				
               ACBrCTe1.Conhecimentos.ImprimirPDF;
               ArqPDF := OnlyNumber(ACBrCTe1.Conhecimentos.Items[0].CTe.infCTe.ID)+'.pdf';
               Cmd.Resposta := 'Arquivo criado em: '+ PathWithDelim(ACBrCTe1.DACTe.PathPDF) +
