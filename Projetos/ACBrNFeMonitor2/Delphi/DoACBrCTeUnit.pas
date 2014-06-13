@@ -288,6 +288,8 @@ begin
            Cmd.Resposta := 'Dacte Impresso com sucesso';
            if ACBrCTe1.DACTe.MostrarPreview then
               Ocultar1.Click;
+		   
+		   ACBrCTe1.DACTe.CTeCancelada := False;
          end
 
         else if Cmd.Metodo = 'imprimirdactepdf' then
@@ -309,6 +311,8 @@ begin
               ArqPDF := OnlyNumber(ACBrCTe1.Conhecimentos.Items[0].CTe.infCTe.ID)+'.pdf';
               Cmd.Resposta := 'Arquivo criado em: '+ PathWithDelim(ACBrCTe1.DACTe.PathPDF) +
                               ArqPDF;
+							  
+			  ACBrCTe1.DACTe.CTeCancelada := False;
            except
               raise Exception.Create('Erro ao criar o arquivo PDF');
            end;
