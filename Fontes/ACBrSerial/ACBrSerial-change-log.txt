@@ -97,6 +97,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+Data: 15/06/2014
+-- ACBrECFFiscNET --
+[-] Correção de leitura de Totalizadores Parciais Tributados dos Dados da Ultima
+    Redução Z  (por: DSA)
+    http://www.projetoacbr.com.br/forum/index.php?showtopic=16114
+
 Data: 06/06/2014
 -- ACBrECFDaruma --
 [+] Implementado método GetNumLoja  (por: DSA)

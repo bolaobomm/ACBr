@@ -3031,9 +3031,9 @@ begin
       AdicionaAliquota( AliqZ );
     end ;
 
-    SubstituicaoTributariaICMS := RoundTo( StrToFloatDef( copy( RetCmd, 337, 14 ),0 ) / 100, -2 ) ;
-    NaoTributadoICMS := RoundTo( StrToFloatDef( copy( RetCmd, 351, 14 ), 0 ) / 100, -2 ) ;
-    IsentoICMS := RoundTo( StrToFloatDef( copy( RetCmd, 365, 14 ), 0 ) / 100, -2 ) ;
+    SubstituicaoTributariaICMS := RoundTo( StrToFloatDef( copy( RetCmd, 337, 14 ), 0 ) / 100, -2 ) ;
+    IsentoICMS                 := RoundTo( StrToFloatDef( copy( RetCmd, 351, 14 ), 0 ) / 100, -2 ) ;
+    NaoTributadoICMS           := RoundTo( StrToFloatDef( copy( RetCmd, 365, 14 ), 0 ) / 100, -2 ) ;
 
     { TOTALIZADORES NÃO FISCAIS }
     S  := Copy(RetCmd,407,126);   // 9 * 14
