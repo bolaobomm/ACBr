@@ -39,12 +39,18 @@
 Unit ACBrECF ;
 
 interface
-uses ACBrBase, ACBrDevice, ACBrECFClass, {ACBrECFVirtual,} ACBrPAFClass, ACBrRFD,
+uses ACBrBase, ACBrDevice, ACBrECFClass, ACBrECFVirtual, ACBrPAFClass, ACBrRFD,
      ACBrAAC, ACBrEAD,{Units da ACBr}
      SysUtils , ACBrConsts, Classes
      {$IFNDEF NOGUI}
-        {$IFDEF VisualCLX}, QControls, QForms, QDialogs, QGraphics, QStdCtrls{$ENDIF}
-        {$IFDEF VCL}, Controls, Forms, Dialogs, Graphics, StdCtrls {$ENDIF}
+        {$IF DEFINED(VisualCLX)}
+           ,QControls, QForms, QDialogs, QGraphics, QStdCtrls
+        {$ELSEIF DEFINED(FMX)}
+           ,FMX.Controls, FMX.Forms, FMX.Dialogs, FMX.Graphics, FMX.StdCtrls
+           ,FMX.Memo, System.UITypes
+        {$ELSE}
+           ,Controls, Forms, Dialogs, Graphics, StdCtrls
+        {$IFEND}
      {$ENDIF} ;
 {$IFDEF FRAMEWORK}
 {$UNDEF NOGUI}
@@ -117,8 +123,12 @@ TACBrECF = class( TACBrComponent )
     fsIndiceGerencial : Integer ;
     {$IFNDEF NOGUI}
       {$IFNDEF FRAMEWORK}
+      {$IFDEF FMX}
+       fsFormMsgColor : TAlphaColor ;
+      {$ELSE}
       fsFormMsgColor : TColor ;
-      fsFormMsgFont  : TFont ;
+      {$ENDIF}
+      fsFormMsgFont: TFont ;
       fsMemoBobina: TMemo ;
       {$ENDIF}
       fsMemoOperacao : String ;
@@ -133,7 +143,7 @@ TACBrECF = class( TACBrComponent )
     {$ENDIF}
 
     fsECF : TACBrECFClass ;  { Classe com instancia do ECF de fsModelo }
-    //fsECFVirtual : TACBrECFVirtual;
+    fsECFVirtual : TACBrECFVirtual;
     fsRFD : TACBrRFD ;
     fsAAC : TACBrAAC ;
     fsEADInterno : TACBrEAD ;
@@ -377,7 +387,7 @@ TACBrECF = class( TACBrComponent )
     function GetNumUltimoItemClass: Integer;
     function GetConsumidorClass: TACBrECFConsumidor;
     function GetDadosReducaoZClass: TACBrECFDadosRZ;
-    //procedure SetECFVirtual(AValue: TACBrECFVirtual);
+    procedure SetECFVirtual(AValue: TACBrECFVirtual);
     procedure SetRFD(const AValue: TACBrRFD);
     procedure SetAAC(const AValue: TACBrAAC);
     procedure SetEAD(const AValue: TACBrEAD);
@@ -738,6 +748,10 @@ TACBrECF = class( TACBrComponent )
      Property MemoItens : Integer read fsMemoItens write fsMemoItens ;
     {$ENDIF}
 
+    {$IFDEF FMX}
+     property FormMsgFonte : TFont read  fsFormMsgFont  write SetFormMsgFonte ;
+    {$ENDIF}
+
     procedure PafMF_LX_Impressao;
 
     procedure PafMF_LMFC_Impressao(const CRZInicial, CRZFinal: Integer); overload;
@@ -871,8 +885,12 @@ TACBrECF = class( TACBrComponent )
 
     {$IFNDEF NOGUI}
     {$IFNDEF FRAMEWORK}
-       property FormMsgFonte : TFont read  fsFormMsgFont  write SetFormMsgFonte ;
-       property FormMsgColor: TColor read  fsFormMsgColor write fsFormMsgColor ;
+       {$IFDEF FMX}
+        property FormMsgColor : TAlphaColor read  fsFormMsgColor write fsFormMsgColor ;
+       {$ELSE}
+        property FormMsgColor : TColor read  fsFormMsgColor write fsFormMsgColor ;
+        property FormMsgFonte : TFont read  fsFormMsgFont  write SetFormMsgFonte ;
+       {$ENDIF}
     {$ENDIF}
     {$ENDIF}
 
@@ -1036,7 +1054,7 @@ TACBrECF = class( TACBrComponent )
      property RFD        : TACBrRFD        read fsRFD        write SetRFD ;
      property AAC        : TACBrAAC        read fsAAC        write SetAAC ;
      property EAD        : TACBrEAD        read fsEAD        write SetEAD ;
-     //property ECFVirtual : TACBrECFVirtual read fsECFVirtual write SetECFVirtual ;
+     property ECFVirtual : TACBrECFVirtual read fsECFVirtual write SetECFVirtual ;
 
      property ArqLOG : String      read GetArqLOG write SetArqLOG ;
      property ConfigBarras: TACBrECFConfigBarras read fsConfigBarras write fsConfigBarras;
@@ -1045,6 +1063,7 @@ TACBrECF = class( TACBrComponent )
 end ;
 
 Function NomeArqCAT52( CAT52ID, NumSerie: String; DtMov : TDatetime ) : String ;
+Function GetECFComponente( AECFClass: TACBrECFClass ): TACBrECF;
 
 implementation
 Uses ACBrUtil, ACBrECFBematech, ACBrECFNaoFiscal, ACBrECFDaruma, ACBrECFSchalter,
@@ -1073,6 +1092,18 @@ begin
             IntToLetra(StrToInt(copy(DtStr,5,2))) ;
 end;
 
+function GetECFComponente(AECFClass: TACBrECFClass): TACBrECF;
+begin
+  Result := nil;
+  if not Assigned( AECFClass ) then
+     exit ;
+
+  if (AECFClass is TACBrECFVirtualClass) then
+     Result := TACBrECF(TACBrECFVirtualClass(AECFClass).ECFVirtual.ECF)
+  else
+     Result := TACBrECF(AECFClass.Owner);
+end;
+
 { TACBrECF }
 constructor TACBrECF.Create(AOwner: TComponent);
 begin
@@ -1093,7 +1124,7 @@ begin
   FDAVItemCount := 0;
   FDAVTotal     := 0.00;
 
-  //fsECFVirtual     := nil;
+  fsECFVirtual     := nil;
   fsEADInterno     := nil;
   fsEAD            := nil;
   fsAAC            := nil;
@@ -1112,8 +1143,9 @@ begin
   {$IFNDEF NOGUI}
   {$IFNDEF FRAMEWORK}
     fsFormMsgFont  := TFont.create ;
-    fsFormMsgColor :=  {$IFDEF VisualCLX} clNormalHighlight {$ELSE}
-                                          clHighlight      {$ENDIF};
+    fsFormMsgColor := {$IF DEFINED(VisualCLX)} clNormalHighlight
+                      {$ELSEIF DEFINED(FMX)} TAlphaColors.Dodgerblue
+                      {$ELSE} clHighlight {$IFEND};
 
     fsMemoBobina := nil ;
     {$ENDIF}
@@ -1180,7 +1212,8 @@ begin
   Ativo := false ;
 
   if Assigned( fsECF ) then
-     FreeAndNil( fsECF ) ;
+     if not (fsECF is TACBrECFVirtualClass) then
+        FreeAndNil( fsECF ) ;
 
   if Assigned( fsEADInterno ) then
      FreeAndNil( fsEADInterno );
@@ -1188,9 +1221,9 @@ begin
   FreeAndNil( fsDevice ) ;
 
   {$IFNDEF NOGUI}
-  {$IFNDEF FRAMEWORK}
-    fsFormMsgFont.Free ;
-  {$ENDIF}
+    {$IFNDEF FRAMEWORK}
+      fsFormMsgFont.Free ;
+    {$ENDIF}
     fsMemoParams.Free ;
   {$ENDIF}
 
@@ -1240,8 +1273,8 @@ begin
   if fsAtivo then
      raise EACBrECFErro.Create( ACBrStr(cACBrECFSetModeloException));
 
-  //if (AValue = ecfECFVirtual) and (not Assigned( fsECFVirtual) ) then
-  //   raise EACBrECFErro.Create( ACBrStr(cACBrECFSemECFVirtualException));
+  if (AValue = ecfECFVirtual) and (not Assigned( fsECFVirtual) ) then
+     raise EACBrECFErro.Create( ACBrStr(cACBrECFSemECFVirtualException));
 
   wRetentar             := ReTentar ;
   wControlePorta        := ControlePorta;
@@ -1278,7 +1311,9 @@ begin
   wInfoRodapeNotaLegalDFProgramaDeCredito := InfoRodapeCupom.NotaLegalDF.ProgramaDeCredito;
   wInfoRodapeRestauranteImprimir := InfoRodapeCupom.Restaurante.Imprimir;
 
-  FreeAndNil( fsECF ) ;
+  if Assigned( fsECF ) then
+     if not (fsECF is TACBrECFVirtualClass) then
+        FreeAndNil( fsECF ) ;
 
   { Instanciando uma nova classe de acordo com fsModelo }
   case AValue of
@@ -1298,7 +1333,7 @@ begin
     ecfNCR       : fsECF := TACBrECFNCR.create( Self ) ;
     ecfSwedaSTX  : fsECF := TACBrECFSwedaSTX.Create( self );
     ecfEscECF    : fsECF := TACBrECFEscECF.Create( self );
-    //ecfECFVirtual: fsECF := fsECFVirtual.ECFClass;
+    ecfECFVirtual: fsECF := fsECFVirtual.ECFVirtualClass;
   else
     fsECF := TACBrECFClass.create( Self ) ;
   end;
@@ -1339,6 +1374,9 @@ begin
   InfoRodapeCupom.NotaLegalDF.ProgramaDeCredito := wInfoRodapeNotaLegalDFProgramaDeCredito;
   InfoRodapeCupom.Restaurante.Imprimir := wInfoRodapeRestauranteImprimir;
 
+  if (fsECF is TACBrECFVirtualClass) then
+     TACBrECFVirtualClass(fsECF).Device := fsDevice;
+
   fsModelo := AValue;
 end;
 
@@ -1378,7 +1416,12 @@ begin
      raise EACBrECFErro.Create( ACBrStr('Modelo não definido'));
 
   if ((Porta = '') or (LowerCase(Porta) = 'procurar')) then
-     AcharPorta ;
+  begin
+     if (fsECF is TACBrECFVirtualClass) then
+        raise EACBrECFErro.Create( ACBrStr('Porta não definida'))
+     else
+        AcharPorta ;
+  end;
 
   fsECF.Ativar ;
   fsAtivo := true ;
@@ -1402,7 +1445,8 @@ begin
 
   if Assigned( fsRFD ) then
   begin
-     if (Modelo <> ecfNaoFiscal) and ( not (MFD and fsRFD.IgnoraEcfMfd)) then
+     if ( not (Modelo in [ecfNaoFiscal,ecfECFVirtual])) and
+        ( not (MFD and fsRFD.IgnoraEcfMfd)) then
      begin
         try
            fsRFD.Ativar ;
@@ -1839,7 +1883,11 @@ begin
      Msg := ACBrStr(Msg);
      {$IFNDEF NOGUI}
      {$IFNDEF FRAMEWORK}
-       MessageDlg(Msg, mtInformation ,[mbOk],0) ;
+       {$IFDEF FMX}
+        MessageDlg(Msg, TMsgDlgType.mtInformation, [TMsgDlgBtn.mbOK],0);
+       {$ELSE}
+        MessageDlg(Msg ,mtInformation ,[mbOk],0) ;
+       {$ENDIF}
      {$ELSE}
        writeln( Msg ) ;
      {$ENDIF}
@@ -5425,27 +5473,29 @@ procedure TACBrECF.Notification(AComponent: TComponent; Operation: TOperation);
 begin
   inherited Notification(AComponent, Operation);
 
-  {$IFNDEF NOGUI}
-  {$IFNDEF FRAMEWORK}
-   if (Operation = opRemove) and (fsMemoBobina <> nil) and (AComponent is TMemo) then
-   begin
-      fsMemoBobina := nil ;
-   end ;
-  {$ENDIF}
-  {$ENDIF}
+  if (Operation = opRemove) then
+  begin
+    {$IFNDEF NOGUI}
+     {$IFNDEF FRAMEWORK}
+      if (fsMemoBobina <> nil) and (AComponent is TMemo) then
+      begin
+         fsMemoBobina := nil ;
+      end ;
+     {$ENDIF}
+    {$ENDIF}
 
-  if (Operation = opRemove) and (AComponent is TACBrRFD) and (fsRFD <> nil) then
-     fsRFD := nil ;
+    if (AComponent is TACBrRFD) and (fsRFD <> nil) then
+       fsRFD := nil ;
 
-  if (Operation = opRemove) and (AComponent is TACBrEAD) and (fsEAD <> nil) then
-     fsEAD := nil ;
+    if (AComponent is TACBrEAD) and (fsEAD <> nil) then
+       fsEAD := nil ;
 
-  if (Operation = opRemove) and (AComponent is TACBrAAC) and (fsAAC <> nil) then
-     fsAAC := nil ;
+    if (AComponent is TACBrAAC) and (fsAAC <> nil) then
+       fsAAC := nil ;
 
-  //if (Operation = opRemove) and (AComponent is TACBrECFVirtual) and (fsECFVirtual <> nil) then
-  //   fsECFVirtual := nil ;
-
+    if (AComponent is TACBrECFVirtual) and (fsECFVirtual <> nil) then
+       fsECFVirtual := nil ;
+  end;
 end;
 
 procedure TACBrECF.DoVerificaValorGT ;
@@ -5509,32 +5559,32 @@ begin
    end ;
 end ;
 
-//procedure TACBrECF.SetECFVirtual(AValue: TACBrECFVirtual);
-//Var
-//  OldValue: TACBrECFVirtual ;
-//begin
-//  if fsAtivo then
-//     raise EACBrECFErro.Create( ACBrStr(cACBrECFSetECFVirtualException));
-//
-//  if AValue <> fsECFVirtual then
-//  begin
-//     if Assigned(fsECFVirtual) then
-//        fsECFVirtual.RemoveFreeNotification(Self);
-//
-//     OldValue     := fsECFVirtual ;   // Usa outra variavel para evitar Loop Infinito
-//     fsECFVirtual := AValue;          // na remoção da associação dos componentes
-//
-//     if Assigned(OldValue) then
-//        if Assigned(OldValue.ECF) then
-//           OldValue.ECF := nil ;
-//
-//     if AValue <> nil then
-//     begin
-//        AValue.FreeNotification(self);
-//        AValue.ECF := Self ;
-//     end ;
-//  end ;
-//end;
+procedure TACBrECF.SetECFVirtual(AValue: TACBrECFVirtual);
+Var
+  OldValue: TACBrECFVirtual ;
+begin
+  if fsAtivo then
+     raise EACBrECFErro.Create( ACBrStr(cACBrECFSetECFVirtualException));
+
+  if AValue <> fsECFVirtual then
+  begin
+     if Assigned(fsECFVirtual) then
+        fsECFVirtual.RemoveFreeNotification(Self);
+
+     OldValue     := fsECFVirtual ;   // Usa outra variavel para evitar Loop Infinito
+     fsECFVirtual := AValue;          // na remoção da associação dos componentes
+
+     if Assigned(OldValue) then
+        if Assigned(OldValue.ECF) then
+           OldValue.ECF := nil ;
+
+     if AValue <> nil then
+     begin
+        AValue.FreeNotification(self);
+        AValue.ECF := Self ;
+     end ;
+  end ;
+end;
 
 procedure TACBrECF.SetRFD(const AValue: TACBrRFD);
 Var

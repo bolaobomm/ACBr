@@ -97,7 +97,7 @@ procedure Register;
 implementation
 Uses ACBrUtil,  
      ACBrECF, ACBrGAV, ACBrCHQ, ACBrLCB, ACBrDIS, ACBrTER, ACBrBAL, ACBrETQ,
-     ACBrRFD, ACBrSMS,
+     ACBrRFD, ACBrSMS, ACBrECFVirtualNaoFiscal,
      SysUtils;
 
 {$IFNDEF FPC}
@@ -107,7 +107,8 @@ Uses ACBrUtil,
 procedure Register;
 begin
   RegisterComponents('ACBr', [TACBrECF, TACBrRFD, TACBrGAV, TACBrCHQ,
-     TACBrLCB, TACBrDIS, TACBrTER, TACBrBAL, TACBrETQ, TACBrSMS]);
+     TACBrLCB, TACBrDIS, TACBrTER, TACBrBAL, TACBrETQ, TACBrSMS,
+     TACBrECFVirtualNaoFiscal]);
 
   { Registrando os Editores de Propriedade }
   RegisterPropertyEditor(TypeInfo(String), TACBrGAV, 'StrComando',

@@ -97,6 +97,31 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+Data: 16/06/2014  (por: DSA)
+-- ACBrECF --
+[+] Adicionada a propriedade "ECFVirtual", que permite fazer com que o ACBrECF
+    comande um outro componente do tipo TACBrECFVirtual. Nesse caso, o modelo
+    deve ser ajustado para "ecfVirtual" e ambos componentes associados
+[*] Refactoring de código
+[*] Ajustes para suportar TACBRECFVirtualClass como um TACBRECFClass
+[+] Adicionada a propriedade "AsString" em TACBrECFAliquota, TACBrECFFormaPagamento,
+    TACBrECFComprovanteNaoFiscal, para permitir salvar e recuperar mais fácilmente
+    valores desses objetos
+[*] Ajustes para tentiva de compatibilização com FireMonkey (FMX)
+
+-- ACBrECFVirtualNaoFiscal --
+[+] Criado novo componente, que servirá de base para todos os ECFs virtuais,
+    que precisarão de Impressão similar a de um ECF. Trata-se de um grande
+    refactoring da Unit ACBrECFNaoFiscal.pas. Ou seja, este ECF Virtual é um
+    emulador de ECF
+    - Permite salvar no componente, propriedades fixas do ECF como: Colunas,
+      NumECF, NumSerie, CNPJ, IE, Cabeçalho, Comandos de Controle da Impressora
+    - Possui disparo de Eventos quando lê e grava o .INI (memória do ECF),
+      permitindo persisti-lo em Banco de Dados ou de outra forma.
+    - Deve ser usado em conjunto com ACBrECF, e ACBrECF.Modelo := ecfECFVirtual
+
+
+
 Data: 15/06/2014
 -- ACBrECFFiscNET --
 [-] Correção de leitura de Totalizadores Parciais Tributados dos Dados da Ultima

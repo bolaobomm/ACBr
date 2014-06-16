@@ -29,7 +29,7 @@
     <License Value="LGPL
 "/>
     <Version Minor="9"/>
-    <Files Count="56">
+    <Files Count="59">
       <Item1>
         <Filename Value="..\..\..\Fontes\ACBrSerial\ACBrCHQ.pas"/>
         <UnitName Value="ACBrCHQ"/>
@@ -255,6 +255,18 @@
         <Filename Value="..\..\..\Fontes\ACBrSerial\ACBrECFEscECF.pas"/>
         <UnitName Value="ACBrECFEscECF"/>
       </Item56>
+      <Item57>
+        <Filename Value="..\..\..\Fontes\ACBrSerial\ACBrECFVirtual.pas"/>
+        <UnitName Value="ACBrECFVirtual"/>
+      </Item57>
+      <Item58>
+        <Filename Value="..\..\..\Fontes\ACBrSerial\ACBrECFVirtualPrinter.pas"/>
+        <UnitName Value="ACBrECFVirtualPrinter"/>
+      </Item58>
+      <Item59>
+        <Filename Value="..\..\..\Fontes\ACBrSerial\ACBrECFVirtualNaoFiscal.pas"/>
+        <UnitName Value="ACBrECFVirtualNaoFiscal"/>
+      </Item59>
     </Files>
     <Type Value="RunAndDesignTime"/>
     <RequiredPkgs Count="5">

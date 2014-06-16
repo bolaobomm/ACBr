@@ -1,7 +1,7 @@
 object Form1: TForm1
   Left = 373
   Height = 418
-  Top = 192
+  Top = 188
   Width = 547
   Caption = 'Teste de Impressora Fiscal'
   ClientHeight = 398
@@ -1243,6 +1243,15 @@ object Form1: TForm1
         OnChange = chIgnorarTagsFormatacaoChange
         ParentFont = False
         TabOrder = 5
+      end
+      object Button2: TButton
+        Left = 438
+        Height = 25
+        Top = 56
+        Width = 75
+        Caption = '1..255'
+        OnClick = Button2Click
+        TabOrder = 6
       end
     end
     object tsDadosRedZ: TTabSheet
@@ -3309,11 +3318,11 @@ object Form1: TForm1
     MsgRelatorio = 'Imprimindo %s  %dÂª Via '
     MsgPausaRelatorio = 'Destaque a %dª via, <ENTER> proxima, %d seg.'
     PaginaDeCodigo = 0
+    FormMsgColor = clHighlight
     FormMsgFonte.Color = clWhite
     FormMsgFonte.Height = 11
     FormMsgFonte.Name = 'MS Sans Serif'
     FormMsgFonte.Pitch = fpVariable
-    FormMsgColor = clHighlight
     OnMsgAguarde = ACBrECF1MsgAguarde
     OnAguardandoRespostaChange = ACBrECF1AguardandoRespostaChange
     OnMsgPoucoPapel = ACBrECF1MsgPoucoPapel
@@ -3346,16 +3355,15 @@ object Form1: TForm1
       'HTML_Font=<font size="5" face="Fixed">'
     )
     OnBobinaAdicionaLinhas = ACBrECF1BobinaAdicionaLinhas
-    RFD = ACBrRFD1
+    ECFVirtual = ACBrECFVirtualNaoFiscal1
     ArqLOG = 'acbrlog.txt'
     ConfigBarras.MostrarCodigo = True
     ConfigBarras.LarguraLinha = 3
     ConfigBarras.Altura = 10
-    left = 312
-    top = 328
+    left = 296
+    top = 200
   end
   object ACBrRFD1: TACBrRFD
-    ECF = ACBrECF1
     left = 344
     top = 328
   end
@@ -3451,5 +3459,38 @@ object Form1: TForm1
     DataSet = mdsAACECF
     left = 133
     top = 329
+  end
+  object ACBrECFVirtualNaoFiscal1: TACBrECFVirtualNaoFiscal
+    ECF = ACBrECF1
+    Colunas = 48
+    NumSerie = '1234567890000'
+    NumECF = 2
+    NumCRO = 1
+    CNPJ = '05.441.336/0001-37'
+    IE = '2222.2222.222'
+    IM = '11111'
+    OnGravaArqINI = ACBrECFVirtualNaoFiscal1GravaArqINI
+    OnLeArqINI = ACBrECFVirtualNaoFiscal1LeArqINI
+    CmdImpCondensado = '#15'
+    CmdImpExpandidoUmaLinha = '#14'
+    CmdImpFimExpandido = '#35,#50,#48'
+    CmdImpZera = '#27,#64'
+    CmdGaveta = '#27,#118,#150'
+    CmdCortaPapelCompleto = '#27,#119'
+    CmdCortaPapelParcial = '#27,#109'
+    Cabecalho.Strings = (
+      'Nome da Empresa 4444'
+      'Nome da Rua , 1234  -  Bairro'
+      'Cidade  -  UF  -  99999-999'
+    )
+    CabecalhoItem.Strings = (
+      'ITEM   CODIGO             DESCRICAO'
+      '.             QTDxUNITARIO   Aliq    VALOR (R$)'
+      '------------------------------------------------'
+    )
+    MascaraItem = 'III CCCCCCCCCCCCC DDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDD QQQQQQQQ UUxVVVVVVVVV AAAAAAA TTTTTTTTTTT'
+    ExibeAvisoLegal = True
+    left = 424
+    top = 200
   end
 end

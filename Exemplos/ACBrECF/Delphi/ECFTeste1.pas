@@ -9,7 +9,8 @@ uses ACBrECF, ACBrRFD, ACBrBase, ACBrDevice, ACBrECFClass, ACBrConsts,
   SysUtils, Classes, Graphics,
   Controls, Forms, Dialogs, StdCtrls,  ComCtrls, Buttons, ExtCtrls,
   Menus, Spin, jpeg, OleCtrls, SHDocVw
-  {$IFDEF Delphi7},XPMan{$ENDIF}, ACBrAAC;
+  {$IFDEF Delphi7},XPMan{$ENDIF}, ACBrAAC, ACBrECFVirtual,
+  ACBrECFVirtualPrinter, ACBrECFVirtualNaoFiscal;
 
 type
   TForm1 = class(TForm)
@@ -347,6 +348,7 @@ type
     btnArqMFDNovo: TButton;
     btnDadosUltimaRZ: TButton;
     ProgramaIdentificaoPafECF1: TMenuItem;
+    ACBrECFVirtualNaoFiscal1: TACBrECFVirtualNaoFiscal;
     procedure cbxModeloChange(Sender: TObject);
     procedure Sair1Click(Sender: TObject);
     procedure bAtivarClick(Sender: TObject);

@@ -5,10 +5,10 @@ unit ECFTeste1;
 interface
 
 uses
-  ACBrECF, ACBrECFClass, ACBrBase, ACBrRFD, ACBrDevice, ACBrAAC, ACBrConsts,
-  ACBrGIF, LCLIntf, Classes, SysUtils, Forms, Controls, Graphics, LCLType,
-  Dialogs, DateUtils, IpHtml, Menus, Buttons, StdCtrls, ExtCtrls, ComCtrls,
-  Spin, EditBtn, DBGrids, DbCtrls, memds, db;
+  ACBrECF, ACBrECFClass, ACBrBase, ACBrRFD, ACBrDevice, ACBrECFVirtualNaoFiscal,
+  ACBrAAC, ACBrConsts, ACBrGIF, LCLIntf, Classes, SysUtils, Forms, Controls,
+  Graphics, LCLType, Dialogs, DateUtils, IpHtml, Menus, Buttons, StdCtrls,
+  ExtCtrls, ComCtrls, Spin, EditBtn, DBGrids, DbCtrls, memds, db, IniFiles, ACBrECFVirtual;
 
 type
   TSimpleIpHtml = class(TIpHtml)
@@ -26,6 +26,7 @@ type
     AbrirCupom1: TMenuItem;
     ACBrAAC1 : TACBrAAC ;
     ACBrECF1: TACBrECF;
+    ACBrECFVirtualNaoFiscal1: TACBrECFVirtualNaoFiscal;
     ACBrGIF1: TACBrGIF;
     ACBrRFD1: TACBrRFD;
     Aliquotas1: TMenuItem;
@@ -56,6 +57,7 @@ type
     bAACAtualizarGT : TButton ;
     btnMenuFiscalParametrosConfig: TButton;
     Button1 : TButton ;
+    Button2: TButton;
     CancelaCupom1: TMenuItem;
     CancelaImpressoCheque1: TMenuItem;
     CancelaNoFiscal1: TMenuItem;
@@ -429,6 +431,10 @@ type
     procedure ACBrAAC1AntesAbrirArquivo(var Continua : Boolean) ;
     procedure ACBrAAC1DepoisAbrirArquivo(Sender : TObject) ;
     procedure ACBrAAC1GetChave(var Chave : AnsiString) ;
+    procedure ACBrECFVirtualNaoFiscal1GravaArqINI(ConteudoINI: TStrings;
+      var Tratado: Boolean);
+    procedure ACBrECFVirtualNaoFiscal1LeArqINI(ConteudoINI: TStrings;
+      var Tratado: Boolean);
     procedure bAACAtualizarGTClick(Sender : TObject) ;
     procedure bAACGravarArquivoClick(Sender : TObject) ;
     procedure bAACAbrirArquivoClick(Sender : TObject) ;
@@ -447,6 +453,7 @@ type
     procedure btnMenuFiscalRelMeiosPagtoClick(Sender : TObject) ;
     procedure btnMenuFiscalParametrosConfigClick(Sender: TObject);
     procedure Button1Click(Sender : TObject) ;
+    procedure Button2Click(Sender: TObject);
     procedure chAACFlushChange(Sender : TObject) ;
     procedure chAACUsarChange(Sender : TObject) ;
     procedure cbxModeloChange(Sender: TObject);
@@ -694,7 +701,7 @@ implementation
 {$R *.lfm}
 
 uses ACBrUtil, ACBrECFBematech, VendeItem, EfetuaPagamento,
-     Relatorio, Sobre, Math, IniFiles, strutils,
+     Relatorio, Sobre, Math, strutils,
      ConfiguraSerial, uDAV, uDAVOS, ACBrPAFClass, typinfo;
      
 procedure TForm1.FormCreate(Sender: TObject);
@@ -1265,6 +1272,18 @@ begin
    }
 end;
 
+procedure TForm1.Button2Click(Sender: TObject);
+var
+  Str: String;
+  A: Integer;
+begin
+  Str := '';
+  For A := 1 to 255 do
+    Str := Str + chr(A);
+
+  ACBrECF1.LinhaRelatorioGerencial( Str );
+end;
+
 procedure TForm1.chAACFlushChange(Sender : TObject) ;
 begin
    ACBrAAC1.EfetuarFlush := chAACFlush.Checked;
@@ -1353,6 +1372,18 @@ begin
    Chave := 'Informe aqui a SUA CHAVE' ;
    // Dicas: Evite Strings fixas.. prefira uma Constante
    // Use Chr(nn) ou outra função para compor a chave
+end;
+
+procedure TForm1.ACBrECFVirtualNaoFiscal1GravaArqINI(ConteudoINI: TStrings;
+  var Tratado: Boolean);
+begin
+  mResp.Lines.Add( 'INI SERÁ GRAVADO' );
+end;
+
+procedure TForm1.ACBrECFVirtualNaoFiscal1LeArqINI(ConteudoINI: TStrings;
+  var Tratado: Boolean);
+begin
+  mResp.Lines.Add( 'INI SERÁ LIDO'  );
 end;
 
 procedure TForm1.bAACAtualizarGTClick(Sender : TObject) ;

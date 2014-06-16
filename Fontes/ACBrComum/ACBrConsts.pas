@@ -213,6 +213,9 @@ const
   cACBrECFRegistraItemNaoFiscalException = 'Comprovante não fiscal: %s inválido' ;
   cACBrECFSetRFDException                = 'Não é possível mudar ACBrECF.RFD com o componente ativo' ;
   cACBrECFSetAACException                = 'Não é possível mudar ACBrECF.AAC com o componente ativo' ;
+  cACBrECFVirtualClassCreateException    = 'Essa Classe deve ser instanciada por TACBrECFVirtual' ;
+  cACBrECFSetECFVirtualException         = 'Não é possível mudar ACBrECF.ECFVirtual com o componente ativo' ;
+  cACBrECFSemECFVirtualException         = 'ACBrECF.ECFVirtual não foi atribuido' ;
 
   cACBrAACNumSerieNaoEncontardoException = 'ECF de Número de série %s não encontrado no Arquivo Auxiliar Criptografado.' ;
   cACBrAACValorGTInvalidoException       = 'Divergência no Valor do Grande Total.';

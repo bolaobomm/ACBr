@@ -5,9 +5,9 @@
     <PathDelim Value="\"/>
     <General>
       <Flags>
-        <SaveOnlyProjectUnits Value="True"/>
         <LRSInOutputDirectory Value="False"/>
       </Flags>
+      <SessionStorage Value="InIDEConfig"/>
       <MainUnit Value="0"/>
       <Title Value="ECFTeste"/>
       <ResourceType Value="res"/>
@@ -15,7 +15,7 @@
       <XPManifest>
         <DpiAware Value="True"/>
       </XPManifest>
-      <ActiveWindowIndexAtStart Value="0"/>
+      <Icon Value="0"/>
     </General>
     <VersionInfo>
       <UseVersionInfo Value="True"/>
@@ -26,7 +26,7 @@
       <CharSet Value="04B0"/>
       <StringTable ProductVersion=""/>
     </VersionInfo>
-    <BuildModes Count="3" Active="Debug">
+    <BuildModes Count="3">
       <Item1 Name="Debug" Default="True"/>
       <Item2 Name="Release">
         <CompilerOptions>
@@ -146,10 +146,6 @@
         <Filename Value="ecfteste.lpr"/>
         <IsPartOfProject Value="True"/>
         <UnitName Value="ECFTeste"/>
-        <WindowIndex Value="0"/>
-        <TopLine Value="8"/>
-        <CursorPos X="1" Y="26"/>
-        <UsageCount Value="201"/>
       </Unit0>
       <Unit1>
         <Filename Value="ecfteste1.pas"/>
@@ -158,16 +154,6 @@
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
         <UnitName Value="ECFTeste1"/>
-        <EditorIndex Value="0"/>
-        <WindowIndex Value="0"/>
-        <TopLine Value="4137"/>
-        <CursorPos X="61" Y="4153"/>
-        <UsageCount Value="201"/>
-        <Bookmarks Count="1">
-          <Item0 X="39" Y="2340" ID="4"/>
-        </Bookmarks>
-        <Loaded Value="True"/>
-        <LoadedDesigner Value="True"/>
       </Unit1>
       <Unit2>
         <Filename Value="configuraserial.pas"/>
@@ -175,10 +161,6 @@
         <ComponentName Value="frConfiguraSerial"/>
         <ResourceBaseClass Value="Form"/>
         <UnitName Value="ConfiguraSerial"/>
-        <WindowIndex Value="0"/>
-        <TopLine Value="19"/>
-        <CursorPos X="21" Y="40"/>
-        <UsageCount Value="201"/>
       </Unit2>
       <Unit3>
         <Filename Value="efetuapagamento.pas"/>
@@ -187,10 +169,6 @@
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
         <UnitName Value="EfetuaPagamento"/>
-        <WindowIndex Value="0"/>
-        <TopLine Value="1"/>
-        <CursorPos X="12" Y="6"/>
-        <UsageCount Value="201"/>
       </Unit3>
       <Unit4>
         <Filename Value="relatorio.pas"/>
@@ -199,10 +177,6 @@
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
         <UnitName Value="Relatorio"/>
-        <WindowIndex Value="0"/>
-        <TopLine Value="66"/>
-        <CursorPos X="19" Y="75"/>
-        <UsageCount Value="201"/>
       </Unit4>
       <Unit5>
         <Filename Value="sobre.pas"/>
@@ -210,10 +184,6 @@
         <ComponentName Value="frmSobre"/>
         <ResourceBaseClass Value="Form"/>
         <UnitName Value="Sobre"/>
-        <WindowIndex Value="0"/>
-        <TopLine Value="20"/>
-        <CursorPos X="65" Y="45"/>
-        <UsageCount Value="201"/>
       </Unit5>
       <Unit6>
         <Filename Value="vendeitem.pas"/>
@@ -222,10 +192,6 @@
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
         <UnitName Value="VendeItem"/>
-        <WindowIndex Value="0"/>
-        <TopLine Value="85"/>
-        <CursorPos X="23" Y="81"/>
-        <UsageCount Value="201"/>
       </Unit6>
       <Unit7>
         <Filename Value="uDAV.pas"/>
@@ -234,10 +200,6 @@
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
         <UnitName Value="uDAV"/>
-        <WindowIndex Value="0"/>
-        <TopLine Value="1"/>
-        <CursorPos X="3" Y="8"/>
-        <UsageCount Value="201"/>
       </Unit7>
       <Unit8>
         <Filename Value="uDAVOS.pas"/>
@@ -246,10 +208,6 @@
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
         <UnitName Value="uDAVOS"/>
-        <WindowIndex Value="0"/>
-        <TopLine Value="1"/>
-        <CursorPos X="3" Y="8"/>
-        <UsageCount Value="201"/>
       </Unit8>
     </Units>
   </ProjectOptions>
@@ -268,6 +226,9 @@
       </SyntaxOptions>
     </Parsing>
     <Linking>
+      <Debugging>
+        <UseHeaptrc Value="True"/>
+      </Debugging>
       <Options>
         <Win32>
           <GraphicApplication Value="True"/>
@@ -283,50 +244,7 @@
     </Other>
   </CompilerOptions>
   <Debugging>
-    <BreakPoints Count="5">
-      <Item1>
-        <Kind Value="bpkSource"/>
-        <WatchScope Value="wpsLocal"/>
-        <WatchKind Value="wpkWrite"/>
-        <Source Value="..\..\..\Fontes\ACBrSerial\ACBrECFEscECF.pas"/>
-        <Line Value="1562"/>
-      </Item1>
-      <Item2>
-        <Kind Value="bpkSource"/>
-        <WatchScope Value="wpsLocal"/>
-        <WatchKind Value="wpkWrite"/>
-        <Source Value="..\..\..\Fontes\ACBrSerial\ACBrECFDaruma.pas"/>
-        <Line Value="1834"/>
-      </Item2>
-      <Item3>
-        <Kind Value="bpkSource"/>
-        <WatchScope Value="wpsLocal"/>
-        <WatchKind Value="wpkWrite"/>
-        <Source Value="..\..\..\Fontes\ACBrSerial\ACBrECFDaruma.pas"/>
-        <Line Value="1828"/>
-      </Item3>
-      <Item4>
-        <Kind Value="bpkSource"/>
-        <WatchScope Value="wpsLocal"/>
-        <WatchKind Value="wpkWrite"/>
-        <Source Value="..\..\..\Fontes\ACBrSerial\ACBrECFSwedaSTX.pas"/>
-        <Line Value="1554"/>
-      </Item4>
-      <Item5>
-        <Kind Value="bpkSource"/>
-        <WatchScope Value="wpsLocal"/>
-        <WatchKind Value="wpkWrite"/>
-        <Source Value="..\..\..\Fontes\ACBrSerial\ACBrECFDaruma.pas"/>
-        <Line Value="4703"/>
-      </Item5>
-    </BreakPoints>
-    <Watches Count="1">
-      <Item1>
-        <Expression Value="R"/>
-        <DisplayStyle Value="wdfString"/>
-      </Item1>
-    </Watches>
-    <Exceptions Count="11" IgnoreAll="True">
+    <Exceptions Count="12" IgnoreAll="True">
       <Item1>
         <Name Value="EACBrECFSemResposta"/>
       </Item1>
@@ -360,7 +278,9 @@
       <Item11>
         <Name Value="EACBrECFSemPapel"/>
       </Item11>
+      <Item12>
+        <Name Value="RunError(103)"/>
+      </Item12>
     </Exceptions>
   </Debugging>
-  <EditorMacros Count="0"/>
 </CONFIG>

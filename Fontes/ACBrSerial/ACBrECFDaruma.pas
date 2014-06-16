@@ -1409,8 +1409,6 @@ begin
 end;
 
 function TACBrECFDaruma.GetNumLoja: String;
-Var
-  RetCmd : AnsiString ;
 begin
   if Trim(fsNumLoja) = '' then
   begin

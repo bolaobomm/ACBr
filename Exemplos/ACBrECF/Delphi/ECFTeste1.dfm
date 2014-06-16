@@ -5,6 +5,7 @@ object Form1: TForm1
   Height = 447
   VertScrollBar.Range = 59
   ActiveControl = PageControl1
+  AutoScroll = False
   Caption = 'Teste de Impressora Fiscal'
   Color = clBtnFace
   Constraints.MinHeight = 400
@@ -140,6 +141,7 @@ object Form1: TForm1
         Width = 105
         Height = 21
         Style = csDropDownList
+        ItemHeight = 13
         TabOrder = 0
         OnChange = cbxModeloChange
         Items.Strings = (
@@ -161,6 +163,7 @@ object Form1: TForm1
         Top = 25
         Width = 105
         Height = 21
+        ItemHeight = 13
         TabOrder = 1
         Text = 'Procurar'
         OnChange = cbxPortaChange
@@ -269,6 +272,9 @@ object Form1: TForm1
         Cancel = True
         Caption = 'Serial'
         Default = True
+        ModalResult = 1
+        TabOrder = 11
+        OnClick = btSerialClick
         Glyph.Data = {
           36030000424D3603000000000000360000002800000010000000100000000100
           1800000000000003000000000000000000000000000000000000FFFFFFFFFFFF
@@ -296,9 +302,6 @@ object Form1: TForm1
           FFFFFFFFFFFFFFFFFFFFFFFF5050004A4A4A3232323232323232323232325032
           00FFFFFF6B8FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
           FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF}
-        ModalResult = 1
-        TabOrder = 11
-        OnClick = btSerialClick
       end
       object chDescricaoGrande: TCheckBox
         Left = 195
@@ -376,6 +379,7 @@ object Form1: TForm1
         Width = 47
         Height = 21
         Style = csDropDownList
+        ItemHeight = 13
         TabOrder = 19
         OnChange = cbxModeloChange
         Items.Strings = (
@@ -1537,6 +1541,9 @@ object Form1: TForm1
       Cancel = True
       Caption = 'Ativar'
       Default = True
+      ModalResult = 1
+      TabOrder = 0
+      OnClick = bAtivarClick
       Glyph.Data = {
         36030000424D3603000000000000360000002800000010000000100000000100
         18000000000000030000120B0000120B00000000000000000000FFFFFFFFFFFF
@@ -1564,9 +1571,6 @@ object Form1: TForm1
         21218C3131943131943131943131943131943131943131943131943131943131
         94292994181884FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
         FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF}
-      ModalResult = 1
-      TabOrder = 0
-      OnClick = bAtivarClick
     end
   end
   object MainMenu1: TMainMenu
@@ -2331,13 +2335,13 @@ object Form1: TForm1
     MsgRelatorio = 'Imprimindo %s  %d'#170' Via '
     MsgPausaRelatorio = 'Destaque a %d'#170' via, <ENTER> proxima, %d seg.'
     PaginaDeCodigo = 0
+    FormMsgColor = clBlack
     FormMsgFonte.Charset = DEFAULT_CHARSET
     FormMsgFonte.Color = clWhite
     FormMsgFonte.Height = 11
     FormMsgFonte.Name = 'MS Sans Serif'
     FormMsgFonte.Pitch = fpVariable
     FormMsgFonte.Style = []
-    FormMsgColor = clBlack
     OnMsgAguarde = ACBrECF1MsgAguarde
     OnAguardandoRespostaChange = ACBrECF1AguardandoRespostaChange
     OnMsgPoucoPapel = ACBrECF1MsgPoucoPapel
@@ -2381,6 +2385,7 @@ object Form1: TForm1
       'HTML_Title_Size=4'
       'HTML_Font=<font size="5" face="Lucida Console">')
     OnBobinaAdicionaLinhas = ACBrECF1BobinaAdicionaLinhas
+    ECFVirtual = ACBrECFVirtualNaoFiscal1
     ArqLOG = 'acbrlog.txt'
     ConfigBarras.MostrarCodigo = True
     ConfigBarras.LarguraLinha = 3
@@ -2399,5 +2404,35 @@ object Form1: TForm1
     Title = 'Salvar arquivo texto'
     Left = 255
     Top = 315
+  end
+  object ACBrECFVirtualNaoFiscal1: TACBrECFVirtualNaoFiscal
+    ECF = ACBrECF1
+    Colunas = 48
+    NumECF = 1
+    NumCRO = 1
+    CNPJ = '01.234.567/0001-22'
+    IE = '012.345.678.90'
+    IM = '1234-0'
+    CmdImpCondensado = '#15'
+    CmdImpExpandidoUmaLinha = '#14'
+    CmdImpFimExpandido = '#35,#50,#48'
+    CmdImpZera = '#27,#64'
+    CmdGaveta = '#27,#118,#150'
+    CmdCortaPapelCompleto = '#27,#119'
+    CmdCortaPapelParcial = '#27,#109'
+    Cabecalho.Strings = (
+      'Nome da Empresa'
+      'Nome da Rua , 1234  -  Bairro'
+      'Cidade  -  UF  -  99999-999')
+    CabecalhoItem.Strings = (
+      'ITEM   CODIGO             DESCRICAO'
+      '.             QTDxUNITARIO   Aliq    VALOR (R$)'
+      '------------------------------------------------')
+    MascaraItem = 
+      'III CCCCCCCCCCCCC DDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDD QQQQQQQQ U' +
+      'UxVVVVVVVVV AAAAAAA TTTTTTTTTTT'
+    ExibeAvisoLegal = True
+    Left = 412
+    Top = 88
   end
 end

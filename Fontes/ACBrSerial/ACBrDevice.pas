@@ -195,6 +195,8 @@ TACBrDevice = class( TComponent )
     Serial : TBlockSerial ;
     PosImp : TPoint;
 
+    procedure Assign(Source: TPersistent); override;
+
     property Ativo : Boolean read fsAtivo write SetAtivo ;
 
     property Porta   : String  read fsPorta write SetPorta ;
@@ -276,7 +278,7 @@ implementation
 Uses ACBrUtil ;
 
 { TACBrDevice }
-constructor TACBrDevice.create( AOwner : TComponent );
+constructor TACBrDevice.Create(AOwner: TComponent);
 begin
   inherited Create( AOwner ) ;
 
@@ -487,6 +489,29 @@ end;
 procedure TACBrDevice.SetMaxBandwidth(const Value: Integer);
 begin
   Serial.MaxLineLength := Value ;
+end;
+
+procedure TACBrDevice.Assign(Source: TPersistent);
+begin
+  inherited Assign(Source);
+
+  if Source is TACBrDevice then
+  begin
+     Baud              := TACBrDevice(Source).Baud ;
+     Data              := TACBrDevice(Source).Data ;
+     Parity            := TACBrDevice(Source).Parity ;
+     Stop              := TACBrDevice(Source).Stop ;
+     MaxBandwidth      := TACBrDevice(Source).MaxBandwidth ;
+     SendBytesCount    := TACBrDevice(Source).SendBytesCount ;
+     SendBytesInterval := TACBrDevice(Source).SendBytesInterval ;
+     HandShake         := TACBrDevice(Source).HandShake ;
+     SoftFlow          := TACBrDevice(Source).SoftFlow ;
+     HardFlow          := TACBrDevice(Source).HardFlow ;
+     ProcessMessages   := TACBrDevice(Source).ProcessMessages ;
+     OnStatus          := TACBrDevice(Source).OnStatus ;
+     HookEnviaString   := TACBrDevice(Source).HookEnviaString ;
+     HookLeString      := TACBrDevice(Source).HookLeString ;
+  end;
 end;
 
 procedure TACBrDevice.SetHardFlow(const Value: Boolean);
