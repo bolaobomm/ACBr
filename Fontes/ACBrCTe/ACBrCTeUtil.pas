@@ -1782,10 +1782,10 @@ begin
   if CertStoreMem = nil then
   begin
     CertStore := CoStore.Create;
-    CertStore.Open(CAPICOM_CURRENT_USER_STORE, 'My', CAPICOM_STORE_OPEN_MAXIMUM_ALLOWED);
+    CertStore.Open(CAPICOM_CURRENT_USER_STORE, 'My', CAPICOM_STORE_OPEN_READ_ONLY);
 
     CertStoreMem := CoStore.Create;
-    CertStoreMem.Open(CAPICOM_MEMORY_STORE, 'Memoria', CAPICOM_STORE_OPEN_MAXIMUM_ALLOWED);
+    CertStoreMem.Open(CAPICOM_MEMORY_STORE, 'Memoria', CAPICOM_STORE_OPEN_READ_ONLY);
 
     Certs := CertStore.Certificates as ICertificates2;
     for i := 1 to Certs.Count do

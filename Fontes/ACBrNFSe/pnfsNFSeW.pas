@@ -878,7 +878,7 @@ begin
         end
         else begin
          if FProvedor in [proPVH, proFreire, proISSe, proSystemPro, proFiorilli, proSaatri, proCoplan,
-                          proISSDigital, proMitra, proVitoria, proGovDigital]
+                          proISSDigital, proMitra, proVitoria, proGovDigital, proProdata]
           then Gerador.wCampoNFSe(tcDat,    '#4', 'Competencia', 10, 10, 1, NFSe.DataEmissao, DSC_DEMI)
           else begin
            if not (FProvedor in [proGoiania])
