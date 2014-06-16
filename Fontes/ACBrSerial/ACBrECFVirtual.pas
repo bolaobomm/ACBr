@@ -364,6 +364,10 @@ TACBrECFVirtualClass = class( TACBrECFClass )
     procedure LerTotaisComprovanteNaoFiscal ; override ;
     Procedure ProgramaComprovanteNaoFiscal( var Descricao: String;
        Tipo : String = ''; Posicao : String = '') ; override ;
+
+    Procedure IdentificaOperador(Nome : String); override;
+    Procedure IdentificaPAF( NomeVersao, MD5 : String) ; override;
+
  end ;
 
 implementation
@@ -680,7 +684,8 @@ begin
   fpNumECF     := 1 ;
   fpIE         := '012.345.678.90' ;
   fpCNPJ       := '01.234.567/0001-22' ;
-  fpPAF        := 'ACBr' ;
+  fpPAF        := '' ;
+  Operador     := '' ;
   fpIM         := '1234-0' ;
   fpModeloStr  := 'ECFVirtual' ;
   fpEXEName    := ParamStr(0) ;
@@ -2064,6 +2069,26 @@ begin
     LeArqINI ;
     raise;
   end ;
+end;
+
+procedure TACBrECFVirtualClass.IdentificaOperador(Nome: String);
+begin
+  Operador := Nome;
+end;
+
+procedure TACBrECFVirtualClass.IdentificaPAF(NomeVersao, MD5: String);
+begin
+  fpPAF := '';
+  if NomeVersao <> '' then
+    fpPAF := NomeVersao ;
+
+  if (MD5 <> '') then
+  begin
+    if (fpPAF <> '') then
+      fpPAF := fpPAF + '|' ;
+
+    fpPAF := fpPAF + MD5 ;
+  end;
 end;
 
 function TACBrECFVirtualClass.GetDataMovimento: TDateTime;

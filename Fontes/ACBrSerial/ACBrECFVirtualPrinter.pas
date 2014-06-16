@@ -46,7 +46,7 @@ uses ACBrECFVirtual, ACBrECFClass, ACBrDevice, ACBrUtil, ACBrConsts,
 const
   cCmdImpCondensado        = #15 ;
   cCmdImpExpandidoUmaLinha = #14 ;
-  cCmdImpFimExpandido      = '#20';
+  cCmdImpFimExpandido      = #20;
   cCmdImpZera              = #27+'@' ;
   cCmdGaveta               = #27+'v'+#150;
   cCmdCortaPapelCompleto   = #27+#119;
@@ -700,7 +700,19 @@ procedure TACBrECFVirtualPrinterClass.AddBufferRodape;
 Var
   V : AnsiString ;
   A : Integer ;
+  SL : TStringList;
 begin
+  if fpPAF <> '' then
+  begin
+    SL := TStringList.Create;
+    try
+      SL.Text := StringReplace(fpPAF,'|',sLineBreak,[rfReplaceAll]);
+      fsBuffer.AddStrings( SL );
+    finally
+      SL.Free
+    end ;
+  end ;
+
   if fpVerao then
     V := 'V'
   else
