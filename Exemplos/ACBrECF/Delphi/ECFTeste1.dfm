@@ -2413,6 +2413,8 @@ object Form1: TForm1
     CNPJ = '01.234.567/0001-22'
     IE = '012.345.678.90'
     IM = '1234-0'
+    OnGravaArqINI = ACBrECFVirtualNaoFiscal1GravaArqINI
+    OnLeArqINI = ACBrECFVirtualNaoFiscal1LeArqINI
     CmdImpCondensado = '#15'
     CmdImpExpandidoUmaLinha = '#14'
     CmdImpFimExpandido = '#35,#50,#48'

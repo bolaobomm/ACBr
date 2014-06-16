@@ -107,7 +107,7 @@ Data: 16/06/2014  (por: DSA)
 [+] Adicionada a propriedade "AsString" em TACBrECFAliquota, TACBrECFFormaPagamento,
     TACBrECFComprovanteNaoFiscal, para permitir salvar e recuperar mais fácilmente
     valores desses objetos
-[*] Ajustes para tentiva de compatibilização com FireMonkey (FMX)
+[*] Ajustes para tentativa de compatibilização com FireMonkey (FMX)
 
 -- ACBrECFVirtualNaoFiscal --
 [+] Criado novo componente, que servirá de base para todos os ECFs virtuais,

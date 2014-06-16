@@ -557,6 +557,10 @@ type
     procedure btnArqMFDNovoClick(Sender: TObject);
     procedure btnDadosUltimaRZClick(Sender: TObject);
     procedure ProgramaIdentificaoPafECF1Click(Sender: TObject);
+    procedure ACBrECFVirtualNaoFiscal1GravaArqINI(ConteudoINI: TStrings;
+      var Tratado: Boolean);
+    procedure ACBrECFVirtualNaoFiscal1LeArqINI(ConteudoINI: TStrings;
+      var Tratado: Boolean);
   private
     { Private declarations }
     Function Converte( cmd : String) : String;
@@ -4067,6 +4071,18 @@ begin
   mResp.Lines.Add( 'Data/Hora Última Redução Z: ('+ FormatDateTime('dd/mm/yy hh:nn:ss',
                    ACBrECF1.DataHoraUltimaReducaoZ) +')' );
   AtualizaMemos ;
+end;
+
+procedure TForm1.ACBrECFVirtualNaoFiscal1GravaArqINI(ConteudoINI: TStrings;
+  var Tratado: Boolean);
+begin
+  mResp.Lines.Add('INI será Gravado')
+end;
+
+procedure TForm1.ACBrECFVirtualNaoFiscal1LeArqINI(ConteudoINI: TStrings;
+  var Tratado: Boolean);
+begin
+  mResp.Lines.Add('INI será Lido')
 end;
 
 end.
