@@ -380,14 +380,14 @@ begin
            begin
               COD_NAT   := '1102';
               DESCR_NAT := 'ENTRADA DE MERCADORIAS';
-              CFOP      := '1102';
+              COP       := 'EA10';
            end;
 
            with Registro0400New do
            begin
               COD_NAT   := '5102';
               DESCR_NAT := 'SAIDA DE MERCADORIAS';
-              CFOP      := '5102';
+              COP       := 'SP10';
            end;
         end;
      end;
@@ -401,14 +401,13 @@ var
   wRegistroE020: TRegistroSEFE020;
   wRegistroE025: TRegistroSEFE025;
 begin
-   wRegistroE020:= nil;
    wRegistroE020:= ACBrSEF2.Bloco_E.RegistroE020New;
 
    with wRegistroE020 do
    begin
       IND_OPER     := SefioEntrada;
       IND_EMIT     := SefiePropria;
-      COD_PART     := 1;
+      COD_PART     := '1';
       COD_MOD      := SrefNF;
       COD_SIT      := SefcsEmissaonormal;
       SER          := '1';
@@ -416,7 +415,7 @@ begin
       CHV_NFE      := '';
       DT_EMIS      := StrToDate('01/01/2013');
       DT_DOC       := StrToDate('01/01/2013');
-      COD_NAT      := 1102;
+      COD_NAT      := '1102';
       COP          := '1102';
       NUM_LCTO     := '0';
       IND_PGTO     := SefipAVista;
@@ -436,14 +435,13 @@ begin
       VL_OUT_IPI   := 0;
       COD_INF_OBS  := '';
 
-      wRegistroE025:= nil;
       wRegistroE025:= wRegistroE020.RegistroE025.New(wRegistroE020);
 
       with wRegistroE025 do
       begin
          VL_CONT_P      := 100;
          VL_OP_ISS_P    := 0;
-         CFOP           := 1102;
+         CFOP           := '1102';
          VL_BC_ICMS_P   := 100;
          ALIQ_ICMS      := 17;
          VL_ICMS_P      := 17;
@@ -459,14 +457,13 @@ begin
       end;
    end;
 
-   wRegistroE020:= nil;
    wRegistroE020:= ACBrSEF2.Bloco_E.RegistroE020New;
 
    with wRegistroE020 do
    begin
       IND_OPER     := SefioSaida;
       IND_EMIT     := SefiePropria;
-      COD_PART     := 3;
+      COD_PART     := '3';
       COD_MOD      := SrefNF;
       COD_SIT      := SefcsEmissaonormal;
       SER          := '1';
@@ -474,7 +471,7 @@ begin
       CHV_NFE      := '';
       DT_EMIS      := StrToDate('01/01/2013');
       DT_DOC       := StrToDate('01/01/2013');
-      COD_NAT      := 6102;
+      COD_NAT      := '6102';
       COP          := '6102';
       NUM_LCTO     := '0';
       IND_PGTO     := SefipAVista;
@@ -494,14 +491,13 @@ begin
       VL_OUT_IPI   := 0;
       COD_INF_OBS  := '';
 
-      wRegistroE025:= nil;
       wRegistroE025:= wRegistroE020.RegistroE025.New(wRegistroE020);
 
       with wRegistroE025 do
       begin
          VL_CONT_P      := 100;
          VL_OP_ISS_P    := 0;
-         CFOP           := 6102;
+         CFOP           := '6102';
          VL_BC_ICMS_P   := 0;
          ALIQ_ICMS      := 0;
          VL_ICMS_P      := 0;
@@ -517,14 +513,13 @@ begin
       end;
    end;
 
-   wRegistroE020:= nil;
    wRegistroE020:= ACBrSEF2.Bloco_E.RegistroE020New;
 
    with wRegistroE020 do
    begin
       IND_OPER     := SefioSaida;
       IND_EMIT     := SefiePropria;
-      COD_PART     := 3;
+      COD_PART     := '3';
       COD_MOD      := SrefNF;
       COD_SIT      := SefcsEmissaonormal;
       SER          := '1';
@@ -532,7 +527,7 @@ begin
       CHV_NFE      := '';
       DT_EMIS      := StrToDate('01/01/2013');
       DT_DOC       := StrToDate('01/01/2013');
-      COD_NAT      := 5102;
+      COD_NAT      := '5102';
       COP          := '5102';
       NUM_LCTO     := '0';
       IND_PGTO     := SefipAVista;
@@ -552,14 +547,13 @@ begin
       VL_OUT_IPI   := 0;
       COD_INF_OBS  := '';
 
-      wRegistroE025:= nil;
       wRegistroE025:= wRegistroE020.RegistroE025.New(wRegistroE020);
 
       with wRegistroE025 do
       begin
          VL_CONT_P      := 100;
          VL_OP_ISS_P    := 0;
-         CFOP           := 5102;
+         CFOP           := '5102';
          VL_BC_ICMS_P   := 0;
          ALIQ_ICMS      := 0;
          VL_ICMS_P      := 0;
@@ -582,7 +576,6 @@ var
   wRegistroE065: TRegistroSEFE065;
 begin
 
-   wRegistroE060:= nil;
    wRegistroE060:= ACBrSEF2.Bloco_E.RegistroE060New;
 
    with wRegistroE060 do
@@ -610,12 +603,11 @@ begin
       VL_ST        := 0;
       COD_INF_OBS  := '';
 
-      wRegistroE065:= nil;
       wRegistroE065:= wRegistroE060.RegistroE065.New(wRegistroE060);
 
       with wRegistroE065 do
       begin
-         CFOP         := 5102;
+         CFOP         := '5102';
          VL_BC_ICMS_P := 100;
          ALIQ_ICMS    := 17;
          VL_ICMS_P    := 17;
@@ -630,18 +622,17 @@ var
   wRegistroE080: TRegistroSEFE080;
   wRegistroE085: TRegistroSEFE085;
 begin
-   ACBrSEF2.Bloco_E.RegistroE001.IND_DAD := icContConteudo;
+   ACBrSEF2.Bloco_E.RegistroE001.IND_DAD :=  idDocEntrSaiAjuste;
 
    GeraArq20;
    GeraArq60;
 
-   wRegistroE080:= nil;
    wRegistroE080:= ACBrSEF2.Bloco_E.RegistroE080New;
 
    with wRegistroE080 do
    begin
       IND_TOT      := 1;
-      COD_MOD      := '2D';
+      COD_MOD      := SrefNFVCCVC;
       NUM_MR       := 1;
       DT_DOC       := StrToDate('01/01/2013');
       VL_BRT       := 100;
@@ -649,7 +640,7 @@ begin
       VL_DESC_ICMS := 0;
       VL_ACMO_ICMS := 0;
       VL_OP_ISS    := 0;
-      COP          := 5102;
+      COP          := '5102';
       NUM_LCTO     := '1';
       VL_CONT      := 100;
       VL_BC_ICMS   := 100;
@@ -659,7 +650,6 @@ begin
       IND_OBS      := 0;
    end;
 
-   wRegistroE085:= nil;
    wRegistroE085:= wRegistroE080.RegistroE085.New(wRegistroE080);
 
    with wRegistroE085 do
@@ -696,7 +686,6 @@ begin
 
        for INotas := 1 to NNotas do
        begin
-          wRegistroC020 := nil;
           wRegistroC020:= RegistroC020New;
 
           with wRegistroC020 do
@@ -732,7 +721,6 @@ begin
              //LINHA C300: ITENS DO DOCUMENTO
              for IItens := 1 to 10 do
              begin
-                wRegistroC300 := nil;
                 wRegistroC300 := wRegistroC020.RegistrosC300.New(wRegistroC020);
 
                 with wRegistroC300 do
@@ -796,7 +784,7 @@ procedure TfrmTelaTeste.btnDefinirPathClick(Sender: TObject);
 var
   wPathCompleto: String;
 begin
-   wPathCompleto:= ExtractFilePath(Application.ExeName);   
+   wPathCompleto:= ExtractFilePath(Application.ExeName);
    ACBrSEF2.Path    := ExtractFilePath(wPathCompleto);
    ACBrSEF2.Arquivo := 'sef2.txt';
 end;
