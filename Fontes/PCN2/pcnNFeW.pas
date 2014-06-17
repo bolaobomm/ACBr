@@ -1085,7 +1085,7 @@ begin
   Gerador.wGrupo('imposto', 'M01');
   Gerador.wCampo(tcDe2, 'M02', 'vTotTrib ', 01, 15, 0, nfe.Det[i].Imposto.vTotTrib, DSC_VTOTTRIB);
 
-  if nfe.Det[i].Imposto.ISSQN.cSitTrib <> ISSQNcSitTribVazio then
+  if (( NFe.Det[i].Imposto.ISSQN.cSitTrib <> ISSQNcSitTribVazio ) or (( NFe.infNFe.Versao > 3 ) and ( nfe.Det[i].Imposto.ISSQN.cListServ <> '' ))) then
    begin
       (**)GerarDetImpostoISSQN(i);
       if NFe.infNFe.Versao >= 3 then
