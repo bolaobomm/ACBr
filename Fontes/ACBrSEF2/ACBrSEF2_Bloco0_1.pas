@@ -41,7 +41,8 @@
 |*  - Ajuste StrToIntDef(COD_BF_ISS) (Registro0025)
 |*  - Ajuste StrToIntDef(wIND_RT,0)  (Registro0030)
 *******************************************************************************}
-                                             
+{$I ACBr.inc}
+
 unit ACBrSEF2_Bloco0_1;
 
 interface

@@ -19,7 +19,7 @@
       </Other>
     </CompilerOptions>
     <Description Value="ACBr - SEF2 (eDoc e SEF) - (http://www.projetoacbr.com.br/)"/>
-    <Files Count="32">
+    <Files Count="33">
       <Item1>
         <Filename Value="..\..\..\Fontes\ACBrSEF2\ACBrSEF2Conversao.pas"/>
         <UnitName Value="ACBrSEF2Conversao"/>
@@ -61,6 +61,10 @@
         <Filename Value="..\..\..\Fontes\ACBrSEF2\ACBrSEF2_BlocoH.pas"/>
         <UnitName Value="ACBrSEF2_blocoH"/>
       </Item10>
+      <Item33>
+        <Filename Value="..\..\..\Fontes\ACBrSEF2\ACBrSEF2_BlocoH_1.pas"/>
+        <UnitName Value="ACBrSEF2_BlocoH_1"/>
+      </Item33>
     </Files>
     <Type Value="RunAndDesignTime"/>
     <RequiredPkgs Count="3">

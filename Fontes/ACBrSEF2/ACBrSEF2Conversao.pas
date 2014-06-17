@@ -37,6 +37,8 @@
 |* 23/08/2013: Juliana Tamizou
 |*  - Padronização de componente existen no Branches de acordo com o ACBr
 *******************************************************************************}
+{$I ACBr.inc}
+
 unit ACBrSEF2Conversao;
 
 interface

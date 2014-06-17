@@ -37,6 +37,8 @@
 |* 23/08/2013: Juliana Tamizou
 |*  - Distribuição da Primeira Versao
 *******************************************************************************}
+{$I ACBr.inc}
+
 unit ACBrSEF2_Bloco0;
 
 interface
@@ -581,7 +583,7 @@ end;
 
 constructor TRegistroSEF0025.Create(AOwner: TRegistroSEF0001);
 begin
-  AOwner.fRegistro0025 := TRegistroSEF0025.Create(AOwner);
+  AOwner.fRegistro0025 := {$IFNDEF FPC}inherited Create{$ElSE}TRegistroSEF0025.Create(AOwner){$ENDIF};
 end;
 
 { TRegistroSEF0100 }

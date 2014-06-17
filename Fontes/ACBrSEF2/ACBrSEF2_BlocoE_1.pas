@@ -44,6 +44,7 @@
 |*  - Correção RegistroE340New
 |*  - Ajustes WriteRegistroE305 wCOP e LFill nos campos IND_MRO, IND_OPER, QTD_LCTO
 *******************************************************************************}
+{$I ACBr.inc}
 
 unit ACBrSEF2_BlocoE_1;
 

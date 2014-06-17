@@ -37,6 +37,7 @@
 |* 23/08/2013: Juliana Tamizou
 |*  - Distribuição da Primeira Versao
 *******************************************************************************}
+{$I ACBr.inc}
 
 unit ACBrSEF2_eDoc_BlocoC_Class;
 

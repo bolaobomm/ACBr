@@ -41,6 +41,7 @@
 |* 09/05/2013: Juliano Rosa
 |*  - Inclusão Registros APURAÇÃO DO IPI E500, E520, E525, E540, E560
 *******************************************************************************}
+{$I ACBr.inc}
 
 unit ACBrSEF2_BlocoE;
 

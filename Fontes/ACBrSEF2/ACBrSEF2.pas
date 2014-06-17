@@ -42,6 +42,7 @@
 |*  - Só grava Bloco H se existir registro de inventário
 |*  - Correção contagem dos registros do Bloco E no Registro 9900
 *******************************************************************************}
+{$I ACBr.inc}
 
 unit ACBrSEF2;
 
