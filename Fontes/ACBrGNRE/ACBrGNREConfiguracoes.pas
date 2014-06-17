@@ -325,7 +325,7 @@ begin
 
  Result := nil;
  Store := CoStore.Create;
- Store.Open(CAPICOM_CURRENT_USER_STORE, CAPICOM_STORE_NAME, CAPICOM_STORE_OPEN_MAXIMUM_ALLOWED);
+ Store.Open(CAPICOM_CURRENT_USER_STORE, CAPICOM_STORE_NAME, CAPICOM_STORE_OPEN_READ_ONLY);
 
  Certs := Store.Certificates as ICertificates2;
  for i:= 1 to Certs.Count do
@@ -339,7 +339,7 @@ begin
      if CertStoreMem = nil
       then begin
        CertStoreMem := CoStore.Create;
-       CertStoreMem.Open(CAPICOM_MEMORY_STORE, 'Memoria', CAPICOM_STORE_OPEN_MAXIMUM_ALLOWED);
+       CertStoreMem.Open(CAPICOM_MEMORY_STORE, 'Memoria', CAPICOM_STORE_OPEN_READ_ONLY);
        CertStoreMem.Add(Cert);
       end;
 
@@ -427,7 +427,7 @@ var
  Cert   : ICertificate2;
 begin
  Store := CoStore.Create;
- Store.Open(CAPICOM_CURRENT_USER_STORE, CAPICOM_STORE_NAME, CAPICOM_STORE_OPEN_MAXIMUM_ALLOWED);
+ Store.Open(CAPICOM_CURRENT_USER_STORE, CAPICOM_STORE_NAME, CAPICOM_STORE_OPEN_READ_ONLY);
 
  Certs  := Store.Certificates as ICertificates2;
  Certs2 := Certs.Select('Certificado(s) Digital(is) disponível(is)', 'Selecione o Certificado Digital para uso no aplicativo', false);

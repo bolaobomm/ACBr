@@ -145,7 +145,7 @@ var
   FNumeroSerie: WideString;
 begin
   Store := CoStore.Create;
-  Store.Open(CAPICOM_CURRENT_USER_STORE, FCertStoreName, CAPICOM_STORE_OPEN_MAXIMUM_ALLOWED);
+  Store.Open(CAPICOM_CURRENT_USER_STORE, FCertStoreName, CAPICOM_STORE_OPEN_READ_ONLY);
 
   Certs := Store.Certificates as ICertificates2;
 
@@ -212,7 +212,7 @@ begin
   begin
     Store := CoStore.Create;
 
-    Store.Open(CAPICOM_CURRENT_USER_STORE, FCertStoreName, CAPICOM_STORE_OPEN_MAXIMUM_ALLOWED);
+    Store.Open(CAPICOM_CURRENT_USER_STORE, FCertStoreName, CAPICOM_STORE_OPEN_READ_ONLY);
 
     Certs := Store.Certificates as ICertificates2;
 
