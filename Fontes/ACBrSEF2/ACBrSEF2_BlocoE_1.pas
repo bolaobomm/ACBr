@@ -1,47 +1,46 @@
-Ôªø{******************************************************************************}
+{******************************************************************************}
 { Projeto: Componentes ACBr                                                    }
-{  Biblioteca multiplataforma de componentes Delphi para intera√ß√£o com equipa- }
-{ mentos de Automa√ß√£o Comercial utilizados no Brasil                           }
+{  Biblioteca multiplataforma de componentes Delphi para interaÁ„o com equipa- }
+{ mentos de AutomaÁ„o Comercial utilizados no Brasil                           }
 {                                                                              }
 { Direitos Autorais Reservados (c) 2009   Isaque Pinheiro                      }
 {                                                                              }
 { Colaboradores nesse arquivo:                                                 }
 {                                                                              }
-{  Voc√™ pode obter a √∫ltima vers√£o desse arquivo na pagina do  Projeto ACBr    }
+{  VocÍ pode obter a ˙ltima vers„o desse arquivo na pagina do  Projeto ACBr    }
 { Componentes localizado em      http://www.sourceforge.net/projects/acbr      }
 {                                                                              }
-{  Esta biblioteca √© software livre; voc√™ pode redistribu√≠-la e/ou modific√°-la }
-{ sob os termos da Licen√ßa P√∫blica Geral Menor do GNU conforme publicada pela  }
-{ Free Software Foundation; tanto a vers√£o 2.1 da Licen√ßa, ou (a seu crit√©rio) }
-{ qualquer vers√£o posterior.                                                   }
+{  Esta biblioteca È software livre; vocÍ pode redistribuÌ-la e/ou modific·-la }
+{ sob os termos da LicenÁa P˙blica Geral Menor do GNU conforme publicada pela  }
+{ Free Software Foundation; tanto a vers„o 2.1 da LicenÁa, ou (a seu critÈrio) }
+{ qualquer vers„o posterior.                                                   }
 {                                                                              }
-{  Esta biblioteca √© distribu√≠da na expectativa de que seja √∫til, por√©m, SEM   }
-{ NENHUMA GARANTIA; nem mesmo a garantia impl√≠cita de COMERCIABILIDADE OU      }
-{ ADEQUA√á√ÉO A UMA FINALIDADE ESPEC√çFICA. Consulte a Licen√ßa P√∫blica Geral Menor}
-{ do GNU para mais detalhes. (Arquivo LICEN√áA.TXT ou LICENSE.TXT)              }
+{  Esta biblioteca È distribuÌda na expectativa de que seja ˙til, porÈm, SEM   }
+{ NENHUMA GARANTIA; nem mesmo a garantia implÌcita de COMERCIABILIDADE OU      }
+{ ADEQUA«√O A UMA FINALIDADE ESPECÕFICA. Consulte a LicenÁa P˙blica Geral Menor}
+{ do GNU para mais detalhes. (Arquivo LICEN«A.TXT ou LICENSE.TXT)              }
 {                                                                              }
-{  Voc√™ deve ter recebido uma c√≥pia da Licen√ßa P√∫blica Geral Menor do GNU junto}
-{ com esta biblioteca; se n√£o, escreva para a Free Software Foundation, Inc.,  }
-{ no endere√ßo 59 Temple Street, Suite 330, Boston, MA 02111-1307 USA.          }
-{ Voc√™ tamb√©m pode obter uma copia da licen√ßa em:                              }
+{  VocÍ deve ter recebido uma cÛpia da LicenÁa P˙blica Geral Menor do GNU junto}
+{ com esta biblioteca; se n„o, escreva para a Free Software Foundation, Inc.,  }
+{ no endereÁo 59 Temple Street, Suite 330, Boston, MA 02111-1307 USA.          }
+{ VocÍ tambÈm pode obter uma copia da licenÁa em:                              }
 { http://www.opensource.org/licenses/lgpl-license.php                          }
 {                                                                              }
-{ Daniel Sim√µes de Almeida  -  daniel@djsystem.com.br  -  www.djsystem.com.br  }
-{              Pra√ßa Anita Costa, 34 - Tatu√≠ - SP - 18270-410                  }
+{ Daniel Simıes de Almeida  -  daniel@djsystem.com.br  -  www.djsystem.com.br  }
+{              PraÁa Anita Costa, 34 - TatuÌ - SP - 18270-410                  }
 {                                                                              }
 {******************************************************************************}
-
 {******************************************************************************
 |* Historico
 |*
 |* 23/08/2013: Juliana Tamizou
-|*  - Distribui√ß√£o da Primeira Versao
+|*  - DistribuiÁ„o da Primeira Versao
 |* 06/05/2013: Juliano Rosa
-|*  - Inclus√£o Registro E120
+|*  - Inclus„o Registro E120
 |* 09/05/2013: Juliano Rosa
 |*  - Ajustes Registro E120
-|*  - Inclus√£o Registros APURA√á√ÉO DO IPI E500, E520, E525, E540, E560 
-|*  - Corre√ß√£o RegistroE340New
+|*  - Inclus„o Registros APURA«√O DO IPI E500, E520, E525, E540, E560 
+|*  - CorreÁ„o RegistroE340New
 |*  - Ajustes WriteRegistroE305 wCOP e LFill nos campos IND_MRO, IND_OPER, QTD_LCTO
 *******************************************************************************}
 {$I ACBr.inc}
@@ -742,7 +741,7 @@ begin
              end;
          RegistroE990.QTD_LIN_E := RegistroE990.QTD_LIN_E + 1;
          end;
-     /// VariavÈ¨†para armazenar a quantidade de registro do tipo.
+     /// Variav?para armazenar a quantidade de registro do tipo.
      FRegistroE310Count := FRegistroE310Count + RegE300.RegistroE310.Count;
   end;
 end;
@@ -776,7 +775,7 @@ begin
              end;
          RegistroE990.QTD_LIN_E := RegistroE990.QTD_LIN_E + 1;
          end;
-     /// VariavÈ¨†para armazenar a quantidade de registro do tipo.
+     /// Variav?para armazenar a quantidade de registro do tipo.
      FRegistroE330Count := FRegistroE330Count + RegE300.RegistroE330.Count;
   end;
 end;
@@ -851,7 +850,7 @@ begin
               end;
          RegistroE990.QTD_LIN_E := RegistroE990.QTD_LIN_E + 1;
          end;
-     /// VariavÈ¨†para armazenar a quantidade de registro do tipo.
+     /// Variav?para armazenar a quantidade de registro do tipo.
      FRegistroE350Count := FRegistroE350Count + RegE300.RegistroE350.Count;
   end;
 end;
@@ -882,7 +881,7 @@ begin
             end;
          RegistroE990.QTD_LIN_E := RegistroE990.QTD_LIN_E + 1;
          end;
-     /// VariavÈ¨†para armazenar a quantidade de registro do tipo.
+     /// Variav?para armazenar a quantidade de registro do tipo.
      FRegistroE360Count := FRegistroE360Count + RegE300.RegistroE360.Count;
   end;
 end;
@@ -1024,7 +1023,7 @@ begin
             end;
          RegistroE990.QTD_LIN_E := RegistroE990.QTD_LIN_E + 1;
          end;
-     /// Variav√©¬¨¬†para armazenar a quantidade de registro do tipo.
+     /// VariavÈ¨†para armazenar a quantidade de registro do tipo.
      FRegistroE560Count := FRegistroE560Count + RegE500.RegistroE560.Count;
   end;
 end;
