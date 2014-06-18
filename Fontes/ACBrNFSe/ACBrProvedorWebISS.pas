@@ -131,6 +131,34 @@ begin
             ConfigURL.HomNomeCidade := 'cacoalro';
             ConfigURL.ProNomeCidade := 'cacoalro';
            end;
+  1500958: begin // Aurora Do Para/PA
+            ConfigURL.HomNomeCidade := 'auroradoparapa';
+            ConfigURL.ProNomeCidade := 'auroradoparapa';
+           end;
+  1507003: begin // Santo Antonio do Taua/PA
+            ConfigURL.HomNomeCidade := 'santoantoniodotauapa';
+            ConfigURL.ProNomeCidade := 'santoantoniodotauapa';
+           end;
+  1507102: begin // Sao Caetano De Odivelas/PA
+            ConfigURL.HomNomeCidade := 'saocaetanodeodivelaspa';
+            ConfigURL.ProNomeCidade := 'saocaetanodeodivelaspa';
+           end;
+  1721000: begin // Palmas/TO
+            ConfigURL.HomNomeCidade := 'palmasto';
+            ConfigURL.ProNomeCidade := 'palmasto';
+           end;
+  2100204: begin // Alcantara/MA
+            ConfigURL.HomNomeCidade := 'alcantarama';
+            ConfigURL.ProNomeCidade := 'alcantarama';
+           end;
+  2110005: begin // Santa Luzia/MA
+            ConfigURL.HomNomeCidade := 'santaluziama';
+            ConfigURL.ProNomeCidade := 'santaluziama';
+           end;
+  2211308: begin // Valenca do Piaui/PI
+            ConfigURL.HomNomeCidade := 'valencadopiauipi';
+            ConfigURL.ProNomeCidade := 'valencadopiauipi';
+           end;
   2800308: begin // Aracaju/SE
             ConfigURL.HomNomeCidade := 'aracajuse';
             ConfigURL.ProNomeCidade := 'aracajuse';
@@ -142,6 +170,10 @@ begin
   2802106: begin // Estância/SE
             ConfigURL.HomNomeCidade := 'estanciase';
             ConfigURL.ProNomeCidade := 'estanciase';
+           end;
+  2803302: begin // Japaratuba/SE
+            ConfigURL.HomNomeCidade := 'japaratubase';
+            ConfigURL.ProNomeCidade := 'japaratubase';
            end;
   2803500: begin // Lagarto/SE
             ConfigURL.HomNomeCidade := 'lagartose';
@@ -155,13 +187,57 @@ begin
             ConfigURL.HomNomeCidade := 'ameliarodriguesba';
             ConfigURL.ProNomeCidade := 'ameliarodriguesba';
            end;
+  2906501: begin // Candeias/BA
+            ConfigURL.HomNomeCidade := 'candeiasba';
+            ConfigURL.ProNomeCidade := 'candeiasba';
+           end;
   2910800: begin // Feira de Santana/BA
             ConfigURL.HomNomeCidade := 'feiradesantanaba';
             ConfigURL.ProNomeCidade := 'feiradesantanaba';
            end;
+  2914802: begin // Itabuna/BA
+            ConfigURL.HomNomeCidade := 'itabunaba';
+            ConfigURL.ProNomeCidade := 'itabunaba';
+           end;
+  2916401: begin // Itapetinga/BA
+            ConfigURL.HomNomeCidade := 'itapetingaba';
+            ConfigURL.ProNomeCidade := 'itapetingaba';
+           end;
+  2932606: begin // Urandi/BA
+            ConfigURL.HomNomeCidade := 'urandiba';
+            ConfigURL.ProNomeCidade := 'urandiba';
+           end;
   3104205: begin // Arcos/MG
             ConfigURL.HomNomeCidade := 'arcosmg';
             ConfigURL.ProNomeCidade := 'arcosmg';
+           end;
+  3107406: begin // Bom Despacho/MG
+            ConfigURL.HomNomeCidade := 'bomdespachomg';
+            ConfigURL.ProNomeCidade := 'bomdespachomg';
+           end;
+  3134608: begin // Jaboticatubas/MG
+            ConfigURL.HomNomeCidade := 'jaboticatubasmg';
+            ConfigURL.ProNomeCidade := 'jaboticatubasmg';
+           end;
+  3138807: begin // Luz/MG
+            ConfigURL.HomNomeCidade := 'luzmg';
+            ConfigURL.ProNomeCidade := 'luzmg';
+           end;
+  3141108: begin // Matozinhos/MG
+            ConfigURL.HomNomeCidade := 'matozinhosmg';
+            ConfigURL.ProNomeCidade := 'matozinhosmg';
+           end;
+  3153608: begin // Prudente de Morais/MG
+            ConfigURL.HomNomeCidade := 'prudentedemoraismg';
+            ConfigURL.ProNomeCidade := 'prudentedemoraismg';
+           end;
+  3159001: begin // Santana do Riacho/MG
+            ConfigURL.HomNomeCidade := 'santanadoriachomg';
+            ConfigURL.ProNomeCidade := 'santanadoriachomg';
+           end;
+  3171105: begin // Verissimo/MG
+            ConfigURL.HomNomeCidade := 'verissimomg';
+            ConfigURL.ProNomeCidade := 'verissimomg';
            end;
   2907509: begin // Catu/BA
             ConfigURL.HomNomeCidade := 'catuba';
@@ -214,6 +290,10 @@ begin
   3136207: begin // João Monlevade/MG
             ConfigURL.HomNomeCidade := 'mgjoaomonlevade';
             ConfigURL.ProNomeCidade := 'mgjoaomonlevade';
+           end;
+  3145208: begin // Nova Serrana/MG
+            ConfigURL.HomNomeCidade := 'novaserranamg';
+            ConfigURL.ProNomeCidade := 'novaserranamg';
            end;
   3147907: begin // Passos/MG
             ConfigURL.HomNomeCidade := 'passosmg';
@@ -303,9 +383,21 @@ begin
             ConfigURL.HomNomeCidade := 'rjteresopolis';
             ConfigURL.ProNomeCidade := 'rjteresopolis';
            end;
+  3305901: begin // Trajano de Moraes/RJ
+            ConfigURL.HomNomeCidade := 'trajanodemoraesrj';
+            ConfigURL.ProNomeCidade := 'trajanodemoraesrj';
+           end;
   4210100: begin // Mafra/SC
             ConfigURL.HomNomeCidade := 'mafrasc';
             ConfigURL.ProNomeCidade := 'mafrasc';
+           end;
+  4209607: begin // Lauro Muller/SC
+            ConfigURL.HomNomeCidade := 'lauromullersc';
+            ConfigURL.ProNomeCidade := 'lauromullersc';
+           end;
+  4211108: begin // Monte Castelo/SC
+            ConfigURL.HomNomeCidade := 'montecastelosc';
+            ConfigURL.ProNomeCidade := 'montecastelosc';
            end;
   4301602: begin // Bage/RS
             ConfigURL.HomNomeCidade := 'bagers';
@@ -326,6 +418,10 @@ begin
   5107909: begin // Sinop/MT
             ConfigURL.HomNomeCidade := 'sinop';
             ConfigURL.ProNomeCidade := 'sinop';
+           end;
+  5107305: begin // Sao Jose do Rio Claro/MT
+            ConfigURL.HomNomeCidade := 'saojosedorioclaromt';
+            ConfigURL.ProNomeCidade := 'saojosedorioclaromt';
            end;
   5107958: begin // Tangara da Serra/MT
             ConfigURL.HomNomeCidade := 'tangaradaserramt';
@@ -374,6 +470,7 @@ begin
   3110509,
   3111200,
   3126109,
+  3145208,
   3170107,
   3302908,
   3303401,
@@ -381,6 +478,7 @@ begin
   3304110,
   3304144,
   3305802,
+  3305901,
   4301602,
   5105259: begin
             ConfigURL.HomRecepcaoLoteRPS    := 'https://www1.webiss.com.br/' + ConfigURL.HomNomeCidade + '_wsnfse_homolog/NfseServices.svc';
@@ -427,18 +525,35 @@ begin
            end;
 
   1100049,
+  1500958,
+  1507003,
+  1507102,
+  2110005,
+  2211308,
+  2803302,
   2901106,
+  2906501,
+  2919553,
+  2932606,
   3101508,
+  3107406,
   3110202,
+  3134608,
+  3138807,
+  3141108,
   3150703,
   3152303,
+  3153608,
+  3159001,
   3162104,
+  3171105,
   3301207,
   3301306,
+  4209607,
+  4211108,
   5101308,
   5101704,
-  5107958,
-  2919553: begin
+  5107958: begin
             ConfigURL.HomRecepcaoLoteRPS    := 'https://www4.webiss.com.br/' + ConfigURL.HomNomeCidade + '_wsnfse_homolog/NfseServices.svc';
             ConfigURL.HomConsultaLoteRPS    := 'https://www4.webiss.com.br/' + ConfigURL.HomNomeCidade + '_wsnfse_homolog/NfseServices.svc';
             ConfigURL.HomConsultaNFSeRPS    := 'https://www4.webiss.com.br/' + ConfigURL.HomNomeCidade + '_wsnfse_homolog/NfseServices.svc';
@@ -454,8 +569,12 @@ begin
             ConfigURL.ProCancelaNFSe        := 'https://www4.webiss.com.br/' + ConfigURL.ProNomeCidade + '_wsnfse/NfseServices.svc';
            end;
 
+  2100204,
+  2914802,
+  2916401,
   3147907,
-  4210100: begin
+  4210100,
+  5107305: begin
             ConfigURL.HomRecepcaoLoteRPS    := 'https://www5.webiss.com.br/' + ConfigURL.HomNomeCidade + '_wsnfse_homolog/NfseServices.svc';
             ConfigURL.HomConsultaLoteRPS    := 'https://www5.webiss.com.br/' + ConfigURL.HomNomeCidade + '_wsnfse_homolog/NfseServices.svc';
             ConfigURL.HomConsultaNFSeRPS    := 'https://www5.webiss.com.br/' + ConfigURL.HomNomeCidade + '_wsnfse_homolog/NfseServices.svc';
@@ -471,7 +590,6 @@ begin
             ConfigURL.ProCancelaNFSe        := 'https://www5.webiss.com.br/' + ConfigURL.ProNomeCidade + '_wsnfse/NfseServices.svc';
            end;
  end;
-
 
  Result := ConfigURL;
 end;

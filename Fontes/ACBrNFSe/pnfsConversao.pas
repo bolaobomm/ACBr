@@ -1119,18 +1119,37 @@ begin
          : Provedor := 'Vitoria';
 
   1100049, // Cacoal/RO
+  1500958, // Aurora Do Para/PA
+  1507003, // Santo Antonio do Taua/PA
+  1507102, // Sao Caetano De Odivelas/PA
+  1721000, // Palmas/TO
+  2100204, // Alcantara/MA
+  2110005, // Santa Luzia/MA
+  2211308, // Valenca do Piaui/PI
   2800308, // Aracaju/SE
   2801009, // Campo do Brito/SE
   2802106, // Estância/SE
+  2803302, // Japaratuba/SE
   2803500, // Lagarto/SE
   2901007, // Amargosa/BA
   2901106, // Amelia Rodrigues/BA
-  2907509, // Catu/BA
+  2906501, // Candeias/BA
   2910800, // Feira de Santana/BA
-  2919553, // Luis Eduardo Magalhaes/BA
-//  2925204, // Pojuca/BA
-  3101508, // Alem Paraiba/MG
+  2914802, // Itabuna/BA
+  2916401, // Itapetinga/BA
+  2932606, // Urandi/BA
   3104205, // Arcos/MG
+  3107406, // Bom Despacho/MG
+  3134608, // Jaboticatubas/MG
+  3138807, // Luz/MG
+  3141108, // Matozinhos/MG
+  3153608, // Prudente de Morais/MG
+  3159001, // Santana do Riacho/MG
+  3171105, // Verissimo/MG
+  2907509, // Catu/BA
+  2919553, // Luiz Eduardo Magalhães/BA
+  2925204, // Pojuca/BA
+  3101508, // Alem Paraiba/MG
   3105608, // Barbacena/MG
   3105905, // Barroso/MG
   3110202, // Cajuri/MG
@@ -1141,10 +1160,11 @@ begin
   3127107, // Frutal/MG
   3133808, // Itaúna/MG
   3136207, // João Monlevade/MG
+  3145208, // Nova Serrana/MG
   3147907, // Passos/MG
   3150703, // Pirajuba/MG
   3152303, // Porto Firme/MG
-//  3155702, // Rio Piracicaba/MG
+  3155702, // Rio Piracicaba/MG
   3159605, // Santa Rita do Sapucaí/MG
   3162104, // São Gotardo/MG
   3170107, // Uberaba/MG
@@ -1163,12 +1183,16 @@ begin
   3305000, // São João da Barra/RJ
   3305604, // Silva Jardim/RJ
   3305802, // Teresópolis/RJ
+  3305901, // Trajano de Moraes/RJ
   4210100, // Mafra/SC
+  4209607, // Lauro Muller/SC
+  4211108, // Monte Castelo/SC
   4301602, // Bage/RS
   5101308, // Arenapolis/MT
   5101704, // Barra do Bugres/MT
   5105259, // Lucas do Rio Verde/MT
   5107909, // Sinop/MT
+  5107305, // Sao Jose do Rio Claro/MT
   5107958, // Tangara da Serra/MT
   5204508  // Caldas Novas/GO
          : Provedor := 'WebISS';
