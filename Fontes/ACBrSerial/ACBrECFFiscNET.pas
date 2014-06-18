@@ -2956,7 +2956,7 @@ end;
 function TACBrECFFiscNET.GetDadosUltimaReducaoZ: AnsiString;
 var
    RetCmd, S, SS : AnsiString ;
-   I, ECFCRZ, ECFCRO : Integer;
+   I, J, ECFCRZ, ECFCRO : Integer;
    ECFVBruta : Double ;
    AliqZ: TACBrECFAliquota;
    CNFZ: TACBrECFComprovanteNaoFiscal;
@@ -3025,9 +3025,10 @@ begin
     S := copy( RetCmd, 113, 224 ) ;  // 16 * 14
     For I := 0 to fpAliquotas.Count-1 do
     begin
+      J := StrToIntDef( Trim(fpAliquotas[I].Indice), I );
       AliqZ := TACBrECFAliquota.Create ;
       AliqZ.Assign( fpAliquotas[I] );
-      AliqZ.Total := RoundTo( StrToFloatDef( copy(S,(I*14)+1,14),0) / 100, -2);
+      AliqZ.Total := RoundTo( StrToFloatDef( copy(S,(J*14)+1,14),0) / 100, -2);
       AdicionaAliquota( AliqZ );
     end ;
 

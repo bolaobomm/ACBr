@@ -97,6 +97,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+Data: 18/06/2014  (por: DSA)
+-- ACBrECFFiscNET --
+[*] Ajusta para que GetDadosUltimaReducaoZ leia corretamente os Totalizadores de
+    alíquotas, mesmo se o índice 0 não estiver programado corretamente
+
 Data: 16/06/2014  (por: DSA)
 -- ACBrECF --
 [+] Adicionada a propriedade "ECFVirtual", que permite fazer com que o ACBrECF
