@@ -71,7 +71,7 @@ type
     constructor Create; reintroduce;
     destructor Destroy; override;
   published
-    property InfEvento: TInfEvento read FInfEvento write FInfEvento;
+    property InfEvento: TInfEvento       read FInfEvento    write FInfEvento;
     property RetInfEvento: TRetInfEvento read FRetInfEvento write FRetInfEvento;
   end;
 
@@ -117,9 +117,9 @@ end;
 function TEventoMDFe.ObterNomeArquivo(tpEvento: TpcnTpEvento): string;
 begin
  case tpEvento of
-    teCancelamento:     Result := Evento.Items[0].InfEvento.chMDFe + '-can-eve.xml'; // Cancelamento da MDFe como Evento
-    teEncerramento:     Result := Evento.Items[0].InfEvento.chMDFe + '-ped-eve.xml'; // Encerramento
-    teInclusaoCondutor: Result := Evento.Items[0].InfEvento.chMDFe + '-inc-eve.xml'; // Inclusao de Condutor
+    teCancelamento:     Result := Evento.Items[0].InfEvento.chMDFe + '-can-eve.xml';
+    teEncerramento:     Result := Evento.Items[0].InfEvento.chMDFe + '-ped-eve.xml';
+    teInclusaoCondutor: Result := Evento.Items[0].InfEvento.chMDFe + '-inc-eve.xml'; 
   else
     raise EventoException.Create('Obter nome do arquivo de Evento não Implementado!');
  end;

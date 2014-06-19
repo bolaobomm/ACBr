@@ -128,21 +128,21 @@ type
     FXML: AnsiString;
   public
   published
-    property Id: string  read FId write FId;
-    property tpAmb: TpcnTipoAmbiente read FtpAmb write FtpAmb;
-    property verAplic: string  read FverAplic write FverAplic;
-    property cOrgao: Integer read FcOrgao write FcOrgao;
-    property cStat: integer read FcStat write FcStat;
-    property xMotivo: string read FxMotivo write FxMotivo;
-    property chMDFe: String read FchMDFe write FchMDFe;
-    property tpEvento: TpcnTpEvento read FtpEvento write FtpEvento;
-    property xEvento: String read FxEvento write FxEvento;
-    property nSeqEvento: Integer read FnSeqEvento write FnSeqEvento;
-    property CNPJDest: string read FCNPJDest write FCNPJDest;
-    property emailDest: String read FemailDest write FemailDest;
-    property dhRegEvento: TDateTime read FdhRegEvento write FdhRegEvento;
-    property nProt: String read FnProt write FnProt;
-    property XML: AnsiString read FXML write FXML;
+    property Id: string              read FId          write FId;
+    property tpAmb: TpcnTipoAmbiente read FtpAmb       write FtpAmb;
+    property verAplic: string        read FverAplic    write FverAplic;
+    property cOrgao: Integer         read FcOrgao      write FcOrgao;
+    property cStat: integer          read FcStat       write FcStat;
+    property xMotivo: string         read FxMotivo     write FxMotivo;
+    property chMDFe: String          read FchMDFe      write FchMDFe;
+    property tpEvento: TpcnTpEvento  read FtpEvento    write FtpEvento;
+    property xEvento: String         read FxEvento     write FxEvento;
+    property nSeqEvento: Integer     read FnSeqEvento  write FnSeqEvento;
+    property CNPJDest: string        read FCNPJDest    write FCNPJDest;
+    property emailDest: String       read FemailDest   write FemailDest;
+    property dhRegEvento: TDateTime  read FdhRegEvento write FdhRegEvento;
+    property nProt: String           read FnProt       write FnProt;
+    property XML: AnsiString         read FXML         write FXML;
   end;
 
 implementation

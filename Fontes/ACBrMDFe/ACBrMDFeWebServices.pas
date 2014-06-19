@@ -88,12 +88,13 @@ type
   public
     function Executar: Boolean;virtual;
     constructor Create(AOwner : TComponent); virtual;
-    property CabMsg: AnsiString read FCabMsg;
-    property DadosMsg: AnsiString read FDadosMsg;
-    property RetornoWS: AnsiString read FRetornoWS;
-    property RetWS: AnsiString read FRetWS;
-    property Msg: AnsiString read FMsg;
-    property PathArqEnv: AnsiString read FPathArqEnv;
+
+    property CabMsg: AnsiString      read FCabMsg;
+    property DadosMsg: AnsiString    read FDadosMsg;
+    property RetornoWS: AnsiString   read FRetornoWS;
+    property RetWS: AnsiString       read FRetWS;
+    property Msg: AnsiString         read FMsg;
+    property PathArqEnv: AnsiString  read FPathArqEnv;
     property PathArqResp: AnsiString read FPathArqResp;
   end;
 
@@ -110,15 +111,16 @@ type
     FxObs :  String;
   public
     function Executar: Boolean; override;
+
     property tpAmb : TpcnTipoAmbiente read FtpAmb;
-    property verAplic : String read FverAplic;
-    property cStat : Integer read FcStat;
-    property xMotivo : String read FxMotivo;
-    property cUF : Integer read FcUF;
-    property dhRecbto : TDateTime read FdhRecbto;
-    property TMed : Integer read FTMed;
-    property dhRetorno : TDateTime read FdhRetorno;
-    property xObs :  String read FxObs;
+    property verAplic : String        read FverAplic;
+    property cStat : Integer          read FcStat;
+    property xMotivo : String         read FxMotivo;
+    property cUF : Integer            read FcUF;
+    property dhRecbto : TDateTime     read FdhRecbto;
+    property TMed : Integer           read FTMed;
+    property dhRetorno : TDateTime    read FdhRetorno;
+    property xObs :  String           read FxObs;
   end;
 
   TMDFeRecepcao = Class(TWebServicesBase)
@@ -137,15 +139,16 @@ type
   public
     function Executar: Boolean; override;
     constructor Create(AOwner : TComponent; AMDFes : TManifestos);reintroduce;
-    property Recibo: String read FRecibo;
+
+    property Recibo: String          read FRecibo;
     property TpAmb: TpcnTipoAmbiente read FTpAmb;
-    property verAplic: String read FverAplic;
-    property cStat: Integer read FcStat;
-    property cUF: Integer read FcUF;
-    property xMotivo: String read FxMotivo;
-    property dhRecbto: TDateTime read FdhRecbto;
-    property TMed: Integer read FTMed;
-    property Lote: String read GetLote write FLote;
+    property verAplic: String        read FverAplic;
+    property cStat: Integer          read FcStat;
+    property cUF: Integer            read FcUF;
+    property xMotivo: String         read FxMotivo;
+    property dhRecbto: TDateTime     read FdhRecbto;
+    property TMed: Integer           read FTMed;
+    property Lote: String            read GetLote write FLote;
   end;
 
   TMDFeRetRecepcao = Class(TWebServicesBase)
@@ -167,16 +170,17 @@ type
     function Executar: Boolean; override;
     constructor Create(AOwner : TComponent; AManifestos : TManifestos);reintroduce;
     destructor destroy; override;
-    property TpAmb: TpcnTipoAmbiente read FTpAmb;
-    property verAplic: String read FverAplic;
-    property cStat: Integer read FcStat;
-    property cUF: Integer read FcUF;
-    property xMotivo: String read FxMotivo;
-    property cMsg: Integer read FcMsg;
-    property xMsg: String read FxMsg;
-    property Recibo: String read FRecibo write FRecibo;
-    property Protocolo: String read FProtocolo write FProtocolo;
-    property ChaveMDFe: String read FChaveMDFe write FChaveMDFe;
+
+    property TpAmb: TpcnTipoAmbiente       read FTpAmb;
+    property verAplic: String              read FverAplic;
+    property cStat: Integer                read FcStat;
+    property cUF: Integer                  read FcUF;
+    property xMotivo: String               read FxMotivo;
+    property cMsg: Integer                 read FcMsg;
+    property xMsg: String                  read FxMsg;
+    property Recibo: String                read FRecibo      write FRecibo;
+    property Protocolo: String             read FProtocolo   write FProtocolo;
+    property ChaveMDFe: String             read FChaveMDFe   write FChaveMDFe;
     property MDFeRetorno: TRetConsReciMDFe read FMDFeRetorno write FMDFeRetorno;
   end;
 
@@ -195,14 +199,15 @@ type
     function Executar: Boolean; override;
     constructor Create(AOwner : TComponent);reintroduce;
     destructor destroy; override;
-    property TpAmb: TpcnTipoAmbiente read FTpAmb;
-    property verAplic: String read FverAplic;
-    property cStat: Integer read FcStat;
-    property xMotivo: String read FxMotivo;
-    property cUF: Integer read FcUF;
-    property xMsg: String read FxMsg;
-    property cMsg: Integer read FcMsg;
-    property Recibo: String read FRecibo write FRecibo;
+
+    property TpAmb: TpcnTipoAmbiente       read FTpAmb;
+    property verAplic: String              read FverAplic;
+    property cStat: Integer                read FcStat;
+    property xMotivo: String               read FxMotivo;
+    property cUF: Integer                  read FcUF;
+    property xMsg: String                  read FxMsg;
+    property cMsg: Integer                 read FcMsg;
+    property Recibo: String                read FRecibo      write FRecibo;
     property MDFeRetorno: TRetConsReciMDFe read FMDFeRetorno write FMDFeRetorno;
   end;
 
@@ -222,18 +227,18 @@ type
   public
     constructor Create(AOwner : TComponent); reintroduce;
     destructor Destroy; override;
-
     function Executar: Boolean;override;
-    property MDFeChave: WideString read FMDFeChave write FMDFeChave;
-    property Protocolo: WideString read FProtocolo write FProtocolo;
-    property DhRecbto: TDateTime read FDhRecbto write FDhRecbto;
-    property XMotivo: WideString read FXMotivo write FXMotivo;
-    property TpAmb: TpcnTipoAmbiente read FTpAmb;
-    property verAplic: String read FverAplic;
-    property cStat: Integer read FcStat;
-    property cUF: Integer read FcUF;
-    property digVal: String read FdigVal;
-    property protMDFe: TProcMDFe read FprotMDFe write FprotMDFe;
+
+    property MDFeChave: WideString                    read FMDFeChave write FMDFeChave;
+    property Protocolo: WideString                    read FProtocolo write FProtocolo;
+    property DhRecbto: TDateTime                      read FDhRecbto  write FDhRecbto;
+    property XMotivo: WideString                      read FXMotivo   write FXMotivo;
+    property TpAmb: TpcnTipoAmbiente                  read FTpAmb;
+    property verAplic: String                         read FverAplic;
+    property cStat: Integer                           read FcStat;
+    property cUF: Integer                             read FcUF;
+    property digVal: String                           read FdigVal;
+    property protMDFe: TProcMDFe                      read FprotMDFe       write FprotMDFe;
     property procEventoMDFe: TRetEventoMDFeCollection read FprocEventoMDFe write FprocEventoMDFe;
   end;
 
@@ -274,13 +279,13 @@ type
     function Envia(ALote: Integer): Boolean; overload;
     function Envia(ALote: String): Boolean; overload;
 //  published
-    property ACBrMDFe: TComponent read FACBrMDFe write FACBrMDFe;
+    property ACBrMDFe: TComponent              read FACBrMDFe      write FACBrMDFe;
     property StatusServico: TMDFeStatusServico read FStatusServico write FStatusServico;
-    property Enviar: TMDFeRecepcao read FEnviar write FEnviar;
-    property Retorno: TMDFeRetRecepcao read FRetorno write FRetorno;
-    property Recibo: TMDFeRecibo read FRecibo write FRecibo;
-    property Consulta: TMDFeConsulta read FConsulta write FConsulta;
-    property EnvEvento: TMDFeEnvEvento read FEnvEvento write FEnvEvento;
+    property Enviar: TMDFeRecepcao             read FEnviar        write FEnviar;
+    property Retorno: TMDFeRetRecepcao         read FRetorno       write FRetorno;
+    property Recibo: TMDFeRecibo               read FRecibo        write FRecibo;
+    property Consulta: TMDFeConsulta           read FConsulta      write FConsulta;
+    property EnvEvento: TMDFeEnvEvento         read FEnvEvento     write FEnvEvento;
   end;
 
 implementation

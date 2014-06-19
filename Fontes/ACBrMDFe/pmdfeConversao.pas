@@ -49,11 +49,8 @@ uses
 
 type
   TLayOutMDFe     = ( LayMDFeEnvio, LayMDFeConsulta );
-  // Alterado por Italo em 21/03/2013
-  // Conforme NT 2013/001
   TMDFeTpEmitente = ( teTransportadora, teTranspCargaPropria );
   TMDFeModal      = ( moRodoviario, moAereo, moAquaviario, moFerroviario );
-  // Incluido por Italo em 16/10/2013
   TMDFeVersao     = ( ve100, ve100a );
 
 const

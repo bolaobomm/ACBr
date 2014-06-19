@@ -936,7 +936,7 @@ function AssinarLibXML(const AXML, ArqPFX, PFXSenha: AnsiString;
 var
   I, J, PosIni, PosFim : Integer;
   URI, AStr, XmlAss    : AnsiString;
-  Tipo                 : Integer;  // 1 - MDFe 2 - Cancelamento 
+  Tipo                 : Integer;   
   Cert: TMemoryStream;
   Cert2: TStringStream;
 begin
