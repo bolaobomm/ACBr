@@ -1,47 +1,46 @@
 object frmDACTeRL: TfrmDACTeRL
   Left = 239
-  Height = 312
   Top = 218
-  Width = 881
+  Width = 906
+  Height = 343
   Caption = 'frmDACTeRL'
-  ClientHeight = 312
-  ClientWidth = 881
   Color = clBtnFace
+  Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
   Font.Height = -11
   Font.Name = 'MS Sans Serif'
+  Font.Style = []
+  OldCreateOrder = True
   OnCreate = FormCreate
   OnDestroy = FormDestroy
-  LCLVersion = '1.3'
+  PixelsPerInch = 96
+  TextHeight = 13
   object RLCTe: TRLReport
     Left = 2
-    Height = 1123
     Top = 2
     Width = 794
+    Height = 1123
+    Font.Charset = DEFAULT_CHARSET
     Font.Color = clWindowText
     Font.Height = -13
     Font.Name = 'Arial'
-    Margins.LeftMargin = 7
-    Margins.TopMargin = 7
-    Margins.RightMargin = 7
-    Margins.BottomMargin = 7
-    RealBounds.Left = 0
-    RealBounds.Top = 0
-    RealBounds.Width = 0
-    RealBounds.Height = 0
+    Font.Style = []
+    Margins.LeftMargin = 7.000000000000000000
+    Margins.TopMargin = 7.000000000000000000
+    Margins.RightMargin = 7.000000000000000000
+    Margins.BottomMargin = 7.000000000000000000
     ShowProgress = False
   end
   object RLPDFFilter1: TRLPDFFilter
-    DocumentInfo.Creator = 'FortesReport (Open Source) v3.24(B14)  \251 Copyright © 1999-2008 Fortes Informática'
-    DocumentInfo.ModDate = 0
-    ViewerOptions = []
-    FontEncoding = feNoEncoding
+    DocumentInfo.Creator = 
+      'FortesReport (Open Source) v3.24(B14)  \251 Copyright '#194#169' 1999-20' +
+      '08 Fortes Inform'#195#161'tica'
     DisplayName = 'Documento PDF'
-    left = 136
-    top = 48
+    Left = 136
+    Top = 48
   end
-  object Datasource1: TDatasource
-    left = 184
-    top = 48
+  object Datasource1: TDataSource
+    Left = 184
+    Top = 48
   end
 end

@@ -56,7 +56,10 @@ uses
   Windows, Messages, Graphics, Controls, Forms, Dialogs, ExtCtrls, MaskUtils, StdCtrls,
   {$ENDIF}
   RLReport, RLFilters, RLPDFFilter,
-  pcnConversao, RLBarcode, DB, StrUtils, RLRichText, ACBrCTeDACTeRL;
+  pcnConversao, RLBarcode, DB, StrUtils, RLRichText, ACBrCTeDACTeRL,
+
+  RLMetaFile, RLFeedBack, RLParser, RLConsts, RLUtils,
+  RLPrintDialog, RLTypes, RLPrinters;
 
 type
 
@@ -64,15 +67,6 @@ type
 
   TfrmDACTeRLRetrato = class(TfrmDACTeRL)
     RLBarcode1: TRLBarcode;
-    rlbCodigoBarras: TRLBarcode;
-    rlb_08_Itens: TRLBand;
-    rldbtTpDoc1: TRLDBText;
-    rldbtCnpjEmitente1: TRLDBText;
-    rldbtDocumento1: TRLDBText;
-    rldbtDocumento2: TRLDBText;
-    rldbtCnpjEmitente2: TRLDBText;
-    rldbtTpDoc2: TRLDBText;
-    RLDraw29: TRLDraw;
     rlb_01_Recibo: TRLBand;
     rlsLinhaH03: TRLDraw;
     rlmEmitente: TRLMemo;
@@ -116,9 +110,6 @@ type
     rlLabel106: TRLLabel;
     rlLabel109: TRLLabel;
     RLDraw34: TRLDraw;
-    RLDraw28: TRLDraw;
-    RLDraw35: TRLDraw;
-    rlsFimItens: TRLDraw;
     rlb_09_Obs: TRLBand;
     rlb_02_Cabecalho: TRLBand;
     rlLabel29: TRLLabel;
@@ -299,10 +290,6 @@ type
     rlLabel62: TRLLabel;
     rlLabel63: TRLLabel;
     rlLabel64: TRLLabel;
-    rlmComplChave1: TRLMemo;
-    rlmComplValor1: TRLMemo;
-    rlmComplChave2: TRLMemo;
-    rlmComplValor2: TRLMemo;
     rlsQuadro01: TRLDraw;
     rlsQuadro02: TRLDraw;
     rlsQuadro04: TRLDraw;
@@ -395,9 +382,6 @@ type
     RLDraw46: TRLDraw;
     RLDraw48: TRLDraw;
     RLDraw49: TRLDraw;
-    RLDraw50: TRLDraw;
-    RLDraw51: TRLDraw;
-    RLDraw52: TRLDraw;
     rlLabel3: TRLLabel;
     rlLabel132: TRLLabel;
     rlLabel133: TRLLabel;
@@ -586,6 +570,28 @@ type
     RLDraw107: TRLDraw;
     rllResumoCanhotoCTe: TRLLabel;
     rllResumoCanhotoCTe2: TRLLabel;
+    rlbCodigoBarras: TRLBarcode;
+    RLDraw51: TRLDraw;
+    RLDraw52: TRLDraw;
+    RLDraw50: TRLDraw;
+    RLLabel198: TRLLabel;
+    RLDraw108: TRLDraw;
+    RLDraw109: TRLDraw;
+    rlmComplChave1: TRLMemo;
+    rlmComplValor1: TRLMemo;
+    rlmComplChave2: TRLMemo;
+    rlmComplValor2: TRLMemo;
+    rlDocOrig_tpDoc1: TRLMemo;
+    rlDocOrig_cpf1: TRLMemo;
+    rlDocOrig_serie1: TRLMemo;
+    rlDocOrig_serie2: TRLMemo;
+    rlDocOrig_cpf2: TRLMemo;
+    rlDocOrig_tpDoc2: TRLMemo;
+    RLDraw28: TRLDraw;
+    RLLabel199: TRLLabel;
+    RLLabel200: TRLLabel;
+    rlTomadorServico: TRLLabel;
+    rlFormaPgto: TRLLabel;
     procedure rlb_01_ReciboBeforePrint(Sender: TrlCustomBand; var PrintBand: boolean);
     procedure rlb_02_CabecalhoBeforePrint(Sender: TrlCustomBand; var PrintBand: boolean);
     procedure rlb_03_DadosDACTeBeforePrint(Sender: TrlCustomBand; var PrintBand: boolean);
@@ -593,7 +599,6 @@ type
     procedure rlb_05_ComplementoBeforePrint(Sender: TrlCustomBand; var PrintBand: boolean);
     procedure rlb_06_ValorPrestacaoBeforePrint(Sender: TrlCustomBand; var PrintBand: boolean);
     procedure rlb_07_HeaderItensBeforePrint(Sender: TrlCustomBand; var PrintBand: boolean);
-    procedure rlb_08_ItensBeforePrint(Sender: TrlCustomBand; var PrintBand: boolean);
     procedure rlb_09_ObsBeforePrint(Sender: TrlCustomBand; var PrintBand: boolean);
     procedure rlb_10_ModRodFracionadoBeforePrint(Sender: TrlCustomBand; var PrintBand: boolean);
     procedure rlb_11_ModRodLot103BeforePrint(Sender: TrlCustomBand; var PrintBand: boolean);
@@ -1061,11 +1066,6 @@ var
 begin
   inherited;
 
-  //  if Trim(FLogo) <> '' then
-  //   begin
-  //   rliLogo.Picture.LoadFromFile(FLogo);
-  //   end;
-
   if (FLogo <> '') then
   begin
     if FilesExists(FLogo) then
@@ -1082,28 +1082,34 @@ begin
         vStringStream.Free;
       end;
     end;
+  end
+  else
+  begin
+    rlmDadosEmitente.Left  := 7;
+    rlmDadosEmitente.Width := 321;
+    rlmDadosEmitente.Alignment := taCenter;
   end;
 
   if FExpandirLogoMarca then
   begin
-    rliLogo.top := 2;
-    rliLogo.Left := 2;
-    rliLogo.Height := 142;
-    rliLogo.Width := 330;
+    rliLogo.top     := 3;
+    rliLogo.Left    := 3;
+    rliLogo.Height  := 91;
+    rliLogo.Width   := 321;
     rliLogo.Stretch := True;
-    rlmEmitente.Enabled := False;
+    rlmEmitente.Enabled      := False;
     rlmDadosEmitente.Enabled := False;
   end;
 
-  rllModal.Caption := TpModalToStrText(FCTe.Ide.modal);
-  rllModelo.Caption := FCTe.Ide.modelo;
-  rllSerie.Caption := IntToStr(FCTe.Ide.serie);  //FormatFloat( '000', FCTe.Ide.serie);
-  rllNumCte.Caption := FormatFloat('000,000,000', FCTe.Ide.nCT);
-  rllPageNumber.Caption := format('%2.2d', [RLCTe.PageNumber]) + '/' + format('%2.2d', [FTotalPages]);
-  //  rllPageNumber.Caption := format('%2.2d', [RLCTe.PageNumber]) + '/' + format('%2.2d', [RLCTe.rlPrinter.PageCount]);
-  rllEmissao.Caption := DFeUtil.FormatDateTime(DateTimeToStr(FCTe.Ide.dhEmi));
+  rllModal.Caption   := TpModalToStrText(FCTe.Ide.modal);
+  rllModelo.Caption  := FCTe.Ide.modelo;
+  rllSerie.Caption   := IntToStr(FCTe.Ide.serie);  //FormatFloat( '000', FCTe.Ide.serie);
+  rllNumCte.Caption  := FormatFloat('000,000,000', FCTe.Ide.nCT);
+  rllPageNumber.Caption   := format('%2.2d', [RLCTe.PageNumber]) + '/' + format('%2.2d', [FTotalPages]);
+//  rllPageNumber.Caption   := format('%2.2d', [RLCTe.PageNumber]) + '/' + format('%2.2d', [RLCTe.rlPrinter.PageCount]);
+  rllEmissao.Caption      := DFeUtil.FormatDateTime(DateTimeToStr(FCTe.Ide.dhEmi));
   rlbCodigoBarras.Caption := Copy(FCTe.InfCTe.Id, 4, 44);
-  rllChave.Caption := CTeUtil.FormatarChaveAcesso(Copy(FCTe.InfCTe.Id, 4, 44));
+  rllChave.Caption        := CTeUtil.FormatarChaveAcesso(Copy(FCTe.InfCTe.Id, 4, 44));
 
   if not FExpandirLogoMarca then
   begin
@@ -1127,7 +1133,7 @@ begin
       end;
       rlmDadosEmitente.Lines.Add('CNPJ: ' + DFeUtil.FormatarCNPJ(CNPJ));
       rlmDadosEmitente.Lines.Add('INSCRIÇÃO ESTADUAL: ' + IE);
-      rlmDadosEmitente.Lines.Add('TELEFONE: ' + DFeUtil.FormatarFone(EnderEmit.Fone));
+      {rlmDadosEmitente.Lines.Add('TELEFONE: ' + DFeUtil.FormatarFone(EnderEmit.Fone));}
 
       if Trim(FUrl) <> '' then
         rlmDadosEmitente.Lines.Add('SITE: ' + FUrl);
@@ -1136,13 +1142,20 @@ begin
     end;
   end;
 
-  rllTipoCte.Caption := tpCTToStrText(FCTe.Ide.tpCTe);
+  rllTipoCte.Caption     := tpCTToStrText(FCTe.Ide.tpCTe);
   rllTipoServico.Caption := TpServToStrText(FCTe.Ide.tpServ);
   if FCTe.Ide.Toma4.xNome = '' then
-    rllTomaServico.Caption := TpTomadorToStrText(FCTe.Ide.Toma03.Toma)
+  begin
+    rllTomaServico.Caption   := TpTomadorToStrText(FCTe.Ide.Toma03.Toma);
+    rlTomadorServico.Caption := TpTomadorToStrText(FCTe.Ide.Toma03.Toma);
+  end
   else
-    rllTomaServico.Caption := TpTomadorToStrText(FCTe.Ide.Toma4.toma);
+  begin
+    rllTomaServico.Caption   := TpTomadorToStrText(FCTe.Ide.Toma4.toma);
+    rlTomadorServico.Caption := TpTomadorToStrText(FCTe.Ide.Toma4.toma);
+  end;                                                                   
   rllFormaPagamento.Caption := tpforPagToStrText(FCTe.Ide.forPag);
+  rlFormaPgto.Caption       := tpforPagToStrText(FCTe.Ide.forPag);
 
   // Normal **************************************************************
   if FCTe.Ide.tpEmis in [teNormal, teSCAN, teSVCSP, teSVCRS] then
@@ -1250,26 +1263,32 @@ begin
   rllFoneDest.Caption := DFeUtil.FormatarFone(FCTe.Dest.fone);
 
   //DADOS EXPEDIDOR
-  rllRazaoExped.Caption := FCTe.Exped.xNome;
-  rllEnderecoExped1.Caption := FCTe.Exped.EnderExped.xLgr + ', ' + FCTe.Exped.EnderExped.nro;
-  rllEnderecoExped2.Caption := FCTe.Exped.EnderExped.xCpl + ' - ' + FCTe.Exped.EnderExped.xBairro;
-  rllCEPExped.Caption := DFeUtil.FormatarCEP(FormatFloat('00000000', FCTe.Exped.EnderExped.CEP));
-  rllMunExped.Caption := FCTe.Exped.EnderExped.xMun + ' - ' + FCTe.Exped.EnderExped.UF;
-  rllCnpjExped.Caption := DFeUtil.FormatarCNPJCPF(FCTe.Exped.CNPJCPF);
-  rllPaisExped.Caption := FCTe.Exped.EnderExped.xPais;
-  rllInscEstExped.Caption := FCTe.Exped.IE;
-  rllFoneExped.Caption := DFeUtil.FormatarFone(FCTe.Exped.fone);
+  if FCTe.Exped.xNome <> '' then
+  begin
+    rllRazaoExped.Caption := FCTe.Exped.xNome;
+    rllEnderecoExped1.Caption := FCTe.Exped.EnderExped.xLgr + ', ' + FCTe.Exped.EnderExped.nro;
+    rllEnderecoExped2.Caption := FCTe.Exped.EnderExped.xCpl + ' - ' + FCTe.Exped.EnderExped.xBairro;
+    rllCEPExped.Caption := DFeUtil.FormatarCEP(FormatFloat('00000000', FCTe.Exped.EnderExped.CEP));
+    rllMunExped.Caption := FCTe.Exped.EnderExped.xMun + ' - ' + FCTe.Exped.EnderExped.UF;
+    rllCnpjExped.Caption := DFeUtil.FormatarCNPJCPF(FCTe.Exped.CNPJCPF);
+    rllPaisExped.Caption := FCTe.Exped.EnderExped.xPais;
+    rllInscEstExped.Caption := FCTe.Exped.IE;
+    rllFoneExped.Caption := DFeUtil.FormatarFone(FCTe.Exped.fone);
+  end;
 
   //DADOS RECEBEDOR
-  rllRazaoReceb.Caption := FCTe.Receb.xNome;
-  rllEnderecoReceb1.Caption := FCTe.Receb.EnderReceb.xLgr + ', ' + FCTe.Receb.EnderReceb.nro;
-  rllEnderecoReceb2.Caption := FCTe.Receb.EnderReceb.xCpl + ' - ' + FCTe.Receb.EnderReceb.xBairro;
-  rllCEPReceb.Caption := DFeUtil.FormatarCEP(FormatFloat('00000000', FCTe.Receb.EnderReceb.CEP));
-  rllMunReceb.Caption := FCTe.Receb.EnderReceb.xMun + ' - ' + FCTe.Receb.EnderReceb.UF;
-  rllCnpjReceb.Caption := DFeUtil.FormatarCNPJCPF(FCTe.Receb.CNPJCPF);
-  rllPaisReceb.Caption := FCTe.Receb.EnderReceb.xPais;
-  rllInscEstReceb.Caption := FCTe.Receb.IE;
-  rllFoneReceb.Caption := DFeUtil.FormatarFone(FCTe.Receb.fone);
+  if FCTe.Receb.xNome <> '' then
+  begin
+    rllRazaoReceb.Caption := FCTe.Receb.xNome;
+    rllEnderecoReceb1.Caption := FCTe.Receb.EnderReceb.xLgr + ', ' + FCTe.Receb.EnderReceb.nro;
+    rllEnderecoReceb2.Caption := FCTe.Receb.EnderReceb.xCpl + ' - ' + FCTe.Receb.EnderReceb.xBairro;
+    rllCEPReceb.Caption := DFeUtil.FormatarCEP(FormatFloat('00000000', FCTe.Receb.EnderReceb.CEP));
+    rllMunReceb.Caption := FCTe.Receb.EnderReceb.xMun + ' - ' + FCTe.Receb.EnderReceb.UF;
+    rllCnpjReceb.Caption := DFeUtil.FormatarCNPJCPF(FCTe.Receb.CNPJCPF);
+    rllPaisReceb.Caption := FCTe.Receb.EnderReceb.xPais;
+    rllInscEstReceb.Caption := FCTe.Receb.IE;
+    rllFoneReceb.Caption := DFeUtil.FormatarFone(FCTe.Receb.fone);
+  end;
 
   if FCTe.Ide.Toma4.xNome = '' then
   begin
@@ -1326,15 +1345,18 @@ begin
   end
   else
   begin
-    rllRazaoToma.Caption := FCTe.Ide.Toma4.xNome;
-    rllEnderecoToma.Caption := FCTe.Ide.Toma4.EnderToma.xLgr + ', ' + FCTe.Ide.Toma4.EnderToma.nro +
-      ' - ' + FCTe.Ide.Toma4.EnderToma.xCpl + ' - ' + FCTe.Ide.Toma4.EnderToma.xBairro;
-    rllCEPToma.Caption := DFeUtil.FormatarCEP(FormatFloat('00000000', FCTe.Ide.Toma4.EnderToma.CEP));
-    rllMunToma.Caption := FCTe.Ide.Toma4.EnderToma.xMun + ' - ' + FCTe.Ide.Toma4.EnderToma.UF;
-    rllCnpjToma.Caption := DFeUtil.FormatarCNPJCPF(FCTe.Ide.Toma4.CNPJCPF);
-    rllPaisToma.Caption := FCTe.Ide.Toma4.EnderToma.xPais;
-    rllInscEstToma.Caption := FCTe.Ide.Toma4.IE;
-    rllFoneToma.Caption := DFeUtil.FormatarFone(FCTe.Ide.Toma4.fone);
+    if FCTe.Ide.Toma4.xNome <> '' then
+    begin
+      rllRazaoToma.Caption := FCTe.Ide.Toma4.xNome;
+      rllEnderecoToma.Caption := FCTe.Ide.Toma4.EnderToma.xLgr + ', ' + FCTe.Ide.Toma4.EnderToma.nro +
+        ' - ' + FCTe.Ide.Toma4.EnderToma.xCpl + ' - ' + FCTe.Ide.Toma4.EnderToma.xBairro;
+      rllCEPToma.Caption := DFeUtil.FormatarCEP(FormatFloat('00000000', FCTe.Ide.Toma4.EnderToma.CEP));
+      rllMunToma.Caption := FCTe.Ide.Toma4.EnderToma.xMun + ' - ' + FCTe.Ide.Toma4.EnderToma.UF;
+      rllCnpjToma.Caption := DFeUtil.FormatarCNPJCPF(FCTe.Ide.Toma4.CNPJCPF);
+      rllPaisToma.Caption := FCTe.Ide.Toma4.EnderToma.xPais;
+      rllInscEstToma.Caption := FCTe.Ide.Toma4.IE;
+      rllFoneToma.Caption := DFeUtil.FormatarFone(FCTe.Ide.Toma4.fone);
+    end;
   end;
 
 {$IFDEF PL_200}
@@ -1751,15 +1773,22 @@ var
   i: integer;
 {$ENDIF}
 begin
-  inherited;
-  PrintBand := RLCTe.PageNumber = 1;
-
   // Imprime a lista dos CT-e Complementados se o Tipo de CTe for Complemento
+
+  inherited;
+  rlb_05_Complemento.Enabled := (FCTe.Ide.tpCTe = tcComplemento);
+  if not rlb_05_Complemento.Enabled then
+    rlb_05_Complemento.Height := 0;
+
+  PrintBand := (RLCTe.PageNumber = 1);
+
   rlmComplChave1.Lines.Clear;
   rlmComplValor1.Lines.Clear;
   rlmComplChave2.Lines.Clear;
   rlmComplValor2.Lines.Clear;
-  rlb_05_Complemento.Enabled := (FCTe.Ide.tpCTe = tcComplemento);
+
+
+
 
 {$IFDEF PL_200}
   rlmComplChave1.Lines.Add(FCTe.InfCTeComp.Chave);
@@ -1790,28 +1819,39 @@ begin
 end;
 
 procedure TfrmDACTeRLRetrato.rlb_07_HeaderItensBeforePrint(Sender: TrlCustomBand; var PrintBand: boolean);
-begin
-  inherited;
-  // Imprime os Documentos Originários se o Tipo de CTe for Normal
-end;
-
-procedure TfrmDACTeRLRetrato.rlb_08_ItensBeforePrint(Sender: TrlCustomBand; var PrintBand: boolean);
 var
-  i: integer;
+  i : Integer;
 begin
   inherited;
 
   // Imprime os Documentos Originários se o Tipo de CTe for Normal
-  // TpcteTipoCTe = (tcNormal, tcComplemento, tcAnulacao, tcSubstituto);
-  rlb_08_Itens.Enabled := (FCTe.Ide.tpCTe = tcNormal) or (FCTe.Ide.tpCTe = tcComplemento) or
+  rlb_07_HeaderItens.Enabled := (FCTe.Ide.tpCTe = tcNormal) or (FCTe.Ide.tpCTe = tcComplemento) or
     (FCTe.Ide.tpCTe = tcSubstituto);
 
-  for i := 1 to 2 do
-    if Trim(cdsDocumentos.FieldByName('DOCUMENTO_' + IntToStr(i)).AsString) = '' then
-      TRLDBText(FindComponent('rldbtCnpjEmitente' + IntToStr(i))).Width := 325
-    else
-      TRLDBText(FindComponent('rldbtCnpjEmitente' + IntToStr(i))).Width := 128;
+  rlDocOrig_tpDoc1.Lines.Clear;
+  rlDocOrig_tpDoc2.Lines.Clear;
+  rlDocOrig_cpf1.Lines.Clear;
+  rlDocOrig_cpf2.Lines.Clear;
+  rlDocOrig_serie1.Lines.Clear;
+  rlDocOrig_serie2.Lines.Clear;
 
+  cdsDocumentos.First;
+  while not cdsDocumentos.Eof do
+  begin
+    if cdsDocumentos.FieldByName('TIPO_1').AsString <> '' then
+    begin
+      rlDocOrig_tpDoc1.Lines.Add(cdsDocumentos.FieldByName('TIPO_1').AsString);
+      rlDocOrig_cpf1.Lines.Add(cdsDocumentos.FieldByName('CNPJCPF_1').AsString);
+      rlDocOrig_serie1.Lines.Add(cdsDocumentos.FieldByName('DOCUMENTO_1').AsString);
+    end;
+    if cdsDocumentos.FieldByName('TIPO_2').AsString <> '' then
+    begin
+      rlDocOrig_tpDoc2.Lines.Add(cdsDocumentos.FieldByName('TIPO_2').AsString);
+      rlDocOrig_cpf2.Lines.Add(cdsDocumentos.FieldByName('CNPJCPF_2').AsString);
+      rlDocOrig_serie2.Lines.Add(cdsDocumentos.FieldByName('DOCUMENTO_2').AsString);
+    end;
+    cdsDocumentos.Next;
+  end;
 end;
 
 procedure TfrmDACTeRLRetrato.rlb_09_ObsBeforePrint(Sender: TrlCustomBand; var PrintBand: boolean);
@@ -2297,7 +2337,12 @@ begin
   inherited;
   PrintBand := RLCTe.PageNumber = 1;
 
-  rllblSistema.Caption := FSistema + ' - ' + FUsuario;
+  rlLabel15.Visible := FImprimeHoraSaida;
+
+  if (FSistema <> '') or (FUsuario <> '') then
+    rllblSistema.Caption := FSistema + ' - ' + FUsuario
+  else
+    rllblSistema.Caption := '';
 end;
 
 procedure TfrmDACTeRLRetrato.rlb_18_ReciboBeforePrint(Sender: TrlCustomBand; var PrintBand: boolean);
@@ -2330,7 +2375,16 @@ var
   i: integer;
 begin
   inherited;
+
+{$IFDEF PL_200}
+  rlb_06_ProdutosPerigosos.Enabled := (FCTe.infCTeNorm.peri.Count > 0);
+{$ELSE}
+  rlb_06_ProdutosPerigosos.Enabled := (FCTe.peri.Count > 0);
+{$ENDIF}
+
   PrintBand := (RLCTe.PageNumber = 1);
+  if not rlb_06_ProdutosPerigosos.Enabled then
+    rlb_06_ProdutosPerigosos.Height := 0;
 
   rlmNumONU.Lines.Clear;
   rlmNomeApropriado.Lines.Clear;
@@ -2376,19 +2430,19 @@ begin
 
 {$IFDEF PL_200}
   if FCTe.infCTeNorm.peri.Count = 0
-   then rlb_06_ProdutosPerigosos.Height := 0;
+   then rlb_06_ProdutosPerigosos.Visible := False;
 {$ELSE}
   if FCTe.peri.Count = 0 then
-    rlb_06_ProdutosPerigosos.Height := 0;
+    rlb_06_ProdutosPerigosos.Visible := False;
 {$ENDIF}
 
   rlb_10_ModRodFracionado.Height := 0;
-  rlb_11_ModRodLot103.Height := 0;
-  rlb_11_ModRodLot104.Height := 0;
-  rlb_12_ModAereo.Height := 0;
-  rlb_13_ModAquaviario.Height := 0;
-  rlb_14_ModFerroviario.Height := 0;
-  rlb_15_ModDutoviario.Height := 0;
+  rlb_11_ModRodLot103.Height     := 0;
+  rlb_11_ModRodLot104.Height     := 0;
+  rlb_12_ModAereo.Height         := 0;
+  rlb_13_ModAquaviario.Height    := 0;
+  rlb_14_ModFerroviario.Height   := 0;
+  rlb_15_ModDutoviario.Height    := 0;
 
   case FCTe.Ide.modal of
     mdRodoviario:
@@ -2400,7 +2454,7 @@ begin
                     end
                     else begin
                      rlb_10_ModRodFracionado.Height := 44;
-                     rlb_11_ModRodLot104.Height     := 105;
+                     rlb_11_ModRodLot104.Height     := 107;
                     end;
                  {$ELSE}
       if FCTe.Rodo.Lota = ltNao then
@@ -2413,7 +2467,7 @@ begin
         if Versao = 103 then
           rlb_11_ModRodLot103.Height := 108
         else
-          rlb_11_ModRodLot104.Height := 105;
+          rlb_11_ModRodLot104.Height := 107;
       end;
                  {$ENDIF}
     end;
@@ -2423,7 +2477,7 @@ begin
     end;
     mdAquaviario:
     begin
-      rlb_13_ModAquaviario.Height := 90;
+      rlb_13_ModAquaviario.Height := 92;
     end;
     mdFerroviario:
     begin

@@ -339,8 +339,8 @@ end;
 // Descomentar este comando quando aparecer a mensagem do Fortes sobre
 // versão diferente
 
-{initialization
-RLConsts.SetVersion(3,71,'B');}
+initialization 
+RLConsts.SetVersion(3,72,'B');
 
 end.
 
