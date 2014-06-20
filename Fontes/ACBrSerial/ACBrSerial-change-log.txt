@@ -97,6 +97,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+Data: 20/06/2014
+-- ACBrECFBematech, ACBrECFDaruma --
+[*] Ajustes para geração de Arquivos com Finalidade finSintegra e finSPED
+    http://www.projetoacbr.com.br/forum/index.php?showtopic=16129
+
 Data: 18/06/2014  (por: DSA)
 -- ACBrECFFiscNET --
 [*] Ajusta para que GetDadosUltimaReducaoZ leia corretamente os Totalizadores de

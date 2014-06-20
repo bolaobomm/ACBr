@@ -5193,13 +5193,23 @@ begin
       finTDM: Relatorio := 'TDM';
       finNFP: Relatorio := 'NFP';
       finNFPTDM: Relatorio := 'NFPTDM';
-      finSintegra: Relatorio := 'SINTEGRA';
-      finSPED: Relatorio := 'SPED';
+      finSintegra:
+      begin
+        Relatorio := 'SINTEGRA';
+        NomeArq  := Relatorio + '.TXT';
+      end;
+      finSPED:
+      begin
+        Relatorio := 'SPED';
+        NomeArq  := Relatorio + '_DRM.TXT';
+      end
     else
       raise EACBrECFERRO.Create(ACBrStr('Finalidade não reconhecida, finalidades válidas: MF, MFD, TDM, NFP, NFPTDM, SINTEGRA, SPED'));
     end;
 
-    NomeArq  := 'ATO_' + Relatorio + '_DATA.TXT';
+    if not (Finalidade in [finSintegra, finSPED]) then
+      NomeArq  := 'ATO_' + Relatorio + '_DATA.TXT';
+
     DirDest  := IncludeTrailingPathDelimiter(ExtractFilePath(NomeArquivo));
     PathDest := DirDest + NomeArq;
 

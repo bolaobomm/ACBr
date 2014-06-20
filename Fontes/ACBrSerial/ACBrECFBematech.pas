@@ -355,7 +355,31 @@ TACBrECFBematech = class( TACBrECFClass )
     xBematech_FI_DownloadMFD: function(cNomeArquivoMFD, cTipoDownload,
       cDadoInicial, cDadoFinal, cUsuario: AnsiString): Integer; stdcall;
     xBematech_FI_DownloadMF: function(cNomeArquivoMF: AnsiString): Integer; stdcall;
-
+    xBematech_FI_RelatorioSintegraMFD: function (iRelatorios : Integer;
+                                                 cArquivo    : String;
+                                                 cMes        : String;
+                                                 cAno        : String;
+                                                 cRazaoSocial: String;
+                                                 cEndereco   : String;
+                                                 cNumero     : String;
+                                                 cComplemento: String;
+                                                 cBairro     : String;
+                                                 cCidade     : String;
+                                                 cCEP        : String;
+                                                 cTelefone   : String;
+                                                 cFax        : String;
+                                                 cContato    : String): Integer; StdCall;
+    xBematech_FI_GeraRegistrosSpedCompleto: function (cArquivoMFD: string;
+                                                      cArquivoTXT: string;
+                                                      cDataInicial: string;
+                                                      cDataFinal: string;
+                                                      cPerfil: string;
+                                                      cCFOP: string;
+                                                      cCODOBSFiscal: string;
+                                                      cAliqPIS: string;
+                                                      cAliqCOFINS: string;
+                                                      cEmpresa: string;
+                                                      cCodMunicipio: string): Integer; StdCall;
     {$IFDEF MSWINDOWS}
      procedure LoadDLLFunctions;
      procedure UnLoadDLLFunctions;
@@ -3335,6 +3359,8 @@ begin
    BematechFunctionDetect( 'Bematech_FI_GeraRegistrosCAT52MFD',@xBematech_FI_GeraRegistrosCAT52MFD );
    BematechFunctionDetect( 'Bematech_FI_DownloadMFD',@xBematech_FI_DownloadMFD );
    BematechFunctionDetect( 'Bematech_FI_DownloadMF',@xBematech_FI_DownloadMF );
+   BematechFunctionDetect( 'Bematech_FI_RelatorioSintegraMFD',@xBematech_FI_RelatorioSintegraMFD );
+   BematechFunctionDetect( 'Bematech_FI_GeraRegistrosSpedCompleto',@xBematech_FI_GeraRegistrosSpedCompleto );
 end;
 
 procedure TACBrECFBematech.UnLoadDLLFunctions;
@@ -3358,6 +3384,8 @@ begin
   xBematech_FI_GeraRegistrosCAT52MFD := Nil;
   xBematech_FI_DownloadMFD           := Nil;
   xBematech_FI_DownloadMF            := Nil;
+  xBematech_FI_RelatorioSintegraMFD  := Nil;
+  xBematech_FI_GeraRegistrosSpedCompleto := Nil;
 end;
 
 procedure TACBrECFBematech.AbrePortaSerialDLL(const aPath: String);
@@ -3777,18 +3805,65 @@ begin
 
      AbrePortaSerialDLL( FilePath ) ;
 
-     Resp := xBematech_FI_ArquivoMFDPath( '',           // Origem = MFD
-                                          NomeArquivo,  // Destino
-                                          DiaIni, DiaFim, 'D', Prop, Tipo,
-                                          cChavePublica, cChavePrivada, 1 ) ;
+     case Finalidade of
+       finMF, finMFD, finTDM,
+       finRZ, finRFD:
+         begin
+          Resp := xBematech_FI_ArquivoMFDPath( '',           // Origem = MFD
+                                              NomeArquivo,  // Destino
+                                              DiaIni, DiaFim, 'D', Prop, Tipo,
+                                              cChavePublica, cChavePrivada, 1 ) ;
 
-     if (Resp <> 1) then
-        raise EACBrECFErro.Create( ACBrStr( 'Erro ao executar xBematech_FI_ArquivoMFDPath.'+sLineBreak+
-                                         AnalisarRetornoDll(Resp) )) ;
+          if (Resp <> 1) then
+             raise EACBrECFErro.Create( ACBrStr( 'Erro ao executar xBematech_FI_ArquivoMFDPath.'+sLineBreak+
+                                        AnalisarRetornoDll(Resp) )) ;
 
-     if not FileExists( NomeArquivo ) then
-        raise EACBrECFErro.Create( ACBrStr( 'Erro na execução de xBematech_FI_ArquivoMFDPath.'+sLineBreak+
-                                   'Arquivo: "'+NomeArquivo + '" não gerado' )) ;
+          if not FileExists( NomeArquivo ) then
+             raise EACBrECFErro.Create( ACBrStr( 'Erro na execução de xBematech_FI_ArquivoMFDPath.'+sLineBreak+
+                                        'Arquivo: "'+NomeArquivo + '" não gerado' )) ;
+         end;
+       //finNFP, finNFPTDM: raise EACBrECFErro.Create( ACBrStr( 'Utilize o método PafMF_GerarCAT52.'));
+       finSintegra:
+         begin
+           if FormatDateTime('mmyyyy', DataInicial) <> FormatDateTime('mmyyyy', DataFinal) then
+             raise EACBrECFErro.Create( ACBrStr( 'Permitido somente o período de um mês.'));
+
+
+
+           Resp := xBematech_FI_RelatorioSintegraMFD(63, //Gera todos os registros (60M, 60A, 60D, 60I, 60R e 75)
+                                                         //Os registros 10, 11 e 90, são gerados automaticamente
+                                                    NomeArquivo,
+                                                    FormatDateTime('mm', DataInicial),
+                                                    FormatDateTime('yyyy', DataInicial),
+                                                    'RAZAOSOCIAL', 'ENDERECO', '12345',
+                                                    'COMP', 'BAIRRO', 'CIDADE',
+                                                    '12345678', '12345678', '12345678',
+                                                    'CONTATO');
+           if (Resp <> 1) then
+             raise EACBrECFErro.Create( ACBrStr( 'Erro ao executar xBematech_FI_RelatorioSintegraMFD.'+sLineBreak+
+                                        AnalisarRetornoDll(Resp) )) ;
+
+           if not FileExists( NomeArquivo ) then
+             raise EACBrECFErro.Create( ACBrStr( 'Erro na execução de xBematech_FI_RelatorioSintegraMFD.'+sLineBreak+
+                                        'Arquivo: "'+NomeArquivo + '" não gerado' )) ;
+         end;
+       finSPED:
+         begin
+           Resp := xBematech_FI_GeraRegistrosSpedCompleto('', NomeArquivo,
+                                                         DiaIni, DiaFim,
+                                                         'T', '5102', ' ',
+                                                         '00,00', '00,00',
+                                                         'TESTE', '1234567');
+           if (Resp <> 1) then
+             raise EACBrECFErro.Create( ACBrStr( 'Erro ao executar xBematech_FI_GeraRegistrosSpedCompleto.'+sLineBreak+
+                                        AnalisarRetornoDll(Resp) )) ;
+
+           if not FileExists( NomeArquivo ) then
+             raise EACBrECFErro.Create( ACBrStr( 'Erro na execução de xBematech_FI_GeraRegistrosSpedCompleto.'+sLineBreak+
+                                        'Arquivo: "'+NomeArquivo + '" não gerado' )) ;                                                         
+         end;
+     end;
+
   finally
      FechaPortaSerialDLL( OldAtivo );
   end;
