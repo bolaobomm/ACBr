@@ -21,8 +21,8 @@ type
 implementation
 
 uses
- StrUtils, Dialogs, ACBrUtil, ACBrNFSe, ACBrNFSeUtil, ACBrNFSeDANFSeQRRetrato,
- ACBrNFSeDANFSeQRRetratoCampinas;
+ StrUtils, Dialogs, ACBrUtil, ACBrNFSe, ACBrNFSeUtil, pcnAuxiliar,
+ ACBrNFSeDANFSeQRRetrato, ACBrNFSeDANFSeQRRetratoCampinas;
 
 constructor TACBrNFSeDANFSeQR.Create(AOwner: TComponent);
 begin
@@ -258,12 +258,20 @@ begin
   then begin
    for i:= 0 to TACBrNFSe(ACBrNFSe).NotasFiscais.Count-1 do
     begin
-      // Alterado por Italo em 05/11/2012
+      // Alterado por Italo em 20/06/2014
 
-      // Aki Alteri a ordem Se não receber a pasta PDF configurada pega a da NFSe
+      if TACBrNFSe(ACBrNFSe).Configuracoes.Arquivos.NomeLongoNFSe then
+        NomeArqPDF := NotaUtil.GerarNomeNFSe(UFparaCodigo(TACBrNFSe(ACBrNFSe).NotasFiscais.Items[i].NFSe.PrestadorServico.Endereco.UF),
+                                             TACBrNFSe(ACBrNFSe).NotasFiscais.Items[i].Nfse.DataEmissao,
+                                             TACBrNFSe(ACBrNFSe).NotasFiscais.Items[i].Nfse.PrestadorServico.IdentificacaoPrestador.Cnpj,
+                                             StrToIntDef(TACBrNFSe(ACBrNFSe).NotasFiscais.Items[i].Nfse.Numero, 0))
+      else
+        NomeArqPDF := TACBrNFSe(ACBrNFSe).NotasFiscais.Items[i].NFSe.Numero;
 
-      NomeArqPDF := StringReplace(TACBrNFSe(ACBrNFSe).NotasFiscais.Items[i].NFSe.Numero, 'NFSe', '', [rfIgnoreCase]);
+      NomeArqPDF := StringReplace(NomeArqPDF, 'NFSe', '', [rfIgnoreCase]);
+//      NomeArqPDF := StringReplace(TACBrNFSe(ACBrNFSe).NotasFiscais.Items[i].NFSe.Numero, 'NFSe', '', [rfIgnoreCase]);
       NomeArqPDF := PathWithDelim(Self.PathPDF) + NomeArqPDF + '.pdf';
+
       if NomeArqPDF = ''
       then begin
         NomeArqPDF := trim(TACBrNFSe(ACBrNFSe).NotasFiscais.Items[i].NomeArq);
