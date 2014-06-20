@@ -611,10 +611,11 @@ begin
       if (leitor.rExtrai(iNivel + 1, 'ListaMensagemRetorno') <> '') or
          (leitor.rExtrai(iNivel + 1, 'Listamensagemretorno') <> '') or
          (leitor.rExtrai(iNivel + 1, 'ListaMensagemAlertaRetorno') <> '') or
-         (leitor.rExtrai(iNivel + 1, 'ListaMensagemRetornoLote') <> '') then
+         (leitor.rExtrai(iNivel + 1, 'ListaMensagemRetornoLote') <> '') or
+         (leitor.rExtrai(iNivel + 1, 'MensagemRetorno') <> '') then
       begin
         i := 0;
-        while Leitor.rExtrai(iNivel + 2, 'MensagemRetorno', '', i + 1) <> '' do begin
+        while Leitor.rExtrai(iNivel + IIf(FProvedor in [proSpeedGov], 1, 2), 'MensagemRetorno', '', i + 1) <> '' do begin
           ListaNfse.FMsgRetorno.Add;
           ListaNfse.FMsgRetorno[i].FCodigo   := Leitor.rCampo(tcStr, 'Codigo');
           ListaNfse.FMsgRetorno[i].FMensagem := Leitor.rCampo(tcStr, 'Mensagem');

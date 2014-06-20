@@ -3587,7 +3587,7 @@ begin
       begin
        if NFSeRetorno.ListaNfse.MsgRetorno.Items[i].Codigo <> 'L000'
         then begin
-         FMsg := FMsg + NFSeRetorno.ListaNfse.MsgRetorno.Items[i].Mensagem + IfThen(FMsg = '', '', ' / ');
+         FMsg := FMsg + IfThen(FMsg = '', '', ' / ') + NFSeRetorno.ListaNfse.MsgRetorno.Items[i].Mensagem;
 
          aMsg := aMsg + 'Código Erro : ' + NFSeRetorno.ListaNfse.MsgRetorno.Items[i].Codigo + LineBreak +
                         'Mensagem... : ' + NFSeRetorno.ListaNfse.MsgRetorno.Items[i].Mensagem + LineBreak+
