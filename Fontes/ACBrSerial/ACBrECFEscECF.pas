@@ -2615,6 +2615,10 @@ begin
 
   // DEBUG
   //WriteToTXT('C:\TEMP\REDZ.TXT', EscECFResposta.Params.Text);
+  if (UpperCase(copy(EscECFResposta.Params.Text, 0, 5)) = 'ERRO:')  then
+  begin
+    raise EACBrECFERRO.Create(ACBrStr(EscECFResposta.Params.Text)) ;
+  end;
 
   { Alimenta a class com os dados atuais do ECF }
   with fpDadosReducaoZClass do
