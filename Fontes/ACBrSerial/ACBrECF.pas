@@ -2331,16 +2331,22 @@ end;
 
 function TACBrECF.GetDadosReducaoZ: AnsiString;
 begin
+  if ComandoLOG = '' then
+     ComandoLOG := 'DadosReducaoZ' ;
   Result := fsECF.DadosReducaoZ;
 end;
 
 function TACBrECF.GetDadosReducaoZClass: TACBrECFDadosRZ;
 begin
+  if ComandoLOG = '' then
+     ComandoLOG := 'DadosReducaoZClass' ;
    Result := fsECF.DadosReducaoZClass;
 end;
 
 function TACBrECF.GetDadosUltimaReducaoZ: AnsiString;
 begin
+  if ComandoLOG = '' then
+     ComandoLOG := 'DadosUltimaReducaoZ' ;
   Result := fsECF.DadosUltimaReducaoZ ;
 end ;
 
