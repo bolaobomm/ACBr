@@ -674,7 +674,7 @@ Este campo será obrigatoriamente preenchido com:
 											<xs:simpleType>
 												<xs:restriction base="xs:string">
 													<xs:whiteSpace value="preserve"/>
-													<xs:pattern value="([!-ÿ]{0}|[!-ÿ]{5,20})?"/>
+												    <xs:pattern value="[!-ÿ]{5,20}"/>
 												</xs:restriction>
 											</xs:simpleType>
 										</xs:element>
@@ -711,7 +711,7 @@ Este campo será obrigatoriamente preenchido com:
 											</xs:restriction>
 										</xs:simpleType>
 									</xs:element>
-									<xs:element name="IE" type="TIeDest" minOccurs="0">
+									<xs:element name="IE" type="TIeDestNaoIsento" minOccurs="0">
 										<xs:annotation>
 											<xs:documentation>Inscrição Estadual (obrigatório nas operações com contribuintes do ICMS)</xs:documentation>
 										</xs:annotation>
@@ -840,7 +840,7 @@ Formato ”CFOP9999”.</xs:documentation>
 														</xs:restriction>
 													</xs:simpleType>
 												</xs:element>
-												<xs:element name="NVE" minOccurs="0">
+												<xs:element name="NVE" minOccurs="0" maxOccurs="8">
 													<xs:annotation>
 														<xs:documentation>Nomenclatura de Valor aduaneio e Estatístico</xs:documentation>
 													</xs:annotation>
@@ -2208,7 +2208,7 @@ A exigência do preenchimento das informações do ICMS diferido fica à critér
 																						<xs:documentation>Valor do ICMS da Operação</xs:documentation>
 																					</xs:annotation>
 																				</xs:element>
-																				<xs:element name="pDif" type="TDec_0302a04Opc" minOccurs="0">
+																				<xs:element name="pDif" type="TDec_0302a04OpcMax100" minOccurs="0">
 																					<xs:annotation>
 																						<xs:documentation>Percentual do diferemento</xs:documentation>
 																					</xs:annotation>
@@ -2989,7 +2989,7 @@ Operação interestadual para consumidor final com partilha do ICMS  devido na o
 																				</xs:element>
 																				<xs:sequence minOccurs="0">
 																					<xs:annotation>
-																						<xs:documentation></xs:documentation>
+																						<xs:documentation/>
 																					</xs:annotation>
 																					<xs:element name="vBCSTRet" type="TDec_1302">
 																						<xs:annotation>
@@ -3225,7 +3225,7 @@ Operação interestadual para consumidor final com partilha do ICMS  devido na o
 																		<xs:annotation>
 																			<xs:documentation>Valor Retenção ISS</xs:documentation>
 																		</xs:annotation>
-																	</xs:element>																	
+																	</xs:element>
 																	<xs:element name="indISS">
 																		<xs:annotation>
 																			<xs:documentation>Exibilidade do ISS:1-Exigível;2-Não incidente;3-Isenção;4-Exportação;5-Imunidade;6-Exig.Susp. Judicial;7-Exig.Susp. ADM</xs:documentation>
@@ -3276,7 +3276,7 @@ Operação interestadual para consumidor final com partilha do ICMS  devido na o
 																				<xs:maxLength value="30"/>
 																			</xs:restriction>
 																		</xs:simpleType>
-																	</xs:element>																	
+																	</xs:element>
 																	<xs:element name="indIncentivo">
 																		<xs:annotation>
 																			<xs:documentation>Indicador de Incentivo Fiscal. 1=Sim; 2=Não</xs:documentation>
@@ -4024,7 +4024,7 @@ Substituição Tributaria;</xs:documentation>
 													<xs:annotation>
 														<xs:documentation>Valor Total Retenção ISS</xs:documentation>
 													</xs:annotation>
-												</xs:element>												
+												</xs:element>
 												<xs:element name="cRegTrib" minOccurs="0">
 													<xs:annotation>
 														<xs:documentation>Código do regime especial de tributação</xs:documentation>
@@ -6803,7 +6803,7 @@ alterado para tamanho variavel 1-4. (NT2011/004)</xs:documentation>
 			<xs:enumeration value="5"/>
 			<xs:enumeration value="6"/>
 			<xs:enumeration value="7"/>
-			<xs:enumeration value="8"/>			
+			<xs:enumeration value="8"/>
 		</xs:restriction>
 	</xs:simpleType>
 	<xs:simpleType name="TFinNFe">
