@@ -1172,6 +1172,7 @@ begin
    begin
      aFontHeigth:=GetFontHeigh;
      qPrinted:=0;
+	 QtdeMin:=0;
      while (FDetIndex<Det.Count) and ((LinhasPorPagina=0) or (qPrinted<LinhasPorPagina)) do
       begin
         Inc(qPrinted);
@@ -1179,7 +1180,7 @@ begin
          begin
           aDescProduto:=Trim(Prod.XProd);
 
-          QtdeMin:=0;
+          //QtdeMin:=0;
           if ImprimirDetalhamentoEspecifico then
           begin
              if Prod.veicProd.chassi<>'' then
