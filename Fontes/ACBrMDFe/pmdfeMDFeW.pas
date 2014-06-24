@@ -510,7 +510,7 @@ begin
   Gerador.wCampo(tcStr, '#02', 'CNPJAgeNav', 14, 14, 1, MDFe.aquav.CNPJAgeNav, DSC_CNPJAGENAV);
   Gerador.wCampo(tcStr, '#03', 'tpEmb     ', 02, 02, 1, MDFe.aquav.tpEmb, DSC_TPEMB);
   Gerador.wCampo(tcStr, '#04', 'cEmbar    ', 01, 10, 1, MDFe.aquav.cEmbar, DSC_CEMBAR);
-//  Gerador.wCampo(tcStr, '#05', 'xEmbar    ', 01, 60, 1, MDFe.aquav.xEmbar, DSC_XEMBAR);
+  Gerador.wCampo(tcStr, '#05', 'xEmbar    ', 01, 60, 1, MDFe.aquav.xEmbar, DSC_XEMBAR);
   Gerador.wCampo(tcStr, '#05', 'nViag     ', 01, 10, 1, MDFe.aquav.nViagem, DSC_NVIAG);
   Gerador.wCampo(tcStr, '#06', 'cPrtEmb   ', 01, 05, 1, MDFe.aquav.cPrtEmb, DSC_CPRTEMB);
   Gerador.wCampo(tcStr, '#07', 'cPrtDest  ', 01, 05, 1, MDFe.aquav.cPrtDest, DSC_CPRTDEST);
@@ -519,7 +519,7 @@ begin
   begin
     Gerador.wGrupo('infTermCarreg', '#08');
     Gerador.wCampo(tcStr, '#09', 'cTermCarreg', 01, 08, 1, MDFe.aquav.infTermCarreg[i].cTermCarreg, DSC_CTERMCARREG);
-//    Gerador.wCampo(tcStr, '#09', 'xTermCarreg', 01, 60, 1, MDFe.aquav.infTermCarreg[i].xTermCarreg, DSC_XTERMCARREG);
+    Gerador.wCampo(tcStr, '#09', 'xTermCarreg', 01, 60, 1, MDFe.aquav.infTermCarreg[i].xTermCarreg, DSC_XTERMCARREG);
     Gerador.wGrupo('/infTermCarreg');
   end;
   if MDFe.aquav.infTermCarreg.Count > 5 then
@@ -529,7 +529,7 @@ begin
   begin
     Gerador.wGrupo('infTermDescarreg', '#10');
     Gerador.wCampo(tcStr, '#11', 'cTermDescarreg', 01, 08, 1, MDFe.aquav.infTermDescarreg[i].cTermDescarreg, DSC_CTERMDESCAR);
-//    Gerador.wCampo(tcStr, '#11', 'xTermDescarreg', 01, 60, 1, MDFe.aquav.infTermDescarreg[i].xTermDescarreg, DSC_XTERMDESCAR);
+    Gerador.wCampo(tcStr, '#11', 'xTermDescarreg', 01, 60, 1, MDFe.aquav.infTermDescarreg[i].xTermDescarreg, DSC_XTERMDESCAR);
     Gerador.wGrupo('/infTermDescarreg');
   end;
   if MDFe.aquav.infTermDescarreg.Count > 5 then
