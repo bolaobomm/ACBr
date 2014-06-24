@@ -338,23 +338,6 @@ begin
             ConfigURL.ProCancelaNFSe        := 'http://nfse.gaspar.sc.gov.br/NFSEWS/Services.svc';
            end;
            *)
-  4308102: begin // Feliz/RS
-            ConfigURL.HomNomeCidade         := '';
-            ConfigURL.HomRecepcaoLoteRPS    := 'http://187.84.56.69:8082/nfsewsteste/Services.svc';
-            ConfigURL.HomConsultaLoteRPS    := 'http://187.84.56.69:8082/nfsewsteste/Services.svc';
-            ConfigURL.HomConsultaNFSeRPS    := 'http://187.84.56.69:8082/nfsewsteste/Services.svc';
-            ConfigURL.HomConsultaSitLoteRPS := 'http://187.84.56.69:8082/nfsewsteste/Services.svc';
-            ConfigURL.HomConsultaNFSe       := 'http://187.84.56.69:8082/nfsewsteste/Services.svc';
-            ConfigURL.HomCancelaNFSe        := 'http://187.84.56.69:8082/nfsewsteste/Services.svc';
-
-            ConfigURL.ProNomeCidade         := '';
-            ConfigURL.ProRecepcaoLoteRPS    := 'http://187.84.56.68:8081/nfsews/Services.svc';
-            ConfigURL.ProConsultaLoteRPS    := 'http://187.84.56.68:8081/nfsews/Services.svc';
-            ConfigURL.ProConsultaNFSeRPS    := 'http://187.84.56.68:8081/nfsews/Services.svc';
-            ConfigURL.ProConsultaSitLoteRPS := 'http://187.84.56.68:8081/nfsews/Services.svc';
-            ConfigURL.ProConsultaNFSe       := 'http://187.84.56.68:8081/nfsews/Services.svc';
-            ConfigURL.ProCancelaNFSe        := 'http://187.84.56.68:8081/nfsews/Services.svc';
-           end;
   4309407: begin // Guapore/RS
             ConfigURL.HomNomeCidade         := '';
             ConfigURL.HomRecepcaoLoteRPS    := 'http://177.20.255.245/NFSEWSTESTE/Services.svc';
