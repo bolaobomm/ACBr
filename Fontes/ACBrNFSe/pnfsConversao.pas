@@ -876,6 +876,7 @@ begin
   4101408, // Apucarana/PR
   4102000, // Assis Chateaubriand/PR
 //  4205902, // Gaspar/SC
+  4308102, // Feliz/RS
 //  4309407, // Guapore/RS
 //  4310207, // Ijui/RS
 //  4320800, // Soledade/RS
