@@ -70,6 +70,7 @@ const
   DSC_QNFE        = 'Quantidade total de NFe relacionados no Manifesto';
   DSC_QNF         = 'Quantidade total de NF relacionados no Manifesto';
   DSC_QCARGA      = 'Peso Bruto Total da Carga / Mercadoria Transportada';
+  DSC_DHINIVIAGEM = 'Data e Hora previstas de Inicio da Viagem';
 
   // Rodoviário
   DSC_CIOT        = 'Código Identificador da Operação de Transporte';
@@ -80,6 +81,8 @@ const
   DSC_CNPJFORN    = 'CNPJ da empresa fornecedora do Vale-Pedágio';
   DSC_CNPJPG      = 'CNPJ do responsável pelo pagamento do Vale-Pedágio';
   DSC_NCOMPRA     = 'Número do comprovante de compra';
+  DSC_CODAGPORTO  = 'Código de Agendamento no Porto';
+
   // Aéreo
   DSC_NAC         = 'Marca da Nacionalidade da Aeronave';
   DSC_MATR        = 'Marca da Matricula da Aeronave';

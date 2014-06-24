@@ -72,13 +72,15 @@ type
 
   Taereo = class; // Informações do modal Aéreo
 
-  Taquav                          = class; // Informações do modal Aquaviário
-  TinfTermCarregCollection        = class;
-  TinfTermCarregCollectionItem    = class;
-  TinfTermDescarregCollection     = class;
-  TinfTermDescarregCollectionItem = class;
-  TinfEmbCombCollection           = class;
-  TinfEmbCombCollectionItem       = class;
+  Taquav                           = class; // Informações do modal Aquaviário
+  TinfTermCarregCollection         = class;
+  TinfTermCarregCollectionItem     = class;
+  TinfTermDescarregCollection      = class;
+  TinfTermDescarregCollectionItem  = class;
+  TinfEmbCombCollection            = class;
+  TinfEmbCombCollectionItem        = class;
+  TinfUnidCargaVaziaCollection     = class;
+  TinfUnidCargaVaziaCollectionItem = class;
 
   Tferrov            = class; // Informações do modal Ferroviário
   TvagCollection     = class;
@@ -194,6 +196,7 @@ type
     FUFFim: String;
     FinfMunCarrega: TinfMunCarregaCollection;
     FinfPercurso: TinfPercursoCollection;
+    FdhIniViagem: TDateTime;
 
     procedure SetinfMunCarrega(Value: TinfMunCarregaCollection);
     procedure SetinfPercurso(Value: TinfPercursoCollection);
@@ -218,6 +221,7 @@ type
     property UFFim: String read FUFFim write FUFFim;
     property infMunCarrega: TinfMunCarregaCollection read FinfMunCarrega write SetinfMunCarrega;
     property infPercurso: TinfPercursoCollection read FinfPercurso write SetinfPercurso;
+    property dhIniViagem: TDateTime read FdhIniViagem write FdhIniViagem;
   end;
 
   Temit = class(TPersistent)
@@ -270,6 +274,7 @@ type
     FveicTracao: TveicTracao;
     FveicReboque : TveicReboqueCollection;
     FvalePed : TvalePed;
+    FcodAgPorto: String;
 
     procedure SetveicReboque(const Value: TveicReboqueCollection);
   public
@@ -281,17 +286,18 @@ type
     property veicTracao: TveicTracao read FveicTracao write FveicTracao;
     property veicReboque: TveicReboqueCollection read FveicReboque write SetveicReboque;
     property valePed: TvalePed read FvalePed write FvalePed;
+    property codAgPorto: String read FcodAgPorto write FcodAgPorto;
   end;
 
  TveicTracao = class(TPersistent)
   private
     FcInt: String;
     Fplaca: String;
+    FRENAVAM: String;
     Ftara: Integer;
     FcapKG: Integer;
     FcapM3: Integer;
     Fprop: Tprop;
-//    FRNTRC: String;
     Fcondutor: TcondutorCollection;
     FtpRod: TpcteTipoRodado;
     FtpCar: TpcteTipoCarroceria;
@@ -304,11 +310,11 @@ type
   published
     property cInt: String read FcInt write FcInt;
     property placa: String read Fplaca write Fplaca;
+    property RENAVAM: String read FRENAVAM write FRENAVAM;
     property tara: Integer read Ftara write Ftara;
     property capKG: Integer read FcapKG write FcapKG;
     property capM3: Integer read FcapM3 write FcapM3;
     property prop: Tprop read Fprop write Fprop;
-//    property RNTRC: String read FRNTRC write FRNTRC;
     property condutor: TcondutorCollection read Fcondutor write Setcondutor;
     property tpRod: TpcteTipoRodado read FtpRod write FtpRod;
     property tpCar: TpcteTipoCarroceria read FtpCar write FtpCar;
@@ -368,10 +374,10 @@ type
   private
     FcInt: String;
     Fplaca: String;
+    FRENAVAM: String;
     Ftara: Integer;
     FcapKG: Integer;
     FcapM3: Integer;
-//    FRNTRC: String;
     Fprop: Tprop;
     FtpCar: TpcteTipoCarroceria;
     FUF: String;
@@ -381,10 +387,10 @@ type
   published
     property cInt: String read FcInt write FcInt;
     property placa: String read Fplaca write Fplaca;
+    property RENAVAM: String read FRENAVAM write FRENAVAM;
     property tara: Integer read Ftara write Ftara;
     property capKG: Integer read FcapKG write FcapKG;
     property capM3: Integer read FcapM3 write FcapM3;
-//    property RNTRC: String read FRNTRC write FRNTRC;
     property prop: Tprop read Fprop write Fprop;
     property tpCar: TpcteTipoCarroceria read FtpCar write FtpCar;
     property UF: String read FUF write FUF;
@@ -454,10 +460,12 @@ type
     FinfTermCarreg: TinfTermCarregCollection;
     FinfTermDescarreg: TinfTermDescarregCollection;
     FinfEmbComb: TinfEmbCombCollection;
+    FinfUnidCargaVazia: TinfUnidCargaVaziaCollection;
 
     procedure SetinfTermCarreg(const Value: TinfTermCarregCollection);
     procedure SetinfTermDescarreg(const Value: TinfTermDescarregCollection);
     procedure SetinfEmbComb(const Value: TinfEmbCombCollection);
+    procedure SetinfUnidCargaVazia(const Value: TinfUnidCargaVaziaCollection);
   public
     constructor Create(AOwner: TMDFe);
     destructor Destroy; override;
@@ -472,6 +480,7 @@ type
     property infTermCarreg: TinfTermCarregCollection read FinfTermCarreg write SetinfTermCarreg;
     property infTermDescarreg: TinfTermDescarregCollection read FinfTermDescarreg write SetinfTermDescarreg;
     property infEmbComb: TinfEmbCombCollection read FinfEmbComb write SetinfEmbComb;
+    property infUnidCargaVazia: TinfUnidCargaVaziaCollection read FinfUnidCargaVazia write SetinfUnidCargaVazia;
   end;
 
   TinfTermCarregCollection = class(TCollection)
@@ -536,6 +545,28 @@ type
     destructor Destroy; override;
   published
     property cEmbComb: String read FcEmbComb write FcEmbComb;
+  end;
+
+  TinfUnidCargaVaziaCollection = class(TCollection)
+  private
+    function GetItem(Index: Integer): TinfUnidCargaVaziaCollectionItem;
+    procedure SetItem(Index: Integer; Value: TinfUnidCargaVaziaCollectionItem);
+  public
+    constructor Create(AOwner: Taquav);
+    function Add: TinfUnidCargaVaziaCollectionItem;
+    property Items[Index: Integer]: TinfUnidCargaVaziaCollectionItem read GetItem write SetItem; default;
+  end;
+
+  TinfUnidCargaVaziaCollectionItem = class(TCollectionItem)
+  private
+    FidUnidCargaVazia: String;
+    FtpUnidCargaVazia: TpcnUnidCarga;
+  public
+    constructor Create; reintroduce;
+    destructor Destroy; override;
+  published
+    property idUnidCargaVazia: String read FidUnidCargaVazia write FidUnidCargaVazia;
+    property tpUnidCargaVazia: TpcnUnidCarga read FtpUnidCargaVazia write FtpUnidCargaVazia;
   end;
 
   Tferrov = class(TPersistent)
@@ -1803,9 +1834,10 @@ end;
 constructor Taquav.Create(AOwner: TMDFe);
 begin
   inherited Create;
-  FinfTermCarreg    := TinfTermCarregCollection.Create(Self);
-  FinfTermDescarreg := TinfTermDescarregCollection.Create(Self);
-  FinfEmbComb       := TinfEmbCombCollection.Create(Self);
+  FinfTermCarreg     := TinfTermCarregCollection.Create(Self);
+  FinfTermDescarreg  := TinfTermDescarregCollection.Create(Self);
+  FinfEmbComb        := TinfEmbCombCollection.Create(Self);
+  FinfUnidCargaVazia := TinfUnidCargaVaziaCollection.Create(Self);
 end;
 
 destructor Taquav.Destroy;
@@ -1813,6 +1845,7 @@ begin
   FinfTermCarreg.Free;
   FinfTermDescarreg.Free;
   FinfEmbComb.Free;
+  FinfUnidCargaVazia.Free;
   inherited;
 end;
 
@@ -1829,6 +1862,12 @@ end;
 procedure Taquav.SetinfTermDescarreg(const Value: TinfTermDescarregCollection);
 begin
   FinfTermDescarreg := Value;
+end;
+
+procedure Taquav.SetinfUnidCargaVazia(
+  const Value: TinfUnidCargaVaziaCollection);
+begin
+  FinfUnidCargaVazia := Value;
 end;
 
 { TinfTermDescarregCollection }
@@ -1902,6 +1941,44 @@ begin
 end;
 
 destructor TinfEmbCombCollectionItem.Destroy;
+begin
+
+  inherited;
+end;
+
+{ TinfUnidCargaVaziaCollection }
+
+function TinfUnidCargaVaziaCollection.Add: TinfUnidCargaVaziaCollectionItem;
+begin
+  Result := TinfUnidCargaVaziaCollectionItem(inherited Add);
+  Result.create;
+end;
+
+constructor TinfUnidCargaVaziaCollection.Create(AOwner: Taquav);
+begin
+  inherited Create(TinfUnidCargaVaziaCollectionItem);
+end;
+
+function TinfUnidCargaVaziaCollection.GetItem(
+  Index: Integer): TinfUnidCargaVaziaCollectionItem;
+begin
+  Result := TinfUnidCargaVaziaCollectionItem(inherited GetItem(Index));
+end;
+
+procedure TinfUnidCargaVaziaCollection.SetItem(Index: Integer;
+  Value: TinfUnidCargaVaziaCollectionItem);
+begin
+  inherited SetItem(Index, Value);
+end;
+
+{ TinfUnidCargaVaziaCollectionItem }
+
+constructor TinfUnidCargaVaziaCollectionItem.Create;
+begin
+
+end;
+
+destructor TinfUnidCargaVaziaCollectionItem.Destroy;
 begin
 
   inherited;
