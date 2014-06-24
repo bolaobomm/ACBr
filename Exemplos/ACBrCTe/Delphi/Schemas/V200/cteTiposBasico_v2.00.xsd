@@ -1298,7 +1298,7 @@ REENTREGA; DEVOLUÇÃO; REFATURAMENTO; etc</xs:documentation>
 1 - Peso Bruto, sempre em quilogramas (obrigatório);
 2 - Peso Cubado; sempre em quilogramas;
 3 - Quantidade de volumes, sempre em unidades (obrigatório);
-4 - Cubagem, sempre em metros cúbicos (obrigatório apenas quando for impossível preencher as dimensões da(s) embalagem(ens) na tag #12 do leiaute do Aéreo).</xs:documentation>
+4 - Cubagem, sempre em metros cúbicos (obrigatório apenas quando for impossível preencher as dimensões da(s) embalagem(ens) na tag xDime do leiaute do Aéreo).</xs:documentation>
 														</xs:annotation>
 														<xs:complexType>
 															<xs:sequence>
@@ -2161,12 +2161,20 @@ Onde v9.99 é a a designação genérica para a versão do arquivo. Por exemplo,
 																		</xs:annotation>
 																		<xs:complexType>
 																			<xs:sequence>
-																				<xs:element name="CNPJ" type="TCnpj">
-																					<xs:annotation>
-																						<xs:documentation>CNPJ do Emitente</xs:documentation>
-																						<xs:documentation>Informar o CNPJ do emitente do Documento Fiscal</xs:documentation>
-																					</xs:annotation>
-																				</xs:element>
+																				<xs:choice>
+																					<xs:element name="CNPJ" type="TCnpj">
+																						<xs:annotation>
+																							<xs:documentation>CNPJ do Emitente</xs:documentation>
+																							<xs:documentation>Informar o CNPJ do emitente do Documento Fiscal</xs:documentation>
+																						</xs:annotation>
+																					</xs:element>
+																					<xs:element name="CPF" type="TCpf">
+																						<xs:annotation>
+																							<xs:documentation>Número do CPF</xs:documentation>
+																							<xs:documentation>Informar o CPF do emitente do documento fiscal</xs:documentation>
+																						</xs:annotation>
+																					</xs:element>
+																				</xs:choice>
 																				<xs:element name="mod" type="TModDoc">
 																					<xs:annotation>
 																						<xs:documentation>Modelo do Documento Fiscal</xs:documentation>
@@ -2305,7 +2313,7 @@ Onde v9.99 é a a designação genérica para a versão do arquivo. Por exemplo,
 					<xs:attribute name="versao" use="required">
 						<xs:annotation>
 							<xs:documentation>Versão do leiaute</xs:documentation>
-							<xs:documentation>Ex: "1.04"</xs:documentation>
+							<xs:documentation>Ex: "2.00"</xs:documentation>
 						</xs:annotation>
 						<xs:simpleType>
 							<xs:restriction base="TVerCTe"/>
@@ -3632,7 +3640,7 @@ Por exemplo: para rodoviário tração ou reboque deverá preencher com a placa 
 	</xs:simpleType>
 	<xs:simpleType name="TVerCTe">
 		<xs:annotation>
-			<xs:documentation>Tipo Versão do CT-e - 1.04</xs:documentation>
+			<xs:documentation>Tipo Versão do CT-e - 2.00</xs:documentation>
 		</xs:annotation>
 		<xs:restriction base="xs:string">
 			<xs:whiteSpace value="preserve"/>
