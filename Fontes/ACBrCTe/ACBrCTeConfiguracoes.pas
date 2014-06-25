@@ -513,7 +513,7 @@ begin
                end;
 			finally
 			  Lista.Free;
-			end
+			end;
             break;
           end;
          Extension := nil;
