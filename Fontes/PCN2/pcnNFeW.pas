@@ -843,7 +843,10 @@ begin
       Gerador.wCampo(tcStr, 'I23a', 'tpViaTransp ', 02, 02, 1, TipoViaTranspToStr(nfe.Det[i].Prod.DI[j].tpViaTransp), DSC_TPVIATRANSP);
       Gerador.wCampo(tcDe2, 'I23b', 'vAFRMM      ', 00, 15, 0, nfe.Det[i].Prod.DI[j].vAFRMM, DSC_VAFRMM);
       Gerador.wCampo(tcStr, 'I23c', 'tpIntermedio', 01, 01, 1, TipoIntermedioToStr(nfe.Det[i].Prod.DI[j].tpIntermedio), DSC_TPINTERMEDIO);
-      Gerador.wCampoCNPJCPF('I23d', 'I23d', nfe.Det[i].Prod.DI[j].CNPJ, CODIGO_BRASIL);
+
+      // Alterado por Italo em 25/06/2014
+      Gerador.wCampo(tcStr, 'I23d', 'CNPJ        ', 14, 14, 0, nfe.Det[i].Prod.DI[j].CNPJ, DSC_CNPJ);
+//      Gerador.wCampoCNPJCPF('I23d', 'I23d', nfe.Det[i].Prod.DI[j].CNPJ, CODIGO_BRASIL);
 
       // Alterado por Italo em 12/03/2014
       Gerador.wCampo(tcStr, 'I23e', 'UFTerceiro  ', 02, 02, 0, nfe.Det[i].Prod.DI[j].UFTerceiro, DSC_UF);
