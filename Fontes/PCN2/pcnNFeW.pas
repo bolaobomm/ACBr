@@ -578,6 +578,13 @@ begin
 
   if nfe.infNFe.Versao >= 3 then
    begin
+    // Alterado por Italo em 26/06/2014
+    if (nfe.Dest.enderDest.cPais = 1058) and (nfe.Dest.CNPJCPF <> '') then
+      Gerador.wCampoCNPJCPF('E02', 'E03', nfe.Dest.CNPJCPF, nfe.Dest.enderDest.cPais)
+    else
+      Gerador.wCampo(tcStr, 'E03a', 'idEstrangeiro', 01, 20, 1, nfe.Dest.idEstrangeiro, DSC_IDESTR);
+
+    (*
     if nfe.Dest.idEstrangeiro <> '' then
        Gerador.wCampo(tcStr, 'E03a', 'idEstrangeiro', 01, 20, 1, nfe.Dest.idEstrangeiro, DSC_IDESTR)
     else begin
@@ -585,6 +592,7 @@ begin
        if nfe.Dest.enderDest.cPais = 1058 then
          Gerador.wCampoCNPJCPF('E02', 'E03', nfe.Dest.CNPJCPF, nfe.Dest.enderDest.cPais);
     end;
+    *)
    end
   else
      Gerador.wCampoCNPJCPF('E02', 'E03', nfe.Dest.CNPJCPF, nfe.Dest.enderDest.cPais);
@@ -841,7 +849,13 @@ begin
     if nfe.infNFe.Versao >= 3 then
     begin
       Gerador.wCampo(tcStr, 'I23a', 'tpViaTransp ', 02, 02, 1, TipoViaTranspToStr(nfe.Det[i].Prod.DI[j].tpViaTransp), DSC_TPVIATRANSP);
-      Gerador.wCampo(tcDe2, 'I23b', 'vAFRMM      ', 00, 15, 0, nfe.Det[i].Prod.DI[j].vAFRMM, DSC_VAFRMM);
+
+      // Alterado por Italo em 26/06/2014
+      if nfe.Det[i].Prod.DI[j].tpViaTransp = tvMaritima then
+        Gerador.wCampo(tcDe2, 'I23b', 'vAFRMM', 00, 15, 1, nfe.Det[i].Prod.DI[j].vAFRMM, DSC_VAFRMM)
+      else
+        Gerador.wCampo(tcDe2, 'I23b', 'vAFRMM', 00, 15, 0, nfe.Det[i].Prod.DI[j].vAFRMM, DSC_VAFRMM);
+
       Gerador.wCampo(tcStr, 'I23c', 'tpIntermedio', 01, 01, 1, TipoIntermedioToStr(nfe.Det[i].Prod.DI[j].tpIntermedio), DSC_TPINTERMEDIO);
 
       // Alterado por Italo em 25/06/2014
