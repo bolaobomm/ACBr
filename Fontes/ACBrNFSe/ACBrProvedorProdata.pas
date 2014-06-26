@@ -116,7 +116,7 @@ begin
            end;
   5218805: begin // Rio Verde/GO
             ConfigURL.HomNomeCidade := 'homologacao.rioverdegoias.com.br';
-            ConfigURL.ProNomeCidade := 'rioverdegoias.com.br';
+            ConfigURL.ProNomeCidade := 'online.rioverdegoias.com.br';
            end;
  end;
 
