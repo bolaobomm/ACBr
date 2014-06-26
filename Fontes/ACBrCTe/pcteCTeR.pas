@@ -1027,6 +1027,43 @@ begin
         CTe.infCTeNorm.aquav.balsa[i01].xBalsa := Leitor.rCampo(tcStr, 'xBalsa');
         inc(i01);
       end;
+
+      i01 := 0;
+      while Leitor.rExtrai(3, 'detCont', '', i01 + 1) <> '' do
+      begin
+        CTe.infCTeNorm.aquav.detCont.Add;
+        CTe.infCTeNorm.aquav.detCont[i01].nCont := Leitor.rCampo(tcStr, 'nCont');
+
+        i02 := 0;
+        while Leitor.rExtrai(4, 'Lacre', '', i02 + 1) <> '' do
+        begin
+          CTe.infCTeNorm.aquav.detCont[i01].Lacre.Add;
+          CTe.infCTeNorm.aquav.detCont[i01].Lacre[i02].nLacre := Leitor.rCampo(tcStr, 'nLacre');
+          inc(i02);
+        end;
+
+        if Leitor.rExtrai(4, 'infDoc') <> ''
+        then begin
+          i02 := 0;
+          while Leitor.rExtrai(5, 'infNF', '', i02 + 1) <> '' do
+          begin
+            CTe.infCTeNorm.aquav.detCont[i01].infDoc.infNF.Add;
+            CTe.infCTeNorm.aquav.detCont[i01].infDoc.infNF[i02].serie   := Leitor.rCampo(tcStr, 'Serie');
+            CTe.infCTeNorm.aquav.detCont[i01].infDoc.infNF[i02].nDoc    := Leitor.rCampo(tcStr, 'nDoc');
+            CTe.infCTeNorm.aquav.detCont[i01].infDoc.infNF[i02].unidRat := Leitor.rCampo(tcDe2, 'unidRat');
+            inc(i02);
+          end;
+          i02 := 0;
+          while Leitor.rExtrai(5, 'infNFe', '', i02 + 1) <> '' do
+          begin
+            CTe.infCTeNorm.aquav.detCont[i01].infDoc.infNFe.Add;
+            CTe.infCTeNorm.aquav.detCont[i01].infDoc.infNFe[i02].chave   := Leitor.rCampo(tcStr, 'chave');
+            CTe.infCTeNorm.aquav.detCont[i01].infDoc.infNFe[i02].unidRat := Leitor.rCampo(tcDe2, 'unidRat');
+            inc(i02);
+          end;
+        end;
+        inc(i01);
+      end;
     end; // fim das informações do modal Aquaviário
 
     if Leitor.rExtrai(2, 'ferrov') <> '' then

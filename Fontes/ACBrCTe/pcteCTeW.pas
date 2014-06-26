@@ -213,6 +213,9 @@ implementation
 const
  xRazao = 'CT-E EMITIDO EM AMBIENTE DE HOMOLOGACAO - SEM VALOR FISCAL';
 
+ DSC_NCONT   = 'Identificação do Container';
+ DSC_DETCONT = 'Detalhamento dos Containers';
+
 { TCTeW }
 
 constructor TCTeW.Create(AOwner: TCTe);
@@ -1602,7 +1605,7 @@ begin
     Gerador.wGrupo('lacRodo', '#41');
     Gerador.wCampo(tcStr, '#42', 'nLacre ', 01, 20, 1, CTe.infCTeNorm.rodo.lacRodo[i].nLacre, DSC_NLACRE);
     Gerador.wGrupo('/lacRodo');
-  end;
+  end;                                                                  
   if CTe.infCTeNorm.rodo.lacRodo.Count > 990 then
     Gerador.wAlerta('#41', 'lacRodo', DSC_LACR, ERR_MSG_MAIOR_MAXIMO + '990');
 end;
@@ -1652,7 +1655,7 @@ end;
 
 procedure TCTeW.GerarAquav;
 var
- i: Integer;
+ i, j: Integer;
 begin
   Gerador.wGrupo('aquav', '#01');
   Gerador.wCampo(tcDe2, '#02', 'vPrest   ', 01, 15, 1, CTe.infCTeNorm.aquav.vPrest, DSC_VPREST);
@@ -1664,7 +1667,7 @@ begin
   for i := 0 to CTe.infCTeNorm.aquav.balsa.Count - 1 do
    begin
     Gerador.wGrupo('balsa', '#07');
-    Gerador.wCampo(tcStr, '#08', 'xBalsa ', 01, 60, 1, CTe.infCTeNorm.aquav.balsa.Items[i].xBalsa, DSC_XBALSA);
+    Gerador.wCampo(tcStr, '#08', 'xBalsa', 01, 60, 1, CTe.infCTeNorm.aquav.balsa.Items[i].xBalsa, DSC_XBALSA);
     Gerador.wGrupo('/balsa');
    end;
   if CTe.infCTeNorm.aquav.balsa.Count > 3 then
@@ -1677,6 +1680,55 @@ begin
   Gerador.wCampo(tcStr, '#13', 'prtDest  ', 01, 60, 0, CTe.infCTeNorm.aquav.prtDest, DSC_PRTDEST);
   Gerador.wCampo(tcStr, '#14', 'tpNav    ', 01, 01, 1, TpNavegacaoToStr(CTe.infCTeNorm.aquav.tpNav), DSC_TPNAV);
   Gerador.wCampo(tcStr, '#15', 'irin     ', 01, 10, 1, CTe.infCTeNorm.aquav.irin, DSC_IRIN);
+
+  for i := 0 to CTe.infCTeNorm.aquav.detCont.Count - 1 do
+   begin
+    Gerador.wGrupo('detCont', '#16');
+    Gerador.wCampo(tcStr, '#17', 'nCont', 01, 20, 1, CTe.infCTeNorm.aquav.detCont.Items[i].nCont, DSC_NCONT);
+
+    for j := 0 to CTe.infCTeNorm.aquav.detCont.Items[i].Lacre.Count - 1 do
+     begin
+      Gerador.wGrupo('Lacre', '#18');
+      Gerador.wCampo(tcStr, '#19', 'nLacre', 01, 20, 1, CTe.infCTeNorm.aquav.detCont.Items[i].Lacre.Items[j].nLacre, DSC_NLACRE);
+      Gerador.wGrupo('/Lacre');
+     end;
+    if CTe.infCTeNorm.aquav.detCont.Items[i].Lacre.Count > 3 then
+     Gerador.wAlerta('#18', 'Lacre', DSC_NLACRE, ERR_MSG_MAIOR_MAXIMO + '3');
+
+    if (CTe.infCTeNorm.aquav.detCont.Items[i].infDoc.infNF.Count > 0) or
+       (CTe.infCTeNorm.aquav.detCont.Items[i].infDoc.infNFe.Count > 0) then
+     begin
+      Gerador.wGrupo('infDoc', '#20');
+
+      for j := 0 to CTe.infCTeNorm.aquav.detCont.Items[i].infDoc.infNF.Count - 1 do
+       begin
+        Gerador.wGrupo('infNF', '#21');
+        Gerador.wCampo(tcStr, '#22', 'serie  ', 01, 03, 1, CTe.infCTeNorm.aquav.detCont.Items[i].infDoc.infNF.Items[j].serie, DSC_SERIE);
+        Gerador.wCampo(tcEsp, '#23', 'nDoc   ', 01, 20, 1, SomenteNumeros(CTe.infCTeNorm.aquav.detCont.Items[i].infDoc.infNF.Items[j].nDoc), DSC_NDOC);
+        Gerador.wCampo(tcDe2, '#24', 'unidRat', 01, 05, 0, CTe.infCTeNorm.aquav.detCont.Items[i].infDoc.infNF.Items[j].unidRat, DSC_QTDRAT);
+       end;
+      if CTe.infCTeNorm.aquav.detCont.Items[i].infDoc.infNF.Count > 999 then
+       Gerador.wAlerta('#21', 'infNF', DSC_INFNF, ERR_MSG_MAIOR_MAXIMO + '999');
+
+      for j := 0 to CTe.infCTeNorm.aquav.detCont.Items[i].infDoc.infNFe.Count - 1 do
+       begin
+        Gerador.wGrupo('infNFe', '#25');
+        Gerador.wCampo(tcStr, '#26', 'chave  ', 44, 44, 1, SomenteNumeros(CTe.infCTeNorm.aquav.detCont.Items[i].infDoc.infNFe.Items[j].chave), DSC_REFNFE);
+        if SomenteNumeros(CTe.infCTeNorm.aquav.detCont.Items[i].infDoc.infNFe.Items[j].chave) <> '' then
+        if not ValidarChave('NFe' + SomenteNumeros(CTe.infCTeNorm.aquav.detCont.Items[i].infDoc.infNFe.Items[j].chave)) then
+         Gerador.wAlerta('#26', 'chave', DSC_REFNFE, ERR_MSG_INVALIDO);
+        Gerador.wCampo(tcDe2, '#27', 'unidRat', 01, 05, 0, CTe.infCTeNorm.aquav.detCont.Items[i].infDoc.infNFe.Items[j].unidRat, DSC_QTDRAT);
+       end;
+      if CTe.infCTeNorm.aquav.detCont.Items[i].infDoc.infNFe.Count > 999 then
+       Gerador.wAlerta('#25', 'infNFe', DSC_INFNF, ERR_MSG_MAIOR_MAXIMO + '999');
+
+      Gerador.wGrupo('/infDoc');
+     end;
+
+    Gerador.wGrupo('/detCont');
+   end;
+  if CTe.infCTeNorm.aquav.detCont.Count > 999 then
+   Gerador.wAlerta('#16', 'detCont', DSC_DETCONT, ERR_MSG_MAIOR_MAXIMO + '999');
 
   Gerador.wGrupo('/aquav');
 end;

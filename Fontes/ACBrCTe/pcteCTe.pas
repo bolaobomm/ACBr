@@ -200,9 +200,20 @@ type
   TNatCarga = class;
 
   // Informações do modal Aquaviário
-  TAquav               = class;
-  TBalsaCollection     = class;
-  TBalsaCollectionItem = class;
+  TAquav                 = class;
+  TBalsaCollection       = class;
+  TBalsaCollectionItem   = class;
+  TdetContCollection     = class;
+  TdetContCollectionItem = class;
+  TLacreCollection       = class;
+  TLacreCollectionItem   = class;
+
+  TInfDocAquav = class;
+
+  TInfNFAquavCollection      = class;
+  TInfNFAquavCollectionItem  = class;
+  TInfNFeAquavCollection     = class;
+  TInfNFeAquavCollectionItem = class;
 
   // Informações do modal Ferroviário
   TFerrov                 = class;
@@ -1797,25 +1808,28 @@ type
     FprtDest  : String;
     FtpNav    : TpcteTipoNavegacao;
     Firin     : String;
+    FdetCont  : TdetContCollection;
 
     procedure SetBalsa(const Value: TbalsaCollection);
+    procedure SetdetCont(const Value: TdetContCollection);
   public
     constructor Create(AOwner: TInfCTeNorm);
     destructor Destroy; override;
   published
-    property vPrest: Currency          read FvPrest   write FvPrest;
-    property vAFRMM: Currency          read FvAFRMM   write FvAFRMM;
-    property nBooking: String          read FnBooking write FnBooking;
-    property nCtrl: String             read FnCtrl    write FnCtrl;
-    property xNavio: String            read FxNavio   write FxNavio;
-    property balsa: TBalsaCollection   read Fbalsa    write Setbalsa;
-    property nViag: String             read FnViag    write FnViag;
-    property direc: TpcteDirecao       read Fdirec    write Fdirec;
-    property prtEmb: String            read FprtEmb   write FprtEmb;
-    property prtTrans: String          read FprtTrans write FprtTrans;
-    property prtDest: String           read FprtDest  write FprtDest;
-    property tpNav: TpcteTipoNavegacao read FtpNav    write FtpNav;
-    property irin: String              read Firin     write Firin;
+    property vPrest: Currency            read FvPrest   write FvPrest;
+    property vAFRMM: Currency            read FvAFRMM   write FvAFRMM;
+    property nBooking: String            read FnBooking write FnBooking;
+    property nCtrl: String               read FnCtrl    write FnCtrl;
+    property xNavio: String              read FxNavio   write FxNavio;
+    property balsa: TBalsaCollection     read Fbalsa    write Setbalsa;
+    property nViag: String               read FnViag    write FnViag;
+    property direc: TpcteDirecao         read Fdirec    write Fdirec;
+    property prtEmb: String              read FprtEmb   write FprtEmb;
+    property prtTrans: String            read FprtTrans write FprtTrans;
+    property prtDest: String             read FprtDest  write FprtDest;
+    property tpNav: TpcteTipoNavegacao   read FtpNav    write FtpNav;
+    property irin: String                read Firin     write Firin;
+    property detCont: TdetContCollection read FdetCont  write SetdetCont;
   end;
 
   TBalsaCollection = class(TCollection)
@@ -1836,6 +1850,113 @@ type
     destructor Destroy; override;
   published
     property xBalsa: String read FxBalsa write FxBalsa;
+  end;
+
+  TdetContCollection = class(TCollection)
+  private
+    function GetItem(Index: Integer): TdetContCollectionItem;
+    procedure SetItem(Index: Integer; Value: TdetContCollectionItem);
+  public
+    constructor Create(AOwner: TAquav);
+    function Add: TdetContCollectionItem;
+    property Items[Index: Integer]: TdetContCollectionItem read GetItem write SetItem; default;
+  end;
+
+  TdetContCollectionItem = class(TCollectionItem)
+  private
+    FnCont  : String;
+    FLacre  : TLacreCollection;
+    FinfDoc : TinfDocAquav;
+
+    procedure SetLacre(const Value: TLacreCollection);
+  public
+    constructor Create; reintroduce;
+    destructor Destroy; override;
+  published
+    property nCont: String           read FnCont  write FnCont;
+    property Lacre: TLacreCollection read FLacre  write SetLacre;
+    property infDoc: TinfDocAquav    read FinfDoc write FinfDoc;
+  end;
+
+  TLacreCollection = class(TCollection)
+  private
+    function GetItem(Index: Integer): TLacreCollectionItem;
+    procedure SetItem(Index: Integer; Value: TLacreCollectionItem);
+  public
+    constructor Create(AOwner: TdetContCollectionItem);
+    function Add: TLacreCollectionItem;
+    property Items[Index: Integer]: TLacreCollectionItem read GetItem write SetItem; default;
+  end;
+
+  TLacreCollectionItem = class(TCollectionItem)
+  private
+    FnLacre : String;
+  public
+    constructor Create; reintroduce;
+    destructor Destroy; override;
+  published
+    property nLacre: String read FnLacre write FnLacre;
+  end;
+
+  TInfDocAquav = class(TPersistent)
+  private
+    FinfNF  : TInfNFAquavCollection;
+    FinfNFe : TInfNFeAquavCollection;
+
+    procedure SetInfNFAquav(const Value: TInfNFAquavCollection);
+    procedure SetInfNFeAquav(const Value: TInfNFeAquavCollection);
+  public
+    constructor Create(AOwner: TdetContCollectionItem);
+    destructor Destroy; override;
+  published
+    property infNF: TInfNFAquavCollection   read FinfNF  write SetInfNFAquav;
+    property infNFe: TInfNFeAquavCollection read FinfNFe write SetInfNFeAquav;
+  end;
+
+  TInfNFAquavCollection = class(TCollection)
+  private
+    function GetItem(Index: Integer): TInfNFAquavCollectionItem;
+    procedure SetItem(Index: Integer; Value: TInfNFAquavCollectionItem);
+  public
+    constructor Create(AOwner: TInfDocAquav);
+    function Add: TInfNFAquavCollectionItem;
+    property Items[Index: Integer]: TInfNFAquavCollectionItem read GetItem write SetItem; default;
+  end;
+
+  TInfNFAquavCollectionItem = class(TCollectionItem)
+  private
+    Fserie   : String;
+    FnDoc    : String;
+    FunidRat : Double;
+  public
+    constructor Create; reintroduce;
+    destructor Destroy; override;
+  published
+    property serie: String   read Fserie   write Fserie;
+    property nDoc: String    read FnDoc    write FnDoc;
+    property unidRat: Double read FunidRat write FunidRat;
+  end;
+
+  TInfNFeAquavCollection = class(TCollection)
+  private
+    function GetItem(Index: Integer): TInfNFeAquavCollectionItem;
+    procedure SetItem(Index: Integer; Value: TInfNFeAquavCollectionItem);
+  public
+    constructor Create(AOwner: TInfDocAquav);
+    function Add: TInfNFeAquavCollectionItem;
+    property Items[Index: Integer]: TInfNFeAquavCollectionItem read GetItem write SetItem; default;
+  end;
+
+  TInfNFeAquavCollectionItem = class(TCollectionItem)
+  private
+    Fchave   : String;
+    FunidRat : Double;
+  public
+    constructor Create; reintroduce;
+    destructor Destroy; override;
+  published
+    property chave: String   read Fchave   write Fchave;
+    property unidRat: Double read FunidRat write FunidRat;
   end;
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -3804,18 +3925,25 @@ end;
 
 constructor TAquav.Create(AOwner: TInfCTeNorm);
 begin
- Fbalsa := TBalsaCollection.Create(Self);
+ Fbalsa   := TBalsaCollection.Create(Self);
+ FdetCont := TdetContCollection.Create(Self);
 end;
 
 destructor TAquav.Destroy;
 begin
   Fbalsa.Free;
+  FdetCont.Free;
   inherited;
 end;
 
 procedure TAquav.SetBalsa(const Value: TbalsaCollection);
 begin
   Fbalsa.Assign(Value);
+end;
+
+procedure TAquav.SetdetCont(const Value: TdetContCollection);
+begin
+  FdetCont := Value;
 end;
 
 { TBalsaCollection }
@@ -3855,6 +3983,190 @@ begin
   inherited;
 end;
 
+{ TdetContCollection }
+
+function TdetContCollection.Add: TdetContCollectionItem;
+begin
+  Result := TdetContCollectionItem(inherited Add);
+  Result.create;
+end;
+
+constructor TdetContCollection.Create(AOwner: TAquav);
+begin
+  inherited Create(TdetContCollectionItem);
+end;
+
+function TdetContCollection.GetItem(
+  Index: Integer): TdetContCollectionItem;
+begin
+  Result := TdetContCollectionItem(inherited GetItem(Index));
+end;
+
+procedure TdetContCollection.SetItem(Index: Integer;
+  Value: TdetContCollectionItem);
+begin
+  inherited SetItem(Index, Value);
+end;
+
+{ TdetContCollectionItem }
+
+constructor TdetContCollectionItem.Create;
+begin
+ FLacre  := TLacreCollection.Create(Self);
+ FinfDoc := TInfDocAquav.Create(Self);
+end;
+
+destructor TdetContCollectionItem.Destroy;
+begin
+  FLacre.Free;
+  FinfDoc.Free;
+  inherited;
+end;
+
+procedure TdetContCollectionItem.SetLacre(const Value: TLacreCollection);
+begin
+  FLacre := Value;
+end;
+
+{ TLacreCollection }
+
+function TLacreCollection.Add: TLacreCollectionItem;
+begin
+  Result := TLacreCollectionItem(inherited Add);
+  Result.create;
+end;
+
+constructor TLacreCollection.Create(AOwner: TdetContCollectionItem);
+begin
+  inherited Create(TLacreCollectionItem);
+end;
+
+function TLacreCollection.GetItem(Index: Integer): TLacreCollectionItem;
+begin
+  Result := TLacreCollectionItem(inherited GetItem(Index));
+end;
+
+procedure TLacreCollection.SetItem(Index: Integer;
+  Value: TLacreCollectionItem);
+begin
+  inherited SetItem(Index, Value);
+end;
+
+{ TLacreCollectionItem }
+
+constructor TLacreCollectionItem.Create;
+begin
+
+end;
+
+destructor TLacreCollectionItem.Destroy;
+begin
+
+  inherited;
+end;
+
+{ TInfDocAquav }
+
+constructor TInfDocAquav.Create(AOwner: TdetContCollectionItem);
+begin
+ FinfNF  := TinfNFAquavCollection.Create(Self);
+ FinfNFe := TinfNFeAquavCollection.Create(Self);
+end;
+
+destructor TInfDocAquav.Destroy;
+begin
+  FinfNF.Free;
+  FinfNFe.Free;
+  inherited;
+end;
+
+procedure TInfDocAquav.SetInfNFAquav(const Value: TInfNFAquavCollection);
+begin
+  FinfNF := Value;
+end;
+
+procedure TInfDocAquav.SetInfNFeAquav(const Value: TInfNFeAquavCollection);
+begin
+  FinfNFe := Value;
+end;
+
+{ TInfNFAquavCollection }
+
+function TInfNFAquavCollection.Add: TInfNFAquavCollectionItem;
+begin
+  Result := TinfNFAquavCollectionItem(inherited Add);
+  Result.create;
+end;
+
+constructor TInfNFAquavCollection.Create(AOwner: TInfDocAquav);
+begin
+  inherited Create(TinfNFAquavCollectionItem);
+end;
+
+function TInfNFAquavCollection.GetItem(
+  Index: Integer): TInfNFAquavCollectionItem;
+begin
+  Result := TinfNFAquavCollectionItem(inherited GetItem(Index));
+end;
+
+procedure TInfNFAquavCollection.SetItem(Index: Integer;
+  Value: TInfNFAquavCollectionItem);
+begin
+  inherited SetItem(Index, Value);
+end;
+
+{ TInfNFAquavCollectionItem }
+
+constructor TInfNFAquavCollectionItem.Create;
+begin
+
+end;
+
+destructor TInfNFAquavCollectionItem.Destroy;
+begin
+
+  inherited;
+end;
+
+{ TInfNFeAquavCollection }
+
+function TInfNFeAquavCollection.Add: TInfNFeAquavCollectionItem;
+begin
+  Result := TinfNFeAquavCollectionItem(inherited Add);
+  Result.create;
+end;
+
+constructor TInfNFeAquavCollection.Create(AOwner: TInfDocAquav);
+begin
+  inherited Create(TinfNFeAquavCollectionItem);
+end;
+
+function TInfNFeAquavCollection.GetItem(
+  Index: Integer): TInfNFeAquavCollectionItem;
+begin
+  Result := TinfNFeAquavCollectionItem(inherited GetItem(Index));
+end;
+
+procedure TInfNFeAquavCollection.SetItem(Index: Integer;
+  Value: TInfNFeAquavCollectionItem);
+begin
+  inherited SetItem(Index, Value);
+end;
+
+{ TInfNFeAquavCollectionItem }
+
+constructor TInfNFeAquavCollectionItem.Create;
+begin
+
+end;
+
+destructor TInfNFeAquavCollectionItem.Destroy;
+begin
+
+  inherited;
+end;
+
+//////////////////////////////////////////////////////////////////////////////
 { TFerrov }
 
 constructor TFerrov.Create(AOwner: TInfCTeNorm);
