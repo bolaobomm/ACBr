@@ -686,7 +686,7 @@ begin
   end;
 
  if not FilesExists(schema_filename) then
-    raise Exception.Create('Arquivo '+schema_filename+' não encontrado');
+    raise Exception.Create('Arquivo ' + schema_filename + ' não encontrado');
 
   Schema.add( 'http://www.portalfiscal.inf.br/mdfe', schema_filename );
 
@@ -706,6 +706,7 @@ var
   ParseError  : IXMLDOMParseError;
   Schema      : XMLSchemaCache;
   Tipo        : Integer;
+  schema_filename : String;
 begin
   Tipo := 0;
 
@@ -801,54 +802,51 @@ begin
 
   case Tipo of
    1: begin
-       Schema.add('http://www.portalfiscal.inf.br/mdfe',
-          DFeUtil.SeSenao(DFeUtil.EstaVazio(APathSchemas),
+       schema_filename := DFeUtil.SeSenao(DFeUtil.EstaVazio(APathSchemas),
           PathWithDelim(ExtractFileDir(application.ExeName))+'Schemas\',
-          PathWithDelim(APathSchemas))+'MDFeModalAereo_v' + MDFeModalAereo + '.xsd');
+          PathWithDelim(APathSchemas))+'MDFeModalAereo_v' + MDFeModalAereo + '.xsd';
       end;
    2: begin
-       Schema.add('http://www.portalfiscal.inf.br/mdfe',
-          DFeUtil.SeSenao(DFeUtil.EstaVazio(APathSchemas),
+       schema_filename := DFeUtil.SeSenao(DFeUtil.EstaVazio(APathSchemas),
           PathWithDelim(ExtractFileDir(application.ExeName))+'Schemas\',
-          PathWithDelim(APathSchemas))+'MDFeModalAquaviario_v' + MDFeModalAqua + '.xsd');
+          PathWithDelim(APathSchemas))+'MDFeModalAquaviario_v' + MDFeModalAqua + '.xsd';
       end;
    3: begin
-       Schema.add('http://www.portalfiscal.inf.br/mdfe',
-          DFeUtil.SeSenao(DFeUtil.EstaVazio(APathSchemas),
+       schema_filename := DFeUtil.SeSenao(DFeUtil.EstaVazio(APathSchemas),
           PathWithDelim(ExtractFileDir(application.ExeName))+'Schemas\',
-          PathWithDelim(APathSchemas))+'MDFeModalDutoviario_v' + MDFeModalDuto + '.xsd');
+          PathWithDelim(APathSchemas))+'MDFeModalDutoviario_v' + MDFeModalDuto + '.xsd';
       end;
    4: begin
-       Schema.add('http://www.portalfiscal.inf.br/mdfe',
-          DFeUtil.SeSenao(DFeUtil.EstaVazio(APathSchemas),
+       schema_filename := DFeUtil.SeSenao(DFeUtil.EstaVazio(APathSchemas),
           PathWithDelim(ExtractFileDir(application.ExeName))+'Schemas\',
-          PathWithDelim(APathSchemas))+'MDFeModalFerroviario_v' + MDFeModalFerro + '.xsd');
+          PathWithDelim(APathSchemas))+'MDFeModalFerroviario_v' + MDFeModalFerro + '.xsd';
       end;
    5: begin
-       Schema.add('http://www.portalfiscal.inf.br/mdfe',
-          DFeUtil.SeSenao(DFeUtil.EstaVazio(APathSchemas),
+       schema_filename := DFeUtil.SeSenao(DFeUtil.EstaVazio(APathSchemas),
           PathWithDelim(ExtractFileDir(application.ExeName))+'Schemas\',
-          PathWithDelim(APathSchemas))+'MDFeModalRodoviario_v' + MDFeModalRodo + '.xsd');
+          PathWithDelim(APathSchemas))+'MDFeModalRodoviario_v' + MDFeModalRodo + '.xsd';
       end;
    6: begin
-       Schema.add('http://www.portalfiscal.inf.br/mdfe',
-          DFeUtil.SeSenao(DFeUtil.EstaVazio(APathSchemas),
+       schema_filename := DFeUtil.SeSenao(DFeUtil.EstaVazio(APathSchemas),
           PathWithDelim(ExtractFileDir(application.ExeName))+'Schemas\',
-          PathWithDelim(APathSchemas))+'evEncMDFe_v' + MDFeModalRodo + '.xsd');
+          PathWithDelim(APathSchemas))+'evEncMDFe_v' + MDFeModalRodo + '.xsd';
       end;
    7: begin
-       Schema.add('http://www.portalfiscal.inf.br/mdfe',
-          DFeUtil.SeSenao(DFeUtil.EstaVazio(APathSchemas),
+       schema_filename := DFeUtil.SeSenao(DFeUtil.EstaVazio(APathSchemas),
           PathWithDelim(ExtractFileDir(application.ExeName))+'Schemas\',
-          PathWithDelim(APathSchemas))+'evCancMDFe_v' + MDFeModalRodo + '.xsd');
+          PathWithDelim(APathSchemas))+'evCancMDFe_v' + MDFeModalRodo + '.xsd';
       end;
    8: begin
-       Schema.add('http://www.portalfiscal.inf.br/mdfe',
-          DFeUtil.SeSenao(DFeUtil.EstaVazio(APathSchemas),
+       schema_filename := DFeUtil.SeSenao(DFeUtil.EstaVazio(APathSchemas),
           PathWithDelim(ExtractFileDir(application.ExeName))+'Schemas\',
-          PathWithDelim(APathSchemas))+'evIncCondutorMDFe_v' + MDFeModalRodo + '.xsd');
+          PathWithDelim(APathSchemas))+'evIncCondutorMDFe_v' + MDFeModalRodo + '.xsd';
       end;
   end;
+
+ if not FilesExists(schema_filename) then
+    raise Exception.Create('Arquivo ' + schema_filename + ' não encontrado');
+
+  Schema.add( 'http://www.portalfiscal.inf.br/mdfe', schema_filename );
 
   DOMDocument.schemas := Schema;
   ParseError          := DOMDocument.validate;
