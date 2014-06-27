@@ -512,8 +512,12 @@ begin
   end;
   Gerador.wCampo(tcStr, 'C18', 'IEST   ', 02, 14, 0, nfe.Emit.IEST, DSC_IEST);
   Gerador.wCampo(tcStr, 'C19', 'IM     ', 01, 15, 0, nfe.Emit.IM, DSC_IM);
+  // Alterado por Italo em 27/06/2014
+  // NT 2013/005 versão 1.03
+  // o CNAE passa ser opcional mesmo quando informado o IM, mas o CNAE só pode
+  // ser informado se o IM for informado.
   if Length(nfe.Emit.IM) > 0 then
-    Gerador.wCampo(tcStr, 'C20', 'CNAE ', 07, 07, 1, nfe.Emit.CNAE, DSC_CNAE); //Está definido como obrigatório porque foi informado IM (Conforme o manual)
+    Gerador.wCampo(tcStr, 'C20', 'CNAE ', 07, 07, 0, nfe.Emit.CNAE, DSC_CNAE); 
   if NFe.infNFe.Versao >= 2 then
      Gerador.wCampo(tcStr, 'C21', 'CRT ', 01, 01, 1, CRTToStr(nfe.Emit.CRT), DSC_CRT);
   Gerador.wGrupo('/emit');
