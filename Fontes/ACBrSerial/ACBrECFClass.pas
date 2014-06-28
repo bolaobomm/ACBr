@@ -716,6 +716,9 @@ TACBrECFClass = class
 
     function GetTipoUltimoDocumento : TACBrECFTipoDocumento ; virtual ;
 
+    procedure SetDecimaisPreco(AValue: Integer); virtual;
+    procedure SetDecimaisQtd(AValue: Integer); virtual;
+
     Function EnviaComando_ECF( cmd : AnsiString ) : AnsiString ; virtual ;
 
     procedure LeResposta ; virtual ;
@@ -760,9 +763,9 @@ TACBrECFClass = class
                 write fpIgnorarTagsFormatacao default false ;
 
     property DecimaisPreco : Integer read fpDecimaisPreco
-       write fpDecimaisPreco default 3 ;
+       write SetDecimaisPreco default 3 ;
     property DecimaisQtd : Integer read fpDecimaisQtd
-       write fpDecimaisQtd default 3 ;
+       write SetDecimaisQtd default 3 ;
     property ArqLOG : String read fpArqLOG write fpArqLOG ;
     property ComandoLOG : AnsiString read fpComandoLOG write fpComandoLOG ;
     property AguardaImpressao : Boolean read fsAguardaImpressao
@@ -1664,6 +1667,16 @@ begin
      Ativar
   else
      Desativar ;
+end;
+
+procedure TACBrECFClass.SetDecimaisPreco(AValue: Integer);
+begin
+  fpDecimaisPreco := AValue;
+end;
+
+procedure TACBrECFClass.SetDecimaisQtd(AValue: Integer);
+begin
+  fpDecimaisQtd := AValue;
 end;
 
 function TACBrECFClass.GetPathDLL : string ;

@@ -178,6 +178,9 @@ TACBrECFDaruma = class( TACBrECFClass )
 
     function GetDadosUltimaReducaoZ: AnsiString; override ;
 
+    procedure SetDecimaisPreco(AValue: Integer); override;
+    procedure SetDecimaisQtd(AValue: Integer); override;
+
     Function VerificaFimLeitura(var Retorno: AnsiString;
        var TempoLimite: TDateTime) : Boolean ; override ;
     function VerificaFimImpressao(var TempoLimite: TDateTime) : Boolean ; override ;
@@ -4773,6 +4776,16 @@ begin
     Result := MontaDadosReducaoZ;
   end;
 end ;
+
+procedure TACBrECFDaruma.SetDecimaisPreco(AValue: Integer);
+begin
+  { Daruma não permite mudar Decimais }
+end;
+
+procedure TACBrECFDaruma.SetDecimaisQtd(AValue: Integer);
+begin
+  { Daruma não permite mudar Decimais }
+end;
 
 procedure TACBrECFDaruma.LoadDLLFunctions;
 

@@ -97,6 +97,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+Data: 28/06/2014
+-- ACBrECFDaruma --
+[*] Ajuste para evitar a modificação inadvertida de DecimaisQtd e DecimaisPreco
+    (por: DSA)
+
 Data: 20/06/2014
 -- ACBrECFBematech, ACBrECFDaruma --
 [*] Ajustes para geração de Arquivos com Finalidade finSintegra e finSPED
