@@ -87,7 +87,7 @@ type
 
      function AssociarAssinatura( CNPJvalue, assinaturaCNPJs : AnsiString ):
        String ; override;
-     function AtivarSAT( subComando : Integer; CNPJ: String; cUF : Integer )
+     function AtivarSAT( subComando : Integer; CNPJ: AnsiString; cUF : Integer )
        : String ; override;
      function AtualizarSoftwareSAT : String ; override;
      function BloquearSAT : String ; override;
@@ -134,7 +134,7 @@ begin
 end ;
 
 function TACBrSATDinamico_cdecl.AtivarSAT(subComando : Integer ;
-  CNPJ : String ; cUF : Integer) : String ;
+  CNPJ : AnsiString; cUF : Integer) : String ;
 Var
   Resp : PAnsiChar;
 begin

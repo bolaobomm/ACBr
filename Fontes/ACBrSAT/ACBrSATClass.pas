@@ -178,7 +178,7 @@ type
 
      function AssociarAssinatura( CNPJvalue, assinaturaCNPJs : AnsiString ):
        String ; virtual;
-     function AtivarSAT( subComando : Integer; CNPJ: String; cUF : Integer )
+     function AtivarSAT( subComando : Integer; CNPJ: AnsiString; cUF : Integer )
        : String ; virtual;
      function AtualizarSoftwareSAT : String ; virtual;
      function BloquearSAT : String ; virtual;
@@ -377,7 +377,7 @@ begin
   Result := '';
 end ;
 
-function TACBrSATClass.AtivarSAT(subComando : Integer ; CNPJ : String ;
+function TACBrSATClass.AtivarSAT(subComando : Integer ; CNPJ : AnsiString ;
   cUF : Integer) : String ;
 begin
   ErroAbstract('AtivarSAT');

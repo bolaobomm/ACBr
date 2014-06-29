@@ -47,6 +47,10 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+Data: 29/06/2014     (por: DSA)
+[-] Modificada a assinatura dos metodo AtivarSAT, para utilização de AnsiString, 
+    a fim de evitar erros nas IDEs do Delphi XE ou superiores
+
 Data: 24/02/2014     (por: DSA)
 [-] Modificada a assinatura dos metodo AssociarAssinatura, TrocarCodigoDeAtivacao
     para utilização de AnsiString, a fim de evitar conflitos com algumas IDEs

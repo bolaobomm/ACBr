@@ -118,7 +118,7 @@ type
      procedure DoLog(AString : String ) ;
 
      function AssociarAssinatura( CNPJvalue, assinaturaCNPJs : AnsiString ): String ;
-     function AtivarSAT(subComando : Integer ; CNPJ : String ; cUF : Integer
+     function AtivarSAT(subComando : Integer ; CNPJ : AnsiString ; cUF : Integer
        ) : String ;
      function AtualizarSoftwareSAT : String ;
      function BloquearSAT : String ;
@@ -323,7 +323,7 @@ begin
   Result := FinalizaComando( fsSATClass.AssociarAssinatura( CNPJvalue, assinaturaCNPJs ) );
 end ;
 
-function TACBrSAT.AtivarSAT(subComando : Integer ; CNPJ : String ;
+function TACBrSAT.AtivarSAT(subComando : Integer ; CNPJ : AnsiString ;
   cUF : Integer) : String ;
 begin
   fsComandoLog := 'AtivarSAT( '+IntToStr(subComando)+', '+CNPJ+', '+IntToStr(cUF)+' )';
