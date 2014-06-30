@@ -1631,9 +1631,9 @@ begin
 
  FDadosMsg := TNFSeG.Gera_DadosMsgConsSeqRPSDSF(FTagI, FTagF, VersaoXML,
                                                 CodCidadeToCodSiafi(StrToIntDef(TNFSeConsultarSequencialRPS(Self).FCidade, 0)),
-                                                TNFSeConsultarSequencialRPS(Self).InscricaoMunicipal,
-                                                TNFSeConsultarSequencialRPS(Self).Cnpj,
-                                                TNFSeConsultarSequencialRPS(Self).SeriePrestacao);
+                                                TNFSeConsultarSequencialRPS(Self).FInscricaoMunicipal,
+                                                TNFSeConsultarSequencialRPS(Self).FCnpj,
+                                                TNFSeConsultarSequencialRPS(Self).FSeriePrestacao);
 
  if FProvedorClass.GetAssinarXML(acConsSecRps)
   then begin
@@ -2715,9 +2715,11 @@ begin
  if not ValidarCNPJ(ACnpj) then
   raise Exception.Create('CNPJ '+ACnpj+' inválido.');
 
- Self.ConsSeqRPS.Cnpj               := ACnpj;
- Self.ConsSeqRPS.InscricaoMunicipal := AInscricaoMunicipal;
- Self.ConsSeqRPS.FSeriePrestacao    := ASeriePrestacao;
+ // Alterado por Italo em 30/06/2014
+ Self.ConsSeqRPS.FCidade             := ACidade;
+ Self.ConsSeqRPS.FCnpj               := ACnpj;
+ Self.ConsSeqRPS.FInscricaoMunicipal := AInscricaoMunicipal;
+ Self.ConsSeqRPS.FSeriePrestacao     := ASeriePrestacao;
 
  Result := Self.ConsSeqRPS.Executar;
 
