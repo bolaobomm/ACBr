@@ -1095,6 +1095,7 @@ begin
 
   4303103, // Cachoeirinha/RS
   4311403, // Lajeado/RS
+  4312401, // Montenegro/RS
   4312658, // Nao-Me-Toque/RS
   4314100, // Passo Fundo/RS
   4316808, // Santa Cruz Do Sul/RS

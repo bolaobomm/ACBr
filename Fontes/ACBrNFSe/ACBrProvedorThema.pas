@@ -107,8 +107,9 @@ end;
 function TProvedorThema.GetConfigURL(ACodCidade: Integer): TConfigURL;
 var
  ConfigURL: TConfigURL;
- sHTTPPro: String;
+ sHTTPHom, sHTTPPro: String;
 begin
+ sHTTPHom := 'http://';
  sHTTPPro := 'https://';
 
  case ACodCidade of
@@ -121,6 +122,11 @@ begin
             ConfigURL.HomNomeCidade := 'nfsehml.lajeado.rs.gov.br/thema-nfse';
             ConfigURL.ProNomeCidade := 'nfse.lajeado.rs.gov.br/thema-nfse';
             sHTTPPro := 'http://';
+           end;
+  4312401: begin // Montenegro/RS
+            ConfigURL.HomNomeCidade := 'nfsehml.montenegro.rs.gov.br/nfsehml';
+            ConfigURL.ProNomeCidade := 'nfe.montenegro.rs.gov.br/thema-nfse';
+            sHTTPHom := 'https://';
            end;
   4312658: begin // Nao-Me-Toque/RS
             ConfigURL.HomNomeCidade := 'nfsehml.naometoquers.com.br/thema-nfse';
@@ -155,12 +161,12 @@ begin
            end;
  end;
 
- ConfigURL.HomRecepcaoLoteRPS    := 'http://' + ConfigURL.HomNomeCidade + '/services/NFSEremessa';
- ConfigURL.HomConsultaLoteRPS    := 'http://' + ConfigURL.HomNomeCidade + '/services/NFSEconsulta';
- ConfigURL.HomConsultaNFSeRPS    := 'http://' + ConfigURL.HomNomeCidade + '/services/NFSEconsulta';
- ConfigURL.HomConsultaSitLoteRPS := 'http://' + ConfigURL.HomNomeCidade + '/services/NFSEconsulta';
- ConfigURL.HomConsultaNFSe       := 'http://' + ConfigURL.HomNomeCidade + '/services/NFSEconsulta';
- ConfigURL.HomCancelaNFSe        := 'http://' + ConfigURL.HomNomeCidade + '/services/NFSEcancelamento';
+ ConfigURL.HomRecepcaoLoteRPS    := sHTTPHom + ConfigURL.HomNomeCidade + '/services/NFSEremessa';
+ ConfigURL.HomConsultaLoteRPS    := sHTTPHom + ConfigURL.HomNomeCidade + '/services/NFSEconsulta';
+ ConfigURL.HomConsultaNFSeRPS    := sHTTPHom + ConfigURL.HomNomeCidade + '/services/NFSEconsulta';
+ ConfigURL.HomConsultaSitLoteRPS := sHTTPHom + ConfigURL.HomNomeCidade + '/services/NFSEconsulta';
+ ConfigURL.HomConsultaNFSe       := sHTTPHom + ConfigURL.HomNomeCidade + '/services/NFSEconsulta';
+ ConfigURL.HomCancelaNFSe        := sHTTPHom + ConfigURL.HomNomeCidade + '/services/NFSEcancelamento';
 
  ConfigURL.ProRecepcaoLoteRPS    := sHTTPPro + ConfigURL.ProNomeCidade + '/services/NFSEremessa';
  ConfigURL.ProConsultaLoteRPS    := sHTTPPro + ConfigURL.ProNomeCidade + '/services/NFSEconsulta';
