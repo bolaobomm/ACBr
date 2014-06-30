@@ -97,6 +97,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+Data: 30/06/2014
+-- ACBrECFDaruma --
+[*] Ajuste para imprimir corretamente a Identificação do Consumidor no Rodapé
+    no modelo: "010400" (antigas FS600) (Por: Ivan)
+    http://www.projetoacbr.com.br/forum/index.php?showtopic=16123
+
 Data: 28/06/2014
 -- ACBrECFDaruma --
 [*] Ajuste para evitar a modificação inadvertida de DecimaisQtd e DecimaisPreco

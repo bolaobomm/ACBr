@@ -2155,7 +2155,7 @@ begin
   begin
     try
       AguardaImpressao := True ;
-      if fpMFD then
+      if (fpMFD) and not(fsNumVersao = '010400') then
       begin
         StrConsumidor := LeftStr(Consumidor.Documento,20) + cDELIMITADOR +
                          LeftStr(Consumidor.Nome,30) + cDELIMITADOR +
@@ -2163,7 +2163,6 @@ begin
 
         EnviaComando( FS + 'F' + #240 + StrConsumidor ) ;
       end
-
       else if fsNumVersao = '2000' then
       begin
         StrConsumidor := PadL( PadL(Consumidor.Documento,27) +
