@@ -585,7 +585,7 @@ type
 
 implementation
 
-uses ACBrNFeUtil, ACBrDFeUtil, pcnNFe, ACBrNFeDANFeRLClass;
+uses ACBrNFeUtil, ACBrDFeUtil, pcnNFe, ACBrNFeDANFeRLClass, DateUtils;
 
 {$R *.dfm}
 
@@ -1051,7 +1051,11 @@ begin
     rllSaida.Caption     := IfThen(DSaiEnt <> 0,
                                       DFeUtil.FormatDate(DateToStr(dSaiEnt)));
 //    rllHoraSaida.Caption := IfThen(hSaiEnt <> 0, FormatDateTime('hh:nn:ss', hSaiEnt));                                      
-    rllHoraSaida.Caption := IfThen(dSaiEnt <> 0, FormatDateTime('hh:nn:ss', dSaiEnt));     //..Rodrigo - substitui campo hSaiEnt por DSaiEnt
+//    rllHoraSaida.Caption := IfThen(dSaiEnt <> 0, FormatDateTime('hh:nn:ss', dSaiEnt));     //..Rodrigo - substitui campo hSaiEnt por DSaiEnt
+    if versao = 2.00 then
+      rllHoraSaida.Caption := ifthen(hSaiEnt = 0, '', TimeToStr(hSaiEnt))
+    else
+      rllHoraSaida.Caption := ifthen(TimeOf(dSaiEnt)=0, '', TimeToStr(dSaiEnt));
 
     if FNFe.Ide.tpEmis in [teNormal, teSCAN] then
       begin
