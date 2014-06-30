@@ -127,6 +127,11 @@ begin
 
  DadosMsg := '<' + Prefixo3 + 'LoteRps' +
 
+               // Inclui a versão antes do Id para proCoplan
+               DFeUtil.SeSenao(AProvedor in [proCoplan],
+                               DFeUtil.SeSenao(VersaoDados <> '', ' versao="' + VersaoDados + '"', '' ),
+                               '') +
+
                // Inclui o Identificador ou não
                DFeUtil.SeSenao(AProvedor = proISSDigital,
                                '',
@@ -146,7 +151,7 @@ begin
                DFeUtil.SeSenao(AProvedor in [proAbaco, proBetha, proGinfes, proGoiania, proGovBR,
                                              {proISSDigital, }proIssCuritiba, proISSNET, proNatal, proActcon,
                                              proRecife, proRJ, proSimplISS, proThema, proTiplan,
-                                             proAgili, proFISSLex, proSpeedGov{, proWebISS}, proPronim],
+                                             proAgili, proFISSLex, proSpeedGov, proPronim, proCoplan],
                                '',
                                DFeUtil.SeSenao(VersaoDados <> '', ' versao="' + VersaoDados + '"', '')
                               ) +

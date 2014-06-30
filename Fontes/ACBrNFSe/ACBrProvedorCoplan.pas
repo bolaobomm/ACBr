@@ -173,7 +173,7 @@ begin
           ' xmlns:xsd="http://www.w3.org/2001/XMLSchema"';
 
  case Acao of
-   acRecepcionar: Result := '<' + Prefixo3 + 'EnviarLoteRpsEnvio' + xmlns + NameSpaceDad;
+   acRecepcionar: Result := '<' + Prefixo3 + 'EnviarLoteRpsEnvio' + {xmlns + } NameSpaceDad;
    acConsSit:     Result := '<' + Prefixo3 + 'ConsultarSituacaoLoteRpsEnvio' + xmlns + NameSpaceDad;
    acConsLote:    Result := '<' + Prefixo3 + 'ConsultarLoteRpsEnvio' + xmlns + NameSpaceDad;
    acConsNFSeRps: Result := '<' + Prefixo3 + 'ConsultarNfseRpsEnvio' + xmlns + NameSpaceDad;
@@ -192,8 +192,9 @@ function TProvedorCoplan.Gera_CabMsg(Prefixo2, VersaoLayOut, VersaoDados,
 begin
  Result := '<' + Prefixo2 + 'cabecalho' +
             ' versao="'  + VersaoLayOut + '"' +
-            ' xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"' +
-            ' xmlns:xsd="http://www.w3.org/2001/XMLSchema"' + NameSpaceCab +
+            //' xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"' +
+            //' xmlns:xsd="http://www.w3.org/2001/XMLSchema"' + NameSpaceCab +
+            NameSpaceCab +
             '<versaoDados>' + VersaoDados + '</versaoDados>'+
            '</' + Prefixo2 + 'cabecalho>';
 end;

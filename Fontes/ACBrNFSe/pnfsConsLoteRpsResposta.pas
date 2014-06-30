@@ -349,7 +349,7 @@ begin
                  then ListaNfse.FCompNfse[i].FNFSe.Servico.xItemListaServico := NotaUtil.ObterDescricaoServico(SomenteNumeros(ListaNfse.FCompNfse[i].FNFSe.Servico.ItemListaServico))
                  else ListaNfse.FCompNfse[i].FNFSe.Servico.xItemListaServico := CodigoToDesc(SomenteNumeros(ListaNfse.FCompNfse[i].FNFSe.Servico.ItemListaServico));
 
-                if Leitor.rExtrai(iNivel + 6, 'Valores') <> ''
+                if (Leitor.rExtrai(iNivel + 6, 'Valores') <> '') or (Leitor.rExtrai(iNivel + 6, 'ValoresNfse') <> '')
                  then begin
                   ListaNfse.FCompNfse[i].FNFSe.Servico.Valores.ValorServicos          := Leitor.rCampo(tcDe2, 'ValorServicos');
                   ListaNfse.FCompNfse[i].FNFSe.Servico.Valores.ValorDeducoes          := Leitor.rCampo(tcDe2, 'ValorDeducoes');

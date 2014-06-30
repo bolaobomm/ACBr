@@ -145,7 +145,7 @@ begin
     Append;
 
     with FNFSe do
-    begin    
+    begin
       with infID do
       begin
         FieldByName('Id').AsString        := IdentificacaoRps.Numero+IdentificacaoRps.Serie;
@@ -195,7 +195,14 @@ begin
        FieldByName('CodigoMunicipio').AsString          := CodCidadeToCidade(StrToInt(CodigoMunicipio))
       else
        FieldByName('CodigoMunicipio').AsString          := '';
-      FieldByName('ExigibilidadeISS').AsString          := DFeUtil.SeSenao(ExigibilidadeISS = exiExigivel,'Exigível', DFeUtil.SeSenao(ExigibilidadeISS = exiNaoIncidencia,'Não Incidência', DFeUtil.SeSenao(ExigibilidadeISS = exiIsencao,'Insenção', DFeUtil.SeSenao(ExigibilidadeISS = exiExportacao,'Exportação', DFeUtil.SeSenao(ExigibilidadeISS = exiImunidade,'Imunidade', DFeUtil.SeSenao(ExigibilidadeISS = exiSuspensaDecisaoJudicial,'Suspensa Decisao Judicial','Suspensa Processo Administrativo'))))));
+      FieldByName('ExigibilidadeISS').AsString          := DFeUtil.SeSenao(ExigibilidadeISS = exiExigivel,               'Exigível',
+                                                           DFeUtil.SeSenao(ExigibilidadeISS = exiNaoIncidencia,          'Não Incidência',
+                                                           DFeUtil.SeSenao(ExigibilidadeISS = exiIsencao,                'Isenção',
+                                                           DFeUtil.SeSenao(ExigibilidadeISS = exiExportacao,             'Exportação',
+                                                           DFeUtil.SeSenao(ExigibilidadeISS = exiImunidade,              'Imunidade',
+                                                           DFeUtil.SeSenao(ExigibilidadeISS = exiSuspensaDecisaoJudicial,'Suspensa Decisao Judicial',
+                                                           DFeUtil.SeSenao(ExigibilidadeISS = exiSuspensaDecisaoJudicial,'Suspensa Processo Administrativo',
+                                                           '' )))))));
       FieldByName('MunicipioIncidencia').AsString       := CodCidadeToCidade(MunicipioIncidencia);
     end;
 
@@ -260,7 +267,7 @@ begin
     else
       FieldByName('LogoPrefExpandido').AsString := '0';
 
-    // Prestador 
+    // Prestador
     if DANFSeClassOwner.ExpandirLogoMarca then
       FieldByName('LogoExpandido').AsString := '1'
     else
@@ -374,7 +381,7 @@ begin
     with FNFSe.Tomador do
     begin
       FieldByName('RazaoSocial').AsString               := RazaoSocial;
-      
+
       with IdentificacaoTomador do
       begin
         if DFeUtil.NaoEstaVazio(CpfCnpj) then
@@ -386,10 +393,10 @@ begin
         end
         else
           FieldByName('CpfCnpj').AsString := '';
-          
+
         FieldByName('InscricaoMunicipal').AsString      := InscricaoMunicipal;
       end;
-      
+
       with Endereco do
       begin
         FieldByName('Endereco').AsString                := Endereco;
@@ -402,14 +409,14 @@ begin
         FieldByName('xMunicipio').AsString              := DFeUtil.CollateBr(xMunicipio);
         FieldByName('CodigoPais').AsString              := IntToStr(CodigoPais);
       end;
-      
+
       with Contato do
       begin
         FieldByName('Telefone').AsString                := DFeUtil.FormatarFone(Telefone);
         FieldByName('Email').AsString                   := Email;
       end;
     end;
-        
+
     Post;
   end;
 end;

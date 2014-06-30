@@ -617,6 +617,7 @@ begin
       // Ler a Lista de Mensagens
       if (leitor.rExtrai(2, 'ListaMensagemRetorno') <> '') or
          (leitor.rExtrai(2, 'ListaMensagemRetornoLote') <> '') or
+         (leitor.rExtrai(2, 'ListaMensagemAlertaRetorno') <> '') or
          (leitor.rExtrai(3, 'Erro') <> '') then
       begin
         i := 0;
