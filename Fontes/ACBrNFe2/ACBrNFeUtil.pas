@@ -1238,7 +1238,7 @@ begin
       LayNfeStatusServico  : Result := DFeUtil.SeSenao(AAmbiente=1, 'https://nfe.sefaz.go.gov.br/nfe/services/v2/NfeStatusServico2',    'https://homolog.sefaz.go.gov.br/nfe/services/v2/NfeStatusServico2?wsdl');
       LayNfeCadastro       : Result := DFeUtil.SeSenao(AAmbiente=1, 'https://nfe.sefaz.go.gov.br/nfe/services/v2/CadConsultaCadastro2', 'https://homolog.sefaz.go.gov.br/nfe/services/v2/CadConsultaCadastro2?wsdl');
       LayNFeCCe,
-      LayNFeEvento         : Result := DFeUtil.SeSenao(AAmbiente=1, 'https://nfe.sefaz.go.gov.br/nfe/services/v2/NfeRecepcaoEvento',    'https://homolog.sefaz.go.gov.br/nfe/services/v2/RecepcaoEvento?wsdl');
+      LayNFeEvento         : Result := DFeUtil.SeSenao(AAmbiente=1, 'https://nfe.sefaz.go.gov.br/nfe/services/v2/RecepcaoEvento',       'https://homolog.sefaz.go.gov.br/nfe/services/v2/RecepcaoEvento?wsdl');
 
       LayNfeAutorizacao    : Result := DFeUtil.SeSenao(AAmbiente=1, 'https://nfe.sefaz.go.gov.br/nfe/services/v2/NfeAutorizacao',       'https://homolog.sefaz.go.gov.br/nfe/services/v2/NfeAutorizacao?wsdl');
       LayNfeRetAutorizacao : Result := DFeUtil.SeSenao(AAmbiente=1, 'https://nfe.sefaz.go.gov.br/nfe/services/v2/NfeRetAutorizacao',    'https://homolog.sefaz.go.gov.br/nfe/services/v2/NfeRetAutorizacao?wsdl');
