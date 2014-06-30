@@ -282,8 +282,9 @@ begin
 
       for I := 0 to veicTracao.condutor.Count - 1 do
       begin
-        FieldByName('CPF').AsString   := DFeUtil.FormatarCPF(veicTracao.condutor.Items[i].CPF) + #13#10;
-        FieldByName('xNome').AsString := veicTracao.condutor.Items[i].xNome + #13#10;
+        //Alteração proposta por Maciel Goettms (27/02/2014) Concatenação dos condutores já adicionados.
+        FieldByName('CPF').AsString   := FieldByName('CPF').AsString + DFeUtil.FormatarCPF(veicTracao.condutor.Items[i].CPF) + #13#10;
+        FieldByName('xNome').AsString := FieldByName('xNome').AsString + veicTracao.condutor.Items[i].xNome + #13#10;
       end;
     end;
     for I := 0 to veicReboque.Count - 1 do
