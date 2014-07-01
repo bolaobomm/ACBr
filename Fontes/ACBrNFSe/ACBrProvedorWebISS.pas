@@ -569,6 +569,7 @@ begin
             ConfigURL.ProCancelaNFSe        := 'https://www4.webiss.com.br/' + ConfigURL.ProNomeCidade + '_wsnfse/NfseServices.svc';
            end;
 
+  1721000,
   2100204,
   2914802,
   2916401,
