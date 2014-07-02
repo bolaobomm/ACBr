@@ -39,7 +39,7 @@ uses
   SysUtils, Classes,
   CmdUnit , blcksock,
   ACBrUtil, ACBrLCB, ACBrDIS, ACBrGAV, ACBrDevice, ACBrCHQ,
-  ACBrECF, ACBrRFD, ACBrBAL, ACBrETQ, ACBrSocket, ACBrCEP, ACBrIBGE ;
+  ACBrECF, ACBrRFD, ACBrBAL, ACBrETQ, ACBrSocket, ACBrCEP, ACBrIBGE, ACBrMail ;
 
 const
    {$I versao.txt}
@@ -52,6 +52,7 @@ type
   Tdm = class(TDataModule)
     ACBrCEP1 : TACBrCEP ;
     ACBrIBGE1 : TACBrIBGE ;
+    ACBrMail1: TACBrMail;
     TcpServer: TACBrTCPServer;
     ACBrCHQ1: TACBrCHQ;
     ACBrGAV1: TACBrGAV;
@@ -117,7 +118,7 @@ Uses IniFiles, UtilUnit,
      {$IFDEF MSWINDOWS} sndkey32, {$ENDIF}
      {$IFDEF LINUX} unix, baseunix, termio, {$ENDIF}
      DoACBrUnit, DoECFUnit, DoGAVUnit, DoCHQUnit, DoDISUnit, DoLCBUnit,
-     DoBALUnit , DoETQUnit, DoCEPUnit, DoIBGEUnit;
+     DoBALUnit , DoETQUnit, DoCEPUnit, DoIBGEUnit, DoEmailUnit;
 
 {$R *.lfm}
 
@@ -375,6 +376,20 @@ begin
       ProxyPass  := LeINICrypt(INI, 'CEP', 'Proxy_Pass', _C) ;
     end ;
 
+    with ACBrMail1 do
+    begin
+      FromName       := Ini.ReadString('EMAIL', 'NomeExibicao', '');
+      From           := Ini.ReadString('EMAIL', 'Endereco', '');
+      Host           := Ini.ReadString('EMAIL', 'Email', '');
+      Port           := Ini.ReadInteger('EMAIL','Porta', 0);
+      Username       := LeINICrypt(Ini,'EMAIL', 'Usuario', _C);
+      Password       := LeINICrypt(Ini,'EMAIL', 'Senha', _C);
+      SetSSL         := Ini.ReadBool('EMAIL', 'ExigeSSL', False);
+      SetTLS         := Ini.ReadBool('EMAIL', 'ExigeTLS', False);
+      DefaultCharset := TMailCharset(GetEnumValue(TypeInfo(TMailCharset),
+                        Ini.ReadString('EMAIL', 'Codificacao', '')));
+    end;
+
     with ACBrIBGE1 do
     begin
       ProxyHost  := Ini.ReadString('CEP', 'Proxy_Host', '');
@@ -480,7 +495,9 @@ begin
            else if Cmd.Objeto = 'CEP' then
              DoCEP( Cmd )
            else if Cmd.Objeto = 'IBGE' then
-             DoIBGE( Cmd );
+             DoIBGE( Cmd )
+           else if Cmd.Objeto = 'EMAIL' then
+             DoEmail ( Cmd );
 
 
            Resposta(Linha, 'OK: '+Cmd.Resposta );

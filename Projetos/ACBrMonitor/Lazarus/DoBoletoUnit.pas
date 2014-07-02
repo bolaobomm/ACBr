@@ -6,6 +6,7 @@
 { Direitos Autorais Reservados (c) 2010 Daniel Simões de Almeida               }
 {                                                                              }
 { Colaboradores nesse arquivo: Juliana Rodrigues Prado Tamizou                 }
+{                              Jean Patrick F. dos Santos (envio de e-mails)   }
 {                                                                              }
 {  Você pode obter a última versão desse arquivo na página do Projeto ACBr     }
 { Componentes localizado em      http://www.sourceforge.net/projects/acbr      }
@@ -43,13 +44,17 @@ procedure DoBoleto(Cmd: TACBrCmd);
 procedure LerIniBoletos(aStr: AnsiString);
 procedure IncluirTitulo(aIni: TMemIniFile; Sessao: String);
 procedure GravarIniRetorno(DirIniRetorno: String);
+function EnviarBoletosPorEmail(aAnexo: String; aEmail: String) : String;
 function ListaBancos() : String;
 
 implementation
 
-uses ACBrBoleto, ACBrUtil, ACBrMonitor1, DoACBrUnit,strutils, typinfo ;
+uses ACBrBoleto, ACBrUtil, ACBrMonitor1, DoACBrUnit, strutils, typinfo,
+  DoEmailUnit ;
 
 procedure DoBoleto ( Cmd: TACBrCmd ) ;
+var
+  EnvioResposta: String;
 begin
    with FrmACBrMonitor.ACBrBoleto1 do
    begin
@@ -86,13 +91,34 @@ begin
          GravarIniRetorno(DirArqRetorno);
        end
 
+      else if cmd.Metodo = 'enviaremail' then
+       begin
+         GerarPDF;
+         EnvioResposta := EnviarBoletosPorEmail(FrmACBrMonitor.ACBrBoleto1.ACBrBoletoFC.NomeArquivo,
+                                                ListadeBoletos[0].Sacado.Email);
+         if ( EnvioResposta = 'OK' ) then
+            Cmd.Resposta := 'E-mail enviado com sucesso!'
+         else
+            raise Exception.Create(EnvioResposta);
+       end
+
       else if cmd.Metodo = 'incluirtitulos' then
        begin
         LerIniBoletos(Cmd.Params(0));
         if Cmd.Params(1) = 'I' then
           Imprimir
         else if Cmd.Params(1)= 'P' then
-          GerarPDF;
+          GerarPDF
+        else if Cmd.Params(1)= 'E' then
+         begin
+           GerarPDF;
+           EnvioResposta := EnviarBoletosPorEmail(FrmACBrMonitor.ACBrBoleto1.ACBrBoletoFC.NomeArquivo,
+                                                  ListadeBoletos[0].Sacado.Email);
+           if ( EnvioResposta = 'OK' ) then
+              Cmd.Resposta := 'E-mail enviado com sucesso!'
+           else
+              raise Exception.Create(EnvioResposta);
+         end;
        end
       else if cmd.Metodo = 'listabancos' then
        begin
@@ -435,6 +461,30 @@ begin
     end;
   finally
     IniRetorno.Free;
+  end;
+end;
+
+function EnviarBoletosPorEmail(aAnexo: String; aEmail: String): String;
+begin
+  with {$IFNDEF NOGUI}FrmACBrMonitor.ACBrMail1 {$ELSE}dm.ACBrMail1 {$ENDIF} do
+  begin
+    try
+      ConfigurarEmailNovo;
+      RecuperarDadosIniciais;
+      Subject   := FrmACBrMonitor.edtBOLEmailAssunto.Text;
+      Body.Text := FrmACBrMonitor.edtBOLEmailMensagem.Text;
+      AddAddress(aEmail);
+      AddAttachment(aAnexo);
+
+      Send;
+      Result := 'OK';
+    except
+      on E: Exception do
+         Result := (e.Message);
+    end;
+
+    { Recupera dados iniciais }
+    RecuperarDadosIniciais;
   end;
 end;
 

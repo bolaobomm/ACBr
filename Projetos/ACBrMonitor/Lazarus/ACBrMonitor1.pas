@@ -41,7 +41,7 @@ uses
   CmdUnit, ACBrECF, ACBrDIS, ACBrGAV, ACBrDevice, ACBrCHQ, ACBrLCB, ACBrRFD, { Unit do ACBr }
   Dialogs, ExtCtrls, Menus, Buttons, StdCtrls, ComCtrls, Controls, Graphics,
   Spin, MaskEdit, EditBtn, ACBrBAL, ACBrETQ, ACBrSocket, ACBrCEP, ACBrIBGE,
-  blcksock, ACBrValidador, ACBrGIF, ACBrBoleto, ACBrBoletoFCFortesFr, ACBrEAD;
+  blcksock, ACBrValidador, ACBrGIF, ACBrBoleto, ACBrBoletoFCFortesFr, ACBrEAD, ACBrMail;
 
 const
   {$I versao.txt}
@@ -64,6 +64,7 @@ type
     ACBrECF1: TACBrECF;
     ACBrGIF1 : TACBrGIF ;
     ACBrIBGE1 : TACBrIBGE ;
+    ACBrMail1: TACBrMail;
     ACBrValidador1 : TACBrValidador ;
     ApplicationProperties1: TApplicationProperties;
     bBALAtivar: TBitBtn;
@@ -84,6 +85,7 @@ type
     bGAVAtivar: TBitBtn;
     bGAVEstado: TBitBtn;
     bIBGETestar: TButton;
+    bEmailTestarConf: TBitBtn;
     bLCBAtivar: TBitBtn;
     bLCBSerial: TBitBtn;
     bRFDID: TButton;
@@ -118,6 +120,8 @@ type
     cbLog: TCheckBox;
     cbRFDModelo: TComboBox;
     cbSenha: TCheckBox;
+    cbEmailSsl: TCheckBox;
+    cbEmailTls: TCheckBox;
     cbxBOLBanco: TComboBox;
     cbxBOLEmissao: TComboBox;
     cbxBOLFiltro: TComboBox;
@@ -139,6 +143,9 @@ type
     chRFD: TCheckBox;
     chRFDIgnoraMFD: TCheckBox;
     ckgBOLMostrar: TCheckGroup;
+    cbEmailCodificacao: TComboBox;
+    edtBOLEmailAssunto: TEdit;
+    gbEmailDados: TGroupBox;
     deBOLDirArquivo: TDirectoryEdit;
     deBOLDirLogo: TDirectoryEdit;
     deBolDirRemessa: TDirectoryEdit;
@@ -155,11 +162,17 @@ type
     edCONProxyPort: TEdit;
     edCONProxyUser: TEdit;
     edECFLog: TEdit;
+    edEmailEndereco: TEdit;
     edEntTXT: TEdit;
+    edEmailHost: TEdit;
     edIBGECodNome: TEdit;
     edLCBPreExcluir: TEdit;
     edLogArq: TEdit;
+    edEmailNome: TEdit;
+    edEmailPorta: TSpinEdit;
     edPortaTCP: TEdit;
+    edEmailSenha: TEdit;
+    edEmailUsuario: TEdit;
     edUSUCNPJ: TEdit;
     edRFDDir: TEdit;
     edUSUEndereco: TEdit;
@@ -209,6 +222,7 @@ type
     gbTXT: TGroupBox;
     GroupBox1: TGroupBox;
     GroupBox2: TGroupBox;
+    GroupBox3: TGroupBox;
     Image1 : TImage ;
     Label1: TLabel;
     Label10: TLabel;
@@ -236,7 +250,15 @@ type
     Label30: TLabel;
     Label31: TLabel;
     Label32: TLabel;
+    Label33: TLabel;
+    Label34: TLabel;
+    Label35: TLabel;
+    Label36: TLabel;
+    Label37: TLabel;
+    Label38: TLabel;
+    Label39: TLabel;
     Label4: TLabel;
+    Label40: TLabel;
     Label43: TLabel;
     Label44: TLabel;
     Label45: TLabel;
@@ -279,6 +301,7 @@ type
     Label79: TLabel;
     Label8: TLabel;
     Label80: TLabel;
+    Label81: TLabel;
     Label82: TLabel;
     Label83: TLabel;
     Label84: TLabel;
@@ -322,6 +345,7 @@ type
     lRFDID: TLabel;
     lRFDMarca: TLabel;
     lTimeOutTCP: TLabel;
+    edtBOLEmailMensagem: TMemo;
     meUSUHoraCadastro: TMaskEdit;
     meRFDHoraSwBasico: TMaskEdit;
     mRFDINI: TMemo;
@@ -335,6 +359,7 @@ type
     pConfig: TPanel;
     pgBoleto: TPageControl;
     pgConRFD: TPageControl;
+    pbEmailTeste: TProgressBar;
     rbLCBFila: TRadioButton;
     rbLCBTeclado: TRadioButton;
     rbTCP: TRadioButton;
@@ -393,6 +418,8 @@ type
     Splitter1: TSplitter;
     TabControl1: TTabControl;
     TabSheet1: TTabSheet;
+    TabSheet2: TTabSheet;
+    tsEmail: TTabSheet;
     tsContaBancaria: TTabSheet;
     tsECFParamI: TTabSheet;
     tsECFParamII: TTabSheet;
@@ -431,10 +458,12 @@ type
     procedure ACBrEAD1GetChavePrivada(var Chave: AnsiString);
     procedure ACBrEAD1GetChavePublica(var Chave: AnsiString);
     procedure ACBrGIF1Click(Sender : TObject) ;
+    procedure ACBrMail1MailProcess(const aStatus: TMailStatus);
     procedure ApplicationProperties1Exception(Sender: TObject; E: Exception);
     procedure ApplicationProperties1Minimize(Sender: TObject);
     procedure ApplicationProperties1Restore(Sender: TObject);
     procedure bCEPTestarClick(Sender : TObject) ;
+    procedure bEmailTestarConfClick(Sender: TObject);
     procedure bIBGETestarClick(Sender : TObject) ;
     procedure bRSAeECFcClick(Sender : TObject) ;
     procedure cbxBOLFiltroChange ( Sender: TObject ) ;
@@ -450,6 +479,7 @@ type
     procedure deBolDirRetornoExit ( Sender: TObject ) ;
     procedure deUSUDataCadastroExit(Sender : TObject) ;
     procedure deRFDDataSwBasicoExit(Sender : TObject) ;
+    procedure edEmailEnderecoExit(Sender: TObject);
     procedure FormClose(Sender: TObject; var CloseAction: TCloseAction);{%h-}
     procedure FormCreate(Sender: TObject);
     procedure ACBrECF1MsgAguarde(Mensagem: string);
@@ -612,6 +642,8 @@ type
     procedure AddLinesLog;
 
     procedure SetDisWorking(const Value: boolean);
+
+    procedure ACBrMailTesteMailProcess(const aStatus: TMailStatus);
   public
     Conexao: TTCPBlockSocket;
 
@@ -640,7 +672,7 @@ uses IniFiles, TypInfo, LCLType, strutils,
   {$IFDEF LINUX} unix, baseunix, termio, {$ENDIF}
   ACBrECFNaoFiscal, ACBrUtil, ACBrConsts, Math, Sobre, DateUtils,
   ConfiguraSerial,
-  DoECFBemafi32, DoECFObserver, DoETQUnit;
+  DoECFBemafi32, DoECFObserver, DoETQUnit, DoEmailUnit;
 
 {$R *.lfm}
 
@@ -882,6 +914,28 @@ begin
   OpenURL('http://www.djsystem.com.br/acbr/sac/');
 end;
 
+procedure TFrmACBrMonitor.ACBrMail1MailProcess(const aStatus: TMailStatus);
+begin
+  pbEmailTeste.Position := Integer(aStatus);
+  case aStatus of
+    pmsStartProcess:
+      mResp.Lines.Add( 'Email, Teste: Iniciando processo de envio.');
+    pmsConfigHeaders:
+      mResp.Lines.Add( 'Email, Teste: Configurando o cabeçalho do e-mail.');
+    pmsLoginSMTP:
+      mResp.Lines.Add( 'Email, Teste: Logando no servidor de e-mail.');
+    pmsStartSends:
+      mResp.Lines.Add( 'Email, Teste: Iniciando os envios.');
+    pmsSendTo:
+      mResp.Lines.Add( 'Email, Teste: Processando lista de destinatários.');
+    pmsSendData:
+      mResp.Lines.Add( 'Email, Teste: Enviando dados.');
+    pmsLogoutSMTP:
+      mResp.Lines.Add( 'Email, Teste: Fazendo Logout no servidor de e-mail.');
+  end;
+  Application.ProcessMessages;
+end;
+
 procedure TFrmACBrMonitor.ApplicationProperties1Minimize(Sender: TObject);
 begin
   if WindowState <> wsMinimized then
@@ -934,6 +988,84 @@ begin
 
      MessageDlg(AMsg,mtInformation,[mbOK],0);
   end ;
+end;
+
+procedure TFrmACBrMonitor.bEmailTestarConfClick(Sender: TObject);
+var
+  Teste : String;
+
+begin
+  if ( Trim(edEmailEndereco.Text) = '' ) or not ValidarEmail( edEmailEndereco.Text ) then
+  begin
+     MessageDlg('Atenção','O endereço de E-mail informado não é Válido ou não foi Preenchido',mtWarning,[mbOK],'');
+     edEmailEndereco.SetFocus;
+     Exit;
+  end;
+
+  if Trim( edEmailHost.Text ) = '' then
+  begin
+    MessageDlg('Atenção','Host SMTP não informado',mtWarning,[mbOK],'');
+    edEmailHost.SetFocus;
+    Exit;
+  end;
+
+  if ( edEmailPorta.Value = 0 ) then
+  begin
+    MessageDlg('Atenção','A Porta SMTP informada não é Válida',mtWarning,[mbOK],'');
+    edEmailPorta.SetFocus;
+    Exit;
+  end;
+
+  if Application.MessageBox('Durante o teste, o programa pode parar ' +
+  'de responder por até três minutos. Deseja prosseguir?', 'ATENÇÃO', 6) <> 6 then
+     Exit;
+
+  bEmailTestarConf.Enabled := False;
+  pbEmailTeste.Visible     := True;
+  pbEmailTeste.Position    := 1;
+  Application.ProcessMessages;
+
+  with ACBrMail1 do
+   begin
+     Attempts       := 1;
+     FromName       := edEmailNome.Text;
+     From           := edEmailEndereco.Text;
+     Username       := edEmailUsuario.Text;
+     Password       := edEmailSenha.Text;
+     Host           := edEmailHost.Text;
+     Teste          := IntToStr(edEmailPorta.Value);
+     Port           := Teste;
+     SetSSL         := cbEmailSsl.Checked;
+     SetTLS         := cbEmailTls.Checked;
+     DefaultCharset := TMailCharset(GetEnumValue(TypeInfo(TMailCharset),
+                       cbEmailCodificacao.Text));;
+
+     AddAddress(edEmailEndereco.Text);
+
+     Subject  := 'ACBrMonitor : Teste de Configuração de Email';
+
+     Body.Add('Se você consegue ler esta mensagem, significa que suas configurações');
+     Body.Add('de SMTP estão corretas.');
+     Body.Add('');
+     Body.Add('ACBrMonitor');
+
+     try
+        try
+          Screen.Cursor := crHourGlass;
+          Application.ProcessMessages;
+          Send;
+        except
+           on e: Exception do
+           begin
+              mResp.Lines.Add( e.Message );
+           end;
+        end;
+     finally
+        Screen.Cursor := crDefault;
+        pbEmailTeste.Visible     := False;
+        bEmailTestarConf.Enabled := True;
+     end;
+   end;
 end;
 
 procedure TFrmACBrMonitor.bIBGETestarClick(Sender : TObject) ;
@@ -1124,6 +1256,15 @@ begin
       mResp.Lines.Add( 'Data Inválida' );
       deRFDDataSwBasico.SetFocus;
    end ;
+end;
+
+procedure TFrmACBrMonitor.edEmailEnderecoExit(Sender: TObject);
+begin
+  if ( Trim(edEmailEndereco.Text) <> '' ) and not ValidarEmail( edEmailEndereco.Text )  then
+  begin
+     mResp.Lines.Add( 'O endereço de E-mail informado não é Válido' );
+     edEmailEndereco.SetFocus;
+  end;
 end;
 
 {------------------------------------------------------------------------------}
@@ -1525,42 +1666,59 @@ begin
     edCONProxyPass.Text := LeINICrypt(INI, 'CEP', 'Proxy_Pass', _C) ;
 
     {Parametros do Boleto - Cliente}
-    edtBOLRazaoSocial.Text  := ini.ReadString('BOLETO', 'Cedente.Nome', '');
-    edtBOLCNPJ.Text         := ini.ReadString('BOLETO', 'Cedente.CNPJCPF', '');
-    edtBOLLogradouro.Text   := ini.ReadString('BOLETO', 'Cedente.Logradouro', '');
-    edtBOLNumero.Text       := ini.ReadString('BOLETO', 'Cedente.Numero', '');
-    edtBOLBairro.Text       := ini.ReadString('BOLETO', 'Cedente.Bairro', '');
-    edtBOLCidade.Text       := ini.ReadString('BOLETO', 'Cedente.Cidade', '');
-    edtBOLCEP.Text          := ini.ReadString('BOLETO', 'Cedente.CEP', '');
-    edtBOLComplemento.Text  := ini.ReadString('BOLETO', 'Cedente.Complemento', '');
-    cbxBOLUF.Text           := ini.ReadString('BOLETO', 'Cedente.UF', '');
-    cbxBOLEmissao.ItemIndex := ini.ReadInteger('BOLETO', 'Cedente.RespEmis', -1);
-    cbxBOLF_J.ItemIndex     := ini.ReadInteger('BOLETO','Cedente.Pessoa',-1);
-    edtCodTransmissao.Text  := ini.ReadString('BOLETO', 'Cedente.CodTransmissao','');
-    edtModalidade.Text      := ini.ReadString('BOLETO','Cedente.Modalidade','');
-    edtConvenio.Text        := ini.ReadString('BOLETO','Cedente.Convenio','');
+    edtBOLRazaoSocial.Text  := Ini.ReadString('BOLETO', 'Cedente.Nome', '');
+    edtBOLCNPJ.Text         := Ini.ReadString('BOLETO', 'Cedente.CNPJCPF', '');
+    edtBOLLogradouro.Text   := Ini.ReadString('BOLETO', 'Cedente.Logradouro', '');
+    edtBOLNumero.Text       := Ini.ReadString('BOLETO', 'Cedente.Numero', '');
+    edtBOLBairro.Text       := Ini.ReadString('BOLETO', 'Cedente.Bairro', '');
+    edtBOLCidade.Text       := Ini.ReadString('BOLETO', 'Cedente.Cidade', '');
+    edtBOLCEP.Text          := Ini.ReadString('BOLETO', 'Cedente.CEP', '');
+    edtBOLComplemento.Text  := Ini.ReadString('BOLETO', 'Cedente.Complemento', '');
+    cbxBOLUF.Text           := Ini.ReadString('BOLETO', 'Cedente.UF', '');
+    cbxBOLEmissao.ItemIndex := Ini.ReadInteger('BOLETO', 'Cedente.RespEmis', -1);
+    cbxBOLF_J.ItemIndex     := Ini.ReadInteger('BOLETO','Cedente.Pessoa',-1);
+    edtCodTransmissao.Text  := Ini.ReadString('BOLETO', 'Cedente.CodTransmissao','');
+    edtModalidade.Text      := Ini.ReadString('BOLETO','Cedente.Modalidade','');
+    edtConvenio.Text        := Ini.ReadString('BOLETO','Cedente.Convenio','');
 
     {Parametros do Boleto - Banco}
     cbxBOLBanco.ItemIndex    := Ini.ReadInteger('BOLETO', 'Banco', 0);
-    edtBOLConta.Text         := ini.ReadString('BOLETO', 'Conta', '');
-    edtBOLDigitoConta.Text   := ini.ReadString('BOLETO', 'DigitoConta', '');
-    edtBOLAgencia.Text       := ini.ReadString('BOLETO', 'Agencia', '');
-    edtBOLDigitoAgencia.Text := ini.ReadString('BOLETO', 'DigitoAgencia', '');
-    edtCodCliente.Text       := ini.ReadString('BOLETO', 'CodCedente', '');
+    edtBOLConta.Text         := Ini.ReadString('BOLETO', 'Conta', '');
+    edtBOLDigitoConta.Text   := Ini.ReadString('BOLETO', 'DigitoConta', '');
+    edtBOLAgencia.Text       := Ini.ReadString('BOLETO', 'Agencia', '');
+    edtBOLDigitoAgencia.Text := Ini.ReadString('BOLETO', 'DigitoAgencia', '');
+    edtCodCliente.Text       := Ini.ReadString('BOLETO', 'CodCedente', '');
 
     {Parametros do Boleto - Boleto}
-    deBOLDirLogo.Text        := ini.ReadString('BOLETO', 'DirLogos',
+    deBOLDirLogo.Text        := Ini.ReadString('BOLETO', 'DirLogos',
                                 ExtractFilePath(Application.ExeName)+'Logos'+PathDelim);
-    edtBOLSH.Text            := ini.ReadString('BOLETO', 'SoftwareHouse', '');
-    spBOLCopias.Value        := ini.ReadInteger('BOLETO', 'Copias', 1);
+    edtBOLSH.Text            := Ini.ReadString('BOLETO', 'SoftwareHouse', '');
+    spBOLCopias.Value        := Ini.ReadInteger('BOLETO', 'Copias', 1);
     ckgBOLMostrar.Checked[0] := Ini.ReadBool('BOLETO', 'Preview', True);
-    ckgBOLMostrar.Checked[1] := ini.ReadBool('BOLETO', 'Setup', True);
-    cbxBOLLayout.ItemIndex   := ini.ReadInteger('BOLETO', 'Layout', 0);
-    cbxBOLFiltro.ItemIndex   := ini.ReadInteger('BOLETO', 'Filtro', 0);
-    deBOLDirArquivo.Text     := ini.ReadString('BOLETO', 'DirArquivoBoleto','');
-    deBolDirRemessa.Text     := ini.ReadString('BOLETO', 'DirArquivoRemessa','');
-    deBolDirRetorno.Text     := ini.ReadString('BOLETO', 'DirArquivoRetorno','');
-    cbxCNAB.ItemIndex        := ini.ReadInteger('BOLETO', 'CNAB',0);
+    ckgBOLMostrar.Checked[1] := Ini.ReadBool('BOLETO', 'Setup', True);
+    cbxBOLLayout.ItemIndex   := Ini.ReadInteger('BOLETO', 'Layout', 0);
+    cbxBOLFiltro.ItemIndex   := Ini.ReadInteger('BOLETO', 'Filtro', 0);
+    deBOLDirArquivo.Text     := Ini.ReadString('BOLETO', 'DirArquivoBoleto','');
+    deBolDirRemessa.Text     := Ini.ReadString('BOLETO', 'DirArquivoRemessa','');
+    deBolDirRetorno.Text     := Ini.ReadString('BOLETO', 'DirArquivoRetorno','');
+    cbxCNAB.ItemIndex        := Ini.ReadInteger('BOLETO', 'CNAB',0);
+
+    {Parametros do Boleto - E-mail}
+    edtBOLEmailAssunto.Text  := Ini.ReadString('BOLETO', 'EmailAssuntoBoleto','');
+    edtBOLEmailMensagem.Text := StringReplace(Ini.ReadString('BOLETO', 'EmailMensagemBoleto',''),
+                                                             '|', LineEnding, [rfReplaceAll]);
+
+    {Parametro da Conta de Email}
+    edEmailNome.Text         := Ini.ReadString('EMAIL', 'NomeExibicao', '');
+    edEmailEndereco.Text     := Ini.ReadString('EMAIL', 'Endereco', '');
+    edEmailHost.Text         := Ini.ReadString('EMAIL', 'Email', '');
+    edEmailPorta.Value       := Ini.ReadInteger('EMAIL','Porta', 0);
+    edEmailUsuario.Text      := LeINICrypt(Ini,'EMAIL', 'Usuario', _C);
+    edEmailSenha.Text        := LeINICrypt(Ini,'EMAIL', 'Senha', _C);
+    cbEmailSsl.Checked       := Ini.ReadBool('EMAIL', 'ExigeSSL', False);
+    cbEmailTls.Checked       := Ini.ReadBool('EMAIL', 'ExigeTLS', False);
+    cbEmailCodificacao.Text  := Ini.ReadString('EMAIL', 'Codificacao', '');
+
   finally
     Ini.Free;
   end;
@@ -1692,6 +1850,20 @@ begin
     ProxyUser  := edCONProxyUser.Text;
     ProxyPass  := edCONProxyPass.Text;
   end ;
+
+  with ACBrMail1 do
+  begin
+    FromName       := edEmailNome.Text;
+    From           := edEmailEndereco.Text;
+    Host           := edEmailHost.Text;
+    Port           := IntToStr(edEmailPorta.Value);
+    Username       := edEmailUsuario.Text;
+    Password       := edEmailSenha.Text;
+    SetSSL         := cbEmailSsl.Checked;
+    SetTLS         := cbEmailTls.Checked;
+    DefaultCharset := TMailCharset(GetEnumValue(TypeInfo(TMailCharset),
+                      cbEmailCodificacao.Text));
+  end;
 
   with ACBrIBGE1 do
   begin
@@ -1970,6 +2142,18 @@ begin
     Ini.WriteInteger('TC', 'TCP_Porta', StrToIntDef(edTCArqPrecos.Text, 6500));
     Ini.WriteString( 'TC', 'Arq_Precos', edTCArqPrecos.Text);
     Ini.WriteString( 'TC', 'Nao_Econtrado', edTCNaoEncontrado.Text);
+
+    { Parametros da Conta de Email }
+    Ini.WriteString(  'EMAIL', 'NomeExibicao', edEmailNome.Text);
+    Ini.WriteString(  'EMAIL', 'Endereco', edEmailEndereco.Text);
+    Ini.WriteString(  'EMAIL', 'Email', edEmailHost.Text);
+    GravaINICrypt(Ini,'EMAIL', 'Usuario', edEmailUsuario.Text, _C);
+    GravaINICrypt(Ini,'EMAIL', 'Senha', edEmailSenha.Text, _C);
+    Ini.WriteInteger( 'EMAIL', 'Porta', edEmailPorta.Value);
+    Ini.WriteBool(    'EMAIL', 'ExigeSSL', cbEmailSsl.Checked);
+    Ini.WriteBool(    'EMAIL', 'ExigeTLS', cbEmailTls.Checked);
+    Ini.WriteString(  'EMAIL', 'Codificacao', cbEmailCodificacao.Text);
+
   finally
     Ini.Free;
   end;
@@ -2094,6 +2278,11 @@ begin
      ini.WriteString('BOLETO', 'DirArquivoRemessa',PathWithoutDelim( deBolDirRemessa.Text ));
      ini.WriteString('BOLETO', 'DirArquivoRetorno',PathWithoutDelim( deBolDirRetorno.Text ));
      ini.WriteInteger('BOLETO','CNAB',cbxCNAB.ItemIndex);
+
+     {Parametros do Boleto - E-mail}
+     ini.WriteString('BOLETO', 'EmailAssuntoBoleto', edtBOLEmailAssunto.Text);
+     ini.WriteString('BOLETO', 'EmailMensagemBoleto', StringReplace(edtBOLEmailMensagem.Text,
+                                                                    LineEnding, '|', [rfReplaceAll]));
    finally
       ini.Free;
    end;
@@ -2278,7 +2467,9 @@ begin
         else if fsCmd.Objeto = 'CEP' then
           DoCEP(fsCmd)
         else if fsCmd.Objeto = 'IBGE' then
-          DoIBGE(fsCmd);
+          DoIBGE(fsCmd)
+        else if fsCmd.Objeto = 'EMAIL' then
+          DoEmail(fsCmd);
 
         // Atualiza Memo de Entrada //
         mCmd.Lines.Assign( fsProcessar );
@@ -2297,7 +2488,7 @@ begin
 end;
 
 {------------------------------------------------------------------------------}
-procedure TFrmACBrMonitor.Resposta(Comando, Resposta: Ansistring);
+procedure TFrmACBrMonitor.Resposta(Comando, Resposta: ansistring);
 var
    SL : TStringList ;
 begin
@@ -2794,8 +2985,9 @@ begin
   mResp.Lines.Add(Resp);
 end;
 
-procedure TFrmACBrMonitor.TcpServerRecebeDados(const TCPBlockSocket: TTCPBlockSocket;
-  const Recebido: AnsiString; var Enviar: AnsiString);
+procedure TFrmACBrMonitor.TcpServerRecebeDados(
+  const TCPBlockSocket: TTCPBlockSocket; const Recebido: ansistring;
+  var Enviar: ansistring);
 var
   CmdEnviado: AnsiString;
 begin
@@ -3733,6 +3925,11 @@ begin
   fsDisWorking := Value;
 end;
 
+procedure TFrmACBrMonitor.ACBrMailTesteMailProcess(const aStatus: TMailStatus);
+begin
+
+end;
+
 {---------------------------------- ACBrBAL -----------------------------------}
 procedure TFrmACBrMonitor.cbBALModeloChange(Sender: TObject);
 begin
@@ -4072,4 +4269,4 @@ begin
 end;
 
 end.
-
+

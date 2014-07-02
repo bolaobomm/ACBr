@@ -7,7 +7,7 @@ object dm: Tdm
   Height = 143
   HorizontalOffset = 495
   VerticalOffset = 323
-  Width = 406
+  Width = 481
   object TcpServer: TACBrTCPServer
     IP = '0.0.0.0'
     Port = '0'
@@ -64,12 +64,22 @@ object dm: Tdm
   object ACBrCEP1: TACBrCEP
     ProxyPort = '8080'
     OnAntesAbrirHTTP = ACBrCEP1AntesAbrirHTTP
+    PesquisarIBGE = True
     left = 111
     top = 12
   end
   object ACBrIBGE1: TACBrIBGE
     ProxyPort = '8080'
     left = 186
+    top = 12
+  end
+  object ACBrMail1: TACBrMail
+    Host = '127.0.0.1'
+    Port = '25'
+    SetSSL = False
+    SetTLS = False
+    Attempts = 3
+    left = 417
     top = 12
   end
 end
