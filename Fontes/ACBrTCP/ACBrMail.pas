@@ -620,12 +620,19 @@ procedure TACBrMail.AddAttachment(aFileName: string; aNameRef: string);
 var
   i: integer;
 begin
+
   {$IFDEF FPC}
   if not FileExistsUTF8(aFileName) then
+  begin
+    if not FileExists(aFileName) then
+      raise Exception.Create('Add Attachment: File not Exists.');
+  end
+  else
+    aFileName := Utf8ToAnsi(aFileName);
   {$ELSE}
   if not FileExists(aFileName) then
-  {$ENDIF}
     raise Exception.Create('Add Attachment: File not Exists.');
+  {$ENDIF}
 
   i := Length(fAttachments);
   SetLength(fAttachments, i + 1);
