@@ -59,20 +59,6 @@ uses
 
 type
   TfrmCTeDAEventoQRRetrato = class(TfrmCTeDAEventoQR)
-    qrb_09_Itens: TQRBand;
-    qrdbtTpDoc1: TQRDBText;
-    cdsDocumentos: TClientDataSet;
-    qrdbtCnpjEmitente1: TQRDBText;
-    qrdbtDocumento1: TQRDBText;
-    qrdbtDocumento2: TQRDBText;
-    qrdbtCnpjEmitente2: TQRDBText;
-    qrdbtTpDoc2: TQRDBText;
-    cdsDocumentosTIPO_1: TStringField;
-    cdsDocumentosCNPJCPF_1: TStringField;
-    cdsDocumentosDOCUMENTO_1: TStringField;
-    cdsDocumentosTIPO_2: TStringField;
-    cdsDocumentosCNPJCPF_2: TStringField;
-    cdsDocumentosDOCUMENTO_2: TStringField;
     qrb_01_Titulo: TQRBand;
     qrlProtocolo: TQRLabel;
     qrlOrgao: TQRLabel;
@@ -80,54 +66,22 @@ type
     QRLabel2: TQRLabel;
     QRLabel78: TQRLabel;
     qrlDescricaoEvento: TQRLabel;
-    qrb_08_HeaderItens: TQRBand;
-    qrb_10_Sistema: TQRBand;
+    qrb_10_HeaderItens: TQRBand;
     qrb_05_Evento: TQRChildBand;
-    QRLabel13: TQRLabel;
-    QRLabel16: TQRLabel;
-    QRLabel22: TQRLabel;
-    QRLabel24: TQRLabel;
-    qrlRazaoEmitente: TQRLabel;
-    qrlEnderecoEmitente: TQRLabel;
-    qrlMunEmitente: TQRLabel;
-    qrlCNPJEmitente: TQRLabel;
-    QRLabel93: TQRLabel;
-    qrlInscEstEmitente: TQRLabel;
-    qrlCEPEmitente: TQRLabel;
-    QRLabel98: TQRLabel;
-    qrb_03_Emitente: TQRChildBand;
     qrb_04_Tomador: TQRChildBand;
     qrb_06_Condicoes: TQRChildBand;
-    QRLabel38: TQRLabel;
-    QRLabel44: TQRLabel;
-    qrmGrupoAlterado: TQRMemo;
-    QRLabel46: TQRLabel;
-    qrmCampoAlterado: TQRMemo;
-    QRLabel42: TQRLabel;
-    qrmValorAlterado: TQRMemo;
-    QRLabel45: TQRLabel;
-    qrmNumItemAlterado: TQRMemo;
-    QRShape18: TQRShape;
-    QRShape17: TQRShape;
-    QRShape15: TQRShape;
-    QRShape19: TQRShape;
     lblTitulo_06: TQRLabel;
     QRShape5: TQRShape;
     qrmCondicoes: TQRMemo;
     qrsQuadro01: TQRShape;
-    qrsQuadro02: TQRShape;
     qrsQuadro04: TQRShape;
-    qrsQuadro05: TQRShape;
     qrsLinhaV10: TQRShape;
     qrsLinhaV09: TQRShape;
     qrsLinhaH04: TQRShape;
     qrsLinhaV01: TQRShape;
-    qrsLinhaH06: TQRShape;
-    qrsLinhaH07: TQRShape;
     QRShape10: TQRShape;
     QRLabel65: TQRLabel;
     QRShape2: TQRShape;
-    qrb_07_Correcao: TQRChildBand;
     QRShape46: TQRShape;
     qrlLinha3: TQRLabel;
     qrlLinha2: TQRLabel;
@@ -165,19 +119,8 @@ type
     QRShape50: TQRShape;
     QRLabel18: TQRLabel;
     qrlStatus: TQRLabel;
-    QRLabel12: TQRLabel;
-    QRShape51: TQRShape;
     QRLabel1: TQRLabel;
     QRShape52: TQRShape;
-    QRShape53: TQRShape;
-    QRShape82: TQRShape;
-    QRShape99: TQRShape;
-    QRLabel4: TQRLabel;
-    qrlBairroEmitente: TQRLabel;
-    QRShape108: TQRShape;
-    QRLabel5: TQRLabel;
-    qrlFoneEmitente: TQRLabel;
-    QRShape109: TQRShape;
     QRLabel14: TQRLabel;
     qrlRazaoTomador: TQRLabel;
     QRLabel25: TQRLabel;
@@ -202,20 +145,78 @@ type
     QRShape58: TQRShape;
     QRShape59: TQRShape;
     qrlMsgTeste: TQRLabel;
-    QRLabel15: TQRLabel;
+    cdsCorrecao: TClientDataSet;
+    cdsCorrecaoItem: TIntegerField;
+    cdsCorrecaoGrupo: TStringField;
+    cdsCorrecaoCampo: TStringField;
+    cdsCorrecaoValor: TStringField;
+    qrb_08_Correcao_Detalhe: TQRBand;
+    QRShape3: TQRShape;
+    QRShape6: TQRShape;
+    QRShape4: TQRShape;
+    qrdbtxtItem: TQRDBText;
+    qrdbtxtGrupo: TQRDBText;
+    qrdbtxtCampo: TQRDBText;
+    qrdbtxtValor: TQRDBText;
+    qrb_03_Documento: TQRBand;
+    qrsQuadro02: TQRShape;
+    qrsLinhaH07: TQRShape;
+    qrsLinhaH06: TQRShape;
+    qrlRazaoEmitente: TQRLabel;
+    qrlMunEmitente: TQRLabel;
+    qrlInscEstEmitente: TQRLabel;
+    qrlEnderecoEmitente: TQRLabel;
+    qrlCNPJEmitente: TQRLabel;
+    qrlCEPEmitente: TQRLabel;
+    QRLabel98: TQRLabel;
+    QRLabel93: TQRLabel;
+    QRLabel24: TQRLabel;
+    QRLabel22: TQRLabel;
+    QRLabel16: TQRLabel;
+    QRLabel13: TQRLabel;
+    QRLabel12: TQRLabel;
+    QRShape51: TQRShape;
+    QRShape53: TQRShape;
+    QRShape82: TQRShape;
+    QRShape99: TQRShape;
+    QRLabel4: TQRLabel;
+    qrlBairroEmitente: TQRLabel;
+    QRShape108: TQRShape;
+    QRLabel5: TQRLabel;
+    qrlFoneEmitente: TQRLabel;
+    QRShape109: TQRShape;
     QRSysData1: TQRSysData;
     qrlblSistema: TQRLabel;
+    QRShape11: TQRShape;
+    QRShape1: TQRShape;
+    qrb_07_Correcao: TQRBand;
+    QRShape18: TQRShape;
+    QRShape19: TQRShape;
+    QRShape15: TQRShape;
+    QRLabel46: TQRLabel;
+    QRLabel45: TQRLabel;
+    QRLabel44: TQRLabel;
+    QRLabel42: TQRLabel;
+    QRLabel38: TQRLabel;
+    QRShape17: TQRShape;
+    qrsQuadro05: TQRShape;
+    qrb_09_Correcao_Summary: TQRBand;
+    QRShape12: TQRShape;
+    QRLabel15: TQRLabel;
+    qrlPaginaDe: TQRLabel;
     procedure QREventoBeforePrint(Sender: TCustomQuickRep; var PrintReport: Boolean);
     procedure qrb_01_TituloBeforePrint(Sender: TQRCustomBand; var PrintBand: Boolean);
     procedure qrb_02_DocumentoBeforePrint(Sender: TQRCustomBand; var PrintBand: Boolean);
     procedure qrb_05_EventoBeforePrint(Sender: TQRCustomBand; var PrintBand: Boolean);
-    procedure qrb_03_EmitenteBeforePrint(Sender: TQRCustomBand; var PrintBand: Boolean);
+    procedure ABeforePrint(Sender: TQRCustomBand; var PrintBand: Boolean);
     procedure qrb_04_TomadorBeforePrint(Sender: TQRCustomBand; var PrintBand: Boolean);
     procedure qrb_06_CondicoesBeforePrint(Sender: TQRCustomBand; var PrintBand: Boolean);
-    procedure qrb_07_CorrecaoBeforePrint(Sender: TQRCustomBand; var PrintBand: Boolean);
-    procedure qrb_08_HeaderItensBeforePrint(Sender: TQRCustomBand; var PrintBand: Boolean);
-    procedure qrb_09_ItensBeforePrint(Sender: TQRCustomBand; var PrintBand: Boolean);
-    procedure qrb_10_SistemaBeforePrint(Sender: TQRCustomBand; var PrintBand: Boolean);
+    procedure qrb_10_HeaderItensBeforePrint(Sender: TQRCustomBand; var PrintBand: Boolean);
+    procedure qrb_08_Correcao_DetalheBeforePrint(Sender: TQRCustomBand;
+      var PrintBand: Boolean);
+    procedure qrb_09_Correcao_SummaryBeforePrint(Sender: TQRCustomBand;
+      var PrintBand: Boolean);
+    procedure qrdbtxtValorPrint(sender: TObject; var Value: string);
   private
     procedure Itens;
   public
@@ -233,9 +234,36 @@ uses
 var
   FProtocoloCTe : string;
 
+procedure TfrmCTeDAEventoQRRetrato.qrb_08_Correcao_DetalheBeforePrint(Sender: TQRCustomBand;
+  var PrintBand: Boolean);
+begin
+  inherited;
+  PrintBand := FEventoCTe.InfEvento.tpEvento = teCCe;
+end;
+
 procedure TfrmCTeDAEventoQRRetrato.Itens;
+var
+  i : Integer;
 begin
  // Itens
+  if ( cdsCorrecao.Active ) then
+  begin
+    cdsCorrecao.CancelUpdates;
+  end
+  else
+  begin
+    cdsCorrecao.CreateDataSet;
+  end;
+
+  for i := 0 to (FEventoCTe.InfEvento.detEvento.infCorrecao.Count -1) do
+  begin
+    cdsCorrecao.Append;
+    cdsCorrecaoItem.AsInteger := FEventoCTe.InfEvento.detEvento.infCorrecao[i].nroItemAlterado;
+    cdsCorrecaoGrupo.AsString := FEventoCTe.InfEvento.detEvento.infCorrecao[i].grupoAlterado;
+    cdsCorrecaoCampo.AsString := FEventoCTe.InfEvento.detEvento.infCorrecao[i].campoAlterado;
+    cdsCorrecaoValor.AsString := FEventoCTe.InfEvento.detEvento.infCorrecao[i].valorAlterado;
+    cdsCorrecao.Post;
+  end;
 end;
 
 procedure TfrmCTeDAEventoQRRetrato.ProtocoloCTe(const sProtocolo: string);
@@ -255,6 +283,13 @@ begin
   QRCTeEvento.Page.BottomMargin := FMargemInferior * 100;
   QRCTeEvento.Page.LeftMargin   := FMargemEsquerda * 100;
   QRCTeEvento.Page.RightMargin  := FMargemDireita  * 100;
+end;
+
+procedure TfrmCTeDAEventoQRRetrato.qrb_09_Correcao_SummaryBeforePrint(
+  Sender: TQRCustomBand; var PrintBand: Boolean);
+begin
+  inherited;
+  PrintBand := FEventoCTe.InfEvento.tpEvento = teCCe;
 end;
 
 procedure TfrmCTeDAEventoQRRetrato.qrb_01_TituloBeforePrint(Sender: TQRCustomBand; var PrintBand: Boolean);
@@ -331,7 +366,7 @@ begin
     end;
 end;
 
-procedure TfrmCTeDAEventoQRRetrato.qrb_03_EmitenteBeforePrint(
+procedure TfrmCTeDAEventoQRRetrato.ABeforePrint(
   Sender: TQRCustomBand; var PrintBand: Boolean);
 begin
   inherited;
@@ -482,58 +517,29 @@ begin
   end;
 end;
 
-procedure TfrmCTeDAEventoQRRetrato.qrb_07_CorrecaoBeforePrint(
-  Sender: TQRCustomBand; var PrintBand: Boolean);
-var
- i: Integer;
-begin
-  inherited;
-
-  PrintBand := FEventoCTe.InfEvento.tpEvento = teCCe;
-
-  qrmNumItemAlterado.Lines.Clear;
-  qrmGrupoAlterado.Lines.Clear;
-  qrmCampoAlterado.Lines.Clear;
-  qrmValorAlterado.Lines.Clear;
-
-  for i := 0 to (FEventoCTe.InfEvento.detEvento.infCorrecao.Count -1) do
-   begin
-    qrmNumItemAlterado.Lines.Add(IntToStr(FEventoCTe.InfEvento.detEvento.infCorrecao[i].nroItemAlterado));
-    qrmGrupoAlterado.Lines.Add(FEventoCTe.InfEvento.detEvento.infCorrecao[i].grupoAlterado);
-    qrmCampoAlterado.Lines.Add(FEventoCTe.InfEvento.detEvento.infCorrecao[i].campoAlterado);
-    qrmValorAlterado.Lines.Add(FEventoCTe.InfEvento.detEvento.infCorrecao[i].valorAlterado);
-   end;
-end;
-
-procedure TfrmCTeDAEventoQRRetrato.qrb_08_HeaderItensBeforePrint(
+procedure TfrmCTeDAEventoQRRetrato.qrb_10_HeaderItensBeforePrint(
   Sender: TQRCustomBand; var PrintBand: Boolean);
 begin
   inherited;
   // Imprime os Documentos Originários se o Tipo de CTe for Normal
-end;
-
-procedure TfrmCTeDAEventoQRRetrato.qrb_09_ItensBeforePrint(Sender: TQRCustomBand; var PrintBand: Boolean);
-//var
-// i : integer;
-begin
-  inherited;
-
-  qrb_09_Itens.Enabled := True;
-  (*
-  for i := 1 to 2 do
-    if Trim(cdsDocumentos.FieldByName('DOCUMENTO_' + IntToStr(i)).AsString) = '' then
-      TQRDBText(FindComponent('qrdbtCnpjEmitente' + intToStr(i))).Width := 325
-    else
-      TQRDBText(FindComponent('qrdbtCnpjEmitente' + intToStr(i))).Width := 128;
-  *)
-end;
-
-procedure TfrmCTeDAEventoQRRetrato.qrb_10_SistemaBeforePrint(
-  Sender: TQRCustomBand; var PrintBand: Boolean);
-begin
-  inherited;
-
+  qrlPaginaDe.Caption := '';//' de ' + IntToStr(QRCTeEvento.QRPrinter.PageNumber);
   qrlblSistema.Caption := FSistema + ' - ' + FUsuario;
+end;
+
+procedure TfrmCTeDAEventoQRRetrato.qrdbtxtValorPrint(sender: TObject;
+  var Value: string);
+var
+  vLength : Integer;
+begin
+  inherited;
+  vLength := 11 * ((Length(Value) div 90) + 1);
+
+  qrb_08_Correcao_Detalhe.Height := vLength;
+  qrdbtxtValor.Height := vLength;
+  QRShape11.Height := vLength;
+  QRShape3.Height := vLength;
+  QRShape6.Height := vLength;
+  QRShape4.Height := vLength;
 end;
 
 end.

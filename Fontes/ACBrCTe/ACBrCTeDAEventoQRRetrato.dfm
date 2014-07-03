@@ -1,9 +1,8 @@
 inherited frmCTeDAEventoQRRetrato: TfrmCTeDAEventoQRRetrato
   Left = 235
   Top = 132
-  Width = 835
-  Height = 784
-  VertScrollBar.Position = 380
+  Width = 844
+  Height = 834
   Caption = 'Evento - Retrato'
   Font.Height = -8
   Font.Name = 'Arial'
@@ -12,10 +11,8 @@ inherited frmCTeDAEventoQRRetrato: TfrmCTeDAEventoQRRetrato
   PixelsPerInch = 96
   TextHeight = 10
   inherited QRCTeEvento: TQuickRep
-    Left = 3
-    Top = -377
     BeforePrint = QREventoBeforePrint
-    DataSet = cdsDocumentos
+    DataSet = cdsCorrecao
     Font.Height = -8
     Font.Name = 'Courier New'
     Functions.DATA = (
@@ -32,239 +29,6 @@ inherited frmCTeDAEventoQRRetrato: TfrmCTeDAEventoQRRetrato
       70.000000000000000000
       0.000000000000000000)
     Units = Native
-    object qrb_09_Itens: TQRBand
-      Left = 26
-      Top = 1073
-      Width = 741
-      Height = 13
-      Frame.Color = clBlack
-      Frame.DrawTop = False
-      Frame.DrawBottom = False
-      Frame.DrawLeft = False
-      Frame.DrawRight = False
-      AlignToBottom = False
-      BeforePrint = qrb_09_ItensBeforePrint
-      Color = clWhite
-      TransparentBand = False
-      ForceNewColumn = False
-      ForceNewPage = False
-      Size.Values = (
-        34.395833333333330000
-        1960.562500000000000000)
-      PreCaluculateBandHeight = False
-      KeepOnOnePage = False
-      BandType = rbDetail
-      object qrdbtTpDoc2: TQRDBText
-        Left = 373
-        Top = 1
-        Width = 76
-        Height = 13
-        Frame.Color = clBlack
-        Frame.DrawTop = False
-        Frame.DrawBottom = False
-        Frame.DrawLeft = False
-        Frame.DrawRight = False
-        Size.Values = (
-          34.395833333333330000
-          986.895833333333200000
-          2.645833333333333000
-          201.083333333333300000)
-        XLColumn = 0
-        Alignment = taLeftJustify
-        AlignToBand = False
-        AutoSize = False
-        AutoStretch = False
-        Color = clWhite
-        DataSet = cdsDocumentos
-        DataField = 'TIPO_2'
-        Font.Charset = DEFAULT_CHARSET
-        Font.Color = clWindowText
-        Font.Height = -9
-        Font.Name = 'Times New Roman'
-        Font.Style = []
-        ParentFont = False
-        Transparent = False
-        WordWrap = True
-        ExportAs = exptText
-        FullJustify = False
-        FontSize = 7
-      end
-      object qrdbtTpDoc1: TQRDBText
-        Left = 5
-        Top = 1
-        Width = 76
-        Height = 13
-        Frame.Color = clBlack
-        Frame.DrawTop = False
-        Frame.DrawBottom = False
-        Frame.DrawLeft = False
-        Frame.DrawRight = False
-        Size.Values = (
-          34.395833333333330000
-          13.229166666666670000
-          2.645833333333333000
-          201.083333333333300000)
-        XLColumn = 0
-        Alignment = taLeftJustify
-        AlignToBand = False
-        AutoSize = False
-        AutoStretch = False
-        Color = clWhite
-        DataSet = cdsDocumentos
-        DataField = 'TIPO_1'
-        Font.Charset = DEFAULT_CHARSET
-        Font.Color = clWindowText
-        Font.Height = -9
-        Font.Name = 'Times New Roman'
-        Font.Style = []
-        ParentFont = False
-        Transparent = False
-        WordWrap = True
-        ExportAs = exptText
-        FullJustify = False
-        FontSize = 7
-      end
-      object qrdbtDocumento2: TQRDBText
-        Left = 542
-        Top = 1
-        Width = 195
-        Height = 13
-        Frame.Color = clBlack
-        Frame.DrawTop = False
-        Frame.DrawBottom = False
-        Frame.DrawLeft = False
-        Frame.DrawRight = False
-        Size.Values = (
-          34.395833333333330000
-          1434.041666666667000000
-          2.645833333333333000
-          515.937500000000000000)
-        XLColumn = 0
-        Alignment = taLeftJustify
-        AlignToBand = False
-        AutoSize = False
-        AutoStretch = False
-        Color = clWhite
-        DataSet = cdsDocumentos
-        DataField = 'DOCUMENTO_2'
-        Font.Charset = DEFAULT_CHARSET
-        Font.Color = clWindowText
-        Font.Height = -9
-        Font.Name = 'Times New Roman'
-        Font.Style = []
-        ParentFont = False
-        Transparent = False
-        WordWrap = True
-        ExportAs = exptText
-        FullJustify = False
-        FontSize = 7
-      end
-      object qrdbtDocumento1: TQRDBText
-        Left = 174
-        Top = 1
-        Width = 195
-        Height = 13
-        Frame.Color = clBlack
-        Frame.DrawTop = False
-        Frame.DrawBottom = False
-        Frame.DrawLeft = False
-        Frame.DrawRight = False
-        Size.Values = (
-          34.395833333333330000
-          460.375000000000000000
-          2.645833333333333000
-          515.937500000000000000)
-        XLColumn = 0
-        Alignment = taLeftJustify
-        AlignToBand = False
-        AutoSize = False
-        AutoStretch = False
-        Color = clWhite
-        DataSet = cdsDocumentos
-        DataField = 'DOCUMENTO_1'
-        Font.Charset = DEFAULT_CHARSET
-        Font.Color = clWindowText
-        Font.Height = -9
-        Font.Name = 'Times New Roman'
-        Font.Style = []
-        ParentFont = False
-        Transparent = False
-        WordWrap = True
-        ExportAs = exptText
-        FullJustify = False
-        FontSize = 7
-      end
-      object qrdbtCnpjEmitente2: TQRDBText
-        Left = 456
-        Top = 1
-        Width = 50
-        Height = 13
-        Frame.Color = clBlack
-        Frame.DrawTop = False
-        Frame.DrawBottom = False
-        Frame.DrawLeft = False
-        Frame.DrawRight = False
-        Size.Values = (
-          34.395833333333330000
-          1206.500000000000000000
-          2.645833333333333000
-          132.291666666666700000)
-        XLColumn = 0
-        Alignment = taLeftJustify
-        AlignToBand = False
-        AutoSize = True
-        AutoStretch = False
-        Color = clWhite
-        DataSet = cdsDocumentos
-        DataField = 'CNPJCPF_2'
-        Font.Charset = DEFAULT_CHARSET
-        Font.Color = clWindowText
-        Font.Height = -9
-        Font.Name = 'Times New Roman'
-        Font.Style = []
-        ParentFont = False
-        Transparent = False
-        WordWrap = False
-        ExportAs = exptText
-        FullJustify = False
-        FontSize = 7
-      end
-      object qrdbtCnpjEmitente1: TQRDBText
-        Left = 88
-        Top = 1
-        Width = 50
-        Height = 13
-        Frame.Color = clBlack
-        Frame.DrawTop = False
-        Frame.DrawBottom = False
-        Frame.DrawLeft = False
-        Frame.DrawRight = False
-        Size.Values = (
-          34.395833333333330000
-          232.833333333333300000
-          2.645833333333333000
-          132.291666666666700000)
-        XLColumn = 0
-        Alignment = taLeftJustify
-        AlignToBand = False
-        AutoSize = True
-        AutoStretch = False
-        Color = clWhite
-        DataSet = cdsDocumentos
-        DataField = 'CNPJCPF_1'
-        Font.Charset = DEFAULT_CHARSET
-        Font.Color = clWindowText
-        Font.Height = -9
-        Font.Name = 'Times New Roman'
-        Font.Style = []
-        ParentFont = False
-        Transparent = False
-        WordWrap = False
-        ExportAs = exptText
-        FullJustify = False
-        FontSize = 7
-      end
-    end
     object qrb_01_Titulo: TQRBand
       Left = 26
       Top = 38
@@ -319,7 +83,7 @@ inherited frmCTeDAEventoQRRetrato: TfrmCTeDAEventoQRRetrato
         Frame.DrawRight = False
         Size.Values = (
           52.916666666666670000
-          608.541666666666700000
+          608.541666666666800000
           5.291666666666667000
           754.062500000000000000)
         XLColumn = 0
@@ -351,7 +115,7 @@ inherited frmCTeDAEventoQRRetrato: TfrmCTeDAEventoQRRetrato
         Frame.DrawLeft = False
         Frame.DrawRight = False
         Size.Values = (
-          42.333333333333330000
+          42.333333333333340000
           476.250000000000000000
           63.500000000000000000
           1005.416666666667000000)
@@ -411,88 +175,52 @@ inherited frmCTeDAEventoQRRetrato: TfrmCTeDAEventoQRRetrato
         FontSize = 10
       end
     end
-    object qrb_08_HeaderItens: TQRBand
+    object qrb_10_HeaderItens: TQRBand
       Left = 26
-      Top = 1057
+      Top = 765
       Width = 741
-      Height = 16
+      Height = 32
       Frame.Color = clBlack
       Frame.DrawTop = False
       Frame.DrawBottom = False
       Frame.DrawLeft = False
       Frame.DrawRight = False
       AlignToBottom = False
-      BeforePrint = qrb_08_HeaderItensBeforePrint
+      BeforePrint = qrb_10_HeaderItensBeforePrint
       Color = clWhite
       TransparentBand = False
       ForceNewColumn = False
       ForceNewPage = False
       LinkBand = qrb_05_Evento
       Size.Values = (
-        42.333333333333330000
-        1960.562500000000000000)
-      PreCaluculateBandHeight = False
-      KeepOnOnePage = False
-      BandType = rbColumnHeader
-    end
-    object qrb_10_Sistema: TQRBand
-      Left = 26
-      Top = 1086
-      Width = 741
-      Height = 19
-      Frame.Color = clBlack
-      Frame.DrawTop = False
-      Frame.DrawBottom = False
-      Frame.DrawLeft = False
-      Frame.DrawRight = False
-      AlignToBottom = True
-      BeforePrint = qrb_10_SistemaBeforePrint
-      Color = clWhite
-      TransparentBand = False
-      ForceNewColumn = False
-      ForceNewPage = False
-      Size.Values = (
-        50.270833333333330000
+        84.666666666666680000
         1960.562500000000000000)
       PreCaluculateBandHeight = False
       KeepOnOnePage = False
       BandType = rbPageFooter
-      object QRLabel15: TQRLabel
-        Left = 2
+      object QRShape1: TQRShape
+        Left = 0
         Top = 0
-        Width = 139
-        Height = 13
+        Width = 741
+        Height = 1
         Frame.Color = clBlack
-        Frame.DrawTop = False
+        Frame.DrawTop = True
         Frame.DrawBottom = False
         Frame.DrawLeft = False
         Frame.DrawRight = False
         Size.Values = (
-          34.395833333333330000
-          5.291666666666667000
+          2.645833333333333000
           0.000000000000000000
-          367.770833333333300000)
+          0.000000000000000000
+          1960.562500000000000000)
         XLColumn = 0
-        Alignment = taLeftJustify
-        AlignToBand = False
-        AutoSize = True
-        AutoStretch = False
-        Caption = 'DATA E HORA DA IMPRESS'#195'O: '
-        Color = clWhite
-        Font.Charset = DEFAULT_CHARSET
-        Font.Color = clWindowText
-        Font.Height = -9
-        Font.Name = 'Times New Roman'
-        Font.Style = []
-        ParentFont = False
-        Transparent = True
-        WordWrap = True
-        ExportAs = exptText
-        FontSize = 7
+        Brush.Style = bsClear
+        Shape = qrsHorLine
+        VertAdjust = 0
       end
       object QRSysData1: TQRSysData
-        Left = 143
-        Top = 0
+        Left = 151
+        Top = 6
         Width = 46
         Height = 13
         Frame.Color = clBlack
@@ -501,9 +229,9 @@ inherited frmCTeDAEventoQRRetrato: TfrmCTeDAEventoQRRetrato
         Frame.DrawLeft = False
         Frame.DrawRight = False
         Size.Values = (
-          34.395833333333330000
-          378.354166666666700000
-          0.000000000000000000
+          34.395833333333340000
+          399.520833333333400000
+          15.875000000000000000
           121.708333333333300000)
         XLColumn = 0
         Alignment = taLeftJustify
@@ -522,9 +250,42 @@ inherited frmCTeDAEventoQRRetrato: TfrmCTeDAEventoQRRetrato
         FontSize = 7
       end
       object qrlblSistema: TQRLabel
-        Left = 352
-        Top = 0
-        Width = 387
+        Left = 448
+        Top = 6
+        Width = 291
+        Height = 13
+        Frame.Color = clBlack
+        Frame.DrawTop = False
+        Frame.DrawBottom = False
+        Frame.DrawLeft = False
+        Frame.DrawRight = False
+        Size.Values = (
+          34.395833333333330000
+          1185.333333333333000000
+          15.875000000000000000
+          769.937500000000000000)
+        XLColumn = 0
+        Alignment = taRightJustify
+        AlignToBand = False
+        AutoSize = False
+        AutoStretch = False
+        Caption = 'Desenvolvido por Projeto ACBr - http://acbr.sourceforge.net/'
+        Color = clWhite
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWindowText
+        Font.Height = -9
+        Font.Name = 'Times New Roman'
+        Font.Style = []
+        ParentFont = False
+        Transparent = True
+        WordWrap = True
+        ExportAs = exptText
+        FontSize = 7
+      end
+      object QRLabel15: TQRLabel
+        Left = 6
+        Top = 6
+        Width = 139
         Height = 13
         Frame.Color = clBlack
         Frame.DrawTop = False
@@ -533,15 +294,48 @@ inherited frmCTeDAEventoQRRetrato: TfrmCTeDAEventoQRRetrato
         Frame.DrawRight = False
         Size.Values = (
           34.395833333333340000
-          931.333333333333500000
-          0.000000000000000000
-          1023.937500000000000000)
+          15.875000000000000000
+          15.875000000000000000
+          367.770833333333400000)
         XLColumn = 0
-        Alignment = taRightJustify
+        Alignment = taLeftJustify
         AlignToBand = False
-        AutoSize = False
+        AutoSize = True
         AutoStretch = False
-        Caption = 'Desenvolvido por Projeto ACBr - http://acbr.sourceforge.net/'
+        Caption = 'DATA E HORA DA IMPRESS'#195'O: '
+        Color = clWhite
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWindowText
+        Font.Height = -9
+        Font.Name = 'Times New Roman'
+        Font.Style = []
+        ParentFont = False
+        Transparent = True
+        WordWrap = True
+        ExportAs = exptText
+        FontSize = 7
+      end
+      object qrlPaginaDe: TQRLabel
+        Left = 345
+        Top = 6
+        Width = 50
+        Height = 13
+        Frame.Color = clBlack
+        Frame.DrawTop = False
+        Frame.DrawBottom = False
+        Frame.DrawLeft = False
+        Frame.DrawRight = False
+        Size.Values = (
+          34.395833333333340000
+          912.812500000000000000
+          15.875000000000000000
+          132.291666666666700000)
+        XLColumn = 0
+        Alignment = taCenter
+        AlignToBand = True
+        AutoSize = True
+        AutoStretch = False
+        Caption = 'qrlPaginaDe'
         Color = clWhite
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clWindowText
@@ -638,26 +432,6 @@ inherited frmCTeDAEventoQRRetrato: TfrmCTeDAEventoQRRetrato
         Shape = qrsRectangle
         VertAdjust = 0
       end
-      object qrsLinhaV10: TQRShape
-        Left = 43
-        Top = 15
-        Width = 1
-        Height = 33
-        Frame.Color = clBlack
-        Frame.DrawTop = False
-        Frame.DrawBottom = False
-        Frame.DrawLeft = False
-        Frame.DrawRight = False
-        Size.Values = (
-          87.312500000000000000
-          113.770833333333300000
-          39.687500000000000000
-          2.645833333333333000)
-        XLColumn = 0
-        Brush.Style = bsClear
-        Shape = qrsRectangle
-        VertAdjust = 0
-      end
       object qrsLinhaH04: TQRShape
         Left = 0
         Top = 48
@@ -692,7 +466,7 @@ inherited frmCTeDAEventoQRRetrato: TfrmCTeDAEventoQRRetrato
           23.812500000000000000
           10.583333333333330000
           47.625000000000000000
-          68.791666666666670000)
+          68.791666666666680000)
         XLColumn = 0
         Alignment = taLeftJustify
         AlignToBand = False
@@ -758,7 +532,7 @@ inherited frmCTeDAEventoQRRetrato: TfrmCTeDAEventoQRRetrato
           23.812500000000000000
           195.791666666666700000
           134.937500000000000000
-          216.958333333333300000)
+          216.958333333333400000)
         XLColumn = 0
         Alignment = taLeftJustify
         AlignToBand = False
@@ -996,7 +770,7 @@ inherited frmCTeDAEventoQRRetrato: TfrmCTeDAEventoQRRetrato
         Size.Values = (
           39.687500000000000000
           132.291666666666700000
-          74.083333333333330000
+          74.083333333333340000
           235.479166666666700000)
         XLColumn = 0
         Alignment = taLeftJustify
@@ -1062,7 +836,7 @@ inherited frmCTeDAEventoQRRetrato: TfrmCTeDAEventoQRRetrato
         Size.Values = (
           39.687500000000000000
           1582.208333333333000000
-          74.083333333333330000
+          74.083333333333340000
           224.895833333333300000)
         XLColumn = 0
         Alignment = taLeftJustify
@@ -1096,7 +870,7 @@ inherited frmCTeDAEventoQRRetrato: TfrmCTeDAEventoQRRetrato
           23.812500000000000000
           10.583333333333330000
           134.937500000000000000
-          74.083333333333330000)
+          74.083333333333340000)
         XLColumn = 0
         Alignment = taLeftJustify
         AlignToBand = False
@@ -1320,542 +1094,8 @@ inherited frmCTeDAEventoQRRetrato: TfrmCTeDAEventoQRRetrato
         ExportAs = exptText
         FontSize = 8
       end
-    end
-    object qrb_03_Emitente: TQRChildBand
-      Left = 26
-      Top = 201
-      Width = 741
-      Height = 120
-      Frame.Color = clBlack
-      Frame.DrawTop = False
-      Frame.DrawBottom = False
-      Frame.DrawLeft = False
-      Frame.DrawRight = False
-      AlignToBottom = False
-      BeforePrint = qrb_03_EmitenteBeforePrint
-      Color = clWhite
-      TransparentBand = False
-      ForceNewColumn = False
-      ForceNewPage = False
-      Size.Values = (
-        317.500000000000000000
-        1960.562500000000000000)
-      PreCaluculateBandHeight = False
-      KeepOnOnePage = False
-      ParentBand = qrb_02_Documento
-      PrintOrder = cboAfterParent
-      object qrsQuadro02: TQRShape
-        Left = 0
-        Top = 0
-        Width = 741
-        Height = 113
-        Frame.Color = clBlack
-        Frame.DrawTop = False
-        Frame.DrawBottom = False
-        Frame.DrawLeft = False
-        Frame.DrawRight = False
-        Size.Values = (
-          298.979166666666700000
-          0.000000000000000000
-          0.000000000000000000
-          1960.562500000000000000)
-        XLColumn = 0
-        Brush.Style = bsClear
-        Shape = qrsRectangle
-        VertAdjust = 0
-      end
-      object qrsLinhaH07: TQRShape
-        Left = 1
-        Top = 80
-        Width = 740
-        Height = 1
-        Frame.Color = clBlack
-        Frame.DrawTop = False
-        Frame.DrawBottom = False
-        Frame.DrawLeft = False
-        Frame.DrawRight = False
-        Size.Values = (
-          2.645833333333333000
-          2.645833333333333000
-          211.666666666666700000
-          1957.916666666667000000)
-        XLColumn = 0
-        Brush.Style = bsClear
-        Shape = qrsRectangle
-        VertAdjust = 0
-      end
-      object qrsLinhaH06: TQRShape
-        Left = 1
-        Top = 48
-        Width = 740
-        Height = 1
-        Frame.Color = clBlack
-        Frame.DrawTop = False
-        Frame.DrawBottom = False
-        Frame.DrawLeft = False
-        Frame.DrawRight = False
-        Size.Values = (
-          2.645833333333333000
-          2.645833333333333000
-          127.000000000000000000
-          1957.916666666667000000)
-        XLColumn = 0
-        Brush.Style = bsClear
-        Shape = qrsRectangle
-        VertAdjust = 0
-      end
-      object qrlRazaoEmitente: TQRLabel
-        Left = 4
-        Top = 30
-        Width = 84
-        Height = 15
-        Frame.Color = clBlack
-        Frame.DrawTop = False
-        Frame.DrawBottom = False
-        Frame.DrawLeft = False
-        Frame.DrawRight = False
-        Size.Values = (
-          39.687500000000000000
-          10.583333333333330000
-          79.375000000000000000
-          222.250000000000000000)
-        XLColumn = 0
-        Alignment = taLeftJustify
-        AlignToBand = False
-        AutoSize = True
-        AutoStretch = False
-        Caption = 'qrlRazaoEmitente'
-        Color = clWhite
-        Font.Charset = DEFAULT_CHARSET
-        Font.Color = clWindowText
-        Font.Height = -11
-        Font.Name = 'Times New Roman'
-        Font.Style = []
-        ParentFont = False
-        Transparent = True
-        WordWrap = True
-        ExportAs = exptText
-        FontSize = 8
-      end
-      object qrlMunEmitente: TQRLabel
-        Left = 4
-        Top = 94
-        Width = 77
-        Height = 15
-        Frame.Color = clBlack
-        Frame.DrawTop = False
-        Frame.DrawBottom = False
-        Frame.DrawLeft = False
-        Frame.DrawRight = False
-        Size.Values = (
-          39.687500000000000000
-          10.583333333333330000
-          248.708333333333300000
-          203.729166666666700000)
-        XLColumn = 0
-        Alignment = taLeftJustify
-        AlignToBand = False
-        AutoSize = True
-        AutoStretch = False
-        Caption = 'qrlMunEmitente'
-        Color = clWhite
-        Font.Charset = DEFAULT_CHARSET
-        Font.Color = clWindowText
-        Font.Height = -11
-        Font.Name = 'Times New Roman'
-        Font.Style = []
-        ParentFont = False
-        Transparent = True
-        WordWrap = True
-        ExportAs = exptText
-        FontSize = 8
-      end
-      object qrlInscEstEmitente: TQRLabel
-        Left = 624
-        Top = 94
-        Width = 90
-        Height = 15
-        Frame.Color = clBlack
-        Frame.DrawTop = False
-        Frame.DrawBottom = False
-        Frame.DrawLeft = False
-        Frame.DrawRight = False
-        Size.Values = (
-          39.687500000000000000
-          1651.000000000000000000
-          248.708333333333300000
-          238.125000000000000000)
-        XLColumn = 0
-        Alignment = taLeftJustify
-        AlignToBand = False
-        AutoSize = True
-        AutoStretch = False
-        Caption = 'qrlInscEstEmitente'
-        Color = clWhite
-        Font.Charset = DEFAULT_CHARSET
-        Font.Color = clWindowText
-        Font.Height = -11
-        Font.Name = 'Times New Roman'
-        Font.Style = []
-        ParentFont = False
-        Transparent = True
-        WordWrap = True
-        ExportAs = exptText
-        FontSize = 8
-      end
-      object qrlEnderecoEmitente: TQRLabel
-        Left = 4
-        Top = 62
-        Width = 99
-        Height = 15
-        Frame.Color = clBlack
-        Frame.DrawTop = False
-        Frame.DrawBottom = False
-        Frame.DrawLeft = False
-        Frame.DrawRight = False
-        Size.Values = (
-          39.687500000000000000
-          10.583333333333330000
-          164.041666666666700000
-          261.937500000000000000)
-        XLColumn = 0
-        Alignment = taLeftJustify
-        AlignToBand = False
-        AutoSize = True
-        AutoStretch = False
-        Caption = 'qrlEnderecoEmitente'
-        Color = clWhite
-        Font.Charset = DEFAULT_CHARSET
-        Font.Color = clWindowText
-        Font.Height = -11
-        Font.Name = 'Times New Roman'
-        Font.Style = []
-        ParentFont = False
-        Transparent = True
-        WordWrap = True
-        ExportAs = exptText
-        FontSize = 8
-      end
-      object qrlCNPJEmitente: TQRLabel
-        Left = 608
-        Top = 30
-        Width = 82
-        Height = 15
-        Frame.Color = clBlack
-        Frame.DrawTop = False
-        Frame.DrawBottom = False
-        Frame.DrawLeft = False
-        Frame.DrawRight = False
-        Size.Values = (
-          39.687500000000000000
-          1608.666666666667000000
-          79.375000000000000000
-          216.958333333333300000)
-        XLColumn = 0
-        Alignment = taLeftJustify
-        AlignToBand = False
-        AutoSize = True
-        AutoStretch = False
-        Caption = 'qrlCNPJEmitente'
-        Color = clWhite
-        Font.Charset = DEFAULT_CHARSET
-        Font.Color = clWindowText
-        Font.Height = -11
-        Font.Name = 'Times New Roman'
-        Font.Style = []
-        ParentFont = False
-        Transparent = True
-        WordWrap = True
-        ExportAs = exptText
-        FontSize = 8
-      end
-      object qrlCEPEmitente: TQRLabel
-        Left = 669
-        Top = 62
-        Width = 64
-        Height = 15
-        Frame.Color = clBlack
-        Frame.DrawTop = False
-        Frame.DrawBottom = False
-        Frame.DrawLeft = False
-        Frame.DrawRight = False
-        Size.Values = (
-          39.687500000000000000
-          1770.062500000000000000
-          164.041666666666700000
-          169.333333333333300000)
-        XLColumn = 0
-        Alignment = taLeftJustify
-        AlignToBand = False
-        AutoSize = False
-        AutoStretch = False
-        Caption = 'qrlCEPEmitente'
-        Color = clWhite
-        Font.Charset = DEFAULT_CHARSET
-        Font.Color = clWindowText
-        Font.Height = -11
-        Font.Name = 'Times New Roman'
-        Font.Style = []
-        ParentFont = False
-        Transparent = True
-        WordWrap = True
-        ExportAs = exptText
-        FontSize = 8
-      end
-      object QRLabel98: TQRLabel
-        Left = 669
-        Top = 52
-        Width = 14
-        Height = 9
-        Frame.Color = clBlack
-        Frame.DrawTop = False
-        Frame.DrawBottom = False
-        Frame.DrawLeft = False
-        Frame.DrawRight = False
-        Size.Values = (
-          23.812500000000000000
-          1770.062500000000000000
-          137.583333333333300000
-          37.041666666666670000)
-        XLColumn = 0
-        Alignment = taLeftJustify
-        AlignToBand = False
-        AutoSize = True
-        AutoStretch = False
-        Caption = 'CEP'
-        Color = clWhite
-        Font.Charset = DEFAULT_CHARSET
-        Font.Color = clWindowText
-        Font.Height = -7
-        Font.Name = 'Times New Roman'
-        Font.Style = []
-        ParentFont = False
-        Transparent = False
-        WordWrap = True
-        ExportAs = exptText
-        FontSize = 5
-      end
-      object QRLabel93: TQRLabel
-        Left = 624
-        Top = 84
-        Width = 77
-        Height = 9
-        Frame.Color = clBlack
-        Frame.DrawTop = False
-        Frame.DrawBottom = False
-        Frame.DrawLeft = False
-        Frame.DrawRight = False
-        Size.Values = (
-          23.812500000000000000
-          1651.000000000000000000
-          222.250000000000000000
-          203.729166666666700000)
-        XLColumn = 0
-        Alignment = taLeftJustify
-        AlignToBand = False
-        AutoSize = True
-        AutoStretch = False
-        Caption = 'INSCRI'#199#195'O ESTADUAL'
-        Color = clWhite
-        Font.Charset = DEFAULT_CHARSET
-        Font.Color = clWindowText
-        Font.Height = -7
-        Font.Name = 'Times New Roman'
-        Font.Style = []
-        ParentFont = False
-        Transparent = False
-        WordWrap = True
-        ExportAs = exptText
-        FontSize = 5
-      end
-      object QRLabel24: TQRLabel
-        Left = 608
-        Top = 19
-        Width = 18
-        Height = 9
-        Frame.Color = clBlack
-        Frame.DrawTop = False
-        Frame.DrawBottom = False
-        Frame.DrawLeft = False
-        Frame.DrawRight = False
-        Size.Values = (
-          23.812500000000000000
-          1608.666666666667000000
-          50.270833333333330000
-          47.625000000000000000)
-        XLColumn = 0
-        Alignment = taLeftJustify
-        AlignToBand = False
-        AutoSize = True
-        AutoStretch = False
-        Caption = 'CNPJ'
-        Color = clWhite
-        Font.Charset = DEFAULT_CHARSET
-        Font.Color = clWindowText
-        Font.Height = -7
-        Font.Name = 'Times New Roman'
-        Font.Style = []
-        ParentFont = False
-        Transparent = False
-        WordWrap = True
-        ExportAs = exptText
-        FontSize = 5
-      end
-      object QRLabel22: TQRLabel
-        Left = 4
-        Top = 84
-        Width = 37
-        Height = 9
-        Frame.Color = clBlack
-        Frame.DrawTop = False
-        Frame.DrawBottom = False
-        Frame.DrawLeft = False
-        Frame.DrawRight = False
-        Size.Values = (
-          23.812500000000000000
-          10.583333333333330000
-          222.250000000000000000
-          97.895833333333330000)
-        XLColumn = 0
-        Alignment = taLeftJustify
-        AlignToBand = False
-        AutoSize = True
-        AutoStretch = False
-        Caption = 'MUNIC'#205'PIO'
-        Color = clWhite
-        Font.Charset = DEFAULT_CHARSET
-        Font.Color = clWindowText
-        Font.Height = -7
-        Font.Name = 'Times New Roman'
-        Font.Style = []
-        ParentFont = False
-        Transparent = False
-        WordWrap = True
-        ExportAs = exptText
-        FontSize = 5
-      end
-      object QRLabel16: TQRLabel
-        Left = 4
-        Top = 52
-        Width = 38
-        Height = 9
-        Frame.Color = clBlack
-        Frame.DrawTop = False
-        Frame.DrawBottom = False
-        Frame.DrawLeft = False
-        Frame.DrawRight = False
-        Size.Values = (
-          23.812500000000000000
-          10.583333333333330000
-          137.583333333333300000
-          100.541666666666700000)
-        XLColumn = 0
-        Alignment = taLeftJustify
-        AlignToBand = False
-        AutoSize = True
-        AutoStretch = False
-        Caption = 'ENDERE'#199'O'
-        Color = clWhite
-        Font.Charset = DEFAULT_CHARSET
-        Font.Color = clWindowText
-        Font.Height = -7
-        Font.Name = 'Times New Roman'
-        Font.Style = []
-        ParentFont = False
-        Transparent = False
-        WordWrap = True
-        ExportAs = exptText
-        FontSize = 5
-      end
-      object QRLabel13: TQRLabel
-        Left = 4
-        Top = 19
-        Width = 78
-        Height = 9
-        Frame.Color = clBlack
-        Frame.DrawTop = False
-        Frame.DrawBottom = False
-        Frame.DrawLeft = False
-        Frame.DrawRight = False
-        Size.Values = (
-          23.812500000000000000
-          10.583333333333330000
-          50.270833333333330000
-          206.375000000000000000)
-        XLColumn = 0
-        Alignment = taLeftJustify
-        AlignToBand = False
-        AutoSize = True
-        AutoStretch = False
-        Caption = 'NOME / RAZ'#195'O SOCIAL'
-        Color = clWhite
-        Font.Charset = DEFAULT_CHARSET
-        Font.Color = clWindowText
-        Font.Height = -7
-        Font.Name = 'Times New Roman'
-        Font.Style = []
-        ParentFont = False
-        Transparent = False
-        WordWrap = True
-        ExportAs = exptText
-        FontSize = 5
-      end
-      object QRLabel12: TQRLabel
-        Left = 6
-        Top = 2
-        Width = 53
-        Height = 15
-        Frame.Color = clBlack
-        Frame.DrawTop = False
-        Frame.DrawBottom = False
-        Frame.DrawLeft = False
-        Frame.DrawRight = False
-        Size.Values = (
-          39.687500000000000000
-          15.875000000000000000
-          5.291666666666667000
-          140.229166666666700000)
-        XLColumn = 0
-        Alignment = taLeftJustify
-        AlignToBand = False
-        AutoSize = True
-        AutoStretch = False
-        Caption = 'EMITENTE'
-        Color = clWhite
-        Font.Charset = DEFAULT_CHARSET
-        Font.Color = clWindowText
-        Font.Height = -11
-        Font.Name = 'Times New Roman'
-        Font.Style = [fsBold]
-        ParentFont = False
-        Transparent = False
-        WordWrap = True
-        ExportAs = exptText
-        FontSize = 8
-      end
-      object QRShape51: TQRShape
-        Left = 0
-        Top = 15
-        Width = 740
-        Height = 1
-        HelpContext = 1
-        Frame.Color = clBlack
-        Frame.DrawTop = False
-        Frame.DrawBottom = False
-        Frame.DrawLeft = False
-        Frame.DrawRight = False
-        Size.Values = (
-          2.645833333333333000
-          0.000000000000000000
-          39.687500000000000000
-          1957.916666666667000000)
-        XLColumn = 0
-        Brush.Style = bsClear
-        Shape = qrsHorLine
-        VertAdjust = 0
-      end
-      object QRShape53: TQRShape
-        Left = 604
+      object qrsLinhaV10: TQRShape
+        Left = 43
         Top = 15
         Width = 1
         Height = 33
@@ -1866,220 +1106,8 @@ inherited frmCTeDAEventoQRRetrato: TfrmCTeDAEventoQRRetrato
         Frame.DrawRight = False
         Size.Values = (
           87.312500000000000000
-          1598.083333333333000000
+          113.770833333333300000
           39.687500000000000000
-          2.645833333333333000)
-        XLColumn = 0
-        Brush.Style = bsClear
-        Shape = qrsRectangle
-        VertAdjust = 0
-      end
-      object QRShape82: TQRShape
-        Left = 665
-        Top = 48
-        Width = 1
-        Height = 33
-        Frame.Color = clBlack
-        Frame.DrawTop = False
-        Frame.DrawBottom = False
-        Frame.DrawLeft = False
-        Frame.DrawRight = False
-        Size.Values = (
-          87.312500000000000000
-          1759.479166666667000000
-          127.000000000000000000
-          2.645833333333333000)
-        XLColumn = 0
-        Brush.Style = bsClear
-        Shape = qrsRectangle
-        VertAdjust = 0
-      end
-      object QRShape99: TQRShape
-        Left = 448
-        Top = 48
-        Width = 1
-        Height = 33
-        Frame.Color = clBlack
-        Frame.DrawTop = False
-        Frame.DrawBottom = False
-        Frame.DrawLeft = False
-        Frame.DrawRight = False
-        Size.Values = (
-          87.312500000000000000
-          1185.333333333333000000
-          127.000000000000000000
-          2.645833333333333000)
-        XLColumn = 0
-        Brush.Style = bsClear
-        Shape = qrsRectangle
-        VertAdjust = 0
-      end
-      object QRLabel4: TQRLabel
-        Left = 452
-        Top = 52
-        Width = 28
-        Height = 9
-        Frame.Color = clBlack
-        Frame.DrawTop = False
-        Frame.DrawBottom = False
-        Frame.DrawLeft = False
-        Frame.DrawRight = False
-        Size.Values = (
-          23.812500000000000000
-          1195.916666666667000000
-          137.583333333333300000
-          74.083333333333330000)
-        XLColumn = 0
-        Alignment = taLeftJustify
-        AlignToBand = False
-        AutoSize = True
-        AutoStretch = False
-        Caption = 'BAIRRO'
-        Color = clWhite
-        Font.Charset = DEFAULT_CHARSET
-        Font.Color = clWindowText
-        Font.Height = -7
-        Font.Name = 'Times New Roman'
-        Font.Style = []
-        ParentFont = False
-        Transparent = False
-        WordWrap = True
-        ExportAs = exptText
-        FontSize = 5
-      end
-      object qrlBairroEmitente: TQRLabel
-        Left = 452
-        Top = 62
-        Width = 85
-        Height = 15
-        Frame.Color = clBlack
-        Frame.DrawTop = False
-        Frame.DrawBottom = False
-        Frame.DrawLeft = False
-        Frame.DrawRight = False
-        Size.Values = (
-          39.687500000000000000
-          1195.916666666667000000
-          164.041666666666700000
-          224.895833333333300000)
-        XLColumn = 0
-        Alignment = taLeftJustify
-        AlignToBand = False
-        AutoSize = True
-        AutoStretch = False
-        Caption = 'qrlBairroEmitente'
-        Color = clWhite
-        Font.Charset = DEFAULT_CHARSET
-        Font.Color = clWindowText
-        Font.Height = -11
-        Font.Name = 'Times New Roman'
-        Font.Style = []
-        ParentFont = False
-        Transparent = True
-        WordWrap = True
-        ExportAs = exptText
-        FontSize = 8
-      end
-      object QRShape108: TQRShape
-        Left = 620
-        Top = 80
-        Width = 1
-        Height = 33
-        Frame.Color = clBlack
-        Frame.DrawTop = False
-        Frame.DrawBottom = False
-        Frame.DrawLeft = False
-        Frame.DrawRight = False
-        Size.Values = (
-          87.312500000000000000
-          1640.416666666667000000
-          211.666666666666700000
-          2.645833333333333000)
-        XLColumn = 0
-        Brush.Style = bsClear
-        Shape = qrsRectangle
-        VertAdjust = 0
-      end
-      object QRLabel5: TQRLabel
-        Left = 452
-        Top = 84
-        Width = 39
-        Height = 9
-        Frame.Color = clBlack
-        Frame.DrawTop = False
-        Frame.DrawBottom = False
-        Frame.DrawLeft = False
-        Frame.DrawRight = False
-        Size.Values = (
-          23.812500000000000000
-          1195.916666666667000000
-          222.250000000000000000
-          103.187500000000000000)
-        XLColumn = 0
-        Alignment = taLeftJustify
-        AlignToBand = False
-        AutoSize = True
-        AutoStretch = False
-        Caption = 'FONE / FAX'
-        Color = clWhite
-        Font.Charset = DEFAULT_CHARSET
-        Font.Color = clWindowText
-        Font.Height = -7
-        Font.Name = 'Times New Roman'
-        Font.Style = []
-        ParentFont = False
-        Transparent = False
-        WordWrap = True
-        ExportAs = exptText
-        FontSize = 5
-      end
-      object qrlFoneEmitente: TQRLabel
-        Left = 452
-        Top = 94
-        Width = 79
-        Height = 15
-        Frame.Color = clBlack
-        Frame.DrawTop = False
-        Frame.DrawBottom = False
-        Frame.DrawLeft = False
-        Frame.DrawRight = False
-        Size.Values = (
-          39.687500000000000000
-          1195.916666666667000000
-          248.708333333333300000
-          209.020833333333300000)
-        XLColumn = 0
-        Alignment = taLeftJustify
-        AlignToBand = False
-        AutoSize = True
-        AutoStretch = False
-        Caption = 'qrlFoneEmitente'
-        Color = clWhite
-        Font.Charset = DEFAULT_CHARSET
-        Font.Color = clWindowText
-        Font.Height = -11
-        Font.Name = 'Times New Roman'
-        Font.Style = []
-        ParentFont = False
-        Transparent = True
-        WordWrap = True
-        ExportAs = exptText
-        FontSize = 8
-      end
-      object QRShape109: TQRShape
-        Left = 448
-        Top = 80
-        Width = 1
-        Height = 33
-        Frame.Color = clBlack
-        Frame.DrawTop = False
-        Frame.DrawBottom = False
-        Frame.DrawLeft = False
-        Frame.DrawRight = False
-        Size.Values = (
-          87.312500000000000000
-          1185.333333333333000000
-          211.666666666666700000
           2.645833333333333000)
         XLColumn = 0
         Brush.Style = bsClear
@@ -2108,7 +1136,7 @@ inherited frmCTeDAEventoQRRetrato: TfrmCTeDAEventoQRRetrato
         1960.562500000000000000)
       PreCaluculateBandHeight = False
       KeepOnOnePage = False
-      ParentBand = qrb_03_Emitente
+      ParentBand = qrb_03_Documento
       PrintOrder = cboAfterParent
       object qrsQuadro03: TQRShape
         Left = 0
@@ -2330,7 +1358,7 @@ inherited frmCTeDAEventoQRRetrato: TfrmCTeDAEventoQRRetrato
           23.812500000000000000
           10.583333333333330000
           222.250000000000000000
-          97.895833333333330000)
+          97.895833333333320000)
         XLColumn = 0
         Alignment = taLeftJustify
         AlignToBand = False
@@ -2396,7 +1424,7 @@ inherited frmCTeDAEventoQRRetrato: TfrmCTeDAEventoQRRetrato
           23.812500000000000000
           1608.666666666667000000
           50.270833333333330000
-          97.895833333333330000)
+          97.895833333333320000)
         XLColumn = 0
         Alignment = taLeftJustify
         AlignToBand = False
@@ -2416,8 +1444,8 @@ inherited frmCTeDAEventoQRRetrato: TfrmCTeDAEventoQRRetrato
         FontSize = 5
       end
       object qrlCNPJTomador: TQRLabel
-        Left = 608
-        Top = 30
+        Left = 610
+        Top = 31
         Width = 82
         Height = 15
         Frame.Color = clBlack
@@ -2427,9 +1455,9 @@ inherited frmCTeDAEventoQRRetrato: TfrmCTeDAEventoQRRetrato
         Frame.DrawRight = False
         Size.Values = (
           39.687500000000000000
-          1608.666666666667000000
-          79.375000000000000000
-          216.958333333333300000)
+          1613.958333333333000000
+          82.020833333333340000
+          216.958333333333400000)
         XLColumn = 0
         Alignment = taLeftJustify
         AlignToBand = False
@@ -2462,7 +1490,7 @@ inherited frmCTeDAEventoQRRetrato: TfrmCTeDAEventoQRRetrato
           23.812500000000000000
           1195.916666666667000000
           137.583333333333300000
-          74.083333333333330000)
+          74.083333333333340000)
         XLColumn = 0
         Alignment = taLeftJustify
         AlignToBand = False
@@ -2714,7 +1742,7 @@ inherited frmCTeDAEventoQRRetrato: TfrmCTeDAEventoQRRetrato
       end
       object QRShape7: TQRShape
         Left = 604
-        Top = 15
+        Top = 16
         Width = 1
         Height = 33
         Frame.Color = clBlack
@@ -2725,7 +1753,7 @@ inherited frmCTeDAEventoQRRetrato: TfrmCTeDAEventoQRRetrato
         Size.Values = (
           87.312500000000000000
           1598.083333333333000000
-          39.687500000000000000
+          42.333333333333330000
           2.645833333333333000)
         XLColumn = 0
         Brush.Style = bsClear
@@ -2975,7 +2003,7 @@ inherited frmCTeDAEventoQRRetrato: TfrmCTeDAEventoQRRetrato
         Frame.DrawLeft = False
         Frame.DrawRight = False
         Size.Values = (
-          84.666666666666670000
+          84.666666666666680000
           31.750000000000000000
           113.770833333333300000
           1897.062500000000000000)
@@ -3016,444 +2044,6 @@ inherited frmCTeDAEventoQRRetrato: TfrmCTeDAEventoQRRetrato
         XLColumn = 0
         Brush.Style = bsClear
         Shape = qrsRectangle
-        VertAdjust = 0
-      end
-    end
-    object qrb_07_Correcao: TQRChildBand
-      Left = 26
-      Top = 705
-      Width = 741
-      Height = 352
-      Frame.Color = clBlack
-      Frame.DrawTop = False
-      Frame.DrawBottom = False
-      Frame.DrawLeft = False
-      Frame.DrawRight = False
-      AlignToBottom = False
-      BeforePrint = qrb_07_CorrecaoBeforePrint
-      Color = clWhite
-      TransparentBand = False
-      ForceNewColumn = False
-      ForceNewPage = False
-      Size.Values = (
-        931.333333333333300000
-        1960.562500000000000000)
-      PreCaluculateBandHeight = False
-      KeepOnOnePage = False
-      ParentBand = qrb_06_Condicoes
-      PrintOrder = cboAfterParent
-      object qrsQuadro05: TQRShape
-        Left = 0
-        Top = 0
-        Width = 741
-        Height = 345
-        Frame.Color = clBlack
-        Frame.DrawTop = False
-        Frame.DrawBottom = False
-        Frame.DrawLeft = False
-        Frame.DrawRight = False
-        Size.Values = (
-          912.812500000000000000
-          0.000000000000000000
-          0.000000000000000000
-          1960.562500000000000000)
-        XLColumn = 0
-        Brush.Style = bsClear
-        Shape = qrsRectangle
-        VertAdjust = 0
-      end
-      object QRShape18: TQRShape
-        Left = 160
-        Top = 15
-        Width = 1
-        Height = 330
-        Frame.Color = clBlack
-        Frame.DrawTop = False
-        Frame.DrawBottom = False
-        Frame.DrawLeft = False
-        Frame.DrawRight = False
-        Size.Values = (
-          873.125000000000000000
-          423.333333333333300000
-          39.687500000000000000
-          2.645833333333333000)
-        XLColumn = 0
-        Brush.Style = bsClear
-        Shape = qrsVertLine
-        VertAdjust = 0
-      end
-      object QRShape19: TQRShape
-        Left = 270
-        Top = 15
-        Width = 1
-        Height = 330
-        Frame.Color = clBlack
-        Frame.DrawTop = False
-        Frame.DrawBottom = False
-        Frame.DrawLeft = False
-        Frame.DrawRight = False
-        Size.Values = (
-          873.125000000000000000
-          714.375000000000000000
-          39.687500000000000000
-          2.645833333333333000)
-        XLColumn = 0
-        Brush.Style = bsClear
-        Shape = qrsVertLine
-        VertAdjust = 0
-      end
-      object QRShape15: TQRShape
-        Left = 50
-        Top = 15
-        Width = 1
-        Height = 330
-        Frame.Color = clBlack
-        Frame.DrawTop = False
-        Frame.DrawBottom = False
-        Frame.DrawLeft = False
-        Frame.DrawRight = False
-        Size.Values = (
-          873.125000000000000000
-          132.291666666666700000
-          39.687500000000000000
-          2.645833333333333000)
-        XLColumn = 0
-        Brush.Style = bsClear
-        Shape = qrsVertLine
-        VertAdjust = 0
-      end
-      object qrmNumItemAlterado: TQRMemo
-        Left = 8
-        Top = 27
-        Width = 40
-        Height = 310
-        Frame.Color = clBlack
-        Frame.DrawTop = False
-        Frame.DrawBottom = False
-        Frame.DrawLeft = False
-        Frame.DrawRight = False
-        Size.Values = (
-          820.208333333333300000
-          21.166666666666670000
-          71.437500000000000000
-          105.833333333333300000)
-        XLColumn = 0
-        Alignment = taRightJustify
-        AlignToBand = False
-        AutoSize = False
-        AutoStretch = False
-        Color = clWhite
-        Font.Charset = DEFAULT_CHARSET
-        Font.Color = clWindowText
-        Font.Height = -11
-        Font.Name = 'Times New Roman'
-        Font.Style = []
-        Lines.Strings = (
-          'Item 1'
-          'Item 2'
-          'Item 3'
-          'Item 4')
-        ParentFont = False
-        Transparent = True
-        WordWrap = True
-        FullJustify = False
-        FontSize = 8
-      end
-      object qrmCampoAlterado: TQRMemo
-        Left = 164
-        Top = 27
-        Width = 100
-        Height = 310
-        Frame.Color = clBlack
-        Frame.DrawTop = False
-        Frame.DrawBottom = False
-        Frame.DrawLeft = False
-        Frame.DrawRight = False
-        Size.Values = (
-          820.208333333333300000
-          433.916666666666700000
-          71.437500000000000000
-          264.583333333333300000)
-        XLColumn = 0
-        Alignment = taLeftJustify
-        AlignToBand = False
-        AutoSize = False
-        AutoStretch = False
-        Color = clWhite
-        Font.Charset = DEFAULT_CHARSET
-        Font.Color = clWindowText
-        Font.Height = -11
-        Font.Name = 'Times New Roman'
-        Font.Style = []
-        Lines.Strings = (
-          'Campo 1'
-          'Campo 2'
-          'Campo 3'
-          'Campo 4')
-        ParentFont = False
-        Transparent = True
-        WordWrap = True
-        FullJustify = False
-        FontSize = 8
-      end
-      object qrmValorAlterado: TQRMemo
-        Left = 274
-        Top = 27
-        Width = 463
-        Height = 310
-        Frame.Color = clBlack
-        Frame.DrawTop = False
-        Frame.DrawBottom = False
-        Frame.DrawLeft = False
-        Frame.DrawRight = False
-        Size.Values = (
-          820.208333333333300000
-          724.958333333333300000
-          71.437500000000000000
-          1225.020833333333000000)
-        XLColumn = 0
-        Alignment = taLeftJustify
-        AlignToBand = False
-        AutoSize = False
-        AutoStretch = False
-        Color = clWhite
-        Font.Charset = DEFAULT_CHARSET
-        Font.Color = clWindowText
-        Font.Height = -11
-        Font.Name = 'Times New Roman'
-        Font.Style = []
-        Lines.Strings = (
-          'Valor 1'
-          'Valor 2'
-          'Valor 3'
-          'Valor 4')
-        ParentFont = False
-        Transparent = True
-        WordWrap = True
-        FullJustify = False
-        FontSize = 8
-      end
-      object qrmGrupoAlterado: TQRMemo
-        Left = 54
-        Top = 27
-        Width = 100
-        Height = 310
-        Frame.Color = clBlack
-        Frame.DrawTop = False
-        Frame.DrawBottom = False
-        Frame.DrawLeft = False
-        Frame.DrawRight = False
-        Size.Values = (
-          820.208333333333300000
-          142.875000000000000000
-          71.437500000000000000
-          264.583333333333300000)
-        XLColumn = 0
-        Alignment = taLeftJustify
-        AlignToBand = False
-        AutoSize = False
-        AutoStretch = False
-        Color = clWhite
-        Font.Charset = DEFAULT_CHARSET
-        Font.Color = clWindowText
-        Font.Height = -11
-        Font.Name = 'Times New Roman'
-        Font.Style = []
-        Lines.Strings = (
-          'Grupo 1'
-          'Grupo 2'
-          'Grupo 3'
-          'Grupo 4')
-        ParentFont = False
-        Transparent = True
-        WordWrap = True
-        FullJustify = False
-        FontSize = 8
-      end
-      object QRLabel46: TQRLabel
-        Left = 164
-        Top = 18
-        Width = 26
-        Height = 9
-        Frame.Color = clBlack
-        Frame.DrawTop = False
-        Frame.DrawBottom = False
-        Frame.DrawLeft = False
-        Frame.DrawRight = False
-        Size.Values = (
-          23.812500000000000000
-          433.916666666666700000
-          47.625000000000000000
-          68.791666666666670000)
-        XLColumn = 0
-        Alignment = taLeftJustify
-        AlignToBand = False
-        AutoSize = True
-        AutoStretch = False
-        Caption = 'CAMPO'
-        Color = clWhite
-        Font.Charset = DEFAULT_CHARSET
-        Font.Color = clWindowText
-        Font.Height = -7
-        Font.Name = 'Times New Roman'
-        Font.Style = []
-        ParentFont = False
-        Transparent = False
-        WordWrap = True
-        ExportAs = exptText
-        FontSize = 5
-      end
-      object QRLabel45: TQRLabel
-        Left = 30
-        Top = 18
-        Width = 17
-        Height = 9
-        Frame.Color = clBlack
-        Frame.DrawTop = False
-        Frame.DrawBottom = False
-        Frame.DrawLeft = False
-        Frame.DrawRight = False
-        Size.Values = (
-          23.812500000000000000
-          79.375000000000000000
-          47.625000000000000000
-          44.979166666666670000)
-        XLColumn = 0
-        Alignment = taLeftJustify
-        AlignToBand = False
-        AutoSize = True
-        AutoStretch = False
-        Caption = 'ITEM'
-        Color = clWhite
-        Font.Charset = DEFAULT_CHARSET
-        Font.Color = clWindowText
-        Font.Height = -7
-        Font.Name = 'Times New Roman'
-        Font.Style = []
-        ParentFont = False
-        Transparent = False
-        WordWrap = True
-        ExportAs = exptText
-        FontSize = 5
-      end
-      object QRLabel44: TQRLabel
-        Left = 54
-        Top = 18
-        Width = 25
-        Height = 9
-        Frame.Color = clBlack
-        Frame.DrawTop = False
-        Frame.DrawBottom = False
-        Frame.DrawLeft = False
-        Frame.DrawRight = False
-        Size.Values = (
-          23.812500000000000000
-          142.875000000000000000
-          47.625000000000000000
-          66.145833333333330000)
-        XLColumn = 0
-        Alignment = taLeftJustify
-        AlignToBand = False
-        AutoSize = True
-        AutoStretch = False
-        Caption = 'GRUPO'
-        Color = clWhite
-        Font.Charset = DEFAULT_CHARSET
-        Font.Color = clWindowText
-        Font.Height = -7
-        Font.Name = 'Times New Roman'
-        Font.Style = []
-        ParentFont = False
-        Transparent = False
-        WordWrap = True
-        ExportAs = exptText
-        FontSize = 5
-      end
-      object QRLabel42: TQRLabel
-        Left = 274
-        Top = 18
-        Width = 25
-        Height = 9
-        Frame.Color = clBlack
-        Frame.DrawTop = False
-        Frame.DrawBottom = False
-        Frame.DrawLeft = False
-        Frame.DrawRight = False
-        Size.Values = (
-          23.812500000000000000
-          724.958333333333300000
-          47.625000000000000000
-          66.145833333333330000)
-        XLColumn = 0
-        Alignment = taLeftJustify
-        AlignToBand = False
-        AutoSize = True
-        AutoStretch = False
-        Caption = 'VALOR'
-        Color = clWhite
-        Font.Charset = DEFAULT_CHARSET
-        Font.Color = clWindowText
-        Font.Height = -7
-        Font.Name = 'Times New Roman'
-        Font.Style = []
-        ParentFont = False
-        Transparent = False
-        WordWrap = True
-        ExportAs = exptText
-        FontSize = 5
-      end
-      object QRLabel38: TQRLabel
-        Left = 6
-        Top = 2
-        Width = 69
-        Height = 15
-        Frame.Color = clBlack
-        Frame.DrawTop = False
-        Frame.DrawBottom = False
-        Frame.DrawLeft = False
-        Frame.DrawRight = False
-        Size.Values = (
-          39.687500000000000000
-          15.875000000000000000
-          5.291666666666667000
-          182.562500000000000000)
-        XLColumn = 0
-        Alignment = taLeftJustify
-        AlignToBand = False
-        AutoSize = True
-        AutoStretch = False
-        Caption = 'CORRE'#199#195'O'
-        Color = clWhite
-        Font.Charset = DEFAULT_CHARSET
-        Font.Color = clWindowText
-        Font.Height = -11
-        Font.Name = 'Times New Roman'
-        Font.Style = [fsBold]
-        ParentFont = False
-        Transparent = False
-        WordWrap = True
-        ExportAs = exptText
-        FontSize = 8
-      end
-      object QRShape17: TQRShape
-        Left = 1
-        Top = 15
-        Width = 740
-        Height = 1
-        HelpContext = 1
-        Frame.Color = clBlack
-        Frame.DrawTop = False
-        Frame.DrawBottom = False
-        Frame.DrawLeft = False
-        Frame.DrawRight = False
-        Size.Values = (
-          2.645833333333333000
-          2.645833333333333000
-          39.687500000000000000
-          1957.916666666667000000)
-        XLColumn = 0
-        Brush.Style = bsClear
-        Shape = qrsHorLine
         VertAdjust = 0
       end
     end
@@ -3514,7 +2104,7 @@ inherited frmCTeDAEventoQRRetrato: TfrmCTeDAEventoQRRetrato
           39.687500000000000000
           15.875000000000000000
           5.291666666666667000
-          799.041666666666700000)
+          799.041666666666800000)
         XLColumn = 0
         Alignment = taLeftJustify
         AlignToBand = False
@@ -3730,8 +2320,8 @@ inherited frmCTeDAEventoQRRetrato: TfrmCTeDAEventoQRRetrato
         Frame.DrawLeft = False
         Frame.DrawRight = False
         Size.Values = (
-          42.333333333333330000
-          296.333333333333300000
+          42.333333333333340000
+          296.333333333333400000
           71.437500000000000000
           185.208333333333300000)
         XLColumn = 0
@@ -3754,7 +2344,7 @@ inherited frmCTeDAEventoQRRetrato: TfrmCTeDAEventoQRRetrato
       end
       object qrsLinhaV05: TQRShape
         Left = 50
-        Top = 15
+        Top = 16
         Width = 1
         Height = 30
         Frame.Color = clBlack
@@ -3765,7 +2355,7 @@ inherited frmCTeDAEventoQRRetrato: TfrmCTeDAEventoQRRetrato
         Size.Values = (
           79.375000000000000000
           132.291666666666700000
-          39.687500000000000000
+          42.333333333333330000
           2.645833333333333000)
         XLColumn = 0
         Brush.Style = bsClear
@@ -3774,7 +2364,7 @@ inherited frmCTeDAEventoQRRetrato: TfrmCTeDAEventoQRRetrato
       end
       object qrsLinhaV06: TQRShape
         Left = 100
-        Top = 15
+        Top = 16
         Width = 1
         Height = 30
         Frame.Color = clBlack
@@ -3784,8 +2374,8 @@ inherited frmCTeDAEventoQRRetrato: TfrmCTeDAEventoQRRetrato
         Frame.DrawRight = False
         Size.Values = (
           79.375000000000000000
-          264.583333333333400000
-          39.687500000000000000
+          264.583333333333300000
+          42.333333333333330000
           2.645833333333333000)
         XLColumn = 0
         Brush.Style = bsClear
@@ -3794,7 +2384,7 @@ inherited frmCTeDAEventoQRRetrato: TfrmCTeDAEventoQRRetrato
       end
       object qrsLinhaV08: TQRShape
         Left = 236
-        Top = 15
+        Top = 16
         Width = 1
         Height = 30
         Frame.Color = clBlack
@@ -3805,7 +2395,7 @@ inherited frmCTeDAEventoQRRetrato: TfrmCTeDAEventoQRRetrato
         Size.Values = (
           79.375000000000000000
           624.416666666666800000
-          39.687500000000000000
+          42.333333333333330000
           2.645833333333333000)
         XLColumn = 0
         Brush.Style = bsClear
@@ -3880,18 +2470,17 @@ inherited frmCTeDAEventoQRRetrato: TfrmCTeDAEventoQRRetrato
       end
       object qrsLinhaV07: TQRShape
         Left = 368
-        Top = 15
+        Top = 16
         Width = 1
-        Height = 66
         Frame.Color = clBlack
         Frame.DrawTop = False
         Frame.DrawBottom = False
         Frame.DrawLeft = False
         Frame.DrawRight = False
         Size.Values = (
-          174.625000000000000000
-          973.666666666666900000
-          39.687500000000000000
+          171.979166666666700000
+          973.666666666666800000
+          42.333333333333330000
           2.645833333333333000)
         XLColumn = 0
         Brush.Style = bsClear
@@ -4004,41 +2593,1364 @@ inherited frmCTeDAEventoQRRetrato: TfrmCTeDAEventoQRRetrato
         VertAdjust = 0
       end
     end
+    object qrb_08_Correcao_Detalhe: TQRBand
+      Left = 26
+      Top = 735
+      Width = 741
+      Height = 15
+      Frame.Color = clBlack
+      Frame.DrawTop = False
+      Frame.DrawBottom = False
+      Frame.DrawLeft = False
+      Frame.DrawRight = False
+      AlignToBottom = False
+      BeforePrint = qrb_08_Correcao_DetalheBeforePrint
+      Color = clWhite
+      TransparentBand = False
+      ForceNewColumn = False
+      ForceNewPage = False
+      Size.Values = (
+        39.687500000000000000
+        1960.562500000000000000)
+      PreCaluculateBandHeight = False
+      KeepOnOnePage = False
+      BandType = rbDetail
+      object QRShape11: TQRShape
+        Left = 0
+        Top = -2
+        Width = 741
+        Height = 19
+        Frame.Color = clBlack
+        Frame.DrawTop = False
+        Frame.DrawBottom = False
+        Frame.DrawLeft = False
+        Frame.DrawRight = False
+        Size.Values = (
+          50.270833333333330000
+          0.000000000000000000
+          -5.291666666666667000
+          1960.562500000000000000)
+        XLColumn = 0
+        Brush.Style = bsClear
+        Shape = qrsRightAndLeft
+        VertAdjust = 0
+      end
+      object QRShape3: TQRShape
+        Left = 161
+        Top = -2
+        Width = 3
+        Height = 19
+        Frame.Color = clBlack
+        Frame.DrawTop = False
+        Frame.DrawBottom = False
+        Frame.DrawLeft = False
+        Frame.DrawRight = False
+        Size.Values = (
+          50.270833333333330000
+          425.979166666666700000
+          -5.291666666666667000
+          7.937500000000000000)
+        XLColumn = 0
+        Brush.Style = bsClear
+        Shape = qrsVertLine
+        VertAdjust = 0
+      end
+      object QRShape6: TQRShape
+        Left = 46
+        Top = -2
+        Width = 4
+        Height = 19
+        Frame.Color = clBlack
+        Frame.DrawTop = False
+        Frame.DrawBottom = False
+        Frame.DrawLeft = False
+        Frame.DrawRight = False
+        Size.Values = (
+          50.270833333333330000
+          121.708333333333300000
+          -5.291666666666667000
+          10.583333333333330000)
+        XLColumn = 0
+        Brush.Style = bsClear
+        Shape = qrsVertLine
+        VertAdjust = 0
+      end
+      object QRShape4: TQRShape
+        Left = 269
+        Top = -2
+        Width = 3
+        Height = 19
+        Frame.Color = clBlack
+        Frame.DrawTop = False
+        Frame.DrawBottom = False
+        Frame.DrawLeft = False
+        Frame.DrawRight = False
+        Size.Values = (
+          50.270833333333330000
+          711.729166666666800000
+          -5.291666666666667000
+          7.937500000000000000)
+        XLColumn = 0
+        Brush.Style = bsClear
+        Shape = qrsVertLine
+        VertAdjust = 0
+      end
+      object qrdbtxtItem: TQRDBText
+        Left = 19
+        Top = 0
+        Width = 21
+        Height = 10
+        Frame.Color = clBlack
+        Frame.DrawTop = False
+        Frame.DrawBottom = False
+        Frame.DrawLeft = False
+        Frame.DrawRight = False
+        Size.Values = (
+          26.458333333333330000
+          50.270833333333330000
+          0.000000000000000000
+          55.562500000000000000)
+        XLColumn = 0
+        Alignment = taLeftJustify
+        AlignToBand = False
+        AutoSize = True
+        AutoStretch = False
+        Color = clWhite
+        DataSet = cdsCorrecao
+        DataField = 'Item'
+        Transparent = False
+        WordWrap = True
+        ExportAs = exptText
+        FullJustify = False
+        FontSize = 6
+      end
+      object qrdbtxtGrupo: TQRDBText
+        Left = 57
+        Top = 0
+        Width = 26
+        Height = 10
+        Frame.Color = clBlack
+        Frame.DrawTop = False
+        Frame.DrawBottom = False
+        Frame.DrawLeft = False
+        Frame.DrawRight = False
+        Size.Values = (
+          26.458333333333330000
+          150.812500000000000000
+          0.000000000000000000
+          68.791666666666680000)
+        XLColumn = 0
+        Alignment = taLeftJustify
+        AlignToBand = False
+        AutoSize = True
+        AutoStretch = False
+        Color = clWhite
+        DataSet = cdsCorrecao
+        DataField = 'Grupo'
+        Transparent = False
+        WordWrap = True
+        ExportAs = exptText
+        FullJustify = False
+        FontSize = 6
+      end
+      object qrdbtxtCampo: TQRDBText
+        Left = 171
+        Top = 0
+        Width = 26
+        Height = 10
+        Frame.Color = clBlack
+        Frame.DrawTop = False
+        Frame.DrawBottom = False
+        Frame.DrawLeft = False
+        Frame.DrawRight = False
+        Size.Values = (
+          26.458333333333330000
+          452.437500000000000000
+          0.000000000000000000
+          68.791666666666680000)
+        XLColumn = 0
+        Alignment = taLeftJustify
+        AlignToBand = False
+        AutoSize = True
+        AutoStretch = False
+        Color = clWhite
+        DataSet = cdsCorrecao
+        DataField = 'Campo'
+        Transparent = False
+        WordWrap = True
+        ExportAs = exptText
+        FullJustify = False
+        FontSize = 6
+      end
+      object qrdbtxtValor: TQRDBText
+        Left = 278
+        Top = 0
+        Width = 459
+        Height = 12
+        Frame.Color = clBlack
+        Frame.DrawTop = False
+        Frame.DrawBottom = False
+        Frame.DrawLeft = False
+        Frame.DrawRight = False
+        Size.Values = (
+          31.750000000000000000
+          735.541666666666800000
+          0.000000000000000000
+          1214.437500000000000000)
+        XLColumn = 0
+        Alignment = taLeftJustify
+        AlignToBand = False
+        AutoSize = False
+        AutoStretch = False
+        Color = clWhite
+        DataSet = cdsCorrecao
+        DataField = 'Valor'
+        OnPrint = qrdbtxtValorPrint
+        Transparent = False
+        WordWrap = True
+        ExportAs = exptText
+        FullJustify = False
+        FontSize = 6
+      end
+    end
+    object qrb_03_Documento: TQRBand
+      Left = 26
+      Top = 201
+      Width = 741
+      Height = 120
+      Frame.Color = clBlack
+      Frame.DrawTop = False
+      Frame.DrawBottom = False
+      Frame.DrawLeft = False
+      Frame.DrawRight = False
+      AlignToBottom = False
+      BeforePrint = ABeforePrint
+      Color = clWhite
+      TransparentBand = False
+      ForceNewColumn = False
+      ForceNewPage = False
+      Size.Values = (
+        317.500000000000000000
+        1960.562500000000000000)
+      PreCaluculateBandHeight = False
+      KeepOnOnePage = False
+      BandType = rbTitle
+      object qrsQuadro02: TQRShape
+        Left = 0
+        Top = 0
+        Width = 741
+        Height = 113
+        Frame.Color = clBlack
+        Frame.DrawTop = False
+        Frame.DrawBottom = False
+        Frame.DrawLeft = False
+        Frame.DrawRight = False
+        Size.Values = (
+          298.979166666666700000
+          0.000000000000000000
+          0.000000000000000000
+          1960.562500000000000000)
+        XLColumn = 0
+        Brush.Style = bsClear
+        Shape = qrsRectangle
+        VertAdjust = 0
+      end
+      object qrsLinhaH07: TQRShape
+        Left = 1
+        Top = 80
+        Width = 740
+        Height = 1
+        Frame.Color = clBlack
+        Frame.DrawTop = False
+        Frame.DrawBottom = False
+        Frame.DrawLeft = False
+        Frame.DrawRight = False
+        Size.Values = (
+          2.645833333333333000
+          2.645833333333333000
+          211.666666666666700000
+          1957.916666666667000000)
+        XLColumn = 0
+        Brush.Style = bsClear
+        Shape = qrsRectangle
+        VertAdjust = 0
+      end
+      object qrsLinhaH06: TQRShape
+        Left = 1
+        Top = 48
+        Width = 740
+        Height = 1
+        Frame.Color = clBlack
+        Frame.DrawTop = False
+        Frame.DrawBottom = False
+        Frame.DrawLeft = False
+        Frame.DrawRight = False
+        Size.Values = (
+          2.645833333333333000
+          2.645833333333333000
+          127.000000000000000000
+          1957.916666666667000000)
+        XLColumn = 0
+        Brush.Style = bsClear
+        Shape = qrsRectangle
+        VertAdjust = 0
+      end
+      object qrlRazaoEmitente: TQRLabel
+        Left = 4
+        Top = 30
+        Width = 84
+        Height = 15
+        Frame.Color = clBlack
+        Frame.DrawTop = False
+        Frame.DrawBottom = False
+        Frame.DrawLeft = False
+        Frame.DrawRight = False
+        Size.Values = (
+          39.687500000000000000
+          10.583333333333330000
+          79.375000000000000000
+          222.250000000000000000)
+        XLColumn = 0
+        Alignment = taLeftJustify
+        AlignToBand = False
+        AutoSize = True
+        AutoStretch = False
+        Caption = 'qrlRazaoEmitente'
+        Color = clWhite
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWindowText
+        Font.Height = -11
+        Font.Name = 'Times New Roman'
+        Font.Style = []
+        ParentFont = False
+        Transparent = True
+        WordWrap = True
+        ExportAs = exptText
+        FontSize = 8
+      end
+      object qrlMunEmitente: TQRLabel
+        Left = 4
+        Top = 94
+        Width = 77
+        Height = 15
+        Frame.Color = clBlack
+        Frame.DrawTop = False
+        Frame.DrawBottom = False
+        Frame.DrawLeft = False
+        Frame.DrawRight = False
+        Size.Values = (
+          39.687500000000000000
+          10.583333333333330000
+          248.708333333333300000
+          203.729166666666700000)
+        XLColumn = 0
+        Alignment = taLeftJustify
+        AlignToBand = False
+        AutoSize = True
+        AutoStretch = False
+        Caption = 'qrlMunEmitente'
+        Color = clWhite
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWindowText
+        Font.Height = -11
+        Font.Name = 'Times New Roman'
+        Font.Style = []
+        ParentFont = False
+        Transparent = True
+        WordWrap = True
+        ExportAs = exptText
+        FontSize = 8
+      end
+      object qrlInscEstEmitente: TQRLabel
+        Left = 624
+        Top = 94
+        Width = 90
+        Height = 15
+        Frame.Color = clBlack
+        Frame.DrawTop = False
+        Frame.DrawBottom = False
+        Frame.DrawLeft = False
+        Frame.DrawRight = False
+        Size.Values = (
+          39.687500000000000000
+          1651.000000000000000000
+          248.708333333333300000
+          238.125000000000000000)
+        XLColumn = 0
+        Alignment = taLeftJustify
+        AlignToBand = False
+        AutoSize = True
+        AutoStretch = False
+        Caption = 'qrlInscEstEmitente'
+        Color = clWhite
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWindowText
+        Font.Height = -11
+        Font.Name = 'Times New Roman'
+        Font.Style = []
+        ParentFont = False
+        Transparent = True
+        WordWrap = True
+        ExportAs = exptText
+        FontSize = 8
+      end
+      object qrlEnderecoEmitente: TQRLabel
+        Left = 4
+        Top = 62
+        Width = 99
+        Height = 15
+        Frame.Color = clBlack
+        Frame.DrawTop = False
+        Frame.DrawBottom = False
+        Frame.DrawLeft = False
+        Frame.DrawRight = False
+        Size.Values = (
+          39.687500000000000000
+          10.583333333333330000
+          164.041666666666700000
+          261.937500000000000000)
+        XLColumn = 0
+        Alignment = taLeftJustify
+        AlignToBand = False
+        AutoSize = True
+        AutoStretch = False
+        Caption = 'qrlEnderecoEmitente'
+        Color = clWhite
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWindowText
+        Font.Height = -11
+        Font.Name = 'Times New Roman'
+        Font.Style = []
+        ParentFont = False
+        Transparent = True
+        WordWrap = True
+        ExportAs = exptText
+        FontSize = 8
+      end
+      object qrlCNPJEmitente: TQRLabel
+        Left = 608
+        Top = 30
+        Width = 82
+        Height = 15
+        Frame.Color = clBlack
+        Frame.DrawTop = False
+        Frame.DrawBottom = False
+        Frame.DrawLeft = False
+        Frame.DrawRight = False
+        Size.Values = (
+          39.687500000000000000
+          1608.666666666667000000
+          79.375000000000000000
+          216.958333333333400000)
+        XLColumn = 0
+        Alignment = taLeftJustify
+        AlignToBand = False
+        AutoSize = True
+        AutoStretch = False
+        Caption = 'qrlCNPJEmitente'
+        Color = clWhite
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWindowText
+        Font.Height = -11
+        Font.Name = 'Times New Roman'
+        Font.Style = []
+        ParentFont = False
+        Transparent = True
+        WordWrap = True
+        ExportAs = exptText
+        FontSize = 8
+      end
+      object qrlCEPEmitente: TQRLabel
+        Left = 669
+        Top = 62
+        Width = 64
+        Height = 15
+        Frame.Color = clBlack
+        Frame.DrawTop = False
+        Frame.DrawBottom = False
+        Frame.DrawLeft = False
+        Frame.DrawRight = False
+        Size.Values = (
+          39.687500000000000000
+          1770.062500000000000000
+          164.041666666666700000
+          169.333333333333300000)
+        XLColumn = 0
+        Alignment = taLeftJustify
+        AlignToBand = False
+        AutoSize = False
+        AutoStretch = False
+        Caption = 'qrlCEPEmitente'
+        Color = clWhite
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWindowText
+        Font.Height = -11
+        Font.Name = 'Times New Roman'
+        Font.Style = []
+        ParentFont = False
+        Transparent = True
+        WordWrap = True
+        ExportAs = exptText
+        FontSize = 8
+      end
+      object QRLabel98: TQRLabel
+        Left = 669
+        Top = 52
+        Width = 14
+        Height = 9
+        Frame.Color = clBlack
+        Frame.DrawTop = False
+        Frame.DrawBottom = False
+        Frame.DrawLeft = False
+        Frame.DrawRight = False
+        Size.Values = (
+          23.812500000000000000
+          1770.062500000000000000
+          137.583333333333300000
+          37.041666666666670000)
+        XLColumn = 0
+        Alignment = taLeftJustify
+        AlignToBand = False
+        AutoSize = True
+        AutoStretch = False
+        Caption = 'CEP'
+        Color = clWhite
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWindowText
+        Font.Height = -7
+        Font.Name = 'Times New Roman'
+        Font.Style = []
+        ParentFont = False
+        Transparent = False
+        WordWrap = True
+        ExportAs = exptText
+        FontSize = 5
+      end
+      object QRLabel93: TQRLabel
+        Left = 624
+        Top = 84
+        Width = 77
+        Height = 9
+        Frame.Color = clBlack
+        Frame.DrawTop = False
+        Frame.DrawBottom = False
+        Frame.DrawLeft = False
+        Frame.DrawRight = False
+        Size.Values = (
+          23.812500000000000000
+          1651.000000000000000000
+          222.250000000000000000
+          203.729166666666700000)
+        XLColumn = 0
+        Alignment = taLeftJustify
+        AlignToBand = False
+        AutoSize = True
+        AutoStretch = False
+        Caption = 'INSCRI'#199#195'O ESTADUAL'
+        Color = clWhite
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWindowText
+        Font.Height = -7
+        Font.Name = 'Times New Roman'
+        Font.Style = []
+        ParentFont = False
+        Transparent = False
+        WordWrap = True
+        ExportAs = exptText
+        FontSize = 5
+      end
+      object QRLabel24: TQRLabel
+        Left = 608
+        Top = 19
+        Width = 18
+        Height = 9
+        Frame.Color = clBlack
+        Frame.DrawTop = False
+        Frame.DrawBottom = False
+        Frame.DrawLeft = False
+        Frame.DrawRight = False
+        Size.Values = (
+          23.812500000000000000
+          1608.666666666667000000
+          50.270833333333330000
+          47.625000000000000000)
+        XLColumn = 0
+        Alignment = taLeftJustify
+        AlignToBand = False
+        AutoSize = True
+        AutoStretch = False
+        Caption = 'CNPJ'
+        Color = clWhite
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWindowText
+        Font.Height = -7
+        Font.Name = 'Times New Roman'
+        Font.Style = []
+        ParentFont = False
+        Transparent = False
+        WordWrap = True
+        ExportAs = exptText
+        FontSize = 5
+      end
+      object QRLabel22: TQRLabel
+        Left = 4
+        Top = 84
+        Width = 37
+        Height = 9
+        Frame.Color = clBlack
+        Frame.DrawTop = False
+        Frame.DrawBottom = False
+        Frame.DrawLeft = False
+        Frame.DrawRight = False
+        Size.Values = (
+          23.812500000000000000
+          10.583333333333330000
+          222.250000000000000000
+          97.895833333333320000)
+        XLColumn = 0
+        Alignment = taLeftJustify
+        AlignToBand = False
+        AutoSize = True
+        AutoStretch = False
+        Caption = 'MUNIC'#205'PIO'
+        Color = clWhite
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWindowText
+        Font.Height = -7
+        Font.Name = 'Times New Roman'
+        Font.Style = []
+        ParentFont = False
+        Transparent = False
+        WordWrap = True
+        ExportAs = exptText
+        FontSize = 5
+      end
+      object QRLabel16: TQRLabel
+        Left = 4
+        Top = 52
+        Width = 38
+        Height = 9
+        Frame.Color = clBlack
+        Frame.DrawTop = False
+        Frame.DrawBottom = False
+        Frame.DrawLeft = False
+        Frame.DrawRight = False
+        Size.Values = (
+          23.812500000000000000
+          10.583333333333330000
+          137.583333333333300000
+          100.541666666666700000)
+        XLColumn = 0
+        Alignment = taLeftJustify
+        AlignToBand = False
+        AutoSize = True
+        AutoStretch = False
+        Caption = 'ENDERE'#199'O'
+        Color = clWhite
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWindowText
+        Font.Height = -7
+        Font.Name = 'Times New Roman'
+        Font.Style = []
+        ParentFont = False
+        Transparent = False
+        WordWrap = True
+        ExportAs = exptText
+        FontSize = 5
+      end
+      object QRLabel13: TQRLabel
+        Left = 4
+        Top = 19
+        Width = 78
+        Height = 9
+        Frame.Color = clBlack
+        Frame.DrawTop = False
+        Frame.DrawBottom = False
+        Frame.DrawLeft = False
+        Frame.DrawRight = False
+        Size.Values = (
+          23.812500000000000000
+          10.583333333333330000
+          50.270833333333330000
+          206.375000000000000000)
+        XLColumn = 0
+        Alignment = taLeftJustify
+        AlignToBand = False
+        AutoSize = True
+        AutoStretch = False
+        Caption = 'NOME / RAZ'#195'O SOCIAL'
+        Color = clWhite
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWindowText
+        Font.Height = -7
+        Font.Name = 'Times New Roman'
+        Font.Style = []
+        ParentFont = False
+        Transparent = False
+        WordWrap = True
+        ExportAs = exptText
+        FontSize = 5
+      end
+      object QRLabel12: TQRLabel
+        Left = 6
+        Top = 2
+        Width = 53
+        Height = 15
+        Frame.Color = clBlack
+        Frame.DrawTop = False
+        Frame.DrawBottom = False
+        Frame.DrawLeft = False
+        Frame.DrawRight = False
+        Size.Values = (
+          39.687500000000000000
+          15.875000000000000000
+          5.291666666666667000
+          140.229166666666700000)
+        XLColumn = 0
+        Alignment = taLeftJustify
+        AlignToBand = False
+        AutoSize = True
+        AutoStretch = False
+        Caption = 'EMITENTE'
+        Color = clWhite
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWindowText
+        Font.Height = -11
+        Font.Name = 'Times New Roman'
+        Font.Style = [fsBold]
+        ParentFont = False
+        Transparent = False
+        WordWrap = True
+        ExportAs = exptText
+        FontSize = 8
+      end
+      object QRShape51: TQRShape
+        Left = 1
+        Top = 15
+        Width = 740
+        Height = 1
+        HelpContext = 1
+        Frame.Color = clBlack
+        Frame.DrawTop = False
+        Frame.DrawBottom = False
+        Frame.DrawLeft = False
+        Frame.DrawRight = False
+        Size.Values = (
+          2.645833333333333000
+          2.645833333333333000
+          39.687500000000000000
+          1957.916666666667000000)
+        XLColumn = 0
+        Brush.Style = bsClear
+        Shape = qrsHorLine
+        VertAdjust = 0
+      end
+      object QRShape53: TQRShape
+        Left = 604
+        Top = 16
+        Width = 1
+        Height = 33
+        Frame.Color = clBlack
+        Frame.DrawTop = False
+        Frame.DrawBottom = False
+        Frame.DrawLeft = False
+        Frame.DrawRight = False
+        Size.Values = (
+          87.312500000000000000
+          1598.083333333333000000
+          42.333333333333330000
+          2.645833333333333000)
+        XLColumn = 0
+        Brush.Style = bsClear
+        Shape = qrsRectangle
+        VertAdjust = 0
+      end
+      object QRShape82: TQRShape
+        Left = 665
+        Top = 48
+        Width = 1
+        Height = 33
+        Frame.Color = clBlack
+        Frame.DrawTop = False
+        Frame.DrawBottom = False
+        Frame.DrawLeft = False
+        Frame.DrawRight = False
+        Size.Values = (
+          87.312500000000000000
+          1759.479166666667000000
+          127.000000000000000000
+          2.645833333333333000)
+        XLColumn = 0
+        Brush.Style = bsClear
+        Shape = qrsRectangle
+        VertAdjust = 0
+      end
+      object QRShape99: TQRShape
+        Left = 448
+        Top = 48
+        Width = 1
+        Height = 33
+        Frame.Color = clBlack
+        Frame.DrawTop = False
+        Frame.DrawBottom = False
+        Frame.DrawLeft = False
+        Frame.DrawRight = False
+        Size.Values = (
+          87.312500000000000000
+          1185.333333333333000000
+          127.000000000000000000
+          2.645833333333333000)
+        XLColumn = 0
+        Brush.Style = bsClear
+        Shape = qrsRectangle
+        VertAdjust = 0
+      end
+      object QRLabel4: TQRLabel
+        Left = 452
+        Top = 52
+        Width = 28
+        Height = 9
+        Frame.Color = clBlack
+        Frame.DrawTop = False
+        Frame.DrawBottom = False
+        Frame.DrawLeft = False
+        Frame.DrawRight = False
+        Size.Values = (
+          23.812500000000000000
+          1195.916666666667000000
+          137.583333333333300000
+          74.083333333333340000)
+        XLColumn = 0
+        Alignment = taLeftJustify
+        AlignToBand = False
+        AutoSize = True
+        AutoStretch = False
+        Caption = 'BAIRRO'
+        Color = clWhite
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWindowText
+        Font.Height = -7
+        Font.Name = 'Times New Roman'
+        Font.Style = []
+        ParentFont = False
+        Transparent = False
+        WordWrap = True
+        ExportAs = exptText
+        FontSize = 5
+      end
+      object qrlBairroEmitente: TQRLabel
+        Left = 452
+        Top = 62
+        Width = 85
+        Height = 15
+        Frame.Color = clBlack
+        Frame.DrawTop = False
+        Frame.DrawBottom = False
+        Frame.DrawLeft = False
+        Frame.DrawRight = False
+        Size.Values = (
+          39.687500000000000000
+          1195.916666666667000000
+          164.041666666666700000
+          224.895833333333300000)
+        XLColumn = 0
+        Alignment = taLeftJustify
+        AlignToBand = False
+        AutoSize = True
+        AutoStretch = False
+        Caption = 'qrlBairroEmitente'
+        Color = clWhite
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWindowText
+        Font.Height = -11
+        Font.Name = 'Times New Roman'
+        Font.Style = []
+        ParentFont = False
+        Transparent = True
+        WordWrap = True
+        ExportAs = exptText
+        FontSize = 8
+      end
+      object QRShape108: TQRShape
+        Left = 620
+        Top = 80
+        Width = 1
+        Height = 33
+        Frame.Color = clBlack
+        Frame.DrawTop = False
+        Frame.DrawBottom = False
+        Frame.DrawLeft = False
+        Frame.DrawRight = False
+        Size.Values = (
+          87.312500000000000000
+          1640.416666666667000000
+          211.666666666666700000
+          2.645833333333333000)
+        XLColumn = 0
+        Brush.Style = bsClear
+        Shape = qrsRectangle
+        VertAdjust = 0
+      end
+      object QRLabel5: TQRLabel
+        Left = 452
+        Top = 84
+        Width = 39
+        Height = 9
+        Frame.Color = clBlack
+        Frame.DrawTop = False
+        Frame.DrawBottom = False
+        Frame.DrawLeft = False
+        Frame.DrawRight = False
+        Size.Values = (
+          23.812500000000000000
+          1195.916666666667000000
+          222.250000000000000000
+          103.187500000000000000)
+        XLColumn = 0
+        Alignment = taLeftJustify
+        AlignToBand = False
+        AutoSize = True
+        AutoStretch = False
+        Caption = 'FONE / FAX'
+        Color = clWhite
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWindowText
+        Font.Height = -7
+        Font.Name = 'Times New Roman'
+        Font.Style = []
+        ParentFont = False
+        Transparent = False
+        WordWrap = True
+        ExportAs = exptText
+        FontSize = 5
+      end
+      object qrlFoneEmitente: TQRLabel
+        Left = 452
+        Top = 94
+        Width = 79
+        Height = 15
+        Frame.Color = clBlack
+        Frame.DrawTop = False
+        Frame.DrawBottom = False
+        Frame.DrawLeft = False
+        Frame.DrawRight = False
+        Size.Values = (
+          39.687500000000000000
+          1195.916666666667000000
+          248.708333333333300000
+          209.020833333333300000)
+        XLColumn = 0
+        Alignment = taLeftJustify
+        AlignToBand = False
+        AutoSize = True
+        AutoStretch = False
+        Caption = 'qrlFoneEmitente'
+        Color = clWhite
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWindowText
+        Font.Height = -11
+        Font.Name = 'Times New Roman'
+        Font.Style = []
+        ParentFont = False
+        Transparent = True
+        WordWrap = True
+        ExportAs = exptText
+        FontSize = 8
+      end
+      object QRShape109: TQRShape
+        Left = 448
+        Top = 80
+        Width = 1
+        Height = 33
+        Frame.Color = clBlack
+        Frame.DrawTop = False
+        Frame.DrawBottom = False
+        Frame.DrawLeft = False
+        Frame.DrawRight = False
+        Size.Values = (
+          87.312500000000000000
+          1185.333333333333000000
+          211.666666666666700000
+          2.645833333333333000)
+        XLColumn = 0
+        Brush.Style = bsClear
+        Shape = qrsRectangle
+        VertAdjust = 0
+      end
+    end
+    object qrb_07_Correcao: TQRBand
+      Left = 26
+      Top = 705
+      Width = 741
+      Height = 30
+      Frame.Color = clBlack
+      Frame.DrawTop = False
+      Frame.DrawBottom = False
+      Frame.DrawLeft = False
+      Frame.DrawRight = False
+      AlignToBottom = False
+      Color = clWhite
+      TransparentBand = False
+      ForceNewColumn = False
+      ForceNewPage = False
+      Size.Values = (
+        79.375000000000000000
+        1960.562500000000000000)
+      PreCaluculateBandHeight = False
+      KeepOnOnePage = False
+      BandType = rbColumnHeader
+      object qrsQuadro05: TQRShape
+        Left = 0
+        Top = 0
+        Width = 741
+        Height = 29
+        Frame.Color = clBlack
+        Frame.DrawTop = False
+        Frame.DrawBottom = False
+        Frame.DrawLeft = False
+        Frame.DrawRight = False
+        Size.Values = (
+          76.729166666666680000
+          0.000000000000000000
+          0.000000000000000000
+          1960.562500000000000000)
+        XLColumn = 0
+        Brush.Style = bsClear
+        Shape = qrsRectangle
+        VertAdjust = 0
+      end
+      object QRShape18: TQRShape
+        Left = 161
+        Top = 16
+        Width = 3
+        Height = 17
+        Frame.Color = clBlack
+        Frame.DrawTop = False
+        Frame.DrawBottom = False
+        Frame.DrawLeft = False
+        Frame.DrawRight = False
+        Size.Values = (
+          44.979166666666670000
+          425.979166666666700000
+          42.333333333333330000
+          7.937500000000000000)
+        XLColumn = 0
+        Brush.Style = bsClear
+        Shape = qrsVertLine
+        VertAdjust = 0
+      end
+      object QRShape19: TQRShape
+        Left = 269
+        Top = 16
+        Width = 2
+        Height = 17
+        Frame.Color = clBlack
+        Frame.DrawTop = False
+        Frame.DrawBottom = False
+        Frame.DrawLeft = False
+        Frame.DrawRight = False
+        Size.Values = (
+          44.979166666666670000
+          711.729166666666800000
+          42.333333333333330000
+          5.291666666666667000)
+        XLColumn = 0
+        Brush.Style = bsClear
+        Shape = qrsVertLine
+        VertAdjust = 0
+      end
+      object QRLabel46: TQRLabel
+        Left = 171
+        Top = 18
+        Width = 26
+        Height = 9
+        Frame.Color = clBlack
+        Frame.DrawTop = False
+        Frame.DrawBottom = False
+        Frame.DrawLeft = False
+        Frame.DrawRight = False
+        Size.Values = (
+          23.812500000000000000
+          452.437500000000000000
+          47.625000000000000000
+          68.791666666666680000)
+        XLColumn = 0
+        Alignment = taLeftJustify
+        AlignToBand = False
+        AutoSize = True
+        AutoStretch = False
+        Caption = 'CAMPO'
+        Color = clWhite
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWindowText
+        Font.Height = -7
+        Font.Name = 'Times New Roman'
+        Font.Style = []
+        ParentFont = False
+        Transparent = False
+        WordWrap = True
+        ExportAs = exptText
+        FontSize = 5
+      end
+      object QRLabel42: TQRLabel
+        Left = 279
+        Top = 18
+        Width = 25
+        Height = 9
+        Frame.Color = clBlack
+        Frame.DrawTop = False
+        Frame.DrawBottom = False
+        Frame.DrawLeft = False
+        Frame.DrawRight = False
+        Size.Values = (
+          23.812500000000000000
+          738.187500000000000000
+          47.625000000000000000
+          66.145833333333340000)
+        XLColumn = 0
+        Alignment = taLeftJustify
+        AlignToBand = False
+        AutoSize = True
+        AutoStretch = False
+        Caption = 'VALOR'
+        Color = clWhite
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWindowText
+        Font.Height = -7
+        Font.Name = 'Times New Roman'
+        Font.Style = []
+        ParentFont = False
+        Transparent = False
+        WordWrap = True
+        ExportAs = exptText
+        FontSize = 5
+      end
+      object QRLabel38: TQRLabel
+        Left = 6
+        Top = 2
+        Width = 69
+        Height = 15
+        Frame.Color = clBlack
+        Frame.DrawTop = False
+        Frame.DrawBottom = False
+        Frame.DrawLeft = False
+        Frame.DrawRight = False
+        Size.Values = (
+          39.687500000000000000
+          15.875000000000000000
+          5.291666666666667000
+          182.562500000000000000)
+        XLColumn = 0
+        Alignment = taLeftJustify
+        AlignToBand = False
+        AutoSize = True
+        AutoStretch = False
+        Caption = 'CORRE'#199#195'O'
+        Color = clWhite
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWindowText
+        Font.Height = -11
+        Font.Name = 'Times New Roman'
+        Font.Style = [fsBold]
+        ParentFont = False
+        Transparent = False
+        WordWrap = True
+        ExportAs = exptText
+        FontSize = 8
+      end
+      object QRShape17: TQRShape
+        Left = 1
+        Top = 15
+        Width = 740
+        Height = 1
+        HelpContext = 1
+        Frame.Color = clBlack
+        Frame.DrawTop = False
+        Frame.DrawBottom = False
+        Frame.DrawLeft = False
+        Frame.DrawRight = False
+        Size.Values = (
+          2.645833333333333000
+          2.645833333333333000
+          39.687500000000000000
+          1957.916666666667000000)
+        XLColumn = 0
+        Brush.Style = bsClear
+        Shape = qrsHorLine
+        VertAdjust = 0
+      end
+      object QRShape15: TQRShape
+        Left = 46
+        Top = 16
+        Width = 4
+        Height = 17
+        Frame.Color = clBlack
+        Frame.DrawTop = False
+        Frame.DrawBottom = False
+        Frame.DrawLeft = False
+        Frame.DrawRight = False
+        Size.Values = (
+          44.979166666666670000
+          121.708333333333300000
+          42.333333333333330000
+          10.583333333333330000)
+        XLColumn = 0
+        Brush.Style = bsClear
+        Shape = qrsVertLine
+        VertAdjust = 0
+      end
+      object QRLabel44: TQRLabel
+        Left = 57
+        Top = 18
+        Width = 25
+        Height = 9
+        Frame.Color = clBlack
+        Frame.DrawTop = False
+        Frame.DrawBottom = False
+        Frame.DrawLeft = False
+        Frame.DrawRight = False
+        Size.Values = (
+          23.812500000000000000
+          150.812500000000000000
+          47.625000000000000000
+          66.145833333333340000)
+        XLColumn = 0
+        Alignment = taLeftJustify
+        AlignToBand = False
+        AutoSize = True
+        AutoStretch = False
+        Caption = 'GRUPO'
+        Color = clWhite
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWindowText
+        Font.Height = -7
+        Font.Name = 'Times New Roman'
+        Font.Style = []
+        ParentFont = False
+        Transparent = False
+        WordWrap = True
+        ExportAs = exptText
+        FontSize = 5
+      end
+      object QRLabel45: TQRLabel
+        Left = 19
+        Top = 18
+        Width = 17
+        Height = 9
+        Frame.Color = clBlack
+        Frame.DrawTop = False
+        Frame.DrawBottom = False
+        Frame.DrawLeft = False
+        Frame.DrawRight = False
+        Size.Values = (
+          23.812500000000000000
+          50.270833333333330000
+          47.625000000000000000
+          44.979166666666670000)
+        XLColumn = 0
+        Alignment = taLeftJustify
+        AlignToBand = False
+        AutoSize = True
+        AutoStretch = False
+        Caption = 'ITEM'
+        Color = clWhite
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWindowText
+        Font.Height = -7
+        Font.Name = 'Times New Roman'
+        Font.Style = []
+        ParentFont = False
+        Transparent = False
+        WordWrap = True
+        ExportAs = exptText
+        FontSize = 5
+      end
+    end
+    object qrb_09_Correcao_Summary: TQRBand
+      Left = 26
+      Top = 750
+      Width = 741
+      Height = 15
+      Frame.Color = clBlack
+      Frame.DrawTop = False
+      Frame.DrawBottom = False
+      Frame.DrawLeft = False
+      Frame.DrawRight = False
+      AlignToBottom = False
+      BeforePrint = qrb_09_Correcao_SummaryBeforePrint
+      Color = clWhite
+      TransparentBand = False
+      ForceNewColumn = False
+      ForceNewPage = False
+      Size.Values = (
+        39.687500000000000000
+        1960.562500000000000000)
+      PreCaluculateBandHeight = False
+      KeepOnOnePage = False
+      BandType = rbSummary
+      object QRShape12: TQRShape
+        Left = 0
+        Top = 0
+        Width = 741
+        Height = 1
+        Frame.Color = clBlack
+        Frame.DrawTop = False
+        Frame.DrawBottom = False
+        Frame.DrawLeft = False
+        Frame.DrawRight = False
+        Size.Values = (
+          2.645833333333333000
+          0.000000000000000000
+          0.000000000000000000
+          1960.562500000000000000)
+        XLColumn = 0
+        Brush.Style = bsClear
+        Shape = qrsHorLine
+        VertAdjust = 0
+      end
+    end
   end
-  object cdsDocumentos: TClientDataSet
+  object cdsCorrecao: TClientDataSet
     Aggregates = <>
+    FieldDefs = <
+      item
+        Name = 'Item'
+        DataType = ftInteger
+      end
+      item
+        Name = 'Grupo'
+        DataType = ftString
+        Size = 30
+      end
+      item
+        Name = 'Campo'
+        DataType = ftString
+        Size = 30
+      end
+      item
+        Name = 'Valor'
+        DataType = ftString
+        Size = 255
+      end>
+    IndexDefs = <>
     Params = <>
+    StoreDefs = True
     Left = 368
-    Top = 59
-    object cdsDocumentosTIPO_1: TStringField
-      DisplayWidth = 14
-      FieldName = 'TIPO_1'
-      Size = 14
+    Top = 104
+    object cdsCorrecaoItem: TIntegerField
+      FieldName = 'Item'
     end
-    object cdsDocumentosCNPJCPF_1: TStringField
-      DisplayWidth = 70
-      FieldName = 'CNPJCPF_1'
-      Size = 70
+    object cdsCorrecaoGrupo: TStringField
+      FieldName = 'Grupo'
+      Size = 30
     end
-    object cdsDocumentosDOCUMENTO_1: TStringField
-      DisplayWidth = 33
-      FieldName = 'DOCUMENTO_1'
-      Size = 33
+    object cdsCorrecaoCampo: TStringField
+      FieldName = 'Campo'
+      Size = 30
     end
-    object cdsDocumentosTIPO_2: TStringField
-      DisplayWidth = 14
-      FieldName = 'TIPO_2'
-      Size = 14
-    end
-    object cdsDocumentosCNPJCPF_2: TStringField
-      DisplayWidth = 70
-      FieldName = 'CNPJCPF_2'
-      Size = 70
-    end
-    object cdsDocumentosDOCUMENTO_2: TStringField
-      DisplayWidth = 33
-      FieldName = 'DOCUMENTO_2'
-      Size = 33
+    object cdsCorrecaoValor: TStringField
+      FieldName = 'Valor'
+      Size = 255
     end
   end
 end
