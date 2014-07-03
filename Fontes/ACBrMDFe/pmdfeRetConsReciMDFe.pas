@@ -27,12 +27,12 @@
 {                                                                              }
 {******************************************************************************}
 
-{******************************************************************************
+{*******************************************************************************
 |* Historico
 |*
 |* 01/08/2012: Italo Jurisato Junior
 |*  - Doação do componente para o Projeto ACBr
-******************************************************************************}
+*******************************************************************************}
 
 {$I ACBr.inc}
 
@@ -61,20 +61,21 @@ type
     FxMotivo: string;
     FcUF: integer;
     FProtMDFe: TProtMDFeCollection;
+
     procedure SetProtMDFe(const Value: TProtMDFeCollection);
   public
     constructor Create;
     destructor Destroy; override;
     function LerXML: boolean;
   published
-    property Leitor: TLeitor read FLeitor write FLeitor;
-    property tpAmb: TpcnTipoAmbiente read FtpAmb write FtpAmb;
-    property versao: string read Fversao write Fversao;
-    property verAplic: string read FverAplic write FverAplic;
-    property nRec: string read FnRec write FnRec;
-    property cStat: integer read FcStat write FcStat;
-    property xMotivo: string read FxMotivo write FxMotivo;
-    property cUF: integer read FcUF write FcUF;
+    property Leitor: TLeitor               read FLeitor   write FLeitor;
+    property tpAmb: TpcnTipoAmbiente       read FtpAmb    write FtpAmb;
+    property versao: string                read Fversao   write Fversao;
+    property verAplic: string              read FverAplic write FverAplic;
+    property nRec: string                  read FnRec     write FnRec;
+    property cStat: integer                read FcStat    write FcStat;
+    property xMotivo: string               read FxMotivo  write FxMotivo;
+    property cUF: integer                  read FcUF      write FcUF;
     property ProtMDFe: TProtMDFeCollection read FProtMDFe write SetProtMDFe;
   end;
 
@@ -99,14 +100,14 @@ type
     FcStat: integer;
     FxMotivo: string;
   published
-    property tpAmb: TpcnTipoAmbiente read FtpAmb write FtpAmb;
-    property verAplic: string read FverAplic write FverAplic;
-    property chMDFe: string read FchMDFe write FchMDFe;
-    property dhRecbto: TDateTime read FdhRecbto write FdhRecbto;
-    property nProt: string read FnProt write FnProt;
-    property digVal: string read FdigVal write FdigVal;
-    property cStat: integer read FcStat write FcStat;
-    property xMotivo: string read FxMotivo write FxMotivo;
+    property tpAmb: TpcnTipoAmbiente read FtpAmb    write FtpAmb;
+    property verAplic: string        read FverAplic write FverAplic;
+    property chMDFe: string          read FchMDFe   write FchMDFe;
+    property dhRecbto: TDateTime     read FdhRecbto write FdhRecbto;
+    property nProt: string           read FnProt    write FnProt;
+    property digVal: string          read FdigVal   write FdigVal;
+    property cStat: integer          read FcStat    write FcStat;
+    property xMotivo: string         read FxMotivo  write FxMotivo;
   end;
 
 implementation

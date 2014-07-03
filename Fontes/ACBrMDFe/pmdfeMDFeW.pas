@@ -27,12 +27,12 @@
 {                                                                              }
 {******************************************************************************}
 
-{******************************************************************************
+{*******************************************************************************
 |* Historico
 |*
 |* 01/08/2012: Italo Jurisato Junior
 |*  - Doação do componente para o Projeto ACBr
-******************************************************************************}
+*******************************************************************************}
 
 {$I ACBr.inc}
 
@@ -85,10 +85,10 @@ type
     function GerarXml: boolean;
     function ObterNomeArquivo: string;
   published
-    property Gerador: TGerador read FGerador write FGerador;
-    property MDFe: TMDFe read FMDFe write FMDFe;
-    property Opcoes: TGeradorOpcoes read FOpcoes write FOpcoes;
-    property VersaoDF: TMDFeVersao read FVersaoDF write FVersaoDF;
+    property Gerador: TGerador      read FGerador  write FGerador;
+    property MDFe: TMDFe            read FMDFe     write FMDFe;
+    property Opcoes: TGeradorOpcoes read FOpcoes   write FOpcoes;
+    property VersaoDF: TMDFeVersao  read FVersaoDF write FVersaoDF;
   end;
 
   TGeradorOpcoes = class(TPersistent)
@@ -100,12 +100,12 @@ type
     FValidarInscricoes: boolean;
     FValidarListaServicos: boolean;
   published
-    property AjustarTagNro: boolean read FAjustarTagNro write FAjustarTagNro;
-    property NormatizarMunicipios: boolean read FNormatizarMunicipios write FNormatizarMunicipios;
-    property GerarTagAssinatura: TpcnTagAssinatura read FGerarTagAssinatura write FGerarTagAssinatura;
-    property PathArquivoMunicipios: string read FPathArquivoMunicipios write FPathArquivoMunicipios;
-    property ValidarInscricoes: boolean read FValidarInscricoes write FValidarInscricoes;
-    property ValidarListaServicos: boolean read FValidarListaServicos write FValidarListaServicos;
+    property AjustarTagNro: boolean                read FAjustarTagNro         write FAjustarTagNro;
+    property NormatizarMunicipios: boolean         read FNormatizarMunicipios  write FNormatizarMunicipios;
+    property GerarTagAssinatura: TpcnTagAssinatura read FGerarTagAssinatura    write FGerarTagAssinatura;
+    property PathArquivoMunicipios: string         read FPathArquivoMunicipios write FPathArquivoMunicipios;
+    property ValidarInscricoes: boolean            read FValidarInscricoes     write FValidarInscricoes;
+    property ValidarListaServicos: boolean         read FValidarListaServicos  write FValidarListaServicos;
   end;
 
   ////////////////////////////////////////////////////////////////////////////////
@@ -117,13 +117,15 @@ implementation
 constructor TMDFeW.Create(AOwner: TMDFe);
 begin
   FMDFe := AOwner;
-  FGerador := TGerador.Create;
+
+  FGerador                  := TGerador.Create;
   FGerador.FIgnorarTagNivel := '|?xml version|MDFe xmlns|infMDFe versao|';
-  FOpcoes := TGeradorOpcoes.Create;
-  FOpcoes.FAjustarTagNro := True;
+
+  FOpcoes                       := TGeradorOpcoes.Create;
+  FOpcoes.FAjustarTagNro        := True;
   FOpcoes.FNormatizarMunicipios := False;
-  FOpcoes.FGerarTagAssinatura := taSomenteSeAssinada;
-  FOpcoes.FValidarInscricoes := False;
+  FOpcoes.FGerarTagAssinatura   := taSomenteSeAssinada;
+  FOpcoes.FValidarInscricoes    := False;
   FOpcoes.FValidarListaServicos := False;
 end;
 
@@ -334,9 +336,9 @@ end;
 procedure TMDFeW.GerarInfModal;
 begin
   case StrToInt(ModalToStr(MDFe.Ide.modal)) of
-   1: Gerador.wGrupo('infModal versaoModal="' + MDFeModalRodo + '"',  '#041');
+   1: Gerador.wGrupo('infModal versaoModal="' + MDFeModalRodo  + '"', '#041');
    2: Gerador.wGrupo('infModal versaoModal="' + MDFeModalAereo + '"', '#041');
-   3: Gerador.wGrupo('infModal versaoModal="' + MDFeModalAqua + '"',  '#041');
+   3: Gerador.wGrupo('infModal versaoModal="' + MDFeModalAqua  + '"', '#041');
    4: Gerador.wGrupo('infModal versaoModal="' + MDFeModalFerro + '"', '#041');
   end;
   case StrToInt(ModalToStr(MDFe.Ide.modal)) of
@@ -931,9 +933,11 @@ var
   PaisBrasil: boolean;
 begin
   PaisBrasil := cPais = CODIGO_BRASIL;
+
   cMun := IIf(PaisBrasil, vcMun, CMUN_EXTERIOR);
   xMun := IIf(PaisBrasil, vxMun, XMUN_EXTERIOR);
-  xUF := IIf(PaisBrasil, vxUF, UF_EXTERIOR);
+  xUF  := IIf(PaisBrasil, vxUF, UF_EXTERIOR);
+  
   xMun := ObterNomeMunicipio(xMun, xUF, cMun);
 end;
 

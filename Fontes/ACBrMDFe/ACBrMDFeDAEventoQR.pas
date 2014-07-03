@@ -27,10 +27,10 @@
 {                                                                              }
 {******************************************************************************}
 
-{******************************************************************************
+{*******************************************************************************
 |* Historico
 |*
-******************************************************************************}
+*******************************************************************************}
 
 {$I ACBr.inc}
 
@@ -62,19 +62,19 @@ type
 
   protected
     //BarCode : TBarCode128c;
-    FACBrMDFe           : TACBrMDFe;
-    FMDFe               : TMDFe;
-    FEventoMDFe         : TInfEventoCollectionItem;
-    FLogo               : String;
-    FNumCopias          : Integer;
-    FSistema            : String;
-    FUsuario            : String;
-    FMostrarPreview     : Boolean;
-    FMargemSuperior     : Double;
-    FMargemInferior     : Double;
-    FMargemEsquerda     : Double;
-    FMargemDireita      : Double;
-    FImpressora         : String;
+    FACBrMDFe       : TACBrMDFe;
+    FMDFe           : TMDFe;
+    FEventoMDFe     : TInfEventoCollectionItem;
+    FLogo           : String;
+    FNumCopias      : Integer;
+    FSistema        : String;
+    FUsuario        : String;
+    FMostrarPreview : Boolean;
+    FMargemSuperior : Double;
+    FMargemInferior : Double;
+    FMargemEsquerda : Double;
+    FMargemDireita  : Double;
+    FImpressora     : String;
 
     procedure SetBarCodeImage(ACode: string; QRImage: TQRImage);
   public
@@ -255,7 +255,7 @@ end;
 
 procedure TfrmMDFeDAEventoQR.SetBarCodeImage(ACode: string; QRImage: TQRImage);
 var
-  b : TBarCode128c;
+  b: TBarCode128c;
 begin
   b := TBarCode128c.Create;
   try

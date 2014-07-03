@@ -27,12 +27,12 @@
 {                                                                              }
 {******************************************************************************}
 
-{******************************************************************************
+{*******************************************************************************
 |* Historico
 |*
 |* 01/08/2012: Italo Jurisato Junior
 |*  - Doação do componente para o Projeto ACBr
-******************************************************************************}
+*******************************************************************************}
 
 {$I ACBr.inc}
 
@@ -58,10 +58,10 @@ type
     destructor Destroy; override;
     function GerarXML: boolean;
   published
-    property Gerador: TGerador read FGerador write FGerador;
-    property URI: string read FURI write FURI;
-    property DigestValue: string read FDigestValue write FDigestValue;
-    property SignatureValue: string read FSignatureValue write FSignatureValue;
+    property Gerador: TGerador       read FGerador         write FGerador;
+    property URI: string             read FURI             write FURI;
+    property DigestValue: string     read FDigestValue     write FDigestValue;
+    property SignatureValue: string  read FSignatureValue  write FSignatureValue;
     property X509Certificate: string read FX509Certificate write FX509Certificate;
   end;
 

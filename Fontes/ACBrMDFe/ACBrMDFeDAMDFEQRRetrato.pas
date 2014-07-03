@@ -27,12 +27,12 @@
 {                                                                              }
 {******************************************************************************}
 
-{******************************************************************************
+{*******************************************************************************
 |* Historico
 |*
 |* 01/08/2012: Italo Jurisato Junior
 |*  - Doação do componente para o Projeto ACBr
-******************************************************************************}
+*******************************************************************************}
 
 {$I ACBr.inc}
 
@@ -228,8 +228,6 @@ end;
 
 procedure TfqrDAMDFEQRRetrato.QRMDFeBeforePrint(Sender: TCustomQuickRep;
   var PrintReport: Boolean);
-//var
-//  nRestItens : Integer;
 begin
   inherited;
    Itens;
@@ -250,11 +248,6 @@ var
  vStringStream: TStringStream;
 begin
   inherited;
-
-//  if Trim(FLogo) <> '' then
-//   begin
-//    qriLogo.Picture.LoadFromFile(FLogo);
-//   end;
 
   // Alterado por Italo em 15/01/2014
   if (FLogo <> '') then
@@ -541,7 +534,7 @@ end;
 
 procedure TfqrDAMDFEQRRetrato.Itens;
 var
- I, J, nItem : Integer;
+ I, J, nItem: Integer;
 begin
   cdsItens.Close;
   cdsItens.CreateDataSet;

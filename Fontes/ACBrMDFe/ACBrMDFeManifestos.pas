@@ -27,12 +27,12 @@
 {                                                                              }
 {******************************************************************************}
 
-{******************************************************************************
+{*******************************************************************************
 |* Historico
 |*
 |* 01/08/2012: Italo Jurisato Junior
 |*  - Doação do componente para o Projeto ACBr
-******************************************************************************}
+*******************************************************************************}
 
 {$I ACBr.inc}
 
@@ -93,21 +93,21 @@ type
                                 UsarThread: Boolean = True;
                                 HTML:Boolean = False);
 
-    property MDFe: TMDFe  read FMDFe write FMDFe;
-    property XML: AnsiString  read GetMDFeXML write FXML;
-    property XMLOriginal: AnsiString  read FXMLOriginal write FXMLOriginal;
-    property Confirmada: Boolean  read FConfirmada write FConfirmada;
-    property Msg: AnsiString  read FMsg write FMsg;
-    property Alertas: AnsiString read FAlertas write FAlertas;
-    property ErroValidacao: AnsiString read FErroValidacao write FErroValidacao;
-    property ErroValidacaoCompleto: AnsiString read FErroValidacaoCompleto write FErroValidacaoCompleto;    
-    property NomeArq: String read FNomeArq write FNomeArq;
+    property MDFe: TMDFe                       read FMDFe                  write FMDFe;
+    property XML: AnsiString                   read GetMDFeXML             write FXML;
+    property XMLOriginal: AnsiString           read FXMLOriginal           write FXMLOriginal;
+    property Confirmada: Boolean               read FConfirmada            write FConfirmada;
+    property Msg: AnsiString                   read FMsg                   write FMsg;
+    property Alertas: AnsiString               read FAlertas               write FAlertas;
+    property ErroValidacao: AnsiString         read FErroValidacao         write FErroValidacao;
+    property ErroValidacaoCompleto: AnsiString read FErroValidacaoCompleto write FErroValidacaoCompleto;
+    property NomeArq: String                   read FNomeArq               write FNomeArq;
   end;
 
   TManifestos = class(TOwnedCollection)
   private
-    FConfiguracoes : TConfiguracoes;
-    FACBrMDFe : TComponent;
+    FConfiguracoes: TConfiguracoes;
+    FACBrMDFe: TComponent;
 
     function GetItem(Index: Integer): Manifesto;
     procedure SetItem(Index: Integer; const Value: Manifesto);
@@ -122,16 +122,15 @@ type
     procedure ImprimirPDF;
     function  Add: Manifesto;
     function Insert(Index: Integer): Manifesto;
-    property Items[Index: Integer]: Manifesto read GetItem  write SetItem;
-    property Configuracoes: TConfiguracoes read FConfiguracoes  write FConfiguracoes;
-
     function GetNamePath: string; override;
-    function LoadFromFile(CaminhoArquivo: string; AGerarMDFe: Boolean = True): boolean;
-    function LoadFromStream(Stream: TStringStream; AGerarMDFe: Boolean = True): boolean;
-    function LoadFromString(AString: String; AGerarMDFe: Boolean = True): boolean;
+    function LoadFromFile(CaminhoArquivo: string; AGerarMDFe: Boolean = False): boolean;
+    function LoadFromStream(Stream: TStringStream; AGerarMDFe: Boolean = False): boolean;
+    function LoadFromString(AString: String; AGerarMDFe: Boolean = False): boolean;
     function SaveToFile(PathArquivo: string = ''): boolean;
 
-    property ACBrMDFe : TComponent read FACBrMDFe;
+    property Items[Index: Integer]: Manifesto read GetItem         write SetItem;
+    property Configuracoes: TConfiguracoes    read FConfiguracoes  write FConfiguracoes;
+    property ACBrMDFe : TComponent            read FACBrMDFe;
   end;
 
   TSendMailThread = class(TThread)
@@ -142,11 +141,12 @@ type
   public
     OcorreramErros: Boolean;
     Terminado: Boolean;
-    smtp : TSMTPSend;
-    sFrom : String;
-    sTo : String;
-    sCC : TStrings;
-    slmsg_Lines : TStrings;
+    smtp: TSMTPSend;
+    sFrom: String;
+    sTo: String;
+    sCC: TStrings;
+    slmsg_Lines: TStrings;
+
     constructor Create; //(AOwner: Manifesto);
     destructor Destroy; override;
   protected
@@ -198,7 +198,7 @@ end;
 
 function Manifesto.SaveToFile(CaminhoArquivo: string = ''): boolean;
 var
-  LocMDFeW : TMDFeW;
+  LocMDFeW: TMDFeW;
 begin
   try
      Result  := True;
@@ -224,7 +224,7 @@ end;
 
 function Manifesto.SaveToStream(Stream: TStringStream): boolean;
 var
-  LocMDFeW : TMDFeW;
+  LocMDFeW: TMDFeW;
 begin
   try
      Result  := True;
@@ -261,9 +261,9 @@ procedure Manifesto.EnviarEmail(const sSmtpHost,
                                       UsarThread: Boolean = True;
                                       HTML:Boolean = False);
 var
- NomeArq : String;
- AnexosEmail:TStrings;
- StreamMDFe : TStringStream;
+ NomeArq: String;
+ AnexosEmail: TStrings;
+ StreamMDFe: TStringStream;
 begin
  AnexosEmail := TStringList.Create;
  StreamMDFe  := TStringStream.Create('');
@@ -310,14 +310,14 @@ begin
                 UsarThread,
                 HTML);
  finally
-    AnexosEmail.Free ;
-    StreamMDFe.Free ;
+    AnexosEmail.Free;
+    StreamMDFe.Free;
  end;
 end;
 
 function Manifesto.GetMDFeXML: AnsiString;
 var
- LocMDFeW : TMDFeW;
+ LocMDFeW: TMDFeW;
 begin
  LocMDFeW := TMDFeW.Create(Self.MDFe);
  try
@@ -352,10 +352,10 @@ end;
 procedure TManifestos.Assinar;
 var
   i: Integer;
-  vAssinada : AnsiString;
-  LocMDFeW : TMDFeW;
+  vAssinada: AnsiString;
+  LocMDFeW: TMDFeW;
   Leitor: TLeitor;
-  FMsg : AnsiString;
+  FMsg: AnsiString;
 begin
   for i:= 0 to Self.Count-1 do
    begin
@@ -403,7 +403,7 @@ end;
 procedure TManifestos.GerarMDFe;
 var
  i: Integer;
- LocMDFeW : TMDFeW;
+ LocMDFeW: TMDFeW;
 begin
  for i:= 0 to Self.Count-1 do
   begin
@@ -412,6 +412,7 @@ begin
        LocMDFeW.Gerador.Opcoes.FormatoAlerta := FConfiguracoes.Geral.FormatoAlerta;
        LocMDFeW.VersaoDF := FConfiguracoes.Geral.VersaoDF;
        LocMDFeW.GerarXml;
+
        Self.Items[i].XML     := LocMDFeW.Gerador.ArquivoFormatoXML;
        Self.Items[i].Alertas := LocMDFeW.Gerador.ListaDeAlertas.Text;
     finally
@@ -459,21 +460,8 @@ end;
 procedure TManifestos.Valida;
 var
  i: Integer;
- FMsg : AnsiString;
+ FMsg: AnsiString;
 begin
-(*
-  for i:= 0 to Self.Count-1 do
-   begin
-     if pos('<Signature',Self.Items[i].XML) = 0 then
-        Assinar;
-     if not(MDFeUtil.Valida(('<MDFe xmlns' +
-        RetornarConteudoEntre(Self.Items[i].XML, '<MDFe xmlns', '</MDFe>')+ '</MDFe>'),
-         FMsg, Self.FConfiguracoes.Geral.PathSchemas)) then
-       raise Exception.Create('Falha na validação dos dados do Manifesto '+
-                    IntToStr(Self.Items[i].MDFe.Ide.nMDF) +
-                    sLineBreak + Self.Items[i].Alertas + FMsg);
-  end;
-*)
   for i:= 0 to Self.Count-1 do
    begin
      if pos('<Signature',Self.Items[i].XML) = 0 then
@@ -498,7 +486,7 @@ end;
 function TManifestos.ValidaAssinatura(out Msg : String) : Boolean;
 var
  i: Integer;
- FMsg : AnsiString;
+ FMsg: AnsiString;
 begin
   Result := True;
   for i:= 0 to Self.Count-1 do
@@ -514,11 +502,11 @@ begin
   end;
 end;
 
-function TManifestos.LoadFromFile(CaminhoArquivo: string; AGerarMDFe: Boolean = True): boolean;
+function TManifestos.LoadFromFile(CaminhoArquivo: string; AGerarMDFe: Boolean = False): boolean;
 var
- LocMDFeR : TMDFeR;
+ LocMDFeR: TMDFeR;
  ArquivoXML: TStringList;
- XML, XMLOriginal : AnsiString;
+ XML, XMLOriginal: AnsiString;
 begin
  try
     ArquivoXML := TStringList.Create;
@@ -545,6 +533,7 @@ begin
             Items[Self.Count-1].XML := LocMDFeR.Leitor.Arquivo;
             Items[Self.Count-1].XMLOriginal := XMLOriginal;
             Items[Self.Count-1].NomeArq := CaminhoArquivo;
+
             if AGerarMDFe then GerarMDFe;
          finally
             LocMDFeR.Free;
@@ -559,9 +548,9 @@ begin
  end;
 end;
 
-function TManifestos.LoadFromStream(Stream: TStringStream; AGerarMDFe: Boolean = True): boolean;
+function TManifestos.LoadFromStream(Stream: TStringStream; AGerarMDFe: Boolean = False): boolean;
 var
- LocMDFeR : TMDFeR;
+ LocMDFeR: TMDFeR;
 begin
   try
     Result  := True;
@@ -582,8 +571,8 @@ end;
 
 function TManifestos.SaveToFile(PathArquivo: string = ''): boolean;
 var
- i : integer;
- CaminhoArquivo : String;
+ i: integer;
+ CaminhoArquivo: String;
 begin
  Result := True;
  try
@@ -601,7 +590,7 @@ begin
  end;
 end;
 
-function TManifestos.LoadFromString(AString: String; AGerarMDFe: Boolean = True): boolean;
+function TManifestos.LoadFromString(AString: String; AGerarMDFe: Boolean = False): boolean;
 var
   XMLMDFe: TStringStream;
 begin

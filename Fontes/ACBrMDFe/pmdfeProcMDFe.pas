@@ -27,12 +27,12 @@
 {                                                                              }
 {******************************************************************************}
 
-{******************************************************************************
+{*******************************************************************************
 |* Historico
 |*
 |* 01/08/2012: Italo Jurisato Junior
 |*  - Doação do componente para o Projeto ACBr
-******************************************************************************}
+*******************************************************************************}
 
 {$I ACBr.inc}
 
@@ -68,18 +68,18 @@ type
     function GerarXML: boolean;
     function ObterNomeArquivo(const PadraoNome: TPcnPadraoNomeProcMDFe = tpnPrivado): string;
   published
-    property Gerador: TGerador read FGerador write FGerador;
-    property PathMDFe: string read FPathMDFe write FPathMDFe;
+    property Gerador: TGerador           read FGerador             write FGerador;
+    property PathMDFe: string            read FPathMDFe            write FPathMDFe;
     property PathRetConsReciMDFe: string read FPathRetConsReciMDFe write FPathRetConsReciMDFe;
-    property PathRetConsSitMDFe: string read FPathRetConsSitMDFe write FPathRetConsSitMDFe;
-    property tpAmb: TpcnTipoAmbiente read FtpAmb write FtpAmb;
-    property verAplic: string read FverAplic write FverAplic;
-    property chMDFe: string read FchMDFe write FchMDFe;
-    property dhRecbto: TDateTime read FdhRecbto write FdhRecbto;
-    property nProt: string read FnProt write FnProt;
-    property digVal: string read FdigVal write FdigVal;
-    property cStat: integer read FcStat write FcStat;
-    property xMotivo: string read FxMotivo write FxMotivo;
+    property PathRetConsSitMDFe: string  read FPathRetConsSitMDFe  write FPathRetConsSitMDFe;
+    property tpAmb: TpcnTipoAmbiente     read FtpAmb               write FtpAmb;
+    property verAplic: string            read FverAplic            write FverAplic;
+    property chMDFe: string              read FchMDFe              write FchMDFe;
+    property dhRecbto: TDateTime         read FdhRecbto            write FdhRecbto;
+    property nProt: string               read FnProt               write FnProt;
+    property digVal: string              read FdigVal              write FdigVal;
+    property cStat: integer              read FcStat               write FcStat;
+    property xMotivo: string             read FxMotivo             write FxMotivo;
   end;
 
 implementation
@@ -167,7 +167,7 @@ begin
              if trim(FnProt) = ''
               then Gerador.wAlerta('XR01', 'PROTOCOLO/MDFe', 'Numero do protocolo', ERR_MSG_VAZIO)
               else begin
-               xProtMDFe := LocLeitor.rExtrai(1, 'protMDFe', '', i + 1); // +'</protMDFe>';
+               xProtMDFe := LocLeitor.rExtrai(1, 'protMDFe', '', i + 1);
                Gerador.ListaDeAlertas.Clear;
                break;
               end;
@@ -179,7 +179,7 @@ begin
        end;
      end;
 
-    // Gerar arquivo pelo arquivo de consulta da situação do MDFe              //
+    // Gerar arquivo pelo arquivo de consulta da situação do MDFe
     if (FPathRetConsReciMDFe = '') and (FPathRetConsSitMDFe <> '') and (not ProtLido)
      then begin
       if not FileExists(FPathRetConsSitMDFe)

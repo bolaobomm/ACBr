@@ -27,12 +27,12 @@
 {                                                                              }
 {******************************************************************************}
 
-{******************************************************************************
+{*******************************************************************************
 |* Historico
 |*
 |* 01/08/2012: Italo Jurisato Junior
 |*  - Doação do componente para o Projeto ACBr
-******************************************************************************}
+*******************************************************************************}
 
 {$I ACBr.inc}
 
@@ -57,7 +57,7 @@ type
     FID: String;
     FtpAmbiente: TpcnTipoAmbiente;
     FCNPJ: String;
-    FcOrgao: integer;
+    FcOrgao: Integer;
     FChave: String;
     FDataEvento: TDateTime;
     FTpEvento: TpcnTpEvento;
@@ -67,35 +67,35 @@ type
 
     function getcOrgao: Integer;
     function getVersaoEvento: String;
-    function getDescEvento: string;
-    function getTipoEvento: string;
+    function getDescEvento: String;
+    function getTipoEvento: String;
   public
     constructor Create;
     destructor Destroy; override;
     function DescricaoTipoEvento(TipoEvento:TpcnTpEvento): String;
 
-    property id: String              read FID         write FID;
-    property cOrgao: Integer         read getcOrgao   write FcOrgao;
-    property tpAmb: TpcnTipoAmbiente read FtpAmbiente write FtpAmbiente;
-    property CNPJ: String            read FCNPJ       write FCNPJ;
-    property chMDFe: String          read FChave      write FChave;
-    property dhEvento: TDateTime     read FDataEvento write FDataEvento;
-    property tpEvento: TpcnTpEvento  read FTpEvento   write FTpEvento;
-    property nSeqEvento: Integer     read FnSeqEvento write FnSeqEvento;
+    property id: String              read FID             write FID;
+    property cOrgao: Integer         read getcOrgao       write FcOrgao;
+    property tpAmb: TpcnTipoAmbiente read FtpAmbiente     write FtpAmbiente;
+    property CNPJ: String            read FCNPJ           write FCNPJ;
+    property chMDFe: String          read FChave          write FChave;
+    property dhEvento: TDateTime     read FDataEvento     write FDataEvento;
+    property tpEvento: TpcnTpEvento  read FTpEvento       write FTpEvento;
+    property nSeqEvento: Integer     read FnSeqEvento     write FnSeqEvento;
     property versaoEvento: String    read getVersaoEvento write FversaoEvento;
-    property detEvento: TDetEvento   read FDetEvento  write FDetEvento;
-    property DescEvento: string      read getDescEvento;
-    property TipoEvento: string      read getTipoEvento;
+    property detEvento: TDetEvento   read FDetEvento      write FDetEvento;
+    property DescEvento: String      read getDescEvento;
+    property TipoEvento: String      read getTipoEvento;
   end;
 
   TDetEvento = class
   private
     FdescEvento: String;
-    FnProt: string;
+    FnProt: String;
     FdtEnc: TDateTime; // Encerramento
     FcUF: Integer;     // Encerramento
     FcMun: Integer;    // Encerramento
-    FxJust: string;    // Cancelamento
+    FxJust: String;    // Cancelamento
     FxNome: String;    // Inclusao de Condutor
     FCPF: String;      // Inclusao de Condutor
   public
@@ -128,17 +128,17 @@ type
     FXML: AnsiString;
   public
   published
-    property Id: string              read FId          write FId;
+    property Id: String              read FId          write FId;
     property tpAmb: TpcnTipoAmbiente read FtpAmb       write FtpAmb;
-    property verAplic: string        read FverAplic    write FverAplic;
+    property verAplic: String        read FverAplic    write FverAplic;
     property cOrgao: Integer         read FcOrgao      write FcOrgao;
-    property cStat: integer          read FcStat       write FcStat;
-    property xMotivo: string         read FxMotivo     write FxMotivo;
+    property cStat: Integer          read FcStat       write FcStat;
+    property xMotivo: String         read FxMotivo     write FxMotivo;
     property chMDFe: String          read FchMDFe      write FchMDFe;
     property tpEvento: TpcnTpEvento  read FtpEvento    write FtpEvento;
     property xEvento: String         read FxEvento     write FxEvento;
     property nSeqEvento: Integer     read FnSeqEvento  write FnSeqEvento;
-    property CNPJDest: string        read FCNPJDest    write FCNPJDest;
+    property CNPJDest: String        read FCNPJDest    write FCNPJDest;
     property emailDest: String       read FemailDest   write FemailDest;
     property dhRegEvento: TDateTime  read FdhRegEvento write FdhRegEvento;
     property nProt: String           read FnProt       write FnProt;
@@ -162,7 +162,7 @@ begin
   inherited;
 end;
 
-function TInfEvento.getcOrgao: integer;
+function TInfEvento.getcOrgao: Integer;
 //  (AC,AL,AP,AM,BA,CE,DF,ES,GO,MA,MT,MS,MG,PA,PB,PR,PE,PI,RJ,RN,RS,RO,RR,SC,SP,SE,TO);
 //  (12,27,16,13,29,23,53,32,52,21,51,50,31,15,25,41,26,22,33,24,43,11,14,42,35,28,17);
 begin
@@ -175,7 +175,7 @@ begin
   *)  
 end;
 
-function TInfEvento.getDescEvento: string;
+function TInfEvento.getDescEvento: String;
 begin
   case fTpEvento of
     teCancelamento        : Result := 'Cancelamento';
@@ -188,7 +188,7 @@ begin
   end;
 end;
 
-function TInfEvento.getTipoEvento: string;
+function TInfEvento.getTipoEvento: String;
 begin
   case FTpEvento of
     teCancelamento        : Result := '110111';

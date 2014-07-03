@@ -27,12 +27,12 @@
 {                                                                              }
 {******************************************************************************}
 
-{******************************************************************************
+{*******************************************************************************
 |* Historico
 |*
 |* 01/08/2012: Italo Jurisato Junior
 |*  - Doação do componente para o Projeto ACBr
-******************************************************************************}
+*******************************************************************************}
 
 {$I ACBr.inc}
 
@@ -50,16 +50,16 @@ type
   private
     FGerador: TGerador;
     FtpAmb: TpcnTipoAmbiente;
-    FnRec: string;
+    FnRec: String;
   public
     constructor Create;
     destructor Destroy; override;
     function GerarXML: boolean;
-    function ObterNomeArquivo: string;
+    function ObterNomeArquivo: String;
   published
     property Gerador: TGerador       read FGerador write FGerador;
     property tpAmb: TpcnTipoAmbiente read FtpAmb   write FtpAmb;
-    property nRec: string            read FnRec    write FnRec;
+    property nRec: String            read FnRec    write FnRec;
   end;
 
 implementation
@@ -77,7 +77,7 @@ begin
   inherited;
 end;
 
-function TConsReciMDFe.ObterNomeArquivo: string;
+function TConsReciMDFe.ObterNomeArquivo: String;
 begin
   Result := SomenteNumeros(FnRec) + '-ped-rec.xml';
 end;

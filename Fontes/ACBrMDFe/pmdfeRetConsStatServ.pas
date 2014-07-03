@@ -27,12 +27,12 @@
 {                                                                              }
 {******************************************************************************}
 
-{******************************************************************************
+{*******************************************************************************
 |* Historico
 |*
 |* 01/08/2012: Italo Jurisato Junior
 |*  - Doação do componente para o Projeto ACBr
-******************************************************************************}
+*******************************************************************************}
 
 {$I ACBr.inc}
 
@@ -63,16 +63,16 @@ type
     destructor Destroy; override;
     function LerXml: boolean;
   published
-    property Leitor: TLeitor read FLeitor write FLeitor;
-    property tpAmb: TpcnTipoAmbiente read FtpAmb write FtpAmb;
-    property verAplic: string read FverAplic write FverAplic;
-    property cStat: integer read FcStat write FcStat;
-    property xMotivo: string read FxMotivo write FxMotivo;
-    property cUF: integer read FcUF write FcUF;
-    property dhRecbto: TDateTime read FdhRecbto write FdhRecbto;
-    property tMed: integer read FtMed write FtMed;
-    property dhRetorno: TDateTime read FdhRetorno write FdhRetorno;
-    property xObs: string read FxObs write FxObs;
+    property Leitor: TLeitor         read FLeitor    write FLeitor;
+    property tpAmb: TpcnTipoAmbiente read FtpAmb     write FtpAmb;
+    property verAplic: string        read FverAplic  write FverAplic;
+    property cStat: integer          read FcStat     write FcStat;
+    property xMotivo: string         read FxMotivo   write FxMotivo;
+    property cUF: integer            read FcUF       write FcUF;
+    property dhRecbto: TDateTime     read FdhRecbto  write FdhRecbto;
+    property tMed: integer           read FtMed      write FtMed;
+    property dhRetorno: TDateTime    read FdhRetorno write FdhRetorno;
+    property xObs: string            read FxObs      write FxObs;
   end;
 
 implementation

@@ -27,12 +27,12 @@
 {                                                                              }
 {******************************************************************************}
 
-{******************************************************************************
+{*******************************************************************************
 |* Historico
 |*
 |* 01/08/2012: Italo Jurisato Junior
 |*  - Doação do componente para o Projeto ACBr
-******************************************************************************}
+*******************************************************************************}
 
 {$I ACBr.inc}
 
@@ -60,10 +60,8 @@ type
     function LerXml: boolean;
   published
     property Leitor: TLeitor read FLeitor write FLeitor;
-    property MDFe: TMDFe read FMDFe write FMDFe;
+    property MDFe: TMDFe     read FMDFe   write FMDFe;
   end;
-
-  ////////////////////////////////////////////////////////////////////////////////
 
 implementation
 
@@ -81,14 +79,12 @@ begin
   inherited Destroy;
 end;
 
-////////////////////////////////////////////////////////////////////////////////
-
 function TMDFeR.LerXml: boolean;
 var
   ok: boolean;
   i, j, i01, i02, i03, i04, i05: integer;
 begin
-
+  (*
   I := 0;
   I := RetornarPosEx('Id=', Leitor.Arquivo, I + 6);
   if I = 0 then
@@ -104,6 +100,8 @@ begin
 
   // MDFe.infMDFe.ID := copy(Leitor.Arquivo, I + 4, J - I - 4);
   MDFe.infMDFe.ID := copy(Leitor.Arquivo, I + 1, J - I -1);
+  *)
+  MDFe.infMDFe.ID := Leitor.rAtributo('Id=');
 
   (* Grupo da TAG <ide> *******************************************************)
   if Leitor.rExtrai(1, 'ide') <> '' then
@@ -249,7 +247,7 @@ begin
 
      end; // fim das informações do modal Rodoviário
 
-    (* Grupo da TAG <aereo> *****************************************************)
+    (* Grupo da TAG <aereo> ***************************************************)
     if Leitor.rExtrai(2, 'aereo') <> '' then
      begin
        MDFe.Aereo.nac     := Leitor.rCampo(tcInt, 'nac');
@@ -260,7 +258,7 @@ begin
        MDFe.Aereo.dVoo    := Leitor.rCampo(tcDat, 'dVoo');
      end; // fim das informações do modal Aéreo
 
-    (* Grupo da TAG <aquav> *****************************************************)
+    (* Grupo da TAG <aquav> ***************************************************)
     if Leitor.rExtrai(2, 'aquav') <> '' then
      begin
        MDFe.aquav.CNPJAgeNav := Leitor.rCampo(tcStr, 'CNPJAgeNav');
@@ -308,7 +306,7 @@ begin
 
      end; // fim das informações do modal Aquaviário
 
-    (* Grupo da TAG <ferrov> ****************************************************)
+    (* Grupo da TAG <ferrov> **************************************************)
     if Leitor.rExtrai(2, 'ferrov') <> '' then
      begin
        if Leitor.rExtrai(3, 'trem') <> '' then
@@ -655,7 +653,7 @@ begin
     MDFe.procMDFe.xMotivo  := Leitor.rCampo(tcStr, 'xMotivo');
   end;
 
-  Result := true;
+  Result := True;
 end;
 
 end.

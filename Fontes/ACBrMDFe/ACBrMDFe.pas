@@ -27,12 +27,12 @@
 {                                                                              }
 {******************************************************************************}
 
-{******************************************************************************
+{*******************************************************************************
 |* Historico
 |*
 |* 01/08/2012: Italo Jurisato Junior
 |*  - Doação do componente para o Projeto ACBr
-******************************************************************************}
+*******************************************************************************}
 
 {$I ACBr.inc}
 
@@ -68,14 +68,15 @@ type
   TACBrMDFe = class(TComponent)
   private
     fsAbout: TACBrMDFeAboutInfo;
-    FDAMDFe : TACBrMDFeDAMDFeClass;
+    FDAMDFe: TACBrMDFeDAMDFeClass;
     FManifestos: TManifestos;
     FEventoMDFe: TEventoMDFe;
     FWebServices: TWebServices;
     FConfiguracoes: TConfiguracoes;
-    FStatus : TStatusACBrMDFe;
+    FStatus: TStatusACBrMDFe;
     FOnStatusChange: TNotifyEvent;
-    FOnGerarLog : TACBrMDFeLog;
+    FOnGerarLog: TACBrMDFeLog;
+
   	procedure SetDAMDFe(const Value: TACBrMDFeDAMDFeClass);
     procedure EnviaEmailThread(const sSmtpHost, sSmtpPort, sSmtpUser,
       sSmtpPasswd, sFrom, sTo, sAssunto: String; sMensagem: TStrings;
@@ -96,12 +97,13 @@ type
     function Enviar(ALote: String; Imprimir: Boolean = True): Boolean; overload;
     function Consultar: Boolean;
     function EnviarEventoMDFe(idLote : Integer): Boolean;
-    property WebServices: TWebServices read FWebServices write FWebServices;
-    property Manifestos: TManifestos read FManifestos write FManifestos;
-    property EventoMDFe: TEventoMDFe read FEventoMDFe write FEventoMDFe;
-    property Status: TStatusACBrMDFe read FStatus;
-    procedure SetStatus( const stNewStatus : TStatusACBrMDFe );
 
+    property WebServices: TWebServices read FWebServices write FWebServices;
+    property Manifestos: TManifestos   read FManifestos  write FManifestos;
+    property EventoMDFe: TEventoMDFe   read FEventoMDFe  write FEventoMDFe;
+    property Status: TStatusACBrMDFe   read FStatus;
+
+    procedure SetStatus( const stNewStatus : TStatusACBrMDFe );
     procedure ImprimirEvento;
     procedure ImprimirEventoPDF;
     procedure EnviarEmailEvento(const sSmtpHost,
@@ -141,11 +143,11 @@ type
                                   UsarThread: Boolean = True;
                                   HTML: Boolean = False);
   published
-    property Configuracoes: TConfiguracoes read FConfiguracoes write FConfiguracoes;
-    property OnStatusChange: TNotifyEvent read FOnStatusChange write FOnStatusChange;
-  	property DAMDFe: TACBrMDFeDAMDFeClass read FDAMDFe write SetDAMDFe;
-    property AboutACBrMDFe : TACBrMDFeAboutInfo read fsAbout write fsAbout stored false;
-    property OnGerarLog : TACBrMDFeLog read FOnGerarLog write FOnGerarLog;
+    property Configuracoes: TConfiguracoes     read FConfiguracoes  write FConfiguracoes;
+    property OnStatusChange: TNotifyEvent      read FOnStatusChange write FOnStatusChange;
+  	property DAMDFe: TACBrMDFeDAMDFeClass      read FDAMDFe         write SetDAMDFe;
+    property AboutACBrMDFe: TACBrMDFeAboutInfo read fsAbout         write fsAbout stored False;
+    property OnGerarLog: TACBrMDFeLog          read FOnGerarLog     write FOnGerarLog;
   end;
 
 procedure ACBrAboutDialog;
@@ -154,7 +156,7 @@ implementation
 
 procedure ACBrAboutDialog;
 var
- Msg : String;
+ Msg: String;
 begin
   Msg := 'Componente ACBrMDFe'+#10+
          'Versão: '+ACBRMDFe_VERSAO+#10+#10+
@@ -254,7 +256,7 @@ end;
 
 function TACBrMDFe.Consultar: Boolean;
 var
- i : Integer;
+ i: Integer;
 begin
   if Self.Manifestos.Count = 0 then
   begin
@@ -322,8 +324,8 @@ procedure TACBrMDFe.EnviaEmailThread(const sSmtpHost, sSmtpPort, sSmtpUser,
   AguardarEnvio: Boolean; NomeRemetente: String; TLS: Boolean;
   StreamMDFe: TStringStream; NomeArq: String; HTML: Boolean = False);
 var
- ThreadSMTP : TSendMailThread;
- m:TMimemess;
+ ThreadSMTP: TSendMailThread;
+ m: TMimemess;
  p: TMimepart;
  i: Integer;
 begin
@@ -404,9 +406,9 @@ procedure TACBrMDFe.EnviarEmailNormal(const sSmtpHost, sSmtpPort, sSmtpUser,
 var
   smtp: TSMTPSend;
   msg_lines: TStringList;
-  m:TMimemess;
+  m: TMimemess;
   p: TMimepart;
-  I : Integer;
+  I: Integer;
   CorpoEmail: TStringList;
 begin
   SetStatus( stMDFeEmail );
@@ -602,8 +604,8 @@ procedure TACBrMDFe.EnviarEmailEvento(const sSmtpHost, sSmtpPort,
   PedeConfirma, AguardarEnvio: Boolean; NomeRemetente: String;
   TLS: Boolean);
 var
-  NomeArq : String;
-  AnexosEmail : TStrings;
+  NomeArq: String;
+  AnexosEmail: TStrings;
 begin
   AnexosEmail := TStringList.Create;
   try

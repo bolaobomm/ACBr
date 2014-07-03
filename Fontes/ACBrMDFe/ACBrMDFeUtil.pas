@@ -27,12 +27,12 @@
 {                                                                              }
 {******************************************************************************}
 
-{******************************************************************************
+{*******************************************************************************
 |* Historico
 |*
 |* 01/08/2012: Italo Jurisato Junior
 |*  - Doação do componente para o Projeto ACBr
-******************************************************************************}
+*******************************************************************************}
 
 {$I ACBr.inc}
 
@@ -334,13 +334,13 @@ end;
 function ValidaLibXML(const AXML: AnsiString;
   var AMsg: AnsiString; const APathSchemas: string = ''): Boolean;
 var
-  doc, schema_doc   : xmlDocPtr;
-  parser_ctxt       : xmlSchemaParserCtxtPtr;
-  schema            : xmlSchemaPtr;
-  valid_ctxt        : xmlSchemaValidCtxtPtr;
-  schemError        : xmlErrorPtr;
-  schema_filename   : PChar;
-  Tipo, I           : Integer;
+  doc, schema_doc: xmlDocPtr;
+  parser_ctxt: xmlSchemaParserCtxtPtr;
+  schema: xmlSchemaPtr;
+  valid_ctxt: xmlSchemaValidCtxtPtr;
+  schemError: xmlErrorPtr;
+  schema_filename: PChar;
+  Tipo, I: Integer;
 begin
  Tipo := MDFeUtil.IdentificaTipoSchema(AXML, I);
 
@@ -376,7 +376,7 @@ begin
 
   if ((doc = nil) or (xmlDocGetRootElement(doc) = nil)) then
   begin
-    AMsg := 'Erro: unable to parse';
+    AMsg   := 'Erro: unable to parse';
     Result := False;
     exit;
   end;
@@ -441,14 +441,14 @@ end;
 function ValidaModalLibXML(XML: AnsiString; var Msg: AnsiString;
  const APathSchemas: string = ''): Boolean;
 var
-  doc, schema_doc : xmlDocPtr;
-  parser_ctxt     : xmlSchemaParserCtxtPtr;
-  schema          : xmlSchemaPtr;
-  valid_ctxt      : xmlSchemaValidCtxtPtr;
-  schemError      : xmlErrorPtr;
-  schema_filename : String; // PChar;
-  Tipo            : Integer;
-  AXML            : AnsiString;
+  doc, schema_doc: xmlDocPtr;
+  parser_ctxt: xmlSchemaParserCtxtPtr;
+  schema: xmlSchemaPtr;
+  valid_ctxt: xmlSchemaValidCtxtPtr;
+  schemError: xmlErrorPtr;
+  schema_filename: String; // PChar;
+  Tipo: Integer;
+  AXML: AnsiString;
 begin
   Tipo := 0;
 
@@ -651,11 +651,11 @@ end;
 function ValidaMSXML(XML: AnsiString; out Msg: AnsiString;
  const APathSchemas: string = ''): Boolean;
 var
-  DOMDocument : IXMLDOMDocument2;
-  ParseError  : IXMLDOMParseError;
-  Schema      : XMLSchemaCache;
-  Tipo, I     : Integer;
-  schema_filename : String;
+  DOMDocument: IXMLDOMDocument2;
+  ParseError: IXMLDOMParseError;
+  Schema: XMLSchemaCache;
+  Tipo, I: Integer;
+  schema_filename: String;
 begin
   Tipo := MDFeUtil.IdentificaTipoSchema(XML, I);
 
@@ -702,11 +702,11 @@ end;
 function ValidaModalMSXML(XML: AnsiString; out Msg: AnsiString;
  const APathSchemas: string = ''): Boolean;
 var
-  DOMDocument : IXMLDOMDocument2;
-  ParseError  : IXMLDOMParseError;
-  Schema      : XMLSchemaCache;
-  Tipo        : Integer;
-  schema_filename : String;
+  DOMDocument: IXMLDOMDocument2;
+  ParseError: IXMLDOMParseError;
+  Schema: XMLSchemaCache;
+  Tipo: Integer;
+  schema_filename: String;
 begin
   Tipo := 0;
 
@@ -859,14 +859,12 @@ end;
 
 function ValidaAssinaturaMSXML(XML: AnsiString; out Msg: AnsiString): Boolean;
 var
-  xmldoc  : IXMLDOMDocument3;
-  xmldsig : IXMLDigitalSignature;
-
-  pKeyInfo : IXMLDOMNode;
-  pKey, pKeyOut : IXMLDSigKey;
-
+  xmldoc: IXMLDOMDocument3;
+  xmldsig: IXMLDigitalSignature;
+  pKeyInfo: IXMLDOMNode;
+  pKey, pKeyOut: IXMLDSigKey;
 begin
-  xmldoc := CoDOMDocument50.Create;
+  xmldoc  := CoDOMDocument50.Create;
   xmldsig := CoMXDigitalSignature50.Create;
 
   xmldoc.async              := False;
@@ -895,11 +893,11 @@ begin
   finally
     Result := (pKeyOut <> nil );
 
-    pKeyOut := nil;
-    pKey := nil;
+    pKeyOut  := nil;
+    pKey     := nil;
     pKeyInfo := nil;
-    xmldsig := nil;
-    xmldoc := nil;
+    xmldsig  := nil;
+    xmldoc   := nil;
   end;
 end;
 
@@ -932,9 +930,9 @@ end;
 function AssinarLibXML(const AXML, ArqPFX, PFXSenha: AnsiString;
   out AXMLAssinado, FMensagem: AnsiString): Boolean;
 var
-  I, J, PosIni, PosFim : Integer;
-  URI, AStr, XmlAss    : AnsiString;
-  Tipo                 : Integer;   
+  I, J, PosIni, PosFim: Integer;
+  URI, AStr, XmlAss: AnsiString;
+  Tipo: Integer;
   Cert: TMemoryStream;
   Cert2: TStringStream;
 begin
@@ -1010,16 +1008,16 @@ begin
     '</Signature>';
 
   case Tipo of
-    1: AStr := AStr + '</MDFe>';
+       1: AStr := AStr + '</MDFe>';
     2..4: AStr := AStr + '</eventoMDFe>';
-    else AStr := '';
+    else  AStr := '';
   end;
 
   if FileExists(ArqPFX) then
     XmlAss := MDFeUtil.sign_file(PAnsiChar(AStr), PAnsiChar(ArqPFX), PAnsiChar(PFXSenha))
   else
    begin
-    Cert := TMemoryStream.Create;
+    Cert  := TMemoryStream.Create;
     Cert2 := TStringStream.Create(ArqPFX);
     try
       Cert.LoadFromStream(Cert2);
@@ -1035,9 +1033,9 @@ begin
 
   // Removendo DTD //
   case Tipo of
-    1: XmlAss := StringReplace( XmlAss, cDTD, '', [] );
+       1: XmlAss := StringReplace( XmlAss, cDTD, '', [] );
     2..4: XmlAss := StringReplace( XmlAss, cDTDEven, '', [] );
-    else XmlAss := '';
+    else  XmlAss := '';
   end;
 
   PosIni := Pos('<X509Certificate>', XmlAss) - 1;
@@ -1054,14 +1052,13 @@ end;
 function AssinarMSXML(XML: AnsiString; Certificado: ICertificate2; out XMLAssinado: AnsiString): Boolean;
 var
   I, J, PosIni, PosFim: Integer;
-  URI               : string;
-  Tipo              : Integer;
-
+  URI: string;
+  Tipo: Integer;
   xmlHeaderAntes, xmlHeaderDepois: AnsiString;
-  xmldoc            : IXMLDOMDocument3;
-  xmldsig           : IXMLDigitalSignature;
-  dsigKey           : IXMLDSigKey;
-  signedKey         : IXMLDSigKey;
+  xmldoc: IXMLDOMDocument3;
+  xmldsig: IXMLDigitalSignature;
+  dsigKey: IXMLDSigKey;
+  signedKey: IXMLDSigKey;
 begin
   if Pos('<Signature', XML) <= 0 then
   begin
@@ -1080,9 +1077,9 @@ begin
     URI := copy(XML, I + 1, J - I - 1);
 
     case Tipo of
-      1: XML := copy(XML,1,pos('</MDFe>',XML)-1);
+         1: XML := copy(XML,1,pos('</MDFe>',XML)-1);
       2..4: XML := copy(XML,1,pos('</eventoMDFe>',XML)-1);
-      else XML := '';
+      else  XML := '';
     end;
 
     XML := XML + '<Signature xmlns="http://www.w3.org/2000/09/xmldsig#"><SignedInfo><CanonicalizationMethod Algorithm="http://www.w3.org/TR/2001/REC-xml-c14n-20010315" /><SignatureMethod Algorithm="http://www.w3.org/2000/09/xmldsig#rsa-sha1" />';
@@ -1091,9 +1088,9 @@ begin
     XML := XML + '<DigestValue></DigestValue></Reference></SignedInfo><SignatureValue></SignatureValue><KeyInfo></KeyInfo></Signature>';
 
     case Tipo of
-      1: XML := XML + '</MDFe>';
+         1: XML := XML + '</MDFe>';
       2..4: XML := XML + '</eventoMDFe>';
-      else XML := '';
+      else  XML := '';
     end;
   end;
 
@@ -1183,10 +1180,10 @@ begin
       XMLAssinado := xmlHeaderAntes + XMLAssinado;
   end;
 
-  dsigKey := nil;
+  dsigKey   := nil;
   signedKey := nil;
-  xmldoc := nil;
-  xmldsig := nil;
+  xmldoc    := nil;
+  xmldsig   := nil;
 
   Result := True;
 end;
@@ -1196,17 +1193,18 @@ end;
 
 class function MDFeUtil.sign_file(const Axml: PAnsiChar; const key_file: PAnsiChar; const senha: PAnsiChar): AnsiString;
 var
-  doc     : xmlDocPtr;
-  node    : xmlNodePtr;
-  dsigCtx : xmlSecDSigCtxPtr;
-  buffer  : PAnsiChar;
-  bufSize : integer;
+  doc: xmlDocPtr;
+  node: xmlNodePtr;
+  dsigCtx: xmlSecDSigCtxPtr;
+  buffer: PAnsiChar;
+  bufSize: integer;
 label
   done;
 begin
-  doc := nil;
-  node := nil;
+  doc     := nil;
+  node    := nil;
   dsigCtx := nil;
+
   result := '';
 
   if (Axml = nil) or (key_file = nil) then Exit;
@@ -1260,17 +1258,18 @@ end;
 
 class function MDFeUtil.sign_memory(const Axml: PAnsiChar; const key_file: PAnsichar; const senha: PAnsiChar; Size: Cardinal; Ponteiro: Pointer): AnsiString;
 var
-  doc     : xmlDocPtr;
-  node    : xmlNodePtr;
-  dsigCtx : xmlSecDSigCtxPtr;
-  buffer  : PAnsiChar;
-  bufSize : integer;
+  doc: xmlDocPtr;
+  node: xmlNodePtr;
+  dsigCtx: xmlSecDSigCtxPtr;
+  buffer: PAnsiChar;
+  bufSize: integer;
 label
  done;
 begin
-    doc := nil;
+    doc     := nil;
     //node := nil;
     dsigCtx := nil;
+    
     result := '';
 
     if (Axml = nil) or (key_file = nil) then Exit;

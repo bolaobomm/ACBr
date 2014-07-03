@@ -27,12 +27,12 @@
 {                                                                              }
 {******************************************************************************}
 
-{******************************************************************************
+{*******************************************************************************
 |* Historico
 |*
 |* 01/08/2012: Italo Jurisato Junior
 |*  - Doação do componente para o Projeto ACBr
-******************************************************************************}
+*******************************************************************************}
 
 {$I ACBr.inc}
 
@@ -44,7 +44,6 @@ uses
   SysUtils, Classes,
   pcnAuxiliar, pcnConversao, pcnLeitor,
   pmdfeProcMDFe, pmdfeRetEnvEventoMDFe;
-//  , pmdfeRetCancMDFe;
 
 type
 
@@ -82,22 +81,20 @@ type
     FcUF: integer;
     FchMDFe: string;
     FprotMDFe: TProcMDFe;
-//    FretCancMDFe: TRetCancMDFe;
     FprocEventoMDFe: TRetEventoMDFeCollection;
   public
     constructor Create;
     destructor Destroy; override;
     function LerXml: boolean;
   published
-    property Leitor: TLeitor read FLeitor write FLeitor;
-    property tpAmb: TpcnTipoAmbiente read FtpAmb write FtpAmb;
-    property verAplic: string read FverAplic write FverAplic;
-    property cStat: Integer read FcStat write FcStat;
-    property xMotivo: string read FxMotivo write FxMotivo;
-    property cUF: integer read FcUF write FcUF;
-    property chMDFe: string read FchMDFe write FchMDFe;
-    property protMDFe: TProcMDFe read FprotMDFe write FprotMDFe;
-//    property retCancMDFe: TRetCancMDFe read FretCancMDFe write FretCancMDFe;
+    property Leitor: TLeitor                          read FLeitor         write FLeitor;
+    property tpAmb: TpcnTipoAmbiente                  read FtpAmb          write FtpAmb;
+    property verAplic: string                         read FverAplic       write FverAplic;
+    property cStat: Integer                           read FcStat          write FcStat;
+    property xMotivo: string                          read FxMotivo        write FxMotivo;
+    property cUF: integer                             read FcUF            write FcUF;
+    property chMDFe: string                           read FchMDFe         write FchMDFe;
+    property protMDFe: TProcMDFe                      read FprotMDFe       write FprotMDFe;
     property procEventoMDFe: TRetEventoMDFeCollection read FprocEventoMDFe write FprocEventoMDFe;
   end;
 
@@ -107,16 +104,14 @@ implementation
 
 constructor TRetConsSitMDFe.Create;
 begin
-  FLeitor := TLeitor.Create;
+  FLeitor   := TLeitor.Create;
   FprotMDFe := TProcMDFe.create;
-//  FretCancMDFe := TRetCancMDFe.create;
 end;
 
 destructor TRetConsSitMDFe.Destroy;
 begin
   FLeitor.Free;
   FprotMDFe.Free;
-//  FretCancMDFe.Free;
   if Assigned(procEventoMDFe) then
     procEventoMDFe.Free;
   inherited;
@@ -167,23 +162,7 @@ begin
       end;
       if i = 0
        then procEventoMDFe.Add;
-      (*
-      if FcStat = 101 then
-       begin
-         if Leitor.rExtrai(1, 'infCanc') <> '' then
-          begin
-            retCancMDFe.tpAmb    := StrToTpAmb(ok, Leitor.rCampo(tcStr, 'tpAmb'));
-            retCancMDFe.verAplic := Leitor.rCampo(tcStr, 'verAplic');
-            retCancMDFe.cStat    := Leitor.rCampo(tcInt, 'cStat');
-            retCancMDFe.xMotivo  := Leitor.rCampo(tcStr, 'xMotivo');
-            retCancMDFe.cUF      := Leitor.rCampo(tcInt, 'cUF');
-            retCancMDFe.chMDFe   := Leitor.rCampo(tcStr, 'chMDFe');
-            retCancMDFe.dhRecbto := Leitor.rCampo(tcDatHor, 'dhRecbto');
-            retCancMDFe.nProt    := Leitor.rCampo(tcStr, 'nProt');
-            FchMDFe              := retCancMDFe.chMDFe;
-         end;
-       end;
-      *)
+
       Result := True;
     end;
 

@@ -27,12 +27,12 @@
 {                                                                              }
 {******************************************************************************}
 
-{******************************************************************************
+{*******************************************************************************
 |* Historico
 |*
 |* 01/08/2012: Italo Jurisato Junior
 |*  - Doação do componente para o Projeto ACBr
-******************************************************************************}
+*******************************************************************************}
 
 {$I ACBr.inc}
 
@@ -144,7 +144,7 @@ end;
 { TRetEventoMDFe }
 constructor TRetEventoMDFe.Create;
 begin
-  FLeitor := TLeitor.Create;
+  FLeitor    := TLeitor.Create;
   FretEvento := TRetInfEventoCollection.Create(Self);
   FInfEvento := TInfEvento.Create;
 end;
@@ -197,14 +197,6 @@ begin
     if (Leitor.rExtrai(1, 'retEnvEvento') <> '') or
        (Leitor.rExtrai(1, 'retEventoMDFe') <> '') then
     begin
-      (*
-      FidLote   := Leitor.rCampo(tcInt, 'idLote');
-      FtpAmb    := StrToTpAmb(ok, Leitor.rCampo(tcStr, 'tpAmb'));
-      FverAplic := Leitor.rCampo(tcStr, 'verAplic');
-      FcOrgao   := Leitor.rCampo(tcInt, 'cOrgao');
-      FcStat    := Leitor.rCampo(tcInt, 'cStat');
-      FxMotivo  := Leitor.rCampo(tcStr, 'xMotivo');
-      *)
       i := 0;
       while Leitor.rExtrai(2, 'infEvento', '', i + 1) <> '' do
        begin

@@ -27,12 +27,12 @@
 {                                                                              }
 {******************************************************************************}
 
-{******************************************************************************
+{*******************************************************************************
 |* Historico
 |*
 |* 01/08/2012: Italo Jurisato Junior
 |*  - Doação do componente para o Projeto ACBr
-******************************************************************************}
+*******************************************************************************}
 
 {$I ACBr.inc}
 
@@ -90,6 +90,7 @@ const
   DSC_CAEREMB     = 'Aeródromo de Embarque';
   DSC_CAERDES     = 'Aeródromo de Destino';
   DSC_DVOO        = 'Data do Vôo';
+
   // Aquaviário
   DSC_CNPJAGENAV  = 'CNPJ da Agência de Navegação';
   DSC_TPEMB       = 'Tipo de Embarcação';
@@ -103,6 +104,7 @@ const
   DSC_CTERMDESCAR = 'Código do Terminal de Descarregamento';
   DSC_XTERMDESCAR = 'Nome do Terminal de Descarregamento';
   DSC_CEMBCOMB    = 'Código da Embarcação do comboio';
+  
   // Ferroviário
   DSC_XPREF       = 'Prefixo do Trem';
   DSC_DHTREM      = 'Data e Hora de liberação do Trem na origem';

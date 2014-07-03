@@ -27,12 +27,12 @@
 {                                                                              }
 {******************************************************************************}
 
-{******************************************************************************
+{*******************************************************************************
 |* Historico
 |*
 |* 01/08/2012: Italo Jurisato Junior
 |*  - Doação do componente para o Projeto ACBr
-******************************************************************************}
+*******************************************************************************}
 
 {$I ACBr.inc}
 
@@ -51,30 +51,30 @@ type
     procedure ErroAbstract( NomeProcedure : String );
     function GetPathArquivos: String;
   protected
-    FACBrMDFe : TComponent;
+    FACBrMDFe: TComponent;
     FLogo: String;
-    FSistema:String;
-    FUsuario:String;
-    FPathArquivos : String;
-    FImpressora : String;
-    FImprimirHoraSaida : Boolean;
-    FImprimirHoraSaida_Hora : string;
-    FMostrarPreview : Boolean;
+    FSistema: String;
+    FUsuario: String;
+    FPathArquivos: String;
+    FImpressora: String;
+    FImprimirHoraSaida: Boolean;
+    FImprimirHoraSaida_Hora: String;
+    FMostrarPreview: Boolean;
     FMostrarStatus: Boolean;
-    FTipoDAMDFe : TpcnTipoImpressao;
+    FTipoDAMDFe: TpcnTipoImpressao;
     FTamanhoPapel: TpcnTamanhoPapel;
-    FNumCopias : Integer;
-    FExpandirLogoMarca:Boolean;
-    FFax  : String;
-    FSite : String;
+    FNumCopias: Integer;
+    FExpandirLogoMarca: Boolean;
+    FFax: String;
+    FSite: String;
     FEmail: String;
-    FImprimeDescPorc : Boolean;
-	  FProtocoloMDFe: string;
+    FImprimeDescPorc: Boolean;
+	  FProtocoloMDFe: String;
     FMargemInferior: Double;
     FMargemSuperior: Double;
     FMargemEsquerda: Double;
     FMargemDireita: Double;
-    FMDFeCancelada: boolean;
+    FMDFeCancelada: Boolean;
     FMDFeEncerrado: Boolean;
 
     procedure Notification(AComponent: TComponent; Operation: TOperation); override;
@@ -86,31 +86,31 @@ type
     procedure ImprimirEVENTO(MDFe : TMDFe = nil); virtual;
     procedure ImprimirEVENTOPDF(MDFe : TMDFe = nil); virtual;
   published
-    property ACBrMDFe : TComponent  read FACBrMDFe write SetMDFe;
-    property Logo: String read FLogo write FLogo;
-    property Sistema: String read FSistema write FSistema;
-    property Usuario: String read FUsuario write FUsuario;
-    property PathPDF: String read GetPathArquivos write FPathArquivos;
-    property Impressora: String read FImpressora write FImpressora;
-    property ImprimirHoraSaida: Boolean read FImprimirHoraSaida write FImprimirHoraSaida;
-    property ImprimirHoraSaida_Hora: string read FImprimirHoraSaida_Hora write FImprimirHoraSaida_Hora;
-    property MostrarPreview: Boolean read FMostrarPreview write FMostrarPreview;
-    property MostrarStatus: Boolean read FMostrarStatus write FMostrarStatus;
-    property TipoDAMDFe: TpcnTipoImpressao read FTipoDAMDFe write FTipoDAMDFe;
-    property TamanhoPapel: TpcnTamanhoPapel read FTamanhoPapel write FTamanhoPapel;
-    property NumCopias: Integer read FNumCopias write FNumCopias;
-    property Fax  : String read FFax   write FFax;
-    property Site : String read FSite  write FSite;
-    property Email: String read FEmail write FEmail;
-    property ImprimirDescPorc: Boolean read FImprimeDescPorc write FImprimeDescPorc;
-    property ProtocoloMDFe: String read FProtocoloMDFe write FProtocoloMDFe;
-    property MargemInferior: Double read FMargemInferior write FMargemInferior;
-    property MargemSuperior: Double read FMargemSuperior write FMargemSuperior;
-    property MargemEsquerda: Double read FMargemEsquerda write FMargemEsquerda;
-    property MargemDireita: Double read FMargemDireita write FMargemDireita;
-    property ExpandirLogoMarca: Boolean read FExpandirLogoMarca write FExpandirLogoMarca default false;
-    property MDFeCancelada: Boolean read FMDFeCancelada write FMDFeCancelada;
-    property MDFeEncerrado: Boolean read FMDFeEncerrado write FMDFeEncerrado;
+    property ACBrMDFe: TComponent           read FACBrMDFe               write SetMDFe;
+    property Logo: String                   read FLogo                   write FLogo;
+    property Sistema: String                read FSistema                write FSistema;
+    property Usuario: String                read FUsuario                write FUsuario;
+    property PathPDF: String                read GetPathArquivos         write FPathArquivos;
+    property Impressora: String             read FImpressora             write FImpressora;
+    property ImprimirHoraSaida: Boolean     read FImprimirHoraSaida      write FImprimirHoraSaida;
+    property ImprimirHoraSaida_Hora: String read FImprimirHoraSaida_Hora write FImprimirHoraSaida_Hora;
+    property MostrarPreview: Boolean        read FMostrarPreview         write FMostrarPreview;
+    property MostrarStatus: Boolean         read FMostrarStatus          write FMostrarStatus;
+    property TipoDAMDFe: TpcnTipoImpressao  read FTipoDAMDFe             write FTipoDAMDFe;
+    property TamanhoPapel: TpcnTamanhoPapel read FTamanhoPapel           write FTamanhoPapel;
+    property NumCopias: Integer             read FNumCopias              write FNumCopias;
+    property Fax: String                    read FFax                    write FFax;
+    property Site: String                   read FSite                   write FSite;
+    property Email: String                  read FEmail                  write FEmail;
+    property ImprimirDescPorc: Boolean      read FImprimeDescPorc        write FImprimeDescPorc;
+    property ProtocoloMDFe: String          read FProtocoloMDFe          write FProtocoloMDFe;
+    property MargemInferior: Double         read FMargemInferior         write FMargemInferior;
+    property MargemSuperior: Double         read FMargemSuperior         write FMargemSuperior;
+    property MargemEsquerda: Double         read FMargemEsquerda         write FMargemEsquerda;
+    property MargemDireita: Double          read FMargemDireita          write FMargemDireita;
+    property ExpandirLogoMarca: Boolean     read FExpandirLogoMarca      write FExpandirLogoMarca default False;
+    property MDFeCancelada: Boolean         read FMDFeCancelada          write FMDFeCancelada;
+    property MDFeEncerrado: Boolean         read FMDFeEncerrado          write FMDFeEncerrado;
   end;
 
 implementation

@@ -27,12 +27,12 @@
 {                                                                              }
 {******************************************************************************}
 
-{******************************************************************************
+{*******************************************************************************
 |* Historico
 |*
 |* 01/08/2012: Italo Jurisato Junior
 |*  - Doação do componente para o Projeto ACBr
-******************************************************************************}
+*******************************************************************************}
 
 {$I ACBr.inc}
 
@@ -60,8 +60,8 @@ type
     {$ELSE}
        FNumeroSerie: AnsiString;
        FDataVenc: TDateTime;
-       FSubjectName : String;
-       FCNPJ : String;
+       FSubjectName: String;
+       FCNPJ: String;
 
        procedure SetNumeroSerie(const Value: AnsiString);
        function GetNumeroSerie: AnsiString;
@@ -76,19 +76,19 @@ type
     {$ENDIF}
   published
     {$IFDEF ACBrMDFeOpenSSL}
-       property Certificado: AnsiString read FCertificado write FCertificado;
+       property Certificado: AnsiString read FCertificado   write FCertificado;
     {$ELSE}
        property NumeroSerie: AnsiString read GetNumeroSerie write SetNumeroSerie;
-       property DataVenc: TDateTime read GetDataVenc;
-       property SubjectName: String read GetSubjectName;
-       property CNPJ: String read GetCNPJ;
+       property DataVenc: TDateTime     read GetDataVenc;
+       property SubjectName: String     read GetSubjectName;
+       property CNPJ: String            read GetCNPJ;
     {$ENDIF}
-       property Senha: AnsiString read FSenhaCert write FSenhaCert;
+       property Senha: AnsiString       read FSenhaCert     write FSenhaCert;
   end;
 
   TWebServicesConf = Class(TComponent)
   private
-    FVisualizar : Boolean;
+    FVisualizar: Boolean;
     FUF: String;
     FUFCodigo: Integer;
     FAmbiente: TpcnTipoAmbiente;
@@ -97,10 +97,11 @@ type
     FProxyPort: String;
     FProxyUser: String;
     FProxyPass: String;
-    FAguardarConsultaRet : Cardinal;
-    FTentativas : Integer;
-    FIntervaloTentativas : Cardinal;
-    FAjustaAguardaConsultaRet : Boolean;
+    FAguardarConsultaRet: Cardinal;
+    FTentativas: Integer;
+    FIntervaloTentativas: Cardinal;
+    FAjustaAguardaConsultaRet: Boolean;
+    FSalvar: Boolean;
 
     procedure SetUF(AValue: String);
     procedure SetAmbiente(AValue: TpcnTipoAmbiente);
@@ -109,21 +110,20 @@ type
   public
     constructor Create(AOwner: TComponent); override;
   published
-    property Visualizar: Boolean read FVisualizar write FVisualizar
-      default False;
-    property UF: String read FUF write SetUF;
-    property UFCodigo: Integer read FUFCodigo;
-    property Ambiente: TpcnTipoAmbiente read FAmbiente write SetAmbiente
-      default taHomologacao;
-    property AmbienteCodigo: Integer read FAmbienteCodigo;
-    property ProxyHost: String read FProxyHost write FProxyHost;
-    property ProxyPort: String read FProxyPort write FProxyPort;
-    property ProxyUser: String read FProxyUser write FProxyUser;
-    property ProxyPass: String read FProxyPass write FProxyPass;
-    property AguardarConsultaRet : Cardinal read FAguardarConsultaRet write FAguardarConsultaRet;
-    property Tentativas : Integer read FTentativas write SetTentativas default 5;
-    property IntervaloTentativas : Cardinal read FIntervaloTentativas write SetIntervaloTentativas;
-    property AjustaAguardaConsultaRet : Boolean read FAjustaAguardaConsultaRet write FAjustaAguardaConsultaRet;
+    property Visualizar: Boolean               read FVisualizar               write FVisualizar   default False;
+    property UF: String                        read FUF                       write SetUF;
+    property UFCodigo: Integer                 read FUFCodigo;
+    property Ambiente: TpcnTipoAmbiente        read FAmbiente                 write SetAmbiente   default taHomologacao;
+    property AmbienteCodigo: Integer           read FAmbienteCodigo;
+    property ProxyHost: String                 read FProxyHost                write FProxyHost;
+    property ProxyPort: String                 read FProxyPort                write FProxyPort;
+    property ProxyUser: String                 read FProxyUser                write FProxyUser;
+    property ProxyPass: String                 read FProxyPass                write FProxyPass;
+    property AguardarConsultaRet: Cardinal     read FAguardarConsultaRet      write FAguardarConsultaRet;
+    property Tentativas: Integer               read FTentativas               write SetTentativas default 5;
+    property IntervaloTentativas: Cardinal     read FIntervaloTentativas      write SetIntervaloTentativas;
+    property AjustaAguardaConsultaRet: Boolean read FAjustaAguardaConsultaRet write FAjustaAguardaConsultaRet;
+    property Salvar: Boolean                   read FSalvar                   write FSalvar       default False;
   end;
 
   TGeralConf = class(TComponent)
@@ -148,16 +148,15 @@ type
     constructor Create(AOwner: TComponent); override;
     function Save(AXMLName: String; AXMLFile: WideString; aPath: String = ''): Boolean;
   published
-    property FormaEmissao: TpcnTipoEmissao read FFormaEmissao
-      write SetFormaEmissao default teNormal;
-    property FormaEmissaoCodigo: Integer read FFormaEmissaoCodigo;
-    property Salvar: Boolean read FSalvar write FSalvar default False;
-    property AtualizarXMLCancelado: Boolean read FAtualizarXMLCancelado write FAtualizarXMLCancelado default True;
-    property PathSalvar: String read GetPathSalvar write FPathSalvar;
-    property PathSchemas: String read FPathSchemas write FPathSchemas;
-    property VersaoDF: TMDFeVersao read FVersaoDF write FVersaoDF default ve100;
-    property ExibirErroSchema: Boolean read FExibirErroSchema write FExibirErroSchema;
-    property FormatoAlerta: string read GetFormatoAlerta write FFormatoAlerta;
+    property FormaEmissao: TpcnTipoEmissao   read FFormaEmissao           write SetFormaEmissao        default teNormal;
+    property FormaEmissaoCodigo: Integer     read FFormaEmissaoCodigo;
+    property Salvar: Boolean                 read FSalvar                 write FSalvar                default False;
+    property AtualizarXMLCancelado: Boolean  read FAtualizarXMLCancelado  write FAtualizarXMLCancelado default True;
+    property PathSalvar: String              read GetPathSalvar           write FPathSalvar;
+    property PathSchemas: String             read FPathSchemas            write FPathSchemas;
+    property VersaoDF: TMDFeVersao           read FVersaoDF               write FVersaoDF              default ve100;
+    property ExibirErroSchema: Boolean       read FExibirErroSchema       write FExibirErroSchema;
+    property FormatoAlerta: string           read GetFormatoAlerta        write FFormatoAlerta;
     {$IFDEF ACBrMDFeOpenSSL}
     property IniFinXMLSECAutomatico: Boolean read FIniFinXMLSECAutomatico write FIniFinXMLSECAutomatico;
     {$ENDIF}
@@ -165,25 +164,25 @@ type
 
   TArquivosConf = class(TComponent)
   private
-    FSalvar : Boolean;
-    FMensal : Boolean;
-    FLiteral : Boolean;
-    FEmissaoPathMDFe : Boolean;
-    FSalvarEvento : Boolean;
-    FPathMDFe : String;
+    FSalvar: Boolean;
+    FMensal: Boolean;
+    FLiteral: Boolean;
+    FEmissaoPathMDFe: Boolean;
+    FSalvarEvento: Boolean;
+    FPathMDFe: String;
     FPathEvento: String;
   public
     constructor Create(AOwner: TComponent); override;
     function GetPathMDFe(Data : TDateTime = 0): String;
     function GetPathEvento(tipoEvento : TpcnTpEvento; Data : TDateTime = 0): String;
   published
-    property Salvar     : Boolean read FSalvar  write FSalvar  default False;
-    property PastaMensal: Boolean read FMensal  write FMensal  default False;
-    property AdicionarLiteral: Boolean read FLiteral write FLiteral default False;
-    property EmissaoPathMDFe: Boolean read FEmissaoPathMDFe write FEmissaoPathMDFe default False;
-    property SalvarEvento: Boolean read FSalvarEvento write FSalvarEvento default False;
-    property PathMDFe : String read FPathMDFe  write FPathMDFe;
-    property PathEvento : String read FPathEvento  write FPathEvento;
+    property Salvar: Boolean           read FSalvar          write FSalvar          default False;
+    property PastaMensal: Boolean      read FMensal          write FMensal          default False;
+    property AdicionarLiteral: Boolean read FLiteral         write FLiteral         default False;
+    property EmissaoPathMDFe: Boolean  read FEmissaoPathMDFe write FEmissaoPathMDFe default False;
+    property SalvarEvento: Boolean     read FSalvarEvento    write FSalvarEvento    default False;
+    property PathMDFe: String          read FPathMDFe        write FPathMDFe;
+    property PathEvento: String        read FPathEvento      write FPathEvento;
   end;
 
   TConfiguracoes = class(TComponent)
@@ -196,10 +195,10 @@ type
     constructor Create(AOwner: TComponent); override;
     destructor Destroy; override;
   published
-    property Geral: TGeralConf read FGeral;
-    property WebServices: TWebServicesConf read FWebServices;
+    property Geral: TGeralConf               read FGeral;
+    property WebServices: TWebServicesConf   read FWebServices;
     property Certificados: TCertificadosConf read FCertificados;
-    property Arquivos: TArquivosConf read FArquivos;
+    property Arquivos: TArquivosConf         read FArquivos;
   end;
 
 implementation
@@ -261,6 +260,8 @@ begin
   FPathSalvar            := '';
   FPathSchemas           := '';
   FExibirErroSchema      := True;
+  FVersaoDF              := ve100;
+
   FFormatoAlerta         := 'TAG:%TAGNIVEL% ID:%ID%/%TAG%(%DESCRICAO%) - %MSG%.';
   // O Formato da mensagem de erro pode ser alterado pelo usuario alterando-se a property FFormatoAlerta: onde;
   // %TAGNIVEL%  : Representa o Nivel da TAG; ex: <transp><vol><lacres>
@@ -268,10 +269,10 @@ begin
   // %ID%        : Representa a ID da TAG; ex X34
   // %MSG%       : Representa a mensagem de alerta
   // %DESCRICAO% : Representa a Descrição da TAG
+
   {$IFDEF ACBrMDFeOpenSSL}
   FIniFinXMLSECAutomatico := True;
   {$ENDIF}
-  FVersaoDF              := ve100;
 end;
 
 function TGeralConf.GetFormatoAlerta: string;
@@ -348,6 +349,7 @@ begin
   FAmbiente       := taHomologacao;
   FVisualizar     := False;
   FAmbienteCodigo := StrToInt(TpAmbToStr(FAmbiente));
+  FSalvar         := False;
 end;
 
 procedure TWebServicesConf.SetAmbiente(AValue: TpcnTipoAmbiente);
@@ -395,24 +397,25 @@ end;
 {$IFNDEF ACBrMDFeOpenSSL}
 function TCertificadosConf.GetCertificado: ICertificate2;
 var
-  Store : IStore3;
-  Certs : ICertificates2;
-  Cert  : ICertificate2;
-  Extension : IExtension;
-  i,j,k     : Integer;
+  Store: IStore3;
+  Certs: ICertificates2;
+  Cert: ICertificate2;
+  Extension: IExtension;
+  i, j, k: Integer;
 
-  xmldoc  : IXMLDOMDocument3;
-  xmldsig : IXMLDigitalSignature;
-  dsigKey : IXMLDSigKey;
-  SigKey  : IXMLDSigKeyEx;
+  xmldoc: IXMLDOMDocument3;
+  xmldsig: IXMLDigitalSignature;
+  dsigKey: IXMLDSigKey;
+  SigKey: IXMLDSigKeyEx;
 
-  PrivateKey     : IPrivateKey;
-  hCryptProvider : HCRYPTPROV;
+  PrivateKey: IPrivateKey;
+  hCryptProvider: HCRYPTPROV;
 
-  XML, Propriedades : String;
-  Lista : TStringList;
+  XML, Propriedades: String;
+  Lista: TStringList;
 begin
   CoInitialize(nil); // PERMITE O USO DE THREAD
+
   if DFeUtil.EstaVazio( FNumeroSerie ) then
     raise Exception.Create('Número de Série do Certificado Digital não especificado !');
 
@@ -486,7 +489,7 @@ begin
          if (Pos('2.16.76.1.3.3', Propriedades) > 0) then
           begin
             Lista      := TStringList.Create;
-			try
+      			try
               Lista.Text := Propriedades;
               for K := 0 to Lista.Count-1 do
               begin
@@ -498,9 +501,9 @@ begin
                 end;
               end;
               break;
-			finally
-			  Lista.Free;
-			end;
+      			finally
+			        Lista.Free;
+			      end;
           end;
          Extension := nil;
        end;
@@ -511,6 +514,7 @@ begin
 
   if not(Assigned(Result)) then
     raise Exception.Create('Certificado Digital não encontrado!');
+
   CoUninitialize;
 end;
 
@@ -526,12 +530,13 @@ end;
 
 function TCertificadosConf.SelecionarCertificado: AnsiString;
 var
-  Store  : IStore3;
-  Certs  : ICertificates2;
-  Certs2 : ICertificates2;
-  Cert   : ICertificate2;
+  Store: IStore3;
+  Certs: ICertificates2;
+  Certs2: ICertificates2;
+  Cert: ICertificate2;
 begin
   CoInitialize(nil); // PERMITE O USO DE THREAD
+
   Store := CoStore.Create;
   Store.Open(CAPICOM_CURRENT_USER_STORE, CAPICOM_STORE_NAME, CAPICOM_STORE_OPEN_READ_ONLY);
 
@@ -547,6 +552,7 @@ begin
   end;
 
   Result := FNumeroSerie;
+
   CoUninitialize;
 end;
 
@@ -596,8 +602,8 @@ end;
 
 function TArquivosConf.GetPathMDFe(Data : TDateTime = 0): String;
 var
-  wDia, wMes, wAno : Word;
-  Dir : String;
+  wDia, wMes, wAno: Word;
+  Dir: String;
 begin
   if DFeUtil.EstaVazio(FPathMDFe) then
      Dir := TConfiguracoes( Self.Owner ).Geral.PathSalvar
@@ -627,8 +633,8 @@ end;
 
 function TArquivosConf.GetPathEvento(tipoEvento: TpcnTpEvento; Data : TDateTime = 0): String;
 var
-  wDia, wMes, wAno : Word;
-  Dir : String;
+  wDia, wMes, wAno: Word;
+  Dir: String;
 begin
   if DFeUtil.EstaVazio(FPathEvento) then
      Dir := TConfiguracoes( Self.Owner ).Geral.PathSalvar

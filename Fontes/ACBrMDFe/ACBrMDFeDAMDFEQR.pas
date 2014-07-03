@@ -27,12 +27,12 @@
 {                                                                              }
 {******************************************************************************}
 
-{******************************************************************************
+{*******************************************************************************
 |* Historico
 |*
 |* 01/08/2012: Italo Jurisato Junior
 |*  - Doação do componente para o Projeto ACBr
-******************************************************************************}
+*******************************************************************************}
 
 {$I ACBr.inc}
 
@@ -55,29 +55,29 @@ type
     { Private declarations }
   protected
     //BarCode : TBarCode128c;
-    FACBrMDFe           : TACBrMDFe;
-    FMDFe               : TMDFe;
-    FLogo               : String;
-    FEmail              : String;
-    FFax                : String;
-    FNumCopias          : Integer;
-    FSistema            : String;
-    FSite               : String;
-    FUsuario            : String;
-    AfterPreview        : Boolean;
-    FExpandirLogoMarca  : Boolean;
-    ChangedPos          : Boolean;
-    FSemValorFiscal     : Boolean;
-    FMargemSuperior     : double;
-    FMargemInferior     : double;
-    FMargemEsquerda     : double;
-    FMargemDireita      : double;
-    FImpressora         : String;
-    FMDFeCancelada      : Boolean;
-    FMDFeEncerrado      : Boolean;
+    FACBrMDFe          : TACBrMDFe;
+    FMDFe              : TMDFe;
+    FLogo              : String;
+    FEmail             : String;
+    FFax               : String;
+    FNumCopias         : Integer;
+    FSistema           : String;
+    FSite              : String;
+    FUsuario           : String;
+    AfterPreview       : Boolean;
+    FExpandirLogoMarca : Boolean;
+    ChangedPos         : Boolean;
+    FSemValorFiscal    : Boolean;
+    FMargemSuperior    : double;
+    FMargemInferior    : double;
+    FMargemEsquerda    : double;
+    FMargemDireita     : double;
+    FImpressora        : String;
+    FMDFeCancelada     : Boolean;
+    FMDFeEncerrado     : Boolean;
 
     procedure qrlSemValorFiscalPrint(sender: TObject; var Value: String);
-    procedure SetBarCodeImage ( ACode : String; QRImage : TQRImage );
+    procedure SetBarCodeImage(ACode: String; QRImage: TQRImage);
   public
     { Public declarations }
     class procedure Imprimir(AMDFe              : TMDFe;

@@ -27,12 +27,12 @@
 {                                                                              }
 {******************************************************************************}
 
-{******************************************************************************
+{*******************************************************************************
 |* Historico
 |*
 |* 01/08/2012: Italo Jurisato Junior
 |*  - Doação do componente para o Projeto ACBr
-******************************************************************************}
+*******************************************************************************}
 
 {$I ACBr.inc}
 
@@ -49,7 +49,7 @@ type
   private
     FGerador: TGerador;
     FtpAmb: TpcnTipoAmbiente;
-    FcUF: integer;
+    FcUF: Integer;
   public
     constructor Create;
     destructor Destroy; override;
@@ -58,7 +58,7 @@ type
   published
     property Gerador: TGerador       read FGerador write FGerador;
     property tpAmb: TpcnTipoAmbiente read FtpAmb   write FtpAmb;
-    property cUF: integer            read FcUF     write FcUF;
+    property cUF: Integer            read FcUF     write FcUF;
   end;
 
 implementation
