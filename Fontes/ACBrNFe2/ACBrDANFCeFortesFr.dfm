@@ -23,7 +23,7 @@ object ACBrNFeDANFCeFortesFr: TACBrNFeDANFCeFortesFr
     Margins.LeftMargin = 2.000000000000000000
     Margins.TopMargin = 2.000000000000000000
     Margins.RightMargin = 2.000000000000000000
-    Margins.BottomMargin = 20.000000000000000000
+    Margins.BottomMargin = 0.000000000000000000
     AllowedBands = [btHeader, btDetail, btSummary, btFooter]
     Font.Charset = DEFAULT_CHARSET
     Font.Color = clBlack
@@ -42,13 +42,14 @@ object ACBrNFeDANFCeFortesFr: TACBrNFeDANFCeFortesFr
       Top = 486
       Width = 286
       Height = 197
-      Margins.LeftMargin = 2.000000000000000000
       AutoSize = True
       BandType = btSummary
+      InsideMargins.LeftMargin = 2.000000000000000000
+      InsideMargins.RightMargin = 2.000000000000000000
       object RLDraw2: TRLDraw
         Left = 8
         Top = 0
-        Width = 278
+        Width = 270
         Height = 8
         Align = faTop
         DrawKind = dkLine
@@ -57,7 +58,7 @@ object ACBrNFeDANFCeFortesFr: TACBrNFeDANFCeFortesFr
       object lConsultaQRCode: TRLLabel
         Left = 8
         Top = 8
-        Width = 278
+        Width = 270
         Height = 12
         Align = faTop
         Alignment = taCenter
@@ -72,26 +73,26 @@ object ACBrNFeDANFCeFortesFr: TACBrNFeDANFCeFortesFr
       end
       object imgQRCode: TRLImage
         Left = 8
-        Top = 37
-        Width = 278
+        Top = 20
+        Width = 270
         Height = 133
-        Align = faBottom
+        Align = faTop
         Center = True
         Scaled = True
       end
       object pGap05: TRLPanel
         Left = 8
-        Top = 20
-        Width = 278
+        Top = 153
+        Width = 270
         Height = 17
-        Align = faBottom
+        Align = faTop
       end
       object lProtocolo: TRLLabel
         Left = 8
-        Top = 187
-        Width = 278
+        Top = 170
+        Width = 270
         Height = 10
-        Align = faBottom
+        Align = faTop
         Alignment = taCenter
         Caption = 'Protocolo de Autoriza'#231#227'o: 999999999999999 DD/MM/AAAA HH:MM:SS'
         Font.Charset = DEFAULT_CHARSET
@@ -104,10 +105,10 @@ object ACBrNFeDANFCeFortesFr: TACBrNFeDANFCeFortesFr
       end
       object pGap8: TRLPanel
         Left = 8
-        Top = 170
-        Width = 278
+        Top = 180
+        Width = 270
         Height = 17
-        Align = faBottom
+        Align = faTop
       end
     end
     object rlsbDetItem: TRLSubDetail
@@ -566,7 +567,7 @@ object ACBrNFeDANFCeFortesFr: TACBrNFeDANFCeFortesFr
       OnDataRecord = rlbsCabecalhoDataRecord
       object rlbMsgDANFe: TRLBand
         Left = 0
-        Top = 81
+        Top = 87
         Width = 286
         Height = 42
         AutoSize = True
@@ -623,13 +624,13 @@ object ACBrNFeDANFCeFortesFr: TACBrNFeDANFCeFortesFr
         Left = 0
         Top = 0
         Width = 286
-        Height = 81
+        Height = 87
         AutoSize = True
         object pLogoeCliche: TRLPanel
           Left = 0
           Top = 0
           Width = 286
-          Height = 81
+          Height = 87
           Align = faTop
           AutoExpand = True
           AutoSize = True
@@ -685,10 +686,10 @@ object ACBrNFeDANFCeFortesFr: TACBrNFeDANFCeFortesFr
           end
           object RLDraw1: TRLDraw
             Left = 0
-            Top = 73
+            Top = 79
             Width = 286
             Height = 8
-            Align = faBottom
+            Align = faTop
             DrawKind = dkLine
             Pen.Style = psDot
           end
@@ -723,7 +724,7 @@ object ACBrNFeDANFCeFortesFr: TACBrNFeDANFCeFortesFr
       end
       object rlbLegenda: TRLBand
         Left = 0
-        Top = 123
+        Top = 129
         Width = 286
         Height = 28
         AutoSize = True
@@ -939,10 +940,10 @@ object ACBrNFeDANFCeFortesFr: TACBrNFeDANFCeFortesFr
       Top = 335
       Width = 286
       Height = 30
-      Margins.LeftMargin = 2.000000000000000000
-      Margins.RightMargin = 2.000000000000000000
       AutoSize = True
       BandType = btSummary
+      InsideMargins.LeftMargin = 2.000000000000000000
+      InsideMargins.RightMargin = 2.000000000000000000
       BeforePrint = rlbMensagemContribuinteBeforePrint
       object lMensagemContribuinte: TRLLabel
         Left = 8
