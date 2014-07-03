@@ -90,7 +90,7 @@
 
 {$I ACBr.inc}
 
-unit ACBrNFeDANFeQRRetrato;
+unit ACBrNFeDANFeQRRetrato;    
 
 interface
 
@@ -1563,6 +1563,12 @@ begin
             else
                 qrlProtocolo.Caption        :=  FNFe.procNFe.nProt + ' ' +
                                                 DFeUtil.SeSenao(FNFe.procNFe.dhRecbto <> 0, DateTimeToStr(FNFe.procNFe.dhRecbto),'');
+            IF FNFe.procNFe.cStat = 0 THEN
+              BEGIN
+              qrlProtocolo.Caption := 'NF-E NÃO ENVIADA PARA SEFAZ';
+              qrlProtocolo.Font.Color := clRed;
+              END
+            ELSE qrlProtocolo.Font.Color := clWindowText;
             qriBarCodeContingencia.Visible  := False;
             qrlMsgAutorizado.Enabled        := True;
         end;

@@ -3382,7 +3382,7 @@ begin
     Result := (NFeRetorno.cStat = 102);
 
     //gerar arquivo proc de inutilizacao
-    if NFeRetorno.cStat=102 then
+    if ((NFeRetorno.cStat = 102) or (NFeRetorno.cStat = 563)) then
     begin
       wProc := TStringList.Create;
       wProc.Add('<?xml version="1.0" encoding="UTF-8" ?>');
@@ -4273,7 +4273,7 @@ begin
     FxMotivo := EventoRetorno.xMotivo;
     FMsg     := EventoRetorno.xMotivo;
     FTpAmb   := EventoRetorno.tpAmb;
-    Result   := (EventoRetorno.cStat = 128) or (EventoRetorno.cStat = 135) or (EventoRetorno.cStat = 136);
+    Result   := (EventoRetorno.cStat = 128) or (EventoRetorno.cStat = 135) or (EventoRetorno.cStat = 136) or (EventoRetorno.cStat = 155);
 
     FPathArqResp := IntToStr(FEvento.idLote) + '-eve.xml';
 
