@@ -919,19 +919,19 @@ begin
   pbEmailTeste.Position := Integer(aStatus);
   case aStatus of
     pmsStartProcess:
-      mResp.Lines.Add( 'Email, Teste: Iniciando processo de envio.');
+      mResp.Lines.Add( 'Email: Iniciando processo de envio.');
     pmsConfigHeaders:
-      mResp.Lines.Add( 'Email, Teste: Configurando o cabeçalho do e-mail.');
+      mResp.Lines.Add( 'Email: Configurando o cabeçalho do e-mail.');
     pmsLoginSMTP:
-      mResp.Lines.Add( 'Email, Teste: Logando no servidor de e-mail.');
+      mResp.Lines.Add( 'Email: Logando no servidor de e-mail.');
     pmsStartSends:
-      mResp.Lines.Add( 'Email, Teste: Iniciando os envios.');
+      mResp.Lines.Add( 'Email: Iniciando os envios.');
     pmsSendTo:
-      mResp.Lines.Add( 'Email, Teste: Processando lista de destinatários.');
+      mResp.Lines.Add( 'Email: Processando lista de destinatários.');
     pmsSendData:
-      mResp.Lines.Add( 'Email, Teste: Enviando dados.');
+      mResp.Lines.Add( 'Email: Enviando dados.');
     pmsLogoutSMTP:
-      mResp.Lines.Add( 'Email, Teste: Fazendo Logout no servidor de e-mail.');
+      mResp.Lines.Add( 'Email: Fazendo Logout no servidor de e-mail.');
   end;
   Application.ProcessMessages;
 end;
