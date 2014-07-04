@@ -1202,7 +1202,7 @@ begin
   if Leitor.rExtrai(1, 'infCteComp') <> ''
   then begin
     CTe.InfCTeComp.Chave := Leitor.rCampo(tcStr, 'chave');
-
+    (*
     if Leitor.rExtrai(2, 'vPresComp') <> ''
     then begin
       CTe.infCTeComp.vPresComp.vTPrest := Leitor.rCampo(tcDe2,'vTPrest');
@@ -1309,6 +1309,7 @@ begin
         end;
       end;
     end;
+   *)
   end; // fim de infCteComp
 
   (* Grupo da TAG <infCteAnu> ************************************************)

@@ -2276,15 +2276,15 @@ type
   TInfCteComp = class(TPersistent)
   private
     FChave     : String;
-    FvPresComp : TVPresComp;
-    FimpComp   : TImpComp;
+//    FvPresComp : TVPresComp;
+//    FimpComp   : TImpComp;
   public
     constructor Create(AOwner: TCTe);
     destructor Destroy; override;
   published
     property chave: String         read FChave     write FChave;
-    property vPresComp: TVPresComp read FvPresComp write FvPresComp;
-    property impComp: TImpComp     read FimpComp   write FimpComp;
+//    property vPresComp: TVPresComp read FvPresComp write FvPresComp;
+//    property impComp: TImpComp     read FimpComp   write FimpComp;
   end;
 
   TVPresComp = class(TPersistent)
@@ -4435,14 +4435,14 @@ end;
 
 constructor TInfCteComp.Create(AOwner: TCTe);
 begin
-  FvPresComp := TVPresComp.Create(Self);
-  FimpComp   := TImpComp.Create(Self);
+//  FvPresComp := TVPresComp.Create(Self);
+//  FimpComp   := TImpComp.Create(Self);
 end;
 
 destructor TInfCteComp.Destroy;
 begin
-  FvPresComp.Free;
-  FimpComp.Free;
+//  FvPresComp.Free;
+//  FimpComp.Free;
   inherited;
 end;
 
