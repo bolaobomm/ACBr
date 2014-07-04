@@ -1792,7 +1792,7 @@ begin
 
 {$IFDEF PL_200}
   rlmComplChave1.Lines.Add(FCTe.InfCTeComp.Chave);
-  rlmComplValor1.Lines.Add(CTeUtil.FormatarValor(msk10x2, FCTe.InfCTeComp.vPresComp.vTPrest));
+  rlmComplValor1.Lines.Add(CTeUtil.FormatarValor(msk10x2, FCTe.vPrest.vTPrest));
 {$ELSE}
   for i := 0 to (FCTe.InfCTeComp.Count - 1) do
   begin
