@@ -47,6 +47,13 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+Data: 04/07/2014  (por: DSA)
+-- ACBrTEFD --
+[*] Adicionado suporte a mensagem padrão quando há problemas com a comunicação
+    com o ECF, na Leitura do Estado do mesmo.    (por: DSA)
+[+] Adicionada a propriedade TACBrTEFDResp.digitado, que será "True" quando a
+    entrada do número do cartão for manual (suporte inicial apenas para SiTEF)
+
 Data: 11/06/2014  (por: DSA)
 -- ACBrTEFDClass --
 [+] Adicionada nova propriedade "LogDebug : Boolean = false".

@@ -409,6 +409,7 @@ type
      fpCodigoRedeAutorizada: String;
      fpDebito: Boolean;
      fpCredito: Boolean;
+     fpDigitado: Boolean;
      fpParceladoPor: TACBrTEFDRespParceladoPor;
      fpValorEntradaCDC:Double;
      fpDataEntradaCDC:TDateTime;
@@ -500,6 +501,7 @@ type
      property CodigoRedeAutorizada:String read fpCodigoRedeAutorizada;
      property Debito:Boolean read fpDebito;
      property Credito:Boolean read fpCredito;
+     property Digitado: Boolean read fpDigitado;
      property ParceladoPor: TACBrTEFDRespParceladoPor read fpParceladoPor;
      property ValorEntradaCDC:Double read fpValorEntradaCDC;
      property DataEntradaCDC:TDateTime read fpDataEntradaCDC;
@@ -1202,8 +1204,9 @@ begin
    fpParceladoPor := parcNenhum;
    fpTipoOperacao := opOutras;
 
-   fpCredito:= False;
-   fpDebito := False;
+   fpCredito  := False;
+   fpDebito   := False;
+   fpDigitado := False;
 
    fpCNFEnviado     := False ;
    fpIndiceFPG_ECF  := '' ;

@@ -304,6 +304,7 @@ begin
    fpImagemComprovante2aVia.Clear;
    fpDebito    := False;
    fpCredito   := False;
+   fpDigitado  := False;
    TemParcelas := False;
 
    for I := 0 to Conteudo.Count - 1 do
@@ -312,6 +313,7 @@ begin
      LinStr := StringToBinaryString( Linha.Informacao.AsString );
 
      case Linha.Identificacao of
+        29 : fpDigitado := (LinStr = 'True');
        // TODO: Mapear mais propriedades do CliSiTef //
        100 :
          begin
@@ -1031,6 +1033,7 @@ begin
                      case TipoCampo of
                         15 : TACBrTEFDRespCliSiTef( Self.Resp ).GravaInformacao( TipoCampo, 'True') ;//Selecionou Debito;
                         25 : TACBrTEFDRespCliSiTef( Self.Resp ).GravaInformacao( TipoCampo, 'True') ;//Selecionou Credito;
+                        29 : TACBrTEFDRespCliSiTef( Self.Resp ).GravaInformacao( TipoCampo, 'True') ;//Cartão Digitado;
                         {Indica que foi escolhido menu de reimpressão}
                         56,57,58 : fReimpressao := True;
                         110      : fCancelamento:= True;

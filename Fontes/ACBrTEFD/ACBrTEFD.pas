@@ -1742,13 +1742,18 @@ begin
    fTefClass.GravaLog( 'InfoECF: '+
      GetEnumName(TypeInfo(TACBrTEFDInfoECF), Integer(Operacao) ) ) ;
 
-   try
-      OnInfoEcf( Operacao, Retorno ) ;
-   except
-      On E : Exception do
-      begin
-         fTefClass.GravaLog( fTefClass.Name +'   Erro: '+E.Message ) ;
-         raise EACBrTEFDECF.Create(E.Message);
+   while Retorno = '' do
+   begin
+      try
+         OnInfoEcf( Operacao, Retorno ) ;
+      except
+         On E : Exception do
+         begin
+            fTefClass.GravaLog( fTefClass.Name +'   Erro: '+E.Message ) ;
+
+            if DoExibeMsg( opmYesNo, CACBrTEFD_Erro_ECFNaoResponde ) <> mrYes then
+               raise EACBrTEFDECF.Create(E.Message);
+         end;
       end;
    end;
 
