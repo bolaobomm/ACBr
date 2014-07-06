@@ -1751,7 +1751,7 @@ begin
          begin
             fTefClass.GravaLog( fTefClass.Name +'   Erro: '+E.Message ) ;
 
-            if DoExibeMsg( opmYesNo, CACBrTEFD_Erro_ECFNaoResponde ) <> mrYes then
+            if DoExibeMsg( opmYesNo, CACBrTEFD_Erro_ECFNaoRespondeInfo ) <> mrYes then
                raise EACBrTEFDECF.Create(E.Message);
          end;
       end;

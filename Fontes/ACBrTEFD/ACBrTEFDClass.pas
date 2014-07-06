@@ -66,8 +66,10 @@ const
    CACBrTEFD_NumVias     = 2 ;
    CACBrTEFD_DestaqueVia = 'Destaque a %dª Via' ;
    CACBrTEFD_Erro_ECFNaoLivre = 'ECF não está LIVRE' ;
-   CACBrTEFD_Erro_ECFNaoResponde = 'Impressora não responde'+sLineBreak+
-                                   'Deseja imprimir novamente ?' ;
+   CACBrTEFD_Erro_ECFNaoResponde = 'Erro na impressão.'+sLineBreak+
+                                   'Deseja tentar novamente ?' ;
+   CACBrTEFD_Erro_ECFNaoRespondeInfo = 'Impressora não responde.'+sLineBreak+
+                                       'Deseja continuar ?' ;
    CACBrTEFD_Erro_NaoAtivo = 'O gerenciador padrão %s não está ativo !' ;
    CACBrTEFD_Erro_SemRequisicao = 'Nenhuma Requisição Iniciada' ;
    CACBrTEFD_Erro_OutraFormaPagamento = 'Gostaria de continuar a transação com '+
