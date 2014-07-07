@@ -112,6 +112,14 @@ object dmACBrNFeFR: TdmACBrNFeFR
       FieldName = 'HoraSaida'
       Size = 10
     end
+    object cdsIdentificacaoMensagemFiscal: TStringField
+      FieldName = 'MensagemFiscal'
+      Size = 200
+    end
+    object cdsIdentificacaoURL: TStringField
+      FieldName = 'URL'
+      Size = 1000
+    end
   end
   object cdsEmitente: TClientDataSet
     Aggregates = <>
@@ -260,6 +268,10 @@ object dmACBrNFeFR: TdmACBrNFeFR
       DisplayWidth = 18
       FieldName = 'IE'
       Size = 18
+    end
+    object cdsDestinatarioConsumidor: TStringField
+      FieldName = 'Consumidor'
+      Size = 60
     end
   end
   object cdsDadosProdutos: TClientDataSet
@@ -467,6 +479,17 @@ object dmACBrNFeFR: TdmACBrNFeFR
     object cdsParametrosLogoCarregado: TBlobField
       FieldName = 'LogoCarregado'
     end
+    object cdsParametrosQrCodeCarregado: TBlobField
+      FieldName = 'QrCodeCarregado'
+      BlobType = ftGraphic
+      Size = 1000
+    end
+    object cdsParametrosDescricaoViaEstabelec: TStringField
+      FieldName = 'DescricaoViaEstabelec'
+    end
+    object cdsParametrosQtdeItens: TIntegerField
+      FieldName = 'QtdeItens'
+    end
   end
   object cdsInformacoesAdicionais: TClientDataSet
     Aggregates = <>
@@ -558,6 +581,12 @@ object dmACBrNFeFR: TdmACBrNFeFR
     object cdsCalculoImpostoVTribFonte: TStringField
       FieldName = 'VTribFonte'
       Size = 100
+    end
+    object cdsCalculoImpostovTotPago: TFloatField
+      FieldName = 'vTotPago'
+    end
+    object cdsCalculoImpostovTroco: TFloatField
+      FieldName = 'vTroco'
     end
   end
   object cdsTransportador: TClientDataSet
@@ -775,7 +804,9 @@ object dmACBrNFeFR: TdmACBrNFeFR
       'FinNFe=FinNFe'
       'ProcEmi=ProcEmi'
       'VerProc=VerProc'
-      'HoraSaida=HoraSaida')
+      'HoraSaida=HoraSaida'
+      'MensagemFiscal=MensagemFiscal'
+      'URL=URL')
     OpenDataSource = False
     DataSet = cdsIdentificacao
     BCDToCurrency = False
@@ -815,6 +846,22 @@ object dmACBrNFeFR: TdmACBrNFeFR
   object frxDestinatario: TfrxDBDataset
     UserName = 'Destinatario'
     CloseDataSource = False
+    FieldAliases.Strings = (
+      'CNPJCPF=CNPJCPF'
+      'XNome=XNome'
+      'XLgr=XLgr'
+      'Nro=Nro'
+      'XCpl=XCpl'
+      'XBairro=XBairro'
+      'CMun=CMun'
+      'XMun=XMun'
+      'UF=UF'
+      'CEP=CEP'
+      'CPais=CPais'
+      'XPais=XPais'
+      'Fone=Fone'
+      'IE=IE'
+      'Consumidor=Consumidor')
     OpenDataSource = False
     DataSet = cdsDestinatario
     BCDToCurrency = False
@@ -888,7 +935,10 @@ object dmACBrNFeFR: TdmACBrNFeFR
       'Casas_vUnCom=Casas_vUnCom'
       'Mask_qCom=Mask_qCom'
       'Mask_vUnCom=Mask_vUnCom'
-      'LogoCarregado=LogoCarregado')
+      'LogoCarregado=LogoCarregado'
+      'QrCodeCarregado=QrCodeCarregado'
+      'DescricaoViaEstabelec=DescricaoViaEstabelec'
+      'QtdeItens=QtdeItens')
     OpenDataSource = False
     DataSet = cdsParametros
     BCDToCurrency = False
@@ -929,7 +979,9 @@ object dmACBrNFeFR: TdmACBrNFeFR
       'VNF=VNF'
       'VTotTrib=VTotTrib'
       'VTribPerc=VTribPerc'
-      'VTribFonte=VTribFonte')
+      'VTribFonte=VTribFonte'
+      'vTotPago=vTotPago'
+      'vTroco=vTroco')
     OpenDataSource = False
     DataSet = cdsCalculoImposto
     BCDToCurrency = False
@@ -1013,9 +1065,8 @@ object dmACBrNFeFR: TdmACBrNFeFR
     Top = 148
   end
   object frxReport: TfrxReport
-    Version = '4.15'
+    Version = '5.0.11'
     DotMatrixReport = False
-    EngineOptions.DoublePass = True
     IniFile = '\Software\Fast Reports'
     PreviewOptions.AllowEdit = False
     PreviewOptions.Buttons = [pbPrint, pbZoom, pbFind, pbNavigator, pbExportQuick]
@@ -1023,9 +1074,10 @@ object dmACBrNFeFR: TdmACBrNFeFR
     PrintOptions.Printer = 'Default'
     PrintOptions.PrintOnSheet = 0
     ReportOptions.CreateDate = 40401.475989294000000000
-    ReportOptions.LastChange = 41730.086785405100000000
+    ReportOptions.LastChange = 41827.584273888900000000
     ScriptLanguage = 'PascalScript'
     StoreInDFM = False
+    OnBeforePrint = frxReportBeforePrint
     OnReportPrint = 'frxReportOnReportPrint'
     Left = 48
     Top = 36
@@ -1044,5 +1096,44 @@ object dmACBrNFeFR: TdmACBrNFeFR
     BCDToCurrency = False
     Left = 304
     Top = 320
+  end
+  object cdsPagamento: TClientDataSet
+    Aggregates = <>
+    Params = <>
+    Left = 400
+    Top = 316
+    object cdsPagamentotPag: TStringField
+      FieldName = 'tPag'
+      Size = 50
+    end
+    object cdsPagamentovPag: TFloatField
+      FieldName = 'vPag'
+    end
+    object cdsPagamentoCNPJ: TStringField
+      FieldName = 'CNPJ'
+      Size = 50
+    end
+    object cdsPagamentotBand: TStringField
+      FieldName = 'tBand'
+      Size = 50
+    end
+    object cdsPagamentocAut: TStringField
+      FieldName = 'cAut'
+    end
+  end
+  object frxPagamento: TfrxDBDataset
+    UserName = 'Pagamento'
+    CloseDataSource = False
+    FieldAliases.Strings = (
+      'tPag=tPag'
+      'vPag=vPag'
+      'CNPJ=CNPJ'
+      'tBand=tBand'
+      'cAut=cAut')
+    OpenDataSource = False
+    DataSet = cdsPagamento
+    BCDToCurrency = False
+    Left = 432
+    Top = 316
   end
 end

@@ -71,45 +71,13 @@ interface
 uses
   pcnEnvEventoNFe,
   SysUtils, Classes, ACBrNFeDANFEClass, pcnNFe, frxClass, frxExportPDF, DB,
-  DBClient, frxDBSet, pcnConversao, frxBarcode, dialogs;
+  DBClient, frxDBSet, pcnConversao, ACBrUtil, frxBarcode, dialogs,
+  ACBrDelphiZXingQrCode, Graphics;
 
 type
   TdmACBrNFeFR = class(TDataModule)
     frxPDFExport: TfrxPDFExport;
     cdsIdentificacao: TClientDataSet;
-    cdsEmitente: TClientDataSet;
-    cdsDestinatario: TClientDataSet;
-    cdsDadosProdutos: TClientDataSet;
-    cdsParametros: TClientDataSet;
-    cdsInformacoesAdicionais: TClientDataSet;
-    cdsDuplicatas: TClientDataSet;
-    cdsCalculoImposto: TClientDataSet;
-    cdsTransportador: TClientDataSet;
-    cdsVeiculo: TClientDataSet;
-    cdsVolumes: TClientDataSet;
-    cdsISSQN: TClientDataSet;
-    cdsFatura: TClientDataSet;
-    cdsLocalRetirada: TClientDataSet;
-    cdsLocalEntrega: TClientDataSet;
-    frxIdentificacao: TfrxDBDataset;
-    frxEmitente: TfrxDBDataset;
-    frxDestinatario: TfrxDBDataset;
-    frxDadosProdutos: TfrxDBDataset;
-    frxParametros: TfrxDBDataset;
-    frxDuplicatas: TfrxDBDataset;
-    frxCalculoImposto: TfrxDBDataset;
-    frxTransportador: TfrxDBDataset;
-    frxVeiculo: TfrxDBDataset;
-    frxVolumes: TfrxDBDataset;
-    frxISSQN: TfrxDBDataset;
-    frxFatura: TfrxDBDataset;
-    frxLocalRetirada: TfrxDBDataset;
-    frxLocalEntrega: TfrxDBDataset;
-    frxInformacoesAdicionais: TfrxDBDataset;
-    frxBarCodeObject: TfrxBarCodeObject;
-    frxReport: TfrxReport;
-    cdsEventos: TClientDataSet;
-    frxEventos: TfrxDBDataset;
     cdsIdentificacaoId: TStringField;
     cdsIdentificacaoChave: TStringField;
     cdsIdentificacaocUF: TStringField;
@@ -131,6 +99,7 @@ type
     cdsIdentificacaoProcEmi: TStringField;
     cdsIdentificacaoVerProc: TStringField;
     cdsIdentificacaoHoraSaida: TStringField;
+    cdsEmitente: TClientDataSet;
     cdsEmitenteCNPJ: TStringField;
     cdsEmitenteXNome: TStringField;
     cdsEmitenteXFant: TStringField;
@@ -149,6 +118,9 @@ type
     cdsEmitenteIM: TStringField;
     cdsEmitenteIEST: TStringField;
     cdsEmitenteCRT: TStringField;
+    cdsEmitenteDESCR_CST: TStringField;
+    cdsEmitenteDADOS_ENDERECO: TStringField;
+    cdsDestinatario: TClientDataSet;
     cdsDestinatarioCNPJCPF: TStringField;
     cdsDestinatarioXNome: TStringField;
     cdsDestinatarioXLgr: TStringField;
@@ -163,6 +135,7 @@ type
     cdsDestinatarioXPais: TStringField;
     cdsDestinatarioFone: TStringField;
     cdsDestinatarioIE: TStringField;
+    cdsDadosProdutos: TClientDataSet;
     cdsDadosProdutosCProd: TStringField;
     cdsDadosProdutoscEAN: TStringField;
     cdsDadosProdutosXProd: TStringField;
@@ -174,11 +147,13 @@ type
     cdsDadosProdutosUCom: TStringField;
     cdsDadosProdutosQCom: TFloatField;
     cdsDadosProdutosVUnCom: TFloatField;
+    cdsDadosProdutosVProd: TFloatField;
     cdsDadosProdutoscEANTrib: TStringField;
     cdsDadosProdutosUTrib: TStringField;
     cdsDadosProdutosQTrib: TFloatField;
     cdsDadosProdutosVUnTrib: TFloatField;
     cdsDadosProdutosvFrete: TFloatField;
+    cdsDadosProdutosVOutro: TFloatField;
     cdsDadosProdutosvSeg: TFloatField;
     cdsDadosProdutosvDesc: TStringField;
     cdsDadosProdutosORIGEM: TStringField;
@@ -188,6 +163,10 @@ type
     cdsDadosProdutosVICMS: TFloatField;
     cdsDadosProdutosVIPI: TFloatField;
     cdsDadosProdutosPIPI: TFloatField;
+    cdsDadosProdutosDescricaoProduto: TStringField;
+    cdsDadosProdutosVTotTrib: TFloatField;
+    cdsDadosProdutosChaveNFe: TStringField;
+    cdsParametros: TClientDataSet;
     cdsParametrosResumoCanhoto: TStringField;
     cdsParametrosMensagem0: TStringField;
     cdsParametrosImagem: TStringField;
@@ -197,15 +176,29 @@ type
     cdsParametrosSite: TStringField;
     cdsParametrosEmail: TStringField;
     cdsParametrosDesconto: TStringField;
+    cdsParametrosTotalLiquido: TStringField;
     cdsParametrosChaveAcesso_Descricao: TStringField;
     cdsParametrosContingencia_ID: TStringField;
     cdsParametrosContingencia_Descricao: TStringField;
     cdsParametrosContingencia_Valor: TStringField;
     cdsParametrosLinhasPorPagina: TIntegerField;
     cdsParametrosLogoExpandido: TStringField;
+    cdsParametrosDESCR_CST: TStringField;
+    cdsParametrosConsultaAutenticidade: TStringField;
+    cdsParametrosCasas_qCom: TIntegerField;
+    cdsParametrosCasas_vUnCom: TIntegerField;
+    cdsParametrosMask_qCom: TStringField;
+    cdsParametrosMask_vUnCom: TStringField;
+    cdsParametrosLogoCarregado: TBlobField;
+    cdsInformacoesAdicionais: TClientDataSet;
+    cdsInformacoesAdicionaisOBS: TStringField;
+    cdsInformacoesAdicionaisLinhasOBS: TIntegerField;
+    cdsDuplicatas: TClientDataSet;
     cdsDuplicatasNDup: TStringField;
     cdsDuplicatasDVenc: TStringField;
     cdsDuplicatasVDup: TFloatField;
+    cdsDuplicatasChaveNFe: TStringField;
+    cdsCalculoImposto: TClientDataSet;
     cdsCalculoImpostoVBC: TFloatField;
     cdsCalculoImpostoVICMS: TFloatField;
     cdsCalculoImpostoVBCST: TFloatField;
@@ -220,6 +213,10 @@ type
     cdsCalculoImpostoVCOFINS: TFloatField;
     cdsCalculoImpostoVOutro: TFloatField;
     cdsCalculoImpostoVNF: TFloatField;
+    cdsCalculoImpostoVTotTrib: TFloatField;
+    cdsCalculoImpostoVTribPerc: TFloatField;
+    cdsCalculoImpostoVTribFonte: TStringField;
+    cdsTransportador: TClientDataSet;
     cdsTransportadorModFrete: TStringField;
     cdsTransportadorCNPJCPF: TStringField;
     cdsTransportadorXNome: TStringField;
@@ -227,23 +224,28 @@ type
     cdsTransportadorXEnder: TStringField;
     cdsTransportadorXMun: TStringField;
     cdsTransportadorUF: TStringField;
+    cdsVeiculo: TClientDataSet;
     cdsVeiculoPLACA: TStringField;
     cdsVeiculoUF: TStringField;
     cdsVeiculoRNTC: TStringField;
+    cdsVolumes: TClientDataSet;
     cdsVolumesQVol: TFloatField;
     cdsVolumesEsp: TStringField;
     cdsVolumesMarca: TStringField;
     cdsVolumesNVol: TStringField;
     cdsVolumesPesoL: TFloatField;
     cdsVolumesPesoB: TFloatField;
+    cdsISSQN: TClientDataSet;
     cdsISSQNvSERV: TFloatField;
     cdsISSQNvBC: TFloatField;
     cdsISSQNvISS: TFloatField;
+    cdsFatura: TClientDataSet;
     cdsFaturaPagamento: TStringField;
     cdsFaturanFat: TStringField;
     cdsFaturavOrig: TFloatField;
     cdsFaturavDesc: TFloatField;
     cdsFaturavLiq: TFloatField;
+    cdsLocalRetirada: TClientDataSet;
     cdsLocalRetiradaCNPJ: TStringField;
     cdsLocalRetiradaXLgr: TStringField;
     cdsLocalRetiradaNro: TStringField;
@@ -252,6 +254,7 @@ type
     cdsLocalRetiradaCMun: TStringField;
     cdsLocalRetiradaXMun: TStringField;
     cdsLocalRetiradaUF: TStringField;
+    cdsLocalEntrega: TClientDataSet;
     cdsLocalEntregaCNPJ: TStringField;
     cdsLocalEntregaXLgr: TStringField;
     cdsLocalEntregaNro: TStringField;
@@ -260,29 +263,43 @@ type
     cdsLocalEntregaCMun: TStringField;
     cdsLocalEntregaXMun: TStringField;
     cdsLocalEntregaUF: TStringField;
-    cdsInformacoesAdicionaisOBS: TStringField;
-    cdsInformacoesAdicionaisLinhasOBS: TIntegerField;
-    cdsParametrosDESCR_CST: TStringField;
-    cdsEmitenteDESCR_CST: TStringField;
-    cdsEmitenteDADOS_ENDERECO: TStringField;
-    cdsDadosProdutosDescricaoProduto: TStringField;
-    cdsDadosProdutosChaveNFe: TStringField;
-    cdsDuplicatasChaveNFe: TStringField;
-    cdsParametrosConsultaAutenticidade: TStringField;
-    cdsParametrosTotalLiquido: TStringField;
-    cdsParametrosCasas_qCom: TIntegerField;
-    cdsParametrosCasas_vUnCom: TIntegerField;
-    cdsParametrosMask_qCom: TStringField;
-    cdsParametrosMask_vUnCom: TStringField;
-    cdsParametrosLogoCarregado: TBlobField;
-    cdsDadosProdutosVProd: TFloatField;
-    cdsCalculoImpostoVTotTrib: TFloatField;
-    cdsDadosProdutosVTotTrib: TFloatField;
-    cdsCalculoImpostoVTribPerc: TFloatField;
-    cdsCalculoImpostoVTribFonte: TStringField;
-    cdsDadosProdutosVOutro: TFloatField;
+    frxIdentificacao: TfrxDBDataset;
+    frxEmitente: TfrxDBDataset;
+    frxDestinatario: TfrxDBDataset;
+    frxDadosProdutos: TfrxDBDataset;
+    frxParametros: TfrxDBDataset;
+    frxDuplicatas: TfrxDBDataset;
+    frxCalculoImposto: TfrxDBDataset;
+    frxTransportador: TfrxDBDataset;
+    frxVeiculo: TfrxDBDataset;
+    frxVolumes: TfrxDBDataset;
+    frxISSQN: TfrxDBDataset;
+    frxFatura: TfrxDBDataset;
+    frxLocalRetirada: TfrxDBDataset;
+    frxLocalEntrega: TfrxDBDataset;
+    frxInformacoesAdicionais: TfrxDBDataset;
+    frxBarCodeObject: TfrxBarCodeObject;
+    frxReport: TfrxReport;
+    cdsEventos: TClientDataSet;
+    frxEventos: TfrxDBDataset;
     cdsDadosProdutosvISSQN: TFloatField;
+    cdsIdentificacaoMensagemFiscal: TStringField;
+    cdsIdentificacaoURL: TStringField;
+    cdsCalculoImpostovTotPago: TFloatField;
+    cdsParametrosQrCodeCarregado: TBlobField;
+    cdsParametrosDescricaoViaEstabelec: TStringField;
+    cdsDestinatarioConsumidor: TStringField;
+    cdsPagamento: TClientDataSet;
+    cdsPagamentotPag: TStringField;
+    cdsPagamentovPag: TFloatField;
+    cdsPagamentoCNPJ: TStringField;
+    cdsPagamentotBand: TStringField;
+    cdsPagamentocAut: TStringField;
+    frxPagamento: TfrxDBDataset;
+    cdsParametrosQtdeItens: TIntegerField;
+    cdsCalculoImpostovTroco: TFloatField;
     constructor Create(AOwner: TComponent); override;
+    procedure frxReportBeforePrint(Sender: TfrxReportComponent);
   private
     FDANFEClassOwner: TACBrNFeDANFEClass;
     FNFe: TNFe;
@@ -293,6 +310,10 @@ type
     FTributosPercentual: TpcnPercentualTributos;
     FTributosPercentualPersonalizado: double;
     FMarcaDaguaMSG: string;
+    FvTroco: Currency;
+    FDetalhado: Boolean;
+    FURLConsultaPublica:String;
+    FDescricaoViaEstabelec: string;
     procedure CarregaIdentificacao;
     procedure CarregaEmitente;
     procedure CarregaDestinatario;
@@ -307,6 +328,7 @@ type
     procedure CarregaLocalRetirada;
     procedure CarregaLocalEntrega;
     procedure CarregaFatura;
+    procedure CarregaPagamento;
     procedure CarregaInformacoesAdicionais;
   public
     property NFe: TNFe read FNFe write FNFe;
@@ -318,8 +340,13 @@ type
     property TributosPercentual: TpcnPercentualTributos read FTributosPercentual write FTributosPercentual;
     property TributosPercentualPersonalizado: double read FTributosPercentualPersonalizado write FTributosPercentualPersonalizado;
     property MarcaDaguaMSG: string read FMarcaDaguaMSG write FMarcaDaguaMSG;
+    property vTroco: Currency read FvTroco write FvTroco;
+    property Detalhado: Boolean read FDetalhado write FDetalhado;
+    property URLConsultaPublica:String read FURLConsultaPublica write FURLConsultaPublica;
+    property DescricaoViaEstabelec: string read FDescricaoViaEstabelec write FDescricaoViaEstabelec;
     procedure CarregaDadosNFe;
     procedure CarregaDadosEventos;
+    procedure PintarQRCode(QRCodeData: String; APict: TPicture);
   end;
 
 var
@@ -487,6 +514,9 @@ begin
         FieldByName('VTribFonte').AsString := '(Fonte: '+TributosFonte+')';
     end;
 
+    FieldByName('vTroco').AsCurrency := FvTroco;
+    FieldByName('vTotPago').AsCurrency := FvTroco+FieldByName('VProd').AsFloat;
+
     Post;
   end;
 end;
@@ -507,6 +537,7 @@ begin
   CarregaLocalRetirada;
   CarregaLocalEntrega;
   CarregaFatura;
+  CarregaPagamento;
   CarregaInformacoesAdicionais;
 end;
 
@@ -524,141 +555,147 @@ begin
   if not cdsParametros.Active then
     CarregaParametros;
 
-  { dados dos produtos }
+  // verificar se e DANFE detalhado
+
+  // dados dos produtos
   with cdsDadosProdutos do
   begin
     Close;
     CreateDataSet;
 
-    for i := 0 to NFe.Det.Count - 1 do
+    if (NFe.Ide.modelo <> 65) or FDetalhado then
     begin
-      Append;
-
-      with FNFe.Det.Items[i].Prod do
+      for i := 0 to NFe.Det.Count - 1 do
       begin
-        FieldByName('ChaveNFe').AsString := FNFe.infNFe.ID;
-        FieldByName('cProd').AsString := cProd;
-        FieldByName('cEAN').AsString := cEAN;
-        FieldByName('XProd').AsString := StringReplace(xProd, ';', #13, [rfReplaceAll]);
+        Append;
 
-        if FDANFEClassOwner.ImprimirTotalLiquido then
-          FieldByName('VProd').AsFloat := DFeUtil.StringToFloatDef(FloatToStr(VProd - vDesc), 0)
-        else
-          FieldByName('VProd').AsFloat := DFeUtil.StringToFloatDef(FloatToStr(VProd), 0);
-
-        wInfAdProd := FNFe.Det.Items[i].infAdProd;
-
-        if Self.ExibirTotalTributosItem then
-          FieldByName('vTotTrib').AsFloat := DFeUtil.StringToFloatDef(FloatToStr(FNFe.Det.Items[i].Imposto.vTotTrib), 0)
-        else
-          FieldByName('vTotTrib').AsFloat := 0;
-        if FieldByName('vTotTrib').AsFloat <> 0 then
+        with FNFe.Det.Items[i].Prod do
         begin
-          wInfAdProd := wInfAdProd+#13+'Val Aprox Tributos: '+ FloatToStrF(FieldByName('vTotTrib').AsFloat,ffCurrency,15,2);
-          wInfAdProd := wInfAdProd+' ('+FloatToStrF(((DFeUtil.StringToFloatDef(FieldByName('vTotTrib').AsString,0)*100)/(DFeUtil.StringToFloatDef(FieldByName('VProd').AsString,0) +
-                                      DFeUtil.StringToFloatDef(FieldByName('VOutro').AsString,0) -
-                                      DFeUtil.StringToFloatDef(FieldByName('VDesc').AsString,0)) ),ffNumber,15,2)+'%)';
-        end;
+          FieldByName('ChaveNFe').AsString := FNFe.infNFe.ID;
+          FieldByName('cProd').AsString := cProd;
+          FieldByName('cEAN').AsString := cEAN;
+          FieldByName('XProd').AsString := StringReplace(xProd, ';', #13, [rfReplaceAll]);
 
-        vTemp2 := TStringList.Create;
-        try
-          if FDANFEClassOwner.ImprimirDetalhamentoEspecifico then
+          if FDANFEClassOwner.ImprimirTotalLiquido then
+            FieldByName('VProd').AsFloat := DFeUtil.StringToFloatDef(FloatToStr(VProd - vDesc), 0)
+          else
+            FieldByName('VProd').AsFloat := DFeUtil.StringToFloatDef(FloatToStr(VProd), 0);
+
+          wInfAdProd := FNFe.Det.Items[i].infAdProd;
+
+          if Self.ExibirTotalTributosItem then
+            FieldByName('vTotTrib').AsFloat := DFeUtil.StringToFloatDef(FloatToStr(FNFe.Det.Items[i].Imposto.vTotTrib), 0)
+          else
+            FieldByName('vTotTrib').AsFloat := 0;
+
+          if FieldByName('vTotTrib').AsFloat <> 0 then
           begin
-            { detalhamento especifico de veículos }
-            if Trim(veicProd.chassi) <> '' then
-            begin
-              vTemp2.Add(' CHASSI: ' + veicProd.chassi);
-              vTemp2.Add(' COMBUSTÍVEL: ' + veicProd.tpComb);
-              vTemp2.Add(' COR: ' + veicProd.xCor);
-              vTemp2.Add(' FAB./MOD.: ' + IntToStr(veicProd.anoFab) + '/' + IntToStr(veicProd.anoMod));
-//              vTemp2.Add(' RENAVAM: ' + veicProd.RENAVAM); // Essa propriedade foi comentada na class, por isso comentei aqui tambem.
-              vTemp2.Add(' Nº DO MOTOR: ' + veicProd.nMotor);
-
-              if Trim(wInfAdProd) <> '' then
-                 wInfAdProd := wInfAdProd + ';'; //insere quebra de linha antes do detalhamento
-
-              wInfAdProd := wInfAdProd + vTemp2.Text;
-              vTemp2.Clear;
-            end;
-
-            { detalhamento específico de medicamentos }
-            if med.Count > 0 then
-            begin
-              for j := 0 to med.Count - 1 do
-              begin
-                with med.Items[j] do
-                begin
-                  vTemp2.Add('-LOTE: ' + nLote);
-                  vTemp2.Add(' QTDADE: ' + DFeUtil.FormatFloat(qLote));
-                  vTemp2.Add(' FABR.: ' + DFeUtil.FormatDate(DateToStr(dFab)));
-                  vTemp2.Add(' VAL.: ' + DFeUtil.FormatDate(DateToStr(dVal)));
-                  vTemp2.Add(DFeUtil.SeSenao(vPMC > 0, ' PMC: ' + DFeUtil.FormatFloat(vPMC), ''));
-                end;
-              end;
-
-              if (Trim(wInfAdProd) <> '') then
-                wInfAdProd := wInfAdProd + ';'; //insere quebra de linha antes do detalhamento
-
-              wInfAdProd := wInfAdProd + vTemp2.Text;
-              vTemp2.Clear;
-            end;
+            wInfAdProd := wInfAdProd+#13+'Val Aprox Tributos: '+ FloatToStrF(FieldByName('vTotTrib').AsFloat,ffCurrency,15,2);
+            wInfAdProd := wInfAdProd+' ('+FloatToStrF(((DFeUtil.StringToFloatDef(FieldByName('vTotTrib').AsString,0)*100)/(DFeUtil.StringToFloatDef(FieldByName('VProd').AsString,0) +
+            DFeUtil.StringToFloatDef(FieldByName('VOutro').AsString,0) -
+            DFeUtil.StringToFloatDef(FieldByName('VDesc').AsString,0)) ),ffNumber,15,2)+'%)';
           end;
 
-          if Trim(winfAdProd) <> '' then
-          begin
-            Campos2 := Split(';', winfAdProd);
-            for IndexCampo2 := 0 to Length(Campos2) - 1 do
-              vTemp2.Add(Trim(Campos2[IndexCampo2]));
-            TmpStr := vTemp2.Text;
+          vTemp2 := TStringList.Create;
+          try
+            if FDANFEClassOwner.ImprimirDetalhamentoEspecifico then
+            begin
+              { detalhamento especifico de veículos }
+              if Trim(veicProd.chassi) <> '' then
+              begin
+                vTemp2.Add(' CHASSI: ' + veicProd.chassi);
+                vTemp2.Add(' COMBUSTÍVEL: ' + veicProd.tpComb);
+                vTemp2.Add(' COR: ' + veicProd.xCor);
+                vTemp2.Add(' FAB./MOD.: ' + IntToStr(veicProd.anoFab) + '/' + IntToStr(veicProd.anoMod));
+                //vTemp2.Add(' RENAVAM: ' + veicProd.RENAVAM); // Essa propriedade foi comentada na class, por isso comentei aqui tambem.
+                vTemp2.Add(' Nº DO MOTOR: ' + veicProd.nMotor);
 
-            // Inserir a quebra de linha para ficar abaixo da descrição do produto
-            BufferXInfProd := #13 + TmPStr;
+                if Trim(wInfAdProd) <> '' then
+                   wInfAdProd := wInfAdProd + ';'; //insere quebra de linha antes do detalhamento
+
+                wInfAdProd := wInfAdProd + vTemp2.Text;
+                vTemp2.Clear;
+              end;
+
+              { detalhamento específico de medicamentos }
+              if med.Count > 0 then
+              begin
+                for j := 0 to med.Count - 1 do
+                  begin
+                    with med.Items[j] do
+                      begin
+                        vTemp2.Add('-LOTE: ' + nLote);
+                        vTemp2.Add(' QTDADE: ' + DFeUtil.FormatFloat(qLote));
+                        vTemp2.Add(' FABR.: ' + DFeUtil.FormatDate(DateToStr(dFab)));
+                        vTemp2.Add(' VAL.: ' + DFeUtil.FormatDate(DateToStr(dVal)));
+                        vTemp2.Add(DFeUtil.SeSenao(vPMC > 0, ' PMC: ' + DFeUtil.FormatFloat(vPMC), ''));
+                      end;
+                  end;
+
+                if (Trim(wInfAdProd) <> '') then
+                   wInfAdProd := wInfAdProd + ';'; //insere quebra de linha antes do detalhamento
+
+                wInfAdProd := wInfAdProd + vTemp2.Text;
+                vTemp2.Clear;
+              end;
+            end;
+
+            if Trim(winfAdProd) <> '' then
+            begin
+              Campos2 := Split(';', winfAdProd);
+              for IndexCampo2 := 0 to Length(Campos2) - 1 do
+                vTemp2.Add(Trim(Campos2[IndexCampo2]));
+
+              TmpStr := vTemp2.Text;
+
+              //Inserir a quebra de linha para ficar abaixo da descrição do produto
+              BufferXInfProd := #13 + TmPStr;
+            end
+            else
+              BufferXInfProd := '';
+
+              FieldByName('infAdProd').AsString := BufferXInfProd;
+          finally
+            vTemp2.Free;
+          end;
+
+          FieldByName('NCM').AsString := NCM;
+          FieldByName('EXTIPI').AsString := EXTIPI;
+          FieldByName('genero').AsString := '';
+          FieldByName('CFOP').AsString := CFOP;
+          FieldByName('Ucom').AsString := UCom;
+          FieldByName('QCom').AsFloat := DFeUtil.StringToFloatDef(FloatToStr(QCom), 0);
+          FieldByName('VUnCom').AsFloat := DFeUtil.StringToFloatDef(FloatToStr(VUnCom), 0);
+
+          FieldByName('cEANTrib').AsString := cEANTrib;
+          FieldByName('UTrib').AsString := uTrib;
+          FieldByName('QTrib').AsFloat := DFeUtil.StringToFloatDef(FloatToStr(qTrib), 0);
+          FieldByName('VUnTrib').AsFloat := DFeUtil.StringToFloatDef(FloatToStr(vUnTrib), 0);
+          FieldByName('vFrete').AsFloat := DFeUtil.StringToFloatDef(FloatToStr(vFrete), 0);
+          FieldByName('vSeg').AsFloat := DFeUtil.StringToFloatDef(FloatToStr(vSeg), 0);
+
+          if FDANFEClassOwner.ImprimirDescPorc then
+          begin
+            if vDesc > 0 then
+               FieldByName('vDesc').AsString := DFeUtil.FormatFloat(((vDesc*100) / (VUnCom * QCom))) + '%'
+               //FieldByName('vDesc').AsString := DFeUtil.FormatFloat(RoundTo(100 - ((((VUnCom * QCom) - vDesc) / (VUnCom * QCom)) * 100), -1)) + '%'
+            else
+               FieldByName('vDesc').AsString := DFeUtil.FormatFloat(vDesc);
           end
           else
-            BufferXInfProd := '';
-
-          FieldByName('infAdProd').AsString := BufferXInfProd;
-        finally
-          vTemp2.Free;
-        end;
-
-        FieldByName('NCM').AsString := NCM;
-        FieldByName('EXTIPI').AsString := EXTIPI;
-        FieldByName('genero').AsString := '';
-        FieldByName('CFOP').AsString := CFOP;
-        FieldByName('Ucom').AsString := UCom;
-        FieldByName('QCom').AsFloat := DFeUtil.StringToFloatDef(FloatToStr(QCom), 0);
-        FieldByName('VUnCom').AsFloat := DFeUtil.StringToFloatDef(FloatToStr(VUnCom), 0);
-
-        FieldByName('cEANTrib').AsString := cEANTrib;
-        FieldByName('UTrib').AsString := uTrib;
-        FieldByName('QTrib').AsFloat := DFeUtil.StringToFloatDef(FloatToStr(qTrib), 0);
-        FieldByName('VUnTrib').AsFloat := DFeUtil.StringToFloatDef(FloatToStr(vUnTrib), 0);
-        FieldByName('vFrete').AsFloat := DFeUtil.StringToFloatDef(FloatToStr(vFrete), 0);
-        FieldByName('vSeg').AsFloat := DFeUtil.StringToFloatDef(FloatToStr(vSeg), 0);
-
-        if FDANFEClassOwner.ImprimirDescPorc then
-        begin
-          if vDesc > 0 then
-            FieldByName('vDesc').AsString := DFeUtil.FormatFloat(((vDesc*100) / (VUnCom * QCom))) + '%'
-            //FieldByName('vDesc').AsString := DFeUtil.FormatFloat(RoundTo(100 - ((((VUnCom * QCom) - vDesc) / (VUnCom * QCom)) * 100), -1)) + '%'
-          else
             FieldByName('vDesc').AsString := DFeUtil.FormatFloat(vDesc);
-        end
-        else
-          FieldByName('vDesc').AsString := DFeUtil.FormatFloat(vDesc);
 
-        with FNFe.Det.Items[i].Imposto.ISSQN do
-        begin
-          FieldByName('vISSQN').AsFloat := vISSQN;
-        end;
+          with FNFe.Det.Items[i].Imposto.ISSQN do
+          begin
+            FieldByName('vISSQN').AsFloat := vISSQN;
+          end;
 
-        with FNFe.Det.Items[i].Imposto.ICMS do
-        begin
-          FieldByName('ORIGEM').AsString := OrigToStr(orig);
+          with FNFe.Det.Items[i].Imposto.ICMS do
+          begin
+            FieldByName('ORIGEM').AsString := OrigToStr(orig);
 
-          case FNFe.Emit.CRT of
-            crtSimplesNacional:
+            case FNFe.Emit.CRT of
+              crtSimplesNacional:
               begin
                 case CSOSN of
                   csosn101, csosn102, csosn103, csosn201, csosn202, csosn203,
@@ -671,113 +708,115 @@ begin
                     end;
                 end;
               end;
-          else
-            begin
-              if CST = cst00 then
+            else
               begin
-                FieldByName('CST').AsString := CSTICMSToStr(cst00);
-                FieldByName('VBC').AsFloat := vBC;
-                FieldByName('PICMS').AsFloat := pICMS;
-                FieldByName('VICMS').AsFloat := vICMS;
-              end
-              else if CST = cst10 then
-              begin
-                FieldByName('CST').AsString := CSTICMSToStr(cst10);
-                FieldByName('VBC').AsFloat := vBC;
-                FieldByName('PICMS').AsFloat := pICMS;
-                FieldByName('VICMS').AsFloat := vICMS;
-              end
-              else if CST = cst20 then
-              begin
-                FieldByName('CST').AsString := CSTICMSToStr(cst20);
-                FieldByName('VBC').AsFloat := vBC;
-                FieldByName('PICMS').AsFloat := pICMS;
-                FieldByName('VICMS').AsFloat := vICMS;
-              end
-              else if CST = cst30 then
-              begin
-                FieldByName('CST').AsString := CSTICMSToStr(cst30);
-                FieldByName('VBC').AsFloat := 0;
-                FieldByName('PICMS').AsFloat := 0;
-                FieldByName('VICMS').AsFloat := 0;
-              end
-              else if (CST = cst40) or (CST = cst41) or (CST = cst50) or (CST = cstRep41) then
-              begin
-                if (CST = cst40) then
-                   FieldByName('CST').AsString := CSTICMSToStr(cst40)
-                else if (CST = cst41) or (CST = cstRep41) then
-                   FieldByName('CST').AsString := CSTICMSToStr(cst41)
-                else if (CST = cst50) then
-                   FieldByName('CST').AsString := CSTICMSToStr(cst50);
-                FieldByName('VBC').AsFloat := 0;
-                FieldByName('PICMS').AsFloat := 0;
-                FieldByName('VICMS').AsFloat := 0;
-              end
-              else if (CST = cst51) then
-              begin
-                FieldByName('CST').AsString := CSTICMSToStr(cst51);
-                FieldByName('VBC').AsFloat := vBC;
-                FieldByName('PICMS').AsFloat := pICMS;
-                FieldByName('VICMS').AsFloat := vICMS;
-              end
-              else if (CST = cst60) then
-              begin
-                FieldByName('CST').AsString := CSTICMSToStr(cst60);
-                FieldByName('VBC').AsFloat := 0;
-                FieldByName('PICMS').AsFloat := 0;
-                FieldByName('VICMS').AsFloat := 0;
-              end
-              else if (CST = cst70) then
-              begin
-                FieldByName('CST').AsString := CSTICMSToStr(cst70);
-                FieldByName('VBC').AsFloat := vBC;
-                FieldByName('PICMS').AsFloat := pICMS;
-                FieldByName('VICMS').AsFloat := vICMS;
-              end
-              else if (CST = cst90) then
-              begin
-                FieldByName('CST').AsString := CSTICMSToStr(cst90);
-                FieldByName('VBC').AsFloat := vBC;
-                FieldByName('PICMS').AsFloat := pICMS;
-                FieldByName('VICMS').AsFloat := vICMS;
-              end
-              else if (CST = cstVazio) then
-              begin
-                FieldByName('CST').AsString := ' ';
-                FieldByName('VBC').AsFloat := 0;
-                FieldByName('PICMS').AsFloat := 0;
-                FieldByName('VICMS').AsFloat := 0;
+                if CST = cst00 then
+                  begin
+                    FieldByName('CST').AsString := CSTICMSToStr(cst00);
+                    FieldByName('VBC').AsFloat := vBC;
+                    FieldByName('PICMS').AsFloat := pICMS;
+                    FieldByName('VICMS').AsFloat := vICMS;
+                  end
+                else if CST = cst10 then
+                  begin
+                    FieldByName('CST').AsString := CSTICMSToStr(cst10);
+                    FieldByName('VBC').AsFloat := vBC;
+                    FieldByName('PICMS').AsFloat := pICMS;
+                    FieldByName('VICMS').AsFloat := vICMS;
+                  end
+                else if CST = cst20 then
+                  begin
+                    FieldByName('CST').AsString := CSTICMSToStr(cst20);
+                    FieldByName('VBC').AsFloat := vBC;
+                    FieldByName('PICMS').AsFloat := pICMS;
+                    FieldByName('VICMS').AsFloat := vICMS;
+                  end
+                else if CST = cst30 then
+                  begin
+                    FieldByName('CST').AsString := CSTICMSToStr(cst30);
+                    FieldByName('VBC').AsFloat := 0;
+                    FieldByName('PICMS').AsFloat := 0;
+                    FieldByName('VICMS').AsFloat := 0;
+                  end
+                else if (CST = cst40) or (CST = cst41) or (CST = cst50) or (CST = cstRep41) then
+                  begin
+                    if (CST = cst40) then
+                      FieldByName('CST').AsString := CSTICMSToStr(cst40)
+                    else if (CST = cst41) or (CST = cstRep41) then
+                      FieldByName('CST').AsString := CSTICMSToStr(cst41)
+                    else if (CST = cst50) then
+                      FieldByName('CST').AsString := CSTICMSToStr(cst50);
+
+                    FieldByName('VBC').AsFloat := 0;
+                    FieldByName('PICMS').AsFloat := 0;
+                    FieldByName('VICMS').AsFloat := 0;
+                  end
+                else if (CST = cst51) then
+                  begin
+                    FieldByName('CST').AsString := CSTICMSToStr(cst51);
+                    FieldByName('VBC').AsFloat := vBC;
+                    FieldByName('PICMS').AsFloat := pICMS;
+                    FieldByName('VICMS').AsFloat := vICMS;
+                  end
+                else if (CST = cst60) then
+                  begin
+                    FieldByName('CST').AsString := CSTICMSToStr(cst60);
+                    FieldByName('VBC').AsFloat := 0;
+                    FieldByName('PICMS').AsFloat := 0;
+                    FieldByName('VICMS').AsFloat := 0;
+                  end
+                else if (CST = cst70) then
+                  begin
+                    FieldByName('CST').AsString := CSTICMSToStr(cst70);
+                    FieldByName('VBC').AsFloat := vBC;
+                    FieldByName('PICMS').AsFloat := pICMS;
+                    FieldByName('VICMS').AsFloat := vICMS;
+                  end
+                else if (CST = cst90) then
+                  begin
+                    FieldByName('CST').AsString := CSTICMSToStr(cst90);
+                    FieldByName('VBC').AsFloat := vBC;
+                    FieldByName('PICMS').AsFloat := pICMS;
+                    FieldByName('VICMS').AsFloat := vICMS;
+                  end
+                else if (CST = cstVazio) then
+                  begin
+                    FieldByName('CST').AsString := ' ';
+                    FieldByName('VBC').AsFloat := 0;
+                    FieldByName('PICMS').AsFloat := 0;
+                    FieldByName('VICMS').AsFloat := 0;
+                  end;
               end;
             end;
           end;
-        end;
 
-        with FNFe.Det.Items[i].Imposto.IPI do
-        begin
-          if (CST = ipi00) or (CST = ipi49) or (CST = ipi50) or (CST = ipi99) then
+          with FNFe.Det.Items[i].Imposto.IPI do
           begin
-            FieldByName('VIPI').AsFloat := DFeUtil.StringToFloatDef(FloatToStr(VIPI), 0);
-            FieldByName('PIPI').AsFloat := DFeUtil.StringToFloatDef(FloatToStr(PIPI), 0);
-          end
-          else if (CST = ipi01) or (CST = ipi02) or (CST = ipi03) or (CST = ipi04) or (CST = ipi51) or (CST = ipi52) or (CST = ipi53) or (CST = ipi54) or (CST = ipi55) then
-          begin
-            FieldByName('VIPI').AsFloat := 0;
-            FieldByName('PIPI').AsFloat := 0;
-          end
-          else
-          begin
-            FieldByName('VIPI').AsFloat := 0;
-            FieldByName('PIPI').AsFloat := 0;
+            if (CST = ipi00) or (CST = ipi49) or (CST = ipi50) or (CST = ipi99) then
+              begin
+                FieldByName('VIPI').AsFloat := DFeUtil.StringToFloatDef(FloatToStr(VIPI), 0);
+                FieldByName('PIPI').AsFloat := DFeUtil.StringToFloatDef(FloatToStr(PIPI), 0);
+              end
+            else if (CST = ipi01) or (CST = ipi02) or (CST = ipi03) or (CST = ipi04) or (CST = ipi51) or (CST = ipi52) or (CST = ipi53) or (CST = ipi54) or (CST = ipi55) then
+              begin
+                FieldByName('VIPI').AsFloat := 0;
+                FieldByName('PIPI').AsFloat := 0;
+              end
+            else
+              begin
+                FieldByName('VIPI').AsFloat := 0;
+                FieldByName('PIPI').AsFloat := 0;
+              end;
           end;
         end;
-      end;
 
-      cdsDadosProdutosDescricaoProduto.AsString := Trim(FieldByName('xProd').AsString);
-      if Trim(FieldByName('InfAdProd').AsString) <> '' then
-        cdsDadosProdutosDescricaoProduto.AsString := cdsDadosProdutosDescricaoProduto.AsString+#13+
+        cdsDadosProdutosDescricaoProduto.AsString := Trim(FieldByName('xProd').AsString);
+        if Trim(FieldByName('InfAdProd').AsString) <> '' then
+          cdsDadosProdutosDescricaoProduto.AsString := cdsDadosProdutosDescricaoProduto.AsString+#13+
                                                      trim(FieldByName('InfAdProd').AsString);
 
-      Post;
+        Post;
+      end;
     end;
   end;
 end;
@@ -819,6 +858,19 @@ begin
         FieldByName('Fone').AsString := DFeUtil.FormatarFone(Fone);
       end;
       FieldByName('IE').AsString := IE;
+      if (cdsIdentificacaoMod_.AsString = '65') then
+      begin
+        if (FieldByName('CNPJCPF').AsString = '') then
+          FieldByName('Consumidor').AsString := 'CONSUMIDOR NÃO IDENTIFICADO'
+        else
+          FieldByName('Consumidor').AsString :=
+             'CPF: ' + Trim(FieldByName('CNPJCPF').AsString) + ' ' + trim(FieldByName('XNome').AsString) + #13 +
+             Trim(FieldByName('XLgr').AsString) + ', ' + Trim(FieldByName('Nro').AsString) + #13 +
+             Trim(FieldByName('XBairro').AsString) + ' - ' +
+             Trim(FieldByName('XMun').AsString) + ' - ' + Trim(FieldByName('UF').AsString);
+      end
+      else
+        FieldByName('Consumidor').AsString := '';
     end;
 
     Post;
@@ -942,6 +994,57 @@ begin
   end;
 end;
 
+procedure TdmACBrNFeFR.CarregaPagamento;
+var
+  i: Integer;
+  bPag, wPag: String;
+begin
+  with cdsPagamento do
+  begin
+    Close;
+    CreateDataSet;
+
+    for i := 0 to NFe.Pag.Count - 1 do
+    begin
+      Append;
+
+      with FNFe.Pag[i] do
+      begin
+        case tPag of
+          fpDinheiro:        wPag:='Dinheiro';
+          fpCheque:          wPag:='Cheque';
+          fpCartaoCredito:   wPag:='Cartão Crédito';
+          fpCartaoDebito:    wPag:='Cartão Débito';
+          fpCreditoLoja:     wPag:='Crédito Loja';
+          fpValeAlimentacao: wPag:='Vale Alimentação';
+          fpValeRefeicao:    wPag:='Vale Refeição';
+          fpValePresente:    wPag:='Vale Presente';
+          fpValeCombustivel: wPag:='Vale Combustível';
+          fpOutro:           wPag:='Outros';
+        end;
+        FieldByName('tPag').AsString := wPag;
+        FieldByName('vPag').AsFloat  := DFeUtil.StringToFloatDef(FloatToStr(vPag), 0);
+
+        with FNFe.Pag do
+        begin
+           FieldByName('CNPJ').AsString  := DFeUtil.FormatarCNPJ(CNPJ);
+           case tBand of
+             bcVisa:            bPag := 'Visa';
+             bcMasterCard:      bPag := 'MasterCard';
+             bcAmericanExpress: bPag := 'AmericanExpress';
+             bcSorocred:        bPag := 'Sorocred';
+             bcOutros:          bPag := 'Outros'
+           end;
+           FieldByName('tBand').AsString := bPag;
+           FieldByName('cAut').AsString  := cAut;
+        end;
+      end;
+
+      Post;
+    end;
+  end;
+end;
+
 procedure TdmACBrNFeFR.CarregaIdentificacao;
 begin
   with cdsIdentificacao do
@@ -966,14 +1069,30 @@ begin
       FieldByName('Mod_').AsString := IntToStr(Modelo);
       FieldByName('Serie').AsString := IntToStr(Serie);
       FieldByName('NNF').AsString := DFeUtil.FormatarNumeroDocumentoFiscal(IntToStr(NNF));
-      FieldByName('DEmi').AsString := DFeUtil.FormatDate(DateToStr(DEmi));
+      if (IntToStr(Modelo) = '65') then
+        FieldByName('DEmi').AsString := DFeUtil.FormatDateTime(DateTimeToStr(DEmi))
+      else
+        FieldByName('DEmi').AsString := DFeUtil.FormatDate(DateToStr(DEmi));
       FieldByName('DSaiEnt').AsString := IfThen(DSaiEnt <> 0, DFeUtil.FormatDate(DateToStr(DSaiEnt)));
       FieldByName('TpNF').AsString := DFeUtil.SeSenao(TpNF = tnEntrada, '0', '1');
       FieldByName('CMunFG').AsString := IntToStr(CMunFG);
       FieldByName('TpImp').AsString := DFeUtil.SeSenao(TpImp = tiRetrato, '1', '2');
       FieldByName('TpEmis').AsString := DFeUtil.SeSenao(TpEmis = teNormal, '1', '5');
       FieldByName('CDV').AsString := IntToStr(CDV);
-      FieldByName('TpAmb').AsString := DFeUtil.SeSenao(TpAmb = taHomologacao, '2', '1');
+      FieldByName('TpAmb').AsString := DFeUtil.SeSenao(TpAmb = taHomologacao,'2','1');
+      if (IntToStr(Modelo) = '65') then
+      begin
+        if TpAmb = taHomologacao then
+          FieldByName('MensagemFiscal').AsString := 'HOMOLOGAÇÃO - SEM VALOR FISCAL'
+        else
+          FieldByName('MensagemFiscal').AsString := 'EMISSÃO NORMAL';
+        FieldByName('URL').AsString              := FURLConsultaPublica;
+      end
+      else begin
+        FieldByName('MensagemFiscal').AsString := '';
+        FieldByName('URL').AsString            := '';
+      end;
+
       FieldByName('FinNFe').AsString := DFeUtil.SeSenao(FinNFe = fnNormal, '1', DFeUtil.SeSenao(FinNFe = fnComplementar, '2', '3'));
       FieldByName('ProcEmi').AsString := DFeUtil.SeSenao(ProcEmi = peAplicativoContribuinte, '0', '');
       FieldByName('VerProc').AsString := VerProc;
@@ -1265,7 +1384,6 @@ begin
               vStringStream.Free;
            end;
         end;
-
         vStream.Position := 0;
         cdsParametrosLogoCarregado.LoadFromStream(vStream);
       finally
@@ -1331,11 +1449,11 @@ begin
     end
     else
     begin
-      vChave_Contingencia := NotaUtil.GerarChaveContingencia(FNFe);
-      FieldByName('ChaveAcesso_Descricao').AsString := 'CHAVE DE ACESSO';
-
       if ((FNFe.Ide.tpEmis = teContingencia) or (FNFe.Ide.tpEmis = teFSDA)) then
       begin
+        vChave_Contingencia := NotaUtil.GerarChaveContingencia(FNFe);
+        FieldByName('ChaveAcesso_Descricao').AsString := 'CHAVE DE ACESSO';
+
         FieldByName('Contingencia_ID').AsString := vChave_Contingencia;
         FieldByName('Contingencia_Descricao').AsString := 'DADOS DA NF-E';
         FieldByName('Contingencia_Valor').AsString := NotaUtil.FormatarChaveContigencia(vChave_Contingencia);
@@ -1358,6 +1476,11 @@ begin
             raise EACBrNFeException.Create('Protocolo de Registro no DPEC não informado.')
           end;
         end;
+      end
+      else
+      if (FNFe.Ide.tpEmis = teOffLine) then
+      begin
+        FieldByName('Contingencia_Valor').AsString := FNFe.procNFe.nProt + ' ' + DFeUtil.SeSenao(FNFe.procNFe.dhRecbto <> 0, DateTimeToStr(FNFe.procNFe.dhRecbto), '');
       end;
     end;
 
@@ -1367,6 +1490,9 @@ begin
     FieldByName('Mask_vUnCom').AsString   := FDANFEClassOwner.CasasDecimais._Mask_vUnCom;
     FieldByName('Casas_qCom').AsInteger   := FDANFEClassOwner.CasasDecimais._qCom;
     FieldByName('Casas_vUnCom').AsInteger := FDANFEClassOwner.CasasDecimais._vUnCom;
+
+    FieldByName('QtdeItens').AsInteger    := NFe.Det.Count;
+    FieldByName('DescricaoViaEstabelec').AsString := FDescricaoViaEstabelec;
 
     Post;
   end;
@@ -1557,6 +1683,72 @@ constructor TdmACBrNFeFR.Create(AOwner: TComponent);
 begin
   inherited;
   FDANFEClassOwner := TACBrNFeDANFEClass(AOwner);
+end;
+
+procedure TdmACBrNFeFR.PintarQRCode(QRCodeData: String; APict: TPicture);
+var
+  QRCode: TDelphiZXingQRCode;
+  QRCodeBitmap: TBitmap;
+  Row, Column: Integer;
+begin
+  QRCode       := TDelphiZXingQRCode.Create;
+  QRCodeBitmap := TBitmap.Create;
+  try
+    QRCode.Data      := QRCodeData;
+    QRCode.Encoding  := qrUTF8NoBOM;
+    QRCode.QuietZone := 1;
+
+    //QRCodeBitmap.SetSize(QRCode.Rows, QRCode.Columns);
+    QRCodeBitmap.Width  := QRCode.Columns;
+    QRCodeBitmap.Height := QRCode.Rows;
+
+    for Row := 0 to QRCode.Rows - 1 do
+    begin
+      for Column := 0 to QRCode.Columns - 1 do
+      begin
+        if (QRCode.IsBlack[Row, Column]) then
+          QRCodeBitmap.Canvas.Pixels[Column, Row] := clBlack
+        else
+          QRCodeBitmap.Canvas.Pixels[Column, Row] := clWhite;
+      end;
+    end;
+
+    APict.Assign(QRCodeBitmap);
+  finally
+    QRCode.Free;
+    QRCodeBitmap.Free;
+  end;
+end;
+
+procedure TdmACBrNFeFR.frxReportBeforePrint(Sender: TfrxReportComponent);
+var qrcode: String;
+begin
+   if (NFe.Ide.modelo = 65) then
+   begin
+     if cdsParametros.FieldByName('Imagem').AsString = '' then
+     begin
+        frxReport.FindObject('ReportTitle1').Visible := False;
+        frxReport.FindObject('ImgLogo').Visible := False;
+     end
+     else
+     begin
+        frxReport.FindObject('ReportTitle1').Visible := True;
+        frxReport.FindObject('ImgLogo').Visible := True;
+     end;
+
+     qrcode := NotaUtil.GetURLQRCode( NFe.ide.cUF,
+                                      NFe.ide.tpAmb,
+                                      OnlyNumber(NFe.InfNFe.ID),
+                                      DFeUtil.SeSenao(NFe.Dest.idEstrangeiro <> '',NFe.Dest.idEstrangeiro, NFe.Dest.CNPJCPF),
+                                      NFe.ide.dEmi,
+                                      NFe.Total.ICMSTot.vNF,
+                                      NFe.Total.ICMSTot.vICMS,
+                                      NFe.signature.DigestValue,
+                                      TACBrNFe( FDANFEClassOwner.ACBrNFe ).Configuracoes.Geral.IdToken,
+                                      TACBrNFe( FDANFEClassOwner.ACBrNFe ).Configuracoes.Geral.Token );
+
+     PintarQRCode( qrcode, TfrxPictureView(frxReport.FindObject('ImgQrCode')).Picture );
+   end;
 end;
 
 end.

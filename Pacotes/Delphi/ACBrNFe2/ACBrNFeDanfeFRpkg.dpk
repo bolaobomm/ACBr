@@ -87,7 +87,7 @@ requires
 {$IFDEF VER250} fs18, frx18, frxe18, frxDB18, {$ENDIF} // XE4
 {$IFDEF VER260} fs19, frx19, frxe19, frxDB19, {$ENDIF} // XE5
 {$IFDEF VER270} fs20, frx20, frxe20, frxDB20, dsnap, {$ENDIF} // XE6
-  ACBr_NFe2;
+  ACBr_NFe2, ACBrDiversos;
 
 contains
   ACBrNFeDANFEFRReg in '..\..\..\Fontes\ACBrNFe2\ACBrNFeDANFEFRReg.pas',

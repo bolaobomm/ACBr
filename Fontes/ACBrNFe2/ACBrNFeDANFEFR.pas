@@ -73,6 +73,10 @@ type
     FTributosPercentual: TpcnPercentualTributos;
     FTributosPercentualPersonalizado: double;
     FMarcaDaguaMSG: string;
+    FvTroco: Currency;
+    FDetalhado: Boolean;
+    FURLConsultaPublica:String;
+    FDescricaoViaEstabelec: string;
     function GetPreparedReport: TfrxReport;
     function GetPreparedReportEvento: TfrxReport;
     function PrepareReport(NFE: TNFe = nil): Boolean;
@@ -83,6 +87,7 @@ type
     constructor Create(AOwner: TComponent); override;
     destructor Destroy; override;
     procedure ImprimirDANFE(NFE: TNFe = nil); override;
+    procedure ImprimirDANFEResumido(NFE: TNFe = nil); override;
     procedure ImprimirDANFEPDF(NFE: TNFe = nil); override;
     procedure ImprimirEVENTO(NFE: TNFe = nil); override;
     procedure ImprimirEVENTOPDF(NFE: TNFe = nil); override;
@@ -100,6 +105,10 @@ type
     property TributosPercentual: TpcnPercentualTributos read FTributosPercentual write setTributosPercentual;
     property TributosPercentualPersonalizado: double read FTributosPercentualPersonalizado write setTributosPercentualPersonalizado;
     property MarcaDaguaMSG: string read FMarcaDaguaMSG write FMarcaDaguaMSG;
+    property vTroco: Currency read FvTroco write FvTroco;
+    property Detalhado: Boolean read FDetalhado;
+    property URLConsultaPublica:String read FURLConsultaPublica write FURLConsultaPublica;
+    property DescricaoViaEstabelec: string read FDescricaoViaEstabelec write FDescricaoViaEstabelec;
   end;
 
 implementation
@@ -118,6 +127,11 @@ begin
   FTributosPercentual := ptValorProdutos;
   FTributosPercentualPersonalizado := 0;
   FMarcaDaguaMSG:='';
+  { NFC-e }
+  FvTroco := 0;
+  FDetalhado := False;
+  FDescricaoViaEstabelec := 'Via do Consumidor';// utilizado para NFC-e
+  FURLConsultaPublica:= ''; //NFCe
 end;
 
 destructor TACBrNFeDANFEFR.Destroy;
@@ -164,6 +178,10 @@ begin
   dmDanfe.TributosPercentual :=  FTributosPercentual;
   dmDanfe.TributosPercentualPersonalizado :=  FTributosPercentualPersonalizado;
   dmDanfe.MarcaDaguaMSG :=  FMarcaDaguaMSG;
+  dmDanfe.vTroco := FvTroco;
+  dmDanfe.Detalhado := FDetalhado;
+  dmDanfe.DescricaoViaEstabelec := FDescricaoViaEstabelec;
+  dmDanfe.URLConsultaPublica    := FURLConsultaPublica;
 
   if Trim(FastFile) <> '' then
   begin
@@ -269,6 +287,21 @@ end;
 
 procedure TACBrNFeDANFEFR.ImprimirDANFE(NFE: TNFe);
 begin
+  FDetalhado := True;
+
+  if PrepareReport(NFE) then
+  begin
+    if MostrarPreview then
+      dmDanfe.frxReport.ShowPreparedReport
+    else
+      dmDanfe.frxReport.Print;
+  end;
+end;
+
+procedure TACBrNFeDANFEFR.ImprimirDANFEResumido(NFE: TNFe);
+begin
+  FDetalhado := False;
+
   if PrepareReport(NFE) then
   begin
     if MostrarPreview then
