@@ -2498,6 +2498,7 @@ begin
  FLinkNfse       := TNFSeLinkNFSe.Create(AFNotaFiscalEletronica, TACBrNFSe(AFNotaFiscalEletronica).NotasFiscais);
  FGerarLoteRPS   := TNFSeGerarLoteRPS.Create(AFNotaFiscalEletronica, TACBrNFSe(AFNotaFiscalEletronica).NotasFiscais);
  FEnviarSincrono := TNFSeEnviarSincrono.Create(AFNotaFiscalEletronica, TACBrNFSe(AFNotaFiscalEletronica).NotasFiscais);
+ FConsSeqRPS     := TNFSeConsultarSequencialRPS.Create(AFNotaFiscalEletronica, TACBrNFSe(AFNotaFiscalEletronica).NotasFiscais);
 end;
 
 destructor TWebServices.Destroy;
@@ -2512,6 +2513,7 @@ begin
  FLinkNfse.Free;
  FGerarLoteRPS.Free;
  FEnviarSincrono.Free;
+ FConsSeqRPS.Free;
 
  inherited;
 end;
