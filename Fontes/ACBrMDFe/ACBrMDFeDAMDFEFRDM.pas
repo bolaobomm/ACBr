@@ -72,8 +72,8 @@ type
     procedure frxReportGetValue(const VarName: string; var Value: Variant);
   private
     FDAMDFEClassOwner: TACBrMDFeDAMDFeClass;
-    FMDFe:             TMDFe;
-    FEvento:           TEventoMDFe;
+    FMDFe            : TMDFe;
+    FEvento          : TEventoMDFe;
     procedure CarregaIdentificacao;
     procedure CarregaParametros;
     procedure CarregaEmitente;
@@ -84,8 +84,8 @@ type
     procedure CarregaModalAquaviario;
     procedure CarregaModalFerroviario;
   public
-    property MDFe:             TMDFe read FMDFe write FMDFe;
-    property Evento:           TEventoMDFe read FEvento write FEvento;
+    property MDFe            : TMDFe read FMDFe write FMDFe;
+    property Evento          : TEventoMDFe read FEvento write FEvento;
     property DAMDFEClassOwner: TACBrMDFeDAMDFeClass read FDAMDFEClassOwner;
     procedure CarregaDados;
     procedure CarregaDadosEventos;
@@ -116,7 +116,7 @@ end;
 procedure TDMACBrMDFeDAMDFEFR.CarregaModal;
 begin
 
-//{$REGION 'Modal Rodoviario'}
+  // {$REGION 'Modal Rodoviario'}
 
   with cdsModalRodo, FieldDefs do
   begin
@@ -137,7 +137,7 @@ begin
     CreateDataSet;
   end;
 
-//{$ENDREGION}
+  // {$ENDREGION}
 
   with CDSModalAereo, FieldDefs do
   begin
@@ -254,7 +254,7 @@ begin
 
   with CDSModalFerrovVagoes, FMDFe.ferrov.vag do
   begin
-    for I := 0 to Count - 1 do
+    for i := 0 to Count - 1 do
     begin
       Append;
       FieldByName('serie').AsString := Items[i].serie;
@@ -280,19 +280,19 @@ begin
       FieldByName('placa').AsString     := veicTracao.placa;
       FieldByName('RNTRCProp').AsString := veicTracao.prop.RNTRC;
 
-      for I := 0 to veicTracao.condutor.Count - 1 do
+      for i := 0 to veicTracao.condutor.Count - 1 do
       begin
-        //Alteração proposta por Maciel Goettms (27/02/2014) Concatenação dos condutores já adicionados.
+        // Alteração proposta por Maciel Goettms (27/02/2014) Concatenação dos condutores já adicionados.
         FieldByName('CPF').AsString   := FieldByName('CPF').AsString + DFeUtil.FormatarCPF(veicTracao.condutor.Items[i].CPF) + #13#10;
         FieldByName('xNome').AsString := FieldByName('xNome').AsString + veicTracao.condutor.Items[i].xNome + #13#10;
       end;
     end;
-    for I := 0 to veicReboque.Count - 1 do
+    for i := 0 to veicReboque.Count - 1 do
     begin
       FieldByName('placa').AsString     := FieldByName('placa').AsString + #13#10 + veicReboque.Items[i].placa;
       FieldByName('RNTRCProp').AsString := FieldByName('RNTRCProp').AsString + #13#10 + veicReboque.Items[i].prop.RNTRC;
     end;
-    for I := 0 to valePed.disp.Count - 1 do
+    for i := 0 to valePed.disp.Count - 1 do
     begin
       FieldByName('CNPJForn').AsString := FieldByName('CNPJForn').AsString + DFeUtil.FormatarCNPJ(valePed.disp.Items[i].CNPJForn) + #13#10;
       FieldByName('CNPJPg').AsString   := FieldByName('CNPJPg').AsString + DFeUtil.FormatarCNPJ(valePed.disp.Items[i].CNPJPg) + #13#10;
@@ -351,7 +351,7 @@ end;
 
 procedure TDMACBrMDFeDAMDFEFR.CarregaDadosEventos;
 var
-  i: Integer;
+  i: integer;
 begin
   with cdsEventos, FieldDefs do
   begin
@@ -396,7 +396,7 @@ begin
         FieldByName('Modelo').AsString      := Copy(InfEvento.chMDFe, 21, 2);
         FieldByName('Serie').AsString       := Copy(InfEvento.chMDFe, 23, 3);
         FieldByName('Numero').AsString      := Copy(InfEvento.chMDFe, 26, 9);
-        FieldByName('MesAno').AsString      := Copy(InfEvento.chMDFe, 05, 2) + '/' + copy(InfEvento.chMDFe, 03, 2);
+        FieldByName('MesAno').AsString      := Copy(InfEvento.chMDFe, 05, 2) + '/' + Copy(InfEvento.chMDFe, 03, 2);
         FieldByName('Barras').AsString      := InfEvento.chMDFe;
         FieldByName('ChaveAcesso').AsString := MDFEUtil.FormatarChaveAcesso(InfEvento.chMDFe);
 
@@ -407,10 +407,10 @@ begin
           taProducao:
             FieldByName('tpAmb').AsString := 'PRODUÇÃO';
           taHomologacao:
-          begin
-            FieldByName('tpAmb').AsString := 'HOMOLOGAÇÃO - SEM VALOR FISCAL';
-            frxReport.Variables['HOMOLOGACAO'] := True;
-          end;
+            begin
+              FieldByName('tpAmb').AsString      := 'HOMOLOGAÇÃO - SEM VALOR FISCAL';
+              frxReport.Variables['HOMOLOGACAO'] := True;
+            end;
         end;
 
         FieldByName('dhEvento').AsDateTime    := InfEvento.dhEvento;
@@ -422,9 +422,9 @@ begin
         FieldByName('xMotivo').AsString       := RetInfEvento.xMotivo;
         FieldByName('nProt').AsString         := RetInfEvento.nProt;
         FieldByName('dhRegEvento').AsDateTime := RetInfEvento.dhRegEvento;
-        FieldByName('xJust').AsString := InfEvento.detEvento.xJust;
-        FieldByName('xNome').AsString := InfEvento.detEvento.xNome;
-        FieldByName('CPF').AsString   := DFeUtil.FormatarCPF(InfEvento.detEvento.CPF);
+        FieldByName('xJust').AsString         := InfEvento.detEvento.xJust;
+        FieldByName('xNome').AsString         := InfEvento.detEvento.xNome;
+        FieldByName('CPF').AsString           := DFeUtil.FormatarCPF(InfEvento.detEvento.CPF);
 
       end;
 
@@ -435,14 +435,16 @@ end;
 
 procedure TDMACBrMDFeDAMDFEFR.CarregaDocumentos;
 var
-  i, j: integer;
+  i, j, x, y: integer;
 begin
   with CDSDocumentos, FieldDefs do
   begin
     Close;
     Clear;
     Add('Tipo', ftString, 5);
-    Add('Chave', FtString, 70);
+    Add('Chave', ftString, 70);
+    Add('idUnidTransp', ftString, 70);
+    Add('idUnidCarga', ftString, 70);
     CreateDataSet;
 
     with FMDFe.infDoc do
@@ -456,8 +458,27 @@ begin
           begin
             Append;
             FieldByName('Tipo').AsString  := 'CTe';
-            FieldByName('Chave').AsString := MDFeUtil.FormatarChaveAcesso(infCTe.Items[j].chCTe, True);
+            FieldByName('Chave').AsString := MDFEUtil.FormatarChaveAcesso(infCTe.Items[j].chCTe, True);
             Post;
+            with infCTe[j] do
+              for x := 0 to infUnidTransp.Count - 1 do
+              begin
+                if x = 0 then
+                  Edit
+                else
+                  Append;
+                FieldByName('idUnidTransp').AsString := infUnidTransp[x].idUnidTransp;
+                Post;
+                for y := 0 to infUnidTransp[x].infUnidCarga.Count - 1 do
+                begin
+                  if y = 0 then
+                    Edit
+                  else
+                    Append;
+                  FieldByName('idUnidCarga').AsString := infUnidTransp[x].infUnidCarga[y].idUnidCarga;
+                  Post;
+                end;
+              end;
           end;
           for j := 0 to infCT.Count - 1 do
           begin
@@ -466,13 +487,51 @@ begin
             FieldByName('Chave').AsString := DFeUtil.FormatarCNPJCPF(FMDFe.emit.CNPJ) + '        ' +
               IntToStr(infCT.Items[j].serie) + '-' + infCT.Items[j].nCT;
             Post;
+            with infCT[j] do
+              for x := 0 to infUnidTransp.Count - 1 do
+              begin
+                if x = 0 then
+                  Edit
+                else
+                  Append;
+                FieldByName('idUnidTransp').AsString := infUnidTransp[x].idUnidTransp;
+                Post;
+                for y := 0 to infUnidTransp[x].infUnidCarga.Count - 1 do
+                begin
+                  if y = 0 then
+                    Edit
+                  else
+                    Append;
+                  FieldByName('idUnidCarga').AsString := infUnidTransp[x].infUnidCarga[y].idUnidCarga;
+                  Post;
+                end;
+              end;
           end;
           for j := 0 to infNFe.Count - 1 do
           begin
             Append;
             FieldByName('Tipo').AsString  := 'NFe';
-            FieldByName('Chave').AsString := MDFeUtil.FormatarChaveAcesso(infNFe.Items[j].chNFe, True);
+            FieldByName('Chave').AsString := MDFEUtil.FormatarChaveAcesso(infNFe.Items[j].chNFe, True);
             Post;
+            with infNFe[j] do
+              for x := 0 to infUnidTransp.Count - 1 do
+              begin
+                if x = 0 then
+                  Edit
+                else
+                  Append;
+                FieldByName('idUnidTransp').AsString := infUnidTransp[x].idUnidTransp;
+                Post;
+                for y := 0 to infUnidTransp[x].infUnidCarga.Count - 1 do
+                begin
+                  if y = 0 then
+                    Edit
+                  else
+                    Append;
+                  FieldByName('idUnidCarga').AsString := infUnidTransp[x].infUnidCarga[y].idUnidCarga;
+                  Post;
+                end;
+              end;
           end;
           for j := 0 to infNF.Count - 1 do
           begin
@@ -481,13 +540,51 @@ begin
             FieldByName('Chave').AsString := DFeUtil.FormatarCNPJCPF(FMDFe.emit.CNPJ) + '        ' +
               IntToStr(infNF.Items[j].serie) + '-' + IntToStr(infNF.Items[j].nNF);
             Post;
+            with infNF[j] do
+              for x := 0 to infUnidTransp.Count - 1 do
+              begin
+                if x = 0 then
+                  Edit
+                else
+                  Append;
+                FieldByName('idUnidTransp').AsString := infUnidTransp[x].idUnidTransp;
+                Post;
+                for y := 0 to infUnidTransp[x].infUnidCarga.Count - 1 do
+                begin
+                  if y = 0 then
+                    Edit
+                  else
+                    Append;
+                  FieldByName('idUnidCarga').AsString := infUnidTransp[x].infUnidCarga[y].idUnidCarga;
+                  Post;
+                end;
+              end;
           end;
           for j := 0 to infMDFeTransp.Count - 1 do
           begin
             Append;
             FieldByName('Tipo').AsString  := 'MDF-e';
-            FieldByName('Chave').AsString := MDFeUtil.FormatarChaveAcesso(infMDFeTransp.Items[j].chMDFe, True);
+            FieldByName('Chave').AsString := MDFEUtil.FormatarChaveAcesso(infMDFeTransp.Items[j].chMDFe, True);
             Post;
+            with infMDFeTransp[j] do
+              for x := 0 to infUnidTransp.Count - 1 do
+              begin
+                if x = 0 then
+                  Edit
+                else
+                  Append;
+                FieldByName('idUnidTransp').AsString := infUnidTransp[x].idUnidTransp;
+                Post;
+                for y := 0 to infUnidTransp[x].infUnidCarga.Count - 1 do
+                begin
+                  if y = 0 then
+                    Edit
+                  else
+                    Append;
+                  FieldByName('idUnidCarga').AsString := infUnidTransp[x].infUnidCarga[y].idUnidCarga;
+                  Post;
+                end;
+              end;
           end;
         end;
       end;
@@ -519,7 +616,7 @@ begin
 
     CreateDataSet;
     Append;
-    with FMDFe.Emit do
+    with FMDFe.emit do
     begin
       FieldByName('CNPJ').AsString  := DFeUtil.FormatarCNPJ(CNPJ);
       FieldByName('IE').AsString    := IE;
@@ -581,7 +678,7 @@ begin
     with FMDFe.infMDFe do
     begin
       FieldByName('Id').AsString    := DFeUtil.LimpaNumero(Id);
-      FieldByName('Chave').AsString := MDFeUtil.FormatarChaveAcesso(Id);
+      FieldByName('Chave').AsString := MDFEUtil.FormatarChaveAcesso(Id);
     end;
 
     with FMDFe.Ide do
@@ -629,8 +726,8 @@ end;
 function CollateBr(Str: string): string;
 var
   Resultado, Temp: string;
-  vChar:           Char;
-  Tamanho, i:      integer;
+  vChar          : Char;
+  Tamanho, i     : integer;
 begin
   Result  := '';
   Tamanho := Length(Str);
@@ -661,15 +758,12 @@ begin
         Resultado := #32
 
 {$IFDEF DELPHI12_UP}
-
       else if CharInset(vChar, ['a' .. 'z', 'A' .. 'Z', '0' .. '9', '-', ' ']) then
 
 {$ELSE}
-
       else if vChar in ['a' .. 'z', 'A' .. 'Z', '0' .. '9', '-', ' '] then
 
 {$ENDIF}
-
         Resultado := UpperCase(vChar);
     end;
     Result := Result + Resultado;
