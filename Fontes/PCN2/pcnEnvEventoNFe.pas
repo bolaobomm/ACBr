@@ -237,9 +237,9 @@ begin
               Gerador.wCampo(tcStr, 'P30', 'idEstrangeiro', 05, 20, 1, Evento.Items[i].InfEvento.detEvento.dest.idEstrangeiro);
              end;
 
-            if Evento.Items[i].InfEvento.detEvento.dest.IE = ''
-             then
+            if Evento.Items[i].InfEvento.detEvento.dest.IE <> '' then
               Gerador.wCampo(tcStr, 'P31', 'IE', 02, 14, 1, Evento.Items[i].InfEvento.detEvento.dest.IE);
+              
             Gerador.wGrupo('/dest');
 
             Gerador.wCampo(tcDe2, 'P32', 'vNF',   01, 15, 1, Evento.Items[i].InfEvento.detEvento.vNF, DSC_VNF);
