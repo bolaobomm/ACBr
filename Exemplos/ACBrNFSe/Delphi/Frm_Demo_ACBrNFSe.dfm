@@ -398,6 +398,7 @@ object frmDemo_ACBrNFSe: TfrmDemo_ACBrNFSe
               'Niteroi/3303302/RJ'
               'Olimpia/3533908/SP'
               'Palhoca/4211900/SC'
+              'Palmas/1721000/TO'
               'Para de Minas/3147105/MG'
               'Paracatu/3147006/MG'
               'Paranagua/4118204/PR'
