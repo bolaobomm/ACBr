@@ -674,12 +674,114 @@ begin
     if (Self.Items[i].NFe.Ide.dSaiEnt < Self.Items[i].NFe.Ide.dEmi) then  //GB10.2  - Facultativo
        Erros := Erros + '506-Rejeição: Data de Saída menor que a Data de Emissão'+sLineBreak;
 
+    if (FConfiguracoes.Geral.ModeloDF = moNFCe) and
+       (Self.Items[i].NFe.Ide.tpNF = tnEntrada) then  //B11-10
+       Erros := Erros + '706-Rejeição: NFC-e para operação de entrada'+sLineBreak;
+
+    if (FConfiguracoes.Geral.ModeloDF = moNFCe) and
+       (Self.Items[i].NFe.Ide.idDest <> doInterna) then  //B11a-10
+       Erros := Erros + '707-Rejeição: Rejeição: NFC-e para operação interestadual ou com o exterior'+sLineBreak;
+
     if not ValidarMunicipio(Self.Items[i].NFe.Ide.cMunFG) then //GB12
        Erros := Erros + '270-Rejeição: Código Município do Fato Gerador: dígito inválido'+sLineBreak;
 
     if (UFparaCodigo(Self.Items[i].NFe.Emit.EnderEmit.UF)<>StrToIntDef(copy(IntToStr(Self.Items[i].NFe.Ide.cMunFG),1,2),0)) then//GB12.1
        Erros := Erros + '271-Rejeição: Código Município do Fato Gerador: difere da UF do emitente'+sLineBreak;
 
+    if (FConfiguracoes.Geral.ModeloDF = moNFCe) and
+       (not (Self.Items[i].NFe.Ide.tpImp in[tiNFCe, tiMsgEletronica])) then  //B21-10
+       Erros := Erros + '709-Rejeição: NFC-e com formato de DANFE inválido'+sLineBreak;
+
+    if (FConfiguracoes.Geral.ModeloDF = moNFe) and
+       (Self.Items[i].NFe.Ide.tpImp in[tiNFCe, tiMsgEletronica]) then  //B21-20
+       Erros := Erros + '710-Rejeição: NF-e com formato de DANFE inválido'+sLineBreak;
+
+    if (FConfiguracoes.Geral.ModeloDF = moNFe) and
+       (Self.Items[i].NFe.Ide.tpEmis = teOffLine) then  //B22-20
+       Erros := Erros + '711-Rejeição: NF-e com contingência off-line'+sLineBreak;
+
+    if(Self.Items[i].NFe.Ide.tpAmb <> FConfiguracoes.WebServices.Ambiente) then  //B24-10
+       Erros := Erros + '252-Rejeição: Ambiente informado diverge do Ambiente de recebimento '+
+                        '(Tipo do ambiente da NF-e difere do ambiente do Web Service)'+sLineBreak;
+
+    if (FConfiguracoes.Geral.ModeloDF = moNFCe) and
+       (Self.Items[i].NFe.Ide.finNFe <> fnNormal) then  //B25-20
+       Erros := Erros + '715-Rejeição: Rejeição: NFC-e com finalidade inválida'+sLineBreak;
+
+    if (FConfiguracoes.Geral.ModeloDF = moNFe) and
+       (Self.Items[i].NFe.Ide.finNFe = fnComplementar) and
+       (Self.Items[i].NFe.Ide.NFref.Count = 0) then  //B25-30
+       Erros := Erros + '254-Rejeição: NF-e complementar não possui NF referenciada'+sLineBreak;
+
+    if (FConfiguracoes.Geral.ModeloDF = moNFe) and
+       (Self.Items[i].NFe.Ide.finNFe = fnComplementar) and
+       (Self.Items[i].NFe.Ide.NFref.Count > 1) then  //B25-40
+       Erros := Erros + '255-Rejeição: NF-e complementar possui mais de uma NF referenciada'+sLineBreak;
+
+    if (FConfiguracoes.Geral.ModeloDF = moNFe) and
+       (Self.Items[i].NFe.Ide.finNFe = fnComplementar) and
+       (Self.Items[i].NFe.Ide.NFref.Count = 1) and
+       ( ((Self.Items[i].NFe.Ide.NFref.Items[0].RefNF.CNPJ > '') and (Self.Items[i].NFe.Ide.NFref.Items[0].RefNF.CNPJ <>  Self.Items[i].NFe.Emit.CNPJCPF)) or
+         ((Self.Items[i].NFe.Ide.NFref.Items[0].RefNFP.CNPJCPF > '') and (Self.Items[i].NFe.Ide.NFref.Items[0].RefNFP.CNPJCPF <>  Self.Items[i].NFe.Emit.CNPJCPF)) ) then  //B25-50
+       Erros := Erros + '269-Rejeição: CNPJ Emitente da NF Complementar difere do CNPJ da NF Referenciada'+sLineBreak;
+
+    if (FConfiguracoes.Geral.ModeloDF = moNFe) and
+       (Self.Items[i].NFe.Ide.finNFe = fnComplementar) and
+       (Self.Items[i].NFe.Ide.NFref.Count = 1) and //Testa pelo número para saber se TAG foi preenchida
+       ( ((Self.Items[i].NFe.Ide.NFref.Items[0].RefNF.nNF > 0) and (Self.Items[i].NFe.Ide.NFref.Items[0].RefNF.cUF <>  UFparaCodigo(Self.Items[i].NFe.Emit.EnderEmit.UF))) or
+         ((Self.Items[i].NFe.Ide.NFref.Items[0].RefNFP.nNF > 0) and (Self.Items[i].NFe.Ide.NFref.Items[0].RefNFP.cUF <>  UFparaCodigo(Self.Items[i].NFe.Emit.EnderEmit.UF))) ) then  //B25-60 - Facultativo
+       Erros := Erros + '678-Rejeição: NF referenciada com UF diferente da NF-e complementar'+sLineBreak;
+
+    if (FConfiguracoes.Geral.ModeloDF = moNFe) and
+       (Self.Items[i].NFe.Ide.finNFe = fnDevolucao) and
+       (Self.Items[i].NFe.Ide.NFref.Count = 0) then  //B25-70
+       Erros := Erros + '321-Rejeição: NF-e devolução não possui NF referenciada'+sLineBreak;
+
+    if (FConfiguracoes.Geral.ModeloDF = moNFe) and
+       (Self.Items[i].NFe.Ide.finNFe = fnDevolucao) and
+       (Self.Items[i].NFe.Ide.NFref.Count > 1) then  //B25-80
+       Erros := Erros + '322-Rejeição: NF-e devolução possui mais de uma NF referenciada'+sLineBreak;
+
+    if (FConfiguracoes.Geral.ModeloDF = moNFCe) and
+       (Self.Items[i].NFe.Ide.indFinal = cfNao) then //B25a-10
+       Erros := Erros + '716-Rejeição: NFC-e em operação não destinada a consumidor final'+sLineBreak;
+
+    if (FConfiguracoes.Geral.ModeloDF = moNFe) and
+       (Self.Items[i].NFe.Ide.indPres = pcEntregaDomicilio) then //B25b-10
+       Erros := Erros + '794-Rejeição: NF-e com indicativo de NFC-e com entrega a domicílio'+sLineBreak;
+
+    if (FConfiguracoes.Geral.ModeloDF = moNFCe) and
+       (not (Self.Items[i].NFe.Ide.indPres in[pcPresencial, pcEntregaDomicilio])) then //B25b-20
+       Erros := Erros + '717-Rejeição: NFC-e em operação não presencial'+sLineBreak;
+
+    if (Self.Items[i].NFe.Ide.procEmi in[peAvulsaFisco, peAvulsaContribuinte]) and
+       (Self.Items[i].NFe.Ide.serie < 890) and
+       (Self.Items[i].NFe.Ide.serie > 899) then //B26-20
+       Erros := Erros + '451-Rejeição: Processo de emissão informado inválido'+sLineBreak;
+
+    if (Self.Items[i].NFe.Ide.procEmi in[peAvulsaFisco, peAvulsaContribuinte]) and
+       (Self.Items[i].NFe.Ide.tpEmis <> teNormal) then //B26-30
+       Erros := Erros + '370-Nota Fiscal Avulsa com tipo de emissão inválido'+sLineBreak;
+
+    if (Self.Items[i].NFe.Ide.tpEmis = teDPEC) and
+       (Self.Items[i].NFe.Ide.xJust > '') then //B28-10
+       Erros := Erros + '556-Justificativa de entrada em contingência não deve ser informada para tipo de emissão normal'+sLineBreak;
+
+    if (Self.Items[i].NFe.Ide.tpEmis in[teContingencia, teDPEC, teFSDA, teOffLine]) and
+       (Self.Items[i].NFe.Ide.xJust = '') then //B28-20
+       Erros := Erros + '557-A Justificativa de entrada em contingência deve ser informada'+sLineBreak;
+
+    if (FConfiguracoes.Geral.ModeloDF = moNFCe) and
+       (Self.Items[i].NFe.Ide.NFref.Count > 0) then  //BA01-10
+       Erros := Erros + '708-Rejeição: NFC-e não pode referenciar documento fiscal'+sLineBreak;
+
+    if (FConfiguracoes.Geral.ModeloDF = moNFCe) and
+       (Self.Items[i].NFe.Emit.IEST > '') then  //C18-10
+       Erros := Erros + '718-Rejeição: NFC-e não deve informar IE de Substituto Tributário'+sLineBreak;
+
+    if (FConfiguracoes.Geral.ModeloDF = moNFCe) and
+       (Self.Items[i].NFe.Emit.IEST > '') then  //C18-10
+       Erros := Erros + '718-Rejeição: NFC-e não deve informar IE de Substituto Tributário'+sLineBreak;
 
     Self.Items[i].RegrasdeNegocios := Erros;
     if Erros <> '' then
