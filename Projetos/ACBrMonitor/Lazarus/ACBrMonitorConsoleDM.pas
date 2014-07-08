@@ -118,7 +118,7 @@ Uses IniFiles, UtilUnit,
      {$IFDEF MSWINDOWS} sndkey32, {$ENDIF}
      {$IFDEF LINUX} unix, baseunix, termio, {$ENDIF}
      DoACBrUnit, DoECFUnit, DoGAVUnit, DoCHQUnit, DoDISUnit, DoLCBUnit,
-     DoBALUnit , DoETQUnit, DoCEPUnit, DoIBGEUnit, DoEmailUnit;
+     DoBALUnit , DoETQUnit, DoCEPUnit, DoIBGEUnit, DoEmailUnit, typinfo;
 
 {$R *.lfm}
 
@@ -381,7 +381,7 @@ begin
       FromName       := Ini.ReadString('EMAIL', 'NomeExibicao', '');
       From           := Ini.ReadString('EMAIL', 'Endereco', '');
       Host           := Ini.ReadString('EMAIL', 'Email', '');
-      Port           := Ini.ReadInteger('EMAIL','Porta', 0);
+      Port           := Ini.ReadString('EMAIL','Porta', '0');
       Username       := LeINICrypt(Ini,'EMAIL', 'Usuario', _C);
       Password       := LeINICrypt(Ini,'EMAIL', 'Senha', _C);
       SetSSL         := Ini.ReadBool('EMAIL', 'ExigeSSL', False);

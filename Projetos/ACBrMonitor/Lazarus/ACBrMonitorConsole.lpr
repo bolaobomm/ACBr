@@ -39,13 +39,10 @@ uses
    unix, baseunix, termio,
    {$IFDEF UseCThreads}cthreads,{$ENDIF}
   {$ENDIF}
-  Classes, SysUtils, IniFiles,
-  CustApp, ACBrBase, ACBrUtil, ACBrConsts, ACBrECF, ACBrECFNaoFiscal,
-  UtilUnit,
-  ACBrMonitorConsoleDM in 'ACBrMonitorConsoleDM.pas',
-  DoACBrUnit, DoETQUnit, DoLCBUnit, DoBALUnit, DoCEPUnit, DoCHQUnit,
-  DoDISUnit, DoECFUnit, DoGAVUnit, DoIBGEUnit,
-  DoECFBemafi32, DoECFObserver ; // Units de tradução dos comandos
+  Classes, SysUtils, IniFiles, CustApp, ACBrBase, ACBrUtil, ACBrConsts, ACBrECF,
+  ACBrECFNaoFiscal, UtilUnit, ACBrMonitorConsoleDM, DoACBrUnit, DoETQUnit,
+  DoLCBUnit, DoBALUnit, DoCEPUnit, DoCHQUnit, DoDISUnit, DoECFUnit, DoGAVUnit,
+  DoIBGEUnit, DoECFBemafi32, DoECFObserver, DoEmailUnit ; // Units de tradução dos comandos
 
 type
 
