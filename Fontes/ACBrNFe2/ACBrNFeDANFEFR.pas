@@ -106,7 +106,7 @@ type
     property TributosPercentualPersonalizado: double read FTributosPercentualPersonalizado write setTributosPercentualPersonalizado;
     property MarcaDaguaMSG: string read FMarcaDaguaMSG write FMarcaDaguaMSG;
     property vTroco: Currency read FvTroco write FvTroco;
-    property Detalhado: Boolean read FDetalhado;
+    property Detalhado: Boolean read FDetalhado write FDetalhado;
     property URLConsultaPublica:String read FURLConsultaPublica write FURLConsultaPublica;
     property DescricaoViaEstabelec: string read FDescricaoViaEstabelec write FDescricaoViaEstabelec;
   end;
