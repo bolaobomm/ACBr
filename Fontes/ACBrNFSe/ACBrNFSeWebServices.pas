@@ -1622,12 +1622,12 @@ begin
  URISig := FProvedorClass.GetURI(URISig);
  URIRef := URISig;
 
- FTagI := FProvedorClass.Gera_TagI(acConsNFSe, Prefixo3, Prefixo4, NameSpaceDad, FConfiguracoes.WebServices.Identificador, URISig);
+ FTagI := FProvedorClass.Gera_TagI(acConsSecRps {acConsNFSe}, Prefixo3, Prefixo4, NameSpaceDad, FConfiguracoes.WebServices.Identificador, URISig);
 
  FDadosSenha := FProvedorClass.Gera_DadosSenha(FConfiguracoes.WebServices.UserWeb,
                                                FConfiguracoes.WebServices.SenhaWeb);
 
- FTagF := FProvedorClass.Gera_TagF(acConsNFSe, Prefixo3);
+ FTagF := FProvedorClass.Gera_TagF(acConsSecRps {acConsNFSe}, Prefixo3);
 
  FDadosMsg := TNFSeG.Gera_DadosMsgConsSeqRPSDSF(FTagI, FTagF, VersaoXML,
                                                 CodCidadeToCodSiafi(StrToIntDef(TNFSeConsultarSequencialRPS(Self).FCidade, 0)),
