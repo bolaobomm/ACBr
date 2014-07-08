@@ -1080,15 +1080,23 @@ begin
       FieldByName('TpEmis').AsString := DFeUtil.SeSenao(TpEmis = teNormal, '1', '5');
       FieldByName('CDV').AsString := IntToStr(CDV);
       FieldByName('TpAmb').AsString := DFeUtil.SeSenao(TpAmb = taHomologacao,'2','1');
+
       if (IntToStr(Modelo) = '65') then
       begin
         if TpAmb = taHomologacao then
-          FieldByName('MensagemFiscal').AsString := 'HOMOLOGAÇÃO - SEM VALOR FISCAL'
+          FieldByName('MensagemFiscal').AsString := 'EMITIDA EM AMBIENTE DE HOMOLOGAÇÃO - SEM VALOR FISCAL'
         else
-          FieldByName('MensagemFiscal').AsString := 'EMISSÃO NORMAL';
-        FieldByName('URL').AsString              := FURLConsultaPublica;
+        begin
+          if tpEmis <> teNormal then
+            FieldByName('MensagemFiscal').AsString := ACBrStr('EMITIDA EM CONTINGÊNCIA')
+          else
+            FieldByName('MensagemFiscal').AsString := ACBrStr('ÁREA DE MENSAGEM FISCAL');
+        end;
+
+        FieldByName('URL').AsString := NotaUtil.GetURLConsultaNFCe(cUF, tpAmb);
       end
-      else begin
+      else
+      begin
         FieldByName('MensagemFiscal').AsString := '';
         FieldByName('URL').AsString            := '';
       end;
