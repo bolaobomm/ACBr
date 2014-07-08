@@ -157,10 +157,10 @@ begin
 
           Add( LFill('K200') +
                LFill( DT_EST ) +
-               LFill( COD_ITEM , 60 ) +
-               LFill( QTD , 17, 3 ) +
+               LFill( COD_ITEM  ) +
+               LFill( QTD  , 0, 3 ) +
                LFill( Integer(IND_EST), 0 ) +
-               LFill( COD_PART, 60 ));
+               LFill( COD_PART ));
         end;
         RegistroK990.QTD_LIN_K := RegistroK990.QTD_LIN_K + 1;
      end;
@@ -184,9 +184,9 @@ begin
 
           Add( LFill('K220') +
                LFill( DT_MOV ) +
-               LFill( COD_ITEM_ORI , 60 ) +
-               LFill( COD_ITEM_DEST , 60 ) +
-               LFill( QTD , 17, 3 ) );
+               LFill( COD_ITEM_ORI  ) +
+               LFill( COD_ITEM_DEST  ) +
+               LFill( QTD , 0, 3 ) );
         end;
         RegistroK990.QTD_LIN_K := RegistroK990.QTD_LIN_K + 1;
      end;
@@ -214,9 +214,11 @@ begin
           Add( LFill('K230') +
                LFill( DT_INI_OP ) +
                LFill( DT_FIN_OP ) +
-               LFill( COD_DOC_OP , 30 ) +
-               LFill( COD_ITEM , 60 ) +
-               LFill( QTD_ENC, 17 , 3 ));
+               LFill( COD_DOC_OP  ) +
+               LFill( COD_ITEM  ) +
+               LFill( QTD_ENC, 0 , 3 ));
+
+          WriteRegistroK235(RegK100.RegistroK230.Items[intFor]);
         end;
         RegistroK990.QTD_LIN_K := RegistroK990.QTD_LIN_K + 1;
      end;
@@ -237,9 +239,9 @@ begin
         begin
           Add( LFill('K235') +
                LFill( DT_SAIDA ) +
-               LFill( COD_ITEM , 60 ) +
-               LFill( QTD , 17 , 3 ) +
-               LFill( COD_INS_SUBST , 60 ));
+               LFill( COD_ITEM  ) +
+               LFill( QTD , 0 , 3 ) +
+               LFill( COD_INS_SUBST  ));
         end;
         RegistroK990.QTD_LIN_K := RegistroK990.QTD_LIN_K + 1;
      end;
@@ -260,8 +262,8 @@ begin
         begin
           Add( LFill('K250') +
                LFill( DT_PROD ) +
-               LFill( COD_ITEM , 60 ) +
-               LFill( QTD , 17, 3 ));
+               LFill( COD_ITEM  ) +
+               LFill( QTD , 0, 3 ));
         end;
         RegistroK990.QTD_LIN_K := RegistroK990.QTD_LIN_K + 1;
      end;
@@ -282,9 +284,9 @@ begin
         begin
           Add( LFill('K255') +
                LFill( DT_CONS ) +
-               LFill( COD_ITEM , 60 ) +
-               LFill( QTD , 17, 3 )+
-               LFill( COD_INS_SUBST, 60));
+               LFill( COD_ITEM  ) +
+               LFill( QTD , 0, 3 )+
+               LFill( COD_INS_SUBST));
         end;
         RegistroK990.QTD_LIN_K := RegistroK990.QTD_LIN_K + 1;
      end;
