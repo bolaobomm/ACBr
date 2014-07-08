@@ -246,7 +246,6 @@ begin
                   PrintCenter('decorrência de problemas técnicos',CenterX);
                 end;
      end;
-
     FontRotation:=0;
   end;
 end;
@@ -1162,17 +1161,16 @@ begin
 end;
 
 procedure ImprimirItens(PosX:Double);
-var qPrinted,QtdeMin,j:Integer;
+var qPrinted,j:Integer;
     aDescProduto, vEnd:String;
     Memo:TMemoBuf;
-    aFontHeigth:Double;
+    aMemoHeigthProduto,aFontHeigth:Double;
 begin
 
   with DANFeRave, DANFeRave.ACBrNFe.NotasFiscais.Items[DANFeRave.FNFIndex].NFe, DANFeRave.BaseReport do
    begin
      aFontHeigth:=GetFontHeigh;
      qPrinted:=0;
-	 QtdeMin:=0;
      while (FDetIndex<Det.Count) and ((LinhasPorPagina=0) or (qPrinted<LinhasPorPagina)) do
       begin
         Inc(qPrinted);
@@ -1180,7 +1178,6 @@ begin
          begin
           aDescProduto:=Trim(Prod.XProd);
 
-          //QtdeMin:=0;
           if ImprimirDetalhamentoEspecifico then
           begin
              if Prod.veicProd.chassi<>'' then
@@ -1195,7 +1192,6 @@ begin
 //                                '  RENAVAM: '+RENAVAM+#13+
                                 '  Nº DO MOTOR: '+nMotor;
                  end;
-                QtdeMin:=QtdeMin+6;
               end;
 
              if Prod.med.Count > 0 then
@@ -1205,88 +1201,81 @@ begin
                    with Prod.med.Items[j] do
                     begin
                      aDescProduto:=aDescProduto+
-                                   ' - LOTE: '+nLote+
-   //                                ' QTDADE: '+DFeUtil.FormatFloat(qLote)+#13+
+                                   ' -LOTE: '+nLote+
+                                   ' QTDADE: '+DFeUtil.FormatFloat(qLote)+
                                    ' FABR.: '+DFeUtil.FormatDate(DateToStr(dFab))+
                                    ' VAL.: '+DFeUtil.FormatDate(DateToStr(dVal))+
                                    DFeUtil.SeSenao(vPMC>0,' PMC: '+DFeUtil.FormatFloat(vPMC),'');
                     end;
-                   QtdeMin:=QtdeMin+1;
                  end;
               end;
           end;
 
           if Trim(infAdProd)>'' then
-           begin
-             aDescProduto:=aDescProduto+#13+StringReplace(infAdProd,';',#13,[rfReplaceAll]);
-             Inc(QtdeMin);
-             for j:=1 to Length(infAdProd) do
-                if infAdProd[j]=';' then
-                   Inc(QtdeMin);
-           end;
+            aDescProduto:=aDescProduto+#13+StringReplace(infAdProd,';',#13,[rfReplaceAll]);
 
-          //Testa se a quantidade de linhas a ser impressa
-          //ultrapassará o final do quadro dos itens,
-          //e caso aconteça, cria uma nova página
-          if (YPos+(aFontHeigth*QtdeMin))>FLastItens then
-           begin
-             Break;
-           end
-           else
-            if FDetIndex>0 then
-             begin
-               MoveTo(PosX,YPos+0.1-aFontHeigth);
-               LineTo(FLastX,YPos+0.1-aFontHeigth);
-             end;
-
-          PrintTab(Prod.CProd);
-          PrintTab('');
-
-          vEnd:=Prod.NCM;
-          if Trim(Prod.EXTIPI)>'' then
-             vEnd:=vEnd+'/'+Prod.EXTIPI;
-          PrintTab(vEnd);
-
-          case Emit.CRT of
-
-	          crtSimplesNacional                         : PrintTab(OrigToStr(Imposto.ICMS.orig)+CSOSNIcmsToStr(Imposto.ICMS.CSOSN));
-            crtRegimeNormal , crtSimplesExcessoReceita : PrintTab(OrigToStr(Imposto.ICMS.orig)+CSTICMSToStr(Imposto.ICMS.CST));
-          end;
-
-          PrintTab(Prod.CFOP);
-          PrintTab(Prod.UCom);
-
-          PrintTab(DFeUtil.FormatFloat(Prod.QCom,DFeUtil.SeSenao(Mask_qCom='',NotaUtil.PreparaCasasDecimais(CasasDecimais_qCom),Mask_qCom)));
-          PrintTab(DFeUtil.FormatFloat(Prod.VUnCom,DFeUtil.SeSenao(Mask_vUnCom='',NotaUtil.PreparaCasasDecimais(CasasDecimais_vUnCom),Mask_vUnCom)));
-
-          if ImprimirValorLiquido then
-             PrintTab(DFeUtil.FormatFloat(Prod.VProd-Prod.VDesc))
-          else
-             PrintTab(DFeUtil.FormatFloat(Prod.VProd));
-
-          if ImprimirDescPorc then
-          begin
-            if Prod.vDesc > 0 then
-               PrintTab(DFeUtil.FormatFloat(RoundTo(100-((((Prod.VUnCom*Prod.QCom)-Prod.vDesc)/(Prod.VUnCom*Prod.QCom))*100),-1))+'%')
-            else
-               PrintTab(DFeUtil.FormatFloat(Prod.vDesc));
-          end
-          else
-            PrintTab(DFeUtil.FormatFloat(Prod.vDesc));
-
-          PrintTab(DFeUtil.FormatFloat(Imposto.ICMS.vBC));
-          PrintTab(DFeUtil.FormatFloat(Imposto.ICMS.vBCST));
-          PrintTab(DFeUtil.FormatFloat(Imposto.ICMS.vICMSST));
-          PrintTab(DFeUtil.FormatFloat(Imposto.ICMS.vICMS));
-          PrintTab(DFeUtil.FormatFloat(Imposto.IPI.vIPI));
-          PrintTab(DFeUtil.FormatFloat(Imposto.ICMS.pICMS));
-          PrintTab(DFeUtil.FormatFloat(Imposto.IPI.pIPI));
           Memo:=TMemoBuf.Create;
           try
+            Memo.BaseReport := DANFeRave.BaseReport;
             Memo.PrintStart:=PosX+ColsWidth[1]+0.5;
             Memo.PrintEnd:=Memo.PrintStart+ColsWidth[2]-0.5;
             Memo.NoNewLine:=true;
-            memo.text:=aDescProduto;
+            memo.Text:=aDescProduto;
+            //Área utilizada para impressão da Descrição + Informação Adicionais do Produto
+            aMemoHeigthProduto:=memo.MemoHeightLeft;
+
+            //Testa se a quantidade de linhas a ser impressa ultrapassa o final do quadro dos itens,
+            //se ultrapassar cria uma nova página
+            if (YPos+aMemoHeigthProduto)>FLastItens then
+              Break
+            else if FDetIndex>0 then
+            begin
+              MoveTo(PosX,YPos+0.1-aFontHeigth);
+              LineTo(FLastX,YPos+0.1-aFontHeigth);
+            end;
+
+            PrintTab(Prod.CProd);
+            PrintTab('');
+
+            vEnd:=Prod.NCM;
+            if Trim(Prod.EXTIPI)>'' then
+               vEnd:=vEnd+'/'+Prod.EXTIPI;
+            PrintTab(vEnd);
+
+            case Emit.CRT of
+              crtSimplesNacional                         : PrintTab(OrigToStr(Imposto.ICMS.orig)+CSOSNIcmsToStr(Imposto.ICMS.CSOSN));
+              crtRegimeNormal , crtSimplesExcessoReceita : PrintTab(OrigToStr(Imposto.ICMS.orig)+CSTICMSToStr(Imposto.ICMS.CST));
+            end;
+
+            PrintTab(Prod.CFOP);
+            PrintTab(Prod.UCom);
+
+            PrintTab(DFeUtil.FormatFloat(Prod.QCom,DFeUtil.SeSenao(Mask_qCom='',NotaUtil.PreparaCasasDecimais(CasasDecimais_qCom),Mask_qCom)));
+            PrintTab(DFeUtil.FormatFloat(Prod.VUnCom,DFeUtil.SeSenao(Mask_vUnCom='',NotaUtil.PreparaCasasDecimais(CasasDecimais_vUnCom),Mask_vUnCom)));
+
+            if ImprimirValorLiquido then
+               PrintTab(DFeUtil.FormatFloat(Prod.VProd-Prod.VDesc))
+            else
+               PrintTab(DFeUtil.FormatFloat(Prod.VProd));
+
+            if ImprimirDescPorc then
+            begin
+              if Prod.vDesc > 0 then
+                 PrintTab(DFeUtil.FormatFloat(RoundTo(100-((((Prod.VUnCom*Prod.QCom)-Prod.vDesc)/(Prod.VUnCom*Prod.QCom))*100),-1))+'%')
+              else
+                 PrintTab(DFeUtil.FormatFloat(Prod.vDesc));
+            end
+            else
+              PrintTab(DFeUtil.FormatFloat(Prod.vDesc));
+
+            PrintTab(DFeUtil.FormatFloat(Imposto.ICMS.vBC));
+            PrintTab(DFeUtil.FormatFloat(Imposto.ICMS.vBCST));
+            PrintTab(DFeUtil.FormatFloat(Imposto.ICMS.vICMSST));
+            PrintTab(DFeUtil.FormatFloat(Imposto.ICMS.vICMS));
+            PrintTab(DFeUtil.FormatFloat(Imposto.IPI.vIPI));
+            PrintTab(DFeUtil.FormatFloat(Imposto.ICMS.pICMS));
+            PrintTab(DFeUtil.FormatFloat(Imposto.IPI.pIPI));
+
             PrintMemo(Memo,0,false);
           finally
             Memo.Free;
@@ -1294,17 +1283,17 @@ begin
 
           // Beretta
           If Prod.UCom <> Prod.uTrib Then
-             Begin
-             NewLine;
-             PrintTab('');  // 1
-             PrintTab('');  // 2
-             PrintTab('');  // 3
-             PrintTab('');  // 4
-             PrintTab('');  // 5
-             PrintTab(Prod.uTrib);  // 6
-             PrintTab(DFeUtil.FormatFloat(Prod.qTrib,'0.0000'));
-             PrintTab(DFeUtil.FormatFloat(Prod.vUnTrib,'0.0000'));
-             End ;
+          begin
+            NewLine;
+            PrintTab('');  // 1
+            PrintTab('');  // 2
+            PrintTab('');  // 3
+            PrintTab('');  // 4
+            PrintTab('');  // 5
+            PrintTab(Prod.uTrib);  // 6
+            PrintTab(DFeUtil.FormatFloat(Prod.qTrib,'0.0000'));
+            PrintTab(DFeUtil.FormatFloat(Prod.vUnTrib,'0.0000'));
+          end;
 
           Inc(FDetIndex);
           NewLine;
