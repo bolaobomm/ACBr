@@ -715,6 +715,10 @@ begin
       Resumido := DanfeResumido;
 
       RLPrinter.Copies     := NumCopias ;
+      
+      if ACBrNFeDANFCeFortes.Impressora <> '' then
+        RLPrinter.PrinterName := ACBrNFeDANFCeFortes.Impressora;
+
       RLLayout.PrintDialog := ACBrNFeDANFCeFortes.MostrarPreview;
       RLLayout.ShowProgress:= False ;
 
