@@ -2687,9 +2687,9 @@ var
   NFeRetorno: TRetConsSitNFe;
   aMsg, aEventos: WideString;
   AProcNFe: TProcNFe;
-  i, j : Integer;
-  Texto : String;
-  Acao  : TStringList ;
+  i, j: Integer;
+  Texto, Metodo, TAGResult: String;
+  Acao: TStringList;
   Stream: TMemoryStream;
   StrStream: TStringStream;
   wAtualiza, NFCancelada: Boolean;
@@ -2702,13 +2702,24 @@ var
 begin
   inherited Executar;
 
+  // Alterações realizadas por Italo em 10/07/2014
+  if FConfiguracoes.WebServices.UFCodigo = 29 then // 29 = BA
+  begin
+    Metodo    := 'NfeConsulta';
+    TAGResult := 'NfeConsultaNFResult';
+  end
+  else begin
+    Metodo    := 'NfeConsulta2';
+    TAGResult := 'NfeConsultaNF2Result';
+  end;
+
   Acao := TStringList.Create;
   Stream := TMemoryStream.Create;
 
   Texto := '<?xml version="1.0" encoding="utf-8"?>';
   Texto := Texto + '<soap12:Envelope xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap12="http://www.w3.org/2003/05/soap-envelope">';
   Texto := Texto +   '<soap12:Header>';
-  Texto := Texto +     '<nfeCabecMsg xmlns="http://www.portalfiscal.inf.br/nfe/wsdl/NfeConsulta2">';
+  Texto := Texto +     '<nfeCabecMsg xmlns="http://www.portalfiscal.inf.br/nfe/wsdl/' + Metodo + '">';
   Texto := Texto +       '<cUF>'+IntToStr(FConfiguracoes.WebServices.UFCodigo)+'</cUF>';
 
   Texto := Texto + '<versaoDados>' + GetVersaoNFe(FConfiguracoes.Geral.ModeloDF,
@@ -2719,7 +2730,7 @@ begin
   Texto := Texto +     '</nfeCabecMsg>';
   Texto := Texto +   '</soap12:Header>';
   Texto := Texto +   '<soap12:Body>';
-  Texto := Texto +     '<nfeDadosMsg xmlns="http://www.portalfiscal.inf.br/nfe/wsdl/NfeConsulta2">';
+  Texto := Texto +     '<nfeDadosMsg xmlns="http://www.portalfiscal.inf.br/nfe/wsdl/' + Metodo + '">';
   Texto := Texto + FDadosMsg;
   Texto := Texto +     '</nfeDadosMsg>';
   Texto := Texto +   '</soap12:Body>';
@@ -2735,7 +2746,7 @@ begin
      ConfiguraReqResp( ReqResp );
      ReqResp.URL := FURL;
      ReqResp.UseUTF8InHeader := True;
-     ReqResp.SoapAction := 'http://www.portalfiscal.inf.br/nfe/wsdl/NfeConsulta2';
+     ReqResp.SoapAction := 'http://www.portalfiscal.inf.br/nfe/wsdl/' + Metodo;
   {$ENDIF}
   NFeRetorno := TRetConsSitNFe.Create;
   try
@@ -2748,20 +2759,20 @@ begin
 
     {$IFDEF ACBrNFeOpenSSL}
        HTTP.Document.LoadFromStream(Stream);
-       ConfiguraHTTP(HTTP,'SOAPAction: "http://www.portalfiscal.inf.br/nfe/wsdl/NfeConsulta2"');
+       ConfiguraHTTP(HTTP,'SOAPAction: "http://www.portalfiscal.inf.br/nfe/wsdl/' + Metodo + '"');
        HTTP.HTTPMethod('POST', FURL);
 
        StrStream := TStringStream.Create('');
        StrStream.CopyFrom(HTTP.Document, 0);
        FRetornoWS := TiraAcentos(ParseText(StrStream.DataString, True));
-       FRetWS := SeparaDados( FRetornoWS,'nfeConsultaNF2Result');
+       FRetWS := SeparaDados(FRetornoWS, TAGResult);
        StrStream.Free;
     {$ELSE}
        ReqResp.Execute(Acao.Text, Stream);
        StrStream := TStringStream.Create('');
        StrStream.CopyFrom(Stream, 0);
        FRetornoWS := TiraAcentos(ParseText(StrStream.DataString, True));
-       FRetWS := SeparaDados( FRetornoWS,'nfeConsultaNF2Result');
+       FRetWS := SeparaDados(FRetornoWS, TAGResult);
        StrStream.Free;
     {$ENDIF}
     if FConfiguracoes.Geral.Salvar  then

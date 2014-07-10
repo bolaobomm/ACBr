@@ -1381,7 +1381,7 @@ begin
    FProvedor := StrToProvedor(Ok, CodCidadeToProvedor(StrToIntDef(CM, 0)));
   end;
 
- if CM = ''
+ if (CM = '') or (CM = '0')
   then begin
    if (Leitor.rExtrai(1, 'Servico') <> '')
     then begin
@@ -1390,7 +1390,7 @@ begin
     end;
   end;
 
- if CM = ''
+ if (CM = '') or (CM = '0')
   then begin
    if (Leitor.rExtrai(1, 'PrestadorServico') <> '')
     then begin
