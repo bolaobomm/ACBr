@@ -2319,7 +2319,12 @@ begin
              end;
           end;
 
-         //infCteComp - Falta Fazer
+         if INIRec.ReadString('infCteComp', 'chave', '') <> '' then
+          begin
+          {$IFDEF PL_200}
+            infCTeComp.chave := INIRec.ReadString('infCteComp', 'chave', '');
+          {$ENDIF}
+          end;
 
          if INIRec.ReadString( 'infCteAnu','chCte','') <> '' then
           begin
