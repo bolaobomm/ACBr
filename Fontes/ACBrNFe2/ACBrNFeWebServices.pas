@@ -1571,8 +1571,15 @@ begin
        raise EACBrNFeException.Create(Self.Enviar.Msg);
      end;
 
+  // Alterado por Augusto Fontana em 09/07/2014.
+  // Realizar a consulta do lote quando o envio for assíncrono
+
   //if (FConfiguracoes.Geral.ModeloDF = moNFe) or (not ASincrono) then
-  if (FConfiguracoes.Geral.ModeloDF = moNFe) and (not ASincrono) then
+  //if (FConfiguracoes.Geral.ModeloDF = moNFe) and (not ASincrono) then
+
+  // Esta forma será correta caso todas as SEFAZ liberem o acesso
+  // Sincrono a Assincrono tanto para a NF-e quanto para a NFC-e.
+  if not ASincrono then
    begin
     Self.Retorno.Recibo := Self.Enviar.Recibo;
     if not(Self.Retorno.Executar) then
@@ -1966,7 +1973,9 @@ begin
        FxMotivo  := NFeRetornoSincrono.protNFe.xMotivo;
        chNFe     := NFeRetornoSincrono.ProtNFe.chNFe;
 
-       Result := (NFeRetornoSincrono.cStat = 104);
+       // Alterado por Augusto Fontana em 09/07/2014.
+       // Verificar se a NF-e foi autorizada com sucesso
+       Result := (NFeRetornoSincrono.cStat = 104) and (NFeRetornoSincrono.protNFe.cStat = 100);
 
        if NFeRetornoSincrono.cStat = 104 then
         begin
