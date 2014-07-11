@@ -68,6 +68,10 @@ type
     frxDocumentos: TfrxDBDataset;
     cdsEventos: TClientDataSet;
     frxEventos: TfrxDBDataset;
+    cdsMunCarrega: TClientDataSet;
+    frxMunCarrega: TfrxDBDataset;
+    cdsPercurso: TClientDataSet;
+    frxPercurso: TfrxDBDataset;
     constructor Create(AOwner: TComponent); override;
     procedure frxReportGetValue(const VarName: string; var Value: Variant);
   private
@@ -83,6 +87,8 @@ type
     procedure CarregaModalAereo;
     procedure CarregaModalAquaviario;
     procedure CarregaModalFerroviario;
+    procedure CarregaMunCarrega; 
+    procedure CarregaPercurso;
   public
     property MDFe            : TMDFe read FMDFe write FMDFe;
     property Evento          : TEventoMDFe read FEvento write FEvento;
@@ -108,6 +114,8 @@ procedure TDMACBrMDFeDAMDFEFR.CarregaDados;
 begin
   CarregaParametros;
   CarregaIdentificacao;
+  CarregaMunCarrega;
+  CarregaPercurso;
   CarregaEmitente;
   CarregaDocumentos;
   CarregaModal;
@@ -302,6 +310,23 @@ begin
   end;
 end;
 
+procedure TDMACBrMDFeDAMDFEFR.CarregaMunCarrega;
+var i:integer;
+begin
+  with cdsMunCarrega, FieldDefs do
+  begin
+    Close;
+    Clear;
+    Add('xMunCarrega', ftString, 60);
+    CreateDataSet;
+    for i := 0 to FMDFe.Ide.infMunCarrega.Count - 1 do
+    begin
+      Append;
+      FieldByName('xMunCarrega').AsString:=FMDFe.Ide.infMunCarrega[i].xMunCarrega;
+    end;
+  end;
+end;
+
 procedure TDMACBrMDFeDAMDFEFR.CarregaParametros;
 begin
   with cdsParametros, FieldDefs do
@@ -334,6 +359,24 @@ begin
     Post;
 
   end;
+end;
+
+procedure TDMACBrMDFeDAMDFEFR.CarregaPercurso;
+var i:integer;
+begin
+  with cdsPercurso, FieldDefs do
+  begin
+    Close;
+    Clear;
+    Add('UFPer', ftString, 2);
+    CreateDataSet;
+    for i := 0 to FMDFe.Ide.infPercurso.Count - 1 do
+    begin
+      Append;
+      FieldByName('UFPer').AsString:=FMDFe.Ide.infPercurso[i].UFPer;
+    end;
+  end;
+
 end;
 
 constructor TDMACBrMDFeDAMDFEFR.Create(AOwner: TComponent);

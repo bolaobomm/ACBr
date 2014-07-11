@@ -1,11 +1,9 @@
 object DMACBrMDFeDAMDFEFR: TDMACBrMDFeDAMDFEFR
   OldCreateOrder = False
-  Left = 565
-  Top = 190
   Height = 382
   Width = 555
   object frxReport: TfrxReport
-    Version = '4.14'
+    Version = '4.15.11'
     DotMatrixReport = False
     IniFile = '\Software\Fast Reports'
     PreviewOptions.AllowEdit = False
@@ -40,6 +38,7 @@ object DMACBrMDFeDAMDFEFR: TDMACBrMDFeDAMDFEFR
     FitWindow = False
     CenterWindow = False
     PrintScaling = False
+    CheckboxAsShape = False
     Left = 48
     Top = 92
   end
@@ -128,14 +127,14 @@ object DMACBrMDFeDAMDFEFR: TDMACBrMDFeDAMDFEFR
     OpenDataSource = False
     DataSet = CDSModalFerrov
     BCDToCurrency = False
-    Left = 392
-    Top = 154
+    Left = 396
+    Top = 182
   end
   object CDSModalFerrov: TClientDataSet
     Aggregates = <>
     Params = <>
     Left = 310
-    Top = 146
+    Top = 178
   end
   object cdsParametros: TClientDataSet
     Aggregates = <>
@@ -155,8 +154,8 @@ object DMACBrMDFeDAMDFEFR: TDMACBrMDFeDAMDFEFR
   object CDSModalFerrovVagoes: TClientDataSet
     Aggregates = <>
     Params = <>
-    Left = 315
-    Top = 206
+    Left = 311
+    Top = 234
   end
   object frxModalFerrovVagoes: TfrxDBDataset
     UserName = 'ModalFerrovVagoes'
@@ -164,8 +163,8 @@ object DMACBrMDFeDAMDFEFR: TDMACBrMDFeDAMDFEFR
     OpenDataSource = False
     DataSet = CDSModalFerrovVagoes
     BCDToCurrency = False
-    Left = 397
-    Top = 206
+    Left = 405
+    Top = 230
   end
   object CDSDocumentos: TClientDataSet
     Aggregates = <>
@@ -185,8 +184,8 @@ object DMACBrMDFeDAMDFEFR: TDMACBrMDFeDAMDFEFR
   object cdsEventos: TClientDataSet
     Aggregates = <>
     Params = <>
-    Left = 320
-    Top = 280
+    Left = 316
+    Top = 308
   end
   object frxEventos: TfrxDBDataset
     UserName = 'Eventos'
@@ -194,7 +193,37 @@ object DMACBrMDFeDAMDFEFR: TDMACBrMDFeDAMDFEFR
     OpenDataSource = False
     DataSet = cdsEventos
     BCDToCurrency = False
-    Left = 352
-    Top = 280
+    Left = 388
+    Top = 304
+  end
+  object cdsMunCarrega: TClientDataSet
+    Aggregates = <>
+    Params = <>
+    Left = 139
+    Top = 128
+  end
+  object frxMunCarrega: TfrxDBDataset
+    UserName = 'MunCarrega'
+    CloseDataSource = False
+    OpenDataSource = False
+    DataSet = cdsMunCarrega
+    BCDToCurrency = False
+    Left = 216
+    Top = 128
+  end
+  object cdsPercurso: TClientDataSet
+    Aggregates = <>
+    Params = <>
+    Left = 299
+    Top = 128
+  end
+  object frxPercurso: TfrxDBDataset
+    UserName = 'Percurso'
+    CloseDataSource = False
+    OpenDataSource = False
+    DataSet = cdsPercurso
+    BCDToCurrency = False
+    Left = 376
+    Top = 128
   end
 end
