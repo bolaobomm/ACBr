@@ -802,7 +802,7 @@ begin
         begin
           strLinha := LFill('0210') +
                       LFill( COD_ITEM_COMP ) +
-                      LFill( QTD_COMP, 17, 6) +
+                      DFill( QTD_COMP, 6) +
                       LFill( PERDA , 2, 2);
 
           Add(strLinha);

@@ -158,7 +158,7 @@ begin
           Add( LFill('K200') +
                LFill( DT_EST ) +
                LFill( COD_ITEM  ) +
-               LFill( QTD  , 0, 3 ) +
+               DFill( QTD  , 3 ) +
                LFill( Integer(IND_EST), 0 ) +
                LFill( COD_PART ));
         end;
@@ -216,7 +216,7 @@ begin
                LFill( DT_FIN_OP ) +
                LFill( COD_DOC_OP  ) +
                LFill( COD_ITEM  ) +
-               LFill( QTD_ENC, 0 , 3 ));
+               DFill( QTD_ENC, 3 ));
 
           WriteRegistroK235(RegK100.RegistroK230.Items[intFor]);
         end;
@@ -240,7 +240,7 @@ begin
           Add( LFill('K235') +
                LFill( DT_SAIDA ) +
                LFill( COD_ITEM  ) +
-               LFill( QTD , 0 , 3 ) +
+               DFill( QTD , 3 ) +
                LFill( COD_INS_SUBST  ));
         end;
         RegistroK990.QTD_LIN_K := RegistroK990.QTD_LIN_K + 1;
