@@ -646,73 +646,76 @@ begin
                            'Schemas',PathWithDelim(APathSchemas)));
 
 {$IFDEF PL_103}
- case Tipo of
-  1: begin
-      if DFeUtil.EstaVazio(APathSchemas) then
-        schema_filename := pchar(PathWithDelim(ExtractFileDir(application.ExeName))+'Schemas\cte_v1.03.xsd')
-       else
-        schema_filename := pchar(PathWithDelim(APathSchemas)+'cte_v1.03.xsd');
-     end;
-  2: begin
-      if DFeUtil.EstaVazio(APathSchemas) then
-        schema_filename := pchar(PathWithDelim(ExtractFileDir(application.ExeName))+'Schemas\canccte_v1.03.xsd')
-       else
-        schema_filename := pchar(PathWithDelim(APathSchemas)+'canccte_v1.03.xsd');
-     end;
-  3: begin
-      if DFeUtil.EstaVazio(APathSchemas) then
-        schema_filename := pchar(PathWithDelim(ExtractFileDir(application.ExeName))+'Schemas\inutcte_v1.03.xsd')
-       else
-        schema_filename := pchar(PathWithDelim(APathSchemas)+'inutcte_v1.03.xsd');
-     end;
- end;
+  case Tipo of
+   1: begin
+       if DFeUtil.EstaVazio(APathSchemas) then
+         schema_filename := pchar(PathWithDelim(ExtractFileDir(application.ExeName))+'Schemas\cte_v1.03.xsd')
+        else
+         schema_filename := pchar(PathWithDelim(APathSchemas)+'cte_v1.03.xsd');
+      end;
+   2: begin
+       if DFeUtil.EstaVazio(APathSchemas) then
+         schema_filename := pchar(PathWithDelim(ExtractFileDir(application.ExeName))+'Schemas\canccte_v1.03.xsd')
+        else
+         schema_filename := pchar(PathWithDelim(APathSchemas)+'canccte_v1.03.xsd');
+      end;
+   3: begin
+       if DFeUtil.EstaVazio(APathSchemas) then
+         schema_filename := pchar(PathWithDelim(ExtractFileDir(application.ExeName))+'Schemas\inutcte_v1.03.xsd')
+        else
+         schema_filename := pchar(PathWithDelim(APathSchemas)+'inutcte_v1.03.xsd');
+      end;
+   else schema_filename := '';
+  end;
 {$ENDIF}
 {$IFNDEF PL_103}
- case Tipo of
-  1: begin
-      if DFeUtil.EstaVazio(APathSchemas) then
-        schema_filename := pchar(PathWithDelim(ExtractFileDir(application.ExeName))+'Schemas\cte_v' + CTeenviCTe + '.xsd')
-       else
-        schema_filename := pchar(PathWithDelim(APathSchemas)+'cte_v' + CTeenviCTe + '.xsd');
-     end;
-  2: begin
-      if DFeUtil.EstaVazio(APathSchemas) then
-        schema_filename := pchar(PathWithDelim(ExtractFileDir(application.ExeName))+'Schemas\canccte_v' + CTecancCTe + '.xsd')
-       else
-        schema_filename := pchar(PathWithDelim(APathSchemas)+'canccte_v' + CTecancCTe + '.xsd');
-     end;
-  3: begin
-      if DFeUtil.EstaVazio(APathSchemas) then
-        schema_filename := pchar(PathWithDelim(ExtractFileDir(application.ExeName))+'Schemas\inutcte_v' + CTeinutCTe + '.xsd')
-       else
-        schema_filename := pchar(PathWithDelim(APathSchemas)+'inutcte_v' + CTeinutCTe + '.xsd');
-     end;
-  4: begin
-      {
-      if DFeUtil.EstaVazio(APathSchemas) then
-        schema_filename := pchar(PathWithDelim(ExtractFileDir(application.ExeName))+'Schemas\envDPEC_v1.04.xsd')
-       else
-        schema_filename := pchar(PathWithDelim(APathSchemas)+'envDPEC_v1.04.xsd');
-      }
-     end;
-  5..11:
-     begin
-      if DFeUtil.EstaVazio(APathSchemas) then
-        schema_filename := pchar(PathWithDelim(ExtractFileDir(application.ExeName))+'Schemas\eventoCTe_v' + CTeEventoCTe + '.xsd')
-       else
-        schema_filename := pchar(PathWithDelim(APathSchemas)+'eventoCTe_v' + CTeEventoCTe + '.xsd');
-     end;
- end;
+  case Tipo of
+   1: begin
+       if DFeUtil.EstaVazio(APathSchemas) then
+         schema_filename := pchar(PathWithDelim(ExtractFileDir(application.ExeName))+'Schemas\cte_v' + CTeenviCTe + '.xsd')
+        else
+         schema_filename := pchar(PathWithDelim(APathSchemas)+'cte_v' + CTeenviCTe + '.xsd');
+      end;
+   2: begin
+       if DFeUtil.EstaVazio(APathSchemas) then
+         schema_filename := pchar(PathWithDelim(ExtractFileDir(application.ExeName))+'Schemas\canccte_v' + CTecancCTe + '.xsd')
+        else
+         schema_filename := pchar(PathWithDelim(APathSchemas)+'canccte_v' + CTecancCTe + '.xsd');
+      end;
+   3: begin
+       if DFeUtil.EstaVazio(APathSchemas) then
+         schema_filename := pchar(PathWithDelim(ExtractFileDir(application.ExeName))+'Schemas\inutcte_v' + CTeinutCTe + '.xsd')
+        else
+         schema_filename := pchar(PathWithDelim(APathSchemas)+'inutcte_v' + CTeinutCTe + '.xsd');
+      end;
+   4: begin
+       {
+       if DFeUtil.EstaVazio(APathSchemas) then
+         schema_filename := pchar(PathWithDelim(ExtractFileDir(application.ExeName))+'Schemas\envDPEC_v1.04.xsd')
+        else
+         schema_filename := pchar(PathWithDelim(APathSchemas)+'envDPEC_v1.04.xsd');
+       }
+       schema_filename := '';
+      end;
+   5..11:
+      begin
+       if DFeUtil.EstaVazio(APathSchemas) then
+         schema_filename := pchar(PathWithDelim(ExtractFileDir(application.ExeName))+'Schemas\eventoCTe_v' + CTeEventoCTe + '.xsd')
+        else
+         schema_filename := pchar(PathWithDelim(APathSchemas)+'eventoCTe_v' + CTeEventoCTe + '.xsd');
+      end;
+   else schema_filename := '';
+  end;
 {$ENDIF}
 
-//  if not FileExists(schema_filename) then
-//    raise Exception.Create('Arquivo de Schema não encontrado' + sLineBreak + schema_filename);
+  if not FileExists(schema_filename) then
+    raise Exception.Create('Arquivo de Schema não encontrado' + sLineBreak + schema_filename);
 
-  doc         := nil;
-  schema_doc  := nil;
-  parser_ctxt := nil;
-  schema      := nil;
-  valid_ctxt  := nil;
+//  doc         := nil;
+//  schema_doc  := nil;
+//  parser_ctxt := nil;
+//  schema      := nil;
+//  valid_ctxt  := nil;
   doc         := xmlParseDoc(PAnsiChar(Axml));
 
   if ((doc = nil) or (xmlDocGetRootElement(doc) = nil)) then
@@ -722,7 +725,8 @@ begin
     exit;
   end;
 
-  schema_doc := xmlReadFile(Pansichar(AnsiToUtf8(schema_filename)), nil, XML_DETECT_IDS);
+//  schema_doc := xmlReadFile(Pansichar(AnsiToUtf8(schema_filename)), nil, XML_DETECT_IDS);
+  schema_doc := xmlReadFile(PAnsiChar(schema_filename), nil, XML_DETECT_IDS);
 
   //  the schema cannot be loaded or is not well-formed
   if (schema_doc = nil) then

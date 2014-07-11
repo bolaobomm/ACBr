@@ -217,15 +217,16 @@ end;
 
 destructor TACBrCTe.Destroy;
 begin
+{$IFDEF ACBrCTeOpenSSL}
+  if FConfiguracoes.Geral.IniFinXMLSECAutomatico then
+   CteUtil.ShutDownXmlSec;
+{$ENDIF}
   FConfiguracoes.Free;
   FConhecimentos.Free;
   FEventoCTe.Free;
   FInutCTe.Free;
   FWebServices.Free;
-{$IFDEF ACBrCTeOpenSSL}
-  if FConfiguracoes.Geral.IniFinXMLSECAutomatico then
-   CteUtil.ShutDownXmlSec;
-{$ENDIF}
+  
   inherited;
 end;
 
