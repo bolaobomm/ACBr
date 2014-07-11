@@ -2622,7 +2622,7 @@ begin
    33: Result := DFeUtil.SeSenao(AAmbiente = taProducao, '', ''); //RJ
    24: Result := DFeUtil.SeSenao(AAmbiente = taProducao, '', ''); //RN
    43: Result := DFeUtil.SeSenao(AAmbiente = taProducao, '', ''); //RS
-   11: Result := DFeUtil.SeSenao(AAmbiente = taProducao, '', ''); //RO
+   11: Result := DFeUtil.SeSenao(AAmbiente = taProducao, 'http://www.nfce.sefin.ro.gov.br/consultanfce/consulta.jsp', 'http://www.nfce.sefin.ro.gov.br/consultanfce/consulta.jsp'); //RO
    14: Result := DFeUtil.SeSenao(AAmbiente = taProducao, '', ''); //RR
    42: Result := DFeUtil.SeSenao(AAmbiente = taProducao, '', ''); //SC
    35: Result := DFeUtil.SeSenao(AAmbiente = taProducao, '', ''); //SP
