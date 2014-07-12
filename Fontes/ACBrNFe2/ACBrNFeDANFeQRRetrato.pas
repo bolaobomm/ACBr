@@ -462,6 +462,18 @@ type
     QRShape68: TQRShape;
     QRLabel9: TQRLabel;
     qrlValorTotTrib: TQRLabel;
+    cdsItensVALORDESC: TStringField;
+    QRLabel75: TQRLabel;
+    qrmProdutoVALORDESC: TQRDBText;
+    QRShape78: TQRShape;
+    qrs15: TQRShape;
+    QRShape79: TQRShape;
+    qrs16: TQRShape;
+    QRShape80: TQRShape;
+    QRShape81: TQRShape;
+    QRShape82: TQRShape;
+    qrs18: TQRShape;
+    qrs17: TQRShape;
     procedure QRNFeBeforePrint(Sender: TCustomQuickRep;
       var PrintReport: Boolean);
     procedure qrbReciboBeforePrint(Sender: TQRCustomBand;
@@ -477,6 +489,8 @@ type
     procedure qrbItensBeforePrint(Sender: TQRCustomBand;
       var PrintBand: Boolean);
     procedure qrmProdutoDescricaoPrint(sender: TObject; var Value: string);
+    procedure qrbHeaderItensBeforePrint(Sender: TQRCustomBand;
+      var PrintBand: Boolean);
   private
     { Private declarations }
     FTotalPages : integer;
@@ -638,6 +652,7 @@ begin
 var
  nItem : Integer;
  sCST, sBCICMS, sALIQICMS, sVALORICMS, sALIQIPI, sVALORIPI : String;
+ dPercDesc : Currency;
 begin
   cdsItens.Close;
   cdsItens.CreateDataSet;
@@ -688,6 +703,18 @@ begin
                     9: cdsItens.FieldByName('VALOR').AsString := FormatFloat('###,###,###,##0.000000000', vUnCom);
                    10: cdsItens.FieldByName('VALOR').AsString := FormatFloat('###,###,###,##0.0000000000', vUnCom);
                   end;
+
+                  //Fernando pasqueto para imprimir o desconto no danfe
+                  if FImprimirDescPorc = True then
+                    begin
+                    if vProd > 0 then
+                      dPercDesc := (vDesc * 100) / vProd
+                    else dPercDesc := 0;
+                    cdsItens.FieldByName('VALORDESC').AsString :=
+                      FormatFloat('###,###,###,##0.00', dPercDesc);
+                    end
+                  else cdsItens.FieldByName('VALORDESC').AsString :=
+                      FormatFloat('###,###,###,##0.00', vDesc);
 
                   cdsItens.FieldByName('UNIDADE').AsString := UCom;
                   cdsItens.FieldByName('TOTAL').AsString :=
@@ -1022,6 +1049,14 @@ begin
     qrs12.Height:= intTamanhoLinha;
     qrs13.Height:= intTamanhoLinha;
     qrs14.Height:= intTamanhoLinha;
+    qrs15.Height:= intTamanhoLinha;
+    qrs16.Height:= intTamanhoLinha;
+    qrs17.Height:= intTamanhoLinha;
+    {
+    if intTamanhoLinha <> 22 then
+      qrs18.Top   := intTamanhoLinha
+    else}
+    qrs18.Top   := intTamanhoLinha - 1;
     //qrs15.Height:= intTamanhoLinha;
 
     if intTamanhoDescricao = 0 then
@@ -1040,7 +1075,10 @@ begin
         qrs12.Visible:= False;
         qrs13.Visible:= False;
         qrs14.Visible:= False;
-        //qrs15.Visible:= False;
+        qrs15.Visible:= False;
+        qrs16.Visible:= False;
+        qrs17.Visible:= False;
+        qrs18.Visible:= False;
     end;
 
     //qrs1.Repaint;
@@ -1057,6 +1095,10 @@ begin
     qrs12.Repaint;
     qrs13.Repaint;
     qrs14.Repaint;
+    qrs15.Repaint;
+    qrs16.Repaint;
+    qrs17.Repaint;
+    qrs18.Repaint;
     //qrs15.Repaint;
 
 
@@ -1304,6 +1346,15 @@ begin
 
     qrlMsgTeste.Repaint;
       
+end;
+
+procedure TfqrDANFeQRRetrato.qrbHeaderItensBeforePrint(Sender: TQRCustomBand;
+  var PrintBand: Boolean);
+begin
+  inherited;
+if FImprimirDescPorc then
+  QRLabel75.Caption := '% DESCONTO'
+ELSE QRLabel75.Caption := 'DESCONTO';
 end;
 
 procedure TfqrDANFeQRRetrato.qrbISSQNBeforePrint(Sender: TQRCustomBand;

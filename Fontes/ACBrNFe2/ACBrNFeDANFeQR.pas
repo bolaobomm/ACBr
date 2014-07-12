@@ -68,7 +68,7 @@ uses
   {$ENDIF}
   ACBrNFeQRCodeBar, pcnNFe, ACBrNFe, ACBrNFeUtil, Printers;
 
-type
+type      
   TfqrDANFeQR = class(TForm)
     QRNFe: TQuickRep;
     procedure FormDestroy(Sender: TObject);
@@ -100,7 +100,8 @@ type
     FResumoCanhoto_Texto: String;
     // Incluido por Luis Fernando em  22/01/2013
     FNFeCancelada       : Boolean;
-    FLocalImpCanhoto    : Integer; 
+    FLocalImpCanhoto    : Integer;
+    FImprimirDescPorc    : Boolean; //incluido por Fernando pasqueto 11/07/2014
     // Incluido por Italo em 27/03/2014
     // Destinado exclusivamente ao DANFE da NFC-e
     FImprimeItens: Boolean;
@@ -135,7 +136,8 @@ type
                              ANFeCancelada        : Boolean  = False;
                              ALocalImpCanhoto     : Integer  = 0;
                              AImprimeItens        : Boolean  = True;
-                             AvTroco              : Currency = 0.0);
+                             AvTroco              : Currency = 0.0;
+                             AImprimirDescPorc     : Boolean  = False);
 
     class procedure SavePDF(AFile                : String;
                             ANFe                 : TNFe;
@@ -159,7 +161,8 @@ type
                             ANFeCancelada        : Boolean  = False;
                             ALocalImpCanhoto     : Integer  = 0;
                             AImprimeItens        : Boolean  = True;
-                            AvTroco              : Currency = 0.0);
+                            AvTroco              : Currency = 0.0;
+                            AImprimirDescPorc     : Boolean  = False);
   end;
 
 implementation
@@ -195,7 +198,8 @@ class procedure TfqrDANFeQR.Imprimir(ANFe                 : TNFe;
                                      ANFeCancelada        : Boolean  = False;
                                      ALocalImpCanhoto     : Integer  = 0;
                                      AImprimeItens        : Boolean  = True;
-                                     AvTroco              : Currency = 0.0);
+                                     AvTroco              : Currency = 0.0;
+                                     AImprimirDescPorc     : Boolean  = False);
 begin
   with Create ( nil ) do
      try
@@ -222,7 +226,7 @@ begin
         FLocalImpCanhoto     := ALocalImpCanhoto;
         FImprimeItens        := AImprimeItens;
         FvTroco              := AvTroco;
-
+        FImprimirDescPorc    := AImprimirDescPorc;
         Printer := TPrinter.Create;
 
         if FImpressora > '' then
@@ -285,7 +289,8 @@ class procedure TfqrDANFeQR.SavePDF(AFile                : String;
                                     ANFeCancelada        : Boolean  = False;
                                     ALocalImpCanhoto     : Integer  = 0;
                                     AImprimeItens        : Boolean  = True;
-                                    AvTroco              : Currency = 0.0);
+                                    AvTroco              : Currency = 0.0;
+                                    AImprimirDescPorc     : Boolean  = False);
 {$IFDEF QReport_PDF}
 var
   qf : TQRPDFDocumentFilter;
@@ -317,6 +322,7 @@ begin
         FLocalImpCanhoto     := ALocalImpCanhoto;
         FImprimeItens        := AImprimeItens;
         FvTroco              := AvTroco;
+        FImprimirDescPorc    := AImprimirDescPorc;
 
         for i := 0 to ComponentCount -1 do
           begin

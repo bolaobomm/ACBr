@@ -1,10 +1,9 @@
 object fqrDANFeQR: TfqrDANFeQR
   Left = 194
   Top = 125
-  Width = 897
-  Height = 742
-  VertScrollBar.Position = 8
   Caption = 'fqrDANFeQR'
+  ClientHeight = 703
+  ClientWidth = 881
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -17,7 +16,7 @@ object fqrDANFeQR: TfqrDANFeQR
   TextHeight = 13
   object QRNFe: TQuickRep
     Left = 3
-    Top = -5
+    Top = 3
     Width = 794
     Height = 1123
     Frame.Color = clBlack
@@ -42,7 +41,6 @@ object fqrDANFeQR: TfqrDANFeQR
     Page.Columns = 1
     Page.Orientation = poPortrait
     Page.PaperSize = A4
-    Page.Continuous = False
     Page.Values = (
       100.000000000000000000
       2970.000000000000000000
@@ -74,8 +72,5 @@ object fqrDANFeQR: TfqrDANFeQR
     PrevFormStyle = fsNormal
     PreviewInitialState = wsNormal
     PrevInitialZoom = qrZoomToFit
-    PreviewDefaultSaveType = stQRP
-    PreviewLeft = 0
-    PreviewTop = 0
   end
 end
