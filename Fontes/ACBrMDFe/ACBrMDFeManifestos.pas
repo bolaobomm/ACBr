@@ -123,9 +123,9 @@ type
     function  Add: Manifesto;
     function Insert(Index: Integer): Manifesto;
     function GetNamePath: string; override;
-    function LoadFromFile(CaminhoArquivo: string; AGerarMDFe: Boolean = False): boolean;
-    function LoadFromStream(Stream: TStringStream; AGerarMDFe: Boolean = False): boolean;
-    function LoadFromString(AString: String; AGerarMDFe: Boolean = False): boolean;
+    function LoadFromFile(CaminhoArquivo: string; AGerarMDFe: Boolean = True): boolean;
+    function LoadFromStream(Stream: TStringStream; AGerarMDFe: Boolean = True): boolean;
+    function LoadFromString(AString: String; AGerarMDFe: Boolean = True): boolean;
     function SaveToFile(PathArquivo: string = ''): boolean;
 
     property Items[Index: Integer]: Manifesto read GetItem         write SetItem;
@@ -502,7 +502,7 @@ begin
   end;
 end;
 
-function TManifestos.LoadFromFile(CaminhoArquivo: string; AGerarMDFe: Boolean = False): boolean;
+function TManifestos.LoadFromFile(CaminhoArquivo: string; AGerarMDFe: Boolean = True): boolean;
 var
  LocMDFeR: TMDFeR;
  ArquivoXML: TStringList;
@@ -548,7 +548,7 @@ begin
  end;
 end;
 
-function TManifestos.LoadFromStream(Stream: TStringStream; AGerarMDFe: Boolean = False): boolean;
+function TManifestos.LoadFromStream(Stream: TStringStream; AGerarMDFe: Boolean = True): boolean;
 var
  LocMDFeR: TMDFeR;
 begin
@@ -590,7 +590,7 @@ begin
  end;
 end;
 
-function TManifestos.LoadFromString(AString: String; AGerarMDFe: Boolean = False): boolean;
+function TManifestos.LoadFromString(AString: String; AGerarMDFe: Boolean = True): boolean;
 var
   XMLMDFe: TStringStream;
 begin
