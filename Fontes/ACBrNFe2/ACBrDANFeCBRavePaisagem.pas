@@ -656,7 +656,7 @@ begin
        Box([fsTop],PosX,YPos,136,aWidthTituloBloco,'Endereço',vEnd);
        Box([fsTop,fsLeft],XPos,YPos,56,aWidthTituloBloco,'Bairro',XBairro);
        Box([fsTop,fsLeft],XPos,YPos,38,aWidthTituloBloco,'CEP',NotaUtil.FormatarCEP(DFeUtil.Poem_Zeros(CEP,8)),taCenter);
-       Box([fsTop,fsLeft],XPos,YPos,21,aWidthTituloBloco,'Data de '+vEntSai,DFeUtil.FormatDate(DateTimeToStr(Ide.DSaiEnt)),taCenter,True);
+       Box([fsTop,fsLeft],XPos,YPos,21,aWidthTituloBloco,'Data de '+vEntSai,DFeUtil.FormatDate(DateOf(Ide.DSaiEnt)),taCenter,True);
        Box([fsTop],PosX,YPos,136,aWidthTituloBloco,'Município',XMun);
        Box([fsTop,fsLeft],XPos,YPos,43,aWidthTituloBloco,'Fone / Fax',NotaUtil.FormatarFone(FONE),taCenter);
        Box([fsTop,fsLeft],XPos,YPos,13,aWidthTituloBloco,'Estado',UF,taCenter);

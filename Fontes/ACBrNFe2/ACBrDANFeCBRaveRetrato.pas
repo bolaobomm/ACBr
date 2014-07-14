@@ -633,7 +633,7 @@ begin
        Box([fsTop],PosX,YPos,93,aHeigthPadrao,'Endereço',vEnd);
        Box([fsTop,fsLeft],XPos,YPos,50,aHeigthPadrao,'Bairro',XBairro);
        Box([fsTop,fsLeft],XPos,YPos,30,aHeigthPadrao,'CEP',NotaUtil.FormatarCEP(DFeUtil.Poem_Zeros(CEP,8)),taCenter);
-       Box([fsTop,fsLeft],XPos,YPos,21,aHeigthPadrao,'Data de '+vEntSai,DFeUtil.FormatDate(DateTimeToStr(Ide.DSaiEnt)),taCenter,True);
+       Box([fsTop,fsLeft],XPos,YPos,21,aHeigthPadrao,'Data de '+vEntSai,DFeUtil.FormatDate(DateOf(ide.dSaiEnt)),taCenter,True);
        Box([fsTop],PosX,YPos,85,aHeigthPadrao,'Município',XMun);
        Box([fsTop,fsLeft],XPos,YPos,40,aHeigthPadrao,'Fone / Fax',NotaUtil.FormatarFone(Fone),taCenter);
        Box([fsTop,fsLeft],XPos,YPos,10,aHeigthPadrao,'Estado',UF,taCenter);
