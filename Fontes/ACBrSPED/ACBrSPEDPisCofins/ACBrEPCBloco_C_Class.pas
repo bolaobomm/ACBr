@@ -1848,7 +1848,7 @@ begin
     begin
       if Assigned(FOnBeforeWriteRegistroC495) then
       begin
-         FOnBeforeWriteRegistroC485(RegC490.RegistroC495.Items[intFor],
+         FOnBeforeWriteRegistroC495(RegC490.RegistroC495.Items[intFor],
                                     NullVL_BC_COFINS,
                                     NullALIQ_COFINS,
                                     NullQUANT_BC_COFINS,
