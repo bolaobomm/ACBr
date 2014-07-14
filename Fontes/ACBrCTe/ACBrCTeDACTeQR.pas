@@ -34,7 +34,7 @@
 {                                                                              }
 {******************************************************************************}
 
-{******************************************************************************
+{*******************************************************************************
 |* Historico
 |*
 |* 16/12/2008: Wemerson Souto
@@ -48,7 +48,7 @@
 |*    nas Class procedures "Imprimir" e "SavePDF"
 |*  - Habilitada a funcionalidade da procedure "SavePDF";
 |* 15/02/2012: Italo Jurisato Junior
-******************************************************************************}
+*******************************************************************************}
 
 {$I ACBr.inc}
 
@@ -285,8 +285,8 @@ class procedure TfrmDACTeQR.SavePDF(AFile               : String;
                                     AEPECEnviado        : Boolean   = False);
 {$IFDEF QReport_PDF}
  var
-  qf : TQRPDFDocumentFilter;
-  i  : Integer;
+  qf: TQRPDFDocumentFilter;
+  i: Integer;
 {$ENDIF}
 begin
 {$IFDEF QReport_PDF}
@@ -354,7 +354,7 @@ end;
 
 procedure TfrmDACTeQR.SetBarCodeImage(ACode: string; QRImage: TQRImage);
 var
-  b : TBarCode128c;
+  b: TBarCode128c;
 begin
   b := TBarCode128c.Create;
   try

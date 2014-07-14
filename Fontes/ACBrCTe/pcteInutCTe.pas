@@ -81,18 +81,18 @@ type
     function LerXMLFromString(const AXML: String): boolean;
     function ObterNomeArquivo: string;
   published
-    property Gerador: TGerador read FGerador write FGerador;
-    property tpAmb: TpcnTipoAmbiente read FtpAmb write FtpAmb;
-    property cUF: integer read FcUF write FcUF;
-    property ano: integer read Fano write Fano;
-    property CNPJ: string read FCNPJ write FCNPJ;
-    property modelo: integer read Fmodelo write Fmodelo;
-    property serie: integer read Fserie write Fserie;
-    property nCTIni: integer read FnCTIni write FnCTIni;
-    property nCTFin: integer read FnCTFin write FnCTFin;
-    property xJust: string read FxJust write FxJust;
-    property ID: string read FIDInutilizacao;
-    property InutCTe: TRetInutCTe read FInutCTe write FInutCTe;
+    property Gerador: TGerador       read FGerador write FGerador;
+    property tpAmb: TpcnTipoAmbiente read FtpAmb   write FtpAmb;
+    property cUF: integer            read FcUF     write FcUF;
+    property ano: integer            read Fano     write Fano;
+    property CNPJ: string            read FCNPJ    write FCNPJ;
+    property modelo: integer         read Fmodelo  write Fmodelo;
+    property serie: integer          read Fserie   write Fserie;
+    property nCTIni: integer         read FnCTIni  write FnCTIni;
+    property nCTFin: integer         read FnCTFin  write FnCTFin;
+    property xJust: string           read FxJust   write FxJust;
+    property ID: string              read FIDInutilizacao;
+    property InutCTe: TRetInutCTe    read FInutCTe write FInutCTe;
   end;
 
 implementation
@@ -153,7 +153,7 @@ end;
 
 function TinutCTe.LerXML(CaminhoArquivo: string): boolean;
 var
-  ArqInut : TStringList;
+  ArqInut: TStringList;
 begin
   ArqInut := TStringList.Create;
   try
@@ -166,7 +166,7 @@ end;
 
 function TinutCTe.LerXMLFromString(const AXML: String): boolean;
 var
-  RetInutCTe : TRetInutCTe;
+  RetInutCTe: TRetInutCTe;
 begin
   RetInutCTe := TRetInutCTe.Create;
   try

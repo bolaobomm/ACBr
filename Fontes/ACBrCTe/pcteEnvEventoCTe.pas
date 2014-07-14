@@ -89,6 +89,7 @@ type
     FGerador: TGerador;
     FidLote: Integer;
     FEvento: TInfEventoCollection;
+    
     procedure SetEvento(const Value: TInfEventoCollection);
   public
     constructor Create;
@@ -136,7 +137,7 @@ end;
 
 function TEventoCTe.GerarXML: boolean;
 var
-  sDoc : String;
+  sDoc: String;
   i: Integer;
 begin
   Gerador.ArquivoFormatoXML := '';
@@ -270,7 +271,7 @@ end;
 
 function TEventoCTe.LerXML(CaminhoArquivo: string): boolean;
 var
-  ArqEvento : TStringList;
+  ArqEvento: TStringList;
 begin
   ArqEvento := TStringList.Create;
   try
@@ -283,7 +284,7 @@ end;
 
 function TEventoCTe.LerXMLFromString(const AXML: String): boolean;
 var
-  RetEventoCTe : TRetEventoCTe;
+  RetEventoCTe: TRetEventoCTe;
   i: Integer;
 begin
   RetEventoCTe := TRetEventoCTe.Create;

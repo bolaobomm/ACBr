@@ -318,6 +318,7 @@ type
     property infCTeNorm: TInfCTeNorm read FinfCTeNorm write FinfCTeNorm;
     property infCteComp: TInfCteComp read FinfCteComp write FinfCteComp;
     property infCteAnu: TInfCteAnu   read FinfCteAnu  write FinfCteAnu;
+
     property autXML: TautXMLCollection read FautXML write SetautXML;
 
     property procCTe: TProcCTe     read FProcCTe   write FProcCTe;
@@ -329,7 +330,7 @@ type
     FId : string;
     FVersao : string;
   published
-    property Id: string read FId write FId;
+    property Id: string     read FId     write FId;
     property versao: string read FVersao write FVersao;
   end;
 

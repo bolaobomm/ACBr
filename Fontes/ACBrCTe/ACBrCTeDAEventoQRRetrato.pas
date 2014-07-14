@@ -34,7 +34,7 @@
 {                                                                              }
 {******************************************************************************}
 
-{******************************************************************************
+{*******************************************************************************
 |* Historico
 |*
 *******************************************************************************}
@@ -212,10 +212,8 @@ type
     procedure qrb_04_TomadorBeforePrint(Sender: TQRCustomBand; var PrintBand: Boolean);
     procedure qrb_06_CondicoesBeforePrint(Sender: TQRCustomBand; var PrintBand: Boolean);
     procedure qrb_10_HeaderItensBeforePrint(Sender: TQRCustomBand; var PrintBand: Boolean);
-    procedure qrb_08_Correcao_DetalheBeforePrint(Sender: TQRCustomBand;
-      var PrintBand: Boolean);
-    procedure qrb_09_Correcao_SummaryBeforePrint(Sender: TQRCustomBand;
-      var PrintBand: Boolean);
+    procedure qrb_08_Correcao_DetalheBeforePrint(Sender: TQRCustomBand; var PrintBand: Boolean);
+    procedure qrb_09_Correcao_SummaryBeforePrint(Sender: TQRCustomBand; var PrintBand: Boolean);
     procedure qrdbtxtValorPrint(sender: TObject; var Value: string);
   private
     procedure Itens;
@@ -243,7 +241,7 @@ end;
 
 procedure TfrmCTeDAEventoQRRetrato.Itens;
 var
-  i : Integer;
+  i: Integer;
 begin
  // Itens
   if ( cdsCorrecao.Active ) then
@@ -529,7 +527,7 @@ end;
 procedure TfrmCTeDAEventoQRRetrato.qrdbtxtValorPrint(sender: TObject;
   var Value: string);
 var
-  vLength : Integer;
+  vLength: Integer;
 begin
   inherited;
   vLength := 11 * ((Length(Value) div 90) + 1);

@@ -35,7 +35,7 @@
 {                                                                              }
 {******************************************************************************}
 
-{******************************************************************************
+{*******************************************************************************
 |* Historico
 |*
 |* 16/12/2008: Wemerson Souto
@@ -51,7 +51,7 @@
 |* - Function GetURL:
 |*  Incluida instrução 33: Result := CTeUtil.GetURLRS(AAmbiente, ALayOut); //RJ
 |*  RJ usa os WebServices do RS
-******************************************************************************}
+*******************************************************************************}
 {$I ACBr.inc}
 
 unit ACBrCTeUtil;
@@ -139,7 +139,7 @@ type
     class function GetURL(const AUF, AAmbiente, FormaEmissao: Integer; ALayOut: TLayOut): WideString;
     class function Valida(const AXML: AnsiString; var AMsg: AnsiString; const APathSchemas: string = ''): Boolean;
 
-    class function FormatarChaveAcesso(AValue : String; Mascara: Boolean = False ): String;
+    class function FormatarChaveAcesso(AValue: String; Mascara: Boolean = False ): String;
     class function FormatarNumCTe(const AValue: Integer): string;
     class function FormatarValor(mask: TpcteMask; const AValue: real): string;
     class function GerarChaveContingencia(FCTe:TCTe): String;
@@ -152,7 +152,7 @@ type
     class function Assinar(const AXML: AnsiString; Certificado: ICertificate2; out AXMLAssinado, FMensagem: AnsiString): Boolean;
 {$ENDIF}
 
-    class function UFtoCUF(UF : String): Integer;
+    class function UFtoCUF(UF: String): Integer;
     class function IdentificaTipoSchema(Const AXML: AnsiString; var I: Integer): integer;
   end;
 
@@ -627,13 +627,13 @@ end;
 function ValidaLibXML(const AXML: AnsiString;
   var AMsg: AnsiString; const APathSchemas: string = ''): Boolean;
 var
-  doc, schema_doc   : xmlDocPtr;
-  parser_ctxt       : xmlSchemaParserCtxtPtr;
-  schema            : xmlSchemaPtr;
-  valid_ctxt        : xmlSchemaValidCtxtPtr;
-  schemError        : xmlErrorPtr;
-  schema_filename   : PChar;
-  Tipo, I           : Integer;
+  doc, schema_doc: xmlDocPtr;
+  parser_ctxt: xmlSchemaParserCtxtPtr;
+  schema: xmlSchemaPtr;
+  valid_ctxt: xmlSchemaValidCtxtPtr;
+  schemError: xmlErrorPtr;
+  schema_filename: PChar;
+  Tipo, I: Integer;
 begin
   Tipo := CTeUtil.IdentificaTipoSchema(AXML, I);
 
@@ -788,14 +788,14 @@ function ValidaModalLibXML(XML: AnsiString; var Msg: AnsiString;
  const APathSchemas: string = ''): Boolean;
 {$IFNDEF PL_103}
 var
-  doc, schema_doc : xmlDocPtr;
-  parser_ctxt     : xmlSchemaParserCtxtPtr;
-  schema          : xmlSchemaPtr;
-  valid_ctxt      : xmlSchemaValidCtxtPtr;
-  schemError      : xmlErrorPtr;
-  schema_filename : String; // PChar;
-  Tipo            : Integer;
-  AXML            : AnsiString;
+  doc, schema_doc: xmlDocPtr;
+  parser_ctxt: xmlSchemaParserCtxtPtr;
+  schema: xmlSchemaPtr;
+  valid_ctxt: xmlSchemaValidCtxtPtr;
+  schemError: xmlErrorPtr;
+  schema_filename: String; // PChar;
+  Tipo: Integer;
+  AXML: AnsiString;
 {$ENDIF}
 begin
 {$IFDEF PL_103}
@@ -1045,11 +1045,11 @@ end;
 function ValidaMSXML(XML: AnsiString; out Msg: AnsiString;
  const APathSchemas: string = ''): Boolean;
 var
-  DOMDocument : IXMLDOMDocument2;
-  ParseError  : IXMLDOMParseError;
-  Schema      : XMLSchemaCache;
-  Tipo, I     : Integer;
-  ArqSchema   : String;
+  DOMDocument: IXMLDOMDocument2;
+  ParseError: IXMLDOMParseError;
+  Schema: XMLSchemaCache;
+  Tipo, I: Integer;
+  ArqSchema: String;
 begin
   Tipo := CTeUtil.IdentificaTipoSchema(XML, I);
 
@@ -1140,12 +1140,12 @@ function ValidaModalMSXML(XML: AnsiString; out Msg: AnsiString;
  const APathSchemas: string = ''): Boolean;
 {$IFNDEF PL_103}
 var
-  DOMDocument : IXMLDOMDocument2;
-  ParseError  : IXMLDOMParseError;
-  Schema      : XMLSchemaCache;
-  Tipo        : Integer;
-  AXML        : AnsiString;
-  ArqSchema   : String;
+  DOMDocument: IXMLDOMDocument2;
+  ParseError: IXMLDOMParseError;
+  Schema: XMLSchemaCache;
+  Tipo: Integer;
+  AXML: AnsiString;
+  ArqSchema: String;
 {$ENDIF}
 begin
 {$IFDEF PL_103}
@@ -1338,12 +1338,10 @@ end;
 
 function ValidaAssinaturaMSXML(XML: AnsiString; out Msg: AnsiString): Boolean;
 var
-  xmldoc  : IXMLDOMDocument3;
-  xmldsig : IXMLDigitalSignature;
-
-  pKeyInfo : IXMLDOMNode;
-  pKey, pKeyOut : IXMLDSigKey;
-
+  xmldoc: IXMLDOMDocument3;
+  xmldsig: IXMLDigitalSignature;
+  pKeyInfo: IXMLDOMNode;
+  pKey, pKeyOut: IXMLDSigKey;
 begin
   xmldoc := CoDOMDocument50.Create;
   xmldsig := CoMXDigitalSignature50.Create;
@@ -1416,9 +1414,9 @@ end;
 function AssinarLibXML(const AXML, ArqPFX, PFXSenha: AnsiString;
   out AXMLAssinado, FMensagem: AnsiString): Boolean;
 var
-  I, J, PosIni, PosFim : Integer;
-  URI, AStr, XmlAss    : AnsiString;
-  Tipo                 : Integer;  // 1 - CTe 2 - Cancelamento 3 - Inutilizacao
+  I, J, PosIni, PosFim: Integer;
+  URI, AStr, XmlAss: AnsiString;
+  Tipo: Integer;  // 1 - CTe 2 - Cancelamento 3 - Inutilizacao
   Cert: TMemoryStream;
   Cert2: TStringStream;
 begin
@@ -1567,14 +1565,13 @@ end;
 function AssinarMSXML(XML: AnsiString; Certificado: ICertificate2; out XMLAssinado: AnsiString): Boolean;
 var
   I, J, PosIni, PosFim: Integer;
-  URI               : string;
-  Tipo              : Integer;
-
+  URI: string;
+  Tipo: Integer;
   xmlHeaderAntes, xmlHeaderDepois: AnsiString;
-  xmldoc            : IXMLDOMDocument3;
-  xmldsig           : IXMLDigitalSignature;
-  dsigKey           : IXMLDSigKey;
-  signedKey         : IXMLDSigKey;
+  xmldoc: IXMLDOMDocument3;
+  xmldsig: IXMLDigitalSignature;
+  dsigKey: IXMLDSigKey;
+  signedKey: IXMLDSigKey;
 begin
   if Pos('<Signature', XML) <= 0 then
   begin
@@ -1724,11 +1721,11 @@ end;
 {$IFDEF ACBrCTeOpenSSL}
 class function CTeUtil.sign_file(const Axml: PAnsiChar; const key_file: PAnsiChar; const senha: PAnsiChar): AnsiString;
 var
-  doc     : xmlDocPtr;
-  node    : xmlNodePtr;
-  dsigCtx : xmlSecDSigCtxPtr;
-  buffer  : PAnsiChar;
-  bufSize : integer;
+  doc: xmlDocPtr;
+  node: xmlNodePtr;
+  dsigCtx: xmlSecDSigCtxPtr;
+  buffer: PAnsiChar;
+  bufSize: integer;
 label
   done;
 begin
@@ -1792,11 +1789,11 @@ end;
 
 class function CTeUtil.sign_memory(const Axml: PAnsiChar; const key_file: PAnsichar; const senha: PAnsiChar; Size: Cardinal; Ponteiro: Pointer): AnsiString;
 var
-  doc     : xmlDocPtr;
-  node    : xmlNodePtr;
-  dsigCtx : xmlSecDSigCtxPtr;
-  buffer  : PAnsiChar;
-  bufSize : integer;
+  doc: xmlDocPtr;
+  node: xmlNodePtr;
+  dsigCtx: xmlSecDSigCtxPtr;
+  buffer: PAnsiChar;
+  bufSize: integer;
 label
  done;
 begin
@@ -1868,7 +1865,7 @@ begin
 {$ENDIF}
 end;
 
-class function CTeUtil.UFtoCUF(UF : String): Integer;
+class function CTeUtil.UFtoCUF(UF: String): Integer;
 var
   Codigo, i: Integer;
 begin

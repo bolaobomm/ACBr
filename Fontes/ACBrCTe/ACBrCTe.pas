@@ -36,12 +36,12 @@
 {                                                                              }
 {******************************************************************************}
 
-{******************************************************************************
+{*******************************************************************************
 |* Historico
 |*
 |* 16/12/2008: Wemerson Souto
 |*  - Doação do componente para o Projeto ACBr
-******************************************************************************}
+*******************************************************************************}
 {$I ACBr.inc}
 
 unit ACBrCTe;
@@ -85,15 +85,15 @@ type
   TACBrCTe = class(TComponent)
   private
     fsAbout: TACBrCTeAboutInfo;
-    FDACTe : TACBrCTeDACTeClass;
+    FDACTe: TACBrCTeDACTeClass;
     FConhecimentos: TConhecimentos;
     FWebServices: TWebServices;
     FConfiguracoes: TConfiguracoes;
     FEventoCTe: TEventoCTe;
     FInutCTe: TInutCTe;
-    FStatus : TStatusACBrCTe;
+    FStatus: TStatusACBrCTe;
     FOnStatusChange: TNotifyEvent;
-    FOnGerarLog : TACBrCTeLog;
+    FOnGerarLog: TACBrCTeLog;
 
   	procedure SetDACTe(const Value: TACBrCTeDACTeClass);
     procedure EnviaEmailThread(const sSmtpHost, sSmtpPort, sSmtpUser,
@@ -115,14 +115,15 @@ type
     function Enviar(ALote: String; Imprimir: Boolean = True): Boolean;  overload;
     function Cancelamento(AJustificativa:WideString): Boolean;
     function Consultar: Boolean;
-    function EnviarEventoCTe(idLote : Integer): Boolean;
-    property WebServices: TWebServices read FWebServices write FWebServices;
-    property Conhecimentos: TConhecimentos read FConhecimentos write FConhecimentos;
-    property EventoCTe: TEventoCTe read FEventoCTe write FEventoCTe;
-    property InutCTe: TInutCTe read FInutCTe write FInutCTe;
-    property Status: TStatusACBrCTe read FStatus;
-    procedure SetStatus( const stNewStatus : TStatusACBrCTe );
+    function EnviarEventoCTe(idLote: Integer): Boolean;
 
+    property WebServices: TWebServices     read FWebServices   write FWebServices;
+    property Conhecimentos: TConhecimentos read FConhecimentos write FConhecimentos;
+    property EventoCTe: TEventoCTe         read FEventoCTe     write FEventoCTe;
+    property InutCTe: TInutCTe             read FInutCTe       write FInutCTe;
+    property Status: TStatusACBrCTe        read FStatus;
+
+    procedure SetStatus(const stNewStatus: TStatusACBrCTe );
     procedure ImprimirEvento;
     procedure ImprimirEventoPDF;
     procedure EnviarEmailEvento(const sSmtpHost,
@@ -132,42 +133,41 @@ type
                                 sFrom,
                                 sTo,
                                 sAssunto: String;
-                                sMensagem : TStrings;
-                                SSL : Boolean;
+                                sMensagem: TStrings;
+                                SSL: Boolean;
                                 EnviaPDF: Boolean = true;
                                 sCC: TStrings = nil;
-                                Anexos:TStrings=nil;
+                                Anexos: TStrings=nil;
                                 PedeConfirma: Boolean = False;
                                 AguardarEnvio: Boolean = False;
                                 NomeRemetente: String = '';
-                                TLS : Boolean = True);
+                                TLS: Boolean = True);
 
     procedure EnviaEmail(const sSmtpHost,
-                                  sSmtpPort,
-                                  sSmtpUser,
-                                  sSmtpPasswd,
-                                  sFrom,
-                                  sTo,
-                                  sAssunto: String;
-                                  sMensagem : TStrings;
-                                  SSL : Boolean;
-                                  sCC: TStrings = nil;
-                                  Anexos:TStrings=nil;
-                                  PedeConfirma: Boolean = False;
-                                  AguardarEnvio: Boolean = False;
-                                  NomeRemetente: String = '';
-                                  TLS : Boolean = True;
-                                  StreamCTe : TStringStream = nil;
-                                  NomeArq : String = '';
-                                  UsarThread: Boolean = True;
-                                  HTML: Boolean = False);
+                         sSmtpPort,
+                         sSmtpUser,
+                         sSmtpPasswd,
+                         sFrom,
+                         sTo,
+                         sAssunto: String;
+                         sMensagem: TStrings;
+                         SSL: Boolean;
+                         sCC: TStrings = nil;
+                         Anexos: TStrings = nil;
+                         PedeConfirma: Boolean = False;
+                         AguardarEnvio: Boolean = False;
+                         NomeRemetente: String = '';
+                         TLS: Boolean = True;
+                         StreamCTe: TStringStream = nil;
+                         NomeArq: String = '';
+                         UsarThread: Boolean = True;
+                         HTML: Boolean = False);
   published
-    property Configuracoes: TConfiguracoes read FConfiguracoes write FConfiguracoes;
-    property OnStatusChange: TNotifyEvent read FOnStatusChange write FOnStatusChange;
-  	property DACTe: TACBrCTeDACTeClass read FDACTe write SetDACTe;
-    property AboutACBrCTe : TACBrCTeAboutInfo read fsAbout write fsAbout
-                          stored false;
-    property OnGerarLog : TACBrCTeLog read FOnGerarLog write FOnGerarLog;
+    property Configuracoes: TConfiguracoes   read FConfiguracoes  write FConfiguracoes;
+    property OnStatusChange: TNotifyEvent    read FOnStatusChange write FOnStatusChange;
+  	property DACTe: TACBrCTeDACTeClass       read FDACTe          write SetDACTe;
+    property AboutACBrCTe: TACBrCTeAboutInfo read fsAbout         write fsAbout stored false;
+    property OnGerarLog: TACBrCTeLog         read FOnGerarLog     write FOnGerarLog;
   end;
 
 procedure ACBrAboutDialog;
@@ -261,7 +261,7 @@ begin
   end;
 end;
 
-procedure TACBrCTe.SetStatus( const stNewStatus : TStatusACBrCTe );
+procedure TACBrCTe.SetStatus(const stNewStatus: TStatusACBrCTe);
 begin
   if ( stNewStatus <> FStatus ) then
   begin
@@ -271,10 +271,9 @@ begin
   end;
 end;
 
-function TACBrCTe.Cancelamento(
-  AJustificativa: WideString): Boolean;
+function TACBrCTe.Cancelamento(AJustificativa: WideString): Boolean;
 var
-  i : Integer;
+  i: Integer;
 begin
   if Self.Conhecimentos.Count = 0 then
    begin
@@ -296,7 +295,7 @@ end;
 
 function TACBrCTe.Consultar: Boolean;
 var
-  i : Integer;
+  i: Integer;
 begin
   if Self.Conhecimentos.Count = 0 then
    begin
@@ -362,8 +361,8 @@ procedure TACBrCTe.EnviaEmailThread(const sSmtpHost, sSmtpPort, sSmtpUser,
   AguardarEnvio: Boolean; NomeRemetente: String; TLS: Boolean;
   StreamCTe: TStringStream; NomeArq: String; HTML: Boolean = False);
 var
- ThreadSMTP : TSendMailThread;
- m:TMimemess;
+ ThreadSMTP: TSendMailThread;
+ m: TMimemess;
  p: TMimepart;
  i: Integer;
 begin
@@ -444,9 +443,9 @@ procedure TACBrCTe.EnviarEmailNormal(const sSmtpHost, sSmtpPort, sSmtpUser,
 var
   smtp: TSMTPSend;
   msg_lines: TStringList;
-  m:TMimemess;
+  m: TMimemess;
   p: TMimepart;
-  I : Integer;
+  I: Integer;
   CorpoEmail: TStringList;
 begin
   SetStatus( stCTeEmail );
@@ -659,8 +658,8 @@ procedure TACBrCTe.EnviarEmailEvento(const sSmtpHost, sSmtpPort, sSmtpUser,
   EnviaPDF: Boolean; sCC, Anexos: TStrings; PedeConfirma,
   AguardarEnvio: Boolean; NomeRemetente: String; TLS: Boolean);
 var
-  NomeArq : String;
-  AnexosEmail : TStrings;
+  NomeArq: String;
+  AnexosEmail: TStrings;
 begin
   AnexosEmail := TStringList.Create;
   try

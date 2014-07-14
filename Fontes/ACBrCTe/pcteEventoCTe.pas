@@ -236,14 +236,10 @@ function TInfEvento.getcOrgao: integer;
 //  (AC,AL,AP,AM,BA,CE,DF,ES,GO,MA,MT,MS,MG,PA,PB,PR,PE,PI,RJ,RN,RS,RO,RR,SC,SP,SE,TO);
 //  (12,27,16,13,29,23,53,32,52,21,51,50,31,15,25,41,26,22,33,24,43,11,14,42,35,28,17);
 begin
-//  Result := StrToInt(copy(FChave, 1, 2));
-
   Result := 0;
 
   if FTpEvento = teEPEC then
   begin
-    // Alterado por Italo em 28/10/2013
-//    case Result of
     case StrToIntDef(copy(FChave, 1, 2), 0) of
       0,
      11, // Rondônia
@@ -278,7 +274,6 @@ begin
     end;
   end
   else begin
-   // Alterado por Italo em 03/10/2013
    if FcOrgao <> 0 then
      Result := FcOrgao
    else
@@ -323,7 +318,8 @@ end;
 
 function TInfEvento.getVersaoEvento: String;
 begin
-  Result := '1.04';
+//  Result := '1.04';
+  Result := '2.00';
 end;
 
 function TInfEvento.DescricaoTipoEvento(TipoEvento: TpcnTpEvento): String;
@@ -394,19 +390,6 @@ end;
 procedure TDetEvento.setCondUso(const Value: String);
 begin
   FCondUso := Value;
-(*
-  if FCondUso = '' then
-    FCondUso := 'A Carta de Correção é disciplinada pelo Art. 58-B do CONVÊNIO/' +
-                'SINIEF 06/89: Fica permitida a utilização de carta de correção,' +
-                ' para regularização de erro ocorrido na emissão de documentos ' +
-                'fiscais relativos à prestação de serviço de transporte, desde ' +
-                'que o erro não esteja relacionado com: I - as variáveis que ' +
-                'determinam o valor do imposto tais como: base de cálculo, ' +
-                'alíquota, diferença de preço, quantidade, valor da prestação;' +
-                'II - a correção de dados cadastrais que implique mudança do ' +
-                'emitente, tomador, remetente ou do destinatário;III - a data ' +
-                'de emissão ou de saída.';
-*)
   if FCondUso = '' then
     FCondUso := 'A Carta de Correcao e disciplinada pelo Art. 58-B do CONVENIO/' +
                 'SINIEF 06/89: Fica permitida a utilizacao de carta de correcao,' +

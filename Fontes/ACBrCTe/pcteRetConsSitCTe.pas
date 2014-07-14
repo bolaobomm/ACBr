@@ -95,15 +95,15 @@ type
     destructor Destroy; override;
     function LerXml: boolean;
   published
-    property Leitor: TLeitor read FLeitor write FLeitor;
-    property tpAmb: TpcnTipoAmbiente read FtpAmb write FtpAmb;
-    property verAplic: string read FverAplic write FverAplic;
-    property cStat: Integer read FcStat write FcStat;
-    property xMotivo: string read FxMotivo write FxMotivo;
-    property cUF: integer read FcUF write FcUF;
-    property chCTe: string read FchCTe write FchCTe;
-    property protCTe: TProcCTe read FprotCTe write FprotCTe;
-    property retCancCTe: TRetCancCTe read FretCancCTe write FretCancCTe;
+    property Leitor: TLeitor                        read FLeitor        write FLeitor;
+    property tpAmb: TpcnTipoAmbiente                read FtpAmb         write FtpAmb;
+    property verAplic: string                       read FverAplic      write FverAplic;
+    property cStat: Integer                         read FcStat         write FcStat;
+    property xMotivo: string                        read FxMotivo       write FxMotivo;
+    property cUF: integer                           read FcUF           write FcUF;
+    property chCTe: string                          read FchCTe         write FchCTe;
+    property protCTe: TProcCTe                      read FprotCTe       write FprotCTe;
+    property retCancCTe: TRetCancCTe                read FretCancCTe    write FretCancCTe;
     property procEventoCTe: TRetEventoCTeCollection read FprocEventoCTe write FprocEventoCTe;
   end;
 
@@ -113,8 +113,8 @@ implementation
 
 constructor TRetConsSitCTe.Create;
 begin
-  FLeitor := TLeitor.Create;
-  FprotCTe := TProcCTe.create;
+  FLeitor     := TLeitor.Create;
+  FprotCTe    := TProcCTe.create;
   FretCancCTe := TRetCancCTe.create;
 end;
 

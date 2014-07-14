@@ -68,7 +68,7 @@ type
     function LerXml: boolean;
   published
     property Leitor: TLeitor read FLeitor write FLeitor;
-    property CTe: TCTe read FCTe write FCTe;
+    property CTe: TCTe       read FCTe    write FCTe;
   end;
 
 implementation
@@ -132,9 +132,6 @@ begin
   CTe.infCTe.versao := copy(Leitor.Arquivo, I + 1, J - I -1);
   //-- Fim inclusão por Thiago Pedro em 02/06/2014
 
-
-
-  // Incluido por Italo em 22/04/2013
   if Pos('Id="', Leitor.Arquivo) <> 0 then
     Aspas := '"'
    else
@@ -256,7 +253,6 @@ begin
       end;
     end;
 
-    // Incluido por Italo em 11/09/2013
     CTe.Compl.Entrega.TipoData := tdNaoInformado;
     CTe.Compl.Entrega.TipoHora := thNaoInformado;
     
@@ -264,20 +260,20 @@ begin
     begin
       if Leitor.rExtrai(3, 'semData') <> '' then
       begin
-        CTe.Compl.Entrega.TipoData      := tdSemData; // 02/05/2012 13:51:33 - Roberto Godinho
+        CTe.Compl.Entrega.TipoData      := tdSemData;
         CTe.Compl.Entrega.semData.tpPer := StrToTpDataPeriodo(ok, Leitor.rCampo(tcStr, 'tpPer'));
       end;
 
       if Leitor.rExtrai(3, 'comData') <> '' then
       begin
-        CTe.Compl.Entrega.TipoData      := tdNaData; // 02/05/2012 13:51:33 - Roberto Godinho
+        CTe.Compl.Entrega.TipoData      := tdNaData;
         CTe.Compl.Entrega.comData.tpPer := StrToTpDataPeriodo(ok, Leitor.rCampo(tcStr, 'tpPer'));
         CTe.Compl.Entrega.comData.dProg := Leitor.rCampo(tcDat, 'dProg');
       end;
 
       if Leitor.rExtrai(3, 'noPeriodo') <> '' then
       begin
-        CTe.Compl.Entrega.TipoData        := tdNoPeriodo; // 02/05/2012 13:51:33 - Roberto Godinho
+        CTe.Compl.Entrega.TipoData        := tdNoPeriodo; 
         CTe.Compl.Entrega.noPeriodo.tpPer := StrToTpDataPeriodo(ok, Leitor.rCampo(tcStr, 'tpPer'));
         CTe.Compl.Entrega.noPeriodo.dIni  := Leitor.rCampo(tcDat, 'dIni');
         CTe.Compl.Entrega.noPeriodo.dFim  := Leitor.rCampo(tcDat, 'dFim');
@@ -285,20 +281,20 @@ begin
 
       if Leitor.rExtrai(3, 'semHora') <> '' then
       begin
-        CTe.Compl.Entrega.TipoHora      := thSemHorario; // 02/05/2012 13:51:33 - Roberto Godinho
+        CTe.Compl.Entrega.TipoHora      := thSemHorario;
         CTe.Compl.Entrega.semHora.tpHor := StrToTpHorarioIntervalo(ok, Leitor.rCampo(tcStr, 'tpHor'));
       end;
 
       if Leitor.rExtrai(3, 'comHora') <> '' then
       begin
-        CTe.Compl.Entrega.TipoHora      := thNoHorario; // 02/05/2012 13:51:33 - Roberto Godinho
+        CTe.Compl.Entrega.TipoHora      := thNoHorario;
         CTe.Compl.Entrega.comHora.tpHor := StrToTpHorarioIntervalo(ok, Leitor.rCampo(tcStr, 'tpHor'));
         CTe.Compl.Entrega.comHora.hProg := StrToTime(Leitor.rCampo(tcStr, 'hProg'));
       end;
 
       if Leitor.rExtrai(3, 'noInter') <> '' then
       begin
-        CTe.Compl.Entrega.TipoHora      := thNoIntervalo; // 02/05/2012 13:51:33 - Roberto Godinho
+        CTe.Compl.Entrega.TipoHora      := thNoIntervalo; 
         CTe.Compl.Entrega.noInter.tpHor := StrToTpHorarioIntervalo(ok, Leitor.rCampo(tcStr, 'tpHor'));
         CTe.Compl.Entrega.noInter.hIni  := StrToTime(Leitor.rCampo(tcStr, 'hIni'));
         CTe.Compl.Entrega.noInter.hFim  := StrToTime(Leitor.rCampo(tcStr, 'hFim'));
@@ -391,7 +387,7 @@ begin
 
     // Incluído por Thiago Pedro em 02/06/2014 -- Compatibilidade com CTe 1
     i01 := 0;
-    if (Copy(CTe.infCTe.versao,1,1)='1') then
+    if (Copy(CTe.infCTe.versao, 1, 1) = '1') then
     begin
       while Leitor.rExtrai(2, 'infNFe', '', i01 + 1) <> '' do
       begin
@@ -884,7 +880,6 @@ begin
         end;
         inc(i01);
       end;
-      //
     end;
 
     i01 := 0;

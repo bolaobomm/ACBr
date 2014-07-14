@@ -34,10 +34,10 @@
 {                                                                              }
 {******************************************************************************}
 
-{******************************************************************************
+{*******************************************************************************
 |* Historico
 |*
-******************************************************************************}
+*******************************************************************************}
 
 {$I ACBr.inc}
 
@@ -214,8 +214,8 @@ class procedure TfrmCTeDAEventoQR.SavePDF(AEventoCTe: TInfEventoCollectionItem;
                                        ACTe: TCTe = nil);
 {$IFDEF QReport_PDF}
  var
-  qf : TQRPDFDocumentFilter;
-  i  : Integer;
+  qf: TQRPDFDocumentFilter;
+  i: Integer;
 {$ENDIF}
 begin
 {$IFDEF QReport_PDF}
@@ -262,7 +262,7 @@ end;
 
 procedure TfrmCTeDAEventoQR.SetBarCodeImage(ACode: string; QRImage: TQRImage);
 var
-  b : TBarCode128c;
+  b: TBarCode128c;
 begin
   b := TBarCode128c.Create;
   try

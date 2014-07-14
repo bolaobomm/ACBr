@@ -131,8 +131,8 @@ var
   xProtCTe: string;
   xId: String;
   LocLeitor: TLeitor;
-  i : Integer;
-  ProtLido : Boolean; // Protocolo lido do Arquivo
+  i: Integer;
+  ProtLido: Boolean; // Protocolo lido do Arquivo
 begin
   ProtLido := False;
 

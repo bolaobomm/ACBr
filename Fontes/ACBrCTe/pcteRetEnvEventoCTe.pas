@@ -83,7 +83,7 @@ type
 
   TRetEventoCTe = class(TPersistent)
   private
-    FidLote : integer;
+    FidLote: integer;
     FtpAmb: TpcnTipoAmbiente;
     FverAplic: string;
     FLeitor: TLeitor;
@@ -169,7 +169,7 @@ end;
 function TRetEventoCTe.LerXml: boolean;
 var
   ok: boolean;
-  i : integer;
+  i: integer;
 begin
   Result := False;
   i := 0;

@@ -65,9 +65,9 @@ type
     function GerarXML: boolean;
     function ObterNomeArquivo: string;
   published
-    property Gerador: TGerador read FGerador write FGerador;
-    property tpAmb: TpcnTipoAmbiente read FtpAmb write FtpAmb;
-    property chCTe: string read FchCTe write FchCTe;
+    property Gerador: TGerador       read FGerador write FGerador;
+    property tpAmb: TpcnTipoAmbiente read FtpAmb   write FtpAmb;
+    property chCTe: string           read FchCTe   write FchCTe;
   end;
 
 implementation

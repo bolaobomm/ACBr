@@ -34,7 +34,7 @@
 {                                                                              }
 {******************************************************************************}
 
-{******************************************************************************
+{*******************************************************************************
 |* Historico
 |*
 *******************************************************************************}
@@ -599,40 +599,25 @@ type
     procedure QRCTeBeforePrint(Sender: TCustomQuickRep; var PrintReport: Boolean);
     procedure qrb_01_ReciboBeforePrint(Sender: TQRCustomBand; var PrintBand: Boolean);
     procedure qrb_02_CabecalhoBeforePrint(Sender: TQRCustomBand; var PrintBand: Boolean);
-    procedure qrb_03_DadosDACTeBeforePrint(Sender: TQRCustomBand;
-      var PrintBand: Boolean);
-    procedure qrb_04_DadosNotaFiscalBeforePrint(Sender: TQRCustomBand;
-      var PrintBand: Boolean);
-    procedure qrb_05_ComplementoBeforePrint(Sender: TQRCustomBand;
-      var PrintBand: Boolean);
-    procedure qrb_06_ValorPrestacaoBeforePrint(Sender: TQRCustomBand;
-      var PrintBand: Boolean);
-    procedure qrb_07_HeaderItensBeforePrint(Sender: TQRCustomBand;
-      var PrintBand: Boolean);
+    procedure qrb_03_DadosDACTeBeforePrint(Sender: TQRCustomBand; var PrintBand: Boolean);
+    procedure qrb_04_DadosNotaFiscalBeforePrint(Sender: TQRCustomBand; var PrintBand: Boolean);
+    procedure qrb_05_ComplementoBeforePrint(Sender: TQRCustomBand; var PrintBand: Boolean);
+    procedure qrb_06_ValorPrestacaoBeforePrint(Sender: TQRCustomBand; var PrintBand: Boolean);
+    procedure qrb_07_HeaderItensBeforePrint(Sender: TQRCustomBand; var PrintBand: Boolean);
     procedure qrb_08_ItensBeforePrint(Sender: TQRCustomBand; var PrintBand: Boolean);
     procedure qrb_09_ObsBeforePrint(Sender: TQRCustomBand; var PrintBand: Boolean);
     procedure qrb_10_ModRodFracionadoBeforePrint(Sender: TQRCustomBand; var PrintBand: Boolean);
     procedure qrb_11_ModRodLot103BeforePrint(Sender: TQRCustomBand; var PrintBand: Boolean);
-    procedure qrb_17_SistemaBeforePrint(Sender: TQRCustomBand;
-      var PrintBand: Boolean);
-    procedure qrb_16_DadosExcEmitenteBeforePrint(Sender: TQRCustomBand;
-      var PrintBand: Boolean);
-    procedure qrb_12_ModAereoBeforePrint(Sender: TQRCustomBand;
-      var PrintBand: Boolean);
-    procedure qrb_13_ModAquaviarioBeforePrint(Sender: TQRCustomBand;
-      var PrintBand: Boolean);
-    procedure qrb_14_ModFerroviarioBeforePrint(Sender: TQRCustomBand;
-      var PrintBand: Boolean);
-    procedure qrb_15_ModDutoviarioBeforePrint(Sender: TQRCustomBand;
-      var PrintBand: Boolean);
-    procedure qrb_01_Recibo_AereoBeforePrint(Sender: TQRCustomBand;
-      var PrintBand: Boolean);
-    procedure qrb_11_ModRodLot104BeforePrint(Sender: TQRCustomBand;
-      var PrintBand: Boolean);
-    procedure qrb_18_ReciboBeforePrint(Sender: TQRCustomBand;
-      var PrintBand: Boolean);
-    procedure qrb_06_ProdutosPerigososBeforePrint(Sender: TQRCustomBand;
-      var PrintBand: Boolean);
+    procedure qrb_17_SistemaBeforePrint(Sender: TQRCustomBand; var PrintBand: Boolean);
+    procedure qrb_16_DadosExcEmitenteBeforePrint(Sender: TQRCustomBand; var PrintBand: Boolean);
+    procedure qrb_12_ModAereoBeforePrint(Sender: TQRCustomBand; var PrintBand: Boolean);
+    procedure qrb_13_ModAquaviarioBeforePrint(Sender: TQRCustomBand; var PrintBand: Boolean);
+    procedure qrb_14_ModFerroviarioBeforePrint(Sender: TQRCustomBand; var PrintBand: Boolean);
+    procedure qrb_15_ModDutoviarioBeforePrint(Sender: TQRCustomBand; var PrintBand: Boolean);
+    procedure qrb_01_Recibo_AereoBeforePrint(Sender: TQRCustomBand; var PrintBand: Boolean);
+    procedure qrb_11_ModRodLot104BeforePrint(Sender: TQRCustomBand; var PrintBand: Boolean);
+    procedure qrb_18_ReciboBeforePrint(Sender: TQRCustomBand; var PrintBand: Boolean);
+    procedure qrb_06_ProdutosPerigososBeforePrint(Sender: TQRCustomBand; var PrintBand: Boolean);
   private
     procedure Itens;
   public
@@ -663,7 +648,7 @@ const
 
 procedure TfrmDACTeQRRetrato.Itens;
 var
-  I, J, K, Item : Integer;
+  I, J, K, Item: Integer;
 begin
   if QRCTe.PageNumber > 0 then
     exit;
@@ -1946,7 +1931,7 @@ end;
 
 procedure TfrmDACTeQRRetrato.qrb_08_ItensBeforePrint(Sender: TQRCustomBand; var PrintBand: Boolean);
 var
-  i : integer;
+  i: integer;
 begin
   inherited;
 

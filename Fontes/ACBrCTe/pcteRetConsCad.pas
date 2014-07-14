@@ -70,23 +70,24 @@ type
     FdhCons: TDateTime;
     FcUF: integer;
     FInfCad: TInfCadCollection;
+
     procedure SetInfCad(const Value: TInfCadCollection);
   public
     constructor Create;
     destructor Destroy; override;
     function LerXML: boolean;
   published
-    property Leitor: TLeitor read FLeitor write FLeitor;
-    property verAplic: string read FverAplic write FverAplic;
-    property cStat: integer read FcStat write FcStat;
-    property xMotivo: string read FxMotivo write FxMotivo;
-    property UF: string read FUF write FUF;
-    property IE: string read FIE write FIE;
-    property CNPJ: string read FCNPJ write FCNPJ;
-    property CPF: string read FCPF write FCPF;
-    property dhCons: TDateTime read FdhCons write FdhCons;
-    property cUF: integer read FcUF write FcUF;
-    property InfCad: TInfCadCollection read FInfCad write SetInfCad;
+    property Leitor: TLeitor           read FLeitor   write FLeitor;
+    property verAplic: string          read FverAplic write FverAplic;
+    property cStat: integer            read FcStat    write FcStat;
+    property xMotivo: string           read FxMotivo  write FxMotivo;
+    property UF: string                read FUF       write FUF;
+    property IE: string                read FIE       write FIE;
+    property CNPJ: string              read FCNPJ     write FCNPJ;
+    property CPF: string               read FCPF      write FCPF;
+    property dhCons: TDateTime         read FdhCons   write FdhCons;
+    property cUF: integer              read FcUF      write FcUF;
+    property InfCad: TInfCadCollection read FInfCad   write SetInfCad;
   end;
 
   TInfCadCollection = class(TCollection)
@@ -125,29 +126,29 @@ type
     FxMun:String;
     FCep:Integer;
   published
-    property IE: string read FIE write FIE;
-    property CNPJ: string read FCNPJ write FCNPJ;
-    property CPF: string read FCPF write FCPF;
-    property UF: string read FUF write FUF;
-    property cSit: integer read FcSit write FcSit;
+    property IE: string          read FIE         write FIE;
+    property CNPJ: string        read FCNPJ       write FCNPJ;
+    property CPF: string         read FCPF        write FCPF;
+    property UF: string          read FUF         write FUF;
+    property cSit: integer       read FcSit       write FcSit;
     property indCredNFe: integer read FindCredNFe write FindCredNFe;
     property indCredCTe: integer read FindCredCTe write FindCredCTe;
-    property xNome: string read FxNome write FxNome;
-    property xFant: string read FxFant write FxFant;
-    property xRegApur: string read FxRegApur write FxRegApur;
-    property CNAE: Integer read FCNAE write FCNAE;
-    property dIniAtiv: TDateTime read FdIniAtiv write FdIniAtiv;
-    property dUltSit: TDateTime read FdUltSit write FdUltSit;
-    property dBaixa: TDateTime read FdBaixa write FdBaixa;
-    property IEUnica: string read FIEUnica write FIEUnica;
-    property IEAtual: string read FIEAtual write FIEAtual;
-    property xLgr: string read FxLgr write FxLgr;
-    property nro: string read Fnro write Fnro;
-    property xCpl: string read FxCpl write FxCpl;
-    property xBairro: string read FxBairro write FxBairro;
-    property cMun: Integer read FcMun write FcMun;
-    property xMun: string read FxMun write FxMun;
-    property CEP: Integer read FCep write FCep;
+    property xNome: string       read FxNome      write FxNome;
+    property xFant: string       read FxFant      write FxFant;
+    property xRegApur: string    read FxRegApur   write FxRegApur;
+    property CNAE: Integer       read FCNAE       write FCNAE;
+    property dIniAtiv: TDateTime read FdIniAtiv   write FdIniAtiv;
+    property dUltSit: TDateTime  read FdUltSit    write FdUltSit;
+    property dBaixa: TDateTime   read FdBaixa     write FdBaixa;
+    property IEUnica: string     read FIEUnica    write FIEUnica;
+    property IEAtual: string     read FIEAtual    write FIEAtual;
+    property xLgr: string        read FxLgr       write FxLgr;
+    property nro: string         read Fnro        write Fnro;
+    property xCpl: string        read FxCpl       write FxCpl;
+    property xBairro: string     read FxBairro    write FxBairro;
+    property cMun: Integer       read FcMun       write FcMun;
+    property xMun: string        read FxMun       write FxMun;
+    property CEP: Integer        read FCep        write FCep;
   end;
 
 implementation
@@ -193,8 +194,6 @@ procedure TInfCadCollection.SetItem(Index: Integer; Value: TInfCadCollectionItem
 begin
   inherited SetItem(Index, Value);
 end;
-
-////////////////////////////////////////////////////////////////////////////////
 
 function TRetConsCad.LerXML: boolean;
 var

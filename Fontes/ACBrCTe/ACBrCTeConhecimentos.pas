@@ -35,12 +35,12 @@
 {                                                                              }
 {******************************************************************************}
 
-{******************************************************************************
+{*******************************************************************************
 |* Historico
 |*
 |* 28/07/2009: Andre F. Moraes
 |*  - Inicio do componente ACBrCTe baseado no componente ACBrCTePCN
-******************************************************************************}
+*******************************************************************************}
 {$I ACBr.inc}
 
 unit ACBrCTeConhecimentos;
@@ -61,8 +61,8 @@ type
     FCTe: TCTe;
     FXML: AnsiString;
     FXMLOriginal: AnsiString;
-    FConfirmada : Boolean;
-    FMsg : AnsiString ;
+    FConfirmada: Boolean;
+    FMsg: AnsiString ;
     FAlertas: AnsiString;
     FErroValidacao: AnsiString;
     FErroValidacaoCompleto: AnsiString;
@@ -84,35 +84,35 @@ type
                                 sFrom,
                                 sTo,
                                 sAssunto: String;
-                                sMensagem : TStrings;
-                                SSL : Boolean;
+                                sMensagem: TStrings;
+                                SSL: Boolean;
                                 EnviaPDF: Boolean = true;
                                 sCC: TStrings = nil;
-                                Anexos:TStrings=nil;
+                                Anexos: TStrings=nil;
                                 PedeConfirma: Boolean = False;
                                 AguardarEnvio: Boolean = False;
                                 NomeRemetente: String = '';
-                                TLS : Boolean = True;
+                                TLS: Boolean = True;
                                 UsarThread: Boolean = True;
-                                HTML:Boolean = False);
-    function ValidarConcatChave : Boolean;
+                                HTML: Boolean = False);
+    function ValidarConcatChave: Boolean;
 
-    property CTe: TCTe  read FCTe write FCTe;
-    property XML: AnsiString  read GetCTeXML write FXML;
-    property XMLOriginal: AnsiString  read FXMLOriginal write FXMLOriginal;
-    property Confirmada: Boolean  read FConfirmada write FConfirmada;
-    property Msg: AnsiString  read FMsg write FMsg;
-    property Alertas: AnsiString read FAlertas write FAlertas;
-    property ErroValidacao: AnsiString read FErroValidacao write FErroValidacao;
-    property ErroValidacaoCompleto: AnsiString read FErroValidacaoCompleto write FErroValidacaoCompleto;    
-    property NomeArq: String read FNomeArq write FNomeArq;
-    property RegrasdeNegocios: AnsiString read FRegrasdeNegocios write FRegrasdeNegocios;
+    property CTe: TCTe                         read FCTe                   write FCTe;
+    property XML: AnsiString                   read GetCTeXML              write FXML;
+    property XMLOriginal: AnsiString           read FXMLOriginal           write FXMLOriginal;
+    property Confirmada: Boolean               read FConfirmada            write FConfirmada;
+    property Msg: AnsiString                   read FMsg                   write FMsg;
+    property Alertas: AnsiString               read FAlertas               write FAlertas;
+    property ErroValidacao: AnsiString         read FErroValidacao         write FErroValidacao;
+    property ErroValidacaoCompleto: AnsiString read FErroValidacaoCompleto write FErroValidacaoCompleto;
+    property NomeArq: String                   read FNomeArq               write FNomeArq;
+    property RegrasdeNegocios: AnsiString      read FRegrasdeNegocios      write FRegrasdeNegocios;
   end;
 
   TConhecimentos = class(TOwnedCollection)
   private
-    FConfiguracoes : TConfiguracoes;
-    FACBrCTe : TComponent;
+    FConfiguracoes: TConfiguracoes;
+    FACBrCTe: TComponent;
 
     function GetItem(Index: Integer): Conhecimento;
     procedure SetItem(Index: Integer; const Value: Conhecimento);
@@ -122,8 +122,8 @@ type
     procedure GerarCTe;
     procedure Assinar;
     procedure Valida;
-    function ValidaAssinatura(out Msg : String) : Boolean;
-    function ValidaRegrasdeNegocios : Boolean;
+    function ValidaAssinatura(out Msg: String): Boolean;
+    function ValidaRegrasdeNegocios: Boolean;
     procedure Imprimir;
     procedure ImprimirPDF;
     function  Add: Conhecimento;
@@ -137,31 +137,31 @@ type
     function LoadFromString(AString: String; AGerarCTe: Boolean = True): boolean;
     function SaveToFile(PathArquivo: string = ''): boolean;
 
-    property Items[Index: Integer]: Conhecimento read GetItem  write SetItem;
-    property Configuracoes: TConfiguracoes read FConfiguracoes  write FConfiguracoes;
-    property ACBrCTe : TComponent read FACBrCTe ;
+    property Items[Index: Integer]: Conhecimento read GetItem         write SetItem;
+    property Configuracoes: TConfiguracoes       read FConfiguracoes  write FConfiguracoes;
+    property ACBrCTe: TComponent                 read FACBrCTe;
   end;
 
   TSendMailThread = class(TThread)
   private
-    FException : Exception;
+    FException: Exception;
     // FOwner: Conhecimento;
     procedure DoHandleException;
   public
     OcorreramErros: Boolean;
     Terminado: Boolean;
-    smtp : TSMTPSend;
-    sFrom : String;
-    sTo : String;
-    sCC : TStrings;
-    slmsg_Lines : TStrings;
+    smtp: TSMTPSend;
+    sFrom: String;
+    sTo: String;
+    sCC: TStrings;
+    slmsg_Lines: TStrings;
+
     constructor Create;
     destructor Destroy; override;
   protected
     procedure Execute; override;
     procedure HandleException;
   end;
-
 
 implementation
 
@@ -208,7 +208,7 @@ end;
 
 function Conhecimento.SaveToFile(CaminhoArquivo: string = ''): boolean;
 var
-  LocCTeW : TCTeW;
+  LocCTeW: TCTeW;
 begin
   try
      Result  := True;
@@ -233,7 +233,7 @@ end;
 
 function Conhecimento.SaveToStream(Stream: TStringStream): boolean;
 var
-  LocCTeW : TCTeW;
+  LocCTeW: TCTeW;
 begin
   try
      Result  := True;
@@ -257,21 +257,21 @@ procedure Conhecimento.EnviarEmail(const sSmtpHost,
                                       sFrom,
                                       sTo,
                                       sAssunto: String;
-                                      sMensagem : TStrings;
-                                      SSL : Boolean;
+                                      sMensagem: TStrings;
+                                      SSL: Boolean;
                                       EnviaPDF: Boolean = true;
                                       sCC: TStrings=nil;
-                                      Anexos:TStrings=nil;
+                                      Anexos: TStrings=nil;
                                       PedeConfirma: Boolean = False;
                                       AguardarEnvio: Boolean = False;
                                       NomeRemetente: String = '';
-                                      TLS : Boolean = True;
+                                      TLS: Boolean = True;
                                       UsarThread: Boolean = True;
-                                      HTML:Boolean = False);
+                                      HTML: Boolean = False);
 var
- NomeArq : String;
- AnexosEmail:TStrings ;
- StreamCTe : TStringStream;
+ NomeArq: String;
+ AnexosEmail: TStrings ;
+ StreamCTe: TStringStream;
 begin
  AnexosEmail := TStringList.Create;
  StreamCTe  := TStringStream.Create('');
@@ -325,7 +325,7 @@ end;
 
 function Conhecimento.GetCTeXML: AnsiString;
 var
- LocCTeW : TCTeW;
+ LocCTeW: TCTeW;
 begin
  LocCTeW := TCTeW.Create(Self.CTe);
  try
@@ -380,10 +380,10 @@ end;
 procedure TConhecimentos.Assinar;
 var
   i: Integer;
-  vAssinada : AnsiString;
-  LocCTeW : TCTeW;
+  vAssinada: AnsiString;
+  LocCTeW: TCTeW;
   Leitor: TLeitor;
-  FMsg : AnsiString;
+  FMsg: AnsiString;
 begin
   for i:= 0 to Self.Count-1 do
    begin
@@ -431,7 +431,7 @@ end;
 procedure TConhecimentos.GerarCTe;
 var
  i: Integer;
- LocCTeW : TCTeW;
+ LocCTeW: TCTeW;
 begin
  for i:= 0 to Self.Count-1 do
   begin
@@ -486,7 +486,7 @@ end;
 procedure TConhecimentos.Valida;
 var
  i: Integer;
- FMsg : AnsiString;
+ FMsg: AnsiString;
 begin
 (*
   for i:= 0 to Self.Count-1 do
@@ -521,10 +521,10 @@ begin
   end;
 end;
 
-function TConhecimentos.ValidaAssinatura(out Msg : String) : Boolean;
+function TConhecimentos.ValidaAssinatura(out Msg: String): Boolean;
 var
  i: Integer;
- FMsg : AnsiString;
+ FMsg: AnsiString;
 begin
   Result := True;
   for i:= 0 to Self.Count-1 do
@@ -542,9 +542,9 @@ end;
 
 function TConhecimentos.LoadFromFile(CaminhoArquivo: string; AGerarCTe: Boolean = True): boolean;
 var
- LocCTeR : TCTeR;
+ LocCTeR: TCTeR;
  ArquivoXML: TStringList;
- XML, XMLOriginal : AnsiString;
+ XML, XMLOriginal: AnsiString;
 begin
  try
     ArquivoXML := TStringList.Create;
@@ -587,7 +587,7 @@ end;
 
 function TConhecimentos.LoadFromStream(Stream: TStringStream; AGerarCTe: Boolean = True): boolean;
 var
- LocCTeR : TCTeR;
+ LocCTeR: TCTeR;
 begin
   try
     Result  := True;
@@ -608,8 +608,8 @@ end;
 
 function TConhecimentos.SaveToFile(PathArquivo: string = ''): boolean;
 var
- i : integer;
- CaminhoArquivo : String;
+ i: integer;
+ CaminhoArquivo: String;
 begin
  Result := True;
  try
@@ -647,7 +647,7 @@ end;
 function TConhecimentos.ValidaRegrasdeNegocios: Boolean;
 var
  i: Integer;
- Erros : AnsiString;
+ Erros: AnsiString;
 begin
   Result := True;
   for i:= 0 to Self.Count-1 do

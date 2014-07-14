@@ -56,9 +56,9 @@ type
     FdhRecbto: TDateTime;
     FtMed: integer;
   public
-    property nRec: string read FnRec write FnRec;
+    property nRec: string        read FnRec     write FnRec;
     property dhRecbto: TDateTime read FdhRecbto write FdhRecbto;
-    property tMed: integer read FtMed write FtMed;
+    property tMed: integer       read FtMed     write FtMed;
   end;
 
   TretEnvCTe = class(TPersistent)
@@ -75,13 +75,13 @@ type
     destructor Destroy; override;
     function LerXml: boolean;
   published
-    property Leitor: TLeitor read FLeitor write FLeitor;
-    property tpAmb: TpcnTipoAmbiente read FtpAmb write FtpAmb; //default taHomologacao;
-    property verAplic: string read FverAplic write FverAplic;
-    property cStat: integer read FcStat write FcStat;
-    property xMotivo: string read FxMotivo write FxMotivo;
-    property cUF: integer read FcUF write FcUF;
-    property infRec: TInfREC read FinfRec write FinfRec;
+    property Leitor: TLeitor         read FLeitor   write FLeitor;
+    property tpAmb: TpcnTipoAmbiente read FtpAmb    write FtpAmb;
+    property verAplic: string        read FverAplic write FverAplic;
+    property cStat: integer          read FcStat    write FcStat;
+    property xMotivo: string         read FxMotivo  write FxMotivo;
+    property cUF: integer            read FcUF      write FcUF;
+    property infRec: TInfREC         read FinfRec   write FinfRec;
   end;
 
 implementation

@@ -37,12 +37,12 @@
 {                                                                              }
 {******************************************************************************}
 
-{******************************************************************************
+{*******************************************************************************
 |* Historico
 |*
 |* 19/08/2009: Wiliam Rosa
 |*  - Definição de classes para impressão do DACTE
-******************************************************************************}
+*******************************************************************************}
 {$I ACBr.inc}
 
 unit ACBrCTeDACTEClass;
@@ -56,72 +56,72 @@ type
   TACBrCteDACTEClass = class( TComponent )
    private
     procedure SetCTE(const Value: TComponent);
-    procedure ErroAbstract( NomeProcedure : String );
+    procedure ErroAbstract(NomeProcedure: String);
     function GetPathArquivos: String;
     procedure SetPathArquivos(const Value: String);
   protected
-    FACBrCTE : TComponent;
+    FACBrCTE: TComponent;
     FLogo: String;
-    FSistema:String;
-    FUsuario:String;
-    FPathArquivos : String;
-    FImpressora : String;
-    FImprimirHoraSaida : Boolean;
-    FImprimirHoraSaida_Hora : string;
-    FMostrarPreview : Boolean;
+    FSistema: String;
+    FUsuario: String;
+    FPathArquivos: String;
+    FImpressora: String;
+    FImprimirHoraSaida: Boolean;
+    FImprimirHoraSaida_Hora: string;
+    FMostrarPreview: Boolean;
     FMostrarStatus: Boolean;
-    FTipoDACTE : TpcnTipoImpressao;
+    FTipoDACTE: TpcnTipoImpressao;
     FTamanhoPapel: TpcnTamanhoPapel;
-    FNumCopias : Integer;
-    FExpandirLogoMarca:Boolean;
-    FFax  : String;
-    FSite : String;
+    FNumCopias: Integer;
+    FExpandirLogoMarca: Boolean;
+    FFax: String;
+    FSite: String;
     FEmail: String;
-    FImprimeDescPorc : Boolean;
+    FImprimeDescPorc: Boolean;
 	  FProtocoloCTE: string;
     FMargemInferior: Double;
     FMargemSuperior: Double;
     FMargemEsquerda: Double;
     FMargemDireita: Double;
-    FCTeCancelada : boolean;
-    FResumoCanhoto : Boolean;//Rodrigo DSP 22/01/2014 10:43:44:
+    FCTeCancelada: boolean;
+    FResumoCanhoto: Boolean; //Rodrigo DSP 22/01/2014 10:43:44:
     FEPECEnviado: Boolean;
 
     procedure Notification(AComponent: TComponent; Operation: TOperation); override;
   public
     constructor Create(AOwner: TComponent); override;
     destructor Destroy; override;
-    procedure ImprimirDACTE(CTE : TCTE = nil); virtual;
-    procedure ImprimirDACTEPDF(CTE : TCTE = nil); virtual;
-    procedure ImprimirEVENTO(CTE : TCTe = nil); virtual;
-    procedure ImprimirEVENTOPDF(CTE : TCTe = nil); virtual;
+    procedure ImprimirDACTE(CTE: TCTE = nil); virtual;
+    procedure ImprimirDACTEPDF(CTE: TCTE = nil); virtual;
+    procedure ImprimirEVENTO(CTE: TCTe = nil); virtual;
+    procedure ImprimirEVENTOPDF(CTE: TCTe = nil); virtual;
   published
-    property ACBrCTE : TComponent  read FACBrCTE write SetCTE;
-    property Logo: String read FLogo write FLogo;
-    property Sistema: String read FSistema write FSistema;
-    property Usuario: String read FUsuario write FUsuario;
-    property PathPDF: String read GetPathArquivos write SetPathArquivos;
-    property Impressora: String read FImpressora write FImpressora;
-    property ImprimirHoraSaida: Boolean read FImprimirHoraSaida write FImprimirHoraSaida;
+    property ACBrCTE: TComponent            read FACBrCTE                write SetCTE;
+    property Logo: String                   read FLogo                   write FLogo;
+    property Sistema: String                read FSistema                write FSistema;
+    property Usuario: String                read FUsuario                write FUsuario;
+    property PathPDF: String                read GetPathArquivos         write SetPathArquivos;
+    property Impressora: String             read FImpressora             write FImpressora;
+    property ImprimirHoraSaida: Boolean     read FImprimirHoraSaida      write FImprimirHoraSaida;
     property ImprimirHoraSaida_Hora: string read FImprimirHoraSaida_Hora write FImprimirHoraSaida_Hora;
-    property MostrarPreview: Boolean read FMostrarPreview write FMostrarPreview;
-    property MostrarStatus: Boolean read FMostrarStatus write FMostrarStatus;
-    property TipoDACTE: TpcnTipoImpressao read FTipoDACTE write FTipoDACTE;
-    property TamanhoPapel: TpcnTamanhoPapel read FTamanhoPapel write FTamanhoPapel;
-    property NumCopias: Integer read FNumCopias write FNumCopias;
-    property Fax  : String read FFax   write FFax;
-    property Site : String read FSite  write FSite;
-    property Email: String read FEmail write FEmail;
-    property ImprimirDescPorc: Boolean read FImprimeDescPorc write FImprimeDescPorc;
-    property ProtocoloCTE: String read FProtocoloCTE write FProtocoloCTE;
-    property MargemInferior: Double read FMargemInferior write FMargemInferior;
-    property MargemSuperior: Double read FMargemSuperior write FMargemSuperior;
-    property MargemEsquerda: Double read FMargemEsquerda write FMargemEsquerda;
-    property MargemDireita: Double read FMargemDireita write FMargemDireita;
-    property ExpandirLogoMarca: Boolean read FExpandirLogoMarca write FExpandirLogoMarca default false;
-    property CTeCancelada: Boolean read FCTeCancelada write FCTeCancelada;
-    property ResumoCanhoto: Boolean read FResumoCanhoto write FResumoCanhoto;//Rodrigo DSP 22/01/2014 10:43:51:
-    property EPECEnviado: Boolean read FEPECEnviado write FEPECEnviado;
+    property MostrarPreview: Boolean        read FMostrarPreview         write FMostrarPreview;
+    property MostrarStatus: Boolean         read FMostrarStatus          write FMostrarStatus;
+    property TipoDACTE: TpcnTipoImpressao   read FTipoDACTE              write FTipoDACTE;
+    property TamanhoPapel: TpcnTamanhoPapel read FTamanhoPapel           write FTamanhoPapel;
+    property NumCopias: Integer             read FNumCopias              write FNumCopias;
+    property Fax: String                    read FFax                    write FFax;
+    property Site: String                   read FSite                   write FSite;
+    property Email: String                  read FEmail                  write FEmail;
+    property ImprimirDescPorc: Boolean      read FImprimeDescPorc        write FImprimeDescPorc;
+    property ProtocoloCTE: String           read FProtocoloCTE           write FProtocoloCTE;
+    property MargemInferior: Double         read FMargemInferior         write FMargemInferior;
+    property MargemSuperior: Double         read FMargemSuperior         write FMargemSuperior;
+    property MargemEsquerda: Double         read FMargemEsquerda         write FMargemEsquerda;
+    property MargemDireita: Double          read FMargemDireita          write FMargemDireita;
+    property ExpandirLogoMarca: Boolean     read FExpandirLogoMarca      write FExpandirLogoMarca default false;
+    property CTeCancelada: Boolean          read FCTeCancelada           write FCTeCancelada;
+    property ResumoCanhoto: Boolean         read FResumoCanhoto          write FResumoCanhoto; //Rodrigo DSP 22/01/2014 10:43:51:
+    property EPECEnviado: Boolean           read FEPECEnviado            write FEPECEnviado;
   end;
 
 implementation
@@ -169,12 +169,12 @@ begin
   inherited Destroy;
 end;
 
-procedure TACBrCteDACTEClass.ImprimirDACTE(CTE : TCTE = nil);
+procedure TACBrCteDACTEClass.ImprimirDACTE(CTE: TCTE = nil);
 begin
   ErroAbstract('Imprimir');
 end;
 
-procedure TACBrCteDACTEClass.ImprimirDACTEPDF(CTE : TCTE = nil);
+procedure TACBrCteDACTEClass.ImprimirDACTEPDF(CTE: TCTE = nil);
 begin
   ErroAbstract('ImprimirPDF');
 end;
@@ -189,7 +189,8 @@ begin
 end;
 
 procedure TACBrCteDACTEClass.SetCTE(const Value: TComponent);
-  Var OldValue : TACBrCTE;
+var
+ OldValue: TACBrCTE;
 begin
   if Value <> FACBrCTE then
   begin
@@ -201,7 +202,7 @@ begin
         FACBrCTE.RemoveFreeNotification(Self);
 
      OldValue := TACBrCTE(FACBrCTE);   // Usa outra variavel para evitar Loop Infinito
-     FACBrCTE := Value;                 // na remoção da associação dos componentes
+     FACBrCTE := Value;                // na remoção da associação dos componentes
 
      if Assigned(OldValue) then
         if Assigned(OldValue.DACTE) then

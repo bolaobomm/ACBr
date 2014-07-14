@@ -71,20 +71,20 @@ type
     destructor Destroy; override;
     function LerXml: boolean;
   published
-    property Leitor: TLeitor read FLeitor write FLeitor;
-    property tpAmb: TpcnTipoAmbiente read FtpAmb write FtpAmb;
-    property verAplic: string read FverAplic write FverAplic;
-    property cStat: integer read FcStat write FcStat;
-    property xMotivo: string read FxMotivo write FxMotivo;
-    property cUF: integer read FcUF write FcUF;
-    property ano: integer read Fano write Fano;
-    property CNPJ: string read FCNPJ write FCNPJ;
-    property Modelo: integer read FModelo write FModelo;
-    property Serie: integer read FSerie write FSerie;
-    property nCTIni: integer read FnCTIni write FnCTIni;
-    property nCTFin: integer read FnCTFin write FnCTFin;
-    property dhRecbto: TDateTime read FdhRecbto write FdhRecbto;
-    property nProt: string read FnProt write FnProt;
+    property Leitor: TLeitor         read FLeitor   write FLeitor;
+    property tpAmb: TpcnTipoAmbiente read FtpAmb    write FtpAmb;
+    property verAplic: string        read FverAplic write FverAplic;
+    property cStat: integer          read FcStat    write FcStat;
+    property xMotivo: string         read FxMotivo  write FxMotivo;
+    property cUF: integer            read FcUF      write FcUF;
+    property ano: integer            read Fano      write Fano;
+    property CNPJ: string            read FCNPJ     write FCNPJ;
+    property Modelo: integer         read FModelo   write FModelo;
+    property Serie: integer          read FSerie    write FSerie;
+    property nCTIni: integer         read FnCTIni   write FnCTIni;
+    property nCTFin: integer         read FnCTFin   write FnCTFin;
+    property dhRecbto: TDateTime     read FdhRecbto write FdhRecbto;
+    property nProt: string           read FnProt    write FnProt;
   end;
 
 implementation

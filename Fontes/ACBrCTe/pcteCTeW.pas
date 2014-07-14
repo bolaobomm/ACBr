@@ -183,9 +183,9 @@ type
     function GerarXml: boolean;
     function ObterNomeArquivo: string;
   published
-    property Gerador: TGerador read FGerador write FGerador;
-    property CTe: TCTe read FCTe write FCTe;
-    property Opcoes: TGeradorOpcoes read FOpcoes write FOpcoes;
+    property Gerador: TGerador      read FGerador write FGerador;
+    property CTe: TCTe              read FCTe     write FCTe;
+    property Opcoes: TGeradorOpcoes read FOpcoes  write FOpcoes;
   end;
 
   TGeradorOpcoes = class(TPersistent)
@@ -197,19 +197,16 @@ type
     FValidarInscricoes: boolean;
     FValidarListaServicos: boolean;
   published
-    property AjustarTagNro: boolean read FAjustarTagNro write FAjustarTagNro;
-    property NormatizarMunicipios: boolean read FNormatizarMunicipios write FNormatizarMunicipios;
-    property GerarTagAssinatura: TpcnTagAssinatura read FGerarTagAssinatura write FGerarTagAssinatura;
-    property PathArquivoMunicipios: string read FPathArquivoMunicipios write FPathArquivoMunicipios;
-    property ValidarInscricoes: boolean read FValidarInscricoes write FValidarInscricoes;
-    property ValidarListaServicos: boolean read FValidarListaServicos write FValidarListaServicos;
+    property AjustarTagNro: boolean                read FAjustarTagNro         write FAjustarTagNro;
+    property NormatizarMunicipios: boolean         read FNormatizarMunicipios  write FNormatizarMunicipios;
+    property GerarTagAssinatura: TpcnTagAssinatura read FGerarTagAssinatura    write FGerarTagAssinatura;
+    property PathArquivoMunicipios: string         read FPathArquivoMunicipios write FPathArquivoMunicipios;
+    property ValidarInscricoes: boolean            read FValidarInscricoes     write FValidarInscricoes;
+    property ValidarListaServicos: boolean         read FValidarListaServicos  write FValidarListaServicos;
   end;
-
-  ////////////////////////////////////////////////////////////////////////////////
 
 implementation
 
-// Regra a ser aplicada em ambiente de homologação a partir de 01/09/2012
 const
  xRazao = 'CT-E EMITIDO EM AMBIENTE DE HOMOLOGACAO - SEM VALOR FISCAL';
 
@@ -238,8 +235,6 @@ begin
   inherited Destroy;
 end;
 
-////////////////////////////////////////////////////////////////////////////////
-
 function TCTeW.ObterNomeArquivo: string;
 begin
   Result := SomenteNumeros(CTe.infCTe.ID) + '-cte.xml';
@@ -249,7 +244,7 @@ function TCTeW.GerarXml: boolean;
 var
   chave: AnsiString;
   Gerar: boolean;
-  xProtCTe : String;
+  xProtCTe: String;
 begin
   chave := '';
 
@@ -276,7 +271,7 @@ begin
 
   GerarInfCTe;
   Gerador.wGrupo('/infCte');
-  //
+
   if FOpcoes.GerarTagAssinatura <> taNunca then
   begin
     Gerar := true;
@@ -487,7 +482,6 @@ begin
 
   GerarFluxo;
 
-  // Alterado por Italo em 11/09/2013
   if (CTe.Compl.Entrega.TipoData <> tdNaoInformado) and
      (CTe.Compl.Entrega.TipoHora <> thNaoInformado)
    then GerarEntrega;
@@ -1914,9 +1908,9 @@ begin
   end;
 end;
 
-procedure TCTeW.GerarInfCTeSub;  // S
+procedure TCTeW.GerarInfCTeSub;
 begin
- if CTe.Ide.tpCTe = tcSubstituto //CTe.infCTeNorm.infCTeSub.chCte<>''
+ if CTe.Ide.tpCTe = tcSubstituto 
   then begin
    Gerador.wGrupo('infCteSub', '#394');
    Gerador.wCampo(tcEsp, '#395', 'chCte ', 44, 44, 1, SomenteNumeros(CTe.infCTeNorm.infCTeSub.chCte), DSC_CHCTE);

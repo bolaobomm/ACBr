@@ -65,10 +65,10 @@ type
     function GerarXML: boolean;
   published
     property Gerador: TGerador read FGerador write FGerador;
-    property UF: string read FUF write FUF;
-    property IE: string read FIE write FIE;
-    property CNPJ: string read FCNPJ write FCNPJ;
-    property CPF: string read FCPF write FCPF;
+    property UF: string        read FUF      write FUF;
+    property IE: string        read FIE      write FIE;
+    property CNPJ: string      read FCNPJ    write FCNPJ;
+    property CPF: string       read FCPF     write FCPF;
   end;
 
 implementation

@@ -34,7 +34,7 @@
 {                                                                              }
 {******************************************************************************}
 
-{******************************************************************************
+{*******************************************************************************
 |* Historico
 |* 11/12/2009: Emerson Crema
 |*  - Implementado fqrDACTeQRRetrato.ProtocoloNFE( sProt ).
@@ -42,7 +42,7 @@
 |*  - Doação do componente para o Projeto ACBr
 |* 20/08/2009: Caique Rodrigues
 |*  - Doação units para geração do DANFe via QuickReport
-******************************************************************************}
+*******************************************************************************}
 
 {$I ACBr.inc}
 
@@ -91,10 +91,9 @@ end;
 
 procedure TACBrCTeDACTeQR.ImprimirDACTe(CTe: TCTe = nil);
 var
-  i     : Integer;
-  sProt : string;
-
-  frmDACTeQRRetrato : TfrmDACTeQR; //TfrmDACTeQRRetrato;
+  i: Integer;
+  sProt: string;
+  frmDACTeQRRetrato: TfrmDACTeQR; //TfrmDACTeQRRetrato;
 begin
   case TamanhoPapel of
     tpA5: begin
@@ -173,11 +172,10 @@ end;
 
 procedure TACBrCTeDACTeQR.ImprimirDACTePDF(CTe: TCTe = nil);
 var
-  i       : Integer;
-  sProt   : String;
-  NomeArq : string;
-
-  frmDACTeQRRetrato : TfrmDACTeQR; //TfrmDACTeQRRetrato;
+  i: Integer;
+  sProt: String;
+  NomeArq: string;
+  frmDACTeQRRetrato: TfrmDACTeQR; //TfrmDACTeQRRetrato;
 begin
   case TamanhoPapel of
     tpA5: begin
@@ -233,7 +231,7 @@ begin
    end
   else
   begin
-     NomeArq := StringReplace(CTe.infCTe.ID,'CTe', '', [rfIgnoreCase]);
+     NomeArq := StringReplace(CTe.infCTe.ID, 'CTe', '', [rfIgnoreCase]);
      NomeArq := PathWithDelim(Self.PathPDF)+NomeArq+'.pdf';
      frmDACTeQRRetrato.SavePDF( NomeArq
                                 , CTe
