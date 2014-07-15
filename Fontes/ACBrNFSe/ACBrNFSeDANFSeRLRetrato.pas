@@ -260,7 +260,10 @@ begin
        begin
          vStringStream := TStringStream.Create(FLogo);
          try
-           rliLogo.Picture.Bitmap.LoadFromStream(vStringStream);
+           try
+             rliLogo.Picture.Bitmap.LoadFromStream(vStringStream);
+           except
+           end;
          finally
            vStringStream.Free;
          end;
@@ -398,13 +401,13 @@ var
 begin
   inherited;
 
- if (FPrestLogo <> '') and FilesExists(FPrestLogo) then
+ (*if (FPrestLogo <> '') and FilesExists(FPrestLogo) then
  begin
    rliPrestLogo.Picture.LoadFromFile(FPrestLogo);
- end;
+ end;*)
 
  // Alterado por Augusto Fontana - 18/09/2013
-(* if (FPrestLogo <> '') then
+ if (FPrestLogo <> '') then
    begin
      if FilesExists(FPrestLogo) then
        rliPrestLogo.Picture.LoadFromFile(FPrestLogo)
@@ -412,13 +415,16 @@ begin
        begin
          vStringStream := TStringStream.Create(FPrestLogo);
          try
-           rliPrestLogo.Picture.Bitmap.LoadFromStream(vStringStream);
+           try
+             rliPrestLogo.Picture.Bitmap.LoadFromStream(vStringStream);
+           except
+           end;
          finally
            vStringStream.Free;
          end;
        end;
    end;
-*)
+
 
  rllPrestCNPJ.Caption := DFeUtil.FormatarCNPJ( FNFSe.PrestadorServico.IdentificacaoPrestador.Cnpj );//Astrogildo em 13/12/12
  rllTomaInscEstadual.Caption := FNFSe.Tomador.IdentificacaoTomador.InscricaoEstadual;
