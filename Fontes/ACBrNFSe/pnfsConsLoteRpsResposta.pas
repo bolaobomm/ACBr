@@ -113,7 +113,8 @@ end;
 
 destructor TListaNfse.Destroy;
 begin
-  FCompNfse.Free;
+  if Assigned(FCompNfse)
+   then FCompNfse.Free;
   FMsgRetorno.Free;
 
   inherited;
