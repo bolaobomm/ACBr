@@ -97,6 +97,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+Data: 15/07/2014
+-- ACBrECFClass --     (por: DSA)
+[-] Correção a bug introduzido em 16/06/2014. Problema no carregamento de
+    Formas de Pagamento acentuadas:
+    http://www.projetoacbr.com.br/forum/index.php?showtopic=16475
+
 Data: 30/06/2014
 -- ACBrECFDaruma --
 [*] Ajuste para imprimir corretamente a Identificação do Consumidor no Rodapé

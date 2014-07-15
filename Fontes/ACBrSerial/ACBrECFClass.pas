@@ -3061,15 +3061,19 @@ begin
 end;
 
 procedure TACBrECFClass.PreparaTEF;
+var
+  ECF: TACBrECF;
 begin
+  ECF := GetECFComponente(Self);
+
   try
-     FechaRelatorio ;
+     ECF.FechaRelatorio ;
   except
   end ;
 
-  CarregaAliquotas ;
-  CarregaFormasPagamento ;
-  CarregaComprovantesNaoFiscais ;
+  ECF.CarregaAliquotas ;
+  ECF.CarregaFormasPagamento ;
+  ECF.CarregaComprovantesNaoFiscais ;
 end;
 
 procedure TACBrECFClass.ReducaoZ(DataHora: TDateTime);
@@ -3276,9 +3280,14 @@ begin
 end;
 
 function TACBrECFClass.GetAliquotas: TACBrECFAliquotas;
+var
+  ECF: TACBrECF;
 begin
   if not Assigned( fpAliquotas ) then
-     CarregaAliquotas ;
+  begin
+     ECF := GetECFComponente(Self);
+     ECF.CarregaAliquotas ;
+  end;
 
   result := fpAliquotas ;
 end;
@@ -3313,8 +3322,7 @@ function TACBrECFClass.AchaICMSAliquota( var AliquotaICMS: String):
        Tipo        : Char ;
        ValAliquota : Double ;
 begin
-  if not Assigned( fpAliquotas ) then
-     CarregaAliquotas ;
+  GetAliquotas;
 
   Result := nil ;
 
@@ -3362,8 +3370,7 @@ var
   ftAliq : Double ;
   cTipo  : Char ;
 begin
-  if not Assigned( fpAliquotas ) then
-     CarregaAliquotas ;
+  GetAliquotas;
 
   if not (Tipo in ['S','T']) then
      Tipo := ' ' ;
@@ -3389,8 +3396,7 @@ end;
 function TACBrECFClass.AchaICMSIndice(Indice: String): TACBrECFAliquota;
 var A : Integer ;
 begin
-  if not Assigned( fpAliquotas ) then
-     CarregaAliquotas ;
+  GetAliquotas;
 
   Result := nil ;
   Indice := UpperCase(Indice) ;
@@ -3429,11 +3435,16 @@ begin
 end;
 
 function TACBrECFClass.GetFormasPagamentos: TACBrECFFormasPagamento;
+var
+  ECF: TACBrECF;
 begin
   if not Assigned( fpFormasPagamentos ) then
-    CarregaFormasPagamento ;
+  begin
+    ECF := GetECFComponente(Self);
+    ECF.CarregaFormasPagamento ;
+  end;
 
-  result := fpFormasPagamentos ;
+  Result := fpFormasPagamentos ;
 end;
 
 function TACBrECFClass.AchaFPGDescricao(Descricao: String;
@@ -3441,8 +3452,7 @@ function TACBrECFClass.AchaFPGDescricao(Descricao: String;
  var Tamanho, A : Integer ;
      DescrECF : String ;
 begin
-  if not Assigned( fpFormasPagamentos ) then
-     CarregaFormasPagamento ; ;
+  GetFormasPagamentos;
 
   result := nil ;
   with fpFormasPagamentos do
@@ -3472,8 +3482,7 @@ function TACBrECFClass.AchaFPGIndice( Indice: String) :
    TACBrECFFormaPagamento;
 var A : Integer ;
 begin
-  if not Assigned( fpFormasPagamentos ) then
-     CarregaFormasPagamento ;
+  GetFormasPagamentos;
 
   result := nil ;
   with fpFormasPagamentos do
@@ -3510,11 +3519,16 @@ begin
 end;
 
 function TACBrECFClass.GetRelatoriosGerenciais: TACBrECFRelatoriosGerenciais;
+var
+  ECF: TACBrECF;
 begin
   if not Assigned( fpRelatoriosGerenciais ) then
-     CarregaRelatoriosGerenciais ;
+  begin
+     ECF := GetECFComponente(Self);
+     ECF.CarregaRelatoriosGerenciais ;
+  end;
 
-  result := fpRelatoriosGerenciais ;
+  Result := fpRelatoriosGerenciais ;
 end;
 
 function TACBrECFClass.AchaRGDescricao(Descricao: String;
@@ -3522,8 +3536,7 @@ function TACBrECFClass.AchaRGDescricao(Descricao: String;
 var Tamanho, A : Integer ;
      DescrECF : String ;
 begin
-  if not Assigned( fpRelatoriosGerenciais ) then
-     CarregaRelatoriosGerenciais ;
+  GetRelatoriosGerenciais;
 
   result := nil ;
   with fpRelatoriosGerenciais do
@@ -3553,8 +3566,7 @@ function TACBrECFClass.AchaRGIndice(
   Indice: String): TACBrECFRelatorioGerencial;
 var A : Integer ;
 begin
-  if not Assigned( fpRelatoriosGerenciais ) then
-     CarregaRelatoriosGerenciais ;
+  GetRelatoriosGerenciais;
 
   result := nil ;
   with fpRelatoriosGerenciais do
@@ -3593,9 +3605,14 @@ begin
 end;
 
 function TACBrECFClass.GetComprovantesNaoFiscais: TACBrECFComprovantesNaoFiscais;
+var
+  ECF: TACBrECF;
 begin
   if not Assigned( fpComprovantesNaoFiscais ) then
-     CarregaComprovantesNaoFiscais ;
+  begin
+     ECF := GetECFComponente(Self);
+     ECF.CarregaComprovantesNaoFiscais ;
+  end;
 
   result := fpComprovantesNaoFiscais ;
 end;
@@ -3605,8 +3622,7 @@ function TACBrECFClass.AchaCNFDescricao( Descricao: String;
  var Tamanho, A : Integer ;
      DescrECF : String ;
 begin
-  if not Assigned( fpComprovantesNaoFiscais ) then
-     CarregaComprovantesNaoFiscais ;
+  GetComprovantesNaoFiscais;
 
   result := nil ;
   with fpComprovantesNaoFiscais do
@@ -3636,8 +3652,7 @@ function TACBrECFClass.AchaCNFIndice(
   Indice: String): TACBrECFComprovanteNaoFiscal;
 var A : Integer ;
 begin
-  if not Assigned( fpComprovantesNaoFiscais ) then
-     CarregaComprovantesNaoFiscais ;
+  GetComprovantesNaoFiscais;
 
   result := nil ;
   with fpComprovantesNaoFiscais do
@@ -3657,8 +3672,7 @@ function TACBrECFClass.AchaCNFFormaPagamento(
   CodFPG: String): TACBrECFComprovanteNaoFiscal;
 var A : Integer ;
 begin
-  if not Assigned( fpComprovantesNaoFiscais ) then
-     CarregaComprovantesNaoFiscais ;
+  GetComprovantesNaoFiscais;
 
   result := nil ;
   with fpComprovantesNaoFiscais do
@@ -3689,9 +3703,14 @@ begin
 end;
 
 function TACBrECFClass.GetUnidadesMedida: TACBrECFUnidadesMedida;
+var
+  ECF: TACBrECF;
 begin
   if not Assigned( fpUnidadesMedida ) then
-     CarregaUnidadesMedida ;
+  begin
+     ECF := GetECFComponente(Self);
+     ECF.CarregaUnidadesMedida ;
+  end;
 
   result := fpUnidadesMedida ;
 end;
@@ -3700,8 +3719,7 @@ function TACBrECFClass.AchaUMDDescricao(
   Descricao: String): TACBrECFUnidadeMedida;
 var A : Integer ;
 begin
-  if not Assigned( fpUnidadesMedida ) then
-     CarregaUnidadesMedida ;
+  GetUnidadesMedida;
 
   result := nil ;
   with fpUnidadesMedida do
@@ -3721,8 +3739,7 @@ end;
 function TACBrECFClass.AchaUMDIndice( Indice: String): TACBrECFUnidadeMedida;
 var A : Integer ;
 begin
-  if not Assigned( fpUnidadesMedida ) then
-     CarregaUnidadesMedida ;
+  GetUnidadesMedida;
 
   result := nil ;
   with fpUnidadesMedida do
