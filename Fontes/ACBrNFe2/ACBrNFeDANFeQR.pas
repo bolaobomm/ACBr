@@ -247,6 +247,8 @@ begin
            QRNFe.PrevShowThumbs      := False;
            QRNFe.PreviewInitialState := wsMaximized;
            QRNFe.PrevInitialZoom     := qrZoomToWidth;
+           // Incluido por Italo em 16/07/2014
+           QRExportFilterLibrary.AddFilter(TQRPDFDocumentFilter);
          {$ENDIF}
 
            QRNFe.Prepare;
