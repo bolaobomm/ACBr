@@ -1106,7 +1106,7 @@ begin
     XMLNFe := TStringStream.Create(AString);
     try
       XMLNFe.WriteString(AString);
-      Result := LoadFromStream(XMLNFe, AGerarNFe);
+      Result := LoadFromStream(XMLNFe);
     finally
       XMLNFe.Free;
     end;
