@@ -103,6 +103,7 @@ type
     FServicoConNfse: String;
     FServicoCancelar: String;
     FServicoGerar: String;
+    FServicoConsSeqRPS:string;
     FServicoEnviarSincrono: String;
     FDefTipos: String;
 
@@ -114,6 +115,7 @@ type
     FConsultaNFSe: String;
     FCancelaNFSe: String;
     FGerarNFSe: String;
+    FConsSeqRPS: string;
     FLinkNFSe: String;
     FGerarLoteRps: String;
     FRecepcaoSincrono: String;
@@ -303,6 +305,7 @@ type
     FSeriePrestacao: String;
     FNFSeRetorno: TRetNfse;
     FNotasFiscais : TNotasFiscais;
+    FSequencialRPS: Integer;
   public
     function Executar: Boolean; override;
     constructor Create(AOwner : TComponent; ANotasFiscais : TNotasFiscais); reintroduce;
@@ -311,6 +314,7 @@ type
     property InscricaoMunicipal: String read FInscricaoMunicipal write FInscricaoMunicipal;
     property Cidade: String read FCidade write FCidade;
     property SeriePrestacao: String read FSeriePrestacao write FSeriePrestacao;
+    property SequencialRPS : Integer read FSequencialRPS write FSequencialRPS; //Incluido por Ailton Branco em 176/07/2014
     property NFSeRetorno: TRetNfse read FNFSeRetorno write FNFSeRetorno;
   end;
 
@@ -559,7 +563,7 @@ begin
  CertContext := Cert as ICertContext;
  CertContext.Get_CertContext(Integer(PCertContext));
 
- if not (FProvedor in [proGovBr, proSimplISS, proAbaco, proISSNet, pro4R,
+ if not (FProvedor in [proGovBr, proSimplISS, proAbaco, proISSNet, pro4R, proIssDSF,  // proIssDSF incluido por Ailton Branco 16/07/2014
                        proFiorilli, proProdata, proCoplan, proThema, proVirtual,
                        proPVH, proFreire, proTecnos, proPronim, proPublica, proEgoverneISS])
   then begin
@@ -730,6 +734,7 @@ begin
    FConsultaNFSe       := FConfiguracoes.WebServices.ProConsultaNFSe;
    FCancelaNFSe        := FConfiguracoes.WebServices.ProCancelaNFSe;
    FGerarNFSe          := FConfiguracoes.WebServices.ProGerarNFSe;
+   FConsSeqRPS         := FConfiguracoes.WebServices.ProConsultaSeqRPS; // Alterado por Ailton Branco 16/072014
    FRecepcaoSincrono   := FConfiguracoes.WebServices.ProRecepcaoSincrono;
   end
   else begin
@@ -741,6 +746,7 @@ begin
    FConsultaNFSe       := FConfiguracoes.WebServices.HomConsultaNFSe;
    FCancelaNFSe        := FConfiguracoes.WebServices.HomCancelaNFSe;
    FGerarNFSe          := FConfiguracoes.WebServices.HomGerarNFSe;
+   FConsSeqRPS         := FConfiguracoes.WebServices.HomConsultaSeqRPS; // Alterado por Ailton Branco 16/072014
    FRecepcaoSincrono   := FConfiguracoes.WebServices.HomRecepcaoSincrono;
   end;
 
@@ -759,7 +765,9 @@ begin
   else if self is TNFSeGerarNfse
   then FURL := FGerarNFSe
   else if self is TNFSeEnviarSincrono
-  then FURL := FRecepcaoSincrono;
+  then FURL := FRecepcaoSincrono
+  else if self is TNFSeConsultarSequencialRPS
+  then FURL := FConsSeqRPS;
 end;
 
 procedure TWebServicesBase.DoNFSeEnviarLoteRPS;

@@ -40,6 +40,7 @@ type
     ServicoConSit: String;
     ServicoConLot: String;
     ServicoConRps: String;
+    ServicoConSeqRps: String;
     ServicoConNfse: String;
     ServicoCancelar: String;
     ServicoGerar: String;
@@ -53,6 +54,7 @@ type
     HomConsultaLoteRPS: String;
     HomConsultaNFSeRPS: String;
     HomConsultaSitLoteRPS: String;
+    HomConsultaSeqRPS: String;
     HomConsultaNFSe: String;
     HomCancelaNFSe: String;
     HomGerarNFSe: String;
@@ -60,6 +62,7 @@ type
     ProNomeCidade:String;
     ProRecepcaoLoteRPS: String;
     ProConsultaLoteRPS: String;
+    ProConsultaSeqRPS: String;
     ProConsultaNFSeRPS: String;
     ProConsultaSitLoteRPS: String;
     ProConsultaNFSe: String;
@@ -144,6 +147,7 @@ type
     FServicoConSit: String;
     FServicoConLot: String;
     FServicoConRps: String;
+    FServicoConSeqRps: String;
     FServicoConNfse: String;
     FServicoCancelar: String;
     FServicoGerar: String;
@@ -154,6 +158,7 @@ type
     FHomNomeCidade:String;
     FHomRecepcaoLoteRPS: String;
     FHomConsultaLoteRPS: String;
+    FHomConsultaSeqRPS: String;
     FHomConsultaNFSeRPS: String;
     FHomConsultaSitLoteRPS: String;
     FHomConsultaNFSe: String;
@@ -163,6 +168,7 @@ type
     FProNomeCidade:String;
     FProRecepcaoLoteRPS: String;
     FProConsultaLoteRPS: String;
+    FProConsultaSeqRPS: String;
     FProConsultaNFSeRPS: String;
     FProConsultaSitLoteRPS: String;
     FProConsultaNFSe: String;
@@ -214,6 +220,7 @@ type
     property ServicoConSit: String read FServicoConSit;
     property ServicoConLot: String read FServicoConLot;
     property ServicoConRps: String read FServicoConRps;
+    property ServicoConSeqRps: String read FServicoConSeqRps;
     property ServicoConNfse: String read FServicoConNfse;
     property ServicoCancelar: String read FServicoCancelar;
     property ServicoGerar: String read FServicoGerar;
@@ -224,6 +231,7 @@ type
     property HomNomeCidade: String read FHomNomeCidade;
     property HomRecepcaoLoteRPS: String read FHomRecepcaoLoteRPS;
     property HomConsultaLoteRPS: String read FHomConsultaLoteRPS;
+    property HomConsultaSeqRPS: String read FHomConsultaSeqRPS;
     property HomConsultaNFSeRPS: String read FHomConsultaNFSeRPS;
     property HomConsultaSitLoteRPS: String read FHomConsultaSitLoteRPS;
     property HomConsultaNFSe: String read FHomConsultaNFSe;
@@ -233,6 +241,7 @@ type
     property ProNomeCidade: String read FProNomeCidade;
     property ProRecepcaoLoteRPS: String read FProRecepcaoLoteRPS;
     property ProConsultaLoteRPS: String read FProConsultaLoteRPS;
+    property ProConsultaSeqRPS: String read FProConsultaSeqRPS;
     property ProConsultaNFSeRPS: String read FProConsultaNFSeRPS;
     property ProConsultaSitLoteRPS: String read FProConsultaSitLoteRPS;
     property ProConsultaNFSe: String read FProConsultaNFSe;
@@ -807,6 +816,7 @@ begin
  FServicoConSit         := ConfigSchema.ServicoConSit;
  FServicoConLot         := ConfigSchema.ServicoConLot;
  FServicoConRps         := ConfigSchema.ServicoConRps;
+ FServicoConSeqRps      := ConfigSchema.ServicoConSeqRps;
  FServicoConNfse        := ConfigSchema.ServicoConNfse;
  FServicoCancelar       := ConfigSchema.ServicoCancelar;
  FServicoGerar          := ConfigSchema.ServicoGerar;
@@ -818,6 +828,7 @@ begin
  FHomNomeCidade         := ConfigURL.HomNomeCidade;
  FHomRecepcaoLoteRPS    := ConfigURL.HomRecepcaoLoteRPS;
  FHomConsultaLoteRPS    := ConfigURL.HomConsultaLoteRPS;
+ FHomConsultaSeqRPS     := ConfigURL.HomConsultaSeqRPS;
  FHomConsultaNFSeRPS    := ConfigURL.HomConsultaNFSeRPS;
  FHomConsultaSitLoteRPS := ConfigURL.HomConsultaSitLoteRPS;
  FHomConsultaNFSe       := ConfigURL.HomConsultaNFSe;
@@ -828,6 +839,7 @@ begin
  FProNomeCidade         := ConfigURL.ProNomeCidade;
  FProRecepcaoLoteRPS    := ConfigURL.ProRecepcaoLoteRPS;
  FProConsultaLoteRPS    := ConfigURL.ProConsultaLoteRPS;
+ FProConsultaSeqRPS     := ConfigURL.ProConsultaSeqRPS;
  FProConsultaNFSeRPS    := ConfigURL.ProConsultaNFSeRPS;
  FProConsultaSitLoteRPS := ConfigURL.ProConsultaSitLoteRPS;
  FProConsultaNFSe       := ConfigURL.ProConsultaNFSe;

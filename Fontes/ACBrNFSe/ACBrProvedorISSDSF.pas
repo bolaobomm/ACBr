@@ -109,14 +109,15 @@ begin
     3552205: ConfigSchema.NameSpaceXML := 'http://localhost:8080/WsNFe2/lote'; //'http://www.issdigitalsod.com.br/WsNFe2';      // Sorocaba/SP
   end;
                                    //tentar este se não der certo http://localhost:8080/WsNFe2/xsd/...
-  ConfigSchema.Cabecalho       := '';
-  ConfigSchema.ServicoEnviar   := 'ReqEnvioLoteRPS.xsd';
-  ConfigSchema.ServicoConSit   := 'ConsultaSeqRps.xsd';
-  ConfigSchema.ServicoConLot   := 'ReqConsultaLote.xsd';
-  ConfigSchema.ServicoConRps   := 'ReqConsultaNFSeRPS.xsd';
-  ConfigSchema.ServicoConNfse  := 'ReqConsultaNotas.xsd';
-  ConfigSchema.ServicoCancelar := 'ReqCancelamentoNFSe.xsd';
-  ConfigSchema.DefTipos        := ''; // 'Tipos.xsd';
+  ConfigSchema.Cabecalho        := '';
+  ConfigSchema.ServicoEnviar    := 'ReqEnvioLoteRPS.xsd';
+  ConfigSchema.ServicoConSit    := 'ConsultaSeqRps.xsd';      //verificar esta opção esta errado pra campo grande
+  ConfigSchema.ServicoConLot    := 'ReqConsultaLote.xsd';
+  ConfigSchema.ServicoConRps    := 'ReqConsultaNFSeRPS.xsd';
+  ConfigSchema.ServicoConNfse   := 'ReqConsultaNotas.xsd';
+  ConfigSchema.ServicoCancelar  := 'ReqCancelamentoNFSe.xsd';
+  ConfigSchema.ServicoConSeqRps := 'consultarSequencialRps.xsd'; // Incluido por Ailton Branco 16/07/2014
+  ConfigSchema.DefTipos         := ''; // 'Tipos.xsd';
 
  Result := ConfigSchema;
 end;
@@ -141,7 +142,7 @@ begin
   ConfigURL.HomConsultaSitLoteRPS := '';
   ConfigURL.HomConsultaNFSe       := '';
   ConfigURL.HomCancelaNFSe        := '';
-  
+
   ConfigURL.ProNomeCidade         := '';
 
    case ACodCidade of
@@ -164,7 +165,7 @@ begin
        ConfigURL.ProCancelaNFSe        := 'http://udigital.uberlandia.mg.gov.br/WsNFe2/LoteRps.jws?wsdl';
      end;
     1501402: // Belem/PA
-     begin 
+     begin
        ConfigURL.ProRecepcaoLoteRPS    := 'http://www.issdigitalbel.com.br/WsNFe2/LoteRps.jws?wsdl';
        ConfigURL.ProConsultaLoteRPS    := 'http://www.issdigitalbel.com.br/WsNFe2/LoteRps.jws?wsdl';
        ConfigURL.ProConsultaNFSeRPS    := 'http://www.issdigitalbel.com.br/WsNFe2/LoteRps.jws?wsdl';
@@ -173,13 +174,14 @@ begin
        ConfigURL.ProCancelaNFSe        := 'http://www.issdigitalbel.com.br/WsNFe2/LoteRps.jws?wsdl';
      end;
     5002704: // Campo Grande/MS
-     begin 
-       ConfigURL.HomRecepcaoLoteRPS    := 'http://treinamento.dsfweb.com.br/WsNFe2/LoteRps.jws?wsdl';
-       ConfigURL.HomConsultaLoteRPS    := 'http://treinamento.dsfweb.com.br/WsNFe2/LoteRps.jws?wsdl';
-       ConfigURL.HomConsultaNFSeRPS    := 'http://treinamento.dsfweb.com.br/WsNFe2/LoteRps.jws?wsdl';
-       ConfigURL.HomConsultaSitLoteRPS := 'http://treinamento.dsfweb.com.br/WsNFe2/LoteRps.jws?wsdl';
-       ConfigURL.HomConsultaNFSe       := 'http://treinamento.dsfweb.com.br/WsNFe2/LoteRps.jws?wsdl';
-       ConfigURL.HomCancelaNFSe        := 'http://treinamento.dsfweb.com.br/WsNFe2/LoteRps.jws?wsdl';
+     begin
+       ConfigURL.HomRecepcaoLoteRPS    := 'http://issdigital.pmcg.ms.gov.br/WsNFe2/LoteRps.jws?wsdl';
+       ConfigURL.HomConsultaLoteRPS    := 'http://issdigital.pmcg.ms.gov.br/WsNFe2/LoteRps.jws?wsdl';
+       ConfigURL.HomConsultaNFSeRPS    := 'http://issdigital.pmcg.ms.gov.br/WsNFe2/LoteRps.jws?wsdl';
+       ConfigURL.HomConsultaSitLoteRPS := 'http://issdigital.pmcg.ms.gov.br/WsNFe2/LoteRps.jws?wsdl';
+       ConfigURL.HomConsultaNFSe       := 'http://issdigital.pmcg.ms.gov.br/WsNFe2/LoteRps.jws?wsdl';
+       ConfigURL.HomCancelaNFSe        := 'http://issdigital.pmcg.ms.gov.br/WsNFe2/LoteRps.jws?wsdl';
+       ConfigURL.HomConsultaSeqRPS     := 'http://issdigital.pmcg.ms.gov.br/WsNFe2/LoteRps.jws?wsdl'; // Incluido por Ailton Branco 16/07/2014
 
        ConfigURL.ProRecepcaoLoteRPS    := 'http://issdigital.pmcg.ms.gov.br/WsNFe2/LoteRps.jws?wsdl';
        ConfigURL.ProConsultaLoteRPS    := 'http://issdigital.pmcg.ms.gov.br/WsNFe2/LoteRps.jws?wsdl';
@@ -187,9 +189,11 @@ begin
        ConfigURL.ProConsultaSitLoteRPS := 'http://issdigital.pmcg.ms.gov.br/WsNFe2/LoteRps.jws?wsdl';
        ConfigURL.ProConsultaNFSe       := 'http://issdigital.pmcg.ms.gov.br/WsNFe2/LoteRps.jws?wsdl';
        ConfigURL.ProCancelaNFSe        := 'http://issdigital.pmcg.ms.gov.br/WsNFe2/LoteRps.jws?wsdl';
+       ConfigURL.ProConsultaSeqRPS     := 'http://issdigital.pmcg.ms.gov.br/WsNFe2/LoteRps.jws?wsdl'; // Incluido por Ailton Branco 16/07/2014
+
      end;
     3303500: // Nova Iguacu/RJ
-     begin 
+     begin
        ConfigURL.ProRecepcaoLoteRPS    := 'http://www.issmaisfacil.com.br/WsNFe2/LoteRps.jws?wsdl';
        ConfigURL.ProConsultaLoteRPS    := 'http://www.issmaisfacil.com.br/WsNFe2/LoteRps.jws?wsdl';
        ConfigURL.ProConsultaNFSeRPS    := 'http://www.issmaisfacil.com.br/WsNFe2/LoteRps.jws?wsdl';
@@ -216,7 +220,7 @@ begin
        ConfigURL.ProCancelaNFSe        := 'http://www.issdigitalslz.com.br/WsNFe2/LoteRps.jws?wsdl';
      end;
     3552205: // Sorocaba/SP
-     begin 
+     begin
        ConfigURL.ProRecepcaoLoteRPS    := 'http://www.issdigitalsod.com.br/WsNFe2/LoteRps.jws?wsdl';
        ConfigURL.ProConsultaLoteRPS    := 'http://www.issdigitalsod.com.br/WsNFe2/LoteRps.jws?wsdl';
        ConfigURL.ProConsultaNFSeRPS    := 'http://www.issdigitalsod.com.br/WsNFe2/LoteRps.jws?wsdl';
@@ -262,7 +266,7 @@ begin
 
    acConsSit:     Result := '';
 
-   acConsLote:    Result := '<' + Prefixo3 + 'ReqConsultaLote' + NameSpaceDad 
+   acConsLote:    Result := '<' + Prefixo3 + 'ReqConsultaLote' + NameSpaceDad
                               { 'xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"' +};
 
    acConsNFSeRps: Result := '<' + Prefixo3 + 'ReqConsultaNFSeRPS' + NameSpaceDad
@@ -277,7 +281,7 @@ begin
    acGerar:       Result := '<' + Prefixo3 + 'ReqEnvioLoteRPS' + NameSpaceDad
                               { 'xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"' +};
 
-   acConsSecRps:  Result := '<' + Prefixo3 + 'ConsultaSeqRps' + NameSpaceDad 
+   acConsSecRps:  Result := '<' + Prefixo3 + 'ConsultaSeqRps' + NameSpaceDad
                               { 'xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"' +};
  end;
 end;
@@ -494,5 +498,3 @@ begin
 end;
 
 end.
-
-
