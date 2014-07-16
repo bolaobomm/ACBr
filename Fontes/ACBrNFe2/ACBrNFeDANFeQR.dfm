@@ -1,9 +1,9 @@
 object fqrDANFeQR: TfqrDANFeQR
   Left = 194
   Top = 125
+  Width = 906
+  Height = 737
   Caption = 'fqrDANFeQR'
-  ClientHeight = 703
-  ClientWidth = 881
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -41,6 +41,7 @@ object fqrDANFeQR: TfqrDANFeQR
     Page.Columns = 1
     Page.Orientation = poPortrait
     Page.PaperSize = A4
+    Page.Continuous = False
     Page.Values = (
       100.000000000000000000
       2970.000000000000000000
@@ -72,5 +73,8 @@ object fqrDANFeQR: TfqrDANFeQR
     PrevFormStyle = fsNormal
     PreviewInitialState = wsNormal
     PrevInitialZoom = qrZoomToFit
+    PreviewDefaultSaveType = stQRP
+    PreviewLeft = 0
+    PreviewTop = 0
   end
 end

@@ -794,6 +794,8 @@ var
  LocNFeR : TNFeR;
  ArquivoXML: TStringList;
  XML, XMLOriginal : AnsiString;
+ Ok: Boolean;
+ Versao: String;
 begin
  try
     ArquivoXML := TStringList.Create;
@@ -817,6 +819,15 @@ begin
          try
             LocNFeR.Leitor.Arquivo := XML;
             LocNFeR.LerXml;
+
+            // Incluido por Italo em 16/07/2014
+            // Detecta o modelo e a versão do Documento Fiscal
+            FConfiguracoes.Geral.ModeloDF := StrToModeloDF(OK, IntToStr(LocNFeR.NFe.Ide.modelo));
+            Versao := LocNFeR.NFe.infNFe.VersaoStr;
+            Versao := StringReplace(Versao, 'versao="', '', [rfReplaceAll,rfIgnoreCase]);
+            Versao := StringReplace(Versao, '"', '', [rfReplaceAll,rfIgnoreCase]);
+            FConfiguracoes.Geral.VersaoDF := StrToVersaoDF(OK, Versao);
+
             Items[Self.Count-1].XML := LocNFeR.Leitor.Arquivo;
             Items[Self.Count-1].XMLOriginal := XMLOriginal;
             Items[Self.Count-1].NomeArq := CaminhoArquivo;
@@ -838,6 +849,8 @@ end;
 function TNotasFiscais.LoadFromStream(Stream: TStringStream; AGerarNFe: Boolean = True): boolean;
 var
  LocNFeR : TNFeR;
+ Ok: Boolean;
+ Versao: String;
 begin
   try
     Result := True;
@@ -845,8 +858,17 @@ begin
     try
        LocNFeR.Leitor.CarregarArquivo(Stream);
        LocNFeR.LerXml;
-       Items[Self.Count-1].XMLOriginal := Stream.DataString;
+
+       // Incluido por Italo em 16/07/2014
+       // Detecta o modelo e a versão do Documento Fiscal
+       FConfiguracoes.Geral.ModeloDF := StrToModeloDF(OK, IntToStr(LocNFeR.NFe.Ide.modelo));
+       Versao := LocNFeR.NFe.infNFe.VersaoStr;
+       Versao := StringReplace(Versao, 'versao="', '', [rfReplaceAll,rfIgnoreCase]);
+       Versao := StringReplace(Versao, '"', '', [rfReplaceAll,rfIgnoreCase]);
+       FConfiguracoes.Geral.VersaoDF := StrToVersaoDF(OK, Versao);
+
        Items[Self.Count-1].XML := LocNFeR.Leitor.Arquivo;
+       Items[Self.Count-1].XMLOriginal := Stream.DataString;
        if AGerarNFe then
           GerarNFe;
     finally

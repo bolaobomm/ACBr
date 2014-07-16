@@ -58,7 +58,6 @@ uses
  Forms, SysUtils, Classes,
  pcnNFe, pcnConversao, ACBrNFeDANFEClass,
  ACBrNFeDANFeQR, ACBrNFeDAEventoQR;
-
 type
   TACBrNFeDANFEQR = class( TACBrNFeDANFEClass )
    private
@@ -147,7 +146,9 @@ begin
                                     , NFeCancelada
                                     , LocalImpCanhoto 
                                     , ImprimeItens
-                                    , vTroco);
+                                    , vTroco
+                                    , ImprimirDescPorc
+                                    , ImprimirDetalhamentoEspecifico);
       end;
    end
   else
@@ -172,9 +173,11 @@ begin
                                 , ExibirResumoCanhoto_Texto
                                 , ExpandirLogoMarca
                                 , NFeCancelada
-                                , LocalImpCanhoto  
+                                , LocalImpCanhoto
                                 , ImprimeItens
-                                , vTroco);
+                                , vTroco
+                                , ImprimirDescPorc
+                                , ImprimirDetalhamentoEspecifico);
 
   fqrDANFeQRRetrato.Free;
 end;
@@ -237,7 +240,9 @@ begin
                                   , NFeCancelada
                                   , LocalImpCanhoto  
                                   , ImprimeItens
-                                  , vTroco);
+                                  , vTroco
+                                  , ImprimirDescPorc
+                                  , ImprimirDetalhamentoEspecifico);
       end;
    end
    else
@@ -266,7 +271,9 @@ begin
                               , NFeCancelada
                               , LocalImpCanhoto
                               , ImprimeItens
-                              , vTroco);
+                              , vTroco
+                              , ImprimirDescPorc
+                              , ImprimirDetalhamentoEspecifico);
    end;
 
   fqrDANFeQRRetrato.Free;

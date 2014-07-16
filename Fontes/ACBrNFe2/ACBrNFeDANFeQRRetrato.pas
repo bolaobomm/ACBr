@@ -650,205 +650,496 @@ begin
    cdsItens.First;
  }
 var
- nItem : Integer;
- sCST, sBCICMS, sALIQICMS, sVALORICMS, sALIQIPI, sVALORIPI : String;
- dPercDesc : Currency;
+  nItem, I, X: Integer;
+  sCST, sBCICMS, sALIQICMS, sVALORICMS, sALIQIPI, sVALORIPI, vAux: String;
+  sDetalhamentoEspecifico: WideString;
+  dPercDesc: Currency;
 begin
   cdsItens.Close;
   cdsItens.CreateDataSet;
   cdsItens.Open;
 
   for nItem := 0 to (FNFe.Det.Count - 1) do
+  begin
+    with FNFe.Det.Items[nItem] do
     begin
-      with FNFe.Det.Items[nItem] do
+      with Prod do
+      begin
+        with Imposto.ICMS do
         begin
-          with Prod do
+          sALIQIPI   := '0,00';
+          sVALORIPI  := '0,00';
+          sDetalhamentoEspecifico := '';
+
+          cdsItens.Append;
+          cdsItens.FieldByName('CODIGO').AsString := CProd;
+          cdsItens.FieldByName('DESCRICAO').AsString := XProd;
+          cdsItens.FieldByName('INFADIPROD').AsString := infAdProd;
+          cdsItens.FieldByName('NCM').AsString := NCM;
+          cdsItens.FieldByName('CFOP').AsString := CFOP;
+
+          if FImprimirDetalhamentoEspecifico then
+          begin
+            vAux := '';
+
+            // *****************************************************************
+            // Veículo
+            // *****************************************************************
+            if trim(Prod.veicProd.chassi) <> '' then
             begin
-              with Imposto.ICMS do
+              sDetalhamentoEspecifico := #13#10;
+              sDetalhamentoEspecifico := sDetalhamentoEspecifico + 'CHASSI: ' + Prod.veicProd.chassi + #13#10;
+              sDetalhamentoEspecifico := sDetalhamentoEspecifico + ' COMBUSTÍVEL: ' + Prod.veicProd.CombDescricao + #13#10;
+              sDetalhamentoEspecifico := sDetalhamentoEspecifico + ' COR: ' + Prod.veicProd.xCor + #13#10;
+              sDetalhamentoEspecifico := sDetalhamentoEspecifico + ' FAB./MOD.: ' + IntToStr(Prod.veicProd.anoFab) + '/' + IntToStr(Prod.veicProd.anoMod) + #13#10;
+              sDetalhamentoEspecifico := sDetalhamentoEspecifico + ' Nº DO MOTOR: ' + Prod.veicProd.nMotor;
+
+              //codigo abaixo comentado foi copiado da danfe do FORTES REPORTS
+              {
+              if Prod.veicProd.tpOP in [toVendaConcessionaria, toFaturamentoDireto, toVendaDireta, toOutros] then
+              begin
+                case Prod.veicProd.tpOP of
+                 toVendaConcessionaria: vAux := '1-VENDA CONCESSIONÁRIA';
+                 toFaturamentoDireto:   vAux := '2-FAT. DIRETO CONS. FINAL';
+                 toVendaDireta:         vAux := '3-VENDA DIRETA';
+                 toOutros:              vAux := '0-OUTROS';
+                end;
+                sDetalhamentoEspecifico := sDetalhamentoEspecifico + 'TIPO DA OPERAÇÃO: ' + vAux + #13#10;
+              end;
+
+              if Prod.veicProd.chassi <> '' then
+                sDetalhamentoEspecifico := sDetalhamentoEspecifico + 'CHASSI: ' + Prod.veicProd.chassi + #13#10;
+              if Prod.veicProd.cCor <> '' then
+                sDetalhamentoEspecifico := sDetalhamentoEspecifico + 'CÓDIGO DA COR: ' + Prod.veicProd.cCor + #13#10;
+              if Prod.veicProd.xCor <> '' then
+                sDetalhamentoEspecifico := sDetalhamentoEspecifico + 'NOME DA COR: ' + Prod.veicProd.xCor + #13#10;
+              if Prod.veicProd.pot <> '' then
+                sDetalhamentoEspecifico := sDetalhamentoEspecifico + 'POTÊNCIA DO MOTOR: ' + Prod.veicProd.pot + #13#10;
+              if Prod.veicProd.Cilin <> '' then
+                sDetalhamentoEspecifico := sDetalhamentoEspecifico + 'CILINDRADAS: ' + Prod.veicProd.Cilin + #13#10;
+              if Prod.veicProd.pesoL <> '' then
+                sDetalhamentoEspecifico := sDetalhamentoEspecifico + 'PESO LÍQUIDO: ' + Prod.veicProd.pesoL + #13#10;
+              if Prod.veicProd.pesoB <> '' then
+                sDetalhamentoEspecifico := sDetalhamentoEspecifico + 'PESO BRUTO: ' + Prod.veicProd.pesoB + #13#10;
+              if Prod.veicProd.nSerie <> '' then
+                sDetalhamentoEspecifico := sDetalhamentoEspecifico + 'NÚMERO DE SÉRIE: ' + Prod.veicProd.nSerie + #13#10;
+
+              if Prod.veicProd.tpComb <> '' then
+              begin
+                case StrToInt(Prod.veicProd.tpComb) of
+                  1: vAux := '01-ÁLCOOL';
+                  2: vAux := '02-GASOLINA';
+                  3: vAux := '03-DIESEL';
+                  4: vAux := '04-GASOGÊNIO';
+                  5: vAux := '05-GÁS METANO';
+                  6: vAux := '06-ELETRICO/F INTERNA';
+                  7: vAux := '07-ELETRICO/F EXTERNA';
+                  8: vAux := '08-GASOLINA/GNC';
+                  9: vAux := '09-ÁLCOOL/GNC';
+                 10: vAux := '10-DIESEL / GNC';
+                 11: vAux := '11-VIDE CAMPO OBSERVAÇÃO';
+                 12: vAux := '12-ÁLCOOL/GNV';
+                 13: vAux := '13-GASOLINA/GNV';
+                 14: vAux := '14-DIESEL/GNV';
+                 15: vAux := '15-GÁS NATURAL VEICULAR';
+                 16: vAux := '16-ÁLCOOL/GASOLINA';
+                 17: vAux := '17-GASOLINA/ÁLCOOL/GNV';
+                 18: vAux := '18-GASOLINA/ELÉTRICO'
+                 else vAux := Prod.veicProd.tpComb;
+                end;
+                sDetalhamentoEspecifico := sDetalhamentoEspecifico + 'COMBUSTÍVEL: ' + vAux + #13#10;
+              end;
+
+              if Prod.veicProd.nMotor <> '' then
+                sDetalhamentoEspecifico := sDetalhamentoEspecifico + 'NÚMERO DO MOTOR: ' + Prod.veicProd.nMotor + #13#10;
+              if Prod.veicProd.CMT <> '' then
+                sDetalhamentoEspecifico := sDetalhamentoEspecifico + 'CAP. MÁX. TRAÇÃO: ' + Prod.veicProd.CMT + #13#10;
+              if Prod.veicProd.dist <> '' then
+                sDetalhamentoEspecifico := sDetalhamentoEspecifico + 'DISTÂNCIA ENTRE EIXOS: ' + Prod.veicProd.dist + #13#10;
+              if IntToStr(Prod.veicProd.anoMod) <> '' then
+                sDetalhamentoEspecifico := sDetalhamentoEspecifico + 'ANO DO MODELO: ' + IntToStr(Prod.veicProd.anoMod) + #13#10;
+              if IntToStr(Prod.veicProd.anoFab) <> '' then
+                sDetalhamentoEspecifico := sDetalhamentoEspecifico + 'ANO DE FABRICAÇÃO: ' + IntToStr(Prod.veicProd.anoFab) + #13#10;
+              if Prod.veicProd.tpPint <> '' then
+                sDetalhamentoEspecifico := sDetalhamentoEspecifico + 'TIPO DE PINTURA: ' + Prod.veicProd.tpPint + #13#10;
+
+              if (Prod.veicProd.tpVeic IN [1..26]) then
+              begin
+                case Prod.veicProd.tpVeic of
+                  1:  vAux := '01-BICICLETA';
+                  2:  vAux := '02-CICLOMOTOR';
+                  3:  vAux := '03-MOTONETA';
+                  4:  vAux := '04-MOTOCICLETA';
+                  5:  vAux := '05-TRICICLO';
+                  6:  vAux := '06-AUTOMÓVEL';
+                  7:  vAux := '07-MICROONIBUS';
+                  8:  vAux := '08-ONIBUS';
+                  9:  vAux := '09-BONDE';
+                 10: vAux := '10-REBOQUE';
+                 11: vAux := '11-SEMI-REBOQUE';
+                 12: vAux := '12-CHARRETE';
+                 13: vAux := '13-CAMIONETA';
+                 14: vAux := '14-CAMINHÃO';
+                 15: vAux := '15-CARROÇA';
+                 16: vAux := '16-CARRO DE MÃO';
+                 17: vAux := '17-CAMINHÃO TRATOR';
+                 18: vAux := '18-TRATOR DE RODAS';
+                 19: vAux := '19-TRATOR DE ESTEIRAS';
+                 20: vAux := '20-TRATOR MISTO';
+                 21: vAux := '21-QUADRICICLO';
+                 22: vAux := '22-CHASSI/PLATAFORMA';
+                 23: vAux := '23-CAMINHONETE';
+                 24: vAux := '24-SIDE-CAR';
+                 25: vAux := '25-UTILITÁRIO';
+                 26: vAux := '26-MOTOR-CASA'
+                 else vAux := IntToStr(Prod.veicProd.tpVeic);
+                end;
+                sDetalhamentoEspecifico := sDetalhamentoEspecifico + 'TIPO DE VEÍCULO: ' + vAux + #13#10;
+              end;
+
+              vAux := '';
+              case Prod.veicProd.espVeic of
+                1: vAux := '01-PASSAGEIRO';
+                2: vAux := '02-CARGA';
+                3: vAux := '03-MISTO';
+                4: vAux := '04-CORRIDA';
+                5: vAux := '05-TRAÇÃO';
+                6: vAux := '06-ESPECIAL';
+                7: vAux := '07-COLEÇÃO'
+               else vAux := IntToStr(Prod.veicProd.espVeic);
+              end;
+
+              if vAux <> '' then
+                sDetalhamentoEspecifico := sDetalhamentoEspecifico + 'ESPÉCIE DO VEÍCULO: ' + vAux + #13#10;
+
+              vAux := '';
+              if Prod.veicProd.VIN = 'R' then
+                vAux := 'R-REMARCADO'
+              else if Prod.veicProd.VIN = 'N' then
+                vAux := 'N-NORMAL'
+              else
+                vAux := Prod.veicProd.VIN;
+
+              if vAux <> '' then
+                sDetalhamentoEspecifico := sDetalhamentoEspecifico + 'VIN (CHASSI): ' + vAux + #13#10;
+
+              if Prod.veicProd.condVeic in [cvAcabado,cvInacabado,cvSemiAcabado] then
+              begin
+                case Prod.veicProd.condVeic of
+                  cvAcabado: vAux     := '1-ACABADO';
+                  cvInacabado: vAux   := '2-INACABADO';
+                  cvSemiAcabado: vAux := '3-SEMI-ACABADO';
+                end;
+                sDetalhamentoEspecifico := sDetalhamentoEspecifico + 'CONDIÇÃO DO VEÍCULO: ' + vAux + #13#10;
+              end;
+
+              if Prod.veicProd.cMod <> '' then
+                sDetalhamentoEspecifico := sDetalhamentoEspecifico + 'CÓDIGO MARCA MODELO: ' + Prod.veicProd.cMod + #13#10;
+
+              if Prod.veicProd.cCorDENATRAN <> '' then
+              begin
+                case StrToInt(Prod.veicProd.cCorDENATRAN) of
+                  1:  vAux := '01-AMARELO';
+                  2:  vAux := '02-AZUL';
+                  3:  vAux := '03-BEGE';
+                  4:  vAux := '04-BRANCA';
+                  5:  vAux := '05-CINZA';
+                  6:  vAux := '06-DOURADA';
+                  7:  vAux := '07-GRENÁ';
+                  8:  vAux := '08-LARANJA';
+                  9:  vAux := '09-MARROM';
+                 10: vAux := '10-PRATA';
+                 11: vAux := '11-PRETA';
+                 12: vAux := '12-ROSA';
+                 13: vAux := '13-ROXA';
+                 14: vAux := '14-VERDE';
+                 15: vAux := '15-VERMELHA';
+                 16: vAux := '16-FANTASIA'
+                 else vAux := Prod.veicProd.cCorDENATRAN;
+                end;
+                sDetalhamentoEspecifico := sDetalhamentoEspecifico + 'CÓDIGO COR DENATRAN: ' + vAux + #13#10;
+              end;
+
+              if Prod.veicProd.lota > 0 then
+                sDetalhamentoEspecifico := sDetalhamentoEspecifico + 'CAPACIDADE MÁXIMA DE LOTAÇÃO: ' + IntToStr(Prod.veicProd.lota) + #13#10;
+
+              if Prod.veicProd.tpRest in [0,1,2,3,4,9] then
+              begin
+                case Prod.veicProd.tpRest of
+                  0: vAux := '0-NÃO HÁ';
+                  1: vAux := '1-ALIENAÇÃO FIDUCIÁRIA';
+                  2: vAux := '2-RESERVA DE DOMICÍLIO';
+                  3: vAux := '3-RESERVA DE DOMÍNIO';
+                  4: vAux := '4-PENHOR DE VEÍCULOS';
+                  9: vAux := '9-OUTRAS'
+                 else vAux := IntToStr(Prod.veicProd.tpRest);
+                end;
+                sDetalhamentoEspecifico := sDetalhamentoEspecifico + 'RESTRIÇÃO: ' + vAux;
+              end;
+
+              }
+            end; // if Prod.veicProd.chassi > ''
+
+            // *****************************************************************
+            // Medicamento
+            // *****************************************************************
+            if Prod.med.Count > 0 then
+            begin
+              for i := 0 to Prod.med.Count - 1 do
+              begin
+                if Prod.med.Items[i].nLote <> '' then
+                  sDetalhamentoEspecifico := sDetalhamentoEspecifico + 'NÚMERO DO LOTE: ' + Prod.med.Items[i].nLote + #13#10;
+                if Prod.med.Items[i].qLote > 0 then
+                  sDetalhamentoEspecifico := sDetalhamentoEspecifico + 'QUANTIDADE DO LOTE: ' + FormatFloat('###,##0.000', Prod.med.Items[i].qLote) + #13#10;
+                if DateToStr(Prod.med.Items[i].dFab) <> '' then
+                  sDetalhamentoEspecifico := sDetalhamentoEspecifico + 'DATA DE FABRICAÇÃO: ' + DateToStr(Prod.med.Items[i].dFab) + #13#10;
+                if DateToStr(Prod.med.Items[i].dVal) <> '' then
+                  sDetalhamentoEspecifico := sDetalhamentoEspecifico + 'DATA DE VALIDADE: ' + DateToStr(Prod.med.Items[i].dVal) + #13#10;
+                if Prod.med.Items[i].vPMC > 0 then
+                  sDetalhamentoEspecifico := sDetalhamentoEspecifico + 'PREÇO MÁX. CONSUMIDOR: R$ ' + FormatFloat('###,##0.00', Prod.med.Items[i].vPMC) + #13#10;
+                if (sDetalhamentoEspecifico > '') and (sDetalhamentoEspecifico <> #13#10) then
                 begin
-                  sALIQIPI   := '0,00';
-                  sVALORIPI  := '0,00';
+                  if i = Prod.med.Count - 1 then
+                    sDetalhamentoEspecifico := sDetalhamentoEspecifico
+                  else
+                    sDetalhamentoEspecifico := sDetalhamentoEspecifico + #13#10;
+                end;
+              end;  // for i := 0 to Prod.med.Count - 1
+            end; // if Prod.med.Count > 0
 
-                  cdsItens.Append;
-                  cdsItens.FieldByName('CODIGO').AsString := CProd;
-                  cdsItens.FieldByName('DESCRICAO').AsString := XProd;
-                  cdsItens.FieldByName('INFADIPROD').AsString := infAdProd;
-                  cdsItens.FieldByName('NCM').AsString := NCM;
-                  cdsItens.FieldByName('CFOP').AsString := CFOP;
-
-                  case FCasasDecimaisqCom of
-                    0: cdsItens.FieldByName('QTDE').AsString := FormatFloat('###,###,###,##0', QCom);
-                    1: cdsItens.FieldByName('QTDE').AsString := FormatFloat('###,###,###,##0.0', QCom);
-                    2: cdsItens.FieldByName('QTDE').AsString := FormatFloat('###,###,###,##0.00', QCom);
-                    3: cdsItens.FieldByName('QTDE').AsString := FormatFloat('###,###,###,##0.000', QCom);
-                    4: cdsItens.FieldByName('QTDE').AsString := FormatFloat('###,###,###,##0.0000', QCom);
-                    5: cdsItens.FieldByName('QTDE').AsString := FormatFloat('###,###,###,##0.00000', QCom);
-                    6: cdsItens.FieldByName('QTDE').AsString := FormatFloat('###,###,###,##0.000000', QCom);
-                    7: cdsItens.FieldByName('QTDE').AsString := FormatFloat('###,###,###,##0.0000000', QCom);
-                    8: cdsItens.FieldByName('QTDE').AsString := FormatFloat('###,###,###,##0.00000000', QCom);
-                    9: cdsItens.FieldByName('QTDE').AsString := FormatFloat('###,###,###,##0.000000000', QCom);
-                   10: cdsItens.FieldByName('QTDE').AsString := FormatFloat('###,###,###,##0.0000000000', QCom);
+            // *****************************************************************
+            // Arma
+            // *****************************************************************
+            if Prod.arma.Count > 0 then
+            begin
+              for i := 0 to Prod.arma.Count - 1 do
+              begin
+                if Prod.arma.Items[i].tpArma in [taUsoPermitido, taUsoRestrito] then
+                begin
+                  case Prod.arma.Items[i].tpArma of
+                   taUsoPermitido: vAux := '0-USO PERMITIDO';
+                   taUsoRestrito:  vAux := '1-USO RESTRITO';
                   end;
+                  sDetalhamentoEspecifico := sDetalhamentoEspecifico + 'TIPO DE ARMA: ' + vAux + #13#10;
+                end;
+                if Prod.arma.Items[i].nSerie <> '' then
+                  sDetalhamentoEspecifico := sDetalhamentoEspecifico + 'No. SÉRIE: ARMA' + Prod.arma.Items[i].nSerie + #13#10;
+                if Prod.arma.Items[i].nCano <> '' then
+                  sDetalhamentoEspecifico := sDetalhamentoEspecifico + 'No. SÉRIE CANO: ' + Prod.arma.Items[i].nCano + #13#10;
+                if Prod.arma.Items[i].descr <> '' then
+                  sDetalhamentoEspecifico := sDetalhamentoEspecifico + 'DESCRIÇÃO ARMA: ' + Prod.arma.Items[i].descr + #13#10;
+                if (sDetalhamentoEspecifico > '') and (sDetalhamentoEspecifico <> #13#10) then
+                begin
+                  if i = Prod.arma.Count - 1 then
+                    sDetalhamentoEspecifico := sDetalhamentoEspecifico
+                  else
+                    sDetalhamentoEspecifico := sDetalhamentoEspecifico + #13#10;
+                end;
+              end;  // for i := 0 to Prod.arma.Count - 1
+            end;  // if Prod.arma.Count > 0
 
-                  case FCasasDecimaisvUnCom of
-                    0: cdsItens.FieldByName('VALOR').AsString := FormatFloat('###,###,###,##0', vUnCom);
-                    1: cdsItens.FieldByName('VALOR').AsString := FormatFloat('###,###,###,##0.0', vUnCom);
-                    2: cdsItens.FieldByName('VALOR').AsString := FormatFloat('###,###,###,##0.00', vUnCom);
-                    3: cdsItens.FieldByName('VALOR').AsString := FormatFloat('###,###,###,##0.000', vUnCom);
-                    4: cdsItens.FieldByName('VALOR').AsString := FormatFloat('###,###,###,##0.0000', vUnCom);
-                    5: cdsItens.FieldByName('VALOR').AsString := FormatFloat('###,###,###,##0.00000', vUnCom);
-                    6: cdsItens.FieldByName('VALOR').AsString := FormatFloat('###,###,###,##0.000000', vUnCom);
-                    7: cdsItens.FieldByName('VALOR').AsString := FormatFloat('###,###,###,##0.0000000', vUnCom);
-                    8: cdsItens.FieldByName('VALOR').AsString := FormatFloat('###,###,###,##0.00000000', vUnCom);
-                    9: cdsItens.FieldByName('VALOR').AsString := FormatFloat('###,###,###,##0.000000000', vUnCom);
-                   10: cdsItens.FieldByName('VALOR').AsString := FormatFloat('###,###,###,##0.0000000000', vUnCom);
-                  end;
+            // *****************************************************************
+            // Combustivel
+            // *****************************************************************
+            if Prod.comb.cProdANP > 0 then
+            begin
+              if Prod.comb.cProdANP > 0 then
+                sDetalhamentoEspecifico := sDetalhamentoEspecifico + 'CÓD. PRODUTO ANP: ' + IntToStr(Prod.comb.cProdANP) + #13#10;
+              if Prod.comb.CODIF <> '' then
+                sDetalhamentoEspecifico := sDetalhamentoEspecifico + 'AUTORIZAÇÃO/CODIF: ' + Prod.comb.CODIF + #13#10;
+              if Prod.comb.qTemp > 0 then
+                sDetalhamentoEspecifico := sDetalhamentoEspecifico + 'QTD. FATURADA TEMP. AMBIENTE: ' + FormatFloat('###,##0.0000', Prod.comb.qTemp) + #13#10;
+              if Prod.comb.UFcons > '' then
+                sDetalhamentoEspecifico := sDetalhamentoEspecifico + 'UF DE CONSUMO: ' + Prod.comb.UFcons + #13#10;
+              if Prod.comb.CIDE.qBCProd > 0 then
+              begin
+                if Prod.comb.CIDE.qBCProd > 0 then
+                  sDetalhamentoEspecifico := sDetalhamentoEspecifico + 'BASE DE CÁLCULO CIDE: ' + FormatFloat('###,##0.0000', Prod.comb.CIDE.qBCProd) + #13#10;
+                if Prod.comb.CIDE.vAliqProd > 0 then
+                  sDetalhamentoEspecifico := sDetalhamentoEspecifico + 'ALÍQUOTA CIDE: ' + FormatFloat('###,##0.0000', Prod.comb.CIDE.vAliqProd) + #13#10;
+                if Prod.comb.CIDE.vCIDE > 0 then
+                  sDetalhamentoEspecifico := sDetalhamentoEspecifico + 'VALOR CIDE: ' + FormatFloat('###,##0.00', Prod.comb.CIDE.vCIDE);
+              end;  // if Prod.comb.CIDE.qBCProd > 0
+            end;  // if Prod.comb.cProdANP > 0
 
-                  //Fernando pasqueto para imprimir o desconto no danfe
-                  if FImprimirDescPorc = True then
-                    begin
-                    if vProd > 0 then
-                      dPercDesc := (vDesc * 100) / vProd
-                    else dPercDesc := 0;
-                    cdsItens.FieldByName('VALORDESC').AsString :=
-                      FormatFloat('###,###,###,##0.00', dPercDesc);
-                    end
-                  else cdsItens.FieldByName('VALORDESC').AsString :=
-                      FormatFloat('###,###,###,##0.00', vDesc);
+            cdsItens.FieldByName('DESCRICAO').AsString := xProd + sDetalhamentoEspecifico;
 
-                  cdsItens.FieldByName('UNIDADE').AsString := UCom;
-                  cdsItens.FieldByName('TOTAL').AsString :=
-                                      FormatFloat('###,###,###,##0.00', vProd);
-                  //==============================================================================
-                  // Em contato com o pessoal da Receita Estadual, foi informado que Ambos os regimes
-                  // trabalham de mesma forma, deferenciando-se apenas em seus códigos
-                  //==============================================================================
-                  if FNFe.Emit.CRT in [crtRegimeNormal, crtSimplesExcessoReceita] then
-                    begin
-                      if CSTICMSToStr(CST) > '' then
-                        sCST := OrigToStr(orig) + CSTICMSToStr(CST)
-                      else
-                        sCST := '';
+          end // if FImprimirDetalhamentoEspecifico = True
+          else cdsItens.FieldByName('DESCRICAO').AsString := XProd;
+
+          case FCasasDecimaisqCom of
+            0: cdsItens.FieldByName('QTDE').AsString := FormatFloat('###,###,###,##0', QCom);
+            1: cdsItens.FieldByName('QTDE').AsString := FormatFloat('###,###,###,##0.0', QCom);
+            2: cdsItens.FieldByName('QTDE').AsString := FormatFloat('###,###,###,##0.00', QCom);
+            3: cdsItens.FieldByName('QTDE').AsString := FormatFloat('###,###,###,##0.000', QCom);
+            4: cdsItens.FieldByName('QTDE').AsString := FormatFloat('###,###,###,##0.0000', QCom);
+            5: cdsItens.FieldByName('QTDE').AsString := FormatFloat('###,###,###,##0.00000', QCom);
+            6: cdsItens.FieldByName('QTDE').AsString := FormatFloat('###,###,###,##0.000000', QCom);
+            7: cdsItens.FieldByName('QTDE').AsString := FormatFloat('###,###,###,##0.0000000', QCom);
+            8: cdsItens.FieldByName('QTDE').AsString := FormatFloat('###,###,###,##0.00000000', QCom);
+            9: cdsItens.FieldByName('QTDE').AsString := FormatFloat('###,###,###,##0.000000000', QCom);
+           10: cdsItens.FieldByName('QTDE').AsString := FormatFloat('###,###,###,##0.0000000000', QCom);
+          end;
+
+          case FCasasDecimaisvUnCom of
+            0: cdsItens.FieldByName('VALOR').AsString := FormatFloat('###,###,###,##0', vUnCom);
+            1: cdsItens.FieldByName('VALOR').AsString := FormatFloat('###,###,###,##0.0', vUnCom);
+            2: cdsItens.FieldByName('VALOR').AsString := FormatFloat('###,###,###,##0.00', vUnCom);
+            3: cdsItens.FieldByName('VALOR').AsString := FormatFloat('###,###,###,##0.000', vUnCom);
+            4: cdsItens.FieldByName('VALOR').AsString := FormatFloat('###,###,###,##0.0000', vUnCom);
+            5: cdsItens.FieldByName('VALOR').AsString := FormatFloat('###,###,###,##0.00000', vUnCom);
+            6: cdsItens.FieldByName('VALOR').AsString := FormatFloat('###,###,###,##0.000000', vUnCom);
+            7: cdsItens.FieldByName('VALOR').AsString := FormatFloat('###,###,###,##0.0000000', vUnCom);
+            8: cdsItens.FieldByName('VALOR').AsString := FormatFloat('###,###,###,##0.00000000', vUnCom);
+            9: cdsItens.FieldByName('VALOR').AsString := FormatFloat('###,###,###,##0.000000000', vUnCom);
+           10: cdsItens.FieldByName('VALOR').AsString := FormatFloat('###,###,###,##0.0000000000', vUnCom);
+          end;
+
+          // Fernando pasqueto para imprimir o desconto no danfe
+          if FImprimirDescPorc = True then
+          begin
+            if vProd > 0 then
+              dPercDesc := (vDesc * 100) / vProd
+            else dPercDesc := 0;
+            cdsItens.FieldByName('VALORDESC').AsString := FormatFloat('###,###,###,##0.00', dPercDesc);
+          end
+          else cdsItens.FieldByName('VALORDESC').AsString := FormatFloat('###,###,###,##0.00', vDesc);
+
+          cdsItens.FieldByName('UNIDADE').AsString := UCom;
+          cdsItens.FieldByName('TOTAL').AsString := FormatFloat('###,###,###,##0.00', vProd);
+
+          //==============================================================================
+          // Em contato com o pessoal da Receita Estadual, foi informado que Ambos os regimes
+          // trabalham de mesma forma, deferenciando-se apenas em seus códigos
+          //==============================================================================
+          if FNFe.Emit.CRT in [crtRegimeNormal, crtSimplesExcessoReceita] then
+          begin
+            if CSTICMSToStr(CST) > '' then
+              sCST := OrigToStr(orig) + CSTICMSToStr(CST)
+            else
+              sCST := '';
+
+            sBCICMS    := '0,00';
+            sALIQICMS  := '0,00';
+            sVALORICMS := '0,00';
+
+            case CST of
+             cst00: begin
+                      sBCICMS    := FormatFloat('###,###,###,##0.00', VBC);
+                      sALIQICMS  := FormatFloat('###,###,###,##0.00', PICMS);
+                      sVALORICMS := FormatFloat('###,###,###,##0.00', VICMS);
+                    end;
+             cst10: begin
+                      sBCICMS    := FormatFloat('###,###,###,##0.00', VBC);
+                      sALIQICMS  := FormatFloat('###,###,###,##0.00', PICMS);
+                      sVALORICMS := FormatFloat('###,###,###,##0.00', VICMS);
+                    end;
+             cst20: begin
+                      sBCICMS    := FormatFloat('###,###,###,##0.00', VBC);
+                      sALIQICMS  := FormatFloat('###,###,###,##0.00', PICMS);
+                      sVALORICMS := FormatFloat('###,###,###,##0.00', VICMS);
+                    end;
+             cst30: begin
+                      sBCICMS    := FormatFloat('###,###,###,##0.00', VBCST);
+                      sALIQICMS  := FormatFloat('###,###,###,##0.00', PICMSST);
+                      sVALORICMS := FormatFloat('###,###,###,##0.00', VICMSST);
+                    end;
+             cst40,
+             cst41,
+             cst50: begin
                       sBCICMS    := '0,00';
                       sALIQICMS  := '0,00';
                       sVALORICMS := '0,00';
+                    end;
+             cst51: begin
+                      sBCICMS    := FormatFloat('###,###,###,##0.00', VBC);
+                      sALIQICMS  := FormatFloat('###,###,###,##0.00', PICMS);
+                      sVALORICMS := FormatFloat('###,###,###,##0.00', VICMS);
+                     end;
+             cst60: begin
+                      sBCICMS    := FormatFloat('###,###,###,##0.00', VBCST);
+                      sVALORICMS := FormatFloat('###,###,###,##0.00', VICMSST);
+                    end;
+             cst70: begin
+                      sBCICMS    := FormatFloat('###,###,###,##0.00', VBC);
+                      sALIQICMS  := FormatFloat('###,###,###,##0.00', PICMS);
+                      sVALORICMS := FormatFloat('###,###,###,##0.00', VICMS);
+                    end;
+             cst90: begin
+                      sBCICMS    := FormatFloat('###,###,###,##0.00', VBC);
+                      sALIQICMS  := FormatFloat('###,###,###,##0.00', PICMS);
+                      sVALORICMS := FormatFloat('###,###,###,##0.00', VICMS);
+                    end;
+            end;
 
-                      if (CST = cst00) then
-                        begin
-                          sBCICMS    := FormatFloat('###,###,###,##0.00', VBC);
-                          sALIQICMS  := FormatFloat('###,###,###,##0.00', PICMS);
-                          sVALORICMS := FormatFloat('###,###,###,##0.00', VICMS);
-                        end
-                      else if (CST = cst10) then
-                        begin
-                          sBCICMS    := FormatFloat('###,###,###,##0.00', VBC);
-                          sALIQICMS  := FormatFloat('###,###,###,##0.00', PICMS);
-                          sVALORICMS := FormatFloat('###,###,###,##0.00', VICMS);
-                        end
-                      else if (CST = cst20) then
-                        begin
-                          sBCICMS    := FormatFloat('###,###,###,##0.00', VBC);
-                          sALIQICMS  := FormatFloat('###,###,###,##0.00', PICMS);
-                          sVALORICMS := FormatFloat('###,###,###,##0.00', VICMS);
-                        end
-                      else if (CST = cst30) then
-                        begin
-                          sBCICMS    := FormatFloat('###,###,###,##0.00', VBCST);
-                          sALIQICMS  := FormatFloat('###,###,###,##0.00', PICMSST);
-                          sVALORICMS := FormatFloat('###,###,###,##0.00', VICMSST);
-                        end
-                      else if (CST = cst40) or (CST = cst41) or (CST = cst50) then
-                        begin
-                          // Campos vazios
-                        end
-                      else if (CST = cst51) then
-                        begin
-                          sBCICMS    := FormatFloat('###,###,###,##0.00', VBC);
-                          sALIQICMS  := FormatFloat('###,###,###,##0.00', PICMS);
-                          sVALORICMS := FormatFloat('###,###,###,##0.00', VICMS);
-                        end
-                      else if (CST = cst60) then
-                        begin
-                          sBCICMS    := FormatFloat('###,###,###,##0.00', VBCST);
-                          sVALORICMS := FormatFloat('###,###,###,##0.00', VICMSST);
-                        end
-                      else if (CST = cst70) then
-                        begin
-                          sBCICMS    := FormatFloat('###,###,###,##0.00', VBC);
-                          sALIQICMS  := FormatFloat('###,###,###,##0.00', PICMS);
-                          sVALORICMS := FormatFloat('###,###,###,##0.00', VICMS);
-                        end
-                      else if (CST = cst90) then
-                        begin
-                          sBCICMS    := FormatFloat('###,###,###,##0.00', VBC);
-                          sALIQICMS  := FormatFloat('###,###,###,##0.00', PICMS);
-                          sVALORICMS := FormatFloat('###,###,###,##0.00', VICMS);
-                       end;
+            cdsItens.FieldByName('CST').AsString       := sCST;
+            cdsItens.FieldByName('BICMS').AsString     := sBCICMS;
+            cdsItens.FieldByName('ALIQICMS').AsString  := sALIQICMS;
+            cdsItens.FieldByName('VALORICMS').AsString := sVALORICMS;
 
-                      cdsItens.FieldByName('CST').AsString := sCST;
-                      cdsItens.FieldByName('BICMS').AsString := sBCICMS;
-                      cdsItens.FieldByName('ALIQICMS').AsString := sALIQICMS;
-                      cdsItens.FieldByName('VALORICMS').AsString := sVALORICMS;
-                      lblCST.Caption := 'CST';
-                      lblCST.Font.Size := 5;
-                      //lblCST.Top := 20;
-                      qrmProdutoCST.DataField := 'CST';
-                    end; //FNFe.Emit.CRT = crtRegimeNormal
+            lblCST.Caption   := 'CST';
+            lblCST.Font.Size := 5;
+            //lblCST.Top := 20;
 
-                  if FNFe.Emit.CRT = crtSimplesNacional then
-                    begin
-                        //==============================================================================
-                        // Adicionado para imprimir alíquotas
-                        //==============================================================================
-                        if CSOSNIcmsToStr(Imposto.ICMS.CSOSN) > '' then
-                           cdsItens.FieldByName('CSOSN').AsString := OrigToStr(orig) + CSOSNIcmsToStr(Imposto.ICMS.CSOSN)
-                        else
-                           cdsItens.FieldByName('CSOSN').AsString := '';
+            qrmProdutoCST.DataField := 'CST';
+          end; //FNFe.Emit.CRT = crtRegimeNormal
 
-                        //==============================================================================
-                        // Resetando valores das qlíquotas
-                        //==============================================================================
-                        sBCICMS    := '0,00';
-                        sALIQICMS  := '0,00';
-                        sVALORICMS := '0,00';
+          if FNFe.Emit.CRT = crtSimplesNacional then
+          begin
+            //==============================================================================
+            // Adicionado para imprimir alíquotas
+            //==============================================================================
+            if CSOSNIcmsToStr(Imposto.ICMS.CSOSN) > '' then
+              cdsItens.FieldByName('CSOSN').AsString := OrigToStr(orig) + CSOSNIcmsToStr(Imposto.ICMS.CSOSN)
+            else
+              cdsItens.FieldByName('CSOSN').AsString := '';
 
-                        case CSOSN of
-                           csosn900:
-                           begin
-                              sBCICMS    := FormatFloat('#,##0.00', VBC);
-                              sALIQICMS  := FormatFloat('#,##0.00', PICMS);
-                              sVALORICMS := FormatFloat('#,##0.00', VICMS);
-                           end;
+            //==============================================================================
+            // Resetando valores das qlíquotas
+            //==============================================================================
+            sBCICMS    := '0,00';
+            sALIQICMS  := '0,00';
+            sVALORICMS := '0,00';
+
+            case CSOSN of
+              csosn900: begin
+                          sBCICMS    := FormatFloat('#,##0.00', VBC);
+                          sALIQICMS  := FormatFloat('#,##0.00', PICMS);
+                          sVALORICMS := FormatFloat('#,##0.00', VICMS);
                         end;
+            end;
 
-                        cdsItens.FieldByName('BICMS').AsString       := sBCICMS;
-                        cdsItens.FieldByName('ALIQICMS').AsString    := sALIQICMS;
-                        cdsItens.FieldByName('VALORICMS').AsString   := sVALORICMS;
-                        lblCST.Caption          := 'CSOSN';
-                        lblCST.Font.Size        := 4;
-                        //lblCST.Top              := 22;
-                        qrmProdutoCST.DataField := 'CSOSN';
-                    end; //FNFe.Emit.CRT = crtSimplesNacional
-                end; // with Imposto.ICMS do
+            cdsItens.FieldByName('BICMS').AsString     := sBCICMS;
+            cdsItens.FieldByName('ALIQICMS').AsString  := sALIQICMS;
+            cdsItens.FieldByName('VALORICMS').AsString := sVALORICMS;
 
-               with Imposto.IPI do
-                begin
-                  if (CST = ipi00) or (CST = ipi49) or
-                     (CST = ipi50) or (CST = ipi99) then
-                    begin
-                      sALIQIPI  := FormatFloat('##0.00', PIPI);
-                      sVALORIPI := FormatFloat('##0.00', VIPI);
-                    end
-                end;
+            lblCST.Caption   := 'CSOSN';
+            lblCST.Font.Size := 4;
+            //lblCST.Top       := 22;
 
-              cdsItens.FieldByName('ALIQIPI').AsString := sALIQIPI;
-              cdsItens.FieldByName('VALORIPI').AsString := sVALORIPI;
-              cdsItens.Post;
-            end; // with Prod do
-        end; //  with FNFe.Det.Items[nItem] do
-    end; //  for nItem := 0 to ( FNFe.Det.Count - 1 ) do
+            qrmProdutoCST.DataField := 'CSOSN';
+          end; //FNFe.Emit.CRT = crtSimplesNacional
+        end; // with Imposto.ICMS do
 
-   cdsItens.First;
+        with Imposto.IPI do
+        begin
+          if (CST = ipi00) or (CST = ipi49) or
+             (CST = ipi50) or (CST = ipi99) then
+          begin
+            sALIQIPI  := FormatFloat('##0.00', PIPI);
+            sVALORIPI := FormatFloat('##0.00', VIPI);
+          end
+        end;
+
+        cdsItens.FieldByName('ALIQIPI').AsString  := sALIQIPI;
+        cdsItens.FieldByName('VALORIPI').AsString := sVALORIPI;
+
+        cdsItens.Post;
+      end; // with Prod do
+    end; //  with FNFe.Det.Items[nItem] do
+  end; //  for nItem := 0 to ( FNFe.Det.Count - 1 ) do
+
+  cdsItens.First;
 end;
 
 procedure TfqrDANFeQRRetrato.ProtocoloNFE( const sProtocolo : String );
@@ -986,54 +1277,59 @@ var
     intTamanhoLinha,
     intResto   :Integer;
 begin
-  inherited;
-    intTamanhoLinha:= Length(cdsItens.FieldByName( 'DESCRICAO' ).AsString);
-    if Length(cdsItens.FieldByName( 'INFADIPROD' ).AsString) > 0 then
-      intTamanhoLinha:=intTamanhoLinha+Length('InfAdic: '+cdsItens.FieldByName( 'INFADIPROD' ).AsString);
-
-    intResto        := intTamanhoLinha DIV 35;
-
-    case intResto of
-      0:begin
-        intTamanhoLinha:=12;
-      end;
-      1:begin
-        if intTamanhoLinha > 35 then
-          intTamanhoLinha:=22
-        else
-          intTamanhoLinha:=12;
-      end;
-      2:begin
-        if intTamanhoLinha > 70 then
-          intTamanhoLinha:=36
-        else
-          intTamanhoLinha:=24;
-      end;
-      3:begin
-        if intTamanhoLinha > 105 then
-          intTamanhoLinha:=48
-        else
-          intTamanhoLinha:=36;
-      end;
-      4:begin
-        if intTamanhoLinha > 140 then
-          intTamanhoLinha:=60
-        else
-          intTamanhoLinha:=48;
-      end;
-      5:begin
-        if intTamanhoLinha > 175 then
-          intTamanhoLinha:=72
-        else
-          intTamanhoLinha:=60;
-      end;
-      6:begin
-        if intTamanhoLinha > 210 then
-          intTamanhoLinha:=84
-        else
-          intTamanhoLinha:=72;
-      end;
+inherited;
+intTamanhoLinha:= Length(cdsItens.FieldByName( 'DESCRICAO' ).AsString);
+if Length(cdsItens.FieldByName( 'INFADIPROD' ).AsString) > 0 then
+  intTamanhoLinha:=intTamanhoLinha+Length('InfAdic: '+cdsItens.FieldByName( 'INFADIPROD' ).AsString);
+intResto        := intTamanhoLinha DIV 35;
+  case intResto of
+    0:
+    begin
+    intTamanhoLinha:=12;
     end;
+    1:
+    begin
+    if intTamanhoLinha > 35 then
+      intTamanhoLinha:=22
+    else
+      intTamanhoLinha:=12;
+    end;
+    2:
+    Begin
+    if intTamanhoLinha > 70 then
+      intTamanhoLinha:=36
+    else
+      intTamanhoLinha:=24;
+    end;
+    3:
+    begin
+    if intTamanhoLinha > 105 then
+      intTamanhoLinha:=48
+    else
+      intTamanhoLinha:=36;
+    end;
+    4:
+    begin
+    if intTamanhoLinha > 140 then
+      intTamanhoLinha:=72
+    else
+      intTamanhoLinha:=60;
+    end;
+    5:
+    begin
+    if intTamanhoLinha > 175 then
+      intTamanhoLinha:=84
+    else
+      intTamanhoLinha:=72;
+    end;
+    6:
+    begin
+    if intTamanhoLinha > 210 then
+      intTamanhoLinha:=96
+    else
+      intTamanhoLinha:=84;
+    end;
+  end;
 
     //qrs1.Height:= intTamanhoLinha;
     qrs2.Height:= intTamanhoLinha;

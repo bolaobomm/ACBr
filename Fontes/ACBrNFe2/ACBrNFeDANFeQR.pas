@@ -102,6 +102,7 @@ type
     FNFeCancelada       : Boolean;
     FLocalImpCanhoto    : Integer;
     FImprimirDescPorc    : Boolean; //incluido por Fernando pasqueto 11/07/2014
+    FImprimirDetalhamentoEspecifico : Boolean; //incluido por Fernando pasqueto 15/07/2014
     // Incluido por Italo em 27/03/2014
     // Destinado exclusivamente ao DANFE da NFC-e
     FImprimeItens: Boolean;
@@ -137,7 +138,8 @@ type
                              ALocalImpCanhoto     : Integer  = 0;
                              AImprimeItens        : Boolean  = True;
                              AvTroco              : Currency = 0.0;
-                             AImprimirDescPorc     : Boolean  = False);
+                             AImprimirDescPorc    : Boolean  = False;
+                             AImprimirDetalhamentoEspecifico : Boolean  = False);
 
     class procedure SavePDF(AFile                : String;
                             ANFe                 : TNFe;
@@ -162,7 +164,8 @@ type
                             ALocalImpCanhoto     : Integer  = 0;
                             AImprimeItens        : Boolean  = True;
                             AvTroco              : Currency = 0.0;
-                            AImprimirDescPorc     : Boolean  = False);
+                            AImprimirDescPorc    : Boolean  = False;
+                            AImprimirDetalhamentoEspecifico : Boolean  = False);
   end;
 
 implementation
@@ -199,7 +202,8 @@ class procedure TfqrDANFeQR.Imprimir(ANFe                 : TNFe;
                                      ALocalImpCanhoto     : Integer  = 0;
                                      AImprimeItens        : Boolean  = True;
                                      AvTroco              : Currency = 0.0;
-                                     AImprimirDescPorc     : Boolean  = False);
+                                     AImprimirDescPorc    : Boolean  = False;
+                                     AImprimirDetalhamentoEspecifico : Boolean  = False);
 begin
   with Create ( nil ) do
      try
@@ -227,6 +231,8 @@ begin
         FImprimeItens        := AImprimeItens;
         FvTroco              := AvTroco;
         FImprimirDescPorc    := AImprimirDescPorc;
+        FImprimirDetalhamentoEspecifico := AImprimirDetalhamentoEspecifico;
+
         Printer := TPrinter.Create;
 
         if FImpressora > '' then
@@ -290,7 +296,8 @@ class procedure TfqrDANFeQR.SavePDF(AFile                : String;
                                     ALocalImpCanhoto     : Integer  = 0;
                                     AImprimeItens        : Boolean  = True;
                                     AvTroco              : Currency = 0.0;
-                                    AImprimirDescPorc     : Boolean  = False);
+                                    AImprimirDescPorc    : Boolean  = False;
+                                    AImprimirDetalhamentoEspecifico : Boolean  = False);
 {$IFDEF QReport_PDF}
 var
   qf : TQRPDFDocumentFilter;
@@ -323,7 +330,8 @@ begin
         FImprimeItens        := AImprimeItens;
         FvTroco              := AvTroco;
         FImprimirDescPorc    := AImprimirDescPorc;
-
+        FImprimirDetalhamentoEspecifico := AImprimirDetalhamentoEspecifico;
+        
         for i := 0 to ComponentCount -1 do
           begin
             if (Components[i] is TQRShape) and (TQRShape(Components[i]).Shape = qrsRoundRect) then
