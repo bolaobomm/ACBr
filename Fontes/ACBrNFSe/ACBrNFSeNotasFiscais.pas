@@ -99,6 +99,7 @@ type
     function GetNamePath: string; override ;
     function LoadFromFile(CaminhoArquivo: string): boolean;
     function LoadFromStream(Stream: TStringStream): boolean;
+    function LoadFromString(AString: string): boolean;
     function SaveToFile(PathArquivo: string = ''): boolean;
 
     property NumeroLote: String read FNumeroLote write FNumeroLote;
@@ -1093,6 +1094,25 @@ begin
  except
   Result := False;
  end;
+end;
+
+function TNotasFiscais.LoadFromString(AString: string): boolean;
+var
+  XMLNFe: TStringStream;
+begin
+  try
+    Result := True;
+
+    XMLNFe := TStringStream.Create(AString);
+    try
+      XMLNFe.WriteString(AString);
+      Result := LoadFromStream(XMLNFe, AGerarNFe);
+    finally
+      XMLNFe.Free;
+    end;
+  except
+    Result := False;
+  end;
 end;
 
 function TNotasFiscais.SaveToFile(PathArquivo: string): boolean;
