@@ -1054,6 +1054,7 @@ Var
   CooIni, CooFim : AnsiString ;
   OldAtivo : Boolean ;
   Tipo :AnsiString;
+  PathBin:AnsiString;
 begin
   LoadDLLFunctions ;
 
@@ -1075,15 +1076,31 @@ begin
      end ;
 
     case Finalidade of
-       finMF  : Tipo := '1';
        finTDM : Tipo := '3';
     else
        Tipo := '2' ;
     end;
 
-    Resp := xECF_ReproduzirMemoriaFiscalMFD(Tipo , CooIni, CooFim, NomeArquivo, '');
+    if Finalidade = finMF then
+     begin
+       PathBin := ExtractFilePath(NomeArquivo);   // na expecificacao de requisito 2.01 pede para gerar e assinar o "Arquivo Binario" da MF também
+       PathBin := PathBin + 'MF.BIN';
+       DeleteFile( PathBin );
+
+       Resp := xECF_DownloadMF( pathBin );
+       if Resp <> 1 then
+          raise EACBrECFERRO.Create( ACBrStr( 'Erro ao executar xECFDownloadMF'+sLineBreak+
+                                          'Cod.: '+IntToStr(Resp) ));
+     end
+    else
+     begin
+       PathBin := '';
+     end ;
+
+    // O que diferencia o a geracao da MF OU MFD é a passagem do valor contido no parametro: PathBin
+    Resp := xECF_ReproduzirMemoriaFiscalMFD(Tipo , CooIni, CooFim, NomeArquivo, PathBin);
     if (Resp <> 1) then
-      raise EACBrECFERRO.Create( ACBrStr( 'Erro ao executar xECF_ReproduzirMemoriaFiscalMFD.'+sLineBreak+
+       raise EACBrECFERRO.Create( ACBrStr( 'Erro ao executar xECF_ReproduzirMemoriaFiscalMFD.'+sLineBreak+
                                        DescricaoErroDLL(Resp) ))
   finally
     xECF_FechaPortaSerial ;
@@ -1232,6 +1249,7 @@ Var
   DiaIni, DiaFim : AnsiString ;
   OldAtivo : Boolean ;
   Tipo:AnsiString;
+  PathBin:AnsiString;
 begin
   LoadDLLFunctions ;
 
@@ -1240,7 +1258,6 @@ begin
     AbrePortaSerialDLL ;
 
     case Finalidade of
-       finMF  : Tipo := '1';
        finTDM : Tipo := '3';
     else
        Tipo := '2' ;
@@ -1249,18 +1266,36 @@ begin
     DiaIni := FormatDateTime('dd"/"mm"/"yy', DataInicial) ;
     DiaFim := FormatDateTime('dd"/"mm"/"yy', DataFinal) ;
 
-    if Tipo='3' then
-    begin
-      Resp := xECF_DownloadMF('ACBr.MF');
-      if (Resp <> 1) then
-        raise EACBrECFERRO.Create( ACBrStr( 'Erro ao executar ECF_DownloadMF.'+sLineBreak+
+    if Tipo = '3' then
+     begin
+       Resp := xECF_DownloadMF('ACBr.MF');
+       if (Resp <> 1) then
+          raise EACBrECFERRO.Create( ACBrStr( 'Erro ao executar ECF_DownloadMF.'+sLineBreak+
                                        DescricaoErroDLL(Resp) ));
        Resp := xECF_ReproduzirMemoriaFiscalMFD(Tipo, DiaIni, DiaFim, NomeArquivo, 'TMP.MF');
-    end
+     end
     else
-    begin
-       Resp := xECF_ReproduzirMemoriaFiscalMFD(Tipo, DiaIni, DiaFim, NomeArquivo, '');
-    end;
+     begin
+       if Finalidade = finMF then
+        begin
+          //na expecificacao de requisito 2.01 pede para gerar e assinar o "Arquivo Binario" da MF também
+          PathBin := ExtractFilePath(NomeArquivo);
+          PathBin:= PathBin + 'MF.BIN';
+          DeleteFile( PathBin );
+
+          Resp := xECF_DownloadMF( pathBin );
+          if Resp <> 1 then
+             raise EACBrECFERRO.Create( ACBrStr( 'Erro ao executar xECFDownloadMF'+sLineBreak+
+                                            'Cod.: '+IntToStr(Resp) ));
+        end
+       else
+        begin
+          PathBin:='';
+        end ;
+
+        // O que diferencia o a geracao da MF OU MFD é a passagem do valor contido no parametro: PathBin
+        Resp := xECF_ReproduzirMemoriaFiscalMFD( Tipo, DiaIni, DiaFim, NomeArquivo, PathBin );
+     end;
 
     if (Resp <> 1) then
       raise EACBrECFERRO.Create( ACBrStr( 'Erro ao executar ECF_ReproduzirMemoriaFiscalMFD.'+sLineBreak+
