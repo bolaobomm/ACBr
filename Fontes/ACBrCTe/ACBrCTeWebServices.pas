@@ -2116,6 +2116,17 @@ begin
 
     TACBrCTe( FACBrCTe ).SetStatus( stCteIdle );
 
+    aMsg := 'Identificador : '     + FCTeChave + LineBreak +
+            'Ambiente : '          + TpAmbToStr(FTpAmb) + LineBreak +
+            'Versão Aplicativo : ' + FverAplic + LineBreak+
+            'Status Código : '     + IntToStr(FcStat) + LineBreak+
+            'Status Descrição : '  + FXMotivo + LineBreak +
+            'UF : '                + CodigoParaUF(FcUF) + LineBreak +
+            'Chave Acesso : '      + FCTeChave + LineBreak +
+            'Recebimento : '       + DateTimeToStr(FDhRecbto) + LineBreak +
+            'Protocolo : '         + FProtocolo + LineBreak +
+            'Digest Value : '      + CTeRetorno.protCTe.digVal + LineBreak;
+    (*
     aMsg := 'Identificador : '+CTeRetorno.protCTe.chCTe+LineBreak+
             'Ambiente : '+TpAmbToStr(CTeRetorno.TpAmb)+LineBreak+
             'Versão Aplicativo : '+CTeRetorno.verAplic+LineBreak+
@@ -2126,10 +2137,10 @@ begin
             'Recebimento : '+DateTimeToStr(FDhRecbto)+LineBreak+
             'Protocolo : '+FProtocolo+LineBreak+
             'Digest Value : '+CTeRetorno.protCTe.digVal+LineBreak;
-
+    *)
     if Assigned(CTeRetorno.procEventoCTe) then // Incluido por Italo em 08/01/2014 - resolver problema de violação de acesso
-    if CTeRetorno.procEventoCTe.Count > 0 then
-      aMsg := aMsg + LineBreak + aEventos;
+      if CTeRetorno.procEventoCTe.Count > 0 then
+        aMsg := aMsg + LineBreak + aEventos;
 
     if FConfiguracoes.WebServices.Visualizar then
       ShowMessage(aMsg);
