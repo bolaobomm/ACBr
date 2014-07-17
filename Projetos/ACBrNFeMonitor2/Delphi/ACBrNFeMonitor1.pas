@@ -963,6 +963,10 @@ begin
      ACBrCTe1.Configuracoes.Arquivos.PathCan  := edtPathCan.Text;
      ACBrCTe1.Configuracoes.Arquivos.PathInu  := edtPathInu.Text;
      ACBrCTe1.Configuracoes.Arquivos.PathEPEC := edtPathDPEC.Text;
+     
+     // token da nfce
+     ACBrNFe1.Configuracoes.Geral.IdToken := Ini.ReadString( 'NFCe', 'IdToken', '') ;
+     ACBrNFe1.Configuracoes.Geral.Token   := Ini.ReadString( 'NFCe', 'Token', '') ;
   finally
      Ini.Free ;
   end ;
