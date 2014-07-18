@@ -58,7 +58,7 @@ type
 
   TMailStatus = (pmsStartProcess, pmsConfigHeaders, pmsLoginSMTP, pmsStartSends,
                  pmsSendTo, pmsSendCC, pmsSendBCC, pmsSendReplyTo, pmsSendData,
-                 pmsLogoutSMTP, pmsDone);
+                 pmsLogoutSMTP, pmsDone, pmsError);
 
   TMailCharset = TMimeChar;
 
@@ -71,13 +71,12 @@ type
   TACBrThread = class(TThread)
   fOwner : TComponent;
   private
-    procedure Terminar(Sender : TObject);
+
   protected
     procedure Execute; override;
   public
     constructor Criar(AOwner : TComponent);
   end;
-
 
   TACBrOnMailProcess = procedure(const aStatus: TMailStatus) of object;
 
@@ -107,8 +106,10 @@ type
 
     fDefaultCharsetCode  : TMimeChar;
 
-    fOnAfterMailProcess : TNotifyEvent;
+    fOnAfterMailProcess  : TNotifyEvent;
     fOnBeforeMailProcess : TNotifyEvent;
+
+    fGetLastSmtpError    : String;
 
     function GetHost: string;
     function GetPort: string;
@@ -130,12 +131,14 @@ type
     procedure SetAltBody(const aValue : TStringList);
     procedure SmtpError(const pMsgError: string);
 
+  protected
+    procedure SendMail;
+
   public
     constructor Create(AOwner: TComponent); override;
     destructor Destroy; override;
     procedure MailProcess(const aStatus: TMailStatus);
-    procedure SendThread;
-    procedure Send;
+    procedure Send(UseThread: Boolean = False);
     procedure Clear;
 
     procedure AddAttachment(aFileName: string; aNameRef: string); overload;
@@ -150,6 +153,8 @@ type
 
     property AltBody: TStringList read fAltBody write SetAltBody;
     property Body: TStringList read fBody write SetBody;
+
+    property GetLastSmtpError: string read fGetLastSmtpError;
 
   published
     property Host: string read GetHost write SetHost;
@@ -258,6 +263,9 @@ end;
 procedure TACBrMail.SmtpError(const pMsgError: string);
 begin
   Clear;
+  if fThread <> nil Then fThread.Terminate;
+  fGetLastSmtpError := pMsgError;
+  MailProcess(pmsError);
   raise Exception.Create(pMsgError);
 end;
 
@@ -335,13 +343,18 @@ begin
   inherited Destroy;
 end;
 
-procedure TACBrMail.SendThread;
+procedure TACBrMail.Send(UseThread: Boolean);
 begin
-     if fThread <> nil Then fThread.Terminate;
-     fThread := TACBrThread.Criar(Self);
+  if UseThread then
+  begin
+    if fThread <> nil Then fThread.Terminate;
+    fThread := TACBrThread.Criar(Self);
+  end
+  else
+    SendMail;
 end;
 
-procedure TACBrMail.Send;
+procedure TACBrMail.SendMail;
 var
   vAttempts: Byte;
   vMIMEPart, vMIMEPart2, vMIMEPart3: TMimePart;
@@ -718,27 +731,17 @@ end;
 constructor TACBrThread.Criar(AOwner: TComponent);
 begin
   inherited Create(True);
-  OnTerminate            := Terminar;
-  FreeOnTerminate        := True;
-  fOwner := AOwner;
+  FreeOnTerminate := True;
+  fOwner          := AOwner;
   Resume;
 end;
 
 procedure TACBrThread.Execute;
 begin
-   //O EXECUTE É CHAMADO NA EXECUÇÃO DA THREAD
-   //E RODA O METODO DE ACORDO COM O TIPO INFORMADO NA CRIAÇÃO DA THREAD.
-     if (not terminated) then
-        Begin
-           TACBrMail(FOwner).Send;
-        end
-     Else abort;
-end;
-
-procedure TACBrThread.Terminar(Sender: TObject);
-begin
-     //NAO SEI SE ISSO É UTIL, USEI PARA DEPURAR ALGUMAS ROTINAS QUE UTILIZAM O THREAD
-     //AGORA QUE NAO PRECISO MAIS TALVEZ EU DEVA REMOVE-LA
+  if (not terminated) then
+    TACBrMail(FOwner).SendMail
+  else
+    Abort;
 end;
 
 end.
