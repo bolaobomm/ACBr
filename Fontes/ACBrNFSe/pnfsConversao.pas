@@ -747,6 +747,7 @@ begin
   1508407, // Xinguara/PA
   2101202, // Bacabal/MA
   2103000, // Caxias/MA
+  3504503, // Avare/SP
   3504800, // Balsamo/SP
   3505203, // Bariri/SP
   3512902, // Cosmorama/SP
