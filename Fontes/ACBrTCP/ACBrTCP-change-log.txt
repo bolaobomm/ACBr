@@ -37,6 +37,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+18/07/2014
+-- ACBrMail --
+[+] Adicionado o método SendThread, para enviar e-mail por thread;
+http://www.projetoacbr.com.br/forum/index.php?/topic/
+16592-altera%C3%A7%C3%A3o-no-acbrmail-inclus%C3%A3o-de-thread-no-processo-de-envio/#entry103309
+
 04/04/2014
 -- ACBrSpedTabelas --
 [+] Doação do componente por (datilas)

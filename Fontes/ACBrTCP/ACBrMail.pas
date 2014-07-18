@@ -1,4 +1,4 @@
-{******************************************************************************}
+﻿{******************************************************************************}
 { Projeto: Componentes ACBr                                                    }
 {  Biblioteca multiplataforma de componentes Delphi para interação com equipa- }
 { mentos de Automação Comercial utilizados no Brasil                           }
@@ -68,6 +68,17 @@ type
     NameRef: string;
   end;
 
+  TACBrThread = class(TThread)
+  fOwner : TComponent;
+  private
+    procedure Terminar(Sender : TObject);
+  protected
+    procedure Execute; override;
+  public
+    constructor Criar(AOwner : TComponent);
+  end;
+
+
   TACBrOnMailProcess = procedure(const aStatus: TMailStatus) of object;
 
   { TACBrMail }
@@ -92,6 +103,7 @@ type
     fAttachments         : TMailAttachments;
     fReplyTo             : TStringList;
     fBCC                 : TStringList;
+    fThread              : TACBrThread;
 
     fDefaultCharsetCode  : TMimeChar;
 
@@ -118,12 +130,11 @@ type
     procedure SetAltBody(const aValue : TStringList);
     procedure SmtpError(const pMsgError: string);
 
-  protected
-
   public
     constructor Create(AOwner: TComponent); override;
     destructor Destroy; override;
     procedure MailProcess(const aStatus: TMailStatus);
+    procedure SendThread;
     procedure Send;
     procedure Clear;
 
@@ -322,6 +333,12 @@ begin
   fMIMEMess.Free;
   fSMTP.Free;
   inherited Destroy;
+end;
+
+procedure TACBrMail.SendThread;
+begin
+     if fThread <> nil Then fThread.Terminate;
+     fThread := TACBrThread.Criar(Self);
 end;
 
 procedure TACBrMail.Send;
@@ -694,6 +711,34 @@ end;
 procedure TACBrMail.AddBCC(aEmail: string);
 begin
   fBCC.Add(aEmail);
+end;
+
+{ TACBrThread }
+
+constructor TACBrThread.Criar(AOwner: TComponent);
+begin
+  inherited Create(True);
+  OnTerminate            := Terminar;
+  FreeOnTerminate        := True;
+  fOwner := AOwner;
+  Resume;
+end;
+
+procedure TACBrThread.Execute;
+begin
+   //O EXECUTE É CHAMADO NA EXECUÇÃO DA THREAD
+   //E RODA O METODO DE ACORDO COM O TIPO INFORMADO NA CRIAÇÃO DA THREAD.
+     if (not terminated) then
+        Begin
+           TACBrMail(FOwner).Send;
+        end
+     Else abort;
+end;
+
+procedure TACBrThread.Terminar(Sender: TObject);
+begin
+     //NAO SEI SE ISSO É UTIL, USEI PARA DEPURAR ALGUMAS ROTINAS QUE UTILIZAM O THREAD
+     //AGORA QUE NAO PRECISO MAIS TALVEZ EU DEVA REMOVE-LA
 end;
 
 end.
