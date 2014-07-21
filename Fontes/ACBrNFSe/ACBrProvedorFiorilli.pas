@@ -120,7 +120,7 @@ begin
   2103000 : // Caxias/MA
     cURL_Producao := 'http://177.105.209.118:8080/IssWeb-ejb/IssWebWS/IssWebWS';
   3504503 : // Avare/SP
-    cURL_Producao := 'http://201.28.69.146:5663/IssWeb-ejb/IssWebWS/IssWebWS';
+    cURL_Producao := 'http://fiorilli.avare.sp.gov.br:5661/IssWeb-ejb/IssWebWS/IssWebWS';
   3504800 : // Balsamo/SP
     cURL_Producao := 'http://201.28.69.146:5663/IssWeb-ejb/IssWebWS/IssWebWS';
   3505203 : // Bariri/SP
