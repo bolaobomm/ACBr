@@ -149,7 +149,7 @@ uses
       jpeg,
     {$IFEND}
   {$ENDIF}
-  ACBrNFeDANFeRL, pcnConversao, RLBarcode, DB, StrUtils;
+  ACBrNFeDANFeRL, pcnConversao, RLBarcode, DB, StrUtils, ACBrUtil;
 
 type
   TfrlDANFeRLRetrato = class(TfrlDANFeRL)
@@ -1110,8 +1110,8 @@ var sChaveContingencia: String;
 begin
   with FNFe.InfNFe, FNFe.Ide do
   begin
-     rllChave.Caption := NotaUtil.FormatarChaveAcesso (Copy (FNFe.InfNFe.Id, 4, 44));
-     rlbCodigoBarras.Caption := Copy (FNFe.InfNFe.Id, 4, 44);
+     rllChave.Caption := NotaUtil.FormatarChaveAcesso(OnlyNumber(FNFe.InfNFe.Id));
+     rlbCodigoBarras.Caption := OnlyNumber(FNFe.InfNFe.Id);
      rllNumNF0.Caption := 'Nº ' + FormatFloat ('000,000,000', nNF);
      rllNumNF1.Caption := 'Nº ' + FormatFloat ('000,000,000', nNF);
      rllSERIE0.Caption := 'SÉRIE ' + IntToStr(Serie);
