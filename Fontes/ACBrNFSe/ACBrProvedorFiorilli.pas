@@ -399,7 +399,8 @@ begin
    acConsSit:     Result := SeparaDados( RetornoWS, 'ns3:consultarSituacaoLoteRpsResponse' );
    acConsLote:    Result := SeparaDados( RetornoWS, 'ns3:consultarLoteRpsResponse' );
    acConsNFSeRps: Result := SeparaDados( RetornoWS, 'ns3:consultarNfsePorRpsResponse' );
-   acConsNFSe:    Result := SeparaDados( RetornoWS, 'ns3:consultarNfseResponse' );
+//   acConsNFSe:    Result := SeparaDados( RetornoWS, 'ns3:consultarNfseResponse' );
+   acConsNFSe:    Result := SeparaDados( RetornoWS, 'ns3:consultarNfseServicoPrestadoResponse' );
    acCancelar:    Result := SeparaDados( RetornoWS, 'ns3:cancelarNfseResponse' );
    acGerar:       Result := SeparaDados( RetornoWS, 'ns3:gerarNfseResponse' );
    acRecSincrono: Result := SeparaDados( RetornoWS, 'ns3:recepcionarLoteRpsSincronoResponse' );
