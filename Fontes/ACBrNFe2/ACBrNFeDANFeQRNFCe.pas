@@ -673,7 +673,7 @@ begin
    then qrlDestCNPJ.Caption := 'CPF/CNPJ: ' + DFeUtil.FormatarCNPJCPF(FNFE.Dest.CNPJCPF)
    else if FNFE.Dest.idEstrangeiro <> ''
          then qrlDestCNPJ.Caption := 'ID Estrangeiro: ' + FNFE.Dest.idEstrangeiro
-         else qrlDestCNPJ.Caption := 'CONSUMINDOR NÃO IDENTIFICADO';
+         else qrlDestCNPJ.Caption := 'CONSUMIDOR NÃO IDENTIFICADO';
 
   // Mensagem
 
