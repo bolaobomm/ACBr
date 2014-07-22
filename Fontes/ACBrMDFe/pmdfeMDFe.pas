@@ -1037,7 +1037,6 @@ type
 
   TMDFe = class(TPersistent)
   private
-//    Fschema: TpcnSchema;
     FinfMDFe: TinfMDFe;
     FIde: TIde;
     Femit: Temit;
@@ -1062,7 +1061,6 @@ type
     constructor Create;
     destructor Destroy; override;
   published
-//    property schema: TpcnSchema read Fschema  write Fschema;
     property infMDFe: TinfMDFe  read FinfMDFe write FinfMDFe;
     property Ide: TIde          read FIde     write FIde;
     property emit: Temit        read Femit    write Femit;

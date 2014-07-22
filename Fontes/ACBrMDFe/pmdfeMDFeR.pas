@@ -101,7 +101,9 @@ begin
   // MDFe.infMDFe.ID := copy(Leitor.Arquivo, I + 4, J - I - 4);
   MDFe.infMDFe.ID := copy(Leitor.Arquivo, I + 1, J - I -1);
   *)
-  MDFe.infMDFe.ID := Leitor.rAtributo('Id=');
+  MDFe.infMDFe.ID := SomenteNumeros(Leitor.rAtributo('Id='));
+  if MDFe.infMDFe.ID = '' then
+    raise Exception.Create('Não encontrei o atributo: Id');
 
   (* Grupo da TAG <ide> *******************************************************)
   if Leitor.rExtrai(1, 'ide') <> '' then
