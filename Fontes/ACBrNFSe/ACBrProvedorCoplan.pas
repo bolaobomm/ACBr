@@ -106,11 +106,13 @@ var
  ConfigURL: TConfigURL;
 begin
  case ACodCidade of
+  5102637: ConfigURL.ProNomeCidade := 'camponovodoparecis'; // Campo Novo do Parecis/MT
   5102678: ConfigURL.ProNomeCidade := 'campoverde';      // Campo Verde/MT
   5103205: ConfigURL.ProNomeCidade := 'colider';         // Colider/MT
   5104104: ConfigURL.ProNomeCidade := 'guarantadonorte'; // Guarantã Do Norte/MT
   5104542: ConfigURL.ProNomeCidade := 'itanhanga';       // Itanhanga/MT
   5105606: ConfigURL.ProNomeCidade := 'matupa';          // Matupá/MT
+  5105903: ConfigURL.ProNomeCidade := 'nobres';          // Nobres/MT
   5106208: ConfigURL.ProNomeCidade := 'novabrasilandia'; // Nova Brasilandia/MT
   5106224: ConfigURL.ProNomeCidade := 'novamutum';       // Nova Mutum/MT
   5106307: ConfigURL.ProNomeCidade := 'paranatinga';     // Paranatinga/MT
