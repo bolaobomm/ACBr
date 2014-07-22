@@ -3,7 +3,6 @@ inherited fqrDANFeQRNFCe: TfqrDANFeQRNFCe
   Top = 120
   Width = 641
   Height = 784
-  VertScrollBar.Position = 0
   Caption = 'DANFe - NFC-e'
   Font.Height = -8
   Font.Name = 'Arial'
@@ -13,7 +12,6 @@ inherited fqrDANFeQRNFCe: TfqrDANFeQRNFCe
   TextHeight = 10
   inherited QRNFe: TQuickRep
     Tag = 1
-    Top = 3
     Width = 302
     BeforePrint = QRNFeBeforePrint
     DataSet = cdsItens

@@ -781,7 +781,8 @@ begin
                                     FNFe.Ide.dEmi,
                                     FNFe.Total.ICMSTot.vNF,
                                     FNFe.Total.ICMSTot.vICMS,
-                                    FNFe.procNFe.digVal,
+                                    FNFe.signature.DigestValue,
+//                                    FNFe.procNFe.digVal,
                                     TACBrNFe( FACBrNFe ).Configuracoes.Geral.IdToken,
                                     TACBrNFe( FACBrNFe ).Configuracoes.Geral.Token);
       QRCode.Data := sURL;
