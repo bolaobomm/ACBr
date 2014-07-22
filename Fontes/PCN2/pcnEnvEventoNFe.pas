@@ -239,12 +239,17 @@ begin
 
             if Evento.Items[i].InfEvento.detEvento.dest.IE <> '' then
               Gerador.wCampo(tcStr, 'P31', 'IE', 02, 14, 1, Evento.Items[i].InfEvento.detEvento.dest.IE);
-              
-            Gerador.wGrupo('/dest');
+
+//            Gerador.wGrupo('/dest');
 
             Gerador.wCampo(tcDe2, 'P32', 'vNF',   01, 15, 1, Evento.Items[i].InfEvento.detEvento.vNF, DSC_VNF);
             Gerador.wCampo(tcDe2, 'P33', 'vICMS', 01, 15, 1, Evento.Items[i].InfEvento.detEvento.vICMS, DSC_VICMS);
             Gerador.wCampo(tcDe2, 'P34', 'vST',   01, 15, 1, Evento.Items[i].InfEvento.detEvento.vST, DSC_VST);
+
+            // Alterado em 22/07/2014 por Italo
+            // para ficar em conformidade com o Schema
+            Gerador.wGrupo('/dest');
+
           end;
       end;
       Gerador.wGrupo('/detEvento');

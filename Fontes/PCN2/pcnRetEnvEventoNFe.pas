@@ -198,9 +198,9 @@ begin
            infEvento.detEvento.tpNF        := StrToTpNF(ok, Leitor.rCampo(tcStr, 'tpNF'));
            infEvento.detEvento.IE          := Leitor.rCampo(tcStr, 'IE');
 
-           infEvento.detEvento.vNF         := Leitor.rCampo(tcDe2, 'vNF');
-           infEvento.detEvento.vICMS       := Leitor.rCampo(tcDe2, 'vICMS');
-           infEvento.detEvento.vST         := Leitor.rCampo(tcDe2, 'vST');
+//           infEvento.detEvento.vNF         := Leitor.rCampo(tcDe2, 'vNF');
+//           infEvento.detEvento.vICMS       := Leitor.rCampo(tcDe2, 'vICMS');
+//           infEvento.detEvento.vST         := Leitor.rCampo(tcDe2, 'vST');
 
            if Leitor.rExtrai(4, 'dest', '', i + 1) <> '' then
            begin
@@ -208,6 +208,13 @@ begin
              infEvento.detEvento.dest.CNPJCPF       := Leitor.rCampoCNPJCPF;
              infEvento.detEvento.dest.idEstrangeiro := Leitor.rCampo(tcStr, 'idEstrangeiro');
              infEvento.detEvento.dest.IE            := Leitor.rCampo(tcStr, 'IE');
+
+             // Alterado em 22/07/2014 por Italo
+             // para ficar em conformidade com o Schema
+             infEvento.detEvento.vNF         := Leitor.rCampo(tcDe2, 'vNF');
+             infEvento.detEvento.vICMS       := Leitor.rCampo(tcDe2, 'vICMS');
+             infEvento.detEvento.vST         := Leitor.rCampo(tcDe2, 'vST');
+
            end;
          end;
       end;
