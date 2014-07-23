@@ -101,6 +101,8 @@ type
   TDICollectionItem = class;
   TAdiCollection = class;
   TAdiCollectionItem = class;
+  TNVECollection = class;
+  TNVECollectionItem = class;
 
   TdetExportCollection = class;
   TdetExportCollectionItem = class;
@@ -564,7 +566,6 @@ type
     FcEAN: string;
     FxProd: string;
     FNCM: string;
-    FNVE: string;
     FEXTIPI: string;
     //Fgenero: integer;
     FCFOP: string;
@@ -591,11 +592,14 @@ type
     Fcomb: Tcomb;
     FnRECOPI: string;
     FnFCI: string;
+    FNVE: TNVECollection;
 
     procedure SetDI(Value: TDICollection);
     procedure SetMed(Value: TmedCollection);
     procedure SetArma(Value: TarmaCollection);
     procedure SetdetExport(const Value: TdetExportCollection);
+    procedure SetNVE(Value : TNVeCollection);
+    procedure getCFOP(const Value: string);
   public
     constructor Create(AOwner: TDetcollectionItem);
     destructor Destroy; override;
@@ -605,10 +609,10 @@ type
     property cEAN: string read FcEAN write FcEAN;
     property xProd: string read FxProd write FxProd;
     property NCM: string read FNCM write FNCM;
-    property NVE: string read FNVE write FNVE;
+    property NVE : TNVECollection read FNVE write FNVE;
     property EXTIPI: string read FEXTIPI write FEXTIPI;
     //property genero: integer read Fgenero write Fgenero;
-    property CFOP: string read FCFOP write FCFOP;
+    property CFOP: string read FCFOP write getCFOP;
     property uCom: string read FuCom write FuCom;
     property qCom: currency read FqCom write FqCom;
     property vUnCom: double read FvUnCom write FvUnCom;
@@ -878,6 +882,23 @@ type
     property cFabricante: string read FcFabricante write FcFabricante;
     property vDescDI: currency read FvDescDI write FvDescDI;
     property nDraw: string read FnDraw write FnDraw;
+  end;
+
+  TNVECollection = class(TCollection)
+  private
+    function GetItem(Index: Integer): TNVECollectionItem;
+    procedure SetItem(Index: Integer; Value: TNVECollectionItem);
+  public
+    constructor Create(AOwner: TProd);
+    function Add: TNVECollectionItem;
+    property Items[Index: Integer]: TNVECollectionItem read GetItem write SetItem; default;
+  end;
+
+  TNVECollectionItem = class(TCollectionItem)
+  private
+    FNve: string;
+  published
+    property NVE: string read FNve write FNve;
   end;
 
   TdetExportCollection = class(TCollection)
@@ -1892,6 +1913,7 @@ constructor TProd.Create(AOwner: TDetcollectionItem);
 begin
   inherited Create;
   FDI := TDICollection.Create(Self);
+  FNVE := TNVECollection.Create(self);
   FdetExport := TdetExportCollection.Create(Self);
   FveicProd := TveicProd.Create;
   FMed := TMedCollection.Create(Self);
@@ -1902,12 +1924,18 @@ end;
 destructor TProd.Destroy;
 begin
   FDI.Free;
+  FNVE.Free;
   FdetExport.Free;
   FveicProd.Free;
   FMed.Free;
   FArma.Free;
   Fcomb.Free;
   inherited;
+end;
+
+procedure TProd.getCFOP(const Value: string);
+begin
+  FCFOP := Value;
 end;
 
 procedure TProd.SetDI(Value: TDICollection);
@@ -1923,6 +1951,11 @@ end;
 procedure TProd.SetMed(Value: TMedCollection);
 begin
   FMed.Assign(Value);
+end;
+
+procedure TProd.SetNVE(Value: TNVeCollection);
+begin
+  FNVE.Assign(Value);
 end;
 
 procedure TProd.SetArma(Value: TArmaCollection);
@@ -2606,6 +2639,28 @@ end;
 
 procedure TdetExportCollection.SetItem(Index: Integer;
   Value: TdetExportCollectionItem);
+begin
+  inherited SetItem(Index, Value);
+end;
+
+{ TNVECollection }
+
+function TNVECollection.Add: TNVECollectionItem;
+begin
+  Result := TNVECollectionItem(inherited Add);
+end;
+
+constructor TNVECollection.Create(AOwner: TProd);
+begin
+  inherited Create(TNVECollectionItem);
+end;
+
+function TNVECollection.GetItem(Index: Integer): TNVECollectionItem;
+begin
+  Result := TNVECollectionItem(inherited GetItem(Index));
+end;
+
+procedure TNVECollection.SetItem(Index: Integer; Value: TNVECollectionItem);
 begin
   inherited SetItem(Index, Value);
 end;

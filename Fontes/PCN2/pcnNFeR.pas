@@ -425,9 +425,6 @@ begin
     (*I03*)NFe.Det[i].Prod.cEAN  := Leitor.rCampo(tcStr, 'cEAN');
     (*I04*)NFe.Det[i].Prod.xProd := Leitor.rCampo(tcStr, 'xProd');
     (*I05*)NFe.Det[i].Prod.NCM   := Leitor.rCampo(tcStr, 'NCM');
-
-    (*I05a*)NFe.Det[i].Prod.NVE  := Leitor.rCampo(tcStr, 'NVE');
-
     (*I06*)NFe.Det[i].Prod.EXTIPI   := Leitor.rCampo(tcStr, 'EXTIPI');
     //(*I07*)NFe.Det[i].Prod.genero := Leitor.rCampo(tcInt, 'genero');
     (*I08*)NFe.Det[i].Prod.CFOP     := Leitor.rCampo(tcEsp, 'CFOP');
@@ -448,6 +445,16 @@ begin
     (*I31*)NFe.Det[i].Prod.nItemPed := Leitor.rCampo(tcInt, 'nItemPed');
     (*I31*)NFe.Det[i].Prod.nRECOPI  := Leitor.rCampo(tcStr, 'nRECOPI');
     (*I70*)NFe.Det[i].Prod.nFCI     := Leitor.rCampo(tcStr, 'nFCI');
+
+    j := 0;
+    while Leitor.rExtrai(3, 'NVE', '', j + 1) <> '' do
+    begin
+      NFe.Det[i].Prod.NVE.Add;
+      (*I05a*) NFe.Det[i].Prod.NVE[j].NVE := Leitor.rCampo(tcStr, 'NVE');
+
+      inc(j);
+    end;
+    
 
     (* Grupo da TAG <det><prod><DI> *)
     j := 0;

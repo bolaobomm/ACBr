@@ -93,6 +93,7 @@ type
     procedure GerarDetProd(const i: integer);
     procedure GerarDetProdDI(const i: integer);
     procedure GerarDetProdDIadi(const i, j: integer);
+    procedure GerarDetProdNVE(const i : integer);
     procedure GerarDetProddetExport(const i: integer);
     procedure GerarDetProdVeicProd(const i: integer);
     procedure GerarDetProdMed(const i: integer);
@@ -794,10 +795,7 @@ begin
   Gerador.wCampo(tcStr, 'I03 ', 'cEAN    ', 00, 14, 1, nfe.Det[i].Prod.cEAN, DSC_CEAN);
   Gerador.wCampo(tcStr, 'I04 ', 'xProd   ', 1, 120, 1, nfe.Det[i].Prod.xProd, DSC_XPROD);
   Gerador.wCampo(tcStr, 'I05 ', 'NCM     ', 02, 08,   IIf(NFe.infNFe.Versao >= 2,1,0), nfe.Det[i].Prod.NCM, DSC_NCM);
-  Gerador.wCampo(tcStr, 'I05a', 'NVE     ', 06, 06, 0, nfe.Det[i].Prod.NVE, DSC_NVE);
-  if trim(nfe.Det[i].Prod.NVE) <> '' then
-    if not DFeUtil.ValidaNVE(nfe.Det[i].Prod.NVE) then
-      Gerador.wAlerta('I05a', 'NVE', DSC_NVE, ERR_MSG_INVALIDO);
+  {**}GerarDetProdNVE(i);
   Gerador.wCampo(tcStr, 'I06 ', 'EXTIPI  ', 02, 03, 0, nfe.Det[i].Prod.EXTIPI, DSC_EXTIPI);
   //Gerador.wCampo(tcInt, 'I07 ', 'genero  ', 02, 02, 0, nfe.Det[i].Prod.genero, DSC_GENERO);
   Gerador.wCampo(tcEsp, 'I08 ', 'CFOP    ', 04, 04, 1, somenteNumeros(nfe.Det[i].Prod.CFOP), DSC_CFOP);
@@ -992,6 +990,22 @@ begin
   end;
   if nfe.Det[i].Prod.med.Count > 500 then
     Gerador.wAlerta('K01', 'med', DSC_NITEM, ERR_MSG_MAIOR_MAXIMO + '500');
+end;
+
+procedure TNFeW.GerarDetProdNVE(const i: integer);
+var
+  j: integer;
+begin
+  for j := 0 to nfe.Det[i].Prod.NVE.Count - 1 do
+  begin
+    Gerador.wCampo(tcStr, 'I05a', 'NVE        ', 06, 06, 0, nfe.Det[i].Prod.NVE[j].NVE, DSC_NVE);
+
+    if not DFeUtil.ValidaNVE(nfe.Det[i].Prod.NVE[j].NVE) then
+      Gerador.wAlerta('I05a', 'NVE', DSC_NVE, ERR_MSG_INVALIDO);
+  end;
+
+  if nfe.Det[i].Prod.NVE.Count > 8 then
+    Gerador.wAlerta('I05a', 'NVE', DSC_NITEM, ERR_MSG_MAIOR_MAXIMO + '8');
 end;
 
 procedure TNFeW.GerarDetProdArma(const i: integer);

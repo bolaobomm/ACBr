@@ -464,6 +464,15 @@ begin
    (*128p*)NFe.Det[i].Prod.nFCI := LerCampo(tcStr, 'nFCI');
   end;
 
+  if ID = 'I05a' then
+  begin
+    i := NFe.Det.Count - 1;
+    NFe.Det[i].Prod.NVE.Add;
+    j := NFe.Det[i].Prod.NVE.Count - 1;
+    (*I05a*)NFe.Det[i].Prod.NVE[j].NVE := LerCampo(tcStr, 'NVE');
+  end;
+
+
   if ID = 'I18' then (* Grupo da TAG <det><prod><DI> **************************)
   begin
     i := NFe.Det.Count - 1;
