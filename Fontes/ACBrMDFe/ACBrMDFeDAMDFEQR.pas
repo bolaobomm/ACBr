@@ -54,66 +54,66 @@ type
   private
     { Private declarations }
   protected
-    //BarCode : TBarCode128c;
-    FACBrMDFe          : TACBrMDFe;
-    FMDFe              : TMDFe;
-    FLogo              : String;
-    FEmail             : String;
-    FFax               : String;
-    FNumCopias         : Integer;
-    FSistema           : String;
-    FSite              : String;
-    FUsuario           : String;
-    AfterPreview       : Boolean;
-    FExpandirLogoMarca : Boolean;
-    ChangedPos         : Boolean;
-    FSemValorFiscal    : Boolean;
-    FMargemSuperior    : double;
-    FMargemInferior    : double;
-    FMargemEsquerda    : double;
-    FMargemDireita     : double;
-    FImpressora        : String;
-    FMDFeCancelada     : Boolean;
-    FMDFeEncerrado     : Boolean;
+    //BarCode: TBarCode128c;
+    FACBrMDFe: TACBrMDFe;
+    FMDFe: TMDFe;
+    FLogo: String;
+    FEmail: String;
+    FFax: String;
+    FNumCopias: Integer;
+    FSistema: String;
+    FSite: String;
+    FUsuario: String;
+    AfterPreview: Boolean;
+    FExpandirLogoMarca: Boolean;
+    ChangedPos: Boolean;
+    FSemValorFiscal: Boolean;
+    FMargemSuperior: double;
+    FMargemInferior: double;
+    FMargemEsquerda: double;
+    FMargemDireita: double;
+    FImpressora: String;
+    FMDFeCancelada: Boolean;
+    FMDFeEncerrado: Boolean;
 
     procedure qrlSemValorFiscalPrint(sender: TObject; var Value: String);
     procedure SetBarCodeImage(ACode: String; QRImage: TQRImage);
   public
     { Public declarations }
-    class procedure Imprimir(AMDFe              : TMDFe;
-                             ALogo              : String  = '';
-                             AEmail             : String  = '';
-                             AExpandirLogoMarca : Boolean = False;
-                             AFax               : String  = '';
-                             ANumCopias         : Integer = 1;
-                             ASistema           : String  = '';
-                             ASite              : String  = '';
-                             AUsuario           : String  = '';
-                             APreview           : Boolean = True;
-                             AMargemSuperior    : Double  = 0.8;
-                             AMargemInferior    : Double  = 0.8;
-                             AMargemEsquerda    : Double  = 0.6;
-                             AMargemDireita     : Double  = 0.51;
-                             AImpressora        : String  = '';
-                             AMDFeCancelada     : Boolean = False;
-                             AMDFeEncerrado     : Boolean = False);
+    class procedure Imprimir(AMDFe: TMDFe;
+                             ALogo: String = '';
+                             AEmail: String = '';
+                             AExpandirLogoMarca: Boolean = False;
+                             AFax: String = '';
+                             ANumCopias: Integer = 1;
+                             ASistema: String = '';
+                             ASite: String = '';
+                             AUsuario: String = '';
+                             APreview: Boolean = True;
+                             AMargemSuperior: Double = 0.8;
+                             AMargemInferior: Double = 0.8;
+                             AMargemEsquerda: Double = 0.6;
+                             AMargemDireita: Double = 0.51;
+                             AImpressora: String = '';
+                             AMDFeCancelada: Boolean = False;
+                             AMDFeEncerrado: Boolean = False);
 
-    class procedure SavePDF(AFile              : String;
-                            AMDFe              : TMDFe;
-                            ALogo              : String  = '';
-                            AEmail             : String  = '';
-                            AExpandirLogoMarca : Boolean = False;
-                            AFax               : String  = '';
-                            ANumCopias         : Integer = 1;
-                            ASistema           : String  = '';
-                            ASite              : String  = '';
-                            AUsuario           : String  = '';
-                            AMargemSuperior    : Double  = 0.8;
-                            AMargemInferior    : Double  = 0.8;
-                            AMargemEsquerda    : Double  = 0.6;
-                            AMargemDireita     : Double  = 0.51;
-                            AMDFeCancelada     : Boolean = False;
-                            AMDFeEncerrado     : Boolean = False);
+    class procedure SavePDF(AFile: String;
+                            AMDFe: TMDFe;
+                            ALogo: String = '';
+                            AEmail: String = '';
+                            AExpandirLogoMarca: Boolean = False;
+                            AFax: String = '';
+                            ANumCopias: Integer = 1;
+                            ASistema: String = '';
+                            ASite: String = '';
+                            AUsuario: String = '';
+                            AMargemSuperior: Double = 0.8;
+                            AMargemInferior: Double = 0.8;
+                            AMargemEsquerda: Double = 0.6;
+                            AMargemDireita: Double = 0.51;
+                            AMDFeCancelada: Boolean = False;
+                            AMDFeEncerrado: Boolean = False);
 
   end;
 
@@ -126,23 +126,23 @@ var
 
 {$R *.dfm}
 
-class procedure TfqrDAMDFEQR.Imprimir(AMDFe              : TMDFe;
-                                      ALogo              : String  = '';
-                                      AEmail             : String  = '';
+class procedure TfqrDAMDFEQR.Imprimir(AMDFe: TMDFe;
+                                      ALogo: String = '';
+                                      AEmail: String = '';
                                       AExpandirLogoMarca : Boolean = False;
-                                      AFax               : String  = '';
-                                      ANumCopias         : Integer = 1;
-                                      ASistema           : String  = '';
-                                      ASite              : String  = '';
-                                      AUsuario           : String  = '';
-                                      APreview           : Boolean = True;
-                                      AMargemSuperior    : Double  = 0.8;
-                                      AMargemInferior    : Double  = 0.8;
-                                      AMargemEsquerda    : Double  = 0.6;
-                                      AMargemDireita     : Double  = 0.51;
-                                      AImpressora        : String  = '';
-                                      AMDFeCancelada     : Boolean = False;
-                                      AMDFeEncerrado     : Boolean = False);
+                                      AFax: String = '';
+                                      ANumCopias: Integer = 1;
+                                      ASistema: String = '';
+                                      ASite: String = '';
+                                      AUsuario: String = '';
+                                      APreview: Boolean = True;
+                                      AMargemSuperior: Double = 0.8;
+                                      AMargemInferior: Double = 0.8;
+                                      AMargemEsquerda: Double = 0.6;
+                                      AMargemDireita: Double = 0.51;
+                                      AImpressora: String = '';
+                                      AMDFeCancelada: Boolean = False;
+                                      AMDFeEncerrado: Boolean = False);
 begin
   with Create ( nil ) do
      try
@@ -200,22 +200,22 @@ begin
      end;
 end;
 
-class procedure TfqrDAMDFEQR.SavePDF(AFile              : String;
-                                     AMDFe              : TMDFe;
-                                     ALogo              : String  = '';
-                                     AEmail             : String  = '';
-                                     AExpandirLogoMarca : Boolean = False;
-                                     AFax               : String  = '';
-                                     ANumCopias         : Integer = 1;
-                                     ASistema           : String  = '';
-                                     ASite              : String  = '';
-                                     AUsuario           : String  = '';
-                                     AMargemSuperior    : Double  = 0.8;
-                                     AMargemInferior    : Double  = 0.8;
-                                     AMargemEsquerda    : Double  = 0.6;
-                                     AMargemDireita     : Double  = 0.51;
-                                     AMDFeCancelada     : Boolean = False;
-                                     AMDFeEncerrado     : Boolean = False);
+class procedure TfqrDAMDFEQR.SavePDF(AFile: String;
+                                     AMDFe: TMDFe;
+                                     ALogo: String = '';
+                                     AEmail: String = '';
+                                     AExpandirLogoMarca: Boolean = False;
+                                     AFax: String = '';
+                                     ANumCopias: Integer = 1;
+                                     ASistema: String = '';
+                                     ASite: String = '';
+                                     AUsuario: String = '';
+                                     AMargemSuperior: Double = 0.8;
+                                     AMargemInferior: Double = 0.8;
+                                     AMargemEsquerda: Double = 0.6;
+                                     AMargemDireita: Double = 0.51;
+                                     AMDFeCancelada: Boolean = False;
+                                     AMDFeEncerrado: Boolean = False);
 {$IFDEF QReport_PDF}
 var
   qf: TQRPDFDocumentFilter;
@@ -245,7 +245,7 @@ begin
           begin
             if (Components[i] is TQRShape) and (TQRShape(Components[i]).Shape = qrsRoundRect) then
               begin
-                TQRShape(Components[i]).Shape := qrsRectangle;
+                TQRShape(Components[i]).Shape     := qrsRectangle;
                 TQRShape(Components[i]).Pen.Width := 1;
               end;
           end;
@@ -254,7 +254,7 @@ begin
         qf := TQRPDFDocumentFilter.Create(AFile);
         try
           qf.CompressionOn := False;
-          QRMDFe.QRPrinter.ExportToFilter( qf );
+          QRMDFe.QRPrinter.ExportToFilter(qf);
         finally
           qf.Free;
         end;
@@ -277,9 +277,9 @@ var
 begin
    b := TBarCode128c.Create;
    try
-  //      Width  := QRImage.Width;
+  //  Width  := QRImage.Width;
      b.Code := ACode;
-     b.PaintCodeToCanvas( ACode, QRImage.Canvas, QRImage.ClientRect );
+     b.PaintCodeToCanvas(ACode, QRImage.Canvas, QRImage.ClientRect);
    finally
      b.free;
    end;

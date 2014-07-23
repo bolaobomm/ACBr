@@ -74,13 +74,13 @@ type
 
   TRetEventoMDFe = class(TPersistent)
   private
-    FidLote : integer;
+    FidLote: Integer;
     FtpAmb: TpcnTipoAmbiente;
-    FverAplic: string;
+    FverAplic: String;
     FLeitor: TLeitor;
-    FcStat: integer;
+    FcStat: Integer;
     FcOrgao: Integer;
-    FxMotivo: string;
+    FxMotivo: String;
     FretEvento: TRetInfEventoCollection;
     FInfEvento: TInfEvento;
     FXML: AnsiString;   //Gustavo Kato XML Completo do evento
@@ -89,13 +89,13 @@ type
     destructor Destroy; override;
     function LerXml: boolean;
   published
-    property idLote: integer                    read FidLote    write FidLote;
+    property idLote: Integer                    read FidLote    write FidLote;
     property Leitor: TLeitor                    read FLeitor    write FLeitor;
     property tpAmb: TpcnTipoAmbiente            read FtpAmb     write FtpAmb;
-    property verAplic: string                   read FverAplic  write FverAplic;
-    property cOrgao: integer                    read FcOrgao    write FcOrgao;
-    property cStat: integer                     read FcStat     write FcStat;
-    property xMotivo: string                    read FxMotivo   write FxMotivo;
+    property verAplic: String                   read FverAplic  write FverAplic;
+    property cOrgao: Integer                    read FcOrgao    write FcOrgao;
+    property cStat: Integer                     read FcStat     write FcStat;
+    property xMotivo: String                    read FxMotivo   write FxMotivo;
     property InfEvento: TInfEvento              read FInfEvento write FInfEvento;
     property retEvento: TRetInfEventoCollection read FretEvento write FretEvento;
     property XML: AnsiString                    read FXML       write FXML;  //Gustavo Kato XML Completo do evento
@@ -142,6 +142,7 @@ begin
 end;
 
 { TRetEventoMDFe }
+
 constructor TRetEventoMDFe.Create;
 begin
   FLeitor    := TLeitor.Create;
@@ -160,7 +161,7 @@ end;
 function TRetEventoMDFe.LerXml: boolean;
 var
   ok: boolean;
-  i : integer;
+  i: Integer;
 begin
   Result := False;
   i := 0;

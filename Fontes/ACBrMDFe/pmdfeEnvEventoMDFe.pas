@@ -85,10 +85,10 @@ type
   public
     constructor Create;
     destructor Destroy; override;
-    function GerarXML: boolean;
-    function LerXML(const CaminhoArquivo: string): boolean;
-    function LerXMLFromString(const AXML: String): boolean;
-    function ObterNomeArquivo(tpEvento: TpcnTpEvento): string;
+    function GerarXML: Boolean;
+    function LerXML(const CaminhoArquivo: String): Boolean;
+    function LerXMLFromString(const AXML: String): Boolean;
+    function ObterNomeArquivo(tpEvento: TpcnTpEvento): String;
   published
     property Gerador: TGerador             read FGerador write FGerador;
     property idLote: Integer               read FidLote  write FidLote;
@@ -115,7 +115,7 @@ begin
   inherited;
 end;
 
-function TEventoMDFe.ObterNomeArquivo(tpEvento: TpcnTpEvento): string;
+function TEventoMDFe.ObterNomeArquivo(tpEvento: TpcnTpEvento): String;
 begin
  case tpEvento of
     teCancelamento:     Result := Evento.Items[0].InfEvento.chMDFe + '-can-eve.xml';
@@ -126,9 +126,9 @@ begin
  end;
 end;
 
-function TEventoMDFe.GerarXML: boolean;
+function TEventoMDFe.GerarXML: Boolean;
 var
-  sDoc : String;
+  sDoc: String;
 begin
   Gerador.ArquivoFormatoXML := '';
   Gerador.wGrupo('eventoMDFe ' + NAME_SPACE_MDFE + ' versao="' + MDFeEventoMDFe + '"');
@@ -144,17 +144,17 @@ begin
   Gerador.wCampo(tcInt, 'EP05', 'cOrgao', 1, 2, 1, Evento.Items[0].InfEvento.cOrgao);
   Gerador.wCampo(tcStr, 'EP06', 'tpAmb ', 1, 1, 1, TpAmbToStr(Evento.Items[0].InfEvento.tpAmb), DSC_TPAMB);
 
-  sDoc := SomenteNumeros( Evento.Items[0].InfEvento.CNPJ );
+  sDoc := SomenteNumeros(Evento.Items[0].InfEvento.CNPJ);
 
-  case Length( sDoc ) of
-    14 : begin
-          Gerador.wCampo(tcStr, 'EP07', 'CNPJ', 14, 14, 1, sDoc , DSC_CNPJ);
-          if not ValidarCNPJ( sDoc ) then Gerador.wAlerta('HP10', 'CNPJ', DSC_CNPJ, ERR_MSG_INVALIDO);
-         end;
-    11 : begin
-          Gerador.wCampo(tcStr, 'EP07', 'CPF ', 11, 11, 1, sDoc, DSC_CPF);
-          if not ValidarCPF( sDoc ) then Gerador.wAlerta('HP11', 'CPF', DSC_CPF, ERR_MSG_INVALIDO);
-         end;
+  case Length(sDoc) of
+    14: begin
+         Gerador.wCampo(tcStr, 'EP07', 'CNPJ', 14, 14, 1, sDoc , DSC_CNPJ);
+         if not ValidarCNPJ(sDoc) then Gerador.wAlerta('HP10', 'CNPJ', DSC_CNPJ, ERR_MSG_INVALIDO);
+        end;
+    11: begin
+         Gerador.wCampo(tcStr, 'EP07', 'CPF ', 11, 11, 1, sDoc, DSC_CPF);
+         if not ValidarCPF(sDoc) then Gerador.wAlerta('HP11', 'CPF', DSC_CPF, ERR_MSG_INVALIDO);
+        end;
   end;
 
   Gerador.wCampo(tcStr, 'EP08', 'chMDFe', 44, 44, 1, Evento.Items[0].InfEvento.chMDFe, DSC_CHAVE);
@@ -163,8 +163,8 @@ begin
    then Gerador.wAlerta('EP08', 'chMDFe', '', 'Chave de MDFe inválida');
 
   // Segundo o manual a data deve conter o UTC mas no schema não contem
-  Gerador.wCampo(tcStr, 'EP09', 'dhEvento', 01, 27,   1, FormatDateTime('yyyy-mm-dd"T"hh:nn:ss',Evento.Items[0].InfEvento.dhEvento)
-                                                           {+ GetUTC( CodigoParaUF(Evento.Items[0].InfEvento.cOrgao),
+  Gerador.wCampo(tcStr, 'EP09', 'dhEvento', 01, 27,   1, FormatDateTime('yyyy-mm-dd"T"hh:nn:ss', Evento.Items[0].InfEvento.dhEvento)
+                                                           {+ GetUTC(CodigoParaUF(Evento.Items[0].InfEvento.cOrgao),
                                                                      Evento.Items[0].InfEvento.dhEvento)} );
 
   Gerador.wCampo(tcInt, 'EP10', 'tpEvento  ', 6, 6, 1, Evento.Items[0].InfEvento.TipoEvento);
@@ -213,9 +213,9 @@ begin
   FEvento.Assign(Value);
 end;
 
-function TEventoMDFe.LerXML(const CaminhoArquivo: string): boolean;
+function TEventoMDFe.LerXML(const CaminhoArquivo: String): Boolean;
 var
-  ArqEvento : TStringList;
+  ArqEvento: TStringList;
 begin
   ArqEvento := TStringList.Create;
   try
@@ -226,9 +226,9 @@ begin
   end;
 end;
 
-function TEventoMDFe.LerXMLFromString(const AXML: String): boolean;
+function TEventoMDFe.LerXMLFromString(const AXML: String): Boolean;
 var
-  RetEventoMDFe : TRetEventoMDFe;
+  RetEventoMDFe: TRetEventoMDFe;
 begin
   RetEventoMDFe := TRetEventoMDFe.Create;
   try

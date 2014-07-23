@@ -197,11 +197,11 @@ type
       var PrintBand: Boolean);
   private
     { Private declarations }
-    FTotalPages : integer;
+    FTotalPages : Integer;
     procedure Itens;
   public
     { Public declarations }
-    procedure ProtocoloMDFe( const sProtocolo : String );
+    procedure ProtocoloMDFe(const sProtocolo: String);
   end;
 
 
@@ -218,10 +218,10 @@ const
    _NUM_ITEMS_OTHERPAGES = 50;
 
 var
-   FProtocoloMDFe : String;
-   nItemControle : Integer;
+  FProtocoloMDFe: String;
+  nItemControle: Integer;
 
-procedure TfqrDAMDFEQRRetrato.ProtocoloMDFe( const sProtocolo : String );
+procedure TfqrDAMDFEQRRetrato.ProtocoloMDFe(const sProtocolo: String);
 begin
    FProtocoloMDFe := sProtocolo;
 end;
@@ -234,7 +234,7 @@ begin
    nItemControle := 0;
    FTotalPages   := 1;
 
-   QRMDFe.ReportTitle:='Manifesto Eletrônico de Documentos Fiscais - MDF-e';
+   QRMDFe.ReportTitle := 'Manifesto Eletrônico de Documentos Fiscais - MDF-e';
 
    QRMDFe.Page.TopMargin    := FMargemSuperior * 100;
    QRMDFe.Page.BottomMargin := FMargemInferior * 100;
@@ -245,7 +245,7 @@ end;
 procedure TfqrDAMDFEQRRetrato.qrb_1_DadosManifestoBeforePrint(Sender: TQRCustomBand;
   var PrintBand: Boolean);
 var
- vStringStream: TStringStream;
+  vStringStream: TStringStream;
 begin
   inherited;
 
@@ -270,19 +270,19 @@ begin
 
   if FExpandirLogoMarca then
    begin
-    qriLogo.top:=2;
-    qriLogo.Left:=2;
-    qriLogo.Height:=142;
-    qriLogo.Width:=330;
-    qriLogo.Stretch:=true;
-    qrmEmitente.Enabled:=False;
-    qrmDadosEmitente.Enabled:=False;
+    qriLogo.top              := 2;
+    qriLogo.Left             := 2;
+    qriLogo.Height           := 142;
+    qriLogo.Width            := 330;
+    qriLogo.Stretch          := True;
+    qrmEmitente.Enabled      := False;
+    qrmDadosEmitente.Enabled := False;
    end;
 
   if not FExpandirLogoMarca then
    begin
-    qrmEmitente.Enabled:=True;
-    qrmDadosEmitente.Enabled:=True;
+    qrmEmitente.Enabled      := True;
+    qrmDadosEmitente.Enabled := True;
     // Emitente
     with FMDFe.Emit do
     begin
@@ -292,9 +292,9 @@ begin
       with EnderEmit do
       begin
         qrmDadosEmitente.Lines.Add(XLgr + IfThen(Nro = '0', '', ', ' + Nro));
-        if XCpl<>'' then qrmDadosEmitente.Lines.Add(XCpl);
-        if XBairro<>'' then qrmDadosEmitente.Lines.Add(XBairro);
-        qrmDadosEmitente.Lines.Add('CEP: ' + DFeUtil.FormatarCEP(FormatFloat( '00000000', CEP )) + ' - ' + XMun + ' - ' + UF);
+        if XCpl <> '' then qrmDadosEmitente.Lines.Add(XCpl);
+        if XBairro <> '' then qrmDadosEmitente.Lines.Add(XBairro);
+        qrmDadosEmitente.Lines.Add('CEP: ' + DFeUtil.FormatarCEP(FormatFloat('00000000', CEP)) + ' - ' + XMun + ' - ' + UF);
       end;
       qrmDadosEmitente.Lines.Add('CNPJ: ' + DFeUtil.FormatarCNPJ(CNPJ));
       qrmDadosEmitente.Lines.Add('INSCRIÇÃO ESTADUAL: ' + IE);
@@ -307,8 +307,9 @@ begin
     end;
    end;
 
-  SetBarCodeImage( Copy ( FMDFe.InfMDFe.Id, 5, 44 ), qriBarCode );
-  qrlChave.Caption      := MDFeUtil.FormatarChaveAcesso(Copy(FMDFe.InfMDFe.Id, 5, 44));
+  SetBarCodeImage(Copy(FMDFe.InfMDFe.Id, 5, 44), qriBarCode);
+
+  qrlChave.Caption := MDFeUtil.FormatarChaveAcesso(Copy(FMDFe.InfMDFe.Id, 5, 44));
 
   if FMDFe.ide.tpEmis = teNormal
    then begin
@@ -328,8 +329,8 @@ begin
    end;
 
   qrlModelo.Caption     := FMDFe.Ide.modelo;
-  qrlSerie.Caption      := FormatFloat( '000', FMDFe.Ide.serie);
-  qrlNumMDFe.Caption    := FormatFloat( '000,000,000', FMDFe.Ide.nMDF );
+  qrlSerie.Caption      := FormatFloat('000', FMDFe.Ide.serie);
+  qrlNumMDFe.Caption    := FormatFloat('000,000,000', FMDFe.Ide.nMDF);
   qrlPageNumber.Caption := format('%2.2d', [QRMDFe.PageNumber]) + '/' + format('%2.2d', [FTotalPages]);
   qrlEmissao.Caption    := DFeUtil.FormatDateTime(DateTimeToStr(FMDFe.Ide.dhEmi));
   qrlUFCarrega.Caption  := FMDFe.Ide.UFIni;
@@ -352,22 +353,22 @@ begin
                   end;
   end;
 
-  qrlqCTe.Caption  := FormatFloat( '##0', FMDFe.tot.qCTe);
-  qrlqCT.Caption   := FormatFloat( '##0', FMDFe.tot.qCT);
-  qrlqNFe.Caption  := FormatFloat( '##0', FMDFe.tot.qNFe);
-  qrlqNF.Caption   := FormatFloat( '##0', FMDFe.tot.qNF);
-  qrlqMDFe.Caption := FormatFloat( '##0', FMDFe.tot.qMDFe);
+  qrlqCTe.Caption  := FormatFloat('##0', FMDFe.tot.qCTe);
+  qrlqCT.Caption   := FormatFloat('##0', FMDFe.tot.qCT);
+  qrlqNFe.Caption  := FormatFloat('##0', FMDFe.tot.qNFe);
+  qrlqNF.Caption   := FormatFloat('##0', FMDFe.tot.qNF);
+  qrlqMDFe.Caption := FormatFloat('##0', FMDFe.tot.qMDFe);
 
   // UnidMed = (uM3,uKG, uTON, uUNIDADE, uLITROS, uMMBTU);
   if FMDFe.tot.cUnid = uKG
-   then qrlPesoTotal.Caption := FormatFloat( '#,##0.###', FMDFe.tot.qCarga)
-   else qrlPesoTotal.Caption := FormatFloat( '#,##0.###', FMDFe.tot.qCarga * 1000);
+   then qrlPesoTotal.Caption := FormatFloat('#,##0.###', FMDFe.tot.qCarga)
+   else qrlPesoTotal.Caption := FormatFloat('#,##0.###', FMDFe.tot.qCarga * 1000);
 end;
 
 procedure TfqrDAMDFEQRRetrato.qrb_2_RodoBeforePrint(Sender: TQRCustomBand;
   var PrintBand: Boolean);
 var
- i: Integer;
+  i: Integer;
 begin
   inherited;
 
@@ -467,7 +468,7 @@ begin
 
   qrmObservacao.Lines.BeginUpdate;
   qrmObservacao.Lines.Clear;
-  qrmObservacao.Lines.Add(StringReplace( FMDFe.infAdic.infCpl, '&lt;BR&gt;', #13#10, [rfReplaceAll,rfIgnoreCase] ) );
+  qrmObservacao.Lines.Add(StringReplace(FMDFe.infAdic.infCpl, '&lt;BR&gt;', #13#10, [rfReplaceAll,rfIgnoreCase]));
   qrmObservacao.Lines.Text:=StringReplace(qrmObservacao.Lines.Text,';',#13,[rfReplaceAll]);
   qrmObservacao.Lines.EndUpdate;
 
@@ -534,7 +535,7 @@ end;
 
 procedure TfqrDAMDFEQRRetrato.Itens;
 var
- I, J, nItem: Integer;
+  I, J, nItem: Integer;
 begin
   cdsItens.Close;
   cdsItens.CreateDataSet;

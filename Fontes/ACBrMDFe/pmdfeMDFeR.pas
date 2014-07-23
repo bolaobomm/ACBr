@@ -57,7 +57,7 @@ type
   public
     constructor Create(AOwner: TMDFe);
     destructor Destroy; override;
-    function LerXml: boolean;
+    function LerXml: Boolean;
   published
     property Leitor: TLeitor read FLeitor write FLeitor;
     property MDFe: TMDFe     read FMDFe   write FMDFe;
@@ -79,10 +79,10 @@ begin
   inherited Destroy;
 end;
 
-function TMDFeR.LerXml: boolean;
+function TMDFeR.LerXml: Boolean;
 var
-  ok: boolean;
-  i, j, i01, i02, i03, i04, i05: integer;
+  ok: Boolean;
+  i, j, i01, i02, i03, i04, i05: Integer;
 begin
   (*
   I := 0;

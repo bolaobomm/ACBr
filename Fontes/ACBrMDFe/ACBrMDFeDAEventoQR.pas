@@ -57,26 +57,27 @@ type
 
   TfrmMDFeDAEventoQR = class(TForm)
     QRMDFeEvento: TQuickRep;
+
     procedure FormDestroy(Sender: TObject);
   private
 
   protected
-    //BarCode : TBarCode128c;
-    FACBrMDFe       : TACBrMDFe;
-    FMDFe           : TMDFe;
-    FEventoMDFe     : TInfEventoCollectionItem;
-    FLogo           : String;
-    FNumCopias      : Integer;
-    FSistema        : String;
-    FUsuario        : String;
-    FMostrarPreview : Boolean;
-    FMargemSuperior : Double;
-    FMargemInferior : Double;
-    FMargemEsquerda : Double;
-    FMargemDireita  : Double;
-    FImpressora     : String;
+    //BarCode: TBarCode128c;
+    FACBrMDFe: TACBrMDFe;
+    FMDFe: TMDFe;
+    FEventoMDFe: TInfEventoCollectionItem;
+    FLogo: String;
+    FNumCopias: Integer;
+    FSistema: String;
+    FUsuario: String;
+    FMostrarPreview: Boolean;
+    FMargemSuperior: Double;
+    FMargemInferior: Double;
+    FMargemEsquerda: Double;
+    FMargemDireita: Double;
+    FImpressora: String;
 
-    procedure SetBarCodeImage(ACode: string; QRImage: TQRImage);
+    procedure SetBarCodeImage(ACode: String; QRImage: TQRImage);
   public
     class procedure Imprimir(AEventoMDFe: TInfEventoCollectionItem;
                              ALogo: String = '';
@@ -114,19 +115,19 @@ var
 {$R *.dfm}
 
 class procedure TfrmMDFeDAEventoQR.Imprimir(AEventoMDFe: TInfEventoCollectionItem;
-                                        ALogo: String = '';
-                                        ANumCopias: Integer = 1;
-                                        ASistema: String = '';
-                                        AUsuario: String = '';
-                                        AMostrarPreview: Boolean = True;
-                                        AMargemSuperior: Double = 0.7;
-                                        AMargemInferior: Double = 0.7;
-                                        AMargemEsquerda: Double = 0.7;
-                                        AMargemDireita: Double = 0.7;
-                                        AImpressora: String = '';
-                                        AMDFe: TMDFe = nil);
+                                            ALogo: String = '';
+                                            ANumCopias: Integer = 1;
+                                            ASistema: String = '';
+                                            AUsuario: String = '';
+                                            AMostrarPreview: Boolean = True;
+                                            AMargemSuperior: Double = 0.7;
+                                            AMargemInferior: Double = 0.7;
+                                            AMargemEsquerda: Double = 0.7;
+                                            AMargemDireita: Double = 0.7;
+                                            AImpressora: String = '';
+                                            AMDFe: TMDFe = nil);
 begin
-  with Create ( nil ) do
+  with Create(nil) do
      try
         FEventoMDFe     := AEventoMDFe;
         FLogo           := ALogo;
@@ -196,23 +197,23 @@ begin
 end;
 
 class procedure TfrmMDFeDAEventoQR.SavePDF(AEventoMDFe: TInfEventoCollectionItem;
-                                       ALogo: String = '';
-                                       AFile: String = '';
-                                       ASistema: String = '';
-                                       AUsuario: String = '';
-                                       AMargemSuperior: Double = 0.7;
-                                       AMargemInferior: Double = 0.7;
-                                       AMargemEsquerda: Double = 0.7;
-                                       AMargemDireita: Double = 0.7;
-                                       AMDFe: TMDFe = nil);
+                                           ALogo: String = '';
+                                           AFile: String = '';
+                                           ASistema: String = '';
+                                           AUsuario: String = '';
+                                           AMargemSuperior: Double = 0.7;
+                                           AMargemInferior: Double = 0.7;
+                                           AMargemEsquerda: Double = 0.7;
+                                           AMargemDireita: Double = 0.7;
+                                           AMDFe: TMDFe = nil);
 {$IFDEF QReport_PDF}
  var
-  qf : TQRPDFDocumentFilter;
-  i  : Integer;
+  qf: TQRPDFDocumentFilter;
+  i: Integer;
 {$ENDIF}
 begin
 {$IFDEF QReport_PDF}
-  with Create ( nil ) do
+  with Create(nil) do
      try
         FEventoMDFe     := AEventoMDFe;
         FLogo           := ALogo;
@@ -230,7 +231,7 @@ begin
           begin
             if (Components[i] is TQRShape) and (TQRShape(Components[i]).Shape = qrsRoundRect) then
               begin
-                TQRShape(Components[i]).Shape := qrsRectangle;
+                TQRShape(Components[i]).Shape     := qrsRectangle;
                 TQRShape(Components[i]).Pen.Width := 1;
               end;
           end;
@@ -253,13 +254,13 @@ begin
 {$ENDIF}
 end;
 
-procedure TfrmMDFeDAEventoQR.SetBarCodeImage(ACode: string; QRImage: TQRImage);
+procedure TfrmMDFeDAEventoQR.SetBarCodeImage(ACode: String; QRImage: TQRImage);
 var
   b: TBarCode128c;
 begin
   b := TBarCode128c.Create;
   try
-    //      Width  := QRImage.Width;
+    // Width  := QRImage.Width;
     b.Code := ACode;
     b.PaintCodeToCanvas(ACode, QRImage.Canvas, QRImage.ClientRect);
   finally

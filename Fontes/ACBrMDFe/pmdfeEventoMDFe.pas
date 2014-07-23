@@ -40,11 +40,12 @@ unit pmdfeEventoMDFe;
 
 interface
 
-uses SysUtils, Classes,
-     {$IFNDEF VER130}
-     Variants,
-     {$ENDIF}
-     pcnAuxiliar, pcnConversao;
+uses
+  SysUtils, Classes,
+{$IFNDEF VER130}
+  Variants,
+{$ENDIF}
+  pcnAuxiliar, pcnConversao;
 
 type
   TInfEvento = class;

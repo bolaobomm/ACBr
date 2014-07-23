@@ -116,24 +116,24 @@ const
   DSC_TU          = 'Tonelada Útil';
 
 
-function TpEmitenteToStr(const t: TMDFeTpEmitente):string;
-function StrToTpEmitente(var ok: boolean; const s: string):TMDFeTpEmitente;
+function TpEmitenteToStr(const t: TMDFeTpEmitente): String;
+function StrToTpEmitente(var ok: Boolean; const s: String): TMDFeTpEmitente;
 
-function ModalToStr(const t: TMDFeModal):string;
-function StrToModal(var ok: boolean; const s: string):TMDFeModal;
+function ModalToStr(const t: TMDFeModal): String;
+function StrToModal(var ok: Boolean; const s: String): TMDFeModal;
 
 implementation
 
 // Tipo de Emitente*************************************************************
 
-function TpEmitenteToStr(const t: TMDFeTpEmitente):string;
+function TpEmitenteToStr(const t: TMDFeTpEmitente): String;
 begin
   result := EnumeradoToStr(t,
                            ['1', '2'],
                            [teTransportadora, teTranspCargaPropria]);
 end;
 
-function StrToTpEmitente(var ok: boolean; const s: string):TMDFeTpEmitente;
+function StrToTpEmitente(var ok: Boolean; const s: String): TMDFeTpEmitente;
 begin
   result := StrToEnumerado(ok, s,
                            ['1', '2'],
@@ -142,14 +142,14 @@ end;
 
 // Modal************************************************************************
 
-function ModalToStr(const t: TMDFeModal):string;
+function ModalToStr(const t: TMDFeModal): String;
 begin
   result := EnumeradoToStr(t,
                            ['1', '2', '3', '4'],
                            [moRodoviario, moAereo, moAquaviario, moFerroviario]);
 end;
 
-function StrToModal(var ok: boolean; const s: string):TMDFeModal;
+function StrToModal(var ok: Boolean; const s: String): TMDFeModal;
 begin
   result := StrToEnumerado(ok, s,
                            ['1', '2', '3', '4'],

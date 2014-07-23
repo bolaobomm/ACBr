@@ -30,7 +30,7 @@
 {*******************************************************************************
 |* Historico
 |*
-********************************************************************************}
+*******************************************************************************}
 
 {$I ACBr.inc}
 
@@ -212,7 +212,7 @@ type
   private
     procedure Itens;
   public
-    procedure ProtocoloMDFe(const sProtocolo: string);
+    procedure ProtocoloMDFe(const sProtocolo: String);
   end;
 
 implementation
@@ -224,14 +224,14 @@ uses
 {$R *.dfm}
 
 var
-  FProtocoloMDFe : string;
+  FProtocoloMDFe: String;
 
 procedure TfrmMDFeDAEventoQRRetrato.Itens;
 begin
  // Itens
 end;
 
-procedure TfrmMDFeDAEventoQRRetrato.ProtocoloMDFe(const sProtocolo: string);
+procedure TfrmMDFeDAEventoQRRetrato.ProtocoloMDFe(const sProtocolo: String);
 begin
   FProtocoloMDFe := sProtocolo;
 end;
@@ -242,7 +242,7 @@ begin
 
   Itens;
 
-  QRMDFeEvento.ReportTitle:='Evento: ' + FormatFloat( '000,000,000', FEventoMDFe.InfEvento.nSeqEvento );
+  QRMDFeEvento.ReportTitle := 'Evento: ' + FormatFloat('000,000,000', FEventoMDFe.InfEvento.nSeqEvento);
 
   QRMDFeEvento.Page.TopMargin    := FMargemSuperior * 100;
   QRMDFeEvento.Page.BottomMargin := FMargemInferior * 100;
@@ -289,9 +289,11 @@ begin
 
     qrlModelo.Caption  := FMDFe.ide.modelo;
     qrlSerie.Caption   := IntToStr(FMDFe.ide.serie);
-    qrlNumMDFe.Caption  := FormatFloat( '000,000,000', FMDFe.Ide.nMDF );
+    qrlNumMDFe.Caption := FormatFloat('000,000,000', FMDFe.Ide.nMDF);
     qrlEmissao.Caption := DFeUtil.FormatDateTime(DateTimeToStr(FMDFe.Ide.dhEmi));
+
     SetBarCodeImage(Copy(FMDFe.InfMDFe.Id, 5, 44), qriBarCode);
+
     qrlChave.Caption := MDFeUtil.FormatarChaveAcesso(Copy(FMDFe.InfMDFe.Id, 5, 44));
    end;
 end;
@@ -303,8 +305,8 @@ begin
   with FEventoMDFe do
     begin
       case InfEvento.tpEvento of
-       teCancelamento: qrlTituloEvento.Caption := 'CANCELAMENTO';
-       teEncerramento: qrlTituloEvento.Caption := 'ENCERRAMENTO';
+       teCancelamento:     qrlTituloEvento.Caption := 'CANCELAMENTO';
+       teEncerramento:     qrlTituloEvento.Caption := 'ENCERRAMENTO';
        teInclusaoCondutor: qrlTituloEvento.Caption := 'INCLUSÃO DE CONDUTOR';
       end;
 

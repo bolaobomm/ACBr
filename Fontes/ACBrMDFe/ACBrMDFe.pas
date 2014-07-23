@@ -63,7 +63,7 @@ type
   EACBrMDFeException = class(Exception);
 
   { Evento para gerar log das mensagens do Componente }
-  TACBrMDFeLog = procedure(const Mensagem : String) of object;
+  TACBrMDFeLog = procedure(const Mensagem: String) of object;
 
   TACBrMDFe = class(TComponent)
   private
@@ -78,16 +78,44 @@ type
     FOnGerarLog: TACBrMDFeLog;
 
   	procedure SetDAMDFe(const Value: TACBrMDFeDAMDFeClass);
-    procedure EnviaEmailThread(const sSmtpHost, sSmtpPort, sSmtpUser,
-      sSmtpPasswd, sFrom, sTo, sAssunto: String; sMensagem: TStrings;
-      SSL: Boolean; sCC, Anexos: TStrings; PedeConfirma, AguardarEnvio: Boolean;
-      NomeRemetente: String; TLS: Boolean; StreamMDFe: TStringStream;
-      NomeArq: String; HTML: Boolean = False);
-    procedure EnviarEmailNormal(const sSmtpHost, sSmtpPort, sSmtpUser,
-      sSmtpPasswd, sFrom, sTo, sAssunto: String; sMensagem: TStrings;
-      SSL: Boolean; sCC, Anexos: TStrings; PedeConfirma, AguardarEnvio: Boolean;
-      NomeRemetente: String; TLS: Boolean; StreamMDFe: TStringStream;
-      NomeArq: String; HTML: Boolean = False);
+
+    procedure EnviaEmailThread(const sSmtpHost,
+                               sSmtpPort,
+                               sSmtpUser,
+                               sSmtpPasswd,
+                               sFrom,
+                               sTo,
+                               sAssunto: String;
+                               sMensagem: TStrings;
+                               SSL: Boolean;
+                               sCC,
+                               Anexos: TStrings;
+                               PedeConfirma,
+                               AguardarEnvio: Boolean;
+                               NomeRemetente: String;
+                               TLS: Boolean;
+                               StreamMDFe: TStringStream;
+                               NomeArq: String;
+                               HTML: Boolean = False);
+
+    procedure EnviarEmailNormal(const sSmtpHost,
+                                sSmtpPort,
+                                sSmtpUser,
+                                sSmtpPasswd,
+                                sFrom,
+                                sTo,
+                                sAssunto: String;
+                                sMensagem: TStrings;
+                                SSL: Boolean;
+                                sCC,
+                                Anexos: TStrings;
+                                PedeConfirma,
+                                AguardarEnvio: Boolean;
+                                NomeRemetente: String;
+                                TLS: Boolean;
+                                StreamMDFe: TStringStream;
+                                NomeArq: String;
+                                HTML: Boolean = False);
   protected
     procedure Notification(AComponent: TComponent; Operation: TOperation); override;
   public
@@ -96,16 +124,17 @@ type
     function Enviar(ALote: Integer; Imprimir:Boolean = True): Boolean; overload;
     function Enviar(ALote: String; Imprimir: Boolean = True): Boolean; overload;
     function Consultar: Boolean;
-    function EnviarEventoMDFe(idLote : Integer): Boolean;
+    function EnviarEventoMDFe(idLote: Integer): Boolean;
 
     property WebServices: TWebServices read FWebServices write FWebServices;
     property Manifestos: TManifestos   read FManifestos  write FManifestos;
     property EventoMDFe: TEventoMDFe   read FEventoMDFe  write FEventoMDFe;
     property Status: TStatusACBrMDFe   read FStatus;
 
-    procedure SetStatus( const stNewStatus : TStatusACBrMDFe );
+    procedure SetStatus(const stNewStatus: TStatusACBrMDFe);
     procedure ImprimirEvento;
     procedure ImprimirEventoPDF;
+
     procedure EnviarEmailEvento(const sSmtpHost,
                                 sSmtpPort,
                                 sSmtpUser,
@@ -113,35 +142,35 @@ type
                                 sFrom,
                                 sTo,
                                 sAssunto: String;
-                                sMensagem : TStrings;
-                                SSL : Boolean;
+                                sMensagem: TStrings;
+                                SSL: Boolean;
                                 EnviaPDF: Boolean = true;
                                 sCC: TStrings = nil;
                                 Anexos:TStrings=nil;
                                 PedeConfirma: Boolean = False;
                                 AguardarEnvio: Boolean = False;
                                 NomeRemetente: String = '';
-                                TLS : Boolean = True);
+                                TLS: Boolean = True);
 
     procedure EnviaEmail(const sSmtpHost,
-                                  sSmtpPort,
-                                  sSmtpUser,
-                                  sSmtpPasswd,
-                                  sFrom,
-                                  sTo,
-                                  sAssunto: String;
-                                  sMensagem : TStrings;
-                                  SSL : Boolean;
-                                  sCC: TStrings = nil;
-                                  Anexos:TStrings=nil;
-                                  PedeConfirma: Boolean = False;
-                                  AguardarEnvio: Boolean = False;
-                                  NomeRemetente: String = '';
-                                  TLS : Boolean = True;
-                                  StreamMDFe : TStringStream = nil;
-                                  NomeArq : String = '';
-                                  UsarThread: Boolean = True;
-                                  HTML: Boolean = False);
+                         sSmtpPort,
+                         sSmtpUser,
+                         sSmtpPasswd,
+                         sFrom,
+                         sTo,
+                         sAssunto: String;
+                         sMensagem: TStrings;
+                         SSL: Boolean;
+                         sCC: TStrings = nil;
+                         Anexos:TStrings=nil;
+                         PedeConfirma: Boolean = False;
+                         AguardarEnvio: Boolean = False;
+                         NomeRemetente: String = '';
+                         TLS: Boolean = True;
+                         StreamMDFe: TStringStream = nil;
+                         NomeArq: String = '';
+                         UsarThread: Boolean = True;
+                         HTML: Boolean = False);
   published
     property Configuracoes: TConfiguracoes     read FConfiguracoes  write FConfiguracoes;
     property OnStatusChange: TNotifyEvent      read FOnStatusChange write FOnStatusChange;
@@ -158,14 +187,14 @@ procedure ACBrAboutDialog;
 var
  Msg: String;
 begin
-  Msg := 'Componente ACBrMDFe'+#10+
-         'Versão: '+ACBRMDFe_VERSAO+#10+#10+
-         'Automação Comercial Brasil'+#10+#10+
-         'http://acbr.sourceforge.net'+#10+#10+
-         'Projeto Cooperar - PCN'+#10+#10+
+  Msg := 'Componente ACBrMDFe' + #10 +
+         'Versão: ' + ACBRMDFe_VERSAO + #10 + #10 +
+         'Automação Comercial Brasil' + #10 + #10 +
+         'http://acbr.sourceforge.net' + #10 + #10 +
+         'Projeto Cooperar - PCN' + #10 + #10 +
          'http://www.projetocooperar.org/pcn/';
 
-  MessageDlg(Msg ,mtInformation ,[mbOk],0);
+  MessageDlg(Msg, mtInformation, [mbOk], 0);
 end;
 
 { TACBrMDFe }
@@ -174,12 +203,12 @@ constructor TACBrMDFe.Create(AOwner: TComponent);
 begin
   inherited Create(AOwner);
 
-  FConfiguracoes      := TConfiguracoes.Create( self );
+  FConfiguracoes      := TConfiguracoes.Create(self);
   FConfiguracoes.Name := 'Configuracoes';
 
-  {$IFDEF COMPILER6_UP}
-     FConfiguracoes.SetSubComponent( true ); { para gravar no DFM/XFM }
-  {$ENDIF}
+{$IFDEF COMPILER6_UP}
+  FConfiguracoes.SetSubComponent(true); { para gravar no DFM/XFM }
+{$ENDIF}
 
   FManifestos               := TManifestos.Create(Self, Manifesto);
   FManifestos.Configuracoes := FConfiguracoes;
@@ -189,10 +218,10 @@ begin
   if FConfiguracoes.WebServices.Tentativas <= 0
    then FConfiguracoes.WebServices.Tentativas := 5;
 
-  {$IFDEF ACBrMDFeOpenSSL}
+{$IFDEF ACBrMDFeOpenSSL}
   if FConfiguracoes.Geral.IniFinXMLSECAutomatico then
     MDFeUtil.InitXmlSec;
-  {$ENDIF}
+{$ENDIF}
 
   FOnGerarLog := nil;
 end;
@@ -204,10 +233,10 @@ begin
   FEventoMDFe.Free;
   FWebServices.Free;
 
-  {$IFDEF ACBrMDFeOpenSSL}
+{$IFDEF ACBrMDFeOpenSSL}
   if FConfiguracoes.Geral.IniFinXMLSECAutomatico then
     MDFeUtil.ShutDownXmlSec;
-  {$ENDIF}
+{$ENDIF}
 
   inherited;
 end;
@@ -244,9 +273,9 @@ begin
   end;
 end;
 
-procedure TACBrMDFe.SetStatus( const stNewStatus : TStatusACBrMDFe );
+procedure TACBrMDFe.SetStatus(const stNewStatus: TStatusACBrMDFe);
 begin
-  if ( stNewStatus <> FStatus ) then
+  if (stNewStatus <> FStatus) then
   begin
     FStatus := stNewStatus;
     if Assigned(fOnStatusChange) then
@@ -374,7 +403,7 @@ begin
     ThreadSMTP.smtp.Password := sSmtpPasswd;
 
     ThreadSMTP.smtp.TargetHost := sSmtpHost;
-    if not DFeUtil.EstaVazio( sSmtpPort ) then     // Usa default
+    if not DFeUtil.EstaVazio(sSmtpPort) then     // Usa default
        ThreadSMTP.smtp.TargetPort := sSmtpPort;
 
     ThreadSMTP.smtp.FullSSL := SSL;
@@ -383,7 +412,7 @@ begin
     if (TLS) then
       ThreadSMTP.smtp.StartTLS;
 
-    SetStatus( stMDFeEmail );
+    SetStatus(stMDFeEmail);
     ThreadSMTP.Resume; // inicia a thread
     if AguardarEnvio then
     begin
@@ -392,7 +421,7 @@ begin
         Application.ProcessMessages;
       until ThreadSMTP.Terminado;
     end;
-    SetStatus( stMDFeIdle );
+    SetStatus(stMDFeIdle);
  finally
     m.free;
  end;
@@ -411,12 +440,13 @@ var
   I: Integer;
   CorpoEmail: TStringList;
 begin
-  SetStatus( stMDFeEmail );
+  SetStatus(stMDFeEmail);
 
-  msg_lines := TStringList.Create;
+  msg_lines  := TStringList.Create;
   CorpoEmail := TStringList.Create;
-  smtp := TSMTPSend.Create;
-  m := TMimemess.create;
+  smtp       := TSMTPSend.Create;
+  m          := TMimemess.create;
+  
   try
     p := m.AddPartMultipart('mixed', nil);
     if sMensagem <> nil then
@@ -489,7 +519,7 @@ begin
     CorpoEmail.Free;
     smtp.Free;
     m.free;
-    SetStatus( stMDFeIdle );
+    SetStatus(stMDFeIdle);
   end;
 end;
 
@@ -501,49 +531,15 @@ procedure TACBrMDFe.EnviaEmail(const sSmtpHost, sSmtpPort, sSmtpUser,
 begin
   if UsarThread then
   begin
-    EnviaEmailThread(
-      sSmtpHost,
-      sSmtpPort,
-      sSmtpUser,
-      sSmtpPasswd,
-      sFrom,
-      sTo,
-      sAssunto,
-      sMensagem,
-      SSL,
-      sCC,
-      Anexos,
-      PedeConfirma,
-      AguardarEnvio,
-      NomeRemetente,
-      TLS,
-      StreamMDFe,
-      NomeArq,
-      HTML
-    );
+    EnviaEmailThread(sSmtpHost, sSmtpPort, sSmtpUser, sSmtpPasswd, sFrom, sTo,
+                     sAssunto, sMensagem, SSL, sCC, Anexos, PedeConfirma,
+                     AguardarEnvio, NomeRemetente, TLS, StreamMDFe, NomeArq, HTML);
   end
   else
   begin
-    EnviarEmailNormal(
-      sSmtpHost,
-      sSmtpPort,
-      sSmtpUser,
-      sSmtpPasswd,
-      sFrom,
-      sTo,
-      sAssunto,
-      sMensagem,
-      SSL,
-      sCC,
-      Anexos,
-      PedeConfirma,
-      AguardarEnvio,
-      NomeRemetente,
-      TLS,
-      StreamMDFe,
-      NomeArq,
-      HTML
-    );
+    EnviarEmailNormal(sSmtpHost, sSmtpPort, sSmtpUser, sSmtpPasswd, sFrom, sTo,
+                      sAssunto, sMensagem, SSL, sCC, Anexos, PedeConfirma,
+                      AguardarEnvio, NomeRemetente, TLS, StreamMDFe, NomeArq, HTML);
   end;
 end;
 
@@ -587,7 +583,6 @@ begin
     except
     end;
   end;
-  {**}
 
   Result := WebServices.EnvEvento.Executar;
   if not Result then
@@ -622,26 +617,14 @@ begin
         NomeArq := Copy(EventoMDFe.Evento[0].InfEvento.id, 09, 44) +
                    Copy(EventoMDFe.Evento[0].InfEvento.id, 03, 06) +
                    Copy(EventoMDFe.Evento[0].InfEvento.id, 53, 02);
-        NomeArq := PathWithDelim(DAMDFE.PathPDF)+NomeArq+'evento.pdf';
+        NomeArq := PathWithDelim(DAMDFE.PathPDF) + NomeArq + 'evento.pdf';
         AnexosEmail.Add(NomeArq);
       end;
     end;
 
-    EnviaEmail(sSmtpHost,
-                sSmtpPort,
-                sSmtpUser,
-                sSmtpPasswd,
-                sFrom,
-                sTo,
-                sAssunto,
-                sMensagem,
-                SSL,
-                sCC,
-                AnexosEmail,
-                PedeConfirma,
-                AguardarEnvio,
-                NomeRemetente,
-                TLS);
+    EnviaEmail(sSmtpHost, sSmtpPort, sSmtpUser, sSmtpPasswd, sFrom, sTo,
+               sAssunto, sMensagem, SSL, sCC, AnexosEmail, PedeConfirma,
+               AguardarEnvio, NomeRemetente, TLS);
   finally
     AnexosEmail.Free;
   end;
@@ -649,7 +632,7 @@ end;
 
 procedure TACBrMDFe.ImprimirEvento;
 begin
-  if not Assigned( DAMDFE ) then
+  if not Assigned(DAMDFE) then
      raise EACBrMDFeException.Create('Componente DAMDFE não associado.')
   else
      DAMDFE.ImprimirEVENTO(nil);
@@ -657,7 +640,7 @@ end;
 
 procedure TACBrMDFe.ImprimirEventoPDF;
 begin
-  if not Assigned( DAMDFE ) then
+  if not Assigned(DAMDFE) then
      raise EACBrMDFeException.Create('Componente DAMDFE não associado.')
   else
      DAMDFE.ImprimirEVENTOPDF(nil);

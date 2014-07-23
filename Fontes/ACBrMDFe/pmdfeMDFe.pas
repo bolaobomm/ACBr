@@ -49,7 +49,6 @@ uses
 
 type
 
-  // Relação dos Tipos
   TinfMDFe                     = class;
   TinfMunCarregaCollection     = class;
   TinfMunCarregaCollectionItem = class;
@@ -59,7 +58,8 @@ type
   Temit                        = class;
   TenderEmit                   = class;
 
-  Trodo                      = class; // Informações do modal Rodoviário
+  // Informações do modal Rodoviário
+  Trodo                      = class;
   Tprop                      = class;
   TveicTracao                = class;
   TcondutorCollection        = class;
@@ -70,9 +70,11 @@ type
   TdispCollection            = class;
   TdispCollectionItem        = class;
 
-  Taereo = class; // Informações do modal Aéreo
+  // Informações do modal Aéreo
+  Taereo = class;
 
-  Taquav                           = class; // Informações do modal Aquaviário
+  // Informações do modal Aquaviário
+  Taquav                           = class;
   TinfTermCarregCollection         = class;
   TinfTermCarregCollectionItem     = class;
   TinfTermDescarregCollection      = class;
@@ -82,7 +84,8 @@ type
   TinfUnidCargaVaziaCollection     = class;
   TinfUnidCargaVaziaCollectionItem = class;
 
-  Tferrov            = class; // Informações do modal Ferroviário
+  // Informações do modal Ferroviário
+  Tferrov            = class;
   TvagCollection     = class;
   TvagCollectionItem = class;
 
@@ -127,7 +130,6 @@ type
 
   TMDFe = class;
 
-  // Definição dos Tipos
   TinfMDFe = class(TPersistent)
   private
     FID: String;
@@ -272,7 +274,7 @@ type
     FRNTRC: String;
     FCIOT: String;
     FveicTracao: TveicTracao;
-    FveicReboque : TveicReboqueCollection;
+    FveicReboque: TveicReboqueCollection;
     FvalePed: TvalePed;
     FcodAgPorto: String;
 
@@ -668,8 +670,6 @@ type
     property infMDFeTransp: TinfMDFeTranspCollection read FinfMDFeTransp write SetinfMDFeTransp;
   end;
 
-////////////////////////////////////////////////////////////////////////////////
-
   TinfCTeCollection = class(TCollection)
   private
     function GetItem(Index: Integer): TinfCTeCollectionItem;
@@ -705,8 +705,6 @@ type
     function Add: TinfUnidTranspCollectionItem;
     property Items[Index: Integer]: TinfUnidTranspCollectionItem read GetItem write SetItem; default;
   end;
-
-////////////////////////////////////////////////////////////////////////////////
 
   TinfUnidTranspCollectionItem = class(TCollectionItem)
   private
@@ -797,8 +795,6 @@ type
     property nLacre: String read FnLacre write FnLacre;
   end;
 
-////////////////////////////////////////////////////////////////////////////////
-
   TinfCTCollection = class(TCollection)
   private
     function GetItem(Index: Integer): TinfCTCollectionItem;
@@ -841,8 +837,6 @@ type
     property Items[Index: Integer]: TinfUnidTranspCollectionItem read GetItem write SetItem; default;
   end;
 
-////////////////////////////////////////////////////////////////////////////////
-
   TinfNFeCollection = class(TCollection)
   private
     function GetItem(Index: Integer): TinfNFeCollectionItem;
@@ -878,8 +872,6 @@ type
     function Add: TinfUnidTranspCollectionItem;
     property Items[Index: Integer]: TinfUnidTranspCollectionItem read GetItem write SetItem; default;
   end;
-
-////////////////////////////////////////////////////////////////////////////////
 
   TinfNFCollection = class(TCollection)
   private
@@ -927,8 +919,6 @@ type
     property Items[Index: Integer]: TinfUnidTranspCollectionItem read GetItem write SetItem; default;
   end;
 
-////////////////////////////////////////////////////////////////////////////////
-
   TinfMDFeTranspCollection = class(TCollection)
   private
     function GetItem(Index: Integer): TinfMDFeTranspCollectionItem;
@@ -962,8 +952,6 @@ type
     function Add: TinfUnidTranspCollectionItem;
     property Items[Index: Integer]: TinfUnidTranspCollectionItem read GetItem write SetItem; default;
   end;
-
-////////////////////////////////////////////////////////////////////////////////
 
   Ttot = class(TPersistent)
   private

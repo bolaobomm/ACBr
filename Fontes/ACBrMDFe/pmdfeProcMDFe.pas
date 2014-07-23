@@ -51,35 +51,35 @@ type
   TProcMDFe = class(TPersistent)
   private
     FGerador: TGerador;
-    FPathMDFe: string;
-    FPathRetConsReciMDFe: string;
-    FPathRetConsSitMDFe: string;
+    FPathMDFe: String;
+    FPathRetConsReciMDFe: String;
+    FPathRetConsSitMDFe: String;
     FtpAmb: TpcnTipoAmbiente;
-    FverAplic: string;
-    FchMDFe: string;
+    FverAplic: String;
+    FchMDFe: String;
     FdhRecbto: TDateTime;
-    FnProt: string;
-    FdigVal: string;
-    FcStat: integer;
-    FxMotivo: string;
+    FnProt: String;
+    FdigVal: String;
+    FcStat: Integer;
+    FxMotivo: String;
   public
     constructor Create;
     destructor Destroy; override;
     function GerarXML: boolean;
-    function ObterNomeArquivo(const PadraoNome: TPcnPadraoNomeProcMDFe = tpnPrivado): string;
+    function ObterNomeArquivo(const PadraoNome: TPcnPadraoNomeProcMDFe = tpnPrivado): String;
   published
     property Gerador: TGerador           read FGerador             write FGerador;
-    property PathMDFe: string            read FPathMDFe            write FPathMDFe;
-    property PathRetConsReciMDFe: string read FPathRetConsReciMDFe write FPathRetConsReciMDFe;
-    property PathRetConsSitMDFe: string  read FPathRetConsSitMDFe  write FPathRetConsSitMDFe;
+    property PathMDFe: String            read FPathMDFe            write FPathMDFe;
+    property PathRetConsReciMDFe: String read FPathRetConsReciMDFe write FPathRetConsReciMDFe;
+    property PathRetConsSitMDFe: String  read FPathRetConsSitMDFe  write FPathRetConsSitMDFe;
     property tpAmb: TpcnTipoAmbiente     read FtpAmb               write FtpAmb;
-    property verAplic: string            read FverAplic            write FverAplic;
-    property chMDFe: string              read FchMDFe              write FchMDFe;
+    property verAplic: String            read FverAplic            write FverAplic;
+    property chMDFe: String              read FchMDFe              write FchMDFe;
     property dhRecbto: TDateTime         read FdhRecbto            write FdhRecbto;
-    property nProt: string               read FnProt               write FnProt;
-    property digVal: string              read FdigVal              write FdigVal;
-    property cStat: integer              read FcStat               write FcStat;
-    property xMotivo: string             read FxMotivo             write FxMotivo;
+    property nProt: String               read FnProt               write FnProt;
+    property digVal: String              read FdigVal              write FdigVal;
+    property cStat: Integer              read FcStat               write FcStat;
+    property xMotivo: String             read FxMotivo             write FxMotivo;
   end;
 
 implementation
@@ -97,9 +97,9 @@ begin
   inherited;
 end;
 
-function TProcMDFe.ObterNomeArquivo(const PadraoNome: TPcnPadraoNomeProcMDFe = tpnPrivado): string;
+function TProcMDFe.ObterNomeArquivo(const PadraoNome: TPcnPadraoNomeProcMDFe = tpnPrivado): String;
 var
-  s: string;
+  s: String;
 begin
   Result := FchMDFe + '-procMDFe.xml';
   if PadraoNome = tpnPublico then
@@ -111,20 +111,20 @@ end;
 
 function TProcMDFe.GerarXML: boolean;
 
-function PreencherTAG(const TAG: string; Texto: string): string;
+function PreencherTAG(const TAG: String; Texto: String): String;
 begin
   result := '<' + TAG + '>' + RetornarConteudoEntre(Texto, '<' + TAG + '>', '</' + TAG + '>') + '</' + TAG + '>';
 end;
 
 var
-  XMLMDFe: TstringList;
-  XMLinfProt: TstringList;
-  XMLinfProt2: TstringList;
-  wCstat: string;
-  xProtMDFe: string;
+  XMLMDFe: TStringList;
+  XMLinfProt: TStringList;
+  XMLinfProt2: TStringList;
+  wCstat: String;
+  xProtMDFe: String;
   LocLeitor: TLeitor;
-  i : Integer;
-  ProtLido : Boolean; // Protocolo lido do Arquivo
+  i: Integer;
+  ProtLido: Boolean; // Protocolo lido do Arquivo
 begin
   ProtLido := False;
   xProtMDFe := '';

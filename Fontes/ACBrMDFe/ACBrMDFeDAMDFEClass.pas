@@ -45,10 +45,10 @@ uses
   pmdfeMDFe, pcnConversao;
 
 type
-  TACBrMDFeDAMDFeClass = class( TComponent )
+  TACBrMDFeDAMDFeClass = class(TComponent)
    private
     procedure SetMDFe(const Value: TComponent);
-    procedure ErroAbstract( NomeProcedure : String );
+    procedure ErroAbstract(NomeProcedure: String);
     function GetPathArquivos: String;
   protected
     FACBrMDFe: TComponent;
@@ -81,10 +81,10 @@ type
   public
     constructor Create(AOwner: TComponent); override;
     destructor Destroy; override;
-    procedure ImprimirDAMDFe(MDFe : TMDFe = nil); virtual;
-    procedure ImprimirDAMDFePDF(MDFe : TMDFe = nil); virtual;
-    procedure ImprimirEVENTO(MDFe : TMDFe = nil); virtual;
-    procedure ImprimirEVENTOPDF(MDFe : TMDFe = nil); virtual;
+    procedure ImprimirDAMDFe(MDFe: TMDFe = nil); virtual;
+    procedure ImprimirDAMDFePDF(MDFe: TMDFe = nil); virtual;
+    procedure ImprimirEVENTO(MDFe: TMDFe = nil); virtual;
+    procedure ImprimirEVENTOPDF(MDFe: TMDFe = nil); virtual;
   published
     property ACBrMDFe: TComponent           read FACBrMDFe               write SetMDFe;
     property Logo: String                   read FLogo                   write FLogo;
@@ -120,7 +120,7 @@ uses
 
 constructor TACBrMDFeDAMDFeClass.Create(AOwner: TComponent);
 begin
-  inherited create( AOwner );
+  inherited create(AOwner);
 
   FACBrMDFe     := nil;
   FLogo         := '';
@@ -157,12 +157,12 @@ begin
   inherited Destroy;
 end;
 
-procedure TACBrMDFeDAMDFeClass.ImprimirDAMDFe(MDFe : TMDFe = nil);
+procedure TACBrMDFeDAMDFeClass.ImprimirDAMDFe(MDFe: TMDFe = nil);
 begin
   ErroAbstract('Imprimir');
 end;
 
-procedure TACBrMDFeDAMDFeClass.ImprimirDAMDFePDF(MDFe : TMDFe = nil);
+procedure TACBrMDFeDAMDFeClass.ImprimirDAMDFePDF(MDFe: TMDFe = nil);
 begin
   ErroAbstract('ImprimirPDF');
 end;
@@ -177,7 +177,8 @@ begin
 end;
 
 procedure TACBrMDFeDAMDFeClass.SetMDFe(const Value: TComponent);
-  Var OldValue : TACBrMDFe;
+var
+  OldValue: TACBrMDFe;
 begin
   if Value <> FACBrMDFe then
   begin
@@ -205,7 +206,7 @@ end;
 
 procedure TACBrMDFeDAMDFeClass.ErroAbstract(NomeProcedure: String);
 begin
-  raise Exception.Create( NomeProcedure );
+  raise Exception.Create(NomeProcedure);
 end;
 
 function TACBrMDFeDAMDFeClass.GetPathArquivos: String;

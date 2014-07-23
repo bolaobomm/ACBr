@@ -54,7 +54,7 @@ type
   public
     constructor Create;
     destructor Destroy; override;
-    function GerarXML: boolean;
+    function GerarXML: Boolean;
     function ObterNomeArquivo: String;
   published
     property Gerador: TGerador       read FGerador write FGerador;
@@ -82,7 +82,7 @@ begin
   Result := SomenteNumeros(FnRec) + '-ped-rec.xml';
 end;
 
-function TConsReciMDFe.GerarXML: boolean;
+function TConsReciMDFe.GerarXML: Boolean;
 begin
   Gerador.ArquivoFormatoXML := '';
 

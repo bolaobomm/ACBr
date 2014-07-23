@@ -47,9 +47,9 @@ uses
 
 type
 
-  TRetEventoMDFeCollection = class;
+  TRetEventoMDFeCollection     = class;
   TRetEventoMDFeCollectionItem = class;
-  TRetConsSitMDFe = class;
+  TRetConsSitMDFe              = class;
 
   TRetEventoMDFeCollection = class(TCollection)
   private
@@ -75,25 +75,25 @@ type
   private
     FLeitor: TLeitor;
     FtpAmb: TpcnTipoAmbiente;
-    FverAplic: string;
+    FverAplic: String;
     FcStat: Integer;
-    FxMotivo: string;
-    FcUF: integer;
-    FchMDFe: string;
+    FxMotivo: String;
+    FcUF: Integer;
+    FchMDFe: String;
     FprotMDFe: TProcMDFe;
     FprocEventoMDFe: TRetEventoMDFeCollection;
   public
     constructor Create;
     destructor Destroy; override;
-    function LerXml: boolean;
+    function LerXml: Boolean;
   published
     property Leitor: TLeitor                          read FLeitor         write FLeitor;
     property tpAmb: TpcnTipoAmbiente                  read FtpAmb          write FtpAmb;
-    property verAplic: string                         read FverAplic       write FverAplic;
+    property verAplic: String                         read FverAplic       write FverAplic;
     property cStat: Integer                           read FcStat          write FcStat;
-    property xMotivo: string                          read FxMotivo        write FxMotivo;
-    property cUF: integer                             read FcUF            write FcUF;
-    property chMDFe: string                           read FchMDFe         write FchMDFe;
+    property xMotivo: String                          read FxMotivo        write FxMotivo;
+    property cUF: Integer                             read FcUF            write FcUF;
+    property chMDFe: String                           read FchMDFe         write FchMDFe;
     property protMDFe: TProcMDFe                      read FprotMDFe       write FprotMDFe;
     property procEventoMDFe: TRetEventoMDFeCollection read FprocEventoMDFe write FprocEventoMDFe;
   end;
@@ -120,9 +120,10 @@ end;
 function TRetConsSitMDFe.LerXml: boolean;
 var
   ok: boolean;
-  i: integer;
+  i: Integer;
 begin
   Result := False;
+  
   try
     if leitor.rExtrai(1, 'retConsSitMDFe') <> '' then
     begin

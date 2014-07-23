@@ -62,17 +62,17 @@ type
   public
     procedure Edit; override;
     function GetAttributes: TPropertyAttributes; override;
-    function GetValue: string; override;
+    function GetValue: String; override;
   end;
 
-  THRWEBSERVICEUFProperty = class( TStringProperty )
+  THRWEBSERVICEUFProperty = class(TStringProperty)
   public
     function GetAttributes: TPropertyAttributes; override;
-    procedure GetValues( Proc : TGetStrProc); override;
+    procedure GetValues(Proc: TGetStrProc); override;
   end;
 
   { Editor de Proriedades de Componente para chamar OpenDialog }
-  TACBrMDFeDirProperty = class( TStringProperty )
+  TACBrMDFeDirProperty = class(TStringProperty)
   public
     procedure Edit; override;
     function GetAttributes: TPropertyAttributes; override;
@@ -140,7 +140,7 @@ begin
   Result := [paDialog, paReadOnly];
 end;
 
-function TACBrAboutDialogProperty.GetValue: string;
+function TACBrAboutDialogProperty.GetValue: String;
 begin
   Result := 'Versão: ' + ACBRMDFe_VERSAO;
 end;
@@ -154,7 +154,7 @@ end;
 
 procedure THRWEBSERVICEUFProperty.GetValues(Proc: TGetStrProc);
 var
- i : integer;
+ i: integer;
 begin
   inherited;
   for i:= 0 to High(NFeUF) do
@@ -165,16 +165,16 @@ end;
 
 procedure TACBrMDFeDirProperty.Edit;
 Var
-{$IFNDEF VisualCLX} Dir : String; {$ELSE} Dir : WideString; {$ENDIF}
+{$IFNDEF VisualCLX} Dir: String; {$ELSE} Dir: WideString; {$ENDIF}
 begin
   {$IFNDEF VisualCLX}
   Dir := GetValue;
   if SelectDirectory(Dir,[],0) then
-     SetValue( Dir );
+     SetValue(Dir);
   {$ELSE}
   Dir := '';
-  if SelectDirectory('Selecione o Diretório','',Dir) then
-     SetValue( Dir );
+  if SelectDirectory('Selecione o Diretório', '', Dir) then
+     SetValue(Dir);
   {$ENDIF}
 end;
 

@@ -136,14 +136,14 @@ type
     FPathSchemas: String;
     FVersaoDF: TMDFeVersao;
     FExibirErroSchema: Boolean;
-    FFormatoAlerta: string;
+    FFormatoAlerta: String;
     {$IFDEF ACBrMDFeOpenSSL}
-    FIniFinXMLSECAutomatico: boolean;
+    FIniFinXMLSECAutomatico: Boolean;
     {$ENDIF}
 
     procedure SetFormaEmissao(AValue: TpcnTipoEmissao);
     function GetPathSalvar: String;
-    function GetFormatoAlerta: string;
+    function GetFormatoAlerta: String;
   public
     constructor Create(AOwner: TComponent); override;
     function Save(AXMLName: String; AXMLFile: WideString; aPath: String = ''): Boolean;
@@ -156,7 +156,7 @@ type
     property PathSchemas: String             read FPathSchemas            write FPathSchemas;
     property VersaoDF: TMDFeVersao           read FVersaoDF               write FVersaoDF              default ve100;
     property ExibirErroSchema: Boolean       read FExibirErroSchema       write FExibirErroSchema;
-    property FormatoAlerta: string           read GetFormatoAlerta        write FFormatoAlerta;
+    property FormatoAlerta: String           read GetFormatoAlerta        write FFormatoAlerta;
     {$IFDEF ACBrMDFeOpenSSL}
     property IniFinXMLSECAutomatico: Boolean read FIniFinXMLSECAutomatico write FIniFinXMLSECAutomatico;
     {$ENDIF}
@@ -173,8 +173,8 @@ type
     FPathEvento: String;
   public
     constructor Create(AOwner: TComponent); override;
-    function GetPathMDFe(Data : TDateTime = 0): String;
-    function GetPathEvento(tipoEvento : TpcnTpEvento; Data : TDateTime = 0): String;
+    function GetPathMDFe(Data: TDateTime = 0): String;
+    function GetPathEvento(tipoEvento: TpcnTpEvento; Data: TDateTime = 0): String;
   published
     property Salvar: Boolean           read FSalvar          write FSalvar          default False;
     property PastaMensal: Boolean      read FMensal          write FMensal          default False;
@@ -211,31 +211,31 @@ uses
 
 constructor TConfiguracoes.Create(AOwner: TComponent);
 begin
-  inherited Create( AOwner );
+  inherited Create(AOwner);
 
   FGeral      := TGeralConf.Create(Self);
   FGeral.Name := 'GeralConf';
-  {$IFDEF COMPILER6_UP}
-   FGeral.SetSubComponent( true );{ para gravar no DFM/XFM }
-  {$ENDIF}
+{$IFDEF COMPILER6_UP}
+  FGeral.SetSubComponent(true); { para gravar no DFM/XFM }
+{$ENDIF}
 
   FWebServices      := TWebServicesConf.Create(self);
   FWebServices.Name := 'WebServicesConf';
-  {$IFDEF COMPILER6_UP}
-   FWebServices.SetSubComponent( true );{ para gravar no DFM/XFM }
-  {$ENDIF}
+{$IFDEF COMPILER6_UP}
+  FWebServices.SetSubComponent(true); { para gravar no DFM/XFM }
+{$ENDIF}
 
   FCertificados      := TCertificadosConf.Create(self);
   FCertificados.Name := 'CertificadosConf';
-  {$IFDEF COMPILER6_UP}
-   FCertificados.SetSubComponent( true );{ para gravar no DFM/XFM }
-  {$ENDIF}
+{$IFDEF COMPILER6_UP}
+  FCertificados.SetSubComponent(true); { para gravar no DFM/XFM }
+{$ENDIF}
 
   FArquivos      := TArquivosConf.Create(self);
   FArquivos.Name := 'ArquivosConf';
-  {$IFDEF COMPILER6_UP}
-   FArquivos.SetSubComponent( true );{ para gravar no DFM/XFM }
-  {$ENDIF}
+{$IFDEF COMPILER6_UP}
+  FArquivos.SetSubComponent(true); { para gravar no DFM/XFM }
+{$ENDIF}
 end;
 
 destructor TConfiguracoes.Destroy;
@@ -251,7 +251,7 @@ end;
 
 constructor TGeralConf.Create(AOwner: TComponent);
 begin
-  Inherited Create( AOwner );
+  Inherited Create(AOwner);
 
   FFormaEmissao          := teNormal;
   FFormaEmissaoCodigo    := StrToInt(TpEmisToStr(FFormaEmissao));
@@ -270,19 +270,19 @@ begin
   // %MSG%       : Representa a mensagem de alerta
   // %DESCRICAO% : Representa a Descrição da TAG
 
-  {$IFDEF ACBrMDFeOpenSSL}
+{$IFDEF ACBrMDFeOpenSSL}
   FIniFinXMLSECAutomatico := True;
-  {$ENDIF}
+{$ENDIF}
 end;
 
-function TGeralConf.GetFormatoAlerta: string;
+function TGeralConf.GetFormatoAlerta: String;
 begin
   if (FFormatoAlerta = '') or (
      (pos('%TAGNIVEL%',FFormatoAlerta) <= 0) and
      (pos('%TAG%',FFormatoAlerta) <= 0) and
      (pos('%ID%',FFormatoAlerta) <= 0) and
      (pos('%MSG%',FFormatoAlerta) <= 0) and
-     (pos('%DESCRICAO%',FFormatoAlerta) <= 0) )then
+     (pos('%DESCRICAO%',FFormatoAlerta) <= 0))then
      Result := 'TAG:%TAGNIVEL% ID:%ID%/%TAG%(%DESCRICAO%) - %MSG%.'
   else Result := FFormatoAlerta;
 end;
@@ -294,7 +294,7 @@ begin
   else
     Result := FPathSalvar;
 
-  Result := PathWithDelim( Trim(Result) );
+  Result := PathWithDelim(Trim(Result));
 end;
 
 function TGeralConf.Save(AXMLName: String; AXMLFile: WideString; aPath: String = ''): Boolean;
@@ -319,10 +319,10 @@ begin
        end;
 
       vSalvar.Text := AXMLFile;
-      if not DirectoryExists( aPath ) then
-         ForceDirectories( aPath );
+      if not DirectoryExists(aPath) then
+         ForceDirectories(aPath);
 
-      vSalvar.SaveToFile( aPath + AXMLName);
+      vSalvar.SaveToFile(aPath + AXMLName);
       Result := True;
     except on E: Exception do
       raise Exception.Create('Erro ao salvar .'+E.Message);
@@ -342,7 +342,7 @@ end;
 
 constructor TWebServicesConf.Create(AOwner: TComponent);
 begin
-  Inherited Create( AOwner );
+  Inherited Create(AOwner);
 
   FUF             := NFeUF[24];
   FUFCodigo       := NFeUFCodigo[24];
@@ -416,7 +416,7 @@ var
 begin
   CoInitialize(nil); // PERMITE O USO DE THREAD
 
-  if DFeUtil.EstaVazio( FNumeroSerie ) then
+  if DFeUtil.EstaVazio(FNumeroSerie) then
     raise Exception.Create('Número de Série do Certificado Digital não especificado !');
 
   Result := nil;
@@ -463,10 +463,10 @@ begin
                raise Exception.Create('Erro ao criar a chave do CSP.');
 
             SigKey := dsigKey as IXMLDSigKeyEx;
-            SigKey.getCSPHandle( hCryptProvider );
+            SigKey.getCSPHandle(hCryptProvider);
 
             try
-              CryptSetProvParam( hCryptProvider , PP_SIGNATURE_PIN, LPBYTE(FSenhaCert), 0 );
+              CryptSetProvParam(hCryptProvider, PP_SIGNATURE_PIN, LPBYTE(FSenhaCert), 0);
             finally
               CryptReleaseContext(hCryptProvider, 0);
             end;
@@ -478,8 +478,8 @@ begin
          end;
        end;
 
-      Result    := Cert;
-      FDataVenc := Cert.ValidToDate;
+      Result       := Cert;
+      FDataVenc    := Cert.ValidToDate;
       FSubjectName := Cert.SubjectName;
 
       for J := 1 to Cert.Extensions.Count do
@@ -488,7 +488,7 @@ begin
          Propriedades := Extension.EncodedData.Format(True);
          if (Pos('2.16.76.1.3.3', Propriedades) > 0) then
           begin
-            Lista      := TStringList.Create;
+            Lista := TStringList.Create;
       			try
               Lista.Text := Propriedades;
               for K := 0 to Lista.Count-1 do
@@ -520,12 +520,12 @@ end;
 
 function TCertificadosConf.GetNumeroSerie: AnsiString;
 begin
-  Result := Trim(UpperCase(StringReplace(FNumeroSerie,' ','',[rfReplaceAll] )));
+  Result := Trim(UpperCase(StringReplace(FNumeroSerie,' ','',[rfReplaceAll])));
 end;
 
 procedure TCertificadosConf.SetNumeroSerie(const Value: AnsiString);
 begin
-  FNumeroSerie := Trim(UpperCase(StringReplace(Value,' ','',[rfReplaceAll] )));
+  FNumeroSerie := Trim(UpperCase(StringReplace(Value,' ','',[rfReplaceAll])));
 end;
 
 function TCertificadosConf.SelecionarCertificado: AnsiString;
@@ -541,7 +541,7 @@ begin
   Store.Open(CAPICOM_CURRENT_USER_STORE, CAPICOM_STORE_NAME, CAPICOM_STORE_OPEN_READ_ONLY);
 
   Certs  := Store.Certificates as ICertificates2;
-  Certs2 := Certs.Select('Certificado(s) Digital(is) disponível(is)', 'Selecione o Certificado Digital para uso no aplicativo', false);
+  Certs2 := Certs.Select('Certificado(s) Digital(is) disponível(is)', 'Selecione o Certificado Digital para uso no aplicativo', False);
 
   if not(Certs2.Count = 0) then
   begin
@@ -600,13 +600,13 @@ begin
   inherited;
 end;
 
-function TArquivosConf.GetPathMDFe(Data : TDateTime = 0): String;
+function TArquivosConf.GetPathMDFe(Data: TDateTime = 0): String;
 var
   wDia, wMes, wAno: Word;
   Dir: String;
 begin
   if DFeUtil.EstaVazio(FPathMDFe) then
-     Dir := TConfiguracoes( Self.Owner ).Geral.PathSalvar
+     Dir := TConfiguracoes(Self.Owner).Geral.PathSalvar
   else
      Dir := FPathMDFe;
 
@@ -622,7 +622,7 @@ begin
   if FLiteral then
    begin
      if copy(Dir,length(Dir)-2,3) <> 'MDFe' then
-        Dir := PathWithDelim(Dir)+'MDFe';
+        Dir := PathWithDelim(Dir) + 'MDFe';
    end;
 
   if not DirectoryExists(Dir) then
@@ -631,13 +631,13 @@ begin
   Result := Dir;
 end;
 
-function TArquivosConf.GetPathEvento(tipoEvento: TpcnTpEvento; Data : TDateTime = 0): String;
+function TArquivosConf.GetPathEvento(tipoEvento: TpcnTpEvento; Data: TDateTime = 0): String;
 var
   wDia, wMes, wAno: Word;
   Dir: String;
 begin
   if DFeUtil.EstaVazio(FPathEvento) then
-     Dir := TConfiguracoes( Self.Owner ).Geral.PathSalvar
+     Dir := TConfiguracoes(Self.Owner).Geral.PathSalvar
   else
      Dir := FPathEvento;
 
@@ -653,13 +653,13 @@ begin
   if FLiteral then
    begin
      if copy(Dir,length(Dir)-2,3) <> 'Evento' then
-        Dir := PathWithDelim(Dir)+'Evento';
+        Dir := PathWithDelim(Dir) + 'Evento';
    end;
 
   case tipoEvento of
-    teEncerramento    : Dir := PathWithDelim(Dir)+'Encerramento';
-    teCancelamento    : Dir := PathWithDelim(Dir)+'Cancelamento';
-    teInclusaoCondutor: Dir := PathWithDelim(Dir)+'IncCondutor';
+    teEncerramento    : Dir := PathWithDelim(Dir) + 'Encerramento';
+    teCancelamento    : Dir := PathWithDelim(Dir) + 'Cancelamento';
+    teInclusaoCondutor: Dir := PathWithDelim(Dir) + 'IncCondutor';
   end;
 
   if not DirectoryExists(Dir) then

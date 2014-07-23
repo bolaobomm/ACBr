@@ -62,12 +62,12 @@ const
 {$ENDIF}
 {$IFNDEF ACBrMDFeOpenSSL}
 var
-  CertStore    : IStore3;
-  CertStoreMem : IStore3;
-  PrivateKey   : IPrivateKey;
-  Certs        : ICertificates2;
-  Cert         : ICertificate2;
-  NumCertCarregado : String;
+  CertStore: IStore3;
+  CertStoreMem: IStore3;
+  PrivateKey: IPrivateKey;
+  Certs: ICertificates2;
+  Cert: ICertificate2;
+  NumCertCarregado: String;
 {$ENDIF}
 
 type
@@ -95,7 +95,7 @@ type
 {$ENDIF}
     class function GetURL(const AUF, AAmbiente, FormaEmissao: Integer; ALayOut: TLayOut): WideString;
     class function Valida(const AXML: AnsiString; var AMsg: AnsiString; const APathSchemas: string = ''): Boolean;
-    class function FormatarChaveAcesso(AValue : String; Mascara: Boolean = False ): String;
+    class function FormatarChaveAcesso(AValue: String; Mascara: Boolean = False): String;
     class function FormatarNumMDFe(const AValue: Integer): string;
     class function FormatarValor(mask: TpcteMask; const AValue: real): string;
     class function GerarChaveContingencia(FMDFe:TMDFe): String;
@@ -106,8 +106,8 @@ type
 {$ELSE}
     class function Assinar(const AXML: AnsiString; Certificado: ICertificate2; out AXMLAssinado, FMensagem: AnsiString): Boolean;
 {$ENDIF}
-    class function UFtoCUF(UF : String): Integer;
-    class function IdentificaTipoSchema(Const AXML: AnsiString; var I: Integer): integer;
+    class function UFtoCUF(UF: String): Integer;
+    class function IdentificaTipoSchema(Const AXML: AnsiString; var I: Integer): Integer;
   end;
 
 implementation
@@ -121,8 +121,8 @@ uses
   Sysutils, Variants, ACBrUtil, ACBrDFeUtil, pcnAuxiliar;
 
 { MDFeUtil }
-{$IFDEF ACBrMDFeOpenSSL}
 
+{$IFDEF ACBrMDFeOpenSSL}
 class procedure MDFeUtil.InitXmlSec;
 begin
   { Init libxml and libxslt libraries }
@@ -308,7 +308,7 @@ begin
   result := FormatFloat(TpMaskToStrText(mask), AValue);
 end;
 
-class function MDFeUtil.FormatarChaveAcesso(AValue: String; Mascara: Boolean = False ): String;
+class function MDFeUtil.FormatarChaveAcesso(AValue: String; Mascara: Boolean = False): String;
 begin
   AValue := DFeUtil.LimpaNumero(AValue);
   if Mascara
@@ -330,7 +330,6 @@ begin
 end;
 
 {$IFDEF ACBrMDFeOpenSSL}
-
 function ValidaLibXML(const AXML: AnsiString;
   var AMsg: AnsiString; const APathSchemas: string = ''): Boolean;
 var
@@ -452,68 +451,68 @@ var
 begin
   Tipo := 0;
 
-  if pos( '<aereo>', XML ) <> 0
+  if pos('<aereo>', XML) <> 0
    then begin
     Tipo := 1;
-    AXML := SeparaDados( XML, 'aereo' );
+    AXML := SeparaDados(XML, 'aereo');
     AXML := '<aereo xmlns="http://www.portalfiscal.inf.br/mdfe">' +
             AXML +
            '</aereo>';
    end;
-  if pos( '<aquav>', XML) <> 0
+  if pos('<aquav>', XML) <> 0
    then begin
     Tipo := 2;
-    AXML := SeparaDados( XML, 'aquav' );
+    AXML := SeparaDados(XML, 'aquav');
     AXML := '<aquav xmlns="http://www.portalfiscal.inf.br/mdfe">' +
             AXML +
            '</aquav>';
    end;
-  if pos( '<duto>', XML) <> 0
+  if pos('<duto>', XML) <> 0
    then begin
     Tipo := 3;
-    AXML := SeparaDados( XML, 'duto' );
+    AXML := SeparaDados(XML, 'duto');
     AXML := '<duto xmlns="http://www.portalfiscal.inf.br/mdfe">' +
             AXML +
            '</duto>';
    end;
-  if pos( '<ferrov>', XML) <> 0
+  if pos('<ferrov>', XML) <> 0
    then begin
     Tipo := 4;
-    AXML := SeparaDados( XML, 'ferrov' );
+    AXML := SeparaDados(XML, 'ferrov');
     AXML := '<ferrov xmlns="http://www.portalfiscal.inf.br/mdfe">' +
             AXML +
            '</ferrov>';
    end;
-  if pos( '<rodo>', XML) <> 0
+  if pos('<rodo>', XML) <> 0
    then begin
     Tipo := 5;
-    AXML := SeparaDados( XML, 'rodo' );
+    AXML := SeparaDados(XML, 'rodo');
     AXML := '<rodo xmlns="http://www.portalfiscal.inf.br/mdfe">' +
             AXML +
            '</rodo>';
    end;
 
   // Eventos
-  if pos( '<evEncMDFe>', XML) <> 0
+  if pos('<evEncMDFe>', XML) <> 0
    then begin
     Tipo := 6;
-    AXML := SeparaDados( XML, 'evEncMDFe' );
+    AXML := SeparaDados(XML, 'evEncMDFe');
     AXML := '<evEncMDFe xmlns="http://www.portalfiscal.inf.br/mdfe">' +
             AXML +
            '</evEncMDFe>';
    end;
-  if pos( '<evCancMDFe>', XML) <> 0
+  if pos('<evCancMDFe>', XML) <> 0
    then begin
     Tipo := 7;
-    AXML := SeparaDados( XML, 'evCancMDFe' );
+    AXML := SeparaDados(XML, 'evCancMDFe');
     AXML := '<evCancMDFe xmlns="http://www.portalfiscal.inf.br/mdfe">' +
             AXML +
            '</evCancMDFe>';
    end;
-  if pos( '<evIncCondutorMDFe>', XML) <> 0
+  if pos('<evIncCondutorMDFe>', XML) <> 0
    then begin
     Tipo := 8;
-    AXML := SeparaDados( XML, 'evIncCondutorMDFe' );
+    AXML := SeparaDados(XML, 'evIncCondutorMDFe');
     AXML := '<evIncCondutorMDFe xmlns="http://www.portalfiscal.inf.br/mdfe">' +
             AXML +
            '</evIncCondutorMDFe>';
@@ -647,7 +646,6 @@ begin
   Result := True;
 end;
 {$ELSE}
-
 function ValidaMSXML(XML: AnsiString; out Msg: AnsiString;
  const APathSchemas: string = ''): Boolean;
 var
@@ -688,7 +686,7 @@ begin
  if not FilesExists(schema_filename) then
     raise Exception.Create('Arquivo ' + schema_filename + ' não encontrado');
 
-  Schema.add( 'http://www.portalfiscal.inf.br/mdfe', schema_filename );
+  Schema.add('http://www.portalfiscal.inf.br/mdfe', schema_filename);
 
   DOMDocument.schemas := Schema;
   ParseError          := DOMDocument.validate;
@@ -710,68 +708,68 @@ var
 begin
   Tipo := 0;
 
-  if pos( '<aereo>', XML ) <> 0
+  if pos('<aereo>', XML) <> 0
    then begin
     Tipo := 1;
-    XML := SeparaDados( XML, 'aereo' );
+    XML := SeparaDados(XML, 'aereo');
     XML := '<aereo xmlns="http://www.portalfiscal.inf.br/mdfe">' +
             XML +
            '</aereo>';
    end;
-  if pos( '<aquav>', XML) <> 0
+  if pos('<aquav>', XML) <> 0
    then begin
     Tipo := 2;
-    XML := SeparaDados( XML, 'aquav' );
+    XML := SeparaDados(XML, 'aquav');
     XML := '<aquav xmlns="http://www.portalfiscal.inf.br/mdfe">' +
             XML +
            '</aquav>';
    end;
-  if pos( '<duto>', XML) <> 0
+  if pos('<duto>', XML) <> 0
    then begin
     Tipo := 3;
-    XML := SeparaDados( XML, 'duto' );
+    XML := SeparaDados(XML, 'duto');
     XML := '<duto xmlns="http://www.portalfiscal.inf.br/mdfe">' +
             XML +
            '</duto>';
    end;
-  if pos( '<ferrov>', XML) <> 0
+  if pos('<ferrov>', XML) <> 0
    then begin
     Tipo := 4;
-    XML := SeparaDados( XML, 'ferrov' );
+    XML := SeparaDados(XML, 'ferrov');
     XML := '<ferrov xmlns="http://www.portalfiscal.inf.br/mdfe">' +
             XML +
            '</ferrov>';
    end;
-  if pos( '<rodo>', XML) <> 0
+  if pos('<rodo>', XML) <> 0
    then begin
     Tipo := 5;
-    XML := SeparaDados( XML, 'rodo' );
+    XML := SeparaDados(XML, 'rodo');
     XML := '<rodo xmlns="http://www.portalfiscal.inf.br/mdfe">' +
             XML +
            '</rodo>';
    end;
 
   // Eventos
-  if pos( '<evEncMDFe>', XML) <> 0
+  if pos('<evEncMDFe>', XML) <> 0
    then begin
     Tipo := 6;
-    XML := SeparaDados( XML, 'evEncMDFe' );
+    XML := SeparaDados(XML, 'evEncMDFe');
     XML := '<evEncMDFe xmlns="http://www.portalfiscal.inf.br/mdfe">' +
             XML +
            '</evEncMDFe>';
    end;
-  if pos( '<evCancMDFe>', XML) <> 0
+  if pos('<evCancMDFe>', XML) <> 0
    then begin
     Tipo := 7;
-    XML := SeparaDados( XML, 'evCancMDFe' );
+    XML := SeparaDados(XML, 'evCancMDFe');
     XML := '<evCancMDFe xmlns="http://www.portalfiscal.inf.br/mdfe">' +
             XML +
            '</evCancMDFe>';
    end;
-  if pos( '<evIncCondutorMDFe>', XML) <> 0
+  if pos('<evIncCondutorMDFe>', XML) <> 0
    then begin
     Tipo := 8;
-    XML := SeparaDados( XML, 'evIncCondutorMDFe' );
+    XML := SeparaDados(XML, 'evIncCondutorMDFe');
     XML := '<evIncCondutorMDFe xmlns="http://www.portalfiscal.inf.br/mdfe">' +
             XML +
            '</evIncCondutorMDFe>';
@@ -846,7 +844,7 @@ begin
  if not FilesExists(schema_filename) then
     raise Exception.Create('Arquivo ' + schema_filename + ' não encontrado');
 
-  Schema.add( 'http://www.portalfiscal.inf.br/mdfe', schema_filename );
+  Schema.add('http://www.portalfiscal.inf.br/mdfe', schema_filename);
 
   DOMDocument.schemas := Schema;
   ParseError          := DOMDocument.validate;
@@ -871,13 +869,13 @@ begin
   xmldoc.validateOnParse    := False;
   xmldoc.preserveWhiteSpace := True;
 
-   if (not xmldoc.loadXML(XML) ) then
+   if (not xmldoc.loadXML(XML)) then
       raise Exception.Create('Não foi possível carregar o arquivo: '+XML);
   try
     xmldoc.setProperty('SelectionNamespaces', DSIGNS);
     xmldsig.signature := xmldoc.selectSingleNode('.//ds:Signature');
 
-   if (xmldsig.signature = nil ) then
+   if (xmldsig.signature = nil) then
       raise Exception.Create('Não foi possível carregar o ler a assinatura: '+XML);
 
     pKeyInfo := xmldoc.selectSingleNode('.//ds:KeyInfo/ds:X509Data');
@@ -891,7 +889,7 @@ begin
           Msg := 'Erro ao verificar assinatura do arquivo: '+ E.Message;
     end;
   finally
-    Result := (pKeyOut <> nil );
+    Result := (pKeyOut <> nil);
 
     pKeyOut  := nil;
     pKey     := nil;
@@ -900,7 +898,6 @@ begin
     xmldoc   := nil;
   end;
 end;
-
 {$ENDIF}
 
 class function MDFeUtil.Valida(const AXML: AnsiString;
@@ -926,7 +923,6 @@ begin
 end;
 
 {$IFDEF ACBrMDFeOpenSSL}
-
 function AssinarLibXML(const AXML, ArqPFX, PFXSenha: AnsiString;
   out AXMLAssinado, FMensagem: AnsiString): Boolean;
 var
@@ -1021,7 +1017,7 @@ begin
     Cert2 := TStringStream.Create(ArqPFX);
     try
       Cert.LoadFromStream(Cert2);
-      XmlAss := MDFeUtil.sign_memory(PAnsiChar(AStr), PAnsiChar(ArqPFX), PAnsiChar(PFXSenha), Cert.Size, Cert.Memory) ;
+      XmlAss := MDFeUtil.sign_memory(PAnsiChar(AStr), PAnsiChar(ArqPFX), PAnsiChar(PFXSenha), Cert.Size, Cert.Memory);
     finally
       Cert2.Free;
       Cert.Free;
@@ -1033,8 +1029,8 @@ begin
 
   // Removendo DTD //
   case Tipo of
-       1: XmlAss := StringReplace( XmlAss, cDTD, '', [] );
-    2..4: XmlAss := StringReplace( XmlAss, cDTDEven, '', [] );
+       1: XmlAss := StringReplace(XmlAss, cDTD, '', []);
+    2..4: XmlAss := StringReplace(XmlAss, cDTDEven, '', []);
     else  XmlAss := '';
   end;
 
@@ -1048,7 +1044,6 @@ begin
   Result := True;
 end;
 {$ELSE}
-
 function AssinarMSXML(XML: AnsiString; Certificado: ICertificate2; out XMLAssinado: AnsiString): Boolean;
 var
   I, J, PosIni, PosFim: Integer;
@@ -1190,14 +1185,13 @@ end;
 {$ENDIF}
 
 {$IFDEF ACBrMDFeOpenSSL}
-
-class function MDFeUtil.sign_file(const Axml: PAnsiChar; const key_file: PAnsiChar; const senha: PAnsiChar): AnsiString;
+ class function MDFeUtil.sign_file(const Axml: PAnsiChar; const key_file: PAnsiChar; const senha: PAnsiChar): AnsiString;
 var
   doc: xmlDocPtr;
   node: xmlNodePtr;
   dsigCtx: xmlSecDSigCtxPtr;
   buffer: PAnsiChar;
-  bufSize: integer;
+  bufSize: Integer;
 label
   done;
 begin
@@ -1262,7 +1256,7 @@ var
   node: xmlNodePtr;
   dsigCtx: xmlSecDSigCtxPtr;
   buffer: PAnsiChar;
-  bufSize: integer;
+  bufSize: Integer;
 label
  done;
 begin
@@ -1310,7 +1304,7 @@ begin
        xmlDocDumpMemory(doc, @buffer, @bufSize);
        if (buffer <> nil) then
           { success }
-          result := buffer ;
+          result := buffer;
    finally
        { cleanup }
        if (dsigCtx <> nil) then
@@ -1318,7 +1312,7 @@ begin
 
        if (doc <> nil) then
          xmlFreeDoc(doc);
-   end ;
+   end;
 end;
 {$ENDIF}
 
@@ -1335,7 +1329,7 @@ begin
 {$ENDIF}
 end;
 
-class function MDFeUtil.UFtoCUF(UF : String): Integer;
+class function MDFeUtil.UFtoCUF(UF: String): Integer;
 var
   Codigo, i: Integer;
 begin
@@ -1354,9 +1348,9 @@ end;
 
 class function MDFeUtil.GerarChaveContingencia(FMDFe:TMDFe): string;
 
-   function GerarDigito_Contingencia(var Digito: integer; chave: string): boolean;
+   function GerarDigito_Contingencia(var Digito: Integer; chave: string): boolean;
    var
-     i, j: integer;
+     i, j: Integer;
    const
      PESO = '43298765432987654329876543298765432';
    begin
@@ -1381,7 +1375,7 @@ var
    wchave: string;
 //   wicms_s, wicms_p: string;
 //   wd,wm,wa: word;
-//   Digito: integer;
+//   Digito: Integer;
 begin
    wchave := '';
    //UF
@@ -1433,33 +1427,33 @@ end;
 class function MDFeUtil.FormatarChaveContingencia(AValue: String): String;
 begin
   AValue := DFeUtil.LimpaNumero(AValue);
-  Result := copy(AValue,1,4)  + ' ' + copy(AValue,5,4)  + ' ' +
-            copy(AValue,9,4)  + ' ' + copy(AValue,13,4) + ' ' +
-            copy(AValue,17,4) + ' ' + copy(AValue,21,4) + ' ' +
-            copy(AValue,25,4) + ' ' + copy(AValue,29,4) + ' ' +
-            copy(AValue,33,4);
+  Result := copy(AValue,  1, 4) + ' ' + copy(AValue,  5, 4) + ' ' +
+            copy(AValue,  9, 4) + ' ' + copy(AValue, 13, 4) + ' ' +
+            copy(AValue, 17, 4) + ' ' + copy(AValue, 21, 4) + ' ' +
+            copy(AValue, 25, 4) + ' ' + copy(AValue, 29, 4) + ' ' +
+            copy(AValue, 33, 4);
 end;
 
-class function MDFeUtil.IdentificaTipoSchema(const AXML: AnsiString; var I: integer): integer;
+class function MDFeUtil.IdentificaTipoSchema(const AXML: AnsiString; var I: Integer): Integer;
 var
  lTipoEvento: String;
 begin
-  I := pos('<infMDFe',AXML);
+  I := pos('<infMDFe', AXML);
   Result := 1;
   if I = 0  then
    begin
-     I := pos('<infEvento',AXML);
+     I := pos('<infEvento', AXML);
      if I > 0 then
       begin
-       lTipoEvento := Trim(RetornarConteudoEntre(AXML,'<tpEvento>','</tpEvento>'));
+       lTipoEvento := Trim(RetornarConteudoEntre(AXML, '<tpEvento>', '</tpEvento>'));
        if lTipoEvento = '110111'
         then Result := 2 // Cancelamento
         else begin
          if lTipoEvento = '110112'
-          then Result := 3 //Encerramento
+          then Result := 3 // Encerramento
           else begin
            if lTipoEvento = '110114'
-            then Result := 4 //Inclusao de Condutor
+            then Result := 4 // Inclusao de Condutor
             else Result := 5;
           end;
         end;

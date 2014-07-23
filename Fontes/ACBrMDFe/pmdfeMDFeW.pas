@@ -77,13 +77,13 @@ type
     procedure GerarautXML;        // Nivel 1
     procedure GerarInfAdic;       // Nivel 1
 
-    procedure AjustarMunicipioUF(var xUF: string; var xMun: string; var cMun: integer; cPais: integer; vxUF, vxMun: string; vcMun: integer);
-    function ObterNomeMunicipio(const xMun, xUF: string; const cMun: integer): string;
+    procedure AjustarMunicipioUF(var xUF: String; var xMun: String; var cMun: Integer; cPais: Integer; vxUF, vxMun: String; vcMun: Integer);
+    function ObterNomeMunicipio(const xMun, xUF: String; const cMun: Integer): String;
   public
     constructor Create(AOwner: TMDFe);
     destructor Destroy; override;
     function GerarXml: boolean;
-    function ObterNomeArquivo: string;
+    function ObterNomeArquivo: String;
   published
     property Gerador: TGerador      read FGerador  write FGerador;
     property MDFe: TMDFe            read FMDFe     write FMDFe;
@@ -96,19 +96,17 @@ type
     FAjustarTagNro: boolean;
     FNormatizarMunicipios: boolean;
     FGerarTagAssinatura: TpcnTagAssinatura;
-    FPathArquivoMunicipios: string;
+    FPathArquivoMunicipios: String;
     FValidarInscricoes: boolean;
     FValidarListaServicos: boolean;
   published
     property AjustarTagNro: boolean                read FAjustarTagNro         write FAjustarTagNro;
     property NormatizarMunicipios: boolean         read FNormatizarMunicipios  write FNormatizarMunicipios;
     property GerarTagAssinatura: TpcnTagAssinatura read FGerarTagAssinatura    write FGerarTagAssinatura;
-    property PathArquivoMunicipios: string         read FPathArquivoMunicipios write FPathArquivoMunicipios;
+    property PathArquivoMunicipios: String         read FPathArquivoMunicipios write FPathArquivoMunicipios;
     property ValidarInscricoes: boolean            read FValidarInscricoes     write FValidarInscricoes;
     property ValidarListaServicos: boolean         read FValidarListaServicos  write FValidarListaServicos;
   end;
-
-  ////////////////////////////////////////////////////////////////////////////////
 
 implementation
 
@@ -136,9 +134,7 @@ begin
   inherited Destroy;
 end;
 
-////////////////////////////////////////////////////////////////////////////////
-
-function TMDFeW.ObterNomeArquivo: string;
+function TMDFeW.ObterNomeArquivo: String;
 begin
   Result := SomenteNumeros(MDFe.infMDFe.ID) + '-mdfe.xml';
 end;
@@ -147,7 +143,7 @@ function TMDFeW.GerarXml: boolean;
 var
   chave: AnsiString;
   Gerar: boolean;
-  xProtMDFe : String;
+  xProtMDFe: String;
 begin
   chave := '';
 
@@ -263,7 +259,7 @@ end;
 
 procedure TMDFeW.GerarinfMunCarrega;
 var
-  i: integer;
+  i: Integer;
 begin
   for i := 0 to MDFe.Ide.infMunCarrega.Count - 1 do
   begin
@@ -278,7 +274,7 @@ end;
 
 procedure TMDFeW.GerarinfPercurso;
 var
-  i: integer;
+  i: Integer;
 begin
   for i := 0 to MDFe.Ide.infPercurso.Count - 1 do
   begin
@@ -307,9 +303,9 @@ end;
 
 procedure TMDFeW.GerarEnderEmit;
 var
-  cMun: integer;
-  xMun: string;
-  xUF: string;
+  cMun: Integer;
+  xMun: String;
+  xUF: String;
 begin
   AjustarMunicipioUF(xUF, xMun, cMun, CODIGO_BRASIL,
                                       MDFe.Emit.enderEmit.UF,
@@ -352,7 +348,7 @@ end;
 
 procedure TMDFeW.GerarRodo;
 var
-  i: integer;
+  i: Integer;
 begin
   Gerador.wGrupo('rodo', '#01');
   Gerador.wCampo(tcStr, '#02', 'RNTRC', 08, 08, 0, SomenteNumeros(MDFe.Rodo.RNTRC), DSC_RNTRC);
@@ -506,7 +502,7 @@ end;
 
 procedure TMDFeW.GerarAquav;
 var
-  i: integer;
+  i: Integer;
 begin
   Gerador.wGrupo('aquav', '#01');
   Gerador.wCampo(tcStr, '#02', 'CNPJAgeNav', 14, 14, 1, MDFe.aquav.CNPJAgeNav, DSC_CNPJAGENAV);
@@ -561,7 +557,7 @@ end;
 
 procedure TMDFeW.GerarFerrov;
 var
-  i: integer;
+  i: Integer;
 begin
   Gerador.wGrupo('ferrov', '#01');
 
@@ -590,7 +586,7 @@ end;
 
 procedure TMDFeW.GerarInfDoc;
 var
-  i, j, k, l, m: integer;
+  i, j, k, l, m: Integer;
 begin
   Gerador.wGrupo('infDoc', '#040');
 
@@ -890,7 +886,7 @@ end;
 
 procedure TMDFeW.GerarLacres;
 var
-  i: integer;
+  i: Integer;
 begin
   for i := 0 to MDFe.lacres.Count - 1 do
   begin
@@ -904,7 +900,7 @@ end;
 
 procedure TMDFeW.GerarautXML;
 var
-  i: integer;
+  i: Integer;
 begin
   for i := 0 to MDFe.autXML.Count - 1 do
   begin
@@ -927,8 +923,8 @@ begin
    end;
 end;
 
-procedure TMDFeW.AjustarMunicipioUF(var xUF, xMun: string;
-  var cMun: integer; cPais: integer; vxUF, vxMun: string; vcMun: integer);
+procedure TMDFeW.AjustarMunicipioUF(var xUF, xMun: String;
+  var cMun: Integer; cPais: Integer; vxUF, vxMun: String; vcMun: Integer);
 var
   PaisBrasil: boolean;
 begin
@@ -941,12 +937,12 @@ begin
   xMun := ObterNomeMunicipio(xMun, xUF, cMun);
 end;
 
-function TMDFeW.ObterNomeMunicipio(const xMun, xUF: string;
-  const cMun: integer): string;
+function TMDFeW.ObterNomeMunicipio(const xMun, xUF: String;
+  const cMun: Integer): String;
 var
-  i: integer;
-  PathArquivo, Codigo: string;
-  List: TstringList;
+  i: Integer;
+  PathArquivo, Codigo: String;
+  List: TStringList;
 begin
   result := '';
   if (FOpcoes.NormatizarMunicipios) and (cMun <> CMUN_EXTERIOR) then
@@ -954,7 +950,7 @@ begin
     PathArquivo := FOpcoes.FPathArquivoMunicipios + 'MunIBGE-UF' + InttoStr(UFparaCodigo(xUF)) + '.txt';
     if FileExists(PathArquivo) then
     begin
-      List := TstringList.Create;
+      List := TStringList.Create;
       try
         List.LoadFromFile(PathArquivo);
         Codigo := IntToStr(cMun);
@@ -962,7 +958,7 @@ begin
         while (i < list.count) and (result = '') do
         begin
           if pos(Codigo, List[i]) > 0 then
-            result := Trim(stringReplace(list[i], codigo, '', []));
+            result := Trim(StringReplace(list[i], codigo, '', []));
           inc(i);
         end;
       finally

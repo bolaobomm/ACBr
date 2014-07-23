@@ -46,20 +46,20 @@ uses
 
 type
 
-  TRetConsReciMDFe = class;
-  TProtMDFeCollection = class;
+  TRetConsReciMDFe        = class;
+  TProtMDFeCollection     = class;
   TProtMDFeCollectionItem = class;
 
   TRetConsReciMDFe = class(TPersistent)
   private
     FLeitor: TLeitor;
     FtpAmb: TpcnTipoAmbiente;
-    Fversao : string;
-    FverAplic: string;
-    FnRec: string;
-    FcStat: integer;
-    FxMotivo: string;
-    FcUF: integer;
+    Fversao: String;
+    FverAplic: String;
+    FnRec: String;
+    FcStat: Integer;
+    FxMotivo: String;
+    FcUF: Integer;
     FProtMDFe: TProtMDFeCollection;
 
     procedure SetProtMDFe(const Value: TProtMDFeCollection);
@@ -70,12 +70,12 @@ type
   published
     property Leitor: TLeitor               read FLeitor   write FLeitor;
     property tpAmb: TpcnTipoAmbiente       read FtpAmb    write FtpAmb;
-    property versao: string                read Fversao   write Fversao;
-    property verAplic: string              read FverAplic write FverAplic;
-    property nRec: string                  read FnRec     write FnRec;
-    property cStat: integer                read FcStat    write FcStat;
-    property xMotivo: string               read FxMotivo  write FxMotivo;
-    property cUF: integer                  read FcUF      write FcUF;
+    property versao: String                read Fversao   write Fversao;
+    property verAplic: String              read FverAplic write FverAplic;
+    property nRec: String                  read FnRec     write FnRec;
+    property cStat: Integer                read FcStat    write FcStat;
+    property xMotivo: String               read FxMotivo  write FxMotivo;
+    property cUF: Integer                  read FcUF      write FcUF;
     property ProtMDFe: TProtMDFeCollection read FProtMDFe write SetProtMDFe;
   end;
 
@@ -92,22 +92,22 @@ type
   TProtMDFeCollectionItem = class(TCollectionItem)
   private
     FtpAmb: TpcnTipoAmbiente;
-    FverAplic: string;
-    FchMDFe: string;
+    FverAplic: String;
+    FchMDFe: String;
     FdhRecbto: TDateTime;
-    FnProt: string;
-    FdigVal: string;
-    FcStat: integer;
-    FxMotivo: string;
+    FnProt: String;
+    FdigVal: String;
+    FcStat: Integer;
+    FxMotivo: String;
   published
     property tpAmb: TpcnTipoAmbiente read FtpAmb    write FtpAmb;
-    property verAplic: string        read FverAplic write FverAplic;
-    property chMDFe: string          read FchMDFe   write FchMDFe;
+    property verAplic: String        read FverAplic write FverAplic;
+    property chMDFe: String          read FchMDFe   write FchMDFe;
     property dhRecbto: TDateTime     read FdhRecbto write FdhRecbto;
-    property nProt: string           read FnProt    write FnProt;
-    property digVal: string          read FdigVal   write FdigVal;
-    property cStat: integer          read FcStat    write FcStat;
-    property xMotivo: string         read FxMotivo  write FxMotivo;
+    property nProt: String           read FnProt    write FnProt;
+    property digVal: String          read FdigVal   write FdigVal;
+    property cStat: Integer          read FcStat    write FcStat;
+    property xMotivo: String         read FxMotivo  write FxMotivo;
   end;
 
 implementation
@@ -132,36 +132,13 @@ begin
   FProtMDFe.Assign(Value);
 end;
 
-{ TProtMDFeCollection }
-
-constructor TProtMDFeCollection.Create(AOwner: TRetConsReciMDFe);
-begin
-  inherited Create(TProtMDFeCollectionItem);
-end;
-
-function TProtMDFeCollection.Add: TProtMDFeCollectionItem;
-begin
-  Result := TProtMDFeCollectionItem(inherited Add);
-end;
-
-function TProtMDFeCollection.GetItem(Index: Integer): TProtMDFeCollectionItem;
-begin
-  Result := TProtMDFeCollectionItem(inherited GetItem(Index));
-end;
-
-procedure TProtMDFeCollection.SetItem(Index: Integer; Value: TProtMDFeCollectionItem);
-begin
-  inherited SetItem(Index, Value);
-end;
-
-////////////////////////////////////////////////////////////////////////////////
-
 function TRetConsReciMDFe.LerXML: boolean;
 var
   ok: boolean;
-  i: integer;
+  i: Integer;
 begin
   Result := False;
+  
   try
     if Leitor.rExtrai(1, 'retConsReciMDFe') <> '' then
     begin
@@ -200,6 +177,28 @@ begin
   except
     result := False;
   end;
+end;
+
+{ TProtMDFeCollection }
+
+constructor TProtMDFeCollection.Create(AOwner: TRetConsReciMDFe);
+begin
+  inherited Create(TProtMDFeCollectionItem);
+end;
+
+function TProtMDFeCollection.Add: TProtMDFeCollectionItem;
+begin
+  Result := TProtMDFeCollectionItem(inherited Add);
+end;
+
+function TProtMDFeCollection.GetItem(Index: Integer): TProtMDFeCollectionItem;
+begin
+  Result := TProtMDFeCollectionItem(inherited GetItem(Index));
+end;
+
+procedure TProtMDFeCollection.SetItem(Index: Integer; Value: TProtMDFeCollectionItem);
+begin
+  inherited SetItem(Index, Value);
 end;
 
 end.
