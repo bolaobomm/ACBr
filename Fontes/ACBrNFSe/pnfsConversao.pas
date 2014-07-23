@@ -711,7 +711,7 @@ begin
   5104104, // Guarantã Do Norte/MT
   5104542, // Itanhanga/MT
   5105606, // Matupá/MT
-  5105903  // Nobres/MT
+  5105903, // Nobres/MT
   5106208, // Nova Brasilândia/MT
   5106224, // Nova Mutum/MT
   5106307, // Paranatinga/MT
@@ -997,7 +997,7 @@ begin
   5100250, // Alta Floresta/MT
   5103403, // Cuiaba/MT
   5105101, // Juara/MT
-  5105903, // Nobres/MT
+//  5105903, // Nobres/MT
   5106232, // Nova Olimpia/MT
   5107925, // Sorriso/MT
   5108402, // Várzea Grande/MT
