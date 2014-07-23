@@ -101,6 +101,8 @@ begin
   // MDFe.infMDFe.ID := copy(Leitor.Arquivo, I + 4, J - I - 4);
   MDFe.infMDFe.ID := copy(Leitor.Arquivo, I + 1, J - I -1);
   *)
+  Leitor.Grupo := Leitor.Arquivo;
+
   MDFe.infMDFe.ID := SomenteNumeros(Leitor.rAtributo('Id='));
   if MDFe.infMDFe.ID = '' then
     raise Exception.Create('Não encontrei o atributo: Id');
