@@ -5807,6 +5807,9 @@ end;
 
 procedure TACBrECF.PafMF_Binario(const PathArquivo: String);
 begin
+  if (not fsAtivo) then
+     raise EACBrECFNaoInicializado.create( ACBrStr(cACBrECFNaoInicializadoException) );
+
   Self.ArquivoMF_DLL(PathArquivo);
   Self.AssinaArquivoComEAD(PathArquivo);
 end;
@@ -6500,6 +6503,9 @@ procedure TACBrECF.PafMF_ArqMF(const APathArquivo: String);
 var
   EADStr: String;
 begin
+  if (not fsAtivo) then
+     raise EACBrECFNaoInicializado.create( ACBrStr(cACBrECFNaoInicializadoException) );
+
   Self.ArquivoMF_DLL(APathArquivo);
 
   if FileExists(APathArquivo) then
@@ -6518,6 +6524,9 @@ procedure TACBrECF.PafMF_ArqMFD(const APathArquivo: String);
 var
   EADStr: String;
 begin
+  if (not fsAtivo) then
+     raise EACBrECFNaoInicializado.create( ACBrStr(cACBrECFNaoInicializadoException) );
+
   Self.ArquivoMFD_DLL(APathArquivo);
 
   if FileExists(APathArquivo) then
