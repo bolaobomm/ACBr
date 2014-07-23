@@ -326,7 +326,7 @@ begin
   then begin
    I := pos(EnviarLoteRps +' xmlns=', AStr);
    if I = 0
-    then NameSpaceLote := ''
+    then NameSpaceLote := ' '
     else begin
      I := I + 25;
      J := pos('>', AStr);
@@ -591,7 +591,7 @@ begin
      I := pos(EnviarLoteRps +' xmlns:ns3=', AXML)
    else I := pos(EnviarLoteRps +' xmlns=', AXML);
    if I = 0
-    then NameSpaceLote := ''
+    then NameSpaceLote := ' '
     else begin
      // Diego Gonçalves -- Correção pois estava duplicando o campo xmlns
      if AProvedor = proBetha then
@@ -607,8 +607,8 @@ begin
       I := I + {25} Length(EnviarLoteRps);
       J := pos('>', AXML);
       NameSpaceLote := Copy(AXML, I, J - I);
-      I := Pos( 'xmlns:ns1=',NameSpaceLote);
-      NameSpaceLote := Copy(NameSpaceLote, I, J - I);
+      I := Pos('xmlns:ns1=', NameSpaceLote);
+      NameSpaceLote := ' ' + Copy(NameSpaceLote, I, J - I);
    end;
 
    Identificador := 'Id';
