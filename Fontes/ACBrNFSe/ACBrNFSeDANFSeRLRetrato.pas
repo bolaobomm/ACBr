@@ -340,6 +340,9 @@ begin
   noImune                   : rllNatOperacao.Caption := '4 - Imune';
   noSuspensaDecisaoJudicial : rllNatOperacao.Caption := '5 - Exigibilidade susp. por decisão judicial';
   noSuspensaProcedimentoAdministrativo : rllNatOperacao.Caption := '6 - Exigibilidade susp. por proced. adm.';
+  noSimplesNacional59       : rllNatOperacao.Caption := '7 - Simples Nacional (Dentro Estado)';
+  noSimplesNacional69       : rllNatOperacao.Caption := '8 - Simples Nacional (Fora Estado)';
+  noTributacaoNoMunicipioSemISS52 : rllNatOperacao.Caption := '9 - Tributacao No Municipio Sem Retenção de ISS';
  end;
 
  // TnfseRegimeEspecialTributacao = ( retNenhum, retMicroempresaMunicipal, retEstimativa, retSociedadeProfissionais, retCooperativa, retMicroempresarioIndividual, retMicroempresarioEmpresaPP )
