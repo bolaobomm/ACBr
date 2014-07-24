@@ -2622,17 +2622,17 @@ end;
 class function NotaUtil.GetURLConsultaNFCe(const AUF : Integer; AAmbiente : TpcnTipoAmbiente) : String;
 begin
   case AUF of
-   12: Result := DFeUtil.SeSenao(AAmbiente = taProducao, 'http://www.sefaznet.ac.gov.br/nfce/', 'http://hml.sefaznet.ac.gov.br/nfce/'); //AC
+   12: Result := DFeUtil.SeSenao(AAmbiente = taProducao, 'http://www.sefaznet.ac.gov.br/nfce/', 'http://hml.sefaznet.ac.gov.br/nfce/'); // AC
    27: Result := DFeUtil.SeSenao(AAmbiente = taProducao, '', ''); //AL
    16: Result := DFeUtil.SeSenao(AAmbiente = taProducao, '', ''); //AP
-   13: Result := DFeUtil.SeSenao(AAmbiente = taProducao, 'http://sistemas.sefaz.am.gov.br/nfceweb/formConsulta.do', 'http://homnfce.sefaz.am.gov.br/nfceweb/formConsulta.do'); //AM
+   13: Result := DFeUtil.SeSenao(AAmbiente = taProducao, 'http://sistemas.sefaz.am.gov.br/nfceweb/formConsulta.do', 'http://homnfce.sefaz.am.gov.br/nfceweb/formConsulta.do'); // AM
    29: Result := DFeUtil.SeSenao(AAmbiente = taProducao, '', ''); //BA
    23: Result := DFeUtil.SeSenao(AAmbiente = taProducao, '', ''); //CE
    53: Result := DFeUtil.SeSenao(AAmbiente = taProducao, '', ''); //DF
    32: Result := DFeUtil.SeSenao(AAmbiente = taProducao, '', ''); //ES
    52: Result := DFeUtil.SeSenao(AAmbiente = taProducao, '', ''); //GO
-   21: Result := DFeUtil.SeSenao(AAmbiente = taProducao, '', ''); //MA
-   51: Result := DFeUtil.SeSenao(AAmbiente = taProducao, 'http://www.sefaz.mt.gov.br/nfce/consultanfce', 'http://homologacao.sefaz.mt.gov.br/nfce/consultanfce'); //MT
+   21: Result := DFeUtil.SeSenao(AAmbiente = taProducao, 'http://www.nfce.sefaz.ma.gov.br/portal/consultaNFe.do', 'http://www.hom.nfce.sefaz.ma.gov.br/portal/consultaNFe.do'); // MA
+   51: Result := DFeUtil.SeSenao(AAmbiente = taProducao, 'http://www.sefaz.mt.gov.br/nfce/consultanfce',          'http://homologacao.sefaz.mt.gov.br/nfce/consultanfce');      // MT
    50: Result := DFeUtil.SeSenao(AAmbiente = taProducao, '', ''); //MS
    31: Result := DFeUtil.SeSenao(AAmbiente = taProducao, '', ''); //MG
    15: Result := DFeUtil.SeSenao(AAmbiente = taProducao, '', ''); //PA
@@ -2641,9 +2641,9 @@ begin
    26: Result := DFeUtil.SeSenao(AAmbiente = taProducao, '', ''); //PE
    22: Result := DFeUtil.SeSenao(AAmbiente = taProducao, '', ''); //PI
    33: Result := DFeUtil.SeSenao(AAmbiente = taProducao, '', ''); //RJ
-   24: Result := DFeUtil.SeSenao(AAmbiente = taProducao, '', ''); //RN
-   43: Result := DFeUtil.SeSenao(AAmbiente = taProducao, '', ''); //RS
-   11: Result := DFeUtil.SeSenao(AAmbiente = taProducao, 'http://www.nfce.sefin.ro.gov.br/consultanfce/consulta.jsp', 'http://www.nfce.sefin.ro.gov.br/consultanfce/consulta.jsp'); //RO
+   24: Result := DFeUtil.SeSenao(AAmbiente = taProducao, 'http://nfce.set.rn.gov.br/portalDFE/NFCe/ConsultaNFCe.aspx', ''); // RN
+   43: Result := DFeUtil.SeSenao(AAmbiente = taProducao, 'https://www.sefaz.rs.gov.br/NFE/NFE-NFC.aspx',               'https://www.sefaz.rs.gov.br/NFE/NFE-NFC.aspx');              // RS
+   11: Result := DFeUtil.SeSenao(AAmbiente = taProducao, 'http://www.nfce.sefin.ro.gov.br/consultanfce/consulta.jsp',  'http://www.nfce.sefin.ro.gov.br/consultanfce/consulta.jsp'); // RO
    14: Result := DFeUtil.SeSenao(AAmbiente = taProducao, '', ''); //RR
    42: Result := DFeUtil.SeSenao(AAmbiente = taProducao, '', ''); //SC
    35: Result := DFeUtil.SeSenao(AAmbiente = taProducao, '', ''); //SP
