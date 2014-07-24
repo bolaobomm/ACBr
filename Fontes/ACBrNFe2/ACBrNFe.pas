@@ -161,7 +161,9 @@ type
                                 PedeConfirma: Boolean = False;
                                 AguardarEnvio: Boolean = False;
                                 NomeRemetente: String = '';
-                                TLS : Boolean = True);
+                                TLS : Boolean = True;
+                                UsarThread: Boolean = True;
+                                HTML: Boolean = False);
 
     procedure EnviaEmail(const sSmtpHost,
                                   sSmtpPort,
@@ -750,7 +752,8 @@ end;
 procedure TACBrNFe.EnviarEmailEvento(const sSmtpHost, sSmtpPort, sSmtpUser,
   sSmtpPasswd, sFrom, sTo, sAssunto: String; sMensagem: TStrings; SSL,
   EnviaPDF: Boolean; sCC, Anexos: TStrings; PedeConfirma,
-  AguardarEnvio: Boolean; NomeRemetente: String; TLS: Boolean);
+  AguardarEnvio: Boolean; NomeRemetente: String; TLS: Boolean;
+  UsarThread: Boolean; HTML: Boolean);
 var
   NomeArq : String;
   AnexosEmail:TStrings ;
@@ -787,7 +790,11 @@ begin
                 PedeConfirma,
                 AguardarEnvio,
                 NomeRemetente,
-                TLS);
+                TLS,
+                nil,
+                '',
+                UsarThread,
+                HTML);
   finally
     AnexosEmail.Free ;
   end;
