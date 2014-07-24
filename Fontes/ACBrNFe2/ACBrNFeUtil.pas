@@ -98,6 +98,7 @@ type
     class function GetURLAM(AAmbiente: Integer; ALayOut: TLayOut; AModeloDF: TpcnModeloDF = moNFe; AVersaoDF: TpcnVersaoDF = ve200): WideString;   //atualizado 2.0 Homologação e Produção
     class function GetURLBA(AAmbiente: Integer; ALayOut: TLayOut; AModeloDF: TpcnModeloDF = moNFe; AVersaoDF: TpcnVersaoDF = ve200): WideString;   //atualizado 2.0 Homologação e Produção
     class function GetURLCE(AAmbiente: Integer; ALayOut: TLayOut; AModeloDF: TpcnModeloDF = moNFe; AVersaoDF: TpcnVersaoDF = ve200): WideString;   //atualizado 2.0 Homologação e Produção
+    class function GetURLES(AAmbiente: Integer; ALayOut: TLayOut; AModeloDF: TpcnModeloDF = moNfe; AVersaoDF: TpcnVersaoDF = ve200): WideString;
     class function GetURLGO(AAmbiente: Integer; ALayOut: TLayOut; AModeloDF: TpcnModeloDF = moNFe; AVersaoDF: TpcnVersaoDF = ve200): WideString;   //atualizado 2.0 Homologação e Produção
     class function GetURLMT(AAmbiente: Integer; ALayOut: TLayOut; AModeloDF: TpcnModeloDF = moNFe; AVersaoDF: TpcnVersaoDF = ve200): WideString;   //atualizado 2.0 Homologação e Produção
     class function GetURLMS(AAmbiente: Integer; ALayOut: TLayOut; AModeloDF: TpcnModeloDF = moNFe; AVersaoDF: TpcnVersaoDF = ve200): WideString;   //atualizado 2.0 Homologação e Produção
@@ -919,42 +920,45 @@ case FormaEmissao of
        // 04/02/2014 - Espirito Santo
 
        case AUF of
-         12: Result := NotaUtil.GetURLSVRS(AAmbiente,ALayOut, AModeloDF, AVersaoDF); //AC
-         27: Result := NotaUtil.GetURLSVRS(AAmbiente,ALayOut, AModeloDF, AVersaoDF); //AL
-         16: Result := NotaUtil.GetURLSVRS(AAmbiente,ALayOut, AModeloDF, AVersaoDF); //AP
-         13: Result := NotaUtil.GetURLAM(AAmbiente,ALayOut, AModeloDF, AVersaoDF);   //AM
-         29: Result := NotaUtil.GetURLBA(AAmbiente,ALayOut, AModeloDF, AVersaoDF);   //BA
-         23: Result := NotaUtil.GetURLCE(AAmbiente,ALayOut, AModeloDF, AVersaoDF);   //CE
-         53: Result := NotaUtil.GetURLSVRS(AAmbiente,ALayOut, AModeloDF, AVersaoDF); //DF
+         12: Result := NotaUtil.GetURLSVRS(AAmbiente, ALayOut, AModeloDF, AVersaoDF); //AC
+         27: Result := NotaUtil.GetURLSVRS(AAmbiente, ALayOut, AModeloDF, AVersaoDF); //AL
+         16: Result := NotaUtil.GetURLSVRS(AAmbiente, ALayOut, AModeloDF, AVersaoDF); //AP
+         13: Result := NotaUtil.GetURLAM(AAmbiente, ALayOut, AModeloDF, AVersaoDF);   //AM
+         29: Result := NotaUtil.GetURLBA(AAmbiente, ALayOut, AModeloDF, AVersaoDF);   //BA
+         23: Result := NotaUtil.GetURLCE(AAmbiente, ALayOut, AModeloDF, AVersaoDF);   //CE
+         53: Result := NotaUtil.GetURLSVRS(AAmbiente, ALayOut, AModeloDF, AVersaoDF); //DF
 
-//         32: Result := NotaUtil.GetURLSVAN(AAmbiente,ALayOut, AModeloDF, AVersaoDF); //ES
-         32: Result := NotaUtil.GetURLSVRS(AAmbiente,ALayOut, AModeloDF, AVersaoDF); //ES
+//         32: Result := NotaUtil.GetURLSVAN(AAmbiente, ALayOut, AModeloDF, AVersaoDF); //ES
+//         32: Result := NotaUtil.GetURLSVRS(AAmbiente, ALayOut, AModeloDF, AVersaoDF); //ES
+         32: Result := NotaUtil.GetURLES(AAmbiente, ALayOut, AModeloDF, AVersaoDF);   //ES
 
-         52: Result := NotaUtil.GetURLGO(AAmbiente,ALayOut, AModeloDF, AVersaoDF);   //GO
-//         21: Result := NotaUtil.GetURLSVAN(AAmbiente,ALayOut, AModeloDF, AVersaoDF); //MA
+         52: Result := NotaUtil.GetURLGO(AAmbiente, ALayOut, AModeloDF, AVersaoDF);   //GO
+
+//         21: Result := NotaUtil.GetURLSVAN(AAmbiente, ALayOut, AModeloDF, AVersaoDF); //MA
          21: begin
                if AModeloDF = moNFCe then
-                 Result := NotaUtil.GetURLSVRS(AAmbiente,ALayOut, AModeloDF, AVersaoDF)  //MA
+                 Result := NotaUtil.GetURLSVRS(AAmbiente, ALayOut, AModeloDF, AVersaoDF)  //MA
                else
-                 Result := NotaUtil.GetURLSVAN(AAmbiente,ALayOut, AModeloDF, AVersaoDF); //MA
+                 Result := NotaUtil.GetURLSVAN(AAmbiente, ALayOut, AModeloDF, AVersaoDF); //MA
              end;
-         51: Result := NotaUtil.GetURLMT(AAmbiente,ALayOut, AModeloDF, AVersaoDF);   //MT
-         50: Result := NotaUtil.GetURLMS(AAmbiente,ALayOut, AModeloDF, AVersaoDF);   //MS
-         31: Result := NotaUtil.GetURLMG(AAmbiente,ALayOut, AModeloDF, AVersaoDF);   //MG
-         15: Result := NotaUtil.GetURLSVAN(AAmbiente,ALayOut, AModeloDF, AVersaoDF); //PA
-         25: Result := NotaUtil.GetURLSVRS(AAmbiente,ALayOut, AModeloDF, AVersaoDF); //PB
-         41: Result := NotaUtil.GetURLPR(AAmbiente,ALayOut, AModeloDF, AVersaoDF);   //PR
-         26: Result := NotaUtil.GetURLPE(AAmbiente,ALayOut, AModeloDF, AVersaoDF);   //PE
-         22: Result := NotaUtil.GetURLSVAN(AAmbiente,ALayOut, AModeloDF, AVersaoDF); //PI
-         33: Result := NotaUtil.GetURLSVRS(AAmbiente,ALayOut, AModeloDF, AVersaoDF); //RJ
-         24: Result := NotaUtil.GetURLSVRS(AAmbiente,ALayOut, AModeloDF, AVersaoDF); //RN
-         43: Result := NotaUtil.GetURLRS(AAmbiente,ALayOut, AModeloDF, AVersaoDF);   //RS
-         11: Result := NotaUtil.GetURLSVRS(AAmbiente,ALayOut, AModeloDF, AVersaoDF); //RO
-         14: Result := NotaUtil.GetURLSVRS(AAmbiente,ALayOut, AModeloDF, AVersaoDF); //RR
-         42: Result := NotaUtil.GetURLSVRS(AAmbiente,ALayOut, AModeloDF, AVersaoDF); //SC
-         35: Result := NotaUtil.GetURLSP(AAmbiente,ALayOut, AModeloDF, AVersaoDF);   //SP
-         28: Result := NotaUtil.GetURLSVRS(AAmbiente,ALayOut, AModeloDF, AVersaoDF); //SE
-         17: Result := NotaUtil.GetURLSVRS(AAmbiente,ALayOut, AModeloDF, AVersaoDF); //TO
+
+         51: Result := NotaUtil.GetURLMT(AAmbiente, ALayOut, AModeloDF, AVersaoDF);   //MT
+         50: Result := NotaUtil.GetURLMS(AAmbiente, ALayOut, AModeloDF, AVersaoDF);   //MS
+         31: Result := NotaUtil.GetURLMG(AAmbiente, ALayOut, AModeloDF, AVersaoDF);   //MG
+         15: Result := NotaUtil.GetURLSVAN(AAmbiente, ALayOut, AModeloDF, AVersaoDF); //PA
+         25: Result := NotaUtil.GetURLSVRS(AAmbiente, ALayOut, AModeloDF, AVersaoDF); //PB
+         41: Result := NotaUtil.GetURLPR(AAmbiente, ALayOut, AModeloDF, AVersaoDF);   //PR
+         26: Result := NotaUtil.GetURLPE(AAmbiente, ALayOut, AModeloDF, AVersaoDF);   //PE
+         22: Result := NotaUtil.GetURLSVAN(AAmbiente, ALayOut, AModeloDF, AVersaoDF); //PI
+         33: Result := NotaUtil.GetURLSVRS(AAmbiente, ALayOut, AModeloDF, AVersaoDF); //RJ
+         24: Result := NotaUtil.GetURLSVRS(AAmbiente, ALayOut, AModeloDF, AVersaoDF); //RN
+         43: Result := NotaUtil.GetURLRS(AAmbiente, ALayOut, AModeloDF, AVersaoDF);   //RS
+         11: Result := NotaUtil.GetURLSVRS(AAmbiente, ALayOut, AModeloDF, AVersaoDF); //RO
+         14: Result := NotaUtil.GetURLSVRS(AAmbiente, ALayOut, AModeloDF, AVersaoDF); //RR
+         42: Result := NotaUtil.GetURLSVRS(AAmbiente, ALayOut, AModeloDF, AVersaoDF); //SC
+         35: Result := NotaUtil.GetURLSP(AAmbiente, ALayOut, AModeloDF, AVersaoDF);   //SP
+         28: Result := NotaUtil.GetURLSVRS(AAmbiente, ALayOut, AModeloDF, AVersaoDF); //SE
+         17: Result := NotaUtil.GetURLSVRS(AAmbiente, ALayOut, AModeloDF, AVersaoDF); //TO
        end;
       end;
   3 : begin
@@ -1224,6 +1228,23 @@ begin
     end;
    end;
 end;
+
+class function NotaUtil.GetURLES(AAmbiente: Integer;
+  ALayOut: TLayOut; AModeloDF: TpcnModeloDF = moNFe; AVersaoDF: TpcnVersaoDF = ve200): WideString;
+begin
+ if AModeloDF = moNFe then
+  begin
+    case ALayOut of
+      LayNfeCadastro : Result := DFeUtil.SeSenao(AAmbiente=1, 'https://app.sefaz.es.gov.br/ConsultaCadastroService/CadConsultaCadastro2.asmx','https://app.sefaz.es.gov.br/ConsultaCadastroService/CadConsultaCadastro2.asmx');
+      else             Result := NotaUtil.GetURLSVRS(AAmbiente, ALayOut, AModeloDF, AVersaoDF);
+    end;
+  end
+ else
+  begin
+   Result := NotaUtil.GetURLSVRS(AAmbiente, ALayOut, AModeloDF, AVersaoDF);
+  end;
+end;
+
 
 class function NotaUtil.GetURLGO(AAmbiente: Integer;
   ALayOut: TLayOut; AModeloDF: TpcnModeloDF = moNFe; AVersaoDF: TpcnVersaoDF = ve200): WideString;
