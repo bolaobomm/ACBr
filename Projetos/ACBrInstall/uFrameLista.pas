@@ -115,6 +115,7 @@ type
     ACBrGNREGuiaFRpkg_dpk: TCheckBox;
     ACBrNFeDanfeESCPOS_dpk: TCheckBox;
 	ACBr_SAT_Extrato_ESCPOS_dpk: TCheckBox;
+	ACBrGNREGuiaRLpkg_dpk: TCheckBox;
     procedure btnPacotesMarcarTodosClick(Sender: TObject);
     procedure btnPacotesDesmarcarTodosClick(Sender: TObject);
     procedure VerificarCheckboxes(Sender: TObject);
@@ -207,9 +208,10 @@ end;
 
 function TframePacotes.IsPacoteGNRE(const ANomePacote: String): Boolean;
 const
-  PACOTES_GNRE: array [0..1] of String =
+  PACOTES_GNRE: array [0..2] of String =
     ('ACBr_GNRE.dpk',
-    'ACBrGNREGuiaFRpkg.dpk');
+    'ACBrGNREGuiaFRpkg.dpk',
+	'ACBrGNREGuiaRLpkg.dpk');
 begin
   Result := MatchText(ANomePacote, PACOTES_GNRE);
 end;

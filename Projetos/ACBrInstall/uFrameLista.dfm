@@ -845,6 +845,10 @@ object framePacotes: TframePacotes
       Caption = 'CT-e'
       ImageIndex = 1
       OnHide = tsNFeHide
+      ExplicitLeft = 0
+      ExplicitTop = 0
+      ExplicitWidth = 0
+      ExplicitHeight = 0
       object ACBrCTeDacteFR_dpk: TCheckBox
         AlignWithMargins = True
         Left = 20
@@ -910,6 +914,10 @@ object framePacotes: TframePacotes
       Caption = 'NFS-e'
       ImageIndex = 2
       OnHide = tsNFeHide
+      ExplicitLeft = 0
+      ExplicitTop = 0
+      ExplicitWidth = 0
+      ExplicitHeight = 0
       object CheckBox2: TCheckBox
         AlignWithMargins = True
         Left = 20
@@ -975,6 +983,10 @@ object framePacotes: TframePacotes
       Caption = 'Boletos'
       ImageIndex = 3
       OnHide = tsNFeHide
+      ExplicitLeft = 0
+      ExplicitTop = 0
+      ExplicitWidth = 0
+      ExplicitHeight = 0
       object ACBr_BoletoFC_FR_dpk: TCheckBox
         AlignWithMargins = True
         Left = 20
@@ -1040,6 +1052,10 @@ object framePacotes: TframePacotes
       Caption = 'MDF-e'
       ImageIndex = 4
       OnHide = tsNFeHide
+      ExplicitLeft = 0
+      ExplicitTop = 0
+      ExplicitWidth = 0
+      ExplicitHeight = 0
       object ACBrMDFeDAMDFEFRpkg_dpk: TCheckBox
         AlignWithMargins = True
         Left = 20
@@ -1105,6 +1121,10 @@ object framePacotes: TframePacotes
       Caption = 'SAT'
       ImageIndex = 5
       OnHide = tsNFeHide
+      ExplicitLeft = 0
+      ExplicitTop = 0
+      ExplicitWidth = 0
+      ExplicitHeight = 0
       object ACBr_SAT_Extrato_Fortes_dpk: TCheckBox
         AlignWithMargins = True
         Left = 20
@@ -1130,6 +1150,10 @@ object framePacotes: TframePacotes
       Caption = 'GNRE'
       ImageIndex = 6
       OnHide = tsNFeHide
+      ExplicitLeft = 0
+      ExplicitTop = 0
+      ExplicitWidth = 0
+      ExplicitHeight = 0
       object ACBrGNREGuiaFRpkg_dpk: TCheckBox
         AlignWithMargins = True
         Left = 20
@@ -1148,6 +1172,26 @@ object framePacotes: TframePacotes
         Font.Style = []
         ParentFont = False
         TabOrder = 0
+        OnClick = VerificarCheckboxes
+      end
+      object ACBrGNREGuiaRLpkg_dpk: TCheckBox
+        AlignWithMargins = True
+        Left = 20
+        Top = 38
+        Width = 182
+        Height = 17
+        Margins.Left = 25
+        Margins.Top = 0
+        Margins.Right = 0
+        Margins.Bottom = 0
+        Caption = 'ACBrGNREGuiaRLpkg.dpk'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWindowText
+        Font.Height = -11
+        Font.Name = 'Tahoma'
+        Font.Style = []
+        ParentFont = False
+        TabOrder = 1
         OnClick = VerificarCheckboxes
       end
     end
