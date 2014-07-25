@@ -338,6 +338,23 @@ begin
             ConfigURL.ProCancelaNFSe        := 'http://nfse.gaspar.sc.gov.br/NFSEWS/Services.svc';
            end;
            *)
+  4210506: begin // Maravilha/SC
+            ConfigURL.HomNomeCidade         := '';
+            ConfigURL.HomRecepcaoLoteRPS    := 'http://187.45.102.245:8090/NFSEWSTESTE/Services.svc';
+            ConfigURL.HomConsultaLoteRPS    := 'http://187.45.102.245:8090/NFSEWSTESTE/Services.svc';
+            ConfigURL.HomConsultaNFSeRPS    := 'http://187.45.102.245:8090/NFSEWSTESTE/Services.svc';
+            ConfigURL.HomConsultaSitLoteRPS := 'http://187.45.102.245:8090/NFSEWSTESTE/Services.svc';
+            ConfigURL.HomConsultaNFSe       := 'http://187.45.102.245:8090/NFSEWSTESTE/Services.svc';
+            ConfigURL.HomCancelaNFSe        := 'http://187.45.102.245:8090/NFSEWSTESTE/Services.svc';
+
+            ConfigURL.ProNomeCidade         := '';
+            ConfigURL.ProRecepcaoLoteRPS    := 'http://187.45.102.245:8090/NFSEWS/Services.svc';
+            ConfigURL.ProConsultaLoteRPS    := 'http://187.45.102.245:8090/NFSEWS/Services.svc';
+            ConfigURL.ProConsultaNFSeRPS    := 'http://187.45.102.245:8090/NFSEWS/Services.svc';
+            ConfigURL.ProConsultaSitLoteRPS := 'http://187.45.102.245:8090/NFSEWS/Services.svc';
+            ConfigURL.ProConsultaNFSe       := 'http://187.45.102.245:8090/NFSEWS/Services.svc';
+            ConfigURL.ProCancelaNFSe        := 'http://187.45.102.245:8090/NFSEWS/Services.svc';
+           end;
   4309407: begin // Guapore/RS
             ConfigURL.HomNomeCidade         := '';
             ConfigURL.HomRecepcaoLoteRPS    := 'http://177.20.255.245/NFSEWSTESTE/Services.svc';
