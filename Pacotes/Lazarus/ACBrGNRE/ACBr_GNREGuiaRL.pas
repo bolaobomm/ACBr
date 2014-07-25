@@ -2,19 +2,20 @@
   This source is only used to compile and install the package.
  }
 
-unit ACBr_GNREGuiaFortes;
+unit ACBr_GNREGuiaRL;
 
 interface
 
 uses
-  LazarusPackageIntf;
+  ACBrGNREGuiaFRFortes, LazarusPackageIntf;
 
 implementation
 
 procedure Register;
 begin
+  RegisterUnit('ACBrGNREGuiaFRFortes', @ACBrGNREGuiaFRFortes.Register);
 end;
 
 initialization
-  RegisterPackage('ACBr_GNREGuiaFortes', @Register);
+  RegisterPackage('ACBr_GNREGuiaRL', @Register);
 end.

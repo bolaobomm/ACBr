@@ -298,6 +298,7 @@ type
     frxPagamento: TfrxDBDataset;
     cdsParametrosQtdeItens: TIntegerField;
     cdsCalculoImpostovTroco: TFloatField;
+    cdsDadosProdutosvBcISSQN: TFloatField;
     constructor Create(AOwner: TComponent); override;
     procedure frxReportBeforePrint(Sender: TfrxReportComponent);
   private
@@ -688,6 +689,7 @@ begin
           with FNFe.Det.Items[i].Imposto.ISSQN do
           begin
             FieldByName('vISSQN').AsFloat := vISSQN;
+            FieldByName('vBcISSQN').AsFloat := vBC;
           end;
 
           with FNFe.Det.Items[i].Imposto.ICMS do

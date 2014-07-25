@@ -388,6 +388,9 @@ object dmACBrNFeFR: TdmACBrNFeFR
     object cdsDadosProdutosvISSQN: TFloatField
       FieldName = 'vISSQN'
     end
+    object cdsDadosProdutosvBcISSQN: TFloatField
+      FieldName = 'vBcISSQN'
+    end
   end
   object cdsParametros: TClientDataSet
     Aggregates = <>
@@ -902,7 +905,8 @@ object dmACBrNFeFR: TdmACBrNFeFR
       'DescricaoProduto=DescricaoProduto'
       'VTotTrib=VTotTrib'
       'ChaveNFe=ChaveNFe'
-      'vISSQN=vISSQN')
+      'vISSQN=vISSQN'
+      'vBcISSQN=vBcISSQN')
     OpenDataSource = False
     DataSet = cdsDadosProdutos
     BCDToCurrency = False
@@ -1065,8 +1069,9 @@ object dmACBrNFeFR: TdmACBrNFeFR
     Top = 148
   end
   object frxReport: TfrxReport
-    Version = '5.0.11'
+    Version = '4.15'
     DotMatrixReport = False
+    EngineOptions.DoublePass = True
     IniFile = '\Software\Fast Reports'
     PreviewOptions.AllowEdit = False
     PreviewOptions.Buttons = [pbPrint, pbZoom, pbFind, pbNavigator, pbExportQuick]
@@ -1074,7 +1079,7 @@ object dmACBrNFeFR: TdmACBrNFeFR
     PrintOptions.Printer = 'Default'
     PrintOptions.PrintOnSheet = 0
     ReportOptions.CreateDate = 40401.475989294000000000
-    ReportOptions.LastChange = 41827.584273888900000000
+    ReportOptions.LastChange = 41839.319318576390000000
     ScriptLanguage = 'PascalScript'
     StoreInDFM = False
     OnBeforePrint = frxReportBeforePrint
