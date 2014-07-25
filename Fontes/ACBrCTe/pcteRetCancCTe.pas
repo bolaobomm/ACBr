@@ -57,12 +57,12 @@ type
     FLeitor: TLeitor;
     FtpAmb: TpcnTipoAmbiente;
     FdhRecbto: TDateTime;
-    FcStat: integer;
-    FcUF: integer;
-    FchCTe: string;
-    FverAplic: string;
-    FnProt: string;
-    FxMotivo: string;
+    FcStat: Integer;
+    FcUF: Integer;
+    FchCTe: String;
+    FverAplic: String;
+    FnProt: String;
+    FxMotivo: String;
     FId: String;
   public
     constructor Create;
@@ -71,13 +71,13 @@ type
   published
     property Leitor: TLeitor         read FLeitor   write FLeitor;
     property tpAmb: TpcnTipoAmbiente read FtpAmb    write FtpAmb;
-    property verAplic: string        read FverAplic write FverAplic;
-    property cStat: integer          read FcStat    write FcStat;
-    property xMotivo: string         read FxMotivo  write FxMotivo;
-    property cUF: integer            read FcUF      write FcUF;
-    property chCTe: string           read FchCTe    write FchCTe;
+    property verAplic: String        read FverAplic write FverAplic;
+    property cStat: Integer          read FcStat    write FcStat;
+    property xMotivo: String         read FxMotivo  write FxMotivo;
+    property cUF: Integer            read FcUF      write FcUF;
+    property chCTe: String           read FchCTe    write FchCTe;
     property dhRecbto: TDateTime     read FdhRecbto write FdhRecbto;
-    property nProt: string           read FnProt    write FnProt;
+    property nProt: String           read FnProt    write FnProt;
     property Id: String              read FId       write FId;
   end;
 

@@ -61,12 +61,12 @@ type
   private
     FLeitor: TLeitor;
     FtpAmb: TpcnTipoAmbiente;
-    Fversao: string;
-    FverAplic: string;
-    FnRec: string;
-    FcStat: integer;
-    FxMotivo: string;
-    FcUF: integer;
+    Fversao: String;
+    FverAplic: String;
+    FnRec: String;
+    FcStat: Integer;
+    FxMotivo: String;
+    FcUF: Integer;
     FProtCTe: TProtCTeCollection;
 
     procedure SetProtCTe(const Value: TProtCTeCollection);
@@ -77,12 +77,12 @@ type
   published
     property Leitor: TLeitor             read FLeitor   write FLeitor;
     property tpAmb: TpcnTipoAmbiente     read FtpAmb    write FtpAmb;
-    property versao: string              read Fversao   write Fversao;
-    property verAplic: string            read FverAplic write FverAplic;
-    property nRec: string                read FnRec     write FnRec;
-    property cStat: integer              read FcStat    write FcStat;
-    property xMotivo: string             read FxMotivo  write FxMotivo;
-    property cUF: integer                read FcUF      write FcUF;
+    property versao: String              read Fversao   write Fversao;
+    property verAplic: String            read FverAplic write FverAplic;
+    property nRec: String                read FnRec     write FnRec;
+    property cStat: Integer              read FcStat    write FcStat;
+    property xMotivo: String             read FxMotivo  write FxMotivo;
+    property cUF: Integer                read FcUF      write FcUF;
     property ProtCTe: TProtCTeCollection read FProtCTe  write SetProtCTe;
   end;
 
@@ -98,25 +98,25 @@ type
 
   TProtCTeCollectionItem = class(TCollectionItem)
   private
-    FId: string;
+    FId: String;
     FtpAmb: TpcnTipoAmbiente;
-    FverAplic: string;
-    FchCTe: string;
+    FverAplic: String;
+    FchCTe: String;
     FdhRecbto: TDateTime;
-    FnProt: string;
-    FdigVal: string;
-    FcStat: integer;
-    FxMotivo: string;
+    FnProt: String;
+    FdigVal: String;
+    FcStat: Integer;
+    FxMotivo: String;
   published
-    property Id: string              read FId       write FId;
+    property Id: String              read FId       write FId;
     property tpAmb: TpcnTipoAmbiente read FtpAmb    write FtpAmb;
-    property verAplic: string        read FverAplic write FverAplic;
-    property chCTe: string           read FchCTe    write FchCTe;
+    property verAplic: String        read FverAplic write FverAplic;
+    property chCTe: String           read FchCTe    write FchCTe;
     property dhRecbto: TDateTime     read FdhRecbto write FdhRecbto;
-    property nProt: string           read FnProt    write FnProt;
-    property digVal: string          read FdigVal   write FdigVal;
-    property cStat: integer          read FcStat    write FcStat;
-    property xMotivo: string         read FxMotivo  write FxMotivo;
+    property nProt: String           read FnProt    write FnProt;
+    property digVal: String          read FdigVal   write FdigVal;
+    property cStat: Integer          read FcStat    write FcStat;
+    property xMotivo: String         read FxMotivo  write FxMotivo;
   end;
 
 implementation
@@ -166,7 +166,7 @@ end;
 function TRetConsReciCTe.LerXML: boolean;
 var
   ok: boolean;
-  i: integer;
+  i: Integer;
 begin
   Result := False;
   try
@@ -186,7 +186,7 @@ begin
       begin
         ProtCTe.Add;
 
-        (*PR04*)ProtCTe[i].FId       := Leitor.rAtributo('Id='); // Incluido por Italo em 20/05/2013
+        (*PR04*)ProtCTe[i].FId       := Leitor.rAtributo('Id='); 
         (*PR05*)ProtCTe[i].FtpAmb    := StrToTpAmb(ok, Leitor.rCampo(tcStr, 'tpAmb'));
         (*PR06*)ProtCTe[i].FverAplic := Leitor.rCampo(tcStr, 'verAplic');
         (*PR07*)ProtCTe[i].FchCTe    := Leitor.rCampo(tcStr, 'chCTe');

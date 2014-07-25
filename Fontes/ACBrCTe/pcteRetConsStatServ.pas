@@ -45,7 +45,9 @@
 
 unit pcteRetConsStatServ;
 
-interface uses
+interface
+
+uses
   SysUtils, Classes, pcnAuxiliar, pcnConversao, pcnLeitor;
 
 type
@@ -54,14 +56,14 @@ type
   private
     FLeitor: TLeitor;
     FtpAmb: TpcnTipoAmbiente;
-    FverAplic: string;
+    FverAplic: String;
     FcStat: integer;
-    FxMotivo: string;
+    FxMotivo: String;
     FcUF: integer;
     FdhRecbto: TDateTime;
-    FtMed: integer;
+    FtMed: Integer;
     FdhRetorno: TDateTime;
-    FxObs: string;
+    FxObs: String;
   public
     constructor Create;
     destructor Destroy; override;
@@ -69,14 +71,14 @@ type
   published
     property Leitor: TLeitor         read FLeitor    write FLeitor;
     property tpAmb: TpcnTipoAmbiente read FtpAmb     write FtpAmb;
-    property verAplic: string        read FverAplic  write FverAplic;
-    property cStat: integer          read FcStat     write FcStat;
-    property xMotivo: string         read FxMotivo   write FxMotivo;
-    property cUF: integer            read FcUF       write FcUF;
+    property verAplic: String        read FverAplic  write FverAplic;
+    property cStat: Integer          read FcStat     write FcStat;
+    property xMotivo: String         read FxMotivo   write FxMotivo;
+    property cUF: Integer            read FcUF       write FcUF;
     property dhRecbto: TDateTime     read FdhRecbto  write FdhRecbto;
-    property tMed: integer           read FtMed      write FtMed;
+    property tMed: Integer           read FtMed      write FtMed;
     property dhRetorno: TDateTime    read FdhRetorno write FdhRetorno;
-    property xObs: string            read FxObs      write FxObs;
+    property xObs: String            read FxObs      write FxObs;
   end;
 
 implementation

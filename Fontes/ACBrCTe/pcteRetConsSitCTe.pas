@@ -82,11 +82,11 @@ type
   private
     FLeitor: TLeitor;
     FtpAmb: TpcnTipoAmbiente;
-    FverAplic: string;
+    FverAplic: String;
     FcStat: Integer;
-    FxMotivo: string;
-    FcUF: integer;
-    FchCTe: string;
+    FxMotivo: String;
+    FcUF: Integer;
+    FchCTe: String;
     FprotCTe: TProcCTe;
     FretCancCTe: TRetCancCTe;
     FprocEventoCTe: TRetEventoCTeCollection;
@@ -97,11 +97,11 @@ type
   published
     property Leitor: TLeitor                        read FLeitor        write FLeitor;
     property tpAmb: TpcnTipoAmbiente                read FtpAmb         write FtpAmb;
-    property verAplic: string                       read FverAplic      write FverAplic;
+    property verAplic: String                       read FverAplic      write FverAplic;
     property cStat: Integer                         read FcStat         write FcStat;
-    property xMotivo: string                        read FxMotivo       write FxMotivo;
-    property cUF: integer                           read FcUF           write FcUF;
-    property chCTe: string                          read FchCTe         write FchCTe;
+    property xMotivo: String                        read FxMotivo       write FxMotivo;
+    property cUF: Integer                           read FcUF           write FcUF;
+    property chCTe: String                          read FchCTe         write FchCTe;
     property protCTe: TProcCTe                      read FprotCTe       write FprotCTe;
     property retCancCTe: TRetCancCTe                read FretCancCTe    write FretCancCTe;
     property procEventoCTe: TRetEventoCTeCollection read FprocEventoCTe write FprocEventoCTe;

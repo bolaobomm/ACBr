@@ -214,11 +214,11 @@ type
     procedure qrb_10_HeaderItensBeforePrint(Sender: TQRCustomBand; var PrintBand: Boolean);
     procedure qrb_08_Correcao_DetalheBeforePrint(Sender: TQRCustomBand; var PrintBand: Boolean);
     procedure qrb_09_Correcao_SummaryBeforePrint(Sender: TQRCustomBand; var PrintBand: Boolean);
-    procedure qrdbtxtValorPrint(sender: TObject; var Value: string);
+    procedure qrdbtxtValorPrint(sender: TObject; var Value: String);
   private
     procedure Itens;
   public
-    procedure ProtocoloCTe(const sProtocolo: string);
+    procedure ProtocoloCTe(const sProtocolo: String);
   end;
 
 implementation
@@ -230,7 +230,7 @@ uses
 {$R *.dfm}
 
 var
-  FProtocoloCTe : string;
+  FProtocoloCTe : String;
 
 procedure TfrmCTeDAEventoQRRetrato.qrb_08_Correcao_DetalheBeforePrint(Sender: TQRCustomBand;
   var PrintBand: Boolean);
@@ -264,7 +264,7 @@ begin
   end;
 end;
 
-procedure TfrmCTeDAEventoQRRetrato.ProtocoloCTe(const sProtocolo: string);
+procedure TfrmCTeDAEventoQRRetrato.ProtocoloCTe(const sProtocolo: String);
 begin
   FProtocoloCTe := sProtocolo;
 end;
@@ -275,7 +275,7 @@ begin
 
   Itens;
 
-  QRCTeEvento.ReportTitle:='Evento: ' + FormatFloat( '000,000,000', FEventoCTe.InfEvento.nSeqEvento );
+  QRCTeEvento.ReportTitle := 'Evento: ' + FormatFloat('000,000,000', FEventoCTe.InfEvento.nSeqEvento);
 
   QRCTeEvento.Page.TopMargin    := FMargemSuperior * 100;
   QRCTeEvento.Page.BottomMargin := FMargemInferior * 100;
@@ -294,9 +294,6 @@ procedure TfrmCTeDAEventoQRRetrato.qrb_01_TituloBeforePrint(Sender: TQRCustomBan
 begin
   inherited;
 
-//  TpcnTpEvento = (teCCe, teCancelamento, teManifDestConfirmacao, teManifDestCiencia,
-//                  teManifDestDesconhecimento, teManifDestOperNaoRealizada,
-//                  teEncerramento, teEPEC, teInclusaoCondutor, teMultiModal);
   case FEventoCTe.InfEvento.tpEvento of
    teCCe: begin
            qrlLinha1.Caption := 'CARTA DE CORREÇÃO ELETRÔNICA';
@@ -329,8 +326,9 @@ begin
 
     qrlModelo.Caption  := FCTe.ide.modelo;
     qrlSerie.Caption   := IntToStr(FCTe.ide.serie);
-    qrlNumCTe.Caption  := FormatFloat( '000,000,000', FCTe.Ide.nCT );
+    qrlNumCTe.Caption  := FormatFloat('000,000,000', FCTe.Ide.nCT);
     qrlEmissao.Caption := DFeUtil.FormatDateTime(DateTimeToStr(FCTe.Ide.dhEmi));
+
     SetBarCodeImage(Copy(FCTe.InfCTe.Id, 4, 44), qriBarCode);
     qrlChave.Caption := CTeUtil.FormatarChaveAcesso(Copy(FCTe.InfCTe.Id, 4, 44));
    end;
@@ -349,10 +347,12 @@ begin
       end;
 
       qrlOrgao.Caption := IntToStr(InfEvento.cOrgao);
+
       case InfEvento.tpAmb of
        taProducao:    qrlTipoAmbiente.Caption := 'PRODUÇÃO';
        taHomologacao: qrlTipoAmbiente.Caption := 'HOMOLOGAÇÃO - SEM VALOR FISCAL';
       end;
+
       qrlEmissaoEvento.Caption   := DFeUtil.FormatDateTime(DateTimeToStr(InfEvento.dhEvento));
       qrlTipoEvento.Caption      := InfEvento.TipoEvento;
       qrlDescricaoEvento.Caption := InfEvento.DescEvento;
@@ -379,8 +379,8 @@ begin
     qrlCNPJEmitente.Caption     := DFeUtil.FormatarCNPJCPF(FCTe.emit.CNPJ);
     qrlEnderecoEmitente.Caption := FCTe.emit.EnderEmit.xLgr + ', ' + FCTe.emit.EnderEmit.nro;
     qrlBairroEmitente.Caption   := FCTe.emit.EnderEmit.xBairro;
-    qrlCEPEmitente.Caption      := DFeUtil.FormatarCEP(FormatFloat( '00000000', FCTe.emit.EnderEmit.CEP ));
-    qrlMunEmitente.Caption      := FCTe.emit.EnderEmit.xMun+' - '+FCTe.emit.EnderEmit.UF;
+    qrlCEPEmitente.Caption      := DFeUtil.FormatarCEP(FormatFloat('00000000', FCTe.emit.EnderEmit.CEP));
+    qrlMunEmitente.Caption      := FCTe.emit.EnderEmit.xMun + ' - ' + FCTe.emit.EnderEmit.UF;
     qrlFoneEmitente.Caption     := DFeUtil.FormatarFone(FCTe.emit.enderEmit.fone);
     qrlInscEstEmitente.Caption  := FCTe.emit.IE;
    end;
@@ -406,8 +406,8 @@ begin
           qrlCNPJTomador.Caption     := DFeUtil.FormatarCNPJCPF(FCTe.Rem.CNPJCPF);
           qrlEnderecoTomador.Caption := FCTe.Rem.EnderReme.xLgr + ', ' + FCTe.Rem.EnderReme.nro;
           qrlBairroTomador.Caption   := FCTe.Rem.EnderReme.xBairro;
-          qrlCEPTomador.Caption      := DFeUtil.FormatarCEP(FormatFloat( '00000000', FCTe.Rem.EnderReme.CEP));
-          qrlMunTomador.Caption      := FCTe.Rem.EnderReme.xMun+' - '+FCTe.Rem.EnderReme.UF;
+          qrlCEPTomador.Caption      := DFeUtil.FormatarCEP(FormatFloat('00000000', FCTe.Rem.EnderReme.CEP));
+          qrlMunTomador.Caption      := FCTe.Rem.EnderReme.xMun + ' - ' + FCTe.Rem.EnderReme.UF;
           qrlFoneTomador.Caption     := DFeUtil.FormatarFone(FCTe.Rem.fone);
           qrlInscEstTomador.Caption  := FCTe.Rem.IE;
         end;
@@ -417,8 +417,8 @@ begin
           qrlCNPJTomador.Caption     := DFeUtil.FormatarCNPJCPF(FCTe.Exped.CNPJCPF);
           qrlEnderecoTomador.Caption := FCTe.Exped.EnderExped.xLgr + ', ' + FCTe.Exped.EnderExped.nro;
           qrlBairroTomador.Caption   := FCTe.Exped.EnderExped.xBairro;
-          qrlCEPTomador.Caption      := DFeUtil.FormatarCEP(FormatFloat( '00000000', FCTe.Exped.EnderExped.CEP));
-          qrlMunTomador.Caption      := FCTe.Exped.EnderExped.xMun+' - '+FCTe.Exped.EnderExped.UF;
+          qrlCEPTomador.Caption      := DFeUtil.FormatarCEP(FormatFloat('00000000', FCTe.Exped.EnderExped.CEP));
+          qrlMunTomador.Caption      := FCTe.Exped.EnderExped.xMun + ' - ' + FCTe.Exped.EnderExped.UF;
           qrlFoneTomador.Caption     := DFeUtil.FormatarFone(FCTe.Exped.fone);
           qrlInscEstTomador.Caption  := FCTe.Exped.IE;
         end;
@@ -428,8 +428,8 @@ begin
           qrlCNPJTomador.Caption     := DFeUtil.FormatarCNPJCPF(FCTe.Receb.CNPJCPF);
           qrlEnderecoTomador.Caption := FCTe.Receb.EnderReceb.xLgr + ', ' + FCTe.Receb.EnderReceb.nro;
           qrlBairroTomador.Caption   := FCTe.Receb.EnderReceb.xBairro;
-          qrlCEPTomador.Caption      := DFeUtil.FormatarCEP(FormatFloat( '00000000', FCTe.Receb.EnderReceb.CEP));
-          qrlMunTomador.Caption      := FCTe.Receb.EnderReceb.xMun+' - '+FCTe.Receb.EnderReceb.UF;
+          qrlCEPTomador.Caption      := DFeUtil.FormatarCEP(FormatFloat('00000000', FCTe.Receb.EnderReceb.CEP));
+          qrlMunTomador.Caption      := FCTe.Receb.EnderReceb.xMun + ' - ' + FCTe.Receb.EnderReceb.UF;
           qrlFoneTomador.Caption     := DFeUtil.FormatarFone(FCTe.Receb.fone);
           qrlInscEstTomador.Caption  := FCTe.Receb.IE;
         end;
@@ -439,8 +439,8 @@ begin
           qrlCNPJTomador.Caption     := DFeUtil.FormatarCNPJCPF(FCTe.Dest.CNPJCPF);
           qrlEnderecoTomador.Caption := FCTe.Dest.EnderDest.xLgr + ', ' + FCTe.Dest.EnderDest.nro;
           qrlBairroTomador.Caption   := FCTe.Dest.EnderDest.xBairro;
-          qrlCEPTomador.Caption      := DFeUtil.FormatarCEP(FormatFloat( '00000000', FCTe.Dest.EnderDest.CEP));
-          qrlMunTomador.Caption      := FCTe.Dest.EnderDest.xMun+' - '+FCTe.Dest.EnderDest.UF;
+          qrlCEPTomador.Caption      := DFeUtil.FormatarCEP(FormatFloat('00000000', FCTe.Dest.EnderDest.CEP));
+          qrlMunTomador.Caption      := FCTe.Dest.EnderDest.xMun + ' - ' + FCTe.Dest.EnderDest.UF;
           qrlFoneTomador.Caption     := DFeUtil.FormatarFone(FCTe.Dest.fone);
           qrlInscEstTomador.Caption  := FCTe.Dest.IE;
         end;
@@ -451,8 +451,8 @@ begin
       qrlCNPJTomador.Caption     := DFeUtil.FormatarCNPJCPF(FCTe.Ide.Toma4.CNPJCPF);
       qrlEnderecoTomador.Caption := FCTe.Ide.Toma4.EnderToma.xLgr + ', ' + FCTe.Ide.Toma4.EnderToma.nro;
       qrlBairroTomador.Caption   := FCTe.Ide.Toma4.EnderToma.xBairro;
-      qrlCEPTomador.Caption      := DFeUtil.FormatarCEP(FormatFloat( '00000000', FCTe.Ide.Toma4.EnderToma.CEP));
-      qrlMunTomador.Caption      := FCTe.Ide.Toma4.EnderToma.xMun+' - '+FCTe.Ide.Toma4.EnderToma.UF;
+      qrlCEPTomador.Caption      := DFeUtil.FormatarCEP(FormatFloat('00000000', FCTe.Ide.Toma4.EnderToma.CEP));
+      qrlMunTomador.Caption      := FCTe.Ide.Toma4.EnderToma.xMun + ' - ' + FCTe.Ide.Toma4.EnderToma.UF;
       qrlFoneTomador.Caption     := DFeUtil.FormatarFone(FCTe.Ide.Toma4.fone);
       qrlInscEstTomador.Caption  := FCTe.Ide.Toma4.IE;
      end;
@@ -506,9 +506,9 @@ begin
            lblTitulo_06.Caption := 'DESCRIÇÃO';
            qrmCondicoes.Lines.Clear;
            qrmCondicoes.Lines.Add('Motivo do EPEC     : ' + FEventoCTe.InfEvento.detEvento.xJust);
-           qrmCondicoes.Lines.Add('Valor do ICMS      : ' + FormatFloat( '#0.00', FEventoCTe.InfEvento.detEvento.vICMS));
-           qrmCondicoes.Lines.Add('Valor da Prestação : ' + FormatFloat( '#0.00', FEventoCTe.InfEvento.detEvento.vTPrest));
-           qrmCondicoes.Lines.Add('Valor da Carga     : ' + FormatFloat( '#0.00', FEventoCTe.InfEvento.detEvento.vCarga));
+           qrmCondicoes.Lines.Add('Valor do ICMS      : ' + FormatFloat('#0.00', FEventoCTe.InfEvento.detEvento.vICMS));
+           qrmCondicoes.Lines.Add('Valor da Prestação : ' + FormatFloat('#0.00', FEventoCTe.InfEvento.detEvento.vTPrest));
+           qrmCondicoes.Lines.Add('Valor da Carga     : ' + FormatFloat('#0.00', FEventoCTe.InfEvento.detEvento.vCarga));
            qrmCondicoes.Lines.Add('UF de inicio/fim da prestação: ' + FEventoCTe.InfEvento.detEvento.UFIni + ' / ' +
                                                                       FEventoCTe.InfEvento.detEvento.UFFim);
           end;
@@ -519,13 +519,13 @@ procedure TfrmCTeDAEventoQRRetrato.qrb_10_HeaderItensBeforePrint(
   Sender: TQRCustomBand; var PrintBand: Boolean);
 begin
   inherited;
-  // Imprime os Documentos Originários se o Tipo de CTe for Normal
-  qrlPaginaDe.Caption := '';//' de ' + IntToStr(QRCTeEvento.QRPrinter.PageNumber);
+
+  qrlPaginaDe.Caption := ''; //' de ' + IntToStr(QRCTeEvento.QRPrinter.PageNumber);
   qrlblSistema.Caption := FSistema + ' - ' + FUsuario;
 end;
 
 procedure TfrmCTeDAEventoQRRetrato.qrdbtxtValorPrint(sender: TObject;
-  var Value: string);
+  var Value: String);
 var
   vLength: Integer;
 begin
@@ -533,11 +533,12 @@ begin
   vLength := 11 * ((Length(Value) div 90) + 1);
 
   qrb_08_Correcao_Detalhe.Height := vLength;
+
   qrdbtxtValor.Height := vLength;
-  QRShape11.Height := vLength;
-  QRShape3.Height := vLength;
-  QRShape6.Height := vLength;
-  QRShape4.Height := vLength;
+  QRShape11.Height    := vLength;
+  QRShape3.Height     := vLength;
+  QRShape6.Height     := vLength;
+  QRShape4.Height     := vLength;
 end;
 
 end.

@@ -45,7 +45,9 @@
 
 unit pcteRetInutCTe;
 
-interface uses
+interface
+
+uses
   SysUtils, Classes, pcnAuxiliar, pcnConversao, pcnLeitor;
 
 type
@@ -53,19 +55,19 @@ type
   TRetInutCTe = class(TPersistent)
   private
     FtpAmb: TpcnTipoAmbiente;
-    FverAplic: string;
+    FverAplic: String;
     FLeitor: TLeitor;
-    FcStat: integer;
-    FxMotivo: string;
-    FcUF: integer;
-    Fano: integer;
-    FCNPJ: string;
-    FModelo: integer;
-    FSerie: integer;
-    FnCTIni: integer;
-    FnCTFin: integer;
+    FcStat: Integer;
+    FxMotivo: String;
+    FcUF: Integer;
+    Fano: Integer;
+    FCNPJ: String;
+    FModelo: Integer;
+    FSerie: Integer;
+    FnCTIni: Integer;
+    FnCTFin: Integer;
     FdhRecbto: TDateTime;
-    FnProt: string;
+    FnProt: String;
   public
     constructor Create;
     destructor Destroy; override;
@@ -73,18 +75,18 @@ type
   published
     property Leitor: TLeitor         read FLeitor   write FLeitor;
     property tpAmb: TpcnTipoAmbiente read FtpAmb    write FtpAmb;
-    property verAplic: string        read FverAplic write FverAplic;
-    property cStat: integer          read FcStat    write FcStat;
-    property xMotivo: string         read FxMotivo  write FxMotivo;
-    property cUF: integer            read FcUF      write FcUF;
-    property ano: integer            read Fano      write Fano;
-    property CNPJ: string            read FCNPJ     write FCNPJ;
-    property Modelo: integer         read FModelo   write FModelo;
-    property Serie: integer          read FSerie    write FSerie;
-    property nCTIni: integer         read FnCTIni   write FnCTIni;
-    property nCTFin: integer         read FnCTFin   write FnCTFin;
+    property verAplic: String        read FverAplic write FverAplic;
+    property cStat: Integer          read FcStat    write FcStat;
+    property xMotivo: String         read FxMotivo  write FxMotivo;
+    property cUF: Integer            read FcUF      write FcUF;
+    property ano: Integer            read Fano      write Fano;
+    property CNPJ: String            read FCNPJ     write FCNPJ;
+    property Modelo: Integer         read FModelo   write FModelo;
+    property Serie: Integer          read FSerie    write FSerie;
+    property nCTIni: Integer         read FnCTIni   write FnCTIni;
+    property nCTFin: Integer         read FnCTFin   write FnCTFin;
     property dhRecbto: TDateTime     read FdhRecbto write FdhRecbto;
-    property nProt: string           read FnProt    write FnProt;
+    property nProt: String           read FnProt    write FnProt;
   end;
 
 implementation

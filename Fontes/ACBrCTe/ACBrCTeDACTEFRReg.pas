@@ -34,12 +34,12 @@
 {                                                                              }
 {******************************************************************************}
 
-{******************************************************************************
+{*******************************************************************************
 |* Historico
 |*
 |* 30/03/2011: Jeickson Gobeti
 |*  - Inicio do desenvolvimento Dacte FastReport
-******************************************************************************}
+*******************************************************************************}
 {$I ACBr.inc}
 
 unit ACBrCTeDACTEFRReg;
@@ -88,18 +88,19 @@ end;
 { TACBrNFeDANFERaveFileNameProperty }
 
 procedure TACBrCTeDACTEFRFileNameProperty.Edit;
-var Dlg : TOpenDialog ;
+var
+  Dlg: TOpenDialog;
 begin
   Dlg := TOpenDialog.Create(nil);
   try
-     Dlg.FileName   := GetValue ;
-     Dlg.InitialDir := ExtractFilePath(GetValue) ;
-     Dlg.Filter     := 'Arquivos do FastReport|*.fr3|Todos os arquivos|*.*' ;
+     Dlg.FileName   := GetValue;
+     Dlg.InitialDir := ExtractFilePath(GetValue);
+     Dlg.Filter     := 'Arquivos do FastReport|*.fr3|Todos os arquivos|*.*';
 
      if Dlg.Execute then
         SetValue(Dlg.FileName);
   finally
-     Dlg.Free ;
+     Dlg.Free;
   end ;
 end;
 

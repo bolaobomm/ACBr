@@ -162,26 +162,17 @@ type
     procedure GerarInfCTeSub;  // Nivel 2
 
     procedure GerarInfCTeComp;      // Nivel 1
-    procedure GerarImpComp;         // Nivel 2
-    procedure GerarICMSComp;        // Nivel 3
-    procedure GerarCST00Comp;       // Nivel 4
-    procedure GerarCST20Comp;       // Nivel 4
-    procedure GerarCST45Comp;       // Nivel 4
-    procedure GerarCST60Comp;       // Nivel 4
-    procedure GerarCST90Comp;       // Nivel 4
-    procedure GerarICMSOutraUFComp; // Nivel 4
-    procedure GerarICMSSNComp;      // Nivel 4
 
     procedure GerarInfCTeAnu; // Nivel 1
     procedure GerarautXML;    // Nivel 1
 
-    procedure AjustarMunicipioUF(var xUF: string; var xMun: string; var cMun: integer; cPais: integer; vxUF, vxMun: string; vcMun: integer);
-    function ObterNomeMunicipio(const xMun, xUF: string; const cMun: integer): string;
+    procedure AjustarMunicipioUF(var xUF: String; var xMun: String; var cMun: Integer; cPais: Integer; vxUF, vxMun: String; vcMun: Integer);
+    function ObterNomeMunicipio(const xMun, xUF: String; const cMun: Integer): String;
   public
     constructor Create(AOwner: TCTe);
     destructor Destroy; override;
     function GerarXml: boolean;
-    function ObterNomeArquivo: string;
+    function ObterNomeArquivo: String;
   published
     property Gerador: TGerador      read FGerador write FGerador;
     property CTe: TCTe              read FCTe     write FCTe;
@@ -190,19 +181,19 @@ type
 
   TGeradorOpcoes = class(TPersistent)
   private
-    FAjustarTagNro: boolean;
-    FNormatizarMunicipios: boolean;
+    FAjustarTagNro: Boolean;
+    FNormatizarMunicipios: Boolean;
     FGerarTagAssinatura: TpcnTagAssinatura;
-    FPathArquivoMunicipios: string;
-    FValidarInscricoes: boolean;
-    FValidarListaServicos: boolean;
+    FPathArquivoMunicipios: String;
+    FValidarInscricoes: Boolean;
+    FValidarListaServicos: Boolean;
   published
-    property AjustarTagNro: boolean                read FAjustarTagNro         write FAjustarTagNro;
-    property NormatizarMunicipios: boolean         read FNormatizarMunicipios  write FNormatizarMunicipios;
+    property AjustarTagNro: Boolean                read FAjustarTagNro         write FAjustarTagNro;
+    property NormatizarMunicipios: Boolean         read FNormatizarMunicipios  write FNormatizarMunicipios;
     property GerarTagAssinatura: TpcnTagAssinatura read FGerarTagAssinatura    write FGerarTagAssinatura;
-    property PathArquivoMunicipios: string         read FPathArquivoMunicipios write FPathArquivoMunicipios;
-    property ValidarInscricoes: boolean            read FValidarInscricoes     write FValidarInscricoes;
-    property ValidarListaServicos: boolean         read FValidarListaServicos  write FValidarListaServicos;
+    property PathArquivoMunicipios: String         read FPathArquivoMunicipios write FPathArquivoMunicipios;
+    property ValidarInscricoes: Boolean            read FValidarInscricoes     write FValidarInscricoes;
+    property ValidarListaServicos: Boolean         read FValidarListaServicos  write FValidarListaServicos;
   end;
 
 implementation
@@ -235,15 +226,15 @@ begin
   inherited Destroy;
 end;
 
-function TCTeW.ObterNomeArquivo: string;
+function TCTeW.ObterNomeArquivo: String;
 begin
   Result := SomenteNumeros(CTe.infCTe.ID) + '-cte.xml';
 end;
 
-function TCTeW.GerarXml: boolean;
+function TCTeW.GerarXml: Boolean;
 var
   chave: AnsiString;
-  Gerar: boolean;
+  Gerar: Boolean;
   xProtCTe: String;
 begin
   chave := '';
@@ -447,9 +438,9 @@ end;
 
 procedure TCTeW.GerarEnderToma;
 var
-  cMun: integer;
-  xMun: string;
-  xUF: string;
+  cMun: Integer;
+  xMun: String;
+  xUF: String;
 begin
   AjustarMunicipioUF(xUF, xMun, cMun, CTe.Ide.Toma4.EnderToma.cPais,
                                       CTe.Ide.Toma4.EnderToma.UF,
@@ -498,7 +489,7 @@ end;
 
 procedure TCTeW.GerarFluxo;
 var
-  i: integer;
+  i: Integer;
 begin
  if (trim(CTe.Compl.fluxo.xOrig) <> '') or (CTe.Compl.fluxo.pass.Count > 0) or
     (trim(CTe.Compl.fluxo.xDest) <> '') or (trim(CTe.Compl.fluxo.xRota) <> '')
@@ -572,7 +563,7 @@ end;
 
 procedure TCTeW.GerarObsCont;
 var
-  i: integer;
+  i: Integer;
 begin
   for i := 0 to CTe.Compl.ObsCont.Count - 1 do
   begin
@@ -586,7 +577,7 @@ end;
 
 procedure TCTeW.GerarObsFisco;
 var
-  i: integer;
+  i: Integer;
 begin
   for i := 0 to CTe.Compl.ObsFisco.Count - 1 do
   begin
@@ -616,9 +607,9 @@ end;
 
 procedure TCTeW.GerarEnderEmit;
 var
-  cMun: integer;
-  xMun: string;
-  xUF: string;
+  cMun: Integer;
+  xMun: String;
+  xUF: String;
 begin
   AjustarMunicipioUF(xUF, xMun, cMun, CODIGO_BRASIL,
                                       CTe.Emit.enderEmit.UF,
@@ -677,9 +668,9 @@ end;
 
 procedure TCTeW.GerarEnderReme;
 var
-  cMun: integer;
-  xMun: string;
-  xUF: string;
+  cMun: Integer;
+  xMun: String;
+  xUF: String;
 begin
   AjustarMunicipioUF(xUF, xMun, cMun, CTe.Rem.EnderReme.cPais,
                                       CTe.Rem.EnderReme.UF,
@@ -759,9 +750,9 @@ end;
 
 procedure TCTeW.GerarEnderExped;
 var
-  cMun: integer;
-  xMun: string;
-  xUF: string;
+  cMun: Integer;
+  xMun: String;
+  xUF: String;
 begin
   AjustarMunicipioUF(xUF, xMun, cMun, CTe.Exped.EnderExped.cPais,
                                       CTe.Exped.EnderExped.UF,
@@ -818,9 +809,9 @@ end;
 
 procedure TCTeW.GerarEnderReceb;
 var
-  cMun: integer;
-  xMun: string;
-  xUF: string;
+  cMun: Integer;
+  xMun: String;
+  xUF: String;
 begin
   AjustarMunicipioUF(xUF, xMun, cMun, CTe.Receb.EnderReceb.cPais,
                                       CTe.Receb.EnderReceb.UF,
@@ -886,9 +877,9 @@ end;
 
 procedure TCTeW.GerarEnderDest;
 var
-  cMun: integer;
-  xMun: string;
-  xUF: string;
+  cMun: Integer;
+  xMun: String;
+  xUF: String;
 begin
   AjustarMunicipioUF(xUF, xMun, cMun, CTe.Dest.EnderDest.cPais,
                                       CTe.Dest.EnderDest.UF,
@@ -947,7 +938,7 @@ end;
 
 procedure TCTeW.GerarComp;
 var
-  i: integer;
+  i: Integer;
 begin
   for i := 0 to CTe.vPrest.comp.Count - 1 do
   begin
@@ -1123,7 +1114,7 @@ end;
 
 procedure TCTeW.GerarInfQ;
 var
-  i: integer;
+  i: Integer;
 begin
   for i := 0 to CTe.infCTeNorm.InfCarga.InfQ.Count - 1 do
   begin
@@ -1150,7 +1141,7 @@ end;
 
 procedure TCTeW.GerarInfNF;
 var
-  i, j, k, l: integer;
+  i, j, k, l: Integer;
 begin
   for i := 0 to CTe.infCTeNorm.infDoc.infNF.Count - 1 do
   begin
@@ -1234,7 +1225,7 @@ end;
 
 procedure TCTeW.GerarInfNFe;
 var
-  i, j, k, l: integer;
+  i, j, k, l: Integer;
 begin
   for i := 0 to CTe.infCTeNorm.infDoc.InfNFe.Count - 1 do
   begin
@@ -1308,7 +1299,7 @@ end;
 
 procedure TCTeW.GerarInfOutros;
 var
-  i, j, k, l: integer;
+  i, j, k, l: Integer;
 begin
   for i := 0 to CTe.infCTeNorm.infDoc.InfOutros.Count - 1 do
   begin
@@ -1379,7 +1370,7 @@ end;
 
 procedure TCTeW.GerarDocAnt;
 var
-  i, i01, i02: integer;
+  i, i01, i02: Integer;
 begin
   Gerador.wGrupo('docAnt', '#344');
 
@@ -1445,7 +1436,7 @@ end;
 
 procedure TCTeW.GerarInfSeg;
 var
-  i: integer;
+  i: Integer;
 begin
   for i := 0 to CTe.infCTeNorm.seg.Count - 1 do
   begin
@@ -1537,7 +1528,7 @@ end;
 
 procedure TCTeW.GerarVeic;
 var
-  i: integer;
+  i: Integer;
 begin
   for i := 0 to CTe.infCTeNorm.rodo.veic.Count - 1 do
   begin
@@ -1592,7 +1583,7 @@ end;
 
 procedure TCTeW.GerarLacre;
 var
-  i: integer;
+  i: Integer;
 begin
   for i := 0 to CTe.infCTeNorm.rodo.lacRodo.Count - 1 do
   begin
@@ -1606,7 +1597,7 @@ end;
 
 procedure TCTeW.GerarMoto;
 var
-  i: integer;
+  i: Integer;
 begin
   for i := 0 to CTe.infCTeNorm.rodo.moto.Count - 1 do
   begin
@@ -1745,8 +1736,8 @@ end;
 
 procedure TCTeW.GerarFerroEnv;
 var
- i, cMun: integer;
- xMun, xUF: string;
+ i, cMun: Integer;
+ xMun, xUF: String;
 begin
   for i := 0 to CTe.infCTeNorm.ferrov.ferroEnv.Count - 1 do
    begin
@@ -1896,7 +1887,7 @@ end;
 
 procedure TCTeW.GerarCobrDup;
 var
-  i: integer;
+  i: Integer;
 begin
   for i := 0 to CTe.infCTeNorm.cobr.dup.Count - 1 do
   begin
@@ -1975,130 +1966,6 @@ begin
   end;
 end;
 
-procedure TCTeW.GerarImpComp;
-begin
-(*
-  Gerador.wGrupo('impComp', '#416');
-  GerarICMSComp;
-  Gerador.wCampo(tcDe2, '#452', 'vTotTrib   ', 01, 15, 0, CTe.InfCTeComp.impComp.vTotTrib, DSC_VCOMP);
-  Gerador.wCampo(tcStr, '#453', 'infAdFisco ', 01, 1000, 0, CTe.InfCTeComp.impComp.InfAdFisco, DSC_INFADFISCO);
-  Gerador.wGrupo('/impComp');
-*)
-end;
-
-procedure TCTeW.GerarICMSComp;
-begin
-(*
-  Gerador.wGrupo('ICMSComp', '#417');
-
-  if CTe.InfCTeComp.impComp.ICMSComp.SituTrib = cst00 then
-    GerarCST00Comp
-  else if CTe.InfCTeComp.impComp.ICMSComp.SituTrib = cst20 then
-    GerarCST20Comp
-  else if ((CTe.InfCTeComp.impComp.ICMSComp.SituTrib = cst40) or
-           (CTe.InfCTeComp.impComp.ICMSComp.SituTrib = cst41) or
-           (CTe.InfCTeComp.impComp.ICMSComp.SituTrib = cst51)) then
-    GerarCST45Comp
-  else if CTe.InfCTeComp.impComp.ICMSComp.SituTrib = cst60 then
-    GerarCST60Comp
-  else if CTe.InfCTeComp.impComp.ICMSComp.SituTrib = cst90 then
-    GerarCST90Comp
-  else if CTe.InfCTeComp.impComp.ICMSComp.SituTrib = cstICMSOutraUF then
-    GerarICMSOutraUFComp
-  else if CTe.InfCTeComp.impComp.ICMSComp.SituTrib = cstICMSSN then
-    GerarICMSSNComp;
-
-  Gerador.wGrupo('/ICMSComp');
-*)
-end;
-
-procedure TCTeW.GerarCST00Comp;
-begin
-(*
-  Gerador.wGrupo('ICMS00', '#418');
-  Gerador.wCampo(tcStr, '#419', 'CST   ', 02, 02, 1, CSTICMSTOStr(CTe.InfCTeComp.impComp.ICMSComp.ICMS00.CST), DSC_CST);
-  Gerador.wCampo(tcDe2, '#420', 'vBC   ', 01, 15, 1, CTe.InfCTeComp.impComp.ICMSComp.ICMS00.vBC, DSC_VBC);
-  Gerador.wCampo(tcDe2, '#421', 'pICMS ', 01, 05, 1, CTe.InfCTeComp.impComp.ICMSComp.ICMS00.pICMS, DSC_PICMS);
-  Gerador.wCampo(tcDe2, '#422', 'vICMS ', 01, 15, 1, CTe.InfCTeComp.impComp.ICMSComp.ICMS00.vICMS, DSC_VICMS);
-  Gerador.wGrupo('/ICMS00');
-*)
-end;
-
-procedure TCTeW.GerarCST20Comp;
-begin
-(*
-  Gerador.wGrupo('ICMS20', '#423');
-  Gerador.wCampo(tcStr, '#424', 'CST    ', 02, 02, 1, CSTICMSTOStr(CTe.InfCTeComp.impComp.ICMSComp.ICMS20.CST), DSC_CST);
-  Gerador.wCampo(tcDe2, '#425', 'pRedBC ', 01, 05, 1, CTe.InfCTeComp.impComp.ICMSComp.ICMS20.pRedBC, DSC_PREDBC);
-  Gerador.wCampo(tcDe2, '#426', 'vBC    ', 01, 15, 1, CTe.InfCTeComp.impComp.ICMSComp.ICMS20.vBC, DSC_VBC);
-  Gerador.wCampo(tcDe2, '#427', 'pICMS  ', 01, 05, 1, CTe.InfCTeComp.impComp.ICMSComp.ICMS20.pICMS, DSC_PICMS);
-  Gerador.wCampo(tcDe2, '#428', 'vICMS  ', 01, 15, 1, CTe.InfCTeComp.impComp.ICMSComp.ICMS20.vICMS, DSC_VICMS);
-  Gerador.wGrupo('/ICMS20');
-*)
-end;
-
-procedure TCTeW.GerarCST45Comp;
-begin
-(*
-  Gerador.wGrupo('ICMS45', '#429');
-  Gerador.wCampo(tcStr, '#430', 'CST ', 02, 02, 1, CSTICMSTOStr(CTe.InfCTeComp.impComp.ICMSComp.ICMS45.CST), DSC_CST);
-  Gerador.wGrupo('/ICMS45');
-*)
-end;
-
-procedure TCTeW.GerarCST60Comp;
-begin
-(*
-  Gerador.wGrupo('ICMS60', '#431');
-  Gerador.wCampo(tcStr, '#432', 'CST        ', 02, 02, 1, CSTICMSTOStr(CTe.InfCTeComp.impComp.ICMSComp.ICMS60.CST), DSC_CST);
-  Gerador.wCampo(tcDe2, '#433', 'vBCSTRet   ', 01, 15, 1, CTe.InfCTeComp.impComp.ICMSComp.ICMS60.vBCSTRet, DSC_VBC);
-  Gerador.wCampo(tcDe2, '#434', 'vICMSSTRet ', 01, 15, 1, CTe.InfCTeComp.impComp.ICMSComp.ICMS60.vICMSSTRet, DSC_VICMS);
-  Gerador.wCampo(tcDe2, '#435', 'pICMSSTRet ', 01, 05, 1, CTe.InfCTeComp.impComp.ICMSComp.ICMS60.pICMSSTRet, DSC_PICMS);
-  if CTe.InfCTeComp.impComp.ICMSComp.ICMS60.vCred > 0 then
-   Gerador.wCampo(tcDe2, '#436', 'vCred     ', 01, 15, 1, CTe.InfCTeComp.impComp.ICMSComp.ICMS60.vCred, DSC_VCRED);
-  Gerador.wGrupo('/ICMS60');
-*)
-end;
-
-procedure TCTeW.GerarCST90Comp;
-begin
-(*
-  Gerador.wGrupo('ICMS90', '#437');
-  Gerador.wCampo(tcStr, '#438', 'CST      ', 02, 02, 1, CSTICMSTOStr(CTe.InfCTeComp.impComp.ICMSComp.ICMS90.CST), DSC_CST);
-  if CTe.InfCTeComp.impComp.ICMSComp.ICMS90.pRedBC > 0 then
-    Gerador.wCampo(tcDe2, '#439', 'pRedBC ', 01, 05, 1, CTe.InfCTeComp.impComp.ICMSComp.ICMS90.pRedBC, DSC_PREDBC);
-  Gerador.wCampo(tcDe2, '#440', 'vBC      ', 01, 15, 1, CTe.InfCTeComp.impComp.ICMSComp.ICMS90.vBC, DSC_VBC);
-  Gerador.wCampo(tcDe2, '#441', 'pICMS    ', 01, 05, 1, CTe.InfCTeComp.impComp.ICMSComp.ICMS90.pICMS, DSC_PICMS);
-  Gerador.wCampo(tcDe2, '#442', 'vICMS    ', 01, 15, 1, CTe.InfCTeComp.impComp.ICMSComp.ICMS90.vICMS, DSC_VICMS);
-  if CTe.InfCTeComp.impComp.ICMSComp.ICMS90.vCred > 0 then
-    Gerador.wCampo(tcDe2, '#443', 'vCred  ', 01, 15, 1, CTe.InfCTeComp.impComp.ICMSComp.ICMS90.vCred, DSC_VCRED);
-  Gerador.wGrupo('/ICMS90');
-*)
-end;
-
-procedure TCTeW.GerarICMSOutraUFComp;
-begin
-(*
-  Gerador.wGrupo('ICMSOutraUF', '#444');
-  Gerador.wCampo(tcStr, '#445', 'CST             ', 02, 02, 1, CSTICMSTOStr(CTe.InfCTeComp.impComp.ICMSComp.ICMSOutraUF.CST), DSC_CST);
-  if CTe.InfCTeComp.impComp.ICMSComp.ICMSOutraUF.pRedBCOutraUF > 0 then
-    Gerador.wCampo(tcDe2, '#446', 'pRedBCOutraUF ', 01, 05, 1, CTe.InfCTeComp.impComp.ICMSComp.ICMSOutraUF.pRedBCOutraUF, DSC_PREDBC);
-  Gerador.wCampo(tcDe2, '#447', 'vBCOutraUF      ', 01, 15, 1, CTe.InfCTeComp.impComp.ICMSComp.ICMSOutraUF.vBCOutraUF, DSC_VBC);
-  Gerador.wCampo(tcDe2, '#448', 'pICMSOutraUF    ', 01, 05, 1, CTe.InfCTeComp.impComp.ICMSComp.ICMSOutraUF.pICMSOutraUF, DSC_PICMS);
-  Gerador.wCampo(tcDe2, '#449', 'vICMSOutraUF    ', 01, 15, 1, CTe.InfCTeComp.impComp.ICMSComp.ICMSOutraUF.vICMSOutraUF, DSC_VICMS);
-  Gerador.wGrupo('/ICMSOutraUF');
-*)
-end;
-
-procedure TCTeW.GerarICMSSNComp;
-begin
-(*
-  Gerador.wGrupo('ICMSSN', '#450');
-  Gerador.wCampo(tcInt, '#451', 'indSN ', 01, 01, 1, CTe.InfCTeComp.impComp.ICMSComp.ICMSSN.indSN, DSC_INDSN);
-  Gerador.wGrupo('/ICMSSN');
-*)  
-end;
-
 procedure TCTeW.GerarInfCTeAnu;
 begin
   if (CTe.Ide.tpCTe = tcAnulacao) then
@@ -2115,7 +1982,7 @@ end;
 
 procedure TCTeW.GerarautXML;
 var
-  i: integer;
+  i: Integer;
 begin
   for i := 0 to CTe.autXML.Count - 1 do
   begin
@@ -2127,10 +1994,10 @@ begin
     Gerador.wAlerta('#415', 'autXML', '', ERR_MSG_MAIOR_MAXIMO + '10');
 end;
 
-procedure TCTeW.AjustarMunicipioUF(var xUF, xMun: string;
-  var cMun: integer; cPais: integer; vxUF, vxMun: string; vcMun: integer);
+procedure TCTeW.AjustarMunicipioUF(var xUF, xMun: String;
+  var cMun: Integer; cPais: Integer; vxUF, vxMun: String; vcMun: Integer);
 var
-  PaisBrasil: boolean;
+  PaisBrasil: Boolean;
 begin
   PaisBrasil := cPais = CODIGO_BRASIL;
   cMun := IIf(PaisBrasil, vcMun, CMUN_EXTERIOR);
@@ -2139,12 +2006,12 @@ begin
   xMun := ObterNomeMunicipio(xMun, xUF, cMun);
 end;
 
-function TCTeW.ObterNomeMunicipio(const xMun, xUF: string;
-  const cMun: integer): string;
+function TCTeW.ObterNomeMunicipio(const xMun, xUF: String;
+  const cMun: Integer): String;
 var
-  i: integer;
-  PathArquivo, Codigo: string;
-  List: TstringList;
+  i: Integer;
+  PathArquivo, Codigo: String;
+  List: TStringList;
 begin
   result := '';
   if (FOpcoes.NormatizarMunicipios) and (cMun <> CMUN_EXTERIOR) then
@@ -2152,7 +2019,7 @@ begin
     PathArquivo := FOpcoes.FPathArquivoMunicipios + 'MunIBGE-UF' + InttoStr(UFparaCodigo(xUF)) + '.txt';
     if FileExists(PathArquivo) then
     begin
-      List := TstringList.Create;
+      List := TStringList.Create;
       try
         List.LoadFromFile(PathArquivo);
         Codigo := IntToStr(cMun);
@@ -2160,7 +2027,7 @@ begin
         while (i < list.count) and (result = '') do
         begin
           if pos(Codigo, List[i]) > 0 then
-            result := Trim(stringReplace(list[i], codigo, '', []));
+            result := Trim(StringReplace(list[i], codigo, '', []));
           inc(i);
         end;
       finally

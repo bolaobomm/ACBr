@@ -45,30 +45,32 @@
 
 unit pcteRetEnvCTe;
 
-interface uses
+interface
+
+uses
   SysUtils, Classes, pcnAuxiliar, pcnConversao, pcnLeitor;
 
 type
 
   TInfREC = class
   private
-    FnRec: string;
+    FnRec: String;
     FdhRecbto: TDateTime;
-    FtMed: integer;
+    FtMed: Integer;
   public
-    property nRec: string        read FnRec     write FnRec;
+    property nRec: String        read FnRec     write FnRec;
     property dhRecbto: TDateTime read FdhRecbto write FdhRecbto;
-    property tMed: integer       read FtMed     write FtMed;
+    property tMed: Integer       read FtMed     write FtMed;
   end;
 
   TretEnvCTe = class(TPersistent)
   private
     FtpAmb: TpcnTipoAmbiente;
-    FcStat: integer;
+    FcStat: Integer;
     FLeitor: TLeitor;
-    FcUF: integer;
-    FverAplic: string;
-    FxMotivo: string;
+    FcUF: Integer;
+    FverAplic: String;
+    FxMotivo: String;
     FinfRec: TInfREC;
   public
     constructor Create;
@@ -77,10 +79,10 @@ type
   published
     property Leitor: TLeitor         read FLeitor   write FLeitor;
     property tpAmb: TpcnTipoAmbiente read FtpAmb    write FtpAmb;
-    property verAplic: string        read FverAplic write FverAplic;
-    property cStat: integer          read FcStat    write FcStat;
-    property xMotivo: string         read FxMotivo  write FxMotivo;
-    property cUF: integer            read FcUF      write FcUF;
+    property verAplic: String        read FverAplic write FverAplic;
+    property cStat: Integer          read FcStat    write FcStat;
+    property xMotivo: String         read FxMotivo  write FxMotivo;
+    property cUF: Integer            read FcUF      write FcUF;
     property infRec: TInfREC         read FinfRec   write FinfRec;
   end;
 
@@ -105,7 +107,7 @@ function TretEnvCTe.LerXml: boolean;
 var
   ok: boolean;
 begin
-  result := False;
+  Result := False;
   try
     Leitor.Grupo := Leitor.Arquivo;
     if leitor.rExtrai(1, 'retEnviCte') <> '' then
@@ -124,7 +126,7 @@ begin
       Result := True;
     end;
   except
-    result := false;
+    Result := False;
   end;
 end;
 

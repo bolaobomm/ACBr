@@ -35,12 +35,12 @@
 {                                                                              }
 {******************************************************************************}
 
-{******************************************************************************
+{*******************************************************************************
 |* Historico
 |*
 |* 16/12/2008: Wemerson Souto
 |*  - Doação do componente para o Projeto ACBr
-******************************************************************************}
+*******************************************************************************}
 {$I ACBr.inc}
 
 unit ACBrCTeConfiguracoes;
@@ -117,8 +117,7 @@ type
   public
     constructor Create(AOwner: TComponent); override;
   published
-    property Visualizar: Boolean read FVisualizar write FVisualizar
-      default False;
+    property Visualizar: Boolean               read FVisualizar               write FVisualizar   default False;
     property UF: String                        read FUF                       write SetUF;
     property UFCodigo: Integer                 read FUFCodigo;
     property Ambiente: TpcnTipoAmbiente        read FAmbiente                 write SetAmbiente   default taHomologacao;
@@ -142,15 +141,15 @@ type
     FAtualizarXMLCancelado: Boolean;
     FPathSalvar: String;
     FPathSchemas: String;
-    FExibirErroSchema: boolean;
-    FFormatoAlerta: string;
+    FExibirErroSchema: Boolean;
+    FFormatoAlerta: String;
   {$IFDEF ACBrCTeOpenSSL}
-    FIniFinXMLSECAutomatico: boolean;
+    FIniFinXMLSECAutomatico: Boolean;
   {$ENDIF}
 
     procedure SetFormaEmissao(AValue: TpcnTipoEmissao);
     function GetPathSalvar: String;
-    function GetFormatoAlerta: string;
+    function GetFormatoAlerta: String;
   public
     constructor Create(AOwner: TComponent); override;
     function Save(AXMLName: String; AXMLFile: WideString; aPath: String = ''): Boolean;
@@ -162,7 +161,7 @@ type
     property PathSalvar: String              read GetPathSalvar           write FPathSalvar;
     property PathSchemas: String             read FPathSchemas            write FPathSchemas;
     property ExibirErroSchema: Boolean       read FExibirErroSchema       write FExibirErroSchema;
-    property FormatoAlerta: string           read GetFormatoAlerta        write FFormatoAlerta;
+    property FormatoAlerta: String           read GetFormatoAlerta        write FFormatoAlerta;
   {$IFDEF ACBrCTeOpenSSL}
     property IniFinXMLSECAutomatico: Boolean read FIniFinXMLSECAutomatico write FIniFinXMLSECAutomatico;
   {$ENDIF}
@@ -221,37 +220,38 @@ type
 
 implementation
 
-uses ACBrCteUtil, Math, StrUtils, ACBrUtil, ACBrDFeUtil, DateUtils;
+uses
+  Math, StrUtils, DateUtils, ACBrCteUtil, ACBrUtil, ACBrDFeUtil;
 
 { TConfiguracoes }
 
 constructor TConfiguracoes.Create(AOwner: TComponent);
 begin
-  inherited Create( AOwner );
+  inherited Create(AOwner);
 
   FGeral      := TGeralConf.Create(Self);
   FGeral.Name := 'GeralConf';
-  {$IFDEF COMPILER6_UP}
-   FGeral.SetSubComponent( true );{ para gravar no DFM/XFM }
-  {$ENDIF}
+{$IFDEF COMPILER6_UP}
+  FGeral.SetSubComponent(true); { para gravar no DFM/XFM }
+{$ENDIF}
 
   FWebServices      := TWebServicesConf.Create(self);
   FWebServices.Name := 'WebServicesConf';
-  {$IFDEF COMPILER6_UP}
-   FWebServices.SetSubComponent( true );{ para gravar no DFM/XFM }
-  {$ENDIF}
+{$IFDEF COMPILER6_UP}
+  FWebServices.SetSubComponent(true); { para gravar no DFM/XFM }
+{$ENDIF}
 
   FCertificados      := TCertificadosConf.Create(self);
   FCertificados.Name := 'CertificadosConf';
-  {$IFDEF COMPILER6_UP}
-   FCertificados.SetSubComponent( true );{ para gravar no DFM/XFM }
-  {$ENDIF}
+{$IFDEF COMPILER6_UP}
+  FCertificados.SetSubComponent(true); { para gravar no DFM/XFM }
+{$ENDIF}
 
   FArquivos      := TArquivosConf.Create(self);
   FArquivos.Name := 'ArquivosConf';
-  {$IFDEF COMPILER6_UP}
-   FArquivos.SetSubComponent( true );{ para gravar no DFM/XFM }
-  {$ENDIF}
+{$IFDEF COMPILER6_UP}
+  FArquivos.SetSubComponent(true); { para gravar no DFM/XFM }
+{$ENDIF}
 end;
 
 destructor TConfiguracoes.Destroy;
@@ -267,7 +267,7 @@ end;
 
 constructor TGeralConf.Create(AOwner: TComponent);
 begin
-  Inherited Create( AOwner );
+  Inherited Create(AOwner);
 
   FFormaEmissao          := teNormal;
   FFormaEmissaoCodigo    := StrToInt(TpEmisToStr(FFormaEmissao));
@@ -284,18 +284,18 @@ begin
   // %MSG%       : Representa a mensagem de alerta
   // %DESCRICAO% : Representa a Descrição da TAG
 {$IFDEF ACBrCTeOpenSSL}
-  FIniFinXMLSECAutomatico:=True;
+  FIniFinXMLSECAutomatico := True;
 {$ENDIF}
 end;
 
-function TGeralConf.GetFormatoAlerta: string;
+function TGeralConf.GetFormatoAlerta: String;
 begin
   if (FFormatoAlerta = '') or (
      (pos('%TAGNIVEL%',FFormatoAlerta) <= 0) and
      (pos('%TAG%',FFormatoAlerta) <= 0) and
      (pos('%ID%',FFormatoAlerta) <= 0) and
      (pos('%MSG%',FFormatoAlerta) <= 0) and
-     (pos('%DESCRICAO%',FFormatoAlerta) <= 0) )then
+     (pos('%DESCRICAO%',FFormatoAlerta) <= 0)) then
      Result := 'TAG:%TAGNIVEL% ID:%ID%/%TAG%(%DESCRICAO%) - %MSG%.'
   else
      Result := FFormatoAlerta;
@@ -308,7 +308,7 @@ begin
   else
     Result := FPathSalvar;
 
-  Result := PathWithDelim( Trim(Result) );
+  Result := PathWithDelim(Trim(Result));
 end;
 
 function TGeralConf.Save(AXMLName: String; AXMLFile: WideString; aPath: String = ''): Boolean;
@@ -322,7 +322,7 @@ begin
       if DFeUtil.NaoEstaVazio(ExtractFilePath(AXMLName)) then
        begin
          aPath    := ExtractFilePath(AXMLName);
-         AXMLName := StringReplace(AXMLName,aPath,'',[rfIgnoreCase]);
+         AXMLName := StringReplace(AXMLName, aPath, '', [rfIgnoreCase]);
        end
       else
        begin
@@ -333,13 +333,13 @@ begin
        end;
 
       vSalvar.Text := AXMLFile;
-      if not DirectoryExists( aPath ) then
-         ForceDirectories( aPath );
+      if not DirectoryExists(aPath) then
+         ForceDirectories(aPath);
 
-      vSalvar.SaveToFile( aPath + AXMLName);
+      vSalvar.SaveToFile(aPath + AXMLName);
       Result := True;
     except on E: Exception do
-      raise Exception.Create('Erro ao salvar .'+E.Message);
+      raise Exception.Create('Erro ao salvar. ' + E.Message);
     end;
   finally
     vSalvar.Free;
@@ -356,7 +356,7 @@ end;
 
 constructor TWebServicesConf.Create(AOwner: TComponent);
 begin
-  Inherited Create( AOwner );
+  Inherited Create(AOwner);
 
   FUF             := NFeUF[24];
   FUFCodigo       := NFeUFCodigo[24];
@@ -430,7 +430,7 @@ var
 begin
   CoInitialize(nil); // PERMITE O USO DE THREAD
   
-  if DFeUtil.EstaVazio( FNumeroSerie ) then
+  if DFeUtil.EstaVazio(FNumeroSerie) then
     raise Exception.Create('Número de Série do Certificado Digital não especificado !');
 
   Result := nil;
@@ -477,10 +477,10 @@ begin
                raise Exception.Create('Erro ao criar a chave do CSP.');
 
             SigKey := dsigKey as IXMLDSigKeyEx;
-            SigKey.getCSPHandle( hCryptProvider );
+            SigKey.getCSPHandle(hCryptProvider);
 
             try
-              CryptSetProvParam( hCryptProvider , PP_SIGNATURE_PIN, LPBYTE(FSenhaCert), 0 );
+              CryptSetProvParam(hCryptProvider , PP_SIGNATURE_PIN, LPBYTE(FSenhaCert), 0);
             finally
               CryptReleaseContext(hCryptProvider, 0);
             end;
@@ -517,7 +517,6 @@ begin
 	    		  finally
 		   	      Lista.Free;
 		     	  end;
-            // break;
           end;
          Extension := nil;
        end;
@@ -534,12 +533,12 @@ end;
 
 function TCertificadosConf.GetNumeroSerie: AnsiString;
 begin
-  Result := Trim(UpperCase(StringReplace(FNumeroSerie,' ','',[rfReplaceAll] )));
+  Result := Trim(UpperCase(StringReplace(FNumeroSerie, ' ', '', [rfReplaceAll])));
 end;
 
 procedure TCertificadosConf.SetNumeroSerie(const Value: AnsiString);
 begin
-  FNumeroSerie := Trim(UpperCase(StringReplace(Value,' ','',[rfReplaceAll] )));
+  FNumeroSerie := Trim(UpperCase(StringReplace(Value, ' ', '', [rfReplaceAll])));
 end;
 
 function TCertificadosConf.SelecionarCertificado: AnsiString;
@@ -620,7 +619,7 @@ var
   Dir: String;
 begin
   if DFeUtil.EstaVazio(FPathCan) then
-     Dir := TConfiguracoes( Self.Owner ).Geral.PathSalvar
+     Dir := TConfiguracoes(Self.Owner).Geral.PathSalvar
   else
      Dir := FPathCan;
 
@@ -629,14 +628,14 @@ begin
      if Data = 0 then
         Data := Now;
      DecodeDate(Data, wAno, wMes, wDia);
-     if Pos(IntToStr(wAno)+IntToStrZero(wMes,2),Dir) <= 0 then
-        Dir := PathWithDelim(Dir)+IntToStr(wAno)+IntToStrZero(wMes,2);
+     if Pos(IntToStr(wAno) + IntToStrZero(wMes, 2), Dir) <= 0 then
+        Dir := PathWithDelim(Dir) + IntToStr(wAno) + IntToStrZero(wMes, 2);
    end;
 
   if FLiteral then
    begin
-     if copy(Dir,length(Dir)-2,3) <> 'Can' then
-        Dir := PathWithDelim(Dir)+'Can';
+     if copy(Dir, length(Dir)-2, 3) <> 'Can' then
+        Dir := PathWithDelim(Dir) + 'Can';
    end;
 
   if not DirectoryExists(Dir) then
@@ -651,7 +650,7 @@ var
   Dir: String;
 begin
   if DFeUtil.EstaVazio(FPathCCe) then
-     Dir := TConfiguracoes( Self.Owner ).Geral.PathSalvar
+     Dir := TConfiguracoes(Self.Owner).Geral.PathSalvar
   else
      Dir := FPathCCe;
 
@@ -660,14 +659,14 @@ begin
      if Data = 0 then
         Data := Now;
      DecodeDate(Data, wAno, wMes, wDia);
-     if Pos(IntToStr(wAno)+IntToStrZero(wMes,2),Dir) <= 0 then
-        Dir := PathWithDelim(Dir)+IntToStr(wAno)+IntToStrZero(wMes,2);
+     if Pos(IntToStr(wAno) + IntToStrZero(wMes, 2), Dir) <= 0 then
+        Dir := PathWithDelim(Dir) + IntToStr(wAno) + IntToStrZero(wMes, 2);
    end;
 
   if FLiteral then
    begin
-     if copy(Dir,length(Dir)-2,3) <> 'CCe' then
-        Dir := PathWithDelim(Dir)+'CCe';
+     if copy(Dir, length(Dir)-2, 3) <> 'CCe' then
+        Dir := PathWithDelim(Dir) + 'CCe';
    end;
 
   if not DirectoryExists(Dir) then
@@ -682,7 +681,7 @@ var
   Dir: String;
 begin
   if DFeUtil.EstaVazio(FPathEPEC) then
-     Dir := TConfiguracoes( Self.Owner ).Geral.PathSalvar
+     Dir := TConfiguracoes(Self.Owner).Geral.PathSalvar
   else
      Dir := FPathEPEC;
 
@@ -691,14 +690,14 @@ begin
      if Data = 0 then
         Data := Now;
      DecodeDate(Data, wAno, wMes, wDia);
-     if Pos(IntToStr(wAno)+IntToStrZero(wMes,2),Dir) <= 0 then
-        Dir := PathWithDelim(Dir)+IntToStr(wAno)+IntToStrZero(wMes,2);
+     if Pos(IntToStr(wAno) + IntToStrZero(wMes, 2), Dir) <= 0 then
+        Dir := PathWithDelim(Dir) + IntToStr(wAno) + IntToStrZero(wMes, 2);
    end;
 
   if FLiteral then
    begin
-     if copy(Dir,length(Dir)-3,4) <> 'EPEC' then
-        Dir := PathWithDelim(Dir)+'EPEC';
+     if copy(Dir, length(Dir)-3, 4) <> 'EPEC' then
+        Dir := PathWithDelim(Dir) + 'EPEC';
    end;
 
   if not DirectoryExists(Dir) then
@@ -713,7 +712,7 @@ var
   Dir: String;
 begin
   if DFeUtil.EstaVazio(FPathInu) then
-     Dir := TConfiguracoes( Self.Owner ).Geral.PathSalvar
+     Dir := TConfiguracoes(Self.Owner).Geral.PathSalvar
   else
      Dir := FPathInu;
 
@@ -722,14 +721,14 @@ begin
      if Data = 0 then
         Data := Now;
      DecodeDate(Data, wAno, wMes, wDia);
-     if Pos(IntToStr(wAno)+IntToStrZero(wMes,2),Dir) <= 0 then
-        Dir := PathWithDelim(Dir)+IntToStr(wAno)+IntToStrZero(wMes,2);
+     if Pos(IntToStr(wAno) + IntToStrZero(wMes, 2), Dir) <= 0 then
+        Dir := PathWithDelim(Dir) + IntToStr(wAno) + IntToStrZero(wMes, 2);
    end;
 
   if FLiteral then
    begin
-     if copy(Dir,length(Dir)-2,3) <> 'Inu' then
-        Dir := PathWithDelim(Dir)+'Inu';
+     if copy(Dir, length(Dir)-2, 3) <> 'Inu' then
+        Dir := PathWithDelim(Dir) + 'Inu';
    end;
 
   if not DirectoryExists(Dir) then
@@ -744,7 +743,7 @@ var
   Dir: String;
 begin
   if DFeUtil.EstaVazio(FPathCTe) then
-     Dir := TConfiguracoes( Self.Owner ).Geral.PathSalvar
+     Dir := TConfiguracoes(Self.Owner).Geral.PathSalvar
   else
      Dir := FPathCTe;
 
@@ -753,14 +752,14 @@ begin
      if Data = 0 then
         Data := Now;
      DecodeDate(Data, wAno, wMes, wDia);
-     if Pos(IntToStr(wAno)+IntToStrZero(wMes,2),Dir) <= 0 then
-        Dir := PathWithDelim(Dir)+IntToStr(wAno)+IntToStrZero(wMes,2);
+     if Pos(IntToStr(wAno) + IntToStrZero(wMes, 2), Dir) <= 0 then
+        Dir := PathWithDelim(Dir) + IntToStr(wAno) + IntToStrZero(wMes, 2);
    end;
 
   if FLiteral then
    begin
-     if copy(Dir,length(Dir)-2,3) <> 'CTe' then
-        Dir := PathWithDelim(Dir)+'CTe';
+     if copy(Dir, length(Dir)-2, 3) <> 'CTe' then
+        Dir := PathWithDelim(Dir) + 'CTe';
    end;
 
   if not DirectoryExists(Dir) then
@@ -775,7 +774,7 @@ var
   Dir: String;
 begin
   if DFeUtil.EstaVazio(FPathEvento) then
-     Dir := TConfiguracoes( Self.Owner ).Geral.PathSalvar
+     Dir := TConfiguracoes(Self.Owner).Geral.PathSalvar
   else
      Dir := FPathEvento;
 

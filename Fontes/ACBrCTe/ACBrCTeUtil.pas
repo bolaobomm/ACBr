@@ -137,11 +137,11 @@ type
     class procedure ShutDownXmlSec;
 {$ENDIF}
     class function GetURL(const AUF, AAmbiente, FormaEmissao: Integer; ALayOut: TLayOut): WideString;
-    class function Valida(const AXML: AnsiString; var AMsg: AnsiString; const APathSchemas: string = ''): Boolean;
+    class function Valida(const AXML: AnsiString; var AMsg: AnsiString; const APathSchemas: String = ''): Boolean;
 
     class function FormatarChaveAcesso(AValue: String; Mascara: Boolean = False ): String;
-    class function FormatarNumCTe(const AValue: Integer): string;
-    class function FormatarValor(mask: TpcteMask; const AValue: real): string;
+    class function FormatarNumCTe(const AValue: Integer): String;
+    class function FormatarValor(mask: TpcteMask; const AValue: real): String;
     class function GerarChaveContingencia(FCTe:TCTe): String;
     class function FormatarChaveContingencia(AValue: String): String;
     class function ValidaAssinatura(const AXML: AnsiString;  var AMsg: AnsiString): Boolean;
@@ -153,7 +153,7 @@ type
 {$ENDIF}
 
     class function UFtoCUF(UF: String): Integer;
-    class function IdentificaTipoSchema(Const AXML: AnsiString; var I: Integer): integer;
+    class function IdentificaTipoSchema(Const AXML: AnsiString; var I: Integer): Integer;
   end;
 
 implementation
@@ -167,8 +167,8 @@ uses
   Sysutils, Variants, ACBrUtil, ACBrConsts, pcnAuxiliar;
 
 { CTeUtil }
-{$IFDEF ACBrCTeOpenSSL}
 
+{$IFDEF ACBrCTeOpenSSL}
 class procedure CTeUtil.InitXmlSec;
 begin
   { Init libxml and libxslt libraries }
@@ -591,12 +591,12 @@ begin
   end;
 end;
 
-class function CTeUtil.FormatarNumCTe(const AValue: Integer): string;
+class function CTeUtil.FormatarNumCTe(const AValue: Integer): String;
 begin
   result := FormatFloat('000000000', AValue);
 end;
 
-class function CTeUtil.FormatarValor(mask: TpcteMask; const AValue: real): string;
+class function CTeUtil.FormatarValor(mask: TpcteMask; const AValue: real): String;
 begin
   result := FormatFloat(TpMaskToStrText(mask), AValue);
 end;
@@ -623,9 +623,8 @@ begin
 end;
 
 {$IFDEF ACBrCTeOpenSSL}
-
 function ValidaLibXML(const AXML: AnsiString;
-  var AMsg: AnsiString; const APathSchemas: string = ''): Boolean;
+  var AMsg: AnsiString; const APathSchemas: String = ''): Boolean;
 var
   doc, schema_doc: xmlDocPtr;
   parser_ctxt: xmlSchemaParserCtxtPtr;
@@ -785,7 +784,7 @@ begin
 end;
 
 function ValidaModalLibXML(XML: AnsiString; var Msg: AnsiString;
- const APathSchemas: string = ''): Boolean;
+ const APathSchemas: String = ''): Boolean;
 {$IFNDEF PL_103}
 var
   doc, schema_doc: xmlDocPtr;
@@ -1039,11 +1038,9 @@ function ValidaAssinaturaLibXML(const Axml: PAnsiChar; out Msg: AnsiString): Boo
 begin
   Result := False;
 end;
-
 {$ELSE}
-
 function ValidaMSXML(XML: AnsiString; out Msg: AnsiString;
- const APathSchemas: string = ''): Boolean;
+ const APathSchemas: String = ''): Boolean;
 var
   DOMDocument: IXMLDOMDocument2;
   ParseError: IXMLDOMParseError;
@@ -1137,7 +1134,7 @@ begin
 end;
 
 function ValidaModalMSXML(XML: AnsiString; out Msg: AnsiString;
- const APathSchemas: string = ''): Boolean;
+ const APathSchemas: String = ''): Boolean;
 {$IFNDEF PL_103}
 var
   DOMDocument: IXMLDOMDocument2;
@@ -1379,11 +1376,10 @@ begin
     xmldoc := nil;
   end;
 end;
-
 {$ENDIF}
 
 class function CTeUtil.Valida(const AXML: AnsiString;
-  var AMsg: AnsiString; const APathSchemas: string = ''): Boolean;
+  var AMsg: AnsiString; const APathSchemas: String = ''): Boolean;
 begin
 {$IFDEF ACBrCTeOpenSSL}
 //  Result := ValidaLibXML(AXML, AMsg, APathSchemas);
@@ -1410,7 +1406,6 @@ begin
 end;
 
 {$IFDEF ACBrCTeOpenSSL}
-
 function AssinarLibXML(const AXML, ArqPFX, PFXSenha: AnsiString;
   out AXMLAssinado, FMensagem: AnsiString): Boolean;
 var
@@ -1521,8 +1516,6 @@ begin
     else AStr := '';
   end;
 
-//  XmlAss := CTeUtil.sign_file(PAnsiChar(AStr), PChar(ArqPFX), PChar(PFXSenha));
-
   if FileExists(ArqPFX) then
     XmlAss := CTeUtil.sign_file(PAnsiChar(AStr), PAnsiChar(ArqPFX), PAnsiChar(PFXSenha))
   else
@@ -1561,11 +1554,10 @@ begin
   Result := True;
 end;
 {$ELSE}
-
 function AssinarMSXML(XML: AnsiString; Certificado: ICertificate2; out XMLAssinado: AnsiString): Boolean;
 var
   I, J, PosIni, PosFim: Integer;
-  URI: string;
+  URI: String;
   Tipo: Integer;
   xmlHeaderAntes, xmlHeaderDepois: AnsiString;
   xmldoc: IXMLDOMDocument3;
@@ -1725,7 +1717,7 @@ var
   node: xmlNodePtr;
   dsigCtx: xmlSecDSigCtxPtr;
   buffer: PAnsiChar;
-  bufSize: integer;
+  bufSize: Integer;
 label
   done;
 begin
@@ -1793,7 +1785,7 @@ var
   node: xmlNodePtr;
   dsigCtx: xmlSecDSigCtxPtr;
   buffer: PAnsiChar;
-  bufSize: integer;
+  bufSize: Integer;
 label
  done;
 begin
@@ -1882,11 +1874,11 @@ begin
      Result := Codigo;
 end;
 
-class function CTeUtil.GerarChaveContingencia(FCTe:TCTe): string;
+class function CTeUtil.GerarChaveContingencia(FCTe:TCTe): String;
 
-   function GerarDigito_Contingencia(var Digito: integer; chave: string): boolean;
+   function GerarDigito_Contingencia(var Digito: Integer; chave: String): Boolean;
    var
-     i, j: integer;
+     i, j: Integer;
    const
      PESO = '43298765432987654329876543298765432';
    begin
@@ -1908,13 +1900,13 @@ class function CTeUtil.GerarChaveContingencia(FCTe:TCTe): string;
    end;
 
 var
-   wchave: string;
-   wicms_s, wicms_p: string;
+   wchave: String;
+   wicms_s, wicms_p: String;
    wd,wm,wa: word;
-   Digito: integer;
+   Digito: Integer;
 begin
    // Alterado Conforme NT 2012/007
-   //UF
+   // UF
    // TpcteTomador = ( tmRemetente, tmExpedidor, tmRecebedor, tmDestinatario, tmOutros);
    if FCTe.Ide.toma4.CNPJCPF<>''
     then begin
@@ -1940,21 +1932,12 @@ begin
     end;
 
    //TIPO DE EMISSAO
-   // Alterado por Italo em 14/10/2013
    case FCTe.Ide.tpEmis of
     teDPEC,
     teContingencia: wchave := wchave + '2';
     teFSDA:         wchave := wchave + '5';
     else            wchave := wchave + '0'; //esta valor caracteriza ERRO, valor tem q ser  2 ou 5
    end;
-
-   (*
-   if FCTe.Ide.tpEmis = teContingencia
-    then wchave := wchave + '2'
-    else if FCTe.Ide.tpEmis = teFSDA
-          then wchave := wchave + '5'
-          else wchave := wchave + '0'; //esta valor caracteriza ERRO, valor tem q ser  2 ou 5
-   *)
 
    //CNPJ OU CPF
    if FCTe.Ide.toma4.CNPJCPF<>''
@@ -2025,7 +2008,7 @@ begin
             copy(AValue,33,4) ;
 end;
 
-class function CTeUtil.IdentificaTipoSchema(const AXML: AnsiString; var I: integer): integer;
+class function CTeUtil.IdentificaTipoSchema(const AXML: AnsiString; var I: Integer): Integer;
 var
  lTipoEvento: String;
 begin
@@ -2063,7 +2046,7 @@ begin
               Result := 5; // Carta de Correção Eletrônica
           end
           else
-            Result := 4; //DPEC
+            Result := 4; // Erro
          end;
      end;
    end;

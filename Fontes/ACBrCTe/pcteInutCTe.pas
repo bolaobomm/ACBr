@@ -63,35 +63,35 @@ type
   private
     FGerador: TGerador;
     FtpAmb: TpcnTipoAmbiente;
-    FcUF: integer;
-    Fano: integer;
-    FCNPJ: string;
-    Fmodelo: integer;
-    Fserie: integer;
-    FnCTIni: integer;
-    FnCTFin: integer;
-    FxJust: string;
-    FIDInutilizacao: string;
+    FcUF: Integer;
+    Fano: Integer;
+    FCNPJ: String;
+    Fmodelo: Integer;
+    Fserie: Integer;
+    FnCTIni: Integer;
+    FnCTFin: Integer;
+    FxJust: String;
+    FIDInutilizacao: String;
     FInutCTe: TRetInutCTe;
   public
     constructor Create;
     destructor Destroy; override;
     function GerarXML: boolean;
-    function LerXML(CaminhoArquivo: string): boolean;
+    function LerXML(CaminhoArquivo: String): boolean;
     function LerXMLFromString(const AXML: String): boolean;
-    function ObterNomeArquivo: string;
+    function ObterNomeArquivo: String;
   published
     property Gerador: TGerador       read FGerador write FGerador;
     property tpAmb: TpcnTipoAmbiente read FtpAmb   write FtpAmb;
-    property cUF: integer            read FcUF     write FcUF;
-    property ano: integer            read Fano     write Fano;
-    property CNPJ: string            read FCNPJ    write FCNPJ;
-    property modelo: integer         read Fmodelo  write Fmodelo;
-    property serie: integer          read Fserie   write Fserie;
-    property nCTIni: integer         read FnCTIni  write FnCTIni;
-    property nCTFin: integer         read FnCTFin  write FnCTFin;
-    property xJust: string           read FxJust   write FxJust;
-    property ID: string              read FIDInutilizacao;
+    property cUF: Integer            read FcUF     write FcUF;
+    property ano: Integer            read Fano     write Fano;
+    property CNPJ: String            read FCNPJ    write FCNPJ;
+    property modelo: Integer         read Fmodelo  write Fmodelo;
+    property serie: Integer          read Fserie   write Fserie;
+    property nCTIni: Integer         read FnCTIni  write FnCTIni;
+    property nCTFin: Integer         read FnCTFin  write FnCTFin;
+    property xJust: String           read FxJust   write FxJust;
+    property ID: String              read FIDInutilizacao;
     property InutCTe: TRetInutCTe    read FInutCTe write FInutCTe;
   end;
 
@@ -112,7 +112,7 @@ begin
   inherited;
 end;
 
-function TinutCTe.ObterNomeArquivo: string;
+function TinutCTe.ObterNomeArquivo: String;
 begin
   Result := SomenteNumeros(FIDInutilizacao) + '-ped-inu.xml';
 end;
@@ -151,7 +151,7 @@ begin
   Result := (Gerador.ListaDeAlertas.Count = 0);
 end;
 
-function TinutCTe.LerXML(CaminhoArquivo: string): boolean;
+function TinutCTe.LerXML(CaminhoArquivo: String): boolean;
 var
   ArqInut: TStringList;
 begin

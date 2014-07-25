@@ -98,68 +98,69 @@ type
     FExpandirLogoMarca  : Boolean;
     ChangedPos          : Boolean;
     FSemValorFiscal     : Boolean;
-    FMargemSuperior     : double;
-    FMargemInferior     : double;
-    FMargemEsquerda     : double;
-    FMargemDireita      : double;
+    FMargemSuperior     : Double;
+    FMargemInferior     : Double;
+    FMargemEsquerda     : Double;
+    FMargemDireita      : Double;
     FImpressora         : String;
     FPosRecibo          : TPosRecibo;
-    FCTeCancelada       : Boolean; //Incluido por Italo em  12/04/2013
-    FTotalPages         : integer;
+    FCTeCancelada       : Boolean;
+    FTotalPages         : Integer;
     FEPECEnviado        : Boolean;
 
-    procedure qrlSemValorFiscalPrint(sender: TObject; var Value: string);
-    procedure SetBarCodeImage(ACode: string; QRImage: TQRImage);
+    procedure qrlSemValorFiscalPrint(sender: TObject; var Value: String);
+    procedure SetBarCodeImage(ACode: String; QRImage: TQRImage);
     function getTextoResumoCanhoto:String;
   public
-    class procedure Imprimir(ACTe                : TCTe;
-                             ALogo               : String    = '';
-                             AEmail              : String    = '';
-                             AImprimeHoraSaida   : Boolean   = False;
-                             AExpandirLogoMarca  : Boolean   = False;
-                             AHoraSaida          : String    = '';
-                             AResumoCanhoto      : Boolean   = False;
-                             AFax                : String    = '';
-                             ANumCopias          : Integer   = 1;
-                             ASistema            : String    = '';
-                             AUrl                : String    = '';
-                             AUsuario            : String    = '';
-                             APreview            : Boolean   = True;
-                             AMargemSuperior     : Double    = 0.8;
-                             AMargemInferior     : Double    = 0.8;
-                             AMargemEsquerda     : Double    = 0.6;
-                             AMargemDireita      : Double    = 0.51;
-                             AImpressora         : String    = '';
-                             APosRecibo          : TPosRecibo = prCabecalho;
-                             ACTeCancelada       : Boolean   = False;
-                             AEPECEnviado        : Boolean   = False);
+    class procedure Imprimir(ACTe               : TCTe;
+                             ALogo              : String    = '';
+                             AEmail             : String    = '';
+                             AImprimeHoraSaida  : Boolean   = False;
+                             AExpandirLogoMarca : Boolean   = False;
+                             AHoraSaida         : String    = '';
+                             AResumoCanhoto     : Boolean   = False;
+                             AFax               : String    = '';
+                             ANumCopias         : Integer   = 1;
+                             ASistema           : String    = '';
+                             AUrl               : String    = '';
+                             AUsuario           : String    = '';
+                             APreview           : Boolean   = True;
+                             AMargemSuperior    : Double    = 0.8;
+                             AMargemInferior    : Double    = 0.8;
+                             AMargemEsquerda    : Double    = 0.6;
+                             AMargemDireita     : Double    = 0.51;
+                             AImpressora        : String    = '';
+                             APosRecibo         : TPosRecibo = prCabecalho;
+                             ACTeCancelada      : Boolean   = False;
+                             AEPECEnviado       : Boolean   = False);
 
-    class procedure SavePDF(AFile: String;
-                            ACTe                : TCTe;
-                            ALogo               : String    = '';
-                            AEmail              : String    = '';
-                            AImprimeHoraSaida   : Boolean   = False;
-                            AExpandirLogoMarca  : Boolean   = False;
-                            AHoraSaida          : String    = '';
-                            AResumoCanhoto      : Boolean   = False;
-                            AFax                : String    = '';
-                            ANumCopias          : Integer   = 1;
-                            ASistema            : String    = '';
-                            AUrl                : String    = '';
-                            AUsuario            : String    = '';
-                            AMargemSuperior     : Double    = 0.8;
-                            AMargemInferior     : Double    = 0.8;
-                            AMargemEsquerda     : Double    = 0.6;
-                            AMargemDireita      : Double    = 0.51;
-                            APosRecibo          : TPosRecibo = prCabecalho;
-                            ACTeCancelada       : Boolean   = False;
-                            AEPECEnviado        : Boolean   = False);
+    class procedure SavePDF(AFile              : String;
+                            ACTe               : TCTe;
+                            ALogo              : String    = '';
+                            AEmail             : String    = '';
+                            AImprimeHoraSaida  : Boolean   = False;
+                            AExpandirLogoMarca : Boolean   = False;
+                            AHoraSaida         : String    = '';
+                            AResumoCanhoto     : Boolean   = False;
+                            AFax               : String    = '';
+                            ANumCopias         : Integer   = 1;
+                            ASistema           : String    = '';
+                            AUrl               : String    = '';
+                            AUsuario           : String    = '';
+                            AMargemSuperior    : Double    = 0.8;
+                            AMargemInferior    : Double    = 0.8;
+                            AMargemEsquerda    : Double    = 0.6;
+                            AMargemDireita     : Double    = 0.51;
+                            APosRecibo         : TPosRecibo = prCabecalho;
+                            ACTeCancelada      : Boolean   = False;
+                            AEPECEnviado       : Boolean   = False);
 
   end;
 
 implementation
 
-uses MaskUtils, ACBrDFeUtil;
+uses
+  MaskUtils, ACBrDFeUtil;
 
 var
   Printer: TPrinter;
@@ -167,49 +168,49 @@ var
 {$R *.dfm}
 
 class procedure TfrmDACTeQR.Imprimir(ACTe               : TCTe;
-                                    ALogo               : String    = '';
-                                    AEmail              : String    = '';
-                                    AImprimeHoraSaida   : Boolean   = False;
-                                    AExpandirLogoMarca  : Boolean   = False;
-                                    AHoraSaida          : String    = '';
-                                    AResumoCanhoto      : Boolean   = False;
-                                    AFax                : String    = '';
-                                    ANumCopias          : Integer   = 1;
-                                    ASistema            : String    = '';
-                                    AUrl                : String    = '';
-                                    AUsuario            : String    = '';
-                                    APreview            : Boolean   = True;
-                                    AMargemSuperior     : Double    = 0.8;
-                                    AMargemInferior     : Double    = 0.8;
-                                    AMargemEsquerda     : Double    = 0.6;
-                                    AMargemDireita      : Double    = 0.51;
-                                    AImpressora         : String    = '';
-                                    APosRecibo          : TPosRecibo = prCabecalho;
-                                    ACTeCancelada       : Boolean   = False;
-                                    AEPECEnviado        : Boolean   = False);
+                                     ALogo              : String    = '';
+                                     AEmail             : String    = '';
+                                     AImprimeHoraSaida  : Boolean   = False;
+                                     AExpandirLogoMarca : Boolean   = False;
+                                     AHoraSaida         : String    = '';
+                                     AResumoCanhoto     : Boolean   = False;
+                                     AFax               : String    = '';
+                                     ANumCopias         : Integer   = 1;
+                                     ASistema           : String    = '';
+                                     AUrl               : String    = '';
+                                     AUsuario           : String    = '';
+                                     APreview           : Boolean   = True;
+                                     AMargemSuperior    : Double    = 0.8;
+                                     AMargemInferior    : Double    = 0.8;
+                                     AMargemEsquerda    : Double    = 0.6;
+                                     AMargemDireita     : Double    = 0.51;
+                                     AImpressora        : String    = '';
+                                     APosRecibo         : TPosRecibo = prCabecalho;
+                                     ACTeCancelada      : Boolean   = False;
+                                     AEPECEnviado       : Boolean   = False);
 begin
-  with Create ( nil ) do
+  with Create(nil) do
      try
-        FCTe                := ACTe;
-        FLogo               := ALogo;
-        FEmail              := AEmail;
-        FImprimeHoraSaida   := AImprimeHoraSaida;
-        FExpandirLogoMarca  := AExpandirLogoMarca;
-        FHoraSaida          := AHoraSaida;
-        FResumoCanhoto      := AResumoCanhoto;
-        FFax                := AFax;
-        FNumCopias          := ANumCopias;
-        FSistema            := ASistema;
-        FUrl                := AUrl;
-        FUsuario            := AUsuario;
-        FMargemSuperior     := AMargemSuperior;
-        FMargemInferior     := AMargemInferior;
-        FMargemEsquerda     := AMargemEsquerda;
-        FMargemDireita      := AMargemDireita;
-        FImpressora         := AImpressora;
-        FPosRecibo          := APosRecibo;
-        FCTeCancelada       := ACTeCancelada;
-        FEPECEnviado        := AEPECEnviado;
+        FCTe               := ACTe;
+        FLogo              := ALogo;
+        FEmail             := AEmail;
+        FImprimeHoraSaida  := AImprimeHoraSaida;
+        FExpandirLogoMarca := AExpandirLogoMarca;
+        FHoraSaida         := AHoraSaida;
+        FResumoCanhoto     := AResumoCanhoto;
+        FFax               := AFax;
+        FNumCopias         := ANumCopias;
+        FSistema           := ASistema;
+        FUrl               := AUrl;
+        FUsuario           := AUsuario;
+        FMargemSuperior    := AMargemSuperior;
+        FMargemInferior    := AMargemInferior;
+        FMargemEsquerda    := AMargemEsquerda;
+        FMargemDireita     := AMargemDireita;
+        FImpressora        := AImpressora;
+        FPosRecibo         := APosRecibo;
+        FCTeCancelada      := ACTeCancelada;
+        FEPECEnviado       := AEPECEnviado;
 
         Printer := TPrinter.Create;
 
@@ -226,18 +227,13 @@ begin
            QRCTe.PreviewInitialState := wsMaximized;
            QRCTe.PrevInitialZoom     := qrZoomToWidth;
 
-           // Incluido por Italo em 14/02/2012
-           // QRCTe.PreviewDefaultSaveType := stPDF;
-           // Incluido por Italo em 16/02/2012
            QRExportFilterLibrary.AddFilter(TQRPDFDocumentFilter);
          {$ENDIF}
 
            QRCTe.Prepare;
            FTotalPages := QRCTe.QRPrinter.PageCount;
            QRCTe.Preview;
-           // Incluido por Italo em 11/04/2013
-           // Segundo o Rodrigo Chiva resolveu o problema de travamento
-           // após o fechamento do Preview
+
            Application.ProcessMessages;
          end else
          begin
@@ -248,69 +244,61 @@ begin
            QRCTe.Print;
          end;
      finally
-        // Incluido por Rodrigo Fernandes em 17/06/2013
-        // QRCTe.QRPrinter.Free;
-        // QRCTe.QRPrinter:=nil;
-
-        // Incluido por Italo em 21/08/2013
         QRCTe.Free;
         QRCTe := nil;
-
-        // Incluido por Rodrigo Fernandes em 11/03/2013
-        // Liberando o objeto Printer da memoria
         Printer.Free;
         Free;
      end;
 end;
 
-class procedure TfrmDACTeQR.SavePDF(AFile               : String;
-                                    ACTe                : TCTe;
-                                    ALogo               : String    = '';
-                                    AEmail              : String    = '';
-                                    AImprimeHoraSaida   : Boolean   = False;
-                                    AExpandirLogoMarca  : Boolean   = False;
-                                    AHoraSaida          : String    = '';
-                                    AResumoCanhoto      : Boolean   = False;
-                                    AFax                : String    = '';
-                                    ANumCopias          : Integer   = 1;
-                                    ASistema            : String    = '';
-                                    AUrl                : String    = '';
-                                    AUsuario            : String    = '';
-                                    AMargemSuperior     : Double    = 0.8;
-                                    AMargemInferior     : Double    = 0.8;
-                                    AMargemEsquerda     : Double    = 0.6;
-                                    AMargemDireita      : Double    = 0.51;
-                                    APosRecibo          : TPosRecibo = prCabecalho;
-                                    ACTeCancelada       : Boolean   = False;
-                                    AEPECEnviado        : Boolean   = False);
+class procedure TfrmDACTeQR.SavePDF(AFile              : String;
+                                    ACTe               : TCTe;
+                                    ALogo              : String    = '';
+                                    AEmail             : String    = '';
+                                    AImprimeHoraSaida  : Boolean   = False;
+                                    AExpandirLogoMarca : Boolean   = False;
+                                    AHoraSaida         : String    = '';
+                                    AResumoCanhoto     : Boolean   = False;
+                                    AFax               : String    = '';
+                                    ANumCopias         : Integer   = 1;
+                                    ASistema           : String    = '';
+                                    AUrl               : String    = '';
+                                    AUsuario           : String    = '';
+                                    AMargemSuperior    : Double    = 0.8;
+                                    AMargemInferior    : Double    = 0.8;
+                                    AMargemEsquerda    : Double    = 0.6;
+                                    AMargemDireita     : Double    = 0.51;
+                                    APosRecibo         : TPosRecibo = prCabecalho;
+                                    ACTeCancelada      : Boolean   = False;
+                                    AEPECEnviado       : Boolean   = False);
 {$IFDEF QReport_PDF}
- var
+var
   qf: TQRPDFDocumentFilter;
   i: Integer;
 {$ENDIF}
 begin
 {$IFDEF QReport_PDF}
-  with Create ( nil ) do
+  with Create(nil) do
      try
-        FCTe                := ACTe;
-        FLogo               := ALogo;
-        FEmail              := AEmail;
-        FImprimeHoraSaida   := AImprimeHoraSaida;
-        FHoraSaida          := AHoraSaida;
-        FResumoCanhoto      := AResumoCanhoto;
-        FFax                := AFax;
-        FNumCopias          := ANumCopias;
-        FSistema            := ASistema;
-        FUrl                := AUrl;
-        FUsuario            := AUsuario;
-        FMargemSuperior     := AMargemSuperior;
-        FMargemInferior     := AMargemInferior;
-        FMargemEsquerda     := AMargemEsquerda;
-        FMargemDireita      := AMargemDireita;
-        FExpandirLogoMarca  := AExpandirLogoMarca;
-        FPosRecibo          := APosRecibo;
-        FCTeCancelada       := ACTeCancelada;
-        FEPECEnviado        := AEPECEnviado;
+        FCTe               := ACTe;
+        FLogo              := ALogo;
+        FEmail             := AEmail;
+        FImprimeHoraSaida  := AImprimeHoraSaida;
+        FHoraSaida         := AHoraSaida;
+        FResumoCanhoto     := AResumoCanhoto;
+        FFax               := AFax;
+        FNumCopias         := ANumCopias;
+        FSistema           := ASistema;
+        FUrl               := AUrl;
+        FUsuario           := AUsuario;
+        FMargemSuperior    := AMargemSuperior;
+        FMargemInferior    := AMargemInferior;
+        FMargemEsquerda    := AMargemEsquerda;
+        FMargemDireita     := AMargemDireita;
+        FExpandirLogoMarca := AExpandirLogoMarca;
+        FPosRecibo         := APosRecibo;
+        FCTeCancelada      := ACTeCancelada;
+        FEPECEnviado       := AEPECEnviado;
 
         for i := 0 to ComponentCount -1 do
           begin
@@ -322,20 +310,16 @@ begin
           end;
         AfterPreview := True;
         QRCTe.Prepare;
-        // Incluido por Italo em 27/08/2013
         FTotalPages := QRCTe.QRPrinter.PageCount;
 
         qf := TQRPDFDocumentFilter.Create(AFile);
         try
           qf.CompressionOn := False;
-          QRCTe.QRPrinter.ExportToFilter( qf );
+          QRCTe.QRPrinter.ExportToFilter(qf);
         finally
           qf.Free;
         end;
      finally
-        // Gustavo Kato 16/12/2013
-//        QRCTe.QRPrinter.Free;
-
         // Incluido por Italo em 13/05/2014
         QRCTe.Free;
         QRCTe := nil;
@@ -344,7 +328,7 @@ begin
 {$ENDIF}
 end;
 
-procedure TfrmDACTeQR.qrlSemValorFiscalPrint(sender: TObject;  var Value: string);
+procedure TfrmDACTeQR.qrlSemValorFiscalPrint(sender: TObject;  var Value: String);
 begin
   inherited;
 
@@ -352,7 +336,7 @@ begin
     Value := '';
 end;
 
-procedure TfrmDACTeQR.SetBarCodeImage(ACode: string; QRImage: TQRImage);
+procedure TfrmDACTeQR.SetBarCodeImage(ACode: String; QRImage: TQRImage);
 var
   b: TBarCode128c;
 begin
@@ -366,7 +350,6 @@ begin
   end;
 end;
 
-// Incluido por Rodrigo Fernandes em 11/03/2013
 procedure TfrmDACTeQR.FormDestroy(Sender: TObject);
 begin
   QRCTe.QRPrinter.Free;
@@ -375,19 +358,21 @@ end;
 
 function TfrmDACTeQR.getTextoResumoCanhoto: String;
 begin
-  Result := 'EMIT: '+FCTe.Emit.xNome+' - '+
+  Result := 'EMIT: ' + FCTe.Emit.xNome + ' - ' +
             'EMISSÃO: ' + FormatDateTime('DD/MM/YYYY',FCTe.Ide.dhEmi) + '  -  TOMADOR: ';
+
   if FCTe.Ide.Toma4.xNome = ''
   then begin
     case FCTe.Ide.Toma03.Toma of
-    tmRemetente: Result := Result + FCTe.Rem.xNome;
-  	tmExpedidor: Result := Result + FCTe.Exped.xNome;
-    tmRecebedor: Result := Result + FCTe.Receb.xNome;
-  	tmDestinatario: Result := Result + FCTe.Dest.xNome;
+      tmRemetente:    Result := Result + FCTe.Rem.xNome;
+    	tmExpedidor:    Result := Result + FCTe.Exped.xNome;
+      tmRecebedor:    Result := Result + FCTe.Receb.xNome;
+    	tmDestinatario: Result := Result + FCTe.Dest.xNome;
     end
   end
   else
     Result := Result + FCTe.Ide.Toma4.xNome;
+
   Result := Result + ' - VALOR A RECEBER: R$ ' + DFeUtil.FormatFloat(FCTe.vPrest.vRec, '###,###,###,##0.00');
 end;
 

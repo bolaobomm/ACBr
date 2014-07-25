@@ -83,13 +83,13 @@ type
 
   TRetEventoCTe = class(TPersistent)
   private
-    FidLote: integer;
+    FidLote: Integer;
     FtpAmb: TpcnTipoAmbiente;
-    FverAplic: string;
+    FverAplic: String;
     FLeitor: TLeitor;
-    FcStat: integer;
+    FcStat: Integer;
     FcOrgao: Integer;
-    FxMotivo: string;
+    FxMotivo: String;
     FretEvento: TRetInfEventoCollection;
     FInfEvento: TInfEvento;
     FXML: AnsiString;
@@ -98,16 +98,16 @@ type
     destructor Destroy; override;
     function LerXml: boolean;
   published
-    property idLote: integer                    read FidLote    write FidLote;
+    property idLote: Integer                    read FidLote    write FidLote;
     property Leitor: TLeitor                    read FLeitor    write FLeitor;
     property tpAmb: TpcnTipoAmbiente            read FtpAmb     write FtpAmb;
-    property verAplic: string                   read FverAplic  write FverAplic;
-    property cOrgao: integer                    read FcOrgao    write FcOrgao;
-    property cStat: integer                     read FcStat     write FcStat;
-    property xMotivo: string                    read FxMotivo   write FxMotivo;
+    property verAplic: String                   read FverAplic  write FverAplic;
+    property cOrgao: Integer                    read FcOrgao    write FcOrgao;
+    property cStat: Integer                     read FcStat     write FcStat;
+    property xMotivo: String                    read FxMotivo   write FxMotivo;
     property InfEvento: TInfEvento              read FInfEvento write FInfEvento;
     property retEvento: TRetInfEventoCollection read FretEvento write FretEvento;
-    property XML: AnsiString                    read FXML       write FXML;  
+    property XML: AnsiString                    read FXML       write FXML;
   end;
 
 implementation
@@ -169,7 +169,7 @@ end;
 function TRetEventoCTe.LerXml: boolean;
 var
   ok: boolean;
-  i: integer;
+  i: Integer;
 begin
   Result := False;
   i := 0;
@@ -179,7 +179,7 @@ begin
     begin
       if Leitor.rExtrai(2, 'infEvento', '', i + 1) <> '' then
        begin
-         infEvento.ID         := Leitor.rAtributo('Id='); // Alterado por Italo em 20/05/2013
+         infEvento.ID         := Leitor.rAtributo('Id='); 
          infEvento.cOrgao     := Leitor.rCampo(tcInt, 'cOrgao');
          infEvento.tpAmb      := StrToTpAmb(ok, Leitor.rCampo(tcStr, 'tpAmb'));
          infEvento.CNPJ       := Leitor.rCampo(tcStr, 'CNPJ');

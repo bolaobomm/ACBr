@@ -49,7 +49,8 @@ unit ACBrCTeDACTEClass;
 
 interface
 
-uses Forms, SysUtils, Classes,
+uses
+  Forms, SysUtils, Classes,
   pcteCTE, pcnConversao;
 
 type
@@ -67,7 +68,7 @@ type
     FPathArquivos: String;
     FImpressora: String;
     FImprimirHoraSaida: Boolean;
-    FImprimirHoraSaida_Hora: string;
+    FImprimirHoraSaida_Hora: String;
     FMostrarPreview: Boolean;
     FMostrarStatus: Boolean;
     FTipoDACTE: TpcnTipoImpressao;
@@ -78,12 +79,12 @@ type
     FSite: String;
     FEmail: String;
     FImprimeDescPorc: Boolean;
-	  FProtocoloCTE: string;
+	  FProtocoloCTE: String;
     FMargemInferior: Double;
     FMargemSuperior: Double;
     FMargemEsquerda: Double;
     FMargemDireita: Double;
-    FCTeCancelada: boolean;
+    FCTeCancelada: Boolean;
     FResumoCanhoto: Boolean; //Rodrigo DSP 22/01/2014 10:43:44:
     FEPECEnviado: Boolean;
 
@@ -103,7 +104,7 @@ type
     property PathPDF: String                read GetPathArquivos         write SetPathArquivos;
     property Impressora: String             read FImpressora             write FImpressora;
     property ImprimirHoraSaida: Boolean     read FImprimirHoraSaida      write FImprimirHoraSaida;
-    property ImprimirHoraSaida_Hora: string read FImprimirHoraSaida_Hora write FImprimirHoraSaida_Hora;
+    property ImprimirHoraSaida_Hora: String read FImprimirHoraSaida_Hora write FImprimirHoraSaida_Hora;
     property MostrarPreview: Boolean        read FMostrarPreview         write FMostrarPreview;
     property MostrarStatus: Boolean         read FMostrarStatus          write FMostrarStatus;
     property TipoDACTE: TpcnTipoImpressao   read FTipoDACTE              write FTipoDACTE;
@@ -126,11 +127,12 @@ type
 
 implementation
 
-uses ACBrCTE, ACBrCteUtil, ACBrUtil, ACBrDFeUtil;
+uses
+  ACBrCTE, ACBrCteUtil, ACBrUtil, ACBrDFeUtil;
 
 constructor TACBrCteDACTEClass.Create(AOwner: TComponent);
 begin
-  inherited create( AOwner );
+  inherited create(AOwner);
 
   FACBrCTE      := nil;
   FLogo         := '';
@@ -159,7 +161,7 @@ begin
   FMargemDireita  := 0.51;
   FCTeCancelada   := False;
 
-  FResumoCanhoto := False;//Rodrigo DSP 22/01/2014 10:43:37:
+  FResumoCanhoto := False; // Rodrigo DSP 22/01/2014 10:43:37:
   FEPECEnviado   := False;
 end;
 
@@ -218,7 +220,7 @@ end;
 
 procedure TACBrCteDACTEClass.ErroAbstract(NomeProcedure: String);
 begin
-  raise Exception.Create( NomeProcedure );
+  raise Exception.Create(NomeProcedure);
 end;
 
 function TACBrCTeDACTEClass.GetPathArquivos: String;

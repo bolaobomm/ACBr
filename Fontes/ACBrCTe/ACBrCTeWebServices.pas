@@ -53,14 +53,15 @@ unit ACBrCTeWebServices;
 
 interface
 
-uses Classes, SysUtils,
-  {$IFDEF VCL} Dialogs, {$ELSE} QDialogs, {$ENDIF}
-  {$IFDEF ACBrCTeOpenSSL}
-    HTTPSend,
-  {$ELSE}
-     SOAPHTTPTrans, WinInet, ACBrCAPICOM_TLB,
-     {SoapHTTPClient, }SOAPConst,{ JwaWinCrypt,}
-  {$ENDIF}
+uses
+  Classes, SysUtils,
+{$IFDEF VCL} Dialogs, {$ELSE} QDialogs, {$ENDIF}
+{$IFDEF ACBrCTeOpenSSL}
+  HTTPSend,
+{$ELSE}
+  SOAPHTTPTrans, WinInet, ACBrCAPICOM_TLB,
+  {SoapHTTPClient, }SOAPConst,{ JwaWinCrypt,}
+{$ENDIF}
   pcnAuxiliar, pcnConversao, pcteRetConsCad,
   ACBrCTeConfiguracoes, ACBrCteConhecimentos,
   pcteRetConsReciCTe, pcteProcCte, pcteRetCancCTe, pcteConsReciCTe,
@@ -301,7 +302,7 @@ type
   TCTeInutilizacao = Class(TWebServicesBase)
   private
     FID: WideString;
-    FProtocolo: string;
+    FProtocolo: String;
     FModelo: Integer;
     FSerie: Integer;
     FCNPJ: String;
@@ -430,16 +431,14 @@ type
 
 implementation
 
-uses {$IFDEF ACBrCTeOpenSSL}
-        ssl_openssl,
-     {$ENDIF}
-     ACBrUtil, ACBrCTeUtil, ACBrCTe, ACBrDFeUtil,
-     pcnGerador, pcnCabecalho, pcnLeitor,
-     pcteConsStatServ, pcteRetConsStatServ,
-     pcteConsCad,
-     pcteConsSitCTe,
-     pcteCancCTe,
-     pcteInutCTe, pcteRetInutCTe;
+uses
+{$IFDEF ACBrCTeOpenSSL}
+  ssl_openssl,
+{$ENDIF}
+  ACBrUtil, ACBrCTeUtil, ACBrCTe, ACBrDFeUtil,
+  pcnGerador, pcnCabecalho, pcnLeitor,
+  pcteConsStatServ, pcteRetConsStatServ, pcteConsCad, pcteConsSitCTe,
+  pcteCancCTe, pcteInutCTe, pcteRetInutCTe;
 
 {$IFNDEF ACBrCTeOpenSSL}
 const
@@ -447,6 +446,7 @@ const
 {$ENDIF}
 
 { TWebServicesBase }
+
 constructor TWebServicesBase.Create(AOwner: TComponent);
 begin
   FConfiguracoes := TConfiguracoes( TACBrCTe( AOwner ).Configuracoes );
@@ -478,7 +478,6 @@ begin
   HTTP.AddPortNumberToHost := False;
   HTTP.Headers.Add(Action);
 end;
-
 {$ELSE}
 procedure TWebServicesBase.ConfiguraReqResp(ReqResp: THTTPReqResp);
 begin
@@ -497,7 +496,7 @@ var
   Cert         : ICertificate2;
   CertContext  : ICertContext;
   PCertContext : Pointer;
-  ContentHeader: string;
+  ContentHeader: String;
 begin
   Cert        := FConfiguracoes.Certificados.GetCertificado;
   CertContext :=  Cert as ICertContext;
@@ -768,7 +767,7 @@ end;
 procedure TWebServicesBase.DoCTeEnvEvento;
 var
   EventoCTe: TEventoCTe;
-  i, j: integer;
+  i, j: Integer;
 begin
   EventoCTe := TEventoCTe.Create;
   try
@@ -1036,15 +1035,15 @@ begin
 end;
 
 { TCTeStatusServico }
+
 function TCTeStatusServico.Executar: Boolean;
 var
   CTeRetorno: TRetConsStatServ;
-  aMsg: string;
+  aMsg: String;
   Texto: String;
   Acao: TStringList;
   Stream: TMemoryStream;
   StrStream: TStringStream;
-
   {$IFDEF ACBrCTeOpenSSL}
      HTTP: THTTPSend;
   {$ELSE}
@@ -1054,7 +1053,7 @@ begin
   {Result :=} inherited Executar;
 
   Result := False;
-  
+
   Acao   := TStringList.Create;
   Stream := TMemoryStream.Create;
   FcStat := 0;
@@ -1200,6 +1199,7 @@ begin
 end;
 
 { TCTeRecepcao }
+
 constructor TCTeRecepcao.Create(AOwner: TComponent; ACTes: TConhecimentos);
 begin
   inherited Create(AOwner);
@@ -1209,12 +1209,11 @@ end;
 function TCTeRecepcao.Executar: Boolean;
 var
   CTeRetorno: TretEnvCTe;
-  aMsg: string;
+  aMsg: String;
   Texto: String; //  Texto : WideString;
   Acao: TStringList;
   Stream: TMemoryStream;
   StrStream: TStringStream;
-
   {$IFDEF ACBrCTeOpenSSL}
      HTTP: THTTPSend;
   {$ELSE}
@@ -1502,16 +1501,16 @@ function TCteRetRecepcao.Executar: Boolean;
 
  function Processando: Boolean;
  var
-    aMsg: string;
-    Texto: String;
-    Acao: TStringList;
-    Stream: TMemoryStream;
-    StrStream: TStringStream;
-    {$IFDEF ACBrCTeOpenSSL}
-       HTTP: THTTPSend;
-    {$ELSE}
-       ReqResp: THTTPReqResp;
-    {$ENDIF}
+   aMsg: String;
+   Texto: String;
+   Acao: TStringList;
+   Stream: TMemoryStream;
+   StrStream: TStringStream;
+   {$IFDEF ACBrCTeOpenSSL}
+      HTTP: THTTPSend;
+   {$ELSE}
+      ReqResp: THTTPReqResp;
+   {$ENDIF}
  begin
     Acao   := TStringList.Create;
     Stream := TMemoryStream.Create;
@@ -1679,7 +1678,6 @@ end;
 
 { TCteRecibo }
 
-// Incluido por Italo em 03/01/2013 (Sujestão de Nilton Olher)
 procedure TCteRecibo.Clear;
 begin
   // Limpa Dados do retorno;
@@ -1703,7 +1701,7 @@ end;
 
 function TCteRecibo.Executar: Boolean;
 var
- aMsg: string;
+ aMsg: String;
  Texto: String;
  Acao: TStringList;
  Stream: TMemoryStream;
@@ -1879,8 +1877,7 @@ var
   Acao: TStringList;
   Stream: TMemoryStream;
   StrStream: TStringStream;
-  wAtualiza, CTCancelado: boolean;
-
+  wAtualiza, CTCancelado: Boolean;
   {$IFDEF ACBrCTeOpenSSL}
      HTTP: THTTPSend;
   {$ELSE}
@@ -2436,7 +2433,7 @@ end;
 function TCTeCancelamento.Executar: Boolean;
 var
   CTeRetorno: TRetCancCTe;
-  aMsg: string;
+  aMsg: String;
   i: Integer;
   Texto: String;
   Acao: TStringList;
@@ -2673,7 +2670,7 @@ end;
 function TCTeInutilizacao.Executar: Boolean;
 var
   CTeRetorno: TRetInutCTe;
-  aMsg: string;
+  aMsg: String;
   Texto, NomeArq : String;
   Acao: TStringList;
   Stream: TMemoryStream;
@@ -3074,12 +3071,12 @@ end;
 
 function TCTeEnvEvento.Executar: Boolean;
 var
-  aMsg, NomeArq: string;
+  aMsg, NomeArq: String;
   Texto: String;
   Acao: TStringList;
   Stream: TMemoryStream;
   StrStream: TStringStream;
-  i, j: integer;
+  i, j: Integer;
   Leitor: TLeitor;
   {$IFDEF ACBrCTeOpenSSL}
      HTTP: THTTPSend;

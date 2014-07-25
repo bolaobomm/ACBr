@@ -327,11 +327,11 @@ type
 
   TInfCTe = class(TPersistent)
   private
-    FId : string;
-    FVersao : string;
+    FId : String;
+    FVersao : String;
   published
-    property Id: string     read FId     write FId;
-    property versao: string read FVersao write FVersao;
+    property Id: String     read FId     write FId;
+    property versao: String read FVersao write FVersao;
   end;
 
   TIde = class(TPersistent)
@@ -1083,14 +1083,14 @@ type
   private
     FcUnid  : UnidMed;
     FtpMed  : String;
-    FqCarga : currency;
+    FqCarga : Currency;
   public
     constructor Create; reintroduce;
     destructor Destroy; override;
   published
     property cUnid: UnidMed   read FcUnid  write FcUnid;
     property tpMed: String    read FtpMed  write FtpMed;
-    property qCarga: currency read FqCarga write FqCarga;
+    property qCarga: Currency read FqCarga write FqCarga;
   end;
 
   TInfDoc = class(TPersistent)
@@ -2184,14 +2184,14 @@ type
   TFat = class(TPersistent)
   private
     FnFat  : String;
-    FvOrig : currency;
-    FvDesc : currency;
-    FvLiq  : currency;
+    FvOrig : Currency;
+    FvDesc : Currency;
+    FvLiq  : Currency;
   published
     property nFat: String    read FnFat  write FnFat;
-    property vOrig: currency read FvOrig write FvOrig;
-    property vDesc: currency read FvDesc write FvDesc;
-    property vLiq: currency  read FvLiq  write FvLiq;
+    property vOrig: Currency read FvOrig write FvOrig;
+    property vDesc: Currency read FvDesc write FvDesc;
+    property vLiq: Currency  read FvLiq  write FvLiq;
   end;
 
   TDupCollection = class(TCollection)
@@ -2208,14 +2208,14 @@ type
   private
     FnDup  : String;
     FdVenc : TDateTime;
-    FvDup  : currency;
+    FvDup  : Currency;
   public
     constructor Create; reintroduce;
     destructor Destroy; override;
   published
     property nDup: String     read FnDup  write FnDup;
     property dVenc: TDateTime read FdVenc write FdVenc;
-    property vDup: currency   read FvDup  write FvDup;
+    property vDup: Currency   read FvDup  write FvDup;
   end;
 
   TInfCteSub = class(TPersistent)

@@ -49,11 +49,12 @@ unit pcteEventoCTe;
 
 interface
 
-uses SysUtils, Classes,
-     {$IFNDEF VER130}
-     Variants,
-     {$ENDIF}
-     pcnAuxiliar, pcnConversao;
+uses
+  SysUtils, Classes,
+{$IFNDEF VER130}
+  Variants,
+{$ENDIF}
+  pcnAuxiliar, pcnConversao;
 
 type
   TInfEvento      = class;
@@ -69,7 +70,7 @@ type
     FID: String;
     FtpAmbiente: TpcnTipoAmbiente;
     FCNPJ: String;
-    FcOrgao: integer;
+    FcOrgao: Integer;
     FChave: String;
     FDataEvento: TDateTime;
     FTpEvento: TpcnTpEvento;
@@ -79,8 +80,8 @@ type
 
     function getcOrgao: Integer;
     function getVersaoEvento: String;
-    function getDescEvento: string;
-    function getTipoEvento: string;
+    function getDescEvento: String;
+    function getTipoEvento: String;
   public
     constructor Create;
     destructor Destroy; override;
@@ -96,22 +97,22 @@ type
     property nSeqEvento: Integer     read FnSeqEvento     write FnSeqEvento;
     property versaoEvento: String    read getVersaoEvento write FversaoEvento;
     property detEvento: TDetEvento   read FDetEvento      write FDetEvento;
-    property DescEvento: string      read getDescEvento;
-    property TipoEvento: string      read getTipoEvento;
+    property DescEvento: String      read getDescEvento;
+    property TipoEvento: String      read getTipoEvento;
   end;
 
   TDetEvento = class(TPersistent)
   private
     FdescEvento: String;
-    FnProt: string;
+    FnProt: String;
 
-    FxJust: string;    // Cancelamento
+    FxJust: String;    // Cancelamento
 
     FvICMS: Currency;  // EPEC
     FvTPrest: Currency;
     FvCarga: Currency;
     Ftoma: TpcteTomador;
-    FUF: string;
+    FUF: String;
     FCNPJCPF: String;
     FIE: String;
     Fmodal: TpcteModal;
@@ -139,7 +140,7 @@ type
     property vTPrest: Currency  read FvTPrest    write FvTPrest;
     property vCarga: Currency   read FvCarga     write FvCarga;
     property toma: TpcteTomador read Ftoma       write Ftoma;
-    property UF: string         read FUF         write FUF;
+    property UF: String         read FUF         write FUF;
     property CNPJCPF: String    read FCNPJCPF    write FCNPJCPF;
     property IE: String         read FIE         write FIE;
     property modal: TpcteModal  read Fmodal      write Fmodal;
@@ -198,17 +199,17 @@ type
     FXML: AnsiString;
   public
   published
-    property Id: string              read FId          write FId;
+    property Id: String              read FId          write FId;
     property tpAmb: TpcnTipoAmbiente read FtpAmb       write FtpAmb;
-    property verAplic: string        read FverAplic    write FverAplic;
+    property verAplic: String        read FverAplic    write FverAplic;
     property cOrgao: Integer         read FcOrgao      write FcOrgao;
-    property cStat: integer          read FcStat       write FcStat;
-    property xMotivo: string         read FxMotivo     write FxMotivo;
+    property cStat: Integer          read FcStat       write FcStat;
+    property xMotivo: String         read FxMotivo     write FxMotivo;
     property chCTe: String           read FchCTe       write FchCTe;
     property tpEvento: TpcnTpEvento  read FtpEvento    write FtpEvento;
     property xEvento: String         read FxEvento     write FxEvento;
     property nSeqEvento: Integer     read FnSeqEvento  write FnSeqEvento;
-    property CNPJDest: string        read FCNPJDest    write FCNPJDest;
+    property CNPJDest: String        read FCNPJDest    write FCNPJDest;
     property emailDest: String       read FemailDest   write FemailDest;
     property dhRegEvento: TDateTime  read FdhRegEvento write FdhRegEvento;
     property nProt: String           read FnProt       write FnProt;
@@ -232,7 +233,7 @@ begin
   inherited;
 end;
 
-function TInfEvento.getcOrgao: integer;
+function TInfEvento.getcOrgao: Integer;
 //  (AC,AL,AP,AM,BA,CE,DF,ES,GO,MA,MT,MS,MG,PA,PB,PR,PE,PI,RJ,RN,RS,RO,RR,SC,SP,SE,TO);
 //  (12,27,16,13,29,23,53,32,52,21,51,50,31,15,25,41,26,22,33,24,43,11,14,42,35,28,17);
 begin
@@ -281,14 +282,10 @@ begin
 
    if Result = 0 then
      raise EventoException.Create('Campo cOrgao não informado.');
-
-   // Estados que utilizam a SVAN: ES, MA, PA, PI, RN Devem utilizar 91
-//   if Result in [32, 21, 15, 22, 24] then
-//     Result := 91;
   end;
 end;
 
-function TInfEvento.getDescEvento: string;
+function TInfEvento.getDescEvento: String;
 begin
   case FTpEvento of
     teCCe                 : Result := 'Carta de Correcao';
@@ -302,7 +299,7 @@ begin
   end;
 end;
 
-function TInfEvento.getTipoEvento: string;
+function TInfEvento.getTipoEvento: String;
 begin
   case FTpEvento of
     teCCe                 : Result := '110110'; // Somete para a versão 2.0
@@ -318,7 +315,6 @@ end;
 
 function TInfEvento.getVersaoEvento: String;
 begin
-//  Result := '1.04';
   Result := '2.00';
 end;
 

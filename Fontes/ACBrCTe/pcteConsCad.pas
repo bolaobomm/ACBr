@@ -55,20 +55,20 @@ type
   TConsCad = class(TPersistent)
   private
     FGerador: TGerador;
-    FUF: string;
-    FIE: string;
-    FCNPJ: string;
-    FCPF: string;
+    FUF: String;
+    FIE: String;
+    FCNPJ: String;
+    FCPF: String;
   public
     constructor Create;
     destructor Destroy; override;
-    function GerarXML: boolean;
+    function GerarXML: Boolean;
   published
     property Gerador: TGerador read FGerador write FGerador;
-    property UF: string        read FUF      write FUF;
-    property IE: string        read FIE      write FIE;
-    property CNPJ: string      read FCNPJ    write FCNPJ;
-    property CPF: string       read FCPF     write FCPF;
+    property UF: String        read FUF      write FUF;
+    property IE: String        read FIE      write FIE;
+    property CNPJ: String      read FCNPJ    write FCNPJ;
+    property CPF: String       read FCPF     write FCPF;
   end;
 
 implementation
@@ -86,7 +86,7 @@ begin
   inherited;
 end;
 
-function TConsCad.GerarXML: boolean;
+function TConsCad.GerarXML: Boolean;
 var
   i: integer;
 begin

@@ -124,7 +124,7 @@ begin
   inherited;
 end;
 
-function TEventoCTe.ObterNomeArquivo(tpEvento: TpcnTpEvento): string;
+function TEventoCTe.ObterNomeArquivo(tpEvento: TpcnTpEvento): String;
 begin
  case tpEvento of
     teCCe         : Result := IntToStr(Self.idLote) + '-cce.xml';
@@ -269,7 +269,7 @@ begin
   FEvento.Assign(Value);
 end;
 
-function TEventoCTe.LerXML(CaminhoArquivo: string): boolean;
+function TEventoCTe.LerXML(CaminhoArquivo: String): boolean;
 var
   ArqEvento: TStringList;
 begin

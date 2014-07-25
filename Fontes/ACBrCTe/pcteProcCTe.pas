@@ -59,36 +59,36 @@ type
   TProcCTe = class(TPersistent)
   private
     FGerador: TGerador;
-    FPathCTe: string;
-    FPathRetConsReciCTe: string;
-    FPathRetConsSitCTe: string;
+    FPathCTe: String;
+    FPathRetConsReciCTe: String;
+    FPathRetConsSitCTe: String;
     FtpAmb: TpcnTipoAmbiente;
-    FverAplic: string;
-    FchCTe: string;
+    FverAplic: String;
+    FchCTe: String;
     FdhRecbto: TDateTime;
-    FnProt: string;
-    FdigVal: string;
-    FcStat: integer;
-    FxMotivo: string;
+    FnProt: String;
+    FdigVal: String;
+    FcStat: Integer;
+    FxMotivo: String;
     FId: String;
   public
     constructor Create;
     destructor Destroy; override;
     function GerarXML: boolean;
-    function ObterNomeArquivo(const PadraoNome: TPcnPadraoNomeProcCTe = tpnPrivado): string;
+    function ObterNomeArquivo(const PadraoNome: TPcnPadraoNomeProcCTe = tpnPrivado): String;
   published
     property Gerador: TGerador          read FGerador            write FGerador;
-    property PathCTe: string            read FPathCTe            write FPathCTe;
-    property PathRetConsReciCTe: string read FPathRetConsReciCTe write FPathRetConsReciCTe;
-    property PathRetConsSitCTe: string  read FPathRetConsSitCTe  write FPathRetConsSitCTe;
+    property PathCTe: String            read FPathCTe            write FPathCTe;
+    property PathRetConsReciCTe: String read FPathRetConsReciCTe write FPathRetConsReciCTe;
+    property PathRetConsSitCTe: String  read FPathRetConsSitCTe  write FPathRetConsSitCTe;
     property tpAmb: TpcnTipoAmbiente    read FtpAmb              write FtpAmb;
-    property verAplic: string           read FverAplic           write FverAplic;
-    property chCTe: string              read FchCTe              write FchCTe;
+    property verAplic: String           read FverAplic           write FverAplic;
+    property chCTe: String              read FchCTe              write FchCTe;
     property dhRecbto: TDateTime        read FdhRecbto           write FdhRecbto;
-    property nProt: string              read FnProt              write FnProt;
-    property digVal: string             read FdigVal             write FdigVal;
-    property cStat: integer             read FcStat              write FcStat;
-    property xMotivo: string            read FxMotivo            write FxMotivo;
+    property nProt: String              read FnProt              write FnProt;
+    property digVal: String             read FdigVal             write FdigVal;
+    property cStat: Integer             read FcStat              write FcStat;
+    property xMotivo: String            read FxMotivo            write FxMotivo;
     property Id: String                 read FId                 write FId;
   end;
 
@@ -107,7 +107,7 @@ begin
   inherited;
 end;
 
-function TProcCTe.ObterNomeArquivo(const PadraoNome: TPcnPadraoNomeProcCTe = tpnPrivado): string;
+function TProcCTe.ObterNomeArquivo(const PadraoNome: TPcnPadraoNomeProcCTe = tpnPrivado): String;
 begin
   Result := FchCTe + '-procCTe.xml';
   if PadraoNome = tpnPublico then
@@ -118,17 +118,17 @@ end;
 
 function TProcCTe.GerarXML: boolean;
 
-function PreencherTAG(const TAG: string; Texto: string): string;
+function PreencherTAG(const TAG: String; Texto: String): String;
 begin
   result := '<' + TAG + '>' + RetornarConteudoEntre(Texto, '<' + TAG + '>', '</' + TAG + '>') + '</' + TAG + '>';
 end;
 
 var
-  XMLCTe: TstringList;
-  XMLinfProt: TstringList;
-  XMLinfProt2: TstringList;
-  wCstat: string;
-  xProtCTe: string;
+  XMLCTe: TStringList;
+  XMLinfProt: TStringList;
+  XMLinfProt2: TStringList;
+  wCstat: String;
+  xProtCTe: String;
   xId: String;
   LocLeitor: TLeitor;
   i: Integer;
@@ -136,8 +136,8 @@ var
 begin
   ProtLido := False;
 
-  XMLCTe := TStringList.Create;
-  XMLinfProt := TStringList.Create;
+  XMLCTe      := TStringList.Create;
+  XMLinfProt  := TStringList.Create;
   XMLinfProt2 := TStringList.Create;
   try
     xProtCTe := '';
@@ -165,7 +165,6 @@ begin
       if not FileExists(FPathRetConsReciCTe)
        then Gerador.wAlerta('XR06', 'PROTOCOLO', 'PROTOCOLO', ERR_MSG_ARQUIVO_NAO_ENCONTRADO)
        else begin
-        // XMLinfProt.LoadFromFile(FPathRetConsReciCTe);
         I := 0;
         LocLeitor := TLeitor.Create;
         try

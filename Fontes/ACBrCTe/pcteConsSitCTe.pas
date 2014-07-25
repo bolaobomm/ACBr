@@ -58,16 +58,16 @@ type
   private
     FGerador: TGerador;
     FtpAmb: TpcnTipoAmbiente;
-    FchCTe: string;
+    FchCTe: String;
   public
     constructor Create;
     destructor Destroy; override;
-    function GerarXML: boolean;
-    function ObterNomeArquivo: string;
+    function GerarXML: Boolean;
+    function ObterNomeArquivo: String;
   published
     property Gerador: TGerador       read FGerador write FGerador;
     property tpAmb: TpcnTipoAmbiente read FtpAmb   write FtpAmb;
-    property chCTe: string           read FchCTe   write FchCTe;
+    property chCTe: String           read FchCTe   write FchCTe;
   end;
 
 implementation
@@ -85,12 +85,12 @@ begin
   inherited;
 end;
 
-function TConsSitCTe.ObterNomeArquivo: string;
+function TConsSitCTe.ObterNomeArquivo: String;
 begin
   Result := SomenteNumeros(FchCTe) + '-ped-sit.xml';
 end;
 
-function TConsSitCTe.GerarXML: boolean;
+function TConsSitCTe.GerarXML: Boolean;
 begin
   Gerador.ArquivoFormatoXML := '';
 

@@ -57,23 +57,23 @@ type
   TcancCTe = class(TPersistent)
   private
     FGerador: TGerador;
-    FChave: string;
+    FChave: String;
     FtpAmb: TpcnTipoAmbiente;
-    FchCTe: string;
-    FnProt: string;
-    FxJust: string;
+    FchCTe: String;
+    FnProt: String;
+    FxJust: String;
   public
     constructor Create;
     destructor Destroy; override;
-    function GerarXML: boolean;
-    function ObterNomeArquivo: string;
+    function GerarXML: Boolean;
+    function ObterNomeArquivo: String;
   published
     property Gerador: TGerador       read FGerador write FGerador;
-    property Chave: string           read FChave   write FChave;
+    property Chave: String           read FChave   write FChave;
     property tpAmb: TpcnTipoAmbiente read FtpAmb   write FtpAmb;
-    property chCTe: string           read FchCTe   write FchCTe;
-    property nProt: string           read FnProt   write FnProt;
-    property xJust: string           read FxJust   write FxJust;
+    property chCTe: String           read FchCTe   write FchCTe;
+    property nProt: String           read FnProt   write FnProt;
+    property xJust: String           read FxJust   write FxJust;
   end;
 
 implementation
@@ -91,12 +91,12 @@ begin
   inherited;
 end;
 
-function TcancCTe.ObterNomeArquivo: string;
+function TcancCTe.ObterNomeArquivo: String;
 begin
   Result := SomenteNumeros(FchCTe) + '-ped-can.xml';
 end;
 
-function TcancCTe.GerarXML: boolean;
+function TcancCTe.GerarXML: Boolean;
 begin
   Gerador.ArquivoFormatoXML := '';
 

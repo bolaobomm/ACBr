@@ -58,16 +58,16 @@ type
   private
     FGerador: TGerador;
     FtpAmb: TpcnTipoAmbiente;
-    FcUF: integer;
+    FcUF: Integer;
   public
     constructor Create;
     destructor Destroy; override;
-    function GerarXML: boolean;
-    function ObterNomeArquivo: string;
+    function GerarXML: Boolean;
+    function ObterNomeArquivo: String;
   published
     property Gerador: TGerador       read FGerador write FGerador;
     property tpAmb: TpcnTipoAmbiente read FtpAmb   write FtpAmb;
-    property cUF: integer            read FcUF     write FcUF;
+    property cUF: Integer            read FcUF     write FcUF;
   end;
 
 implementation
@@ -85,11 +85,11 @@ begin
   inherited;
 end;
 
-function TConsStatServ.ObterNomeArquivo: string;
+function TConsStatServ.ObterNomeArquivo: String;
 var
   DataHora: TDateTime;
   Year, Month, Day, Hour, Min, Sec, Milli: Word;
-  AAAAMMDDTHHMMSS: string;
+  AAAAMMDDTHHMMSS: String;
 begin
   Datahora:=now;
   DecodeTime(DataHora, Hour, Min, Sec, Milli);
@@ -99,7 +99,7 @@ begin
   Result := AAAAMMDDTHHMMSS + '-ped-sta.xml';
 end;
 
-function TConsStatServ.GerarXML: boolean;
+function TConsStatServ.GerarXML: Boolean;
 begin
   Gerador.ArquivoFormatoXML := '';
 

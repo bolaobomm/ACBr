@@ -58,16 +58,16 @@ type
   private
     FGerador: TGerador;
     FtpAmb: TpcnTipoAmbiente;
-    FnRec: string;
+    FnRec: String;
   public
     constructor Create;
     destructor Destroy; override;
-    function GerarXML: boolean;
-    function ObterNomeArquivo: string;
+    function GerarXML: Boolean;
+    function ObterNomeArquivo: String;
   published
     property Gerador: TGerador       read FGerador write FGerador;
     property tpAmb: TpcnTipoAmbiente read FtpAmb   write FtpAmb;
-    property nRec: string            read FnRec    write FnRec;
+    property nRec: String            read FnRec    write FnRec;
   end;
 
 implementation
@@ -85,12 +85,12 @@ begin
   inherited;
 end;
 
-function TConsReciCTe.ObterNomeArquivo: string;
+function TConsReciCTe.ObterNomeArquivo: String;
 begin
   Result := SomenteNumeros(FnRec) + '-ped-rec.xml';
 end;
 
-function TConsReciCTe.GerarXML: boolean;
+function TConsReciCTe.GerarXML: Boolean;
 begin
   Gerador.ArquivoFormatoXML := '';
 

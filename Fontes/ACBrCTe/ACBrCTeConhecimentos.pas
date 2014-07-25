@@ -62,7 +62,7 @@ type
     FXML: AnsiString;
     FXMLOriginal: AnsiString;
     FConfirmada: Boolean;
-    FMsg: AnsiString ;
+    FMsg: AnsiString;
     FAlertas: AnsiString;
     FErroValidacao: AnsiString;
     FErroValidacaoCompleto: AnsiString;
@@ -75,8 +75,8 @@ type
     destructor Destroy; override;
     procedure Imprimir;
     procedure ImprimirPDF;
-    function SaveToFile(CaminhoArquivo: string = ''): boolean;
-    function SaveToStream(Stream: TStringStream): boolean;
+    function SaveToFile(CaminhoArquivo: String = ''): Boolean;
+    function SaveToStream(Stream: TStringStream): Boolean;
     procedure EnviarEmail(const sSmtpHost,
                                 sSmtpPort,
                                 sSmtpUser,
@@ -88,7 +88,7 @@ type
                                 SSL: Boolean;
                                 EnviaPDF: Boolean = true;
                                 sCC: TStrings = nil;
-                                Anexos: TStrings=nil;
+                                Anexos: TStrings = nil;
                                 PedeConfirma: Boolean = False;
                                 AguardarEnvio: Boolean = False;
                                 NomeRemetente: String = '';
@@ -129,13 +129,13 @@ type
     function  Add: Conhecimento;
     function Insert(Index: Integer): Conhecimento;
 
-    function GetNamePath: string; override ;
+    function GetNamePath: String; override;
     // Incluido o Parametro AGerarCTe que determina se após carregar os dados do CTe
     // para o componente, será gerado ou não novamente o XML do CTe.
-    function LoadFromFile(CaminhoArquivo: string; AGerarCTe: Boolean = True): boolean;
-    function LoadFromStream(Stream: TStringStream; AGerarCTe: Boolean = True): boolean;
-    function LoadFromString(AString: String; AGerarCTe: Boolean = True): boolean;
-    function SaveToFile(PathArquivo: string = ''): boolean;
+    function LoadFromFile(CaminhoArquivo: String; AGerarCTe: Boolean = True): Boolean;
+    function LoadFromStream(Stream: TStringStream; AGerarCTe: Boolean = True): Boolean;
+    function LoadFromString(AString: String; AGerarCTe: Boolean = True): Boolean;
+    function SaveToFile(PathArquivo: String = ''): Boolean;
 
     property Items[Index: Integer]: Conhecimento read GetItem         write SetItem;
     property Configuracoes: TConfiguracoes       read FConfiguracoes  write FConfiguracoes;
@@ -165,7 +165,8 @@ type
 
 implementation
 
-uses ACBrCTe, ACBrUtil, ACBrDFeUtil, pcnGerador;
+uses
+  ACBrCTe, ACBrUtil, ACBrDFeUtil, pcnGerador;
 
 { Conhecimento }
 
@@ -178,10 +179,10 @@ begin
   FCTe.Ide.modelo := '57';
 
   FCTe.Ide.verProc := 'ACBrCTe';
-  FCTe.Ide.tpAmb   := TACBrCTe( TConhecimentos( Collection ).ACBrCTe ).Configuracoes.WebServices.Ambiente;
-  FCTe.Ide.tpEmis  := TACBrCTe( TConhecimentos( Collection ).ACBrCTe ).Configuracoes.Geral.FormaEmissao;
-  if Assigned(TACBrCTe( TConhecimentos( Collection ).ACBrCTe ).DACTe) then
-     FCTe.Ide.tpImp   := TACBrCTe( TConhecimentos( Collection ).ACBrCTe ).DACTe.TipoDACTE;
+  FCTe.Ide.tpAmb   := TACBrCTe(TConhecimentos(Collection).ACBrCTe).Configuracoes.WebServices.Ambiente;
+  FCTe.Ide.tpEmis  := TACBrCTe(TConhecimentos(Collection).ACBrCTe).Configuracoes.Geral.FormaEmissao;
+  if Assigned(TACBrCTe(TConhecimentos(Collection).ACBrCTe).DACTe) then
+     FCTe.Ide.tpImp   := TACBrCTe(TConhecimentos(Collection).ACBrCTe).DACTe.TipoDACTE;
 end;
 
 destructor Conhecimento.Destroy;
@@ -192,21 +193,21 @@ end;
 
 procedure Conhecimento.Imprimir;
 begin
-  if not Assigned( TACBrCTe( TConhecimentos( Collection ).ACBrCTe ).DACTE ) then
+  if not Assigned(TACBrCTe(TConhecimentos(Collection).ACBrCTe).DACTE) then
      raise Exception.Create('Componente DACTE não associado.')
   else
-     TACBrCTe( TConhecimentos( Collection ).ACBrCTe ).DACTE.ImprimirDACTE(CTe);
+     TACBrCTe(TConhecimentos(Collection).ACBrCTe).DACTE.ImprimirDACTE(CTe);
 end;
 
 procedure Conhecimento.ImprimirPDF;
 begin
-  if not Assigned( TACBrCTe( TConhecimentos( Collection ).ACBrCTe ).DACTE ) then
+  if not Assigned(TACBrCTe(TConhecimentos(Collection).ACBrCTe).DACTE) then
      raise Exception.Create('Componente DACTE não associado.')
   else
-     TACBrCTe( TConhecimentos( Collection ).ACBrCTe ).DACTE.ImprimirDACTEPDF(CTe);
+     TACBrCTe(TConhecimentos(Collection).ACBrCTe).DACTE.ImprimirDACTEPDF(CTe);
 end;
 
-function Conhecimento.SaveToFile(CaminhoArquivo: string = ''): boolean;
+function Conhecimento.SaveToFile(CaminhoArquivo: String = ''): Boolean;
 var
   LocCTeW: TCTeW;
 begin
@@ -214,10 +215,10 @@ begin
      Result  := True;
      LocCTeW := TCTeW.Create(CTe);
      try
-        LocCTeW.Gerador.Opcoes.FormatoAlerta := TACBrCTe( TConhecimentos( Collection ).ACBrCTe ).Configuracoes.Geral.FormatoAlerta;
+        LocCTeW.Gerador.Opcoes.FormatoAlerta := TACBrCTe(TConhecimentos(Collection).ACBrCTe).Configuracoes.Geral.FormatoAlerta;
         LocCTeW.GerarXml;
         if DFeUtil.EstaVazio(CaminhoArquivo) then
-           CaminhoArquivo := PathWithDelim(TACBrCTe( TConhecimentos( Collection ).ACBrCTe ).Configuracoes.Geral.PathSalvar)+copy(CTe.inFCTe.ID, (length(CTe.inFCTe.ID)-44)+1, 44)+'-cte.xml';
+           CaminhoArquivo := PathWithDelim(TACBrCTe(TConhecimentos(Collection).ACBrCTe).Configuracoes.Geral.PathSalvar)+copy(CTe.inFCTe.ID, (length(CTe.inFCTe.ID)-44)+1, 44)+'-cte.xml';
         if DFeUtil.EstaVazio(CaminhoArquivo) or not DirectoryExists(ExtractFilePath(CaminhoArquivo)) then
            raise Exception.Create('Caminho Inválido: ' + CaminhoArquivo);
         LocCTeW.Gerador.SalvarArquivo(CaminhoArquivo);
@@ -231,7 +232,7 @@ begin
   end;
 end;
 
-function Conhecimento.SaveToStream(Stream: TStringStream): boolean;
+function Conhecimento.SaveToStream(Stream: TStringStream): Boolean;
 var
   LocCTeW: TCTeW;
 begin
@@ -239,7 +240,7 @@ begin
      Result  := True;
      LocCTeW := TCTeW.Create(CTe);
      try
-        LocCTeW.Gerador.Opcoes.FormatoAlerta := TACBrCTe( TConhecimentos( Collection ).ACBrCTe ).Configuracoes.Geral.FormatoAlerta;
+        LocCTeW.Gerador.Opcoes.FormatoAlerta := TACBrCTe(TConhecimentos(Collection).ACBrCTe).Configuracoes.Geral.FormatoAlerta;
         LocCTeW.GerarXml;
         Stream.WriteString(LocCTeW.Gerador.ArquivoFormatoXML);
      finally
@@ -251,27 +252,27 @@ begin
 end;
 
 procedure Conhecimento.EnviarEmail(const sSmtpHost,
-                                      sSmtpPort,
-                                      sSmtpUser,
-                                      sSmtpPasswd,
-                                      sFrom,
-                                      sTo,
-                                      sAssunto: String;
-                                      sMensagem: TStrings;
-                                      SSL: Boolean;
-                                      EnviaPDF: Boolean = true;
-                                      sCC: TStrings=nil;
-                                      Anexos: TStrings=nil;
-                                      PedeConfirma: Boolean = False;
-                                      AguardarEnvio: Boolean = False;
-                                      NomeRemetente: String = '';
-                                      TLS: Boolean = True;
-                                      UsarThread: Boolean = True;
-                                      HTML: Boolean = False);
+                                         sSmtpPort,
+                                         sSmtpUser,
+                                         sSmtpPasswd,
+                                         sFrom,
+                                         sTo,
+                                         sAssunto: String;
+                                         sMensagem: TStrings;
+                                         SSL: Boolean;
+                                         EnviaPDF: Boolean = true;
+                                         sCC: TStrings = nil;
+                                         Anexos: TStrings = nil;
+                                         PedeConfirma: Boolean = False;
+                                         AguardarEnvio: Boolean = False;
+                                         NomeRemetente: String = '';
+                                         TLS: Boolean = True;
+                                         UsarThread: Boolean = True;
+                                         HTML: Boolean = False);
 var
- NomeArq: String;
- AnexosEmail: TStrings ;
- StreamCTe: TStringStream;
+  NomeArq: String;
+  AnexosEmail: TStrings;
+  StreamCTe: TStringStream;
 begin
  AnexosEmail := TStringList.Create;
  StreamCTe  := TStringStream.Create('');
@@ -286,40 +287,27 @@ begin
      end
     else
      begin
-       SaveToStream(StreamCTe) ;
+       SaveToStream(StreamCTe);
      end;
     if (EnviaPDF) then
     begin
-       if TACBrCTe( TConhecimentos( Collection ).ACBrCTe ).DACTE <> nil then
+       if TACBrCTe(TConhecimentos(Collection).ACBrCTe).DACTE <> nil then
        begin
-          TACBrCTe( TConhecimentos( Collection ).ACBrCTe ).DACTE.ImprimirDACTEPDF(CTe);
+          TACBrCTe(TConhecimentos(Collection).ACBrCTe).DACTE.ImprimirDACTEPDF(CTe);
           NomeArq :=  StringReplace(CTe.infCTe.ID,'CTe', '', [rfIgnoreCase]);
-          NomeArq := PathWithDelim(TACBrCTe( TConhecimentos( Collection ).ACBrCTe ).DACTE.PathPDF)+NomeArq+'.pdf';
+          NomeArq := PathWithDelim(TACBrCTe(TConhecimentos(Collection).ACBrCTe).DACTE.PathPDF)+NomeArq+'.pdf';
           AnexosEmail.Add(NomeArq);
        end;
     end;
-    TACBrCTe( TConhecimentos( Collection ).ACBrCTe ).EnviaEmail(sSmtpHost,
-                sSmtpPort,
-                sSmtpUser,
-                sSmtpPasswd,
-                sFrom,
-                sTo,
-                sAssunto,
-                sMensagem,
-                SSL,
-                sCC,
-                AnexosEmail,
-                PedeConfirma,
-                AguardarEnvio,
-                NomeRemetente,
-                TLS,
-                StreamCTe,
-                copy(CTe.infCTe.ID, (length(CTe.infCTe.ID)-44)+1, 44)+'-CTe.xml',
-                UsarThread,
-                HTML);
+    TACBrCTe(TConhecimentos(Collection).ACBrCTe).EnviaEmail(sSmtpHost, sSmtpPort,
+                sSmtpUser, sSmtpPasswd, sFrom, sTo, sAssunto, sMensagem, SSL,
+                sCC, AnexosEmail, PedeConfirma, AguardarEnvio, NomeRemetente,
+                TLS, StreamCTe,
+                copy(CTe.infCTe.ID, (length(CTe.infCTe.ID)-44)+1, 44) + '-CTe.xml',
+                UsarThread, HTML);
  finally
-    AnexosEmail.Free ;
-    StreamCTe.Free ;
+    AnexosEmail.Free;
+    StreamCTe.Free;
  end;
 end;
 
@@ -329,13 +317,12 @@ var
 begin
  LocCTeW := TCTeW.Create(Self.CTe);
  try
-    LocCTeW.Gerador.Opcoes.FormatoAlerta := TACBrCTe( TConhecimentos( Collection ).ACBrCTe ).Configuracoes.Geral.FormatoAlerta;
+    LocCTeW.Gerador.Opcoes.FormatoAlerta := TACBrCTe(TConhecimentos(Collection).ACBrCTe).Configuracoes.Geral.FormatoAlerta;
     LocCTeW.GerarXml;
     Result := LocCTeW.Gerador.ArquivoFormatoXML;
  finally
     LocCTeW.Free;
  end;
-// Result := FXML;
 end;
 
 function Conhecimento.ValidarConcatChave: Boolean;
@@ -343,30 +330,31 @@ var
   wAno, wMes, wDia: Word;
 begin
   DecodeDate(CTe.ide.dhEmi, wAno, wMes, wDia);
-  if (Copy(CTe.infCTe.ID,4,2) <> IntToStrZero(CTe.ide.cUF, 2)) or
-     (Copy(CTe.infCTe.ID,6,2) <> Copy(FormatFloat('0000', wAno), 3, 2)) or
-     (Copy(CTe.infCTe.ID,8,2) <> FormatFloat('00', wMes)) or
-     (Copy(CTe.infCTe.ID,10,14) <> copy(SomenteNumeros(CTe.Emit.CNPJ) + '00000000000000', 1, 14)) or
-     (Copy(CTe.infCTe.ID,24,2) <> CTe.ide.modelo) or
-     (Copy(CTe.infCTe.ID,26,3) <> IntToStrZero(CTe.ide.serie, 3)) or
-     (Copy(CTe.infCTe.ID,29,9) <> IntToStrZero(CTe.ide.nCT, 9)) or
-     (Copy(CTe.infCTe.ID,38,1) <> TpEmisToStr(CTe.ide.tpEmis)) or
-     (Copy(CTe.infCTe.ID,39,8) <> IntToStrZero(CTe.ide.cCT, 8)) then
+  if (Copy(CTe.infCTe.ID,  4,  2) <> IntToStrZero(CTe.ide.cUF, 2)) or
+     (Copy(CTe.infCTe.ID,  6,  2) <> Copy(FormatFloat('0000', wAno), 3, 2)) or
+     (Copy(CTe.infCTe.ID,  8,  2) <> FormatFloat('00', wMes)) or
+     (Copy(CTe.infCTe.ID, 10, 14) <> copy(SomenteNumeros(CTe.Emit.CNPJ) + '00000000000000', 1, 14)) or
+     (Copy(CTe.infCTe.ID, 24,  2) <> CTe.ide.modelo) or
+     (Copy(CTe.infCTe.ID, 26,  3) <> IntToStrZero(CTe.ide.serie, 3)) or
+     (Copy(CTe.infCTe.ID, 29,  9) <> IntToStrZero(CTe.ide.nCT, 9)) or
+     (Copy(CTe.infCTe.ID, 38,  1) <> TpEmisToStr(CTe.ide.tpEmis)) or
+     (Copy(CTe.infCTe.ID, 39,  8) <> IntToStrZero(CTe.ide.cCT, 8)) then
     Result := False
   else
     Result := True;
 end;
 
 { TConhecimentos }
+
 constructor TConhecimentos.Create(AOwner: TPersistent;
   ItemClass: TCollectionItemClass);
 begin
-  if not (AOwner is TACBrCTe ) then
-     raise Exception.Create( 'AOwner deve ser do tipo TACBrCTe') ;
+  if not (AOwner is TACBrCTe) then
+     raise Exception.Create('AOwner deve ser do tipo TACBrCTe');
 
   inherited;
 
-  FACBrCTe := TACBrCTe( AOwner ) ;
+  FACBrCTe := TACBrCTe(AOwner);
 end;
 
 
@@ -374,7 +362,7 @@ function TConhecimentos.Add: Conhecimento;
 begin
   Result := Conhecimento(inherited Add);
 
-  Result.CTe.Ide.tpAmb := Configuracoes.WebServices.Ambiente ;
+  Result.CTe.Ide.tpAmb := Configuracoes.WebServices.Ambiente;
 end;
 
 procedure TConhecimentos.Assinar;
@@ -401,8 +389,8 @@ begin
            raise Exception.Create('Falha ao assinar Conhecimento de Transporte Eletrônico '+
                                    IntToStr(Self.Items[i].CTe.Ide.cCT)+FMsg);
 {$ENDIF}
-        vAssinada := StringReplace( vAssinada, '<'+ENCODING_UTF8_STD+'>', '', [rfReplaceAll] ) ;
-        vAssinada := StringReplace( vAssinada, '<?xml version="1.0"?>', '', [rfReplaceAll] ) ;
+        vAssinada := StringReplace(vAssinada, '<'+ENCODING_UTF8_STD+'>', '', [rfReplaceAll]);
+        vAssinada := StringReplace(vAssinada, '<?xml version="1.0"?>', '', [rfReplaceAll]);
         Self.Items[i].XML := vAssinada;
 
         Leitor := TLeitor.Create;
@@ -430,21 +418,21 @@ end;
 
 procedure TConhecimentos.GerarCTe;
 var
- i: Integer;
- LocCTeW: TCTeW;
+  i: Integer;
+  LocCTeW: TCTeW;
 begin
- for i:= 0 to Self.Count-1 do
-  begin
-    LocCTeW := TCTeW.Create(Self.Items[i].CTe);
-    try
-       LocCTeW.Gerador.Opcoes.FormatoAlerta := FConfiguracoes.Geral.FormatoAlerta;
-       LocCTeW.GerarXml;
-       Self.Items[i].XML     := LocCTeW.Gerador.ArquivoFormatoXML;
-       Self.Items[i].Alertas := LocCTeW.Gerador.ListaDeAlertas.Text;
-    finally
-       LocCTeW.Free;
-    end;
-  end;
+  for i:= 0 to Self.Count-1 do
+   begin
+     LocCTeW := TCTeW.Create(Self.Items[i].CTe);
+     try
+        LocCTeW.Gerador.Opcoes.FormatoAlerta := FConfiguracoes.Geral.FormatoAlerta;
+        LocCTeW.GerarXml;
+        Self.Items[i].XML     := LocCTeW.Gerador.ArquivoFormatoXML;
+        Self.Items[i].Alertas := LocCTeW.Gerador.ListaDeAlertas.Text;
+     finally
+        LocCTeW.Free;
+     end;
+   end;
 end;
 
 function TConhecimentos.GetItem(Index: Integer): Conhecimento;
@@ -452,25 +440,25 @@ begin
   Result := Conhecimento(inherited Items[Index]);
 end;
 
-function TConhecimentos.GetNamePath: string;
+function TConhecimentos.GetNamePath: String;
 begin
   Result := 'Conhecimento';
 end;
 
 procedure TConhecimentos.Imprimir;
 begin
-  if not Assigned( TACBrCTe( FACBrCTe ).DACTE ) then
+  if not Assigned(TACBrCTe(FACBrCTe).DACTE) then
      raise Exception.Create('Componente DACTE não associado.')
   else
-     TACBrCTe( FACBrCTe ).DACTe.ImprimirDACTe(nil);
+     TACBrCTe(FACBrCTe).DACTe.ImprimirDACTe(nil);
 end;
 
 procedure TConhecimentos.ImprimirPDF;
 begin
-  if not Assigned( TACBrCTe( FACBrCTe ).DACTE ) then
+  if not Assigned(TACBrCTe(FACBrCTe).DACTE) then
      raise Exception.Create('Componente DACTE não associado.')
   else
-     TACBrCTe( FACBrCTe ).DACTe.ImprimirDACTePDF(nil);
+     TACBrCTe(FACBrCTe).DACTe.ImprimirDACTePDF(nil);
 end;
 
 function TConhecimentos.Insert(Index: Integer): Conhecimento;
@@ -485,22 +473,9 @@ end;
 
 procedure TConhecimentos.Valida;
 var
- i: Integer;
- FMsg: AnsiString;
+  i: Integer;
+  FMsg: AnsiString;
 begin
-(*
-  for i:= 0 to Self.Count-1 do
-   begin
-     if pos('<Signature',Self.Items[i].XML) = 0 then
-        Assinar;
-     if not(CTeUtil.Valida(('<CTe xmlns' +
-        RetornarConteudoEntre(Self.Items[i].XML, '<CTe xmlns', '</CTe>')+ '</CTe>'),
-         FMsg, Self.FConfiguracoes.Geral.PathSchemas)) then
-       raise Exception.Create('Falha na validação dos dados do Conhecimento '+
-                    IntToStr(Self.Items[i].CTe.Ide.nCT) +
-                    sLineBreak + Self.Items[i].Alertas + FMsg);
-  end;
- *)
   for i:= 0 to Self.Count-1 do
    begin
      if pos('<Signature',Self.Items[i].XML) = 0 then
@@ -508,14 +483,13 @@ begin
      if not(CTeUtil.Valida(('<CTe xmlns' + RetornarConteudoEntre(Self.Items[i].XML, '<CTe xmlns', '</CTe>')+ '</CTe>'),
                             FMsg, Self.FConfiguracoes.Geral.PathSchemas)) then
       begin
-        Self.Items[i].ErroValidacaoCompleto := 'Falha na validação dos dados do Conhecimento '+
-                                               IntToStr(Self.Items[i].CTe.Ide.nCT)+sLineBreak+
-                                               Self.Items[i].Alertas+
-                                               FMsg;
-        Self.Items[i].ErroValidacao := 'Falha na validação dos dados do conhecimento '+
-                                       IntToStr(Self.Items[i].CTe.Ide.nCT)+sLineBreak+
-                                       Self.Items[i].Alertas+
-                                       IfThen(Self.FConfiguracoes.Geral.ExibirErroSchema,FMsg,'');
+        Self.Items[i].ErroValidacaoCompleto := 'Falha na validação dos dados do Conhecimento ' +
+                                               IntToStr(Self.Items[i].CTe.Ide.nCT) + sLineBreak +
+                                               Self.Items[i].Alertas + FMsg;
+        Self.Items[i].ErroValidacao := 'Falha na validação dos dados do conhecimento ' +
+                                       IntToStr(Self.Items[i].CTe.Ide.nCT) + sLineBreak +
+                                       Self.Items[i].Alertas +
+                                       IfThen(Self.FConfiguracoes.Geral.ExibirErroSchema, FMsg, '');
         raise Exception.Create(Self.Items[i].ErroValidacao);
       end;
   end;
@@ -523,8 +497,8 @@ end;
 
 function TConhecimentos.ValidaAssinatura(out Msg: String): Boolean;
 var
- i: Integer;
- FMsg: AnsiString;
+  i: Integer;
+  FMsg: AnsiString;
 begin
   Result := True;
   for i:= 0 to Self.Count-1 do
@@ -532,15 +506,15 @@ begin
      if not(CTeUtil.ValidaAssinatura(Self.Items[i].XMLOriginal, FMsg)) then
       begin
         Result := False;
-        Msg := 'Falha na validação da assinatura do conhecimento '+
-                               IntToStr(Self.Items[i].CTe.Ide.nCT)+sLineBreak+FMsg
+        Msg := 'Falha na validação da assinatura do conhecimento ' +
+               IntToStr(Self.Items[i].CTe.Ide.nCT) + sLineBreak + FMsg
       end
      else
        Result := True;
   end;
 end;
 
-function TConhecimentos.LoadFromFile(CaminhoArquivo: string; AGerarCTe: Boolean = True): boolean;
+function TConhecimentos.LoadFromFile(CaminhoArquivo: String; AGerarCTe: Boolean = True): Boolean;
 var
  LocCTeR: TCTeR;
  ArquivoXML: TStringList;
@@ -552,17 +526,17 @@ begin
       ArquivoXML.LoadFromFile(CaminhoArquivo {$IFDEF DELPHI2009_UP}, TEncoding.UTF8{$ENDIF});
       XMLOriginal := ArquivoXML.Text;
       Result := True;
-      while pos('</CTe>',ArquivoXML.Text) > 0 do
+      while pos('</CTe>', ArquivoXML.Text) > 0 do
        begin
-         if pos('</cteProc>',ArquivoXML.Text) > 0  then
+         if pos('</cteProc>', ArquivoXML.Text) > 0  then
           begin
-            XML := copy(ArquivoXML.Text,1,pos('</cteProc>',ArquivoXML.Text)+5);
-            ArquivoXML.Text := Trim(copy(ArquivoXML.Text,pos('</cteProc>',ArquivoXML.Text)+10,length(ArquivoXML.Text)));
+            XML := copy(ArquivoXML.Text, 1, pos('</cteProc>', ArquivoXML.Text) + 5);
+            ArquivoXML.Text := Trim(copy(ArquivoXML.Text, pos('</cteProc>', ArquivoXML.Text) + 10, length(ArquivoXML.Text)));
           end
          else
           begin
-            XML := copy(ArquivoXML.Text,1,pos('</CTe>',ArquivoXML.Text)+5);
-            ArquivoXML.Text := Trim(copy(ArquivoXML.Text,pos('</CTe>',ArquivoXML.Text)+6,length(ArquivoXML.Text)));
+            XML := copy(ArquivoXML.Text, 1, pos('</CTe>', ArquivoXML.Text) + 5);
+            ArquivoXML.Text := Trim(copy(ArquivoXML.Text, pos('</CTe>', ArquivoXML.Text) + 6,length(ArquivoXML.Text)));
           end;
          LocCTeR := TCTeR.Create(Self.Add.CTe);
          try
@@ -585,7 +559,7 @@ begin
  end;
 end;
 
-function TConhecimentos.LoadFromStream(Stream: TStringStream; AGerarCTe: Boolean = True): boolean;
+function TConhecimentos.LoadFromStream(Stream: TStringStream; AGerarCTe: Boolean = True): Boolean;
 var
  LocCTeR: TCTeR;
 begin
@@ -606,28 +580,29 @@ begin
   end;
 end;
 
-function TConhecimentos.SaveToFile(PathArquivo: string = ''): boolean;
+function TConhecimentos.SaveToFile(PathArquivo: String = ''): Boolean;
 var
  i: integer;
  CaminhoArquivo: String;
 begin
  Result := True;
  try
-    for i:= 0 to TACBrCTe( FACBrCTe ).Conhecimentos.Count-1 do
+    for i:= 0 to TACBrCTe(FACBrCTe).Conhecimentos.Count-1 do
      begin
         if DFeUtil.EstaVazio(PathArquivo) then
-           PathArquivo := TACBrCTe( FACBrCTe ).Configuracoes.Geral.PathSalvar
+           PathArquivo := TACBrCTe(FACBrCTe).Configuracoes.Geral.PathSalvar
         else
            PathArquivo := ExtractFilePath(PathArquivo);
-        CaminhoArquivo := PathWithDelim(PathArquivo)+copy(TACBrCTe( FACBrCTe ).Conhecimentos.Items[i].CTe.inFCTe.ID, (length(TACBrCTe( FACBrCTe ).Conhecimentos.Items[i].CTe.inFCTe.ID)-44)+1, 44)+'-cte.xml';
-        TACBrCTe( FACBrCTe ).Conhecimentos.Items[i].SaveToFile(CaminhoArquivo)
+        CaminhoArquivo := PathWithDelim(PathArquivo) +
+                          copy(TACBrCTe(FACBrCTe).Conhecimentos.Items[i].CTe.inFCTe.ID, (length(TACBrCTe(FACBrCTe).Conhecimentos.Items[i].CTe.inFCTe.ID)-44)+1, 44)+'-cte.xml';
+        TACBrCTe(FACBrCTe).Conhecimentos.Items[i].SaveToFile(CaminhoArquivo)
      end;
  except
     Result := False;
  end;
 end;
 
-function TConhecimentos.LoadFromString(AString: String; AGerarCTe: Boolean = True): boolean;
+function TConhecimentos.LoadFromString(AString: String; AGerarCTe: Boolean = True): Boolean;
 var
   XMLCTe: TStringStream;
 begin
@@ -654,16 +629,16 @@ begin
   begin
     Erros := '';
     if not Self.Items[i].ValidarConcatChave then
-       Erros := 'Rejeição: Erro na Chave de Acesso - Campo Id não corresponde à concatenação dos campos correspondentes'+sLineBreak;
+       Erros := 'Rejeição: Erro na Chave de Acesso - Campo Id não corresponde à concatenação dos campos correspondentes' + sLineBreak;
 
     if (Self.Items[i].CTe.ide.tpAmb <> FConfiguracoes.WebServices.Ambiente) then
-       Erros := Erros + '252-Rejeição: Tipo do ambiente do CT-e difere do ambiente do Web Service'+sLineBreak;
+       Erros := Erros + '252-Rejeição: Tipo do ambiente do CT-e difere do ambiente do Web Service' + sLineBreak;
 
     if (Self.Items[i].CTe.Ide.serie > 889) then
-       Erros := Erros + '670-Rejeição: Série utilizada fora da faixa permitida no Web Service (0-889)'+sLineBreak;
+       Erros := Erros + '670-Rejeição: Série utilizada fora da faixa permitida no Web Service (0-889)' + sLineBreak;
 
-    if copy(IntToStr(Self.Items[i].CTe.Emit.EnderEmit.cMun),1,2) <> IntToStr(FConfiguracoes.WebServices.UFCodigo) then
-       Erros := Erros + '226-Rejeição: Código da UF do Emitente diverge da UF autorizadora'+sLineBreak;
+    if copy(IntToStr(Self.Items[i].CTe.Emit.EnderEmit.cMun), 1, 2) <> IntToStr(FConfiguracoes.WebServices.UFCodigo) then
+       Erros := Erros + '226-Rejeição: Código da UF do Emitente diverge da UF autorizadora' + sLineBreak;
 
 
     Self.Items[i].RegrasdeNegocios := Erros;
@@ -676,8 +651,6 @@ end;
 
 procedure TSendMailThread.DoHandleException;
 begin
-  // TACBrCTe(TConhecimentos(FOwner.GetOwner).ACBrCTe).SetStatus( stCTeIdle );
-
   // FOwner.Alertas := FException.Message;
 
   if FException is Exception then
@@ -710,7 +683,7 @@ end;
 
 procedure TSendMailThread.Execute;
 var
- i: integer;
+  i: integer;
 begin
   inherited;
 
@@ -720,7 +693,7 @@ begin
       if not smtp.Login() then
         raise Exception.Create('SMTP ERROR: Login:' + smtp.EnhCodeString+sLineBreak+smtp.FullResult.Text);
 
-      if not smtp.MailFrom( sFrom, Length(sFrom)) then
+      if not smtp.MailFrom(sFrom, Length(sFrom)) then
         raise Exception.Create('SMTP ERROR: MailFrom:' + smtp.EnhCodeString+sLineBreak+smtp.FullResult.Text);
 
       if not smtp.MailTo(sTo) then
@@ -744,7 +717,7 @@ begin
       try
         smtp.Sock.CloseSocket;
       except
-      end ;
+      end;
       Terminado := True;
     end;
   except
