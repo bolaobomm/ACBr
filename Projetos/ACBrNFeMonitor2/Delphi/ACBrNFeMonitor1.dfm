@@ -4891,14 +4891,14 @@ object frmAcbrNfeMonitor: TfrmAcbrNfeMonitor
               Top = 0
               Width = 40
               Height = 13
-              Caption = 'IdToken'
+              Caption = 'Token'
             end
             object Label50: TLabel
               Left = 0
               Top = 40
               Width = 31
               Height = 13
-              Caption = 'Token'
+              Caption = 'IdToken'
             end
             object edtToken: TEdit
               Left = 0
