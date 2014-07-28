@@ -1081,7 +1081,7 @@ object frmDemo_ACBrNFSe: TfrmDemo_ACBrNFSe
         Top = 8
         Width = 177
         Height = 25
-        Caption = 'Gerar e Enviar Lote'
+        Caption = 'Gerar e Enviar Lote RPS'
         TabOrder = 1
         OnClick = btnGerarEnviarLoteClick
       end
@@ -1126,7 +1126,7 @@ object frmDemo_ACBrNFSe: TfrmDemo_ACBrNFSe
         Top = 8
         Width = 177
         Height = 25
-        Caption = 'Gerar e Enviar NFSe'
+        Caption = 'Gerar e Enviar um RPS'
         TabOrder = 8
         OnClick = btnGerarEnviarNFSeClick
       end
