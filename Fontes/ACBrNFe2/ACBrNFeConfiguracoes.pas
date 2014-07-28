@@ -1,7 +1,7 @@
 {******************************************************************************}
 { Projeto: Componente ACBrNFe                                                  }
 {  Biblioteca multiplataforma de componentes Delphi para emissão de Nota Fiscal}
-{ eletrônica - NFe - http://www.nfe.fazenda.gov.br                          }
+{ eletrônica - NFe - http://www.nfe.fazenda.gov.br                             }
 {                                                                              }
 { Direitos Autorais Reservados (c) 2008 Wemerson Souto                         }
 {                                       Daniel Simoes de Almeida               }
@@ -90,7 +90,7 @@ type
 
   TWebServicesConf = Class(TComponent)
   private
-    FVisualizar : Boolean;
+    FVisualizar: Boolean;
     FUF: String;
     FUFCodigo: Integer;
     FAmbiente: TpcnTipoAmbiente;
@@ -99,32 +99,33 @@ type
     FProxyPort: String;
     FProxyUser: String;
     FProxyPass: String;
-    FAguardarConsultaRet : Cardinal;
-    FTentativas : Integer;
-    FIntervaloTentativas : Cardinal;
-    FAjustaAguardaConsultaRet : Boolean;
+    FAguardarConsultaRet: Cardinal;
+    FTentativas: Integer;
+    FIntervaloTentativas: Cardinal;
+    FAjustaAguardaConsultaRet: Boolean;
+    FSalvar: Boolean;
+
     procedure SetUF(AValue: String);
     procedure SetAmbiente(AValue: TpcnTipoAmbiente);
     procedure SetTentativas(const Value: Integer);
     procedure SetIntervaloTentativas(const Value: Cardinal);
   public
-    constructor Create(AOwner: TComponent); override ;
+    constructor Create(AOwner: TComponent); override;
   published
-    property Visualizar: Boolean read FVisualizar write FVisualizar
-      default False ;
-    property UF: String read FUF write SetUF;
-    property UFCodigo: Integer read FUFCodigo;
-    property Ambiente: TpcnTipoAmbiente read FAmbiente write SetAmbiente
-      default taHomologacao ;
-    property AmbienteCodigo: Integer read FAmbienteCodigo;
-    property ProxyHost: String read FProxyHost write FProxyHost;
-    property ProxyPort: String read FProxyPort write FProxyPort;
-    property ProxyUser: String read FProxyUser write FProxyUser;
-    property ProxyPass: String read FProxyPass write FProxyPass;
-    property AguardarConsultaRet : Cardinal read FAguardarConsultaRet write FAguardarConsultaRet;
-    property Tentativas : Integer read FTentativas write SetTentativas default 5;
-    property IntervaloTentativas : Cardinal read FIntervaloTentativas write SetIntervaloTentativas;
-    property AjustaAguardaConsultaRet : Boolean read FAjustaAguardaConsultaRet write FAjustaAguardaConsultaRet;
+    property Visualizar: Boolean               read FVisualizar               write FVisualizar   default False;
+    property UF: String                        read FUF                       write SetUF;
+    property UFCodigo: Integer                 read FUFCodigo;
+    property Ambiente: TpcnTipoAmbiente        read FAmbiente                 write SetAmbiente   default taHomologacao;
+    property AmbienteCodigo: Integer           read FAmbienteCodigo;
+    property ProxyHost: String                 read FProxyHost                write FProxyHost;
+    property ProxyPort: String                 read FProxyPort                write FProxyPort;
+    property ProxyUser: String                 read FProxyUser                write FProxyUser;
+    property ProxyPass: String                 read FProxyPass                write FProxyPass;
+    property AguardarConsultaRet: Cardinal     read FAguardarConsultaRet      write FAguardarConsultaRet;
+    property Tentativas: Integer               read FTentativas               write SetTentativas default 5;
+    property IntervaloTentativas: Cardinal     read FIntervaloTentativas      write SetIntervaloTentativas;
+    property AjustaAguardaConsultaRet: Boolean read FAjustaAguardaConsultaRet write FAjustaAguardaConsultaRet;
+    property Salvar: Boolean                   read FSalvar                   write FSalvar       default False;
   end;
 
   TGeralConf = class(TComponent)
@@ -152,14 +153,14 @@ type
     function GetFormatoAlerta: string;
     procedure SetVersaoDF(const Value: TpcnVersaoDF);
   public
-    constructor Create(AOwner: TComponent); override ;
+    constructor Create(AOwner: TComponent); override;
     function Save(AXMLName: String; AXMLFile: WideString; aPath: String = ''): Boolean;
   published
     property FormaEmissao: TpcnTipoEmissao read FFormaEmissao
-      write SetFormaEmissao default teNormal ;
+      write SetFormaEmissao default teNormal;
     property FormaEmissaoCodigo: Integer read FFormaEmissaoCodigo;
-    property Salvar: Boolean read FSalvar write FSalvar default False ;
-    property AtualizarXMLCancelado: Boolean read FAtualizarXMLCancelado write FAtualizarXMLCancelado default True ;
+    property Salvar: Boolean read FSalvar write FSalvar default False;
+    property AtualizarXMLCancelado: Boolean read FAtualizarXMLCancelado write FAtualizarXMLCancelado default True;
     property PathSalvar: String read GetPathSalvar write FPathSalvar;
     property PathSchemas: String read FPathSchemas write FPathSchemas;
     property ExibirErroSchema: Boolean read FExibirErroSchema write FExibirErroSchema;
@@ -189,7 +190,7 @@ type
     FPathMDe  : String;
     FPathEvento  : String;
   public
-    constructor Create(AOwner: TComponent); override ;
+    constructor Create(AOwner: TComponent); override;
     function GetPathCan(Data : TDateTime = 0): String;
     function GetPathDPEC(Data : TDateTime = 0): String;
     function GetPathInu(Data : TDateTime = 0): String;
@@ -198,11 +199,11 @@ type
     function GetPathMDe(Data : TDateTime = 0): String;
     function GetPathEvento(tipoEvento : TpcnTpEvento; Data : TDateTime = 0): String;
   published
-    property Salvar     : Boolean read FSalvar  write FSalvar  default False ;
-    property PastaMensal: Boolean read FMensal  write FMensal  default False ;
-    property AdicionarLiteral: Boolean read FLiteral write FLiteral default False ;
-    property EmissaoPathNFe: Boolean read FEmissaoPathNFe write FEmissaoPathNFe default False ;
-    property SalvarCCeCanEvento: Boolean read FSalvarEvento write FSalvarEvento default False ;
+    property Salvar     : Boolean read FSalvar  write FSalvar  default False;
+    property PastaMensal: Boolean read FMensal  write FMensal  default False;
+    property AdicionarLiteral: Boolean read FLiteral write FLiteral default False;
+    property EmissaoPathNFe: Boolean read FEmissaoPathNFe write FEmissaoPathNFe default False;
+    property SalvarCCeCanEvento: Boolean read FSalvarEvento write FSalvarEvento default False;
     property PathNFe : String read FPathNFe  write FPathNFe;
     property PathCan : String read FPathCan  write FPathCan;
     property PathInu : String read FPathInu  write FPathInu;
@@ -222,10 +223,10 @@ type
     constructor Create(AOwner: TComponent); override;
     destructor Destroy; override;
   published
-    property Geral: TGeralConf read FGeral ;
-    property WebServices: TWebServicesConf read FWebServices ;
-    property Certificados: TCertificadosConf read FCertificados ;
-    property Arquivos: TArquivosConf read FArquivos ;
+    property Geral: TGeralConf read FGeral;
+    property WebServices: TWebServicesConf read FWebServices;
+    property Certificados: TCertificadosConf read FCertificados;
+    property Arquivos: TArquivosConf read FArquivos;
   end;
 
 implementation
@@ -236,28 +237,28 @@ uses ACBrNFe, ACBrNFeUtil, Math, StrUtils, ACBrUtil, ACBrDFeUtil, DateUtils;
 
 constructor TConfiguracoes.Create(AOwner: TComponent);
 begin
-  inherited Create( AOwner ) ;
+  inherited Create( AOwner );
   
   FGeral       := TGeralConf.Create(Self);
-  FGeral.Name  := 'GeralConf' ;
+  FGeral.Name  := 'GeralConf';
   {$IFDEF COMPILER6_UP}
    FGeral.SetSubComponent( true );{ para gravar no DFM/XFM }
   {$ENDIF}
 
   FWebServices  := TWebServicesConf.Create(self);
-  FWebServices.Name  := 'WebServicesConf' ;
+  FWebServices.Name  := 'WebServicesConf';
   {$IFDEF COMPILER6_UP}
    FWebServices.SetSubComponent( true );{ para gravar no DFM/XFM }
   {$ENDIF}
 
   FCertificados := TCertificadosConf.Create(self);
-  FCertificados.Name  := 'CertificadosConf' ;
+  FCertificados.Name  := 'CertificadosConf';
   {$IFDEF COMPILER6_UP}
    FCertificados.SetSubComponent( true );{ para gravar no DFM/XFM }
   {$ENDIF}
 
   FArquivos := TArquivosConf.Create(self);
-  FArquivos.Name  := 'ArquivosConf' ;
+  FArquivos.Name  := 'ArquivosConf';
   {$IFDEF COMPILER6_UP}
    FArquivos.SetSubComponent( true );{ para gravar no DFM/XFM }
   {$ENDIF}
@@ -282,8 +283,8 @@ begin
   FFormaEmissaoCodigo := StrToInt(TpEmisToStr(FFormaEmissao));
   FSalvar             := False;
   FAtualizarXMLCancelado := True;
-  FPathSalvar         := '' ;
-  FPathSchemas        := '' ;
+  FPathSalvar         := '';
+  FPathSchemas        := '';
   FExibirErroSchema   := True;
   FFormatoAlerta := 'TAG:%TAGNIVEL% ID:%ID%/%TAG%(%DESCRICAO%) - %MSG%.';
   // O Formato da mensagem de erro pode ser alterado pelo usuario alterando-se a property FFormatoAlerta: onde;
@@ -320,7 +321,7 @@ begin
   else
     Result := FPathSalvar;
 
-  Result := PathWithDelim( Trim(Result) ) ;
+  Result := PathWithDelim( Trim(Result) );
 end;
 
 function TGeralConf.Save(AXMLName: String; AXMLFile: WideString; aPath: String = ''): Boolean;
@@ -390,18 +391,19 @@ end;
 
 constructor TWebServicesConf.Create(AOwner: TComponent);
 begin
-  Inherited Create( AOwner );
+  Inherited Create(AOwner);
 
-  FUF               := NFeUF[24];
-  FUFCodigo         := NFeUFCodigo[24];
-  FAmbiente         := taHomologacao;
-  FVisualizar       := False ;
-  FAmbienteCodigo   := StrToInt(TpAmbToStr(FAmbiente));
+  FUF             := NFeUF[24];
+  FUFCodigo       := NFeUFCodigo[24];
+  FAmbiente       := taHomologacao;
+  FVisualizar     := False;
+  FAmbienteCodigo := StrToInt(TpAmbToStr(FAmbiente));
+  FSalvar         := False;
 end;
 
 procedure TWebServicesConf.SetAmbiente(AValue: TpcnTipoAmbiente);
 begin
-  FAmbiente := AValue;
+  FAmbiente       := AValue;
   FAmbienteCodigo := StrToInt(TpAmbToStr(AValue));
 end;
 
@@ -425,7 +427,7 @@ procedure TWebServicesConf.SetUF(AValue: String);
 var
   Codigo, i: Integer;
 begin
-  Codigo := -1 ;
+  Codigo := -1;
   for i:= 0 to High(NFeUF) do
   begin
     if NFeUF[I] = AValue then

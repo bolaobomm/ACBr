@@ -1669,10 +1669,17 @@ begin
 
   try
     TACBrNFe( FACBrNFe ).SetStatus( stNFeStatusServico );
+
     if FConfiguracoes.Geral.Salvar then
      begin
-       FPathArqEnv := FormatDateTime('yyyymmddhhnnss',Now)+'-ped-sta.xml';
+       FPathArqEnv := FormatDateTime('yyyymmddhhnnss', Now) + '-ped-sta.xml';
        FConfiguracoes.Geral.Save(FPathArqEnv, FDadosMsg);
+     end;
+
+    if FConfiguracoes.WebServices.Salvar then
+     begin
+       FPathArqEnv := FormatDateTime('yyyymmddhhnnss', Now) + '-ped-sta-soap.xml';
+       FConfiguracoes.Geral.Save(FPathArqEnv, Texto);
      end;
 
     try
@@ -1744,6 +1751,12 @@ begin
        begin
          FPathArqResp := FormatDateTime('yyyymmddhhnnss',Now)+'-sta.xml';
          FConfiguracoes.Geral.Save(FPathArqResp, FRetWS);
+       end;
+
+      if FConfiguracoes.WebServices.Salvar then
+       begin
+         FPathArqResp := FormatDateTime('yyyymmddhhnnss',Now)+'-sta-soap.xml';
+         FConfiguracoes.Geral.Save(FPathArqResp, FRetornoWS);
        end;
 
     except on E: Exception do
@@ -1892,11 +1905,19 @@ begin
 
   try
     TACBrNFe( FACBrNFe ).SetStatus( stNFeRecepcao );
+
     if FConfiguracoes.Geral.Salvar then
      begin
        FPathArqEnv := Lote+'-env-lot.xml';
        FConfiguracoes.Geral.Save(FPathArqEnv, FDadosMsg);
      end;
+
+    if FConfiguracoes.WebServices.Salvar then
+     begin
+       FPathArqEnv := Lote+'-env-lot-soap.xml';
+       FConfiguracoes.Geral.Save(FPathArqEnv, Texto);
+     end;
+
     {$IFDEF ACBrNFeOpenSSL}
        HTTP.Document.LoadFromStream(Stream);
        ConfiguraHTTP(HTTP,'SOAPAction: "'+SoapAction+'"');
@@ -2055,7 +2076,7 @@ begin
 
       if  FConfiguracoes.Geral.Salvar then
        begin
-         // Alterado por Italo em 16/04/2014 
+         // Alterado por Italo em 16/04/2014
          if FRecibo <> '' then
            FPathArqResp := FRecibo+'-pro-rec.xml'
          else
@@ -2063,6 +2084,17 @@ begin
 
          FConfiguracoes.Geral.Save(FPathArqResp, FRetWS);
        end;
+
+      if  FConfiguracoes.WebServices.Salvar then
+       begin
+         if FRecibo <> '' then
+           FPathArqResp := FRecibo+'-pro-rec-soap.xml'
+         else
+           FPathArqResp := Lote+'-pro-lot-soap.xml';
+
+         FConfiguracoes.Geral.Save(FPathArqResp, FRetornoWS);
+       end;
+
      end
     else
      begin
@@ -2104,6 +2136,12 @@ begin
         begin
           FPathArqResp := Lote+'-rec.xml';
           FConfiguracoes.Geral.Save(FPathArqResp, FRetWS);
+        end;
+
+       if FConfiguracoes.WebServices.Salvar then
+        begin
+          FPathArqResp := Lote+'-rec-soap.xml';
+          FConfiguracoes.Geral.Save(FPathArqResp, FRetornoWS);
         end;
      end;
 
@@ -2347,6 +2385,13 @@ function TNFeRetRecepcao.Executar: Boolean;
          FPathArqEnv := Recibo+'-ped-rec.xml';
          FConfiguracoes.Geral.Save(FPathArqEnv, FDadosMsg);
        end;
+
+      if FConfiguracoes.WebServices.Salvar then
+       begin
+         FPathArqEnv := Recibo+'-ped-rec-soap.xml';
+         FConfiguracoes.Geral.Save(FPathArqEnv, Texto);
+       end;
+
       {$IFDEF ACBrNFeOpenSSL}
          HTTP.Document.LoadFromStream(Stream);
          ConfiguraHTTP(HTTP,'SOAPAction: "'+SoapAction+'"');
@@ -2379,11 +2424,19 @@ function TNFeRetRecepcao.Executar: Boolean;
            FRetWS := SeparaDados( FRetornoWS,'nfeRetRecepcao2Result');
          StrStream.Free;
       {$ENDIF}
+
       if FConfiguracoes.Geral.Salvar then
        begin
          FPathArqResp := Recibo+'-pro-rec.xml';
          FConfiguracoes.Geral.Save(FPathArqResp, FRetWS);
        end;
+
+      if FConfiguracoes.WebServices.Salvar then
+       begin
+         FPathArqResp := Recibo+'-pro-rec-soap.xml';
+         FConfiguracoes.Geral.Save(FPathArqResp, FRetornoWS);
+       end;
+
       FNFeRetorno.Leitor.Arquivo := FRetWS;
       FNFeRetorno.LerXML;
 
@@ -2594,6 +2647,13 @@ begin
       FPathArqEnv := Recibo+'-ped-rec.xml';
       FConfiguracoes.Geral.Save(FPathArqEnv, FDadosMsg);
     end;
+
+   if FConfiguracoes.WebServices.Salvar then
+    begin
+      FPathArqEnv := Recibo+'-ped-rec-soap.xml';
+      FConfiguracoes.Geral.Save(FPathArqEnv, Texto);
+    end;
+
    {$IFDEF ACBrNFeOpenSSL}
       HTTP.Document.LoadFromStream(Stream);
       ConfiguraHTTP(HTTP,'SOAPAction: "' + SoapAction + '"');
@@ -2626,11 +2686,19 @@ begin
         FRetWS := SeparaDados( FRetornoWS,'nfeRetRecepcao2Result');
       StrStream.Free;
    {$ENDIF}
+
    if FConfiguracoes.Geral.Salvar then
     begin
       FPathArqResp := Recibo+'-pro-rec.xml';
       FConfiguracoes.Geral.Save(FPathArqResp, FRetWS);
     end;
+
+   if FConfiguracoes.WebServices.Salvar then
+    begin
+      FPathArqResp := Recibo+'-pro-rec-soap.xml';
+      FConfiguracoes.Geral.Save(FPathArqResp, FRetornoWS);
+    end;
+
    FNFeRetorno.Leitor.Arquivo := FRetWS;
    FNFeRetorno.LerXML;
 
@@ -2760,10 +2828,17 @@ begin
   NFeRetorno := TRetConsSitNFe.Create;
   try
     TACBrNFe( FACBrNFe ).SetStatus( stNfeConsulta );
+
     if FConfiguracoes.Geral.Salvar then
      begin
        FPathArqEnv := FNFeChave+'-ped-sit.xml';
        FConfiguracoes.Geral.Save(FPathArqEnv, FDadosMsg);
+     end;
+
+    if FConfiguracoes.WebServices.Salvar then
+     begin
+       FPathArqEnv := FNFeChave+'-ped-sit-soap.xml';
+       FConfiguracoes.Geral.Save(FPathArqEnv, Texto);
      end;
 
     {$IFDEF ACBrNFeOpenSSL}
@@ -2784,10 +2859,17 @@ begin
        FRetWS := SeparaDados(FRetornoWS, TAGResult);
        StrStream.Free;
     {$ENDIF}
+
     if FConfiguracoes.Geral.Salvar  then
      begin
        FPathArqResp := FNFeChave+'-sit.xml';
        FConfiguracoes.Geral.Save(FPathArqResp, FRetWS);
+     end;
+
+    if FConfiguracoes.WebServices.Salvar  then
+     begin
+       FPathArqResp := FNFeChave+'-sit-soap.xml';
+       FConfiguracoes.Geral.Save(FPathArqResp, FRetornoWS);
      end;
 
     NFeRetorno.Leitor.Arquivo := FRetWS;
@@ -3127,6 +3209,12 @@ begin
     if FConfiguracoes.Arquivos.Salvar then
       FConfiguracoes.Geral.Save(FNFeChave+'-ped-can.xml', FDadosMsg, FConfiguracoes.Arquivos.GetPathCan );
 
+    if FConfiguracoes.WebServices.Salvar then
+     begin
+       FPathArqEnv := FNFeChave+'-ped-can-soap.xml';
+       FConfiguracoes.Geral.Save(FPathArqEnv, Texto);
+     end;
+
     {$IFDEF ACBrNFeOpenSSL}
        HTTP.Document.LoadFromStream(Stream);
        ConfiguraHTTP(HTTP,'SOAPAction: "http://www.portalfiscal.inf.br/nfe/wsdl/NfeCancelamento2"');
@@ -3154,6 +3242,12 @@ begin
 
     if FConfiguracoes.Arquivos.Salvar then
       FConfiguracoes.Geral.Save(FNFeChave+'-can.xml', FRetWS, FConfiguracoes.Arquivos.GetPathCan );
+
+    if FConfiguracoes.WebServices.Salvar then
+     begin
+       FPathArqResp := FNFeChave+'-can-soap.xml';
+       FConfiguracoes.Geral.Save(FPathArqResp, FRetornoWS);
+     end;
 
     NFeRetorno.Leitor.Arquivo := FRetWS;
     NFeRetorno.LerXml;
@@ -3338,6 +3432,7 @@ begin
   NFeRetorno := TRetInutNFe.Create;
   try
     TACBrNFe( FACBrNFe ).SetStatus( stNfeInutilizacao );
+
     if FConfiguracoes.Geral.Salvar then
      begin
        FPathArqEnv := StringReplace(FID,'ID','',[rfIgnoreCase])+'-ped-inu.xml';
@@ -3346,6 +3441,12 @@ begin
 
     if FConfiguracoes.Arquivos.Salvar then
       FConfiguracoes.Geral.Save(StringReplace(FID,'ID','',[rfIgnoreCase])+'-ped-inu.xml', FDadosMsg, FConfiguracoes.Arquivos.GetPathInu);
+
+    if FConfiguracoes.WebServices.Salvar then
+     begin
+       FPathArqEnv := StringReplace(FID,'ID','',[rfIgnoreCase])+'-ped-inu-soap.xml';
+       FConfiguracoes.Geral.Save(FPathArqEnv, Texto);
+     end;
 
     {$IFDEF ACBrNFeOpenSSL}
        HTTP.Document.LoadFromStream(Stream);
@@ -3374,6 +3475,12 @@ begin
 
     if FConfiguracoes.Arquivos.Salvar then
       FConfiguracoes.Geral.Save(StringReplace(FID,'ID','',[rfIgnoreCase])+'-inu.xml', FRetWS, FConfiguracoes.Arquivos.GetPathInu);
+
+    if FConfiguracoes.WebServices.Salvar then
+     begin
+       FPathArqResp := StringReplace(FID,'ID','',[rfIgnoreCase])+'-inu-soap.xml';
+       FConfiguracoes.Geral.Save(FPathArqResp, FRetornoWS);
+     end;
 
     NFeRetorno.Leitor.Arquivo := FRetWS;
     NFeRetorno.LerXml;
@@ -3530,6 +3637,13 @@ begin
        FPathArqEnv := FormatDateTime('yyyymmddhhnnss',Now)+'-ped-cad.xml';
        FConfiguracoes.Geral.Save(FPathArqEnv, FDadosMsg);
      end;
+
+    if FConfiguracoes.WebServices.Salvar then
+     begin
+       FPathArqEnv := FormatDateTime('yyyymmddhhnnss',Now)+'-ped-cad-soap.xml';
+       FConfiguracoes.Geral.Save(FPathArqEnv, Texto);
+     end;
+
     FRetWS := '';
     {$IFDEF ACBrNFeOpenSSL}
        HTTP.Document.LoadFromStream(Stream);
@@ -3554,6 +3668,12 @@ begin
      begin
        FPathArqResp := FormatDateTime('yyyymmddhhnnss',Now)+'-cad.xml';
        FConfiguracoes.Geral.Save(FPathArqResp, FRetWS);
+     end;
+
+    if FConfiguracoes.WebServices.Salvar then
+     begin
+       FPathArqResp := FormatDateTime('yyyymmddhhnnss',Now)+'-cad-soap.xml';
+       FConfiguracoes.Geral.Save(FPathArqResp, FRetornoWS);
      end;
 
     FRetConsCad.Leitor.Arquivo := FRetWS;
@@ -3678,6 +3798,7 @@ begin
 
   try
     TACBrNFe( FACBrNFe ).SetStatus( stNFeEnvDPEC );
+
     if FConfiguracoes.Geral.Salvar then
      begin
        FPathArqEnv := FormatDateTime('yyyymmddhhnnss',Now)+'-env-dpec.xml';
@@ -3686,6 +3807,12 @@ begin
 
     if FConfiguracoes.Arquivos.Salvar then
       FConfiguracoes.Geral.Save(FormatDateTime('yyyymmddhhnnss',Now)+'-env-dpec.xml', FDadosMsg, FConfiguracoes.Arquivos.GetPathDPEC);
+
+    if FConfiguracoes.WebServices.Salvar then
+     begin
+       FPathArqEnv := FormatDateTime('yyyymmddhhnnss',Now)+'-env-dpec-soap.xml';
+       FConfiguracoes.Geral.Save(FPathArqEnv, Texto);
+     end;
 
     FRetWS := '';
     StrStream := TStringStream.Create('');
@@ -3745,6 +3872,12 @@ begin
 
     if FConfiguracoes.Arquivos.Salvar then
       FConfiguracoes.Geral.Save(FormatDateTime('yyyymmddhhnnss',Now)+'-ret-dpec.xml', FRetWS, FConfiguracoes.Arquivos.GetPathDPEC);
+
+    if FConfiguracoes.WebServices.Salvar then
+     begin
+       FPathArqResp := FormatDateTime('yyyymmddhhnnss',Now)+'-ret-dpec-soap.xml';
+       FConfiguracoes.Geral.Save(FPathArqResp, FRetornoWS);
+     end;
 
     //gerar arquivo proc de DPEC
     if (RetDPEC.cStat = 124) then
@@ -3838,6 +3971,13 @@ begin
        FPathArqEnv := FormatDateTime('yyyymmddhhnnss',Now)+'-cons-dpec.xml';
        FConfiguracoes.Geral.Save(FPathArqEnv, FDadosMsg);
      end;
+
+    if FConfiguracoes.WebServices.Salvar then
+     begin
+       FPathArqEnv := FormatDateTime('yyyymmddhhnnss',Now)+'-cons-dpec-soap.xml';
+       FConfiguracoes.Geral.Save(FPathArqEnv, Texto);
+     end;
+
     FRetWS := '';
     {$IFDEF ACBrNFeOpenSSL}
        HTTP.Document.LoadFromStream(Stream);
@@ -3857,10 +3997,17 @@ begin
        FRetWS := SeparaDados( FRetornoWS,'sceConsultaDPECResult',True);
        StrStream.Free;
     {$ENDIF}
+
     if FConfiguracoes.Geral.Salvar then
      begin
        FPathArqResp := FormatDateTime('yyyymmddhhnnss',Now)+'-sit-dpec.xml';
        FConfiguracoes.Geral.Save(FPathArqResp, FRetWS);
+     end;
+
+    if FConfiguracoes.WebServices.Salvar then
+     begin
+       FPathArqResp := FormatDateTime('yyyymmddhhnnss',Now)+'-sit-dpec-soap.xml';
+       FConfiguracoes.Geral.Save(FPathArqResp, FRetornoWS);
      end;
 
     //FretDPEC := TRetDPEC.Create;
@@ -4010,6 +4157,9 @@ begin
           FConfiguracoes.Geral.Save(FPathArqEnv, FDadosMsg, FConfiguracoes.Arquivos.GetPathEvento(teCCe));
      end;
 
+    if FConfiguracoes.WebServices.Salvar then
+      FConfiguracoes.Geral.Save(IntToStr(FCCe.idLote)+ '-ped-cce-soap.xml', Texto);
+
     {$IFDEF ACBrNFeOpenSSL}
        HTTP.Document.LoadFromStream(Stream);
        ConfiguraHTTP(HTTP,'SOAPAction: "http://www.portalfiscal.inf.br/nfe/wsdl/RecepcaoEvento"');
@@ -4061,6 +4211,7 @@ begin
     Result   := (CCeRetorno.cStat = 128) or (CCeRetorno.cStat = 135) or (CCeRetorno.cStat = 136);
 
     FPathArqResp := IntToStr(FCCe.idLote) + '-cce.xml';
+
     if FConfiguracoes.Geral.Salvar then
       FConfiguracoes.Geral.Save(FPathArqResp, FRetWS);
 
@@ -4071,6 +4222,9 @@ begin
        else
           FConfiguracoes.Geral.Save(FPathArqResp, FRetWS, FConfiguracoes.Arquivos.GetPathEvento(teCCe));
      end;
+
+    if FConfiguracoes.WebServices.Salvar then
+      FConfiguracoes.Geral.Save(IntToStr(FCCe.idLote) + '-cce-soap.xml', FRetornoWS);
 
     //gerar arquivo proc de cce
     if Result then
@@ -4247,6 +4401,9 @@ begin
           FConfiguracoes.Geral.Save(FPathArqEnv, FDadosMsg, FConfiguracoes.Arquivos.GetPathEvento(FEvento.Evento.Items[0].InfEvento.tpEvento));
      end;
 
+    if FConfiguracoes.WebServices.Salvar then
+      FConfiguracoes.Geral.Save(IntToStr(FEvento.idLote)+'-ped-evento-soap.xml', Texto);
+
     {$IFDEF ACBrNFeOpenSSL}
        HTTP.Document.LoadFromStream(Stream);
        ConfiguraHTTP(HTTP,'SOAPAction: "http://www.portalfiscal.inf.br/nfe/wsdl/RecepcaoEvento"');
@@ -4269,6 +4426,9 @@ begin
     FPathArqResp := IntToStr(FEvento.idLote) + '-eve.xml';
     if FConfiguracoes.Geral.Salvar then
       FConfiguracoes.Geral.Save(FPathArqResp, FRetWS);
+
+    if FConfiguracoes.WebServices.Salvar then
+      FConfiguracoes.Geral.Save(IntToStr(FEvento.idLote) + '-eve-soap.xml', FRetornoWS);
 
     FEventoRetorno                := TRetEventoNFe.Create;
     FEventoRetorno.Leitor.Arquivo := FRetWS;
@@ -4452,7 +4612,6 @@ begin
   Texto := Texto +   '<soap12:Header>';
   Texto := Texto +     '<nfeCabecMsg xmlns="http://www.portalfiscal.inf.br/nfe/wsdl/NfeConsultaDest">';
   Texto := Texto +       '<cUF>'+IntToStr(FConfiguracoes.WebServices.UFCodigo)+'</cUF>';
-//<indComp>string</indComp>
 
   Texto := Texto +       '<versaoDados>' + GetVersaoNFe(FConfiguracoes.Geral.ModeloDF,
                                                         FConfiguracoes.Geral.VersaoDF,
@@ -4491,10 +4650,17 @@ begin
 
   try
     TACBrNFe( FACBrNFe ).SetStatus( stConsNFeDest );
+
     if FConfiguracoes.Geral.Salvar then
      begin
        FPathArqEnv := FormatDateTime('yyyymmddhhnnss',Now)+'-con-nfe-dest.xml';
        FConfiguracoes.Geral.Save(FPathArqEnv, FDadosMsg);
+     end;
+
+    if FConfiguracoes.WebServices.Salvar then
+     begin
+       FPathArqEnv := FormatDateTime('yyyymmddhhnnss',Now)+'-con-nfe-dest-soap.xml';
+       FConfiguracoes.Geral.Save(FPathArqEnv, Texto);
      end;
 
     try
@@ -4541,6 +4707,12 @@ begin
        begin
          FPathArqResp := FormatDateTime('yyyymmddhhnnss',Now)+'-nfe-dest.xml';
          FConfiguracoes.Geral.Save(FPathArqResp, FRetWS);
+       end;
+
+      if FConfiguracoes.WebServices.Salvar then
+       begin
+         FPathArqResp := FormatDateTime('yyyymmddhhnnss',Now)+'-nfe-dest-soap.xml';
+         FConfiguracoes.Geral.Save(FPathArqResp, FRetornoWS);
        end;
 
     except on E: Exception do
@@ -4646,10 +4818,17 @@ begin
 
   try
     TACBrNFe( FACBrNFe ).SetStatus( stDownloadNFe );
+
     if FConfiguracoes.Geral.Salvar then
      begin
        FPathArqEnv := FormatDateTime('yyyymmddhhnnss',Now)+'-ped-down-nfe.xml';
        FConfiguracoes.Geral.Save(FPathArqEnv, FDadosMsg);
+     end;
+
+    if FConfiguracoes.WebServices.Salvar then
+     begin
+       FPathArqEnv := FormatDateTime('yyyymmddhhnnss',Now)+'-ped-down-nfe-soap.xml';
+       FConfiguracoes.Geral.Save(FPathArqEnv, Texto);
      end;
 
     try
@@ -4695,6 +4874,12 @@ begin
        begin
          FPathArqResp := FormatDateTime('yyyymmddhhnnss',Now)+'-down-nfe.xml';
          FConfiguracoes.Geral.Save(FPathArqResp, FRetWS);
+       end;
+
+      if FConfiguracoes.WebServices.Salvar then
+       begin
+         FPathArqResp := FormatDateTime('yyyymmddhhnnss',Now)+'-down-nfe-soap.xml';
+         FConfiguracoes.Geral.Save(FPathArqResp, FRetornoWS);
        end;
 
       for i := 0 to FRetDownloadNFe.retNFe.Count - 1 do
