@@ -1821,52 +1821,8 @@ begin
 end;
 
 procedure TACBrECFClass.GravaLog(AString : AnsiString ; Traduz : Boolean) ;
-Var Buf, Ch : AnsiString ;
-    I   : Integer ;
-    ASC : Byte ;
 begin
-  if fpArqLOG = '' then
-     exit ;
-
-  if not Traduz then
-     Buf := AString
-  else
-   begin
-     Buf := '' ;
-     For I := 1 to Length(AString) do
-     begin
-        ASC := Ord(AString[I]) ;
-
-        case AString[I] of
-           NUL   : Ch := '[NUL]' ;
-           SOH   : Ch := '[SOH]' ;
-           STX   : Ch := '[STX]' ;
-           ETX   : Ch := '[ETX]' ;
-           ENQ   : Ch := '[ENQ]' ;
-           ACK   : Ch := '[ACK]' ;
-           TAB   : Ch := '[TAB]' ;
-           BS    : Ch := '[BS]' ;
-           LF    : Ch := '[LF]' ;
-           FF    : Ch := '[FF]' ;
-           CR    : Ch := '[CR]' ;
-           WAK   : Ch := '[WAK]' ;
-           NAK   : Ch := '[NAK]' ;
-           ESC   : Ch := '[ESC]' ;
-           FS    : Ch := '[FS]' ;
-           GS    : Ch := '[GS]' ;
-           #32..#126 : Ch := AString[I] ;
-        else ;
-          Ch := '['+IntToStr(ASC)+']'
-        end;
-
-        Buf := Buf + Ch ;
-     end ;
-   end ;
-
-  try
-     WriteToTXT(fpArqLOG, Buf, True);
-  except
-  end ;
+  WriteLog(fpArqLOG, AString, Traduz);
 end ;
 
 function TACBrECFClass.EnviaComando_ECF(cmd: AnsiString): AnsiString;

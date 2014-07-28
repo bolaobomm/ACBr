@@ -97,6 +97,13 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+Data: 28/07/2014
+-- ACBrBAL --
+[+] Adicionado mecanismo de Gravação de Log  (por: DSA)
+[*] Refactoring de GravaLog para ACBrUtil.pas
+    procedure WriteLog(const ArqTXT, AString: AnsiString;
+        TranslateUnprintable: Boolean);
+
 Data: 17/07/2014
 -- ACBrECFSwedaSTX --
 [*] Modificações em ArquivoMFD_DLL para correta geração dos arquivos:

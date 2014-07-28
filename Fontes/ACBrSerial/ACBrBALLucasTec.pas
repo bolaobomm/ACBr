@@ -74,6 +74,7 @@ begin
   fpUltimoPesoLido := 0 ;
   fpUltimaResposta := '' ;
 
+  GravaLog('- '+FormatDateTime('hh:nn:ss:zzz',now)+' TX -> '+#05 );
   fpDevice.Serial.Purge;
   fpDevice.EnviaString( #05 );      { Envia comando solicitando o Peso }
   sleep(200) ;
@@ -124,6 +125,8 @@ begin
     for i:=1 to 4 do begin
       //fpUltimaResposta := fpDevice.Serial.RecvPacket( MillisecTimeOut);
       fpUltimaResposta := fpDevice.Serial.RecvTerminated( MillisecTimeOut, #13 );
+      GravaLog('- '+FormatDateTime('hh:nn:ss:zzz',now)+' RX <- '+fpUltimaResposta );
+
       //fpUltimaResposta := #2+'0000 000001 20/06/05 50.00 kg B  0.60 kg T  49.40 kg L'+#13#180;
       fpUltimaResposta := Copy(fpUltimaResposta,Pos(#2,fpUltimaResposta)+1,Length(fpUltimaResposta));
 
@@ -167,6 +170,8 @@ begin
         fpUltimaResposta := e.Message;
      end;
   end ;
+
+  GravaLog('              UltimoPesoLido: '+FloatToStr(fpUltimoPesoLido)+' , Resposta: '+Resposta );
 end;
 
 end.

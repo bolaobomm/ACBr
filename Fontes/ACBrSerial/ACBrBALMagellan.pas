@@ -76,6 +76,7 @@ begin
   fpUltimoPesoLido := 0 ;
   fpUltimaResposta := '' ;
 
+  GravaLog('- '+FormatDateTime('hh:nn:ss:zzz',now)+' TX -> '+#087 );
   fpDevice.Serial.Purge ;           { Limpa a Porta }
   fpDevice.EnviaString( #87 );      { Envia comando solicitando o Peso }
   sleep(200) ;
@@ -98,6 +99,7 @@ begin
   Decimais := 1000 ;
   Try
      fpUltimaResposta := fpDevice.Serial.RecvPacket( MillisecTimeOut );
+     GravaLog('- '+FormatDateTime('hh:nn:ss:zzz',now)+' RX <- '+fpUltimaResposta );
 
      if Length(fpUltimaResposta) > 20 then
       begin
@@ -177,6 +179,8 @@ begin
      { Peso não foi recebido (TimeOut) }
      fpUltimoPesoLido := -9 ;
   end ;
+
+  GravaLog('              UltimoPesoLido: '+FloatToStr(fpUltimoPesoLido)+' , Resposta: '+Resposta );
 end;
 
 end.

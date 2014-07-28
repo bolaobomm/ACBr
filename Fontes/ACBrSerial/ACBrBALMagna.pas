@@ -76,6 +76,7 @@ begin
   fpUltimoPesoLido := 0 ;
   fpUltimaResposta := '' ;
 
+  GravaLog('- '+FormatDateTime('hh:nn:ss:zzz',now)+' TX -> '+#80 );
   fpDevice.Serial.Purge ;
   fpDevice.EnviaString( #80 );      { Envia comando solicitando o Peso }
   sleep(200) ;
@@ -95,25 +96,26 @@ begin
 
   Try
      fpUltimaResposta := fpDevice.Serial.RecvPacket( MillisecTimeOut );
+     GravaLog('- '+FormatDateTime('hh:nn:ss:zzz',now)+' RX <- '+fpUltimaResposta );
+
      fpUltimaResposta := Copy(fpUltimaResposta,1,pos(#10,fpUltimaResposta)-1);
 
      { Limpa para reposta para pegar o Valor }
-      Resposta := fpUltimaResposta;
+     Resposta := fpUltimaResposta;
 
-      MInicio := Pos(' ',Resposta);
-      Mfinal  := Pos('k',Resposta);
-      if Mfinal = 0 then
-         Mfinal := Length(resposta);
-      Resposta := Copy (Resposta,Minicio,MFinal - Minicio);
+     MInicio := Pos(' ',Resposta);
+     Mfinal  := Pos('k',Resposta);
+     if Mfinal = 0 then
+        Mfinal := Length(resposta);
+     Resposta := Copy (Resposta,Minicio,MFinal - Minicio);
 
-      Resposta := StringReplace(Resposta, '.', DecimalSeparator, [rfReplaceAll]);
-      Resposta := StringReplace(Resposta, ',', DecimalSeparator, [rfReplaceAll]);
-
+     Resposta := StringReplace(Resposta, '.', DecimalSeparator, [rfReplaceAll]);
+     Resposta := StringReplace(Resposta, ',', DecimalSeparator, [rfReplaceAll]);
 
      try
-         if Length(Resposta) > 10 then
-            fpUltimoPesoLido := StrToFloat(copy(Resposta, 1, 6)) / 1000
-         else if pos(Decimalseparator, Resposta) > 0 then                        
+        if Length(Resposta) > 10 then
+           fpUltimoPesoLido := StrToFloat(copy(Resposta, 1, 6)) / 1000
+        else if pos(Decimalseparator, Resposta) > 0 then
            fpUltimoPesoLido := StrToFloat(Resposta)
         else
            fpUltimoPesoLido := StrToInt(Resposta) / 1000
@@ -134,6 +136,8 @@ begin
      fpUltimoPesoLido := -9 ;
      fpUltimaResposta := 'Peso Não Lido ';
   end ;
+
+  GravaLog('              UltimoPesoLido: '+FloatToStr(fpUltimoPesoLido)+' , Resposta: '+Resposta );
 end;
 
 end.

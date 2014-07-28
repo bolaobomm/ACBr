@@ -61,6 +61,9 @@ TACBrBALModelo = (balNenhum, balFilizola, balToledo, balToledo2180, balUrano, ba
 TACBrBALLePeso = procedure(Peso : Double; Resposta : AnsiString) of object ;
 
 { Componente ACBrBAL }
+
+{ TACBrBAL }
+
 TACBrBAL = class( TACBrComponent )
   private
     fsDevice  : TACBrDevice ;   { SubComponente ACBrDevice }
@@ -78,6 +81,8 @@ TACBrBAL = class( TACBrComponent )
     fsMonitorarBalanca: Boolean;
     fsIntervalo: Integer;
 
+    function GetArqLOG: String;
+    procedure SetArqLOG(AValue: String);
     procedure SetModelo(const Value: TACBrBALModelo);
     procedure SetPorta(const Value: String);
     procedure SetAtivo(const Value: Boolean);
@@ -113,6 +118,7 @@ TACBrBAL = class( TACBrComponent )
         write SetIntervalo default 200 ;
      property MonitorarBalanca : Boolean read fsMonitorarBalanca
         write SetMonitorarBalanca default False ;
+     property ArqLOG : String      read GetArqLOG write SetArqLOG ;
      { Instancia do Componente ACBrDevice, será passada para fsBAL.create }
      property Device : TACBrDevice read fsDevice ;
      property OnLePeso : TACBrBALLePeso read fsOnLePeso write fsOnLePeso;
@@ -171,11 +177,15 @@ begin
 end;
 
 procedure TACBrBAL.SetModelo(const Value: TACBrBALModelo);
+var
+  wArqLOG: String;
 begin
   if fsModelo = Value then exit ;
 
   if fsAtivo then
      raise Exception.Create(ACBrStr('Não é possível mudar o Modelo com ACBrBAL Ativo') );
+
+  wArqLOG := ArqLOG ;
 
   FreeAndNil( fsBAL ) ;
 
@@ -194,7 +204,19 @@ begin
      fsBAL := TACBrBALClass.create( Self ) ;
   end;
 
+  ArqLOG := wArqLOG;
+
   fsModelo := Value;
+end;
+
+function TACBrBAL.GetArqLOG: String;
+begin
+  Result := fsBAL.ArqLOG;
+end;
+
+procedure TACBrBAL.SetArqLOG(AValue: String);
+begin
+  fsBAL.ArqLOG := AValue;
 end;
 
 procedure TACBrBAL.SetAtivo(const Value: Boolean);
@@ -240,7 +262,8 @@ begin
 end;
 
 function TACBrBAL.LePeso( MillisecTimeOut : Integer) : Double;
-Var Ativado, Monitorando : Boolean ;
+Var
+  Ativado, Monitorando : Boolean ;
 begin
   Ativado     := Ativo ;
   Monitorando := MonitorarBalanca ;

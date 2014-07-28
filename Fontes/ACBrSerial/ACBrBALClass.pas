@@ -54,6 +54,8 @@ type
   declara a Classe. NAO DEVE SER INSTANCIADA. Usada apenas como base para
   as demais Classes de BALANCA como por exemplo a classe TACBrBALFilizola }
 
+{ TACBrBALClass }
+
 TACBrBALClass = class
   private
     procedure SetAtivo(const Value: Boolean);
@@ -63,6 +65,7 @@ TACBrBALClass = class
     fpModeloStr: String;
     fpUltimoPesoLido: Double;
     fpUltimaResposta: AnsiString;
+    fpArqLOG: String;
   public
     constructor Create(AOwner: TComponent);
     destructor Destroy  ; override ;
@@ -73,9 +76,12 @@ TACBrBALClass = class
 
     function LePeso( MillisecTimeOut : Integer = 3000) :Double ; virtual;
     procedure LeSerial( MillisecTimeOut : Integer = 500) ; virtual ;
+    procedure GravaLog(AString: AnsiString; Traduz :Boolean = True);
+
     property ModeloStr: String  read fpModeloStr ;
     property UltimoPesoLido : Double read fpUltimoPesoLido ;
     property UltimaResposta : AnsiString read fpUltimaResposta ;
+    property ArqLOG : String read fpArqLOG write fpArqLOG ;
 end;
 
 implementation
@@ -99,6 +105,7 @@ begin
 
   fpAtivo     := false ;
   fpModeloStr := 'Não Definida' ;
+  fpArqLOG    := '' ;
 end;
 
 destructor TACBrBALClass.Destroy;
@@ -119,6 +126,14 @@ end;
 procedure TACBrBALClass.Ativar;
 begin
   if fpAtivo then exit ;
+
+  GravaLog( sLineBreak +
+            StringOfChar('-',80)+ sLineBreak +
+            'ATIVAR - '+FormatDateTime('dd/mm/yy hh:nn:ss:zzz',now)+
+            ' - Modelo: '+ModeloStr+
+            ' - Porta: '+fpDevice.Porta+
+            '         Device: '+fpDevice.DeviceToString(False) + sLineBreak +
+            StringOfChar('-',80) + sLineBreak, False );
 
   if fpDevice.Porta <> '' then
      fpDevice.Ativar ;
@@ -148,6 +163,11 @@ procedure TACBrBALClass.LeSerial( MillisecTimeOut : Integer) ;
 begin
   { Deve ser implementada na Classe Filha }
   raise Exception.Create(ACBrStr('Procedure LeSerial não implementada em: ')+ModeloStr);
+end;
+
+procedure TACBrBALClass.GravaLog(AString: AnsiString; Traduz: Boolean);
+begin
+  WriteLog(fpArqLOG,AString,Traduz);
 end;
 
 end.

@@ -74,7 +74,8 @@ function TACBrBALToledo.LePeso( MillisecTimeOut : Integer) : Double;
 begin
   fpUltimoPesoLido := 0 ;
   fpUltimaResposta := '' ;
-  
+
+  GravaLog('- '+FormatDateTime('hh:nn:ss:zzz',now)+' TX -> '+#05 );
   fpDevice.Serial.Purge ;           { Limpa a Porta }
   fpDevice.EnviaString( #05 );      { Envia comando solicitando o Peso }
   sleep(200) ;
@@ -90,13 +91,16 @@ Var
   Decimais : Integer ;
   St2      : AnsiChar ;
   PI,PF    : Integer ;
+  Protocolo: String;
 begin
   fpUltimoPesoLido := 0 ;
   fpUltimaResposta := '' ;
+  Protocolo        := '';
 
   Decimais := 1000 ;
   Try
      fpUltimaResposta := fpDevice.Serial.RecvPacket( MillisecTimeOut );
+     GravaLog('- '+FormatDateTime('hh:nn:ss:zzz',now)+' RX <- '+fpUltimaResposta );
 
      if Length(fpUltimaResposta) > 20 then
       begin
@@ -132,9 +136,10 @@ begin
         St2 := fpUltimaResposta[9] ;
         if TestBit(Ord(St2),3) then   { Bit 3 de ST2 ligado = 2 casas decimais }
            Decimais := 100 ;
-        Resposta := Trim(Copy(fpUltimaResposta,3,6));
-      end
 
+        Resposta := Trim(Copy(fpUltimaResposta,3,6));
+        Protocolo := 'Protocolo A';
+      end
      else
       begin
       { Protocolo B = [ ENQ ] [ STX ] [ PESO ] [ ETX ]
@@ -147,9 +152,14 @@ begin
         PI := pos(STX, fpUltimaResposta) ;
         PF := pos(ETX, fpUltimaResposta) ;
         if PF = 0 then                       { Não achou ETX, procura por CR }
-           PF := pos(CR, fpUltimaResposta) ;
+           PF := pos(CR, fpUltimaResposta)
+        else
+           Protocolo := 'Protocolo B' ;
+
         if PF = 0 then                       { Não achou CR, usa toda a String } 
-           PF := Length(fpUltimaResposta) + 1 ;
+           PF := Length(fpUltimaResposta) + 1
+        else
+           Protocolo := 'Protocolo C' ;
 
         Resposta := Trim( copy( fpUltimaResposta, PI+1, PF-PI-1 )) ;
       end ;
@@ -176,6 +186,9 @@ begin
      { Peso não foi recebido (TimeOut) }
      fpUltimoPesoLido := -9 ;
   end ;
+
+  GravaLog('              UltimoPesoLido: '+FloatToStr(fpUltimoPesoLido)+
+     ' , Resposta: '+Resposta+' - '+Protocolo );
 end;
 
 end.

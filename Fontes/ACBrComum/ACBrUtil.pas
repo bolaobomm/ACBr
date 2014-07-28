@@ -270,6 +270,8 @@ Procedure DesligarMaquina(Reboot: Boolean = False; Forcar: Boolean = False;
    LogOff: Boolean = False) ;
 Procedure WriteToTXT( const ArqTXT, AString : AnsiString;
    const AppendIfExists : Boolean = True; AddLineBreak : Boolean = True );
+procedure WriteLog( const ArqTXT, AString : AnsiString ;
+   TranslateUnprintable : Boolean = False) ;
 
 //funcoes para uso com o modulo ACBrSintegra
 function TiraPontos(Str: string): string;
@@ -2280,6 +2282,57 @@ begin
   finally
      FS.Free ;
   end;
+end;
+
+procedure WriteLog(const ArqTXT, AString: AnsiString;
+  TranslateUnprintable: Boolean);
+Var
+  Buf, Ch : AnsiString ;
+  I   : Integer ;
+  ASC : Byte ;
+begin
+  if ArqTXT = '' then
+     exit ;
+
+  if not TranslateUnprintable then
+     Buf := AString
+  else
+   begin
+     Buf := '' ;
+     For I := 1 to Length(AString) do
+     begin
+        ASC := Ord(AString[I]) ;
+
+        case AString[I] of
+           NUL   : Ch := '[NUL]' ;
+           SOH   : Ch := '[SOH]' ;
+           STX   : Ch := '[STX]' ;
+           ETX   : Ch := '[ETX]' ;
+           ENQ   : Ch := '[ENQ]' ;
+           ACK   : Ch := '[ACK]' ;
+           TAB   : Ch := '[TAB]' ;
+           BS    : Ch := '[BS]' ;
+           LF    : Ch := '[LF]' ;
+           FF    : Ch := '[FF]' ;
+           CR    : Ch := '[CR]' ;
+           WAK   : Ch := '[WAK]' ;
+           NAK   : Ch := '[NAK]' ;
+           ESC   : Ch := '[ESC]' ;
+           FS    : Ch := '[FS]' ;
+           GS    : Ch := '[GS]' ;
+           #32..#126 : Ch := AString[I] ;
+        else ;
+          Ch := '['+IntToStr(ASC)+']'
+        end;
+
+        Buf := Buf + Ch ;
+     end ;
+   end ;
+
+  try
+     WriteToTXT(ArqTXT, Buf, True, True);
+  except
+  end ;
 end;
 
 {-----------------------------------------------------------------------------
