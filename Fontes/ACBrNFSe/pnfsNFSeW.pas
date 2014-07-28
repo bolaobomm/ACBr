@@ -133,7 +133,7 @@ begin
  Gerador.Prefixo           := FPrefixo4;
 
  if (FProvedor in [proActcon, pro4R, proAgili, proBHISS, proCoplan, proDigifred,
-                   profintelISS, proFiorilli, proGoiania, {proGovBR,}
+                   profintelISS, proFiorilli, proGoiania, {proGovBR,} proIssDSF, //Ailton
                    proISSDigital, proNatal, proProdata, proProdemge, proPVH,
                    proSaatri, proVirtual, proFreire, proLink3, proVitoria,
                    proTecnos, proPronim, proSystemPro])
@@ -944,18 +944,24 @@ end;
 ////////////////////////////////////////////////////////////////////////////////
 
 procedure TNFSeW.GerarServico_Provedor_IssDsf;
-var
-   i: integer;
-   sDeducaoPor, sTipoDeducao: string;
+var i: integer;
+    sDeducaoPor, sTipoDeducao: string;
 begin
 
-   for i:=0 to NFSe.Servico.ItemServico.Count -1 do begin
-       Gerador.wCampoNFSe(tcStr, '', 'DiscriminacaoServico', 01, 80, 1, NFSe.Servico.ItemServico.Items[i].Descricao , '');
-       Gerador.wCampoNFSe(tcDe4, '', 'Quantidade'          , 01, 15, 1, NFSe.Servico.ItemServico.Items[i].Quantidade , '');
-       Gerador.wCampoNFSe(tcDe4, '', 'ValorUnitario'       , 01, 20, 1, NFSe.Servico.ItemServico.Items[i].ValorUnitario , '');
-       Gerador.wCampoNFSe(tcDe2, '', 'ValorTotal'          , 01, 18, 1, NFSe.Servico.ItemServico.Items[i].ValorTotal , '');
-       Gerador.wCampoNFSe(tcStr, '', 'Tributavel'          , 01, 01, 0, NFSe.Servico.ItemServico.Items[i].Descricao , '');
-   end;
+   {adicionado as tags dos itens e item dos serviços conforme exemplo da DSF}
+   Gerador.wGrupoNFSe('Itens')  ;  //--> adicionado por Ailton
+     for i:=0 to NFSe.Servico.ItemServico.Count -1 do
+     begin
+       Gerador.wGrupoNFSe('Item');   //--> adicionado por Ailton
+         Gerador.wCampoNFSe(tcStr, '', 'DiscriminacaoServico', 01, 80, 1, NFSe.Servico.ItemServico.Items[i].Descricao , '');
+         Gerador.wCampoNFSe(tcDe4, '', 'Quantidade'          , 01, 15, 1, NFSe.Servico.ItemServico.Items[i].Quantidade , '');
+         Gerador.wCampoNFSe(tcDe4, '', 'ValorUnitario'       , 01, 20, 1, NFSe.Servico.ItemServico.Items[i].ValorUnitario , '');
+         Gerador.wCampoNFSe(tcDe2, '', 'ValorTotal'          , 01, 18, 1, NFSe.Servico.ItemServico.Items[i].ValorTotal , '');
+         Gerador.wCampoNFSe(tcStr, '', 'Tributavel'          , 01, 01, 0, NFSe.Servico.ItemServico.Items[i].Descricao , '');
+       Gerador.wGrupoNFSe('/Item');  //--> adicionado por Ailton
+     end;
+   Gerador.wGrupoNFSe('/Itens');     //--> adicionado por Ailton
+
 
    for i:=0 to NFSe.Servico.Deducao.Count -1 do begin
       Gerador.wGrupoNFSe('Deducoes');
@@ -1252,7 +1258,7 @@ begin
       iSerItem   := StrToInt( Copy( IntToStr(iAux), 1, 1) ); //9
       iSerSubItem:= StrToInt( Copy( IntToStr(iAux), 2, 2) ); //1
     end;
-    
+
   Gerador.wGrupoNFSe('rps');
     Gerador.wCampoNFSe(tcInt,   '', 'nrRps       ', 01, 15, 1, SomenteNumeros(NFSe.IdentificacaoRps.Numero), '');
     Gerador.wCampoNFSe(tcStr,   '', 'nrEmissorRps', 01, 01, 1, NFSe.IdentificacaoRps.Serie, '');
@@ -1311,7 +1317,7 @@ begin
       Gerador.wCampoNFSe(tcDe2, '', 'vlAliquotaInss  ', 01, 02, 1, NFSe.Servico.Valores.AliquotaInss, '');
       Gerador.wCampoNFSe(tcDe2, '', 'vlAliquotaIrrf  ', 01, 02, 1, NFSe.Servico.Valores.AliquotaIr, '');
       Gerador.wCampoNFSe(tcDe2, '', 'vlAliquotaPis   ', 01, 02, 1, NFSe.Servico.Valores.AliquotaPis, '');
-    Gerador.wGrupoNFSe('/retencoes');  
+    Gerador.wGrupoNFSe('/retencoes');
   Gerador.wGrupoNFSe('/rps');
 end;
 
@@ -1319,7 +1325,7 @@ procedure TNFSeW.GerarCondicaoPagamento;
 var
   i: Integer;
 begin
-  if (NFSe.CondicaoPagamento.QtdParcela > 0) then 
+  if (NFSe.CondicaoPagamento.QtdParcela > 0) then
     begin
       Gerador.wGrupoNFSe('CondicaoPagamento');
         Gerador.wCampoNFSe(tcStr, '#53', 'Condicao  ', 01, 20, 1, NFSe.CondicaoPagamento.Condicao, '');
