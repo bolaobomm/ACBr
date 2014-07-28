@@ -655,6 +655,7 @@ begin
   4206405, // Guaraciaba/SC
   4206900, // Ibirama/SC
   4207304, // Imbituba/SC
+  4207700, // Ipumirim/SC
   4208302, // Itapema/SC
   4208401, // Itapiranga/SC
   4208500, // Ituporanga/SC
