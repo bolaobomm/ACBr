@@ -271,7 +271,7 @@ object dmACBrNFeFR: TdmACBrNFeFR
     end
     object cdsDestinatarioConsumidor: TStringField
       FieldName = 'Consumidor'
-      Size = 60
+      Size = 150
     end
   end
   object cdsDadosProdutos: TClientDataSet
@@ -489,6 +489,7 @@ object dmACBrNFeFR: TdmACBrNFeFR
     end
     object cdsParametrosDescricaoViaEstabelec: TStringField
       FieldName = 'DescricaoViaEstabelec'
+      Size = 30
     end
     object cdsParametrosQtdeItens: TIntegerField
       FieldName = 'QtdeItens'
