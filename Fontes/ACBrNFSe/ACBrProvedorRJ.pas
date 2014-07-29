@@ -200,119 +200,119 @@ function TProvedorRJ.GeraEnvelopeRecepcionarLoteRPS(URLNS: String;
   CabMsg, DadosMsg, DadosSenha: AnsiString): AnsiString;
 begin
  result := '<?xml version="1.0" encoding="UTF-8"?>' +
-           '<S:Envelope xmlns:S="http://schemas.xmlsoap.org/soap/envelope/" ' +
-                       'xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" ' +
-                       'xmlns:xsd="http://www.w3.org/2001/XMLSchema">' +
-            '<S:Body>' +
-             '<RecepcionarLoteRpsRequest xmlns="' + URLNS + '/">' +
+           '<soap:Envelope xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" ' +
+                          'xmlns:xsd="http://www.w3.org/2001/XMLSchema" ' +
+                          'xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/">' +
+            '<soap:Body>' +
+             '<RecepcionarLoteRpsRequest xmlns="http://notacarioca.rio.gov.br/">' +
               '<inputXML>' +
                 StringReplace(StringReplace(DadosMsg, '<', '&lt;', [rfReplaceAll]), '>', '&gt;', [rfReplaceAll]) +
               '</inputXML>' +
              '</RecepcionarLoteRpsRequest>' +
-            '</S:Body>' +
-           '</S:Envelope>';
+            '</soap:Body>' +
+           '</soap:Envelope>';
 end;
 
 function TProvedorRJ.GeraEnvelopeConsultarSituacaoLoteRPS(
   URLNS: String; CabMsg, DadosMsg, DadosSenha: AnsiString): AnsiString;
 begin
  result := '<?xml version="1.0" encoding="UTF-8"?>' +
-           '<s:Envelope xmlns:s="http://schemas.xmlsoap.org/soap/envelope/" ' +
-                       'xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" ' +
-                       'xmlns:xsd="http://www.w3.org/2001/XMLSchema">' +
-            '<s:Body>' +
+           '<soap:Envelope xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" ' +
+                          'xmlns:xsd="http://www.w3.org/2001/XMLSchema" ' +
+                          'xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/">' +
+            '<soap:Body>' +
              '<ConsultarSituacaoLoteRpsRequest xmlns="' + URLNS + '/">' +
               '<inputXML>' +
                 StringReplace(StringReplace(DadosMsg, '<', '&lt;', [rfReplaceAll]), '>', '&gt;', [rfReplaceAll]) +
               '</inputXML>' +
              '</ConsultarSituacaoLoteRpsRequest>' +
-            '</s:Body>' +
-           '</s:Envelope>';
+            '</soap:Body>' +
+           '</soap:Envelope>';
 end;
 
 function TProvedorRJ.GeraEnvelopeConsultarLoteRPS(URLNS: String;
   CabMsg, DadosMsg, DadosSenha: AnsiString): AnsiString;
 begin
  result := '<?xml version="1.0" encoding="UTF-8"?>' +
-           '<s:Envelope xmlns:s="http://schemas.xmlsoap.org/soap/envelope/" ' +
-                       'xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" ' +
-                       'xmlns:xsd="http://www.w3.org/2001/XMLSchema">' +
-            '<s:Body>' +
+           '<soap:Envelope xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" ' +
+                          'xmlns:xsd="http://www.w3.org/2001/XMLSchema" ' +
+                          'xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/">' +
+            '<soap:Body>' +
              '<ConsultarLoteRpsRequest xmlns="' + URLNS + '/">' +
               '<inputXML>' +
                 StringReplace(StringReplace(DadosMsg, '<', '&lt;', [rfReplaceAll]), '>', '&gt;', [rfReplaceAll]) +
               '</inputXML>' +
              '</ConsultarLoteRpsRequest>' +
-            '</s:Body>' +
-           '</s:Envelope>';
+            '</soap:Body>' +
+           '</soap:Envelope>';
 end;
 
 function TProvedorRJ.GeraEnvelopeConsultarNFSeporRPS(URLNS: String;
   CabMsg, DadosMsg, DadosSenha: AnsiString): AnsiString;
 begin
  result := '<?xml version="1.0" encoding="UTF-8"?>' +
-           '<s:Envelope xmlns:s="http://schemas.xmlsoap.org/soap/envelope/" ' +
-                       'xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" ' +
-                       'xmlns:xsd="http://www.w3.org/2001/XMLSchema">' +
-            '<s:Body>' +
+           '<soap:Envelope xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" ' +
+                          'xmlns:xsd="http://www.w3.org/2001/XMLSchema" ' +
+                          'xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/">' +
+            '<soap:Body>' +
              '<ConsultarNfsePorRpsRequest xmlns="' + URLNS + '/">' +
               '<inputXML>' +
                 StringReplace(StringReplace(DadosMsg, '<', '&lt;', [rfReplaceAll]), '>', '&gt;', [rfReplaceAll]) +
               '</inputXML>' +
              '</ConsultarNfsePorRpsRequest>' +
-            '</s:Body>' +
-           '</s:Envelope>';
+            '</soap:Body>' +
+           '</soap:Envelope>';
 end;
 
 function TProvedorRJ.GeraEnvelopeConsultarNFSe(URLNS: String; CabMsg,
   DadosMsg, DadosSenha: AnsiString): AnsiString;
 begin
  result := '<?xml version="1.0" encoding="UTF-8"?>' +
-           '<s:Envelope xmlns:s="http://schemas.xmlsoap.org/soap/envelope/" ' +
-                       'xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" ' +
-                       'xmlns:xsd="http://www.w3.org/2001/XMLSchema">' +
-            '<s:Body>' +
+           '<soap:Envelope xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" ' +
+                          'xmlns:xsd="http://www.w3.org/2001/XMLSchema" ' +
+                          'xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/">' +
+            '<soap:Body>' +
              '<ConsultarNfseRequest xmlns="' + URLNS + '/">' +
               '<inputXML>' +
                 StringReplace(StringReplace(DadosMsg, '<', '&lt;', [rfReplaceAll]), '>', '&gt;', [rfReplaceAll]) +
               '</inputXML>' +
              '</ConsultarNfseRequest>' +
-            '</s:Body>' +
-           '</s:Envelope>';
+            '</soap:Body>' +
+           '</soap:Envelope>';
 end;
 
 function TProvedorRJ.GeraEnvelopeCancelarNFSe(URLNS: String; CabMsg,
   DadosMsg, DadosSenha: AnsiString): AnsiString;
 begin
  result := '<?xml version="1.0" encoding="UTF-8"?>' +
-           '<s:Envelope xmlns:s="http://schemas.xmlsoap.org/soap/envelope/" ' +
-                       'xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" ' +
-                       'xmlns:xsd="http://www.w3.org/2001/XMLSchema">' +
-            '<s:Body>' +
+           '<soap:Envelope xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" ' +
+                          'xmlns:xsd="http://www.w3.org/2001/XMLSchema" ' +
+                          'xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/">' +
+            '<soap:Body>' +
              '<CancelarNfseRequest xmlns="' + URLNS + '/">' +
               '<inputXML>' +
                 StringReplace(StringReplace(DadosMsg, '<', '&lt;', [rfReplaceAll]), '>', '&gt;', [rfReplaceAll]) +
               '</inputXML>' +
              '</CancelarNfseRequest>' +
-            '</s:Body>' +
-           '</s:Envelope>';
+            '</soap:Body>' +
+           '</soap:Envelope>';
 end;
 
 function TProvedorRJ.GeraEnvelopeGerarNFSe(URLNS: String; CabMsg, DadosMsg,
   DadosSenha: AnsiString): AnsiString;
 begin
  result := '<?xml version="1.0" encoding="UTF-8"?>' +
-           '<s:Envelope xmlns:s="http://schemas.xmlsoap.org/soap/envelope/" ' +
-                       'xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" ' +
-                       'xmlns:xsd="http://www.w3.org/2001/XMLSchema">' +
-            '<s:Body>' +
+           '<soap:Envelope xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" ' +
+                          'xmlns:xsd="http://www.w3.org/2001/XMLSchema" ' +
+                          'xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/">' +
+            '<soap:Body>' +
              '<GerarNfseRequest xmlns="' + URLNS + '/">' +
               '<inputXML>' +
                 StringReplace(StringReplace(DadosMsg, '<', '&lt;', [rfReplaceAll]), '>', '&gt;', [rfReplaceAll]) +
               '</inputXML>' +
              '</GerarNfseRequest>' +
-            '</s:Body>' +
-           '</s:Envelope>';
+            '</soap:Body>' +
+           '</soap:Envelope>';
 end;
 
 function TProvedorRJ.GeraEnvelopeRecepcionarSincrono(URLNS: String; CabMsg,
