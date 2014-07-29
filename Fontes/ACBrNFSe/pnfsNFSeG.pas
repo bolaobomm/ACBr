@@ -35,12 +35,14 @@ type
                                      TagI, TagF: AnsiString; AProvedor: TnfseProvedor = proNenhum; ARazaoSocial: String = ''): AnsiString;
 
      class function Gera_DadosMsgConsNFSe(Prefixo3, Prefixo4, NameSpaceDad, VersaoXML,
-                                  CNPJ, IM: String;
-                                  DataInicial, DataFinal: TDateTime;
-                                  TagI, TagF: AnsiString; NumeroNFSe: string = '';
-                                  Senha : string = ''; FraseSecreta : string = '';
-                                  AProvedor: TnfseProvedor = proNenhum;
-                                  APagina: Integer = 1): AnsiString;
+                                          CNPJ, IM: String;
+                                          DataInicial, DataFinal: TDateTime;
+                                          TagI, TagF: AnsiString; NumeroNFSe: string = '';
+                                          Senha : string = ''; FraseSecreta : string = '';
+                                          AProvedor: TnfseProvedor = proNenhum;
+                                          APagina: Integer = 1; CNPJTomador: String = ''; IMTomador: String = '';
+                                          NomeInter: String = ''; CNPJInter: String = ''; IMInter: String = ''): AnsiString;
+
      // Alterado por Augusto Fontana - 28/04/2014. Inclusão do parametromo motivo do cancelamento
      class function Gera_DadosMsgCancelarNFSe(Prefixo4, NameSpaceDad, NumeroNFSe, CNPJ, IM,
                                       CodMunicipio, CodCancelamento: String;
@@ -353,7 +355,8 @@ class function TNFSeG.Gera_DadosMsgConsNFSe(Prefixo3, Prefixo4,
   NameSpaceDad, VersaoXML, CNPJ, IM: String; DataInicial, DataFinal: TDateTime; TagI,
   TagF: AnsiString; NumeroNFSe: string = ''; Senha : string = '';
   FraseSecreta : string = ''; AProvedor: TnfseProvedor = proNenhum;
-  APagina: Integer = 1): AnsiString;
+  APagina: Integer = 1; CNPJTomador: String = ''; IMTomador: String = '';
+  NomeInter: String = ''; CNPJInter: String = ''; IMInter: String = ''): AnsiString;
 var
  DadosMsg: AnsiString;
 begin
@@ -394,9 +397,9 @@ begin
  if NumeroNFSe <> '' then
  begin
   if AProvedor in [proPVH, proSystemPro, proPublica] then
-    DadosMsg := DadosMsg + '<Faixa>'+
-                             '<NumeroNfseInicial>'+NumeroNFSe+'</NumeroNfseInicial>'+
-                             '<NumeroNfseFinal>'+NumeroNFSe+'</NumeroNfseFinal>'+
+    DadosMsg := DadosMsg + '<Faixa>' +
+                             '<NumeroNfseInicial>' + NumeroNFSe + '</NumeroNfseInicial>' +
+                             '<NumeroNfseFinal>' + NumeroNFSe + '</NumeroNfseFinal>' +
                            '</Faixa>'
   else
     DadosMsg := DadosMsg + '<' + Prefixo3 + 'NumeroNfse>' +
@@ -413,6 +416,60 @@ begin
                                  FormatDateTime('yyyy-mm-dd', DataFinal) +
                                '</' + Prefixo3 + 'DataFinal>' +
                               '</' + Prefixo3 + 'PeriodoEmissao>';
+
+ if (CNPJTomador <> '') or (IMTomador <> '')
+  then begin
+    DadosMsg := DadosMsg + '<Tomador>' +
+                            DFeUtil.SeSenao(VersaoXML = '2',
+
+                            '<' + Prefixo4 + 'CpfCnpj>' +
+                             DFeUtil.SeSenao(Length(OnlyNumber(CnpjTomador)) <= 11,
+                             '<' + Prefixo4 + 'Cpf>' +
+                               CnpjTomador +
+                             '</' + Prefixo4 + 'Cpf>',
+                             '<' + Prefixo4 + 'Cnpj>' +
+                               CnpjTomador +
+                             '</' + Prefixo4 + 'Cnpj>') +
+                            '</' + Prefixo4 + 'CpfCnpj>',
+
+                            '<' + Prefixo4 + 'Cnpj>' +
+                             CnpjTomador +
+                            '</' + Prefixo4 + 'Cnpj>') +
+
+                            '<' + Prefixo4 + 'InscricaoMunicipal>' +
+                             IMTomador +
+                            '</' + Prefixo4 + 'InscricaoMunicipal>' +
+                           '</Tomador>'
+  end;
+
+ if (NomeInter <> '') and (CNPJInter <> '')
+  then begin
+    DadosMsg := DadosMsg + '<IntermediarioServico>' +
+                            '<' + Prefixo4 + 'RazaoSocial>' +
+                             NomeInter +
+                            '</' + Prefixo4 + 'RazaoSocial>' +
+
+                            DFeUtil.SeSenao(VersaoXML = '2',
+
+                            '<' + Prefixo4 + 'CpfCnpj>' +
+                             DFeUtil.SeSenao(Length(OnlyNumber(CnpjInter)) <= 11,
+                             '<' + Prefixo4 + 'Cpf>' +
+                               CnpjInter +
+                             '</' + Prefixo4 + 'Cpf>',
+                             '<' + Prefixo4 + 'Cnpj>' +
+                               CnpjInter +
+                             '</' + Prefixo4 + 'Cnpj>') +
+                            '</' + Prefixo4 + 'CpfCnpj>',
+
+                            '<' + Prefixo4 + 'Cnpj>' +
+                             CnpjInter +
+                            '</' + Prefixo4 + 'Cnpj>') +
+
+                            '<' + Prefixo4 + 'InscricaoMunicipal>' +
+                             IMInter +
+                            '</' + Prefixo4 + 'InscricaoMunicipal>' +
+                           '</IntermediarioServico>'
+  end;
 
  if AProvedor in [proFiorilli, profintelISS, proPVH, proSystemPro]
   then DadosMsg := DadosMsg + '<' + Prefixo3 + 'Pagina>' +

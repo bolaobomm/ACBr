@@ -86,8 +86,21 @@ type
                               Mes: Integer = 0; Ano: Integer = 0; ARazaoSocial: string = ''): Boolean;
     function ConsultarNFSeporRps(ANumero, ASerie, ATipo, ACnpj, AInscricaoMunicipal: String;
                                  ASenha: String = ''; AFraseSecreta: String = ''; ARazaoSocial: String = ''): Boolean;
-    function ConsultarNFSe(ACnpj, AInscricaoMunicipal: String; ADataInicial, ADataFinal: TDateTime; NumeroNFSe: String = '';
-                           APagina: Integer = 1; ASenha : String = ''; AFraseSecreta : String = ''): Boolean;
+
+    function ConsultarNFSe(ACnpj,
+                           AInscricaoMunicipal: String;
+                           ADataInicial,
+                           ADataFinal: TDateTime;
+                           ANumeroNFSe: String = '';
+                           APagina: Integer = 1;
+                           ASenha : String = '';
+                           AFraseSecreta : String = '';
+                           ACNPJTomador: String = '';
+                           AIMTomador: String = '';
+                           ANomeInter: String = '';
+                           ACNPJInter: String = '';
+                           AIMInter: String = ''): Boolean;
+
     function ConsultarSequencialRPS(ACidade, ACnpj, AInscricaoMunicipal, ASeriePrestacao: String):Boolean;
     function CancelarNFSe(ACodigoCancelamento: String): Boolean;
     function Gerar(ARps: Integer): Boolean;
@@ -326,12 +339,23 @@ begin
                 AInscricaoMunicipal, ASenha, AFraseSecreta, ARazaoSocial);
 end;
 
-function TACBrNFSe.ConsultarNFSe(ACnpj, AInscricaoMunicipal: String;
-  ADataInicial, ADataFinal: TDateTime; NumeroNFSe: string = '';
-  APagina: Integer = 1; ASenha : String = ''; AFraseSecreta : String = ''): Boolean;
+function TACBrNFSe.ConsultarNFSe(ACnpj,
+                                 AInscricaoMunicipal: String;
+                                 ADataInicial,
+                                 ADataFinal: TDateTime;
+                                 ANumeroNFSe: string = '';
+                                 APagina: Integer = 1;
+                                 ASenha : String = '';
+                                 AFraseSecreta : String = '';
+                                 ACNPJTomador: String = '';
+                                 AIMTomador: String = '';
+                                 ANomeInter: String = '';
+                                 ACNPJInter: String = '';
+                                 AIMInter: String = ''): Boolean;
 begin
  Result := WebServices.ConsultaNFSe(ACnpj, AInscricaoMunicipal, ADataInicial,
-                ADataFinal, NumeroNFSe, APagina, ASenha, AFraseSecreta);
+                ADataFinal, ANumeroNFSe, APagina, ASenha, AFraseSecreta,
+                ACNPJTomador, AIMTomador, ANomeInter, ACNPJInter, AIMInter);
 end;
 
 function TACBrNFSe.CancelarNFSe(ACodigoCancelamento: String): Boolean;

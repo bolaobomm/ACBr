@@ -282,19 +282,32 @@ type
     FPagina: Integer;
     FSenha: string;
     FFraseSecreta: string;
+    FCNPJTomador: String;
+    FIMTomador: String;
+    FNomeInter: String;
+    FCNPJInter: String;
+    FIMInter: String;
+
   public
     function Executar: Boolean; override;
     constructor Create(AOwner : TComponent; ANotasFiscais : TNotasFiscais); reintroduce;
     destructor Destroy; override;
-    property Cnpj: String read FCnpj write FCnpj;
+
+    property Cnpj: String               read FCnpj               write FCnpj;
     property InscricaoMunicipal: String read FInscricaoMunicipal write FInscricaoMunicipal;
-    property DataInicial: TDateTime read FDataInicial write FDataInicial;
-    property DataFinal: TDateTime read FDataFinal write FDataFinal;
-    property NumeroNFSe: String read FNumeroNFSe write FNumeroNFSe;
-    property NFSeRetorno: TRetNfse read FNFSeRetorno write FNFSeRetorno;
-    property Pagina: Integer read FPagina write FPagina;
-    property Senha: string read FSenha write FSenha;
-    property FraseSecreta: string read FFraseSecreta write FFraseSecreta;
+    property DataInicial: TDateTime     read FDataInicial        write FDataInicial;
+    property DataFinal: TDateTime       read FDataFinal          write FDataFinal;
+    property NumeroNFSe: String         read FNumeroNFSe         write FNumeroNFSe;
+    property NFSeRetorno: TRetNfse      read FNFSeRetorno        write FNFSeRetorno;
+    property Pagina: Integer            read FPagina             write FPagina;
+    property Senha: string              read FSenha              write FSenha;
+    property FraseSecreta: string       read FFraseSecreta       write FFraseSecreta;
+    property CNPJTomador: String        read FCNPJTomador        write FCNPJTomador;
+    property IMTomador: String          read FIMTomador          write FIMTomador;
+    property NomeInter: String          read FNomeInter          write FNomeInter;
+    property CNPJInter: String          read FCNPJInter          write FCNPJInter;
+    property IMInter: String            read FIMInter            write FIMInter;
+
   end;
 
   TNFSeConsultarSequencialRPS = Class(TWebServicesBase)
@@ -442,10 +455,20 @@ type
                                 const ASenha: string = '';
                                 const AFraseSecreta: string = '';
                                 const ARazaoSocial: string = ''): Boolean;
-    function ConsultaNFSe(ACnpj, AInscricaoMunicipal: String; ADataInicial, ADataFinal: TDateTime;
-                          NumeroNFSe: string = ''; APagina: Integer = 1;
+    function ConsultaNFSe(ACnpj,
+                          AInscricaoMunicipal: String;
+                          ADataInicial,
+                          ADataFinal: TDateTime;
+                          NumeroNFSe: string = '';
+                          APagina: Integer = 1;
                           const ASenha: string = '';
-                          const AFraseSecreta: string = ''): Boolean;
+                          const AFraseSecreta: string = '';
+                          ACNPJTomador: String = '';
+                          AIMTomador: String = '';
+                          ANomeInter: String = '';
+                          ACNPJInter: String = '';
+                          AIMInter: String = ''): Boolean;
+                          
     function ConsultaSequencialRPS(ACidade, ACnpj, AInscricaoMunicipal, ASeriePrestacao: String):Boolean;
     function CancelaNFSe(ACodigoCancelamento: String;
                          const CarregaProps: boolean = true): Boolean; overload;
@@ -1534,7 +1557,12 @@ begin
                                                    TNFSeConsultarNfse(Self).Senha,
                                                    TNFSeConsultarNfse(Self).FraseSecreta,
                                                    FProvedor,
-                                                   TNFSeConsultarNfse(Self).FPagina);
+                                                   TNFSeConsultarNfse(Self).FPagina,
+                                                   TNFSeConsultarNfse(Self).FCNPJTomador,
+                                                   TNFSeConsultarNfse(Self).FIMTomador,
+                                                   TNFSeConsultarNfse(Self).FNomeInter,
+                                                   TNFSeConsultarNfse(Self).FCNPJInter,
+                                                   TNFSeConsultarNfse(Self).FIMInter);
    if FDadosMsg <> ''
     then begin
     {$IFDEF ACBrNFSeOpenSSL}
@@ -1574,7 +1602,12 @@ begin
                                                    TNFSeConsultarNfse(Self).Senha,
                                                    TNFSeConsultarNfse(Self).FraseSecreta,
                                                    FProvedor,
-                                                   TNFSeConsultarNfse(Self).FPagina);
+                                                   TNFSeConsultarNfse(Self).FPagina,
+                                                   TNFSeConsultarNfse(Self).FCNPJTomador,
+                                                   TNFSeConsultarNfse(Self).FIMTomador,
+                                                   TNFSeConsultarNfse(Self).FNomeInter,
+                                                   TNFSeConsultarNfse(Self).FCNPJInter,
+                                                   TNFSeConsultarNfse(Self).FIMInter);
   end;
 
   if FDadosMsg = '' then
@@ -2688,14 +2721,23 @@ begin
  Result := ConsultaLoteRPS(AProtocolo, False);
 end;
 
-function TWebServices.ConsultaNFSe(ACnpj, AInscricaoMunicipal: String;
-  ADataInicial, ADataFinal: TDateTime; NumeroNFSe: string = '';
-  APagina: Integer = 1;
-  const ASenha : string = ''; const AFraseSecreta: String = ''): Boolean;
+function TWebServices.ConsultaNFSe(ACnpj,
+                                   AInscricaoMunicipal: String;
+                                   ADataInicial,
+                                   ADataFinal: TDateTime;
+                                   NumeroNFSe: string = '';
+                                   APagina: Integer = 1;
+                                   const ASenha : string = '';
+                                   const AFraseSecreta: String = '';
+                                   ACNPJTomador: String = '';
+                                   AIMTomador: String = '';
+                                   ANomeInter: String = '';
+                                   ACNPJInter: String = '';
+                                   AIMInter: String = ''): Boolean;
 begin
  ACnpj := OnlyNumber(ACnpj);
  if not ValidarCNPJ(ACnpj) then
-  raise Exception.Create('CNPJ '+ACnpj+' inválido.');
+  raise Exception.Create('CNPJ ' + ACnpj + ' inválido.');
 
  Self.ConsNfse.Cnpj               := ACnpj;
  Self.ConsNfse.InscricaoMunicipal := AInscricaoMunicipal;
@@ -2704,7 +2746,12 @@ begin
  Self.ConsNfse.NumeroNFSe         := NumeroNFSe;
  Self.ConsNfse.Pagina             := APagina;
  Self.ConsNfse.Senha              := ASenha;
- Self.ConsNfse.FraseSecreta       := AFraseSecreta; 
+ Self.ConsNfse.FraseSecreta       := AFraseSecreta;
+ Self.ConsNfse.CNPJTomador        := ACNPJTomador;
+ Self.ConsNfse.IMTomador          := AIMTomador;
+ Self.ConsNfse.NomeInter          := ANomeInter;
+ Self.ConsNfse.CNPJInter          := ACNPJInter;
+ Self.ConsNfse.IMInter            := AIMInter;
 
  Result := Self.ConsNfse.Executar;
 
@@ -2946,7 +2993,7 @@ begin
  TACBrNFSe( FACBrNFSe ).SetStatus( stNFSeRecepcao );
 
  if FConfiguracoes.WebServices.Salvar
-   then FConfiguracoes.Geral.Save(NumeroLote+'-env-lot-c.xml', Texto, FConfiguracoes.Arquivos.GetPathGer);
+   then FConfiguracoes.Geral.Save(NumeroLote+'-env-lot-soap.xml', Texto, FConfiguracoes.Arquivos.GetPathGer);
 
  if FConfiguracoes.Geral.Salvar
    then FConfiguracoes.Geral.Save(NumeroLote+'-env-lot.xml', FDadosMsg, FConfiguracoes.Arquivos.GetPathGer);
@@ -2990,7 +3037,7 @@ begin
     {$ENDIF}
 
     if FConfiguracoes.WebServices.Salvar
-     then FConfiguracoes.Geral.Save(NumeroLote+'-rec-c.xml', FRetornoWS, FConfiguracoes.Arquivos.GetPathGer);
+     then FConfiguracoes.Geral.Save(NumeroLote+'-rec-soap.xml', FRetornoWS, FConfiguracoes.Arquivos.GetPathGer);
 
     if FConfiguracoes.Geral.Salvar
      then FConfiguracoes.Geral.Save(NumeroLote+'-rec.xml', FRetWS, FConfiguracoes.Arquivos.GetPathGer);
@@ -3120,7 +3167,7 @@ begin
  TACBrNFSe( FACBrNFSe ).SetStatus( stNFSeConsulta );
 
  if FConfiguracoes.WebServices.Salvar
-   then FConfiguracoes.Geral.Save(Protocolo + '-con-sit-c.xml', Texto, FConfiguracoes.Arquivos.GetPathGer);
+   then FConfiguracoes.Geral.Save(Protocolo + '-con-sit-soap.xml', Texto, FConfiguracoes.Arquivos.GetPathGer);
 
  if FConfiguracoes.Geral.Salvar
    then FConfiguracoes.Geral.Save(Protocolo + '-con-sit.xml', FDadosMsg, FConfiguracoes.Arquivos.GetPathGer);
@@ -3162,7 +3209,7 @@ begin
   {$ENDIF}
 
   if FConfiguracoes.WebServices.Salvar
-   then FConfiguracoes.Geral.Save(Protocolo + '-sit-c.xml', FRetornoWS, FConfiguracoes.Arquivos.GetPathGer);
+   then FConfiguracoes.Geral.Save(Protocolo + '-sit-soap.xml', FRetornoWS, FConfiguracoes.Arquivos.GetPathGer);
 
   if FConfiguracoes.Geral.Salvar
    then FConfiguracoes.Geral.Save(Protocolo + '-sit.xml', FRetWS, FConfiguracoes.Arquivos.GetPathGer);
@@ -3351,7 +3398,7 @@ begin
  TACBrNFSe( FACBrNFSe ).SetStatus( stNFSeConsulta );
 
  if FConfiguracoes.WebServices.Salvar
-   then FConfiguracoes.Geral.Save(Protocolo + '-con-lot-c.xml', Texto, FConfiguracoes.Arquivos.GetPathGer);
+   then FConfiguracoes.Geral.Save(Protocolo + '-con-lot-soap.xml', Texto, FConfiguracoes.Arquivos.GetPathGer);
 
  if FConfiguracoes.Geral.Salvar
    then FConfiguracoes.Geral.Save(Protocolo + '-con-lot.xml', FDadosMsg, FConfiguracoes.Arquivos.GetPathGer);
@@ -3393,7 +3440,7 @@ begin
   {$ENDIF}
 
   if FConfiguracoes.WebServices.Salvar
-   then FConfiguracoes.Geral.Save(Protocolo + '-lista-nfse-c.xml', FRetornoWS, FConfiguracoes.Arquivos.GetPathGer);
+   then FConfiguracoes.Geral.Save(Protocolo + '-lista-nfse-soap.xml', FRetornoWS, FConfiguracoes.Arquivos.GetPathGer);
 
   if FConfiguracoes.Geral.Salvar
    then FConfiguracoes.Geral.Save(Protocolo + '-lista-nfse.xml', {NotaUtil.RetirarPrefixos(FRetWS)} FRetWS, FConfiguracoes.Arquivos.GetPathGer);
@@ -3684,7 +3731,7 @@ begin
  TACBrNFSe( FACBrNFSe ).SetStatus( stNFSeConsulta );
 
  if FConfiguracoes.WebServices.Salvar
-   then FConfiguracoes.Geral.Save(Numero + Serie + '-con-nfse-rps-c.xml', Texto, FConfiguracoes.Arquivos.GetPathGer);
+   then FConfiguracoes.Geral.Save(Numero + Serie + '-con-nfse-rps-soap.xml', Texto, FConfiguracoes.Arquivos.GetPathGer);
 
  if FConfiguracoes.Geral.Salvar
    then FConfiguracoes.Geral.Save(Numero + Serie + '-con-nfse-rps.xml', FDadosMsg, FConfiguracoes.Arquivos.GetPathGer);
@@ -3726,7 +3773,7 @@ begin
   {$ENDIF}
 
   if FConfiguracoes.WebServices.Salvar
-   then FConfiguracoes.Geral.Save(Numero + Serie + '-comp-nfse-c.xml', FRetornoWS, FConfiguracoes.Arquivos.GetPathGer);
+   then FConfiguracoes.Geral.Save(Numero + Serie + '-comp-nfse-soap.xml', FRetornoWS, FConfiguracoes.Arquivos.GetPathGer);
 
   if FConfiguracoes.Geral.Salvar
    then FConfiguracoes.Geral.Save(Numero + Serie + '-comp-nfse.xml', FRetWS, FConfiguracoes.Arquivos.GetPathGer);
@@ -3931,7 +3978,7 @@ begin
 
  if FConfiguracoes.WebServices.Salvar
    then FConfiguracoes.Geral.Save(FormatDateTime('yyyymmdd', DataInicial) +
-                                  FormatDateTime('yyyymmdd', DataFinal) + '-con-nfse-c.xml', Texto, FConfiguracoes.Arquivos.GetPathGer);
+                                  FormatDateTime('yyyymmdd', DataFinal) + '-con-nfse-soap.xml', Texto, FConfiguracoes.Arquivos.GetPathGer);
 
  if FConfiguracoes.Geral.Salvar
    then FConfiguracoes.Geral.Save(FormatDateTime('yyyymmdd', DataInicial) +
@@ -3975,7 +4022,7 @@ begin
 
   if FConfiguracoes.WebServices.Salvar
    then FConfiguracoes.Geral.Save(FormatDateTime('yyyymmdd', DataInicial) +
-                                  FormatDateTime('yyyymmdd', DataFinal) + '-lista-nfse-c.xml', FRetornoWS, FConfiguracoes.Arquivos.GetPathGer);
+                                  FormatDateTime('yyyymmdd', DataFinal) + '-lista-nfse-soap.xml', FRetornoWS, FConfiguracoes.Arquivos.GetPathGer);
 
   if FConfiguracoes.Geral.Salvar
    then FConfiguracoes.Geral.Save(FormatDateTime('yyyymmdd', DataInicial) +
@@ -4152,7 +4199,7 @@ begin
  TACBrNFSe( FACBrNFSe ).SetStatus( stNFSeCancelamento );
 
  if FConfiguracoes.WebServices.Salvar
-   then FConfiguracoes.Geral.Save(TNFSeCancelarNFse(Self).FNotasFiscais.Items[0].NFSe.Numero + '-ped-can-c.xml', Texto, FConfiguracoes.Arquivos.GetPathCan );
+   then FConfiguracoes.Geral.Save(TNFSeCancelarNFse(Self).FNotasFiscais.Items[0].NFSe.Numero + '-ped-can-soap.xml', Texto, FConfiguracoes.Arquivos.GetPathCan );
 
  if FConfiguracoes.Geral.Salvar
    then FConfiguracoes.Geral.Save(TNFSeCancelarNFse(Self).FNotasFiscais.Items[0].NFSe.Numero + '-ped-can.xml', FDadosMsg, FConfiguracoes.Arquivos.GetPathCan );
@@ -4198,7 +4245,7 @@ begin
   {$ENDIF}
 
   if FConfiguracoes.WebServices.Salvar
-   then FConfiguracoes.Geral.Save(TNFSeCancelarNFse(Self).FNotasFiscais.Items[0].NFSe.Numero + '-can-c.xml', FRetornoWS, FConfiguracoes.Arquivos.GetPathCan);
+   then FConfiguracoes.Geral.Save(TNFSeCancelarNFse(Self).FNotasFiscais.Items[0].NFSe.Numero + '-can-soap.xml', FRetornoWS, FConfiguracoes.Arquivos.GetPathCan);
 
   if FConfiguracoes.Geral.Salvar
    then FConfiguracoes.Geral.Save(TNFSeCancelarNFse(Self).FNotasFiscais.Items[0].NFSe.Numero + '-can.xml', FRetWS, FConfiguracoes.Arquivos.GetPathCan);
@@ -4310,7 +4357,7 @@ begin
  TACBrNFSe( FACBrNFSe ).SetStatus( stNFSeRecepcao );
 
  if FConfiguracoes.WebServices.Salvar
-   then FConfiguracoes.Geral.Save(IntToStr(NumeroRps)+'-ger-nfse-c.xml', Texto, FConfiguracoes.Arquivos.GetPathGer);
+   then FConfiguracoes.Geral.Save(IntToStr(NumeroRps)+'-ger-nfse-soap.xml', Texto, FConfiguracoes.Arquivos.GetPathGer);
 
  if FConfiguracoes.Geral.Salvar
    then FConfiguracoes.Geral.Save(IntToStr(NumeroRps)+'-ger-nfse.xml', FDadosMsg, FConfiguracoes.Arquivos.GetPathGer);
@@ -4353,7 +4400,7 @@ begin
   {$ENDIF}
 
   if FConfiguracoes.WebServices.Salvar
-   then FConfiguracoes.Geral.Save(IntToStr(NumeroRps) + '-lista-nfse-c.xml', FRetornoWS, FConfiguracoes.Arquivos.GetPathGer);
+   then FConfiguracoes.Geral.Save(IntToStr(NumeroRps) + '-lista-nfse-soap.xml', FRetornoWS, FConfiguracoes.Arquivos.GetPathGer);
 
   if FConfiguracoes.Geral.Salvar
    then FConfiguracoes.Geral.Save(IntToStr(NumeroRps) + '-lista-nfse.xml', NotaUtil.RetirarPrefixos(FRetWS), FConfiguracoes.Arquivos.GetPathGer);
@@ -4599,7 +4646,7 @@ begin
  TACBrNFSe( FACBrNFSe ).SetStatus( stNFSeRecepcao );
 
  if FConfiguracoes.WebServices.Salvar
-   then FConfiguracoes.Geral.Save(NumeroLote+'-env-lotS-c.xml', Texto, FConfiguracoes.Arquivos.GetPathGer);
+   then FConfiguracoes.Geral.Save(NumeroLote+'-env-lotS-soap.xml', Texto, FConfiguracoes.Arquivos.GetPathGer);
 
  if FConfiguracoes.Geral.Salvar
    then FConfiguracoes.Geral.Save(NumeroLote+'-env-lotS.xml', FDadosMsg, FConfiguracoes.Arquivos.GetPathGer);
@@ -4641,7 +4688,7 @@ begin
   {$ENDIF}
 
   if FConfiguracoes.WebServices.Salvar
-   then FConfiguracoes.Geral.Save(NumeroLote + '-lista-nfse-c.xml', FRetornoWS, FConfiguracoes.Arquivos.GetPathGer);
+   then FConfiguracoes.Geral.Save(NumeroLote + '-lista-nfse-soap.xml', FRetornoWS, FConfiguracoes.Arquivos.GetPathGer);
 
   if FConfiguracoes.Geral.Salvar
    then FConfiguracoes.Geral.Save(NumeroLote + '-lista-nfse.xml', NotaUtil.RetirarPrefixos(FRetWS), FConfiguracoes.Arquivos.GetPathGer);
@@ -4864,7 +4911,7 @@ begin
  TACBrNFSe( FACBrNFSe ).SetStatus( stNFSeConsulta );
 
  if FConfiguracoes.WebServices.Salvar
-   then FConfiguracoes.Geral.Save('-con-seqRPS-c.xml', Texto, FConfiguracoes.Arquivos.GetPathGer);
+   then FConfiguracoes.Geral.Save('-con-seqRPS-soap.xml', Texto, FConfiguracoes.Arquivos.GetPathGer);
 
  if FConfiguracoes.Geral.Salvar
    then FConfiguracoes.Geral.Save('-con-seqRPS.xml', FDadosMsg, FConfiguracoes.Arquivos.GetPathGer);
@@ -4906,7 +4953,7 @@ begin
   {$ENDIF}
 
   if FConfiguracoes.WebServices.Salvar
-   then FConfiguracoes.Geral.Save('-lista-seqRPS-c.xml', FRetornoWS, FConfiguracoes.Arquivos.GetPathGer);
+   then FConfiguracoes.Geral.Save('-lista-seqRPS-soap.xml', FRetornoWS, FConfiguracoes.Arquivos.GetPathGer);
 
   if FConfiguracoes.Geral.Salvar
    then FConfiguracoes.Geral.Save('-lista-seqRPS.xml', NotaUtil.RetirarPrefixos(FRetWS), FConfiguracoes.Arquivos.GetPathGer);
