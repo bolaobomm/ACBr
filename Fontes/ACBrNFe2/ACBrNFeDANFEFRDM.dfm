@@ -1,5 +1,7 @@
 object dmACBrNFeFR: TdmACBrNFeFR
   OldCreateOrder = False
+  Left = 329
+  Top = 23
   Height = 526
   Width = 720
   object frxPDFExport: TfrxPDFExport
@@ -11,7 +13,6 @@ object dmACBrNFeFR: TdmACBrNFeFR
     Outline = False
     Background = True
     HTMLTags = True
-    Quality = 95
     Author = 'FastReport'
     Subject = 'Exportando DANFE para PDF'
     ProtectionFlags = [ePrint, eModify, eCopy, eAnnot]
@@ -270,6 +271,7 @@ object dmACBrNFeFR: TdmACBrNFeFR
       Size = 18
     end
     object cdsDestinatarioConsumidor: TStringField
+      DisplayWidth = 150
       FieldName = 'Consumidor'
       Size = 150
     end
