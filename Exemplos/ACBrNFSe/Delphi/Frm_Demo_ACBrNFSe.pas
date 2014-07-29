@@ -181,7 +181,7 @@ type
     procedure LerConfiguracao;
     procedure ConfiguraComponente;
     procedure LoadXML(MyMemo: TMemo; MyWebBrowser: TWebBrowser);
-    procedure GerarNFSe(NumNFSe : String);
+    procedure AlimentaComponente(NumNFSe : String);
   public
     { Public declarations }
   end;
@@ -411,7 +411,7 @@ begin
  MyWebBrowser.Navigate(ExtractFileDir(application.ExeName)+'temp.xml');
 end;
 
-procedure TfrmDemo_ACBrNFSe.GerarNFSe(NumNFSe: String);
+procedure TfrmDemo_ACBrNFSe.AlimentaComponente(NumNFSe: String);
 var
  ValorISS: Double;
 begin
@@ -678,7 +678,7 @@ begin
   then exit;
 
  ACBrNFSe1.NotasFiscais.Clear;
- GerarNFSe(vAux);
+ AlimentaComponente(vAux);
  ACBrNFSe1.Enviar(vNumLote);
 
  ACBrNFSe1.NotasFiscais.Clear;
@@ -766,7 +766,7 @@ begin
   then exit;
 
  ACBrNFSe1.NotasFiscais.Clear;
- GerarNFSe(vAux);
+ AlimentaComponente(vAux);
  ACBrNFSe1.NotasFiscais.Items[0].SaveToFile;
 
  ShowMessage('Arquivo gerado em: '+ACBrNFSe1.NotasFiscais.Items[0].NomeArq);
@@ -960,7 +960,7 @@ begin
   then exit;
 
  ACBrNFSe1.NotasFiscais.Clear;
- GerarNFSe(vNumRPS);
+ AlimentaComponente(vNumRPS);
 
  ACBrNFSe1.Gerar(StrToInt(vNumRPS));
  sNomeArq := ACBrNFSe1.NotasFiscais.Items[0].NomeArq;
@@ -1059,7 +1059,7 @@ begin
   then exit;
 
  ACBrNFSe1.NotasFiscais.Clear;
- GerarNFSe(vAux);
+ AlimentaComponente(vAux);
  ACBrNFSe1.GerarLote(vNumLote);
 
  ShowMessage('Arquivo gerado em: '+ACBrNFSe1.NotasFiscais.Items[0].NomeArq);
@@ -1084,7 +1084,7 @@ begin
   then exit;
 
  ACBrNFSe1.NotasFiscais.Clear;
- GerarNFSe(vAux);
+ AlimentaComponente(vAux);
  ACBrNFSe1.EnviarSincrono(vNumLote);
 
  ACBrNFSe1.NotasFiscais.Clear;
