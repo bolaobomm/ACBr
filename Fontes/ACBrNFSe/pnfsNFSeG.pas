@@ -629,7 +629,8 @@ begin
                '<Versao>'               + VersaoXML          + '</Versao>' +
                '<MetodoEnvio>'          + 'WS'               + '</MetodoEnvio>' +
              '</Cabecalho>' +
-             '<Lote ' + Identificador + '="Lote:' + NumeroLote + '">' +
+             //'<Lote ' + Identificador + '="Lote:' + NumeroLote + '">' +        //Alterado por Ailton 28/07/2017 Retirado o item "Lote" no provedor DSF da erro
+             '<Lote ' + Identificador + '="' + NumeroLote + '">' +
                 Notas +
              '</Lote>';
 
@@ -664,7 +665,8 @@ begin
                '<transacao>' + Transacao + '</transacao>' +
                '<Versao>' + VersaoXML + '</Versao>' +
              '</Cabecalho>' +
-             '<Lote  Id="Lote:' + NumeroLote + '">' +
+             //'<Lote  Id="Lote:' + NumeroLote + '">' +
+             '<Lote  Id="' + NumeroLote + '">' + //Alterado por Ailton 28/07/2017 Retirado o item "Lote" no provedor DSF da erro
                 Notas +
              '</Lote>';
 
@@ -710,7 +712,8 @@ begin
 		         '<transacao>'        + Transacao + '</transacao>' +
 		         '<Versao>'           + VersaoXML + '</Versao>' +
 	          '</Cabecalho>' +
-             '<Lote Id="Lote:' + NumeroLote + '">' +
+            // '<Lote Id="Lote:' + NumeroLote + '">' +
+            '<Lote  Id="' + NumeroLote + '">' + //Alterado por Ailton 28/07/2017 Retirado o item "Lote" no provedor DSF da erro
                 Notas +
              '</Lote>';
 
