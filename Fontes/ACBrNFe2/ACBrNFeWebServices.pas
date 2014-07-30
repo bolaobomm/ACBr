@@ -4484,6 +4484,7 @@ begin
                  FEvento.Evento.Items[i].RetInfEvento.nProt       := EventoRetorno.retEvento.Items[j].RetInfEvento.nProt;
                  FEvento.Evento.Items[i].RetInfEvento.dhRegEvento := EventoRetorno.retEvento.Items[j].RetInfEvento.dhRegEvento;
                  FEvento.Evento.Items[i].RetInfEvento.cStat       := EventoRetorno.retEvento.Items[j].RetInfEvento.cStat;
+                 FEvento.Evento.Items[i].RetInfEvento.xMotivo     := EventoRetorno.retEvento.Items[j].RetInfEvento.xMotivo;
 
                  wProc := TStringList.Create;
                  wProc.Add('<?xml version="1.0" encoding="UTF-8" ?>');
