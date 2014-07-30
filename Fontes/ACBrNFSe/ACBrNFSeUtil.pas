@@ -563,6 +563,7 @@ var
  xmldsig   : IXMLDigitalSignature;
  dsigKey   : IXMLDSigKey;
  signedKey : IXMLDSigKey;
+ xmlRoot   : IXMLDOMElement;
 begin
  AXML := XML;
 
@@ -810,8 +811,8 @@ begin
  begin
      NameSpaceLote:=DSIGNS + ' xmlns:ns1="http://localhost:8080/WsNFe2/lote" xmlns:tipos="http://localhost:8080/WsNFe2/tp" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"';
      xmldoc.setProperty('SelectionNamespaces', NameSpaceLote );
-//     xmlRoot:= xmldoc.documentElement;
-//     xmlRoot.setAttribute('xsi:schemaLocation','http://localhost:8080/WsNFe2/lote http://localhost:8080/WsNFe2/xsd/ReqEnvioLoteRPS.xsd');
+     xmlRoot := xmldoc.documentElement;
+     xmlRoot.setAttribute('xsi:schemaLocation','http://localhost:8080/WsNFe2/lote http://localhost:8080/WsNFe2/xsd/ReqEnvioLoteRPS.xsd');
   end
   else
   begin
