@@ -113,7 +113,12 @@ begin
       (*DR05 *)FtpAmb := StrToTpAmb(ok, Leitor.rCampo(tcStr, 'tpAmb'));
       (*DR06 *)FverAplic := Leitor.rCampo(tcStr, 'verAplic');
       (*DR07 *)FcStat := Leitor.rCampo(tcInt, 'cStat');
-      (*DR08 *)FxMotivo := Leitor.rCampo(tcStr, 'xMotivo');
+
+      if leitor.rExtrai(1, 'infInut') <> '' then
+       (*DR08 *)FxMotivo := Leitor.rCampo(tcStr, 'xJust')
+      else
+       (*DR08 *)FxMotivo := Leitor.rCampo(tcStr, 'xMotivo');
+
       (*DR09 *)FcUF := Leitor.rCampo(tcInt, 'cUF');
       (*DR10 *)Fano := Leitor.rCampo(tcInt, 'ano');
       (*DR11 *)FCNPJ := Leitor.rCampo(tcStr, 'CNPJ');
