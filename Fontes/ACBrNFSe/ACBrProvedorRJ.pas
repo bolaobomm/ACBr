@@ -70,14 +70,10 @@ begin
  ConfigCidade.Prefixo4      := '';
  ConfigCidade.Identificador := 'Id';
 
-// if AAmbiente = 1
-//  then ConfigCidade.NameSpaceEnvelope := 'http://notacarioca.rio.gov.br'
-//  else ConfigCidade.NameSpaceEnvelope := 'http://homologacao.notacarioca.rio.gov.br';
-
  ConfigCidade.NameSpaceEnvelope := 'http://notacarioca.rio.gov.br';
 
  ConfigCidade.AssinaRPS  := False;
- ConfigCidade.AssinaLote := True; // Alterado por Italo em 10/05/2013
+ ConfigCidade.AssinaLote := True;
 
  Result := ConfigCidade;
 end;
