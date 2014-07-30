@@ -989,7 +989,8 @@ end;
 
 procedure TNFSeW.GerarXML_Provedor_IssDsf;
 var
-   sAssinatura, sSituacao, sTipoRecolhimento, sValorServico_Assinatura: string;
+   sAssinatura, sSituacao, sTipoRecolhimento, sValorServico_Assinatura,
+   sTipoRecolhimentoAssinaturaRPS: string;
 begin
    Gerador.Prefixo := '';
   // Gerador.wGrupoNFSe('Rps ' + FIdentificador + '="rps:' + NFSe.InfID.ID + '"');
@@ -1006,20 +1007,28 @@ begin
                                            ['A','R'],
                                            [stNormal, stRetencao]);
 
+      // Wilker: ao assinar o RPS, a documentação indica trocar A por N:
+      // "07 - Tipo Recolhimento, se for “A” preenche com “N” senão “S”"
+      sTipoRecolhimentoAssinaturaRPS := EnumeradoToStr( NFSe.Servico.Valores.IssRetido,
+                                           ['N','S'],
+                                           [stNormal, stRetencao]);
+
       sValorServico_Assinatura := Poem_Zeros( SomenteNumeros( FormatFloat('#0.00', (NFSe.Servico.Valores.ValorServicos - NFSe.Servico.Valores.ValorDeducoes) ) ), 15);
 
       sAssinatura := Poem_Zeros(NFSe.Prestador.InscricaoMunicipal, 11) +
                      padL( NFSe.IdentificacaoRps.Serie, 5 , ' ') +
                      Poem_Zeros(NFSe.IdentificacaoRps.Numero, 12) +
                      FormatDateTime('yyyymmdd',NFse.DataEmissaoRps) +
+                     'T ' +
                      sSituacao +
-                     sTipoRecolhimento +
+                     sTipoRecolhimentoAssinaturaRPS +
                      sValorServico_Assinatura +
                      Poem_Zeros( SomenteNumeros( FormatFloat('#0.00',NFSe.Servico.Valores.ValorDeducoes)), 15 ) +
-                     Poem_Zeros( SomenteNumeros( NFSe.Servico.CodigoCnae ), 10 );
+                     Poem_Zeros( SomenteNumeros( NFSe.Servico.CodigoCnae ), 10 ) +
                      Poem_Zeros( SomenteNumeros( NFSe.Tomador.IdentificacaoTomador.CpfCnpj), 14);
 
       sAssinatura := SHA1(sAssinatura);
+      sAssinatura := LowerCase(StrToHex(sAssinatura));
 
       Gerador.wCampoNFSe(tcStr, '', 'Assinatura', 01, 2000, 1, sAssinatura, '');
 

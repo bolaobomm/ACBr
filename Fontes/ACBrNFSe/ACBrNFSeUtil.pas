@@ -806,13 +806,21 @@ begin
  if (not xmldoc.loadXML(AXML))
   then raise Exception.Create('Não foi possível carregar o arquivo: ' + AXML);
 
- xmldoc.setProperty('SelectionNamespaces', DSIGNS + NameSpaceLote);
+ if AProvedor = proIssDSF then
+ begin
+     NameSpaceLote:=DSIGNS + ' xmlns:ns1="http://localhost:8080/WsNFe2/lote" xmlns:tipos="http://localhost:8080/WsNFe2/tp" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"';
+     xmldoc.setProperty('SelectionNamespaces', NameSpaceLote );
+     xmlRoot:= xmldoc.documentElement;
+     xmlRoot.setAttribute('xsi:schemaLocation','http://localhost:8080/WsNFe2/lote http://localhost:8080/WsNFe2/xsd/ReqEnvioLoteRPS.xsd');
+  end
+  else
+  begin
+    xmldoc.setProperty('SelectionNamespaces', DSIGNS + NameSpaceLote);
+  end;
 
  if ALote
   then begin
-   if (URI <> '') and (AProvedor = proIssDSF)
-    then xmldsig.signature := xmldoc.selectSingleNode('.//ns1:'+ EnviarLoteRps + '/ds:Signature')
-   else if (AProvedor in [proEquiplano,proPronim{Dalvan}])
+   if (AProvedor in [proEquiplano, proPronim, proIssDSF])
     then xmldsig.signature := xmldoc.selectSingleNode('.//ds:Signature')
    else if (URI <> '') and not (AProvedor in [proRecife, proRJ, proAbaco, proIssCuritiba, proFISSLex, proBetha, proPublica])
     then xmldsig.signature := xmldoc.selectSingleNode('.//ds:Signature[@' + Identificador + '="AssLote_' + URI + '"]')
