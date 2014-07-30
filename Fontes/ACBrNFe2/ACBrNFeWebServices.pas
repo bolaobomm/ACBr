@@ -2780,7 +2780,7 @@ begin
   inherited Executar;
 
   // Alterações realizadas por Italo em 10/07/2014
-  if FConfiguracoes.WebServices.UFCodigo = 29 then // 29 = BA
+  if (FConfiguracoes.WebServices.UFCodigo = 29) and (FConfiguracoes.Geral.VersaoDF = ve310) then // 29 = BA
   begin
     Metodo    := 'NfeConsulta';
     TAGResult := 'NfeConsultaNFResult';
