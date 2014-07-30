@@ -194,22 +194,21 @@ end;
 function TProvedorNatal.GeraEnvelopeRecepcionarLoteRPS(URLNS: String;
   CabMsg, DadosMsg, DadosSenha: AnsiString): AnsiString;
 begin
- Result := '';
- raise Exception.Create( 'Opção não implementada para este provedor.' );
-{
- result := '<?xml version="1.0" encoding="UTF-8"?>' +
-           '<S:Envelope xmlns:S="http://schemas.xmlsoap.org/soap/envelope/" ' +
-                       'xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" ' +
-                       'xmlns:xsd="http://www.w3.org/2001/XMLSchema">' +
-            '<S:Body>' +
-             '<EnviarLoteRpsEnvio xmlns="' + URLNS + '">' +
-              '<MensagemXML>' +
-                StringReplace(StringReplace(DadosMsg, '<', '&lt;', [rfReplaceAll]), '>', '&gt;', [rfReplaceAll]) +
-              '</MensagemXML>' +
-             '</EnviarLoteRpsEnvio>' +
-            '</S:Body>' +
-           '</S:Envelope>';
-}
+ Result := '<?xml version="1.0" encoding="UTF-8"?>' +
+           '<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" ' +
+                             'xmlns:wsn="https://wsnfsev1.natal.rn.gov.br:8444">' +
+            '<soapenv:Header/>' +
+            '<soapenv:Body>' +
+             '<wsn:RecepcionarLoteRpsRequest>' +
+              '<nfseCabecMsg>' +
+                   StringReplace(StringReplace(CabMsg, '<', '&lt;', [rfReplaceAll]), '>', '&gt;', [rfReplaceAll]) +
+              '</nfseCabecMsg>' +
+              '<nfseDadosMsg>' +
+                 StringReplace(StringReplace(DadosMsg, '<', '&lt;', [rfReplaceAll]), '>', '&gt;', [rfReplaceAll]) +
+              '</nfseDadosMsg>' +
+             '</wsn:RecepcionarLoteRpsRequest>' +
+            '</soapenv:Body>' +
+           '</soapenv:Envelope>';
 end;
 
 function TProvedorNatal.GeraEnvelopeConsultarSituacaoLoteRPS(

@@ -112,9 +112,24 @@ begin
  sHTTPPro := 'https://';
 
  case ACodCidade of
+  4306403: begin //Dois Irmãos/RS
+            ConfigURL.HomNomeCidade := 'homologadoi.nfse-tecnos.com.br';
+            ConfigURL.ProNomeCidade := 'dois.nfse-tecnos.com.br';
+            sHTTPPro := 'http://';
+           end;
+  4307609: begin // Estância Velha/RS
+            ConfigURL.HomNomeCidade := 'homologaestan.nfse-tecnos.com.br';
+            ConfigURL.ProNomeCidade := 'estanciavelha.nfse-tecnos.com.br';
+            sHTTPPro := 'http://';
+           end;
   4307807: begin // Estrela/RS
             ConfigURL.HomNomeCidade := 'homologaest.nfse-tecnos.com.br';
             ConfigURL.ProNomeCidade := 'estrela.nfse-tecnos.com.br';
+            sHTTPPro := 'http://';
+           end;
+  4308201: begin // Flores da Cunha/RS
+            ConfigURL.HomNomeCidade := 'homologaflo.nfse-tecnos.com.br';
+            ConfigURL.ProNomeCidade := 'flores.nfse-tecnos.com.br';
             sHTTPPro := 'http://';
            end;
   4310801: begin // Ivoti/RS
@@ -127,29 +142,19 @@ begin
             ConfigURL.ProNomeCidade := 'novaprata.nfse-tecnos.com.br';
             sHTTPPro := 'http://';
            end;
-  4307609: begin // Estância Velha/RS
-            ConfigURL.HomNomeCidade := 'homologaestan.nfse-tecnos.com.br';
-            ConfigURL.ProNomeCidade := 'estanciavelha.nfse-tecnos.com.br';
-            sHTTPPro := 'http://';
-           end;
   4314803: begin // Portao/RS
             ConfigURL.HomNomeCidade := 'homologapor.nfse-tecnos.com.br';
             ConfigURL.ProNomeCidade := 'portao.nfse-tecnos.com.br';
             sHTTPPro := 'http://';
            end;
-  4308201: begin // Flores da Cunha/RS
-            ConfigURL.HomNomeCidade := 'homologaflo.nfse-tecnos.com.br';
-            ConfigURL.ProNomeCidade := 'flores.nfse-tecnos.com.br';
+  4320404: begin // Serafina Correa/RS
+            ConfigURL.HomNomeCidade := 'homologasera.nfse-tecnos.com.br';
+            ConfigURL.ProNomeCidade := 'serafina.nfse-tecnos.com.br';
             sHTTPPro := 'http://';
            end;
   4322806: begin // Veranopolis/RS
             ConfigURL.HomNomeCidade := 'homologaver.nfse-tecnos.com.br';
             ConfigURL.ProNomeCidade := 'veranopolis.nfse-tecnos.com.br';
-            sHTTPPro := 'http://';
-           end;
-  4306403: begin //Dois Irmãos/RS
-            ConfigURL.HomNomeCidade := 'homologadoi.nfse-tecnos.com.br';
-            ConfigURL.ProNomeCidade := 'dois.nfse-tecnos.com.br';
             sHTTPPro := 'http://';
            end;
 

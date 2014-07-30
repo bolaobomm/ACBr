@@ -1088,14 +1088,15 @@ begin
   2611101  // Petrolina/PE
          : Provedor := 'SpeedGov';
 
+  4306403, //Dois Irmãos/RS
   4307609, // Estância Velha/RS
   4307807, // Estrela/RS
   4308201, // Flores da Cunha/RS
   4310801, // Ivoti/RS
   4313300, // Nova Prata/RS
   4314803, // Portao/RS
-  4322806, // Veranopolis/RS
-  4306403  //Dois Irmãos/RS
+  4320404, // Serafina Correa/RS
+  4322806  // Veranopolis/RS
          : Provedor := 'Tecnos';
 
   4303103, // Cachoeirinha/RS
