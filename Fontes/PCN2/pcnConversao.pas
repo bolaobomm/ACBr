@@ -343,6 +343,7 @@ const
 
   LineBreak = #13#10;
 
+function StrToHex(S: String): String;
 function StrToEnumerado(var ok: boolean; const s: string; const AString: array of string;
   const AEnumerados: array of variant): variant;
 function EnumeradoToStr(const t: variant; const AString:
@@ -548,6 +549,14 @@ function TipoAutorToStr(const t: TpcnTipoAutor ): string;
 function StrToTipoAutor(var ok: boolean; const s: string): TpcnTipoAutor;
 
 implementation
+
+function StrToHex(S: String): String;
+var I: Integer;
+begin
+  Result:= '';
+  for I := 1 to length (S) do
+    Result:= Result+IntToHex(ord(S[i]),2);
+end;
 
 function StrToEnumerado(var ok: boolean; const s: string; const AString:
   array of string; const AEnumerados: array of variant): variant;
