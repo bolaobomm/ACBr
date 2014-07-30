@@ -731,7 +731,7 @@ begin
 
     if Trim(CTe.Exped.IE) = 'ISENTO'
      then Gerador.wCampo(tcStr, '#145', 'IE ', 00, 14, 1, CTe.Exped.IE, DSC_IE)
-     else Gerador.wCampo(tcStr, '#145', 'IE ', 00, 14, 0, SomenteNumeros(CTe.Exped.IE), DSC_IE);
+     else Gerador.wCampo(tcStr, '#145', 'IE ', 00, 14, 1, SomenteNumeros(CTe.Exped.IE), DSC_IE);
 
     if (FOpcoes.ValidarInscricoes)
      then if not ValidarIE(CTe.Exped.IE, CTe.Exped.EnderExped.UF) then
@@ -790,7 +790,7 @@ begin
 
     if Trim(CTe.Receb.IE) = 'ISENTO'
      then Gerador.wCampo(tcStr, '#163', 'IE ', 00, 14, 1, CTe.Receb.IE, DSC_IE)
-     else Gerador.wCampo(tcStr, '#163', 'IE ', 00, 14, 0, SomenteNumeros(CTe.Receb.IE), DSC_IE);
+     else Gerador.wCampo(tcStr, '#163', 'IE ', 00, 14, 1, SomenteNumeros(CTe.Receb.IE), DSC_IE);
 
     if (FOpcoes.ValidarInscricoes)
      then if not ValidarIE(CTe.Receb.IE, CTe.Receb.EnderReceb.UF) then
