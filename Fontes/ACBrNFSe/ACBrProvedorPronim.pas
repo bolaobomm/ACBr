@@ -79,7 +79,7 @@ begin
   3118601: ConfigCidade.AssinaLote := True; {Denio Incluido para Contagem} 
   4309407: ConfigCidade.AssinaLote := True; {Dalvan}
   4320800: ConfigCidade.AssinaLote := True; {Dalvan}
- else      ConfigCidade.AssinaLote := False;
+  else     ConfigCidade.AssinaLote := False;
  end;
 
  Result := ConfigCidade;

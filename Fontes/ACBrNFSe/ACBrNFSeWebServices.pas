@@ -43,7 +43,7 @@ uses
     ACBrProvedorLink3, ACBrProvedorSpeedGov, ACBrProvedorVitoria,
     ACBrProvedorMitra, ACBrProvedorTecnos, ACBrProvedorPronim,
     ACBrProvedorActcon, ACBrProvedorEL, ACBrProvedorEgoverneISS,
-    ACBrProvedorSisPMJP, ACBrProvedorSystemPro;
+    ACBrProvedorSisPMJP, ACBrProvedorSystemPro, ACBrProvedorSalvador;
 
 type
 
@@ -699,6 +699,7 @@ begin
   proEL:          FProvedorClass := TProvedorEL.Create;
   proEgoverneISS: FProvedorClass := TProvedorEgoverneISS.Create;
   proSisPMJP:     FProvedorClass := TProvedorSisPMJP.Create;
+  proSalvador:    FProvedorClass := TProvedorSalvador.Create;
  end;
 
  FPrefixo2     := FConfiguracoes.WebServices.Prefixo2;

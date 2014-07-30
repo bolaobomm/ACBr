@@ -642,6 +642,7 @@ begin
    // Alterado por Italo em 07/08/2013 - incluido na lista o proAbaco
    if (URI = '') or (AProvedor in [proRecife, proRJ, proAbaco, proIssDSF, proIssCuritiba, proFISSLex, proGovBR, proPublica, proPronim{Dalvan}])
     then AID := '>'
+    else if AProvedor = proNatal then AID := ' ' + Identificador + '="Ass_lote">'
     else AID := ' ' + Identificador + '="AssLote_' + URI + '">';
 
    // Incluido por Italo em 07/08/2013
@@ -815,8 +816,9 @@ begin
     then xmldsig.signature := xmldoc.selectSingleNode('.//ds:Signature')
    else if (URI <> '') and not (AProvedor in [proRecife, proRJ, proAbaco, proIssCuritiba, proFISSLex, proBetha, proPublica])
     then xmldsig.signature := xmldoc.selectSingleNode('.//ds:Signature[@' + Identificador + '="AssLote_' + URI + '"]')
-   else
-   if (URI <> '') and (AProvedor = proBetha)
+   else if AProvedor = proNatal
+    then xmldsig.signature := xmldoc.selectSingleNode('.//ds:Signature[@' + Identificador + '="Ass_' + URI + '"]')
+   else if (URI <> '') and (AProvedor = proBetha)
     then xmldsig.signature := xmldoc.selectSingleNode('.//ns3:' + EnviarLoteRps + '/ds:Signature')
    else begin
      xmldsig.signature := xmldoc.selectSingleNode('.//ds1:' + EnviarLoteRps + '/ds:Signature');
@@ -1002,6 +1004,14 @@ begin
     else XMLAssinado := xmlHeaderAntes + XMLAssinado;
   end;
 
+  //Não é possível assinar por delphi quando o id é minúsculo... mas se manter o id maiúsculo
+  //não será validado o schema... uma função mais legível como stringreplace faz a assinatura sumir.
+  if (not ALote) and (Aprovedor in [proPublica])
+   then begin
+     I := pos('Id=', XMLAssinado);
+     XMLAssinado[I] := 'i';
+   end;
+
  dsigKey   := nil;
  signedKey := nil;
  xmldoc    := nil;
@@ -1111,10 +1121,13 @@ begin
    begin
     Cert  := TMemoryStream.Create;
     Cert2 := TStringStream.Create(ArqPFX);
-
-    Cert.LoadFromStream(Cert2);
-
-    XmlAss := NotaUtil.sign_memory( PAnsiChar(AXML), PAnsiChar(ArqPFX), PAnsiChar(PFXSenha), Cert.Size, Cert.Memory );
+    try
+      Cert.LoadFromStream(Cert2);
+      XmlAss := NotaUtil.sign_memory(PAnsiChar(AStr), PAnsiChar(ArqPFX), PAnsiChar(PFXSenha), Cert.Size, Cert.Memory);
+    finally
+      Cert2.Free;
+      Cert.Free;
+    end;
   end;
 
   // Removendo quebras de linha //

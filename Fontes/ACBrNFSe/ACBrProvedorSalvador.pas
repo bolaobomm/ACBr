@@ -51,196 +51,9 @@ implementation
 
 { TProvedorSalvador }
 
-
-
-{ TProvedorSalvador }
-
 constructor TProvedorSalvador.Create;
 begin
  {----}
-end;
-
-function TProvedorSalvador.GeraEnvelopeCancelarNFSe(URLNS: String; CabMsg,
-  DadosMsg, DadosSenha: AnsiString): AnsiString;
-begin
- result := '<?xml version="1.0" encoding="UTF-8"?>' +
-           '<S:Envelope xmlns:S="http://schemas.xmlsoap.org/soap/envelope/" ' +
-                       'xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" ' +
-                       'xmlns:xsd="http://www.w3.org/2001/XMLSchema">' +
-            '<S:Body>' +
-             '<CancelarNfseEnvio xmlns="' + URLNS + '">' +
-              '<MensagemXML>' +
-                StringReplace(StringReplace(DadosMsg, '<', '&lt;', [rfReplaceAll]), '>', '&gt;', [rfReplaceAll]) +
-              '</MensagemXML>' +
-             '</CancelarNfseEnvio>' +
-            '</S:Body>' +
-           '</S:Envelope>';
-end;
-
-function TProvedorSalvador.GeraEnvelopeConsultarLoteRPS(URLNS: String; CabMsg,
-  DadosMsg, DadosSenha: AnsiString): AnsiString;
-begin
- result := '<?xml version="1.0" encoding="UTF-8"?>' +
-           '<S:Envelope xmlns:S="http://schemas.xmlsoap.org/soap/envelope/" ' +
-                       'xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" ' +
-                       'xmlns:xsd="http://www.w3.org/2001/XMLSchema">' +
-            '<S:Body>' +
-             '<ConsultarLoteRpsEnvio xmlns="' + URLNS + '">' +
-              '<MensagemXML>' +
-                StringReplace(StringReplace(DadosMsg, '<', '&lt;', [rfReplaceAll]), '>', '&gt;', [rfReplaceAll]) +
-              '</MensagemXML>' +
-             '</ConsultarLoteRpsEnvio>' +
-            '</S:Body>' +
-           '</S:Envelope>';
-end;
-
-function TProvedorSalvador.GeraEnvelopeConsultarNFSe(URLNS: String; CabMsg,
-  DadosMsg, DadosSenha: AnsiString): AnsiString;
-begin
- result := '<?xml version="1.0" encoding="UTF-8"?>' +
-           '<S:Envelope xmlns:S="http://schemas.xmlsoap.org/soap/envelope/" ' +
-                       'xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" ' +
-                       'xmlns:xsd="http://www.w3.org/2001/XMLSchema">' +
-            '<S:Body>' +
-             '<ConsultarNfseEnvio xmlns="' + URLNS + '">' +
-              '<MensagemXML>' +
-                StringReplace(StringReplace(DadosMsg, '<', '&lt;', [rfReplaceAll]), '>', '&gt;', [rfReplaceAll]) +
-              '</MensagemXML>' +
-             '</ConsultarNfseEnvio>' +
-            '</S:Body>' +
-           '</S:Envelope>';
-end;
-
-function TProvedorSalvador.GeraEnvelopeConsultarNFSeporRPS(URLNS: String;
-  CabMsg, DadosMsg, DadosSenha: AnsiString): AnsiString;
-begin
- result := '<?xml version="1.0" encoding="UTF-8"?>' +
-           '<S:Envelope xmlns:S="http://schemas.xmlsoap.org/soap/envelope/" ' +
-                       'xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" ' +
-                       'xmlns:xsd="http://www.w3.org/2001/XMLSchema">' +
-            '<S:Body>' +
-             '<ConsultarNfseRpsEnvio xmlns="' + URLNS + '">' +
-              '<MensagemXML>' +
-                StringReplace(StringReplace(DadosMsg, '<', '&lt;', [rfReplaceAll]), '>', '&gt;', [rfReplaceAll]) +
-              '</MensagemXML>' +
-             '</ConsultarNfseRpsEnvio>' +
-            '</S:Body>' +
-           '</S:Envelope>';
-end;
-
-function TProvedorSalvador.GeraEnvelopeConsultarSituacaoLoteRPS(URLNS: String;
-  CabMsg, DadosMsg, DadosSenha: AnsiString): AnsiString;
-begin
- result := '<?xml version="1.0" encoding="UTF-8"?>' +
-           '<S:Envelope xmlns:S="http://schemas.xmlsoap.org/soap/envelope/" ' +
-                       'xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" ' +
-                       'xmlns:xsd="http://www.w3.org/2001/XMLSchema">' +
-            '<S:Body>' +
-             '<ConsultarSituacaoLoteRpsEnvio xmlns="' + URLNS + '">' +
-              '<MensagemXML>' +
-                StringReplace(StringReplace(DadosMsg, '<', '&lt;', [rfReplaceAll]), '>', '&gt;', [rfReplaceAll]) +
-              '</MensagemXML>' +
-             '</ConsultarSituacaoLoteRpsEnvio>' +
-            '</S:Body>' +
-           '</S:Envelope>';
-end;
-
-function TProvedorSalvador.GeraEnvelopeGerarNFSe(URLNS: String; CabMsg,
-  DadosMsg, DadosSenha: AnsiString): AnsiString;
-begin
- Result := '';
- raise Exception.Create( 'Opção não implementada para este provedor.' );
-end;
-
-function TProvedorSalvador.GeraEnvelopeRecepcionarLoteRPS(URLNS: String; CabMsg,
-  DadosMsg, DadosSenha: AnsiString): AnsiString;
-begin
- result := '<?xml version="1.0" encoding="UTF-8"?>' +
-           '<S:Envelope xmlns:S="http://schemas.xmlsoap.org/soap/envelope/" ' +
-                       'xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" ' +
-                       'xmlns:xsd="http://www.w3.org/2001/XMLSchema">' +
-            '<S:Body>' +
-             '<EnviarLoteRpsEnvio xmlns="' + URLNS + '">' +
-              '<MensagemXML>' +
-                StringReplace(StringReplace(DadosMsg, '<', '&lt;', [rfReplaceAll]), '>', '&gt;', [rfReplaceAll]) +
-              '</MensagemXML>' +
-             '</EnviarLoteRpsEnvio>' +
-            '</S:Body>' +
-           '</S:Envelope>';
-end;
-
-function TProvedorSalvador.GeraEnvelopeRecepcionarSincrono(URLNS: String;
-  CabMsg, DadosMsg, DadosSenha: AnsiString): AnsiString;
-begin
- Result := '';
-end;
-
-function TProvedorSalvador.GeraRetornoNFSe(Prefixo: String; RetNFSe: AnsiString;
-  NomeCidade: String): AnsiString;
-begin
- Result := '<?xml version="1.0" encoding="UTF-8"?>' +
-           '<' + Prefixo + 'CompNfse xmlns="http://www.abrasf.org.br/ABRASF/arquivos/">' +
-             RetNfse +
-           '</' + Prefixo + 'CompNfse>';
-end;
-
-function TProvedorSalvador.Gera_CabMsg(Prefixo2, VersaoLayOut, VersaoDados,
-  NameSpaceCab: String; ACodCidade: Integer): AnsiString;
-begin
- Result := '<' + Prefixo2 + 'cabecalho versao="'  + VersaoLayOut + '"' + NameSpaceCab +
-            '<versaoDados>' + VersaoDados + '</versaoDados>'+
-           '</' + Prefixo2 + 'cabecalho>';
-end;
-
-function TProvedorSalvador.Gera_DadosSenha(CNPJ, Senha: String): AnsiString;
-begin
- Result := '';
-end;
-
-function TProvedorSalvador.Gera_TagF(Acao: TnfseAcao;
-  Prefixo3: String): AnsiString;
-begin
- case Acao of
-   acRecepcionar: Result := '</' + Prefixo3 + 'EnviarLoteRpsEnvio>';
-   acConsSit:     Result := '</' + Prefixo3 + 'ConsultarSituacaoLoteRpsEnvio>';
-   acConsLote:    Result := '</' + Prefixo3 + 'ConsultarLoteRpsEnvio>';
-   acConsNFSeRps: Result := '</' + Prefixo3 + 'ConsultarNfseRpsEnvio>';
-   acConsNFSe:    Result := '</' + Prefixo3 + 'ConsultarNfseEnvio>';
-   acCancelar:    Result := '</' + Prefixo3 + 'Pedido>' +
-                            '</' + Prefixo3 + 'CancelarNfseEnvio>';
-   acGerar:       Result := '';
- end;
-end;
-
-function TProvedorSalvador.Gera_TagI(Acao: TnfseAcao; Prefixo3, Prefixo4,
-  NameSpaceDad, Identificador, URI: String): AnsiString;
-begin
- case Acao of
-   acRecepcionar: Result := '<' + Prefixo3 + 'EnviarLoteRpsEnvio' + NameSpaceDad;
-   acConsSit:     Result := '<' + Prefixo3 + 'ConsultarSituacaoLoteRpsEnvio' + NameSpaceDad;
-   acConsLote:    Result := '<' + Prefixo3 + 'ConsultarLoteRpsEnvio' + NameSpaceDad;
-   acConsNFSeRps: Result := '<' + Prefixo3 + 'ConsultarNfseRpsEnvio' + NameSpaceDad;
-   acConsNFSe:    Result := '<' + Prefixo3 + 'ConsultarNfseEnvio' + NameSpaceDad;
-   acCancelar:    Result := '<' + Prefixo3 + 'CancelarNfseEnvio' + NameSpaceDad +
-                             '<' + Prefixo3 + 'Pedido>' +
-                              '<' + Prefixo4 + 'InfPedidoCancelamento' +
-                                 DFeUtil.SeSenao(Identificador <> '', ' ' + Identificador + '="' + URI + '"', '') + '>';
-   acGerar:       Result := '';
- end;
-end;
-
-function TProvedorSalvador.GetAssinarXML(Acao: TnfseAcao): Boolean;
-begin
- case Acao of
-   acRecepcionar: Result := False;
-   acConsSit:     Result := False;
-   acConsLote:    Result := False;
-   acConsNFSeRps: Result := False;
-   acConsNFSe:    Result := False;
-   acCancelar:    Result := False;
-   acGerar:       Result := False;
-   else           Result := False;
- end;
 end;
 
 function TProvedorSalvador.GetConfigCidade(ACodCidade, AAmbiente: Integer): TConfigCidade;
@@ -251,7 +64,7 @@ begin
  ConfigCidade.Prefixo2      := '';
  ConfigCidade.Prefixo3      := '';
  ConfigCidade.Prefixo4      := '';
- ConfigCidade.Identificador := 'Id';
+ ConfigCidade.Identificador := 'Id'; // Alterado para poder Assinar no Schema é id
 
  if AAmbiente = 1
   then ConfigCidade.NameSpaceEnvelope := 'http://www.abrasf.org.br/ABRASF/arquivos/nfse.xsd'
@@ -306,9 +119,202 @@ begin
  Result := ConfigURL;
 end;
 
-function TProvedorSalvador.GetLinkNFSe(ACodMunicipio, ANumeroNFSe: Integer; ACodVerificacao, AInscricaoM: String; AAmbiente: Integer): String;
+function TProvedorSalvador.GetURI(URI: String): String;
+begin
+ Result := URI;
+end;
+
+function TProvedorSalvador.GetAssinarXML(Acao: TnfseAcao): Boolean;
+begin
+ case Acao of
+   acRecepcionar: Result := False;
+   acConsSit:     Result := False;
+   acConsLote:    Result := False;
+   acConsNFSeRps: Result := False;
+   acConsNFSe:    Result := False;
+   acCancelar:    Result := False;
+   acGerar:       Result := False;
+   else           Result := False;
+ end;
+end;
+
+function TProvedorSalvador.GetValidarLote: Boolean;
+begin
+  Result := True;
+end;
+
+function TProvedorSalvador.Gera_TagI(Acao: TnfseAcao; Prefixo3, Prefixo4,
+  NameSpaceDad, Identificador, URI: String): AnsiString;
+begin
+ case Acao of
+   acRecepcionar: Result := '<' + Prefixo3 + 'EnviarLoteRpsEnvio' + NameSpaceDad;
+   acConsSit:     Result := '<' + Prefixo3 + 'ConsultarSituacaoLoteRpsEnvio' + NameSpaceDad;
+   acConsLote:    Result := '<' + Prefixo3 + 'ConsultarLoteRpsEnvio' + NameSpaceDad;
+   acConsNFSeRps: Result := '<' + Prefixo3 + 'ConsultarNfseRpsEnvio' + NameSpaceDad;
+   acConsNFSe:    Result := '<' + Prefixo3 + 'ConsultarNfseEnvio' + NameSpaceDad;
+   acCancelar:    Result := '<' + Prefixo3 + 'CancelarNfseEnvio' + NameSpaceDad +
+                             '<' + Prefixo3 + 'Pedido>' +
+                              '<' + Prefixo4 + 'InfPedidoCancelamento' +
+                                 DFeUtil.SeSenao(Identificador <> '', ' ' + Identificador + '="' + URI + '"', '') + '>';
+   acGerar:       Result := '';
+ end;
+end;
+
+function TProvedorSalvador.Gera_CabMsg(Prefixo2, VersaoLayOut, VersaoDados,
+  NameSpaceCab: String; ACodCidade: Integer): AnsiString;
+begin
+ Result := '<' + Prefixo2 + 'cabecalho versao="'  + VersaoLayOut + '"' + NameSpaceCab +
+            '<versaoDados>' + VersaoDados + '</versaoDados>'+
+           '</' + Prefixo2 + 'cabecalho>';
+end;
+
+function TProvedorSalvador.Gera_DadosSenha(CNPJ, Senha: String): AnsiString;
 begin
  Result := '';
+end;
+
+function TProvedorSalvador.Gera_TagF(Acao: TnfseAcao;
+  Prefixo3: String): AnsiString;
+begin
+ case Acao of
+   acRecepcionar: Result := '</' + Prefixo3 + 'EnviarLoteRpsEnvio>';
+   acConsSit:     Result := '</' + Prefixo3 + 'ConsultarSituacaoLoteRpsEnvio>';
+   acConsLote:    Result := '</' + Prefixo3 + 'ConsultarLoteRpsEnvio>';
+   acConsNFSeRps: Result := '</' + Prefixo3 + 'ConsultarNfseRpsEnvio>';
+   acConsNFSe:    Result := '</' + Prefixo3 + 'ConsultarNfseEnvio>';
+   acCancelar:    Result := '</' + Prefixo3 + 'Pedido>' +
+                            '</' + Prefixo3 + 'CancelarNfseEnvio>';
+   acGerar:       Result := '';
+ end;
+end;
+
+function TProvedorSalvador.GeraEnvelopeRecepcionarLoteRPS(URLNS: String; CabMsg,
+  DadosMsg, DadosSenha: AnsiString): AnsiString;
+begin
+ result := '<?xml version="1.0" encoding="UTF-8"?>' +
+           '<S:Envelope xmlns:S="http://schemas.xmlsoap.org/soap/envelope/" ' +
+                       'xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" ' +
+                       'xmlns:xsd="http://www.w3.org/2001/XMLSchema">' +
+            '<S:Body>' +
+             '<EnviarLoteRpsEnvio xmlns="' + URLNS + '">' +
+              '<MensagemXML>' +
+                StringReplace(StringReplace(DadosMsg, '<', '&lt;', [rfReplaceAll]), '>', '&gt;', [rfReplaceAll]) +
+              '</MensagemXML>' +
+             '</EnviarLoteRpsEnvio>' +
+            '</S:Body>' +
+           '</S:Envelope>';
+end;
+
+function TProvedorSalvador.GeraEnvelopeConsultarSituacaoLoteRPS(URLNS: String;
+  CabMsg, DadosMsg, DadosSenha: AnsiString): AnsiString;
+begin
+ result := '<?xml version="1.0" encoding="UTF-8"?>' +
+           '<S:Envelope xmlns:S="http://schemas.xmlsoap.org/soap/envelope/" ' +
+                       'xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" ' +
+                       'xmlns:xsd="http://www.w3.org/2001/XMLSchema">' +
+            '<S:Body>' +
+             '<ConsultarSituacaoLoteRpsEnvio xmlns="' + URLNS + '">' +
+              '<MensagemXML>' +
+                StringReplace(StringReplace(DadosMsg, '<', '&lt;', [rfReplaceAll]), '>', '&gt;', [rfReplaceAll]) +
+              '</MensagemXML>' +
+             '</ConsultarSituacaoLoteRpsEnvio>' +
+            '</S:Body>' +
+           '</S:Envelope>';
+end;
+
+function TProvedorSalvador.GeraEnvelopeConsultarLoteRPS(URLNS: String; CabMsg,
+  DadosMsg, DadosSenha: AnsiString): AnsiString;
+begin
+ result := '<?xml version="1.0" encoding="UTF-8"?>' +
+           '<S:Envelope xmlns:S="http://schemas.xmlsoap.org/soap/envelope/" ' +
+                       'xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" ' +
+                       'xmlns:xsd="http://www.w3.org/2001/XMLSchema">' +
+            '<S:Body>' +
+             '<ConsultarLoteRpsEnvio xmlns="' + URLNS + '">' +
+              '<MensagemXML>' +
+                StringReplace(StringReplace(DadosMsg, '<', '&lt;', [rfReplaceAll]), '>', '&gt;', [rfReplaceAll]) +
+              '</MensagemXML>' +
+             '</ConsultarLoteRpsEnvio>' +
+            '</S:Body>' +
+           '</S:Envelope>';
+end;
+
+function TProvedorSalvador.GeraEnvelopeConsultarNFSeporRPS(URLNS: String;
+  CabMsg, DadosMsg, DadosSenha: AnsiString): AnsiString;
+begin
+ result := '<?xml version="1.0" encoding="UTF-8"?>' +
+           '<S:Envelope xmlns:S="http://schemas.xmlsoap.org/soap/envelope/" ' +
+                       'xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" ' +
+                       'xmlns:xsd="http://www.w3.org/2001/XMLSchema">' +
+            '<S:Body>' +
+             '<ConsultarNfseRpsEnvio xmlns="' + URLNS + '">' +
+              '<MensagemXML>' +
+                StringReplace(StringReplace(DadosMsg, '<', '&lt;', [rfReplaceAll]), '>', '&gt;', [rfReplaceAll]) +
+              '</MensagemXML>' +
+             '</ConsultarNfseRpsEnvio>' +
+            '</S:Body>' +
+           '</S:Envelope>';
+end;
+
+function TProvedorSalvador.GeraEnvelopeConsultarNFSe(URLNS: String; CabMsg,
+  DadosMsg, DadosSenha: AnsiString): AnsiString;
+begin
+ result := '<?xml version="1.0" encoding="UTF-8"?>' +
+           '<S:Envelope xmlns:S="http://schemas.xmlsoap.org/soap/envelope/" ' +
+                       'xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" ' +
+                       'xmlns:xsd="http://www.w3.org/2001/XMLSchema">' +
+            '<S:Body>' +
+             '<ConsultarNfseEnvio xmlns="' + URLNS + '">' +
+              '<MensagemXML>' +
+                StringReplace(StringReplace(DadosMsg, '<', '&lt;', [rfReplaceAll]), '>', '&gt;', [rfReplaceAll]) +
+              '</MensagemXML>' +
+             '</ConsultarNfseEnvio>' +
+            '</S:Body>' +
+           '</S:Envelope>';
+end;
+
+function TProvedorSalvador.GeraEnvelopeCancelarNFSe(URLNS: String; CabMsg,
+  DadosMsg, DadosSenha: AnsiString): AnsiString;
+begin
+ result := '<?xml version="1.0" encoding="UTF-8"?>' +
+           '<S:Envelope xmlns:S="http://schemas.xmlsoap.org/soap/envelope/" ' +
+                       'xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" ' +
+                       'xmlns:xsd="http://www.w3.org/2001/XMLSchema">' +
+            '<S:Body>' +
+             '<CancelarNfseEnvio xmlns="' + URLNS + '">' +
+              '<MensagemXML>' +
+                StringReplace(StringReplace(DadosMsg, '<', '&lt;', [rfReplaceAll]), '>', '&gt;', [rfReplaceAll]) +
+              '</MensagemXML>' +
+             '</CancelarNfseEnvio>' +
+            '</S:Body>' +
+           '</S:Envelope>';
+end;
+
+function TProvedorSalvador.GeraEnvelopeGerarNFSe(URLNS: String; CabMsg,
+  DadosMsg, DadosSenha: AnsiString): AnsiString;
+begin
+ Result := '';
+ raise Exception.Create( 'Opção não implementada para este provedor.' );
+end;
+
+function TProvedorSalvador.GeraEnvelopeRecepcionarSincrono(URLNS: String;
+  CabMsg, DadosMsg, DadosSenha: AnsiString): AnsiString;
+begin
+ Result := '';
+end;
+
+function TProvedorSalvador.GetSoapAction(Acao: TnfseAcao;
+  NomeCidade: String): String;
+begin
+ case Acao of
+   acRecepcionar: Result := 'http://www.abrasf.org.br/ABRASF/arquivos/nfse.xsd/WSNacional/RecepcionarLoteRps';
+   acConsSit:     Result := 'http://www.abrasf.org.br/ABRASF/arquivos/nfse.xsd/WSNacional/ConsultarSituacaoLoteRps';
+   acConsLote:    Result := 'http://www.abrasf.org.br/ABRASF/arquivos/nfse.xsd/WSNacional/ConsultarLoteRps';
+   acConsNFSeRps: Result := 'http://www.abrasf.org.br/ABRASF/arquivos/nfse.xsd/WSNacional/ConsultarNfsePorRps';
+   acConsNFSe:    Result := 'http://www.abrasf.org.br/ABRASF/arquivos/nfse.xsd/WSNacional/ConsultarNfse';
+   acCancelar:    Result := 'http://www.abrasf.org.br/ABRASF/arquivos/nfse.xsd/WSNacional/CancelarNfse';
+   acGerar:       Result := '';
+ end;
 end;
 
 function TProvedorSalvador.GetRetornoWS(Acao: TnfseAcao; RetornoWS: AnsiString): AnsiString;
@@ -342,28 +348,18 @@ begin
  end;
 end;
 
-function TProvedorSalvador.GetSoapAction(Acao: TnfseAcao;
-  NomeCidade: String): String;
+function TProvedorSalvador.GeraRetornoNFSe(Prefixo: String; RetNFSe: AnsiString;
+  NomeCidade: String): AnsiString;
 begin
- case Acao of
-   acRecepcionar: Result := 'http://www.abrasf.org.br/ABRASF/arquivos/nfse.xsd/WSNacional/RecepcionarLoteRps';
-   acConsSit:     Result := 'http://www.abrasf.org.br/ABRASF/arquivos/nfse.xsd/WSNacional/ConsultarSituacaoLoteRps';
-   acConsLote:    Result := 'http://www.abrasf.org.br/ABRASF/arquivos/nfse.xsd/WSNacional/ConsultarLoteRps';
-   acConsNFSeRps: Result := 'http://www.abrasf.org.br/ABRASF/arquivos/nfse.xsd/WSNacional/ConsultarNfsePorRps';
-   acConsNFSe:    Result := 'http://www.abrasf.org.br/ABRASF/arquivos/nfse.xsd/WSNacional/ConsultarNfse';
-   acCancelar:    Result := 'http://www.abrasf.org.br/ABRASF/arquivos/nfse.xsd/WSNacional/CancelarNfse';
-   acGerar:       Result := '';
- end;
+ Result := '<?xml version="1.0" encoding="UTF-8"?>' +
+           '<' + Prefixo + 'CompNfse xmlns="http://www.abrasf.org.br/ABRASF/arquivos/">' +
+             RetNfse +
+           '</' + Prefixo + 'CompNfse>';
 end;
 
-function TProvedorSalvador.GetURI(URI: String): String;
+function TProvedorSalvador.GetLinkNFSe(ACodMunicipio, ANumeroNFSe: Integer; ACodVerificacao, AInscricaoM: String; AAmbiente: Integer): String;
 begin
- Result := URI;
-end;
-
-function TProvedorSalvador.GetValidarLote: Boolean;
-begin
-  Result := True;
+ Result := '';
 end;
 
 end.

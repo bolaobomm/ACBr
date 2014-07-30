@@ -1072,7 +1072,16 @@ begin
    LocNFSeR.NFSe.IdentificacaoRps.Tipo := StrToTipoRPS(ok, TipoRPS);
    LocNFSeR.NFSe.Prestador.Cnpj:= CNPJ;
    LocNFSeR.NFSe.Prestador.InscricaoMunicipal:= IM;
-   
+
+   LocNFSeR.VersaoXML      := NotaUtil.VersaoXML(ArquivoXML.Text);
+   LocNFSeR.Leitor.Arquivo := ArquivoXML.Text;
+   LocNFSeR.TabServicosExt := self.Configuracoes.Arquivos.TabServicosExt;
+   LocNFSeR.LerXml;
+
+   Items[Self.Count-1].XML_NFSe := LocNFSeR.Leitor.Arquivo;
+   Items[Self.Count-1].NomeArq  := '';
+
+   (*
    StreamText := TStringStream.Create(ArquivoXML.Text);
    try
     LocNFSeR.VersaoXML := NotaUtil.VersaoXML(ArquivoXML.Text);
@@ -1087,6 +1096,7 @@ begin
    finally
     StreamText.Free;
    end;
+   *)
   finally
    LocNFSeR.Free;
    ArquivoXML.Free;

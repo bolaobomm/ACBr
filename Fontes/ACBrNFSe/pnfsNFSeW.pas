@@ -195,14 +195,15 @@ begin
   proISSNet,
   proNatal,
   proProdemge,
+  proPronim,
   proPublica,
   proRecife,
   proRJ,
+  proSalvador,
   proSimplISS,
+  proSpeedGov,
   proThema,
   proTiplan,
-  proSpeedGov,
-  proPronim,
   proWebISS: GerarXML_ABRASF_V1;
 
   pro4R,
@@ -211,21 +212,21 @@ begin
   proDigifred,
   proFIntelISS,
   proFiorilli,
+  proFreire,
   proGoiania,
   proGovDigital,
   proISSDigital,
   proISSe,
-  proSystemPro,
+  proLink3,
+  proMitra,
   proProdata,
-  proVitoria,
   proPVH,
   proSaatri,
   proSisPMJP,
-  proFreire,
-  proLink3,
-  proMitra,
+  proSystemPro,
+  proTecnos,
   proVirtual,
-  proTecnos: GerarXML_ABRASF_V2;
+  proVitoria: GerarXML_ABRASF_V2;
 
   proIssDsf: GerarXML_Provedor_IssDsf;
 
@@ -279,8 +280,8 @@ begin
       Gerador.wCampoNFSe(tcStr, '#2', 'Serie ', 01, 05, 1, NFSe.IdentificacaoRps.Serie, '');
       Gerador.wCampoNFSe(tcStr, '#3', 'Tipo  ', 01, 01, 1, TipoRPSToStr(NFSe.IdentificacaoRps.Tipo), '');
      Gerador.wGrupoNFSe('/IdentificacaoRps');
-     Gerador.wCampoNFSe(tcDat,    '#4', 'DataEmissao', 10, 10, 1, NFSe.DataEmissao, DSC_DEMI);
-     Gerador.wCampoNFSe(tcStr,    '#9', 'Status     ', 01, 01, 1, StatusRPSToStr(NFSe.Status), '');
+     Gerador.wCampoNFSe(tcDat, '#4', 'DataEmissao', 10, 10, 1, NFSe.DataEmissao, DSC_DEMI);
+     Gerador.wCampoNFSe(tcStr, '#9', 'Status     ', 01, 01, 1, StatusRPSToStr(NFSe.Status), '');
      Gerador.wGrupoNFSe('/Rps');
    end;
  end

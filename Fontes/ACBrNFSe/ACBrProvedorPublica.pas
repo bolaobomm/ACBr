@@ -68,7 +68,7 @@ begin
  ConfigCidade.Prefixo2      := '';
  ConfigCidade.Prefixo3      := '';
  ConfigCidade.Prefixo4      := '';
- ConfigCidade.Identificador := 'id';
+ ConfigCidade.Identificador := 'Id'; // Alterado para poder Assinar no Schema é id
 
  if AAmbiente = 1                         
   then ConfigCidade.NameSpaceEnvelope := 'http://service.nfse.integracao.ws.publica/'

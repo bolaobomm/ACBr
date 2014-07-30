@@ -392,7 +392,7 @@ uses
  ACBrProvedorLink3, ACBrProvedorSpeedGov, ACBrProvedorVitoria,
  ACBrProvedorMitra, ACBrProvedorTecnos, ACBrProvedorPronim,
  ACBrProvedorActcon, ACBrProvedorEL, ACBrProvedorEgoverneISS,
- ACBrProvedorSisPMJP, ACBrProvedorSystemPro;
+ ACBrProvedorSisPMJP, ACBrProvedorSystemPro, ACBrProvedorSalvador;
 
 { TConfiguracoes }
 
@@ -791,6 +791,7 @@ begin
   proEgoverneISS: FProvedorClass := TProvedorEgoverneISS.Create;
   proSisPMJP:     FProvedorClass := TProvedorSisPMJP.Create;
   proSystemPro:   FProvedorClass := TProvedorSystemPro.Create;
+  proSalvador:    FProvedorClass := TProvedorSalvador.Create;
  end;
 
  ConfigCidade   := FProvedorClass.GetConfigCidade(FCodigoMunicipio, FAmbienteCodigo);
