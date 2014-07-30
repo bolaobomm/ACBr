@@ -748,6 +748,7 @@ begin
   4119905  // Ponta Grossa/PR
          : Provedor := 'fintelISS';
 
+  1100114, // Jaru/RO
   1100122, // Ji-Parana/RO
   1508407, // Xinguara/PA
   2101202, // Bacabal/MA

@@ -108,9 +108,13 @@ var
  cURL_Producao : string;
 const
   cURL_Homologacao = 'http://201.28.69.146:5663/IssWeb-ejb/IssWebWS/IssWebWS';
+
+
 begin
  // URL de produção
  case ACodCidade of
+  1100114 : // Jaru
+    cURL_Producao := 'http://201.45.58.229:5660/IssWeb-ejb/IssWebWS/IssWebWS?wsdl';
   1100122 : // Ji-Parana/RO
     cURL_Producao := 'http://177.124.184.59:5660/IssWeb-ejb/IssWebWS/IssWebWS';
   1508407 : // Xinguara/PA
@@ -125,8 +129,8 @@ begin
     cURL_Producao := 'http://201.28.69.146:5663/IssWeb-ejb/IssWebWS/IssWebWS';
   3505203 : // Bariri/SP
     cURL_Producao := 'http://sipweb.bariri.sp.gov.br:8080/IssWeb-ejb/IssWebWS/IssWebWS?wsdl';
-  3512902 : // Cosmorama/SP 
-    cURL_Producao := 'http://189.111.140.145:8080/IssWeb-ejb/IssWebWS/IssWebWS?wsdl';	
+  3512902 : // Cosmorama/SP
+    cURL_Producao := 'http://189.111.140.145:8080/IssWeb-ejb/IssWebWS/IssWebWS?wsdl';
   3514502 : // Duartina/SP
     cURL_Producao := 'http://186.224.0.62:5661/IssWeb-ejb/IssWebWS/IssWebWS?wsdl';
   3516705 : // Garca/SP
