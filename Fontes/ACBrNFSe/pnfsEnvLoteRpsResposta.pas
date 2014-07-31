@@ -198,7 +198,7 @@ var
   strAux: AnsiString;
   leitorAux: TLeitor;
 begin
-  result := False;
+  Result := False;
 
   try
     Leitor.Arquivo := NotaUtil.RetirarPrefixos(Leitor.Arquivo);
@@ -212,8 +212,9 @@ begin
          FInfRec.FSucesso := Leitor.rCampo(tcStr, 'Sucesso');
          if (FInfRec.FSucesso = 'true') then
          begin
-            FInfRec.FNumeroLote :=  Leitor.rCampo(tcStr, 'NumeroLote');
-            FInfRec.FProtocolo  :=  Leitor.rCampo(tcStr, 'NumeroLote');
+            FInfRec.FNumeroLote      := Leitor.rCampo(tcStr, 'NumeroLote');
+            FInfRec.FProtocolo       := Leitor.rCampo(tcStr, 'NumeroLote');
+            FinfRec.FDataRecebimento := Leitor.rCampo(tcDatHor, 'DataEnvioLote')
          end;
       end;
 
@@ -254,7 +255,7 @@ begin
             //i := 0 ;
             posI := pos('<Erro>', strAux);
 
-            while ( posI > 0 ) do begin
+            while (posI > 0) do begin
                count := pos('</Erro>', strAux) + 6;
 
                FInfRec.FMsgRetorno.Add;
@@ -277,7 +278,7 @@ begin
       Result := True;
     end;
   except
-    result := False;
+    Result := False;
   end;
 end;
 
@@ -325,7 +326,7 @@ begin
 
     Result := True;
   except
-    result := False;
+    Result := False;
   end;
 end;
 

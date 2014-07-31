@@ -1482,7 +1482,8 @@ class function NotaUtil.RetirarPrefixos(const AXML: String): String;
 var
  XML: string;
 begin
- XML := StringReplace( AXML, 'ns2:', '', [rfReplaceAll] );
+ XML := StringReplace( AXML, 'ns1:', '', [rfReplaceAll] );
+ XML := StringReplace( XML, 'ns2:', '', [rfReplaceAll] );
  XML := StringReplace( XML, 'ns3:', '', [rfReplaceAll] );
  XML := StringReplace( XML, 'ns4:', '', [rfReplaceAll] );
  XML := StringReplace( XML, 'ns5:', '', [rfReplaceAll] );
