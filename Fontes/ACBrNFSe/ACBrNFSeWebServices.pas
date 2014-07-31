@@ -818,10 +818,12 @@ begin
 
  if FServicoEnviar <> ''
   then begin
-   if (FProvedor = proIssDSF)
-    then FNameSpaceDad := 'xmlns:' + stringReplace(Prefixo3, ':', '', []) + '="' + FURLNS1 + '" ' {+
-                              'xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="'
-                              + FURLNS1 + ' ' + FHTTP_AG + FServicoEnviar + '"'}
+   if (FProvedor = proIssDSF) then
+     FNameSpaceDad :=  'xmlns:' + stringReplace(Prefixo3, ':', '', []) + '="' + FURLNS1 + '"'
+                    + ' xmlns:tipos="http://localhost:8080/WsNFe2/tp"'
+                    + ' xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"'
+                    + ' xsi:schemaLocation="http://localhost:8080/WsNFe2/lote http://localhost:8080/WsNFe2/xsd/ReqEnvioLoteRPS.xsd"'
+					
    else if (FProvedor = proEquiplano)
     then FNameSpaceDad := 'xmlns:' + stringReplace(Prefixo3, ':', '', []) + '="http://www.equiplano.com.br/esnfs" ' +
                           'xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" ' +
@@ -847,10 +849,16 @@ begin
 
  if FDefTipos <> ''
   then begin
-   if Prefixo4 <> ''
-    then FNameSpaceDad := FNameSpaceDad +
-                        ' xmlns:' + stringReplace(Prefixo4, ':', '', []) + '="' + FHTTP_AG + Separador + FDefTipos + '">'
-    else FNameSpaceDad := FNameSpaceDad + ' xmlns="' + FHTTP_AG + Separador + FDefTipos + '">';
+   if Prefixo4 <> '' then
+     begin
+     // Wilker
+     if FProvedor = proIssDsf then
+       FNameSpaceDad := FNameSpaceDad + '>'
+     else
+       FNameSpaceDad := FNameSpaceDad + ' xmlns:' + stringReplace(Prefixo4, ':', '', []) + '="' + FHTTP_AG + Separador + FDefTipos + '">'
+    end
+   else 
+	 FNameSpaceDad := FNameSpaceDad + ' xmlns="' + FHTTP_AG + Separador + FDefTipos + '">';
   end;
 
  if FNameSpaceDad = ''

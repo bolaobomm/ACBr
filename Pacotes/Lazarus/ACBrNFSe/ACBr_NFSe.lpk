@@ -20,7 +20,7 @@
     </CompilerOptions>
     <Description Value="ACBr - Nota Fiscal Eletrônica de Serviço - (http://www.projetoacbr.com.br/)"/>
     <License Value="LGPL"/>
-    <Files Count="45">
+    <Files Count="46">
       <Item1>
         <Filename Value="..\..\..\Fontes\ACBrNFSe\ACBrNFSe.pas"/>
         <UnitName Value="ACBrNFSe"/>
@@ -202,6 +202,10 @@
         <Filename Value="..\..\..\Fontes\ACBrNFSe\ACBrProvedorISSDigital.pas"/>
         <UnitName Value="ACBrProvedorISSDigital"/>
       </Item45>
+      <Item46>
+        <Filename Value="..\..\..\Fontes\ACBrNFSe\Crypt.SHA1.pas"/>
+        <UnitName Value="Crypt.SHA1"/>
+      </Item46>
     </Files>
     <Type Value="RunAndDesignTime"/>
     <RequiredPkgs Count="5">

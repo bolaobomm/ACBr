@@ -661,6 +661,7 @@ begin
                     '<Transform Algorithm="http://www.w3.org/2000/09/xmldsig#enveloped-signature" />' +
                       DFeUtil.SeSenao((AProvedor in [proActcon, profintelISS, proGovBr, proPronim{Dalvan}, proISSNet, proNatal, proIssDSF]), '',
                     '<Transform Algorithm="http://www.w3.org/TR/2001/REC-xml-c14n-20010315" />') +
+					 DFeUtil.SeSenao((AProvedor in [proIssDSF]), '<Transform Algorithm="http://www.w3.org/TR/2001/REC-xml-c14n-20010315#WithComments"/>', '') +
                    '</Transforms>' +
                    '<DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" />' +
                    '<DigestValue></DigestValue>' +
@@ -725,8 +726,11 @@ begin
                      '<Reference URI="' + DFeUtil.SeSenao(URI = '', '">', '#' + URI + '">') +
                       '<Transforms>' +
                        '<Transform Algorithm="http://www.w3.org/2000/09/xmldsig#enveloped-signature" />' +
-                       DFeUtil.SeSenao((AProvedor in [proActcon, profintelISS, proGovBr, proPronim{Dalvan}, proISSNet, proNatal]), '',
+                       DFeUtil.SeSenao((AProvedor in [proActcon, profintelISS,
+                          proGovBr, proPronim{Dalvan}, proISSNet, proNatal]), '',
                        '<Transform Algorithm="http://www.w3.org/TR/2001/REC-xml-c14n-20010315" />') +
+                       DFeUtil.SeSenao((AProvedor in [proIssDSF]), '',
+                       '<Transform Algorithm="http://www.w3.org/TR/2001/REC-xml-c14n-20010315#WithComments"/>') +
                       '</Transforms>' +
                       '<DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" />' +
                       '<DigestValue></DigestValue>' +

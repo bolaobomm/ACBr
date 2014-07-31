@@ -11,7 +11,7 @@ uses
   SysUtils, Classes, StrUtils,
   pcnAuxiliar, pcnConversao, pcnGerador,
   pnfsNFSe, pnfsConversao,
-  ACBrNFSeConfiguracoes, synacode;
+  ACBrNFSeConfiguracoes, synacode, Crypt.SHA1;
 
 type
 
@@ -1031,7 +1031,7 @@ begin
                      Poem_Zeros( SomenteNumeros( NFSe.Tomador.IdentificacaoTomador.CpfCnpj), 14);
 
       sAssinatura := SHA1(sAssinatura);
-      sAssinatura := LowerCase(StrToHex(sAssinatura));
+      sAssinatura := LowerCase(sAssinatura);
 
       Gerador.wCampoNFSe(tcStr, '', 'Assinatura', 01, 2000, 1, sAssinatura, '');
 
@@ -1041,11 +1041,11 @@ begin
       Gerador.wCampoNFSe(tcStr, '', 'TipoRPS',                     01, 20,  1, 'RPS', '');
 
       if NFSe.IdentificacaoRps.Serie = '' then
-         Gerador.wCampoNFSe(tcStr, '', 'Serie', 01, 02,  1, 'NF', '')
+         Gerador.wCampoNFSe(tcStr, '', 'SerieRPS', 01, 02,  1, 'NF', '')
       else
-         Gerador.wCampoNFSe(tcStr, '', 'Serie', 01, 02,  1, NFSe.IdentificacaoRps.Serie, '');
+         Gerador.wCampoNFSe(tcStr, '', 'SerieRPS', 01, 02,  1, NFSe.IdentificacaoRps.Serie, '');
 
-      Gerador.wCampoNFSe(tcStr,    '', 'NumeroRps',      01, 12,  1, NFSe.IdentificacaoRps.Numero, '');
+      Gerador.wCampoNFSe(tcStr,    '', 'NumeroRPS',      01, 12,  1, NFSe.IdentificacaoRps.Numero, '');
       Gerador.wCampoNFSe(tcDatHor, '', 'DataEmissaoRPS', 01, 21,  1, NFse.DataEmissaoRps, '');
 
       Gerador.wCampoNFSe(tcStr, '', 'SituacaoRPS', 01, 01, 1, sSituacao, '');

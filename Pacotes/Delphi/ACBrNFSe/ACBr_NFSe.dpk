@@ -1,6 +1,7 @@
 package ACBr_NFSe;
 
 {$R *.res}
+{$IFDEF IMPLICITBUILDING This IFDEF should not be used by users}
 {$ALIGN 8}
 {$ASSERTIONS ON}
 {$BOOLEVAL OFF}
@@ -11,17 +12,19 @@ package ACBr_NFSe;
 {$LOCALSYMBOLS ON}
 {$LONGSTRINGS ON}
 {$OPENSTRINGS ON}
-{$OPTIMIZATION ON}
+{$OPTIMIZATION OFF}
 {$OVERFLOWCHECKS OFF}
 {$RANGECHECKS OFF}
 {$REFERENCEINFO ON}
 {$SAFEDIVIDE OFF}
-{$STACKFRAMES OFF}
+{$STACKFRAMES ON}
 {$TYPEDADDRESS OFF}
 {$VARSTRINGCHECKS ON}
 {$WRITEABLECONST OFF}
 {$MINENUMSIZE 1}
-{$IMAGEBASE $400000}                                    
+{$IMAGEBASE $400000}
+{$DEFINE DEBUG}
+{$ENDIF IMPLICITBUILDING}
 {$DESCRIPTION 'ACBr - Nota Fiscal Eletrônica de Serviço - (http://www.projetoacbr.com.br/)'}
 {$IMPLICITBUILD ON}
 
@@ -30,10 +33,6 @@ requires
   vcl,
   ACBrComum,
   designide,
-{$IFDEF COMPILER7_UP}
-  vclactnband,
-  vclx,
-{$ENDIF}
   ACBrCapicom,
   synapse,
   soaprtl,
@@ -79,15 +78,16 @@ contains
   ACBrProvedorTiplan in '..\..\..\Fontes\ACBrNFSe\ACBrProvedorTiplan.pas',
   ACBrProvedorWebISS in '..\..\..\Fontes\ACBrNFSe\ACBrProvedorWebISS.pas',
   ACBrProvedorBetim in '..\..\..\Fontes\ACBrNFSe\ACBrProvedorBetim.pas',
-  ACBrProvedorFISSLEX in '..\..\..\Fontes\ACBrNFSe\ACBrProvedorfISSLex.pas',
+  ACBrProvedorfISSLex in '..\..\..\Fontes\ACBrNFSe\ACBrProvedorfISSLex.pas',
   ACBrProvedorSaatri in '..\..\..\Fontes\ACBrNFSe\ACBrProvedorSaatri.pas',
   pnfsGerarNfseResposta in '..\..\..\Fontes\ACBrNFSe\pnfsGerarNfseResposta.pas',
   ACBrProvedorAbaco in '..\..\..\Fontes\ACBrNFSe\ACBrProvedorAbaco.pas',
   ACBrProvedorGoiania in '..\..\..\Fontes\ACBrNFSe\ACBrProvedorGoiania.pas',
-  ACBrProvedorIssCuritiba in '..\..\..\Fontes\ACBrNFSe\ACBrProvedorISSCuritiba.pas',
+  ACBrProvedorISSCuritiba in '..\..\..\Fontes\ACBrNFSe\ACBrProvedorISSCuritiba.pas',
   ACBrProvedorBHISS in '..\..\..\Fontes\ACBrNFSe\ACBrProvedorBHISS.pas',
   ACBrProvedorNatal in '..\..\..\Fontes\ACBrNFSe\ACBrProvedorNatal.pas',
   ACBrProvedorISSe in '..\..\..\Fontes\ACBrNFSe\ACBrProvedorISSe.pas',
-  ACBrProvedorISSDigital in '..\..\..\Fontes\ACBrNFSe\ACBrProvedorISSDigital.pas';
+  ACBrProvedorISSDigital in '..\..\..\Fontes\ACBrNFSe\ACBrProvedorISSDigital.pas',
+  Crypt.SHA1 in '..\..\..\Fontes\ACBrNFSe\Crypt.SHA1.pas';
 
 end.

@@ -681,8 +681,8 @@ begin
                '<dtInicio>' + FormatDateTime('yyyy-mm-dd', DataInicial) + '</dtInicio>' +
                '<dtFim>'    + FormatDateTime('yyyy-mm-dd', DataFinal) + '</dtFim>' +
                '<QtdRPS>'               + QtdeNotas               + '</QtdRPS>' +
-               '<ValorTotalServicos>'   + ValorTotalServicos + '</ValorTotalServicos>' +
-               '<ValorTotalDeducoes>'   + ValorTotalDeducoes + '</ValorTotalDeducoes>' +
+               '<ValorTotalServicos>'   + StringReplace(ValorTotalServicos, ',', '.', [rfReplaceAll]) + '</ValorTotalServicos>' +
+               '<ValorTotalDeducoes>'   + StringReplace(ValorTotalDeducoes, ',', '.', [rfReplaceAll]) + '</ValorTotalDeducoes>' +
                '<Versao>'               + VersaoXML          + '</Versao>' +
                '<MetodoEnvio>'          + 'WS'               + '</MetodoEnvio>' +
              '</Cabecalho>' +
