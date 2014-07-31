@@ -1250,7 +1250,7 @@ begin
                                                       CodCidadeToCodSiafi( strtointDef(TNFSeConsultarLoteRPS(Self).FNotasFiscais.Items[0].NFSe.PrestadorServico.Endereco.CodigoMunicipio, 0)),
                                                       TNFSeConsultarLoteRPS(Self).Cnpj,
                                                       TNFSeConsultarLoteRPS(Self).NumeroLote,
-                                                      TagI, TagF)
+                                                      '', '') //FTagI, FTagF)
    else if (FProvedor = proEquiplano)
     then FDadosMsg := TNFSeG.Gera_DadosMsgConsLoteEquiplano(FConfiguracoes.WebServices.CodigoMunicipio,
                                                             SomenteNumeros(TNFSeConsultarLoteRPS(Self).FCNPJ),
@@ -1291,7 +1291,7 @@ begin
                                                       CodCidadeToCodSiafi( strtointDef(TNFSeConsultarLoteRPS(Self).FNotasFiscais.Items[0].NFSe.PrestadorServico.Endereco.CodigoMunicipio, 0)),
                                                       TNFSeConsultarLoteRPS(Self).Cnpj,
                                                       TNFSeConsultarLoteRPS(Self).NumeroLote,
-                                                      TagI, TagF)
+                                                      FTagI, FTagF)
    else if (FProvedor = proEquiplano)
     then FDadosMsg := TNFSeG.Gera_DadosMsgConsLoteEquiplano(FConfiguracoes.WebServices.CodigoMunicipio,
                                                             SomenteNumeros(TNFSeConsultarLoteRPS(Self).FCNPJ),
@@ -1406,7 +1406,7 @@ begin
                                                          LowerCase(booltostr(TNFSeConsultarNfseRPS(Self).FNotasFiscais.Transacao, True)),
                                                          TNFSeConsultarNfseRPS(Self).FNotasFiscais.NumeroLote,
                                                          vNotas,
-                                                         TagI, TagF)
+                                                         '', '') //FTagI, FTagF)
    else if (FProvedor = proEquiplano)
     then FDadosMsg := TNFSeG.Gera_DadosMsgConsNFSeRPSEquiplano(FConfiguracoes.WebServices.CodigoMunicipio,
                                                                TNFSeConsultarNfseRPS(Self).Numero,
@@ -1450,13 +1450,13 @@ begin
                                                          LowerCase(booltostr(TNFSeConsultarNfseRPS(Self).FNotasFiscais.Transacao, True)),
                                                          TNFSeConsultarNfseRPS(Self).FNotasFiscais.NumeroLote,
                                                          vNotas,
-                                                         TagI, TagF)
+                                                         FTagI, FTagF)
    else if (FProvedor = proEquiplano)
     then FDadosMsg := TNFSeG.Gera_DadosMsgConsNFSeRPSEquiplano(FConfiguracoes.WebServices.CodigoMunicipio,
                                                                TNFSeConsultarNfseRPS(Self).Numero,
                                                                SomenteNumeros(TNFSeConsultarNfseRPS(Self).FCnpj),
                                                                TNFSeConsultarNfseRPS(Self).InscricaoMunicipal,
-                                                               TagI, TagF)
+                                                               FTagI, FTagF)
    else FDadosMsg := TNFSeG.Gera_DadosMsgConsNFSeRPS(Prefixo3, Prefixo4,
                                                       NameSpaceDad, FVersaoXML,
                                                       TNFSeConsultarNfseRPS(Self).Numero,
@@ -1554,7 +1554,7 @@ begin
                                                       TNFSeConsultarNfse(Self).FNumeroNFSe,
                                                       TNFSeConsultarNfse(Self).DataInicial,
                                                       TNFSeConsultarNfse(Self).DataFinal,
-                                                      TagI, TagF)
+                                                      '', '') //FTagI, FTagF)
     else FDadosMsg := TNFSeG.Gera_DadosMsgConsNFSe(Prefixo3, Prefixo4,
                                                    NameSpaceDad, FVersaoXML,
                                                    SomenteNumeros(TNFSeConsultarNfse(Self).Cnpj),
@@ -1599,7 +1599,7 @@ begin
                                                       TNFSeConsultarNfse(Self).FNumeroNFSe,
                                                       TNFSeConsultarNfse(Self).DataInicial,
                                                       TNFSeConsultarNfse(Self).DataFinal,
-                                                      TagI, TagF)
+                                                      FTagI, FTagF)
     else FDadosMsg := TNFSeG.Gera_DadosMsgConsNFSe(Prefixo3, Prefixo4,
                                                    NameSpaceDad, FVersaoXML,
                                                    SomenteNumeros(TNFSeConsultarNfse(Self).Cnpj),
@@ -1845,7 +1845,7 @@ begin
                                                           CodCidadeToCodSiafi(strtoint64(TNFSeCancelarNfse(Self).FCodigoMunicipio)),
                                                           TNFSeCancelarNfse(Self).FNotasFiscais.NumeroLote,
                                                           vNotas,
-                                                          TagI, TagF)
+                                                          '', '') //FTagI, FTagF)
 
    else if (FProvedor = proEquiplano)
     then FDadosMsg := TNFSeG.Gera_DadosMsgCancelarNFSeEquiplano(StrToInt(TNFSeCancelarNfse(Self).FCodigoMunicipio),
@@ -1853,7 +1853,7 @@ begin
                                                                 TNFSeCancelarNfse(Self).FIM,
                                                                 TNFSeCancelarNfse(Self).FNumeroNFSe,
                                                                 TNFSeCancelarNfse(Self).FMotivoCancelamento,
-                                                                '','')//TagI, TagF)
+                                                                '', '') //FTagI, FTagF)
 
    else FDadosMsg := TNFSeG.Gera_DadosMsgCancelarNFSe(Prefixo4,
                                                       NameSpaceDad,
@@ -1891,14 +1891,14 @@ begin
                                                           CodCidadeToCodSiafi(strtoint64(TNFSeCancelarNfse(Self).FCodigoMunicipio)),
                                                           TNFSeCancelarNfse(Self).FNotasFiscais.NumeroLote,
                                                           vNotas,
-                                                          TagI, TagF)
+                                                          FTagI, FTagF)
    else if (FProvedor = proEquiplano)
     then FDadosMsg := TNFSeG.Gera_DadosMsgCancelarNFSeEquiplano(StrToInt(TNFSeCancelarNfse(Self).FCodigoMunicipio),
                                                                 SomenteNumeros(TNFSeCancelarNfse(Self).FCnpj),
                                                                 TNFSeCancelarNfse(Self).FIM,
                                                                 TNFSeCancelarNfse(Self).FNumeroNFSe,
                                                                 TNFSeCancelarNfse(Self).FMotivoCancelamento,
-                                                                TagI, TagF)
+                                                                FTagI, FTagF)
    else if (FProvedor = proFreire)
     then FDadosMsg := TNFSeG.Gera_DadosMsgCancelarNFSeFreire(Prefixo4,
                                                              NameSpaceDad,
@@ -1908,7 +1908,7 @@ begin
                                                              TNFSeCancelarNfse(Self).FCodigoMunicipio,
                                                              TNFSeCancelarNfse(Self).FCodigoCancelamento,
                                                              TNFSeCancelarNfse(Self).FMotivoCancelamento,
-                                                             TagI, TagF)
+                                                             FTagI, FTagF)
 
    else FDadosMsg := TNFSeG.Gera_DadosMsgCancelarNFSe(Prefixo4,
                                                       NameSpaceDad,

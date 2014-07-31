@@ -241,8 +241,8 @@ function TProvedorIssDSF.GetAssinarXML(Acao: TnfseAcao): Boolean;
 begin
  case Acao of
    acRecepcionar: Result := True;
-   acConsSit:     Result := True;
-   acConsLote:    Result := True;
+   acConsSit:     Result := False;
+   acConsLote:    Result := False;
    acConsNFSeRps: Result := True;
    acConsNFSe:    Result := True;
    acCancelar:    Result := True;
