@@ -85,7 +85,6 @@ type
     FListaNfse: TListaNfse;
     FProvedor: TnfseProvedor;
     FTabServicosExt: Boolean;
-//    function ObterDescricaoServico(cCodigo: string): string;
   public
     constructor Create;
     destructor Destroy; override;
@@ -678,18 +677,15 @@ begin
             if (Leitor.rCampo(tcInt, 'QtdNotasProcessadas') > 0) then
             begin
 
-               strAux := leitor.rExtrai(2, 'ListaNFSe');
+               strAux := leitor.rExtrai(1, 'ListaNFSe');
                if (strAux <> '') then
                begin
-                  i := 0 ;
                   posI := pos('<ConsultaNFSe>', strAux);
-
+                  i := 0;
                   while ( posI > 0 ) do begin
                      count := pos('</ConsultaNFSe>', strAux) + 14;
 
                      ListaNfse.FCompNfse.Add;
-                     inc(i);
-
                      LeitorAux := TLeitor.Create;
                      leitorAux.Arquivo := copy(strAux, PosI, count);
                      leitorAux.Grupo   := leitorAux.Arquivo;
@@ -702,6 +698,7 @@ begin
 
                      Delete(strAux, PosI, count);
                      posI := pos('<ConsultaNFSe>', strAux);
+                     inc(i);
                   end;
                end;
             end;
@@ -709,19 +706,17 @@ begin
       end;
 
       i := 0 ;
-      if (leitor.rExtrai(2, 'Alertas') <> '') then
+      if (leitor.rExtrai(1, 'Alertas') <> '') then
       begin     
-         strAux := leitor.rExtrai(2, 'Alertas');
+         strAux := leitor.rExtrai(2, 'Alerta');
          if (strAux <> '') then
          begin
             posI := pos('<Alerta>', strAux);
-
+            i := 0 ;
             while ( posI > 0 ) do begin
                count := pos('</Alerta>', strAux) + 7;
 
                ListaNfse.FMsgRetorno.Add;
-               inc(i);
-
                LeitorAux := TLeitor.Create;
                leitorAux.Arquivo := copy(strAux, PosI, count);
                leitorAux.Grupo   := leitorAux.Arquivo;
@@ -733,6 +728,7 @@ begin
 
                Delete(strAux, PosI, count);
                posI := pos('<Alerta>', strAux);
+               inc(i);
             end;
          end;
       end;
@@ -772,34 +768,6 @@ begin
     result := False;
   end;
 end;
-{
-function TretLote.ObterDescricaoServico(cCodigo: string): string;
-var
- i           : integer;
- PathArquivo : string;
- List        : TstringList;
-begin
- result := '';
-
- if FPathArquivoTabServicos = ''
-  then FPathArquivoTabServicos := NotaUtil.PathWithDelim(ExtractFileDir(application.ExeName)) + 'TabServicos\';
-
- PathArquivo := FPathArquivoTabServicos + 'TabServicos.txt';
- if (FileExists(PathArquivo)) and (cCodigo <> '')
-  then begin
-   List := TstringList.Create;
-   List.LoadFromFile(PathArquivo);
-   i := 0;
-   while (i < list.count) and (result = '') do
-    begin
-     if pos(cCodigo, List[i]) > 0
-      then result := Trim(stringReplace(list[i], ccodigo, '', []));
-     inc(i);
-   end;
-   List.free;
-  end;
-end;
-}
 
 function TretLote.LerXML_provedorEquiplano: Boolean;
 var

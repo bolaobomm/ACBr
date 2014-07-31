@@ -261,28 +261,14 @@ function TProvedorIssDSF.Gera_TagI(Acao: TnfseAcao; Prefixo3, Prefixo4,
   NameSpaceDad, Identificador, URI: String): AnsiString;
 begin
  case Acao of
-   acRecepcionar: Result := '<' + Prefixo3 + 'ReqEnvioLoteRPS' + NameSpaceDad
-                               { 'xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"' +};
-
+   acRecepcionar: Result := '<' + Prefixo3 + 'ReqEnvioLoteRPS' + NameSpaceDad;
    acConsSit:     Result := '';
-
-   acConsLote:    Result := '<' + Prefixo3 + 'ReqConsultaLote' + NameSpaceDad
-                              { 'xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"' +};
-
-   acConsNFSeRps: Result := '<' + Prefixo3 + 'ReqConsultaNFSeRPS' + NameSpaceDad
-                              { 'xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"' +};
-
-   acConsNFSe:    Result := '<' + Prefixo3 + 'ReqConsultaNotas' + NameSpaceDad
-                              { 'xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"' +};
-
-   acCancelar:    Result := '<' + Prefixo3 + 'ReqCancelamentoNFSe' + NameSpaceDad
-                              { 'xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"' +};
-
-   acGerar:       Result := '<' + Prefixo3 + 'ReqEnvioLoteRPS' + NameSpaceDad
-                              { 'xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"' +};
-
-   acConsSecRps:  Result := '<' + Prefixo3 + 'ConsultaSeqRps' + NameSpaceDad
-                              { 'xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"' +};
+   acConsLote:    Result := '<' + Prefixo3 + 'ReqConsultaLote' + NameSpaceDad;
+   acConsNFSeRps: Result := '<' + Prefixo3 + 'ReqConsultaNFSeRPS' + NameSpaceDad;
+   acConsNFSe:    Result := '<' + Prefixo3 + 'ReqConsultaNotas' + NameSpaceDad;
+   acCancelar:    Result := '<' + Prefixo3 + 'ReqCancelamentoNFSe' + NameSpaceDad;
+   acGerar:       Result := '<' + Prefixo3 + 'ReqEnvioLoteRPS' + NameSpaceDad;
+   acConsSecRps:  Result := '<' + Prefixo3 + 'ConsultaSeqRps' + NameSpaceDad;
  end;
 end;
 
@@ -290,9 +276,6 @@ function TProvedorIssDSF.Gera_CabMsg(Prefixo2, VersaoLayOut, VersaoDados,
   NameSpaceCab: String; ACodCidade: Integer): AnsiString;
 begin
  Result := '';
-           {'<' + Prefixo2 + 'cabecalho versao="'  + VersaoLayOut + '"' + NameSpaceCab +
-            '<versaoDados>' + VersaoDados + '</versaoDados>'+
-           '</' + Prefixo2 + 'cabecalho>';}
 end;
 
 function TProvedorIssDSF.Gera_DadosSenha(CNPJ, Senha: String): AnsiString;
@@ -325,9 +308,7 @@ begin
              '<soapenv:Body>' +
                '<dsf:enviar soapenv:encodingStyle="http://schemas.xmlsoap.org/soap/encoding/">' +
                  '<mensagemXml xsi:type="xsd:string">' +
-                 //'<![CDATA[' +
-                   DadosMsg +
-                 //']]>' +
+                   StringReplace(StringReplace(DadosMsg, '<', '&lt;', [rfReplaceAll]), '>', '&gt;', [rfReplaceAll]) +
                  '</mensagemXml>' +
                '</dsf:enviar>' +
              '</soapenv:Body>' +
@@ -351,9 +332,7 @@ begin
              '<soapenv:Body>' +
                '<dsf:consultarLote soapenv:encodingStyle="http://schemas.xmlsoap.org/soap/encoding/">' +
                  '<mensagemXml xsi:type="xsd:string">' +
-                 //'<![CDATA[' +
-                   DadosMsg +
-                 //']]>' +
+                   StringReplace(StringReplace(DadosMsg, '<', '&lt;', [rfReplaceAll]), '>', '&gt;', [rfReplaceAll]) +
                  '</mensagemXml>' +
                '</dsf:consultarLote>' +
              '</soapenv:Body>' +
@@ -371,9 +350,7 @@ begin
              '<soapenv:Body>' +
                '<dsf:consultarNFSeRps soapenv:encodingStyle="http://schemas.xmlsoap.org/soap/encoding/">' +
                  '<mensagemXml xsi:type="xsd:string">' +
-                 //'<![CDATA[' +
-                   DadosMsg +
-                 //']]>' +
+                   StringReplace(StringReplace(DadosMsg, '<', '&lt;', [rfReplaceAll]), '>', '&gt;', [rfReplaceAll]) +
                  '</mensagemXml>' +
                '</dsf:consultarNFSeRps>' +
              '</soapenv:Body>' +
@@ -391,9 +368,7 @@ begin
              '<soapenv:Body>' +
                '<dsf:consultarNota soapenv:encodingStyle="http://schemas.xmlsoap.org/soap/encoding/">' +
                  '<mensagemXml xsi:type="xsd:string">' +
-                 //'<![CDATA[' +
-                   DadosMsg +
-                 //']]>' +
+                   StringReplace(StringReplace(DadosMsg, '<', '&lt;', [rfReplaceAll]), '>', '&gt;', [rfReplaceAll]) +
                  '</mensagemXml>' +
                '</dsf:consultarNota>' +
              '</soapenv:Body>' +
@@ -411,9 +386,7 @@ begin
              '<soapenv:Body>' +
                '<dsf:cancelar soapenv:encodingStyle="http://schemas.xmlsoap.org/soap/encoding/">' +
                  '<mensagemXml xsi:type="xsd:string">' +
-                 //'<![CDATA[' +
-                   DadosMsg +
-                 //']]>' +
+                   StringReplace(StringReplace(DadosMsg, '<', '&lt;', [rfReplaceAll]), '>', '&gt;', [rfReplaceAll]) +
                  '</mensagemXml>' +
                '</dsf:cancelar>' +
              '</soapenv:Body>' +
@@ -444,9 +417,7 @@ begin
              '<soapenv:Body>' +
                '<dsf:consultarSequencialRps soapenv:encodingStyle="http://schemas.xmlsoap.org/soap/encoding/">' +
                  '<mensagemXml xsi:type="xsd:string">' +
-                 //'<![CDATA[' +
-                   DadosMsg +
-                 //']]>' +
+                   StringReplace(StringReplace(DadosMsg, '<', '&lt;', [rfReplaceAll]), '>', '&gt;', [rfReplaceAll]) +
                  '</mensagemXml>' +
                '</dsf:consultarSequencialRps>' +
              '</soapenv:Body>' +
@@ -487,7 +458,7 @@ function TProvedorIssDSF.GeraRetornoNFSe(Prefixo: String;
 begin
  Result := '<?xml version="1.0" encoding="UTF-8"?>' +
            '<CompNfse xmlns:ns4="http://www.e-governeapps2.com.br/nfse.xsd">' +
-            RetNFSe +
+             RetNFSe +
            '</CompNfse>';
 end;
 
