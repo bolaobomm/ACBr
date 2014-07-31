@@ -947,17 +947,20 @@ end;
 procedure TNFSeW.GerarServico_Provedor_IssDsf;
 var
    i: integer;
-   sDeducaoPor, sTipoDeducao: string;
+   sDeducaoPor, sTipoDeducao, sTributavel: string;
 begin
 
    Gerador.wGrupoNFSe('Itens');
    for i:=0 to NFSe.Servico.ItemServico.Count -1 do begin
      Gerador.wGrupoNFSe('Item');
+	   sTributavel := EnumeradoToStr( NFSe.Servico.ItemServico.Items[i].Tributavel,
+                                           ['S', 'N'], [snSim, snNao]);
+	 
        Gerador.wCampoNFSe(tcStr, '', 'DiscriminacaoServico', 01, 80, 1, NFSe.Servico.ItemServico.Items[i].Descricao , '');
        Gerador.wCampoNFSe(tcDe4, '', 'Quantidade'          , 01, 15, 1, NFSe.Servico.ItemServico.Items[i].Quantidade , '');
        Gerador.wCampoNFSe(tcDe4, '', 'ValorUnitario'       , 01, 20, 1, NFSe.Servico.ItemServico.Items[i].ValorUnitario , '');
        Gerador.wCampoNFSe(tcDe2, '', 'ValorTotal'          , 01, 18, 1, NFSe.Servico.ItemServico.Items[i].ValorTotal , '');
-       Gerador.wCampoNFSe(tcStr, '', 'Tributavel'          , 01, 01, 0, NFSe.Servico.ItemServico.Items[i].Descricao , '');
+       Gerador.wCampoNFSe(tcStr, '', 'Tributavel'          , 01, 01, 0, sTributavel , '');
      Gerador.wGrupoNFSe('/Item');
    end;
    Gerador.wGrupoNFSe('/Itens');

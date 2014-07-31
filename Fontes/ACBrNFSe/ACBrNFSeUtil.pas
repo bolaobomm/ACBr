@@ -1070,7 +1070,7 @@ var
  XmlAss : AnsiString;
  Cert: TMemoryStream;
  Cert2: TStringStream;
- EnviarLoteRps: String;
+ EnviarLoteRps: String; 
 begin
   Tipo := 1;
 
@@ -1132,7 +1132,7 @@ begin
     Cert2 := TStringStream.Create(ArqPFX);
     try
       Cert.LoadFromStream(Cert2);
-      XmlAss := NotaUtil.sign_memory(PAnsiChar(AStr), PAnsiChar(ArqPFX), PAnsiChar(PFXSenha), Cert.Size, Cert.Memory);
+      XmlAss := NotaUtil.sign_memory(PAnsiChar(AXML), PAnsiChar(ArqPFX), PAnsiChar(PFXSenha), Cert.Size, Cert.Memory);
     finally
       Cert2.Free;
       Cert.Free;

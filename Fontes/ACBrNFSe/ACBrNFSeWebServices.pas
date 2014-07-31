@@ -980,8 +980,8 @@ begin
                                                       TNFSeEnviarLoteRPS(Self).FNotasFiscais.Items[0].NFSe.PrestadorServico.RazaoSocial,
                                                       LowerCase(booltostr(TNFSeEnviarLoteRPS(Self).FNotasFiscais.Transacao, True)),
                                                       IntToStr(TNFSeEnviarLoteRps(Self).FNotasFiscais.Count),
-                                                      FloatToStr( TNFSeEnviarLoteRps(Self).FNotasFiscais.Items[0].NFSe.Servico.Valores.ValorServicos),
-                                                      FloatToStr( TNFSeEnviarLoteRps(Self).FNotasFiscais.Items[0].NFSe.Servico.Valores.ValorDeducoes),
+                                                      FormatFloat('0.00', TNFSeEnviarLoteRps(Self).FNotasFiscais.Items[0].NFSe.Servico.Valores.ValorServicos),
+                                                      FormatFloat('0.00', TNFSeEnviarLoteRps(Self).FNotasFiscais.Items[0].NFSe.Servico.Valores.ValorDeducoes),
                                                       DataInicial, DataFinal,
                                                       vNotas,
                                                       FTagI, FTagF)
@@ -2321,8 +2321,8 @@ begin
                                                       TNFSeGerarLoteRPS(Self).FNotasFiscais.Items[0].NFSe.PrestadorServico.RazaoSocial,
                                                       LowerCase(booltostr(TNFSeGerarLoteRPS(Self).FNotasFiscais.Transacao, True)),
                                                       IntToStr(TNFSeGerarLoteRPS(Self).FNotasFiscais.Count),
-                                                      FormatFloat('#0.00', TNFSeGerarLoteRPS(Self).FNotasFiscais.Items[0].NFSe.Servico.Valores.ValorServicos),
-                                                      FormatFloat('#0.00', TNFSeGerarLoteRPS(Self).FNotasFiscais.Items[0].NFSe.Servico.Valores.ValorDeducoes),
+                                                      FormatFloat('0.00', TNFSeGerarLoteRPS(Self).FNotasFiscais.Items[0].NFSe.Servico.Valores.ValorServicos),
+                                                      FormatFloat('0.00', TNFSeGerarLoteRPS(Self).FNotasFiscais.Items[0].NFSe.Servico.Valores.ValorDeducoes),
                                                       DataInicial, DataFinal,
                                                       vNotas,
                                                       FTagI, FTagF)
