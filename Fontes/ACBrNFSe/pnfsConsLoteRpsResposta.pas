@@ -712,7 +712,6 @@ begin
          if (strAux <> '') then
          begin
             posI := pos('<Alerta>', strAux);
-            i := 0 ;
             while ( posI > 0 ) do begin
                count := pos('</Alerta>', strAux) + 7;
 
@@ -733,20 +732,19 @@ begin
          end;
       end;
 
-      if (leitor.rExtrai(2, 'Erros') <> '') then
+      if (leitor.rExtrai(1, 'Erros') <> '') then
       begin
 
          strAux := leitor.rExtrai(2, 'Erros');
          if (strAux <> '') then
          begin
-            //i := 0 ;
             posI := pos('<Erro>', strAux);
 
             while ( posI > 0 ) do begin
                count := pos('</Erro>', strAux) + 6;
 
                ListaNfse.FMsgRetorno.Add;
-               inc(i);
+
 
                LeitorAux := TLeitor.Create;
                leitorAux.Arquivo := copy(strAux, PosI, count);
@@ -754,11 +752,11 @@ begin
 
                ListaNfse.FMsgRetorno[i].FCodigo  := leitorAux.rCampo(tcStr, 'Codigo');
                ListaNfse.FMsgRetorno[i].Mensagem := leitorAux.rCampo(tcStr, 'Descricao');
-
                LeitorAux.free;
 
                Delete(strAux, PosI, count);
                posI := pos('<Erro>', strAux);
+               inc(i);
             end;
          end;
       end;

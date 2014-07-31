@@ -1248,12 +1248,6 @@ begin
  if FProvedorClass.GetAssinarXML(acConsLote)
   then begin
    case FProvedor of
-    proIssDSF: FDadosMsg := TNFSeG.Gera_DadosMsgConsLoteDSF(Prefixo3, Prefixo4,
-                                                      NameSpaceDad, VersaoXML,
-                                                      CodCidadeToCodSiafi( strtointDef(TNFSeConsultarLoteRPS(Self).FNotasFiscais.Items[0].NFSe.PrestadorServico.Endereco.CodigoMunicipio, 0)),
-                                                      TNFSeConsultarLoteRPS(Self).Cnpj,
-                                                      TNFSeConsultarLoteRPS(Self).NumeroLote,
-                                                      '', ''); //FTagI, FTagF)
     proEquiplano: FDadosMsg := TNFSeG.Gera_DadosMsgConsLoteEquiplano(FConfiguracoes.WebServices.CodigoMunicipio,
                                                             SomenteNumeros(TNFSeConsultarLoteRPS(Self).FCNPJ),
                                                             TNFSeConsultarLoteRPS(Self).IM,
