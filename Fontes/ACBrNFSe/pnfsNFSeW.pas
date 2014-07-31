@@ -11,7 +11,7 @@ uses
   SysUtils, Classes, StrUtils,
   pcnAuxiliar, pcnConversao, pcnGerador,
   pnfsNFSe, pnfsConversao,
-  ACBrNFSeConfiguracoes, synacode, Crypt.SHA1;
+  ACBrNFSeConfiguracoes, synacode, CryptSHA1;
 
 type
 

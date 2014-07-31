@@ -20,7 +20,7 @@ uses
   ACBrProvedorfISSLex, ACBrProvedorSaatri, pnfsGerarNfseResposta, 
   ACBrProvedorAbaco, ACBrProvedorGoiania, ACBrProvedorISSCuritiba, 
   ACBrProvedorBHISS, ACBrProvedorNatal, ACBrProvedorISSe, 
-  ACBrProvedorISSDigital, LazarusPackageIntf;
+  ACBrProvedorISSDigital, ACBrProvedorSalvador, CryptSHA1, LazarusPackageIntf;
 
 implementation
 

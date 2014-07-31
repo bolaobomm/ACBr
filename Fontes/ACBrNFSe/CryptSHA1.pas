@@ -1,4 +1,4 @@
-unit Crypt.SHA1;
+unit CryptSHA1;
 
 {
   SHA1.pas: SHA-1 hash implementation, based on RFC 3174 and MD5.pas
