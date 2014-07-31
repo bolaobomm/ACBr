@@ -105,6 +105,7 @@ type
      class function FormatarCEP(AValue : String ): String;
      class function FormatarFone(AValue : String ): String;
      class function FormatarNumeroDocumentoFiscal(AValue : String ): String;
+     class function FormatarNumeroDocumentoFiscalNFSe(AValue: String): String;
      class function FormatarChaveAcesso(AValue : String ): String;
      class function StringToFloat(AValue : String ) : Double;
      class function StringToFloatDef(const AValue: String; const DefaultValue: Double): Double;
@@ -275,6 +276,12 @@ begin
   AValue := Poem_Zeros(AValue, 9);
   Result := copy(AValue,1,3) + '.' + copy(AValue,4,3)+ '.'+
             copy(AValue,7,3);
+end;
+
+class function DFeUtil.FormatarNumeroDocumentoFiscalNFSe(AValue: String): String;
+begin
+  AValue := Poem_Zeros(AValue, 15);
+  Result := copy(AValue,1,4) + '.' + copy(AValue,5,12);
 end;
 
 class function DFeUtil.FormatDate(const AString: string): String;

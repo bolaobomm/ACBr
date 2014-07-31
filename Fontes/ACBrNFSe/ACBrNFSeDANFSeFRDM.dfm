@@ -1,11 +1,9 @@
 object dmACBrNFSeFR: TdmACBrNFSeFR
   OldCreateOrder = False
-  Left = 199
-  Top = 125
   Height = 363
   Width = 580
   object frxReport: TfrxReport
-    Version = '4.13.1'
+    Version = '4.15.10'
     DotMatrixReport = False
     IniFile = '\Software\Fast Reports'
     PreviewOptions.Buttons = [pbPrint, pbLoad, pbSave, pbExport, pbZoom, pbFind, pbOutline, pbPageSetup, pbTools, pbEdit, pbNavigator, pbExportQuick]
@@ -30,6 +28,7 @@ object dmACBrNFSeFR: TdmACBrNFSeFR
     Outline = False
     Background = True
     HTMLTags = True
+    Quality = 95
     Author = 'FastReport'
     Subject = 'Exportando o DANFSe para PDF'
     ProtectionFlags = [ePrint, eModify, eCopy, eAnnot]
@@ -69,7 +68,7 @@ object dmACBrNFSeFR: TdmACBrNFSeFR
     end
     object cdsIdentificacaoNumeroNFSe: TStringField
       FieldName = 'NumeroNFSe'
-      Size = 15
+      Size = 16
     end
     object cdsIdentificacaoNFSeSubstituida: TStringField
       FieldName = 'NFSeSubstituida'

@@ -203,7 +203,7 @@ begin
                                                            DFeUtil.SeSenao(ExigibilidadeISS = exiSuspensaDecisaoJudicial,'Suspensa Decisao Judicial',
                                                            DFeUtil.SeSenao(ExigibilidadeISS = exiSuspensaDecisaoJudicial,'Suspensa Processo Administrativo',
                                                            '' )))))));
-      FieldByName('MunicipioIncidencia').AsString       := CodCidadeToCidade(MunicipioIncidencia);
+      FieldByName('MunicipioIncidencia').AsString       := CodCidadeToCidade(StrToInt(CodigoMunicipio)); // MunicipioIncidencia // removido pois sempre vem em branco.. (Oneide)
     end;
 
 	with FNFSe.ConstrucaoCivil do

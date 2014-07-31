@@ -888,7 +888,7 @@ begin
   3541505, // Presidente Venceslau/SP
   4101408, // Apucarana/PR
   4102000, // Assis Chateaubriand/PR
-  4210506, // Maravilha/SC
+  //4210506, // Maravilha/SC
   4321709  // Tres Coroas/RS
          : Provedor := 'GovBR';
 
@@ -903,6 +903,7 @@ begin
   4310207, // Ijui/RS
   4320800, // Soledade/RS
   4322400, // Uruguaiana/RS
+  4210506, // Maravilha/SC
   4201307  // Araquari/SC
          : Provedor := 'Pronim';
 

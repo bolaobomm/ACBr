@@ -79,7 +79,7 @@ begin
   3118601: ConfigCidade.AssinaLote := True; {Denio Incluido para Contagem} 
   4309407: ConfigCidade.AssinaLote := True; {Dalvan}
   4320800: ConfigCidade.AssinaLote := True; {Dalvan}
-  else     ConfigCidade.AssinaLote := False;
+ else      ConfigCidade.AssinaLote := False;
  end;
 
  Result := ConfigCidade;
@@ -111,6 +111,24 @@ var
  ConfigURL: TConfigURL;
 begin
  case ACodCidade of
+   4210506: begin // Maravilha/SC
+            ConfigURL.HomNomeCidade         := '';
+            ConfigURL.HomRecepcaoLoteRPS    := 'http://187.45.102.245:8090/NFSEWSTESTE/Services.svc';
+            ConfigURL.HomConsultaLoteRPS    := 'http://187.45.102.245:8090/NFSEWSTESTE/Services.svc';
+            ConfigURL.HomConsultaNFSeRPS    := 'http://187.45.102.245:8090/NFSEWSTESTE/Services.svc';
+            ConfigURL.HomConsultaSitLoteRPS := 'http://187.45.102.245:8090/NFSEWSTESTE/Services.svc';
+            ConfigURL.HomConsultaNFSe       := 'http://187.45.102.245:8090/NFSEWSTESTE/Services.svc';
+            ConfigURL.HomCancelaNFSe        := 'http://187.45.102.245:8090/NFSEWSTESTE/Services.svc';
+
+            ConfigURL.ProNomeCidade         := '';
+            ConfigURL.ProRecepcaoLoteRPS    := 'http://187.45.102.245:8090/NFSEWS/Services.svc';
+            ConfigURL.ProConsultaLoteRPS    := 'http://187.45.102.245:8090/NFSEWS/Services.svc';
+            ConfigURL.ProConsultaNFSeRPS    := 'http://187.45.102.245:8090/NFSEWS/Services.svc';
+            ConfigURL.ProConsultaSitLoteRPS := 'http://187.45.102.245:8090/NFSEWS/Services.svc';
+            ConfigURL.ProConsultaNFSe       := 'http://187.45.102.245:8090/NFSEWS/Services.svc';
+            ConfigURL.ProCancelaNFSe        := 'http://187.45.102.245:8090/NFSEWS/Services.svc';
+           end;
+
   3118601: begin // Contagem/MG
             ConfigURL.HomNomeCidade         := '';
             ConfigURL.HomRecepcaoLoteRPS    := 'http://teste.contagem.mg.gov.br/NFSEWSTESTE/Services.svc';
