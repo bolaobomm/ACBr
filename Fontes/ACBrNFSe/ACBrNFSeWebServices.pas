@@ -2611,7 +2611,7 @@ begin
    //Alterado por Cleiver em 10-10-2013
    if not (TACBrNFSe( FACBrNFSe ).Configuracoes.WebServices.Provedor in [proDigifred, proProdata,
           proVitoria, proPVH, profintelISS, proSaatri, proSisPMJP, proCoplan, proISSDigital,
-          proFiorilli, proFreire, proTecnos]) then begin
+          proISSDSF, proFiorilli, proFreire, proTecnos]) then begin
      Result := Self.ConsSitLote.Executar;
 
      if not (Result)
