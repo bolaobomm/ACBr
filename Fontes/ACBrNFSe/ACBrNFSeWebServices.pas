@@ -3054,9 +3054,12 @@ begin
     NFSeRetorno := TretEnvLote.Create;
 
     NFSeRetorno.Leitor.Arquivo := FRetWS;
-    if (FProvedor = proEquiplano)
-     then NFSeRetorno.LerXML_provedorEquiplano
-    else NFSeRetorno.LerXml;
+
+    case FProvedor of
+     proEquiplano: NFSeRetorno.LerXML_provedorEquiplano;
+     proISSDSF:    NFSeRetorno.LerXml_provedorIssDsf;
+     else          NFSeRetorno.LerXml;
+    end;
 
     TACBrNFSe( FACBrNFSe ).SetStatus( stNFSeIdle );
 
