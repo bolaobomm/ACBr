@@ -420,7 +420,7 @@ begin
  if (CNPJTomador <> '') or (IMTomador <> '')
   then begin
     DadosMsg := DadosMsg + '<Tomador>' +
-                            DFeUtil.SeSenao(VersaoXML = '2',
+                            DFeUtil.SeSenao((VersaoXML = '2') or (AProvedor in [proThema]),
 
                             '<' + Prefixo4 + 'CpfCnpj>' +
                              DFeUtil.SeSenao(Length(OnlyNumber(CnpjTomador)) <= 11,
