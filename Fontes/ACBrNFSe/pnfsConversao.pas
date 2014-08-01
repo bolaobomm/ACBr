@@ -645,6 +645,7 @@ begin
   4203006, // Cacador/SC
   4203600, // Campos Novos/SC
   4203808, // Canoinhas/SC
+  4203907, // Capinzal/SC
   4204202, // Chapecó/SC
   4204251, // Cocal Do Sul/SC
   4204350, // Cordilheira Alta/SC
@@ -664,7 +665,9 @@ begin
   4209003, // Joaçaba/SC
   4209300, // Lages/SC
   4210001, // Luiz Alves/SC
+  4211058, // Monte Carlo/SC
   4211306, // Navegantes/SC
+  4211801, // Ouro/SC
   4211900, // Palhoça/SC
   4212106, // Palmitos/SC
   4212502, // Penha/SC
