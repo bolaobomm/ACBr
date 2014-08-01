@@ -2336,6 +2336,24 @@ begin
             InfCTeAnuEnt.dEmi  := DFeUtil.StringToDate(INIRec.ReadString( 'infCteAnu','dEmi','0'));
           {$ENDIF}
           end;
+
+         {$IFDEF PL_200}
+         I := 1;
+         while true do
+          begin
+            sSecao := 'autXML' + IntToStrZero(I, 2);
+            sFim   := INIRec.ReadString(sSecao, 'CNPJCPF', 'FIM');
+            if (sFim = 'FIM') or (Length(sFim) <= 0) then
+               break;
+
+            with autXML.Add do
+             begin
+               CNPJCPF := sFim;
+             end;
+            Inc(I);
+          end;
+         {$ENDIF}
+
        end;
    finally
       INIRec.Free;
@@ -2702,6 +2720,18 @@ begin
             INIRec.WriteString('Rodo', 'RNTRC', Rodo.RNTRC);
             INIRec.WriteString('Rodo', 'dPrev', DateToStr(Rodo.dPrev));
             INIRec.WriteString('Rodo', 'lota', TpLotacaoToStr(Rodo.Lota));
+          end;
+        {$ENDIF}
+
+        {$IFDEF PL_200}
+          for i := 0 to autXML.Count - 1 do
+          begin
+            sSecao := 'autXML' + IntToStrZero(I+1, 2);
+
+            with autXML.Items[i] do
+            begin
+              INIRec.WriteString(sSecao, 'CNPJCPF', CNPJCPF);
+            end;
           end;
         {$ENDIF}
        end;
