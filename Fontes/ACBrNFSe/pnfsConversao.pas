@@ -625,7 +625,7 @@ begin
   4100301, // Agudos do Sul/PR
   4100400, // Almirante Tamandaré/PR
   4101002, // Ampére/PR
-  4102604, // Barracão/PR 
+  4102604, // Barracão/PR
   4104253, // Campo Magro/PR
   4106407, // Cornélio Procópio/PR
   4107652, // Fazenda Rio Grande/PR
@@ -656,6 +656,7 @@ begin
   4205704, // Garopaba/SC
   4206207, // Gravatal/SC
   4206405, // Guaraciaba/SC
+  4206702, // Herval D Oeste/SC
   4206900, // Ibirama/SC
   4207304, // Imbituba/SC
   4207700, // Ipumirim/SC
