@@ -166,10 +166,10 @@ end;
 function TProvedorNatal.Gera_CabMsg(Prefixo2, VersaoLayOut, VersaoDados,
   NameSpaceCab: String; ACodCidade: Integer): AnsiString;
 begin
- Result := '<' + Prefixo2 + 'cabecalho ' +
-                            'xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" ' +
-                            'xmlns:xsd="http://www.w3.org/2001/XMLSchema" ' +
-                            'versao="' + VersaoLayOut + '"' + NameSpaceCab +
+ Result := '<' + Prefixo2 + 'cabecalho xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" ' +
+                                      'xmlns:xsd="http://www.w3.org/2001/XMLSchema" ' +
+                                      'versao="' + VersaoLayOut + '" ' +
+                                      'xmlns="http://www.abrasf.org.br/ABRASF/arquivos/nfse.xsd">' +
             '<versaoDados>' + VersaoDados + '</versaoDados>'+
            '</' + Prefixo2 + 'cabecalho>';
 end;
