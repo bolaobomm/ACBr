@@ -1,7 +1,7 @@
 object frmPrincipal: TfrmPrincipal
   Left = 359
   Top = 202
-  ActiveControl = wizPgFinalizar
+  ActiveControl = wizPgInicio
   BorderIcons = [biSystemMenu, biMinimize]
   BorderStyle = bsSingle
   Caption = 'Instalador ACBr'
@@ -24,7 +24,7 @@ object frmPrincipal: TfrmPrincipal
     Top = 0
     Width = 720
     Height = 612
-    ActivePage = wizPgFinalizar
+    ActivePage = wizPgInicio
     ButtonBarHeight = 42
     ButtonStart.Caption = 'Para o in'#237'cio'
     ButtonStart.NumGlyphs = 1
@@ -1268,27 +1268,20 @@ object frmPrincipal: TfrmPrincipal
         ParentBackground = False
         ParentColor = False
         TabOrder = 0
-        ExplicitWidth = 554
-        ExplicitHeight = 499
         inherited Label18: TLabel
           Width = 509
           Caption = 
             'S'#243' selecione os pacotes abaixo, que voc'#234' tenha a suite do gerado' +
             'r instalada no seu delphi.'
-          ExplicitWidth = 509
         end
         inherited pnlBotoesPacotes: TPanel
           Top = 467
           Width = 554
-          ExplicitTop = 467
-          ExplicitWidth = 554
           inherited btnPacotesDesmarcarTodos: TSpeedButton
             Left = 522
-            ExplicitLeft = 522
           end
           inherited btnPacotesMarcarTodos: TSpeedButton
             Left = 490
-            ExplicitLeft = 490
           end
         end
       end
@@ -1317,10 +1310,6 @@ object frmPrincipal: TfrmPrincipal
       Caption = 'Reposit'#243'rio'
       OnEnterPage = wizPgObterFontesEnterPage
       OnNextButtonClick = wizPgObterFontesNextButtonClick
-      ExplicitLeft = 0
-      ExplicitTop = 0
-      ExplicitWidth = 0
-      ExplicitHeight = 0
       object Label1: TLabel
         Left = 77
         Top = 177
@@ -1405,10 +1394,6 @@ object frmPrincipal: TfrmPrincipal
       Caption = 'Instala'#231#227'o'
       OnEnterPage = wizPgInstalacaoEnterPage
       OnNextButtonClick = wizPgInstalacaoNextButtonClick
-      ExplicitLeft = 0
-      ExplicitTop = 0
-      ExplicitWidth = 0
-      ExplicitHeight = 0
       object btnInstalarACBr: TSpeedButton
         Left = 430
         Top = 463
@@ -1491,7 +1476,7 @@ object frmPrincipal: TfrmPrincipal
       object Label3: TLabel
         Left = 39
         Top = 58
-        Width = 338
+        Width = 334
         Height = 38
         Caption = 'A instala'#231#227'o do projeto ACBr foi conclu'#237'da com '#234'xito.'
         Font.Charset = DEFAULT_CHARSET
