@@ -42,6 +42,17 @@
     </xs:restriction>
   </xs:simpleType>
 
+  <xs:simpleType name="tsInscricaoEstadual">
+    <xs:annotation>
+      <xs:documentation>Tipo padrão referente a inscrição estadual.</xs:documentation>
+    </xs:annotation>
+	<xs:restriction base="xs:string">
+		<xs:maxLength value="20" />
+		<xs:minLength value="0" />
+		<xs:whiteSpace value="collapse" />
+    </xs:restriction>
+  </xs:simpleType>
+  
   <xs:simpleType name="tsRazaoSocial">
     <xs:annotation>
       <xs:documentation>Razão Social do Contribuinte</xs:documentation>
@@ -418,6 +429,7 @@
     <xs:sequence>
       <xs:element name="CpfCnpj" type="tipos:TcCpfCnpj" minOccurs="0" maxOccurs="1" />
       <xs:element name="InscricaoMunicipal" type="tipos:tsInscricaoMunicipal" minOccurs="0" maxOccurs="1" />
+      <xs:element name="InscricaoEstadual" type="tipos:tsInscricaoEstadual" minOccurs="0" maxOccurs="1" />
     </xs:sequence>
   </xs:complexType>
 
