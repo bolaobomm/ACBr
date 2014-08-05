@@ -681,7 +681,7 @@ begin
            else Gerador.wCampoNFSe(tcStr, '#36', 'Cnpj', 14, 14, 1, SomenteNumeros(NFSe.Tomador.IdentificacaoTomador.CpfCnpj), '');
          Gerador.wGrupoNFSe('/CpfCnpj');
          Gerador.wCampoNFSe(tcStr, '#37', 'InscricaoMunicipal', 01, 15, 0, NFSe.Tomador.IdentificacaoTomador.InscricaoMunicipal, '');
-         if FProvedor = proSimplISS
+		 if (FProvedor = proSimplISS) or (FProvedor = proBetha)
            then Gerador.wCampoNFSe(tcStr, '#38', 'InscricaoEstadual', 01, 20, 0, NFSe.Tomador.IdentificacaoTomador.InscricaoEstadual, '');
        Gerador.wGrupoNFSe('/IdentificacaoTomador');
       end;
