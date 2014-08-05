@@ -2000,12 +2000,12 @@ begin
                     end;
 
                    sSecao   := 'II'+IntToStrZero(I,3) ;
-                   sFim   := INIRec.ReadString( sSecao,'ValorBase',INIRec.ReadString( sSecao,'vBc','FIM')) ;
+                   sFim   := INIRec.ReadString( sSecao,'ValorBase',INIRec.ReadString( sSecao,'vBC','FIM')) ;
                    if (sFim <> 'FIM') then
                     begin
                      with II do
                       begin
-                        vBc      := StringToFloatDef( INIRec.ReadString(sSecao,'ValorBase'          ,INIRec.ReadString(sSecao,'vBc'     ,'')) ,0);
+                        vBc      := StringToFloatDef( INIRec.ReadString(sSecao,'ValorBase'          ,INIRec.ReadString(sSecao,'vBC'     ,'')) ,0);
                         vDespAdu := StringToFloatDef( INIRec.ReadString(sSecao,'ValorDespAduaneiras',INIRec.ReadString(sSecao,'vDespAdu','')) ,0);
                         vII      := StringToFloatDef( INIRec.ReadString(sSecao,'ValorII'            ,INIRec.ReadString(sSecao,'vII'     ,'')) ,0);
                         vIOF     := StringToFloatDef( INIRec.ReadString(sSecao,'ValorIOF'           ,INIRec.ReadString(sSecao,'vIOF'    ,'')) ,0);
@@ -2031,13 +2031,13 @@ begin
                    sSecao    := 'PISST'+IntToStrZero(I,3) ;
                    sFim   := INIRec.ReadString( sSecao,'ValorBase','F')+ INIRec.ReadString( sSecao,'Quantidade','IM') ;
                    if (sFim = 'FIM') then
-                      sFim   := INIRec.ReadString( sSecao,'vBc','F')+ INIRec.ReadString( sSecao,'qBCProd','IM') ;
+                      sFim   := INIRec.ReadString( sSecao,'vBC','F')+ INIRec.ReadString( sSecao,'qBCProd','IM') ;
 
                    if (sFim <> 'FIM') then
                     begin
                      with PISST do
                       begin
-                        vBc       := StringToFloatDef( INIRec.ReadString(sSecao,'ValorBase'    ,INIRec.ReadString(sSecao,'vBc'      ,'')) ,0);
+                        vBc       := StringToFloatDef( INIRec.ReadString(sSecao,'ValorBase'    ,INIRec.ReadString(sSecao,'vBC'      ,'')) ,0);
                         pPis      := StringToFloatDef( INIRec.ReadString(sSecao,'AliquotaPerc' ,INIRec.ReadString(sSecao,'pPis'     ,'')) ,0);
                         qBCProd   := StringToFloatDef( INIRec.ReadString(sSecao,'Quantidade'   ,INIRec.ReadString(sSecao,'qBCProd'  ,'')) ,0);
                         vAliqProd := StringToFloatDef( INIRec.ReadString(sSecao,'AliquotaValor',INIRec.ReadString(sSecao,'vAliqProd','')) ,0);
@@ -2064,8 +2064,8 @@ begin
                    sSecao    := 'COFINSST'+IntToStrZero(I,3) ;
                    sFim   := INIRec.ReadString( sSecao,'ValorBase','F')+ INIRec.ReadString( sSecao,'Quantidade','IM');
                    if (sFim = 'FIM') then
-                      sFim   := INIRec.ReadString( sSecao,'vBc','F')+ INIRec.ReadString( sSecao,'qBCProd','IM') ;
-                      
+                      sFim   := INIRec.ReadString( sSecao,'vBC','F')+ INIRec.ReadString( sSecao,'qBCProd','IM') ;
+
                    if (sFim <> 'FIM') then
                     begin
                      with COFINSST do
@@ -2080,6 +2080,8 @@ begin
 
                    sSecao    := 'ISSQN'+IntToStrZero(I,3) ;
                    sFim   := INIRec.ReadString( sSecao,'ValorBase','FIM') ;
+                   if (sFim = 'FIM') then
+                      sFim   := INIRec.ReadString( sSecao,'vBC','FIM');
                    if (sFim <> 'FIM') then
                     begin
                      with ISSQN do
