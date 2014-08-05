@@ -71,8 +71,8 @@ begin
  ConfigCidade.Identificador := 'Id';
 
  if AAmbiente = 1
-  then ConfigCidade.NameSpaceEnvelope := 'http://www.abrasf.org.br/ABRASF/arquivos/nfse.xsd'
-  else ConfigCidade.NameSpaceEnvelope := 'http://www.abrasf.org.br/ABRASF/arquivos/nfse.xsd';
+  then ConfigCidade.NameSpaceEnvelope := 'http://nfse.recife.pe.gov.br'
+  else ConfigCidade.NameSpaceEnvelope := 'http://nfse.recife.pe.gov.br';
 
  ConfigCidade.AssinaRPS  := True;
  ConfigCidade.AssinaLote := True;
@@ -96,6 +96,7 @@ begin
  ConfigSchema.ServicoConNfse  := 'nfse.xsd';
  ConfigSchema.ServicoCancelar := 'nfse.xsd';
  ConfigSchema.DefTipos        := '';
+ ConfigSchema.ServicoGerar    := 'http://nfse.recife.pe.gov.br/WSNacional/XSD/1/nfse_recife_v01.xsd';
 
  Result := ConfigSchema;
 end;
@@ -111,6 +112,7 @@ begin
  ConfigURL.HomConsultaSitLoteRPS := 'https://nfse.recife.pe.gov.br/WSNacional/nfse_v01.asmx';
  ConfigURL.HomConsultaNFSe       := 'https://nfse.recife.pe.gov.br/WSNacional/nfse_v01.asmx';
  ConfigURL.HomCancelaNFSe        := 'https://nfse.recife.pe.gov.br/WSNacional/nfse_v01.asmx';
+ ConfigURL.HomGerarNFSe          := 'https://nfse.recife.pe.gov.br/WSNacional/nfse_v01.asmx';
 
  ConfigURL.ProNomeCidade         := '';
  ConfigURL.ProRecepcaoLoteRPS    := 'https://nfse.recife.pe.gov.br/WSNacional/nfse_v01.asmx';
@@ -119,6 +121,7 @@ begin
  ConfigURL.ProConsultaSitLoteRPS := 'https://nfse.recife.pe.gov.br/WSNacional/nfse_v01.asmx';
  ConfigURL.ProConsultaNFSe       := 'https://nfse.recife.pe.gov.br/WSNacional/nfse_v01.asmx';
  ConfigURL.ProCancelaNFSe        := 'https://nfse.recife.pe.gov.br/WSNacional/nfse_v01.asmx';
+ ConfigURL.ProGerarNFSe          := 'https://nfse.recife.pe.gov.br/WSNacional/nfse_v01.asmx';
 
  Result := ConfigURL;
 end;
@@ -160,7 +163,7 @@ begin
                              '<' + Prefixo3 + 'Pedido>' +
                               '<' + Prefixo4 + 'InfPedidoCancelamento' +
                                  DFeUtil.SeSenao(Identificador <> '', ' ' + Identificador + '="' + URI + '"', '') + '>';
-   acGerar:       Result := '';
+   acGerar:       Result := '<GerarNfseEnvio xmlns="http://nfse.recife.pe.gov.br/WSNacional/XSD/1/nfse_recife_v01.xsd">';
  end;
 end;
 
@@ -187,135 +190,146 @@ begin
    acConsNFSe:    Result := '</' + Prefixo3 + 'ConsultarNfseEnvio>';
    acCancelar:    Result := '</' + Prefixo3 + 'Pedido>' +
                             '</' + Prefixo3 + 'CancelarNfseEnvio>';
-   acGerar:       Result := '';
+   acGerar:       Result := '</GerarNfseEnvio>';
  end;
 end;
 
 function TProvedorRecife.GeraEnvelopeRecepcionarLoteRPS(URLNS: String;
   CabMsg, DadosMsg, DadosSenha: AnsiString): AnsiString;
 begin
- result := '<?xml version="1.0" encoding="UTF-8"?>' +
-           '<S:Envelope xmlns:S="http://schemas.xmlsoap.org/soap/envelope/" ' +
-                       'xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" ' +
-                       'xmlns:xsd="http://www.w3.org/2001/XMLSchema">' +
-            '<S:Body>' +
-             '<EnviarLoteRpsEnvio xmlns="' + URLNS + '">' +
-              '<MensagemXML>' +
+ result := '<?xml version="1.0" encoding="utf-8"?>' +
+           '<soap:Envelope xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" ' +
+                          'xmlns:xsd="http://www.w3.org/2001/XMLSchema" ' +
+                          'xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/">' +
+            '<soap:Body>' +
+             '<RecepcionarLoteRpsRequest xmlns="' + URLNS + '/">' +
+              '<inputXML>' +
                 StringReplace(StringReplace(DadosMsg, '<', '&lt;', [rfReplaceAll]), '>', '&gt;', [rfReplaceAll]) +
-              '</MensagemXML>' +
-             '</EnviarLoteRpsEnvio>' +
-            '</S:Body>' +
-           '</S:Envelope>';
+              '</inputXML>' +
+             '</RecepcionarLoteRpsRequest>' +
+            '</soap:Body>' +
+           '</soap:Envelope>';
 end;
 
 function TProvedorRecife.GeraEnvelopeConsultarSituacaoLoteRPS(
   URLNS: String; CabMsg, DadosMsg, DadosSenha: AnsiString): AnsiString;
 begin
- result := '<?xml version="1.0" encoding="UTF-8"?>' +
-           '<S:Envelope xmlns:S="http://schemas.xmlsoap.org/soap/envelope/" ' +
-                       'xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" ' +
-                       'xmlns:xsd="http://www.w3.org/2001/XMLSchema">' +
-            '<S:Body>' +
-             '<ConsultarSituacaoLoteRpsEnvio xmlns="' + URLNS + '">' +
-              '<MensagemXML>' +
+ result := '<?xml version="1.0" encoding="utf-8"?>' +
+           '<soap:Envelope xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" ' +
+                          'xmlns:xsd="http://www.w3.org/2001/XMLSchema" ' +
+                          'xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/">' +
+            '<soap:Body>' +
+             '<ConsultarSituacaoLoteRpsRequest xmlns="' + URLNS + '/">' +
+              '<inputXML>' +
                 StringReplace(StringReplace(DadosMsg, '<', '&lt;', [rfReplaceAll]), '>', '&gt;', [rfReplaceAll]) +
-              '</MensagemXML>' +
-             '</ConsultarSituacaoLoteRpsEnvio>' +
-            '</S:Body>' +
-           '</S:Envelope>';
+              '</inputXML>' +
+             '</ConsultarSituacaoLoteRpsRequest>' +
+            '</soap:Body>' +
+           '</soap:Envelope>';
 end;
 
 function TProvedorRecife.GeraEnvelopeConsultarLoteRPS(URLNS: String;
   CabMsg, DadosMsg, DadosSenha: AnsiString): AnsiString;
 begin
- result := '<?xml version="1.0" encoding="UTF-8"?>' +
-           '<S:Envelope xmlns:S="http://schemas.xmlsoap.org/soap/envelope/" ' +
-                       'xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" ' +
-                       'xmlns:xsd="http://www.w3.org/2001/XMLSchema">' +
-            '<S:Body>' +
-             '<ConsultarLoteRpsEnvio xmlns="' + URLNS + '">' +
-              '<MensagemXML>' +
+ result := '<?xml version="1.0" encoding="utf-8"?>' +
+           '<soap:Envelope xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" ' +
+                          'xmlns:xsd="http://www.w3.org/2001/XMLSchema" ' +
+                          'xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/">' +
+            '<soap:Body>' +
+             '<ConsultarLoteRpsRequest xmlns="' + URLNS + '/">' +
+              '<inputXML>' +
                 StringReplace(StringReplace(DadosMsg, '<', '&lt;', [rfReplaceAll]), '>', '&gt;', [rfReplaceAll]) +
-              '</MensagemXML>' +
-             '</ConsultarLoteRpsEnvio>' +
-            '</S:Body>' +
-           '</S:Envelope>';
+              '</inputXML>' +
+             '</ConsultarLoteRpsRequest>' +
+            '</soap:Body>' +
+           '</soap:Envelope>';
 end;
 
 function TProvedorRecife.GeraEnvelopeConsultarNFSeporRPS(URLNS: String;
   CabMsg, DadosMsg, DadosSenha: AnsiString): AnsiString;
 begin
- result := '<?xml version="1.0" encoding="UTF-8"?>' +
-           '<S:Envelope xmlns:S="http://schemas.xmlsoap.org/soap/envelope/" ' +
-                       'xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" ' +
-                       'xmlns:xsd="http://www.w3.org/2001/XMLSchema">' +
-            '<S:Body>' +
-             '<ConsultarNfseRpsEnvio xmlns="' + URLNS + '">' +
-              '<MensagemXML>' +
+ result := '<?xml version="1.0" encoding="utf-8"?>' +
+           '<soap:Envelope xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" ' +
+                          'xmlns:xsd="http://www.w3.org/2001/XMLSchema" ' +
+                          'xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/">' +
+            '<soap:Body>' +
+             '<ConsultarNfsePorRpsRequest xmlns="' + URLNS + '/">' +
+              '<inputXML>' +
                 StringReplace(StringReplace(DadosMsg, '<', '&lt;', [rfReplaceAll]), '>', '&gt;', [rfReplaceAll]) +
-              '</MensagemXML>' +
-             '</ConsultarNfseRpsEnvio>' +
-            '</S:Body>' +
-           '</S:Envelope>';
+              '</inputXML>' +
+             '</ConsultarNfsePorRpsRequest>' +
+            '</soap:Body>' +
+           '</soap:Envelope>';
 end;
 
 function TProvedorRecife.GeraEnvelopeConsultarNFSe(URLNS: String; CabMsg,
   DadosMsg, DadosSenha: AnsiString): AnsiString;
 begin
- result := '<?xml version="1.0" encoding="UTF-8"?>' +
-           '<S:Envelope xmlns:S="http://schemas.xmlsoap.org/soap/envelope/" ' +
-                       'xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" ' +
-                       'xmlns:xsd="http://www.w3.org/2001/XMLSchema">' +
-            '<S:Body>' +
-             '<ConsultarNfseEnvio xmlns="' + URLNS + '">' +
-              '<MensagemXML>' +
+ result := '<?xml version="1.0" encoding="utf-8"?>' +
+           '<soap:Envelope xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" ' +
+                          'xmlns:xsd="http://www.w3.org/2001/XMLSchema" ' +
+                          'xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/">' +
+            '<soap:Body>' +
+             '<ConsultarNfseRequest xmlns="' + URLNS + '/">' +
+              '<inputXML>' +
                 StringReplace(StringReplace(DadosMsg, '<', '&lt;', [rfReplaceAll]), '>', '&gt;', [rfReplaceAll]) +
-              '</MensagemXML>' +
-             '</ConsultarNfseEnvio>' +
-            '</S:Body>' +
-           '</S:Envelope>';
+              '</inputXML>' +
+             '</ConsultarNfseRequest>' +
+            '</soap:Body>' +
+           '</soap:Envelope>';
 end;
 
 function TProvedorRecife.GeraEnvelopeCancelarNFSe(URLNS: String; CabMsg,
   DadosMsg, DadosSenha: AnsiString): AnsiString;
 begin
- result := '<?xml version="1.0" encoding="UTF-8"?>' +
-           '<S:Envelope xmlns:S="http://schemas.xmlsoap.org/soap/envelope/" ' +
-                       'xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" ' +
-                       'xmlns:xsd="http://www.w3.org/2001/XMLSchema">' +
-            '<S:Body>' +
-             '<CancelarNfseEnvio xmlns="' + URLNS + '">' +
-              '<MensagemXML>' +
+ result := '<?xml version="1.0" encoding="utf-8"?>' +
+           '<soap:Envelope xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" ' +
+                          'xmlns:xsd="http://www.w3.org/2001/XMLSchema" ' +
+                          'xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/">' +
+            '<soap:Body>' +
+             '<CancelarNfseRequest xmlns="' + URLNS + '/">' +
+              '<inputXML>' +
                 StringReplace(StringReplace(DadosMsg, '<', '&lt;', [rfReplaceAll]), '>', '&gt;', [rfReplaceAll]) +
-              '</MensagemXML>' +
-             '</CancelarNfseEnvio>' +
-            '</S:Body>' +
-           '</S:Envelope>';
+              '</inputXML>' +
+             '</CancelarNfseRequest>' +
+            '</soap:Body>' +
+           '</soap:Envelope>';
 end;
 
 function TProvedorRecife.GeraEnvelopeRecepcionarSincrono(URLNS: String;
   CabMsg, DadosMsg, DadosSenha: AnsiString): AnsiString;
 begin
  Result := '';
+ raise Exception.Create( 'Opção não implementada para este provedor.' );
 end;
 
 function TProvedorRecife.GeraEnvelopeGerarNFSe(URLNS: String; CabMsg,
   DadosMsg, DadosSenha: AnsiString): AnsiString;
 begin
- Result := '';
- raise Exception.Create( 'Opção não implementada para este provedor.' );
+ result := '<?xml version="1.0" encoding="utf-8"?>' +
+           '<soap:Envelope xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" ' +
+                          'xmlns:xsd="http://www.w3.org/2001/XMLSchema" ' +
+                          'xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/">' +
+            '<soap:Body>' +
+             '<GerarNfseRequest xmlns="' + URLNS + '/">' +
+              '<inputXML>' +
+                StringReplace(StringReplace(DadosMsg, '<', '&lt;', [rfReplaceAll]), '>', '&gt;', [rfReplaceAll]) +
+              '</inputXML>' +
+             '</GerarNfseRequest>' +
+            '</soap:Body>' +
+           '</soap:Envelope>';
 end;
 
 function TProvedorRecife.GetSoapAction(Acao: TnfseAcao; NomeCidade: String): String;
 begin
  case Acao of
-   acRecepcionar: Result := 'http://www.abrasf.org.br/ABRASF/arquivos/nfse.xsd/WSNacional/RecepcionarLoteRps';
-   acConsSit:     Result := 'http://www.abrasf.org.br/ABRASF/arquivos/nfse.xsd/WSNacional/ConsultarSituacaoLoteRps';
-   acConsLote:    Result := 'http://www.abrasf.org.br/ABRASF/arquivos/nfse.xsd/WSNacional/ConsultarLoteRps';
-   acConsNFSeRps: Result := 'http://www.abrasf.org.br/ABRASF/arquivos/nfse.xsd/WSNacional/ConsultarNfsePorRps';
-   acConsNFSe:    Result := 'http://www.abrasf.org.br/ABRASF/arquivos/nfse.xsd/WSNacional/ConsultarNfse';
-   acCancelar:    Result := 'http://www.abrasf.org.br/ABRASF/arquivos/nfse.xsd/WSNacional/CancelarNfse';
-   acGerar:       Result := '';
+   acRecepcionar: Result := 'http://nfse.recife.pe.gov.br/RecepcionarLoteRps';
+   acConsSit:     Result := 'http://nfse.recife.pe.gov.br/ConsultarSituacaoLoteRps';
+   acConsLote:    Result := 'http://nfse.recife.pe.gov.br/ConsultarLoteRps';
+   acConsNFSeRps: Result := 'http://nfse.recife.pe.gov.br/ConsultarNfsePorRps';
+   acConsNFSe:    Result := 'http://nfse.recife.pe.gov.br/ConsultarNfse';
+   acCancelar:    Result := 'http://nfse.recife.pe.gov.br/CancelarNfse';
+   acGerar:       Result := 'http://nfse.recife.pe.gov.br/GerarNfse';
  end;
 end;
 
@@ -323,38 +337,14 @@ function TProvedorRecife.GetRetornoWS(Acao: TnfseAcao; RetornoWS: AnsiString): A
 var
  RetWS: AnsiString;
 begin
- case Acao of
-   acRecepcionar: begin
-                   RetWS := SeparaDados( RetornoWS, 'EnviarLoteRpsResposta>' );
-                   RetWS := RetWS + '</EnviarLoteRpsResposta>';
-                   Result := RetWS;
-                  end;
-   acConsSit:     Result := SeparaDados( RetornoWS, 'ConsultarSituacaoLoteRpsResposta' );
-   acConsLote:    Result := SeparaDados( RetornoWS, 'ConsultarLoteRpsRpsResposta' );
-   acConsNFSeRps: begin
-                   RetWS := SeparaDados( RetornoWS, 'ConsultarNfseRpsResposta>' );
-                   RetWS := RetWS + '</ConsultarNfseRpsResposta>';
-                   Result := RetWS;
-                  end;
-   acConsNFSe:    begin
-                   RetWS := SeparaDados( RetornoWS, 'ConsultarNfseResposta>' );
-                   RetWS := RetWS + '</ConsultarNfseResposta>';
-                   Result := RetWS;
-                  end;
-   acCancelar:    begin
-                   RetWS := SeparaDados( RetornoWS, 'CancelarNfseResposta>' );
-                   RetWS := RetWS + '</CancelarNfseResposta>';
-                   Result := RetWS;
-                  end;
-   acGerar:       Result := '';
- end;
+ Result := SeparaDados(RetornoWS, 'outputXML');
 end;
 
 function TProvedorRecife.GeraRetornoNFSe(Prefixo: String;
   RetNFSe: AnsiString; NomeCidade: String): AnsiString;
 begin
  Result := '<?xml version="1.0" encoding="UTF-8"?>' +
-           '<' + Prefixo + 'CompNfse xmlns="http://www.abrasf.org.br/ABRASF/arquivos/">' +
+           '<' + Prefixo + 'CompNfse xmlns="http://www.abrasf.org.br/ABRASF/arquivos/nfse.xsd">' +
              RetNfse +
            '</' + Prefixo + 'CompNfse>';
 end;
@@ -362,7 +352,8 @@ end;
 function TProvedorRecife.GetLinkNFSe(ACodMunicipio, ANumeroNFSe: Integer;
   ACodVerificacao, AInscricaoM: String; AAmbiente: Integer): String;
 begin
- Result := '';
+ Result := 'https://nfse.recife.pe.gov.br/nfse.aspx?ccm=' + AInscricaoM +
+           '&nf=' + IntToStr(ANumeroNFSe) + '&cod=' + ACodVerificacao;
 end;
 
 end.

@@ -2102,9 +2102,6 @@ begin
    if FConfiguracoes.WebServices.Salvar
     then FConfiguracoes.Geral.Save('-xxx1.xml', FDadosMsg);
 
-//   if not (FProvedor in [profintelISS, proVitoria, proPublica]) then
-//    FDadosMsg := TNFSeGerarNFSe(Self).FNotasFiscais.AssinarLoteRps(IntToStr(TNFSeGerarNFSe(Self).NumeroRps), FDadosMSg);
-
    if FConfiguracoes.WebServices.Salvar
     then FConfiguracoes.Geral.Save('-xxx2.xml', FDadosMsg);
 
@@ -2113,7 +2110,7 @@ begin
      if not(NotaUtil.Valida(FDadosMsg, FMsg,
                             FConfiguracoes.Geral.PathSchemas,
                             FConfiguracoes.WebServices.URL,
-                            FConfiguracoes.WebServices.ServicoEnviar,
+                            FConfiguracoes.WebServices.ServicoGerar,
                             FConfiguracoes.WebServices.Prefixo4))
       then raise Exception.Create('Falha na validação do Lote ' +
                      IntToStr(TNFSeGerarNFSe(Self).NumeroRps) + sLineBreak + FMsg);

@@ -596,12 +596,14 @@ begin
   proCoplan,
   proVirtual,
   proFreire,
+  proRecife,
   proSaatri,
   proSisPMJP,
   proFiorilli,
   proPublica,
   proSystemPro,
   proEGoverneISS: Result := TagI + Notas + TagF;
+
   else begin // proWebISS
    DadosMsg := '<' + Prefixo3 + 'LoteRps'+
                  DFeUtil.SeSenao(Identificador <> '', ' ' + Identificador + '="' + NumeroLote + '"', '') +
@@ -643,7 +645,7 @@ begin
 
  if AProvedor in [proNenhum, proAbaco, proBetha, proBetim, proBHIss, proDigifred,
   proEquiplano, {proFiorilli, }proFIssLex, proGinfes, proGovBR, proIssCuritiba,
-  proIssIntel, proIssNet, proNatal, proProdemge, proRecife, proRJ,
+  proIssIntel, proIssNet, proNatal, proProdemge, {proRecife,} proRJ,
   proSimplIss, proThema, proTiplan, proIssDSF, proAgili, proSpeedGov, proPronim, proActcon] then Result := '';
 end;
 
