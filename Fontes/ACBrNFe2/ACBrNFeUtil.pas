@@ -1200,10 +1200,8 @@ begin
   if AModeloDF = moNFe then 
    begin
     case ALayOut of
-      LayNfeRecepcao,
-      LayNfeAutorizacao    : Result := DFeUtil.SeSenao(AAmbiente=1, 'https://nfe.sefaz.ce.gov.br/nfe2/services/NfeRecepcao2',         'https://nfeh.sefaz.ce.gov.br/nfe2/services/NfeRecepcao2');
-      LayNfeRetRecepcao,
-      LayNfeRetAutorizacao : Result := DFeUtil.SeSenao(AAmbiente=1, 'https://nfe.sefaz.ce.gov.br/nfe2/services/NfeRetRecepcao2',      'https://nfeh.sefaz.ce.gov.br/nfe2/services/NfeRetRecepcao2');
+      LayNfeRecepcao       : Result := DFeUtil.SeSenao(AAmbiente=1, 'https://nfe.sefaz.ce.gov.br/nfe2/services/NfeRecepcao2',         'https://nfeh.sefaz.ce.gov.br/nfe2/services/NfeRecepcao2');
+      LayNfeRetRecepcao    : Result := DFeUtil.SeSenao(AAmbiente=1, 'https://nfe.sefaz.ce.gov.br/nfe2/services/NfeRetRecepcao2',      'https://nfeh.sefaz.ce.gov.br/nfe2/services/NfeRetRecepcao2');
       LayNfeCancelamento   : Result := DFeUtil.SeSenao(AAmbiente=1, 'https://nfe.sefaz.ce.gov.br/nfe2/services/NfeCancelamento2',     'https://nfeh.sefaz.ce.gov.br/nfe2/services/NfeCancelamento2');
       LayNfeInutilizacao   : Result := DFeUtil.SeSenao(AAmbiente=1, 'https://nfe.sefaz.ce.gov.br/nfe2/services/NfeInutilizacao2',     'https://nfeh.sefaz.ce.gov.br/nfe2/services/NfeInutilizacao2');
       LayNfeConsulta       : Result := DFeUtil.SeSenao(AAmbiente=1, 'https://nfe.sefaz.ce.gov.br/nfe2/services/NfeConsulta2',         'https://nfeh.sefaz.ce.gov.br/nfe2/services/NfeConsulta2');
@@ -1211,6 +1209,9 @@ begin
       LayNfeCadastro       : Result := DFeUtil.SeSenao(AAmbiente=1, 'https://nfe.sefaz.ce.gov.br/nfe2/services/CadConsultaCadastro2', 'https://nfeh.sefaz.ce.gov.br/nfe2/services/CadConsultaCadastro2');
       LayNFeCCe,
       LayNFeEvento         : Result := DFeUtil.SeSenao(AAmbiente=1, 'https://nfe.sefaz.ce.gov.br/nfe2/services/RecepcaoEvento',       'https://nfeh.sefaz.ce.gov.br/nfe2/services/RecepcaoEvento');
+
+      LayNfeAutorizacao    : Result := DFeUtil.SeSenao(AAmbiente=1, 'https://nfe.sefaz.ce.gov.br/nfe2/services/NfeAutorizacao',       'https://nfeh.sefaz.ce.gov.br/nfe2/services/NfeAutorizacao');
+      LayNfeRetAutorizacao : Result := DFeUtil.SeSenao(AAmbiente=1, 'https://nfe.sefaz.ce.gov.br/nfe2/services/NfeRetAutorizacao',    'https://nfeh.sefaz.ce.gov.br/nfe2/services/NfeRetAutorizacao');
     end;
    end
   else

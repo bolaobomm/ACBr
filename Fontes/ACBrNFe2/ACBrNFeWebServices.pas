@@ -1815,11 +1815,12 @@ begin
   Acao := TStringList.Create;
   Stream := TMemoryStream.Create;
 
-  // Alterado por Italo em 01/04/2014
+  // Alterado por Italo em 05/08/2014
   case FConfiguracoes.Geral.ModeloDF of
    moNFe:  begin
-            if (FConfiguracoes.Geral.VersaoDF = ve310) and not
-               (FConfiguracoes.WebServices.UFCodigo in [23])  then // CE
+//            if (FConfiguracoes.Geral.VersaoDF = ve310) and not
+//               (FConfiguracoes.WebServices.UFCodigo in [23])  then // CE
+            if (FConfiguracoes.Geral.VersaoDF = ve310) then
              begin
                SoapAction := 'http://www.portalfiscal.inf.br/nfe/wsdl/NfeAutorizacao';
                nfeAutorizacaoLote := True;
@@ -1847,19 +1848,6 @@ begin
              end;
            end;
   end;
-  (*
-  if ((FConfiguracoes.Geral.ModeloDF = moNFCe) or (FConfiguracoes.Geral.VersaoDF = ve310)) and not
-     (FConfiguracoes.WebServices.UFCodigo in [23])  then // CE
-   begin
-     SoapAction := 'http://www.portalfiscal.inf.br/nfe/wsdl/NfeAutorizacao';
-     nfeAutorizacaoLote := True;
-   end
-  else
-   begin
-     SoapAction := 'http://www.portalfiscal.inf.br/nfe/wsdl/NfeRecepcao2';
-     nfeAutorizacaoLote := False;
-   end;
-  *)
 
   Texto := '<?xml version="1.0" encoding="utf-8"?>';
   Texto := Texto + '<soap12:Envelope xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap12="http://www.w3.org/2003/05/soap-envelope">';
@@ -2292,51 +2280,40 @@ function TNFeRetRecepcao.Executar: Boolean;
     if assigned(FNFeRetorno) then
        FNFeRetorno.Free;
 
-  // Alterado por Italo em 01/04/2014
-  case FConfiguracoes.Geral.ModeloDF of
-   moNFe:  begin
-            if (FConfiguracoes.Geral.VersaoDF = ve310) and not
-               (FConfiguracoes.WebServices.UFCodigo in [23])  then // CE
-             begin
-               SoapAction := 'http://www.portalfiscal.inf.br/nfe/wsdl/NfeRetAutorizacao';
-               nfeAutorizacaoLote := True;
-             end
-            else
-             begin
-               SoapAction := 'http://www.portalfiscal.inf.br/nfe/wsdl/NfeRetRecepcao2';
-               nfeAutorizacaoLote := False;
+    // Alterado por Italo em 05/08/2014
+    case FConfiguracoes.Geral.ModeloDF of
+     moNFe:  begin
+//              if (FConfiguracoes.Geral.VersaoDF = ve310) and not
+//                 (FConfiguracoes.WebServices.UFCodigo in [23])  then // CE
+              if (FConfiguracoes.Geral.VersaoDF = ve310) then
+               begin
+                 SoapAction := 'http://www.portalfiscal.inf.br/nfe/wsdl/NfeRetAutorizacao';
+                 nfeAutorizacaoLote := True;
+               end
+              else
+               begin
+                 SoapAction := 'http://www.portalfiscal.inf.br/nfe/wsdl/NfeRetRecepcao2';
+                 nfeAutorizacaoLote := False;
+               end;
              end;
-           end;
-           // Até o momento somente as UF: AC-Acre, AM-Amazonas, MA-Maranhão,
-           // MT-Mato Grosso, RN-Rio Grande do Norte, RS-Rio Grande do Sul e
-           // SE-Sergipe participam do projeto da NFC-e
-   moNFCe: begin
-            if (FConfiguracoes.Geral.VersaoDF = ve310) and not
-               (FConfiguracoes.WebServices.UFCodigo in [13])  then // AM
-             begin
-               SoapAction := 'http://www.portalfiscal.inf.br/nfe/wsdl/NfeRetAutorizacao';
-               nfeAutorizacaoLote := True;
-             end
-            else
-             begin
-               SoapAction := 'http://www.portalfiscal.inf.br/nfe/wsdl/NfeRetRecepcao2';
-               nfeAutorizacaoLote := False;
+             // Até o momento somente as UF: AC-Acre, AM-Amazonas, MA-Maranhão,
+             // MT-Mato Grosso, RN-Rio Grande do Norte, RS-Rio Grande do Sul e
+             // SE-Sergipe participam do projeto da NFC-e
+     moNFCe: begin
+              if (FConfiguracoes.Geral.VersaoDF = ve310) and not
+                 (FConfiguracoes.WebServices.UFCodigo in [13])  then // AM
+               begin
+                 SoapAction := 'http://www.portalfiscal.inf.br/nfe/wsdl/NfeRetAutorizacao';
+                 nfeAutorizacaoLote := True;
+               end
+              else
+               begin
+                 SoapAction := 'http://www.portalfiscal.inf.br/nfe/wsdl/NfeRetRecepcao2';
+                 nfeAutorizacaoLote := False;
+               end;
              end;
-           end;
-  end;
-  (*
-    if ((FConfiguracoes.Geral.ModeloDF = moNFCe) or (FConfiguracoes.Geral.VersaoDF = ve310)) and not
-       (FConfiguracoes.WebServices.UFCodigo in [23])  then // CE
-     begin
-       SoapAction := 'http://www.portalfiscal.inf.br/nfe/wsdl/NfeRetAutorizacao';
-       nfeAutorizacaoLote := True;
-     end
-    else
-     begin
-       SoapAction := 'http://www.portalfiscal.inf.br/nfe/wsdl/NfeRetRecepcao2';
-       nfeAutorizacaoLote := False;
-     end;
-  *)
+    end;
+
     Texto := '<?xml version="1.0" encoding="utf-8"?>';
     Texto := Texto + '<soap12:Envelope xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap12="http://www.w3.org/2003/05/soap-envelope">';
     Texto := Texto +   '<soap12:Header>';
@@ -2554,11 +2531,12 @@ begin
   Acao := TStringList.Create;
   Stream := TMemoryStream.Create;
 
-  // Alterado por Italo em 01/04/2014
+  // Alterado por Italo em 05/08/2014
   case FConfiguracoes.Geral.ModeloDF of
    moNFe:  begin
-            if (FConfiguracoes.Geral.VersaoDF = ve310) and not
-               (FConfiguracoes.WebServices.UFCodigo in [23])  then // CE
+//            if (FConfiguracoes.Geral.VersaoDF = ve310) and not
+//               (FConfiguracoes.WebServices.UFCodigo in [23])  then // CE
+            if (FConfiguracoes.Geral.VersaoDF = ve310) then
              begin
                SoapAction := 'http://www.portalfiscal.inf.br/nfe/wsdl/NfeRetAutorizacao';
                nfeAutorizacaoLote := True;
@@ -2586,19 +2564,7 @@ begin
              end;
            end;
   end;
-  (*
-  if ((FConfiguracoes.Geral.ModeloDF = moNFCe) or (FConfiguracoes.Geral.VersaoDF = ve310)) and not
-     (FConfiguracoes.WebServices.UFCodigo in [23])  then // CE
-   begin
-     SoapAction := 'http://www.portalfiscal.inf.br/nfe/wsdl/NfeRetAutorizacao';
-     nfeAutorizacaoLote := True;
-   end
-  else
-   begin
-     SoapAction := 'http://www.portalfiscal.inf.br/nfe/wsdl/NfeRetRecepcao2';
-     nfeAutorizacaoLote := False;
-   end;
-  *)
+
   Texto := '<?xml version="1.0" encoding="utf-8"?>';
   Texto := Texto + '<soap12:Envelope xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap12="http://www.w3.org/2003/05/soap-envelope">';
   Texto := Texto +   '<soap12:Header>';
