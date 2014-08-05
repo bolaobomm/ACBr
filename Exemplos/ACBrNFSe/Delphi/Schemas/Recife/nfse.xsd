@@ -5,7 +5,7 @@
             xmlns:dsig="http://www.w3.org/2000/09/xmldsig#"
             attributeFormDefault="unqualified"
             elementFormDefault="qualified">
-<xsd:import namespace="http://www.w3.org/2000/09/xmldsig#" schemaLocation="xmldsig-core-schema20020212.xsd"/>
+<xsd:import namespace="http://www.w3.org/2000/09/xmldsig#" schemaLocation="xmldsig-core-schema_v01.xsd"/>
 
 <!-- definition of simple elements -->
     <xsd:simpleType name="tsNumeroNfse">
@@ -259,7 +259,6 @@
 	</xsd:simpleType>
 	<xsd:simpleType name="tsIdTag">
 		<xsd:restriction base="xsd:string">
-      <xsd:minLength value="1"/>
       <xsd:maxLength value="255"/>
 		</xsd:restriction>
 	</xsd:simpleType>
@@ -354,7 +353,7 @@
             <xsd:element name="Valores" type="tcValores" minOccurs="1" maxOccurs="1"/>
             <xsd:element name="ItemListaServico" type="tsItemListaServico" minOccurs="1" maxOccurs="1"/>
             <xsd:element name="CodigoCnae" type="tsCodigoCnae" minOccurs="0" maxOccurs="1"/>
-            <xsd:element name="CodigoTributacaoMunicipio" type="tsCodigoTributacao" minOccurs="0" maxOccurs="1"/>
+            <xsd:element name="CodigoTributacaoMunicipio" type="tsCodigoTributacao" minOccurs="1" maxOccurs="1"/>
             <xsd:element name="Discriminacao" type="tsDiscriminacao" minOccurs="1" maxOccurs="1"/>
             <xsd:element name="CodigoMunicipio" type="tsCodigoMunicipioIbge" minOccurs="1" maxOccurs="1"/>
         </xsd:sequence>
@@ -390,12 +389,12 @@
             <xsd:element name="IntermediarioServico" type="tcIdentificacaoIntermediarioServico" minOccurs="0" maxOccurs="1"/>
             <xsd:element name="ConstrucaoCivil" type="tcDadosConstrucaoCivil" minOccurs="0" maxOccurs="1"/>
         </xsd:sequence>
-        <xsd:attribute name="Id" type="tsIdTag" use="required" />
+        <xsd:attribute name="Id" type="tsIdTag" />
     </xsd:complexType>
     <xsd:complexType name="tcRps">
         <xsd:sequence>
             <xsd:element name="InfRps" type="tcInfRps" minOccurs="1" maxOccurs="1"/>
-            <xsd:element ref="dsig:Signature" minOccurs="1" maxOccurs="1" />
+            <xsd:element ref="dsig:Signature" minOccurs="0" maxOccurs="1" />
         </xsd:sequence>
     </xsd:complexType>
     <xsd:complexType name="tcIdentificacaoNfse">
@@ -428,26 +427,26 @@
             <xsd:element name="OrgaoGerador" type="tcIdentificacaoOrgaoGerador" minOccurs="1" maxOccurs="1"/>
             <xsd:element name="ConstrucaoCivil" type="tcDadosConstrucaoCivil" minOccurs="0" maxOccurs="1"/>
         </xsd:sequence>
-        <xsd:attribute name="Id" type="tsIdTag"/>
+        <xsd:attribute name="Id" type="tsIdTag" />
     </xsd:complexType>
     <xsd:complexType name="tcNfse">
         <xsd:sequence>
             <xsd:element name="InfNfse" type="tcInfNfse" minOccurs="1" maxOccurs="1"/>
-            <xsd:element ref="dsig:Signature" minOccurs="1" maxOccurs="2"/>
+            <xsd:element ref="dsig:Signature" minOccurs="0" maxOccurs="2"/>
         </xsd:sequence>
     </xsd:complexType>
 
     <xsd:complexType name="tcInfPedidoCancelamento">
         <xsd:sequence>
             <xsd:element name="IdentificacaoNfse" type="tcIdentificacaoNfse" minOccurs="1" maxOccurs="1"/>
-            <xsd:element name="CodigoCancelamento" type="tsCodigoCancelamentoNfse" minOccurs="1" maxOccurs="1"/>
+            <xsd:element name="CodigoCancelamento" type="tsCodigoCancelamentoNfse" minOccurs="0" maxOccurs="1"/>
         </xsd:sequence>
-        <xsd:attribute name="Id" type="tsIdTag" use="required" />
+        <xsd:attribute name="Id" type="tsIdTag" />
     </xsd:complexType>
     <xsd:complexType name="tcPedidoCancelamento">
         <xsd:sequence>
             <xsd:element name="InfPedidoCancelamento" type="tcInfPedidoCancelamento" minOccurs="1" maxOccurs="1"/>
-            <xsd:element ref="dsig:Signature" minOccurs="1" maxOccurs="1" />
+            <xsd:element ref="dsig:Signature" minOccurs="0" maxOccurs="1" />
         </xsd:sequence>
     </xsd:complexType>
     <xsd:complexType name="tcConfirmacaoCancelamento">
@@ -455,13 +454,13 @@
             <xsd:element name="Pedido" type="tcPedidoCancelamento" minOccurs="1" maxOccurs="1"/>
             <xsd:element name="DataHoraCancelamento" type="xsd:dateTime" minOccurs="1" maxOccurs="1"/>
         </xsd:sequence>
-        <xsd:attribute name="id" type="tsIdTag"/>
+        <xsd:attribute name="Id" type="tsIdTag" />
     </xsd:complexType>
 
     <xsd:complexType name="tcCancelamentoNfse">
         <xsd:sequence>
             <xsd:element name="Confirmacao" type="tcConfirmacaoCancelamento" minOccurs="1" maxOccurs="1"/>
-            <xsd:element ref="dsig:Signature" minOccurs="1" maxOccurs="1"/>
+            <xsd:element ref="dsig:Signature" minOccurs="0" maxOccurs="1"/>
         </xsd:sequence>
     </xsd:complexType>
 
@@ -469,12 +468,12 @@
         <xsd:sequence>
             <xsd:element name="NfseSubstituidora" type="tsNumeroNfse" minOccurs="1" maxOccurs="1"/>
         </xsd:sequence>
-        <xsd:attribute name="id" type="tsIdTag"/>
+        <xsd:attribute name="Id" type="tsIdTag"/>
     </xsd:complexType>
     <xsd:complexType name="tcSubstituicaoNfse">
         <xsd:sequence>
             <xsd:element name="SubstituicaoNfse" type="tcInfSubstituicaoNfse" minOccurs="1" maxOccurs="1"/>
-            <xsd:element ref="dsig:Signature" minOccurs="1" maxOccurs="2"/>
+            <xsd:element ref="dsig:Signature" minOccurs="0" maxOccurs="2"/>
         </xsd:sequence>
     </xsd:complexType>
     <xsd:complexType name="tcCompNfse">
@@ -521,7 +520,7 @@
                 </xsd:complexType>
             </xsd:element>
         </xsd:sequence>
-        <xsd:attribute name="Id" type="tsIdTag" use="required" />
+        <xsd:attribute name="Id" type="tsIdTag" />
     </xsd:complexType>
 
     <xsd:element name="EnviarLoteRpsResposta">
