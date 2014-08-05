@@ -899,7 +899,7 @@ begin
 
   if FProvedor in [proTecnos]
     then begin
-      Gerador.wCampoNFSe(tcStr, '#4', 'IdCidade', 7, 7, 1, NFSe.Servico.CodigoMunicipio);
+      Gerador.wCampoNFSe(tcStr, '#4', 'IdCidade', 7, 7, 1, NFSe.PrestadorServico.Endereco.CodigoMunicipio);
     end;
 
         GerarServicoValores_V2;
