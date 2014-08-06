@@ -2356,6 +2356,8 @@ begin
 
     if (TACBrCTe( FACBrCTe ).Conhecimentos.Count <= 0) then
      begin
+       FRetCTeDFe := '';
+
        if FileExists(PathWithDelim(FConfiguracoes.Geral.PathSalvar)+FCTeChave+'-cte.xml') then
         begin
           AProcCTe := TProcCTe.Create;
@@ -2369,10 +2371,7 @@ begin
             if (FConfiguracoes.Geral.Salvar) and (DFeUtil.NaoEstaVazio(aCTe)) then
               AProcCTe.Gerador.SalvarArquivo(AProcCTe.PathCTe);
 
-            FRetCTeDFe := '';
-
-            if (FConfiguracoes.Arquivos.Salvar) and (DFeUtil.NaoEstaVazio(aCTe)) and
-               (DFeUtil.NaoEstaVazio(SeparaDados(FRetWS, 'procEventoCTe'))) then
+            if (DFeUtil.NaoEstaVazio(aCTe)) and (DFeUtil.NaoEstaVazio(SeparaDados(FRetWS, 'procEventoCTe'))) then
              begin
                Inicio := Pos('<procEventoCTe', FRetWS);
                Fim    := Pos('</retConsSitCTe', FRetWS) -1;
@@ -2392,17 +2391,19 @@ begin
 
                FRetCTeDFe := aCTeDFe;
 
-               if FConfiguracoes.Arquivos.EmissaoPathCTe then
-                 FConfiguracoes.Geral.Save(FCTeChave+'-CTeDFe.xml', aCTeDFe, PathWithDelim(FConfiguracoes.Arquivos.GetPathCTe(TACBrCTe( FACBrCTe ).Conhecimentos.Items[i].CTe.Ide.dhEmi)))
-               else
-                 FConfiguracoes.Geral.Save(FCTeChave+'-CTeDFe.xml', aCTeDFe, PathWithDelim(FConfiguracoes.Arquivos.GetPathCTe));
-
              end;
           finally
             AProcCTe.Free;
           end;
         end;
 
+       if (FConfiguracoes.Arquivos.Salvar) and (FRetCTeDFe <> '') then
+        begin
+          if FConfiguracoes.Arquivos.EmissaoPathCTe then
+            FConfiguracoes.Geral.Save(FCTeChave+'-CTeDFe.xml', FRetCTeDFe, PathWithDelim(FConfiguracoes.Arquivos.GetPathCTe(TACBrCTe( FACBrCTe ).Conhecimentos.Items[i].CTe.Ide.dhEmi)))
+          else
+            FConfiguracoes.Geral.Save(FCTeChave+'-CTeDFe.xml', FRetCTeDFe, PathWithDelim(FConfiguracoes.Arquivos.GetPathCTe));
+        end;
      end;
 
   finally
