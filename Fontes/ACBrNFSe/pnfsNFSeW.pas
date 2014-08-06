@@ -151,7 +151,7 @@ begin
    then Atributo := ' Id="' +  (NFSe.IdentificacaoRps.Numero) + '"';
 
  if (FProvedor <> proIssDsf) and (FProvedor <> proEquiplano) and (FProvedor <> proEgoverneISS) then
-   if (FProvedor in [proGoiania, proProdata, proVitoria, proFiorilli, proVirtual, proPublica, proSystemPro])
+   if (FProvedor in [proGoiania, proProdata, proVitoria, proFiorilli, proVirtual, proPublica{, proSystemPro}])
      then begin
       Gerador.wGrupo('GerarNfseEnvio' + Atributo);
 	    Gerador.wGrupo('Rps');
@@ -255,7 +255,7 @@ begin
    end;
 
  if (FProvedor <> proIssDsf) and (FProvedor <> proEquiplano) and (FProvedor <> proEgoverneISS) then
-   if (FProvedor in [proGoiania, proProdata, proVitoria, proFiorilli, proVirtual, proPublica, proSystemPro])
+   if (FProvedor in [proGoiania, proProdata, proVitoria, proFiorilli, proVirtual, proPublica{, proSystemPro}])
      then begin
       Gerador.wGrupo('/Rps');
       Gerador.wGrupo('/GerarNfseEnvio');
@@ -865,7 +865,7 @@ begin
     Gerador.wGrupoNFSe('/Rps');
 
 
-  if FProvedor in [profintelISS,proSystemPro]
+  if FProvedor in [profintelISS, proSystemPro]
     then begin
       GerarListaServicos;
 
@@ -881,9 +881,12 @@ begin
           proMitra,
           proGovDigital,
           proISSDigital,
-          proISSe, proSystemPro: Gerador.wCampoNFSe(tcDat,    '#4', 'Competencia', 10, 10, 1, NFSe.Competencia, DSC_DEMI);
+          proISSe,
+          proSystemPro: Gerador.wCampoNFSe(tcDat,    '#4', 'Competencia', 10, 10, 1, NFSe.Competencia, DSC_DEMI);
+
           proGoiania,
           proTecnos:  Gerador.wCampoNFSe(tcDatHor, '#4', 'Competencia', 19, 19, 0, NFSe.Competencia, DSC_DEMI);
+          
           else        Gerador.wCampoNFSe(tcStr,    '#4', 'Competencia', 19, 19, 1, NFSe.Competencia, DSC_DEMI);
          end
         end

@@ -191,17 +191,17 @@ begin
  xmlns := ' xmlns="http://www.abrasf.org.br/nfse.xsd">';
                     
  case Acao of
-   acRecepcionar: Result := '<' + Prefixo3 + '' + xmlns;
+   acRecepcionar: Result := '<' + Prefixo3 + 'EnviarLoteRpsEnvio' + xmlns;
    acConsSit:     Result := '<' + Prefixo3 + '' + xmlns;
-   acConsLote:    Result := '<' + Prefixo3 + '' + xmlns;
-   acConsNFSeRps: Result := '<' + Prefixo3 + '' + xmlns;
+   acConsLote:    Result := '<' + Prefixo3 + 'ConsultarLoteRpsEnvio' + xmlns;
+   acConsNFSeRps: Result := '<' + Prefixo3 + 'ConsultarNfseRpsEnvio' + xmlns;
    acConsNFSe:    Result := '<' + Prefixo3 + 'ConsultarNfseFaixaEnvio' + xmlns;
    acCancelar:    Result := '<' + Prefixo3 + 'CancelarNfseEnvio' + xmlns +
                              '<' + Prefixo3 + 'Pedido>' +
                               '<' + Prefixo4 + 'InfPedidoCancelamento' +
                                  DFeUtil.SeSenao(Identificador <> '', ' ' + Identificador + '="' + URI + '"', '') + '>';
-   acGerar:       Result := ''; //'<' + Prefixo3 + 'GerarNfseEnvio' + xmlns;
-   acRecSincrono: Result := '<' + Prefixo3 + '' + xmlns; //???
+   acGerar:       Result := '<' + Prefixo3 + 'GerarNfseEnvio' + xmlns;
+   acRecSincrono: Result := '<' + Prefixo3 + 'EnviarLoteRpsSincronoEnvio' + xmlns;
  end;
  
 end;
@@ -224,15 +224,15 @@ end;
 function TProvedorSystemPro.Gera_TagF(Acao: TnfseAcao; Prefixo3: String): AnsiString;
 begin
  case Acao of
-   acRecepcionar: Result := '';
+   acRecepcionar: Result := '</' + Prefixo3 + 'EnviarLoteRpsEnvio>';
    acConsSit:     Result := '';
-   acConsLote:    Result := '';
-   acConsNFSeRps: Result := '';
+   acConsLote:    Result := '</' + Prefixo3 + 'ConsultarLoteRpsEnvio>';
+   acConsNFSeRps: Result := '</' + Prefixo3 + 'ConsultarNfseRpsEnvio>';
    acConsNFSe:    Result := '</' + Prefixo3 + 'ConsultarNfseFaixaEnvio>';
    acCancelar:    Result := '</' + Prefixo3 + 'Pedido>' +
                             '</' + Prefixo3 + 'CancelarNfseEnvio>';
-   acGerar:       Result := ''; //'</' + Prefixo3 + 'GerarNfseEnvio>';
-   acRecSincrono: Result := '';
+   acGerar:       Result := '</' + Prefixo3 + 'GerarNfseEnvio>';
+   acRecSincrono: Result := '</' + Prefixo3 + 'EnviarLoteRpsSincronoEnvio>';
  end;
 end;
 
@@ -274,23 +274,23 @@ end;
 function TProvedorSystemPro.GeraEnvelopeGerarNFSe(URLNS: String; CabMsg,
   DadosMsg, DadosSenha: AnsiString): AnsiString;
 begin
-  result := '<?xml version="1.0" encoding="UTF-8"?>'
-           +'<S:Envelope xmlns:S="http://schemas.xmlsoap.org/soap/envelope/" xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/">'
-           +'<SOAP-ENV:Header/>'
-           +'<S:Body>'
-           +'<ns2:GerarNfse xmlns:ns2="http://NFSe.wsservices.systempro.com.br/">'
-
-           + '<nfseCabecMsg><![CDATA[<?xml version=''1.0'' encoding=''UTF-8''?>'
-           + '<cabecalho xmlns="http://www.abrasf.org.br/nfse.xsd" '
-           + 'versao="0.01">'
-           + '<versaoDados>2.01</versaoDados>'
-           + '</cabecalho>]]></nfseCabecMsg>'
-
-           +'<nfseDadosMsg><![CDATA[' + DadosMsg + ']]></nfseDadosMsg>'
-
-           +'</ns2:GerarNfse>'
-           +'</S:Body>'
-           +'</S:Envelope>';
+  result := '<?xml version="1.0" encoding="UTF-8"?>' +
+            '<S:Envelope xmlns:S="http://schemas.xmlsoap.org/soap/envelope/" ' +
+                        'xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/">' +
+             '<SOAP-ENV:Header/>' +
+             '<S:Body>' +
+              '<ns2:GerarNfse xmlns:ns2="http://NFSe.wsservices.systempro.com.br/">' +
+               '<nfseCabecMsg><![CDATA[<?xml version=''1.0'' encoding=''UTF-8''?>' +
+                '<cabecalho xmlns="http://www.abrasf.org.br/nfse.xsd" versao="0.01">' +
+                '<versaoDados>2.01</versaoDados>' +
+                '</cabecalho>]]>' +
+               '</nfseCabecMsg>' +
+               '<nfseDadosMsg>' +
+                '<![CDATA[' + DadosMsg + ']]>' +
+               '</nfseDadosMsg>' +
+              '</ns2:GerarNfse>' +
+             '</S:Body>' +
+            '</S:Envelope>';
 
 end;
 
