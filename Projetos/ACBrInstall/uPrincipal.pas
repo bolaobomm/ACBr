@@ -520,7 +520,7 @@ var
 begin
   ArqIni := TIniFile.Create(PathArquivoIni);
   try
-    edtDirDestino.Text         := ArqIni.ReadString('CONFIG', 'DiretorioInstalacao', 'C:\ACBr');
+    edtDirDestino.Text         := ArqIni.ReadString('CONFIG', 'DiretorioInstalacao', ExtractFilePath(ParamStr(0)));
     edtPlatform.ItemIndex      := edtPlatform.Items.IndexOf(ArqIni.ReadString('CONFIG', 'Plataforma', 'Win32'));
     edtDelphiVersion.ItemIndex := edtDelphiVersion.Items.IndexOf(ArqIni.ReadString('CONFIG', 'DelphiVersao', ''));
     ckbFecharTortoise.Checked  := ArqIni.ReadBool('CONFIG', 'FecharTortoise', True);
