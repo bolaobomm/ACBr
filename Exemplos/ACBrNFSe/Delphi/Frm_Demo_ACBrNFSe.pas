@@ -432,7 +432,7 @@ begin
      // TnfseTipoRPS = ( trRPS, trNFConjugada, trCupom );
      IdentificacaoRps.Tipo := trRPS;
 
-     DataEmissao := Date;
+     DataEmissao := Now;
 
      // TnfseNaturezaOperacao = ( noTributacaoNoMunicipio, noTributacaoForaMunicipio, noIsencao, noImune, noSuspensaDecisaoJudicial, noSuspensaProcedimentoAdministrativo );
      NaturezaOperacao := noTributacaoNoMunicipio;

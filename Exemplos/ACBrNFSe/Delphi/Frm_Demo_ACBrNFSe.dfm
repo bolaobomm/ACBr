@@ -344,6 +344,7 @@ object frmDemo_ACBrNFSe: TfrmDemo_ACBrNFSe
               'Curitiba/4106902/PR'
               'Diadema/3513801/SP'
               'Duque de Caxias/3301702/RJ'
+              'Erechim/4307005/RS'
               'Estancia Velha/4307609/RS'
               'Eunapolis/2910727/BA'
               'Fazenda Rio Grande/4107652/PR'
