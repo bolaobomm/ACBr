@@ -98,8 +98,10 @@ var
 begin
   { Banestes não usa digitos verificadores para agência e conta }
   cLivreAsbace := copy(ACBrTitulo.NossoNumero,2,8)+
-                  padR(trim(ACBrTitulo.ACBrBoleto.Cedente.Conta)+
-                       trim(ACBrTitulo.ACBrBoleto.Cedente.ContaDigito),11,'0')+
+                  copy(trim(ACBrTitulo.ACBrBoleto.Cedente.Conta), 2, 10)+
+                            ACBrtitulo.ACBrBoleto.Cedente.ContaDigito+
+//                  padR(trim(ACBrTitulo.ACBrBoleto.Cedente.Conta)+
+//                       trim(ACBrTitulo.ACBrBoleto.Cedente.ContaDigito),11,'0')+
                   '4'+
                   IntToStrZero(fpNumero,3);
   cIndice      := '21212121212121212121212';
