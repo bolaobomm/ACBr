@@ -696,6 +696,7 @@ begin
     proPVH,
     proSaatri,
     proSisPMJP,
+    proSystemPro,
     proTecnos,
     ProVirtual,
     proVitoria: Result := LerRPS_ABRASF_V2;
@@ -1479,13 +1480,14 @@ begin
   proPVH,
   proSaatri,
   proSisPMJP,
+  proSystemPro,
   proTecnos,
   ProVirtual,
   proVitoria: Result := LerNFSe_ABRASF_V2;
 
   proIssDsf:  Result := LerNFSe_IssDsf;
 
-  proSystemPro: Result := LerNFSe_ProvedorSysPro;
+//  proSystemPro: Result := LerNFSe_ProvedorSysPro;
 
   proEquiplano: Result := LerNFSe_Equiplano;
  end;
