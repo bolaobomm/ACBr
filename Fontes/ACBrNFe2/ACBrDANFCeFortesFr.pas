@@ -581,7 +581,7 @@ begin
     begin
       PrintIt := True ;
 
-      lObservacoes.Lines.Add( infCpl );
+      lObservacoes.Lines.Add( StringReplace( infCpl, ';', #13, [rfReplaceAll] ) );
     end;
   end;
 end;
