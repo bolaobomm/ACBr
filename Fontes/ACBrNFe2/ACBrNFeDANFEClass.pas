@@ -125,6 +125,8 @@ type
     procedure ImprimirDANFEResumidoPDF(NFE : TNFe = nil); virtual;
     procedure ImprimirEVENTO(NFE : TNFe = nil); virtual;
     procedure ImprimirEVENTOPDF(NFE : TNFe = nil); virtual;
+    procedure ImprimirINUTILIZACAO(NFE : TNFe = nil); virtual;
+    procedure ImprimirINUTILIZACAOPDF(NFE : TNFe = nil); virtual;
   published
     property ACBrNFe : TComponent  read FACBrNFe write SetNFE ;
     property Logo: String read FLogo write FLogo ;
@@ -335,6 +337,16 @@ begin
 end;
 
 procedure TACBrNFeDANFEClass.ImprimirEVENTOPDF(NFE: TNFe);
+begin
+  ErroAbstract('ImprimirPDF');
+end;
+
+procedure TACBrNFeDANFEClass.ImprimirINUTILIZACAO(NFE: TNFe);
+begin
+  ErroAbstract('Imprimir');
+end;
+
+procedure TACBrNFeDANFEClass.ImprimirINUTILIZACAOPDF(NFE: TNFe);
 begin
   ErroAbstract('ImprimirPDF');
 end;

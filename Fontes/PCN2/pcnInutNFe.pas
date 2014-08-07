@@ -186,6 +186,7 @@ begin
       cStat    := RetInutNFe.cStat;
       xMotivo  := RetInutNFe.xMotivo;
       cUF      := RetInutNFe.cUF;
+      xJust    := RetInutNFe.xJust; //Adicionada para trazer a Justificativa, caso seja um arquivo ProcInut
 
       ano      := RetInutNFe.ano;
       CNPJ     := RetInutNFe.CNPJ;

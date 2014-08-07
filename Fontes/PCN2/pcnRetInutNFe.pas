@@ -43,6 +43,14 @@
 //                                                                            //
 ////////////////////////////////////////////////////////////////////////////////
 
+//////////////////////////////////////////////
+// 07/08/2014 JOAO PAULO DA SIVA LEAO
+//   Criado o campo xJUST para trazer a justificativa, caso seja um arquivo procInut
+//   E corrigido a falha da leitura de um arquivo procInut que não trazia os dados
+//     do retorno corretamente, devido a seguinte linha
+//           if leitor.rExtrai(1, 'infInut') <> '' then
+//////////////////////////////////////
+
 unit pcnRetInutNFe;
 
 interface uses
@@ -57,6 +65,7 @@ type
     FLeitor: TLeitor;
     FcStat: integer;
     FxMotivo: string;
+    FxJust: string;  //Criado para Pegar a Justificativa caso, esteja lendo um arquivo ProcInut
     FcUF: integer;
     Fano: integer;
     FCNPJ: string;
@@ -76,6 +85,7 @@ type
     property verAplic: string read FverAplic write FverAplic;
     property cStat: integer read FcStat write FcStat;
     property xMotivo: string read FxMotivo write FxMotivo;
+    property xJust: string read FxJust write FxJust;
     property cUF: integer read FcUF write FcUF;
     property ano: integer read Fano write Fano;
     property CNPJ: string read FCNPJ write FCNPJ;
@@ -114,10 +124,7 @@ begin
       (*DR06 *)FverAplic := Leitor.rCampo(tcStr, 'verAplic');
       (*DR07 *)FcStat := Leitor.rCampo(tcInt, 'cStat');
 
-      if leitor.rExtrai(1, 'infInut') <> '' then
-       (*DR08 *)FxMotivo := Leitor.rCampo(tcStr, 'xJust')
-      else
-       (*DR08 *)FxMotivo := Leitor.rCampo(tcStr, 'xMotivo');
+      (*DR08 *)FxMotivo := Leitor.rCampo(tcStr, 'xMotivo');
 
       (*DR09 *)FcUF := Leitor.rCampo(tcInt, 'cUF');
       (*DR10 *)Fano := Leitor.rCampo(tcInt, 'ano');
@@ -128,6 +135,11 @@ begin
       (*DR15 *)FnNFFin := Leitor.rCampo(tcInt, 'nNFFin');
       (*DR16 *)FdhRecbto := Leitor.rCampo(tcDatHor, 'dhRecbto');
       (*DR17 *)FnProt := Leitor.rCampo(tcStr, 'nProt');
+
+      //Criado pegar a Justificativa, caso seja um arquivo ProcInut
+      if leitor.rExtrai(1, 'infInut') <> '' then
+          FxJust := Leitor.rCampo(tcStr, 'xJust');
+
       Result := True;
     end;
   except

@@ -76,6 +76,8 @@ type
     procedure ImprimirDANFEPDF(NFE : TNFe = nil); override ;
     procedure ImprimirEVENTO(NFE : TNFe = nil); override ;
     procedure ImprimirEVENTOPDF(NFE : TNFe = nil); override ;
+    procedure ImprimirINUTILIZACAO(NFE : TNFe = nil); override ;
+    procedure ImprimirINUTILIZACAOPDF(NFE : TNFe = nil); override ;
   published
      property TamanhoCampoCodigo:integer read FTamanhoCampoCodigo write FTamanhoCampoCodigo;
      property TamanhoCampoVlUnit:integer read FTamanhoCampoVlUnit write FTamanhoCampoVlUnit;
@@ -349,6 +351,118 @@ begin
       NomeArq := PathWithDelim(Self.PathPDF)+NomeArq+'evento.pdf';
 
       ImprimirEventoRave(TACBrNFe(ACBrNFe),
+                       Site,
+                       Email,
+                       Fax,
+                       Sistema,
+                       Usuario,
+                       SeSenaoJPEG(ExisteLogoMarca,LogoMarcaEmpresa,nil),
+                       DFeUtil.SeSenao((TipoDANFE=tiRetrato),poPortrait,poLandScape),
+                       tsPDF,
+                       MostrarStatus,
+                       MostrarSetup,
+                       NumCopias,
+                       Impressora,
+                       NomeArq,
+                       MargemInferior*10,
+                       MargemSuperior*10,
+                       MargemEsquerda*10,
+                       MargemDireita*10,
+                       TamanhoFonte_DemaisCampos,
+                       EspessuraBorda,
+                       FormularioContinuo,
+                       ExpandirLogoMarca,
+                       NFe);
+    finally
+      LogoMarcaEmpresa.Free;
+    end;
+end;
+
+procedure TACBrNFeDANFERaveCB.ImprimirINUTILIZACAO(NFE: TNFe);
+var
+ LogoMarcaEmpresa:TJPEGImage;
+ ExisteLogoMarca: Boolean;
+ vStringStream: TStringStream;
+begin
+    ExisteLogoMarca:=True;
+    LogoMarcaEmpresa:=TJPEGImage.Create;
+    try
+      if DFeUtil.NaoEstaVazio(Logo) then
+       begin
+         if FileExists(Logo) then
+            LogoMarcaEmpresa.LoadFromFile(Logo)
+         else
+         begin
+            vStringStream:= TStringStream.Create(Logo);
+            try
+               LogoMarcaEmpresa.LoadFromStream(vStringStream);
+            finally
+               vStringStream.Free;
+            end;
+         end;
+       end
+       else
+        ExisteLogoMarca:=False;
+
+      ImprimirInutilizacaoRave(TACBrNFe(ACBrNFe),
+                       Site,
+                       Email,
+                       Fax,
+                       Sistema,
+                       Usuario,
+                       SeSenaoJPEG(ExisteLogoMarca,LogoMarcaEmpresa,nil),
+                       DFeUtil.SeSenao((TipoDANFE=tiRetrato),poPortrait,poLandScape),
+                       DFeUtil.SeSenao(MostrarPreview,tsPreview,tsPrint),
+                       MostrarStatus,
+                       MostrarSetup,
+                       NumCopias,
+                       Impressora,
+                       '',
+                       MargemInferior*10,
+                       MargemSuperior*10,
+                       MargemEsquerda*10,
+                       MargemDireita*10,
+                       TamanhoFonte_DemaisCampos,
+                       EspessuraBorda,
+                       FormularioContinuo,
+                       ExpandirLogoMarca,
+                       NFe);
+    finally
+      LogoMarcaEmpresa.Free;
+    end;
+end;
+
+procedure TACBrNFeDANFERaveCB.ImprimirINUTILIZACAOPDF(NFE: TNFe);
+var
+ LogoMarcaEmpresa:TJPEGImage;
+ ExisteLogoMarca: Boolean;
+ vStringStream: TStringStream;
+ NomeArq : String;
+begin
+    ExisteLogoMarca:=True;
+    LogoMarcaEmpresa:=TJPEGImage.Create;
+    try
+      if DFeUtil.NaoEstaVazio(Logo) then
+       begin
+         if FileExists(Logo) then
+            LogoMarcaEmpresa.LoadFromFile(Logo)
+         else
+         begin
+            vStringStream:= TStringStream.Create(Logo);
+            try
+               LogoMarcaEmpresa.LoadFromStream(vStringStream);
+            finally
+               vStringStream.Free;
+            end;
+         end;
+       end
+       else
+        ExisteLogoMarca:=False;
+
+      NomeArq := StringReplace(TACBrNFe(ACBrNFe).InutNFe.ID,'ID', '', [rfIgnoreCase]);
+      NomeArq := PathWithDelim(Self.PathPDF)+NomeArq+'-ProcInutNFe.pdf';
+
+      ImprimirInutilizacaoRave(TACBrNFe(ACBrNFe),
                        Site,
                        Email,
                        Fax,

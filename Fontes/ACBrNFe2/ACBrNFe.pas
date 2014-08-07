@@ -146,6 +146,8 @@ type
 
     procedure ImprimirEvento;
     procedure ImprimirEventoPDF;
+    procedure ImprimirInutilizacao;
+    procedure ImprimirInutilizacaoPDF;
     procedure EnviarEmailEvento(const sSmtpHost,
                                 sSmtpPort,
                                 sSmtpUser,
@@ -515,6 +517,22 @@ begin
      raise EACBrNFeException.Create('Componente DANFE não associado.')
   else
      DANFE.ImprimirEVENTOPDF(nil);
+end;
+
+procedure TACBrNFe.ImprimirInutilizacao;
+begin
+  if not Assigned( DANFE ) then
+     raise EACBrNFeException.Create('Componente DANFE não associado.')
+  else
+     DANFE.ImprimirINUTILIZACAO(nil);
+end;
+
+procedure TACBrNFe.ImprimirInutilizacaoPDF;
+begin
+  if not Assigned( DANFE ) then
+     raise EACBrNFeException.Create('Componente DANFE não associado.')
+  else
+     DANFE.ImprimirINUTILIZACAOPDF(nil);
 end;
 
 procedure TACBrNFe.EnviarEmailNormal(const sSmtpHost, sSmtpPort, sSmtpUser,
