@@ -75,6 +75,7 @@ Var wDescricao  : AnsiString ;
     Finalidade  : TACBrECFFinalizaArqMFD;
     TipoDoc     : TACBrECFTipoDocumento;
     TipoDocSet  : TACBrECFTipoDocumentoSet;
+    TipoDocStr, FinalidadeStr: String;
 begin
   with {$IFNDEF NOGUI}FrmACBrMonitor.ACBrECF1 {$ELSE}dm.ACBrECF1 {$ENDIF} do
   begin
@@ -879,39 +880,43 @@ begin
 
         else if Cmd.Metodo = 'arquivomfd_dll' then
          begin
-
            NomeArquivo := AjustaNomeArquivoCmd( Cmd ) ;
+           TipoDoc := docTodos;             { Valor Padrao para Tipo Documento }
+           Finalidade := finMFD;                { Valor Padrao para Finalidade }
 
-           TipoDoc := docTodos; { Valor Padrao para Tipo Documento }
-           Finalidade := finMFD;     { Valor Padrao para Finalidade }
-         
-		   if Cmd.Params(3) <> '' then
-			 if StrIsNumber(Cmd.Params(3)) then
-			   TipoDoc := TACBrECFTipoDocumento(StrToIntDef(Cmd.Params(3), 19))
-			 else
-               TipoDoc := TACBrECFTipoDocumento(GetEnumValue(TypeInfo(TACBrECFTipoDocumento),Cmd.Params(3)));   { Tipo de Documento do rquivoMFD }
+           TipoDocStr    := Trim(Cmd.Params(3));
+           FinalidadeStr := Trim(Cmd.Params(4));
 
-		   if Cmd.Params(4) <> '' then
-		     if StrIsNumber(Cmd.Params(4)) then
- 			   Finalidade := TACBrECFFinalizaArqMFD(StrToIntDef( Cmd.Params(4), 1))
-			 else
-               Finalidade := TACBrECFFinalizaArqMFD(GetEnumValue(TypeInfo(TACBrECFFinalizaArqMFD),Cmd.Params(4)));    { Finalidade do ArquivoMFD }
-           
+           if TipoDocStr <> '' then
+           begin
+              if StrIsNumber(TipoDocStr) then
+                 TipoDoc := TACBrECFTipoDocumento(StrToIntDef(TipoDocStr, 19))
+              else
+                 TipoDoc := TACBrECFTipoDocumento(GetEnumValue(TypeInfo(TACBrECFTipoDocumento),TipoDocStr));   { Tipo de Documento do ArquivoMFD }
+           end ;
 
-            if pos(DateSeparator,Cmd.Params(0)) > 0 then
-               ArquivoMFD_DLL(
-                   StringToDateTime(Cmd.Params(0)),                { Dt.Inicial }
-                   StringToDateTime(Cmd.Params(1)),                  { Dt.Final }
-                   NomeArquivo,                               { Nome do Arquivo }
-                   [TipoDoc],                               { Tipo de Documento }
-                   Finalidade)                                     { Finalidade }
-            else
-               ArquivoMFD_DLL(
-                   StrToInt(Trim(Cmd.Params(0))),                  { COOInicial }
-                   StrToInt(Trim(Cmd.Params(1))),                    { COOFinal }
-                   NomeArquivo,                               { Nome do Arquivo }
-                   [TipoDoc],                               { Tipo de Documento }
-                   Finalidade);                                    { Finalidade }
+           if FinalidadeStr <> '' then
+           begin
+              if StrIsNumber(FinalidadeStr) then
+                 Finalidade := TACBrECFFinalizaArqMFD(StrToIntDef( FinalidadeStr, 1))
+              else
+                 Finalidade := TACBrECFFinalizaArqMFD(GetEnumValue(TypeInfo(TACBrECFFinalizaArqMFD),FinalidadeStr));    { Finalidade do ArquivoMFD }
+           end ;
+
+           if pos(DateSeparator,Cmd.Params(0)) > 0 then
+              ArquivoMFD_DLL(
+                  StringToDateTime(Cmd.Params(0)),                { Dt.Inicial }
+                  StringToDateTime(Cmd.Params(1)),                  { Dt.Final }
+                  NomeArquivo,                               { Nome do Arquivo }
+                  [TipoDoc],                               { Tipo de Documento }
+                  Finalidade)                                     { Finalidade }
+           else
+              ArquivoMFD_DLL(
+                  StrToInt(Trim(Cmd.Params(0))),                  { COOInicial }
+                  StrToInt(Trim(Cmd.Params(1))),                    { COOFinal }
+                  NomeArquivo,                               { Nome do Arquivo }
+                  [TipoDoc],                               { Tipo de Documento }
+                  Finalidade);                                    { Finalidade }
          end
 
         else if Cmd.Metodo = 'espelhomfd_dll' then
