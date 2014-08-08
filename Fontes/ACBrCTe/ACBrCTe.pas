@@ -71,7 +71,7 @@ const
 {$ENDIF}
 {$IFDEF PL_200}
 const
-  ACBRCTE_VERSAO = '0.7.0a XML 2.00';
+  ACBRCTE_VERSAO = '0.8.0 XML 2.00';
 {$ENDIF}
 
 type
@@ -152,8 +152,11 @@ type
     property Status: TStatusACBrCTe        read FStatus;
 
     procedure SetStatus(const stNewStatus: TStatusACBrCTe);
+
     procedure ImprimirEvento;
     procedure ImprimirEventoPDF;
+    procedure ImprimirInutilizacao;
+    procedure ImprimirInutilizacaoPDF;
 
     procedure EnviarEmailEvento(const sSmtpHost,
                                       sSmtpPort,
@@ -648,6 +651,22 @@ begin
      raise EACBrCTeException.Create('Componente DACTE não associado.')
   else
      DACTE.ImprimirEVENTOPDF(nil);
+end;
+
+procedure TACBrCTe.ImprimirInutilizacao;
+begin
+  if not Assigned(DACTE) then
+     raise EACBrCTeException.Create('Componente DACTE não associado.')
+  else
+     DACTE.ImprimirINUTILIZACAO(nil);
+end;
+
+procedure TACBrCTe.ImprimirInutilizacaoPDF;
+begin
+  if not Assigned(DACTE) then
+     raise EACBrCTeException.Create('Componente DACTE não associado.')
+  else
+     DACTE.ImprimirINUTILIZACAOPDF(nil);
 end;
 
 procedure TACBrCTe.EnviarEmailEvento(const sSmtpHost, sSmtpPort, sSmtpUser,

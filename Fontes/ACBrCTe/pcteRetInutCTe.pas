@@ -54,11 +54,13 @@ type
 
   TRetInutCTe = class(TPersistent)
   private
+    FId: String;
     FtpAmb: TpcnTipoAmbiente;
     FverAplic: String;
     FLeitor: TLeitor;
     FcStat: Integer;
     FxMotivo: String;
+    FxJust: String;
     FcUF: Integer;
     Fano: Integer;
     FCNPJ: String;
@@ -74,10 +76,12 @@ type
     function LerXml: boolean;
   published
     property Leitor: TLeitor         read FLeitor   write FLeitor;
+    property Id: String              read FId       write FId;
     property tpAmb: TpcnTipoAmbiente read FtpAmb    write FtpAmb;
     property verAplic: String        read FverAplic write FverAplic;
     property cStat: Integer          read FcStat    write FcStat;
     property xMotivo: String         read FxMotivo  write FxMotivo;
+    property xJust: String           read FxJust    write FxJust;
     property cUF: Integer            read FcUF      write FcUF;
     property ano: Integer            read Fano      write Fano;
     property CNPJ: String            read FCNPJ     write FCNPJ;
@@ -110,6 +114,11 @@ var
 begin
   Result := False;
   try
+    if (leitor.rExtrai(1, 'inutCTe') <> '') then
+    begin
+      FId := Leitor.rAtributo('Id=');
+    end;
+
     if (leitor.rExtrai(1, 'retInutCTe') <> '') or (leitor.rExtrai(1, 'infInut') <> '') then
     begin
       (*DR05 *)FtpAmb    := StrToTpAmb(ok, Leitor.rCampo(tcStr, 'tpAmb'));
@@ -129,6 +138,10 @@ begin
         (*DR16 *)FdhRecbto := Leitor.rCampo(tcDatHor, 'dhRecbto');
         (*DR17 *)FnProt    := Leitor.rCampo(tcStr, 'nProt');
       end;
+
+      if leitor.rExtrai(1, 'infInut') <> '' then
+        FxJust := Leitor.rCampo(tcStr, 'xJust');
+
       Result := True;
     end;
   except

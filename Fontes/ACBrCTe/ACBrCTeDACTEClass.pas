@@ -54,7 +54,7 @@ uses
   pcteCTE, pcnConversao;
 
 type
-  TACBrCteDACTEClass = class( TComponent )
+  TACBrCTeDACTEClass = class(TComponent)
    private
     procedure SetCTE(const Value: TComponent);
     procedure ErroAbstract(NomeProcedure: String);
@@ -96,6 +96,8 @@ type
     procedure ImprimirDACTEPDF(CTE: TCTE = nil); virtual;
     procedure ImprimirEVENTO(CTE: TCTe = nil); virtual;
     procedure ImprimirEVENTOPDF(CTE: TCTe = nil); virtual;
+    procedure ImprimirINUTILIZACAO(CTE: TCTe = nil); virtual;
+    procedure ImprimirINUTILIZACAOPDF(CTE: TCTe = nil); virtual;
   published
     property ACBrCTE: TComponent            read FACBrCTE                write SetCTE;
     property Logo: String                   read FLogo                   write FLogo;
@@ -128,9 +130,9 @@ type
 implementation
 
 uses
-  ACBrCTE, ACBrCteUtil, ACBrUtil, ACBrDFeUtil;
+  ACBrCTE, ACBrCTeUtil, ACBrUtil, ACBrDFeUtil;
 
-constructor TACBrCteDACTEClass.Create(AOwner: TComponent);
+constructor TACBrCTeDACTEClass.Create(AOwner: TComponent);
 begin
   inherited create(AOwner);
 
@@ -165,23 +167,23 @@ begin
   FEPECEnviado   := False;
 end;
 
-destructor TACBrCteDACTEClass.Destroy;
+destructor TACBrCTeDACTEClass.Destroy;
 begin
 
   inherited Destroy;
 end;
 
-procedure TACBrCteDACTEClass.ImprimirDACTE(CTE: TCTE = nil);
+procedure TACBrCTeDACTEClass.ImprimirDACTE(CTE: TCTE = nil);
 begin
   ErroAbstract('Imprimir');
 end;
 
-procedure TACBrCteDACTEClass.ImprimirDACTEPDF(CTE: TCTE = nil);
+procedure TACBrCTeDACTEClass.ImprimirDACTEPDF(CTE: TCTE = nil);
 begin
   ErroAbstract('ImprimirPDF');
 end;
 
-procedure TACBrCteDACTEClass.Notification(AComponent: TComponent;
+procedure TACBrCTeDACTEClass.Notification(AComponent: TComponent;
   Operation: TOperation);
 begin
   inherited Notification(AComponent, Operation);
@@ -190,7 +192,7 @@ begin
      FACBrCTE := nil;
 end;
 
-procedure TACBrCteDACTEClass.SetCTE(const Value: TComponent);
+procedure TACBrCTeDACTEClass.SetCTE(const Value: TComponent);
 var
  OldValue: TACBrCTE;
 begin
@@ -218,7 +220,7 @@ begin
   end;
 end;
 
-procedure TACBrCteDACTEClass.ErroAbstract(NomeProcedure: String);
+procedure TACBrCTeDACTEClass.ErroAbstract(NomeProcedure: String);
 begin
   raise Exception.Create(NomeProcedure);
 end;
@@ -236,17 +238,27 @@ begin
   Result := PathWithDelim(FPathArquivos);
 end;
 
-procedure TACBrCteDACTEClass.SetPathArquivos(const Value: String);
+procedure TACBrCTeDACTEClass.SetPathArquivos(const Value: String);
 begin
   FPathArquivos := Value;
 end;
 
-procedure TACBrCteDACTEClass.ImprimirEVENTO(CTE: TCTe);
+procedure TACBrCTeDACTEClass.ImprimirEVENTO(CTE: TCTe);
 begin
   ErroAbstract('Imprimir');
 end;
 
-procedure TACBrCteDACTEClass.ImprimirEVENTOPDF(CTE: TCTe);
+procedure TACBrCTeDACTEClass.ImprimirEVENTOPDF(CTE: TCTe);
+begin
+  ErroAbstract('ImprimirPDF');
+end;
+
+procedure TACBrCTeDACTEClass.ImprimirINUTILIZACAO(CTE: TCTe);
+begin
+  ErroAbstract('Imprimir');
+end;
+
+procedure TACBrCTeDACTEClass.ImprimirINUTILIZACAOPDF(CTE: TCTe);
 begin
   ErroAbstract('ImprimirPDF');
 end;

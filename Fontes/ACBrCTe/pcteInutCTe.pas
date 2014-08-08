@@ -72,7 +72,7 @@ type
     FnCTFin: Integer;
     FxJust: String;
     FIDInutilizacao: String;
-    FInutCTe: TRetInutCTe;
+    FRetInutCTe: TRetInutCTe;
   public
     constructor Create;
     destructor Destroy; override;
@@ -81,18 +81,18 @@ type
     function LerXMLFromString(const AXML: String): boolean;
     function ObterNomeArquivo: String;
   published
-    property Gerador: TGerador       read FGerador write FGerador;
-    property tpAmb: TpcnTipoAmbiente read FtpAmb   write FtpAmb;
-    property cUF: Integer            read FcUF     write FcUF;
-    property ano: Integer            read Fano     write Fano;
-    property CNPJ: String            read FCNPJ    write FCNPJ;
-    property modelo: Integer         read Fmodelo  write Fmodelo;
-    property serie: Integer          read Fserie   write Fserie;
-    property nCTIni: Integer         read FnCTIni  write FnCTIni;
-    property nCTFin: Integer         read FnCTFin  write FnCTFin;
-    property xJust: String           read FxJust   write FxJust;
+    property Gerador: TGerador       read FGerador    write FGerador;
+    property tpAmb: TpcnTipoAmbiente read FtpAmb      write FtpAmb;
+    property cUF: Integer            read FcUF        write FcUF;
+    property ano: Integer            read Fano        write Fano;
+    property CNPJ: String            read FCNPJ       write FCNPJ;
+    property modelo: Integer         read Fmodelo     write Fmodelo;
+    property serie: Integer          read Fserie      write Fserie;
+    property nCTIni: Integer         read FnCTIni     write FnCTIni;
+    property nCTFin: Integer         read FnCTFin     write FnCTFin;
+    property xJust: String           read FxJust      write FxJust;
     property ID: String              read FIDInutilizacao;
-    property InutCTe: TRetInutCTe    read FInutCTe write FInutCTe;
+    property RetInutCTe: TRetInutCTe read FRetInutCTe write FRetInutCTe;
   end;
 
 implementation
@@ -102,13 +102,13 @@ implementation
 constructor TinutCTe.Create;
 begin
   FGerador := TGerador.Create;
-  FInutCTe := TRetInutCTe.Create;
+  FRetInutCTe := TRetInutCTe.Create;
 end;
 
 destructor TinutCTe.Destroy;
 begin
   FGerador.Free;
-  FInutCTe.Free;
+  FRetInutCTe.Free;
   inherited;
 end;
 
@@ -166,32 +166,34 @@ end;
 
 function TinutCTe.LerXMLFromString(const AXML: String): boolean;
 var
-  RetInutCTe: TRetInutCTe;
+  RetornoInutCTe: TRetInutCTe;
 begin
-  RetInutCTe := TRetInutCTe.Create;
+  RetornoInutCTe := TRetInutCTe.Create;
   try
-    RetInutCTe.Leitor.Arquivo := AXML;
-    Result := RetInutCTe.LerXml;
+    RetornoInutCTe.Leitor.Arquivo := AXML;
+    Result := RetornoInutCTe.LerXml;
 
-    with FInutCTe do
+    with FRetInutCTe do
      begin
-      tpAmb    := RetInutCTe.tpAmb;
-      verAplic := RetInutCTe.verAplic;
-      cStat    := RetInutCTe.cStat;
-      xMotivo  := RetInutCTe.xMotivo;
-      cUF      := RetInutCTe.cUF;
+      ID       := RetornoInutCTe.Id;
+      tpAmb    := RetornoInutCTe.tpAmb;
+      verAplic := RetornoInutCTe.verAplic;
+      cStat    := RetornoInutCTe.cStat;
+      xMotivo  := RetornoInutCTe.xMotivo;
+      cUF      := RetornoInutCTe.cUF;
+      xJust    := RetornoInutCTe.xJust;
 
-      ano      := RetInutCTe.ano;
-      CNPJ     := RetInutCTe.CNPJ;
-      Modelo   := RetInutCTe.Modelo;
-      Serie    := RetInutCTe.Serie;
-      nCTIni   := RetInutCTe.nCTIni;
-      nCTFin   := RetInutCTe.nCTFin;
-      dhRecbto := RetInutCTe.dhRecbto;
-      nProt    := RetInutCTe.nProt;
+      ano      := RetornoInutCTe.ano;
+      CNPJ     := RetornoInutCTe.CNPJ;
+      Modelo   := RetornoInutCTe.Modelo;
+      Serie    := RetornoInutCTe.Serie;
+      nCTIni   := RetornoInutCTe.nCTIni;
+      nCTFin   := RetornoInutCTe.nCTFin;
+      dhRecbto := RetornoInutCTe.dhRecbto;
+      nProt    := RetornoInutCTe.nProt;
      end;
   finally
-     RetInutCTe.Free;
+     RetornoInutCTe.Free;
   end;
 end;
 
