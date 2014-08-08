@@ -132,6 +132,8 @@ type
     ACBrCTeDACTeQR1: TACBrCTeDACTeQR;
     btnEnviarEventoEmail: TButton;
     btnGerarPDFEvento: TButton;
+    btnImprimirInut: TButton;
+    btnGerarPDFInut: TButton;
     procedure sbtnCaminhoCertClick(Sender: TObject);
     procedure sbtnGetCertClick(Sender: TObject);
     procedure sbtnLogoMarcaClick(Sender: TObject);
@@ -161,6 +163,8 @@ type
     procedure ACBrCTe1GerarLog(const Mensagem: String);
     procedure btnEnviarEventoEmailClick(Sender: TObject);
     procedure btnGerarPDFEventoClick(Sender: TObject);
+    procedure btnImprimirInutClick(Sender: TObject);
+    procedure btnGerarPDFInutClick(Sender: TObject);
     {
     procedure lblMouseEnter(Sender: TObject);
     procedure lblMouseLeave(Sender: TObject);
@@ -2358,6 +2362,34 @@ begin
                              , cbEmailSSL.Checked ); // Auto TLS
     CC.Free;
     Evento.Free;
+  end;
+end;
+
+procedure TfrmDemo_ACBrCTe.btnImprimirInutClick(Sender: TObject);
+begin
+  OpenDialog1.Title := 'Selecione o ProcInutCTe';
+  OpenDialog1.DefaultExt := '*-ProcInutCTe.xml';
+  OpenDialog1.Filter := 'Arquivos ProcInutCTe (*-ProcInutCTe.xml)|*-ProcInutCTe.xml|Arquivos XML (*.xml)|*.xml|Todos os Arquivos (*.*)|*.*';
+  OpenDialog1.InitialDir := ACBrCTe1.Configuracoes.Geral.PathSalvar;
+
+  if OpenDialog1.Execute then
+  begin
+    ACBrCTe1.InutCTe.LerXML(OpenDialog1.FileName);
+    ACBrCTe1.ImprimirInutilizacao;
+  end;
+end;
+
+procedure TfrmDemo_ACBrCTe.btnGerarPDFInutClick(Sender: TObject);
+begin
+  OpenDialog1.Title := 'Selecione o ProcInutCTe';
+  OpenDialog1.DefaultExt := '*-ProcInutCTe.xml';
+  OpenDialog1.Filter := 'Arquivos ProcInutCTe (*-ProcInutCTe.xml)|*-ProcInutCTe.xml|Arquivos XML (*.xml)|*.xml|Todos os Arquivos (*.*)|*.*';
+  OpenDialog1.InitialDir := ACBrCTe1.Configuracoes.Geral.PathSalvar;
+
+  if OpenDialog1.Execute then
+  begin
+    ACBrCTe1.InutCTe.LerXML(OpenDialog1.FileName);
+    ACBrCTe1.ImprimirInutilizacaoPDF;
   end;
 end;
 

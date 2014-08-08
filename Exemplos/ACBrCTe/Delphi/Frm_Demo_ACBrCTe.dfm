@@ -804,7 +804,7 @@ object frmDemo_ACBrCTe: TfrmDemo_ACBrCTe
       TabOrder = 0
       object btnImprimir: TButton
         Left = 8
-        Top = 156
+        Top = 128
         Width = 177
         Height = 25
         Caption = 'Imprimir DACTe'
@@ -839,8 +839,8 @@ object frmDemo_ACBrCTe: TfrmDemo_ACBrCTe
         OnClick = btnStatusServClick
       end
       object btnCancCTe: TButton
-        Left = 9
-        Top = 126
+        Left = 377
+        Top = 94
         Width = 177
         Height = 25
         Caption = 'Cancelamento por Evento'
@@ -885,7 +885,7 @@ object frmDemo_ACBrCTe: TfrmDemo_ACBrCTe
       end
       object btnGerarPDF: TButton
         Left = 192
-        Top = 158
+        Top = 128
         Width = 177
         Height = 25
         Caption = 'Gerar PDF'
@@ -893,8 +893,8 @@ object frmDemo_ACBrCTe: TfrmDemo_ACBrCTe
         OnClick = btnGerarPDFClick
       end
       object btnEnviarEmail: TButton
-        Left = 377
-        Top = 156
+        Left = 376
+        Top = 128
         Width = 177
         Height = 25
         Caption = 'Enviar CTe Email'
@@ -920,8 +920,8 @@ object frmDemo_ACBrCTe: TfrmDemo_ACBrCTe
         OnClick = btnEnvEPECClick
       end
       object btnImprimirEvento: TButton
-        Left = 9
-        Top = 188
+        Left = 8
+        Top = 160
         Width = 177
         Height = 25
         Caption = 'Imprimir Evento'
@@ -947,8 +947,8 @@ object frmDemo_ACBrCTe: TfrmDemo_ACBrCTe
         OnClick = btnConsultarChaveClick
       end
       object btnEnviarEventoEmail: TButton
-        Left = 377
-        Top = 188
+        Left = 376
+        Top = 160
         Width = 177
         Height = 25
         Caption = 'Enviar Evento Email'
@@ -957,12 +957,30 @@ object frmDemo_ACBrCTe: TfrmDemo_ACBrCTe
       end
       object btnGerarPDFEvento: TButton
         Left = 192
-        Top = 190
+        Top = 160
         Width = 177
         Height = 25
         Caption = 'Gerar PDF Evento'
         TabOrder = 17
         OnClick = btnGerarPDFEventoClick
+      end
+      object btnImprimirInut: TButton
+        Left = 8
+        Top = 192
+        Width = 177
+        Height = 25
+        Caption = 'Imprimir Inutiliza'#231#227'o'
+        TabOrder = 18
+        OnClick = btnImprimirInutClick
+      end
+      object btnGerarPDFInut: TButton
+        Left = 192
+        Top = 192
+        Width = 177
+        Height = 25
+        Caption = 'Gerar PDF Inutiliza'#231#227'o'
+        TabOrder = 19
+        OnClick = btnGerarPDFInutClick
       end
     end
     object PageControl2: TPageControl
