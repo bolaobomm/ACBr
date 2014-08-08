@@ -181,6 +181,7 @@ begin
 
     with FInutNFe do
      begin
+      Id       := RetInutNFe.Id;
       tpAmb    := RetInutNFe.tpAmb;
       verAplic := RetInutNFe.verAplic;
       cStat    := RetInutNFe.cStat;

@@ -57,17 +57,20 @@ interface
 uses
  Forms, SysUtils, Classes,
  pcnNFe, pcnConversao, ACBrNFeDANFEClass,
- ACBrNFeDANFeQR, ACBrNFeDAEventoQR;
+ ACBrNFeDANFeQR, ACBrNFeDAEventoQR, ACBrNFeDAInutQR;
+
 type
   TACBrNFeDANFEQR = class( TACBrNFeDANFEClass )
    private
    public
     constructor Create(AOwner: TComponent); override;
     destructor Destroy; override;
-    procedure ImprimirDANFE(NFE : TNFe = nil); override;
-    procedure ImprimirDANFEPDF(NFE : TNFe = nil); override;
-    procedure ImprimirEVENTO(NFe : TNFe = nil); override;
-    procedure ImprimirEVENTOPDF(NFe : TNFe = nil); override;
+    procedure ImprimirDANFE(NFE: TNFe = nil); override;
+    procedure ImprimirDANFEPDF(NFE: TNFe = nil); override;
+    procedure ImprimirEVENTO(NFe: TNFe = nil); override;
+    procedure ImprimirEVENTOPDF(NFe: TNFe = nil); override;
+    procedure ImprimirINUTILIZACAO(NFe: TNFe = nil); override;
+    procedure ImprimirINUTILIZACAOPDF(NFe: TNFe = nil); override;
   end;
 
 implementation
@@ -76,10 +79,11 @@ uses
  StrUtils, Dialogs,
  ACBrUtil, ACBrNFe, ACBrNFeUtil,
  ACBrNFeDANFeQRRetrato, ACBrNFeDANFeQRPaisagem, ACBrNFeDANFeQRSimplificado,
- ACBrNFeDANFeQRNFCe, ACBrNFeDAEventoQRRetrato;
+ ACBrNFeDANFeQRNFCe, ACBrNFeDAEventoQRRetrato, ACBrNFeDAInutQRRetrato;
 
 var
  frmNFeDAEventoQR : TfrmNFeDAEventoQR;
+ frmNFeDAInutQR : TfrmNFeDAInutQR;
 
 constructor TACBrNFeDANFEQR.Create(AOwner: TComponent);
 begin
@@ -426,6 +430,38 @@ begin
     end;
 
   FreeAndNil(frmNFeDAEventoQR);
+end;
+
+procedure TACBrNFeDANFEQR.ImprimirINUTILIZACAO(NFe: TNFe);
+begin
+  frmNFeDAInutQR := TfrmNFeDAInutQRRetrato.Create(Self);
+
+  frmNFeDAInutQR.Imprimir(TACBrNFe(ACBrNFe),
+                          FLogo, FNumCopias, FSistema, FUsuario,
+                          FMostrarPreview, FMargemSuperior,
+                          FMargemInferior, FMargemEsquerda,
+                          FMargemDireita, FImpressora);
+
+  FreeAndNil(frmNFeDAInutQR);
+end;
+
+procedure TACBrNFeDANFEQR.ImprimirINUTILIZACAOPDF(NFe: TNFe);
+var
+ sFile: String;
+begin
+  frmNFeDAInutQR := TfrmNFeDAInutQRRetrato.Create(Self);
+
+  sFile := StringReplace(TACBrNFe(ACBrNFe).InutNFe.ID, 'ID', '', [rfIgnoreCase]);
+  if sFile = '' then
+    sFile := StringReplace(TACBrNFe(ACBrNFe).InutNFe.InutNFe.Id, 'ID', '', [rfIgnoreCase]);
+  sFile := PathWithDelim(Self.PathPDF) + sFile + '-ProcInutNFe.pdf';
+
+  frmNFeDAInutQR.SavePDF(TACBrNFe(ACBrNFe),
+                         FLogo, sFile, FSistema, FUsuario,
+                         FMargemSuperior, FMargemInferior,
+                         FMargemEsquerda, FMargemDireita);
+
+  FreeAndNil(frmNFeDAInutQR);
 end;
 
 end.

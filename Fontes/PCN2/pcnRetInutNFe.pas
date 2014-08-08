@@ -60,6 +60,7 @@ type
 
   TRetInutNFe = class(TPersistent)
   private
+    FId: String;
     FtpAmb: TpcnTipoAmbiente;
     FverAplic: string;
     FLeitor: TLeitor;
@@ -81,6 +82,7 @@ type
     function LerXml: boolean;
   published
     property Leitor: TLeitor read FLeitor write FLeitor;
+    property Id: String              read FId    write FId;
     property tpAmb: TpcnTipoAmbiente read FtpAmb write FtpAmb;
     property verAplic: string read FverAplic write FverAplic;
     property cStat: integer read FcStat write FcStat;
@@ -118,6 +120,11 @@ var
 begin
   Result := False;
   try
+    if (leitor.rExtrai(1, 'inutNFe') <> '') then
+    begin
+      FId := Leitor.rAtributo('Id=');
+    end;
+
     if (leitor.rExtrai(1, 'retInutNFe') <> '') or (leitor.rExtrai(1, 'infInut') <> '') then
     begin
       (*DR05 *)FtpAmb := StrToTpAmb(ok, Leitor.rCampo(tcStr, 'tpAmb'));
