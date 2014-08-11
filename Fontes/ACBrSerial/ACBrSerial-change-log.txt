@@ -97,6 +97,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+Data: 11/08/2014
+-- ACBrECFFiscNet --
+[-] A Elgin K retorna em alguns casos um byte a mais gerando um número de série
+    com 21 caracteres, foi implementado a verificação e remoção se necessário 
+    do byte excedente.
+
 Data: 28/07/2014
 -- ACBrBAL --
 [+] Adicionado mecanismo de Gravação de Log  (por: DSA)
