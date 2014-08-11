@@ -257,7 +257,8 @@ begin
    exit;
   end;
 
- NotasFiscais.Assinar(FConfiguracoes.WebServices.Provedor <> proPublica); // Assina os Rps
+ NotasFiscais.Assinar; 
+// NotasFiscais.Assinar(FConfiguracoes.WebServices.Provedor <> proPublica); // Assina os Rps
 
  Result := WebServices.Envia(ALote);
 

@@ -1973,7 +1973,7 @@ begin
   then FNameSpaceDad := '>'
   else FNameSpaceDad := ' ' + FNameSpaceDad;
 
- if FConfiguracoes.Certificados.AssinaRPS
+ if FConfiguracoes.Certificados.AssinaRPS or FProvedorClass.GetAssinarXML(acGerar)
   then begin
    for i := 0 to TNFSeGerarNFSe(Self).FNotasFiscais.Count-1 do
     begin

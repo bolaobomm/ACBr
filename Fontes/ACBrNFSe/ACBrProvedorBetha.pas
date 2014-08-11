@@ -74,7 +74,7 @@ begin
   then ConfigCidade.NameSpaceEnvelope := 'http://www.betha.com.br/e-nota-contribuinte-ws'
   else ConfigCidade.NameSpaceEnvelope := 'http://www.betha.com.br/e-nota-contribuinte-ws';
 
- ConfigCidade.AssinaRPS  := True;
+ ConfigCidade.AssinaRPS  := False; // True;
  ConfigCidade.AssinaLote := True;
 
  Result := ConfigCidade;
@@ -95,6 +95,7 @@ begin
  ConfigSchema.ServicoConRps   := 'servico_enviar_lote_rps_resposta_v01.xsd';
  ConfigSchema.ServicoConNfse  := 'servico_consultar_nfse_envio_v01.xsd';
  ConfigSchema.ServicoCancelar := 'servico_cancelar_nfse_envio_v01.xsd';
+ ConfigSchema.ServicoGerar    := '';
  ConfigSchema.DefTipos        := '';
 
  Result := ConfigSchema;
@@ -136,7 +137,7 @@ begin
    acConsLote:    Result := False;
    acConsNFSeRps: Result := False;
    acConsNFSe:    Result := False;
-   acCancelar:    Result := False;
+   acCancelar:    Result := True;
    acGerar:       Result := False;
    else           Result := False;
  end;
