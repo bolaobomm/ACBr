@@ -299,7 +299,7 @@ begin
    acConsLote:    Result := SeparaDados( RetornoWS, 'ConsultarLoteRpsRpsResposta' );
    acConsNFSeRps: begin
                    RetWS := SeparaDados( RetornoWS, 'ConsultarNfseRpsResult>' );
-                   RetWS := RetWS + '</ConsultarNfseRpsResult>';
+//                   RetWS := RetWS + '</ConsultarNfseRpsResult>';
                    Result := RetWS;
                   end;
    acConsNFSe:    begin
@@ -314,7 +314,7 @@ begin
                   end;
    acGerar:       begin
                    RetWS := SeparaDados( RetornoWS, 'GerarNfseResult' );
-                   RetWS := RetWS + '</GerarNfseResult>';
+//                   RetWS := RetWS + '</GerarNfseResult>';
                    Result := RetWS;
                   end;
  end;

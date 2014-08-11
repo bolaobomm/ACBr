@@ -418,7 +418,7 @@ function TProvedorFiorilli.GeraRetornoNFSe(Prefixo: String;
   RetNFSe: AnsiString; NomeCidade: String): AnsiString;
 begin
  Result := '<?xml version="1.0" encoding="UTF-8"?>' +
-           '<' + Prefixo + 'CompNfse xmlns="http://www.abrasf.org.br/nfse">' +
+           '<' + Prefixo + 'CompNfse xmlns:ns2="http://www.abrasf.org.br/nfse.xsd">' +
              RetNfse +
            '</' + Prefixo + 'CompNfse>';
 end;
