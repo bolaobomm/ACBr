@@ -72,9 +72,12 @@ begin
 
  case ACodCidade of
   2304400: begin // Fortaleza/CE
+            ConfigCidade.NameSpaceEnvelope := 'http://producao.issfortaleza.com.br';
+            (*
             if AAmbiente = 1
              then ConfigCidade.NameSpaceEnvelope := 'http://producao.issfortaleza.com.br'
              else ConfigCidade.NameSpaceEnvelope := 'http://homologacao.issfortaleza.com.br';
+            *)
            end;
   else     begin // Demais cidades
             if AAmbiente = 1
@@ -121,6 +124,22 @@ begin
  if ACodCidade = 2304400  // Fortaleza/CE
   then begin
    ConfigURL.HomNomeCidade         := '';
+   ConfigURL.HomRecepcaoLoteRPS    := 'http://isshomo.sefin.fortaleza.ce.gov.br:80/grpfor-iss/ServiceGinfesImplService';
+   ConfigURL.HomConsultaLoteRPS    := 'http://isshomo.sefin.fortaleza.ce.gov.br:80/grpfor-iss/ServiceGinfesImplService';
+   ConfigURL.HomConsultaNFSeRPS    := 'http://isshomo.sefin.fortaleza.ce.gov.br:80/grpfor-iss/ServiceGinfesImplService';
+   ConfigURL.HomConsultaSitLoteRPS := 'http://isshomo.sefin.fortaleza.ce.gov.br:80/grpfor-iss/ServiceGinfesImplService';
+   ConfigURL.HomConsultaNFSe       := 'http://isshomo.sefin.fortaleza.ce.gov.br:80/grpfor-iss/ServiceGinfesImplService';
+   ConfigURL.HomCancelaNFSe        := 'http://isshomo.sefin.fortaleza.ce.gov.br:80/grpfor-iss/ServiceGinfesImplService';
+
+   ConfigURL.ProNomeCidade         := '';
+   ConfigURL.ProRecepcaoLoteRPS    := 'https://iss.fortaleza.ce.gov.br/grpfor-iss/ServiceGinfesImplService';
+   ConfigURL.ProConsultaLoteRPS    := 'https://iss.fortaleza.ce.gov.br/grpfor-iss/ServiceGinfesImplService';
+   ConfigURL.ProConsultaNFSeRPS    := 'https://iss.fortaleza.ce.gov.br/grpfor-iss/ServiceGinfesImplService';
+   ConfigURL.ProConsultaSitLoteRPS := 'https://iss.fortaleza.ce.gov.br/grpfor-iss/ServiceGinfesImplService';
+   ConfigURL.ProConsultaNFSe       := 'https://iss.fortaleza.ce.gov.br/grpfor-iss/ServiceGinfesImplService';
+   ConfigURL.ProCancelaNFSe        := 'https://iss.fortaleza.ce.gov.br/grpfor-iss/ServiceGinfesImplService';
+   (*
+   ConfigURL.HomNomeCidade         := '';
    ConfigURL.HomRecepcaoLoteRPS    := 'https://homologacao.issfortaleza.com.br/ServiceGinfesImpl';
    ConfigURL.HomConsultaLoteRPS    := 'https://homologacao.issfortaleza.com.br/ServiceGinfesImpl';
    ConfigURL.HomConsultaNFSeRPS    := 'https://homologacao.issfortaleza.com.br/ServiceGinfesImpl';
@@ -135,6 +154,7 @@ begin
    ConfigURL.ProConsultaSitLoteRPS := 'https://producao.issfortaleza.com.br/ServiceGinfesImpl';
    ConfigURL.ProConsultaNFSe       := 'https://producao.issfortaleza.com.br/ServiceGinfesImpl';
    ConfigURL.ProCancelaNFSe        := 'https://producao.issfortaleza.com.br/ServiceGinfesImpl';
+   *)
   end
   else begin  // Demais Cidades
    ConfigURL.HomNomeCidade         := '';
