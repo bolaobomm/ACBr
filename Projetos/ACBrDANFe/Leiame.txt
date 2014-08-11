@@ -1,13 +1,14 @@
-ACBrDANFe 
+ACBrDANFe - Versão: 2014.8.11.1
 ----------------------------------
 Programa para impressão de DANFE
 Compilado com:
-Delphi XE2 - ACBrNFe2 - OpenSSL - Revisao 4944
+Delphi XE3 - ACBrNFe2 - Capicom - Revisão: 7276
 
 NOTA: Para compilar você mesmo o projeto, é necessário que estejam instalados os seguintes pacotes de DANFE:
 - ACBrNFeDanfeRV.dpk
 - ACBrNFeDanfeRVCodeBase.dpk
 - ACBrNFeDanfeRLpkg.dpk
+- ACBrNFeDanfeFRpkg.dpk
 
 
 1- INSTALAÇÃO

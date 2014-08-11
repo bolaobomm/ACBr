@@ -1103,7 +1103,8 @@ object frm_danfe: Tfrm_danfe
   end
   object ACBrNFe1: TACBrNFe
     Configuracoes.Geral.PathSalvar = 'C:\Arquivos de programas\CodeGear\RAD Studio\5.0\bin\'
-    Configuracoes.Geral.IniFinXMLSECAutomatico = True
+    Configuracoes.Geral.ExibirErroSchema = True
+    Configuracoes.Geral.FormatoAlerta = 'TAG:%TAGNIVEL% ID:%ID%/%TAG%(%DESCRICAO%) - %MSG%.'
     Configuracoes.WebServices.UF = 'SP'
     Configuracoes.WebServices.AguardarConsultaRet = 0
     Configuracoes.WebServices.IntervaloTentativas = 0
@@ -1134,12 +1135,15 @@ object frm_danfe: Tfrm_danfe
     ImprimirDetalhamentoEspecifico = True
     NFeCancelada = False
     LocalImpCanhoto = 0
+    ImprimeItens = True
     TamanhoCampoCodigo = 0
+    TamanhoCampoVlUnit = 0
     TamanhoFonte_ANTT = 10
     Fonte = ftTimes
     EspessuraBorda = 2
     MostrarSetup = False
-    Left = 40
+    TributosPercentual = ptValorProdutos
+    Left = 72
     Top = 40
   end
   object TrayIcon1: TTrayIcon
@@ -1174,10 +1178,12 @@ object frm_danfe: Tfrm_danfe
     ImprimirDetalhamentoEspecifico = True
     NFeCancelada = False
     LocalImpCanhoto = 0
+    ImprimeItens = True
     EspessuraBorda = 1
     TamanhoFonte_RazaoSocial = 12
     TamanhoFonte_ANTT = 10
-    Left = 72
+    TributosPercentual = ptValorProdutos
+    Left = 40
     Top = 40
   end
   object ACBrNFeDANFeRL1: TACBrNFeDANFeRL
@@ -1200,10 +1206,41 @@ object frm_danfe: Tfrm_danfe
     ImprimirDetalhamentoEspecifico = True
     NFeCancelada = False
     LocalImpCanhoto = 0
+    ImprimeItens = True
     LarguraCodProd = 0
-    TamanhoFonte_RazaoSocial = 8
     ExibirEAN = False
     Left = 104
+    Top = 40
+  end
+  object ACBrNFeDANFEFR1: TACBrNFeDANFEFR
+    MostrarPreview = True
+    MostrarStatus = True
+    TipoDANFE = tiSemGeracao
+    NumCopias = 1
+    ImprimirDescPorc = False
+    ImprimirTotalLiquido = False
+    MargemInferior = 0.800000000000000000
+    MargemSuperior = 0.800000000000000000
+    MargemEsquerda = 0.600000000000000000
+    MargemDireita = 0.510000000000000000
+    CasasDecimais._qCom = 2
+    CasasDecimais._vUnCom = 2
+    ExibirResumoCanhoto = False
+    FormularioContinuo = False
+    TamanhoFonte_DemaisCampos = 10
+    ProdutosPorPagina = 0
+    ImprimirDetalhamentoEspecifico = True
+    NFeCancelada = False
+    LocalImpCanhoto = 0
+    ImprimeItens = True
+    vTroco = 0.000000000000000000
+    EspessuraBorda = 1
+    ExibirTotalTributosItem = False
+    ExibeCampoFatura = True
+    TributosPercentual = ptValorProdutos
+    Detalhado = False
+    DescricaoViaEstabelec = 'Via do Consumidor'
+    Left = 136
     Top = 40
   end
 end

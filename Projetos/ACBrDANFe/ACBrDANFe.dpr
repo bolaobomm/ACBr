@@ -1,6 +1,7 @@
 program ACBrDANFe;
 
 uses
+  MidasLib,
   Forms,
   uACBrDanfe in 'uACBrDanfe.pas' {frm_danfe};
 

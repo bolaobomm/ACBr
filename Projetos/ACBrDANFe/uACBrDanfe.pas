@@ -5,18 +5,21 @@ interface
 uses
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms, RLConsts,
   Dialogs, ACBrNFeDANFEClass, ACBrNFeDANFERaveCB, ACBrNFe, IniFiles, ExtCtrls,
-  ACBrNFeUtil, ACBrDFeUtil, pcnConversao, ACBrNFeDANFeRLClass, ACBrNFeDANFERave, ACBrNFeDANFeRL;
+  System.UITypes,
+  ACBrNFeUtil, ACBrDFeUtil, pcnConversao, ACBrNFeDANFeRLClass, ACBrNFeDANFERave, ACBrNFeDANFeRL,
+  ACBrNFeDANFEFR;
 
 type
   Tfrm_danfe = class(TForm)
     ACBrNFe1: TACBrNFe;
-    ACBrNFeDANFERaveCB1: TACBrNFeDANFERaveCB;
     Panel1: TPanel;
     TrayIcon1: TTrayIcon;
     Timer1: TTimer;
     Image1: TImage;
     ACBrNFeDANFERave1: TACBrNFeDANFERave;
+    ACBrNFeDANFERaveCB1: TACBrNFeDANFERaveCB;
     ACBrNFeDANFeRL1: TACBrNFeDANFeRL;
+    ACBrNFeDANFEFR1: TACBrNFeDANFEFR;
     function  Configuracao: boolean;
     procedure Timer1Timer(Sender: TObject);
     procedure FormCreate(Sender: TObject);
@@ -24,68 +27,96 @@ type
     { Private declarations }
     const
       wArquivoINI: string =
-'[DANFe]'+#13+
-'# DANFe                          = Rave'+#13+
-'# DANFe                          = Fortes'+#13+
-'DANFe                          = RaveCB'+#13+
-#13+
-'[PROPRIEDADES_DANFe]'+#13+
-'CasasDecimais_Qtde             = 2'+#13+
-'CasasDecimais_Unidade          = 2'+#13+
-'CasasDecimais_Mask_Qtde        ='+#13+
-'CasasDecimais_Mask_Unidade     ='+#13+
-'Email                          ='+#13+
-'ExibirResumoCanhoto            = 0'+#13+
-'ExibirResumoCanhoto_Texto      ='+#13+
-'ExpandirLogoMarca              = 0'+#13+
-'Fax                            ='+#13+
-'FormularioContinuo             = 0'+#13+
-'Impressora                     ='+#13+
-'ImprimirDescPorc               = 0'+#13+
-'ImprimirTotalLiquido           = 0'+#13+
-'Logo                           ='+#13+
-'MargemDireita                  = 0,51'+#13+
-'MargemEsquerda                 = 0,6'+#13+
-'MargemInferior                 = 0,8'+#13+
-'MargemSuperior                 = 0,8'+#13+
-'MostrarPreview                 = 1'+#13+
-'MostrarStatus                  = 1'+#13+
-'NumCopias                      = 1'+#13+
-'PathPdf                        ='+#13+
-'ProdutosPorPagina              = 0'+#13+
-'ProtocoloNFe                   ='+#13+
-'Sistema                        ='+#13+
-'Site                           ='+#13+
-'TamanhoFonte_DemaisCampos      = 10'+#13+
-'# TipoDANFE                      = tiPaisagem'+#13+
-'TipoDANFE                      = tiRetrato'+#13+
-'Usuario                        ='+#13+
-#13+
-'[PROPRIEDADEs_DANFe_RAVE]'+#13+
-'EspessuraBorda                 = 1'+#13+
-'ImprimirDetalhamentoEspecifico = 1'+#13+
-'TamanhoFonte_RazaoSocial       = 12'+#13+
-'TamanhoFonte_ANTT              = 10'+#13+
-#13+
-'[PROPRIEDADEs_DANFe_RAVECB]'+#13+
-'EspessuraBorda                 = 2'+#13+
-'# Fonte                          = ftCourier'+#13+
-'Fonte                          = ftTimes'+#13+
-'ImprimirDetalhamentoEspecifico = 1'+#13+
-'TamanhoCampoCodigo             = 0'+#13+
-'TamanhoFonte_ANTT              = 10'+#13+
-'MostrarSetup                   = 0'+#13+
-#13+
-'[PROPRIEDADEs_DANFe_FORTES]'+#13+
-'# FonteDANFE                     = fdArial'+#13+
-'# FonteDANFE                     = fdCourierNew'+#13+
-'FonteDANFE                     = fdTimesNewRoman'+#13+
-'LarguraCodProd                 = 0'+#13+
-'MarcadAgua                     ='+#13+
-'# PosCanhoto                     = pcRodape'+#13+
-'PosCanhoto                     = pcCabecalho'+#13+
-'TamanhoFonte_RazaoSocial       = 12';
+'[DANFe]'+sLineBreak+
+'Versao                         = <VERSAOINI>'+sLineBreak+
+'# DANFe                          = Rave'+sLineBreak+
+'# DANFe                          = Fortes'+sLineBreak+
+'# DANFe                          = Fast'+sLineBreak+
+'DANFe                          = RaveCB'+sLineBreak+
+sLineBreak+
+'[PROPRIEDADES_DANFe]'+sLineBreak+
+'CasasDecimais_Qtde             = 2'+sLineBreak+
+'CasasDecimais_Unidade          = 2'+sLineBreak+
+'CasasDecimais_Mask_Qtde        ='+sLineBreak+
+'CasasDecimais_Mask_Unidade     ='+sLineBreak+
+'Email                          ='+sLineBreak+
+'ExibirResumoCanhoto            = 0'+sLineBreak+
+'ExibirResumoCanhoto_Texto      ='+sLineBreak+
+'ExpandirLogoMarca              = 0'+sLineBreak+
+'Fax                            ='+sLineBreak+
+'FormularioContinuo             = 0'+sLineBreak+
+'Impressora                     ='+sLineBreak+
+'ImprimirDescPorc               = 0'+sLineBreak+
+'ImprimirDetalhamentoEspecifico = 1'+sLineBreak+
+'ImprimirTotalLiquido           = 0'+sLineBreak+
+'Logo                           ='+sLineBreak+
+'MargemDireita                  = 0,51'+sLineBreak+
+'MargemEsquerda                 = 0,6'+sLineBreak+
+'MargemInferior                 = 0,8'+sLineBreak+
+'MargemSuperior                 = 0,8'+sLineBreak+
+'MostrarPreview                 = 1'+sLineBreak+
+'MostrarStatus                  = 1'+sLineBreak+
+'NumCopias                      = 1'+sLineBreak+
+'PathPdf                        ='+sLineBreak+
+'ProdutosPorPagina              = 0'+sLineBreak+
+'ProtocoloNFe                   ='+sLineBreak+
+'Sistema                        ='+sLineBreak+
+'Site                           ='+sLineBreak+
+'TamanhoFonte_DemaisCampos      = 10'+sLineBreak+
+'# TipoDANFE                      = tiPaisagem'+sLineBreak+
+'TipoDANFE                      = tiRetrato'+sLineBreak+
+'Usuario                        ='+sLineBreak+
+sLineBreak+
+'[PROPRIEDADEs_DANFe_RAVE]'+sLineBreak+
+'EspessuraBorda                 = 1'+sLineBreak+
+'TamanhoFonte_RazaoSocial       = 12'+sLineBreak+
+'TamanhoFonte_ANTT              = 10'+sLineBreak+
+'TributosFonte                  ='+sLineBreak+
+'# TributosPercentual             = ptValorNF'+sLineBreak+
+'# TributosPercentual             = ptPersonalizado'+sLineBreak+
+'TributosPercentual             = ptValorProdutos'+sLineBreak+
+'MarcaDaguaMSG                  ='+sLineBreak+
+sLineBreak+
+'[PROPRIEDADEs_DANFe_RAVECB]'+sLineBreak+
+'EspessuraBorda                 = 2'+sLineBreak+
+'# Fonte                          = ftCourier'+sLineBreak+
+'Fonte                          = ftTimes'+sLineBreak+
+'TamanhoCampoCodigo             = 0'+sLineBreak+
+'TamanhoFonte_ANTT              = 10'+sLineBreak+
+'MostrarSetup                   = 0'+sLineBreak+
+'TributosFonte                  ='+sLineBreak+
+'# TributosPercentual             = ptValorNF'+sLineBreak+
+'# TributosPercentual             = ptPersonalizado'+sLineBreak+
+'TributosPercentual             = ptValorProdutos'+sLineBreak+
+'MarcaDaguaMSG                  ='+sLineBreak+
+'TamanhoCampoVlUnit             = 0'+sLineBreak+
+sLineBreak+
+'[PROPRIEDADEs_DANFe_FORTES]'+sLineBreak+
+'# FonteNome                      = nfArial'+sLineBreak+
+'# FonteNome                      = nfCourierNew'+sLineBreak+
+'FonteNome                      = nfTimesNewRoman'+sLineBreak+
+'Negrito                        = 0'+sLineBreak+
+'TamanhoFonte_RazaoSocial       = 12'+sLineBreak+
+'LarguraCodProd                 = 0'+sLineBreak+
+'MarcadAgua                     ='+sLineBreak+
+'# PosCanhoto                     = pcRodape'+sLineBreak+
+'PosCanhoto                     = pcCabecalho'+sLineBreak+
+'ExibirEAN                      = 0'+sLineBreak+
+sLineBreak+
+'[PROPRIEDADEs_DANFe_FAST]'+sLineBreak+
+'EspessuraBorda                 = 1'+sLineBreak+
+'ShowDialog                     = false'+sLineBreak+
+'ExibirTotalTributosItem        = false'+sLineBreak+
+'ExibeCampoFatura               = true'+sLineBreak+
+'TributosFonte                  ='+sLineBreak+
+'# TributosPercentual             = ptValorNF'+sLineBreak+
+'# TributosPercentual             = ptPersonalizado'+sLineBreak+
+'TributosPercentual             = ptValorProdutos'+sLineBreak+
+'MarcaDaguaMSG                  ='+sLineBreak+
+'TributosPercentualPersonalizado=0'+sLineBreak+
+'';
 
+    function  VersaoExecutavel(lExeName: string): String;
   public
     { Public declarations }
     wPDF: boolean;
@@ -114,6 +145,8 @@ var
    wString: TStringList;
    wDanfe: string;
    IniFile : string;
+   VersaoIni: string;
+   CriaINI: Boolean;
 begin
    result:=false;
 
@@ -121,11 +154,22 @@ begin
    IniFile := ExtractFilePath(Application.ExeName)+'ACBrDANFe.ini';
    Ini:=TIniFile.Create(IniFile);
    try
-      if not FileExists(IniFile) then
+      CriaIni := not FileExists(IniFile);
+      if not CriaIni then
       begin
-         wString.Text:=wArquivoINI;
-         wString.SaveToFile(IniFile);
-         Delay(3000);
+        VersaoIni := Trim(Ini.ReadString('DANFe','VERSAO' ,''));
+        if VersaoExecutavel(Application.ExeName) <> VersaoIni then
+        begin
+          RenameFile(IniFile,ChangeFileExt(IniFile,'.ini_antigo'));
+          CriaINI := True;
+        end;
+      end;
+      if CriaIni then
+      begin
+        wString.Text:=wArquivoINI;
+        wString.Text := StringReplace(wString.Text,'<VERSAOINI>',Trim(VersaoExecutavel(Application.ExeName)),[rfReplaceAll, rfIgnoreCase]);
+        wString.SaveToFile(IniFile);
+        Delay(3000);
       end;
 
       try
@@ -135,7 +179,9 @@ begin
          else if wDanfe='RaveCB' then
             ACBrNFe1.DANFE := ACBrNFeDANFeRaveCB1
          else if wDanfe='Fortes' then
-            ACBrNFe1.DANFE := ACBrNFeDANFeRL1;
+            ACBrNFe1.DANFE := ACBrNFeDANFeRL1
+         else if wDanfe='Fast' then
+            ACBrNFe1.DANFE := ACBrNFeDANFeFR1;
 
          with ACBrNFe1.DANFE do
          begin
@@ -151,6 +197,7 @@ begin
             FormularioContinuo             := Ini.ReadBool('PROPRIEDADES_DANFe','FormularioContinuo' ,false);
             Impressora                     := Trim(Ini.ReadString('PROPRIEDADES_DANFe','Impressora' ,''));
             ImprimirDescPorc               := Ini.ReadBool('PROPRIEDADES_DANFe','ImprimirDescPorc' ,false);
+            ImprimirDetalhamentoEspecifico := Ini.ReadBool('PROPRIEDADES_DANFe','ImprimirDetalhamentoEspecifico' ,true);
             ImprimirTotalLiquido           := Ini.ReadBool('PROPRIEDADES_DANFe','ImprimirTotalLiquido' ,false);
             Logo                           := Trim(Ini.ReadString('PROPRIEDADES_DANFe','Logo' ,''));
             MargemDireita                  := Ini.ReadFloat('PROPRIEDADES_DANFe','MargemDireita' ,0.51);
@@ -172,39 +219,65 @@ begin
 
          with ACBrNFeDANFeRave1 do
          begin
-            EspessuraBorda                 := Ini.ReadInteger('PROPRIEDADES_DANFe_RAVE','EspessuraBorda' ,2);
-            ImprimirDetalhamentoEspecifico := Ini.ReadBool('PROPRIEDADES_DANFe_RAVE','ImprimirDetalhamentoEspecifico' ,true);
             RavFile                        := ExtractFilePath(Application.ExeName)+'DANFE_Rave513.rav';
+            EspessuraBorda                 := Ini.ReadInteger('PROPRIEDADES_DANFe_RAVE','EspessuraBorda' ,2);
             TamanhoFonte_RazaoSocial       := Ini.ReadInteger('PROPRIEDADES_DANFe_RAVE','TamanhoFonte_RazaoSocial' ,12);
             TamanhoFonte_ANTT              := Ini.ReadInteger('PROPRIEDADES_DANFe_RAVE','TamanhoFonte_ANTT' ,10);
+            TributosFonte                  := Trim(Ini.ReadString('PROPRIEDADES_DANFe_RAVE','TributosFonte' ,''));
+            TributosPercentual             := DFeUtil.SeSenao(Trim(Ini.ReadString('PROPRIEDADEs_DANFe_RAVE','TributosPercentual' ,'ptValorProdutos'))='ptValorProdutos',ptValorProdutos,
+                                                              DFeUtil.SeSenao(Trim(Ini.ReadString('PROPRIEDADEs_DANFe_RAVE','TributosPercentual' ,'ptValorNF'))='ptValorNF',ptValorNF,
+                                                              ptPersonalizado));
+            MarcaDaguaMSG                  := Trim(Ini.ReadString('PROPRIEDADES_DANFe_RAVE','MarcaDaguaMSG' ,''));
          end;
 
          with ACBrNFeDANFeRaveCB1 do
          begin
             EspessuraBorda                 := Ini.ReadInteger('PROPRIEDADEs_DANFe_RAVECB','EspessuraBorda' ,2);
             Fonte                          := DFeUtil.SeSenao(Trim(Ini.ReadString('PROPRIEDADEs_DANFe_RAVECB','Fonte' ,'ftTimes'))='ftTimes',ftTimes, ftCourier);
-            ImprimirDetalhamentoEspecifico := Ini.ReadBool('PROPRIEDADEs_DANFe_RAVECB','ImprimirDetalhamentoEspecifico' ,true);
             TamanhoCampoCodigo             := Ini.ReadInteger('PROPRIEDADEs_DANFe_RAVECB','TamanhoCampoCodigo' ,10);
             TamanhoFonte_ANTT              := Ini.ReadInteger('PROPRIEDADES_DANFe_RAVE','TamanhoFonte_ANTT' ,10);
             MostrarSetup                   := Ini.ReadBool('PROPRIEDADEs_DANFe_RAVECB','MostrarSetup' ,false);
+            TributosFonte                  := Trim(Ini.ReadString('PROPRIEDADES_DANFe_RAVECB','TributosFonte' ,''));
+            TributosPercentual             := DFeUtil.SeSenao(Trim(Ini.ReadString('PROPRIEDADEs_DANFe_RAVECB','TributosPercentual' ,'ptValorProdutos'))='ptValorProdutos',ptValorProdutos,
+                                                              DFeUtil.SeSenao(Trim(Ini.ReadString('PROPRIEDADEs_DANFe_RAVECB','TributosPercentual' ,'ptValorNF'))='ptValorNF',ptValorNF,
+                                                              ptPersonalizado));
+            MarcaDaguaMSG                  := Trim(Ini.ReadString('PROPRIEDADES_DANFe_RAVECB','MarcaDaguaMSG' ,''));
+            TamanhoCampoVlUnit             := Ini.ReadInteger('PROPRIEDADES_DANFe_RAVECB','TamanhoCampoVlUnit' ,0);
          end;
 
          with ACBrNFeDANFeRL1 do
          begin
-            FonteDANFE                     := DFeUtil.SeSenao(Trim(Ini.ReadString('PROPRIEDADEs_DANFe_FORTES','FonteDANFE' ,'fdTimesNewRoman'))='fdTimesNewRoman',fdTimesNewRoman,
-                                                               DFeUtil.SeSenao(Trim(Ini.ReadString('PROPRIEDADEs_DANFe_FORTES','FonteDANFE' ,'fdCourierNew'))='fdCourierNew',fdCourierNew,
-                                                               fdArial));
+            Fonte.Nome                     := DFeUtil.SeSenao(Trim(Ini.ReadString('PROPRIEDADEs_DANFe_FORTES','FonteNome' ,'nfTimesNewRoman'))='nfTimesNewRoman',nfTimesNewRoman,
+                                                              DFeUtil.SeSenao(Trim(Ini.ReadString('PROPRIEDADEs_DANFe_FORTES','FonteNome' ,'nfCourierNew'))='nfCourierNew',nfCourierNew,
+                                                              nfArial));
+            Fonte.Negrito                  := Ini.ReadBool('PROPRIEDADEs_DANFe_FORTES','Negrito' ,false);
+            Fonte.TamanhoFonte_RazaoSocial := Ini.ReadInteger('PROPRIEDADES_DANFe_FORTES','TamanhoFonte_RazaoSocial' ,12);
             LarguraCodProd                 := Ini.ReadInteger('PROPRIEDADEs_DANFe_FORTES','LarguraCodProd' ,0);
             MarcadAgua                     := Trim(Ini.ReadString('PROPRIEDADES_DANFe_FORTES','MarcadAgua' ,''));
             PosCanhoto                     := DFeUtil.SeSenao(Trim(Ini.ReadString('PROPRIEDADEs_DANFe_FORTES','PosCanhoto' ,'pcCabecalho'))='pcCabecalho',pcCabecalho,pcRodape);
-            TamanhoFonte_RazaoSocial       := Ini.ReadInteger('PROPRIEDADES_DANFe_FORTES','TamanhoFonte_RazaoSocial' ,12);
+            ExibirEAN                      := Ini.ReadBool('PROPRIEDADEs_DANFe_FORTES','ExibirEAN' ,false);
+         end;
+
+         with ACBrNFeDANFeFR1 do
+         begin
+            FastFile                       := ExtractFilePath(Application.ExeName)+'DANFeRetrato.fr3';
+            EspessuraBorda                 := Ini.ReadInteger('PROPRIEDADES_DANFe_FAST','EspessuraBorda' ,1);
+            ShowDialog                     := Ini.ReadBool('PROPRIEDADEs_DANFe_FAST','ShowDialog' ,false);
+            ExibirTotalTributosItem        := Ini.ReadBool('PROPRIEDADEs_DANFe_FAST','ExibirTotalTributosItem' ,false);
+            ExibeCampoFatura               := Ini.ReadBool('PROPRIEDADEs_DANFe_FAST','ExibeCampoFatura' ,true);
+            TributosFonte                  := Trim(Ini.ReadString('PROPRIEDADES_DANFe_FAST','TributosFonte' ,''));
+            TributosPercentual             := DFeUtil.SeSenao(Trim(Ini.ReadString('PROPRIEDADEs_DANFe_FAST','TributosPercentual' ,'ptValorProdutos'))='ptValorProdutos',ptValorProdutos,
+                                                              DFeUtil.SeSenao(Trim(Ini.ReadString('PROPRIEDADEs_DANFe_FAST','TributosPercentual' ,'ptValorNF'))='ptValorNF',ptValorNF,
+                                                              ptPersonalizado));
+            TributosPercentualPersonalizado:= Ini.ReadFloat('PROPRIEDADES_DANFe_FAST','TributosPercentualPersonalizado' ,0);
+            MarcaDaguaMSG                  := Trim(Ini.ReadString('PROPRIEDADES_DANFe_FAST','MarcaDaguaMSG' ,''));
          end;
 
          Result:=True;
       except
          on EXC: Exception do
          begin
-            MessageDlg('Erro:'+#13#13+exc.message,mtError,[mbOk],0);
+            MessageDlg('Erro:'+sLineBreak+sLineBreak+exc.message,mtError,[mbOk],0);
          end;
       end;
    finally
@@ -260,11 +333,11 @@ begin
             except on
                EXC:Exception do
                begin
-                  MessageDlg('Erro:'+#13#13+exc.message,mtError,[mbOk],0);
+                  MessageDlg('Erro:'+sLineBreak+sLineBreak+
+                             exc.message,mtError,[mbOk],0);
                end;
             end;
-         end;
-      end;
+         end;                        end;
    end;
 
    Timer1.Enabled:=True;
@@ -273,6 +346,48 @@ end;
 procedure Tfrm_danfe.Timer1Timer(Sender: TObject);
 begin
    Close;
+end;
+
+function Tfrm_danfe.VersaoExecutavel(lExeName: string): String;
+type
+  PFFI = ^vs_FixedFileInfo;
+var
+  F       : PFFI;
+  Handle  : Dword;
+  Len     : Longint;
+  Data    : Pchar;
+  Buffer  : Pointer;
+  Tamanho : Dword;
+  Parquivo: Pchar;
+  Arquivo : String;
+begin
+  Arquivo  := lExeName;
+  if FileExists(Arquivo) then
+  begin
+    Parquivo := StrAlloc(Length(Arquivo) + 1);
+    StrPcopy(Parquivo, Arquivo);
+    Len := GetFileVersionInfoSize(Parquivo, Handle);
+    Result := '';
+    if Len > 0 then
+    begin
+      Data:=StrAlloc(Len+1);
+      if GetFileVersionInfo(Parquivo,Handle,Len,Data) then
+      begin
+        VerQueryValue(Data, '',Buffer,Tamanho);
+        F := PFFI(Buffer);
+        Result := Format('%d.%d.%d.%d',
+                        [HiWord(F^.dwFileVersionMs),
+                         LoWord(F^.dwFileVersionMs),
+                         HiWord(F^.dwFileVersionLs),
+                         Loword(F^.dwFileVersionLs)]
+                        );
+      end;
+      StrDispose(Data);
+    end;
+    StrDispose(Parquivo);
+  end
+  else
+    raise Exception.Create('Arquivo '+Arquivo+' não encontrado.');
 end;
 
 initialization
