@@ -1638,18 +1638,18 @@ begin
                        LFill( ALIQ_ST, 0, 2 ) +
                        LFill( VL_ICMS_ST, 0, 2 ) +
                        LFill( strIND_APUR ) +
-                       LFill( CST_IPI ) +
+                       LFill( CST_IPI, 2, True ) +
                        LFill( COD_ENQ ) +
                        LFill( VL_BC_IPI, 0, 2 ) +
                        LFill( ALIQ_IPI,  0, 2 ) +
                        LFill( VL_IPI, 0, 2 ) +
-                       LFill( CST_PIS ) +
+                       LFill( CST_PIS, 2, True ) +
                        LFill( VL_BC_PIS, 0, 2 ) +
                        LFill( ALIQ_PIS_PERC, 0, intDecimaisPercent, False, '0', strMascaraParcent ) +
                        LFill( QUANT_BC_PIS,  0, 3, False, '0', '#0.000' ) +
                        LFill( ALIQ_PIS_R, 0, 4, False, '0', '#0.0000' ) +
                        LFill( VL_PIS, 0, 2 ) +
-                       LFill( CST_COFINS ) +
+                       LFill( CST_COFINS, 2, True ) +
                        LFill( VL_BC_COFINS, 0, 2 ) +
                        LFill( ALIQ_COFINS_PERC, 0, intDecimaisPercent, False, '0', strMascaraParcent ) +
                        LFill( QUANT_BC_COFINS,  0, 3, False, '0', '#0.000' ) +
