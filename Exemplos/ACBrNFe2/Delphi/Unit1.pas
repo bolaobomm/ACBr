@@ -9,7 +9,7 @@ uses IniFiles, ShellAPI, pcnRetConsReciNFe,
   Dialogs, StdCtrls, ExtCtrls, Buttons, ComCtrls, OleCtrls, SHDocVw,
   ACBrNFe, pcnConversao, ACBrNFeDANFEClass, ACBrNFeDANFERave, ACBrUtil,
   pcnNFeW, pcnNFeRTXT, pcnAuxiliar, ACBrDFeUtil,
-  XMLIntf, XMLDoc, ACBrNFeDANFERaveCB;
+  XMLIntf, XMLDoc, ACBrNFeDANFERaveCB, ACBrNFeDANFEFR, ACBrNFeDANFeRLClass;
 
 type
   TForm1 = class(TForm)
@@ -149,6 +149,8 @@ type
     btnImprimirCCe: TButton;
     btnEnviarEvento: TButton;
     btnCriarEnviarNFCe: TButton;
+    ACBrNFeDANFEFR1: TACBrNFeDANFEFR;
+    ACBrNFeDANFeRL1: TACBrNFeDANFeRL;
     procedure sbtnCaminhoCertClick(Sender: TObject);
     procedure sbtnLogoMarcaClick(Sender: TObject);
     procedure sbtnPathSalvarClick(Sender: TObject);
@@ -696,10 +698,11 @@ begin
   OpenDialog1.DefaultExt := '*-nfe.XML';
   OpenDialog1.Filter := 'Arquivos NFE (*-nfe.XML)|*-nfe.XML|Arquivos XML (*.XML)|*.XML|Todos os Arquivos (*.*)|*.*';
   OpenDialog1.InitialDir := ACBrNFe1.Configuracoes.Geral.PathSalvar;
+  ACBrNFeDANFEFR1.FastFile := 'C:\Delphi Files\ACBr\Exemplos\ACBrNFe2\Delphi\Report\DanfeRetrato.fr3';
   if OpenDialog1.Execute then
   begin
     ACBrNFe1.NotasFiscais.Clear;
-    ACBrNFe1.NotasFiscais.LoadFromFile(OpenDialog1.FileName);
+    ACBrNFe1.NotasFiscais.LoadFromFile(OpenDialog1.FileName,False);
     if ACBrNFe1.NotasFiscais.Items[0].NFe.Ide.tpEmis = teDPEC then
      begin
        ACBrNFe1.WebServices.ConsultaDPEC.NFeChave := ACBrNFe1.NotasFiscais.Items[0].NFe.infNFe.ID;

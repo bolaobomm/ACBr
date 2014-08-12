@@ -299,6 +299,9 @@ type
     cdsParametrosQtdeItens: TIntegerField;
     cdsCalculoImpostovTroco: TFloatField;
     cdsDadosProdutosvBcISSQN: TFloatField;
+    cdsDadosProdutosUTrib2: TStringField;
+    cdsDadosProdutosQTrib2: TFloatField;
+    cdsDadosProdutosVUnTrib2: TFloatField;
     constructor Create(AOwner: TComponent); override;
     procedure frxReportBeforePrint(Sender: TfrxReportComponent);
   private
@@ -315,6 +318,7 @@ type
     FDetalhado: Boolean;
     FURLConsultaPublica:String;
     FDescricaoViaEstabelec: string;
+    FImprimirUnQtVlComercial: boolean;
     procedure CarregaIdentificacao;
     procedure CarregaEmitente;
     procedure CarregaDestinatario;
@@ -341,6 +345,7 @@ type
     property TributosPercentual: TpcnPercentualTributos read FTributosPercentual write FTributosPercentual;
     property TributosPercentualPersonalizado: double read FTributosPercentualPersonalizado write FTributosPercentualPersonalizado;
     property MarcaDaguaMSG: string read FMarcaDaguaMSG write FMarcaDaguaMSG;
+    property ImprimirUnQtVlComercial: boolean read FImprimirUnQtVlComercial write FImprimirUnQtVlComercial;
     property vTroco: Currency read FvTroco write FvTroco;
     property Detalhado: Boolean read FDetalhado write FDetalhado;
     property URLConsultaPublica:String read FURLConsultaPublica write FURLConsultaPublica;
@@ -674,6 +679,22 @@ begin
           FieldByName('VUnTrib').AsFloat := DFeUtil.StringToFloatDef(FloatToStr(vUnTrib), 0);
           FieldByName('vFrete').AsFloat := DFeUtil.StringToFloatDef(FloatToStr(vFrete), 0);
           FieldByName('vSeg').AsFloat := DFeUtil.StringToFloatDef(FloatToStr(vSeg), 0);
+
+          //especifica tipo de impressão
+          case FImprimirUnQtVlComercial of
+            true:
+            begin
+              FieldByName('Unidade').AsString      := FieldByName('Ucom').AsString;
+              FieldByName('Quantidade').AsFloat    := FieldByName('QCom').AsFloat;
+              FieldByName('ValorUnitario').AsFloat := FieldByName('VUnCom').AsFloat;
+            end;
+            false:
+            begin
+              FieldByName('Unidade').AsString      := FieldByName('UTrib').AsString;
+              FieldByName('Quantidade').AsFloat    := FieldByName('QTrib').AsFloat;
+              FieldByName('ValorUnitario').AsFloat := FieldByName('VUnTrib').AsFloat;
+            end;
+          end;
 
           if FDANFEClassOwner.ImprimirDescPorc then
           begin

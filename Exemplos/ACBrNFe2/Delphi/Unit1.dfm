@@ -1197,7 +1197,7 @@ object Form1: TForm1
     Configuracoes.WebServices.IntervaloTentativas = 1000
     Configuracoes.WebServices.AjustaAguardaConsultaRet = True
     OnStatusChange = ACBrNFe1StatusChange
-    DANFE = ACBrNFeDANFERaveCB1
+    DANFE = ACBrNFeDANFEFR1
     OnGerarLog = ACBrNFe1GerarLog
     Left = 723
     Top = 377
@@ -1223,6 +1223,7 @@ object Form1: TForm1
     ImprimirDetalhamentoEspecifico = True
     NFeCancelada = False
     LocalImpCanhoto = 0
+    ImprimeItens = True
     RavFile = 
       'D:\delphi\ACBr\trunk\Exemplos\ACBrNFe2\Delphi\Report\NotaFiscalE' +
       'letronica.rav'
@@ -1234,7 +1235,6 @@ object Form1: TForm1
     Top = 377
   end
   object ACBrNFeDANFERaveCB1: TACBrNFeDANFERaveCB
-    ACBrNFe = ACBrNFe1
     Logo = 'C:\VBSAUTOMACAO\logo_empresa.jpg'
     Sistema = 'DJSYSTEM'
     Usuario = 'Andr'#233
@@ -1251,14 +1251,16 @@ object Form1: TForm1
     MargemDireita = 0.510000000000000000
     CasasDecimais._qCom = 2
     CasasDecimais._vUnCom = 2
-    ExibirResumoCanhoto = False
+    ExibirResumoCanhoto = True
     FormularioContinuo = False
     TamanhoFonte_DemaisCampos = 10
     ProdutosPorPagina = 0
     ImprimirDetalhamentoEspecifico = True
     NFeCancelada = False
     LocalImpCanhoto = 0
+    ImprimeItens = True
     TamanhoCampoCodigo = 0
+    TamanhoCampoVlUnit = 0
     TamanhoFonte_ANTT = 10
     Fonte = ftCourier
     EspessuraBorda = 2
@@ -1266,5 +1268,65 @@ object Form1: TForm1
     TributosPercentual = ptValorProdutos
     Left = 726
     Top = 409
+  end
+  object ACBrNFeDANFEFR1: TACBrNFeDANFEFR
+    ACBrNFe = ACBrNFe1
+    PathPDF = 'C:\Program Files\Borland\Delphi7\Bin\'
+    MostrarPreview = True
+    MostrarStatus = True
+    TipoDANFE = tiSemGeracao
+    NumCopias = 1
+    ImprimirDescPorc = False
+    ImprimirTotalLiquido = False
+    MargemInferior = 0.800000000000000000
+    MargemSuperior = 0.800000000000000000
+    MargemEsquerda = 0.600000000000000000
+    MargemDireita = 0.510000000000000000
+    CasasDecimais._qCom = 2
+    CasasDecimais._vUnCom = 2
+    ExibirResumoCanhoto = False
+    FormularioContinuo = False
+    TamanhoFonte_DemaisCampos = 10
+    ProdutosPorPagina = 0
+    ImprimirDetalhamentoEspecifico = True
+    NFeCancelada = False
+    LocalImpCanhoto = 0
+    ImprimeItens = True
+    vTroco = 0.000000000000000000
+    EspessuraBorda = 1
+    ExibirTotalTributosItem = False
+    ExibeCampoFatura = True
+    TributosPercentual = ptValorProdutos
+    Detalhado = False
+    DescricaoViaEstabelec = 'Via do Consumidor'
+    Left = 496
+    Top = 440
+  end
+  object ACBrNFeDANFeRL1: TACBrNFeDANFeRL
+    PathPDF = 'C:\Program Files\Borland\Delphi7\Bin\'
+    MostrarPreview = True
+    MostrarStatus = True
+    TipoDANFE = tiRetrato
+    NumCopias = 1
+    ImprimirDescPorc = False
+    ImprimirTotalLiquido = False
+    MargemInferior = 0.700000000000000000
+    MargemSuperior = 0.700000000000000000
+    MargemEsquerda = 0.700000000000000000
+    MargemDireita = 0.700000000000000000
+    CasasDecimais._qCom = 4
+    CasasDecimais._vUnCom = 4
+    ExibirResumoCanhoto = False
+    FormularioContinuo = False
+    TamanhoFonte_DemaisCampos = 10
+    ProdutosPorPagina = 0
+    ImprimirDetalhamentoEspecifico = True
+    NFeCancelada = False
+    LocalImpCanhoto = 0
+    ImprimeItens = True
+    LarguraCodProd = 54
+    ExibirEAN = False
+    Left = 552
+    Top = 384
   end
 end

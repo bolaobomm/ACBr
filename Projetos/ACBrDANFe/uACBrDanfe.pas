@@ -105,15 +105,16 @@ sLineBreak+
 sLineBreak+
 '[PROPRIEDADEs_DANFe_FAST]'+sLineBreak+
 'EspessuraBorda                 = 1'+sLineBreak+
-'ShowDialog                     = false'+sLineBreak+
-'ExibirTotalTributosItem        = false'+sLineBreak+
-'ExibeCampoFatura               = true'+sLineBreak+
+'ShowDialog                     = 0'+sLineBreak+
+'ExibirTotalTributosItem        = 0'+sLineBreak+
+'ExibeCampoFatura               = 1'+sLineBreak+
 'TributosFonte                  ='+sLineBreak+
 '# TributosPercentual             = ptValorNF'+sLineBreak+
 '# TributosPercentual             = ptPersonalizado'+sLineBreak+
 'TributosPercentual             = ptValorProdutos'+sLineBreak+
 'MarcaDaguaMSG                  ='+sLineBreak+
-'TributosPercentualPersonalizado=0'+sLineBreak+
+'TributosPercentualPersonalizado= 0'+sLineBreak+
+'ImprimirUnQtVlComercial        = 0'+sLineBreak+
 '';
 
     function  VersaoExecutavel(lExeName: string): String;
@@ -271,6 +272,7 @@ begin
                                                               ptPersonalizado));
             TributosPercentualPersonalizado:= Ini.ReadFloat('PROPRIEDADES_DANFe_FAST','TributosPercentualPersonalizado' ,0);
             MarcaDaguaMSG                  := Trim(Ini.ReadString('PROPRIEDADES_DANFe_FAST','MarcaDaguaMSG' ,''));
+            ImprimirUnQtVlComercial        := Ini.ReadBool('PROPRIEDADEs_DANFe_FAST','ImprimirUnQtVlComercial' ,false);
          end;
 
          Result:=True;

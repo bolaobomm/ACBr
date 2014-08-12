@@ -1109,7 +1109,6 @@ object frm_danfe: Tfrm_danfe
     Configuracoes.WebServices.AguardarConsultaRet = 0
     Configuracoes.WebServices.IntervaloTentativas = 0
     Configuracoes.WebServices.AjustaAguardaConsultaRet = False
-    DANFE = ACBrNFeDANFERaveCB1
     Left = 8
     Top = 40
   end

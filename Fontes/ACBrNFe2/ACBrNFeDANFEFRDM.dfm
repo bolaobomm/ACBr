@@ -1,7 +1,5 @@
 object dmACBrNFeFR: TdmACBrNFeFR
   OldCreateOrder = False
-  Left = 329
-  Top = 23
   Height = 526
   Width = 720
   object frxPDFExport: TfrxPDFExport
@@ -13,6 +11,7 @@ object dmACBrNFeFR: TdmACBrNFeFR
     Outline = False
     Background = True
     HTMLTags = True
+    Quality = 95
     Author = 'FastReport'
     Subject = 'Exportando DANFE para PDF'
     ProtectionFlags = [ePrint, eModify, eCopy, eAnnot]
@@ -330,14 +329,14 @@ object dmACBrNFeFR: TdmACBrNFeFR
       FieldName = 'cEANTrib'
       Size = 60
     end
-    object cdsDadosProdutosUTrib: TStringField
+    object cdsDadosProdutosUTrib2: TStringField
       FieldName = 'UTrib'
       Size = 6
     end
-    object cdsDadosProdutosQTrib: TFloatField
+    object cdsDadosProdutosQTrib2: TFloatField
       FieldName = 'QTrib'
     end
-    object cdsDadosProdutosVUnTrib: TFloatField
+    object cdsDadosProdutosVUnTrib2: TFloatField
       FieldName = 'VUnTrib'
     end
     object cdsDadosProdutosvFrete: TFloatField
@@ -392,6 +391,16 @@ object dmACBrNFeFR: TdmACBrNFeFR
     end
     object cdsDadosProdutosvBcISSQN: TFloatField
       FieldName = 'vBcISSQN'
+    end
+    object cdsDadosProdutosUTrib: TStringField
+      FieldName = 'Unidade'
+      Size = 6
+    end
+    object cdsDadosProdutosQTrib: TFloatField
+      FieldName = 'Quantidade'
+    end
+    object cdsDadosProdutosVUnTrib: TFloatField
+      FieldName = 'ValorUnitario'
     end
   end
   object cdsParametros: TClientDataSet
@@ -909,7 +918,10 @@ object dmACBrNFeFR: TdmACBrNFeFR
       'VTotTrib=VTotTrib'
       'ChaveNFe=ChaveNFe'
       'vISSQN=vISSQN'
-      'vBcISSQN=vBcISSQN')
+      'vBcISSQN=vBcISSQN'
+      'Unidade=Unidade'
+      'Quantidade=Quantidade'
+      'ValorUnitario=ValorUnitario')
     OpenDataSource = False
     DataSet = cdsDadosProdutos
     BCDToCurrency = False
@@ -1072,7 +1084,7 @@ object dmACBrNFeFR: TdmACBrNFeFR
     Top = 148
   end
   object frxReport: TfrxReport
-    Version = '4.15'
+    Version = '4.14'
     DotMatrixReport = False
     EngineOptions.DoublePass = True
     IniFile = '\Software\Fast Reports'
@@ -1082,7 +1094,7 @@ object dmACBrNFeFR: TdmACBrNFeFR
     PrintOptions.Printer = 'Default'
     PrintOptions.PrintOnSheet = 0
     ReportOptions.CreateDate = 40401.475989294000000000
-    ReportOptions.LastChange = 41839.319318576390000000
+    ReportOptions.LastChange = 41852.744346828700000000
     ScriptLanguage = 'PascalScript'
     StoreInDFM = False
     OnBeforePrint = frxReportBeforePrint
