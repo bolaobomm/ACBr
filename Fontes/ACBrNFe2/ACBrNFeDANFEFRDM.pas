@@ -1731,22 +1731,26 @@ begin
 end;
 
 procedure TdmACBrNFeFR.frxReportBeforePrint(Sender: TfrxReportComponent);
-var qrcode: String;
+var
+  qrcode: String;
 begin
-   if (NFe.Ide.modelo = 65) then
-   begin
-     if cdsParametros.FieldByName('Imagem').AsString = '' then
-     begin
+  qrCode := '';
+  if Assigned(NFe) then
+  begin
+    if (NFe.Ide.modelo = 65) then
+    begin
+      if cdsParametros.FieldByName('Imagem').AsString = '' then
+      begin
         frxReport.FindObject('ReportTitle1').Visible := False;
         frxReport.FindObject('ImgLogo').Visible := False;
-     end
-     else
-     begin
+      end
+      else
+      begin
         frxReport.FindObject('ReportTitle1').Visible := True;
         frxReport.FindObject('ImgLogo').Visible := True;
-     end;
+      end;
 
-     qrcode := NotaUtil.GetURLQRCode( NFe.ide.cUF,
+      qrcode := NotaUtil.GetURLQRCode( NFe.ide.cUF,
                                       NFe.ide.tpAmb,
                                       OnlyNumber(NFe.InfNFe.ID),
                                       DFeUtil.SeSenao(NFe.Dest.idEstrangeiro <> '',NFe.Dest.idEstrangeiro, NFe.Dest.CNPJCPF),
@@ -1757,8 +1761,9 @@ begin
                                       TACBrNFe( FDANFEClassOwner.ACBrNFe ).Configuracoes.Geral.IdToken,
                                       TACBrNFe( FDANFEClassOwner.ACBrNFe ).Configuracoes.Geral.Token );
 
-     PintarQRCode( qrcode, TfrxPictureView(frxReport.FindObject('ImgQrCode')).Picture );
-   end;
+      PintarQRCode( qrcode, TfrxPictureView(frxReport.FindObject('ImgQrCode')).Picture );
+    end;
+  end;
 end;
 
 end.
