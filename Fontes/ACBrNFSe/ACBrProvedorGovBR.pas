@@ -212,7 +212,7 @@ begin
             ConfigURL.ProConsultaNFSe       := 'http://nfe.saquarema.rj.gov.br/NFSEws/Services.svc';
             ConfigURL.ProCancelaNFSe        := 'http://nfe.saquarema.rj.gov.br/NFSEws/Services.svc';
            end;
-
+(*
   3504008: begin // Assis/SP
             ConfigURL.HomNomeCidade         := '';
             ConfigURL.HomRecepcaoLoteRPS    := 'http://nfseteste.assis.sp.gov.br/NFSEWSTESTE/Services.svc';
@@ -230,6 +230,7 @@ begin
             ConfigURL.ProConsultaNFSe       := 'http://nfse.assis.sp.gov.br/NFSEWS/Services.svc';
             ConfigURL.ProCancelaNFSe        := 'http://nfse.assis.sp.gov.br/NFSEWS/Services.svc';
            end;
+*)
            (*
   3511102: begin // Catanduva/SP por fnietto
             ConfigURL.HomNomeCidade         := '';

@@ -888,7 +888,7 @@ begin
   3143302, // Montes Claros/MG
   3202405, // Guarapari/ES
   3305505, // Saquarema/RJ
-  3504008, // Assis/SP
+//  3504008, // Assis/SP
   3541505, // Presidente Venceslau/SP
   4101408, // Apucarana/PR
   4102000, // Assis Chateaubriand/PR
@@ -900,6 +900,7 @@ begin
   3304706, // Sto Antonio de Padua/RJ
   3511102, // Catanduva/SP
   3530300, // Mirassol/SP
+  3504008, // Assis/SP
   4118501, // Pato Branco/PR
   4205902, // Gaspar/SC
   4308102, // Feliz/RS
@@ -909,7 +910,7 @@ begin
   4322400, // Uruguaiana/RS
   4210506, // Maravilha/SC
   4201307  // Araquari/SC
-         : Provedor := 'Pronim';
+           : Provedor := 'Pronim';
 
   3132404, // Itajubá/MG
   3138203, // Lavras/MG
