@@ -826,6 +826,37 @@ end;
 
 procedure TNFSeW.GerarXML_ABRASF_V2;
 begin
+  case FProvedor of
+   proDigifred,
+   proFiorilli,
+   proISSe,
+   proISSDigital,
+   proPVH,
+   proMitra:     begin
+                   Gerador.wGrupoNFSe('InfDeclaracaoPrestacaoServico ' + FIdentificador + '="rps' + NFSe.InfID.ID + '"');
+                   Gerador.wGrupoNFSe('Rps');
+                 end;
+   proSystemPro: begin
+                   Gerador.wGrupoNFSe('InfDeclaracaoPrestacaoServico ' + FIdentificador + '="' + NFSe.InfID.ID + '"');
+                 end;
+   proTecnos:    begin
+                   //Rodrigo Crovador - Adicionado o xmlns na tag InfDeclaracaoPrestacaoServico. Se removido, o provedor não reconhece a ass. digital
+                   Gerador.WGrupoNFSe('tcDeclaracaoPrestacaoServico');
+                   Gerador.wGrupoNFSe('InfDeclaracaoPrestacaoServico ' + FIdentificador + '="' + NFSe.InfID.ID + '"' + ' xmlns="http://www.abrasf.org.br/nfse.xsd"');
+                   Gerador.wGrupoNFSe('Rps');
+                  end;
+//   proVirtual:    begin
+//                    Gerador.wGrupoNFSe('Rps');
+//                    Gerador.wCampoNFSe(tcStr, '#', 'Id', 01, 255, 1, 'rps' + NFSe.InfID.ID, '');
+//                  end;
+   else           begin
+                    Gerador.wGrupoNFSe('InfDeclaracaoPrestacaoServico');
+                    if FIdentificador = ''
+                     then Gerador.wGrupoNFSe('Rps')
+                     else Gerador.wGrupoNFSe('Rps ' + FIdentificador + '="rps' + NFSe.InfID.ID + '"');
+                  end;
+  end;
+  (*
   if FProvedor in [proDigifred, proFiorilli, proISSe, proISSDigital, proPVH, proMitra]
     then begin
       Gerador.wGrupoNFSe('InfDeclaracaoPrestacaoServico ' + FIdentificador + '="rps' + NFSe.InfID.ID + '"');
@@ -844,11 +875,11 @@ begin
       end
       else begin
         Gerador.wGrupoNFSe('InfDeclaracaoPrestacaoServico');
-         if FIdentificador = ''
-           then Gerador.wGrupoNFSe('Rps')
-           else Gerador.wGrupoNFSe('Rps ' + FIdentificador + '="rps' + NFSe.InfID.ID + '"');
+        if FIdentificador = ''
+         then Gerador.wGrupoNFSe('Rps')
+         else Gerador.wGrupoNFSe('Rps ' + FIdentificador + '="rps' + NFSe.InfID.ID + '"');
       end;
-
+  *)
   GerarIdentificacaoRPS;
 
   if FProvedor <> proSystemPro then

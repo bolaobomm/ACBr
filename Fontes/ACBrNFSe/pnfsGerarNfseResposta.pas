@@ -676,10 +676,10 @@ begin
         end;
         // Andeson de Jesus - Barreiras - BA
 
-        if (leitor.rExtrai(1, 's:Fault') <> '') then begin
+        if (leitor.rExtrai(1, 's:Fault') <> '') or (leitor.rExtrai(1, 'SOAP-ENV:Fault') <> '') then begin
 
            i := 0;
-           while Leitor.rExtrai(1, 's:Fault', '', i + 1) <> '' do
+           while (Leitor.rExtrai(1, 's:Fault', '', i + 1) <> '') or (Leitor.rExtrai(1, 'SOAP-ENV:Fault', '', i + 1) <> '')do
            begin
               ListaNfse.FMsgRetorno.Add;
               ListaNfse.FMsgRetorno[i].FCodigo   := Leitor.rCampo(tcStr, 'faultcode');

@@ -197,7 +197,7 @@ begin
 
  Result := TagI + DadosMsg + TagF;
 
- if AProvedor = proNenhum then Result := '';
+ if AProvedor in [proNenhum, proVirtual] then Result := '';
 end;
 
 class function TNFSeG.Gera_DadosMsgConsSitLote(Prefixo3, Prefixo4,
@@ -238,8 +238,9 @@ begin
  Result := TagI + DadosMsg + TagF;
 
  if AProvedor in [proNenhum, pro4R, proAgili, proCoplan, profintelISS, proFiorilli,
-                  proGoiania, proGovDigital, proISSDigital, proISSe, proProdata, proVirtual,
-                  proSaatri, proFreire, proPVH, proVitoria, proTecnos, proSisPMJP, proSystemPro] then Result := '';
+                  proGoiania, proGovDigital, proISSDigital, proISSe, proProdata,
+                  proVirtual, proSaatri, proFreire, proPVH, proVitoria, proTecnos,
+                  proSisPMJP, proSystemPro] then Result := '';
 end;
 
 class function TNFSeG.Gera_DadosMsgConsLote(Prefixo3, Prefixo4,
@@ -289,7 +290,7 @@ begin
 
  Result := TagI + DadosMsg + TagF;
 
- if AProvedor = proNenhum then Result := '';
+ if AProvedor in [proNenhum, proVirtual] then Result := '';
 end;
 
 class function TNFSeG.Gera_DadosMsgConsNFSeRPS(Prefixo3, Prefixo4,
@@ -348,7 +349,7 @@ begin
 
  Result := TagI + DadosMsg + TagF;
 
- if AProvedor = proNenhum then Result := '';
+ if AProvedor in [proNenhum, proVirtual] then Result := '';
 end;
 
 class function TNFSeG.Gera_DadosMsgConsNFSe(Prefixo3, Prefixo4,
@@ -478,7 +479,7 @@ begin
 
  Result := TagI + DadosMsg + TagF;
 
- if AProvedor = proNenhum then Result := '';
+ if AProvedor in [proNenhum, proVirtual] then Result := '';
 end;
 
 class function TNFSeG.Gera_DadosMsgCancelarNFSe(Prefixo4, NameSpaceDad, NumeroNFSe,
@@ -660,8 +661,9 @@ begin
  if AProvedor in [proNenhum, proAbaco, proBetha, proBetim, proBHISS, proDigifred,
      proEquiplano, profintelISS, proFISSLex, proGinfes, proGoiania, proGovBR,
      proGovDigital, proIssCuritiba, proISSDigital, proISSIntel, proISSNet, proNatal,
-     proProdemge, proPublica, proRecife, proRJ, proSaatri, proFreire, proSimplISS, proThema,
-     proTiplan, proWebISS, proProdata, proAgili, proSpeedGov, proPronim] then Result := '';
+     proProdemge, proPublica, proRecife, proRJ, proSaatri, proFreire, proSimplISS,
+     proThema, proTiplan, proWebISS, proProdata, proAgili, proSpeedGov, proPronim,
+     proVirtual] then Result := '';
 end;
 
 //-------------------------------------------------------------------------
