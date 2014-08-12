@@ -460,6 +460,7 @@ procedure TdmACBrCTeFR.CarregaDadosNotasFiscais;
 var
   i: Integer;
   DoctoRem: string;
+  NroNota: integer; // Adicionado por Rodrigo Cardilo
 begin
   { dados das Notas Fiscais }
   DoctoRem := FCTe.Rem.CNPJCPF;
@@ -523,8 +524,13 @@ begin
         FieldByName('Serie').AsString := copy(chave,23,3);
         FieldByName('ChaveAcesso').AsString := chave;
         FieldByName('NotaFiscal').AsString := copy(chave,26,9);
-        { Alterado por Jose Nilton Pace em 16/05/2013 }
-        FieldByName('TextoImpressao').AsString := 'NF-e                '+chave;
+        NroNota := StrToInt(Copy(chave, 26, 9)); // Adicionado por Rodrigo Cardilo em 11/08/2014
+
+        { Alterado por Jose Nilton Pace em 16/05/2013 
+        FieldByName('TextoImpressao').AsString := 'NF-e                '+chave; }
+
+        { Alterado por Rodrigo Cardilo em 11/08/2014 }
+        FieldByName('TextoImpressao').AsString := 'NF-e ' + FormatFloat('000000000', NroNota) + '      ' + chave ;
 (*
         FieldByName('TextoImpressao').AsString := 'NF-e            ' + chave;
 *)
@@ -958,6 +964,21 @@ begin
     with FCTe.compl do
     begin
       wObs := xObs;
+
+   {Adicionado por Rodrigo Cardilo em 11/08/2014}
+   // Observações 
+      for i := 0 to ObsCont.Count - 1 do
+      begin
+        with ObsCont.Items[i] do
+          TmpStr := TmpStr + XCampo + ': ' + XTexto + ';';
+      end;
+
+      if Length(wObs) > 0 then
+        wObs := wObs + ';';
+      wObs := wObs + TmpStr;
+
+      TmpStr := '';
+
 
       {$IFDEF PL_200}
       if CTe.ide.tpCTe=tcSubstituto then // Adicionado por NCC em 24/04/2014
