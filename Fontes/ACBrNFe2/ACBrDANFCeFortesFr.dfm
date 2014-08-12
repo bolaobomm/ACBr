@@ -1,9 +1,9 @@
 object ACBrNFeDANFCeFortesFr: TACBrNFeDANFCeFortesFr
   Left = 473
   Top = 85
+  Width = 779
+  Height = 789
   Caption = 'ACBrNFeDANFCeFortesFr'
-  ClientHeight = 746
-  ClientWidth = 755
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -18,47 +18,45 @@ object ACBrNFeDANFCeFortesFr: TACBrNFeDANFCeFortesFr
   object rlVenda: TRLReport
     Left = 16
     Top = 0
-    Width = 302
+    Width = 280
     Height = 1512
-    Margins.LeftMargin = 2.000000000000000000
-    Margins.TopMargin = 2.000000000000000000
-    Margins.RightMargin = 2.000000000000000000
-    Margins.BottomMargin = 0.000000000000000000
     AllowedBands = [btHeader, btDetail, btSummary, btFooter]
     Font.Charset = DEFAULT_CHARSET
     Font.Color = clBlack
     Font.Height = -9
     Font.Name = 'Arial'
     Font.Style = []
+    Margins.LeftMargin = 0.000000000000000000
+    Margins.TopMargin = 2.000000000000000000
+    Margins.RightMargin = 0.000000000000000000
+    Margins.BottomMargin = 0.000000000000000000
     PageSetup.PaperSize = fpCustom
-    PageSetup.PaperWidth = 80.000000000000000000
+    PageSetup.PaperWidth = 74.000000000000000000
     PageSetup.PaperHeight = 400.000000000000000000
     PrintDialog = False
     ShowProgress = False
     BeforePrint = rlVendaBeforePrint
     OnDataRecord = rlVendaDataRecord
     object rlbRodape: TRLBand
-      Left = 8
+      Left = 0
       Top = 486
-      Width = 286
+      Width = 280
       Height = 197
       AutoSize = True
       BandType = btSummary
-      InsideMargins.LeftMargin = 2.000000000000000000
-      InsideMargins.RightMargin = 2.000000000000000000
       object RLDraw2: TRLDraw
-        Left = 8
+        Left = 0
         Top = 0
-        Width = 270
+        Width = 280
         Height = 8
         Align = faTop
         DrawKind = dkLine
         Pen.Style = psDot
       end
       object lConsultaQRCode: TRLLabel
-        Left = 8
+        Left = 0
         Top = 8
-        Width = 270
+        Width = 280
         Height = 12
         Align = faTop
         Alignment = taCenter
@@ -72,25 +70,25 @@ object ACBrNFeDANFCeFortesFr: TACBrNFeDANFCeFortesFr
         ParentFont = False
       end
       object imgQRCode: TRLImage
-        Left = 8
+        Left = 0
         Top = 20
-        Width = 270
+        Width = 280
         Height = 133
         Align = faTop
         Center = True
         Scaled = True
       end
       object pGap05: TRLPanel
-        Left = 8
+        Left = 0
         Top = 153
-        Width = 270
+        Width = 280
         Height = 17
         Align = faTop
       end
       object lProtocolo: TRLLabel
-        Left = 8
+        Left = 0
         Top = 170
-        Width = 270
+        Width = 280
         Height = 10
         Align = faTop
         Alignment = taCenter
@@ -104,17 +102,17 @@ object ACBrNFeDANFCeFortesFr: TACBrNFeDANFCeFortesFr
         ParentFont = False
       end
       object pGap8: TRLPanel
-        Left = 8
+        Left = 0
         Top = 180
-        Width = 270
+        Width = 280
         Height = 17
         Align = faTop
       end
     end
     object rlsbDetItem: TRLSubDetail
-      Left = 8
+      Left = 0
       Top = 162
-      Width = 286
+      Width = 280
       Height = 80
       AllowedBands = [btDetail, btSummary]
       Font.Charset = DEFAULT_CHARSET
@@ -122,19 +120,17 @@ object ACBrNFeDANFCeFortesFr: TACBrNFeDANFCeFortesFr
       Font.Height = -9
       Font.Name = 'Arial'
       Font.Style = []
-      InsideMargins.LeftMargin = 2.000000000000000000
-      InsideMargins.RightMargin = 2.000000000000000000
       ParentFont = False
       OnDataRecord = rlsbDetItemDataRecord
       object rlbDetItem: TRLBand
-        Left = 8
+        Left = 0
         Top = 0
-        Width = 270
+        Width = 280
         Height = 20
         AutoSize = True
         BeforePrint = rlbDetItemBeforePrint
         object lTotalItem: TRLLabel
-          Left = 236
+          Left = 227
           Top = 10
           Width = 34
           Height = 10
@@ -178,9 +174,9 @@ object ACBrNFeDANFCeFortesFr: TACBrNFeDANFCeFortesFr
         end
       end
       object rlbDescItem: TRLBand
-        Left = 8
+        Left = 0
         Top = 20
-        Width = 270
+        Width = 280
         Height = 24
         BeforePrint = rlbDescItemBeforePrint
         object lTitDesconto: TRLLabel
@@ -210,7 +206,7 @@ object ACBrNFeDANFCeFortesFr: TACBrNFeDANFCeFortesFr
           ParentFont = False
         end
         object lDesconto: TRLLabel
-          Left = 236
+          Left = 227
           Top = 1
           Width = 34
           Height = 10
@@ -224,7 +220,7 @@ object ACBrNFeDANFCeFortesFr: TACBrNFeDANFCeFortesFr
           ParentFont = False
         end
         object lDescValLiq: TRLLabel
-          Left = 236
+          Left = 227
           Top = 13
           Width = 34
           Height = 10
@@ -239,9 +235,9 @@ object ACBrNFeDANFCeFortesFr: TACBrNFeDANFCeFortesFr
         end
       end
       object rlbOutroItem: TRLBand
-        Left = 8
+        Left = 0
         Top = 44
-        Width = 270
+        Width = 280
         Height = 24
         BeforePrint = rlbOutroItemBeforePrint
         object lTitAcrescimo: TRLLabel
@@ -271,7 +267,7 @@ object ACBrNFeDANFCeFortesFr: TACBrNFeDANFCeFortesFr
           ParentFont = False
         end
         object lOutro: TRLLabel
-          Left = 236
+          Left = 227
           Top = 1
           Width = 34
           Height = 10
@@ -285,7 +281,7 @@ object ACBrNFeDANFCeFortesFr: TACBrNFeDANFCeFortesFr
           ParentFont = False
         end
         object lOutroValLiq: TRLLabel
-          Left = 236
+          Left = 227
           Top = 13
           Width = 34
           Height = 10
@@ -300,31 +296,29 @@ object ACBrNFeDANFCeFortesFr: TACBrNFeDANFCeFortesFr
         end
       end
       object rlbGap: TRLBand
-        Left = 8
+        Left = 0
         Top = 68
-        Width = 270
+        Width = 280
         Height = 2
         BandType = btSummary
         BeforePrint = rlbGapBeforePrint
       end
     end
     object rlsbPagamentos: TRLSubDetail
-      Left = 8
+      Left = 0
       Top = 242
-      Width = 286
+      Width = 280
       Height = 65
-      InsideMargins.LeftMargin = 2.000000000000000000
-      InsideMargins.RightMargin = 2.000000000000000000
       OnDataRecord = rlsbPagamentosDataRecord
       object rlbPagamento: TRLBand
-        Left = 8
+        Left = 0
         Top = 42
-        Width = 270
+        Width = 280
         Height = 12
         AutoSize = True
         BeforePrint = rlbPagamentoBeforePrint
         object lPagamento: TRLLabel
-          Left = 226
+          Left = 218
           Top = 0
           Width = 44
           Height = 12
@@ -352,9 +346,9 @@ object ACBrNFeDANFCeFortesFr: TACBrNFeDANFCeFortesFr
         end
       end
       object rlbTroco: TRLBand
-        Left = 8
+        Left = 0
         Top = 54
-        Width = 270
+        Width = 280
         Height = 12
         AutoSize = True
         BandType = btSummary
@@ -379,7 +373,7 @@ object ACBrNFeDANFCeFortesFr: TACBrNFeDANFCeFortesFr
           ParentFont = False
         end
         object lTroco: TRLLabel
-          Left = 226
+          Left = 218
           Top = 0
           Width = 44
           Height = 12
@@ -394,9 +388,9 @@ object ACBrNFeDANFCeFortesFr: TACBrNFeDANFCeFortesFr
         end
       end
       object rlbTotal: TRLBand
-        Left = 8
+        Left = 0
         Top = 0
-        Width = 270
+        Width = 280
         Height = 42
         AutoSize = True
         BandType = btHeader
@@ -421,7 +415,7 @@ object ACBrNFeDANFCeFortesFr: TACBrNFeDANFCeFortesFr
           ParentFont = False
         end
         object lTotal: TRLLabel
-          Left = 226
+          Left = 217
           Top = 18
           Width = 44
           Height = 11
@@ -448,7 +442,7 @@ object ACBrNFeDANFCeFortesFr: TACBrNFeDANFCeFortesFr
           ParentFont = False
         end
         object lQtdTotalItensVal: TRLLabel
-          Left = 239
+          Left = 230
           Top = 6
           Width = 31
           Height = 12
@@ -475,7 +469,7 @@ object ACBrNFeDANFCeFortesFr: TACBrNFeDANFCeFortesFr
           ParentFont = False
         end
         object lTitValorPago: TRLLabel
-          Left = 221
+          Left = 213
           Top = 30
           Width = 48
           Height = 12
@@ -491,7 +485,7 @@ object ACBrNFeDANFCeFortesFr: TACBrNFeDANFCeFortesFr
         object RLDraw7: TRLDraw
           Left = 0
           Top = 0
-          Width = 270
+          Width = 280
           Height = 8
           Align = faTop
           DrawKind = dkLine
@@ -500,26 +494,24 @@ object ACBrNFeDANFCeFortesFr: TACBrNFeDANFCeFortesFr
       end
     end
     object rlbLei12741: TRLBand
-      Left = 8
+      Left = 0
       Top = 307
-      Width = 286
+      Width = 280
       Height = 28
       AutoSize = True
       BandType = btSummary
-      InsideMargins.LeftMargin = 2.000000000000000000
-      InsideMargins.RightMargin = 2.000000000000000000
       BeforePrint = rlbLei12741BeforePrint
       object RLDraw6: TRLDraw
-        Left = 8
+        Left = 0
         Top = 0
-        Width = 270
+        Width = 280
         Height = 8
         Align = faTop
         DrawKind = dkLine
         Pen.Style = psDot
       end
       object lTitLei12741: TRLLabel
-        Left = 8
+        Left = 0
         Top = 4
         Width = 182
         Height = 12
@@ -532,7 +524,7 @@ object ACBrNFeDANFCeFortesFr: TACBrNFeDANFCeFortesFr
         ParentFont = False
       end
       object lTitLei12742: TRLLabel
-        Left = 8
+        Left = 1
         Top = 16
         Width = 112
         Height = 12
@@ -545,7 +537,7 @@ object ACBrNFeDANFCeFortesFr: TACBrNFeDANFCeFortesFr
         ParentFont = False
       end
       object lValLei12741: TRLLabel
-        Left = 232
+        Left = 218
         Top = 4
         Width = 44
         Height = 11
@@ -560,21 +552,21 @@ object ACBrNFeDANFCeFortesFr: TACBrNFeDANFCeFortesFr
       end
     end
     object rlbsCabecalho: TRLSubDetail
-      Left = 8
+      Left = 0
       Top = 8
-      Width = 286
+      Width = 280
       Height = 154
       OnDataRecord = rlbsCabecalhoDataRecord
       object rlbMsgDANFe: TRLBand
         Left = 0
         Top = 87
-        Width = 286
+        Width = 280
         Height = 42
         AutoSize = True
         object lMsgDANFCe: TRLLabel
           Left = 0
           Top = 0
-          Width = 286
+          Width = 280
           Height = 14
           Align = faTop
           Alignment = taCenter
@@ -590,7 +582,7 @@ object ACBrNFeDANFCeFortesFr: TACBrNFeDANFCeFortesFr
         object lMsgDANFCe1: TRLLabel
           Left = 0
           Top = 28
-          Width = 286
+          Width = 280
           Height = 14
           Align = faTop
           Alignment = taCenter
@@ -606,7 +598,7 @@ object ACBrNFeDANFCeFortesFr: TACBrNFeDANFCeFortesFr
         object lMsgDANFCe2: TRLLabel
           Left = 0
           Top = 14
-          Width = 286
+          Width = 280
           Height = 14
           Align = faTop
           Alignment = taCenter
@@ -623,13 +615,13 @@ object ACBrNFeDANFCeFortesFr: TACBrNFeDANFCeFortesFr
       object rlbDadosCliche: TRLBand
         Left = 0
         Top = 0
-        Width = 286
+        Width = 280
         Height = 87
         AutoSize = True
         object pLogoeCliche: TRLPanel
           Left = 0
           Top = 0
-          Width = 286
+          Width = 280
           Height = 87
           Align = faTop
           AutoExpand = True
@@ -637,7 +629,7 @@ object ACBrNFeDANFCeFortesFr: TACBrNFeDANFCeFortesFr
           object lRazaoSocial: TRLLabel
             Left = 0
             Top = 25
-            Width = 286
+            Width = 280
             Height = 12
             Align = faTop
             Alignment = taCenter
@@ -652,7 +644,7 @@ object ACBrNFeDANFCeFortesFr: TACBrNFeDANFCeFortesFr
           object lEmitCNPJ_IE_IM: TRLLabel
             Left = 0
             Top = 37
-            Width = 286
+            Width = 280
             Height = 12
             Align = faTop
             Alignment = taCenter
@@ -670,7 +662,7 @@ object ACBrNFeDANFCeFortesFr: TACBrNFeDANFCeFortesFr
           object lEndereco: TRLMemo
             Left = 0
             Top = 49
-            Width = 286
+            Width = 280
             Height = 30
             Align = faTop
             Alignment = taCenter
@@ -687,7 +679,7 @@ object ACBrNFeDANFCeFortesFr: TACBrNFeDANFCeFortesFr
           object RLDraw1: TRLDraw
             Left = 0
             Top = 79
-            Width = 286
+            Width = 280
             Height = 8
             Align = faTop
             DrawKind = dkLine
@@ -696,7 +688,7 @@ object ACBrNFeDANFCeFortesFr: TACBrNFeDANFCeFortesFr
           object lNomeFantasia: TRLLabel
             Left = 0
             Top = 6
-            Width = 286
+            Width = 280
             Height = 19
             Align = faTop
             Alignment = taCenter
@@ -712,7 +704,7 @@ object ACBrNFeDANFCeFortesFr: TACBrNFeDANFCeFortesFr
           object imgLogo: TRLImage
             Left = 0
             Top = 0
-            Width = 286
+            Width = 280
             Height = 6
             Align = faTop
             AutoSize = True
@@ -725,14 +717,14 @@ object ACBrNFeDANFCeFortesFr: TACBrNFeDANFCeFortesFr
       object rlbLegenda: TRLBand
         Left = 0
         Top = 129
-        Width = 286
+        Width = 280
         Height = 28
         AutoSize = True
         BeforePrint = rlbLegendaBeforePrint
         object RLDraw4: TRLDraw
           Left = 0
           Top = 0
-          Width = 286
+          Width = 280
           Height = 8
           Align = faTop
           DrawKind = dkLine
@@ -741,10 +733,9 @@ object ACBrNFeDANFCeFortesFr: TACBrNFeDANFCeFortesFr
         object lCPF_CNPJ1: TRLLabel
           Left = 0
           Top = 8
-          Width = 286
+          Width = 280
           Height = 12
           Align = faTop
-          Alignment = taCenter
           Caption = '#|COD|DESC|QTD|UN| VL UN R$|(VLTR R$)*| VL ITEM R$'
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
@@ -757,7 +748,7 @@ object ACBrNFeDANFCeFortesFr: TACBrNFeDANFCeFortesFr
         object RLDraw5: TRLDraw
           Left = 0
           Top = 20
-          Width = 286
+          Width = 280
           Height = 8
           Align = faTop
           DrawKind = dkLine
@@ -766,28 +757,26 @@ object ACBrNFeDANFCeFortesFr: TACBrNFeDANFCeFortesFr
       end
     end
     object rlbConsumidor: TRLBand
-      Left = 8
+      Left = 0
       Top = 431
-      Width = 286
+      Width = 280
       Height = 55
       AutoSize = True
       BandType = btSummary
-      InsideMargins.LeftMargin = 2.000000000000000000
-      InsideMargins.RightMargin = 2.000000000000000000
       BeforePrint = rlbConsumidorBeforePrint
       object RLDraw10: TRLDraw
-        Left = 8
+        Left = 0
         Top = 0
-        Width = 270
+        Width = 280
         Height = 8
         Align = faTop
         DrawKind = dkLine
         Pen.Style = psDot
       end
       object lTitConsumidor: TRLLabel
-        Left = 8
+        Left = 0
         Top = 8
-        Width = 270
+        Width = 280
         Height = 11
         Align = faTop
         Alignment = taCenter
@@ -800,9 +789,9 @@ object ACBrNFeDANFCeFortesFr: TACBrNFeDANFCeFortesFr
         ParentFont = False
       end
       object lEnderecoConsumidor: TRLMemo
-        Left = 8
+        Left = 0
         Top = 43
-        Width = 270
+        Width = 280
         Height = 12
         Align = faTop
         Alignment = taCenter
@@ -817,9 +806,9 @@ object ACBrNFeDANFCeFortesFr: TACBrNFeDANFCeFortesFr
         ParentFont = False
       end
       object lCPF_CNPJ_ID: TRLMemo
-        Left = 8
+        Left = 0
         Top = 19
-        Width = 270
+        Width = 280
         Height = 24
         Align = faTop
         Alignment = taCenter
@@ -837,28 +826,26 @@ object ACBrNFeDANFCeFortesFr: TACBrNFeDANFCeFortesFr
       end
     end
     object rlbMensagemFiscal: TRLBand
-      Left = 8
+      Left = 0
       Top = 365
-      Width = 286
+      Width = 280
       Height = 66
       AutoSize = True
       BandType = btSummary
-      InsideMargins.LeftMargin = 2.000000000000000000
-      InsideMargins.RightMargin = 2.000000000000000000
       BeforePrint = rlbMensagemFiscalBeforePrint
       object RLDraw12: TRLDraw
-        Left = 8
+        Left = 0
         Top = 0
-        Width = 270
+        Width = 280
         Height = 8
         Align = faTop
         DrawKind = dkLine
         Pen.Style = psDot
       end
       object lMensagemFiscal: TRLLabel
-        Left = 8
+        Left = 0
         Top = 8
-        Width = 270
+        Width = 280
         Height = 10
         Align = faTop
         Alignment = taCenter
@@ -871,9 +858,9 @@ object ACBrNFeDANFCeFortesFr: TACBrNFeDANFCeFortesFr
         ParentFont = False
       end
       object lChaveDeAcesso: TRLLabel
-        Left = 8
+        Left = 0
         Top = 54
-        Width = 270
+        Width = 280
         Height = 12
         Align = faTop
         Alignment = taCenter
@@ -886,9 +873,9 @@ object ACBrNFeDANFCeFortesFr: TACBrNFeDANFCeFortesFr
         ParentFont = False
       end
       object lTitChaveAcesso: TRLLabel
-        Left = 8
+        Left = 0
         Top = 42
-        Width = 270
+        Width = 280
         Height = 12
         Align = faTop
         Alignment = taCenter
@@ -901,9 +888,9 @@ object ACBrNFeDANFCeFortesFr: TACBrNFeDANFCeFortesFr
         ParentFont = False
       end
       object lNumSerieEmissao: TRLLabel
-        Left = 8
+        Left = 0
         Top = 18
-        Width = 270
+        Width = 280
         Height = 12
         Align = faTop
         Alignment = taCenter
@@ -918,9 +905,9 @@ object ACBrNFeDANFCeFortesFr: TACBrNFeDANFCeFortesFr
         ParentFont = False
       end
       object lTitConsulteChave: TRLMemo
-        Left = 8
+        Left = 0
         Top = 30
-        Width = 270
+        Width = 280
         Height = 12
         Align = faTop
         Alignment = taCenter
@@ -936,19 +923,17 @@ object ACBrNFeDANFCeFortesFr: TACBrNFeDANFCeFortesFr
       end
     end
     object rlbMensagemContribuinte: TRLBand
-      Left = 8
+      Left = 0
       Top = 335
-      Width = 286
+      Width = 280
       Height = 30
       AutoSize = True
       BandType = btSummary
-      InsideMargins.LeftMargin = 2.000000000000000000
-      InsideMargins.RightMargin = 2.000000000000000000
       BeforePrint = rlbMensagemContribuinteBeforePrint
       object lMensagemContribuinte: TRLLabel
-        Left = 8
+        Left = 0
         Top = 8
-        Width = 270
+        Width = 280
         Height = 10
         Align = faTop
         Alignment = taCenter
@@ -961,18 +946,18 @@ object ACBrNFeDANFCeFortesFr: TACBrNFeDANFCeFortesFr
         ParentFont = False
       end
       object RLDraw3: TRLDraw
-        Left = 8
+        Left = 0
         Top = 0
-        Width = 270
+        Width = 280
         Height = 8
         Align = faTop
         DrawKind = dkLine
         Pen.Style = psDot
       end
       object lObservacoes: TRLMemo
-        Left = 8
+        Left = 0
         Top = 18
-        Width = 270
+        Width = 280
         Height = 12
         Align = faTop
         Alignment = taCenter
