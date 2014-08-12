@@ -172,6 +172,7 @@ end;
 function TACBrNFeDANFEFR.PrepareReport(NFE: TNFe): Boolean;
 var
   I: Integer;
+ wProjectStream: TStringStream;
 begin
   Result := False;
 
@@ -189,10 +190,20 @@ begin
 
   if Trim(FastFile) <> '' then
   begin
-    if FileExists(FastFile) then
-      dmDanfe.frxReport.LoadFromFile(FastFile)
+    if not (uppercase(copy(FastFile,length(FastFile)-3,4))='.FR3') then
+    begin
+      wProjectStream:=TStringStream.Create(FastFile);
+      dmDanfe.frxReport.FileName := '';
+      dmDanfe.frxReport.LoadFromStream(wProjectStream);
+      wProjectStream.Free;
+    end
     else
-      raise EACBrNFeDANFEFR.CreateFmt('Caminho do arquivo de impressão do DANFE "%s" inválido.', [FastFile]);
+    begin
+      if FileExists(FastFile) then
+        dmDanfe.frxReport.LoadFromFile(FastFile)
+      else
+        raise EACBrNFeDANFEFR.CreateFmt('Caminho do arquivo de impressão do DANFE "%s" inválido.', [FastFile]);
+    end;
   end
   else
     raise EACBrNFeDANFEFR.Create('Caminho do arquivo de impressão do DANFE não assinalado.');
