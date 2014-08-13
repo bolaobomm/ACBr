@@ -123,10 +123,12 @@ begin
     cURL_Producao := 'http://finanbbl.ddns.us:8080/IssWeb-ejb/IssWebWS/IssWebWS';
   2103000 : // Caxias/MA
     cURL_Producao := 'http://177.105.209.118:8080/IssWeb-ejb/IssWebWS/IssWebWS';
+  3305505 : // Saquarema/RJ
+    cURL_Producao :=  'http://201.18.231.99:5661/IssWeb-ejb/IssWebWS/IssWebWS';
   3504503 : // Avare/SP
     cURL_Producao := 'http://fiorilli.avare.sp.gov.br:5661/IssWeb-ejb/IssWebWS/IssWebWS';
   3504800 : // Balsamo/SP
-    cURL_Producao := 'http://201.28.69.146:5663/IssWeb-ejb/IssWebWS/IssWebWS';
+    cURL_Producao := 'http://201.28.69.146:5663/IssWeb-ejb/IssWebWS/IssWebWS';  // essa URL é a mesma de Homologação, portanto deve estar errada.
   3505203 : // Bariri/SP
     cURL_Producao := 'http://sipweb.bariri.sp.gov.br:8080/IssWeb-ejb/IssWebWS/IssWebWS?wsdl';
   3512902 : // Cosmorama/SP

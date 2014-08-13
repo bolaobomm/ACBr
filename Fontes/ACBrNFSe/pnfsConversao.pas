@@ -757,6 +757,7 @@ begin
   1508407, // Xinguara/PA
   2101202, // Bacabal/MA
   2103000, // Caxias/MA
+  3305505, // Saquarema/RJ
   3504503, // Avare/SP
   3504800, // Balsamo/SP
   3505203, // Bariri/SP
@@ -887,7 +888,7 @@ begin
 //  4322400, // Uruguaiana/RS
   3143302, // Montes Claros/MG
   3202405, // Guarapari/ES
-  3305505, // Saquarema/RJ
+//  3305505, // Saquarema/RJ
 //  3504008, // Assis/SP
   3541505, // Presidente Venceslau/SP
   4101408, // Apucarana/PR
