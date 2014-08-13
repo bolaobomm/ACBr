@@ -218,8 +218,8 @@ begin
       if (cnpj <> '') and (length(cnpj) < 14) then
         cnpj := padR(cnpj, 14, '0');
 
-      cnpj := trim(Leitor.rCampo(tcStr, 'CPF'));
-      if (cnpj <> '') and (length(cnpj) < 11) then
+      cpf := trim(Leitor.rCampo(tcStr, 'CPF'));
+      if (cpf <> '') and (length(cpf) < 11) then
         cpf  := padR(cpf, 11, '0');
 
 
@@ -242,8 +242,8 @@ begin
         if (cnpj <> '') and (length(cnpj) < 14) then
           cnpj := padR(cnpj, 14, '0');
 
-        cnpj := trim(Leitor.rCampo(tcStr, 'CPF'));
-        if (cnpj <> '') and (length(cnpj) < 11) then
+        cpf := trim(Leitor.rCampo(tcStr, 'CPF'));
+        if (cpf <> '') and (length(cpf) < 11) then
           cpf  := padR(cpf, 11, '0');
 
 
