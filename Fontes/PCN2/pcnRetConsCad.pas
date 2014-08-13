@@ -155,6 +155,9 @@ type
 
 implementation
 
+uses
+  ACBrUtil;
+
 { RetConsCad }
 
 constructor TRetConsCad.Create;
@@ -213,8 +216,8 @@ begin
       (*GR06 *)FxMotivo := Leitor.rCampo(tcStr, 'xMotivo');
       (*GR06a*)FUF := Leitor.rCampo(tcStr, 'UF');
       (*GR06b*)FIE := Leitor.rCampo(tcStr, 'IE');
-      (*GR06c*)FCNPJ := Leitor.rCampo(tcStr, 'CNPJ');
-      (*GR06d*)FCPF := Leitor.rCampo(tcStr, 'CPF');
+      (*GR06c*)FCNPJ := padR(Leitor.rCampo(tcStr, 'CNPJ'), 14, '0');
+      (*GR06d*)FCPF := padR(Leitor.rCampo(tcStr, 'CPF'), 11, '0');
       (*GR06e*)FdhCons := Leitor.rCampo(tcDatHor, 'dhCons');
       (*GR06f*)FcUF := Leitor.rCampo(tcInt, 'cUF');
       while Leitor.rExtrai(2, 'infCad', '', i + 1) <> '' do
@@ -222,8 +225,8 @@ begin
         InfCad.Add;
 
         (*GR08 *)InfCad[i].FIE := Leitor.rCampo(tcStr, 'IE');
-        (*GR09 *)InfCad[i].FCNPJ := Leitor.rCampo(tcStr, 'CNPJ');
-        (*GR10 *)InfCad[i].FCPF := Leitor.rCampo(tcStr, 'CPF');
+        (*GR09 *)InfCad[i].FCNPJ := padR(Leitor.rCampo(tcStr, 'CNPJ'), 14, '0');
+        (*GR10 *)InfCad[i].FCPF := padR(Leitor.rCampo(tcStr, 'CPF'), 11, '0');
         (*GR11 *)InfCad[i].FUF := Leitor.rCampo(tcStr, 'UF');
         (*GR12 *)InfCad[i].FcSit := Leitor.rCampo(tcInt, 'cSit');
         (*GR12a*)InfCad[i].FindCredNFe := Leitor.rCampo(tcInt, 'indCredNFe');
