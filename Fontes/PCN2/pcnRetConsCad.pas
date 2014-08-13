@@ -205,28 +205,51 @@ end;
 function TRetConsCad.LerXML: boolean;
 var
   i: integer;
+  cnpj, cpf: string;
 begin
-  i := 0; 
+  i := 0;
   Result := False;
   try
     if Leitor.rExtrai(1, 'infCons') <> '' then
     begin
+      // tratamento para quando o webservice não retorna os zeros a esquerda
+      // na consulta
+      cnpj := trim(Leitor.rCampo(tcStr, 'CNPJ'));
+      if (cnpj <> '') and (length(cnpj) < 14) then
+        cnpj := padR(cnpj, 14, '0');
+
+      cnpj := trim(Leitor.rCampo(tcStr, 'CPF'));
+      if (cnpj <> '') and (length(cnpj) < 11) then
+        cpf  := padR(cpf, 11, '0');
+
+
       (*GR04 *)FverAplic := Leitor.rCampo(tcStr, 'verAplic');
       (*GR05 *)FcStat := Leitor.rCampo(tcInt, 'cStat');
       (*GR06 *)FxMotivo := Leitor.rCampo(tcStr, 'xMotivo');
       (*GR06a*)FUF := Leitor.rCampo(tcStr, 'UF');
       (*GR06b*)FIE := Leitor.rCampo(tcStr, 'IE');
-      (*GR06c*)FCNPJ := padR(Leitor.rCampo(tcStr, 'CNPJ'), 14, '0');
-      (*GR06d*)FCPF := padR(Leitor.rCampo(tcStr, 'CPF'), 11, '0');
+      (*GR06c*)FCNPJ := cnpj;
+      (*GR06d*)FCPF := cpf;
       (*GR06e*)FdhCons := Leitor.rCampo(tcDatHor, 'dhCons');
       (*GR06f*)FcUF := Leitor.rCampo(tcInt, 'cUF');
       while Leitor.rExtrai(2, 'infCad', '', i + 1) <> '' do
       begin
         InfCad.Add;
 
+        // tratamento para quando o webservice não retorna os zeros a esquerda
+        // na consulta
+        cnpj := trim(Leitor.rCampo(tcStr, 'CNPJ'));
+        if (cnpj <> '') and (length(cnpj) < 14) then
+          cnpj := padR(cnpj, 14, '0');
+
+        cnpj := trim(Leitor.rCampo(tcStr, 'CPF'));
+        if (cnpj <> '') and (length(cnpj) < 11) then
+          cpf  := padR(cpf, 11, '0');
+
+
         (*GR08 *)InfCad[i].FIE := Leitor.rCampo(tcStr, 'IE');
-        (*GR09 *)InfCad[i].FCNPJ := padR(Leitor.rCampo(tcStr, 'CNPJ'), 14, '0');
-        (*GR10 *)InfCad[i].FCPF := padR(Leitor.rCampo(tcStr, 'CPF'), 11, '0');
+        (*GR09 *)InfCad[i].FCNPJ := cnpj;
+        (*GR10 *)InfCad[i].FCPF := cpf;
         (*GR11 *)InfCad[i].FUF := Leitor.rCampo(tcStr, 'UF');
         (*GR12 *)InfCad[i].FcSit := Leitor.rCampo(tcInt, 'cSit');
         (*GR12a*)InfCad[i].FindCredNFe := Leitor.rCampo(tcInt, 'indCredNFe');
