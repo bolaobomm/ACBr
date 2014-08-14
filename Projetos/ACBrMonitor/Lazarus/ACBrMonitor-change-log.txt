@@ -43,6 +43,10 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+Versão 0.10.7.0  14/08/14
+[*]   Modificado mecanismo de criação do arquivo TXT para processar de forma
+      mais otimizada arquivos com lote de comandos  (por: DSA)
+
 Versão 0.9.26.1  01/08/13    (Por: DSA)
 [+]   Adicionado suporte para conversão do Arquivo de Entrada e Saida para ANSI
 

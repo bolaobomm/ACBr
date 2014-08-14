@@ -610,6 +610,7 @@ type
     ArqSaiTXT, ArqSaiTMP, ArqEntTXT, ArqLogTXT: string;
     fsCmd: TACBrCmd;
     fsProcessar : TStringList ;
+    fsInicioLoteTXT: Boolean;
     NewLines: ansistring;
     fsDisWorking: boolean;
     fsRFDIni: string;
@@ -700,6 +701,7 @@ begin
 
   fsCmd       := TACBrCmd.Create;
   fsProcessar := TStringList.Create;
+  fsInicioLoteTXT := False;
 
   Inicio     := True;
   ArqSaiTXT  := '';
@@ -2415,6 +2417,7 @@ begin
     fsProcessar.Add(NewLines);
 
   NewLines := '';
+  fsInicioLoteTXT := True;
 
   while fsProcessar.Count > 0 do
   begin
@@ -2484,6 +2487,8 @@ begin
 
       sbProcessando.Panels[1].Text := '';
     end;
+
+    fsInicioLoteTXT := False;
   end;
 end;
 
@@ -2504,23 +2509,27 @@ begin
 
   if rbTXT.Checked then
   begin
-     { Primeiro salva em Temporário para que a gravação de todos os Bytes ocorra
-       antes que a aplicação controladora do ACBrMonitor tente ler o arquivo de
-       Resposta incompleto }
-    TryDeleteFile(ArqSaiTMP, 1000); // Tenta apagar por até 1 segundo
+    { Primeiro salva em Temporário para que a gravação de todos os Bytes ocorra
+      antes que a aplicação controladora do ACBrMonitor tente ler o arquivo de
+      Resposta incompleto }
+    if fsInicioLoteTXT or (TipoCMD <> 'A') then
+       TryDeleteFile(ArqSaiTMP, 1000); // Tenta apagar por até 1 segundo
 
     if FileExists(ArqSaiTXT) then
        RenameFile(ArqSaiTXT, ArqSaiTMP); { GravaArqResp faz append se arq. existir }
 
-    if TipoCMD = 'A' then
+    if TipoCMD = 'A' then     // ACBr
      begin
        if chbArqSaiANSI.Checked then
           Resposta := Utf8ToAnsi(Resposta);
+
        WriteToTXT(ArqSaiTMP, Resposta);
-       RenameFile(ArqSaiTMP, ArqSaiTXT);
+
+       if (fsProcessar.Count < 1) then    // É final do Lote TXT ?
+          RenameFile(ArqSaiTMP, ArqSaiTXT);
      end
 
-    else if TipoCMD = 'B' then
+    else if TipoCMD = 'B' then          // Bematech Monitor
      begin
        if copy(Resposta, 1, 3) <> 'OK:' then
         begin
@@ -2537,7 +2546,7 @@ begin
         end;
      end
 
-    else if TipoCMD = 'D' then
+    else if TipoCMD = 'D' then      // Daruma Monitor
      begin
        if copy(Resposta, 1, 3) <> 'OK:' then
         begin
