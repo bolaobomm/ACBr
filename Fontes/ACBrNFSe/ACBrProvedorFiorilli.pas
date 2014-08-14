@@ -140,7 +140,7 @@ begin
   3540200 : // Pontal/SP
     cURL_Producao := 'http://177.69.210.132:8080/IssWeb-ejb/IssWebWS/IssWebWS';
   3549409 : // Sao Joaquim Da Barra/SP
-    cURL_Producao := 'http://187.72.128.133:5661/IssWeb-ejb/IssWebWS/IssWebWS';
+    cURL_Producao := 'http://187.72.128.113:5661/IssWeb-ejb/IssWebWS/IssWebWS';
   3551603 : // Serra Negra/SP
     cURL_Producao := 'http://intra.serranegra.sp.gov.br/IssWeb-ejb/IssWebWS/IssWebWS';
   3555000 : // Tupã/SP
