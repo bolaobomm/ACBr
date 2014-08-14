@@ -150,7 +150,7 @@ var
   i: Integer;
   iNivel: Integer;
 begin
-  Result := False;
+  Result := True;
 
   try
     Leitor.Arquivo := NotaUtil.RetirarPrefixos(Leitor.Arquivo);
@@ -181,11 +181,21 @@ begin
        inc(i);
      end;
 
-//        if i = 0 then
+    i := 0;
+    while (Leitor.rExtrai(1, 'Fault', '', i + 1) <> '') do
+     begin
+       InfRec.FMsgRetorno.Add;
+       InfRec.FMsgRetorno[i].FCodigo   := Leitor.rCampo(tcStr, 'faultcode');
+       InfRec.FMsgRetorno[i].FMensagem := Leitor.rCampo(tcStr, 'faultstring');
+       InfRec.FMsgRetorno[i].FCorrecao := '';
+
+       inc(i);
+     end;
+
+           //        if i = 0 then
 //          InfRec.FMsgRetorno.Add;
 //      end;
 
-    Result := True;
   except
     Result := False;
   end;

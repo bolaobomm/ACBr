@@ -141,8 +141,8 @@ function TretSitLote.LerXml: boolean;
 var
   i: Integer;
 begin
-  result := False;
-  
+  result := True;
+
   try
     // Incluido por Ricardo Miranda em 14/03/2013
     Leitor.Arquivo := NotaUtil.RetirarPrefixos(Leitor.Arquivo);
@@ -178,8 +178,18 @@ begin
         end;
       end;
 
-      result := True;
     end;
+
+    i := 0;
+    while (Leitor.rExtrai(1, 'Fault', '', i + 1) <> '') do
+     begin
+       InfSit.FMsgRetorno.Add;
+       InfSit.FMsgRetorno[i].FCodigo   := Leitor.rCampo(tcStr, 'faultcode');
+       InfSit.FMsgRetorno[i].FMensagem := Leitor.rCampo(tcStr, 'faultstring');
+       InfSit.FMsgRetorno[i].FCorrecao := '';
+
+       inc(i);
+     end;
   except
     result := False;
   end;

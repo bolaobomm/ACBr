@@ -216,7 +216,7 @@ function TretCancNFSe.LerXml: boolean;
 var
   i: Integer;
 begin
-  result := False;
+  result := True;
 
   try
     // Incluido por Ricardo Miranda em 14/03/2013
@@ -253,7 +253,6 @@ begin
         end;
       end;
 
-      Result := True;
     end
   else
     begin
@@ -312,9 +311,20 @@ begin
            InfCanc.FMsgRetorno[0].FCorrecao := Leitor.rCampo(tcStr, 'Correcao');
         end;
 
-        result := True;
       end;
     end;
+
+    i := 0;
+    while (Leitor.rExtrai(1, 'Fault', '', i + 1) <> '') do
+     begin
+       InfCanc.FMsgRetorno.Add;
+       InfCanc.FMsgRetorno[i].FCodigo   := Leitor.rCampo(tcStr, 'faultcode');
+       InfCanc.FMsgRetorno[i].FMensagem := Leitor.rCampo(tcStr, 'faultstring');
+       InfCanc.FMsgRetorno[i].FCorrecao := '';
+
+       inc(i);
+     end;
+
   except
     result := False;
   end;

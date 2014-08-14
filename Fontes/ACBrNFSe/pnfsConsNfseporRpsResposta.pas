@@ -231,7 +231,7 @@ var
   i, k, Item: Integer;
   VersaoXML: String;
 begin
-  result := False;
+  result := True;
   
   try
     Leitor.Arquivo := NotaUtil.RetirarPrefixos(Leitor.Arquivo);
@@ -610,8 +610,19 @@ begin
         end;
       end;
 
-      Result := True;
     end;
+
+    i := 0;
+    while (Leitor.rExtrai(1, 'Fault', '', i + 1) <> '') do
+     begin
+       ListaNfse.FMsgRetorno.Add;
+       ListaNfse.FMsgRetorno[i].FCodigo   := Leitor.rCampo(tcStr, 'faultcode');
+       ListaNfse.FMsgRetorno[i].FMensagem := Leitor.rCampo(tcStr, 'faultstring');
+       ListaNfse.FMsgRetorno[i].FCorrecao := '';
+
+       inc(i);
+     end;
+
   except
     result := False;
   end;

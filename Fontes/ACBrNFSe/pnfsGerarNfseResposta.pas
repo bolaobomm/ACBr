@@ -232,7 +232,8 @@ var
   ProtocoloTemp, NumeroLoteTemp: String;
   DataRecebimentoTemp:Tdatetime;  
 begin
-  result := False;
+  Result := True;
+
   try
     Leitor.Arquivo := NotaUtil.RetirarPrefixos(Leitor.Arquivo);
     VersaoXML := NotaUtil.VersaoXML(Leitor.Arquivo);
@@ -656,7 +657,6 @@ begin
         end;
       end;
 
-      Result := True;
     end
     else begin// alterado Joel Takei ISSe 08/06/2013
         if (leitor.rExtrai(1, 'ListaMensagemRetorno') <> '') or
@@ -672,14 +672,13 @@ begin
 
             inc(i);
           end;
-          Result := True;
         end;
         // Andeson de Jesus - Barreiras - BA
 
-        if (leitor.rExtrai(1, 's:Fault') <> '') or (leitor.rExtrai(1, 'SOAP-ENV:Fault') <> '') then begin
+//        if (leitor.rExtrai(1, 'Fault') <> '') then begin
 
            i := 0;
-           while (Leitor.rExtrai(1, 's:Fault', '', i + 1) <> '') or (Leitor.rExtrai(1, 'SOAP-ENV:Fault', '', i + 1) <> '')do
+           while (Leitor.rExtrai(1, 'Fault', '', i + 1) <> '') do
            begin
               ListaNfse.FMsgRetorno.Add;
               ListaNfse.FMsgRetorno[i].FCodigo   := Leitor.rCampo(tcStr, 'faultcode');
@@ -688,8 +687,7 @@ begin
 
               inc(i);
            end;
-           Result := True;
-        end; //fim Fault
+//        end; //fim Fault
 
         if (Leitor.rExtrai(1, 'EmitirResponse') <> '') then
         begin
