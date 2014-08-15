@@ -123,9 +123,17 @@ class function TNFSeG.Gera_DadosMsgEnviarLote(Prefixo3, Prefixo4,
   IM, QtdeNotas: String; Notas, TagI, TagF: AnsiString; AProvedor: TnfseProvedor = proNenhum): AnsiString;
 var
  DadosMsg: AnsiString;
+ IdLote: String;
 begin
  if AProvedor = proBetha then Prefixo3 := '';
- if AProvedor in [proGovBR, proPronim{, proPublica}] then Identificador := '';
+ if AProvedor in [proGovBR, proPronim, proISSDigital] then Identificador := '';
+
+ case AProvedor of
+  proTecnos : IdLote := '1' + IntToStrZero(YearOf(Date), 4) +
+                        Copy(Notas, Pos('<InfDeclaracaoPrestacaoServico Id="', Notas) + 36, 14) +
+                        IntToStrZero(StrToIntDef(NumeroLote, 1), 16);
+  else IdLote := NumeroLote;
+ end;
 
  DadosMsg := '<' + Prefixo3 + 'LoteRps' +
 
@@ -135,23 +143,11 @@ begin
                                '') +
 
                // Inclui o Identificador ou não
-               DFeUtil.SeSenao(AProvedor = proISSDigital,
-                               '',
-                               DFeUtil.SeSenao(Identificador <> '',
-                                               ' ' + Identificador + '="' +
-                                               DFeUtil.SeSenao(AProvedor = proTecnos,
-                                                   '1' + IntToStrZero(YearOf(Date), 4) +
-                                                   Copy(Notas, Pos('<InfDeclaracaoPrestacaoServico Id="', Notas) + 36, 14) +
-                                                                    IntToStrZero(StrToIntDef(NumeroLote, 1), 16),
-                                                                                            NumeroLote
-                                                                                           ) + '"',
-                                               ''
-                                              )
-                              ) +
+               DFeUtil.SeSenao(Identificador <> '', ' ' + Identificador + '="' + IdLote + '"', '') +
 
                // Inclui a versão ou não
                DFeUtil.SeSenao(AProvedor in [proAbaco, proBetha, proGinfes, proGoiania, proGovBR,
-                                             {proISSDigital, }proIssCuritiba, proISSNET, proNatal, proActcon,
+                                             proIssCuritiba, proISSNET, proNatal, proActcon,
                                              proRecife, proRJ, proSimplISS, proThema, proTiplan,
                                              proAgili, proFISSLex, proSpeedGov, proPronim, proCoplan],
                                '',

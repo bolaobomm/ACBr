@@ -178,6 +178,8 @@ begin
 
   proSystemPro: FNFSe.InfID.ID := FNFSe.InfID.ID;
 
+  proRecife: FNFSe.InfID.ID := 'RPS' + SomenteNumeros(FNFSe.IdentificacaoRps.Numero);
+
   else FNFSe.InfID.ID := SomenteNumeros(FNFSe.IdentificacaoRps.Numero) + FNFSe.IdentificacaoRps.Serie;
  end;
 
@@ -789,7 +791,8 @@ procedure TNFSeW.GerarXML_ABRASF_V1;
 begin
   if (FIdentificador = '') {or (FProvedor = proPublica)}
     then Gerador.wGrupoNFSe('InfRps')
-    else Gerador.wGrupoNFSe('InfRps ' + FIdentificador + '="rps' + NFSe.InfID.ID + '"');
+    else Gerador.wGrupoNFSe('InfRps ' + FIdentificador + '="' + NFSe.InfID.ID + '"');
+//    else Gerador.wGrupoNFSe('InfRps ' + FIdentificador + '="rps' + NFSe.InfID.ID + '"');
 
    GerarIdentificacaoRPS;
 
