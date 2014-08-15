@@ -716,7 +716,7 @@ end;
 
 function TNFSeR.LerNFSe_ABRASF_V1: Boolean;
 var
- item: Integer;
+ item, I: Integer;
  ok  : Boolean;
 begin
   if (Leitor.rExtrai(3, 'IdentificacaoRps') <> '')
@@ -909,6 +909,26 @@ begin
     NFSe.ConstrucaoCivil.CodigoObra := Leitor.rCampo(tcStr, 'CodigoObra');
     NFSe.ConstrucaoCivil.Art        := Leitor.rCampo(tcStr, 'Art');
    end;
+
+   // adicionado por Tailan Bonassi
+   if FProvedor in [proBetha] then
+     if Leitor.rExtrai(3, 'CondicaoPagamento') <> ''
+     then begin
+      NFSe.CondicaoPagamento.Condicao:= StrToCondicao(ok,Leitor.rCampo(tcStr,'Condicao'));
+      NFSe.CondicaoPagamento.QtdParcela:= Leitor.rCampo(tcInt,'Condicao');
+      for I := 0 to 9999
+      do begin
+       if (Leitor.rExtrai(4, 'Parcelas', 'Parcelas', i) <> '')
+        then begin
+         with NFSe.CondicaoPagamento.Parcelas.Add
+          do begin
+           Parcela        := Leitor.rCampo(tcInt, 'Parcela');
+           DataVencimento := Leitor.rCampo(tcDatVcto, 'DataVencimento');
+           Valor          := Leitor.rCampo(tcDe2, 'Valor');
+         end;
+        end else Break;
+      end;
+     end;
 
  Result := True;
 end;

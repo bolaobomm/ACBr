@@ -413,7 +413,7 @@ type
   TParcelasCollection = class(TCollection)
   private
     function GetItem(Index: Integer): TParcelasCollectionItem;
-    procedure SetItem(Index: Integer; Value: TParcelasCollectionItem);
+    procedure SetItem(Index: Integer; Const Value: TParcelasCollectionItem);
   public
     constructor Create(AOwner: TCondicaoPagamento);
 
@@ -423,17 +423,18 @@ type
 
   TCondicaoPagamento = class(TPersistent)
   private
-    FCondicao: string;
+    FCondicao: TnfseCondicaoPagamento;
     FQtdParcela: Integer;
     FParcelas: TParcelasCollection;
+    procedure SetParcelas(const Value: TParcelasCollection);
   public
     constructor Create;
     destructor Destroy; override;
   published
-    property Condicao: string read FCondicao write FCondicao;
+    property Condicao: TnfseCondicaoPagamento read FCondicao write FCondicao;
     property QtdParcela: Integer read FQtdParcela write FQtdParcela;
-    property Parcelas: TParcelasCollection read FParcelas write FParcelas;
-  end;
+    property Parcelas: TParcelasCollection read FParcelas write SetParcelas;
+ end;
 
  TNFSe = class(TPersistent)
   private
@@ -918,7 +919,7 @@ begin
   Result := TParcelasCollectionItem(inherited Add);
 end;
 
-constructor TParcelasCollection.Create(AOwner: TCondicaoPagamento);
+constructor TParcelasCollection.Create(AOwner : TCondicaoPagamento);
 begin
   inherited Create(TParcelasCollectionItem);
 end;
@@ -929,7 +930,7 @@ begin
 end;
 
 procedure TParcelasCollection.SetItem(Index: Integer;
-  Value: TParcelasCollectionItem);
+  const Value: TParcelasCollectionItem);
 begin
   inherited SetItem(Index, Value);
 end;
@@ -945,6 +946,11 @@ destructor TCondicaoPagamento.Destroy;
 begin
   FParcelas.Free;
   inherited;
+end;
+
+procedure TCondicaoPagamento.SetParcelas(const Value: TParcelasCollection);
+begin
+  FParcelas.Assign(Value);
 end;
 
 end.

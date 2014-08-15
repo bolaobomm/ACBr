@@ -1026,7 +1026,7 @@ begin
    if FConfiguracoes.WebServices.Salvar
     then FConfiguracoes.Geral.Save('-xxx2.xml', FDadosMsg);
 
-   if FProvedorClass.GetValidarLote
+   {if FProvedorClass.GetValidarLote
     then begin
      if not(NotaUtil.Valida(FDadosMsg, FMsg,
                             FConfiguracoes.Geral.PathSchemas,
@@ -1035,7 +1035,7 @@ begin
                             FConfiguracoes.WebServices.Prefixo4))
       then raise Exception.Create('Falha na validação do Lote ' +
                      TNFSeEnviarLoteRps(Self).NumeroLote + sLineBreak + FMsg);
-    end;
+    end;}
   end
   else raise Exception.Create('A funcionalidade [Enviar Lote] não foi disponibilizada pelo provedor: ' + FxProvedor);
 end;
@@ -2105,7 +2105,7 @@ begin
    if FConfiguracoes.WebServices.Salvar
     then FConfiguracoes.Geral.Save('-xxx2.xml', FDadosMsg);
 
-   if FProvedorClass.GetValidarLote
+   {if FProvedorClass.GetValidarLote
     then begin
      if not(NotaUtil.Valida(FDadosMsg, FMsg,
                             FConfiguracoes.Geral.PathSchemas,
@@ -2114,7 +2114,7 @@ begin
                             FConfiguracoes.WebServices.Prefixo4))
       then raise Exception.Create('Falha na validação do Lote ' +
                      IntToStr(TNFSeGerarNFSe(Self).NumeroRps) + sLineBreak + FMsg);
-    end;
+    end;}
   end
   else raise Exception.Create('A funcionalidade [Gerar NFSe] não foi disponibilizada pelo provedor: ' + FxProvedor);
 end;
@@ -2347,7 +2347,7 @@ begin
     FConfiguracoes.Geral.Save(TNFSeGerarLoteRps(Self).NumeroLote+'-lot-rps.xml', FDadosMsg, PathSalvar);
 //   end;
 
- if FProvedorClass.GetValidarLote
+ {if FProvedorClass.GetValidarLote
   then begin
    if not(NotaUtil.Valida(FDadosMsg, FMsg,
                           FConfiguracoes.Geral.PathSchemas,
@@ -2356,7 +2356,7 @@ begin
                           FConfiguracoes.WebServices.Prefixo4))
     then raise Exception.Create('Falha na validação do Lote ' +
                    TNFSeGerarLoteRps(Self).NumeroLote + sLineBreak + FMsg);
-  end;
+  end;}
 end;
 
 procedure TWebServicesBase.DoNFSeEnviarSincrono;
@@ -2509,7 +2509,7 @@ begin
    if FConfiguracoes.WebServices.Salvar
     then FConfiguracoes.Geral.Save('-xxx2.xml', FDadosMsg);
 
-   if FProvedorClass.GetValidarLote
+   {if FProvedorClass.GetValidarLote
     then begin
      if not(NotaUtil.Valida(FDadosMsg, FMsg,
                             FConfiguracoes.Geral.PathSchemas,
@@ -2518,7 +2518,7 @@ begin
                             FConfiguracoes.WebServices.Prefixo4))
       then raise Exception.Create('Falha na validação do Lote ' +
                      TNFSeEnviarSincrono(Self).NumeroLote + sLineBreak + FMsg);
-    end;
+    end;}
   end
   else raise Exception.Create('A funcionalidade [Enviar Sincrono] não foi disponibilizada pelo provedor: ' + FxProvedor);
 end;

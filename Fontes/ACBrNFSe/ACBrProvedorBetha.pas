@@ -74,7 +74,7 @@ begin
   then ConfigCidade.NameSpaceEnvelope := 'http://www.betha.com.br/e-nota-contribuinte-ws'
   else ConfigCidade.NameSpaceEnvelope := 'http://www.betha.com.br/e-nota-contribuinte-ws';
 
- ConfigCidade.AssinaRPS  := False; // True;
+ ConfigCidade.AssinaRPS  := True;
  ConfigCidade.AssinaLote := True;
 
  Result := ConfigCidade;

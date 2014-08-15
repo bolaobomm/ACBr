@@ -817,6 +817,11 @@ begin
                   ConteudoProcessado := SomenteNumeros(ConteudoProcessado);
                 EstaVazio := ((wAno = 1899) and (wMes = 12) and (wDia = 30));
               end;
+    tcDatVcto:begin
+                 DecodeDate(valor, wAno, wMes, wDia);
+                 ConteudoProcessado := FormatFloat('00', wDia)+ '/' + FormatFloat('00', wMes)+ '/' +FormatFloat('0000', wAno);
+                 EstaVazio := ((wAno = 1899) and (wMes = 12) and (wDia = 30));
+              end;
     tcHor,
     tcHorCFe: begin
                 DecodeTime(valor, wHor, wMin, wSeg, wMse);

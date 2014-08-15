@@ -39,6 +39,7 @@ type
   TnfseRegimeEspecialTributacao = ( retNenhum, retMicroempresaMunicipal, retEstimativa, retSociedadeProfissionais, retCooperativa,
                                     retMicroempresarioIndividual, retMicroempresarioEmpresaPP, retLucroReal, retLucroPresumido );
   TnfseSimNao = ( snSim, snNao );
+  TnfseCondicaoPagamento = (cpAVista, cpNaApresentacao, cpAPrazo, cpCartaoCredito, cpCartaoDebito);
   TnfseTipoRPS = ( trRPS, trNFConjugada, trCupom );
   TnfseIndicacaoCpfCnpj = ( iccCPF, iccCNPJ, iccNaoInformado );
   TnfseSituacaoLoteRPS = ( slrNaoRecibo, slrNaoProcessado, slrProcessadoErro, slrProcessadoSucesso );
@@ -106,6 +107,9 @@ function StrToSituacaoTributaria(var ok: boolean; const s: string):TnfseSituacao
 
 function ResponsavelRetencaoToStr(const t: TnfseResponsavelRetencao):string;
 function StrToResponsavelRetencao(var ok: boolean; const s: string):TnfseResponsavelRetencao;
+
+function CondicaoToStr(const t: TnfseCondicaoPagamento): string;
+function StrToCondicao(var ok: boolean; const s: string): TnfseCondicaoPagamento;
 
 implementation
 
@@ -353,6 +357,23 @@ begin
                             proTecnos, proPronim, proActcon, proEL, proEgoverneISS, proSisPMJP, proSystemPro,
                             proSalvador]);
 end;
+
+// Condição de pagamento ******************************************************
+
+function CondicaoToStr(const t: TnfseCondicaoPagamento): string;
+begin
+  Result:= EnumeradoToStr(t,
+                          ['A_VISTA', 'NA_APRESENTACAO', 'A_PRAZO', 'CARTAO_DEBITO', 'CARTAO_CREDITO'],
+                          [cpAVista, cpNaApresentacao, cpAPrazo, cpCartaoDebito,cpCartaoCredito]);
+end;
+
+function StrToCondicao(var ok: boolean; const s: string): TnfseCondicaoPagamento;
+begin
+  Result:= StrToEnumerado(ok, s,
+                          ['A_VISTA', 'NA_APRESENTACAO', 'A_PRAZO', 'CARTAO_DEBITO', 'CARTAO_CREDITO'],
+                          [cpAVista, cpNaApresentacao, cpAPrazo, cpCartaoDebito,cpCartaoCredito])
+end;
+
 
 // Descrição do Serviço ********************************************************
 
@@ -881,6 +902,10 @@ begin
 //  3304706, // Sto Antonio de Padua/RJ
 //  3511102, // Catanduva/SP
 //  3530300, // Mirassol/SP
+  3541505, // Presidente Venceslau/SP
+  4204004, //Catanduvas / SC
+  4101408, // Apucarana/PR
+  4102000, // Assis Chateaubriand/PR
 //  4205902, // Gaspar/SC
 //  4309407, // Guapore/RS
 //  4310207, // Ijui/RS
@@ -890,9 +915,6 @@ begin
   3202405, // Guarapari/ES
 //  3305505, // Saquarema/RJ
 //  3504008, // Assis/SP
-  3541505, // Presidente Venceslau/SP
-  4101408, // Apucarana/PR
-  4102000, // Assis Chateaubriand/PR
   //4210506, // Maravilha/SC
   4321709  // Tres Coroas/RS
          : Provedor := 'GovBR';

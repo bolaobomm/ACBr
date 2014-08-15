@@ -222,6 +222,12 @@ begin
                   else
                     result:=0;
                   end;
+    tcDatVcto : begin
+                  if length(ConteudoTag)>0 then
+                    result := EncodeDate(StrToInt(copy(ConteudoTag, 07, 4)), StrToInt(copy(ConteudoTag, 03, 2)), StrToInt(copy(ConteudoTag, 01, 2)))
+                  else
+                    Result:= 0;
+                end;
     tcDatCFe  : begin
                   if length(ConteudoTag)>0 then
                     result := EncodeDate(StrToInt(copy(ConteudoTag, 01, 4)), StrToInt(copy(ConteudoTag, 05, 2)), StrToInt(copy(ConteudoTag, 07, 2)))

@@ -229,7 +229,7 @@ end;
 function TretNfse.LerXml: boolean;
 var
   ok: boolean;
-  i, k, Item: Integer;
+  i, k, Item, J: Integer;
   VersaoXML: String;
 begin
   result := True;
@@ -550,6 +550,27 @@ begin
                then begin
                 ListaNfse.FCompNfse[i].FNFSe.ConstrucaoCivil.CodigoObra := Leitor.rCampo(tcStr, 'CodigoObra');
                 ListaNfse.FCompNfse[i].FNFSe.ConstrucaoCivil.Art        := Leitor.rCampo(tcStr, 'Art');
+               end;
+
+               //Grupo da TAG <CondicaoPagamento> ********************************************
+              // adicionado por Tailan Bonassi
+              if FProvedor in [proBetha] then
+               if Leitor.rExtrai(6, 'CondicaoPagamento') <> ''
+               then begin
+                ListaNfse.FCompNfse[i].NFSe.CondicaoPagamento.Condicao:= StrToCondicao(ok,Leitor.rCampo(tcStr,'Condicao'));
+                ListaNfse.FCompNfse[i].NFSe.CondicaoPagamento.QtdParcela:= Leitor.rCampo(tcInt,'Condicao');
+                for J := 0 to 9999
+                do begin
+                 if (Leitor.rExtrai(7, 'Parcelas', 'Parcelas', J) <> '')
+                  then begin
+                   with ListaNfse.FCompNfse[i].NFSe.CondicaoPagamento.Parcelas.Add
+                    do begin
+                     Parcela        := Leitor.rCampo(tcInt, 'Parcela');
+                     DataVencimento := Leitor.rCampo(tcDatVcto, 'DataVencimento');
+                     Valor          := Leitor.rCampo(tcDe2, 'Valor');
+                   end;
+                  end else Break;
+                end;
                end;
 
              end; // fim do InfNfse

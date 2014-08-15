@@ -375,6 +375,23 @@ begin
             ConfigURL.ProConsultaNFSe       := 'http://177.20.255.244/NFSEWS/Services.svc';
             ConfigURL.ProCancelaNFSe        := 'http://177.20.255.244/NFSEWS/Services.svc';
            end;
+  4204004: begin // Catanduvas / SC
+            ConfigURL.HomNomeCidade         := '';
+            ConfigURL.HomRecepcaoLoteRPS    := 'http://nfe.catanduvas.sc.gov.br:8089/NFSEWSTESTE/Services.svc';
+            ConfigURL.HomConsultaLoteRPS    := 'http://nfe.catanduvas.sc.gov.br:8089/NFSEWSTESTE/Services.svc';
+            ConfigURL.HomConsultaNFSeRPS    := 'http://nfe.catanduvas.sc.gov.br:8089/NFSEWSTESTE/Services.svc';
+            ConfigURL.HomConsultaSitLoteRPS := 'http://nfe.catanduvas.sc.gov.br:8089/NFSEWSTESTE/Services.svc';
+            ConfigURL.HomConsultaNFSe       := 'http://nfe.catanduvas.sc.gov.br:8089/NFSEWSTESTE/Services.svc';
+            ConfigURL.HomCancelaNFSe        := 'http://nfe.catanduvas.sc.gov.br:8089/NFSEWSTESTE/Services.svc';
+
+            ConfigURL.ProNomeCidade         := '';
+            ConfigURL.ProRecepcaoLoteRPS    := 'http://nfe.catanduvas.sc.gov.br:8089/NFSEWS/Services.svc';
+            ConfigURL.ProConsultaLoteRPS    := 'http://nfe.catanduvas.sc.gov.br:8089/NFSEWS/Services.svc';
+            ConfigURL.ProConsultaNFSeRPS    := 'http://nfe.catanduvas.sc.gov.br:8089/NFSEWS/Services.svc';
+            ConfigURL.ProConsultaSitLoteRPS := 'http://nfe.catanduvas.sc.gov.br:8089/NFSEWS/Services.svc';
+            ConfigURL.ProConsultaNFSe       := 'http://nfe.catanduvas.sc.gov.br:8089/NFSEWS/Services.svc';
+            ConfigURL.ProCancelaNFSe        := 'http://nfe.catanduvas.sc.gov.br:8089/NFSEWS/Services.svc';
+           end;
            (*
   4310207: begin // Ijui/RS
             ConfigURL.HomNomeCidade         := '';

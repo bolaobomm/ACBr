@@ -205,7 +205,7 @@ end;
 function TRetConsCad.LerXML: boolean;
 var
   i: integer;
-  cnpj, cpf: string;
+  // cnpj, cpf: string;
 begin
   i := 0;
   Result := False;
