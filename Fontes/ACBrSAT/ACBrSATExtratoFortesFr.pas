@@ -853,7 +853,7 @@ begin
    LoadPortugueseStrings;
   {$ELSE}
    // Para que serve esse método ?? //
-   SetVersion( CommercialVersion, ReleaseVersion, CommentVersion );
+   //SetVersion( CommercialVersion, ReleaseVersion, CommentVersion );
   {$ENDIF}
 
   frACBrSATExtratoFortesFr := TACBrSATExtratoFortesFr.Create(Self);

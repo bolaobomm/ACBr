@@ -593,7 +593,7 @@ end;
 
 initialization
 
-RLConsts.SetVersion(3, 71, 'B');
+//RLConsts.SetVersion(3, 71, 'B');
 {$ENDIF}
 
 end.
