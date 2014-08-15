@@ -860,12 +860,6 @@ end;
 function TACBrECFFiscNET.GetNumSerie: String;
 begin
   Result := LeTexto( 'NumeroSerieECF' );
-
-  // o numero de serie não deve ter mais que 20 caracteres
-  // a Elgin K em alguns casos retorna um byte a mais
-  // verficado junto ao suporte Elgin
-  if Length(Result) > 20 then
-    Result := Copy(Result, 0, 20);
 end;
 
 function TACBrECFFiscNET.GetNumSerieMFD: String;
