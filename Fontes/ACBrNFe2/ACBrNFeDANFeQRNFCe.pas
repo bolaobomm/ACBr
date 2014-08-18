@@ -165,13 +165,15 @@ type
     qrlDestCNPJ: TQRLabel;
     qrlDescricao: TQRLabel;
     qrlProtocolo: TQRLabel;
-    qrlMsgTipoEmissao: TQRLabel;
     QRLabel2: TQRLabel;
     qriQRCode: TQRImage;
     qrlEmissao: TQRLabel;
     QRLabel3: TQRLabel;
     cdsItensITEM: TStringField;
     qrmProdutoItem: TQRDBText;
+    qrlDestEnder: TQRLabel;
+    qrb05a_InfComplementar: TQRChildBand;
+    qrmInfComp: TQRMemo;
     procedure QRNFeBeforePrint(Sender: TCustomQuickRep;
       var PrintReport: Boolean);
     procedure qrmProdutoDescricaoPrint(sender: TObject; var Value: string);
@@ -195,6 +197,8 @@ type
     procedure qrb07_ConsumidorBeforePrint(Sender: TQRCustomBand;
       var PrintBand: Boolean);
     procedure qrb08_QRCodeBeforePrint(Sender: TQRCustomBand;
+      var PrintBand: Boolean);
+    procedure qrb05a_InfComplementarBeforePrint(Sender: TQRCustomBand;
       var PrintBand: Boolean);
   private
     { Private declarations }
@@ -645,11 +649,45 @@ begin
                          '(' + DFeUtil.FormatFloat(Perc) + '%)(Fonte: IBPT)';
 end;
 
+procedure TfqrDANFeQRNFCe.qrb05a_InfComplementarBeforePrint(
+  Sender: TQRCustomBand; var PrintBand: Boolean);
+begin
+  inherited;
+
+  PrintBand := (FNFE.InfAdic.infCpl <> '');
+  qrmInfComp.Lines.Clear;
+  qrmInfComp.Lines.Add(FNFE.InfAdic.infCpl);
+end;
+
 procedure TfqrDANFeQRNFCe.qrb06_ChaveBeforePrint(Sender: TQRCustomBand;
   var PrintBand: Boolean);
 begin
   inherited;
 //  PrintBand := QRNFe.PageNumber = 1;
+
+  case FNFe.Ide.tpEmis of
+    teNormal,
+    teSCAN:         qrlTipoEmissao.Caption := 'EMISSÃO NORMAL';
+
+    teContingencia,
+    teFSDA,
+    teOffline:      qrlTipoEmissao.Caption := 'EMITIDA EM CONTINGENCIA';
+  end;
+  (*
+  if FNFe.procNFe.cStat > 0 then
+   begin
+     if FNFe.procNFe.cStat = 100 then
+       qrlTipoEmissao.Caption := 'NFC-e AUTORIZADA';
+     if ((FNFe.procNFe.cStat in [101, 151, 155]) or (FNFeCancelada)) then
+       qrlTipoEmissao.Caption := 'NFC-e CANCELADA';
+     if FNFe.procNFe.cStat = 110 then
+       qrlTipoEmissao.Caption := 'NFC-e DENEGADA';
+     if not FNFe.procNFe.cStat in [100, 101, 110, 151, 155] then
+       qrlTipoEmissao.Caption := FNFe.procNFe.xMotivo;
+   end;
+  *)
+  if FNFe.Ide.tpAmb = taHomologacao then
+    qrlTipoEmissao.Caption := 'HOMOLOGAÇÂO - SEM VALOR FISCAL';
 
   lblNumero.Caption := 'Número: ' + FormatFloat('000,000,000', FNFe.Ide.nNF) +
                        ' - Série: '+ FormatFloat('000', FNFe.Ide.serie);
@@ -663,94 +701,26 @@ end;
 
 procedure TfqrDANFeQRNFCe.qrb07_ConsumidorBeforePrint(Sender: TQRCustomBand;
   var PrintBand: Boolean);
-var
- vTpEmissao: Integer;
 begin
   inherited;
 //  PrintBand := QRNFe.PageNumber = 1;
 
+  qrlDestEnder.Caption := '';
+
   if FNFE.Dest.CNPJCPF <> ''
-   then qrlDestCNPJ.Caption := 'CPF/CNPJ: ' + DFeUtil.FormatarCNPJCPF(FNFE.Dest.CNPJCPF)
-   else if FNFE.Dest.idEstrangeiro <> ''
-         then qrlDestCNPJ.Caption := 'ID Estrangeiro: ' + FNFE.Dest.idEstrangeiro
-         else qrlDestCNPJ.Caption := 'CONSUMIDOR NÃO IDENTIFICADO';
-
-  // Mensagem
-
-  // Normal **************************************************************
-  if FNFe.Ide.tpEmis in [teNormal, teSCAN]
    then begin
-    if FNFe.procNFe.cStat = 100
-     then qrlDescricao.Caption := 'Protocolo de Autorização';
-
-    if FNFe.procNFe.cStat in [101, 151, 155]
-     then qrlDescricao.Caption:= 'Protocolo de Homologação de Cancelamento';
-
-    if FNFe.procNFe.cStat = 110
-     then qrlDescricao.Caption:= 'Protocolo de Denegação de Uso';
-   end;
-
-  // Contingencia ********************************************************
-  if FNFe.Ide.tpEmis in [teContingencia, teFSDA]
-   then qrlTipoEmissao.Caption := 'CONTINGENCIA FS-DA';
-
-  if FNFe.Ide.tpAmb = taHomologacao then
-   begin
-     qrlMsgTipoEmissao.Caption := 'HOMOLOGAÇÂO - SEM VALOR FISCAL';
-     qrlMsgTipoEmissao.Enabled := True;
-     qrlMsgTipoEmissao.Visible := True;
-   end;
-
-  if FNFe.procNFe.cStat > 0 then
-   begin
-     if ((FNFe.procNFe.cStat in [101, 151, 155]) or (FNFeCancelada)) then
-     begin
-       qrlMsgTipoEmissao.Caption := 'NF-e CANCELADA';
-       qrlMsgTipoEmissao.Visible := True;
-       qrlMsgTipoEmissao.Enabled := True;
-     end;
-     if FNFe.procNFe.cStat = 110 then
-     begin
-       qrlMsgTipoEmissao.Caption := 'NF-e DENEGADA';
-       qrlMsgTipoEmissao.Visible := True;
-       qrlMsgTipoEmissao.Enabled := True;
-     end;
-     if not FNFe.procNFe.cStat in [100, 101, 110, 151, 155] then
-     begin
-       qrlMsgTipoEmissao.Caption := FNFe.procNFe.xMotivo;
-       qrlMsgTipoEmissao.Visible := True;
-       qrlMsgTipoEmissao.Enabled := True;
-     end;
-   end;
-
-  if FNFe.Ide.tpEmis = teContingencia then
-      vTpEmissao:=2
-  else
-  if FNFe.Ide.tpEmis = teDPEC then
-      vTpEmissao:=4
-  else
-  if FNFe.Ide.tpEmis = teFSDA then
-      vTpEmissao:=5;
-
-  case vTpEmissao of
-   2: begin
-       qrlMsgTipoEmissao.Caption := 'DANFE em Contingencia - impresso em decorrencia de problemas tecnicos';
-       qrlMsgTipoEmissao.Visible := True;
-       qrlMsgTipoEmissao.Enabled := True;
-      end;
-   4: begin
-       qrlMsgTipoEmissao.Caption := 'DANFE impresso em contingencia - DPEC regularmente recebida pela Receita Federal do Brasil';
-       qrlMsgTipoEmissao.Visible := True;
-       qrlMsgTipoEmissao.Enabled := True;
-      end;
-   5: begin
-       qrlMsgTipoEmissao.Caption := 'DANFE em Contingencia - impresso em decorrencia de problemas tecnicos';
-       qrlMsgTipoEmissao.Visible := True;
-       qrlMsgTipoEmissao.Enabled := True;
-      end;
-  end;
-
- qrlMsgTipoEmissao.Repaint;
+     qrlDestCNPJ.Caption  := 'CPF/CNPJ: ' +
+                             DFeUtil.FormatarCNPJCPF(FNFE.Dest.CNPJCPF) +
+                             FNFE.Dest.xNome;
+     qrlDestEnder.Caption := FNFE.Dest.EnderDest.xLgr + ', ' +
+                             FNFE.Dest.EnderDest.nro + ' ' +
+                             FNFE.Dest.EnderDest.xBairro + ' ' +
+                             FNFE.Dest.EnderDest.xMun;
+   end
+   else if FNFE.Dest.idEstrangeiro <> ''
+         then qrlDestCNPJ.Caption := 'ID Estrangeiro: ' +
+                                     FNFE.Dest.idEstrangeiro + FNFE.Dest.xNome
+         else qrlDestCNPJ.Caption := 'CONSUMIDOR NÃO IDENTIFICADO';
 end;
 
 procedure TfqrDANFeQRNFCe.qrb08_QRCodeBeforePrint(Sender: TQRCustomBand;
@@ -831,6 +801,18 @@ begin
   finally
     QRCodeBitmap.Free;
   end;
+
+  if FNFe.Ide.tpEmis in [teNormal, teSCAN]
+   then begin
+    if FNFe.procNFe.cStat = 100
+     then qrlDescricao.Caption := 'Protocolo de Autorização';
+
+    if FNFe.procNFe.cStat in [101, 151, 155]
+     then qrlDescricao.Caption:= 'Protocolo de Homologação de Cancelamento';
+
+    if FNFe.procNFe.cStat = 110
+     then qrlDescricao.Caption:= 'Protocolo de Denegação de Uso';
+   end;
 
   if FProtocoloNFE <> ''
    then qrlProtocolo.Caption := FProtocoloNFE

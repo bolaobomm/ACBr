@@ -934,7 +934,7 @@ inherited fqrDANFeQRNFCe: TfqrDANFeQRNFCe
     end
     object qrb07_Consumidor: TQRChildBand
       Left = 23
-      Top = 619
+      Top = 693
       Width = 260
       Height = 64
       Frame.Color = clBlack
@@ -1021,28 +1021,27 @@ inherited fqrDANFeQRNFCe: TfqrDANFeQRNFCe
         ExportAs = exptText
         FontSize = 10
       end
-      object qrlMsgTipoEmissao: TQRLabel
-        Left = 8
+      object qrlDestEnder: TQRLabel
+        Left = 2
         Top = 42
-        Width = 228
-        Height = 20
-        Enabled = False
+        Width = 253
+        Height = 16
         Frame.Color = clBlack
         Frame.DrawTop = False
         Frame.DrawBottom = False
         Frame.DrawLeft = False
         Frame.DrawRight = False
         Size.Values = (
-          52.916666666666670000
-          21.166666666666670000
+          42.333333333333340000
+          5.291666666666667000
           111.125000000000000000
-          603.250000000000000000)
+          669.395833333333400000)
         XLColumn = 0
-        Alignment = taLeftJustify
+        Alignment = taCenter
         AlignToBand = False
-        AutoSize = True
+        AutoSize = False
         AutoStretch = False
-        Caption = 'HOMOLOGACAO - SEM VALOR FISCAL'
+        Caption = 'qrlDestEnder'
         Color = clWhite
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clWindowText
@@ -1377,7 +1376,7 @@ inherited fqrDANFeQRNFCe: TfqrDANFeQRNFCe
     end
     object qrb08_QRCode: TQRChildBand
       Left = 23
-      Top = 683
+      Top = 757
       Width = 260
       Height = 198
       Frame.Color = clBlack
@@ -1580,7 +1579,7 @@ inherited fqrDANFeQRNFCe: TfqrDANFeQRNFCe
     end
     object qrb06_Chave: TQRChildBand
       Left = 23
-      Top = 487
+      Top = 561
       Width = 260
       Height = 132
       Frame.Color = clBlack
@@ -1599,7 +1598,7 @@ inherited fqrDANFeQRNFCe: TfqrDANFeQRNFCe
         687.916666666666800000)
       PreCaluculateBandHeight = False
       KeepOnOnePage = False
-      ParentBand = qrb05_Tributos
+      ParentBand = qrb05a_InfComplementar
       PrintOrder = cboAfterParent
       object QRLabel9: TQRLabel
         Left = 77
@@ -1831,6 +1830,62 @@ inherited fqrDANFeQRNFCe: TfqrDANFeQRNFCe
         WordWrap = True
         ExportAs = exptText
         FontSize = 8
+      end
+    end
+    object qrb05a_InfComplementar: TQRChildBand
+      Left = 23
+      Top = 487
+      Width = 260
+      Height = 74
+      Frame.Color = clBlack
+      Frame.DrawTop = False
+      Frame.DrawBottom = False
+      Frame.DrawLeft = False
+      Frame.DrawRight = False
+      AlignToBottom = False
+      BeforePrint = qrb05a_InfComplementarBeforePrint
+      Color = clWhite
+      TransparentBand = False
+      ForceNewColumn = False
+      ForceNewPage = False
+      Size.Values = (
+        195.791666666666700000
+        687.916666666666800000)
+      PreCaluculateBandHeight = False
+      KeepOnOnePage = False
+      ParentBand = qrb05_Tributos
+      PrintOrder = cboAfterParent
+      object qrmInfComp: TQRMemo
+        Left = 2
+        Top = 0
+        Width = 255
+        Height = 72
+        Frame.Color = clBlack
+        Frame.DrawTop = False
+        Frame.DrawBottom = False
+        Frame.DrawLeft = False
+        Frame.DrawRight = False
+        Size.Values = (
+          190.500000000000000000
+          5.291666666666667000
+          0.000000000000000000
+          674.687500000000000000)
+        XLColumn = 0
+        Alignment = taLeftJustify
+        AlignToBand = False
+        AutoSize = False
+        AutoStretch = True
+        Color = clWhite
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWindowText
+        Font.Height = -13
+        Font.Name = 'Times New Roman'
+        Font.Style = []
+        ParentFont = False
+        Transparent = False
+        WordWrap = True
+        FullJustify = False
+        FontSize = 10
       end
     end
   end
