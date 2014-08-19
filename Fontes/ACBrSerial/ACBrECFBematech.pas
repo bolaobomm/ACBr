@@ -296,14 +296,19 @@ const
     { 218 } 'Cancelamento de Acréscimo/Desconto não permitido');
 
 {$IFNDEF MSWINDOWS}
- cLIB_Bema = 'linuxmfd';
+ cLIB_VersaoMinima = '3.21.0';
+{$ELSE}
+ cLIB_VersaoMinima = '6.1.1.6';
+{$ENDIF}
+
+{$IFNDEF MSWINDOWS}
+ cLIB_Bema = 'libbemafiscal.so';
 {$ELSE}
  {$IFDEF CPU64}
   cLIB_Bema = 'Bemafi64.dll';
  {$ELSE}
   cLIB_Bema = 'Bemafi32.dll';
  {$ENDIF}
- cLIB_VersaoMinima = '6.1.1.6';
 {$ENDIF}
 
 type
@@ -336,25 +341,25 @@ TACBrECFBematech = class( TACBrECFClass )
 
     fsModelosCheque : TACBrCHQModelos ;
 
-    xBematech_FI_ReloadINIFile:Function:Integer;StdCall;
-    xBematech_FI_AbrePortaSerial:Function:Integer;StdCall;
-    xBematech_FI_VersaoDll:Function( cVersao: AnsiString ): Integer; StdCall;
-    xBematech_FI_FechaPortaSerial:Function:Integer;StdCall;
+    xBematech_FI_ReloadINIFile:Function:Integer;{$IFDEF LINUX} cdecl {$ELSE} stdcall {$ENDIF};
+    xBematech_FI_AbrePortaSerial:Function:Integer;{$IFDEF LINUX} cdecl {$ELSE} stdcall {$ENDIF};
+    xBematech_FI_VersaoDll:Function( cVersao: AnsiString ): Integer; {$IFDEF LINUX} cdecl {$ELSE} stdcall {$ENDIF};
+    xBematech_FI_FechaPortaSerial:Function:Integer;{$IFDEF LINUX} cdecl {$ELSE} stdcall {$ENDIF};
     xBematech_FI_EspelhoMFD:Function( cNomeArquivoDestino: AnsiString;
        cDadoInicial: AnsiString; cDadoFinal: AnsiString;
        cTipoDownload: AnsiString; cUsuario: AnsiString;
-       cChavePublica: AnsiString; cChavePrivada: AnsiString ):Integer;StdCall;
+       cChavePublica: AnsiString; cChavePrivada: AnsiString ):Integer;{$IFDEF LINUX} cdecl {$ELSE} stdcall {$ENDIF};
     xBematech_FI_ArquivoMFDPath:Function( cNomeArquivoOrigem: AnsiString;
        cNomeArquivoDestino: AnsiString;
        cDadoInicial: AnsiString; cDadoFinal: AnsiString;
        cTipoDownload: AnsiString; cUsuario: AnsiString;
        iTipoGeracao: integer; cChavePublica: AnsiString;
-       cChavePrivada: AnsiString; iUnicoArquivo: integer ):Integer;StdCall;
+       cChavePrivada: AnsiString; iUnicoArquivo: integer ):Integer;{$IFDEF LINUX} cdecl {$ELSE} stdcall {$ENDIF};
     xBematech_FI_GeraRegistrosCAT52MFD: function(cNomeArquivoMFD: AnsiString;
-       cData: AnsiString): Integer; stdcall;
+       cData: AnsiString): Integer; {$IFDEF LINUX} cdecl {$ELSE} stdcall {$ENDIF};
     xBematech_FI_DownloadMFD: function(cNomeArquivoMFD, cTipoDownload,
-      cDadoInicial, cDadoFinal, cUsuario: AnsiString): Integer; stdcall;
-    xBematech_FI_DownloadMF: function(cNomeArquivoMF: AnsiString): Integer; stdcall;
+      cDadoInicial, cDadoFinal, cUsuario: AnsiString): Integer; {$IFDEF LINUX} cdecl {$ELSE} stdcall {$ENDIF};
+    xBematech_FI_DownloadMF: function(cNomeArquivoMF: AnsiString): Integer; {$IFDEF LINUX} cdecl {$ELSE} stdcall {$ENDIF};
     xBematech_FI_RelatorioSintegraMFD: function (iRelatorios : Integer;
                                                  cArquivo    : String;
                                                  cMes        : String;
@@ -368,7 +373,7 @@ TACBrECFBematech = class( TACBrECFClass )
                                                  cCEP        : String;
                                                  cTelefone   : String;
                                                  cFax        : String;
-                                                 cContato    : String): Integer; StdCall;
+                                                 cContato    : String): Integer; {$IFDEF LINUX} cdecl {$ELSE} stdcall {$ENDIF};
     xBematech_FI_GeraRegistrosSpedCompleto: function (cArquivoMFD: string;
                                                       cArquivoTXT: string;
                                                       cDataInicial: string;
@@ -379,14 +384,12 @@ TACBrECFBematech = class( TACBrECFClass )
                                                       cAliqPIS: string;
                                                       cAliqCOFINS: string;
                                                       cEmpresa: string;
-                                                      cCodMunicipio: string): Integer; StdCall;
-    {$IFDEF MSWINDOWS}
+                                                      cCodMunicipio: string): Integer; {$IFDEF LINUX} cdecl {$ELSE} stdcall {$ENDIF};
      procedure LoadDLLFunctions;
      procedure UnLoadDLLFunctions;
      procedure AbrePortaSerialDLL(const aPath: String='');
      procedure FechaPortaSerialDLL(const OldAtivo : Boolean) ;
      function AnalisarRetornoDll(const ARetorno: Integer): String;
-    {$ENDIF}
 
     function GetProp: AnsiString;
     function GetTotalizadoresParciais : String ;
@@ -3310,7 +3313,6 @@ begin
      Result := Resp ;
 end;
 
-{$IFDEF MSWINDOWS}
 procedure TACBrECFBematech.LoadDLLFunctions;
 
  procedure BematechFunctionDetect( FuncName: String; var LibPointer: Pointer;
@@ -3393,6 +3395,7 @@ Var
   Resp : Integer ;
   aPorta, IniFile : String ;
 
+  {$IFDEF MSWINDOWS}
   procedure ConfiguraBemaFI32ini(const aPorta, aPath : String ) ;
   var
     Ini : TIniFile ;
@@ -3409,6 +3412,7 @@ Var
        Ini.Free ;
     end ;
   end;
+  {$ENDIF}
 
 begin
   aPorta := fpDevice.Porta;
@@ -3417,17 +3421,21 @@ begin
   Ativo := False ;
   Sleep( 300 ) ;
 
-  {$IFDEF CPU64}
-   IniFile := ExtractFilePath( ParamStr(0) )+'BemaFi64.INI' ;
-  {$ELSE}
-   IniFile := ExtractFilePath( ParamStr(0) )+'BemaFi32.INI' ;
+  {$IFDEF MSWINDOWS}
+   {$IFDEF CPU64}
+    IniFile := ExtractFilePath( ParamStr(0) )+'BemaFi64.INI' ;
+   {$ELSE}
+    IniFile := ExtractFilePath( ParamStr(0) )+'BemaFi32.INI' ;
+   {$ENDIF}
+   if FileExists( IniFile ) then
+      ConfiguraBemaFI32ini(aPorta, aPath);
   {$ENDIF}
-  if FileExists( IniFile ) then
-     ConfiguraBemaFI32ini(aPorta, aPath);
 
   LoadDLLFunctions;
 
-  xBematech_FI_ReloadINIFile;
+  {$IFDEF MSWINDOWS}
+   xBematech_FI_ReloadINIFile;
+  {$ENDIF}
 
   GravaLog( '   xBematech_FI_AbrePortaSerial' );
   Resp := xBematech_FI_AbrePortaSerial();
@@ -3436,13 +3444,15 @@ begin
  -4: O arquivo de inicialização BemaFI32.ini não foi encontrado no diretório de sistema do Windows.
  -5: Erro ao abrir a porta de comunicação.
 }
-  if Resp = -4 then
-  begin
-     GravaLog( '      Erro = -4' );
-     ConfiguraBemaFI32ini( aPorta, aPath ) ;
-     GravaLog( '   xBematech_FI_AbrePortaSerial' );
-     Resp := xBematech_FI_AbrePortaSerial();
-  end ;
+  {$IFDEF MSWINDOWS}
+   if Resp = -4 then
+   begin
+      GravaLog( '      Erro = -4' );
+      ConfiguraBemaFI32ini( aPorta, aPath ) ;
+      GravaLog( '   xBematech_FI_AbrePortaSerial' );
+      Resp := xBematech_FI_AbrePortaSerial();
+   end ;
+  {$ENDIF}
 
 (*
   if Resp = -5 then
@@ -3500,8 +3510,6 @@ begin
   Result := 'Cod.: '+IntToStr(ARetorno) + ifthen(Result='','',' - ') + Result;
 end;
 
-{$ENDIF}
-
 function TACBrECFBematech.GetProp: AnsiString;
 begin
   if (fsProp = '') and Ativo then
@@ -3517,38 +3525,38 @@ var
   Resp : Integer ;
   DiaIni, DiaFim: AnsiString ;
   OldAtivo : Boolean ;
-  {$IFNDEF MSWINDOWS} Cmd, ArqTmp : String ; {$ENDIF}
+  //{$IFNDEF MSWINDOWS} Cmd, ArqTmp : String ; {$ENDIF}
 begin
- {$IFNDEF MSWINDOWS}
-  ArqTmp := ExtractFilePath( NomeArquivo ) + 'ACBr.mfd' ;
-  DeleteFile( ArqTmp ) ;
-
-  DiaIni   := FormatDateTime('ddmmyy',DataInicial) ;
-  DiaFim   := FormatDateTime('ddmmyy',DataFinal) ;
-
-  OldAtivo := Ativo ;
-  try
-     Ativo := False;
-
-     Cmd := fpDevice.Porta + ' ' + ArqTmp+' 1 ' + DiaIni + ' ' + DiaFim + ' ' + Prop;
-     RunCommand('./linuxmfd',Cmd,True) ;
-
-     if not FileExists( ArqTmp ) then
-        raise EACBrECFErro.Create( ACBrStr('Erro na execução do utilitário "linuxmfd" '+
-                                        'Arquivo: '+ArqTmp+' não foi criado' ) ) ;
-
-     SysUtils.DeleteFile( NomeArquivo ) ;
-     Cmd := NomeArquivo + ' ' + ArqTmp + ' 1 ' + DiaIni + ' ' + DiaFim + ' ' + Prop ;
-     RunCommand('./bemamfd2',Cmd,True) ;
-
-     if not FileExists( NomeArquivo ) then
-        raise EACBrECFErro.Create( ACBrStr( 'Erro na execução do utilitário "bemamfd2".'+sLineBreak+
-                                'Arquivo: "'+NomeArquivo + '" não gerado' )) ;
-  finally
-     DeleteFile( ArqTmp ) ;
-     Ativo := OldAtivo ;
-  end;
- {$ELSE}
+ //{$IFNDEF MSWINDOWS}
+ // ArqTmp := ExtractFilePath( NomeArquivo ) + 'ACBr.mfd' ;
+ // DeleteFile( ArqTmp ) ;
+ //
+ // DiaIni   := FormatDateTime('ddmmyy',DataInicial) ;
+ // DiaFim   := FormatDateTime('ddmmyy',DataFinal) ;
+ //
+ // OldAtivo := Ativo ;
+ // try
+ //    Ativo := False;
+ //
+ //    Cmd := fpDevice.Porta + ' ' + ArqTmp+' 1 ' + DiaIni + ' ' + DiaFim + ' ' + Prop;
+ //    RunCommand('./linuxmfd',Cmd,True) ;
+ //
+ //    if not FileExists( ArqTmp ) then
+ //       raise EACBrECFErro.Create( ACBrStr('Erro na execução do utilitário "linuxmfd" '+
+ //                                       'Arquivo: '+ArqTmp+' não foi criado' ) ) ;
+ //
+ //    SysUtils.DeleteFile( NomeArquivo ) ;
+ //    Cmd := NomeArquivo + ' ' + ArqTmp + ' 1 ' + DiaIni + ' ' + DiaFim + ' ' + Prop ;
+ //    RunCommand('./bemamfd2',Cmd,True) ;
+ //
+ //    if not FileExists( NomeArquivo ) then
+ //       raise EACBrECFErro.Create( ACBrStr( 'Erro na execução do utilitário "bemamfd2".'+sLineBreak+
+ //                               'Arquivo: "'+NomeArquivo + '" não gerado' )) ;
+ // finally
+ //    DeleteFile( ArqTmp ) ;
+ //    Ativo := OldAtivo ;
+ // end;
+ //{$ELSE}
   DiaIni   := FormatDateTime('dd"/"mm"/"yyyy', DataInicial) ;
   DiaFim   := FormatDateTime('dd"/"mm"/"yyyy', DataFinal) ;
   OldAtivo := Ativo ;
@@ -3569,7 +3577,7 @@ begin
   finally
      FechaPortaSerialDLL( OldAtivo );
   end;
- {$ENDIF}
+ //{$ENDIF}
 end;
 
 procedure TACBrECFBematech.EspelhoMFD_DLL(COOInicial, COOFinal: Integer;
@@ -3578,38 +3586,38 @@ var
   Resp : Integer ;
   CooIni, CooFim: AnsiString ;
   OldAtivo : Boolean ;
-  {$IFNDEF MSWINDOWS} Cmd, ArqTmp : String ; {$ENDIF}
+  //{$IFNDEF MSWINDOWS} Cmd, ArqTmp : String ; {$ENDIF}
 begin
   CooIni := IntToStrZero( COOInicial, 6 ) ;
   CooFim := IntToStrZero( COOFinal, 6 ) ;
 
- {$IFNDEF MSWINDOWS}
-  ArqTmp := ExtractFilePath( NomeArquivo ) + 'ACBr.mfd' ;
-  DeleteFile( ArqTmp ) ;
-
-  OldAtivo := Ativo ;
-  try
-     Ativo := False;
-
-     Cmd := fpDevice.Porta + ' ' + ArqTmp+' 2 '+ CooIni + ' ' + CooFim + ' ' + Prop  ;
-     RunCommand('./linuxmfd',Cmd,True) ;
-
-     if not FileExists( ArqTmp ) then
-        raise EACBrECFErro.Create( ACBrStr('Erro na execução do utilitário "linuxmfd" '+
-                                        'Arquivo: '+ArqTmp+' não foi criado' ) ) ;
-
-     SysUtils.DeleteFile( NomeArquivo ) ;
-     Cmd := NomeArquivo + ' ' + ArqTmp + ' 2 ' + CooIni + ' ' + CooFim + ' ' + Prop ;
-     RunCommand('./bemamfd2',Cmd,True) ;
-
-     if not FileExists( NomeArquivo ) then
-        raise EACBrECFErro.Create( ACBrStr( 'Erro na execução do utilitário "bemamfd2".'+sLineBreak+
-                                'Arquivo: "'+NomeArquivo + '" não gerado' )) ;
-  finally
-     DeleteFile( ArqTmp ) ;
-     Ativo := OldAtivo ;
-  end;
- {$ELSE}
+ //{$IFNDEF MSWINDOWS}
+ // ArqTmp := ExtractFilePath( NomeArquivo ) + 'ACBr.mfd' ;
+ // DeleteFile( ArqTmp ) ;
+ //
+ // OldAtivo := Ativo ;
+ // try
+ //    Ativo := False;
+ //
+ //    Cmd := fpDevice.Porta + ' ' + ArqTmp+' 2 '+ CooIni + ' ' + CooFim + ' ' + Prop  ;
+ //    RunCommand('./linuxmfd',Cmd,True) ;
+ //
+ //    if not FileExists( ArqTmp ) then
+ //       raise EACBrECFErro.Create( ACBrStr('Erro na execução do utilitário "linuxmfd" '+
+ //                                       'Arquivo: '+ArqTmp+' não foi criado' ) ) ;
+ //
+ //    SysUtils.DeleteFile( NomeArquivo ) ;
+ //    Cmd := NomeArquivo + ' ' + ArqTmp + ' 2 ' + CooIni + ' ' + CooFim + ' ' + Prop ;
+ //    RunCommand('./bemamfd2',Cmd,True) ;
+ //
+ //    if not FileExists( NomeArquivo ) then
+ //       raise EACBrECFErro.Create( ACBrStr( 'Erro na execução do utilitário "bemamfd2".'+sLineBreak+
+ //                               'Arquivo: "'+NomeArquivo + '" não gerado' )) ;
+ // finally
+ //    DeleteFile( ArqTmp ) ;
+ //    Ativo := OldAtivo ;
+ // end;
+ //{$ELSE}
   OldAtivo := Ativo ;
   try
      DeleteFile(NomeArquivo);
@@ -3628,7 +3636,7 @@ begin
   finally
      FechaPortaSerialDLL( OldAtivo );
   end;
- {$ENDIF}
+ //{$ENDIF}
 end;
 
 procedure TACBrECFBematech.PafMF_GerarCAT52(const DataInicial: TDateTime;
@@ -3640,9 +3648,6 @@ var
   FileMFD: AnsiString;
   DataArquivo: TDateTime;
 begin
- {$IFNDEF MSWINDOWS}
-  inherited PafMF_GerarCAT52( DataInicial, DataFinal, DirArquivos);
- {$ELSE}
   DiaIni   := FormatDateTime('dd/mm/yyyy', DataInicial);
   DiaFim   := FormatDateTime('dd/mm/yyyy', DataFinal);
 
@@ -3691,7 +3696,6 @@ begin
   finally
     FechaPortaSerialDLL( OldAtivo );
   end;
- {$ENDIF}
 end;
 
 procedure TACBrECFBematech.ArquivoMFD_DLL(NomeArquivo: AnsiString);
@@ -3699,11 +3703,7 @@ Var
   Resp : Integer ;
   FilePath : AnsiString ;
   OldAtivo : Boolean ;
-  {$IFNDEF MSWINDOWS} Cmd, ArqTmp : String ; {$ENDIF}
 begin
-  {$IFNDEF MSWINDOWS}
-   inherited ArquivoMFD_DLL( NomeArquivo );
-  {$ELSE}
   FilePath := ExtractFilePath( NomeArquivo );
   OldAtivo := Ativo ;
   try
@@ -3720,7 +3720,6 @@ begin
   finally
      FechaPortaSerialDLL( OldAtivo );
   end;
-  {$ENDIF}
 end;
 
 procedure TACBrECFBematech.ArquivoMF_DLL(NomeArquivo : AnsiString) ;
@@ -3728,11 +3727,7 @@ Var
   Resp : Integer ;
   FilePath : AnsiString ;
   OldAtivo : Boolean ;
-  {$IFNDEF MSWINDOWS} Cmd, ArqTmp : String ; {$ENDIF}
 begin
-  {$IFNDEF MSWINDOWS}
-   inherited ArquivoMF_DLL( NomeArquivo );
-  {$ELSE}
   FilePath := ExtractFilePath( NomeArquivo );
   OldAtivo := Ativo ;
   try
@@ -3749,7 +3744,6 @@ begin
   finally
      FechaPortaSerialDLL( OldAtivo );
   end;
-  {$ENDIF}
 end;
 
 procedure TACBrECFBematech.ArquivoMFD_DLL(DataInicial, DataFinal: TDateTime;
@@ -3759,7 +3753,7 @@ Var
   Resp, Tipo : Integer ;
   DiaIni, DiaFim, Prefixo, FilePath : AnsiString ;
   OldAtivo : Boolean ;
-  {$IFNDEF MSWINDOWS} Cmd, ArqTmp : String ; {$ENDIF}
+  //{$IFNDEF MSWINDOWS} Cmd, ArqTmp : String ; {$ENDIF}
 begin
   FilePath := ExtractFilePath( NomeArquivo );
   Tipo     := 2;
@@ -3767,36 +3761,36 @@ begin
 
   FinalidadeToTipoPrefixo( Finalidade, Tipo, Prefixo );
 
- {$IFNDEF MSWINDOWS}
-  ArqTmp := FilePath +'ACBr.mfd';
-  DeleteFile( ArqTmp ) ;
-
-  DiaIni := FormatDateTime('ddmmyy',DataInicial) ;
-  DiaFim := FormatDateTime('ddmmyy',DataFinal) ;
-
-  OldAtivo := Ativo ;
-  try
-     Ativo := False;
-
-     Cmd := fpDevice.Porta + ' ' + ArqTmp+' 3 ' + DiaIni + ' ' + DiaFim + ' ' + Prop;
-     RunCommand('./linuxmfd',Cmd,True) ;
-
-     if not FileExists( ArqTmp ) then
-        raise EACBrECFErro.Create( ACBrStr('Erro na execução do utilitário "linuxmfd" '+
-                                        'Arquivo: '+ArqTmp+' não foi criado' ) ) ;
-
-     SysUtils.DeleteFile( NomeArquivo ) ;
-     Cmd := NomeArquivo + ' ' + ArqTmp + ' 3 ' + DiaIni + ' ' + DiaFim + ' ' + Prop ;
-     RunCommand('./bemamfd2',Cmd,True) ;
-
-     if not FileExists( NomeArquivo ) then
-        raise EACBrECFErro.Create( ACBrStr( 'Erro na execução do utilitário "bemamfd2".'+sLineBreak+
-                                'Arquivo: "'+NomeArquivo + '" não gerado' )) ;
-  finally
-     DeleteFile( ArqTmp ) ;
-     Ativo := OldAtivo ;
-  end;
- {$ELSE}
+ //{$IFNDEF MSWINDOWS}
+ // ArqTmp := FilePath +'ACBr.mfd';
+ // DeleteFile( ArqTmp ) ;
+ //
+ // DiaIni := FormatDateTime('ddmmyy',DataInicial) ;
+ // DiaFim := FormatDateTime('ddmmyy',DataFinal) ;
+ //
+ // OldAtivo := Ativo ;
+ // try
+ //    Ativo := False;
+ //
+ //    Cmd := fpDevice.Porta + ' ' + ArqTmp+' 3 ' + DiaIni + ' ' + DiaFim + ' ' + Prop;
+ //    RunCommand('./linuxmfd',Cmd,True) ;
+ //
+ //    if not FileExists( ArqTmp ) then
+ //       raise EACBrECFErro.Create( ACBrStr('Erro na execução do utilitário "linuxmfd" '+
+ //                                       'Arquivo: '+ArqTmp+' não foi criado' ) ) ;
+ //
+ //    SysUtils.DeleteFile( NomeArquivo ) ;
+ //    Cmd := NomeArquivo + ' ' + ArqTmp + ' 3 ' + DiaIni + ' ' + DiaFim + ' ' + Prop ;
+ //    RunCommand('./bemamfd2',Cmd,True) ;
+ //
+ //    if not FileExists( NomeArquivo ) then
+ //       raise EACBrECFErro.Create( ACBrStr( 'Erro na execução do utilitário "bemamfd2".'+sLineBreak+
+ //                               'Arquivo: "'+NomeArquivo + '" não gerado' )) ;
+ // finally
+ //    DeleteFile( ArqTmp ) ;
+ //    Ativo := OldAtivo ;
+ // end;
+ //{$ELSE}
   DiaIni   := FormatDateTime('dd"/"mm"/"yyyy', DataInicial) ;
   DiaFim   := FormatDateTime('dd"/"mm"/"yyyy', DataFinal) ;
   OldAtivo := Ativo ;
@@ -3867,7 +3861,7 @@ begin
   finally
      FechaPortaSerialDLL( OldAtivo );
   end;
- {$ENDIF}
+ //{$ENDIF}
 end;
 
 procedure TACBrECFBematech.ArquivoMFD_DLL( ContInicial, ContFinal : Integer;
@@ -3877,7 +3871,7 @@ Var
   Resp, Tipo : Integer ;
   DadoInicial, DadoFinal, Prefixo, FilePath, TipoDownload : AnsiString ;
   OldAtivo : Boolean ;
-  {$IFNDEF MSWINDOWS} Cmd, ArqTmp : String ; {$ENDIF}
+  //{$IFNDEF MSWINDOWS} Cmd, ArqTmp : String ; {$ENDIF}
 begin
   FilePath := ExtractFilePath( NomeArquivo );
   Tipo     := 2;
@@ -3885,39 +3879,39 @@ begin
 
   FinalidadeToTipoPrefixo( Finalidade, Tipo, Prefixo );
 
- {$IFNDEF MSWINDOWS}
-  if TipoContador = tpcCRZ then
-     CRZToCOO(ContInicial, ContFinal, ContInicial, ContFinal) ;
-
-  DadoInicial := IntToStrZero( ContInicial, 6 ) ;
-  DadoFinal   := IntToStrZero( ContFinal, 6 ) ;
-
-  ArqTmp := FilePath + 'ACBr.mfd';
-  DeleteFile( ArqTmp ) ;
-
-  OldAtivo := Ativo ;
-  try
-     Ativo := False;
-
-     Cmd := fpDevice.Porta + ' ' + ArqTmp+' 3 ' + DadoInicial + ' ' + DadoFinal + ' ' + Prop;
-     RunCommand('./linuxmfd',Cmd,True) ;
-
-     if not FileExists( ArqTmp ) then
-        raise EACBrECFErro.Create( ACBrStr('Erro na execução do utilitário "linuxmfd" '+
-                                        'Arquivo: '+ArqTmp+' não foi criado' ) ) ;
-
-     SysUtils.DeleteFile( NomeArquivo ) ;
-     Cmd := NomeArquivo + ' ' + ArqTmp + ' 3 ' + DadoInicial + ' ' + DadoFinal + ' ' + Prop ;
-     RunCommand('./bemamfd2',Cmd,True) ;
-
-     if not FileExists( NomeArquivo ) then
-        raise EACBrECFErro.Create( ACBrStr( 'Erro na execução do utilitário "bemamfd2".'+sLineBreak+
-                                'Arquivo: "'+NomeArquivo + '" não gerado' )) ;
-  finally
-     DeleteFile( ArqTmp ) ;
-     Ativo := OldAtivo ;
-  end;
- {$ELSE}
+ //{$IFNDEF MSWINDOWS}
+ // if TipoContador = tpcCRZ then
+ //    CRZToCOO(ContInicial, ContFinal, ContInicial, ContFinal) ;
+ //
+ // DadoInicial := IntToStrZero( ContInicial, 6 ) ;
+ // DadoFinal   := IntToStrZero( ContFinal, 6 ) ;
+ //
+ // ArqTmp := FilePath + 'ACBr.mfd';
+ // DeleteFile( ArqTmp ) ;
+ //
+ // OldAtivo := Ativo ;
+ // try
+ //    Ativo := False;
+ //
+ //    Cmd := fpDevice.Porta + ' ' + ArqTmp+' 3 ' + DadoInicial + ' ' + DadoFinal + ' ' + Prop;
+ //    RunCommand('./linuxmfd',Cmd,True) ;
+ //
+ //    if not FileExists( ArqTmp ) then
+ //       raise EACBrECFErro.Create( ACBrStr('Erro na execução do utilitário "linuxmfd" '+
+ //                                       'Arquivo: '+ArqTmp+' não foi criado' ) ) ;
+ //
+ //    SysUtils.DeleteFile( NomeArquivo ) ;
+ //    Cmd := NomeArquivo + ' ' + ArqTmp + ' 3 ' + DadoInicial + ' ' + DadoFinal + ' ' + Prop ;
+ //    RunCommand('./bemamfd2',Cmd,True) ;
+ //
+ //    if not FileExists( NomeArquivo ) then
+ //       raise EACBrECFErro.Create( ACBrStr( 'Erro na execução do utilitário "bemamfd2".'+sLineBreak+
+ //                               'Arquivo: "'+NomeArquivo + '" não gerado' )) ;
+ // finally
+ //    DeleteFile( ArqTmp ) ;
+ //    Ativo := OldAtivo ;
+ // end;
+ //{$ELSE}
   if (TipoContador = tpcCRZ) then
   begin
      DadoInicial  := IntToStrZero( ContInicial, 4 ) ;
@@ -3951,7 +3945,7 @@ begin
   finally
      FechaPortaSerialDLL( OldAtivo );
   end;
- {$ENDIF}
+ //{$ENDIF}
 end;
 
 procedure TACBrECFBematech.CRZToCOO(const ACRZIni, ACRZFim: Integer;
