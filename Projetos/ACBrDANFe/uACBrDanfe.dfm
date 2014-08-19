@@ -5,7 +5,7 @@ object frm_danfe: Tfrm_danfe
   BorderIcons = [biSystemMenu]
   BorderStyle = bsSingle
   Caption = 'ACBrDANFe'
-  ClientHeight = 112
+  ClientHeight = 87
   ClientWidth = 282
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
@@ -24,7 +24,7 @@ object frm_danfe: Tfrm_danfe
     Left = 0
     Top = 0
     Width = 282
-    Height = 78
+    Height = 87
     Cursor = crHandPoint
     Align = alClient
     Picture.Data = {
@@ -1086,21 +1086,6 @@ object frm_danfe: Tfrm_danfe
     ExplicitWidth = 535
     ExplicitHeight = 38
   end
-  object Panel1: TPanel
-    Left = 0
-    Top = 78
-    Width = 282
-    Height = 34
-    Align = alBottom
-    Caption = 'REVIS'#195'O: 4944'
-    Font.Charset = DEFAULT_CHARSET
-    Font.Color = clWindowText
-    Font.Height = -11
-    Font.Name = 'Tahoma'
-    Font.Style = [fsBold]
-    ParentFont = False
-    TabOrder = 0
-  end
   object ACBrNFe1: TACBrNFe
     Configuracoes.Geral.PathSalvar = 'C:\Arquivos de programas\CodeGear\RAD Studio\5.0\bin\'
     Configuracoes.Geral.ExibirErroSchema = True
@@ -1109,6 +1094,7 @@ object frm_danfe: Tfrm_danfe
     Configuracoes.WebServices.AguardarConsultaRet = 0
     Configuracoes.WebServices.IntervaloTentativas = 0
     Configuracoes.WebServices.AjustaAguardaConsultaRet = False
+    DANFE = ACBrNFeDANFERaveCB1
     Left = 8
     Top = 40
   end

@@ -12,7 +12,6 @@ uses
 type
   Tfrm_danfe = class(TForm)
     ACBrNFe1: TACBrNFe;
-    Panel1: TPanel;
     TrayIcon1: TTrayIcon;
     Timer1: TTimer;
     Image1: TImage;

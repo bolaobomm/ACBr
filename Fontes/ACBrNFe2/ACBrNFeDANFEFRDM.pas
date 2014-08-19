@@ -1196,7 +1196,8 @@ begin
           teFSDA,
           teSCAN,
           teSVCAN,
-          teSVCRS:
+          teSVCRS,
+          teSVCSP:
             wContingencia := 'DANFE EM CONTINGÊNCIA, IMPRESSO EM DECORRÊNCIA DE PROBLEMAS TÉCNICOS';
 
           teDPEC:
@@ -1358,7 +1359,7 @@ begin
     if (FNFe.Ide.TpAmb = taHomologacao) then
     begin
       //Modificado em 22/05/2013 - Fábio Gabriel
-      if (FNFe.Ide.tpEmis in [teContingencia, teFSDA, teSCAN, teDPEC, teSVCAN, teSVCRS]) then
+      if (FNFe.Ide.tpEmis in [teContingencia, teFSDA, teSCAN, teDPEC, teSVCAN, teSVCRS, teSVCSP]) then
       begin
         if (FNFe.procNFe.cStat in [101, 151, 155]) then
           FieldByName('Mensagem0').AsString := 'NFe sem Valor Fiscal - HOMOLOGAÇÃO'+
@@ -1372,7 +1373,7 @@ begin
     end
     else
     begin
-      if not (FNFe.Ide.tpEmis in [teContingencia, teFSDA, teSVCAN, teSVCRS]) then
+      if not (FNFe.Ide.tpEmis in [teContingencia, teFSDA, teSVCAN, teSVCRS, teSVCSP]) then
       begin
         //prioridade para opção NFeCancelada
         if (FDANFEClassOwner.NFeCancelada) or
@@ -1459,7 +1460,7 @@ begin
     FieldByName('Contingencia_ID').AsString := '';
     FieldByName('ConsultaAutenticidade').AsString := 'Consulta de autenticidade no portal nacional da NF-e'+#13+
                                                      'www.nfe.fazenda.gov.br/portal ou no site da Sefaz autorizadora';
-    if ((FNFe.Ide.tpEmis=teNormal) or (FNFe.Ide.tpEmis = teSCAN)) then
+    if ((FNFe.Ide.tpEmis in [teNormal,teSCAN,teSVCRS,teSVCSP])) then
     begin
       FieldByName('ChaveAcesso_Descricao').AsString := 'CHAVE DE ACESSO';
       FieldByName('Contingencia_ID').AsString := '';
