@@ -253,6 +253,8 @@ begin
   then begin
    TagCab   := 'Cabecalho';
    TagDados := 'EnviarLoteRpsEnvio';
+   CabMsg   := '<![CDATA[' + CabMsg + ']]>';
+   DadosMsg := '<![CDATA[' + DadosMsg + ']]>';
   end
   else begin
    TagCab   := 'arg0';
