@@ -803,6 +803,20 @@ begin
                     FieldByName('PICMS').AsFloat := pICMS;
                     FieldByName('VICMS').AsFloat := vICMS;
                   end
+                else if (CST = cstPart10) then
+                  begin
+                    FieldByName('CST').AsString := CSTICMSToStr(cstPart10);
+                    FieldByName('VBC').AsFloat := vBC;
+                    FieldByName('PICMS').AsFloat := pICMS;
+                    FieldByName('VICMS').AsFloat := vICMS;
+                  end
+                else if (CST = cstPart90) then
+                  begin
+                    FieldByName('CST').AsString := CSTICMSToStr(cstPart90);
+                    FieldByName('VBC').AsFloat := vBC;
+                    FieldByName('PICMS').AsFloat := pICMS;
+                    FieldByName('VICMS').AsFloat := vICMS;
+                  end
                 else if (CST = cstVazio) then
                   begin
                     FieldByName('CST').AsString := ' ';
