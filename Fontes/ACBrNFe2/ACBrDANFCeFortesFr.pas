@@ -701,9 +701,6 @@ var
 begin
   {$IFDEF FPC}
    LoadPortugueseStrings;
-  {$ELSE}
-   // Para que serve esse m√©todo ?? //
-   //SetVersion( CommercialVersion, ReleaseVersion, CommentVersion );
   {$ENDIF}
 
   frACBrNFeDANFCeFortesFr := TACBrNFeDANFCeFortesFr.Create(Self);
@@ -768,6 +765,11 @@ end;
 {$ifdef FPC}
 initialization
    {$I ACBrNFeDANFCeFortes.lrs}
+{$else}
+// Descomentar este comando quando aparecer a mensagem do Fortes sobre
+// vers„o diferente
+initialization 
+  RLConsts.SetVersion(3,72,'B');
 {$endif}
 
 end.

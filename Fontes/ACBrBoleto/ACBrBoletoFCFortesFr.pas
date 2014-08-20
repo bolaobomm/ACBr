@@ -465,9 +465,6 @@ begin
 
   {$IFDEF FPC}
    LoadPortugueseStrings;
-  {$ELSE}
-   // Para que serve esse método ?? //
-   //SetVersion( CommercialVersion, ReleaseVersion, CommentVersion );
   {$ENDIF}
 
   frACBrBoletoFortes := TACBrBoletoFCFortesFr.Create(Self);
@@ -813,6 +810,11 @@ end;
 {$ifdef FPC}
 initialization
    {$I ACBrBoletoFCFortes.lrs}
+{$else}
+// Descomentar este comando quando aparecer a mensagem do Fortes sobre
+// versão diferente
+initialization 
+  RLConsts.SetVersion(3,72,'B');
 {$endif}
 
 end.

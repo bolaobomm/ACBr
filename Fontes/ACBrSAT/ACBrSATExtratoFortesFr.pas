@@ -851,9 +851,6 @@ var
 begin
   {$IFDEF FPC}
    LoadPortugueseStrings;
-  {$ELSE}
-   // Para que serve esse método ?? //
-   //SetVersion( CommercialVersion, ReleaseVersion, CommentVersion );
   {$ENDIF}
 
   frACBrSATExtratoFortesFr := TACBrSATExtratoFortesFr.Create(Self);
@@ -933,6 +930,11 @@ end;
 {$ifdef FPC}
 initialization
    {$I ACBrSATExtratoFortes.lrs}
+{$else}
+// Descomentar este comando quando aparecer a mensagem do Fortes sobre
+// versão diferente
+initialization 
+  RLConsts.SetVersion(3,72,'B');
 {$endif}
 
 end.

@@ -202,7 +202,6 @@ end;
 
 constructor TACBrNFeDANFeRL.Create(AOwner: TComponent);
 begin
-  //SetVersion(CommercialVersion,ReleaseVersion,CommentVersion);
   inherited create( AOwner );
   FFonte := TFonte.Create(self);
   FFonte.Name := 'Fonte';
@@ -461,5 +460,13 @@ try
   FreeAndNil(frlDANFeEventoRL);
  end; 
 end;
+
+{$ifdef FPC}
+{$else}
+// Descomentar este comando quando aparecer a mensagem do Fortes sobre
+// versão diferente
+initialization 
+  RLConsts.SetVersion(3,72,'B');
+{$endif}
 
 end.
