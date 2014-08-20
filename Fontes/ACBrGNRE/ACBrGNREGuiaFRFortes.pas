@@ -588,13 +588,4 @@ begin
   RLMemo5.Visible := cdsGuia.FieldByName('Ambiente').AsInteger = 9;
 end;
 
-{$ifdef FPC}
-
-{$else}
-// Descomentar este comando quando aparecer a mensagem do Fortes sobre
-// versão diferente
-initialization 
-  RLConsts.SetVersion(3,72,'B');
-{$endif}
-
 end.

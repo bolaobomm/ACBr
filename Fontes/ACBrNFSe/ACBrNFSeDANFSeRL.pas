@@ -310,10 +310,4 @@ begin
 
 end;
 
-// Descomentar este comando quando aparecer a mensagem do Fortes sobre
-// versão diferente
-
-{initialization
-RLConsts.SetVersion(3,71,'B');}
-
 end.

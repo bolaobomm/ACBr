@@ -810,11 +810,6 @@ end;
 {$ifdef FPC}
 initialization
    {$I ACBrBoletoFCFortes.lrs}
-{$else}
-// Descomentar este comando quando aparecer a mensagem do Fortes sobre
-// versão diferente
-initialization 
-  RLConsts.SetVersion(3,72,'B');
 {$endif}
 
 end.

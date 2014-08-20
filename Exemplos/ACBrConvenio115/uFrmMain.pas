@@ -242,7 +242,4 @@ begin
   end;
 end;
 
-initialization
-  RLConsts.SetVersion(3,71,'B');
-
 end.

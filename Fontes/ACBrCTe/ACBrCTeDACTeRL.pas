@@ -336,10 +336,4 @@ begin
   Result := Result + ' - VALOR A RECEBER: R$ ' + DFeUtil.FormatFloat(FCTe.vPrest.vRec, '###,###,###,##0.00');
 end;
 
-// Descomentar este comando quando aparecer a mensagem do Fortes sobre
-// versão diferente
-
-{initialization 
-  RLConsts.SetVersion(3,72,'B');}
-
 end.
