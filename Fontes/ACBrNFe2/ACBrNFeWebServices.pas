@@ -4309,8 +4309,10 @@ var
   {$ENDIF}
 begin
   FEvento.idLote := idLote;
-  if Assigned(FEventoRetorno) then
+  if Assigned(FEventoRetorno) then begin
      FEventoRetorno.Free;
+     FEventoRetorno := nil;
+  end;
 
   inherited Executar;
 
