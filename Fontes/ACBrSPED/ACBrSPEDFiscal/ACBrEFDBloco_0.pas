@@ -335,7 +335,6 @@ type
     fDESCR_ITEM: String;       /// Descrição do item:
     fCOD_BARRA: String;        /// Código de barra do produto, se houver:
     fCOD_ANT_ITEM: String;     /// Código anterior do item (ultima apresentado):
-    FRegistro0210: TRegistro0210List;
     fUNID_INV: String;         /// Unidade de medida do estoque:
     fTIPO_ITEM: TACBrTipoItem; /// Tipo do item - Atividades Industriais, Comerciais e Serviços: 00 - Mercadoria para Revenda, 01 - Matéria-Prima,  02 - Embalagem, 03 - Produto em Processo, 04 - Produto Acabado, 05 - Subproduto, 06 - Produto Intermediário, 07 - Material de Uso e Consumo, 08 - Ativo Imobilizado, 09 - Serviços, 10 - Outros insumos, 99 - Outras
     fCOD_NCM: String;          /// Código da Nomenclatura Comum do Mercosul:
@@ -346,6 +345,7 @@ type
 
     FRegistro0205: TRegistro0205List;  /// BLOCO C - Lista de Registro0205 (FILHO)
     FRegistro0206: TRegistro0206List;  /// BLOCO C - Lista de Registro0206 (FILHO)
+    FRegistro0210: TRegistro0210List;
     FRegistro0220: TRegistro0220List;  /// BLOCO C - Lista de Registro0220 (FILHO)
   public
     constructor Create(AOwner: TRegistro0001); virtual; /// Create
@@ -678,29 +678,6 @@ type
 
 implementation
 
-{ TRegistro0210List }
-
-function TRegistro0210List.GetItem(Index: Integer): TRegistro0210;
-begin
-  Result := TRegistro0210(Inherited Items[Index]);
-end;
-
-procedure TRegistro0210List.SetItem(Index: Integer; const Value: TRegistro0210);
-begin
-  Put(Index, Value);
-end;
-
-function TRegistro0210List.New(AOwner: TRegistro0200): TRegistro0210;
-begin
-  Result := TRegistro0210.Create(AOwner);
-  Add(Result);
-end;
-
-{ TRegistro0210 }
-
-constructor TRegistro0210.Create(AOwner: TRegistro0200);
-begin
-end;
 
 { TRegistro0001 }
 
@@ -946,6 +923,24 @@ begin
   Put(Index, Value);
 end;
 
+{ TRegistro0210List }
+
+function TRegistro0210List.GetItem(Index: Integer): TRegistro0210;
+begin
+  Result := TRegistro0210(Inherited Items[Index]);
+end;
+
+procedure TRegistro0210List.SetItem(Index: Integer; const Value: TRegistro0210);
+begin
+  Put(Index, Value);
+end;
+
+function TRegistro0210List.New(AOwner: TRegistro0200): TRegistro0210;
+begin
+  Result := TRegistro0210.Create(AOwner);
+  Add(Result);
+end;
+
 { TRegistro0220List }
 
 function TRegistro0220List.GetItem(Index: Integer): TRegistro0220;
@@ -1082,6 +1077,7 @@ constructor TRegistro0200.Create(AOwner: TRegistro0001);
 begin
    FRegistro0205 := TRegistro0205List.Create;
    FRegistro0206 := TRegistro0206List.Create;
+   FRegistro0210 := TRegistro0210List.Create;  // jorge 20/08/14
    FRegistro0220 := TRegistro0220List.Create;
 end;
 
@@ -1089,6 +1085,7 @@ destructor TRegistro0200.Destroy;
 begin
   FRegistro0205.Free;
   FRegistro0206.Free;
+  FRegistro0210.Free; // jorge 20/08/14
   FRegistro0220.Free;
   inherited;
 end;
@@ -1214,6 +1211,13 @@ end;
 { TRegistro0206 }
 
 constructor TRegistro0206.Create(AOwner: TRegistro0200);
+begin
+end;
+
+
+{ TRegistro0210 }
+
+constructor TRegistro0210.Create(AOwner: TRegistro0200);
 begin
 end;
 
