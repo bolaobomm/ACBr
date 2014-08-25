@@ -316,8 +316,8 @@ begin
   Gerador.wGrupoNFSe('Servico');
    Gerador.wGrupoNFSe('Valores');
     Gerador.wCampoNFSe(tcDe2, '#13', 'ValorServicos', 01, 15, 1, NFSe.Servico.Valores.ValorServicos, '');
-    //Alterado por JuaumKiko em 05/02/2014
-    if FProvedor in [{proGinfes,} proRecife, proFreire, proPronim]
+    { Alterado por Cleiver em 25/08/2014 }
+    if FProvedor in [proRecife, proFreire, proPronim, proISSNET]
       then begin
         Gerador.wCampoNFSe(tcDe2, '#14', 'ValorDeducoes', 01, 15, 1, NFSe.Servico.Valores.ValorDeducoes, '');
         Gerador.wCampoNFSe(tcDe2, '#15', 'ValorPis     ', 01, 15, 1, NFSe.Servico.Valores.ValorPis, '');
@@ -998,7 +998,7 @@ begin
 	 
        Gerador.wCampoNFSe(tcStr, '', 'DiscriminacaoServico', 01, 80, 1, NFSe.Servico.ItemServico.Items[i].Descricao , '');
        Gerador.wCampoNFSe(tcDe4, '', 'Quantidade'          , 01, 15, 1, NFSe.Servico.ItemServico.Items[i].Quantidade , '');
-       Gerador.wCampoNFSe(tcDe4, '', 'ValorUnitario'       , 01, 20, 1, NFSe.Servico.ItemServico.Items[i].ValorUnitario , '');
+       Gerador.wCampoNFSe(tcDe2, '', 'ValorUnitario'       , 01, 20, 1, NFSe.Servico.ItemServico.Items[i].ValorUnitario , '');
        Gerador.wCampoNFSe(tcDe2, '', 'ValorTotal'          , 01, 18, 1, NFSe.Servico.ItemServico.Items[i].ValorTotal , '');
        Gerador.wCampoNFSe(tcStr, '', 'Tributavel'          , 01, 01, 0, sTributavel , '');
      Gerador.wGrupoNFSe('/Item');
@@ -1062,7 +1062,8 @@ begin
                      padL( NFSe.IdentificacaoRps.Serie, 5 , ' ') +
                      Poem_Zeros(NFSe.IdentificacaoRps.Numero, 12) +
                      FormatDateTime('yyyymmdd',NFse.DataEmissaoRps) +
-                     'T ' +
+                     EnumeradoToStr( NFSe.OptanteSimplesNacional, ['H','G'], [snSim, snNao])+
+                     ' ' +
                      sSituacao +
                      sTipoRecolhimentoAssinaturaRPS +
                      sValorServico_Assinatura +
