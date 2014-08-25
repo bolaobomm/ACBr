@@ -492,12 +492,46 @@ type
     property ACBrBoleto  : TACBrBoleto read fACBrBoleto;
   end;
 
-  TACBrSacado = class
+  TACBrSacadoAvalista = class
   private
     fTipoPessoa  : TACBrPessoa;
+
+    fNomeAvalista: String;
+    fCNPJCPF     : String;
+    fLogradouro  : String;
+    fNumero      : String;
+    fComplemento : String;
+    fBairro      : String;
+    fCidade      : String;
+    fUF          : String;
+    fCEP         : String;
+    fEmail       : String;
+    fFone        : String;
+    fInscricaoNr : String;
+  public
+    property Pessoa      : TACBrPessoa read fTipoPessoa  write fTipoPessoa;
+    property NomeAvalista: String  read fNomeAvalista    write fNomeAvalista;
+    property CNPJCPF     : String  read fCNPJCPF     write fCNPJCPF;
+    property Logradouro  : String  read fLogradouro  write fLogradouro;
+    property Numero      : String  read fNumero      write fNumero;
+    property Complemento : String  read fComplemento write fComplemento;
+    property Bairro      : String  read fBairro      write fBairro;
+    property Cidade      : String  read fCidade      write fCidade;
+    property UF          : String  read fUF          write fUF;
+    property CEP         : String  read fCEP         write fCEP;
+    property Email       : String  read fEmail       write fEmail;
+    property Fone        : String  read fFone        write fFone;
+    property InscricaoNr : String  read fInscricaoNr write fInscricaoNr;
+  end;
+
+  TACBrSacado = class
+  private
+    fSacadoAvalista : TACBrSacadoAvalista;
+    fTipoPessoa     : TACBrPessoa;
+
+    fAvalista    : String;
     fNomeSacado  : String;
     fCNPJCPF     : String;
-    fAvalista    : String;
     fLogradouro  : String;
     fNumero      : String;
     fComplemento : String;
@@ -508,10 +542,15 @@ type
     fEmail       : String;
     fFone        : String;
   public
-    property Pessoa      : TACBrPessoa read fTipoPessoa  write fTipoPessoa;
+    constructor Create;
+    destructor Destroy; override;
+
+    property Pessoa         : TACBrPessoa         read fTipoPessoa     write fTipoPessoa;
+    property SacadoAvalista : TACBrSacadoAvalista read fSacadoAvalista write fSacadoAvalista;
+
+    property Avalista    : String  read fAvalista    write fAvalista;
     property NomeSacado  : String  read fNomeSacado  write fNomeSacado;
     property CNPJCPF     : String  read fCNPJCPF     write fCNPJCPF;
-    property Avalista    : String  read fAvalista    write fAvalista;
     property Logradouro  : String  read fLogradouro  write fLogradouro;
     property Numero      : String  read fNumero      write fNumero;
     property Complemento : String  read fComplemento write fComplemento;
@@ -929,6 +968,19 @@ end;
 
 destructor TACBrCedente.Destroy;
 begin
+  inherited;
+end;
+
+{ TACBrSacado }
+
+constructor TACBrSacado.Create;
+begin
+   fSacadoAvalista := TACBrSacadoAvalista.Create;
+end;
+
+destructor TACBrSacado.Destroy;
+begin
+   fSacadoAvalista.Free;
   inherited;
 end;
 
