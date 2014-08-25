@@ -1273,111 +1273,49 @@ end;
 procedure TfqrDANFeQRRetrato.qrmProdutoDescricaoPrint(sender: TObject;
   var Value: string);
 var
-    intTamanhoDescricao,
-    intTamanhoLinha,
-    intResto   :Integer;
+	 intTamanho,
+	 intLinhasDescricao,
+    intLinhasAdicionais,
+	 intAlturaLinha : Integer;
 begin
 inherited;
-intTamanhoLinha:= Length(cdsItens.FieldByName( 'DESCRICAO' ).AsString);
-if Length(cdsItens.FieldByName( 'INFADIPROD' ).AsString) > 0 then
-  intTamanhoLinha:=intTamanhoLinha+Length('InfAdic: '+cdsItens.FieldByName( 'INFADIPROD' ).AsString);
-intResto        := intTamanhoLinha DIV 35;
-  case intResto of
-    0:
-    begin
-    intTamanhoLinha:=12;
-    end;
-    1:
-    begin
-    if intTamanhoLinha > 35 then
-      intTamanhoLinha:=22
-    else
-      intTamanhoLinha:=12;
-    end;
-    2:
-    Begin
-    if intTamanhoLinha > 70 then
-      intTamanhoLinha:=36
-    else
-      intTamanhoLinha:=24;
-    end;
-    3:
-    begin
-    if intTamanhoLinha > 105 then
-      intTamanhoLinha:=48
-    else
-      intTamanhoLinha:=36;
-    end;
-    4:
-    begin
-    if intTamanhoLinha > 140 then
-      intTamanhoLinha:=72
-    else
-      intTamanhoLinha:=60;
-    end;
-    5:
-    begin
-    if intTamanhoLinha > 175 then
-      intTamanhoLinha:=84
-    else
-      intTamanhoLinha:=72;
-    end;
-    6:
-    begin
-    if intTamanhoLinha > 210 then
-      intTamanhoLinha:=96
-    else
-      intTamanhoLinha:=84;
-    end;
-  end;
+   // Numero de linhas ocupadas pela descrição
+   intTamanho := Length(cdsItens.FieldByName( 'DESCRICAO' ).AsString);
+   intLinhasDescricao := Trunc(intTamanho / 35);
+   if intLinhasDescricao * 35 < intTamanho then begin
+      intLinhasDescricao := intLinhasDescricao + 1;
+   end;
 
-    //qrs1.Height:= intTamanhoLinha;
-    qrs2.Height:= intTamanhoLinha;
-    qrs3.Height:= intTamanhoLinha;
-    qrs4.Height:= intTamanhoLinha;
-    qrs5.Height:= intTamanhoLinha;
-    qrs6.Height:= intTamanhoLinha;
-    qrs7.Height:= intTamanhoLinha;
-    qrs8.Height:= intTamanhoLinha;
-    qrs9.Height:= intTamanhoLinha;
-    qrs10.Height:= intTamanhoLinha;
-    qrs11.Height:= intTamanhoLinha;
-    qrs12.Height:= intTamanhoLinha;
-    qrs13.Height:= intTamanhoLinha;
-    qrs14.Height:= intTamanhoLinha;
-    qrs15.Height:= intTamanhoLinha;
-    qrs16.Height:= intTamanhoLinha;
-    qrs17.Height:= intTamanhoLinha;
-    {
-    if intTamanhoLinha <> 22 then
-      qrs18.Top   := intTamanhoLinha
-    else}
-    qrs18.Top   := intTamanhoLinha - 1;
-    //qrs15.Height:= intTamanhoLinha;
+	// Numero de Linhas ocupadas pelas Informações Adicionais do Produto
+   intLinhasAdicionais := 0;
+	if Length(cdsItens.FieldByName( 'INFADIPROD' ).AsString) > 0 then begin
+      intTamanho := Length('InfAdic: '+cdsItens.FieldByName( 'INFADIPROD' ).AsString);
+  		intLinhasAdicionais := Trunc(intTamanho / 35);
+      if intLinhasAdicionais * 35 < intTamanho then begin
+         intLinhasAdicionais := intLinhasAdicionais + 1;
+      end;
+   end;
 
-    if intTamanhoDescricao = 0 then
-    begin
-        //qrs1.Visible:= False;
-        qrs2.Visible:= False;
-        qrs3.Visible:= False;
-        qrs4.Visible:= False;
-        qrs5.Visible:= False;
-        qrs6.Visible:= False;
-        qrs7.Visible:= False;
-        qrs8.Visible:= False;
-        qrs9.Visible:= False;
-        qrs10.Visible:= False;
-        qrs11.Visible:= False;
-        qrs12.Visible:= False;
-        qrs13.Visible:= False;
-        qrs14.Visible:= False;
-        qrs15.Visible:= False;
-        qrs16.Visible:= False;
-        qrs17.Visible:= False;
-        qrs18.Visible:= False;
-    end;
+   intAlturaLinha := (intLinhasDescricao + intLinhasAdicionais) * 12;
 
-    //qrs1.Repaint;
+    qrs2.Height:= intAlturaLinha;
+    qrs3.Height:= intAlturaLinha;
+    qrs4.Height:= intAlturaLinha;
+    qrs5.Height:= intAlturaLinha;
+    qrs6.Height:= intAlturaLinha;
+    qrs7.Height:= intAlturaLinha;
+    qrs8.Height:= intAlturaLinha;
+    qrs9.Height:= intAlturaLinha;
+    qrs10.Height:= intAlturaLinha;
+    qrs11.Height:= intAlturaLinha;
+    qrs12.Height:= intAlturaLinha;
+    qrs13.Height:= intAlturaLinha;
+    qrs14.Height:= intAlturaLinha;
+    qrs15.Height:= intAlturaLinha;
+    qrs16.Height:= intAlturaLinha;
+    qrs17.Height:= intAlturaLinha;
+    qrs18.Top   := intAlturaLinha;
+
     qrs2.Repaint;
     qrs3.Repaint;
     qrs4.Repaint;
@@ -1395,13 +1333,13 @@ intResto        := intTamanhoLinha DIV 35;
     qrs16.Repaint;
     qrs17.Repaint;
     qrs18.Repaint;
-    //qrs15.Repaint;
-
+ 
 
    if cdsItensINFADIPROD.AsString<>'' then begin
       Value:=Value+#13+'InfAd: '+cdsItensINFADIPROD.AsString;
    end;
 end;
+
 
 procedure TfqrDANFeQRRetrato.qrbEmitenteDestinatarioBeforePrint(Sender: TQRCustomBand;
   var PrintBand: Boolean);
