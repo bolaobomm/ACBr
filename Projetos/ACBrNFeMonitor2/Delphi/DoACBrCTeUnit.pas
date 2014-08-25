@@ -2788,6 +2788,8 @@ begin
            infEvento.tpEvento           := StrToTpEvento(ok,INIRec.ReadString(sSecao, 'tpEvento', ''));
            infEvento.nSeqEvento         := INIRec.ReadInteger(sSecao, 'nSeqEvento', 1);
            infEvento.detEvento.xCondUso := '';
+           infEvento.detEvento.xJust    := INIRec.ReadString(sSecao, 'xJust', '');
+           infEvento.detEvento.nProt    := INIRec.ReadString(sSecao, 'nProt', '');
 
            ACBrCTe1.EventoCTe.Evento.Items[I-1].InfEvento.detEvento.infCorrecao.Clear;
 
