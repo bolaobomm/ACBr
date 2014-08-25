@@ -74,7 +74,7 @@ begin
   then ConfigCidade.NameSpaceEnvelope := 'http://nfse.recife.pe.gov.br'
   else ConfigCidade.NameSpaceEnvelope := 'http://nfse.recife.pe.gov.br';
 
- ConfigCidade.AssinaRPS  := True;
+ ConfigCidade.AssinaRPS  := False;
  ConfigCidade.AssinaLote := True;
 
  Result := ConfigCidade;
