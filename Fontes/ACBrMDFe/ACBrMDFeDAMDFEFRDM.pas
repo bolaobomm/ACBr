@@ -759,7 +759,11 @@ begin
       FieldByName('qNFe').AsInteger    := qNFe;
       FieldByName('qNF').AsInteger     := qNF;
       FieldByName('qMDFe').AsInteger   := qMDFe;
-      FieldByName('qCarga').AsCurrency := qCarga;
+//      FieldByName('qCarga').AsCurrency := qCarga;
+      if cUndi = uTon then
+        FieldByName('qCarga').AsCurrency := qCarga * 1000
+      else
+        FieldByName('qCarga').AsCurrency := qCarga;
     end;
     FieldByName('OBS').AsString := FMDFe.infAdic.infCpl;
     Post;
