@@ -1007,17 +1007,17 @@ begin
 
     if Self.ExibeCampoFatura then   //Incluido por Fábio Gabriel - 22/05/2013
     begin
+      Append;
+
+      if FNFe.Ide.indPag = ipVista then
+        FieldByName('Pagamento').AsString := 'PAGAMENTO À VISTA'
+      else if FNFe.Ide.indPag = ipPrazo then
+        FieldByName('Pagamento').AsString := 'PAGAMENTO A PRAZO'
+      else
+        FieldByName('Pagamento').AsString := '';
+
       if DFeUtil.NaoEstaVazio(FNFe.Cobr.Fat.nFat) then
       begin
-        Append;
-
-        if FNFe.Ide.indPag = ipVista then
-          FieldByName('Pagamento').AsString := 'PAGAMENTO À VISTA'
-        else if FNFe.Ide.indPag = ipPrazo then
-          FieldByName('Pagamento').AsString := 'PAGAMENTO A PRAZO'
-        else
-          FieldByName('Pagamento').AsString := '';
-
         with FNFe.Cobr.Fat do
         begin
           FieldByName('nfat').AsString := nFat;
@@ -1025,9 +1025,9 @@ begin
           FieldByName('vDesc').AsFloat := DFeUtil.StringToFloatDef(FloatToStr(vDesc), 0);
           FieldByName('vLiq').AsFloat := DFeUtil.StringToFloatDef(FloatToStr(vLiq), 0);
         end;
-
-        Post;
       end;
+
+      Post;
     end;
   end;
 end;
