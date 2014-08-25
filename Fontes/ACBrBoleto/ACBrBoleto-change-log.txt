@@ -47,12 +47,17 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+Data: 25/08/2014 ver. 0.0.94a
+-- ACBrBoleto --
+[+] Criado nova class TACBrSacadoAvalista e adicionado como propriedade "SacadoAvalista" 
+    na class TACBrSacado (por Isaque Pinheiro)
+    http://www.projetoacbr.com.br/forum/index.php?/topic/16856-sacador-avalista/#entry105124
+
 Data: 02/06/2014 ver. 0.0.94
 -- ACBrBancoob.pas
 [-] Adição do envio dos Dias para Protesto e Número da Parcela, além do comando Trim() na
     propriedade NumeroDocumento na remessa CNAB400.(Juliana Tamizou)
 [-] Adição do envio dos Dias para Protesto na remessa CNAB240. (Juliana Tamizou)	 
-
 
 Data: 15/05/2014 ver. 0.0.93
 -- ACBrBoleto --
