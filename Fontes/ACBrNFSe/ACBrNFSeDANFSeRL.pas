@@ -90,6 +90,15 @@ type
     FImpressora     : String;
     FPrestLogo      : String;
     FPrefeitura     : String;
+    FRazaoSocial    : String;
+    FUF             : String;
+    FEndereco       : String;
+    FComplemento    : String;
+    FFone           : String;
+    FMunicipio      : String;
+    FInscMunicipal  : String;
+    FEMail_Prestador : String;
+
 
 	cdsItens:  {$IFDEF BORLAND} TClientDataSet {$ELSE} TBufDataset{$ENDIF};
 	procedure ConfigDataSet;
@@ -114,6 +123,15 @@ type
                              AImpressora     : String  = '';
                              APrestLogo      : String  = '';
                              APrefeitura     : String  = '';
+                             ARazaoSocial    : String  = '';
+                             AEndereco       : String  = '';
+                             AComplemento    : String  = '';
+                             AFone           : String  = '';
+                             AMunicipio      : String  = '';
+                             AInscMunicipal  : String  = '';
+                             AEMail_Prestador : String  = '';
+                             AUF              : String  = '';
+
                              // Augusto Fontana
                              APrintDialog    : Boolean = True);
 
@@ -131,7 +149,15 @@ type
                             AMargemEsquerda : Double  = 0.6;
                             AMargemDireita  : Double  = 0.51;
                             APrestLogo      : String  = '';
-                            APrefeitura     : String  = '');
+                            APrefeitura     : String  = '';
+                            ARazaoSocial    : String  = '';
+                            AEndereco       : String  = '';
+                            AComplemento    : String  = '';
+                            AFone           : String  = '';
+                            AMunicipio      : String  = '';
+                            AInscMunicipal  : String  = '';
+                            AEMail_Prestador : String  = '';
+                            AUF              : String  = '');
   end;
 
 var
@@ -228,7 +254,8 @@ end;
 class procedure TfrlDANFSeRL.Imprimir(ANFSe: TNFSe; ALogo, AEmail, AFax: String;
   ANumCopias: Integer; ASistema, ASite, AUsuario: String; APreview: Boolean;
   AMargemSuperior, AMargemInferior, AMargemEsquerda, AMargemDireita: Double;
-  AImpressora, APrestLogo, APrefeitura: String; APrintDialog: Boolean);
+  AImpressora, APrestLogo, APrefeitura, ARazaoSocial, AEndereco,
+  AComplemento, AFone, AMunicipio, AInscMunicipal, AEMail_Prestador, AUF : String; APrintDialog: Boolean);
 begin
  with Create ( nil ) do
   try
@@ -247,6 +274,14 @@ begin
    FImpressora     := AImpressora;
    FPrestLogo      := APrestLogo;
    FPrefeitura     := APrefeitura;
+   FRazaoSocial    := ARazaoSocial;
+   FUF             := AUF;
+   FEndereco       := AEndereco;
+   FComplemento    := AComplemento;
+   FFone           := AFone;
+   FMunicipio      := AMunicipio;
+   FInscMunicipal  := AInscMunicipal;
+   FEMail_Prestador := AEMail_Prestador;
 
    if FImpressora > '' then
      RLPrinter.PrinterName := FImpressora;
@@ -270,7 +305,8 @@ end;
 class procedure TfrlDANFSeRL.SavePDF(AFile: String; ANFSe: TNFSe; ALogo, AEmail,
   AFax: String; ANumCopias: Integer; ASistema, ASite, AUsuario: String;
   AMargemSuperior, AMargemInferior, AMargemEsquerda, AMargemDireita: Double;
-  APrestLogo, APrefeitura: String);
+  APrestLogo, APrefeitura, ARazaoSocial, AEndereco, AComplemento, AFone, AMunicipio,
+  AInscMunicipal, AEMail_Prestador, AUF : String);
 begin
   with Create ( nil ) do
    try
@@ -288,6 +324,14 @@ begin
     FMargemDireita  := AMargemDireita;
     FPrestLogo      := APrestLogo;
     FPrefeitura     := APrefeitura;
+    FRazaoSocial    := ARazaoSocial;
+    FUF             := AUF;
+    FEndereco       := AEndereco;
+    FComplemento    := AComplemento;
+    FFone           := AFone;
+    FMunicipio      := AMunicipio;
+    FInscMunicipal  := AInscMunicipal;
+    FEMail_Prestador := AEMail_Prestador;
 
     with RLPDFFilter1.DocumentInfo do
       begin
@@ -309,5 +353,11 @@ procedure TfrlDANFSeRL.SetBarCodeImage(ACode: String; RLImage : TRLImage);
 begin
 
 end;
+
+// Descomentar este comando quando aparecer a mensagem do Fortes sobre
+// versão diferente
+
+{initialization
+RLConsts.SetVersion(3,71,'B');}
 
 end.

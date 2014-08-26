@@ -68,6 +68,14 @@ begin
                                  , Impressora
                                  , PrestLogo
                                  , Prefeitura
+                                 , RazaoSocial
+                                 , Endereco
+                                 , Complemento
+                                 , Fone
+                                 , Municipio
+                                 , InscMunicipal
+                                 , EMail_Prestador
+                                 , UF
                                  // Augusto Fontana
                                  , PrintDialog);
     end;
@@ -88,6 +96,14 @@ begin
                                    , Impressora
                                    , PrestLogo
                                    , Prefeitura
+                                   , RazaoSocial
+                                   , Endereco
+                                   , Complemento
+                                   , Fone
+                                   , Municipio
+                                   , InscMunicipal
+                                   , EMail_Prestador
+                                   , UF
                                    // Augusto Fontana
                                    , PrintDialog);
 

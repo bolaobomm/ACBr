@@ -34,6 +34,14 @@ type
     FMargemDireita: Double;
     FPrestLogo: String;
     FPrefeitura: String;
+    FRazaoSocial: String;
+    FEndereco : String;
+    FComplemento : String;
+    FFone : String;
+    FMunicipio : String;
+    FInscMunicipal : String;
+    FEMail_Prestador : String;
+    FUF : String;         
     FNFSeCancelada: boolean;
     FImprimeCanhoto: Boolean;
 
@@ -64,6 +72,16 @@ type
     property MargemDireita: Double read FMargemDireita write FMargemDireita;
     property PrestLogo: String read FPrestLogo write FPrestLogo;
     property Prefeitura: String read FPrefeitura write FPrefeitura;
+
+    property RazaoSocial: String read FRazaoSocial write FRazaoSocial;
+    property UF: String read FUF write FUF;
+    property Endereco: String read FEndereco write FEndereco;
+    property Complemento: String read FComplemento write FComplemento;
+    property Fone: String read FFone write FFone;
+    property Municipio: String read FMunicipio write FMunicipio;
+    property InscMunicipal: String read FInscMunicipal write FInscMunicipal;
+    property EMail_Prestador: String read FEMail_Prestador write FEMail_Prestador;
+
     property NFSeCancelada: Boolean read FNFSeCancelada write FNFSeCancelada;
     property ImprimeCanhoto: Boolean read FImprimeCanhoto write FImprimeCanhoto default False;
   end;
@@ -97,6 +115,15 @@ begin
  FMargemDireita  := 0.51;
  FPrestLogo      := '';
  FPrefeitura     := '';
+ FRazaoSocial    := '';
+ FEndereco       := '';
+ FComplemento    := '';
+ FFone           := '';
+ FMunicipio      := '';
+ FInscMunicipal  := '';
+ FEMail_Prestador := '';
+ FUF              := '';               
+
  FNFSeCancelada  := False;
 end;
 

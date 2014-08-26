@@ -431,19 +431,46 @@ begin
 
  rllPrestCNPJ.Caption := DFeUtil.FormatarCNPJ( FNFSe.PrestadorServico.IdentificacaoPrestador.Cnpj );//Astrogildo em 13/12/12
  rllTomaInscEstadual.Caption := FNFSe.Tomador.IdentificacaoTomador.InscricaoEstadual;
- rllPrestInscMunicipal.Caption := FNFSe.PrestadorServico.IdentificacaoPrestador.InscricaoMunicipal;
- rllPrestNome.Caption := FNFSe.PrestadorServico.RazaoSocial;
- rllPrestEndereco.Caption := Trim( FNFSe.PrestadorServico.Endereco.Endereco )+', '+
-                             Trim( FNFSe.PrestadorServico.Endereco.Numero )+' - '+
-                             Trim( FNFSe.PrestadorServico.Endereco.Bairro )+
-                             ' - CEP: '+
-                             DFeUtil.FormatarCEP( DFeUtil.Poem_Zeros( FNFSe.PrestadorServico.Endereco.CEP, 8 ) );//Astrogildo em 13/12/12
- rllPrestComplemento.Caption := FNFSe.PrestadorServico.Endereco.Complemento;
- rllPrestTelefone.Caption := DFeUtil.FormatarFone( FNFSe.PrestadorServico.Contato.Telefone );//Astrogildo em 13/12/12
- rllPrestMunicipio.Caption := FNFSe.PrestadorServico.Endereco.CodigoMunicipio +
-  ' - ' + FNFSe.PrestadorServico.Endereco.xMunicipio;
- rllPrestUF.Caption := FNFSe.PrestadorServico.Endereco.UF;
- rllPrestEmail.Caption := FNFSe.PrestadorServico.Contato.Email;
+
+ If FNFSe.PrestadorServico.IdentificacaoPrestador.InscricaoMunicipal <> '' Then
+   rllPrestInscMunicipal.Caption := FNFSe.PrestadorServico.IdentificacaoPrestador.InscricaoMunicipal
+ Else rllPrestInscMunicipal.Caption := FInscMunicipal;
+
+ If FNFSe.PrestadorServico.RazaoSocial <> '' Then
+   rllPrestNome.Caption := FNFSe.PrestadorServico.RazaoSocial
+ Else rllPrestNome.Caption := FRazaoSocial;
+
+ If FNFSe.PrestadorServico.Endereco.Endereco <> '' Then Begin
+
+   rllPrestEndereco.Caption := Trim( FNFSe.PrestadorServico.Endereco.Endereco )+', '+
+                               Trim( FNFSe.PrestadorServico.Endereco.Numero )+' - '+
+                               Trim( FNFSe.PrestadorServico.Endereco.Bairro )+
+                               ' - CEP: '+
+                               DFeUtil.FormatarCEP( DFeUtil.Poem_Zeros( FNFSe.PrestadorServico.Endereco.CEP, 8 ) );//Astrogildo em 13/12/12
+ End Else Begin
+
+   rllPrestEndereco.Caption := Trim(FEndereco);
+ End;
+
+ If FNFSe.PrestadorServico.Endereco.Complemento <> '' Then
+   rllPrestComplemento.Caption := FNFSe.PrestadorServico.Endereco.Complemento
+ Else rllPrestComplemento.Caption := FComplemento;
+
+ If FNFSe.PrestadorServico.Contato.Telefone <> '' Then
+   rllPrestTelefone.Caption := DFeUtil.FormatarFone(FNFSe.PrestadorServico.Contato.Telefone)
+ Else rllPrestTelefone.Caption := DFeUtil.FormatarFone(FFone);
+
+ If FNFSe.PrestadorServico.Endereco.xMunicipio <> '' Then
+   rllPrestMunicipio.Caption := FNFSe.PrestadorServico.Endereco.CodigoMunicipio + ' - ' + FNFSe.PrestadorServico.Endereco.xMunicipio
+ Else rllPrestMunicipio.Caption := FMunicipio;
+
+ If FNFSe.PrestadorServico.Endereco.UF <> '' Then
+   rllPrestUF.Caption := FNFSe.PrestadorServico.Endereco.UF
+ Else rllPrestUF.Caption := FUF;
+
+ If FNFSe.PrestadorServico.Contato.Email <> '' Then
+   rllPrestEmail.Caption := FNFSe.PrestadorServico.Contato.Email
+ Else rllPrestEmail.Caption := FEMail_Prestador;
 
  // Comprovante de Entrega - Márcio Lopes em 27/11/2013
  rllPrestNomeEnt.Caption := FNFSe.PrestadorServico.RazaoSocial;
