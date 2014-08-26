@@ -1026,7 +1026,7 @@ begin
    if FConfiguracoes.WebServices.Salvar
     then FConfiguracoes.Geral.Save('-xxx2.xml', FDadosMsg);
 
-   {if FProvedorClass.GetValidarLote
+   if FProvedorClass.GetValidarLote
     then begin
      if not(NotaUtil.Valida(FDadosMsg, FMsg,
                             FConfiguracoes.Geral.PathSchemas,
@@ -1035,7 +1035,7 @@ begin
                             FConfiguracoes.WebServices.Prefixo4))
       then raise Exception.Create('Falha na validação do Lote ' +
                      TNFSeEnviarLoteRps(Self).NumeroLote + sLineBreak + FMsg);
-    end;}
+    end;
   end
   else raise Exception.Create('A funcionalidade [Enviar Lote] não foi disponibilizada pelo provedor: ' + FxProvedor);
 end;
@@ -1403,7 +1403,7 @@ begin
                                                          LowerCase(booltostr(TNFSeConsultarNfseRPS(Self).FNotasFiscais.Transacao, True)),
                                                          TNFSeConsultarNfseRPS(Self).FNotasFiscais.NumeroLote,
                                                          vNotas,
-                                                         '', ''); //FTagI, FTagF)
+                                                         '', ''); 
     proEquiplano: FDadosMsg := TNFSeG.Gera_DadosMsgConsNFSeRPSEquiplano(FConfiguracoes.WebServices.CodigoMunicipio,
                                                                TNFSeConsultarNfseRPS(Self).Numero,
                                                                SomenteNumeros(TNFSeConsultarNfseRPS(Self).FCnpj),
@@ -1551,7 +1551,7 @@ begin
                                                       TNFSeConsultarNfse(Self).FNumeroNFSe,
                                                       TNFSeConsultarNfse(Self).DataInicial,
                                                       TNFSeConsultarNfse(Self).DataFinal,
-                                                      '', ''); //FTagI, FTagF)
+                                                      '', ''); 
     else FDadosMsg := TNFSeG.Gera_DadosMsgConsNFSe(Prefixo3, Prefixo4,
                                                    NameSpaceDad, FVersaoXML,
                                                    SomenteNumeros(TNFSeConsultarNfse(Self).Cnpj),
@@ -1773,21 +1773,24 @@ begin
   else FNameSpaceDad := ' ' + FNameSpaceDad;
 
  if (TNFSeCancelarNfse(Self).FNumeroNFSe = '') then
-   TNFSeCancelarNfse(Self).FNumeroNFSe      := TNFSeCancelarNfse(Self).FNotasFiscais.Items[0].NFSe.Numero;
+   TNFSeCancelarNfse(Self).FNumeroNFSe := TNFSeCancelarNfse(Self).FNotasFiscais.Items[0].NFSe.Numero;
+
  if (TNFSeCancelarNfse(Self).FCNPJ = '') then
  begin
    if (FProvedor = proDigifred) or (FProvedor = pro4R) then
-    TNFSeCancelarNfse(Self).FCNPJ            := SomenteNumeros(TNFSeCancelarNfse(Self).FNotasFiscais.Items[0].NFSe.Prestador.Cnpj)
+    TNFSeCancelarNfse(Self).FCNPJ := SomenteNumeros(TNFSeCancelarNfse(Self).FNotasFiscais.Items[0].NFSe.Prestador.Cnpj)
    else
-    TNFSeCancelarNfse(Self).FCNPJ            := SomenteNumeros(TNFSeCancelarNfse(Self).FNotasFiscais.Items[0].NFSe.PrestadorServico.IdentificacaoPrestador.Cnpj);
+    TNFSeCancelarNfse(Self).FCNPJ := SomenteNumeros(TNFSeCancelarNfse(Self).FNotasFiscais.Items[0].NFSe.PrestadorServico.IdentificacaoPrestador.Cnpj);
  end;
+
  if (TNFSeCancelarNfse(Self).FIM = '') then
  begin
   if (FProvedor = proDigifred) or (FProvedor = pro4R) then
-    TNFSeCancelarNfse(Self).FIM              := TNFSeCancelarNfse(Self).FNotasFiscais.Items[0].NFSe.Prestador.InscricaoMunicipal
+    TNFSeCancelarNfse(Self).FIM := TNFSeCancelarNfse(Self).FNotasFiscais.Items[0].NFSe.Prestador.InscricaoMunicipal
   else
-    TNFSeCancelarNfse(Self).FIM              := TNFSeCancelarNfse(Self).FNotasFiscais.Items[0].NFSe.PrestadorServico.IdentificacaoPrestador.InscricaoMunicipal;
+    TNFSeCancelarNfse(Self).FIM := TNFSeCancelarNfse(Self).FNotasFiscais.Items[0].NFSe.PrestadorServico.IdentificacaoPrestador.InscricaoMunicipal;
  end;
+
  if (TNFSeCancelarNfse(Self).MotivoCancelamento = '') then
    TNFSeCancelarNfse(Self).MotivoCancelamento:= TNFSeCancelarNfse(Self).FNotasFiscais.Items[0].NFSe.MotivoCancelamento;
 
@@ -1844,13 +1847,13 @@ begin
                                                           CodCidadeToCodSiafi(strtoint64(TNFSeCancelarNfse(Self).FCodigoMunicipio)),
                                                           TNFSeCancelarNfse(Self).FNotasFiscais.NumeroLote,
                                                           vNotas,
-                                                          '', ''); //FTagI, FTagF)
+                                                          '', '');
     proEquiplano: FDadosMsg := TNFSeG.Gera_DadosMsgCancelarNFSeEquiplano(StrToInt(TNFSeCancelarNfse(Self).FCodigoMunicipio),
                                                                 SomenteNumeros(TNFSeCancelarNfse(Self).FCnpj),
                                                                 TNFSeCancelarNfse(Self).FIM,
                                                                 TNFSeCancelarNfse(Self).FNumeroNFSe,
                                                                 TNFSeCancelarNfse(Self).FMotivoCancelamento,
-                                                                '', ''); //FTagI, FTagF)
+                                                                '', ''); 
     else FDadosMsg := TNFSeG.Gera_DadosMsgCancelarNFSe(Prefixo4,
                                                        NameSpaceDad,
                                                        TNFSeCancelarNfse(Self).FNumeroNFSe,
@@ -2105,7 +2108,7 @@ begin
    if FConfiguracoes.WebServices.Salvar
     then FConfiguracoes.Geral.Save('-xxx2.xml', FDadosMsg);
 
-   {if FProvedorClass.GetValidarLote
+   if FProvedorClass.GetValidarLote
     then begin
      if not(NotaUtil.Valida(FDadosMsg, FMsg,
                             FConfiguracoes.Geral.PathSchemas,
@@ -2114,7 +2117,7 @@ begin
                             FConfiguracoes.WebServices.Prefixo4))
       then raise Exception.Create('Falha na validação do Lote ' +
                      IntToStr(TNFSeGerarNFSe(Self).NumeroRps) + sLineBreak + FMsg);
-    end;}
+    end;
   end
   else raise Exception.Create('A funcionalidade [Gerar NFSe] não foi disponibilizada pelo provedor: ' + FxProvedor);
 end;
@@ -2347,7 +2350,7 @@ begin
     FConfiguracoes.Geral.Save(TNFSeGerarLoteRps(Self).NumeroLote+'-lot-rps.xml', FDadosMsg, PathSalvar);
 //   end;
 
- {if FProvedorClass.GetValidarLote
+ if FProvedorClass.GetValidarLote
   then begin
    if not(NotaUtil.Valida(FDadosMsg, FMsg,
                           FConfiguracoes.Geral.PathSchemas,
@@ -2356,7 +2359,7 @@ begin
                           FConfiguracoes.WebServices.Prefixo4))
     then raise Exception.Create('Falha na validação do Lote ' +
                    TNFSeGerarLoteRps(Self).NumeroLote + sLineBreak + FMsg);
-  end;}
+  end;
 end;
 
 procedure TWebServicesBase.DoNFSeEnviarSincrono;
@@ -2509,7 +2512,7 @@ begin
    if FConfiguracoes.WebServices.Salvar
     then FConfiguracoes.Geral.Save('-xxx2.xml', FDadosMsg);
 
-   {if FProvedorClass.GetValidarLote
+   if FProvedorClass.GetValidarLote
     then begin
      if not(NotaUtil.Valida(FDadosMsg, FMsg,
                             FConfiguracoes.Geral.PathSchemas,
@@ -2518,7 +2521,7 @@ begin
                             FConfiguracoes.WebServices.Prefixo4))
       then raise Exception.Create('Falha na validação do Lote ' +
                      TNFSeEnviarSincrono(Self).NumeroLote + sLineBreak + FMsg);
-    end;}
+    end;
   end
   else raise Exception.Create('A funcionalidade [Enviar Sincrono] não foi disponibilizada pelo provedor: ' + FxProvedor);
 end;
@@ -2599,11 +2602,12 @@ begin
    Self.ConsLote.FraseSecreta := TACBrNFSe( FACBrNFSe ).NotasFiscais.Items[0].NFSe.Prestador.FraseSecreta;
  end;
 
- if (TACBrNFSe( FACBrNFSe ).Configuracoes.WebServices.ConsultaLoteAposEnvio) and (Result) then begin
-   //Alterado por Cleiver em 10-10-2013
+ if (TACBrNFSe( FACBrNFSe ).Configuracoes.WebServices.ConsultaLoteAposEnvio) and (Result) then
+ begin
    if not (TACBrNFSe( FACBrNFSe ).Configuracoes.WebServices.Provedor in [proDigifred, proProdata,
           proVitoria, proPVH, profintelISS, proSaatri, proSisPMJP, proCoplan, proISSDigital,
-          proISSDSF, proFiorilli, proFreire, proTecnos]) then begin
+          proISSDSF, proFiorilli, proFreire, proTecnos]) then
+    begin
      Result := Self.ConsSitLote.Executar;
 
      if not (Result)
@@ -2697,7 +2701,6 @@ begin
  Self.ConsNfseRps.FraseSecreta       := AFraseSecreta;
  Self.ConsNfseRps.RazaoSocial        := ARazaoSocial;
 
- // Alterado por Rosemir Zeferino em 24/05/2013
  Result := Self.ConsNfseRps.Executar;
 
  if not (Result)
@@ -2834,14 +2837,23 @@ begin
      Self.ConsNfse.InscricaoMunicipal := TACBrNFSe( FACBrNFSe ).NotasFiscais.Items[0].NFSe.PrestadorServico.IdentificacaoPrestador.InscricaoMunicipal;
      Result := Self.ConsNfse.Executar;
    end
-   else
-   begin
+   else begin
      Self.ConsNfseRps.Numero             := TACBrNFSe( FACBrNFSe ).NotasFiscais.Items[0].NFSe.IdentificacaoRps.Numero;
      Self.ConsNfseRps.Serie              := TACBrNFSe( FACBrNFSe ).NotasFiscais.Items[0].NFSe.IdentificacaoRps.Serie;
      Self.ConsNfseRps.Tipo               := TipoRPSToStr(TACBrNFSe( FACBrNFSe ).NotasFiscais.Items[0].NFSe.IdentificacaoRps.Tipo);
-     Self.ConsNfseRps.Cnpj               := TACBrNFSe( FACBrNFSe ).NotasFiscais.Items[0].NFSe.PrestadorServico.IdentificacaoPrestador.Cnpj;
-     Self.ConsNfseRps.InscricaoMunicipal := TACBrNFSe( FACBrNFSe ).NotasFiscais.Items[0].NFSe.PrestadorServico.IdentificacaoPrestador.InscricaoMunicipal;
-     Self.ConsNfseRps.RazaoSocial        := TACBrNFSe( FACBrNFSe ).NotasFiscais.Items[0].NFSe.PrestadorServico.RazaoSocial;
+
+     if TACBrNFSe( FACBrNFSe ).Configuracoes.WebServices.Provedor in [proDigifred] then
+     begin
+       Self.ConsNfseRps.Cnpj               := TACBrNFSe( FACBrNFSe ).NotasFiscais.Items[0].NFSe.Prestador.Cnpj;
+       Self.ConsNfseRps.InscricaoMunicipal := TACBrNFSe( FACBrNFSe ).NotasFiscais.Items[0].NFSe.Prestador.InscricaoMunicipal;
+       Self.ConsNfseRps.RazaoSocial        := '';
+     end
+     else begin
+       Self.ConsNfseRps.Cnpj               := TACBrNFSe( FACBrNFSe ).NotasFiscais.Items[0].NFSe.PrestadorServico.IdentificacaoPrestador.Cnpj;
+       Self.ConsNfseRps.InscricaoMunicipal := TACBrNFSe( FACBrNFSe ).NotasFiscais.Items[0].NFSe.PrestadorServico.IdentificacaoPrestador.InscricaoMunicipal;
+       Self.ConsNfseRps.RazaoSocial        := TACBrNFSe( FACBrNFSe ).NotasFiscais.Items[0].NFSe.PrestadorServico.RazaoSocial;
+     end;
+
      Result := Self.ConsNfseRps.Executar;
    end;
 
@@ -2944,6 +2956,7 @@ begin
 end;
 
 { TNFSeEnviarLoteRPS }
+
 constructor TNFSeEnviarLoteRPS.Create(AOwner : TComponent;
   ANotasFiscais: TNotasFiscais);
 begin
@@ -2974,7 +2987,7 @@ var
    ReqResp : THTTPReqResp;
  {$ENDIF}
 begin
- {Result :=} inherited Executar;
+  inherited Executar;
 
  // O número do protocolo deve ser inicializado antes do processo de transmissão.
  // Ao se transmitir pode ocorrer erro e este campo ficaria com o número de protocolo
@@ -3093,10 +3106,6 @@ begin
 
     Result := (NFSeRetorno.InfRec.Protocolo<>'');
 
-  //
-  // Alterado por Luis Fernando Vilela em 15/02/2013
-  //
-  // para capturar erro de conexao
   except
 		on E: Exception do
 		begin
@@ -3157,7 +3166,7 @@ var
    ReqResp : THTTPReqResp;
  {$ENDIF}
 begin
- {Result :=} inherited Executar;
+ inherited Executar;
 
  if Assigned(NFSeRetorno)
   then NFSeRetorno.Free;
@@ -3303,8 +3312,7 @@ end;
 var
   vCont, qTent: Integer;
 begin
-  {Result :=} inherited Executar;
-//  Result := False;
+  inherited Executar;
 
   TACBrNFSe( FACBrNFSe ).SetStatus( stNFSeConsulta );
   Sleep(TACBrNFSe( FACBrNFSe ).Configuracoes.WebServices.AguardarConsultaRet);
@@ -3323,12 +3331,6 @@ begin
       break;
 
     qTent := qTent + 1;  
-    {
-    if vCont > (TACBrNFSe( FACBrNFSe ).Configuracoes.WebServices.Tentativas * 10000) then
-      break;
-
-    vCont := vCont + 10000;
-    }
   end;
   TACBrNFSe( FACBrNFSe ).SetStatus( stNFSeIdle );
 
@@ -3388,7 +3390,7 @@ var
  iNFRetorno    : Integer;
  iNF           : Integer;
 begin
- {Result :=} inherited Executar;
+ inherited Executar;
 
  if Assigned(NFSeRetorno)
   then NFSeRetorno.Free;
@@ -3529,7 +3531,6 @@ begin
      p := Length(trim(Prefixo3));
      if j > 0
       then begin
-       // Alterado por GHN em 16/07/2013
        for iNFRetorno := 0 to NFSeRetorno.ListaNfse.CompNfse.Count - 1 do
        begin
         for iNF := 0 to FNotasFiscais.Count - 1 do
@@ -3566,9 +3567,6 @@ begin
 
            FNotasFiscais.Items[iNF].NFSe.Tomador.Endereco.xMunicipio := NFSeRetorno.ListaNfse.CompNfse.Items[iNFRetorno].Nfse.Tomador.Endereco.xMunicipio;
 
-//          FRetNfse := Copy(FRetListaNfse, 1, j - 1);
-
-           // Alterado por Augusto Fontana - 16/09/2013
            FRetNfse := NFSeRetorno.ListaNfse.CompNfse.Items[iNFRetorno].Nfse.XML;
 
            k :=  Pos('<' + Prefixo4 + 'Nfse', FRetNfse);
@@ -3624,8 +3622,6 @@ begin
             if FNotasFiscais.Count>0
              then FNotasFiscais.Items[iNF].NomeArq := PathWithDelim(PathSalvar) + NomeArq;
 //           end;
-
-//          FRetListaNfse := Copy(FRetListaNfse, j + 11 + p, length(FRetListaNfse));
 
            FNotasFiscais.Items[iNF].XML_NFSe := FRetNfse;
 
@@ -3721,7 +3717,7 @@ var
  PathSalvar   : String;
  NomeArq      : String;
 begin
- {Result :=} inherited Executar;
+ inherited Executar;
 
  if Assigned(NFSeRetorno)
   then NFSeRetorno.Free;
@@ -3795,15 +3791,12 @@ begin
   NFSeRetorno.Provedor       := FProvedor;
   NFSeRetorno.TabServicosExt := FConfiguracoes.Arquivos.TabServicosExt;
 
-  // Alterado por Rosemir Zeferino em 24/05/2013
   if (FProvedor = proIssDsf )then
     Result := NFSeRetorno.LerXml_provedorIssDsf //falta homologar
   else if (FProvedor = proEquiplano) then
     Result := NFSeRetorno.LerXML_provedorEquiplano
   else
     Result := NFSeRetorno.LerXml;
-
- // Incluido por Ricardo Miranda em 14/03/2013
 
   if FProvedor <> proISSNet
    then begin
@@ -3871,11 +3864,10 @@ begin
       //Eduardo - DRD, adicionei
       FNotasFiscais.Items[i].NFSe.InfID.ID          := NFSeRetorno.ListaNfse.CompNfse.Items[i].NFSe.InfID.ID +
                                                        NFSeRetorno.ListaNfse.CompNfse.Items[i].Nfse.IdentificacaoRps.Serie;
-      // alterado por joel takei 12/08/2013
       FNotasFiscais.Items[i].XML                    := FRetNfse;
 
       FNotasFiscais.Items[i].NFSe.NfseCancelamento.DataHora := NFSeRetorno.ListaNfse.CompNfse.Items[i].Nfse.NfseCancelamento.DataHora;
-      // Incluido por joel takei 12/08/2013
+
       FNotasFiscais.Items[i].NFSe.NfseCancelamento.Pedido.CodigoCancelamento := NFSeRetorno.ListaNfse.CompNfse.Items[i].Nfse.NfseCancelamento.Pedido.CodigoCancelamento;
       FNotasFiscais.Items[i].NFSe.Status                                     := NFSeRetorno.ListaNfse.CompNfse.Items[i].NFSe.Status;
 
@@ -3912,7 +3904,6 @@ begin
   if Assigned(TACBrNFSe( FACBrNFSe ).OnGerarLog)
    then TACBrNFSe( FACBrNFSe ).OnGerarLog(aMsg);
 
-  // Alterado por Rosemir Zeferino em 24/05/2013
   Result := (Result) and (FMsg = '');
 
  finally
@@ -3967,7 +3958,7 @@ var
  PathSalvar    : String;
  NomeArq       : String;
 begin
- {Result :=} inherited Executar;
+ inherited Executar;
 
  if Assigned(NFSeRetorno)
   then NFSeRetorno.Free;
@@ -4049,8 +4040,7 @@ begin
      NFSeRetorno.LerXml_provedorIssDsf //falta homologar
   else begin
      NFSeRetorno.LerXml;
-     // Incluido por Italo em 15/07/2013
-     // Será utilizado para realizar as consultas as NFSe
+     // Utilizado para realizar as consultas as NFSe
      // quando o provedor por Fiorilli e fintelISS
      FPagina := NFSeRetorno.ListaNfse.Pagina;
   end;
@@ -4189,7 +4179,7 @@ var
    ReqResp : THTTPReqResp;
  {$ENDIF}
 begin
- {Result :=} inherited Executar;
+ inherited Executar;
 
  if Assigned(NFSeRetorno)
   then NFSeRetorno.Free;
@@ -4900,7 +4890,7 @@ var
  i             : Integer;
 // PathSalvar    : String;
 begin
- {Result :=} inherited Executar;
+ inherited Executar;
 
  // Incluido por Rodrigo Cantelli
  if Assigned(NFSeRetorno)
