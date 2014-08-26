@@ -281,6 +281,8 @@ begin
   then begin
    TagCab   := 'Cabecalho';
    TagDados := 'ConsultarSituacaoLoteRpsEnvio';
+   CabMsg   := '<![CDATA[' + CabMsg + ']]>';
+   DadosMsg := '<![CDATA[' + DadosMsg + ']]>';
   end
   else begin
    TagCab   := 'arg0';
@@ -307,6 +309,8 @@ begin
   then begin
    TagCab   := 'Cabecalho';
    TagDados := 'ConsultarLoteRpsEnvio';
+   CabMsg   := '<![CDATA[' + CabMsg + ']]>';
+   DadosMsg := '<![CDATA[' + DadosMsg + ']]>';
   end
   else begin
    TagCab   := 'arg0';
@@ -333,6 +337,8 @@ begin
   then begin
    TagCab   := 'Cabecalho';
    TagDados := 'ConsultarNfseRpsEnvio';
+   CabMsg   := '<![CDATA[' + CabMsg + ']]>';
+   DadosMsg := '<![CDATA[' + DadosMsg + ']]>';
   end
   else begin
    TagCab   := 'arg0';
@@ -359,6 +365,8 @@ begin
   then begin
    TagCab   := 'Cabecalho';
    TagDados := 'ConsultarNfseEnvio';
+   CabMsg   := '<![CDATA[' + CabMsg + ']]>';
+   DadosMsg := '<![CDATA[' + DadosMsg + ']]>';
   end
   else begin
    TagCab   := 'arg0';
@@ -382,8 +390,14 @@ var
  TagDados: String;
 begin
  if Pos('issfortaleza', URLNS) > 0
-  then TagDados := 'CancelarNfseEnvio'
-  else TagDados := 'arg0';
+  then begin
+   TagDados := 'CancelarNfseEnvio';
+   DadosMsg := '<![CDATA[' + DadosMsg + ']]>';
+  end
+  else begin
+   TagDados := 'arg0';
+   DadosMsg := StringReplace(StringReplace(DadosMsg, '<', '&lt;', [rfReplaceAll]), '>', '&gt;', [rfReplaceAll]);
+  end;
 
  result := '<?xml version="1.0" encoding="UTF-8"?>' +
            '<s:Envelope xmlns:s="http://schemas.xmlsoap.org/soap/envelope/">' +
@@ -391,7 +405,7 @@ begin
              '<ns1:CancelarNfse xmlns:ns1="' + URLNS + '">' +
               '<' + TagDados +'>' +
                '&lt;?xml version="1.0" encoding="UTF-8"?&gt;' +
-               StringReplace(StringReplace(DadosMsg, '<', '&lt;', [rfReplaceAll]), '>', '&gt;', [rfReplaceAll]) +
+               DadosMsg +
               '</' + TagDados +'>' +
              '</ns1:CancelarNfse>' +
             '</s:Body>' +
