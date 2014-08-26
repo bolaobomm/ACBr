@@ -47,6 +47,15 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+Data: 26/08/2014     (por: DSA)
+-- ACBrSATExtratoFortes --
+[+] Adicionadas propriedades de controle de Largura e Margens
+[*] Ajustes no layout de impressao para suportar mudanças de Margens dinâmicas
+
+-- SATTeste - Lzarus --
+[*] Modificações para permitir a seleção de Tipo de Extrato (Fortes, EscPos)
+    e ajuste de Margens
+
 Data: 29/06/2014     (por: DSA)
 [-] Modificada a assinatura dos metodo AtivarSAT, para utilização de AnsiString, 
     a fim de evitar erros nas IDEs do Delphi XE ou superiores

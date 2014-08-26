@@ -64,6 +64,8 @@ type
 
   TACBrSATExtratoFortes = class( TACBrSATExtratoClass )
   private
+    fLarguraBobina: Integer;
+    fMargens: TACBrSATExtratoMargem;
   protected
     procedure Imprimir;
   public
@@ -74,6 +76,8 @@ type
     procedure ImprimirExtratoResumido(ACFe : TCFe = nil); override;
     procedure ImprimirExtratoCancelamento(ACFe : TCFe = nil; ACFeCanc: TCFeCanc = nil); override;
   published
+    property LarguraBobina : Integer read fLarguraBobina  write fLarguraBobina default 302;
+    property Margens       : TACBrSATExtratoMargem read fMargens write fMargens;
   end ;
 
   { TACBrSATExtratoFortesFr }
@@ -88,6 +92,7 @@ type
     imgLogoCan: TRLImage;
     imgQRCodeCan: TRLImage;
     imgQRCodeCanl: TRLImage;
+    lBaseCalcISSQN: TRLLabel;
     lChaveAcessoCan: TRLLabel;
     lChaveAcessoCanl: TRLLabel;
     lCPF_CNPJ: TRLLabel;
@@ -97,6 +102,9 @@ type
     lCupomFiscalEletronicoCan: TRLLabel;
     lDataHoraCan: TRLLabel;
     lDataHoraCanl: TRLLabel;
+    lDeducISSQN: TRLLabel;
+    lDesconto: TRLLabel;
+    lDescValLiq: TRLLabel;
     lEmitCNPJ_IE_IM: TRLLabel;
     lEmitCNPJ_IE_IMCan: TRLLabel;
     lEndereco: TRLLabel;
@@ -113,6 +121,8 @@ type
     lNumeroExtratoCan: TRLLabel;
     lNumSATCan: TRLLabel;
     lNumSATCanl: TRLLabel;
+    lOutro: TRLLabel;
+    lOutroValLiq: TRLLabel;
     lRazaoSocial: TRLLabel;
     lRazaoSocialCan: TRLLabel;
     lTesteCan: TRLMemo;
@@ -140,13 +150,7 @@ type
     lTotAcrescimos: TRLLabel;
     lChaveAcesso: TRLLabel;
     lSubTotal: TRLLabel;
-    lDesconto: TRLLabel;
-    lOutro: TRLLabel;
-    lDescValLiq: TRLLabel;
-    lDeducISSQN: TRLLabel;
-    lOutroValLiq: TRLLabel;
     lNumSAT: TRLLabel;
-    lBaseCalcISSQN: TRLLabel;
     lTitSAT: TRLLabel;
     bcChaveAcesso1: TRLBarcode;
     lSequencia: TRLLabel;
@@ -206,6 +210,9 @@ type
     pLogoeCliche: TRLPanel;
     RLDraw8: TRLDraw;
     RLDraw9: TRLDraw;
+    RLPanel1: TRLPanel;
+    RLPanel2: TRLPanel;
+    RLPanel3: TRLPanel;
     rlVenda: TRLReport;
     rlObsContrib: TRLBand;
     RLDraw2: TRLDraw;
@@ -310,6 +317,21 @@ begin
   fResumido := false;
 
   fACBrSATExtrato := TACBrSATExtratoFortes(Owner) ;  // Link para o Pai
+
+  with fACBrSATExtrato do
+  begin
+    rlVenda.Width := LarguraBobina;
+    rlVenda.Margins.LeftMargin   := Margens.Esquerda;
+    rlVenda.Margins.RightMargin  := Margens.Direita;
+    rlVenda.Margins.TopMargin    := Margens.Topo;
+    rlVenda.Margins.BottomMargin := Margens.Fundo;
+
+    rlCancelamento.Width := LarguraBobina;
+    rlCancelamento.Margins.LeftMargin   := Margens.Esquerda;
+    rlCancelamento.Margins.RightMargin  := Margens.Direita;
+    rlCancelamento.Margins.TopMargin    := Margens.Topo;
+    rlCancelamento.Margins.BottomMargin := Margens.Fundo;
+  end;
 end;
 
 procedure TACBrSATExtratoFortesFr.rlVendaDataRecord(Sender: TObject;
@@ -834,11 +856,14 @@ constructor TACBrSATExtratoFortes.Create(AOwner: TComponent);
 begin
   inherited create( AOwner );
 
+  fMargens := TACBrSATExtratoMargem.create;
+  fLarguraBobina := 302;
   fpAbout := 'ACBrSATExtratoFortes ver: ' + CACBrSATExtratoFortes_Versao  ;
 end;
 
 destructor TACBrSATExtratoFortes.Destroy;
 begin
+  fMargens.Destroy;
 
   inherited Destroy ;
 end;

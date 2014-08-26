@@ -5,9 +5,10 @@ unit Unit1 ;
 interface
 
 uses
-  Classes, SysUtils, FileUtil, SynMemo, SynHighlighterXML, Forms, Controls,
-  Graphics, Dialogs, StdCtrls, ActnList, Menus, ExtCtrls, Buttons, ComCtrls,
-  Spin, ACBrSAT, ACBrSATClass, ACBrSATExtratoESCPOS, ACBrSATExtratoFortesFr;
+  Classes, SysUtils, FileUtil, SynMemo, SynHighlighterXML, PrintersDlgs, Forms,
+  Controls, Graphics, Dialogs, StdCtrls, ActnList, Menus, ExtCtrls, Buttons,
+  ComCtrls, Spin, ACBrSAT, ACBrSATClass, ACBrSATExtratoESCPOS,
+  ACBrSATExtratoFortesFr;
 
 const
   cAssinatura = '9d4c4eef8c515e2c1269c2e4fff0719d526c5096422bf1defa20df50ba06469'+
@@ -24,10 +25,13 @@ type
     ACBrSAT1 : TACBrSAT ;
     ACBrSATExtratoESCPOS1 : TACBrSATExtratoESCPOS ;
     ACBrSATExtratoFortes1: TACBrSATExtratoFortes;
+    bImpressora: TButton;
     bInicializar : TButton ;
     btLerParams: TButton;
     btSalvarParams: TButton;
     btSerial: TBitBtn;
+    cbUsarEscPos: TRadioButton;
+    cbUsarFortes: TRadioButton;
     cbxModelo : TComboBox ;
     cbxAmbiente : TComboBox ;
     cbxIndRatISSQN : TComboBox ;
@@ -37,20 +41,34 @@ type
     cbxFormatXML: TCheckBox;
     edChaveCancelamento: TEdit;
     edLog : TEdit ;
-    edtPorta : TEdit ;
+    edtPorta: TEdit;
     GroupBox2: TGroupBox;
+    GroupBox3: TGroupBox;
+    GroupBox4: TGroupBox;
     Label18: TLabel;
+    Label19: TLabel;
+    Label20: TLabel;
+    Label21: TLabel;
+    Label22: TLabel;
+    Label23: TLabel;
     Label6: TLabel;
+    Label7: TLabel;
+    lImpressora: TLabel;
     mCancelamentoEnviar: TSynMemo;
     miGerarXMLCancelamento: TMenuItem;
     miEnviarCancelamento: TMenuItem;
     MenuItem12: TMenuItem;
     miImprimirExtratoCancelamento: TMenuItem;
     Panel2: TPanel;
+    PrintDialog1: TPrintDialog;
+    seLargura: TSpinEdit;
+    seMargemDireita: TSpinEdit;
+    seMargemEsquerda: TSpinEdit;
+    seMargemFundo: TSpinEdit;
+    seMargemTopo: TSpinEdit;
     sfeVersaoEnt: TFloatSpinEdit;
     Label13: TLabel;
     Label17 : TLabel ;
-    Label7 : TLabel ;
     Label8: TLabel;
     mLimpar : TMenuItem ;
     mImprimirExtratoVendaResumido : TMenuItem ;
@@ -115,6 +133,7 @@ type
     mVendaEnviar: TSynMemo;
     mRecebido: TSynMemo;
     SynXMLSyn1: TSynXMLSyn;
+    Impressao: TTabSheet;
     tsCancelamento: TTabSheet;
     tsDadosEmit : TTabSheet ;
     tsDadosSAT : TTabSheet ;
@@ -125,10 +144,13 @@ type
     procedure ACBrSAT1GetcodigoDeAtivacao(var Chave: AnsiString);
     procedure ACBrSAT1GetsignAC(var Chave : AnsiString) ;
     procedure ACBrSAT1Log(const AString: String);
+    procedure bImpressoraClick(Sender: TObject);
     procedure bInicializarClick(Sender : TObject) ;
     procedure btLerParamsClick(Sender : TObject) ;
     procedure btSalvarParamsClick(Sender : TObject) ;
     procedure btSerialClick(Sender: TObject);
+    procedure cbUsarEscPosClick(Sender: TObject);
+    procedure cbUsarFortesClick(Sender: TObject);
     procedure cbxModeloChange(Sender : TObject) ;
     procedure cbxUTF8Change(Sender: TObject);
     procedure miGerarXMLCancelamentoClick(Sender: TObject);
@@ -158,7 +180,7 @@ type
     procedure SbArqLogClick(Sender : TObject) ;
     procedure sePagCodChange(Sender: TObject);
   private
-    procedure PrepararImpressaoESCPOS;
+    procedure PrepararImpressao;
     procedure TrataErros(Sender : TObject ; E : Exception) ;
     procedure AjustaACBrSAT ;
     { private declarations }
@@ -171,7 +193,8 @@ var
 
 implementation
 
-Uses typinfo, ACBrUtil, pcnConversao, synacode, IniFiles, ConfiguraSerial;
+Uses typinfo, ACBrUtil, pcnConversao, synacode, IniFiles, ConfiguraSerial,
+  RLPrinters, Printers;
 
 {$R *.lfm}
 
@@ -270,6 +293,12 @@ begin
   StatusBar1.Panels[1].Text := IntToStr( ACBrSAT1.Resposta.codigoDeRetorno );
 end;
 
+procedure TForm1.bImpressoraClick(Sender: TObject);
+begin
+  if PrintDialog1.Execute then
+    lImpressora.Caption := Printer.PrinterName ;
+end;
+
 procedure TForm1.bInicializarClick(Sender : TObject) ;
 begin
   AjustaACBrSAT;
@@ -315,6 +344,16 @@ begin
 
     edtSwHCNPJ.Text       := INI.ReadString('SwH','CNPJ','11111111111111');
     edtSwHAssinatura.Text := INI.ReadString('SwH','Assinatura',cAssinatura);
+
+    cbUsarFortes.Checked   := INI.ReadBool('Fortes','UsarFortes', True) ;
+    cbUsarEscPos.Checked   := not cbUsarFortes.Checked;
+    seLargura.Value        := INI.ReadInteger('Fortes','Largura',ACBrSATExtratoFortes1.LarguraBobina);
+    seMargemTopo.Value     := INI.ReadInteger('Fortes','MargemTopo',ACBrSATExtratoFortes1.Margens.Topo);
+    seMargemFundo.Value    := INI.ReadInteger('Fortes','MargemFundo',ACBrSATExtratoFortes1.Margens.Fundo);
+    seMargemEsquerda.Value := INI.ReadInteger('Fortes','MargemEsquerda',ACBrSATExtratoFortes1.Margens.Esquerda);
+    seMargemDireita.Value  := INI.ReadInteger('Fortes','MargemDireita',ACBrSATExtratoFortes1.Margens.Direita);
+
+    lImpressora.Caption := INI.ReadString('Printer','Name',Printer.PrinterName);
   finally
      INI.Free ;
   end ;
@@ -352,6 +391,15 @@ begin
 
     INI.WriteString('SwH','CNPJ',edtSwHCNPJ.Text);
     INI.WriteString('SwH','Assinatura',edtSwHAssinatura.Text);
+
+    INI.WriteBool('Fortes','UsarFortes',cbUsarFortes.Checked) ;
+    INI.WriteInteger('Fortes','Largura',seLargura.Value);
+    INI.WriteInteger('Fortes','MargemTopo',seMargemTopo.Value);
+    INI.WriteInteger('Fortes','MargemFundo',seMargemFundo.Value);
+    INI.WriteInteger('Fortes','MargemEsquerda',seMargemEsquerda.Value);
+    INI.WriteInteger('Fortes','MargemDireita',seMargemDireita.Value);
+
+    INI.WriteString('Printer','Name',Printer.PrinterName);
   finally
      INI.Free ;
   end ;
@@ -374,6 +422,18 @@ begin
   finally
      FreeAndNil( frConfiguraSerial ) ;
   end ;
+end;
+
+procedure TForm1.cbUsarEscPosClick(Sender: TObject);
+begin
+  cbUsarFortes.Checked := False;
+  ACBrSAT1.Extrato := ACBrSATExtratoESCPOS1;
+end;
+
+procedure TForm1.cbUsarFortesClick(Sender: TObject);
+begin
+  cbUsarEscPos.Checked := False;
+  ACBrSAT1.Extrato := ACBrSATExtratoFortes1
 end;
 
 procedure TForm1.cbxModeloChange(Sender : TObject) ;
@@ -434,7 +494,7 @@ end;
 
 procedure TForm1.miImprimirExtratoCancelamentoClick(Sender: TObject);
 begin
-  PrepararImpressaoESCPOS;
+  PrepararImpressao;
   ACBrSAT1.ImprimirExtratoCancelamento;
 end;
 
@@ -799,13 +859,13 @@ end;
 
 procedure TForm1.mImprimirExtratoVendaClick(Sender : TObject) ;
 begin
-  PrepararImpressaoESCPOS;
+  PrepararImpressao;
   ACBrSAT1.ImprimirExtrato;
 end;
 
 procedure TForm1.mImprimirExtratoVendaResumidoClick(Sender : TObject) ;
 begin
-  PrepararImpressaoESCPOS;
+  PrepararImpressao;
   ACBrSAT1.ImprimirExtratoResumido;
 end;
 
@@ -827,13 +887,28 @@ begin
   cbxUTF8.Checked := ACBrSAT1.Config.EhUTF8;
 end;
 
-procedure TForm1.PrepararImpressaoESCPOS;
+procedure TForm1.PrepararImpressao;
 begin
-  if ACBrSAT1.Extrato <> ACBrSATExtratoESCPOS1 then exit;
+  if ACBrSAT1.Extrato = ACBrSATExtratoESCPOS1 then
+  begin
+    ACBrSATExtratoESCPOS1.Device.Porta := edtPorta.Text;
+    ACBrSATExtratoESCPOS1.Device.Ativar;
+    ACBrSATExtratoESCPOS1.ImprimeQRCode := True;
+  end
+  else
+  begin
+    ACBrSATExtratoFortes1.LarguraBobina := seLargura.Value;
+    ACBrSATExtratoFortes1.Margens.Topo  := seMargemTopo.Value ;
+    ACBrSATExtratoFortes1.Margens.Fundo := seMargemFundo.Value ;
+    ACBrSATExtratoFortes1.Margens.Esquerda := seMargemEsquerda.Value ;
+    ACBrSATExtratoFortes1.Margens.Direita  := seMargemDireita.Value ;
 
-  ACBrSATExtratoESCPOS1.Device.Porta := edtPorta.Text;
-  ACBrSATExtratoESCPOS1.Device.Ativar;
-  ACBrSATExtratoESCPOS1.ImprimeQRCode := True;
+    try
+      if lImpressora.Caption <> '' then
+        Printer.SetPrinter( lImpressora.Caption );
+    except
+    end;
+  end;
 end;
 
 
