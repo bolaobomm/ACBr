@@ -760,7 +760,7 @@ begin
       FieldByName('qNF').AsInteger     := qNF;
       FieldByName('qMDFe').AsInteger   := qMDFe;
 //      FieldByName('qCarga').AsCurrency := qCarga;
-      if cUndi = uTon then
+      if cUnid = uTon then
         FieldByName('qCarga').AsCurrency := qCarga * 1000
       else
         FieldByName('qCarga').AsCurrency := qCarga;
