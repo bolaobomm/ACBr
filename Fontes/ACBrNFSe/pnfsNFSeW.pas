@@ -136,7 +136,7 @@ begin
                    profintelISS, proFiorilli, proGoiania, {proGovBR,}  proIssDSF,
                    proISSDigital, proNatal, proProdata, proProdemge, proPVH,
                    proSaatri, proVirtual, proFreire, proLink3, proVitoria,
-                   proTecnos, proPronim, proSystemPro])
+                   proTecnos, proPronim, proSystemPro, proSisPMJP])
    then FDefTipos := FServicoEnviar;
 
  if (RightStr(FURL, 1) <> '/') and (FDefTipos <> '')
@@ -402,7 +402,7 @@ begin
    // Provedor Ginfes
    // Schema: tipos_v02 o nome da tag é MunicipioPrestacaoServico *** essa versão não esta em uso
    // Schema: tipos_v03 o nome da tag é CodigoMunicipio
-   
+
    // No provedor ISSNet o nome da tag é MunicipioPrestacaoServico e os demais é CodigoMunicipio
    if FProvedor = proISSNet
      then Gerador.wCampoNFSe(tcStr, '#33', 'MunicipioPrestacaoServico', 01, 0007, 1, SomenteNumeros(NFSe.Servico.CodigoMunicipio), '')
@@ -481,7 +481,7 @@ begin
 
   if not (FProvedor in [pro4R, profinteliSS, proFiorilli, proGoiania, proISSDigital,
                         proISSe, proSystemPro, proProdata, proVitoria, proPVH, proSaatri, proCoplan, proFreire,
-                        proLink3, proMitra, proGovDigital, proVirtual])
+                        proLink3, proMitra, proGovDigital, proVirtual, proSisPMJP])
    then Gerador.wCampoNFSe(tcDe2, '#24', 'BaseCalculo', 01, 15, 0, NFSe.Servico.Valores.BaseCalculo, '');
 
   if FProvedor in [pro4R, profintelISS, proISSDigital, proISSe, proSystemPro, proSaatri, {proCoplan,}
@@ -673,7 +673,7 @@ begin
        (FProvedor in [pro4R, proAgili, proCoplan, proDigifred, proFiorilli,
                       proGoiania, proGovDigital, proISSDigital, proISSe, proSystemPro,
                       proProdata, proPVH, proSaatri, proVirtual, proFreire,
-                      proLink3, proVitoria, proMitra, proTecnos])
+                      proLink3, proVitoria, proMitra, proTecnos, proSisPMJP])
       then Gerador.wGrupoNFSe('Tomador')
       else Gerador.wGrupoNFSe('TomadorServico');
     // Alterado por Augusto Fontana em 12/06/2014
@@ -726,7 +726,7 @@ begin
        (FProvedor in [pro4R, proAgili, proCoplan, proDigifred, proFiorilli,
                       proGoiania, proGovDigital, proISSDigital, proISSe, proSystemPro,
                       proProdata, proPVH, proSaatri, proVirtual, proFreire,
-                      proLink3, proVitoria, proMitra, proTecnos])
+                      proLink3, proVitoria, proMitra, proTecnos, proSisPMJP])
       then Gerador.wGrupoNFSe('/Tomador')
       else Gerador.wGrupoNFSe('/TomadorServico');
    end
@@ -736,7 +736,7 @@ begin
        (FProvedor in [pro4R, proAgili, proCoplan, proDigifred, proFiorilli,
                       proGoiania, proGovDigital, proISSDigital, proISSe,
                       proProdata, proPVH, proSaatri, proVirtual, proFreire,
-                      proLink3, proVitoria, proMitra, proTecnos])
+                      proLink3, proVitoria, proMitra, proTecnos, proSisPMJP])
       then Gerador.wCampoNFSe(tcStr, '#', 'Tomador', 0, 1, 1, '', '')
       else Gerador.wCampoNFSe(tcStr, '#', 'TomadorServico', 0, 1, 1, '', '');
    end;
@@ -834,6 +834,7 @@ begin
    proFiorilli,
    proISSe,
    proISSDigital,
+   proSisPMJP,
    proPVH,
    proMitra:     begin
                    Gerador.wGrupoNFSe('InfDeclaracaoPrestacaoServico ' + FIdentificador + '="rps' + NFSe.InfID.ID + '"');
@@ -919,6 +920,7 @@ begin
           proGovDigital,
           proISSDigital,
           proISSe,
+          proSisPMJP,
           proSystemPro: Gerador.wCampoNFSe(tcDat,    '#4', 'Competencia', 10, 10, 1, NFSe.Competencia, DSC_DEMI);
 
           proGoiania,
@@ -929,7 +931,7 @@ begin
         end
         else begin
          if FProvedor in [proPVH, proFreire, proISSe, proSystemPro, proFiorilli, proSaatri, proCoplan,
-                          proISSDigital, proMitra, proVitoria, proGovDigital, proProdata]
+                          proISSDigital, proMitra, proVitoria, proGovDigital, proProdata, proSisPMJP]
           then Gerador.wCampoNFSe(tcDat,    '#4', 'Competencia', 10, 10, 1, NFSe.DataEmissao, DSC_DEMI)
           else begin
            if not (FProvedor in [proGoiania])

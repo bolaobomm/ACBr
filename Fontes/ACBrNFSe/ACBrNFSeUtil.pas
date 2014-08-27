@@ -1496,6 +1496,7 @@ begin
  XML := StringReplace( XML, 'tc:', '', [rfReplaceAll] );
  XML := StringReplace( XML, 'ii:', '', [rfReplaceAll] );
  XML := StringReplace( XML, 'p1:', '', [rfReplaceAll] );
+ XML := StringReplace( XML, 'nfse:', '', [rfReplaceAll] );
  XML := StringReplace( XML, 'soap:', '', [rfReplaceAll] );
  XML := StringReplace( XML, 'SOAP-ENV:', '', [rfReplaceAll] );
 

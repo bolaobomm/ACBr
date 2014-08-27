@@ -401,7 +401,8 @@ begin
    exit;
   end;
 
- NotasFiscais.Assinar(True); // Assina os Rps
+ if (FConfiguracoes.WebServices.Provedor <> proSisPMJP) then
+   NotasFiscais.Assinar(True); // Assina os Rps
 
  Result := WebServices.Gera(ARps);
 end;
@@ -437,7 +438,9 @@ begin
    exit;
   end;
 
- NotasFiscais.Assinar(FConfiguracoes.WebServices.Provedor <> proPublica); // Assina os Rps
+ if (FConfiguracoes.WebServices.Provedor <> proPublica) and
+    (FConfiguracoes.WebServices.Provedor <> proSisPMJP) then
+   NotasFiscais.Assinar(True); // Assina os Rps
 
  Result := WebServices.GeraLote(ALote);
 

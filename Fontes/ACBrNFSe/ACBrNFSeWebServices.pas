@@ -926,7 +926,7 @@ begin
     begin
      if (FProvedor in [profintelISS, proSaatri, proSisPMJP, proCoplan, proGoiania, proISSDigital,
                        proISSe, proSystemPro, pro4R, proFiorilli, proProdata, proVitoria, proPVH,
-                       proAgili, proVirtual, proFreire, proLink3, proGovDigital])
+                       proAgili, proVirtual, proFreire, proLink3, proGovDigital, proSisPMJP])
       then vNotas := vNotas + '<' + Prefixo4 + 'Rps>' +
                                '<' + Prefixo4 + 'InfDeclaracaoPrestacaoServico' +
                                  RetornarConteudoEntre(TNFSeEnviarLoteRPS(Self).FNotasFiscais.Items[I].XML_Rps,
@@ -3521,8 +3521,12 @@ begin
             end;
         end;
     end
-   else
+   else begin
+    if FProvedor = proSisPMJP then
+      Prefixo3 := 'nfse:';
+
     FRetListaNfse := SeparaDados(FRetWS, Prefixo3 + 'ListaNfse');
+   end;
 
 //  i := 0;
    while FRetListaNfse <> '' do
@@ -3599,6 +3603,9 @@ begin
               end;
              FRetNFSe := FRetNfse2;
             end;
+
+           if FProvedor = proSisPMJP then
+             Prefixo3 := 'nfse:';
 
            FRetNFSe := FProvedorClass.GeraRetornoNFSe(Prefixo3, FRetNFSe, FNomeCidade);
 
@@ -4712,7 +4719,14 @@ begin
   //            3 = Processado com Erro
   //            4 = Processado com Sucesso
 
+  if FProvedor = proSisPMJP then
+    Prefixo3 := 'nfse:';
+
   FRetListaNfse := NotaUtil.RetirarPrefixos(SeparaDados(FRetWS, Prefixo3 + 'ListaNfse'));
+
+  if FProvedor = proSisPMJP then
+    Prefixo3 := '';
+
   i := 0;
   while FRetListaNfse <> '' do
    begin

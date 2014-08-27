@@ -236,7 +236,7 @@ begin
  if AProvedor in [proNenhum, pro4R, proAgili, proCoplan, profintelISS, proFiorilli,
                   proGoiania, proGovDigital, proISSDigital, proISSe, proProdata,
                   proVirtual, proSaatri, proFreire, proPVH, proVitoria, proTecnos,
-                  proSisPMJP, proSystemPro] then Result := '';
+                  proSisPMJP, proSystemPro, proSisPMJP] then Result := '';
 end;
 
 class function TNFSeG.Gera_DadosMsgConsLote(Prefixo3, Prefixo4,
@@ -393,7 +393,7 @@ begin
 
  if NumeroNFSe <> '' then
  begin
-  if AProvedor in [proPVH, proSystemPro, proPublica] then
+  if AProvedor in [proPVH, proSystemPro, proPublica, proSisPMJP] then
     DadosMsg := DadosMsg + '<Faixa>' +
                              '<NumeroNfseInicial>' + NumeroNFSe + '</NumeroNfseInicial>' +
                              '<NumeroNfseFinal>' + NumeroNFSe + '</NumeroNfseFinal>' +
@@ -468,7 +468,7 @@ begin
                            '</IntermediarioServico>'
   end;
 
- if AProvedor in [proFiorilli, profintelISS, proPVH, proSystemPro]
+ if AProvedor in [proFiorilli, profintelISS, proPVH, proSystemPro, proSisPMJP]
   then DadosMsg := DadosMsg + '<' + Prefixo3 + 'Pagina>' +
                                 IntToStr(APagina) +
                               '</' + Prefixo3 + 'Pagina>';
@@ -516,8 +516,10 @@ begin
                     '</' + Prefixo4 + 'Numero>' +
 
                     // alterado por Akai - L. Massao Aihara 12/11/2013
-                   DFeUtil.SeSenao(AProvedor in [pro4R, proISSe, profintelISS, proFiorilli,proDigifred, proSystempro,
-                                                 proVirtual, proISSDigital, proSaatri, proCoplan, proVitoria, proTecnos, proPVH],
+                   DFeUtil.SeSenao(AProvedor in [pro4R, proISSe, profintelISS, proFiorilli,
+                                                 proDigifred, proSystempro, proVirtual,
+                                                 proISSDigital, proSaatri, proCoplan,
+                                                 proVitoria, proTecnos, proPVH, proSisPMJP],
 
                     //Adicionei o SeSenao para poder cancelar nota onde o pretador é pessoa física (Cartório em Vitória-ES). - Eduardo Silva dos Santos - 11/01/2014 - DRD SISTEMAS
                     DFeUtil.SeSenao( length(Cnpj)=14,
