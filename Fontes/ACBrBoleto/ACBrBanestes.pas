@@ -253,6 +253,7 @@ var
    DigitoNossoNumero, Ocorrencia: String;
    PracaPostagem, aCarteira, Protesto: String;
    TipoSacado, MensagemCedente, wLinha: String;
+   TipoAvalista: String;
 begin
 
    case ACBrBanco.ACBrBoleto.Cedente.TipoInscricao of
@@ -310,6 +311,20 @@ begin
       else
          TipoSacado := '99';
       end;
+
+      {Pegando Tipo de Avalista}
+      if Sacado.SacadoAvalista.CNPJCPF <> '' then
+       begin
+        case Sacado.SacadoAvalista.Pessoa of
+           pFisica   : TipoAvalista := '1';
+           pJuridica : TipoAvalista := '2';
+        else
+           TipoAvalista := '9';
+        end;
+       end
+      else
+        TipoAvalista:= '0';
+
       case Aceite of
          atSim :  ATipoAceite := 'A';
          atNao :  ATipoAceite := 'N';
@@ -331,10 +346,10 @@ begin
                   Space(06)                                               +  // identificação do carnê
                   '00'                                                    +  // número da parcela do carnê
                   '00'                                                    +  // quantidade de parcelas no carnê
-                  '0'                                                     +  // tipo do sacador avalista
+                  TipoAvalista                                            +  // tipo do sacador avalista
                   //Copy(TipoSacado,2,1)+
                   padR('0',14,'0')                                        +  // sacador avalista. não pode ser o proprio sacado
-                  //padR(OnlyNumber(Sacado.CNPJCPF),14,'0') +                // sacador avalista. não pode ser o proprio sacado
+                  padR(OnlyNumber(Sacado.SacadoAvalista.CNPJCPF),14,'0')  +  // sacador avalista. não pode ser o proprio sacado
                   aCarteira                                               +
                   Ocorrencia                                              +
                   padR(SeuNumero, 10, '0')                                +

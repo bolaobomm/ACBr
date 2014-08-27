@@ -227,6 +227,7 @@ var
   sEspecie, sDataMoraJuros, sDataDesconto: string;
   STipoJuros, sTipoDesconto, sDiasProtesto: string;
   sTipoInscricao, sEndereco, sMensagem: string;
+  aTipoInscricao: Char;
   function MontarInstrucoes1: string;
   begin
     with ACBrTitulo do
@@ -451,6 +452,18 @@ begin
        pOutras  : sTipoInscricao := '9';
     end;
 
+    if Sacado.SacadoAvalista.CNPJCPF <> '' then
+     begin
+      case Sacado.SacadoAvalista.Pessoa of
+        pFisica  : aTipoInscricao := '1';
+        pJuridica: aTipoInscricao := '2';
+        pOutras  : aTipoInscricao := '9';
+      end;
+     end
+    else
+      aTipoInscricao:= '0';
+
+
     sEndereco := padL(Sacado.Logradouro + ' ' +
                       Sacado.Numero + ' ' +
                       Sacado.Complemento , 40, ' ');
@@ -523,9 +536,9 @@ begin
               padR(Copy(OnlyNumber(Sacado.CEP), 6, 3), 3, '0') + // 134 - 136 / Sufixo do Cep do sacado
               padL(Trim(Sacado.Cidade), 15)                    + // 137 - 151 / Cidade do sacado
               Sacado.UF                                        + // 152 - 153 / Unidade da federação do sacado
-              '0'                                              + // 154 - 154 / Tipo de inscrição sacador/avalista
-              IntToStrZero(0, 15)                              + // 155 - 169 / Nº de inscrição sacador/avalista
-              Space(40)                                        + // 170 - 209 / Nome do sacador/avalista
+              aTipoInscricao                                   + // 154 - 154 / Tipo de inscrição sacador/avalista
+              padR(Sacado.SacadoAvalista.CNPJCPF, 15,'0')       + // 155 - 169 / Nº de inscrição sacador/avalista
+              padL(Sacado.SacadoAvalista.NomeAvalista,40,' ')  + // 170 - 209 / Nome do sacador/avalista
               '000'                                            + // 210 – 212 / Identificador de carne
               '000'                                            + // 213 – 215 / Seqüencial da Parcela ou número inicial da parcela
               '000'                                            + // 216 – 218 / Quantidade total de parcelas

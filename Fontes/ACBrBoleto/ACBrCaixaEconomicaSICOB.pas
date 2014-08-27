@@ -630,6 +630,7 @@ var
    ADataMoraJuros, ADataDesconto, ANossoNumero  :String;
    ATipoAceite, ACodCedenteDV, aCodCedente      :String;
    aEspecieDoc: String;
+   TipoInscricaoAvalista: Char;
 begin
    with ACBrTitulo do
    begin
@@ -643,6 +644,13 @@ begin
          pFisica  : ATipoInscricao := '1';
          pJuridica: ATipoInscricao := '2';
          pOutras  : ATipoInscricao := '9';
+      end;
+
+      {Pegando tipo de pessoa do Avalista}
+      case Sacado.Pessoa of
+         pFisica  : TipoInscricaoAvalista := '1';
+         pJuridica: TipoInscricaoAvalista := '2';
+         pOutras  : TipoInscricaoAvalista := '9';
       end;
 
       {Pegando o Tipo de Ocorrencia}
@@ -819,9 +827,9 @@ begin
                padL(Sacado.Cidade, 15, ' ')                               + // 137 a 151 - cidade sacado
                padL(Sacado.UF, 2, ' ')                                    + // 152 a 153 - UF sacado
                {Dados do sacador/avalista}
-               ATipoInscricao                                             + // 154 a 154  - Tipo de inscrição: Não informado {campo obrigatorio segunto manual da caixa}
-               '000000000000000'                                          + // 155 a 169 - Número de inscrição
-               space(40)                                                  + // 170 a 209 - Nome do sacador/avalista
+               TipoInscricaoAvalista                                      + // 154 a 154  - Tipo de inscrição: Não informado {campo obrigatorio segunto manual da caixa}
+               padR(OnlyNumber(Sacado.SacadoAvalista.CNPJCPF), 15, '0')   + // 155 a 169 - Número de inscrição
+               padL(Sacado.SacadoAvalista.NomeAvalista,40,' ')            + // 170 a 209 - Nome do sacador/avalista
                space(3)                                                   + // 210 a 212 - Uso exclusivo FEBRABAN/CNAB
                space(20)                                                  + // 213 a 232 - Uso exclusivo FEBRABAN/CNAB
                space(8);                                                    // 233 a 240 - Uso exclusivo FEBRABAN/CNAB

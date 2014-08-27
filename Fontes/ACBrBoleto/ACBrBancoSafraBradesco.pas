@@ -263,7 +263,7 @@ begin
         padL(OnlyNumber(Sacado.CEP), 8, '0') +                       // CEP do sacado
         padL(Sacado.Cidade, 15, ' ') +                               // Cidade do sacado
         padL(Sacado.UF, 2, ' ') +                                    // UF do sacado
-        Space(30) +                                                  // Nome do sacador avalista
+        padL(Sacado.SacadoAvalista.NomeAvalista,30) +                  // Nome do sacador avalista
         Space(7) +                                                   // Brancos
         '422' +                                                      // Banco emitente do boleto: 422 = Banco Safra
         IntToStrZero(FNumeroRemessa, 3);                             // Número sequencial da remessa

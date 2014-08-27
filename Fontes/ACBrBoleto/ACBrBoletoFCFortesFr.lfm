@@ -1,7 +1,7 @@
 object ACBRBoletoFCFortesFr: TACBRBoletoFCFortesFr
-  Left = 215
+  Left = 233
   Height = 750
-  Top = 12
+  Top = 32
   Width = 1033
   Caption = 'ACBRBoletoFCFortesFr'
   ClientHeight = 750
@@ -12,11 +12,11 @@ object ACBRBoletoFCFortesFr: TACBRBoletoFCFortesFr
   Font.Name = 'MS Sans Serif'
   OnCreate = FormCreate
   OnDestroy = FormDestroy
-  LCLVersion = '1.3'
+  LCLVersion = '1.2.2.0'
   object LayoutBoleto: TRLReport
-    Left = 32
+    Left = 40
     Height = 1123
-    Top = 16
+    Top = -280
     Width = 794
     Margins.LeftMargin = 4
     Margins.TopMargin = 5
@@ -3374,6 +3374,20 @@ object ACBRBoletoFCFortesFr: TACBRBoletoFCFortesFr
         AutoSize = False
         Font.Color = clBlack
         Font.Height = -9
+        Font.Name = 'Arial'
+        ParentFont = False
+        RealBounds.Left = 0
+        RealBounds.Top = 0
+        RealBounds.Width = 0
+        RealBounds.Height = 0
+      end
+      object txtSacadorAvalista3: TRLLabel
+        Left = 113
+        Height = 14
+        Top = 331
+        Width = 101
+        Font.Color = clWindowText
+        Font.Height = -11
         Font.Name = 'Arial'
         ParentFont = False
         RealBounds.Left = 0

@@ -376,7 +376,7 @@ begin
                      Space(1)                                                           +  // 326 a 326 - Filler - Brancos
                      padL( OnlyNumber(Sacado.CEP), 8 )                                  +  // 327 a 334 - CEP do sacado
                      padL('', 5, '0')                                                   +  // 335 a 339 - Código do sacado junto ao cliente (zeros quando inexistente)
-                     padL('', 14, ' ')                                                  +  // 340 a 353 - CIC/CGC do sacador avalista
+                     padL(Sacado.SacadoAvalista.CNPJCPF, 14, ' ')                       +  // 340 a 353 - CIC/CGC do sacador avalista
                      padL(Sacado.Avalista, 41, ' ')                                        // 354 a 394 - Nome do sacador avalista ---Anderson
          else
             wLinha:= wLinha +
@@ -1410,6 +1410,7 @@ function TACBrBancoSicredi.GerarRegistroTransacao240(
 var
     AceiteStr, CodProtesto, DiasProtesto, TipoSacado: String;
     DigitoNossoNumero, Especie, EndSacado: String;
+    TipoAvalista: Char;
 begin
   with ACBrBanco.ACBrBoleto.Cedente, ACBrTitulo do
   begin
@@ -1451,6 +1452,15 @@ begin
     if (Sacado.Numero <> '') then
       EndSacado := EndSacado + ', ' + Sacado.Numero;
     EndSacado := padL(trim(EndSacado), 40);
+
+
+    {Avalista}
+    case Sacado.SacadoAvalista.Pessoa of
+      pFisica:   TipoAvalista := '1';
+      pJuridica: TipoAvalista := '2';
+    else
+      TipoAvalista := '9';
+    end;
 
     {SEGMENTO P}
     Result:= '748'                                                          + // 001 a 003 - Código do banco na compensação
@@ -1516,9 +1526,9 @@ begin
              Copy(padR(OnlyNumber(Sacado.CEP),8,'0'),6,3)                   + // 134 a 136 - Sufixo do CEP
              padL(Sacado.Cidade, 15)                                        + // 137 a 151 - Cidade
              padR(UF, 2)                                                    + // 152 a 153 - Unidade da Federação
-             TipoSacado                                                     + // 154 a 154 - Tipo de inscrição
-             padL('', 15, '0')                                              + // 155 a 169 - Número de inscrição
-             Space(40)                                                      + // 170 a 209 - Nome do sacador/avalista
+             TipoAvalista                                                   + // 154 a 154 - Tipo de inscrição
+             padL(Sacado.SacadoAvalista.CNPJCPF, 15, '0')                   + // 155 a 169 - Número de inscrição
+             padL(Sacado.SacadoAvalista.NomeAvalista,40,' ')                + // 170 a 209 - Nome do sacador/avalista
              padL('', 3, '0')                                               + // 210 a 212 - Cód. bco corresp. na compensação
              Space(20)                                                      + // 213 a 232 - Nosso nº no banco correspondente
              Space(8);                                                        // 233 a 240 - Uso exclusivo FEBRABAN/CNAB

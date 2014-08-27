@@ -240,6 +240,7 @@ function TACBrBancoItau.GerarRegistroTransacao240(ACBrTitulo : TACBrTitulo): Str
 var
    ATipoInscricao, ATipoOcorrencia           :String;
    ADataMoraJuros, ADataDesconto,ATipoAceite :String;
+   ATipoInscricaoAvalista: Char;
 begin
    with ACBrTitulo do
    begin
@@ -341,6 +342,18 @@ begin
          pOutras  : ATipoInscricao := '9';
       end;
 
+      {Pegando tipo de pessoa do Avalista}
+      if Sacado.SacadoAvalista.CNPJCPF <> '' then
+       begin
+        case Sacado.SacadoAvalista.Pessoa of
+           pFisica  : ATipoInscricaoAvalista := '1';
+           pJuridica: ATipoInscricaoAvalista := '2';
+           pOutras  : ATipoInscricaoAvalista := '9';
+        end;
+       end
+      else
+        ATipoInscricaoAvalista:= '0';
+
       Result:= Result + #13#10 +
                IntToStrZero(ACBrBanco.Numero, 3)                          + //Código do banco
                '0001'                                                     + //Número do lote
@@ -360,9 +373,9 @@ begin
                padL(Sacado.Cidade, 15, ' ')                               +  // 137 a 151
                padL(Sacado.UF, 2, ' ')                                    +  // 152 a 153
                         {Dados do sacador/avalista}
-               '0'                                                        + //Tipo de inscrição: Não informado
-               padR('', 15, '0')                                          + //Número de inscrição
-               padL('', 30, ' ')                                          + //Nome do sacador/avalista
+               ATipoInscricaoAvalista                                     + //Tipo de inscrição: Não informado
+               padR(Sacado.SacadoAvalista.CNPJCPF, 15, '0')               + //Número de inscrição
+               padL(Sacado.SacadoAvalista.NomeAvalista, 30, ' ')          + //Nome do sacador/avalista
                space(10)                                                  + //Uso exclusivo FEBRABAN/CNAB
                padL('0',3, '0')                                           + //Uso exclusivo FEBRABAN/CNAB
                space(28);                                            //Uso exclusivo FEBRABAN/CNAB
@@ -647,12 +660,12 @@ begin
                    padL(Sacado.Cidade, 15, ' ')                                                   + // CIDADE DO SACADO
                    padL(Sacado.UF, 2, ' ')                                                        + // UF DO SACADO
                    {Dados do sacador/avalista}
-                   padL('', 30, ' ')                                                              + // NOME DO SACADOR/AVALISTA
+                   padL(Sacado.SacadoAvalista.NomeAvalista, 30, ' ')                              + // NOME DO SACADOR/AVALISTA
                    space(4)                                                                       + // COMPLEMENTO DO REGISTRO
-                   padL(TiraAcentos(LocalPagamento), 55, ' ')                                                  + // LOCAL PAGAMENTO
-                   padL(' ', 55, ' ')                                                              + // LOCAL PAGAMENTO 2
+                   padL(TiraAcentos(LocalPagamento), 55, ' ')                                     + // LOCAL PAGAMENTO
+                   padL(' ', 55, ' ')                                                             + // LOCAL PAGAMENTO 2
                    '01'                                                                           + // IDENTIF. TIPO DE INSCRIÇÃO DO SACADOR/AVALISTA
-                   padL('0', 15, '0')                                                             + // NÚMERO DE INSCRIÇÃO DO SACADOR/AVALISTA
+                   padL(Sacado.SacadoAvalista.CNPJCPF, 15, '0')                                   + // NÚMERO DE INSCRIÇÃO DO SACADOR/AVALISTA
                    space(31)                                                                      + // COMPLEMENTO DO REGISTRO
                    IntToStrZero(aRemessa.Count + 1 , 6);                                            // Nº SEQÜENCIAL DO REGISTRO NO ARQUIVO
 
@@ -697,7 +710,7 @@ begin
 
                    {Dados do sacado}
                    ATipoSacado                                                                    + // IDENTIFICAÇÃO DO TIPO DE INSCRIÇÃO/SACADO
-                   padR(OnlyNumber(Sacado.CNPJCPF), 14, '0')                                                  + // Nº DE INSCRIÇÃO DO SACADO  (CPF/CGC)
+                   padR(OnlyNumber(Sacado.CNPJCPF), 14, '0')                                      + // Nº DE INSCRIÇÃO DO SACADO  (CPF/CGC)
                    padL(Sacado.NomeSacado, 30, ' ')                                               + // NOME DO SACADO
                    space(10)                                                                      + // BRANCOS(COMPLEMENTO DE REGISTRO)
                    padL(Sacado.Logradouro +' '+ Sacado.Numero +' '+ Sacado.Complemento , 40, ' ') + // RUA, NÚMERO E COMPLEMENTO DO SACADO
@@ -707,11 +720,11 @@ begin
                    padL(Sacado.UF, 2, ' ')                                                        + // UF DO SACADO
 
                    {Dados do sacador/avalista}
-                   padL('', 30, ' ')                                                              + // NOME DO SACADOR/AVALISTA
+                   padL(Sacado.SacadoAvalista.NomeAvalista, 30, ' ')                              + // NOME DO SACADOR/AVALISTA
                    space(4)                                                                       + // COMPLEMENTO DO REGISTRO
                    ADataMoraJuros                                                                 + // DATA DE MORA
                    IfThen((DataProtesto <> null) and (DataProtesto > Vencimento),
-                           padR(IntToStr(DaysBetween(DataProtesto, Vencimento)), 2, '0'), '00')      + // PRAZO
+                           padR(IntToStr(DaysBetween(DataProtesto, Vencimento)), 2, '0'), '00')   + // PRAZO
                    space(1)                                                                       + // BRANCOS
                    IntToStrZero(aRemessa.Count + 1, 6);                          // Nº SEQÜENCIAL DO REGISTRO NO ARQUIVO
         end;

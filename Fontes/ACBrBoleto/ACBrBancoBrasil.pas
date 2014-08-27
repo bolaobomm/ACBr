@@ -541,9 +541,10 @@ begin
                padL(Sacado.Cidade, 15, ' ')                                             +
                padL(Sacado.UF, 2, ' ')                                                  +
                         {Dados do sacador/avalista}
-               '0'                                                                      + //Tipo de inscrição: Não informado
-               padL('', 15, '0')                                                        + //Número de inscrição
-               padL('', 40, ' ')                                                        + //Nome do sacador/avalista
+               IfThen(Sacado.SacadoAvalista.Pessoa = pJuridica,'2',
+                      IfThen(Sacado.SacadoAvalista.CNPJCPF <> '','1', '0'))             + //Tipo de inscrição: Não informado
+               padL(OnlyNumber(Sacado.SacadoAvalista.CNPJCPF), 15, '0')                 + //Número de inscrição
+               padL(Sacado.SacadoAvalista.NomeAvalista, 40, ' ')                        + //Nome do sacador/avalista
                padL('', 3, '0')                                                         + //Uso exclusivo FEBRABAN/CNAB
                padL('',20, ' ')                                                         + //Uso exclusivo FEBRABAN/CNAB
                padL('', 8, ' ');                                                          //Uso exclusivo FEBRABAN/CNAB

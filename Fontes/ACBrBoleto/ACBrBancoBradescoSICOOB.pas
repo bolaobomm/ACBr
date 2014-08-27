@@ -181,6 +181,7 @@ var
   aTipoSacado, aMensagemCedente,
   wLinha : String;
   TipoBoleto : Char;
+  aTipoSacador: String;
 
   function DoMontaInstrucoes1: string;
   begin
@@ -295,6 +296,14 @@ begin
          aTipoSacado := '00';
       end;
 
+      {Pegando Tipo de Sacador Avalista}
+      case Sacado.SacadoAvalista.Pessoa of
+         pFisica   : aTipoSacador := '01';
+         pJuridica : aTipoSacador := '02';
+      else
+         aTipoSacador := '00';
+      end;
+
       with ACBrBoleto do
       begin
          if Mensagem.Text <> '' then
@@ -330,9 +339,9 @@ begin
                         Sacado.UF, 40)                                    + // Endereço Completo
                   space(12) + padL( Sacado.CEP, 8 )                       + // 1ª Mensagem + CEP
                   space(1)                                                + // Branco
-                  padR(OnlyNumber('0'),14,'0')                            + // Inscrição do Sacador / Avalista
-                  aTipoSacado                                             + // Tipo do Documento do Sacador / Avalista
-                  padL( Sacado.NomeSacado , 43, ' ')                      ; // Sacador / Avalista
+                  padR(OnlyNumber(Sacado.SacadoAvalista.CNPJCPF),14,'0')  + // Inscrição do Sacador / Avalista
+                  aTipoSacador                                            + // Tipo do Documento do Sacador / Avalista
+                  padL( Sacado.SacadoAvalista.NomeAvalista , 43, ' ')     ; // Sacador / Avalista
 
 
          wLinha := wLinha + IntToStrZero(aRemessa.Count + 1, 6); // Nº SEQÜENCIAL DO REGISTRO NO ARQUIVO

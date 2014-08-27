@@ -47,6 +47,19 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+
+Data: 25/08/2014 ver. 0.0.95a
+-- ACBrBoleto  --
+[*] MOdificado propriedade Avalista na class TACBrSacado para apontar para a propriedade
+    Nome da classe SacadoAValista(por Juliana Tamizou)
+[*] Ajustado classes dos bancos para utilizar as informações do Avalista nos arquivos de 
+    remessa. (por Juliana Tamizou)
+
+-- ACBrBoletoFcFortes ver. 0.0.24a
+[+] Adicionado impressão do nome do avalista no boleto.
+    (por Juliana Tamizou)
+
+
 Data: 25/08/2014 ver. 0.0.94a
 -- ACBrBoleto --
 [+] Criado nova class TACBrSacadoAvalista e adicionado como propriedade "SacadoAvalista" 

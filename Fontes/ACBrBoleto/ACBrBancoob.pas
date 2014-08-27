@@ -557,6 +557,7 @@ function TACBrBancoob.GerarRegistroTransacao240(
 var AEspecieTitulo, ATipoInscricao, ATipoOcorrencia, ATipoBoleto, ADataMoraJuros,
     ADataDesconto,ATipoAceite,NossoNum : string;
     DiasProtesto: String;
+    ATipoInscricaoAvalista: Char;
 begin
   NossoNum  := RemoveString('-', MontarCampoNossoNumero(ACBrTitulo));
   with ACBrTitulo do
@@ -676,6 +677,19 @@ begin
         pJuridica: ATipoInscricao := '2';
         pOutras  : ATipoInscricao := '9';
       end;
+
+      {Pegando tipo de pessoa do Avalista}
+      if Sacado.SacadoAvalista.CNPJCPF <> '' then
+       begin
+        case Sacado.SacadoAvalista.Pessoa of
+          pFisica  : ATipoInscricaoAvalista := '1';
+          pJuridica: ATipoInscricaoAvalista := '2';
+          pOutras  : ATipoInscricaoAvalista := '9';
+        end;
+       end
+      else
+       ATipoInscricaoAvalista:= '0';
+
       Result:= Result + #13#10 +
                IntToStrZero(ACBrBanco.Numero, 3)                          + //Código do banco
                '0001'                                                     + //Número do lote
@@ -694,9 +708,9 @@ begin
                padL(Sacado.Cidade, 15, ' ')                               +  // 137 a 151
                padL(Sacado.UF, 2, ' ')                                    +  // 152 a 153
                         {Dados do sacador/avalista}
-               '0'                                                        + //Tipo de inscrição: Não informado
-               space(15)                                                  + //Número de inscrição
-               padL('', 30, ' ')                                          + //Nome do sacador/avalista
+               ATipoInscricaoAvalista                                     + //Tipo de inscrição: Não informado
+               padL(Sacado.SacadoAvalista.CNPJCPF,15, ' ' )               + //Número de inscrição
+               padL(Sacado.SacadoAvalista.NomeAvalista, 30, ' ')          + //Nome do sacador/avalista
                space(10)                                                  + //Uso exclusivo FEBRABAN/CNAB
                padL('0',3, '0')                                           + //Uso exclusivo FEBRABAN/CNAB
                space(28);                                                   //Uso exclusivo FEBRABAN/CNAB

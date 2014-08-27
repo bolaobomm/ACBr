@@ -58,7 +58,7 @@ uses  ACBrBase,  {Units da ACBr}
      Graphics, Contnrs, Classes;
 
 const
-  CACBrBoleto_Versao = '0.0.94a' ;
+  CACBrBoleto_Versao = '0.0.95a' ;
 
 type
   TACBrTipoCobranca =
@@ -524,6 +524,8 @@ type
     property InscricaoNr : String  read fInscricaoNr write fInscricaoNr;
   end;
 
+  { TACBrSacado }
+
   TACBrSacado = class
   private
     fSacadoAvalista : TACBrSacadoAvalista;
@@ -541,6 +543,8 @@ type
     fCEP         : String;
     fEmail       : String;
     fFone        : String;
+    function GetNomeAvalista: String;
+    procedure SetNomeAvalista(AValue: String);
   public
     constructor Create;
     destructor Destroy; override;
@@ -548,7 +552,7 @@ type
     property Pessoa         : TACBrPessoa         read fTipoPessoa     write fTipoPessoa;
     property SacadoAvalista : TACBrSacadoAvalista read fSacadoAvalista write fSacadoAvalista;
 
-    property Avalista    : String  read fAvalista    write fAvalista;
+    property Avalista    : String  read GetNomeAvalista write SetNomeAvalista;
     property NomeSacado  : String  read fNomeSacado  write fNomeSacado;
     property CNPJCPF     : String  read fCNPJCPF     write fCNPJCPF;
     property Logradouro  : String  read fLogradouro  write fLogradouro;
@@ -972,6 +976,19 @@ begin
 end;
 
 { TACBrSacado }
+
+function TACBrSacado.GetNomeAvalista: String;
+begin
+  Result:= Self.SacadoAvalista.NomeAvalista;
+end;
+
+procedure TACBrSacado.SetNomeAvalista(AValue: String);
+begin
+   if Self.SacadoAvalista.NomeAvalista = AValue then
+     Exit;
+
+   Self.SacadoAvalista.NomeAvalista:= AValue;
+end;
 
 constructor TACBrSacado.Create;
 begin

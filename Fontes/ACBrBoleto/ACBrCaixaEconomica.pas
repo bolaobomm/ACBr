@@ -607,9 +607,10 @@ begin
                padL(Sacado.Cidade, 15, ' ')                               + // 137 a 151 - cidade sacado
                padL(Sacado.UF, 2, ' ')                                    + // 152 a 153 - UF sacado
                         {Dados do sacador/avalista}
-               '0'                                                        + //154 - Tipo de inscrição: Não informado
-               padL('', 15, '0')                                          + //155 a 169 - Número de inscrição
-               padL('', 40, ' ')                                          + //170 a 209 - Nome do sacador/avalista
+
+               IfThen(Sacado.SacadoAvalista.Pessoa = pJuridica,'2','1')   + //154 - Tipo de inscrição: Não informado
+               padL(Sacado.SacadoAvalista.CNPJCPF, 15, '0')               + //155 a 169 - Número de inscrição
+               padL(Sacado.SacadoAvalista.NomeAvalista, 40, ' ')          + //170 a 209 - Nome do sacador/avalista
                padL('', 3, ' ')                                           + //210 a 212 - Uso exclusivo FEBRABAN/CNAB
                padL('',20, ' ')                                           + //213 a 232 - Uso exclusivo FEBRABAN/CNAB
                padL('', 8, ' ');                                            //233 a 240 - Uso exclusivo FEBRABAN/CNAB

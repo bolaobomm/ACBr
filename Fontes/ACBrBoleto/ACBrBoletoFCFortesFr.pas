@@ -52,7 +52,7 @@ uses
   ACBrBoleto ;
 
 const
-  CACBrBoletoFCFortes_Versao = '0.0.23a' ;
+  CACBrBoletoFCFortes_Versao = '0.0.24a' ;
 
 type
 
@@ -131,6 +131,7 @@ type
     RLDraw9: TRLDraw;
     RLLabel102: TRLLabel;
     RLLabel11: TRLLabel;
+    txtSacadorAvalista3: TRLLabel;
     RLLabel14: TRLLabel;
     RLLabel145: TRLLabel;
     RLLabel146: TRLLabel;
@@ -656,6 +657,7 @@ begin
       txtCpfCnpjSacado2.Caption       := Titulo.Sacado.CNPJCPF;
       txtInstrucoes2.Lines.Text       := MensagemPadrao.Text;
       txtOrientacoesBanco.Lines.Text  := Banco.OrientacoesBanco.Text;
+      txtSacadorAvalista2.Caption     := Titulo.Sacado.Avalista;
 
       rlBarraOrientbanco.Visible:= txtOrientacoesBanco.Lines.Count > 0;
 
@@ -700,6 +702,7 @@ begin
      txtEnderecoSacado3.Caption      := txtEnderecoSacado2.Caption;
      txtCidadeSacado3.Caption        := txtCidadeSacado2.Caption;
      txtCpfCnpjSacado3.Caption       := txtCpfCnpjSacado2.Caption;
+     txtSacadorAvalista3.Caption     := txtSacadorAvalista2.Caption;
 
      imgCodigoBarra.Caption          := CodBarras;
      txtLinhaDigitavel.Caption       := LinhaDigitavel;
