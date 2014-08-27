@@ -588,7 +588,8 @@ begin
 
  if not (FProvedor in [proGovBr, proSimplISS, proAbaco, proISSNet, pro4R, proIssDSF,  // proIssDSF incluido por Ailton Branco 16/07/2014
                        proFiorilli, proProdata, proCoplan, proThema, proVirtual,
-                       proPVH, proFreire, proTecnos, proPronim, proPublica, proEgoverneISS])
+                       proPVH, proFreire, proTecnos, proPronim, proPublica,
+                       proEgoverneISS, proActcon])
   then begin
 
     if FProvedor = proSystemPro then
