@@ -776,6 +776,7 @@ begin
   1100114, // Jaru/RO
   1100122, // Ji-Parana/RO
   1508407, // Xinguara/PA
+  1600303, // Macapá/AP
   2101202, // Bacabal/MA
   2103000, // Caxias/MA
   3305505, // Saquarema/RJ
