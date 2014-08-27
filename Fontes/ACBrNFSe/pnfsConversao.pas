@@ -689,6 +689,7 @@ begin
   4210001, // Luiz Alves/SC
   4211058, // Monte Carlo/SC
   4211306, // Navegantes/SC
+  4211702, // Orleans/SC
   4211801, // Ouro/SC
   4211900, // Palhoça/SC
   4212106, // Palmitos/SC
