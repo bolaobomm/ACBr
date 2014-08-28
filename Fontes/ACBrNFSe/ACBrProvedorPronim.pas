@@ -79,6 +79,7 @@ begin
   3118601: ConfigCidade.AssinaLote := True; {Denio Incluido para Contagem} 
   4309407: ConfigCidade.AssinaLote := True; {Dalvan}
   4320800: ConfigCidade.AssinaLote := True; {Dalvan}
+  4204004: ConfigCidade.AssinaLote := True; {Dalvan}
  else      ConfigCidade.AssinaLote := False;
  end;
 
@@ -349,6 +350,23 @@ begin
             ConfigURL.ProConsultaSitLoteRPS := 'http://dueto-web.uruguaiana.rs.gov.br:7778/NFSEWS/Services.svc';
             ConfigURL.ProConsultaNFSe       := 'http://dueto-web.uruguaiana.rs.gov.br:7778/NFSEWS/Services.svc';
             ConfigURL.ProCancelaNFSe        := 'http://dueto-web.uruguaiana.rs.gov.br:7778/NFSEWS/Services.svc';
+           end;
+  4204004: begin // Catanduvas / SC
+            ConfigURL.HomNomeCidade         := '';
+            ConfigURL.HomRecepcaoLoteRPS    := 'http://nfe.catanduvas.sc.gov.br:8089/NFSEWSTESTE/Services.svc';
+            ConfigURL.HomConsultaLoteRPS    := 'http://nfe.catanduvas.sc.gov.br:8089/NFSEWSTESTE/Services.svc';
+            ConfigURL.HomConsultaNFSeRPS    := 'http://nfe.catanduvas.sc.gov.br:8089/NFSEWSTESTE/Services.svc';
+            ConfigURL.HomConsultaSitLoteRPS := 'http://nfe.catanduvas.sc.gov.br:8089/NFSEWSTESTE/Services.svc';
+            ConfigURL.HomConsultaNFSe       := 'http://nfe.catanduvas.sc.gov.br:8089/NFSEWSTESTE/Services.svc';
+            ConfigURL.HomCancelaNFSe        := 'http://nfe.catanduvas.sc.gov.br:8089/NFSEWSTESTE/Services.svc';
+
+            ConfigURL.ProNomeCidade         := '';
+            ConfigURL.ProRecepcaoLoteRPS    := 'http://nfe.catanduvas.sc.gov.br:8089/NFSEWS/Services.svc';
+            ConfigURL.ProConsultaLoteRPS    := 'http://nfe.catanduvas.sc.gov.br:8089/NFSEWS/Services.svc';
+            ConfigURL.ProConsultaNFSeRPS    := 'http://nfe.catanduvas.sc.gov.br:8089/NFSEWS/Services.svc';
+            ConfigURL.ProConsultaSitLoteRPS := 'http://nfe.catanduvas.sc.gov.br:8089/NFSEWS/Services.svc';
+            ConfigURL.ProConsultaNFSe       := 'http://nfe.catanduvas.sc.gov.br:8089/NFSEWS/Services.svc';
+            ConfigURL.ProCancelaNFSe        := 'http://nfe.catanduvas.sc.gov.br:8089/NFSEWS/Services.svc';
            end;
  end;
 

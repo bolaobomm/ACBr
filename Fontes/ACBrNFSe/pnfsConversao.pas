@@ -905,7 +905,7 @@ begin
 //  3511102, // Catanduva/SP
 //  3530300, // Mirassol/SP
   3541505, // Presidente Venceslau/SP
-  4204004, //Catanduvas / SC
+//  4204004, //Catanduvas / SC
   4101408, // Apucarana/PR
   4102000, // Assis Chateaubriand/PR
 //  4205902, // Gaspar/SC
@@ -923,18 +923,19 @@ begin
 
   3118601, // Contagem/MG
   3304706, // Sto Antonio de Padua/RJ
+  3504008, // Assis/SP
   3511102, // Catanduva/SP
   3530300, // Mirassol/SP
-  3504008, // Assis/SP
   4118501, // Pato Branco/PR
+  4201307, // Araquari/SC
+  4204004, //Catanduvas / SC
   4205902, // Gaspar/SC
+  4210506, // Maravilha/SC
   4308102, // Feliz/RS
   4309407, // Guapore/RS
   4310207, // Ijui/RS
   4320800, // Soledade/RS
-  4322400, // Uruguaiana/RS
-  4210506, // Maravilha/SC
-  4201307  // Araquari/SC
+  4322400  // Uruguaiana/RS
            : Provedor := 'Pronim';
 
   3132404, // Itajubá/MG
