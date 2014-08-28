@@ -284,22 +284,22 @@ type
     QRLabel51: TQRLabel;
     QRLabel52: TQRLabel;
     qrlSitTrib: TQRLabel;
-    QRLabel55: TQRLabel;
+    lblBC: TQRLabel;
     qrlBaseCalc: TQRLabel;
-    QRLabel56: TQRLabel;
+    lblAliq: TQRLabel;
     qrlAliqICMS: TQRLabel;
-    QRLabel54: TQRLabel;
+    lblValorICMS: TQRLabel;
     qrlVlrICMS: TQRLabel;
-    QRLabel53: TQRLabel;
+    lblRedBC: TQRLabel;
     qrlRedBaseCalc: TQRLabel;
-    QRLabel58: TQRLabel;
+    qrlICMSST: TQRLabel;
     qrlICMS_ST: TQRLabel;
-    QRShape26: TQRShape;
-    QRShape25: TQRShape;
-    QRShape23: TQRShape;
-    QRShape22: TQRShape;
+    qrsICMSST: TQRShape;
+    qrsRedBC: TQRShape;
+    qrsValorICMS: TQRShape;
+    qrsBC: TQRShape;
     QRShape21: TQRShape;
-    QRShape20: TQRShape;
+    qrsAliq: TQRShape;
     QRLabel59: TQRLabel;
     QRShape5: TQRShape;
     QRShape6: TQRShape;
@@ -1826,6 +1826,51 @@ procedure TfrmDACTeQRRetrato.qrb_06_ValorPrestacaoBeforePrint(
 begin
   inherited;
   PrintBand := QRCTe.PageNumber = 1;
+
+  // ICMS ST
+  if (Copy(FCTe.infCTe.versao, 1, 1) = '1')
+   then begin
+    qrsBC.Left := 346;
+    lblBC.Left := 350;
+    qrlBaseCalc.Left := 350;
+
+    qrsAliq.Left := 448;
+    lblAliq.Left := 454;
+    qrlAliqICMS.Left := 454;
+
+    qrsValorICMS.Left := 500;
+    lblValorICMS.Left := 504;
+    qrlVlrICMS.Left := 504;
+
+    qrsRedBC.Left := 586;
+    lblRedBC.Left := 590;
+    qrlRedBaseCalc.Left := 590;
+
+    qrsICMSST.Enabled := True;
+    qrlICMSST.Enabled := True;
+    qrlICMS_ST.Enabled := True;
+   end
+   else begin
+    qrsBC.Left := 436;
+    lblBC.Left := 440;
+    qrlBaseCalc.Left := 440;
+
+    qrsAliq.Left := 538;
+    lblAliq.Left := 544;
+    qrlAliqICMS.Left := 544;
+
+    qrsValorICMS.Left := 590;
+    lblValorICMS.Left := 594;
+    qrlVlrICMS.Left := 594;
+
+    qrsRedBC.Left := 676;
+    lblRedBC.Left := 680;
+    qrlRedBaseCalc.Left := 680;
+
+    qrsICMSST.Enabled := False;
+    qrlICMSST.Enabled := False;
+    qrlICMS_ST.Enabled := False;
+   end;
 end;
 
 procedure TfrmDACTeQRRetrato.qrb_07_HeaderItensBeforePrint(

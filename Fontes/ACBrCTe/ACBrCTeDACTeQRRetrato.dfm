@@ -2,6 +2,7 @@ inherited frmDACTeQRRetrato: TfrmDACTeQRRetrato
   Left = 193
   Width = 831
   Height = 585
+  VertScrollBar.Position = 551
   Caption = 'DACTe - Retrato'
   Font.Height = -8
   Font.Name = 'Arial'
@@ -11,7 +12,7 @@ inherited frmDACTeQRRetrato: TfrmDACTeQRRetrato
   TextHeight = 10
   inherited QRCTe: TQuickRep
     Left = 3
-    Top = 3
+    Top = -548
     BeforePrint = QRCTeBeforePrint
     DataSet = cdsDocumentos
     Font.Height = -8
@@ -9758,7 +9759,7 @@ inherited frmDACTeQRRetrato: TfrmDACTeQRRetrato
         Shape = qrsVertLine
         VertAdjust = 0
       end
-      object QRShape20: TQRShape
+      object qrsAliq: TQRShape
         Left = 448
         Top = 89
         Width = 1
@@ -9778,7 +9779,7 @@ inherited frmDACTeQRRetrato: TfrmDACTeQRRetrato
         Shape = qrsVertLine
         VertAdjust = 0
       end
-      object QRShape22: TQRShape
+      object qrsBC: TQRShape
         Left = 346
         Top = 89
         Width = 1
@@ -9798,7 +9799,7 @@ inherited frmDACTeQRRetrato: TfrmDACTeQRRetrato
         Shape = qrsVertLine
         VertAdjust = 0
       end
-      object QRShape23: TQRShape
+      object qrsValorICMS: TQRShape
         Left = 500
         Top = 89
         Width = 1
@@ -9818,7 +9819,7 @@ inherited frmDACTeQRRetrato: TfrmDACTeQRRetrato
         Shape = qrsVertLine
         VertAdjust = 0
       end
-      object QRShape25: TQRShape
+      object qrsRedBC: TQRShape
         Left = 586
         Top = 89
         Width = 1
@@ -9838,7 +9839,7 @@ inherited frmDACTeQRRetrato: TfrmDACTeQRRetrato
         Shape = qrsVertLine
         VertAdjust = 0
       end
-      object QRShape26: TQRShape
+      object qrsICMSST: TQRShape
         Left = 650
         Top = 89
         Width = 1
@@ -10406,7 +10407,7 @@ inherited frmDACTeQRRetrato: TfrmDACTeQRRetrato
         ExportAs = exptText
         FontSize = 7
       end
-      object QRLabel58: TQRLabel
+      object qrlICMSST: TQRLabel
         Left = 656
         Top = 94
         Width = 28
@@ -10439,7 +10440,7 @@ inherited frmDACTeQRRetrato: TfrmDACTeQRRetrato
         ExportAs = exptText
         FontSize = 5
       end
-      object QRLabel56: TQRLabel
+      object lblAliq: TQRLabel
         Left = 454
         Top = 94
         Width = 38
@@ -10472,7 +10473,7 @@ inherited frmDACTeQRRetrato: TfrmDACTeQRRetrato
         ExportAs = exptText
         FontSize = 5
       end
-      object QRLabel55: TQRLabel
+      object lblBC: TQRLabel
         Left = 350
         Top = 94
         Width = 65
@@ -10505,7 +10506,7 @@ inherited frmDACTeQRRetrato: TfrmDACTeQRRetrato
         ExportAs = exptText
         FontSize = 5
       end
-      object QRLabel54: TQRLabel
+      object lblValorICMS: TQRLabel
         Left = 504
         Top = 94
         Width = 44
@@ -10538,7 +10539,7 @@ inherited frmDACTeQRRetrato: TfrmDACTeQRRetrato
         ExportAs = exptText
         FontSize = 5
       end
-      object QRLabel53: TQRLabel
+      object lblRedBC: TQRLabel
         Left = 590
         Top = 94
         Width = 58
