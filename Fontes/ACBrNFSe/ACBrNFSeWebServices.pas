@@ -3572,7 +3572,11 @@ begin
 
            FNotasFiscais.Items[iNF].NFSe.Tomador.Endereco.xMunicipio := NFSeRetorno.ListaNfse.CompNfse.Items[iNFRetorno].Nfse.Tomador.Endereco.xMunicipio;
 
-           FRetNfse := NFSeRetorno.ListaNfse.CompNfse.Items[iNFRetorno].Nfse.XML;
+           if FProvedor = proISSNet then
+             FRetNfse := AnsiString(StringReplace(String(NFSeRetorno.ListaNfse.CompNfse.Items[iNFRetorno].Nfse.XML), '<br>', '', [rfReplaceAll]))
+           else
+             FRetNfse := NFSeRetorno.ListaNfse.CompNfse.Items[iNFRetorno].Nfse.XML;
+//             FRetNfse := ParseText(NFSeRetorno.ListaNfse.CompNfse.Items[iNFRetorno].Nfse.XML);
 
            k :=  Pos('<' + Prefixo4 + 'Nfse', FRetNfse);
            FRetNfse := Copy(FRetNfse, k, length(FRetNfse));
