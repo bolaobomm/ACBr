@@ -677,7 +677,7 @@ begin
       then Gerador.wGrupoNFSe('Tomador')
       else Gerador.wGrupoNFSe('TomadorServico');
     // Alterado por Augusto Fontana em 12/06/2014
-    if (NFSe.Tomador.Endereco.UF <> 'EX') or (FProvedor = proSimplISS)
+    if (NFSe.Tomador.Endereco.UF <> 'EX') or (FProvedor = proSimplISS) or (FProvedor = proISSNet) 
       then begin
         Gerador.wGrupoNFSe('IdentificacaoTomador');
          Gerador.wGrupoNFSe('CpfCnpj');
