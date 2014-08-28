@@ -566,7 +566,7 @@ begin
                     padL('', 15, '0'))                                                 + // 75 - 89 Percentual de multa. Informar zeros se não cobrar
                     padL('',110,' ')                                                   + // 90 - 199
                     padL('',8,'0')                                                     + // 200 - 207
-               padR('', 33, ' ');                                                        // 208 - 240 Brancos (Não definido pelo FEBRAN)
+               StringOfChar('0', 33);                                                    // 208 - 240 Zeros (De acordo com o manual de particularidades BB)
 
 
       end; 

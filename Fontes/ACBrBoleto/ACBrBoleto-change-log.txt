@@ -49,9 +49,13 @@ Símbolo : Significado
 
 Data: 28/08/2014 ver. 0.0.96a
 -- ACBrBoleto  --
-[*] Correção no tamanho máximo do nosso número, de acordo com os manuais disponiveis
+--ACBrBancoHSBC 
+[-] Correção no tamanho máximo do nosso número, de acordo com os manuais disponiveis
     o máximo seriam 13 digitos e mais 3 para o dígito verificador. (por Juliana Tamizou)
 
+--ACBrBancoBrasil 
+[*] Ajuste remessa CNAB240 para atender o manual de particularidades do Banco do Brasil.
+   (por Juliana Tamizou)
 
 
 Data: 25/08/2014 ver. 0.0.95a
