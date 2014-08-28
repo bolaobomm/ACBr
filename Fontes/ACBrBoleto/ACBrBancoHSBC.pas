@@ -111,7 +111,7 @@ begin
    fpDigito                := 9;
    fpNome                  := 'HSBC';
    fpNumero                := 399;
-   fpTamanhoMaximoNossoNum := 16;
+   fpTamanhoMaximoNossoNum := 13;
    fpTamanhoAgencia        := 4;
    fpTamanhoConta          := 7;
    fpTamanhoCarteira       := 3;
@@ -177,7 +177,7 @@ begin
      Result := RightStr(wNossoNumero,10) + AnsiString(IntToStr(Modulo.DigitoFinal));
    end
   else
-     Result := ACBrTitulo.NossoNumero + '-' +
+     Result :=ACBrTitulo.NossoNumero + '-' +
               CalcularDigitoVerificador(ACBrTitulo);
 end;
 
