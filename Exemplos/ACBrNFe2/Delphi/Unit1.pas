@@ -9,7 +9,8 @@ uses IniFiles, ShellAPI, pcnRetConsReciNFe,
   Dialogs, StdCtrls, ExtCtrls, Buttons, ComCtrls, OleCtrls, SHDocVw,
   ACBrNFe, pcnConversao, ACBrNFeDANFEClass, ACBrNFeDANFERave, ACBrUtil,
   pcnNFeW, pcnNFeRTXT, pcnAuxiliar, ACBrDFeUtil,
-  XMLIntf, XMLDoc, ACBrNFeDANFERaveCB, ACBrNFeDANFEFR, ACBrNFeDANFeRLClass;
+  XMLIntf, XMLDoc, ACBrNFeDANFERaveCB,  ACBrNFeDANFeRLClass,
+  ACBrDANFCeFortesFr;
 
 type
   TForm1 = class(TForm)
@@ -149,8 +150,8 @@ type
     btnImprimirCCe: TButton;
     btnEnviarEvento: TButton;
     btnCriarEnviarNFCe: TButton;
-    ACBrNFeDANFEFR1: TACBrNFeDANFEFR;
     ACBrNFeDANFeRL1: TACBrNFeDANFeRL;
+    ACBrNFeDANFCeFortes1: TACBrNFeDANFCeFortes;
     procedure sbtnCaminhoCertClick(Sender: TObject);
     procedure sbtnLogoMarcaClick(Sender: TObject);
     procedure sbtnPathSalvarClick(Sender: TObject);
@@ -340,7 +341,7 @@ begin
        begin
          ACBrNFe1.DANFE.TipoDANFE  := StrToTpImp(OK,IntToStr(rgTipoDanfe.ItemIndex+1));
          ACBrNFe1.DANFE.Logo       := edtLogoMarca.Text;
-       end;  
+       end;
 
       edtEmitCNPJ.Text       := Ini.ReadString( 'Emitente','CNPJ'       ,'') ;
       edtEmitIE.Text         := Ini.ReadString( 'Emitente','IE'         ,'') ;
@@ -698,7 +699,7 @@ begin
   OpenDialog1.DefaultExt := '*-nfe.XML';
   OpenDialog1.Filter := 'Arquivos NFE (*-nfe.XML)|*-nfe.XML|Arquivos XML (*.XML)|*.XML|Todos os Arquivos (*.*)|*.*';
   OpenDialog1.InitialDir := ACBrNFe1.Configuracoes.Geral.PathSalvar;
-  ACBrNFeDANFEFR1.FastFile := 'C:\Delphi Files\ACBr\Exemplos\ACBrNFe2\Delphi\Report\DanfeRetrato.fr3';
+
   if OpenDialog1.Execute then
   begin
     ACBrNFe1.NotasFiscais.Clear;
@@ -2922,7 +2923,8 @@ begin
 
   ACBrNFe1.NotasFiscais.Clear;
 
-  ACBrNFe1.Configuracoes.Geral.ModeloDF := moNFCe;  
+  ACBrNFe1.Configuracoes.Geral.ModeloDF := moNFCe;
+  ACBrNFe1.Configuracoes.Geral.VersaoDF := ve310;
   GerarNFCe(vAux);
 
   ACBrNFe1.Enviar(vNumLote,True,Sincrono);
@@ -2961,11 +2963,14 @@ end;
 procedure TForm1.tsNFeEnter(Sender: TObject);
 begin
   ACBrNFe1.Configuracoes.Geral.ModeloDF := moNFe;
+  ACBrNFe1.Configuracoes.Geral.PathSchemas := PathWithDelim(ExtractFilePath(Application.ExeName))+'Schemas\V200';  
 end;
 
 procedure TForm1.tsNFCeEnter(Sender: TObject);
 begin
-  ACBrNFe1.Configuracoes.Geral.ModeloDF := moNFe;
+  ACBrNFe1.Configuracoes.Geral.ModeloDF := moNFCe;
+  ACBrNFe1.Configuracoes.Geral.VersaoDF := ve310;
+  ACBrNFe1.Configuracoes.Geral.PathSchemas := PathWithDelim(ExtractFilePath(Application.ExeName))+'Schemas\V310';
 end;
 
 end.

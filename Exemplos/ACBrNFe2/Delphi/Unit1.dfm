@@ -1,9 +1,9 @@
 object Form1: TForm1
   Left = 269
   Top = 149
+  Width = 894
+  Height = 632
   Caption = 'ACBrNFe - Demonstra'#231#227'o'
-  ClientHeight = 593
-  ClientWidth = 878
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -368,6 +368,7 @@ object Form1: TForm1
               Font.Height = -13
               Font.Name = 'MS Sans Serif'
               Font.Style = []
+              ItemHeight = 16
               ItemIndex = 24
               ParentFont = False
               TabOrder = 1
@@ -779,6 +780,8 @@ object Form1: TForm1
       Width = 153
       Height = 25
       Caption = 'Salvar Configura'#231#245'es'
+      TabOrder = 1
+      OnClick = btnSalvarConfigClick
       Glyph.Data = {
         76010000424D7601000000000000760000002800000020000000100000000100
         04000000000000010000130B0000130B00001000000000000000000000000000
@@ -793,8 +796,6 @@ object Form1: TForm1
         99337F3FF7F3733777F30F08F0F0337999337F7737F73F7777330FFFF0039999
         93337FFFF7737777733300000033333333337777773333333333}
       NumGlyphs = 2
-      TabOrder = 1
-      OnClick = btnSalvarConfigClick
     end
   end
   object Panel2: TPanel
@@ -816,7 +817,7 @@ object Form1: TForm1
         Top = 1
         Width = 577
         Height = 298
-        ActivePage = tsNFe
+        ActivePage = tsNFCe
         Align = alClient
         TabOrder = 0
         object tsNFe: TTabSheet
@@ -1197,7 +1198,7 @@ object Form1: TForm1
     Configuracoes.WebServices.IntervaloTentativas = 1000
     Configuracoes.WebServices.AjustaAguardaConsultaRet = True
     OnStatusChange = ACBrNFe1StatusChange
-    DANFE = ACBrNFeDANFEFR1
+    DANFE = ACBrNFeDANFCeFortes1
     OnGerarLog = ACBrNFe1GerarLog
     Left = 723
     Top = 377
@@ -1269,39 +1270,6 @@ object Form1: TForm1
     Left = 726
     Top = 409
   end
-  object ACBrNFeDANFEFR1: TACBrNFeDANFEFR
-    ACBrNFe = ACBrNFe1
-    PathPDF = 'C:\Program Files\Borland\Delphi7\Bin\'
-    MostrarPreview = True
-    MostrarStatus = True
-    TipoDANFE = tiSemGeracao
-    NumCopias = 1
-    ImprimirDescPorc = False
-    ImprimirTotalLiquido = False
-    MargemInferior = 0.800000000000000000
-    MargemSuperior = 0.800000000000000000
-    MargemEsquerda = 0.600000000000000000
-    MargemDireita = 0.510000000000000000
-    CasasDecimais._qCom = 2
-    CasasDecimais._vUnCom = 2
-    ExibirResumoCanhoto = False
-    FormularioContinuo = False
-    TamanhoFonte_DemaisCampos = 10
-    ProdutosPorPagina = 0
-    ImprimirDetalhamentoEspecifico = True
-    NFeCancelada = False
-    LocalImpCanhoto = 0
-    ImprimeItens = True
-    vTroco = 0.000000000000000000
-    EspessuraBorda = 1
-    ExibirTotalTributosItem = False
-    ExibeCampoFatura = True
-    TributosPercentual = ptValorProdutos
-    Detalhado = False
-    DescricaoViaEstabelec = 'Via do Consumidor'
-    Left = 496
-    Top = 440
-  end
   object ACBrNFeDANFeRL1: TACBrNFeDANFeRL
     PathPDF = 'C:\Program Files\Borland\Delphi7\Bin\'
     MostrarPreview = True
@@ -1328,5 +1296,31 @@ object Form1: TForm1
     ExibirEAN = False
     Left = 552
     Top = 384
+  end
+  object ACBrNFeDANFCeFortes1: TACBrNFeDANFCeFortes
+    ACBrNFe = ACBrNFe1
+    PathPDF = 'C:\Program Files\Borland\Delphi7\Bin\'
+    MostrarPreview = True
+    MostrarStatus = True
+    TipoDANFE = tiSemGeracao
+    NumCopias = 1
+    ImprimirDescPorc = False
+    ImprimirTotalLiquido = False
+    MargemInferior = 0.800000000000000000
+    MargemSuperior = 0.800000000000000000
+    MargemEsquerda = 0.600000000000000000
+    MargemDireita = 0.510000000000000000
+    CasasDecimais._qCom = 2
+    CasasDecimais._vUnCom = 2
+    ExibirResumoCanhoto = False
+    FormularioContinuo = False
+    TamanhoFonte_DemaisCampos = 10
+    ProdutosPorPagina = 0
+    ImprimirDetalhamentoEspecifico = True
+    NFeCancelada = False
+    LocalImpCanhoto = 0
+    ImprimeItens = True
+    Left = 486
+    Top = 381
   end
 end
