@@ -559,7 +559,7 @@ var
  Lista          : TStringList;
 begin
  CoInitialize(nil); // PERMITE O USO DE THREAD
-  
+ try  
  if DFeUtil.EstaVazio( FNumeroSerie )
   then raise Exception.Create('Número de Série do Certificado Digital não especificado !');
 
@@ -659,6 +659,9 @@ begin
 
   if not(Assigned(Result)) then
     raise Exception.Create('Certificado Digital não encontrado!');
+  finally
+    CoUninitialize;
+  end;
 end;
 
 function TCertificadosConf.GetNumeroSerie: AnsiString;

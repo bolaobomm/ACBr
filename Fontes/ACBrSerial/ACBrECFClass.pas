@@ -69,6 +69,43 @@ type
 
 { TACBrECFRodape }
 
+  { TACBRAbastecimento }
+
+  TACBRRodapeAbastecimento = class( TPersistent )
+       private
+            FEI: Double;
+            FBico: Integer;
+            FVolume: Double;
+            FEF: Double;
+    FAutomatico: Boolean;
+            procedure SetBico(const Value: Integer);
+            procedure SetEF(const Value: Double);
+            procedure SetEI(const Value: Double);
+            procedure SetVolume(const Value: Double);
+    procedure SetAutomatico(const Value: Boolean);
+       public
+           property Bico: Integer read FBico write SetBico;
+           property EI: Double read FEI write SetEI;
+           property EF: Double read FEF write SetEF;
+           property Volume: Double read FVolume write SetVolume;
+           property Automatico: Boolean read FAutomatico write SetAutomatico;
+  end;
+
+   { TACBRAbastecimentos }
+
+  TACBRRodapeAbastecimentos = class(TObjectList)
+  private
+    fsImprimir: Boolean;
+    procedure SetObject(Index: Integer; Item: TACBRRodapeAbastecimento);
+    function GetObject(Index: Integer): TACBRRodapeAbastecimento;
+    procedure Insert(Index: Integer; Obj: TACBRRodapeAbastecimento);
+  public
+     property Imprimir: Boolean read fsImprimir write fsImprimir;
+    function New: TACBRRodapeAbastecimento;
+    function Add(Obj: TACBRRodapeAbastecimento): Integer;
+    property Objects[Index: Integer]: TACBRRodapeAbastecimento read GetObject write SetObject; default;
+  end;
+
 TACBrECFRodapeImposto = class( TPersistent )
   private
     fsValorAproximado: Double;
@@ -124,6 +161,7 @@ TACBrECFRodape = class( TPersistent )
     fsNotaLegalDF: TACBrECFRodapeNotaLegalDF;
     fsParaibaLegal: Boolean;
     fsImposto: TACBrECFRodapeImposto;
+    fsPostoComustivel: TACBRRodapeAbastecimentos; 
     procedure SetMD5(AValue : String) ;
   public
     constructor Create;
@@ -142,6 +180,7 @@ TACBrECFRodape = class( TPersistent )
     property ParaibaLegal: Boolean read fsParaibaLegal write fsParaibaLegal default False;
     property NotaLegalDF : TACBrECFRodapeNotaLegalDF read fsNotaLegalDF write fsNotaLegalDF;
     property Imposto     : TACBrECFRodapeImposto read fsImposto write fsImposto;
+    property PostoCombustivel: TACBRRodapeAbastecimentos read fsPostoComustivel write fsPostoComustivel;
 end;
 
 { Definindo novo tipo para armazenar Aliquota de ICMS }
@@ -4785,6 +4824,9 @@ begin
 
   fsImposto := TACBrECFRodapeImposto.Create;
 
+  fsPostoComustivel := TACBRRodapeAbastecimentos.Create; 
+  fsPostoComustivel.Imprimir := False;
+
   Self.Clear;
 end;
 
@@ -4793,6 +4835,7 @@ begin
   FreeAndNil(fsNotaLegalDF);
   FreeAndNil(fsRestaurante);
   FreeAndNil(fsImposto);
+  FreeAndNil(fsPostoComustivel);
   inherited;
 end;
 
@@ -4814,6 +4857,61 @@ begin
 
   fsImposto.ValorAproximado := 0.00;
   fsImposto.Fonte := '';
+end;
+
+{ TACBRRodapeAbastecimento }
+
+procedure TACBRRodapeAbastecimento.SetAutomatico(const Value: Boolean);
+begin
+  FAutomatico := Value;
+end;
+
+procedure TACBRRodapeAbastecimento.SetBico(const Value: Integer);
+begin
+  FBico := Value;
+end;
+
+procedure TACBRRodapeAbastecimento.SetEF(const Value: Double);
+begin
+  FEF := Value;
+end;
+
+procedure TACBRRodapeAbastecimento.SetEI(const Value: Double);
+begin
+  FEI := Value;
+end;
+
+procedure TACBRRodapeAbastecimento.SetVolume(const Value: Double);
+begin
+  FVolume := Value;
+end;
+
+{ TACBRodapeRAbastecimentos }
+
+function TACBRRodapeAbastecimentos.Add(Obj: TACBRRodapeAbastecimento): Integer;
+begin
+  Result := inherited Add(Obj);
+end;
+
+function TACBRRodapeAbastecimentos.GetObject(Index: Integer): TACBRRodapeAbastecimento;
+begin
+  Result := inherited GetItem(Index) as TACBRRodapeAbastecimento;
+end;
+
+procedure TACBRRodapeAbastecimentos.Insert(Index: Integer; Obj: TACBRRodapeAbastecimento);
+begin
+  inherited Insert(Index, Obj);
+end;
+
+function TACBRRodapeAbastecimentos.New: TACBRRodapeAbastecimento;
+begin
+  Result := TACBRRodapeAbastecimento.Create;
+  Add(Result);
+end;
+
+procedure TACBRRodapeAbastecimentos.SetObject(Index: Integer; Item: TACBRRodapeAbastecimento);
+begin
+  inherited SetItem(Index, Item);
 end;
 
 end.

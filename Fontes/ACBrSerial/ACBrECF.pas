@@ -219,6 +219,7 @@ TACBrECF = class( TACBrComponent )
 
     FDAVItemCount: Integer;
     FDAVTotal: Double;
+    FQuebraLinhaRodape : Boolean;
 
     function GetArredondaItemMFD : Boolean ;
     function GetIgnorarErroSemPapel : Boolean ;
@@ -399,11 +400,13 @@ TACBrECF = class( TACBrComponent )
     function GetInfoRodapeCupom: TACBrECFRodape;
     procedure SetInfoRodapeCupom(const Value: TACBrECFRodape);
     function GetRespostasComandoClass: TACBrInformacoes;
+    function GetRodapePostos: String;
     function GetRodapeRestaurante: String;
     function GetRodapeUF: String;
     function GetRodapeImposto: String;
     function GetOnChequeEstado: TACBrECFOnChequeEstado;
     procedure SetOnChequeEstado(const Value: TACBrECFOnChequeEstado);
+    function GetQuebraLinha(const Value :string):String;
   protected
     fpUltimoEstadoObtido: TACBrECFEstado;
     procedure Notification(AComponent: TComponent; Operation: TOperation); override;
@@ -836,6 +839,7 @@ TACBrECF = class( TACBrComponent )
     function GetRodapePaf: String;
 
   published
+     property QuebraLinhaRodape : Boolean read FQuebraLinhaRodape write FQuebraLinhaRodape;
      property About : String read GetAbout write SetAbout stored False ;
      property Modelo : TACBrECFModelo read fsModelo write SetModelo
                  default ecfNenhum ;
@@ -1121,6 +1125,7 @@ begin
   fsNumSerieCache   := '';
   fsGavetaSinalInvertido  := False;
 
+  FQuebraLinhaRodape := False;
   FDAVItemCount := 0;
   FDAVTotal     := 0.00;
 
@@ -3103,24 +3108,65 @@ begin
 
   // atende ao requisito do paf-ECF V item 2
   if Trim(InfoRodapeCupom.PreVenda) <> EmptyStr then
-    Result := Result + 'PV' + Trim(InfoRodapeCupom.PreVenda);
+    Result := Result + GetQuebraLinha('PV' + Trim(InfoRodapeCupom.PreVenda));
 
   // atende ao requisito do paf-ECF VI item 5
   if Trim(InfoRodapeCupom.Dav) <> EmptyStr then
-    Result := Result + 'DAV' + Trim(InfoRodapeCupom.Dav);
+    Result := Result + GetQuebraLinha(Ifthen(QuebraLinhaRodape, sLineBreak, EmptyStr) + 'DAV' + Trim(InfoRodapeCupom.Dav));
 
   // atende ao requisito do paf-ECF LI item 1
   if Trim(InfoRodapeCupom.DavOs) <> EmptyStr then
-    Result := Result + 'DAV-OS' + Trim(InfoRodapeCupom.DavOs);
+    Result := Result + GetQuebraLinha('DAV-OS' + Trim(InfoRodapeCupom.DavOs));
 
   // atende ao requisito do paf-ECF XXVIII item 8
   if Trim(InfoRodapeCupom.NF) <> EmptyStr then
-    Result := Result + 'NF:' + Trim(InfoRodapeCupom.NF);
+    Result := Result + GetQuebraLinha('NF:' + Trim(InfoRodapeCupom.NF));
 
+  Result := Trim(Result) + sLineBreak + Trim(GetRodapePostos);
   Result := Trim(Result) + sLineBreak + Trim(GetRodapeRestaurante);
   Result := Trim(Result) + sLineBreak + Trim(GetRodapeUF);
   Result := Trim(Result) + sLineBreak + Trim(GetRodapeImposto);
   Result := Trim(Result);
+  InfoRodapeCupom.PostoCombustivel.Clear;
+  InfoRodapeCupom.PostoCombustivel.Imprimir := False;
+end;
+
+function TACBrECF.GetRodapePostos: String;
+var
+  Rodape: String;
+  I: Integer;
+begin
+  Rodape := EmptyStr;
+    // atende ao requisito do PAF-ECF REQUISITO XXXVIII do BLOCO II ( REVENDEDOR VAREJISTA DE COMBUSTÍVEL AUTOMOTIVO )
+  if ( InfoRodapeCupom.PostoCombustivel.Imprimir ) and
+     (  InfoRodapeCupom.PostoCombustivel.Count > 0 )  then
+  begin
+      {
+            1. O PAF-ECF deve imprimir no Cupom Fiscal, exclusivamente em uma única linha:
+          a) a “Referência ao Sistema de Abastecimento de Combustíveis”;
+          b) no campo "informações suplementares" ou “mensagens promocionais”, conforme o ECF que está em uso, na ordem dos abastecimentos, a partir do primeiro caractere ou a partir do caractere imediatamente seguinte aos registros do PV”N” ou do DAV“N”, quando for o caso, a expressão “#CF:” imediatamente antes da Referência ao Sistema de Abastecimento de Combustíveis de todos os bicos de abastecimento de combustíveis objeto da comercialização.
+          Exemplo:
+          #CF:B02 EI0008188,752 EF00020328,797 V12140,045
+          Deve ser observado que não há espaço entre a expressão #CF: e o número do bico B02.
+          c) se o Cupom Fiscal for emitido automaticamente, conforme previsto nas alíneas “c1” e “c2” do item 1 do Requisito XXXV, deve ser impressa a letra “A” imediatamente ao final do último caractere impresso.
+          Exemplo:
+          #CF:B02 EI0008188,752 EF00020328,797 V12140,045A
+          Deve ser observado que não há espaço entre o número 12140,045 e a letra “A”.
+      }
+    with InfoRodapeCupom do
+    begin
+      for I := 0 to PostoCombustivel.Count - 1 do
+      begin
+        Rodape := Rodape + #10 +
+        '#CF:B' + Format('%2.2d', [ PostoCombustivel[I].Bico ] ) +
+        ' EI' + FormatFloat( '0000000.000', PostoCombustivel[I].EI ) +
+        ' EF' + FormatFloat( '0000000.000', PostoCombustivel[I].EF ) +
+        ' V' + FormatFloat( '0.000', PostoCombustivel[I].Volume ) +
+        ifthen( PostoCombustivel[I].Automatico, 'A', '' );
+      end;
+    end;
+  end;
+  Result := Rodape;
 end;
 
 function TACBrECF.GetRodapeRestaurante: String;
@@ -3172,6 +3218,11 @@ begin
   end;
 
   Result := ACBrStr( Rodape );
+end;
+
+function TACBrECF.GetQuebraLinha(const Value :string):String;
+begin
+  Result := Ifthen(QuebraLinhaRodape, sLineBreak, EmptyStr) + Value;
 end;
 
 function TACBrECF.GetRodapeUF: String;
