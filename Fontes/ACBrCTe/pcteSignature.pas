@@ -57,8 +57,11 @@ type
     FGerador: TGerador;
     FURI: String;
     FDigestValue: String;
-    FSignatureValue: String;
-    FX509Certificate: String;
+//    FSignatureValue: String;
+//    FX509Certificate: String;
+    // Alterado por Italo em 29/08/2014
+    FSignatureValue: AnsiString;
+    FX509Certificate: AnsiString;
   public
     constructor Create;
     destructor Destroy; override;
@@ -67,8 +70,10 @@ type
     property Gerador: TGerador       read FGerador         write FGerador;
     property URI: String             read FURI             write FURI;
     property DigestValue: String     read FDigestValue     write FDigestValue;
-    property SignatureValue: String  read FSignatureValue  write FSignatureValue;
-    property X509Certificate: String read FX509Certificate write FX509Certificate;
+//    property SignatureValue: String  read FSignatureValue  write FSignatureValue;
+//    property X509Certificate: String read FX509Certificate write FX509Certificate;
+    property SignatureValue: AnsiString  read FSignatureValue  write FSignatureValue;
+    property X509Certificate: AnsiString read FX509Certificate write FX509Certificate;
   end;
 
 implementation
