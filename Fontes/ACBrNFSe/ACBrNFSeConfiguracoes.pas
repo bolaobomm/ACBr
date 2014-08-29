@@ -9,7 +9,7 @@ uses
   Windows, ACBrCAPICOM_TLB, ACBrMSXML2_TLB,
   JwaWinCrypt, JwaWinType,
 {$ENDIF}
-  Classes, Sysutils, pnfsConversao, pcnConversao;
+  Classes, Sysutils, pnfsConversao, pcnConversao, ActiveX;
 
 {$IFNDEF ACBrNFSeOpenSSL}
   const CAPICOM_STORE_NAME = 'My'; //My CA Root AddressBook
@@ -558,6 +558,8 @@ var
  Propriedades   : String;
  Lista          : TStringList;
 begin
+ CoInitialize(nil); // PERMITE O USO DE THREAD
+  
  if DFeUtil.EstaVazio( FNumeroSerie )
   then raise Exception.Create('Número de Série do Certificado Digital não especificado !');
 

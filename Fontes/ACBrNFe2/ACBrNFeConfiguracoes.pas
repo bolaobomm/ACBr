@@ -47,7 +47,7 @@ unit ACBrNFeConfiguracoes;
 interface
 
 uses {$IFNDEF ACBrNFeOpenSSL} windows, ACBrCAPICOM_TLB, JwaWinCrypt, ACBrMSXML2_TLB,  {$ENDIF}
-  Classes, Sysutils, pcnConversao;
+  Classes, Sysutils, pcnConversao, ActiveX;
 
 {$IFNDEF ACBrNFeOpenSSL}
   const CAPICOM_STORE_NAME = 'My'; //My CA Root AddressBook
@@ -461,7 +461,8 @@ var
   XML, Propriedades : String;
   Lista : TStringList;
 begin
-//  CoInitialize(nil); // PERMITE O USO DE THREAD
+  CoInitialize(nil); // PERMITE O USO DE THREAD
+  
   if DFeUtil.EstaVazio( FNumeroSerie ) then
     raise EACBrNFeException.Create('Número de Série do Certificado Digital não especificado !');
 

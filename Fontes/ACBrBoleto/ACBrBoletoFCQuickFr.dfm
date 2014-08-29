@@ -3656,7 +3656,7 @@ object ACBRBoletoFCQuickFr: TACBRBoletoFCQuickFr
         XLColumn = 0
         Alignment = taLeftJustify
         AlignToBand = False
-        AutoSize = False
+        AutoSize = True
         AutoStretch = False
         Caption = 'Pagar preferencialmente nas ag'#234'ncias banc'#225'rias e lot'#233'ricas'
         Color = clWhite
@@ -5745,6 +5745,7 @@ object ACBRBoletoFCQuickFr: TACBRBoletoFCQuickFr
           1132.416666666667000000
           394.229166666666700000)
         XLColumn = 0
+        Stretch = True
       end
       object txtLocalPagamento3: TQRLabel
         Left = 8

@@ -1,9 +1,9 @@
 object ACBRBoletoFCFortesFr: TACBRBoletoFCFortesFr
   Left = 352
   Top = 115
-  Width = 1084
-  Height = 768
   Caption = 'ACBRBoletoFCFortesFr'
+  ClientHeight = 730
+  ClientWidth = 1068
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -2615,6 +2615,8 @@ object ACBRBoletoFCFortesFr: TACBRBoletoFCFortesFr
         Top = 350
         Width = 414
         Height = 58
+        Margins.LeftMargin = 1.000000000000000000
+        Margins.RightMargin = 1.000000000000000000
         Behavior = [beSiteExpander]
         Caption = '00000000000000000000000000000000000000000000'
         CheckSumMethod = cmNone
@@ -2624,8 +2626,6 @@ object ACBRBoletoFCFortesFr: TACBRBoletoFCFortesFr
         Font.Name = 'MS Sans Serif'
         Font.Style = []
         InvalidCode = icDrawAnyway
-        Margins.LeftMargin = 1.000000000000000000
-        Margins.RightMargin = 1.000000000000000000
         ParentFont = False
         Ratio = 3.000000000000000000
         RealBounds.UsedUnit = buMilimeters
@@ -2752,22 +2752,35 @@ object ACBRBoletoFCFortesFr: TACBRBoletoFCFortesFr
         Font.Style = []
         ParentFont = False
       end
+      object txtSacadorAvalista3: TRLLabel
+        Left = 108
+        Top = 330
+        Width = 435
+        Height = 14
+        AutoSize = False
+        Font.Charset = ANSI_CHARSET
+        Font.Color = clBlack
+        Font.Height = -11
+        Font.Name = 'Arial'
+        Font.Style = []
+        ParentFont = False
+      end
     end
   end
   object BoletoCarne: TRLReport
-    Left = 793
-    Top = 3
+    Left = 798
+    Top = 27
     Width = 794
     Height = 1123
+    Margins.LeftMargin = 8.000000000000000000
+    Margins.TopMargin = 5.000000000000000000
+    Margins.RightMargin = 5.000000000000000000
+    Margins.BottomMargin = 5.000000000000000000
     Font.Charset = DEFAULT_CHARSET
     Font.Color = clBlack
     Font.Height = -13
     Font.Name = 'Arial'
     Font.Style = []
-    Margins.LeftMargin = 8.000000000000000000
-    Margins.TopMargin = 5.000000000000000000
-    Margins.RightMargin = 5.000000000000000000
-    Margins.BottomMargin = 5.000000000000000000
     PreviewOptions.ShowModal = True
     BeforePrint = BoletoCarneBeforePrint
     OnDataCount = BoletoCarneDataCount
@@ -3303,6 +3316,7 @@ object ACBRBoletoFCFortesFr: TACBRBoletoFCFortesFr
         Font.Name = 'Arial'
         Font.Style = []
         ParentFont = False
+        Text = ''
       end
       object RLDBText18: TRLDBText
         Left = 570
@@ -3317,6 +3331,7 @@ object ACBRBoletoFCFortesFr: TACBRBoletoFCFortesFr
         Font.Name = 'Arial'
         Font.Style = []
         ParentFont = False
+        Text = ''
       end
       object RLLabel16: TRLLabel
         Left = 644
@@ -3916,6 +3931,8 @@ object ACBRBoletoFCFortesFr: TACBRBoletoFCFortesFr
         Top = 286
         Width = 465
         Height = 66
+        Margins.LeftMargin = 1.000000000000000000
+        Margins.RightMargin = 1.000000000000000000
         AutoSize = False
         Caption = '23790-3571000000100120'
         CheckSumMethod = cmNone
@@ -3925,8 +3942,6 @@ object ACBRBoletoFCFortesFr: TACBRBoletoFCFortesFr
         Font.Name = 'Arial'
         Font.Style = []
         InvalidCode = icDrawAnyway
-        Margins.LeftMargin = 1.000000000000000000
-        Margins.RightMargin = 1.000000000000000000
         ParentFont = False
         Ratio = 3.000000000000000000
       end

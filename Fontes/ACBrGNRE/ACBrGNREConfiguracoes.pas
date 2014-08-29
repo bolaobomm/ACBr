@@ -54,7 +54,7 @@ uses
   ACBrCAPICOM_TLB, ACBrMSXML2_TLB,
   JwaWinCrypt, JwaWinType,
 {$ENDIF}
-  Classes, Sysutils, pgnreConversao, pcnConversao;
+  Classes, Sysutils, pgnreConversao, pcnConversao, ActiveX;
 
 {$IFNDEF ACBrGNREOpenSSL}
   const CAPICOM_STORE_NAME = 'My'; //My CA Root AddressBook
@@ -320,6 +320,8 @@ var
  hCryptProvider : HCRYPTPROV;
  XML            : String;
 begin
+ CoInitialize(nil); // PERMITE O USO DE THREAD
+
  if DFeUtil.EstaVazio( FNumeroSerie )
   then raise Exception.Create('Número de Série do Certificado Digital não especificado !');
 
