@@ -926,7 +926,7 @@ begin
     begin
      if (FProvedor in [profintelISS, proSaatri, proSisPMJP, proCoplan, proGoiania, proISSDigital,
                        proISSe, proSystemPro, pro4R, proFiorilli, proProdata, proVitoria, proPVH,
-                       proAgili, proVirtual, proFreire, proLink3, proGovDigital, proSisPMJP])
+                       proAgili, proVirtual, proFreire, proLink3, proGovDigital])
       then vNotas := vNotas + '<' + Prefixo4 + 'Rps>' +
                                '<' + Prefixo4 + 'InfDeclaracaoPrestacaoServico' +
                                  RetornarConteudoEntre(TNFSeEnviarLoteRPS(Self).FNotasFiscais.Items[I].XML_Rps,

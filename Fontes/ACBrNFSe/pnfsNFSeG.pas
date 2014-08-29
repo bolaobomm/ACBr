@@ -236,7 +236,7 @@ begin
  if AProvedor in [proNenhum, pro4R, proAgili, proCoplan, profintelISS, proFiorilli,
                   proGoiania, proGovDigital, proISSDigital, proISSe, proProdata,
                   proVirtual, proSaatri, proFreire, proPVH, proVitoria, proTecnos,
-                  proSisPMJP, proSystemPro, proSisPMJP] then Result := '';
+                  proSisPMJP, proSystemPro] then Result := '';
 end;
 
 class function TNFSeG.Gera_DadosMsgConsLote(Prefixo3, Prefixo4,
