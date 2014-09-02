@@ -899,17 +899,17 @@ begin
                     Pos('<Prestador><CpfCnpj><Cnpj>', ArquivoXML.Text) + 26,
                     Pos('</Cnpj></CpfCnpj>',ArquivoXML.Text) - (Pos('<Prestador><CpfCnpj><Cnpj>', ArquivoXML.Text) + 26));
 
-       if ((Length(CNPJ) <> 11) and (Length(CNPJ) <> 14)) or (Trim(CNPJ) = '') then
+       if ((Length(CNPJ) <> 11) and (Length(CNPJ) <> 14)) then
           CNPJ:= Copy(ArquivoXML.Text,
                       Pos('<Prestador><CpfCnpj><Cpf>', ArquivoXML.Text) + 25,
                       Pos('</Cpf></CpfCnpj>',ArquivoXML.Text) - (Pos('<Prestador><CpfCnpj><Cpf>', ArquivoXML.Text) + 25));
 
-       if ((Length(CNPJ) <> 11) and (Length(CNPJ) <> 14)) or (Trim(CNPJ) = '') then
+       if ((Length(CNPJ) <> 11) and (Length(CNPJ) <> 14)) then
           CNPJ := Copy(ArquivoXML.Text,
                       Pos('<Prestador><Cnpj>', ArquivoXML.Text) + 17,
                       Pos('</Cnpj>',ArquivoXML.Text) - (Pos('<Prestador><Cnpj>', ArquivoXML.Text) + 17));
 
-       if ((Length(CNPJ) <> 11) and (Length(CNPJ) <> 14)) or (Trim(CNPJ) = '') then
+       if ((Length(CNPJ) <> 11) and (Length(CNPJ) <> 14)) then
           CNPJ:= Copy(ArquivoXML.Text,
                       Pos('<Prestador><Cpf>', ArquivoXML.Text) + 16,
                       Pos('</Cpf>',ArquivoXML.Text) - (Pos('<Prestador><Cpf>', ArquivoXML.Text) + 16));
