@@ -112,7 +112,7 @@ begin
   3139607: ConfigURL.ProNomeCidade := 'mantena';            // Mantena/MG
   3169307: ConfigURL.ProNomeCidade := 'trescoracoes';       // Três Corações/MG
   3502101: ConfigURL.ProNomeCidade := 'andradina';          // Andradina/SP
-  3502507: ConfigURL.ProNomeCidade := 'aparecidasp';        // Aparecida/SP
+  3502507: ConfigURL.ProNomeCidade := 'aparecida';          // Aparecida/SP
   3522307: ConfigURL.ProNomeCidade := 'itapetininga';       // Itapetininga/SP
   3524402: ConfigURL.ProNomeCidade := 'jacarei';            // Jacareí/SP
   3524709: ConfigURL.ProNomeCidade := 'jaguariuna';         // Jaguariúna/SP
