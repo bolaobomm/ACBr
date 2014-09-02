@@ -58,7 +58,7 @@ uses {$IFNDEF ACBrNFeOpenSSL}ACBrCAPICOM_TLB, ACBrMSXML2_TLB, JwaWinCrypt, {$END
   {$IFDEF FPC}
      LResources, Controls, Graphics, Dialogs, strutils,
   {$ELSE}
-     StrUtils,
+     StrUtils, Activex,
   {$ENDIF}
   ACBrNFeConfiguracoes, pcnConversao, pcnNFe, ACBrDFeUtil;
 
@@ -2211,6 +2211,8 @@ var
  dsigKey   : IXMLDSigKey;
  signedKey : IXMLDSigKey;
 begin
+  CoInitialize(nil);
+  try
    if Pos('<Signature',XML) <= 0 then
    begin
       Tipo := NotaUtil.IdentificaTipoSchema(XML,I);
@@ -2342,6 +2344,9 @@ begin
    xmldsig   := nil;
 
    Result := True;
+  finally
+   CoUninitialize;
+  end;
 end;
 {$ENDIF}
 
