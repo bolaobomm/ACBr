@@ -98,7 +98,6 @@ type
     class function GetURLAM(AAmbiente: Integer; ALayOut: TLayOut; AModeloDF: TpcnModeloDF = moNFe; AVersaoDF: TpcnVersaoDF = ve200): WideString;   //atualizado 2.0 Homologação e Produção
     class function GetURLBA(AAmbiente: Integer; ALayOut: TLayOut; AModeloDF: TpcnModeloDF = moNFe; AVersaoDF: TpcnVersaoDF = ve200): WideString;   //atualizado 2.0 Homologação e Produção
     class function GetURLCE(AAmbiente: Integer; ALayOut: TLayOut; AModeloDF: TpcnModeloDF = moNFe; AVersaoDF: TpcnVersaoDF = ve200): WideString;   //atualizado 2.0 Homologação e Produção
-    class function GetURLES(AAmbiente: Integer; ALayOut: TLayOut; AModeloDF: TpcnModeloDF = moNfe; AVersaoDF: TpcnVersaoDF = ve200): WideString;
     class function GetURLGO(AAmbiente: Integer; ALayOut: TLayOut; AModeloDF: TpcnModeloDF = moNFe; AVersaoDF: TpcnVersaoDF = ve200): WideString;   //atualizado 2.0 Homologação e Produção
     class function GetURLMT(AAmbiente: Integer; ALayOut: TLayOut; AModeloDF: TpcnModeloDF = moNFe; AVersaoDF: TpcnVersaoDF = ve200): WideString;   //atualizado 2.0 Homologação e Produção
     class function GetURLMS(AAmbiente: Integer; ALayOut: TLayOut; AModeloDF: TpcnModeloDF = moNFe; AVersaoDF: TpcnVersaoDF = ve200): WideString;   //atualizado 2.0 Homologação e Produção
@@ -129,6 +128,7 @@ type
     class function ChaveAcesso(AUF:Integer; ADataEmissao:TDateTime; ACNPJ:String; ASerie:Integer;
                                ANumero,ACodigo: Integer; AModelo:Integer=55): String;
     class function ExtraiCNPJChaveAcesso(AChaveNFE: String): String;
+    class function ExtraiModeloChaveAcesso(AChaveNFE: String): String;
 
 //    class function LasString(AString: String): String;
 //    class function EstaVazio(const AValue: String): Boolean;overload;
@@ -395,11 +395,21 @@ end;
 
 class function NotaUtil.ExtraiCNPJChaveAcesso(AChaveNFE: String): String;
 begin
-  if ValidarChave(AChaveNFe) then
+  AChaveNFE := OnlyNumber(AChaveNFE);
+  if ValidarChave('NFe'+AChaveNFe) then
      Result := copy(AChaveNFE,7,14)
   else
      Result := '';
 end;
+
+class function NotaUtil.ExtraiModeloChaveAcesso(AChaveNFE: String): String;
+begin
+  AChaveNFE := OnlyNumber(AChaveNFE);
+  if ValidarChave('NFe'+AChaveNFe) then
+     Result := copy(AChaveNFE,21,2)
+  else
+     Result := '';
+end;     
 
 (*
 class function NotaUtil.PosEx(const SubStr, S: AnsiString; Offset: Cardinal = 1): Integer;
@@ -900,7 +910,6 @@ begin
 //  (12,27,16,13,29,23,53,32,52,21,51,50,31,15,25,41,26,22,33,24,43,11,14,42,35,28,17);
 
 case FormaEmissao of
-  // 1 = Normal, 2 = Contingência FS-IA, 3 = SCAN, 4 = DPEC / EPEC, 5 = Contingência FS-DA, 9 = Contingência Off-Line (NFC-e)
   1,2,4,5,9 : begin
        case ALayOut of
          LayNfeEnvDPEC      : Result := DFeUtil.SeSenao(AAmbiente=1, 'https://www.nfe.fazenda.gov.br/SCERecepcaoRFB/SCERecepcaoRFB.asmx',   'https://hom.nfe.fazenda.gov.br/SCERecepcaoRFB/SCERecepcaoRFB.asmx');
@@ -937,28 +946,27 @@ case FormaEmissao of
 //         21: Result := NotaUtil.GetURLSVAN(AAmbiente, ALayOut, AModeloDF, AVersaoDF); //MA
          21: begin
                if AModeloDF = moNFCe then
-                 Result := NotaUtil.GetURLSVRS(AAmbiente, ALayOut, AModeloDF, AVersaoDF)  //MA
+                 Result := NotaUtil.GetURLSVRS(AAmbiente,ALayOut, AModeloDF, AVersaoDF)  //MA
                else
-                 Result := NotaUtil.GetURLSVAN(AAmbiente, ALayOut, AModeloDF, AVersaoDF); //MA
+                 Result := NotaUtil.GetURLSVAN(AAmbiente,ALayOut, AModeloDF, AVersaoDF); //MA
              end;
-
-         51: Result := NotaUtil.GetURLMT(AAmbiente, ALayOut, AModeloDF, AVersaoDF);   //MT
-         50: Result := NotaUtil.GetURLMS(AAmbiente, ALayOut, AModeloDF, AVersaoDF);   //MS
-         31: Result := NotaUtil.GetURLMG(AAmbiente, ALayOut, AModeloDF, AVersaoDF);   //MG
-         15: Result := NotaUtil.GetURLSVAN(AAmbiente, ALayOut, AModeloDF, AVersaoDF); //PA
-         25: Result := NotaUtil.GetURLSVRS(AAmbiente, ALayOut, AModeloDF, AVersaoDF); //PB
-         41: Result := NotaUtil.GetURLPR(AAmbiente, ALayOut, AModeloDF, AVersaoDF);   //PR
-         26: Result := NotaUtil.GetURLPE(AAmbiente, ALayOut, AModeloDF, AVersaoDF);   //PE
-         22: Result := NotaUtil.GetURLSVAN(AAmbiente, ALayOut, AModeloDF, AVersaoDF); //PI
-         33: Result := NotaUtil.GetURLSVRS(AAmbiente, ALayOut, AModeloDF, AVersaoDF); //RJ
-         24: Result := NotaUtil.GetURLSVRS(AAmbiente, ALayOut, AModeloDF, AVersaoDF); //RN
-         43: Result := NotaUtil.GetURLRS(AAmbiente, ALayOut, AModeloDF, AVersaoDF);   //RS
-         11: Result := NotaUtil.GetURLSVRS(AAmbiente, ALayOut, AModeloDF, AVersaoDF); //RO
-         14: Result := NotaUtil.GetURLSVRS(AAmbiente, ALayOut, AModeloDF, AVersaoDF); //RR
-         42: Result := NotaUtil.GetURLSVRS(AAmbiente, ALayOut, AModeloDF, AVersaoDF); //SC
-         35: Result := NotaUtil.GetURLSP(AAmbiente, ALayOut, AModeloDF, AVersaoDF);   //SP
-         28: Result := NotaUtil.GetURLSVRS(AAmbiente, ALayOut, AModeloDF, AVersaoDF); //SE
-         17: Result := NotaUtil.GetURLSVRS(AAmbiente, ALayOut, AModeloDF, AVersaoDF); //TO
+         51: Result := NotaUtil.GetURLMT(AAmbiente,ALayOut, AModeloDF, AVersaoDF);   //MT
+         50: Result := NotaUtil.GetURLMS(AAmbiente,ALayOut, AModeloDF, AVersaoDF);   //MS
+         31: Result := NotaUtil.GetURLMG(AAmbiente,ALayOut, AModeloDF, AVersaoDF);   //MG
+         15: Result := NotaUtil.GetURLSVAN(AAmbiente,ALayOut, AModeloDF, AVersaoDF); //PA
+         25: Result := NotaUtil.GetURLSVRS(AAmbiente,ALayOut, AModeloDF, AVersaoDF); //PB
+         41: Result := NotaUtil.GetURLPR(AAmbiente,ALayOut, AModeloDF, AVersaoDF);   //PR
+         26: Result := NotaUtil.GetURLPE(AAmbiente,ALayOut, AModeloDF, AVersaoDF);   //PE
+         22: Result := NotaUtil.GetURLSVAN(AAmbiente,ALayOut, AModeloDF, AVersaoDF); //PI
+         33: Result := NotaUtil.GetURLSVRS(AAmbiente,ALayOut, AModeloDF, AVersaoDF); //RJ
+         24: Result := NotaUtil.GetURLSVRS(AAmbiente,ALayOut, AModeloDF, AVersaoDF); //RN
+         43: Result := NotaUtil.GetURLRS(AAmbiente,ALayOut, AModeloDF, AVersaoDF);   //RS
+         11: Result := NotaUtil.GetURLSVRS(AAmbiente,ALayOut, AModeloDF, AVersaoDF); //RO
+         14: Result := NotaUtil.GetURLSVRS(AAmbiente,ALayOut, AModeloDF, AVersaoDF); //RR
+         42: Result := NotaUtil.GetURLSVRS(AAmbiente,ALayOut, AModeloDF, AVersaoDF); //SC
+         35: Result := NotaUtil.GetURLSP(AAmbiente,ALayOut, AModeloDF, AVersaoDF);   //SP
+         28: Result := NotaUtil.GetURLSVRS(AAmbiente,ALayOut, AModeloDF, AVersaoDF); //SE
+         17: Result := NotaUtil.GetURLSVRS(AAmbiente,ALayOut, AModeloDF, AVersaoDF); //TO
        end;
       end;
   3 : begin
@@ -1609,7 +1617,7 @@ begin
       else schema_filename := '';
     end;
    end
-  else
+  else 
    begin
     case Tipo of
       1: schema_filename := DFeUtil.SeSenao(DFeUtil.EstaVazio(APathSchemas),PathWithDelim(ExtractFileDir(DFeUtil.PathAplication))+
@@ -2009,20 +2017,20 @@ begin
             if lTipoEvento = '110111' then
               Result := 6 // Cancelamento
             else if lTipoEvento = '210200' then
-              Result := 7 // Manif. Destinatario: Confirmação da Operação
+              Result := 7 //Manif. Destinatario: Confirmação da Operação
             else if lTipoEvento = '210210' then
-              Result := 8 // Manif. Destinatario: Ciência da Operação Realizada
+              Result := 8 //Manif. Destinatario: Ciência da Operação Realizada
             else if lTipoEvento = '210220' then
-              Result := 9 // Manif. Destinatario: Desconhecimento da Operação
+              Result := 9 //Manif. Destinatario: Desconhecimento da Operação
             else if lTipoEvento = '210240' then
               Result := 10 // Manif. Destinatario: Operação não Realizada
             else if lTipoEvento = '110140' then
               Result := 11 // EPEC
             else
-              Result := 5; // Carta de Correção Eletrônica
+              Result := 5; //Carta de Correção Eletrônica
           end
           else
-            Result := 4; // DPEC
+            Result := 4; //DPEC
          end;
      end;
    end;
@@ -2628,10 +2636,10 @@ end;
 class function NotaUtil.GetURLConsultaNFCe(const AUF : Integer; AAmbiente : TpcnTipoAmbiente) : String;
 begin
   case AUF of
-   12: Result := DFeUtil.SeSenao(AAmbiente = taProducao, 'http://www.sefaznet.ac.gov.br/nfce/', 'http://hml.sefaznet.ac.gov.br/nfce/'); // AC
+   12: Result := DFeUtil.SeSenao(AAmbiente = taProducao, 'http://www.sefaznet.ac.gov.br/nfce/', 'http://hml.sefaznet.ac.gov.br/nfce/'); //AC
    27: Result := DFeUtil.SeSenao(AAmbiente = taProducao, '', ''); //AL
    16: Result := DFeUtil.SeSenao(AAmbiente = taProducao, '', ''); //AP
-   13: Result := DFeUtil.SeSenao(AAmbiente = taProducao, 'http://sistemas.sefaz.am.gov.br/nfceweb/formConsulta.do', 'http://homnfce.sefaz.am.gov.br/nfceweb/formConsulta.do'); // AM
+   13: Result := DFeUtil.SeSenao(AAmbiente = taProducao, 'http://sistemas.sefaz.am.gov.br/nfceweb/formConsulta.do', 'http://homnfce.sefaz.am.gov.br/nfceweb/formConsulta.do'); //AM
    29: Result := DFeUtil.SeSenao(AAmbiente = taProducao, '', ''); //BA
    23: Result := DFeUtil.SeSenao(AAmbiente = taProducao, '', ''); //CE
    53: Result := DFeUtil.SeSenao(AAmbiente = taProducao, '', ''); //DF
@@ -2709,18 +2717,12 @@ begin
 
   // Passo 3 e 4
   cIdToken  := AidToken;
-
-  // Alterado por Italo em 05/06/2014
-  // Essa alteração foi feita, pois algumas UF estão gerando o Token também para o Ambiente de Homologação
-  // Neste caso o mesmo deve ser informado na propriedade Token caso contario deve-se atribuir a
-  // essa propriedade uma string vazia
-  if (AAmbiente = taHomologacao) then
-   begin
-    if (AToken = '')
-      then cTokenHom := Copy(AchNFe, 7, 8) + '20' + Copy(AchNFe, 3, 2) + Copy(cIdToken, 3, 4)
-      else cTokenHom := AToken;
-   end
-   else cTokenPro := AToken;
+  if DFeUtil.EstaVazio(AToken) then
+     cTokenHom := Copy(AchNFe, 7, 8) + '20' + Copy(AchNFe, 3, 2) + Copy(cIdToken, 3, 4)
+  else
+     cTokenHom := AToken;
+        
+  cTokenPro := AToken;
 
   sToken    := DFeUtil.SeSenao(AAmbiente = taProducao, cIdToken + cTokenPro, cIdToken + cTokenHom);
 

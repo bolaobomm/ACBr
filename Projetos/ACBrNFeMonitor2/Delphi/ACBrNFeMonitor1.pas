@@ -288,6 +288,7 @@ type
     Label50: TLabel;
     edtToken: TEdit;
     edtIdToken: TEdit;
+    cbxSepararPorCNPJ: TCheckBox;
     procedure DoACBrTimer(Sender: TObject);
     procedure edOnlyNumbers(Sender: TObject; var Key: Char);
     procedure FormCreate(Sender: TObject);
@@ -822,7 +823,7 @@ begin
      ACBrCTe1.Configuracoes.WebServices.UF         := cbUF.Text;
      ACBrCTe1.Configuracoes.WebServices.Ambiente   := StrToTpAmb(Ok,IntToStr(rgTipoAmb.ItemIndex+1));
 
-     rgTipoCancelamento.ItemIndex := Ini.ReadInteger( 'WebService','TipoCancelamento',IfThen((pos('|'+UpperCase(ACBrNFe1.Configuracoes.WebServices.UF)+'|', '|PR|ES|MA|PA|PI|RN|') <= 0),0,1)) ;
+     rgTipoCancelamento.ItemIndex := Ini.ReadInteger( 'WebService','TipoCancelamento',0) ;
 
      edtIdToken.Text := Ini.ReadString( 'NFCe', 'IdToken', '') ;     
      edtToken.Text := Ini.ReadString( 'NFCe', 'Token', '') ;
@@ -937,6 +938,7 @@ begin
      cbxAdicionaLiteral.Checked := Ini.ReadBool(   'Arquivos','AddLiteral' ,false);
      cbxEmissaoPathNFe.Checked  := Ini.ReadBool(   'Arquivos','EmissaoPathNFe',false);
      cbxSalvaCCeCancelamentoPathEvento.Checked  := Ini.ReadBool(   'Arquivos','SalvarCCeCanPathEvento',false);
+     cbxSepararPorCNPJ.Checked  := Ini.ReadBool(   'Arquivos','SepararPorCNPJ',false);
      edtPathNFe.Text            := Ini.ReadString( 'Arquivos','PathNFe'    ,'') ;
      edtPathCan.Text            := Ini.ReadString( 'Arquivos','PathCan'    ,'') ;
      edtPathInu.Text            := Ini.ReadString( 'Arquivos','PathInu'    ,'') ;
@@ -949,6 +951,7 @@ begin
      ACBrNFe1.Configuracoes.Arquivos.AdicionarLiteral := cbxAdicionaLiteral.Checked;
      ACBrNFe1.Configuracoes.Arquivos.EmissaoPathNFe   := cbxEmissaoPathNFe.Checked;
      ACBrNFe1.Configuracoes.Arquivos.SalvarCCeCanEvento := cbxSalvaCCeCancelamentoPathEvento.Checked;
+     ACBrNFe1.Configuracoes.Arquivos.SepararPorCNPJ   := cbxSepararPorCNPJ.Checked;
      ACBrNFe1.Configuracoes.Arquivos.PathNFe  := edtPathNFe.Text;
      ACBrNFe1.Configuracoes.Arquivos.PathCan  := edtPathCan.Text;
      ACBrNFe1.Configuracoes.Arquivos.PathInu  := edtPathInu.Text;
@@ -1093,6 +1096,7 @@ begin
      Ini.WriteBool(   'Arquivos','AddLiteral' ,cbxAdicionaLiteral.Checked);
      Ini.WriteBool(   'Arquivos','EmissaoPathNFe',cbxEmissaoPathNFe.Checked);
      Ini.WriteBool(   'Arquivos','SalvarCCeCanPathEvento',cbxSalvaCCeCancelamentoPathEvento.Checked);
+     Ini.WriteBool(   'Arquivos','SepararPorCNPJ',cbxSepararPorCNPJ.Checked);
      Ini.WriteString( 'Arquivos','PathNFe'    ,edtPathNFe.Text) ;
      Ini.WriteString( 'Arquivos','PathCan'    ,edtPathCan.Text) ;
      Ini.WriteString( 'Arquivos','PathInu'    ,edtPathInu.Text) ;
@@ -1898,6 +1902,7 @@ begin
      cbxAdicionaLiteral.Enabled := True;
      cbxEmissaoPathNFe.Enabled  := True;
      cbxSalvaCCeCancelamentoPathEvento.Enabled  := True;
+     cbxSepararPorCNPJ.Enabled  := True;
      edtPathNFe.Enabled   := True;
      edtPathCan.Enabled   := True;
      edtPathInu.Enabled   := True;
@@ -1916,7 +1921,8 @@ begin
      cbxPastaMensal.Enabled     := False;
      cbxAdicionaLiteral.Enabled := False;
      cbxEmissaoPathNFe.Enabled  := False;
-     cbxSalvaCCeCancelamentoPathEvento.Enabled  := True;
+     cbxSalvaCCeCancelamentoPathEvento.Enabled  := False;
+     cbxSepararPorCNPJ.Enabled  := False;     
      edtPathNFe.Enabled   := False;
      edtPathCan.Enabled   := False;
      edtPathInu.Enabled   := False;

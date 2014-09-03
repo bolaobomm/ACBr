@@ -150,8 +150,8 @@ begin
 //  FBuffer.Add(FLinhaCmd);
   FBuffer.Add(cCmdImpNegrito+FpNFe.Emit.xNome+cCmdImpFimNegrito);
   FLinhaCmd := cCmdImpNegrito+cCmdFontePequena+
-              'CNPJ:'+DFeUtil.FormatarCNPJ(FpNFe.Emit.CNPJCPF)+'   '+
-              'Inscrição Estadual:'+Trim(FpNFe.Emit.IE)+cCmdImpFimNegrito;
+              ACBrStr('CNPJ:'+DFeUtil.FormatarCNPJ(FpNFe.Emit.CNPJCPF)+'   '+
+              'Inscrição Estadual:'+Trim(FpNFe.Emit.IE))+cCmdImpFimNegrito;
   FBuffer.Add(FLinhaCmd);
 
   FBuffer.Add(cCmdFontePequena+Trim(FpNFe.Emit.EnderEmit.xLgr)+' '+
@@ -166,9 +166,9 @@ begin
   FLinhaCmd := cCmdFonteNormal+cCmdAlinhadoCentro+cCmdImpNegrito+
                  'DANFE NFC-e - Documento Auxiliar';
   FBuffer.Add(FLinhaCmd);
-  FLinhaCmd := 'da Nota Fiscal Eletrônica para Consumidor Final';
+  FLinhaCmd := ACBrStr('da Nota Fiscal Eletrônica para Consumidor Final');
   FBuffer.Add(FLinhaCmd);
-  FLinhaCmd := 'Não permite aproveitamento de crédito de ICMS'+cCmdImpFimNegrito;
+  FLinhaCmd := ACBrStr('Não permite aproveitamento de crédito de ICMS')+cCmdImpFimNegrito;
   FBuffer.Add(FLinhaCmd);
 end;
 
@@ -177,7 +177,7 @@ var
   i : integer;
 begin
   FBuffer.Add(cCmdFonteNormal+'------------------------------------------------');
-  FBuffer.Add('#|COD|DESCRIÇÃO|QTD|UN|VL UN R$|VL TOTAL R$');
+  FBuffer.Add(ACBrStr('#|COD|DESCRIÇÃO|QTD|UN|VL UN R$|VL TOTAL R$'));
   FBuffer.Add('------------------------------------------------');
 
   for i:=0 to FpNFe.Det.Count - 1 do
@@ -198,13 +198,13 @@ begin
      if FpNFe.Det.Items[i].Prod.vDesc > 0 then
       begin
         FBuffer.Add(padS('desconto|'+FormatFloat('-#,###,##0.00',FpNFe.Det.Items[i].Prod.vDesc),64, '|'));
-        FBuffer.Add(padS('valor líquido|'+FormatFloat('#,###,##0.00',(FpNFe.Det.Items[i].Prod.qCom*FpNFe.Det.Items[i].Prod.vUnCom)-FpNFe.Det.Items[i].Prod.vDesc),64, '|'));
+        FBuffer.Add(padS(ACBrStr('valor líquido|')+FormatFloat('#,###,##0.00',(FpNFe.Det.Items[i].Prod.qCom*FpNFe.Det.Items[i].Prod.vUnCom)-FpNFe.Det.Items[i].Prod.vDesc),64, '|'));
       end;
 
      if FpNFe.Det.Items[i].Prod.vOutro > 0 then
       begin
-        FBuffer.Add(padS('desconto|'+FormatFloat('-#,###,##0.00',FpNFe.Det.Items[i].Prod.vOutro),64, '|'));
-        FBuffer.Add(padS('valor líquido|'+FormatFloat('#,###,##0.00',(FpNFe.Det.Items[i].Prod.qCom*FpNFe.Det.Items[i].Prod.vUnCom)+FpNFe.Det.Items[i].Prod.vOutro),64, '|'));
+        FBuffer.Add(padS('outros|'+FormatFloat('-#,###,##0.00',FpNFe.Det.Items[i].Prod.vOutro),64, '|'));
+        FBuffer.Add(padS(ACBrStr('valor líquido|')+FormatFloat('#,###,##0.00',(FpNFe.Det.Items[i].Prod.qCom*FpNFe.Det.Items[i].Prod.vUnCom)+FpNFe.Det.Items[i].Prod.vOutro),64, '|'));
       end;
    end;
   FBuffer.Add(cCmdAlinhadoEsquerda+cCmdFonteNormal);
@@ -221,7 +221,7 @@ begin
      if FpNFe.Total.ICMSTot.vDesc > 0 then
         FBuffer.Add(cCmdFontePequena+padS('Descontos|'+FormatFloat('-#,###,##0.00',FpNFe.Total.ICMSTot.vDesc),64, '|'));
      if FpNFe.Total.ICMSTot.vOutro > 0 then
-        FBuffer.Add(cCmdFontePequena+padS('Acréscimos|'+FormatFloat('+#,###,##0.00',FpNFe.Total.ICMSTot.vOutro),64, '|'));
+        FBuffer.Add(cCmdFontePequena+padS(ACBrStr('Acréscimos|')+FormatFloat('+#,###,##0.00',FpNFe.Total.ICMSTot.vOutro),64, '|'));
    end;
 
   FLinhaCmd := cCmdAlinhadoEsquerda+cCmdImpExpandido+
@@ -253,7 +253,7 @@ procedure TACBrNFeDANFeESCPOS.GerarTotTrib;
 begin
   if FpNFe.Total.ICMSTot.vTotTrib > 0 then
    begin
-     FBuffer.Add(cCmdFontePequena+padS('Informação dos Tributos Totais Incidentes |'+cCmdImpNegrito+FormatFloat('#,###,##0.00',FpNFe.Total.ICMSTot.vTotTrib),66, '|'));
+     FBuffer.Add(cCmdFontePequena+padS(ACBrStr('Informação dos Tributos Totais Incidentes |')+cCmdImpNegrito+FormatFloat('#,###,##0.00',FpNFe.Total.ICMSTot.vTotTrib),66, '|'));
      FBuffer.Add(cCmdImpFimNegrito+'(Lei Federal 12.741/2012)');
      FBuffer.Add(cCmdFonteNormal+'------------------------------------------------');
    end;
@@ -264,24 +264,24 @@ begin
   if FpNFe.ide.tpAmb = taHomologacao then
    begin
      FLinhaCmd := cCmdFontePequena+cCmdAlinhadoCentro+cCmdImpNegrito+
-                 'EMITIDA EM AMBIENTE DE HOMOLOGAÇÃO - SEM VALOR FISCAL';
+                 ACBrStr('EMITIDA EM AMBIENTE DE HOMOLOGAÇÃO - SEM VALOR FISCAL');
    end
   else
    begin
      if FpNFe.Ide.tpEmis <> teNormal then
         FLinhaCmd := cCmdFonteNormal+cCmdAlinhadoCentro+cCmdImpNegrito+
-                 'EMITIDA EM CONTINGÊNCIA'
+                 ACBrStr('EMITIDA EM CONTINGÊNCIA')
      else
         FLinhaCmd := cCmdFonteNormal+cCmdAlinhadoCentro+cCmdImpNegrito+
-                 'ÁREA DE MENSAGEM FISCAL';
+                 ACBrStr('ÁREA DE MENSAGEM FISCAL');
    end;
 
   FBuffer.Add(FLinhaCmd);
 
   FLinhaCmd := cCmdImpFimNegrito+cCmdFontePequena+cCmdAlinhadoCentro+
-               'Número '+IntToStrZero(FpNFe.Ide.nNF,9)+
+               ACBrStr('Número '+IntToStrZero(FpNFe.Ide.nNF,9)+
                ' Série '+IntToStrZero(FpNFe.Ide.serie,3)+
-               ' Emissão '+DateTimeToStr(FpNFe.ide.dEmi) ;
+               ' Emissão '+DateTimeToStr(FpNFe.ide.dEmi)) ;
   FBuffer.Add(FLinhaCmd);
   FBuffer.Add(cCmdAlinhadoCentro+cCmdFontePequena+'Consulte pela Chave de Acesso em '+NotaUtil.GetURLConsultaNFCe(FpNFe.Ide.cUF,FpNFe.ide.tpAmb));
   FBuffer.Add(cCmdAlinhadoCentro+cCmdFonteNormal+'CHAVE DE ACESSO');
@@ -382,7 +382,7 @@ begin
 
   FBuffer.Add('');
   FBuffer.Add('');
-  FBuffer.Add(cCmdFontePequena+'Protocolo de Autorização:'+Trim(FpNFe.procNFe.nProt)+' '+DFeUtil.SeSenao(FpNFe.procNFe.dhRecbto<>0,DateTimeToStr(FpNFe.procNFe.dhRecbto),'')+cCmdFonteNormal);
+  FBuffer.Add(cCmdFontePequena+ACBrStr('Protocolo de Autorização:'+Trim(FpNFe.procNFe.nProt)+' '+DFeUtil.SeSenao(FpNFe.procNFe.dhRecbto<>0,DateTimeToStr(FpNFe.procNFe.dhRecbto),''))+cCmdFonteNormal);
   FBuffer.Add('');
   FBuffer.Add('');
   FBuffer.Add('');
@@ -419,7 +419,7 @@ begin
   if NFe = nil then
    begin
      if not Assigned(ACBrNFe) then
-        raise Exception.Create('Componente ACBrNFe não atribuído');
+        raise Exception.Create(ACBrStr('Componente ACBrNFe não atribuído'));
 
      FpNFe := TACBrNFe(ACBrNFe).NotasFiscais.Items[0].NFe;
    end
@@ -443,7 +443,7 @@ begin
   if NFe = nil then
    begin
      if not Assigned(ACBrNFe) then
-        raise Exception.Create('Componente ACBrNFe não atribuído');
+        raise Exception.Create(ACBrStr('Componente ACBrNFe não atribuído'));
 
      FpNFe := TACBrNFe(ACBrNFe).NotasFiscais.Items[0].NFe;
    end

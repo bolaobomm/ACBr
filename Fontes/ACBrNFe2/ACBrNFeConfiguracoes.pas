@@ -182,6 +182,7 @@ type
     FLiteral  : Boolean;
     FEmissaoPathNFe  : Boolean;
     FSalvarEvento : Boolean;
+    FSepararCNPJ : Boolean;
     FPathNFe  : String;
     FPathCan  : String;
     FPathInu  : String;
@@ -191,19 +192,20 @@ type
     FPathEvento  : String;
   public
     constructor Create(AOwner: TComponent); override;
-    function GetPathCan(Data : TDateTime = 0): String;
-    function GetPathDPEC(Data : TDateTime = 0): String;
-    function GetPathInu(Data : TDateTime = 0): String;
-    function GetPathNFe(Data : TDateTime = 0): String;
-    function GetPathCCe(Data : TDateTime = 0): String;
-    function GetPathMDe(Data : TDateTime = 0): String;
-    function GetPathEvento(tipoEvento : TpcnTpEvento; Data : TDateTime = 0): String;
+    function GetPathCan(CNPJ : String = ''): String;
+    function GetPathDPEC(CNPJ : String = ''): String;
+    function GetPathInu(CNPJ : String = ''): String;
+    function GetPathNFe(Data : TDateTime = 0; CNPJ : String = ''): String;
+    function GetPathCCe(CNPJ : String = ''): String;
+    function GetPathMDe(CNPJ : String = ''): String;
+    function GetPathEvento(tipoEvento : TpcnTpEvento; CNPJ : String = ''): String;
   published
     property Salvar     : Boolean read FSalvar  write FSalvar  default False;
     property PastaMensal: Boolean read FMensal  write FMensal  default False;
     property AdicionarLiteral: Boolean read FLiteral write FLiteral default False;
     property EmissaoPathNFe: Boolean read FEmissaoPathNFe write FEmissaoPathNFe default False;
     property SalvarCCeCanEvento: Boolean read FSalvarEvento write FSalvarEvento default False;
+    property SepararPorCNPJ: Boolean read FSepararCNPJ write FSepararCNPJ default False ;
     property PathNFe : String read FPathNFe  write FPathNFe;
     property PathCan : String read FPathCan  write FPathCan;
     property PathInu : String read FPathInu  write FPathInu;
@@ -373,18 +375,11 @@ procedure TGeralConf.SetModeloDF(AValue: TpcnModeloDF);
 begin
   FModeloDF := AValue;
   FModeloDFCodigo := StrToInt(ModeloDFToStr(FModeloDF));
-
-  if FModeloDF = moNFe then
-    SetVersaoDF(ve200)
-  else
-    SetVersaoDF(ve300);
 end;
 
 procedure TGeralConf.SetVersaoDF(const Value: TpcnVersaoDF);
 begin
   FVersaoDF := Value;
-  if (FModeloDF = moNFe) and (FVersaoDF = ve300) then FVersaoDF := ve200;
-  if (FModeloDF = moNFCe) and (FVersaoDF = ve200) then FVersaoDF := ve300;
 end;
 
 { TWebServicesConf }
@@ -537,20 +532,20 @@ begin
          if (Pos('2.16.76.1.3.3',Propriedades) > 0) then
           begin
             Lista := TStringList.Create;
-			try
-            Lista.Text := Propriedades;
-             for K:=0 to Lista.Count-1 do
-              begin
-               if (Pos('2.16.76.1.3.3',Lista.Strings[K]) > 0) then
+			      try
+               Lista.Text := Propriedades;
+               for K:=0 to Lista.Count-1 do
                 begin
-                  FCNPJ := StringReplace(Lista.Strings[K],'2.16.76.1.3.3=','',[rfIgnoreCase]);
-                  FCNPJ := OnlyNumber(HexToAscii(RemoveString(' ',FCNPJ)));
-                  break;
+                  if (Pos('2.16.76.1.3.3',Lista.Strings[K]) > 0) then
+                   begin
+                     FCNPJ := StringReplace(Lista.Strings[K],'2.16.76.1.3.3=','',[rfIgnoreCase]);
+                     FCNPJ := OnlyNumber(HexToAscii(RemoveString(' ',FCNPJ)));
+                     break;
+                   end;
                 end;
-              end;
-			finally
-			  Lista.free;
-			end;
+			      finally
+			         Lista.free;
+       			end;
             break;
           end;
          Extension := nil;
@@ -647,20 +642,23 @@ begin
   inherited;
 end;
 
-function TArquivosConf.GetPathCan(Data : TDateTime = 0): String;
+function TArquivosConf.GetPathCan(CNPJ : String = ''): String;
 var
   wDia, wMes, wAno : Word;
   Dir : String;
+  Data : TDateTime;
 begin
   if DFeUtil.EstaVazio(FPathCan) then
      Dir := TConfiguracoes( Self.Owner ).Geral.PathSalvar
   else
      Dir := FPathCan;
 
+  if FSepararCNPJ then
+     Dir := PathWithDelim(Dir)+TConfiguracoes( Self.Owner ).Certificados.CNPJ;
+
   if FMensal then
    begin
-     if Data = 0 then
-        Data := Now;
+     Data := Now;
      DecodeDate(Data, wAno, wMes, wDia);
      if Pos(IntToStr(wAno)+IntToStrZero(wMes,2),Dir) <= 0 then
         Dir := PathWithDelim(Dir)+IntToStr(wAno)+IntToStrZero(wMes,2);
@@ -678,20 +676,23 @@ begin
   Result  := Dir;
 end;
 
-function TArquivosConf.GetPathCCe(Data : TDateTime = 0): String;
+function TArquivosConf.GetPathCCe(CNPJ : String = ''): String;
 var
   wDia, wMes, wAno : Word;
   Dir : String;
+  Data : TDateTime;
 begin
   if DFeUtil.EstaVazio(FPathCCe) then
      Dir := TConfiguracoes( Self.Owner ).Geral.PathSalvar
   else
      Dir := FPathCCe;
 
+  if FSepararCNPJ then
+     Dir := PathWithDelim(Dir)+TConfiguracoes( Self.Owner ).Certificados.CNPJ;
+
   if FMensal then
    begin
-     if Data = 0 then
-        Data := Now;
+     Data := Now;
      DecodeDate(Data, wAno, wMes, wDia);
      if Pos(IntToStr(wAno)+IntToStrZero(wMes,2),Dir) <= 0 then
         Dir := PathWithDelim(Dir)+IntToStr(wAno)+IntToStrZero(wMes,2);
@@ -709,20 +710,23 @@ begin
   Result  := Dir;
 end;
 
-function TArquivosConf.GetPathDPEC(Data : TDateTime = 0): String;
+function TArquivosConf.GetPathDPEC(CNPJ : String = ''): String;
 var
   wDia, wMes, wAno : Word;
   Dir : String;
+  Data : TDateTime;
 begin
   if DFeUtil.EstaVazio(FPathDPEC) then
      Dir := TConfiguracoes( Self.Owner ).Geral.PathSalvar
   else
      Dir := FPathDPEC;
 
+  if FSepararCNPJ then
+     Dir := PathWithDelim(Dir)+TConfiguracoes( Self.Owner ).Certificados.CNPJ;
+
   if FMensal then
    begin
-     if Data = 0 then
-        Data := Now;
+     Data := Now;
      DecodeDate(Data, wAno, wMes, wDia);
      if Pos(IntToStr(wAno)+IntToStrZero(wMes,2),Dir) <= 0 then
         Dir := PathWithDelim(Dir)+IntToStr(wAno)+IntToStrZero(wMes,2);
@@ -740,20 +744,23 @@ begin
   Result  := Dir;
 end;
 
-function TArquivosConf.GetPathEvento(tipoEvento : TpcnTpEvento; Data : TDateTime = 0): String;
+function TArquivosConf.GetPathEvento(tipoEvento : TpcnTpEvento; CNPJ : String = ''): String;
 var
   wDia, wMes, wAno : Word;
   Dir : String;
+  Data : TDateTime;
 begin
   if DFeUtil.EstaVazio(FPathEvento) then
      Dir := TConfiguracoes( Self.Owner ).Geral.PathSalvar
   else
      Dir := FPathEvento;
 
+  if FSepararCNPJ then
+     Dir := PathWithDelim(Dir)+TConfiguracoes( Self.Owner ).Certificados.CNPJ;     
+
   if FMensal then
    begin
-     if Data = 0 then
-        Data := Now;
+     Data := Now;
      DecodeDate(Data, wAno, wMes, wDia);
      if Pos(IntToStr(wAno)+IntToStrZero(wMes,2),Dir) <= 0 then
         Dir := PathWithDelim(Dir)+IntToStr(wAno)+IntToStrZero(wMes,2);
@@ -781,20 +788,23 @@ begin
 end;
 
 
-function TArquivosConf.GetPathInu(Data : TDateTime = 0): String;
+function TArquivosConf.GetPathInu(CNPJ : String = ''): String;
 var
   wDia, wMes, wAno : Word;
   Dir : String;
+  Data : TDateTime;
 begin
   if DFeUtil.EstaVazio(FPathInu) then
      Dir := TConfiguracoes( Self.Owner ).Geral.PathSalvar
   else
      Dir := FPathInu;
 
+  if FSepararCNPJ then
+     Dir := PathWithDelim(Dir)+TConfiguracoes( Self.Owner ).Certificados.CNPJ;
+
   if FMensal then
    begin
-     if Data = 0 then
-        Data := Now;
+     Data := Now;
      DecodeDate(Data, wAno, wMes, wDia);
      if Pos(IntToStr(wAno)+IntToStrZero(wMes,2),Dir) <= 0 then
         Dir := PathWithDelim(Dir)+IntToStr(wAno)+IntToStrZero(wMes,2);
@@ -812,20 +822,23 @@ begin
   Result  := Dir;
 end;
 
-function TArquivosConf.GetPathMDe(Data : TDateTime = 0): String;
+function TArquivosConf.GetPathMDe(CNPJ : String = ''): String;
 var
   wDia, wMes, wAno : Word;
   Dir : String;
+  Data : TDateTime;
 begin
   if DFeUtil.EstaVazio(FPathMDe) then
      Dir := TConfiguracoes( Self.Owner ).Geral.PathSalvar
   else
      Dir := FPathMDe;
 
+  if FSepararCNPJ then
+     Dir := PathWithDelim(Dir)+TConfiguracoes( Self.Owner ).Certificados.CNPJ;
+
   if FMensal then
    begin
-     if Data = 0 then
-        Data := Now;
+     Data := Now;
      DecodeDate(Data, wAno, wMes, wDia);
      if Pos(IntToStr(wAno)+IntToStrZero(wMes,2),Dir) <= 0 then
         Dir := PathWithDelim(Dir)+IntToStr(wAno)+IntToStrZero(wMes,2);
@@ -843,7 +856,7 @@ begin
   Result  := Dir;
 end;
 
-function TArquivosConf.GetPathNFe(Data : TDateTime = 0): String;
+function TArquivosConf.GetPathNFe(Data : TDateTime = 0; CNPJ : String = ''): String;
 var
   wDia, wMes, wAno : Word;
   Dir : String;
@@ -852,6 +865,9 @@ begin
      Dir := TConfiguracoes( Self.Owner ).Geral.PathSalvar
   else
      Dir := FPathNFe;
+
+  if FSepararCNPJ then
+     Dir := PathWithDelim(Dir)+TConfiguracoes( Self.Owner ).Certificados.CNPJ;     
 
   if FMensal then
    begin

@@ -4573,7 +4573,7 @@ object frmAcbrNfeMonitor: TfrmAcbrNfeMonitor
           Top = 0
           Width = 561
           Height = 230
-          ActivePage = tsWSNFCe
+          ActivePage = tsWSNFeCTe
           Align = alClient
           Style = tsFlatButtons
           TabOrder = 0
@@ -4792,14 +4792,18 @@ object frmAcbrNfeMonitor: TfrmAcbrNfeMonitor
               Width = 250
               Height = 69
               Caption = 'Forma de Emiss'#227'o'
-              Columns = 2
+              Columns = 3
               ItemIndex = 0
               Items.Strings = (
                 'Normal'
                 'Conting'#234'ncia'
                 'SCAN'
                 'DPEC'
-                'FSDA')
+                'FSDA'
+                'SVC-AN'
+                'SVC-RS'
+                'SVC-SP'
+                'OffLine')
               TabOrder = 2
             end
             object gbxRetornoEnvio: TGroupBox
@@ -5758,6 +5762,15 @@ object frmAcbrNfeMonitor: TfrmAcbrNfeMonitor
           Enabled = False
           TabOrder = 11
         end
+        object cbxSepararPorCNPJ: TCheckBox
+          Left = 288
+          Top = 40
+          Width = 233
+          Height = 17
+          Caption = 'Separar Arqs pelo CNPJ do Certificado'
+          Enabled = False
+          TabOrder = 12
+        end
       end
       object Testes: TTabSheet
         Caption = 'Testes'
@@ -6461,6 +6474,7 @@ object frmAcbrNfeMonitor: TfrmAcbrNfeMonitor
     ImprimirDetalhamentoEspecifico = True
     NFeCancelada = False
     LocalImpCanhoto = 0
+    ImprimeItens = True
     EspessuraBorda = 1
     TamanhoFonte_RazaoSocial = 12
     TamanhoFonte_ANTT = 10
@@ -6490,7 +6504,9 @@ object frmAcbrNfeMonitor: TfrmAcbrNfeMonitor
     ImprimirDetalhamentoEspecifico = True
     NFeCancelada = False
     LocalImpCanhoto = 0
+    ImprimeItens = True
     TamanhoCampoCodigo = 0
+    TamanhoCampoVlUnit = 0
     TamanhoFonte_ANTT = 10
     Fonte = ftTimes
     EspessuraBorda = 1

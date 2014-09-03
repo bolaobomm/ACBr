@@ -561,7 +561,7 @@ uses {$IFDEF ACBrNFeOpenSSL}
      pcnRetEnvNFe, pcnConsReciNFe ,
      pcnConsCad,
      pcnNFeR, pcnLeitor,
-     pcnEnvDPEC, pcnConsDPEC, Math, pcnEventoNFe;
+     pcnEnvDPEC, pcnConsDPEC,  pcnEventoNFe, StrUtils;
 
 {$IFNDEF ACBrNFeOpenSSL}
 const
@@ -658,6 +658,7 @@ end;
 procedure TWebServicesBase.DoNFeCancelamento;
 var
   CancNFe: TcancNFe;
+  ok : Boolean;
 begin
   CancNFe := TcancNFe.Create;
   CancNFe.schema  := TsPL006;
@@ -665,6 +666,8 @@ begin
   CancNFe.tpAmb   := TpcnTipoAmbiente(FConfiguracoes.WebServices.AmbienteCodigo-1);
   CancNFe.nProt   := TNFeCancelamento(Self).Protocolo;
   CancNFe.xJust   := TNFeCancelamento(Self).Justificativa;
+
+  FConfiguracoes.Geral.ModeloDF := StrToModeloDF(ok,NotaUtil.ExtraiModeloChaveAcesso(CancNFe.chNFe));
 
   CancNFe.Versao := GetVersaoNFe(FConfiguracoes.Geral.ModeloDF,
                                  FConfiguracoes.Geral.VersaoDF,
@@ -829,11 +832,14 @@ end;
 procedure TWebServicesBase.DoNFeConsulta;
 var
   ConsSitNFe : TConsSitNFe;
+  ok : Boolean;
 begin
   ConsSitNFe    := TConsSitNFe.Create;
   ConsSitNFe.schema := TsPL006;
   ConsSitNFe.TpAmb := TpcnTipoAmbiente(FConfiguracoes.WebServices.AmbienteCodigo-1);
   ConsSitNFe.chNFe  := TNFeConsulta(Self).NFeChave;
+
+  FConfiguracoes.Geral.ModeloDF := StrToModeloDF(ok,NotaUtil.ExtraiModeloChaveAcesso(ConsSitNFe.chNFe));
 
   ConsSitNFe.Versao := GetVersaoNFe(FConfiguracoes.Geral.ModeloDF,
                                      FConfiguracoes.Geral.VersaoDF,
@@ -852,6 +858,7 @@ end;
 procedure TWebServicesBase.DoNFeInutilizacao;
 var
   InutNFe: TinutNFe;
+  ok: boolean;
 begin
   InutNFe := TinutNFe.Create;
   InutNFe.schema  := TsPL006;
@@ -864,6 +871,8 @@ begin
   InutNFe.nNFIni  := TNFeInutilizacao(Self).NumeroInicial;
   InutNFe.nNFFin  := TNFeInutilizacao(Self).NumeroFinal;
   InutNFe.xJust   := TNFeInutilizacao(Self).Justificativa;
+
+ FConfiguracoes.Geral.ModeloDF := StrToModeloDF(ok,InutNFe.modelo);
 
   InutNFe.Versao := GetVersaoNFe(FConfiguracoes.Geral.ModeloDF,
                                  FConfiguracoes.Geral.VersaoDF,
@@ -989,6 +998,7 @@ end;
 procedure TWebServicesBase.DoNFeConsultaDPEC;
 var
   ConsDPEC: TConsDPEC;
+  ok : Boolean;
 begin
   ConsDPEC := TConsDPEC.Create;
   ConsDPEC.schema   := TsPL005c;
@@ -996,6 +1006,8 @@ begin
   ConsDPEC.verAplic := NfVersao;
   ConsDPEC.nRegDPEC := TNFeConsultaDPEC(Self).nRegDPEC;
   ConsDPEC.chNFe    := TNFeConsultaDPEC(Self).NFeChave;
+
+  FConfiguracoes.Geral.ModeloDF := StrToModeloDF(ok,NotaUtil.ExtraiModeloChaveAcesso(ConsDPEC.chNFe));
 
   ConsDPEC.Versao := GetVersaoNFe(FConfiguracoes.Geral.ModeloDF,
                                  FConfiguracoes.Geral.VersaoDF,
@@ -1599,7 +1611,7 @@ var
   NFeRetorno: TRetConsStatServ;
   aMsg: string;
   Texto : String;
-  Acao  : TStringList;
+  Acao  : TStringList ;
   Stream: TMemoryStream;
   StrStream: TStringStream;
 
@@ -2045,10 +2057,13 @@ begin
              if FConfiguracoes.Arquivos.Salvar then
               begin
                 if FConfiguracoes.Arquivos.EmissaoPathNFe then
-                   TACBrNFe( FACBrNFe ).NotasFiscais.Items[i].SaveToFile(PathWithDelim(FConfiguracoes.Arquivos.GetPathNFe(TACBrNFe( FACBrNFe ).NotasFiscais.Items[i].NFe.Ide.dEmi))+StringReplace(TACBrNFe( FACBrNFe ).NotasFiscais.Items[i].NFe.InfNFe.Id,'NFe','',[rfIgnoreCase])+'-nfe.xml')
+                   TACBrNFe( FACBrNFe ).NotasFiscais.Items[i].SaveToFile(PathWithDelim(FConfiguracoes.Arquivos.GetPathNFe(TACBrNFe( FACBrNFe ).NotasFiscais.Items[i].NFe.Ide.dEmi,
+                                                                                                                          TACBrNFe( FACBrNFe ).NotasFiscais.Items[i].NFe.Emit.CNPJCPF))
+                                                                                                                          +StringReplace(TACBrNFe( FACBrNFe ).NotasFiscais.Items[i].NFe.InfNFe.Id,'NFe','',[rfIgnoreCase])+'-nfe.xml')
                 else
-                   TACBrNFe( FACBrNFe ).NotasFiscais.Items[i].SaveToFile(PathWithDelim(FConfiguracoes.Arquivos.GetPathNFe)+StringReplace(TACBrNFe( FACBrNFe ).NotasFiscais.Items[i].NFe.InfNFe.Id,'NFe','',[rfIgnoreCase])+'-nfe.xml');
-                end;
+                   TACBrNFe( FACBrNFe ).NotasFiscais.Items[i].SaveToFile(PathWithDelim(FConfiguracoes.Arquivos.GetPathNFe(Now,
+                                                                                                                          TACBrNFe( FACBrNFe ).NotasFiscais.Items[i].NFe.Emit.CNPJCPF))
+                                                                                                                          +StringReplace(TACBrNFe( FACBrNFe ).NotasFiscais.Items[i].NFe.InfNFe.Id,'NFe','',[rfIgnoreCase])+'-nfe.xml')                end;
               end;
           break;
         end;
@@ -2209,9 +2224,14 @@ begin
           end;
          if FConfiguracoes.Arquivos.Salvar then
             if FConfiguracoes.Arquivos.EmissaoPathNFe then
-               FNotasFiscais.Items[j].SaveToFile(PathWithDelim(FConfiguracoes.Arquivos.GetPathNFe(FNotasFiscais.Items[j].NFe.Ide.dEmi))+StringReplace(FNotasFiscais.Items[j].NFe.InfNFe.Id,'NFe','',[rfIgnoreCase])+'-nfe.xml')
+               FNotasFiscais.Items[j].SaveToFile(PathWithDelim(FConfiguracoes.Arquivos.GetPathNFe(FNotasFiscais.Items[j].NFe.Ide.dEmi,
+                                                                                                  FNotasFiscais.Items[j].NFe.Emit.CNPJCPF))
+                                                                                                  +StringReplace(FNotasFiscais.Items[j].NFe.InfNFe.Id,'NFe','',[rfIgnoreCase])+'-nfe.xml')
             else
-               FNotasFiscais.Items[j].SaveToFile(PathWithDelim(FConfiguracoes.Arquivos.GetPathNFe)+StringReplace(FNotasFiscais.Items[j].NFe.InfNFe.Id,'NFe','',[rfIgnoreCase])+'-nfe.xml');
+               FNotasFiscais.Items[j].SaveToFile(PathWithDelim(FConfiguracoes.Arquivos.GetPathNFe(now,
+                                                                                                  FNotasFiscais.Items[j].NFe.Emit.CNPJCPF))
+                                                                                                  +StringReplace(FNotasFiscais.Items[j].NFe.InfNFe.Id,'NFe','',[rfIgnoreCase])+'-nfe.xml');
+
          break;
        end;
     end;
@@ -3054,9 +3074,14 @@ begin
             if FConfiguracoes.Arquivos.Salvar and wAtualiza then
             begin
               if FConfiguracoes.Arquivos.EmissaoPathNFe then
-                 TACBrNFe( FACBrNFe ).NotasFiscais.Items[i].SaveToFile(PathWithDelim(FConfiguracoes.Arquivos.GetPathNFe(TACBrNFe( FACBrNFe ).NotasFiscais.Items[i].NFe.Ide.dEmi))+StringReplace(TACBrNFe( FACBrNFe ).NotasFiscais.Items[i].NFe.InfNFe.Id,'NFe','',[rfIgnoreCase])+'-nfe.xml')
+                 TACBrNFe( FACBrNFe ).NotasFiscais.Items[i].SaveToFile(PathWithDelim(FConfiguracoes.Arquivos.GetPathNFe(TACBrNFe( FACBrNFe ).NotasFiscais.Items[i].NFe.Ide.dEmi,
+                                                                                                                        TACBrNFe( FACBrNFe ).NotasFiscais.Items[i].NFe.Emit.CNPJCPF))
+                                                                                                                        +StringReplace(TACBrNFe( FACBrNFe ).NotasFiscais.Items[i].NFe.InfNFe.Id,'NFe','',[rfIgnoreCase])+'-nfe.xml')
               else
-                 TACBrNFe( FACBrNFe ).NotasFiscais.Items[i].SaveToFile(PathWithDelim(FConfiguracoes.Arquivos.GetPathNFe)+StringReplace(TACBrNFe( FACBrNFe ).NotasFiscais.Items[i].NFe.InfNFe.Id,'NFe','',[rfIgnoreCase])+'-nfe.xml');
+                 TACBrNFe( FACBrNFe ).NotasFiscais.Items[i].SaveToFile(PathWithDelim(FConfiguracoes.Arquivos.GetPathNFe(now,
+                                                                                                                        TACBrNFe( FACBrNFe ).NotasFiscais.Items[i].NFe.Emit.CNPJCPF))
+                                                                                                                        +StringReplace(TACBrNFe( FACBrNFe ).NotasFiscais.Items[i].NFe.InfNFe.Id,'NFe','',[rfIgnoreCase])+'-nfe.xml')
+
             end;
 
             break;
@@ -3172,8 +3197,8 @@ begin
        FConfiguracoes.Geral.Save(FPathArqEnv, FDadosMsg);
      end;
 
-    if FConfiguracoes.Arquivos.Salvar then
-      FConfiguracoes.Geral.Save(FNFeChave+'-ped-can.xml', FDadosMsg, FConfiguracoes.Arquivos.GetPathCan );
+     if FConfiguracoes.Arquivos.Salvar then
+         FConfiguracoes.Geral.Save(FNFeChave+'-ped-can.xml', FDadosMsg, FConfiguracoes.Arquivos.GetPathCan(IfThen(FConfiguracoes.Arquivos.SepararPorCNPJ,NotaUtil.ExtraiCNPJChaveAcesso(TACBrNFe( FACBrNFe ).WebServices.Cancelamento.NFeChave),'')) );
 
     if FConfiguracoes.WebServices.Salvar then
      begin
@@ -3207,7 +3232,7 @@ begin
      end;
 
     if FConfiguracoes.Arquivos.Salvar then
-      FConfiguracoes.Geral.Save(FNFeChave+'-can.xml', FRetWS, FConfiguracoes.Arquivos.GetPathCan );
+      FConfiguracoes.Geral.Save(FNFeChave+'-can.xml', FRetWS, FConfiguracoes.Arquivos.GetPathCan(IfThen(FConfiguracoes.Arquivos.SepararPorCNPJ,NotaUtil.ExtraiCNPJChaveAcesso(TACBrNFe( FACBrNFe ).WebServices.Cancelamento.NFeChave),'')) );
 
     if FConfiguracoes.WebServices.Salvar then
      begin
@@ -3273,9 +3298,14 @@ begin
                  else
                  begin
                     if FConfiguracoes.Arquivos.EmissaoPathNFe then
-                       TACBrNFe( FACBrNFe ).NotasFiscais.Items[i].SaveToFile(PathWithDelim(FConfiguracoes.Arquivos.GetPathNFe(TACBrNFe( FACBrNFe ).NotasFiscais.Items[i].NFe.Ide.dEmi))+StringReplace(TACBrNFe( FACBrNFe ).NotasFiscais.Items[i].NFe.InfNFe.Id,'NFe','',[rfIgnoreCase])+'-nfe.xml')
+                       TACBrNFe( FACBrNFe ).NotasFiscais.Items[i].SaveToFile(PathWithDelim(FConfiguracoes.Arquivos.GetPathNFe(TACBrNFe( FACBrNFe ).NotasFiscais.Items[i].NFe.Ide.dEmi,
+                                                                                                                              TACBrNFe( FACBrNFe ).NotasFiscais.Items[i].NFe.Emit.CNPJCPF))
+                                                                                                                              +StringReplace(TACBrNFe( FACBrNFe ).NotasFiscais.Items[i].NFe.InfNFe.Id,'NFe','',[rfIgnoreCase])+'-nfe.xml')
                     else
-                       TACBrNFe( FACBrNFe ).NotasFiscais.Items[i].SaveToFile(PathWithDelim(FConfiguracoes.Arquivos.GetPathNFe)+StringReplace(TACBrNFe( FACBrNFe ).NotasFiscais.Items[i].NFe.InfNFe.Id,'NFe','',[rfIgnoreCase])+'-nfe.xml');
+                       TACBrNFe( FACBrNFe ).NotasFiscais.Items[i].SaveToFile(PathWithDelim(FConfiguracoes.Arquivos.GetPathNFe(now,
+                                                                                                                              TACBrNFe( FACBrNFe ).NotasFiscais.Items[i].NFe.Emit.CNPJCPF))
+                                                                                                                              +StringReplace(TACBrNFe( FACBrNFe ).NotasFiscais.Items[i].NFe.InfNFe.Id,'NFe','',[rfIgnoreCase])+'-nfe.xml')
+
                  end;
               end;
             end;
@@ -3304,7 +3334,7 @@ begin
          FConfiguracoes.Geral.Save(FNFeChave+'-ProcCancNFe.xml', FXML_ProcCancNFe);
 
       if FConfiguracoes.Arquivos.Salvar then
-        FConfiguracoes.Geral.Save(FNFeChave+'-ProcCancNFe.xml', FXML_ProcCancNFe, FConfiguracoes.Arquivos.GetPathCan );
+        FConfiguracoes.Geral.Save(FNFeChave+'-ProcCancNFe.xml', FXML_ProcCancNFe, FConfiguracoes.Arquivos.GetPathCan(IfThen(FConfiguracoes.Arquivos.SepararPorCNPJ,NotaUtil.ExtraiCNPJChaveAcesso(TACBrNFe( FACBrNFe ).WebServices.Cancelamento.NFeChave),'')) );
     end;
 
   finally
@@ -3406,7 +3436,7 @@ begin
      end;
 
     if FConfiguracoes.Arquivos.Salvar then
-      FConfiguracoes.Geral.Save(StringReplace(FID,'ID','',[rfIgnoreCase])+'-ped-inu.xml', FDadosMsg, FConfiguracoes.Arquivos.GetPathInu);
+      FConfiguracoes.Geral.Save(StringReplace(FID,'ID','',[rfIgnoreCase])+'-ped-inu.xml', FDadosMsg, FConfiguracoes.Arquivos.GetPathInu(IfThen(FConfiguracoes.Arquivos.SepararPorCNPJ,TACBrNFe( FACBrNFe ).WebServices.Inutilizacao.CNPJ,'')));
 
     if FConfiguracoes.WebServices.Salvar then
      begin
@@ -3440,7 +3470,7 @@ begin
      end;
 
     if FConfiguracoes.Arquivos.Salvar then
-      FConfiguracoes.Geral.Save(StringReplace(FID,'ID','',[rfIgnoreCase])+'-inu.xml', FRetWS, FConfiguracoes.Arquivos.GetPathInu);
+      FConfiguracoes.Geral.Save(StringReplace(FID,'ID','',[rfIgnoreCase])+'-inu.xml', FRetWS, FConfiguracoes.Arquivos.GetPathInu(IfThen(FConfiguracoes.Arquivos.SepararPorCNPJ,TACBrNFe( FACBrNFe ).WebServices.Inutilizacao.CNPJ,'')));
 
     if FConfiguracoes.WebServices.Salvar then
      begin
@@ -3494,7 +3524,7 @@ begin
       if FConfiguracoes.Geral.Salvar then
          FConfiguracoes.Geral.Save(StringReplace(FID,'ID','',[rfIgnoreCase])+'-ProcInutNFe.xml', FXML_ProcInutNFe);
       if FConfiguracoes.Arquivos.Salvar then
-         FConfiguracoes.Geral.Save(StringReplace(FID,'ID','',[rfIgnoreCase])+'-ProcInutNFe.xml', FXML_ProcInutNFe, FConfiguracoes.Arquivos.GetPathInu );
+         FConfiguracoes.Geral.Save(StringReplace(FID,'ID','',[rfIgnoreCase])+'-ProcInutNFe.xml', FXML_ProcInutNFe, FConfiguracoes.Arquivos.GetPathInu(IfThen(FConfiguracoes.Arquivos.SepararPorCNPJ,TACBrNFe( FACBrNFe ).WebServices.Inutilizacao.CNPJ,'')) );
     end;
 
   finally
