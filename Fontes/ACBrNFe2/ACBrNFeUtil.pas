@@ -98,6 +98,7 @@ type
     class function GetURLAM(AAmbiente: Integer; ALayOut: TLayOut; AModeloDF: TpcnModeloDF = moNFe; AVersaoDF: TpcnVersaoDF = ve200): WideString;   //atualizado 2.0 Homologação e Produção
     class function GetURLBA(AAmbiente: Integer; ALayOut: TLayOut; AModeloDF: TpcnModeloDF = moNFe; AVersaoDF: TpcnVersaoDF = ve200): WideString;   //atualizado 2.0 Homologação e Produção
     class function GetURLCE(AAmbiente: Integer; ALayOut: TLayOut; AModeloDF: TpcnModeloDF = moNFe; AVersaoDF: TpcnVersaoDF = ve200): WideString;   //atualizado 2.0 Homologação e Produção
+    class function GetURLES(AAmbiente: Integer; ALayOut: TLayOut; AModeloDF: TpcnModeloDF = moNfe; AVersaoDF: TpcnVersaoDF = ve200): WideString;
     class function GetURLGO(AAmbiente: Integer; ALayOut: TLayOut; AModeloDF: TpcnModeloDF = moNFe; AVersaoDF: TpcnVersaoDF = ve200): WideString;   //atualizado 2.0 Homologação e Produção
     class function GetURLMT(AAmbiente: Integer; ALayOut: TLayOut; AModeloDF: TpcnModeloDF = moNFe; AVersaoDF: TpcnVersaoDF = ve200): WideString;   //atualizado 2.0 Homologação e Produção
     class function GetURLMS(AAmbiente: Integer; ALayOut: TLayOut; AModeloDF: TpcnModeloDF = moNFe; AVersaoDF: TpcnVersaoDF = ve200): WideString;   //atualizado 2.0 Homologação e Produção

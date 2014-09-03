@@ -872,7 +872,7 @@ begin
   InutNFe.nNFFin  := TNFeInutilizacao(Self).NumeroFinal;
   InutNFe.xJust   := TNFeInutilizacao(Self).Justificativa;
 
- FConfiguracoes.Geral.ModeloDF := StrToModeloDF(ok,InutNFe.modelo);
+ FConfiguracoes.Geral.ModeloDF := StrToModeloDF(ok,IntToStr(InutNFe.modelo));
 
   InutNFe.Versao := GetVersaoNFe(FConfiguracoes.Geral.ModeloDF,
                                  FConfiguracoes.Geral.VersaoDF,
