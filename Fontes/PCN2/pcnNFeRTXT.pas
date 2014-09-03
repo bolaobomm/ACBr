@@ -227,6 +227,10 @@ begin
   FID := UpperCase(copy(Registro, 2, pos('|', FRegistro) - 2));
   if FID = '' then
     exit;
+  if ID = 'A' then
+  begin
+     NFe.infNFe.Versao := LerCampo(tcDe2, 'versao');
+  end;   
 
   if ID = 'B' then (* Grupo da TAG <ide> **************************************)
   begin
@@ -237,10 +241,21 @@ begin
     (*B06*)NFe.ide.modelo := LerCampo(tcInt, 'mod');
     (*B07*)NFe.ide.serie := LerCampo(tcInt, 'serie');
     (*B08*)NFe.ide.nNF := LerCampo(tcInt, 'nNF');
-    (*B09*)NFe.ide.dEmi := LerCampo(tcDat, 'dEmi');
-    (*B10*)NFe.ide.dSaiEnt := LerCampo(tcDat, 'dSaiEnt');
-   (*B10a*)NFe.ide.hSaiEnt := LerCampo(tcHor, 'hSaiEnt');
+    if (nfe.infNFe.Versao < 3.10) then
+     begin
+       (*B09*)NFe.ide.dEmi := LerCampo(tcDat, 'dEmi');
+      (*B10*)NFe.ide.dSaiEnt := LerCampo(tcDat, 'dSaiEnt');
+     (*B10a*)NFe.ide.hSaiEnt := LerCampo(tcHor, 'hSaiEnt');
+
+     end
+    else
+     begin
+       (*B09*)NFe.ide.dEmi := LerCampo(tcDat, 'dhEmi');
+              NFe.Ide.dSaiEnt := LerCampo(tcDat, 'dhSaiEnt');
+     end;
+
     (*B11*)NFe.ide.tpNF := StrToTpNF(ok, LerCampo(tcStr, 'tpNF'));
+           NFe.ide.idDest := StrToDestinoOperacao(ok, LerCampo(tcStr, 'idDest'));
     (*B12*)NFe.ide.cMunFG := LerCampo(tcInt, 'cMunFG');
 
     (*B21*)NFe.Ide.tpImp := StrToTpImp(ok, LerCampo(tcStr, 'tpImp'));
@@ -248,6 +263,8 @@ begin
     (*B23*)NFe.Ide.cDV := LerCampo(tcInt, 'cDV');
     (*B24*)NFe.Ide.tpAmb := StrToTpAmb(ok, LerCampo(tcStr, 'tpAmb'));
     (*B25*)NFe.Ide.finNFe := StrToFinNFe(ok, LerCampo(tcStr, 'finNFe'));
+           NFe.Ide.indFinal := StrToConsumidorFinal(ok, LerCampo(tcStr, 'indFinal'));
+           NFe.Ide.indPres := StrToPresencaComprador(ok, LerCampo(tcStr, 'indPres'));
     (*B26*)NFe.Ide.procEmi := StrToprocEmi(ok, LerCampo(tcStr, 'procEmi'));
     (*B27*)NFe.Ide.verProc := LerCampo(tcStr, 'verProc');
     (*B28*)NFe.Ide.dhCont := LerCampo(tcDatHor, 'dhCont');
@@ -255,14 +272,14 @@ begin
   end;
 
   (* Grupo da TAG <ide><NFref><refNFe> ****************************************)
-  if ID = 'B13' then
+  if (ID = 'B13') or (ID = 'BA') then
   begin
     NFe.Ide.NFref.Add;
     i := NFe.ide.NFref.Count - 1;
     (*B13*)NFe.ide.NFref[i].refNFe := LerCampo(tcEsp, 'refNFe');
   end;
 
-  if ID = 'B14' then (* Grupo da TAG <ide><NFref><RefNF> **********************)
+  if (ID = 'B14') or (ID = 'BA03') then (* Grupo da TAG <ide><NFref><RefNF> **********************)
   begin
     NFe.Ide.NFref.Add;
     i := NFe.ide.NFref.Count - 1;
@@ -274,7 +291,7 @@ begin
     (*B20*)NFe.Ide.NFref[i].RefNF.nNF := LerCampo(tcInt, 'nNF');
   end;
 
-  if ID = 'B20A' then (* Grupo da TAG <ide><NFref><refNFP> **********************)
+  if (ID = 'B20A') or (ID = 'BA10') then (* Grupo da TAG <ide><NFref><refNFP> **********************)
   begin
     NFe.Ide.NFref.Add;
     i := NFe.ide.NFref.Count - 1;
@@ -284,15 +301,17 @@ begin
     (*B20f*)NFe.Ide.NFref[i].refNFP.modelo := LerCampo(tcStr, 'mod');
     (*B20g*)NFe.ide.NFref[i].refNFP.serie := LerCampo(tcInt, 'serie');
     (*B20h*)NFe.Ide.NFref[i].refNFP.nNF := LerCampo(tcInt, 'nNF');
+    if (NFe.infNFe.Versao >= 3.10) then
+        NFe.ide.NFref[i].refCTe := LerCampo(tcEsp, 'refCTe'); 
   end;
 
-  if (ID = 'B20D') and  (NFe.ide.NFref.Count > 0) then
+  if ((ID = 'B20D') or (ID = 'B13')) and  (NFe.ide.NFref.Count > 0) then
    begin
      i := NFe.ide.NFref.Count - 1;
     (*B20d*)NFe.Ide.NFref[i].refNFP.CNPJCPF := LerCampo(tcEsp, 'CNPJ');
    end;
 
-  if (ID = 'B20E') and  (NFe.ide.NFref.Count > 0) then
+  if ((ID = 'B20E') or (ID = 'B14')) and  (NFe.ide.NFref.Count > 0) then
    begin
      i := NFe.ide.NFref.Count - 1;
     (*B20e*)NFe.Ide.NFref[i].refNFP.CNPJCPF := LerCampo(tcEsp, 'CPF');
@@ -306,7 +325,7 @@ begin
     (*B13*)NFe.ide.NFref[i].refCTe := LerCampo(tcEsp, 'refCTe');
   end;
 
-  if ID = 'B20J' then (* Grupo da TAG <ide><NFref><refECF> **********************)
+  if (ID = 'B20J') or (ID = 'BA20') then (* Grupo da TAG <ide><NFref><refECF> **********************)
   begin
     NFe.Ide.NFref.Add;
     i := NFe.ide.NFref.Count - 1;
@@ -368,14 +387,18 @@ begin
   if ID = 'E' then (* Grupo da TAG <dest> *************************************)
   begin
     (*E04*)NFe.Dest.xNome := LerCampo(tcStr, 'xNome');
+           NFe.Dest.indIEDest := StrToindIEDest(ok, LerCampo(tcStr, 'indIEDest'));
     (*E17*)NFe.Dest.IE := LerCampo(tcStr, 'IE');
     (*E18*)NFe.Dest.ISUF := LerCampo(tcStr, 'ISUF');
+           NFe.Dest.IM := LerCampo(tcStr, 'IM');    
     (*E19*)NFe.Dest.Email := LerCampo(tcStr, 'email');
   end;
   if ID = 'E02' then
     (*E02*)NFe.Dest.CNPJCPF := LerCampo(tcStr, 'CNPJ');
   if ID = 'E03' then
     (*E03*)NFe.Dest.CNPJCPF := LerCampo(tcStr, 'CPF');
+  if ID = 'E03A' then
+    (*E03*)NFe.Dest.idEstrangeiro := LerCampo(tcStr, 'idEstrangeiro');
 
   if ID = 'E05' then (* Grupo da TAG <dest><EnderDest> ************************)
   begin
@@ -428,6 +451,11 @@ begin
   if ID = 'G02A' then
     (*G02a*)NFe.Entrega.CNPJCPF := LerCampo(tcStr, 'CPF');
 
+  if ID = 'GA02' then
+     NFe.autXML.Add.CNPJCPF := LerCampo(tcStr, 'CNPJ');
+  if ID = 'GA03' then
+     NFe.autXML.Add.CNPJCPF := LerCampo(tcStr, 'CPF');
+
   if ID = 'H' then (* Grupo da TAG <det> **************************************)
   begin
     NFe.Det.Add;
@@ -443,6 +471,7 @@ begin
     (*I03*)NFe.Det[i].Prod.cEAN := LerCampo(tcStr, 'cEAN');
     (*I04*)NFe.Det[i].Prod.xProd := LerCampo(tcStr, 'xProd');
     (*I05*)NFe.Det[i].Prod.NCM := LerCampo(tcStr, 'NCM');
+//           NFe.Det[i].Prod.NVE := LerCampo(tcStr, 'NVE'); // Emissor da Fazenda está preparado para apenas uma ocorrência por item
     (*I06*)NFe.Det[i].Prod.EXTIPI := LerCampo(tcStr, 'EXTIPI');
     //(*I07*)NFe.Det[i].Prod.genero := LerCampo(tcInt, 'genero');
     (*I08*)NFe.Det[i].Prod.CFOP := LerCampo(tcEsp, 'CFOP');
@@ -483,6 +512,11 @@ begin
     (*I21*)NFe.Det[i].Prod.DI[j].xLocDesemb := LerCampo(tcStr, 'xLocDesemb');
     (*I22*)NFe.Det[i].Prod.DI[j].UFDesemb := LerCampo(tcStr, 'UFDesemb');
     (*I23*)NFe.Det[i].Prod.DI[j].dDesemb := LerCampo(tcDat, 'dDesemb');
+{           NFe.Det[i].Prod.DI[j].tpViaTransp := StrToindIEDest(ok, LerCampo(tcStr, 'tpViaTransp'));
+           NFe.Det[i].Prod.DI[j].vAFRMM := LerCampo(tcStr, 'vAFRMM');
+           NFe.Det[i].Prod.DI[j].tpIntermedio := StrToindIEDest(ok, LerCampo(tcStr, 'tpIntermedio'));
+           NFe.Det[i].Prod.DI[j].CNPJ := LerCampo(tcStr, 'CNPJ');
+           NFe.Det[i].Prod.DI[j].UFTerceiro := LerCampo(tcStr, 'UFTerceiro'); }
     (*I24*)NFe.Det[i].Prod.DI[j].cExportador := LerCampo(tcStr, 'cExportador');
   end;
 
@@ -496,6 +530,7 @@ begin
     (*I27*)NFe.Det[i].Prod.DI[j].adi[k].nSeqAdi := LerCampo(tcInt, 'nSeqAdic');
     (*I28*)NFe.Det[i].Prod.DI[j].adi[k].cFabricante := LerCampo(tcStr, 'cFabricante');
     (*I29*)NFe.Det[i].Prod.DI[j].adi[k].vDescDI := LerCampo(tcDe2, 'vDescDI');
+           NFe.Det[i].Prod.DI[j].adi[k].cFabricante := LerCampo(tcStr, 'nDraw');    
   end;
 
   if ID = 'J' then (* Grupo da TAG <det><prod><veicProd> **********************)
@@ -551,21 +586,28 @@ begin
     (*L05*)NFe.Det[i].Prod.arma[j].descr := LerCampo(tcStr, 'descr');
   end;
 
-  if ID = 'L01' then (* Grupo da TAG <det><prod><comb> ************************)
+  if (ID = 'L01') or (ID = 'LA') then (* Grupo da TAG <det><prod><comb> ************************)
   begin
     i := NFe.Det.Count - 1;
     (*L102*)NFe.Det[i].Prod.comb.cProdANP := LerCampo(tcInt, 'cProdANP');
+            NFe.Det[i].Prod.comb.pMixGN := LerCampo(tcDe4, 'pMixGN');
     (*L103*)NFe.Det[i].Prod.comb.CODIF := LerCampo(tcEsp, 'CODIF');
     (*L104*)NFe.Det[i].Prod.comb.qTemp := LerCampo(tcDe4, 'qTemp');
     (*L120*)NFe.Det[i].Prod.comb.UFcons:= LerCampo(tcStr, 'UFCons');
   end;
 
-  if ID = 'L105' then (* Grupo da TAG <det><prod><comb><CIDE> *****************)
+  if (ID = 'L105') or (ID = 'LA07') then (* Grupo da TAG <det><prod><comb><CIDE> *****************)
   begin
     i := NFe.Det.Count - 1;
     (*L106*)NFe.Det[i].Prod.comb.CIDE.qBCprod := LerCampo(tcDe4, 'qBCprod');
     (*L107*)NFe.Det[i].Prod.comb.CIDE.vAliqProd := LerCampo(tcDe4, 'vAliqProd');
     (*L108*)NFe.Det[i].Prod.comb.CIDE.vCIDE := LerCampo(tcDe2, 'vCIDE');
+  end;
+
+  if ID = 'LB' then
+  begin
+    i := NFe.Det.Count - 1;
+       NFe.Det[i].Prod.nRECOPI := LerCampo(tcStr, 'nRECOPI');
   end;
 
   if ID = 'L109' then (* Grupo da TAG <det><prod><comb><ICMS> *****************)
@@ -628,7 +670,11 @@ begin
     (*N29*)NFe.Det[i].Imposto.ICMS.pCredSN := LerCampo(tcDe2, 'pCredSN');
     (*N30*)NFe.Det[i].Imposto.ICMS.vCredICMSSN := LerCampo(tcDe2, 'vCredICMSSN');
     (*N31*)NFe.Det[i].Imposto.ICMS.vBCSTDest := LerCampo(tcDe2, 'vBCSTDest');
-    (*N32*)NFe.Det[i].Imposto.ICMS.vICMSSTDest := LerCampo(tcDe2, 'vICMSSTDest');
+    (*N32*)NFe.Det[i].Imposto.ICMS.vICMSDeson := LerCampo(tcDe2, 'vICMSDeson');
+{           NFe.Det[i].Imposto.ICMS.motDesICMS := StrToModBC(ok, LerCampo(tcStr, 'motDesICMS'));
+           NFe.Det[i].Imposto.ICMS.pDif := LerCampo(tcDe4, 'pDif');
+           NFe.Det[i].Imposto.ICMS.vICMSDif := LerCampo(tcDe2, 'vICMSDif');
+           NFe.Det[i].Imposto.ICMS.vICMSOp := LerCampo(tcDe2, 'vICMSOp');}
   end;
 
   if ID = 'O' then (* Grupo da TAG <det><imposto><IPI> **********************)
@@ -666,6 +712,7 @@ begin
     i := NFe.Det.Count - 1;
     (*O11*)NFe.Det[i].Imposto.IPI.qUnid := LerCampo(tcDe4, 'qUnid');
     (*O12*)NFe.Det[i].Imposto.IPI.vUnid := LerCampo(tcDe4, 'vUnid');
+           NFe.Det[i].Imposto.IPI.vIPI := LerCampo(tcDe2, 'vIPI');
   end;
 
   if ID = 'P' then (* Grupo da TAG <det><imposto><II> *************************)
@@ -816,13 +863,30 @@ begin
     (*U04*)NFe.Det[i].Imposto.ISSQN.vISSQN := LerCampo(tcDe2, 'vISSQN');
     (*U05*)NFe.Det[i].Imposto.ISSQN.cMunFG := LerCampo(tcInt, 'cMunFG');
     (*U06*)NFe.Det[i].Imposto.ISSQN.cListServ := LerCampo(tcInt, 'cListServ');
-    (*U07*)NFe.Det[i].Imposto.ISSQN.cSitTrib := StrToISSQNcSitTrib(Ok, LerCampo(tcStr, 'cSitTrib'));
+{           NFe.Det[i].Imposto.ISSQN.vDeducao := LerCampo(tcDe2, 'vDeducao');
+           NFe.Det[i].Imposto.ISSQN.vOutro := LerCampo(tcDe2, 'vOutro');
+           NFe.Det[i].Imposto.ISSQN.vDescIncond := LerCampo(tcDe2, 'vDescIncond');
+           NFe.Det[i].Imposto.ISSQN.vDescCond := LerCampo(tcDe2, 'vDescCond');
+           NFe.Det[i].Imposto.ISSQN.vISSRet := LerCampo(tcDe2, 'vISSRet');
+           NFe.Det[i].Imposto.ISSQN.indISS := LerCampo(tcStr, 'indISS');
+           NFe.Det[i].Imposto.ISSQN.cServico := LerCampo(tcStr, 'cServico');
+           NFe.Det[i].Imposto.ISSQN.cMun := LerCampo(tcStr, 'cMun');
+           NFe.Det[i].Imposto.ISSQN.cPais := LerCampo(tcStr, 'cPais');
+           NFe.Det[i].Imposto.ISSQN.nProcesso := LerCampo(tcStr, 'nProcesso');
+           NFe.Det[i].Imposto.ISSQN.indIncentivo := LerCampo(tcStr, 'indIncentivo'); }
+     (*U07*)NFe.Det[i].Imposto.ISSQN.cSitTrib := StrToISSQNcSitTrib(Ok, LerCampo(tcStr, 'cSitTrib'));
+  end;
+
+  if ID = 'UA' then
+  begin
+    //Verificar layout do SEFAZ pois está colocando como campo alguns grupos
   end;
 
   if ID = 'W02' then (* Grupo da TAG <total><ICMSTot> *************************)
   begin
     (*W03*)NFe.Total.ICMSTot.vBC := LerCampo(tcDe2, 'vBC');
     (*W04*)NFe.Total.ICMSTot.vICMS := LerCampo(tcDe2, 'vICMS');
+           NFe.Total.ICMSTot.vICMSDeson := LerCampo(tcDe2, 'vICMSDeson');
     (*W05*)NFe.Total.ICMSTot.vBCST := LerCampo(tcDe2, 'vBCST');
     (*W06*)NFe.Total.ICMSTot.vST := LerCampo(tcDe2, 'vST');
     (*W07*)NFe.Total.ICMSTot.vProd := LerCampo(tcDe2, 'vProd');
@@ -845,6 +909,13 @@ begin
     (*W20*)NFe.Total.ISSQNtot.vISS := LerCampo(tcDe2, 'vISS');
     (*W21*)NFe.Total.ISSQNtot.vPIS := LerCampo(tcDe2, 'vPIS');
     (*W22*)NFe.Total.ISSQNtot.vCOFINS := LerCampo(tcDe2, 'vCOFINS');
+           NFe.Total.ISSQNtot.dCompet := LerCampo(tcDat, 'dCompet');
+           NFe.Total.ISSQNtot.vDeducao := LerCampo(tcDe2, 'vDeducao');
+           NFe.Total.ISSQNtot.vOutro := LerCampo(tcDe2, 'vOutro');
+           NFe.Total.ISSQNtot.vDescIncond := LerCampo(tcDe2, 'vDescIncond');
+           NFe.Total.ISSQNtot.vDescCond := LerCampo(tcDe2, 'vDescCond');
+//           NFe.Total.ISSQNtot.vISSRet := LerCampo(tcDe2, 'vISSRet');
+           NFe.Total.ISSQNtot.cRegTrib := StrToRegTribISSQN(ok ,LerCampo(tcStr, 'cRegTrib'));
   end;
 
   if ID = 'W23' then (* Grupo da TAG <total><retTrib> *************************)
@@ -898,6 +969,8 @@ begin
     (*X23*)NFe.Transp.Reboque[i].placa := LerCampo(tcStr, 'placa');
     (*X24*)NFe.Transp.Reboque[i].UF := LerCampo(tcStr, 'UF');
     (*X25*)NFe.Transp.Reboque[i].RNTC := LerCampo(tcStr, 'RNTC');
+         {  NFe.Transp.Reboque[i].vagao := LerCampo(tcStr, 'vagao');
+           NFe.Transp.Reboque[i].balsa := LerCampo(tcStr, 'balsa');} //Na NT 2013.0005 - 1.03 - esses campos são filhos do grupo X01 - transp - Grupo Informações do Transporte
   end;
 
   if ID = 'X26' then (* Grupo da TAG <transp><vol> ****************************)
@@ -937,6 +1010,19 @@ begin
     (*Y10*)NFe.Cobr.Dup[i].vDup := LerCampo(tcDe2, 'vDup');
   end;
 
+  if ID = 'YA' then
+  begin
+    NFe.pag.Add;
+    i := NFe.pag.Count - 1;
+    NFe.pag[i].tPag := LerCampo(tcStr, 'tPag');
+    NFe.pag[i].vPag := LerCampo(tcDe2, 'vPag');
+//    NFe.pag[i].card := LerCampo(tcStr, 'card'); // é um grupo
+    NFe.pag[i].CNPJ := LerCampo(tcStr, 'CNPJ');
+    NFe.pag[i].tBand := StrToBandeiraCartao(ok, LerCampo(tcStr, 'tBand'));
+    NFe.pag[i].cAut := LerCampo(tcStr, 'cAut');
+  end;
+
+
   if ID = 'Z' then (* Grupo da TAG <InfAdic> **********************************)
   begin
     (*Z02*)NFe.InfAdic.infAdFisco := LerCampo(tcStr, 'infAdFisco');
@@ -971,6 +1057,9 @@ begin
   begin
     (*ZA02*)NFe.exporta.UFembarq := LerCampo(tcStr, 'UFembarq');
     (*ZA03*)NFe.exporta.xLocEmbarq := LerCampo(tcStr, 'xLocEmbarq');
+            NFe.exporta.UFSaidaPais := LerCampo(tcStr, 'UFSaidaPais');
+            NFe.exporta.xLocExporta := LerCampo(tcStr, 'xLocExporta');
+            NFe.exporta.xLocDespacho := LerCampo(tcStr, 'xLocDespacho');
   end;
 
   if ID = 'ZB' then (* Grupo da TAG <compra> **********************************)
@@ -978,6 +1067,18 @@ begin
     (*ZB02*)NFe.compra.xNEmp := LerCampo(tcStr, 'xNEmp');
     (*ZB03*)NFe.compra.xPed := LerCampo(tcStr, 'xPed');
     (*ZB04*)NFe.compra.xCont := LerCampo(tcStr, 'xCont');
+  end;
+
+  if ID = 'ZC' then  //Precisa rever todo esse grupo e tbm ZC04  ZC10
+  begin
+    NFe.cana.safra := LerCampo(tcStr, 'safra');
+    NFe.cana.ref := LerCampo(tcStr, 'ref');
+    NFe.cana.qTotMes := LerCampo(tcDe2, 'qTotMes');
+    NFe.cana.qTotAnt := LerCampo(tcDe2, 'qTotAnt');
+    NFe.cana.qTotGer := LerCampo(tcDe2, 'qTotGer');
+    NFe.cana.vFor := LerCampo(tcDe2, 'vFor');
+    NFe.cana.vTotDed := LerCampo(tcDe2, 'vTotDed');
+    NFe.cana.vLiqFor := LerCampo(tcDe2, 'vLiqFor');
   end;
 
 end;

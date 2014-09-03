@@ -279,7 +279,7 @@ begin
     LoadLayout('<C02a> C02a|CPF¨');
     LoadLayout('<C05>   C05|XLgr¨|Nro¨|xCpl¨|xBairro¨|CMun¨|XMun¨|UF¨|CEP¨|CPais¨|XPais¨|Fone¨');
     LoadLayout('<D01>     D|CNPJ¨|XOrgao¨|Matr¨|XAgente¨|Fone¨|UF¨|NDAR¨|DEmi¨|VDAR¨|RepEmi¨|DPag¨');
-    LoadLayout('<E01>     E|XNome¨|indIEDest¨|IE¨|ISUF¨|EMAIL¨');
+    LoadLayout('<E01>     E|XNome¨|indIEDest¨|IE¨|ISUF¨|IM¨|EMAIL¨');
     LoadLayout('<E02>   E02|CNPJ¨');
     LoadLayout('<E03>   E03|CPF¨');
     LoadLayout('<E03a> E03a|idEstrangeiro¨');
