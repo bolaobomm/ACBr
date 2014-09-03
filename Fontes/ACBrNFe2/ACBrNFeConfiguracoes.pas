@@ -58,19 +58,19 @@ type
   TCertificadosConf = class(TComponent)
   private
     FSenhaCert: AnsiString;
+    FCNPJ : String;    
     {$IFDEF ACBrNFeOpenSSL}
        FCertificado: AnsiString;
     {$ELSE}
        FNumeroSerie: AnsiString;
        FDataVenc: TDateTime;
        FSubjectName : String;
-       FCNPJ : String;
        procedure SetNumeroSerie(const Value: AnsiString);
        function GetNumeroSerie: AnsiString;
     function GetDataVenc: TDateTime;
     function GetSubjectName: String;
-    function GetCNPJ: String;
     {$ENDIF}
+    function GetCNPJ: String;
   public
     {$IFNDEF ACBrNFeOpenSSL}
        function SelecionarCertificado:AnsiString;
@@ -83,9 +83,9 @@ type
        property NumeroSerie: AnsiString read GetNumeroSerie write SetNumeroSerie;
        property DataVenc: TDateTime read GetDataVenc;
        property SubjectName: String read GetSubjectName;
-       property CNPJ: String read GetCNPJ;
     {$ENDIF}
-       property Senha: AnsiString read FSenhaCert write FSenhaCert;    
+       property CNPJ: String read GetCNPJ;
+       property Senha: AnsiString read FSenhaCert write FSenhaCert;
   end;
 
   TWebServicesConf = Class(TComponent)
@@ -624,9 +624,11 @@ begin
  else
     Result := '';
 end;
+{$ENDIF}
 
 function TCertificadosConf.GetCNPJ: String;
 begin
+{$IFNDEF ACBrNFeOpenSSL}
  if DFeUtil.NaoEstaVazio(FNumeroSerie) then
   begin
     if FCNPJ = '' then
@@ -635,9 +637,12 @@ begin
   end
  else
     Result := '';
+{$ELSE}
+    Result := FCNPJ;
+{$ENDIF}
 end;
 
-{$ENDIF}
+
 
 
 { TArquivosConf }
