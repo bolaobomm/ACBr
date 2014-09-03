@@ -2,10 +2,15 @@
 
  with ACBrCTe.EventoCTe.Evento.Add do
   begin
-   infevento.chCTe    := Chave;
-   infEvento.CNPJ     := sCNPJ;
-   infEvento.dhEvento := now;
-   infEvento.tpEvento := teCCe;
+   infevento.chCTe      := Chave;
+   infEvento.CNPJ       := sCNPJ;
+   infEvento.dhEvento   := now;
+   infEvento.tpEvento   := teCCe;
+   infEvento.nSeqEvento := nSequencia;
+
+   infEvento.detEvento.xCondUso := '';
+
+   ACBrCTe.EventoCTe.Evento.Items[0].InfEvento.detEvento.infCorrecao.Clear;
 
    with ACBrCTe.EventoCTe.Evento.Items[0].InfEvento.detEvento.infCorrecao.Add do
     begin
