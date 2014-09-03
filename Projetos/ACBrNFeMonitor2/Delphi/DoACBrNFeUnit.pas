@@ -87,6 +87,7 @@ var
 
   NFeRTXT   : TNFeRTXT;
   VersaoDF  : TpcnVersaoDF;
+  ModeloDF  : TpcnModeloDF;  
 begin
  with frmAcbrNfeMonitor do
   begin
@@ -496,51 +497,66 @@ begin
                             'DhRecbto='+DateTimeToStr( ACBrNFe1.WebServices.Enviar.dhRecbto)+sLineBreak+
                             'TMed='+IntToStr( ACBrNFe1.WebServices.Enviar.tMed)+sLineBreak;
 
-           ACBrNFe1.WebServices.Retorno.Recibo := ACBrNFe1.WebServices.Enviar.Recibo;
-           ACBrNFe1.WebServices.Retorno.Executar;
-
-           Cmd.Resposta :=  Cmd.Resposta+
-                            ACBrNFe1.WebServices.Retorno.Msg+sLineBreak+
-                            '[RETORNO]'+sLineBreak+
-                            'Versao='+ACBrNFe1.WebServices.Retorno.verAplic+sLineBreak+
-                            'TpAmb='+TpAmbToStr(ACBrNFe1.WebServices.Retorno.TpAmb)+sLineBreak+
-                            'VerAplic='+ACBrNFe1.WebServices.Retorno.VerAplic+sLineBreak+
-                            'NRec='+ACBrNFe1.WebServices.Retorno.NFeRetorno.nRec+sLineBreak+
-                            'CStat='+IntToStr(ACBrNFe1.WebServices.Retorno.CStat)+sLineBreak+
-                            'XMotivo='+ACBrNFe1.WebServices.Retorno.XMotivo+sLineBreak+
-                            'CUF='+IntToStr(ACBrNFe1.WebServices.Retorno.CUF)+sLineBreak;
-
-           for I:= 0 to ACBrNFe1.WebServices.Retorno.NFeRetorno.ProtNFe.Count-1 do
+           if ACBrNFe1.WebServices.Enviar.Recibo <> '' then
             begin
-              for J:= 0 to ACBrNFe1.NotasFiscais.Count-1 do
-              begin
-                if 'NFe'+ACBrNFe1.WebServices.Retorno.NFeRetorno.ProtNFe.Items[i].chNFe = ACBrNFe1.NotasFiscais.Items[j].NFe.InfNFe.Id  then
-                begin
-                  Cmd.Resposta := Cmd.Resposta+
-                             '[NFE'+Trim(IntToStr(ACBrNFe1.NotasFiscais.Items[J].NFe.Ide.NNF))+']'+sLineBreak+
-                             'Versao='+ACBrNFe1.WebServices.Retorno.NFeRetorno.ProtNFe.Items[i].verAplic+sLineBreak+
-                             'TpAmb='+TpAmbToStr(ACBrNFe1.WebServices.Retorno.NFeRetorno.ProtNFe.Items[i].tpAmb)+sLineBreak+
-                             'VerAplic='+ACBrNFe1.WebServices.Retorno.NFeRetorno.ProtNFe.Items[i].verAplic+sLineBreak+
-                             'CStat='+IntToStr(ACBrNFe1.WebServices.Retorno.NFeRetorno.ProtNFe.Items[i].cStat)+sLineBreak+
-                             'XMotivo='+ACBrNFe1.WebServices.Retorno.NFeRetorno.ProtNFe.Items[i].xMotivo+sLineBreak+
-                             'CUF='+IntToStr(ACBrNFe1.WebServices.Retorno.NFeRetorno.cUF)+sLineBreak+
-                             'ChNFe='+ACBrNFe1.WebServices.Retorno.NFeRetorno.ProtNFe.Items[i].chNFe+sLineBreak+
-                             'DhRecbto='+DateTimeToStr(ACBrNFe1.WebServices.Retorno.NFeRetorno.ProtNFe.Items[i].dhRecbto)+sLineBreak+
-                             'NProt='+ACBrNFe1.WebServices.Retorno.NFeRetorno.ProtNFe.Items[i].nProt+sLineBreak+
-                             'DigVal='+ACBrNFe1.WebServices.Retorno.NFeRetorno.ProtNFe.Items[i].digVal+sLineBreak;
-                  break;
-                end;
-              end;
+              ACBrNFe1.WebServices.Retorno.Recibo := ACBrNFe1.WebServices.Enviar.Recibo;
+              ACBrNFe1.WebServices.Retorno.Executar;
 
+              Cmd.Resposta :=  Cmd.Resposta+
+                               ACBrNFe1.WebServices.Retorno.Msg+sLineBreak+
+                               '[RETORNO]'+sLineBreak+
+                               'Versao='+ACBrNFe1.WebServices.Retorno.verAplic+sLineBreak+
+                               'TpAmb='+TpAmbToStr(ACBrNFe1.WebServices.Retorno.TpAmb)+sLineBreak+
+                               'VerAplic='+ACBrNFe1.WebServices.Retorno.VerAplic+sLineBreak+
+                               'NRec='+ACBrNFe1.WebServices.Retorno.NFeRetorno.nRec+sLineBreak+
+                               'CStat='+IntToStr(ACBrNFe1.WebServices.Retorno.CStat)+sLineBreak+
+                               'XMotivo='+ACBrNFe1.WebServices.Retorno.XMotivo+sLineBreak+
+                               'CUF='+IntToStr(ACBrNFe1.WebServices.Retorno.CUF)+sLineBreak;
+
+              for I:= 0 to ACBrNFe1.WebServices.Retorno.NFeRetorno.ProtNFe.Count-1 do
+               begin
+                 for J:= 0 to ACBrNFe1.NotasFiscais.Count-1 do
+                 begin
+                   if 'NFe'+ACBrNFe1.WebServices.Retorno.NFeRetorno.ProtNFe.Items[i].chNFe = ACBrNFe1.NotasFiscais.Items[j].NFe.InfNFe.Id  then
+                   begin
+                     Cmd.Resposta := Cmd.Resposta+
+                                '[NFE'+Trim(IntToStr(ACBrNFe1.NotasFiscais.Items[J].NFe.Ide.NNF))+']'+sLineBreak+
+                                'Versao='+ACBrNFe1.WebServices.Retorno.NFeRetorno.ProtNFe.Items[i].verAplic+sLineBreak+
+                                'TpAmb='+TpAmbToStr(ACBrNFe1.WebServices.Retorno.NFeRetorno.ProtNFe.Items[i].tpAmb)+sLineBreak+
+                                'VerAplic='+ACBrNFe1.WebServices.Retorno.NFeRetorno.ProtNFe.Items[i].verAplic+sLineBreak+
+                                'CStat='+IntToStr(ACBrNFe1.WebServices.Retorno.NFeRetorno.ProtNFe.Items[i].cStat)+sLineBreak+
+                                'XMotivo='+ACBrNFe1.WebServices.Retorno.NFeRetorno.ProtNFe.Items[i].xMotivo+sLineBreak+
+                                'CUF='+IntToStr(ACBrNFe1.WebServices.Retorno.NFeRetorno.cUF)+sLineBreak+
+                                'ChNFe='+ACBrNFe1.WebServices.Retorno.NFeRetorno.ProtNFe.Items[i].chNFe+sLineBreak+
+                                'DhRecbto='+DateTimeToStr(ACBrNFe1.WebServices.Retorno.NFeRetorno.ProtNFe.Items[i].dhRecbto)+sLineBreak+
+                                'NProt='+ACBrNFe1.WebServices.Retorno.NFeRetorno.ProtNFe.Items[i].nProt+sLineBreak+
+                                'DigVal='+ACBrNFe1.WebServices.Retorno.NFeRetorno.ProtNFe.Items[i].digVal+sLineBreak;
+                     break;
+                   end;
+                 end;
+                if DFeUtil.NaoEstaVazio(Cmd.Params(4)) then
+                   ACBrNFe1.DANFE.Impressora := Cmd.Params(4)
+                else
+                   ACBrNFe1.DANFE.Impressora := cbxImpressora.Text;
+
+                if ACBrNFe1.NotasFiscais.Items[0].Confirmada and (Cmd.Params(3) = '1') then
+                 begin
+                   ConfiguraDANFe;
+                   ACBrNFe1.NotasFiscais.Items[0].Imprimir;
+                 end;
+               end;
+            end
+           else
+            begin
               if DFeUtil.NaoEstaVazio(Cmd.Params(4)) then
                  ACBrNFe1.DANFE.Impressora := Cmd.Params(4)
               else
                  ACBrNFe1.DANFE.Impressora := cbxImpressora.Text;
 
-              if ACBrNFe1.NotasFiscais.Items[i].Confirmada and (Cmd.Params(3) = '1') then
+              if ACBrNFe1.NotasFiscais.Items[0].Confirmada and (Cmd.Params(3) = '1') then
                begin
                  ConfiguraDANFe;
-                 ACBrNFe1.NotasFiscais.Items[i].Imprimir;
+                 ACBrNFe1.NotasFiscais.Items[0].Imprimir;
                end;
             end;
          end
@@ -1273,6 +1289,15 @@ begin
               raise Exception.Create('Versão Inválida.');
          end
 
+        else if Cmd.Metodo = 'setmodelodf' then //55 65
+         begin
+            ModeloDF := StrToModeloDF(OK, Cmd.Params(0));
+            if OK then
+               ACBrNFe1.Configuracoes.Geral.ModeloDF := ModeloDF
+            else
+              raise Exception.Create('Modelo Inválido(55/65).');
+         end
+
         else if Cmd.Metodo = 'settoken' then
          begin
            ACBrNFe1.Configuracoes.Geral.Token := Cmd.Params(0);
@@ -1386,6 +1411,18 @@ begin
                       Cmd.Params(7)); //CNPJ
            Cmd.Resposta := Chave;
          end
+
+        else if cmd.Metodo = 'getpathnfe' then
+           Cmd.Resposta := ACBrNFe1.Configuracoes.Arquivos.GetPathNFe
+
+        else if Cmd.Metodo = 'getpathcce' then // Retorna Path onde está sendo salvo o xml das CCEs
+           Cmd.Resposta := ACBrNFe1.Configuracoes.Arquivos.GetPathCCe
+
+        else if Cmd.Metodo = 'getpathcan' then // Path Eventos de cancelamento
+           Cmd.Resposta := ACBrNFe1.Configuracoes.Arquivos.GetPathCan
+
+        else if Cmd.Metodo = 'getpathevento' then
+           Cmd.Resposta := ACBrNFe1.Configuracoes.Arquivos.GetPathEvento( TpcnTpEvento(StrToInt(Cmd.Params(0))) )
 
         else if Cmd.Metodo = 'restaurar' then
            Restaurar1Click( frmAcbrNfeMonitor )
@@ -1505,7 +1542,7 @@ begin
       ACBrNFe1.NotasFiscais.Clear;
       with ACBrNFe1.NotasFiscais.Add.NFe do
        begin
-         versao :=                          INIRec.ReadString('infNFe','versao', '');
+         versao        :=                   INIRec.ReadString('infNFe','versao', '');
          infNFe.versao := StringToFloatDef( INIRec.ReadString('infNFe','versao', '') ,0) ;
 
          versao := infNFe.VersaoStr;
@@ -1715,7 +1752,6 @@ begin
                   Prod.cEAN      := INIRec.ReadString( sSecao,'EAN'      ,INIRec.ReadString( sSecao,'cEAN'      ,''));
                Prod.xProd    := INIRec.ReadString( sSecao,'Descricao',INIRec.ReadString( sSecao,'xProd',''));
                Prod.NCM       := INIRec.ReadString( sSecao,'NCM'      ,'');
-               // Dever alterado para uma lista - Italo 12/08/2014
 //               Prod.NVE       := INIRec.ReadString( sSecao,'NVE'      ,'');
                Prod.EXTIPI       := INIRec.ReadString( sSecao,'EXTIPI'      ,'');
                Prod.CFOP     := INIRec.ReadString( sSecao,'CFOP'     ,'');
@@ -2080,7 +2116,7 @@ begin
                     end;
 
                    sSecao    := 'ISSQN'+IntToStrZero(I,3) ;
-                   sFim   := INIRec.ReadString( sSecao,'ValorBase','FIM') ;
+                   sFim   := INIRec.ReadString( sSecao,'ValorBase',INIRec.ReadString(sSecao,'vBC'   ,'FIM')) ;
                    if (sFim = 'FIM') then
                       sFim   := INIRec.ReadString( sSecao,'vBC','FIM');
                    if (sFim <> 'FIM') then
@@ -2129,21 +2165,21 @@ begin
 
          Total.ISSQNtot.dCompet     := DFeUtil.StringToDate(INIRec.ReadString('ISSQNtot','dCompet','0'));
          Total.ISSQNtot.vDeducao    := StringToFloatDef( INIRec.ReadString('ISSQNtot','vDeducao'   ,'') ,0) ;
-//         Total.ISSQNtot.vINSS       := StringToFloatDef( INIRec.ReadString('ISSQNtot','vINSS'   ,'') ,0) ;
-//         Total.ISSQNtot.vIR         := StringToFloatDef( INIRec.ReadString('ISSQNtot','vIR'   ,'') ,0) ;
-//         Total.ISSQNtot.vCSLL       := StringToFloatDef( INIRec.ReadString('ISSQNtot','vCSLL'   ,'') ,0) ;
+         //Total.ISSQNtot.vINSS       := StringToFloatDef( INIRec.ReadString('ISSQNtot','vINSS'   ,'') ,0) ;
+         //Total.ISSQNtot.vIR         := StringToFloatDef( INIRec.ReadString('ISSQNtot','vIR'   ,'') ,0) ;
+         //Total.ISSQNtot.vCSLL       := StringToFloatDef( INIRec.ReadString('ISSQNtot','vCSLL'   ,'') ,0) ;
          Total.ISSQNtot.vOutro      := StringToFloatDef( INIRec.ReadString('ISSQNtot','vOutro'   ,'') ,0) ;
          Total.ISSQNtot.vDescIncond := StringToFloatDef( INIRec.ReadString('ISSQNtot','vDescIncond'   ,'') ,0) ;
          Total.ISSQNtot.vDescCond   := StringToFloatDef( INIRec.ReadString('ISSQNtot','vDescCond'   ,'') ,0) ;
          Total.ISSQNtot.vDeducao    := StringToFloatDef( INIRec.ReadString('ISSQNtot','vDeducao'   ,'') ,0) ;
-//         Total.ISSQNtot.indISSRet   := StrToindISSRet( OK,INIRec.ReadString('ISSQNtot','indISSRet','2')) ; //NFe3
-//         Total.ISSQNtot.indISS      := StrToindISS( OK,INIRec.ReadString('ISSQNtot','indISS','2')) ; //NFe3
-//         Total.ISSQNtot.cServico    := INIRec.ReadString('ISSQNtot','cServico','');
-//         Total.ISSQNtot.cMun        := INIRec.ReadInteger('ISSQNtot','cMun',0);
-//         Total.ISSQNtot.cPais       := INIRec.ReadInteger('ISSQNtot','cPais',1058);
-//         Total.ISSQNtot.nProcesso   := INIRec.ReadString('ISSQNtot','nProcesso','');
+         //Total.ISSQNtot.indISSRet   := StrToindISSRet( OK,INIRec.ReadString('ISSQNtot','indISSRet','2')) ; //NFe3
+         //Total.ISSQNtot.indISS      := StrToindISS( OK,INIRec.ReadString('ISSQNtot','indISS','2')) ; //NFe3
+         //Total.ISSQNtot.cServico    := INIRec.ReadString('ISSQNtot','cServico','');
+         //Total.ISSQNtot.cMun        := INIRec.ReadInteger('ISSQNtot','cMun',0);
+         //Total.ISSQNtot.cPais       := INIRec.ReadInteger('ISSQNtot','cPais',1058);
+         //Total.ISSQNtot.nProcesso   := INIRec.ReadString('ISSQNtot','nProcesso','');
          Total.ISSQNtot.cRegTrib    := StrToRegTribISSQN( OK,INIRec.ReadString('ISSQNtot','cRegTrib','1')) ; //NFe3
-//         Total.ISSQNtot.indIncentivo:= StrToindIncentivo( OK,INIRec.ReadString('ISSQNtot','indIncentivo','1')) ; //NFe3
+         //Total.ISSQNtot.indIncentivo:= StrToindIncentivo( OK,INIRec.ReadString('ISSQNtot','indIncentivo','1')) ; //NFe3
 
          Total.retTrib.vRetPIS    := StringToFloatDef( INIRec.ReadString('retTrib','vRetPIS'   ,'') ,0) ;
          Total.retTrib.vRetCOFINS := StringToFloatDef( INIRec.ReadString('retTrib','vRetCOFINS','') ,0) ;
@@ -2416,6 +2452,9 @@ begin
    try
       with ACBrNFe1.NotasFiscais.Items[0].NFe do
        begin
+         INIRec.WriteString( 'infNFe','ID' ,infNFe.ID);
+         INIRec.WriteString( 'infNFe','Versao' ,FloatToStr(infNFe.Versao));
+
          INIRec.WriteInteger('Identificacao','cUF'     ,Ide.cUF);
          INIRec.WriteInteger('Identificacao','Codigo'  ,Ide.cNF);
          INIRec.WriteString( 'Identificacao','NaturezaOperacao' ,Ide.natOp);
