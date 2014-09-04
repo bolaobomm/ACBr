@@ -462,7 +462,7 @@ var
   XML, Propriedades : String;
   Lista : TStringList;
 begin
-  if PCertCarregado <> nil then
+  if (PCertCarregado <> nil) and (NumCertCarregado = FNumeroSerie) then
      Result := PCertCarregado
   else
    begin
