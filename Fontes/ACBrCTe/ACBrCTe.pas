@@ -42,6 +42,7 @@
 |* 16/12/2008: Wemerson Souto
 |*  - Doação do componente para o Projeto ACBr
 *******************************************************************************}
+
 {$I ACBr.inc}
 
 unit ACBrCTe;
@@ -309,6 +310,8 @@ function TACBrCTe.Cancelamento(AJustificativa: WideString): Boolean;
 var
   i: Integer;
 begin
+  raise Exception.Create('Cancelamento somente por Evento.');
+(*
   if Self.Conhecimentos.Count = 0 then
    begin
       if Assigned(Self.OnGerarLog) then
@@ -325,6 +328,8 @@ begin
   end;
 
   Result := True;
+*)
+  Result := False;
 end;
 
 function TACBrCTe.Consultar: Boolean;

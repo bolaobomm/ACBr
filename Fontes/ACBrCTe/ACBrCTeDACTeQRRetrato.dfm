@@ -2,7 +2,6 @@ inherited frmDACTeQRRetrato: TfrmDACTeQRRetrato
   Left = 193
   Width = 831
   Height = 585
-  VertScrollBar.Position = 551
   Caption = 'DACTe - Retrato'
   Font.Height = -8
   Font.Name = 'Arial'
@@ -12,7 +11,7 @@ inherited frmDACTeQRRetrato: TfrmDACTeQRRetrato
   TextHeight = 10
   inherited QRCTe: TQuickRep
     Left = 3
-    Top = -548
+    Top = 3
     BeforePrint = QRCTeBeforePrint
     DataSet = cdsDocumentos
     Font.Height = -8

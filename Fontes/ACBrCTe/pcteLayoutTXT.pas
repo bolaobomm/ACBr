@@ -43,10 +43,13 @@
 //                                                                            //
 ////////////////////////////////////////////////////////////////////////////////
 
+{$I ACBr.inc}
+
 unit pcteLayoutTXT;
 
-interface uses
+interface
 
+uses
   SysUtils, Classes, pcnAuxiliar, pcnConversao;
 
 function CarregarLayoutTXT(const versao: string): AnsiString;

@@ -52,6 +52,7 @@
 |*  Incluida instrução 33: Result := CTeUtil.GetURLRS(AAmbiente, ALayOut); //RJ
 |*  RJ usa os WebServices do RS
 *******************************************************************************}
+
 {$I ACBr.inc}
 
 unit ACBrCTeUtil;
@@ -66,7 +67,7 @@ uses
 {$IFDEF FPC}
   LResources, Controls, Graphics, Dialogs,
 {$ELSE}
-  StrUtils,
+  StrUtils, Activex,
 {$ENDIF}
   ACBrCTeConfiguracoes, pcnConversao, pcteCTe, ACBrDFeUtil;
 
@@ -95,36 +96,36 @@ type
   private
     // Estados Emissores pela Sefaz Virtual RS (Rio Grande do Sul):
     // AC, AL, AM, BA, CE, DF, ES, GO, MA, PA, PB, PI, RJ, RN, RO, SC, SE, TO.
-    class function GetURLSVRS(AAmbiente: Integer; ALayOut: TLayOut): WideString;
+    class function GetURLSVRS(AAmbiente: Integer; ALayOut: TLayOutCTe): WideString;
 
-    class function GetURLAC(AAmbiente: Integer; ALayOut: TLayOut): WideString;
-    class function GetURLAL(AAmbiente: Integer; ALayOut: TLayOut): WideString;
-    class function GetURLAP(AAmbiente: Integer; ALayOut: TLayOut): WideString;
-    class function GetURLAM(AAmbiente: Integer; ALayOut: TLayOut): WideString;
-    class function GetURLBA(AAmbiente: Integer; ALayOut: TLayOut): WideString;
-    class function GetURLCE(AAmbiente: Integer; ALayOut: TLayOut): WideString;
-    class function GetURLDF(AAmbiente: Integer; ALayOut: TLayOut): WideString;
-    class function GetURLES(AAmbiente: Integer; ALayOut: TLayOut): WideString;
-    class function GetURLGO(AAmbiente: Integer; ALayOut: TLayOut): WideString;
-    class function GetURLMA(AAmbiente: Integer; ALayOut: TLayOut): WideString;
-    class function GetURLPA(AAmbiente: Integer; ALayOut: TLayOut): WideString;
-    class function GetURLPB(AAmbiente: Integer; ALayOut: TLayOut): WideString;
-    class function GetURLPE(AAmbiente: Integer; ALayOut: TLayOut): WideString;
-    class function GetURLPI(AAmbiente: Integer; ALayOut: TLayOut): WideString;
-    class function GetURLRJ(AAmbiente: Integer; ALayOut: TLayOut): WideString;
-    class function GetURLRN(AAmbiente: Integer; ALayOut: TLayOut): WideString;
-    class function GetURLRO(AAmbiente: Integer; ALayOut: TLayOut): WideString;
-    class function GetURLRR(AAmbiente: Integer; ALayOut: TLayOut): WideString;
-    class function GetURLSC(AAmbiente: Integer; ALayOut: TLayOut): WideString;
-    class function GetURLSE(AAmbiente: Integer; ALayOut: TLayOut): WideString;
-    class function GetURLTO(AAmbiente: Integer; ALayOut: TLayOut): WideString;
+    class function GetURLAC(AAmbiente: Integer; ALayOut: TLayOutCTe): WideString;
+    class function GetURLAL(AAmbiente: Integer; ALayOut: TLayOutCTe): WideString;
+    class function GetURLAP(AAmbiente: Integer; ALayOut: TLayOutCTe): WideString;
+    class function GetURLAM(AAmbiente: Integer; ALayOut: TLayOutCTe): WideString;
+    class function GetURLBA(AAmbiente: Integer; ALayOut: TLayOutCTe): WideString;
+    class function GetURLCE(AAmbiente: Integer; ALayOut: TLayOutCTe): WideString;
+    class function GetURLDF(AAmbiente: Integer; ALayOut: TLayOutCTe): WideString;
+    class function GetURLES(AAmbiente: Integer; ALayOut: TLayOutCTe): WideString;
+    class function GetURLGO(AAmbiente: Integer; ALayOut: TLayOutCTe): WideString;
+    class function GetURLMA(AAmbiente: Integer; ALayOut: TLayOutCTe): WideString;
+    class function GetURLPA(AAmbiente: Integer; ALayOut: TLayOutCTe): WideString;
+    class function GetURLPB(AAmbiente: Integer; ALayOut: TLayOutCTe): WideString;
+    class function GetURLPE(AAmbiente: Integer; ALayOut: TLayOutCTe): WideString;
+    class function GetURLPI(AAmbiente: Integer; ALayOut: TLayOutCTe): WideString;
+    class function GetURLRJ(AAmbiente: Integer; ALayOut: TLayOutCTe): WideString;
+    class function GetURLRN(AAmbiente: Integer; ALayOut: TLayOutCTe): WideString;
+    class function GetURLRO(AAmbiente: Integer; ALayOut: TLayOutCTe): WideString;
+    class function GetURLRR(AAmbiente: Integer; ALayOut: TLayOutCTe): WideString;
+    class function GetURLSC(AAmbiente: Integer; ALayOut: TLayOutCTe): WideString;
+    class function GetURLSE(AAmbiente: Integer; ALayOut: TLayOutCTe): WideString;
+    class function GetURLTO(AAmbiente: Integer; ALayOut: TLayOutCTe): WideString;
 
-    class function GetURLMG(AAmbiente: Integer; ALayOut: TLayOut): WideString;
-    class function GetURLRS(AAmbiente: Integer; ALayOut: TLayOut): WideString;
-    class function GetURLSP(AAmbiente: Integer; ALayOut: TLayOut): WideString;
-    class function GetURLMT(AAmbiente: Integer; ALayOut: TLayOut): WideString;
-    class function GetURLMS(AAmbiente: Integer; ALayOut: TLayOut): WideString;
-    class function GetURLPR(AAmbiente: Integer; ALayOut: TLayOut): WideString;
+    class function GetURLMG(AAmbiente: Integer; ALayOut: TLayOutCTe): WideString;
+    class function GetURLRS(AAmbiente: Integer; ALayOut: TLayOutCTe): WideString;
+    class function GetURLSP(AAmbiente: Integer; ALayOut: TLayOutCTe): WideString;
+    class function GetURLMT(AAmbiente: Integer; ALayOut: TLayOutCTe): WideString;
+    class function GetURLMS(AAmbiente: Integer; ALayOut: TLayOutCTe): WideString;
+    class function GetURLPR(AAmbiente: Integer; ALayOut: TLayOutCTe): WideString;
 
   protected
 
@@ -136,7 +137,7 @@ type
     class procedure InitXmlSec;
     class procedure ShutDownXmlSec;
 {$ENDIF}
-    class function GetURL(const AUF, AAmbiente, FormaEmissao: Integer; ALayOut: TLayOut): WideString;
+    class function GetURL(const AUF, AAmbiente, FormaEmissao: Integer; ALayOut: TLayOutCTe): WideString;
     class function Valida(const AXML: AnsiString; var AMsg: AnsiString; const APathSchemas: String = ''): Boolean;
 
     class function FormatarChaveAcesso(AValue: String; Mascara: Boolean = False ): String;
@@ -222,7 +223,7 @@ end;
 {$ENDIF}
 
 class function CTeUtil.GetURL(const AUF, AAmbiente, FormaEmissao: Integer;
-  ALayOut: TLayOut): WideString;
+  ALayOut: TLayOutCTe): WideString;
 begin
   //  (AC,AL,AP,AM,BA,CE,DF,ES,GO,MA,MT,MS,MG,PA,PB,PR,PE,PI,RJ,RN,RS,RO,RR,SC,SP,SE,TO);
   //  (12,27,16,13,29,23,53,32,52,21,51,50,31,15,25,41,26,22,33,24,43,11,14,42,35,28,17);
@@ -324,7 +325,7 @@ begin
 end;
 
 // SVRS = SEFAZ Virtual do RS
-class function CTeUtil.GetURLSVRS(AAmbiente: Integer; ALayOut: TLayOut): WideString;
+class function CTeUtil.GetURLSVRS(AAmbiente: Integer; ALayOut: TLayOutCTe): WideString;
 begin
   case ALayOut of
     LayCTeRecepcao:      Result := DFeUtil.SeSenao(AAmbiente = 1, 'https://cte.sefaz.rs.gov.br/ws/cterecepcao/CteRecepcao.asmx'            , 'https://homologacao.cte.sefaz.rs.gov.br/ws/cterecepcao/CteRecepcao.asmx');
@@ -338,7 +339,7 @@ begin
   end;
 end;
 
-class function CTeUtil.GetURLAC(AAmbiente: Integer; ALayOut: TLayOut): WideString;
+class function CTeUtil.GetURLAC(AAmbiente: Integer; ALayOut: TLayOutCTe): WideString;
 begin
   case ALayOut of
    LayCTeCadastro: Result := DFeUtil.SeSenao(AAmbiente = 1, '', '');
@@ -346,7 +347,7 @@ begin
   end;
 end;
 
-class function CTeUtil.GetURLAL(AAmbiente: Integer; ALayOut: TLayOut): WideString;
+class function CTeUtil.GetURLAL(AAmbiente: Integer; ALayOut: TLayOutCTe): WideString;
 begin
   case ALayOut of
    LayCTeCadastro: Result := DFeUtil.SeSenao(AAmbiente = 1, '', '');
@@ -354,7 +355,7 @@ begin
   end;
 end;
 
-class function CTeUtil.GetURLAP(AAmbiente: Integer; ALayOut: TLayOut): WideString;
+class function CTeUtil.GetURLAP(AAmbiente: Integer; ALayOut: TLayOutCTe): WideString;
 begin
   case ALayOut of
    LayCTeCadastro: Result := DFeUtil.SeSenao(AAmbiente = 1, '', '');
@@ -362,7 +363,7 @@ begin
   end;
 end;
 
-class function CTeUtil.GetURLAM(AAmbiente: Integer; ALayOut: TLayOut): WideString;
+class function CTeUtil.GetURLAM(AAmbiente: Integer; ALayOut: TLayOutCTe): WideString;
 begin
   case ALayOut of
    LayCTeCadastro: Result := DFeUtil.SeSenao(AAmbiente = 1, 'https://nfe.sefaz.am.gov.br/services2/services/cadconsultacadastro2', 'https://homnfe.sefaz.am.gov.br/services2/services/cadconsultacadastro2');
@@ -370,7 +371,7 @@ begin
   end;
 end;
 
-class function CTeUtil.GetURLBA(AAmbiente: Integer; ALayOut: TLayOut): WideString;
+class function CTeUtil.GetURLBA(AAmbiente: Integer; ALayOut: TLayOutCTe): WideString;
 begin
   case ALayOut of
    LayCTeCadastro: Result := DFeUtil.SeSenao(AAmbiente = 1, 'https://nfe.sefaz.ba.gov.br/webservices/nfenw/CadConsultaCadastro2.asmx', 'https://hnfe.sefaz.ba.gov.br/webservices/nfenw/CadConsultaCadastro2.asmx');
@@ -378,7 +379,7 @@ begin
   end;
 end;
 
-class function CTeUtil.GetURLCE(AAmbiente: Integer; ALayOut: TLayOut): WideString;
+class function CTeUtil.GetURLCE(AAmbiente: Integer; ALayOut: TLayOutCTe): WideString;
 begin
   case ALayOut of
    LayCTeCadastro: Result := DFeUtil.SeSenao(AAmbiente = 1, 'https://nfe.sefaz.ce.gov.br/nfe2/services/CadConsultaCadastro2', 'https://nfeh.sefaz.ce.gov.br/nfe2/services/CadConsultaCadastro2');
@@ -386,7 +387,7 @@ begin
   end;
 end;
 
-class function CTeUtil.GetURLDF(AAmbiente: Integer; ALayOut: TLayOut): WideString;
+class function CTeUtil.GetURLDF(AAmbiente: Integer; ALayOut: TLayOutCTe): WideString;
 begin
   case ALayOut of
    LayCTeCadastro: Result := DFeUtil.SeSenao(AAmbiente = 1, '', '');
@@ -394,7 +395,7 @@ begin
   end;
 end;
 
-class function CTeUtil.GetURLES(AAmbiente: Integer; ALayOut: TLayOut): WideString;
+class function CTeUtil.GetURLES(AAmbiente: Integer; ALayOut: TLayOutCTe): WideString;
 begin
   case ALayOut of
    LayCTeCadastro: Result := DFeUtil.SeSenao(AAmbiente = 1, '', '');
@@ -402,7 +403,7 @@ begin
   end;
 end;
 
-class function CTeUtil.GetURLGO(AAmbiente: Integer; ALayOut: TLayOut): WideString;
+class function CTeUtil.GetURLGO(AAmbiente: Integer; ALayOut: TLayOutCTe): WideString;
 begin
   case ALayOut of
    LayCTeCadastro: Result := DFeUtil.SeSenao(AAmbiente = 1, 'https://nfe.sefaz.go.gov.br/nfe/services/v2/CadConsultaCadastro2', 'https://homolog.sefaz.go.gov.br/nfe/services/v2/CadConsultaCadastro2');
@@ -410,7 +411,7 @@ begin
   end;
 end;
 
-class function CTeUtil.GetURLMA(AAmbiente: Integer; ALayOut: TLayOut): WideString;
+class function CTeUtil.GetURLMA(AAmbiente: Integer; ALayOut: TLayOutCTe): WideString;
 begin
   case ALayOut of
    LayCTeCadastro: Result := DFeUtil.SeSenao(AAmbiente = 1, '', '');
@@ -418,7 +419,7 @@ begin
   end;
 end;
 
-class function CTeUtil.GetURLPA(AAmbiente: Integer; ALayOut: TLayOut): WideString;
+class function CTeUtil.GetURLPA(AAmbiente: Integer; ALayOut: TLayOutCTe): WideString;
 begin
   case ALayOut of
    LayCTeCadastro: Result := DFeUtil.SeSenao(AAmbiente = 1, '', '');
@@ -426,7 +427,7 @@ begin
   end;
 end;
 
-class function CTeUtil.GetURLPB(AAmbiente: Integer; ALayOut: TLayOut): WideString;
+class function CTeUtil.GetURLPB(AAmbiente: Integer; ALayOut: TLayOutCTe): WideString;
 begin
   case ALayOut of
    LayCTeCadastro: Result := DFeUtil.SeSenao(AAmbiente = 1, '', '');
@@ -434,7 +435,7 @@ begin
   end;
 end;
 
-class function CTeUtil.GetURLPE(AAmbiente: Integer; ALayOut: TLayOut): WideString;
+class function CTeUtil.GetURLPE(AAmbiente: Integer; ALayOut: TLayOutCTe): WideString;
 begin
   case ALayOut of
    LayCTeCadastro: Result := DFeUtil.SeSenao(AAmbiente = 1, 'https://nfe.sefaz.pe.gov.br/nfe-service/services/CadConsultaCadastro2', '');
@@ -442,7 +443,7 @@ begin
   end;
 end;
 
-class function CTeUtil.GetURLPI(AAmbiente: Integer; ALayOut: TLayOut): WideString;
+class function CTeUtil.GetURLPI(AAmbiente: Integer; ALayOut: TLayOutCTe): WideString;
 begin
   case ALayOut of
    LayCTeCadastro: Result := DFeUtil.SeSenao(AAmbiente = 1, '', '');
@@ -450,7 +451,7 @@ begin
   end;
 end;
 
-class function CTeUtil.GetURLRJ(AAmbiente: Integer; ALayOut: TLayOut): WideString;
+class function CTeUtil.GetURLRJ(AAmbiente: Integer; ALayOut: TLayOutCTe): WideString;
 begin
   case ALayOut of
    LayCTeCadastro: Result := DFeUtil.SeSenao(AAmbiente = 1, '', '');
@@ -458,7 +459,7 @@ begin
   end;
 end;
 
-class function CTeUtil.GetURLRN(AAmbiente: Integer; ALayOut: TLayOut): WideString;
+class function CTeUtil.GetURLRN(AAmbiente: Integer; ALayOut: TLayOutCTe): WideString;
 begin
   case ALayOut of
    LayCTeCadastro: Result := DFeUtil.SeSenao(AAmbiente = 1, '', '');
@@ -466,7 +467,7 @@ begin
   end;
 end;
 
-class function CTeUtil.GetURLRO(AAmbiente: Integer; ALayOut: TLayOut): WideString;
+class function CTeUtil.GetURLRO(AAmbiente: Integer; ALayOut: TLayOutCTe): WideString;
 begin
   case ALayOut of
    LayCTeCadastro: Result := DFeUtil.SeSenao(AAmbiente = 1, '', '');
@@ -474,7 +475,7 @@ begin
   end;
 end;
 
-class function CTeUtil.GetURLRR(AAmbiente: Integer; ALayOut: TLayOut): WideString;
+class function CTeUtil.GetURLRR(AAmbiente: Integer; ALayOut: TLayOutCTe): WideString;
 begin
   case ALayOut of
    LayCTeCadastro: Result := DFeUtil.SeSenao(AAmbiente = 1, '', '');
@@ -482,7 +483,7 @@ begin
   end;
 end;
 
-class function CTeUtil.GetURLSC(AAmbiente: Integer; ALayOut: TLayOut): WideString;
+class function CTeUtil.GetURLSC(AAmbiente: Integer; ALayOut: TLayOutCTe): WideString;
 begin
   case ALayOut of
    LayCTeCadastro: Result := DFeUtil.SeSenao(AAmbiente = 1, '', '');
@@ -490,7 +491,7 @@ begin
   end;
 end;
 
-class function CTeUtil.GetURLSE(AAmbiente: Integer; ALayOut: TLayOut): WideString;
+class function CTeUtil.GetURLSE(AAmbiente: Integer; ALayOut: TLayOutCTe): WideString;
 begin
   case ALayOut of
    LayCTeCadastro: Result := DFeUtil.SeSenao(AAmbiente = 1, '', '');
@@ -498,7 +499,7 @@ begin
   end;
 end;
 
-class function CTeUtil.GetURLTO(AAmbiente: Integer; ALayOut: TLayOut): WideString;
+class function CTeUtil.GetURLTO(AAmbiente: Integer; ALayOut: TLayOutCTe): WideString;
 begin
   case ALayOut of
    LayCTeCadastro: Result := DFeUtil.SeSenao(AAmbiente = 1, '', '');
@@ -506,7 +507,7 @@ begin
   end;
 end;
 
-class function CTeUtil.GetURLMG(AAmbiente: Integer; ALayOut: TLayOut): WideString;
+class function CTeUtil.GetURLMG(AAmbiente: Integer; ALayOut: TLayOutCTe): WideString;
 begin
   case ALayOut of
     LayCTeRecepcao:      Result := DFeUtil.SeSenao(AAmbiente = 1, 'https://cte.fazenda.mg.gov.br/cte/services/CteRecepcao'          , 'https://hcte.fazenda.mg.gov.br/cte/services/CteRecepcao'); //?WSDL
@@ -520,7 +521,7 @@ begin
   end;
 end;
 
-class function CTeUtil.GetURLRS(AAmbiente: Integer; ALayOut: TLayOut): WideString;
+class function CTeUtil.GetURLRS(AAmbiente: Integer; ALayOut: TLayOutCTe): WideString;
 begin
   case ALayOut of
     LayCTeRecepcao:      Result := DFeUtil.SeSenao(AAmbiente = 1, 'https://cte.sefaz.rs.gov.br/ws/cterecepcao/CteRecepcao.asmx'                 , 'https://homologacao.cte.sefaz.rs.gov.br/ws/cterecepcao/CteRecepcao.asmx');
@@ -535,7 +536,7 @@ begin
 end;
 
 // As URLs da SEFAZ de SP são as mesmas para o SVSP = SEFAZ Virtual de SP
-class function CTeUtil.GetURLSP(AAmbiente: Integer; ALayOut: TLayOut): WideString;
+class function CTeUtil.GetURLSP(AAmbiente: Integer; ALayOut: TLayOutCTe): WideString;
 begin
   case ALayOut of
     LayCTeRecepcao:      Result := DFeUtil.SeSenao(AAmbiente = 1, 'https://nfe.fazenda.sp.gov.br/cteWEB/services/cteRecepcao.asmx'         , 'https://homologacao.nfe.fazenda.sp.gov.br/cteWEB/services/cteRecepcao.asmx');
@@ -549,7 +550,7 @@ begin
   end;
 end;
 
-class function CTeUtil.GetURLMS(AAmbiente: Integer; ALayOut: TLayOut): WideString;
+class function CTeUtil.GetURLMS(AAmbiente: Integer; ALayOut: TLayOutCTe): WideString;
 begin
   case ALayOut of
     LayCTeRecepcao:      Result := DFeUtil.SeSenao(AAmbiente = 1, 'https://producao.cte.ms.gov.br/cteWEB/CteRecepcao.asmx'        , 'https://homologacao.cte.ms.gov.br/cteWEB/CteRecepcao.asmx');
@@ -563,7 +564,7 @@ begin
   end;
 end;
 
-class function CTeUtil.GetURLMT(AAmbiente: Integer; ALayOut: TLayOut): WideString;
+class function CTeUtil.GetURLMT(AAmbiente: Integer; ALayOut: TLayOutCTe): WideString;
 begin
   case ALayOut of
     LayCTeRecepcao:      Result := DFeUtil.SeSenao(AAmbiente = 1, 'https://cte.sefaz.mt.gov.br/ctews/services/CteRecepcao'            , 'https://homologacao.sefaz.mt.gov.br/ctews/services/CteRecepcao'); //?WSDL
@@ -577,7 +578,7 @@ begin
   end;
 end;
 
-class function CTeUtil.GetURLPR(AAmbiente: Integer; ALayOut: TLayOut): WideString;
+class function CTeUtil.GetURLPR(AAmbiente: Integer; ALayOut: TLayOutCTe): WideString;
 begin
   case ALayOut of
     LayCTeRecepcao:      Result := DFeUtil.SeSenao(AAmbiente = 1, 'https://cte.fazenda.pr.gov.br/cte/CteRecepcao'          , 'https://homologacao.cte.fazenda.pr.gov.br/cte/CteRecepcao'); //?wsdl
@@ -1048,89 +1049,94 @@ var
   Tipo, I: Integer;
   ArqSchema: String;
 begin
-  Tipo := CTeUtil.IdentificaTipoSchema(XML, I);
+  CoInitialize(nil);
+  try
+    Tipo := CTeUtil.IdentificaTipoSchema(XML, I);
 
-  DOMDocument                  := CoDOMDocument50.Create;
-  DOMDocument.async            := False;
-  DOMDocument.resolveExternals := False;
-  DOMDocument.validateOnParse  := True;
-  DOMDocument.loadXML(XML);
+    DOMDocument                  := CoDOMDocument50.Create;
+    DOMDocument.async            := False;
+    DOMDocument.resolveExternals := False;
+    DOMDocument.validateOnParse  := True;
+    DOMDocument.loadXML(XML);
 
-  Schema := CoXMLSchemaCache50.Create;
+    Schema := CoXMLSchemaCache50.Create;
 
- if not DirectoryExists(DFeUtil.SeSenao(DFeUtil.EstaVazio(APathSchemas),
-                  PathWithDelim(ExtractFileDir(application.ExeName))+'Schemas',
-                  PathWithDelim(APathSchemas))) then
-    raise Exception.Create('Diretório de Schemas não encontrado'+sLineBreak+
-                            DFeUtil.SeSenao(DFeUtil.EstaVazio(APathSchemas),
-                            PathWithDelim(ExtractFileDir(application.ExeName))+
-                            'Schemas',PathWithDelim(APathSchemas)));
+    if not DirectoryExists(DFeUtil.SeSenao(DFeUtil.EstaVazio(APathSchemas),
+                    PathWithDelim(ExtractFileDir(application.ExeName))+'Schemas',
+                    PathWithDelim(APathSchemas))) then
+      raise Exception.Create('Diretório de Schemas não encontrado'+sLineBreak+
+                              DFeUtil.SeSenao(DFeUtil.EstaVazio(APathSchemas),
+                              PathWithDelim(ExtractFileDir(application.ExeName))+
+                              'Schemas',PathWithDelim(APathSchemas)));
 
 {$IFDEF PL_103}
-  Schema.remove('http://www.portalfiscal.inf.br/cte');
+    Schema.remove('http://www.portalfiscal.inf.br/cte');
 
-  case Tipo of
-   1: begin
-       Schema.add('http://www.portalfiscal.inf.br/cte',
-        DFeUtil.SeSenao(DFeUtil.EstaVazio(APathSchemas),
-        PathWithDelim(ExtractFileDir(application.ExeName))+'Schemas\',
-        PathWithDelim(APathSchemas))+'cte_v1.03.xsd')
-      end;
-   2: begin
-       Schema.add('http://www.portalfiscal.inf.br/cte',
-        DFeUtil.SeSenao(DFeUtil.EstaVazio(APathSchemas),
-        PathWithDelim(ExtractFileDir(application.ExeName))+'Schemas\',
-        PathWithDelim(APathSchemas))+'cancCte_v1.03.xsd')
-      end;
-   3: begin
-       Schema.add('http://www.portalfiscal.inf.br/cte',
-        DFeUtil.SeSenao(DFeUtil.EstaVazio(APathSchemas),
-        PathWithDelim(ExtractFileDir(application.ExeName))+'Schemas\',
-        PathWithDelim(APathSchemas))+'inutCte_v1.03.xsd')
-      end;
-  end;
+    case Tipo of
+     1: begin
+         Schema.add('http://www.portalfiscal.inf.br/cte',
+          DFeUtil.SeSenao(DFeUtil.EstaVazio(APathSchemas),
+          PathWithDelim(ExtractFileDir(application.ExeName))+'Schemas\',
+          PathWithDelim(APathSchemas))+'cte_v1.03.xsd')
+        end;
+     2: begin
+         Schema.add('http://www.portalfiscal.inf.br/cte',
+          DFeUtil.SeSenao(DFeUtil.EstaVazio(APathSchemas),
+          PathWithDelim(ExtractFileDir(application.ExeName))+'Schemas\',
+          PathWithDelim(APathSchemas))+'cancCte_v1.03.xsd')
+        end;
+     3: begin
+         Schema.add('http://www.portalfiscal.inf.br/cte',
+          DFeUtil.SeSenao(DFeUtil.EstaVazio(APathSchemas),
+          PathWithDelim(ExtractFileDir(application.ExeName))+'Schemas\',
+          PathWithDelim(APathSchemas))+'inutCte_v1.03.xsd')
+        end;
+    end;
 {$ENDIF}
 
 {$IFNDEF PL_103}
-  Schema.remove('http://www.portalfiscal.inf.br/cte');
+    Schema.remove('http://www.portalfiscal.inf.br/cte');
 
-  case Tipo of
-   1: begin
-       ArqSchema := DFeUtil.SeSenao(DFeUtil.EstaVazio(APathSchemas),
-                    PathWithDelim(ExtractFileDir(application.ExeName)) + 'Schemas\',
-                    PathWithDelim(APathSchemas)) + 'cte_v' + CTeenviCTe + '.xsd';
-      end;
-   2: begin
-       ArqSchema := DFeUtil.SeSenao(DFeUtil.EstaVazio(APathSchemas),
-                    PathWithDelim(ExtractFileDir(application.ExeName)) + 'Schemas\',
-                    PathWithDelim(APathSchemas)) + 'cancCte_v' + CTecancCTe + '.xsd';
-      end;
-   3: begin
-       ArqSchema := DFeUtil.SeSenao(DFeUtil.EstaVazio(APathSchemas),
-                    PathWithDelim(ExtractFileDir(application.ExeName)) + 'Schemas\',
-                    PathWithDelim(APathSchemas)) + 'inutCte_v' + CTeinutCTe + '.xsd';
-      end;
-    5..11:
-      begin
-       ArqSchema := DFeUtil.SeSenao(DFeUtil.EstaVazio(APathSchemas),
-                    PathWithDelim(ExtractFileDir(application.ExeName)) + 'Schemas\',
-                    PathWithDelim(APathSchemas)) + 'eventoCTe_v' + CTeEventoCTe + '.xsd';
-      end;
-  end;
+    case Tipo of
+     1: begin
+         ArqSchema := DFeUtil.SeSenao(DFeUtil.EstaVazio(APathSchemas),
+                      PathWithDelim(ExtractFileDir(application.ExeName)) + 'Schemas\',
+                      PathWithDelim(APathSchemas)) + 'cte_v' + CTeenviCTe + '.xsd';
+        end;
+     2: begin
+         ArqSchema := DFeUtil.SeSenao(DFeUtil.EstaVazio(APathSchemas),
+                      PathWithDelim(ExtractFileDir(application.ExeName)) + 'Schemas\',
+                      PathWithDelim(APathSchemas)) + 'cancCte_v' + CTecancCTe + '.xsd';
+        end;
+     3: begin
+         ArqSchema := DFeUtil.SeSenao(DFeUtil.EstaVazio(APathSchemas),
+                      PathWithDelim(ExtractFileDir(application.ExeName)) + 'Schemas\',
+                      PathWithDelim(APathSchemas)) + 'inutCte_v' + CTeinutCTe + '.xsd';
+        end;
+      5..11:
+        begin
+         ArqSchema := DFeUtil.SeSenao(DFeUtil.EstaVazio(APathSchemas),
+                      PathWithDelim(ExtractFileDir(application.ExeName)) + 'Schemas\',
+                      PathWithDelim(APathSchemas)) + 'eventoCTe_v' + CTeEventoCTe + '.xsd';
+        end;
+    end;
 
-  if not FileExists(ArqSchema) then
-    raise Exception.Create('Arquivo de Schema não encontrado:' + sLineBreak + ArqSchema);
+    if not FileExists(ArqSchema) then
+      raise Exception.Create('Arquivo de Schema não encontrado:' + sLineBreak + ArqSchema);
 
-  Schema.add('http://www.portalfiscal.inf.br/cte', ArqSchema);
+    Schema.add('http://www.portalfiscal.inf.br/cte', ArqSchema);
 {$ENDIF}
 
-  DOMDocument.schemas := Schema;
-  ParseError          := DOMDocument.validate;
-  Result              := (ParseError.errorCode = 0);
-  Msg                 := ParseError.reason;
-  DOMDocument         := nil;
-  ParseError          := nil;
-  Schema              := nil;
+    DOMDocument.schemas := Schema;
+    ParseError          := DOMDocument.validate;
+    Result              := (ParseError.errorCode = 0);
+    Msg                 := ParseError.reason;
+    DOMDocument         := nil;
+    ParseError          := nil;
+    Schema              := nil;
+  finally
+    CoUninitialize;
+  end;
 end;
 
 function ValidaModalMSXML(XML: AnsiString; out Msg: AnsiString;
@@ -1565,148 +1571,153 @@ var
   dsigKey: IXMLDSigKey;
   signedKey: IXMLDSigKey;
 begin
-  if Pos('<Signature', XML) <= 0 then
-  begin
-    Tipo := CTeUtil.IdentificaTipoSchema(XML,I);
+  CoInitialize(nil);
+  try
+   if Pos('<Signature', XML) <= 0 then
+   begin
+     Tipo := CTeUtil.IdentificaTipoSchema(XML,I);
 
-    I := DFeUtil.PosEx('Id=', XML, 6);
-    if I = 0 then
-      raise Exception.Create('Não encontrei inicio do URI: Id=');
-    I := DFeUtil.PosEx('"', XML, I + 2);
-    if I = 0 then
-      raise Exception.Create('Não encontrei inicio do URI: aspas inicial');
-    J := DFeUtil.PosEx('"', XML, I + 1);
-    if J = 0 then
-      raise Exception.Create('Não encontrei inicio do URI: aspas final');
+     I := DFeUtil.PosEx('Id=', XML, 6);
+     if I = 0 then
+       raise Exception.Create('Não encontrei inicio do URI: Id=');
+     I := DFeUtil.PosEx('"', XML, I + 2);
+     if I = 0 then
+       raise Exception.Create('Não encontrei inicio do URI: aspas inicial');
+     J := DFeUtil.PosEx('"', XML, I + 1);
+     if J = 0 then
+       raise Exception.Create('Não encontrei inicio do URI: aspas final');
 
-    URI := copy(XML, I + 1, J - I - 1);
+     URI := copy(XML, I + 1, J - I - 1);
 
-    case Tipo of
-      1: XML := copy(XML, 1, pos('</CTe>', XML) - 1);
-      2: XML := copy(XML, 1, pos('</cancCTe>', XML) - 1);
-      3: XML := copy(XML, 1, pos('</inutCTe>', XML) - 1);
-      5..11: XML := copy(XML, 1, pos('</eventoCTe>', XML) - 1);
-      else XML := '';
-    end;
+     case Tipo of
+       1: XML := copy(XML, 1, pos('</CTe>', XML) - 1);
+       2: XML := copy(XML, 1, pos('</cancCTe>', XML) - 1);
+       3: XML := copy(XML, 1, pos('</inutCTe>', XML) - 1);
+       5..11: XML := copy(XML, 1, pos('</eventoCTe>', XML) - 1);
+       else XML := '';
+     end;
 
-    XML := XML + '<Signature xmlns="http://www.w3.org/2000/09/xmldsig#">' +
-                   '<SignedInfo>' +
-                     '<CanonicalizationMethod Algorithm="http://www.w3.org/TR/2001/REC-xml-c14n-20010315" />' +
-                     '<SignatureMethod Algorithm="http://www.w3.org/2000/09/xmldsig#rsa-sha1" />' +
-                     '<Reference URI="#' + URI + '">' +
-                       '<Transforms>' +
-                         '<Transform Algorithm="http://www.w3.org/2000/09/xmldsig#enveloped-signature" />' +
-                         '<Transform Algorithm="http://www.w3.org/TR/2001/REC-xml-c14n-20010315" />' +
-                       '</Transforms>' +
-                       '<DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" />' +
-                       '<DigestValue></DigestValue>' +
-                     '</Reference>' +
-                   '</SignedInfo>' +
-                   '<SignatureValue></SignatureValue>' +
-                   '<KeyInfo></KeyInfo>' +
-                 '</Signature>';
+     XML := XML + '<Signature xmlns="http://www.w3.org/2000/09/xmldsig#">' +
+                    '<SignedInfo>' +
+                      '<CanonicalizationMethod Algorithm="http://www.w3.org/TR/2001/REC-xml-c14n-20010315" />' +
+                      '<SignatureMethod Algorithm="http://www.w3.org/2000/09/xmldsig#rsa-sha1" />' +
+                      '<Reference URI="#' + URI + '">' +
+                        '<Transforms>' +
+                          '<Transform Algorithm="http://www.w3.org/2000/09/xmldsig#enveloped-signature" />' +
+                          '<Transform Algorithm="http://www.w3.org/TR/2001/REC-xml-c14n-20010315" />' +
+                        '</Transforms>' +
+                        '<DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" />' +
+                        '<DigestValue></DigestValue>' +
+                      '</Reference>' +
+                    '</SignedInfo>' +
+                    '<SignatureValue></SignatureValue>' +
+                    '<KeyInfo></KeyInfo>' +
+                  '</Signature>';
 
-    case Tipo of
-      1: XML := XML + '</CTe>';
-      2: XML := XML + '</cancCTe>';
-      3: XML := XML + '</inutCTe>';
-      5..11: XML := XML + '</eventoCTe>';
-      else XML := '';
-    end;
-  end;
+     case Tipo of
+       1: XML := XML + '</CTe>';
+       2: XML := XML + '</cancCTe>';
+       3: XML := XML + '</inutCTe>';
+       5..11: XML := XML + '</eventoCTe>';
+       else XML := '';
+     end;
+   end;
 
-  // Lendo Header antes de assinar //
-  xmlHeaderAntes := '';
-  I := pos('?>', XML);
-  if I > 0 then
-    xmlHeaderAntes := copy(XML, 1, I + 1);
+   // Lendo Header antes de assinar //
+   xmlHeaderAntes := '';
+   I := pos('?>', XML);
+   if I > 0 then
+     xmlHeaderAntes := copy(XML, 1, I + 1);
 
-  xmldoc := CoDOMDocument50.Create;
+   xmldoc := CoDOMDocument50.Create;
 
-  xmldoc.async := False;
-  xmldoc.validateOnParse := False;
-  xmldoc.preserveWhiteSpace := True;
+   xmldoc.async := False;
+   xmldoc.validateOnParse := False;
+   xmldoc.preserveWhiteSpace := True;
 
-  xmldsig := CoMXDigitalSignature50.Create;
+   xmldsig := CoMXDigitalSignature50.Create;
 
-  if (not xmldoc.loadXML(XML)) then
-    raise Exception.Create('Não foi possível carregar o arquivo: ' + XML);
+   if (not xmldoc.loadXML(XML)) then
+     raise Exception.Create('Não foi possível carregar o arquivo: ' + XML);
 
-  xmldoc.setProperty('SelectionNamespaces', DSIGNS);
+   xmldoc.setProperty('SelectionNamespaces', DSIGNS);
 
-  xmldsig.signature := xmldoc.selectSingleNode('.//ds:Signature');
+   xmldsig.signature := xmldoc.selectSingleNode('.//ds:Signature');
 
-  if (xmldsig.signature = nil) then
-    raise Exception.Create('Falha ao setar assinatura.');
+   if (xmldsig.signature = nil) then
+     raise Exception.Create('Falha ao setar assinatura.');
 
-  if (xmldsig.signature = nil) then
-    raise Exception.Create('É preciso carregar o template antes de assinar.');
+   if (xmldsig.signature = nil) then
+     raise Exception.Create('É preciso carregar o template antes de assinar.');
 
-   if NumCertCarregado <> Certificado.SerialNumber then
+    if NumCertCarregado <> Certificado.SerialNumber then
       CertStoreMem := nil;
 
-  if CertStoreMem = nil then
-  begin
-    CertStore := CoStore.Create;
-    CertStore.Open(CAPICOM_CURRENT_USER_STORE, 'My', CAPICOM_STORE_OPEN_READ_ONLY);
+   if CertStoreMem = nil then
+   begin
+     CertStore := CoStore.Create;
+     CertStore.Open(CAPICOM_CURRENT_USER_STORE, 'My', CAPICOM_STORE_OPEN_READ_ONLY);
 
-    CertStoreMem := CoStore.Create;
-    CertStoreMem.Open(CAPICOM_MEMORY_STORE, 'Memoria', CAPICOM_STORE_OPEN_READ_ONLY);
+     CertStoreMem := CoStore.Create;
+     CertStoreMem.Open(CAPICOM_MEMORY_STORE, 'Memoria', CAPICOM_STORE_OPEN_READ_ONLY);
 
-    Certs := CertStore.Certificates as ICertificates2;
-    for i := 1 to Certs.Count do
-    begin
-      Cert := IInterface(Certs.Item[i]) as ICertificate2;
-      if Cert.SerialNumber = Certificado.SerialNumber then
-       begin
-         CertStoreMem.Add(Cert);
-         NumCertCarregado := Certificado.SerialNumber;
-       end;
-    end;
+     Certs := CertStore.Certificates as ICertificates2;
+     for i := 1 to Certs.Count do
+     begin
+       Cert := IInterface(Certs.Item[i]) as ICertificate2;
+       if Cert.SerialNumber = Certificado.SerialNumber then
+        begin
+          CertStoreMem.Add(Cert);
+          NumCertCarregado := Certificado.SerialNumber;
+        end;
+     end;
+   end;
+
+   OleCheck(IDispatch(Certificado.PrivateKey).QueryInterface(IPrivateKey, PrivateKey));
+   xmldsig.store := CertStoreMem;
+
+   dsigKey := xmldsig.createKeyFromCSP(PrivateKey.ProviderType, PrivateKey.ProviderName, PrivateKey.ContainerName, 0);
+   if (dsigKey = nil) then
+     raise Exception.Create('Erro ao criar a chave do CSP.');
+
+   signedKey := xmldsig.sign(dsigKey, $00000002);
+   if (signedKey <> nil) then
+   begin
+     XMLAssinado := xmldoc.xml;
+     XMLAssinado := StringReplace(XMLAssinado, #10, '', [rfReplaceAll]);
+     XMLAssinado := StringReplace(XMLAssinado, #13, '', [rfReplaceAll]);
+     PosIni := Pos('<SignatureValue>', XMLAssinado) + length('<SignatureValue>');
+     XMLAssinado := copy(XMLAssinado, 1, PosIni - 1) + StringReplace(copy(XMLAssinado, PosIni, length(XMLAssinado)), ' ', '', [rfReplaceAll]);
+     PosIni := Pos('<X509Certificate>', XMLAssinado) - 1;
+     PosFim := DFeUtil.PosLast('<X509Certificate>', XMLAssinado);
+
+     XMLAssinado := copy(XMLAssinado, 1, PosIni) + copy(XMLAssinado, PosFim, length(XMLAssinado));
+   end
+   else
+     raise Exception.Create('Assinatura Falhou.');
+
+   if xmlHeaderAntes <> '' then
+   begin
+     I := pos('?>', XMLAssinado);
+     if I > 0 then
+     begin
+       xmlHeaderDepois := copy(XMLAssinado, 1, I + 1);
+       if xmlHeaderAntes <> xmlHeaderDepois then
+         XMLAssinado := StuffString(XMLAssinado, 1, length(xmlHeaderDepois), xmlHeaderAntes);
+     end
+     else
+       XMLAssinado := xmlHeaderAntes + XMLAssinado;
+   end;
+
+   dsigKey := nil;
+   signedKey := nil;
+   xmldoc := nil;
+   xmldsig := nil;
+
+   Result := True;
+  finally
+   CoUninitialize;
   end;
-
-  OleCheck(IDispatch(Certificado.PrivateKey).QueryInterface(IPrivateKey, PrivateKey));
-  xmldsig.store := CertStoreMem;
-
-  dsigKey := xmldsig.createKeyFromCSP(PrivateKey.ProviderType, PrivateKey.ProviderName, PrivateKey.ContainerName, 0);
-  if (dsigKey = nil) then
-    raise Exception.Create('Erro ao criar a chave do CSP.');
-
-  signedKey := xmldsig.sign(dsigKey, $00000002);
-  if (signedKey <> nil) then
-  begin
-    XMLAssinado := xmldoc.xml;
-    XMLAssinado := StringReplace(XMLAssinado, #10, '', [rfReplaceAll]);
-    XMLAssinado := StringReplace(XMLAssinado, #13, '', [rfReplaceAll]);
-    PosIni := Pos('<SignatureValue>', XMLAssinado) + length('<SignatureValue>');
-    XMLAssinado := copy(XMLAssinado, 1, PosIni - 1) + StringReplace(copy(XMLAssinado, PosIni, length(XMLAssinado)), ' ', '', [rfReplaceAll]);
-    PosIni := Pos('<X509Certificate>', XMLAssinado) - 1;
-    PosFim := DFeUtil.PosLast('<X509Certificate>', XMLAssinado);
-
-    XMLAssinado := copy(XMLAssinado, 1, PosIni) + copy(XMLAssinado, PosFim, length(XMLAssinado));
-  end
-  else
-    raise Exception.Create('Assinatura Falhou.');
-
-  if xmlHeaderAntes <> '' then
-  begin
-    I := pos('?>', XMLAssinado);
-    if I > 0 then
-    begin
-      xmlHeaderDepois := copy(XMLAssinado, 1, I + 1);
-      if xmlHeaderAntes <> xmlHeaderDepois then
-        XMLAssinado := StuffString(XMLAssinado, 1, length(xmlHeaderDepois), xmlHeaderAntes);
-    end
-    else
-      XMLAssinado := xmlHeaderAntes + XMLAssinado;
-  end;
-
-  dsigKey := nil;
-  signedKey := nil;
-  xmldoc := nil;
-  xmldsig := nil;
-
-  Result := True;
 end;
 {$ENDIF}
 

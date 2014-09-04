@@ -43,6 +43,7 @@
 |* 19/08/2009: Wiliam Rosa
 |*  - Definição de classes para impressão do DACTE
 *******************************************************************************}
+
 {$I ACBr.inc}
 
 unit ACBrCTeDACTEClass;

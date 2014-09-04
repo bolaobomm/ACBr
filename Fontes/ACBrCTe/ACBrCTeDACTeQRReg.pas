@@ -42,6 +42,7 @@
 |* 20/08/2009: Caique Rodrigues
 |*  - Doação units para geração do DANFe via QuickReport
 *******************************************************************************}
+
 {$I ACBr.inc}
 
 unit ACBrCTeDACTeQRReg;

@@ -50,13 +50,14 @@
 
 unit pcteCTe;
 
-interface uses
+interface
 
+uses
   SysUtils, Classes,
 {$IFNDEF VER130}
   Variants,
 {$ENDIF}
-  pcnConversao, pcteProcCTe, pcnSignature;
+  pcnConversao, pcteProcCTe, pcteSignature;
 
 {$IFDEF PL_103}
  {$I pcteCTe_V103.inc}

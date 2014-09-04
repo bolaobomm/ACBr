@@ -47,6 +47,7 @@
 |* 08/03/2010 : Bruno - Rhythmus Informatica
 |* Corrigida função DoCTeRecepcao
 *******************************************************************************}
+
 {$I ACBr.inc}
 
 unit ACBrCTeWebServices;
@@ -436,7 +437,7 @@ uses
   ssl_openssl,
 {$ENDIF}
   ACBrUtil, ACBrCTeUtil, ACBrCTe, ACBrDFeUtil,
-  pcnGerador, pcnCabecalho, pcnLeitor,
+  pcnGerador, pcteCabecalho, pcnLeitor,
   pcteConsStatServ, pcteRetConsStatServ, pcteConsCad, pcteConsSitCTe,
   pcteCancCTe, pcteInutCTe, pcteRetInutCTe;
 
