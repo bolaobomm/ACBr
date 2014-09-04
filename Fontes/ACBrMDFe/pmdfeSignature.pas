@@ -56,7 +56,7 @@ type
   public
     constructor Create;
     destructor Destroy; override;
-    function GerarXML: boolean;
+    function GerarXML: Boolean;
   published
     property Gerador: TGerador       read FGerador         write FGerador;
     property URI: String             read FURI             write FURI;
@@ -80,7 +80,7 @@ begin
   inherited;
 end;
 
-function TSignature.GerarXML: boolean;
+function TSignature.GerarXML: Boolean;
 begin
   FGerador.ArquivoFormatoXML := '';
   FGerador.Opcoes.TagVaziaNoFormatoResumido := false;

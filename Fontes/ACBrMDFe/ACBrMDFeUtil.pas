@@ -48,7 +48,7 @@ uses
 {$IFDEF FPC}
   LResources, Controls, Graphics, Dialogs,
 {$ELSE}
-  StrUtils,
+  StrUtils, Activex,
 {$ENDIF}
   ACBrMDFeConfiguracoes, pcnConversao, pmdfeMDFe;
 
@@ -76,13 +76,13 @@ type
     // Estados Emissores pela Sefaz Virtual RS (Rio Grande do Sul):
     // AC, AL, AP, AM, BA, CE, DF, ES, GO, MA, PA, PB, PR, PE, PI, RJ, RN,
     // RO, RR, SC, SE, TO.
-    class function GetURLSVRS(AAmbiente: Integer; ALayOut: TLayOut): WideString;
+    class function GetURLSVRS(AAmbiente: Integer; ALayOut: TLayOutMDFe): WideString;
 
-    class function GetURLMG(AAmbiente: Integer; ALayOut: TLayOut): WideString;
-    class function GetURLRS(AAmbiente: Integer; ALayOut: TLayOut): WideString;
-    class function GetURLSP(AAmbiente: Integer; ALayOut: TLayOut): WideString;
-    class function GetURLMT(AAmbiente: Integer; ALayOut: TLayOut): WideString;
-    class function GetURLMS(AAmbiente: Integer; ALayOut: TLayOut): WideString;
+    class function GetURLMG(AAmbiente: Integer; ALayOut: TLayOutMDFe): WideString;
+    class function GetURLRS(AAmbiente: Integer; ALayOut: TLayOutMDFe): WideString;
+    class function GetURLSP(AAmbiente: Integer; ALayOut: TLayOutMDFe): WideString;
+    class function GetURLMT(AAmbiente: Integer; ALayOut: TLayOutMDFe): WideString;
+    class function GetURLMS(AAmbiente: Integer; ALayOut: TLayOutMDFe): WideString;
 
   protected
 
@@ -93,7 +93,7 @@ type
     class procedure InitXmlSec;
     class procedure ShutDownXmlSec;
 {$ENDIF}
-    class function GetURL(const AUF, AAmbiente, FormaEmissao: Integer; ALayOut: TLayOut): WideString;
+    class function GetURL(const AUF, AAmbiente, FormaEmissao: Integer; ALayOut: TLayOutMDFe): WideString;
     class function Valida(const AXML: AnsiString; var AMsg: AnsiString; const APathSchemas: string = ''): Boolean;
     class function FormatarChaveAcesso(AValue: String; Mascara: Boolean = False): String;
     class function FormatarNumMDFe(const AValue: Integer): string;
@@ -176,7 +176,7 @@ end;
 {$ENDIF}
 
 class function MDFeUtil.GetURL(const AUF, AAmbiente, FormaEmissao: Integer;
-  ALayOut: TLayOut): WideString;
+  ALayOut: TLayOutMDFe): WideString;
 begin
   //  (AC,AL,AP,AM,BA,CE,DF,ES,GO,MA,MT,MS,MG,PA,PB,PR,PE,PI,RJ,RN,RS,RO,RR,SC,SP,SE,TO);
   //  (12,27,16,13,29,23,53,32,52,21,51,50,31,15,25,41,26,22,33,24,43,11,14,42,35,28,17);
@@ -227,7 +227,7 @@ begin
 end;
 
 class function MDFeUtil.GetURLSVRS(AAmbiente: Integer;
-  ALayOut: TLayOut): WideString;
+  ALayOut: TLayOutMDFe): WideString;
 begin
   case ALayOut of
     LayMDFeRecepcao:      Result := DFeUtil.SeSenao(AAmbiente = 1, 'https://mdfe.sefaz.rs.gov.br/ws/MDFerecepcao/MDFeRecepcao.asmx'            , 'https://mdfe-hml.sefaz.rs.gov.br/ws/MDFerecepcao/MDFeRecepcao.asmx');
@@ -239,7 +239,7 @@ begin
 end;
 
 class function MDFeUtil.GetURLMG(AAmbiente: Integer;
-  ALayOut: TLayOut): WideString;
+  ALayOut: TLayOutMDFe): WideString;
 begin
   case ALayOut of
     LayMDFeRecepcao:      Result := DFeUtil.SeSenao(AAmbiente = 1, 'https://mdfe.sefaz.rs.gov.br/ws/MDFerecepcao/MDFeRecepcao.asmx'            , 'https://mdfe-hml.sefaz.rs.gov.br/ws/MDFerecepcao/MDFeRecepcao.asmx');
@@ -251,7 +251,7 @@ begin
 end;
 
 class function MDFeUtil.GetURLRS(AAmbiente: Integer;
-  ALayOut: TLayOut): WideString;
+  ALayOut: TLayOutMDFe): WideString;
 begin
   case ALayOut of
     LayMDFeRecepcao:      Result := DFeUtil.SeSenao(AAmbiente = 1, 'https://mdfe.sefaz.rs.gov.br/ws/MDFerecepcao/MDFeRecepcao.asmx'            , 'https://mdfe-hml.sefaz.rs.gov.br/ws/MDFerecepcao/MDFeRecepcao.asmx');
@@ -263,7 +263,7 @@ begin
 end;
 
 class function MDFeUtil.GetURLSP(AAmbiente: Integer;
-  ALayOut: TLayOut): WideString;
+  ALayOut: TLayOutMDFe): WideString;
 begin
   case ALayOut of
     LayMDFeRecepcao:      Result := DFeUtil.SeSenao(AAmbiente = 1, 'https://mdfe.sefaz.rs.gov.br/ws/MDFerecepcao/MDFeRecepcao.asmx'            , 'https://mdfe-hml.sefaz.rs.gov.br/ws/MDFerecepcao/MDFeRecepcao.asmx');
@@ -275,7 +275,7 @@ begin
 end;
 
 class function MDFeUtil.GetURLMS(AAmbiente: Integer;
-  ALayOut: TLayOut): WideString;
+  ALayOut: TLayOutMDFe): WideString;
 begin
   case ALayOut of
     LayMDFeRecepcao:      Result := DFeUtil.SeSenao(AAmbiente = 1, 'https://mdfe.sefaz.rs.gov.br/ws/MDFerecepcao/MDFeRecepcao.asmx'            , 'https://mdfe-hml.sefaz.rs.gov.br/ws/MDFerecepcao/MDFeRecepcao.asmx');
@@ -287,7 +287,7 @@ begin
 end;
 
 class function MDFeUtil.GetURLMT(AAmbiente: Integer;
-  ALayOut: TLayOut): WideString;
+  ALayOut: TLayOutMDFe): WideString;
 begin
   case ALayOut of
     LayMDFeRecepcao:      Result := DFeUtil.SeSenao(AAmbiente = 1, 'https://mdfe.sefaz.rs.gov.br/ws/MDFerecepcao/MDFeRecepcao.asmx'            , 'https://mdfe-hml.sefaz.rs.gov.br/ws/MDFerecepcao/MDFeRecepcao.asmx');
@@ -655,46 +655,51 @@ var
   Tipo, I: Integer;
   schema_filename: String;
 begin
-  Tipo := MDFeUtil.IdentificaTipoSchema(XML, I);
+  CoInitialize(nil);
+  try
+    Tipo := MDFeUtil.IdentificaTipoSchema(XML, I);
 
-  DOMDocument                  := CoDOMDocument50.Create;
-  DOMDocument.async            := False;
-  DOMDocument.resolveExternals := False;
-  DOMDocument.validateOnParse  := True;
-  DOMDocument.loadXML(XML);
+    DOMDocument                  := CoDOMDocument50.Create;
+    DOMDocument.async            := False;
+    DOMDocument.resolveExternals := False;
+    DOMDocument.validateOnParse  := True;
+    DOMDocument.loadXML(XML);
 
-  Schema := CoXMLSchemaCache50.Create;
+    Schema := CoXMLSchemaCache50.Create;
 
- if not DirectoryExists(DFeUtil.SeSenao(DFeUtil.EstaVazio(APathSchemas),
-                  PathWithDelim(ExtractFileDir(application.ExeName))+'Schemas',
-                  PathWithDelim(APathSchemas))) then
-    raise Exception.Create('Diretório de Schemas não encontrado'+sLineBreak+
-                            DFeUtil.SeSenao(DFeUtil.EstaVazio(APathSchemas),
-                            PathWithDelim(ExtractFileDir(application.ExeName))+
-                            'Schemas',PathWithDelim(APathSchemas)));
+    if not DirectoryExists(DFeUtil.SeSenao(DFeUtil.EstaVazio(APathSchemas),
+                    PathWithDelim(ExtractFileDir(application.ExeName))+'Schemas',
+                    PathWithDelim(APathSchemas))) then
+      raise Exception.Create('Diretório de Schemas não encontrado'+sLineBreak+
+                              DFeUtil.SeSenao(DFeUtil.EstaVazio(APathSchemas),
+                              PathWithDelim(ExtractFileDir(application.ExeName))+
+                              'Schemas',PathWithDelim(APathSchemas)));
 
-  case Tipo of
-    1: schema_filename := DFeUtil.SeSenao(DFeUtil.EstaVazio(APathSchemas),
-                                           PathWithDelim(ExtractFileDir(application.ExeName)) + 'Schemas\',
-                                           PathWithDelim(APathSchemas)) + 'MDFe_v' + MDFeEnviMDFe + '.xsd';
-    2..4: schema_filename := DFeUtil.SeSenao(DFeUtil.EstaVazio(APathSchemas),
+    case Tipo of
+      1: schema_filename := DFeUtil.SeSenao(DFeUtil.EstaVazio(APathSchemas),
                                              PathWithDelim(ExtractFileDir(application.ExeName)) + 'Schemas\',
-                                             PathWithDelim(APathSchemas)) + 'eventoMDFe_v' + MDFeEventoMDFe + '.xsd';
-    else schema_filename := '';
+                                             PathWithDelim(APathSchemas)) + 'MDFe_v' + MDFeEnviMDFe + '.xsd';
+      2..4: schema_filename := DFeUtil.SeSenao(DFeUtil.EstaVazio(APathSchemas),
+                                               PathWithDelim(ExtractFileDir(application.ExeName)) + 'Schemas\',
+                                               PathWithDelim(APathSchemas)) + 'eventoMDFe_v' + MDFeEventoMDFe + '.xsd';
+      else schema_filename := '';
+    end;
+
+    if not FilesExists(schema_filename) then
+       raise Exception.Create('Arquivo ' + schema_filename + ' não encontrado');
+
+    Schema.add('http://www.portalfiscal.inf.br/mdfe', schema_filename);
+
+    DOMDocument.schemas := Schema;
+    ParseError          := DOMDocument.validate;
+    Result              := (ParseError.errorCode = 0);
+    Msg                 := ParseError.reason;
+    DOMDocument         := nil;
+    ParseError          := nil;
+    Schema              := nil;
+  finally
+    CoUninitialize;
   end;
-
- if not FilesExists(schema_filename) then
-    raise Exception.Create('Arquivo ' + schema_filename + ' não encontrado');
-
-  Schema.add('http://www.portalfiscal.inf.br/mdfe', schema_filename);
-
-  DOMDocument.schemas := Schema;
-  ParseError          := DOMDocument.validate;
-  Result              := (ParseError.errorCode = 0);
-  Msg                 := ParseError.reason;
-  DOMDocument         := nil;
-  ParseError          := nil;
-  Schema              := nil;
 end;
 
 function ValidaModalMSXML(XML: AnsiString; out Msg: AnsiString;
@@ -1055,132 +1060,137 @@ var
   dsigKey: IXMLDSigKey;
   signedKey: IXMLDSigKey;
 begin
-  if Pos('<Signature', XML) <= 0 then
-  begin
-    Tipo := MDFeUtil.IdentificaTipoSchema(XML, I);
+  CoInitialize(nil);
+  try
+   if Pos('<Signature', XML) <= 0 then
+   begin
+     Tipo := MDFeUtil.IdentificaTipoSchema(XML, I);
 
-    I := DFeUtil.PosEx('Id=', XML, 6);
-    if I = 0 then
-      raise Exception.Create('Não encontrei inicio do URI: Id=');
-    I := DFeUtil.PosEx('"', XML, I + 2);
-    if I = 0 then
-      raise Exception.Create('Não encontrei inicio do URI: aspas inicial');
-    J := DFeUtil.PosEx('"', XML, I + 1);
-    if J = 0 then
-      raise Exception.Create('Não encontrei inicio do URI: aspas final');
+     I := DFeUtil.PosEx('Id=', XML, 6);
+     if I = 0 then
+       raise Exception.Create('Não encontrei inicio do URI: Id=');
+     I := DFeUtil.PosEx('"', XML, I + 2);
+     if I = 0 then
+       raise Exception.Create('Não encontrei inicio do URI: aspas inicial');
+     J := DFeUtil.PosEx('"', XML, I + 1);
+     if J = 0 then
+       raise Exception.Create('Não encontrei inicio do URI: aspas final');
 
-    URI := copy(XML, I + 1, J - I - 1);
+     URI := copy(XML, I + 1, J - I - 1);
 
-    case Tipo of
-         1: XML := copy(XML,1,pos('</MDFe>',XML)-1);
-      2..4: XML := copy(XML,1,pos('</eventoMDFe>',XML)-1);
-      else  XML := '';
-    end;
+     case Tipo of
+          1: XML := copy(XML,1,pos('</MDFe>',XML)-1);
+       2..4: XML := copy(XML,1,pos('</eventoMDFe>',XML)-1);
+       else  XML := '';
+     end;
 
-    XML := XML + '<Signature xmlns="http://www.w3.org/2000/09/xmldsig#"><SignedInfo><CanonicalizationMethod Algorithm="http://www.w3.org/TR/2001/REC-xml-c14n-20010315" /><SignatureMethod Algorithm="http://www.w3.org/2000/09/xmldsig#rsa-sha1" />';
-    XML := XML + '<Reference URI="#' + URI + '">';
-    XML := XML + '<Transforms><Transform Algorithm="http://www.w3.org/2000/09/xmldsig#enveloped-signature" /><Transform Algorithm="http://www.w3.org/TR/2001/REC-xml-c14n-20010315" /></Transforms><DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" />';
-    XML := XML + '<DigestValue></DigestValue></Reference></SignedInfo><SignatureValue></SignatureValue><KeyInfo></KeyInfo></Signature>';
+     XML := XML + '<Signature xmlns="http://www.w3.org/2000/09/xmldsig#"><SignedInfo><CanonicalizationMethod Algorithm="http://www.w3.org/TR/2001/REC-xml-c14n-20010315" /><SignatureMethod Algorithm="http://www.w3.org/2000/09/xmldsig#rsa-sha1" />';
+     XML := XML + '<Reference URI="#' + URI + '">';
+     XML := XML + '<Transforms><Transform Algorithm="http://www.w3.org/2000/09/xmldsig#enveloped-signature" /><Transform Algorithm="http://www.w3.org/TR/2001/REC-xml-c14n-20010315" /></Transforms><DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" />';
+     XML := XML + '<DigestValue></DigestValue></Reference></SignedInfo><SignatureValue></SignatureValue><KeyInfo></KeyInfo></Signature>';
 
-    case Tipo of
-         1: XML := XML + '</MDFe>';
-      2..4: XML := XML + '</eventoMDFe>';
-      else  XML := '';
-    end;
-  end;
+     case Tipo of
+          1: XML := XML + '</MDFe>';
+       2..4: XML := XML + '</eventoMDFe>';
+       else  XML := '';
+     end;
+   end;
 
-  // Lendo Header antes de assinar //
-  xmlHeaderAntes := '';
-  I := pos('?>', XML);
-  if I > 0 then
-    xmlHeaderAntes := copy(XML, 1, I + 1);
+   // Lendo Header antes de assinar //
+   xmlHeaderAntes := '';
+   I := pos('?>', XML);
+   if I > 0 then
+     xmlHeaderAntes := copy(XML, 1, I + 1);
 
-  xmldoc := CoDOMDocument50.Create;
+   xmldoc := CoDOMDocument50.Create;
 
-  xmldoc.async := False;
-  xmldoc.validateOnParse := False;
-  xmldoc.preserveWhiteSpace := True;
+   xmldoc.async := False;
+   xmldoc.validateOnParse := False;
+   xmldoc.preserveWhiteSpace := True;
 
-  xmldsig := CoMXDigitalSignature50.Create;
+   xmldsig := CoMXDigitalSignature50.Create;
 
-  if (not xmldoc.loadXML(XML)) then
-    raise Exception.Create('Não foi possível carregar o arquivo: ' + XML);
+   if (not xmldoc.loadXML(XML)) then
+     raise Exception.Create('Não foi possível carregar o arquivo: ' + XML);
 
-  xmldoc.setProperty('SelectionNamespaces', DSIGNS);
+   xmldoc.setProperty('SelectionNamespaces', DSIGNS);
 
-  xmldsig.signature := xmldoc.selectSingleNode('.//ds:Signature');
+   xmldsig.signature := xmldoc.selectSingleNode('.//ds:Signature');
 
-  if (xmldsig.signature = nil) then
-    raise Exception.Create('Falha ao setar assinatura.');
+   if (xmldsig.signature = nil) then
+     raise Exception.Create('Falha ao setar assinatura.');
 
-  if (xmldsig.signature = nil) then
-    raise Exception.Create('É preciso carregar o template antes de assinar.');
+   if (xmldsig.signature = nil) then
+     raise Exception.Create('É preciso carregar o template antes de assinar.');
 
    if NumCertCarregado <> Certificado.SerialNumber then
-      CertStoreMem := nil;
+     CertStoreMem := nil;
 
-  if CertStoreMem = nil then
-  begin
-    CertStore := CoStore.Create;
-    CertStore.Open(CAPICOM_CURRENT_USER_STORE, 'My', CAPICOM_STORE_OPEN_READ_ONLY);
+   if CertStoreMem = nil then
+   begin
+     CertStore := CoStore.Create;
+     CertStore.Open(CAPICOM_CURRENT_USER_STORE, 'My', CAPICOM_STORE_OPEN_READ_ONLY);
 
-    CertStoreMem := CoStore.Create;
-    CertStoreMem.Open(CAPICOM_MEMORY_STORE, 'Memoria', CAPICOM_STORE_OPEN_READ_ONLY);
+     CertStoreMem := CoStore.Create;
+     CertStoreMem.Open(CAPICOM_MEMORY_STORE, 'Memoria', CAPICOM_STORE_OPEN_READ_ONLY);
 
-    Certs := CertStore.Certificates as ICertificates2;
-    for i := 1 to Certs.Count do
-    begin
-      Cert := IInterface(Certs.Item[i]) as ICertificate2;
-      if Cert.SerialNumber = Certificado.SerialNumber then
-       begin
-         CertStoreMem.Add(Cert);
-         NumCertCarregado := Certificado.SerialNumber;
-       end;
-    end;
+     Certs := CertStore.Certificates as ICertificates2;
+     for i := 1 to Certs.Count do
+     begin
+       Cert := IInterface(Certs.Item[i]) as ICertificate2;
+       if Cert.SerialNumber = Certificado.SerialNumber then
+        begin
+          CertStoreMem.Add(Cert);
+          NumCertCarregado := Certificado.SerialNumber;
+        end;
+     end;
+   end;
+
+   OleCheck(IDispatch(Certificado.PrivateKey).QueryInterface(IPrivateKey, PrivateKey));
+   xmldsig.store := CertStoreMem;
+
+   dsigKey := xmldsig.createKeyFromCSP(PrivateKey.ProviderType, PrivateKey.ProviderName, PrivateKey.ContainerName, 0);
+   if (dsigKey = nil) then
+     raise Exception.Create('Erro ao criar a chave do CSP.');
+
+   signedKey := xmldsig.sign(dsigKey, $00000002);
+   if (signedKey <> nil) then
+   begin
+     XMLAssinado := xmldoc.xml;
+     XMLAssinado := StringReplace(XMLAssinado, #10, '', [rfReplaceAll]);
+     XMLAssinado := StringReplace(XMLAssinado, #13, '', [rfReplaceAll]);
+     PosIni := Pos('<SignatureValue>', XMLAssinado) + length('<SignatureValue>');
+     XMLAssinado := copy(XMLAssinado, 1, PosIni - 1) + StringReplace(copy(XMLAssinado, PosIni, length(XMLAssinado)), ' ', '', [rfReplaceAll]);
+     PosIni := Pos('<X509Certificate>', XMLAssinado) - 1;
+     PosFim := DFeUtil.PosLast('<X509Certificate>', XMLAssinado);
+
+     XMLAssinado := copy(XMLAssinado, 1, PosIni) + copy(XMLAssinado, PosFim, length(XMLAssinado));
+   end
+   else
+     raise Exception.Create('Assinatura Falhou.');
+
+   if xmlHeaderAntes <> '' then
+   begin
+     I := pos('?>', XMLAssinado);
+     if I > 0 then
+     begin
+       xmlHeaderDepois := copy(XMLAssinado, 1, I + 1);
+       if xmlHeaderAntes <> xmlHeaderDepois then
+         XMLAssinado := StuffString(XMLAssinado, 1, length(xmlHeaderDepois), xmlHeaderAntes);
+     end
+     else
+       XMLAssinado := xmlHeaderAntes + XMLAssinado;
+   end;
+
+   dsigKey   := nil;
+   signedKey := nil;
+   xmldoc    := nil;
+   xmldsig   := nil;
+
+   Result := True;
+  finally
+   CoUninitialize;
   end;
-
-  OleCheck(IDispatch(Certificado.PrivateKey).QueryInterface(IPrivateKey, PrivateKey));
-  xmldsig.store := CertStoreMem;
-
-  dsigKey := xmldsig.createKeyFromCSP(PrivateKey.ProviderType, PrivateKey.ProviderName, PrivateKey.ContainerName, 0);
-  if (dsigKey = nil) then
-    raise Exception.Create('Erro ao criar a chave do CSP.');
-
-  signedKey := xmldsig.sign(dsigKey, $00000002);
-  if (signedKey <> nil) then
-  begin
-    XMLAssinado := xmldoc.xml;
-    XMLAssinado := StringReplace(XMLAssinado, #10, '', [rfReplaceAll]);
-    XMLAssinado := StringReplace(XMLAssinado, #13, '', [rfReplaceAll]);
-    PosIni := Pos('<SignatureValue>', XMLAssinado) + length('<SignatureValue>');
-    XMLAssinado := copy(XMLAssinado, 1, PosIni - 1) + StringReplace(copy(XMLAssinado, PosIni, length(XMLAssinado)), ' ', '', [rfReplaceAll]);
-    PosIni := Pos('<X509Certificate>', XMLAssinado) - 1;
-    PosFim := DFeUtil.PosLast('<X509Certificate>', XMLAssinado);
-
-    XMLAssinado := copy(XMLAssinado, 1, PosIni) + copy(XMLAssinado, PosFim, length(XMLAssinado));
-  end
-  else
-    raise Exception.Create('Assinatura Falhou.');
-
-  if xmlHeaderAntes <> '' then
-  begin
-    I := pos('?>', XMLAssinado);
-    if I > 0 then
-    begin
-      xmlHeaderDepois := copy(XMLAssinado, 1, I + 1);
-      if xmlHeaderAntes <> xmlHeaderDepois then
-        XMLAssinado := StuffString(XMLAssinado, 1, length(xmlHeaderDepois), xmlHeaderAntes);
-    end
-    else
-      XMLAssinado := xmlHeaderAntes + XMLAssinado;
-  end;
-
-  dsigKey   := nil;
-  signedKey := nil;
-  xmldoc    := nil;
-  xmldsig   := nil;
-
-  Result := True;
 end;
 {$ENDIF}
 

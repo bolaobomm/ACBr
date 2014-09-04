@@ -48,10 +48,9 @@ uses
   pcnConversao;
 
 type
-  TLayOutMDFe     = ( LayMDFeEnvio, LayMDFeConsulta );
-  TMDFeTpEmitente = ( teTransportadora, teTranspCargaPropria );
-  TMDFeModal      = ( moRodoviario, moAereo, moAquaviario, moFerroviario );
-  TMDFeVersao     = ( ve100, ve100a );
+  TMDFeTpEmitente = (teTransportadora, teTranspCargaPropria);
+  TMDFeModal      = (moRodoviario, moAereo, moAquaviario, moFerroviario);
+  TMDFeVersao     = (ve100, ve100a);
 
 const
 

@@ -298,7 +298,7 @@ uses
   ssl_openssl,
 {$ENDIF}
   ACBrUtil, ACBrDFeUtil, ACBrMDFeUtil, ACBrMDFe,
-  pcnGerador, pcnCabecalho, pcnLeitor;
+  pcnGerador, pmdfeCabecalho, pcnLeitor;
 
 {$IFNDEF ACBrMDFeOpenSSL}
 const
