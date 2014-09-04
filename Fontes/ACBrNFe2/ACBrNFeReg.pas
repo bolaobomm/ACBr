@@ -1,7 +1,7 @@
 {******************************************************************************}
 { Projeto: Componente ACBrNFe                                                  }
 {  Biblioteca multiplataforma de componentes Delphi para emissão de Nota Fiscal}
-{ eletrônica - NFe - http://www.nfe.fazenda.gov.br                          }
+{ eletrônica - NFe - http://www.nfe.fazenda.gov.br                             }
 {                                                                              }
 { Direitos Autorais Reservados (c) 2008 Wemerson Souto                         }
 {                                       Daniel Simoes de Almeida               }
@@ -34,14 +34,15 @@
 {                                                                              }
 {******************************************************************************}
 
-{******************************************************************************
+{*******************************************************************************
 |* Historico
 |*
 |* 16/12/2008: Wemerson Souto
 |*  - Doação do componente para o Projeto ACBr
 |* 09/03/2009: Dulcemar P.Zilli
 |*  - Incluido IPI e II
-******************************************************************************}
+*******************************************************************************}
+
 {$I ACBr.inc}
 
 unit ACBrNFeReg;
@@ -61,7 +62,6 @@ uses
        DesignEditors
     {$ENDIF}
   {$ENDIF} ;
-
 
 type
   { Editor de Proriedades de Componente para mostrar o AboutACBr }
@@ -85,12 +85,12 @@ type
     function GetAttributes: TPropertyAttributes; override;
   end;
 
-
 procedure Register;
 
 implementation
 
-uses ACBrNFeConfiguracoes;
+uses
+  ACBrNFeConfiguracoes;
 
 {$IFNDEF FPC}
    {$R ACBrNFe.dcr}
@@ -141,7 +141,7 @@ end;
 { TACBrAboutDialogProperty }
 procedure TACBrAboutDialogProperty.Edit;
 begin
-  ACBrAboutDialog ;
+  ACBrAboutDialog;
 end;
 
 function TACBrAboutDialogProperty.GetAttributes: TPropertyAttributes;
@@ -151,7 +151,7 @@ end;
 
 function TACBrAboutDialogProperty.GetValue: string;
 begin
-  Result := 'Versão: ' + ACBRNFE_VERSAO ;
+  Result := 'Versão: ' + ACBRNFE_VERSAO;
 end;
 
 { THRWEBSERVICEUFProperty }
@@ -163,7 +163,7 @@ end;
 
 procedure THRWEBSERVICEUFProperty.GetValues(Proc: TGetStrProc);
 var
- i : integer;
+ i : Integer;
 begin
   inherited;
   for i:= 0 to High(NFeUF) do
@@ -177,13 +177,13 @@ Var
 {$IFNDEF VisualCLX} Dir : String ; {$ELSE} Dir : WideString ; {$ENDIF}
 begin
   {$IFNDEF VisualCLX}
-  Dir := GetValue ;
+  Dir := GetValue;
   if SelectDirectory(Dir,[],0) then
-     SetValue( Dir ) ;
+     SetValue( Dir );
   {$ELSE}
-  Dir := '' ;
+  Dir := '';
   if SelectDirectory('Selecione o Diretório','',Dir) then
-     SetValue( Dir ) ;
+     SetValue( Dir );
   {$ENDIF}
 end;
 

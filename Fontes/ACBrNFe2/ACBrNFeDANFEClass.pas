@@ -1,7 +1,7 @@
 {******************************************************************************}
 { Projeto: Componente ACBrNFe                                                  }
 {  Biblioteca multiplataforma de componentes Delphi para emissão de Nota Fiscal}
-{ eletrônica - NFe - http://www.nfe.fazenda.gov.br                          }
+{ eletrônica - NFe - http://www.nfe.fazenda.gov.br                             }
 {                                                                              }
 { Direitos Autorais Reservados (c) 2008 Wemerson Souto                         }
 {                                       Daniel Simoes de Almeida               }
@@ -34,12 +34,12 @@
 {                                                                              }
 {******************************************************************************}
 
-{******************************************************************************
+{*******************************************************************************
 |* Historico
 |*
 |* 16/12/2008: Wemerson Souto
 |*  - Doação do componente para o Projeto ACBr
-******************************************************************************}
+*******************************************************************************}
 
 {$I ACBr.inc}
 
@@ -47,27 +47,27 @@ unit ACBrNFeDANFEClass;
 
 interface
 
-uses Forms, SysUtils, Classes,
-  pcnNFe, pcnConversao;
+uses
+  Forms, SysUtils, Classes, pcnNFe, pcnConversao;
 
 type
 
   TCasasDecimais = class(TComponent)
   private
-    FqCom: integer;
-    FvUnCom: integer;
-    FMask_qCom:String;
-    FMask_vUnCom:String;
+    FqCom: Integer;
+    FvUnCom: Integer;
+    FMask_qCom: String;
+    FMask_vUnCom: String;
 
-    procedure Set_qCom(AValue: integer);
-    procedure Set_vUnCom(AValue: integer);
+    procedure Set_qCom(AValue: Integer);
+    procedure Set_vUnCom(AValue: Integer);
   public
-    constructor Create(AOwner: TComponent); override ;
+    constructor Create(AOwner: TComponent); override;
     destructor Destroy; override;
   published
-    property _qCom: Integer read FQCom write Set_qCom;
-    property _vUnCom: Integer read FvUnCom write Set_vUnCom;
-    property _Mask_qCom: String read FMask_qCom write FMask_qCom;
+    property _qCom: Integer       read FQCom        write Set_qCom;
+    property _vUnCom: Integer     read FvUnCom      write Set_vUnCom;
+    property _Mask_qCom: String   read FMask_qCom   write FMask_qCom;
     property _Mask_vUnCom: String read FMask_vUnCom write FMask_vUnCom;
   end;
 
@@ -76,40 +76,40 @@ type
   TACBrNFeDANFEClass = class( TComponent )
    private
     procedure SetNFE(const Value: TComponent);
-    procedure ErroAbstract( NomeProcedure : String ) ;
+    procedure ErroAbstract(NomeProcedure: String);
     function GetPathArquivos: String;
     procedure SetPathArquivos(const Value: String);
   protected
-    FACBrNFe : TComponent;
+    FACBrNFe: TComponent;
     FLogo: String;
-    FSistema:String;
-    FUsuario:String;
-    FPathArquivos : String;
-    FImpressora : String;
-    FImprimirTotalLiquido: boolean;
-    FMostrarPreview : Boolean;
+    FSistema: String;
+    FUsuario: String;
+    FPathArquivos: String;
+    FImpressora: String;
+    FImprimirTotalLiquido: Boolean;
+    FMostrarPreview: Boolean;
     FMostrarStatus: Boolean;
-    FTipoDANFE : TpcnTipoImpressao;
-    FNumCopias : Integer;
-    FExpandirLogoMarca:Boolean;
-    FFax  : String;
-    FSite : String;
+    FTipoDANFE: TpcnTipoImpressao;
+    FNumCopias: Integer;
+    FExpandirLogoMarca: Boolean;
+    FFax: String;
+    FSite: String;
     FEmail: String;
-    FImprimeDescPorc : Boolean;
-    FProtocoloNFe: string;
+    FImprimeDescPorc: Boolean;
+    FProtocoloNFe: String;
     FMargemInferior: Double;
     FMargemSuperior: Double;
     FMargemEsquerda: Double;
     FMargemDireita: Double;
     FCasasDecimais: TCasasDecimais;
-    FExibeResumoCanhoto: boolean;
-    FExibeResumoCanhoto_Texto: string;
-    FFormularioContinuo: boolean;
+    FExibeResumoCanhoto: Boolean;
+    FExibeResumoCanhoto_Texto: String;
+    FFormularioContinuo: Boolean;
     FTamanhoFonte_DemaisCampos: Integer;
-    FProdutosPorPagina: integer;
-    FImprimirDetalhamentoEspecifico: boolean;
-    FNFeCancelada : boolean;
-    FLocalImpCanhoto: integer; // Incluido por Italo em 31/01/2013
+    FProdutosPorPagina: Integer;
+    FImprimirDetalhamentoEspecifico: Boolean;
+    FNFeCancelada: Boolean;
+    FLocalImpCanhoto: Integer;
     // Incluido por Italo em 27/03/2014
     // Destinado exclusivamente ao DANFE da NFC-e
     FImprimeItens: Boolean;
@@ -119,54 +119,55 @@ type
   public
     constructor Create(AOwner: TComponent); override;
     destructor Destroy; override;
-    procedure ImprimirDANFE(NFE : TNFe = nil); virtual;
-    procedure ImprimirDANFEResumido(NFE : TNFe = nil); virtual;
-    procedure ImprimirDANFEPDF(NFE : TNFe = nil); virtual;
-    procedure ImprimirDANFEResumidoPDF(NFE : TNFe = nil); virtual;
-    procedure ImprimirEVENTO(NFE : TNFe = nil); virtual;
-    procedure ImprimirEVENTOPDF(NFE : TNFe = nil); virtual;
-    procedure ImprimirINUTILIZACAO(NFE : TNFe = nil); virtual;
-    procedure ImprimirINUTILIZACAOPDF(NFE : TNFe = nil); virtual;
+    procedure ImprimirDANFE(NFE: TNFe = nil); virtual;
+    procedure ImprimirDANFEResumido(NFE: TNFe = nil); virtual;
+    procedure ImprimirDANFEPDF(NFE: TNFe = nil); virtual;
+    procedure ImprimirDANFEResumidoPDF(NFE: TNFe = nil); virtual;
+    procedure ImprimirEVENTO(NFE: TNFe = nil); virtual;
+    procedure ImprimirEVENTOPDF(NFE: TNFe = nil); virtual;
+    procedure ImprimirINUTILIZACAO(NFE: TNFe = nil); virtual;
+    procedure ImprimirINUTILIZACAOPDF(NFE: TNFe = nil); virtual;
   published
-    property ACBrNFe : TComponent  read FACBrNFe write SetNFE ;
-    property Logo: String read FLogo write FLogo ;
-    property Sistema: String read FSistema write FSistema ;
-    property Usuario: String read FUsuario write FUsuario ;
-    property PathPDF: String read GetPathArquivos write SetPathArquivos  ;
-    property Impressora: String read FImpressora write FImpressora ;
-    property MostrarPreview: Boolean read FMostrarPreview write FMostrarPreview ;
-    property MostrarStatus: Boolean read FMostrarStatus write FMostrarStatus ;
-    property TipoDANFE: TpcnTipoImpressao read FTipoDANFE write FTipoDANFE ;
-    property NumCopias: Integer read FNumCopias write FNumCopias ;
-    property Fax  : String read FFax   write FFax ;
-    property Site : String read FSite  write FSite ;
-    property Email: String read FEmail write FEmail ;
-    property ImprimirDescPorc: Boolean read FImprimeDescPorc write FImprimeDescPorc ;
-    property ImprimirTotalLiquido: Boolean read FImprimirTotalLiquido write FImprimirTotalLiquido ;
-    property ProtocoloNFe: String read FProtocoloNFe write FProtocoloNFe ;
-    property MargemInferior: Double read FMargemInferior write FMargemInferior ;
-    property MargemSuperior: Double read FMargemSuperior write FMargemSuperior ;
-    property MargemEsquerda: Double read FMargemEsquerda write FMargemEsquerda ;
-    property MargemDireita: Double read FMargemDireita write FMargemDireita ;
-    property CasasDecimais: TCasasDecimais read FCasasDecimais ;
-    property ExibirResumoCanhoto: Boolean read FExibeResumoCanhoto write FExibeResumoCanhoto ;
-    property ExibirResumoCanhoto_Texto: string read FExibeResumoCanhoto_Texto write FExibeResumoCanhoto_Texto ;
-    property FormularioContinuo: Boolean read FFormularioContinuo write FFormularioContinuo ;
-    property ExpandirLogoMarca: Boolean read FExpandirLogoMarca write FExpandirLogoMarca default false ;
-    property TamanhoFonte_DemaisCampos: Integer read FTamanhoFonte_DemaisCampos write FTamanhoFonte_DemaisCampos ;
-    property ProdutosPorPagina: Integer read FProdutosPorPagina write FProdutosPorPagina ;
-    property ImprimirDetalhamentoEspecifico: Boolean read FImprimirDetalhamentoEspecifico write FImprimirDetalhamentoEspecifico ;
-    property NFeCancelada: Boolean read FNFeCancelada write FNFeCancelada ;
-    property LocalImpCanhoto: Integer read FLocalImpCanhoto write FLocalImpCanhoto; // Incluido por Italo em 31/01/2013
+    property ACBrNFe: TComponent                     read FACBrNFe                        write SetNFE;
+    property Logo: String                            read FLogo                           write FLogo;
+    property Sistema: String                         read FSistema                        write FSistema;
+    property Usuario: String                         read FUsuario                        write FUsuario;
+    property PathPDF: String                         read GetPathArquivos                 write SetPathArquivos;
+    property Impressora: String                      read FImpressora                     write FImpressora;
+    property MostrarPreview: Boolean                 read FMostrarPreview                 write FMostrarPreview;
+    property MostrarStatus: Boolean                  read FMostrarStatus                  write FMostrarStatus;
+    property TipoDANFE: TpcnTipoImpressao            read FTipoDANFE                      write FTipoDANFE;
+    property NumCopias: Integer                      read FNumCopias                      write FNumCopias;
+    property Fax: String                             read FFax                            write FFax;
+    property Site: String                            read FSite                           write FSite;
+    property Email: String                           read FEmail                          write FEmail;
+    property ImprimirDescPorc: Boolean               read FImprimeDescPorc                write FImprimeDescPorc;
+    property ImprimirTotalLiquido: Boolean           read FImprimirTotalLiquido           write FImprimirTotalLiquido;
+    property ProtocoloNFe: String                    read FProtocoloNFe                   write FProtocoloNFe;
+    property MargemInferior: Double                  read FMargemInferior                 write FMargemInferior;
+    property MargemSuperior: Double                  read FMargemSuperior                 write FMargemSuperior;
+    property MargemEsquerda: Double                  read FMargemEsquerda                 write FMargemEsquerda;
+    property MargemDireita: Double                   read FMargemDireita                  write FMargemDireita;
+    property CasasDecimais: TCasasDecimais           read FCasasDecimais;
+    property ExibirResumoCanhoto: Boolean            read FExibeResumoCanhoto             write FExibeResumoCanhoto;
+    property ExibirResumoCanhoto_Texto: String       read FExibeResumoCanhoto_Texto       write FExibeResumoCanhoto_Texto;
+    property FormularioContinuo: Boolean             read FFormularioContinuo             write FFormularioContinuo;
+    property ExpandirLogoMarca: Boolean              read FExpandirLogoMarca              write FExpandirLogoMarca default false;
+    property TamanhoFonte_DemaisCampos: Integer      read FTamanhoFonte_DemaisCampos      write FTamanhoFonte_DemaisCampos;
+    property ProdutosPorPagina: Integer              read FProdutosPorPagina              write FProdutosPorPagina;
+    property ImprimirDetalhamentoEspecifico: Boolean read FImprimirDetalhamentoEspecifico write FImprimirDetalhamentoEspecifico;
+    property NFeCancelada: Boolean                   read FNFeCancelada                   write FNFeCancelada;
+    property LocalImpCanhoto: Integer                read FLocalImpCanhoto                write FLocalImpCanhoto;
     // Incluido por Italo em 27/03/2014
     // Destinado exclusivamente ao DANFE da NFC-e
-    property ImprimeItens: Boolean read FImprimeItens write FImprimeItens;
-    property vTroco: Currency read FvTroco write FvTroco;
+    property ImprimeItens: Boolean                   read FImprimeItens                   write FImprimeItens;
+    property vTroco: Currency                        read FvTroco                         write FvTroco;
   end;
 
 implementation
 
-uses ACBrNFe, ACBrNFeUtil, ACBrUtil, ACBrDFeUtil ;
+uses
+  ACBrNFe, ACBrNFeUtil, ACBrUtil, ACBrDFeUtil;
 
 //Casas Decimais
 constructor TCasasDecimais.Create(AOwner: TComponent);
@@ -180,10 +181,10 @@ end;
 destructor TCasasDecimais.Destroy;
 begin
 
-  inherited Destroy ;
+  inherited Destroy;
 end;
 
-procedure TCasasDecimais.Set_qCom(AValue: integer);
+procedure TCasasDecimais.Set_qCom(AValue: Integer);
 begin
   if ((AValue >= 0) and
       (AValue <= 4))  then
@@ -192,7 +193,7 @@ begin
     FqCom := 2;
 end;
 
-procedure TCasasDecimais.Set_vUnCom(AValue: integer);
+procedure TCasasDecimais.Set_vUnCom(AValue: Integer);
 begin
   if ((AValue >= 0) and
       (AValue <= 10))  then
@@ -206,25 +207,25 @@ constructor TACBrNFeDANFEClass.Create(AOwner: TComponent);
 begin
   inherited create( AOwner );
 
-  FACBrNFe      := nil ;
-  FLogo         := '' ;
-  FSistema      := '' ;
-  FUsuario      := '' ;
-  FPathArquivos := '' ;
-  FImpressora   := '' ;
-  FImprimirTotalLiquido   := False;
-  FMostrarPreview         := True;
-  FMostrarStatus          := True;
+  FACBrNFe      := nil;
+  FLogo         := '';
+  FSistema      := '';
+  FUsuario      := '';
+  FPathArquivos := '';
+  FImpressora   := '';
+  FImprimirTotalLiquido := False;
+  FMostrarPreview       := True;
+  FMostrarStatus        := True;
   FNumCopias := 1;
-  FFax   := '' ;
-  FSite  := '' ;
-  FEmail := '' ;
+  FFax       := '';
+  FSite      := '';
+  FEmail     := '';
   FImprimeDescPorc := False;
-  FProtocoloNFe := '';
-  FMargemInferior := 0.8;
-  FMargemSuperior := 0.8;
-  FMargemEsquerda := 0.6;
-  FMargemDireita  := 0.51;
+  FProtocoloNFe    := '';
+  FMargemInferior  := 0.8;
+  FMargemSuperior  := 0.8;
+  FMargemEsquerda  := 0.6;
+  FMargemDireita   := 0.51;
   FExibeResumoCanhoto := false;
   FExibeResumoCanhoto_Texto := '';
   FFormularioContinuo := false;
@@ -232,9 +233,9 @@ begin
   FProdutosPorPagina := 0;
   FImprimirDetalhamentoEspecifico := true;
   FNFeCancelada := False;
-  FLocalImpCanhoto := 0;  // Incluido por Italo em 31/01/2013
+  FLocalImpCanhoto := 0;
   FCasasDecimais := TCasasDecimais.Create(self);
-  FCasasDecimais.Name:= 'CasasDecimais' ;
+  FCasasDecimais.Name:= 'CasasDecimais';
 
   FImprimeItens := True;
   FvTroco       := 0.0;
@@ -242,26 +243,25 @@ begin
   {$IFDEF COMPILER6_UP}
       FCasasDecimais.SetSubComponent( true );{ para gravar no DFM/XFM }
   {$ENDIF}
-
 end;
 
 destructor TACBrNFeDANFEClass.Destroy;
 begin
 
-  inherited Destroy ;
+  inherited Destroy;
 end;
 
-procedure TACBrNFeDANFEClass.ImprimirDANFE(NFE : TNFe = nil) ;
+procedure TACBrNFeDANFEClass.ImprimirDANFE(NFE : TNFe = nil);
 begin
   ErroAbstract('Imprimir');
 end;
 
-procedure TACBrNFeDANFEClass.ImprimirDANFEResumido(NFE : TNFe = nil) ;
+procedure TACBrNFeDANFEClass.ImprimirDANFEResumido(NFE : TNFe = nil);
 begin
   ErroAbstract('ImprimirResumido');
 end;
 
-procedure TACBrNFeDANFEClass.ImprimirDANFEPDF(NFE : TNFe = nil) ;
+procedure TACBrNFeDANFEClass.ImprimirDANFEPDF(NFE : TNFe = nil);
 begin
   ErroAbstract('ImprimirPDF');
 end;
@@ -277,41 +277,40 @@ begin
   inherited Notification(AComponent, Operation);
 
   if (Operation = opRemove) and (FACBrNFe <> nil) and (AComponent is TACBrNFe) then
-     FACBrNFe := nil ;
+     FACBrNFe := nil;
 end;
 
 procedure TACBrNFeDANFEClass.SetNFE(const Value: TComponent);
-  Var OldValue : TACBrNFe ;
+  Var OldValue : TACBrNFe;
 begin
   if Value <> FACBrNFe then
   begin
      if Value <> nil then
         if not (Value is TACBrNFe) then
-           raise EACBrNFeException.Create('ACBrDANFE.NFE deve ser do tipo TACBrNFe') ;
+           raise EACBrNFeException.Create('ACBrDANFE.NFE deve ser do tipo TACBrNFe');
 
      if Assigned(FACBrNFe) then
         FACBrNFe.RemoveFreeNotification(Self);
 
-     OldValue := TACBrNFe(FACBrNFe) ;   // Usa outra variavel para evitar Loop Infinito
+     OldValue := TACBrNFe(FACBrNFe);   // Usa outra variavel para evitar Loop Infinito
      FACBrNFe := Value;                 // na remoção da associação dos componentes
 
      if Assigned(OldValue) then
         if Assigned(OldValue.DANFE) then
-           OldValue.DANFE := nil ;
+           OldValue.DANFE := nil;
 
      if Value <> nil then
      begin
         Value.FreeNotification(self);
-        TACBrNFe(Value).DANFE := self ;
-     end ;
-  end ;
+        TACBrNFe(Value).DANFE := self;
+     end;
+  end;
 end;
 
 procedure TACBrNFeDANFEClass.ErroAbstract(NomeProcedure: String);
 begin
-  raise EACBrNFeException.Create( NomeProcedure ) ;
+  raise EACBrNFeException.Create( NomeProcedure );
 end;
-
 
 function TACBrNFeDANFEClass.GetPathArquivos: String;
 begin

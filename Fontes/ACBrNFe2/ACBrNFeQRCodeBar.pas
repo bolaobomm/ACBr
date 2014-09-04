@@ -1,7 +1,7 @@
 {******************************************************************************}
 { Projeto: Componente ACBrNFe                                                  }
 {  Biblioteca multiplataforma de componentes Delphi para emissão de Nota Fiscal}
-{ eletrônica - NFe - http://www.nfe.fazenda.gov.br                          }
+{ eletrônica - NFe - http://www.nfe.fazenda.gov.br                             }
 {                                                                              }
 { Direitos Autorais Reservados (c) 2008 Wemerson Souto                         }
 {                                       Daniel Simoes de Almeida               }
@@ -34,16 +34,18 @@
 {                                                                              }
 {******************************************************************************}
 
-{******************************************************************************
+{*******************************************************************************
 |* Historico
 |*
 |* 16/12/2008: Wemerson Souto
 |*  - Doação do componente para o Projeto ACBr
 |* 20/08/2009: Caique Rodrigues
 |*  - Doação units para geração do Danfe via QuickReport
-******************************************************************************}
+*******************************************************************************}
+
 {$I ACBr.inc}
-unit ACBrNFeQRCodeBar ;
+
+unit ACBrNFeQRCodeBar;
 
 {*********************************************************
  Código de barras Code128C com DV baseado na :

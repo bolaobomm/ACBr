@@ -3,7 +3,6 @@ inherited fqrDANFeQRSimplificado: TfqrDANFeQRSimplificado
   Top = 116
   Width = 641
   Height = 784
-  VertScrollBar.Position = 0
   Caption = 'DANFe - Simplificado'
   Font.Height = -8
   Font.Name = 'Arial'
@@ -13,7 +12,6 @@ inherited fqrDANFeQRSimplificado: TfqrDANFeQRSimplificado
   TextHeight = 10
   inherited QRNFe: TQuickRep
     Tag = 1
-    Top = 3
     Width = 302
     BeforePrint = QRNFeBeforePrint
     DataSet = cdsItens

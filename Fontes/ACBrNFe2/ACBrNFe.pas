@@ -1,7 +1,7 @@
 {******************************************************************************}
 { Projeto: Componente ACBrNFe                                                  }
 {  Biblioteca multiplataforma de componentes Delphi para emissão de Nota Fiscal}
-{ eletrônica - NFe - http://www.nfe.fazenda.gov.br                          }
+{ eletrônica - NFe - http://www.nfe.fazenda.gov.br                             }
 {                                                                              }
 { Direitos Autorais Reservados (c) 2008 Wemerson Souto                         }
 {                                       Daniel Simoes de Almeida               }
@@ -34,14 +34,15 @@
 {                                                                              }
 {******************************************************************************}
 
-{******************************************************************************
+{*******************************************************************************
 |* Historico
 |*
 |* 16/12/2008: Wemerson Souto
 |*  - Doação do componente para o Projeto ACBr
 |* 24/09/2012: Italo Jurisato Junior
 |*  - Alterações para funcionamento com NFC-e
-******************************************************************************}
+*******************************************************************************}
+
 {$I ACBr.inc}
 
 unit ACBrNFe;
@@ -69,28 +70,28 @@ type
   EACBrNFeException = class(Exception);
 
   // Evento para gerar log das mensagens do Componente
-  TACBrNFeLog = procedure(const Mensagem : String) of object ;
+  TACBrNFeLog = procedure(const Mensagem : String) of object;
 
   {Carta de Correção}
   TCartaCorrecao = Class(TComponent)
   private
-    FCCe : TCCeNFe;
+    FCCe: TCCeNFe;
   public
     constructor Create(AOwner: TComponent); override;
     destructor Destroy; override;
 
-    property CCe   : TCCeNFe  read FCCe      write FCCe;
+    property CCe: TCCeNFe read FCCe write FCCe;
   end;
 
   {Download}
   TDownload = Class(TComponent)
   private
-    FDownload : TDownloadNFe;
+    FDownload: TDownloadNFe;
   public
     constructor Create(AOwner: TComponent); override;
     destructor Destroy; override;
 
-    property Download : TDownloadNFe read FDownload write FDownload;
+    property Download: TDownloadNFe read FDownload write FDownload;
   end;
 
   TACBrNFe = class(TComponent)
@@ -135,15 +136,16 @@ type
                              IndEmi: TpcnIndicadorEmissor;
                              ultNSU: String): Boolean;
     function Download: Boolean;
-    property WebServices: TWebServices read FWebServices write FWebServices;
-    property NotasFiscais: TNotasFiscais read FNotasFiscais write FNotasFiscais;
-    property CartaCorrecao: TCartaCorrecao read FCartaCorrecao write FCartaCorrecao;
-    property EventoNFe: TEventoNFe read FEventoNFe write FEventoNFe;
-    property InutNFe: TInutNFe read FInutNFe write FInutNFe;
-    property DownloadNFe: TDownload read FDownloadNFe write FDownloadNFe;
-    property Status: TStatusACBrNFe read FStatus;
-    procedure SetStatus( const stNewStatus : TStatusACBrNFe );
 
+    property WebServices: TWebServices     read FWebServices   write FWebServices;
+    property NotasFiscais: TNotasFiscais   read FNotasFiscais  write FNotasFiscais;
+    property CartaCorrecao: TCartaCorrecao read FCartaCorrecao write FCartaCorrecao;
+    property EventoNFe: TEventoNFe         read FEventoNFe     write FEventoNFe;
+    property InutNFe: TInutNFe             read FInutNFe       write FInutNFe;
+    property DownloadNFe: TDownload        read FDownloadNFe   write FDownloadNFe;
+    property Status: TStatusACBrNFe        read FStatus;
+
+    procedure SetStatus( const stNewStatus : TStatusACBrNFe );
     procedure ImprimirEvento;
     procedure ImprimirEventoPDF;
     procedure ImprimirInutilizacao;
@@ -187,21 +189,30 @@ type
                                   UsarThread: Boolean = True;
                                   HTML: Boolean = False);
 
+  // Incluido por Italo em 25/08/2014
+    function AdministrarCSC(ARaizCNPJ: String;
+                            AIndOP: TpcnIndOperacao;
+                            AIdCSC: Integer;
+                            ACodigoCSC: String): Boolean;
+    function DistribuicaoDFe(AcUFAutor: Integer;
+                             ACNPJCPF,
+                             AultNSU,
+                             ANSU: String): Boolean;
   published
-    property Configuracoes: TConfiguracoes read FConfiguracoes write FConfiguracoes;
-    property OnStatusChange: TNotifyEvent read FOnStatusChange write FOnStatusChange;
-    property DANFE: TACBrNFeDANFEClass read FDANFE write SetDANFE ;
-    property AboutACBrNFe : TACBrNFeAboutInfo read fsAbout write fsAbout
-                          stored false ;
-    property OnGerarLog : TACBrNFeLog read FOnGerarLog write FOnGerarLog ;
+    property Configuracoes: TConfiguracoes   read FConfiguracoes  write FConfiguracoes;
+    property OnStatusChange: TNotifyEvent    read FOnStatusChange write FOnStatusChange;
+    property DANFE: TACBrNFeDANFEClass       read FDANFE          write SetDANFE;
+    property AboutACBrNFe: TACBrNFeAboutInfo read fsAbout         write fsAbout stored false;
+    property OnGerarLog: TACBrNFeLog         read FOnGerarLog     write FOnGerarLog;
   end;
 
-procedure ACBrAboutDialog ;
+procedure ACBrAboutDialog;
 
 implementation
 
-procedure ACBrAboutDialog ;
-var Msg : String ;
+procedure ACBrAboutDialog;
+var
+ Msg: String;
 begin
     Msg := 'Componente ACBrNFe2'+#10+
            'Versão: '+ACBRNFE_VERSAO+#10+#10+
@@ -209,7 +220,7 @@ begin
            'http://acbr.sourceforge.net'+#10+#10+
            'Projeto Cooperar - PCN'+#10+#10+
            'http://www.projetocooperar.org/pcn/';
-     MessageDlg(Msg ,mtInformation ,[mbOk],0) ;
+     MessageDlg(Msg ,mtInformation ,[mbOk],0);
 end;
 
 { TACBrNFe }
@@ -219,7 +230,7 @@ begin
   inherited Create(AOwner);
 
   FConfiguracoes     := TConfiguracoes.Create( self );
-  FConfiguracoes.Name:= 'Configuracoes' ;
+  FConfiguracoes.Name:= 'Configuracoes';
   {$IFDEF COMPILER6_UP}
    FConfiguracoes.SetSubComponent( true );{ para gravar no DFM/XFM }
   {$ENDIF}
@@ -236,16 +247,16 @@ begin
      FConfiguracoes.WebServices.Tentativas := 5;
   {$IFDEF ACBrNFeOpenSSL}
     if FConfiguracoes.Geral.IniFinXMLSECAutomatico then
-      NotaUtil.InitXmlSec ;
+      NotaUtil.InitXmlSec;
   {$ENDIF}
-  FOnGerarLog := nil ;
+  FOnGerarLog := nil;
 end;
 
 destructor TACBrNFe.Destroy;
 begin
   {$IFDEF ACBrNFeOpenSSL}
     if FConfiguracoes.Geral.IniFinXMLSECAutomatico then
-      NotaUtil.ShutDownXmlSec ;
+      NotaUtil.ShutDownXmlSec;
   {$ENDIF}
   FConfiguracoes.Free;
   FNotasFiscais.Free;
@@ -262,30 +273,30 @@ begin
   inherited Notification(AComponent, Operation);
 
   if (Operation = opRemove) and (FDANFE <> nil) and (AComponent is TACBrNFeDANFEClass) then
-     FDANFE := nil ;
+     FDANFE := nil;
 end;
 
 procedure TACBrNFe.SetDANFE(const Value: TACBrNFeDANFEClass);
- Var OldValue: TACBrNFeDANFEClass ;
+ Var OldValue: TACBrNFeDANFEClass;
 begin
   if Value <> FDANFE then
   begin
      if Assigned(FDANFE) then
         FDANFE.RemoveFreeNotification(Self);
 
-     OldValue  := FDANFE ;   // Usa outra variavel para evitar Loop Infinito
+     OldValue  := FDANFE;   // Usa outra variavel para evitar Loop Infinito
      FDANFE    := Value;    // na remoção da associação dos componentes
 
      if Assigned(OldValue) then
         if Assigned(OldValue.ACBrNFe) then
-           OldValue.ACBrNFe := nil ;
+           OldValue.ACBrNFe := nil;
 
      if Value <> nil then
      begin
         Value.FreeNotification(self);
-        Value.ACBrNFe := self ;
-     end ;
-  end ;
+        Value.ACBrNFe := self;
+     end;
+  end;
 end;
 
 procedure TACBrNFe.SetStatus( const stNewStatus : TStatusACBrNFe );
@@ -303,6 +314,8 @@ function TACBrNFe.Cancelamento(
 var
   i : Integer;
 begin
+  raise EACBrNFeException.Create('Cancelamento somente por evento.');
+(*
   if Self.NotasFiscais.Count = 0 then
    begin
       if Assigned(Self.OnGerarLog) then
@@ -318,11 +331,12 @@ begin
   end;
 
   Result := true;
+*)
 end;
 
 function TACBrNFe.Consultar: Boolean;
 var
-  i : Integer;
+  i: Integer;
 begin
   if Self.NotasFiscais.Count = 0 then
    begin
@@ -337,7 +351,6 @@ begin
     WebServices.Consulta.Executar;
   end;
   Result := True;
-
 end;
 
 function TACBrNFe.Enviar(ALote: Integer; Imprimir: Boolean = True; Sincrono: Boolean = False): Boolean;
@@ -644,7 +657,7 @@ var
 begin
  m:=TMimemess.create;
 
- ThreadSMTP := TSendMailThread.Create ;  // Não Libera, pois usa FreeOnTerminate := True ;
+ ThreadSMTP := TSendMailThread.Create;  // Não Libera, pois usa FreeOnTerminate := True;
  try
     p := m.AddPartMultipart('mixed', nil);
     if sMensagem <> nil then
@@ -774,7 +787,7 @@ procedure TACBrNFe.EnviarEmailEvento(const sSmtpHost, sSmtpPort, sSmtpUser,
   UsarThread: Boolean; HTML: Boolean);
 var
   NomeArq : String;
-  AnexosEmail:TStrings ;
+  AnexosEmail:TStrings;
 begin
   AnexosEmail := TStringList.Create;
   try
@@ -814,11 +827,48 @@ begin
                 UsarThread,
                 HTML);
   finally
-    AnexosEmail.Free ;
+    AnexosEmail.Free;
+  end;
+end;
+
+function TACBrNFe.AdministrarCSC(ARaizCNPJ: String;
+  AIndOP: TpcnIndOperacao; AIdCSC: Integer; ACodigoCSC: String): Boolean;
+begin
+  WebServices.AdministrarCSCNFCe.RaizCNPJ  := ARaizCNPJ;
+  WebServices.AdministrarCSCNFCe.indOP     := AIndOP;
+  WebServices.AdministrarCSCNFCe.idCsc     := AIdCSC;
+  WebServices.AdministrarCSCNFCe.codigoCsc := ACodigoCSC;
+
+  Result := WebServices.AdministrarCSCNFCe.Executar;
+
+  if not Result then
+  begin
+    if Assigned(Self.OnGerarLog) then
+      Self.OnGerarLog(WebServices.AdministrarCSCNFCe.Msg);
+    raise EACBrNFeException.Create(WebServices.AdministrarCSCNFCe.Msg);
+  end;
+end;
+
+function TACBrNFe.DistribuicaoDFe(AcUFAutor: Integer; ACNPJCPF, AultNSU,
+  ANSU: String): Boolean;
+begin
+  WebServices.DistribuicaoDFe.cUFAutor := AcUFAutor;
+  WebServices.DistribuicaoDFe.CNPJCPF  := ACNPJCPF;
+  WebServices.DistribuicaoDFe.ultNSU   := AultNSU;
+  WebServices.DistribuicaoDFe.NSU      := ANSU;
+
+  Result := WebServices.DistribuicaoDFe.Executar;
+
+  if not Result then
+  begin
+    if Assigned(Self.OnGerarLog) then
+      Self.OnGerarLog(WebServices.DistribuicaoDFe.Msg);
+    raise EACBrNFeException.Create(WebServices.DistribuicaoDFe.Msg);
   end;
 end;
 
 { TCartaCorrecao }
+
 constructor TCartaCorrecao.Create(AOwner: TComponent);
 begin
   inherited;
@@ -831,36 +881,8 @@ begin
   inherited;
 end;
 
-{ TEnvEventoNFe }
-{constructor TEnvEventoNFe.Create(AOwner: TComponent);
-begin
-  inherited;
-  FEnvEventoNFe := TEventoNFe.Create;
-end;
-
-destructor TEnvEventoNFe.Destroy;
-begin
-  FEnvEventoNFe.Free;
-  inherited;
-end;  }
-
-{procedure TEnvEventoNFe.Imprimir;
-begin
-  if not Assigned( TACBrNFe( Owner ).DANFE ) then
-     raise EACBrNFeException.Create('Componente DANFE não associado.')
-  else
-     TACBrNFe( Owner ).DANFE.ImprimirEVENTO(nil);
-end;
-
-procedure TEnvEventoNFe.ImprimirPDF;
-begin
-  if not Assigned( TACBrNFe( Owner ).DANFE ) then
-     raise EACBrNFeException.Create('Componente DANFE não associado.')
-  else
-     TACBrNFe( Owner ).DANFE.ImprimirEVENTOPDF(nil);
-end;}
-
 { TDownload }
+
 constructor TDownload.Create(AOwner: TComponent);
 begin
   inherited;

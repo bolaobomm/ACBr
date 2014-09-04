@@ -34,7 +34,7 @@
 {                                                                              }
 {******************************************************************************}
 
-{******************************************************************************
+{*******************************************************************************
 |* Historico
 |*
 |* 16/12/2008: Wemerson Souto
@@ -46,7 +46,8 @@
 |*  - Criado Validação do XML da NFE baseado em código passado por Daniel Simões
 |* 24/09/2012: Italo Jurisato Junior
 |*  - Alterações para funcionamento com NFC-e
-******************************************************************************}
+*******************************************************************************}
+
 {$I ACBr.inc}
 
 unit ACBrNFeUtil;
@@ -93,20 +94,20 @@ type
 //Estados Emissores pela Sefaz Virtual RS (Rio Grande do Sul): AC, AL, AM, AP, MS, PB, RJ, RR, SC, SE e TO.
 //Estados Emissores pela Sefaz Virtual AN (Ambiente Nacional): ES, MA, PA, PI e RN.
 
-    class function GetURLSVRS(AAmbiente: Integer; ALayOut: TLayOut; AModeloDF: TpcnModeloDF = moNFe; AVersaoDF: TpcnVersaoDF = ve200): WideString; //atualizado 2.0 Homologação e Produção
-    class function GetURLSVAN(AAmbiente: Integer; ALayOut: TLayOut; AModeloDF: TpcnModeloDF = moNFe; AVersaoDF: TpcnVersaoDF = ve200): WideString; //atualizado 2.0 Homologação e Produção
-    class function GetURLAM(AAmbiente: Integer; ALayOut: TLayOut; AModeloDF: TpcnModeloDF = moNFe; AVersaoDF: TpcnVersaoDF = ve200): WideString;   //atualizado 2.0 Homologação e Produção
-    class function GetURLBA(AAmbiente: Integer; ALayOut: TLayOut; AModeloDF: TpcnModeloDF = moNFe; AVersaoDF: TpcnVersaoDF = ve200): WideString;   //atualizado 2.0 Homologação e Produção
-    class function GetURLCE(AAmbiente: Integer; ALayOut: TLayOut; AModeloDF: TpcnModeloDF = moNFe; AVersaoDF: TpcnVersaoDF = ve200): WideString;   //atualizado 2.0 Homologação e Produção
+    class function GetURLSVRS(AAmbiente: Integer; ALayOut: TLayOut; AModeloDF: TpcnModeloDF = moNFe; AVersaoDF: TpcnVersaoDF = ve200): WideString;
+    class function GetURLSVAN(AAmbiente: Integer; ALayOut: TLayOut; AModeloDF: TpcnModeloDF = moNFe; AVersaoDF: TpcnVersaoDF = ve200): WideString;
+    class function GetURLAM(AAmbiente: Integer; ALayOut: TLayOut; AModeloDF: TpcnModeloDF = moNFe; AVersaoDF: TpcnVersaoDF = ve200): WideString;
+    class function GetURLBA(AAmbiente: Integer; ALayOut: TLayOut; AModeloDF: TpcnModeloDF = moNFe; AVersaoDF: TpcnVersaoDF = ve200): WideString;
+    class function GetURLCE(AAmbiente: Integer; ALayOut: TLayOut; AModeloDF: TpcnModeloDF = moNFe; AVersaoDF: TpcnVersaoDF = ve200): WideString;
     class function GetURLES(AAmbiente: Integer; ALayOut: TLayOut; AModeloDF: TpcnModeloDF = moNfe; AVersaoDF: TpcnVersaoDF = ve200): WideString;
-    class function GetURLGO(AAmbiente: Integer; ALayOut: TLayOut; AModeloDF: TpcnModeloDF = moNFe; AVersaoDF: TpcnVersaoDF = ve200): WideString;   //atualizado 2.0 Homologação e Produção
-    class function GetURLMT(AAmbiente: Integer; ALayOut: TLayOut; AModeloDF: TpcnModeloDF = moNFe; AVersaoDF: TpcnVersaoDF = ve200): WideString;   //atualizado 2.0 Homologação e Produção
-    class function GetURLMS(AAmbiente: Integer; ALayOut: TLayOut; AModeloDF: TpcnModeloDF = moNFe; AVersaoDF: TpcnVersaoDF = ve200): WideString;   //atualizado 2.0 Homologação e Produção
-    class function GetURLMG(AAmbiente: Integer; ALayOut: TLayOut; AModeloDF: TpcnModeloDF = moNFe; AVersaoDF: TpcnVersaoDF = ve200): WideString;   //atualizado 2.0 Homologação e Produção
-    class function GetURLPR(AAmbiente: Integer; ALayOut: TLayOut; AModeloDF: TpcnModeloDF = moNFe; AVersaoDF: TpcnVersaoDF = ve200): WideString;   //atualizado 2.0 Homologação e Produção
-    class function GetURLPE(AAmbiente: Integer; ALayOut: TLayOut; AModeloDF: TpcnModeloDF = moNFe; AVersaoDF: TpcnVersaoDF = ve200): WideString;   //atualizado 2.0 Homologação e Produção
-    class function GetURLRS(AAmbiente: Integer; ALayOut: TLayOut; AModeloDF: TpcnModeloDF = moNFe; AVersaoDF: TpcnVersaoDF = ve200): WideString;   //atualizado 2.0 Homologação e Produção
-    class function GetURLSP(AAmbiente: Integer; ALayOut: TLayOut; AModeloDF: TpcnModeloDF = moNFe; AVersaoDF: TpcnVersaoDF = ve200): WideString;   //atualizado 2.0 Homologação e Produção
+    class function GetURLGO(AAmbiente: Integer; ALayOut: TLayOut; AModeloDF: TpcnModeloDF = moNFe; AVersaoDF: TpcnVersaoDF = ve200): WideString;
+    class function GetURLMT(AAmbiente: Integer; ALayOut: TLayOut; AModeloDF: TpcnModeloDF = moNFe; AVersaoDF: TpcnVersaoDF = ve200): WideString;
+    class function GetURLMS(AAmbiente: Integer; ALayOut: TLayOut; AModeloDF: TpcnModeloDF = moNFe; AVersaoDF: TpcnVersaoDF = ve200): WideString;
+    class function GetURLMG(AAmbiente: Integer; ALayOut: TLayOut; AModeloDF: TpcnModeloDF = moNFe; AVersaoDF: TpcnVersaoDF = ve200): WideString;
+    class function GetURLPR(AAmbiente: Integer; ALayOut: TLayOut; AModeloDF: TpcnModeloDF = moNFe; AVersaoDF: TpcnVersaoDF = ve200): WideString;
+    class function GetURLPE(AAmbiente: Integer; ALayOut: TLayOut; AModeloDF: TpcnModeloDF = moNFe; AVersaoDF: TpcnVersaoDF = ve200): WideString;
+    class function GetURLRS(AAmbiente: Integer; ALayOut: TLayOut; AModeloDF: TpcnModeloDF = moNFe; AVersaoDF: TpcnVersaoDF = ve200): WideString;
+    class function GetURLSP(AAmbiente: Integer; ALayOut: TLayOut; AModeloDF: TpcnModeloDF = moNFe; AVersaoDF: TpcnVersaoDF = ve200): WideString;
   protected
 
   public
@@ -116,51 +117,16 @@ type
        class Procedure InitXmlSec ;
        class Procedure ShutDownXmlSec ;
     {$ENDIF}
-//    class function PosEx(const SubStr, S: AnsiString; Offset: Cardinal = 1): Integer;
-//    class function PosLast(const SubStr, S: AnsiString ): Integer;
-//    class function PadE(const AString : string; const nLen : Integer; const Caracter : Char = ' ') : String;
-//    class function PadD(const AString : string; const nLen : Integer; const Caracter : Char = ' ') : String;
-//    class function padC(const AString : string; const nLen : Integer; const Caracter : Char = ' ') : String;
-//    class function SeSenao(ACondicao: Boolean; ATrue, AFalse: Variant) : Variant;
-//    class function FormatFloat(AValue: Extended; const AFormat: string = ',0.00'): String;
-//    class function Poem_Zeros(const Texto : String; const Tamanho : Integer) : String;overload;
-//    class function Poem_Zeros(const Valor : Integer; const Tamanho : Integer) : String;overload;
     class function Modulo11(Valor: string): String;
     class function ChaveAcesso(AUF:Integer; ADataEmissao:TDateTime; ACNPJ:String; ASerie:Integer;
                                ANumero,ACodigo: Integer; AModelo:Integer=55): String;
     class function ExtraiCNPJChaveAcesso(AChaveNFE: String): String;
     class function ExtraiModeloChaveAcesso(AChaveNFE: String): String;
-
-//    class function LasString(AString: String): String;
-//    class function EstaVazio(const AValue: String): Boolean;overload;
-//    class procedure EstaVazio(const AValue, AMensagem: String);overload;
-//    class function NaoEstaVazio(AValue: String): Boolean;
-//    class function EstaZerado(AValue: Double): Boolean;overload;
-//    class function EstaZerado(AValue: Integer): Boolean;overload;
-//    class procedure EstaZerado(AValue: Integer; AMensagem: String);overload;
-//    class function NaoEstaZerado(AValue: Double): Boolean;overload;
-//    class function NaoEstaZerado(AValue: Integer): Boolean;overload;
-//    class function LimpaNumero(AValue: String): String;
-//    class function TrataString(const AValue: String): String;overload;
-//    class function TrataString(const AValue: String; const ATamanho: Integer): String;overload;
-//    class function CortaD(const AString: string; const ATamanho: Integer): String;
-//    class function CortaE(const AString: string; const ATamanho: Integer): String;
-//    class function FormatDate(const AString: string): String;
-//    class function StringToDate(const AString: string): TDateTime;
-//    class function StringToTime(const AString: string): TDateTime;
     class function StringToDateTime(const AString: string): TDateTime;
-//    class function TamanhoIgual(const AValue: String; const ATamanho: Integer): Boolean;overload;
-//    class procedure TamanhoIgual(const AValue: String; const ATamanho: Integer; AMensagem: String);overload;
-//    class function TamanhoIgual(const AValue: Integer; const ATamanho: Integer): Boolean;overload;
-//    class procedure TamanhoIgual(const AValue: Integer; const ATamanho: Integer; AMensagem: String);overload;
-//    class function TamanhoMenor(const AValue: String; const ATamanho: Integer): Boolean;
     class function ValidaUFCidade(const UF, Cidade: Integer): Boolean;overload;
     class procedure ValidaUFCidade(const UF, Cidade: Integer; Const AMensagem: String);overload;
-//    class function FormatarCPF(AValue : String ): String;
-//    class function FormatarCNPJ(AValue : String ): String;
     class function FormatarCEP(AValue : String ): String;
     class function FormatarFone(AValue : String ): String;
-//    class function FormatarNumeroDocumentoFiscal(AValue : String ): String;
     class function FormatarChaveAcesso(AValue : String ): String;
     class function GetURL(Const AUF, AAmbiente, FormaEmissao: Integer; ALayOut: TLayOut; AModeloDF: TpcnModeloDF = moNFe; AVersaoDF: TpcnVersaoDF = ve200): WideString;
     class function IdentificaTipoSchema(Const AXML: AnsiString; var I: Integer): integer; {eventos_juaumkiko}
@@ -172,8 +138,6 @@ type
 {$ELSE}
     class function Assinar(const AXML: AnsiString; Certificado : ICertificate2; out AXMLAssinado, FMensagem: AnsiString): Boolean;
 {$ENDIF}
-//    class function StringToFloat(AValue : String ) : Double ;
-//    class function StringToFloatDef(const AValue: String; const DefaultValue: Double): Double;
     class procedure ConfAmbiente;
     class function PathAplication: String;
     class function GerarChaveContingencia(FNFe:TNFe): String;
@@ -410,150 +374,7 @@ begin
      Result := copy(AChaveNFE,21,2)
   else
      Result := '';
-end;     
-
-(*
-class function NotaUtil.PosEx(const SubStr, S: AnsiString; Offset: Cardinal = 1): Integer;
-var
-  I,X: Integer;
-  Len, LenSubStr: Integer;
-begin
-  if Offset = 1 then
-    Result := Pos(SubStr, S)
-  else
-  begin
-    I := Offset;
-    LenSubStr := Length(SubStr);
-    Len := Length(S) - LenSubStr + 1;
-    while I <= Len do
-    begin
-      if S[I] = SubStr[1] then
-      begin
-        X := 1;
-        while (X < LenSubStr) and (S[I + X] = SubStr[X + 1]) do
-          Inc(X);
-        if (X = LenSubStr) then
-        begin
-          Result := I;
-          exit;
-        end;
-      end;
-      Inc(I);
-    end;
-    Result := 0;
-  end;
 end;
-*)
-
-(*
-class function NotaUtil.PosLast(const SubStr, S: AnsiString ): Integer;
-Var P : Integer ;
-begin
-  Result := 0 ;
-  P := Pos( SubStr, S) ;
-  while P <> 0 do
-  begin
-     Result := P ;
-     P := PosEx( SubStr, S, P+1) ;
-  end ;
-end ;
-*)
-
-(*
-class function NotaUtil.CortaD(const AString: string;
-  const ATamanho: Integer): String;
-begin
-  Result := copy(AString,1,ATamanho);
-end;
-*)
-
-(*
-class function NotaUtil.CortaE(const AString: string;
-  const ATamanho: Integer): String;
-begin
-  Result := AString;
-  if Length(AString) > ATamanho then
-    Result := copy(AString, Length(AString)-ATamanho+1, length(AString));
-end;
-*)
-
-(*
-class function NotaUtil.EstaVazio(const AValue: String): Boolean;
-begin
-  Result := (Trim(AValue)='');
-end;
-*)
-
-(*
-class function NotaUtil.EstaZerado(AValue: Double): Boolean;
-begin
-  Result := (AValue = 0);
-end;
-*)
-
-(*
-class procedure NotaUtil.EstaVazio(const AValue, AMensagem: String);
-begin
-  if NotaUtil.EstaVazio(AValue) then
-    raise EACBrNFeException.Create(AMensagem);
-end;
-*)
-
-(*
-class function NotaUtil.EstaZerado(AValue: Integer): Boolean;
-begin
-  Result := (AValue = 0);
-end;
-*)
-
-(*
-class function NotaUtil.FormatDate(const AString: string): String;
-var
-  vTemp: TDateTime;
-{$IFDEF VER140} //delphi6
-{$ELSE}
-  FFormato : TFormatSettings;
-{$ENDIF}
-begin
-  try
-{$IFDEF VER140} //delphi6
-    DateSeparator := '/';
-    ShortDateFormat := 'dd/mm/yyyy';
-{$ELSE}
-    FFormato.DateSeparator   := '-';
-    FFormato.ShortDateFormat := 'yyyy-mm-dd';
-//    vTemp := StrToDate(AString, FFormato);
-{$ENDIF}
-    vTemp := StrToDate(AString);
-    if vTemp = 0 then
-      Result := ''
-    else
-      Result := DateToStr(vTemp);
-  except
-    Result := '';
-  end;
-end;
-*)
-
-(*
-class function NotaUtil.StringToDate(const AString: string): TDateTime;
-begin
-  if (AString = '0') or (AString = '') then
-     Result := 0
-  else
-     Result := StrToDate(AString);
-end;
-*)
-
-(*
-class function NotaUtil.StringToTime(const AString: string): TDateTime;
-begin
-  if (AString = '0') or (AString = '') then
-     Result := 0
-  else
-     Result := StrToTime(AString);
-end;
-*)
 
 class function NotaUtil.StringToDateTime(const AString: string): TDateTime;
 begin
@@ -562,51 +383,6 @@ begin
   else
      Result := StrToDateTime(AString);
 end;
-
-(*
-class function NotaUtil.FormatFloat(AValue: Extended; const AFormat: string): string;
-{$IFDEF VER140} //delphi6
-{$ELSE}
-var
-  vFormato: TFormatSettings;
-{$ENDIF}
-begin
-{$IFDEF VER140} //delphi6
-  DecimalSeparator  := ',';
-  ThousandSeparator := '.';
-  Result := SysUtils.FormatFloat(AFormat, AValue);
-{$ELSE}
-  vFormato.DecimalSeparator  := ',';
-  vFormato.ThousandSeparator := '.';
-  Result := SysUtils.FormatFloat(AFormat, AValue, vFormato);
-{$ENDIF}
-end;
-*)
-
-(*
-class function NotaUtil.LasString(AString: String): String;
-begin
-  Result := Copy(AString, Length(AString), Length(AString));
-end;
-*)
-
-(*
-class function NotaUtil.LimpaNumero(AValue: String): String;
-var
-  A : Integer ;
-begin
-  Result := '' ;
-  For A := 1 to length(AValue) do
-  begin
-    {$IFDEF DELPHI12_UP}
-    if CharInSet(AValue[A], ['0'..'9']) then
-    {$ELSE}
-    if (AValue[A] in ['0'..'9']) then
-    {$ENDIF}
-       Result := Result + AValue[A];
-  end ;
-end;
-*)
 
 class function NotaUtil.Modulo11(Valor: string): string;
 var
@@ -631,266 +407,15 @@ begin
   Result := IntToStr(Digito);
 end;
 
-(*
-class function NotaUtil.NaoEstaVazio(AValue: String): Boolean;
-begin
-  Result := not(EstaVazio(AValue));
-end;
-*)
-
-(*
-class function NotaUtil.NaoEstaZerado(AValue: Double): Boolean;
-begin
-  Result := not(EstaZerado(AValue));
-end;
-
-class function NotaUtil.NaoEstaZerado(AValue: Integer): Boolean;
-begin
-  Result := not(EstaZerado(AValue));
-end;
-*)
-
-(*
-class function NotaUtil.padC(const AString: string; const nLen: Integer;
-  const Caracter: Char): String;
-Var nCharLeft : Integer ;
-    D : Double ;
-begin
-  Result    := copy(AString,1,nLen) ;
-  D         := (nLen - Length( Result )) / 2 ;
-  nCharLeft := Trunc( D ) ;
-  Result    := PadE( StringOfChar(Caracter, nCharLeft)+Result, nLen, Caracter) ;
-end ;
-*)
-
-(*
-class function NotaUtil.PadD(const AString: string; const nLen: Integer;
-  const Caracter: Char): String;
-begin
-  Result := copy(AString,1,nLen) ;
-  Result := StringOfChar(Caracter, (nLen - Length(Result))) + Result ;
-end;
-*)
-
-(*
-class function NotaUtil.PadE(const AString: string; const nLen: Integer;
-  const Caracter: Char): String;
-begin
-  Result := copy(AString,1,nLen) ;
-  Result := Result + StringOfChar(Caracter, (nLen - Length(Result))) ;
-end;
-*)
-
-(*
-class function NotaUtil.Poem_Zeros(const Texto: String;
-  const Tamanho: Integer): String;
-begin
-  Result := PadD(Trim(Texto),Tamanho,'0') ;
-end;
-
-class function NotaUtil.Poem_Zeros(const Valor, Tamanho: Integer): String;
-begin
-  Result := PadD(IntToStr(Valor), Tamanho, '0') ;
-end;
-*)
-
-(*
-class function NotaUtil.SeSenao(ACondicao: Boolean; ATrue,
-  AFalse: Variant): Variant;
-begin
-  Result := AFalse;
-  if ACondicao then
-    Result := ATrue;
-end;
-*)
-
-(*
-class function NotaUtil.TrataString(const AValue: String): String;
-var
-  A : Integer ;
-begin
-  Result := '' ;
-  For A := 1 to length(AValue) do
-  begin
-    case Ord(AValue[A]) of
-      60  : Result := Result + '&lt;';  //<
-      62  : Result := Result + '&gt;';  //>
-      38  : Result := Result + '&amp;'; //&
-      34  : Result := Result + '&quot;';//"
-      39  : Result := Result + '&#39;'; //'
-      32  : begin          // Retira espaços duplos
-              if ( Ord(AValue[Pred(A)]) <> 32 ) then
-                 Result := Result + ' ';
-            end;
-      193 : Result := Result + 'A';//Á
-      224 : Result := Result + 'a';//à
-      226 : Result := Result + 'a';//â
-      234 : Result := Result + 'e';//ê
-      244 : Result := Result + 'o';//ô
-      251 : Result := Result + 'u';//û
-      227 : Result := Result + 'a';//ã
-      245 : Result := Result + 'o';//õ
-      225 : Result := Result + 'a';//á
-      233 : Result := Result + 'e';//é
-      237 : Result := Result + 'i';//í
-      243 : Result := Result + 'o';//ó
-      250 : Result := Result + 'u';//ú
-      231 : Result := Result + 'c';//ç
-      252 : Result := Result + 'u';//ü
-      192 : Result := Result + 'A';//À
-      194 : Result := Result + 'A';//Â
-      202 : Result := Result + 'E';//Ê
-      212 : Result := Result + 'O';//Ô
-      219 : Result := Result + 'U';//Û
-      195 : Result := Result + 'A';//Ã
-      213 : Result := Result + 'O';//Õ
-      201 : Result := Result + 'E';//É
-      205 : Result := Result + 'I';//Í
-      211 : Result := Result + 'O';//Ó
-      218 : Result := Result + 'U';//Ú
-      199 : Result := Result + 'C';//Ç
-      220 : Result := Result + 'U';//Ü
-    else
-      Result := Result + AValue[A];
-    end;
-  end;
-  Result := Trim(Result);
-end;
-
-class function NotaUtil.TrataString(const AValue: String;
-  const ATamanho: Integer): String;
-begin
-  Result := NotaUtil.TrataString(NotaUtil.CortaD(AValue, ATamanho));
-end;
-*)
-
-(*
-class function NotaUtil.TamanhoIgual(const AValue: String;
-  const ATamanho: Integer): Boolean;
-begin
-  Result := (Length(AValue)= ATamanho);
-end;
-
-class procedure NotaUtil.TamanhoIgual(const AValue: String;
-  const ATamanho: Integer; AMensagem: String);
-begin
-  if not(NotaUtil.TamanhoIgual(AValue, ATamanho)) then
-    raise EACBrNFeException.Create(AMensagem);
-end;
-
-class function NotaUtil.TamanhoIgual(const AValue,
-  ATamanho: Integer): Boolean;
-begin
-  Result := (Length(IntToStr(AValue))= ATamanho);
-end;
-
-class procedure NotaUtil.TamanhoIgual(const AValue,
-  ATamanho: Integer; AMensagem: String);
-begin
-  if not(NotaUtil.TamanhoIgual(AValue, ATamanho)) then
-    raise EACBrNFeException.Create(AMensagem);
-end;
-*)
-
-(*
-class procedure NotaUtil.EstaZerado(AValue: Integer;
-  AMensagem: String);
-begin
-  if NotaUtil.EstaZerado(AValue) then
-    raise EACBrNFeException.Create(AMensagem);
-end;
-*)
-
-(*
-class function NotaUtil.FormatarCPF(AValue: String): String;
-begin
-  if Length(AValue) = 0 then
-     Result := AValue
-  else
-   begin
-      AValue := NotaUtil.LimpaNumero(AValue);
-     Result := copy(AValue,1,3) + '.' + copy(AValue,4 ,3) + '.' +
-               copy(AValue,7,3) + '-' + copy(AValue,10,2) ;
-   end;
-end;
-*)
-
-(*
-class function NotaUtil.FormatarCNPJ(AValue: String): String;
-begin
-  if Length(AValue) = 0 then
-     Result := AValue
-  else
-   begin
-     AValue := NotaUtil.LimpaNumero(AValue);
-     Result := copy(AValue,1,2) + '.' + copy(AValue,3,3) + '.' +
-               copy(AValue,6,3) + '/' + copy(AValue,9,4) + '-' + copy(AValue,13,2) ;
-   end;
-end;
-*)
-
 class function NotaUtil.FormatarCEP(AValue: String): String;
 begin
    Result := DFeUtil.FormatarCEP(AValue);
-//  Result := copy(AValue,1,5) + '-' + copy(AValue,6,3);
 end;
-
-(*
-class function NotaUtil.TamanhoMenor(const AValue: String;
-  const ATamanho: Integer): Boolean;
-begin
-  Result := (Length(AValue) < ATamanho);
-end;
-*)
 
 class function NotaUtil.FormatarFone(AValue: String): String;
-//var
-//  lTemp: string;
-  //i: integer;
 begin
    Result := DFeUtil.FormatarFone(AValue);
-(*
-  AValue := IntToStr(StrToInt64Def(DFeUtil.LimpaNumero(AValue),0));
-  Result := AValue;
-  lTemp := '';
-
-  if DFeUtil.NaoEstaVazio(AValue) then
-  begin
-    if Length(AValue) < 10 then
-      AValue := DFeUtil.Poem_Zeros(DFeUtil.LimpaNumero(AValue), 10);
-
-    Result := copy(AValue,Length(AValue)-7,4)+'-'+copy(AValue,Length(AValue)-3,4);
-
-    lTemp:=copy(AValue,1,Length(AValue)-8);
-    case length(AValue) of
-      10: Result := '('+lTemp+')'+Result;
-      else
-      begin
-        lTemp:=copy(AValue,Length(AValue)-8,1);
-        Result := lTemp+Result;
-        lTemp:=copy(AValue,1,Length(AValue)-9);
-        Result := '('+lTemp+')'+Result;
-      end;
-    end;
-  end;
-*)
-  {Result := AValue;
-  if NotaUtil.NaoEstaVazio(AValue) then
-  begin
-    AValue := NotaUtil.Poem_Zeros(NotaUtil.LimpaNumero(AValue), 10);
-    Result := '('+copy(AValue,1,2) + ')' + copy(AValue,3,8);
-  end;}
 end;
-
-(*
-class function NotaUtil.FormatarNumeroDocumentoFiscal(
-  AValue: String): String;
-begin
-  AValue := NotaUtil.Poem_Zeros(AValue, 9);
-  Result := copy(AValue,1,3) + '.' + copy(AValue,4,3)+ '.'+
-            copy(AValue,7,3);
-end;
-*)
 
 class function NotaUtil.FormatarChaveAcesso(AValue: String): String;
 begin
@@ -918,6 +443,7 @@ case FormaEmissao of
          LayNFeEventoAN     : Result := DFeUtil.SeSenao(AAmbiente=1, 'https://www.nfe.fazenda.gov.br/RecepcaoEvento/RecepcaoEvento.asmx',   'https://hom.nfe.fazenda.gov.br/RecepcaoEvento/RecepcaoEvento.asmx ');
          LayNfeConsNFeDest  : Result := DFeUtil.SeSenao(AAmbiente=1, 'https://www.nfe.fazenda.gov.br/NFeConsultaDest/NFeConsultaDest.asmx', 'https://hom.nfe.fazenda.gov.br/NFeConsultaDest/NFeConsultaDest.asmx');
          LayNfeDownloadNFe  : Result := DFeUtil.SeSenao(AAmbiente=1, 'https://www.nfe.fazenda.gov.br/NfeDownloadNF/NfeDownloadNF.asmx',     'https://hom.nfe.fazenda.gov.br/NfeDownloadNF/NfeDownloadNF.asmx');
+         LayDistDFeInt      : Result := DFeUtil.SeSenao(AAmbiente=1, '', '');
        end;
 
        // Alguns Estados Brasiseiros deixaram de autorizar as NF-e no SEFAZ Virtual do Ambiente Nacional
@@ -991,7 +517,6 @@ case FormaEmissao of
        case ALayOut of
          LayNfeRecepcao       : Result := DFeUtil.SeSenao(AAmbiente=1, 'https://www.svc.fazenda.gov.br/NfeRecepcao2/NfeRecepcao2.asmx',           'https://hom.svc.fazenda.gov.br/NfeRecepcao2/NfeRecepcao2.asmx');
          LayNfeRetRecepcao    : Result := DFeUtil.SeSenao(AAmbiente=1, 'https://www.svc.fazenda.gov.br/NfeRetRecepcao2/NfeRetRecepcao2.asmx',     'https://hom.svc.fazenda.gov.br/NfeRetRecepcao2/NfeRetRecepcao2.asmx');
-//         LayNfeCancelamento  : Result := DFeUtil.SeSenao(AAmbiente=1, 'https://hom.nfe.fazenda.gov.br/SVC/NfeCancelamento/NfeCancelamento2.asmx',   'https://hom.svc.fazenda.gov.br/NfeCancelamento/NfeCancelamento2.asmx');
          LayNfeCancelamento   : Result := DFeUtil.SeSenao(AAmbiente=1, '', '');
          LayNfeInutilizacao   : Result := DFeUtil.SeSenao(AAmbiente=1, 'https://www.svc.fazenda.gov.br/NfeInutilizacao2/NfeInutilizacao2.asmx',   'https://hom.svc.fazenda.gov.br/NfeInutilizacao2/NfeInutilizacao2.asmx');
          LayNfeConsulta       : Result := DFeUtil.SeSenao(AAmbiente=1, 'https://www.svc.fazenda.gov.br/NfeConsulta2/NfeConsulta2.asmx',           'https://hom.svc.fazenda.gov.br/NfeConsulta2/NfeConsulta2.asmx');
@@ -1009,7 +534,6 @@ case FormaEmissao of
        case ALayOut of
          LayNfeRecepcao       : Result := DFeUtil.SeSenao(AAmbiente=1, 'https://nfe.sefazvirtual.rs.gov.br/ws/Nferecepcao/NFeRecepcao2.asmx',            'https://homologacao.nfe.sefazvirtual.rs.gov.br/ws/Nferecepcao/NFeRecepcao2.asmx');
          LayNfeRetRecepcao    : Result := DFeUtil.SeSenao(AAmbiente=1, 'https://nfe.sefazvirtual.rs.gov.br/ws/NfeRetRecepcao/NfeRetRecepcao2.asmx',      'https://homologacao.nfe.sefazvirtual.rs.gov.br/ws/NfeRetRecepcao/NfeRetRecepcao2.asmx');
-//         LayNfeCancelamento  : Result := DFeUtil.SeSenao(AAmbiente=1, 'https://nfe.sefazvirtual.rs.gov.br/ws/NfeCancelamento/NfeCancelamento2.asmx',    'https://homologacao.nfe.sefazvirtual.rs.gov.br/ws/NfeCancelamento/NfeCancelamento2.asmx');
          LayNfeCancelamento   : Result := DFeUtil.SeSenao(AAmbiente=1, '', '');
          LayNfeInutilizacao   : Result := DFeUtil.SeSenao(AAmbiente=1, '', '');
          LayNfeConsulta       : Result := DFeUtil.SeSenao(AAmbiente=1, 'https://nfe.sefazvirtual.rs.gov.br/ws/NfeConsulta/NfeConsulta2.asmx',            'https://homologacao.nfe.sefazvirtual.rs.gov.br/ws/NfeConsulta/NfeConsulta2.asmx');
@@ -1063,6 +587,8 @@ begin
       LayNfeStatusServico  : Result := DFeUtil.SeSenao(AAmbiente=1, 'https://nfe.sefazvirtual.rs.gov.br/ws/NfeStatusServico/NfeStatusServico2.asmx',  'https://homologacao.nfe.sefazvirtual.rs.gov.br/ws/NfeStatusServico/NfeStatusServico2.asmx');
       LayNFeCCe,
       LayNFeEvento         : Result := DFeUtil.SeSenao(AAmbiente=1, 'https://nfe.sefazvirtual.rs.gov.br/ws/recepcaoevento/recepcaoevento.asmx',       'https://homologacao.nfe.sefazvirtual.rs.gov.br/ws/recepcaoevento/recepcaoevento.asmx');
+
+      LayAdministrarCSCNFCe: Result := DFeUtil.SeSenao(AAmbiente=1, '', '');
     end;
    end;
 end;
@@ -1090,15 +616,15 @@ begin
   else
    begin
     case ALayOut of
-      LayNfeRecepcao,
       LayNfeAutorizacao    : Result := DFeUtil.SeSenao(AAmbiente=1, '', '');
-      LayNfeRetRecepcao,
       LayNfeRetAutorizacao : Result := DFeUtil.SeSenao(AAmbiente=1, '', '');
       LayNfeInutilizacao   : Result := DFeUtil.SeSenao(AAmbiente=1, '', '');
       LayNfeConsulta       : Result := DFeUtil.SeSenao(AAmbiente=1, '', '');
       LayNfeStatusServico  : Result := DFeUtil.SeSenao(AAmbiente=1, '', '');
       LayNFeCCe,
       LayNFeEvento         : Result := DFeUtil.SeSenao(AAmbiente=1, '', '');
+
+      LayAdministrarCSCNFCe: Result := DFeUtil.SeSenao(AAmbiente=1, '', '');
     end;
    end;
 end;
@@ -1149,6 +675,8 @@ begin
       LayNfeStatusServico  : Result := DFeUtil.SeSenao(AAmbiente=1, 'https://nfce.sefaz.am.gov.br/nfce-services/services/NfeStatusServico2', 'https://homnfce.sefaz.am.gov.br/nfce-services-nac/services/NfeStatusServico2');
       LayNFeCCe,
       LayNFeEvento         : Result := DFeUtil.SeSenao(AAmbiente=1, 'https://nfce.sefaz.am.gov.br/nfce-services/services/RecepcaoEvento',    'https://homnfce.sefaz.am.gov.br/nfce-services-nac/services/RecepcaoEvento');
+
+      LayAdministrarCSCNFCe: Result := DFeUtil.SeSenao(AAmbiente=1, '', '');
     end;
    end;
 end;
@@ -1190,15 +718,15 @@ begin
   else
    begin
     case ALayOut of
-      LayNfeRecepcao,
       LayNfeAutorizacao    : Result := DFeUtil.SeSenao(AAmbiente=1, '', '');
-      LayNfeRetRecepcao,
       LayNfeRetAutorizacao : Result := DFeUtil.SeSenao(AAmbiente=1, '', '');
       LayNfeInutilizacao   : Result := DFeUtil.SeSenao(AAmbiente=1, '', '');
       LayNfeConsulta       : Result := DFeUtil.SeSenao(AAmbiente=1, '', '');
       LayNfeStatusServico  : Result := DFeUtil.SeSenao(AAmbiente=1, '', '');
       LayNFeCCe,
       LayNFeEvento         : Result := DFeUtil.SeSenao(AAmbiente=1, '', '');
+
+      LayAdministrarCSCNFCe: Result := DFeUtil.SeSenao(AAmbiente=1, '', '');
     end;
    end;
 end;
@@ -1226,15 +754,15 @@ begin
   else
    begin
     case ALayOut of
-      LayNfeRecepcao,
       LayNfeAutorizacao    : Result := DFeUtil.SeSenao(AAmbiente=1, '', '');
-      LayNfeRetRecepcao,
       LayNfeRetAutorizacao : Result := DFeUtil.SeSenao(AAmbiente=1, '', '');
       LayNfeInutilizacao   : Result := DFeUtil.SeSenao(AAmbiente=1, '', '');
       LayNfeConsulta       : Result := DFeUtil.SeSenao(AAmbiente=1, '', '');
       LayNfeStatusServico  : Result := DFeUtil.SeSenao(AAmbiente=1, '', '');
       LayNFeCCe,
       LayNFeEvento         : Result := DFeUtil.SeSenao(AAmbiente=1, '', '');
+
+      LayAdministrarCSCNFCe: Result := DFeUtil.SeSenao(AAmbiente=1, '', '');
     end;
    end;
 end;
@@ -1254,7 +782,6 @@ begin
    Result := NotaUtil.GetURLSVRS(AAmbiente, ALayOut, AModeloDF, AVersaoDF);
   end;
 end;
-
 
 class function NotaUtil.GetURLGO(AAmbiente: Integer;
   ALayOut: TLayOut; AModeloDF: TpcnModeloDF = moNFe; AVersaoDF: TpcnVersaoDF = ve200): WideString;
@@ -1279,15 +806,15 @@ begin
   else
    begin
     case ALayOut of
-      LayNfeRecepcao,
       LayNfeAutorizacao    : Result := DFeUtil.SeSenao(AAmbiente=1, '', '');
-      LayNfeRetRecepcao,
       LayNfeRetAutorizacao : Result := DFeUtil.SeSenao(AAmbiente=1, '', '');
       LayNfeInutilizacao   : Result := DFeUtil.SeSenao(AAmbiente=1, '', '');
       LayNfeConsulta       : Result := DFeUtil.SeSenao(AAmbiente=1, '', '');
       LayNfeStatusServico  : Result := DFeUtil.SeSenao(AAmbiente=1, '', '');
       LayNFeCCe,
       LayNFeEvento         : Result := DFeUtil.SeSenao(AAmbiente=1, '', '');
+
+      LayAdministrarCSCNFCe: Result := DFeUtil.SeSenao(AAmbiente=1, '', '');
     end;
    end;
 end;
@@ -1324,6 +851,8 @@ begin
       LayNfeStatusServico  : Result := DFeUtil.SeSenao(AAmbiente=1, 'https://nfce.sefaz.mt.gov.br/nfcews/services/NfeStatusServico2?wsdl', 'https://homologacao.sefaz.mt.gov.br/nfcews/services/NfeStatusServico2?wsdl');
       LayNFeCCe,
       LayNFeEvento         : Result := DFeUtil.SeSenao(AAmbiente=1, 'https://nfce.sefaz.mt.gov.br/nfcews/services/RecepcaoEvento?wsdl',    'https://homologacao.sefaz.mt.gov.br/nfcews/services/RecepcaoEvento?wsdl');
+
+      LayAdministrarCSCNFCe: Result := DFeUtil.SeSenao(AAmbiente=1, '', '');
     end;
    end;
 end;
@@ -1351,15 +880,15 @@ begin
   else
    begin
     case ALayOut of
-      LayNfeRecepcao,
       LayNfeAutorizacao    : Result := DFeUtil.SeSenao(AAmbiente=1, '', '');
-      LayNfeRetRecepcao,
       LayNfeRetAutorizacao : Result := DFeUtil.SeSenao(AAmbiente=1, '', '');
       LayNfeInutilizacao   : Result := DFeUtil.SeSenao(AAmbiente=1, '', '');
       LayNfeConsulta       : Result := DFeUtil.SeSenao(AAmbiente=1, '', '');
       LayNfeStatusServico  : Result := DFeUtil.SeSenao(AAmbiente=1, '', '');
       LayNFeCCe,
       LayNFeEvento         : Result := DFeUtil.SeSenao(AAmbiente=1, '', '');
+
+      LayAdministrarCSCNFCe: Result := DFeUtil.SeSenao(AAmbiente=1, '', '');
     end;
    end;
 end;
@@ -1387,15 +916,15 @@ begin
   else
    begin
     case ALayOut of
-      LayNfeRecepcao,
       LayNfeAutorizacao    : Result := DFeUtil.SeSenao(AAmbiente=1, '', '');
-      LayNfeRetRecepcao,
       LayNfeRetAutorizacao : Result := DFeUtil.SeSenao(AAmbiente=1, '', '');
       LayNfeInutilizacao   : Result := DFeUtil.SeSenao(AAmbiente=1, '', '');
       LayNfeConsulta       : Result := DFeUtil.SeSenao(AAmbiente=1, '', '');
       LayNfeStatusServico  : Result := DFeUtil.SeSenao(AAmbiente=1, '', '');
       LayNFeCCe,
       LayNFeEvento         : Result := DFeUtil.SeSenao(AAmbiente=1, '', '');
+
+      LayAdministrarCSCNFCe: Result := DFeUtil.SeSenao(AAmbiente=1, '', '');
     end;
    end;
 end;
@@ -1435,15 +964,15 @@ begin
   else
    begin
     case ALayOut of
-      LayNfeRecepcao,
       LayNfeAutorizacao    : Result := DFeUtil.SeSenao(AAmbiente=1, '', '');
-      LayNfeRetRecepcao,
       LayNfeRetAutorizacao : Result := DFeUtil.SeSenao(AAmbiente=1, '', '');
       LayNfeInutilizacao   : Result := DFeUtil.SeSenao(AAmbiente=1, '', '');
       LayNfeConsulta       : Result := DFeUtil.SeSenao(AAmbiente=1, '', '');
       LayNfeStatusServico  : Result := DFeUtil.SeSenao(AAmbiente=1, '', '');
       LayNFeCCe,
       LayNFeEvento         : Result := DFeUtil.SeSenao(AAmbiente=1, '', '');
+
+      LayAdministrarCSCNFCe: Result := DFeUtil.SeSenao(AAmbiente=1, '', '');
     end;
    end;
 end;
@@ -1471,15 +1000,15 @@ begin
   else
    begin
     case ALayOut of
-      LayNfeRecepcao,
       LayNfeAutorizacao    : Result := DFeUtil.SeSenao(AAmbiente=1, '', '');
-      LayNfeRetRecepcao,
       LayNfeRetAutorizacao : Result := DFeUtil.SeSenao(AAmbiente=1, '', '');
       LayNfeInutilizacao   : Result := DFeUtil.SeSenao(AAmbiente=1, '', '');
       LayNfeConsulta       : Result := DFeUtil.SeSenao(AAmbiente=1, '', '');
       LayNfeStatusServico  : Result := DFeUtil.SeSenao(AAmbiente=1, '', '');
       LayNFeCCe,
       LayNFeEvento         : Result := DFeUtil.SeSenao(AAmbiente=1, '', '');
+
+      LayAdministrarCSCNFCe: Result := DFeUtil.SeSenao(AAmbiente=1, '', '');
     end;
    end;
 end;
@@ -1516,6 +1045,8 @@ begin
       LayNfeStatusServico  : Result := DFeUtil.SeSenao(AAmbiente=1, 'https://nfe.sefaz.rs.gov.br/ws/NfeStatusServico/NfeStatusServico2.asmx',  'https://homologacao.nfe.sefaz.rs.gov.br/ws/NfeStatusServico/NfeStatusServico2.asmx');
       LayNFeCCe,
       LayNFeEvento         : Result := DFeUtil.SeSenao(AAmbiente=1, 'https://nfe.sefaz.rs.gov.br/ws/recepcaoevento/recepcaoevento.asmx',       'https://homologacao.nfe.sefaz.rs.gov.br/ws/recepcaoevento/recepcaoevento.asmx');
+
+      LayAdministrarCSCNFCe: Result := DFeUtil.SeSenao(AAmbiente=1, '', '');
     end;
    end;
 end;
@@ -1555,15 +1086,15 @@ begin
   else
    begin
     case ALayOut of
-      LayNfeRecepcao,
       LayNfeAutorizacao    : Result := DFeUtil.SeSenao(AAmbiente=1, '', '');
-      LayNfeRetRecepcao,
       LayNfeRetAutorizacao : Result := DFeUtil.SeSenao(AAmbiente=1, '', '');
       LayNfeInutilizacao   : Result := DFeUtil.SeSenao(AAmbiente=1, '', '');
       LayNfeConsulta       : Result := DFeUtil.SeSenao(AAmbiente=1, '', '');
       LayNfeStatusServico  : Result := DFeUtil.SeSenao(AAmbiente=1, '', '');
       LayNFeCCe,
       LayNFeEvento         : Result := DFeUtil.SeSenao(AAmbiente=1, '', '');
+
+      LayAdministrarCSCNFCe: Result := DFeUtil.SeSenao(AAmbiente=1, '', '');
     end;
    end;
 end;
@@ -1648,62 +1179,7 @@ begin
       else schema_filename := '';
     end;
    end;
-  (*
-  case Tipo of
-    1:
-    begin
-      if DFeUtil.EstaVazio(APathSchemas) then
-         schema_filename := pchar(PathWithDelim(ExtractFileDir(application.ExeName))+'Schemas\nfe_v2.00.xsd')
-      else
-         schema_filename := pchar(PathWithDelim(APathSchemas)+'nfe_v2.00.xsd');
-    end;
-    2:
-    begin
-      if DFeUtil.EstaVazio(APathSchemas) then
-         schema_filename := pchar(PathWithDelim(ExtractFileDir(application.ExeName))+'Schemas\cancNFe_v2.00.xsd')
-      else
-         schema_filename := pchar(PathWithDelim(APathSchemas)+'cancNFe_v2.00.xsd');
-    end;
-    3:
-    begin
-      if DFeUtil.EstaVazio(APathSchemas) then
-         schema_filename := pchar(PathWithDelim(ExtractFileDir(application.ExeName))+'Schemas\inutNFe_v2.00.xsd')
-      else
-         schema_filename := pchar(PathWithDelim(APathSchemas)+'inutNFe_v2.00.xsd');
-    end;
-    4:
-    begin
-      if DFeUtil.EstaVazio(APathSchemas) then
-         schema_filename := pchar(PathWithDelim(ExtractFileDir(application.ExeName))+'Schemas\envDPEC_v1.01.xsd')
-      else
-         schema_filename := pchar(PathWithDelim(APathSchemas)+'envDPEC_v1.01.xsd');
-    end;
-    5:
-    begin
-      if DFeUtil.EstaVazio(APathSchemas) then
-         schema_filename := pchar(PathWithDelim(ExtractFileDir(application.ExeName))+'Schemas\envCCe_v1.00.xsd')
-      else
-         schema_filename := pchar(PathWithDelim(APathSchemas)+'envCCe_v1.00.xsd');
-    end;
-    6:
-    begin
-      if DFeUtil.EstaVazio(APathSchemas) then
-         schema_filename := pchar(PathWithDelim(ExtractFileDir(application.ExeName))+'Schemas\envEventoCancNFe_v1.00.xsd')
-      else
-         schema_filename := pchar(PathWithDelim(APathSchemas)+'envEventoCancNFe_v1.00.xsd');
-    end;
-    7..10:
-    begin
-      if DFeUtil.EstaVazio(APathSchemas) then
-         schema_filename := pchar(PathWithDelim(ExtractFileDir(application.ExeName))+'Schemas\envConfRecebto_v1.00.xsd')
-      else
-         schema_filename := pchar(PathWithDelim(APathSchemas)+'envConfRecebto_v1.00.xsd');
-    end;
-    else
-      schema_filename := '';
-  end;
-  *)
-  
+
   if not FilesExists(schema_filename) then
     raise EACBrNFeException.Create('Arquivo '+schema_filename+' não encontrado');
 
@@ -1844,106 +1320,99 @@ var
   Tipo,I: Integer;
   schema_filename: String;
 begin
-  Tipo := NotaUtil.IdentificaTipoSchema(XML,I) ;
+  CoInitialize(nil);
+  try
+    Tipo := NotaUtil.IdentificaTipoSchema(XML,I) ;
 
-  DOMDocument := CoDOMDocument50.Create;
-  DOMDocument.async := False;
-  DOMDocument.resolveExternals := False;
-  DOMDocument.validateOnParse := True;
-  DOMDocument.loadXML(XML);
+    DOMDocument := CoDOMDocument50.Create;
+    DOMDocument.async := False;
+    DOMDocument.resolveExternals := False;
+    DOMDocument.validateOnParse := True;
+    DOMDocument.loadXML(XML);
 
-  Schema := CoXMLSchemaCache50.Create;
+    Schema := CoXMLSchemaCache50.Create;
 
-  if not DirectoryExists(DFeUtil.SeSenao(DFeUtil.EstaVazio(APathSchemas),PathWithDelim(ExtractFileDir(application.ExeName))+'Schemas',PathWithDelim(APathSchemas))) then
-     raise EACBrNFeException.Create('Diretório de Schemas não encontrado'+sLineBreak+
+    if not DirectoryExists(DFeUtil.SeSenao(DFeUtil.EstaVazio(APathSchemas),PathWithDelim(ExtractFileDir(application.ExeName))+'Schemas',PathWithDelim(APathSchemas))) then
+       raise EACBrNFeException.Create('Diretório de Schemas não encontrado'+sLineBreak+
                            DFeUtil.SeSenao(DFeUtil.EstaVazio(APathSchemas),PathWithDelim(ExtractFileDir(application.ExeName))+'Schemas',PathWithDelim(APathSchemas)));
 
-  if AModeloDF = moNFe then
-   begin
-    case Tipo of
-      1: schema_filename := DFeUtil.SeSenao(DFeUtil.EstaVazio(APathSchemas),PathWithDelim(ExtractFileDir(application.ExeName))+
-                                             'Schemas\',PathWithDelim(APathSchemas))+'nfe_v' +
-                                             GetVersaoNFe(AModeloDF, AVersaoDF, LayNfeRecepcao) + '.xsd';
-      2: schema_filename := DFeUtil.SeSenao(DFeUtil.EstaVazio(APathSchemas),PathWithDelim(ExtractFileDir(application.ExeName))+
-                                             'Schemas\',PathWithDelim(APathSchemas))+'cancNFe_v' +
-                                             GetVersaoNFe(AModeloDF, AVersaoDF, LayNfeCancelamento) + '.xsd';
-      3: schema_filename := DFeUtil.SeSenao(DFeUtil.EstaVazio(APathSchemas),PathWithDelim(ExtractFileDir(application.ExeName))+
-                                             'Schemas\',PathWithDelim(APathSchemas))+'inutNFe_v' +
-                                             GetVersaoNFe(AModeloDF, AVersaoDF, LayNfeInutilizacao) + '.xsd';
-      4: schema_filename := DFeUtil.SeSenao(DFeUtil.EstaVazio(APathSchemas),PathWithDelim(ExtractFileDir(application.ExeName))+
-                                             'Schemas\',PathWithDelim(APathSchemas))+'envDPEC_v' +
-                                             GetVersaoNFe(AModeloDF, AVersaoDF, LayNfeEnvDPEC) + '.xsd';
-      5: schema_filename := DFeUtil.SeSenao(DFeUtil.EstaVazio(APathSchemas),PathWithDelim(ExtractFileDir(application.ExeName))+
-                                             'Schemas\',PathWithDelim(APathSchemas))+'envCCe_v' +
-                                             GetVersaoNFe(AModeloDF, AVersaoDF, LayNfeCCe) + '.xsd';
-      6: schema_filename := DFeUtil.SeSenao(DFeUtil.EstaVazio(APathSchemas),PathWithDelim(ExtractFileDir(application.ExeName))+
-                                             'Schemas\',PathWithDelim(APathSchemas))+'envEventoCancNFe_v' +
-                                             GetVersaoNFe(AModeloDF, AVersaoDF, LayNfeEvento) + '.xsd';
-      7..10: schema_filename := DFeUtil.SeSenao(DFeUtil.EstaVazio(APathSchemas),PathWithDelim(ExtractFileDir(application.ExeName))+
-                                                 'Schemas\',PathWithDelim(APathSchemas))+'envConfRecebto_v' +
-                                                 GetVersaoNFe(AModeloDF, AVersaoDF, LayNfeEvento) + '.xsd';
-      11: schema_filename := DFeUtil.SeSenao(DFeUtil.EstaVazio(APathSchemas),PathWithDelim(ExtractFileDir(application.ExeName))+
-                                             'Schemas\',PathWithDelim(APathSchemas))+'envEPEC_v' +
-                                             GetVersaoNFe(AModeloDF, AVersaoDF, LayNfeEventoAN) + '.xsd';
-      else schema_filename := '';
-    end;
-   end
-  else 
-   begin
-    case Tipo of
-      1: schema_filename := DFeUtil.SeSenao(DFeUtil.EstaVazio(APathSchemas),PathWithDelim(ExtractFileDir(application.ExeName))+
-                                             'Schemas\',PathWithDelim(APathSchemas))+'nfe_v' +
-                                             GetVersaoNFe(AModeloDF, AVersaoDF, LayNfeRecepcao) + '.xsd';
-      2: schema_filename := DFeUtil.SeSenao(DFeUtil.EstaVazio(APathSchemas),PathWithDelim(ExtractFileDir(application.ExeName))+
-                                             'Schemas\',PathWithDelim(APathSchemas))+'cancNFe_v' +
-                                             GetVersaoNFe(AModeloDF, AVersaoDF, LayNfeCancelamento) + '.xsd';
-      3: schema_filename := DFeUtil.SeSenao(DFeUtil.EstaVazio(APathSchemas),PathWithDelim(ExtractFileDir(application.ExeName))+
-                                             'Schemas\',PathWithDelim(APathSchemas))+'inutNFe_v' +
-                                             GetVersaoNFe(AModeloDF, AVersaoDF, LayNfeInutilizacao) + '.xsd';
-      4: schema_filename := DFeUtil.SeSenao(DFeUtil.EstaVazio(APathSchemas),PathWithDelim(ExtractFileDir(application.ExeName))+
-                                             'Schemas\',PathWithDelim(APathSchemas))+'envDPEC_v' +
-                                             GetVersaoNFe(AModeloDF, AVersaoDF, LayNfeEnvDPEC) + '.xsd';
-      5: schema_filename := DFeUtil.SeSenao(DFeUtil.EstaVazio(APathSchemas),PathWithDelim(ExtractFileDir(application.ExeName))+
-                                             'Schemas\',PathWithDelim(APathSchemas))+'envCCe_v' +
-                                             GetVersaoNFe(AModeloDF, AVersaoDF, LayNfeCCe) + '.xsd';
-      6: schema_filename := DFeUtil.SeSenao(DFeUtil.EstaVazio(APathSchemas),PathWithDelim(ExtractFileDir(application.ExeName))+
-                                             'Schemas\',PathWithDelim(APathSchemas))+'envEventoCancNFe_v' +
-                                             GetVersaoNFe(AModeloDF, AVersaoDF, LayNfeEvento) + '.xsd';
-      7..10: schema_filename := DFeUtil.SeSenao(DFeUtil.EstaVazio(APathSchemas),PathWithDelim(ExtractFileDir(application.ExeName))+
-                                                 'Schemas\',PathWithDelim(APathSchemas))+'envConfRecebto_v' +
-                                                 GetVersaoNFe(AModeloDF, AVersaoDF, LayNfeEvento) + '.xsd';
-      11: schema_filename := DFeUtil.SeSenao(DFeUtil.EstaVazio(APathSchemas),PathWithDelim(ExtractFileDir(application.ExeName))+
-                                             'Schemas\',PathWithDelim(APathSchemas))+'envEPEC_v' +
-                                             GetVersaoNFe(AModeloDF, AVersaoDF, LayNfeEventoAN) + '.xsd';
-      else schema_filename := '';
-    end;
-   end;
+    if AModeloDF = moNFe then
+     begin
+      case Tipo of
+        1: schema_filename := DFeUtil.SeSenao(DFeUtil.EstaVazio(APathSchemas),PathWithDelim(ExtractFileDir(application.ExeName))+
+                                               'Schemas\',PathWithDelim(APathSchemas))+'nfe_v' +
+                                               GetVersaoNFe(AModeloDF, AVersaoDF, LayNfeRecepcao) + '.xsd';
+        2: schema_filename := DFeUtil.SeSenao(DFeUtil.EstaVazio(APathSchemas),PathWithDelim(ExtractFileDir(application.ExeName))+
+                                               'Schemas\',PathWithDelim(APathSchemas))+'cancNFe_v' +
+                                               GetVersaoNFe(AModeloDF, AVersaoDF, LayNfeCancelamento) + '.xsd';
+        3: schema_filename := DFeUtil.SeSenao(DFeUtil.EstaVazio(APathSchemas),PathWithDelim(ExtractFileDir(application.ExeName))+
+                                               'Schemas\',PathWithDelim(APathSchemas))+'inutNFe_v' +
+                                               GetVersaoNFe(AModeloDF, AVersaoDF, LayNfeInutilizacao) + '.xsd';
+        4: schema_filename := DFeUtil.SeSenao(DFeUtil.EstaVazio(APathSchemas),PathWithDelim(ExtractFileDir(application.ExeName))+
+                                               'Schemas\',PathWithDelim(APathSchemas))+'envDPEC_v' +
+                                               GetVersaoNFe(AModeloDF, AVersaoDF, LayNfeEnvDPEC) + '.xsd';
+        5: schema_filename := DFeUtil.SeSenao(DFeUtil.EstaVazio(APathSchemas),PathWithDelim(ExtractFileDir(application.ExeName))+
+                                               'Schemas\',PathWithDelim(APathSchemas))+'envCCe_v' +
+                                               GetVersaoNFe(AModeloDF, AVersaoDF, LayNfeCCe) + '.xsd';
+        6: schema_filename := DFeUtil.SeSenao(DFeUtil.EstaVazio(APathSchemas),PathWithDelim(ExtractFileDir(application.ExeName))+
+                                               'Schemas\',PathWithDelim(APathSchemas))+'envEventoCancNFe_v' +
+                                               GetVersaoNFe(AModeloDF, AVersaoDF, LayNfeEvento) + '.xsd';
+        7..10: schema_filename := DFeUtil.SeSenao(DFeUtil.EstaVazio(APathSchemas),PathWithDelim(ExtractFileDir(application.ExeName))+
+                                                   'Schemas\',PathWithDelim(APathSchemas))+'envConfRecebto_v' +
+                                                   GetVersaoNFe(AModeloDF, AVersaoDF, LayNfeEvento) + '.xsd';
+        11: schema_filename := DFeUtil.SeSenao(DFeUtil.EstaVazio(APathSchemas),PathWithDelim(ExtractFileDir(application.ExeName))+
+                                               'Schemas\',PathWithDelim(APathSchemas))+'envEPEC_v' +
+                                               GetVersaoNFe(AModeloDF, AVersaoDF, LayNfeEventoAN) + '.xsd';
+        else schema_filename := '';
+      end;
+     end
+    else
+     begin
+      case Tipo of
+        1: schema_filename := DFeUtil.SeSenao(DFeUtil.EstaVazio(APathSchemas),PathWithDelim(ExtractFileDir(application.ExeName))+
+                                               'Schemas\',PathWithDelim(APathSchemas))+'nfe_v' +
+                                               GetVersaoNFe(AModeloDF, AVersaoDF, LayNfeRecepcao) + '.xsd';
+        2: schema_filename := DFeUtil.SeSenao(DFeUtil.EstaVazio(APathSchemas),PathWithDelim(ExtractFileDir(application.ExeName))+
+                                               'Schemas\',PathWithDelim(APathSchemas))+'cancNFe_v' +
+                                               GetVersaoNFe(AModeloDF, AVersaoDF, LayNfeCancelamento) + '.xsd';
+        3: schema_filename := DFeUtil.SeSenao(DFeUtil.EstaVazio(APathSchemas),PathWithDelim(ExtractFileDir(application.ExeName))+
+                                               'Schemas\',PathWithDelim(APathSchemas))+'inutNFe_v' +
+                                               GetVersaoNFe(AModeloDF, AVersaoDF, LayNfeInutilizacao) + '.xsd';
+        4: schema_filename := DFeUtil.SeSenao(DFeUtil.EstaVazio(APathSchemas),PathWithDelim(ExtractFileDir(application.ExeName))+
+                                               'Schemas\',PathWithDelim(APathSchemas))+'envDPEC_v' +
+                                               GetVersaoNFe(AModeloDF, AVersaoDF, LayNfeEnvDPEC) + '.xsd';
+        5: schema_filename := DFeUtil.SeSenao(DFeUtil.EstaVazio(APathSchemas),PathWithDelim(ExtractFileDir(application.ExeName))+
+                                               'Schemas\',PathWithDelim(APathSchemas))+'envCCe_v' +
+                                               GetVersaoNFe(AModeloDF, AVersaoDF, LayNfeCCe) + '.xsd';
+        6: schema_filename := DFeUtil.SeSenao(DFeUtil.EstaVazio(APathSchemas),PathWithDelim(ExtractFileDir(application.ExeName))+
+                                               'Schemas\',PathWithDelim(APathSchemas))+'envEventoCancNFe_v' +
+                                               GetVersaoNFe(AModeloDF, AVersaoDF, LayNfeEvento) + '.xsd';
+        7..10: schema_filename := DFeUtil.SeSenao(DFeUtil.EstaVazio(APathSchemas),PathWithDelim(ExtractFileDir(application.ExeName))+
+                                                   'Schemas\',PathWithDelim(APathSchemas))+'envConfRecebto_v' +
+                                                   GetVersaoNFe(AModeloDF, AVersaoDF, LayNfeEvento) + '.xsd';
+        11: schema_filename := DFeUtil.SeSenao(DFeUtil.EstaVazio(APathSchemas),PathWithDelim(ExtractFileDir(application.ExeName))+
+                                               'Schemas\',PathWithDelim(APathSchemas))+'envEPEC_v' +
+                                               GetVersaoNFe(AModeloDF, AVersaoDF, LayNfeEventoAN) + '.xsd';
+        else schema_filename := '';
+      end;
+     end;
 
- (*
-  case Tipo of
-    1: schema_filename := DFeUtil.SeSenao(DFeUtil.EstaVazio(APathSchemas),PathWithDelim(ExtractFileDir(application.ExeName))+'Schemas\',PathWithDelim(APathSchemas))+'nfe_v2.00.xsd';
-    2: schema_filename := DFeUtil.SeSenao(DFeUtil.EstaVazio(APathSchemas),PathWithDelim(ExtractFileDir(application.ExeName))+'Schemas\',PathWithDelim(APathSchemas))+'cancNFe_v2.00.xsd';
-    3: schema_filename := DFeUtil.SeSenao(DFeUtil.EstaVazio(APathSchemas),PathWithDelim(ExtractFileDir(application.ExeName))+'Schemas\',PathWithDelim(APathSchemas))+'inutNFe_v2.00.xsd';
-    4: schema_filename := DFeUtil.SeSenao(DFeUtil.EstaVazio(APathSchemas),PathWithDelim(ExtractFileDir(application.ExeName))+'Schemas\',PathWithDelim(APathSchemas))+'envDPEC_v1.01.xsd';
-    5: schema_filename := DFeUtil.SeSenao(DFeUtil.EstaVazio(APathSchemas),PathWithDelim(ExtractFileDir(application.ExeName))+'Schemas\',PathWithDelim(APathSchemas))+'envCCe_v1.00.xsd';
-    6: schema_filename := DFeUtil.SeSenao(DFeUtil.EstaVazio(APathSchemas),PathWithDelim(ExtractFileDir(application.ExeName))+'Schemas\',PathWithDelim(APathSchemas))+'envEventoCancNFe_v1.00.xsd';
-    7..10: schema_filename := DFeUtil.SeSenao(DFeUtil.EstaVazio(APathSchemas),PathWithDelim(ExtractFileDir(application.ExeName))+'Schemas\',PathWithDelim(APathSchemas))+'envConfRecebto_v1.00.xsd';
-    else schema_filename := '';
+    if not FilesExists(schema_filename) then
+       raise EACBrNFeException.Create('Arquivo '+schema_filename+' não encontrado');
+
+    Schema.add( 'http://www.portalfiscal.inf.br/nfe', schema_filename );
+
+    DOMDocument.schemas := Schema;
+    ParseError := DOMDocument.validate;
+    Result := (ParseError.errorCode = 0);
+    Msg   := ParseError.reason;
+
+    DOMDocument := nil;
+    ParseError := nil;
+    Schema := nil;
+  finally
+    CoUninitialize;
   end;
- *)
-  if not FilesExists(schema_filename) then
-     raise EACBrNFeException.Create('Arquivo '+schema_filename+' não encontrado');
-
-  Schema.add( 'http://www.portalfiscal.inf.br/nfe', schema_filename );
-
-  DOMDocument.schemas := Schema;
-  ParseError := DOMDocument.validate;
-  Result := (ParseError.errorCode = 0);
-  Msg   := ParseError.reason;
-
-  DOMDocument := nil;
-  ParseError := nil;
-  Schema := nil;
 end;
 
 function ValidaAssinaturaMSXML(XML: AnsiString; out Msg: AnsiString): Boolean;
@@ -2157,14 +1626,12 @@ begin
               '</KeyInfo>'+
             '</Signature>';
 
-  // Alterado por Italo em 14/09/2012
   case Tipo of
     1: AStr := AStr + '</NFe>';
     2: AStr := AStr + '</cancNFe>';
     3: AStr := AStr + '</inutNFe>';
     4: AStr := AStr + '</envDPEC>';
     5..11: AStr := AStr + '</evento>';
-//    5..10: AStr := AStr + '</evento></envEvento>';
     else AStr := '';
   end;
 
@@ -2252,14 +1719,12 @@ begin
       XML := XML + '<Transforms><Transform Algorithm="http://www.w3.org/2000/09/xmldsig#enveloped-signature" /><Transform Algorithm="http://www.w3.org/TR/2001/REC-xml-c14n-20010315" /></Transforms><DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" />';
       XML := XML + '<DigestValue></DigestValue></Reference></SignedInfo><SignatureValue></SignatureValue><KeyInfo></KeyInfo></Signature>';
 
-      // Alterado por Italo em 14/09/2012
       case Tipo of
         1: XML := XML + '</NFe>';
         2: XML := XML + '</cancNFe>';
         3: XML := XML + '</inutNFe>';
         4: XML := XML + '</envDPEC>';
         5..11: XML := XML + '</evento>';
-//        5..10: XML := XML + '</evento></envEvento>';
         else XML := '';
       end;
    end;
@@ -2375,43 +1840,13 @@ end;
 class function NotaUtil.ValidaUFCidade(const UF, Cidade: Integer): Boolean;
 begin
    Result := DFeUtil.ValidaUFCidade(UF, Cidade);
-//  Result := (Copy(IntToStr(UF), 1, 2) = Copy(IntToStr(Cidade), 1, 2));
 end;
 
 class procedure NotaUtil.ValidaUFCidade(const UF, Cidade: Integer;
   const AMensagem: String);
 begin
    DFeUtil.ValidaUFCidade(UF, Cidade, AMensagem);
-//  if not(ValidaUFCidade(UF,Cidade)) then
-//    raise EACBrNFeException.Create(AMensagem);
 end;
-
-(*
-class function NotaUtil.StringToFloat(AValue: String): Double;
-begin
-  AValue := Trim( AValue ) ;
-
-  if DecimalSeparator <> '.' then
-     AValue := StringReplace(AValue,'.',DecimalSeparator,[rfReplaceAll]) ;
-
-  if DecimalSeparator <> ',' then
-     AValue := StringReplace(AValue,',',DecimalSeparator,[rfReplaceAll]) ;
-
-  Result := StrToFloat(AValue)
-end ;
-*)
-
-(*
-class function NotaUtil.StringToFloatDef(const AValue: String;
-  const DefaultValue: Double): Double;
-begin
-  try
-     Result := StringToFloat( AValue ) ;
-  except
-     Result := DefaultValue ;
-  end ;
-end ;
-*)
 
 class procedure NotaUtil.ConfAmbiente;
 begin
@@ -2421,7 +1856,6 @@ end;
 class function NotaUtil.PathAplication: String;
 begin
    Result := DFeUtil.PathAplication;
-//  Result := ExtractFilePath(Application.ExeName);
 end;
 
 class function NotaUtil.GerarChaveContingencia(FNFe:TNFe): string;
@@ -2531,90 +1965,13 @@ begin
 end;
 
 class function NotaUtil.CollateBr(Str: String): String;
-//var
-//   i, wTamanho: integer;
-//   wChar, wResultado: Char;
 begin
    Result := DFeUtil.CollateBr(Str);
-(*
-   result:='';
-   wtamanho:=Length(Str);
-   i:=1;
-   while (i <= wtamanho) do
-   begin
-      wChar:=Str[i];
-      case wChar of
-         'á', 'â', 'ã', 'à', 'ä', 'å',
-         'Á', 'Â', 'Ã', 'À', 'Ä', 'Å': wResultado := 'A';
-         'é', 'ê', 'è', 'ë',
-         'É', 'Ê', 'È', 'Ë': wResultado := 'E';
-         'í', 'î', 'ì', 'ï',
-         'Í', 'Î', 'Ì', 'Ï': wResultado := 'I';
-         'ó', 'ô', 'õ', 'ò', 'ö',
-         'Ó', 'Ô', 'Õ', 'Ò', 'Ö': wResultado := 'O';
-         'ú', 'û', 'ù', 'ü',
-         'Ú', 'Û', 'Ù', 'Ü': wResultado := 'U';
-         'ç', 'Ç': wResultado := 'C';
-         'ñ', 'Ñ': wResultado := 'N';
-         'ý', 'ÿ', 'Ý', 'Y': wResultado := 'Y';
-      else
-         wResultado:=wChar;
-      end;
-      i:=i+1;
-      Result:=Result+wResultado;
-   end;
-   Result:=UpperCase(Result);
-*)
 end;
 
 class function NotaUtil.UpperCase2(Str: String): String;
-//var
-//   i, wTamanho: integer;
-//   wChar, wResultado: Char;
 begin
    Result := DFeUtil.UpperCase2(Str);
-(*
-   result:='';
-   wtamanho:=Length(Str);
-   i:=1;
-   while (i <= wtamanho) do
-   begin
-      wChar:=Str[i];
-      case wChar of
-         'á','Á': wResultado := 'Á';
-         'ã','Ã': wResultado := 'Ã';
-         'à','À': wResultado := 'À';
-         'â','Â': wResultado := 'Â';
-         'ä','Ä': wResultado := 'Ä';
-         'å','Å': wResultado := 'Å';
-         'é','É': wResultado := 'É';
-         'è','È': wResultado := 'È';
-         'ê','Ê': wResultado := 'Ê';
-         'ë','Ë': wResultado := 'Ë';
-         'í','Í': wResultado := 'Í';
-         'ì','Ì': wResultado := 'Ì';
-         'î','Î': wResultado := 'Î';
-         'ï','Ï': wResultado := 'Ï';
-         'ó','Ó': wResultado := 'Ó';
-         'õ','Õ': wResultado := 'Õ';
-         'ò','Ò': wResultado := 'Ò';
-         'ô','Ô': wResultado := 'Ô';
-         'ö','Ö': wResultado := 'Ö';
-         'ú','Ú': wResultado := 'Ú';
-         'ù','Ù': wResultado := 'Ù';
-         'û','Û': wResultado := 'Û';
-         'ü','Ü': wResultado := 'Ü';
-         'ç', 'Ç': wResultado := 'Ç';
-         'ñ', 'Ñ': wResultado := 'Ñ';
-         'ý', 'ÿ', 'Ý', 'Y': wResultado := 'Y';
-      else
-         wResultado:=wChar;
-      end;
-      i:=i+1;
-      Result:=Result+wResultado;
-   end;
-   Result:=UpperCase(Result);
-*)
 end;
 
 class function NotaUtil.UFtoCUF(UF : String): Integer;
@@ -2655,7 +2012,7 @@ begin
    41: Result := DFeUtil.SeSenao(AAmbiente = taProducao, '', ''); //PR
    26: Result := DFeUtil.SeSenao(AAmbiente = taProducao, '', ''); //PE
    22: Result := DFeUtil.SeSenao(AAmbiente = taProducao, '', ''); //PI
-   33: Result := DFeUtil.SeSenao(AAmbiente = taProducao, '', ''); //RJ
+   33: Result := DFeUtil.SeSenao(AAmbiente = taProducao, 'https://www.sefaz.rs.gov.br/NFE/NFE-COM.aspx',               'https://www.sefaz.rs.gov.br/NFE/NFE-COM.aspx');              // RJ
    24: Result := DFeUtil.SeSenao(AAmbiente = taProducao, 'http://nfce.set.rn.gov.br/portalDFE/NFCe/ConsultaNFCe.aspx', ''); // RN
    43: Result := DFeUtil.SeSenao(AAmbiente = taProducao, 'https://www.sefaz.rs.gov.br/NFE/NFE-NFC.aspx',               'https://www.sefaz.rs.gov.br/NFE/NFE-NFC.aspx');              // RS
    11: Result := DFeUtil.SeSenao(AAmbiente = taProducao, 'http://www.nfce.sefin.ro.gov.br/consultanfce/consulta.jsp',  'http://www.nfce.sefin.ro.gov.br/consultanfce/consulta.jsp'); // RO
@@ -2697,7 +2054,7 @@ begin
    41: urlUF := DFeUtil.SeSenao(AAmbiente = taProducao, '', ''); // PR
    26: urlUF := DFeUtil.SeSenao(AAmbiente = taProducao, '', ''); // PE
    22: urlUF := DFeUtil.SeSenao(AAmbiente = taProducao, '', ''); // PI
-   33: urlUF := DFeUtil.SeSenao(AAmbiente = taProducao, '', ''); // RJ
+   33: urlUF := DFeUtil.SeSenao(AAmbiente = taProducao, 'https://www.sefaz.rs.gov.br/NFE/NFE-COM.aspx',              'https://www.sefaz.rs.gov.br/NFE/NFE-COM.aspx');              // RJ
    24: urlUF := DFeUtil.SeSenao(AAmbiente = taProducao, 'http://nfce.set.rn.gov.br/consultarNFCe.aspx',              'http://nfce.set.rn.gov.br/consultarNFCe.aspx');              // RN
    43: urlUF := DFeUtil.SeSenao(AAmbiente = taProducao, 'https://www.sefaz.rs.gov.br/NFCE/NFCE-COM.aspx',            'https://www.sefaz.rs.gov.br/NFCE/NFCE-COM.aspx');            // RS
    11: urlUF := DFeUtil.SeSenao(AAmbiente = taProducao, 'http://www.nfce.sefin.ro.gov.br/consultanfce/consulta.jsp', 'http://www.nfce.sefin.ro.gov.br/consultanfce/consulta.jsp'); // RO
@@ -2724,6 +2081,18 @@ begin
      cTokenHom := AToken;
         
   cTokenPro := AToken;
+
+  // Alterado por Italo em 05/06/2014
+  // Essa alteração foi feita, pois algumas UF estão gerando o Token também para o Ambiente de Homologação
+  // Neste caso o mesmo deve ser informado na propriedade Token caso contario deve-se atribuir a
+  // essa propriedade uma String vazia
+  if (AAmbiente = taHomologacao) then
+   begin
+    if (AToken = '')
+      then cTokenHom := Copy(AchNFe, 7, 8) + '20' + Copy(AchNFe, 3, 2) + Copy(cIdToken, 3, 4)
+      else cTokenHom := AToken;
+   end
+   else cTokenPro := AToken;
 
   sToken    := DFeUtil.SeSenao(AAmbiente = taProducao, cIdToken + cTokenPro, cIdToken + cTokenHom);
 

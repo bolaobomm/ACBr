@@ -1,7 +1,6 @@
 inherited fqrDANFeQRPaisagem: TfqrDANFeQRPaisagem
   Width = 1146
   Height = 855
-  VertScrollBar.Position = 0
   Caption = 'DANFe - Paisagem'
   Font.Height = -8
   Font.Name = 'Arial'

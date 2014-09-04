@@ -34,7 +34,7 @@
 {                                                                              }
 {******************************************************************************}
 
-{******************************************************************************
+{*******************************************************************************
 | Historico
 |
 | 18/03/2010: André R. Langner
@@ -86,17 +86,17 @@
 |   - Tratamento da propriedade "ExibirResumoCanhoto_Texto"
 |  22/01/2013 : LUIS FERNANDO COSTA
 |   - Ajustado "FSistema" para que fique uma msg livre
-******************************************************************************}
+*******************************************************************************}
 
 {$I ACBr.inc}
 
-unit ACBrNFeDANFeQRRetrato;    
+unit ACBrNFeDANFeQRRetrato;
 
 interface
 
 uses
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
-  Dialogs, ExtCtrls, QuickRpt, QRCtrls,  XMLIntf, XMLDoc, 
+  Dialogs, ExtCtrls, QuickRpt, QRCtrls,  XMLIntf, XMLDoc,
   JPEG, ACBrNFeDANFeQR, ACBrNFeQRCodeBar, pcnConversao, DB,
   {$IFDEF QReport_PDF}
      QRPDFFilt,

@@ -1,7 +1,7 @@
 {******************************************************************************}
 { Projeto: Componente ACBrNFe                                                  }
 {  Biblioteca multiplataforma de componentes Delphi para emissão de Nota Fiscal}
-{ eletrônica - NFe - http://www.nfe.fazenda.gov.br                          }
+{ eletrônica - NFe - http://www.nfe.fazenda.gov.br                             }
 {                                                                              }
 { Direitos Autorais Reservados (c) 2008 Wemerson Souto                         }
 {                                       Daniel Simoes de Almeida               }
@@ -34,14 +34,17 @@
 {                                                                              }
 {******************************************************************************}
 
-{******************************************************************************
+{*******************************************************************************
 |* Historico
 |*
 |* 19/03/2013: André Ferreira de Moraes
 |*  - Versão inicial da classe ACBrCertificado
 |* 20/03/2013: Rafael Batiati
 |*  - Inclusão do comando SelecionarCertificado
-******************************************************************************}
+*******************************************************************************}
+
+{$I ACBr.inc}
+
 unit ACBrCertificado;
 
 interface
@@ -56,64 +59,66 @@ type
 
   TACBrCertificado = class
   private
-    FCertContext : PCCERT_CONTEXT;
-    FEmitidoPara: string;
-    FEmitidoPor: string;
-    FNomeAmigavel: string;
-    FEmail: string;
+    FCertContext: PCCERT_CONTEXT;
+    FEmitidoPara: String;
+    FEmitidoPor: String;
+    FNomeAmigavel: String;
+    FEmail: String;
     FValidoDe: TDateTime;
     FValidoAte: TDateTime;
-    FNumeroSerial: string;
-    FPrivateKey: string;
-    FPublicKey: string;
+    FNumeroSerial: String;
+    FPrivateKey: String;
+    FPublicKey: String;
 
-    function GetDigestValue(const AXml: string): string;
-    function GetSignatureValue(const AXml: string): string;
+    function GetDigestValue(const AXml: String): String;
+    function GetSignatureValue(const AXml: String): String;
     function CreateSignedInfo(AXML : String): String;
     function CreateSignature(ASignedInfo: String): String;
     function CreateSecuredKeyInfo(ASignature: String): String;
-
     function AdicionarKeyInfo(Axml: String): String;
   public
     constructor Create(ACertContext: PCCERT_CONTEXT);
     destructor Destroy; override;
-    function Assinar(const Axml: PAnsiChar) : string;
-    function AssinarLibXML(const Axml: PAnsiChar) : string;
+    function Assinar(const Axml: PAnsiChar) : String;
+    function AssinarLibXML(const Axml: PAnsiChar) : String;
+
     property CertContext: PCCERT_CONTEXT read FCertContext;
-    property EmitidoPara: string read FEmitidoPara;
-    property EmitidoPor: string read FEmitidoPor;
-    property NomeAmigavel: string read FNomeAmigavel;
-    property Email: string read FEmail;
-    property ValidoDe: TDateTime read FValidoDe;
-    property ValidoAte: TDateTime read FValidoAte;
-    property NumeroSerial: string read FNumeroSerial;
+    property EmitidoPara: String         read FEmitidoPara;
+    property EmitidoPor: String          read FEmitidoPor;
+    property NomeAmigavel: String        read FNomeAmigavel;
+    property Email: String               read FEmail;
+    property ValidoDe: TDateTime         read FValidoDe;
+    property ValidoAte: TDateTime        read FValidoAte;
+    property NumeroSerial: String        read FNumeroSerial;
   end;
 
   TACBrStore = class(TComponent)
   private
     FStore: HCERTSTORE;
-    FStoreName: string;
+    FStoreName: String;
     FCertificados: TList;
 
     function GetCount: Integer;
     function GetItem(Index: Integer): TACBrCertificado;
     procedure CarregaCertificados(hStore: HCERTSTORE);
-
-    procedure InitXmlSec ;
-    procedure ShutDownXmlSec ;
+    procedure InitXmlSec;
+    procedure ShutDownXmlSec;
   public
     constructor Create(AOwner: TComponent); override;
     destructor Destroy; override;
     procedure Add(Certificado: TACBrCertificado);
-    procedure AbrirCertificados(const AStoreName: string);
+    procedure AbrirCertificados(const AStoreName: String);
+
     property Items[Index: Integer]: TACBrCertificado read GetItem; default;
-    property Count: Integer read GetCount;
-    function SelecionarCertificado: string;
+    property Count: Integer                          read GetCount;
+
+    function SelecionarCertificado: String;
   published
-    property StoreName: string read FStoreName write FStoreName;
+    property StoreName: String read FStoreName write FStoreName;
   end;
 
 implementation
+
 {Declarações das chamadas da libxmlsec-mscrypto.dll }
 function xmlSecMSCryptoCertAdopt(pCert : PCCERT_CONTEXT; type_: xmlSecKeyDataType):xmlSecKeyDataPtr; cdecl; external 'libxmlsec-mscrypto.dll';
 function xmlSecMSCryptoAppKeyLoadMemory(const data: xmlSecBytePtr; dataSize: xmlSecSize; format: xmlSecKeyDataFormat; const pwd: PAnsiChar; pwdCallback: Pointer; pwdCallbackCtx: Pointer) : xmlSecKeyPtr; cdecl; external 'libxmlsec-mscrypto.dll';
@@ -138,20 +143,21 @@ begin
   end;
 end;
 
-function BynaryToString( Valor : string ):string;
+function BynaryToString( Valor : String ):String;
 var
   chString : DWORD;
   szString : String;
 begin
   chString := 0;
   szString := '';
-  CryptBinaryToString(pointer(Valor), length(Valor), CRYPT_STRING_BASE64, nil, chString);
+  CryptBinaryToString(pointer(Valor), length(Valor), CRYPT_String_BASE64, nil, chString);
   SetLength(szString, chString-1);
-  CryptBinaryToString(pointer(Valor), length(Valor), CRYPT_STRING_BASE64, PAnsiChar(szString), chString);
+  CryptBinaryToString(pointer(Valor), length(Valor), CRYPT_String_BASE64, PAnsiChar(szString), chString);
   Result := szString;
 end;
 
 { TACBrCertificado }
+
 //Baseado no exemplo disponível em http://www.clevercomponents.com/articles/article022/soapsecurity.asp
 function TACBrCertificado.AdicionarKeyInfo(Axml: String): String;
 var
@@ -175,7 +181,7 @@ begin
   Result := Axml;
 end;
 
-function TACBrCertificado.Assinar(const Axml: PAnsiChar): string;
+function TACBrCertificado.Assinar(const Axml: PAnsiChar): String;
 var
   signedInfo, signature, security, assinado : String;
 begin
@@ -195,7 +201,7 @@ begin
   Result := assinado;
 end;
 
-function TACBrCertificado.AssinarLibXML(const Axml: PAnsiChar): string;
+function TACBrCertificado.AssinarLibXML(const Axml: PAnsiChar): String;
 var
   doc: xmlDocPtr;
   node: xmlNodePtr;
@@ -290,7 +296,7 @@ begin
        if (doc <> nil) then
          xmlFreeDoc(doc);
 
-   end ;
+   end;
 end;
 
 constructor TACBrCertificado.Create(ACertContext: PCCERT_CONTEXT);
@@ -322,7 +328,7 @@ begin
   CertGetCertificateContextProperty(CertContext, CERT_FRIENDLY_NAME_PROP_ID, nil, chString);
   GetMem(szString, chString);
   CertGetCertificateContextProperty(CertContext, CERT_FRIENDLY_NAME_PROP_ID, PAnsiChar(szString), chString);
-  FNomeAmigavel := string(system.Copy(szString, 1, chString));
+  FNomeAmigavel := String(system.Copy(szString, 1, chString));
 
   CertGetNameString(CertContext, CERT_NAME_EMAIL_TYPE, 0, nil, Valor, 256);
   FEmail := Valor;
@@ -338,7 +344,7 @@ begin
   CertGetCertificateContextProperty(CertContext, CERT_KEY_PROV_INFO_PROP_ID, nil, chString);
   GetMem(szString, chString);
   CertGetCertificateContextProperty(CertContext, CERT_KEY_PROV_INFO_PROP_ID, PAnsiChar(szString), chString);
-  FPrivateKey := string(system.Copy(szString, 1, chString));
+  FPrivateKey := String(system.Copy(szString, 1, chString));
   FPrivateKey := BynaryToString(FPrivateKey);
 end;
 
@@ -368,7 +374,7 @@ end;
 
 function TACBrCertificado.CreateSignature(ASignedInfo: String): String;
 var
-  sigValue, encSigValue, Signature, SignatureOrig: string;
+  sigValue, encSigValue, Signature, SignatureOrig: String;
 begin
   try
     ASignedInfo :=  '<Signature xmlns="http://www.w3.org/2000/09/xmldsig#">'+
@@ -409,10 +415,10 @@ function TACBrCertificado.CreateSignedInfo(AXML : String): String;
 var
   Leitor: TLeitor;
   I, J: Integer;
-  Tipo : Integer;
+  Tipo: Integer;
   data, SignedInfoOrig, SignedInfo: String;
-  digestValue: string;
-  URI        : String ;
+  digestValue: String;
+  URI: String;
 begin
   Leitor := TLeitor.Create;
   try
@@ -459,6 +465,7 @@ begin
 end;
 
 { TACBrStore }
+
 procedure TACBrStore.Add(Certificado: TACBrCertificado);
 begin
   FCertificados.Add(Certificado);
@@ -526,7 +533,7 @@ begin
   Result := TACBrCertificado(FCertificados[Index]);
 end;
 
-procedure TACBrStore.AbrirCertificados(const AStoreName: string);
+procedure TACBrStore.AbrirCertificados(const AStoreName: String);
 begin
   FStoreName := AStoreName;
   FStore := CertOpenSystemStore(0, PChar(StoreName));
@@ -534,7 +541,7 @@ begin
     CarregaCertificados(FStore);
 end;
 
-function TACBrStore.SelecionarCertificado: string;
+function TACBrStore.SelecionarCertificado: String;
 var
   hCtx: PCCERT_CONTEXT;
   Titulo, Pergunta : PWideChar;
@@ -557,7 +564,7 @@ begin
   end;
 end;
 
-function TACBrCertificado.GetDigestValue(const AXml: string): string;
+function TACBrCertificado.GetDigestValue(const AXml: String): String;
 {var
    context: HCRYPTPROV;
    hash: HCRYPTHASH;
@@ -633,7 +640,7 @@ begin
   end;
 end;
 
-function TACBrCertificado.GetSignatureValue(const AXml: string): string;
+function TACBrCertificado.GetSignatureValue(const AXml: String): String;
 {var
    xmlData, signature: PByte; data: array[0..0] of PByte;
    msgCert: array[0..0] of PCCERT_CONTEXT;

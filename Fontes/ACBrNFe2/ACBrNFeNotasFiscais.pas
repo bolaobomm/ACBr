@@ -34,7 +34,7 @@
 {                                                                              }
 {******************************************************************************}
 
-{******************************************************************************
+{*******************************************************************************
 |* Historico
 |*
 |* 16/12/2008: Wemerson Souto
@@ -43,7 +43,8 @@
 |*  - Envio do e-mail utilizando Thread
 |* 24/09/2012: Italo Jurisato Junior
 |*  - Alterações para funcionamento com NFC-e
-******************************************************************************}
+*******************************************************************************}
+
 {$I ACBr.inc}
 
 unit ACBrNFeNotasFiscais;
@@ -64,21 +65,22 @@ type
     FNFe: TNFe;
     FXML: AnsiString;
     FXMLOriginal: AnsiString;
-    FConfirmada : Boolean;
-    FMsg : AnsiString ;
+    FConfirmada: Boolean;
+    FMsg: AnsiString;
     FAlertas: AnsiString;
     FErroValidacao: AnsiString;
     FErroValidacaoCompleto: AnsiString;
     FRegrasdeNegocios: AnsiString;
     FNomeArq: String;
+
     function GetNFeXML: AnsiString;
   public
     constructor Create(Collection2: TCollection); override;
     destructor Destroy; override;
     procedure Imprimir;
     procedure ImprimirPDF;
-    function SaveToFile(CaminhoArquivo: string = ''; SalvaTXT : Boolean = False): boolean;
-    function SaveToStream(Stream: TStringStream): boolean;
+    function SaveToFile(CaminhoArquivo: String = ''; SalvaTXT : Boolean = False): Boolean;
+    function SaveToStream(Stream: TStringStream): Boolean;
     procedure EnviarEmail(const sSmtpHost,
                                 sSmtpPort,
                                 sSmtpUser,
@@ -86,30 +88,30 @@ type
                                 sFrom,
                                 sTo,
                                 sAssunto: String;
-                                sMensagem : TStrings;
-                                SSL : Boolean;
-                                EnviaPDF: Boolean = true;
+                                sMensagem: TStrings;
+                                SSL: Boolean;
+                                EnviaPDF: Boolean = True;
                                 sCC: TStrings = nil;
-                                Anexos:TStrings=nil;
+                                Anexos: TStrings = nil;
                                 PedeConfirma: Boolean = False;
                                 AguardarEnvio: Boolean = False;
                                 NomeRemetente: String = '';
                                 TLS : Boolean = True;
                                 UsarThread: Boolean = True;
-                                HTML:Boolean = False);
+                                HTML: Boolean = False);
     //Funções para validar Regras de Negócios
-    function ValidarConcatChave : Boolean;
+    function ValidarConcatChave: Boolean;
 
-    property NFe: TNFe  read FNFe write FNFe;
-    property XML: AnsiString  read GetNFeXML write FXML;
-    property XMLOriginal: AnsiString  read FXMLOriginal write FXMLOriginal;
-    property Confirmada: Boolean  read FConfirmada write FConfirmada;
-    property Msg: AnsiString  read FMsg write FMsg;
-    property Alertas: AnsiString read FAlertas write FAlertas;
-    property ErroValidacao: AnsiString read FErroValidacao write FErroValidacao;
+    property NFe: TNFe                         read FNFe                   write FNFe;
+    property XML: AnsiString                   read GetNFeXML              write FXML;
+    property XMLOriginal: AnsiString           read FXMLOriginal           write FXMLOriginal;
+    property Confirmada: Boolean               read FConfirmada            write FConfirmada;
+    property Msg: AnsiString                   read FMsg                   write FMsg;
+    property Alertas: AnsiString               read FAlertas               write FAlertas;
+    property ErroValidacao: AnsiString         read FErroValidacao         write FErroValidacao;
     property ErroValidacaoCompleto: AnsiString read FErroValidacaoCompleto write FErroValidacaoCompleto;
-    property RegrasdeNegocios: AnsiString read FRegrasdeNegocios write FRegrasdeNegocios;       
-    property NomeArq: String read FNomeArq write FNomeArq;
+    property RegrasdeNegocios: AnsiString      read FRegrasdeNegocios      write FRegrasdeNegocios;
+    property NomeArq: String                   read FNomeArq               write FNomeArq;
   end;
 
   { TNotasFiscais }
@@ -117,7 +119,7 @@ type
   TNotasFiscais = class(TOwnedCollection)
   private
     FConfiguracoes : TConfiguracoes;
-    FACBrNFe : TComponent ;
+    FACBrNFe : TComponent;
 
     function GetItem(Index: Integer): NotaFiscal;
     procedure SetItem(Index: Integer; const Value: NotaFiscal);
@@ -135,25 +137,27 @@ type
     procedure ImprimirResumidoPDF;
     function  Add: NotaFiscal;
     function Insert(Index: Integer): NotaFiscal;
-    property Items[Index: Integer]: NotaFiscal read GetItem  write SetItem; default;
-    property Configuracoes: TConfiguracoes read FConfiguracoes  write FConfiguracoes;
 
-    function GetNamePath: string; override ;
+    property Items[Index: Integer]: NotaFiscal read GetItem        write SetItem; default;
+    property Configuracoes: TConfiguracoes     read FConfiguracoes write FConfiguracoes;
+
+    function GetNamePath: String; override;
     // Incluido o Parametro AGerarNFe que determina se após carregar os dados da NFe
     // para o componente, será gerado ou não novamente o XML da NFe.
-    function LoadFromFile(CaminhoArquivo: string; AGerarNFe: Boolean = True): boolean;
-    function LoadFromStream(Stream: TStringStream; AGerarNFe: Boolean = True): boolean;
-    function LoadFromString(AString: String; AGerarNFe: Boolean = True): boolean;
-    function SaveToFile(PathArquivo: string = ''; SalvaTXT : Boolean = False): boolean;
-    function SaveToTXT(PathArquivo: string = ''): boolean;
+    function LoadFromFile(CaminhoArquivo: String; AGerarNFe: Boolean = True): Boolean;
+    function LoadFromStream(Stream: TStringStream; AGerarNFe: Boolean = True): Boolean;
+    function LoadFromString(AString: String; AGerarNFe: Boolean = True): Boolean;
+    function SaveToFile(PathArquivo: String = ''; SalvaTXT : Boolean = False): Boolean;
+    function SaveToTXT(PathArquivo: String = ''): Boolean;
 
-    property ACBrNFe : TComponent read FACBrNFe;
+    property ACBrNFe: TComponent read FACBrNFe;
   end;
 
   TSendMailThread = class(TThread)
   private
     FException : Exception;
     //FOwner: NotaFiscal;
+
     procedure DoHandleException;
   public
     OcorreramErros: Boolean;
@@ -163,6 +167,7 @@ type
     sTo : String;
     sCC : TStrings;
     slmsg_Lines : TStrings;
+
     constructor Create;
     destructor Destroy; override;
   protected
@@ -170,10 +175,10 @@ type
     procedure HandleException;
   end;
 
-
 implementation
 
-uses ACBrNFe, ACBrUtil, pcnGerador;
+uses
+  ACBrNFe, ACBrUtil, pcnGerador;
 
 { NotaFiscal }
 
@@ -196,11 +201,11 @@ begin
   FNFe.Ide.tpNF    := tnSaida;
   FNFe.Ide.indPag  := ipVista;
   FNFe.Ide.verProc := 'ACBrNFe2';
-  FNFe.Ide.tpAmb   := TACBrNFe( TNotasFiscais( Collection ).ACBrNFe ).Configuracoes.WebServices.Ambiente  ;
-  FNFe.Ide.tpEmis  := TACBrNFe( TNotasFiscais( Collection ).ACBrNFe ).Configuracoes.Geral.FormaEmissao ;
+  FNFe.Ide.tpAmb   := TACBrNFe( TNotasFiscais( Collection ).ACBrNFe ).Configuracoes.WebServices.Ambiente ;
+  FNFe.Ide.tpEmis  := TACBrNFe( TNotasFiscais( Collection ).ACBrNFe ).Configuracoes.Geral.FormaEmissao;
 
   if Assigned(TACBrNFe( TNotasFiscais( Collection ).ACBrNFe ).DANFE) then
-     FNFe.Ide.tpImp := TACBrNFe( TNotasFiscais( Collection ).ACBrNFe ).DANFE.TipoDANFE ;
+     FNFe.Ide.tpImp := TACBrNFe( TNotasFiscais( Collection ).ACBrNFe ).DANFE.TipoDANFE;
 
   FNFe.Emit.EnderEmit.xPais := 'BRASIL';
   FNFe.Emit.EnderEmit.cPais := 1058;
@@ -212,7 +217,6 @@ begin
      FNFe.Dest.EnderDest.cPais := 1058;
      FNFe.Dest.EnderDest.nro   := 'SEM NUMERO';
    end;
-
 end;
 
 destructor NotaFiscal.Destroy;
@@ -237,7 +241,7 @@ begin
      TACBrNFe( TNotasFiscais( Collection ).ACBrNFe ).DANFE.ImprimirDANFEPDF(NFe);
 end;
 
-function NotaFiscal.SaveToFile(CaminhoArquivo: string = ''; SalvaTXT : Boolean = False): boolean;
+function NotaFiscal.SaveToFile(CaminhoArquivo: String = ''; SalvaTXT : Boolean = False): Boolean;
 var
   LocNFeW : TNFeW;
 begin
@@ -245,17 +249,12 @@ begin
      Result := True;
      LocNFeW := TNFeW.Create(NFe);
      try
-        LocNFeW.schema := TsPL005c;
+//        LocNFeW.schema := TsPL005c;
         LocNFeW.Opcoes.GerarTXTSimultaneamente := SalvaTXT;
 
         NFe.infNFe.Versao := DFeUtil.StringToFloat(GetVersaoNFe(TACBrNFe( TNotasFiscais( Collection ).ACBrNFe ).Configuracoes.Geral.ModeloDF,
                                               TACBrNFe( TNotasFiscais( Collection ).ACBrNFe ).Configuracoes.Geral.VersaoDF,
                                               LayNfeRecepcao));
-
-//        if (TACBrNFe( TNotasFiscais( Collection ).ACBrNFe ).Configuracoes.Geral.ModeloDF = moNFCe) then
-//           NFe.infNFe.Versao := DFeUtil.StringToFloat(NFCeEnvi)
-//        else
-//           NFe.infNFe.Versao := DFeUtil.StringToFloat(NFenviNFe);
 
         LocNFeW.Gerador.Opcoes.FormatoAlerta := TACBrNFe( TNotasFiscais( Collection ).ACBrNFe ).Configuracoes.Geral.FormatoAlerta;
         LocNFeW.GerarXml;
@@ -278,7 +277,7 @@ begin
   end;
 end;
 
-function NotaFiscal.SaveToStream(Stream: TStringStream): boolean;
+function NotaFiscal.SaveToStream(Stream: TStringStream): Boolean;
 var
   LocNFeW : TNFeW;
 begin
@@ -286,16 +285,11 @@ begin
      Result := True;
      LocNFeW := TNFeW.Create(NFe);
      try
-        LocNFeW.schema := TsPL005c;
+//        LocNFeW.schema := TsPL005c;
 
         NFe.infNFe.Versao := DFeUtil.StringToFloat(GetVersaoNFe(TACBrNFe( TNotasFiscais( Collection ).ACBrNFe ).Configuracoes.Geral.ModeloDF,
                                               TACBrNFe( TNotasFiscais( Collection ).ACBrNFe ).Configuracoes.Geral.VersaoDF,
                                               LayNfeRecepcao));
-
-//        if (TACBrNFe( TNotasFiscais( Collection ).ACBrNFe ).Configuracoes.Geral.ModeloDF = moNFCe) then
-//           NFe.infNFe.Versao := DFeUtil.StringToFloat(NFCeEnvi)
-//        else
-//           NFe.infNFe.Versao := DFeUtil.StringToFloat(NFenviNFe);
 
         LocNFeW.Gerador.Opcoes.FormatoAlerta := TACBrNFe( TNotasFiscais( Collection ).ACBrNFe ).Configuracoes.Geral.FormatoAlerta;
         LocNFeW.GerarXml;
@@ -328,7 +322,7 @@ procedure NotaFiscal.EnviarEmail(const sSmtpHost,
                                       HTML:Boolean = False);
 var
  NomeArq : String;
- AnexosEmail:TStrings ;
+ AnexosEmail:TStrings;
  StreamNFe : TStringStream;
 begin
  AnexosEmail := TStringList.Create;
@@ -344,7 +338,7 @@ begin
      end
     else
      begin
-       SaveToStream(StreamNFe) ;
+       SaveToStream(StreamNFe);
      end;
     if (EnviaPDF) then
     begin
@@ -376,8 +370,8 @@ begin
                 UsarThread,
                 HTML);
  finally
-    AnexosEmail.Free ;
-    StreamNFe.Free ;
+    AnexosEmail.Free;
+    StreamNFe.Free;
  end;
 end;
 
@@ -387,16 +381,11 @@ var
 begin
  LocNFeW := TNFeW.Create(Self.NFe);
  try
-    LocNFeW.schema := TsPL005c;
+//    LocNFeW.schema := TsPL005c;
 
     NFe.infNFe.Versao := DFeUtil.StringToFloat(GetVersaoNFe(TACBrNFe( TNotasFiscais( Collection ).ACBrNFe ).Configuracoes.Geral.ModeloDF,
                                               TACBrNFe( TNotasFiscais( Collection ).ACBrNFe ).Configuracoes.Geral.VersaoDF,
                                               LayNfeRecepcao));
-
-//    if (TACBrNFe( TNotasFiscais( Collection ).ACBrNFe ).Configuracoes.Geral.ModeloDF = moNFCe) then
-//       Self.NFe.infNFe.Versao := DFeUtil.StringToFloat(NFCeEnvi)
-//    else
-//       Self.NFe.infNFe.Versao := DFeUtil.StringToFloat(NFenviNFe);
 
     LocNFeW.Gerador.Opcoes.FormatoAlerta := TACBrNFe( TNotasFiscais( Collection ).ACBrNFe ).Configuracoes.Geral.FormatoAlerta;       
     LocNFeW.GerarXml;
@@ -404,7 +393,6 @@ begin
  finally
     LocNFeW.Free;
  end;
-// Result := FXML;
 end;
 
 function NotaFiscal.ValidarConcatChave: Boolean;
@@ -427,15 +415,16 @@ begin
 end;
 
 { TNotasFiscais }
+
 constructor TNotasFiscais.Create(AOwner: TPersistent;
   ItemClass: TCollectionItemClass);
 begin
   if not (AOwner is TACBrNFe ) then
-     raise EACBrNFeException.Create( 'AOwner deve ser do tipo TACBrNFe') ;
+     raise EACBrNFeException.Create( 'AOwner deve ser do tipo TACBrNFe');
 
   inherited;
 
-  FACBrNFe := TACBrNFe( AOwner ) ;
+  FACBrNFe := TACBrNFe( AOwner );
 end;
 
 
@@ -456,16 +445,11 @@ begin
    begin
      LocNFeW := TNFeW.Create(Self.Items[i].NFe);
      try
-        LocNFeW.schema := TsPL005c;
+//        LocNFeW.schema := TsPL005c;
 
         Self.Items[i].NFe.infNFe.Versao := DFeUtil.StringToFloat(GetVersaoNFe(FConfiguracoes.Geral.ModeloDF,
                                               FConfiguracoes.Geral.VersaoDF,
                                               LayNfeRecepcao));
-
-//        if (FConfiguracoes.Geral.ModeloDF = moNFCe) then
-//           Self.Items[i].NFe.infNFe.Versao := DFeUtil.StringToFloat(NFCeEnvi)
-//        else
-//           Self.Items[i].NFe.infNFe.Versao := DFeUtil.StringToFloat(NFenviNFe);
 
         LocNFeW.Gerador.Opcoes.FormatoAlerta := FConfiguracoes.Geral.FormatoAlerta;
         LocNFeW.GerarXml;
@@ -479,8 +463,8 @@ begin
            raise EACBrNFeException.Create('Falha ao assinar Nota Fiscal Eletrônica '+
                                    IntToStr(Self.Items[i].NFe.Ide.nNF)+FMsg);
 {$ENDIF}
-        vAssinada := StringReplace( vAssinada, '<'+ENCODING_UTF8_STD+'>', '', [rfReplaceAll] ) ;
-        vAssinada := StringReplace( vAssinada, '<?xml version="1.0"?>', '', [rfReplaceAll] ) ;
+        vAssinada := StringReplace( vAssinada, '<'+ENCODING_UTF8_STD+'>', '', [rfReplaceAll] );
+        vAssinada := StringReplace( vAssinada, '<?xml version="1.0"?>', '', [rfReplaceAll] );
         Self.Items[i].XML := vAssinada;
 
         Leitor := TLeitor.Create;
@@ -513,16 +497,11 @@ begin
   begin
     LocNFeW := TNFeW.Create(Self.Items[i].NFe);
     try
-       LocNFeW.schema := TsPL006;
+//       LocNFeW.schema := TsPL006;
 
        Self.Items[i].NFe.infNFe.Versao := DFeUtil.StringToFloat(GetVersaoNFe(FConfiguracoes.Geral.ModeloDF,
                                               FConfiguracoes.Geral.VersaoDF,
                                               LayNfeRecepcao));
-
-//       if (FConfiguracoes.Geral.ModeloDF = moNFCe) then
-//          Self.Items[i].NFe.infNFe.Versao := DFeUtil.StringToFloat(NFCeEnvi)
-//       else
-//          Self.Items[i].NFe.infNFe.Versao := DFeUtil.StringToFloat(NFenviNFe);
 
        LocNFeW.Gerador.Opcoes.FormatoAlerta := FConfiguracoes.Geral.FormatoAlerta;
        LocNFeW.GerarXml;
@@ -539,7 +518,7 @@ begin
   Result := NotaFiscal(inherited Items[Index]);
 end;
 
-function TNotasFiscais.GetNamePath: string;
+function TNotasFiscais.GetNamePath: String;
 begin
   Result := 'NotaFiscal';
 end;
@@ -789,7 +768,7 @@ begin
   end;
 end;
 
-function TNotasFiscais.LoadFromFile(CaminhoArquivo: string; AGerarNFe: Boolean = True): boolean;
+function TNotasFiscais.LoadFromFile(CaminhoArquivo: String; AGerarNFe: Boolean = True): Boolean;
 var
  LocNFeR : TNFeR;
  ArquivoXML: TStringList;
@@ -846,7 +825,7 @@ begin
  end;
 end;
 
-function TNotasFiscais.LoadFromStream(Stream: TStringStream; AGerarNFe: Boolean = True): boolean;
+function TNotasFiscais.LoadFromStream(Stream: TStringStream; AGerarNFe: Boolean = True): Boolean;
 var
  LocNFeR : TNFeR;
  Ok: Boolean;
@@ -879,7 +858,7 @@ begin
   end;
 end;
 
-function TNotasFiscais.LoadFromString(AString: String; AGerarNFe: Boolean = True): boolean;
+function TNotasFiscais.LoadFromString(AString: String; AGerarNFe: Boolean = True): Boolean;
 var
   XMLNFe: TStringStream;
 begin
@@ -898,9 +877,9 @@ begin
   end;
 end;
 
-function TNotasFiscais.SaveToFile(PathArquivo: string = ''; SalvaTXT : Boolean = False): boolean;
+function TNotasFiscais.SaveToFile(PathArquivo: String = ''; SalvaTXT : Boolean = False): Boolean;
 var
- i : integer;
+ i : Integer;
  CaminhoArquivo : String;
 begin
  Result := True;
@@ -919,11 +898,11 @@ begin
  end;
 end;
 
-function TNotasFiscais.SaveToTXT(PathArquivo: string): boolean;
+function TNotasFiscais.SaveToTXT(PathArquivo: String): Boolean;
 var
   loSTR: TStringList;
   LocNFeW : TNFeW;
-  I,J: integer;
+  I,J: Integer;
 begin
   Result:=False;
   loSTR := TStringList.Create;
@@ -933,17 +912,12 @@ begin
     begin
       LocNFeW := TNFeW.Create(Self.Items[I].Nfe);
       try
-        LocNFeW.schema := TsPL006;
+//        LocNFeW.schema := TsPL006;
         LocNFeW.Opcoes.GerarTXTSimultaneamente:=true;
 
         Self.Items[i].NFe.infNFe.Versao := DFeUtil.StringToFloat(GetVersaoNFe(FConfiguracoes.Geral.ModeloDF,
                                               FConfiguracoes.Geral.VersaoDF,
                                               LayNfeRecepcao));
-
-//        if (FConfiguracoes.Geral.ModeloDF= moNFCe) then
-//           Self.Items[i].NFe.infNFe.Versao := DFeUtil.StringToFloat(NFCeEnvi)
-//        else
-//           Self.Items[i].NFe.infNFe.Versao := DFeUtil.StringToFloat(NFenviNFe);
 
         LocNFeW.Gerador.Opcoes.FormatoAlerta := FConfiguracoes.Geral.FormatoAlerta;
         LocNFeW.GerarXml;
@@ -1017,7 +991,7 @@ end;
 
 procedure TSendMailThread.Execute;
 var
-   I: integer;
+   I: Integer;
 begin
   inherited;
 
@@ -1051,7 +1025,7 @@ begin
       try
         smtp.Sock.CloseSocket;
       except
-      end ;
+      end;
       Terminado := True;
     end;
   except
