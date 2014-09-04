@@ -5349,9 +5349,9 @@ inherited fqrDANFeQRRetrato: TfqrDANFeQRRetrato
         FontSize = 6
       end
       object qrlFatValor11: TQRLabel
-        Left = 207
-        Top = 49
-        Width = 19
+        Left = 548
+        Top = 130
+        Width = 50
         Height = 11
         Frame.Color = clBlack
         Frame.DrawTop = False
@@ -5360,9 +5360,9 @@ inherited fqrDANFeQRRetrato: TfqrDANFeQRRetrato
         Frame.DrawRight = False
         Size.Values = (
           29.104166666666670000
-          548.000000000000000000
-          130.000000000000000000
-          50.000000000000000000)
+          1449.916666666667000000
+          343.958333333333400000
+          132.291666666666700000)
         XLColumn = 0
         Alignment = taRightJustify
         AlignToBand = False
