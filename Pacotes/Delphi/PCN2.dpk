@@ -64,6 +64,11 @@ contains
   pcnSignature in '..\..\Fontes\PCN2\pcnSignature.pas',
   pcnValidador in '..\..\Fontes\PCN2\pcnValidador.pas',
   pcnEnvEventoNFe in '..\..\Fontes\PCN2\pcnEnvEventoNFe.pas',
-  pcnRetEnvEventoNFe in '..\..\Fontes\PCN2\pcnRetEnvEventoNFe.pas';
+  pcnRetEnvEventoNFe in '..\..\Fontes\PCN2\pcnRetEnvEventoNFe.pas',
+  pcnAdmCSCNFCe in '..\..\Fontes\PCN2\pcnAdmCSCNFCe.pas',
+  pcnDistDFeInt in '..\..\Fontes\PCN2\pcnDistDFeInt.pas',
+  pcnEventoNFe in '..\..\Fontes\PCN2\pcnEventoNFe.pas',
+  pcnRetAdmCSCNFCe in '..\..\Fontes\PCN2\pcnRetAdmCSCNFCe.pas',
+  pcnRetDistDFeInt in '..\..\Fontes\PCN2\pcnRetDistDFeInt.pas';
 
 end.
