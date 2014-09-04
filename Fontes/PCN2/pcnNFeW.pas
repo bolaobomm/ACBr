@@ -51,12 +51,16 @@
 |* 29/04/2013: Italo Jurisato Junior
 |*  - Alterações para atender NT 2013/003 
 ******************************************************************************}
+
+{$I ACBr.inc}
+
 unit pcnNFeW;
 
-{$H+}
+// {$H+}
 
-interface uses
+interface
 
+uses
   SysUtils, Classes,
   pcnAuxiliar, pcnConversao, pcnGerador, pcnNFe, pcnLayoutTXT, ACBrDFeUtil;
 
@@ -68,51 +72,52 @@ type
   private
     FGerador: TGerador;
     FNFe: TNFe;
-    FSchema: TpcnSchema;
+//    FSchema: TpcnSchema;
     FOpcoes: TGeradorOpcoes;
 
     Usar_tcDe4: Boolean;
+    Versao: String;
 
     procedure GerarInfNFe;
     procedure GerarIde;
     procedure GerarIdeNFref;
-    procedure GerarIdeNFrerefNFe(const i: integer);
-    procedure GerarIdeNFrefRefNF(const i: integer);
-    procedure GerarRefNFP(const i: integer);
-    procedure GerarIdeNFrerefCTe(const i: integer);
-    procedure GerarRefECF(const i: integer);
+    procedure GerarIdeNFrerefNFe(const i: Integer);
+    procedure GerarIdeNFrefRefNF(const i: Integer);
+    procedure GerarRefNFP(const i: Integer);
+    procedure GerarIdeNFrerefCTe(const i: Integer);
+    procedure GerarRefECF(const i: Integer);
     procedure GerarEmit;
     procedure GerarEmitEnderEmit;
     procedure GerarAvulsa;
     procedure GerarDest;
-    procedure GerarDestEnderDest(var UF: string);
+    procedure GerarDestEnderDest(var UF: String);
     procedure GerarRetirada;
     procedure GerarEntrega;
     procedure GerarautXML;    
     procedure GerarDet;
-    procedure GerarDetProd(const i: integer);
-    procedure GerarDetProdDI(const i: integer);
-    procedure GerarDetProdDIadi(const i, j: integer);
-    procedure GerarDetProdNVE(const i : integer);
-    procedure GerarDetProddetExport(const i: integer);
-    procedure GerarDetProdVeicProd(const i: integer);
-    procedure GerarDetProdMed(const i: integer);
-    procedure GerarDetProdArma(const i: integer);
-    procedure GerarDetProdComb(const i: integer);
-    procedure GerarDetProdCombCIDE(const i: integer);
-    procedure GerarDetProdCombICMS(const i: integer);
-    procedure GerarDetProdCombICMSInter(const i: integer);
-    procedure GerarDetProdCombICMSCons(const i: integer);
-    procedure GerarDetImposto(const i: integer);
-    procedure GerarDetImpostoICMS(const i: integer);
-    procedure GerarDetImpostoIPI(const i: integer);
-    procedure GerarDetImpostoII(const i: integer);
-    procedure GerarDetImpostoPIS(const i: integer);
-    procedure GerarDetImpostoPISST(const i: integer);
-    procedure GerarDetImpostoCOFINS(const i: integer);
-    procedure GerarDetImpostoCOFINSST(const i: integer);
-    procedure GerarDetImpostoISSQN(const i: integer);
-    procedure GerarDetDevol(const i: integer);
+    procedure GerarDetProd(const i: Integer);
+    procedure GerarDetProdDI(const i: Integer);
+    procedure GerarDetProdDIadi(const i, j: Integer);
+    procedure GerarDetProdNVE(const i : Integer);
+    procedure GerarDetProddetExport(const i: Integer);
+    procedure GerarDetProdVeicProd(const i: Integer);
+    procedure GerarDetProdMed(const i: Integer);
+    procedure GerarDetProdArma(const i: Integer);
+    procedure GerarDetProdComb(const i: Integer);
+    procedure GerarDetProdCombCIDE(const i: Integer);
+    procedure GerarDetProdCombICMS(const i: Integer);
+    procedure GerarDetProdCombICMSInter(const i: Integer);
+    procedure GerarDetProdCombICMSCons(const i: Integer);
+    procedure GerarDetImposto(const i: Integer);
+    procedure GerarDetImpostoICMS(const i: Integer);
+    procedure GerarDetImpostoIPI(const i: Integer);
+    procedure GerarDetImpostoII(const i: Integer);
+    procedure GerarDetImpostoPIS(const i: Integer);
+    procedure GerarDetImpostoPISST(const i: Integer);
+    procedure GerarDetImpostoCOFINS(const i: Integer);
+    procedure GerarDetImpostoCOFINSST(const i: Integer);
+    procedure GerarDetImpostoISSQN(const i: Integer);
+    procedure GerarDetDevol(const i: Integer);
     procedure GerarTotal;
     procedure GerarTotalICMSTotal;
     procedure GerarTotalISSQNtot;
@@ -127,7 +132,7 @@ type
     procedure GerarTranspVeicTransp;
     procedure GerarTranspReboque;
     procedure GerarTranspVol;
-    procedure GerarTranspVolLacres(i: integer);
+    procedure GerarTranspVolLacres(i: Integer);
     procedure GerarInfAdic;
     procedure GerarInfAdicObsCont;
     procedure GerarInfAdicObsFisco;
@@ -138,39 +143,39 @@ type
     procedure GerarforDia;
     procedure GerarDeduc;
 
-    procedure AjustarMunicipioUF(var xUF: string; var xMun: string; var cMun: integer; cPais: integer; vxUF, vxMun: string; vcMun: integer);
-    function ObterNomeMunicipio(const xMun, xUF: string; const cMun: integer): string;
+    procedure AjustarMunicipioUF(var xUF: String; var xMun: String; var cMun: Integer; cPais: Integer; vxUF, vxMun: String; vcMun: Integer);
+    function ObterNomeMunicipio(const xMun, xUF: String; const cMun: Integer): String;
   public
     constructor Create(AOwner: TNFe);
     destructor Destroy; override;
-    function GerarXml: boolean;
-    function ObterNomeArquivo: string;
+    function GerarXml: Boolean;
+    function ObterNomeArquivo: String;
   published
-    property Gerador: TGerador read FGerador write FGerador;
-    property NFe: TNFe read FNFe write FNFe;
-    property schema: TpcnSchema read Fschema write Fschema;
-    property Opcoes: TGeradorOpcoes read FOpcoes write FOpcoes;
+    property Gerador: TGerador      read FGerador write FGerador;
+    property NFe: TNFe              read FNFe     write FNFe;
+//    property schema: TpcnSchema     read Fschema  write Fschema;
+    property Opcoes: TGeradorOpcoes read FOpcoes  write FOpcoes;
   end;
 
   TGeradorOpcoes = class(TPersistent)
   private
-    FAjustarTagNro: boolean;
-    FGerarTagIPIparaNaoTributado: boolean;
-    FGerarTXTSimultaneamente: boolean;
-    FNormatizarMunicipios: boolean;
+    FAjustarTagNro: Boolean;
+    FGerarTagIPIparaNaoTributado: Boolean;
+    FGerarTXTSimultaneamente: Boolean;
+    FNormatizarMunicipios: Boolean;
     FGerarTagAssinatura: TpcnTagAssinatura;
-    FPathArquivoMunicipios: string;
-    FValidarInscricoes: boolean;
-    FValidarListaServicos: boolean;
+    FPathArquivoMunicipios: String;
+    FValidarInscricoes: Boolean;
+    FValidarListaServicos: Boolean;
   published
-    property AjustarTagNro: boolean read FAjustarTagNro write FAjustarTagNro;
-    property GerarTagIPIparaNaoTributado: boolean read FGerarTagIPIparaNaoTributado write FGerarTagIPIparaNaoTributado;
-    property GerarTXTSimultaneamente: boolean read FGerarTXTSimultaneamente write FGerarTXTSimultaneamente;
-    property NormatizarMunicipios: boolean read FNormatizarMunicipios write FNormatizarMunicipios;
+    property AjustarTagNro: Boolean read FAjustarTagNro write FAjustarTagNro;
+    property GerarTagIPIparaNaoTributado: Boolean read FGerarTagIPIparaNaoTributado write FGerarTagIPIparaNaoTributado;
+    property GerarTXTSimultaneamente: Boolean read FGerarTXTSimultaneamente write FGerarTXTSimultaneamente;
+    property NormatizarMunicipios: Boolean read FNormatizarMunicipios write FNormatizarMunicipios;
     property GerarTagAssinatura: TpcnTagAssinatura read FGerarTagAssinatura write FGerarTagAssinatura;
-    property PathArquivoMunicipios: string read FPathArquivoMunicipios write FPathArquivoMunicipios;
-    property ValidarInscricoes: boolean read FValidarInscricoes write FValidarInscricoes;
-    property ValidarListaServicos: boolean read FValidarListaServicos write FValidarListaServicos;
+    property PathArquivoMunicipios: String read FPathArquivoMunicipios write FPathArquivoMunicipios;
+    property ValidarInscricoes: Boolean read FValidarInscricoes write FValidarInscricoes;
+    property ValidarListaServicos: Boolean read FValidarListaServicos write FValidarListaServicos;
   end;
 
   ////////////////////////////////////////////////////////////////////////////////
@@ -203,31 +208,32 @@ end;
 
 ////////////////////////////////////////////////////////////////////////////////
 
-function TNFeW.ObterNomeArquivo: string;
+function TNFeW.ObterNomeArquivo: String;
 begin
   Result := SomenteNumeros(nfe.infNFe.ID) + '-nfe.xml';
 end;
 
-function TNFeW.GerarXml: boolean;
+function TNFeW.GerarXml: Boolean;
 var
   chave: AnsiString;
-  Gerar: boolean;
+  Gerar: Boolean;
   xProtNFe : String;
 begin
 
   Usar_tcDe4 := (NFe.infNFe.Versao >= 3.10);
+  Versao     := Copy(NFe.infNFe.VersaoStr, 9, 4);
 
   chave := '';
   if NFe.infNFe.Versao >= 2 then
    begin
-     FSchema := TsPL006;
+//     FSchema := TsPL006;
      if not GerarChave(Chave, nfe.ide.cUF, nfe.ide.cNF, nfe.ide.modelo, nfe.ide.serie,
        nfe.ide.nNF, StrToInt(TpEmisToStr(nfe.ide.tpEmis)), nfe.ide.dEmi, nfe.emit.CNPJCPF) then
        Gerador.wAlerta('A01', 'infNFe', DSC_CHAVE, ERR_MSG_GERAR_CHAVE);
    end
   else
    begin
-     FSchema := TsPL005c;
+//     FSchema := TsPL005c;
      if not GerarChaveCTe(chave, nfe.ide.cUF, nfe.ide.cNF, nfe.ide.modelo, nfe.ide.serie,
        nfe.ide.nNF, nfe.ide.dEmi, nfe.emit.CNPJCPF) then
        Gerador.wAlerta('A01', 'infNFe', DSC_CHAVE, ERR_MSG_GERAR_CHAVE);
@@ -248,11 +254,13 @@ begin
    end;
    
   nfe.ide.cDV := RetornarDigito(nfe.infNFe.ID);
-  nfe.Ide.cNF := RetornarCodigoNumerico(nfe.infNFe.ID,NFe.infNFe.Versao);
+  nfe.Ide.cNF := RetornarCodigoNumerico(nfe.infNFe.ID, NFe.infNFe.Versao);
   // Carrega Layout que sera utilizado para gera o txt
   Gerador.LayoutArquivoTXT.Clear;
   if FOpcoes.GerarTXTSimultaneamente then
-    Gerador.LayoutArquivoTXT.Text := CarregarLayoutTXT(RetornarVersaoLayout(FSchema, tlNFe));
+    Gerador.LayoutArquivoTXT.Text := CarregarLayoutTXT(Versao);
+//  if FOpcoes.GerarTXTSimultaneamente then
+//    Gerador.LayoutArquivoTXT.Text := CarregarLayoutTXT(RetornarVersaoLayout(FSchema, tlNFe));
   //
   Gerador.ArquivoFormatoXML := '';
   Gerador.ArquivoFormatoTXT := '';
@@ -260,9 +268,7 @@ begin
   if nfe.procNFe.nProt <> '' then
    begin
       Gerador.wGrupo(ENCODING_UTF8, '', False);
-//      Gerador.wGrupo('nfeProc versao="' + NFe.infNFe.VersaoStr  + '" ' + NAME_SPACE, '');
       Gerador.wGrupo('nfeProc ' + NFe.infNFe.VersaoStr + ' ' + NAME_SPACE, '');
-//      Gerador.wGrupo('nfeProc ' + V2_00 + ' ' + NAME_SPACE, '');
    end;
   Gerador.wGrupo('NFe ' + NAME_SPACE);
   Gerador.wGrupo('infNFe ' + NFe.infNFe.VersaoStr + ' Id="' + nfe.infNFe.ID + '"');
@@ -289,7 +295,6 @@ begin
   if nfe.procNFe.nProt <> '' then
    begin
      xProtNFe :=
-//       (**)'<protNFe versao="2.00">' +
        (**)'<protNFe ' + NFe.infNFe.VersaoStr + '>' +
      (******)'<infProt>'+
      (*********)'<tpAmb>'+TpAmbToStr(nfe.procNFe.tpAmb)+'</tpAmb>'+
@@ -417,7 +422,7 @@ end;
 
 procedure TNFeW.GerarIdeNFref;
 var
-  i: integer;
+  i: Integer;
 begin
   // Gera TAGs se NÃO for uma NFe referência
   for i := 0 to nfe.ide.NFref.Count - 1 do
@@ -435,13 +440,13 @@ begin
     Gerador.wAlerta('B12a', 'NFref', DSC_QNF, ERR_MSG_MAIOR_MAXIMO + '500');
 end;
 
-procedure TNFeW.GerarIdeNFrerefNFe(const i: integer);
+procedure TNFeW.GerarIdeNFrerefNFe(const i: Integer);
 begin
   Gerador.wCampo(tcEsp, 'B13', 'refNFe', 44, 44, 1, SomenteNumeros(nfe.ide.NFref[i].refNFe), DSC_REFNFE);
   if not ValidarChave('NFe' + SomenteNumeros(nfe.ide.NFref[i].refNFe)) then Gerador.wAlerta('B13', 'refNFe', DSC_REFNFE, ERR_MSG_INVALIDO);
 end;
 
-procedure TNFeW.GerarIdeNFrefRefNF(const i: integer);
+procedure TNFeW.GerarIdeNFrefRefNF(const i: Integer);
 begin
   Gerador.wGrupo('refNF', 'B14');
   Gerador.wCampo(tcInt, 'B15', 'cUF   ', 02, 02, 1, nfe.Ide.NFref[i].RefNF.cUF, DSC_CUF);
@@ -456,7 +461,7 @@ begin
   Gerador.wGrupo('/refNF');
 end;
 
-procedure TNFeW.GerarRefNFP(const i: integer);
+procedure TNFeW.GerarRefNFP(const i: Integer);
 begin
   Gerador.wGrupo('refNFP', 'B20a');
   Gerador.wCampo(tcInt, 'B20b', 'cUF   ', 02, 02, 1, nfe.Ide.NFref[i].RefNFP.cUF, DSC_CUF);
@@ -471,14 +476,14 @@ begin
   Gerador.wGrupo('/refNFP');
 end;
 
-procedure TNFeW.GerarIdeNFrerefCTe(const i: integer);
+procedure TNFeW.GerarIdeNFrerefCTe(const i: Integer);
 begin
   Gerador.wCampo(tcEsp, 'B20i', 'refCTe', 44, 44, 1, SomenteNumeros(nfe.ide.NFref[i].refCTe), DSC_REFCTE);
   if not ValidarChave('NFe'+ SomenteNumeros(nfe.ide.NFref[i].refCTe)) then Gerador.wAlerta('B20i', 'refCTe',DSC_REFCTE, ERR_MSG_INVALIDO);
 end;
 
 
-procedure TNFeW.GerarRefECF(const i: integer);
+procedure TNFeW.GerarRefECF(const i: Integer);
 begin
   Gerador.wGrupo('refECF', 'B20j');
   Gerador.wCampo(tcStr, 'B20k', 'mod   ', 02, 02, 1, ECFModRefToStr( nfe.Ide.NFref[i].RefECF.modelo ) , DSC_MOD);
@@ -526,9 +531,9 @@ end;
 
 procedure TNFeW.GerarEmitEnderEmit;
 var
-  cMun: integer;
-  xMun: string;
-  xUF: string;
+  cMun: Integer;
+  xMun: String;
+  xUF: String;
 begin
   AjustarMunicipioUF(xUF, xMun, cMun, nfe.Emit.enderEmit.cPais, nfe.Emit.enderEmit.UF, nfe.Emit.enderEmit.xMun, nfe.Emit.EnderEmit.cMun);
   Gerador.wGrupo('enderEmit', 'C05');
@@ -574,7 +579,7 @@ end;
 
 procedure TNFeW.GerarDest;
 var
-  UF: string;
+  UF: String;
 const
   HOM_NOME_DEST = 'NF-E EMITIDA EM AMBIENTE DE HOMOLOGACAO - SEM VALOR FISCAL';
 begin
@@ -617,15 +622,12 @@ begin
 
   Gerador.IDNivel := 'E01';
 
-  // Alterado por Italo em 13/12/2013
   if nfe.infNFe.Versao >= 3.10 then
     Gerador.wCampo(tcStr, 'E16a', 'indIEDest', 01, 01, 1, indIEDestToStr(nfe.Dest.indIEDest), DSC_INDIEDEST)
   else nfe.Dest.indIEDest := inContribuinte;
 
-  // Alterado por Italo em 13/12/2013
   if nfe.Dest.indIEDest <> inIsento then
    begin
-     // Alterado por Italo em 16/12/2013
      if (nfe.Dest.IE <> '') or (nfe.infNFe.Versao < 3) then
       begin
         // Inscrição Estadual
@@ -654,11 +656,11 @@ begin
   Gerador.wGrupo('/dest');
 end;
 
-procedure TNFeW.GerarDestEnderDest(var UF: string);
+procedure TNFeW.GerarDestEnderDest(var UF: String);
 var
-  cMun: integer;
-  xMun: string;
-  xUF: string;
+  cMun: Integer;
+  xMun: String;
+  xUF: String;
 begin
   AjustarMunicipioUF(xUF, xMun, cMun, nfe.Dest.enderDest.cPais, nfe.Dest.enderDest.UF, nfe.Dest.enderDest.xMun, nfe.Dest.enderDest.cMun);
   UF := xUF;
@@ -686,9 +688,9 @@ end;
 
 procedure TNFeW.GerarRetirada;
 var
-  cMun: integer;
-  xMun: string;
-  xUF: string;
+  cMun: Integer;
+  xMun: String;
+  xUF: String;
 begin
   if trim(nfe.Retirada.xLgr) <> '' then
   begin
@@ -712,9 +714,9 @@ end;
 
 procedure TNFeW.GerarEntrega;
 var
-  cMun: integer;
-  xMun: string;
-  xUF: string;
+  cMun: Integer;
+  xMun: String;
+  xUF: String;
 begin
   if trim(nfe.Entrega.xLgr) <> '' then
   begin
@@ -754,7 +756,7 @@ end;
 
 procedure TNFeW.GerarautXML;
 var
-  i: integer;
+  i: Integer;
 begin
   for i := 0 to NFe.autXML.Count - 1 do
   begin
@@ -768,7 +770,7 @@ end;
 
 procedure TNFeW.GerarDet;
 var
-  i: integer;
+  i: Integer;
 begin
   for i := 0 to nfe.Det.Count - 1 do
   begin
@@ -788,7 +790,7 @@ begin
     Gerador.wAlerta('H02', 'nItem', DSC_NITEM, ERR_MSG_MAIOR_MAXIMO + '990');
 end;
 
-procedure TNFeW.GerarDetProd(const i: integer);
+procedure TNFeW.GerarDetProd(const i: Integer);
 begin
   Gerador.wGrupo('prod', 'I01');
   Gerador.wCampo(tcStr, 'I02 ', 'cProd   ', 01, 60, 1, nfe.Det[i].Prod.cProd, DSC_CPROD);
@@ -829,9 +831,9 @@ begin
   Gerador.wGrupo('/prod');
 end;
 
-procedure TNFeW.GerarDetProdDI(const i: integer);
+procedure TNFeW.GerarDetProdDI(const i: Integer);
 var
-  j: integer;
+  j: Integer;
 begin
   for j := 0 to nfe.Det[i].Prod.DI.Count - 1 do
   begin
@@ -879,9 +881,9 @@ begin
     Gerador.wAlerta('I18', 'DI', DSC_NITEM, ERR_MSG_MAIOR_MAXIMO + '100');
 end;
 
-procedure TNFeW.GerarDetProdDIadi(const i, j: integer);
+procedure TNFeW.GerarDetProdDIadi(const i, j: Integer);
 var
-  k: integer;
+  k: Integer;
 begin
   for k := 0 to nfe.Det[i].Prod.DI[j].adi.Count - 1 do
   begin
@@ -900,9 +902,9 @@ begin
     Gerador.wAlerta('I25', 'adi', DSC_NITEM, ERR_MSG_MAIOR_MAXIMO + '100');
 end;
 
-procedure TNFeW.GerarDetProddetExport(const i: integer);
+procedure TNFeW.GerarDetProddetExport(const i: Integer);
 var
-  j: integer;
+  j: Integer;
 begin
   for j := 0 to nfe.Det[i].Prod.detExport.Count - 1 do
   begin
@@ -931,7 +933,7 @@ begin
     Gerador.wAlerta('I50', 'detExport', DSC_NITEM, ERR_MSG_MAIOR_MAXIMO + '500');
 end;
 
-procedure TNFeW.GerarDetProdVeicProd(const i: integer);
+procedure TNFeW.GerarDetProdVeicProd(const i: Integer);
 begin
   if trim(nfe.Det[i].Prod.veicProd.chassi) <> '' then
   begin
@@ -974,9 +976,9 @@ begin
   end;
 end;
 
-procedure TNFeW.GerarDetProdMed(const i: integer);
+procedure TNFeW.GerarDetProdMed(const i: Integer);
 var
-  j: integer;
+  j: Integer;
 begin
   for j := 0 to nfe.Det[i].Prod.med.Count - 1 do
   begin
@@ -992,9 +994,9 @@ begin
     Gerador.wAlerta('K01', 'med', DSC_NITEM, ERR_MSG_MAIOR_MAXIMO + '500');
 end;
 
-procedure TNFeW.GerarDetProdNVE(const i: integer);
+procedure TNFeW.GerarDetProdNVE(const i: Integer);
 var
-  j: integer;
+  j: Integer;
 begin
   for j := 0 to nfe.Det[i].Prod.NVE.Count - 1 do
   begin
@@ -1008,9 +1010,9 @@ begin
     Gerador.wAlerta('I05a', 'NVE', DSC_NITEM, ERR_MSG_MAIOR_MAXIMO + '8');
 end;
 
-procedure TNFeW.GerarDetProdArma(const i: integer);
+procedure TNFeW.GerarDetProdArma(const i: Integer);
 var
-  j: integer;
+  j: Integer;
 begin
   for j := 0 to nfe.Det[i].Prod.arma.Count - 1 do
   begin
@@ -1025,7 +1027,7 @@ begin
     Gerador.wAlerta('L01', 'arma', DSC_NITEM, ERR_MSG_MAIOR_MAXIMO + '500');
 end;
 
-procedure TNFeW.GerarDetProdComb(const i: integer);
+procedure TNFeW.GerarDetProdComb(const i: Integer);
 begin
   if (nfe.Det[i].Prod.comb.cProdANP > 0) then
   begin
@@ -1063,7 +1065,7 @@ begin
   end;
 end;
 
-procedure TNFeW.GerarDetProdCombCIDE(const i: integer);
+procedure TNFeW.GerarDetProdCombCIDE(const i: Integer);
 begin
   if (nfe.Det[i].Prod.comb.CIDE.qBCProd > 0) or
     (nfe.Det[i].Prod.comb.CIDE.vAliqProd > 0) or
@@ -1077,7 +1079,7 @@ begin
   end;
 end;
 
-procedure TNFeW.GerarDetProdCombICMS(const i: integer);
+procedure TNFeW.GerarDetProdCombICMS(const i: Integer);
 begin
   Gerador.wGrupo('ICMSComb', 'L109');
   Gerador.wCampo(tcDe2, 'L110', 'vBCICMS  ', 01, 15, 1, nfe.Det[i].Prod.comb.ICMS.vBCICMS, DSC_VBCICMS);
@@ -1087,7 +1089,7 @@ begin
   Gerador.wGrupo('/ICMSComb');
 end;
 
-procedure TNFeW.GerarDetProdCombICMSInter(const i: integer);
+procedure TNFeW.GerarDetProdCombICMSInter(const i: Integer);
 begin
   if (nfe.Det[i].Prod.comb.ICMSInter.vBCICMSSTDest > 0) or
     (nfe.Det[i].Prod.comb.ICMSInter.vICMSSTDest > 0) then
@@ -1099,7 +1101,7 @@ begin
   end;
 end;
 
-procedure TNFeW.GerarDetProdCombICMSCons(const i: integer);
+procedure TNFeW.GerarDetProdCombICMSCons(const i: Integer);
 begin
   if (nfe.Det[i].Prod.comb.ICMSCons.vBCICMSSTCons > 0) or
     (nfe.Det[i].Prod.comb.ICMSCons.vICMSSTCons > 0) or
@@ -1115,7 +1117,7 @@ begin
   end;
 end;
 
-procedure TNFeW.GerarDetImposto(const i: integer);
+procedure TNFeW.GerarDetImposto(const i: Integer);
 begin
   Gerador.wGrupo('imposto', 'M01');
   Gerador.wCampo(tcDe2, 'M02', 'vTotTrib ', 01, 15, 0, nfe.Det[i].Imposto.vTotTrib, DSC_VTOTTRIB);
@@ -1140,15 +1142,15 @@ begin
   Gerador.wGrupo('/imposto');
 end;
 
-procedure TNFeW.GerarDetImpostoICMS(const i: integer);
+procedure TNFeW.GerarDetImpostoICMS(const i: Integer);
 // Rotina melhorada por
 // Perterson          - > peterson161@yahoo.com
 // Henrique Leonardo  - > Hleonardopa@yahoo.com.br
 // Jeandeson Merelis  - > jeanmerelis@yahoo.com
    var
-    sTagTemp : string;
+    sTagTemp : String;
 
-    function BuscaTag(const t: TpcnCSTIcms): string;
+    function BuscaTag(const t: TpcnCSTIcms): String;
      begin
        case t of
           cst00		: result := '00';
@@ -1459,7 +1461,7 @@ begin
    Gerador.wGrupo('/ICMS');
 end;
 
-procedure TNFeW.GerarDetImpostoIPI(const i: integer);
+procedure TNFeW.GerarDetImpostoIPI(const i: Integer);
 var
   CST00495099: Boolean;
 begin
@@ -1524,7 +1526,7 @@ begin
   Gerador.wGrupo('/IPI');
 end;
 
-procedure TNFeW.GerarDetImpostoII(const i: integer);
+procedure TNFeW.GerarDetImpostoII(const i: Integer);
 begin
   if (nfe.Det[i].Imposto.II.vBc > 0) or
      (nfe.Det[i].Imposto.II.vDespAdu > 0) or
@@ -1541,7 +1543,7 @@ begin
   end;
 end;
 
-procedure TNFeW.GerarDetImpostoPIS(const i: integer);
+procedure TNFeW.GerarDetImpostoPIS(const i: Integer);
 begin
   Gerador.wGrupo('PIS', 'Q01');
   if nfe.Det[i].Imposto.PIS.CST in [pis01, pis02] then
@@ -1596,7 +1598,7 @@ begin
   Gerador.wGrupo('/PIS');
 end;
 
-procedure TNFeW.GerarDetImpostoPISST(const i: integer);
+procedure TNFeW.GerarDetImpostoPISST(const i: Integer);
 begin
   if (nfe.Det[i].Imposto.PISST.vBc > 0) or
     (nfe.Det[i].Imposto.PISST.pPis > 0) or
@@ -1627,7 +1629,7 @@ begin
   end;
 end;
 
-procedure TNFeW.GerarDetImpostoCOFINS(const i: integer);
+procedure TNFeW.GerarDetImpostoCOFINS(const i: Integer);
 begin
   Gerador.wGrupo('COFINS', 'S01');
   if nfe.Det[i].Imposto.COFINS.CST in [cof01, cof02] then
@@ -1682,7 +1684,7 @@ begin
   Gerador.wGrupo('/COFINS');
 end;
 
-procedure TNFeW.GerarDetImpostoCOFINSST(const i: integer);
+procedure TNFeW.GerarDetImpostoCOFINSST(const i: Integer);
 begin
   if (nfe.Det[i].Imposto.COFINSST.vBC > 0) or
     (nfe.Det[i].Imposto.COFINSST.pCOFINS > 0) or
@@ -1713,7 +1715,7 @@ begin
   end;
 end;
 
-procedure TNFeW.GerarDetImpostoISSQN(const i: integer);
+procedure TNFeW.GerarDetImpostoISSQN(const i: Integer);
 var
  Codigo: String;
 begin
@@ -1749,7 +1751,6 @@ begin
     if (NFe.infNFe.Versao >= 2) and (NFe.infNFe.Versao < 3) then
        Gerador.wCampo(tcStr, 'U07', 'cSitTrib', 01, 01, 1, ISSQNcSitTribToStr( nfe.Det[i].Imposto.ISSQN.cSitTrib ) , DSC_CSITTRIB);
 
-    // Italo
     if NFe.infNFe.Versao >= 3.10 then
     begin
       Gerador.wCampo(tcDe2, 'U07', 'vDeducao    ', 01, 15, 0, nfe.Det[i].Imposto.ISSQN.vDeducao, DSC_VDEDUCAO);
@@ -1770,7 +1771,7 @@ begin
   end;
 end;
 
-procedure TNFeW.GerarDetDevol(const i: integer);
+procedure TNFeW.GerarDetDevol(const i: Integer);
 begin
   Gerador.wGrupo('impostoDevol', 'U50');
   Gerador.wCampo(tcDe2, 'U51', 'pDevol', 01, 05, 1, nfe.Det[i].pDevol, DSC_PDEVOL);
@@ -1845,7 +1846,6 @@ begin
 //      Gerador.wCampo(tcInt, 'W22m', 'cPais       ', 01, 04, 0, nfe.Total.ISSQNtot.cPais, DSC_CPAIS);
 //      Gerador.wCampo(tcStr, 'W22n', 'nProcesso   ', 01, 30, 0, nfe.Total.ISSQNtot.nProcesso , DSC_NPROCESSO);
 
-      // Italo
       Gerador.wCampo(tcDe2, 'W22f', 'vISSRet     ', 01, 15, 0, nfe.Total.ISSQNtot.vISSRet, DSC_VISSRET);
       Gerador.wCampo(tcStr, 'W22g', 'cRegTrib    ', 01, 01, 1, RegTribISSQNToStr( nfe.Total.ISSQNtot.cRegTrib ) , DSC_CREGTRIB);
 //      Gerador.wCampo(tcStr, 'W22p', 'indIncentivo', 01, 01, 1, indIncentivoToStr( nfe.Total.ISSQNtot.indIncentivo ) , DSC_INDINCENTIVO);
@@ -1910,7 +1910,7 @@ end;
 
 procedure TNFeW.GerarCobrDup;
 var
-  i: integer;
+  i: Integer;
 begin
   for i := 0 to nfe.Cobr.Dup.Count - 1 do
   begin
@@ -2012,7 +2012,7 @@ end;
 
 procedure TNFeW.GerarTranspReboque;
 var
-  i: integer;
+  i: Integer;
 begin
   if nfe.Transp.Reboque.Count > 5 then
     Gerador.wAlerta('X22', 'reboque', DSC_REBOQUE, ERR_MSG_MAIOR_MAXIMO + '5');
@@ -2030,7 +2030,7 @@ end;
 
 procedure TNFeW.GerarTranspVol;
 var
-  i: integer;
+  i: Integer;
 begin
   for i := 0 to nfe.Transp.Vol.Count - 1 do
   begin
@@ -2046,9 +2046,9 @@ begin
   end;
 end;
 
-procedure TNFeW.GerarTranspVolLacres(i: integer);
+procedure TNFeW.GerarTranspVolLacres(i: Integer);
 var
-  j: integer;
+  j: Integer;
 begin
   for j := 0 to nfe.transp.Vol[i].lacres.Count - 1 do
   begin
@@ -2078,7 +2078,7 @@ end;
 
 procedure TNFeW.GerarInfAdicObsCont;
 var
-  i: integer;
+  i: Integer;
 begin
   if nfe.InfAdic.obsCont.Count > 10 then
     Gerador.wAlerta('Z04', 'obsCont', DSC_OBSCONT, ERR_MSG_MAIOR_MAXIMO + '10');
@@ -2096,7 +2096,7 @@ end;
 
 procedure TNFeW.GerarInfAdicObsFisco;
 var
-  i: integer;
+  i: Integer;
 begin
   if nfe.InfAdic.obsFisco.Count > 10 then
     Gerador.wAlerta('Z07', 'obsFisco', DSC_OBSFISCO, ERR_MSG_MAIOR_MAXIMO + '10');
@@ -2114,7 +2114,7 @@ end;
 
 procedure TNFeW.GerarInfAdicProcRef;
 var
-  i: integer;
+  i: Integer;
 begin
   if nfe.InfAdic.procRef.Count > 0 then
   begin
@@ -2191,7 +2191,7 @@ end;
 
 procedure TNFeW.GerarforDia;
 var
-  i: integer;
+  i: Integer;
 begin
   if nfe.cana.fordia.Count > 31 then
     Gerador.wAlerta('ZC04', 'forDia', DSC_FORDIA, ERR_MSG_MAIOR_MAXIMO + '31');
@@ -2205,7 +2205,7 @@ end;
 
 procedure TNFeW.GerarDeduc;
 var
-  i: integer;
+  i: Integer;
 begin
   if nfe.cana.deduc.Count > 10 then
     Gerador.wAlerta('ZC10', 'deduc', DSC_DEDUC, ERR_MSG_MAIOR_MAXIMO + '10');
@@ -2220,9 +2220,9 @@ end;
 
 // Outras //////////////////////////////////////////////////////////////////////
 
-procedure TNFeW.AjustarMunicipioUF(var xUF: string; var xMun: string; var cMun: integer; cPais: integer; vxUF, vxMun: string; vcMun: integer);
+procedure TNFeW.AjustarMunicipioUF(var xUF: String; var xMun: String; var cMun: Integer; cPais: Integer; vxUF, vxMun: String; vcMun: Integer);
 var
-  PaisBrasil: boolean;
+  PaisBrasil: Boolean;
 begin
   PaisBrasil := cPais = CODIGO_BRASIL;
   cMun := IIf(PaisBrasil, vcMun, CMUN_EXTERIOR);
@@ -2231,11 +2231,11 @@ begin
   xMun := ObterNomeMunicipio(xMun, xUF, cMun);
 end;
 
-function TNFeW.ObterNomeMunicipio(const xMun, xUF: string; const cMun: integer): string;
+function TNFeW.ObterNomeMunicipio(const xMun, xUF: String; const cMun: Integer): String;
 var
-  i: integer;
-  PathArquivo, Codigo: string;
-  List: TstringList;
+  i: Integer;
+  PathArquivo, Codigo: String;
+  List: TStringList;
 begin
   result := '';
   if (FOpcoes.NormatizarMunicipios) and (cMun <> CMUN_EXTERIOR) then
@@ -2243,14 +2243,14 @@ begin
     PathArquivo := FOpcoes.FPathArquivoMunicipios + 'MunIBGE-UF' + InttoStr(UFparaCodigo(xUF)) + '.txt';
     if FileExists(PathArquivo) then
     begin
-      List := TstringList.Create;
+      List := TStringList.Create;
       List.LoadFromFile(PathArquivo);
       Codigo := IntToStr(cMun);
       i := 0;
       while (i < list.count) and (result = '') do
       begin
         if pos(Codigo, List[i]) > 0 then
-          result := Trim(stringReplace(list[i], codigo, '', []));
+          result := Trim(StringReplace(list[i], codigo, '', []));
         inc(i);
       end;
       List.free;
@@ -2262,7 +2262,7 @@ end;
 
 procedure TNFeW.Gerarpag;
 var
-  i: integer;
+  i: Integer;
 begin
   for i := 0 to nfe.pag.Count - 1 do
   begin

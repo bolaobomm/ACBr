@@ -49,6 +49,7 @@
 |* 24/09/2012: Italo Jurisato Junior
 |*  - Alterações para funcionamento com NFC-e
 ******************************************************************************}
+
 {$I ACBr.inc}
 
 unit pcnNFe;
@@ -156,7 +157,7 @@ type
 
   TNFe = class(TPersistent)
   private
-    FSchema: TpcnSchema;
+//    FSchema: TpcnSchema;
     FinfNFe: TinfNFe;
     FIde: TIde;
     FEmit: TEmit;
@@ -172,7 +173,7 @@ type
     FInfAdic: TInfAdic;
     Fexporta: Texporta;
     Fcompra: Tcompra;
-    Fcana: Tcana;    
+    Fcana: Tcana;
     FSignature: TSignature;
     FProcNFe: TProcNFe;
     FautXML: TautXMLCollection;
@@ -184,7 +185,7 @@ type
     constructor Create;
     destructor Destroy; override;
   published
-    property schema: TpcnSchema read Fschema write Fschema;
+//    property schema: TpcnSchema read Fschema write Fschema;
     //
     property infNFe: TinfNFe read FinfNFe write FinfNFe;
     property Ide: TIde read FIde write FIde;
@@ -209,75 +210,76 @@ type
 
   TinfNFe = class(TPersistent)
   private
-    FID: string;
-    FVersao : Real;
-    function GetVersaoStr: string;
+    FID: String;
+    FVersao: Real;
+    function GetVersaoStr: String;
     function GetVersao: Real;
   published
-    property ID: string read FID write FID;
+    property ID: String read FID write FID;
     property Versao: Real read GetVersao write FVersao;
-    property VersaoStr : string read GetVersaoStr;
+    property VersaoStr: String read GetVersaoStr;
   end;
 
   TIde = class(TPersistent)
   private
-    FcUF: integer;
-    FcNF: integer;
-    FnatOp: string;
+    FcUF: Integer;
+    FcNF: Integer;
+    FnatOp: String;
     FindPag: TpcnIndicadorPagamento;
-    Fmodelo: integer;
-    Fserie: integer;
-    FnNF: integer;
+    Fmodelo: Integer;
+    Fserie: Integer;
+    FnNF: Integer;
     FdEmi: TDateTime;
     FdSaiEnt: TDateTime;
     FhSaiEnt: TDateTime;
     FtpNF: TpcnTipoNFe;
     FidDest: TpcnDestinoOperacao;
-    FcMunFG: integer;
+    FcMunFG: Integer;
     FNFref: TNFrefCollection;
     FrefNFP: TRefNFP;    
     FtpImp: TpcnTipoImpressao;
     FtpEmis: TpcnTipoEmissao;
-    FcDV: integer;
+    FcDV: Integer;
     FtpAmb: TpcnTipoAmbiente;
     FfinNFe : TpcnFinalidadeNFe;
     FindFinal: TpcnConsumidorFinal;
     FindPres: TpcnPresencaComprador;
     FprocEmi: TpcnProcessoEmissao;
-    FverProc: string;
+    FverProc: String;
     FdhCont : TDateTime;
-    FxJust  : string;
+    FxJust  : String;
+
     procedure SetNFref(Value: TNFrefCollection);
   public
     constructor Create(AOwner: TNFe);
     destructor Destroy; override;
   published
-    property cUF: integer read FcUF write FcUF;
-    property cNF: integer read FcNF write FcNF;
-    property natOp: string read FnatOp write FnatOp;
+    property cUF: Integer read FcUF write FcUF;
+    property cNF: Integer read FcNF write FcNF;
+    property natOp: String read FnatOp write FnatOp;
     property indPag: TpcnIndicadorPagamento read FindPag write FindPag default ipPrazo;
-    property modelo: integer read Fmodelo write Fmodelo;
-    property serie: integer read Fserie write Fserie;
-    property nNF: integer read FnNF write FnNF;
+    property modelo: Integer read Fmodelo write Fmodelo;
+    property serie: Integer read Fserie write Fserie;
+    property nNF: Integer read FnNF write FnNF;
     property dEmi: TDateTime read FdEmi write FdEmi;
     property dSaiEnt: TDateTime read FdSaiEnt write FdSaiEnt;
     property hSaiEnt: TDateTime read FhSaiEnt write FhSaiEnt;
     property tpNF: TpcnTipoNFe read FtpNF write FtpNF default tnSaida;
     property idDest: TpcnDestinoOperacao read FidDest write FidDest;
-    property cMunFG: integer read FcMunFG write FcMunFG;
+    property cMunFG: Integer read FcMunFG write FcMunFG;
     property NFref: TNFrefCollection read FNFref write SetNFref;
     property refNFP: TRefNFP read FrefNFP write FrefNFP;
     property tpImp: TpcnTipoImpressao read FtpImp write FtpImp default tiPaisagem;
     property tpEmis: TpcnTipoEmissao read FtpEmis write FtpEmis default teNormal;
-    property cDV: integer read FcDV write FcDV;
+    property cDV: Integer read FcDV write FcDV;
     property tpAmb: TpcnTipoAmbiente read FtpAmb write FtpAmb default taHomologacao;
     property finNFe: TpcnFinalidadeNFe read FfinNFe write FfinNFe default fnNormal;
     property indFinal: TpcnConsumidorFinal read FindFinal write FindFinal;
     property indPres: TpcnPresencaComprador read FindPres write FindPres;
     property procEmi: TpcnProcessoEmissao read FprocEmi write FprocEmi default peAplicativoContribuinte;
-    property verProc: string read FverProc write FverProc;
+    property verProc: String read FverProc write FverProc;
     property dhCont: TDateTime read FdhCont write FdhCont;
-    property xJust: string read FxJust write FxJust;
+    property xJust: String read FxJust write FxJust;
   end;
 
   TNFrefCollection = class(TCollection)
@@ -292,8 +294,8 @@ type
 
   TNFrefCollectionItem = class(TCollectionItem)
   private
-    FrefNFe: string;
-    FrefCTe: string;
+    FrefNFe: String;
+    FrefCTe: String;
     FRefNF: TRefNF;
     FRefECF: TRefECF;
     FRefNFP: TRefNFP;
@@ -301,8 +303,8 @@ type
     constructor Create; reintroduce;
     destructor Destroy; override;
   published
-    property refNFe: string read FrefNFe write FrefNFe;
-    property refCTe: string read FrefCTe write FrefCTe;
+    property refNFe: String read FrefNFe write FrefNFe;
+    property refCTe: String read FrefCTe write FrefCTe;
     property RefNF: TRefNF read FRefNF write FRefNF;
     property RefNFP: TRefNFP read FRefNFP write FRefNFP;
     property RefECF: TRefECF read FRefECF write FRefECF;
@@ -310,225 +312,225 @@ type
 
   TRefNF = class(TPersistent)
   private
-    FcUF: integer;
-    FAAMM: string;
-    FCNPJ: string;
-    Fmodelo: integer;
-    Fserie: integer;
-    FnNF: integer;
+    FcUF: Integer;
+    FAAMM: String;
+    FCNPJ: String;
+    Fmodelo: Integer;
+    Fserie: Integer;
+    FnNF: Integer;
   published
-    property cUF: integer read FcUF write FcUF;
-    property AAMM: string read FAAMM write FAAMM;
-    property CNPJ: string read FCNPJ write FCNPJ;
-    property modelo: integer read FModelo write Fmodelo;
-    property serie: integer read FSerie write Fserie;
-    property nNF: integer read FnNF write FnNF;
+    property cUF: Integer read FcUF write FcUF;
+    property AAMM: String read FAAMM write FAAMM;
+    property CNPJ: String read FCNPJ write FCNPJ;
+    property modelo: Integer read FModelo write Fmodelo;
+    property serie: Integer read FSerie write Fserie;
+    property nNF: Integer read FnNF write FnNF;
   end;
 
   TRefNFP = class(TPersistent)
   private
-    FcUF: integer;
-    FAAMM: string;
-    FCNPJCPF: string;
-    FIE  : string;
-    Fmodelo: string;
-    Fserie : integer;
-    FnNF   : integer;
+    FcUF: Integer;
+    FAAMM: String;
+    FCNPJCPF: String;
+    FIE: String;
+    Fmodelo: String;
+    Fserie: Integer;
+    FnNF: Integer;
   published
-    property cUF: integer read FcUF write FcUF;
-    property AAMM: string read FAAMM write FAAMM;
-    property CNPJCPF: string read FCNPJCPF write FCNPJCPF;
-    property IE: string read FIE write FIE;
-    property modelo: string read FModelo write Fmodelo;
-    property serie: integer read FSerie write Fserie;
-    property nNF: integer read FnNF write FnNF;
+    property cUF: Integer read FcUF write FcUF;
+    property AAMM: String read FAAMM write FAAMM;
+    property CNPJCPF: String read FCNPJCPF write FCNPJCPF;
+    property IE: String read FIE write FIE;
+    property modelo: String read FModelo write Fmodelo;
+    property serie: Integer read FSerie write Fserie;
+    property nNF: Integer read FnNF write FnNF;
   end;
 
   TRefECF = class(TPersistent)
   private
     Fmodelo: TpcnECFModRef;
-    FnECF  : string;
-    FnCOO  : string;
+    FnECF: String;
+    FnCOO: String;
   published
     property modelo:TpcnECFModRef read FModelo write Fmodelo default ECFModRefVazio;
-    property nECF: string read FnECF write FnECF;
-    property nCOO: string read FnCOO write FnCOO;
+    property nECF: String read FnECF write FnECF;
+    property nCOO: String read FnCOO write FnCOO;
   end;
 
 
   TEmit = class(TPersistent)
   private
-    FCNPJCPF: string;
-    FxNome: string;
-    FxFant: string;
+    FCNPJCPF: String;
+    FxNome: String;
+    FxFant: String;
     FenderEmit: TenderEmit;
-    FIE: string;
-    FIEST: string;
-    FIM: string;
-    FCNAE: string;
+    FIE: String;
+    FIEST: String;
+    FIM: String;
+    FCNAE: String;
     FCRT: TpcnCRT;
   public
     constructor Create(AOwner: TNFe);
     destructor Destroy; override;
   published
-    property CNPJCPF: string read FCNPJCPF write FCNPJCPF;
-    property xNome: string read FxNome write FxNome;
-    property xFant: string read FxFant write FxFant;
+    property CNPJCPF: String read FCNPJCPF write FCNPJCPF;
+    property xNome: String read FxNome write FxNome;
+    property xFant: String read FxFant write FxFant;
     property EnderEmit: TEnderEmit read FEnderEmit write FEnderEmit;
-    property IE: string read FIE write FIE;
-    property IEST: string read FIEST write FIEST;
-    property IM: string read FIM write FIM;
-    property CNAE: string read FCNAE write FCNAE;
+    property IE: String read FIE write FIE;
+    property IEST: String read FIEST write FIEST;
+    property IM: String read FIM write FIM;
+    property CNAE: String read FCNAE write FCNAE;
     property CRT: TpcnCRT read FCRT write FCRT;
   end;
 
   TenderEmit = class(TPersistent)
   private
-    FxLgr: string;
-    Fnro: string;
-    fxCpl: string;
-    FxBairro: string;
-    FcMun: integer;
-    FxMun: string;
-    FUF: string;
-    FCEP: integer;
-    FcPais: integer;
-    FxPais: string;
-    Ffone: string;
+    FxLgr: String;
+    Fnro: String;
+    fxCpl: String;
+    FxBairro: String;
+    FcMun: Integer;
+    FxMun: String;
+    FUF: String;
+    FCEP: Integer;
+    FcPais: Integer;
+    FxPais: String;
+    Ffone: String;
   published
-    property xLgr: string read FxLgr write FxLgr;
-    property nro: string read Fnro write Fnro;
-    property xCpl: string read FxCpl write FxCpl;
-    property xBairro: string read FxBairro write FxBairro;
-    property cMun: integer read FcMun write FcMun;
-    property xMun: string read FxMun write FxMun;
-    property UF: string read FUF write FUF;
-    property CEP: integer read FCEP write FCEP;
-    property cPais: integer read FcPais write FcPais ;
-    property xPais: string read FxPais write FxPais ;
-    property fone: string read Ffone write Ffone;
+    property xLgr: String read FxLgr write FxLgr;
+    property nro: String read Fnro write Fnro;
+    property xCpl: String read FxCpl write FxCpl;
+    property xBairro: String read FxBairro write FxBairro;
+    property cMun: Integer read FcMun write FcMun;
+    property xMun: String read FxMun write FxMun;
+    property UF: String read FUF write FUF;
+    property CEP: Integer read FCEP write FCEP;
+    property cPais: Integer read FcPais write FcPais ;
+    property xPais: String read FxPais write FxPais ;
+    property fone: String read Ffone write Ffone;
   end;
 
   TAvulsa = class(TPersistent)
   private
-    FCNPJ: string;
-    FxOrgao: string;
-    Fmatr: string;
-    FxAgente: string;
-    Ffone: string;
-    FUF: string;
-    FnDAR: string;
+    FCNPJ: String;
+    FxOrgao: String;
+    Fmatr: String;
+    FxAgente: String;
+    Ffone: String;
+    FUF: String;
+    FnDAR: String;
     FdEmi: TDateTime;
-    FvDAR: currency;
-    FrepEmi: string;
+    FvDAR: Currency;
+    FrepEmi: String;
     FdPag: TDateTime;
   published
-    property CNPJ: string read FCNPJ write FCNPJ;
-    property xOrgao: string read FxOrgao write FxOrgao;
-    property matr: string read Fmatr write Fmatr;
-    property xAgente: string read FxAgente write FxAgente;
-    property fone: string read Ffone write Ffone;
-    property UF: string read FUF write FUF;
-    property nDAR: string read FnDAR write FnDAR;
+    property CNPJ: String read FCNPJ write FCNPJ;
+    property xOrgao: String read FxOrgao write FxOrgao;
+    property matr: String read Fmatr write Fmatr;
+    property xAgente: String read FxAgente write FxAgente;
+    property fone: String read Ffone write Ffone;
+    property UF: String read FUF write FUF;
+    property nDAR: String read FnDAR write FnDAR;
     property dEmi: TDateTime read FdEmi write FdEmi;
-    property vDAR: currency read FvDAR write FvDAR;
-    property repEmi: string read FrepEmi write FrepEmi;
+    property vDAR: Currency read FvDAR write FvDAR;
+    property repEmi: String read FrepEmi write FrepEmi;
     property dPag: TDateTime read FdPag write FdPag;
   end;
 
   TDest = class(TPersistent)
   private
-    FCNPJCPF: string;
-    FidEstrangeiro: string;
-    FxNome: string;
+    FCNPJCPF: String;
+    FidEstrangeiro: String;
+    FxNome: String;
     FEnderDest: TEnderDest;
     FindIEDest: TpcnindIEDest;
-    FIE: string;
-    FISUF: string;
-    FIM: string;
-    Femail: string;
+    FIE: String;
+    FISUF: String;
+    FIM: String;
+    Femail: String;
   public
     constructor Create(AOwner: TNFe);
     destructor Destroy; override;
   published
-    property CNPJCPF: string read FCNPJCPF write FCNPJCPF;
-    property idEstrangeiro: string read FidEstrangeiro write FidEstrangeiro;
-    property xNome: string read FxNome write FxNome;
+    property CNPJCPF: String read FCNPJCPF write FCNPJCPF;
+    property idEstrangeiro: String read FidEstrangeiro write FidEstrangeiro;
+    property xNome: String read FxNome write FxNome;
     property EnderDest: TEnderDest read FEnderDest write FEnderDest;
     property indIEDest: TpcnindIEDest read FindIEDest write FindIEDest;
-    property IE: string read FIE write FIE;
-    property ISUF: string read FISUF write FISUF;
-    property IM: string read FIM write FIM;
-    property Email: string read Femail write Femail;
+    property IE: String read FIE write FIE;
+    property ISUF: String read FISUF write FISUF;
+    property IM: String read FIM write FIM;
+    property Email: String read Femail write Femail;
   end;
 
   TEnderDest = class(TPersistent)
   private
-    FxLgr: string;
-    Fnro: string;
-    fxCpl: string;
-    FxBairro: string;
-    FcMun: integer;
-    FxMun: string;
-    FUF: string;
-    FCEP: integer;
-    FcPais: integer;
-    FxPais: string;
-    Ffone: string;
+    FxLgr: String;
+    Fnro: String;
+    fxCpl: String;
+    FxBairro: String;
+    FcMun: Integer;
+    FxMun: String;
+    FUF: String;
+    FCEP: Integer;
+    FcPais: Integer;
+    FxPais: String;
+    Ffone: String;
   published
-    property xLgr: string read FxLgr write FxLgr;
-    property nro: string read Fnro write Fnro;
-    property xCpl: string read FxCpl write FxCpl;
-    property xBairro: string read FxBairro write FxBairro;
-    property cMun: integer read FcMun write FcMun;
-    property xMun: string read FxMun write FxMun;
-    property UF: string read FUF write FUF;
-    property CEP: integer read FCEP write FCEP;
-    property cPais: integer read FcPais write FcPais ;
-    property xPais: string read FxPais write FxPais ;
-    property fone: string read Ffone write Ffone;
+    property xLgr: String read FxLgr write FxLgr;
+    property nro: String read Fnro write Fnro;
+    property xCpl: String read FxCpl write FxCpl;
+    property xBairro: String read FxBairro write FxBairro;
+    property cMun: Integer read FcMun write FcMun;
+    property xMun: String read FxMun write FxMun;
+    property UF: String read FUF write FUF;
+    property CEP: Integer read FCEP write FCEP;
+    property cPais: Integer read FcPais write FcPais ;
+    property xPais: String read FxPais write FxPais ;
+    property fone: String read Ffone write Ffone;
   end;
 
   TRetirada = class(TPersistent)
   private
-    FCNPJCPF: string;
-    FxLgr: string;
-    Fnro: string;
-    fxCpl: string;
-    FxBairro: string;
-    FcMun: integer;
-    FxMun: string;
-    FUF: string;
+    FCNPJCPF: String;
+    FxLgr: String;
+    Fnro: String;
+    fxCpl: String;
+    FxBairro: String;
+    FcMun: Integer;
+    FxMun: String;
+    FUF: String;
   published
-    property CNPJCPF: string read FCNPJCPF write FCNPJCPF;
-    property xLgr: string read FxLgr write FxLgr;
-    property nro: string read Fnro write Fnro;
-    property xCpl: string read FxCpl write FxCpl;
-    property xBairro: string read FxBairro write FxBairro;
-    property cMun: integer read FcMun write FcMun;
-    property xMun: string read FxMun write FxMun;
-    property UF: string read FUF write FUF;
+    property CNPJCPF: String read FCNPJCPF write FCNPJCPF;
+    property xLgr: String read FxLgr write FxLgr;
+    property nro: String read Fnro write Fnro;
+    property xCpl: String read FxCpl write FxCpl;
+    property xBairro: String read FxBairro write FxBairro;
+    property cMun: Integer read FcMun write FcMun;
+    property xMun: String read FxMun write FxMun;
+    property UF: String read FUF write FUF;
   end;
 
   TEntrega = class(TPersistent)
   private
-    FCNPJCPF: string;
-    FxLgr: string;
-    Fnro: string;
-    fxCpl: string;
-    FxBairro: string;
-    FcMun: integer;
-    FxMun: string;
-    FUF: string;
+    FCNPJCPF: String;
+    FxLgr: String;
+    Fnro: String;
+    fxCpl: String;
+    FxBairro: String;
+    FcMun: Integer;
+    FxMun: String;
+    FUF: String;
   published
-    property CNPJCPF: string read FCNPJCPF write FCNPJCPF;
-    property xLgr: string read FxLgr write FxLgr;
-    property nro: string read Fnro write Fnro;
-    property xCpl: string read FxCpl write FxCpl;
-    property xBairro: string read FxBairro write FxBairro;
-    property cMun: integer read FcMun write FcMun;
-    property xMun: string read FxMun write FxMun;
-    property UF: string read FUF write FUF;
+    property CNPJCPF: String read FCNPJCPF write FCNPJCPF;
+    property xLgr: String read FxLgr write FxLgr;
+    property nro: String read Fnro write Fnro;
+    property xCpl: String read FxCpl write FxCpl;
+    property xBairro: String read FxBairro write FxBairro;
+    property cMun: Integer read FcMun write FcMun;
+    property xMun: String read FxMun write FxMun;
+    property UF: String read FUF write FUF;
   end;
 
   TDetCollection = class(TCollection)
@@ -545,53 +547,53 @@ type
   private
     FProd: TProd;
     FImposto: TImposto;
-    FpDevol: currency;
-    FvIPIDevol: currency;
-    FinfAdProd: string;
+    FpDevol: Currency;
+    FvIPIDevol: Currency;
+    FinfAdProd: String;
   public
     constructor Create; reintroduce;
     destructor Destroy; override;
   published
     property Prod: TProd read FProd write FProd;
     property Imposto: TImposto read FImposto write FImposto;
-    property pDevol: currency read FpDevol write FpDevol;
-    property vIPIDevol: currency read FvIPIDevol write FvIPIDevol;
-    property infAdProd: string read FinfAdProd write FinfAdProd;
+    property pDevol: Currency read FpDevol write FpDevol;
+    property vIPIDevol: Currency read FvIPIDevol write FvIPIDevol;
+    property infAdProd: String read FinfAdProd write FinfAdProd;
   end;
 
   TProd = class(TPersistent)
   private
-    FcProd: string;
-    FnItem: integer;
-    FcEAN: string;
-    FxProd: string;
-    FNCM: string;
-    FEXTIPI: string;
-    //Fgenero: integer;
-    FCFOP: string;
-    FuCom: string;
-    FqCom: currency;
-    FvUnCom: double;
-    FvProd: currency;
-    FcEANTrib: string;
-    FuTrib: string;
-    FqTrib: currency;
-    FvUnTrib: double;
-    FvFrete: currency;
-    FvSeg: currency;
-    FvDesc: currency;
-    FvOutro: currency;
+    FcProd: String;
+    FnItem: Integer;
+    FcEAN: String;
+    FxProd: String;
+    FNCM: String;
+    FEXTIPI: String;
+    //Fgenero: Integer;
+    FCFOP: String;
+    FuCom: String;
+    FqCom: Currency;
+    FvUnCom: Double;
+    FvProd: Currency;
+    FcEANTrib: String;
+    FuTrib: String;
+    FqTrib: Currency;
+    FvUnTrib: Double;
+    FvFrete: Currency;
+    FvSeg: Currency;
+    FvDesc: Currency;
+    FvOutro: Currency;
     FIndTot: TpcnIndicadorTotal;
     FDI: TDICollection;
-    FxPed: string;
-    FnItemPed: integer;
+    FxPed: String;
+    FnItemPed: Integer;
     FdetExport: TdetExportCollection;
     FveicProd: TveicProd;
     Fmed: TMedCollection;
     Farma: TarmaCollection;
     Fcomb: Tcomb;
-    FnRECOPI: string;
-    FnFCI: string;
+    FnRECOPI: String;
+    FnFCI: String;
     FNVE: TNVECollection;
 
     procedure SetDI(Value: TDICollection);
@@ -599,100 +601,101 @@ type
     procedure SetArma(Value: TarmaCollection);
     procedure SetdetExport(const Value: TdetExportCollection);
     procedure SetNVE(Value : TNVeCollection);
-    procedure getCFOP(const Value: string);
+    procedure getCFOP(const Value: String);
   public
     constructor Create(AOwner: TDetcollectionItem);
     destructor Destroy; override;
   published
-    property cProd: string read FcProd write FcProd;
-    property nItem: integer read FnItem write FnItem;
-    property cEAN: string read FcEAN write FcEAN;
-    property xProd: string read FxProd write FxProd;
-    property NCM: string read FNCM write FNCM;
+    property cProd: String read FcProd write FcProd;
+    property nItem: Integer read FnItem write FnItem;
+    property cEAN: String read FcEAN write FcEAN;
+    property xProd: String read FxProd write FxProd;
+    property NCM: String read FNCM write FNCM;
     property NVE : TNVECollection read FNVE write FNVE;
-    property EXTIPI: string read FEXTIPI write FEXTIPI;
-    //property genero: integer read Fgenero write Fgenero;
-    property CFOP: string read FCFOP write getCFOP;
-    property uCom: string read FuCom write FuCom;
-    property qCom: currency read FqCom write FqCom;
-    property vUnCom: double read FvUnCom write FvUnCom;
-    property vProd: currency read FvProd write FvProd;
-    property cEANTrib: string read FcEANTrib write FcEANTrib;
-    property uTrib: string read FuTrib write FuTrib;
-    property qTrib: currency read FqTrib write FqTrib;
-    property vUnTrib: double read FvUnTrib write FvUnTrib;
-    property vFrete: currency read FvFrete write FvFrete;
-    property vSeg: currency read FvSeg write FvSeg;
-    property vDesc: currency read FvDesc write FvDesc;
-    property vOutro: currency read FvOutro write FvOutro;
+    property EXTIPI: String read FEXTIPI write FEXTIPI;
+    //property genero: Integer read Fgenero write Fgenero;
+    property CFOP: String read FCFOP write getCFOP;
+    property uCom: String read FuCom write FuCom;
+    property qCom: Currency read FqCom write FqCom;
+    property vUnCom: Double read FvUnCom write FvUnCom;
+    property vProd: Currency read FvProd write FvProd;
+    property cEANTrib: String read FcEANTrib write FcEANTrib;
+    property uTrib: String read FuTrib write FuTrib;
+    property qTrib: Currency read FqTrib write FqTrib;
+    property vUnTrib: Double read FvUnTrib write FvUnTrib;
+    property vFrete: Currency read FvFrete write FvFrete;
+    property vSeg: Currency read FvSeg write FvSeg;
+    property vDesc: Currency read FvDesc write FvDesc;
+    property vOutro: Currency read FvOutro write FvOutro;
     property IndTot: TpcnIndicadorTotal read FIndTot write FIndTot default itSomaTotalNFe;
     property DI: TDICollection read FDI write SetDI;
-    property xPed: string read FxPed write FxPed;
-    property nItemPed : integer read FnItemPed write FnItemPed;
+    property xPed: String read FxPed write FxPed;
+    property nItemPed : Integer read FnItemPed write FnItemPed;
     property detExport: TdetExportCollection read FdetExport write SetdetExport;
     property veicProd: TveicProd read FveicProd write FveicProd;
     property med: TMedCollection read Fmed write SetMed;
     property arma: TarmaCollection read Farma write SetArma;
     property comb: Tcomb read Fcomb write Fcomb;
-    property nRECOPI: string read FnRECOPI write FnRECOPI;
-    property nFCI: string read FnFCI write FnFCI;
+    property nRECOPI: String read FnRECOPI write FnRECOPI;
+    property nFCI: String read FnFCI write FnFCI;
   end;
 
   TveicProd = class(TPersistent)
   private
     FtpOP: TpcnTipoOperacao;
-    Fchassi: string;
-    FcCor: string;
-    FxCor: string;
-    Fpot: string;
-    FCilin: string;
-    FpesoL: string;
-    FpesoB: string;
-    FnSerie: string;
-    FtpComb: string;
-    FnMotor: string;
-    FCMT: string;
-    Fdist: string;
-    //FRENAVAM: string;
-    FanoMod: integer;
-    FanoFab: integer;
-    FtpPint: string;
-    FtpVeic: integer;
-    FespVeic: integer;
-    FVIN: string;
+    Fchassi: String;
+    FcCor: String;
+    FxCor: String;
+    Fpot: String;
+    FCilin: String;
+    FpesoL: String;
+    FpesoB: String;
+    FnSerie: String;
+    FtpComb: String;
+    FnMotor: String;
+    FCMT: String;
+    Fdist: String;
+    //FRENAVAM: String;
+    FanoMod: Integer;
+    FanoFab: Integer;
+    FtpPint: String;
+    FtpVeic: Integer;
+    FespVeic: Integer;
+    FVIN: String;
     FcondVeic: TpcnCondicaoVeiculo;
-    FcMod: string;
-    FcCorDENATRAN: string;
-    Flota: integer;
-    FtpRest: integer;
-    function getCombDescricao: string;
+    FcMod: String;
+    FcCorDENATRAN: String;
+    Flota: Integer;
+    FtpRest: Integer;
+
+    function getCombDescricao: String;
   published
     property tpOP: TpcnTipoOperacao read FtpOP write FtpOP;
-    property chassi: string read Fchassi write Fchassi;
-    property cCor: string read FcCor write FcCor;
-    property xCor: string read FxCor write FxCor;
-    property pot: string read Fpot write Fpot;
-    property Cilin: string read FCilin write FCilin;
-    property pesoL: string read FpesoL write FpesoL;
-    property pesoB: string read FpesoB write FpesoB;
-    property nSerie: string read FnSerie write FnSerie;
-    property tpComb: string read FtpComb write FtpComb;
-    property CombDescricao: string read getCombDescricao;
-    property nMotor: string read FnMotor write FnMotor;
-    property CMT: string read FCMT write FCMT;
-    property dist: string read Fdist write Fdist;
-    //property RENAVAM: string read FRENAVAM write FRENAVAM;
-    property anoMod: integer read FanoMod write FanoMod;
-    property anoFab: integer read FanoFab write FanoFab;
-    property tpPint: string read FtpPint write FtpPint;
-    property tpVeic: integer read FtpVeic write FtpVeic;
-    property espVeic: integer read FespVeic write FespVeic;
-    property VIN: string read FVIN write FVIN;
+    property chassi: String read Fchassi write Fchassi;
+    property cCor: String read FcCor write FcCor;
+    property xCor: String read FxCor write FxCor;
+    property pot: String read Fpot write Fpot;
+    property Cilin: String read FCilin write FCilin;
+    property pesoL: String read FpesoL write FpesoL;
+    property pesoB: String read FpesoB write FpesoB;
+    property nSerie: String read FnSerie write FnSerie;
+    property tpComb: String read FtpComb write FtpComb;
+    property CombDescricao: String read getCombDescricao;
+    property nMotor: String read FnMotor write FnMotor;
+    property CMT: String read FCMT write FCMT;
+    property dist: String read Fdist write Fdist;
+    //property RENAVAM: String read FRENAVAM write FRENAVAM;
+    property anoMod: Integer read FanoMod write FanoMod;
+    property anoFab: Integer read FanoFab write FanoFab;
+    property tpPint: String read FtpPint write FtpPint;
+    property tpVeic: Integer read FtpVeic write FtpVeic;
+    property espVeic: Integer read FespVeic write FespVeic;
+    property VIN: String read FVIN write FVIN;
     property condVeic: TpcnCondicaoVeiculo read FcondVeic write FcondVeic;
-    property cMod: string read FcMod write FcMod;
-    property cCorDENATRAN: string read FcCorDENATRAN write FcCorDENATRAN;
-    property lota: integer read Flota write Flota;
-    property tpRest: integer read FtpRest write FtpRest;
+    property cMod: String read FcMod write FcMod;
+    property cCorDENATRAN: String read FcCorDENATRAN write FcCorDENATRAN;
+    property lota: Integer read Flota write Flota;
+    property tpRest: Integer read FtpRest write FtpRest;
   end;
 
   TMedCollection = class(TCollection)
@@ -708,17 +711,17 @@ type
 
   TMedCollectionItem = class(TCollectionItem)
   private
-    FnLote: string;
-    FqLote: currency;
+    FnLote: String;
+    FqLote: Currency;
     FdFab: TDateTime;
     FdVal: TDateTime;
-    FvPMC: currency;
+    FvPMC: Currency;
   published
-    property nLote: string read FnLote write FnLote;
-    property qLote: currency read FqLote write FqLote;
+    property nLote: String read FnLote write FnLote;
+    property qLote: Currency read FqLote write FqLote;
     property dFab: TDateTime read FdFab write FdFab;
     property dVal: TDateTime read FdVal write FdVal;
-    property vPMC: currency read FvPMC write FvPMC;
+    property vPMC: Currency read FvPMC write FvPMC;
   end;
 
   TArmaCollection = class(TCollection)
@@ -735,23 +738,23 @@ type
   TArmaCollectionItem = class(TCollectionItem)
   private
     FtpArma: TpcnTipoArma;
-    FnSerie: string;
-    FnCano: string;
-    Fdescr: string;
+    FnSerie: String;
+    FnCano: String;
+    Fdescr: String;
   published
     property tpArma: TpcnTipoArma read FtpArma write FtpArma default taUsoPermitido;
-    property nSerie: string read FnSerie write FnSerie;
-    property nCano: string read FnCano write FnCano;
-    property descr: string read Fdescr write Fdescr;
+    property nSerie: String read FnSerie write FnSerie;
+    property nCano: String read FnCano write FnCano;
+    property descr: String read Fdescr write Fdescr;
   end;
 
   Tcomb = class(TPersistent)
   private
-    FcProdANP: integer;
-    FpMixGN: currency;
-    FCODIF: string;
-    FqTemp: currency;
-    FUFcons: string;
+    FcProdANP: Integer;
+    FpMixGN: Currency;
+    FCODIF: String;
+    FqTemp: Currency;
+    FUFcons: String;
     FCIDE: TCIDE;
     FICMS: TICMSComb;
     FICMSInter: TICMSInter;
@@ -760,11 +763,11 @@ type
     constructor Create(AOwner: TProd);
     destructor Destroy; override;
   published
-    property cProdANP: integer read FcProdANP write FcProdANP;
-    property pMixGN: currency read FpMixGN write FpMixGN;
-    property CODIF: string read FCODIF write FCODIF;
-    property qTemp: currency read FqTemp write FqTemp;
-    property UFcons: string read FUFcons write FUFcons;
+    property cProdANP: Integer read FcProdANP write FcProdANP;
+    property pMixGN: Currency read FpMixGN write FpMixGN;
+    property CODIF: String read FCODIF write FCODIF;
+    property qTemp: Currency read FqTemp write FqTemp;
+    property UFcons: String read FUFcons write FUFcons;
     property CIDE: TCIDE read FCIDE write FCIDE;
     property ICMS: TICMSComb read FICMS write FICMS;
     property ICMSInter: TICMSInter read FICMSInter write FICMSInter;
@@ -773,46 +776,46 @@ type
 
   TCIDE = class(TPersistent)
   private
-    FqBCProd: currency;
-    FvAliqProd: currency;
-    FvCIDE: currency;
+    FqBCProd: Currency;
+    FvAliqProd: Currency;
+    FvCIDE: Currency;
   published
-    property qBCProd: currency read FqBCProd write FqBCProd;
-    property vAliqProd: currency read FvAliqProd write FvAliqProd;
-    property vCIDE: currency read FvCIDE write FvCIDE;
+    property qBCProd: Currency read FqBCProd write FqBCProd;
+    property vAliqProd: Currency read FvAliqProd write FvAliqProd;
+    property vCIDE: Currency read FvCIDE write FvCIDE;
   end;
 
   TICMSComb = class(TPersistent)
   private
-    FvBCICMS: currency;
-    FvICMS: currency;
-    FvBCICMSST: currency;
-    FvICMSST: currency;
+    FvBCICMS: Currency;
+    FvICMS: Currency;
+    FvBCICMSST: Currency;
+    FvICMSST: Currency;
   published
-    property vBCICMS: currency read FvBCICMS write FvBCICMS;
-    property vICMS: currency read FvICMS write FvICMS;
-    property vBCICMSST: currency read FvBCICMSST write FvBCICMSST;
-    property vICMSST: currency read FvICMSST write FvICMSST;
+    property vBCICMS: Currency read FvBCICMS write FvBCICMS;
+    property vICMS: Currency read FvICMS write FvICMS;
+    property vBCICMSST: Currency read FvBCICMSST write FvBCICMSST;
+    property vICMSST: Currency read FvICMSST write FvICMSST;
   end;
 
   TICMSInter = class(TPersistent)
   private
-    FvBCICMSSTDest: currency;
-    FvICMSSTDest: currency;
+    FvBCICMSSTDest: Currency;
+    FvICMSSTDest: Currency;
   published
-    property vBCICMSSTDest: currency read FvBCICMSSTDest write FvBCICMSSTDest;
-    property vICMSSTDest: currency read FvICMSSTDest write FvICMSSTDest;
+    property vBCICMSSTDest: Currency read FvBCICMSSTDest write FvBCICMSSTDest;
+    property vICMSSTDest: Currency read FvICMSSTDest write FvICMSSTDest;
   end;
 
   TICMSCons = class(TPersistent)
   private
-    FvBCICMSSTCons: currency;
-    FvICMSSTCons: currency;
-    FUFcons: string;
+    FvBCICMSSTCons: Currency;
+    FvICMSSTCons: Currency;
+    FUFcons: String;
   published
-    property vBCICMSSTCons: currency read FvBCICMSSTCons write FvBCICMSSTCons;
-    property vICMSSTCons: currency read FvICMSSTCons write FvICMSSTCons;
-    property UFcons: string read FUFcons write FUFcons;
+    property vBCICMSSTCons: Currency read FvBCICMSSTCons write FvBCICMSSTCons;
+    property vICMSSTCons: Currency read FvICMSSTCons write FvICMSSTCons;
+    property UFcons: String read FUFcons write FUFcons;
   end;
 
   TDICollection = class(TCollection)
@@ -827,17 +830,17 @@ type
 
   TDICollectionItem = class(TCollectionItem)
   private
-    FnDi: string;
+    FnDi: String;
     FdDi: TDateTime;
-    FxLocDesemb: string;
-    FUFDesemb: string;
+    FxLocDesemb: String;
+    FUFDesemb: String;
     FdDesemb: TDateTime;
     FtpViaTransp: TpcnTipoViaTransp;
-    FvAFRMM: currency;
+    FvAFRMM: Currency;
     FtpIntermedio: TpcnTipoIntermedio;
-    FCNPJ: string;
-    FUFTerceiro: string;
-    FcExportador: string;
+    FCNPJ: String;
+    FUFTerceiro: String;
+    FcExportador: String;
     Fadi: TadiCollection;
 
     procedure SetAdi(Value: TAdiCollection);
@@ -845,17 +848,17 @@ type
     constructor Create; reintroduce;
     destructor Destroy; override;
   published
-    property nDi: string read FnDi write FnDi;
+    property nDi: String read FnDi write FnDi;
     property dDi: TDateTime read FdDi write FdDi;
-    property xLocDesemb: string read FxLocDesemb write FxLocDesemb;
-    property UFDesemb: string read FUFDesemb write FUFDesemb;
+    property xLocDesemb: String read FxLocDesemb write FxLocDesemb;
+    property UFDesemb: String read FUFDesemb write FUFDesemb;
     property dDesemb: TDateTime read FdDesemb write FdDesemb;
     property tpViaTransp: TpcnTipoViaTransp read FtpViaTransp write FtpViaTransp;
-    property vAFRMM: currency read FvAFRMM write FvAFRMM;
+    property vAFRMM: Currency read FvAFRMM write FvAFRMM;
     property tpIntermedio: TpcnTipoIntermedio read FtpIntermedio write FtpIntermedio;
-    property CNPJ: string read FCNPJ write FCNPJ;
-    property UFTerceiro: string read FUFTerceiro write FUFTerceiro;
-    property cExportador: string read FcExportador write FcExportador;
+    property CNPJ: String read FCNPJ write FCNPJ;
+    property UFTerceiro: String read FUFTerceiro write FUFTerceiro;
+    property cExportador: String read FcExportador write FcExportador;
     property adi: TAdiCollection read Fadi write SetAdi;
   end;
 
@@ -871,17 +874,17 @@ type
 
   TAdiCollectionItem = class(TCollectionItem)
   private
-    FnAdicao: integer;
-    FnSeqAdi: integer;
-    FcFabricante: string;
-    FvDescDI: currency;
-    FnDraw: string;
+    FnAdicao: Integer;
+    FnSeqAdi: Integer;
+    FcFabricante: String;
+    FvDescDI: Currency;
+    FnDraw: String;
   published
-    property nAdicao: integer read FnAdicao write FnAdicao;
-    property nSeqAdi: integer read FnSeqAdi write FnSeqAdi;
-    property cFabricante: string read FcFabricante write FcFabricante;
-    property vDescDI: currency read FvDescDI write FvDescDI;
-    property nDraw: string read FnDraw write FnDraw;
+    property nAdicao: Integer read FnAdicao write FnAdicao;
+    property nSeqAdi: Integer read FnSeqAdi write FnSeqAdi;
+    property cFabricante: String read FcFabricante write FcFabricante;
+    property vDescDI: Currency read FvDescDI write FvDescDI;
+    property nDraw: String read FnDraw write FnDraw;
   end;
 
   TNVECollection = class(TCollection)
@@ -896,9 +899,9 @@ type
 
   TNVECollectionItem = class(TCollectionItem)
   private
-    FNve: string;
+    FNve: String;
   published
-    property NVE: string read FNve write FNve;
+    property NVE: String read FNve write FNve;
   end;
 
   TdetExportCollection = class(TCollection)
@@ -913,21 +916,20 @@ type
 
   TdetExportCollectionItem = class(TCollectionItem)
   private
-    FnDraw: string;
-    FnRE: string;
-    FchNFe: string;
-    FqExport: currency;
+    FnDraw: String;
+    FnRE: String;
+    FchNFe: String;
+    FqExport: Currency;
   published
-    property nDraw: string read FnDraw write FnDraw;
-    property nRE: string read FnRE write FnRE;
-    property chNFe: string read FchNFe write FchNFe;
-    property qExport: currency read FqExport write FqExport;
+    property nDraw: String read FnDraw write FnDraw;
+    property nRE: String read FnRE write FnRE;
+    property chNFe: String read FchNFe write FchNFe;
+    property qExport: Currency read FqExport write FqExport;
   end;
 
   TImposto = class(TPersistent)
   private
-    // Incluido por Italo em 29/04/2013 conforme NT 2013/003
-    FvTotTrib: currency;
+    FvTotTrib: Currency;
     FICMS: TICMS;
     FIPI: TIPI;
     FII: TII;
@@ -940,7 +942,7 @@ type
     constructor Create(AOwner: TDetcollectionItem);
     destructor Destroy; override;
   published
-    property vTotTrib: currency read FvTotTrib write FvTotTrib;
+    property vTotTrib: Currency read FvTotTrib write FvTotTrib;
     property ICMS: TICMS read FICMS write FICMS;
     property IPI: TIPI read FIPI write FIPI;
     property II: TII read FII write FII;
@@ -957,148 +959,148 @@ type
     FCST: TpcnCSTIcms;                    //N12
     FCSOSN: TpcnCSOSNIcms;                //N12a
     FmodBC: TpcnDeterminacaoBaseIcms;     //N13
-    FpRedBC: currency;                    //N14
-    FvBC: currency;                       //N15
-    FpICMS: currency;                     //N16
-    FvICMS: currency;                     //N17
+    FpRedBC: Currency;                    //N14
+    FvBC: Currency;                       //N15
+    FpICMS: Currency;                     //N16
+    FvICMS: Currency;                     //N17
     FmodBCST: TpcnDeterminacaoBaseIcmsST; //N18
-    FpMVAST: currency;                    //N19
-    FpRedBCST: currency;                  //N20
-    FvBCST: currency;                     //N21
-    FpICMSST: currency;                   //N22
-    FvICMSST: currency;                   //N23
-    FUFST: string;                        //N24
-    FpBCOp: currency;                     //N25
-    FvBCSTRet: currency;                  //N26
-    FvICMSSTRet: currency;                //N27
+    FpMVAST: Currency;                    //N19
+    FpRedBCST: Currency;                  //N20
+    FvBCST: Currency;                     //N21
+    FpICMSST: Currency;                   //N22
+    FvICMSST: Currency;                   //N23
+    FUFST: String;                        //N24
+    FpBCOp: Currency;                     //N25
+    FvBCSTRet: Currency;                  //N26
+    FvICMSSTRet: Currency;                //N27
     FmotDesICMS: TpcnMotivoDesoneracaoICMS; //N28
-    FpCredSN: currency;                   //N29
-    FvCredICMSSN: currency;               //N30
-    FvBCSTDest: currency;                 //N31
-    FvICMSSTDest: currency;               //N32
-    FvICMSDeson: currency;
-    FvICMSOp: currency;
-    FpDif: currency;
-    FvICMSDif: currency;
+    FpCredSN: Currency;                   //N29
+    FvCredICMSSN: Currency;               //N30
+    FvBCSTDest: Currency;                 //N31
+    FvICMSSTDest: Currency;               //N32
+    FvICMSDeson: Currency;
+    FvICMSOp: Currency;
+    FpDif: Currency;
+    FvICMSDif: Currency;
   published
     property orig: TpcnOrigemMercadoria read Forig write Forig default oeNacional;
     property CST: TpcnCSTIcms read FCST write FCST default cst00;
     property CSOSN: TpcnCSOSNIcms read FCSOSN write FCSOSN;
     property modBC: TpcnDeterminacaoBaseIcms read FmodBC write FmodBC default dbiMargemValorAgregado;
-    property pRedBC: currency read FpRedBC write FpRedBC;
-    property vBC: currency read FvBC write FvBC;
-    property pICMS: currency read FpICMS write FpICMS;
-    property vICMS: currency read FvICMS write FvICMS;
+    property pRedBC: Currency read FpRedBC write FpRedBC;
+    property vBC: Currency read FvBC write FvBC;
+    property pICMS: Currency read FpICMS write FpICMS;
+    property vICMS: Currency read FvICMS write FvICMS;
     property modBCST: TpcnDeterminacaoBaseIcmsST read FmodBCST write FmodBCST default dbisPrecoTabelado;
-    property pMVAST: currency read FpMVAST write FpMVAST;
-    property pRedBCST: currency read FpRedBCST write FpRedBCST;
-    property vBCST: currency read FvBCST write FvBCST;
-    property pICMSST: currency read FpICMSST write FpICMSST;
-    property vICMSST: currency read FvICMSST write FvICMSST;
-    property UFST: string read FUFST write FUFST;
-    property pBCOp: currency read FpBCOp write FpBCOp;
-    property vBCSTRet: currency read FvBCSTRet write FvBCSTRet;
-    property vICMSSTRet: currency read FvICMSSTRet write FvICMSSTRet;
+    property pMVAST: Currency read FpMVAST write FpMVAST;
+    property pRedBCST: Currency read FpRedBCST write FpRedBCST;
+    property vBCST: Currency read FvBCST write FvBCST;
+    property pICMSST: Currency read FpICMSST write FpICMSST;
+    property vICMSST: Currency read FvICMSST write FvICMSST;
+    property UFST: String read FUFST write FUFST;
+    property pBCOp: Currency read FpBCOp write FpBCOp;
+    property vBCSTRet: Currency read FvBCSTRet write FvBCSTRet;
+    property vICMSSTRet: Currency read FvICMSSTRet write FvICMSSTRet;
     property motDesICMS: TpcnMotivoDesoneracaoICMS read FmotDesICMS write FmotDesICMS;
-    property pCredSN: currency read FpCredSN write FpCredSN;
-    property vCredICMSSN: currency read FvCredICMSSN write FvCredICMSSN;
-    property vBCSTDest: currency read FvBCSTDest write FvBCSTDest;
-    property vICMSSTDest: currency read FvICMSSTDest write FvICMSSTDest;
-    property vICMSDeson: currency read FvICMSDeson write FvICMSDeson;
-    property vICMSOp: currency read FvICMSOp write FvICMSOp;
-    property pDif: currency read FpDif write FpDif;
-    property vICMSDif: currency read FvICMSDif write FvICMSDif;
+    property pCredSN: Currency read FpCredSN write FpCredSN;
+    property vCredICMSSN: Currency read FvCredICMSSN write FvCredICMSSN;
+    property vBCSTDest: Currency read FvBCSTDest write FvBCSTDest;
+    property vICMSSTDest: Currency read FvICMSSTDest write FvICMSSTDest;
+    property vICMSDeson: Currency read FvICMSDeson write FvICMSDeson;
+    property vICMSOp: Currency read FvICMSOp write FvICMSOp;
+    property pDif: Currency read FpDif write FpDif;
+    property vICMSDif: Currency read FvICMSDif write FvICMSDif;
   end;
 
   TIPI = class(TPersistent)
   private
-    FclEnq: string;
-    FCNPJProd: string;
-    FcSelo: string;
-    FqSelo: integer;
-    FcEnq: string;
+    FclEnq: String;
+    FCNPJProd: String;
+    FcSelo: String;
+    FqSelo: Integer;
+    FcEnq: String;
     FCST: TpcnCstIpi;
-    FvBC: currency;
-    FqUnid: currency;
-    FvUnid: currency;
-    FpIPI: currency;
-    FvIPI: currency;
+    FvBC: Currency;
+    FqUnid: Currency;
+    FvUnid: Currency;
+    FpIPI: Currency;
+    FvIPI: Currency;
   published
-    property clEnq: string read FclEnq write FclEnq;
-    property CNPJProd: string read FCNPJProd write FCNPJProd;
-    property cSelo: string read FcSelo write FcSelo;
-    property qSelo: integer read FqSelo write FqSelo;
-    property cEnq: string read FcEnq write FcEnq;
+    property clEnq: String read FclEnq write FclEnq;
+    property CNPJProd: String read FCNPJProd write FCNPJProd;
+    property cSelo: String read FcSelo write FcSelo;
+    property qSelo: Integer read FqSelo write FqSelo;
+    property cEnq: String read FcEnq write FcEnq;
     property CST: TpcnCstIpi read FCST write FCST default ipi00;
-    property vBC: currency read FvBC write FvBC;
-    property qUnid: currency read FqUnid write FqUnid;
-    property vUnid: currency read FvUnid write FvUnid;
-    property pIPI: currency read FpIPI write FpIPI;
-    property vIPI: currency read FvIPI write FvIPI;
+    property vBC: Currency read FvBC write FvBC;
+    property qUnid: Currency read FqUnid write FqUnid;
+    property vUnid: Currency read FvUnid write FvUnid;
+    property pIPI: Currency read FpIPI write FpIPI;
+    property vIPI: Currency read FvIPI write FvIPI;
   end;
 
   TII = class(TPersistent)
   private
-    FvBc: currency;
-    FvDespAdu: currency;
-    FvII: currency;
-    FvIOF: currency;
+    FvBc: Currency;
+    FvDespAdu: Currency;
+    FvII: Currency;
+    FvIOF: Currency;
   published
-    property vBc: currency read FvBC write FvBC;
-    property vDespAdu: currency read FvDespAdu write FvDespAdu;
-    property vII: currency read FvII write FvII;
-    property vIOF: currency read FvIOF write FvIOF;
+    property vBc: Currency read FvBC write FvBC;
+    property vDespAdu: Currency read FvDespAdu write FvDespAdu;
+    property vII: Currency read FvII write FvII;
+    property vIOF: Currency read FvIOF write FvIOF;
   end;
 
   TPIS = class(TPersistent)
   private
     FCST: TpcnCstPis;
-    FvBC: currency;
-    FpPIS: currency;
-    FvPIS: currency;
-    FqBCProd: currency;
-    FvAliqProd: currency;
+    FvBC: Currency;
+    FpPIS: Currency;
+    FvPIS: Currency;
+    FqBCProd: Currency;
+    FvAliqProd: Currency;
   published
     property CST: TpcnCstPis read FCST write FCST default pis01;
-    property vBC: currency read FvBC write FvBC;
-    property pPIS: currency read FpPIS write FpPIS;
-    property vPIS: currency read FvPIS write FvPIS;
-    property qBCProd: currency read FqBCProd write FqBCProd;
-    property vAliqProd: currency read FvAliqProd write FvAliqProd;
+    property vBC: Currency read FvBC write FvBC;
+    property pPIS: Currency read FpPIS write FpPIS;
+    property vPIS: Currency read FvPIS write FvPIS;
+    property qBCProd: Currency read FqBCProd write FqBCProd;
+    property vAliqProd: Currency read FvAliqProd write FvAliqProd;
   end;
 
   TPISST = class(TPersistent)
   private
-    FvBc: currency;
-    FpPis: currency;
-    FqBCProd: currency;
-    FvAliqProd: currency;
-    FvPIS: currency;
+    FvBc: Currency;
+    FpPis: Currency;
+    FqBCProd: Currency;
+    FvAliqProd: Currency;
+    FvPIS: Currency;
   published
-    property vBc: currency read FvBc write FvBc;
-    property pPis: currency read FpPis write FpPis;
-    property qBCProd: currency read FqBCProd write FqBCProd;
-    property vAliqProd: currency read FvAliqProd write FvAliqProd;
-    property vPIS: currency read FvPIS write FvPIS;
+    property vBc: Currency read FvBc write FvBc;
+    property pPis: Currency read FpPis write FpPis;
+    property qBCProd: Currency read FqBCProd write FqBCProd;
+    property vAliqProd: Currency read FvAliqProd write FvAliqProd;
+    property vPIS: Currency read FvPIS write FvPIS;
   end;
 
   TCOFINS = class(TPersistent)
   private
     FCST: TpcnCstCofins;
-    FvBC: currency;
-    FpCOFINS: currency;
-    FvCOFINS: currency;
-    FvBCProd: currency;
-    FvAliqProd: currency;
-    FqBCProd: currency;
+    FvBC: Currency;
+    FpCOFINS: Currency;
+    FvCOFINS: Currency;
+    FvBCProd: Currency;
+    FvAliqProd: Currency;
+    FqBCProd: Currency;
   published
     property CST: TpcnCstCofins read FCST write FCST default cof01;
-    property vBC: currency read FvBC write FvBC;
-    property pCOFINS: currency read FpCOFINS write FpCOFINS;
-    property vCOFINS: currency read FvCOFINS write FvCOFINS;
-    property vBCProd: currency read FvBCProd write FvBCProd;
-    property vAliqProd: currency read FvAliqProd write FvAliqProd;
-    property qBCProd: currency read FqBCProd write FqBCProd;
+    property vBC: Currency read FvBC write FvBC;
+    property pCOFINS: Currency read FpCOFINS write FpCOFINS;
+    property vCOFINS: Currency read FvCOFINS write FvCOFINS;
+    property vBCProd: Currency read FvBCProd write FvBCProd;
+    property vAliqProd: Currency read FvAliqProd write FvAliqProd;
+    property qBCProd: Currency read FqBCProd write FqBCProd;
   end;
 
   TTotal = class(TPersistent)
@@ -1132,8 +1134,7 @@ type
     FvCOFINS: Currency;
     FvOutro: Currency;
     FvNF: Currency;
-    // Incluido por Italo em 29/04/2013 conforme NT 2013/003
-    FvTotTrib: currency;
+    FvTotTrib: Currency;
   published
     property vBC: Currency read FvBC write FvBC;
     property vICMS: Currency read FvICMS write FvICMS;
@@ -1150,7 +1151,7 @@ type
     property vCOFINS: Currency read FvCOFINS write FvCOFINS;
     property vOutro: Currency read FvOutro write FvOutro;
     property vNF: Currency read FvNF write FvNF;
-    property vTotTrib: currency read FvTotTrib write FvTotTrib;
+    property vTotTrib: Currency read FvTotTrib write FvTotTrib;
   end;
 
   TISSQNtot = class(TPersistent)
@@ -1171,12 +1172,10 @@ type
 //    FindISSRet: TpcnindISSRet;
 //    FindISS: TpcnindISS;
 //    FcServico: String;
-//    FcMun: integer;
-//    FcPais: integer;
+//    FcMun: Integer;
+//    FcPais: Integer;
 //    FnProcesso: String;
-
-    // Italo
-    FvISSRet: currency;
+    FvISSRet: Currency;
     FcRegTrib: TpcnRegTribISSQN;
 //    FindIncentivo: TpcnindIncentivo;
   published
@@ -1196,12 +1195,10 @@ type
 //    property indISSRet: TpcnindISSRet read FindISSRet write FindISSRet;
 //    property indISS: TpcnindISS read FindISS write FindISS;
 //    property cServico: String read FcServico write FcServico;
-//    property cMun: integer read FcMun write FcMun;
-//    property cPais: integer read FcPais write FcPais;
+//    property cMun: Integer read FcMun write FcMun;
+//    property cPais: Integer read FcPais write FcPais;
 //    property nProcesso: String read FnProcesso write FnProcesso;
-
-    // Italo
-    property vISSRet: currency read FvISSRet write FvISSRet;
+    property vISSRet: Currency read FvISSRet write FvISSRet;
     property cRegTrib: TpcnRegTribISSQN read FcRegTrib write FcRegTrib;
 //    property indIncentivo: TpcnindIncentivo read FindIncentivo write FindIncentivo;
   end;
@@ -1228,60 +1225,57 @@ type
 
   TCOFINSST = class(TPersistent)
   private
-    FvBC: currency;
-    FpCOFINS: currency;
-    FqBCProd: currency;
-    FvAliqProd: currency;
-    FvCOFINS: currency;
+    FvBC: Currency;
+    FpCOFINS: Currency;
+    FqBCProd: Currency;
+    FvAliqProd: Currency;
+    FvCOFINS: Currency;
   published
-    property vBC: currency read FvBC write FvBC;
-    property pCOFINS: currency read FpCOFINS write FpCOFINS;
-    property qBCProd: currency read FqBCProd write FqBCProd;
-    property vAliqProd: currency read FvAliqProd write FvAliqProd;
-    property vCOFINS: currency read FvCOFINS write FvCOFINS;
+    property vBC: Currency read FvBC write FvBC;
+    property pCOFINS: Currency read FpCOFINS write FpCOFINS;
+    property qBCProd: Currency read FqBCProd write FqBCProd;
+    property vAliqProd: Currency read FvAliqProd write FvAliqProd;
+    property vCOFINS: Currency read FvCOFINS write FvCOFINS;
   end;
 
   TISSQN = class(TPersistent)
   private
-    FvBC: currency;
-    FvAliq: currency;
-    FvISSQN: currency;
-    FcMunFG: integer;
+    FvBC: Currency;
+    FvAliq: Currency;
+    FvISSQN: Currency;
+    FcMunFG: Integer;
     FcListServ: String;
     FcSitTrib: TpcnISSQNcSitTrib;
-    // italo
-    FvDeducao: currency;
-    FvOutro: currency;
-    FvDescIncond: currency;
-    FvDescCond: currency;
+    FvDeducao: Currency;
+    FvOutro: Currency;
+    FvDescIncond: Currency;
+    FvDescCond: Currency;
     FindISSRet: TpcnindISSRet;
-    FvISSRet: currency;
+    FvISSRet: Currency;
     FindISS: TpcnindISS;
     FcServico: String;
-    FcMun: integer;
-    FcPais: integer;
+    FcMun: Integer;
+    FcPais: Integer;
     FnProcesso: String;
     FindIncentivo: TpcnindIncentivo;
-
   public
   published
-    property vBC: currency read FvBC write FvBC;
-    property vAliq: currency read FvAliq write FvAliq;
-    property vISSQN: currency read FvISSQN write FvISSQN;
-    property cMunFG: integer read FcMunFG write FcMunFG;
+    property vBC: Currency read FvBC write FvBC;
+    property vAliq: Currency read FvAliq write FvAliq;
+    property vISSQN: Currency read FvISSQN write FvISSQN;
+    property cMunFG: Integer read FcMunFG write FcMunFG;
     property cListServ: String read FcListServ write FcListServ;
     property cSitTrib: TpcnISSQNcSitTrib read FcSitTrib write FcSitTrib default ISSQNcSitTribVazio;
-    // italo
-    property vDeducao: currency read FvDeducao write FvDeducao;
-    property vOutro: currency read FvOutro write FvOutro;
-    property vDescIncond: currency read FvDescIncond write FvDescIncond;
-    property vDescCond: currency read FvDescCond write FvDescCond;
+    property vDeducao: Currency read FvDeducao write FvDeducao;
+    property vOutro: Currency read FvOutro write FvOutro;
+    property vDescIncond: Currency read FvDescIncond write FvDescIncond;
+    property vDescCond: Currency read FvDescCond write FvDescCond;
     property indISSRet: TpcnindISSRet read FindISSRet write FindISSRet;
-    property vISSRet: currency read FvISSRet write FvISSRet;
+    property vISSRet: Currency read FvISSRet write FvISSRet;
     property indISS: TpcnindISS read FindISS write FindISS;
     property cServico: String read FcServico write FcServico;
-    property cMun: integer read FcMun write FcMun;
-    property cPais: integer read FcPais write FcPais;
+    property cMun: Integer read FcMun write FcMun;
+    property cPais: Integer read FcPais write FcPais;
     property nProcesso: String read FnProcesso write FnProcesso;
     property indIncentivo: TpcnindIncentivo read FindIncentivo write FindIncentivo;
   end;
@@ -1294,8 +1288,9 @@ type
     FveicTransp: TveicTransp;
     FVol: TVolCollection;
     FReboque: TReboqueCollection;
-    Fvagao: string;
-    Fbalsa: string;
+    Fvagao: String;
+    Fbalsa: String;
+
     procedure SetVol(Value: TVolCollection);
     procedure SetReboque(Value: TReboqueCollection);
   public
@@ -1308,55 +1303,55 @@ type
     property veicTransp: TveicTransp read FveicTransp write FveicTransp;
     property Vol: TVolCollection read FVol write SetVol;
     property Reboque: TReboqueCollection read FReboque write SetReboque;
-    property vagao: string read Fvagao write Fvagao;
-    property balsa: string read Fbalsa write Fbalsa;
+    property vagao: String read Fvagao write Fvagao;
+    property balsa: String read Fbalsa write Fbalsa;
   end;
 
   TTransporta = class(TPersistent)
   private
-    FCNPJCPF: string;
-    FxNome: string;
-    FIE: string;
-    FxEnder: string;
-    FxMun: string;
-    FUF: string;
+    FCNPJCPF: String;
+    FxNome: String;
+    FIE: String;
+    FxEnder: String;
+    FxMun: String;
+    FUF: String;
   published
-    property CNPJCPF: string read FCNPJCPF write FCNPJCPF;
-    property xNome: string read FxNome write FxNome;
-    property IE: string read FIE write FIE;
-    property xEnder: string read FxEnder write FxEnder;
-    property xMun: string read FxMun write FxMun;
-    property UF: string read FUF write FUF;
+    property CNPJCPF: String read FCNPJCPF write FCNPJCPF;
+    property xNome: String read FxNome write FxNome;
+    property IE: String read FIE write FIE;
+    property xEnder: String read FxEnder write FxEnder;
+    property xMun: String read FxMun write FxMun;
+    property UF: String read FUF write FUF;
   end;
 
   TretTransp = class(TPersistent)
   private
-    FvServ: currency;
-    FvBCRet: currency;
-    FpICMSRet: currency;
-    FvICMSRet: currency;
-    FCFOP: string;
-    FcMunFG: integer;
+    FvServ: Currency;
+    FvBCRet: Currency;
+    FpICMSRet: Currency;
+    FvICMSRet: Currency;
+    FCFOP: String;
+    FcMunFG: Integer;
   public
     constructor Create(AOwner: TTransp);
   published
-    property vServ: currency read FvServ write FvServ;
-    property vBCRet: currency read FvBCRet write FvBCRet;
-    property pICMSRet: currency read FpICMSRet write FpICMSRet;
-    property vICMSRet: currency read FvICMSRet write FvICMSRet;
-    property CFOP: string read FCFOP write FCFOP;
-    property cMunFG: integer read FcMunFG write FcMunFG;
+    property vServ: Currency read FvServ write FvServ;
+    property vBCRet: Currency read FvBCRet write FvBCRet;
+    property pICMSRet: Currency read FpICMSRet write FpICMSRet;
+    property vICMSRet: Currency read FvICMSRet write FvICMSRet;
+    property CFOP: String read FCFOP write FCFOP;
+    property cMunFG: Integer read FcMunFG write FcMunFG;
   end;
 
   TveicTransp = class(TPersistent)
   private
-    Fplaca: string;
-    FUF: string;
-    FRNTC: string;
+    Fplaca: String;
+    FUF: String;
+    FRNTC: String;
   published
-    property placa: string read Fplaca write Fplaca;
-    property UF: string read FUF write FUF;
-    property RNTC: string read FRNTC write FRNTC;
+    property placa: String read Fplaca write Fplaca;
+    property UF: String read FUF write FUF;
+    property RNTC: String read FRNTC write FRNTC;
   end;
 
   TReboqueCollection = class(TCollection)
@@ -1371,13 +1366,13 @@ type
 
   TReboqueCollectionItem = class(TCollectionItem)
   private
-    Fplaca: string;
-    FUF: string;
-    FRNTC: string;
+    Fplaca: String;
+    FUF: String;
+    FRNTC: String;
   published
-    property placa: string read Fplaca write Fplaca;
-    property UF: string read FUF write FUF;
-    property RNTC: string read FRNTC write FRNTC;
+    property placa: String read Fplaca write Fplaca;
+    property UF: String read FUF write FUF;
+    property RNTC: String read FRNTC write FRNTC;
   end;
 
   TVolCollection = class(TCollection)
@@ -1392,24 +1387,25 @@ type
 
   TVolCollectionItem = class(TCollectionItem)
   private
-    FqVol: integer;
-    Fesp: string;
-    Fmarca: string;
-    FnVol: string;
-    FpesoL: currency;
-    FpesoB: currency;
+    FqVol: Integer;
+    Fesp: String;
+    Fmarca: String;
+    FnVol: String;
+    FpesoL: Currency;
+    FpesoB: Currency;
     FLacres: TLacresCollection;
+
     procedure SetLacres(Value: TLacresCollection);
   public
     constructor Create; reintroduce;
     destructor Destroy; override;
   published
-    property qVol: integer read FqVol write FqVol;
-    property esp: string read Fesp write Fesp;
-    property marca: string read Fmarca write Fmarca;
-    property nVol: string read FnVol write FnVol;
-    property pesoL: currency read FpesoL write FpesoL;
-    property pesoB: currency read FpesoB write FpesoB;
+    property qVol: Integer read FqVol write FqVol;
+    property esp: String read Fesp write Fesp;
+    property marca: String read Fmarca write Fmarca;
+    property nVol: String read FnVol write FnVol;
+    property pesoL: Currency read FpesoL write FpesoL;
+    property pesoB: Currency read FpesoB write FpesoB;
     property Lacres: TLacresCollection read FLacres write SetLacres;
   end;
 
@@ -1425,15 +1421,16 @@ type
 
   TLacresCollectionItem = class(TCollectionItem)
   private
-    FnLacre: string;
+    FnLacre: String;
   published
-    property nLacre: string read FnLacre write FnLacre;
+    property nLacre: String read FnLacre write FnLacre;
   end;
 
   TCobr = class(TPersistent)
   private
     FFat: TFat;
     FDup: TDupCollection;
+
     procedure SetDup(Value: TDupCollection);
   public
     constructor Create(AOwner: TNFe);
@@ -1445,15 +1442,15 @@ type
 
   TFat = class(TPersistent)
   private
-    FnFat: string;
-    FvOrig: currency;
-    FvDesc: currency;
-    FvLiq: currency;
+    FnFat: String;
+    FvOrig: Currency;
+    FvDesc: Currency;
+    FvLiq: Currency;
   published
-    property nFat: string read FnFat write FnFat;
-    property vOrig: currency read FvOrig write FvOrig;
-    property vDesc: currency read FvDesc write FvDesc;
-    property vLiq: currency read FvLiq write FvLiq;
+    property nFat: String read FnFat write FnFat;
+    property vOrig: Currency read FvOrig write FvOrig;
+    property vDesc: Currency read FvDesc write FvDesc;
+    property vLiq: Currency read FvLiq write FvLiq;
   end;
 
   TDupCollection = class(TCollection)
@@ -1470,13 +1467,13 @@ type
 
   TDupCollectionItem = class(TCollectionItem)
   private
-    FnDup: string;
+    FnDup: String;
     FdVenc: TDateTime;
-    FvDup: currency;
+    FvDup: Currency;
   published
-    property nDup: string read FnDup write FnDup;
+    property nDup: String read FnDup write FnDup;
     property dVenc: TDateTime read FdVenc write FdVenc;
-    property vDup: currency read FvDup write FvDup;
+    property vDup: Currency read FvDup write FvDup;
   end;
 
   TpagCollection = class(TCollection)
@@ -1492,25 +1489,26 @@ type
   TpagCollectionItem = class(TCollectionItem)
   private
     FtPag: TpcnFormaPagamento;
-    FvPag: currency;
-    FCNPJ: string;
+    FvPag: Currency;
+    FCNPJ: String;
     FtBand: TpcnBandeiraCartao;
-    FcAut: string;
+    FcAut: String;
   published
     property tPag: TpcnFormaPagamento read FtPag write FtPag;
     property vPag: Currency read FvPag write FvPag;
-    property CNPJ: string read FCNPJ write FCNPJ;
+    property CNPJ: String read FCNPJ write FCNPJ;
     property tBand: TpcnBandeiraCartao read FtBand write FtBand;
-    property cAut: string read FcAut write FcAut;
+    property cAut: String read FcAut write FcAut;
   end;
 
   TInfAdic = class(TPersistent)
   private
-    FinfAdFisco: string;
-    FinfCpl: string;
+    FinfAdFisco: String;
+    FinfCpl: String;
     FobsCont: TobsContCollection;
     FobsFisco: TobsFiscoCollection;
     FprocRef: TprocRefCollection;
+
     procedure SetobsCont(Value: TobsContCollection);
     procedure SetobsFisco(Value: TobsFiscoCollection);
     procedure SetprocRef(Value: TprocRefCollection);
@@ -1518,8 +1516,8 @@ type
     constructor Create(AOwner: TNFe);
     destructor Destroy; override;
   published
-    property infAdFisco: string read FinfAdFisco write FinfAdFisco;
-    property infCpl: string read FinfCpl write FinfCpl;
+    property infAdFisco: String read FinfAdFisco write FinfAdFisco;
+    property infCpl: String read FinfCpl write FinfCpl;
     property obsCont: TobsContCollection read FobsCont write SetobsCont;
     property obsFisco: TobsFiscoCollection read FobsFisco write SetobsFisco;
     property procRef: TprocRefCollection read FprocRef write SetprocRef;
@@ -1537,11 +1535,11 @@ type
 
   TobsContCollectionItem = class(TCollectionItem)
   private
-    FxCampo: string;
-    FxTexto: string;
+    FxCampo: String;
+    FxTexto: String;
   published
-    property xCampo: string read FxCampo write FxCampo;
-    property xTexto: string read FxTexto write FxTexto;
+    property xCampo: String read FxCampo write FxCampo;
+    property xTexto: String read FxTexto write FxTexto;
   end;
 
   TobsFiscoCollection = class(TCollection)
@@ -1556,11 +1554,11 @@ type
 
   TobsFiscoCollectionItem = class(TCollectionItem)
   private
-    FxCampo: string;
-    FxTexto: string;
+    FxCampo: String;
+    FxTexto: String;
   published
-    property xCampo: string read FxCampo write FxCampo;
-    property xTexto: string read FxTexto write FxTexto;
+    property xCampo: String read FxCampo write FxCampo;
+    property xTexto: String read FxTexto write FxTexto;
   end;
 
   TprocRefCollection = class(TCollection)
@@ -1575,69 +1573,70 @@ type
 
   TprocRefCollectionItem = class(TCollectionItem)
   private
-    FnProc: string;
+    FnProc: String;
     FindProc: TpcnIndicadorProcesso;
   published
-    property nProc: string read FnProc write FnProc;
+    property nProc: String read FnProc write FnProc;
     property indProc: TpcnIndicadorProcesso read FindProc write FindProc default ipSEFAZ;
   end;
 
   TExporta = class(TPersistent)
   private
-    FUFembarq: string;
-    FxLocEmbarq: string;
+    FUFembarq: String;
+    FxLocEmbarq: String;
     // Versao 3.10
-    FUFSaidaPais: string;
-    FxLocExporta: string;
-    FxLocDespacho: string;
+    FUFSaidaPais: String;
+    FxLocExporta: String;
+    FxLocDespacho: String;
   published
-    property UFembarq: string read FUFembarq write FUFembarq;
-    property xLocEmbarq: string read FxLocEmbarq write FxLocEmbarq;
+    property UFembarq: String read FUFembarq write FUFembarq;
+    property xLocEmbarq: String read FxLocEmbarq write FxLocEmbarq;
     // Versao 3.10
-    property UFSaidaPais: string read FUFSaidaPais write FUFSaidaPais;
-    property xLocExporta: string read FxLocExporta write FxLocExporta;
-    property xLocDespacho: string read FxLocDespacho write FxLocDespacho;
+    property UFSaidaPais: String read FUFSaidaPais write FUFSaidaPais;
+    property xLocExporta: String read FxLocExporta write FxLocExporta;
+    property xLocDespacho: String read FxLocDespacho write FxLocDespacho;
   end;
 
   TCompra = class(TPersistent)
   private
-    FxNEmp: string;
-    FxPed: string;
-    FxCont: string;
+    FxNEmp: String;
+    FxPed: String;
+    FxCont: String;
   published
-    property xNEmp: string read FxNEmp write FxNEmp;
-    property xPed: string read FxPed write FxPed;
-    property xCont: string read FxCont write FxCont;
+    property xNEmp: String read FxNEmp write FxNEmp;
+    property xPed: String read FxPed write FxPed;
+    property xCont: String read FxCont write FxCont;
   end;
 
   TCana = class(TPersistent)
   private
-    Fsafra: string;
-    Fref: string;
+    Fsafra: String;
+    Fref: String;
     Ffordia : TForDiaCollection;
-    FqTotMes: double;
-    FqTotAnt: double;
-    FqTotGer: double;
+    FqTotMes: Double;
+    FqTotAnt: Double;
+    FqTotGer: Double;
     Fdeduc : TDeducCollection;
-    FvFor: currency;
-    FvTotDed: currency;
-    FvLiqFor: currency;
+    FvFor: Currency;
+    FvTotDed: Currency;
+    FvLiqFor: Currency;
+
     procedure SetDeduc(const Value: TDeducCollection);
     procedure SetForDia(const Value: TForDiaCollection);
   private
     constructor Create(AOwner: TNFe);
   published
     destructor Destroy; override;
-    property safra: string read Fsafra write Fsafra;
-    property ref: string read Fref write Fref;
+    property safra: String read Fsafra write Fsafra;
+    property ref: String read Fref write Fref;
     property fordia: TForDiaCollection read Ffordia write SetForDia;
-    property qTotMes: double read FqTotMes write FqTotMes;
-    property qTotAnt: double read FqTotAnt write FqTotAnt;
-    property qTotGer: double read FqTotGer write FqTotGer;
+    property qTotMes: Double read FqTotMes write FqTotMes;
+    property qTotAnt: Double read FqTotAnt write FqTotAnt;
+    property qTotGer: Double read FqTotGer write FqTotGer;
     property deduc: TDeducCollection read Fdeduc write SetDeduc;
-    property vFor: currency read FvFor write FvFor;
-    property vTotDed: currency read FvTotDed write FvTotDed;
-    property vLiqFor: currency read FvLiqFor write FvLiqFor;
+    property vFor: Currency read FvFor write FvFor;
+    property vTotDed: Currency read FvTotDed write FvTotDed;
+    property vLiqFor: Currency read FvLiqFor write FvLiqFor;
   end;
 
   TForDiaCollection = class(TCollection)
@@ -1652,11 +1651,11 @@ type
 
   TForDiaCollectionItem = class(TCollectionItem)
   private
-    Fdia: integer;
-    Fqtde: currency;
+    Fdia: Integer;
+    Fqtde: Currency;
   published
-    property dia: integer read Fdia write Fdia;
-    property qtde: currency read Fqtde write Fqtde;
+    property dia: Integer read Fdia write Fdia;
+    property qtde: Currency read Fqtde write Fqtde;
   end;
 
   TDeducCollection = class(TCollection)
@@ -1671,11 +1670,11 @@ type
 
   TDeducCollectionItem = class(TCollectionItem)
   private
-    FxDed: string;
-    FvDed: currency;
+    FxDed: String;
+    FvDed: Currency;
   published
-    property xDed: string read FxDed write FxDed;
-    property vDed: currency read FvDed write FvDed;
+    property xDed: String read FxDed write FxDed;
+    property vDed: Currency read FvDed write FvDed;
   end;
 
   TautXMLCollection = class(TCollection)
@@ -1700,9 +1699,9 @@ type
 
 const
 
-  CMUN_EXTERIOR: integer = 9999999;
-  XMUN_EXTERIOR: string = 'EXTERIOR';
-  UF_EXTERIOR: string = 'EX';
+  CMUN_EXTERIOR: Integer = 9999999;
+  XMUN_EXTERIOR: String = 'EXTERIOR';
+  UF_EXTERIOR: String = 'EX';
 
 implementation
 
@@ -1933,7 +1932,7 @@ begin
   inherited;
 end;
 
-procedure TProd.getCFOP(const Value: string);
+procedure TProd.getCFOP(const Value: String);
 begin
   FCFOP := Value;
 end;
@@ -2499,9 +2498,9 @@ begin
      Result := FVersao;
 end;
 
-function TinfNFe.GetVersaoStr: string;
+function TinfNFe.GetVersaoStr: String;
    function FormatFloat_Aux(AValue: Extended;
-                            AFormat: string): string;
+                            AFormat: String): String;
    {$IFDEF VER140} //delphi6
    {$ELSE}
    var
@@ -2529,9 +2528,9 @@ end;
 
 { TveicProd }
 
-function TveicProd.getCombDescricao: string;
+function TveicProd.getCombDescricao: String;
 var
-  wTpComb: integer;
+  wTpComb: Integer;
 begin
   wTpComb := StrToIntDef(FtpComb,0);
 

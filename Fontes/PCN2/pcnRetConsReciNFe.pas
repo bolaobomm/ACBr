@@ -43,52 +43,50 @@
 //                                                                            //
 ////////////////////////////////////////////////////////////////////////////////
 
+{$I ACBr.inc}
 
 unit pcnRetConsReciNFe;
 
-interface uses
+interface
+
+uses
   SysUtils, Classes, pcnAuxiliar, pcnConversao, pcnLeitor;
 
 type
 
-  //////////////////////////////////////////////////////////////////////////////
-  //                                                                          //
-  //    E M   D E S E N V O L V I M E N T O   -   N Ã O   T E S T A D O       //
-  //                                                                          //
-  //////////////////////////////////////////////////////////////////////////////
-
-  TRetConsReciNFe = class;
-  TProtNFeCollection = class;
+  TRetConsReciNFe        = class;
+  TProtNFeCollection     = class;
   TProtNFeCollectionItem = class;
 
   TRetConsReciNFe = class(TPersistent)
   private
     FLeitor: TLeitor;
     FtpAmb: TpcnTipoAmbiente;
-    FverAplic: string;
-    FnRec: string;
-    FcStat: integer;
-    FxMotivo: string;
-    FcUF: integer;
-    FcMsg: integer;
-    FxMsg: string;
+    FverAplic: String;
+    FnRec: String;
+    FcStat: Integer;
+    FxMotivo: String;
+    FcUF: Integer;
+    FcMsg: Integer;
+    FxMsg: String;
     FProtNFe: TProtNFeCollection;
+
     procedure SetProtNFe(const Value: TProtNFeCollection);
   public
     constructor Create;
     destructor Destroy; override;
-    function LerXML: boolean;
+    function LerXML: Boolean;
   published
-    property Leitor: TLeitor read FLeitor write FLeitor;
-    property tpAmb: TpcnTipoAmbiente read FtpAmb write FtpAmb;
-    property verAplic: string read FverAplic write FverAplic;
-    property nRec: string read FnRec write FnRec;
-    property cStat: integer read FcStat write FcStat;
-    property xMotivo: string read FxMotivo write FxMotivo;
-    property cUF: integer read FcUF write FcUF;
-    property cMsg: integer read FcMsg write FcMsg;
-    property xMsg: string read FxMsg write FxMsg;
-    property ProtNFe: TProtNFeCollection read FProtNFe write SetProtNFe;
+    property Leitor: TLeitor             read FLeitor   write FLeitor;
+    property tpAmb: TpcnTipoAmbiente     read FtpAmb    write FtpAmb;
+    property verAplic: String            read FverAplic write FverAplic;
+    property nRec: String                read FnRec     write FnRec;
+    property cStat: Integer              read FcStat    write FcStat;
+    property xMotivo: String             read FxMotivo  write FxMotivo;
+    property cUF: Integer                read FcUF      write FcUF;
+    property cMsg: Integer               read FcMsg     write FcMsg;
+    property xMsg: String                read FxMsg     write FxMsg;
+    property ProtNFe: TProtNFeCollection read FProtNFe  write SetProtNFe;
   end;
 
   TProtNFeCollection = class(TCollection)
@@ -104,22 +102,22 @@ type
   TProtNFeCollectionItem = class(TCollectionItem)
   private
     FtpAmb: TpcnTipoAmbiente;
-    FverAplic: string;
-    FchNFe: string;
+    FverAplic: String;
+    FchNFe: String;
     FdhRecbto: TDateTime;
-    FnProt: string;
-    FdigVal: string;
-    FcStat: integer;
-    FxMotivo: string;
+    FnProt: String;
+    FdigVal: String;
+    FcStat: Integer;
+    FxMotivo: String;
   published
-    property tpAmb: TpcnTipoAmbiente read FtpAmb write FtpAmb;
-    property verAplic: string read FverAplic write FverAplic;
-    property chNFe: string read FchNFe write FchNFe;
-    property dhRecbto: TDateTime read FdhRecbto write FdhRecbto;
-    property nProt: string read FnProt write FnProt;
-    property digVal: string read FdigVal write FdigVal;
-    property cStat: integer read FcStat write FcStat;
-    property xMotivo: string read FxMotivo write FxMotivo;
+    property tpAmb: TpcnTipoAmbiente read FtpAmb    write FtpAmb;
+    property verAplic: String        read FverAplic write FverAplic;
+    property chNFe: String           read FchNFe    write FchNFe;
+    property dhRecbto: TDateTime     read FdhRecbto write FdhRecbto;
+    property nProt: String           read FnProt    write FnProt;
+    property digVal: String          read FdigVal   write FdigVal;
+    property cStat: Integer          read FcStat    write FcStat;
+    property xMotivo: String         read FxMotivo  write FxMotivo;
   end;
 
 implementation
@@ -128,7 +126,7 @@ implementation
 
 constructor TRetConsReciNFe.Create;
 begin
-  FLeitor := TLeitor.Create;
+  FLeitor  := TLeitor.Create;
   FProtNFe := TProtNFeCollection.Create(self);
 end;
 
@@ -166,38 +164,38 @@ begin
   inherited SetItem(Index, Value);
 end;
 
-////////////////////////////////////////////////////////////////////////////////
-
-function TRetConsReciNFe.LerXML: boolean;
+function TRetConsReciNFe.LerXML: Boolean;
 var
-  ok: boolean;
-  i: integer;
+  ok: Boolean;
+  i: Integer;
 begin
   Result := False;
   try
     if Leitor.rExtrai(1, 'retConsReciNFe') <> '' then
     begin
       Leitor.Grupo := Leitor.Arquivo;
-      (*BR03 *)FtpAmb := StrToTpAmb(ok, Leitor.rCampo(tcStr, 'tpAmb'));
+
+      (*BR03 *)FtpAmb    := StrToTpAmb(ok, Leitor.rCampo(tcStr, 'tpAmb'));
       (*BR04 *)FverAplic := Leitor.rCampo(tcStr, 'verAplic');
-      (*BR04a*)FnRec := Leitor.rCampo(tcStr, 'nRec');
-      (*BR05 *)FcStat := Leitor.rCampo(tcInt, 'cStat');
-      (*BR06 *)FxMotivo := Leitor.rCampo(tcStr, 'xMotivo');
-      (*BR06a*)FcUF := Leitor.rCampo(tcInt, 'cUF');
-      (*BR06b*)FcMsg := Leitor.rCampo(tcInt, 'cMsg');
-      (*BR06c*)FxMsg := Leitor.rCampo(tcStr, 'xMsg');
+      (*BR04a*)FnRec     := Leitor.rCampo(tcStr, 'nRec');
+      (*BR05 *)FcStat    := Leitor.rCampo(tcInt, 'cStat');
+      (*BR06 *)FxMotivo  := Leitor.rCampo(tcStr, 'xMotivo');
+      (*BR06a*)FcUF      := Leitor.rCampo(tcInt, 'cUF');
+      (*BR06b*)FcMsg     := Leitor.rCampo(tcInt, 'cMsg');
+      (*BR06c*)FxMsg     := Leitor.rCampo(tcStr, 'xMsg');
+
       i := 0;
       while (FcStat = 104) and (Leitor.rExtrai(1, 'infProt', '', i + 1) <> '') do
       begin
         ProtNFe.Add;
-        (*PR05*)ProtNFe[i].FtpAmb := StrToTpAmb(ok, Leitor.rCampo(tcStr, 'tpAmb'));
+        (*PR05*)ProtNFe[i].FtpAmb    := StrToTpAmb(ok, Leitor.rCampo(tcStr, 'tpAmb'));
         (*PR06*)ProtNFe[i].FverAplic := Leitor.rCampo(tcStr, 'verAplic');
-        (*PR07*)ProtNFe[i].FchNFe := Leitor.rCampo(tcStr, 'chNFe');
+        (*PR07*)ProtNFe[i].FchNFe    := Leitor.rCampo(tcStr, 'chNFe');
         (*PR08*)ProtNFe[i].FdhRecbto := Leitor.rCampo(tcDatHor, 'dhRecbto');
-        (*PR09*)ProtNFe[i].FnProt := Leitor.rCampo(tcStr, 'nProt');
-        (*PR10*)ProtNFe[i].FdigVal := Leitor.rCampo(tcStr, 'digVal');
-        (*PR11*)ProtNFe[i].FcStat := Leitor.rCampo(tcInt, 'cStat');
-        (*PR12*)ProtNFe[i].FxMotivo := Leitor.rCampo(tcStr, 'xMotivo');
+        (*PR09*)ProtNFe[i].FnProt    := Leitor.rCampo(tcStr, 'nProt');
+        (*PR10*)ProtNFe[i].FdigVal   := Leitor.rCampo(tcStr, 'digVal');
+        (*PR11*)ProtNFe[i].FcStat    := Leitor.rCampo(tcInt, 'cStat');
+        (*PR12*)ProtNFe[i].FxMotivo  := Leitor.rCampo(tcStr, 'xMotivo');
         inc(i);
       end;
       if i = 0 then

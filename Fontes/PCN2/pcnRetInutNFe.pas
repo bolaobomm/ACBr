@@ -51,9 +51,13 @@
 //           if leitor.rExtrai(1, 'infInut') <> '' then
 //////////////////////////////////////
 
+{$I ACBr.inc}
+
 unit pcnRetInutNFe;
 
-interface uses
+interface
+
+uses
   SysUtils, Classes, pcnAuxiliar, pcnConversao, pcnLeitor;
 
 type
@@ -62,41 +66,41 @@ type
   private
     FId: String;
     FtpAmb: TpcnTipoAmbiente;
-    FverAplic: string;
+    FverAplic: String;
     FLeitor: TLeitor;
-    FcStat: integer;
-    FxMotivo: string;
-    FxJust: string;  //Criado para Pegar a Justificativa caso, esteja lendo um arquivo ProcInut
-    FcUF: integer;
-    Fano: integer;
-    FCNPJ: string;
-    FModelo: integer;
-    FSerie: integer;
-    FnNFIni: integer;
-    FnNFFin: integer;
+    FcStat: Integer;
+    FxMotivo: String;
+    FxJust: String;  //Criado para Pegar a Justificativa caso, esteja lendo um arquivo ProcInut
+    FcUF: Integer;
+    Fano: Integer;
+    FCNPJ: String;
+    FModelo: Integer;
+    FSerie: Integer;
+    FnNFIni: Integer;
+    FnNFFin: Integer;
     FdhRecbto: TDateTime;
-    FnProt: string;
+    FnProt: String;
   public
     constructor Create;
     destructor Destroy; override;
-    function LerXml: boolean;
+    function LerXml: Boolean;
   published
-    property Leitor: TLeitor read FLeitor write FLeitor;
-    property Id: String              read FId    write FId;
-    property tpAmb: TpcnTipoAmbiente read FtpAmb write FtpAmb;
-    property verAplic: string read FverAplic write FverAplic;
-    property cStat: integer read FcStat write FcStat;
-    property xMotivo: string read FxMotivo write FxMotivo;
-    property xJust: string read FxJust write FxJust;
-    property cUF: integer read FcUF write FcUF;
-    property ano: integer read Fano write Fano;
-    property CNPJ: string read FCNPJ write FCNPJ;
-    property Modelo: integer read FModelo write FModelo;
-    property Serie: integer read FSerie write FSerie;
-    property nNFIni: integer read FnNFIni write FnNFIni;
-    property nNFFin: integer read FnNFFin write FnNFFin;
-    property dhRecbto: TDateTime read FdhRecbto write FdhRecbto;
-    property nProt: string read FnProt write FnProt;
+    property Leitor: TLeitor         read FLeitor   write FLeitor;
+    property Id: String              read FId       write FId;
+    property tpAmb: TpcnTipoAmbiente read FtpAmb    write FtpAmb;
+    property verAplic: String        read FverAplic write FverAplic;
+    property cStat: Integer          read FcStat    write FcStat;
+    property xMotivo: String         read FxMotivo  write FxMotivo;
+    property xJust: String           read FxJust    write FxJust;
+    property cUF: Integer            read FcUF      write FcUF;
+    property ano: Integer            read Fano      write Fano;
+    property CNPJ: String            read FCNPJ     write FCNPJ;
+    property Modelo: Integer         read FModelo   write FModelo;
+    property Serie: Integer          read FSerie    write FSerie;
+    property nNFIni: Integer         read FnNFIni   write FnNFIni;
+    property nNFFin: Integer         read FnNFFin   write FnNFFin;
+    property dhRecbto: TDateTime     read FdhRecbto write FdhRecbto;
+    property nProt: String           read FnProt    write FnProt;
   end;
 
 implementation
@@ -114,9 +118,9 @@ begin
   inherited;
 end;
 
-function TRetInutNFe.LerXml: boolean;
+function TRetInutNFe.LerXml: Boolean;
 var
-  ok: boolean;
+  ok: Boolean;
 begin
   Result := False;
   try

@@ -42,47 +42,45 @@
 //              condicionado a manutenção deste cabeçalho junto ao código     //
 //                                                                            //
 ////////////////////////////////////////////////////////////////////////////////
-{******************************************************************************
+
+{*******************************************************************************
 |* Historico
 |*
 |* 28/09/2012: Italo
-|*  - Revisado geração do XML e adicionado propriedade para controle de Versão 
+|*  - Revisado geração do XML e adicionado propriedade para controle de Versão
 |*    do WebService Utilizado
-******************************************************************************}
+*******************************************************************************}
+
+{$I ACBr.inc}
+
 unit pcnConsCad;
 
-interface uses
+interface
+
+uses
   SysUtils, Classes, pcnAuxiliar, pcnConversao, pcnGerador;
 
 type
 
-  //////////////////////////////////////////////////////////////////////////////
-  //                                                                          //
-  //    E M   D E S E N V O L V I M E N T O   -   N Ã O   T E S T A D O       //
-  //                                                                          //
-  //////////////////////////////////////////////////////////////////////////////
-
   TConsCad = class(TPersistent)
   private
     FGerador: TGerador;
-    FSchema: TpcnSchema;
-    FUF: string;
-    FIE: string;
-    FCNPJ: string;
-    FCPF: string;
+    FUF: String;
+    FIE: String;
+    FCNPJ: String;
+    FCPF: String;
     FVersao: String;
   public
     constructor Create;
     destructor Destroy; override;
-    function GerarXML: boolean;
+    function GerarXML: Boolean;
   published
     property Gerador: TGerador read FGerador write FGerador;
-    property schema: TpcnSchema read Fschema write Fschema;
-    property UF: string read FUF write FUF;
-    property IE: string read FIE write FIE;
-    property CNPJ: string read FCNPJ write FCNPJ;
-    property CPF: string read FCPF write FCPF;
-    property Versao: String read FVersao write FVersao;
+    property UF: String        read FUF      write FUF;
+    property IE: String        read FIE      write FIE;
+    property CNPJ: String      read FCNPJ    write FCNPJ;
+    property CPF: String       read FCPF     write FCPF;
+    property Versao: String    read FVersao  write FVersao;
   end;
 
 implementation
@@ -100,11 +98,12 @@ begin
   inherited;
 end;
 
-function TConsCad.GerarXML: boolean;
+function TConsCad.GerarXML: Boolean;
 var
   i: integer;
 begin
   Gerador.ArquivoFormatoXML := '';
+
   Gerador.wGrupo('ConsCad ' + NAME_SPACE + ' versao="' + Versao + '"');
   Gerador.wGrupo('infCons');
   Gerador.wCampo(tcStr, 'GP04', 'xServ ', 008, 008, 1, 'CONS-CAD', DSC_XSERV);
@@ -126,7 +125,6 @@ begin
   Gerador.wGrupo('/ConsCad');
 
   Result := (Gerador.ListaDeAlertas.Count = 0);
- 
 end;
 
 end.

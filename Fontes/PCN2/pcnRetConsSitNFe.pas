@@ -43,26 +43,23 @@
 //                                                                            //
 ////////////////////////////////////////////////////////////////////////////////
 
+{$I ACBr.inc}
+
 unit pcnRetConsSitNFe;
 
-interface uses
+interface
+
+uses
   SysUtils, Classes, pcnAuxiliar, pcnConversao, pcnLeitor, pcnProcNFe,
   pcnRetCancNFe, pcnRetEnvEventoNFe;
 
 type
 
-  //////////////////////////////////////////////////////////////////////////////
-  //                                                                          //
-  //    E M   D E S E N V O L V I M E N T O   -   N Ã O   T E S T A D O       //
-  //                                                                          //
-  //////////////////////////////////////////////////////////////////////////////
-
   {eventos_juaumkiko}
-  TRetEventoNFeCollection = class;
+  TRetEventoNFeCollection     = class;
   TRetEventoNFeCollectionItem = class;
-  TRetConsSitNFe = class;
+  TRetConsSitNFe              = class;
 
-  {eventos_juaumkiko}
   TRetEventoNFeCollection = class(TCollection)
   private
     function GetItem(Index: Integer): TRetEventoNFeCollectionItem;
@@ -73,7 +70,6 @@ type
     property Items[Index: Integer]: TRetEventoNFeCollectionItem read GetItem write SetItem; default;
   end;
 
-  {eventos_juaumkiko}
   TRetEventoNFeCollectionItem = class(TCollectionItem)
   private
     FRetEventoNFe: TRetEventoNFe;
@@ -88,33 +84,33 @@ type
   private
     FLeitor: TLeitor;
     FtpAmb: TpcnTipoAmbiente;
-    FverAplic: string;
+    FverAplic: String;
     FcStat: Integer;
-    FxMotivo: string;
-    FcUF: integer;
+    FxMotivo: String;
+    FcUF: Integer;
     FdhRecbto: TDateTime;
-    FchNFe: string;
+    FchNFe: String;
     FprotNFe: TProcNFe;
     FretCancNFe: TRetCancNFe;
     FprocEventoNFe: TRetEventoNFeCollection;
-    FnRec: string; // Consta no Retorno da NFC-e
+    FnRec: String; // Consta no Retorno da NFC-e
   public
     constructor Create;
     destructor Destroy; override;
-    function LerXml: boolean;
+    function LerXml: Boolean;
   published
-    property Leitor: TLeitor read FLeitor write FLeitor;
-    property tpAmb: TpcnTipoAmbiente read FtpAmb write FtpAmb;
-    property verAplic: string read FverAplic write FverAplic;
-    property cStat: Integer read FcStat write FcStat;
-    property xMotivo: string read FxMotivo write FxMotivo;
-    property cUF: integer read FcUF write FcUF;
-    property dhRecbto: TDateTime read FdhRecbto write FdhRecbto;
-    property chNfe: string read FchNfe write FchNfe;
-    property protNFe: TProcNFe read FprotNFe write FprotNFe;
-    property retCancNFe: TRetCancNFe read FretCancNFe write FretCancNFe;
+    property Leitor: TLeitor                        read FLeitor        write FLeitor;
+    property tpAmb: TpcnTipoAmbiente                read FtpAmb         write FtpAmb;
+    property verAplic: String                       read FverAplic      write FverAplic;
+    property cStat: Integer                         read FcStat         write FcStat;
+    property xMotivo: String                        read FxMotivo       write FxMotivo;
+    property cUF: Integer                           read FcUF           write FcUF;
+    property dhRecbto: TDateTime                    read FdhRecbto      write FdhRecbto;
+    property chNfe: String                          read FchNfe         write FchNfe;
+    property protNFe: TProcNFe                      read FprotNFe       write FprotNFe;
+    property retCancNFe: TRetCancNFe                read FretCancNFe    write FretCancNFe;
     property procEventoNFe: TRetEventoNFeCollection read FprocEventoNFe write FprocEventoNFe;
-    property nRec: string read FnRec write FnRec;
+    property nRec: String                           read FnRec          write FnRec;
   end;
 
 implementation
@@ -123,8 +119,8 @@ implementation
 
 constructor TRetConsSitNFe.Create;
 begin
-  FLeitor := TLeitor.Create;
-  FprotNFe := TProcNFe.create;
+  FLeitor     := TLeitor.Create;
+  FprotNFe    := TProcNFe.create;
   FretCancNFe := TRetCancNFe.create;
 end;
 
@@ -138,26 +134,27 @@ begin
   inherited;
 end;
 
-function TRetConsSitNFe.LerXml: boolean;
+function TRetConsSitNFe.LerXml: Boolean;
 var
-  ok: boolean;
-  i: integer;
+  ok: Boolean;
+  i: Integer;
 begin
   Result := False;
   try
     if leitor.rExtrai(1, 'retConsSitNFe') <> '' then
     begin
-      (*ER03 *)FtpAmb     := StrToTpAmb(ok, leitor.rCampo(tcStr, 'tpAmb'));
-      (*ER04 *)FverAplic  := leitor.rCampo(tcStr, 'verAplic');
+      (*ER03 *)FtpAmb    := StrToTpAmb(ok, leitor.rCampo(tcStr, 'tpAmb'));
+      (*ER04 *)FverAplic := leitor.rCampo(tcStr, 'verAplic');
 
       // Consta no Retorno da NFC-e
-      (*ER04a*)FnRec      := leitor.rCampo(tcStr, 'nRec');
+      (*ER04a*)FnRec     := leitor.rCampo(tcStr, 'nRec');
 
-      (*ER05 *)FcStat     := leitor.rCampo(tcInt, 'cStat');
-      (*ER06 *)FxMotivo   := leitor.rCampo(tcStr, 'xMotivo');
-      (*ER07 *)FcUF       := leitor.rCampo(tcInt, 'cUF');
-      (*ER07a*)FdhRecbto  := leitor.rCampo(tcDatHor, 'dhRecbto');
-      (*ER07b*)FchNFe     := leitor.rCampo(tcStr, 'chNFe');
+      (*ER05 *)FcStat    := leitor.rCampo(tcInt, 'cStat');
+      (*ER06 *)FxMotivo  := leitor.rCampo(tcStr, 'xMotivo');
+      (*ER07 *)FcUF      := leitor.rCampo(tcInt, 'cUF');
+      (*ER07a*)FdhRecbto := leitor.rCampo(tcDatHor, 'dhRecbto');
+      (*ER07b*)FchNFe    := leitor.rCampo(tcStr, 'chNFe');
+
       case FcStat of 100,101,104,110,150,151,155,301,302:
         begin
           if ((Leitor.rExtrai(1, 'protNFe') <> '') or (Leitor.rExtrai(1, 'infProt') <> '')) then
@@ -196,7 +193,7 @@ begin
       begin
         procEventoNFe.Add;
         procEventoNFe.Items[i].RetEventoNFe.Leitor.Arquivo := Leitor.Grupo;
-        procEventoNFe.Items[i].RetEventoNFe.XML := Leitor.Grupo; 
+        procEventoNFe.Items[i].RetEventoNFe.XML            := Leitor.Grupo; 
         procEventoNFe.Items[i].RetEventoNFe.LerXml;
         inc(i);
       end;

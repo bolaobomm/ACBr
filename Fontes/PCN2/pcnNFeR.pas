@@ -50,10 +50,13 @@
 |*  - Alterações para funcionamento com NFC-e
 ******************************************************************************}
 
+{$I ACBr.inc}
+
 unit pcnNFeR;
 
-interface uses
+interface
 
+uses
   SysUtils, Classes,
 {$IFNDEF VER130}
   Variants,
@@ -70,25 +73,24 @@ type
   public
     constructor Create(AOwner: TNFe);
     destructor Destroy; override;
-    function LerXml: boolean;
+    function LerXml: Boolean;
   published
-    property Leitor: TLeitor read FLeitor write FLeitor;
-    property NFe: TNFe read FNFe write FNFe;
+    property Leitor: TLeitor    read FLeitor write FLeitor;
+    property NFe: TNFe          read FNFe    write FNFe;
     property schema: TpcnSchema read Fschema write Fschema;
   end;
 
-  ////////////////////////////////////////////////////////////////////////////////
-
 implementation
 
-uses StrUtils, ACBrConsts;
+uses
+  StrUtils, ACBrConsts;
 
 { TNFeR }
 
 constructor TNFeR.Create(AOwner: TNFe);
 begin
   FLeitor := TLeitor.Create;
-  FNFe := AOwner;
+  FNFe    := AOwner;
 end;
 
 destructor TNFeR.Destroy;
@@ -97,16 +99,14 @@ begin
   inherited Destroy;
 end;
 
-////////////////////////////////////////////////////////////////////////////////
-
-function TNFeR.LerXml: boolean;
+function TNFeR.LerXml: Boolean;
 var
-  ok: boolean;
-  i, j, k, z, nItem: integer;
+  ok: Boolean;
+  i, j, k, z, nItem: Integer;
   Arquivo, Itens, ItensTemp, VersaoInfNFe, Temp_VersaoInfNFe, NumItem: AnsiString;
   Aspas: String;
 
-  Function VerificaParSt(const t: TpcnCSTIcms): TpcnCSTIcms;
+  function VerificaParSt(const t: TpcnCSTIcms): TpcnCSTIcms;
   // 	Verifica se existe Partilha ou St
   begin
     Result := t;
@@ -123,7 +123,6 @@ var
     end;
   end;
 begin
-  // Incluido por Italo em 22/04/2013
   if Pos('Id="', Leitor.Arquivo) <> 0 then
     Aspas := '"'
    else
@@ -779,13 +778,6 @@ begin
       if NFe.infNFe.Versao >= 3 then
       begin
 
-//        dCompet := trim(Leitor.rCampo(tcStr, 'dCompet'));
-//        if dCompet <> '' then
-//        begin
-//          dCompet := Copy(dCompet, 7, 2) + '/' + Copy(dCompet, 5, 2)+ '/' + Copy(dCompet, 1, 4);
-//          (*W22a*)NFe.Total.ISSQNtot.dCompet := StrToDate(dCompet);
-//        end;
-
         (*W22a*)NFe.Total.ISSQNtot.dCompet     := Leitor.rCampo(tcDat, 'dCompet');
         (*W22b*)NFe.Total.ISSQNtot.vDeducao    := Leitor.rCampo(tcDe2, 'vDeducao');
 //        (*W22c*)NFe.Total.ISSQNtot.vINSS        := Leitor.rCampo(tcDe2, 'vINSS');
@@ -801,12 +793,12 @@ begin
 //        (*W22m*)NFe.Total.ISSQNtot.cPais        := Leitor.rCampo(tcInt, 'cPais');
 //        (*W22n*)NFe.Total.ISSQNtot.nProcesso    := Leitor.rCampo(tcStr, 'nProcesso');
 
-        // Italo
         (*W22f*)NFe.Total.ISSQNtot.vISSRet     := Leitor.rCampo(tcDe2, 'vISSRet');
         (*W22g*)NFe.Total.ISSQNtot.cRegTrib    := StrToRegTribISSQN(Ok, Leitor.rCampo(tcStr, 'cRegTrib'));
 //        (*W22p*)NFe.Total.ISSQNtot.indIncentivo := StrToindIncentivo(Ok, Leitor.rCampo(tcStr, 'indIncentivo'));
       end;
     end;
+    
     if Leitor.rExtrai(2, 'retTrib') <> '' then
     begin
       (*W24*)NFe.Total.retTrib.vRetPIS    := Leitor.rCampo(tcDe2, 'vRetPIS');

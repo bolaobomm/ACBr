@@ -42,22 +42,25 @@
 //              condicionado a manutenção deste cabeçalho junto ao código     //
 //                                                                            //
 ////////////////////////////////////////////////////////////////////////////////
-///
+
+{$I ACBr.inc}
+
 unit pcnEnvEventoNFe;
 
 interface
 
-uses SysUtils, Classes,
-     {$IFNDEF VER130}
-     Variants,
-     {$ENDIF}
-     pcnAuxiliar, pcnConversao, pcnGerador, pcnLeitor, pcnEventoNFe;
+uses
+  SysUtils, Classes,
+  {$IFNDEF VER130}
+   Variants,
+  {$ENDIF}
+  pcnAuxiliar, pcnConversao, pcnGerador, pcnLeitor, pcnEventoNFe;
 
 type
-  TInfEventoCollection  = class;
+  TInfEventoCollection     = class;
   TInfEventoCollectionItem = class;
-  TEventoNFe = class;
-  EventoException = class(Exception);
+  TEventoNFe               = class;
+  EventoException          = class(Exception);
 
   TInfEventoCollection = class(TCollection)
   private
@@ -77,14 +80,13 @@ type
     constructor Create; reintroduce;
     destructor Destroy; override;
   published
-    property InfEvento: TInfEvento read FInfEvento write FInfEvento;
+    property InfEvento: TInfEvento       read FInfEvento    write FInfEvento;
     property RetInfEvento: TRetInfEvento read FRetInfEvento write FRetInfEvento;
   end;
 
   TEventoNFe = class(TPersistent)
   private
     FGerador: TGerador;
-    FSchema: TpcnSchema;
     FidLote: Integer;
     FEvento: TInfEventoCollection;
     FVersao: String;
@@ -93,13 +95,12 @@ type
   public
     constructor Create;
     destructor Destroy; override;
-    function GerarXML: boolean;
-    function LerXML(const CaminhoArquivo: string): boolean;
-    function LerXMLFromString(const AXML: String): boolean;
-    function ObterNomeArquivo(tpEvento: TpcnTpEvento): string;
+    function GerarXML: Boolean;
+    function LerXML(const CaminhoArquivo: String): Boolean;
+    function LerXMLFromString(const AXML: String): Boolean;
+    function ObterNomeArquivo(tpEvento: TpcnTpEvento): String;
   published
     property Gerador: TGerador            read FGerador write FGerador;
-    property schema: TpcnSchema           read Fschema  write Fschema;
     property idLote: Integer              read FidLote  write FidLote;
     property Evento: TInfEventoCollection read FEvento  write SetEvento;
     property Versao: String               read FVersao  write FVersao;
@@ -107,14 +108,15 @@ type
 
 implementation
 
-uses pcnRetEnvEventoNFe ;
+uses
+  pcnRetEnvEventoNFe;
 
 { TEventoNFe }
 
 constructor TEventoNFe.Create;
 begin
-  FGerador   := TGerador.Create;
-  FEvento    := TInfEventoCollection.Create(Self);
+  FGerador := TGerador.Create;
+  FEvento  := TInfEventoCollection.Create(Self);
 end;
 
 destructor TEventoNFe.Destroy;
@@ -124,7 +126,7 @@ begin
   inherited;
 end;
 
-function TEventoNFe.ObterNomeArquivo(tpEvento: TpcnTpEvento): string;
+function TEventoNFe.ObterNomeArquivo(tpEvento: TpcnTpEvento): String;
 begin
  case tpEvento of
     teCCe                       : Result := IntToStr(Self.idLote) + '-cce.xml';     // Carta de Correção Eletrônica
@@ -139,59 +141,58 @@ begin
  end;
 end;
 
-function TEventoNFe.GerarXML: boolean;
+function TEventoNFe.GerarXML: Boolean;
 var
-  i     : integer;
-  sDoc  : String;
+  i: Integer;
+  sDoc: String;
 begin
   Result := False;
 
-//  if RetornarVersaoLayout(FSchema, tlCCeNFe) = '2.00' then
-//  begin
+  Gerador.ArquivoFormatoXML := '';
+  Gerador.wGrupo('envEvento ' + NAME_SPACE + ' versao="' + Versao + '"');
+  Gerador.wCampo(tcInt, 'HP03', 'idLote', 001, 015, 1, FidLote, DSC_IDLOTE);
+  for i := 0 to Evento.Count - 1 do
+  begin
+    Evento.Items[i].InfEvento.id := 'ID'+
+                                      Evento.Items[i].InfEvento.TipoEvento +
+                                      SomenteNumeros(Evento.Items[i].InfEvento.chNFe) +
+                                      Format('%.2d', [Evento.Items[i].InfEvento.nSeqEvento]);
 
-    Gerador.ArquivoFormatoXML := '';
-//    Gerador.wGrupo('envEvento ' + NAME_SPACE + ' ' + V1_00);
-    Gerador.wGrupo('envEvento ' + NAME_SPACE + ' versao="' + Versao + '"');
-    Gerador.wCampo(tcInt, 'HP03', 'idLote', 001, 015, 1, FidLote, DSC_IDLOTE);
-    for i:= 0 to Evento.Count - 1 do
-    begin
-      Evento.Items[i].InfEvento.id := 'ID'+
-                                        Evento.Items[i].InfEvento.TipoEvento +
-                                        SomenteNumeros(Evento.Items[i].InfEvento.chNFe) +
-                                        Format('%.2d', [Evento.Items[i].InfEvento.nSeqEvento]);
+    Gerador.wGrupo('evento ' + NAME_SPACE + ' versao="' + Versao + '"');
+    Gerador.wGrupo('infEvento Id="' + Evento.Items[i].InfEvento.id + '"');
 
-//      Gerador.wGrupo('evento ' + NAME_SPACE + ' ' + V1_00);
-      Gerador.wGrupo('evento ' + NAME_SPACE + ' versao="' + Versao + '"');
-      Gerador.wGrupo('infEvento Id="' + Evento.Items[i].InfEvento.id + '"');
-      if Length(Evento.Items[i].InfEvento.id) < 54 then
-          Gerador.wAlerta('HP07', 'ID', '', 'ID de Evento inválido');
-      Gerador.wCampo(tcInt, 'HP08', 'cOrgao', 001, 002, 1, FEvento.Items[i].FInfEvento.cOrgao);
-      Gerador.wCampo(tcStr, 'HP09', 'tpAmb', 001, 001,  1, TpAmbToStr(Evento.Items[i].InfEvento.tpAmb), DSC_TPAMB);
+    if Length(Evento.Items[i].InfEvento.id) < 54 then
+      Gerador.wAlerta('HP07', 'ID', '', 'ID de Evento inválido');
 
-      // SomenteNumeros ..estava executando 5 vezes na versao anterior
-      // no techo de verificar se era cnpj ou cpf.
-      sDoc := SomenteNumeros( Evento.Items[i].InfEvento.CNPJ );
-      case Length( sDoc ) of
-        14 : begin
-              Gerador.wCampo(tcStr, 'HP10', 'CNPJ', 014, 014, 1, sDoc , DSC_CNPJ);
-              if not ValidarCNPJ( sDoc ) then Gerador.wAlerta('HP10', 'CNPJ', DSC_CNPJ, ERR_MSG_INVALIDO);
-             end;
-        11 : begin
-              Gerador.wCampo(tcStr, 'HP11', 'CPF', 011, 011, 1, sDoc, DSC_CPF);
-              if not ValidarCPF( sDoc ) then Gerador.wAlerta('HP11', 'CPF', DSC_CPF, ERR_MSG_INVALIDO);
-             end;
-      end;
-      Gerador.wCampo(tcStr,    'HP12', 'chNFe', 044, 044,      1, Evento.Items[i].InfEvento.chNFe, DSC_CHAVE);
-      if not ValidarChave('NFe' + SomenteNumeros(Evento.Items[i].InfEvento.chNFe)) then
-        Gerador.wAlerta('HP12', 'chNFe', '', 'Chave de NFe inválida');
-        Gerador.wCampo(tcStr,    'HP13', 'dhEvento', 001, 050,   1, FormatDateTime('yyyy-mm-dd"T"hh:nn:ss',Evento.Items[i].InfEvento.dhEvento)+
-                                                                  GetUTC(CodigoParaUF(Evento.Items[i].InfEvento.cOrgao), Evento.Items[i].InfEvento.dhEvento));
-      Gerador.wCampo(tcInt,    'HP14', 'tpEvento', 006, 006,   1, Evento.Items[i].InfEvento.TipoEvento);
-      Gerador.wCampo(tcInt,    'HP15', 'nSeqEvento', 001, 002, 1, Evento.Items[i].InfEvento.nSeqEvento);
-      Gerador.wCampo(tcStr,    'HP16', 'verEvento', 001, 004,  1, Evento.Items[i].InfEvento.versaoEvento);
-      Gerador.wGrupo('detEvento versao="' +  Versao + '"');
-      Gerador.wCampo(tcStr,    'HP19', 'descEvento', 005, 060, 1,  Evento.Items[i].InfEvento.DescEvento);
-      case Evento.Items[i].InfEvento.tpEvento of
+    Gerador.wCampo(tcInt, 'HP08', 'cOrgao', 001, 002, 1, FEvento.Items[i].FInfEvento.cOrgao);
+    Gerador.wCampo(tcStr, 'HP09', 'tpAmb', 001, 001,  1, TpAmbToStr(Evento.Items[i].InfEvento.tpAmb), DSC_TPAMB);
+
+    // SomenteNumeros ..estava executando 5 vezes na versao anterior
+    // no techo de verificar se era cnpj ou cpf.
+    sDoc := SomenteNumeros( Evento.Items[i].InfEvento.CNPJ );
+    case Length( sDoc ) of
+     14: begin
+           Gerador.wCampo(tcStr, 'HP10', 'CNPJ', 014, 014, 1, sDoc , DSC_CNPJ);
+           if not ValidarCNPJ( sDoc ) then Gerador.wAlerta('HP10', 'CNPJ', DSC_CNPJ, ERR_MSG_INVALIDO);
+         end;
+     11: begin
+           Gerador.wCampo(tcStr, 'HP11', 'CPF', 011, 011, 1, sDoc, DSC_CPF);
+           if not ValidarCPF( sDoc ) then Gerador.wAlerta('HP11', 'CPF', DSC_CPF, ERR_MSG_INVALIDO);
+         end;
+    end;
+    Gerador.wCampo(tcStr,    'HP12', 'chNFe', 044, 044,      1, Evento.Items[i].InfEvento.chNFe, DSC_CHAVE);
+
+    if not ValidarChave('NFe' + SomenteNumeros(Evento.Items[i].InfEvento.chNFe)) then
+      Gerador.wAlerta('HP12', 'chNFe', '', 'Chave de NFe inválida');
+
+    Gerador.wCampo(tcStr,    'HP13', 'dhEvento', 001, 050,   1, FormatDateTime('yyyy-mm-dd"T"hh:nn:ss',Evento.Items[i].InfEvento.dhEvento)+
+                                                                GetUTC(CodigoParaUF(Evento.Items[i].InfEvento.cOrgao), Evento.Items[i].InfEvento.dhEvento));
+    Gerador.wCampo(tcInt,    'HP14', 'tpEvento', 006, 006,   1, Evento.Items[i].InfEvento.TipoEvento);
+    Gerador.wCampo(tcInt,    'HP15', 'nSeqEvento', 001, 002, 1, Evento.Items[i].InfEvento.nSeqEvento);
+    Gerador.wCampo(tcStr,    'HP16', 'verEvento', 001, 004,  1, Evento.Items[i].InfEvento.versaoEvento);
+    Gerador.wGrupo('detEvento versao="' +  Versao + '"');
+    Gerador.wCampo(tcStr,    'HP19', 'descEvento', 005, 060, 1,  Evento.Items[i].InfEvento.DescEvento);
+    case Evento.Items[i].InfEvento.tpEvento of
         teCCe:
           begin
             Gerador.wCampo(tcStr, 'HP20', 'xCorrecao', 015, 1000, 1,  Evento.Items[i].InfEvento.detEvento.xCorrecao);
@@ -251,16 +252,14 @@ begin
             Gerador.wGrupo('/dest');
 
           end;
-      end;
-      Gerador.wGrupo('/detEvento');
-      Gerador.wGrupo('/infEvento');
-      Gerador.wGrupo('/evento');
     end;
-    Gerador.wGrupo('/envEvento');
+    Gerador.wGrupo('/detEvento');
+    Gerador.wGrupo('/infEvento');
+    Gerador.wGrupo('/evento');
+  end;
+  Gerador.wGrupo('/envEvento');
 
-    Result := (Gerador.ListaDeAlertas.Count = 0);
-
-//  end;
+  Result := (Gerador.ListaDeAlertas.Count = 0);
 end;
 
 procedure TEventoNFe.SetEvento(const Value: TInfEventoCollection);
@@ -268,7 +267,7 @@ begin
   FEvento.Assign(Value);
 end;
 
-function TEventoNFe.LerXML(const CaminhoArquivo: string): boolean;
+function TEventoNFe.LerXML(const CaminhoArquivo: String): Boolean;
 var
   ArqEvento    : TStringList;
 begin
@@ -281,7 +280,7 @@ begin
   end;
 end;
 
-function TEventoNFe.LerXMLFromString(const AXML: String): boolean;
+function TEventoNFe.LerXMLFromString(const AXML: String): Boolean;
 var
   RetEventoNFe : TRetEventoNFe;
 begin

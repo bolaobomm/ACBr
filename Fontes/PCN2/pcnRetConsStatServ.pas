@@ -43,46 +43,44 @@
 //                                                                            //
 ////////////////////////////////////////////////////////////////////////////////
 
+{$I ACBr.inc}
+
 unit pcnRetConsStatServ;
 
-interface uses
+interface
+
+uses
   SysUtils, Classes, pcnAuxiliar, pcnConversao, pcnLeitor;
 
 type
-
-  //////////////////////////////////////////////////////////////////////////////
-  //                                                                          //
-  //    E M   D E S E N V O L V I M E N T O   -   N Ã O   T E S T A D O       //
-  //                                                                          //
-  //////////////////////////////////////////////////////////////////////////////
 
   TRetConsStatServ = class(TPersistent)
   private
     FtpAmb: TpcnTipoAmbiente;
     FdhRecbto: TDateTime;
-    FcStat: integer;
+    FcStat: Integer;
     FLeitor: TLeitor;
-    FxMotivo: string;
-    FcUF: integer;
-    FverAplic: string;
-    FtMed: integer;
+    FxMotivo: String;
+    FcUF: Integer;
+    FverAplic: String;
+    FtMed: Integer;
     FdhRetorno: TDateTime;
-    FxObs: string;
+    FxObs: String;
   public
     constructor Create;
     destructor Destroy; override;
-    function LerXml: boolean;
+    function LerXml: Boolean;
   published
-    property Leitor: TLeitor read FLeitor write FLeitor;
-    property tpAmb: TpcnTipoAmbiente read FtpAmb write FtpAmb;
-    property verAplic: string read FverAplic write FverAplic;
-    property cStat: integer read FcStat write FcStat;
-    property xMotivo: string read FxMotivo write FxMotivo;
-    property cUF: integer read FcUF write FcUF;
-    property dhRecbto: TDateTime read FdhRecbto write FdhRecbto;
-    property tMed: integer read FtMed write FtMed;
-    property dhRetorno: TDateTime read FdhRetorno write FdhRetorno;
-    property xObs: string read FxObs write FxObs;
+    property Leitor: TLeitor         read FLeitor    write FLeitor;
+    property tpAmb: TpcnTipoAmbiente read FtpAmb     write FtpAmb;
+    property verAplic: String        read FverAplic  write FverAplic;
+    property cStat: Integer          read FcStat     write FcStat;
+    property xMotivo: String         read FxMotivo   write FxMotivo;
+    property cUF: Integer            read FcUF       write FcUF;
+    property dhRecbto: TDateTime     read FdhRecbto  write FdhRecbto;
+    property tMed: Integer           read FtMed      write FtMed;
+    property dhRetorno: TDateTime    read FdhRetorno write FdhRetorno;
+    property xObs: String            read FxObs      write FxObs;
   end;
 
 implementation
@@ -100,24 +98,25 @@ begin
   inherited;
 end;
 
-function TRetConsStatServ.LerXml: boolean;
+function TRetConsStatServ.LerXml: Boolean;
 var
-  ok: boolean;
+  ok: Boolean;
 begin
   Result := False;
   try
     Leitor.Grupo := Leitor.Arquivo;
     if leitor.rExtrai(1, 'retConsStatServ') <> '' then
     begin
-      (*FR03*)FtpAmb := StrToTpAmb(ok, Leitor.rCampo(tcStr, 'tpAmb'));
-      (*FR04*)FverAplic := Leitor.rCampo(tcStr, 'verAplic');
-      (*FR05*)FcStat := Leitor.rCampo(tcInt, 'cStat');
-      (*FR06*)FxMotivo := Leitor.rCampo(tcStr, 'xMotivo');
-      (*FR07*)FcUF := Leitor.rCampo(tcInt, 'cUF');
-      (*FR08*)FdhRecbto := Leitor.rCampo(tcDatHor, 'dhRecbto');
-      (*FR09*)FtMed := Leitor.rCampo(tcInt, 'tMed');
+      (*FR03*)FtpAmb     := StrToTpAmb(ok, Leitor.rCampo(tcStr, 'tpAmb'));
+      (*FR04*)FverAplic  := Leitor.rCampo(tcStr, 'verAplic');
+      (*FR05*)FcStat     := Leitor.rCampo(tcInt, 'cStat');
+      (*FR06*)FxMotivo   := Leitor.rCampo(tcStr, 'xMotivo');
+      (*FR07*)FcUF       := Leitor.rCampo(tcInt, 'cUF');
+      (*FR08*)FdhRecbto  := Leitor.rCampo(tcDatHor, 'dhRecbto');
+      (*FR09*)FtMed      := Leitor.rCampo(tcInt, 'tMed');
       (*FR10*)FdhRetorno := Leitor.rCampo(tcDatHor, 'dhRetorno');
-      (*FR11*)FxObs := Leitor.rCampo(tcStr, 'xObs');
+      (*FR11*)FxObs      := Leitor.rCampo(tcStr, 'xObs');
+      
       Result := True;
     end;
   except

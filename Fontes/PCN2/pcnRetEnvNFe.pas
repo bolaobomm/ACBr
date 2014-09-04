@@ -43,51 +43,49 @@
 //                                                                            //
 ////////////////////////////////////////////////////////////////////////////////
 
+{$I ACBr.inc}
+
 unit pcnRetEnvNFe;
 
-interface uses
+interface
+
+uses
   SysUtils, Classes, pcnAuxiliar, pcnConversao, pcnLeitor;
 
 type
 
-  //////////////////////////////////////////////////////////////////////////////
-  //                                                                          //
-  //    E M   D E S E N V O L V I M E N T O   -   N Ã O   T E S T A D O       //
-  //                                                                          //
-  //////////////////////////////////////////////////////////////////////////////
-
   TInfREC = class
   private
-    FnRec: string;
+    FnRec: String;
     FdhRecbto: TDateTime;
-    FtMed: integer;
+    FtMed: Integer;
   public
-    property nRec: string read FnRec write FnRec;
+    property nRec: String        read FnRec     write FnRec;
     property dhRecbto: TDateTime read FdhRecbto write FdhRecbto;
-    property tMed: integer read FtMed write FtMed;
+    property tMed: Integer       read FtMed     write FtMed;
   end;
 
   TretEnvNFe = class(TPersistent)
   private
     FtpAmb: TpcnTipoAmbiente;
-    FcStat: integer;
+    FcStat: Integer;
     FLeitor: TLeitor;
-    FcUF: integer;
-    FverAplic: string;
-    FxMotivo: string;
+    FcUF: Integer;
+    FverAplic: String;
+    FxMotivo: String;
     FinfRec: TInfREC;
   public
     constructor Create;
     destructor Destroy; override;
-    function LerXml: boolean;
+    function LerXml: Boolean;
   published
-    property Leitor: TLeitor read FLeitor write FLeitor;
-    property tpAmb: TpcnTipoAmbiente read FtpAmb write FtpAmb;
-    property verAplic: string read FverAplic write FverAplic;
-    property cStat: integer read FcStat write FcStat;
-    property xMotivo: string read FxMotivo write FxMotivo;
-    property cUF: integer read FcUF write FcUF;
-    property infRec: TInfREC read FinfRec write FinfRec;
+    property Leitor: TLeitor         read FLeitor   write FLeitor;
+    property tpAmb: TpcnTipoAmbiente read FtpAmb    write FtpAmb;
+    property verAplic: String        read FverAplic write FverAplic;
+    property cStat: Integer          read FcStat    write FcStat;
+    property xMotivo: String         read FxMotivo  write FxMotivo;
+    property cUF: Integer            read FcUF      write FcUF;
+    property infRec: TInfREC         read FinfRec   write FinfRec;
   end;
 
 implementation
@@ -107,24 +105,26 @@ begin
   inherited;
 end;
 
-function TretEnvNFe.LerXml: boolean;
+function TretEnvNFe.LerXml: Boolean;
 var
-  ok: boolean;
+  ok: Boolean;
 begin
   result := False;
   try
     Leitor.Grupo := Leitor.Arquivo;
     if leitor.rExtrai(1, 'retEnviNFe') <> '' then
     begin
-      (*AR03 *)FtpAmb := StrToTpAmb(ok, Leitor.rCampo(tcStr, 'tpAmb'));
+      (*AR03 *)FtpAmb    := StrToTpAmb(ok, Leitor.rCampo(tcStr, 'tpAmb'));
       (*AR04 *)FverAplic := Leitor.rCampo(tcStr, 'verAplic');
-      (*AR05 *)FcStat := Leitor.rCampo(tcInt, 'cStat');
-      (*AR06 *)FxMotivo := Leitor.rCampo(tcStr, 'xMotivo');
-      (*AR06a*)FcUF := Leitor.rCampo(tcInt, 'cUF');
+      (*AR05 *)FcStat    := Leitor.rCampo(tcInt, 'cStat');
+      (*AR06 *)FxMotivo  := Leitor.rCampo(tcStr, 'xMotivo');
+      (*AR06a*)FcUF      := Leitor.rCampo(tcInt, 'cUF');
+
       //       Grupo infRec - Dados do Recibo do Lote (Só é gerado se o Lote for aceito)
-      (*AR08 *)infRec.nRec := Leitor.rCampo(tcStr, 'nRec');
+      (*AR08 *)infRec.nRec      := Leitor.rCampo(tcStr, 'nRec');
       (*AR09 *)infRec.FdhRecbto := Leitor.rCampo(tcDatHor, 'dhRecbto');
-      (*AR10 *)infRec.FtMed := Leitor.rCampo(tcInt, 'tMed');
+      (*AR10 *)infRec.FtMed     := Leitor.rCampo(tcInt, 'tMed');
+      
       Result := True;
     end;
   except

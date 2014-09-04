@@ -42,11 +42,14 @@
 //              condicionado a manutenção deste cabeçalho junto ao código     //
 //                                                                            //
 ////////////////////////////////////////////////////////////////////////////////
-///
+
+{$I ACBr.inc}
+
 unit pcnCCeNFe;
 
-interface uses
+interface
 
+uses
   SysUtils, Classes,
 {$IFNDEF VER130}
   Variants,
@@ -54,11 +57,11 @@ interface uses
   pcnAuxiliar, pcnConversao, pcnGerador;
 
 type
-  TDetEvento = class ;
-  TInfEvento = class ;
-  TInfEventoCollection  = class ;
-  TInfEventoCollectionItem = class ;
-  TCCeNFe = class ;
+  TDetEvento               = class;
+  TInfEvento               = class;
+  TInfEventoCollection     = class;
+  TInfEventoCollectionItem = class;
+  TCCeNFe                  = class;
 
   TDetEvento = class
   private
@@ -66,13 +69,13 @@ type
     FDescEvento: String;
     FCorrecao: String;
     FCondUso: String;
-    procedure setCondUso(const Value: String);
 
+    procedure setCondUso(const Value: String);
   public
-    property versao: string           read FVersao      write FVersao;
-    property descEvento: string       read FDescEvento  write FDescEvento;
-    property xCorrecao: String        read FCorrecao    write FCorrecao;
-    property xCondUso: String         read FCondUso     write setCondUso;
+    property versao: String     read FVersao     write FVersao;
+    property descEvento: String read FDescEvento write FDescEvento;
+    property xCorrecao: String  read FCorrecao   write FCorrecao;
+    property xCondUso: String   read FCondUso    write setCondUso;
   end;
 
   TInfEvento = class
@@ -89,16 +92,16 @@ type
   public
     constructor Create;
     destructor Destroy; override;
-    property id: String              read FID         write FID;
-    property cOrgao: Integer         read FOrgao      write FOrgao;
-    property tpAmb: TpcnTipoAmbiente read FtpAmbiente write FtpAmbiente;
-    property CNPJ: String            read FCNPJ       write FCNPJ;
-    property chNFe: String           read FChave      write FChave;
-    property dhEvento: TDateTime     read FDataEvento write FDataEvento;
-    property tpEvento: Integer       read FTpEvento write FTpEvento;
-    property nSeqEvento: Integer     read FnSeqEvento write FnSeqEvento;
+    property id: String              read FID           write FID;
+    property cOrgao: Integer         read FOrgao        write FOrgao;
+    property tpAmb: TpcnTipoAmbiente read FtpAmbiente   write FtpAmbiente;
+    property CNPJ: String            read FCNPJ         write FCNPJ;
+    property chNFe: String           read FChave        write FChave;
+    property dhEvento: TDateTime     read FDataEvento   write FDataEvento;
+    property tpEvento: Integer       read FTpEvento     write FTpEvento;
+    property nSeqEvento: Integer     read FnSeqEvento   write FnSeqEvento;
     property versaoEvento: String    read FVersaoEvento write FVersaoEvento;
-    property detEvento: TDetEvento   read FDetEvento write FDetEvento;
+    property detEvento: TDetEvento   read FDetEvento    write FDetEvento;
   end;
 
   TInfEventoCollection = class(TCollection)
@@ -124,19 +127,18 @@ type
   TCCeNFe = class(TPersistent)
   private
     FGerador: TGerador;
-    FSchema: TpcnSchema;
     FidLote: Integer;
     FEvento: TInfEventoCollection;
     FVersao: String;
+
     procedure SetEvento(const Value: TInfEventoCollection);
   public
     constructor Create;
     destructor Destroy; override;
     function GerarXML: boolean;
-    function ObterNomeArquivo: string;
+    function ObterNomeArquivo: String;
   published
-    property Gerador: TGerador  read FGerador write FGerador;
-    property schema: TpcnSchema read Fschema write Fschema;
+    property Gerador: TGerador             read FGerador     write FGerador;
     property idLote: Integer               read FidLote      write FidLote;
     property Evento: TInfEventoCollection  read FEvento      write SetEvento;
     property Versao: String                read FVersao      write FVersao;
@@ -159,7 +161,7 @@ begin
   inherited;
 end;
 
-function TCCeNFe.ObterNomeArquivo: string;
+function TCCeNFe.ObterNomeArquivo: String;
 begin
   Result := IntToStr(Self.idLote) + '-cce.xml';
 end;
@@ -170,57 +172,51 @@ var
 begin
   Result := False;
 
-//  if RetornarVersaoLayout(FSchema, tlCCeNFe) = '2.00' then
-//   begin
+  Gerador.ArquivoFormatoXML := '';
 
-     Gerador.ArquivoFormatoXML := '';
-//     Gerador.wGrupo('envEvento ' + NAME_SPACE + ' ' + V1_00);
-     Gerador.wGrupo('envEvento ' + NAME_SPACE + ' versao="' + Versao + '"');
-     Gerador.wCampo(tcInt, 'HP03', 'idLote', 001, 015, 1, FidLote, DSC_IDLOTE);
-     for i:= 0 to Evento.Count - 1 do
+  Gerador.wGrupo('envEvento ' + NAME_SPACE + ' versao="' + Versao + '"');
+  Gerador.wCampo(tcInt, 'HP03', 'idLote', 001, 015, 1, FidLote, DSC_IDLOTE);
+  for i:= 0 to Evento.Count - 1 do
+   begin
+     Evento.Items[i].InfEvento.id := 'ID110110' + SomenteNumeros(Evento.Items[i].InfEvento.chNFe) + Format('%.2d', [Evento.Items[i].InfEvento.nSeqEvento]);
+
+     Gerador.wGrupo('evento ' + NAME_SPACE + ' versao="' + Versao + '"');
+     Gerador.wGrupo('infEvento Id="' + Evento.Items[i].InfEvento.id + '"');
+     if Length(Evento.Items[i].InfEvento.id) < 54 then
+       Gerador.wAlerta('HP07', 'ID', '', 'ID de carta de correção inválido');
+     Gerador.wCampo(tcInt, 'HP08', 'cOrgao', 001, 002, 1, Evento.Items[i].InfEvento.cOrgao);
+     Gerador.wCampo(tcStr, 'HP09', 'tpAmb', 001, 001,  1, TpAmbToStr(Evento.Items[i].InfEvento.tpAmb), DSC_TPAMB);
+     if Length(SomenteNumeros(Evento.Items[i].InfEvento.CNPJ)) = 14 then
       begin
-        Evento.Items[i].InfEvento.id := 'ID110110' + SomenteNumeros(Evento.Items[i].InfEvento.chNFe) + Format('%.2d', [Evento.Items[i].InfEvento.nSeqEvento]);
+        Gerador.wCampo(tcStr, 'HP10', 'CNPJ', 014, 014, 1, SomenteNumeros(Evento.Items[i].InfEvento.CNPJ), DSC_CNPJ);
+        if not ValidarCNPJ(SomenteNumeros(Evento.Items[i].InfEvento.CNPJ)) then
+          Gerador.wAlerta('HP10', 'CNPJ', DSC_CNPJ, ERR_MSG_INVALIDO);
+      end
+     else if Length(SomenteNumeros(Evento.Items[i].InfEvento.CNPJ)) = 11 then
+      begin
+        Gerador.wCampo(tcStr, 'HP11', 'CPF', 011, 011, 1, SomenteNumeros(Evento.Items[i].InfEvento.CNPJ), DSC_CPF);
+        if not ValidarCPF(SomenteNumeros(Evento.Items[i].InfEvento.CNPJ)) then
+          Gerador.wAlerta('HP11', 'CPF', DSC_CPF, ERR_MSG_INVALIDO);
+      end;
+     Gerador.wCampo(tcStr,    'HP12', 'chNFe', 044, 044,      1, Evento.Items[i].InfEvento.chNFe, DSC_CHAVE);
+     if not ValidarChave('NFe' + SomenteNumeros(Evento.Items[i].InfEvento.chNFe)) then
+       Gerador.wAlerta('HP12', 'chNFe', '', 'Chave de NFe inválida');
+     Gerador.wCampo(tcStr,    'HP13', 'dhEvento', 001, 050,   1, FormatDateTime('yyyy-mm-dd"T"hh:nn:ss',Evento.Items[i].InfEvento.dhEvento)+
+                                                                 GetUTC(CodigoParaUF(Evento.Items[i].InfEvento.cOrgao), Evento.Items[i].InfEvento.dhEvento));
+     Gerador.wCampo(tcInt,    'HP14', 'tpEvento', 006, 006,   1, Evento.Items[i].InfEvento.tpEvento);
+     Gerador.wCampo(tcInt,    'HP15', 'nSeqEvento', 001, 002, 1, Evento.Items[i].InfEvento.nSeqEvento);
+     Gerador.wCampo(tcStr,    'HP16', 'verEvento', 001, 004,  1, Evento.Items[i].InfEvento.versaoEvento);
+     Gerador.wGrupo('detEvento versao="' +  Versao + '"');
+     Gerador.wCampo(tcStr,    'HP19', 'descEvento', 005, 060, 1,  Evento.Items[i].InfEvento.detEvento.descEvento);
+     Gerador.wCampo(tcStr,    'HP20', 'xCorrecao', 015, 1000, 1,  Evento.Items[i].InfEvento.detEvento.xCorrecao);
+     Gerador.wCampo(tcStr,    'HP20a', 'xCondUso', 001, 5000, 1,  Evento.Items[i].InfEvento.detEvento.xCondUso);
+     Gerador.wGrupo('/detEvento');
+     Gerador.wGrupo('/infEvento');
+     Gerador.wGrupo('/evento');
+  end;
+  Gerador.wGrupo('/envEvento');
 
-//        Gerador.wGrupo('evento ' + NAME_SPACE + ' ' + V1_00);
-        Gerador.wGrupo('evento ' + NAME_SPACE + ' versao="' + Versao + '"');
-        Gerador.wGrupo('infEvento Id="' + Evento.Items[i].InfEvento.id + '"');
-        if Length(Evento.Items[i].InfEvento.id) < 54 then
-          Gerador.wAlerta('HP07', 'ID', '', 'ID de carta de correção inválido');
-        Gerador.wCampo(tcInt, 'HP08', 'cOrgao', 001, 002, 1, Evento.Items[i].InfEvento.cOrgao);
-        Gerador.wCampo(tcStr, 'HP09', 'tpAmb', 001, 001,  1, TpAmbToStr(Evento.Items[i].InfEvento.tpAmb), DSC_TPAMB);
-        if Length(SomenteNumeros(Evento.Items[i].InfEvento.CNPJ)) = 14 then
-         begin
-           Gerador.wCampo(tcStr, 'HP10', 'CNPJ', 014, 014, 1, SomenteNumeros(Evento.Items[i].InfEvento.CNPJ), DSC_CNPJ);
-           if not ValidarCNPJ(SomenteNumeros(Evento.Items[i].InfEvento.CNPJ)) then
-             Gerador.wAlerta('HP10', 'CNPJ', DSC_CNPJ, ERR_MSG_INVALIDO);
-         end
-        else if Length(SomenteNumeros(Evento.Items[i].InfEvento.CNPJ)) = 11 then
-         begin
-           Gerador.wCampo(tcStr, 'HP11', 'CPF', 011, 011, 1, SomenteNumeros(Evento.Items[i].InfEvento.CNPJ), DSC_CPF);
-           if not ValidarCPF(SomenteNumeros(Evento.Items[i].InfEvento.CNPJ)) then
-             Gerador.wAlerta('HP11', 'CPF', DSC_CPF, ERR_MSG_INVALIDO);
-         end;
-        Gerador.wCampo(tcStr,    'HP12', 'chNFe', 044, 044,      1, Evento.Items[i].InfEvento.chNFe, DSC_CHAVE);
-        if not ValidarChave('NFe' + SomenteNumeros(Evento.Items[i].InfEvento.chNFe)) then
-          Gerador.wAlerta('HP12', 'chNFe', '', 'Chave de NFe inválida');
-        Gerador.wCampo(tcStr,    'HP13', 'dhEvento', 001, 050,   1, FormatDateTime('yyyy-mm-dd"T"hh:nn:ss',Evento.Items[i].InfEvento.dhEvento)+
-                                                                    GetUTC(CodigoParaUF(Evento.Items[i].InfEvento.cOrgao), Evento.Items[i].InfEvento.dhEvento));
-        Gerador.wCampo(tcInt,    'HP14', 'tpEvento', 006, 006,   1, Evento.Items[i].InfEvento.tpEvento);
-        Gerador.wCampo(tcInt,    'HP15', 'nSeqEvento', 001, 002, 1, Evento.Items[i].InfEvento.nSeqEvento);
-        Gerador.wCampo(tcStr,    'HP16', 'verEvento', 001, 004,  1, Evento.Items[i].InfEvento.versaoEvento);
-        Gerador.wGrupo('detEvento versao="' +  Versao + '"');
-        Gerador.wCampo(tcStr,    'HP19', 'descEvento', 005, 060, 1,  Evento.Items[i].InfEvento.detEvento.descEvento);
-        Gerador.wCampo(tcStr,    'HP20', 'xCorrecao', 015, 1000, 1,  Evento.Items[i].InfEvento.detEvento.xCorrecao);
-        Gerador.wCampo(tcStr,    'HP20a', 'xCondUso', 001, 5000, 1,  Evento.Items[i].InfEvento.detEvento.xCondUso);
-        Gerador.wGrupo('/detEvento');
-        Gerador.wGrupo('/infEvento');
-        Gerador.wGrupo('/evento');
-     end;
-     Gerador.wGrupo('/envEvento');
-
-     Result := (Gerador.ListaDeAlertas.Count = 0);
-
-//   end
+  Result := (Gerador.ListaDeAlertas.Count = 0);
 end;
 
 procedure TCCeNFe.SetEvento(const Value: TInfEventoCollection);
@@ -259,16 +255,6 @@ begin
                 ' II - a correcao de dados cadastrais que implique mudanca' +
                 ' do remetente ou do destinatario; III - a data de emissao ou' +
                 ' de saida.'
-{    FCondUso := 'A Carta de Correção é disciplinada pelo § 1º-A do art. 7º' +
-                ' do Convênio S/N, de 15 de dezembro de 1970 e pode ser' +
-                ' utilizada para regularização de erro ocorrido na emissão de' +
-                ' documento fiscal, desde que o erro não esteja relacionado' +
-                ' com: I - as variáveis que determinam o valor do imposto' +
-                ' tais como: base de cálculo, alíquota, diferença de preço,' +
-                ' quantidade, valor da operação ou da prestação; II - a' +
-                ' correção de dados cadastrais que implique mudança do' +
-                ' remetente ou do destinatário; III - a data de emissão ou de' +
-                ' saída.';    }
 end;
 
 { TInfEventoCollection }

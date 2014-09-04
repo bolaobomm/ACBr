@@ -43,22 +43,20 @@
 //                                                                            //
 ////////////////////////////////////////////////////////////////////////////////
 
+{$I ACBr.inc}
+
 unit pcnCadEmiDFe;
 
-interface uses
+interface
+
+uses
   SysUtils, Classes, pcnAuxiliar, pcnConversao, pcnGerador;
 
 type
 
-  //////////////////////////////////////////////////////////////////////////////
-  //                                                                          //
-  //    E M   D E S E N V O L V I M E N T O   -   N Ã O   T E S T A D O       //
-  //                                                                          //
-  //////////////////////////////////////////////////////////////////////////////
-
-  TCadEmiDFe = class;
-  TDFeCollectionItem = class;
-  TEmissorCollection = class;
+  TCadEmiDFe             = class;
+  TDFeCollectionItem     = class;
+  TEmissorCollection     = class;
   TEmissorCollectionItem = class;
 
   TDFeCollection = class(TCollection)
@@ -68,8 +66,7 @@ type
   public
     constructor Create(AOwner: TCadEmiDFe); reintroduce;
     function Add: TDFeCollectionItem;
-    property Items[Index: Integer]: TDFeCollectionItem read GetItem write
-    SetItem; default;
+    property Items[Index: Integer]: TDFeCollectionItem read GetItem write SetItem; default;
   end;
 
   TDFeCollectionItem = class(TCollectionItem)
@@ -77,8 +74,8 @@ type
     FModelo: Integer;
     FSit: TpcnTipoAmbiente;
   published
-    property Modelo: Integer read FModelo write FModelo;
-    property Sit: TpcnTipoAmbiente read FSit write FSit;
+    property Modelo: Integer       read FModelo write FModelo;
+    property Sit: TpcnTipoAmbiente read FSit    write FSit;
   end;
 
   TEmissorCollection = class(TCollection)
@@ -88,49 +85,50 @@ type
   public
     constructor Create(AOwner: TCadEmiDFe); reintroduce;
     function Add: TEmissorCollectionItem;
-    property Items[Index: Integer]: TEmissorCollectionItem read GetItem write
-    SetItem; default;
+    property Items[Index: Integer]: TEmissorCollectionItem read GetItem write SetItem; default;
   end;
 
   TEmissorCollectionItem = class(TCollectionItem)
   private
-    FUF: string;
-    FCNPJEmissor: string;
-    FCNPJMatriz: string;
-    FIEEmissor: string;
+    FUF: String;
+    FCNPJEmissor: String;
+    FCNPJMatriz: String;
+    FIEEmissor: String;
     FPaisMatriz: Integer;
     FPaisEmissor: Integer;
     FDfe: TDFeCollection;
+
     procedure SetDFe(const Value: TDFeCollection);
   public
     constructor Create; reintroduce;
     destructor Destroy; override;
   published
-    property UF: string read FUF write FUF;
-    property CNPJEmissor: string read FCNPJEmissor write FCNPJEmissor;
-    property CNPJMatriz: string read FCNPJMatriz write FCNPJMatriz;
-    property IEEmissor: string read FIEEmissor write FIEEmissor;
+    property UF: String           read FUF          write FUF;
+    property CNPJEmissor: String  read FCNPJEmissor write FCNPJEmissor;
+    property CNPJMatriz: String   read FCNPJMatriz  write FCNPJMatriz;
+    property IEEmissor: String    read FIEEmissor   write FIEEmissor;
     property PaisEmissor: Integer read FPaisEmissor write FPaisEmissor;
-    property PaisMatriz: Integer read FPaisMatriz write FPaisMatriz;
-    property DFe: TDFeCollection read FDfe write SetDFe;
+    property PaisMatriz: Integer  read FPaisMatriz  write FPaisMatriz;
+    property DFe: TDFeCollection  read FDfe         write SetDFe;
   end;
 
   TCadEmiDFe = class(TPersistent)
   private
     FGerador: TGerador;
     FDPublic: TDateTime;
-    FchNFe: string;
+    FchNFe: String;
     FEmissor: TEmissorCollection;
+
     procedure SetEmissor(const Value: TEmissorCollection);
     procedure GeraDFE(const vN: Integer);
   public
     constructor Create;
     destructor Destroy; override;
-    function GerarXML: boolean;
+    function GerarXML: Boolean;
   published
-    property Gerador: TGerador read FGerador write FGerador;
-    property chNFe: string read FchNFe write FchNFe;
-    property DPublic: TDateTime read FDPublic write FDPublic;
+    property Gerador: TGerador           read FGerador write FGerador;
+    property chNFe: String               read FchNFe   write FchNFe;
+    property DPublic: TDateTime          read FDPublic write FDPublic;
     property Emissor: TEmissorCollection read FEmissor write SetEmissor;
 
   end;
@@ -152,11 +150,12 @@ begin
   inherited;
 end;
 
-function TCadEmiDFe.GerarXML: boolean;
+function TCadEmiDFe.GerarXML: Boolean;
 var
-  i: integer;
+  i: Integer;
 begin
   Gerador.ArquivoFormatoXML := '';
+
   Gerador.wGrupo(ENCODING_UTF8, '',False);
   Gerador.wGrupo('cadEmiDFe ' + NAME_SPACE + ' ' + V1_07);
   Gerador.wGrupo('infCadEmiDFe Id = "ID' + SomenteNumeros(FchNFe) + '"');
@@ -177,6 +176,7 @@ begin
   Gerador.wGrupo('Signature Id = "ID' + SomenteNumeros(FchNFe) + '"');
   Gerador.wGrupo('/Signature');
   Gerador.wGrupo('/cadEmiDFe');
+  
   Result := (Gerador.ListaDeAlertas.Count = 0);
 end;
 

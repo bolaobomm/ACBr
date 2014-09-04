@@ -42,17 +42,22 @@
 //              condicionado a manutenção deste cabeçalho junto ao código     //
 //                                                                            //
 ////////////////////////////////////////////////////////////////////////////////
-{******************************************************************************
+
+{*******************************************************************************
 |* Historico
 |*
 |* 28/09/2012: Italo
-|*  - Revisado geração do XML e adicionado propriedade para controle de Versão 
+|*  - Revisado geração do XML e adicionado propriedade para controle de Versão
 |*    do WebService Utilizado
-******************************************************************************}
+*******************************************************************************}
+
+{$I ACBr.inc}
+
 unit pcnInutNFe;
 
-interface uses
+interface
 
+uses
   SysUtils, Classes,
 {$IFNDEF VER130}
   Variants,
@@ -64,41 +69,39 @@ type
   TinutNFe = class(TPersistent)
   private
     FGerador: TGerador;
-    FSchema: TpcnSchema;
     FtpAmb: TpcnTipoAmbiente;
-    FcUF: integer;
-    Fano: integer;
-    FCNPJ: string;
-    Fmodelo: integer;
-    Fserie: integer;
-    FnNFIni: integer;
-    FnNFFin: integer;
-    FxJust: string;
-    FIDInutilizacao: string;
+    FcUF: Integer;
+    Fano: Integer;
+    FCNPJ: String;
+    Fmodelo: Integer;
+    Fserie: Integer;
+    FnNFIni: Integer;
+    FnNFFin: Integer;
+    FxJust: String;
+    FIDInutilizacao: String;
     FVersao: String;
     FInutNFe: TRetInutNFe;
   public
     constructor Create;
     destructor Destroy; override;
-    function GerarXML: boolean;
-    function LerXML(CaminhoArquivo: string): boolean;
-    function LerXMLFromString(const AXML: String): boolean;
-    function ObterNomeArquivo: string;
+    function GerarXML: Boolean;
+    function LerXML(CaminhoArquivo: String): Boolean;
+    function LerXMLFromString(const AXML: String): Boolean;
+    function ObterNomeArquivo: String;
   published
-    property Gerador: TGerador read FGerador write FGerador;
-    property schema: TpcnSchema read Fschema write Fschema;
-    property tpAmb: TpcnTipoAmbiente read FtpAmb write FtpAmb;
-    property cUF: integer read FcUF write FcUF;
-    property ano: integer read Fano write Fano;
-    property CNPJ: string read FCNPJ write FCNPJ;
-    property modelo: integer read Fmodelo write Fmodelo;
-    property serie: integer read Fserie write Fserie;
-    property nNFIni: integer read FnNFIni write FnNFIni;
-    property nNFFin: integer read FnNFFin write FnNFFin;
-    property xJust: string read FxJust write FxJust;
-    property ID: string read FIDInutilizacao;
-    property Versao: String read FVersao write FVersao;
-    property InutNFe: TRetInutNFe read FInutNFe write FInutNFe;
+    property Gerador: TGerador       read FGerador write FGerador;
+    property tpAmb: TpcnTipoAmbiente read FtpAmb   write FtpAmb;
+    property cUF: Integer            read FcUF     write FcUF;
+    property ano: Integer            read Fano     write Fano;
+    property CNPJ: String            read FCNPJ    write FCNPJ;
+    property modelo: Integer         read Fmodelo  write Fmodelo;
+    property serie: Integer          read Fserie   write Fserie;
+    property nNFIni: Integer         read FnNFIni  write FnNFIni;
+    property nNFFin: Integer         read FnNFFin  write FnNFFin;
+    property xJust: String           read FxJust   write FxJust;
+    property ID: String              read FIDInutilizacao;
+    property Versao: String          read FVersao  write FVersao;
+    property InutNFe: TRetInutNFe    read FInutNFe write FInutNFe;
   end;
 
 implementation
@@ -118,12 +121,12 @@ begin
   inherited;
 end;
 
-function TinutNFe.ObterNomeArquivo: string;
+function TinutNFe.ObterNomeArquivo: String;
 begin
   Result := SomenteNumeros(FIDInutilizacao) + '-ped-inu.xml';
 end;
 
-function TinutNFe.GerarXML: boolean;
+function TinutNFe.GerarXML: Boolean;
 begin
   FIDInutilizacao := 'ID' + IntToStrZero(FcUF, 2) +  IntToStrZero(Fano, 2)+
                      SomenteNumeros(FCNPJ) + IntToStrZero(Fmodelo, 2) + IntToStrZero(Fserie, 3) +
@@ -157,9 +160,9 @@ begin
 
 end;
 
-function TinutNFe.LerXML(CaminhoArquivo: string): boolean;
+function TinutNFe.LerXML(CaminhoArquivo: String): Boolean;
 var
-  ArqInut : TStringList;
+  ArqInut: TStringList;
 begin
   ArqInut := TStringList.Create;
   try
@@ -170,9 +173,9 @@ begin
   end;
 end;
 
-function TinutNFe.LerXMLFromString(const AXML: String): boolean;
+function TinutNFe.LerXMLFromString(const AXML: String): Boolean;
 var
-  RetInutNFe : TRetInutNFe;
+  RetInutNFe: TRetInutNFe;
 begin
   RetInutNFe := TRetInutNFe.Create;
   try

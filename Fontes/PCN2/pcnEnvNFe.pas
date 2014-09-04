@@ -43,36 +43,34 @@
 //                                                                            //
 ////////////////////////////////////////////////////////////////////////////////
 
+{$I ACBr.inc}
+
 unit pcnEnvNFe;
 
-interface uses
+interface
+
+uses
   SysUtils, Classes, pcnAuxiliar, pcnConversao, pcnGerador;
 
 type
 
-  //////////////////////////////////////////////////////////////////////////////
-  //                                                                          //
-  //    E M   D E S E N V O L V I M E N T O   -   N Ã O   T E S T A D O       //
-  //                                                                          //
-  //////////////////////////////////////////////////////////////////////////////
-
   TenvNFe = class(TPersistent)
   private
     FGerador: TGerador;
-    FSchema: TpcnSchema;
-    FidLote: string;
+    FidLote: String;
     FListaDeArquivos: TStringlist;
+    FVersao: String;
   public
     constructor Create;
     destructor Destroy; override;
-    function GerarXML: boolean;
-    function ObterNomeArquivo: string;
-    function AdicionarArquivo(Path: string): Boolean;
+    function GerarXML: Boolean;
+    function ObterNomeArquivo: String;
+    function AdicionarArquivo(Path: String): Boolean;
   published
-    property Gerador: TGerador read FGerador write FGerador;
-    property Schema: TpcnSchema read FSchema write FSchema;
-    property idLote: string read FidLote write FidLote;
+    property Gerador: TGerador            read FGerador         write FGerador;
+    property idLote: String               read FidLote          write FidLote;
     property ListaDeArquivos: TStringList read FListaDeArquivos write FListaDeArquivos;
+    property Versao: String               read FVersao          write FVersao;
   end;
 
 implementation
@@ -81,8 +79,8 @@ implementation
 
 constructor TenvNFe.Create;
 begin
-  FGerador := TGerador.Create;
-  FListaDeArquivos := TstringList.Create;
+  FGerador         := TGerador.Create;
+  FListaDeArquivos := TStringList.Create;
 end;
 
 destructor TenvNFe.Destroy;
@@ -92,12 +90,12 @@ begin
   inherited;
 end;
 
-function TenvNFe.ObterNomeArquivo: string;
+function TenvNFe.ObterNomeArquivo: String;
 begin
   Result := FidLote + '-env-lot.xml';
 end;
 
-function TenvNFe.AdicionarArquivo(Path: string): Boolean;
+function TenvNFe.AdicionarArquivo(Path: String): Boolean;
 begin
   Result := False;
   if FListaDeArquivos.Count = 50 then
@@ -108,33 +106,33 @@ begin
   Result := True;
 end;
 
-function TenvNFe.GerarXML: boolean;
+function TenvNFe.GerarXML: Boolean;
 var
-  i: integer;
+  i: Integer;
   XMLNFE: TStringList;
 begin
   Result := False;
-  if RetornarVersaoLayout(FSchema, tlenvNFe) = '1.10' then
+
+  Gerador.ArquivoFormatoXML := '';
+
+  Gerador.wGrupo(ENCODING_UTF8_STD, '', False);
+  Gerador.wGrupo('enviNFe ' + NAME_SPACE + ' versao="' + Versao + '"');
+  Gerador.wCampo(tcStr, 'AP03', 'idLote', 001, 015, 1, FIdLote, DSC_IdLote);
+  for i := 0 to FlistaDeArquivos.count - 1 do
   begin
-    Gerador.ArquivoFormatoXML := '';
-    Gerador.wGrupo(ENCODING_UTF8_STD, '', False);
-    Gerador.wGrupo('enviNFe ' + NAME_SPACE + ' ' + V1_10);
-    Gerador.wCampo(tcStr, 'AP03', 'idLote', 001, 015, 1, FIdLote, DSC_IdLote);
-    for i := 0 to FlistaDeArquivos.count - 1 do
+    XMLNFE := TStringList.create;
+    if not FileExists(FListaDeArquivos[i]) then
     begin
-      XMLNFE := TStringList.create;
-      if not FileExists(FListaDeArquivos[i]) then
-      begin
-        Gerador.wAlerta('AP04', 'NFE', 'NFE', ERR_MSG_ARQUIVO_NAO_ENCONTRADO);
-      end
-      else
-        XMLNFE.LoadFromFile(FListaDeArquivos[i]);
-      Gerador.wTexto('<NFe xmlns' + RetornarConteudoEntre(XMLNFE.Text, '<NFe xmlns', '</NFe>') + '</NFe>');
-      XMLNFE.Free;
-    end;
-    Gerador.wGrupo('/enviNFe');
-    Result := (Gerador.ListaDeAlertas.Count = 0);
+      Gerador.wAlerta('AP04', 'NFE', 'NFE', ERR_MSG_ARQUIVO_NAO_ENCONTRADO);
+    end
+    else
+      XMLNFE.LoadFromFile(FListaDeArquivos[i]);
+    Gerador.wTexto('<NFe xmlns' + RetornarConteudoEntre(XMLNFE.Text, '<NFe xmlns', '</NFe>') + '</NFe>');
+    XMLNFE.Free;
   end;
+  Gerador.wGrupo('/enviNFe');
+
+  Result := (Gerador.ListaDeAlertas.Count = 0);
 end;
 
 end.

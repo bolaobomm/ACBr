@@ -75,30 +75,34 @@
 //                                                                            //
 ////////////////////////////////////////////////////////////////////////////////
 
+{$I ACBr.inc}
+
 unit pcnValidador;
 
-interface uses
+interface
+
+uses
   windows, SysUtils, Classes, pcnConversao;
 
 function ValidarXML(var Mensagens: AnsiString;
-  PathArquivoXML,
-  PathValidador: string;
-  Schema: TpcnSchema;
-  TipoLayout: TpcnTipoLayout;
-  ApagarAposValidar: Boolean = False): Boolean;
+                    PathArquivoXML,
+                    PathValidador: String;
+                    Schema: TpcnSchema;
+                    TipoLayout: TpcnTipoLayout;
+                    ApagarAposValidar: Boolean = False): Boolean;
 
 implementation
 
 function ValidarXML(var Mensagens: AnsiString; // Variavel que recebera as mensagens do validador
   PathArquivoXML, // Path e nome do arquivo xml a ser validado
-  PathValidador: string; // Path aonde se encontra o .exe do validador
+  PathValidador: String; // Path aonde se encontra o .exe do validador
   Schema: TpcnSchema; // Schema que sera utilizada na validação
   TipoLayout: TpcnTipoLayout; // Tipo do layout do arquivo que sera validado
   ApagarAposValidar: Boolean = False): Boolean; // Indica se é para apagar o xml após validar
 var
-  i: integer;
+  i: Integer;
   ArquivoRetorno: TStringList;
-  NomeArquivoRetorno: string;
+  NomeArquivoRetorno: String;
 begin
   Result := False;
   if not FileExists(PathArquivoXML) then

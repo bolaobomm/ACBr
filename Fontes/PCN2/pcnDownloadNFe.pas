@@ -42,11 +42,14 @@
 //              condicionado a manutenção deste cabeçalho junto ao código     //
 //                                                                            //
 ////////////////////////////////////////////////////////////////////////////////
-///
+
+{$I ACBr.inc}
+
 unit pcnDownloadNFe;
 
-interface uses
+interface
 
+uses
   SysUtils, Classes,
 {$IFNDEF VER130}
   Variants,
@@ -54,9 +57,9 @@ interface uses
   pcnAuxiliar, pcnConversao, pcnGerador;
 
 type
-  TDownloadNFe = class ;
-  TChavesCollection  = class ;
-  TChavesCollectionItem = class ;
+  TDownloadNFe          = class;
+  TChavesCollection     = class;
+  TChavesCollectionItem = class;
 
   TChavesCollection = class(TCollection)
   private
@@ -78,24 +81,23 @@ type
   TDownloadNFe = class(TPersistent)
   private
     FGerador: TGerador;
-    FSchema: TpcnSchema;
     FtpAmb: TpcnTipoAmbiente;
     FCNPJ: String;
     FChaves: TChavesCollection;
     FVersao: String;
+
     procedure SetChaves(const Value: TChavesCollection);
   public
     constructor Create;
     destructor Destroy; override;
-    function GerarXML: boolean;
-    function ObterNomeArquivo: string;
+    function GerarXML: Boolean;
+    function ObterNomeArquivo: String;
   published
-    property Gerador: TGerador          read FGerador write FGerador;
-    property schema: TpcnSchema         read Fschema  write Fschema;
-    property tpAmb: TpcnTipoAmbiente    read FtpAmb   write FtpAmb;
-    property CNPJ: String               read FCNPJ    write FCNPJ;
-    property Chaves: TChavesCollection  read FChaves  write SetChaves;
-    property Versao: String             read FVersao  write FVersao;
+    property Gerador: TGerador         read FGerador write FGerador;
+    property tpAmb: TpcnTipoAmbiente   read FtpAmb   write FtpAmb;
+    property CNPJ: String              read FCNPJ    write FCNPJ;
+    property Chaves: TChavesCollection read FChaves  write SetChaves;
+    property Versao: String            read FVersao  write FVersao;
   end;
 
 implementation
@@ -138,11 +140,11 @@ begin
   inherited;
 end;
 
-function TDownloadNFe.ObterNomeArquivo: string;
+function TDownloadNFe.ObterNomeArquivo: String;
 var
   DataHora: TDateTime;
   Year, Month, Day, Hour, Min, Sec, Milli: Word;
-  AAAAMMDDTHHMMSS: string;
+  AAAAMMDDTHHMMSS: String;
 begin
   Datahora := now;
   DecodeTime(DataHora, Hour, Min, Sec, Milli);
@@ -157,40 +159,35 @@ begin
   FChaves.Assign(Value);
 end;
 
-function TDownloadNFe.GerarXML: boolean;
+function TDownloadNFe.GerarXML: Boolean;
 var
- i : integer;
+ i: Integer;
  sDoc: String;
 begin
   Result := False;
 
-//  if RetornarVersaoLayout(FSchema, tlDownloadNFe) = '2.00' then
-//   begin
+  Gerador.ArquivoFormatoXML := '';
 
-     Gerador.ArquivoFormatoXML := '';
-//     Gerador.wGrupo('downloadNFe ' + NAME_SPACE + ' ' + V1_00);
-     Gerador.wGrupo('downloadNFe ' + NAME_SPACE + ' versao="' + Versao + '"');
-     Gerador.wCampo(tcStr, 'JP03', 'tpAmb', 001, 001, 1, tpAmbToStr(FtpAmb), DSC_TPAMB);
-     Gerador.wCampo(tcStr, 'JP04', 'xServ', 012, 012, 1, 'DOWNLOAD NFE', DSC_XSERV);
+  Gerador.wGrupo('downloadNFe ' + NAME_SPACE + ' versao="' + Versao + '"');
+  Gerador.wCampo(tcStr, 'JP03', 'tpAmb', 001, 001, 1, tpAmbToStr(FtpAmb), DSC_TPAMB);
+  Gerador.wCampo(tcStr, 'JP04', 'xServ', 012, 012, 1, 'DOWNLOAD NFE', DSC_XSERV);
 
-     sDoc := SomenteNumeros( FCNPJ );
-     Gerador.wCampo(tcStr, 'JP05', 'CNPJ', 014, 014, 1, sDoc , DSC_CNPJ);
-     if not ValidarCNPJ( sDoc ) then Gerador.wAlerta('JP05', 'CNPJ', DSC_CNPJ, ERR_MSG_INVALIDO);
+  sDoc := SomenteNumeros( FCNPJ );
+  Gerador.wCampo(tcStr, 'JP05', 'CNPJ', 014, 014, 1, sDoc , DSC_CNPJ);
+  if not ValidarCNPJ( sDoc ) then Gerador.wAlerta('JP05', 'CNPJ', DSC_CNPJ, ERR_MSG_INVALIDO);
 
-     for i := 0 to Chaves.Count - 1 do
-      begin
-        Gerador.wCampo(tcStr, 'JP06', 'chNFe', 044, 044,  1, Chaves.Items[i].chNFe);
-      end;
-     if Chaves.Count > 10 then
-      Gerador.wAlerta('JP06', 'chNFe', DSC_NITEM, ERR_MSG_MAIOR_MAXIMO + '10');
-     if Chaves.Count < 1 then
-      Gerador.wAlerta('JP06', 'chNFe', DSC_NITEM, ERR_MSG_MENOR_MINIMO + '1');
+  for i := 0 to Chaves.Count - 1 do
+   begin
+     Gerador.wCampo(tcStr, 'JP06', 'chNFe', 044, 044,  1, Chaves.Items[i].chNFe);
+   end;
+  if Chaves.Count > 10 then
+   Gerador.wAlerta('JP06', 'chNFe', DSC_NITEM, ERR_MSG_MAIOR_MAXIMO + '10');
+  if Chaves.Count < 1 then
+   Gerador.wAlerta('JP06', 'chNFe', DSC_NITEM, ERR_MSG_MENOR_MINIMO + '1');
 
-     Gerador.wGrupo('/downloadNFe');
+  Gerador.wGrupo('/downloadNFe');
 
-     Result := (Gerador.ListaDeAlertas.Count = 0);
-
-//   end
+  Result := (Gerador.ListaDeAlertas.Count = 0);
 end;
 
 end.

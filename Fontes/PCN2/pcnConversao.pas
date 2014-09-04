@@ -45,12 +45,14 @@
 //              condicionado a manutenção deste cabeçalho junto ao código     //
 //                                                                            //
 ////////////////////////////////////////////////////////////////////////////////
-{******************************************************************************
+
+{*******************************************************************************
 |* Historico
 |*
 |* 28/09/2012: Italo
 |*  - Incluído constantes com as versões atuais dos WebServices
-******************************************************************************}
+*******************************************************************************}
+
 {$I ACBr.inc}
 
 unit pcnConversao;
@@ -64,28 +66,33 @@ interface uses
   Classes;
 
 type
-  TStatusACBrNFe = ( stIdle, stNFeStatusServico, stNFeRecepcao, stNFeRetRecepcao,
-                     stNFeConsulta, stNFeCancelamento, stNFeInutilizacao, stNFeRecibo,
-                     stNFeCadastro, stNFeEmail, stNFeEnvDPEC, stNFeConsultaDPEC,
-                     stNFeCCe, stNFeEvento, stConsNFeDest, stDownloadNFe);
+  TStatusACBrNFe = (stIdle, stNFeStatusServico, stNFeRecepcao, stNFeRetRecepcao,
+                    stNFeConsulta, stNFeCancelamento, stNFeInutilizacao, stNFeRecibo,
+                    stNFeCadastro, stNFeEmail, stNFeEnvDPEC, stNFeConsultaDPEC,
+                    stNFeCCe, stNFeEvento, stConsNFeDest, stDownloadNFe, stAdmCSCNFCe,
+                    stDistDFeInt);
 
-  TStatusACBrCTe = ( stCTeIdle, stCTeStatusServico, stCTeRecepcao, stCTeRetRecepcao,
-                     stCTeConsulta, stCTeCancelamento, stCTeInutilizacao, stCTeRecibo,
-                     stCTeCadastro, stCTeEmail, stCTeCCe, stCTeEvento );
+  TStatusACBrCTe = (stCTeIdle, stCTeStatusServico, stCTeRecepcao, stCTeRetRecepcao,
+                    stCTeConsulta, stCTeCancelamento, stCTeInutilizacao, stCTeRecibo,
+                    stCTeCadastro, stCTeEmail, stCTeCCe, stCTeEvento);
 
-  TStatusACBrMDFe = ( stMDFeIdle, stMDFeStatusServico, stMDFeRecepcao, stMDFeRetRecepcao,
-                      stMDFeConsulta, stMDFeRecibo, stMDFeEmail, stMDFeEvento );
+  TStatusACBrMDFe = (stMDFeIdle, stMDFeStatusServico, stMDFeRecepcao, stMDFeRetRecepcao,
+                     stMDFeConsulta, stMDFeRecibo, stMDFeEmail, stMDFeEvento);
 
   (* IMPORTANTE - Sempre que alterar um Tipo efetuar a atualização das funções de conversão correspondentes *)
-  TLayOut = (LayNfeRecepcao, LayNfeRetRecepcao, LayNfeCancelamento, LayNfeInutilizacao,
-             LayNfeConsulta, LayNfeStatusServico, LayNfeCadastro, LayNfeEnvDPEC,
-             LayNfeConsultaDPEC, LayNFeCCe, LayNFeEvento, LayNFeEventoAN,
-             LayNFeConsNFeDest, LayNFeDownloadNFe, LayNfeAutorizacao, LayNfeRetAutorizacao,
-             LayCTeRecepcao, LayCTeRetRecepcao, LayCTeCancelamento, LayCTeInutilizacao,
-             LayCTeConsultaCT, LayCTeStatusServico, LayCTeCadastro, LayCTeEvento,
-             LayCTeEventoEPEC,
-             LayMDFeRecepcao, LayMDFeRetRecepcao, LayMDFeConsulta, LayMDFeStatusServico,
-             LayMDFeEvento);
+  TLayOut = (LayNfeRecepcao, LayNfeRetRecepcao, LayNfeCancelamento,
+             LayNfeInutilizacao, LayNfeConsulta, LayNfeStatusServico,
+             LayNfeCadastro, LayNfeEnvDPEC, LayNfeConsultaDPEC, LayNFeCCe,
+             LayNFeEvento, LayNFeEventoAN, LayNFeConsNFeDest, LayNFeDownloadNFe,
+             LayNfeAutorizacao, LayNfeRetAutorizacao, LayAdministrarCSCNFCe,
+             LayDistDFeInt);
+
+  TLayOutCTe = (LayCTeRecepcao, LayCTeRetRecepcao, LayCTeCancelamento,
+                LayCTeInutilizacao, LayCTeConsultaCT, LayCTeStatusServico,
+                LayCTeCadastro, LayCTeEvento, LayCTeEventoEPEC);
+
+  TLayOutMDFe = (LayMDFeRecepcao, LayMDFeRetRecepcao, LayMDFeConsulta,
+                 LayMDFeStatusServico, LayMDFeEvento);
 
   TpcnSchema = (TsPL005c, TsPL006,
                 TsPL_CTe_103, TsPL_CTe_104,
@@ -144,7 +151,6 @@ type
 
   TpcteFormaPagamento = (fpPago, fpAPagar, fpOutros);
   TpcteTipoCTe = (tcNormal, tcComplemento, tcAnulacao, tcSubstituto);
-  // Alterado por Italo em 20/05/2013
   TpcteModal = (mdRodoviario, mdAereo, mdAquaviario, mdFerroviario, mdDutoviario, mdMultimodal);
   TpcteTipoServico = (tsNormal, tsSubcontratacao, tsRedespacho, tsIntermediario, tsMultimodal);
   TpcteRetira = (rtSim, rtNao);
@@ -172,7 +178,6 @@ type
   TPosRecibo = (prCabecalho, prRodape);
   TpcteModeloNF = (moNF011AAvulsa, moNFProdutor);
   TpcteTrafegoMutuo = (tmOrigem, tmDestino);
-  // Alterado por Italo em 20/05/2013
   TpcnTpEvento = (teCCe, teCancelamento, teManifDestConfirmacao, teManifDestCiencia,
                   teManifDestDesconhecimento, teManifDestOperNaoRealizada,
                   teEncerramento, teEPEC, teInclusaoCondutor, teMultiModal,
@@ -200,7 +205,6 @@ type
   TpcnindRatISSQN = (irSim, irNao);
   TpcnindRegra = (irArredondamento, irTruncamento);
   TpcnCodigoMP = (mpDinheiro, mpCheque, mpCartaodeCredito, mpCartaodeDebito, mpCreditoLoja, mpValeAlimentacao, mpValeRefeicao, mpValePresente, mpValeCombustivel, mpOutros);
-  // Incluido por Italo em 20/05/2013
   TpcnUnidTransp = ( utRodoTracao, utRodoReboque, utNavio, utBalsa, utAeronave, utVagao, utOutros );
   TpcnUnidCarga  = ( ucContainer, ucULD, ucPallet, ucOutros );
   TpcnindNegociavel = (inNaoNegociavel, inNegociavel);
@@ -212,6 +216,8 @@ type
   TpcnindIncentivo = (iiSim, iiNao);
   // Incluido por Italo em 20/05/2014
   TpcnTipoAutor = (taEmpresaEmitente, taEmpresaDestinataria, taEmpresa, taFisco, taRFB, taOutros);
+  // Incluido por Italo em 25/08/2014
+  TpcnIndOperacao = (ioConsultaCSC, ioNovoCSC, ioRevogaCSC);
 
 const
   TpcnTpEventoString : array[0..12] of String =('110110',
@@ -296,7 +302,7 @@ const
   CTecancCTe      = '1.03';
   CTeinutCTe      = '1.03';
   CTeconsCad      = '2.00';
-  CTeEventoCTe    = '0.00';  // Incluido por Italo em 20/05/2013
+  CTeEventoCTe    = '0.00';
 {$ENDIF}
 
 {$IFDEF PL_104}
@@ -308,9 +314,8 @@ const
   CTecancCTe      = '1.04';
   CTeinutCTe      = '1.04';
   CTeconsCad      = '2.00';
-  CTeEventoCTe    = '1.04';  // Incluido por Italo em 26/11/2012
+  CTeEventoCTe    = '1.04';
 
-  // Incluido por Italo em 25/10/2012
   CTeModalRodo    = '1.04';
   CTeModalAereo   = '1.04';
   CTeModalAqua    = '1.04';
@@ -319,7 +324,6 @@ const
   CTeMultiModal   = '0.00';
 {$ENDIF}
 
-// Incluido por Italo em 20/05/2013
 {$IFDEF PL_200}
   CTecabMsg       = '2.00';
   CTeconsStatServ = '2.00';
@@ -548,6 +552,9 @@ function GetVersaoNFe(AModeloDF: TpcnModeloDF; AVersaoDF: TpcnVersaoDF; ALayOut:
 function TipoAutorToStr(const t: TpcnTipoAutor ): string;
 function StrToTipoAutor(var ok: boolean; const s: string): TpcnTipoAutor;
 
+function IndOperacaoToStr(const t: TpcnIndOperacao ): string;
+function StrToIndOperacao(var ok: boolean; const s: string): TpcnIndOperacao;
+
 implementation
 
 function StrToHex(S: String): String;
@@ -661,7 +668,6 @@ begin
 end;
 
 // B21 - Formato de Impressão do DANFE *****************************************
-// Alterado por Italo em 25/02/2013 removido o valor tiResumido
 function TpImpToStr(const t: TpcnTipoImpressao): string;
 begin
   result := EnumeradoToStr(t, ['0', '1', '2', '3', '4', '5'],
@@ -876,26 +882,18 @@ begin
                               [cst00, cst10, cst20, cst30, cst40, cst41, cst50, cst51, cst60, cst70, cst80, cst81, cst90, cstPart10 , cstPart90 , cstRep41, cstICMSOutraUF, cstICMSSN]);
 end;
 
-// A função abaixo foi alterada em 21/06/2010 por: Italo Jurisato Junior
-// Foi incluido '80', '81', e cst80, cst81,
-// Para ficar compativel com a função: CSTICMSToStr, logo acima
 function StrToCSTICMS(var ok: boolean; const s: string): TpcnCSTIcms;
 begin
   result := StrToEnumerado(ok, s, ['00', '10', '20', '30', '40', '41', '50', '51', '60', '70', '80', '81', '90', '91', '92'],
     [cst00, cst10, cst20, cst30, cst40, cst41, cst50, cst51, cst60, cst70, cst80, cst81, cst90, cstICMSOutraUF, cstICMSSN]);
 end;
 
-// A função abaixo foi alterada em 21/06/2010 por: Italo Jurisato Junior
-// Foi incluido '11', '12', e cst80, cst81,
-// Para ficar compativel com a função: CSTICMSToStr, logo acima
 function CSTICMSToStrTagPos(const t: TpcnCSTIcms): string;
 begin
   result := EnumeradoToStr(t, ['02', '03', '04', '05', '06', '06', '06', '07', '08', '09', '10', '11', '12', '10a', '10a', '10b'],
     [cst00, cst10, cst20, cst30, cst40, cst41, cst50, cst51, cst60, cst70, cst80, cst81, cst90, cstPart10 , cstPart90 , cstRep41]);
 end;
 
-// A função abaixo foi alterada em 21/06/2010 por: Italo Jurisato Junior
-// As linhas alteradas estão comentadas
 function CSTICMSToStrTagPosText(const t: TpcnCSTIcms): string;
 begin
   result := EnumeradoToStr(t,
@@ -916,26 +914,6 @@ begin
     'ICMS DEVIDO A UF DE ORIGEM DA PRESTACAO, QUANDO DIFERENTE DA UF DO EMITENTE',
     'SIMPLES NACIONAL'],
     [cst00, cst10, cst20, cst30, cst40, cst41, cst45, cst50, cst51, cst60, cst70, cst80, cst81, cst90, cstICMSOutraUF, cstICMSSN]);
-(*
-  result := EnumeradoToStr(t,
-   ['PRESTAÇÃO SUJEITO À TRIBUTAÇÃO NORMAL ICMS',
-    '10',
-    'PRESTAÇÃO SUJEITO À TRIBUTAÇÃO COM BC REDUZIDA DO ICMS',
-    '30',
-    'ICMS ISENTO, NÃO TRIBUTADO OU DEFERIDO',
-    'ICMS ISENTO, NÃO TRIBUTADO OU DEFERIDO',
-    'ICMS ISENTO, NÃO TRIBUTADO OU DEFERIDO',
-    '50',
-    'ICMS ISENTO, NÃO TRIBUTADO OU DEFERIDO', // '51' alterado para o CT-e
-    'ICMS COBRADO ANTERIORMENTE POR SUBSTITUIÇÃO TRIBUTÁRIA',                   // foi incluido pois esta faltando
-    '70',
-    'RESPONSABILIDADE DO RECOLHIMENTO DO ICMS ATRIBUÍDO AO TOMADOR OU 3° POR ST',
-    'ICMS DEVICO À OUTRA UF',
-    'ICMS OUTROS',
-    'ICMS DEVIDO A UF DE ORIGEM DA PRESTACAO, QUANDO DIFERENTE DA UF DO EMITENTE',
-    'SIMPLES NACIONAL'],
-    [cst00, cst10, cst20, cst30, cst40, cst41, cst45, cst50, cst51, cst60, cst70, cst80, cst81, cst90, cstICMSOutraUF, cstICMSSN]);
-*)
 end;
 
 // N13 - Modalidade de determinação da BC do ICMS ******************************
@@ -1666,7 +1644,6 @@ begin
                                MPOutros]);
 end;
 
-// Incluido por Italo em 20/05/2013
 // Tipo da Unidade de Transporte ***********************************************
 
 function UnidTranspToStr(const t: TpcnUnidTransp):string;
@@ -1791,7 +1768,6 @@ begin
                                   [ve200, ve300, ve310]);
 end;
 
-
 function GetVersaoNFe(AModeloDF: TpcnModeloDF; AVersaoDF: TpcnVersaoDF; ALayOut: TLayOut): string;
 begin
   result := '';
@@ -1817,6 +1793,9 @@ begin
                         LayNFeDownloadNFe:    result := '1.00';
                         LayNfeAutorizacao:    result := '2.00';
                         LayNfeRetAutorizacao: result := '2.00';
+                        LayDistDFeInt:        result := '1.00';
+
+                        LayAdministrarCSCNFCe: result := '0.00';
                        end;
                      end;
               ve310: begin
@@ -1837,6 +1816,9 @@ begin
                         LayNFeDownloadNFe:    result := '1.00';
                         LayNfeAutorizacao:    result := '3.10';
                         LayNfeRetAutorizacao: result := '3.10';
+                        LayDistDFeInt:        result := '1.00';
+
+                        LayAdministrarCSCNFCe: result := '0.00';
                        end;
                      end;
              end;
@@ -1861,6 +1843,9 @@ begin
                         LayNFeDownloadNFe:    result := '1.00';
                         LayNfeAutorizacao:    result := '3.00';
                         LayNfeRetAutorizacao: result := '3.00';
+                        LayDistDFeInt:        result := '1.00';
+
+                        LayAdministrarCSCNFCe: result := '1.00';
                        end;
                      end;
               ve310: begin
@@ -1881,6 +1866,9 @@ begin
                         LayNFeDownloadNFe:    result := '1.00';
                         LayNfeAutorizacao:    result := '3.10';
                         LayNfeRetAutorizacao: result := '3.10';
+                        LayDistDFeInt:        result := '1.00';
+
+                        LayAdministrarCSCNFCe: result := '1.00';
                        end;
                      end;
              end;
@@ -1900,6 +1888,18 @@ begin
   result := StrToEnumerado(ok, s, ['1', '2', '3', '5', '6', '9'],
                                   [taEmpresaEmitente, taEmpresaDestinataria,
                                    taEmpresa, taFisco, taRFB, taOutros]);
+end;
+
+function IndOperacaoToStr(const t: TpcnIndOperacao ): string;
+begin
+  result := EnumeradoToStr(t, ['1', '2', '3'],
+                              [ioConsultaCSC, ioNovoCSC, ioRevogaCSC]);
+end;
+
+function StrToIndOperacao(var ok: boolean; const s: string): TpcnIndOperacao;
+begin
+  result := StrToEnumerado(ok, s, ['1', '2', '3'],
+                                  [ioConsultaCSC, ioNovoCSC, ioRevogaCSC]);
 end;
 
 end.

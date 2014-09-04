@@ -43,23 +43,20 @@
 //                                                                            //
 ////////////////////////////////////////////////////////////////////////////////
 
+{$I ACBr.inc}
+
 unit pcnConsNFeDest;
 
-interface uses
+interface
+
+uses
   SysUtils, Classes, pcnAuxiliar, pcnConversao, pcnGerador;
 
 type
 
-  //////////////////////////////////////////////////////////////////////////////
-  //                                                                          //
-  //    E M   D E S E N V O L V I M E N T O   -   N Ã O   T E S T A D O       //
-  //                                                                          //
-  //////////////////////////////////////////////////////////////////////////////
-
   TConsNFeDest = class(TPersistent)
   private
     FGerador: TGerador;
-    FSchema: TpcnSchema;
     FtpAmb: TpcnTipoAmbiente;
     FCNPJ: String;
     FindNFe: TpcnIndicadorNFe;
@@ -69,17 +66,16 @@ type
   public
     constructor Create;
     destructor Destroy; override;
-    function GerarXML: boolean;
+    function GerarXML: Boolean;
     function ObterNomeArquivo: string;
   published
-    property Gerador: TGerador read FGerador write FGerador;
-    property schema: TpcnSchema read Fschema write Fschema;
-    property tpAmb: TpcnTipoAmbiente read FtpAmb write FtpAmb;
-    property CNPJ: String read FCNPJ write FCNPJ;
-    property indNFe: TpcnIndicadorNFe read FindNFe write FindNFe;
-    property indEmi: TpcnIndicadorEmissor read FindEmi write FindEmi;
-    property ultNSU: String read FultNSU write FultNSU;
-    property Versao: String read FVersao write FVersao;
+    property Gerador: TGerador            read FGerador write FGerador;
+    property tpAmb: TpcnTipoAmbiente      read FtpAmb   write FtpAmb;
+    property CNPJ: String                 read FCNPJ    write FCNPJ;
+    property indNFe: TpcnIndicadorNFe     read FindNFe  write FindNFe;
+    property indEmi: TpcnIndicadorEmissor read FindEmi  write FindEmi;
+    property ultNSU: String               read FultNSU  write FultNSU;
+    property Versao: String               read FVersao  write FVersao;
   end;
 
 implementation
@@ -111,36 +107,31 @@ begin
   Result := AAAAMMDDTHHMMSS + '-con-nfe-dest.xml';
 end;
 
-function TConsNFeDest.GerarXML: boolean;
+function TConsNFeDest.GerarXML: Boolean;
 var
  sDoc, sNSU: String;
 begin
   Result := False;
 
-//  if retornarVersaoLayout(Fschema, tlConsNFeDest) = '2.00' then
-//  begin
+  Gerador.ArquivoFormatoXML := '';
+  
+  Gerador.wGrupo('consNFeDest ' + NAME_SPACE + ' versao="' + Versao + '"');
+  Gerador.wCampo(tcStr, 'IP03', 'tpAmb', 001, 001, 1, tpAmbToStr(FtpAmb), DSC_TPAMB);
+  Gerador.wCampo(tcStr, 'IP04', 'xServ', 018, 018, 1, 'CONSULTAR NFE DEST', DSC_XSERV);
 
-    Gerador.ArquivoFormatoXML := '';
-//    Gerador.wGrupo('consNFeDest ' + NAME_SPACE + ' ' + V1_01);
-    Gerador.wGrupo('consNFeDest ' + NAME_SPACE + ' versao="' + Versao + '"');
-    Gerador.wCampo(tcStr, 'IP03', 'tpAmb', 001, 001, 1, tpAmbToStr(FtpAmb), DSC_TPAMB);
-    Gerador.wCampo(tcStr, 'IP04', 'xServ', 018, 018, 1, 'CONSULTAR NFE DEST', DSC_XSERV);
+  sDoc := SomenteNumeros( FCNPJ );
+  Gerador.wCampo(tcStr, 'IP05', 'CNPJ', 014, 014, 1, sDoc , DSC_CNPJ);
+  if not ValidarCNPJ( sDoc ) then Gerador.wAlerta('IP05', 'CNPJ', DSC_CNPJ, ERR_MSG_INVALIDO);
 
-    sDoc := SomenteNumeros( FCNPJ );
-    Gerador.wCampo(tcStr, 'IP05', 'CNPJ', 014, 014, 1, sDoc , DSC_CNPJ);
-    if not ValidarCNPJ( sDoc ) then Gerador.wAlerta('IP05', 'CNPJ', DSC_CNPJ, ERR_MSG_INVALIDO);
+  Gerador.wCampo(tcStr, 'IP06', 'indNFe', 001, 001, 1, IndicadorNFeToStr(FindNFe), DSC_INDNFE);
+  Gerador.wCampo(tcStr, 'IP07', 'indEmi', 001, 001, 1, IndicadorEmissorToStr(FindEmi), DSC_INDEMI);
 
-    Gerador.wCampo(tcStr, 'IP06', 'indNFe', 001, 001, 1, IndicadorNFeToStr(FindNFe), DSC_INDNFE);
-    Gerador.wCampo(tcStr, 'IP07', 'indEmi', 001, 001, 1, IndicadorEmissorToStr(FindEmi), DSC_INDEMI);
+  sNSU := FultNSU;
+  if sNSU = '' then sNSU := '0';
+  Gerador.wCampo(tcStr, 'IP08', 'ultNSU', 001, 015, 1, sNSU, DSC_ULTNSU);
+  Gerador.wGrupo('/consNFeDest');
 
-    sNSU := FultNSU;
-    if sNSU = '' then sNSU := '0';
-    Gerador.wCampo(tcStr, 'IP08', 'ultNSU', 001, 015, 1, sNSU, DSC_ULTNSU);
-    Gerador.wGrupo('/consNFeDest');
-    Result := (Gerador.ListaDeAlertas.Count = 0);
-
-//  end;
-
+  Result := (Gerador.ListaDeAlertas.Count = 0);
 end;
 
 end.

@@ -42,21 +42,25 @@
 //              condicionado a manutenção deste cabeçalho junto ao código     //
 //                                                                            //
 ////////////////////////////////////////////////////////////////////////////////
+
+{$I ACBr.inc}
+
 unit pcnEventoNFe;
 
 interface
 
-uses SysUtils, Classes,
-     {$IFNDEF VER130}
-     Variants,
-     {$ENDIF}
-     pcnAuxiliar, pcnConversao;
+uses
+  SysUtils, Classes,
+  {$IFNDEF VER130}
+    Variants,
+  {$ENDIF}
+  pcnAuxiliar, pcnConversao;
 
 type
-  TInfEvento = class;
-  TDestinatario = class;
-  TDetEvento = class;
-  TRetInfEvento = class;
+  TInfEvento      = class;
+  TDestinatario   = class;
+  TDetEvento      = class;
+  TRetInfEvento   = class;
   EventoException = class(Exception);
 
   TInfEvento = class
@@ -64,7 +68,7 @@ type
     FID: String;
     FtpAmbiente: TpcnTipoAmbiente;
     FCNPJ: String;
-    FcOrgao: integer;
+    FcOrgao: Integer;
     FChave: String;
     FDataEvento: TDateTime;
     FTpEvento: TpcnTpEvento;
@@ -72,17 +76,17 @@ type
     FVersaoEvento: String;
     FDetEvento: TDetEvento;
 
-    function getcOrgao: integer;
+    function getcOrgao: Integer;
     function getVersaoEvento: String;
-    function getDescEvento: string;
-    function getTipoEvento: string;
+    function getDescEvento: String;
+    function getTipoEvento: String;
   public
     constructor Create;
     destructor Destroy; override;
     function DescricaoTipoEvento(TipoEvento:TpcnTpEvento): String;
 
     property id: String              read FID             write FID;
-    property cOrgao: integer         read getcOrgao       write FcOrgao;
+    property cOrgao: Integer         read getcOrgao       write FcOrgao;
     property tpAmb: TpcnTipoAmbiente read FtpAmbiente     write FtpAmbiente;
     property CNPJ: String            read FCNPJ           write FCNPJ;
     property chNFe: String           read FChave          write FChave;
@@ -91,8 +95,8 @@ type
     property nSeqEvento: Integer     read FnSeqEvento     write FnSeqEvento;
     property versaoEvento: String    read getVersaoEvento write FversaoEvento;
     property detEvento: TDetEvento   read FDetEvento      write FDetEvento;
-    property DescEvento: string      read getDescEvento;
-    property TipoEvento: string      read getTipoEvento;
+    property DescEvento: String      read getDescEvento;
+    property TipoEvento: String      read getTipoEvento;
   end;
 
   TDestinatario = class(TPersistent)
@@ -101,12 +105,11 @@ type
     FCNPJCPF: String;
     FidEstrangeiro: String;
     FIE: String;
-
   public
-    property UF: String              read FUF             write FUF;
-    property CNPJCPF: String         read FCNPJCPF        write FCNPJCPF;
-    property idEstrangeiro: String   read FidEstrangeiro  write FidEstrangeiro;
-    property IE: String              read FIE             write FIE;
+    property UF: String            read FUF            write FUF;
+    property CNPJCPF: String       read FCNPJCPF       write FCNPJCPF;
+    property idEstrangeiro: String read FidEstrangeiro write FidEstrangeiro;
+    property IE: String            read FIE            write FIE;
   end;
 
   TDetEvento = class
@@ -115,9 +118,9 @@ type
     FDescEvento: String;
     FCorrecao: String;     // Carta de Correção
     FCondUso: String;      // Carta de Correção
-    FnProt: string;        // Cancelamento
-    FxJust: string;        // Cancelamento e Manif. Destinatario
-    FcOrgaoAutor: integer; // EPEC
+    FnProt: String;        // Cancelamento
+    FxJust: String;        // Cancelamento e Manif. Destinatario
+    FcOrgaoAutor: Integer; // EPEC
     FtpAutor: TpcnTipoAutor;
     FverAplic: String;
     FdhEmi: TDateTime;
@@ -133,22 +136,22 @@ type
     constructor Create(AOwner: TInfEvento);
     destructor Destroy; override;
 
-    property versao: string           read FVersao      write FVersao;
-    property descEvento: string       read FDescEvento  write FDescEvento;
-    property xCorrecao: String        read FCorrecao    write FCorrecao;
-    property xCondUso: String         read FCondUso     write setCondUso;
-    property nProt: String            read FnProt       write FnProt;
-    property xJust: String            read FxJust       write FxJust;
-    property cOrgaoAutor: integer     read FcOrgaoAutor write FcOrgaoAutor;
-    property tpAutor: TpcnTipoAutor   read FtpAutor     write FtpAutor;
-    property verAplic: String         read FverAplic    write FverAplic;
-    property dhEmi: TDateTime         read FdhEmi       write FdhEmi;
-    property tpNF: TpcnTipoNFe        read FtpNF        write FtpNF;
-    property IE: String               read FIE          write FIE;
-    property dest: TDestinatario      read Fdest        write Fdest;
-    property vNF: Currency            read FvNF         write FvNF;
-    property vICMS: Currency          read FvICMS       write FvICMS;
-    property vST: Currency            read FvST         write FvST;
+    property versao: String         read FVersao      write FVersao;
+    property descEvento: String     read FDescEvento  write FDescEvento;
+    property xCorrecao: String      read FCorrecao    write FCorrecao;
+    property xCondUso: String       read FCondUso     write setCondUso;
+    property nProt: String          read FnProt       write FnProt;
+    property xJust: String          read FxJust       write FxJust;
+    property cOrgaoAutor: Integer   read FcOrgaoAutor write FcOrgaoAutor;
+    property tpAutor: TpcnTipoAutor read FtpAutor     write FtpAutor;
+    property verAplic: String       read FverAplic    write FverAplic;
+    property dhEmi: TDateTime       read FdhEmi       write FdhEmi;
+    property tpNF: TpcnTipoNFe      read FtpNF        write FtpNF;
+    property IE: String             read FIE          write FIE;
+    property dest: TDestinatario    read Fdest        write Fdest;
+    property vNF: Currency          read FvNF         write FvNF;
+    property vICMS: Currency        read FvICMS       write FvICMS;
+    property vST: Currency          read FvST         write FvST;
   end;
 
   TRetInfEvento = class
@@ -165,27 +168,26 @@ type
     FnSeqEvento: Integer;
     FCNPJDest: String;
     FemailDest: String;
-    FcOrgaoAutor: integer;
+    FcOrgaoAutor: Integer;
     FdhRegEvento: TDateTime;
     FnProt: String;
     FchNFePend: String;
     FXML: AnsiString;
-
   public
   published
-    property Id: string              read FId          write FId;
+    property Id: String              read FId          write FId;
     property tpAmb: TpcnTipoAmbiente read FtpAmb       write FtpAmb;
-    property verAplic: string        read FverAplic    write FverAplic;
+    property verAplic: String        read FverAplic    write FverAplic;
     property cOrgao: Integer         read FcOrgao      write FcOrgao;
-    property cStat: integer          read FcStat       write FcStat;
-    property xMotivo: string         read FxMotivo     write FxMotivo;
+    property cStat: Integer          read FcStat       write FcStat;
+    property xMotivo: String         read FxMotivo     write FxMotivo;
     property chNFe: String           read FchNFe       write FchNFe;
     property tpEvento: TpcnTpEvento  read FtpEvento    write FtpEvento;
     property xEvento: String         read FxEvento     write FxEvento;
     property nSeqEvento: Integer     read FnSeqEvento  write FnSeqEvento;
-    property CNPJDest: string        read FCNPJDest    write FCNPJDest;
+    property CNPJDest: String        read FCNPJDest    write FCNPJDest;
     property emailDest: String       read FemailDest   write FemailDest;
-    property cOrgaoAutor: integer    read FcOrgaoAutor write FcOrgaoAutor;
+    property cOrgaoAutor: Integer    read FcOrgaoAutor write FcOrgaoAutor;
     property dhRegEvento: TDateTime  read FdhRegEvento write FdhRegEvento;
     property nProt: String           read FnProt       write FnProt;
     property chNFePend: String       read FchNFePend   write FchNFePend;
@@ -208,20 +210,20 @@ begin
   inherited;
 end;
 
-function TInfEvento.getcOrgao: integer;
+function TInfEvento.getcOrgao: Integer;
 //  (AC,AL,AP,AM,BA,CE,DF,ES,GO,MA,MT,MS,MG,PA,PB,PR,PE,PI,RJ,RN,RS,RO,RR,SC,SP,SE,TO);
 //  (12,27,16,13,29,23,53,32,52,21,51,50,31,15,25,41,26,22,33,24,43,11,14,42,35,28,17);
 begin
   if FcOrgao <> 0 then
     Result := FcOrgao
   else
-     Result := StrToIntDef(copy(FChave,1,2),0);
+     Result := StrToIntDef(copy(FChave, 1, 2), 0);
 
   if Result = 0 then
     raise EventoException.Create('Campo cOrgao não informado');
 end;
 
-function TInfEvento.getDescEvento: string;
+function TInfEvento.getDescEvento: String;
 begin
   case fTpEvento of
     teCCe                      : Result := 'Carta de Correcao';
@@ -236,7 +238,7 @@ begin
   end;
 end;
 
-function TInfEvento.getTipoEvento: string;
+function TInfEvento.getTipoEvento: String;
 begin
   case FTpEvento of
     teCCe                      : Result := '110110'; // CCe

@@ -51,8 +51,9 @@
 
 unit pcnGerador;
 
-interface uses
+interface
 
+uses
   SysUtils, Classes,
 {$IFNDEF VER130}
   Variants,
@@ -135,7 +136,6 @@ const
   ERR_MSG_FINAL_MENOR_INICIAL = 'O numero final não pode ser menor que o inicial';
   ERR_MSG_ARQUIVO_NAO_ENCONTRADO = 'Arquivo não encontrado';
   ERR_MSG_SOMENTE_UM = 'Somente um campo deve ser preenchido';
- // Incluido por Italo em 18/07/2012
   ERR_MSG_MENOR_MINIMO = 'Número de ocorrências menor que o mínimo permitido - Mínimo ';
 
   CODIGO_BRASIL = 1058;
@@ -147,7 +147,6 @@ const
   NAME_SPACE_CTE  = 'xmlns="http://www.portalfiscal.inf.br/cte"';
   NAME_SPACE_CFE  = 'xmlns="http://www.fazenda.sp.gov.br/sat"';
   NAME_SPACE_MDFE = 'xmlns="http://www.portalfiscal.inf.br/mdfe"';
- // Incluido por Claudemir em 13/03/2013
   NAME_SPACE_GNRE = 'xmlns="http://www.gnre.pe.gov.br"';
 
   V0_02 = 'versao="0.02"';
@@ -423,10 +422,8 @@ const
   DSC_INDNFE = 'Indicador de NF-e consultada';
   DSC_INDEMI = 'Indicador do Emissor da NF-e';
   DSC_ULTNSU = 'Último NSU recebido pela Empresa';
-  // Incluido por Italo em 29/04/2013 conforme NT 2013/003
   DSC_QNF = 'Quantidade de Documento Fiscal';
   DSC_VTOTTRIB = 'Valor Aproximado Total de Tributos';
-  // Incluido por Italo em 13/08/2013
   DSC_IDDEST = 'Destino da Operação';
   DSC_INDFINAL = 'Indicador de Operação com Consumidor Final';
   DSC_INDPRES = 'Indicador de Presença do Consumidor Final';
@@ -513,7 +510,6 @@ const
   DSC_QTD      = 'Quantidade';
   DSC_DRET     = 'Detalhes da Retirada';
 
-  // Incluido por Italo em 04/09/2013
   DSC_XCARACAD  = 'Caracteristica adicional do transporte';
   DSC_XCARACSET = 'Caracteristica adicional do serviço';
   DSC_XEMI      = 'Funcionário emissor do CTe';
@@ -625,7 +621,8 @@ const
 
 implementation
 
-uses DateUtils, ACBrConsts;
+uses
+  DateUtils, ACBrConsts;
 
 { TGerador }
 
@@ -843,12 +840,13 @@ begin
       tcDe2,
       tcDe3,
       tcDe4,
-      tcDe6,  // Incluido por Italo em 30/09/2010
+      tcDe6,  
       tcDe10 : begin
-                // adicionar um para que o máximo não considere a virgula
-                Limite := Limite + 1;
+                  // adicionar um para que o máximo não considere a virgula
+                  Limite := Limite + 1;
 
-                // Tipo numerico com decimais
+                  // Tipo numerico com decimais
+                  (*
                   case Tipo of
                     tcDe2 : NumeroDecimais :=  2;
                     tcDe3 : NumeroDecimais :=  3;
@@ -858,6 +856,31 @@ begin
                   end;
                   //VlrExt := StrToFloat(valor);
                   ConteudoProcessado  := FormatFloat('0.0000000000', valor);
+                  *)
+
+                  case Tipo of
+                    tcDe2 : begin
+                      NumeroDecimais :=  2;
+                      ConteudoProcessado := FormatFloat('0.00', valor);
+                    end;
+                    tcDe3 : begin
+                      NumeroDecimais :=  3;
+                      ConteudoProcessado := FormatFloat('0.000', valor);
+                    end;
+                    tcDe4 : begin
+                      NumeroDecimais :=  4;
+                      ConteudoProcessado := FormatFloat('0.0000', valor);
+                    end;
+                    tcDe6 : begin
+                      NumeroDecimais :=  6;
+                      ConteudoProcessado := FormatFloat('0.000000', valor);
+                    end;
+                    tcDe10: begin
+                      NumeroDecimais := 10;
+                      ConteudoProcessado := FormatFloat('0.0000000000', valor);
+                    end;
+                  end;
+
                   EstaVazio           := (valor = 0) and (ocorrencias = 0);
                   if StrToIntDef(Copy(ConteudoProcessado, pos(DecimalSeparator, ConteudoProcessado) + NumeroDecimais + 1, 10),0) > 0 then
                     walerta(ID, Tag, Descricao, ERR_MSG_MAXIMO_DECIMAIS + ' ' + IntToStr(NumeroDecimais));

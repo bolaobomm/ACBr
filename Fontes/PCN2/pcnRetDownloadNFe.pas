@@ -42,11 +42,14 @@
 //              condicionado a manutenção deste cabeçalho junto ao código     //
 //                                                                            //
 ////////////////////////////////////////////////////////////////////////////////
-///
+
+{$I ACBr.inc}
+
 unit pcnRetDownloadNFe;
 
-interface uses
+interface
 
+uses
   SysUtils, Classes,
 {$IFNDEF VER130}
   Variants,
@@ -54,9 +57,9 @@ interface uses
   pcnAuxiliar, pcnConversao, pcnLeitor, ACBrUtil;
 
 type
-  TRetNFeCollection  = class ;
-  TRetNFeCollectionItem = class ;
-  TRetDownloadNFe = class ;
+  TRetNFeCollection     = class;
+  TRetNFeCollectionItem = class;
+  TRetDownloadNFe       = class;
 
   TRetNFeCollection = class(TCollection)
   private
@@ -155,6 +158,7 @@ begin
 end;
 
 { TRetDownloadNFe }
+
 procedure TRetDownloadNFe.SetretNFe(const Value: TRetNFeCollection);
 begin
   FretNFe.Assign(Value);
@@ -176,7 +180,7 @@ end;
 function TRetDownloadNFe.LerXml: boolean;
 var
   ok: Boolean;
-  i : Integer;
+  i: Integer;
 begin
   Result := False;
   try

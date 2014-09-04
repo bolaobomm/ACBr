@@ -42,20 +42,24 @@
 //              condicionado a manutenção deste cabeçalho junto ao código     //
 //                                                                            //
 ////////////////////////////////////////////////////////////////////////////////
+
+{$I ACBr.inc}
+
 unit pcnRetEnvEventoNFe;
 
 interface
 
-uses SysUtils, Classes,
-     {$IFNDEF VER130}
-     Variants,
-     {$ENDIF}
-     pcnAuxiliar, pcnConversao, pcnLeitor, pcnEventoNFe;
+uses
+  SysUtils, Classes,
+  {$IFNDEF VER130}
+    Variants,
+  {$ENDIF}
+  pcnAuxiliar, pcnConversao, pcnLeitor, pcnEventoNFe;
 
 type
-  TRetInfEventoCollection  = class;
+  TRetInfEventoCollection     = class;
   TRetInfEventoCollectionItem = class;
-  TRetEventoNFe = class;
+  TRetEventoNFe               = class;
 
   TRetInfEventoCollection = class(TCollection)
   private
@@ -79,29 +83,29 @@ type
 
   TRetEventoNFe = class(TPersistent)
   private
-    FidLote : integer;
+    FidLote: Integer;
     FtpAmb: TpcnTipoAmbiente;
-    FverAplic: string;
+    FverAplic: String;
     FLeitor: TLeitor;
-    FcStat: integer;
+    FcStat: Integer;
     FcOrgao: Integer;
-    FxMotivo: string;
+    FxMotivo: String;
     FretEvento: TRetInfEventoCollection;
     FInfEvento: TInfEvento;
     FXML: AnsiString;
   public
     constructor Create;
     destructor Destroy; override;
-    function LerXml: boolean;
+    function LerXml: Boolean;
   published
-    property idLote: integer read FidLote write FidLote;
-    property Leitor: TLeitor read FLeitor write FLeitor;
-    property tpAmb: TpcnTipoAmbiente read FtpAmb write FtpAmb;
-    property verAplic: string read FverAplic write FverAplic;
-    property cOrgao: integer read FcOrgao write FcOrgao;
-    property cStat: integer read FcStat write FcStat;
-    property xMotivo: string read FxMotivo write FxMotivo;
-    property InfEvento: TInfEvento read FInfEvento write FInfEvento;
+    property idLote: Integer                    read FidLote    write FidLote;
+    property Leitor: TLeitor                    read FLeitor    write FLeitor;
+    property tpAmb: TpcnTipoAmbiente            read FtpAmb     write FtpAmb;
+    property verAplic: String                   read FverAplic  write FverAplic;
+    property cOrgao: Integer                    read FcOrgao    write FcOrgao;
+    property cStat: Integer                     read FcStat     write FcStat;
+    property xMotivo: String                    read FxMotivo   write FxMotivo;
+    property InfEvento: TInfEvento              read FInfEvento write FInfEvento;
     property retEvento: TRetInfEventoCollection read FretEvento write FretEvento;
     property XML: AnsiString                    read FXML       write FXML;
   end;
@@ -148,6 +152,7 @@ begin
 end;
 
 { TRetEventoNFe }
+
 constructor TRetEventoNFe.Create;
 begin
   FLeitor := TLeitor.Create;
@@ -163,10 +168,10 @@ begin
   inherited;
 end;
 
-function TRetEventoNFe.LerXml: boolean;
+function TRetEventoNFe.LerXml: Boolean;
 var
-  ok: boolean;
-  i : integer;
+  ok: Boolean;
+  i: Integer;
 begin
   Result := False;
   i:=0;
@@ -175,15 +180,16 @@ begin
     begin
       if Leitor.rExtrai(2, 'infEvento', '', i + 1) <> '' then
        begin
-         infEvento.ID            := Leitor.rAtributo('Id');
-         InfEvento.cOrgao        := Leitor.rCampo(tcInt, 'cOrgao');
-         infEvento.tpAmb         := StrToTpAmb(ok, Leitor.rCampo(tcStr, 'tpAmb'));
-         infEvento.CNPJ          := Leitor.rCampo(tcStr, 'CNPJ');
-         infEvento.chNFe         := Leitor.rCampo(tcStr, 'chNFe');
-         infEvento.dhEvento      := Leitor.rCampo(tcDatHor, 'dhEvento');
-         infEvento.tpEvento      := StrToTpEvento(ok,Leitor.rCampo(tcStr, 'tpEvento'));
-         infEvento.nSeqEvento    := Leitor.rCampo(tcInt, 'nSeqEvento');
-         infEvento.VersaoEvento  := Leitor.rCampo(tcDe2, 'verEvento');
+         infEvento.ID           := Leitor.rAtributo('Id');
+         InfEvento.cOrgao       := Leitor.rCampo(tcInt, 'cOrgao');
+         infEvento.tpAmb        := StrToTpAmb(ok, Leitor.rCampo(tcStr, 'tpAmb'));
+         infEvento.CNPJ         := Leitor.rCampo(tcStr, 'CNPJ');
+         infEvento.chNFe        := Leitor.rCampo(tcStr, 'chNFe');
+         infEvento.dhEvento     := Leitor.rCampo(tcDatHor, 'dhEvento');
+         infEvento.tpEvento     := StrToTpEvento(ok,Leitor.rCampo(tcStr, 'tpEvento'));
+         infEvento.nSeqEvento   := Leitor.rCampo(tcInt, 'nSeqEvento');
+         infEvento.VersaoEvento := Leitor.rCampo(tcDe2, 'verEvento');
+
          if Leitor.rExtrai(3, 'detEvento', '', i + 1) <> '' then
          begin
            infEvento.DetEvento.xCorrecao := Leitor.rCampo(tcStr, 'xCorrecao');
@@ -211,10 +217,9 @@ begin
 
              // Alterado em 22/07/2014 por Italo
              // para ficar em conformidade com o Schema
-             infEvento.detEvento.vNF         := Leitor.rCampo(tcDe2, 'vNF');
-             infEvento.detEvento.vICMS       := Leitor.rCampo(tcDe2, 'vICMS');
-             infEvento.detEvento.vST         := Leitor.rCampo(tcDe2, 'vST');
-
+             infEvento.detEvento.vNF   := Leitor.rCampo(tcDe2, 'vNF');
+             infEvento.detEvento.vICMS := Leitor.rCampo(tcDe2, 'vICMS');
+             infEvento.detEvento.vST   := Leitor.rCampo(tcDe2, 'vST');
            end;
          end;
       end;
@@ -238,15 +243,15 @@ begin
          FretEvento.Items[i].FRetInfEvento.XML := Leitor.Grupo;
 
 //         (*HR10 *)FretEvento.versao               := Leitor.rCampo(tcStr, 'versao');
-         (*HR12 *)FretEvento.Items[i].FRetInfEvento.Id       := Leitor.rAtributo('Id');
-         (*HR13 *)FretEvento.Items[i].FRetInfEvento.tpAmb    := StrToTpAmb(ok, Leitor.rCampo(tcStr, 'tpAmb'));
-         (*HR14 *)FretEvento.Items[i].FRetInfEvento.verAplic := Leitor.rCampo(tcStr, 'verAplic');
-         (*HR15 *)FretEvento.Items[i].FRetInfEvento.cOrgao   := Leitor.rCampo(tcInt, 'cOrgao');
-         (*HR16 *)FretEvento.Items[i].FRetInfEvento.cStat    := Leitor.rCampo(tcInt, 'cStat');
-         (*HR17 *)FretEvento.Items[i].FRetInfEvento.xMotivo  := Leitor.rCampo(tcStr, 'xMotivo');
-         (*HR18 *)FretEvento.Items[i].FRetInfEvento.chNFe    := Leitor.rCampo(tcStr, 'chNFe');
-         (*HR19 *)FretEvento.Items[i].FRetInfEvento.tpEvento := StrToTpEvento(ok,Leitor.rCampo(tcStr, 'tpEvento'));
-         (*HR20 *)FretEvento.Items[i].FRetInfEvento.xEvento  := Leitor.rCampo(tcStr, 'xEvento');
+         (*HR12 *)FretEvento.Items[i].FRetInfEvento.Id         := Leitor.rAtributo('Id');
+         (*HR13 *)FretEvento.Items[i].FRetInfEvento.tpAmb      := StrToTpAmb(ok, Leitor.rCampo(tcStr, 'tpAmb'));
+         (*HR14 *)FretEvento.Items[i].FRetInfEvento.verAplic   := Leitor.rCampo(tcStr, 'verAplic');
+         (*HR15 *)FretEvento.Items[i].FRetInfEvento.cOrgao     := Leitor.rCampo(tcInt, 'cOrgao');
+         (*HR16 *)FretEvento.Items[i].FRetInfEvento.cStat      := Leitor.rCampo(tcInt, 'cStat');
+         (*HR17 *)FretEvento.Items[i].FRetInfEvento.xMotivo    := Leitor.rCampo(tcStr, 'xMotivo');
+         (*HR18 *)FretEvento.Items[i].FRetInfEvento.chNFe      := Leitor.rCampo(tcStr, 'chNFe');
+         (*HR19 *)FretEvento.Items[i].FRetInfEvento.tpEvento   := StrToTpEvento(ok,Leitor.rCampo(tcStr, 'tpEvento'));
+         (*HR20 *)FretEvento.Items[i].FRetInfEvento.xEvento    := Leitor.rCampo(tcStr, 'xEvento');
          (*HR21 *)FretEvento.Items[i].FRetInfEvento.nSeqEvento := Leitor.rCampo(tcInt, 'nSeqEvento');
          (*HR22 *)FretEvento.Items[i].FRetInfEvento.CNPJDest   := Leitor.rCampo(tcStr, 'CNPJDest');
          if FretEvento.Items[i].FRetInfEvento.CNPJDest = '' then

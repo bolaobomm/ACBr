@@ -42,44 +42,42 @@
 //              condicionado a manutenção deste cabeçalho junto ao código     //
 //                                                                            //
 ////////////////////////////////////////////////////////////////////////////////
-{******************************************************************************
+
+{*******************************************************************************
 |* Historico
 |*
 |* 28/09/2012: Italo
-|*  - Revisado geração do XML e adicionado propriedade para controle de Versão 
+|*  - Revisado geração do XML e adicionado propriedade para controle de Versão
 |*    do WebService Utilizado
-******************************************************************************}
+*******************************************************************************}
+
+{$I ACBr.inc}
+
 unit pcnConsStatServ;
 
-interface uses
+interface
+
+uses
   SysUtils, Classes, pcnAuxiliar, pcnConversao, pcnGerador;
 
 type
 
-  //////////////////////////////////////////////////////////////////////////////
-  //                                                                          //
-  //    E M   D E S E N V O L V I M E N T O   -   N Ã O   T E S T A D O       //
-  //                                                                          //
-  //////////////////////////////////////////////////////////////////////////////
-
   TConsStatServ = class(TPersistent)
   private
     FGerador: TGerador;
-    FSchema: TpcnSchema;
     FtpAmb: TpcnTipoAmbiente;
-    FcUF: integer;
+    FcUF: Integer;
     FVersao: String;
   public
     constructor Create;
     destructor Destroy; override;
-    function GerarXML: boolean;
+    function GerarXML: Boolean;
     function ObterNomeArquivo: string;
   published
-    property Gerador: TGerador read FGerador write FGerador;
-    property schema: TpcnSchema read Fschema write Fschema;
-    property tpAmb: TpcnTipoAmbiente read FtpAmb write FtpAmb;
-    property cUF: integer read FcUF write FcUF;
-    property Versao: String read FVersao write FVersao;
+    property Gerador: TGerador       read FGerador write FGerador;
+    property tpAmb: TpcnTipoAmbiente read FtpAmb   write FtpAmb;
+    property cUF: Integer            read FcUF     write FcUF;
+    property Versao: String          read FVersao  write FVersao;
   end;
 
 implementation
@@ -111,9 +109,10 @@ begin
   Result := AAAAMMDDTHHMMSS + '-ped-sta.xml';
 end;
 
-function TConsStatServ.GerarXML: boolean;
+function TConsStatServ.GerarXML: Boolean;
 begin
   Gerador.ArquivoFormatoXML := '';
+
   Gerador.wGrupo('consStatServ ' + NAME_SPACE + ' versao="' + Versao + '"');
   Gerador.wCampo(tcStr, 'FP03', 'tpAmb', 001, 001, 1, tpAmbToStr(FtpAmb), DSC_TPAMB);
   Gerador.wCampo(tcInt, 'FP04', 'cUF  ', 002, 002, 1, FcUF, DSC_CUF);
@@ -121,7 +120,6 @@ begin
   Gerador.wGrupo('/consStatServ');
 
   Result := (Gerador.ListaDeAlertas.Count = 0);
-
 end;
 
 end.

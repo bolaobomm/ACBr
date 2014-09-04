@@ -43,44 +43,42 @@
 //                                                                            //
 ////////////////////////////////////////////////////////////////////////////////
 
+{$I ACBr.inc}
+
 unit pcnRetCancNFe;
 
-interface uses
+interface
+
+uses
   SysUtils, Classes, pcnAuxiliar, pcnConversao, pcnLeitor;
 
 type
-
-  //////////////////////////////////////////////////////////////////////////////
-  //                                                                          //
-  //    E M   D E S E N V O L V I M E N T O   -   N Ã O   T E S T A D O       //
-  //                                                                          //
-  //////////////////////////////////////////////////////////////////////////////
 
   TRetCancNFe = class(TPersistent)
   private
     FLeitor: TLeitor;
     FtpAmb: TpcnTipoAmbiente;
     FdhRecbto: TDateTime;
-    FcStat: integer;
-    FcUF: integer;
-    FchNFE: string;
-    FverAplic: string;
-    FnProt: string;
-    FxMotivo: string;
+    FcStat: Integer;
+    FcUF: Integer;
+    FchNFE: String;
+    FverAplic: String;
+    FnProt: String;
+    FxMotivo: String;
   public
     constructor Create;
     destructor Destroy; override;
-    function LerXml: boolean;
+    function LerXml: Boolean;
   published
-    property Leitor: TLeitor read FLeitor write FLeitor;
-    property tpAmb: TpcnTipoAmbiente read FtpAmb write FtpAmb;
-    property verAplic: string read FverAplic write FverAplic;
-    property cStat: integer read FcStat write FcStat;
-    property xMotivo: string read FxMotivo write FxMotivo;
-    property cUF: integer read FcUF write FcUF;
-    property chNFE: string read FchNFE write FchNFE;
-    property dhRecbto: TDateTime read FdhRecbto write FdhRecbto;
-    property nProt: string read FnProt write FnProt;
+    property Leitor: TLeitor         read FLeitor   write FLeitor;
+    property tpAmb: TpcnTipoAmbiente read FtpAmb    write FtpAmb;
+    property verAplic: String        read FverAplic write FverAplic;
+    property cStat: Integer          read FcStat    write FcStat;
+    property xMotivo: String         read FxMotivo  write FxMotivo;
+    property cUF: Integer            read FcUF      write FcUF;
+    property chNFE: String           read FchNFE    write FchNFE;
+    property dhRecbto: TDateTime     read FdhRecbto write FdhRecbto;
+    property nProt: String           read FnProt    write FnProt;
   end;
 
 implementation
@@ -98,25 +96,27 @@ begin
   inherited;
 end;
 
-function TRetCancNFe.LerXml: boolean;
+function TRetCancNFe.LerXml: Boolean;
 var
-  ok: boolean;
+  ok: Boolean;
 begin
   Result := False;
   try
     if Leitor.rExtrai(1, 'infCanc') <> '' then
     begin
-      (*CR05 *)FtpAmb := StrToTpAmb(ok, Leitor.rCampo(tcStr, 'tpAmb'));
+      (*CR05 *)FtpAmb    := StrToTpAmb(ok, Leitor.rCampo(tcStr, 'tpAmb'));
       (*CR06 *)FverAplic := Leitor.rCampo(tcStr, 'verAplic');
-      (*CR07 *)FcStat := Leitor.rCampo(tcInt, 'cStat');
-      (*CR08 *)FxMotivo := Leitor.rCampo(tcStr, 'xMotivo');
-      (*CR08a*)FcUF := Leitor.rCampo(tcInt, 'cUF');
+      (*CR07 *)FcStat    := Leitor.rCampo(tcInt, 'cStat');
+      (*CR08 *)FxMotivo  := Leitor.rCampo(tcStr, 'xMotivo');
+      (*CR08a*)FcUF      := Leitor.rCampo(tcInt, 'cUF');
+
       if cStat in [101,151,155] then
       begin
-        (*CR09 *)FchNFe := Leitor.rCampo(tcStr, 'chNFe');
+        (*CR09 *)FchNFe    := Leitor.rCampo(tcStr, 'chNFe');
         (*CR10 *)FdhRecbto := Leitor.rCampo(tcDatHor, 'dhRecbto');
-        (*CR11 *)FnProt := Leitor.rCampo(tcStr, 'nProt');
+        (*CR11 *)FnProt    := Leitor.rCampo(tcStr, 'nProt');
       end;
+
       Result := True;
     end;
   except

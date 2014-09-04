@@ -42,7 +42,8 @@
 //              condicionado a manutenção deste cabeçalho junto ao código     //
 //                                                                            //
 ////////////////////////////////////////////////////////////////////////////////
-{******************************************************************************
+
+{*******************************************************************************
 |* Historico
 |*
 |* 03/08/2011: Italo
@@ -61,7 +62,8 @@
 |*  - Incluído Função GetFimDoHorarioDeVerao
 |*  - Incluído Função GetDataDoCarnaval
 |*  - Incluído Função GetDataDaPascoa
-******************************************************************************}
+*******************************************************************************}
+
 {$IFDEF FPC}
   {$MODE DELPHI}
 {$ENDIF}
@@ -70,8 +72,9 @@ unit pcnAuxiliar;
 
 {$H+}
 
-interface uses
+interface
 
+uses
   SysUtils, Classes,
 {$IFNDEF VER130}
   Variants,
@@ -309,7 +312,6 @@ begin
   end;
 end;
 
-
 function GerarDigito(var Digito: integer; chave: string): boolean;
 var
   i, j: integer;
@@ -421,7 +423,7 @@ begin
                 tlConsNFeDest     : Result := '2.00';
                 tlDownloadNFe     : Result := '2.00';
               end;
-
+(*
     // Tipos de LayOut para CT-e
     TsPL_CTe_103 :  case Layout of
                       tlConsStatServCTe : Result := '1.03';
@@ -457,6 +459,7 @@ begin
                       tlProcInutCTe     : Result := '1.04';
                       tlRetInutCTe      : Result := '1.04';
                     end;
+*)
   end;
 end;
 

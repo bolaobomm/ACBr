@@ -43,12 +43,13 @@
 //                                                                            //
 ////////////////////////////////////////////////////////////////////////////////
 
-// NÃO FUNCIONAL AINDA /////////////////////////////////////////////////////////
+{$I ACBr.inc}
 
 unit pcnEnvDPEC;
 
-interface uses
+interface
 
+uses
   SysUtils, Classes,
 {$IFNDEF VER130}
   Variants,
@@ -57,17 +58,16 @@ interface uses
 
 type
 
-  TEnvDPEC = class;
-  TinfDPEC = class;
-  TideDec = class;
-  TresNFeCollection = class;
+  TEnvDPEC              = class;
+  TinfDPEC              = class;
+  TideDec               = class;
+  TresNFeCollection     = class;
   TresNFeCollectionItem = class;
-  TGeradorOpcoes = class;
+  TGeradorOpcoes        = class;
 
   TEnvDPEC = class(TPersistent)
   private
     FGerador: TGerador;
-    FSchema: TpcnSchema;
     FOpcoes: TGeradorOpcoes;
     FinfDPEC: TinfDPEC;
     FSignature: TSignature;
@@ -75,53 +75,53 @@ type
   public
     constructor Create;
     destructor Destroy; override;
-    function GerarXML: boolean;
+    function GerarXML: Boolean;
   published
-    property Gerador: TGerador read FGerador write FGerador;
-    property schema: TpcnSchema read Fschema write Fschema;
-    property Opcoes: TGeradorOpcoes read FOpcoes write FOpcoes;
-    property infDPEC: TinfDPEC read FinfDPEC write FinfDPEC;
-    property signature: Tsignature read Fsignature write Fsignature;
-    property Versao: String read FVersao write FVersao;
+    property Gerador: TGerador      read FGerador   write FGerador;
+    property Opcoes: TGeradorOpcoes read FOpcoes    write FOpcoes;
+    property infDPEC: TinfDPEC      read FinfDPEC   write FinfDPEC;
+    property signature: Tsignature  read Fsignature write Fsignature;
+    property Versao: String         read FVersao    write FVersao;
   end;
 
   TGeradorOpcoes = class(TPersistent)
   private
-    FValidarInscricao: boolean;
+    FValidarInscricao: Boolean;
     FGerarTagAssinatura: TpcnTagAssinatura;
   published
-    property ValidarInscricao: boolean read FValidarInscricao write FValidarInscricao;
+    property ValidarInscricao: Boolean             read FValidarInscricao   write FValidarInscricao;
     property GerarTagAssinatura: TpcnTagAssinatura read FGerarTagAssinatura write FGerarTagAssinatura;
   end;
 
   TinfDPEC = class(TPersistent)
   private
-    FID: string;
+    FID: String;
     FIdeDec: TideDec;
     FresNFe: TresNFeCollection;
+
     procedure SetresNFe(Value: TresNFeCollection);
   public
     constructor Create(AOwner: TEnvDPEC);
     destructor Destroy; override;
   published
-    property ID: string read FID write FID;
-    property IdeDec: TIdeDec read FIdeDec write FIdeDec;
+    property ID: String                read FID     write FID;
+    property IdeDec: TIdeDec           read FIdeDec write FIdeDec;
     property resNFe: TresNFeCollection read FresNFe write SetresNFe;
   end;
 
   TideDec = class(TPersistent)
   private
-    FcUF: integer;
+    FcUF: Integer;
     FtpAmb: TpcnTipoAmbiente;
-    FverProc: string;
-    FCNPJ: string;
-    FIE: string;
+    FverProc: String;
+    FCNPJ: String;
+    FIE: String;
   published
-    property cUF: integer read FcUF write FcUF;
-    property tpAmb: TpcnTipoAmbiente read FtpAmb write FtpAmb default taHomologacao;
-    property verProc: string read FverProc write FverProc;
-    property CNPJ: string read FCNPJ write FCNPJ;
-    property IE: string read FIE write FIE;
+    property cUF: Integer            read FcUF     write FcUF;
+    property tpAmb: TpcnTipoAmbiente read FtpAmb   write FtpAmb default taHomologacao;
+    property verProc: String         read FverProc write FverProc;
+    property CNPJ: String            read FCNPJ    write FCNPJ;
+    property IE: String              read FIE      write FIE;
   end;
 
   TresNFeCollection = class(TCollection)
@@ -136,19 +136,19 @@ type
 
   TresNFeCollectionItem = class(TCollectionItem)
   private
-    FchNFe: string;
-    FCNPJCPF: string;
-    FUF: string;
-    FvNF: currency;
-    FvICMS: currency;
-    FvST: currency;
+    FchNFe: String;
+    FCNPJCPF: String;
+    FUF: String;
+    FvNF: Currency;
+    FvICMS: Currency;
+    FvST: Currency;
   published
-    property chNFe: string read FchNFe write FchNFe;
-    property CNPJCPF: string read FCNPJCPF write FCNPJCPF;
-    property UF: string read FUF write FUF;
-    property vNF: currency read FvNF write FvNF;
-    property vICMS: currency read FvICMS write FvICMS;
-    property vST: currency read FvST write FvST;
+    property chNFe: String   read FchNFe   write FchNFe;
+    property CNPJCPF: String read FCNPJCPF write FCNPJCPF;
+    property UF: String      read FUF      write FUF;
+    property vNF: Currency   read FvNF     write FvNF;
+    property vICMS: Currency read FvICMS   write FvICMS;
+    property vST: Currency   read FvST     write FvST;
   end;
 
 implementation
@@ -159,9 +159,9 @@ constructor TEnvDPEC.Create;
 begin
   FGerador := TGerador.Create;
   FinfDPEC := TinfDPEC.Create(self);
-  FOpcoes := TGeradorOpcoes.Create;
+  FOpcoes  := TGeradorOpcoes.Create;
   FOpcoes.FGerarTagAssinatura := taNunca;
-  FOpcoes.FValidarInscricao := False;
+  FOpcoes.FValidarInscricao   := False;
   Fsignature := Tsignature.create;
 end;
 
@@ -217,72 +217,68 @@ begin
   inherited SetItem(Index, Value);
 end;
 
-function TEnvDPEC.GerarXML: boolean;
+function TEnvDPEC.GerarXML: Boolean;
 var
-  i: integer;
-  Gerar: boolean;
+  i: Integer;
+  Gerar: Boolean;
 begin
   Result := False;
 
-//  if retornarVersaoLayout(Fschema, tlEnvDPEC) = '1.01' then
-//  begin
-
-    Self.infDPEC.IdeDec.CNPJ := SomenteNumeros(Self.infDPEC.IdeDec.CNPJ);
-    Self.infDPEC.IdeDec.IE := SomenteNumeros(Self.infDPEC.IdeDec.IE);
+  Self.infDPEC.IdeDec.CNPJ := SomenteNumeros(Self.infDPEC.IdeDec.CNPJ);
+  Self.infDPEC.IdeDec.IE := SomenteNumeros(Self.infDPEC.IdeDec.IE);
     //
-    Gerador.ArquivoFormatoXML := '';
-    Gerador.wGrupo(ENCODING_UTF8, '', False);
-//    Gerador.wGrupo('envDPEC '+  V1_01 + ' ' + NAME_SPACE );
-    Gerador.wGrupo('envDPEC versao="'+  Versao + '" ' + NAME_SPACE );
-    Gerador.wGrupo('infDPEC Id="DPEC' + SomenteNumeros( Self.infDPEC.Id) + '"');
-    Gerador.wGrupo('ideDec');
-    Gerador.wCampo(tcInt, 'AP06', 'cUF    ', 02, 02, 1, Self.infDPEC.IdeDec.cUF, DSC_CUF);
-    if not ValidarCodigoUF(Self.infDPEC.IdeDec.cUF) then
-      Gerador.wAlerta('AP06', 'cUF', DSC_CUF, ERR_MSG_INVALIDO);
-    Gerador.wCampo(tcStr, 'AP07', 'tpAmb  ', 01, 01, 1, tpAmbToStr(Self.infDPEC.IdeDec.FtpAmb), DSC_TPAMB);
-    Gerador.wCampo(tcStr, 'AP08', 'verProc', 01, 20, 1, Self.infDPEC.IdeDec.verProc, DSC_VERPROC);
-    Gerador.wCampo(tcStr, 'AP09', 'CNPJ   ', 14, 14, 1, Self.infDPEC.IdeDec.CNPJ, DSC_CNPJ);
-    if not ValidarCNPJ(Self.infDPEC.IdeDec.CNPJ) then
-      Gerador.wAlerta('AP09', 'CNPJ', DSC_CNPJ, ERR_MSG_INVALIDO);
-    Gerador.wCampo(tcStr, 'AP10', 'IE     ', 02, 14, 1, Self.infDPEC.IdeDec.IE, DSC_IE);
-    if (FOpcoes.ValidarInscricao) and (Self.infDPEC.IdeDec.IE <> '') then
-      if not ValidarIE(Self.infDPEC.IdeDec.IE, codigoParaUF(Self.infDPEC.IdeDec.cUF)) then
-        Gerador.wAlerta('AP10', 'IE', DSC_IE, ERR_MSG_INVALIDO);
-    Gerador.wGrupo('/ideDec');
-    for i := 0 to Self.infDPEC.resNFe.Count - 1 do
+  Gerador.ArquivoFormatoXML := '';
+  
+  Gerador.wGrupo(ENCODING_UTF8, '', False);
+  Gerador.wGrupo('envDPEC versao="'+  Versao + '" ' + NAME_SPACE );
+  Gerador.wGrupo('infDPEC Id="DPEC' + SomenteNumeros( Self.infDPEC.Id) + '"');
+  Gerador.wGrupo('ideDec');
+  Gerador.wCampo(tcInt, 'AP06', 'cUF    ', 02, 02, 1, Self.infDPEC.IdeDec.cUF, DSC_CUF);
+  if not ValidarCodigoUF(Self.infDPEC.IdeDec.cUF) then
+    Gerador.wAlerta('AP06', 'cUF', DSC_CUF, ERR_MSG_INVALIDO);
+  Gerador.wCampo(tcStr, 'AP07', 'tpAmb  ', 01, 01, 1, tpAmbToStr(Self.infDPEC.IdeDec.FtpAmb), DSC_TPAMB);
+  Gerador.wCampo(tcStr, 'AP08', 'verProc', 01, 20, 1, Self.infDPEC.IdeDec.verProc, DSC_VERPROC);
+  Gerador.wCampo(tcStr, 'AP09', 'CNPJ   ', 14, 14, 1, Self.infDPEC.IdeDec.CNPJ, DSC_CNPJ);
+  if not ValidarCNPJ(Self.infDPEC.IdeDec.CNPJ) then
+    Gerador.wAlerta('AP09', 'CNPJ', DSC_CNPJ, ERR_MSG_INVALIDO);
+  Gerador.wCampo(tcStr, 'AP10', 'IE     ', 02, 14, 1, Self.infDPEC.IdeDec.IE, DSC_IE);
+  if (FOpcoes.ValidarInscricao) and (Self.infDPEC.IdeDec.IE <> '') then
+    if not ValidarIE(Self.infDPEC.IdeDec.IE, codigoParaUF(Self.infDPEC.IdeDec.cUF)) then
+      Gerador.wAlerta('AP10', 'IE', DSC_IE, ERR_MSG_INVALIDO);
+  Gerador.wGrupo('/ideDec');
+  for i := 0 to Self.infDPEC.resNFe.Count - 1 do
+  begin
+    Self.infDPEC.resNFe[i].CNPJCPF := SomenteNumeros(Self.infDPEC.resNFe[i].CNPJCPF);
+    Gerador.wGrupo('resNFe');
+    Gerador.wCampo(tcStr, 'AP12', 'chNFe', 044, 044, 1, SomenteNumeros(Self.infDPEC.resNFe[i].chNFe), DSC_CHNFE);
+    Gerador.wCampoCNPJCPF('AP13', 'AP14', Self.infDPEC.resNFe[i].CNPJCPF, CODIGO_BRASIL);
+    Gerador.wCampo(tcStr, 'AP15', 'UF   ', 02, 02, 1, Self.infDPEC.resNFe[i].UF, DSC_UF);
+    Gerador.wCampo(tcDe2, 'AP16', 'vNF  ', 01, 15, 1, Self.infDPEC.resNFe[i].vNF, DSC_VNF);
+    Gerador.wCampo(tcDe2, 'AP17', 'vICMS', 01, 15, 1, Self.infDPEC.resNFe[i].vICMS, DSC_VICMS);
+    Gerador.wCampo(tcDe2, 'AP18', 'vST  ', 01, 15, 1, Self.infDPEC.resNFe[i].vST, DSC_VST);
+    Gerador.wGrupo('/resNFe');
+  end;
+  Gerador.wGrupo('/infDPEC');
+    //
+  if FOpcoes.GerarTagAssinatura <> taNunca then
+  begin
+    Gerar := true;
+    if FOpcoes.GerarTagAssinatura = taSomenteSeAssinada then
+      Gerar := ((Self.signature.DigestValue <> '') and (Self.signature.SignatureValue <> '') and (Self.signature.X509Certificate <> ''));
+    if FOpcoes.GerarTagAssinatura = taSomenteParaNaoAssinada then
+      Gerar := ((Self.signature.DigestValue = '') and (Self.signature.SignatureValue = '') and (Self.signature.X509Certificate = ''));
+    if Gerar then
     begin
-      Self.infDPEC.resNFe[i].CNPJCPF := SomenteNumeros(Self.infDPEC.resNFe[i].CNPJCPF);
-      Gerador.wGrupo('resNFe');
-      Gerador.wCampo(tcStr, 'AP12', 'chNFe', 044, 044, 1, SomenteNumeros(Self.infDPEC.resNFe[i].chNFe), DSC_CHNFE);
-      Gerador.wCampoCNPJCPF('AP13', 'AP14', Self.infDPEC.resNFe[i].CNPJCPF, CODIGO_BRASIL);
-      Gerador.wCampo(tcStr, 'AP15', 'UF   ', 02, 02, 1, Self.infDPEC.resNFe[i].UF, DSC_UF);
-      Gerador.wCampo(tcDe2, 'AP16', 'vNF  ', 01, 15, 1, Self.infDPEC.resNFe[i].vNF, DSC_VNF);
-      Gerador.wCampo(tcDe2, 'AP17', 'vICMS', 01, 15, 1, Self.infDPEC.resNFe[i].vICMS, DSC_VICMS);
-      Gerador.wCampo(tcDe2, 'AP18', 'vST  ', 01, 15, 1, Self.infDPEC.resNFe[i].vST, DSC_VST);
-      Gerador.wGrupo('/resNFe');
+      Self.signature.URI := somenteNumeros(Self.infDPEC.Id);
+      Self.signature.Gerador.Opcoes.IdentarXML := Gerador.Opcoes.IdentarXML;
+      Self.signature.GerarXML;
+      Gerador.ArquivoFormatoXML := Gerador.ArquivoFormatoXML + Self.signature.Gerador.ArquivoFormatoXML;
     end;
-    Gerador.wGrupo('/infDPEC');
+  end;
     //
-    if FOpcoes.GerarTagAssinatura <> taNunca then
-    begin
-      Gerar := true;
-      if FOpcoes.GerarTagAssinatura = taSomenteSeAssinada then
-        Gerar := ((Self.signature.DigestValue <> '') and (Self.signature.SignatureValue <> '') and (Self.signature.X509Certificate <> ''));
-      if FOpcoes.GerarTagAssinatura = taSomenteParaNaoAssinada then
-        Gerar := ((Self.signature.DigestValue = '') and (Self.signature.SignatureValue = '') and (Self.signature.X509Certificate = ''));
-      if Gerar then
-      begin
-        Self.signature.URI := somenteNumeros(Self.infDPEC.Id);
-        Self.signature.Gerador.Opcoes.IdentarXML := Gerador.Opcoes.IdentarXML;
-        Self.signature.GerarXML;
-        Gerador.ArquivoFormatoXML := Gerador.ArquivoFormatoXML + Self.signature.Gerador.ArquivoFormatoXML;
-      end;
-    end;
-    //
-    Gerador.wGrupo('/envDPEC');
-    Result := (Gerador.ListaDeAlertas.Count = 0);
+  Gerador.wGrupo('/envDPEC');
 
-//  end;
+  Result := (Gerador.ListaDeAlertas.Count = 0);
 end;
 
 end.

@@ -43,41 +43,37 @@
 //                                                                            //
 ////////////////////////////////////////////////////////////////////////////////
 
+{$I ACBr.inc}
+
 unit pcnConsDPEC;
 
-interface uses
+interface
+
+uses
   SysUtils, Classes, pcnAuxiliar, pcnConversao, pcnGerador;
 
 type
 
-  //////////////////////////////////////////////////////////////////////////////
-  //                                                                          //
-  //    E M   D E S E N V O L V I M E N T O   -   N Ã O   T E S T A D O       //
-  //                                                                          //
-  //////////////////////////////////////////////////////////////////////////////
-
   TConsDPEC = class(TPersistent)
   private
     FGerador: TGerador;
-    FSchema: TpcnSchema;
     FtpAmb: TpcnTipoAmbiente;
-    FverAplic: string;
-    FchNFe: string;
-    FnRegDPEC: string;
+    FverAplic: String;
+    FchNFe: String;
+    FnRegDPEC: String;
     FVersao: String;
   public
     constructor Create;
     destructor Destroy; override;
-    function GerarXML: boolean;
-    function ObterNomeArquivo: string;
+    function GerarXML: Boolean;
+    function ObterNomeArquivo: String;
   published
-    property Gerador: TGerador read FGerador write FGerador;
-    property schema: TpcnSchema read Fschema write Fschema;
-    property tpAmb: TpcnTipoAmbiente read FtpAmb write FtpAmb;
-    property verAplic: string read FverAplic write FverAplic;
-    property chNFe: string read FchNFe write FchNFe;
-    property nRegDPEC: string read FnRegDPEC write FnRegDPEC;
-    property Versao: String read FVersao write FVersao;
+    property Gerador: TGerador       read FGerador  write FGerador;
+    property tpAmb: TpcnTipoAmbiente read FtpAmb    write FtpAmb;
+    property verAplic: String        read FverAplic write FverAplic;
+    property chNFe: String           read FchNFe    write FchNFe;
+    property nRegDPEC: String        read FnRegDPEC write FnRegDPEC;
+    property Versao: String          read FVersao   write FVersao;
   end;
 
 implementation
@@ -95,34 +91,30 @@ begin
   inherited;
 end;
 
-function TConsDPEC.ObterNomeArquivo: string;
+function TConsDPEC.ObterNomeArquivo: String;
 begin
-  Result := SomenteNumeros(FchNFe) + '-ped-sit.xml'; ///////alterar
+  Result := SomenteNumeros(FchNFe) + '-ped-sit.xml';
 end;
 
-function TConsDPEC.GerarXML: boolean;
+function TConsDPEC.GerarXML: Boolean;
 begin
   Result := False;
 
-//  if retornarVersaoLayout(Fschema, tlConsDPEC) = '1.01' then
-//  begin
+  Gerador.ArquivoFormatoXML := '';
 
-    Gerador.ArquivoFormatoXML := '';
-    Gerador.wGrupo(ENCODING_UTF8, '', False);
-//    Gerador.wGrupo('consDPEC '+  V1_01 + ' ' + NAME_SPACE );
-    Gerador.wGrupo('consDPEC versao="'+  Versao + '" ' + NAME_SPACE );
-    Gerador.wCampo(tcStr, 'BP03', 'tpAmb', 001, 001, 1, tpAmbToStr(FtpAmb), DSC_TPAMB);
-    Gerador.wCampo(tcStr, 'BP04', 'verAplic', 001, 020, 1, FverAplic, DSC_VERAPLIC);
-    if trim(FchNFe) <> '' then
-      Gerador.wCampo(tcEsp, 'BP05', 'chNFe', 044, 044, 1, FchNFe, DSC_CHNFe);
-    if trim(FnRegDPEC) <> '' then
-      Gerador.wCampo(tcEsp, 'BP06', 'nRegDPEC', 015, 015, 1, FnRegDPEC, DSC_nRegDPEC);
-    Gerador.wGrupo('/consDPEC');
-    if (trim(FchNFe) <> '') and (trim(FnRegDPEC) <> '') then
-      Gerador.wAlerta('BP05/BP06', 'chNFe/nRegDPEC', DSC_CHNFe + '/' + DSC_nRegDPEC, ERR_MSG_SOMENTE_UM);
-    Result := (Gerador.ListaDeAlertas.Count = 0);
+  Gerador.wGrupo(ENCODING_UTF8, '', False);
+  Gerador.wGrupo('consDPEC versao="'+  Versao + '" ' + NAME_SPACE );
+  Gerador.wCampo(tcStr, 'BP03', 'tpAmb', 001, 001, 1, tpAmbToStr(FtpAmb), DSC_TPAMB);
+  Gerador.wCampo(tcStr, 'BP04', 'verAplic', 001, 020, 1, FverAplic, DSC_VERAPLIC);
+  if trim(FchNFe) <> '' then
+    Gerador.wCampo(tcEsp, 'BP05', 'chNFe', 044, 044, 1, FchNFe, DSC_CHNFe);
+  if trim(FnRegDPEC) <> '' then
+    Gerador.wCampo(tcEsp, 'BP06', 'nRegDPEC', 015, 015, 1, FnRegDPEC, DSC_nRegDPEC);
+  Gerador.wGrupo('/consDPEC');
+  if (trim(FchNFe) <> '') and (trim(FnRegDPEC) <> '') then
+    Gerador.wAlerta('BP05/BP06', 'chNFe/nRegDPEC', DSC_CHNFe + '/' + DSC_nRegDPEC, ERR_MSG_SOMENTE_UM);
 
-//  end;
+  Result := (Gerador.ListaDeAlertas.Count = 0);
 end;
 
 end.

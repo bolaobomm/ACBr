@@ -42,44 +42,42 @@
 //              condicionado a manutenção deste cabeçalho junto ao código     //
 //                                                                            //
 ////////////////////////////////////////////////////////////////////////////////
-{******************************************************************************
+
+{*******************************************************************************
 |* Historico
 |*
 |* 28/09/2012: Italo
-|*  - Revisado geração do XML e adicionado propriedade para controle de Versão 
+|*  - Revisado geração do XML e adicionado propriedade para controle de Versão
 |*    do WebService Utilizado
-******************************************************************************}
+*******************************************************************************}
+
+{$I ACBr.inc}
+
 unit pcnConsSitNFe;
 
-interface uses
+interface
+
+uses
   SysUtils, Classes, pcnAuxiliar, pcnConversao, pcnGerador;
 
 type
 
-  //////////////////////////////////////////////////////////////////////////////
-  //                                                                          //
-  //    E M   D E S E N V O L V I M E N T O   -   N Ã O   T E S T A D O       //
-  //                                                                          //
-  //////////////////////////////////////////////////////////////////////////////
-
   TConsSitNFe = class(TPersistent)
   private
     FGerador: TGerador;
-    FSchema: TpcnSchema;
     FtpAmb: TpcnTipoAmbiente;
-    FchNFe: string;
+    FchNFe: String;
     FVersao: String;
   public
     constructor Create;
     destructor Destroy; override;
-    function GerarXML: boolean;
-    function ObterNomeArquivo: string;    
+    function GerarXML: Boolean;
+    function ObterNomeArquivo: String;
   published
-    property Gerador: TGerador read FGerador write FGerador;
-    property schema: TpcnSchema read Fschema write Fschema;
-    property tpAmb: TpcnTipoAmbiente read FtpAmb write FtpAmb;
-    property chNFe: string read FchNFe write FchNFe;
-    property Versao: String read FVersao write FVersao;
+    property Gerador: TGerador       read FGerador write FGerador;
+    property tpAmb: TpcnTipoAmbiente read FtpAmb   write FtpAmb;
+    property chNFe: String           read FchNFe   write FchNFe;
+    property Versao: String          read FVersao  write FVersao;
   end;
 
 implementation
@@ -97,14 +95,15 @@ begin
   inherited;
 end;
 
-function TConsSitNFe.ObterNomeArquivo: string;
+function TConsSitNFe.ObterNomeArquivo: String;
 begin
   Result := SomenteNumeros(FchNFe) + '-ped-sit.xml';
 end;
 
-function TConsSitNFe.GerarXML: boolean;
+function TConsSitNFe.GerarXML: Boolean;
 begin
   Gerador.ArquivoFormatoXML := '';
+
   Gerador.wGrupo('consSitNFe ' + NAME_SPACE + ' versao="' + Versao + '"');
   Gerador.wCampo(tcStr, 'EP03', 'tpAmb', 001, 001, 1, tpAmbToStr(FtpAmb), DSC_TPAMB);
   Gerador.wCampo(tcStr, 'EP04', 'xServ', 009, 009, 1, 'CONSULTAR', DSC_XSERV);

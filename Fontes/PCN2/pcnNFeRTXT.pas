@@ -43,10 +43,13 @@
 //                                                                            //
 ////////////////////////////////////////////////////////////////////////////////
 
+{$I ACBr.inc}
+
 unit pcnNFeRTXT;
 
-interface uses
+interface
 
+uses
   SysUtils, Classes,
 {$IFNDEF VER130}
   Variants,
@@ -61,25 +64,25 @@ type
     FNFe: TNFe;
     FConteudoArquivo: TStringList;
     FLayoutArquivoTXT: TStringList;
-    FSchema: TpcnSchema;
-    FRegistro: string;
-    FID: string;
+//    FSchema: TpcnSchema;
+    FRegistro: String;
+    FID: String;
   public
     constructor Create(AOwner: TNFe);
     destructor Destroy; override;
-    function LerTxt: boolean;
-    function CarregarArquivo(const CaminhoArquivo: string): boolean;
-    procedure LerRegistro(const Registro: string);
-    function LerCampo(const Tipo: TpcnTipoCampo; TAG: string): variant;
-    function RetornarConteudoTag(const TAG: string): string;
-    function LocalizarPosicaoTAG(TAG: string; Conteudo: string): integer;
+    function LerTxt: Boolean;
+    function CarregarArquivo(const CaminhoArquivo: String): Boolean;
+    procedure LerRegistro(const Registro: String);
+    function LerCampo(const Tipo: TpcnTipoCampo; TAG: String): variant;
+    function RetornarConteudoTag(const TAG: String): String;
+    function LocalizarPosicaoTAG(TAG: String; Conteudo: String): Integer;
   published
-    property NFe: TNFe read FNFe write FNFe;
-    property ConteudoArquivo: TStringList read FConteudoArquivo write FConteudoArquivo;
+    property NFe: TNFe                     read FNFe              write FNFe;
+    property ConteudoArquivo: TStringList  read FConteudoArquivo  write FConteudoArquivo;
     property LayoutArquivoTXT: TStringList read FLayoutArquivoTXT write FLayoutArquivoTXT;
-    property schema: TpcnSchema read Fschema write Fschema;
-    property Registro: string read FRegistro write FRegistro;
-    property ID: string read FID write FID;
+//    property schema: TpcnSchema            read Fschema           write Fschema;
+    property Registro: String              read FRegistro         write FRegistro;
+    property ID: String                    read FID               write FID;
   end;
 
 implementation
@@ -88,8 +91,8 @@ implementation
 
 constructor TNFeRTXT.Create(AOwner: TNFe);
 begin
-  FNFe := AOwner;
-  FConteudoArquivo := TStringList.create;
+  FNFe              := AOwner;
+  FConteudoArquivo  := TStringList.create;
   FLayoutArquivoTXT := TStringList.create;
 end;
 
@@ -100,7 +103,7 @@ begin
   FLayoutArquivoTXT.Free;
 end;
 
-function TNFeRTXT.CarregarArquivo(const CaminhoArquivo: string): boolean;
+function TNFeRTXT.CarregarArquivo(const CaminhoArquivo: String): Boolean;
 begin
   Result := False;
   if not FileExists(caminhoArquivo) then
@@ -109,10 +112,10 @@ begin
   Result := True;
 end;
 
-function TNFeRTXT.LerTxt: boolean;
+function TNFeRTXT.LerTxt: Boolean;
 var
-  i: integer;
-  versao: string;
+  i: Integer;
+  versao: String;
 begin
   Result := False;
   // Ler o arquivo
@@ -140,9 +143,9 @@ begin
   Result := True;
 end;
 
-function TNFeRTXT.LerCampo(const Tipo: TpcnTipoCampo; TAG: string): variant;
+function TNFeRTXT.LerCampo(const Tipo: TpcnTipoCampo; TAG: String): variant;
 var
-  ConteudoTag: string;
+  ConteudoTag: String;
 begin
   ConteudoTag := RetornarConteudoTag(TAG);
   if copy(ConteudoTag,1,1) = '§' then
@@ -180,9 +183,9 @@ begin
   end;
 end;
 
-function TNFeRTXT.LocalizarPosicaoTAG(TAG: string; Conteudo: string): integer;
+function TNFeRTXT.LocalizarPosicaoTAG(TAG: String; Conteudo: String): Integer;
 var
-  i, contador: integer;
+  i, contador: Integer;
 begin
   TAG := Trim(TAG);
   conteudo := copy(conteudo, 1, pos('|' + TAG + '¨', conteudo));
@@ -193,10 +196,10 @@ begin
   result := contador;
 end;
 
-function TNFeRTXT.RetornarConteudoTag(const TAG: string): string;
+function TNFeRTXT.RetornarConteudoTag(const TAG: String): String;
 var
-  i, j, k, m: integer;
-  s: string;
+  i, j, k, m: Integer;
+  s: String;
 begin
   j := 0;
   for i := 0 to FLayoutArquivoTXT.count - 1 do
@@ -217,10 +220,10 @@ begin
   result := copy(s, 1, pos('|', s) - 1);
 end;
 
-procedure TNFeRTXT.LerRegistro(const Registro: string);
+procedure TNFeRTXT.LerRegistro(const Registro: String);
 var
-  i, j, k: integer;
-  ok: boolean;
+  i, j, k: Integer;
+  ok: Boolean;
 begin
 
   FRegistro := Registro;

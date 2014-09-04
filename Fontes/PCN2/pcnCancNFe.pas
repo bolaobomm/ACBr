@@ -42,17 +42,22 @@
 //              condicionado a manutenção deste cabeçalho junto ao código     //
 //                                                                            //
 ////////////////////////////////////////////////////////////////////////////////
-{******************************************************************************
+
+{*******************************************************************************
 |* Historico
 |*
 |* 28/09/2012: Italo
-|*  - Revisado geração do XML e adicionado propriedade para controle de Versão 
+|*  - Revisado geração do XML e adicionado propriedade para controle de Versão
 |*    do WebService Utilizado
-******************************************************************************}
+*******************************************************************************}
+
+{$I ACBr.inc}
 
 unit pcnCancNFe;
 
-interface uses
+interface
+
+uses
   SysUtils, Classes, pcnAuxiliar, pcnConversao, pcnGerador;
 
 type
@@ -60,27 +65,25 @@ type
   TcancNFe = class(TPersistent)
   private
     FGerador: TGerador;
-    FSchema: TpcnSchema;
-    FChave: string;
+    FChave: String;
     FtpAmb: TpcnTipoAmbiente;
-    FchNFe: string;
-    FnProt: string;
-    FxJust: string;
+    FchNFe: String;
+    FnProt: String;
+    FxJust: String;
     FVersao: String;
   public
     constructor Create;
     destructor Destroy; override;
-    function GerarXML: boolean;
-    function ObterNomeArquivo: string;
+    function GerarXML: Boolean;
+    function ObterNomeArquivo: String;
   published
-    property Gerador: TGerador read FGerador write FGerador;
-    property Schema: TpcnSchema read FSchema write FSchema;
-    property Chave: string read FChave write FChave;
-    property tpAmb: TpcnTipoAmbiente read FtpAmb write FtpAmb;
-    property chNFe: string read FchNFe write FchNFe;
-    property nProt: string read FnProt write FnProt;
-    property xJust: string read FxJust write FxJust;
-    property Versao: String read FVersao write FVersao;
+    property Gerador: TGerador       read FGerador write FGerador;
+    property Chave: String           read FChave   write FChave;
+    property tpAmb: TpcnTipoAmbiente read FtpAmb   write FtpAmb;
+    property chNFe: String           read FchNFe   write FchNFe;
+    property nProt: String           read FnProt   write FnProt;
+    property xJust: String           read FxJust   write FxJust;
+    property Versao: String          read FVersao  write FVersao;
   end;
 
 implementation
@@ -98,14 +101,15 @@ begin
   inherited;
 end;
 
-function TcancNFe.ObterNomeArquivo: string;
+function TcancNFe.ObterNomeArquivo: String;
 begin
   Result := SomenteNumeros(FchNFe) + '-ped-can.xml';
 end;
 
-function TcancNFe.GerarXML: boolean;
+function TcancNFe.GerarXML: Boolean;
 begin
   Gerador.ArquivoFormatoXML := '';
+
   Gerador.wGrupo('cancNFe ' + NAME_SPACE + ' versao="' + Versao + '"');
   Gerador.wGrupo('infCanc Id="ID' + SomenteNumeros(FchNFe) + '"');
   Gerador.wCampo(tcStr, 'CP05', 'tpAmb', 001, 001, 1, tpAmbToStr(FtpAmb), DSC_TPAMB);
@@ -119,7 +123,6 @@ begin
   Gerador.wGrupo('/cancNFe');
 
   Result := (Gerador.ListaDeAlertas.Count = 0);
-
 end;
 
 end.

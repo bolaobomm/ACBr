@@ -42,11 +42,14 @@
 //              condicionado a manutenção deste cabeçalho junto ao código     //
 //                                                                            //
 ////////////////////////////////////////////////////////////////////////////////
-///
+
+{$I ACBr.inc}
+
 unit pcnRetConsNFeDest;
 
-interface uses
+interface
 
+uses
   SysUtils, Classes,
 {$IFNDEF VER130}
   Variants,
@@ -54,39 +57,39 @@ interface uses
   pcnAuxiliar, pcnConversao, pcnLeitor{, pcnEnvEventoNFe};
 
 type
-  TresNFe = class ;
-  TresCanc = class ;
-  TresCCe = class ;
-  TRetCollection  = class ;
-  TRetCollectionItem = class ;
-  TRetConsNFeDest = class ;
+  TresNFe            = class;
+  TresCanc           = class;
+  TresCCe            = class;
+  TRetCollection     = class;
+  TRetCollectionItem = class;
+  TRetConsNFeDest    = class;
 
   TresNFe = class
   private
     FdhRecbto: TDateTime;
     FdEmi: TDateTime;
     FtpNF: TpcnTipoNFe;
-    FdigVal: string;
-    FchNFe: string;
-    FvNF: double;
-    FxNome: string;
-    FCNPJCPF: string;
-    FIE: string;
+    FdigVal: String;
+    FchNFe: String;
+    FvNF: Double;
+    FxNome: String;
+    FCNPJCPF: String;
+    FIE: String;
     FcSitConf: TpcnSituacaoManifDest;
-    FNSU: string;
+    FNSU: String;
     FcSitNFe: TpcnSituacaoNFe;
   public
-    property NSU: string read FNSU write FNSU;
-    property chNFe: string read FchNFe write FchNFe;
-    property CNPJCPF: string read FCNPJCPF write FCNPJCPF;
-    property xNome: string read FxNome write FxNome;
-    property IE: string read FIE write FIE;
-    property dEmi: TDateTime read FdEmi write FdEmi;
-    property tpNF: TpcnTipoNFe read FtpNF write FtpNF;
-    property vNF: double read FvNF write FvNF;
-    property digVal: string read FdigVal write FdigVal;
-    property dhRecbto: TDateTime read FdhRecbto write FdhRecbto;
-    property cSitNFe: TpcnSituacaoNFe read FcSitNFe write FcSitNFe;
+    property NSU: String                     read FNSU      write FNSU;
+    property chNFe: String                   read FchNFe    write FchNFe;
+    property CNPJCPF: String                 read FCNPJCPF  write FCNPJCPF;
+    property xNome: String                   read FxNome    write FxNome;
+    property IE: String                      read FIE       write FIE;
+    property dEmi: TDateTime                 read FdEmi     write FdEmi;
+    property tpNF: TpcnTipoNFe               read FtpNF     write FtpNF;
+    property vNF: Double                     read FvNF      write FvNF;
+    property digVal: String                  read FdigVal   write FdigVal;
+    property dhRecbto: TDateTime             read FdhRecbto write FdhRecbto;
+    property cSitNFe: TpcnSituacaoNFe        read FcSitNFe  write FcSitNFe;
     property cSitConf: TpcnSituacaoManifDest read FcSitConf write FcSitConf;
   end;
 
@@ -95,27 +98,27 @@ type
     FdhRecbto: TDateTime;
     FdEmi: TDateTime;
     FtpNF: TpcnTipoNFe;
-    FdigVal: string;
-    FchNFe: string;
-    FvNF: double;
-    FxNome: string;
-    FCNPJCPF: string;
-    FIE: string;
+    FdigVal: String;
+    FchNFe: String;
+    FvNF: Double;
+    FxNome: String;
+    FCNPJCPF: String;
+    FIE: String;
     FcSitConf: TpcnSituacaoManifDest;
-    FNSU: string;
+    FNSU: String;
     FcSitNFe: TpcnSituacaoNFe;
   public
-    property NSU: string read FNSU write FNSU;
-    property chNFe: string read FchNFe write FchNFe;
-    property CNPJCPF: string read FCNPJCPF write FCNPJCPF;
-    property xNome: string read FxNome write FxNome;
-    property IE: string read FIE write FIE;
-    property dEmi: TDateTime read FdEmi write FdEmi;
-    property tpNF: TpcnTipoNFe read FtpNF write FtpNF;
-    property vNF: double read FvNF write FvNF;
-    property digVal: string read FdigVal write FdigVal;
-    property dhRecbto: TDateTime read FdhRecbto write FdhRecbto;
-    property cSitNFe: TpcnSituacaoNFe read FcSitNFe write FcSitNFe;
+    property NSU: String                     read FNSU      write FNSU;
+    property chNFe: String                   read FchNFe    write FchNFe;
+    property CNPJCPF: String                 read FCNPJCPF  write FCNPJCPF;
+    property xNome: String                   read FxNome    write FxNome;
+    property IE: String                      read FIE       write FIE;
+    property dEmi: TDateTime                 read FdEmi     write FdEmi;
+    property tpNF: TpcnTipoNFe               read FtpNF     write FtpNF;
+    property vNF: Double                     read FvNF      write FvNF;
+    property digVal: String                  read FdigVal   write FdigVal;
+    property dhRecbto: TDateTime             read FdhRecbto write FdhRecbto;
+    property cSitNFe: TpcnSituacaoNFe        read FcSitNFe  write FcSitNFe;
     property cSitConf: TpcnSituacaoManifDest read FcSitConf write FcSitConf;
   end;
 
@@ -123,23 +126,23 @@ type
   private
     FdhRecbto: TDateTime;
     FtpNF: TpcnTipoNFe;
-    FchNFe: string;
+    FchNFe: String;
     FdhEvento: TDateTime;
-    FxCorrecao: string;
+    FxCorrecao: String;
     FtpEvento: TpcnTpEvento;
-    FdescEvento: string;
-    FNSU: string;
+    FdescEvento: String;
+    FNSU: String;
     FnSeqEvento: ShortInt;
   public
-    property NSU: string read FNSU write FNSU;
-    property chNFe: string read FchNFe write FchNFe;
-    property dhEvento: TDateTime read FdhEvento write FdhEvento;
-    property tpEvento: TpcnTpEvento read FtpEvento write FtpEvento;
-    property nSeqEvento: ShortInt read FnSeqEvento write FnSeqEvento;
-    property descEvento: string read FdescEvento write FdescEvento;
-    property xCorrecao: string read FxCorrecao write FxCorrecao;
-    property tpNF: TpcnTipoNFe read FtpNF write FtpNF;
-    property dhRecbto: TDateTime read FdhRecbto write FdhRecbto;
+    property NSU: String            read FNSU        write FNSU;
+    property chNFe: String          read FchNFe      write FchNFe;
+    property dhEvento: TDateTime    read FdhEvento   write FdhEvento;
+    property tpEvento: TpcnTpEvento read FtpEvento   write FtpEvento;
+    property nSeqEvento: ShortInt   read FnSeqEvento write FnSeqEvento;
+    property descEvento: String     read FdescEvento write FdescEvento;
+    property xCorrecao: String      read FxCorrecao  write FxCorrecao;
+    property tpNF: TpcnTipoNFe      read FtpNF       write FtpNF;
+    property dhRecbto: TDateTime    read FdhRecbto   write FdhRecbto;
   end;
 
   TRetCollection = class(TCollection)
@@ -161,43 +164,43 @@ type
     constructor Create; reintroduce;
     destructor Destroy; override;
   published
-    property resNFe: TresNFe read FresNFe write FresNFe;
+    property resNFe: TresNFe   read FresNFe  write FresNFe;
     property resCanc: TresCanc read FresCanc write FresCanc;
-    property resCCe: TresCCe read FresCCe write FresCCe;
+    property resCCe: TresCCe   read FresCCe  write FresCCe;
   end;
 
   TRetConsNFeDest = class(TPersistent)
   private
-    Fversao : string;
+    Fversao: String;
     FtpAmb: TpcnTipoAmbiente;
-    FverAplic: string;
+    FverAplic: String;
     FLeitor: TLeitor;
-    FcStat: integer;
+    FcStat: Integer;
     FdhResp: TDateTime;
-    FxMotivo: string;
+    FxMotivo: String;
     FindCont: TpcnIndicadorContinuacao;
-    FultNSU: string;
+    FultNSU: String;
     Fret: TRetCollection;
     FXML: AnsiString;
+
     procedure Setret(const Value: TRetCollection);
   public
     constructor Create;
     destructor Destroy; override;
-    function LerXml: boolean;
+    function LerXml: Boolean;
   published
-    property versao: string read Fversao write Fversao;
-    property Leitor: TLeitor read FLeitor write FLeitor;
-    property tpAmb: TpcnTipoAmbiente read FtpAmb write FtpAmb;
-    property verAplic: string read FverAplic write FverAplic;
-    property cStat: integer read FcStat write FcStat;
-    property xMotivo: string read FxMotivo write FxMotivo;
-    property dhResp: TDateTime read FdhResp write FdhResp;
-    property indCont: TpcnIndicadorContinuacao read FindCont write FindCont;
-    property ultNSU: string read FultNSU write FultNSU;
-    property ret: TRetCollection read Fret write Setret;
-    property XML: AnsiString read FXML write FXML;
+    property versao: String                    read Fversao   write Fversao;
+    property Leitor: TLeitor                   read FLeitor   write FLeitor;
+    property tpAmb: TpcnTipoAmbiente           read FtpAmb    write FtpAmb;
+    property verAplic: String                  read FverAplic write FverAplic;
+    property cStat: Integer                    read FcStat    write FcStat;
+    property xMotivo: String                   read FxMotivo  write FxMotivo;
+    property dhResp: TDateTime                 read FdhResp   write FdhResp;
+    property indCont: TpcnIndicadorContinuacao read FindCont  write FindCont;
+    property ultNSU: String                    read FultNSU   write FultNSU;
+    property ret: TRetCollection               read Fret      write Setret;
+    property XML: AnsiString                   read FXML      write FXML;
   end;
-
 
 implementation
 
@@ -230,9 +233,9 @@ end;
 
 constructor TRetCollectionItem.Create;
 begin
-  FresNFe := TresNFe.Create;
+  FresNFe  := TresNFe.Create;
   FresCanc := TresCanc.Create;
-  FresCCe := TresCCe.Create;
+  FresCCe  := TresCCe.Create;
 end;
 
 destructor TRetCollectionItem.Destroy;
@@ -244,6 +247,7 @@ begin
 end;
 
 { TRetConsNFeDest }
+
 procedure TRetConsNFeDest.Setret(const Value: TRetCollection);
 begin
   Fret.Assign(Value);
@@ -252,7 +256,7 @@ end;
 constructor TRetConsNFeDest.Create;
 begin
   FLeitor := TLeitor.Create;
-  Fret := TRetCollection.Create(Self);
+  Fret    := TRetCollection.Create(Self);
 end;
 
 destructor TRetConsNFeDest.Destroy;
@@ -262,18 +266,18 @@ begin
   inherited;
 end;
 
-function TRetConsNFeDest.LerXml: boolean;
+function TRetConsNFeDest.LerXml: Boolean;
 var
-  ok: boolean;
-  i : integer;
+  ok: Boolean;
+  i : Integer;
 begin
   Result := False;
   try
     FXML := Self.Leitor.Arquivo;
+
     if (Leitor.rExtrai(1, 'retConsNFeDest') <> '') then
     begin
       (*IR02 *)Fversao   := Leitor.rAtributo('versao');
-//      (*IR02 *)Fversao   := Leitor.rCampo(tcStr, 'versao');
       (*IR03 *)FtpAmb    := StrToTpAmb(ok, Leitor.rCampo(tcStr, 'tpAmb'));
       (*IR04 *)FverAplic := Leitor.rCampo(tcStr, 'verAplic');
       (*IR05 *)FcStat    := Leitor.rCampo(tcInt, 'cStat');
@@ -281,6 +285,7 @@ begin
       (*IR07 *)FdhResp   := Leitor.rCampo(tcDatHor, 'dhResp');
       (*IR08 *)FindCont  := StrToIndicadorContinuacao(ok, Leitor.rCampo(tcStr, 'indCont'));
       (*IR09 *)FultNSU   := Leitor.rCampo(tcStr, 'ultNSU');
+
       i := 0;
       while Leitor.rExtrai(2, 'ret', '', i + 1) <> '' do
       begin
@@ -288,45 +293,47 @@ begin
 
         if (Leitor.rExtrai(3, 'resNFe') <> '') then
         begin
-          (*IR12 *)Fret.Items[i].FresNFe.FNSU       := Leitor.rAtributo('NSU');
-//          (*IR12 *)Fret.Items[i].FresNFe.FNSU       := Leitor.rCampo(tcStr, 'NSU');
-          (*IR13 *)Fret.Items[i].FresNFe.chNFe      := Leitor.rCampo(tcStr, 'chNFe');
-          (*IR14 *)Fret.Items[i].FresNFe.FCNPJCPF   := Leitor.rCampo(tcStr, 'CNPJ');
+          (*IR12 *)Fret.Items[i].FresNFe.FNSU      := Leitor.rAtributo('NSU');
+          (*IR13 *)Fret.Items[i].FresNFe.chNFe     := Leitor.rCampo(tcStr, 'chNFe');
+          (*IR14 *)Fret.Items[i].FresNFe.FCNPJCPF  := Leitor.rCampo(tcStr, 'CNPJ');
+
           if Fret.Items[i].FresNFe.FCNPJCPF = '' then
             (*IR15 *)Fret.Items[i].FresNFe.FCNPJCPF := Leitor.rCampo(tcStr, 'CPF');
-          (*IR16 *)Fret.Items[i].FresNFe.FxNome     := Leitor.rCampo(tcStr, 'xNome');
-          (*IR17 *)Fret.Items[i].FresNFe.FIE        := Leitor.rCampo(tcStr, 'IE');
-          (*IR18 *)Fret.Items[i].FresNFe.FdEmi      := Leitor.rCampo(tcDat, 'dEmi');
-          (*IR19 *)Fret.Items[i].FresNFe.FtpNF      := StrToTpNF(ok, Leitor.rCampo(tcStr, 'tpNF'));
-          (*IR20 *)Fret.Items[i].FresNFe.FvNF       := Leitor.rCampo(tcDe2, 'vNF');
-          (*IR21 *)Fret.Items[i].FresNFe.FdigVal    := Leitor.rCampo(tcStr, 'digVal');
-          (*IR22 *)Fret.Items[i].FresNFe.FdhRecbto  := Leitor.rCampo(tcDatHor, 'dhRecbto');
-          (*IR23 *)Fret.Items[i].FresNFe.FcSitNFe   := StrToSituacaoNFe(ok, Leitor.rCampo(tcStr, 'cSitNFe'));
-          (*IR24 *)Fret.Items[i].FresNFe.FcSitConf  := StrToSituacaoManifDest(ok, Leitor.rCampo(tcStr, 'cSitConf'));
+
+          (*IR16 *)Fret.Items[i].FresNFe.FxNome    := Leitor.rCampo(tcStr, 'xNome');
+          (*IR17 *)Fret.Items[i].FresNFe.FIE       := Leitor.rCampo(tcStr, 'IE');
+          (*IR18 *)Fret.Items[i].FresNFe.FdEmi     := Leitor.rCampo(tcDat, 'dEmi');
+          (*IR19 *)Fret.Items[i].FresNFe.FtpNF     := StrToTpNF(ok, Leitor.rCampo(tcStr, 'tpNF'));
+          (*IR20 *)Fret.Items[i].FresNFe.FvNF      := Leitor.rCampo(tcDe2, 'vNF');
+          (*IR21 *)Fret.Items[i].FresNFe.FdigVal   := Leitor.rCampo(tcStr, 'digVal');
+          (*IR22 *)Fret.Items[i].FresNFe.FdhRecbto := Leitor.rCampo(tcDatHor, 'dhRecbto');
+          (*IR23 *)Fret.Items[i].FresNFe.FcSitNFe  := StrToSituacaoNFe(ok, Leitor.rCampo(tcStr, 'cSitNFe'));
+          (*IR24 *)Fret.Items[i].FresNFe.FcSitConf := StrToSituacaoManifDest(ok, Leitor.rCampo(tcStr, 'cSitConf'));
         end;
 
         if (Leitor.rExtrai(3, 'resCanc') <> '') then
         begin
-          (*IR26 *)Fret.Items[i].FresCanc.FNSU       := Leitor.rAtributo('NSU');
-          (*IR27 *)Fret.Items[i].FresCanc.chNFe      := Leitor.rCampo(tcStr, 'chNFe');
-          (*IR28 *)Fret.Items[i].FresCanc.FCNPJCPF   := Leitor.rCampo(tcStr, 'CNPJ');
+          (*IR26 *)Fret.Items[i].FresCanc.FNSU      := Leitor.rAtributo('NSU');
+          (*IR27 *)Fret.Items[i].FresCanc.chNFe     := Leitor.rCampo(tcStr, 'chNFe');
+          (*IR28 *)Fret.Items[i].FresCanc.FCNPJCPF  := Leitor.rCampo(tcStr, 'CNPJ');
+
           if Fret.Items[i].FresCanc.FCNPJCPF = '' then
             (*IR29 *)Fret.Items[i].FresCanc.FCNPJCPF := Leitor.rCampo(tcStr, 'CPF');
-          (*IR30 *)Fret.Items[i].FresCanc.FxNome     := Leitor.rCampo(tcStr, 'xNome');
-          (*IR31 *)Fret.Items[i].FresCanc.FIE        := Leitor.rCampo(tcStr, 'IE');
-          (*IR32 *)Fret.Items[i].FresCanc.FdEmi      := Leitor.rCampo(tcDat, 'dEmi');
-          (*IR33 *)Fret.Items[i].FresCanc.FtpNF      := StrToTpNF(ok, Leitor.rCampo(tcStr, 'tpNF'));
-          (*IR34 *)Fret.Items[i].FresCanc.FvNF       := Leitor.rCampo(tcDe2, 'vNF');
-          (*IR35 *)Fret.Items[i].FresCanc.FdigVal    := Leitor.rCampo(tcStr, 'digVal');
-          (*IR36 *)Fret.Items[i].FresCanc.FdhRecbto  := Leitor.rCampo(tcDatHor, 'dhRecbto');
-          (*IR37 *)Fret.Items[i].FresCanc.FcSitNFe   := StrToSituacaoNFe(ok, Leitor.rCampo(tcStr, 'cSitNFe'));
-          (*IR38 *)Fret.Items[i].FresCanc.FcSitConf  := StrToSituacaoManifDest(ok, Leitor.rCampo(tcStr, 'cSitConf'));
+
+          (*IR30 *)Fret.Items[i].FresCanc.FxNome    := Leitor.rCampo(tcStr, 'xNome');
+          (*IR31 *)Fret.Items[i].FresCanc.FIE       := Leitor.rCampo(tcStr, 'IE');
+          (*IR32 *)Fret.Items[i].FresCanc.FdEmi     := Leitor.rCampo(tcDat, 'dEmi');
+          (*IR33 *)Fret.Items[i].FresCanc.FtpNF     := StrToTpNF(ok, Leitor.rCampo(tcStr, 'tpNF'));
+          (*IR34 *)Fret.Items[i].FresCanc.FvNF      := Leitor.rCampo(tcDe2, 'vNF');
+          (*IR35 *)Fret.Items[i].FresCanc.FdigVal   := Leitor.rCampo(tcStr, 'digVal');
+          (*IR36 *)Fret.Items[i].FresCanc.FdhRecbto := Leitor.rCampo(tcDatHor, 'dhRecbto');
+          (*IR37 *)Fret.Items[i].FresCanc.FcSitNFe  := StrToSituacaoNFe(ok, Leitor.rCampo(tcStr, 'cSitNFe'));
+          (*IR38 *)Fret.Items[i].FresCanc.FcSitConf := StrToSituacaoManifDest(ok, Leitor.rCampo(tcStr, 'cSitConf'));
         end;
 
         if (Leitor.rExtrai(3, 'resCCe') <> '') then
         begin
           (*IR40 *)Fret.Items[i].FresCCe.FNSU        := Leitor.rAtributo('NSU');
-//          (*IR40 *)Fret.Items[i].FresCCe.FNSU        := Leitor.rCampo(tcStr, 'NSU');
           (*IR41 *)Fret.Items[i].FresCCe.chNFe       := Leitor.rCampo(tcStr, 'chNFe');
           (*IR42 *)Fret.Items[i].FresCCe.FdhEvento   := Leitor.rCampo(tcDatHor, 'dhEvento');
           (*IR43 *)Fret.Items[i].FresCCe.FtpEvento   := StrToTpEvento(ok, Leitor.rCampo(tcStr, 'tpEvento'));

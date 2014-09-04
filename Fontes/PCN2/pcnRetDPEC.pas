@@ -43,44 +43,42 @@
 //                                                                            //
 ////////////////////////////////////////////////////////////////////////////////
 
+{$I ACBr.inc}
+
 unit pcnRetDPEC;
 
-interface uses
+interface
+
+uses
   SysUtils, Classes, pcnAuxiliar, pcnConversao, pcnLeitor;
 
 type
 
-  //////////////////////////////////////////////////////////////////////////////
-  //                                                                          //
-  //    E M   D E S E N V O L V I M E N T O   -   N Ã O   T E S T A D O       //
-  //                                                                          //
-  //////////////////////////////////////////////////////////////////////////////
-
   TRetDPEC = class(TPersistent)
   private
     FLeitor: TLeitor;
-    FId: string;
+    FId: String;
     FtpAmb: TpcnTipoAmbiente;
-    FverAplic: string;
-    FcStat: integer;
-    FxMotivo: string;
+    FverAplic: String;
+    FcStat: Integer;
+    FxMotivo: String;
     FdhRegDPEC: TDateTime;
-    FnRegDPEC: string;
-    FchNFE: string;
+    FnRegDPEC: String;
+    FchNFE: String;
   public
     constructor Create;
     destructor Destroy; override;
-    function LerXml: boolean;
+    function LerXml: Boolean;
   published
-    property Leitor: TLeitor read FLeitor write FLeitor;
-    property Id: string read FId write FId;
-    property tpAmb: TpcnTipoAmbiente read FtpAmb write FtpAmb;
-    property verAplic: string read FverAplic write FverAplic;
-    property cStat: integer read FcStat write FcStat;
-    property xMotivo: string read FxMotivo write FxMotivo;
-    property dhRegDPEC: TDateTime read FdhRegDPEC write FdhRegDPEC;
-    property nRegDPEC: string read FnRegDPEC write FnRegDPEC;
-    property chNFE: string read FchNFE write FchNFE;
+    property Leitor: TLeitor         read FLeitor    write FLeitor;
+    property Id: String              read FId        write FId;
+    property tpAmb: TpcnTipoAmbiente read FtpAmb     write FtpAmb;
+    property verAplic: String        read FverAplic  write FverAplic;
+    property cStat: Integer          read FcStat     write FcStat;
+    property xMotivo: String         read FxMotivo   write FxMotivo;
+    property dhRegDPEC: TDateTime    read FdhRegDPEC write FdhRegDPEC;
+    property nRegDPEC: String        read FnRegDPEC  write FnRegDPEC;
+    property chNFE: String           read FchNFE     write FchNFE;
   end;
 
 implementation
@@ -98,26 +96,27 @@ begin
   inherited;
 end;
 
-function TRetDPEC.LerXml: boolean;
+function TRetDPEC.LerXml: Boolean;
 var
-  ok: boolean;
+  ok: Boolean;
 begin
   Result := False;
   try
     if Leitor.rExtrai(1, 'infDPECReg') <> '' then
     begin
-      (*AR04 *)FId := Leitor.rAtributo('infDPECReg Id=');
-      (*AR05 *)FtpAmb := StrToTpAmb(ok, Leitor.rCampo(tcStr, 'tpAmb'));
+      (*AR04 *)FId       := Leitor.rAtributo('infDPECReg Id=');
+      (*AR05 *)FtpAmb    := StrToTpAmb(ok, Leitor.rCampo(tcStr, 'tpAmb'));
       (*AR06 *)FverAplic := Leitor.rCampo(tcStr, 'verAplic');
-      (*AR07 *)FcStat := Leitor.rCampo(tcInt, 'cStat');
-      (*AR08 *)FxMotivo := Leitor.rCampo(tcStr, 'xMotivo');
+      (*AR07 *)FcStat    := Leitor.rCampo(tcInt, 'cStat');
+      (*AR08 *)FxMotivo  := Leitor.rCampo(tcStr, 'xMotivo');
+
       if cStat = 124 then
       begin
         (*AR09 *)FdhRegDPEC := Leitor.rCampo(tcDatHor, 'dhRegDPEC');
-        (*AR10 *)nRegDPEC := Leitor.rCampo(tcStr, 'nRegDPEC');
-        
-        (*AR10 *)FchNFe := Leitor.rCampo(tcStr, 'chNFe');
+        (*AR10 *)nRegDPEC   := Leitor.rCampo(tcStr, 'nRegDPEC');
+        (*AR10 *)FchNFe     := Leitor.rCampo(tcStr, 'chNFe');
       end;
+      
       Result := True;
     end;
   except

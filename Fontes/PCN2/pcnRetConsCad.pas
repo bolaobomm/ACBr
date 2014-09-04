@@ -43,53 +43,52 @@
 //                                                                            //
 ////////////////////////////////////////////////////////////////////////////////
 
+{$I ACBr.inc}
+
 unit pcnRetConsCad;
 
-interface uses
+interface
+
+uses
   SysUtils, Classes, pcnAuxiliar, pcnConversao, pcnLeitor;
 
 type
 
-  //////////////////////////////////////////////////////////////////////////////
-  //                                                                          //
-  //    E M   D E S E N V O L V I M E N T O   -   N Ã O   T E S T A D O       //
-  //                                                                          //
-  //////////////////////////////////////////////////////////////////////////////
-
-  TRetConsCad = class;
-  TInfCadCollection = class;
+  TRetConsCad           = class;
+  TInfCadCollection     = class;
   TInfCadCollectionItem = class;
 
   TRetConsCad = class(TPersistent)
   private
     FLeitor: TLeitor;
-    FverAplic: string;
-    FcStat: integer;
-    FxMotivo: string;
-    FUF: string;
-    FIE: string;
-    FCNPJ: string;
-    FCPF: string;
+    FverAplic: String;
+    FcStat: Integer;
+    FxMotivo: String;
+    FUF: String;
+    FIE: String;
+    FCNPJ: String;
+    FCPF: String;
     FdhCons: TDateTime;
-    FcUF: integer;
+    FcUF: Integer;
     FInfCad: TInfCadCollection;
+
     procedure SetInfCad(const Value: TInfCadCollection);
   public
     constructor Create;
     destructor Destroy; override;
-    function LerXML: boolean;
+    function LerXML: Boolean;
   published
-    property Leitor: TLeitor read FLeitor write FLeitor;
-    property verAplic: string read FverAplic write FverAplic;
-    property cStat: integer read FcStat write FcStat;
-    property xMotivo: string read FxMotivo write FxMotivo;
-    property UF: string read FUF write FUF;
-    property IE: string read FIE write FIE;
-    property CNPJ: string read FCNPJ write FCNPJ;
-    property CPF: string read FCPF write FCPF;
-    property dhCons: TDateTime read FdhCons write FdhCons;
-    property cUF: integer read FcUF write FcUF;
-    property InfCad: TInfCadCollection read FInfCad write SetInfCad;
+    property Leitor: TLeitor           read FLeitor   write FLeitor;
+    property verAplic: String          read FverAplic write FverAplic;
+    property cStat: Integer            read FcStat    write FcStat;
+    property xMotivo: String           read FxMotivo  write FxMotivo;
+    property UF: String                read FUF       write FUF;
+    property IE: String                read FIE       write FIE;
+    property CNPJ: String              read FCNPJ     write FCNPJ;
+    property CPF: String               read FCPF      write FCPF;
+    property dhCons: TDateTime         read FdhCons   write FdhCons;
+    property cUF: Integer              read FcUF      write FcUF;
+    property InfCad: TInfCadCollection read FInfCad   write SetInfCad;
   end;
 
   TInfCadCollection = class(TCollection)
@@ -104,53 +103,53 @@ type
 
   TInfCadCollectionItem = class(TCollectionItem)
   private
-    FIE: string;
-    FCNPJ: string;
-    FCPF: string;
-    FUF: string;
-    FcSit: integer;
-    FindCredNFe: integer;
-    FindCredCTe: integer;
-    FxNome: string;
+    FIE: String;
+    FCNPJ: String;
+    FCPF: String;
+    FUF: String;
+    FcSit: Integer;
+    FindCredNFe: Integer;
+    FindCredCTe: Integer;
+    FxNome: String;
     FxFant: String;
-    FxRegApur:String;
-    FCNAE:Integer;
-    FdIniAtiv:TDateTime;
-    FdUltSit:TDateTime;
-    FdBaixa:TDateTime;
-    FIEUnica:String;
-    FIEAtual:String;
-    FxLgr:String;
-    Fnro:String;
-    FxCpl:String;
-    FxBairro:String;
-    FcMun:Integer;
-    FxMun:String;
-    FCep:Integer;
+    FxRegApur: String;
+    FCNAE: Integer;
+    FdIniAtiv: TDateTime;
+    FdUltSit: TDateTime;
+    FdBaixa: TDateTime;
+    FIEUnica: String;
+    FIEAtual: String;
+    FxLgr: String;
+    Fnro: String;
+    FxCpl: String;
+    FxBairro: String;
+    FcMun: Integer;
+    FxMun: String;
+    FCep: Integer;
   published
-    property IE: string read FIE write FIE;
-    property CNPJ: string read FCNPJ write FCNPJ;
-    property CPF: string read FCPF write FCPF;
-    property UF: string read FUF write FUF;
-    property cSit: integer read FcSit write FcSit;
-    property indCredNFe: integer read FindCredNFe write FindCredNFe;
-    property indCredCTe: integer read FindCredCTe write FindCredCTe;
-    property xNome: string read FxNome write FxNome;
-    property xFant: string read FxFant write FxFant;
-    property xRegApur: string read FxRegApur write FxRegApur;
-    property CNAE: Integer read FCNAE write FCNAE;
-    property dIniAtiv: TDateTime read FdIniAtiv write FdIniAtiv;
-    property dUltSit: TDateTime read FdUltSit write FdUltSit;
-    property dBaixa: TDateTime read FdBaixa write FdBaixa;
-    property IEUnica: string read FIEUnica write FIEUnica;
-    property IEAtual: string read FIEAtual write FIEAtual;
-    property xLgr: string read FxLgr write FxLgr;
-    property nro: string read Fnro write Fnro;
-    property xCpl: string read FxCpl write FxCpl;
-    property xBairro: string read FxBairro write FxBairro;
-    property cMun: Integer read FcMun write FcMun;
-    property xMun: string read FxMun write FxMun;
-    property CEP: Integer read FCep write FCep;
+    property IE: String          read FIE         write FIE;
+    property CNPJ: String        read FCNPJ       write FCNPJ;
+    property CPF: String         read FCPF        write FCPF;
+    property UF: String          read FUF         write FUF;
+    property cSit: Integer       read FcSit       write FcSit;
+    property indCredNFe: Integer read FindCredNFe write FindCredNFe;
+    property indCredCTe: Integer read FindCredCTe write FindCredCTe;
+    property xNome: String       read FxNome      write FxNome;
+    property xFant: String       read FxFant      write FxFant;
+    property xRegApur: String    read FxRegApur   write FxRegApur;
+    property CNAE: Integer       read FCNAE       write FCNAE;
+    property dIniAtiv: TDateTime read FdIniAtiv   write FdIniAtiv;
+    property dUltSit: TDateTime  read FdUltSit    write FdUltSit;
+    property dBaixa: TDateTime   read FdBaixa     write FdBaixa;
+    property IEUnica: String     read FIEUnica    write FIEUnica;
+    property IEAtual: String     read FIEAtual    write FIEAtual;
+    property xLgr: String        read FxLgr       write FxLgr;
+    property nro: String         read Fnro        write Fnro;
+    property xCpl: String        read FxCpl       write FxCpl;
+    property xBairro: String     read FxBairro    write FxBairro;
+    property cMun: Integer       read FcMun       write FcMun;
+    property xMun: String        read FxMun       write FxMun;
+    property CEP: Integer        read FCep        write FCep;
   end;
 
 implementation
@@ -200,12 +199,9 @@ begin
   inherited SetItem(Index, Value);
 end;
 
-////////////////////////////////////////////////////////////////////////////////
-
-function TRetConsCad.LerXML: boolean;
+function TRetConsCad.LerXML: Boolean;
 var
-  i: integer;
-  // cnpj, cpf: string;
+  i: Integer;
 begin
   i := 0;
   Result := False;
@@ -220,18 +216,18 @@ begin
 
       cpf := trim(Leitor.rCampo(tcStr, 'CPF'));
       if (cpf <> '') and (length(cpf) < 11) then
-        cpf  := padR(cpf, 11, '0');
-
+        cpf := padR(cpf, 11, '0');
 
       (*GR04 *)FverAplic := Leitor.rCampo(tcStr, 'verAplic');
-      (*GR05 *)FcStat := Leitor.rCampo(tcInt, 'cStat');
-      (*GR06 *)FxMotivo := Leitor.rCampo(tcStr, 'xMotivo');
-      (*GR06a*)FUF := Leitor.rCampo(tcStr, 'UF');
-      (*GR06b*)FIE := Leitor.rCampo(tcStr, 'IE');
-      (*GR06c*)FCNPJ := cnpj;
-      (*GR06d*)FCPF := cpf;
-      (*GR06e*)FdhCons := Leitor.rCampo(tcDatHor, 'dhCons');
-      (*GR06f*)FcUF := Leitor.rCampo(tcInt, 'cUF');
+      (*GR05 *)FcStat    := Leitor.rCampo(tcInt, 'cStat');
+      (*GR06 *)FxMotivo  := Leitor.rCampo(tcStr, 'xMotivo');
+      (*GR06a*)FUF       := Leitor.rCampo(tcStr, 'UF');
+      (*GR06b*)FIE       := Leitor.rCampo(tcStr, 'IE');
+      (*GR06c*)FCNPJ     := cnpj;
+      (*GR06d*)FCPF      := cpf;
+      (*GR06e*)FdhCons   := Leitor.rCampo(tcDatHor, 'dhCons');
+      (*GR06f*)FcUF      := Leitor.rCampo(tcInt, 'cUF');
+
       while Leitor.rExtrai(2, 'infCad', '', i + 1) <> '' do
       begin
         InfCad.Add;
@@ -247,29 +243,29 @@ begin
           cpf  := padR(cpf, 11, '0');
 
 
-        (*GR08 *)InfCad[i].FIE := Leitor.rCampo(tcStr, 'IE');
-        (*GR09 *)InfCad[i].FCNPJ := cnpj;
-        (*GR10 *)InfCad[i].FCPF := cpf;
-        (*GR11 *)InfCad[i].FUF := Leitor.rCampo(tcStr, 'UF');
-        (*GR12 *)InfCad[i].FcSit := Leitor.rCampo(tcInt, 'cSit');
+        (*GR08 *)InfCad[i].FIE         := Leitor.rCampo(tcStr, 'IE');
+        (*GR09 *)InfCad[i].FCNPJ       := cnpj;
+        (*GR10 *)InfCad[i].FCPF        := cpf;
+        (*GR11 *)InfCad[i].FUF         := Leitor.rCampo(tcStr, 'UF');
+        (*GR12 *)InfCad[i].FcSit       := Leitor.rCampo(tcInt, 'cSit');
         (*GR12a*)InfCad[i].FindCredNFe := Leitor.rCampo(tcInt, 'indCredNFe');
         (*GR12b*)InfCad[i].FindCredCTe := Leitor.rCampo(tcInt, 'indCredCTe');
-        (*GR13 *)InfCad[i].FxNome := Leitor.rCampo(tcStr, 'xNome');
-        (*GR13a*)InfCad[i].FxFant := Leitor.rCampo(tcStr, 'xFant');
-        (*GR14 *)InfCad[i].FxRegApur := Leitor.rCampo(tcStr, 'xRegApur');
-        (*GR15 *)InfCad[i].FCNAE := Leitor.rCampo(tcInt, 'CNAE');
-        (*GR16 *)InfCad[i].FdIniAtiv := Leitor.rCampo(tcDat, 'dIniAtiv');
-        (*GR17 *)InfCad[i].FdUltSit := Leitor.rCampo(tcDat, 'dUltSit');
-        (*GR18 *)InfCad[i].FdBaixa := Leitor.rCampo(tcDat, 'dBaixa');
-        (*GR20 *)InfCad[i].FIEUnica := Leitor.rCampo(tcStr, 'IEUnica');
-        (*GR21 *)InfCad[i].FIEAtual := Leitor.rCampo(tcStr, 'IEAtual'); 
-        (*GR23 *)InfCad[i].FxLgr := Leitor.rCampo(tcStr, 'xLgr');
-        (*GR24 *)InfCad[i].Fnro := Leitor.rCampo(tcStr, 'nro');
-        (*GR25 *)InfCad[i].FxCpl := Leitor.rCampo(tcStr, 'xCpl');
-        (*GR26 *)InfCad[i].FxBairro := Leitor.rCampo(tcStr, 'xBairro');
-        (*GR27 *)InfCad[i].FcMun := Leitor.rCampo(tcInt, 'cMun');
-        (*GR28 *)InfCad[i].FxMun := Leitor.rCampo(tcStr, 'xMun');
-        (*GR29 *)InfCad[i].FCep := Leitor.rCampo(tcInt, 'CEP');
+        (*GR13 *)InfCad[i].FxNome      := Leitor.rCampo(tcStr, 'xNome');
+        (*GR13a*)InfCad[i].FxFant      := Leitor.rCampo(tcStr, 'xFant');
+        (*GR14 *)InfCad[i].FxRegApur   := Leitor.rCampo(tcStr, 'xRegApur');
+        (*GR15 *)InfCad[i].FCNAE       := Leitor.rCampo(tcInt, 'CNAE');
+        (*GR16 *)InfCad[i].FdIniAtiv   := Leitor.rCampo(tcDat, 'dIniAtiv');
+        (*GR17 *)InfCad[i].FdUltSit    := Leitor.rCampo(tcDat, 'dUltSit');
+        (*GR18 *)InfCad[i].FdBaixa     := Leitor.rCampo(tcDat, 'dBaixa');
+        (*GR20 *)InfCad[i].FIEUnica    := Leitor.rCampo(tcStr, 'IEUnica');
+        (*GR21 *)InfCad[i].FIEAtual    := Leitor.rCampo(tcStr, 'IEAtual');
+        (*GR23 *)InfCad[i].FxLgr       := Leitor.rCampo(tcStr, 'xLgr');
+        (*GR24 *)InfCad[i].Fnro        := Leitor.rCampo(tcStr, 'nro');
+        (*GR25 *)InfCad[i].FxCpl       := Leitor.rCampo(tcStr, 'xCpl');
+        (*GR26 *)InfCad[i].FxBairro    := Leitor.rCampo(tcStr, 'xBairro');
+        (*GR27 *)InfCad[i].FcMun       := Leitor.rCampo(tcInt, 'cMun');
+        (*GR28 *)InfCad[i].FxMun       := Leitor.rCampo(tcStr, 'xMun');
+        (*GR29 *)InfCad[i].FCep        := Leitor.rCampo(tcInt, 'CEP');
 
         inc(i);
       end;

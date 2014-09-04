@@ -43,36 +43,33 @@
 //                                                                            //
 ////////////////////////////////////////////////////////////////////////////////
 
+{$I ACBr.inc}
 
 unit pcnRetAtuCadEmiDFe;
 
-interface uses
+interface
+
+uses
   SysUtils, Classes, pcnAuxiliar, pcnConversao, pcnLeitor;
 
 type
 
-  //////////////////////////////////////////////////////////////////////////////
-  //                                                                          //
-  //    E M   D E S E N V O L V I M E N T O   -   N Ã O   T E S T A D O       //
-  //                                                                          //
-  //////////////////////////////////////////////////////////////////////////////
-
   TretAtuCadEmiDFe = class(TPersistent)
   private
     FXML: TLeitor;
-    FCNPJ: string;
+    FCNPJ: String;
     FresOpe: Integer;
-    FUF: string;
+    FUF: String;
     Fope: Integer;
   public
     constructor Create;
     destructor Destroy; override;
-    function LerXml: boolean;
+    function LerXml: Boolean;
   published
-    property XML: TLeitor read FXML write FXML;
-    property UF: string read FUF write FUF;
-    property CNPJ: string read FCNPJ write FCNPJ;
-    property ope: Integer read Fope write Fope;
+    property XML: TLeitor    read FXML    write FXML;
+    property UF: String      read FUF     write FUF;
+    property CNPJ: String    read FCNPJ   write FCNPJ;
+    property ope: Integer    read Fope    write Fope;
     property resOpe: Integer read FresOpe write FresOpe;
   end;
 
@@ -91,13 +88,13 @@ begin
   inherited;
 end;
 
-function TretAtuCadEmiDFe.LerXml: boolean;
+function TretAtuCadEmiDFe.LerXml: Boolean;
 begin
   result := true;
   try
-    (*N05*)FUF := xml.rCampo(tcStr, 'UF');
-    (*N06*)FCNPJ := xml.rCampo(tcStr, 'CNPJ');
-    (*N07*)Fope := xml.rCampo(tcInt, 'ope');
+    (*N05*)FUF     := xml.rCampo(tcStr, 'UF');
+    (*N06*)FCNPJ   := xml.rCampo(tcStr, 'CNPJ');
+    (*N07*)Fope    := xml.rCampo(tcInt, 'ope');
     (*N08*)FresOpe := xml.rCampo(tcInt, 'resOpe');
   except
     result := false;

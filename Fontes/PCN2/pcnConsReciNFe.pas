@@ -42,44 +42,42 @@
 //              condicionado a manutenção deste cabeçalho junto ao código     //
 //                                                                            //
 ////////////////////////////////////////////////////////////////////////////////
-{******************************************************************************
+
+{*******************************************************************************
 |* Historico
 |*
 |* 28/09/2012: Italo
-|*  - Revisado geração do XML e adicionado propriedade para controle de Versão 
+|*  - Revisado geração do XML e adicionado propriedade para controle de Versão
 |*    do WebService Utilizado
-******************************************************************************}
+*******************************************************************************}
+
+{$I ACBr.inc}
+
 unit pcnConsReciNFe;
 
-interface uses
+interface
+
+uses
   SysUtils, Classes, pcnAuxiliar, pcnConversao, pcnGerador;
 
 type
 
-  //////////////////////////////////////////////////////////////////////////////
-  //                                                                          //
-  //    E M   D E S E N V O L V I M E N T O   -   N Ã O   T E S T A D O       //
-  //                                                                          //
-  //////////////////////////////////////////////////////////////////////////////
-
   TConsReciNFe = class(TPersistent)
   private
     FGerador: TGerador;
-    FSchema: TpcnSchema;
     FtpAmb: TpcnTipoAmbiente;
-    FnRec: string;
+    FnRec: String;
     FVersao: String;
   public
     constructor Create;
     destructor Destroy; override;
-    function GerarXML: boolean;
-    function ObterNomeArquivo: string;    
+    function GerarXML: Boolean;
+    function ObterNomeArquivo: String;
   published
-    property Gerador: TGerador read FGerador write FGerador;
-    property schema: TpcnSchema read Fschema write Fschema;
-    property tpAmb: TpcnTipoAmbiente read FtpAmb write FtpAmb;
-    property nRec: string read FnRec write FnRec;
-    property Versao: String read FVersao write FVersao;
+    property Gerador: TGerador       read FGerador write FGerador;
+    property tpAmb: TpcnTipoAmbiente read FtpAmb   write FtpAmb;
+    property nRec: String            read FnRec    write FnRec;
+    property Versao: String          read FVersao  write FVersao;
   end;
 
 implementation
@@ -97,21 +95,21 @@ begin
   inherited;
 end;
 
-function TConsReciNFe.ObterNomeArquivo: string;
+function TConsReciNFe.ObterNomeArquivo: String;
 begin
   Result := SomenteNumeros(FnRec) + '-ped-rec.xml';
 end;
 
-function TConsReciNFe.GerarXML: boolean;
+function TConsReciNFe.GerarXML: Boolean;
 begin
    Gerador.ArquivoFormatoXML := '';
+
    Gerador.wGrupo('consReciNFe ' + NAME_SPACE + ' versao="' + Versao + '"');
    Gerador.wCampo(tcStr, 'BP03', 'tpAmb', 001, 001, 1, tpAmbToStr(FtpAmb), DSC_TPAMB);
    Gerador.wCampo(tcEsp, 'BP04', 'nRec ', 015, 015, 1, FnRec, DSC_NREC);
    Gerador.wGrupo('/consReciNFe');
 
    Result := (Gerador.ListaDeAlertas.Count = 0);
-
 end;
 
 end.

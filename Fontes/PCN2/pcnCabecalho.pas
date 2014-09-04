@@ -43,25 +43,29 @@
 //                                                                            //
 ////////////////////////////////////////////////////////////////////////////////
 
+{$I ACBr.inc}
+
 unit pcnCabecalho;
 
-interface uses
+interface
+
+uses
   SysUtils, Classes, pcnAuxiliar, pcnConversao, pcnGerador;
 
 type
   TCabecalho = class(TPersistent)
   private
     FGerador: TGerador;
-    FVersao: string;
-    FVersaoDados: string;
+    FVersao: String;
+    FVersaoDados: String;
   public
     constructor Create;
     destructor Destroy; override;
-    function GerarXML: boolean;
+    function GerarXML: Boolean;
   published
-    property Gerador: TGerador read FGerador write FGerador;
-    property Versao: string read FVersao write FVersao;
-    property VersaoDados: string read FVersaoDados write FVersaoDados;
+    property Gerador: TGerador   read FGerador     write FGerador;
+    property Versao: String      read FVersao      write FVersao;
+    property VersaoDados: String read FVersaoDados write FVersaoDados;
   end;
 
 implementation
@@ -79,13 +83,15 @@ begin
   inherited;
 end;
 
-function TCabecalho.GerarXML: boolean;
+function TCabecalho.GerarXML: Boolean;
 begin
   Gerador.ArquivoFormatoXML := '';
+  
   Gerador.wGrupo(ENCODING_UTF8_STD, '', False);
   Gerador.wGrupo('cabecMsg ' + NAME_SPACE + ' versao="' + Versao + '"');
   Gerador.wCampo(tcStr, 'FP03', 'versaoDados', 001, 001, 1, VersaoDados, DSC_VERPROC);
   Gerador.wGrupo('/cabecMsg');
+
   Result := (Gerador.ListaDeAlertas.Count = 0);
 end;
 

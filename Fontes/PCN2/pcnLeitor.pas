@@ -48,12 +48,14 @@
 |* 30/09/2010: Italo
 |*  - Incluído tipo TcDe6
 ******************************************************************************}
+
 {$I ACBr.inc}
 
 unit pcnLeitor;
 
-interface uses
+interface
 
+uses
   SysUtils, Classes, StrUtils, 
 {$IFNDEF VER130}
   Variants,
