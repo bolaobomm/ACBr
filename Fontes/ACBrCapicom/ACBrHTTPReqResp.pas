@@ -129,7 +129,9 @@ begin
   FORMAT_MESSAGE_ALLOCATE_BUFFER or FORMAT_MESSAGE_IGNORE_INSERTS or  FORMAT_MESSAGE_ARGUMENT_ARRAY,
   Pointer(GetModuleHandle(winetdll)), ErrorCode, 0, @Buffer, SizeOf(Buffer), nil);
   try
-    while (Len > 0) and {$IFDEF UNICODE}(CharInSet(Buffer[Len - 1], [#0..#32, '.'])) {$ELSE}(Buffer[Len - 1] in [#0..#32, '.']) {$ENDIF} do Dec(Len);
+    while (Len > 0) and {$IFDEF UNICODE}{$IFDEF FPC} (Buffer[Len - 1] in [#0..#32, '.'])
+      {$ELSE} (CharInSet(Buffer[Len - 1], [#0..#32, '.'])) {$ENDIF}
+      {$ELSE}(Buffer[Len - 1] in [#0..#32, '.']) {$ENDIF} do Dec(Len);
     SetString(Result, Buffer, Len);
   finally
     LocalFree(HLOCAL(Buffer));
@@ -345,13 +347,13 @@ begin
                      if Result = '' then
                       begin
                         ErrorCode := GetLastError;
-                        raise Exception.Create('Erro: Requisição não enviada.'+sLineBreak+IntToStr(ErrorCode)+' - '+GetWinInetError(ErrorCode));
+                        raise Exception.Create('Erro: Requisiç£¯ nã¯ enviada.'+sLineBreak+IntToStr(ErrorCode)+' - '+GetWinInetError(ErrorCode));
                       end
                      else if Pos('<TITLE',UpperCase(Result)) > 0 then
                       begin
                         PosError := Pos('<TITLE>',UpperCase(Result))+7;
                         ErrorMsg := trim(copy(Result, PosError, (pos('</TITLE>', UpperCase(Result)) - PosError)));
-                        raise Exception.Create('Erro: Requisição não enviada.'+sLineBreak+ErrorMsg);
+                        raise Exception.Create('Erro: Requisiç£¯ nã¯ enviada.'+sLineBreak+ErrorMsg);
                       end;
                    finally
                      BufStream.Free;
@@ -360,7 +362,7 @@ begin
                 else
                  begin
                     ErrorCode := GetLastError;
-                    raise Exception.Create('Erro: Requisição não enviada.'+sLineBreak+IntToStr(ErrorCode)+' - '+GetWinInetError(ErrorCode));
+                    raise Exception.Create('Erro: Requisiç£¯ nã¯ enviada.'+sLineBreak+IntToStr(ErrorCode)+' - '+GetWinInetError(ErrorCode));
                  end;
               finally
                 Header.Free;

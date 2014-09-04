@@ -59,7 +59,10 @@ uses {$IFNDEF ACBrNFeOpenSSL}ACBrCAPICOM_TLB, ACBrMSXML2_TLB, JwaWinCrypt, {$END
   {$IFDEF FPC}
      LResources, Controls, Graphics, Dialogs, strutils,
   {$ELSE}
-     StrUtils, Activex,
+     StrUtils,
+  {$ENDIF}
+  {$IFDEF MSWINDOWS}
+     ActiveX,
   {$ENDIF}
   ACBrNFeConfiguracoes, pcnConversao, pcnNFe, ACBrDFeUtil;
 

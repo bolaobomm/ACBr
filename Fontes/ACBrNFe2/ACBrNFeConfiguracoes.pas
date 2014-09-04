@@ -58,17 +58,18 @@ type
   TCertificadosConf = class(TComponent)
   private
     FSenhaCert: AnsiString;
-    FCNPJ : String;    
+    FCNPJ : String;
     {$IFDEF ACBrNFeOpenSSL}
        FCertificado: AnsiString;
     {$ELSE}
+       PCertCarregado : ICertificate2;  
        FNumeroSerie: AnsiString;
        FDataVenc: TDateTime;
        FSubjectName : String;
        procedure SetNumeroSerie(const Value: AnsiString);
        function GetNumeroSerie: AnsiString;
-    function GetDataVenc: TDateTime;
-    function GetSubjectName: String;
+       function GetDataVenc: TDateTime;
+       function GetSubjectName: String;
     {$ENDIF}
     function GetCNPJ: String;
   public
@@ -461,110 +462,116 @@ var
   XML, Propriedades : String;
   Lista : TStringList;
 begin
-  CoInitialize(nil); // PERMITE O USO DE THREAD
-  try
-  if DFeUtil.EstaVazio( FNumeroSerie ) then
-    raise EACBrNFeException.Create('Número de Série do Certificado Digital não especificado !');
+  if PCertCarregado <> nil then
+     Result := PCertCarregado
+  else
+   begin
+     CoInitialize(nil); // PERMITE O USO DE THREAD
+     try
+        if DFeUtil.EstaVazio( FNumeroSerie ) then
+          raise EACBrNFeException.Create('Número de Série do Certificado Digital não especificado !');
 
-  Result := nil;
-  Store := CoStore.Create;
-  Store.Open(CAPICOM_CURRENT_USER_STORE, CAPICOM_STORE_NAME, CAPICOM_STORE_OPEN_READ_ONLY);
+        Result := nil;
+        Store := CoStore.Create;
+        Store.Open(CAPICOM_CURRENT_USER_STORE, CAPICOM_STORE_NAME, CAPICOM_STORE_OPEN_READ_ONLY);
 
-  Certs := Store.Certificates as ICertificates2;
-  for i:= 1 to Certs.Count do
-  begin
-    Cert := IInterface(Certs.Item[i]) as ICertificate2;
-    if Cert.SerialNumber = FNumeroSerie then
-    begin
-      if DFeUtil.EstaVazio(NumCertCarregado) then
-         NumCertCarregado := Cert.SerialNumber;
-
-      PrivateKey := Cert.PrivateKey;
-
-      if  CertStoreMem = nil then
-       begin
-         CertStoreMem := CoStore.Create;
-         CertStoreMem.Open(CAPICOM_MEMORY_STORE, 'MemoriaACBr', CAPICOM_STORE_OPEN_READ_ONLY);
-         CertStoreMem.Add(Cert);
-
-         if (FSenhaCert <> '') and PrivateKey.IsHardwareDevice then
+        Certs := Store.Certificates as ICertificates2;
+        for i:= 1 to Certs.Count do
+        begin
+          Cert := IInterface(Certs.Item[i]) as ICertificate2;
+          if Cert.SerialNumber = FNumeroSerie then
           begin
+            if DFeUtil.EstaVazio(NumCertCarregado) then
+               NumCertCarregado := Cert.SerialNumber;
 
-            XML := XML + '<Signature xmlns="http://www.w3.org/2000/09/xmldsig#"><SignedInfo><CanonicalizationMethod Algorithm="http://www.w3.org/TR/2001/REC-xml-c14n-20010315"/><SignatureMethod Algorithm="http://www.w3.org/2000/09/xmldsig#rsa-sha1" />';
-            XML := XML + '<Reference URI="#">';
-            XML := XML + '<Transforms><Transform Algorithm="http://www.w3.org/2000/09/xmldsig#enveloped-signature" /><Transform Algorithm="http://www.w3.org/TR/2001/REC-xml-c14n-20010315" /></Transforms><DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" />';
-            XML := XML + '<DigestValue></DigestValue></Reference></SignedInfo><SignatureValue></SignatureValue><KeyInfo></KeyInfo></Signature>';
+            PrivateKey := Cert.PrivateKey;
 
-            xmldoc := CoDOMDocument50.Create;
-            xmldoc.async              := False;
-            xmldoc.validateOnParse    := False;
-            xmldoc.preserveWhiteSpace := True;
-            xmldoc.loadXML(XML);
-            xmldoc.setProperty('SelectionNamespaces', DSIGNS);
+            if  CertStoreMem = nil then
+             begin
+               CertStoreMem := CoStore.Create;
+               CertStoreMem.Open(CAPICOM_MEMORY_STORE, 'MemoriaACBr', CAPICOM_STORE_OPEN_READ_ONLY);
+               CertStoreMem.Add(Cert);
 
-            xmldsig := CoMXDigitalSignature50.Create;
-            xmldsig.signature := xmldoc.selectSingleNode('.//ds:Signature');
-            xmldsig.store := CertStoreMem;
-
-            dsigKey := xmldsig.createKeyFromCSP(PrivateKey.ProviderType, PrivateKey.ProviderName, PrivateKey.ContainerName, 0);
-            if (dsigKey = nil) then
-               raise EACBrNFeException.Create('Erro ao criar a chave do CSP.');
-
-            SigKey := dsigKey as IXMLDSigKeyEx;
-            SigKey.getCSPHandle( hCryptProvider );
-
-            try
-               CryptSetProvParam( hCryptProvider , PP_SIGNATURE_PIN, windows.PBYTE(FSenhaCert), 0 );
-            finally
-              CryptReleaseContext(hCryptProvider, 0);
-            end;
-
-            SigKey    := nil;
-            dsigKey   := nil;
-            xmldsig   := nil;
-            xmldoc    := nil;
-         end;
-       end;
-
-      Result := Cert;
-      FDataVenc := Cert.ValidToDate;
-      FSubjectName := Cert.SubjectName;
-
-      for J:=1 to Cert.Extensions.Count do
-       begin
-         Extension := IInterface(Cert.Extensions.Item[J]) as IExtension;
-         Propriedades := Extension.EncodedData.Format(True);
-         if (Pos('2.16.76.1.3.3',Propriedades) > 0) then
-          begin
-            Lista := TStringList.Create;
-			      try
-               Lista.Text := Propriedades;
-               for K:=0 to Lista.Count-1 do
+               if (FSenhaCert <> '') and PrivateKey.IsHardwareDevice then
                 begin
-                  if (Pos('2.16.76.1.3.3',Lista.Strings[K]) > 0) then
-                   begin
-                     FCNPJ := StringReplace(Lista.Strings[K],'2.16.76.1.3.3=','',[rfIgnoreCase]);
-                     FCNPJ := OnlyNumber(HexToAscii(RemoveString(' ',FCNPJ)));
-                     break;
-                   end;
+
+                  XML := XML + '<Signature xmlns="http://www.w3.org/2000/09/xmldsig#"><SignedInfo><CanonicalizationMethod Algorithm="http://www.w3.org/TR/2001/REC-xml-c14n-20010315"/><SignatureMethod Algorithm="http://www.w3.org/2000/09/xmldsig#rsa-sha1" />';
+                  XML := XML + '<Reference URI="#">';
+                  XML := XML + '<Transforms><Transform Algorithm="http://www.w3.org/2000/09/xmldsig#enveloped-signature" /><Transform Algorithm="http://www.w3.org/TR/2001/REC-xml-c14n-20010315" /></Transforms><DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" />';
+                  XML := XML + '<DigestValue></DigestValue></Reference></SignedInfo><SignatureValue></SignatureValue><KeyInfo></KeyInfo></Signature>';
+
+                  xmldoc := CoDOMDocument50.Create;
+                  xmldoc.async              := False;
+                  xmldoc.validateOnParse    := False;
+                  xmldoc.preserveWhiteSpace := True;
+                  xmldoc.loadXML(XML);
+                  xmldoc.setProperty('SelectionNamespaces', DSIGNS);
+
+                  xmldsig := CoMXDigitalSignature50.Create;
+                  xmldsig.signature := xmldoc.selectSingleNode('.//ds:Signature');
+                  xmldsig.store := CertStoreMem;
+
+                  dsigKey := xmldsig.createKeyFromCSP(PrivateKey.ProviderType, PrivateKey.ProviderName, PrivateKey.ContainerName, 0);
+                  if (dsigKey = nil) then
+                     raise EACBrNFeException.Create('Erro ao criar a chave do CSP.');
+
+                  SigKey := dsigKey as IXMLDSigKeyEx;
+                  SigKey.getCSPHandle( hCryptProvider );
+
+                  try
+                     CryptSetProvParam( hCryptProvider , PP_SIGNATURE_PIN, windows.PBYTE(FSenhaCert), 0 );
+                  finally
+                    CryptReleaseContext(hCryptProvider, 0);
+                  end;
+
+                  SigKey    := nil;
+                  dsigKey   := nil;
+                  xmldsig   := nil;
+                  xmldoc    := nil;
+               end;
+             end;
+
+            Result := Cert;
+            PCertCarregado := Result;
+            FDataVenc := Cert.ValidToDate;
+            FSubjectName := Cert.SubjectName;
+
+            for J:=1 to Cert.Extensions.Count do
+             begin
+               Extension := IInterface(Cert.Extensions.Item[J]) as IExtension;
+               Propriedades := Extension.EncodedData.Format(True);
+               if (Pos('2.16.76.1.3.3',Propriedades) > 0) then
+                begin
+                  Lista := TStringList.Create;
+      			      try
+                     Lista.Text := Propriedades;
+                     for K:=0 to Lista.Count-1 do
+                      begin
+                        if (Pos('2.16.76.1.3.3',Lista.Strings[K]) > 0) then
+                         begin
+                           FCNPJ := StringReplace(Lista.Strings[K],'2.16.76.1.3.3=','',[rfIgnoreCase]);
+                           FCNPJ := OnlyNumber(HexToAscii(RemoveString(' ',FCNPJ)));
+                           break;
+                         end;
+                      end;
+			            finally
+      			         Lista.free;
+             			end;
+                  break;
                 end;
-			      finally
-			         Lista.free;
-       			end;
+               Extension := nil;
+             end;
+
             break;
           end;
-         Extension := nil;
-       end;
+        end;
 
-      break;
-    end;
-  end;
-
-  if not(Assigned(Result)) then
-    raise EACBrNFeException.Create('Certificado Digital não encontrado!');
-  finally
-    CoUninitialize;
-  end;
+        if not(Assigned(Result)) then
+          raise EACBrNFeException.Create('Certificado Digital não encontrado!');
+     finally
+       CoUninitialize;
+     end;
+   end;
 end;
 
 function TCertificadosConf.GetNumeroSerie: AnsiString;

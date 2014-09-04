@@ -52,8 +52,20 @@ interface
 uses
   Classes, Windows, SysUtils, Variants,
   WinCrypt, ACBrUtil, ACBrDFeUtil, pcnLeitor,
-  libxml2, libxslt, libxmlsec,
-  JwaWinType;
+  libxml2, libxslt, libxmlsec;
+
+{$EXTERNALSYM CERT_CONTEXT}
+_CERT_CONTEXT = record
+  dwCertEncodingType: LongWord;
+  pbCertEncoded: ^Byte;
+  cbCertEncoded: LongWord;
+  pCertInfo: Pointer;
+  hCertStore: Pointer;
+end;
+
+{$EXTERNALSYM _CERT_CONTEXT}
+CERT_CONTEXT = _CERT_CONTEXT;
+
 
 type
 
@@ -248,7 +260,7 @@ begin
        Rewrite(arquivo);
        CloseFile(arquivo);
 
-              AssignFile(arquivo, 'c:\temp\cert.txt');
+       AssignFile(arquivo, 'c:\temp\cert.txt');
 
        keyPriv := xmlSecKeyCreate;
        xmlSecKeySetValue(keyPriv,xmlSecMSCryptoCertAdopt(CertContext, $0002));
