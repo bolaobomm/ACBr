@@ -15,6 +15,7 @@ uses
   pcnRetConsSitNFe, pcnRetConsStatServ, pcnRetDPEC, pcnRetEnvEventoNFe, 
   pcnRetEnvNFe, pcnRetInutNFe, pcnSignature, pcnCCeNFe, pcnRetCCeNFe, 
   pcnDownloadNFe, pcnConsNFeDest, pcnRetConsNFeDest, pcnRetDownloadNFe, 
+  pcnAdmCSCNFCe, pcnRetAdmCSCNFCe, pcnDistDFeInt, pcnRetDistDFeInt, 
   LazarusPackageIntf;
 
 implementation
