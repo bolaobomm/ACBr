@@ -1,4 +1,4 @@
-{******************************************************************************}
+﻿{******************************************************************************}
 { Projeto: Componentes ACBr                                                    }
 {  Classe para Lazarus/Free Pascal e Delphi para requisições SOAP com suporte  }
 { certificados A1 e A3 usando as bibliotecas WinINet e CAPICOM                 }
@@ -58,44 +58,44 @@ type
   TACBrHTTPReqResp = class
   private
     FCertificate      : ICertificate2;
-    FCertSerialNumber : String;
-    FCertStoreName    : String;
-    FSOAPAction       : String;
-    FMimeType         : String; // (ex.: 'application/soap+xml' ou 'text/xml' - que é o Content-Type)
-    FCharsets         : String; //  (ex.: 'ISO-8859-1,utf-8' - que é o Accept-Charset)
-    FData             : String;
-    FProxyHost        : String;
-    FProxyPass        : String;
-    FProxyPort        : String;
-    FProxyUser        : String;
-    FUrl              : String;
+    FCertSerialNumber : AnsiString;
+    FCertStoreName    : AnsiString;
+    FSOAPAction       : AnsiString;
+    FMimeType         : AnsiString; // (ex.: 'application/soap+xml' ou 'text/xml' - que é o Content-Type)
+    FCharsets         : AnsiString; //  (ex.: 'ISO-8859-1,utf-8' - que é o Accept-Charset)
+    FData             : AnsiString;
+    FProxyHost        : AnsiString;
+    FProxyPass        : AnsiString;
+    FProxyPort        : AnsiString;
+    FProxyUser        : AnsiString;
+    FUrl              : AnsiString;
     FUseCertificate   : Boolean;
     FShowCertStore    : Boolean;
     FUseSSL           : Boolean;
 
-    function GetWinInetError(ErrorCode:Cardinal): string;
-    function OpenCertStore: String;
+    function GetWinInetError(ErrorCode:Cardinal): AnsiString;
+    function OpenCertStore: AnsiString;
 
   protected
 
   public
-    property SOAPAction     : String        read FSOAPAction     write FSOAPAction;
-    property MimeType       : String        read FMimeType       write FMimeType;
-    property Charsets       : String        read FCharsets       write FCharsets;
-    property Url            : String        read FUrl            write FUrl;
-    property Data           : String        read FData           write FData;
-    property ProxyHost      : String        read FProxyHost      write FProxyHost;
-    property ProxyPort      : String        read FProxyPort      write FProxyPort;
-    property ProxyUser      : String        read FProxyUser      write FProxyUser;
-    property ProxyPass      : String        read FProxyPass      write FProxyPass;
-    property CertStoreName  : String        read FCertStoreName  write FCertStoreName;
+    property SOAPAction     : AnsiString        read FSOAPAction     write FSOAPAction;
+    property MimeType       : AnsiString        read FMimeType       write FMimeType;
+    property Charsets       : AnsiString        read FCharsets       write FCharsets;
+    property Url            : AnsiString        read FUrl            write FUrl;
+    property Data           : AnsiString        read FData           write FData;
+    property ProxyHost      : AnsiString        read FProxyHost      write FProxyHost;
+    property ProxyPort      : AnsiString        read FProxyPort      write FProxyPort;
+    property ProxyUser      : AnsiString        read FProxyUser      write FProxyUser;
+    property ProxyPass      : AnsiString        read FProxyPass      write FProxyPass;
+    property CertStoreName  : AnsiString        read FCertStoreName  write FCertStoreName;
     property UseCertificate : Boolean       read FUseCertificate write FUseCertificate;
     property UseSSL         : Boolean       read FUseSSL         write FUseSSL;
     property ShowCertStore  : Boolean       read FShowCertStore  write FShowCertStore;
 
     procedure SetCertificate (pCertSerialNumber: String); overload;
     procedure SetCertificate (pCertificate: ICertificate2); overload;
-    function Execute: String;
+    function Execute: AnsiString;
     constructor Create;
 end;
 
@@ -117,12 +117,12 @@ uses StrUtils;
 
 { TACBrHTTPReqResp }
 
-function  TACBrHTTPReqResp.GetWinInetError(ErrorCode:Cardinal): string;
+function  TACBrHTTPReqResp.GetWinInetError(ErrorCode:Cardinal): AnsiString;
 const
    winetdll = 'wininet.dll';
 var
   Len: Integer;
-  Buffer: PChar;
+  Buffer: PAnsiChar;
 begin
   Len := FormatMessage(
   FORMAT_MESSAGE_FROM_HMODULE or FORMAT_MESSAGE_FROM_SYSTEM or
@@ -138,7 +138,7 @@ begin
   end;
 end;
 
-function TACBrHTTPReqResp.OpenCertStore: String;
+function TACBrHTTPReqResp.OpenCertStore: AnsiString;
 var
   Store: IStore3;
   Certs: ICertificates2;
@@ -177,9 +177,9 @@ begin
   FCertSerialNumber := '';
 end;
 
-function TACBrHTTPReqResp.Execute: String;
+function TACBrHTTPReqResp.Execute: AnsiString;
 var
-  aBuffer: array[0..4096] of char;
+  aBuffer: array[0..4096] of AnsiChar;
   Header: TStringStream;
   BufStream: TMemoryStream;
   BytesRead: cardinal;
@@ -196,7 +196,7 @@ var
   PCertContext: Pointer;
 
   port, i, AccessType, ErrorCode, PosError: integer;
-  ANone, AHost, APage, pProxy, ErrorMsg: string;
+  ANone, AHost, APage, pProxy, ErrorMsg: String;
 begin
 
   if (FUseCertificate) then FUseSSL := True;
@@ -286,7 +286,7 @@ begin
           else
             flags := INTERNET_SERVICE_HTTP;
 
-          pRequest := HTTPOpenRequest(pConnection, PChar('POST'),
+          pRequest := HttpOpenRequest(pConnection, PChar('POST'),
             PChar(APage), nil, nil, nil, flags, 0);
 
           if not Assigned(pRequest) then
@@ -312,13 +312,14 @@ begin
 
                 if trim(FProxyUser) <> '' then
                   if not InternetSetOption(pRequest, INTERNET_OPTION_PROXY_USERNAME,
-                    PChar(FProxyUser), Length(FProxyUser)) then
+                    PAnsiChar(FProxyUser), Length(FProxyUser)) then
                       raise Exception.Create('Erro: Proxy User');
 
                 if trim(FProxyPass) <> '' then
                   if not InternetSetOption(pRequest, INTERNET_OPTION_PROXY_PASSWORD,
-                    PChar(FProxyPass), Length(FProxyPass)) then
+                    PAnsiChar(FProxyPass), Length(FProxyPass)) then
                       raise Exception.Create('Erro: Proxy Password');
+
 
                 HttpAddRequestHeaders(pRequest, PChar(Header.DataString),
                   Length(Header.DataString), HTTP_ADDREQ_FLAG_ADD);
@@ -329,7 +330,9 @@ begin
                    raise Exception.Create('Erro: '+E.Message);
                 end;   }
 
-                if HTTPSendRequest(pRequest, nil, 0, Pointer(FData), Length(FData)) then
+                //FData := AnsiToUtf8(FData);
+
+                if HttpSendRequest(pRequest, nil, 0, Pointer(FData), Length(FData)) then
                  begin
                    BufStream := TMemoryStream.Create;
                    try
@@ -343,17 +346,17 @@ begin
 
                      aBuffer[0] := #0;
                      BufStream.Write(aBuffer, 1);
-                     Result := PChar(BufStream.Memory);
+                     Result := PAnsiChar(BufStream.Memory);
                      if Result = '' then
                       begin
                         ErrorCode := GetLastError;
-                        raise Exception.Create('Erro: Requisi磯 n㯠enviada.'+sLineBreak+IntToStr(ErrorCode)+' - '+GetWinInetError(ErrorCode));
+                        raise Exception.Create('Erro: Requisicao nao enviada.'+sLineBreak+IntToStr(ErrorCode)+' - '+GetWinInetError(ErrorCode));
                       end
                      else if Pos('<TITLE',UpperCase(Result)) > 0 then
                       begin
                         PosError := Pos('<TITLE>',UpperCase(Result))+7;
                         ErrorMsg := trim(copy(Result, PosError, (pos('</TITLE>', UpperCase(Result)) - PosError)));
-                        raise Exception.Create('Erro: Requisi磯 n㯠enviada.'+sLineBreak+ErrorMsg);
+                        raise Exception.Create('Erro: Requisicao nao enviada.'+sLineBreak+ErrorMsg);
                       end;
                    finally
                      BufStream.Free;
@@ -362,7 +365,7 @@ begin
                 else
                  begin
                     ErrorCode := GetLastError;
-                    raise Exception.Create('Erro: Requisi磯 n㯠enviada.'+sLineBreak+IntToStr(ErrorCode)+' - '+GetWinInetError(ErrorCode));
+                    raise Exception.Create('Erro: Requisicao nao enviada.'+sLineBreak+IntToStr(ErrorCode)+' - '+GetWinInetError(ErrorCode));
                  end;
               finally
                 Header.Free;
@@ -381,7 +384,7 @@ end;
 constructor TACBrHTTPReqResp.Create;
 begin
   FMimeType         := 'application/soap+xml';
-  FCharsets         := 'ISO-8859-1,utf-8';
+  FCharsets         := 'utf-8';
   FCertStoreName    := 'My';
   FCertSerialNumber := '';
   FCertificate      := nil;
