@@ -41,7 +41,7 @@ uses
   {$IFDEF FPC}
     LResources, Controls, Graphics, Dialogs,
   {$ELSE}
-    StrUtils,
+    StrUtils, Activex,
   {$ENDIF}
   Sysutils, ACBrNFSeConfiguracoes, pnfsConversao, pnfsNFSe, pcnAuxiliar, ACBrDFeUtil;
 
@@ -594,142 +594,71 @@ var
  signedKey : IXMLDSigKey;
  xmlRoot   : IXMLDOMElement;
 begin
- AXML := XML;
+  CoInitialize(nil);
+  try
+   AXML := XML;
 
- case AProvedor of
-  proActcon:    begin
-                  EnviarLoteRps := 'EnviarLoteRpsEnvio';
-                  LoteURI := 'LoteRps';
-                end;
-  proIssDsf:    begin
-                  EnviarLoteRps := 'ReqEnvioLoteRPS';
-                  LoteURI := 'Lote';
-                end;
-  proEquiplano: begin
-                  EnviarLoteRps := 'enviarLoteRpsEnvio';
-                  LoteURI := 'lote';
-                end;
-  else          begin
-                  // Tecnos utiliza apenas metodo sincrono com mesmo mais de 3 notas
-                  if (ASincrono) or (AProvedor = proTecnos)
-                   then EnviarLoteRps := 'EnviarLoteRpsSincronoEnvio'
-                   else EnviarLoteRps := 'EnviarLoteRpsEnvio';
-                  LoteURI := 'LoteRps';
-                end;
- end;
-
- if ALote
-  then begin
-   if AProvedor = proBetha then
-     I := pos(EnviarLoteRps +' xmlns:ns3=', AXML)
-   else I := pos(EnviarLoteRps +' xmlns=', AXML);
-   if I = 0
-    then NameSpaceLote := ' '
-    else begin
-     // Diego Gonçalves -- Correção pois estava duplicando o campo xmlns
-     if AProvedor = proBetha then
-       I := I + {25} Length(EnviarLoteRps + ' xmlns:ns3=')
-     else I := I + {25} Length(EnviarLoteRps + ' xmlns=');
-     J := pos('>', AXML);
-     if AProvedor = proBetha then
-       NameSpaceLote := ' xmlns:ns3=' + Copy(AXML, I, J - I)
-     else NameSpaceLote := ' xmlns:ds1=' + Copy(AXML, I, J - I);
-    end;
-
-   if AProvedor = proIssDsf then begin
-      I := I + {25} Length(EnviarLoteRps);
-      J := pos('>', AXML);
-      NameSpaceLote := Copy(AXML, I, J - I);
-      I := Pos('xmlns:ns1=', NameSpaceLote);
-      NameSpaceLote := ' ' + Copy(NameSpaceLote, I, J - I);
+   case AProvedor of
+    proActcon:    begin
+                    EnviarLoteRps := 'EnviarLoteRpsEnvio';
+                    LoteURI := 'LoteRps';
+                  end;
+    proIssDsf:    begin
+                    EnviarLoteRps := 'ReqEnvioLoteRPS';
+                    LoteURI := 'Lote';
+                  end;
+    proEquiplano: begin
+                    EnviarLoteRps := 'enviarLoteRpsEnvio';
+                    LoteURI := 'lote';
+                  end;
+    else          begin
+                    // Tecnos utiliza apenas metodo sincrono com mesmo mais de 3 notas
+                    if (ASincrono) or (AProvedor = proTecnos)
+                     then EnviarLoteRps := 'EnviarLoteRpsSincronoEnvio'
+                     else EnviarLoteRps := 'EnviarLoteRpsEnvio';
+                    LoteURI := 'LoteRps';
+                  end;
    end;
 
-   Identificador := 'Id';
-   I             := pos(LoteURI + ' Id=', AXML);
-   if I = 0
+   if ALote
     then begin
-     Identificador := 'id';
-     I             := pos(LoteURI + ' id=', AXML);
-    end;
-   if I = 0
-    then begin
-     Identificador := '';
-     URI           := '';
-    end
-    else begin
-     I := DFeUtil.PosEx('"', AXML, I + 2);
+     if AProvedor = proBetha then
+       I := pos(EnviarLoteRps +' xmlns:ns3=', AXML)
+     else I := pos(EnviarLoteRps +' xmlns=', AXML);
      if I = 0
-      then raise Exception.Create('Não encontrei inicio do URI: aspas inicial');
-     J := DFeUtil.PosEx('"', AXML, I + 1);
-     if J = 0
-      then raise Exception.Create('Não encontrei inicio do URI: aspas final');
+      then NameSpaceLote := ' '
+      else begin
+       // Diego Gonçalves -- Correção pois estava duplicando o campo xmlns
+       if AProvedor = proBetha then
+         I := I + {25} Length(EnviarLoteRps + ' xmlns:ns3=')
+       else I := I + {25} Length(EnviarLoteRps + ' xmlns=');
+       J := pos('>', AXML);
+       if AProvedor = proBetha then
+         NameSpaceLote := ' xmlns:ns3=' + Copy(AXML, I, J - I)
+       else NameSpaceLote := ' xmlns:ds1=' + Copy(AXML, I, J - I);
+      end;
 
-     URI := copy(AXML, I + 1, J - I - 1);
-    end;
+     if AProvedor = proIssDsf then begin
+        I := I + {25} Length(EnviarLoteRps);
+        J := pos('>', AXML);
+        NameSpaceLote := Copy(AXML, I, J - I);
+        I := Pos('xmlns:ns1=', NameSpaceLote);
+        NameSpaceLote := ' ' + Copy(NameSpaceLote, I, J - I);
+     end;
 
-   AXML := copy(AXML, 1, pos('</'+ APrefixo3 + EnviarLoteRps + '>', AXML) - 1);
-
-   // Alterado por Italo em 07/08/2013 - incluido na lista o proAbaco
-   if (URI = '') or (AProvedor in [proRecife, proRJ, proAbaco, proIssDSF, proIssCuritiba, proFISSLex, proGovBR, proPublica, proPronim{Dalvan}])
-    then AID := '>'
-    else if AProvedor = proNatal then AID := ' ' + Identificador + '="Ass_lote">'
-    else AID := ' ' + Identificador + '="AssLote_' + URI + '">';
-
-   // Incluido por Italo em 07/08/2013
-   if AProvedor in [proAbaco, proIssCuritiba, proFISSLex, proPublica]
-    then URI := '';
-
-   AXML := AXML + '<Signature xmlns="http://www.w3.org/2000/09/xmldsig#"' + AID +
-                 '<SignedInfo>' +
-                   DFeUtil.SeSenao((AProvedor in [proActcon, proNatal]),
-                    '<CanonicalizationMethod Algorithm="http://www.w3.org/TR/2001/REC-xml-c14n-20010315#WithComments" />',
-                    '<CanonicalizationMethod Algorithm="http://www.w3.org/TR/2001/REC-xml-c14n-20010315" />') +
-                  '<SignatureMethod Algorithm="http://www.w3.org/2000/09/xmldsig#rsa-sha1" />' +
-                  '<Reference URI="' + DFeUtil.SeSenao(URI = '', '">', '#' + URI + '">') +
-                   '<Transforms>' +
-                    '<Transform Algorithm="http://www.w3.org/2000/09/xmldsig#enveloped-signature" />' +
-                    DFeUtil.SeSenao((AProvedor in [proActcon, profintelISS, proGovBr, proPronim,
-                                                   proISSNet, proNatal, proIssDSF]),
-                                    '',
-                                    '<Transform Algorithm="http://www.w3.org/TR/2001/REC-xml-c14n-20010315" />') +
-                    DFeUtil.SeSenao((AProvedor in [proIssDSF]),
-                                    '<Transform Algorithm="http://www.w3.org/TR/2001/REC-xml-c14n-20010315#WithComments"/>',
-                                    '') +
-                   '</Transforms>' +
-                   '<DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" />' +
-                   '<DigestValue></DigestValue>' +
-                  '</Reference>' +
-                 '</SignedInfo>' +
-                 '<SignatureValue></SignatureValue>' +
-                 '<KeyInfo>' +
-                  '<X509Data>' +
-                    '<X509Certificate></X509Certificate>' +
-                  '</X509Data>' +
-                 '</KeyInfo>' +
-                '</Signature>';
-
-   AXML := AXML + '</'+ APrefixo3 + EnviarLoteRps + '>';
-
-  end
-  else begin
-
-   // Ao assinar um RPS a tag não possui prefixo
-   APrefixo3 := '';
-
-   if Pos('<Signature', AXML) <= 0
-    then begin
      Identificador := 'Id';
-     I             := pos('Id=', AXML);
+     I             := pos(LoteURI + ' Id=', AXML);
      if I = 0
       then begin
        Identificador := 'id';
-       I             := pos('id=', AXML);
-       if I = 0
-        then Identificador := '';
-  //      raise Exception.Create('Não encontrei inicio do URI: Id=');
+       I             := pos(LoteURI + ' id=', AXML);
       end;
-     if I <> 0
+     if I = 0
       then begin
+       Identificador := '';
+       URI           := '';
+      end
+      else begin
        I := DFeUtil.PosEx('"', AXML, I + 2);
        if I = 0
         then raise Exception.Create('Não encontrei inicio do URI: aspas inicial');
@@ -738,46 +667,252 @@ begin
         then raise Exception.Create('Não encontrei inicio do URI: aspas final');
 
        URI := copy(AXML, I + 1, J - I - 1);
-      end
-      else URI := '';
+      end;
 
-     // Alterado por Italo em 10/05/2013 - incluido na lista o proRJ
-     if (URI = '') or (AProvedor in [proActcon, profintelISS, proRecife, proNatal, proRJ, proGovBR, proPronim{Dalvan}, proTecnos, proPublica])
+     AXML := copy(AXML, 1, pos('</'+ APrefixo3 + EnviarLoteRps + '>', AXML) - 1);
+
+     // Alterado por Italo em 07/08/2013 - incluido na lista o proAbaco
+     if (URI = '') or (AProvedor in [proRecife, proRJ, proAbaco, proIssDSF, proIssCuritiba, proFISSLex, proGovBR, proPublica, proPronim{Dalvan}])
       then AID := '>'
-      else AID := ' ' + Identificador + '="Ass_' + URI + '">';
+      else if AProvedor = proNatal then AID := ' ' + Identificador + '="Ass_lote">'
+      else AID := ' ' + Identificador + '="AssLote_' + URI + '">';
 
-     // Incluido por Italo em 23/04/2013
+     // Incluido por Italo em 07/08/2013
      if AProvedor in [proAbaco, proIssCuritiba, proFISSLex, proPublica]
       then URI := '';
 
-     Assinatura := '<Signature xmlns="http://www.w3.org/2000/09/xmldsig#"' + AID +
-                    '<SignedInfo>' +
+     AXML := AXML + '<Signature xmlns="http://www.w3.org/2000/09/xmldsig#"' + AID +
+                     '<SignedInfo>' +
                       DFeUtil.SeSenao((AProvedor in [proActcon, proNatal]),
                        '<CanonicalizationMethod Algorithm="http://www.w3.org/TR/2001/REC-xml-c14n-20010315#WithComments" />',
                        '<CanonicalizationMethod Algorithm="http://www.w3.org/TR/2001/REC-xml-c14n-20010315" />') +
-                     '<SignatureMethod Algorithm="http://www.w3.org/2000/09/xmldsig#rsa-sha1" />' +
+                      '<SignatureMethod Algorithm="http://www.w3.org/2000/09/xmldsig#rsa-sha1" />' +
                      '<Reference URI="' + DFeUtil.SeSenao(URI = '', '">', '#' + URI + '">') +
                       '<Transforms>' +
                        '<Transform Algorithm="http://www.w3.org/2000/09/xmldsig#enveloped-signature" />' +
-                       DFeUtil.SeSenao((AProvedor in [proActcon, profintelISS, proGovBr, proPronim,
-                                                      proISSNet, proNatal, proIssDSF]),
-                                       '',
-                                       '<Transform Algorithm="http://www.w3.org/TR/2001/REC-xml-c14n-20010315" />') +
-                       DFeUtil.SeSenao((AProvedor in [proIssDSF]),
-                                       '<Transform Algorithm="http://www.w3.org/TR/2001/REC-xml-c14n-20010315#WithComments"/>',
-                                       '') +
+                        DFeUtil.SeSenao((AProvedor in [proActcon, profintelISS, proGovBr, proPronim,
+                                                       proISSNet, proNatal, proIssDSF]),
+                                        '',
+                                        '<Transform Algorithm="http://www.w3.org/TR/2001/REC-xml-c14n-20010315" />') +
+                        DFeUtil.SeSenao((AProvedor in [proIssDSF]),
+                                        '<Transform Algorithm="http://www.w3.org/TR/2001/REC-xml-c14n-20010315#WithComments"/>',
+                                        '') +
                       '</Transforms>' +
                       '<DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" />' +
                       '<DigestValue></DigestValue>' +
                      '</Reference>' +
-                    '</SignedInfo>' +
-                    '<SignatureValue></SignatureValue>' +
-                    '<KeyInfo>' +
-                     '<X509Data>' +
+                     '</SignedInfo>' +
+                     '<SignatureValue></SignatureValue>' +
+                     '<KeyInfo>' +
+                      '<X509Data>' +
                        '<X509Certificate></X509Certificate>' +
-                     '</X509Data>' +
-                    '</KeyInfo>' +
-                   '</Signature>';
+                      '</X509Data>' +
+                     '</KeyInfo>' +
+                    '</Signature>';
+
+     AXML := AXML + '</'+ APrefixo3 + EnviarLoteRps + '>';
+
+    end
+    else begin
+
+     // Ao assinar um RPS a tag não possui prefixo
+     APrefixo3 := '';
+
+     if Pos('<Signature', AXML) <= 0
+      then begin
+       Identificador := 'Id';
+       I             := pos('Id=', AXML);
+       if I = 0
+        then begin
+         Identificador := 'id';
+         I             := pos('id=', AXML);
+         if I = 0
+          then Identificador := '';
+    //      raise Exception.Create('Não encontrei inicio do URI: Id=');
+        end;
+       if I <> 0
+        then begin
+         I := DFeUtil.PosEx('"', AXML, I + 2);
+         if I = 0
+          then raise Exception.Create('Não encontrei inicio do URI: aspas inicial');
+         J := DFeUtil.PosEx('"', AXML, I + 1);
+         if J = 0
+          then raise Exception.Create('Não encontrei inicio do URI: aspas final');
+
+         URI := copy(AXML, I + 1, J - I - 1);
+        end
+        else URI := '';
+
+       // Alterado por Italo em 10/05/2013 - incluido na lista o proRJ
+       if (URI = '') or (AProvedor in [proActcon, profintelISS, proRecife, proNatal, proRJ, proGovBR, proPronim{Dalvan}, proTecnos, proPublica])
+        then AID := '>'
+        else AID := ' ' + Identificador + '="Ass_' + URI + '">';
+
+       // Incluido por Italo em 23/04/2013
+       if AProvedor in [proAbaco, proIssCuritiba, proFISSLex, proPublica]
+        then URI := '';
+
+       Assinatura := '<Signature xmlns="http://www.w3.org/2000/09/xmldsig#"' + AID +
+                      '<SignedInfo>' +
+                        DFeUtil.SeSenao((AProvedor in [proActcon, proNatal]),
+                         '<CanonicalizationMethod Algorithm="http://www.w3.org/TR/2001/REC-xml-c14n-20010315#WithComments" />',
+                         '<CanonicalizationMethod Algorithm="http://www.w3.org/TR/2001/REC-xml-c14n-20010315" />') +
+                       '<SignatureMethod Algorithm="http://www.w3.org/2000/09/xmldsig#rsa-sha1" />' +
+                       '<Reference URI="' + DFeUtil.SeSenao(URI = '', '">', '#' + URI + '">') +
+                        '<Transforms>' +
+                         '<Transform Algorithm="http://www.w3.org/2000/09/xmldsig#enveloped-signature" />' +
+                         DFeUtil.SeSenao((AProvedor in [proActcon, profintelISS, proGovBr, proPronim,
+                                                        proISSNet, proNatal, proIssDSF]),
+                                         '',
+                                         '<Transform Algorithm="http://www.w3.org/TR/2001/REC-xml-c14n-20010315" />') +
+                         DFeUtil.SeSenao((AProvedor in [proIssDSF]),
+                                         '<Transform Algorithm="http://www.w3.org/TR/2001/REC-xml-c14n-20010315#WithComments"/>',
+                                         '') +
+                        '</Transforms>' +
+                        '<DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" />' +
+                        '<DigestValue></DigestValue>' +
+                       '</Reference>' +
+                      '</SignedInfo>' +
+                      '<SignatureValue></SignatureValue>' +
+                      '<KeyInfo>' +
+                       '<X509Data>' +
+                         '<X509Certificate></X509Certificate>' +
+                       '</X509Data>' +
+                      '</KeyInfo>' +
+                     '</Signature>';
+
+       case AProvedor of
+        profintelISS,
+        proGoiania,
+        proDigifred,
+        proISSDigital,
+        proISSe,
+        pro4R,
+        proFiorilli,
+        proCoplan,
+        proProdata,
+        proVitoria,
+        proPVH,
+        proAgili,
+        proVirtual,
+        proFreire,
+        proLink3,
+        proMitra,
+        proGovDigital,
+        proSisPMJP,
+        proSystemPro,
+        proSaatri:    begin
+                       AXML := copy(AXML, 1, pos('</InfDeclaracaoPrestacaoServico>', AXML) - 1);
+                       AXML := AXML + '</InfDeclaracaoPrestacaoServico>';
+                       AXML := AXML + Assinatura;
+                       AXML := AXML + '</Rps>';
+                       // Alterado por Cleiver em 26/02/2013
+                       if (AProvedor in [proGoiania, proProdata, proVitoria, proFiorilli, proVirtual{, proSystemPro}])
+                        then AXML := AXML + '</GerarNfseEnvio>';
+                      end;
+        proTecnos:    begin
+                       AXML := copy(AXML, 1, pos('</InfDeclaracaoPrestacaoServico>', AXML) - 1);
+                       AXML := AXML + '</InfDeclaracaoPrestacaoServico>';
+                       AXML := AXML + Assinatura;
+                       AXML := AXML + '</tcDeclaracaoPrestacaoServico></Rps>';
+                      end;
+        else begin
+              AXML := copy(AXML, 1, pos('</Rps>', AXML) - 1);
+              AXML := AXML + Assinatura;
+              AXML := AXML + '</Rps>';
+              // Alterado por Cleiver em 26/02/2013
+              if (AProvedor in [proGoiania, proProdata, proVitoria, proPublica{, proSystemPro}])
+               then AXML := AXML + '</GerarNfseEnvio>';
+             end;
+       end;
+      end;
+    end;
+
+   // Lendo Header antes de assinar //
+   xmlHeaderAntes := '';
+
+   I := pos('?>', AXML);
+   if I > 0
+    then xmlHeaderAntes := copy(AXML, 1, I + 1);
+
+   xmldoc := CoDOMDocument50.Create;
+
+   xmldoc.async              := False;
+   xmldoc.validateOnParse    := False;
+   xmldoc.preserveWhiteSpace := True;
+
+   xmldsig := CoMXDigitalSignature50.Create;
+
+   if (not xmldoc.loadXML(AXML))
+    then raise Exception.Create('Não foi possível carregar o arquivo: ' + AXML);
+
+   if AProvedor = proIssDSF then
+   begin
+     NameSpaceLote:=DSIGNS + ' xmlns:ns1="http://localhost:8080/WsNFe2/lote" xmlns:tipos="http://localhost:8080/WsNFe2/tp" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"';
+     xmldoc.setProperty('SelectionNamespaces', NameSpaceLote );
+     xmlRoot := xmldoc.documentElement;
+     xmlRoot.setAttribute('xsi:schemaLocation','http://localhost:8080/WsNFe2/lote http://localhost:8080/WsNFe2/xsd/ReqEnvioLoteRPS.xsd');
+   end
+   else
+   begin
+     xmldoc.setProperty('SelectionNamespaces', DSIGNS + NameSpaceLote);
+   end;
+
+   if ALote
+    then begin
+     if (AProvedor in [proEquiplano, proPronim, proIssDSF])
+      then xmldsig.signature := xmldoc.selectSingleNode('.//ds:Signature')
+     else if (URI <> '') and not (AProvedor in [proRecife, proRJ, proAbaco, proIssCuritiba, proFISSLex, proBetha, proPublica])
+      then xmldsig.signature := xmldoc.selectSingleNode('.//ds:Signature[@' + Identificador + '="AssLote_' + URI + '"]')
+     else if AProvedor = proNatal
+      then xmldsig.signature := xmldoc.selectSingleNode('.//ds:Signature[@' + Identificador + '="Ass_' + URI + '"]')
+     else if (URI <> '') and (AProvedor = proBetha)
+      then xmldsig.signature := xmldoc.selectSingleNode('.//ns3:' + EnviarLoteRps + '/ds:Signature')
+     else begin
+       xmldsig.signature := xmldoc.selectSingleNode('.//ds1:' + EnviarLoteRps + '/ds:Signature');
+      end;
+    end
+    else xmldsig.signature := xmldoc.selectSingleNode('.//ds:Signature');
+
+   if (xmldsig.signature = nil)
+   then raise Exception.Create('É preciso carregar o template antes de assinar.');
+
+   if NumCertCarregado <> Certificado.SerialNumber
+    then CertStoreMem := nil;
+
+   if  CertStoreMem = nil
+    then begin
+     CertStore := CoStore.Create;
+     CertStore.Open(CAPICOM_CURRENT_USER_STORE, 'My', CAPICOM_STORE_OPEN_READ_ONLY);
+
+     CertStoreMem := CoStore.Create;
+     CertStoreMem.Open(CAPICOM_MEMORY_STORE, 'Memoria', CAPICOM_STORE_OPEN_READ_ONLY);
+
+     Certs := CertStore.Certificates as ICertificates2;
+     for i := 1 to Certs.Count do
+      begin
+       Cert := IInterface(Certs.Item[i]) as ICertificate2;
+       if Cert.SerialNumber = Certificado.SerialNumber
+        then begin
+         CertStoreMem.Add(Cert);
+          NumCertCarregado := Certificado.SerialNumber;
+        end;
+      end;
+   end;
+
+   OleCheck(IDispatch(Certificado.PrivateKey).QueryInterface(IPrivateKey,PrivateKey));
+   xmldsig.store := CertStoreMem;
+
+   dsigKey := xmldsig.createKeyFromCSP(PrivateKey.ProviderType, PrivateKey.ProviderName, PrivateKey.ContainerName, 0);
+   if (dsigKey = nil)
+    then raise Exception.Create('Erro ao criar a chave do CSP.');
+
+   signedKey := xmldsig.sign(dsigKey, $00000002);
+   if (signedKey <> nil)
+    then begin
+     XMLAssinado := xmldoc.xml;
+     XMLAssinado := StringReplace( XMLAssinado, #10, '', [rfReplaceAll] );
+     XMLAssinado := StringReplace( XMLAssinado, #13, '', [rfReplaceAll] );
 
      case AProvedor of
       profintelISS,
@@ -786,7 +921,6 @@ begin
       proISSDigital,
       proISSe,
       pro4R,
-      proFiorilli,
       proCoplan,
       proProdata,
       proVitoria,
@@ -799,273 +933,142 @@ begin
       proGovDigital,
       proSisPMJP,
       proSystemPro,
-      proSaatri:    begin
-                     AXML := copy(AXML, 1, pos('</InfDeclaracaoPrestacaoServico>', AXML) - 1);
-                     AXML := AXML + '</InfDeclaracaoPrestacaoServico>';
-                     AXML := AXML + Assinatura;
+      proSaatri: begin
+                   //By Akai - L. Massao Aihara ==================================
+                   //MUDA A ASSINATURA...
+                   //para não criar uma variavel usei a XMLAssinado mesmo...
+                   //como o acbr estava gerando algumas coisas que não tinha no exemplo da Prefeitura de PG
+                   //so fiz um processo para remover o "excesso"!!!
+                   if not ALote then
+                    begin
+                     AXML := copy(XML, 1, pos('</'+ APrefixo3 + 'InfDeclaracaoPrestacaoServico>', XML) - 1);
+                     AXML := AXML + '</'+ APrefixo3 + 'InfDeclaracaoPrestacaoServico>';
+                     I    := pos('<Signature', XMLAssinado);
+
+                     XMLAssinado := copy(XMLAssinado, I, pos('</Signature>', XMLAssinado) - I);
+                     I           := pos('>', XMLAssinado);
+                     XMLAssinado := StringReplace(XMLAssinado, Copy(XMLAssinado, 54, I - 54), '', []);
+
+  //                   I           := pos('<KeyInfo>', XMLAssinado);
+  //                   XMLAssinado := StringReplace(XMLAssinado, copy(XMLAssinado, I, pos('</KeyInfo>', XMLAssinado) - I), '', []);
+  //                   XMLAssinado := StringReplace(XMLAssinado, '</KeyInfo>', '', []);
+
+                     AXML := AXML + XMLAssinado;
+                     AXML := AXML + '</Signature>';
                      AXML := AXML + '</Rps>';
+
                      // Alterado por Cleiver em 26/02/2013
-                     if (AProvedor in [proGoiania, proProdata, proVitoria, proFiorilli, proVirtual{, proSystemPro}])
+                     if (AProvedor in [proGoiania, proProdata, proVitoria, proVirtual{, proSystemPro}])
                       then AXML := AXML + '</GerarNfseEnvio>';
+
+                     XMLAssinado := AXML;
+                    end
+                    else
+                    //Se for o LOTE...
+                    //essa parte não precisava, ja a prefeitura ja estava retornando a msg "correta"...
+                    //mas como no exemplo da prefeitura estava diferente, alterei tbm...
+                    begin
+                     AXML := copy(XML, 1, pos('</LoteRps>', XML) - 1);
+                     AXML := AXML + '</LoteRps>';
+                     I    := pos('</LoteRps>', XMLAssinado);
+
+                     XMLAssinado := copy(XMLAssinado, I, pos('</' + EnviarLoteRps + '>', XMLAssinado) - I);
+                     XMLAssinado := StringReplace(XMLAssinado, '</LoteRps>', '', []);
+                     I           := pos('>', XMLAssinado);
+                     XMLAssinado := StringReplace(XMLAssinado, Copy(XMLAssinado, 54, I - 54), '', []);
+
+  //                   I           := pos('<KeyInfo>', XMLAssinado);
+  //                   XMLAssinado := StringReplace(XMLAssinado, copy(XMLAssinado, I, pos('</KeyInfo>', XMLAssinado) - I), '', []);
+  //                   XMLAssinado := StringReplace(XMLAssinado, '</KeyInfo>', '', []);
+
+                     AXML := AXML + XMLAssinado;
+                     AXML := AXML + '</' + EnviarLoteRps + '>';
+
+                     XMLAssinado := AXML;
                     end;
-      proTecnos:    begin
-                     AXML := copy(AXML, 1, pos('</InfDeclaracaoPrestacaoServico>', AXML) - 1);
-                     AXML := AXML + '</InfDeclaracaoPrestacaoServico>';
-                     AXML := AXML + Assinatura;
-                     AXML := AXML + '</tcDeclaracaoPrestacaoServico></Rps>';
-                    end;
-      else begin
-            AXML := copy(AXML, 1, pos('</Rps>', AXML) - 1);
-            AXML := AXML + Assinatura;
-            AXML := AXML + '</Rps>';
-            // Alterado por Cleiver em 26/02/2013
-            if (AProvedor in [proGoiania, proProdata, proVitoria, proPublica{, proSystemPro}])
-             then AXML := AXML + '</GerarNfseEnvio>';
-           end;
-     end;
+                   //Fim alteração Akai ==========================================
 
-    end;
-
-  end;
-
- // Lendo Header antes de assinar //
- xmlHeaderAntes := '';
-
- I := pos('?>', AXML);
- if I > 0
-  then xmlHeaderAntes := copy(AXML, 1, I + 1);
-
- xmldoc := CoDOMDocument50.Create;
-
- xmldoc.async              := False;
- xmldoc.validateOnParse    := False;
- xmldoc.preserveWhiteSpace := True;
-
- xmldsig := CoMXDigitalSignature50.Create;
-
- if (not xmldoc.loadXML(AXML))
-  then raise Exception.Create('Não foi possível carregar o arquivo: ' + AXML);
-
- if AProvedor = proIssDSF then
- begin
-     NameSpaceLote:=DSIGNS + ' xmlns:ns1="http://localhost:8080/WsNFe2/lote" xmlns:tipos="http://localhost:8080/WsNFe2/tp" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"';
-     xmldoc.setProperty('SelectionNamespaces', NameSpaceLote );
-     xmlRoot := xmldoc.documentElement;
-     xmlRoot.setAttribute('xsi:schemaLocation','http://localhost:8080/WsNFe2/lote http://localhost:8080/WsNFe2/xsd/ReqEnvioLoteRPS.xsd');
-  end
-  else
-  begin
-    xmldoc.setProperty('SelectionNamespaces', DSIGNS + NameSpaceLote);
-  end;
-
- if ALote
-  then begin
-   if (AProvedor in [proEquiplano, proPronim, proIssDSF])
-    then xmldsig.signature := xmldoc.selectSingleNode('.//ds:Signature')
-   else if (URI <> '') and not (AProvedor in [proRecife, proRJ, proAbaco, proIssCuritiba, proFISSLex, proBetha, proPublica])
-    then xmldsig.signature := xmldoc.selectSingleNode('.//ds:Signature[@' + Identificador + '="AssLote_' + URI + '"]')
-   else if AProvedor = proNatal
-    then xmldsig.signature := xmldoc.selectSingleNode('.//ds:Signature[@' + Identificador + '="Ass_' + URI + '"]')
-   else if (URI <> '') and (AProvedor = proBetha)
-    then xmldsig.signature := xmldoc.selectSingleNode('.//ns3:' + EnviarLoteRps + '/ds:Signature')
-   else begin
-     xmldsig.signature := xmldoc.selectSingleNode('.//ds1:' + EnviarLoteRps + '/ds:Signature');
-    end;
-  end
-  else xmldsig.signature := xmldoc.selectSingleNode('.//ds:Signature');
-
- if (xmldsig.signature = nil)
-  then raise Exception.Create('É preciso carregar o template antes de assinar.');
-
- if NumCertCarregado <> Certificado.SerialNumber
-  then CertStoreMem := nil;
-
- if  CertStoreMem = nil
-  then begin
-   CertStore := CoStore.Create;
-   CertStore.Open(CAPICOM_CURRENT_USER_STORE, 'My', CAPICOM_STORE_OPEN_READ_ONLY);
-
-   CertStoreMem := CoStore.Create;
-   CertStoreMem.Open(CAPICOM_MEMORY_STORE, 'Memoria', CAPICOM_STORE_OPEN_READ_ONLY);
-
-   Certs := CertStore.Certificates as ICertificates2;
-   for i := 1 to Certs.Count do
-    begin
-     Cert := IInterface(Certs.Item[i]) as ICertificate2;
-     if Cert.SerialNumber = Certificado.SerialNumber
-      then begin
-       CertStoreMem.Add(Cert);
-        NumCertCarregado := Certificado.SerialNumber;
-      end;
-    end;
- end;
-
- OleCheck(IDispatch(Certificado.PrivateKey).QueryInterface(IPrivateKey,PrivateKey));
- xmldsig.store := CertStoreMem;
-
- dsigKey := xmldsig.createKeyFromCSP(PrivateKey.ProviderType, PrivateKey.ProviderName, PrivateKey.ContainerName, 0);
- if (dsigKey = nil)
-  then raise Exception.Create('Erro ao criar a chave do CSP.');
-
- signedKey := xmldsig.sign(dsigKey, $00000002);
- if (signedKey <> nil)
-  then begin
-   XMLAssinado := xmldoc.xml;
-   XMLAssinado := StringReplace( XMLAssinado, #10, '', [rfReplaceAll] );
-   XMLAssinado := StringReplace( XMLAssinado, #13, '', [rfReplaceAll] );
-
-   case AProvedor of
-    profintelISS,
-    proGoiania,
-    proDigifred,
-    proISSDigital,
-    proISSe,
-    pro4R,
-    proCoplan,
-    proProdata,
-    proVitoria,
-    proPVH,
-    proAgili,
-    proVirtual,
-    proFreire,
-    proLink3,
-    proMitra,
-    proGovDigital,
-    proSisPMJP,
-    proSystemPro,
-    proSaatri: begin
-                 //By Akai - L. Massao Aihara ==================================
-                 //MUDA A ASSINATURA...
-                 //para não criar uma variavel usei a XMLAssinado mesmo...
-                 //como o acbr estava gerando algumas coisas que não tinha no exemplo da Prefeitura de PG
-                 //so fiz um processo para remover o "excesso"!!!
-                 if not ALote then
-                  begin
+                   (*
+                   // Variavel XML contem o XML original de entrada na função
+                   // sem assinatura.
                    AXML := copy(XML, 1, pos('</'+ APrefixo3 + 'InfDeclaracaoPrestacaoServico>', XML) - 1);
                    AXML := AXML + '</'+ APrefixo3 + 'InfDeclaracaoPrestacaoServico>';
                    I    := pos('<Signature', XMLAssinado);
-
-                   XMLAssinado := copy(XMLAssinado, I, pos('</Signature>', XMLAssinado) - I);
-                   I           := pos('>', XMLAssinado);
-                   XMLAssinado := StringReplace(XMLAssinado, Copy(XMLAssinado, 54, I - 54), '', []);
-
-//                   I           := pos('<KeyInfo>', XMLAssinado);
-//                   XMLAssinado := StringReplace(XMLAssinado, copy(XMLAssinado, I, pos('</KeyInfo>', XMLAssinado) - I), '', []);
-//                   XMLAssinado := StringReplace(XMLAssinado, '</KeyInfo>', '', []);
-
-                   AXML := AXML + XMLAssinado;
+                   AXML := AXML + copy(XMLAssinado, I, pos('</Signature>', XMLAssinado) - I);
                    AXML := AXML + '</Signature>';
                    AXML := AXML + '</Rps>';
 
-                   // Alterado por Cleiver em 26/02/2013
-                   if (AProvedor in [proGoiania, proProdata, proVitoria, proVirtual{, proSystemPro}])
-                    then AXML := AXML + '</GerarNfseEnvio>';
-
                    XMLAssinado := AXML;
-                  end
-                  else
-                  //Se for o LOTE...
-                  //essa parte não precisava, ja a prefeitura ja estava retornando a msg "correta"...
-                  //mas como no exemplo da prefeitura estava diferente, alterei tbm...
-                  begin
-                   AXML := copy(XML, 1, pos('</LoteRps>', XML) - 1);
-                   AXML := AXML + '</LoteRps>';
-                   I    := pos('</LoteRps>', XMLAssinado);
+                   *)
+                 end;
+     end; // fim do case
 
-                   XMLAssinado := copy(XMLAssinado, I, pos('</' + EnviarLoteRps + '>', XMLAssinado) - I);
-                   XMLAssinado := StringReplace(XMLAssinado, '</LoteRps>', '', []);
-                   I           := pos('>', XMLAssinado);
-                   XMLAssinado := StringReplace(XMLAssinado, Copy(XMLAssinado, 54, I - 54), '', []);
+     if ALote
+      then begin
+       // Sugestão de Rodrigo Cantelli
+       PosIniAssLote := Pos('</'+ APrefixo3 + 'LoteRps>', XMLAssinado);
 
-//                   I           := pos('<KeyInfo>', XMLAssinado);
-//                   XMLAssinado := StringReplace(XMLAssinado, copy(XMLAssinado, I, pos('</KeyInfo>', XMLAssinado) - I), '', []);
-//                   XMLAssinado := StringReplace(XMLAssinado, '</KeyInfo>', '', []);
+       if PosIniAssLote = 0
+        then PosIniAssLote := Pos('</LoteRps>', XMLAssinado) + length('</LoteRps>')
+        else PosIniAssLote := PosIniAssLote + length('</'+ APrefixo3 + 'LoteRps>');
 
-                   AXML := AXML + XMLAssinado;
-                   AXML := AXML + '</' + EnviarLoteRps + '>';
+       PosIni      := DFeUtil.PosEx('<SignatureValue>', XMLAssinado, PosIniAssLote) + length('<SignatureValue>');
+       XMLAssinado := copy(XMLAssinado, 1, PosIni - 1) +
+                      StringReplace( copy(XMLAssinado, PosIni, length(XMLAssinado)), ' ', '', [rfReplaceAll] );
 
-                   XMLAssinado := AXML;
-                  end;
-                 //Fim alteração Akai ==========================================
+       // Sugestão de Rodrigo Cantelli
+       PosIniAssLote := Pos('</'+ APrefixo3 + 'LoteRps>', XMLAssinado);
 
-                 (*
-                 // Variavel XML contem o XML original de entrada na função
-                 // sem assinatura.
-                 AXML := copy(XML, 1, pos('</'+ APrefixo3 + 'InfDeclaracaoPrestacaoServico>', XML) - 1);
-                 AXML := AXML + '</'+ APrefixo3 + 'InfDeclaracaoPrestacaoServico>';
-                 I    := pos('<Signature', XMLAssinado);
-                 AXML := AXML + copy(XMLAssinado, I, pos('</Signature>', XMLAssinado) - I);
-                 AXML := AXML + '</Signature>';
-                 AXML := AXML + '</Rps>';
+       if PosIniAssLote = 0
+        then PosIniAssLote := Pos('</LoteRps>', XMLAssinado) + length('</LoteRps>')
+        else PosIniAssLote := PosIniAssLote + length('</'+ APrefixo3 + 'LoteRps>');
 
-                 XMLAssinado := AXML;
-                 *)
-               end;
-   end; // fim do case
-
-   if ALote
-    then begin
-     // Sugestão de Rodrigo Cantelli
-     PosIniAssLote := Pos('</'+ APrefixo3 + 'LoteRps>', XMLAssinado);
-
-     if PosIniAssLote = 0
-      then PosIniAssLote := Pos('</LoteRps>', XMLAssinado) + length('</LoteRps>')
-      else PosIniAssLote := PosIniAssLote + length('</'+ APrefixo3 + 'LoteRps>');
-
-     PosIni      := DFeUtil.PosEx('<SignatureValue>', XMLAssinado, PosIniAssLote) + length('<SignatureValue>');
-     XMLAssinado := copy(XMLAssinado, 1, PosIni - 1) +
-                    StringReplace( copy(XMLAssinado, PosIni, length(XMLAssinado)), ' ', '', [rfReplaceAll] );
-
-     // Sugestão de Rodrigo Cantelli
-     PosIniAssLote := Pos('</'+ APrefixo3 + 'LoteRps>', XMLAssinado);
-
-     if PosIniAssLote = 0
-      then PosIniAssLote := Pos('</LoteRps>', XMLAssinado) + length('</LoteRps>')
-      else PosIniAssLote := PosIniAssLote + length('</'+ APrefixo3 + 'LoteRps>');
-
-     PosIni      := DFeUtil.PosEx('<X509Certificate>', XMLAssinado, PosIniAssLote) - 1;
-     PosFim      := DFeUtil.PosLast('<X509Certificate>', XMLAssinado);
-     XMLAssinado := copy(XMLAssinado, 1, PosIni) +
-                    copy(XMLAssinado, PosFim, length(XMLAssinado));
+       PosIni      := DFeUtil.PosEx('<X509Certificate>', XMLAssinado, PosIniAssLote) - 1;
+       PosFim      := DFeUtil.PosLast('<X509Certificate>', XMLAssinado);
+       XMLAssinado := copy(XMLAssinado, 1, PosIni) +
+                      copy(XMLAssinado, PosFim, length(XMLAssinado));
+      end
+      else begin
+       PosIni      := Pos('<SignatureValue>', XMLAssinado) + length('<SignatureValue>');
+       XMLAssinado := copy(XMLAssinado, 1, PosIni - 1) +
+                      StringReplace( copy(XMLAssinado, PosIni, length(XMLAssinado)), ' ', '', [rfReplaceAll] );
+       PosIni      := Pos('<X509Certificate>', XMLAssinado) - 1;
+       PosFim      := DFeUtil.PosLast('<X509Certificate>', XMLAssinado);
+       XMLAssinado := copy(XMLAssinado, 1, PosIni) +
+                      copy(XMLAssinado, PosFim, length(XMLAssinado));
+      end;
     end
-    else begin
-     PosIni      := Pos('<SignatureValue>', XMLAssinado) + length('<SignatureValue>');
-     XMLAssinado := copy(XMLAssinado, 1, PosIni - 1) +
-                    StringReplace( copy(XMLAssinado, PosIni, length(XMLAssinado)), ' ', '', [rfReplaceAll] );
-     PosIni      := Pos('<X509Certificate>', XMLAssinado) - 1;
-     PosFim      := DFeUtil.PosLast('<X509Certificate>', XMLAssinado);
-     XMLAssinado := copy(XMLAssinado, 1, PosIni) +
-                    copy(XMLAssinado, PosFim, length(XMLAssinado));
+    else raise Exception.Create('Assinatura Falhou.');
+
+   if xmlHeaderAntes <> ''
+    then begin
+     I := pos('?>',XMLAssinado);
+     if I > 0
+      then begin
+       xmlHeaderDepois := copy(XMLAssinado,1,I+1);
+       if xmlHeaderAntes <> xmlHeaderDepois
+        then XMLAssinado := StuffString(XMLAssinado,1,length(xmlHeaderDepois),xmlHeaderAntes);
+      end
+      else XMLAssinado := xmlHeaderAntes + XMLAssinado;
     end;
-  end
-  else raise Exception.Create('Assinatura Falhou.');
 
- if xmlHeaderAntes <> ''
-  then begin
-   I := pos('?>',XMLAssinado);
-   if I > 0
-    then begin
-     xmlHeaderDepois := copy(XMLAssinado,1,I+1);
-     if xmlHeaderAntes <> xmlHeaderDepois
-      then XMLAssinado := StuffString(XMLAssinado,1,length(xmlHeaderDepois),xmlHeaderAntes);
-    end
-    else XMLAssinado := xmlHeaderAntes + XMLAssinado;
+    //Não é possível assinar por delphi quando o id é minúsculo... mas se manter o id maiúsculo
+    //não será validado o schema... uma função mais legível como stringreplace faz a assinatura sumir.
+    if (not ALote) and (Aprovedor in [proPublica])
+     then begin
+       I := pos('Id=', XMLAssinado);
+       XMLAssinado[I] := 'i';
+     end;
+
+   dsigKey   := nil;
+   signedKey := nil;
+   xmldoc    := nil;
+   xmldsig   := nil;
+
+   Result := True;
+  finally
+   CoUninitialize;
   end;
-
-  //Não é possível assinar por delphi quando o id é minúsculo... mas se manter o id maiúsculo
-  //não será validado o schema... uma função mais legível como stringreplace faz a assinatura sumir.
-  if (not ALote) and (Aprovedor in [proPublica])
-   then begin
-     I := pos('Id=', XMLAssinado);
-     XMLAssinado[I] := 'i';
-   end;
-
- dsigKey   := nil;
- signedKey := nil;
- xmldoc    := nil;
- xmldsig   := nil;
-
- Result := True;
 end;
 {$ENDIF}
 
@@ -1460,42 +1463,47 @@ var
  Schema          : XMLSchemaCache;
  schema_filename : String;
 begin
- DOMDocument                  := CoDOMDocument50.Create;
- DOMDocument.async            := False;
- DOMDocument.resolveExternals := False;
- DOMDocument.validateOnParse  := True;
- DOMDocument.loadXML(XML);
+  CoInitialize(nil);
+  try
+    DOMDocument                  := CoDOMDocument50.Create;
+    DOMDocument.async            := False;
+    DOMDocument.resolveExternals := False;
+    DOMDocument.validateOnParse  := True;
+    DOMDocument.loadXML(XML);
 
- Schema := CoXMLSchemaCache50.Create;
+    Schema := CoXMLSchemaCache50.Create;
 
- if not DirectoryExists(DFeUtil.SeSenao(DFeUtil.EstaVazio(APathSchemas),
-                        PathWithDelim(ExtractFileDir(application.ExeName)) + 'Schemas',
-                        PathWithDelim(APathSchemas)))
-  then raise Exception.Create('Diretório de Schemas não encontrado' + sLineBreak +
-                              DFeUtil.SeSenao(DFeUtil.EstaVazio(APathSchemas),
-                              PathWithDelim(ExtractFileDir(application.ExeName)) + 'Schemas',
-                              PathWithDelim(APathSchemas)));
+    if not DirectoryExists(DFeUtil.SeSenao(DFeUtil.EstaVazio(APathSchemas),
+                           PathWithDelim(ExtractFileDir(application.ExeName)) + 'Schemas',
+                           PathWithDelim(APathSchemas)))
+     then raise Exception.Create('Diretório de Schemas não encontrado' + sLineBreak +
+                                 DFeUtil.SeSenao(DFeUtil.EstaVazio(APathSchemas),
+                                 PathWithDelim(ExtractFileDir(application.ExeName)) + 'Schemas',
+                                 PathWithDelim(APathSchemas)));
 
- schema_filename := DFeUtil.SeSenao(DFeUtil.EstaVazio(APathSchemas),
-                    PathWithDelim(ExtractFileDir(application.ExeName)) + 'Schemas\',
-                    PathWithDelim(APathSchemas)) + Servico;
+    schema_filename := DFeUtil.SeSenao(DFeUtil.EstaVazio(APathSchemas),
+                       PathWithDelim(ExtractFileDir(application.ExeName)) + 'Schemas\',
+                       PathWithDelim(APathSchemas)) + Servico;
 
- if not FilesExists(schema_filename)
-  then raise Exception.Create('Arquivo ' + schema_filename + ' não encontrado.');
+    if not FilesExists(schema_filename)
+     then raise Exception.Create('Arquivo ' + schema_filename + ' não encontrado.');
 
- if RightStr(URL, 1) = '/'
-  then Schema.add( URL + Servico, schema_filename )
-  else Schema.add( URL, schema_filename );
+    if RightStr(URL, 1) = '/'
+     then Schema.add( URL + Servico, schema_filename )
+     else Schema.add( URL, schema_filename );
 
- DOMDocument.schemas := Schema;
+    DOMDocument.schemas := Schema;
 
- ParseError := DOMDocument.validate;
- Result     := (ParseError.errorCode = 0);
- Msg        := ParseError.reason;
+    ParseError := DOMDocument.validate;
+    Result     := (ParseError.errorCode = 0);
+    Msg        := ParseError.reason;
 
- DOMDocument := nil;
- ParseError  := nil;
- Schema      := nil;
+    DOMDocument := nil;
+    ParseError  := nil;
+    Schema      := nil;
+  finally
+    CoUninitialize;
+  end;
 end;
 {$ENDIF}
 
