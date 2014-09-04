@@ -1677,7 +1677,7 @@ end;
 function TNFeStatusServico.Executar: Boolean;
 var
   NFeRetorno: TRetConsStatServ;
-  aMsg: string;
+  aMsg, Servico, SoapAction: string;
   Texto : String;
 
   {$IFDEF ACBrNFeOpenSSL}
@@ -1690,16 +1690,22 @@ begin
 
   Result := False;
 
+  // Alterado por Italo em 27/08/2014
+  if (FConfiguracoes.Geral.ModeloDF = moNFe) and (FConfiguracoes.Geral.VersaoDF = ve310) and (FConfiguracoes.WebServices.UFCodigo = 29)
+   then begin
+     Servico    := '"http://www.portalfiscal.inf.br/nfe/wsdl/NfeStatusServico"';
+     SoapAction := 'http://www.portalfiscal.inf.br/nfe/wsdl/NfeStatusServico/NfeStatusServicoNF';
+   end
+   else begin
+     Servico    := '"http://www.portalfiscal.inf.br/nfe/wsdl/NfeStatusServico2"';
+     SoapAction := 'http://www.portalfiscal.inf.br/nfe/wsdl/NfeStatusServico2';
+   end;
+
   Texto := '<?xml version="1.0" encoding="utf-8"?>';
   Texto := Texto + '<soap12:Envelope xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap12="http://www.w3.org/2003/05/soap-envelope">';
   Texto := Texto +   '<soap12:Header>';
-
-  // Alterado por Italo em 15/04/2014
-  if (FConfiguracoes.Geral.ModeloDF = moNFe) and (FConfiguracoes.Geral.VersaoDF = ve310) and (FConfiguracoes.WebServices.UFCodigo = 29)
-   then Texto := Texto +     '<nfeCabecMsg xmlns="http://www.portalfiscal.inf.br/nfe/wsdl/NfeStatusServico">'
-   else Texto := Texto +     '<nfeCabecMsg xmlns="http://www.portalfiscal.inf.br/nfe/wsdl/NfeStatusServico2">';
-
-  Texto := Texto +       '<cUF>'+IntToStr(FConfiguracoes.WebServices.UFCodigo)+'</cUF>';
+  Texto := Texto +     '<nfeCabecMsg xmlns=' + Servico + '>';
+  Texto := Texto +       '<cUF>' + IntToStr(FConfiguracoes.WebServices.UFCodigo) + '</cUF>';
 
   Texto := Texto + '<versaoDados>' + GetVersaoNFe(FConfiguracoes.Geral.ModeloDF,
                                                   FConfiguracoes.Geral.VersaoDF,
@@ -1710,12 +1716,8 @@ begin
   Texto := Texto +   '</soap12:Header>';
   Texto := Texto +   '<soap12:Body>';
 
-  // Alterado por Italo em 15/04/2014
-  if (FConfiguracoes.Geral.ModeloDF = moNFe) and (FConfiguracoes.Geral.VersaoDF = ve310) and (FConfiguracoes.WebServices.UFCodigo = 29)
-   then Texto := Texto +     '<nfeDadosMsg xmlns="http://www.portalfiscal.inf.br/nfe/wsdl/NfeStatusServico">'
-   else Texto := Texto +     '<nfeDadosMsg xmlns="http://www.portalfiscal.inf.br/nfe/wsdl/NfeStatusServico2">';
-
-  Texto := Texto + FDadosMsg;
+  Texto := Texto +     '<nfeDadosMsg xmlns=' + Servico + '>';
+  Texto := Texto +       FDadosMsg;
   Texto := Texto +     '</nfeDadosMsg>';
   Texto := Texto +   '</soap12:Body>';
   Texto := Texto +'</soap12:Envelope>';
@@ -1726,17 +1728,7 @@ begin
      ReqResp := TACBrHTTPReqResp.Create;
      ConfiguraReqResp( ReqResp );
      ReqResp.URL := FURL;
-
-{     if FConfiguracoes.WebServices.UFCodigo = 29 then //Bahia está usando SOAP ACTION diferente
-        ReqResp.SoapAction := 'http://www.portalfiscal.inf.br/nfe/wsdl/NfeStatusServico2/nfeStatusServicoNF2'
-     else}
-     ReqResp.SOAPAction := 'http://www.portalfiscal.inf.br/nfe/wsdl/NfeStatusServico2';
-
-     // Alterado por Italo em 15/04/2014
-     if (FConfiguracoes.Geral.ModeloDF = moNFe) and (FConfiguracoes.Geral.VersaoDF = ve310) and (FConfiguracoes.WebServices.UFCodigo = 29) then 
-        ReqResp.SOAPAction := 'http://www.portalfiscal.inf.br/nfe/wsdl/NfeStatusServico/NfeStatusServicoNF'
-     else 
-        ReqResp.SOAPAction := 'http://www.portalfiscal.inf.br/nfe/wsdl/NfeStatusServico2';
+     ReqResp.SoapAction := SoapAction;
   {$ENDIF}
 
   try
@@ -1757,12 +1749,7 @@ begin
     try
       {$IFDEF ACBrNFeOpenSSL}
          HTTP.Document.WriteBuffer(Texto[1], Length(Texto));
-
-         // Alterado por Italo em 15/04/2014
-         if (FConfiguracoes.Geral.ModeloDF = moNFe) and (FConfiguracoes.Geral.VersaoDF = ve310) and (FConfiguracoes.WebServices.UFCodigo = 29)
-          then ConfiguraHTTP(HTTP,'SOAPAction: "http://www.portalfiscal.inf.br/nfe/wsdl/NfeStatusServico/NfeStatusServicoNF"')
-          else ConfiguraHTTP(HTTP,'SOAPAction: "http://www.portalfiscal.inf.br/nfe/wsdl/NfeStatusServico2"');
-
+         ConfiguraHTTP(HTTP,'SOAPAction: "' + SoapAction +'"');
          HTTP.HTTPMethod('POST', FURL);
          HTTP.Document.Position := 0;
          SetLength(Texto, HTTP.Document.Size);
@@ -2770,8 +2757,8 @@ var
 begin
   inherited Executar;
 
-  // Alterações realizadas por Italo em 10/07/2014
-  if (FConfiguracoes.WebServices.UFCodigo = 29) and (FConfiguracoes.Geral.VersaoDF = ve310) then // 29 = BA
+  // Alterações realizadas por Italo em 25/08/2014
+  if (FConfiguracoes.WebServices.UFCodigo in [29, 41]) and (FConfiguracoes.Geral.VersaoDF = ve310) then // 29 = BA
   begin
     Metodo    := 'NfeConsulta';
     TAGResult := 'NfeConsultaNFResult';
