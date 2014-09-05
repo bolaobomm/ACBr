@@ -975,7 +975,7 @@ end;
 function TMDFeRetRecepcao.Confirma(AInfProt: TProtMDFeCollection): Boolean;
 var
   i, j: Integer;
-  AProcMDFe: TProcMDFe;
+//  AProcMDFe: TProcMDFe;
 begin
   Result := False;
 

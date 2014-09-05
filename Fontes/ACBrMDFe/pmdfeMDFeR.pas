@@ -82,7 +82,7 @@ end;
 function TMDFeR.LerXml: Boolean;
 var
   ok: Boolean;
-  i, j, i01, i02, i03, i04, i05: Integer;
+  {i, j,} i01, i02, i03, i04, i05: Integer;
 begin
   (*
   I := 0;

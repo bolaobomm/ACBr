@@ -41,11 +41,11 @@ unit pmdfeConversao;
 interface
 
 uses
-  Classes, SysUtils,
+  SysUtils,
 {$IFNDEF VER130}
   Variants,
 {$ENDIF}
-  pcnConversao;
+  Classes{, pcnConversao};
 
 type
   TMDFeTpEmitente = (teTransportadora, teTranspCargaPropria);
@@ -115,6 +115,11 @@ const
   DSC_TU          = 'Tonelada Útil';
 
 
+function StrToEnumerado(var ok: boolean; const s: string; const AString: array of string;
+  const AEnumerados: array of variant): variant;
+function EnumeradoToStr(const t: variant; const AString:
+  array of string; const AEnumerados: array of variant): variant;
+
 function TpEmitenteToStr(const t: TMDFeTpEmitente): String;
 function StrToTpEmitente(var ok: Boolean; const s: String): TMDFeTpEmitente;
 
@@ -122,6 +127,31 @@ function ModalToStr(const t: TMDFeModal): String;
 function StrToModal(var ok: Boolean; const s: String): TMDFeModal;
 
 implementation
+
+function StrToEnumerado(var ok: boolean; const s: string; const AString:
+  array of string; const AEnumerados: array of variant): variant;
+var
+  i: integer;
+begin
+  result := -1;
+  for i := Low(AString) to High(AString) do
+    if AnsiSameText(s, AString[i]) then
+      result := AEnumerados[i];
+  ok := result <> -1;
+  if not ok then
+    result := AEnumerados[0];
+end;
+
+function EnumeradoToStr(const t: variant; const AString:
+  array of string; const AEnumerados: array of variant): variant;
+var
+  i: integer;
+begin
+  result := '';
+  for i := Low(AEnumerados) to High(AEnumerados) do
+    if t = AEnumerados[i] then
+      result := AString[i];
+end;
 
 // Tipo de Emitente*************************************************************
 

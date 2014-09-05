@@ -655,6 +655,7 @@ var
   Tipo, I: Integer;
   schema_filename: String;
 begin
+  Result := False;
   CoInitialize(nil);
   try
     Tipo := MDFeUtil.IdentificaTipoSchema(XML, I);
@@ -1060,6 +1061,7 @@ var
   dsigKey: IXMLDSigKey;
   signedKey: IXMLDSigKey;
 begin
+  Result := False;
   CoInitialize(nil);
   try
    if Pos('<Signature', XML) <= 0 then
