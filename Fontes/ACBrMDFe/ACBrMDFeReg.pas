@@ -42,7 +42,7 @@ interface
 
 uses
   SysUtils, Classes,
-  {pcnConversao,} ACBrMDFe,
+  pcnConversao, ACBrMDFe,
   {$IFDEF VisualCLX} QDialogs {$ELSE} Dialogs, FileCtrl {$ENDIF},
   {$IFDEF FPC}
      LResources, LazarusPackageIntf, PropEdits, componenteditors
