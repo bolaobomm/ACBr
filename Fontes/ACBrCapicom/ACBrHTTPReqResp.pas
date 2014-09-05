@@ -266,8 +266,8 @@ begin
       else
         Port := INTERNET_DEFAULT_HTTP_PORT;
 
-      pConnection := InternetConnect(pSession, PChar(AHost), Port,
-        PChar(FProxyUser), PChar(FProxyPass), INTERNET_SERVICE_HTTP, 0, 0);
+      pConnection := InternetConnectA(pSession, PAnsiChar(AHost), Port,
+        PAnsiChar(FProxyUser), PAnsiChar(FProxyPass), INTERNET_SERVICE_HTTP, 0, 0);
 
       if not Assigned(pConnection) then
         raise Exception.Create('Erro: Internet Connect or Host')
@@ -329,8 +329,6 @@ begin
                 except on E: Exception do
                    raise Exception.Create('Erro: '+E.Message);
                 end;   }
-
-                //FData := AnsiToUtf8(FData);
 
                 if HttpSendRequest(pRequest, nil, 0, Pointer(FData), Length(FData)) then
                  begin
