@@ -1,37 +1,37 @@
-Ôªø{******************************************************************************}
+{******************************************************************************}
 { Projeto: Componentes ACBr                                                    }
-{  Classe para Lazarus/Free Pascal e Delphi para requisi√ß√µes SOAP com suporte  }
+{  Classe para Lazarus/Free Pascal e Delphi para requisiÁıes SOAP com suporte  }
 { certificados A1 e A3 usando as bibliotecas WinINet e CAPICOM                 }
 {                                                                              }
 { Direitos Autorais Reservados (c) 2014 Jean Patrick Figueiredo dos Santos     }
 {                                       Daniel Simoes de Almeida               }
-{                                       Andr√© Ferreira de Moraes               }
+{                                       AndrÈ Ferreira de Moraes               }
 {                                                                              }
 { Colaboradores nesse arquivo:                                                 }
 {                                       Juliomar Marchetti                     }
 {                                                                              }
-{  Voc√™ pode obter a √∫ltima vers√£o desse arquivo na pagina do Projeto ACBr     }
+{  VocÍ pode obter a ˙ltima vers„o desse arquivo na pagina do Projeto ACBr     }
 { Componentes localizado em http://www.sourceforge.net/projects/acbr           }
 {                                                                              }
 {                                                                              }
-{  Esta biblioteca √© software livre; voc√™ pode redistribu√≠-la e/ou modific√°-la }
-{ sob os termos da Licen√ßa P√∫blica Geral Menor do GNU conforme publicada pela  }
-{ Free Software Foundation; tanto a vers√£o 2.1 da Licen√ßa, ou (a seu crit√©rio) }
-{ qualquer vers√£o posterior.                                                   }
+{  Esta biblioteca È software livre; vocÍ pode redistribuÌ-la e/ou modific·-la }
+{ sob os termos da LicenÁa P˙blica Geral Menor do GNU conforme publicada pela  }
+{ Free Software Foundation; tanto a vers„o 2.1 da LicenÁa, ou (a seu critÈrio) }
+{ qualquer vers„o posterior.                                                   }
 {                                                                              }
-{  Esta biblioteca √© distribu√≠da na expectativa de que seja √∫til, por√©m, SEM   }
-{ NENHUMA GARANTIA; nem mesmo a garantia impl√≠cita de COMERCIABILIDADE OU      }
-{ ADEQUA√á√ÉO A UMA FINALIDADE ESPEC√çFICA. Consulte a Licen√ßa P√∫blica Geral Menor}
-{ do GNU para mais detalhes. (Arquivo LICEN√áA.TXT ou LICENSE.TXT)              }
+{  Esta biblioteca È distribuÌda na expectativa de que seja ˙til, porÈm, SEM   }
+{ NENHUMA GARANTIA; nem mesmo a garantia implÌcita de COMERCIABILIDADE OU      }
+{ ADEQUA«√O A UMA FINALIDADE ESPECÕFICA. Consulte a LicenÁa P˙blica Geral Menor}
+{ do GNU para mais detalhes. (Arquivo LICEN«A.TXT ou LICENSE.TXT)              }
 {                                                                              }
-{  Voc√™ deve ter recebido uma c√≥pia da Licen√ßa P√∫blica Geral Menor do GNU junto}
-{ com esta biblioteca; se n√£o, escreva para a Free Software Foundation, Inc.,  }
-{ no endere√ßo 59 Temple Street, Suite 330, Boston, MA 02111-1307 USA.          }
-{ Voc√™ tamb√©m pode obter uma copia da licen√ßa em:                              }
+{  VocÍ deve ter recebido uma cÛpia da LicenÁa P˙blica Geral Menor do GNU junto}
+{ com esta biblioteca; se n„o, escreva para a Free Software Foundation, Inc.,  }
+{ no endereÁo 59 Temple Street, Suite 330, Boston, MA 02111-1307 USA.          }
+{ VocÍ tambÈm pode obter uma copia da licenÁa em:                              }
 { http://www.opensource.org/licenses/lgpl-license.php                          }
 {                                                                              }
-{ Daniel Sim√µes de Almeida  -  daniel@djsystem.com.br  -  www.djsystem.com.br  }
-{              Pra√ßa Anita Costa, 34 - Tatu√≠ - SP - 18270-410                  }
+{ Daniel Simıes de Almeida  -  daniel@djsystem.com.br  -  www.djsystem.com.br  }
+{              PraÁa Anita Costa, 34 - TatuÌ - SP - 18270-410                  }
 {                                                                              }
 {******************************************************************************}
 
@@ -39,7 +39,7 @@
 |* Historico
 |*
 |* 15/01/2014: Jean Patrick Figueiredo dos Santos
-|*  - Contribui√ß√£o da classe para o Projeto ACBr
+|*  - ContribuiÁ„o da classe para o Projeto ACBr
 ******************************************************************************}
 
 {$I ACBr.inc}
@@ -61,8 +61,8 @@ type
     FCertSerialNumber : AnsiString;
     FCertStoreName    : AnsiString;
     FSOAPAction       : AnsiString;
-    FMimeType         : AnsiString; // (ex.: 'application/soap+xml' ou 'text/xml' - que √© o Content-Type)
-    FCharsets         : AnsiString; //  (ex.: 'ISO-8859-1,utf-8' - que √© o Accept-Charset)
+    FMimeType         : AnsiString; // (ex.: 'application/soap+xml' ou 'text/xml' - que È o Content-Type)
+    FCharsets         : AnsiString; //  (ex.: 'ISO-8859-1,utf-8' - que È o Accept-Charset)
     FData             : AnsiString;
     FProxyHost        : AnsiString;
     FProxyPass        : AnsiString;
@@ -151,7 +151,7 @@ begin
 
   Certs := Store.Certificates as ICertificates2;
 
-  Certs2 := Certs.Select(Utf8ToAnsi('Certificado(s) Digital(is) dispon√≠vel(is)'),
+  Certs2 := Certs.Select(Utf8ToAnsi('Certificado(s) Digital(is) disponÌvel(is)'),
     'Selecione o Certificado Digital para uso no aplicativo', False);
 
   if not (Certs2.Count = 0) then
