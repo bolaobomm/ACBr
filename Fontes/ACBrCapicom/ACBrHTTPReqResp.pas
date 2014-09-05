@@ -266,8 +266,8 @@ begin
       else
         Port := INTERNET_DEFAULT_HTTP_PORT;
 
-      pConnection := InternetConnectA(pSession, PAnsiChar(AHost), Port,
-        PAnsiChar(FProxyUser), PAnsiChar(FProxyPass), INTERNET_SERVICE_HTTP, 0, 0);
+      pConnection := InternetConnect(pSession, PChar(AHost), Port,
+        nil, nil, INTERNET_SERVICE_HTTP, 0, 0);
 
       if not Assigned(pConnection) then
         raise Exception.Create('Erro: Internet Connect or Host')
