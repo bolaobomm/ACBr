@@ -4,7 +4,7 @@ interface
 
 uses
   Forms, SysUtils, Classes, Graphics, ACBrNFSeDANFSeClass, ACBrNFSeDANFSeFRDM,
-  pnfsNFSe, pcnConversao, frxClass;
+  pnfsNFSe, {pcnConversao,} pnfsConversao, frxClass;
 
 type
   EACBrNFSeDANFSeFR = class(Exception);
@@ -31,7 +31,7 @@ type
 implementation
 
 uses
-  ACBrNFSe, ACBrNFeUtil, ACBrUtil, StrUtils, Dialogs;
+  ACBrNFSe, {ACBrNFeUtil,} ACBrUtil, StrUtils, Dialogs;
 
 constructor TACBrNFSeDANFSeFR.Create(AOwner: TComponent);
 begin

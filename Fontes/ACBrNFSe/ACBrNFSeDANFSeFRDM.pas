@@ -4,7 +4,7 @@ interface
 
 uses
   SysUtils, Classes, frxClass, frxExportPDF, DB, DBClient, frxDBSet,
-  ACBrNFSeDANFSeClass, pnfsNFSe, pcnConversao, pnfsConversao, frxBarcode, dialogs;
+  ACBrNFSeDANFSeClass, pnfsNFSe, {pcnConversao,} pnfsConversao, frxBarcode, dialogs;
 
 type
   TdmACBrNFSeFR = class(TDataModule)
@@ -121,7 +121,7 @@ var
 
 implementation
 
-uses ACBrNFSe, ACBrNFeUtil, ACBrDFeUtil, StrUtils, Math;
+uses ACBrNFSe, {ACBrNFeUtil,} ACBrDFeUtil, StrUtils, Math;
 
 {$R *.dfm}
 

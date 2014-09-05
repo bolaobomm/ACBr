@@ -38,7 +38,7 @@ uses
   {$IFNDEF VER130}
     Variants,
   {$ENDIF}
-  Classes, pcnConversao;
+  Classes{, pcnConversao};
 
 type
   TStatusACBrNFSe = ( stNFSeIdle, stNFSeRecepcao, stNFSeConsulta, stNFSeCancelamento, stNFSeEmail, stNFSeAguardaProcesso);
@@ -94,6 +94,12 @@ type
 
   TnfseResponsavelRetencao = ( ptTomador, rtPrestador );
 
+function StrToHex(S: String): String;
+function StrToEnumerado(var ok: boolean; const s: string; const AString: array of string;
+  const AEnumerados: array of variant): variant;
+function EnumeradoToStr(const t: variant; const AString:
+  array of string; const AEnumerados: array of variant): variant;
+
 function PadraoLayoutToStr(const t: TnfsePadraoLayout):string;
 function StrToPadraoLayout(var ok: boolean; const s: string):TnfsePadraoLayout;
 
@@ -143,6 +149,39 @@ function CondicaoToStr(const t: TnfseCondicaoPagamento): string;
 function StrToCondicao(var ok: boolean; const s: string): TnfseCondicaoPagamento;
 
 implementation
+
+function StrToHex(S: String): String;
+var I: Integer;
+begin
+  Result:= '';
+  for I := 1 to length (S) do
+    Result:= Result+IntToHex(ord(S[i]),2);
+end;
+
+function StrToEnumerado(var ok: boolean; const s: string; const AString:
+  array of string; const AEnumerados: array of variant): variant;
+var
+  i: integer;
+begin
+  result := -1;
+  for i := Low(AString) to High(AString) do
+    if AnsiSameText(s, AString[i]) then
+      result := AEnumerados[i];
+  ok := result <> -1;
+  if not ok then
+    result := AEnumerados[0];
+end;
+
+function EnumeradoToStr(const t: variant; const AString:
+  array of string; const AEnumerados: array of variant): variant;
+var
+  i: integer;
+begin
+  result := '';
+  for i := Low(AEnumerados) to High(AEnumerados) do
+    if t = AEnumerados[i] then
+      result := AString[i];
+end;
 
 // Padrao Layout ***************************************************************
 
