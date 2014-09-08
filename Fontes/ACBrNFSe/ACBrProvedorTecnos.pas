@@ -109,8 +109,8 @@ begin
  else
    ConfigCidade.AssinaRPS  := true;
 }   
- ConfigCidade.AssinaRPS  := true;
- ConfigCidade.AssinaLote := False;
+ ConfigCidade.AssinaRPS  := False;
+ ConfigCidade.AssinaLote := True;
  Result := ConfigCidade;
 end;
 
@@ -195,12 +195,15 @@ begin
  ConfigURL.HomConsultaSitLoteRPS := '';
  ConfigURL.HomConsultaNFSe       := 'http://' + ConfigURL.HomNomeCidade + ':9094';
  ConfigURL.HomCancelaNFSe        := 'http://' + ConfigURL.HomNomeCidade + ':9098';
+ ConfigURL.HomRecepcaoSincrono   := 'http://' + ConfigURL.HomNomeCidade + ':9091';
+
  ConfigURL.ProRecepcaoLoteRPS    := sHTTPPro + ConfigURL.ProNomeCidade + ':9091';
  ConfigURL.ProConsultaLoteRPS    := sHTTPPro + ConfigURL.ProNomeCidade + ':9097';
  ConfigURL.ProConsultaNFSeRPS    := sHTTPPro + ConfigURL.ProNomeCidade + ':9095';
  ConfigURL.ProConsultaSitLoteRPS := '';
  ConfigURL.ProConsultaNFSe       := sHTTPPro + ConfigURL.ProNomeCidade + ':9094';
  ConfigURL.ProCancelaNFSe        := sHTTPPro + ConfigURL.ProNomeCidade + ':9098';
+ ConfigURL.ProRecepcaoSincrono   := sHTTPPro + ConfigURL.ProNomeCidade + ':9091';
 
  Result := ConfigURL;
 end;
@@ -245,7 +248,7 @@ begin
                              '<' + Prefixo3 + 'Pedido>' +
                              '<' + Prefixo4 + 'InfPedidoCancelamento ' + Identificador + '="' + URI + '"' + xmlns + '>';
    acGerar:       Result := '';
-   acRecSincrono: Result := '';
+   acRecSincrono: Result := '<' + Prefixo3 + 'EnviarLoteRpsSincronoEnvio' + xmlns;
  end;
 end;
 
@@ -273,7 +276,7 @@ begin
    acCancelar:    Result := '</' + Prefixo3 + 'Pedido>' +
                             '</' + Prefixo3 + 'CancelarNfseEnvio>';
    acGerar:       Result := '';
-   acRecSincrono: Result := ''; 
+   acRecSincrono: Result := '</' + Prefixo3 + 'EnviarLoteRpsSincronoEnvio>';
 end;
 end;
 
@@ -378,7 +381,18 @@ end;
 function TProvedorTecnos.GeraEnvelopeRecepcionarSincrono(URLNS: String;
   CabMsg, DadosMsg, DadosSenha: AnsiString): AnsiString;
 begin
- Result := '';
+ result := '<?xml version="1.0" encoding="UTF-8"?>' +
+           '<S:Envelope xmlns:S="http://schemas.xmlsoap.org/soap/envelope/" ' +
+                       'xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" ' +
+                       'xmlns:xsd="http://www.w3.org/2001/XMLSchema">' +
+            '<S:Body>' +
+             '<' + FMetodoRecepcionar + ' xmlns="' + URLNS + '">' +
+              '<remessa>' +
+                StringReplace(StringReplace(DadosMsg, '<', '&lt;', [rfReplaceAll]), '>', '&gt;', [rfReplaceAll]) +
+              '</remessa>' +
+             '</' + FMetodoRecepcionar + '>' +
+            '</S:Body>' +
+           '</S:Envelope>';
 end;
 
 function TProvedorTecnos.GetSoapAction(Acao: TnfseAcao; NomeCidade: String): String;
@@ -391,20 +405,21 @@ begin
    acConsNFSe:    Result := 'http://tempuri.org/mConsultaNFSePorFaixa';
    acCancelar:    Result := 'http://tempuri.org/mCancelamentoNFSe';
    acGerar:       Result := '';
-   acRecSincrono: Result := ''; end;
+   acRecSincrono: Result := 'http://tempuri.org/' + FMetodoRecepcionar;
+ end;
 end;
 
 function TProvedorTecnos.GetRetornoWS(Acao: TnfseAcao; RetornoWS: AnsiString): AnsiString;
 begin
  case Acao of
-   acRecepcionar: Result := SeparaDados( RetornoWS, 'mEnvioLoteRPSSincronoResponse');
-   acConsSit: Result := SeparaDados( RetornoWS, '');
-   acConsLote: Result := SeparaDados( RetornoWS, 'mConsultaLoteRPSResponse');
-   acConsNFSeRps: Result := SeparaDados( RetornoWS, 'mConsultaNFSePorRPSResponse');
-   acConsNFSe: Result := SeparaDados( RetornoWS, 'mConsultaNFSePorFaixaResponse');
-   acCancelar: Result := SeparaDados( RetornoWS, 'mCancelamentoNFSeResponse');
-   acGerar: Result := '';
-   acRecSincrono: Result := '';
+   acRecepcionar: Result := SeparaDados( RetornoWS, 'mEnvioLoteRPSSincronoResult');
+   acConsSit:     Result := SeparaDados( RetornoWS, '');
+   acConsLote:    Result := SeparaDados( RetornoWS, 'mConsultaLoteRPSResult');
+   acConsNFSeRps: Result := SeparaDados( RetornoWS, 'mConsultaNFSePorRPSResult');
+   acConsNFSe:    Result := SeparaDados( RetornoWS, 'mConsultaNFSePorFaixaResult');
+   acCancelar:    Result := SeparaDados( RetornoWS, 'mCancelamentoNFSeResult');
+   acGerar:       Result := '';
+   acRecSincrono: Result := SeparaDados( RetornoWS, 'mEnvioLoteRPSSincronoResult');
  end;
 end;
 

@@ -1898,6 +1898,7 @@ begin
    if FDadosMsg <> ''
     then begin
     {$IFDEF ACBrNFSeOpenSSL}
+     URIRef := '';
      if not(NotaUtil.AssinarXML(FDadosMsg, URISig, URIRef, FTagI, FTagF,
                      FConfiguracoes.Certificados.Certificado,
                      FConfiguracoes.Certificados.Senha,
@@ -2492,21 +2493,44 @@ begin
   else begin
    for i := 0 to TNFSeEnviarSincrono(Self).FNotasFiscais.Count-1 do
     begin
-     if (FProvedor in [profintelISS, proSaatri, proSisPMJP, proGoiania, proISSDigital, proISSe, proSystemPro,
-                       pro4R, proFiorilli, proProdata, proVitoria, proPVH, proAgili,
-                       proCoplan, proVirtual, proFreire, proLink3, proGovDigital])
-      then vNotas := vNotas + '<' + Prefixo4 + 'Rps>' +
+     case FProvedor of
+      profintelISS,
+      proSaatri,
+      proSisPMJP,
+      proGoiania,
+      proISSDigital,
+      proISSe,
+      proSystemPro,
+      pro4R,
+      proFiorilli,
+      proProdata,
+      proVitoria,
+      proPVH,
+      proAgili,
+      proCoplan,
+      proVirtual,
+      proFreire,
+      proLink3,
+      proGovDigital: vNotas := vNotas + '<' + Prefixo4 + 'Rps>' +
                                '<' + Prefixo4 + 'InfDeclaracaoPrestacaoServico' +
                                  RetornarConteudoEntre(TNFSeEnviarSincrono(Self).FNotasFiscais.Items[I].XML_Rps,
                                    '<' + Prefixo4 + 'InfDeclaracaoPrestacaoServico', '</' + Prefixo4 + 'InfDeclaracaoPrestacaoServico>') +
                                '</' + Prefixo4 + 'InfDeclaracaoPrestacaoServico>'+
-                              '</' + Prefixo4 + 'Rps>'
+                              '</' + Prefixo4 + 'Rps>';
+
+      proTecnos: vNotas := vNotas + '<' + Prefixo4 + 'Rps>' +
+                               '<' + Prefixo4 + 'tcDeclaracaoPrestacaoServico' +
+                                 RetornarConteudoEntre(TNFSeEnviarSincrono(Self).FNotasFiscais.Items[I].XML_Rps,
+                                   '<' + Prefixo4 + 'tcDeclaracaoPrestacaoServico', '</tcDeclaracaoPrestacaoServico>') +
+                               '</tcDeclaracaoPrestacaoServico>'+
+                              '</' + Prefixo4 + 'Rps>';
 
       else vNotas := vNotas + '<' + Prefixo4 + 'Rps>' +
                                '<' + Prefixo4 + 'InfRps' +
                                  RetornarConteudoEntre(TNFSeEnviarSincrono(Self).FNotasFiscais.Items[I].XML_Rps,
                                    '<' + Prefixo4 + 'InfRps', '</Rps>') +
                               '</' + Prefixo4 + 'Rps>';
+     end;
     end;
   end;
 
@@ -4664,6 +4688,12 @@ var
 begin
  inherited Executar;
 
+ // O número do protocolo deve ser inicializado antes do processo de transmissão.
+ // Ao se transmitir pode ocorrer erro e este campo ficaria com o número de protocolo
+ // do lote anterior
+ FDataRecebimento := 0;
+ FProtocolo       := '';
+
  if Assigned(NFSeRetorno)
   then NFSeRetorno.Free;
 
@@ -4856,6 +4886,9 @@ begin
 
   TACBrNFSe( FACBrNFSe ).SetStatus( stNFSeIdle );
 
+  FDataRecebimento := NFSeRetorno.ListaNfse.CompNfse[0].Nfse.dhRecebimento;
+  FProtocolo       := NFSeRetorno.ListaNfse.CompNfse[0].Nfse.Protocolo;
+
   // Lista de Mensagem de Retorno
   FMsg := '';
   if NFSeRetorno.ListaNfse.MsgRetorno.Count>0
@@ -4863,7 +4896,8 @@ begin
     aMsg:='';
     for i:=0 to NFSeRetorno.ListaNfse.MsgRetorno.Count - 1 do
      begin
-      if NFSeRetorno.ListaNfse.MsgRetorno.Items[i].Codigo <> 'L000'
+      if (NFSeRetorno.ListaNfse.MsgRetorno.Items[i].Codigo <> 'L000') and
+         (NFSeRetorno.ListaNfse.MsgRetorno.Items[i].Codigo <> 'A0000')
        then begin
         FMsg := FMsg + NFSeRetorno.ListaNfse.MsgRetorno.Items[i].Mensagem + IfThen(FMsg = '', '', ' / ');
 

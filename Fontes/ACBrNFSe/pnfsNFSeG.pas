@@ -589,7 +589,7 @@ begin
 
                    '</' + Prefixo4 + 'CodigoCancelamento>';
                   // Alterado por Augusto Fontana - 28/04/2014. Incluir do motivo do cancelamento
-                  if (AProvedor = proPublica) and (MotivoCancelamento <> '') then
+                  if (AProvedor in [proPublica, proTecnos]) and (MotivoCancelamento <> '') then
                     begin
                       DadosMsg := DadosMsg + '<' + Prefixo4 + 'MotivoCancelamento>';
                       DadosMsg := DadosMsg + MotivoCancelamento;

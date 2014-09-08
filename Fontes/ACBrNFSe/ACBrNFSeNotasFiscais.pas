@@ -786,6 +786,7 @@ var
 {$IFDEF DELPHI2009_UP}
  Encoding : TEncoding;
 {$ENDIF}
+ CodigoMunicipio, Prestador, RazaoSocial,
  CNPJ, IM, NumeroRPS, SerieRPS, TipoRPS: String;
  ok: Boolean;
 begin
@@ -873,6 +874,15 @@ begin
        end;
       end;
    4: begin
+       if Trim(RazaoSocial) = '' then
+          Prestador := Copy(ArquivoXML.Text,
+                      Pos('<Prestador>', ArquivoXML.Text) + 11,
+                      Pos('</Prestador>',ArquivoXML.Text) - (Pos('<Prestador>', ArquivoXML.Text) + 11));
+
+          RazaoSocial := Copy(Prestador,
+                      Pos('<RazaoSocial>', Prestador) + 13,
+                      Pos('</RazaoSocial>',Prestador) - (Pos('<RazaoSocial>', Prestador) + 13));
+
        if pos('</InfDeclaracaoPrestacaoServico>',ArquivoXML.Text) > 0
         then begin
          while pos('</InfDeclaracaoPrestacaoServico>',ArquivoXML.Text) > 0 do
@@ -885,6 +895,7 @@ begin
             LocNFSeR.VersaoXML      := NotaUtil.VersaoXML(XML);
             LocNFSeR.TabServicosExt := self.Configuracoes.Arquivos.TabServicosExt;
             LocNFSeR.LerXml;
+            LocNFSeR.NFSe.PrestadorServico.RazaoSocial := RazaoSocial;
             Items[Self.Count-1].XML_Rps := LocNFSeR.Leitor.Arquivo;
             Items[Self.Count-1].NomeArq := CaminhoArquivo;
            finally
@@ -947,6 +958,10 @@ begin
                   Pos('<InscricaoMunicipal>', ArquivoXML.Text) + 20,
                   Pos('</InscricaoMunicipal>',ArquivoXML.Text) - (Pos('<InscricaoMunicipal>', ArquivoXML.Text) + 20));
 
+       CodigoMunicipio := Copy(ArquivoXML.Text,
+                   Pos('<CodigoMunicipio>', ArquivoXML.Text) + 17,
+                   Pos('</CodigoMunicipio>',ArquivoXML.Text) - (Pos('<CodigoMunicipio>', ArquivoXML.Text) + 17));
+
        if pos('</InfDeclaracaoPrestacaoServico>',ArquivoXML.Text) > 0
         then begin
          while pos('</InfDeclaracaoPrestacaoServico>',ArquivoXML.Text) > 0 do
@@ -955,11 +970,13 @@ begin
            ArquivoXML.Text := Trim(copy(ArquivoXML.Text, pos('</InfDeclaracaoPrestacaoServico>', ArquivoXML.Text) + 38, length(ArquivoXML.Text)));
 
            LocNFSeR        := TNFSeR.Create(Self.Add.NFSe);
+           LocNFSeR.NFSe.Numero := NumeroRPS;
            LocNFSeR.NFSe.IdentificacaoRps.Numero := NumeroRPS;
            LocNFSeR.NFSe.IdentificacaoRps.Serie := SerieRPS;
            LocNFSeR.NFSe.IdentificacaoRps.Tipo := StrToTipoRPS(ok, TipoRPS);
            LocNFSeR.NFSe.Prestador.Cnpj:= CNPJ;
            LocNFSeR.NFSe.Prestador.InscricaoMunicipal:= IM;
+           LocNFSeR.NFSe.PrestadorServico.Endereco.CodigoMunicipio:= CodigoMunicipio;
            try
             LocNFSeR.Leitor.Arquivo := XML;
             LocNFSeR.VersaoXML      := NotaUtil.VersaoXML(XML);

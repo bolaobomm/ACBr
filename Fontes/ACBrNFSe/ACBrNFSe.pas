@@ -351,6 +351,10 @@ begin
   if (Trim(Self.WebServices.ConsLote.NumeroLote) = '') then 
     Self.WebServices.ConsLote.NumeroLote:= ANumLote;
 
+  //obrigatorio passar a razao social para o provedor Tecnos
+  if (FConfiguracoes.WebServices.Provedor in [proTecnos]) and (ARazaoSocial = '') then
+    ARazaoSocial := NotasFiscais.Items[0].NFSe.PrestadorServico.RazaoSocial;
+
  Result := WebServices.ConsultaLoteRps(AProtocolo, ACNPJ, AInscricaoMunicipal, ASenha, AFraseSecreta, ARazaoSocial);
 end;
 
