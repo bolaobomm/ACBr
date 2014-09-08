@@ -49,7 +49,7 @@ var
 implementation
 
 {$R *.dfm}
-{$R ..\..\..\ACBrFalaWaves\ACBrFala.RES }
+{$R ..\..\..\Fontes\ACBrDiversos\ACBrFalaWaves\ACBrFala.RES }
 
 procedure TForm1.FormCreate(Sender: TObject);
 begin

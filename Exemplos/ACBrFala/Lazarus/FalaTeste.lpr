@@ -7,8 +7,6 @@ uses
   Forms
   { add your units here }, FalaTeste1;
 
-{$R manifest.res}
-
 begin
   Application.Initialize;
   Application.CreateForm(TForm1, Form1);

@@ -10,6 +10,9 @@ uses
   Dialogs, StdCtrls, ACBrFala, Buttons ;
 
 type
+
+  { TForm1 }
+
   TForm1 = class(TForm)
     ACBrFala1: TACBrFala;
     edValor: TEdit;
@@ -184,6 +187,6 @@ end;
 
 initialization
    {$I FalaTeste1.lrs}
-   {$I ../../../ACBrFalaWaves/ACBrFala.lrs }
+   {$I ../../../Fontes/ACBrDiversos/ACBrFalaWaves/ACBrFala.lrs }
 
 end.

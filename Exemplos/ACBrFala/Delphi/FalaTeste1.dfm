@@ -1,8 +1,8 @@
 object Form1: TForm1
   Left = 311
   Top = 155
-  Width = 326
-  Height = 313
+  Width = 352
+  Height = 329
   Caption = 'Form1'
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
@@ -156,7 +156,7 @@ object Form1: TForm1
     OnClick = chDinheiroClick
   end
   object ACBrFala1: TACBrFala
-    OrigemArquivos = '..\..\ACBrFalaWaves'
+    OrigemArquivos = '..\..\..\Fontes\ACBrDiversos\ACBrFalaWaves'
     LocalSons = lsRecurso
     ExtensaoSons = '.wav'
     CharsSeparadores = ' ,;|'
