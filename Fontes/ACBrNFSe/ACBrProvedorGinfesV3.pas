@@ -486,42 +486,48 @@ begin
                    if Result = ''
                     then Result := SeparaDados( RetornoWS, 'EnviarLoteRpsResposta' );
                    if Result = ''
-                    then Result := SeparaDados( RetornoWS, 'soap:Body' );
+                    then Result := SeparaDados( RetornoWS, 'soap:Body' )
+                    else Result := Result + '</EnviarLoteRpsResposta>';
                   end;
    acConsSit:     begin
                    Result := SeparaDados( RetornoWS, 'return' );
                    if Result = ''
                     then Result := SeparaDados( RetornoWS, 'ConsultarSituacaoLoteRpsResposta' );
                    if Result = ''
-                    then Result := SeparaDados( RetornoWS, 'soap:Body' );
+                    then Result := SeparaDados( RetornoWS, 'soap:Body' )
+                    else Result := Result + '</ConsultarSituacaoLoteRpsResposta>';
                   end;
    acConsLote:    begin
                    Result := SeparaDados( RetornoWS, 'return' );
                    if Result = ''
                     then Result := SeparaDados( RetornoWS, 'ConsultarLoteRpsResposta' );
                    if Result = ''
-                    then Result := SeparaDados( RetornoWS, 'soap:Body' );
+                    then Result := SeparaDados( RetornoWS, 'soap:Body' )
+                    else Result := Result + '</ConsultarLoteRpsResposta>';
                   end;
    acConsNFSeRps: begin
                    Result := SeparaDados( RetornoWS, 'return' );
                    if Result = ''
                     then Result := SeparaDados( RetornoWS, 'ConsultarNfsePorRpsResposta' );
                    if Result = ''
-                    then Result := SeparaDados( RetornoWS, 'soap:Body' );
+                    then Result := SeparaDados( RetornoWS, 'soap:Body' )
+                    else Result := Result + '</ConsultarNfsePorRpsResposta>';
                   end;
    acConsNFSe:    begin
                    Result := SeparaDados( RetornoWS, 'return' );
                    if Result = ''
                     then Result := SeparaDados( RetornoWS, 'ConsultarNfseResposta' );
                    if Result = ''
-                    then Result := SeparaDados( RetornoWS, 'soap:Body' );
+                    then Result := SeparaDados( RetornoWS, 'soap:Body' )
+                    else Result := Result + '</ConsultarNfseResposta>';
                   end;
    acCancelar:    begin
                    Result := SeparaDados( RetornoWS, 'return' );
                    if Result = ''
                     then Result := SeparaDados( RetornoWS, 'CancelarNfseResposta' );
                    if Result = ''
-                    then Result := SeparaDados( RetornoWS, 'soap:Body' );
+                    then Result := SeparaDados( RetornoWS, 'soap:Body' )
+                    else Result := Result + '</CancelarNfseResposta>';
                   end;
    acGerar:       begin
                    Result := '';
