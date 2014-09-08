@@ -1523,7 +1523,7 @@ procedure GerarIniNFe( AStr: WideString ) ;
 var
   I, J, K : Integer;
   versao, sSecao, sFim, sCodPro, sNumeroDI, sNumeroADI, sQtdVol,
-  sNumDup, sCampoAdic, sTipo, sDia, sDeduc : String;
+  sNumDup, sCampoAdic, sTipo, sDia, sDeduc, sNVE : String;
   INIRec : TMemIniFile ;
   SL     : TStringList;
   OK     : boolean;
@@ -1783,6 +1783,18 @@ begin
                vIPIDevol := StringToFloatDef( INIRec.ReadString(sSecao,'vIPIDevol','') ,0);
 
                Imposto.vTotTrib := StringToFloatDef( INIRec.ReadString(sSecao,'vTotTrib','') ,0) ; //NFe2
+
+               J := 1 ;
+               while true do
+                begin
+                  sSecao  := 'NVE'+IntToStrZero(I,3)+IntToStrZero(J,3) ;
+                  sNVE    := INIRec.ReadString(sSecao,'NVE','') ;
+                  if (sNVE <> '') then
+                     Prod.NVE.Add.NVE := sNVE
+                  else
+                     Break;   
+                  Inc(J);
+                end;
 
                J := 1 ;
                while true do
@@ -2130,7 +2142,18 @@ begin
                            vISSQN    := StringToFloatDef( INIRec.ReadString(sSecao,'ValorISSQN'  ,INIRec.ReadString(sSecao,'vISSQN','')) ,0);
                            cMunFG    := StrToInt( INIRec.ReadString(sSecao,'MunicipioFatoGerador',INIRec.ReadString(sSecao,'cMunFG','')));
                            cListServ := INIRec.ReadString(sSecao,'CodigoServico',INIRec.ReadString(sSecao,'cListServ',''));
-                           cSitTrib  := StrToISSQNcSitTrib( OK,INIRec.ReadString(sSecao,'cSitTrib','')) ; //NFe2
+                           cSitTrib  := StrToISSQNcSitTrib( OK,INIRec.ReadString(sSecao,'cSitTrib','')) ;
+                           vDeducao    := StringToFloatDef( INIRec.ReadString(sSecao,'ValorDeducao'   ,INIRec.ReadString(sSecao,'vDeducao'   ,'')) ,0);
+                           vOutro      := StringToFloatDef( INIRec.ReadString(sSecao,'ValorOutro'   ,INIRec.ReadString(sSecao,'vOutro'   ,'')) ,0);
+                           vDescIncond := StringToFloatDef( INIRec.ReadString(sSecao,'ValorDescontoIncondicional'   ,INIRec.ReadString(sSecao,'vDescIncond'   ,'')) ,0);
+                           vDescCond   := StringToFloatDef( INIRec.ReadString(sSecao,'vDescontoCondicional'   ,INIRec.ReadString(sSecao,'vDescCond'   ,'')) ,0);
+                           vISSRet     := StringToFloatDef( INIRec.ReadString(sSecao,'ValorISSRetido'   ,INIRec.ReadString(sSecao,'vISSRet'   ,'')) ,0);
+                           indISS      := StrToindISS( OK,INIRec.ReadString(sSecao,'indISS','')) ;
+                           cServico    := INIRec.ReadString(sSecao,'cServico','');
+                           cMun        := INIRec.ReadInteger(sSecao,'cMun',0);
+                           cPais       := INIRec.ReadInteger(sSecao,'cPais',1058);
+                           nProcesso   := INIRec.ReadString(sSecao,'nProcesso','');
+                           indIncentivo := StrToindIncentivo( OK,INIRec.ReadString(sSecao,'indIncentivo','')) ;
                          end;
                       end;
                     end;
@@ -2162,24 +2185,13 @@ begin
          Total.ISSQNTot.vISS   := StringToFloatDef( INIRec.ReadString('Total','ValorISSQN'   ,INIRec.ReadString('ISSQNtot','vISS' ,'')) ,0) ;
          Total.ISSQNTot.vPIS   := StringToFloatDef( INIRec.ReadString('Total','ValorPISISS'  ,INIRec.ReadString('ISSQNtot','vPIS' ,'')) ,0) ;
          Total.ISSQNTot.vCOFINS := StringToFloatDef( INIRec.ReadString('Total','ValorCONFINSISS',INIRec.ReadString('ISSQNtot','vCOFINS','')) ,0) ;
-
          Total.ISSQNtot.dCompet     := DFeUtil.StringToDate(INIRec.ReadString('ISSQNtot','dCompet','0'));
          Total.ISSQNtot.vDeducao    := StringToFloatDef( INIRec.ReadString('ISSQNtot','vDeducao'   ,'') ,0) ;
-         //Total.ISSQNtot.vINSS       := StringToFloatDef( INIRec.ReadString('ISSQNtot','vINSS'   ,'') ,0) ;
-         //Total.ISSQNtot.vIR         := StringToFloatDef( INIRec.ReadString('ISSQNtot','vIR'   ,'') ,0) ;
-         //Total.ISSQNtot.vCSLL       := StringToFloatDef( INIRec.ReadString('ISSQNtot','vCSLL'   ,'') ,0) ;
          Total.ISSQNtot.vOutro      := StringToFloatDef( INIRec.ReadString('ISSQNtot','vOutro'   ,'') ,0) ;
          Total.ISSQNtot.vDescIncond := StringToFloatDef( INIRec.ReadString('ISSQNtot','vDescIncond'   ,'') ,0) ;
          Total.ISSQNtot.vDescCond   := StringToFloatDef( INIRec.ReadString('ISSQNtot','vDescCond'   ,'') ,0) ;
-         Total.ISSQNtot.vDeducao    := StringToFloatDef( INIRec.ReadString('ISSQNtot','vDeducao'   ,'') ,0) ;
-         //Total.ISSQNtot.indISSRet   := StrToindISSRet( OK,INIRec.ReadString('ISSQNtot','indISSRet','2')) ; //NFe3
-         //Total.ISSQNtot.indISS      := StrToindISS( OK,INIRec.ReadString('ISSQNtot','indISS','2')) ; //NFe3
-         //Total.ISSQNtot.cServico    := INIRec.ReadString('ISSQNtot','cServico','');
-         //Total.ISSQNtot.cMun        := INIRec.ReadInteger('ISSQNtot','cMun',0);
-         //Total.ISSQNtot.cPais       := INIRec.ReadInteger('ISSQNtot','cPais',1058);
-         //Total.ISSQNtot.nProcesso   := INIRec.ReadString('ISSQNtot','nProcesso','');
-         Total.ISSQNtot.cRegTrib    := StrToRegTribISSQN( OK,INIRec.ReadString('ISSQNtot','cRegTrib','1')) ; //NFe3
-         //Total.ISSQNtot.indIncentivo:= StrToindIncentivo( OK,INIRec.ReadString('ISSQNtot','indIncentivo','1')) ; //NFe3
+         Total.ISSQNtot.vISSRet     := StringToFloatDef( INIRec.ReadString('ISSQNtot','vISSRet'   ,'') ,0) ;
+         Total.ISSQNtot.cRegTrib    := StrToRegTribISSQN( OK,INIRec.ReadString('ISSQNtot','cRegTrib','1')) ;
 
          Total.retTrib.vRetPIS    := StringToFloatDef( INIRec.ReadString('retTrib','vRetPIS'   ,'') ,0) ;
          Total.retTrib.vRetCOFINS := StringToFloatDef( INIRec.ReadString('retTrib','vRetCOFINS','') ,0) ;
