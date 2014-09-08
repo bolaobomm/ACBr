@@ -301,8 +301,9 @@ begin
     DFeUtil.FormatFloat( FNFSe.Servico.Valores.ValorServicos ); //Astrogildo em 13/12/12
 
  rlmCodServico.Lines.Clear;
- rlmCodServico.Lines.Append(FNFSe.Servico.ItemListaServico + ' - '+
-                            FNFSe.Servico.xItemListaServico);
+
+ If FNFSe.Servico.xItemListaServico <> '' Then
+   rlmCodServico.Lines.Append(FNFSe.Servico.ItemListaServico + ' - '+ FNFSe.Servico.xItemListaServico);
 
  rllCodObra.Caption := FNFSe.ConstrucaoCivil.CodigoObra;
  rllCodART.Caption  := FNFSe.ConstrucaoCivil.Art;

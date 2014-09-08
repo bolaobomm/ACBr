@@ -75,9 +75,9 @@ inherited frlDANFSeRLRetrato: TfrlDANFSeRLRetrato
         Transparent = False
       end
       object RLLabel12: TRLLabel
-        Left = 612
+        Left = 613
         Top = 50
-        Width = 132
+        Width = 130
         Height = 15
         Alignment = taCenter
         Caption = 'Data e Hora de Emiss'#227'o'
@@ -462,9 +462,9 @@ inherited frlDANFSeRLRetrato: TfrlDANFSeRLRetrato
         ParentFont = False
       end
       object RLLabel8: TRLLabel
-        Left = 616
+        Left = 617
         Top = 94
-        Width = 124
+        Width = 122
         Height = 15
         Alignment = taCenter
         Caption = 'C'#243'digo de Verifica'#231#227'o'
@@ -610,7 +610,6 @@ inherited frlDANFSeRLRetrato: TfrlDANFSeRLRetrato
         Height = 92
         Alignment = taCenter
         AutoSize = False
-        Behavior = [beSiteExpander]
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clWindowText
         Font.Height = -16
@@ -1601,7 +1600,6 @@ inherited frlDANFSeRLRetrato: TfrlDANFSeRLRetrato
         Width = 737
         Height = 97
         AutoSize = False
-        Behavior = [beSiteExpander]
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clWindowText
         Font.Height = -11
@@ -1772,7 +1770,6 @@ inherited frlDANFSeRLRetrato: TfrlDANFSeRLRetrato
         Width = 645
         Height = 43
         AutoSize = False
-        Behavior = [beSiteExpander]
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clWindowText
         Font.Height = -11
@@ -2625,7 +2622,6 @@ inherited frlDANFSeRLRetrato: TfrlDANFSeRLRetrato
         Width = 743
         Height = 64
         AutoSize = False
-        Behavior = [beSiteExpander]
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clWindowText
         Font.Height = -11
