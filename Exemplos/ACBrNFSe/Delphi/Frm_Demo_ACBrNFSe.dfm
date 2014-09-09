@@ -304,6 +304,7 @@ object frmDemo_ACBrNFSe: TfrmDemo_ACBrNFSe
               'Aquiraz/2301000/CE'
               'Araraquara/3503208/SP'
               'Araras/3503307/SP'
+              'Araucaria/4101804/PR'
               'Araxa/3104007/MG'
               'Arcos/3104205/MG'
               'Assis Chateaubriand/4102000/PR'
