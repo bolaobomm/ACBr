@@ -141,6 +141,7 @@ type
     btnGerarLoteRPS: TButton;
     btnGerarEnviarSincrono: TButton;
     Button1: TButton;
+    ckSalvarSoap: TCheckBox;
     procedure sbtnCaminhoCertClick(Sender: TObject);
     procedure sbtnGetCertClick(Sender: TObject);
     procedure sbtnLogoMarcaClick(Sender: TObject);
@@ -252,6 +253,7 @@ begin
   Ini.WriteBool(    'WebService', 'Visualizar', ckVisualizar.Checked);
   Ini.WriteString(  'WebService', 'SenhaWeb'  , edtSenhaWeb.Text);
   Ini.WriteString(  'WebService', 'UserWeb'   , edtUserWeb.Text);
+  Ini.WriteBool(    'WebService', 'SalvarSoap', ckSalvarSoap.Checked);
 
   Ini.WriteString( 'Proxy', 'Host' , edtProxyHost.Text);
   Ini.WriteString( 'Proxy', 'Porta', edtProxyPorta.Text);
@@ -334,6 +336,7 @@ begin
   ckVisualizar.Checked := Ini.ReadBool(    'WebService', 'Visualizar', False);
   edtSenhaWeb.Text     := Ini.ReadString(  'WebService', 'SenhaWeb'  , '');
   edtUserWeb.Text      := Ini.ReadString(  'WebService', 'UserWeb'  , '');
+  ckSalvarSoap.Checked := Ini.ReadBool(    'WebService', 'SalvarSoap', False);
 
   edtProxyHost.Text  := Ini.ReadString( 'Proxy', 'Host' , '');
   edtProxyPorta.Text := Ini.ReadString( 'Proxy', 'Porta', '');
@@ -386,6 +389,7 @@ begin
  ACBrNFSe1.Configuracoes.WebServices.Visualizar      := ckVisualizar.Checked;
  ACBrNFSe1.Configuracoes.WebServices.SenhaWeb        := edtSenhaWeb.Text;
  ACBrNFSe1.Configuracoes.WebServices.UserWeb         := edtUserWeb.Text;
+ ACBrNFSe1.Configuracoes.WebServices.Salvar          := ckSalvarSoap.Checked;
 
  ACBrNFSe1.Configuracoes.WebServices.ProxyHost := edtProxyHost.Text;
  ACBrNFSe1.Configuracoes.WebServices.ProxyPort := edtProxyPorta.Text;

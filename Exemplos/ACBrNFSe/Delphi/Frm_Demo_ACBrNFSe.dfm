@@ -787,7 +787,7 @@ object frmDemo_ACBrNFSe: TfrmDemo_ACBrNFSe
             object ckVisualizar: TCheckBox
               Left = 8
               Top = 78
-              Width = 153
+              Width = 129
               Height = 17
               Caption = 'Visualizar Mensagem'
               Font.Charset = DEFAULT_CHARSET
@@ -810,6 +810,20 @@ object frmDemo_ACBrNFSe: TfrmDemo_ACBrNFSe
                 'Produ'#231#227'o'
                 'Homologa'#231#227'o')
               TabOrder = 0
+            end
+            object ckSalvarSoap: TCheckBox
+              Left = 152
+              Top = 78
+              Width = 81
+              Height = 17
+              Caption = 'Salvar Soap'
+              Font.Charset = DEFAULT_CHARSET
+              Font.Color = clWindowText
+              Font.Height = -11
+              Font.Name = 'MS Sans Serif'
+              Font.Style = []
+              ParentFont = False
+              TabOrder = 2
             end
           end
           object gbProxy: TGroupBox
