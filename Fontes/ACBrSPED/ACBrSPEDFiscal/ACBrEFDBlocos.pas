@@ -781,42 +781,18 @@ end;
 
 function IndFrtToStr(AValue: TACBrIndFrt): string;
 begin
-{
-  TACBrIndFrt = (
-                 tfPorContaEmitente,     // 0 - Por conta de terceiros
-                 tfPorContaDestinatario, // 1 - Por conta do emitente
-                 tfPorContaTerceiros,    // 2 - Por conta do destinatário
-                 tfSemCobrancaFrete,     // 9 - Sem cobrança de frete
-                 tfNenhum
-Indicador do tipo do frete:
-0- Por conta de terceiros;
-1- Por conta do emitente;
-2- Por conta do destinatário;
-9- Sem cobrança de frete.
-17  IND_FRT
-Obs.: A partir de 01/01/2012 passará a ser:
-Indicador do tipo do frete:
-0- Por conta do emitente;
-1- Por conta do destinatário/remetente;
-2- Por conta de terceiros;
-9- Sem cobrança de frete.
-
-   if DT_INI >= EncodeDate(2012,01,01) then
+   if AValue = tfSemCobrancaFrete then
    begin
-}
-      if AValue = tfSemCobrancaFrete then
-      begin
-         Result := '9';
-         Exit;
-      end
-      else
-      if AValue = tfNenhum then
-      begin
-         Result := '';
-         Exit;
-      end;
-      Result := IntToStr( Integer( AValue ) );
-//   end;
+      Result := '9';
+      Exit;
+   end
+   else
+   if AValue = tfNenhum then
+   begin
+      Result := '';
+      Exit;
+   end;
+   Result := IntToStr( Integer( AValue ) );
 end;
 
 function StrToIndFrt(AValue: string): TACBrIndFrt;

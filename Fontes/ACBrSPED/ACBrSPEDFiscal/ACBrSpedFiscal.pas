@@ -590,13 +590,13 @@ begin
   if not FInicializado then
      raise Exception.Create( 'Métodos "IniciaGeracao" não foi executado' );
 
-  /// BLOCO 0
+  // BLOCO 0
   WriteRegistro0000;
   WriteRegistro0001;
   WriteRegistro0990;
   Bloco_0.WriteBuffer;
   Bloco_0.Conteudo.Clear;
-  Bloco_0.Gravado := True ;
+  Bloco_0.Gravado := True;
 end;
 
 procedure TACBrSPEDFiscal.WriteBloco_C( FechaBloco : Boolean );
@@ -696,7 +696,7 @@ end;
 
 procedure TACBrSPEDFiscal.WriteBloco_K;
 begin
-  if Bloco_K.Gravado then exit ;
+   if Bloco_K.Gravado then exit ;
 
    if not Bloco_H.Gravado then
       WriteBloco_H;
@@ -757,6 +757,7 @@ end;
 
 procedure TACBrSPEDFiscal.WriteRegistro0001;
 begin
+   // Preenche as classes com os dados
    Bloco_0.WriteRegistro0001;
    //
    with Bloco_9.Registro9900 do

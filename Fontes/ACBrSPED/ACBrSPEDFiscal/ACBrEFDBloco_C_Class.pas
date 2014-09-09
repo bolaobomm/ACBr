@@ -373,7 +373,7 @@ begin
   FRegistroC113Count := 0;
   FRegistroC114Count := 0;
   FRegistroC115Count := 0;
-  FRegistroC116Count := 0;  
+  FRegistroC116Count := 0;
   FRegistroC111Count := 0;
   FRegistroC120Count := 0;
   FRegistroC130Count := 0;
@@ -994,15 +994,10 @@ begin
           //9- Sem cobrança de frete.
           if DT_INI >= EncodeDate(2012,01,01) then
           begin
-            case IND_FRT of
-             tfPorContaEmitente:     strIND_FRT := '0';
-             tfPorContaDestinatario: strIND_FRT := '1';
-             tfPorContaTerceiros:    strIND_FRT := '2';
-             tfSemCobrancaFrete:     strIND_FRT := '9';
-             tfNenhum:               strIND_FRT := '';
-            end;
+            strIND_FRT := IndFrtToStr(IND_FRT);
           end
           else
+          begin
             case IND_FRT of
              tfPorContaTerceiros:    strIND_FRT := '0';
              tfPorContaEmitente:     strIND_FRT := '1';
@@ -1010,6 +1005,7 @@ begin
              tfSemCobrancaFrete:     strIND_FRT := '9';
              tfNenhum:               strIND_FRT := '';
             end;
+          end;
 
           if DT_INI >= EncodeDate(2012,07,01) then
           begin

@@ -341,7 +341,7 @@ type
     fEX_IPI: String;           /// Código EX, conforme a TIPI:
     fCOD_GEN: String;          /// Código gênero item, tabela indicada item 4.2.1:
     fCOD_LST: String;          /// Código serviço Anexo I - Lei nº116/03:
-    fALIQ_ICMS: Currency;      /// Alíquota ICMS aplicável (operações internas):
+    fALIQ_ICMS: Variant;      /// Alíquota ICMS aplicável (operações internas):
 
     FRegistro0205: TRegistro0205List;  /// BLOCO C - Lista de Registro0205 (FILHO)
     FRegistro0206: TRegistro0206List;  /// BLOCO C - Lista de Registro0206 (FILHO)
@@ -361,7 +361,7 @@ type
     property EX_IPI: String read FEX_IPI write FEX_IPI;
     property COD_GEN: String read FCOD_GEN write FCOD_GEN;
     property COD_LST: String read FCOD_LST write FCOD_LST;
-    property ALIQ_ICMS: Currency read FALIQ_ICMS write FALIQ_ICMS;
+    property ALIQ_ICMS: Variant read FALIQ_ICMS write FALIQ_ICMS;
     /// Registros FILHOS
     property Registro0205: TRegistro0205List read FRegistro0205 write FRegistro0205;
     property Registro0206: TRegistro0206List read FRegistro0206 write FRegistro0206;

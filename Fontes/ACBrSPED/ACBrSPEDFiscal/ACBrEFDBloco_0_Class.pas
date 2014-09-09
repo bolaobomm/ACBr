@@ -692,7 +692,7 @@ begin
                       LFill( EX_IPI ) +
                       LFill( COD_GEN ) +
                       LFill( COD_LST ) +
-                      LFill( ALIQ_ICMS,0,2 );
+                      VLFill( ALIQ_ICMS, 0, 2 );
           //-- Write
           if Assigned(FOnWriteRegistro0200) then
              FOnWriteRegistro0200(strLinha);
