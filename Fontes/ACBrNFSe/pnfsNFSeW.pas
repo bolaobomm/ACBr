@@ -217,6 +217,7 @@ begin
  case FProvedor of
   proAbaco,
   proActcon,
+  proAraucaria,
   proBetha,
   proBetim,
   proBHISS,

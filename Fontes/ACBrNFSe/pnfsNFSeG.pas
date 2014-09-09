@@ -177,7 +177,7 @@ begin
                DFeUtil.SeSenao(Identificador <> '', ' ' + Identificador + '="' + IdLote + '"', '') +
 
                // Inclui a versão ou não
-               DFeUtil.SeSenao(AProvedor in [proAbaco, proBetha, proGinfes, proGoiania, proGovBR,
+               DFeUtil.SeSenao(AProvedor in [proAbaco, proAraucaria, proBetha, proGinfes, proGoiania, proGovBR,
                                              proIssCuritiba, proISSNET, proNatal, proActcon,
                                              proRecife, proRJ, proSimplISS, proThema, proTiplan,
                                              proAgili, proFISSLex, proSpeedGov, proPronim, proCoplan],
@@ -673,7 +673,7 @@ begin
   end;
  end;
 
- if AProvedor in [proNenhum, proAbaco, proBetha, proBetim, proBHIss, proDigifred,
+ if AProvedor in [proNenhum, proAbaco, proAraucaria, proBetha, proBetim, proBHIss, proDigifred,
   proEquiplano, {proFiorilli, }proFIssLex, proGinfes, proGovBR, proIssCuritiba,
   proIssIntel, proIssNet, proNatal, proProdemge, {proRecife,} proRJ,
   proSimplIss, proThema, proTiplan, proIssDSF, proAgili, proSpeedGov, proPronim, proActcon] then Result := '';
@@ -687,7 +687,7 @@ begin
                                    VersaoDados, VersaoXML, NumeroLote, CNPJ, IM,
                                    QtdeNotas, Notas, TagI, TagF, AProvedor);
 
- if AProvedor in [proNenhum, proAbaco, proBetha, proBetim, proBHISS, proDigifred,
+ if AProvedor in [proNenhum, proAbaco, proAraucaria, proBetha, proBetim, proBHISS, proDigifred,
      proEquiplano, profintelISS, proFISSLex, proGinfes, proGoiania, proGovBR,
      proGovDigital, proIssCuritiba, proISSDigital, proISSIntel, proISSNet, proNatal,
      proProdemge, proPublica, proRecife, proRJ, proSaatri, proFreire, proSimplISS,

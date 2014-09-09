@@ -72,7 +72,8 @@ uses
     ACBrProvedorLink3, ACBrProvedorSpeedGov, ACBrProvedorVitoria,
     ACBrProvedorMitra, ACBrProvedorTecnos, ACBrProvedorPronim,
     ACBrProvedorActcon, ACBrProvedorEL, ACBrProvedorEgoverneISS,
-    ACBrProvedorSisPMJP, ACBrProvedorSystemPro, ACBrProvedorSalvador;
+    ACBrProvedorSisPMJP, ACBrProvedorSystemPro, ACBrProvedorSalvador,
+    ACBrProvedorAraucaria;
 
 type
 
@@ -730,6 +731,7 @@ begin
   proEgoverneISS: FProvedorClass := TProvedorEgoverneISS.Create;
   proSisPMJP:     FProvedorClass := TProvedorSisPMJP.Create;
   proSalvador:    FProvedorClass := TProvedorSalvador.Create;
+  proAraucaria:   FProvedorClass := TProvedorAraucaria.Create;
  end;
 
  FPrefixo2     := FConfiguracoes.WebServices.Prefixo2;

@@ -1054,7 +1054,7 @@ begin
 
     //Não é possível assinar por delphi quando o id é minúsculo... mas se manter o id maiúsculo
     //não será validado o schema... uma função mais legível como stringreplace faz a assinatura sumir.
-    if (not ALote) and (Aprovedor in [proPublica])
+    if (not ALote) and (Aprovedor in [proPublica, proAraucaria])
      then begin
        I := pos('Id=', XMLAssinado);
        XMLAssinado[I] := 'i';
@@ -1535,6 +1535,7 @@ begin
  XML := StringReplace( XML, 'p1:', '', [rfReplaceAll] );
  XML := StringReplace( XML, 'nfse:', '', [rfReplaceAll] );
  XML := StringReplace( XML, 'soap:', '', [rfReplaceAll] );
+ XML := StringReplace( XML, 'soap12:', '', [rfReplaceAll] );
  XML := StringReplace( XML, 'SOAP-ENV:', '', [rfReplaceAll] );
 
  result := XML;

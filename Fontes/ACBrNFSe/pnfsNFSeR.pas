@@ -711,6 +711,7 @@ begin
 
    case FProvedor of
     proAbaco,
+    proAraucaria,
     proBetha,
     proBHISS,
     proFISSLex,
@@ -1544,6 +1545,7 @@ begin
  case FProvedor of
   proAbaco,
   proActcon,
+  proAraucaria,
   proBetha,
   proBHISS,
   proFISSLex,
