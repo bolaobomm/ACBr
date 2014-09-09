@@ -309,7 +309,7 @@ type
     fNUM_ITEM                 : String;                    /// Número seqüencial do item no documento fiscal
     fCOD_ITEM                 : String;                    /// Código do item (campo 02 do Registro 0200)
     fDESCR_COMPL              : String;                    /// Descrição complementar do item como adotado no documento fiscal
-    fQTD                      : Double;                    /// Quantidade do item
+    fQTD                      : Variant;                   /// Quantidade do item
     fUNID                     : String;                    /// Unidade do item(Campo 02 do registro 0190)
     fVL_ITEM                  : currency;                  /// Valor total do item
     fVL_DESC                  : currency;                  /// Valor do desconto comercial
@@ -330,13 +330,13 @@ type
     fALIQ_IPI                 : currency;                  /// Alíquota do IPI
     fVL_IPI                   : currency;                  /// Valor do IPI creditado/debitado
     fCST_PIS                  : TACBrCstPis;               /// Código da Situação Tributária referente ao PIS.
-    fVL_BC_PIS                : currency;                  /// Valor da base de cálculo do PIS
+    fVL_BC_PIS                : Variant;                   /// Valor da base de cálculo do PIS
     fALIQ_PIS_PERC            : currency;                  /// Alíquota do PIS (em percentual)
     fQUANT_BC_PIS             : Double;                    /// Quantidade - Base de cálculo PIS
     fALIQ_PIS_R               : Double;                    /// Alíquota do PIS (em reais)
     fVL_PIS                   : currency;                  /// Valor do PIS
     fCST_COFINS               : TACBrSituacaoTribCOFINS;   /// Código da Situação Tributária referente ao COFINS.
-    fVL_BC_COFINS             : currency;                  /// Valor da base de cálculo da COFINS
+    fVL_BC_COFINS             : Variant;                   /// Valor da base de cálculo da COFINS
     fALIQ_COFINS_PERC         : currency;                  /// Alíquota do COFINS (em percentual)
     fQUANT_BC_COFINS          : Double;                    /// Quantidade - Base de cálculo COFINS
     fALIQ_COFINS_R            : Double;                    /// Alíquota da COFINS (em reais)
@@ -346,7 +346,7 @@ type
     property NUM_ITEM         : String                    read FNUM_ITEM         write FNUM_ITEM;
     property COD_ITEM         : String                    read FCOD_ITEM         write FCOD_ITEM;
     property DESCR_COMPL      : String                    read FDESCR_COMPL      write FDESCR_COMPL;
-    property QTD              : Double                    read FQTD              write FQTD;
+    property QTD              : Variant                   read FQTD              write FQTD;
     property UNID             : String                    read FUNID             write FUNID;
     property VL_ITEM          : currency                  read FVL_ITEM          write FVL_ITEM;
     property VL_DESC          : currency                  read FVL_DESC          write FVL_DESC;
@@ -367,13 +367,13 @@ type
     property ALIQ_IPI         : currency                  read FALIQ_IPI         write FALIQ_IPI;
     property VL_IPI           : currency                  read FVL_IPI           write FVL_IPI;
     property CST_PIS          : TACBrCstPis               read FCST_PIS          write FCST_PIS;
-    property VL_BC_PIS        : currency                  read FVL_BC_PIS        write FVL_BC_PIS;
+    property VL_BC_PIS        : Variant                   read FVL_BC_PIS        write FVL_BC_PIS;
     property ALIQ_PIS_PERC    : currency                  read FALIQ_PIS_PERC    write FALIQ_PIS_PERC;
     property QUANT_BC_PIS     : Double                    read FQUANT_BC_PIS     write FQUANT_BC_PIS;
     property ALIQ_PIS_R       : Double                    read FALIQ_PIS_R       write FALIQ_PIS_R;
     property VL_PIS           : currency                  read FVL_PIS           write FVL_PIS;
     property CST_COFINS       : TACBrSituacaoTribCOFINS   read FCST_COFINS       write FCST_COFINS;
-    property VL_BC_COFINS     : currency                  read FVL_BC_COFINS     write FVL_BC_COFINS;
+    property VL_BC_COFINS     : Variant                   read FVL_BC_COFINS     write FVL_BC_COFINS;
     property ALIQ_COFINS_PERC : currency                  read FALIQ_COFINS_PERC write FALIQ_COFINS_PERC;
     property QUANT_BC_COFINS  : Double                    read FQUANT_BC_COFINS  write FQUANT_BC_COFINS;
     property ALIQ_COFINS_R    : Double                    read FALIQ_COFINS_R    write FALIQ_COFINS_R;

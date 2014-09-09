@@ -1024,7 +1024,7 @@ begin
               {02} LFill( NUM_ITEM )             +
               {03} LFill( COD_ITEM )             +
               {04} LFill( DESCR_COMPL )          +
-              {05} DFill( QTD, 5 )               +
+              {05} VDFill( QTD, 5 )              +
               {06} LFill( UNID )                 +
               {07} LFill( VL_ITEM,0,2 )          +
               {08} LFill( VL_DESC,0,2 )          +
@@ -1045,13 +1045,13 @@ begin
               {23} LFill( ALIQ_IPI,0,2 )         +
               {24} LFill( VL_IPI,0,2 )           +
               {25} LFill( CstPisToStr(CST_PIS) ) +
-              {26} DFill( VL_BC_PIS,     2, True ) +
+              {26} VDFill( VL_BC_PIS,    2     ) +
               {27} DFill( ALIQ_PIS_PERC, 4, True ) +
               {28} DFill( QUANT_BC_PIS,  3, True ) +
               {29} DFill( ALIQ_PIS_R,    4, True ) +
               {30} LFill( VL_PIS,0,2 )           +
               {31} LFill( CstCofinsToStr(CST_COFINS) ) +
-              {32} DFill( VL_BC_COFINS,     2, True ) +
+              {32} VDFill( VL_BC_COFINS,  2    ) +
               {33} DFill( ALIQ_COFINS_PERC, 4, True ) +
               {34} DFill( QUANT_BC_COFINS,  3, True ) +
               {35} DFill( ALIQ_COFINS_R,    4, True ) +
