@@ -328,6 +328,7 @@ object frmDemo_ACBrNFSe: TfrmDemo_ACBrNFSe
               'Campos dos Goytacazes/3301009/RJ'
               'Canoas/4304606/RS'
               'Capao Bonito/3510203/SP'
+              'Carazinho/4304705/RS'
               'Caruaru/2604106/PE'
               'Cataguases/3115300/MG'
               'Catanduva/3511102/SP'
