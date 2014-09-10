@@ -518,9 +518,10 @@ begin
                  LFill(VL_NT_ISS,2) +
                  LFill(VL_RET_ISS,2) );
          end;
+         WriteRegistroA360(A350);
          RegistroA990.QTD_LIN_A := RegistroA990.QTD_LIN_A + 1;
       end;
-      WriteRegistroA360(A350);
+
       FRegistroA350Count := FRegistroA350Count + RegA001.RegistroA350.Count;
   end;
 end;
