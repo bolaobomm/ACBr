@@ -97,6 +97,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+Data: 10/09/2014
+-- ACBrECFEscECF --
+[+] Adicionado suporte aos métodos: EspelhoMFD_DLL, ArquivoMFD_DLL, ArquivoMF_DLL
+    para o Modelo MP4200 da Bematech (por: DSA)
+
+
 Data: 11/08/2014
 -- ACBrECFFiscNet --
 [-] A Elgin K retorna em alguns casos um byte a mais gerando um número de série

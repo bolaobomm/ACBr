@@ -173,6 +173,8 @@ TACBrECFEscECF = class( TACBrECFClass )
     Procedure SalvaRespostasMemoria( AtualizaVB: Boolean = True );
     Procedure LeRespostasMemoria;
 
+    function CriarECFClassPorMarca : TACBrECFClass;
+
  protected
     function VerificaFimLeitura(var Retorno: AnsiString;
       var TempoLimite: TDateTime): Boolean; override;
@@ -688,6 +690,12 @@ begin
                             'Porta Serial:  (COM1, COM2, COM3, ...)'));
 
   inherited Ativar ; { Abre porta serial }
+
+  if not EmLinha( TimeOut ) then
+  begin
+     if fpDevice.HandShake <> hsDTR_DSR then
+        fpDevice.HandShake := hsDTR_DSR
+  end;
 
   fsNumVersao    := '' ;
   fsVersaoEscECF := '' ;
@@ -1267,6 +1275,13 @@ begin
   end;
 end ;
 
+function TACBrECFEscECF.CriarECFClassPorMarca: TACBrECFClass;
+begin
+  Result := nil;
+  if fsMarcaECF = 'BEMATECH' then
+    Result := TACBrECFBematech.create(fpOwner);
+end;
+
 function TACBrECFEscECF.RetornaInfoECF(Registrador: String): AnsiString;
 begin
   if Pos('|',Registrador) = 0 then
@@ -1779,44 +1794,116 @@ end;
 
 procedure TACBrECFEscECF.EspelhoMFD_DLL(DataInicial, DataFinal: TDateTime;
   NomeArquivo: AnsiString; Documentos: TACBrECFTipoDocumentoSet);
+var
+  ECFClass: TACBrECFClass;
 begin
-  // TODO: Aguardar DLL 7.0 da Bematech ficar estável
-  inherited;
+  ECFClass := CriarECFClassPorMarca;
+
+  if ECFClass = nil then
+    inherited;
+
+  try
+    Self.Desativar;
+    ECFClass.EspelhoMFD_DLL(DataInicial, DataFinal, NomeArquivo, Documentos);
+  finally
+    ECFClass.Free;
+    Self.Ativar;
+  end;
 end;
 
 procedure TACBrECFEscECF.EspelhoMFD_DLL(COOInicial, COOFinal: Integer;
   NomeArquivo: AnsiString; Documentos: TACBrECFTipoDocumentoSet);
+var
+  ECFClass: TACBrECFClass;
 begin
-  // TODO: Aguardar DLL 7.0 da Bematech ficar estável
-  inherited;
+  ECFClass := CriarECFClassPorMarca;
+
+  if ECFClass = nil then
+    inherited;
+
+  try
+    Self.Desativar;
+    ECFClass.EspelhoMFD_DLL(COOInicial, COOFinal, NomeArquivo, Documentos);
+  finally
+    ECFClass.Free;
+    Self.Ativar;
+  end;
 end;
 
 procedure TACBrECFEscECF.ArquivoMFD_DLL(DataInicial, DataFinal: TDateTime;
   NomeArquivo: AnsiString; Documentos: TACBrECFTipoDocumentoSet;
   Finalidade: TACBrECFFinalizaArqMFD);
+var
+  ECFClass: TACBrECFClass;
 begin
-  // TODO: Aguardar DLL 7.0 da Bematech ficar estável
-  inherited;
+  ECFClass := CriarECFClassPorMarca;
+
+  if ECFClass = nil then
+    inherited;
+
+  try
+    Self.Desativar;
+    ECFClass.ArquivoMFD_DLL(DataInicial, DataFinal, NomeArquivo, Documentos, Finalidade);
+  finally
+    ECFClass.Free;
+    Self.Ativar;
+  end;
 end;
 
 procedure TACBrECFEscECF.ArquivoMFD_DLL(ContInicial, ContFinal: Integer;
   NomeArquivo: AnsiString; Documentos: TACBrECFTipoDocumentoSet;
   Finalidade: TACBrECFFinalizaArqMFD; TipoContador: TACBrECFTipoContador);
+var
+  ECFClass: TACBrECFClass;
 begin
-  // TODO: Aguardar DLL 7.0 da Bematech ficar estável
-  inherited;
+  ECFClass := CriarECFClassPorMarca;
+
+  if ECFClass = nil then
+    inherited;
+
+  try
+    Self.Desativar;
+    ECFClass.ArquivoMFD_DLL(ContInicial, ContFinal, NomeArquivo, Documentos, Finalidade, TipoContador);
+  finally
+    ECFClass.Free;
+    Self.Ativar;
+  end;
 end;
 
 procedure TACBrECFEscECF.ArquivoMF_DLL(NomeArquivo: AnsiString);
+var
+  ECFClass: TACBrECFClass;
 begin
-  // TODO: Aguardar DLL 7.0 da Bematech ficar estável
-  inherited;
+  ECFClass := CriarECFClassPorMarca;
+
+  if ECFClass = nil then
+    inherited;
+
+  try
+    Self.Desativar;
+    ECFClass.ArquivoMF_DLL(NomeArquivo);
+  finally
+    ECFClass.Free;
+    Self.Ativar;
+  end;
 end;
 
 procedure TACBrECFEscECF.ArquivoMFD_DLL(NomeArquivo: AnsiString);
+var
+  ECFClass: TACBrECFClass;
 begin
-  // TODO: Aguardar DLL 7.0 da Bematech ficar estável
-  inherited;
+  ECFClass := CriarECFClassPorMarca;
+
+  if ECFClass = nil then
+    inherited;
+
+  try
+    Self.Desativar;
+    ECFClass.ArquivoMFD_DLL(NomeArquivo);
+  finally
+    ECFClass.Free;
+    Self.Ativar;
+  end;
 end;
 
 procedure TACBrECFEscECF.IdentificaOperador(Nome: String);

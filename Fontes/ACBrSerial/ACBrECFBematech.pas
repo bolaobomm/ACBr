@@ -3512,8 +3512,13 @@ end;
 
 function TACBrECFBematech.GetProp: AnsiString;
 begin
-  if (fsProp = '') and Ativo then
-     fsProp := IntToStr( StrToIntDef( UsuarioAtual, 1) ) ;
+  if Ativo then
+  begin
+    if (fsProp = '') then
+       fsProp := IntToStr( StrToIntDef( UsuarioAtual, 1) ) ;
+  end
+  else
+    fsProp := '1';
 
   Result := fsProp;
 end;
