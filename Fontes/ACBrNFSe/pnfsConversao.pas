@@ -822,7 +822,7 @@ begin
   5108006  // Tapurah/MT
          : Provedor := 'Coplan';
 
-//  4300406, // Alegrete/RS
+  4300406, // Alegrete/RS
   4304705 // Carazinho/RS
          : Provedor := 'DBSeller';
 
@@ -1077,7 +1077,7 @@ begin
   3200300, // Alfredo Chaves/ES
   3204708, // São Gabriel da Palha/ES
   4109609, // Guaratuba/PR
-  4300406, // Alegrete/RS
+//  4300406, // Alegrete/RS
   4313953, // Pantano Grande/RS
   5106505, // Poconé/MT
   5106778, // Porto Alegre do Norte/MT

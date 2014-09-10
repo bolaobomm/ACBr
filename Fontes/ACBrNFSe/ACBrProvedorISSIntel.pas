@@ -250,11 +250,13 @@ begin
              then ConfigCidade.NameSpaceEnvelope := 'https://guaratuba-pr.issintel.com.br/webservices/abrasf/api'
              else ConfigCidade.NameSpaceEnvelope := 'https://guaratuba-pr.treino-issintel.com.br/webservices/abrasf/api';
            end;
+           (*
   4300406: begin // Alegrete/RS
             if AAmbiente = 1
              then ConfigCidade.NameSpaceEnvelope := 'https://alegrete-rs.issintel.com.br/webservices/abrasf/api'
              else ConfigCidade.NameSpaceEnvelope := 'https://alegrete-rs.treino-issintel.com.br/webservices/abrasf/api';
            end;
+           *)
   4313953: begin // Pantano Grande/RS
             if AAmbiente = 1
              then ConfigCidade.NameSpaceEnvelope := 'https://pantanogrande-rs.issintel.com.br/webservices/abrasf/api'
@@ -454,11 +456,13 @@ begin
             ConfigURL.ProNomeCidade := 'guaratuba-pr';
             Porta := ''; //Porta := ':442';
            end;
+           (*
   4300406: begin // Alegrete/RS
             ConfigURL.HomNomeCidade := 'alegrete-rs';
             ConfigURL.ProNomeCidade := 'alegrete-rs';
             Porta := ''; //Porta := ':442';
            end;
+           *)
   4313953: begin // Pantano Grande/RS
             ConfigURL.HomNomeCidade := 'pantanogrande-rs';
             ConfigURL.ProNomeCidade := 'pantanogrande-rs';
