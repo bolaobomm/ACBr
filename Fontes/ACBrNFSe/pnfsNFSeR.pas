@@ -714,6 +714,7 @@ begin
     proAraucaria,
     proBetha,
     proBHISS,
+    proDBSeller,
     proFISSLex,
     proGinfes,
     proGovBR,
@@ -1187,15 +1188,28 @@ begin
         NFSe.Servico.Valores.DescontoIncondicionado := Leitor.rCampo(tcDe2, 'DescontoIncondicionado');
 
         { Alterado Por Cleiver em - 22-08-2014 }
-        if NFSe.Servico.Valores.BaseCalculo = 0 then
+        // Alterado por Italo em 10/09/2014
+        if NFSe.Servico.Valores.ValorLiquidoNfse = 0 then
           NFSe.Servico.Valores.ValorLiquidoNfse     := NFSe.Servico.Valores.ValorServicos -
-                                                       NFSe.Servico.Valores.ValorDeducoes -
+                                                       NFSe.Servico.Valores.DescontoIncondicionado -
                                                        NFSe.Servico.Valores.DescontoCondicionado -
-                                                       NFSe.Servico.Valores.DescontoIncondicionado;
-        if NFSe.Servico.Valores.BaseCalculo = 0 then
-          NFSe.Servico.Valores.BaseCalculo          := NFSe.Servico.Valores.ValorLiquidoNfse;
-       NFSe.Servico.Valores.ValorIss                := (NFSe.Servico.Valores.BaseCalculo * NFSe.Servico.Valores.Aliquota)/100;
+                                                       // Retenções Federais
+                                                       NFSe.Servico.Valores.ValorPis -
+                                                       NFSe.Servico.Valores.ValorCofins -
+                                                       NFSe.Servico.Valores.ValorIr -
+                                                       NFSe.Servico.Valores.ValorInss -
+                                                       NFSe.Servico.Valores.ValorCsll -
 
+                                                       NFSe.Servico.Valores.OutrasRetencoes -
+                                                       NFSe.Servico.Valores.ValorIssRetido;
+
+        if NFSe.Servico.Valores.BaseCalculo = 0 then
+          NFSe.Servico.Valores.BaseCalculo          := NFSe.Servico.Valores.ValorServicos -
+                                                       NFSe.Servico.Valores.ValorDeducoes -
+                                                       NFSe.Servico.Valores.DescontoIncondicionado;
+
+        if NFSe.Servico.Valores.ValorIss = 0 then
+          NFSe.Servico.Valores.ValorIss             := (NFSe.Servico.Valores.BaseCalculo * NFSe.Servico.Valores.Aliquota)/100;
 
       end;
     end; // fim serviço
@@ -1548,6 +1562,7 @@ begin
   proAraucaria,
   proBetha,
   proBHISS,
+  proDBSeller,
   proFISSLex,
   proGinfes,
   proGovBR,

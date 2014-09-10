@@ -221,6 +221,7 @@ begin
   proBetha,
   proBetim,
   proBHISS,
+  proDBSeller,
   proFISSLex,
   proGinfes,
   proGovBR,

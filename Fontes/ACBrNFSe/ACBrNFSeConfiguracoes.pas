@@ -422,7 +422,7 @@ uses
  ACBrProvedorMitra, ACBrProvedorTecnos, ACBrProvedorPronim,
  ACBrProvedorActcon, ACBrProvedorEL, ACBrProvedorEgoverneISS,
  ACBrProvedorSisPMJP, ACBrProvedorSystemPro, ACBrProvedorSalvador,
- ACBrProvedorAraucaria;
+ ACBrProvedorAraucaria, ACBrProvedorDBSeller;
 
 { TConfiguracoes }
 
@@ -824,6 +824,7 @@ begin
   proSystemPro:   FProvedorClass := TProvedorSystemPro.Create;
   proSalvador:    FProvedorClass := TProvedorSalvador.Create;
   proAraucaria:   FProvedorClass := TProvedorAraucaria.Create;
+  proDBSeller:    FProvedorClass := TProvedorDBSeller.Create;
  end;
 
  ConfigCidade   := FProvedorClass.GetConfigCidade(FCodigoMunicipio, FAmbienteCodigo);

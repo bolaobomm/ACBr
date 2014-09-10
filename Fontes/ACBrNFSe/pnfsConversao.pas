@@ -87,7 +87,7 @@ type
                     proAgili, proVirtual, proPVH, proFreire, proLink3, proSpeedGov,
                     proVitoria, proMitra, ProTecnos, proPronim, proActcon, proEL,
                     proEgoverneISS, proSisPMJP, proSystemPro, proSalvador,
-                    proAraucaria );
+                    proAraucaria, proDBSeller );
 
   TnfseAcao = ( acRecepcionar, acConsSit, acConsLote, acConsNFSeRps, acConsNFSe, acCancelar, acGerar, acRecSincrono, acConsSecRps );
 
@@ -398,7 +398,7 @@ begin
                             'FISSLEX', 'Goiania', 'IssCuritiba', 'BHISS', 'Natal', 'ISSDigital', 'ISSe',
                             '4R', 'GovDigital', 'Fiorilli', 'Coplan', 'Prodata', 'Agili', 'Virtual', 'PVH',
                             'Freire', 'Link3', 'SpeedGov', 'Vitoria', 'Mitra', 'Tecnos', 'Pronim', 'Actcon',
-                            'EL', 'EgoverneISS', 'SisPMJP', 'SystemPro', 'Salvador', 'Araucaria'],
+                            'EL', 'EgoverneISS', 'SisPMJP', 'SystemPro', 'Salvador', 'Araucaria', 'DBSeller'],
                            [proNenhum, proTiplan, proISSNET, proWebISS, proGINFES, proIssDSF, proProdemge, proAbaco,
                             proBetha, proEquiplano, proISSIntel, proProdam, proGovBR, proRecife,
                             proSimplISS, proThema, proRJ, proPublica, profintelISS, proDigifred, proBetim,
@@ -406,7 +406,7 @@ begin
                             proISSDigital, proISSe, pro4R, proGovDigital, proFiorilli, proCoplan, proProdata,
                             proAgili, proVirtual, proPVH, proFreire, proLink3, proSpeedGov, proVitoria, proMitra,
                             proTecnos, proPronim, proActcon, proEL, proEgoverneISS, proSisPMJP, proSystemPro,
-                            proSalvador, proAraucaria]);
+                            proSalvador, proAraucaria, proDBSeller]);
 end;
 
 function StrToProvedor(var ok: boolean; const s: string):TnfseProvedor;
@@ -418,7 +418,7 @@ begin
                             'FISSLEX', 'Goiania', 'IssCuritiba', 'BHISS', 'Natal', 'ISSDigital', 'ISSe',
                             '4R', 'GovDigital', 'Fiorilli', 'Coplan', 'Prodata', 'Agili', 'Virtual', 'PVH',
                             'Freire', 'Link3', 'SpeedGov', 'Vitoria', 'Mitra', 'Tecnos', 'Pronim', 'Actcon',
-                            'EL', 'proEgoverneISS', 'SisPMJP', 'SystemPro', 'Salvador', 'Araucaria'],
+                            'EL', 'proEgoverneISS', 'SisPMJP', 'SystemPro', 'Salvador', 'Araucaria', 'DBSeller'],
                            [proNenhum, proTiplan, proISSNET, proWebISS, proGINFES, proIssDSF, proProdemge, proAbaco,
                             proBetha, proEquiplano, proISSIntel, proProdam, proGovBR, proRecife,
                             proSimplISS, proThema, proRJ, proPublica, profintelISS, proDigifred, proBetim,
@@ -426,7 +426,7 @@ begin
                             proISSDigital, proISSe, pro4R, proGovDigital, proFiorilli, proCoplan, proProdata,
                             proAgili, proVirtual, proPVH, proFreire, proLink3, proSpeedGov, proVitoria, proMitra,
                             proTecnos, proPronim, proActcon, proEL, proEgoverneISS, proSisPMJP, proSystemPro,
-                            proSalvador, proAraucaria]);
+                            proSalvador, proAraucaria, proDBSeller]);
 end;
 
 // Condição de pagamento ******************************************************
@@ -821,6 +821,10 @@ begin
   5106455, // Planalto da Serra/MT
   5108006  // Tapurah/MT
          : Provedor := 'Coplan';
+
+//  4300406, // Alegrete/RS
+  4304705 // Carazinho/RS
+         : Provedor := 'DBSeller';
 
   4308508  // Frederico Westphalen/RS
          : Provedor := 'Digifred';

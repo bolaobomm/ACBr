@@ -1054,7 +1054,7 @@ begin
 
     //Não é possível assinar por delphi quando o id é minúsculo... mas se manter o id maiúsculo
     //não será validado o schema... uma função mais legível como stringreplace faz a assinatura sumir.
-    if (not ALote) and (Aprovedor in [proPublica, proAraucaria])
+    if (not ALote) and (Aprovedor in [proPublica, proAraucaria, proDBSeller])
      then begin
        I := pos('Id=', XMLAssinado);
        XMLAssinado[I] := 'i';

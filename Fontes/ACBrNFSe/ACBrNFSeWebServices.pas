@@ -73,7 +73,7 @@ uses
     ACBrProvedorMitra, ACBrProvedorTecnos, ACBrProvedorPronim,
     ACBrProvedorActcon, ACBrProvedorEL, ACBrProvedorEgoverneISS,
     ACBrProvedorSisPMJP, ACBrProvedorSystemPro, ACBrProvedorSalvador,
-    ACBrProvedorAraucaria;
+    ACBrProvedorAraucaria, ACBrProvedorDBSeller;
 
 type
 
@@ -732,6 +732,7 @@ begin
   proSisPMJP:     FProvedorClass := TProvedorSisPMJP.Create;
   proSalvador:    FProvedorClass := TProvedorSalvador.Create;
   proAraucaria:   FProvedorClass := TProvedorAraucaria.Create;
+  proDBSeller:    FProvedorClass := TProvedorDBSeller.Create;
  end;
 
  FPrefixo2     := FConfiguracoes.WebServices.Prefixo2;

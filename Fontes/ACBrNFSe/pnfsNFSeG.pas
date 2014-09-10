@@ -177,10 +177,11 @@ begin
                DFeUtil.SeSenao(Identificador <> '', ' ' + Identificador + '="' + IdLote + '"', '') +
 
                // Inclui a versão ou não
-               DFeUtil.SeSenao(AProvedor in [proAbaco, proAraucaria, proBetha, proGinfes, proGoiania, proGovBR,
-                                             proIssCuritiba, proISSNET, proNatal, proActcon,
-                                             proRecife, proRJ, proSimplISS, proThema, proTiplan,
-                                             proAgili, proFISSLex, proSpeedGov, proPronim, proCoplan],
+               DFeUtil.SeSenao(AProvedor in [proAbaco, proAraucaria, proBetha, proDBSeller,
+                                             proGinfes, proGoiania, proGovBR, proIssCuritiba,
+                                             proISSNET, proNatal, proActcon, proRecife, proRJ,
+                                             proSimplISS, proThema, proTiplan, proAgili,
+                                             proFISSLex, proSpeedGov, proPronim, proCoplan],
                                '',
                                DFeUtil.SeSenao(VersaoDados <> '', ' versao="' + VersaoDados + '"', '')
                               ) +
@@ -673,8 +674,8 @@ begin
   end;
  end;
 
- if AProvedor in [proNenhum, proAbaco, proAraucaria, proBetha, proBetim, proBHIss, proDigifred,
-  proEquiplano, {proFiorilli, }proFIssLex, proGinfes, proGovBR, proIssCuritiba,
+ if AProvedor in [proNenhum, proAbaco, proAraucaria, proBetha, proBetim, proBHIss, proDBSeller,
+  proDigifred, proEquiplano, {proFiorilli, }proFIssLex, proGinfes, proGovBR, proIssCuritiba,
   proIssIntel, proIssNet, proNatal, proProdemge, {proRecife,} proRJ,
   proSimplIss, proThema, proTiplan, proIssDSF, proAgili, proSpeedGov, proPronim, proActcon] then Result := '';
 end;
@@ -687,8 +688,8 @@ begin
                                    VersaoDados, VersaoXML, NumeroLote, CNPJ, IM,
                                    QtdeNotas, Notas, TagI, TagF, AProvedor);
 
- if AProvedor in [proNenhum, proAbaco, proAraucaria, proBetha, proBetim, proBHISS, proDigifred,
-     proEquiplano, profintelISS, proFISSLex, proGinfes, proGoiania, proGovBR,
+ if AProvedor in [proNenhum, proAbaco, proAraucaria, proBetha, proBetim, proBHISS, proDBSeller,
+     proDigifred, proEquiplano, profintelISS, proFISSLex, proGinfes, proGoiania, proGovBR,
      proGovDigital, proIssCuritiba, proISSDigital, proISSIntel, proISSNet, proNatal,
      proProdemge, proPublica, proRecife, proRJ, proSaatri, proFreire, proSimplISS,
      proThema, proTiplan, proWebISS, proProdata, proAgili, proSpeedGov, proPronim,
