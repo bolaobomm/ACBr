@@ -95,7 +95,7 @@ type
 
     procedure SetCertificate (pCertSerialNumber: String); overload;
     procedure SetCertificate (pCertificate: ICertificate2); overload;
-    function Execute: AnsiString;
+    function Execute: {$IFDEF FPC} String {$ELSE} AnsiString {$ENDIF};
     constructor Create;
 end;
 
@@ -147,17 +147,25 @@ var
   FNumeroSerie: WideString;
 begin
   Store := CoStore.Create;
-  Store.Open(CAPICOM_CURRENT_USER_STORE, FCertStoreName, CAPICOM_STORE_OPEN_READ_ONLY);
+  try
+    Store.Open(CAPICOM_CURRENT_USER_STORE, FCertStoreName, CAPICOM_STORE_OPEN_READ_ONLY);
 
-  Certs := Store.Certificates as ICertificates2;
+    Certs := Store.Certificates as ICertificates2;
 
-  Certs2 := Certs.Select(Utf8ToAnsi('Certificado(s) Digital(is) disponível(is)'),
-    'Selecione o Certificado Digital para uso no aplicativo', False);
+    {$IFDEF FPC}
+    Certs2 := Certs.Select(AnsiToUtf8('Certificado(s) Digital(is) disponível(is)'),
+    {$ELSE}
+    Certs2 := Certs.Select('Certificado(s) Digital(is) disponível(is)',
+    {$ENDIF}
+      'Selecione o Certificado Digital para uso no aplicativo', False);
 
-  if not (Certs2.Count = 0) then
-  begin
-    Cert := IInterface(Certs2.Item[1]) as ICertificate2;
-    FNumeroSerie := Cert.SerialNumber;
+    if not (Certs2.Count = 0) then
+    begin
+      Cert := IInterface(Certs2.Item[1]) as ICertificate2;
+      FNumeroSerie := Cert.SerialNumber;
+    end;
+  finally
+    FreeAndNil(Store);
   end;
 
   Result := FNumeroSerie;
@@ -177,7 +185,7 @@ begin
   FCertSerialNumber := '';
 end;
 
-function TACBrHTTPReqResp.Execute: AnsiString;
+function TACBrHTTPReqResp.Execute: {$IFDEF FPC} String {$ELSE} AnsiString {$ENDIF};
 var
   aBuffer: array[0..4096] of AnsiChar;
   Header: TStringStream;
@@ -213,27 +221,26 @@ begin
   if FCertSerialNumber <> '' then
   begin
     Store := CoStore.Create;
+		Store.Open(CAPICOM_CURRENT_USER_STORE, FCertStoreName, CAPICOM_STORE_OPEN_READ_ONLY);
 
-    Store.Open(CAPICOM_CURRENT_USER_STORE, FCertStoreName, CAPICOM_STORE_OPEN_READ_ONLY);
+		Certs := Store.Certificates as ICertificates2;
 
-    Certs := Store.Certificates as ICertificates2;
+		if Certs.Count > 0 then
+		begin
 
-    if Certs.Count > 0 then
-    begin
+		  for i := 1 to Certs.Count do
+		  begin
+			Cert2 := IInterface(Certs.Item[i]) as ICertificate2;
+			if Cert2.SerialNumber = FCertSerialNumber then
+			begin
+			  Cert := Cert2;
+			  break;
+			end;
+		  end;
 
-      for i := 1 to Certs.Count do
-      begin
-        Cert2 := IInterface(Certs.Item[i]) as ICertificate2;
-        if Cert2.SerialNumber = FCertSerialNumber then
-        begin
-          Cert := Cert2;
-          break;
-        end;
-      end;
-
-      CertContext := Cert as ICertContext;
-      CertContext.Get_CertContext(integer(PCertContext));
-    end;
+		  CertContext := Cert as ICertContext;
+		  CertContext.Get_CertContext(integer(PCertContext));
+		end;
   end
   else
   begin
@@ -344,17 +351,25 @@ begin
 
                      aBuffer[0] := #0;
                      BufStream.Write(aBuffer, 1);
-                     Result := PAnsiChar(BufStream.Memory);
+                     Result := {$IFDEF FPC} AnsiToUtf8(PChar(BufStream.Memory)) {$ELSE} PAnsiChar(BufStream.Memory) {$ENDIF};
                      if Result = '' then
                       begin
                         ErrorCode := GetLastError;
-                        raise Exception.Create('Erro: Requisicao nao enviada.'+sLineBreak+IntToStr(ErrorCode)+' - '+GetWinInetError(ErrorCode));
+                        {$IFDEF FPC}
+                        raise Exception.Create(AnsiToUtf8('Erro: Requisição não enviada.'+sLineBreak+IntToStr(ErrorCode)+' - '+GetWinInetError(ErrorCode)));
+                        {$ELSE}
+                        raise Exception.Create('Erro: Requisição não enviada.'+sLineBreak+IntToStr(ErrorCode)+' - '+GetWinInetError(ErrorCode));
+                        {$ENDIF}
                       end
                      else if Pos('<TITLE',UpperCase(Result)) > 0 then
                       begin
                         PosError := Pos('<TITLE>',UpperCase(Result))+7;
                         ErrorMsg := trim(copy(Result, PosError, (pos('</TITLE>', UpperCase(Result)) - PosError)));
-                        raise Exception.Create('Erro: Requisicao nao enviada.'+sLineBreak+ErrorMsg);
+                        {$IFDEF FPC}
+                        raise Exception.Create(AnsiToUtf8('Erro: Requisição não enviada.'+sLineBreak+ErrorMsg));
+                        {$ELSE}
+                        raise Exception.Create('Erro: Requisição não enviada.'+sLineBreak+ErrorMsg);
+                        {$ENDIF}
                       end;
                    finally
                      BufStream.Free;
@@ -363,7 +378,11 @@ begin
                 else
                  begin
                     ErrorCode := GetLastError;
-                    raise Exception.Create('Erro: Requisicao nao enviada.'+sLineBreak+IntToStr(ErrorCode)+' - '+GetWinInetError(ErrorCode));
+                    {$IFDEF FPC}
+                    raise Exception.Create(AnsiToUtf8('Erro: Requisição não enviada.'+sLineBreak+IntToStr(ErrorCode)+' - '+GetWinInetError(ErrorCode)));
+                    {$ELSE}
+                    raise Exception.Create('Erro: Requisição não enviada.'+sLineBreak+IntToStr(ErrorCode)+' - '+GetWinInetError(ErrorCode));
+                    {$ENDIF}
                  end;
               finally
                 Header.Free;

@@ -62,7 +62,7 @@
 // Ajusta FreePascal para o modo Delphi
 //------------------------------------------------------------------------------
 {$IFDEF FPC}
-  {$DEFINE ACBrNFeOpenSSL}
+  {$DEFINE ACBrNFeOpenSSL} // Para usar Lazarus com Capcom deve ser cometando as linhas 65 e 191
   {$DEFINE ACBrCTeOpenSSL}
   {$DEFINE ACBrNFSeOpenSSL}
   {$DEFINE ACBrMDFeOpenSSL}
@@ -188,7 +188,7 @@
 {$ENDIF}
 
 {$IFDEF ACBrCTeOpenSSL}
-  {$DEFINE ACBrNFeOpenSSL}
+  {$DEFINE ACBrNFeOpenSSL}// Para usar Lazarus com Capcom deve ser cometando as linhas 65 e 191
 {$ENDIF}
 
 // Definições para o Quick Report
