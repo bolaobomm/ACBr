@@ -397,6 +397,23 @@ begin
             ConfigURL.ProConsultaNFSe       := 'http://nfe.catanduvas.sc.gov.br:8089/NFSEWS/Services.svc';
             ConfigURL.ProCancelaNFSe        := 'http://nfe.catanduvas.sc.gov.br:8089/NFSEWS/Services.svc';
            end;
+  3143302: begin // Montes Claros/MG
+            ConfigURL.HomNomeCidade         := '';
+            ConfigURL.HomRecepcaoLoteRPS    := 'http://nfeteste.montesclaros.mg.gov.br:8081/nfsewsteste/Services.svc';
+            ConfigURL.HomConsultaLoteRPS    := 'http://nfeteste.montesclaros.mg.gov.br:8081/nfsewsteste/Services.svc';
+            ConfigURL.HomConsultaNFSeRPS    := 'http://nfeteste.montesclaros.mg.gov.br:8081/nfsewsteste/Services.svc';
+            ConfigURL.HomConsultaSitLoteRPS := 'http://nfeteste.montesclaros.mg.gov.br:8081/nfsewsteste/Services.svc';
+            ConfigURL.HomConsultaNFSe       := 'http://nfeteste.montesclaros.mg.gov.br:8081/nfsewsteste/Services.svc';
+            ConfigURL.HomCancelaNFSe        := 'http://nfeteste.montesclaros.mg.gov.br:8081/nfsewsteste/Services.svc';
+
+            ConfigURL.ProNomeCidade         := '';
+            ConfigURL.ProRecepcaoLoteRPS    := 'http://nfe.montesclaros.mg.gov.br:8082/NFSEws/Services.svc';
+            ConfigURL.ProConsultaLoteRPS    := 'http://nfe.montesclaros.mg.gov.br:8082/NFSEws/Services.svc';
+            ConfigURL.ProConsultaNFSeRPS    := 'http://nfe.montesclaros.mg.gov.br:8082/NFSEws/Services.svc';
+            ConfigURL.ProConsultaSitLoteRPS := 'http://nfe.montesclaros.mg.gov.br:8082/NFSEws/Services.svc';
+            ConfigURL.ProConsultaNFSe       := 'http://nfe.montesclaros.mg.gov.br:8082/NFSEws/Services.svc';
+            ConfigURL.ProCancelaNFSe        := 'http://nfe.montesclaros.mg.gov.br:8082/NFSEws/Services.svc';
+           end;
  end;
 
  Result := ConfigURL;

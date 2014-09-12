@@ -117,33 +117,16 @@ begin
  ConfigSchema.VersaoDados     := '1.00';
  ConfigSchema.VersaoXML       := '1';
 
-// case ACodCidade of
-//  4102000,       // Assis Chateaubriand/PR
-//  4321709: begin // Tres Coroas/RS
-            ConfigSchema.NameSpaceXML    := 'http://tempuri.org/';
-            ConfigSchema.Cabecalho       := '';
-            ConfigSchema.ServicoEnviar   := 'servico_enviar_lote_rps_envio.xsd';
-            ConfigSchema.ServicoConSit   := 'servico_consultar_situacao_lote_rps_envio.xsd';
-            ConfigSchema.ServicoConLot   := 'servico_consultar_lote_rps_envio.xsd';
-            ConfigSchema.ServicoConRps   := 'servico_consultar_nfse_rps_envio';
-            ConfigSchema.ServicoConNfse  := 'servico_consultar_nfse_envio';
-            ConfigSchema.ServicoCancelar := 'servico_cancelar_nfse_envio';
-            ConfigSchema.DefTipos        := 'tipos_complexos.xsd'; // Alterado por Italo em 05/02/2014
-(*
-           end;
-  else     begin
-            ConfigSchema.NameSpaceXML    := 'http://www.abrasf.org.br/ABRASF/arquivos/';
-            ConfigSchema.Cabecalho       := 'nfse.xsd';
-            ConfigSchema.ServicoEnviar   := 'nfse.xsd';
-            ConfigSchema.ServicoConSit   := 'nfse.xsd';
-            ConfigSchema.ServicoConLot   := 'nfse.xsd';
-            ConfigSchema.ServicoConRps   := 'nfse.xsd';
-            ConfigSchema.ServicoConNfse  := 'nfse.xsd';
-            ConfigSchema.ServicoCancelar := 'nfse.xsd';
-            ConfigSchema.DefTipos        := '';
-           end;
- end;
-*)
+ ConfigSchema.NameSpaceXML    := 'http://tempuri.org/';
+ ConfigSchema.Cabecalho       := '';
+ ConfigSchema.ServicoEnviar   := 'servico_enviar_lote_rps_envio.xsd';
+ ConfigSchema.ServicoConSit   := 'servico_consultar_situacao_lote_rps_envio.xsd';
+ ConfigSchema.ServicoConLot   := 'servico_consultar_lote_rps_envio.xsd';
+ ConfigSchema.ServicoConRps   := 'servico_consultar_nfse_rps_envio';
+ ConfigSchema.ServicoConNfse  := 'servico_consultar_nfse_envio';
+ ConfigSchema.ServicoCancelar := 'servico_cancelar_nfse_envio';
+ ConfigSchema.DefTipos        := 'tipos_complexos.xsd'; // Alterado por Italo em 05/02/2014
+
  Result := ConfigSchema;
 end;
 
@@ -170,7 +153,7 @@ begin
             ConfigURL.ProConsultaNFSe       := 'http://nfse.contagem.mg.gov.br/NFSEWS/Services.svc';
             ConfigURL.ProCancelaNFSe        := 'http://nfse.contagem.mg.gov.br/NFSEWS/Services.svc';
            end;
-           *)
+           
   3143302: begin // Montes Claros/MG
             ConfigURL.HomNomeCidade         := '';
             ConfigURL.HomRecepcaoLoteRPS    := 'http://nfeteste.montesclaros.mg.gov.br:8081/nfsewsteste/Services.svc';
@@ -188,7 +171,7 @@ begin
             ConfigURL.ProConsultaNFSe       := 'http://nfe.montesclaros.mg.gov.br:8082/NFSEws/Services.svc';
             ConfigURL.ProCancelaNFSe        := 'http://nfe.montesclaros.mg.gov.br:8082/NFSEws/Services.svc';
            end;
-
+           *)
   3202405: begin // Guarapari/ES
             ConfigURL.HomNomeCidade         := '';
             ConfigURL.HomRecepcaoLoteRPS    := 'http://nfseteste.guarapari.es.gov.br/NFSEWSTESTE/Services.svc';

@@ -2605,17 +2605,39 @@ end;
 
 destructor TWebServices.Destroy;
 begin
- FEnviar.Free;
- FConsSitLote.Free;
- FConsLote.Free;
- FConsNfseRps.Free;
- FConsNfse.Free;
- FCancNfse.Free;
- FGerarNFSe.Free;
- FLinkNfse.Free;
- FGerarLoteRPS.Free;
- FEnviarSincrono.Free;
- FConsSeqRPS.Free;
+  if Assigned(FEnviar) then //Leandro
+     FEnviar.Free;
+  if Assigned(FConsSitLote) then //Leandro
+     FConsSitLote.Free;
+  if Assigned(FConsLote) then //Leandro
+     FConsLote.Free;
+  if Assigned(FConsNfseRps) then //Leandro
+     FConsNfseRps.Free;
+  if Assigned(FConsNfse) then //Leandro
+     FConsNfse.Free;
+  if Assigned(FCancNfse) then //Leandro
+     FCancNfse.Free;
+  if Assigned(FGerarNFSe) then //Leandro
+     FGerarNFSe.Free;
+  if Assigned(FLinkNfse) then //Leandro
+     FLinkNfse.Free;
+  if Assigned(FGerarLoteRPS) then //Leandro
+     FGerarLoteRPS.Free;
+  if Assigned(FEnviarSincrono) then //Leandro
+     FEnviarSincrono.Free;
+  if Assigned(FConsSeqRPS) then //Leandro
+     FConsSeqRPS.Free;
+// FEnviar.Free;
+// FConsSitLote.Free;
+// FConsLote.Free;
+// FConsNfseRps.Free;
+// FConsNfse.Free;
+// FCancNfse.Free;
+// FGerarNFSe.Free;
+// FLinkNfse.Free;
+// FGerarLoteRPS.Free;
+// FEnviarSincrono.Free;
+// FConsSeqRPS.Free;
 
  inherited;
 end;
@@ -2900,11 +2922,16 @@ begin
      Self.ConsNfseRps.Tipo               := TipoRPSToStr(TACBrNFSe( FACBrNFSe ).NotasFiscais.Items[0].NFSe.IdentificacaoRps.Tipo);
 
      Self.ConsNfseRps.Cnpj               := TACBrNFSe( FACBrNFSe ).NotasFiscais.Items[0].NFSe.Prestador.Cnpj;
-     Self.ConsNfseRps.InscricaoMunicipal := TACBrNFSe( FACBrNFSe ).NotasFiscais.Items[0].NFSe.Prestador.InscricaoMunicipal;
-     Self.ConsNfseRps.RazaoSocial        := '';
+     if Self.ConsNfseRps.Cnpj = '' then
+       Self.ConsNfseRps.Cnpj := TACBrNFSe( FACBrNFSe ).NotasFiscais.Items[0].NFSe.PrestadorServico.IdentificacaoPrestador.Cnpj;
 
+     Self.ConsNfseRps.InscricaoMunicipal := TACBrNFSe( FACBrNFSe ).NotasFiscais.Items[0].NFSe.Prestador.InscricaoMunicipal;
+     if Self.ConsNfseRps.InscricaoMunicipal = '' then
+       Self.ConsNfseRps.InscricaoMunicipal := TACBrNFSe( FACBrNFSe ).NotasFiscais.Items[0].NFSe.PrestadorServico.IdentificacaoPrestador.InscricaoMunicipal;
+
+     Self.ConsNfseRps.RazaoSocial        := '';
      if not (TACBrNFSe( FACBrNFSe ).Configuracoes.WebServices.Provedor in [proDigifred]) then
-       Self.ConsNfseRps.RazaoSocial        := TACBrNFSe( FACBrNFSe ).NotasFiscais.Items[0].NFSe.PrestadorServico.RazaoSocial;
+       Self.ConsNfseRps.RazaoSocial := TACBrNFSe( FACBrNFSe ).NotasFiscais.Items[0].NFSe.PrestadorServico.RazaoSocial;
 
      Result := Self.ConsNfseRps.Executar;
    end;
