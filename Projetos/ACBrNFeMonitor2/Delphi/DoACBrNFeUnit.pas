@@ -269,6 +269,7 @@ begin
         else if Cmd.Metodo = 'imprimirdanfe' then
          begin
            OldMostrarPreview := ACBrNFe1.DANFE.MostrarPreview;
+           ConfiguraDANFe;
            if ACBrNFe1.DANFE.MostrarPreview or (Cmd.Params(4) = '1') then
             begin
               Restaurar1.Click;
@@ -318,7 +319,6 @@ begin
               ACBrNFeDANFERaveCB1.MarcaDaguaMSG := '';
             end ;
 
-           ConfiguraDANFe;  
            ACBrNFe1.NotasFiscais.Imprimir;
            Cmd.Resposta := 'Danfe Impresso com sucesso';
            if ACBrNFe1.DANFE.MostrarPreview or (Cmd.Params(4) = '1') then
@@ -336,6 +336,8 @@ begin
            else
               raise Exception.Create('Arquivo '+Cmd.Params(0)+' não encontrado.');
 
+           ConfiguraDANFe;
+
            if DFeUtil.NaoEstaVazio(Cmd.Params(1)) then
               ACBrNFe1.DANFE.ProtocoloNFe := Cmd.Params(1);
 
@@ -348,7 +350,6 @@ begin
             end;
 
            try
-              ConfiguraDANFe;
               ACBrNFe1.NotasFiscais.ImprimirPDF;
               ArqPDF := StringReplace(ACBrNFe1.NotasFiscais.Items[0].NFe.infNFe.ID,'NFe','',[rfIgnoreCase])+'.pdf';
               Cmd.Resposta := 'Arquivo criado em: '+ PathWithDelim(ACBrNFe1.DANFE.PathPDF) +
@@ -534,6 +535,9 @@ begin
                      break;
                    end;
                  end;
+
+                ConfiguraDANFe;
+
                 if DFeUtil.NaoEstaVazio(Cmd.Params(4)) then
                    ACBrNFe1.DANFE.Impressora := Cmd.Params(4)
                 else
@@ -541,13 +545,14 @@ begin
 
                 if ACBrNFe1.NotasFiscais.Items[0].Confirmada and (Cmd.Params(3) = '1') then
                  begin
-                   ConfiguraDANFe;
                    ACBrNFe1.NotasFiscais.Items[0].Imprimir;
                  end;
                end;
             end
            else
             begin
+              ConfiguraDANFe;
+
               if DFeUtil.NaoEstaVazio(Cmd.Params(4)) then
                  ACBrNFe1.DANFE.Impressora := Cmd.Params(4)
               else
@@ -555,7 +560,6 @@ begin
 
               if ACBrNFe1.NotasFiscais.Items[0].Confirmada and (Cmd.Params(3) = '1') then
                begin
-                 ConfiguraDANFe;
                  ACBrNFe1.NotasFiscais.Items[0].Imprimir;
                end;
             end;
@@ -661,6 +665,8 @@ begin
                 (Cmd.Metodo = 'adicionarnfe')  or (Cmd.Metodo = 'adicionarnfesefaz') or
                 (Cmd.Metodo = 'enviarlotenfe') or (Cmd.Metodo = 'enviardpecnfe') then
          begin
+           ConfiguraDANFe;
+
            if (Cmd.Metodo = 'criarnfe') or (Cmd.Metodo = 'criarenviarnfe') or
               (Cmd.Metodo = 'adicionarnfe') then
               GerarIniNFe( Cmd.Params(0)  )
@@ -782,7 +788,6 @@ begin
                     if (Cmd.Params(1) = '1') and EnviadoDPEC then
                      begin
                        ACBrNFe1.DANFE.ProtocoloNFe := ACBrNFe1.WebServices.EnviarDPEC.nRegDPEC +' '+ DateTimeToStr(ACBrNFe1.WebServices.EnviarDPEC.DhRegDPEC);
-                       ConfiguraDANFe;
                        ACBrNFe1.NotasFiscais.Items[i].Imprimir;
                      end;
                   end;
@@ -866,7 +871,6 @@ begin
                         ACBrNFe1.DANFE.Impressora := cbxImpressora.Text;
                         if ACBrNFe1.NotasFiscais.Items[i].Confirmada and (Cmd.Params(2) = '1') then
                          begin
-                           ConfiguraDANFe;
                            ACBrNFe1.NotasFiscais.Items[i].Imprimir;
                          end;  
                         if (Cmd.Params(2) = '1') and ACBrNFeDANFERave1.MostrarPreview then
@@ -1395,6 +1399,15 @@ begin
            {$ENDIF}
          end
 
+        else if Cmd.Metodo = 'cnpjcertificado' then
+         begin
+           {$IFDEF ACBrNFeOpenSSL}
+              Cmd.Resposta := 'Função disponível apenas na versão CAPICOM'
+           {$ELSE}
+              Cmd.Resposta := ACBrNFe1.Configuracoes.Certificados.CNPJ;
+           {$ENDIF}
+         end
+
         else if Cmd.Metodo = 'lerini' then // Recarrega configurações do arquivo INI
            frmAcbrNfeMonitor.LerIni
 
@@ -1527,6 +1540,7 @@ var
   INIRec : TMemIniFile ;
   SL     : TStringList;
   OK     : boolean;
+  TributosFonte : String;
 begin
  INIRec := TMemIniFile.create( 'nfe.ini' ) ;
  SL := TStringList.Create;
@@ -2426,6 +2440,12 @@ begin
              end;
             Inc(I);
           end;
+
+          TributosFonte := INIRec.ReadString('Tributos','Fonte','');
+          ACBrNFeDANFERave1.TributosFonte := TributosFonte;
+          ACBrNFeDANFERaveCB1.TributosFonte := TributosFonte;
+//          ACBrNFeDANFCeFortes1.TributosFonte := TributosFonte;
+//          ACBrNFeDANFeESCPOS1.TributosFonte := TributosFonte;
        end;
    finally
       INIRec.Free ;
