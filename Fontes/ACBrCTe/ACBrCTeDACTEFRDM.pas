@@ -1251,6 +1251,8 @@ procedure TdmACBrCTeFR.CarregaParametros;
 var
   vChave_Contingencia: string;
   vResumo: string;
+  vStream: TMemoryStream;
+  vStringStream: TStringStream;
 begin
   { parâmetros }
   with cdsParametros do
@@ -1272,6 +1274,7 @@ begin
     FieldDefs.Add('Contingencia_Descricao', ftString, 60);
     FieldDefs.Add('Contingencia_Valor', ftString, 60);
     FieldDefs.Add('LinhasPorPagina', ftInteger);
+    FieldDefs.Add('LogoCarregado', ftBlob);
 
     CreateDataSet;
     Append;
@@ -1322,7 +1325,27 @@ begin
 
     // Carregamento da imagem
     if DACTEClassOwner.Logo <> '' then
+    begin
       FieldByName('Imagem').AsString := DACTEClassOwner.Logo;
+      vStream := TMemoryStream.Create;
+      try
+        if FileExists(DACTEClassOwner.Logo) then
+           vStream.LoadFromFile(DACTEClassOwner.Logo)
+        else
+        begin
+           vStringStream:= TStringStream.Create(DACTEClassOwner.Logo);
+           try
+              vStream.LoadFromStream(vStringStream);
+           finally
+              vStringStream.Free;
+           end;
+        end;
+        vStream.Position := 0;
+        TBlobField(cdsParametros.FieldByName('LogoCarregado')).LoadFromStream(vStream);
+      finally
+        vStream.Free;
+      end;
+    end;
 
     if FDACTEClassOwner.Sistema <> '' then
       FieldByName('Sistema').AsString := FDACTEClassOwner.Sistema
