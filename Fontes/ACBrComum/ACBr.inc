@@ -59,6 +59,10 @@
 //{$DEFINE ACBrMDFeOpenSSL}
 //{$DEFINE ACBrGNREOpenSSL}
 
+// Descomente a linha abaixo para usar o componente de comunicação SOAP do Delphi ao invés do ACBrHTTPReqResp(Funciona apenas com a versão CAPICOM)
+//--------------------------------------------------------------------------------
+//{$DEFINE SoapHTTP}
+
 // Ajusta FreePascal para o modo Delphi
 //------------------------------------------------------------------------------
 {$IFDEF FPC}

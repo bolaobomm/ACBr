@@ -59,8 +59,12 @@ uses Classes, SysUtils,
   {$IFDEF ACBrNFeOpenSSL}
     HTTPSend,
   {$ELSE}
-     ACBrHTTPReqResp,
-  {$ENDIF}
+     {$IFDEF SoapHTTP}
+     SoapHTTPClient, SOAPHTTPTrans, SOAPConst, JwaWinCrypt, WinInet, ACBrCAPICOM_TLB,
+     {$ELSE}
+        ACBrHTTPReqResp,
+     {$ENDIF}
+  {$ENDIF}     
   pcnNFe, pcnNFeW,
   pcnRetConsReciNFe, pcnRetConsCad, pcnAuxiliar, pcnConversao, pcnRetDPEC,
   pcnProcNFe, pcnRetCancNFe, pcnCCeNFe, pcnRetCCeNFe,
@@ -95,8 +99,14 @@ type
     {$IFDEF ACBrNFeOpenSSL}
        procedure ConfiguraHTTP( HTTP : THTTPSend; Action : AnsiString);
     {$ELSE}
-       procedure ConfiguraReqResp( ReqResp : TACBrHTTPReqResp);
+       {$IFDEF SoapHTTP}
+          procedure ConfiguraReqResp( ReqResp : THTTPReqResp);
+          procedure OnBeforePost(const HTTPReqResp: THTTPReqResp; Data:Pointer);
+       {$ELSE}
+          procedure ConfiguraReqResp( ReqResp : TACBrHTTPReqResp);
+       {$ENDIF}
     {$ENDIF}
+     function EnviarDadosWebService(URL, SoapAction, Dados : String) : String;
   protected
     FCabMsg: WideString;
     FDadosMsg: AnsiString;
@@ -654,6 +664,56 @@ begin
 end;
 
 {$ELSE}
+{$IFDEF SoapHTTP}
+procedure TWebServicesBase.ConfiguraReqResp( ReqResp : THTTPReqResp);
+begin
+  if FConfiguracoes.WebServices.ProxyHost <> '' then
+   begin
+     ReqResp.Proxy        := FConfiguracoes.WebServices.ProxyHost+':'+FConfiguracoes.WebServices.ProxyPort;
+     ReqResp.UserName     := FConfiguracoes.WebServices.ProxyUser;
+     ReqResp.Password     := FConfiguracoes.WebServices.ProxyPass;
+   end;
+  ReqResp.OnBeforePost := OnBeforePost;
+end;
+
+procedure TWebServicesBase.OnBeforePost(const HTTPReqResp: THTTPReqResp;
+  Data: Pointer);
+var
+  Cert         : ICertificate2;
+  CertContext  : ICertContext;
+  PCertContext : Pointer;
+  ContentHeader: string;
+begin
+  Cert := FConfiguracoes.Certificados.GetCertificado;
+  CertContext :=  Cert as ICertContext;
+  CertContext.Get_CertContext(Integer(PCertContext));
+
+  if not InternetSetOption(Data, INTERNET_OPTION_CLIENT_CERT_CONTEXT, PCertContext,SizeOf(CERT_CONTEXT)) then
+   begin
+     if Assigned(TACBrNFe( FACBrNFe ).OnGerarLog) then
+        TACBrNFe( FACBrNFe ).OnGerarLog('ERRO: Erro OnBeforePost: ' + IntToStr(GetLastError));
+     raise EACBrNFeException.Create( 'Erro OnBeforePost: ' + IntToStr(GetLastError) );
+   end;
+
+   if trim(FConfiguracoes.WebServices.ProxyUser) <> '' then begin
+     if not InternetSetOption(Data, INTERNET_OPTION_PROXY_USERNAME, PChar(FConfiguracoes.WebServices.ProxyUser), Length(FConfiguracoes.WebServices.ProxyUser)) then
+       raise EACBrNFeException.Create( 'Erro OnBeforePost: ' + IntToStr(GetLastError) );
+   end;
+   if trim(FConfiguracoes.WebServices.ProxyPass) <> '' then begin
+     if not InternetSetOption(Data, INTERNET_OPTION_PROXY_PASSWORD, PChar(FConfiguracoes.WebServices.ProxyPass),Length (FConfiguracoes.WebServices.ProxyPass)) then
+       raise EACBrNFeException.Create( 'Erro OnBeforePost: ' + IntToStr(GetLastError) );
+   end;
+
+  if (pos('SCERECEPCAORFB',UpperCase(FURL)) <= 0) and
+     (pos('SCECONSULTARFB',UpperCase(FURL)) <= 0) then
+   begin
+     ContentHeader := Format(ContentTypeTemplate, ['application/soap+xml; charset=utf-8']);
+     HttpAddRequestHeaders(Data, PChar(ContentHeader), Length(ContentHeader), HTTP_ADDREQ_FLAG_REPLACE);
+   end;
+  HTTPReqResp.CheckContentType;
+//  HTTPReqResp.ConnectTimeout := 20000;
+end;
+{$ELSE}
 procedure TWebServicesBase.ConfiguraReqResp( ReqResp : TACBrHTTPReqResp);
 begin
   if FConfiguracoes.WebServices.ProxyHost <> '' then
@@ -673,6 +733,79 @@ begin
      ReqResp.MimeType := 'text/xml';
 end;
 {$ENDIF}
+{$ENDIF}
+
+function TWebServicesBase.EnviarDadosWebService(URL, SoapAction, Dados : String) : String;
+var
+ RetornoWS : String;
+  {$IFDEF ACBrNFeOpenSSL}
+     HTTP: THTTPSend;
+  {$ELSE}
+     {$IFDEF SoapHTTP}
+        ReqResp: THTTPReqResp;
+        Stream: TMemoryStream;
+        StrStream: TStringStream;
+     {$ELSE}
+        ReqResp: TACBrHTTPReqResp;
+     {$ENDIF}   
+  {$ENDIF}
+begin
+  {$IFDEF ACBrNFeOpenSSL}
+     HTTP := THTTPSend.Create;
+  {$ELSE}
+     {$IFDEF SoapHTTP}
+        ReqResp := THTTPReqResp.Create(nil);
+        ConfiguraReqResp( ReqResp );
+        ReqResp.URL := URL;
+        ReqResp.UseUTF8InHeader := True;
+        ReqResp.SoapAction := SoapAction;
+     {$ELSE}
+        ReqResp := TACBrHTTPReqResp.Create;
+        ConfiguraReqResp( ReqResp );
+        ReqResp.URL := URL;
+        ReqResp.SoapAction := SoapAction;
+     {$ENDIF}   
+  {$ENDIF}
+  try
+     {$IFDEF ACBrNFeOpenSSL}
+        HTTP.Document.WriteBuffer(Dados[1], Length(Texto));
+        ConfiguraHTTP(HTTP,'SOAPAction: "' + SoapAction +'"');
+        HTTP.HTTPMethod('POST', URL);
+        HTTP.Document.Position := 0;
+        SetLength(Texto, HTTP.Document.Size);
+        HTTP.Document.ReadBuffer(Dados[1], HTTP.Document.Size);
+        RetornoWS := TiraAcentos(ParseText(Texto, True));
+     {$ELSE}
+         {$IFDEF SoapHTTP}
+            Stream := TMemoryStream.Create;
+            StrStream := TStringStream.Create('');
+            try
+               ReqResp.Execute(Dados, Stream);
+               StrStream.CopyFrom(Stream, 0);
+               RetornoWS := TiraAcentos(ParseText(StrStream.DataString, True));
+            finally
+               StrStream.Free;
+               Stream.Free;
+            end;
+        {$ELSE}
+            ReqResp.Data := Dados;
+            RetornoWS := TiraAcentos(ParseText(ReqResp.Execute, True));
+        {$ENDIF}
+     {$ENDIF}
+   finally
+     {$IFDEF ACBrNFeOpenSSL}
+         HTTP.Free;
+     {$ELSE}
+        {$IFDEF SoapHTTP}
+            ReqResp.Free;
+        {$ELSE}
+            ReqResp.Free; 
+        {$ENDIF}
+     {$ENDIF}
+   end;
+
+  Result := RetornoWS;
+end;
 
 procedure TWebServicesBase.DoNFeCancelamento;
 var
@@ -698,22 +831,14 @@ begin
     begin
       if Assigned(TACBrNFe( FACBrNFe ).OnGerarLog) then
          TACBrNFe( FACBrNFe ).OnGerarLog('ERRO: Falha ao assinar Cancelamento Nota Fiscal Eletrônica '+LineBreak+FMsg);
-      {$IFDEF FPC}
-      raise EACBrNFeException.Create(AnsiToUtf8('Falha ao assinar Cancelamento Nota Fiscal Eletrônica '+LineBreak+FMsg));
-      {$ELSE}
       raise EACBrNFeException.Create('Falha ao assinar Cancelamento Nota Fiscal Eletrônica '+LineBreak+FMsg);
-      {$ENDIF}
     end;
 {$ELSE}
   if not(NotaUtil.Assinar(CancNFe.Gerador.ArquivoFormatoXML, TConfiguracoes(FConfiguracoes).Certificados.GetCertificado , FDadosMsg, FMsg)) then
      begin
        if Assigned(TACBrNFe( FACBrNFe ).OnGerarLog) then
           TACBrNFe( FACBrNFe ).OnGerarLog('Falha ao assinar Cancelamento Nota Fiscal Eletrônica '+LineBreak+FMsg);
-       {$IFDEF FPC}
-       raise EACBrNFeException.Create(AnsiToUtf8('Falha ao assinar Cancelamento de Nota Fiscal Eletrônica '+LineBreak+FMsg));
-       {$ELSE}
        raise EACBrNFeException.Create('Falha ao assinar Cancelamento de Nota Fiscal Eletrônica '+LineBreak+FMsg);
-       {$ENDIF}
      end;
 {$ENDIF}
 
@@ -722,11 +847,7 @@ begin
      begin
        if Assigned(TACBrNFe( FACBrNFe ).OnGerarLog) then
           TACBrNFe( FACBrNFe ).OnGerarLog('Falha na validação dos dados do cancelamento '+LineBreak+FMsg);
-       {$IFDEF FPC}
-       raise EACBrNFeException.Create(AnsiToUtf8('Falha na validação dos dados do cancelamento '+LineBreak+FMsg));
-       {$ELSE}
        raise EACBrNFeException.Create('Falha na validação dos dados do cancelamento '+LineBreak+FMsg);
-       {$ENDIF}
      end;
 
   CancNFe.Free;
@@ -844,11 +965,7 @@ begin
      begin
        if Assigned(TACBrNFe( FACBrNFe ).OnGerarLog) then
           TACBrNFe( FACBrNFe ).OnGerarLog('Falha na validação dos dados da carta de correção '+LineBreak+FMsg);
-       {$IFDEF FPC}
-       raise EACBrNFeException.Create(AnsiToUtf8('Falha na validação dos dados da carta de correção '+LineBreak+FMsg));
-       {$ELSE}
        raise EACBrNFeException.Create('Falha na validação dos dados da carta de correção '+LineBreak+FMsg);
-       {$ENDIF}
      end;
 
   for i := 0 to TNFeCartaCorrecao(Self).FCCe.Evento.Count-1 do
@@ -916,22 +1033,14 @@ begin
      begin
        if Assigned(TACBrNFe( FACBrNFe ).OnGerarLog) then
           TACBrNFe( FACBrNFe ).OnGerarLog('Falha ao assinar Inutilização Nota Fiscal Eletrônica '+LineBreak+FMsg);
-       {$IFDEF FPC}
-       raise EACBrNFeException.Create(AnsiToUtf8('Falha ao assinar Inutilização Nota Fiscal Eletrônica '+LineBreak+FMsg));
-       {$ELSE}
        raise EACBrNFeException.Create('Falha ao assinar Inutilização Nota Fiscal Eletrônica '+LineBreak+FMsg);
-       {$ENDIF}
      end;
 {$ELSE}
   if not(NotaUtil.Assinar(InutNFe.Gerador.ArquivoFormatoXML, TConfiguracoes(FConfiguracoes).Certificados.GetCertificado , FDadosMsg, FMsg)) then
      begin
        if Assigned(TACBrNFe( FACBrNFe ).OnGerarLog) then
           TACBrNFe( FACBrNFe ).OnGerarLog('Falha ao assinar Inutilização Nota Fiscal Eletrônica '+LineBreak+FMsg);
-       {$IFDEF FPC}
-       raise EACBrNFeException.Create(AnsiToUtf8('Falha ao assinar Inutilização Nota Fiscal Eletrônica '+LineBreak+FMsg));
-       {$ELSE}
        raise EACBrNFeException.Create('Falha ao assinar Inutilização Nota Fiscal Eletrônica '+LineBreak+FMsg);
-       {$ENDIF}
      end;
 {$ENDIF}
 
@@ -1326,11 +1435,7 @@ begin
      begin
        if Assigned(TACBrNFe( FACBrNFe ).OnGerarLog) then
           TACBrNFe( FACBrNFe ).OnGerarLog('Falha na validação dos dados do Envio de Evento '+LineBreak+FMsg);
-       {$IFDEF FPC}
-       raise EACBrNFeException.Create(AnsiToUtf8('Falha na validação dos dados do Envio de Evento '+LineBreak+FMsg));
-       {$ELSE}
        raise EACBrNFeException.Create('Falha na validação dos dados do Envio de Evento '+LineBreak+FMsg);
-       {$ENDIF}
      end;
 
   for i := 0 to TNFeEnvEvento(Self).FEvento.Evento.Count-1 do
@@ -1591,11 +1696,7 @@ begin
    end;}
   CNPJ := OnlyNumber(CNPJ);
   if not ValidarCNPJ(CNPJ) then
-     {$IFDEF FPC}
-     raise EACBrNFeException.Create(AnsiToUtf8('CNPJ '+CNPJ+' inválido.'));
-     {$ELSE}
      raise EACBrNFeException.Create('CNPJ '+CNPJ+' inválido.');
-     {$ENDIF}
 
   Self.Inutilizacao.CNPJ   := CNPJ;
   Self.Inutilizacao.Modelo := Modelo;
@@ -1653,7 +1754,7 @@ begin
   FConsNFeDest.Free;
   FDownloadNFe.Free;
   FAdministrarCSCNFCe.Free;
-  FDistribuicaoDFe.Free;  
+  FDistribuicaoDFe.Free;
   FEnvioWebService.Free;
   inherited;
 end;
@@ -1711,12 +1812,6 @@ var
   NFeRetorno: TRetConsStatServ;
   aMsg, Servico, SoapAction: string;
   Texto : String;
-
-  {$IFDEF ACBrNFeOpenSSL}
-     HTTP: THTTPSend;
-  {$ELSE}
-     ReqResp: TACBrHTTPReqResp;
-  {$ENDIF}
 begin
   inherited Executar;
 
@@ -1754,15 +1849,6 @@ begin
   Texto := Texto +   '</soap12:Body>';
   Texto := Texto +'</soap12:Envelope>';
 
-  {$IFDEF ACBrNFeOpenSSL}
-     HTTP := THTTPSend.Create;
-  {$ELSE}
-     ReqResp := TACBrHTTPReqResp.Create;
-     ConfiguraReqResp( ReqResp );
-     ReqResp.URL := FURL;
-     ReqResp.SoapAction := SoapAction;
-  {$ENDIF}
-
   try
     TACBrNFe( FACBrNFe ).SetStatus( stNFeStatusServico );
 
@@ -1779,24 +1865,13 @@ begin
      end;
 
     try
-      {$IFDEF ACBrNFeOpenSSL}
-         HTTP.Document.WriteBuffer(Texto[1], Length(Texto));
-         ConfiguraHTTP(HTTP,'SOAPAction: "' + SoapAction +'"');
-         HTTP.HTTPMethod('POST', FURL);
-         HTTP.Document.Position := 0;
-         SetLength(Texto, HTTP.Document.Size);
-         HTTP.Document.ReadBuffer(Texto[1], HTTP.Document.Size);
-         FRetornoWS := TiraAcentos(ParseText(Texto, True));
-         FRetWS := SeparaDados( FRetornoWS,'nfeStatusServicoNF2Result');
-         if FRetWS = '' then
-           FRetWS := SeparaDados( FRetornoWS,'NfeStatusServicoNFResult');
-      {$ELSE}
-         ReqResp.Data := Texto;
-         FRetornoWS := TiraAcentos(ParseText(ReqResp.Execute, True));
-         FRetWS := SeparaDados( FRetornoWS,'nfeStatusServicoNF2Result');
-         if FRetWS = '' then
-           FRetWS := SeparaDados( FRetornoWS,'NfeStatusServicoNFResult');
-      {$ENDIF}
+      FRetornoWS := EnviarDadosWebService(FURL,SoapAction,Texto);
+
+      FRetWS := SeparaDados( FRetornoWS,'nfeStatusServicoNF2Result');
+      if FRetWS = '' then
+         FRetWS := SeparaDados( FRetornoWS,'NfeStatusServicoNFResult');
+
+
       NFeRetorno := TRetConsStatServ.Create;
       NFeRetorno.Leitor.Arquivo := FRetWS;
       NFeRetorno.LerXml;
@@ -1813,11 +1888,7 @@ begin
               'Retorno : '+ DFeUtil.SeSenao(NFeRetorno.dhRetorno = 0, '', DateTimeToStr(NFeRetorno.dhRetorno))+LineBreak+
               'Observação : '+NFeRetorno.xObs+LineBreak;
       if FConfiguracoes.WebServices.Visualizar then
-        {$IFDEF FPC}
-        ShowMessage(AnsiToUtf8(aMsg));
-        {$ELSE}
         ShowMessage(aMsg);
-        {$ENDIF}
 
       if Assigned(TACBrNFe( FACBrNFe ).OnGerarLog) then
          TACBrNFe( FACBrNFe ).OnGerarLog(aMsg);
@@ -1857,23 +1928,12 @@ begin
           TACBrNFe( FACBrNFe ).OnGerarLog('WebService Consulta Status serviço:'+LineBreak+
                                           '- Inativo ou Inoperante tente novamente.'+LineBreak+
                                           '- '+E.Message);
-       {$IFDEF FPC}
-       raise EACBrNFeException.Create(AnsiToUtf8('WebService Consulta Status serviço:'+LineBreak+
-                              '- Inativo ou Inoperante tente novamente.'+LineBreak+
-                              '- '+E.Message));
-       {$ELSE}
        raise EACBrNFeException.Create('WebService Consulta Status serviço:'+LineBreak+
                               '- Inativo ou Inoperante tente novamente.'+LineBreak+
                               '- '+E.Message);
-       {$ENDIF}
       end;
     end;
   finally
-    {$IFDEF ACBrNFeOpenSSL}
-      HTTP.Free;
-    {$ELSE}
-      ReqResp.Free;
-    {$ENDIF}
     NotaUtil.ConfAmbiente;
     TACBrNFe( FACBrNFe ).SetStatus( stIdle );
   end;
@@ -1896,12 +1956,6 @@ var
   Texto : string;
   i: integer;
   AProcNFe: TProcNFe;
-
-  {$IFDEF ACBrNFeOpenSSL}
-     HTTP: THTTPSend;
-  {$ELSE}
-     ReqResp: TACBrHTTPReqResp;
-  {$ENDIF}
 begin
   inherited Executar;
 
@@ -1968,15 +2022,6 @@ begin
 //  if assigned(TACBrNFe( FACBrNFe ).WebServices.Retorno.NFeRetorno) then
 //     TACBrNFe( FACBrNFe ).WebServices.Retorno.NFeRetorno.Free;
 
-  {$IFDEF ACBrNFeOpenSSL}
-     HTTP := THTTPSend.Create;
-  {$ELSE}
-     ReqResp := TACBrHTTPReqResp.Create;
-     ConfiguraReqResp( ReqResp );
-     ReqResp.URL := FURL;
-     ReqResp.SOAPAction := SoapAction;
-  {$ENDIF}
-
   try
     TACBrNFe( FACBrNFe ).SetStatus( stNFeRecepcao );
 
@@ -1992,36 +2037,17 @@ begin
        FConfiguracoes.Geral.Save(FPathArqEnv, Texto);
      end;
 
-    {$IFDEF ACBrNFeOpenSSL}
-       HTTP.Document.WriteBuffer(Texto[1], Length(Texto));
-       ConfiguraHTTP(HTTP,'SOAPAction: "'+SoapAction+'"');
-       HTTP.HTTPMethod('POST', FURL);
-       HTTP.Document.Position := 0;
-       SetLength(Texto, HTTP.Document.Size);
-       HTTP.Document.ReadBuffer(Texto[1], HTTP.Document.Size);
-       FRetornoWS := TiraAcentos(ParseText(Texto, True));
-       // Incluido por Italo em 15/04/2014
-       if nfeAutorizacaoLote then
-        begin
-          FRetWS := SeparaDados( FRetornoWS,'nfeAutorizacaoLoteResult');
-          if FRetWS = '' then
-            FRetWS := SeparaDados( FRetornoWS,'nfeAutorizacaoResult');
-        end
-       else
-          FRetWS := SeparaDados( FRetornoWS,'nfeRecepcaoLote2Result');
-    {$ELSE}
-       ReqResp.Data := Texto;
-       FRetornoWS := TiraAcentos(ParseText(ReqResp.Execute, True));
-       // Incluido por Italo em 15/04/2014
-       if nfeAutorizacaoLote then
-        begin
-          FRetWS := SeparaDados( FRetornoWS,'nfeAutorizacaoLoteResult');
-          if FRetWS = '' then
-            FRetWS := SeparaDados( FRetornoWS,'nfeAutorizacaoResult');
-        end
-       else
-          FRetWS := SeparaDados( FRetornoWS,'nfeRecepcaoLote2Result');
-    {$ENDIF}
+     FRetornoWS := EnviarDadosWebService(FURL,SoapAction,Texto);
+
+     if nfeAutorizacaoLote then
+      begin
+        FRetWS := SeparaDados( FRetornoWS,'nfeAutorizacaoLoteResult');
+        if FRetWS = '' then
+          FRetWS := SeparaDados( FRetornoWS,'nfeAutorizacaoResult');
+      end
+     else
+        FRetWS := SeparaDados( FRetornoWS,'nfeRecepcaoLote2Result');
+
 
     if ((FConfiguracoes.Geral.ModeloDF = moNFCe) or (FConfiguracoes.Geral.VersaoDF = ve310)) and FSincrono then
      begin
@@ -2047,11 +2073,7 @@ begin
                'chNFe : '+NFeRetornoSincrono.chNfe+LineBreak;
 
        if FConfiguracoes.WebServices.Visualizar then
-       {$IFDEF FPC}
-       ShowMessage(AnsiToUtf8(aMsg));
-       {$ELSE}
-       ShowMessage(aMsg);
-       {$ENDIF}
+          ShowMessage(aMsg);
 
        if Assigned(TACBrNFe( FACBrNFe ).OnGerarLog) then
           TACBrNFe( FACBrNFe ).OnGerarLog(aMsg);
@@ -2190,11 +2212,7 @@ begin
                'Recebimento : '+DFeUtil.SeSenao(NFeRetorno.InfRec.dhRecbto = 0, '', DateTimeToStr(NFeRetorno.InfRec.dhRecbto))+LineBreak+
                'Tempo Médio : '+IntToStr(NFeRetorno.InfRec.TMed)+LineBreak;
        if FConfiguracoes.WebServices.Visualizar then
-       {$IFDEF FPC}
-       ShowMessage(AnsiToUtf8(aMsg));
-       {$ELSE}
-       ShowMessage(aMsg);
-       {$ENDIF}
+          ShowMessage(aMsg);
 
        if Assigned(TACBrNFe( FACBrNFe ).OnGerarLog) then
           TACBrNFe( FACBrNFe ).OnGerarLog(aMsg);
@@ -2228,11 +2246,6 @@ begin
 
 
   finally
-    {$IFDEF ACBrNFeOpenSSL}
-       HTTP.Free;
-    {$ELSE}
-      ReqResp.Free;
-    {$ENDIF}
     NotaUtil.ConfAmbiente;
     TACBrNFe( FACBrNFe ).SetStatus( stIdle );
   end;
@@ -2328,11 +2341,7 @@ begin
   begin
     if not(FNotasFiscais.Items[i].Confirmada) then
     begin
-      {$IFDEF FPC}
-      FMsg   := AnsiToUtf8('Nota(s) não confirmadas:')+LineBreak;
-      {$ELSE}
       FMsg   := 'Nota(s) não confirmadas:'+LineBreak;
-      {$ENDIF}
       break;
     end;
   end;
@@ -2365,11 +2374,6 @@ function TNFeRetRecepcao.Executar: Boolean;
     SoapAction, aMsg: string;
     nfeAutorizacaoLote : boolean;
     Texto : String;
-    {$IFDEF ACBrNFeOpenSSL}
-       HTTP: THTTPSend;
-    {$ELSE}
-       ReqResp: TACBrHTTPReqResp;
-    {$ENDIF}
   begin
 
     if assigned(FNFeRetorno) then
@@ -2435,14 +2439,6 @@ function TNFeRetRecepcao.Executar: Boolean;
     Texto := Texto +   '</soap12:Body>';
     Texto := Texto +'</soap12:Envelope>';
 
-    {$IFDEF ACBrNFeOpenSSL}
-       HTTP := THTTPSend.Create;
-    {$ELSE}
-       ReqResp := TACBrHTTPReqResp.Create;
-       ConfiguraReqResp( ReqResp );
-       ReqResp.URL := FURL;
-       ReqResp.SOAPAction := SoapAction;
-    {$ENDIF}
 
     FNFeRetorno := TRetConsReciNFe.Create;
     try
@@ -2460,34 +2456,16 @@ function TNFeRetRecepcao.Executar: Boolean;
          FConfiguracoes.Geral.Save(FPathArqEnv, Texto);
        end;
 
-      {$IFDEF ACBrNFeOpenSSL}
-         HTTP.Document.WriteBuffer(Texto[1], Length(Texto));
-         ConfiguraHTTP(HTTP,'SOAPAction: "'+SoapAction+'"');
-         HTTP.HTTPMethod('POST', FURL);
-         HTTP.Document.Position := 0;
-         SetLength(Texto, HTTP.Document.Size);
-         HTTP.Document.ReadBuffer(Texto[1], HTTP.Document.Size);
-         FRetornoWS := TiraAcentos(ParseText(Texto, True));
-         // Alterado por Italo em 15/04/2014
-         if nfeAutorizacaoLote then begin
-           FRetWS := SeparaDados( FRetornoWS,'nfeRetAutorizacaoResult');
-           if FRetWS = '' then
-             FRetWS := SeparaDados( FRetornoWS,'nfeRetAutorizacaoLoteResult');
-         end
-         else
-           FRetWS := SeparaDados( FRetornoWS,'nfeRetRecepcao2Result');
-      {$ELSE}
-         ReqResp.Data := Texto;
-         FRetornoWS := TiraAcentos(ParseText(ReqResp.Execute, True));
-         // Alterado por Italo em 15/04/2014
-         if nfeAutorizacaoLote then begin
-           FRetWS := SeparaDados( FRetornoWS,'nfeRetAutorizacaoResult');
-           if FRetWS = '' then
-             FRetWS := SeparaDados( FRetornoWS,'nfeRetAutorizacaoLoteResult');
-         end
-         else
-           FRetWS := SeparaDados( FRetornoWS,'nfeRetRecepcao2Result');
-      {$ENDIF}
+      FRetornoWS := EnviarDadosWebService(FURL,SoapAction,Texto);
+
+      if nfeAutorizacaoLote then
+       begin
+         FRetWS := SeparaDados( FRetornoWS,'nfeRetAutorizacaoResult');
+         if FRetWS = '' then
+            FRetWS := SeparaDados( FRetornoWS,'nfeRetAutorizacaoLoteResult');
+       end
+      else
+        FRetWS := SeparaDados( FRetornoWS,'nfeRetRecepcao2Result');
 
       if FConfiguracoes.Geral.Salvar then
        begin
@@ -2515,11 +2493,7 @@ function TNFeRetRecepcao.Executar: Boolean;
               'cMsg : '+IntToStr(FNFeRetorno.cMsg)+LineBreak+
               'xMsg : '+FNFeRetorno.xMsg+LineBreak;
       if FConfiguracoes.WebServices.Visualizar then
-      {$IFDEF FPC}
-      ShowMessage(AnsiToUtf8(aMsg));
-      {$ELSE}
-      ShowMessage(aMsg);
-      {$ENDIF}
+         ShowMessage(aMsg);
 
       if Assigned(TACBrNFe( FACBrNFe ).OnGerarLog) then
          TACBrNFe( FACBrNFe ).OnGerarLog(aMsg);
@@ -2541,11 +2515,6 @@ function TNFeRetRecepcao.Executar: Boolean;
       end;
 
     finally
-      {$IFDEF ACBrNFeOpenSSL}
-        HTTP.Free;
-      {$ELSE}
-        ReqResp.Free;
-      {$ENDIF}
       NotaUtil.ConfAmbiente;
       TACBrNFe( FACBrNFe ).SetStatus( stIdle );
     end;
@@ -2603,11 +2572,6 @@ function TNFeRecibo.Executar: Boolean;
 var
  aMsg, Texto, SoapAction: string;
  nfeAutorizacaoLote : boolean;
- {$IFDEF ACBrNFeOpenSSL}
-    HTTP: THTTPSend;
- {$ELSE}
-    ReqResp: TACBrHTTPReqResp;
- {$ENDIF}
 begin
   if assigned(FNFeRetorno) then
     FNFeRetorno.Free;
@@ -2674,15 +2638,6 @@ begin
   Texto := Texto +   '</soap12:Body>';
   Texto := Texto +'</soap12:Envelope>';
 
-  {$IFDEF ACBrNFeOpenSSL}
-     HTTP := THTTPSend.Create;
-  {$ELSE}
-     ReqResp := TACBrHTTPReqResp.Create;
-     ConfiguraReqResp( ReqResp );
-     ReqResp.URL := FURL;
-     ReqResp.SOAPAction := SoapAction;
-  {$ENDIF}
-
  FNFeRetorno := TRetConsReciNFe.Create;
  try
    TACBrNFe( FACBrNFe ).SetStatus( stNfeRetRecepcao );
@@ -2699,34 +2654,16 @@ begin
       FConfiguracoes.Geral.Save(FPathArqEnv, Texto);
     end;
 
-   {$IFDEF ACBrNFeOpenSSL}
-      HTTP.Document.WriteBuffer(Texto[1], Length(Texto));
-      ConfiguraHTTP(HTTP,'SOAPAction: "' + SoapAction + '"');
-      HTTP.HTTPMethod('POST', FURL);
-      HTTP.Document.Position := 0;
-      SetLength(Texto, HTTP.Document.Size);
-      HTTP.Document.ReadBuffer(Texto[1], HTTP.Document.Size);
-      FRetornoWS := TiraAcentos(ParseText(Texto, True));
-      // Alterado por Italo em 15/04/2014
-      if nfeAutorizacaoLote then begin
-        FRetWS := SeparaDados( FRetornoWS,'nfeRetAutorizacaoResult');
-        if FRetWS = '' then
-          FRetWS := SeparaDados( FRetornoWS,'nfeRetAutorizacaoLoteResult');
-      end
-      else
-        FRetWS := SeparaDados( FRetornoWS,'nfeRetRecepcao2Result');
-   {$ELSE}
-      ReqResp.Data := Texto;
-      FRetornoWS := TiraAcentos(ParseText(ReqResp.Execute, True));
-      // Alterado por Italo em 15/04/2014
-      if nfeAutorizacaoLote then begin
-        FRetWS := SeparaDados( FRetornoWS,'nfeRetAutorizacaoResult');
-        if FRetWS = '' then
-          FRetWS := SeparaDados( FRetornoWS,'nfeRetAutorizacaoLoteResult');
-      end
-      else
-        FRetWS := SeparaDados( FRetornoWS,'nfeRetRecepcao2Result');
-   {$ENDIF}
+    FRetornoWS := EnviarDadosWebService(FURL,SoapAction,Texto);
+
+    if nfeAutorizacaoLote then
+     begin
+       FRetWS := SeparaDados( FRetornoWS,'nfeRetAutorizacaoResult');
+       if FRetWS = '' then
+         FRetWS := SeparaDados( FRetornoWS,'nfeRetAutorizacaoLoteResult');
+     end
+    else
+       FRetWS := SeparaDados( FRetornoWS,'nfeRetRecepcao2Result');
 
    if FConfiguracoes.Geral.Salvar then
     begin
@@ -2752,11 +2689,7 @@ begin
            'Status Descrição : '+FNFeRetorno.ProtNFe.Items[0].xMotivo+LineBreak+
            'UF : '+CodigoParaUF(FNFeRetorno.cUF)+LineBreak;
    if FConfiguracoes.WebServices.Visualizar then
-   {$IFDEF FPC}
-   ShowMessage(AnsiToUtf8(aMsg));
-   {$ELSE}
-   ShowMessage(aMsg);
-   {$ENDIF}
+     ShowMessage(aMsg);
 
    if Assigned(TACBrNFe( FACBrNFe ).OnGerarLog) then
       TACBrNFe( FACBrNFe ).OnGerarLog(aMsg);
@@ -2773,11 +2706,6 @@ begin
    FMsg   := FNFeRetorno.xMotivo;
 
  finally
-   {$IFDEF ACBrNFeOpenSSL}
-      HTTP.Free;
-   {$ELSE}
-      ReqResp.Free;
-   {$ENDIF}
    NotaUtil.ConfAmbiente;
    TACBrNFe( FACBrNFe ).SetStatus( stIdle );
  end;
@@ -2808,14 +2736,8 @@ var
   aMsg, aEventos: WideString;
   AProcNFe: TProcNFe;
   i, j: Integer;
-  Texto, Metodo, TAGResult: String;
+  Texto, SoapAction, Metodo, TAGResult: String;
   wAtualiza, NFCancelada: Boolean;
-
-  {$IFDEF ACBrNFeOpenSSL}
-     HTTP: THTTPSend;
-  {$ELSE}
-     ReqResp: TACBrHTTPReqResp;
-  {$ENDIF}
 begin
   inherited Executar;
 
@@ -2829,6 +2751,8 @@ begin
     Metodo    := 'NfeConsulta2';
     TAGResult := 'NfeConsultaNF2Result';
   end;
+
+  SoapAction := 'http://www.portalfiscal.inf.br/nfe/wsdl/' + Metodo;  
 
   Texto := '<?xml version="1.0" encoding="utf-8"?>';
   Texto := Texto + '<soap12:Envelope xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap12="http://www.w3.org/2003/05/soap-envelope">';
@@ -2850,13 +2774,6 @@ begin
   Texto := Texto +   '</soap12:Body>';
   Texto := Texto +'</soap12:Envelope>';
 
-  {$IFDEF ACBrNFeOpenSSL}
-     HTTP := THTTPSend.Create;
-  {$ELSE}
-     ReqResp := TACBrHTTPReqResp.Create;
-     ConfiguraReqResp( ReqResp );
-     ReqResp.URL := FURL;
-     ReqResp.SOAPAction := 'http://www.portalfiscal.inf.br/nfe/wsdl/' + Metodo;  {$ENDIF}
   NFeRetorno := TRetConsSitNFe.Create;
   try
     TACBrNFe( FACBrNFe ).SetStatus( stNfeConsulta );
@@ -2873,20 +2790,8 @@ begin
        FConfiguracoes.Geral.Save(FPathArqEnv, Texto);
      end;
 
-    {$IFDEF ACBrNFeOpenSSL}
-       HTTP.Document.WriteBuffer(Texto[1], Length(Texto));
-       ConfiguraHTTP(HTTP,'SOAPAction: "http://www.portalfiscal.inf.br/nfe/wsdl/' + Metodo + '"');
-       HTTP.HTTPMethod('POST', FURL);
-       HTTP.Document.Position := 0;
-       SetLength(Texto, HTTP.Document.Size);
-       HTTP.Document.ReadBuffer(Texto[1], HTTP.Document.Size);
-       FRetornoWS := TiraAcentos(ParseText(Texto, True));
-       FRetWS := SeparaDados(FRetornoWS, TAGResult);
-    {$ELSE}
-       ReqResp.Data := Texto;
-       FRetornoWS := TiraAcentos(ParseText(ReqResp.Execute, True));
-       FRetWS := SeparaDados(FRetornoWS, TAGResult);
-    {$ENDIF}
+    FRetornoWS := EnviarDadosWebService(FURL,SoapAction,Texto);
+    FRetWS := SeparaDados(FRetornoWS, TAGResult);
 
     if FConfiguracoes.Geral.Salvar  then
      begin
@@ -3055,11 +2960,7 @@ begin
       aMsg := aMsg + LineBreak + aEventos;
 
     if FConfiguracoes.WebServices.Visualizar then
-    {$IFDEF FPC}
-    ShowMessage(AnsiToUtf8(aMsg));
-    {$ELSE}
-    ShowMessage(aMsg);
-    {$ENDIF}
+      ShowMessage(aMsg);
 
     if Assigned(TACBrNFe( FACBrNFe ).OnGerarLog) then
        TACBrNFe( FACBrNFe ).OnGerarLog(aMsg);
@@ -3164,11 +3065,6 @@ begin
         end;
      end;
   finally
-    {$IFDEF ACBrNFeOpenSSL}
-       HTTP.Free;
-    {$ELSE}
-      ReqResp.Free;
-    {$ENDIF}
     NFeRetorno.Free; //(se descomentar essa linha não será possível ler a propriedade ACBrNFe1.WebServices.Consulta.protNFe.nProt)
     NotaUtil.ConfAmbiente;
     TACBrNFe( FACBrNFe ).SetStatus( stIdle );
@@ -3179,15 +3075,10 @@ end;
 function TNFeCancelamento.Executar: Boolean;
 var
   NFeRetorno: TRetCancNFe;
-  aMsg: string;
+  aMsg, SoapAction: string;
   i : Integer;
   Texto : String;
   wPROC: TStringList;
-  {$IFDEF ACBrNFeOpenSSL}
-     HTTP: THTTPSend;
-  {$ELSE}
-     ReqResp: TACBrHTTPReqResp;
-  {$ENDIF}
 begin
   inherited Executar;
 
@@ -3211,14 +3102,7 @@ begin
   Texto := Texto +   '</soap12:Body>';
   Texto := Texto +'</soap12:Envelope>';
 
-  {$IFDEF ACBrNFeOpenSSL}
-     HTTP := THTTPSend.Create;
-  {$ELSE}
-     ReqResp := TACBrHTTPReqResp.Create;
-     ConfiguraReqResp( ReqResp );
-     ReqResp.URL := FURL;
-     ReqResp.SOAPAction := 'http://www.portalfiscal.inf.br/nfe/wsdl/NfeCancelamento2';
-  {$ENDIF}
+  SoapAction := 'http://www.portalfiscal.inf.br/nfe/wsdl/NfeCancelamento2';
 
   NFeRetorno := TRetCancNFe.Create;
   try
@@ -3239,20 +3123,8 @@ begin
        FConfiguracoes.Geral.Save(FPathArqEnv, Texto);
      end;
 
-    {$IFDEF ACBrNFeOpenSSL}
-       HTTP.Document.WriteBuffer(Texto[1], Length(Texto));
-       ConfiguraHTTP(HTTP,'SOAPAction: "http://www.portalfiscal.inf.br/nfe/wsdl/NfeCancelamento2"');
-       HTTP.HTTPMethod('POST', FURL);
-       HTTP.Document.Position := 0;
-       SetLength(Texto, HTTP.Document.Size);
-       HTTP.Document.ReadBuffer(Texto[1], HTTP.Document.Size);
-       FRetornoWS := TiraAcentos(ParseText(Texto, True));
-       FRetWS := SeparaDados( FRetornoWS,'nfeCancelamentoNF2Result');
-    {$ELSE}
-       ReqResp.Data := Texto;
-       FRetornoWS := TiraAcentos(ParseText(ReqResp.Execute, True));
-       FRetWS := SeparaDados( FRetornoWS,'nfeCancelamentoNF2Result');
-   {$ENDIF}
+    FRetornoWS := EnviarDadosWebService(FURL,SoapAction,Texto);
+    FRetWS := SeparaDados( FRetornoWS,'nfeCancelamentoNF2Result');
 
     if FConfiguracoes.Geral.Salvar then
      begin
@@ -3285,11 +3157,7 @@ begin
             'Protocolo : '+NFeRetorno.nProt+LineBreak;
 
     if FConfiguracoes.WebServices.Visualizar then
-    {$IFDEF FPC}
-    ShowMessage(AnsiToUtf8(aMsg));
-    {$ELSE}
-    ShowMessage(aMsg);
-    {$ENDIF}
+      ShowMessage(aMsg);
 
     if Assigned(TACBrNFe( FACBrNFe ).OnGerarLog) then
        TACBrNFe( FACBrNFe ).OnGerarLog(aMsg);
@@ -3371,11 +3239,6 @@ begin
     end;
 
   finally
-    {$IFDEF ACBrNFeOpenSSL}
-       HTTP.Free;
-    {$ELSE}
-      ReqResp.Free;
-    {$ENDIF}
     NFeRetorno.Free; //(se descomentar essa linha não será possível ler a propriedade ACBrNFe1.WebServices.Consulta.protNFe)
     NotaUtil.ConfAmbiente;
     TACBrNFe( FACBrNFe ).SetStatus( stIdle );
@@ -3387,12 +3250,8 @@ begin
   if DFeUtil.EstaVazio(AValue) then
    begin
      if Assigned(TACBrNFe( FACBrNFe ).OnGerarLog) then
-        TACBrNFe( FACBrNFe ).OnGerarLog('ERRO: Informar uma Justificativa para cancelar a Nota Fiscal Eletrônica');
-     {$IFDEF FPC}
-     raise EACBrNFeException.Create(AnsiToUtf8('Informar uma Justificativa para cancelar a Nota Fiscal Eletrônica'))
-     {$ELSE}
-     raise EACBrNFeException.Create('Informar uma Justificativa para cancelar a Nota Fiscal Eletrônica')
-     {$ENDIF}
+        TACBrNFe( FACBrNFe ).OnGerarLog('ERRO: Informar uma Justificativa para cancelar a Nota Fiscal Eletronica');
+     raise EACBrNFeException.Create('Informar uma Justificativa para cancelar a Nota Fiscal Eletronica')
    end
   else
     AValue := DFeUtil.TrataString(AValue);
@@ -3400,12 +3259,8 @@ begin
   if Length(AValue) < 15 then
    begin
      if Assigned(TACBrNFe( FACBrNFe ).OnGerarLog) then
-        TACBrNFe( FACBrNFe ).OnGerarLog('ERRO: A Justificativa para Cancelamento da Nota Fiscal Eletrônica deve ter no mínimo 15 caracteres');
-     {$IFDEF FPC}
-     raise EACBrNFeException.Create(AnsiToUtf8('A Justificativa para Cancelamento da Nota Fiscal Eletrônica deve ter no mínimo 15 caracteres'))
-     {$ELSE}
-     raise EACBrNFeException.Create('A Justificativa para Cancelamento da Nota Fiscal Eletrônica deve ter no mínimo 15 caracteres')
-     {$ENDIF}
+        TACBrNFe( FACBrNFe ).OnGerarLog('ERRO: A Justificativa para Cancelamento da Nota Fiscal Eletronica deve ter no minimo 15 caracteres');
+     raise EACBrNFeException.Create('A Justificativa para Cancelamento da Nota Fiscal Eletronica deve ter no minimo 15 caracteres')
    end
   else
     FJustificativa := Trim(AValue);
@@ -3415,14 +3270,9 @@ end;
 function TNFeInutilizacao.Executar: Boolean;
 var
   NFeRetorno: TRetInutNFe;
-  aMsg: string;
+  aMsg, SoapAction: String;
   Texto : String;
   wProc  : TStringList ;
-  {$IFDEF ACBrNFeOpenSSL}
-     HTTP: THTTPSend;
-  {$ELSE}
-     ReqResp: TACBrHTTPReqResp;
-  {$ENDIF}
 begin
   inherited Executar;
 
@@ -3446,14 +3296,8 @@ begin
   Texto := Texto +   '</soap12:Body>';
   Texto := Texto +'</soap12:Envelope>';
 
-  {$IFDEF ACBrNFeOpenSSL}
-     HTTP := THTTPSend.Create;
-  {$ELSE}
-     ReqResp := TACBrHTTPReqResp.Create;
-     ConfiguraReqResp( ReqResp );
-     ReqResp.URL := FURL;
-     ReqResp.SoapAction := 'http://www.portalfiscal.inf.br/nfe/wsdl/NfeInutilizacao2';
-  {$ENDIF}
+  SoapAction := 'http://www.portalfiscal.inf.br/nfe/wsdl/NfeInutilizacao2';
+
   NFeRetorno := TRetInutNFe.Create;
   try
     TACBrNFe( FACBrNFe ).SetStatus( stNfeInutilizacao );
@@ -3473,20 +3317,8 @@ begin
        FConfiguracoes.Geral.Save(FPathArqEnv, Texto);
      end;
 
-    {$IFDEF ACBrNFeOpenSSL}
-       HTTP.Document.WriteBuffer(Texto[1], Length(Texto));
-       ConfiguraHTTP(HTTP,'SOAPAction: "http://www.portalfiscal.inf.br/nfe/wsdl/NfeInutilizacao2"');
-       HTTP.HTTPMethod('POST', FURL);
-       HTTP.Document.Position := 0;
-       SetLength(Texto, HTTP.Document.Size);
-       HTTP.Document.ReadBuffer(Texto[1], HTTP.Document.Size);
-       FRetornoWS := TiraAcentos(ParseText(Texto, True));
-       FRetWS := SeparaDados( FRetornoWS,'nfeInutilizacaoNF2Result');
-    {$ELSE}
-       ReqResp.Data := Texto;
-       FRetornoWS := TiraAcentos(ParseText(ReqResp.Execute, True));
-       FRetWS := SeparaDados( FRetornoWS,'nfeInutilizacaoNF2Result');
-    {$ENDIF}
+    FRetornoWS := EnviarDadosWebService(FURL,SoapAction,Texto);
+    FRetWS := SeparaDados( FRetornoWS,'nfeInutilizacaoNF2Result');
 
     if FConfiguracoes.Geral.Salvar then
      begin
@@ -3514,11 +3346,7 @@ begin
             'UF : '+CodigoParaUF(NFeRetorno.cUF)+LineBreak+
             'Recebimento : '+DFeUtil.SeSenao(NFeRetorno.DhRecbto = 0, '', DateTimeToStr(NFeRetorno.dhRecbto));
     if FConfiguracoes.WebServices.Visualizar then
-    {$IFDEF FPC}
-    ShowMessage(AnsiToUtf8(aMsg));
-    {$ELSE}
-    ShowMessage(aMsg);
-    {$ENDIF}
+      ShowMessage(aMsg);
 
     if Assigned(TACBrNFe( FACBrNFe ).OnGerarLog) then
        TACBrNFe( FACBrNFe ).OnGerarLog(aMsg);
@@ -3557,11 +3385,6 @@ begin
     end;
 
   finally
-    {$IFDEF ACBrNFeOpenSSL}
-       HTTP.Free;
-    {$ELSE}
-      ReqResp.Free;
-    {$ENDIF}
     NFeRetorno.Free; //(se descomentar essa linha não será possível ler a propriedade ACBrNFe1.WebServices.Consulta.protNFe)
     NotaUtil.ConfAmbiente;
     TACBrNFe( FACBrNFe ).SetStatus( stIdle );
@@ -3573,12 +3396,8 @@ begin
   if DFeUtil.EstaVazio(AValue) then
    begin
      if Assigned(TACBrNFe( FACBrNFe ).OnGerarLog) then
-        TACBrNFe( FACBrNFe ).OnGerarLog('ERRO: Informar uma Justificativa para Inutilização de numeração da Nota Fiscal Eletrônica');
-     {$IFDEF FPC}
-     raise EACBrNFeException.Create(AnsiToUtf8('Informar uma Justificativa para Inutilização de numeração da Nota Fiscal Eletrônica'))
-     {$ELSE}
-     raise EACBrNFeException.Create('Informar uma Justificativa para Inutilização de numeração da Nota Fiscal Eletrônica')
-     {$ENDIF}
+        TACBrNFe( FACBrNFe ).OnGerarLog('ERRO: Informar uma Justificativa para Inutilização de numeração da Nota Fiscal Eletronica');
+     raise EACBrNFeException.Create('Informar uma Justificativa para Inutilização de numeração da Nota Fiscal Eletronica')
    end
   else
     AValue := DFeUtil.TrataString(AValue);
@@ -3586,12 +3405,8 @@ begin
   if Length(Trim(AValue)) < 15 then
    begin
      if Assigned(TACBrNFe( FACBrNFe ).OnGerarLog) then
-        TACBrNFe( FACBrNFe ).OnGerarLog('ERRO: A Justificativa para Inutilização de numeração da Nota Fiscal Eletrônica deve ter no mínimo 15 caracteres');
-     {$IFDEF FPC}
-     raise EACBrNFeException.Create(AnsiToUtf8('A Justificativa para Inutilização de numeração da Nota Fiscal Eletrônica deve ter no mínimo 15 caracteres'))
-     {$ELSE}
-     raise EACBrNFeException.Create('A Justificativa para Inutilização de numeração da Nota Fiscal Eletrônica deve ter no mínimo 15 caracteres')
-     {$ENDIF}
+        TACBrNFe( FACBrNFe ).OnGerarLog('ERRO: A Justificativa para Inutilização de numeração da Nota Fiscal Eletronica deve ter no minimo 15 caracteres');
+     raise EACBrNFeException.Create('A Justificativa para Inutilização de numeração da Nota Fiscal Eletronica deve ter no minimo 15 caracteres')
    end
   else
     FJustificativa := Trim(AValue);
@@ -3607,13 +3422,8 @@ end;
 
 function TNFeConsultaCadastro.Executar: Boolean;
 var
-  aMsg : String;
+  aMsg, SoapAction : String;
   Texto : String;
-  {$IFDEF ACBrNFeOpenSSL}
-     HTTP: THTTPSend;
-  {$ELSE}
-     ReqResp: TACBrHTTPReqResp;
-  {$ENDIF}
 begin
   if assigned(FRetConsCad) then
      FreeAndNil(FRetConsCad);
@@ -3640,14 +3450,8 @@ begin
   Texto := Texto +   '</soap12:Body>';
   Texto := Texto +'</soap12:Envelope>';
 
-  {$IFDEF ACBrNFeOpenSSL}
-     HTTP := THTTPSend.Create;
-  {$ELSE}
-     ReqResp := TACBrHTTPReqResp.Create;
-     ConfiguraReqResp( ReqResp );
-     ReqResp.URL := FURL;
-     ReqResp.SoapAction := 'http://www.portalfiscal.inf.br/nfe/wsdl/CadConsultaCadastro2' ;
-  {$ENDIF}
+  SoapAction := 'http://www.portalfiscal.inf.br/nfe/wsdl/CadConsultaCadastro2' ;
+
   try
     TACBrNFe( FACBrNFe ).SetStatus( stNFeCadastro );
 
@@ -3666,20 +3470,8 @@ begin
      end;
 
     FRetWS := '';
-    {$IFDEF ACBrNFeOpenSSL}
-       HTTP.Document.WriteBuffer(Texto[1], Length(Texto));
-       ConfiguraHTTP(HTTP,'SOAPAction: "http://www.portalfiscal.inf.br/nfe/wsdl/CadConsultaCadastro2"');
-       HTTP.HTTPMethod('POST', FURL);
-       HTTP.Document.Position := 0;
-       SetLength(Texto, HTTP.Document.Size);
-       HTTP.Document.ReadBuffer(Texto[1], HTTP.Document.Size);
-       FRetornoWS := TiraAcentos(ParseText(Texto, True));
-       FRetWS := SeparaDados( FRetornoWS,'consultaCadastro2Result');
-    {$ELSE}
-       ReqResp.Data := Texto;
-       FRetornoWS := TiraAcentos(ParseText(ReqResp.Execute, True));
-       FRetWS := SeparaDados( FRetornoWS,'consultaCadastro2Result');
-    {$ENDIF}
+    FRetornoWS := EnviarDadosWebService(FURL,SoapAction,Texto);
+    FRetWS := SeparaDados( FRetornoWS,'consultaCadastro2Result');
 
     if FConfiguracoes.Geral.Salvar then
      begin
@@ -3704,11 +3496,7 @@ begin
 
     TACBrNFe( FACBrNFe ).SetStatus( stIdle );
     if FConfiguracoes.WebServices.Visualizar then
-    {$IFDEF FPC}
-    ShowMessage(AnsiToUtf8(aMsg));
-    {$ELSE}
-    ShowMessage(aMsg);
-    {$ENDIF}
+       ShowMessage(aMsg);
 
     if Assigned(TACBrNFe( FACBrNFe ).OnGerarLog) then
        TACBrNFe( FACBrNFe ).OnGerarLog(aMsg);
@@ -3723,11 +3511,6 @@ begin
 
    Result := (FRetConsCad.cStat in [111,112]);
   finally
-    {$IFDEF ACBrNFeOpenSSL}
-       HTTP.Free;
-    {$ELSE}
-       ReqResp.Free;
-    {$ENDIF}
     NotaUtil.ConfAmbiente;
     TACBrNFe( FACBrNFe ).SetStatus( stIdle );
   end;
@@ -3767,12 +3550,7 @@ end;
 function TNFeEnvDPEC.Executar: Boolean;
 var
   Texto : String;
-  aMsg : String;
-  {$IFDEF ACBrNFeOpenSSL}
-     HTTP: THTTPSend;
-  {$ELSE}
-     ReqResp: TACBrHTTPReqResp;
-  {$ENDIF}
+  aMsg, SoapAction : String;
   RetDPEC : TRetDPEC;
   wProc: TStringList;
 begin
@@ -3797,13 +3575,7 @@ begin
   Texto := Texto + '</soap:Body>';
   Texto := Texto + '</soap:Envelope>';
 
-  {$IFDEF ACBrNFeOpenSSL}
-     HTTP := THTTPSend.Create;
-  {$ELSE}
-     ReqResp := TACBrHTTPReqResp.Create;
-     ReqResp.URL := FURL;
-     ReqResp.SoapAction := 'http://www.portalfiscal.inf.br/nfe/wsdl/SCERecepcaoRFB/sceRecepcaoDPEC';
-  {$ENDIF}
+  SoapAction := 'http://www.portalfiscal.inf.br/nfe/wsdl/SCERecepcaoRFB/sceRecepcaoDPEC';
 
   try
     TACBrNFe( FACBrNFe ).SetStatus( stNFeEnvDPEC );
@@ -3824,20 +3596,8 @@ begin
      end;
 
     FRetWS := '';
-    {$IFDEF ACBrNFeOpenSSL}
-       HTTP.Document.WriteBuffer(Texto[1], Length(Texto));
-       ConfiguraHTTP(HTTP,'SOAPAction: "http://www.portalfiscal.inf.br/nfe/wsdl/SCERecepcaoRFB/sceRecepcaoDPEC"');
-       HTTP.HTTPMethod('POST', FURL);
-       HTTP.Document.Position := 0;
-       SetLength(Texto, HTTP.Document.Size);
-       HTTP.Document.ReadBuffer(Texto[1], HTTP.Document.Size);
-       FRetornoWS := TiraAcentos(ParseText(Texto, True));
-       FRetWS := SeparaDados( FRetornoWS,'sceRecepcaoDPECResult',True);
-    {$ELSE}
-       ReqResp.Data := Texto;
-       FRetornoWS := TiraAcentos(ParseText(ReqResp.Execute, True));
-       FRetWS := SeparaDados( FRetornoWS,'sceRecepcaoDPECResult',True);
-    {$ENDIF}
+    FRetornoWS := EnviarDadosWebService(FURL,SoapAction,Texto);
+    FRetWS := SeparaDados( FRetornoWS,'sceRecepcaoDPECResult',True);
 
     RetDPEC := TRetDPEC.Create;
     RetDPEC.Leitor.Arquivo := FRetWS;
@@ -3853,11 +3613,7 @@ begin
 
     TACBrNFe( FACBrNFe ).SetStatus( stIdle );
     if FConfiguracoes.WebServices.Visualizar then
-    {$IFDEF FPC}
-    ShowMessage(AnsiToUtf8(aMsg));
-    {$ELSE}
-    ShowMessage(aMsg);
-    {$ENDIF}
+       ShowMessage(aMsg);
 
     if Assigned(TACBrNFe( FACBrNFe ).OnGerarLog) then
        TACBrNFe( FACBrNFe ).OnGerarLog(aMsg);
@@ -3908,11 +3664,6 @@ begin
     RetDPEC.Free;
 
   finally
-    {$IFDEF ACBrNFeOpenSSL}
-       HTTP.Free;
-    {$ELSE}
-       ReqResp.Free;
-    {$ENDIF}
     NotaUtil.ConfAmbiente;
     TACBrNFe( FACBrNFe ).SetStatus( stIdle );
   end;
@@ -3922,12 +3673,7 @@ end;
 function TNFeConsultaDPEC.Executar: Boolean;
 var
   Texto : String;
-  aMsg : String;
-  {$IFDEF ACBrNFeOpenSSL}
-     HTTP: THTTPSend;
-  {$ELSE}
-     ReqResp: TACBrHTTPReqResp;
-  {$ENDIF}
+  aMsg, SoapAction : String;
   FretDPEC: TRetDPEC;
 begin
   inherited Executar;
@@ -3951,13 +3697,7 @@ begin
   Texto := Texto + '</soap:Body>';
   Texto := Texto + '</soap:Envelope>';
 
-  {$IFDEF ACBrNFeOpenSSL}
-     HTTP := THTTPSend.Create;
-  {$ELSE}
-     ReqResp := TACBrHTTPReqResp.Create;
-     ReqResp.URL := FURL;
-     ReqResp.SoapAction := 'http://www.portalfiscal.inf.br/nfe/wsdl/SCEConsultaRFB/sceConsultaDPEC';
-  {$ENDIF}
+  SoapAction := 'http://www.portalfiscal.inf.br/nfe/wsdl/SCEConsultaRFB/sceConsultaDPEC';
 
   FretDPEC:= TRetDPEC.Create;
   try
@@ -3978,20 +3718,8 @@ begin
      end;
 
     FRetWS := '';
-    {$IFDEF ACBrNFeOpenSSL}
-       HTTP.Document.WriteBuffer(Texto[1], Length(Texto));
-       ConfiguraHTTP(HTTP,'SOAPAction: "http://www.portalfiscal.inf.br/nfe/wsdl/SCEConsultaRFB/sceConsultaDPEC"');
-       HTTP.HTTPMethod('POST', FURL);
-       HTTP.Document.Position := 0;
-       SetLength(Texto, HTTP.Document.Size);
-       HTTP.Document.ReadBuffer(Texto[1], HTTP.Document.Size);
-       FRetornoWS := TiraAcentos(ParseText(Texto, True));
-       FRetWS := SeparaDados( FRetornoWS,'sceConsultaDPECResult',True);
-    {$ELSE}
-       ReqResp.Data := Texto;
-       FRetornoWS := TiraAcentos(ParseText(ReqResp.Execute, True));
-       FRetWS := SeparaDados( FRetornoWS,'sceConsultaDPECResult',True);
-    {$ENDIF}
+    FRetornoWS := EnviarDadosWebService(FURL,SoapAction,Texto);
+    FRetWS := SeparaDados( FRetornoWS,'sceConsultaDPECResult',True);
 
     if FConfiguracoes.Geral.Salvar then
      begin
@@ -4019,11 +3747,7 @@ begin
 
     TACBrNFe( FACBrNFe ).SetStatus( stIdle );
     if FConfiguracoes.WebServices.Visualizar then
-    {$IFDEF FPC}
-    ShowMessage(AnsiToUtf8(aMsg));
-    {$ELSE}
-    ShowMessage(aMsg);
-    {$ENDIF}
+       ShowMessage(aMsg);
 
     if Assigned(TACBrNFe( FACBrNFe ).OnGerarLog) then
        TACBrNFe( FACBrNFe ).OnGerarLog(aMsg);
@@ -4040,11 +3764,6 @@ begin
     Result := ({RetDPEC}FretDPEC.cStat = 125);
 
   finally
-    {$IFDEF ACBrNFeOpenSSL}
-       HTTP.Free;
-    {$ELSE}
-       ReqResp.Free;
-    {$ENDIF}
     NotaUtil.ConfAmbiente;
     TACBrNFe( FACBrNFe ).SetStatus( stIdle );
     FretDPEC.Free;
@@ -4083,16 +3802,11 @@ end;
 
 function TNFeCartaCorrecao.Executar: Boolean;
 var
-  aMsg, NomeArq: string;
+  aMsg, SoapAction, NomeArq: string;
   Texto : String;
   wProc  : TStringList ;
   i,j : integer;
   Leitor : TLeitor;
-  {$IFDEF ACBrNFeOpenSSL}
-     HTTP: THTTPSend;
-  {$ELSE}
-     ReqResp: TACBrHTTPReqResp;
-  {$ENDIF}
 begin
   FCCe.idLote := idLote;
   if Assigned(FCCeRetorno) then
@@ -4120,14 +3834,7 @@ begin
   Texto := Texto +   '</soap12:Body>';
   Texto := Texto +'</soap12:Envelope>';
 
-   {$IFDEF ACBrNFeOpenSSL}
-     HTTP := THTTPSend.Create;
-  {$ELSE}
-     ReqResp := TACBrHTTPReqResp.Create;
-     ConfiguraReqResp( ReqResp );
-     ReqResp.URL := FURL;
-     ReqResp.SoapAction := 'http://www.portalfiscal.inf.br/nfe/wsdl/RecepcaoEvento';
-  {$ENDIF}                  
+  SoapAction := 'http://www.portalfiscal.inf.br/nfe/wsdl/RecepcaoEvento';
 
   try
     TACBrNFe( FACBrNFe ).SetStatus( stNFeCCe );
@@ -4147,20 +3854,8 @@ begin
     if FConfiguracoes.WebServices.Salvar then
       FConfiguracoes.Geral.Save(IntToStr(FCCe.idLote)+ '-ped-cce-soap.xml', Texto);
 
-    {$IFDEF ACBrNFeOpenSSL}
-       HTTP.Document.WriteBuffer(Texto[1], Length(Texto));
-       ConfiguraHTTP(HTTP,'SOAPAction: "http://www.portalfiscal.inf.br/nfe/wsdl/RecepcaoEvento"');
-       HTTP.HTTPMethod('POST', FURL);
-       HTTP.Document.Position := 0;
-       SetLength(Texto, HTTP.Document.Size);
-       HTTP.Document.ReadBuffer(Texto[1], HTTP.Document.Size);
-       FRetornoWS := TiraAcentos(ParseText(Texto, True));
-       FRetWS := SeparaDados( FRetornoWS,'nfeRecepcaoEventoResult');
-    {$ELSE}
-       ReqResp.Data := Texto;
-       FRetornoWS := TiraAcentos(ParseText(ReqResp.Execute, True));
-       FRetWS := SeparaDados( FRetornoWS,'nfeRecepcaoEventoResult');
-    {$ENDIF}
+    FRetornoWS := EnviarDadosWebService(FURL,SoapAction,Texto);
+    FRetWS := SeparaDados( FRetornoWS,'nfeRecepcaoEventoResult');
 
     FCCeRetorno := TRetCCeNFe.Create;
     FCCeRetorno.Leitor.Arquivo := FRetWS;
@@ -4173,11 +3868,7 @@ begin
             'Status Descrição : '+CCeRetorno.xMotivo+LineBreak+
             'Recebimento : '+DFeUtil.SeSenao(CCeRetorno.retEvento.Items[0].RetInfEvento.dhRegEvento = 0, '', DateTimeToStr(CCeRetorno.retEvento.Items[0].RetInfEvento.dhRegEvento));
     if FConfiguracoes.WebServices.Visualizar then
-    {$IFDEF FPC}
-    ShowMessage(AnsiToUtf8(aMsg));
-    {$ELSE}
-    ShowMessage(aMsg);
-    {$ENDIF}
+      ShowMessage(aMsg);
 
     if Assigned(TACBrNFe( FACBrNFe ).OnGerarLog) then
        TACBrNFe( FACBrNFe ).OnGerarLog(aMsg);
@@ -4286,11 +3977,6 @@ begin
       Leitor.Free;
     end;
   finally
-    {$IFDEF ACBrNFeOpenSSL}
-       HTTP.Free;
-    {$ELSE}
-       ReqResp.Free;
-    {$ENDIF}
     NotaUtil.ConfAmbiente;
     TACBrNFe( FACBrNFe ).SetStatus( stIdle );
   end;
@@ -4313,16 +3999,11 @@ end;
 
 function TNFeEnvEvento.Executar: Boolean;
 var
-  aMsg, NomeArq: string;
+  aMsg, SoapAction, NomeArq: string;
   Texto : String;
   wProc  : TStringList ;
   i,j : integer;
   Leitor : TLeitor;
-  {$IFDEF ACBrNFeOpenSSL}
-     HTTP: THTTPSend;
-  {$ELSE}
-     ReqResp: TACBrHTTPReqResp;
-  {$ENDIF}
 begin
   FEvento.idLote := idLote;
   if Assigned(FEventoRetorno) then begin
@@ -4352,14 +4033,7 @@ begin
   Texto := Texto +   '</soap12:Body>';
   Texto := Texto +'</soap12:Envelope>';
 
-   {$IFDEF ACBrNFeOpenSSL}
-     HTTP := THTTPSend.Create;
-  {$ELSE}
-     ReqResp := TACBrHTTPReqResp.Create;
-     ConfiguraReqResp( ReqResp );
-     ReqResp.URL := FURL;
-     ReqResp.SoapAction := 'http://www.portalfiscal.inf.br/nfe/wsdl/RecepcaoEvento';
-  {$ENDIF}
+  SoapAction := 'http://www.portalfiscal.inf.br/nfe/wsdl/RecepcaoEvento';
 
   try
     TACBrNFe( FACBrNFe ).SetStatus( stNFeEvento );
@@ -4381,20 +4055,8 @@ begin
     if FConfiguracoes.WebServices.Salvar then
       FConfiguracoes.Geral.Save(IntToStr(FEvento.idLote)+'-ped-evento-soap.xml', Texto);
 
-    {$IFDEF ACBrNFeOpenSSL}
-       HTTP.Document.WriteBuffer(Texto[1], Length(Texto));
-       ConfiguraHTTP(HTTP,'SOAPAction: "http://www.portalfiscal.inf.br/nfe/wsdl/RecepcaoEvento"');
-       HTTP.HTTPMethod('POST', FURL);
-       HTTP.Document.Position := 0;
-       SetLength(Texto, HTTP.Document.Size);
-       HTTP.Document.ReadBuffer(Texto[1], HTTP.Document.Size);
-       FRetornoWS := TiraAcentos(ParseText(Texto, True));
-       FRetWS := SeparaDados( FRetornoWS,'nfeRecepcaoEventoResult');
-    {$ELSE}
-       ReqResp.Data := Texto;
-       FRetornoWS := TiraAcentos(ParseText(ReqResp.Execute, True));
-       FRetWS := SeparaDados( FRetornoWS,'nfeRecepcaoEventoResult');
-    {$ENDIF}
+    FRetornoWS := EnviarDadosWebService(FURL,SoapAction,Texto);
+    FRetWS := SeparaDados( FRetornoWS,'nfeRecepcaoEventoResult');
 
     FPathArqResp := IntToStr(FEvento.idLote) + '-eve.xml';
     if FConfiguracoes.Geral.Salvar then
@@ -4417,11 +4079,7 @@ begin
                                                        '',
                                                        DateTimeToStr(EventoRetorno.retEvento.Items[0].RetInfEvento.dhRegEvento));
     if FConfiguracoes.WebServices.Visualizar then
-    {$IFDEF FPC}
-    ShowMessage(AnsiToUtf8(aMsg));
-    {$ELSE}
-    ShowMessage(aMsg);
-    {$ENDIF}
+      ShowMessage(aMsg);
 
     if Assigned(TACBrNFe( FACBrNFe ).OnGerarLog) then
        TACBrNFe( FACBrNFe ).OnGerarLog(aMsg);
@@ -4537,11 +4195,6 @@ begin
       end;   
     end;
   finally
-    {$IFDEF ACBrNFeOpenSSL}
-       HTTP.Free;
-    {$ELSE}
-       ReqResp.Free;
-    {$ENDIF}
     NotaUtil.ConfAmbiente;
     TACBrNFe( FACBrNFe ).SetStatus( stIdle );
   end;
@@ -4564,14 +4217,8 @@ end;
 
 function TNFeConsNFeDest.Executar: Boolean;
 var
-  aMsg: string;
+  aMsg, SoapAction: string;
   Texto : String;
-
-  {$IFDEF ACBrNFeOpenSSL}
-     HTTP: THTTPSend;
-  {$ELSE}
-     ReqResp: TACBrHTTPReqResp;
-  {$ENDIF}
 begin
   inherited Executar;
 
@@ -4597,14 +4244,7 @@ begin
   Texto := Texto +   '</soap12:Body>';
   Texto := Texto +'</soap12:Envelope>';
 
-  {$IFDEF ACBrNFeOpenSSL}
-     HTTP := THTTPSend.Create;
-  {$ELSE}
-     ReqResp := TACBrHTTPReqResp.Create;
-     ConfiguraReqResp( ReqResp );
-     ReqResp.URL := FURL;
-     ReqResp.SoapAction := 'http://www.portalfiscal.inf.br/nfe/wsdl/NfeConsultaDest/nfeConsultaNFDest';
-  {$ENDIF}
+  SoapAction := 'http://www.portalfiscal.inf.br/nfe/wsdl/NfeConsultaDest/nfeConsultaNFDest';
 
   // Movido para fora do try por Italo em 16/08/2012
 //  if Assigned(FretConsNFeDest)
@@ -4630,20 +4270,8 @@ begin
      end;
 
     try
-      {$IFDEF ACBrNFeOpenSSL}
-         HTTP.Document.WriteBuffer(Texto[1], Length(Texto));
-         ConfiguraHTTP(HTTP,'SOAPAction: "http://www.portalfiscal.inf.br/nfe/wsdl/NfeConsultaDest/nfeConsultaNFDest"');
-         HTTP.HTTPMethod('POST', FURL);
-         HTTP.Document.Position := 0;
-         SetLength(Texto, HTTP.Document.Size);
-         HTTP.Document.ReadBuffer(Texto[1], HTTP.Document.Size);
-         FRetornoWS := TiraAcentos(ParseText(Texto, True));
-         FRetWS := SeparaDados( FRetornoWS,'nfeConsultaNFDestResult');
-      {$ELSE}
-         ReqResp.Data := Texto;
-         FRetornoWS := TiraAcentos(ParseText(ReqResp.Execute, True));
-         FRetWS := SeparaDados( FRetornoWS,'nfeConsultaNFDestResult');
-      {$ENDIF}
+      FRetornoWS := EnviarDadosWebService(FURL,SoapAction,Texto);
+      FRetWS := SeparaDados( FRetornoWS,'nfeConsultaNFDestResult');
 
       FretConsNFeDest.Leitor.Arquivo := FRetWS;
       FretConsNFeDest.LerXml;
@@ -4659,11 +4287,7 @@ begin
               'Último NSU : '+FretConsNFeDest.ultNSU+LineBreak;
               
       if FConfiguracoes.WebServices.Visualizar then
-      {$IFDEF FPC}
-      ShowMessage(AnsiToUtf8(aMsg));
-      {$ELSE}
-      ShowMessage(aMsg);
-      {$ENDIF}
+        ShowMessage(aMsg);
 
       if Assigned(TACBrNFe( FACBrNFe ).OnGerarLog) then
          TACBrNFe( FACBrNFe ).OnGerarLog(aMsg);
@@ -4694,11 +4318,6 @@ begin
       end;
     end;
   finally
-    {$IFDEF ACBrNFeOpenSSL}
-      HTTP.Free;
-    {$ELSE}
-      ReqResp.Free;
-    {$ENDIF}
     NotaUtil.ConfAmbiente;
     TACBrNFe( FACBrNFe ).SetStatus( stIdle );
   end;
@@ -4723,15 +4342,9 @@ end;
 
 function TNFeDownloadNFe.Executar: Boolean;
 var
-  aMsg: string;
+  aMsg, SoapAction: string;
   Texto : String;
   i: Integer;
-
-  {$IFDEF ACBrNFeOpenSSL}
-     HTTP: THTTPSend;
-  {$ELSE}
-     ReqResp: TACBrHTTPReqResp;
-  {$ENDIF}
 begin
   inherited Executar;
 
@@ -4757,14 +4370,7 @@ begin
   Texto := Texto +   '</soap12:Body>';
   Texto := Texto +'</soap12:Envelope>';
 
-  {$IFDEF ACBrNFeOpenSSL}
-     HTTP := THTTPSend.Create;
-  {$ELSE}
-     ReqResp := TACBrHTTPReqResp.Create;
-     ConfiguraReqResp( ReqResp );
-     ReqResp.URL := FURL;
-     ReqResp.SOAPAction := 'http://www.portalfiscal.inf.br/nfe/wsdl/NfeDownloadNF/nfeDownloadNF';
-  {$ENDIF}
+  SOAPAction := 'http://www.portalfiscal.inf.br/nfe/wsdl/NfeDownloadNF/nfeDownloadNF';
 
   if Assigned(FRetDownloadNFe)
    then FreeAndNil(FRetDownloadNFe);
@@ -4787,20 +4393,8 @@ begin
      end;
 
     try
-      {$IFDEF ACBrNFeOpenSSL}
-         HTTP.Document.WriteBuffer(Texto[1], Length(Texto));
-         ConfiguraHTTP(HTTP,'SOAPAction: "http://www.portalfiscal.inf.br/nfe/wsdl/NfeDownloadNF/nfeDownloadNF"');
-         HTTP.HTTPMethod('POST', FURL);
-         HTTP.Document.Position := 0;
-         SetLength(Texto, HTTP.Document.Size);
-         HTTP.Document.ReadBuffer(Texto[1], HTTP.Document.Size);
-         FRetornoWS := TiraAcentos(ParseText(Texto, True));
-         FRetWS := SeparaDados( FRetornoWS,'nfeDownloadNFResult');
-      {$ELSE}
-         ReqResp.Data := Texto;
-         FRetornoWS := TiraAcentos(ParseText(ReqResp.Execute, True));
-         FRetWS := SeparaDados( FRetornoWS,'nfeDownloadNFResult');
-      {$ENDIF}
+      FRetornoWS := EnviarDadosWebService(FURL,SoapAction,Texto);
+      FRetWS := SeparaDados( FRetornoWS,'nfeDownloadNFResult');
 
       FRetDownloadNFe.Leitor.Arquivo := FRetWS;
       FRetDownloadNFe.LerXml;
@@ -4815,11 +4409,7 @@ begin
               'Recebimento : '+DFeUtil.SeSenao(FRetDownloadNFe.dhResp = 0, '', DateTimeToStr(FRetDownloadNFe.dhResp))+LineBreak;
 
       if FConfiguracoes.WebServices.Visualizar then
-      {$IFDEF FPC}
-      ShowMessage(AnsiToUtf8(aMsg));
-      {$ELSE}
-      ShowMessage(aMsg);
-      {$ENDIF}
+        ShowMessage(aMsg);
 
       if Assigned(TACBrNFe( FACBrNFe ).OnGerarLog) then
          TACBrNFe( FACBrNFe ).OnGerarLog(aMsg);
@@ -4859,11 +4449,6 @@ begin
       end;
     end;
   finally
-    {$IFDEF ACBrNFeOpenSSL}
-      HTTP.Free;
-    {$ELSE}
-      ReqResp.Free;
-    {$ENDIF}
     NotaUtil.ConfAmbiente;
     TACBrNFe( FACBrNFe ).SetStatus( stIdle );
   end;
@@ -4887,14 +4472,7 @@ end;
 
 function TAdministrarCSCNFCe.Executar: Boolean;
 var
-  aMsg, Texto: String;
-  i : integer;
-
-  {$IFDEF ACBrNFeOpenSSL}
-     HTTP: THTTPSend;
-  {$ELSE}
-     ReqResp: TACBrHTTPReqResp;
-  {$ENDIF}
+  aMsg, SoapAction, Texto: String;
 begin
   inherited Executar;
 
@@ -4925,16 +4503,8 @@ begin
   Texto := Texto + '</soap12:Envelope>';
 
 
-  {$IFDEF ACBrNFeOpenSSL}
-     HTTP := THTTPSend.Create;
-  {$ELSE}
-     ReqResp := TACBrHTTPReqResp.Create;
-     ConfiguraReqResp( ReqResp );
-     ReqResp.URL := FURL;
-     
-  // Corrigir o SoapAction
-     ReqResp.SoapAction := 'http://www.portalfiscal.inf.br/nfe/wsdl/NfeConsultaDest/nfeConsultaNFDest';
-  {$ENDIF}
+ // Corrigir o SoapAction
+  SoapAction := 'http://www.portalfiscal.inf.br/nfe/wsdl/NfeConsultaDest/nfeConsultaNFDest';
 
   if Assigned(FretAdmCSCNFCe)
    then FreeAndNil(FretAdmCSCNFCe);
@@ -4957,23 +4527,9 @@ begin
      end;
 
     try
-      {$IFDEF ACBrNFeOpenSSL}
-         HTTP.Document.WriteBuffer(Texto[1], Length(Texto));
-           // Corrigir o SoapAction
-         ConfiguraHTTP(HTTP,'SOAPAction: "http://www.portalfiscal.inf.br/nfe/wsdl/NfeConsultaDest/nfeConsultaNFDest"');
-         HTTP.HTTPMethod('POST', FURL);
-         HTTP.Document.Position := 0;
-         SetLength(Texto, HTTP.Document.Size);
-         HTTP.Document.ReadBuffer(Texto[1], HTTP.Document.Size);
-         FRetornoWS := TiraAcentos(ParseText(Texto, True));
+      FRetornoWS := EnviarDadosWebService(FURL,SoapAction,Texto);
   // Corrigir a TAG que contem o Retorno
-         FRetWS := SeparaDados( FRetornoWS,'nfeConsultaNFDestResult');
-      {$ELSE}
-         ReqResp.Data := Texto;
-         FRetornoWS := TiraAcentos(ParseText(ReqResp.Execute, True));
-  // Corrigir a TAG que contem o Retorno
-         FRetWS := SeparaDados( FRetornoWS,'nfeConsultaNFDestResult');
-      {$ENDIF}
+      FRetWS := SeparaDados( FRetornoWS,'nfeConsultaNFDestResult');
 
       FretAdmCSCNFCe.Leitor.Arquivo := FRetWS;
       FretAdmCSCNFCe.LerXml;
@@ -4984,11 +4540,7 @@ begin
               'Status Descrição : ' + FretAdmCSCNFCe.xMotivo + LineBreak;
 
       if FConfiguracoes.WebServices.Visualizar then
-      {$IFDEF FPC}
-      ShowMessage(AnsiToUtf8(aMsg));
-      {$ELSE}
-      ShowMessage(aMsg);
-      {$ENDIF}
+        ShowMessage(aMsg);
 
       if Assigned(TACBrNFe( FACBrNFe ).OnGerarLog) then
          TACBrNFe( FACBrNFe ).OnGerarLog(aMsg);
@@ -5019,11 +4571,6 @@ begin
       end;
     end;
   finally
-    {$IFDEF ACBrNFeOpenSSL}
-      HTTP.Free;
-    {$ELSE}
-      ReqResp.Free;
-    {$ENDIF}
     NotaUtil.ConfAmbiente;
     TACBrNFe( FACBrNFe ).SetStatus( stIdle );
   end;
@@ -5047,14 +4594,7 @@ end;
 
 function TDistribuicaoDFe.Executar: Boolean;
 var
-  aMsg, Texto: String;
-  i : integer;
-
-  {$IFDEF ACBrNFeOpenSSL}
-     HTTP: THTTPSend;
-  {$ELSE}
-     ReqResp: TACBrHTTPReqResp;
-  {$ENDIF}
+  aMsg, SoapAction, Texto: String;
 begin
   inherited Executar;
 
@@ -5080,14 +4620,7 @@ begin
   Texto := Texto +   '</soap12:Body>';
   Texto := Texto + '</soap12:Envelope>';
 
-  {$IFDEF ACBrNFeOpenSSL}
-     HTTP := THTTPSend.Create;
-  {$ELSE}
-     ReqResp := TACBrHTTPReqResp.Create;
-     ConfiguraReqResp( ReqResp );
-     ReqResp.URL := FURL;
-     ReqResp.SOAPAction := 'http://www.portalfiscal.inf.br/nfe/wsdl/NFeDistribuicaoDFe/nfeDistDFeInteresse';
-  {$ENDIF}
+  SoapAction := 'http://www.portalfiscal.inf.br/nfe/wsdl/NFeDistribuicaoDFe/nfeDistDFeInteresse';
 
   if Assigned(FretDistDFeInt)
    then FreeAndNil(FretDistDFeInt);
@@ -5110,20 +4643,8 @@ begin
      end;
 
     try
-      {$IFDEF ACBrNFeOpenSSL}
-         HTTP.Document.WriteBuffer(Texto[1], Length(Texto));
-         ConfiguraHTTP(HTTP,'SOAPAction: "http://www.portalfiscal.inf.br/nfe/wsdl/NFeDistribuicaoDFe/nfeDistDFeInteresse"');
-         HTTP.HTTPMethod('POST', FURL);
-         HTTP.Document.Position := 0;
-         SetLength(Texto, HTTP.Document.Size);
-         HTTP.Document.ReadBuffer(Texto[1], HTTP.Document.Size);
-         FRetornoWS := TiraAcentos(ParseText(Texto, True));
-         FRetWS := SeparaDados( FRetornoWS,'nfeDistDFeInteresseResult');
-      {$ELSE}
-         ReqResp.Data := Texto;
-         FRetornoWS := TiraAcentos(ParseText(ReqResp.Execute, True));
-         FRetWS := SeparaDados( FRetornoWS,'nfeDistDFeInteresseResult');
-      {$ENDIF}
+      FRetornoWS := EnviarDadosWebService(FURL,SoapAction,Texto);
+      FRetWS := SeparaDados( FRetornoWS,'nfeDistDFeInteresseResult');
 
       FretDistDFeInt.Leitor.Arquivo := FRetWS;
       FretDistDFeInt.LerXml;
@@ -5139,11 +4660,7 @@ begin
               'Máximo NSU : ' + FretDistDFeInt.maxNSU + LineBreak;
 
       if FConfiguracoes.WebServices.Visualizar then
-      {$IFDEF FPC}
-      ShowMessage(AnsiToUtf8(aMsg));
-      {$ELSE}
-      ShowMessage(aMsg);
-      {$ENDIF}
+        ShowMessage(aMsg);
 
       if Assigned(TACBrNFe( FACBrNFe ).OnGerarLog) then
          TACBrNFe( FACBrNFe ).OnGerarLog(aMsg);
@@ -5168,21 +4685,12 @@ begin
           TACBrNFe( FACBrNFe ).OnGerarLog('WebService Distribuição de DFe:' + LineBreak +
                                           '- Inativo ou Inoperante tente novamente.' + LineBreak +
                                           '- ' + E.Message);
-       {$IFDEF FPC}
-       raise EACBrNFeException.Create(AnsiToUtf8('WebService Distribuição de DFe:') + LineBreak +
-       {$ELSE}
        raise EACBrNFeException.Create('WebService Distribuição de DFe:' + LineBreak +
-       {$ENDIF}
                               '- Inativo ou Inoperante tente novamente.' + LineBreak +
                               '- ' + E.Message);
       end;
     end;
   finally
-    {$IFDEF ACBrNFeOpenSSL}
-      HTTP.Free;
-    {$ELSE}
-      ReqResp.Free;
-    {$ENDIF}
     NotaUtil.ConfAmbiente;
     TACBrNFe( FACBrNFe ).SetStatus( stIdle );
   end;
@@ -5193,12 +4701,6 @@ end;
 function TNFeEnvioWebService.Executar: Boolean;
 var
   Texto, Versao : String;
-
-  {$IFDEF ACBrNFeOpenSSL}
-     HTTP: THTTPSend;
-  {$ELSE}
-     ReqResp: TACBrHTTPReqResp;
-  {$ENDIF}
 
   LeitorXML : TLeitor;
 begin
@@ -5232,31 +4734,11 @@ begin
   Texto := Texto +   '</soap12:Body>';
   Texto := Texto +'</soap12:Envelope>';
 
-  {$IFDEF ACBrNFeOpenSSL}
-     HTTP := THTTPSend.Create;
-  {$ELSE}
-     ReqResp := TACBrHTTPReqResp.Create;
-     ConfiguraReqResp( ReqResp );
-     ReqResp.URL := FURL;
-     ReqResp.SoapAction := FSoapActionEnvio;
-  {$ENDIF}
 
   try
     try
-      {$IFDEF ACBrNFeOpenSSL}
-         HTTP.Document.WriteBuffer(Texto[1], Length(Texto));
-         ConfiguraHTTP(HTTP,'SOAPAction: "'+FSoapActionEnvio+'"');
-         HTTP.HTTPMethod('POST', FURL);
-         HTTP.Document.Position := 0;
-         SetLength(Texto, HTTP.Document.Size);
-         HTTP.Document.ReadBuffer(Texto[1], HTTP.Document.Size);
-         FRetornoWS := TiraAcentos(ParseText(Texto, True));
-         FRetWS := SeparaDados( FRetornoWS,'soap:Body');
-      {$ELSE}
-         ReqResp.Data := Texto;
-         FRetornoWS := TiraAcentos(ParseText(ReqResp.Execute, True));
-         FRetWS := SeparaDados( FRetornoWS,'soap:Body');
-      {$ENDIF}
+      FRetornoWS := EnviarDadosWebService(FURL,FSoapActionEnvio,Texto);
+      FRetWS := SeparaDados( FRetornoWS,'soap:Body');
 
     except on E: Exception do
       begin
@@ -5271,11 +4753,6 @@ begin
       end;
     end;
   finally
-    {$IFDEF ACBrNFeOpenSSL}
-      HTTP.Free;
-    {$ELSE}
-      ReqResp.Free;
-    {$ENDIF}
     NotaUtil.ConfAmbiente;
   end;
 end;
