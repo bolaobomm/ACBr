@@ -59,7 +59,7 @@
 //{$DEFINE ACBrMDFeOpenSSL}
 //{$DEFINE ACBrGNREOpenSSL}
 
-// Descomente a linha abaixo para usar o componente de comunicação SOAP do Delphi ao invés do ACBrHTTPReqResp(Funciona apenas com a versão CAPICOM)
+// Descomente a linha abaixo para usar o componente de comunicação SOAP do Delphi ao invés do ACBrHTTPReqResp(Funciona apenas com a versão CAPICOM) - Não é compatível com o Lazarus
 //--------------------------------------------------------------------------------
 //{$DEFINE SoapHTTP}
 
