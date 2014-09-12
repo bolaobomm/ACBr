@@ -20,7 +20,6 @@
       <Other>
         <CompilerMessages>
           <IgnoredMessages idx5024="True"/>
-          <UseMsgFile Value="True"/>
         </CompilerMessages>
         <CompilerPath Value="$(CompPath)"/>
       </Other>
@@ -29,7 +28,7 @@
     <License Value="LGPL
 "/>
     <Version Minor="10"/>
-    <Files Count="15">
+    <Files Count="16">
       <Item1>
         <Filename Value="..\..\Fontes\ACBrTCP\ACBrSocket.pas"/>
         <UnitName Value="ACBrSocket"/>
@@ -91,6 +90,10 @@
         <Filename Value="..\..\Fontes\ACBrTCP\ACBrSpedTabelas.pas"/>
         <UnitName Value="ACBrSpedTabelas"/>
       </Item15>
+      <Item16>
+        <Filename Value="..\..\Fontes\ACBrTCP\ACBrSedex.pas"/>
+        <UnitName Value="ACBrSedex"/>
+      </Item16>
     </Files>
     <Type Value="RunAndDesignTime"/>
     <RequiredPkgs Count="4">

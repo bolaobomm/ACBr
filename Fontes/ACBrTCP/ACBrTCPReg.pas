@@ -43,7 +43,7 @@ implementation
 
 Uses ACBrSocket, ACBrCEP, ACBrIBGE, ACBrNFPws, ACBrCNIEE, ACBrSuframa, ACBrDownload,
    SysUtils, ACBrIBPTax, ACBrConsultaCNPJ, ACBrConsultaCPF, ACBrCotacao, ACBrMail,
-   ACBrSpedTabelas;
+   ACBrSpedTabelas, ACBrSedex;
 
 {$IFNDEF FPC}
    {$R ACBrTCP.dcr}
@@ -54,7 +54,7 @@ begin
   RegisterComponents('ACBr',
     [ TACBrTCPServer, TACBrCEP, TACBrIBGE, TACBrNFPws, TACBrCNIEE, TACBrSuframa,
       TACBrDownload, TACBrIBPTax, TACBrConsultaCNPJ, TACBrConsultaCPF, TACBrCotacao,
-      TACBrMail, TACBrSpedTabelas ]
+      TACBrMail, TACBrSpedTabelas, TACBrSedex ]
   );
 end;
 
