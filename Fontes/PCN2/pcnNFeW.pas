@@ -572,7 +572,7 @@ begin
     Gerador.wCampo(tcDat, 'D09', 'dEmi   ', 10, 10, 0, nfe.Avulsa.dEmi, DSC_DEMI);
     Gerador.wCampo(tcDe2, 'D10', 'vDAR   ', 01, 15, 0, nfe.Avulsa.vDAR, DSC_VDAR);
     Gerador.wCampo(tcStr, 'D11', 'repEmi ', 01, 60, 1, nfe.Avulsa.repEmi, DSC_REPEMI);
-    Gerador.wCampo(tcDat, 'D12', 'dPag   ', 10, 10, 1, nfe.Avulsa.dPag, DSC_DPAG);
+    Gerador.wCampo(tcDat, 'D12', 'dPag   ', 10, 10, 0, nfe.Avulsa.dPag, DSC_DPAG);
     Gerador.wGrupo('/avulsa');
   end;
 end;
