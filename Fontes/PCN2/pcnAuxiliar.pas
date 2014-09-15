@@ -971,7 +971,8 @@ end;
 
 function GetUTC(UF: string; const dataHora: TDateTime): string;
 const
-  UTC4 = '.AC.AM.RR.RO.MT.MS.';
+  UTC5 = '.AC.';
+  UTC4 = '.AM.RR.RO.MT.MS.';
   UTC3 = '.AP.PA.MA.PI.TO.GO.CE.RN.PB.PE.AL.SE.BA.MG.ES.RJ.SP.PR.SC.RS.DF.';
 var
   HorarioDeVerao: Boolean;
@@ -993,6 +994,11 @@ begin
     Result := '-03:00';
     if IsHorarioDeVerao(UF, dataHora) then
       Result := '-02:00';
+  end
+  else
+  if AnsiPos('.' + UF + '.', UTC5) > 0 then
+  begin
+    Result := '-05:00';
   end;
 end;
 
