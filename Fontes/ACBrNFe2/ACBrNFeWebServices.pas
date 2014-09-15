@@ -768,13 +768,13 @@ begin
   {$ENDIF}
   try
      {$IFDEF ACBrNFeOpenSSL}
-        HTTP.Document.WriteBuffer(Dados[1], Length(Texto));
+        HTTP.Document.WriteBuffer(Dados[1], Length(Dados));
         ConfiguraHTTP(HTTP,'SOAPAction: "' + SoapAction +'"');
         HTTP.HTTPMethod('POST', URL);
         HTTP.Document.Position := 0;
-        SetLength(Texto, HTTP.Document.Size);
+        SetLength(Dados, HTTP.Document.Size);
         HTTP.Document.ReadBuffer(Dados[1], HTTP.Document.Size);
-        RetornoWS := TiraAcentos(ParseText(Texto, True));
+        RetornoWS := TiraAcentos(ParseText(Dados, True));
      {$ELSE}
          {$IFDEF SoapHTTP}
             Stream := TMemoryStream.Create;
