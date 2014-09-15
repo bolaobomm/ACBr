@@ -953,7 +953,7 @@ begin
    9: begin
        schema_filename := {pchar}(DFeUtil.SeSenao(DFeUtil.EstaVazio(APathSchemas),
           PathWithDelim(ExtractFileDir(application.ExeName))+'Schemas\',
-          PathWithDelim(APathSchemas))+'evMultimodal_v' + CTeEventoCTe + '.xsd');
+          PathWithDelim(APathSchemas))+'evRegMultimodal_v' + CTeEventoCTe + '.xsd');
       end;
   10: begin
        schema_filename := {pchar}(DFeUtil.SeSenao(DFeUtil.EstaVazio(APathSchemas),
@@ -1315,7 +1315,7 @@ begin
    9: begin
        ArqSchema := DFeUtil.SeSenao(DFeUtil.EstaVazio(APathSchemas),
                     PathWithDelim(ExtractFileDir(application.ExeName)) + 'Schemas\',
-                    PathWithDelim(APathSchemas)) + 'evMultimodal_v' + CTeEventoCTe + '.xsd';
+                    PathWithDelim(APathSchemas)) + 'evRegMultimodal_v' + CTeEventoCTe + '.xsd';
       end;
   10: begin
        ArqSchema := DFeUtil.SeSenao(DFeUtil.EstaVazio(APathSchemas),
