@@ -1,6 +1,6 @@
 inherited frlDANFeRLRetrato: TfrlDANFeRLRetrato
-  Left = 206
-  Top = 112
+  Left = 476
+  Top = 119
   Width = 820
   Height = 655
   VertScrollBar.Position = 523
@@ -1048,12 +1048,15 @@ inherited frlDANFeRLRetrato: TfrlDANFeRLRetrato
         Width = 300
         Height = 14
         AutoSize = False
+        Color = clWhite
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
         Font.Height = -11
         Font.Name = 'Arial'
         Font.Style = [fsBold]
+        ParentColor = False
         ParentFont = False
+        Transparent = False
       end
       object rllInscricaoEstadual: TRLLabel
         Tag = 703

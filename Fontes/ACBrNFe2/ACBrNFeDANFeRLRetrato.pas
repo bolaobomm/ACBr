@@ -1132,7 +1132,7 @@ begin
     else
       rllHoraSaida.Caption := ifthen(TimeOf(dSaiEnt)=0, '', TimeToStr(dSaiEnt));
 
-    if FNFe.Ide.tpEmis in [teNormal, teSCAN] then
+    if FNFe.Ide.tpEmis in [teNormal, teSCAN, teSVCAN, teSVCRS, teSVCSP] then
       begin
         if FNFe.procNFe.cStat > 0 then
           begin
