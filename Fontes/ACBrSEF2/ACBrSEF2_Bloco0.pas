@@ -257,6 +257,7 @@ type
     procedure SetItem(Index: Integer; const Value: TRegistroSEF0150);
   public
     function New(AOwner: TRegistroSEF0001): TRegistroSEF0150;
+    function LocalizaRegistro(pCOD_PART: String): boolean;
     property Items[Index: Integer]: TRegistroSEF0150 read GetItem write SetItem;
   end;
 
@@ -284,6 +285,7 @@ type
     procedure SetItem(Index: Integer; const Value: TRegistroSEF0200);
   public
     function New(AOwner: TRegistroSEF0001): TRegistroSEF0200;
+    function LocalizaRegistro(pCOD_ITEM: String): boolean;
     property Items[Index: Integer]: TRegistroSEF0200 read GetItem write SetItem;
   end;
 
@@ -357,6 +359,7 @@ type
     procedure SetItem(Index: Integer; const Value: TRegistroSEF0400);
   public
     function New(AOwner: TRegistroSEF0001): TRegistroSEF0400;
+    function LocalizaRegistro(pCOD_NAT: String): boolean;
     property Items[Index: Integer]: TRegistroSEF0400 read GetItem write SetItem;
   end;
 
@@ -597,7 +600,23 @@ end;
 
 function TRegistroSEF0150List.GetItem(Index: Integer): TRegistroSEF0150;
 begin
-  Result := TRegistroSEF0150(Get(Index));
+  Result := TRegistroSEF0150(Inherited Items[Index]);
+end;
+
+
+function TRegistroSEF0150List.LocalizaRegistro(pCOD_PART: String): boolean;
+var
+intFor: integer;
+begin
+   Result := false;
+   for intFor := 0 to Self.Count - 1 do
+   begin
+      if Self.Items[intFor].COD_PART = pCOD_PART then
+      begin
+         Result := true;
+         Break;
+      end;
+   end;
 end;
 
 function TRegistroSEF0150List.New(AOwner: TRegistroSEF0001): TRegistroSEF0150;
@@ -627,7 +646,22 @@ end;
 
 function TRegistroSEF0400List.GetItem(Index: Integer): TRegistroSEF0400;
 begin
-  Result := TRegistroSEF0400(Get(Index));
+  Result := TRegistroSEF0400(Inherited Items[Index]);
+end;
+
+function TRegistroSEF0400List.LocalizaRegistro(pCOD_NAT: String): boolean;
+var
+intFor: integer;
+begin
+   Result := false;
+   for intFor := 0 to Self.Count - 1 do
+   begin
+      if Self.Items[intFor].COD_NAT = pCOD_NAT then
+      begin
+         Result := true;
+         Break;
+      end;
+   end;
 end;
 
 function TRegistroSEF0400List.New(AOwner: TRegistroSEF0001): TRegistroSEF0400;
@@ -742,7 +776,22 @@ end;
 
 function TRegistroSEF0200List.GetItem(Index: Integer): TRegistroSEF0200;
 begin
-  Result := TRegistroSEF0200(Get(Index));
+  Result := TRegistroSEF0200(Inherited Items[Index]);
+end;
+
+function TRegistroSEF0200List.LocalizaRegistro(pCOD_ITEM: String): boolean;
+var
+intFor: integer;
+begin
+   Result := false;
+   for intFor := 0 to Self.Count - 1 do
+   begin
+      if Self.Items[intFor].COD_ITEM = pCOD_ITEM then
+      begin
+         Result := true;
+         Break;
+      end;
+   end;
 end;
 
 function TRegistroSEF0200List.New(AOwner: TRegistroSEF0001): TRegistroSEF0200;
