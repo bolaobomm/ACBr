@@ -376,11 +376,6 @@ procedure TGeralConf.SetModeloDF(AValue: TpcnModeloDF);
 begin
   FModeloDF := AValue;
   FModeloDFCodigo := StrToInt(ModeloDFToStr(FModeloDF));
-
-  if FModeloDF = moNFe then
-    SetVersaoDF(ve200)
-  else
-    SetVersaoDF(ve310);
 end;
 
 procedure TGeralConf.SetVersaoDF(const Value: TpcnVersaoDF);
