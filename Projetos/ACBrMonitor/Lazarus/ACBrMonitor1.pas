@@ -2411,13 +2411,24 @@ end;
 {------------------------------------------------------------------------------}
 procedure TFrmACBrMonitor.Processar;
 var
-  Linha: ansistring;
+  Linha: AnsiString;
 begin
   if NewLines <> '' then
     fsProcessar.Add(NewLines);
 
   NewLines := '';
   fsInicioLoteTXT := True;
+
+  // Apagando linhas em branco no final do arquivo, pois isso atrapalha a detectção do final de arquivo //
+  if fsProcessar.Count > 0 then
+  begin
+    Linha := Trim(fsProcessar[fsProcessar.Count-1]) ;
+    while Linha = '' do
+    begin
+      fsProcessar.Delete(fsProcessar.Count-1);
+      Linha := Trim(fsProcessar[fsProcessar.Count-1]) ;
+    end ;
+  end;
 
   while fsProcessar.Count > 0 do
   begin
