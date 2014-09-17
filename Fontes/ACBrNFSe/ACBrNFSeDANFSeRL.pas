@@ -96,7 +96,10 @@ type
     FComplemento    : String;
     FFone           : String;
     FMunicipio      : String;
+    FOutrasInformacaoesImp : String;
     FInscMunicipal  : String;
+    FT_InscEstadual : String;
+    FT_InscMunicipal : String;
     FEMail_Prestador : String;
 
 
@@ -131,6 +134,9 @@ type
                              AInscMunicipal  : String  = '';
                              AEMail_Prestador : String  = '';
                              AUF              : String  = '';
+                             AOutrasInformacaoesImp : String = '';
+                             AT_InscMunicipal : String = '';
+                             AT_InscEstadual : String = '';
 
                              // Augusto Fontana
                              APrintDialog    : Boolean = True);
@@ -157,7 +163,10 @@ type
                             AMunicipio      : String  = '';
                             AInscMunicipal  : String  = '';
                             AEMail_Prestador : String  = '';
-                            AUF              : String  = '');
+                            AUF              : String  = '';
+                            AT_InscMunicipal : String = '';
+                            AT_InscEstadual : String = '';
+                            AOutrasInformacaoesImp : String = '');
   end;
 
 var
@@ -255,33 +264,37 @@ class procedure TfrlDANFSeRL.Imprimir(ANFSe: TNFSe; ALogo, AEmail, AFax: String;
   ANumCopias: Integer; ASistema, ASite, AUsuario: String; APreview: Boolean;
   AMargemSuperior, AMargemInferior, AMargemEsquerda, AMargemDireita: Double;
   AImpressora, APrestLogo, APrefeitura, ARazaoSocial, AEndereco,
-  AComplemento, AFone, AMunicipio, AInscMunicipal, AEMail_Prestador, AUF : String; APrintDialog: Boolean);
+  AComplemento, AFone, AMunicipio, AInscMunicipal, AEMail_Prestador, AUF,
+  AOutrasInformacaoesImp, AT_InscMunicipal, AT_InscEstadual : String; APrintDialog: Boolean);
 begin
  with Create ( nil ) do
   try
-   FNFSe           := ANFSe;
-   FLogo           := ALogo;
-   FEmail          := AEmail;
-   FFax            := AFax;
-   FNumCopias      := ANumCopias;
-   FSistema        := ASistema;
-   FSite           := ASite;
-   FUsuario        := AUsuario;
-   FMargemSuperior := AMargemSuperior;
-   FMargemInferior := AMargemInferior;
-   FMargemEsquerda := AMargemEsquerda;
-   FMargemDireita  := AMargemDireita;
-   FImpressora     := AImpressora;
-   FPrestLogo      := APrestLogo;
-   FPrefeitura     := APrefeitura;
-   FRazaoSocial    := ARazaoSocial;
-   FUF             := AUF;
-   FEndereco       := AEndereco;
-   FComplemento    := AComplemento;
-   FFone           := AFone;
-   FMunicipio      := AMunicipio;
-   FInscMunicipal  := AInscMunicipal;
-   FEMail_Prestador := AEMail_Prestador;
+   FNFSe                  := ANFSe;
+   FLogo                  := ALogo;
+   FEmail                 := AEmail;
+   FFax                   := AFax;
+   FNumCopias             := ANumCopias;
+   FSistema               := ASistema;
+   FSite                  := ASite;
+   FUsuario               := AUsuario;
+   FMargemSuperior        := AMargemSuperior;
+   FMargemInferior        := AMargemInferior;
+   FMargemEsquerda        := AMargemEsquerda;
+   FMargemDireita         := AMargemDireita;
+   FImpressora            := AImpressora;
+   FPrestLogo             := APrestLogo;
+   FPrefeitura            := APrefeitura;
+   FRazaoSocial           := ARazaoSocial;
+   FUF                    := AUF;
+   FEndereco              := AEndereco;
+   FComplemento           := AComplemento;
+   FFone                  := AFone;
+   FMunicipio             := AMunicipio;
+   FOutrasInformacaoesImp := AOutrasInformacaoesImp;
+   FInscMunicipal         := AInscMunicipal;
+   FEMail_Prestador       := AEMail_Prestador;
+   FT_InscMunicipal       := AT_InscMunicipal;
+   FT_InscEstadual        := AT_InscEstadual;
 
    if FImpressora > '' then
      RLPrinter.PrinterName := FImpressora;
@@ -290,6 +303,7 @@ begin
      RLPrinter.Copies := FNumCopias
    else
      RLPrinter.Copies := 1;
+
    // Augusto Fontana
    RLNFSe.PrintDialog := APrintDialog;
    if APreview = True then
@@ -306,7 +320,7 @@ class procedure TfrlDANFSeRL.SavePDF(AFile: String; ANFSe: TNFSe; ALogo, AEmail,
   AFax: String; ANumCopias: Integer; ASistema, ASite, AUsuario: String;
   AMargemSuperior, AMargemInferior, AMargemEsquerda, AMargemDireita: Double;
   APrestLogo, APrefeitura, ARazaoSocial, AEndereco, AComplemento, AFone, AMunicipio,
-  AInscMunicipal, AEMail_Prestador, AUF : String);
+  AInscMunicipal, AEMail_Prestador, AUF, AT_InscMunicipal, AT_InscEstadual, AOutrasInformacaoesImp : String);
 begin
   with Create ( nil ) do
    try
@@ -330,8 +344,11 @@ begin
     FComplemento    := AComplemento;
     FFone           := AFone;
     FMunicipio      := AMunicipio;
+    FOutrasInformacaoesImp := AOutrasInformacaoesImp;
     FInscMunicipal  := AInscMunicipal;
     FEMail_Prestador := AEMail_Prestador;
+    FT_InscMunicipal       := AT_InscMunicipal;
+    FT_InscEstadual        := AT_InscEstadual;
 
     with RLPDFFilter1.DocumentInfo do
       begin

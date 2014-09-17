@@ -70,9 +70,12 @@ type
     FComplemento : String;
     FFone : String;
     FMunicipio : String;
+    FOutrasInformacaoesImp : String;
     FInscMunicipal : String;
+    FT_InscEstadual : String;
+    FT_InscMunicipal : String;
     FEMail_Prestador : String;
-    FUF : String;         
+    FUF : String;
     FNFSeCancelada: boolean;
     FImprimeCanhoto: Boolean;
 
@@ -110,8 +113,11 @@ type
     property Complemento: String read FComplemento write FComplemento;
     property Fone: String read FFone write FFone;
     property Municipio: String read FMunicipio write FMunicipio;
+    property OutrasInformacaoesImp: String read FOutrasInformacaoesImp write FOutrasInformacaoesImp;
     property InscMunicipal: String read FInscMunicipal write FInscMunicipal;
     property EMail_Prestador: String read FEMail_Prestador write FEMail_Prestador;
+    property T_InscEstadual: String read FT_InscEstadual write FT_InscEstadual;
+    property T_InscMunicipal: String read FT_InscMunicipal write FT_InscMunicipal;
 
     property NFSeCancelada: Boolean read FNFSeCancelada write FNFSeCancelada;
     property ImprimeCanhoto: Boolean read FImprimeCanhoto write FImprimeCanhoto default False;
@@ -151,11 +157,14 @@ begin
  FComplemento    := '';
  FFone           := '';
  FMunicipio      := '';
- FInscMunicipal  := '';
- FEMail_Prestador := '';
- FUF              := '';               
+ FOutrasInformacaoesImp := '';
+ FInscMunicipal         := '';
+ FEMail_Prestador       := '';
+ FUF                    := '';
+ FT_InscEstadual        := '';
+ FT_InscMunicipal       := '';
 
- FNFSeCancelada  := False;
+ FNFSeCancelada         := False;
 end;
 
 destructor TACBrNFSeDANFSeClass.Destroy;

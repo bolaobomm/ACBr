@@ -76,6 +76,9 @@ begin
                                  , InscMunicipal
                                  , EMail_Prestador
                                  , UF
+                                 , OutrasInformacaoesImp
+                                 , T_InscEstadual
+                                 , T_InscMunicipal
                                  // Augusto Fontana
                                  , PrintDialog);
     end;
@@ -104,6 +107,9 @@ begin
                                    , InscMunicipal
                                    , EMail_Prestador
                                    , UF
+                                   , OutrasInformacaoesImp
+                                   , T_InscEstadual
+                                   , T_InscMunicipal
                                    // Augusto Fontana
                                    , PrintDialog);
 

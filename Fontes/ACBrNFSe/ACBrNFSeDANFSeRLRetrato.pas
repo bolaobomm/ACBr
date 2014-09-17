@@ -212,8 +212,10 @@ begin
  rlmDadosAdicionais.Lines.BeginUpdate;
  rlmDadosAdicionais.Lines.Clear;
 
- rlmDadosAdicionais.Lines.Add(StringReplace( FNFSe.OutrasInformacoes,
-                         ';', #13#10, [rfReplaceAll,rfIgnoreCase] ) );
+ If FNFSe.OutrasInformacoes <> '' Then
+   rlmDadosAdicionais.Lines.Add(StringReplace(FNFSe.OutrasInformacoes, ';', #13#10, [rfReplaceAll,rfIgnoreCase]))
+ Else If FOutrasInformacaoesImp <> '' Then
+   rlmDadosAdicionais.Lines.Add(StringReplace(FOutrasInformacaoesImp, ';', #13#10, [rfReplaceAll,rfIgnoreCase]));
 
  rlmDadosAdicionais.Lines.EndUpdate;
 
@@ -431,7 +433,10 @@ begin
 
 
  rllPrestCNPJ.Caption := DFeUtil.FormatarCNPJ( FNFSe.PrestadorServico.IdentificacaoPrestador.Cnpj );//Astrogildo em 13/12/12
- rllTomaInscEstadual.Caption := FNFSe.Tomador.IdentificacaoTomador.InscricaoEstadual;
+
+ If FNFSe.Tomador.IdentificacaoTomador.InscricaoEstadual <> '' Then
+   rllTomaInscEstadual.Caption := FNFSe.Tomador.IdentificacaoTomador.InscricaoEstadual
+ Else rllTomaInscEstadual.Caption := FT_InscEstadual;
 
  If FNFSe.PrestadorServico.IdentificacaoPrestador.InscricaoMunicipal <> '' Then
    rllPrestInscMunicipal.Caption := FNFSe.PrestadorServico.IdentificacaoPrestador.InscricaoMunicipal
@@ -488,7 +493,10 @@ begin
   then rllTomaCNPJ.Caption := DFeUtil.FormatarCPF( FNFSe.Tomador.IdentificacaoTomador.CpfCnpj ) //Astrogildo em 13/12/12
   else rllTomaCNPJ.Caption := DFeUtil.FormatarCNPJ( FNFSe.Tomador.IdentificacaoTomador.CpfCnpj );//Astrogildo em 13/12/12
 
- rllTomaInscMunicipal.Caption := FNFSe.Tomador.IdentificacaoTomador.InscricaoMunicipal;
+ If FNFSe.Tomador.IdentificacaoTomador.InscricaoMunicipal <> '' Then
+   rllTomaInscMunicipal.Caption := FNFSe.Tomador.IdentificacaoTomador.InscricaoMunicipal
+ Else rllTomaInscMunicipal.Caption := FT_InscMunicipal;
+
  rllTomaNome.Caption := FNFSe.Tomador.RazaoSocial;
  rllTomaEndereco.Caption := Trim( FNFSe.Tomador.Endereco.Endereco )+', '+
                             Trim( FNFSe.Tomador.Endereco.Numero )+' - '+
