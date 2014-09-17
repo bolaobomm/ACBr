@@ -291,7 +291,8 @@ begin
     teCCe                 : Result := 'Carta de Correcao';
     teCancelamento        : Result := 'Cancelamento';
     teEPEC                : Result := 'EPEC';
-    teMultiModal          : Result := 'Ocorrencias de Transito';
+//    teMultiModal          : Result := 'Ocorrencias de Transito';
+    teMultiModal          : Result := 'Registro Multimodal';
     teRegistroPassagem    : Result := 'Registro de Passagem';
     teRegistroPassagemBRId: Result := 'Registro de Passagem BRId';
   else
@@ -324,7 +325,8 @@ begin
     teCCe                 : Result := 'CARTA DE CORREÇÃO ELETRÔNICA';
     teCancelamento        : Result := 'CANCELAMENTO DO CT-e';
     teEPEC                : Result := 'EPEC';
-    teMultiModal          : Result := 'OCORRÊNCIAS DE TRÂNSITO';
+//    teMultiModal          : Result := 'OCORRÊNCIAS DE TRÂNSITO';
+    teMultiModal          : Result := 'REGISTRO MULTIMODAL';
     teRegistroPassagem    : Result := 'REGISTRO DE PASSAGEM';
     teRegistroPassagemBRId: Result := 'REGISTRO DE PASSAGEM BRId';
   else
