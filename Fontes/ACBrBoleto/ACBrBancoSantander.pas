@@ -72,7 +72,7 @@ type
 
 implementation
 
-uses ACBrUtil, StrUtils;
+uses ACBrUtil, StrUtils, math;
 
 { TACBrBancoSantander }
 
@@ -780,7 +780,7 @@ end;
 procedure TACBrBancoSantander.LerRetorno240(ARetorno: TStringList);
 var
   Titulo: TACBrTitulo;
-  Linha, rCedente, rAgencia, rAgenciaDigito, rConta, rContaDigito, rCNPJCPF : String;
+  Linha, rCodigoCedente, rCedente, rAgencia, rAgenciaDigito, rConta, rContaDigito, rCNPJCPF : String;
   iLinha : Integer;
   iIdxMotivo: Integer;
   procedure DoVerOcorrencia(AOcorrencia: string);
@@ -831,11 +831,12 @@ begin
     raise Exception.create(ACBrStr(ACBrBanco.ACBrBoleto.NomeArqRetorno +
                            'não é um arquivo de retorno do banco' + sLineBreak + Nome));
 
+  rCodigoCedente := Copy(ARetorno[0], 53, 9);
   rCedente       := Copy(ARetorno[0], 73, 30);
   rAgencia       := Copy(ARetorno[0], 33, 4);
   rAgenciaDigito := Copy(ARetorno[0], 37, 1);
-  rConta         := padR(OnlyNumber(Copy(ARetorno[0], 33, 4)), fpTamanhoConta, '0');
-  rContaDigito   := Copy(ARetorno[0], 47, 4);
+  rConta         := padR(OnlyNumber(Copy(ARetorno[0], 38, 9)), fpTamanhoConta, '0');
+  rContaDigito   := Copy(ARetorno[0], 47, 1);
   rCNPJCPF := OnlyNumber(Copy(ARetorno[0], 18, 15));
 
   with ACBrBanco.ACBrBoleto do
@@ -848,7 +849,12 @@ begin
        raise Exception.Create(ACBrStr('Agencia\Conta do arquivo inválido'));
 
     Cedente.Nome := rCedente;
+    Cedente.CodigoCedente := rCodigoCedente;
     Cedente.CNPJCPF := rCnpjCpf;
+    Cedente.Agencia := rAgencia;
+    Cedente.AgenciaDigito := rAgenciaDigito;
+    Cedente.Conta := rConta;
+    Cedente.ContaDigito := rContaDigito;
 
     case StrToIntDef(copy(ARetorno[0], 17, 1), 0) of
       1:
@@ -893,10 +899,11 @@ begin
         Sacado.CNPJCPF := Trim(Copy(Linha, 129, 15));
         Sacado.NomeSacado := Trim(Copy(Linha, 144, 40));
       end
-      else // segmento U
+      else if copy(Linha, 14, 1) = 'U' then
       begin
         // Algumas ocorrências estão diferentes do cnab400, farei uma separada aqui
         DoVerOcorrencia(Copy(Linha, 16, 2));
+        ValorDocumento := max(ValorDocumento,StrToFloatDef(copy(Linha, 78, 15), 0) / 100);
         ValorMoraJuros := StrToFloatDef(copy(Linha, 18, 15), 0) / 100;
         ValorDesconto := StrToFloatDef(copy(Linha, 33, 15), 0) / 100;
         ValorAbatimento := StrToFloatDef(copy(Linha, 48, 15), 0) / 100;
@@ -906,7 +913,7 @@ begin
         ValorOutrosCreditos := StrToFloatDef(copy(Linha, 123, 15), 0) / 100;
         DataOcorrencia := StringToDateTimeDef(Copy(Linha, 138, 2)+'/'+
                                               Copy(Linha, 140, 2)+'/'+
-                                              Copy(Linha, 143,4),0, 'DD/MM/YYYY' );
+                                              Copy(Linha, 142,4),0, 'DD/MM/YYYY' );
         DataCredito := StringToDateTimeDef(Copy(Linha, 146, 2)+'/'+
                                            Copy(Linha, 148, 2)+'/'+
                                            Copy(Linha, 150,4),0, 'DD/MM/YYYY' );

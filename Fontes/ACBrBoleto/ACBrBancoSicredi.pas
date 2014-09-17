@@ -320,9 +320,9 @@ begin
                      IfThen(TipoBoleto = 'A', 'S', 'N')                                 +  // 072 a 072 - Postagem do título = "S" Para postar o título "N" Não postar e remeter para o cedente
                      Space(2)                                                           +  // 073 a 074 - Filler Brancos
                      IfThen((TipoBoleto = 'B') and (Parcela > 0),
-                             padR(IntToStr(Parcela),2,'0'), '  ')                       +  // 075 a 076 - Número da parcela do carnê --Anderson
+                             padR(IntToStr(Parcela),2,'0'), '00')                       +  // 075 a 076 - Número da parcela do carnê --Anderson
                      IfThen((TipoBoleto = 'B') and (TotalParcelas > 0),
-                            padR(IntToStr(TotalParcelas),2,'0'), '  ');                    // 077 a 078 - Número total de parcelas do carnê -- Anderson
+                            padR(IntToStr(TotalParcelas),2,'0'), '00');                    // 077 a 078 - Número total de parcelas do carnê -- Anderson
 
 
          wLinha:= wLinha +

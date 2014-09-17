@@ -47,6 +47,18 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+
+Data: 17/09/2014 ver. 0.0.97a
+-- ACBrBoleto  --
+--ACBrBancoSantander 
+[*] Ajustes leitura retorno CNAB240 conforme manual atualizado. (por Jeter Rabelo/Luiz Paulo)
+http://www.projetoacbr.com.br/forum/index.php?/topic/16236-santander-cnab2340-homologado/
+
+--ACBrBancoSicredi-- 
+[*] Ajustes geração remessa CNAB400 para atender exigência SIcredi. (por Juliana Tamizou)
+http://www.projetoacbr.com.br/forum/index.php?/topic/17582-campo-em-branco-quando-%C3%A9-tipo-impress%C3%A3o-normal/
+
+
 Data: 28/08/2014 ver. 0.0.96a
 -- ACBrBoleto  --
 --ACBrBancoHSBC 
