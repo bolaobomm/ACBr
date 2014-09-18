@@ -220,22 +220,24 @@ begin
             Gerador.wGrupo('dest');
             Gerador.wCampo(tcStr, 'P27', 'UF', 02, 02, 1, Evento.Items[i].InfEvento.detEvento.dest.UF);
 
-            if Evento.Items[i].InfEvento.detEvento.dest.idEstrangeiro = ''
-             then begin
-              sDoc := SomenteNumeros( Evento.Items[i].InfEvento.detEvento.dest.CNPJCPF );
-              case Length( sDoc ) of
-               14 : begin
-                      Gerador.wCampo(tcStr, 'P28', 'CNPJ', 014, 014, 1, sDoc , DSC_CNPJ);
-                      if not ValidarCNPJ( sDoc ) then Gerador.wAlerta('P28', 'CNPJ', DSC_CNPJ, ERR_MSG_INVALIDO);
-                    end;
-               11 : begin
-                      Gerador.wCampo(tcStr, 'P29', 'CPF', 011, 011, 1, sDoc, DSC_CPF);
-                      if not ValidarCPF( sDoc ) then Gerador.wAlerta('P29', 'CPF', DSC_CPF, ERR_MSG_INVALIDO);
-                    end;
-              end;
+            if (Evento.Items[i].InfEvento.detEvento.dest.idEstrangeiro = '') and
+               (Evento.Items[i].InfEvento.detEvento.dest.UF <> 'EX') then
+             begin
+               sDoc := SomenteNumeros( Evento.Items[i].InfEvento.detEvento.dest.CNPJCPF );
+               case Length( sDoc ) of
+                14 : begin
+                       Gerador.wCampo(tcStr, 'P28', 'CNPJ', 014, 014, 1, sDoc , DSC_CNPJ);
+                       if not ValidarCNPJ( sDoc ) then Gerador.wAlerta('P28', 'CNPJ', DSC_CNPJ, ERR_MSG_INVALIDO);
+                     end;
+                11 : begin
+                       Gerador.wCampo(tcStr, 'P29', 'CPF', 011, 011, 1, sDoc, DSC_CPF);
+                       if not ValidarCPF( sDoc ) then Gerador.wAlerta('P29', 'CPF', DSC_CPF, ERR_MSG_INVALIDO);
+                     end;
+               end;
              end
-             else begin
-              Gerador.wCampo(tcStr, 'P30', 'idEstrangeiro', 05, 20, 1, Evento.Items[i].InfEvento.detEvento.dest.idEstrangeiro);
+            else
+             begin
+                Gerador.wCampo(tcStr, 'P30', 'idEstrangeiro', 05, 20, 1, Evento.Items[i].InfEvento.detEvento.dest.idEstrangeiro);
              end;
 
             if Evento.Items[i].InfEvento.detEvento.dest.IE <> '' then

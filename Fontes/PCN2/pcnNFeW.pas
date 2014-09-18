@@ -324,6 +324,7 @@ begin
 
   if (nfe.Dest.CNPJCPF <> '') or
      (nfe.Dest.idEstrangeiro <> '') or
+     (nfe.Dest.EnderDest.UF = 'EX') or
      (nfe.Ide.modelo <> 65) then
      GerarDest;
 
