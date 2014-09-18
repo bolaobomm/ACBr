@@ -54,6 +54,7 @@ uses
  Forms, SysUtils, Classes, QRPrntr,
  pcnConversao, pcteCTe, ACBrCTeDACTeClass,
  ACBrCTeDACTeQR, ACBrCTeDACTeQRRetrato, ACBrCTeDACTeQRRetratoA5,
+ ACBrCTeDACTeQRRetrato2Vias,
  ACBrCTeDAEventoQR, ACBrCTeDAEventoQRRetrato,
  ACBrCTeDAInutQR, ACBrCTeDAInutQRRetrato;
 
@@ -110,6 +111,12 @@ begin
            frmDACTeQRRetrato.QRCTe.Page.Length    := 148.0;
            frmDACTeQRRetrato.QRCTe.Page.Width     := 210.0;
           end;
+    tpA4_2vias: begin
+                 frmDACTeQRRetrato := TfrmDACTeQRRetrato2vias.Create(Self);
+                 frmDACTeQRRetrato.QRCTe.Page.PaperSize := A4;
+                 frmDACTeQRRetrato.QRCTe.Page.Length    := 297.0;
+                 frmDACTeQRRetrato.QRCTe.Page.Width     := 210.0;
+                end;
      else begin // tpA4
            frmDACTeQRRetrato := TfrmDACTeQRRetrato.Create(Self);
            frmDACTeQRRetrato.QRCTe.Page.PaperSize := A4;
@@ -161,6 +168,12 @@ begin
            frmDACTeQRRetrato.QRCTe.Page.Length    := 148.0;
            frmDACTeQRRetrato.QRCTe.Page.Width     := 210.0;
           end;
+    tpA4_2vias: begin
+                 frmDACTeQRRetrato := TfrmDACTeQRRetrato2vias.Create(Self);
+                 frmDACTeQRRetrato.QRCTe.Page.PaperSize := A4;
+                 frmDACTeQRRetrato.QRCTe.Page.Length    := 297.0;
+                 frmDACTeQRRetrato.QRCTe.Page.Width     := 210.0;
+                end;
      else begin // tpA4
            frmDACTeQRRetrato := TfrmDACTeQRRetrato.Create(Self);
            frmDACTeQRRetrato.QRCTe.Page.PaperSize := A4;

@@ -1559,7 +1559,8 @@ begin
 
   qrlNatOperacao.Caption := FormatFloat('0000', FCTe.Ide.CFOP) + ' - ' + FCTe.Ide.natOp;
 
-  qrlFilial.Caption := FFilial + '/';
+//  qrlFilial.Caption := FFilial + '/';
+  qrlFilial.Caption := '';
 
   //Rodapé
   qrlSistema.Caption := 'PROCESSADO POR: ' + FSistema;
@@ -1678,13 +1679,14 @@ begin
   qrlProdPredominante.Caption := FCTe.InfCarga.proPred;
 {$ENDIF}
 
-
-//  qrlOutrasCaracCarga.Caption := FCTe.InfCarga.xOutCat;
 {$IFDEF PL_103}
   qrlVlrTotalMerc.Caption := DFeUtil.FormatarValor(msk15x2, FCTe.InfCarga.vMerc);
 {$ENDIF}
 {$IFDEF PL_104}
   qrlVlrTotalMerc.Caption := CTeUtil.FormatarValor(msk15x2, FCTe.InfCarga.vCarga);
+{$ENDIF}
+{$IFDEF PL_200}
+  qrlVlrTotalMerc.Caption := CTeUtil.FormatarValor(msk15x2, FCTe.infCTeNorm.infCarga.vCarga);
 {$ENDIF}
 
   {
@@ -1910,24 +1912,23 @@ begin
         qrlICMS_ST.Caption     := CteUtil.FormatarValor(msk4x2, FCTe.Imp.ICMS.CST90.vCred);
       end;
   end;
-{$ENDIF}
-{$IFDEF PL_104}
+{$ELSE}
   case FCTe.Imp.ICMS.SituTrib of
     cst00:
       begin
-        //qrlRedBaseCalc.Caption := '';
-        qrlBaseCalc.Caption    := CteUtil.FormatarValor(msk9x2, FCTe.Imp.ICMS.ICMS00.vBC);
-        qrlAliqICMS.Caption    := CteUtil.FormatarValor(msk4x2, FCTe.Imp.ICMS.ICMS00.pICMS);
-        qrlVlrICMS.Caption     := CteUtil.FormatarValor(msk4x2, FCTe.Imp.ICMS.ICMS00.vICMS);
-       // qrlICMS_ST.Caption     := '';
+//        qrlRedBaseCalc.Caption := '';
+        qrlBaseCalc.Caption    := CTeUtil.FormatarValor(msk9x2, FCTe.Imp.ICMS.ICMS00.vBC);
+        qrlAliqICMS.Caption    := CTeUtil.FormatarValor(msk4x2, FCTe.Imp.ICMS.ICMS00.pICMS);
+        qrlVlrICMS.Caption     := CTeUtil.FormatarValor(msk4x2, FCTe.Imp.ICMS.ICMS00.vICMS);
+        qrlVlrICMSST.Caption   := '';
       end;
     cst20:
       begin
-       // qrlRedBaseCalc.Caption := CteUtil.FormatarValor(mskAliq, FCTe.Imp.ICMS.ICMS20.pRedBC);
-        qrlBaseCalc.Caption    := CteUtil.FormatarValor(msk9x2, FCTe.Imp.ICMS.ICMS20.vBC);
-        qrlAliqICMS.Caption    := CteUtil.FormatarValor(msk4x2, FCTe.Imp.ICMS.ICMS20.pICMS);
-        qrlVlrICMS.Caption     := CteUtil.FormatarValor(msk4x2, FCTe.Imp.ICMS.ICMS20.vICMS);
-       // qrlICMS_ST.Caption     := '';
+//        qrlRedBaseCalc.Caption := CTeUtil.FormatarValor(msk4x2, FCTe.Imp.ICMS.ICMS20.pRedBC);
+        qrlBaseCalc.Caption    := CTeUtil.FormatarValor(msk9x2, FCTe.Imp.ICMS.ICMS20.vBC);
+        qrlAliqICMS.Caption    := CTeUtil.FormatarValor(msk4x2, FCTe.Imp.ICMS.ICMS20.pICMS);
+        qrlVlrICMS.Caption     := CTeUtil.FormatarValor(msk4x2, FCTe.Imp.ICMS.ICMS20.vICMS);
+        qrlVlrICMSST.Caption   := '';
       end;
     cst40:
       begin
@@ -1935,15 +1936,15 @@ begin
         qrlBaseCalc.Caption    := '';
         qrlAliqICMS.Caption    := '';
         qrlVlrICMS.Caption     := '';
-   //     qrlICMS_ST.Caption     := '';
+        qrlVlrICMSST.Caption   := '';
       end;
     cst41:
       begin
-     //   qrlRedBaseCalc.Caption := '';
+//        qrlRedBaseCalc.Caption := '';
         qrlBaseCalc.Caption    := '';
         qrlAliqICMS.Caption    := '';
         qrlVlrICMS.Caption     := '';
-       // qrlICMS_ST.Caption     := '';
+        qrlVlrICMSST.Caption   := '';
       end;
     cst45:
       begin
@@ -1951,49 +1952,47 @@ begin
         qrlBaseCalc.Caption    := '';
         qrlAliqICMS.Caption    := '';
         qrlVlrICMS.Caption     := '';
-  //      qrlICMS_ST.Caption     := '';
+        qrlVlrICMSST.Caption   := '';
       end;
     cst51:
       begin
-    //    qrlRedBaseCalc.Caption := '';
+//        qrlRedBaseCalc.Caption := '';
         qrlBaseCalc.Caption    := '';
         qrlAliqICMS.Caption    := '';
         qrlVlrICMS.Caption     := '';
-      //  qrlICMS_ST.Caption     := '';
+        qrlVlrICMSST.Caption   := '';
       end;
     cst60:
       begin
-      //  qrlRedBaseCalc.Caption := '';
-        qrlBaseCalc.Caption    := CteUtil.FormatarValor(msk9x2, FCTe.Imp.ICMS.ICMS60.vBCSTRet);
-        qrlAliqICMS.Caption    := CteUtil.FormatarValor(msk4x2, FCTe.Imp.ICMS.ICMS60.pICMSSTRet);
-        qrlVlrICMS.Caption     := CteUtil.FormatarValor(msk9x2, FCTe.Imp.ICMS.ICMS60.vICMSSTRet);
-        qrlVlrICMSST.Caption   := CteUtil.FormatarValor(msk9x2, FCTe.Imp.ICMS.ICMS60.vICMSSTRet - FCTe.Imp.ICMS.ICMS60.vCred);
-        qrlVlrCREDPRES.Caption := CteUtil.FormatarValor(msk9x2, FCTe.Imp.ICMS.ICMS60.vCred);
+//        qrlRedBaseCalc.Caption := '';
+        qrlBaseCalc.Caption    := CTeUtil.FormatarValor(msk9x2, FCTe.Imp.ICMS.ICMS60.vBCSTRet);
+        qrlAliqICMS.Caption    := CTeUtil.FormatarValor(msk4x2, FCTe.Imp.ICMS.ICMS60.pICMSSTRet);
+        qrlVlrICMS.Caption     := CTeUtil.FormatarValor(msk9x2, FCTe.Imp.ICMS.ICMS60.vICMSSTRet);
+        qrlVlrICMSST.Caption   := '';
       end;
     cst90:
       begin
-       // qrlRedBaseCalc.Caption := CteUtil.FormatarValor(mskAliq, FCTe.Imp.ICMS.ICMS90.pRedBC);
-        qrlBaseCalc.Caption    := CteUtil.FormatarValor(msk9x2, FCTe.Imp.ICMS.ICMS90.vBC);
-        qrlAliqICMS.Caption    := CteUtil.FormatarValor(msk4x2, FCTe.Imp.ICMS.ICMS90.pICMS);
-        qrlVlrICMS.Caption     := CteUtil.FormatarValor(msk9x2, FCTe.Imp.ICMS.ICMS90.vICMS);
-      //  qrlICMS_ST.Caption     := CteUtil.FormatarValor(msk4x2, FCTe.Imp.ICMS.ICMS90.vCred);
+//        qrlRedBaseCalc.Caption := CTeUtil.FormatarValor(msk4x2, FCTe.Imp.ICMS.ICMS90.pRedBC);
+        qrlBaseCalc.Caption    := CTeUtil.FormatarValor(msk9x2, FCTe.Imp.ICMS.ICMS90.vBC);
+        qrlAliqICMS.Caption    := CTeUtil.FormatarValor(msk4x2, FCTe.Imp.ICMS.ICMS90.pICMS);
+        qrlVlrICMS.Caption     := CTeUtil.FormatarValor(msk9x2, FCTe.Imp.ICMS.ICMS90.vICMS);
+        qrlVlrICMSST.Caption   := '';
       end;
-    // Incluido por Italo em 05/12/2011 (contribuição de Doni Dephi)
     cstICMSOutraUF:
       begin
-      //  qrlRedBaseCalc.Caption := CteUtil.FormatarValor(mskAliq, FCTe.Imp.ICMS.ICMSOutraUF.pRedBCOutraUF);
-        qrlBaseCalc.Caption    := CteUtil.FormatarValor(msk9x2, FCTe.Imp.ICMS.ICMSOutraUF.vBCOutraUF);
-        qrlAliqICMS.Caption    := CteUtil.FormatarValor(msk4x2, FCTe.Imp.ICMS.ICMSOutraUF.pICMSOutraUF);
-        qrlVlrICMS.Caption     := CteUtil.FormatarValor(msk9x2, FCTe.Imp.ICMS.ICMSOutraUF.vICMSOutraUF);
-  //      qrlICMS_ST.Caption     := '';
+//        qrlRedBaseCalc.Caption := CTeUtil.FormatarValor(msk4x2, FCTe.Imp.ICMS.ICMSOutraUF.pRedBCOutraUF);
+        qrlBaseCalc.Caption    := CTeUtil.FormatarValor(msk9x2, FCTe.Imp.ICMS.ICMSOutraUF.vBCOutraUF);
+        qrlAliqICMS.Caption    := CTeUtil.FormatarValor(msk4x2, FCTe.Imp.ICMS.ICMSOutraUF.pICMSOutraUF);
+        qrlVlrICMS.Caption     := CTeUtil.FormatarValor(msk9x2, FCTe.Imp.ICMS.ICMSOutraUF.vICMSOutraUF);
+        qrlVlrICMSST.Caption   := '';
       end;
     cstICMSSN:
       begin
-     //   qrlRedBaseCalc.Caption := '';
+//        qrlRedBaseCalc.Caption := '';
         qrlBaseCalc.Caption    := '';
         qrlAliqICMS.Caption    := '';
         qrlVlrICMS.Caption     := '';
-  //      qrlICMS_ST.Caption     := '';
+        qrlVlrICMSST.Caption   := '';
       end;
   end;
 {$ENDIF}
