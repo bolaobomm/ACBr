@@ -256,7 +256,8 @@ begin
                                               TACBrNFe( TNotasFiscais( Collection ).ACBrNFe ).Configuracoes.Geral.VersaoDF,
                                               LayNfeRecepcao));
 
-        LocNFeW.Gerador.Opcoes.FormatoAlerta := TACBrNFe( TNotasFiscais( Collection ).ACBrNFe ).Configuracoes.Geral.FormatoAlerta;
+        LocNFeW.Gerador.Opcoes.FormatoAlerta  := TACBrNFe( TNotasFiscais( Collection ).ACBrNFe ).Configuracoes.Geral.FormatoAlerta;
+        LocNFeW.Gerador.Opcoes.RetirarAcentos := TACBrNFe( TNotasFiscais( Collection ).ACBrNFe ).Configuracoes.Geral.RetirarAcentos;
         LocNFeW.GerarXml;
         if DFeUtil.EstaVazio(CaminhoArquivo) then
            CaminhoArquivo := PathWithDelim(TACBrNFe( TNotasFiscais( Collection ).ACBrNFe ).Configuracoes.Geral.PathSalvar)+copy(NFe.infNFe.ID, (length(NFe.infNFe.ID)-44)+1, 44)+'-NFe.xml';
@@ -291,7 +292,8 @@ begin
                                               TACBrNFe( TNotasFiscais( Collection ).ACBrNFe ).Configuracoes.Geral.VersaoDF,
                                               LayNfeRecepcao));
 
-        LocNFeW.Gerador.Opcoes.FormatoAlerta := TACBrNFe( TNotasFiscais( Collection ).ACBrNFe ).Configuracoes.Geral.FormatoAlerta;
+        LocNFeW.Gerador.Opcoes.FormatoAlerta  := TACBrNFe( TNotasFiscais( Collection ).ACBrNFe ).Configuracoes.Geral.FormatoAlerta;
+        LocNFeW.Gerador.Opcoes.RetirarAcentos := TACBrNFe( TNotasFiscais( Collection ).ACBrNFe ).Configuracoes.Geral.RetirarAcentos;
         LocNFeW.GerarXml;
         Stream.WriteString(LocNFeW.Gerador.ArquivoFormatoXML);
      finally
@@ -387,7 +389,8 @@ begin
                                               TACBrNFe( TNotasFiscais( Collection ).ACBrNFe ).Configuracoes.Geral.VersaoDF,
                                               LayNfeRecepcao));
 
-    LocNFeW.Gerador.Opcoes.FormatoAlerta := TACBrNFe( TNotasFiscais( Collection ).ACBrNFe ).Configuracoes.Geral.FormatoAlerta;       
+    LocNFeW.Gerador.Opcoes.FormatoAlerta  := TACBrNFe( TNotasFiscais( Collection ).ACBrNFe ).Configuracoes.Geral.FormatoAlerta;
+    LocNFeW.Gerador.Opcoes.RetirarAcentos := TACBrNFe( TNotasFiscais( Collection ).ACBrNFe ).Configuracoes.Geral.RetirarAcentos;
     LocNFeW.GerarXml;
     Result := LocNFeW.Gerador.ArquivoFormatoXML;
  finally
@@ -451,7 +454,8 @@ begin
                                               FConfiguracoes.Geral.VersaoDF,
                                               LayNfeRecepcao));
 
-        LocNFeW.Gerador.Opcoes.FormatoAlerta := FConfiguracoes.Geral.FormatoAlerta;
+        LocNFeW.Gerador.Opcoes.FormatoAlerta  := FConfiguracoes.Geral.FormatoAlerta;
+        LocNFeW.Gerador.Opcoes.RetirarAcentos := FConfiguracoes.Geral.RetirarAcentos;
         LocNFeW.GerarXml;
         Self.Items[i].Alertas := LocNFeW.Gerador.ListaDeAlertas.Text;
 {$IFDEF ACBrNFeOpenSSL}
@@ -503,7 +507,8 @@ begin
                                               FConfiguracoes.Geral.VersaoDF,
                                               LayNfeRecepcao));
 
-       LocNFeW.Gerador.Opcoes.FormatoAlerta := FConfiguracoes.Geral.FormatoAlerta;
+       LocNFeW.Gerador.Opcoes.FormatoAlerta  := FConfiguracoes.Geral.FormatoAlerta;
+       LocNFeW.Gerador.Opcoes.RetirarAcentos := FConfiguracoes.Geral.RetirarAcentos;
        LocNFeW.GerarXml;
        Self.Items[i].XML := LocNFeW.Gerador.ArquivoFormatoXML;
        Self.Items[i].Alertas := LocNFeW.Gerador.ListaDeAlertas.Text;
@@ -919,7 +924,8 @@ begin
                                               FConfiguracoes.Geral.VersaoDF,
                                               LayNfeRecepcao));
 
-        LocNFeW.Gerador.Opcoes.FormatoAlerta := FConfiguracoes.Geral.FormatoAlerta;
+        LocNFeW.Gerador.Opcoes.FormatoAlerta  := FConfiguracoes.Geral.FormatoAlerta;
+        LocNFeW.Gerador.Opcoes.RetirarAcentos := FConfiguracoes.Geral.RetirarAcentos;
         LocNFeW.GerarXml;
         loSTR.Text := loSTR.Text +
                       copy(LocNFeW.Gerador.ArquivoFormatoTXT,14,length(LocNFeW.Gerador.ArquivoFormatoTXT));

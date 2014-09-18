@@ -139,6 +139,7 @@ type
     FPathSchemas: String;
     FExibirErroSchema: boolean;
     FFormatoAlerta: String;
+    FRetirarAcentos: boolean;
     {$IFDEF ACBrNFeOpenSSL}
        FIniFinXMLSECAutomatico: boolean;
     {$ENDIF}
@@ -166,6 +167,7 @@ type
     property PathSchemas: String read FPathSchemas write FPathSchemas;
     property ExibirErroSchema: Boolean read FExibirErroSchema write FExibirErroSchema;
     property FormatoAlerta: string read GetFormatoAlerta write FFormatoAlerta;
+    property RetirarAcentos: boolean read FRetirarAcentos write FRetirarAcentos;
     {$IFDEF ACBrNFeOpenSSL}
        property IniFinXMLSECAutomatico: Boolean read FIniFinXMLSECAutomatico write FIniFinXMLSECAutomatico;
     {$ENDIF}
@@ -296,6 +298,7 @@ begin
   // %ID%        : Representa a ID da TAG; ex X34
   // %MSG%       : Representa a mensagem de alerta
   // %DESCRICAO% : Representa a Descrição da TAG
+  FRetirarAcentos := True;
   {$IFDEF ACBrNFeOpenSSL}
      FIniFinXMLSECAutomatico:=True;
   {$ENDIF}
