@@ -187,7 +187,7 @@ type
   TpcnIndicadorContinuacao = (icNaoPossuiMaisDocumentos, icPossuiMaisDocumentos);
   TpcnSituacaoNFe = (snAutorizado,snDenegado,snCancelada);
   TpcnSituacaoManifDest = (smdSemManifestacao, smdConfirmada, smdDesconhecida, smdOperacaoNaoRealizada, smdCiencia);
-  TpcnTamanhoPapel = (tpA4, tpA5);
+  TpcnTamanhoPapel = (tpA4, tpA4_2vias, tpA5);
 
   TpcnModeloDF = (moNFe, moNFCe);
   TpcnVersaoDF = (ve200, ve300, ve310);
