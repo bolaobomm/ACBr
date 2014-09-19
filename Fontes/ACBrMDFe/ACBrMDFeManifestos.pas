@@ -204,7 +204,8 @@ begin
      Result  := True;
      LocMDFeW := TMDFeW.Create(MDFe);
      try
-        LocMDFeW.Gerador.Opcoes.FormatoAlerta := TACBrMDFe(TManifestos(Collection).ACBrMDFe).Configuracoes.Geral.FormatoAlerta;
+        LocMDFeW.Gerador.Opcoes.FormatoAlerta  := TACBrMDFe(TManifestos(Collection).ACBrMDFe).Configuracoes.Geral.FormatoAlerta;
+        LocMDFeW.Gerador.Opcoes.RetirarAcentos := TACBrMDFe(TManifestos(Collection).ACBrMDFe).Configuracoes.Geral.RetirarAcentos;
         LocMDFeW.VersaoDF := TACBrMDFe(TManifestos(Collection).ACBrMDFe).Configuracoes.Geral.VersaoDF;
         LocMDFeW.GerarXml;
         if DFeUtil.EstaVazio(CaminhoArquivo) then
@@ -230,7 +231,8 @@ begin
      Result  := True;
      LocMDFeW := TMDFeW.Create(MDFe);
      try
-        LocMDFeW.Gerador.Opcoes.FormatoAlerta := TACBrMDFe(TManifestos(Collection).ACBrMDFe).Configuracoes.Geral.FormatoAlerta;
+        LocMDFeW.Gerador.Opcoes.FormatoAlerta  := TACBrMDFe(TManifestos(Collection).ACBrMDFe).Configuracoes.Geral.FormatoAlerta;
+        LocMDFeW.Gerador.Opcoes.RetirarAcentos := TACBrMDFe(TManifestos(Collection).ACBrMDFe).Configuracoes.Geral.RetirarAcentos;
         LocMDFeW.VersaoDF := TACBrMDFe(TManifestos(Collection).ACBrMDFe).Configuracoes.Geral.VersaoDF;
         LocMDFeW.GerarXml;
         Stream.WriteString(LocMDFeW.Gerador.ArquivoFormatoXML);
@@ -311,7 +313,8 @@ var
 begin
  LocMDFeW := TMDFeW.Create(Self.MDFe);
  try
-    LocMDFeW.Gerador.Opcoes.FormatoAlerta := TACBrMDFe(TManifestos(Collection).ACBrMDFe).Configuracoes.Geral.FormatoAlerta;
+    LocMDFeW.Gerador.Opcoes.FormatoAlerta  := TACBrMDFe(TManifestos(Collection).ACBrMDFe).Configuracoes.Geral.FormatoAlerta;
+    LocMDFeW.Gerador.Opcoes.RetirarAcentos := TACBrMDFe(TManifestos(Collection).ACBrMDFe).Configuracoes.Geral.RetirarAcentos;
     LocMDFeW.VersaoDF := TACBrMDFe(TManifestos(Collection).ACBrMDFe).Configuracoes.Geral.VersaoDF;
     LocMDFeW.GerarXml;
     Result := LocMDFeW.Gerador.ArquivoFormatoXML;
@@ -351,7 +354,8 @@ begin
    begin
      LocMDFeW := TMDFeW.Create(Self.Items[i].MDFe);
      try
-        LocMDFeW.Gerador.Opcoes.FormatoAlerta := FConfiguracoes.Geral.FormatoAlerta;
+        LocMDFeW.Gerador.Opcoes.FormatoAlerta  := FConfiguracoes.Geral.FormatoAlerta;
+        LocMDFeW.Gerador.Opcoes.RetirarAcentos := FConfiguracoes.Geral.RetirarAcentos;
         LocMDFeW.VersaoDF := FConfiguracoes.Geral.VersaoDF;
         LocMDFeW.GerarXml;
         Self.Items[i].Alertas := LocMDFeW.Gerador.ListaDeAlertas.Text;
@@ -399,7 +403,8 @@ begin
   begin
     LocMDFeW := TMDFeW.Create(Self.Items[i].MDFe);
     try
-       LocMDFeW.Gerador.Opcoes.FormatoAlerta := FConfiguracoes.Geral.FormatoAlerta;
+       LocMDFeW.Gerador.Opcoes.FormatoAlerta  := FConfiguracoes.Geral.FormatoAlerta;
+       LocMDFeW.Gerador.Opcoes.RetirarAcentos := FConfiguracoes.Geral.RetirarAcentos;
        LocMDFeW.VersaoDF := FConfiguracoes.Geral.VersaoDF;
        LocMDFeW.GerarXml;
 

@@ -137,6 +137,7 @@ type
     FVersaoDF: TMDFeVersao;
     FExibirErroSchema: Boolean;
     FFormatoAlerta: String;
+    FRetirarAcentos: Boolean;
     {$IFDEF ACBrMDFeOpenSSL}
     FIniFinXMLSECAutomatico: Boolean;
     {$ENDIF}
@@ -157,6 +158,7 @@ type
     property VersaoDF: TMDFeVersao           read FVersaoDF               write FVersaoDF              default ve100;
     property ExibirErroSchema: Boolean       read FExibirErroSchema       write FExibirErroSchema;
     property FormatoAlerta: String           read GetFormatoAlerta        write FFormatoAlerta;
+    property RetirarAcentos: Boolean         read FRetirarAcentos         write FRetirarAcentos;
     {$IFDEF ACBrMDFeOpenSSL}
     property IniFinXMLSECAutomatico: Boolean read FIniFinXMLSECAutomatico write FIniFinXMLSECAutomatico;
     {$ENDIF}
@@ -270,6 +272,8 @@ begin
   // %MSG%       : Representa a mensagem de alerta
   // %DESCRICAO% : Representa a Descrição da TAG
 
+  FRetirarAcentos := True;
+  
 {$IFDEF ACBrMDFeOpenSSL}
   FIniFinXMLSECAutomatico := True;
 {$ENDIF}

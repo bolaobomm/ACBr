@@ -216,7 +216,8 @@ begin
      Result  := True;
      LocCTeW := TCTeW.Create(CTe);
      try
-        LocCTeW.Gerador.Opcoes.FormatoAlerta := TACBrCTe(TConhecimentos(Collection).ACBrCTe).Configuracoes.Geral.FormatoAlerta;
+        LocCTeW.Gerador.Opcoes.FormatoAlerta  := TACBrCTe(TConhecimentos(Collection).ACBrCTe).Configuracoes.Geral.FormatoAlerta;
+        LocCTeW.Gerador.Opcoes.RetirarAcentos := TACBrCTe(TConhecimentos(Collection).ACBrCTe).Configuracoes.Geral.RetirarAcentos;
         LocCTeW.GerarXml;
         if DFeUtil.EstaVazio(CaminhoArquivo) then
            CaminhoArquivo := PathWithDelim(TACBrCTe(TConhecimentos(Collection).ACBrCTe).Configuracoes.Geral.PathSalvar)+copy(CTe.inFCTe.ID, (length(CTe.inFCTe.ID)-44)+1, 44)+'-cte.xml';
@@ -241,7 +242,8 @@ begin
      Result  := True;
      LocCTeW := TCTeW.Create(CTe);
      try
-        LocCTeW.Gerador.Opcoes.FormatoAlerta := TACBrCTe(TConhecimentos(Collection).ACBrCTe).Configuracoes.Geral.FormatoAlerta;
+        LocCTeW.Gerador.Opcoes.FormatoAlerta  := TACBrCTe(TConhecimentos(Collection).ACBrCTe).Configuracoes.Geral.FormatoAlerta;
+        LocCTeW.Gerador.Opcoes.RetirarAcentos := TACBrCTe(TConhecimentos(Collection).ACBrCTe).Configuracoes.Geral.RetirarAcentos;
         LocCTeW.GerarXml;
         Stream.WriteString(LocCTeW.Gerador.ArquivoFormatoXML);
      finally
@@ -318,7 +320,8 @@ var
 begin
  LocCTeW := TCTeW.Create(Self.CTe);
  try
-    LocCTeW.Gerador.Opcoes.FormatoAlerta := TACBrCTe(TConhecimentos(Collection).ACBrCTe).Configuracoes.Geral.FormatoAlerta;
+    LocCTeW.Gerador.Opcoes.FormatoAlerta  := TACBrCTe(TConhecimentos(Collection).ACBrCTe).Configuracoes.Geral.FormatoAlerta;
+    LocCTeW.Gerador.Opcoes.RetirarAcentos := TACBrCTe(TConhecimentos(Collection).ACBrCTe).Configuracoes.Geral.RetirarAcentos;
     LocCTeW.GerarXml;
     Result := LocCTeW.Gerador.ArquivoFormatoXML;
  finally
@@ -378,7 +381,8 @@ begin
    begin
      LocCTeW := TCTeW.Create(Self.Items[i].CTe);
      try
-        LocCTeW.Gerador.Opcoes.FormatoAlerta := FConfiguracoes.Geral.FormatoAlerta;
+        LocCTeW.Gerador.Opcoes.FormatoAlerta  := FConfiguracoes.Geral.FormatoAlerta;
+        LocCTeW.Gerador.Opcoes.RetirarAcentos := FConfiguracoes.Geral.RetirarAcentos;
         LocCTeW.GerarXml;
         Self.Items[i].Alertas := LocCTeW.Gerador.ListaDeAlertas.Text;
 {$IFDEF ACBrCTeOpenSSL}
@@ -426,7 +430,8 @@ begin
    begin
      LocCTeW := TCTeW.Create(Self.Items[i].CTe);
      try
-        LocCTeW.Gerador.Opcoes.FormatoAlerta := FConfiguracoes.Geral.FormatoAlerta;
+        LocCTeW.Gerador.Opcoes.FormatoAlerta  := FConfiguracoes.Geral.FormatoAlerta;
+        LocCTeW.Gerador.Opcoes.RetirarAcentos := FConfiguracoes.Geral.RetirarAcentos;
         LocCTeW.GerarXml;
         Self.Items[i].XML     := LocCTeW.Gerador.ArquivoFormatoXML;
         Self.Items[i].Alertas := LocCTeW.Gerador.ListaDeAlertas.Text;

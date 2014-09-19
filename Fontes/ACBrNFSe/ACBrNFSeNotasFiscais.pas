@@ -442,6 +442,9 @@ begin
   LocNFSeW.DefTipos      := TACBrNFSe( TNotasFiscais( Collection ).ACBrNFSe ).Configuracoes.WebServices.DefTipos;
   LocNFSeW.ServicoEnviar := TACBrNFSe( TNotasFiscais( Collection ).ACBrNFSe ).Configuracoes.WebServices.ServicoEnviar;
 
+  LocNFSeW.Gerador.Opcoes.FormatoAlerta  := TACBrNFSe( TNotasFiscais( Collection ).ACBrNFSe ).Configuracoes.Geral.FormatoAlerta;
+  LocNFSeW.Gerador.Opcoes.RetirarAcentos := TACBrNFSe( TNotasFiscais( Collection ).ACBrNFSe ).Configuracoes.Geral.RetirarAcentos;
+
   LocNFSeW.GerarXml;
   Result := LocNFSeW.Gerador.ArquivoFormatoXML;
  finally
@@ -478,6 +481,10 @@ begin
    LocNFSeW.VersaoXML     := TACBrNFSe( TNotasFiscais( Collection ).ACBrNFSe ).Configuracoes.WebServices.VersaoXML;
    LocNFSeW.DefTipos      := TACBrNFSe( TNotasFiscais( Collection ).ACBrNFSe ).Configuracoes.WebServices.DefTipos;
    LocNFSeW.ServicoEnviar := TACBrNFSe( TNotasFiscais( Collection ).ACBrNFSe ).Configuracoes.WebServices.ServicoEnviar;
+
+   LocNFSeW.Gerador.Opcoes.FormatoAlerta  := TACBrNFSe( TNotasFiscais( Collection ).ACBrNFSe ).Configuracoes.Geral.FormatoAlerta;
+   LocNFSeW.Gerador.Opcoes.RetirarAcentos := TACBrNFSe( TNotasFiscais( Collection ).ACBrNFSe ).Configuracoes.Geral.RetirarAcentos;
+
    LocNFSeW.GerarXml;
 
    if DFeUtil.EstaVazio(CaminhoArquivo)
@@ -564,6 +571,10 @@ begin
     LocNFSeW.VersaoXML     := self.Configuracoes.WebServices.VersaoXML;
     LocNFSeW.DefTipos      := self.Configuracoes.WebServices.DefTipos;
     LocNFSeW.ServicoEnviar := self.Configuracoes.WebServices.ServicoEnviar;
+
+    LocNFSeW.Gerador.Opcoes.FormatoAlerta  := self.Configuracoes.Geral.FormatoAlerta;
+    LocNFSeW.Gerador.Opcoes.RetirarAcentos := self.Configuracoes.Geral.RetirarAcentos;
+
     LocNFSeW.GerarXml;
     Self.Items[i].Alertas := LocNFSeW.Gerador.ListaDeAlertas.Text;
     Self.Items[i].XML_Rps := LocNFSeW.Gerador.ArquivoFormatoXML;
@@ -739,6 +750,10 @@ begin
     LocNFSeW.VersaoXML     := self.Configuracoes.WebServices.VersaoXML;
     LocNFSeW.DefTipos      := self.Configuracoes.WebServices.DefTipos;
     LocNFSeW.ServicoEnviar := Self.Configuracoes.WebServices.ServicoEnviar;
+
+    LocNFSeW.Gerador.Opcoes.FormatoAlerta  := Self.Configuracoes.Geral.FormatoAlerta;
+    LocNFSeW.Gerador.Opcoes.RetirarAcentos := Self.Configuracoes.Geral.RetirarAcentos;
+
     LocNFSeW.GerarXml;
     Self.Items[i].XML_RPS := LocNFSeW.Gerador.ArquivoFormatoXML;
     Self.Items[i].Alertas := LocNFSeW.Gerador.ListaDeAlertas.Text;

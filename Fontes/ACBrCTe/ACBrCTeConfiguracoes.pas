@@ -144,6 +144,7 @@ type
     FPathSchemas: String;
     FExibirErroSchema: Boolean;
     FFormatoAlerta: String;
+    FRetirarAcentos: Boolean;
   {$IFDEF ACBrCTeOpenSSL}
     FIniFinXMLSECAutomatico: Boolean;
   {$ENDIF}
@@ -163,6 +164,7 @@ type
     property PathSchemas: String             read FPathSchemas            write FPathSchemas;
     property ExibirErroSchema: Boolean       read FExibirErroSchema       write FExibirErroSchema;
     property FormatoAlerta: String           read GetFormatoAlerta        write FFormatoAlerta;
+    property RetirarAcentos: Boolean         read FRetirarAcentos         write FRetirarAcentos;
   {$IFDEF ACBrCTeOpenSSL}
     property IniFinXMLSECAutomatico: Boolean read FIniFinXMLSECAutomatico write FIniFinXMLSECAutomatico;
   {$ENDIF}
@@ -277,6 +279,7 @@ begin
   FPathSalvar            := '';
   FPathSchemas           := '';
   FExibirErroSchema      := True;
+
   FFormatoAlerta         := 'TAG:%TAGNIVEL% ID:%ID%/%TAG%(%DESCRICAO%) - %MSG%.';
   // O Formato da mensagem de erro pode ser alterado pelo usuario alterando-se a property FFormatoAlerta: onde;
   // %TAGNIVEL%  : Representa o Nivel da TAG; ex: <transp><vol><lacres>
@@ -284,6 +287,8 @@ begin
   // %ID%        : Representa a ID da TAG; ex X34
   // %MSG%       : Representa a mensagem de alerta
   // %DESCRICAO% : Representa a Descrição da TAG
+
+  FRetirarAcentos := True;
 {$IFDEF ACBrCTeOpenSSL}
   FIniFinXMLSECAutomatico := True;
 {$ENDIF}
