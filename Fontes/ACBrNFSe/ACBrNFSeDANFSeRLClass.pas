@@ -76,9 +76,11 @@ begin
                                  , InscMunicipal
                                  , EMail_Prestador
                                  , UF
-                                 , OutrasInformacaoesImp
                                  , T_InscEstadual
                                  , T_InscMunicipal
+                                 , OutrasInformacaoesImp
+                                 , Atividade
+                                 , T_Fone
                                  // Augusto Fontana
                                  , PrintDialog);
     end;
@@ -107,9 +109,11 @@ begin
                                    , InscMunicipal
                                    , EMail_Prestador
                                    , UF
-                                   , OutrasInformacaoesImp
                                    , T_InscEstadual
                                    , T_InscMunicipal
+                                   , OutrasInformacaoesImp
+                                   , Atividade
+                                   , T_Fone
                                    // Augusto Fontana
                                    , PrintDialog);
 
@@ -136,6 +140,15 @@ begin
 //      end
 //      else NomeArq := StringReplace(NomeArq,'-nfse.xml', '.pdf', [rfIgnoreCase]);
 
+{
+class procedure TfrlDANFSeRL.SavePDF(AFile: String; ANFSe: TNFSe; ALogo, AEmail,
+  AFax: String; ANumCopias: Integer; ASistema, ASite, AUsuario: String;
+  AMargemSuperior, AMargemInferior, AMargemEsquerda, AMargemDireita: Double;
+  APrestLogo, APrefeitura, ARazaoSocial, AEndereco, AComplemento, AFone, AMunicipio,
+  AInscMunicipal, AEMail_Prestador, AUF, AT_InscEstadual, AT_InscMunicipal,
+  AOutrasInformacaoesImp, AAtividade : String);
+}
+
      frlDANFSeRLRetrato.SavePDF( NomeArq
                                , TACBrNFSe(ACBrNFSe).NotasFiscais.Items[i].NFSe
                                , Logo
@@ -150,7 +163,20 @@ begin
                                , MargemEsquerda
                                , MargemDireita
                                , PrestLogo
-                               , Prefeitura);
+                               , Prefeitura
+                               , RazaoSocial
+                               , Endereco
+                               , Complemento
+                               , Fone
+                               , Municipio
+                               , InscMunicipal
+                               , EMail_Prestador
+                               , UF
+                               , T_InscEstadual
+                               , T_InscMunicipal
+                               , OutrasInformacaoesImp
+                               , Atividade
+                               , T_Fone);
     end;
   end
   else begin
@@ -171,7 +197,20 @@ begin
                              , MargemEsquerda
                              , MargemDireita
                              , PrestLogo
-                             , Prefeitura);
+                             , Prefeitura
+                             , RazaoSocial
+                             , Endereco
+                             , Complemento
+                             , Fone
+                             , Municipio
+                             , InscMunicipal
+                             , EMail_Prestador
+                             , UF
+                             , T_InscEstadual
+                             , T_InscMunicipal
+                             , OutrasInformacaoesImp
+                             , Atividade
+                             , T_Fone);
   end;
 
  frlDANFSeRLRetrato.Free;

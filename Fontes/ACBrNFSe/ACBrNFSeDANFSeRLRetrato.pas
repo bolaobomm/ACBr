@@ -304,8 +304,25 @@ begin
 
  rlmCodServico.Lines.Clear;
 
- If FNFSe.Servico.xItemListaServico <> '' Then
+ If FNFSe.Servico.xItemListaServico <> '' Then Begin
+
+   RLLabel16.Visible := True;
+   rlmCodServico.Lines.Append('Atividade: ' + FAtividade);
    rlmCodServico.Lines.Append(FNFSe.Servico.ItemListaServico + ' - '+ FNFSe.Servico.xItemListaServico);
+ End Else Begin
+
+   If FAtividade <> '' Then Begin
+
+     RLLabel16.Visible := True;
+     RLLabel16.Caption := 'Atividade:';
+
+     rlmCodServico.Lines.Append(FAtividade);
+   End Else Begin
+
+     RLLabel16.Visible := False;
+   End;
+
+ End;
 
  rllCodObra.Caption := FNFSe.ConstrucaoCivil.CodigoObra;
  rllCodART.Caption  := FNFSe.ConstrucaoCivil.Art;
@@ -504,9 +521,12 @@ begin
                             ' - CEP: '+
                             DFeUtil.FormatarCEP( DFeUtil.Poem_Zeros( FNFSe.Tomador.Endereco.CEP, 8 ) );//Astrogildo em 13/12/12
  rllTomaComplemento.Caption := FNFSe.Tomador.Endereco.Complemento;
- rllTomaTelefone.Caption := DFeUtil.FormatarFone( FNFSe.Tomador.Contato.Telefone );//Astrogildo em 13/12/12
- rllTomaMunicipio.Caption := FNFSe.Tomador.Endereco.CodigoMunicipio +
-  ' - ' + FNFSe.Tomador.Endereco.xMunicipio;
+
+ If FNFSe.Tomador.Contato.Telefone <> '' Then
+   rllTomaTelefone.Caption := DFeUtil.FormatarFone(FNFSe.Tomador.Contato.Telefone)
+ Else rllTomaTelefone.Caption := DFeUtil.FormatarFone(FT_Fone);
+
+ rllTomaMunicipio.Caption := FNFSe.Tomador.Endereco.CodigoMunicipio + ' - ' + FNFSe.Tomador.Endereco.xMunicipio;
  rllTomaUF.Caption := FNFSe.Tomador.Endereco.UF;
  rllTomaEmail.Caption := FNFSe.Tomador.Contato.Email;
 
