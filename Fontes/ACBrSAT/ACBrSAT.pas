@@ -169,7 +169,7 @@ type
 
 implementation
 
-Uses ACBrUtil, ACBrSATDinamico_cdecl;
+Uses ACBrUtil, ACBrSATDinamico_cdecl, ACBrSATDinamico_stdcall;
 
 { TACBrSAT }
 
@@ -550,6 +550,7 @@ begin
   { Instanciando uma nova classe de acordo com AValue }
   case AValue of
     satDinamico_cdecl : fsSATClass := TACBrSATDinamico_cdecl.Create( Self ) ;
+    satDinamico_stdcall : fsSATClass := TACBrSATDinamico_stdcall.Create( Self ) ;
   else
     fsSATClass := TACBrSATClass.Create( Self ) ;
   end;

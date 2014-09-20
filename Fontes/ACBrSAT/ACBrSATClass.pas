@@ -63,7 +63,7 @@ const
                                  'Acesse nosso Forum em: http://projetoacbr.com.br/' ;
 type
 
-  TACBrSATModelo = ( satNenhum, satDinamico_cdecl ) ;
+  TACBrSATModelo = ( satNenhum, satDinamico_cdecl, satDinamico_stdcall ) ;
 
   { EACBrSATErro }
 
@@ -366,8 +366,11 @@ begin
 end;
 
 procedure TACBrSATClass.UnLoadDLLFunctions ;
+var
+  sLibName: String;
 begin
-  {}
+  sLibName := PathDLL + NomeDLL;
+  UnLoadLibrary( sLibName );
 end ;
 
 function TACBrSATClass.AssociarAssinatura(CNPJvalue,

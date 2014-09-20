@@ -33,7 +33,7 @@
 
 {$I ACBr.inc}
 
-unit ACBrSATDinamico_cdecl ;
+unit ACBrSATDinamico_stdcall ;
 
 interface
 
@@ -42,46 +42,46 @@ uses
 
 type
 
-   { TACBrSATDinamico_cdecl }
+   { TACBrSATDinamico_stdcall }
 
-   TACBrSATDinamico_cdecl = class( TACBrSATClass )
+   TACBrSATDinamico_stdcall = class( TACBrSATClass )
    private
      xSAT_AssociarAssinatura : function ( numeroSessao : LongInt;
         codigoDeAtivacao, CNPJvalue, assinaturaCNPJs : PAnsiChar ) : PAnsiChar ;
-        cdecl;
+        stdcall;
      xSAT_AtivarSAT : function ( numeroSessao, subComando : LongInt;
-        codigoDeAtivacao, CNPJ: PAnsiChar; cUF : LongInt ) : PAnsiChar ; cdecl;
+        codigoDeAtivacao, CNPJ: PAnsiChar; cUF : LongInt ) : PAnsiChar ; stdcall;
      xSAT_AtualizarSoftwareSAT : function ( numeroSessao : LongInt;
-        codigoDeAtivacao : PAnsiChar ) : PAnsiChar ; cdecl;
+        codigoDeAtivacao : PAnsiChar ) : PAnsiChar ; stdcall;
      xSAT_BloquearSAT : function ( numeroSessao : LongInt;
-        codigoDeAtivacao : PAnsiChar ) : PAnsiChar ; cdecl;
+        codigoDeAtivacao : PAnsiChar ) : PAnsiChar ; stdcall;
      xSAT_CancelarUltimaVenda : function (numeroSessao : LongInt;
-        codigoAtivacao, chave, dadosCancelamento : PAnsiChar ) : PAnsiChar ; cdecl;
+        codigoAtivacao, chave, dadosCancelamento : PAnsiChar ) : PAnsiChar ; stdcall;
      xSAT_ComunicarCertificadoICPBRASIL : function ( numeroSessao : LongInt;
-        codigoDeAtivacao, certificado : PAnsiChar ) : PAnsiChar ; cdecl;
+        codigoDeAtivacao, certificado : PAnsiChar ) : PAnsiChar ; stdcall;
      xSAT_ConfigurarInterfaceDeRede : function ( numeroSessao : LongInt;
-        codigoDeAtivacao, dadosConfiguracao : PAnsiChar ) : PAnsiChar ; cdecl;
+        codigoDeAtivacao, dadosConfiguracao : PAnsiChar ) : PAnsiChar ; stdcall;
      xSAT_ConsultarNumeroSessao : function (numeroSessao : LongInt;
-        codigoDeAtivacao : PAnsiChar; cNumeroDeSessao : LongInt) : PAnsiChar ; cdecl;
-     xSAT_ConsultarSAT : function ( numeroSessao : LongInt ) : PAnsiChar ; cdecl;
+        codigoDeAtivacao : PAnsiChar; cNumeroDeSessao : LongInt) : PAnsiChar ; stdcall;
+     xSAT_ConsultarSAT : function ( numeroSessao : LongInt ) : PAnsiChar ; stdcall;
      xSAT_ConsultarStatusOperacional : function ( numeroSessao : LongInt;
-        codigoDeAtivacao : PAnsiChar ) : PAnsiChar ; cdecl;
+        codigoDeAtivacao : PAnsiChar ) : PAnsiChar ; stdcall;
      xSAT_DesbloquearSAT : function ( numeroSessao : LongInt;
-        codigoDeAtivacao : PAnsiChar ) : PAnsiChar ; cdecl;
-     xSAT_DesligarSAT : function : PAnsiChar ; cdecl;
+        codigoDeAtivacao : PAnsiChar ) : PAnsiChar ; stdcall;
+     xSAT_DesligarSAT : function : PAnsiChar ; stdcall;
      xSAT_EnviarDadosVenda : function ( numeroSessao : LongInt;
-        codigoDeAtivacao, dadosVenda : PAnsiChar) : PAnsiChar ; cdecl;
+        codigoDeAtivacao, dadosVenda : PAnsiChar) : PAnsiChar ; stdcall;
      xSAT_ExtrairLogs : function ( numeroSessao : LongInt;
-        codigoDeAtivacao : PAnsiChar ) : PAnsiChar ; cdecl;
+        codigoDeAtivacao : PAnsiChar ) : PAnsiChar ; stdcall;
      xSAT_TesteFimAFim : function ( numeroSessao : LongInt;
-        codigoDeAtivacao, dadosVenda : PAnsiChar) : PAnsiChar ; cdecl;
+        codigoDeAtivacao, dadosVenda : PAnsiChar) : PAnsiChar ; stdcall;
      xSAT_TrocarCodigoDeAtivacao : function ( numeroSessao : LongInt;
         codigoDeAtivacao : PAnsiChar; opcao : LongInt; novoCodigo,
-        confNovoCodigo : PAnsiChar ) : PAnsiChar ; cdecl;
+        confNovoCodigo : PAnsiChar ) : PAnsiChar ; stdcall;
 
    protected
      procedure LoadDLLFunctions ; override;
-     procedure UnLoadDLLFunctions ; override;
+     procedure UnLoadDLLFunctions; override;
 
    public
      constructor Create( AOwner : TComponent ) ; override;
@@ -115,14 +115,14 @@ implementation
 
 Uses ACBrUtil;
 
-constructor TACBrSATDinamico_cdecl.Create(AOwner : TComponent) ;
+constructor TACBrSATDinamico_stdcall.Create(AOwner : TComponent) ;
 begin
   inherited Create(AOwner) ;
 
-  fpModeloStr := 'Emulador_SAT_Dinamico_cdecl' ;
+  fpModeloStr := 'Emulador_SAT_Dinamico' ;
 end ;
 
-function TACBrSATDinamico_cdecl.AssociarAssinatura(CNPJvalue,
+function TACBrSATDinamico_stdcall.AssociarAssinatura(CNPJvalue,
   assinaturaCNPJs : AnsiString) : String ;
 Var
   Resp : PAnsiChar;
@@ -134,7 +134,7 @@ begin
   Result := String( Resp );
 end ;
 
-function TACBrSATDinamico_cdecl.AtivarSAT(subComando : Integer ;
+function TACBrSATDinamico_stdcall.AtivarSAT(subComando : Integer ;
   CNPJ : AnsiString; cUF : Integer) : String ;
 Var
   Resp : PAnsiChar;
@@ -144,7 +144,7 @@ begin
   Result := String( Resp );
 end ;
 
-function TACBrSATDinamico_cdecl.AtualizarSoftwareSAT : String ;
+function TACBrSATDinamico_stdcall.AtualizarSoftwareSAT : String ;
 Var
   Resp : PAnsiChar;
 begin
@@ -152,7 +152,7 @@ begin
   Result := String( Resp );
 end ;
 
-function TACBrSATDinamico_cdecl.BloquearSAT : String ;
+function TACBrSATDinamico_stdcall.BloquearSAT : String ;
 Var
   Resp : PAnsiChar;
 begin
@@ -160,7 +160,7 @@ begin
   Result := String( Resp );
 end ;
 
-function TACBrSATDinamico_cdecl.CancelarUltimaVenda(chave,
+function TACBrSATDinamico_stdcall.CancelarUltimaVenda(chave,
   dadosCancelamento : AnsiString) : String ;
 Var
   Resp : PAnsiChar;
@@ -170,7 +170,7 @@ begin
   Result := String( Resp );
 end ;
 
-function TACBrSATDinamico_cdecl.ComunicarCertificadoICPBRASIL(
+function TACBrSATDinamico_stdcall.ComunicarCertificadoICPBRASIL(
   certificado : AnsiString) : String ;
 Var
   Resp : PAnsiChar;
@@ -180,7 +180,7 @@ begin
   Result := String( Resp );
 end ;
 
-function TACBrSATDinamico_cdecl.ConfigurarInterfaceDeRede(
+function TACBrSATDinamico_stdcall.ConfigurarInterfaceDeRede(
   dadosConfiguracao : AnsiString) : String ;
 Var
   Resp : PAnsiChar;
@@ -190,7 +190,7 @@ begin
   Result := String( Resp );
 end ;
 
-function TACBrSATDinamico_cdecl.ConsultarNumeroSessao(cNumeroDeSessao : Integer
+function TACBrSATDinamico_stdcall.ConsultarNumeroSessao(cNumeroDeSessao : Integer
   ) : String ;
 Var
   Resp : PAnsiChar;
@@ -200,7 +200,7 @@ begin
   Result := String( Resp );
 end ;
 
-function TACBrSATDinamico_cdecl.ConsultarSAT : String ;
+function TACBrSATDinamico_stdcall.ConsultarSAT : String ;
 Var
   Resp : PAnsiChar;
 begin
@@ -208,7 +208,7 @@ begin
   Result := String( Resp );
 end ;
 
-function TACBrSATDinamico_cdecl.ConsultarStatusOperacional : String ;
+function TACBrSATDinamico_stdcall.ConsultarStatusOperacional : String ;
 Var
   Resp : PAnsiChar;
 begin
@@ -216,7 +216,7 @@ begin
   Result := String( Resp );
 end ;
 
-function TACBrSATDinamico_cdecl.DesbloquearSAT : String ;
+function TACBrSATDinamico_stdcall.DesbloquearSAT : String ;
 Var
   Resp : PAnsiChar;
 begin
@@ -224,7 +224,7 @@ begin
   Result := String( Resp );
 end ;
 
-function TACBrSATDinamico_cdecl.DesligarSAT : String ;
+function TACBrSATDinamico_stdcall.DesligarSAT : String ;
 Var
   Resp : PAnsiChar;
 begin
@@ -232,7 +232,7 @@ begin
   Result := String( Resp );
 end ;
 
-function TACBrSATDinamico_cdecl.EnviarDadosVenda(dadosVenda : AnsiString) : String ;
+function TACBrSATDinamico_stdcall.EnviarDadosVenda(dadosVenda : AnsiString) : String ;
 Var
   Resp : PAnsiChar;
 begin
@@ -241,7 +241,7 @@ begin
   Result := String( Resp );
 end ;
 
-function TACBrSATDinamico_cdecl.ExtrairLogs : String ;
+function TACBrSATDinamico_stdcall.ExtrairLogs : String ;
 Var
   Resp : PAnsiChar;
 begin
@@ -249,7 +249,7 @@ begin
   Result := String( Resp );
 end ;
 
-function TACBrSATDinamico_cdecl.TesteFimAFim(dadosVenda : AnsiString) : String ;
+function TACBrSATDinamico_stdcall.TesteFimAFim(dadosVenda : AnsiString) : String ;
 Var
   Resp : PAnsiChar;
 begin
@@ -258,7 +258,7 @@ begin
   Result := String( Resp );
 end ;
 
-function TACBrSATDinamico_cdecl.TrocarCodigoDeAtivacao(
+function TACBrSATDinamico_stdcall.TrocarCodigoDeAtivacao(
   codigoDeAtivacaoOuEmergencia: AnsiString; opcao: Integer; novoCodigo: AnsiString
   ): String;
 Var
@@ -275,7 +275,7 @@ begin
   Result := String( Resp );
 end ;
 
-procedure TACBrSATDinamico_cdecl.LoadDLLFunctions;
+procedure TACBrSATDinamico_stdcall.LoadDLLFunctions;
 begin
   FunctionDetectLibSAT( 'AssociarAssinatura', @xSAT_AssociarAssinatura );
   FunctionDetectLibSAT( 'AtivarSAT', @xSAT_AtivarSAT );
@@ -295,7 +295,7 @@ begin
   FunctionDetectLibSAT( 'TrocarCodigoDeAtivacao', @xSAT_TrocarCodigoDeAtivacao);
 end;
 
-procedure TACBrSATDinamico_cdecl.UnLoadDLLFunctions;
+procedure TACBrSATDinamico_stdcall.UnLoadDLLFunctions;
 begin
   inherited UnLoadDLLFunctions;
 
@@ -316,20 +316,6 @@ begin
   xSAT_TesteFimAFim                   := Nil;
   xSAT_TrocarCodigoDeAtivacao         := Nil;
 end;
-
-(* Resposta válida do Kryptus
-Result := IntToStr(numeroSessao)+#10+
-'|06000'+#10+
-'|0000'+#10+
-'|Emitido com sucesso + conte?do das notas'+#10+
-'|999'+#10+
-'|Aviso nao catalogado'+#10+
-'|PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiPz48Q0ZlIHhtbG5zPSJodHRwOi8vd3d3LmZhemVuZGEuc3AuZ292LmJyL3NhdCI+PGluZkNGZSB4bWxucz0iaHR0cDovL3d3dy5mYXplbmRhLnNwLmdvdi5ici9zYXQiIHhtbG5zOnhzZD0iaHR0cDovL3d3dy53My5vcmcvMjAwMS9YTUxTY2hlbWEiIHhtbG5zOnhzaT0iaHR0cDovL3d3dy53My5vcmcvMjAwMS9YTUxTY2hlbWEtaW5zdGFuY2UiIElkPSJDRmUzNTAxMDEwNTc2MTA5ODAwMDExMzU5OTAwMDAwMTg2MDAwMDAxMTkzMzEzMCIgdmVyc2FvPSIwLjAzIiB2ZXJzYW9EYWRvc0VudD0iMC4wMyIgdmVyc2FvU0I9IjAxMDAwMCI+PGlkZT48Y1VGPjM1PC9jVUY+PGNORj4xOTMzMTM8L2NORj48bW9kPjU5PC9tb2Q+PG5zZXJpZVNBVD45MDAwMDAxODY8L25zZXJpZVNBVD48bkNGZT4wMDAwMDE8L25DRmU+PGRFbWk+MjAwMTAxMDE8L2RFbWk+PGhFbWk+MDAwMDAwPC9oRW1pPjxjRFY+MDwvY0RWPjx0cEFtYj4yPC90cEFtYj48Q05QSj4xNjcxNjExNDAwMDE3MjwvQ05QSj48c2lnbkFDPjRGVXljNUg1eFF4N0pGR0dZOGNLbFB4RVNnSFM0RlV5YzVINXhReDdKRkdHWThjS2xQeEVTZ0hTNEZVeWM1SDV4UXg3SkZHR1k4Y0tsUHhFU2dIUzRGVXljNUg1eFF4N0pGR0dZOGNLbFB4RVNnSFM0RlV5YzVINXhReDdKRkdHWThjS2xQeEVTZ0hTNEZVeWM1SDV4UXg3SkZHR1k4Y0tsUHhFU2dIUzRGVXljNUg1eFF4N0pGR0dZOGNLbFB4RVNnSFM0RlV5YzVINXhReDdKRkdHWThjS2xQeEVTZ0hTNE
-'|20010101000000'+#10+
-'|35010105761098000113599000001860000011933130'+#10+
-'|000000000000125'+#10+
-'|';
-*)
 
 end.
 
