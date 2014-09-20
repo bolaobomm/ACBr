@@ -47,6 +47,13 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+Data: 20/09/2014  (por: DSA)
+-- ACBrTEFDCliSiTEF --
+[+] Adicionado suporte a propriedade "LogDebug", para gravar no Log todos os
+    retornos da CliSiTef
+[+] Adição de novas mensagens de erro, e modificação para a exibição das mesmas
+http://www.projetoacbr.com.br/forum/index.php?/topic/17301-tefdclisitef-avaliaerro/
+
 Data: 06/07/2014  (por: DSA)
 -- ACBrTEFDClass --
 [*] Modificada a mensagem de problema de comunicação com o ECF na leitura de

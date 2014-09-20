@@ -1299,8 +1299,9 @@ begin
          BloquearMouseTeclado( False );
 
          { Transfere valore de "Conteudo" para as propriedades }
-         // DEBUG
-         //GravaLog( Self.Resp.Conteudo.Conteudo.Text );
+         if LogDebug then
+            GravaLog( Self.Resp.Conteudo.Conteudo.Text );
+
          TACBrTEFDRespCliSiTef( Self.Resp ).ConteudoToProperty ;
 
          if (HouveImpressao and fCancelamento) then
@@ -1387,18 +1388,21 @@ begin
 end;
 
 procedure TACBrTEFDCliSiTef.AvaliaErro( Sts : Integer );
-//var
-//   Erro : String;
+var
+   Erro : String;
 begin
-(*
    Erro := '' ;
    Case Sts of
         -1 : Erro := 'Módulo não inicializado' ;
         -2 : Erro := 'Operação cancelada pelo operador' ;
-        -3 : Erro := 'Fornecida uma modalidade inválida' ;
+        -3 : Erro := 'Fornecido um código de função inválido' ;
         -4 : Erro := 'Falta de memória para rodar a função' ;
         -5 : Erro := '' ; // 'Sem comunicação com o SiTef' ; // Comentado pois SiTEF já envia a msg de Erro
         -6 : Erro := 'Operação cancelada pelo usuário' ;
+		-40: Erro := 'Transação negada pelo SiTef';
+		-43: Erro := 'Falha no pinpad';
+		-50: Erro := 'Transação não segura';
+		-100: Erro := 'Erro interno do módulo';		
    else
       if Sts < 0 then
          Erro := 'Erros detectados internamente pela rotina ('+IntToStr(Sts)+')'
@@ -1406,10 +1410,8 @@ begin
          Erro := 'Negada pelo autorizador ('+IntToStr(Sts)+')' ;
    end;
 
-
    if Erro <> '' then
       TACBrTEFD(Owner).DoExibeMsg( opmOK, Erro );
-*)
 end ;
 
 function TACBrTEFDCliSiTef.ProcessarRespostaPagamento(
