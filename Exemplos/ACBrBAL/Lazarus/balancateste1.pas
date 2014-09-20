@@ -17,11 +17,13 @@ type
     btnConectar: TButton;
     btnDesconectar: TButton;
     btnLerPeso: TButton;
+    edLog: TEdit;
+    Label12: TLabel;
+    SbArqLog: TSpeedButton;
     sttPeso: TStaticText;
     sttResposta: TStaticText;
     Label2: TLabel;
     Label3: TLabel;
-    btnSair: TButton;
     edtTimeOut: TEdit;
     Label9: TLabel;
     chbMonitorar: TCheckBox;
@@ -44,13 +46,13 @@ type
     cmbStopBits: TComboBox;
     procedure btnConectarClick(Sender: TObject);
     procedure btnLerPesoClick(Sender: TObject);
-    procedure btnSairClick(Sender: TObject);
     procedure btnDesconectarClick(Sender: TObject);
     procedure FormClose(Sender: TObject; var CloseAction: TCloseAction);
     procedure edtTimeOutKeyPress(Sender: TObject; var Key: Char);
     procedure chbMonitorarClick(Sender: TObject);
     procedure ACBrBAL1LePeso(Peso: Double; Resposta: String);
     procedure FormCreate(Sender : TObject) ;
+    procedure SbArqLogClick(Sender: TObject);
   private
     { private declarations }
     Function Converte( cmd : String) : String;
@@ -62,7 +64,11 @@ var
   Form1: TForm1; 
 
 implementation
-Uses typinfo ;
+
+{$R *.lfm}
+
+Uses
+  typinfo, ACBrUtil ;
 
 function TForm1.Converte(cmd: String): String;
 var A : Integer ;
@@ -94,6 +100,7 @@ begin
    ACBrBAL1.Device.Data      := StrToInt( cmbDataBits.text );
    ACBrBAL1.Device.Baud      := StrToInt( cmbBaudRate.Text );
    ACBrBAL1.Device.Porta     := cmbPortaSerial.Text;
+   ACBrBAL1.ArqLOG           := edLog.Text;
 
    // Conecta com a balança
    ACBrBAL1.Ativar;
@@ -114,11 +121,6 @@ begin
    end ;
 
    ACBrBAL1.LePeso( TimeOut );
-end;
-
-procedure TForm1.btnSairClick(Sender: TObject);
-begin
-   close;
 end;
 
 procedure TForm1.btnDesconectarClick(Sender: TObject);
@@ -175,13 +177,15 @@ begin
 
 end;
 
+procedure TForm1.SbArqLogClick(Sender: TObject);
+begin
+  OpenURL( ExtractFilePath( Application.ExeName ) + edLog.Text);
+end;
+
 procedure TForm1.FormClose(Sender: TObject; var CloseAction: TCloseAction);
 begin
   ACBrBAL1.Desativar ;
 end;
-
-initialization
-  {$I balancateste1.lrs}
 
 end.
 
