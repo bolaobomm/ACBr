@@ -13,6 +13,7 @@ type
   { TForm1 }
 
   TForm1 = class(TForm)
+    ACBrMail1: TACBrMail;
     ApplicationProperties1: TApplicationProperties;
     btAbrirHtml: TToolButton;
     btAbrirTexto: TToolButton;
@@ -49,6 +50,7 @@ type
     btTitulosHtml: TToolButton;
     btVisualizar: TToolButton;
     CheckBox1: TCheckBox;
+    cbUsarThread: TCheckBox;
     ComboBox1: TComboBox;
     ComboBox2: TComboBox;
     ComboBox3: TComboBox;
@@ -395,7 +397,7 @@ end;
 procedure TForm1.MenuItem10Click(Sender: TObject);
 begin
   Application.MessageBox(PChar(MenuItem10.Hint),
-    'Sobre Enviador de E-mails ACBrMail ...',MB_ICONASTERICK);
+    'Sobre Enviador de E-mails ACBrMail ...',MB_ICONASTERISK);
 end;
 
 procedure TForm1.MenuItem13Click(Sender: TObject);
@@ -1116,7 +1118,7 @@ begin
   if dm.tbContas.IsEmpty then
   begin
     Application.MessageBox('Você precisa cadastrar uma conta para poder enviar e-mails!',
-      'Informação', MB_ICONASTERICK);
+      'Informação', MB_ICONASTERISK);
     ToolButton4.Click;
   end
   else
@@ -1140,8 +1142,6 @@ begin
 end;
 
 procedure TForm1.btEnviarClick(Sender: TObject);
-var
-  Enviar_ACBrMail: TACBrMail;
 begin
   if dm.tbDestinos.State in [dsInsert,dsEdit] then
   begin
@@ -1150,14 +1150,14 @@ begin
     else
       dm.tbDestinos.Cancel;
   end;
+
   Screen.Cursor := crHourGlass;
   ProgressBar1.Position := 0;
   ProgressBar1.Visible := True;
   Panel1.Caption := 'Status do envio:';
   Application.ProcessMessages;
-  Enviar_ACBrMail := TACBrMail.Create(nil);
   try
-    with Enviar_ACBrMail do
+    with ACBrMail1 do
     begin
       OnMailProcess := @Enviar_ACBrMailMailProcess;
       ReadingConfirmation := CheckBox1.Checked;
@@ -1169,7 +1169,10 @@ begin
         Body.Text := SynMemo1.Text
       else
         Body.Text := Memo1.Text;
-      if ComboBox2.ItemIndex = 2 then AltBody.Text := Memo2.Text;
+
+      if ComboBox2.ItemIndex = 2 then
+         AltBody.Text := Memo2.Text;
+
       Subject := Edit1.Text;
       dm.tbContas.Locate('NomeEmail',ComboBox4.Text,[]);
       From := dm.tbContas.Fields[3].AsString;
@@ -1203,8 +1206,8 @@ begin
       end;
 
       Sleep(500);
-      Send;
-      Application.MessageBox('Mensagem enviada com sucesso!','Informação',MB_ICONASTERICK);
+      Send( cbUsarThread.Checked );
+      Application.MessageBox('Mensagem enviada com sucesso!','Informação',MB_ICONASTERISK);
     end;
   finally
     Screen.Cursor := crDefault;
@@ -1212,7 +1215,6 @@ begin
     dm.tbAnexos.EnableControls;
     Panel1.Caption := '';
     ProgressBar1.Visible := False;
-    Enviar_ACBrMail.Free;
   end;
   NovaMensagem;
 end;

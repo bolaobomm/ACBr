@@ -121,7 +121,7 @@ begin
       Body.Add('Enviador de E-mails ACBrMail - v1.0');
       if Form2.ShowModal = mrOK then
         Application.MessageBox(PChar('Uma mensagem de teste foi enviada para o e-mail: '+
-          edEmail.Text),'Informação',MB_ICONASTERICK)
+          edEmail.Text),'Informação',MB_ICONASTERISK)
       else
       begin
         Application.MessageBox(PChar('O teste falhou!' + LineEnding + LineEnding +

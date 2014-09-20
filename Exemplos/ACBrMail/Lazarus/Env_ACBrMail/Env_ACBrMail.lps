@@ -4,7 +4,7 @@
     <PathDelim Value="\"/>
     <Version Value="9"/>
     <BuildModes Active="Release"/>
-    <Units Count="11">
+    <Units Count="14">
       <Unit0>
         <Filename Value="Env_ACBrMail.lpr"/>
         <IsPartOfProject Value="True"/>
@@ -21,8 +21,8 @@
         <IsVisibleTab Value="True"/>
         <EditorIndex Value="0"/>
         <WindowIndex Value="0"/>
-        <TopLine Value="438"/>
-        <CursorPos X="40" Y="449"/>
+        <TopLine Value="1184"/>
+        <CursorPos X="32" Y="1212"/>
         <UsageCount Value="200"/>
         <Loaded Value="True"/>
         <LoadedDesigner Value="True"/>
@@ -34,11 +34,11 @@
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
         <UnitName Value="uProvedores"/>
-        <EditorIndex Value="7"/>
+        <EditorIndex Value="10"/>
         <WindowIndex Value="0"/>
         <TopLine Value="45"/>
         <CursorPos X="72" Y="47"/>
-        <UsageCount Value="144"/>
+        <UsageCount Value="145"/>
         <Loaded Value="True"/>
         <LoadedDesigner Value="True"/>
       </Unit2>
@@ -53,7 +53,7 @@
         <WindowIndex Value="0"/>
         <TopLine Value="96"/>
         <CursorPos X="43" Y="107"/>
-        <UsageCount Value="141"/>
+        <UsageCount Value="142"/>
         <Loaded Value="True"/>
         <LoadedDesigner Value="True"/>
       </Unit3>
@@ -68,7 +68,7 @@
         <WindowIndex Value="0"/>
         <TopLine Value="152"/>
         <CursorPos X="22" Y="173"/>
-        <UsageCount Value="136"/>
+        <UsageCount Value="137"/>
         <Loaded Value="True"/>
         <LoadedDesigner Value="True"/>
       </Unit4>
@@ -81,9 +81,12 @@
         <UnitName Value="uContasCad"/>
         <EditorIndex Value="4"/>
         <WindowIndex Value="0"/>
-        <TopLine Value="101"/>
-        <CursorPos X="27" Y="109"/>
-        <UsageCount Value="137"/>
+        <TopLine Value="114"/>
+        <CursorPos X="55" Y="128"/>
+        <UsageCount Value="138"/>
+        <Bookmarks Count="1">
+          <Item0 X="38" Y="124" ID="1"/>
+        </Bookmarks>
         <Loaded Value="True"/>
         <LoadedDesigner Value="True"/>
       </Unit5>
@@ -94,11 +97,11 @@
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
         <UnitName Value="uContatosCad"/>
-        <EditorIndex Value="6"/>
+        <EditorIndex Value="9"/>
         <WindowIndex Value="0"/>
         <TopLine Value="63"/>
         <CursorPos X="1" Y="82"/>
-        <UsageCount Value="136"/>
+        <UsageCount Value="137"/>
         <Loaded Value="True"/>
         <LoadedDesigner Value="True"/>
       </Unit6>
@@ -113,7 +116,7 @@
         <WindowIndex Value="0"/>
         <TopLine Value="57"/>
         <CursorPos X="1" Y="69"/>
-        <UsageCount Value="135"/>
+        <UsageCount Value="136"/>
         <Loaded Value="True"/>
         <LoadedDesigner Value="True"/>
       </Unit7>
@@ -124,11 +127,11 @@
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
         <UnitName Value="uTestes"/>
-        <EditorIndex Value="5"/>
+        <EditorIndex Value="8"/>
         <WindowIndex Value="0"/>
         <TopLine Value="74"/>
         <CursorPos X="1" Y="83"/>
-        <UsageCount Value="29"/>
+        <UsageCount Value="30"/>
         <Loaded Value="True"/>
         <LoadedDesigner Value="True"/>
       </Unit8>
@@ -148,130 +151,160 @@
         <CursorPos X="1" Y="528"/>
         <UsageCount Value="24"/>
       </Unit10>
+      <Unit11>
+        <Filename Value="C:\lazarus\lcl\forms.pp"/>
+        <UnitName Value="Forms"/>
+        <EditorIndex Value="7"/>
+        <WindowIndex Value="0"/>
+        <TopLine Value="1376"/>
+        <CursorPos X="14" Y="1385"/>
+        <UsageCount Value="10"/>
+        <Loaded Value="True"/>
+      </Unit11>
+      <Unit12>
+        <Filename Value="C:\lazarus\components\lazreport\source\lr_desgn.pas"/>
+        <UnitName Value="LR_Desgn"/>
+        <EditorIndex Value="5"/>
+        <WindowIndex Value="0"/>
+        <TopLine Value="6205"/>
+        <CursorPos X="10" Y="6216"/>
+        <UsageCount Value="10"/>
+        <Loaded Value="True"/>
+      </Unit12>
+      <Unit13>
+        <Filename Value="C:\lazarus\lcl\lcltype.pp"/>
+        <UnitName Value="LCLType"/>
+        <EditorIndex Value="6"/>
+        <WindowIndex Value="0"/>
+        <TopLine Value="759"/>
+        <CursorPos X="3" Y="770"/>
+        <UsageCount Value="10"/>
+        <Loaded Value="True"/>
+      </Unit13>
     </Units>
     <General>
       <ActiveWindowIndexAtStart Value="0"/>
     </General>
     <JumpHistory Count="30" HistoryIndex="29">
       <Position1>
-        <Filename Value="ucontascad.pas"/>
-        <Caret Line="108" Column="1" TopLine="99"/>
+        <Filename Value="unit1.pas"/>
+        <Caret Line="426" Column="3" TopLine="423"/>
       </Position1>
       <Position2>
-        <Filename Value="ucontascad.pas"/>
-        <Caret Line="109" Column="1" TopLine="99"/>
+        <Filename Value="unit1.pas"/>
+        <Caret Line="1012" Column="3" TopLine="1009"/>
       </Position2>
       <Position3>
-        <Filename Value="ucontascad.pas"/>
-        <Caret Line="110" Column="1" TopLine="99"/>
+        <Filename Value="unit1.pas"/>
+        <Caret Line="752" Column="1" TopLine="735"/>
       </Position3>
       <Position4>
-        <Filename Value="ucontascad.pas"/>
-        <Caret Line="111" Column="1" TopLine="99"/>
+        <Filename Value="unit1.pas"/>
+        <Caret Line="444" Column="1" TopLine="423"/>
       </Position4>
       <Position5>
         <Filename Value="ucontascad.pas"/>
-        <Caret Line="112" Column="1" TopLine="99"/>
+        <Caret Line="131" Column="1" TopLine="115"/>
       </Position5>
       <Position6>
         <Filename Value="ucontascad.pas"/>
-        <Caret Line="113" Column="1" TopLine="99"/>
+        <Caret Line="109" Column="34" TopLine="101"/>
       </Position6>
       <Position7>
-        <Filename Value="ucontascad.pas"/>
-        <Caret Line="114" Column="1" TopLine="99"/>
+        <Filename Value="unit1.pas"/>
+        <Caret Line="429" Column="1" TopLine="423"/>
       </Position7>
       <Position8>
-        <Filename Value="ucontascad.pas"/>
-        <Caret Line="115" Column="1" TopLine="99"/>
+        <Filename Value="unit1.pas"/>
+        <Caret Line="458" Column="29" TopLine="456"/>
       </Position8>
       <Position9>
-        <Filename Value="ucontascad.pas"/>
-        <Caret Line="116" Column="1" TopLine="99"/>
+        <Filename Value="unit1.pas"/>
+        <Caret Line="459" Column="29" TopLine="457"/>
       </Position9>
       <Position10>
-        <Filename Value="ucontascad.pas"/>
-        <Caret Line="117" Column="1" TopLine="99"/>
+        <Filename Value="unit1.pas"/>
+        <Caret Line="518" Column="1" TopLine="514"/>
       </Position10>
       <Position11>
-        <Filename Value="ucontascad.pas"/>
-        <Caret Line="118" Column="1" TopLine="100"/>
+        <Filename Value="unit1.pas"/>
+        <Caret Line="441" Column="27" TopLine="430"/>
       </Position11>
       <Position12>
-        <Filename Value="ucontascad.pas"/>
-        <Caret Line="119" Column="1" TopLine="101"/>
+        <Filename Value="unit1.pas"/>
+        <Caret Line="440" Column="3" TopLine="438"/>
       </Position12>
       <Position13>
-        <Filename Value="ucontascad.pas"/>
-        <Caret Line="120" Column="1" TopLine="103"/>
+        <Filename Value="unit1.pas"/>
+        <Caret Line="519" Column="3" TopLine="516"/>
       </Position13>
       <Position14>
-        <Filename Value="ucontascad.pas"/>
-        <Caret Line="121" Column="1" TopLine="104"/>
+        <Filename Value="unit1.pas"/>
+        <Caret Line="449" Column="40" TopLine="432"/>
       </Position14>
       <Position15>
         <Filename Value="unit1.pas"/>
-        <Caret Line="1349" Column="19" TopLine="1328"/>
+        <Caret Line="450" Column="40" TopLine="433"/>
       </Position15>
       <Position16>
         <Filename Value="unit1.pas"/>
-        <Caret Line="289" Column="15" TopLine="269"/>
+        <Caret Line="1144" Column="1" TopLine="1131"/>
       </Position16>
       <Position17>
-        <Filename Value="unit1.pas"/>
-        <Caret Line="908" Column="38" TopLine="895"/>
+        <Filename Value="ucontascad.pas"/>
+        <Caret Line="109" Column="27" TopLine="101"/>
       </Position17>
       <Position18>
-        <Filename Value="unit1.pas"/>
-        <Caret Line="426" Column="3" TopLine="423"/>
+        <Filename Value="ucontascad.pas"/>
+        <Caret Line="124" Column="53" TopLine="113"/>
       </Position18>
       <Position19>
-        <Filename Value="unit1.pas"/>
-        <Caret Line="1012" Column="3" TopLine="1009"/>
+        <Filename Value="C:\lazarus\components\lazreport\source\lr_desgn.pas"/>
+        <Caret Line="1" Column="1" TopLine="1"/>
       </Position19>
       <Position20>
-        <Filename Value="unit1.pas"/>
-        <Caret Line="752" Column="1" TopLine="735"/>
+        <Filename Value="C:\lazarus\components\lazreport\source\lr_desgn.pas"/>
+        <Caret Line="6216" Column="10" TopLine="6205"/>
       </Position20>
       <Position21>
-        <Filename Value="unit1.pas"/>
-        <Caret Line="444" Column="1" TopLine="423"/>
+        <Filename Value="ucontascad.pas"/>
+        <Caret Line="124" Column="44" TopLine="113"/>
       </Position21>
       <Position22>
         <Filename Value="ucontascad.pas"/>
-        <Caret Line="131" Column="1" TopLine="115"/>
+        <Caret Line="1" Column="1" TopLine="1"/>
       </Position22>
       <Position23>
         <Filename Value="ucontascad.pas"/>
-        <Caret Line="109" Column="34" TopLine="101"/>
+        <Caret Line="7" Column="5" TopLine="1"/>
       </Position23>
       <Position24>
-        <Filename Value="unit1.pas"/>
-        <Caret Line="429" Column="1" TopLine="423"/>
+        <Filename Value="ucontascad.pas"/>
+        <Caret Line="49" Column="5" TopLine="30"/>
       </Position24>
       <Position25>
         <Filename Value="unit1.pas"/>
-        <Caret Line="458" Column="29" TopLine="456"/>
+        <Caret Line="1145" Column="1" TopLine="1132"/>
       </Position25>
       <Position26>
         <Filename Value="unit1.pas"/>
-        <Caret Line="459" Column="29" TopLine="457"/>
+        <Caret Line="400" Column="61" TopLine="389"/>
       </Position26>
       <Position27>
         <Filename Value="unit1.pas"/>
-        <Caret Line="518" Column="1" TopLine="514"/>
+        <Caret Line="1121" Column="38" TopLine="1110"/>
       </Position27>
       <Position28>
         <Filename Value="unit1.pas"/>
-        <Caret Line="441" Column="27" TopLine="430"/>
+        <Caret Line="1159" Column="19" TopLine="1154"/>
       </Position28>
       <Position29>
         <Filename Value="unit1.pas"/>
-        <Caret Line="440" Column="3" TopLine="438"/>
+        <Caret Line="1206" Column="92" TopLine="1195"/>
       </Position29>
       <Position30>
         <Filename Value="unit1.pas"/>
-        <Caret Line="519" Column="3" TopLine="516"/>
+        <Caret Line="1218" Column="50" TopLine="1202"/>
       </Position30>
     </JumpHistory>
     <CustomSessionData Count="2">
