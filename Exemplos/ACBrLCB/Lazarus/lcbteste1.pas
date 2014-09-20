@@ -74,6 +74,8 @@ var
 
 implementation
 
+{$R *.lfm}
+
 function TForm1.Converte(cmd: String): String;
 var A : Integer ;
 begin
@@ -163,7 +165,7 @@ end;
 procedure TForm1.Vende;
 Var Atraso : Integer ;
 begin
-  mProdutos.Lines.Add( 'Cód: '+ACBrLCB1.UltimoCodigo ) ;
+  mProdutos.Lines.Add( 'CÃ³d: '+ACBrLCB1.UltimoCodigo ) ;
 
   Atraso := StrToIntDef(edAtraso.Text,0) ;
   if Atraso > 0 then

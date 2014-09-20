@@ -1,4 +1,4 @@
-<?xml version="1.0"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <CONFIG>
   <ProjectOptions>
     <Version Value="9"/>
@@ -8,6 +8,7 @@
         <LRSInOutputDirectory Value="False"/>
       </Flags>
       <MainUnit Value="0"/>
+      <ResourceType Value="res"/>
       <ActiveWindowIndexAtStart Value="0"/>
     </General>
     <VersionInfo>
@@ -49,21 +50,23 @@
         <Filename Value="lcbteste1.pas"/>
         <IsPartOfProject Value="True"/>
         <ComponentName Value="Form1"/>
+        <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
         <UnitName Value="LCBTeste1"/>
         <IsVisibleTab Value="True"/>
         <EditorIndex Value="0"/>
         <WindowIndex Value="0"/>
-        <TopLine Value="1"/>
-        <CursorPos X="24" Y="2"/>
+        <TopLine Value="67"/>
+        <CursorPos X="33" Y="75"/>
         <UsageCount Value="20"/>
         <Loaded Value="True"/>
         <LoadedDesigner Value="True"/>
       </Unit1>
       <Unit2>
         <Filename Value="lcbteste1.lfm"/>
+        <WindowIndex Value="0"/>
         <TopLine Value="325"/>
-        <CursorPos X="4" Y="352"/>
+        <CursorPos X="85" Y="338"/>
         <UsageCount Value="10"/>
         <DefaultSyntaxHighlighter Value="LFM"/>
       </Unit2>
@@ -92,9 +95,10 @@
     </JumpHistory>
   </ProjectOptions>
   <CompilerOptions>
-    <Version Value="10"/>
+    <Version Value="11"/>
     <PathDelim Value="\"/>
     <SearchPaths>
+      <UnitOutputDirectory Value="lib\$(TargetCPU)-$(TargetOS)"/>
       <SrcPath Value="$(LazarusDir)\lcl;$(LazarusDir)\lcl\interfaces\$(LCLWidgetType)"/>
     </SearchPaths>
     <Parsing>
@@ -104,7 +108,7 @@
     </Parsing>
     <Linking>
       <Debugging>
-        <DebugInfoType Value="dsAuto"/>
+        <GenerateDebugInfo Value="False"/>
       </Debugging>
       <Options>
         <Win32>
@@ -129,4 +133,5 @@
       </Item2>
     </Exceptions>
   </Debugging>
+  <EditorMacros Count="0"/>
 </CONFIG>

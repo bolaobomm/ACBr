@@ -4,59 +4,60 @@ object Form1: TForm1
   Top = 296
   Width = 554
   ActiveControl = mProdutos
-  Caption = 'Teste de Leitor de Código de Barras Serial'
+  BorderStyle = bsSingle
+  Caption = 'Teste de Leitor de CÃ³digo de Barras Serial'
   ClientHeight = 293
   ClientWidth = 554
   Font.Height = -11
   Font.Name = 'MS Sans Serif'
   OnCreate = FormCreate
-  LCLVersion = '0.9.31'
+  LCLVersion = '1.2.4.0'
   object Label1: TLabel
     Left = 8
-    Height = 14
+    Height = 13
     Top = 8
-    Width = 68
-    Caption = 'Última Leitura:'
+    Width = 67
+    Caption = 'Ãšltima Leitura:'
     ParentColor = False
   end
   object Label3: TLabel
     Left = 222
-    Height = 14
+    Height = 13
     Top = 199
-    Width = 63
+    Width = 62
     Caption = 'Interv.Leitura'
     ParentColor = False
   end
   object Label4: TLabel
     Left = 8
-    Height = 14
+    Height = 13
     Top = 199
-    Width = 26
+    Width = 25
     Caption = 'Porta'
     ParentColor = False
   end
   object Label5: TLabel
     Left = 152
-    Height = 14
+    Height = 13
     Top = 199
-    Width = 30
+    Width = 29
     Caption = 'Sufixo'
     ParentColor = False
   end
   object Label6: TLabel
     Left = 352
-    Height = 14
+    Height = 13
     Top = 32
-    Width = 81
+    Width = 80
     Caption = 'Conteudo da Fila'
     ParentColor = False
   end
   object Label2: TLabel
     Left = 374
-    Height = 14
+    Height = 13
     Top = 199
-    Width = 133
-    Caption = 'Simular Atraso na Aplicação'
+    Width = 132
+    Caption = 'Simular Atraso na AplicaÃ§Ã£o'
     ParentColor = False
   end
   object lUltimaLeitura: TLabel
@@ -75,41 +76,41 @@ object Form1: TForm1
   end
   object Label7: TLabel
     Left = 80
-    Height = 14
+    Height = 13
     Top = 199
-    Width = 26
+    Width = 25
     Caption = 'Baud'
     ParentColor = False
   end
   object Label8: TLabel
     Left = 8
-    Height = 14
+    Height = 13
     Top = 247
-    Width = 24
+    Width = 23
     Caption = 'Data'
     ParentColor = False
   end
   object Label9: TLabel
     Left = 249
-    Height = 14
+    Height = 13
     Top = 247
-    Width = 58
+    Width = 57
     Caption = 'HandShake'
     ParentColor = False
   end
   object Label10: TLabel
     Left = 72
-    Height = 14
+    Height = 13
     Top = 247
-    Width = 27
+    Width = 26
     Caption = 'Parity'
     ParentColor = False
   end
   object Label11: TLabel
     Left = 352
-    Height = 14
+    Height = 13
     Top = 248
-    Width = 23
+    Width = 22
     Caption = 'Stop'
     ParentColor = False
   end
@@ -119,14 +120,14 @@ object Form1: TForm1
     Top = 40
     Width = 337
     Lines.Strings = (
-      'SE NAO LEU O CÓDIGO DE BARRAS:'
+      'SE NAO LEU O CÃ“DIGO DE BARRAS:'
       ''
-      '1 - Verifique se a Porta está correta'
-      '2 - Verifique se o Baud está correto'
-      '3 - Experimente deixar o SUFIXO vazio. Após uma leitura '
+      '1 - Verifique se a Porta estÃ¡ correta'
+      '2 - Verifique se o Baud estÃ¡ correto'
+      '3 - Experimente deixar o SUFIXO vazio. ApÃ³s uma leitura '
       'verifique o Sufixo correto no final de "Ultima Leitura" '
       'IMPORTANTE: Informar o sufixo correto para o '
-      'componente é importante para ler corretamente um código de '
+      'componente Ã© importante para ler corretamente um cÃ³digo de '
       'cada vez.'
     )
     ScrollBars = ssVertical
@@ -224,7 +225,7 @@ object Form1: TForm1
     Height = 41
     Top = 102
     Width = 185
-    Caption = 'Simulando Atraso (Impressão)'
+    Caption = 'Simulando Atraso (ImpressÃ£o)'
     TabOrder = 19
     Visible = False
   end
