@@ -300,7 +300,7 @@ var
 {-----------------------------------------------------------------------------
   Todos os Fontes do ACBr usam Encoding CP1252, para manter compatibilidade com
   D5 a D2007, Porém D2009 e superiores e Lazarus 0.9.27 e acima usam UTF8.
-  A função abaixo converte a AString para de ANSI, para UTF8, apenas se o
+  A função abaixo converte a "AString" de ANSI, para UTF8, porém apenas se o
   Compilador usar UNICODE
  -----------------------------------------------------------------------------}
 function ACBrStr( AString : AnsiString ) : String ;
@@ -2592,39 +2592,11 @@ var
   PosIni, PosFim : Integer;
   UTexto, UChave :string;
 begin
-  (*
-  if MantemChave then
-   begin
-     PosIni := Pos(String(Chave),String(Texto))-1;
-     PosFim := Pos('/'+String(Chave),String(Texto))+length(String(Chave))+3;
-
-     if (PosIni = 0) or (PosFim = 0) then
-      begin
-        PosIni := Pos('ns2:'+String(Chave),String(Texto))-1;
-        PosFim := Pos('/ns2:'+String(Chave),String(Texto))+length(String(Chave))+3;
-      end;
-   end
-  else
-   begin
-     PosIni := Pos(String(Chave),String(Texto))+Pos('>',copy(String(Texto),Pos(String(Chave),String(Texto)),length(String(Texto))));
-     PosFim := Pos('/'+String(Chave),String(Texto));
-
-     if (PosIni = 0) or (PosFim = 0) then
-      begin
-        PosIni := Pos('ns2:'+String(Chave),String(Texto))+Pos('>',copy(String(Texto),Pos('ns2:'+String(Chave),String(Texto)),length(String(Texto))));
-        PosFim := Pos('/ns2:'+String(Chave),String(Texto));
-      end;
-   end;
-   *)
-  // Alterado por Italo em 15/04/2014
-  // Conforme proposta feita por Jairo - Microns 
   UTexto := AnsiUpperCase(string(Texto));
   UChave := AnsiUpperCase(string(Chave));
 
   if MantemChave then
    begin
-     // Alterado por italo em 05/06/2014
-//     PosIni := Pos(UChave, UTexto)-1;
      PosIni := Pos('<' + UChave, UTexto);
      PosFim := Pos('/' + UChave, UTexto) + length(UChave) + 3;
 
@@ -2636,8 +2608,6 @@ begin
    end
   else
    begin
-     // Alterado por italo em 05/06/2014
-//     PosIni := Pos(UChave, UTexto) + Pos('>', copy(UTexto, Pos(UChave, UTexto), length(UTexto)));
      PosIni := Pos('<' + UChave, UTexto) + Pos('>', copy(UTexto, Pos('<' + UChave, UTexto), length(UTexto)));
      PosFim := Pos('/' + UChave, UTexto);
 
