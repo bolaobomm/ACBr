@@ -66,6 +66,8 @@ var
 
 implementation
 
+{$R *.lfm}
+
 uses ACBrUtil, ACBrCHQPerto ;
      
 procedure TfrCHQ.FormCreate(Sender: TObject);
@@ -206,6 +208,7 @@ begin
   cbxModelo.ItemIndex := Integer( ACBrCHQ1.Modelo ) ;
   cbxPorta.Text  := ACBrCHQ1.Porta ;
 
+  TACBrCHQPerto( ACBrCHQ1.CHQ ).CmdImpCheque := 'XX' ;
   bCMC7.Visible := (ACBrCHQ1.Modelo = chqPerto) ;
 {  sbECF.Visible := (ACBrCHQ1.Modelo = chqImpressoraECF) ;}
 
@@ -257,9 +260,6 @@ procedure TfrCHQ.bImpVersoClick(Sender: TObject);
 begin
   ACBrCHQ1.ImprimirVerso( mVerso.Lines );
 end;
-
-initialization
-  {$I chqteste1.lrs}
 
 end.
 

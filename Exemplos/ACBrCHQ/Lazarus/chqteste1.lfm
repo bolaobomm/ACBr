@@ -11,7 +11,7 @@ object frCHQ: TfrCHQ
   Caption = 'Teste ACBrCHQ'
   ClientHeight = 263
   ClientWidth = 606
-  LCLVersion = '1.0.4.0'
+  LCLVersion = '1.2.4.0'
   object pVerso: TPanel
     Left = 0
     Height = 262
@@ -14972,18 +14972,18 @@ object frCHQ: TfrCHQ
     end
     object Label3: TLabel
       Left = 180
-      Height = 16
+      Height = 15
       Top = 227
-      Width = 105
+      Width = 104
       Caption = '&Verificar Formulário'
       FocusControl = cbVerifica
       ParentColor = False
     end
     object Label2: TLabel
       Left = 160
-      Height = 14
+      Height = 13
       Top = 181
-      Width = 26
+      Width = 25
       Caption = '&Porta'
       FocusControl = cbxPorta
       Font.Height = 11
@@ -14994,9 +14994,9 @@ object frCHQ: TfrCHQ
     end
     object Label1: TLabel
       Left = 160
-      Height = 16
+      Height = 15
       Top = 144
-      Width = 42
+      Width = 41
       Caption = '&Modelo'
       FocusControl = cbxModelo
       ParentColor = False
@@ -15022,7 +15022,6 @@ object frCHQ: TfrCHQ
         F0FFFFFF8FFCFFF88FFFF00FF0FFFFFFF8CFF88FFFFFFF0FFF000FFFFF888FFF
         FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
       }
-      NumGlyphs = 0
       Transparent = False
       OnClick = sbECFClick
     end
@@ -15201,6 +15200,7 @@ object frCHQ: TfrCHQ
     end
   end
   object ACBrECF1: TACBrECF
+    QuebraLinhaRodape = False
     Modelo = ecfBematech
     Porta = 'COM1'
     MsgAguarde = 'Aguardando a resposta da Impressora: %d segundos'
@@ -15208,11 +15208,11 @@ object frCHQ: TfrCHQ
     MsgRelatorio = 'Imprimindo %s  %dª Via '
     MsgPausaRelatorio = 'Destaque a %dª via, <ENTER> proxima, %d seg.'
     PaginaDeCodigo = 850
+    FormMsgColor = clHighlight
     FormMsgFonte.Color = clWhite
     FormMsgFonte.Height = 11
     FormMsgFonte.Name = 'MS Sans Serif'
     FormMsgFonte.Pitch = fpVariable
-    FormMsgColor = clHighlight
     MemoParams.Strings = (
       '[Cabecalho]'
       'LIN000=<center><b>Nome da Empresa</b></center>'
@@ -15245,13 +15245,6 @@ object frCHQ: TfrCHQ
     ConfigBarras.MostrarCodigo = True
     ConfigBarras.LarguraLinha = 3
     ConfigBarras.Altura = 10
-    InfoRodapeCupom.CupomMania = False
-    InfoRodapeCupom.MinasLegal = False
-    InfoRodapeCupom.ParaibaLegal = False
-    InfoRodapeCupom.NotaLegalDF.Imprimir = False
-    InfoRodapeCupom.NotaLegalDF.ProgramaDeCredito = False
-    InfoRodapeCupom.NotaLegalDF.ValorICMS = 0
-    InfoRodapeCupom.NotaLegalDF.ValorISS = 0
     left = 488
     top = 48
   end
