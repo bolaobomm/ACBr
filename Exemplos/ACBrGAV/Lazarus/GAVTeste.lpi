@@ -1,4 +1,4 @@
-<?xml version="1.0"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <CONFIG>
   <ProjectOptions>
     <Version Value="9"/>
@@ -8,6 +8,7 @@
         <LRSInOutputDirectory Value="False"/>
       </Flags>
       <MainUnit Value="0"/>
+      <ResourceType Value="res"/>
       <ActiveWindowIndexAtStart Value="0"/>
     </General>
     <VersionInfo>
@@ -49,12 +50,14 @@
         <Filename Value="gavteste1.pas"/>
         <IsPartOfProject Value="True"/>
         <ComponentName Value="Form1"/>
+        <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
         <UnitName Value="GAVTeste1"/>
+        <IsVisibleTab Value="True"/>
         <EditorIndex Value="0"/>
         <WindowIndex Value="0"/>
-        <TopLine Value="114"/>
-        <CursorPos X="7" Y="120"/>
+        <TopLine Value="40"/>
+        <CursorPos X="44" Y="47"/>
         <UsageCount Value="21"/>
         <Loaded Value="True"/>
         <LoadedDesigner Value="True"/>
@@ -69,26 +72,42 @@
       <Unit3>
         <Filename Value="..\..\..\Fontes\ACBrSerial\ACBrSerialReg.pas"/>
         <UnitName Value="ACBrSerialReg"/>
-        <IsVisibleTab Value="True"/>
         <EditorIndex Value="1"/>
         <WindowIndex Value="0"/>
         <TopLine Value="156"/>
-        <CursorPos X="37" Y="168"/>
+        <CursorPos X="9" Y="170"/>
         <UsageCount Value="10"/>
         <Loaded Value="True"/>
       </Unit3>
     </Units>
-    <JumpHistory Count="1" HistoryIndex="0">
+    <JumpHistory Count="5" HistoryIndex="4">
       <Position1>
         <Filename Value="..\..\..\Fontes\ACBrSerial\ACBrSerialReg.pas"/>
         <Caret Line="7" Column="30" TopLine="1"/>
       </Position1>
+      <Position2>
+        <Filename Value="gavteste1.pas"/>
+        <Caret Line="114" Column="30" TopLine="98"/>
+      </Position2>
+      <Position3>
+        <Filename Value="gavteste1.pas"/>
+        <Caret Line="121" Column="30" TopLine="105"/>
+      </Position3>
+      <Position4>
+        <Filename Value="gavteste1.pas"/>
+        <Caret Line="74" Column="22" TopLine="70"/>
+      </Position4>
+      <Position5>
+        <Filename Value="gavteste1.pas"/>
+        <Caret Line="132" Column="1" TopLine="100"/>
+      </Position5>
     </JumpHistory>
   </ProjectOptions>
   <CompilerOptions>
-    <Version Value="9"/>
+    <Version Value="11"/>
     <PathDelim Value="\"/>
     <SearchPaths>
+      <UnitOutputDirectory Value="lib\$(TargetCPU)-$(TargetOS)"/>
       <SrcPath Value="$(LazarusDir)\lcl;$(LazarusDir)\lcl\interfaces\$(LCLWidgetType)"/>
     </SearchPaths>
     <Parsing>
@@ -117,4 +136,5 @@
       </Item2>
     </Exceptions>
   </Debugging>
+  <EditorMacros Count="0"/>
 </CONFIG>

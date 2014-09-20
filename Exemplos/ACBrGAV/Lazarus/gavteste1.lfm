@@ -9,19 +9,21 @@ object Form1: TForm1
   VertScrollBar.Range = 161
   ActiveControl = cbxModelo
   Caption = 'Teste de Gavetas'
+  ClientHeight = 169
+  ClientWidth = 266
   Font.CharSet = ANSI_CHARSET
   Font.Height = -11
   Font.Name = 'MS Sans Serif'
   Font.Pitch = fpVariable
   OnCreate = FormCreate
   ShowHint = True
+  LCLVersion = '1.2.4.0'
   object SpeedButton1: TSpeedButton
     Left = 224
     Height = 30
     Hint = 'Testar impressora ligada a ACBrECF'
     Top = 16
     Width = 31
-    Color = clBtnFace
     Glyph.Data = {
       96010000424D9601000000000000760000002800000018000000180000000100
       04000000000020010000120B0000120B00001000000010000000000000000000
@@ -37,36 +39,35 @@ object Form1: TForm1
       F0FFFFFF8FFCFFF88FFFF00FF0FFFFFFF8CFF88FFFFFFF0FFF000FFFFF888FFF
       FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
     }
-    NumGlyphs = 0
     OnClick = SpeedButton1Click
   end
   object Label1: TLabel
     Left = 12
-    Height = 14
+    Height = 13
     Top = 4
-    Width = 88
+    Width = 87
     Caption = '&Modelo Gaveta'
-    Color = clNone
     FocusControl = cbxModelo
     Font.Height = 11
     Font.Name = 'MS Sans Serif'
     Font.Pitch = fpVariable
     Font.Style = [fsBold]
     ParentColor = False
+    ParentFont = False
   end
   object Label2: TLabel
     Left = 144
-    Height = 14
+    Height = 13
     Top = 4
-    Width = 32
+    Width = 31
     Caption = '&Porta'
-    Color = clNone
     FocusControl = cbxPorta
     Font.Height = 11
     Font.Name = 'MS Sans Serif'
     Font.Pitch = fpVariable
     Font.Style = [fsBold]
     ParentColor = False
+    ParentFont = False
   end
   object gbEstado: TGroupBox
     Left = 8
@@ -74,10 +75,13 @@ object Form1: TForm1
     Top = 48
     Width = 249
     Caption = 'Estado da Gaveta'
+    ClientHeight = 63
+    ClientWidth = 245
     Font.Height = 11
     Font.Name = 'MS Sans Serif'
     Font.Pitch = fpVariable
     Font.Style = [fsBold]
+    ParentFont = False
     TabOrder = 2
     object lEstado: TLabel
       Left = 8
@@ -87,16 +91,16 @@ object Form1: TForm1
       Alignment = taCenter
       AutoSize = False
       Caption = 'Desconhecido'
-      Color = clNone
       Font.Height = 25
       Font.Name = 'helvetica'
       Font.Pitch = fpVariable
       Font.Style = [fsBold]
       ParentColor = False
+      ParentFont = False
     end
     object cbxMonitorar: TCheckBox
       Left = 8
-      Height = 13
+      Height = 19
       Top = 43
       Width = 194
       Caption = 'Monitorar Estado a cada 3 segundos'
@@ -104,6 +108,7 @@ object Form1: TForm1
       Font.Name = 'MS Sans Serif'
       Font.Pitch = fpVariable
       OnClick = cbxMonitorarClick
+      ParentFont = False
       TabOrder = 0
     end
   end
@@ -162,7 +167,6 @@ object Form1: TForm1
     Width = 75
     Caption = 'Cancela'
     Kind = bkCancel
-    NumGlyphs = 0
     OnClick = BitBtn1Click
     TabOrder = 5
   end
@@ -171,7 +175,6 @@ object Form1: TForm1
     Height = 21
     Top = 20
     Width = 125
-    AutoCompleteText = [cbactEndOfLineComplete, cbactSearchAscending]
     ItemHeight = 13
     Items.Strings = (
       'gavNenhuma'
@@ -180,7 +183,6 @@ object Form1: TForm1
       'gavImpressoraECF'
       'gavImpressoraComum'
     )
-    MaxLength = 0
     OnChange = cbxModeloChange
     Style = csDropDownList
     TabOrder = 0
@@ -190,7 +192,6 @@ object Form1: TForm1
     Height = 21
     Top = 20
     Width = 65
-    AutoCompleteText = [cbactEndOfLineComplete, cbactSearchAscending]
     ItemHeight = 13
     ItemIndex = 0
     Items.Strings = (
@@ -203,7 +204,6 @@ object Form1: TForm1
       'LPT2'
       'LPT3'
     )
-    MaxLength = 0
     OnChange = cbxPortaChange
     TabOrder = 1
     Text = 'COM1'
@@ -216,24 +216,60 @@ object Form1: TForm1
     top = 96
   end
   object ACBrGAV1: TACBrGAV
+    Modelo = gavImpressoraComum
     Porta = 'COM1'
-    StrComando = '#027,v,#140 | Bematech'
+    Device.HandShake = hsRTS_CTS
+    Device.HardFlow = True
+    StrComando = '#254 | Daruma'
     left = 24
     top = 72
   end
   object ACBrECF1: TACBrECF
+    QuebraLinhaRodape = False
     Modelo = ecfBematech
     Porta = 'COM2'
     MsgAguarde = 'Aguardando a resposta da Impressora: %d segundos'
-    MsgRelatorio = 'Imprimindo %s  %dª Via '
-    MsgPausaRelatorio = 'Destaque a %dª via, <ENTER> proxima, %d seg.'
+    MsgTrabalhando = 'Impressora estÃ¡ trabalhando'
+    MsgRelatorio = 'Imprimindo %s  %dÂª Via '
+    MsgPausaRelatorio = 'Destaque a %dÂª via, <ENTER> proxima, %d seg.'
+    PaginaDeCodigo = 850
+    FormMsgColor = clHighlight
     FormMsgFonte.Color = clWhite
     FormMsgFonte.Height = 11
     FormMsgFonte.Name = 'MS Sans Serif'
     FormMsgFonte.Pitch = fpVariable
-    FormMsgColor = clHighlight
+    MemoParams.Strings = (
+      '[Cabecalho]'
+      'LIN000=<center><b>Nome da Empresa</b></center>'
+      'LIN001=<center>Nome da Rua , 1234  -  Bairro</center>'
+      'LIN002=<center>Cidade  -  UF  -  99999-999</center>'
+      'LIN003=<center>CNPJ: 01.234.567/0001-22    IE: 012.345.678.90</center>'
+      'LIN004=<table width=100%><tr><td align=left><code>Data</code> <code>Hora</code></td><td align=right>COO: <b><code>NumCupom</code></b></td></tr></table>'
+      'LIN005=<hr>'
+      ' '
+      '[Cabecalho_Item]'
+      'LIN000=ITEM   CODIGO      DESCRICAO'
+      'LIN001=QTD         x UNITARIO       Aliq     VALOR (R$)'
+      'LIN002=<hr>'
+      'MascaraItem=III CCCCCCCCCCCCCC DDDDDDDDDDDDDDDDDDDDDDDDDDDDDQQQQQQQQ UU x VVVVVVVVVVVVV AAAAAA TTTTTTTTTTTTT'
+      ' '
+      '[Rodape]'
+      'LIN000=<hr>'
+      'LIN001=<table width=100%><tr><td align=left><code>Data</code> <code>Hora</code></td><td align=right>Projeto ACBr: <b><code>ACBR</code></b></td></tr></table>'
+      'LIN002=<center>Obrigado Volte Sempre</center>'
+      'LIN003=<hr>'
+      ' '
+      '[Formato]'
+      'Colunas=48'
+      'HTML=1'
+      'HTML_Title_Size=2'
+      'HTML_Font=<font size="2" face="Lucida Console">'
+    )
     Device.HandShake = hsRTS_CTS
     Device.HardFlow = True
+    ConfigBarras.MostrarCodigo = True
+    ConfigBarras.LarguraLinha = 3
+    ConfigBarras.Altura = 10
     left = 224
     top = 48
   end

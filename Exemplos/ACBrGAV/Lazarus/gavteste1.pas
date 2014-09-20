@@ -46,6 +46,8 @@ var
 
 implementation
 
+{$R *.lfm}
+
 procedure TForm1.FormCreate(Sender: TObject);
 begin
   cbxModelo.ItemIndex := 2 ;
@@ -129,9 +131,6 @@ begin
   ACBrECF1.Ativar ;
   ACBrECF1.TestarDialog ;
 end;
-
-initialization
-  {$I gavteste1.lrs}
 
 end.
 
