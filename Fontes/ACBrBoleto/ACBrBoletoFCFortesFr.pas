@@ -216,6 +216,7 @@ type
     RLLabel92: TRLLabel;
     RLLabel96: TRLLabel;
     RLLabel98: TRLLabel;
+    txtNumBarcode: TRLLabel;
     txtLocal: TRLMemo;
     txtLocalPagamento3: TRLMemo;
     txtNomeSacado: TRLLabel;
@@ -466,6 +467,9 @@ begin
 
   {$IFDEF FPC}
    LoadPortugueseStrings;
+  {$ELSE}
+   // Para que serve esse método ?? //
+   SetVersion( CommercialVersion, ReleaseVersion, CommentVersion );
   {$ENDIF}
 
   frACBrBoletoFortes := TACBrBoletoFCFortesFr.Create(Self);
@@ -705,6 +709,7 @@ begin
      txtSacadorAvalista3.Caption     := txtSacadorAvalista2.Caption;
 
      imgCodigoBarra.Caption          := CodBarras;
+     txtNumBarcode.Caption           := CodBarras;
      txtLinhaDigitavel.Caption       := LinhaDigitavel;
      txtInstrucoes3.Lines.Text       := txtInstrucoes2.Lines.Text;
    end;
