@@ -29,7 +29,8 @@ requires
   rtl,
   designide,
   vcl,
-  ACBrComum;
+  ACBrComum,
+  ACBrDiversos;
 
 contains
   ACBrSped in '..\..\..\Fontes\ACBrSPED\ACBrSped.pas',
