@@ -98,12 +98,17 @@ function IfThen(AValue: Boolean; const ATrue: Currency; AFalse: Currency): Curre
 
 implementation
 
+uses ACBrValidador;
+
 function funChecaUF(const UF: String): boolean;
-const
-   cUF = 'SPMGRJRSSCPRESDFMTMSGOTOBASEALPBPEMARNCEPIPAAMAPFNACRRRO';
-var
-intPosition: integer;
+//const
+//   cUF = 'SPMGRJRSSCPRESDFMTMSGOTOBASEALPBPEMARNCEPIPAAMAPFNACRRRO';
+//var
+//intPosition: integer;
 begin
+  Result := ACBrValidador.ACBrValidadorValidarDocumento(docUF, UF) = '';
+
+{
    Result := true;
    if UF <> '' then
    begin
@@ -111,6 +116,7 @@ begin
       if (intPosition = 0) or ((intPosition mod 2) = 0) then
          Result := false;
    end;
+}
 end;
 
 function funChecaCOD_CONS(const COD_MOD, COD_CONS: AnsiString): Boolean;
@@ -316,9 +322,12 @@ end;
 
 { Verifica se o CEP e valido }
 function funChecaCEP(const CEP, UF: String): Boolean;
-var
-cCEP1: Integer;
+//var
+//cCEP1: Integer;
 begin
+  Result := ACBrValidador.ACBrValidadorValidarDocumento(docCEP, CEP, UF) = '';
+
+{
   if CEP = '' then
   begin
     Result := False;
@@ -388,6 +397,7 @@ begin
   end
   else
     Result := True;
+}
 end;
 
 function funChecaCNPJ(const CNPJ: String): Boolean;
@@ -398,7 +408,9 @@ function funChecaCNPJ(const CNPJ: String): Boolean;
 //wCGCDigt: Integer;
 //strCNPJ: String;
 begin
-   Result := funChecaIE(CNPJ, 'CNPJ');
+  Result := ACBrValidador.ACBrValidadorValidarCNPJ(CNPJ) = '';
+
+//   Result := funChecaIE(CNPJ, 'CNPJ');
 (*
    strCNPJ := CNPJ;
    if (strCNPJ <> '  .   .   /    -  ') and (strCNPJ <> '') then
@@ -460,7 +472,9 @@ function funChecaCPF(const CPF: String): Boolean;
 //wCPFDigt: Integer;
 //strCPF: String;
 begin
-   Result := funChecaIE(CPF, 'CPF');
+  Result := ACBrValidador.ACBrValidadorValidarCPF(CPF) = '';
+
+//   Result := funChecaIE(CPF, 'CPF');
 (*
    strCPF := CPF;
    if (strCPF <> '   .   .   -  ') and (strCPF <> '') then
@@ -559,6 +573,7 @@ end;
 
 { Valida a inscrição estadual }
 function funChecaIE(const IE, TIPO: String): Boolean;
+{
 var
 Contador: ShortInt;
 Casos: ShortInt;
@@ -584,7 +599,10 @@ Peso: String;
 Digito: ShortInt;
 Resultado: String;
 Retorno: Boolean;
+}
 begin
+  Result := ACBrValidador.ACBrValidadorValidarIE(IE, TIPO) = '';
+(*
   { Isento ja e aceito }
   if (IE = 'ISENTO') or (Trim(IE) = '') then
   begin
@@ -833,6 +851,7 @@ begin
   except
     Result := false;
   end;
+*)
 end;
 
 function funChecaCFOP(const CFOP: Integer): Boolean;
