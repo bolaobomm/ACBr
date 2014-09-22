@@ -1201,7 +1201,7 @@ begin
   end;
 
 // Alterado por Italo em 18/09/2014
-{$if CompilerVersion >= 22}
+{$ifdef CompilerVersion >= 22}
   schema_doc := xmlReadFile(Pansichar(AnsiToUtf8(schema_filename)), nil, XML_DETECT_IDS);
 {$else}
   schema_doc := xmlReadFile(PAnsiChar(schema_filename), nil, XML_DETECT_IDS);
