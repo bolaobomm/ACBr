@@ -1,0 +1,54 @@
+package ACBrNFSeDANFSeRV;
+
+{$R *.res}
+{$ALIGN 8}
+{$ASSERTIONS ON}
+{$BOOLEVAL OFF}
+{$DEBUGINFO ON}
+{$EXTENDEDSYNTAX ON}
+{$IMPORTEDDATA ON}
+{$IOCHECKS ON}
+{$LOCALSYMBOLS ON}
+{$LONGSTRINGS ON}
+{$OPENSTRINGS ON}
+{$OPTIMIZATION ON}
+{$OVERFLOWCHECKS OFF}
+{$RANGECHECKS OFF}
+{$REFERENCEINFO ON}
+{$SAFEDIVIDE OFF}
+{$STACKFRAMES OFF}
+{$TYPEDADDRESS OFF}
+{$VARSTRINGCHECKS ON}
+{$WRITEABLECONST OFF}
+{$MINENUMSIZE 1}
+{$IMAGEBASE $400000}
+{$DESCRIPTION 'ACBr Automação Comercial Brasil - ACBrNFSeDANFSeRV - (http://acbr.sourceforge.net/)'}
+{$IMPLICITBUILD ON}
+
+requires
+  rtl,
+  Rave75VCL,
+  bdertl,
+  dbrtl,
+  vcljpg,
+  vcl,
+  ACBr_NFSe,
+  PCN2,
+  ACBrComum,
+  designide,
+  xmlrtl,
+  vclactnband,
+  vclx,
+  dsnap,
+  vcldb,
+  inet,
+  soaprtl,
+  synapse,
+  ACBrCapicom;
+
+contains
+  ACBrNFSeDANFSeRVClass in '..\..\..\Fontes\ACBrNFSe\ACBrNFSeDANFSeRVClass.pas',
+  ACBrNFSeDANFSeRVReg in '..\..\..\Fontes\ACBrNFSe\ACBrNFSeDANFSeRVReg.pas',
+  DANFSeRaveDM in '..\..\..\Fontes\ACBrNFSe\DANFSeRaveDM.pas';
+
+end.
