@@ -380,12 +380,7 @@ begin
     exit;
   end;
 
-// Alterado por Italo em 18/09/2014
-{$ifdef CompilerVersion >= 22}
-  schema_doc := xmlReadFile(Pansichar(AnsiToUtf8(schema_filename)), nil, XML_DETECT_IDS);
-{$else}
-  schema_doc := xmlReadFile(PAnsiChar(schema_filename), nil, XML_DETECT_IDS);
-{$endif}
+  schema_doc := xmlReadFile(Pansichar(ACBrStr(schema_filename)), nil, XML_DETECT_IDS);
 
   //  the schema cannot be loaded or is not well-formed
   if (schema_doc = nil) then
@@ -594,12 +589,7 @@ begin
     exit;
   end;
 
-// Alterado por Italo em 18/09/2014
-{$ifdef CompilerVersion >= 22}
-  schema_doc := xmlReadFile(Pansichar(AnsiToUtf8(schema_filename)), nil, XML_DETECT_IDS);
-{$else}
-  schema_doc := xmlReadFile(PAnsiChar(schema_filename), nil, XML_DETECT_IDS);
-{$endif}
+  schema_doc := xmlReadFile(Pansichar(ACBrStr(schema_filename)), nil, XML_DETECT_IDS);
 
   //  the schema cannot be loaded or is not well-formed
   if (schema_doc = nil) then
