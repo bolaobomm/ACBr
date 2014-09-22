@@ -1398,7 +1398,7 @@ begin
  schema_doc := xmlReadFile(Pansichar(AnsiToUtf8(schema_filename)), nil, XML_DETECT_IDS);
 {$else}
  schema_doc := xmlReadFile(PAnsiChar(schema_filename), nil, XML_DETECT_IDS);
-{$ifend}
+{$endif}
 
 //  the schema cannot be loaded or is not well-formed
  if (schema_doc = nil) then

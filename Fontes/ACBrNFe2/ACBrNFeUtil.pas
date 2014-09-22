@@ -1205,7 +1205,7 @@ begin
   schema_doc := xmlReadFile(Pansichar(AnsiToUtf8(schema_filename)), nil, XML_DETECT_IDS);
 {$else}
   schema_doc := xmlReadFile(PAnsiChar(schema_filename), nil, XML_DETECT_IDS);
-{$ifend}
+{$endif}
 
 // schema_doc  := xmlReadFile(PAnsiChar(schema_filename), nil, XML_DETECT_IDS);
 
