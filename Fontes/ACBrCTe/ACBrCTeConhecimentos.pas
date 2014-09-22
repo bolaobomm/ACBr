@@ -71,6 +71,7 @@ type
     FRegrasdeNegocios: AnsiString;
 
     function GetCTeXML: AnsiString;
+    function GerarXML(var XML: String; var Alertas: String): String;
   public
     constructor Create(Collection2: TCollection); override;
     destructor Destroy; override;
@@ -210,24 +211,20 @@ end;
 
 function Conhecimento.SaveToFile(CaminhoArquivo: String = ''): Boolean;
 var
-  LocCTeW: TCTeW;
+  ArqXML, Alertas, ArqTXT : String;
 begin
   try
-     Result  := True;
-     LocCTeW := TCTeW.Create(CTe);
-     try
-        LocCTeW.Gerador.Opcoes.FormatoAlerta  := TACBrCTe(TConhecimentos(Collection).ACBrCTe).Configuracoes.Geral.FormatoAlerta;
-        LocCTeW.Gerador.Opcoes.RetirarAcentos := TACBrCTe(TConhecimentos(Collection).ACBrCTe).Configuracoes.Geral.RetirarAcentos;
-        LocCTeW.GerarXml;
-        if DFeUtil.EstaVazio(CaminhoArquivo) then
-           CaminhoArquivo := PathWithDelim(TACBrCTe(TConhecimentos(Collection).ACBrCTe).Configuracoes.Geral.PathSalvar)+copy(CTe.inFCTe.ID, (length(CTe.inFCTe.ID)-44)+1, 44)+'-cte.xml';
-        if DFeUtil.EstaVazio(CaminhoArquivo) or not DirectoryExists(ExtractFilePath(CaminhoArquivo)) then
-           raise Exception.Create('Caminho Inválido: ' + CaminhoArquivo);
-        LocCTeW.Gerador.SalvarArquivo(CaminhoArquivo);
-        NomeArq := CaminhoArquivo;
-     finally
-        LocCTeW.Free;
-     end;
+     Result := True;
+     ArqTXT := GerarXML(ArqXML, Alertas);
+     if DFeUtil.EstaVazio(CaminhoArquivo) then
+        CaminhoArquivo := PathWithDelim(TACBrCTe(TConhecimentos(Collection).ACBrCTe).Configuracoes.Geral.PathSalvar) + copy(CTe.infCTe.ID, (length(CTe.infCTe.ID)-44)+1, 44)+'-CTe.xml';
+
+     if DFeUtil.EstaVazio(CaminhoArquivo) or not DirectoryExists(ExtractFilePath(CaminhoArquivo)) then
+        raise EACBrCTeException.Create('Caminho Inválido: ' + CaminhoArquivo);
+
+     WriteToTXT(CaminhoArquivo, ArqXML, False, False);
+
+     NomeArq := CaminhoArquivo;
   except
      raise;
      Result := False;
@@ -236,19 +233,12 @@ end;
 
 function Conhecimento.SaveToStream(Stream: TStringStream): Boolean;
 var
-  LocCTeW: TCTeW;
+  ArqXML, Alertas : String;
 begin
   try
-     Result  := True;
-     LocCTeW := TCTeW.Create(CTe);
-     try
-        LocCTeW.Gerador.Opcoes.FormatoAlerta  := TACBrCTe(TConhecimentos(Collection).ACBrCTe).Configuracoes.Geral.FormatoAlerta;
-        LocCTeW.Gerador.Opcoes.RetirarAcentos := TACBrCTe(TConhecimentos(Collection).ACBrCTe).Configuracoes.Geral.RetirarAcentos;
-        LocCTeW.GerarXml;
-        Stream.WriteString(LocCTeW.Gerador.ArquivoFormatoXML);
-     finally
-        LocCTeW.Free;
-     end;
+     Result := True;
+     GerarXML(ArqXML, Alertas);
+     Stream.WriteString(ArqXML);
   except
      Result := False;
   end;
@@ -316,17 +306,10 @@ end;
 
 function Conhecimento.GetCTeXML: AnsiString;
 var
- LocCTeW: TCTeW;
+ ArqXML, Alertas: String;
 begin
- LocCTeW := TCTeW.Create(Self.CTe);
- try
-    LocCTeW.Gerador.Opcoes.FormatoAlerta  := TACBrCTe(TConhecimentos(Collection).ACBrCTe).Configuracoes.Geral.FormatoAlerta;
-    LocCTeW.Gerador.Opcoes.RetirarAcentos := TACBrCTe(TConhecimentos(Collection).ACBrCTe).Configuracoes.Geral.RetirarAcentos;
-    LocCTeW.GerarXml;
-    Result := LocCTeW.Gerador.ArquivoFormatoXML;
- finally
-    LocCTeW.Free;
- end;
+ GerarXML(ArqXML, Alertas);
+ Result := ArqXML;
 end;
 
 function Conhecimento.ValidarConcatChave: Boolean;
@@ -346,6 +329,24 @@ begin
     Result := False
   else
     Result := True;
+end;
+
+function Conhecimento.GerarXML(var XML, Alertas: String): String;
+var
+  LocCTeW : TCTeW;
+begin
+  LocCTeW := TCTeW.Create(Self.CTe);
+  try
+     LocCTeW.Gerador.Opcoes.FormatoAlerta   := TACBrCTe(TConhecimentos(Collection).ACBrCTe).Configuracoes.Geral.FormatoAlerta;
+     LocCTeW.Gerador.Opcoes.RetirarAcentos  := TACBrCTe(TConhecimentos(Collection).ACBrCTe).Configuracoes.Geral.RetirarAcentos;
+
+     LocCTeW.GerarXml;
+     XML     := LocCTeW.Gerador.ArquivoFormatoXML;
+     Alertas := LocCTeW.Gerador.ListaDeAlertas.Text;
+     Result  := '';
+  finally
+     LocCTeW.Free;
+  end;
 end;
 
 { TConhecimentos }
@@ -373,72 +374,58 @@ procedure TConhecimentos.Assinar;
 var
   i: Integer;
   vAssinada: AnsiString;
-  LocCTeW: TCTeW;
+  ArqXML, Alertas: String;
   Leitor: TLeitor;
   FMsg: AnsiString;
 begin
   for i:= 0 to Self.Count-1 do
    begin
-     LocCTeW := TCTeW.Create(Self.Items[i].CTe);
-     try
-        LocCTeW.Gerador.Opcoes.FormatoAlerta  := FConfiguracoes.Geral.FormatoAlerta;
-        LocCTeW.Gerador.Opcoes.RetirarAcentos := FConfiguracoes.Geral.RetirarAcentos;
-        LocCTeW.GerarXml;
-        Self.Items[i].Alertas := LocCTeW.Gerador.ListaDeAlertas.Text;
+     Self.Items[i].GerarXML(ArqXML, Alertas);
+     Self.Items[i].Alertas := Alertas;
+
 {$IFDEF ACBrCTeOpenSSL}
-        if not(CTeUtil.Assinar(LocCTeW.Gerador.ArquivoFormatoXML, FConfiguracoes.Certificados.Certificado , FConfiguracoes.Certificados.Senha, vAssinada, FMsg)) then
+     if not(CTeUtil.Assinar(ArqXML, FConfiguracoes.Certificados.Certificado , FConfiguracoes.Certificados.Senha, vAssinada, FMsg)) then
            raise Exception.Create('Falha ao assinar Conhecimento de Transporte Eletrônico '+
                                    IntToStr(Self.Items[i].CTe.Ide.cCT)+FMsg);
 {$ELSE}
-        if not(CTeUtil.Assinar(LocCTeW.Gerador.ArquivoFormatoXML, FConfiguracoes.Certificados.GetCertificado , vAssinada, FMsg)) then
+     if not(CTeUtil.Assinar(ArqXML, FConfiguracoes.Certificados.GetCertificado , vAssinada, FMsg)) then
            raise Exception.Create('Falha ao assinar Conhecimento de Transporte Eletrônico '+
                                    IntToStr(Self.Items[i].CTe.Ide.cCT)+FMsg);
 {$ENDIF}
-        vAssinada := StringReplace(vAssinada, '<'+ENCODING_UTF8_STD+'>', '', [rfReplaceAll]);
-        vAssinada := StringReplace(vAssinada, '<?xml version="1.0"?>', '', [rfReplaceAll]);
-        Self.Items[i].XML := vAssinada;
+     vAssinada := StringReplace(vAssinada, '<'+ENCODING_UTF8_STD+'>', '', [rfReplaceAll]);
+     vAssinada := StringReplace(vAssinada, '<?xml version="1.0"?>', '', [rfReplaceAll]);
+     Self.Items[i].XML := vAssinada;
 
-        Leitor := TLeitor.Create;
-        try
-          leitor.Grupo := vAssinada;
-          Self.Items[i].CTe.signature.URI := Leitor.rAtributo('Reference URI=');
-          Self.Items[i].CTe.signature.DigestValue := Leitor.rCampo(tcStr, 'DigestValue');
-          Self.Items[i].CTe.signature.SignatureValue := Leitor.rCampo(tcStr, 'SignatureValue');
-          Self.Items[i].CTe.signature.X509Certificate := Leitor.rCampo(tcStr, 'X509Certificate');
-        finally
-          Leitor.Free;
-        end;
-
-        if FConfiguracoes.Geral.Salvar then
-           FConfiguracoes.Geral.Save(StringReplace(Self.Items[i].CTe.infCTe.ID, 'CTe', '', [rfIgnoreCase])+'-cte.xml', vAssinada);
-
-        if DFeUtil.NaoEstaVazio(Self.Items[i].NomeArq) then
-           FConfiguracoes.Geral.Save(ExtractFileName(Self.Items[i].NomeArq), vAssinada, ExtractFilePath(Self.Items[i].NomeArq));
+     Leitor := TLeitor.Create;
+     try
+       leitor.Grupo := vAssinada;
+       Self.Items[i].CTe.signature.URI := Leitor.rAtributo('Reference URI=');
+       Self.Items[i].CTe.signature.DigestValue := Leitor.rCampo(tcStr, 'DigestValue');
+       Self.Items[i].CTe.signature.SignatureValue := Leitor.rCampo(tcStr, 'SignatureValue');
+       Self.Items[i].CTe.signature.X509Certificate := Leitor.rCampo(tcStr, 'X509Certificate');
      finally
-        LocCTeW.Free;
+       Leitor.Free;
      end;
-   end;
 
+     if FConfiguracoes.Geral.Salvar then
+       FConfiguracoes.Geral.Save(StringReplace(Self.Items[i].CTe.infCTe.ID, 'CTe', '', [rfIgnoreCase])+'-CTe.xml', vAssinada);
+
+     if DFeUtil.NaoEstaVazio(Self.Items[i].NomeArq) then
+       FConfiguracoes.Geral.Save(ExtractFileName(Self.Items[i].NomeArq), vAssinada, ExtractFilePath(Self.Items[i].NomeArq));
+   end;
 end;
 
 procedure TConhecimentos.GerarCTe;
 var
-  i: Integer;
-  LocCTeW: TCTeW;
+ i: Integer;
+ ArqXML, Alertas: String;
 begin
-  for i:= 0 to Self.Count-1 do
-   begin
-     LocCTeW := TCTeW.Create(Self.Items[i].CTe);
-     try
-        LocCTeW.Gerador.Opcoes.FormatoAlerta  := FConfiguracoes.Geral.FormatoAlerta;
-        LocCTeW.Gerador.Opcoes.RetirarAcentos := FConfiguracoes.Geral.RetirarAcentos;
-        LocCTeW.GerarXml;
-        Self.Items[i].XML     := LocCTeW.Gerador.ArquivoFormatoXML;
-        Self.Items[i].Alertas := LocCTeW.Gerador.ListaDeAlertas.Text;
-     finally
-        LocCTeW.Free;
-     end;
-   end;
+ for i:= 0 to Self.Count-1 do
+  begin
+    Self.Items[i].GerarXML(ArqXML, Alertas);
+    Self.Items[i].XML := UTF8Encode(ArqXML);
+    Self.Items[i].Alertas := Alertas;
+  end;
 end;
 
 function TConhecimentos.GetItem(Index: Integer): Conhecimento;
@@ -600,7 +587,7 @@ begin
         else
            PathArquivo := ExtractFilePath(PathArquivo);
         CaminhoArquivo := PathWithDelim(PathArquivo) +
-                          copy(TACBrCTe(FACBrCTe).Conhecimentos.Items[i].CTe.inFCTe.ID, (length(TACBrCTe(FACBrCTe).Conhecimentos.Items[i].CTe.inFCTe.ID)-44)+1, 44)+'-cte.xml';
+                          copy(TACBrCTe(FACBrCTe).Conhecimentos.Items[i].CTe.inFCTe.ID, (length(TACBrCTe(FACBrCTe).Conhecimentos.Items[i].CTe.inFCTe.ID)-44)+1, 44)+'-CTe.xml';
         TACBrCTe(FACBrCTe).Conhecimentos.Items[i].SaveToFile(CaminhoArquivo)
      end;
  except
