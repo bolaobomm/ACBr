@@ -67,6 +67,7 @@ type
     FNomeArq: String;
 
     function GetMDFeXML: AnsiString;
+    function GerarXML(var XML: String; var Alertas: String): String;
   public
     constructor Create(Collection2: TCollection); override;
     destructor Destroy; override;
@@ -198,25 +199,20 @@ end;
 
 function Manifesto.SaveToFile(CaminhoArquivo: String = ''): Boolean;
 var
-  LocMDFeW: TMDFeW;
+  ArqXML, Alertas, ArqTXT : String;
 begin
   try
-     Result  := True;
-     LocMDFeW := TMDFeW.Create(MDFe);
-     try
-        LocMDFeW.Gerador.Opcoes.FormatoAlerta  := TACBrMDFe(TManifestos(Collection).ACBrMDFe).Configuracoes.Geral.FormatoAlerta;
-        LocMDFeW.Gerador.Opcoes.RetirarAcentos := TACBrMDFe(TManifestos(Collection).ACBrMDFe).Configuracoes.Geral.RetirarAcentos;
-        LocMDFeW.VersaoDF := TACBrMDFe(TManifestos(Collection).ACBrMDFe).Configuracoes.Geral.VersaoDF;
-        LocMDFeW.GerarXml;
-        if DFeUtil.EstaVazio(CaminhoArquivo) then
-           CaminhoArquivo := PathWithDelim(TACBrMDFe(TManifestos(Collection).ACBrMDFe).Configuracoes.Geral.PathSalvar)+copy(MDFe.inFMDFe.ID, (length(MDFe.inFMDFe.ID)-44)+1, 44)+'-mdfe.xml';
-        if DFeUtil.EstaVazio(CaminhoArquivo) or not DirectoryExists(ExtractFilePath(CaminhoArquivo)) then
-           raise Exception.Create('Caminho Inválido: ' + CaminhoArquivo);
-        LocMDFeW.Gerador.SalvarArquivo(CaminhoArquivo);
-        NomeArq := CaminhoArquivo;
-     finally
-        LocMDFeW.Free;
-     end;
+     Result := True;
+     ArqTXT := GerarXML(ArqXML, Alertas);
+     if DFeUtil.EstaVazio(CaminhoArquivo) then
+        CaminhoArquivo := PathWithDelim(TACBrMDFe(TManifestos(Collection).ACBrMDFe).Configuracoes.Geral.PathSalvar) + copy(MDFe.infMDFe.ID, (length(MDFe.infMDFe.ID)-44)+1, 44)+'-MDFe.xml';
+
+     if DFeUtil.EstaVazio(CaminhoArquivo) or not DirectoryExists(ExtractFilePath(CaminhoArquivo)) then
+        raise EACBrMDFeException.Create('Caminho Inválido: ' + CaminhoArquivo);
+
+     WriteToTXT(CaminhoArquivo, ArqXML, False, False);
+
+     NomeArq := CaminhoArquivo;
   except
      raise;
      Result := False;
@@ -225,20 +221,12 @@ end;
 
 function Manifesto.SaveToStream(Stream: TStringStream): Boolean;
 var
-  LocMDFeW: TMDFeW;
+  ArqXML, Alertas : String;
 begin
   try
-     Result  := True;
-     LocMDFeW := TMDFeW.Create(MDFe);
-     try
-        LocMDFeW.Gerador.Opcoes.FormatoAlerta  := TACBrMDFe(TManifestos(Collection).ACBrMDFe).Configuracoes.Geral.FormatoAlerta;
-        LocMDFeW.Gerador.Opcoes.RetirarAcentos := TACBrMDFe(TManifestos(Collection).ACBrMDFe).Configuracoes.Geral.RetirarAcentos;
-        LocMDFeW.VersaoDF := TACBrMDFe(TManifestos(Collection).ACBrMDFe).Configuracoes.Geral.VersaoDF;
-        LocMDFeW.GerarXml;
-        Stream.WriteString(LocMDFeW.Gerador.ArquivoFormatoXML);
-     finally
-        LocMDFeW.Free;
-     end;
+     Result := True;
+     GerarXML(ArqXML, Alertas);
+     Stream.WriteString(ArqXML);
   except
      Result := False;
   end;
@@ -309,21 +297,33 @@ end;
 
 function Manifesto.GetMDFeXML: AnsiString;
 var
- LocMDFeW: TMDFeW;
+ ArqXML, Alertas: String;
 begin
- LocMDFeW := TMDFeW.Create(Self.MDFe);
- try
-    LocMDFeW.Gerador.Opcoes.FormatoAlerta  := TACBrMDFe(TManifestos(Collection).ACBrMDFe).Configuracoes.Geral.FormatoAlerta;
-    LocMDFeW.Gerador.Opcoes.RetirarAcentos := TACBrMDFe(TManifestos(Collection).ACBrMDFe).Configuracoes.Geral.RetirarAcentos;
-    LocMDFeW.VersaoDF := TACBrMDFe(TManifestos(Collection).ACBrMDFe).Configuracoes.Geral.VersaoDF;
-    LocMDFeW.GerarXml;
-    Result := LocMDFeW.Gerador.ArquivoFormatoXML;
- finally
-    LocMDFeW.Free;
- end;
+ GerarXML(ArqXML, Alertas);
+ Result := ArqXML;
+end;
+
+function Manifesto.GerarXML(var XML, Alertas: String): String;
+var
+  LocMDFeW : TMDFeW;
+begin
+  LocMDFeW := TMDFeW.Create(Self.MDFe);
+  try
+     LocMDFeW.Gerador.Opcoes.FormatoAlerta  := TACBrMDFe(TManifestos(Collection).ACBrMDFe).Configuracoes.Geral.FormatoAlerta;
+     LocMDFeW.Gerador.Opcoes.RetirarAcentos := TACBrMDFe(TManifestos(Collection).ACBrMDFe).Configuracoes.Geral.RetirarAcentos;
+     LocMDFeW.VersaoDF                      := TACBrMDFe(TManifestos(Collection).ACBrMDFe).Configuracoes.Geral.VersaoDF;
+
+     LocMDFeW.GerarXml;
+     XML     := LocMDFeW.Gerador.ArquivoFormatoXML;
+     Alertas := LocMDFeW.Gerador.ListaDeAlertas.Text;
+     Result  := '';
+  finally
+     LocMDFeW.Free;
+  end;
 end;
 
 { TManifestos }
+
 constructor TManifestos.Create(AOwner: TPersistent;
   ItemClass: TCollectionItemClass);
 begin
@@ -346,73 +346,57 @@ procedure TManifestos.Assinar;
 var
   i: Integer;
   vAssinada: AnsiString;
-  LocMDFeW: TMDFeW;
+  ArqXML, Alertas: String;
   Leitor: TLeitor;
   FMsg: AnsiString;
 begin
   for i:= 0 to Self.Count-1 do
    begin
-     LocMDFeW := TMDFeW.Create(Self.Items[i].MDFe);
-     try
-        LocMDFeW.Gerador.Opcoes.FormatoAlerta  := FConfiguracoes.Geral.FormatoAlerta;
-        LocMDFeW.Gerador.Opcoes.RetirarAcentos := FConfiguracoes.Geral.RetirarAcentos;
-        LocMDFeW.VersaoDF := FConfiguracoes.Geral.VersaoDF;
-        LocMDFeW.GerarXml;
-        Self.Items[i].Alertas := LocMDFeW.Gerador.ListaDeAlertas.Text;
+     Self.Items[i].GerarXML(ArqXML, Alertas);
+     Self.Items[i].Alertas := Alertas;
+
 {$IFDEF ACBrMDFeOpenSSL}
-        if not(MDFeUtil.Assinar(LocMDFeW.Gerador.ArquivoFormatoXML, FConfiguracoes.Certificados.Certificado , FConfiguracoes.Certificados.Senha, vAssinada, FMsg)) then
-           raise Exception.Create('Falha ao assinar Manifesto Eletrônico de Documentos Fiscais '+
+     if not(MDFeUtil.Assinar(ArqXML, FConfiguracoes.Certificados.Certificado , FConfiguracoes.Certificados.Senha, vAssinada, FMsg)) then
+       raise Exception.Create('Falha ao assinar Manifesto Eletrônico de Documentos Fiscais '+
                                    IntToStr(Self.Items[i].MDFe.Ide.cMDF)+FMsg);
 {$ELSE}
-        if not(MDFeUtil.Assinar(LocMDFeW.Gerador.ArquivoFormatoXML, FConfiguracoes.Certificados.GetCertificado , vAssinada, FMsg)) then
-           raise Exception.Create('Falha ao assinar Manifesto Eletrônico de Documentos Fiscais '+
+     if not(MDFeUtil.Assinar(ArqXML, FConfiguracoes.Certificados.GetCertificado , vAssinada, FMsg)) then
+       raise Exception.Create('Falha ao assinar Manifesto Eletrônico de Documentos Fiscais '+
                                    IntToStr(Self.Items[i].MDFe.Ide.cMDF)+FMsg);
 {$ENDIF}
-        vAssinada := StringReplace(vAssinada, '<'+ENCODING_UTF8_STD+'>', '', [rfReplaceAll]);
-        vAssinada := StringReplace(vAssinada, '<?xml version="1.0"?>', '', [rfReplaceAll]);
-        Self.Items[i].XML := vAssinada;
+     vAssinada := StringReplace(vAssinada, '<'+ENCODING_UTF8_STD+'>', '', [rfReplaceAll]);
+     vAssinada := StringReplace(vAssinada, '<?xml version="1.0"?>', '', [rfReplaceAll]);
+     Self.Items[i].XML := vAssinada;
 
-        Leitor := TLeitor.Create;
-        try
-          leitor.Grupo := vAssinada;
-          Self.Items[i].MDFe.signature.URI := Leitor.rAtributo('Reference URI=');
-          Self.Items[i].MDFe.signature.DigestValue := Leitor.rCampo(tcStr, 'DigestValue');
-          Self.Items[i].MDFe.signature.SignatureValue := Leitor.rCampo(tcStr, 'SignatureValue');
-          Self.Items[i].MDFe.signature.X509Certificate := Leitor.rCampo(tcStr, 'X509Certificate');
-        finally
-          Leitor.Free;
-        end;
-        if FConfiguracoes.Geral.Salvar then
-           FConfiguracoes.Geral.Save(StringReplace(Self.Items[i].MDFe.infMDFe.ID, 'MDFe', '', [rfIgnoreCase])+'-mdfe.xml', vAssinada);
-
-        if DFeUtil.NaoEstaVazio(Self.Items[i].NomeArq) then
-           FConfiguracoes.Geral.Save(ExtractFileName(Self.Items[i].NomeArq), vAssinada, ExtractFilePath(Self.Items[i].NomeArq));
+     Leitor := TLeitor.Create;
+     try
+       leitor.Grupo := vAssinada;
+       Self.Items[i].MDFe.signature.URI := Leitor.rAtributo('Reference URI=');
+       Self.Items[i].MDFe.signature.DigestValue := Leitor.rCampo(tcStr, 'DigestValue');
+       Self.Items[i].MDFe.signature.SignatureValue := Leitor.rCampo(tcStr, 'SignatureValue');
+       Self.Items[i].MDFe.signature.X509Certificate := Leitor.rCampo(tcStr, 'X509Certificate');
      finally
-        LocMDFeW.Free;
+       Leitor.Free;
      end;
-   end;
 
+     if FConfiguracoes.Geral.Salvar then
+       FConfiguracoes.Geral.Save(StringReplace(Self.Items[i].MDFe.infMDFe.ID, 'MDFe', '', [rfIgnoreCase])+'-MDFe.xml', vAssinada);
+
+     if DFeUtil.NaoEstaVazio(Self.Items[i].NomeArq) then
+       FConfiguracoes.Geral.Save(ExtractFileName(Self.Items[i].NomeArq), vAssinada, ExtractFilePath(Self.Items[i].NomeArq));
+   end;
 end;
 
 procedure TManifestos.GerarMDFe;
 var
  i: Integer;
- LocMDFeW: TMDFeW;
+ ArqXML, Alertas: String;
 begin
  for i:= 0 to Self.Count-1 do
   begin
-    LocMDFeW := TMDFeW.Create(Self.Items[i].MDFe);
-    try
-       LocMDFeW.Gerador.Opcoes.FormatoAlerta  := FConfiguracoes.Geral.FormatoAlerta;
-       LocMDFeW.Gerador.Opcoes.RetirarAcentos := FConfiguracoes.Geral.RetirarAcentos;
-       LocMDFeW.VersaoDF := FConfiguracoes.Geral.VersaoDF;
-       LocMDFeW.GerarXml;
-
-       Self.Items[i].XML     := LocMDFeW.Gerador.ArquivoFormatoXML;
-       Self.Items[i].Alertas := LocMDFeW.Gerador.ListaDeAlertas.Text;
-    finally
-       LocMDFeW.Free;
-    end;
+    Self.Items[i].GerarXML(ArqXML, Alertas);
+    Self.Items[i].XML := UTF8Encode(ArqXML);
+    Self.Items[i].Alertas := Alertas;
   end;
 end;
 
@@ -576,7 +560,7 @@ begin
            PathArquivo := TACBrMDFe(FACBrMDFe).Configuracoes.Geral.PathSalvar
         else
            PathArquivo := ExtractFilePath(PathArquivo);
-        CaminhoArquivo := PathWithDelim(PathArquivo) + copy(TACBrMDFe(FACBrMDFe).Manifestos.Items[i].MDFe.inFMDFe.ID, (length(TACBrMDFe(FACBrMDFe).Manifestos.Items[i].MDFe.inFMDFe.ID)-44)+1, 44)+'-mdfe.xml';
+        CaminhoArquivo := PathWithDelim(PathArquivo) + copy(TACBrMDFe(FACBrMDFe).Manifestos.Items[i].MDFe.inFMDFe.ID, (length(TACBrMDFe(FACBrMDFe).Manifestos.Items[i].MDFe.inFMDFe.ID)-44)+1, 44)+'-MDFe.xml';
         TACBrMDFe(FACBrMDFe).Manifestos.Items[i].SaveToFile(CaminhoArquivo)
      end;
  except
