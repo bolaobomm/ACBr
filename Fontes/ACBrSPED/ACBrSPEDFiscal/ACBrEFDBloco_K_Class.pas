@@ -264,6 +264,7 @@ begin
                LFill( DT_PROD ) +
                LFill( COD_ITEM  ) +
                LFill( QTD , 0, 3 ));
+		  WriteRegistroK255(RegK100.RegistroK250.Items[intFor]);
         end;
         RegistroK990.QTD_LIN_K := RegistroK990.QTD_LIN_K + 1;
      end;
