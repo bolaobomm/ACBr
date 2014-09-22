@@ -3956,7 +3956,8 @@ begin
 
               NomeArq := FCCe.Evento.Items[i].InfEvento.chNFe +
                          '110110' +
-                         IntToStr(FCCe.Evento.Items[i].InfEvento.nSeqEvento) +
+//                         IntToStr(FCCe.Evento.Items[i].InfEvento.nSeqEvento) +
+                         Format('%.2d', [FCCe.Evento.Items[i].InfEvento.nSeqEvento]) +
                          '-procEventoNFe.xml';
 
               if FConfiguracoes.Geral.Salvar then

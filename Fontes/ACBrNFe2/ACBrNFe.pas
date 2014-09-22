@@ -801,7 +801,10 @@ begin
       if DANFE <> nil then
       begin
         ImprimirEventoPDF;
-        NomeArq := StringReplace(EventoNFe.Evento[0].InfEvento.id,'ID', '', [rfIgnoreCase]);
+//        NomeArq := StringReplace(EventoNFe.Evento[0].InfEvento.id,'ID', '', [rfIgnoreCase]);
+        NomeArq := Copy(EventoNFe.Evento[0].InfEvento.id, 09, 44) +
+                   Copy(EventoNFe.Evento[0].InfEvento.id, 03, 06) +
+                   Copy(EventoNFe.Evento[0].InfEvento.id, 53, 02);
         NomeArq := PathWithDelim(DANFE.PathPDF)+NomeArq+'evento.pdf';
         AnexosEmail.Add(NomeArq);
       end;
