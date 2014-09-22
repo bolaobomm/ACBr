@@ -74,6 +74,7 @@ type
     FNomeArq: String;
 
     function GetNFeXML: AnsiString;
+    function GerarXML(var XML: String; var Alertas: String; GerarTXT: Boolean = false) : String;  //SE GerarTXT = True retorna o arquivo no formato TXT, senão retorna vazio.
   public
     constructor Create(Collection2: TCollection); override;
     destructor Destroy; override;
@@ -243,35 +244,22 @@ end;
 
 function NotaFiscal.SaveToFile(CaminhoArquivo: String = ''; SalvaTXT : Boolean = False): Boolean;
 var
-  LocNFeW : TNFeW;
+  ArqXML, Alertas, ArqTXT : String;
 begin
   try
      Result := True;
-     LocNFeW := TNFeW.Create(NFe);
-     try
-//        LocNFeW.schema := TsPL005c;
-        LocNFeW.Opcoes.GerarTXTSimultaneamente := SalvaTXT;
+     ArqTXT := GerarXML(ArqXML, Alertas, SalvaTXT);
+     if DFeUtil.EstaVazio(CaminhoArquivo) then
+        CaminhoArquivo := PathWithDelim(TACBrNFe( TNotasFiscais( Collection ).ACBrNFe ).Configuracoes.Geral.PathSalvar)+copy(NFe.infNFe.ID, (length(NFe.infNFe.ID)-44)+1, 44)+'-NFe.xml';
 
-        NFe.infNFe.Versao := DFeUtil.StringToFloat(GetVersaoNFe(TACBrNFe( TNotasFiscais( Collection ).ACBrNFe ).Configuracoes.Geral.ModeloDF,
-                                              TACBrNFe( TNotasFiscais( Collection ).ACBrNFe ).Configuracoes.Geral.VersaoDF,
-                                              LayNfeRecepcao));
+     if DFeUtil.EstaVazio(CaminhoArquivo) or not DirectoryExists(ExtractFilePath(CaminhoArquivo)) then
+        raise EACBrNFeException.Create('Caminho Inválido: ' + CaminhoArquivo);
 
-        LocNFeW.Gerador.Opcoes.FormatoAlerta  := TACBrNFe( TNotasFiscais( Collection ).ACBrNFe ).Configuracoes.Geral.FormatoAlerta;
-        LocNFeW.Gerador.Opcoes.RetirarAcentos := TACBrNFe( TNotasFiscais( Collection ).ACBrNFe ).Configuracoes.Geral.RetirarAcentos;
-        LocNFeW.GerarXml;
-        if DFeUtil.EstaVazio(CaminhoArquivo) then
-           CaminhoArquivo := PathWithDelim(TACBrNFe( TNotasFiscais( Collection ).ACBrNFe ).Configuracoes.Geral.PathSalvar)+copy(NFe.infNFe.ID, (length(NFe.infNFe.ID)-44)+1, 44)+'-NFe.xml';
+     WriteToTXT(CaminhoArquivo,ArqXML,False,False);
 
-        if DFeUtil.EstaVazio(CaminhoArquivo) or not DirectoryExists(ExtractFilePath(CaminhoArquivo)) then
-           raise EACBrNFeException.Create('Caminho Inválido: ' + CaminhoArquivo);
-
-        LocNFeW.Gerador.SalvarArquivo(CaminhoArquivo);
-        if SalvaTXT then
-           LocNFeW.Gerador.SalvarArquivo(ChangeFileExt(CaminhoArquivo,'.txt'),fgTXT);
-        NomeArq := CaminhoArquivo;
-     finally
-        LocNFeW.Free;
-     end;
+     if SalvaTXT then
+        WriteToTXT(ChangeFileExt(CaminhoArquivo,'.txt'),ArqTXT,False,False);
+     NomeArq := CaminhoArquivo;
   except
      raise;
      Result := False;
@@ -280,25 +268,12 @@ end;
 
 function NotaFiscal.SaveToStream(Stream: TStringStream): Boolean;
 var
-  LocNFeW : TNFeW;
+  ArqXML, Alertas : String;
 begin
   try
      Result := True;
-     LocNFeW := TNFeW.Create(NFe);
-     try
-//        LocNFeW.schema := TsPL005c;
-
-        NFe.infNFe.Versao := DFeUtil.StringToFloat(GetVersaoNFe(TACBrNFe( TNotasFiscais( Collection ).ACBrNFe ).Configuracoes.Geral.ModeloDF,
-                                              TACBrNFe( TNotasFiscais( Collection ).ACBrNFe ).Configuracoes.Geral.VersaoDF,
-                                              LayNfeRecepcao));
-
-        LocNFeW.Gerador.Opcoes.FormatoAlerta  := TACBrNFe( TNotasFiscais( Collection ).ACBrNFe ).Configuracoes.Geral.FormatoAlerta;
-        LocNFeW.Gerador.Opcoes.RetirarAcentos := TACBrNFe( TNotasFiscais( Collection ).ACBrNFe ).Configuracoes.Geral.RetirarAcentos;
-        LocNFeW.GerarXml;
-        Stream.WriteString(LocNFeW.Gerador.ArquivoFormatoXML);
-     finally
-        LocNFeW.Free;
-     end;
+     GerarXML(ArqXML, Alertas, False);
+     Stream.WriteString(ArqXML);
   except
      Result := False;
   end;
@@ -379,23 +354,36 @@ end;
 
 function NotaFiscal.GetNFeXML: AnsiString;
 var
- LocNFeW : TNFeW;
+ ArqXML, Alertas: String;
 begin
- LocNFeW := TNFeW.Create(Self.NFe);
- try
-//    LocNFeW.schema := TsPL005c;
+ GerarXML(ArqXML, Alertas, False);
+ Result := ArqXML;
+end;
 
+function NotaFiscal.GerarXML(var XML: String; var Alertas: String; GerarTXT: Boolean = false) : String;
+var
+  LocNFeW : TNFeW;
+begin
+  LocNFeW := TNFeW.Create(Self.NFe);
+  try
     NFe.infNFe.Versao := DFeUtil.StringToFloat(GetVersaoNFe(TACBrNFe( TNotasFiscais( Collection ).ACBrNFe ).Configuracoes.Geral.ModeloDF,
                                               TACBrNFe( TNotasFiscais( Collection ).ACBrNFe ).Configuracoes.Geral.VersaoDF,
                                               LayNfeRecepcao));
 
-    LocNFeW.Gerador.Opcoes.FormatoAlerta  := TACBrNFe( TNotasFiscais( Collection ).ACBrNFe ).Configuracoes.Geral.FormatoAlerta;
-    LocNFeW.Gerador.Opcoes.RetirarAcentos := TACBrNFe( TNotasFiscais( Collection ).ACBrNFe ).Configuracoes.Geral.RetirarAcentos;
-    LocNFeW.GerarXml;
-    Result := LocNFeW.Gerador.ArquivoFormatoXML;
- finally
-    LocNFeW.Free;
- end;
+     LocNFeW.Opcoes.GerarTXTSimultaneamente := GerarTXT;
+     LocNFeW.Gerador.Opcoes.FormatoAlerta   := TACBrNFe( TNotasFiscais( Collection ).ACBrNFe ).Configuracoes.Geral.FormatoAlerta;
+     LocNFeW.Gerador.Opcoes.RetirarAcentos  := TACBrNFe( TNotasFiscais( Collection ).ACBrNFe ).Configuracoes.Geral.RetirarAcentos;
+     
+     LocNFeW.GerarXml;
+     XML     := LocNFeW.Gerador.ArquivoFormatoXML;
+     Alertas := LocNFeW.Gerador.ListaDeAlertas.Text;
+     if GerarTXT then
+        Result := LocNFeW.Gerador.ArquivoFormatoTXT
+     else
+        Result := '';
+  finally
+     LocNFeW.Free;
+  end;
 end;
 
 function NotaFiscal.ValidarConcatChave: Boolean;
@@ -440,54 +428,40 @@ procedure TNotasFiscais.Assinar;
 var
   i: Integer;
   vAssinada : AnsiString;
-  LocNFeW : TNFeW;
+  ArqXML, Alertas: String;
   Leitor: TLeitor;
   FMsg : AnsiString;
 begin
   for i:= 0 to Self.Count-1 do
    begin
-     LocNFeW := TNFeW.Create(Self.Items[i].NFe);
-     try
-//        LocNFeW.schema := TsPL005c;
-
-        Self.Items[i].NFe.infNFe.Versao := DFeUtil.StringToFloat(GetVersaoNFe(FConfiguracoes.Geral.ModeloDF,
-                                              FConfiguracoes.Geral.VersaoDF,
-                                              LayNfeRecepcao));
-
-        LocNFeW.Gerador.Opcoes.FormatoAlerta  := FConfiguracoes.Geral.FormatoAlerta;
-        LocNFeW.Gerador.Opcoes.RetirarAcentos := FConfiguracoes.Geral.RetirarAcentos;
-        LocNFeW.GerarXml;
-        Self.Items[i].Alertas := LocNFeW.Gerador.ListaDeAlertas.Text;
+     Self.Items[i].GerarXML(ArqXML, Alertas, False);
+     Self.Items[i].Alertas := Alertas;
 {$IFDEF ACBrNFeOpenSSL}
-        if not(NotaUtil.Assinar(LocNFeW.Gerador.ArquivoFormatoXML, FConfiguracoes.Certificados.Certificado , FConfiguracoes.Certificados.Senha, vAssinada, FMsg)) then
-           raise EACBrNFeException.Create('Falha ao assinar Nota Fiscal Eletrônica '+
+     if not(NotaUtil.Assinar(ArqXML, FConfiguracoes.Certificados.Certificado , FConfiguracoes.Certificados.Senha, vAssinada, FMsg)) then
+        raise EACBrNFeException.Create('Falha ao assinar Nota Fiscal Eletrônica '+
                                    IntToStr(Self.Items[i].NFe.Ide.nNF)+FMsg);
 {$ELSE}
-        if not(NotaUtil.Assinar(LocNFeW.Gerador.ArquivoFormatoXML, FConfiguracoes.Certificados.GetCertificado , vAssinada, FMsg)) then
-           raise EACBrNFeException.Create('Falha ao assinar Nota Fiscal Eletrônica '+
+     if not(NotaUtil.Assinar(ArqXML, FConfiguracoes.Certificados.GetCertificado , vAssinada, FMsg)) then
+        raise EACBrNFeException.Create('Falha ao assinar Nota Fiscal Eletrônica '+
                                    IntToStr(Self.Items[i].NFe.Ide.nNF)+FMsg);
 {$ENDIF}
-        vAssinada := StringReplace( vAssinada, '<'+ENCODING_UTF8_STD+'>', '', [rfReplaceAll] );
-        vAssinada := StringReplace( vAssinada, '<?xml version="1.0"?>', '', [rfReplaceAll] );
-        Self.Items[i].XML := vAssinada;
+     vAssinada := StringReplace( vAssinada, '<'+ENCODING_UTF8_STD+'>', '', [rfReplaceAll] );
+     vAssinada := StringReplace( vAssinada, '<?xml version="1.0"?>', '', [rfReplaceAll] );
+     Self.Items[i].XML := vAssinada;
 
-        Leitor := TLeitor.Create;
-        leitor.Grupo := vAssinada;
-        Self.Items[i].NFe.signature.URI := Leitor.rAtributo('Reference URI=');
-        Self.Items[i].NFe.signature.DigestValue := Leitor.rCampo(tcStr, 'DigestValue');
-        Self.Items[i].NFe.signature.SignatureValue := Leitor.rCampo(tcStr, 'SignatureValue');
-        Self.Items[i].NFe.signature.X509Certificate := Leitor.rCampo(tcStr, 'X509Certificate');
-        Leitor.Free;
-        
-        if FConfiguracoes.Geral.Salvar then
-           FConfiguracoes.Geral.Save(StringReplace(Self.Items[i].NFe.infNFe.ID, 'NFe', '', [rfIgnoreCase])+'-nfe.xml', vAssinada);
+     Leitor := TLeitor.Create;
+     leitor.Grupo := vAssinada;
+     Self.Items[i].NFe.signature.URI := Leitor.rAtributo('Reference URI=');
+     Self.Items[i].NFe.signature.DigestValue := Leitor.rCampo(tcStr, 'DigestValue');
+     Self.Items[i].NFe.signature.SignatureValue := Leitor.rCampo(tcStr, 'SignatureValue');
+     Self.Items[i].NFe.signature.X509Certificate := Leitor.rCampo(tcStr, 'X509Certificate');
+     Leitor.Free;
 
-        if DFeUtil.NaoEstaVazio(Self.Items[i].NomeArq) then
-           FConfiguracoes.Geral.Save(ExtractFileName(Self.Items[i].NomeArq), vAssinada, ExtractFilePath(Self.Items[i].NomeArq));
+     if FConfiguracoes.Geral.Salvar then
+        FConfiguracoes.Geral.Save(StringReplace(Self.Items[i].NFe.infNFe.ID, 'NFe', '', [rfIgnoreCase])+'-nfe.xml', vAssinada);
+      if DFeUtil.NaoEstaVazio(Self.Items[i].NomeArq) then
+        FConfiguracoes.Geral.Save(ExtractFileName(Self.Items[i].NomeArq), vAssinada, ExtractFilePath(Self.Items[i].NomeArq));
 
-     finally
-        LocNFeW.Free;
-     end;
    end;
 
 end;
@@ -495,26 +469,13 @@ end;
 procedure TNotasFiscais.GerarNFe;
 var
  i: Integer;
- LocNFeW : TNFeW;
+ ArqXML, Alertas: String;
 begin
  for i:= 0 to Self.Count-1 do
   begin
-    LocNFeW := TNFeW.Create(Self.Items[i].NFe);
-    try
-//       LocNFeW.schema := TsPL006;
-
-       Self.Items[i].NFe.infNFe.Versao := DFeUtil.StringToFloat(GetVersaoNFe(FConfiguracoes.Geral.ModeloDF,
-                                              FConfiguracoes.Geral.VersaoDF,
-                                              LayNfeRecepcao));
-
-       LocNFeW.Gerador.Opcoes.FormatoAlerta  := FConfiguracoes.Geral.FormatoAlerta;
-       LocNFeW.Gerador.Opcoes.RetirarAcentos := FConfiguracoes.Geral.RetirarAcentos;
-       LocNFeW.GerarXml;
-       Self.Items[i].XML := LocNFeW.Gerador.ArquivoFormatoXML;
-       Self.Items[i].Alertas := LocNFeW.Gerador.ListaDeAlertas.Text;
-    finally
-       LocNFeW.Free;
-    end;
+    Self.Items[i].GerarXML(ArqXML, Alertas, False);
+    Self.Items[i].XML := UTF8Encode(ArqXML);
+    Self.Items[i].Alertas := Alertas;
   end;
 end;
 
@@ -906,7 +867,7 @@ end;
 function TNotasFiscais.SaveToTXT(PathArquivo: String): Boolean;
 var
   loSTR: TStringList;
-  LocNFeW : TNFeW;
+  ArqXML, Alertas, ArqTXT : String;
   I,J: Integer;
 begin
   Result:=False;
@@ -915,23 +876,9 @@ begin
     loSTR.Clear;
     for I := 0 to Self.Count - 1 do
     begin
-      LocNFeW := TNFeW.Create(Self.Items[I].Nfe);
-      try
-//        LocNFeW.schema := TsPL006;
-        LocNFeW.Opcoes.GerarTXTSimultaneamente:=true;
-
-        Self.Items[i].NFe.infNFe.Versao := DFeUtil.StringToFloat(GetVersaoNFe(FConfiguracoes.Geral.ModeloDF,
-                                              FConfiguracoes.Geral.VersaoDF,
-                                              LayNfeRecepcao));
-
-        LocNFeW.Gerador.Opcoes.FormatoAlerta  := FConfiguracoes.Geral.FormatoAlerta;
-        LocNFeW.Gerador.Opcoes.RetirarAcentos := FConfiguracoes.Geral.RetirarAcentos;
-        LocNFeW.GerarXml;
-        loSTR.Text := loSTR.Text +
-                      copy(LocNFeW.Gerador.ArquivoFormatoTXT,14,length(LocNFeW.Gerador.ArquivoFormatoTXT));
-      finally
-        LocNFeW.Free;
-      end;
+      ArqTXT := Self.Items[I].GerarXML(ArqXML, Alertas, True);
+      loSTR.Text := loSTR.Text +
+                      copy(ArqTXT,14,length(ArqTXT));
     end;
     
     if loSTR.Count > 0 then
