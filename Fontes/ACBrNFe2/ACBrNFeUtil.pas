@@ -2058,7 +2058,8 @@ begin
    41: urlUF := DFeUtil.SeSenao(AAmbiente = taProducao, '', ''); // PR
    26: urlUF := DFeUtil.SeSenao(AAmbiente = taProducao, '', ''); // PE
    22: urlUF := DFeUtil.SeSenao(AAmbiente = taProducao, '', ''); // PI
-   33: urlUF := DFeUtil.SeSenao(AAmbiente = taProducao, 'https://www.sefaz.rs.gov.br/NFE/NFE-COM.aspx',              'https://www.sefaz.rs.gov.br/NFE/NFE-COM.aspx');              // RJ
+//   33: urlUF := DFeUtil.SeSenao(AAmbiente = taProducao, 'https://www.sefaz.rs.gov.br/NFE/NFE-COM.aspx',              'https://www.sefaz.rs.gov.br/NFE/NFE-COM.aspx');              // RJ
+   33: urlUF := DFeUtil.SeSenao(AAmbiente = taProducao, 'http://www4.fazenda.rj.gov.br/consultaNFCe/QRCode',         'http://www4.fazenda.rj.gov.br/consultaNFCe/QRCode');         // RJ
    24: urlUF := DFeUtil.SeSenao(AAmbiente = taProducao, 'http://nfce.set.rn.gov.br/consultarNFCe.aspx',              'http://nfce.set.rn.gov.br/consultarNFCe.aspx');              // RN
    43: urlUF := DFeUtil.SeSenao(AAmbiente = taProducao, 'https://www.sefaz.rs.gov.br/NFCE/NFCE-COM.aspx',            'https://www.sefaz.rs.gov.br/NFCE/NFCE-COM.aspx');            // RS
    11: urlUF := DFeUtil.SeSenao(AAmbiente = taProducao, 'http://www.nfce.sefin.ro.gov.br/consultanfce/consulta.jsp', 'http://www.nfce.sefin.ro.gov.br/consultanfce/consulta.jsp'); // RO
@@ -2117,7 +2118,7 @@ begin
   end;
 
   // Passo 6
-  Result := urlUF + '?'+ sEntrada + cIdToken+ '&cHashQRCode=' + cHashQRCode;
+  Result := urlUF + '?' + sEntrada + cIdToken+ '&cHashQRCode=' + cHashQRCode;
 end;
 
 end.
