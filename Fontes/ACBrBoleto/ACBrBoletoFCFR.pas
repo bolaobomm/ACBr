@@ -295,7 +295,7 @@ begin
             begin
                frxPDFExport.FileName := NomeArquivo;
                frxPDFExport.ShowDialog := MostrarSetup;
-			   frxPDFExport.ShowProgress := MostrarSetup;
+   			   frxPDFExport.ShowProgress := MostrarSetup;
                frxPDFExport.Author     := SoftwareHouse;
                frxPDFExport.Creator    := SoftwareHouse;
                frxPDFExport.Producer   := SoftwareHouse;
@@ -304,17 +304,17 @@ begin
                frxPDFExport.Keywords   := frxPDFExport.Title;
                frxPDFExport.Background := false; // isso faz diminuir 70% do tamanho do pdf
                frxReport.Export(DmBoleto.frxPDFExport);
-			   if frxPDFExport.FileName <> NomeArquivo then
-					NomeArquivo := frxPDFExport.FileName;
+   			   if frxPDFExport.FileName <> NomeArquivo then
+	   				NomeArquivo := frxPDFExport.FileName;
             end;
             fiHTML:
             begin
                frxHTMLExport.FileName := NomeArquivo;
                frxHTMLExport.ShowDialog := MostrarSetup;
-			   frxHTMLExport.ShowProgress := MostrarSetup;
+	   		   frxHTMLExport.ShowProgress := MostrarSetup;
                frxReport.Export(DmBoleto.frxHTMLExport);
-			   if frxHTMLExport.FileName <> NomeArquivo then
-					NomeArquivo := frxHTMLExport.FileName;
+   			   if frxHTMLExport.FileName <> NomeArquivo then
+	   				NomeArquivo := frxHTMLExport.FileName;
             end;
           else
             exit;
@@ -437,6 +437,55 @@ begin
          Post;
       end;
       // Titulos
+      // Otimizar este loop tirando o FieldByName() (por Toninho Nunes)
+      with DmBoleto.cdsTitulo do
+      begin
+        Field_NossNum        := FieldByName('NossoNum');
+        Field_CodCendente    := FieldByName('CodCedente');
+        Field_CodBarras      := FieldByName('CodBarras');
+        Field_LinhaDigitaval := FieldByName('LinhaDigitavel');
+        Field_TipoDoc        := FieldByName('TipoDoc');
+        Field_Vencimento     := FieldByName('Vencimento');
+        Field_DataDocumento  := FieldByName('DataDocumento');
+        Field_NumeroDocumento:= FieldByName('NumeroDocumento');
+        Field_TotalParcelas  := FieldByName('TotalParcelas');
+        Field_Parcela        := FieldByName('Parcela');
+        Field_EspecieMod     := FieldByName('EspecieMod');
+        Field_EspecieDoc     := FieldByName('EspecieDoc');
+        Field_Aceite         := FieldByName('Aceite');
+        Field_DataProcessamento := FieldByName('DataProcessamento');
+        Field_NossoNumero    := FieldByName('NossoNumero');
+        Field_Carteira       := FieldByName('Carteira');
+        Field_ValorDocumento := FieldByName('ValorDocumento');
+        Field_LocalPagamento := FieldByName('LocalPagamento');
+        Field_ValorMoraJuros := FieldByName('ValorMoraJuros');
+        Field_ValorDesconto  := FieldByName('ValorDesconto');
+        Field_ValorAbatimento:= FieldByName('ValorAbatimento');
+        Field_DataMoraJuros  := FieldByName('DataMoraJuros');
+        Field_DataDesconto   := FieldByName('DataDesconto');
+        Field_DataABatimento := FieldByName('DataAbatimento');
+        Field_DataProtesto   := FieldByName('DataProtesto');
+        Field_PercentualMulta:= FieldByName('PercentualMulta');
+        Field_Mensagem       := FieldByName('Mensagem');
+        Field_OcorrenciaOriginal := FieldByName('OcorrenciaOriginal');
+        Field_Instrucao1     := FieldByName('Instrucao1');
+        Field_Instrucao2     := FieldByName('Instrucao2');
+        Field_TextoLivre     := FieldByName('TextoLivre');
+        Field_Asbace         := FieldByName('Asbace');
+
+        // Sacado
+        Field_Sacado_NomeSacado := FieldByName('Sacado_NomeSacado');
+        Field_Sacado_CNPJCPF    := FieldByName('Sacado_CNPJCPF');
+        Field_Sacado_Logradouro := FieldByName('Sacado_Logradouro');
+        Field_Sacado_Complemento:= FieldByName('Sacado_Complemento');
+        Field_Sacado_Numero     := FieldByName('Sacado_Numero');
+        Field_Sacado_Bairro     := FieldByName('Sacado_Bairro');
+        Field_Sacado_Cidade     := FieldByName('Sacado_Cidade');
+        Field_Sacado_UF         := FieldByName('Sacado_UF');
+        Field_Sacado_CEP        := FieldByName('Sacado_CEP');
+        Field_Sacado_Avalista   := FieldByName('Sacado_Avalista');
+      end;
+
       for iFor := 0 to ListadeBoletos.Count - 1 do
       begin
          case ACBrBoleto.Cedente.TipoInscricao of
@@ -454,7 +503,7 @@ begin
             Field_NossNum.AsString             := Banco.MontarCampoNossoNumero( ListadeBoletos[iFor] );
             Field_CodCendente.AsString         := Banco.MontarCampoCodigoCedente( ListadeBoletos[iFor] );
             Field_CodBarras.AsString           := Banco.MontarCodigoBarras( ListadeBoletos[iFor] );
-            Field_LinhaDigitaval.AsString      := Banco.MontarLinhaDigitavel( FieldByName('CodBarras').AsString,ListadeBoletos[iFor] );
+            Field_LinhaDigitaval.AsString      := Banco.MontarLinhaDigitavel( Field_CodBarras.AsString,ListadeBoletos[iFor] );
             Field_TipoDoc.AsString             := sTipoDoc;
             Field_Vencimento.AsDateTime        := ListadeBoletos[iFor].Vencimento;
             Field_DataDocumento.AsDateTime     := ListadeBoletos[iFor].DataDocumento;
