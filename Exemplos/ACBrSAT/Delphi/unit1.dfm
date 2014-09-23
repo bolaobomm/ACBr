@@ -260,7 +260,7 @@ object Form1: TForm1
             Cursor = crIBeam
             TabOrder = 0
           end
-          object edPathDLL: TEdit
+          object edNomeDLL: TEdit
             Left = 230
             Top = 24
             Width = 156
@@ -419,7 +419,7 @@ object Form1: TForm1
             Width = 134
             Height = 21
             Style = csDropDownList
-            ItemHeight = 13
+            ItemHeight = 0
             TabOrder = 4
           end
           object cbxIndRatISSQN: TComboBox
@@ -428,7 +428,7 @@ object Form1: TForm1
             Width = 134
             Height = 21
             Style = csDropDownList
-            ItemHeight = 13
+            ItemHeight = 0
             TabOrder = 5
           end
           object cbxRegTributario: TComboBox
@@ -437,7 +437,7 @@ object Form1: TForm1
             Width = 166
             Height = 21
             Style = csDropDownList
-            ItemHeight = 13
+            ItemHeight = 0
             TabOrder = 3
           end
         end

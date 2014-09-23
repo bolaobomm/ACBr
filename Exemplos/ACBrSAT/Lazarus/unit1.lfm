@@ -9,7 +9,7 @@ object Form1: TForm1
   Menu = MainMenu1
   OnCreate = FormCreate
   Position = poMainFormCenter
-  LCLVersion = '1.2.2.0'
+  LCLVersion = '1.2.4.0'
   object Splitter1: TSplitter
     Cursor = crVSplit
     Left = 0
@@ -1656,9 +1656,9 @@ object Form1: TForm1
         Height = 182
         Top = 0
         Width = 552
-        ActivePage = Impressao
+        ActivePage = tsDadosSAT
         Align = alClient
-        TabIndex = 3
+        TabIndex = 0
         TabOrder = 0
         object tsDadosSAT: TTabSheet
           Caption = 'Dados do SAT CFe'
@@ -1693,12 +1693,12 @@ object Form1: TForm1
             Left = 217
             Height = 15
             Top = 7
-            Width = 50
+            Width = 59
             Alignment = taRightJustify
-            Caption = 'Path DLL:'
+            Caption = 'Nome DLL:'
             ParentColor = False
           end
-          object edPathDLL: TEdit
+          object edNomeDLL: TEdit
             Cursor = crIBeam
             Left = 217
             Height = 23
@@ -2318,6 +2318,7 @@ object Form1: TForm1
   end
   object ACBrSAT1: TACBrSAT
     Extrato = ACBrSATExtratoFortes1
+    NomeDLL = 'c:\sat\SAT.DLL'
     OnLog = ACBrSAT1Log
     Config.infCFe_versaoDadosEnt = 0.05
     Config.ide_numeroCaixa = 0

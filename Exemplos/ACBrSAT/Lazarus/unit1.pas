@@ -74,7 +74,7 @@ type
     mImprimirExtratoVendaResumido : TMenuItem ;
     mImprimirExtratoVenda : TMenuItem ;
     seNumeroCaixa : TSpinEdit ;
-    edPathDLL : TEdit ;
+    edNomeDLL : TEdit ;
     edtEmitCNPJ : TEdit ;
     edtEmitIE : TEdit ;
     edtEmitIM : TEdit ;
@@ -260,7 +260,7 @@ begin
   begin
     Modelo  := TACBrSATModelo( cbxModelo.ItemIndex ) ;
     ArqLOG  := edLog.Text;
-    PathDLL := edPathDLL.Text;
+    NomeDLL := edNomeDLL.Text;
     Config.ide_numeroCaixa := seNumeroCaixa.Value;
     Config.ide_tpAmb       := TpcnTipoAmbiente( cbxAmbiente.ItemIndex );
     Config.ide_CNPJ        := edtSwHCNPJ.Text;
@@ -322,7 +322,7 @@ begin
   try
     cbxModelo.ItemIndex    := INI.ReadInteger('SAT','Modelo',0);
     edLog.Text             := INI.ReadString('SAT','ArqLog','ACBrSAT.log');
-    edPathDLL.Text         := INI.ReadString('SAT','PathDLL','C:\SAT\');
+    edNomeDLL.Text         := INI.ReadString('SAT','NomeDLL','C:\SAT\SAT.DLL');
     edtCodigoAtivacao.Text := INI.ReadString('SAT','CodigoAtivacao','123456');
     edtCodUF.Text          := INI.ReadString('SAT','CodigoUF','35');
     seNumeroCaixa.Value    := INI.ReadInteger('SAT','NumeroCaixa',1);
@@ -370,7 +370,7 @@ begin
   try
     INI.WriteInteger('SAT','Modelo',cbxModelo.ItemIndex);
     INI.WriteString('SAT','ArqLog',edLog.Text);
-    INI.WriteString('SAT','PathDLL',edPathDLL.Text);
+    INI.WriteString('SAT','NomeDLL',edNomeDLL.Text);
     INI.WriteString('SAT','CodigoAtivacao',edtCodigoAtivacao.Text);
     INI.WriteString('SAT','CodigoUF',edtCodUF.Text);
     INI.WriteInteger('SAT','NumeroCaixa',seNumeroCaixa.Value);
