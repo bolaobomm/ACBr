@@ -1546,6 +1546,15 @@ end;
 
 procedure TNFeW.GerarDetImpostoPIS(const i: Integer);
 begin
+  if (nfe.Ide.modelo = 65) and
+   ((nfe.Det[i].Imposto.PIS.vBC = 0) and
+    (nfe.Det[i].Imposto.PIS.pPIS = 0) and
+    (nfe.Det[i].Imposto.PIS.vPIS = 0) and
+    (nfe.Det[i].Imposto.PIS.qBCProd = 0) and
+    (nfe.Det[i].Imposto.PIS.vAliqProd = 0) and
+    (not (nfe.Det[i].Imposto.PIS.CST in [pis04, pis05, pis06, pis07, pis08, pis09]))) then      //No caso da NFC-e, o grupo de tributação do PIS e o grupo de tributação da COFINS são opcionais.
+      exit;
+      
   Gerador.wGrupo('PIS', 'Q01');
   if nfe.Det[i].Imposto.PIS.CST in [pis01, pis02] then
   begin
@@ -1632,6 +1641,15 @@ end;
 
 procedure TNFeW.GerarDetImpostoCOFINS(const i: Integer);
 begin
+  if (nfe.Ide.modelo = 65) and
+   ((nfe.Det[i].Imposto.COFINS.vBC = 0) and
+    (nfe.Det[i].Imposto.COFINS.pCOFINS = 0) and
+    (nfe.Det[i].Imposto.COFINS.vCOFINS = 0) and
+    (nfe.Det[i].Imposto.COFINS.qBCProd = 0) and
+    (nfe.Det[i].Imposto.COFINS.vAliqProd = 0) and
+    (not (nfe.Det[i].Imposto.COFINS.CST in [cof04, cof05, cof06, cof07, cof08, cof09]))) then      //No caso da NFC-e, o grupo de tributação do PIS e o grupo de tributação da COFINS são opcionais.
+      exit;
+
   Gerador.wGrupo('COFINS', 'S01');
   if nfe.Det[i].Imposto.COFINS.CST in [cof01, cof02] then
   begin
