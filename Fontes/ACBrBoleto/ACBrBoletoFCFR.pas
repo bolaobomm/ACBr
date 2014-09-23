@@ -350,6 +350,52 @@ function TACBrBoletoFCFR.PrepareBoletos(const DmBoleto: TdmACBrBoletoFCFR): Bool
 var
   iFor: Integer;
   sTipoDoc: String;
+
+  //Titulos
+  Field_NossNum : TField;
+  Field_CodCendente : TField;
+  Field_CodBarras : TField;
+  Field_LinhaDigitaval : TField;
+  Field_TipoDoc : TField;
+  Field_Vencimento : TField;
+  Field_DataDocumento : TField;
+  Field_NumeroDocumento : TField;
+  Field_TotalParcelas : TField;
+  Field_Parcela : TField;
+  Field_EspecieMod : TField;
+  Field_EspecieDoc : TField;
+  Field_Aceite : TField;
+  Field_DataProcessamento : TField;
+  Field_NossoNumero : TField;
+  Field_Carteira : TField;
+  Field_ValorDocumento : TField;
+  Field_LocalPagamento : TField;
+  Field_ValorMoraJuros : TField;
+  Field_ValorDesconto  : TField;
+  Field_ValorAbatimento: TField;
+  Field_DataMoraJuros  : TField;
+  Field_DataDesconto   : TField;
+  Field_DataABatimento : TField;
+  Field_DataProtesto   : TField;
+  Field_PercentualMulta: TField;
+  Field_Mensagem : TField;
+  Field_OcorrenciaOriginal : TField;
+  Field_Instrucao1 : TField;
+  Field_Instrucao2 : TField;
+  Field_TextoLivre : TField;
+  Field_Asbace : TField;
+
+  // Sacado
+  Field_Sacado_NomeSacado : TField;
+  Field_Sacado_CNPJCPF : TField;
+  Field_Sacado_Logradouro : TField;
+  Field_Sacado_Complemento : TField;
+  Field_Sacado_Numero : TField;
+  Field_Sacado_Bairro : TField;
+  Field_Sacado_Cidade : TField;
+  Field_Sacado_UF : TField;
+  Field_Sacado_CEP : TField;
+  Field_Sacado_Avalista : TField;
 begin
    with ACBrBoleto do
    begin
@@ -405,6 +451,53 @@ begin
          with DmBoleto.cdsTitulo do
          begin
             Append;
+            Field_NossNum.AsString             := Banco.MontarCampoNossoNumero( ListadeBoletos[iFor] );
+            Field_CodCendente.AsString         := Banco.MontarCampoCodigoCedente( ListadeBoletos[iFor] );
+            Field_CodBarras.AsString           := Banco.MontarCodigoBarras( ListadeBoletos[iFor] );
+            Field_LinhaDigitaval.AsString      := Banco.MontarLinhaDigitavel( FieldByName('CodBarras').AsString,ListadeBoletos[iFor] );
+            Field_TipoDoc.AsString             := sTipoDoc;
+            Field_Vencimento.AsDateTime        := ListadeBoletos[iFor].Vencimento;
+            Field_DataDocumento.AsDateTime     := ListadeBoletos[iFor].DataDocumento;
+            Field_NumeroDocumento.AsString     := ListadeBoletos[iFor].NumeroDocumento;
+            Field_TotalParcelas.AsInteger      := ListadeBoletos[iFor].TotalParcelas;
+            Field_Parcela.AsInteger            := ListadeBoletos[iFor].Parcela;
+            Field_EspecieMod.AsString          := ListadeBoletos[iFor].EspecieMod;
+            Field_EspecieDoc.AsString          := ListadeBoletos[iFor].EspecieDoc;
+            Field_Aceite.AsInteger             := Integer(ListadeBoletos[iFor].Aceite);
+            Field_DataProcessamento.AsDateTime := ListadeBoletos[iFor].DataProcessamento;
+            Field_NossoNumero.AsString         := ListadeBoletos[iFor].NossoNumero;
+            Field_Carteira.AsString            := ListadeBoletos[iFor].Carteira;
+            Field_ValorDocumento.AsCurrency    := ListadeBoletos[iFor].ValorDocumento;
+            Field_LocalPagamento.AsString      := ListadeBoletos[iFor].LocalPagamento;
+            Field_ValorMoraJuros.AsCurrency    := ListadeBoletos[iFor].ValorMoraJuros;
+            Field_ValorDesconto.AsCurrency     := ListadeBoletos[iFor].ValorDesconto;
+            Field_ValorAbatimento.AsCurrency   := ListadeBoletos[iFor].ValorAbatimento;
+            Field_DataMoraJuros.AsDateTime     := ListadeBoletos[iFor].DataMoraJuros;
+            Field_DataDesconto.AsDateTime      := ListadeBoletos[iFor].DataDesconto;
+            Field_DataABatimento.AsDateTime    := ListadeBoletos[iFor].DataAbatimento;
+            Field_DataProtesto.AsDateTime      := ListadeBoletos[iFor].DataProtesto;
+            Field_PercentualMulta.AsFloat      := ListadeBoletos[iFor].PercentualMulta;
+            Field_Mensagem.AsString            := ListadeBoletos[iFor].Mensagem.Text;
+            Field_OcorrenciaOriginal.AsInteger := Integer(ListadeBoletos[iFor].OcorrenciaOriginal);
+            Field_Instrucao1.AsString          := ListadeBoletos[iFor].Instrucao1;
+            Field_Instrucao2.AsString          := ListadeBoletos[iFor].Instrucao2;
+            Field_TextoLivre.AsString          := ListadeBoletos[iFor].TextoLivre;
+            if ACBrBoleto.Banco.Numero = 21 then
+              Field_Asbace.AsString            := TACBrBanestes(Banco).CalcularCampoASBACE(ListadeBoletos[iFor]);
+
+            // Sacado
+            Field_Sacado_NomeSacado.AsString   := ListadeBoletos[iFor].Sacado.NomeSacado;
+            Field_Sacado_CNPJCPF.AsString      := ListadeBoletos[iFor].Sacado.CNPJCPF;
+            Field_Sacado_Logradouro.AsString   := ListadeBoletos[iFor].Sacado.Logradouro;
+            Field_Sacado_Complemento.AsString  := ListadeBoletos[iFor].Sacado.Complemento;
+            Field_Sacado_Numero.AsString       := ListadeBoletos[iFor].Sacado.Numero;
+            Field_Sacado_Bairro.AsString       := ListadeBoletos[iFor].Sacado.Bairro;
+            Field_Sacado_Cidade.AsString       := ListadeBoletos[iFor].Sacado.Cidade;
+            Field_Sacado_UF.AsString           := ListadeBoletos[iFor].Sacado.UF;
+            Field_Sacado_CEP.AsString          := ListadeBoletos[iFor].Sacado.CEP;
+            Field_Sacado_Avalista.AsString     := ListadeBoletos[iFor].Sacado.Avalista;
+
+            (*
             FieldByName('NossoNum').AsString            := Banco.MontarCampoNossoNumero( ListadeBoletos[iFor] );
             FieldByName('CodCedente').AsString          := Banco.MontarCampoCodigoCedente( ListadeBoletos[iFor] );
             FieldByName('CodBarras').AsString           := Banco.MontarCodigoBarras( ListadeBoletos[iFor] );
@@ -450,6 +543,7 @@ begin
             FieldByName('Sacado_UF').AsString           := ListadeBoletos[iFor].Sacado.UF;
             FieldByName('Sacado_CEP').AsString          := ListadeBoletos[iFor].Sacado.CEP;
             FieldByName('Sacado_Avalista').AsString     := ListadeBoletos[iFor].Sacado.Avalista;
+            *)
             Post;
          end;
       end;
