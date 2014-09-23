@@ -47,6 +47,15 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+Data: 23/09/2014     (por: DSA)
+-- ACBrSAT --
+[*] Remoção da propriedade "PathDll"
+[+] Adição da propriedade "NomeDll", que deve conter o Path e Nome da DLL
+    (alguns fabricantes não usam o nome "SAT.DLL")
+[*] Adicionada verificação de existência do nome da DLL antes da carga
+[*] Ignora erro de leitura de xSAT_DesligarSAT, pois alguns fabricantes não
+    implementam esse método
+
 Data: 20/09/2014     (por: DSA)
 -- ACBrSAT --
 [+] Adição de um novo modelo com carga de DLL dinâmica em stdcall 

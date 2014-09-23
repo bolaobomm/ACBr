@@ -144,19 +144,17 @@ type
    private
      function GetcodigoDeAtivacao : AnsiString ;
      function GetnumeroSessao : Integer ;
-     function GetPathDLL : string ;
+     function GetNomeDLL : string ;
 
      procedure ErroAbstract( NomeProcedure : String ) ;
      function GetsignAC : AnsiString ;
    protected
      fpOwner : TComponent ;   { Componente ACBrSAT }
      fpModeloStr: String;
-     fpNomeDLL  : String;
 
      function GetModeloStr: String; virtual ;
-     function GetNomeDLL : String ; virtual ;
 
-     property PathDLL: String read GetPathDLL ;
+     property NomeDLL: String read GetNomeDLL ;
 
      property codigoDeAtivacao : AnsiString read GetcodigoDeAtivacao ;
      property signAC : AnsiString read GetsignAC ;
@@ -174,7 +172,6 @@ type
      procedure DesInicializar ; virtual ;
 
      Property ModeloStr: String read GetModeloStr ;
-     property NomeDLL  : String read GetNomeDLL ;
 
      function AssociarAssinatura( CNPJvalue, assinaturaCNPJs : AnsiString ):
        String ; virtual;
@@ -311,11 +308,11 @@ begin
 
   fpOwner := AOwner ;
   fpModeloStr := 'Não Definido' ;
-  fpNomeDLL   := cLIBSAT;
 end ;
 
 destructor TACBrSATClass.Destroy ;
 begin
+  UnLoadDLLFunctions;
   inherited Destroy ;
 end ;
 
@@ -329,9 +326,9 @@ begin
   UnLoadDLLFunctions;
 end ;
 
-function TACBrSATClass.GetPathDLL : string ;
+function TACBrSATClass.GetNomeDLL : string ;
 begin
-  Result := PathWithDelim( TACBrSAT(fpOwner).PathDLL );
+  Result := TACBrSAT(fpOwner).NomeDLL;
 end;
 
 procedure TACBrSATClass.ErroAbstract(NomeProcedure : String) ;
@@ -350,11 +347,6 @@ begin
   Result := TACBrSAT(fpOwner).codigoDeAtivacao;
 end;
 
-function TACBrSATClass.GetNomeDLL : String ;
-begin
-  Result := fpNomeDLL;
-end;
-
 function TACBrSATClass.GetnumeroSessao : Integer ;
 begin
   Result := TACBrSAT(fpOwner).numeroSessao;
@@ -366,11 +358,8 @@ begin
 end;
 
 procedure TACBrSATClass.UnLoadDLLFunctions ;
-var
-  sLibName: String;
 begin
-  sLibName := PathDLL + NomeDLL;
-  UnLoadLibrary( sLibName );
+  UnLoadLibrary( NomeDLL );
 end ;
 
 function TACBrSATClass.AssociarAssinatura(CNPJvalue,
@@ -485,11 +474,13 @@ end ;
 procedure TACBrSATClass.FunctionDetectLibSAT(FuncName : String ;
   var LibPointer : Pointer) ;
 var
-  sLibName : String ;
+  sLibName: String;
 begin
   if not Assigned( LibPointer )  then
   begin
-    sLibName := PathDLL + NomeDLL;
+    sLibName := NomeDLL;
+    if not FileExists(sLibName) then
+      raise EACBrSATErro.Create( 'Arquivo não encontrado: '+sLibName );
 
     if not FunctionDetect( sLibName, FuncName, LibPointer) then
     begin

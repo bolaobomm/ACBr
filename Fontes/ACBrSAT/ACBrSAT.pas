@@ -55,7 +55,7 @@ type
      fsOnGetcodigoDeAtivacao : TACBrSATGetChave ;
      fsOnGetsignAC : TACBrSATGetChave ;
      fsOnLog : TACBrSATDoLog ;
-     fsPathDLL : String ;
+     fsNomeDLL : String ;
      fsResposta : TACBrSATResposta ;
      fsRespostaComando : String ;
      fsSATClass : TACBrSATClass ;
@@ -73,12 +73,11 @@ type
      function GetAbout : String;
      function GetcodigoDeAtivacao : AnsiString ;
      function GetModeloStrClass : String ;
-     function GetNomeDLL : String ;
      function GetsignAC : AnsiString ;
      procedure SetAbout(const Value: String);{%h-}
      procedure SetInicializado(AValue : Boolean) ;
      procedure SetModelo(AValue : TACBrSATModelo) ;
-     procedure SetPathDLL(AValue : string) ;
+     procedure SetNomeDLL(AValue : string) ;
 
      procedure IniciaComando ;
      function FinalizaComando(AResult: String): String;
@@ -99,7 +98,6 @@ type
      procedure VerificaInicializado ;
 
      Property ModeloStr : String  read GetModeloStrClass;
-     Property NomeDLL   : String  read GetNomeDLL;
 
      property numeroSessao : Integer read fsnumeroSessao write fsnumeroSessao;
      function GerarnumeroSessao : Integer ;
@@ -152,7 +150,7 @@ type
 
      property Extrato: TACBrSATExtratoClass read fsExtrato write SetExtrato ;
 
-     property PathDLL: string read fsPathDLL write SetPathDLL;
+     property NomeDLL: string read fsNomeDLL write SetNomeDLL;
 
      property About : String read GetAbout write SetAbout stored False ;
      property ArqLOG : String read fsArqLOG write fsArqLOG ;
@@ -178,7 +176,7 @@ begin
   inherited Create(AOwner) ;
 
   fsnumeroSessao    := 0;
-  fsPathDLL         := '';
+  fsNomeDLL         := '';
   fsArqLOG          := '' ;
   fsComandoLog      := '';
   fsRespostaComando := '';
@@ -191,6 +189,7 @@ begin
   fsCFe     := TCFe.Create;
   fsCFeCanc := TCFeCanc.Create;
   fsResposta:= TACBrSATResposta.Create;
+  fsSATClass:= TACBrSATClass.Create( Self ) ;
 end ;
 
 destructor TACBrSAT.Destroy ;
@@ -199,6 +198,9 @@ begin
   fsCFe.Free;
   fsCFeCanc.Free;
   fsResposta.Free;
+
+  if Assigned( fsSATClass ) then
+    FreeAndNil( fsSATClass );
 
   inherited Destroy ;
 end ;
@@ -504,11 +506,6 @@ begin
    Result := fsSATClass.ModeloStr;
 end;
 
-function TACBrSAT.GetNomeDLL : String ;
-begin
-  Result := fsSATClass.NomeDLL;
-end;
-
 function TACBrSAT.GetsignAC : AnsiString ;
 var
   AsignAC : AnsiString ;
@@ -561,10 +558,16 @@ begin
   fsModelo := AValue;
 end ;
 
-procedure TACBrSAT.SetPathDLL(AValue : string) ;
+procedure TACBrSAT.SetNomeDLL(AValue : string) ;
+var
+  FileName: String;
 begin
-  if fsPathDLL = AValue then Exit ;
-  fsPathDLL := PathWithDelim( Trim(AValue) ) ;
+  if fsNomeDLL = AValue then Exit ;
+  fsNomeDLL := Trim(AValue) ;
+
+  FileName := ExtractFileName( fsNomeDLL );
+  if FileName = '' then
+    fsNomeDLL := PathWithDelim( fsNomeDLL ) + cLIBSAT;
 end ;
 
 procedure TACBrSAT.SetExtrato(const Value: TACBrSATExtratoClass);

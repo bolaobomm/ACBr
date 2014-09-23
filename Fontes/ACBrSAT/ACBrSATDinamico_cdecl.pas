@@ -228,6 +228,9 @@ function TACBrSATDinamico_cdecl.DesligarSAT : String ;
 Var
   Resp : PAnsiChar;
 begin
+  if not Assigned( xSAT_DesligarSAT ) then
+    raise EACBrSATErro.Create('SAT_DesligarSAT não implementado em: '+NomeDLL);
+
   Resp := xSAT_DesligarSAT ;
   Result := String( Resp );
 end ;
@@ -288,11 +291,14 @@ begin
   FunctionDetectLibSAT( 'ConsultarSAT', @xSAT_ConsultarSAT);
   FunctionDetectLibSAT( 'ConsultarStatusOperacional', @xSAT_ConsultarStatusOperacional);
   FunctionDetectLibSAT( 'DesbloquearSAT', @xSAT_DesbloquearSAT);
-  FunctionDetectLibSAT( 'DesligarSAT', @xSAT_DesligarSAT);
   FunctionDetectLibSAT( 'EnviarDadosVenda', @xSAT_EnviarDadosVenda);
   FunctionDetectLibSAT( 'ExtrairLogs', @xSAT_ExtrairLogs);
   FunctionDetectLibSAT( 'TesteFimAFim', @xSAT_TesteFimAFim) ;
   FunctionDetectLibSAT( 'TrocarCodigoDeAtivacao', @xSAT_TrocarCodigoDeAtivacao);
+  try
+    FunctionDetectLibSAT( 'DesligarSAT', @xSAT_DesligarSAT);
+  except
+  end;
 end;
 
 procedure TACBrSATDinamico_cdecl.UnLoadDLLFunctions;
