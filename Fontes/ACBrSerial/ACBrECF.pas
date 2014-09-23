@@ -830,7 +830,9 @@ TACBrECF = class( TACBrComponent )
 
     procedure DAV_Abrir(const AEmissao: TDateTime;
       const ADescrDocumento, ANumero, ASituacao, AVendedor, AObservacao,
-      ACNPJCPF, ANomeCliente, AEndereco: String; const AIndice: Integer = 0);
+      ACNPJCPF, ANomeCliente, AEndereco: String; const ANumFabricacao : string = '';
+      const AMarca : string = ''; const AModelo :string = ''; const AAno :string ='' ;
+      const APlaca : string = ''; const ARenavam: string = ''; const AIndice: Integer = 0);
     procedure DAV_Fechar(const AObservacao: String; AVlrDesconto : Double = 0; AVlrAcrescimo: Double = 0);
     procedure DAV_RegistrarItem(const ACodigo, ADescricao, AUnid: String;
       const AQuantidade, AVlrUnitario, AVlrDesconto, AVlrAcrescimo: Double;
@@ -6614,7 +6616,7 @@ end;
 
 procedure TACBrECF.DAV_Abrir(const AEmissao: TDateTime; const ADescrDocumento,
   ANumero, ASituacao, AVendedor, AObservacao, ACNPJCPF, ANomeCliente,
-  AEndereco: String; const AIndice: Integer);
+  AEndereco, ANumFabricacao, AMarca, AModelo, AAno, APlaca, ARenavam: String; const AIndice: Integer);
 var
   TextoRel: TStringList;
 begin
@@ -6652,6 +6654,37 @@ begin
     TextoRel.Add('CNPJ/CPF: ' + ACNPJCPF);
     TextoRel.Add('Nome: '     + ANomeCliente);
     TextoRel.Add('Endereço: ' + AEndereco);
+
+    if (ANumFabricacao <> EmptyStr) then
+    begin
+      TextoRel.Add('');
+      TextoRel.Add('OBJETO DE CONSERTO');
+      TextoRel.Add('</linha_simples>');
+      TextoRel.Add('Núm. Fabricação:');
+      TextoRel.Add(ANumFabricacao);
+    end;
+
+    if (AMarca <> EmptyStr) or
+      (AModelo <> EmptyStr) or
+      (AAno <> EmptyStr) or
+      (APlaca <> EmptyStr) or
+    (ARenavam <> EmptyStr) then
+    begin
+      TextoRel.Add('');
+      TextoRel.Add('VEÍCULO');
+      TextoRel.Add('</linha_simples>');
+      if AMarca <> EmptyStr then
+        TextoRel.Add('Marca: '+Copy(AMarca, 0, 38));
+      if AModelo <> EmptyStr then
+        TextoRel.Add('Modelo: '+Copy(AModelo, 0, 38));
+      if AAno <> EmptyStr then
+        TextoRel.Add('Ano: '+Copy(AAno, 0, 38));
+      if APlaca <> EmptyStr then
+        TextoRel.Add('Placa: '+Copy(APlaca, 0, 38));
+      if ARenavam <> EmptyStr then
+        TextoRel.Add('Renavam: '+Copy(ARenavam, 0, 38));
+    end;
+
 
     TextoRel.Add('');
     TextoRel.Add('</linha_simples>');
