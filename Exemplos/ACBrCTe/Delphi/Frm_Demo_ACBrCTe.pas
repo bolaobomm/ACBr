@@ -338,7 +338,7 @@ begin
     ACBrCTe1.DACTe.TipoDACTe := StrToTpImp(OK,IntToStr(rgTipoDaCTe.ItemIndex+1));
     ACBrCTe1.DACTe.Logo      := edtLogoMarca.Text;
     ACBrCTe1.DACTe.PathPDF   := edtPathLogs.Text;
-    ACBrCTe1.DACTe.TamanhoPapel := tpA4;
+    ACBrCTe1.DACTe.TamanhoPapel := tpA4_2vias;
    end;
 
   edtEmitCNPJ.Text       := Ini.ReadString( 'Emitente','CNPJ'       ,'');
