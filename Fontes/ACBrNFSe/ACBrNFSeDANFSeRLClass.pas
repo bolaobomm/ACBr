@@ -81,7 +81,9 @@ begin
                                  , OutrasInformacaoesImp
                                  , Atividade
                                  , T_Fone
-                                 // Augusto Fontana
+                                 , T_Endereco
+                                 , T_Complemento
+                                 , T_Email
                                  , PrintDialog);
     end;
   end
@@ -114,7 +116,9 @@ begin
                                    , OutrasInformacaoesImp
                                    , Atividade
                                    , T_Fone
-                                   // Augusto Fontana
+                                   , T_Endereco
+                                   , T_Complemento
+                                   , T_Email
                                    , PrintDialog);
 
  frlDANFSeRLRetrato.Free;
@@ -176,7 +180,10 @@ class procedure TfrlDANFSeRL.SavePDF(AFile: String; ANFSe: TNFSe; ALogo, AEmail,
                                , T_InscMunicipal
                                , OutrasInformacaoesImp
                                , Atividade
-                               , T_Fone);
+                               , T_Fone
+                               , T_Endereco
+                               , T_Complemento
+                               , T_Email);
     end;
   end
   else begin
@@ -210,7 +217,10 @@ class procedure TfrlDANFSeRL.SavePDF(AFile: String; ANFSe: TNFSe; ALogo, AEmail,
                              , T_InscMunicipal
                              , OutrasInformacaoesImp
                              , Atividade
-                             , T_Fone);
+                             , T_Fone
+                             , T_Endereco
+                             , T_Complemento
+                             , T_Email);
   end;
 
  frlDANFSeRLRetrato.Free;

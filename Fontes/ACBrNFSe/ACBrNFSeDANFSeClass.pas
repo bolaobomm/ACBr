@@ -74,7 +74,10 @@ type
     FInscMunicipal : String;
     FT_InscEstadual : String;
     FT_InscMunicipal : String;
-    FT_Fone          : String;            
+    FT_Fone          : String;
+    FT_Endereco      : String;
+    FT_Complemento   : String;
+    FT_Email         : String;
     FEMail_Prestador : String;
     FUF : String;
     FAtividade : String;
@@ -118,11 +121,16 @@ type
     property OutrasInformacaoesImp: String read FOutrasInformacaoesImp write FOutrasInformacaoesImp;
     property InscMunicipal: String read FInscMunicipal write FInscMunicipal;
     property EMail_Prestador: String read FEMail_Prestador write FEMail_Prestador;
+
     property T_InscEstadual: String read FT_InscEstadual write FT_InscEstadual;
     property T_InscMunicipal: String read FT_InscMunicipal write FT_InscMunicipal;
     property T_Fone: String read FT_Fone write FT_Fone;
-    property Atividade: String read FAtividade write FAtividade;
 
+    property T_Endereco: String read FT_Endereco write FT_Endereco;
+    property T_Complemento: String read FT_Complemento write FT_Complemento;
+    property T_Email: String read FT_Email write FT_Email;
+
+    property Atividade: String read FAtividade write FAtividade;
     property NFSeCancelada: Boolean read FNFSeCancelada write FNFSeCancelada;
     property ImprimeCanhoto: Boolean read FImprimeCanhoto write FImprimeCanhoto default False;
   end;
@@ -169,6 +177,9 @@ begin
  FT_InscMunicipal       := '';
  FAtividade             := '';
  FT_Fone                := '';
+ FT_Endereco            := '';
+ FT_Complemento         := '';
+ FT_Email               := '';
 
  FNFSeCancelada         := False;
 end;

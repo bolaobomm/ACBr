@@ -348,9 +348,39 @@ begin
                                      FNFSe.Servico.Valores.ValorCofins + FNFSe.Servico.Valores.ValorInss +
                                      FNFSe.Servico.Valores.ValorIr + FNFSe.Servico.Valores.ValorCsll );
  rllOutrasRetencoes.Caption     := DFeUtil.FormatFloat( FNFSe.Servico.Valores.OutrasRetencoes );//Astrogildo em 13/12/12
- rllValorIssRetido.Caption      := DFeUtil.FormatFloat( FNFSe.Servico.Valores.ValorIssRetido );//Astrogildo em 13/12/12
 
- rllValorLiquido.Caption := DFeUtil.FormatFloat( FNFSe.Servico.Valores.ValorLiquidoNfse );//Astrogildo em 13/12/12
+ If FNFSe.Servico.Valores.ValorIssRetido > 0 Then Begin
+
+   rllValorIssRetido.Caption := DFeUtil.FormatFloat(FNFSe.Servico.Valores.ValorIssRetido);
+
+   rllValorLiquido.Caption   := DFeUtil.FormatFloat(FNFSe.Servico.Valores.ValorLiquidoNfse -
+                                                    FNFSe.Servico.Valores.ValorIssRetido);
+ End Else Begin
+
+   Case FNFSe.Servico.Valores.IssRetido Of
+   stRetencao     : Begin
+
+                      rllValorIssRetido.Caption := DFeUtil.FormatFloat(FNFSe.Servico.Valores.ValorIss);
+
+                      rllValorLiquido.Caption   := DFeUtil.FormatFloat(FNFSe.Servico.Valores.ValorLiquidoNfse -
+                                                                       FNFSe.Servico.Valores.ValorIss);
+                    End;
+
+   stNormal       : Begin
+
+                      rllValorIssRetido.Caption := DFeUtil.FormatFloat(0);
+
+                      rllValorLiquido.Caption   := DFeUtil.FormatFloat(FNFSe.Servico.Valores.ValorLiquidoNfse);
+                    End;
+
+   stSubstituicao : Begin
+
+                      rllValorIssRetido.Caption := DFeUtil.FormatFloat(0);
+
+                      rllValorLiquido.Caption   := DFeUtil.FormatFloat(FNFSe.Servico.Valores.ValorLiquidoNfse);
+                    End;
+   end;
+ End;
 
  // TnfseNaturezaOperacao = ( noTributacaoNoMunicipio, noTributacaoForaMunicipio, noIsencao, noImune, noSuspensaDecisaoJudicial, noSuspensaProcedimentoAdministrativo )
  case FNFSe.NaturezaOperacao of
@@ -399,8 +429,11 @@ begin
   stNormal       : rllISSReter.Caption := 'Não';//Astrogildo em 13/12/12
   stSubstituicao : rllISSReter.Caption := 'ST';//Astrogildo em 13/12/12
  end;
- rllValorISS.Caption := DFeUtil.FormatFloat( FNFSe.Servico.Valores.ValorIss );
 
+ case FNFSe.OptanteSimplesNacional of
+ snSim : rllValorISS.Caption := DFeUtil.FormatFloat(0);
+ snNao : rllValorISS.Caption := DFeUtil.FormatFloat(FNFSe.Servico.Valores.ValorIss);
+ end;
 // rllValorCredito.Caption := NotaUtil.FormatFloat( FNFSe.ValorCredito );
 
 end;
@@ -495,10 +528,8 @@ begin
    rllPrestEmail.Caption := FNFSe.PrestadorServico.Contato.Email
  Else rllPrestEmail.Caption := FEMail_Prestador;
 
- // Comprovante de Entrega - Márcio Lopes em 27/11/2013
- rllPrestNomeEnt.Caption := FNFSe.PrestadorServico.RazaoSocial;
- rllNumNF0Ent.Caption  := FormatFloat('00000000000', StrToFloat(FNFSe.Numero));
-
+ rllPrestNomeEnt.Caption := FRazaoSocial;
+ rllNumNF0Ent.Caption    := FormatFloat('00000000000', StrToFloat(FNFSe.Numero));
 end;
 
 procedure TfrlDANFSeRLRetrato.rlbTomadorBeforePrint(Sender: TObject;
@@ -515,20 +546,33 @@ begin
  Else rllTomaInscMunicipal.Caption := FT_InscMunicipal;
 
  rllTomaNome.Caption := FNFSe.Tomador.RazaoSocial;
- rllTomaEndereco.Caption := Trim( FNFSe.Tomador.Endereco.Endereco )+', '+
-                            Trim( FNFSe.Tomador.Endereco.Numero )+' - '+
-                            Trim( FNFSe.Tomador.Endereco.Bairro )+
-                            ' - CEP: '+
-                            DFeUtil.FormatarCEP( DFeUtil.Poem_Zeros( FNFSe.Tomador.Endereco.CEP, 8 ) );//Astrogildo em 13/12/12
- rllTomaComplemento.Caption := FNFSe.Tomador.Endereco.Complemento;
+
+ If FNFSe.Tomador.Endereco.Endereco <> '' Then Begin
+
+   rllTomaEndereco.Caption := Trim(FNFSe.Tomador.Endereco.Endereco) + ', '  +
+                              Trim(FNFSe.Tomador.Endereco.Numero )  + ' - ' +
+                              Trim(FNFSe.Tomador.Endereco.Bairro )  + ' - CEP: ' +
+                              DFeUtil.FormatarCEP(DFeUtil.Poem_Zeros(FNFSe.Tomador.Endereco.CEP, 8 ));
+ End Else Begin
+
+   rllTomaEndereco.Caption := Trim(FT_Endereco) + ' - CEP: ' +
+                              DFeUtil.FormatarCEP(DFeUtil.Poem_Zeros(FNFSe.Tomador.Endereco.CEP, 8 ));
+ End;
+
+ If FNFSe.Tomador.Endereco.Complemento <> '' Then
+   rllTomaComplemento.Caption := FNFSe.Tomador.Endereco.Complemento
+ Else rllTomaComplemento.Caption := FT_Complemento;
 
  If FNFSe.Tomador.Contato.Telefone <> '' Then
    rllTomaTelefone.Caption := DFeUtil.FormatarFone(FNFSe.Tomador.Contato.Telefone)
  Else rllTomaTelefone.Caption := DFeUtil.FormatarFone(FT_Fone);
 
  rllTomaMunicipio.Caption := FNFSe.Tomador.Endereco.CodigoMunicipio + ' - ' + FNFSe.Tomador.Endereco.xMunicipio;
- rllTomaUF.Caption := FNFSe.Tomador.Endereco.UF;
- rllTomaEmail.Caption := FNFSe.Tomador.Contato.Email;
+ rllTomaUF.Caption        := FNFSe.Tomador.Endereco.UF;
+
+ If FNFSe.Tomador.Contato.Email <> '' Then
+   rllTomaEmail.Caption := FNFSe.Tomador.Contato.Email
+ Else rllTomaEmail.Caption := FT_Email;
 
  // Mensagem para modo Homologacao.
  rllMsgTeste.Visible := False;

@@ -103,7 +103,9 @@ type
     FEMail_Prestador : String;
     FAtividade       : String;
     FT_Fone          : String;
-
+    FT_Endereco      : String;
+    FT_Complemento   : String;
+    FT_Email         : String;
 
 	cdsItens:  {$IFDEF BORLAND} TClientDataSet {$ELSE} TBufDataset{$ENDIF};
 	procedure ConfigDataSet;
@@ -134,13 +136,16 @@ type
                              AFone           : String  = '';
                              AMunicipio      : String  = '';
                              AInscMunicipal  : String  = '';
-                             AEMail_Prestador : String  = '';
-                             AUF              : String  = '';
-                             AT_InscEstadual : String = '';
-                             AT_InscMunicipal : String = '';
+                             AEMail_Prestador       : String = '';
+                             AUF                    : String = '';
+                             AT_InscEstadual        : String = '';
+                             AT_InscMunicipal       : String = '';
                              AOutrasInformacaoesImp : String = '';
-                             AAtividade        : String = '';
-                             AT_Fone           : String = '';
+                             AAtividade             : String = '';
+                             AT_Fone                : String = '';
+                             AT_Endereco            : String = '';
+                             AT_Complemento         : String = '';
+                             AT_Email               : String = '';
 
                              // Augusto Fontana
                              APrintDialog    : Boolean = True);
@@ -171,8 +176,11 @@ type
                             AT_InscEstadual : String = '';
                             AT_InscMunicipal : String = '';
                             AOutrasInformacaoesImp : String = '';
-                            AAtividade : String = '';
-                            AT_Fone    : String = '');
+                            AAtividade             : String = '';
+                            AT_Fone                : String = '';
+                            AT_Endereco            : String = '';
+                            AT_Complemento         : String = '';
+                            AT_Email               : String = '');
   end;
 
 var
@@ -271,7 +279,8 @@ class procedure TfrlDANFSeRL.Imprimir(ANFSe: TNFSe; ALogo, AEmail, AFax: String;
   AMargemSuperior, AMargemInferior, AMargemEsquerda, AMargemDireita: Double;
   AImpressora, APrestLogo, APrefeitura, ARazaoSocial, AEndereco,
   AComplemento, AFone, AMunicipio, AInscMunicipal, AEMail_Prestador, AUF,
-  AT_InscEstadual, AT_InscMunicipal, AOutrasInformacaoesImp, AAtividade, AT_Fone : String; APrintDialog: Boolean);
+  AT_InscEstadual, AT_InscMunicipal, AOutrasInformacaoesImp, AAtividade, AT_Fone,
+  AT_Endereco, AT_Complemento, AT_Email : String; APrintDialog: Boolean);
 begin
  with Create ( nil ) do
   try
@@ -302,7 +311,10 @@ begin
    FT_InscEstadual        := AT_InscEstadual;
    FT_InscMunicipal       := AT_InscMunicipal;
    FAtividade             := AAtividade;
-   FT_Fone                := AT_Fone;
+   FT_Fone                := AT_Fone; 
+   FT_Endereco            := AT_Endereco;
+   FT_Complemento         := AT_Complemento;
+   FT_Email               := AT_Email;
 
    if FImpressora > '' then
      RLPrinter.PrinterName := FImpressora;
@@ -329,7 +341,8 @@ class procedure TfrlDANFSeRL.SavePDF(AFile: String; ANFSe: TNFSe; ALogo, AEmail,
   AMargemSuperior, AMargemInferior, AMargemEsquerda, AMargemDireita: Double;
   APrestLogo, APrefeitura, ARazaoSocial, AEndereco, AComplemento, AFone, AMunicipio,
   AInscMunicipal, AEMail_Prestador, AUF, AT_InscEstadual, AT_InscMunicipal,
-  AOutrasInformacaoesImp, AAtividade, AT_Fone : String);
+  AOutrasInformacaoesImp, AAtividade, AT_Fone,
+  AT_Endereco, AT_Complemento, AT_Email : String);
 begin
   with Create ( nil ) do
    try
@@ -360,6 +373,10 @@ begin
     FT_InscMunicipal       := AT_InscMunicipal;
     FAtividade             := AAtividade;
     FT_Fone                := AT_Fone;
+
+    FT_Endereco            := AT_Endereco;
+    FT_Complemento         := AT_Complemento;
+    FT_Email               := AT_Email;
 
     with RLPDFFilter1.DocumentInfo do
       begin
