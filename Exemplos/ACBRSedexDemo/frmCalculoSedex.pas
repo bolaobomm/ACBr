@@ -5,82 +5,88 @@ interface
 uses
   Windows, Messages, SysUtils, Variants, Classes, Graphics,
   Controls, Forms, Dialogs, StdCtrls, Mask, ACBrBase, ACBrSocket, ACBrSedex,
-  TypInfo, ExtCtrls;
+  TypInfo, ExtCtrls, DB, DBClient, Grids, DBGrids, ComCtrls, TabNotBk,
+  DBCtrls;
 
 type
   TForm1 = class(TForm)
+    ACBrSedex1: TACBrSedex;
+    TabbedNotebook1: TTabbedNotebook;
     Panel1: TPanel;
-    EditCEPOrigem: TEdit;
-    EditCEPDestino: TEdit;
     Label1: TLabel;
     Label2: TLabel;
-    EditPeso: TEdit;
     Label3: TLabel;
     Label4: TLabel;
-    EditComprimento: TEdit;
     Label5: TLabel;
-    EditLargura: TEdit;
     Label6: TLabel;
-    EditAltura: TEdit;
     Label7: TLabel;
     Label8: TLabel;
-    EditDiametro: TEdit;
     Label11: TLabel;
     Label12: TLabel;
+    Label14: TLabel;
+    Image1: TImage;
+    Label19: TLabel;
+    Label20: TLabel;
+    Label21: TLabel;
+    EditCEPOrigem: TEdit;
+    EditCEPDestino: TEdit;
+    EditPeso: TEdit;
+    EditComprimento: TEdit;
+    EditLargura: TEdit;
+    EditAltura: TEdit;
+    EditDiametro: TEdit;
     cbFormato: TComboBox;
     cbMaoPropria: TComboBox;
-    Label14: TLabel;
     cbAvisoReceb: TComboBox;
+    btnConsultar: TButton;
+    cbServico: TComboBox;
+    EditValorDeclarado: TEdit;
+    EdtContrato: TEdit;
+    EdtSenha: TEdit;
     Panel2: TPanel;
-    retValorFrete: TEdit;
-    retValorMaoPropria: TEdit;
-    retPrzEntrega: TEdit;
     Label9: TLabel;
     Label10: TLabel;
     Label13: TLabel;
     Label15: TLabel;
-    btnConsultar: TButton;
-    retEntregaSabado: TEdit;
-    retEntregaDomiciliar: TEdit;
     Label16: TLabel;
     Label17: TLabel;
-    retValorAvisoReceb: TEdit;
     lblValorAvisoReceb: TLabel;
-    retValorDeclarado: TEdit;
     Label18: TLabel;
-    Image1: TImage;
-    cbServico: TComboBox;
-    Label19: TLabel;
+    retValorFrete: TEdit;
+    retValorMaoPropria: TEdit;
+    retPrzEntrega: TEdit;
+    retEntregaSabado: TEdit;
+    retEntregaDomiciliar: TEdit;
+    retValorAvisoReceb: TEdit;
+    retValorDeclarado: TEdit;
     retCodigoServico: TEdit;
-    EditValorDeclarado: TEdit;
-    ACBrSedex1: TACBrSedex;
-    EdtContrato: TEdit;
-    EdtSenha: TEdit;
-    Label20: TLabel;
-    Label21: TLabel;
+    DBGrid1: TDBGrid;
+    DataSource1: TDataSource;
+    ClientDataSet1: TClientDataSet;
+    ClientDataSet1Data: TDateTimeField;
+    ClientDataSet1Local: TStringField;
+    ClientDataSet1Observacao: TStringField;
+    EdtRastreio: TEdit;
+    Button1: TButton;
+    ClientDataSet1Situacao: TStringField;
+    Panel3: TPanel;
+    DBMemo2: TDBMemo;
+    DBMemo1: TDBMemo;
+    Label22: TLabel;
+    Label23: TLabel;
     procedure btnConsultarClick(Sender: TObject);
+    procedure Button1Click(Sender: TObject);
+    procedure FormShow(Sender: TObject);
   private
   public
   end;
 
-function IfThen(AValue: Boolean; const ATrue: string; AFalse: string = ''): string; overload;
-
 var
   Form1: TForm1;
-  nValorFrete: Currency;
-  tempDir: String;
 
 implementation
 
 {$R *.dfm}
-
-function IfThen(AValue: Boolean; const ATrue: string; AFalse: string = ''): string;
-begin
-  if AValue then
-    Result := ATrue
-  else
-    Result := AFalse;
-end;
 
 procedure TForm1.btnConsultarClick(Sender: TObject);
 begin
@@ -113,6 +119,36 @@ ACBrSedex1.ValorDeclarado := StrToFloatDef(EditValorDeclarado.Text,0);
  retEntregaSabado.Text := ACBrSedex1.retEntregaSabado;
  retPrzEntrega.Text := IntToStr(ACBrSedex1.retPrazoEntrega);
  End;
+end;
+
+procedure TForm1.Button1Click(Sender: TObject);
+Var
+ I:Integer;
+begin
+ACBrSedex1.Rastrear(EdtRastreio.Text);
+
+Try
+ClientDataSet1.CreateDataSet;
+except
+End;
+
+
+For i := 0 to ACBrSedex1.Rastreio.Count -1 Do
+ Begin
+ ClientDataSet1.Append;
+
+ ClientDataSet1Data.Value := ACBrSedex1.Rastreio[i].DataHora;
+ ClientDataSet1Local.Value := ACBrSedex1.Rastreio[i].Local;
+ ClientDataSet1Situacao.Value := ACBrSedex1.Rastreio[i].Situacao ;
+ ClientDataSet1Observacao.Value := ACBrSedex1.Rastreio[i].Observacao;
+
+ ClientDataSet1.Post;
+ End;
+end;
+
+procedure TForm1.FormShow(Sender: TObject);
+begin
+TabbedNotebook1.PageIndex := 0;
 end;
 
 end.

@@ -61,6 +61,30 @@ type
 
  EACBrSedexException = class(Exception);
 
+  TACBrRastreio = class
+  private
+    fDataHora: TDateTime;
+    fLocal: string;
+    fSituacao: string;
+    fObservacao:String;
+
+  public
+    property DataHora: TDateTime read fDataHora write fDataHora;
+    property Local: string read fLocal write fLocal;
+    property Situacao: string read fSituacao write fSituacao;
+    property Observacao: string read fObservacao write fObservacao;
+  end;
+
+  TACBrRastreioClass = class(TObjectList)
+  protected
+    procedure SetObject(Index: integer; Item: TACBrRastreio);
+    function GetObject(Index: integer): TACBrRastreio;
+  public
+    function Add(Obj: TACBrRastreio): integer;
+    function New: TACBrRastreio;
+    property Objects[Index: integer]: TACBrRastreio read GetObject write SetObject; default;
+  end;
+
   TACBrSedex = class(TACBrHTTP)
 
   private
@@ -92,6 +116,8 @@ type
    fErro: Integer;
    fMsgErro: String;
 
+   fRastreio : TACBrRastreioClass;
+
    procedure SetTpServico(const AValue: TACBrTpServico);
    procedure SetTpFormato(const AValue: TACBrTpFormato);
    procedure SetMaoPropria(const AValue: TACBrMaoPropria);
@@ -101,6 +127,7 @@ type
    constructor Create(AOwner: TComponent); override;
    destructor Destroy; override;
    function Consultar: Boolean;
+   Procedure Rastrear(Const CodRastreio:String);
    property retCodigoServico: string read fCodigoServico write fCodigoServico;
    property retValor: Double read fValor write fValor;
    property retPrazoEntrega: Integer read fPrazoEntrega write fPrazoEntrega;
@@ -112,6 +139,7 @@ type
    property retEntregaSabado: String read fEntregaSabado write fEntregaSabado;
    property retErro: Integer read fErro write fErro;
    property retMsgErro: String read fMsgErro write fMsgErro;
+   property Rastreio: TACBrRastreioClass read fRastreio write fRastreio;
 
   published
    property CodContrato: string read fsCodContrato write fsCodContrato;
@@ -137,6 +165,8 @@ implementation
 constructor TACBrSedex.Create(AOwner: TComponent);
 begin
   inherited;
+  fRastreio := TACBrRastreioClass.Create;
+  fRastreio.Clear;
   fsCodContrato := '';
   fsDsSenha := '';
   fsCepOrigem := '';
@@ -165,8 +195,31 @@ begin
   fMsgErro := '';
 end;
 
+procedure TACBrRastreioClass.SetObject(Index: integer; Item: TACBrRastreio);
+begin
+  inherited SetItem(Index, Item);
+end;
+
+function TACBrRastreioClass.GetObject(Index: integer): TACBrRastreio;
+begin
+  Result := inherited GetItem(Index) as TACBrRastreio;
+end;
+
+function TACBrRastreioClass.New: TACBrRastreio;
+begin
+  Result := TACBrRastreio.Create;
+  Add(Result);
+end;
+
+function TACBrRastreioClass.Add(Obj: TACBrRastreio): integer;
+begin
+  Result := inherited Add(Obj);
+end;
+
+
 destructor TACBrSedex.Destroy;
 begin
+ fRastreio.Free;
   inherited Destroy;
 end;
 
@@ -359,4 +412,70 @@ end;
 //011 CEP inicial e final pertencentes a Área de Risco
 //7 Serviço indisponível, tente mais tarde
 //99 Outros erros diversos do .Net
+Procedure TACBrSedex.Rastrear(const CodRastreio: String);
+Var
+ sl1: TStringList;
+ i,cont:Integer;
+ vobs:String;
+
+  function CopyDeAte(Texto, TextIni, TextFim: string): string;
+  var
+    ContIni, ContFim: integer;
+  begin
+    Result := '';
+    if (Pos(TextFim, Texto) <> 0) and (Pos(TextIni, Texto) <> 0) then
+    begin
+      ContIni := Pos(TextIni, Texto) + Length(TextIni);
+      ContFim := Pos(TextFim, Texto);
+      Result := Copy(Texto, ContIni, ContFim - ContIni);
+    end;
+  end;
+begin
+ If Length(CodRastreio) <> 13 Then
+  raise EACBrSedexException.Create('Código de rastreamento deve conter 13 caracteres');
+
+ try
+  Self.HTTPGet('http://websro.correios.com.br/sro_bin/txect01$.QueryList?P_LINGUA=001&P_TIPO=001&P_COD_UNI='+CodRastreio);
+ except
+  on E: Exception do
+   begin
+    raise EACBrSedexException.Create('Erro ao Rastrear' + #13#10 + E.Message);
+   end;
+ end;
+
+ if Pos('O nosso sistema não possui dados sobre o objeto',Self.RespHTTP.Text) > 0 Then
+ raise EACBrSedexException.Create('O nosso sistema não possui dados sobre o objeto' + #13#10 +
+ 'informado. Se o objeto foi postado recentemente, é natural que seus rastros não tenham ingressado no sistema,' + #13#10 +
+ 'nesse caso, por favor, tente novamente mais tarde. Adicionalmente,' + #13#10 +
+ 'verifique se o código digitado está correto: '+CodRastreio);
+
+ Try
+ sl1 := TStringList.Create;
+ sl1.Text := Self.RespHTTP.Text;
+ cont := sl1.Count -1;
+
+  For i := cont DownTo 0 Do
+  Begin
+   If Pos('colspan',sl1[i]) > 0 Then
+    Begin
+    vObs := CopyDeAte(sl1[i],'colspan=2>','</td></tr>');
+    end
+   Else
+   If Pos('rowspan',sl1[i]) > 0 Then
+    Begin
+    with Rastreio.New do
+     begin
+     DataHora := StrToDateTime(Copy(sl1[i],19,16)+':00');
+     Local := CopyDeAte(sl1[i],'</td><td>','</td><td><FONT');
+     Situacao := CopyDeAte(sl1[i],'">','</font>');
+     Observacao := vObs;
+     End;
+     vObs := '';
+    end;
+  End;
+ Finally
+  sl1.Free;
+ End;
+End;
+
 end.
