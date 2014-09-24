@@ -4133,7 +4133,7 @@ object frmAcbrNfeMonitor: TfrmAcbrNfeMonitor
       Top = 1
       Width = 569
       Height = 261
-      ActivePage = WebService
+      ActivePage = Monitor
       Align = alClient
       Style = tsFlatButtons
       TabOrder = 0
@@ -4474,6 +4474,8 @@ object frmAcbrNfeMonitor: TfrmAcbrNfeMonitor
           Width = 97
           Height = 17
           Caption = 'Monitorar Pasta'
+          Checked = True
+          State = cbChecked
           TabOrder = 3
           OnClick = cbMonitorarPastaClick
         end
@@ -4893,14 +4895,14 @@ object frmAcbrNfeMonitor: TfrmAcbrNfeMonitor
             object Label49: TLabel
               Left = 0
               Top = 0
-              Width = 40
+              Width = 31
               Height = 13
               Caption = 'Token'
             end
             object Label50: TLabel
               Left = 0
               Top = 40
-              Width = 31
+              Width = 40
               Height = 13
               Caption = 'IdToken'
             end
@@ -5068,7 +5070,7 @@ object frmAcbrNfeMonitor: TfrmAcbrNfeMonitor
           Top = 0
           Width = 561
           Height = 230
-          ActivePage = tsDanfe
+          ActivePage = TabSheet1
           Align = alClient
           Style = tsFlatButtons
           TabOrder = 0

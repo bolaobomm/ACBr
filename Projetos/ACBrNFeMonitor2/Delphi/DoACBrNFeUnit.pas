@@ -1390,7 +1390,7 @@ begin
          end
 
 
-        else if Cmd.Metodo = 'certificadodatavencimento' then
+        else if ((Cmd.Metodo = 'certificadodatavencimento') or (Cmd.Metodo = 'datavencimentocertificado')) then
          begin
            {$IFDEF ACBrNFeOpenSSL}
               Cmd.Resposta := 'Função disponível apenas na versão CAPICOM'
