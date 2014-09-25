@@ -106,7 +106,7 @@ type
           procedure ConfiguraReqResp( ReqResp : TACBrHTTPReqResp);
        {$ENDIF}
     {$ENDIF}
-     function EnviarDadosWebService(URL, SoapAction, Dados : String) : String;
+     function EnviarDadosWebService(URL, SoapAction, Dados : AnsiString) : String;
   protected
     FCabMsg: WideString;
     FDadosMsg: AnsiString;
@@ -735,7 +735,7 @@ end;
 {$ENDIF}
 {$ENDIF}
 
-function TWebServicesBase.EnviarDadosWebService(URL, SoapAction, Dados : String) : String;
+function TWebServicesBase.EnviarDadosWebService(URL, SoapAction, Dados : AnsiString) : String;
 var
  RetornoWS : String;
   {$IFDEF ACBrNFeOpenSSL}
