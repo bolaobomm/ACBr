@@ -380,7 +380,7 @@ begin
     exit;
   end;
 
-  schema_doc := xmlReadFile(Pansichar(ACBrStr(schema_filename)), nil, XML_DETECT_IDS);
+  schema_doc := xmlReadFile(Pansichar(AnsiString(ACBrStr(schema_filename))), nil, XML_DETECT_IDS);
 
   //  the schema cannot be loaded or is not well-formed
   if (schema_doc = nil) then
@@ -589,7 +589,7 @@ begin
     exit;
   end;
 
-  schema_doc := xmlReadFile(Pansichar(ACBrStr(schema_filename)), nil, XML_DETECT_IDS);
+  schema_doc := xmlReadFile(Pansichar(AnsiString(ACBrStr(schema_filename))), nil, XML_DETECT_IDS);
 
   //  the schema cannot be loaded or is not well-formed
   if (schema_doc = nil) then
