@@ -64,7 +64,7 @@ uses {$IFNDEF ACBrNFeOpenSSL}ACBrCAPICOM_TLB, ACBrMSXML2_TLB, JwaWinCrypt, {$END
   {$IFDEF MSWINDOWS}
      ActiveX,
   {$ENDIF}
-  ACBrNFeConfiguracoes, pcnConversao, pcnNFe, ACBrDFeUtil;
+  ACBrNFeConfiguracoes, pcnConversao, pcnNFe, ACBrDFeUtil, ACBrEAD;
 
 
 {$IFDEF ACBrNFeOpenSSL}
@@ -79,8 +79,9 @@ const
 const
   DSIGNS = 'xmlns:ds="http://www.w3.org/2000/09/xmldsig#"';
 {$ENDIF}
-{$IFNDEF ACBrNFeOpenSSL}
 var
+  fsHashQRCode : TACBrEAD;
+{$IFNDEF ACBrNFeOpenSSL}
   CertStore     : IStore3;
   CertStoreMem  : IStore3;
   PrivateKey    : IPrivateKey;
@@ -160,7 +161,7 @@ type
 implementation
 
 uses {$IFDEF ACBrNFeOpenSSL}libxml2, libxmlsec, libxslt, {$ELSE} ComObj, {$ENDIF} Sysutils,
-  Variants, ACBrUtil, ACBrConsts, ACBrNFe, pcnAuxiliar, ACBrEAD;
+  Variants, ACBrUtil, ACBrConsts, ACBrNFe, pcnAuxiliar;
 
 { NotaUtil }
 
@@ -183,7 +184,7 @@ begin
 
     try
        { load template }
-       doc := xmlParseDoc(Axml);
+       doc := xmlParseDoc(PAnsiChar(UTF8Encode(Axml)));
        if ((doc = nil) or (xmlDocGetRootElement(doc) = nil)) then
          raise Exception.Create('Error: unable to parse');
 
@@ -245,7 +246,7 @@ begin
     if (Axml = nil) or (key_file = nil) then Exit;
     try
        { load template }
-       doc := xmlParseDoc(Axml);
+       doc := xmlParseDoc(PAnsiChar(UTF8Encode(Axml)));
        if ((doc = nil) or (xmlDocGetRootElement(doc) = nil)) then
          raise Exception.Create('Error: unable to parse');
 
@@ -1079,7 +1080,7 @@ begin
         LayNfeConsulta       : Result := DFeUtil.SeSenao(AAmbiente=1, 'https://nfe.fazenda.sp.gov.br/ws/nfeconsulta2.asmx',         'https://homologacao.nfe.fazenda.sp.gov.br/ws/nfeconsulta2.asmx');
         LayNfeStatusServico  : Result := DFeUtil.SeSenao(AAmbiente=1, 'https://nfe.fazenda.sp.gov.br/ws/nfestatusservico2.asmx',    'https://homologacao.nfe.fazenda.sp.gov.br/ws/nfestatusservico2.asmx');
         LayNfeCadastro       : Result := DFeUtil.SeSenao(AAmbiente=1, 'https://nfe.fazenda.sp.gov.br/ws/cadconsultacadastro2.asmx', 'https://homologacao.nfe.fazenda.sp.gov.br/ws/cadconsultacadastro2.asmx');
-        LayNFeCCe,
+        LayNFeCCe,                                                                                                                   
         LayNFeEvento         : Result := DFeUtil.SeSenao(AAmbiente=1, 'https://nfe.fazenda.sp.gov.br/ws/recepcaoevento.asmx',       'https://homologacao.nfe.fazenda.sp.gov.br/ws/recepcaoevento.asmx');
         LayNfeAutorizacao    : Result := DFeUtil.SeSenao(AAmbiente=1, 'https://nfe.fazenda.sp.gov.br/ws/nfeautorizacao.asmx',       'https://homologacao.nfe.fazenda.sp.gov.br/ws/nfeautorizacao.asmx');
         LayNfeRetAutorizacao : Result := DFeUtil.SeSenao(AAmbiente=1, 'https://nfe.fazenda.sp.gov.br/ws/nferetautorizacao.asmx',    'https://homologacao.nfe.fazenda.sp.gov.br/ws/nferetautorizacao.asmx');
@@ -1100,6 +1101,7 @@ begin
       LayAdministrarCSCNFCe: Result := DFeUtil.SeSenao(AAmbiente=1, '', '');
     end;
    end;
+
 end;
 
 {$IFDEF ACBrNFeOpenSSL}
@@ -1192,7 +1194,7 @@ begin
  //schema      := nil;
  //valid_ctxt  := nil;
 
- doc := xmlParseDoc(PAnsiChar(Axml));
+ doc := xmlParseDoc(PAnsiChar(UTF8Encode(Axml)));
  if ((doc = nil) or (xmlDocGetRootElement(doc) = nil)) then
   begin
     AMsg := 'Erro: unable to parse';
@@ -2037,7 +2039,6 @@ var
  sdhEmi_HEX, sdigVal_HEX, sNF, sICMS,
  cIdToken, cTokenHom, cTokenPro, sToken,
  sEntrada, cHashQRCode, urlUF: String;
- HashQRCode : TACBrEAD;
 begin
   case AUF of
    12: urlUF := DFeUtil.SeSenao(AAmbiente = taProducao, 'http://www.sefaznet.ac.gov.br/nfe', 'http://hml.sefaznet.ac.gov.br/nfce'); // AC
@@ -2093,11 +2094,13 @@ begin
   // essa propriedade uma String vazia
   if (AAmbiente = taHomologacao) then
    begin
-    if (AToken = '')
-      then cTokenHom := Copy(AchNFe, 7, 8) + '20' + Copy(AchNFe, 3, 2) + Copy(cIdToken, 3, 4)
-      else cTokenHom := AToken;
+     if (AToken = '') then
+        cTokenHom := Copy(AchNFe, 7, 8) + '20' + Copy(AchNFe, 3, 2) + Copy(cIdToken, 3, 4)
+     else
+        cTokenHom := AToken;
    end
-   else cTokenPro := AToken;
+  else
+     cTokenPro := AToken;
 
   sToken    := DFeUtil.SeSenao(AAmbiente = taProducao, cIdToken + cTokenPro, cIdToken + cTokenHom);
 
@@ -2110,15 +2113,22 @@ begin
                '&digVal=' + sdigVal_HEX + '&cIdToken=';
 
   // Passo 5 calcular o SHA-1 da string sEntrada
-  HashQRCode := TACBrEAD.Create(nil);
+  if fsHashQRCode = nil then
+    fsHashQRCode := TACBrEAD.Create(nil);
   try
-    cHashQRCode := HashQRCode.CalcularHash(sEntrada + sToken, dgstSHA1);
-  finally
-    HashQRCode.Free;
+    cHashQRCode := fsHashQRCode.CalcularHash(sEntrada + sToken, dgstSHA1);
+  except
+    raise Exception.Create('Erro ao calcular Hash do QR-Code');
   end;
 
   // Passo 6
   Result := urlUF + '?' + sEntrada + cIdToken+ '&cHashQRCode=' + cHashQRCode;
 end;
+
+initialization
+
+finalization
+  if fsHashQRCode <> nil then
+     fsHashQRCode.Free;
 
 end.
