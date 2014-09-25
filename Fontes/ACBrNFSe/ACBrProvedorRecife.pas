@@ -116,6 +116,7 @@ begin
  ConfigSchema.VersaoCabecalho := '1.00';
  ConfigSchema.VersaoDados     := '1.00';
  ConfigSchema.VersaoXML       := '1';
+ (*
  ConfigSchema.NameSpaceXML    := 'http://www.abrasf.org.br/ABRASF/arquivos/';
  ConfigSchema.Cabecalho       := 'nfse.xsd';
  ConfigSchema.ServicoEnviar   := 'nfse.xsd';
@@ -124,6 +125,15 @@ begin
  ConfigSchema.ServicoConRps   := 'nfse.xsd';
  ConfigSchema.ServicoConNfse  := 'nfse.xsd';
  ConfigSchema.ServicoCancelar := 'nfse.xsd';
+ *)
+ ConfigSchema.NameSpaceXML    := 'http://www.abrasf.org.br/ABRASF/arquivos/nfse.xsd';
+ ConfigSchema.Cabecalho       := 'tipos_nfse_v01.xsd';
+ ConfigSchema.ServicoEnviar   := 'tipos_nfse_v01.xsd';
+ ConfigSchema.ServicoConSit   := 'tipos_nfse_v01.xsd';
+ ConfigSchema.ServicoConLot   := 'tipos_nfse_v01.xsd';
+ ConfigSchema.ServicoConRps   := 'tipos_nfse_v01.xsd';
+ ConfigSchema.ServicoConNfse  := 'tipos_nfse_v01.xsd';
+ ConfigSchema.ServicoCancelar := 'tipos_nfse_v01.xsd';
  ConfigSchema.DefTipos        := '';
  ConfigSchema.ServicoGerar    := 'http://nfse.recife.pe.gov.br/WSNacional/XSD/1/nfse_recife_v01.xsd';
 
