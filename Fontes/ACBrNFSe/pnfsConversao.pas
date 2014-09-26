@@ -970,8 +970,8 @@ begin
   4202404, // Blumenau/SC
   4309308, // Guaiba/RS
   4314407, // Pelotas/RS
-  5220454, // Senador Canedo/GO
-  5213103  // Mineiros/GO
+  5220454 // Senador Canedo/GO
+  //5213103  // Mineiros/GO
          : Provedor := 'GINFES';
 
     25300, // Goiânia/GO
