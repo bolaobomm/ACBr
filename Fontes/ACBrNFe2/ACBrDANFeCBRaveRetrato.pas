@@ -1310,11 +1310,11 @@ var wtemp: double;
 begin
   //tamanho padrao das colunas
   ColsWidth[1]:=15;
-  ColsWidth[2]:=52;
+  ColsWidth[2]:=49;
   ColsWidth[3]:=13;
   ColsWidth[4]:=7;
   ColsWidth[5]:=7;
-  ColsWidth[6]:=7;
+  ColsWidth[6]:=9;
   ColsWidth[7]:=12;
   ColsWidth[8]:=13;
   ColsWidth[9]:=15;
