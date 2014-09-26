@@ -1,3 +1,5 @@
+{$I ACBr.inc}
+
 program ACBrNFeMonitor;
 
 uses

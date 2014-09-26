@@ -4,7 +4,7 @@ object frmAcbrNfeMonitor: TfrmAcbrNfeMonitor
   Width = 587
   Height = 583
   ActiveControl = btMinimizar
-  Caption = 'ACBrNFeMonitor2'
+  Caption = 'ACBrNFeMonitor'
   Color = clBtnFace
   Constraints.MinHeight = 485
   Constraints.MinWidth = 545
@@ -77,7 +77,7 @@ object frmAcbrNfeMonitor: TfrmAcbrNfeMonitor
         Align = alClient
         Lines.Strings = (
           '')
-        TabOrder = 2
+        TabOrder = 1
         WordWrap = False
       end
     end
@@ -120,7 +120,7 @@ object frmAcbrNfeMonitor: TfrmAcbrNfeMonitor
     Width = 571
     Height = 40
     Align = alBottom
-    TabOrder = 1
+    TabOrder = 2
     DesignSize = (
       571
       40)
@@ -4126,14 +4126,14 @@ object frmAcbrNfeMonitor: TfrmAcbrNfeMonitor
     Width = 571
     Height = 263
     Align = alBottom
-    TabOrder = 3
+    TabOrder = 1
     Visible = False
     object PageControl1: TPageControl
       Left = 1
       Top = 1
       Width = 569
       Height = 261
-      ActivePage = Monitor
+      ActivePage = DANFE
       Align = alClient
       Style = tsFlatButtons
       TabOrder = 0
@@ -4144,7 +4144,7 @@ object frmAcbrNfeMonitor: TfrmAcbrNfeMonitor
           Top = 8
           Width = 188
           Height = 68
-          TabOrder = 1
+          TabOrder = 3
           object Label12: TLabel
             Left = 8
             Top = 21
@@ -4238,7 +4238,7 @@ object frmAcbrNfeMonitor: TfrmAcbrNfeMonitor
           Top = 101
           Width = 188
           Height = 46
-          TabOrder = 6
+          TabOrder = 8
           object Label17: TLabel
             Left = 8
             Top = 24
@@ -4260,7 +4260,7 @@ object frmAcbrNfeMonitor: TfrmAcbrNfeMonitor
           Top = 79
           Width = 338
           Height = 68
-          TabOrder = 8
+          TabOrder = 6
           object Label18: TLabel
             Left = 26
             Top = 21
@@ -4319,7 +4319,7 @@ object frmAcbrNfeMonitor: TfrmAcbrNfeMonitor
           Width = 65
           Height = 17
           Caption = 'TCP/IP'
-          TabOrder = 0
+          TabOrder = 1
           OnClick = rbTCPClick
         end
         object cbSenha: TCheckBox
@@ -4328,7 +4328,7 @@ object frmAcbrNfeMonitor: TfrmAcbrNfeMonitor
           Width = 137
           Height = 17
           Caption = 'Proteger Configura'#231'oes'
-          TabOrder = 5
+          TabOrder = 7
           OnClick = cbSenhaClick
         end
         object rbTXT: TRadioButton
@@ -4346,7 +4346,7 @@ object frmAcbrNfeMonitor: TfrmAcbrNfeMonitor
           Width = 217
           Height = 17
           Caption = 'Log de Comandos Enviado e Recebidos'
-          TabOrder = 7
+          TabOrder = 5
           OnClick = cbLogClick
         end
         object gbLogComp: TGroupBox
@@ -4354,7 +4354,7 @@ object frmAcbrNfeMonitor: TfrmAcbrNfeMonitor
           Top = 151
           Width = 338
           Height = 68
-          TabOrder = 10
+          TabOrder = 11
           object Label40: TLabel
             Left = 26
             Top = 21
@@ -4422,7 +4422,7 @@ object frmAcbrNfeMonitor: TfrmAcbrNfeMonitor
           Width = 195
           Height = 17
           Caption = 'Permite executar apenas um Monitor'
-          TabOrder = 11
+          TabOrder = 10
         end
         object btnDoar: TBitBtn
           Left = 6
@@ -4476,7 +4476,7 @@ object frmAcbrNfeMonitor: TfrmAcbrNfeMonitor
           Caption = 'Monitorar Pasta'
           Checked = True
           State = cbChecked
-          TabOrder = 3
+          TabOrder = 0
           OnClick = cbMonitorarPastaClick
         end
       end
@@ -4580,7 +4580,7 @@ object frmAcbrNfeMonitor: TfrmAcbrNfeMonitor
           Style = tsFlatButtons
           TabOrder = 0
           object tsWSNFeCTe: TTabSheet
-            Caption = 'NF-e/CT-e'
+            Caption = 'NF-e/CT-e/MDF-e'
             object GroupBox4: TGroupBox
               Left = 3
               Top = -1
@@ -4921,10 +4921,6 @@ object frmAcbrNfeMonitor: TfrmAcbrNfeMonitor
               TabOrder = 1
             end
           end
-          object tsWSNFSe: TTabSheet
-            Caption = 'NFS-e'
-            ImageIndex = 1
-          end
         end
       end
       object Email: TTabSheet
@@ -5006,7 +5002,7 @@ object frmAcbrNfeMonitor: TfrmAcbrNfeMonitor
             Top = 72
             Width = 130
             Height = 21
-            TabOrder = 2
+            TabOrder = 3
           end
           object edtSmtpPass: TEdit
             Left = 144
@@ -5014,14 +5010,14 @@ object frmAcbrNfeMonitor: TfrmAcbrNfeMonitor
             Width = 130
             Height = 21
             PasswordChar = '*'
-            TabOrder = 3
+            TabOrder = 4
           end
           object edtEmailAssunto: TEdit
             Left = 8
             Top = 112
             Width = 266
             Height = 21
-            TabOrder = 4
+            TabOrder = 5
           end
           object cbEmailSSL: TCheckBox
             Left = 10
@@ -5029,7 +5025,7 @@ object frmAcbrNfeMonitor: TfrmAcbrNfeMonitor
             Width = 167
             Height = 17
             Caption = 'Email SSL - Conex'#227'o Segura'
-            TabOrder = 5
+            TabOrder = 6
           end
           object mmEmailMsg: TMemo
             Left = 288
@@ -5037,7 +5033,7 @@ object frmAcbrNfeMonitor: TfrmAcbrNfeMonitor
             Width = 254
             Height = 185
             Anchors = [akLeft, akTop, akRight]
-            TabOrder = 6
+            TabOrder = 2
           end
           object rgEmailTipoEnvio: TRadioGroup
             Left = 8
@@ -5050,7 +5046,7 @@ object frmAcbrNfeMonitor: TfrmAcbrNfeMonitor
             Items.Strings = (
               'Synapse'
               'Indy')
-            TabOrder = 7
+            TabOrder = 8
           end
           object cbEmailTLS: TCheckBox
             Left = 10
@@ -5058,19 +5054,19 @@ object frmAcbrNfeMonitor: TfrmAcbrNfeMonitor
             Width = 167
             Height = 17
             Caption = 'Email TLS - Conex'#227'o Segura'
-            TabOrder = 8
+            TabOrder = 7
           end
         end
       end
       object DANFE: TTabSheet
-        Caption = 'DANFE/DACTE'
+        Caption = 'DANFe/DACTe/DAMDFe'
         ImageIndex = 4
         object pgDANFe: TPageControl
           Left = 0
           Top = 0
           Width = 561
           Height = 230
-          ActivePage = TabSheet1
+          ActivePage = tsDanfe
           Align = alClient
           Style = tsFlatButtons
           TabOrder = 0
@@ -5130,7 +5126,7 @@ object frmAcbrNfeMonitor: TfrmAcbrNfeMonitor
               Top = -2
               Width = 152
               Height = 33
-              Caption = 'DANFE/DACTE'
+              Caption = 'DANFe/DACTe/DAMDFe'
               Columns = 2
               ItemIndex = 0
               Items.Strings = (
@@ -5144,7 +5140,7 @@ object frmAcbrNfeMonitor: TfrmAcbrNfeMonitor
               Width = 219
               Height = 21
               ItemHeight = 13
-              TabOrder = 2
+              TabOrder = 5
             end
             object cbxImpDescPorc: TCheckBox
               Left = 316
@@ -5152,7 +5148,7 @@ object frmAcbrNfeMonitor: TfrmAcbrNfeMonitor
               Width = 200
               Height = 17
               Caption = 'Imprimir Desconto em Porcentagem'
-              TabOrder = 10
+              TabOrder = 2
             end
             object cbxMostrarPreview: TCheckBox
               Left = 316
@@ -5160,14 +5156,14 @@ object frmAcbrNfeMonitor: TfrmAcbrNfeMonitor
               Width = 200
               Height = 17
               Caption = 'Mostrar Preview antes da impress'#227'o'
-              TabOrder = 11
+              TabOrder = 3
             end
             object edtNumCopia: TEdit
               Left = 231
               Top = 50
               Width = 66
               Height = 21
-              TabOrder = 3
+              TabOrder = 6
               Text = '1'
               OnKeyPress = edtNumCopiaKeyPress
             end
@@ -5177,7 +5173,7 @@ object frmAcbrNfeMonitor: TfrmAcbrNfeMonitor
               Width = 291
               Height = 54
               Caption = 'Margens'
-              TabOrder = 4
+              TabOrder = 9
               object Label2: TLabel
                 Left = 8
                 Top = 12
@@ -5263,7 +5259,7 @@ object frmAcbrNfeMonitor: TfrmAcbrNfeMonitor
               Width = 200
               Height = 17
               Caption = 'Exibir Resumo no Canhoto'
-              TabOrder = 12
+              TabOrder = 4
             end
             object cbxImpValLiq: TCheckBox
               Left = 316
@@ -5271,7 +5267,7 @@ object frmAcbrNfeMonitor: TfrmAcbrNfeMonitor
               Width = 200
               Height = 17
               Caption = 'Imprimir Valor L'#237'quido do Produto'
-              TabOrder = 13
+              TabOrder = 7
             end
             object cbxFormCont: TCheckBox
               Left = 316
@@ -5279,7 +5275,7 @@ object frmAcbrNfeMonitor: TfrmAcbrNfeMonitor
               Width = 200
               Height = 17
               Caption = 'Formulario Pr'#233'-Impresso'
-              TabOrder = 14
+              TabOrder = 8
             end
             object rgTipoFonte: TRadioGroup
               Left = 316
@@ -5292,7 +5288,7 @@ object frmAcbrNfeMonitor: TfrmAcbrNfeMonitor
               Items.Strings = (
                 'Times'
                 'Courier')
-              TabOrder = 18
+              TabOrder = 17
             end
             object cbxMostraStatus: TCheckBox
               Left = 316
@@ -5300,7 +5296,7 @@ object frmAcbrNfeMonitor: TfrmAcbrNfeMonitor
               Width = 200
               Height = 17
               Caption = 'Mostrar Status'
-              TabOrder = 15
+              TabOrder = 10
             end
             object cbxExpandirLogo: TCheckBox
               Left = 316
@@ -5308,14 +5304,14 @@ object frmAcbrNfeMonitor: TfrmAcbrNfeMonitor
               Width = 200
               Height = 17
               Caption = 'Expandir Logo '
-              TabOrder = 16
+              TabOrder = 11
             end
             object edtProdPag: TEdit
               Left = 6
               Top = 142
               Width = 99
               Height = 21
-              TabOrder = 5
+              TabOrder = 12
               Text = '0'
               OnKeyPress = edtNumCopiaKeyPress
             end
@@ -5324,7 +5320,7 @@ object frmAcbrNfeMonitor: TfrmAcbrNfeMonitor
               Top = 142
               Width = 83
               Height = 21
-              TabOrder = 6
+              TabOrder = 13
               Text = '1'
               OnKeyPress = edtNumCopiaKeyPress
             end
@@ -5333,7 +5329,7 @@ object frmAcbrNfeMonitor: TfrmAcbrNfeMonitor
               Top = 142
               Width = 98
               Height = 21
-              TabOrder = 7
+              TabOrder = 14
               Text = '12'
               OnKeyPress = edtNumCopiaKeyPress
             end
@@ -5342,7 +5338,7 @@ object frmAcbrNfeMonitor: TfrmAcbrNfeMonitor
               Top = 142
               Width = 106
               Height = 21
-              TabOrder = 17
+              TabOrder = 15
               Text = '10'
               OnKeyPress = edtNumCopiaKeyPress
             end
@@ -5358,7 +5354,7 @@ object frmAcbrNfeMonitor: TfrmAcbrNfeMonitor
                 '2'
                 '3'
                 '4')
-              TabOrder = 8
+              TabOrder = 16
             end
             object spedtDecimaisVUnit: TSpinEdit
               Left = 177
@@ -5367,7 +5363,7 @@ object frmAcbrNfeMonitor: TfrmAcbrNfeMonitor
               Height = 22
               MaxValue = 10
               MinValue = 0
-              TabOrder = 9
+              TabOrder = 18
               Value = 0
             end
           end
@@ -5676,7 +5672,7 @@ object frmAcbrNfeMonitor: TfrmAcbrNfeMonitor
           Top = 156
           Width = 252
           Height = 21
-          TabOrder = 8
+          TabOrder = 10
         end
         object cbxSalvarArqs: TCheckBox
           Left = 6
@@ -5693,7 +5689,7 @@ object frmAcbrNfeMonitor: TfrmAcbrNfeMonitor
           Width = 210
           Height = 17
           Caption = 'Criar Pastas Mensalmente'
-          TabOrder = 1
+          TabOrder = 2
           OnClick = cbxPastaMensalClick
         end
         object cbxAdicionaLiteral: TCheckBox
@@ -5702,42 +5698,42 @@ object frmAcbrNfeMonitor: TfrmAcbrNfeMonitor
           Width = 210
           Height = 17
           Caption = 'Adicionar Literal no nome das pastas'
-          TabOrder = 2
+          TabOrder = 4
         end
         object edtPathNFe: TEdit
           Left = 6
           Top = 76
           Width = 252
           Height = 21
-          TabOrder = 4
+          TabOrder = 6
         end
         object edtPathCan: TEdit
           Left = 6
           Top = 116
           Width = 252
           Height = 21
-          TabOrder = 6
+          TabOrder = 8
         end
         object edtPathInu: TEdit
           Left = 288
           Top = 76
           Width = 244
           Height = 21
-          TabOrder = 5
+          TabOrder = 7
         end
         object edtPathDPEC: TEdit
           Left = 288
           Top = 116
           Width = 244
           Height = 21
-          TabOrder = 7
+          TabOrder = 9
         end
         object edtPathPDF: TEdit
           Left = 6
           Top = 196
           Width = 252
           Height = 21
-          TabOrder = 10
+          TabOrder = 12
         end
         object cbxEmissaoPathNFe: TCheckBox
           Left = 288
@@ -5746,14 +5742,14 @@ object frmAcbrNfeMonitor: TfrmAcbrNfeMonitor
           Height = 17
           Caption = 'Salvar NFe pelo campo Data de Emiss'#227'o'
           Enabled = False
-          TabOrder = 3
+          TabOrder = 1
         end
         object edtPathEvento: TEdit
           Left = 288
           Top = 156
           Width = 244
           Height = 21
-          TabOrder = 9
+          TabOrder = 11
         end
         object cbxSalvaCCeCancelamentoPathEvento: TCheckBox
           Left = 288
@@ -5762,7 +5758,7 @@ object frmAcbrNfeMonitor: TfrmAcbrNfeMonitor
           Height = 17
           Caption = 'Salvar Arqs Canc./CCe na pasta Eventos'
           Enabled = False
-          TabOrder = 11
+          TabOrder = 3
         end
         object cbxSepararPorCNPJ: TCheckBox
           Left = 288
@@ -5771,7 +5767,7 @@ object frmAcbrNfeMonitor: TfrmAcbrNfeMonitor
           Height = 17
           Caption = 'Separar Arqs pelo CNPJ do Certificado'
           Enabled = False
-          TabOrder = 12
+          TabOrder = 5
         end
       end
       object Testes: TTabSheet
@@ -5780,14 +5776,14 @@ object frmAcbrNfeMonitor: TfrmAcbrNfeMonitor
         object Panel1: TPanel
           Left = 0
           Top = 0
-          Width = 159
+          Width = 161
           Height = 230
           Align = alLeft
           TabOrder = 0
           object pgTestes: TPageControl
             Left = 1
             Top = 1
-            Width = 157
+            Width = 159
             Height = 228
             ActivePage = tsTesteNFe
             Align = alClient
@@ -5810,7 +5806,7 @@ object frmAcbrNfeMonitor: TfrmAcbrNfeMonitor
                 Width = 140
                 Height = 22
                 Caption = 'Validar XML'
-                TabOrder = 1
+                TabOrder = 4
                 OnClick = btnValidarXMLClick
               end
               object btnImprimir: TButton
@@ -5819,7 +5815,7 @@ object frmAcbrNfeMonitor: TfrmAcbrNfeMonitor
                 Width = 140
                 Height = 22
                 Caption = 'Imprimir NFe'
-                TabOrder = 2
+                TabOrder = 5
                 OnClick = btnImprimirClick
               end
               object btnInutilizar: TButton
@@ -5828,7 +5824,7 @@ object frmAcbrNfeMonitor: TfrmAcbrNfeMonitor
                 Width = 140
                 Height = 22
                 Caption = 'Inutilizar NFe'
-                TabOrder = 3
+                TabOrder = 6
                 OnClick = btnInutilizarClick
               end
               object btnConsultar: TButton
@@ -5837,7 +5833,7 @@ object frmAcbrNfeMonitor: TfrmAcbrNfeMonitor
                 Width = 140
                 Height = 22
                 Caption = 'Consultar NFe'
-                TabOrder = 4
+                TabOrder = 2
                 OnClick = btnConsultarClick
               end
               object btnCancNF: TButton
@@ -5846,7 +5842,7 @@ object frmAcbrNfeMonitor: TfrmAcbrNfeMonitor
                 Width = 140
                 Height = 22
                 Caption = 'Cancelamento NFe'
-                TabOrder = 5
+                TabOrder = 3
                 OnClick = btnCancNFClick
               end
               object btnEnviar: TButton
@@ -5855,7 +5851,7 @@ object frmAcbrNfeMonitor: TfrmAcbrNfeMonitor
                 Width = 140
                 Height = 22
                 Caption = 'Enviar XML NFe'
-                TabOrder = 6
+                TabOrder = 1
                 OnClick = btnEnviarClick
               end
               object btnEnviarEmail: TButton
@@ -5935,28 +5931,82 @@ object frmAcbrNfeMonitor: TfrmAcbrNfeMonitor
                 OnClick = btnEnviarCTeClick
               end
             end
-            object tsTesteNFSe: TTabSheet
-              Caption = 'NFS-e'
+            object tsTesteMDFe: TTabSheet
+              Caption = 'MDF-e'
               ImageIndex = 2
+              object btnStatusServMDFe: TButton
+                Left = 1
+                Top = 6
+                Width = 140
+                Height = 22
+                Caption = 'Status Servi'#231'o'
+                TabOrder = 0
+                OnClick = btnStatusServMDFeClick
+              end
+              object btnEnviarMDFe: TButton
+                Left = 1
+                Top = 34
+                Width = 140
+                Height = 22
+                Caption = 'Enviar XML MDFe'
+                TabOrder = 1
+                OnClick = btnEnviarMDFeClick
+              end
+              object btnConsultarMDFe: TButton
+                Left = 1
+                Top = 62
+                Width = 140
+                Height = 22
+                Caption = 'Consultar MDFe'
+                TabOrder = 2
+                OnClick = btnConsultarMDFeClick
+              end
+              object btnCancNFMDFe: TButton
+                Left = 1
+                Top = 90
+                Width = 140
+                Height = 22
+                Caption = 'Cancelamento MDFe'
+                TabOrder = 3
+                OnClick = btnCancNFMDFeClick
+              end
+              object btnValidarXMLMDFe: TButton
+                Left = 1
+                Top = 118
+                Width = 140
+                Height = 22
+                Caption = 'Validar XML'
+                TabOrder = 4
+                OnClick = btnValidarXMLMDFeClick
+              end
+              object btnImprimirMDFe: TButton
+                Left = 1
+                Top = 146
+                Width = 140
+                Height = 22
+                Caption = 'Imprimir MDFe'
+                TabOrder = 5
+                OnClick = btnImprimirMDFeClick
+              end
             end
           end
         end
         object Panel2: TPanel
-          Left = 159
+          Left = 161
           Top = 0
-          Width = 402
+          Width = 400
           Height = 230
           Align = alClient
           TabOrder = 1
           object WBResposta: TWebBrowser
             Left = 1
             Top = 18
-            Width = 400
+            Width = 398
             Height = 211
             Align = alClient
-            TabOrder = 0
+            TabOrder = 1
             ControlData = {
-              4C00000057290000CF1500000000000000000000000000000000000000000000
+              4C00000022290000CF1500000000000000000000000000000000000000000000
               000000004C000000000000000000000001000000E0D057007335CF11AE690800
               2B2E126208000000000000004C0000000114020000000000C000000000000046
               8000000000000000000000000000000000000000000000000000000000000000
@@ -5965,7 +6015,7 @@ object frmAcbrNfeMonitor: TfrmAcbrNfeMonitor
           object Panel3: TPanel
             Left = 1
             Top = 1
-            Width = 400
+            Width = 398
             Height = 17
             Align = alTop
             Alignment = taLeftJustify
@@ -5976,13 +6026,9 @@ object frmAcbrNfeMonitor: TfrmAcbrNfeMonitor
             Font.Name = 'MS Sans Serif'
             Font.Style = [fsBold]
             ParentFont = False
-            TabOrder = 1
+            TabOrder = 0
           end
         end
-      end
-      object Integracao: TTabSheet
-        Caption = 'Integra'#231#227'o'
-        ImageIndex = 7
       end
     end
   end
@@ -6597,5 +6643,53 @@ object frmAcbrNfeMonitor: TfrmAcbrNfeMonitor
     ImprimeItens = True
     Left = 201
     Top = 60
+  end
+  object ACBrMDFe1: TACBrMDFe
+    Configuracoes.Geral.PathSalvar = 'C:\Program Files (x86)\Borland\Delphi7\Bin\'
+    Configuracoes.Geral.ExibirErroSchema = True
+    Configuracoes.Geral.FormatoAlerta = 'TAG:%TAGNIVEL% ID:%ID%/%TAG%(%DESCRICAO%) - %MSG%.'
+    Configuracoes.WebServices.UF = 'SP'
+    Configuracoes.WebServices.AguardarConsultaRet = 0
+    Configuracoes.WebServices.IntervaloTentativas = 0
+    Configuracoes.WebServices.AjustaAguardaConsultaRet = False
+    DAMDFe = ACBrMDFeDAMDFEQR1
+    Left = 52
+    Top = 146
+  end
+  object ACBrMDFeDAMDFEQR1: TACBrMDFeDAMDFEQR
+    ACBrMDFe = ACBrMDFe1
+    PathPDF = 'C:\Program Files (x86)\Borland\Delphi7\Bin\'
+    ImprimirHoraSaida = False
+    MostrarPreview = True
+    MostrarStatus = True
+    TipoDAMDFe = tiSemGeracao
+    TamanhoPapel = tpA4
+    NumCopias = 1
+    ImprimirDescPorc = False
+    MargemInferior = 0.800000000000000000
+    MargemSuperior = 0.800000000000000000
+    MargemEsquerda = 0.600000000000000000
+    MargemDireita = 0.510000000000000000
+    MDFeCancelada = False
+    MDFeEncerrado = False
+    Left = 121
+    Top = 146
+  end
+  object ACBrMDFeDAMDFeRL1: TACBrMDFeDAMDFeRL
+    ImprimirHoraSaida = False
+    MostrarPreview = True
+    MostrarStatus = True
+    TipoDAMDFe = tiSemGeracao
+    TamanhoPapel = tpA4
+    NumCopias = 1
+    ImprimirDescPorc = False
+    MargemInferior = 0.800000000000000000
+    MargemSuperior = 0.800000000000000000
+    MargemEsquerda = 0.600000000000000000
+    MargemDireita = 0.510000000000000000
+    MDFeCancelada = False
+    MDFeEncerrado = False
+    Left = 250
+    Top = 149
   end
 end

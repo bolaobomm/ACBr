@@ -90,8 +90,8 @@ MaxStackSize=1048576
 ImageBase=4194304
 ExeDescription=
 [Directories]
-OutputDir=
-UnitOutputDir=
+OutputDir=.\
+UnitOutputDir=.\dcu
 PackageDLLOutputDir=
 PackageDCPOutputDir=
 SearchPath=
@@ -134,3 +134,15 @@ OriginalFilename=
 ProductName=
 ProductVersion=1.0.0.0
 Comments=
+[Excluded Packages]
+C:\Program Files (x86)\Embarcadero\RAD Studio\Componentes\ACBr\Lib\Delphi\LibD7\ACBr_SAT_Extrato_Fortes.bpl=ACBr - Extrato Cupom Fiscal Eletrônico SAT para Fortes Report - (http://www.projectoacbr.com.br/)
+C:\Program Files (x86)\Embarcadero\RAD Studio\Componentes\ACBr\Lib\Delphi\LibD7\ACBr_SAT_Extrato_ESCPOS.bpl=ACBr - Extrato Cupom Fiscal Eletrônico SAT para Serial - (http://www.projectoacbr.com.br/)
+[HistoryLists\hlUnitAliases]
+Count=1
+Item0=WinTypes=Windows;WinProcs=Windows;DbiTypes=BDE;DbiProcs=BDE;DbiErrs=BDE;
+[HistoryLists\hlUnitOutputDirectory]
+Count=1
+Item0=.\dcu
+[HistoryLists\hlOutputDirectorry]
+Count=1
+Item0=.\

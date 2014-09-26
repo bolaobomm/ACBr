@@ -42,8 +42,9 @@ uses IniFiles, CmdUnitNFe, FileCtrl, Printers,
   Dialogs, StdCtrls, ComCtrls, ExtCtrls, Buttons, Spin, Menus, ImgList,
   ACBrNFe, ACBrNFeDANFEClass, ACBrNFeDANFERave, pcnConversao, OleCtrls,
   SHDocVw, ACBrNFeUtil, ACBrDFeUtil, ACBrNFeDANFERaveCB, ACBrGIF,
-  ACBrCTeDACTEClass, ACBrCTeDACTeQRClass, ACBrCTe, ACBrNFeDANFeESCPOS,
-  ACBrDANFCeFortesFr;
+  ACBrCTeDACTEClass, ACBrCTeDACTeQRClass, ACBrCTe, ACBrMDFeDAMDFeClass,
+  ACBrMDFeDAMDFEQRClass, ACBrDANFCeFortesFr,  ACBrMDFe, ACBrNFeDANFeESCPOS,
+  ACBrMDFeDAMDFeRLClass;
 
 const
    BufferMemoResposta = 10000 ;              { Maximo de Linhas no MemoResposta }
@@ -246,11 +247,8 @@ type
     cbModoXML: TCheckBox;
     cbEmailTLS: TCheckBox;
     cbMonitorarPasta: TCheckBox;
-    tsTesteNFSe: TTabSheet;
-    Integracao: TTabSheet;
     pgTipoWebService: TPageControl;
     tsWSNFeCTe: TTabSheet;
-    tsWSNFSe: TTabSheet;
     GroupBox4: TGroupBox;
     Label6: TLabel;
     sbPathSalvar: TSpeedButton;
@@ -289,6 +287,9 @@ type
     edtToken: TEdit;
     edtIdToken: TEdit;
     cbxSepararPorCNPJ: TCheckBox;
+    ACBrMDFe1: TACBrMDFe;
+    ACBrMDFeDAMDFEQR1: TACBrMDFeDAMDFEQR;
+    ACBrMDFeDAMDFeRL1: TACBrMDFeDAMDFeRL;
     procedure DoACBrTimer(Sender: TObject);
     procedure edOnlyNumbers(Sender: TObject; var Key: Char);
     procedure FormCreate(Sender: TObject);
@@ -345,6 +346,12 @@ type
     procedure btnImprimirCTeClick(Sender: TObject);
     procedure btnInutilizarCTeClick(Sender: TObject);
     procedure cbMonitorarPastaClick(Sender: TObject);
+    procedure btnStatusServMDFeClick(Sender: TObject);
+    procedure btnEnviarMDFeClick(Sender: TObject);
+    procedure btnConsultarMDFeClick(Sender: TObject);
+    procedure btnCancNFMDFeClick(Sender: TObject);
+    procedure btnValidarXMLMDFeClick(Sender: TObject);
+    procedure btnImprimirMDFeClick(Sender: TObject);
   private
     { Private declarations }
     ACBrNFeMonitorINI : string;
@@ -385,8 +392,8 @@ var
 
 implementation
 
-uses ACBrUtil, IdStack, UtilUnit, DoACBrNFeUnit, DoACBrCTeUnit, Math,
-  DoACBrNFeXMLUnit;
+uses ACBrUtil, IdStack, UtilUnit, DoACBrNFeUnit,
+     DoACBrCTeUnit, Math, DoACBrNFeXMLUnit, DoACBrMDFeUnit;
 
 const
   SELDIRHELP = 1000;
@@ -773,6 +780,10 @@ begin
      ACBrCTe1.Configuracoes.Geral.Salvar       := ckSalvar.Checked;
      ACBrCTe1.Configuracoes.Geral.PathSalvar   := edtPathLogs.Text;
 
+     ACBrMDFe1.Configuracoes.Geral.FormaEmissao := StrToTpEmis(OK,IntToStr(rgFormaEmissao.ItemIndex+1));
+     ACBrMDFe1.Configuracoes.Geral.Salvar       := ckSalvar.Checked;
+     ACBrMDFe1.Configuracoes.Geral.PathSalvar   := edtPathLogs.Text;
+
      cbxAjustarAut.Checked  := Ini.ReadBool(   'WebService','AjustarAut' ,False) ;
      edtAguardar.Text       := Ini.ReadString( 'WebService','Aguardar'  ,'0') ;
      edtTentativas.Text     := Ini.ReadString( 'WebService','Tentativas','5') ;
@@ -781,35 +792,42 @@ begin
 
      ACBrNFe1.Configuracoes.WebServices.AjustaAguardaConsultaRet := cbxAjustarAut.Checked;
      ACBrCTe1.Configuracoes.WebServices.AjustaAguardaConsultaRet := cbxAjustarAut.Checked;
+     ACBrMDFe1.Configuracoes.WebServices.AjustaAguardaConsultaRet := cbxAjustarAut.Checked;
      if DFeUtil.NaoEstaVazio(edtAguardar.Text)then
       begin
         ACBrNFe1.Configuracoes.WebServices.AguardarConsultaRet := DFeUtil.SeSenao(StrToInt(edtAguardar.Text)<1000,StrToInt(edtAguardar.Text)*1000,StrToInt(edtAguardar.Text));
-        ACBrCTe1.Configuracoes.WebServices.AguardarConsultaRet := DFeUtil.SeSenao(StrToInt(edtAguardar.Text)<1000,StrToInt(edtAguardar.Text)*1000,StrToInt(edtAguardar.Text))
+        ACBrCTe1.Configuracoes.WebServices.AguardarConsultaRet := DFeUtil.SeSenao(StrToInt(edtAguardar.Text)<1000,StrToInt(edtAguardar.Text)*1000,StrToInt(edtAguardar.Text));
+        ACBrMDFe1.Configuracoes.WebServices.AguardarConsultaRet := DFeUtil.SeSenao(StrToInt(edtAguardar.Text)<1000,StrToInt(edtAguardar.Text)*1000,StrToInt(edtAguardar.Text));
       end
      else
       begin
         edtAguardar.Text := IntToStr(ACBrNFe1.Configuracoes.WebServices.AguardarConsultaRet);
         edtAguardar.Text := IntToStr(ACBrCTe1.Configuracoes.WebServices.AguardarConsultaRet);
+        edtAguardar.Text := IntToStr(ACBrMDFe1.Configuracoes.WebServices.AguardarConsultaRet);
       end;
      if DFeUtil.NaoEstaVazio(edtTentativas.Text) then
       begin
         ACBrNFe1.Configuracoes.WebServices.Tentativas          := StrToInt(edtTentativas.Text);
         ACBrCTe1.Configuracoes.WebServices.Tentativas          := StrToInt(edtTentativas.Text);
+        ACBrMDFe1.Configuracoes.WebServices.Tentativas          := StrToInt(edtTentativas.Text);
       end
      else
       begin
         edtTentativas.Text := IntToStr(ACBrNFe1.Configuracoes.WebServices.Tentativas);
         edtTentativas.Text := IntToStr(ACBrCTe1.Configuracoes.WebServices.Tentativas);
+        edtTentativas.Text := IntToStr(ACBrMDFe1.Configuracoes.WebServices.Tentativas);
       end;
      if DFeUtil.NaoEstaVazio(edtIntervalo.Text) then
       begin
         ACBrNFe1.Configuracoes.WebServices.IntervaloTentativas := DFeUtil.SeSenao(StrToInt(edtIntervalo.Text)<1000,StrToInt(edtIntervalo.Text)*1000,StrToInt(edtIntervalo.Text));
-        ACBrCTe1.Configuracoes.WebServices.IntervaloTentativas := DFeUtil.SeSenao(StrToInt(edtIntervalo.Text)<1000,StrToInt(edtIntervalo.Text)*1000,StrToInt(edtIntervalo.Text))
+        ACBrCTe1.Configuracoes.WebServices.IntervaloTentativas := DFeUtil.SeSenao(StrToInt(edtIntervalo.Text)<1000,StrToInt(edtIntervalo.Text)*1000,StrToInt(edtIntervalo.Text));
+        ACBrMDFe1.Configuracoes.WebServices.IntervaloTentativas := DFeUtil.SeSenao(StrToInt(edtIntervalo.Text)<1000,StrToInt(edtIntervalo.Text)*1000,StrToInt(edtIntervalo.Text));
       end
      else
       begin
         edtIntervalo.Text := IntToStr(ACBrNFe1.Configuracoes.WebServices.IntervaloTentativas);
         edtIntervalo.Text := IntToStr(ACBrCTe1.Configuracoes.WebServices.IntervaloTentativas);
+        edtIntervalo.Text := IntToStr(ACBrMDFe1.Configuracoes.WebServices.IntervaloTentativas);
       end;
 
 
@@ -823,6 +841,9 @@ begin
      ACBrCTe1.Configuracoes.WebServices.UF         := cbUF.Text;
      ACBrCTe1.Configuracoes.WebServices.Ambiente   := StrToTpAmb(Ok,IntToStr(rgTipoAmb.ItemIndex+1));
 
+     ACBrMDFe1.Configuracoes.WebServices.UF         := cbUF.Text;
+     ACBrMDFe1.Configuracoes.WebServices.Ambiente   := StrToTpAmb(Ok,IntToStr(rgTipoAmb.ItemIndex+1));
+
      rgTipoCancelamento.ItemIndex := Ini.ReadInteger( 'WebService','TipoCancelamento',0) ;
 
      edtIdToken.Text := Ini.ReadString( 'NFCe', 'IdToken', '') ;     
@@ -835,6 +856,8 @@ begin
      ACBrCTe1.Configuracoes.Certificados.Certificado  := edtCaminho.Text;
      ACBrCTe1.Configuracoes.Geral.IniFinXMLSECAutomatico := False;
      ACBrNFe1.Configuracoes.Geral.IniFinXMLSECAutomatico := False;
+     ACBrMDFe1.Configuracoes.Certificados.Certificado  := edtCaminho.Text;
+     ACBrMDFe1.Configuracoes.Geral.IniFinXMLSECAutomatico := False;
      {$ELSE}
      lblCaminho.Caption := 'Número de Série';
      edtCaminho.Text  := Ini.ReadString( 'Certificado','Caminho' ,'') ;
@@ -843,10 +866,14 @@ begin
 
      ACBrCTe1.Configuracoes.Certificados.NumeroSerie := edtCaminho.Text;
      edtCaminho.Text := ACBrCTe1.Configuracoes.Certificados.NumeroSerie;
+
+     ACBrMDFe1.Configuracoes.Certificados.NumeroSerie := edtCaminho.Text;
+     edtCaminho.Text := ACBrMDFe1.Configuracoes.Certificados.NumeroSerie;
      {$ENDIF}
      edtSenha.Text    := LeINICrypt(INI,'Certificado','Senha', _C) ;
      ACBrNFe1.Configuracoes.Certificados.Senha        := edtSenha.Text;
      ACBrCTe1.Configuracoes.Certificados.Senha        := edtSenha.Text;
+     ACBrMDFe1.Configuracoes.Certificados.Senha        := edtSenha.Text;
 
      edtProxyHost.Text  := Ini.ReadString( 'Proxy','Host'   ,'') ;
      edtProxyPorta.Text := Ini.ReadString( 'Proxy','Porta'  ,'') ;
@@ -861,6 +888,11 @@ begin
      ACBrCTe1.Configuracoes.WebServices.ProxyPort := edtProxyPorta.Text;
      ACBrCTe1.Configuracoes.WebServices.ProxyUser := edtProxyUser.Text;
      ACBrCTe1.Configuracoes.WebServices.ProxyPass := edtProxySenha.Text;
+
+     ACBrMDFe1.Configuracoes.WebServices.ProxyHost := edtProxyHost.Text;
+     ACBrMDFe1.Configuracoes.WebServices.ProxyPort := edtProxyPorta.Text;
+     ACBrMDFe1.Configuracoes.WebServices.ProxyUser := edtProxyUser.Text;
+     ACBrMDFe1.Configuracoes.WebServices.ProxyPass := edtProxySenha.Text;
 
      rgTipoDanfe.ItemIndex     := Ini.ReadInteger( 'Geral','DANFE'   ,0) ;
      edtLogoMarca.Text         := Ini.ReadString( 'Geral','LogoMarca','') ;
@@ -919,6 +951,26 @@ begin
      ACBrCTe1.DACTe.MostrarStatus        := cbxMostraStatus.Checked;
      ACBrCTe1.DACTe.ExpandirLogoMarca    := cbxExpandirLogo.Checked;
 
+     ACBrMDFe1.DAMDFe := ACBrMDFeDAMDFEQR1;
+     ACBrMDFe1.DAMDFe.TipoDAMDFe  := StrToTpImp(OK,IntToStr(rgTipoDanfe.ItemIndex+1));
+     ACBrMDFe1.DAMDFe.Logo       := edtLogoMarca.Text;
+     ACBrMDFe1.DAMDFe.Sistema := edtSoftwareHouse.Text;
+     ACBrMDFe1.DAMDFe.Site    := edtSiteEmpresa.Text;
+     ACBrMDFe1.DAMDFe.Email   := edtEmailEmpresa.Text;
+     ACBrMDFe1.DAMDFe.Fax     := edtFaxEmpresa.Text;
+     ACBrMDFe1.DAMDFe.ImprimirDescPorc  := cbxImpDescPorc.Checked;
+     ACBrMDFe1.DAMDFe.MostrarPreview    := cbxMostrarPreview.Checked;
+     ACBrMDFe1.DAMDFe.Impressora := cbxImpressora.Text;
+     ACBrMDFe1.DAMDFe.NumCopias  := StrToIntDef(edtNumCopia.Text, 1);
+//     ACBrCTe1.DACTe.ProdutosPorPagina := StrToIntDef(edtProdPag.Text, 0);
+     ACBrMDFe1.DAMDFe.MargemInferior  := StrToFloatDef(edtMargemInf.Text,0.8);
+     ACBrMDFe1.DAMDFe.MargemSuperior  := StrToFloatDef(edtMargemSup.Text,0.8);
+     ACBrMDFe1.DAMDFe.MargemDireita   := StrToFloatDef(edtMargemDir.Text,0.51);
+     ACBrMDFe1.DAMDFe.MargemEsquerda  := StrToFloatDef(edtMargemEsq.Text,0.6);
+     ACBrMDFe1.DAMDFe.PathPDF     := edtPathPDF.Text;
+     ACBrMDFe1.DAMDFe.MostrarStatus        := cbxMostraStatus.Checked;
+     ACBrMDFe1.DAMDFe.ExpandirLogoMarca    := cbxExpandirLogo.Checked;
+
      edtSmtpHost.Text      := Ini.ReadString( 'Email','Host'   ,'') ;
      edtSmtpPort.Text      := Ini.ReadString( 'Email','Port'   ,'') ;
      edtSmtpUser.Text      := Ini.ReadString( 'Email','User'   ,'') ;
@@ -970,6 +1022,13 @@ begin
      // token da nfce
      ACBrNFe1.Configuracoes.Geral.IdToken := Ini.ReadString( 'NFCe', 'IdToken', '') ;
      ACBrNFe1.Configuracoes.Geral.Token   := Ini.ReadString( 'NFCe', 'Token', '') ;
+     ACBrMDFe1.Configuracoes.Arquivos.Salvar           := cbxSalvarArqs.Checked;
+     ACBrMDFe1.Configuracoes.Arquivos.PastaMensal      := cbxPastaMensal.Checked;
+     ACBrMDFe1.Configuracoes.Arquivos.AdicionarLiteral := cbxAdicionaLiteral.Checked;
+     ACBrMDFe1.Configuracoes.Arquivos.EmissaoPathMDFe   := cbxEmissaoPathNFe.Checked;
+     ACBrMDFe1.Configuracoes.Arquivos.SalvarEvento := cbxSalvaCCeCancelamentoPathEvento.Checked;
+     ACBrMDFe1.Configuracoes.Arquivos.PathMDFe  := edtPathNFe.Text;
+     ACBrMDFe1.Configuracoes.Arquivos.PathEvento := edtPathEvento.Text;
   finally
      Ini.Free ;
   end ;
@@ -1183,7 +1242,8 @@ begin
         try
            ArqSefaz := False;
            if (copy(UpperCase(Linha),1,4) <> 'NFE.') and
-              (copy(UpperCase(Linha),1,4) <> 'CTE.') then              { Comandos do ACBrMonitor }
+              (copy(UpperCase(Linha),1,4) <> 'CTE.') and
+              (copy(UpperCase(Linha),1,5) <> 'MDFE.') then              { Comandos do ACBrMonitor }
             begin
               if (copy(Linha, 1, 10) = 'NOTAFISCAL') or (copy(Linha, 1, 11) = 'NOTA FISCAL') then
                begin
@@ -1204,7 +1264,9 @@ begin
               if UpperCase(Cmd.Objeto) = 'NFE' then
                  DoACBrNFe( Cmd )
               else if UpperCase(Cmd.Objeto) = 'CTE' then
-                 DoACBrCTe( Cmd );
+                 DoACBrCTe( Cmd )
+              else if UpperCase(Cmd.Objeto) = 'MDFE' then
+                 DoACBrMDFe( Cmd );
 
               if not cbModoXML.Checked then
                  Resposta(Linha, 'OK: '+Cmd.Resposta )
@@ -2149,6 +2211,112 @@ begin
         ACBrNFeDANFERaveCB1.Fonte  := DFeUtil.SeSenao(rgTipoFonte.ItemIndex=0,ftTimes,ftCourier);
       end;
    end;
+end;
+
+procedure TfrmAcbrNfeMonitor.btnStatusServMDFeClick(Sender: TObject);
+begin
+ ACBrMDFe1.WebServices.StatusServico.Executar;
+ ExibeResp(ACBrMDFe1.WebServices.StatusServico.RetWS);
+end;
+
+procedure TfrmAcbrNfeMonitor.btnConsultarMDFeClick(Sender: TObject);
+begin
+ OpenDialog1.Title := 'Selecione o MDFe';
+ OpenDialog1.DefaultExt := '*-MDFe.xml';
+ OpenDialog1.Filter := 'Arquivos MDFe (*-MDFe.xml)|*-MDFe.xml|Arquivos XML (*.xml)|*.xml|Todos os Arquivos (*.*)|*.*';
+ OpenDialog1.InitialDir := ACBrMDFe1.Configuracoes.Geral.PathSalvar;
+
+ if OpenDialog1.Execute then
+  begin
+   ACBrMDFe1.Manifestos.Clear;
+   ACBrMDFe1.Manifestos.LoadFromFile(OpenDialog1.FileName);
+   ACBrMDFe1.Consultar;
+   ExibeResp(ACBrMDFe1.WebServices.Consulta.RetWS);
+ end;
+end;
+
+procedure TfrmAcbrNfeMonitor.btnValidarXMLMDFeClick(Sender: TObject);
+begin
+ OpenDialog1.Title := 'Selecione o MDFe';
+ OpenDialog1.DefaultExt := '*-MDFe.xml';
+ OpenDialog1.Filter := 'Arquivos MDFe (*-MDFe.xml)|*-MDFe.xml|Arquivos XML (*.xml)|*.xml|Todos os Arquivos (*.*)|*.*';
+ OpenDialog1.InitialDir := ACBrMDFe1.Configuracoes.Geral.PathSalvar;
+
+ if OpenDialog1.Execute then
+  begin
+   ACBrMDFe1.Manifestos.Clear;
+   ACBrMDFe1.Manifestos.LoadFromFile(OpenDialog1.FileName);
+   ACBrMDFe1.Manifestos.Valida;
+   showmessage('Manifesto Eletrônico de Documentos Fiscais Valido');
+  end;
+end;
+
+procedure TfrmAcbrNfeMonitor.btnCancNFMDFeClick(Sender: TObject);
+var
+ vAux : String;
+begin
+ OpenDialog1.Title := 'Selecione o MDFe';
+ OpenDialog1.DefaultExt := '*-MDFe.xml';
+ OpenDialog1.Filter := 'Arquivos MDFe (*-MDFe.xml)|*-MDFe.xml|Arquivos XML (*.xml)|*.xml|Todos os Arquivos (*.*)|*.*';
+ OpenDialog1.InitialDir := ACBrMDFe1.Configuracoes.Geral.PathSalvar;
+
+ if OpenDialog1.Execute then
+  begin
+   ACBrMDFe1.Manifestos.Clear;
+   ACBrMDFe1.Manifestos.LoadFromFile(OpenDialog1.FileName);
+   if not(InputQuery('WebServices Cancelamento', 'Justificativa', vAux))
+    then exit;
+
+
+   with ACBrMDFe1.EventoMDFe.Evento.Add do
+    begin
+     infEvento.chMDFe   := Copy(ACBrMDFe1.Manifestos.Items[0].MDFe.infMDFe.ID, 5, 44);
+     infEvento.CNPJ     := ACBrMDFe1.Manifestos.Items[0].MDFe.emit.CNPJ;
+     infEvento.dhEvento := now;
+     infEvento.tpEvento   := teCancelamento;
+     infEvento.nSeqEvento := 1;
+
+     infEvento.detEvento.nProt := ACBrMDFe1.Manifestos.Items[0].MDFe.procMDFe.nProt;
+     infEvento.detEvento.xJust := trim(vAux);
+    end;
+
+   ACBrMDFe1.EnviarEventoMDFe( 1 ); // 1 = Numero do Lote
+
+   ExibeResp(ACBrMDFe1.WebServices.EnvEvento.RetWS);
+  end;
+end;
+
+procedure TfrmAcbrNfeMonitor.btnImprimirMDFeClick(Sender: TObject);
+begin
+  OpenDialog1.Title := 'Selecione a MDFe';
+  OpenDialog1.DefaultExt := '*-MDFe.XML';
+  OpenDialog1.Filter := 'Arquivos MDFe (*-MDFe.XML)|*-MDFe.XML|Arquivos XML (*.XML)|*.XML|Todos os Arquivos (*.*)|*.*';
+  OpenDialog1.InitialDir := ACBrMDFe1.Configuracoes.Geral.PathSalvar;
+  if OpenDialog1.Execute then
+  begin
+    ACBrMDFe1.Manifestos.Clear;
+    ACBrMDFe1.Manifestos.LoadFromFile(OpenDialog1.FileName);
+    ACBrMDFe1.Manifestos.Imprimir;
+  end;
+end;
+
+procedure TfrmAcbrNfeMonitor.btnEnviarMDFeClick(Sender: TObject);
+var
+ vAux : String;
+begin
+  if not(InputQuery('WebServices Enviar', 'Numero do Lote', vAux)) then
+    exit;
+  OpenDialog1.Title := 'Selecione a MDFe';
+  OpenDialog1.DefaultExt := '*-mdfe.XML';
+  OpenDialog1.Filter := 'Arquivos MDFe (*-mdfe.XML)|*-cte.XML|Arquivos XML (*.XML)|*.XML|Todos os Arquivos (*.*)|*.*';
+  OpenDialog1.InitialDir := ACBrMDFe1.Configuracoes.Geral.PathSalvar;
+  if OpenDialog1.Execute then
+  begin
+    ACBrMDFe1.Manifestos.Clear;
+    ACBrMDFe1.Manifestos.LoadFromFile(OpenDialog1.FileName);
+    ACBrMDFe1.Enviar(StrToInt(vAux));
+    ExibeResp(ACBrMDFe1.WebServices.Retorno.RetWS);
+  end;
 end;
 
 end.

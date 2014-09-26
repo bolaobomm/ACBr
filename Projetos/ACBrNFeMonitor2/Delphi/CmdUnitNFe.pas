@@ -35,7 +35,7 @@ interface
 Uses SysUtils, Classes, Math ;
 
 Const
-   Objetos = '"NFE","CTE"' ;
+   Objetos = '"NFE","CTE","MDFE"' ;
 
 type
 TACBrNFeCTeCmd = class
@@ -185,4 +185,4 @@ begin
 end;
 
 end.
- 
+
