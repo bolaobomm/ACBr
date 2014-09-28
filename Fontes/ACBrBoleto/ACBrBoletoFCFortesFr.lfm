@@ -1,10 +1,10 @@
 object ACBRBoletoFCFortesFr: TACBRBoletoFCFortesFr
-  Left = 233
-  Height = 750
-  Top = 32
+  Left = 229
+  Height = 742
+  Top = 0
   Width = 1033
   Caption = 'ACBRBoletoFCFortesFr'
-  ClientHeight = 750
+  ClientHeight = 742
   ClientWidth = 1033
   Color = clBtnFace
   Font.Color = clWindowText
@@ -12,11 +12,11 @@ object ACBRBoletoFCFortesFr: TACBRBoletoFCFortesFr
   Font.Name = 'MS Sans Serif'
   OnCreate = FormCreate
   OnDestroy = FormDestroy
-  LCLVersion = '1.2.2.0'
+  LCLVersion = '1.2.4.0'
   object LayoutBoleto: TRLReport
-    Left = 40
+    Left = 8
     Height = 1123
-    Top = -280
+    Top = -320
     Width = 794
     Margins.LeftMargin = 4
     Margins.TopMargin = 5
@@ -3398,9 +3398,9 @@ object ACBRBoletoFCFortesFr: TACBRBoletoFCFortesFr
     end
   end
   object BoletoCarne: TRLReport
-    Left = 712
+    Left = 648
     Height = 1123
-    Top = 56
+    Top = 40
     Width = 794
     Font.Color = clBlack
     Font.Height = -13

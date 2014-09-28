@@ -58,7 +58,7 @@ uses  ACBrBase,  {Units da ACBr}
      Graphics, Contnrs, Classes;
 
 const
-  CACBrBoleto_Versao = '0.0.97a' ;
+  CACBrBoleto_Versao = '0.0.98a' ;
 
 type
   TACBrTipoCobranca =
@@ -796,6 +796,7 @@ type
     fMostrarSetup: Boolean;
     fNomeArquivo: String;
     fNumCopias      : Integer;
+    fPrinterName    : String;
     fOnObterLogo : TACBrBoletoFCOnObterLogo ;
     fSoftwareHouse  : String;
     function GetAbout: String;
@@ -834,6 +835,7 @@ type
     property Filtro         : TACBrBoletoFCFiltro read fFiltro     write fFiltro         default fiNenhum ;
     property NomeArquivo    : String          read GetNomeArquivo  write fNomeArquivo ;
     property SoftwareHouse  : String          read fSoftwareHouse  write fSoftwareHouse;
+    property PrinterName    : String          read fPrinterName    write fPrinterName;
   end;
 
   //email
@@ -2098,6 +2100,7 @@ begin
    fMostrarSetup   := True;
    fFiltro         := fiNenhum;
    fNomeArquivo    := '' ;
+   fPrinterName    := '' ;
 end;
 
 procedure TACBrBoletoFCClass.Notification ( AComponent: TComponent;
@@ -2206,6 +2209,7 @@ var
    FiltroAntigo         : TACBrBoletoFCFiltro;
    MostrarPreviewAntigo : Boolean;
    MostrarSetupAntigo   : Boolean;
+   PrinterNameAntigo    : String;
 begin
    if NomeArquivo = '' then
       raise Exception.Create( ACBrStr('NomeArquivo não especificado')) ;
@@ -2213,16 +2217,18 @@ begin
    FiltroAntigo         := Filtro;
    MostrarPreviewAntigo := MostrarPreview;
    MostrarSetupAntigo   := MostrarSetup;
+   PrinterNameAntigo    := PrinterName;
    try
      Filtro         := fiPDF;
      MostrarPreview := false;
      MostrarSetup   := false;
-
+     PrinterName    := '';
      Imprimir;
    finally
      Filtro         := FiltroAntigo;
      MostrarPreview := MostrarPreviewAntigo;
      MostrarSetup   := MostrarSetupAntigo;
+     PrinterName    := PrinterNameAntigo;
    end;
 end;
 
@@ -2231,6 +2237,7 @@ var
    FiltroAntigo         : TACBrBoletoFCFiltro;
    MostrarPreviewAntigo : Boolean;
    MostrarSetupAntigo   : Boolean;
+   PrinterNameAntigo    : String;
 begin
    if NomeArquivo = '' then
       raise Exception.Create( ACBrStr('NomeArquivo não especificado')) ;
@@ -2238,17 +2245,18 @@ begin
    FiltroAntigo         := Filtro;
    MostrarPreviewAntigo := MostrarPreview;
    MostrarSetupAntigo   := MostrarSetup;
-
+   PrinterNameAntigo    := PrinterName;
    try
      Filtro         := fiHTML;
      MostrarPreview := false;
      MostrarSetup   := false;
-
+     PrinterName    := '';
      Imprimir;
    finally
      Filtro         := FiltroAntigo;
      MostrarPreview := MostrarPreviewAntigo;
      MostrarSetup   := MostrarSetupAntigo;
+     PrinterName    := PrinterNameAntigo;
    end;
 end;
 

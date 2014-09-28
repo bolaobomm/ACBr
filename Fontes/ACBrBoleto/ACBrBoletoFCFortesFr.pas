@@ -216,7 +216,6 @@ type
     RLLabel92: TRLLabel;
     RLLabel96: TRLLabel;
     RLLabel98: TRLLabel;
-    txtNumBarcode: TRLLabel;
     txtLocal: TRLMemo;
     txtLocalPagamento3: TRLMemo;
     txtNomeSacado: TRLLabel;
@@ -468,7 +467,7 @@ begin
   {$IFDEF FPC}
    LoadPortugueseStrings;
   {$ELSE}
-   // Para que serve esse método ?? //
+   // Evitando mensagem de versão do fortes //
    SetVersion( CommercialVersion, ReleaseVersion, CommentVersion );
   {$ENDIF}
 
@@ -484,6 +483,8 @@ begin
 
         RLPrinter.Copies     := NumCopias ;  // Aparentemente isso está errado... :(
         RLLayout.PrintDialog := MostrarSetup;
+        if PrinterName <> '' then
+           RLPrinter.PrinterName := PrinterName;
 
         if Filtro = fiNenhum then
          begin
@@ -709,7 +710,6 @@ begin
      txtSacadorAvalista3.Caption     := txtSacadorAvalista2.Caption;
 
      imgCodigoBarra.Caption          := CodBarras;
-     txtNumBarcode.Caption           := CodBarras;
      txtLinhaDigitavel.Caption       := LinhaDigitavel;
      txtInstrucoes3.Lines.Text       := txtInstrucoes2.Lines.Text;
    end;
@@ -773,9 +773,6 @@ begin
       txtLinhaDigitavelCarne.Caption := LinhaDigitavel;
       imgBarrasCarne.Caption := CodBarras;
    end;
-
-
-
 end;
 
 procedure TACBrBoletoFCFortesFr.RLBand4BeforePrint(Sender: TObject;

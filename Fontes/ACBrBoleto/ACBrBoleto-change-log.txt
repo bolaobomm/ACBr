@@ -47,10 +47,16 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+Data: 28/09/2014
+-- ACBrBoletoFCClass --
+[+] Adicionada a propriedade "PrinterName"
+
+-- ACBrBoletoFcFortes --
+[*] Adicionado tratamento para a propriedade: "PrinterName"
+[-] Correção de exception ao listar o relatorio
 
 Data: 17/09/2014 ver. 0.0.97a
--- ACBrBoleto  --
---ACBrBancoSantander 
+--ACBrBancoSantander
 [*] Ajustes leitura retorno CNAB240 conforme manual atualizado. (por Jeter Rabelo/Luiz Paulo)
 http://www.projetoacbr.com.br/forum/index.php?/topic/16236-santander-cnab2340-homologado/
 
