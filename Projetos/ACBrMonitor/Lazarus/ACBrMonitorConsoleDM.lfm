@@ -82,4 +82,18 @@ object dm: Tdm
     left = 417
     top = 12
   end
+  object ACBrSedex1: TACBrSedex
+    ProxyPort = '8080'
+    Peso = 0
+    Formato = TpfCaixaPacote
+    Comprimento = 0
+    Altura = 0
+    Largura = 0
+    ValorDeclarado = 0
+    Servico = Tps41106PAC
+    Diametro = 0
+    UrlConsulta = 'http://ws.correios.com.br/calculador/CalcPrecoPrazo.aspx?'
+    left = 417
+    top = 80
+  end
 end

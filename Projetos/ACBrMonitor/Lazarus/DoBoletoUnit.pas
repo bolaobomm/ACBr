@@ -68,7 +68,12 @@ begin
          Cmd.Resposta:= IntToStr(ListadeBoletos.Count)
 
       else if cmd.Metodo = 'imprimir' then
+       begin
+         if Cmd.Params(0) <> '' then
+            ACBrMonitor1.FrmACBrMonitor.ACBrBoletoFCFortes1.PrinterName := Cmd.Params(0);
+
          Imprimir
+       end
 
       else if cmd.Metodo = 'gerarpdf' then
          GerarPDF

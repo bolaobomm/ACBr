@@ -103,7 +103,7 @@
         <PackageName Value="LCL"/>
       </Item8>
     </RequiredPackages>
-    <Units Count="20">
+    <Units Count="21">
       <Unit0>
         <Filename Value="ACBrMonitor.lpr"/>
         <IsPartOfProject Value="True"/>
@@ -213,6 +213,11 @@
         <IsPartOfProject Value="True"/>
         <UnitName Value="DoEmailUnit"/>
       </Unit19>
+      <Unit20>
+        <Filename Value="DoSedexUnit.pas"/>
+        <IsPartOfProject Value="True"/>
+        <UnitName Value="DoSedexUnit"/>
+      </Unit20>
     </Units>
   </ProjectOptions>
   <CompilerOptions>
@@ -240,7 +245,7 @@
     </Other>
   </CompilerOptions>
   <Debugging>
-    <Exceptions Count="12">
+    <Exceptions Count="13">
       <Item1>
         <Name Value="EAbort"/>
       </Item1>
@@ -277,6 +282,9 @@
       <Item12>
         <Name Value="EACBrECFTimeOut"/>
       </Item12>
+      <Item13>
+        <Name Value="EACBrSedexException"/>
+      </Item13>
     </Exceptions>
   </Debugging>
 </CONFIG>

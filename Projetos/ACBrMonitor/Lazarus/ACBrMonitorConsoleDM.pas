@@ -39,7 +39,8 @@ uses
   SysUtils, Classes,
   CmdUnit , blcksock,
   ACBrUtil, ACBrLCB, ACBrDIS, ACBrGAV, ACBrDevice, ACBrCHQ,
-  ACBrECF, ACBrRFD, ACBrBAL, ACBrETQ, ACBrSocket, ACBrCEP, ACBrIBGE, ACBrMail ;
+  ACBrECF, ACBrRFD, ACBrBAL, ACBrETQ, ACBrSocket, ACBrCEP, 
+  ACBrIBGE, ACBrMail, ACBrSedex ;
 
 const
    {$I versao.txt}
@@ -61,6 +62,7 @@ type
     ACBrRFD1: TACBrRFD;
     ACBrBAL1: TACBrBAL;
     ACBrETQ1: TACBrETQ;
+    ACBrSedex1:TACBrSedex;
     procedure ACBrCEP1AntesAbrirHTTP(var AURL : String) ;
     procedure DataModuleCreate(Sender: TObject);
     procedure DataModuleDestroy(Sender: TObject);
@@ -118,7 +120,8 @@ Uses IniFiles, UtilUnit,
      {$IFDEF MSWINDOWS} sndkey32, {$ENDIF}
      {$IFDEF LINUX} unix, baseunix, termio, {$ENDIF}
      DoACBrUnit, DoECFUnit, DoGAVUnit, DoCHQUnit, DoDISUnit, DoLCBUnit,
-     DoBALUnit , DoETQUnit, DoCEPUnit, DoIBGEUnit, DoEmailUnit, typinfo;
+     DoBALUnit , DoETQUnit, DoCEPUnit, DoIBGEUnit, DoEmailUnit, DoSedexUnit,
+     typinfo;
 
 {$R *.lfm}
 
@@ -497,8 +500,9 @@ begin
            else if Cmd.Objeto = 'IBGE' then
              DoIBGE( Cmd )
            else if Cmd.Objeto = 'EMAIL' then
-             DoEmail ( Cmd );
-
+             DoEmail ( Cmd )
+           else if Cmd.Objeto = 'SEDEX' then
+             DoSedex(Cmd);
 
            Resposta(Linha, 'OK: '+Cmd.Resposta );
         except

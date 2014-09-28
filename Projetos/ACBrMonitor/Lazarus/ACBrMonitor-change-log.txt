@@ -43,6 +43,10 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+28/09/2014
+[+]   Adicionada configuração para Impressora padrão na Aba Boleto
+[+]   Adicionado suporte ao componente ACBrSedex
+
 Versão 0.10.9.1 16/09/14
 [-]   Correção para tratamento de arquivos de Entrada (ENT.TXT) com linhas em
       branco no final do arquivo, ocasionando a não geração do arquivo SAI.TXT   (por: DSA)

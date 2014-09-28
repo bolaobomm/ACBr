@@ -41,7 +41,8 @@ uses
   CmdUnit, ACBrECF, ACBrDIS, ACBrGAV, ACBrDevice, ACBrCHQ, ACBrLCB, ACBrRFD, { Unit do ACBr }
   Dialogs, ExtCtrls, Menus, Buttons, StdCtrls, ComCtrls, Controls, Graphics,
   Spin, MaskEdit, EditBtn, ACBrBAL, ACBrETQ, ACBrSocket, ACBrCEP, ACBrIBGE,
-  blcksock, ACBrValidador, ACBrGIF, ACBrBoleto, ACBrBoletoFCFortesFr, ACBrEAD, ACBrMail;
+  blcksock, ACBrValidador, ACBrGIF, ACBrBoleto, ACBrBoletoFCFortesFr, ACBrEAD, 
+  ACBrMail, ACBrSedex, Printers;
 
 const
   {$I versao.txt}
@@ -65,6 +66,7 @@ type
     ACBrGIF1 : TACBrGIF ;
     ACBrIBGE1 : TACBrIBGE ;
     ACBrMail1: TACBrMail;
+    ACBrSedex1: TACBrSedex;
     ACBrValidador1 : TACBrValidador ;
     ApplicationProperties1: TApplicationProperties;
     bBALAtivar: TBitBtn;
@@ -96,7 +98,9 @@ type
     bRSALoadKey: TButton;
     bRSAPrivKey: TButton;
     bRSAPubKey: TButton;
+    bSedexRastrear: TButton;
     bTCAtivar: TBitBtn;
+    bSedexTestar: TButton;
     cbBALModelo: TComboBox;
     cbBALPorta: TComboBox;
     cbCEPWebService: TComboBox;
@@ -144,6 +148,21 @@ type
     chRFDIgnoraMFD: TCheckBox;
     ckgBOLMostrar: TCheckGroup;
     cbEmailCodificacao: TComboBox;
+    cbxBOLImpressora: TComboBox;
+    cbxSedexServico: TComboBox;
+    cbxSedexMaoPropria: TComboBox;
+    cbxSedexFormato: TComboBox;
+    cbxSedexAvisoReceb: TComboBox;
+    edtSedexContrato: TEdit;
+    edtSedexValorDeclarado: TEdit;
+    edtSedexSenha: TEdit;
+    edtSedexCEPOrigem: TEdit;
+    edtSedexCEPDestino: TEdit;
+    edtSedexPeso: TEdit;
+    edtSedexComprimento: TEdit;
+    edtSedexLargura: TEdit;
+    edtSedexAltura: TEdit;
+    edtSedexDiametro: TEdit;
     edtBOLEmailAssunto: TEdit;
     gbEmailDados: TGroupBox;
     deBOLDirArquivo: TDirectoryEdit;
@@ -226,6 +245,12 @@ type
     Image1 : TImage ;
     Label1: TLabel;
     Label10: TLabel;
+    Label100: TLabel;
+    Label101: TLabel;
+    Label102: TLabel;
+    Label103: TLabel;
+    Label104: TLabel;
+    Label105: TLabel;
     Label11: TLabel;
     Label12: TLabel;
     Label13: TLabel;
@@ -259,6 +284,8 @@ type
     Label39: TLabel;
     Label4: TLabel;
     Label40: TLabel;
+    Label41: TLabel;
+    Label42: TLabel;
     Label43: TLabel;
     Label44: TLabel;
     Label45: TLabel;
@@ -314,6 +341,13 @@ type
     Label90: TLabel;
     Label91: TLabel;
     Label92: TLabel;
+    Label93: TLabel;
+    Label94: TLabel;
+    Label95: TLabel;
+    Label96: TLabel;
+    Label97: TLabel;
+    Label98: TLabel;
+    Label99: TLabel;
     lAdSufixo: TLabel;
     lblBOLAgencia: TLabel;
     lblBOLBairro: TLabel;
@@ -419,6 +453,7 @@ type
     TabControl1: TTabControl;
     TabSheet1: TTabSheet;
     TabSheet2: TTabSheet;
+    TabSheet3: TTabSheet;
     tsEmail: TTabSheet;
     tsContaBancaria: TTabSheet;
     tsECFParamI: TTabSheet;
@@ -466,9 +501,15 @@ type
     procedure bEmailTestarConfClick(Sender: TObject);
     procedure bIBGETestarClick(Sender : TObject) ;
     procedure bRSAeECFcClick(Sender : TObject) ;
+    procedure bSedexRastrearClick(Sender: TObject);
+    procedure bSedexTestarClick(Sender: TObject);
     procedure cbxBOLFiltroChange ( Sender: TObject ) ;
     procedure cbxBOLF_JChange ( Sender: TObject ) ;
     procedure cbCEPWebServiceChange(Sender : TObject) ;
+    procedure cbxSedexAvisoRecebChange(Sender: TObject);
+    procedure cbxSedexFormatoChange(Sender: TObject);
+    procedure cbxSedexMaoPropriaChange(Sender: TObject);
+    procedure cbxSedexServicoChange(Sender: TObject);
     procedure chECFArredondaMFDClick(Sender: TObject);
     procedure chECFControlePortaClick(Sender: TObject);
     procedure chECFIgnorarTagsFormatacaoClick(Sender: TObject);
@@ -673,7 +714,7 @@ uses IniFiles, TypInfo, LCLType, strutils,
   {$IFDEF LINUX} unix, baseunix, termio, {$ENDIF}
   ACBrECFNaoFiscal, ACBrUtil, ACBrConsts, Math, Sobre, DateUtils,
   ConfiguraSerial,
-  DoECFBemafi32, DoECFObserver, DoETQUnit, DoEmailUnit;
+  DoECFBemafi32, DoECFObserver, DoETQUnit, DoEmailUnit, DoSedexUnit;
 
 {$R *.lfm}
 
@@ -808,7 +849,10 @@ begin
     Inc(iCEP);
   end;
 
-  TrayIcon1.Icon.Assign(Self.Icon);
+  { Carregando lista de impressoras}
+  cbxBOLImpressora.Items.Clear;
+  cbxBOLImpressora.Items.Assign(Printer.Printers);
+
   TrayIcon1.Hint := 'ACBrMonitor ' + Versao;
   TrayIcon1.BalloonTitle := TrayIcon1.Hint;
   TrayIcon1.BalloonHint := 'Projeto ACBr' + sLineBreak + 'http://acbr.sf.net';
@@ -1138,6 +1182,52 @@ begin
   end ;
 end;
 
+procedure TFrmACBrMonitor.bSedexRastrearClick(Sender: TObject);
+var
+   CodRastreio : String ;
+begin
+  CodRastreio := '' ;
+
+  if not InputQuery('Código de Rastreio','Entre com o Código de Rastreio', CodRastreio ) then
+     exit ;
+
+  ACBrSedex1.Rastrear(CodRastreio);
+  mResp.Lines.Add( ProcessarRespostaRastreio );
+end;
+
+procedure TFrmACBrMonitor.bSedexTestarClick(Sender: TObject);
+Var
+  AMsg : String ;
+  I : Integer ;
+begin
+  AMsg := '';
+
+  with ACBrSedex1 do
+  begin
+     Formato          := TACBrTpFormato(cbxSedexFormato.ItemIndex);
+     MaoPropria       := (cbxSedexMaoPropria.ItemIndex = 0);
+     AvisoRecebimento := (cbxSedexAvisoReceb.ItemIndex = 0);
+     Servico          := TACBrTpServico(cbxSedexAvisoReceb.ItemIndex);
+     CodContrato      := edtSedexContrato.Text;
+     Senha            := edtSedexSenha.Text;
+     CepOrigem        := edtSedexCEPOrigem.Text;
+     CepDestino       := edtSedexCEPDestino.Text;
+     Peso             := StrToFloatDef(edtSedexPeso.Text,0);
+     Comprimento      := StrToFloatDef(edtSedexComprimento.Text,0);
+     Largura          := StrToFloatDef(edtSedexLargura.Text,0);
+     Altura           := StrToFloatDef(edtSedexAltura.Text,0);
+     Diametro         := StrToFloatDef(edtSedexDiametro.Text,0);
+     ValorDeclarado   := StrToFloatDef(edtSedexValorDeclarado.Text,0);
+
+     if ACBrSedex1.Consultar then
+       AMsg := ProcessarRespostaSedex
+     else
+       AMsg := 'Erro na consulta';
+  end;
+
+  mResp.Lines.Add(AMsg);
+end;
+
 procedure TFrmACBrMonitor.cbxBOLFiltroChange ( Sender: TObject ) ;
 begin
    deBOLDirArquivo.Enabled := (cbxBOLFiltro.ItemIndex > 0) ;
@@ -1163,6 +1253,26 @@ procedure TFrmACBrMonitor.cbCEPWebServiceChange(Sender : TObject) ;
 begin
   ACBrCEP1.WebService := TACBrCEPWebService( cbCEPWebService.ItemIndex ) ;
   edCEPChaveBuscarCEP.Enabled := (ACBrCEP1.WebService in [wsBuscarCep, wsCepLivre]) ;
+end;
+
+procedure TFrmACBrMonitor.cbxSedexAvisoRecebChange(Sender: TObject);
+begin
+  ACBrSedex1.AvisoRecebimento := (cbxSedexAvisoReceb.ItemIndex = 0);
+end;
+
+procedure TFrmACBrMonitor.cbxSedexFormatoChange(Sender: TObject);
+begin
+  ACBrSedex1.Formato := TACBrTpFormato(cbxSedexFormato.ItemIndex);
+end;
+
+procedure TFrmACBrMonitor.cbxSedexMaoPropriaChange(Sender: TObject);
+begin
+  ACBrSedex1.MaoPropria := (cbxSedexMaoPropria.ItemIndex = 0);
+end;
+
+procedure TFrmACBrMonitor.cbxSedexServicoChange(Sender: TObject);
+begin
+  ACBrSedex1.Servico := TACBrTpServico(cbxSedexServico.ItemIndex);
 end;
 
 procedure TFrmACBrMonitor.chECFArredondaMFDClick(Sender: TObject);
@@ -1333,6 +1443,7 @@ var
   IpList : TStringList ;
   I : Integer ;
 begin
+  cbxBOLImpressora.Items.Assign(Printer.Printers);
   Timer1.Enabled := False;
   Inicio := False;
   Erro := '';
@@ -1704,7 +1815,8 @@ begin
     deBolDirRemessa.Text     := Ini.ReadString('BOLETO', 'DirArquivoRemessa','');
     deBolDirRetorno.Text     := Ini.ReadString('BOLETO', 'DirArquivoRetorno','');
     cbxCNAB.ItemIndex        := Ini.ReadInteger('BOLETO', 'CNAB',0);
-
+    {Parametro do Boleto Impressora}
+    cbxBOLImpressora.ItemIndex:= cbxBOLImpressora.Items.IndexOf(Ini.ReadString( 'BOLETO','Impressora','')) ;
     {Parametros do Boleto - E-mail}
     edtBOLEmailAssunto.Text  := Ini.ReadString('BOLETO', 'EmailAssuntoBoleto','');
     edtBOLEmailMensagem.Text := StringReplace(Ini.ReadString('BOLETO', 'EmailMensagemBoleto',''),
@@ -1721,6 +1833,9 @@ begin
     cbEmailTls.Checked       := Ini.ReadBool('EMAIL', 'ExigeTLS', False);
     cbEmailCodificacao.Text  := Ini.ReadString('EMAIL', 'Codificacao', '');
 
+    {Parametro Sedex}
+    edtSedexContrato.Text    := Ini.ReadString('SEDEX', 'Contrato', '');
+    edtSedexSenha.Text       := LeINICrypt(Ini,'SEDEX', 'SenhaSedex', _C);
   finally
     Ini.Free;
   end;
@@ -1875,6 +1990,12 @@ begin
     ProxyPass  := edCONProxyPass.Text;
   end ;
 
+  with ACBrSedex1 do
+  begin
+    CodContrato := edtSedexContrato.Text;
+    Senha       := edtSedexSenha.Text;
+  end;
+
   with ACBrBoleto1 do
   begin
     Cedente.Nome := edtBOLRazaoSocial.Text;
@@ -1930,6 +2051,7 @@ begin
     DirLogo        := deBOLDirLogo.Text;
     MostrarPreview := ckgBOLMostrar.Checked[0];
     MostrarSetup   := ckgBOLMostrar.Checked[1];
+    PrinterName    := cbxBOLImpressora.Text;
 
     wNomeArquivo := Trim(deBOLDirArquivo.Text);
     if wNomeArquivo = '' then
@@ -2156,6 +2278,9 @@ begin
     Ini.WriteBool(    'EMAIL', 'ExigeTLS', cbEmailTls.Checked);
     Ini.WriteString(  'EMAIL', 'Codificacao', cbEmailCodificacao.Text);
 
+    { Parametros Sedex }
+    Ini.WriteString(  'SEDEX', 'Contrato', edtSedexContrato.Text);
+    GravaINICrypt(Ini,'SEDEX', 'SenhaSedex', edtSedexSenha.Text, _C);
   finally
     Ini.Free;
   end;
@@ -2285,6 +2410,8 @@ begin
      ini.WriteString('BOLETO', 'EmailAssuntoBoleto', edtBOLEmailAssunto.Text);
      ini.WriteString('BOLETO', 'EmailMensagemBoleto', StringReplace(edtBOLEmailMensagem.Text,
                                                                     LineEnding, '|', [rfReplaceAll]));
+      {Parametros do Boleto - Impressora}
+     Ini.WriteString( 'BOLETO', 'Impressora', cbxBOLImpressora.Text) ;
    finally
       ini.Free;
    end;
@@ -2483,7 +2610,9 @@ begin
         else if fsCmd.Objeto = 'IBGE' then
           DoIBGE(fsCmd)
         else if fsCmd.Objeto = 'EMAIL' then
-          DoEmail(fsCmd);
+          DoEmail(fsCmd)
+        else if fsCmd.Objeto = 'SEDEX' then
+          DoSedex(fsCmd);
 
         // Atualiza Memo de Entrada //
         mCmd.Lines.Assign( fsProcessar );
