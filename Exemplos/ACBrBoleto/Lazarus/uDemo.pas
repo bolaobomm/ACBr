@@ -206,11 +206,8 @@ end;
 procedure TfrmDemo.btnIncluiBoletoClick ( Sender: TObject ) ;
 var
   Titulo : TACBrTitulo;
-  teste: String;
-  teste2: String;
 begin
      Titulo := ACBrBoleto1.CriarTituloNaLista;
-     teste2 := edtCarteira.Text;
 
      with Titulo do
      begin
@@ -222,7 +219,7 @@ begin
            Aceite := atSim
         else
            Aceite := atNao;
-        Carteira          :=  teste2; //edtCarteira.Text;
+        Carteira          := edtCarteira.Text;
         DataProcessamento := Now;
         NossoNumero       := edtNossoNro.Text;
         ValorDocumento    := StrToCurr(edtValorDoc.Text);
@@ -250,9 +247,6 @@ begin
         Instrucao2        := padL(trim(edtInstrucoes2.Text),2,'0');
         {Parcela := 1;
         TotalParcelas := 1};
-
-        teste2:= edtCarteira.Text;
-        teste:= Carteira;
 
        // ACBrBoleto1.AdicionarMensagensPadroes(Titulo,Mensagem);
      end;

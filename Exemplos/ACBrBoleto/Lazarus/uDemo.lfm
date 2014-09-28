@@ -8,7 +8,7 @@ object frmDemo: TfrmDemo
   ClientWidth = 811
   OnCreate = FormCreate
   Position = poScreenCenter
-  LCLVersion = '1.1'
+  LCLVersion = '1.2.4.0'
   object GroupBox2: TGroupBox
     Left = 8
     Height = 72
@@ -267,7 +267,7 @@ object frmDemo: TfrmDemo
       Top = 24
       Width = 176
       TabOrder = 0
-      Text = '0000000001'
+      Text = '00000001'
     end
     object Label4: TLabel
       Left = 6
@@ -708,8 +708,11 @@ object frmDemo: TfrmDemo
   end
   object ACBrBoleto1: TACBrBoleto
     Banco.Numero = 104
-    Banco.TamanhoMaximoNossoNum = 15
+    Banco.TamanhoMaximoNossoNum = 0
     Banco.TipoCobranca = cobCaixaSicob
+    Banco.OrientacoesBanco.Strings = (
+      'SAC CAIXA: 0800 726 0101 (informações,reclamações e elogios) '#13#10'Para pessoas com deficiência auditiva ou de fala: 0800 726 2492 '#13#10'Ouvidoria: 0800 725 7474 (reclamações não solucionadas e denúncias)'#13#10'     caixa.gov.br      '
+    )
     Cedente.Nome = 'teste cedente'
     Cedente.CodigoCedente = '166087000000032'
     Cedente.Agencia = '01073'
@@ -718,6 +721,7 @@ object frmDemo: TfrmDemo
     Cedente.ContaDigito = '8'
     Cedente.Modalidade = '019'
     Cedente.Convenio = '899283'
+    Cedente.TipoDocumento = Tradicional
     Cedente.CNPJCPF = '82.961.095/0001-74'
     Cedente.TipoInscricao = pJuridica
     Cedente.Logradouro = 'Rua  XI de Agosto'
