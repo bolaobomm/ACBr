@@ -90,35 +90,35 @@ implementation
 
 procedure TForm1.btnConsultarClick(Sender: TObject);
 begin
-ACBrSedex1.CodContrato := EdtContrato.Text;
-ACBrSedex1.Senha := EdtSenha.Text;
-ACBrSedex1.CepOrigem := EditCEPOrigem.Text;
-ACBrSedex1.CepDestino := EditCEPDestino.Text;
-ACBrSedex1.Peso := StrToFloatDef(EditPeso.Text,0);
-ACBrSedex1.Formato := TACBrTpFormato(cbFormato.ItemIndex);
-ACBrSedex1.MaoPropria := TACBrMaoPropria(cbMaoPropria.ItemIndex);
-ACBrSedex1.AvisoRecebimento := TACBrAvisoRecebimento(cbAvisoReceb.ItemIndex);
-ACBrSedex1.Comprimento := StrToFloatDef(EditComprimento.Text,0);
-ACBrSedex1.Largura := StrToFloatDef(EditLargura.Text,0);
-ACBrSedex1.Altura := StrToFloatDef(EditAltura.Text,0);
-ACBrSedex1.Servico := TACBrTpServico(cbAvisoReceb.ItemIndex);
-ACBrSedex1.Diametro := StrToFloatDef(EditDiametro.Text,0);
-ACBrSedex1.ValorDeclarado := StrToFloatDef(EditValorDeclarado.Text,0);
+  ACBrSedex1.CodContrato := EdtContrato.Text;
+  ACBrSedex1.Senha := EdtSenha.Text;
+  ACBrSedex1.CepOrigem := EditCEPOrigem.Text;
+  ACBrSedex1.CepDestino := EditCEPDestino.Text;
+  ACBrSedex1.Peso := StrToFloatDef(EditPeso.Text,0);
+  ACBrSedex1.Formato := TACBrTpFormato(cbFormato.ItemIndex);
+  ACBrSedex1.MaoPropria := (cbMaoPropria.ItemIndex = 0);
+  ACBrSedex1.AvisoRecebimento := (cbAvisoReceb.ItemIndex = 0);
+  ACBrSedex1.Comprimento := StrToFloatDef(EditComprimento.Text,0);
+  ACBrSedex1.Largura := StrToFloatDef(EditLargura.Text,0);
+  ACBrSedex1.Altura := StrToFloatDef(EditAltura.Text,0);
+  ACBrSedex1.Servico := TACBrTpServico(cbAvisoReceb.ItemIndex);
+  ACBrSedex1.Diametro := StrToFloatDef(EditDiametro.Text,0);
+  ACBrSedex1.ValorDeclarado := StrToFloatDef(EditValorDeclarado.Text,0);
 
- if Not ACBrSedex1.Consultar  then
-  MessageDlg('Não Foi Possivel Fazer a Consulta:'+sLineBreak+
-   IntToStr(ACBrSedex1.retErro)+' - '+ACBrSedex1.retMsgErro, mtError, [mbOK], 0)
- Else
- Begin
- retCodigoServico.Text := ACBrSedex1.retCodigoServico;
- retValorFrete.Text := FloatToStr(ACBrSedex1.retValor);
- retValorMaoPropria.Text := FloatToStr(ACBrSedex1.retValorMaoPropria);
- retValorAvisoReceb.Text := FloatToStr(ACBrSedex1.retValorAvisoRecebimento);
- retValorDeclarado.Text := FloatToStr(ACBrSedex1.retValorValorDeclarado);
- retEntregaDomiciliar.Text := ACBrSedex1.retEntregaDomiciliar;
- retEntregaSabado.Text := ACBrSedex1.retEntregaSabado;
- retPrzEntrega.Text := IntToStr(ACBrSedex1.retPrazoEntrega);
- End;
+  if Not ACBrSedex1.Consultar  then
+    MessageDlg('Não Foi Possivel Fazer a Consulta:'+sLineBreak+
+    IntToStr(ACBrSedex1.retErro)+' - '+ACBrSedex1.retMsgErro, mtError, [mbOK], 0)
+  Else
+  Begin
+    retCodigoServico.Text := ACBrSedex1.retCodigoServico;
+    retValorFrete.Text := FloatToStr(ACBrSedex1.retValor);
+    retValorMaoPropria.Text := FloatToStr(ACBrSedex1.retValorMaoPropria);
+    retValorAvisoReceb.Text := FloatToStr(ACBrSedex1.retValorAvisoRecebimento);
+    retValorDeclarado.Text := FloatToStr(ACBrSedex1.retValorValorDeclarado);
+    retEntregaDomiciliar.Text := ACBrSedex1.retEntregaDomiciliar;
+    retEntregaSabado.Text := ACBrSedex1.retEntregaSabado;
+    retPrzEntrega.Text := IntToStr(ACBrSedex1.retPrazoEntrega);
+  End;
 end;
 
 procedure TForm1.Button1Click(Sender: TObject);
@@ -133,17 +133,17 @@ except
 End;
 
 
-For i := 0 to ACBrSedex1.Rastreio.Count -1 Do
- Begin
- ClientDataSet1.Append;
+For i := 0 to ACBrSedex1.retRastreio.Count -1 Do
+Begin
+  ClientDataSet1.Append;
 
- ClientDataSet1Data.Value := ACBrSedex1.Rastreio[i].DataHora;
- ClientDataSet1Local.Value := ACBrSedex1.Rastreio[i].Local;
- ClientDataSet1Situacao.Value := ACBrSedex1.Rastreio[i].Situacao ;
- ClientDataSet1Observacao.Value := ACBrSedex1.Rastreio[i].Observacao;
+  ClientDataSet1Data.Value := ACBrSedex1.retRastreio[i].DataHora;
+  ClientDataSet1Local.Value := ACBrSedex1.retRastreio[i].Local;
+  ClientDataSet1Situacao.Value := ACBrSedex1.retRastreio[i].Situacao ;
+  ClientDataSet1Observacao.Value := ACBrSedex1.retRastreio[i].Observacao;
 
- ClientDataSet1.Post;
- End;
+  ClientDataSet1.Post;
+  End;
 end;
 
 procedure TForm1.FormShow(Sender: TObject);

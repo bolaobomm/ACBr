@@ -1,5 +1,5 @@
 object Form1: TForm1
-  Left = 488
+  Left = 478
   Top = 119
   Width = 565
   Height = 536
@@ -20,7 +20,6 @@ object Form1: TForm1
     Width = 549
     Height = 498
     Align = alClient
-    PageIndex = 1
     TabFont.Charset = DEFAULT_CHARSET
     TabFont.Color = clBtnText
     TabFont.Height = -11
@@ -1070,8 +1069,6 @@ object Form1: TForm1
   object ACBrSedex1: TACBrSedex
     ProxyPort = '8080'
     Formato = TpfCaixaPacote
-    MaoPropria = mpNao
-    AvisoRecebimento = arNao
     Servico = Tps41106PAC
     UrlConsulta = 'http://ws.correios.com.br/calculador/CalcPrecoPrazo.aspx?'
     Left = 488
