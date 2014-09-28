@@ -37,6 +37,18 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+28/09/2014
+-- ACBrSedex -- (por: DSA)
+[*] Propriedades "MaoPropria" e "AvisoRecebimento" modificadas para Boolean
+[*] Melhorias no tratamento de erro do método "Rastrear"
+[*] Melhorias para suportar UTF8 e Lazarus
+[*] Identação e limpeza de código
+
+12/09/2014
+-- ACBrSedex --
+[+] Adicionado componente ACBrSedex (por: Datilas)
+http://www.projetoacbr.com.br/forum/index.php?/topic/17388-correios-calculo-de-sedex-pac/
+
 18/07/2014
 -- ACBrMail --
 [+] Adicionado o método SendThread, para enviar e-mail por thread;

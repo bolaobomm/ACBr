@@ -31,7 +31,6 @@
 {                                                                              }
 { Daniel Simões de Almeida  -  daniel@djsystem.com.br  -  www.djsystem.com.br  }
 {              Praça Anita Costa, 34 - Tatuí - SP - 18270-410                  }
-
 {******************************************************************************}
 {******************************************************************************
 |* Historico
@@ -46,34 +45,44 @@ unit ACBrSedex;
 interface
 
 uses
- Classes, SysUtils, contnrs, ACBrSocket, ACBrUtil;
+  Classes, SysUtils, contnrs, ACBrSocket, ACBrUtil;
+
+const
+  CURL_SEDEX = 'http://ws.correios.com.br/calculador/CalcPrecoPrazo.aspx?';
 
 type
- TACBrTpServico = (Tps41106PAC, Tps40010SEDEX, Tps40215SEDEX10, Tps40290SEDEXHOJE, Tps81019eSEDEX, Tps44105MALOTE,
- Tps85480AEROGRAMA, Tps10030CARTASIMPLES, Tps10014CARTAREGISTRADA, Tps16012CARTAOPOSTAL, Tps20010IMPRESSO, Tps14010MALADIRETA,
- Tps40010SEDEXVarejo, Tps40045SEDEXaCobrarVarejo, Tps40215SEDEX10Varejo, Tps40290SEDEXHojeVarejo, Tps41106PACVarejo);
+  TACBrTpServico = (Tps41106PAC, Tps40010SEDEX, Tps40215SEDEX10,
+    Tps40290SEDEXHOJE, Tps81019eSEDEX, Tps44105MALOTE,
+    Tps85480AEROGRAMA, Tps10030CARTASIMPLES, Tps10014CARTAREGISTRADA,
+    Tps16012CARTAOPOSTAL, Tps20010IMPRESSO, Tps14010MALADIRETA,
+    Tps40010SEDEXVarejo, Tps40045SEDEXaCobrarVarejo, Tps40215SEDEX10Varejo,
+    Tps40290SEDEXHojeVarejo, Tps41106PACVarejo);
 
- TACBrTpFormato = (TpfCaixaPacote, TpfRoloPrisma, TpfEnvelope);
+  TACBrTpFormato = (TpfCaixaPacote, TpfRoloPrisma, TpfEnvelope);
 
- TACBrMaoPropria = (mpSim, mpNao);
+  { EACBrSedexException }
 
- TACBrAvisoRecebimento = (arSim, arNao);
+  EACBrSedexException = class(Exception)
+  public
+    constructor CreateACBrStr(const msg : string);
+  end ;
 
- EACBrSedexException = class(Exception);
+  { TACBrRastreio }
 
   TACBrRastreio = class
   private
     fDataHora: TDateTime;
     fLocal: string;
     fSituacao: string;
-    fObservacao:String;
-
+    fObservacao: string;
   public
     property DataHora: TDateTime read fDataHora write fDataHora;
-    property Local: string read fLocal write fLocal;
-    property Situacao: string read fSituacao write fSituacao;
-    property Observacao: string read fObservacao write fObservacao;
+    property Local: String read fLocal write fLocal;
+    property Situacao: String read fSituacao write fSituacao;
+    property Observacao: String read fObservacao write fObservacao;
   end;
+
+  { TACBrRastreioClass }
 
   TACBrRastreioClass = class(TObjectList)
   protected
@@ -82,118 +91,98 @@ type
   public
     function Add(Obj: TACBrRastreio): integer;
     function New: TACBrRastreio;
-    property Objects[Index: integer]: TACBrRastreio read GetObject write SetObject; default;
+    property Objects[Index: integer]: TACBrRastreio read GetObject write SetObject;
+      default;
   end;
 
+  { TACBrSedex }
+
   TACBrSedex = class(TACBrHTTP)
-
   private
-   fsCodContrato: string;
-   fsDsSenha: string;
-   fsCepOrigem: string;
-   fsCepDestino: string;
-   fnVlPeso: Double;
-   fnCdFormato: TACBrTpFormato;
-   fnVlComprimento: Double;
-   fnVlAltura: Double;
-   fnVlLargura: Double;
-   fsCdMaoPropria: TACBrMaoPropria;
-   fnVlValorDeclarado: Double;
-   fsCdAvisoRecebimento: TACBrAvisoRecebimento;
-   fnCdServico: TACBrTpServico;
-   fnVlDiametro: Double;
-   fUrlConsulta: string;
+    fsCodContrato: String;
+    fsDsSenha: String;
+    fsCepOrigem: String;
+    fsCepDestino: String;
+    fnVlPeso: Double;
+    fnCdFormato: TACBrTpFormato;
+    fnVlComprimento: Double;
+    fnVlAltura: Double;
+    fnVlLargura: Double;
+    fsMaoPropria: Boolean;
+    fnVlValorDeclarado: Double;
+    fsAvisoRecebimento: Boolean;
+    fnCdServico: TACBrTpServico;
+    fnVlDiametro: Double;
+    fUrlConsulta: String;
 
-   fCodigoServico: String;
-   fValor: Double;
-   fPrazoEntrega: Integer;
-   fValorSemAdicionais: Double;
-   fValorMaoPropria: Double;
-   fValorAvisoRecebimento: Double;
-   fValorValorDeclarado: Double;
-   fEntregaDomiciliar: String;
-   fEntregaSabado: String;
-   fErro: Integer;
-   fMsgErro: String;
-
-   fRastreio : TACBrRastreioClass;
-
-   procedure SetTpServico(const AValue: TACBrTpServico);
-   procedure SetTpFormato(const AValue: TACBrTpFormato);
-   procedure SetMaoPropria(const AValue: TACBrMaoPropria);
-   procedure SetAvisoRecebimento(const AValue: TACBrAvisoRecebimento);
-
+    fCodigoServico: String;
+    fValor: Double;
+    fPrazoEntrega: Integer;
+    fValorSemAdicionais: Double;
+    fValorMaoPropria: Double;
+    fValorAvisoRecebimento: Double;
+    fValorValorDeclarado: Double;
+    fEntregaDomiciliar: String;
+    fEntregaSabado: String;
+    fErro: Integer;
+    fMsgErro: String;
+    fRastreio: TACBrRastreioClass;
   public
-   constructor Create(AOwner: TComponent); override;
-   destructor Destroy; override;
-   function Consultar: Boolean;
-   Procedure Rastrear(Const CodRastreio:String);
-   property retCodigoServico: string read fCodigoServico write fCodigoServico;
-   property retValor: Double read fValor write fValor;
-   property retPrazoEntrega: Integer read fPrazoEntrega write fPrazoEntrega;
-   property retValorSemAdicionais: Double read fValorSemAdicionais write fValorSemAdicionais;
-   property retValorMaoPropria: Double read fValorMaoPropria write fValorMaoPropria;
-   property retValorAvisoRecebimento: Double read fValorAvisoRecebimento write fValorAvisoRecebimento;
-   property retValorValorDeclarado: Double read fValorValorDeclarado write fValorValorDeclarado;
-   property retEntregaDomiciliar: String read fEntregaDomiciliar write fEntregaDomiciliar;
-   property retEntregaSabado: String read fEntregaSabado write fEntregaSabado;
-   property retErro: Integer read fErro write fErro;
-   property retMsgErro: String read fMsgErro write fMsgErro;
-   property Rastreio: TACBrRastreioClass read fRastreio write fRastreio;
+    constructor Create(AOwner: TComponent); override;
+    destructor Destroy; override;
+
+    function Consultar: Boolean;
+    procedure Rastrear(const CodRastreio: String);
+
+    property retCodigoServico: String read fCodigoServico write fCodigoServico;
+    property retValor: Double read fValor write fValor;
+    property retPrazoEntrega: Integer read fPrazoEntrega write fPrazoEntrega;
+    property retValorSemAdicionais: Double read fValorSemAdicionais
+      write fValorSemAdicionais;
+    property retValorMaoPropria: Double read fValorMaoPropria write fValorMaoPropria;
+    property retValorAvisoRecebimento: Double
+      read fValorAvisoRecebimento write fValorAvisoRecebimento;
+    property retValorValorDeclarado: Double
+      read fValorValorDeclarado write fValorValorDeclarado;
+    property retEntregaDomiciliar: String read fEntregaDomiciliar
+      write fEntregaDomiciliar;
+    property retEntregaSabado: String read fEntregaSabado write fEntregaSabado;
+    property retErro: Integer read fErro write fErro;
+    property retMsgErro: String read fMsgErro write fMsgErro;
+
+    property retRastreio: TACBrRastreioClass read fRastreio write fRastreio;
 
   published
-   property CodContrato: string read fsCodContrato write fsCodContrato;
-   property Senha: string read fsDsSenha write fsDsSenha;
-   property CepOrigem: string read fsCepOrigem write fsCepOrigem;
-   property CepDestino: string read fsCepDestino write fsCepDestino;
-   property Peso: Double read fnVlPeso write fnVlPeso;
-   property Formato: TACBrTpFormato read fnCdFormato write fnCdFormato;
-   property Comprimento: Double read fnVlComprimento write fnVlComprimento;
-   property Altura: Double read fnVlAltura write fnVlAltura;
-   property Largura: Double read fnVlLargura write fnVlLargura;
-   property MaoPropria: TACBrMaoPropria read fsCdMaoPropria write fsCdMaoPropria;
-   property ValorDeclarado: Double read fnVlValorDeclarado write fnVlValorDeclarado;
-   property AvisoRecebimento: TACBrAvisoRecebimento read fsCdAvisoRecebimento write fsCdAvisoRecebimento;
-   property Servico: TACBrTpServico read fnCdServico write fnCdServico;
-   property Diametro: Double read fnVlDiametro write fnVlDiametro;
-   property UrlConsulta: string read fUrlConsulta write fUrlConsulta;
+    property CodContrato: String read fsCodContrato write fsCodContrato;
+    property Senha: String read fsDsSenha write fsDsSenha;
+    property CepOrigem: String read fsCepOrigem write fsCepOrigem;
+    property CepDestino: String read fsCepDestino write fsCepDestino;
+    property Peso: Double read fnVlPeso write fnVlPeso;
+    property Formato: TACBrTpFormato read fnCdFormato write fnCdFormato;
+    property Comprimento: Double read fnVlComprimento write fnVlComprimento;
+    property Altura: Double read fnVlAltura write fnVlAltura;
+    property Largura: Double read fnVlLargura write fnVlLargura;
+    property MaoPropria: Boolean read fsMaoPropria write fsMaoPropria
+      default false;
+    property ValorDeclarado: Double read fnVlValorDeclarado write fnVlValorDeclarado;
+    property AvisoRecebimento: Boolean read fsAvisoRecebimento write fsAvisoRecebimento
+      default false;
+    property Servico: TACBrTpServico read fnCdServico write fnCdServico;
+    property Diametro: Double read fnVlDiametro write fnVlDiametro;
+    property UrlConsulta: String read fUrlConsulta write fUrlConsulta;
   end;
 
 
 implementation
 
-constructor TACBrSedex.Create(AOwner: TComponent);
-begin
-  inherited;
-  fRastreio := TACBrRastreioClass.Create;
-  fRastreio.Clear;
-  fsCodContrato := '';
-  fsDsSenha := '';
-  fsCepOrigem := '';
-  fsCepDestino := '';
-  fnVlPeso := 0;
-  fnCdFormato := TpfCaixaPacote;
-  fnVlComprimento := 0;
-  fnVlAltura := 0;
-  fnVlLargura := 0;
-  fsCdMaoPropria := mpNao;
-  fnVlValorDeclarado := 0;
-  fsCdAvisoRecebimento := arNao;
-  fnCdServico := Tps41106PAC;
-  fUrlConsulta := 'http://ws.correios.com.br/calculador/CalcPrecoPrazo.aspx?';
+{ EACBrSedexException }
 
-  fCodigoServico := '';
-  fValor := 0;
-  fPrazoEntrega := 0;
-  fValorSemAdicionais := 0;
-  fValorMaoPropria := 0;
-  fValorAvisoRecebimento := 0;
-  fValorValorDeclarado := 0;
-  fEntregaDomiciliar := '';
-  fEntregaSabado := '';
-  fErro := 0;
-  fMsgErro := '';
+constructor EACBrSedexException.CreateACBrStr(const msg: string);
+begin
+  inherited Create( ACBrStr(msg) );
 end;
+
+{ TACBrRastreioClass }
 
 procedure TACBrRastreioClass.SetObject(Index: integer; Item: TACBrRastreio);
 begin
@@ -216,148 +205,156 @@ begin
   Result := inherited Add(Obj);
 end;
 
+{ TACBrSedex }
+
+constructor TACBrSedex.Create(AOwner: TComponent);
+begin
+  inherited Create(AOwner);
+
+  fRastreio := TACBrRastreioClass.Create;
+  fRastreio.Clear;
+  fsCodContrato := '';
+  fsDsSenha := '';
+  fsCepOrigem := '';
+  fsCepDestino := '';
+  fnVlPeso := 0;
+  fnCdFormato := TpfCaixaPacote;
+  fnVlComprimento := 0;
+  fnVlAltura := 0;
+  fnVlLargura := 0;
+  fsMaoPropria := False;
+  fnVlValorDeclarado := 0;
+  fsAvisoRecebimento := False;
+  fnCdServico := Tps41106PAC;
+  fUrlConsulta := CURL_SEDEX;
+
+  fCodigoServico := '';
+  fValor := 0;
+  fPrazoEntrega := 0;
+  fValorSemAdicionais := 0;
+  fValorMaoPropria := 0;
+  fValorAvisoRecebimento := 0;
+  fValorValorDeclarado := 0;
+  fEntregaDomiciliar := '';
+  fEntregaSabado := '';
+  fErro := 0;
+  fMsgErro := '';
+end;
 
 destructor TACBrSedex.Destroy;
 begin
- fRastreio.Free;
+  fRastreio.Free;
   inherited Destroy;
-end;
-
-procedure TACBrSedex.SetTpServico(const AValue: TACBrTpServico);
-begin
-  if fnCdServico = AValue then
-    exit;
-  fnCdServico := AValue;
-end;
-
-procedure TACBrSedex.SetTpFormato(const AValue: TACBrTpFormato);
-begin
-  if fnCdFormato = AValue then
-    exit;
-  fnCdFormato := AValue;
-end;
-
-procedure TACBrSedex.SetMaoPropria(const AValue: TACBrMaoPropria);
-begin
-  if fsCdMaoPropria = AValue then
-    exit;
-  fsCdMaoPropria := AValue;
-end;
-
-procedure TACBrSedex.SetAvisoRecebimento(const AValue: TACBrAvisoRecebimento);
-begin
-  if fsCdAvisoRecebimento = AValue then
-    exit;
-  fsCdAvisoRecebimento := AValue;
 end;
 
 function TACBrSedex.Consultar: Boolean;
 var
-  TpServico, TpFormato, TpMaoPropria, TpAvisoRecebimento,
-  Buffer: string;
+  TpServico, TpFormato, TpMaoPropria, TpAvisoRecebimento, Buffer: string;
 begin
-Result := False;
- if fnCdServico = Tps41106PAC then
-  TpServico := '41106'
- else if fnCdServico = Tps40010SEDEX then
-  TpServico := '40010'
- else if fnCdServico = Tps40215SEDEX10 then
-  TpServico := '40215'
-  else if fnCdServico = Tps40290SEDEXHOJE then
-  TpServico := '40290'
- else if fnCdServico = Tps81019eSEDEX then
-  TpServico := '81019'
- else if fnCdServico = Tps44105MALOTE then
-  TpServico := '44105'
- else if fnCdServico = Tps85480AEROGRAMA then
-  TpServico := '85480'
- else if fnCdServico = Tps10030CARTASIMPLES then
-  TpServico := '10030'
- else if fnCdServico = Tps10014CARTAREGISTRADA then
-  TpServico := '10014'
- else if fnCdServico = Tps16012CARTAOPOSTAL then
-  TpServico := '16012'
- else if fnCdServico = Tps20010IMPRESSO then
-  TpServico := '20010'
- else if fnCdServico = Tps14010MALADIRETA then
-  TpServico := '14010'
- else if fnCdServico = Tps40010SEDEXVarejo then
-    TpServico := '40010'
- else if fnCdServico = Tps40045SEDEXaCobrarVarejo then
-  TpServico := '40045'
- else if fnCdServico = Tps40215SEDEX10Varejo then
-  TpServico := '40215'
- else if fnCdServico = Tps40290SEDEXHojeVarejo then
-  TpServico := '40290'
- else if fnCdServico = Tps41106PACVarejo then
-  TpServico := '41106'
- Else raise EACBrSedexException.Create('Tipo de Serviço Invalido');
+  case fnCdServico of
+    Tps41106PAC :
+      TpServico := '41106';
+    Tps40010SEDEX :
+      TpServico := '40010';
+    Tps40215SEDEX10 :
+      TpServico := '40215';
+    Tps40290SEDEXHOJE :
+      TpServico := '40290';
+    Tps81019eSEDEX :
+      TpServico := '81019';
+    Tps44105MALOTE :
+      TpServico := '44105';
+    Tps85480AEROGRAMA :
+      TpServico := '85480';
+    Tps10030CARTASIMPLES :
+      TpServico := '10030';
+    Tps10014CARTAREGISTRADA :
+      TpServico := '10014';
+    Tps16012CARTAOPOSTAL :
+      TpServico := '16012';
+    Tps20010IMPRESSO :
+      TpServico := '20010';
+    Tps14010MALADIRETA :
+      TpServico := '14010';
+    Tps40010SEDEXVarejo :
+      TpServico := '40010';
+    Tps40045SEDEXaCobrarVarejo :
+      TpServico := '40045';
+    Tps40215SEDEX10Varejo :
+      TpServico := '40215';
+    Tps40290SEDEXHojeVarejo :
+      TpServico := '40290';
+    Tps41106PACVarejo :
+      TpServico := '41106';
+    else
+      raise EACBrSedexException.CreateACBrStr('Tipo de Serviço Inválido');
+  end;
 
- if fnCdFormato = TpfCaixaPacote then
-  TpFormato := '1'
- Else if fnCdFormato = TpfRoloPrisma then
- TpFormato := '2'
- Else if fnCdFormato = TpfEnvelope then
- TpFormato := '3'
- Else raise EACBrSedexException.Create('Formato da Embalagem Inavlido');
+  case fnCdFormato of
+    TpfCaixaPacote :
+      TpFormato := '1';
+    TpfRoloPrisma :
+      TpFormato := '2';
+    TpfEnvelope :
+      TpFormato := '3';
+    else
+      raise EACBrSedexException.CreateACBrStr('Formato da Embalagem Inválido');
+  end;
 
- if fsCdMaoPropria = mpSim then
- TpMaoPropria := 'S'
- Else if fsCdMaoPropria = mpNao then
- TpMaoPropria := 'N'
- Else raise EACBrSedexException.Create('Mao Propria Invalida');
+  if fsMaoPropria then
+    TpMaoPropria := 'S'
+  else
+    TpMaoPropria := 'N';
 
- if fsCdAvisoRecebimento = arSim then
- TpAvisoRecebimento := 'S'
- Else if fsCdAvisoRecebimento = arNao then
- TpAvisoRecebimento := 'N'
- Else raise EACBrSedexException.Create('Aviso de Recebimento Invalido');
+  if fsAvisoRecebimento then
+    TpAvisoRecebimento := 'S'
+  else
+    TpAvisoRecebimento := 'N';
 
- try
-  Self.HTTPGet(fUrlConsulta+
-   'nCdEmpresa='+fsCodContrato+
-   '&sDsSenha='+fsDsSenha+
-   '&sCepOrigem='+OnlyNumber(fsCepOrigem)+
-   '&sCepDestino='+OnlyNumber(fsCepDestino)+
-   '&nVlPeso='+FormatFloat('#,000',fnVlPeso)+
-   '&nCdFormato='+TpFormato+
-   '&nVlComprimento='+FormatFloat('#,000',fnVlComprimento)+
-   '&nVlAltura='+FormatFloat('#,000',fnVlAltura)+
-   '&nVlLargura='+FormatFloat('#,000',fnVlLargura)+
-   '&sCdMaoPropria='+TpMaoPropria+
-   '&nVlValorDeclarado='+FormatFloat('#0,00',fnVlValorDeclarado)+
-   '&sCdAvisoRecebimento='+TpAvisoRecebimento+
-   '&nCdServico='+TpServico+
-   '&nVlDiametro='+FormatFloat('#,000',fnVlDiametro)+
-   '&StrRetorno=xml');
- except
-  on E: Exception do
-   begin
-    raise EACBrSedexException.Create('Erro ao consultar Sedex' + #13#10 + E.Message);
-   end;
- end;
+  try
+    Self.HTTPGet(fUrlConsulta +
+      'nCdEmpresa=' + fsCodContrato +
+      '&sDsSenha=' + fsDsSenha +
+      '&sCepOrigem=' + OnlyNumber(fsCepOrigem) +
+      '&sCepDestino=' + OnlyNumber(fsCepDestino) +
+      '&nVlPeso=' + FormatFloat('#,000', fnVlPeso) +
+      '&nCdFormato=' + TpFormato +
+      '&nVlComprimento=' + FormatFloat('#,000', fnVlComprimento) +
+      '&nVlAltura=' + FormatFloat('#,000', fnVlAltura) +
+      '&nVlLargura=' + FormatFloat('#,000', fnVlLargura) +
+      '&sCdMaoPropria=' + TpMaoPropria +
+      '&nVlValorDeclarado=' + FormatFloat('#0,00', fnVlValorDeclarado) +
+      '&sCdAvisoRecebimento=' + TpAvisoRecebimento +
+      '&nCdServico=' + TpServico +
+      '&nVlDiametro=' + FormatFloat('#,000', fnVlDiametro) +
+      '&StrRetorno=xml');
+  except
+    on E: Exception do
+    begin
+      raise EACBrSedexException.Create('Erro ao consultar Sedex' + sLineBreak + E.Message);
+    end;
+  end;
 
- Buffer := Self.RespHTTP.Text;
+  Buffer := Self.RespHTTP.Text;
 
- retCodigoServico := LerTagXml(Buffer,'Codigo',True);
- retvalor := StrToFloat(LerTagXml(Buffer,'Valor',True));
- retPrazoEntrega := StrToInt(LerTagXml(Buffer,'PrazoEntrega',True));
- retValorSemAdicionais := StrToFloat(LerTagXml(Buffer,'ValorSemAdicionais',True));
- retValorMaoPropria := StrToFloat(LerTagXml(Buffer,'ValorMaoPropria',True));
- retValorAvisoRecebimento := StrToFloat(LerTagXml(Buffer,'ValorAvisoRecebimento',True));
- retValorValorDeclarado := StrToFloat(LerTagXml(Buffer,'ValorValorDeclarado',True));;
- retEntregaDomiciliar := LerTagXml(Buffer,'EntregaDomiciliar',True);
- retEntregaSabado := LerTagXml(Buffer,'EntregaSabado',True);
- retErro := StrToInt(LerTagXml(Buffer,'Erro',True));
- retMsgErro := LerTagXml(Buffer,'MsgErro',True);
- retMsgErro := StringReplace(retMsgErro,'<![CDATA[','',[rfReplaceAll]);
- retMsgErro := StringReplace(retMsgErro,']]>','',[rfReplaceAll]);
+  retCodigoServico         := LerTagXml(Buffer, 'Codigo', True);
+  retvalor                 := StrToFloat(LerTagXml(Buffer, 'Valor', True));
+  retPrazoEntrega          := StrToInt(LerTagXml(Buffer, 'PrazoEntrega', True));
+  retValorSemAdicionais    := StrToFloat(LerTagXml(Buffer, 'ValorSemAdicionais', True));
+  retValorMaoPropria       := StrToFloat(LerTagXml(Buffer, 'ValorMaoPropria', True));
+  retValorAvisoRecebimento := StrToFloat(LerTagXml(Buffer, 'ValorAvisoRecebimento', True));
+  retValorValorDeclarado   := StrToFloat(LerTagXml(Buffer, 'ValorValorDeclarado', True));
+  retEntregaDomiciliar     := LerTagXml(Buffer, 'EntregaDomiciliar', True);
+  retEntregaSabado         := LerTagXml(Buffer, 'EntregaSabado', True);
+  retErro                  := StrToInt(LerTagXml(Buffer, 'Erro', True));
+  retMsgErro               := LerTagXml(Buffer, 'MsgErro', True);
 
+  retMsgErro := StringReplace(retMsgErro, '<![CDATA[', '', [rfReplaceAll]);
+  retMsgErro := StringReplace(retMsgErro, ']]>', '', [rfReplaceAll]);
 
-
- if retErro = 0 then
- Result := True;
+  Result := (retErro = 0);
 end;
+
 //Código de erro Mensagem de erro
 //0 Processamento com sucesso
 //-1 Código de serviço inválido
@@ -412,11 +409,11 @@ end;
 //011 CEP inicial e final pertencentes a Área de Risco
 //7 Serviço indisponível, tente mais tarde
 //99 Outros erros diversos do .Net
-Procedure TACBrSedex.Rastrear(const CodRastreio: String);
-Var
- sl1: TStringList;
- i,cont:Integer;
- vobs:String;
+procedure TACBrSedex.Rastrear(const CodRastreio: String);
+var
+  SL: TStringList;
+  I, Cont: integer;
+  vObs, Erro: String;
 
   function CopyDeAte(Texto, TextIni, TextFim: string): string;
   var
@@ -431,51 +428,63 @@ Var
     end;
   end;
 begin
- If Length(CodRastreio) <> 13 Then
-  raise EACBrSedexException.Create('Código de rastreamento deve conter 13 caracteres');
+  retRastreio.Clear;
 
- try
-  Self.HTTPGet('http://websro.correios.com.br/sro_bin/txect01$.QueryList?P_LINGUA=001&P_TIPO=001&P_COD_UNI='+CodRastreio);
- except
-  on E: Exception do
-   begin
-    raise EACBrSedexException.Create('Erro ao Rastrear' + #13#10 + E.Message);
-   end;
- end;
+  if Length(CodRastreio) <> 13 then
+    raise EACBrSedexException.CreateACBrStr('Código de rastreamento deve conter 13 caracteres');
 
- if Pos('O nosso sistema não possui dados sobre o objeto',Self.RespHTTP.Text) > 0 Then
- raise EACBrSedexException.Create('O nosso sistema não possui dados sobre o objeto' + #13#10 +
- 'informado. Se o objeto foi postado recentemente, é natural que seus rastros não tenham ingressado no sistema,' + #13#10 +
- 'nesse caso, por favor, tente novamente mais tarde. Adicionalmente,' + #13#10 +
- 'verifique se o código digitado está correto: '+CodRastreio);
-
- Try
- sl1 := TStringList.Create;
- sl1.Text := Self.RespHTTP.Text;
- cont := sl1.Count -1;
-
-  For i := cont DownTo 0 Do
-  Begin
-   If Pos('colspan',sl1[i]) > 0 Then
-    Begin
-    vObs := CopyDeAte(sl1[i],'colspan=2>','</td></tr>');
-    end
-   Else
-   If Pos('rowspan',sl1[i]) > 0 Then
-    Begin
-    with Rastreio.New do
-     begin
-     DataHora := StrToDateTime(Copy(sl1[i],19,16)+':00');
-     Local := CopyDeAte(sl1[i],'</td><td>','</td><td><FONT');
-     Situacao := CopyDeAte(sl1[i],'">','</font>');
-     Observacao := vObs;
-     End;
-     vObs := '';
+  try
+    Self.HTTPGet(
+      'http://websro.correios.com.br/sro_bin/txect01$.QueryList?P_LINGUA=001&P_TIPO=001&P_COD_UNI='
+      + CodRastreio);
+  except
+    on E: Exception do
+    begin
+      raise EACBrSedexException.Create('Erro ao Rastrear' + sLineBreak + E.Message);
     end;
-  End;
- Finally
-  sl1.Free;
- End;
-End;
+  end;
+
+  //DEBUG
+  //Self.RespHTTP.SaveToFile('C:\TEMP\RASTREIO.HTML');
+
+  if Pos(ACBrStr('Não Disponível!'), Self.RespHTTP.Text) > 0 then
+  begin
+    Erro := Trim(StripHTML(Self.RespHTTP.Text));
+    Erro := Trim(StringReplace(Erro,'SRO - Internet','',[rfReplaceAll]));
+    Erro := Trim(StringReplace(Erro,'Resultado da Pesquisa','',[rfReplaceAll]));
+
+    //Self.RespHTTP.Text := Erro ;
+    //Self.RespHTTP.SaveToFile('C:\TEMP\RASTREIO.txt');
+
+    raise EACBrSedexException.Create(Erro);
+  end;
+
+  SL := TStringList.Create;
+  try
+    SL.Text := Self.RespHTTP.Text;
+    Cont := SL.Count - 1;
+
+    for I := cont downto 0 do
+    begin
+      if Pos('colspan', SL[I]) > 0 then
+        vObs := CopyDeAte(SL[I], 'colspan=2>', '</td></tr>')
+
+      else if Pos('rowspan', SL[I]) > 0 then
+      begin
+        with retRastreio.New do
+        begin
+          DataHora   := StrToDateTime(Copy(SL[I], 19, 16) + ':00');
+          Local      := CopyDeAte(SL[I], '</td><td>', '</td><td><FONT');
+          Situacao   := CopyDeAte(SL[I], '">', '</font>');
+          Observacao := vObs;
+        end;
+
+        vObs := '';
+      end;
+    end;
+  finally
+    SL.Free;
+  end;
+end;
 
 end.
