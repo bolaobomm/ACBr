@@ -335,18 +335,21 @@ begin
     end;
   end;
 
+  //DEBUG
+  //Self.RespHTTP.SaveToFile('C:\TEMP\CONSULTA.HTML');
+
   Buffer := Self.RespHTTP.Text;
 
   retCodigoServico         := LerTagXml(Buffer, 'Codigo', True);
-  retvalor                 := StrToFloat(LerTagXml(Buffer, 'Valor', True));
-  retPrazoEntrega          := StrToInt(LerTagXml(Buffer, 'PrazoEntrega', True));
-  retValorSemAdicionais    := StrToFloat(LerTagXml(Buffer, 'ValorSemAdicionais', True));
-  retValorMaoPropria       := StrToFloat(LerTagXml(Buffer, 'ValorMaoPropria', True));
-  retValorAvisoRecebimento := StrToFloat(LerTagXml(Buffer, 'ValorAvisoRecebimento', True));
-  retValorValorDeclarado   := StrToFloat(LerTagXml(Buffer, 'ValorValorDeclarado', True));
+  retvalor                 := StringToFloatDef(LerTagXml(Buffer, 'Valor', True),-1);
+  retPrazoEntrega          := StrToIntDef(LerTagXml(Buffer, 'PrazoEntrega', True),-1);
+  retValorSemAdicionais    := StringToFloatDef(LerTagXml(Buffer, 'ValorSemAdicionais', True),-1);
+  retValorMaoPropria       := StringToFloatDef(LerTagXml(Buffer, 'ValorMaoPropria', True),-1);
+  retValorAvisoRecebimento := StringToFloatDef(LerTagXml(Buffer, 'ValorAvisoRecebimento', True),-1);
+  retValorValorDeclarado   := StringToFloatDef(LerTagXml(Buffer, 'ValorValorDeclarado', True),-1);
   retEntregaDomiciliar     := LerTagXml(Buffer, 'EntregaDomiciliar', True);
   retEntregaSabado         := LerTagXml(Buffer, 'EntregaSabado', True);
-  retErro                  := StrToInt(LerTagXml(Buffer, 'Erro', True));
+  retErro                  := StrToIntDef(LerTagXml(Buffer, 'Erro', True),-1);
   retMsgErro               := LerTagXml(Buffer, 'MsgErro', True);
 
   retMsgErro := StringReplace(retMsgErro, '<![CDATA[', '', [rfReplaceAll]);

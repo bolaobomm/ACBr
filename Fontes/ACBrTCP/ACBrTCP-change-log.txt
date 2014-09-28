@@ -43,6 +43,7 @@ Símbolo : Significado
 [*] Melhorias no tratamento de erro do método "Rastrear"
 [*] Melhorias para suportar UTF8 e Lazarus
 [*] Identação e limpeza de código
+[-] Ajuste para tratar corretamente Valores com Separador Decimal diferente de '.'
 
 12/09/2014
 -- ACBrSedex --
