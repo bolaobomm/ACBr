@@ -1462,7 +1462,7 @@ Begin
   IF UF = 'GO' Then Mascara := '**.***.***-*';
   IF UF = 'MA' Then Mascara := '*********';
   IF UF = 'MT' Then Mascara := '**********-*';
-  IF UF = 'MS' Then Mascara := '**.***.***-*'
+  IF UF = 'MS' Then Mascara := '**.***.***-*';
   IF UF = 'MG' Then Mascara := '***.***.***/****';
   IF UF = 'PA' Then Mascara := '**-******-*';
   IF UF = 'PB' Then Mascara := '********-*';
