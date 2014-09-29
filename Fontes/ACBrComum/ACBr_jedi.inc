@@ -527,6 +527,8 @@
   HAS_AUTOMATIC_DB_FIELDS        Database fields are automatically created/refreshed (D20+)
   HAS_EARGUMENTEXCEPTION         Exception class EArgumentException is available (D14+)
   HAS_ENOTIMPLEMENTED            Exception class ENotImplemented is available (D15+)
+  HAS_UNIT_VCL_THEMES            Unit Vcl.Themes is available (D16+)
+  HAS_UNIT_UXTHEME               Unit (Vcl.)UxTheme is available (D7+)
 
 
 - Compiler Settings
@@ -908,16 +910,16 @@
 
     {$IFDEF UNKNOWN_COMPILER_VERSION} // adjust for newer version (always use latest version)
       {$DEFINE BDS}
-      {$DEFINE BDS14}
-      {$DEFINE COMPILER20}
+      {$DEFINE BDS15}
+      {$DEFINE COMPILER21}
       {$IFDEF BCB}
-        {$DEFINE BCB20}
+        {$DEFINE BCB21}
       {$ELSE}
-        {$DEFINE DELPHI20}
-        {$DEFINE DELPHIXE6} // synonym to DELPHI20
-        {$DEFINE DELPHICOMPILER20}
+        {$DEFINE DELPHI21}
+        {$DEFINE DELPHIXE7} // synonym to DELPHI20
+        {$DEFINE DELPHICOMPILER21}
       {$ENDIF BCB}
-      {$DEFINE RTL270_UP}
+      {$DEFINE RTL280_UP}
       {$UNDEF UNKNOWN_COMPILER_VERSION}
     {$ENDIF}
 
@@ -1507,6 +1509,10 @@
   {$DEFINE XPLATFORM_RTL}
 {$ENDIF RTL140_UP}
 
+{$IFDEF RTL150_UP}
+  {$DEFINE HAS_UNIT_UXTHEME}
+{$ENDIF RTL150_UP}
+
 {$IFDEF RTL170_UP}
   {$DEFINE HAS_UNIT_HTTPPROD}
 {$ENDIF RTL170_UP}
@@ -1534,6 +1540,7 @@
 {$IFDEF RTL230_UP}
   {$DEFINE HAS_UNITSCOPE}
   {$DEFINE HAS_UNIT_SYSTEM_UITYPES}
+  {$DEFINE HAS_UNIT_VCL_THEMES}
 {$ENDIF RTL230_UP}
 
 {$IFDEF RTL240_UP}
