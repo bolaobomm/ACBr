@@ -53,6 +53,8 @@ var
 
 implementation
 
+{$R *.lfm}
+
 procedure TfrValidador.FormCreate(Sender: TObject);
 begin
   edIgnorar.Text := ACBrValidador1.IgnorarChar ;
@@ -125,9 +127,6 @@ procedure TfrValidador.edDoctoChange(Sender: TObject);
 begin
   mMsgErro.Lines.Clear ;
 end;
-
-initialization
-  {$I validadorteste1.lrs}
 
 end.
 
