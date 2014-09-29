@@ -3319,6 +3319,8 @@ begin
 
     FRetornoWS := EnviarDadosWebService(FURL,SoapAction,Texto);
     FRetWS := SeparaDados( FRetornoWS,'nfeInutilizacaoNF2Result');
+    if FRetWS = '' then
+      FRetWS := SeparaDados( FRetornoWS,'nfeInutilizacaoNFResult');
 
     if FConfiguracoes.Geral.Salvar then
      begin
