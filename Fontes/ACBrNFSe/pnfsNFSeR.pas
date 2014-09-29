@@ -829,6 +829,21 @@ begin
       NFSe.Servico.Valores.DescontoIncondicionado := Leitor.rCampo(tcDe2, 'DescontoIncondicionado');
      end;
 
+    // Incluido por Italo em 29/09/2014
+    if NFSe.Servico.Valores.ValorLiquidoNfse = 0 then
+      NFSe.Servico.Valores.ValorLiquidoNfse := NFSe.Servico.Valores.ValorServicos -
+                                               NFSe.Servico.Valores.DescontoIncondicionado -
+                                               NFSe.Servico.Valores.DescontoCondicionado -
+                                               // Retenções Federais
+                                               NFSe.Servico.Valores.ValorPis -
+                                               NFSe.Servico.Valores.ValorCofins -
+                                               NFSe.Servico.Valores.ValorIr -
+                                               NFSe.Servico.Valores.ValorInss -
+                                               NFSe.Servico.Valores.ValorCsll -
+
+                                               NFSe.Servico.Valores.OutrasRetencoes -
+                                               NFSe.Servico.Valores.ValorIssRetido;
+
    end; // fim serviço
 
   if Leitor.rExtrai(3, 'PrestadorServico') <> ''
