@@ -310,6 +310,11 @@ begin
             qrlLinha2.Caption := 'Não possui valor fiscal, simples representação da EPEC indicada abaixo.';
             qrlLinha3.Caption := 'CONSULTE A AUTENTICIDADE DA EPEC NO SITE DA SEFAZ VIRTUAL DE CONTINGÊNCIA DO RS/SP.';
            end;
+   teMultiModal: begin
+                  qrlLinha1.Caption := 'REGISTRO DO MULTIMODAL';
+                  qrlLinha2.Caption := 'Não possui valor fiscal, simples representação do Registro indicado abaixo.';
+                  qrlLinha3.Caption := 'CONSULTE A AUTENTICIDADE DO REGISTRO NO SITE DA SEFAZ AUTORIZADORA.';
+                 end;
   end;
 end;
 
@@ -344,6 +349,7 @@ begin
        teCCe:          qrlTituloEvento.Caption := 'CARTA DE CORREÇÃO ELETRÔNICA';
        teCancelamento: qrlTituloEvento.Caption := 'CANCELAMENTO';
        teEPEC:         qrlTituloEvento.Caption := 'EVENTO PRÉVIO DE EMISSÃO EM CONTINGÊNCIA';
+       teMultimodal:   qrlTituloEvento.Caption := 'REGISTRO DO MULTIMODAL';
       end;
 
       qrlOrgao.Caption := IntToStr(InfEvento.cOrgao);
@@ -467,6 +473,7 @@ begin
   PrintBand := (FEventoCTe.InfEvento.tpEvento = teCCe) or
                (FEventoCTe.InfEvento.tpEvento = teCancelamento) or
                (FEventoCTe.InfEvento.tpEvento = teEPEC) or
+               (FEventoCTe.InfEvento.tpEvento = teMultimodal) or
                (FEventoCTe.InfEvento.tpAmb = taHomologacao);
 
   qrlMsgTeste.Visible := False;
@@ -481,9 +488,11 @@ begin
 
   qrmCondicoes.Visible := (FEventoCTe.InfEvento.tpEvento = teCCe) or
                           (FEventoCTe.InfEvento.tpEvento = teCancelamento) or
+                          (FEventoCTe.InfEvento.tpEvento = teMultimodal) or
                           (FEventoCTe.InfEvento.tpEvento = teEPEC);
   qrmCondicoes.Enabled := (FEventoCTe.InfEvento.tpEvento = teCCe) or
                           (FEventoCTe.InfEvento.tpEvento = teCancelamento) or
+                          (FEventoCTe.InfEvento.tpEvento = teMultimodal) or
                           (FEventoCTe.InfEvento.tpEvento = teEPEC);
 
   case FEventoCTe.InfEvento.tpEvento of
@@ -511,6 +520,12 @@ begin
            qrmCondicoes.Lines.Add('Valor da Carga     : ' + FormatFloat('#0.00', FEventoCTe.InfEvento.detEvento.vCarga));
            qrmCondicoes.Lines.Add('UF de inicio/fim da prestação: ' + FEventoCTe.InfEvento.detEvento.UFIni + ' / ' +
                                                                       FEventoCTe.InfEvento.detEvento.UFFim);
+          end;
+   teMultimodal: begin
+           lblTitulo_06.Caption := 'DESCRIÇÃO';
+           qrmCondicoes.Lines.Clear;
+           qrmCondicoes.Lines.Add('Documento : ' + FEventoCTe.InfEvento.detEvento.nDoc);
+           qrmCondicoes.Lines.Add('Registro  : ' + FEventoCTe.InfEvento.detEvento.xRegistro);
           end;
   end;
 end;
