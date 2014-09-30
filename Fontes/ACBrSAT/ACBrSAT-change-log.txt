@@ -47,6 +47,21 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+Data: 30/09/2013     (por: DSA)
+-- ACBrSAT --
+[*] Modificação no método "ExtrairLogs" para: ExtrairLogs(NomeArquivo: String)
+    Arquivo de Log será criado com o valor do retorno convertido de Base64 para
+    AscII
+[*] Remoção do método: DesligarSAT, pois o mesmo foi retirado da especificação:
+    2.11.4
+
+-- ACBrSATExtratoFortes --
+[+] Adicionado a propriedade: "PrinterName", para permitir atribuir a impressora
+    padrão
+[*] Tentativa de ajuste para correção de impressão de relatório em bobina com
+    muitos itens
+    (Também requer ajuste do tamanho da página da Impressora no Windows)
+
 Data: 23/09/2014     (por: DSA)
 -- ACBrSAT --
 [*] Remoção da propriedade "PathDll"

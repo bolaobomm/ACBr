@@ -190,7 +190,6 @@ type
      function ConsultarSAT : String ; virtual;
      function ConsultarStatusOperacional : String ; virtual;
      function DesbloquearSAT : String ; virtual;
-     function DesligarSAT : String ; virtual;
      function EnviarDadosVenda( dadosVenda : AnsiString ) : String ; virtual;
      function ExtrairLogs : String ; virtual;
      function TesteFimAFim( dadosVenda : AnsiString) : String ; virtual;
@@ -431,12 +430,6 @@ end ;
 function TACBrSATClass.DesbloquearSAT : String ;
 begin
   ErroAbstract('DesbloquearSAT');
-  Result := '';
-end ;
-
-function TACBrSATClass.DesligarSAT : String ;
-begin
-  ErroAbstract('DesligarSAT');
   Result := '';
 end ;
 

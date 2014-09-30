@@ -68,7 +68,6 @@ type
         codigoDeAtivacao : PAnsiChar ) : PAnsiChar ; cdecl;
      xSAT_DesbloquearSAT : function ( numeroSessao : LongInt;
         codigoDeAtivacao : PAnsiChar ) : PAnsiChar ; cdecl;
-     xSAT_DesligarSAT : function : PAnsiChar ; cdecl;
      xSAT_EnviarDadosVenda : function ( numeroSessao : LongInt;
         codigoDeAtivacao, dadosVenda : PAnsiChar) : PAnsiChar ; cdecl;
      xSAT_ExtrairLogs : function ( numeroSessao : LongInt;
@@ -103,7 +102,6 @@ type
      function ConsultarSAT : String ; override ;
      function ConsultarStatusOperacional : String ; override;
      function DesbloquearSAT : String ; override;
-     function DesligarSAT : String ; override;
      function EnviarDadosVenda( dadosVenda : AnsiString ) : String ; override;
      function ExtrairLogs : String ; override;
      function TesteFimAFim( dadosVenda : AnsiString) : String ; override;
@@ -224,17 +222,6 @@ begin
   Result := String( Resp );
 end ;
 
-function TACBrSATDinamico_cdecl.DesligarSAT : String ;
-Var
-  Resp : PAnsiChar;
-begin
-  if not Assigned( xSAT_DesligarSAT ) then
-    raise EACBrSATErro.Create('SAT_DesligarSAT não implementado em: '+NomeDLL);
-
-  Resp := xSAT_DesligarSAT ;
-  Result := String( Resp );
-end ;
-
 function TACBrSATDinamico_cdecl.EnviarDadosVenda(dadosVenda : AnsiString) : String ;
 Var
   Resp : PAnsiChar;
@@ -295,10 +282,6 @@ begin
   FunctionDetectLibSAT( 'ExtrairLogs', @xSAT_ExtrairLogs);
   FunctionDetectLibSAT( 'TesteFimAFim', @xSAT_TesteFimAFim) ;
   FunctionDetectLibSAT( 'TrocarCodigoDeAtivacao', @xSAT_TrocarCodigoDeAtivacao);
-  try
-    FunctionDetectLibSAT( 'DesligarSAT', @xSAT_DesligarSAT);
-  except
-  end;
 end;
 
 procedure TACBrSATDinamico_cdecl.UnLoadDLLFunctions;
@@ -316,7 +299,6 @@ begin
   xSAT_ConsultarSAT                   := Nil;
   xSAT_ConsultarStatusOperacional     := Nil;
   xSAT_DesbloquearSAT                 := Nil;
-  xSAT_DesligarSAT                    := Nil;
   xSAT_EnviarDadosVenda               := Nil;
   xSAT_ExtrairLogs                    := Nil;
   xSAT_TesteFimAFim                   := Nil;

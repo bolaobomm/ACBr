@@ -132,10 +132,9 @@ type
      function ConsultarSAT : String ;
      function ConsultarStatusOperacional : String ;
      function DesbloquearSAT : String ;
-     function DesligarSAT : String ;
      function EnviarDadosVenda : String ; overload;
      function EnviarDadosVenda( dadosVenda : AnsiString ) : String ; overload;
-     function ExtrairLogs : String ;
+     procedure ExtrairLogs( NomeArquivo : String );
      function TesteFimAFim( dadosVenda : AnsiString) : String ;
      function TrocarCodigoDeAtivacao(codigoDeAtivacaoOuEmergencia: AnsiString;
        opcao: Integer; novoCodigo: AnsiString): String;
@@ -428,13 +427,6 @@ begin
   Result := FinalizaComando( fsSATClass.DesbloquearSAT );
 end ;
 
-function TACBrSAT.DesligarSAT : String ;
-begin
-  fsComandoLog := 'DesligarSAT';
-  IniciaComando;
-  Result := FinalizaComando( fsSATClass.DesligarSAT );
-end ;
-
 function TACBrSAT.EnviarDadosVenda: String;
 begin
   Result := EnviarDadosVenda( CFe.GetXMLString( True ) );  // True = Gera apenas as TAGs da aplicação
@@ -460,11 +452,36 @@ begin
   end;
 end ;
 
-function TACBrSAT.ExtrairLogs : String ;
+procedure TACBrSAT.ExtrairLogs(NomeArquivo: String);
+var
+  LogBin, LogBase64: AnsiString;
+  MS: TMemoryStream;
 begin
+  if NomeArquivo = '' then
+    raise EACBrSATErro.Create('Arquivo de Logs não especificado');
+
   fsComandoLog := 'ExtrairLogs';
   IniciaComando;
-  Result := FinalizaComando( fsSATClass.ExtrairLogs );
+  FinalizaComando( fsSATClass.ExtrairLogs );
+
+  // TODO: Criar verificação para os retornos: 15002, e 11098 - SAT em processamento
+
+  // Transformando retorno, de Base64 para ASCII
+  if (Resposta.RetornoLst.Count > 5) and
+     (Resposta.codigoDeRetorno = 15000) then  // 1500 = Transferência completa
+  begin
+    LogBase64 := Resposta.RetornoLst[5];
+    LogBin    := DecodeBase64(LogBase64);
+
+    MS := TMemoryStream.Create;
+    try
+      MS.Clear;
+      MS.WriteBuffer(LogBin[1], Length(LogBin));
+      MS.SaveToFile( NomeArquivo );
+    Finally
+      MS.Free;
+    end;
+  end;
 end ;
 
 function TACBrSAT.TesteFimAFim(dadosVenda : AnsiString) : String ;
