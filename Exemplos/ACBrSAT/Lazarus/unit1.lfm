@@ -24,9 +24,9 @@ object Form1: TForm1
     Height = 250
     Top = 208
     Width = 727
-    ActivePage = tsLog
+    ActivePage = tsCancelamento
     Align = alClient
-    TabIndex = 0
+    TabIndex = 3
     TabOrder = 1
     object tsLog: TTabSheet
       Caption = 'Log de Comandos'
@@ -46,13 +46,13 @@ object Form1: TForm1
     object tsGerado: TTabSheet
       Caption = 'XML Gerado'
       ClientHeight = 222
-      ClientWidth = 717
+      ClientWidth = 719
       inline mVendaEnviar: TSynMemo
         Cursor = crIBeam
         Left = 0
         Height = 222
         Top = 0
-        Width = 717
+        Width = 719
         Align = alClient
         Font.Height = -13
         Font.Name = 'Courier New'
@@ -538,13 +538,13 @@ object Form1: TForm1
     object tsRecebido: TTabSheet
       Caption = 'XML Recebido'
       ClientHeight = 222
-      ClientWidth = 717
+      ClientWidth = 719
       inline mRecebido: TSynMemo
         Cursor = crIBeam
         Left = 0
         Height = 222
         Top = 0
-        Width = 717
+        Width = 719
         Align = alClient
         Font.Height = -13
         Font.Name = 'Courier New'
@@ -1030,13 +1030,13 @@ object Form1: TForm1
     object tsCancelamento: TTabSheet
       Caption = 'XML Cancelamento'
       ClientHeight = 222
-      ClientWidth = 717
+      ClientWidth = 719
       inline mCancelamentoEnviar: TSynMemo
         Cursor = crIBeam
         Left = 0
         Height = 197
         Top = 0
-        Width = 717
+        Width = 719
         Align = alClient
         Font.Height = -13
         Font.Name = 'Courier New'
@@ -1522,10 +1522,10 @@ object Form1: TForm1
         Left = 0
         Height = 25
         Top = 197
-        Width = 717
+        Width = 719
         Align = alBottom
         ClientHeight = 25
-        ClientWidth = 717
+        ClientWidth = 719
         TabOrder = 1
         object Label18: TLabel
           Left = 6
@@ -1542,7 +1542,7 @@ object Form1: TForm1
           Left = 127
           Height = 23
           Top = 1
-          Width = 579
+          Width = 581
           Align = alClient
           BorderSpacing.Right = 10
           TabOrder = 0
@@ -1656,9 +1656,9 @@ object Form1: TForm1
         Height = 182
         Top = 0
         Width = 552
-        ActivePage = tsDadosSAT
+        ActivePage = Impressao
         Align = alClient
-        TabIndex = 0
+        TabIndex = 3
         TabOrder = 0
         object tsDadosSAT: TTabSheet
           Caption = 'Dados do SAT CFe'
@@ -2087,13 +2087,21 @@ object Form1: TForm1
               ParentColor = False
             end
             object cbUsarFortes: TRadioButton
-              Left = 184
+              Left = 192
               Height = 19
-              Top = 16
+              Top = 0
               Width = 78
               Caption = 'Usar Fortes'
               OnClick = cbUsarFortesClick
               TabOrder = 6
+            end
+            object cbPreview: TCheckBox
+              Left = 192
+              Height = 19
+              Top = 24
+              Width = 61
+              Caption = 'Preview'
+              TabOrder = 7
             end
           end
           object GroupBox4: TGroupBox
@@ -2166,9 +2174,9 @@ object Form1: TForm1
               TabOrder = 1
             end
             object cbUsarEscPos: TRadioButton
-              Left = 16
+              Left = 8
               Height = 19
-              Top = 16
+              Top = 0
               Width = 85
               Caption = 'Usar EscPOS'
               OnClick = cbUsarEscPosClick
@@ -2298,13 +2306,6 @@ object Form1: TForm1
       object mExtrairLogs: TMenuItem
         Caption = 'Extrair Logs'
         OnClick = mExtrairLogsClick
-      end
-      object MenuItem9: TMenuItem
-        Caption = '-'
-      end
-      object mDesligarSAT: TMenuItem
-        Caption = 'Desligar SAT'
-        OnClick = mDesligarSATClick
       end
     end
     object mLimpar: TMenuItem

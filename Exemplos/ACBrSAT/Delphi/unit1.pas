@@ -62,7 +62,6 @@ type
     Label9 : TLabel ;
     MainMenu1 : TMainMenu ;
     MenuItem1 : TMenuItem ;
-    mDesligarSAT : TMenuItem ;
     MenuItem2 : TMenuItem ;
     mAtivarSAT : TMenuItem ;
     mComunicarCertificado : TMenuItem ;
@@ -81,7 +80,6 @@ type
     MenuItem8 : TMenuItem ;
     mAtaulizarSoftwareSAT : TMenuItem ;
     mConfigurarInterfaceRede : TMenuItem ;
-    MenuItem9 : TMenuItem ;
     mExtrairLogs : TMenuItem ;
     mResposta : TMemo ;
     mVenda : TMemo ;
@@ -132,7 +130,6 @@ type
     procedure mConsultarSATClick(Sender : TObject) ;
     procedure mConsultarStatusOperacionalClick(Sender : TObject) ;
     procedure mDesbloquearSATClick(Sender : TObject) ;
-    procedure mDesligarSATClick(Sender : TObject) ;
     procedure MenuItem5Click(Sender : TObject) ;
     procedure mEnviarVendaClick(Sender : TObject) ;
     procedure mExtrairLogsClick(Sender : TObject) ;
@@ -428,11 +425,6 @@ begin
   ACBrSAT1.DesbloquearSAT;
 end;
 
-procedure TForm1.mDesligarSATClick(Sender : TObject) ;
-begin
-  ACBrSAT1.DesligarSAT;
-end;
-
 procedure TForm1.MenuItem5Click(Sender : TObject) ;
 Var
   CodNovo, CodAtual, tipoCodigo: String;
@@ -497,8 +489,15 @@ begin
 end;
 
 procedure TForm1.mExtrairLogsClick(Sender : TObject) ;
+Var
+  NomeArquivo: String ;
 begin
-  ACBrSAT1.ExtrairLogs;
+  NomeArquivo := ExtractFilePath(Application.ExeName)+'SAT.LOG';
+  if not InputQuery('ExtrairLogs',
+                    'Informe o nome para criação do Arquivo de Log:', NomeArquivo ) then
+    Exit;
+
+  ACBrSAT1.ExtrairLogs( NomeArquivo );  
 end;
 
 procedure TForm1.mGerarVendaClick(Sender : TObject) ;

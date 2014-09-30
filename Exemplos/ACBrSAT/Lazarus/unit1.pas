@@ -39,6 +39,7 @@ type
     cbxRegTributario : TComboBox ;
     cbxUTF8: TCheckBox;
     cbxFormatXML: TCheckBox;
+    cbPreview: TCheckBox;
     edChaveCancelamento: TEdit;
     edLog : TEdit ;
     edtPorta: TEdit;
@@ -98,7 +99,6 @@ type
     Label9 : TLabel ;
     MainMenu1 : TMainMenu ;
     MenuItem1 : TMenuItem ;
-    mDesligarSAT : TMenuItem ;
     MenuItem2 : TMenuItem ;
     mAtivarSAT : TMenuItem ;
     mComunicarCertificado : TMenuItem ;
@@ -116,7 +116,6 @@ type
     MenuItem8 : TMenuItem ;
     mAtaulizarSoftwareSAT : TMenuItem ;
     mConfigurarInterfaceRede : TMenuItem ;
-    MenuItem9 : TMenuItem ;
     mExtrairLogs : TMenuItem ;
     mLog : TMemo ;
     mTesteFimAFim : TMenuItem ;
@@ -169,7 +168,6 @@ type
     procedure mConsultarSATClick(Sender : TObject) ;
     procedure mConsultarStatusOperacionalClick(Sender : TObject) ;
     procedure mDesbloquearSATClick(Sender : TObject) ;
-    procedure mDesligarSATClick(Sender : TObject) ;
     procedure MenuItem5Click(Sender : TObject) ;
     procedure mEnviarVendaClick(Sender : TObject) ;
     procedure mExtrairLogsClick(Sender : TObject) ;
@@ -352,6 +350,7 @@ begin
     seMargemFundo.Value    := INI.ReadInteger('Fortes','MargemFundo',ACBrSATExtratoFortes1.Margens.Fundo);
     seMargemEsquerda.Value := INI.ReadInteger('Fortes','MargemEsquerda',ACBrSATExtratoFortes1.Margens.Esquerda);
     seMargemDireita.Value  := INI.ReadInteger('Fortes','MargemDireita',ACBrSATExtratoFortes1.Margens.Direita);
+    cbPreview.Checked      := INI.ReadBool('Fortes','Preview',True);
 
     lImpressora.Caption := INI.ReadString('Printer','Name',Printer.PrinterName);
   finally
@@ -398,6 +397,7 @@ begin
     INI.WriteInteger('Fortes','MargemFundo',seMargemFundo.Value);
     INI.WriteInteger('Fortes','MargemEsquerda',seMargemEsquerda.Value);
     INI.WriteInteger('Fortes','MargemDireita',seMargemDireita.Value);
+    INI.WriteBool('Fortes','Preview',cbPreview.Checked);
 
     INI.WriteString('Printer','Name',Printer.PrinterName);
   finally
@@ -472,7 +472,7 @@ begin
   if mCancelamentoEnviar.Lines.Count < 1 then
   begin
     ACBrSAT1.CancelarUltimaVenda;
-    mCancelamentoEnviar.Lines.Text := ACBrSAT1.CFeCanc.AsXMLString;
+    mCancelamentoEnviar.Lines.Text := ACBrSAT1.CFeCanc.GetXMLString(True);
   end
   else
   begin
@@ -599,11 +599,6 @@ begin
   ACBrSAT1.DesbloquearSAT;
 end;
 
-procedure TForm1.mDesligarSATClick(Sender : TObject) ;
-begin
-  ACBrSAT1.DesligarSAT;
-end;
-
 procedure TForm1.MenuItem5Click(Sender : TObject) ;
 Var
   CodNovo, CodAtual, tipoCodigo: String;
@@ -668,13 +663,21 @@ begin
 end;
 
 procedure TForm1.mExtrairLogsClick(Sender : TObject) ;
+Var
+  NomeArquivo: String ;
 begin
-  ACBrSAT1.ExtrairLogs;
+  NomeArquivo := ExtractFilePath(Application.ExeName)+'SAT.LOG';
+  if not InputQuery('ExtrairLogs',
+                    'Informe o nome para criação do Arquivo de Log:', NomeArquivo ) then
+    Exit;
+
+  ACBrSAT1.ExtrairLogs( NomeArquivo );
 end;
 
 procedure TForm1.mGerarVendaClick(Sender : TObject) ;
 var
   TotalItem: Double;
+  A: Integer;
 begin
   PageControl1.ActivePage := tsGerado;
 
@@ -702,9 +705,11 @@ begin
     Entrega.xMun := 'municipio';
     Entrega.UF := 'RJ';
 
+    For A := 0 to 1 do  // Ajuste aqui para vender mais itens
+    begin
     with Det.Add do
     begin
-      nItem := 1;
+      nItem := 1 + (A * 3);
       Prod.cProd := 'ACBR001';
       Prod.cEAN := '6291041500213';
       Prod.xProd := 'Assinatura SAC';
@@ -745,7 +750,7 @@ begin
 
     with Det.Add do
     begin
-      nItem := 2;
+      nItem := 2 + (A * 3);
       Prod.cProd := '6291041500213';
       Prod.cEAN := '6291041500213';
       Prod.xProd := 'Outro produto Qualquer, com a Descrição Grande';
@@ -779,7 +784,7 @@ begin
 
     with Det.Add do
     begin
-      nItem := 3;
+      nItem := 3 + (A * 3);
       Prod.cProd := 'abc123';
       Prod.cEAN := '6291041500213';
       Prod.xProd := 'ACBrSAT rules';
@@ -805,6 +810,7 @@ begin
       infAdProd := 'Informacoes adicionais';
     end;
 
+    end;
     (*
     with Det.Add do
     begin
@@ -897,15 +903,16 @@ begin
   end
   else
   begin
-    ACBrSATExtratoFortes1.LarguraBobina := seLargura.Value;
-    ACBrSATExtratoFortes1.Margens.Topo  := seMargemTopo.Value ;
-    ACBrSATExtratoFortes1.Margens.Fundo := seMargemFundo.Value ;
+    ACBrSATExtratoFortes1.LarguraBobina    := seLargura.Value;
+    ACBrSATExtratoFortes1.Margens.Topo     := seMargemTopo.Value ;
+    ACBrSATExtratoFortes1.Margens.Fundo    := seMargemFundo.Value ;
     ACBrSATExtratoFortes1.Margens.Esquerda := seMargemEsquerda.Value ;
     ACBrSATExtratoFortes1.Margens.Direita  := seMargemDireita.Value ;
+    ACBrSATExtratoFortes1.MostrarPreview   := cbPreview.Checked;
 
     try
       if lImpressora.Caption <> '' then
-        Printer.SetPrinter( lImpressora.Caption );
+        ACBrSATExtratoFortes1.PrinterName := lImpressora.Caption;
     except
     end;
   end;

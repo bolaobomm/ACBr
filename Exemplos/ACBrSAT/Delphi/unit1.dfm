@@ -419,7 +419,7 @@ object Form1: TForm1
             Width = 134
             Height = 21
             Style = csDropDownList
-            ItemHeight = 0
+            ItemHeight = 13
             TabOrder = 4
           end
           object cbxIndRatISSQN: TComboBox
@@ -428,7 +428,7 @@ object Form1: TForm1
             Width = 134
             Height = 21
             Style = csDropDownList
-            ItemHeight = 0
+            ItemHeight = 13
             TabOrder = 5
           end
           object cbxRegTributario: TComboBox
@@ -437,7 +437,7 @@ object Form1: TForm1
             Width = 166
             Height = 21
             Style = csDropDownList
-            ItemHeight = 0
+            ItemHeight = 13
             TabOrder = 3
           end
         end
@@ -584,13 +584,6 @@ object Form1: TForm1
       object mExtrairLogs: TMenuItem
         Caption = 'Extrair Logs'
         OnClick = mExtrairLogsClick
-      end
-      object MenuItem9: TMenuItem
-        Caption = '-'
-      end
-      object mDesligarSAT: TMenuItem
-        Caption = 'Desligar SAT'
-        OnClick = mDesligarSATClick
       end
     end
     object Limpar1: TMenuItem
