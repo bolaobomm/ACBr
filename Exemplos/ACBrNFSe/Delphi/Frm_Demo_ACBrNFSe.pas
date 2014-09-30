@@ -403,6 +403,7 @@ begin
    ACBrNFSe1.DANFSe.Logo       := edtLogoMarca.Text;
    ACBrNFSe1.DANFSe.PrestLogo  := edtPrestLogo.Text;
    ACBrNFSe1.DANFSe.Prefeitura := edtPrefeitura.Text;
+   ACBrNFSe1.DANFSe.PathPDF    := edtPathLogs.Text;
   end;
 
  lblSchemas.Caption := ACBrNFSe1.Configuracoes.WebServices.xProvedor;
@@ -791,7 +792,9 @@ begin
   begin
    ACBrNFSe1.NotasFiscais.Clear;
    ACBrNFSe1.NotasFiscais.LoadFromFile(OpenDialog1.FileName);
+   ACBrNFSe1.Configuracoes.Arquivos.NomeLongoNFSe := True;
    ACBrNFSe1.NotasFiscais.Imprimir;
+   ACBrNFSe1.NotasFiscais.ImprimirPDF;
 
    MemoDados.Lines.Add('Arquivo Carregado de: '+ACBrNFSe1.NotasFiscais.Items[0].NomeArq);
    MemoDados.Lines.Add('Nota Numero: '+ACBrNFSe1.NotasFiscais.Items[0].NFSe.Numero);
