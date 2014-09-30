@@ -37,55 +37,9 @@
 {*******************************************************************************
 | Historico
 |
-| 18/03/2010: André R. Langner
-|  - Alterada fonte de Arial para Courier New.
-|  - Ajuste na disposição de campos no DANFe.
-|  - Impressao dos campos Fax, Email, Site referentes ao emitente.
-|  - Adicionado campos qrlDataHoraImpressao, qrlSistema.
-|  - Impressao de Data/Hora da impressao, Usuario, Sistema no rodapé do DANFe.
-|  - Impressao de informacoes adicionais do item logo a baixo a sua descricao
-|    em qrmProdutoDescricao.
-|  - Impressao da Hora de Saida em qrlHoraSaida.
-|  - Impressao de codigo de barras e chave em caso de impressao de formulário
-|    de segurança
-|  - Impressao de Local de Retirada e Local de Entrega em Informacoes Complementares.
-|
-| 15/12/2009: Emerson Crema
-|  - Removida a rotina Detalhes e desenvolvida a Itens.
-|  - Implementado ClientDataSet.
-|  - Correcao no totalizador de paginas.
-|
-| 11/12/2009: Emerson Crema
-|  - Ajuste no posicionamento das linhas e alinhamento de campos numéricos
-|  - Alteracao da legenda 1-Saida, 2-Entrada, para 0-Entrada, 1- Saida.
-|  - Alteracao da legenda 1-Emitente, 2-Destinatario, para
-|    0-Emitente, 1-Destinatario.
-|  - Incluida a mensagem para modo "homologação":
-|    "Este documento não tem validade jurídica"
-|    obs: precisa do componente QrAngLbl.
-|  - Habilitada a banda qrsISSQN desde q FNFE.Total.ISSQNtot.vISS > 0.
-|  - Preenchimento dos labels: qrlTotalServicos, qrlBaseISSQN, qrlValorISSQN.
-|  - Implementada ajuste na lista de itens para + d 1 pagina.
-|  - Implementado campo "Protocolo de autorizacao".
-|  - Colocada a banda de "Identificacao do recebedor" no topo.
-|
-| 20/08/2009: Caique Rodrigues
-|  - Doação units para geração do Danfe via QuickReport
-|
-| 16/12/2008: Wemerson Souto
-|  - Doação do componente para o Projeto ACBr
-|  23/11/2010: Peterson de Cerqueira Matos
-|   - Formatação das casas decimais da "Quantidade" e do "Valor Unitário"
-|   - Correção na exibição da coluna CST. Quando o emitente for "Simples
-|     Nacional - CRT=1", será exibida a informação CSOSN ao invés do CST
-|  20/05/2011: Peterson de Cerqueira Matos
-|   - Ajuste de layout quadro "duplicatas"
-|   - Ajuste no procedimento de exibição das duplicatas limitando-as em 15
-|     para evitar Acess Violation em NF-e's com mais de 15 duplicatas
-|   - Tratamento da propriedade "ExibirResumoCanhoto"
-|   - Tratamento da propriedade "ExibirResumoCanhoto_Texto"
-|  22/01/2013 : LUIS FERNANDO COSTA
-|   - Ajustado "FSistema" para que fique uma msg livre
+|  30/09/2014 : AltC
+|   - Alterado para o componente QRMemo a fim de armazenar os dados do
+|     Consumidor
 *******************************************************************************}
 
 {$I ACBr.inc}
@@ -163,7 +117,6 @@ type
     qrmPagDesc: TQRMemo;
     qrmPagValor: TQRMemo;
     QRLabel1: TQRLabel;
-    qrlDestCNPJ: TQRLabel;
     qrlDescricao: TQRLabel;
     qrlProtocolo: TQRLabel;
     QRLabel2: TQRLabel;
@@ -172,9 +125,9 @@ type
     QRLabel3: TQRLabel;
     cdsItensITEM: TStringField;
     qrmProdutoItem: TQRDBText;
-    qrlDestEnder: TQRLabel;
     qrb05a_InfComplementar: TQRChildBand;
     qrmInfComp: TQRMemo;
+    qrlDestCNPJ: TQRMemo;
     procedure QRNFeBeforePrint(Sender: TCustomQuickRep;
       var PrintReport: Boolean);
     procedure qrmProdutoDescricaoPrint(sender: TObject; var Value: string);
@@ -705,23 +658,21 @@ procedure TfqrDANFeQRNFCe.qrb07_ConsumidorBeforePrint(Sender: TQRCustomBand;
 begin
   inherited;
 //  PrintBand := QRNFe.PageNumber = 1;
-
-  qrlDestEnder.Caption := '';
-
+  qrlDestCNPJ.lines.Clear;
   if FNFE.Dest.CNPJCPF <> ''
-   then begin
-     qrlDestCNPJ.Caption  := 'CPF/CNPJ: ' +
-                             DFeUtil.FormatarCNPJCPF(FNFE.Dest.CNPJCPF) +
-                             FNFE.Dest.xNome;
-     qrlDestEnder.Caption := FNFE.Dest.EnderDest.xLgr + ', ' +
-                             FNFE.Dest.EnderDest.nro + ' ' +
-                             FNFE.Dest.EnderDest.xBairro + ' ' +
-                             FNFE.Dest.EnderDest.xMun;
-   end
-   else if FNFE.Dest.idEstrangeiro <> ''
-         then qrlDestCNPJ.Caption := 'ID Estrangeiro: ' +
-                                     FNFE.Dest.idEstrangeiro + FNFE.Dest.xNome
-         else qrlDestCNPJ.Caption := 'CONSUMIDOR NÃO IDENTIFICADO';
+     then begin
+            qrlDestCNPJ.lines.Add( 'CPF/CNPJ: ' +
+                                   DFeUtil.FormatarCNPJCPF(FNFE.Dest.CNPJCPF) +
+                                   FNFE.Dest.xNome);
+            qrlDestCNPJ.lines.Add( FNFE.Dest.EnderDest.xLgr + ', ' +
+                                   FNFE.Dest.EnderDest.nro + ' ' +
+                                   FNFE.Dest.EnderDest.xBairro + ' ' +
+                                   FNFE.Dest.EnderDest.xMun);
+          end
+     else if FNFE.Dest.idEstrangeiro <> ''
+             then qrlDestCNPJ.lines.Add( 'ID Estrangeiro: ' +
+                                         FNFE.Dest.idEstrangeiro + FNFE.Dest.xNome)
+             else qrlDestCNPJ.lines.Add('CONSUMIDOR NÃO IDENTIFICADO');
 end;
 
 procedure TfqrDANFeQRNFCe.qrb08_QRCodeBeforePrint(Sender: TQRCustomBand;

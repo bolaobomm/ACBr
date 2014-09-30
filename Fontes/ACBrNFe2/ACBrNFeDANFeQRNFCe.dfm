@@ -1,8 +1,9 @@
 inherited fqrDANFeQRNFCe: TfqrDANFeQRNFCe
   Left = 238
   Top = 120
-  Width = 641
-  Height = 784
+  Width = 658
+  Height = 791
+  VertScrollBar.Position = 369
   Caption = 'DANFe - NFC-e'
   Font.Height = -8
   Font.Name = 'Arial'
@@ -12,6 +13,8 @@ inherited fqrDANFeQRNFCe: TfqrDANFeQRNFCe
   TextHeight = 10
   inherited QRNFe: TQuickRep
     Tag = 1
+    Left = 2
+    Top = 2
     Width = 302
     BeforePrint = QRNFeBeforePrint
     DataSet = cdsItens
@@ -36,7 +39,7 @@ inherited fqrDANFeQRNFCe: TfqrDANFeQRNFCe
       Left = 23
       Top = 30
       Width = 260
-      Height = 163
+      Height = 162
       Frame.Color = clBlack
       Frame.DrawTop = False
       Frame.DrawBottom = True
@@ -55,7 +58,7 @@ inherited fqrDANFeQRNFCe: TfqrDANFeQRNFCe
       ForceNewPage = False
       ParentFont = False
       Size.Values = (
-        431.270833333333400000
+        428.625000000000000000
         687.916666666666800000)
       PreCaluculateBandHeight = False
       KeepOnOnePage = False
@@ -464,7 +467,7 @@ inherited fqrDANFeQRNFCe: TfqrDANFeQRNFCe
     end
     object qrb02_DadosFixosDanfe: TQRChildBand
       Left = 23
-      Top = 193
+      Top = 192
       Width = 260
       Height = 60
       Frame.Color = clBlack
@@ -493,7 +496,7 @@ inherited fqrDANFeQRNFCe: TfqrDANFeQRNFCe
       PrintOrder = cboAfterParent
       object QRLabel17: TQRLabel
         Left = 36
-        Top = 3
+        Top = 4
         Width = 200
         Height = 16
         Frame.Color = clBlack
@@ -504,7 +507,7 @@ inherited fqrDANFeQRNFCe: TfqrDANFeQRNFCe
         Size.Values = (
           42.333333333333340000
           95.250000000000000000
-          7.937500000000000000
+          10.583333333333330000
           529.166666666666700000)
         XLColumn = 0
         Alignment = taCenter
@@ -525,8 +528,8 @@ inherited fqrDANFeQRNFCe: TfqrDANFeQRNFCe
         FontSize = 10
       end
       object qrlURLSefaz: TQRLabel
-        Left = 17
-        Top = 21
+        Left = 16
+        Top = 20
         Width = 221
         Height = 16
         Frame.Color = clBlack
@@ -536,8 +539,8 @@ inherited fqrDANFeQRNFCe: TfqrDANFeQRNFCe
         Frame.DrawRight = False
         Size.Values = (
           42.333333333333340000
-          44.979166666666670000
-          55.562500000000000000
+          42.333333333333340000
+          52.916666666666670000
           584.729166666666800000)
         XLColumn = 0
         Alignment = taCenter
@@ -558,8 +561,8 @@ inherited fqrDANFeQRNFCe: TfqrDANFeQRNFCe
         FontSize = 10
       end
       object QRLabel19: TQRLabel
-        Left = 1
-        Top = 39
+        Left = -123
+        Top = 40
         Width = 257
         Height = 16
         Frame.Color = clBlack
@@ -569,8 +572,8 @@ inherited fqrDANFeQRNFCe: TfqrDANFeQRNFCe
         Frame.DrawRight = False
         Size.Values = (
           42.333333333333340000
-          2.645833333333333000
-          103.187500000000000000
+          -325.437500000000000000
+          105.833333333333300000
           679.979166666666800000)
         XLColumn = 0
         Alignment = taCenter
@@ -593,7 +596,7 @@ inherited fqrDANFeQRNFCe: TfqrDANFeQRNFCe
     end
     object qrb03a_Cab_Itens: TQRBand
       Left = 23
-      Top = 253
+      Top = 252
       Width = 260
       Height = 34
       Frame.Color = clBlack
@@ -608,7 +611,7 @@ inherited fqrDANFeQRNFCe: TfqrDANFeQRNFCe
       ForceNewColumn = False
       ForceNewPage = False
       Size.Values = (
-        89.958333333333340000
+        89.958333333333320000
         687.916666666666800000)
       PreCaluculateBandHeight = False
       KeepOnOnePage = False
@@ -683,14 +686,14 @@ inherited fqrDANFeQRNFCe: TfqrDANFeQRNFCe
         Left = 78
         Top = 18
         Width = 32
-        Height = 15
+        Height = 16
         Frame.Color = clBlack
         Frame.DrawTop = False
         Frame.DrawBottom = False
         Frame.DrawLeft = False
         Frame.DrawRight = False
         Size.Values = (
-          39.687500000000000000
+          42.333333333333340000
           206.375000000000000000
           47.625000000000000000
           84.666666666666680000)
@@ -746,18 +749,18 @@ inherited fqrDANFeQRNFCe: TfqrDANFeQRNFCe
         FontSize = 8
       end
       object QRLabel149: TQRLabel
-        Left = 116
+        Left = 115
         Top = 18
         Width = 69
-        Height = 15
+        Height = 16
         Frame.Color = clBlack
         Frame.DrawTop = False
         Frame.DrawBottom = False
         Frame.DrawLeft = False
         Frame.DrawRight = False
         Size.Values = (
-          39.687500000000000000
-          306.916666666666700000
+          42.333333333333340000
+          304.270833333333400000
           47.625000000000000000
           182.562500000000000000)
         XLColumn = 0
@@ -779,18 +782,18 @@ inherited fqrDANFeQRNFCe: TfqrDANFeQRNFCe
         FontSize = 8
       end
       object QRLabel150: TQRLabel
-        Left = 188
+        Left = 189
         Top = 18
         Width = 67
-        Height = 15
+        Height = 16
         Frame.Color = clBlack
         Frame.DrawTop = False
         Frame.DrawBottom = False
         Frame.DrawLeft = False
         Frame.DrawRight = False
         Size.Values = (
-          39.687500000000000000
-          497.416666666666700000
+          42.333333333333340000
+          500.062500000000000000
           47.625000000000000000
           177.270833333333300000)
         XLColumn = 0
@@ -823,7 +826,7 @@ inherited fqrDANFeQRNFCe: TfqrDANFeQRNFCe
         Frame.DrawRight = False
         Size.Values = (
           42.333333333333340000
-          89.958333333333340000
+          89.958333333333320000
           5.291666666666667000
           113.770833333333300000)
         XLColumn = 0
@@ -847,9 +850,9 @@ inherited fqrDANFeQRNFCe: TfqrDANFeQRNFCe
     end
     object qrb04_Totais: TQRBand
       Left = 23
-      Top = 322
+      Top = 320
       Width = 260
-      Height = 141
+      Height = 140
       Frame.Color = clBlack
       Frame.DrawTop = False
       Frame.DrawBottom = True
@@ -862,7 +865,7 @@ inherited fqrDANFeQRNFCe: TfqrDANFeQRNFCe
       ForceNewColumn = False
       ForceNewPage = False
       Size.Values = (
-        373.062500000000000000
+        370.416666666666700000
         687.916666666666800000)
       PreCaluculateBandHeight = False
       KeepOnOnePage = False
@@ -934,7 +937,7 @@ inherited fqrDANFeQRNFCe: TfqrDANFeQRNFCe
     end
     object qrb07_Consumidor: TQRChildBand
       Left = 23
-      Top = 693
+      Top = 690
       Width = 260
       Height = 64
       Frame.Color = clBlack
@@ -957,7 +960,7 @@ inherited fqrDANFeQRNFCe: TfqrDANFeQRNFCe
       PrintOrder = cboAfterParent
       object QRLabel1: TQRLabel
         Left = 84
-        Top = 3
+        Top = 4
         Width = 88
         Height = 16
         Frame.Color = clBlack
@@ -968,7 +971,7 @@ inherited fqrDANFeQRNFCe: TfqrDANFeQRNFCe
         Size.Values = (
           42.333333333333340000
           222.250000000000000000
-          7.937500000000000000
+          10.583333333333330000
           232.833333333333400000)
         XLColumn = 0
         Alignment = taCenter
@@ -988,10 +991,10 @@ inherited fqrDANFeQRNFCe: TfqrDANFeQRNFCe
         ExportAs = exptText
         FontSize = 10
       end
-      object qrlDestCNPJ: TQRLabel
+      object qrlDestCNPJ: TQRMemo
         Left = 2
-        Top = 23
-        Width = 253
+        Top = 17
+        Width = 255
         Height = 16
         Frame.Color = clBlack
         Frame.DrawTop = False
@@ -1001,63 +1004,29 @@ inherited fqrDANFeQRNFCe: TfqrDANFeQRNFCe
         Size.Values = (
           42.333333333333340000
           5.291666666666667000
-          60.854166666666680000
-          669.395833333333400000)
+          44.979166666666670000
+          674.687500000000000000)
         XLColumn = 0
         Alignment = taCenter
-        AlignToBand = False
+        AlignToBand = True
         AutoSize = False
-        AutoStretch = False
-        Caption = 'qrlDestCNPJ'
+        AutoStretch = True
         Color = clWhite
-        Font.Charset = DEFAULT_CHARSET
+        Font.Charset = ANSI_CHARSET
         Font.Color = clWindowText
         Font.Height = -13
         Font.Name = 'Times New Roman'
         Font.Style = []
         ParentFont = False
-        Transparent = True
+        Transparent = False
         WordWrap = True
-        ExportAs = exptText
-        FontSize = 10
-      end
-      object qrlDestEnder: TQRLabel
-        Left = 2
-        Top = 42
-        Width = 253
-        Height = 16
-        Frame.Color = clBlack
-        Frame.DrawTop = False
-        Frame.DrawBottom = False
-        Frame.DrawLeft = False
-        Frame.DrawRight = False
-        Size.Values = (
-          42.333333333333340000
-          5.291666666666667000
-          111.125000000000000000
-          669.395833333333400000)
-        XLColumn = 0
-        Alignment = taCenter
-        AlignToBand = False
-        AutoSize = False
-        AutoStretch = False
-        Caption = 'qrlDestEnder'
-        Color = clWhite
-        Font.Charset = DEFAULT_CHARSET
-        Font.Color = clWindowText
-        Font.Height = -13
-        Font.Name = 'Times New Roman'
-        Font.Style = []
-        ParentFont = False
-        Transparent = True
-        WordWrap = True
-        ExportAs = exptText
+        FullJustify = False
         FontSize = 10
       end
     end
     object qrb03b_Desc_Itens: TQRBand
       Left = 23
-      Top = 287
+      Top = 286
       Width = 260
       Height = 34
       Frame.Color = clBlack
@@ -1079,7 +1048,7 @@ inherited fqrDANFeQRNFCe: TfqrDANFeQRNFCe
       ForceNewPage = False
       ParentFont = False
       Size.Values = (
-        89.958333333333340000
+        89.958333333333320000
         687.916666666666800000)
       PreCaluculateBandHeight = False
       KeepOnOnePage = False
@@ -1333,9 +1302,9 @@ inherited fqrDANFeQRNFCe: TfqrDANFeQRNFCe
     end
     object qrb03c_Lin_Itens: TQRChildBand
       Left = 23
-      Top = 321
+      Top = 320
       Width = 260
-      Height = 1
+      Height = 0
       Frame.Color = clBlack
       Frame.DrawTop = False
       Frame.DrawBottom = False
@@ -1348,7 +1317,7 @@ inherited fqrDANFeQRNFCe: TfqrDANFeQRNFCe
       ForceNewColumn = False
       ForceNewPage = False
       Size.Values = (
-        2.645833333333333000
+        0.000000000000000000
         687.916666666666800000)
       PreCaluculateBandHeight = False
       KeepOnOnePage = False
@@ -1376,7 +1345,7 @@ inherited fqrDANFeQRNFCe: TfqrDANFeQRNFCe
     end
     object qrb08_QRCode: TQRChildBand
       Left = 23
-      Top = 757
+      Top = 754
       Width = 260
       Height = 198
       Frame.Color = clBlack
@@ -1522,7 +1491,7 @@ inherited fqrDANFeQRNFCe: TfqrDANFeQRNFCe
     end
     object qrb05_Tributos: TQRChildBand
       Left = 23
-      Top = 463
+      Top = 460
       Width = 260
       Height = 24
       Frame.Color = clBlack
@@ -1579,7 +1548,7 @@ inherited fqrDANFeQRNFCe: TfqrDANFeQRNFCe
     end
     object qrb06_Chave: TQRChildBand
       Left = 23
-      Top = 561
+      Top = 558
       Width = 260
       Height = 132
       Frame.Color = clBlack
@@ -1601,7 +1570,7 @@ inherited fqrDANFeQRNFCe: TfqrDANFeQRNFCe
       ParentBand = qrb05a_InfComplementar
       PrintOrder = cboAfterParent
       object QRLabel9: TQRLabel
-        Left = 77
+        Left = 76
         Top = 90
         Width = 117
         Height = 16
@@ -1612,7 +1581,7 @@ inherited fqrDANFeQRNFCe: TfqrDANFeQRNFCe
         Frame.DrawRight = False
         Size.Values = (
           42.333333333333340000
-          203.729166666666700000
+          201.083333333333300000
           238.125000000000000000
           309.562500000000000000)
         XLColumn = 0
@@ -1668,7 +1637,7 @@ inherited fqrDANFeQRNFCe: TfqrDANFeQRNFCe
       end
       object qrlTipoEmissao: TQRLabel
         Left = 58
-        Top = 3
+        Top = 4
         Width = 142
         Height = 24
         Frame.Color = clBlack
@@ -1679,7 +1648,7 @@ inherited fqrDANFeQRNFCe: TfqrDANFeQRNFCe
         Size.Values = (
           63.500000000000000000
           153.458333333333300000
-          7.937500000000000000
+          10.583333333333330000
           375.708333333333400000)
         XLColumn = 0
         Alignment = taCenter
@@ -1834,7 +1803,7 @@ inherited fqrDANFeQRNFCe: TfqrDANFeQRNFCe
     end
     object qrb05a_InfComplementar: TQRChildBand
       Left = 23
-      Top = 487
+      Top = 484
       Width = 260
       Height = 74
       Frame.Color = clBlack
