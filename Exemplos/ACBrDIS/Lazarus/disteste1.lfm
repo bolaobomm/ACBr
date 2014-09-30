@@ -16,12 +16,12 @@ object Form1: TForm1
   OnCloseQuery = FormCloseQuery
   OnCreate = FormCreate
   Position = poScreenCenter
-  LCLVersion = '1.1'
+  LCLVersion = '1.2.4.0'
   object Label2: TLabel
     Left = 16
-    Height = 14
+    Height = 13
     Top = 236
-    Width = 26
+    Width = 25
     Caption = '&Porta'
     FocusControl = cbxPorta
     Font.Height = 11
@@ -32,50 +32,50 @@ object Form1: TForm1
   end
   object Label1: TLabel
     Left = 88
-    Height = 14
+    Height = 13
     Top = 236
-    Width = 36
+    Width = 35
     Caption = '&Modelo'
     FocusControl = cbxModelo
     ParentColor = False
   end
   object Label3: TLabel
     Left = 240
-    Height = 14
+    Height = 13
     Top = 236
-    Width = 42
+    Width = 41
     Caption = '&Intervalo'
     ParentColor = False
   end
   object Label4: TLabel
     Left = 302
-    Height = 14
+    Height = 13
     Top = 236
-    Width = 35
+    Width = 34
     Caption = 'P&assos'
     ParentColor = False
   end
   object Label5: TLabel
     Left = 296
-    Height = 14
+    Height = 13
     Top = 284
-    Width = 35
+    Width = 34
     Caption = 'Linhas:'
     ParentColor = False
   end
   object Label6: TLabel
     Left = 370
-    Height = 14
+    Height = 13
     Top = 284
-    Width = 39
+    Width = 38
     Caption = 'Colunas'
     ParentColor = False
   end
   object lLinhas: TLabel
     Left = 341
-    Height = 14
+    Height = 13
     Top = 284
-    Width = 9
+    Width = 8
     Caption = '0'
     Font.Color = clBlack
     Font.Height = 11
@@ -87,9 +87,9 @@ object Form1: TForm1
   end
   object lColunas: TLabel
     Left = 419
-    Height = 14
+    Height = 13
     Top = 284
-    Width = 9
+    Width = 8
     Caption = '0'
     Font.Color = clBlack
     Font.Height = 11
@@ -133,26 +133,26 @@ object Form1: TForm1
   end
   object Label9: TLabel
     Left = 8
-    Height = 14
+    Height = 13
     Top = 144
-    Width = 59
+    Width = 58
     Caption = '&Alinhamento'
     FocusControl = cbxAlinhamento
     ParentColor = False
   end
   object Label10: TLabel
     Left = 134
-    Height = 14
+    Height = 13
     Top = 144
-    Width = 56
+    Width = 55
     Caption = 'Efeito Exibir'
     ParentColor = False
   end
   object Label11: TLabel
     Left = 288
-    Height = 14
+    Height = 13
     Top = 144
-    Width = 56
+    Width = 55
     Caption = 'Efeito Rolar'
     ParentColor = False
   end
@@ -250,7 +250,7 @@ object Form1: TForm1
     Top = 12
     Width = 89
     BorderSpacing.InnerBorder = 4
-    Caption = '&Demonstração'
+    Caption = '&DemonstraÃ§Ã£o'
     OnClick = bDemoClick
     TabOrder = 4
   end
@@ -361,9 +361,9 @@ object Form1: TForm1
   end
   object Label8: TLabel
     Left = 354
-    Height = 14
+    Height = 13
     Top = 235
-    Width = 71
+    Width = 70
     Caption = 'Intervalo Bytes'
     ParentColor = False
   end
@@ -430,9 +430,9 @@ object Form1: TForm1
   end
   object Label12: TLabel
     Left = 9
-    Height = 14
+    Height = 13
     Top = 284
-    Width = 19
+    Width = 18
     Caption = 'Lin'
     Font.Height = -11
     Font.Name = 'MS Sans Serif'
@@ -442,9 +442,9 @@ object Form1: TForm1
   end
   object Label13: TLabel
     Left = 80
-    Height = 14
+    Height = 13
     Top = 284
-    Width = 20
+    Width = 19
     Caption = 'Col'
     Font.Height = -11
     Font.Name = 'MS Sans Serif'
@@ -464,7 +464,6 @@ object Form1: TForm1
   object ACBrDIS1: TACBrDIS
     Porta = 'COM1'
     Intervalo = 200
-    IntervaloEnvioBytes = 0
     OnAtualiza = ACBrDIS1Atualiza
     left = 200
     top = 88

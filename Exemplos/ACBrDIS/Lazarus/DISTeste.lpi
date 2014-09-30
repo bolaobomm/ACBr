@@ -1,4 +1,4 @@
-<?xml version="1.0"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <CONFIG>
   <ProjectOptions>
     <Version Value="9"/>
@@ -8,6 +8,7 @@
         <LRSInOutputDirectory Value="False"/>
       </Flags>
       <MainUnit Value="0"/>
+      <ResourceType Value="res"/>
       <ActiveWindowIndexAtStart Value="0"/>
     </General>
     <VersionInfo>
@@ -53,10 +54,11 @@
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
         <UnitName Value="DISTeste1"/>
+        <IsVisibleTab Value="True"/>
         <EditorIndex Value="0"/>
         <WindowIndex Value="0"/>
-        <TopLine Value="216"/>
-        <CursorPos X="16" Y="235"/>
+        <TopLine Value="79"/>
+        <CursorPos X="44" Y="89"/>
         <UsageCount Value="105"/>
         <Loaded Value="True"/>
         <LoadedDesigner Value="True"/>
@@ -100,7 +102,6 @@
       <Unit6>
         <Filename Value="..\..\..\Fontes\ACBrSerial\ACBrDISClass.pas"/>
         <UnitName Value="ACBrDISClass"/>
-        <IsVisibleTab Value="True"/>
         <EditorIndex Value="3"/>
         <WindowIndex Value="0"/>
         <TopLine Value="191"/>
@@ -331,12 +332,12 @@
         <Caret Line="717" Column="20" TopLine="701"/>
       </Position28>
       <Position29>
-        <Filename Value="..\..\..\Fontes\ACBrSerial\ACBrDIS.pas"/>
-        <Caret Line="1" Column="1" TopLine="52"/>
+        <Filename Value="disteste1.pas"/>
+        <Caret Line="221" Column="16" TopLine="228"/>
       </Position29>
       <Position30>
-        <Filename Value="..\..\..\Fontes\ACBrSerial\ACBrDISClass.pas"/>
-        <Caret Line="1" Column="1" TopLine="7"/>
+        <Filename Value="disteste1.pas"/>
+        <Caret Line="266" Column="1" TopLine="247"/>
       </Position30>
     </JumpHistory>
   </ProjectOptions>
@@ -344,7 +345,8 @@
     <Version Value="11"/>
     <PathDelim Value="\"/>
     <SearchPaths>
-      <SrcPath Value="$(LazarusDir)\lcl;$(LazarusDir)\lcl\interfaces\$(LCLWidgetType)"/>
+      <IncludeFiles Value="$(ProjOutDir)"/>
+      <UnitOutputDirectory Value="lib\$(TargetCPU)-$(TargetOS)"/>
     </SearchPaths>
     <Parsing>
       <SyntaxOptions>

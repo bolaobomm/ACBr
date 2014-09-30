@@ -1,3 +1,4 @@
+
 unit DISTeste1;
 
 {$mode objfpc}{$H+}
@@ -85,6 +86,8 @@ var
   Form1: TForm1; 
 
 implementation
+
+{$R *.lfm}
 
 Uses AcbrUtil ;
 
@@ -262,8 +265,6 @@ begin
      ACBrDIS1.RolarLinha(2, TACBrDISEfeitoRolar( cbxRolarEfeito.ItemIndex ) ) ;
 end;
 
-initialization
-  {$I disteste1.lrs}
 
 end.
 
