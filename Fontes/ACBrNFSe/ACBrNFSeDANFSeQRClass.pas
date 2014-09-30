@@ -328,13 +328,26 @@ begin
   end
   else begin
    // Alterado por Italo em 05/11/2012
-   NomeArqPDF := trim(NFSe.NomeArq);
+//   NomeArqPDF := trim(NFSe.NomeArq);
+
+   // Alterado por Italo em 30/09/2014
+   if TACBrNFSe(ACBrNFSe).Configuracoes.Arquivos.NomeLongoNFSe then
+     NomeArqPDF := NotaUtil.GerarNomeNFSe(UFparaCodigo(NFSe.PrestadorServico.Endereco.UF),
+                                          NFSe.DataEmissao,
+                                          NFSe.PrestadorServico.IdentificacaoPrestador.Cnpj,
+                                          StrToIntDef(NFSe.Numero, 0))
+   else
+     NomeArqPDF := NFSe.Numero;
+
+   NomeArqPDF := StringReplace(NomeArqPDF, 'NFSe', '', [rfIgnoreCase]);
+   NomeArqPDF := PathWithDelim(Self.PathPDF) + NomeArqPDF + '.pdf';
+
    if NomeArqPDF = ''
     then begin
      NomeArqPDF := StringReplace(NFSe.Numero, 'NFSe', '', [rfIgnoreCase]);
      NomeArqPDF := PathWithDelim(Self.PathPDF) + NomeArqPDF + '.pdf';
-    end
-    else NomeArqPDF := StringReplace(NomeArqPDF, '-nfse.xml', '.pdf', [rfIgnoreCase]);
+    end;
+//    else NomeArqPDF := StringReplace(NomeArqPDF, '-nfse.xml', '.pdf', [rfIgnoreCase]);
 
    fqrDANFSeQRRetrato.SavePDF( NomeArqPDF
                              , NFSe
