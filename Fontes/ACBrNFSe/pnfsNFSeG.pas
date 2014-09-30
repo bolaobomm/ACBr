@@ -176,12 +176,13 @@ begin
                // Inclui o Identificador ou não
                DFeUtil.SeSenao(Identificador <> '', ' ' + Identificador + '="' + IdLote + '"', '') +
 
-               // Inclui a versão ou não
+               // Não Incluir a versão para os provedores abaixo
                DFeUtil.SeSenao(AProvedor in [proAbaco, proAraucaria, proBetha, proDBSeller,
                                              proGinfes, proGoiania, proGovBR, proIssCuritiba,
                                              proISSNET, proNatal, proActcon, proRecife, proRJ,
                                              proSimplISS, proThema, proTiplan, proAgili,
-                                             proFISSLex, proSpeedGov, proPronim, proCoplan],
+                                             proFISSLex, proSpeedGov, proPronim, proCoplan,
+                                             proSalvador],
                                '',
                                DFeUtil.SeSenao(VersaoDados <> '', ' versao="' + VersaoDados + '"', '')
                               ) +
