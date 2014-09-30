@@ -1474,7 +1474,7 @@ begin
     FieldByName('Contingencia_ID').AsString := '';
     FieldByName('ConsultaAutenticidade').AsString := 'Consulta de autenticidade no portal nacional da NF-e'+#13+
                                                      'www.nfe.fazenda.gov.br/portal ou no site da Sefaz autorizadora';
-    if ((FNFe.Ide.tpEmis in [teNormal,teSCAN,teSVCRS,teSVCSP])) then
+    if ((FNFe.Ide.tpEmis in [teNormal,teSVCAN,teSCAN,teSVCRS,teSVCSP])) then
     begin
       FieldByName('ChaveAcesso_Descricao').AsString := 'CHAVE DE ACESSO';
       FieldByName('Contingencia_ID').AsString := '';
@@ -1510,18 +1510,16 @@ begin
       //Modificado em 22/05/2013 - Fábio Gabriel
       if (FNFe.Ide.tpEmis = teDPEC) then
       begin
-        FieldByName('Contingencia_Descricao').AsString := 'NÚMERO DE REGISTRO DPEC';
-        //prioridade para ProtocoloNFe informado
-        if DFeUtil.NaoEstaVazio(FDANFEClassOwner.ProtocoloNFe) then
-          FieldByName('Contingencia_Valor').AsString := FDANFEClassOwner.ProtocoloNFe
+        if DFeUtil.NaoEstaVazio(FNFe.procNFe.nProt) then // DPEC TRANSMITIDO
+        begin
+           FieldByName('Contingencia_Descricao').AsString := 'PROTOCOLO DE AUTORIZAÇÃO DE USO';
+           FieldByName('Contingencia_Valor').AsString := FNFe.procNFe.nProt + ' ' + DFeUtil.SeSenao(FNFe.procNFe.dhRecbto <> 0, DateTimeToStr(FNFe.procNFe.dhRecbto), '');
+        end
         else
         begin
-          try
-            FieldByName('Contingencia_Valor').AsString := FNFe.procNFe.nProt + ' ' + DFeUtil.SeSenao(FNFe.procNFe.dhRecbto <> 0, DateTimeToStr(FNFe.procNFe.dhRecbto), '');
-            FieldByName('Contingencia_Descricao').AsString := 'PROTOCOLO DE AUTORIZAÇÃO DE USO';
-          except
-            raise EACBrNFeException.Create('Protocolo de Registro no DPEC não informado.')
-          end;
+           FieldByName('Contingencia_Descricao').AsString := 'NÚMERO DE REGISTRO DPEC';
+           if DFeUtil.NaoEstaVazio(FDANFEClassOwner.ProtocoloNFe) then
+             FieldByName('Contingencia_Valor').AsString := FDANFEClassOwner.ProtocoloNFe;
         end;
       end
       else
