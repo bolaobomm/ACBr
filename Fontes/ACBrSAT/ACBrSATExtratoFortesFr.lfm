@@ -8,7 +8,7 @@ object ACBrSATExtratoFortesFr: TACBrSATExtratoFortesFr
   ClientWidth = 738
   OnCreate = FormCreate
   OnDestroy = FormDestroy
-  LCLVersion = '1.2.2.0'
+  LCLVersion = '1.2.4.0'
   object rlVenda: TRLReport
     Left = 8
     Height = 1512

@@ -49,7 +49,7 @@ uses Classes, SysUtils,
      {$IFDEF FPC}
        LResources,
      {$ENDIF}
-     Forms, Graphics, ACBrSAT,
+     Forms, Graphics,
      ACBrSATExtratoClass, ACBrUtil,
      pcnCFe, pcnCFeCanc, pcnConversao, ACBrDFeUtil,
      RLConsts, RLReport, RLBarcode, RLPDFFilter, RLHTMLFilter, RLPrintDialog,
@@ -78,6 +78,7 @@ type
   published
     property LarguraBobina : Integer read fLarguraBobina  write fLarguraBobina default 302;
     property Margens       : TACBrSATExtratoMargem read fMargens write fMargens;
+    property PrinterName;
   end ;
 
   { TACBrSATExtratoFortesFr }
@@ -278,6 +279,7 @@ type
     fHeightDetItem: Integer;
     fResumido: Boolean;
 
+    function CalcularTamanhoDaPagina( AReport : TRLReport): Integer;
     procedure PintarQRCode(QRCodeData: String; APict: TPicture);
     function CompoemEnderecoCFe: String ;
     function CompoemCliche: String;
@@ -291,7 +293,7 @@ procedure Register;
 
 implementation
 
-uses  ACBrDelphiZXingQRCode, math;
+uses  ACBrDelphiZXingQRCode, math, RLTypes;
 
 {$ifdef FPC}
   {$R *.lfm}
@@ -422,6 +424,25 @@ begin
   RecordAction := raUseIt ;
 end;
 
+function TACBrSATExtratoFortesFr.CalcularTamanhoDaPagina(AReport: TRLReport
+  ): Integer;
+var
+  TotalPaginaPixel: Integer;
+begin
+  if AReport = rlVenda then
+    // Calculando o tamanho da Página em Pixels //
+    TotalPaginaPixel := rlbsCabecalho.Height +
+                        rlbRodape.Height +
+                        round( rlsbDetItem.Height * ACBrSATExtrato.CFe.Det.Count )
+  else
+    TotalPaginaPixel := rlbCabecalhoCan.Height +
+                        rlbDadosCupomCancelado.Height +
+                        rlbCanRodape.Height +
+                        ifthen( (ACBrSATExtrato.CFe.ide.tpAmb = taHomologacao), rlbTeste.Height, 0 ) ;
+
+  Result := max( 100, 10 + round(TotalPaginaPixel/MMAsPixels));
+end;
+
 procedure TACBrSATExtratoFortesFr.PintarQRCode(QRCodeData: String; APict: TPicture);
 var
   QRCode: TDelphiZXingQRCode;
@@ -503,7 +524,6 @@ procedure TACBrSATExtratoFortesFr.rlVendaBeforePrint(Sender: TObject;
   var PrintIt: boolean);
 var
   NumExtrato, qrcode: String;
-  TotalPaginaPixel: Integer;
   I: Integer;
 begin
   fNumItem  := 0;
@@ -559,14 +579,6 @@ begin
       PintarQRCode( qrcode, imgQRCode.Picture );
     end;
   end;
-
-
-  // Calculando o tamanho da Página em Pixels //
-  TotalPaginaPixel := rlbsCabecalho.Height +
-                      rlbRodape.Height +
-                      Trunc( rlsbDetItem.Height * ACBrSATExtrato.CFe.Det.Count );
-  // Pixel para Milimitros //
-  rlVenda.PageSetup.PaperHeight := max( 100, 10+Trunc( TotalPaginaPixel / 3.7 ));
 end;
 
 procedure TACBrSATExtratoFortesFr.rlbDetItemBeforePrint(Sender: TObject;
@@ -893,6 +905,22 @@ begin
       RLPrinter.Copies     := NumCopias ;
       RLLayout.PrintDialog := MostrarSetup;
       RLLayout.ShowProgress:= False ;
+
+      if (Filtro = fiNenhum) and (PrinterName <> '') then
+        RLPrinter.PrinterName := PrinterName;
+
+      // Largura e Margens do Relatório //
+      RLLayout.Width := LarguraBobina;
+      RLLayout.Margins.LeftMargin   := Margens.Esquerda;
+      RLLayout.Margins.RightMargin  := Margens.Direita;
+      RLLayout.Margins.TopMargin    := Margens.Topo;
+      RLLayout.Margins.BottomMargin := Margens.Fundo;
+
+      // Ajustando o tamanho da página //
+      RLLayout.PageBreaking := pbNone;
+      RLLayout.PageSetup.PaperSize   := fpCustom ;
+      RLLayout.PageSetup.PaperWidth  := Round(LarguraBobina/MMAsPixels) ;
+      RLLayout.PageSetup.PaperHeight := CalcularTamanhoDaPagina( RLLayout );
 
       if Filtro = fiNenhum then
       begin

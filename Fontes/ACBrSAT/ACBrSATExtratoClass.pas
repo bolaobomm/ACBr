@@ -88,6 +88,7 @@ type
     fMostrarSetup: Boolean;
     fNomeArquivo: String;
     fNumCopias: Integer;
+    fPrinterName : String;
     fPictureLogo: TPicture;
     fSoftwareHouse: String;
 
@@ -107,6 +108,7 @@ type
     fpLayOut: TACBrSATExtratoLayOut;
 
     procedure Notification(AComponent: TComponent; Operation: TOperation); override;
+    property PrinterName    : String   read fPrinterName    write fPrinterName;
   public
     constructor Create(AOwner: TComponent); override;
     destructor Destroy; override;
@@ -136,7 +138,6 @@ type
     property NomeArquivo    : String   read GetNomeArquivo  write fNomeArquivo ;
     property SoftwareHouse  : String   read fSoftwareHouse  write fSoftwareHouse;
     property Filtro         : TACBrSATExtratoFiltro read fFiltro write fFiltro default fiNenhum ;
-
   end ;
 
 implementation
@@ -178,6 +179,7 @@ begin
   fNomeArquivo    := '' ;
   fMask_qCom      := '0.0000';
   fMask_vUnCom    := '0.000';
+  fPrinterName    := '' ;
 end;
 
 destructor TACBrSATExtratoClass.Destroy;
