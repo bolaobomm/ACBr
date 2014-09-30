@@ -292,7 +292,7 @@ begin
   rgFormaEmissao.ItemIndex := Ini.ReadInteger('Geral','FormaEmissao', 0);
   ckSalvar.Checked         := Ini.ReadBool(   'Geral','Salvar'      , True);
   edtPathLogs.Text         := Ini.ReadString( 'Geral','PathSalvar'  , '');
-  rgVersaoDF.ItemIndex     := Ini.ReadInteger('Geral','VersaoDF'    , 0);
+  rgVersaoDF.ItemIndex     := Ini.ReadInteger('Geral','VersaoDF'    , 1);
 
   cbUF.ItemIndex       := cbUF.Items.IndexOf(Ini.ReadString('WebService','UF', 'SP'));
   rgTipoAmb.ItemIndex  := Ini.ReadInteger('WebService','Ambiente'  , 0);

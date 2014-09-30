@@ -314,7 +314,7 @@ object frmDemo_ACBrMDFe: TfrmDemo_ACBrMDFe
             Height = 57
             Caption = 'Vers'#227'o do Documento Fiscal'
             Columns = 2
-            ItemIndex = 0
+            ItemIndex = 1
             Items.Strings = (
               '1.00'
               '1.00a')
