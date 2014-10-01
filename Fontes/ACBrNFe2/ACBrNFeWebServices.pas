@@ -2062,8 +2062,42 @@ begin
 
        NFeRetornoSincrono.LerXml;
 
+       // Consta no Retorno da NFC-e
+       FRecibo   := NFeRetornoSincrono.nRec;
+
+       FTpAmb    := NFeRetornoSincrono.TpAmb;
+       FverAplic := NFeRetornoSincrono.verAplic;
+       FcUF      := NFeRetornoSincrono.cUF;
+
+       // Alterado por Italo em 01/10/2014
+       if NFeRetornoSincrono.cStat = 104 then
+        begin
+          FcStat    := NFeRetornoSincrono.protNFe.cStat;
+          FMsg      := NFeRetornoSincrono.protNFe.xMotivo;
+          FxMotivo  := NFeRetornoSincrono.protNFe.xMotivo;
+          chNFe     := NFeRetornoSincrono.ProtNFe.chNFe;
+          FdhRecbto := NFeRetornoSincrono.protNFe.dhRecbto;
+        end
+        else
+        begin
+          FcStat    := NFeRetornoSincrono.cStat;
+          FMsg      := NFeRetornoSincrono.xMotivo;
+          FxMotivo  := NFeRetornoSincrono.xMotivo;
+          chNFe     := NFeRetornoSincrono.chNFe;
+          FdhRecbto := NFeRetornoSincrono.dhRecbto;
+        end;
+
        TACBrNFe( FACBrNFe ).SetStatus( stIdle );
 
+       // Alterado por Italo em 01/10/2014
+       aMsg := 'Ambiente : '+TpAmbToStr(FTpAmb)+LineBreak+
+               'Versão Aplicativo : '+FverAplic+LineBreak+
+               'Status Código : '+IntToStr(FcStat)+LineBreak+
+               'Status Descrição : '+FxMotivo+LineBreak+
+               'UF : '+CodigoParaUF(FcUF)+LineBreak+
+               'dhRecbto : '+DateTimeToStr(FdhRecbto)+LineBreak+
+               'chNFe : '+chNfe+LineBreak;
+       (*
        aMsg := 'Ambiente : '+TpAmbToStr(NFeRetornoSincrono.TpAmb)+LineBreak+
                'Versão Aplicativo : '+NFeRetornoSincrono.verAplic+LineBreak+
                'Status Código : '+IntToStr(NFeRetornoSincrono.protNFe.cStat)+LineBreak+
@@ -2071,28 +2105,18 @@ begin
                'UF : '+CodigoParaUF(NFeRetornoSincrono.cUF)+LineBreak+
                'dhRecbto : '+DateTimeToStr(NFeRetornoSincrono.dhRecbto)+LineBreak+
                'chNFe : '+NFeRetornoSincrono.chNfe+LineBreak;
-
+       *)
        if FConfiguracoes.WebServices.Visualizar then
           ShowMessage(aMsg);
 
        if Assigned(TACBrNFe( FACBrNFe ).OnGerarLog) then
           TACBrNFe( FACBrNFe ).OnGerarLog(aMsg);
 
-       FTpAmb    := NFeRetornoSincrono.TpAmb;
-       FverAplic := NFeRetornoSincrono.verAplic;
-
-       // Consta no Retorno da NFC-e
-       FRecibo   := NFeRetornoSincrono.nRec;
-
-       FcStat    := NFeRetornoSincrono.protNFe.cStat;
-       FcUF      := NFeRetornoSincrono.cUF;
-       FMsg      := NFeRetornoSincrono.protNFe.xMotivo;
-       FxMotivo  := NFeRetornoSincrono.protNFe.xMotivo;
-       chNFe     := NFeRetornoSincrono.ProtNFe.chNFe;
-
        // Alterado por Augusto Fontana em 09/07/2014.
        // Verificar se a NF-e foi autorizada com sucesso
-       Result := (NFeRetornoSincrono.cStat = 104) and (NFeRetornoSincrono.protNFe.cStat = 100);
+//       Result := (NFeRetornoSincrono.cStat = 104) and (NFeRetornoSincrono.protNFe.cStat = 100);
+       // Alterado por Italo em 01/10/2014
+       Result := (NFeRetornoSincrono.cStat = 104) and (NFeRetornoSincrono.protNFe.cStat in [100, 150]);
 
        if NFeRetornoSincrono.cStat = 104 then
         begin
