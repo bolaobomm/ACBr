@@ -134,7 +134,9 @@ type
      function DesbloquearSAT : String ;
      function EnviarDadosVenda : String ; overload;
      function EnviarDadosVenda( dadosVenda : AnsiString ) : String ; overload;
-     procedure ExtrairLogs( NomeArquivo : String );
+     procedure ExtrairLogs( NomeArquivo : String ); overload;
+     procedure ExtrairLogs( AStringList : TStrings ); overload;
+     procedure ExtrairLogs( AStream : TStream ); overload;
      function TesteFimAFim( dadosVenda : AnsiString) : String ;
      function TrocarCodigoDeAtivacao(codigoDeAtivacaoOuEmergencia: AnsiString;
        opcao: Integer; novoCodigo: AnsiString): String;
@@ -454,12 +456,40 @@ end ;
 
 procedure TACBrSAT.ExtrairLogs(NomeArquivo: String);
 var
-  LogBin, LogBase64: AnsiString;
-  MS: TMemoryStream;
+  SL: TStringList;
 begin
   if NomeArquivo = '' then
-    raise EACBrSATErro.Create('Arquivo de Logs não especificado');
+    raise EACBrSATErro.Create('Nome para Arquivo de Log não especificado');
 
+  SL := TStringList.Create;
+  try
+    SL.Clear;
+    ExtrairLogs(SL);
+    SL.SaveToFile(NomeArquivo)
+  Finally
+    SL.Free;
+  end;
+end ;
+
+procedure TACBrSAT.ExtrairLogs(AStringList: TStrings);
+var
+  MS: TMemoryStream;
+begin
+  MS := TMemoryStream.Create;
+  try
+    MS.Clear;
+    ExtrairLogs(MS);
+    MS.Seek(0,soBeginning);
+    AStringList.LoadFromStream(MS);
+  Finally
+    MS.Free;
+  end;
+end;
+
+procedure TACBrSAT.ExtrairLogs(AStream: TStream);
+var
+  LogBin : AnsiString;
+begin
   fsComandoLog := 'ExtrairLogs';
   IniciaComando;
   FinalizaComando( fsSATClass.ExtrairLogs );
@@ -470,19 +500,13 @@ begin
   if (Resposta.RetornoLst.Count > 5) and
      (Resposta.codigoDeRetorno = 15000) then  // 1500 = Transferência completa
   begin
-    LogBase64 := Resposta.RetornoLst[5];
-    LogBin    := DecodeBase64(LogBase64);
+    LogBin := DecodeBase64( Resposta.RetornoLst[5] );
 
-    MS := TMemoryStream.Create;
-    try
-      MS.Clear;
-      MS.WriteBuffer(LogBin[1], Length(LogBin));
-      MS.SaveToFile( NomeArquivo );
-    Finally
-      MS.Free;
-    end;
+    AStream.Size     := 0;
+    AStream.Position := 0;
+    AStream.WriteBuffer(LogBin[1], Length(LogBin));
   end;
-end ;
+end;
 
 function TACBrSAT.TesteFimAFim(dadosVenda : AnsiString) : String ;
 begin

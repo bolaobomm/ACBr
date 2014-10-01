@@ -47,6 +47,13 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+Data: 31/09/2013     (por: DSA)
+-- ACBrSAT --
+[*] Adicionada sobrecarga no método: ExtrairLogs
+     procedure ExtrairLogs( NomeArquivo : String ); overload;
+     procedure ExtrairLogs( AStringList : TStrings ); overload;
+     procedure ExtrairLogs( AStream : TStream ); overload;
+
 Data: 30/09/2013     (por: DSA)
 -- ACBrSAT --
 [*] Modificação no método "ExtrairLogs" para: ExtrairLogs(NomeArquivo: String)
