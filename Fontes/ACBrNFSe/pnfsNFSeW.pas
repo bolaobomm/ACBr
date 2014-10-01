@@ -952,7 +952,7 @@ begin
           proMitra,
           proGovDigital,
           proISSDigital,
-          proISSe,
+       //   proISSe,    //  Joel Takei 01/10/2014   
           proSisPMJP,
           proSystemPro: Gerador.wCampoNFSe(tcDat,    '#4', 'Competencia', 10, 10, 1, NFSe.Competencia, DSC_DEMI);
 
