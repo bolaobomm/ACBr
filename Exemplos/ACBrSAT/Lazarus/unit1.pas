@@ -705,7 +705,7 @@ begin
     Entrega.xMun := 'municipio';
     Entrega.UF := 'RJ';
 
-    For A := 0 to 1 do  // Ajuste aqui para vender mais itens
+    For A := 0 to 0 do  // Ajuste aqui para vender mais itens
     begin
     with Det.Add do
     begin
@@ -844,13 +844,13 @@ begin
 
     with Pagto.Add do
     begin
-      cMP := MPDinheiro;
+      cMP := mpDinheiro;
       vMP := 50;
     end;
 
     with Pagto.Add do
     begin
-      cMP := MPCartaodeCredito;
+      cMP := mpCartaodeCredito;
       vMP := 100;
     end;
 
