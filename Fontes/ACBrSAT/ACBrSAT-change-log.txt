@@ -47,6 +47,21 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+Data: 01/10/2014     (por: DSA)
+-- ACBrSAT --
+[+] Adicionada as propriedades:
+    - SalvarCFes: Boolean   (opção para salvar XMLs enviados e recebidos do SAT)
+    - PastaCFeVenda: String         (Path para salvar XMLs de Venda)
+    - PastaCFeCancelamento: String  (Path para salvar XMLs de Cancelamento)
+
+-- ACBrSATExtratoFortes --
+[-] Ajuste para não exibir Warning de numero de versão do Fortes no Delphi
+[*] Compatibilização da Versão Delphi com as modificações recentes
+
+-- SATTeste --
+[+] Ajustes no Demo para as novas propriedades
+[*] Compatibilização da versão Delphi com a versão Lazarus (novos recursos)
+
 Data: 31/09/2013     (por: DSA)
 -- ACBrSAT --
 [*] Adicionada sobrecarga no método: ExtrairLogs

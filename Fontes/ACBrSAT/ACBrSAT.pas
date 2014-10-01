@@ -67,6 +67,10 @@ type
      fsModelo : TACBrSATModelo ;
      fsConfig : TACBrSATConfig ;
 
+     fsSalvarCFes: Boolean;
+     fsPastaCFeCancelamento: String;
+     fsPastaCFeVenda: String;
+
      function CodificarPaginaDeCodigoSAT(ATexto: String): AnsiString;
      function DecodificarPaginaDeCodigoSAT(ATexto: AnsiString): String;
 
@@ -78,6 +82,11 @@ type
      procedure SetInicializado(AValue : Boolean) ;
      procedure SetModelo(AValue : TACBrSATModelo) ;
      procedure SetNomeDLL(AValue : string) ;
+
+     function GetPastaCFeCancelamento: String;
+     function GetPastaCFeVenda: String;
+     procedure SetPastaCFeCancelamento(AValue: String);
+     procedure SetPastaCFeVenda(AValue: String);
 
      procedure IniciaComando ;
      function FinalizaComando(AResult: String): String;
@@ -163,6 +172,10 @@ type
         write fsOnGetcodigoDeAtivacao;
      property OnGetsignAC : TACBrSATGetChave read fsOnGetsignAC write fsOnGetsignAC;
 
+     property SalvarCFes: Boolean read fsSalvarCFes write fsSalvarCFes default false;
+     property PastaCFeVenda: String read GetPastaCFeVenda write SetPastaCFeVenda;
+     property PastaCFeCancelamento: String read GetPastaCFeCancelamento
+        write SetPastaCFeCancelamento;
    end;
 
 
@@ -191,6 +204,10 @@ begin
   fsCFeCanc := TCFeCanc.Create;
   fsResposta:= TACBrSATResposta.Create;
   fsSATClass:= TACBrSATClass.Create( Self ) ;
+
+  fsSalvarCFes           := False;
+  fsPastaCFeCancelamento := '';
+  fsPastaCFeVenda        := '';
 end ;
 
 destructor TACBrSAT.Destroy ;
@@ -364,13 +381,20 @@ end ;
 function TACBrSAT.CancelarUltimaVenda(chave, dadosCancelamento : AnsiString
   ) : String ;
 var
-  XMLRecebido: String;
+  XMLRecebido, NomeCFe: String;
 begin
   fsComandoLog := 'CancelarUltimaVenda( '+chave+', '+dadosCancelamento+' )';
   if Trim(chave) = '' then
      raise EACBrSATErro.Create('Parâmetro: "chave" não informado');
   if Trim(dadosCancelamento) = '' then
      raise EACBrSATErro.Create('Parâmetro: "dadosCancelamento" não informado');
+
+  if SalvarCFes then
+  begin
+    ForceDirectories( PastaCFeCancelamento );
+    NomeCFe := PastaCFeCancelamento + PathDelim + chave + '-can-env.xml';
+    WriteToTXT(NomeCFe, dadosCancelamento, False, False);
+  end;
 
   IniciaComando;
   Result := FinalizaComando( fsSATClass.CancelarUltimaVenda(chave, dadosCancelamento) ) ;
@@ -379,8 +403,12 @@ begin
   begin
      XMLRecebido := DecodeBase64(fsResposta.RetornoLst[6]);
      CFeCanc.AsXMLString := XMLRecebido;
-     //DEBUG
-     //WriteToTXT('c:\temp\CancRec.xml',XMLRecebido,False,False);
+
+     if SalvarCFes then
+     begin
+       NomeCFe := PastaCFeCancelamento + PathDelim + chave + '-can.xml';
+       WriteToTXT(NomeCFe, XMLRecebido, False, False);
+     end;
   end;
 end ;
 
@@ -436,21 +464,35 @@ end;
 
 function TACBrSAT.EnviarDadosVenda(dadosVenda : AnsiString) : String ;
 var
-  XMLRecebido: String;
+  XMLRecebido, NomeCFe : String;
 begin
   fsComandoLog := 'EnviarDadosVenda( '+dadosVenda+' )';
   if Trim(dadosVenda) = '' then
      raise EACBrSATErro.Create('Parâmetro: "dadosVenda" não informado');
 
   IniciaComando;
+
+  if SalvarCFes then
+  begin
+    ForceDirectories( PastaCFeVenda );
+    NomeCFe := PastaCFeVenda + PathDelim +
+               FormatDateTime('YYYYMMDDHHNNSS',Now) + '-' +
+               IntToStrZero(numeroSessao, 6) + '-cfe-env.xml';
+    WriteToTXT(NomeCFe, dadosVenda, False, False);
+  end;
+
   Result := FinalizaComando( fsSATClass.EnviarDadosVenda( Trim(dadosVenda) ) );
 
   if fsResposta.codigoDeRetorno = 6000 then
   begin
      XMLRecebido := DecodeBase64(fsResposta.RetornoLst[6]);
      CFe.AsXMLString := XMLRecebido;
-     //DEBUG
-     //WriteToTXT('c:\temp\VendaRec.xml',XMLRecebido,False,False);
+
+     if SalvarCFes then
+     begin
+       NomeCFe := PastaCFeVenda + PathDelim + CFe.infCFe.ID + '-cfe.xml';
+       WriteToTXT(NomeCFe, XMLRecebido, False, False);
+     end;
   end;
 end ;
 
@@ -610,6 +652,34 @@ begin
   if FileName = '' then
     fsNomeDLL := PathWithDelim( fsNomeDLL ) + cLIBSAT;
 end ;
+
+function TACBrSAT.GetPastaCFeCancelamento: String;
+begin
+  if fsPastaCFeCancelamento = '' then
+     if not (csDesigning in Self.ComponentState) then
+        fsPastaCFeCancelamento := ExtractFilePath( ParamStr(0) ) + 'CFesCancelados' ;
+
+  Result := fsPastaCFeCancelamento ;
+end;
+
+function TACBrSAT.GetPastaCFeVenda: String;
+begin
+  if fsPastaCFeVenda = '' then
+     if not (csDesigning in Self.ComponentState) then
+        fsPastaCFeVenda := ExtractFilePath( ParamStr(0) ) + 'CFesEnviados' ;
+
+  Result := fsPastaCFeVenda ;
+end;
+
+procedure TACBrSAT.SetPastaCFeCancelamento(AValue: String);
+begin
+  fsPastaCFeCancelamento := PathWithoutDelim( AValue );
+end;
+
+procedure TACBrSAT.SetPastaCFeVenda(AValue: String);
+begin
+  fsPastaCFeVenda := PathWithoutDelim( AValue );
+end;
 
 procedure TACBrSAT.SetExtrato(const Value: TACBrSATExtratoClass);
 Var

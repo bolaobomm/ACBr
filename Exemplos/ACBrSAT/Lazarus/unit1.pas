@@ -32,6 +32,7 @@ type
     btSerial: TBitBtn;
     cbUsarEscPos: TRadioButton;
     cbUsarFortes: TRadioButton;
+    cbxSalvarCFe: TCheckBox;
     cbxModelo : TComboBox ;
     cbxAmbiente : TComboBox ;
     cbxIndRatISSQN : TComboBox ;
@@ -151,6 +152,7 @@ type
     procedure cbUsarEscPosClick(Sender: TObject);
     procedure cbUsarFortesClick(Sender: TObject);
     procedure cbxModeloChange(Sender : TObject) ;
+    procedure cbxSalvarCFeChange(Sender: TObject);
     procedure cbxUTF8Change(Sender: TObject);
     procedure miGerarXMLCancelamentoClick(Sender: TObject);
     procedure miEnviarCancelamentoClick(Sender: TObject);
@@ -271,6 +273,7 @@ begin
     Config.PaginaDeCodigo     := sePagCod.Value;
     Config.EhUTF8             := cbxUTF8.Checked;
     Config.infCFe_versaoDadosEnt := sfeVersaoEnt.Value;
+    SalvarCFes := cbxSalvarCFe.Checked;
   end
 end ;
 
@@ -328,6 +331,7 @@ begin
     sePagCod.Value         := INI.ReadInteger('SAT','PaginaDeCodigo',0);
     sfeVersaoEnt.Value     := INI.ReadFloat('SAT','versaoDadosEnt', cversaoDadosEnt);
     cbxFormatXML.Checked   := INI.ReadBool('SAT','FormatarXML', True);
+    cbxSalvarCFe.Checked   := INI.ReadBool('SAT','SalvarCFe', True);
     sePagCodChange(Sender);
 
     edtPorta.Text := INI.ReadString('Extrato','Porta','COM1');
@@ -377,6 +381,7 @@ begin
     INI.WriteInteger('SAT','PaginaDeCodigo',sePagCod.Value);
     INI.WriteFloat('SAT','versaoDadosEnt',sfeVersaoEnt.Value);
     INI.WriteBool('SAT','FormatarXML', cbxFormatXML.Checked);
+    INI.ReadBool('SAT','SalvarCFe', cbxSalvarCFe.Checked);
 
     INI.WriteString('Extrato','Porta',edtPorta.Text);
     INI.WriteString('Extrato','ParamsString',ACBrSATExtratoESCPOS1.Device.ParamsString);
@@ -444,6 +449,11 @@ begin
     cbxModelo.ItemIndex := Integer( ACBrSAT1.Modelo ) ;
     raise ;
   end ;
+end;
+
+procedure TForm1.cbxSalvarCFeChange(Sender: TObject);
+begin
+  ACBrSAT1.SalvarCFes := cbxSalvarCFe.Checked;
 end;
 
 procedure TForm1.cbxUTF8Change(Sender: TObject);
@@ -633,9 +643,6 @@ begin
 end;
 
 procedure TForm1.mEnviarVendaClick(Sender : TObject) ;
-Var
-  DirEnv, DirResp : String;
-  numSessao: Integer;
 begin
   if mVendaEnviar.Text = '' then
     mGerarVenda.Click;
@@ -644,20 +651,9 @@ begin
 
   ACBrSAT1.EnviarDadosVenda( mVendaEnviar.Text );
 
-  DirEnv := ExtractFilePath(Application.ExeName)+'\Env\';
-  DirResp := ExtractFilePath(Application.ExeName)+'\Res\';
-  numSessao := ACBrSAT1.numeroSessao;
-
-  ForceDirectory( DirEnv );
-  ForceDirectory( DirResp );
-
-  mVendaEnviar.Lines.SaveToFile(DirEnv + 'CFe-'+IntToStrZero(numSessao,6)+'.xml');
-
   if ACBrSAT1.Resposta.codigoDeRetorno = 6000 then
   begin
     mRecebido.Lines.Text := ACBrSAT1.CFe.AsXMLString;
-    mRecebido.Lines.SaveToFile(DirResp + 'CFe-'+ACBrSAT1.CFe.infCFe.ID+'-rec.xml');
-     //LoadXML(mRecebido, wbCupom);
     PageControl1.ActivePage := tsRecebido;
   end;
 end;
