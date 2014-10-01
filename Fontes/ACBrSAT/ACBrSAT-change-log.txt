@@ -49,6 +49,8 @@ Símbolo : Significado
 
 Data: 01/10/2014     (por: DSA)
 -- ACBrSAT --
+[-] Correção no método de CancelarUltimaVenda, prefixo de "chCanc" deve ser
+    informado como "Cfe" e não "CFe"
 [+] Adicionada as propriedades:
     - SalvarCFes: Boolean   (opção para salvar XMLs enviados e recebidos do SAT)
     - PastaCFeVenda: String         (Path para salvar XMLs de Venda)
