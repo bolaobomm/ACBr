@@ -178,6 +178,7 @@ begin
                        TributosFonte,
                        TributosPercentual,
                        MarcaDaguaMSG,
+                       LocalImpCanhoto,
                        NFe);
     finally
       LogoMarcaEmpresa.Free;
@@ -258,6 +259,7 @@ begin
                        TributosFonte,
                        TributosPercentual,
                        MarcaDaguaMSG,
+                       LocalImpCanhoto,
                        NFE);
     finally
       LogoMarcaEmpresa.Free;

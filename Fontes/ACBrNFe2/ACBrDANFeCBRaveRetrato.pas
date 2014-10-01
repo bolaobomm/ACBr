@@ -150,13 +150,25 @@ begin
         if (not FormularioContinuo) then
         begin
           SetPen(FColorBorders,psDot,EspessuraBorda,pmCopy);
-          MoveTo(PosX,PosY+aHeigth+3);
-          LineTo(FLastX,PosY+aHeigth+3);
+          if PosicaoCanhoto = 0 then
+          begin
+            MoveTo(PosX,PosY+aHeigth+3);
+            LineTo(FLastX,PosY+aHeigth+3);
+          end
+          else
+          begin
+            MoveTo(PosX,PosY-3);
+            LineTo(FLastX,PosY-3);
+          end;
+
           SetPen(FColorBorders,psSolid,EspessuraBorda,pmCopy);
         end;
       end;
 
-     Result:=PosY+aHeigth+6;
+     if PosicaoCanhoto = 0 then
+       Result:=PosY+aHeigth+6
+     else
+      Result:=PosY-6;
   end;
 end;
 
@@ -1009,13 +1021,13 @@ begin
   end;
 end;
 
-function ImprimirRodape(PosX: Double): Double;
+function ImprimirRodape(PosX: Double; PosY: Double): Double;
 var vEnd:String;
 begin
   with DANFeRave, DANFeRave.ACBrNFe.NotasFiscais.Items[DANFeRave.FNFIndex].NFe, DANFeRave.BaseReport do
    begin
      SetFontTitle;
-     Result:=FLastY-GetFontHeigh;
+     Result:={FLastY}PosY-GetFontHeigh;
      GotoXY(PosX,Result);
      NewLine;
      vEnd:='DATA E HORA DA IMPRESSÃO: '+FormatDateTime('dd/mm/yyyy hh:mm:ss',Now);
@@ -1123,7 +1135,8 @@ begin
 
     XX:=MarginLeft;YY:=MarginTop;
     Result:=XX;
-    YY:=ImprimirCanhoto(XX,YY);
+    if PosicaoCanhoto = 0 then
+      YY:=ImprimirCanhoto(XX,YY);
     ImprimirMensagensDeFundo;
     XX:=ImprimirEmitente(XX,YY);
     XX:=ImprimirTituloDANFe(XX,YY);
@@ -1142,21 +1155,30 @@ begin
        YY:=ImprimirFaturas(Result,YY);
        YY:=ImprimirCalculoImposto(Result,YY);
        YY:=ImprimirTransportadorVolumes(Result,YY);
-       FLastItens:=ImprimirRodape(Result);
+       if PosicaoCanhoto = 0 then
+         FLastItens:=ImprimirRodape(Result,FLastY)
+       else
+       begin
+         FLastItens:=ImprimirCanhoto(Result,FLastY-18);
+         FLastItens:=ImprimirRodape(Result,FLastItens);
+       end;
        FLastItens:=ImprimirDadosAdicionais(Result,FLastItens,32);
        FLastItens:=ImprimirCalculoISSQN(Result,FLastItens);
      end
     else begin
-       FLastItens:=ImprimirRodape(Result);
+       FLastItens:=ImprimirRodape(Result, FLastY);
+
        if (not IsPrintAllInfCpl) then
           if not IsPrintAllProd then
              FLastItens:=ImprimirDadosAdicionais(Result,FLastItens,32)
             else
              FLastItens:=ImprimirDadosAdicionais(Result,FLastItens,FLastItens-YY-4);
+
     end;
 
     if not IsPrintAllProd then
        PrepararItens(Result,YY,FLastItens);
+
   end;
 end;
 
