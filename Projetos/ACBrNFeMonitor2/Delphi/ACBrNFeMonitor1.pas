@@ -287,6 +287,7 @@ type
     edtToken: TEdit;
     edtIdToken: TEdit;
     cbxSepararPorCNPJ: TCheckBox;
+    cbModoEmissao: TCheckBox;
     ACBrMDFe1: TACBrMDFe;
     ACBrMDFeDAMDFEQR1: TACBrMDFeDAMDFEQR;
     ACBrMDFeDAMDFeRL1: TACBrMDFeDAMDFeRL;
@@ -752,6 +753,7 @@ begin
      sedLogLinhasComp.Value := Ini.ReadInteger('ACBrNFeMonitor','Linhas_Log_Comp',0);
      cbUmaInstancia.Checked := Ini.ReadBool('ACBrNFeMonitor','Uma_Instancia',false);
      cbModoXML.Checked      := Ini.ReadBool('ACBrNFeMonitor','ModoXML',false);
+     cbModoEmissao.Checked  := Ini.ReadBool('ACBrNFeMonitor','IgnorarComandoModoEmissao',false);
 
      ArqEntTXT := AcertaPath( edEntTXT.Text ) ;
      ArqEntOrig := ArqEntTXT;
@@ -1080,6 +1082,7 @@ begin
 
      Ini.WriteBool('ACBrNFeMonitor','Uma_Instancia',cbUmaInstancia.Checked);
      Ini.WriteBool('ACBrNFeMonitor','ModoXML',cbModoXML.Checked);
+     Ini.WriteBool('ACBrNFeMonitor','IgnorarComandoModoEmissao',cbModoEmissao.Checked);
 
      Ini.WriteString( 'Certificado','Caminho' ,edtCaminho.Text) ;
      GravaINICrypt(INI,'Certificado','Senha', edtSenha.Text, _C) ;

@@ -27,7 +27,7 @@ object frmAcbrNfeMonitor: TfrmAcbrNfeMonitor
     Left = 0
     Top = 0
     Width = 571
-    Height = 222
+    Height = 223
     Align = alClient
     TabOrder = 0
     object Splitter1: TSplitter
@@ -85,7 +85,7 @@ object frmAcbrNfeMonitor: TfrmAcbrNfeMonitor
       Left = 1
       Top = 92
       Width = 569
-      Height = 129
+      Height = 130
       Align = alClient
       TabOrder = 1
       object pTodResp: TPanel
@@ -102,7 +102,7 @@ object frmAcbrNfeMonitor: TfrmAcbrNfeMonitor
         Left = 1
         Top = 18
         Width = 567
-        Height = 110
+        Height = 111
         Align = alClient
         Lines.Strings = (
           '')
@@ -116,7 +116,7 @@ object frmAcbrNfeMonitor: TfrmAcbrNfeMonitor
   end
   object pBotoes: TPanel
     Left = 0
-    Top = 485
+    Top = 486
     Width = 571
     Height = 40
     Align = alBottom
@@ -4109,7 +4109,7 @@ object frmAcbrNfeMonitor: TfrmAcbrNfeMonitor
   end
   object StatusBar1: TStatusBar
     Left = 0
-    Top = 525
+    Top = 526
     Width = 571
     Height = 19
     Panels = <
@@ -4122,7 +4122,7 @@ object frmAcbrNfeMonitor: TfrmAcbrNfeMonitor
   end
   object pConfig: TPanel
     Left = 0
-    Top = 222
+    Top = 223
     Width = 571
     Height = 263
     Align = alBottom
@@ -4143,7 +4143,7 @@ object frmAcbrNfeMonitor: TfrmAcbrNfeMonitor
           Left = 6
           Top = 8
           Width = 188
-          Height = 68
+          Height = 66
           TabOrder = 3
           object Label12: TLabel
             Left = 8
@@ -4235,7 +4235,7 @@ object frmAcbrNfeMonitor: TfrmAcbrNfeMonitor
         end
         object gbSenha: TGroupBox
           Left = 6
-          Top = 101
+          Top = 81
           Width = 188
           Height = 46
           TabOrder = 8
@@ -4324,7 +4324,7 @@ object frmAcbrNfeMonitor: TfrmAcbrNfeMonitor
         end
         object cbSenha: TCheckBox
           Left = 24
-          Top = 97
+          Top = 77
           Width = 137
           Height = 17
           Caption = 'Proteger Configura'#231'oes'
@@ -4418,7 +4418,7 @@ object frmAcbrNfeMonitor: TfrmAcbrNfeMonitor
         end
         object cbUmaInstancia: TCheckBox
           Left = 6
-          Top = 151
+          Top = 135
           Width = 195
           Height = 17
           Caption = 'Permite executar apenas um Monitor'
@@ -4462,7 +4462,7 @@ object frmAcbrNfeMonitor: TfrmAcbrNfeMonitor
         end
         object cbModoXML: TCheckBox
           Left = 6
-          Top = 170
+          Top = 154
           Width = 205
           Height = 17
           Caption = 'Receber e Enviar Respostas em XML'
@@ -4478,6 +4478,14 @@ object frmAcbrNfeMonitor: TfrmAcbrNfeMonitor
           State = cbChecked
           TabOrder = 0
           OnClick = cbMonitorarPastaClick
+        end
+        object cbModoEmissao: TCheckBox
+          Left = 6
+          Top = 173
+          Width = 205
+          Height = 17
+          Caption = 'Ignorar Comando Modo Emiss'#227'o'
+          TabOrder = 14
         end
       end
       object Certificado: TTabSheet
@@ -5139,7 +5147,7 @@ object frmAcbrNfeMonitor: TfrmAcbrNfeMonitor
               Top = 50
               Width = 219
               Height = 21
-              ItemHeight = 13
+              ItemHeight = 0
               TabOrder = 5
             end
             object cbxImpDescPorc: TCheckBox
@@ -6081,6 +6089,7 @@ object frmAcbrNfeMonitor: TfrmAcbrNfeMonitor
     Configuracoes.Geral.PathSalvar = 'C:\Program Files\Borland\Delphi7\Bin\'
     Configuracoes.Geral.ExibirErroSchema = True
     Configuracoes.Geral.FormatoAlerta = 'TAG:%TAGNIVEL% ID:%ID%/%TAG%(%DESCRICAO%) - %MSG%.'
+    Configuracoes.Geral.RetirarAcentos = True
     Configuracoes.WebServices.UF = 'SP'
     Configuracoes.WebServices.AguardarConsultaRet = 0
     Configuracoes.WebServices.IntervaloTentativas = 1000
@@ -6552,9 +6561,7 @@ object frmAcbrNfeMonitor: TfrmAcbrNfeMonitor
     ImprimirDetalhamentoEspecifico = True
     NFeCancelada = False
     LocalImpCanhoto = 0
-    ImprimeItens = True
     TamanhoCampoCodigo = 0
-    TamanhoCampoVlUnit = 0
     TamanhoFonte_ANTT = 10
     Fonte = ftTimes
     EspessuraBorda = 1

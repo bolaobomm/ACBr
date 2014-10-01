@@ -1270,6 +1270,9 @@ begin
 
         else if Cmd.Metodo = 'setformaemissao' then //1-Normal 2-Contingencia 3-SCAN 4-DPEC 5-FSDA
          begin
+           if cbModoEmissao.checked then
+             exit;
+             
            if (StrToInt(Cmd.Params(0))>=1) and (StrToInt(Cmd.Params(0))<=9) then
             begin
               ACBrNFe1.Configuracoes.Geral.FormaEmissao := StrToTpEmis(OK, Cmd.Params(0));
