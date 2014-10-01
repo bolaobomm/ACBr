@@ -2289,8 +2289,8 @@ begin
      end;
   {$ENDIF}
 
-  {$IFNDEF PL_200}
     qrlIndConteiners.Caption := '';
+  {$IFNDEF PL_200}
     for i := 0 to (detCont.Count - 1) do
      begin
        for j := 0 to (detCont.Items[i].Lacre.Count - 1) do
