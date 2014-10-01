@@ -747,6 +747,7 @@ begin
   4204509, // Corupá/SC
   4204608, // Criciúma/SC
   4205001, // Dionísio Cerqueira/SC
+  4205308, // Faxinal Dos Guedes/SC
   4205555, // Frei Rogério/SC
   4205704, // Garopaba/SC
   4206207, // Gravatal/SC
@@ -760,6 +761,7 @@ begin
   4208500, // Ituporanga/SC
   4209003, // Joaçaba/SC
   4209300, // Lages/SC
+  4209409, // Laguna/SC
   4210001, // Luiz Alves/SC
   4211058, // Monte Carlo/SC
   4211306, // Navegantes/SC
@@ -771,6 +773,7 @@ begin
   4212908, // Pinhalzinho/SC
   4213104, // Piratuba/SC
   4213153, // Planalto Alegre/SC
+  4213401, // Ponte Serrada/SC
   4213609, // Porto União/SC
   4213708, // Pouso Redondo/SC
   4214805, // Rio do Sul/SC
@@ -788,6 +791,7 @@ begin
   4217907, // Tangará/SC
   4218004, // Tijucas/SC
   4219002, // Urussanga/SC
+  4219101, // Vargeao/SC
   4219507, // Xanxere/SC
   4219606, // Xavantina/SC
   4219705, // Xaxim/SC
