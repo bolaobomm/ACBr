@@ -1090,6 +1090,7 @@ object frm_danfe: Tfrm_danfe
     Configuracoes.Geral.PathSalvar = 'C:\Arquivos de programas\CodeGear\RAD Studio\5.0\bin\'
     Configuracoes.Geral.ExibirErroSchema = True
     Configuracoes.Geral.FormatoAlerta = 'TAG:%TAGNIVEL% ID:%ID%/%TAG%(%DESCRICAO%) - %MSG%.'
+    Configuracoes.Geral.RetirarAcentos = True
     Configuracoes.WebServices.UF = 'SP'
     Configuracoes.WebServices.AguardarConsultaRet = 0
     Configuracoes.WebServices.IntervaloTentativas = 0
@@ -1223,6 +1224,7 @@ object frm_danfe: Tfrm_danfe
     ExibirTotalTributosItem = False
     ExibeCampoFatura = True
     TributosPercentual = ptValorProdutos
+    ImprimirUnQtVlComercial = False
     Detalhado = False
     DescricaoViaEstabelec = 'Via do Consumidor'
     Left = 136

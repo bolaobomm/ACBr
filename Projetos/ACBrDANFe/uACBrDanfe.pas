@@ -89,6 +89,8 @@ sLineBreak+
 'TributosPercentual             = ptValorProdutos'+sLineBreak+
 'MarcaDaguaMSG                  ='+sLineBreak+
 'TamanhoCampoVlUnit             = 0'+sLineBreak+
+'#LocalImpCanhoto                = 1'+sLineBreak+
+'LocalImpCanhoto                = 0'+sLineBreak+
 sLineBreak+
 '[PROPRIEDADEs_DANFe_FORTES]'+sLineBreak+
 '# FonteNome                      = nfArial'+sLineBreak+
@@ -243,6 +245,7 @@ begin
                                                               ptPersonalizado));
             MarcaDaguaMSG                  := Trim(Ini.ReadString('PROPRIEDADES_DANFe_RAVECB','MarcaDaguaMSG' ,''));
             TamanhoCampoVlUnit             := Ini.ReadInteger('PROPRIEDADES_DANFe_RAVECB','TamanhoCampoVlUnit' ,0);
+            LocalImpCanhoto                := Ini.ReadInteger('PROPRIEDADES_DANFe_RAVECB','LocalImpCanhoto' ,0);
          end;
 
          with ACBrNFeDANFeRL1 do
