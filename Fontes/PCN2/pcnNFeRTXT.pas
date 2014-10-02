@@ -136,7 +136,7 @@ begin
   for i := 0 to FLayoutArquivoTXT.Count - 1 do
     FLayoutArquivoTXT[i] := '§' + trim(copy(FLayoutArquivoTXT[i], pos('>', FLayoutArquivoTXT[i]) + 1, maxInt));
   // Ler Registros
-  for i := 2 to FConteudoArquivo.Count - 1 do
+  for i := 1 to FConteudoArquivo.Count - 1 do
   begin
     LerRegistro(FconteudoArquivo[i])
   end;
@@ -206,7 +206,10 @@ begin
   begin
     s := FLayoutArquivoTXT[i];
     if (pos('§' + UpperCase(FID) + '|', s) > 0) and (j = 0) then
+    begin
       j := LocalizarPosicaoTAG(UpperCase(TAG), s);
+      break;
+    end;
   end;
   k := 0;
   m := 0;
@@ -233,7 +236,7 @@ begin
   if ID = 'A' then
   begin
      NFe.infNFe.Versao := LerCampo(tcDe2, 'versao');
-  end;   
+  end;
 
   if ID = 'B' then (* Grupo da TAG <ide> **************************************)
   begin
