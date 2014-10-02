@@ -93,8 +93,16 @@ begin
           Box([fsTop,fsBottom],PosX+aWidthReceb,PosY+aHeigthNumSerie,aWidth-aWidthReceb,aHeigthIdent,'','',taLeftJustify,True,False,False); //identificação e assinatura
           Box([fsLeft],PosX+aWidthReceb,YPos,aWidth-aWidthReceb,FLastY-YPos); //data recebimento
           SetPen(FColorBorders,psDot,EspessuraBorda,pmCopy);
-          MoveTo(PosX+aWidth+3,FFirstY);
-          LineTo(PosX+aWidth+3,FLastY);
+          if PosicaoCanhoto = 0 then
+          begin
+            MoveTo(PosX+aWidth+3,FFirstY);
+            LineTo(PosX+aWidth+3,FLastY);
+          end
+          else
+          begin
+            MoveTo(PosX-3,FFirstY);
+            LineTo(PosX-3,FLastY);
+          end;
           SetPen(FColorBorders,psSolid,EspessuraBorda,pmCopy);
         end;
 
@@ -151,7 +159,10 @@ begin
         end;
      end;
 
-     Result:=PosX+aWidth+6;
+    if PosicaoCanhoto = 0 then
+      Result:=PosX+aWidth+6
+    else
+      Result:=PosX-6;
    end;
 end;
 
@@ -1148,16 +1159,23 @@ begin
     Inc(FCurrentPage);
     if FPageNum=1 then
      begin
+       FLastXX := FLastX;
        FNumeroNF:=FormatFloat('000000000',Ide.NNF);
        FNumeroNF:=Copy(FNumeroNF,1,3)+'.'+Copy(FNumeroNF,4,3)+'.'+Copy(FNumeroNF,7,3);
        //FEspelho:=Trim(procNFe.nProt)='';
        FEspelho:=false; //funcionalidade de espelho suspensa devido reclamações
        FChaveNFe:=RightStr(infNFe.ID,44);
-     end;
+     end
+     else
+       FLastX := FLastXX;
 
     XX:=MarginLeft;YY:=MarginTop;
-    XX:=ImprimirCanhoto(XX,YY);
-
+    if PosicaoCanhoto = 0 then
+      XX:=ImprimirCanhoto(XX,YY)
+    else
+    begin
+      FLastX := ImprimirCanhoto(FLastX-16,YY);
+    end;
     Result:=XX;
 
     ImprimirMensagensDeFundo(XX);

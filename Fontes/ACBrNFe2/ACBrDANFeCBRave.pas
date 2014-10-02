@@ -117,7 +117,7 @@ type
      FMemoInfCpl:TMemoBuf;
      FDetIndex:Integer;
      FLastItens:Double;
-     FFirstX,FFirstY,FLastX,FLastY:double;
+     FFirstX,FFirstY,FLastX,FLastY,FLastXX:double;
      FontNameUsed : String;
      FontSizeIdentDoc_Outros : Integer;
      FColorBorders:TColor;
