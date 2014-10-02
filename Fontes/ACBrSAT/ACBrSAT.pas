@@ -44,6 +44,8 @@ uses
     {$IFDEF FPC} ,LResources {$ENDIF}
   {$ENDIF};
 
+const CPREFIXO_CFe = 'CFe';
+
 type
    { TACBrSAT }
 
@@ -56,6 +58,7 @@ type
      fsOnGetsignAC : TACBrSATGetChave ;
      fsOnLog : TACBrSATDoLog ;
      fsNomeDLL : String ;
+     fsPrefixoCFe: String;
      fsResposta : TACBrSATResposta ;
      fsRespostaComando : String ;
      fsSATClass : TACBrSATClass ;
@@ -119,6 +122,7 @@ type
      property CFe : TCFe read fsCFe ;
      property CFeCanc : TCFeCanc read fsCFeCanc ;
      property Resposta : TACBrSATResposta read fsResposta;
+     property PrefixoCFe: String read fsPrefixoCFe;
 
      procedure InicializaCFe( ACFe : TCFe = nil );
 
@@ -208,6 +212,7 @@ begin
   fsSalvarCFes           := False;
   fsPastaCFeCancelamento := '';
   fsPastaCFeVenda        := '';
+  fsPrefixoCFe           := CPREFIXO_CFe;
 end ;
 
 destructor TACBrSAT.Destroy ;
@@ -235,6 +240,7 @@ begin
 
   DoLog( 'ACBrSAT.Inicializado');
   fsInicializado := true ;
+  fsPrefixoCFe := CPREFIXO_CFe;
 end ;
 
 procedure TACBrSAT.DesInicializar ;
@@ -381,11 +387,13 @@ end ;
 function TACBrSAT.CancelarUltimaVenda(chave, dadosCancelamento : AnsiString
   ) : String ;
 var
-  XMLRecebido, NomeCFe: String;
+  XMLRecebido, NomeCFe, ChaveAntiga: String;
 begin
   fsComandoLog := 'CancelarUltimaVenda( '+chave+', '+dadosCancelamento+' )';
+
   if Trim(chave) = '' then
      raise EACBrSATErro.Create('Parâmetro: "chave" não informado');
+
   if Trim(dadosCancelamento) = '' then
      raise EACBrSATErro.Create('Parâmetro: "dadosCancelamento" não informado');
 
@@ -398,6 +406,17 @@ begin
 
   IniciaComando;
   Result := FinalizaComando( fsSATClass.CancelarUltimaVenda(chave, dadosCancelamento) ) ;
+
+  // Workaround para SAT Kryptus, que usa o prefixo como: "Cfe" ao inves de "CFe"
+  if (fsResposta.codigoDeRetorno = 7007) and (LeftStr(chave,3) = CPREFIXO_CFe) then
+  begin
+    fsPrefixoCFe      := 'Cfe';                      // Ajusta o Prefixo
+    ChaveAntiga       := chave;
+    chave             := fsPrefixoCFe + copy(chave,4,Length(chave));
+    dadosCancelamento := StringReplace( dadosCancelamento, ChaveAntiga, chave, [rfReplaceAll] );
+    CancelarUltimaVenda( chave, dadosCancelamento);  // Tenta novamente
+    exit;                                            // cai fora por já tratou na chamada acima
+  end;
 
   if fsResposta.codigoDeRetorno = 7000 then
   begin
@@ -717,7 +736,7 @@ end ;
 procedure TACBrSAT.CFe2CFeCanc;
 begin
   CFeCanc.Clear;
-  CFeCanc.infCFe.chCanc   := 'Cfe'+CFe.infCFe.ID;
+  CFeCanc.infCFe.chCanc   := fsPrefixoCFe + CFe.infCFe.ID;
   CFeCanc.infCFe.dEmi     := CFe.ide.dEmi;
   CFeCanc.infCFe.hEmi     := CFe.ide.hEmi;
   CFeCanc.ide.CNPJ        := CFe.ide.CNPJ;

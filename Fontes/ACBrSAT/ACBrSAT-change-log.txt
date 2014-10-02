@@ -47,6 +47,13 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+Data: 02/10/2014     (por: DSA)
+-- ACBrSAT --
+[-] Ajuste no método CancelarUltimaVenda, de acordo com a especificação 2.11.4,
+    prefixo de "chCanc" deve realmente ser informado como "CFe" e não "Cfe"
+[*] Aplicado workaround para equipamentos que usam o prefixo "Cfe" e ajustar o
+    XML e Chave, em caso de erro na tentativa de cancelamento.
+
 Data: 01/10/2014     (por: DSA)
 -- ACBrSAT --
 [-] Correção no método de CancelarUltimaVenda, prefixo de "chCanc" deve ser
