@@ -48,6 +48,12 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 
+02/10/2014
+----------
+[+] Incluido a URL de homologação e produção (não liberado ainda) para consumir o Web Service
+    NFeDistribuicaoDFe
+    por: Italo Jurisato Junior
+
 14/11/2013
 ----------
 [-] Acerto na tag nItemPed, ela é um campo numérico e estava gerando zeros não significativos.
