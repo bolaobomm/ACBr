@@ -97,6 +97,7 @@ type
     CheckBox2: TCheckBox;
     CheckBox4: TCheckBox;
     CheckBox5: TCheckBox;
+	ACBrNFSeDANFSeRVpkg_dpk: TCheckBox;
     ACBr_BoletoFC_FR_dpk: TCheckBox;
     ACBr_BoletoFC_Quick_dpk: TCheckBox;
     ACBr_BoletoFC_Fortes_dpk: TCheckBox;
@@ -218,11 +219,12 @@ end;
 
 function TframePacotes.IsPacoteNFSe(const ANomePacote: String): Boolean;
 const
-  PACOTES_NFSe: array [0..3] of String =
+  PACOTES_NFSe: array [0..4] of String =
     ('ACBr_NFSe.dpk',
      'ACBrNFSeDanfseFRpkg.dpk',
      'ACBrNFSeDanfseRLpkg.dpk',
-     'ACBrNFSeDanfseQRpkg.dpk');
+     'ACBrNFSeDanfseQRpkg.dpk',
+	 'ACBrNFSeDANFSeRVpkg.dpk');
 begin
   Result := MatchText(ANomePacote, PACOTES_NFSe);
 end;

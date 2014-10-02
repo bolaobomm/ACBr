@@ -47,6 +47,10 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+02/10/2014
+[*] Alteração para poder compilar com o instalador do DANFSe em Rave Report
+[*] Alterado o pacote inicial do Rave para suportar as diversas versões conforme delphi!
+
 14/11/2013
 [+] Integração com o provedor Equiplano (por Michel Ouriques)
 

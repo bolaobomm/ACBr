@@ -39,6 +39,10 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+02/10/2014
+----------
+[+] Adicionado novo componente para impressão do DANFSe em Rave Report para compilar
+
 20/06/2012
 ----------
 [*] Alterado para usar o novo repositório SVN

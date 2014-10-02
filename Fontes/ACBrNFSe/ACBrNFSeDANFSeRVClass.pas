@@ -5,7 +5,7 @@ unit ACBrNFSeDANFSeRVClass;
 interface
 
 uses
- Forms, SysUtils, Classes, pnfsNFSe, ACBrNFSeDANFSeClass,RpDefine, RvLDCompiler,
+ Forms, SysUtils, Classes, pnfsNFSe, ACBrNFSeDANFSeClass, RpDefine, 
  pnfsConversao, DANFSeRaveDM, StrUtils, Dialogs, ACBrUtil, ACBrNFSe, ACBrNFSeUtil ;
 
 type
