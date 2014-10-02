@@ -55,7 +55,7 @@ uses
 function CarregarLayoutTXT(const versao: string): AnsiString;
 
 const
-  VERSOES_VALIDAS_LAYOUT_TXT = '|1.10|2.00|3.10';
+  VERSOES_VALIDAS_LAYOUT_TXT = '|1.10|2.00|3.10|';
 
 implementation
 
@@ -69,9 +69,9 @@ var
 begin
   if versao = '1.10' then
   begin
-    LoadLayout('<B01>       NOTA FISCAL|1');
-    LoadLayout('<B01>     A|1.10|^id^'); //ok
-    LoadLayout('<B01>     B|cUF¨|cNF¨|NatOp¨|indPag¨|mod¨|serie¨|nNF¨|dEmi¨|dSaiEnt¨|tpNF¨|cMunFG¨|TpImp¨|TpEmis¨|CDV¨|TpAmb¨|FinNFe¨|ProcEmi¨|VerProc¨'); //ok
+    LoadLayout('<A>       NOTA FISCAL|1');
+    LoadLayout('<A01>     A|versao¨|^id^');
+    LoadLayout('<B01>     B|cUF¨|cNF¨|NatOp¨|indPag¨|mod¨|serie¨|nNF¨|dhEmi¨|dSaiEnt¨|tpNF¨|cMunFG¨|TpImp¨|TpEmis¨|CDV¨|TpAmb¨|FinNFe¨|ProcEmi¨|VerProc¨'); //ok
     LoadLayout('<B12a>  B13|refNFe¨'); //ok
     LoadLayout('<B14>   B14|cUF¨|AAMM¨|CNPJ¨|Mod¨|serie¨|nNF¨'); //ok
     LoadLayout('<C01>     C|XNome¨|XFant¨|IE¨|IEST¨|IM¨|CNAE¨'); //ok
@@ -160,8 +160,8 @@ begin
   end
   else if versao = '2.00' then
   begin
-    LoadLayout('<B01>       NOTA FISCAL|1');
-    LoadLayout('<B01>     A|2.00|^id^'); //ok
+    LoadLayout('<A>       NOTA FISCAL|1');
+    LoadLayout('<A01>     A|versao¨|^id^');
     LoadLayout('<B01>     B|cUF¨|cNF¨|NatOp¨|indPag¨|mod¨|serie¨|nNF¨|dEmi¨|dSaiEnt¨|hSaiEnt¨|tpNF¨|cMunFG¨|TpImp¨|TpEmis¨|CDV¨|TpAmb¨|FinNFe¨|ProcEmi¨|VerProc¨|dhCont¨|xJust¨'); //ok
     LoadLayout('<B12a>  B13|refNFe¨'); //ok
     LoadLayout('<B14>   B14|cUF¨|AAMM¨|CNPJ¨|Mod¨|serie¨|nNF¨'); //ok
@@ -268,8 +268,8 @@ begin
   end
   else if versao = '3.10' then
   begin
-    LoadLayout('<B01>       NOTA FISCAL|1');
-    LoadLayout('<B01>     A|3.10|^id^');
+    LoadLayout('<A>       NOTA FISCAL|1');
+    LoadLayout('<A01>     A|versao¨|^id^');
     LoadLayout('<B01>     B|cUF¨|cNF¨|NatOp¨|indPag¨|mod¨|serie¨|nNF¨|dhEmi¨|dhSaiEnt¨|tpNF¨|idDest¨|cMunFG¨|tpImp¨|tpEmis¨|CDV¨|tpAmb¨|finNFe¨|procEmi¨|verProc¨|dhCont¨|xJust¨');
     LoadLayout('<BA>     BA|refNFe¨');
     LoadLayout('<BA03> BA03|cUF¨|AAMM¨|CNPJ¨|Mod¨|serie¨|nNF¨');
