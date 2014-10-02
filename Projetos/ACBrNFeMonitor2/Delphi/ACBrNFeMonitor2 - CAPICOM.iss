@@ -40,7 +40,7 @@ Name: custom; Description: Instalação Customizada; Flags: iscustom
 [Components]
 Name: programa; Description: Programa ACBrNFeMonitor; Types: full compact custom; Flags: fixed
 Name: help; Description: Arquivos de Ajuda; Types: full custom
-Name: exemplos; Description: Exemplos de Uso; Types: full custom
+;Name: exemplos; Description: Exemplos de Uso; Types: full custom
 
 [Languages]
 Name: brazilianportuguese; MessagesFile: compiler:Languages\BrazilianPortuguese.isl
