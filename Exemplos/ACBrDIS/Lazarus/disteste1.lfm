@@ -426,6 +426,7 @@ object Form1: TForm1
     Height = 21
     Top = 280
     Width = 40
+    MaxValue = 200
     TabOrder = 22
   end
   object Label12: TLabel

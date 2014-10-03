@@ -71,12 +71,18 @@ var
   Form1: TForm1;
 
 implementation
-Uses AcbrUtil ;
+Uses AcbrUtil, typinfo ;
 
 {$R *.dfm}
 
 procedure TForm1.FormCreate(Sender: TObject);
+var
+  I: TACBrDISModelo;
 begin
+  cbxModelo.Items.Clear ;
+  For I := Low(TACBrDISModelo) to High(TACBrDISModelo) do
+     cbxModelo.Items.Add( GetEnumName(TypeInfo(TACBrDISModelo), integer(I) ) ) ;
+
   cbxAlinhamento.ItemIndex  := 2 ;
   cbxExibirEfeito.ItemIndex := 0 ;
   cbxRolarEfeito.ItemIndex  := 4 ;
