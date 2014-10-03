@@ -60,6 +60,8 @@ type
 
 implementation
 
+uses ACBrSpedUtils;
+
 { TPAF_S }
 constructor TPAF_S.Create;
 begin
@@ -124,7 +126,7 @@ begin
                                            LFill(CNPJ, 14) +
                                            LFill(DT_ABER, 'yyyymmddhhmmss') +
                                            //RFill(SITU, 1) +
-                                           RFill(NUM_MESA, 13) +
+                                           RFill(NUM_MESA, 13, ifThen(RegistroValido, ' ', '?')) +
                                            LFill(VL_TOT, 13, 2) +
                                            RFill(COO_CM, 9) +
                                            RFill(NUM_FAB_CM, 20) +
@@ -156,7 +158,7 @@ begin
         strRegistroS3 := strRegistroS3 + LFill('S3') +
                                          LFill(RegS2.CNPJ, 14) +
                                          LFill(RegS2.DT_ABER, 'yyyymmddhhmmss') +
-                                         RFill(NUM_MESA, 13) +
+                                         RFill(NUM_MESA, 13, ifThen(RegistroValido, ' ', '?')) +
                                          RFill(COD_ITEM, 14) +
                                          RFill(DESC_ITEM, 100) +
                                          LFill(QTDE_ITEM, 7, QTDE_DECIMAL) +
