@@ -98,7 +98,7 @@ begin
  ConfigCidade.Prefixo2      := '';
  ConfigCidade.Prefixo3      := '';
  ConfigCidade.Prefixo4      := '';
- ConfigCidade.Identificador := 'id'; // Dever ser trocado depois para id
+ ConfigCidade.Identificador := 'Id'; // Dever ser trocado depois para id
 
  case ACodCidade of
   4300406: NomeCidade := 'alegrete.rs';
@@ -107,10 +107,10 @@ begin
 
  if AAmbiente = 1
   then ConfigCidade.NameSpaceEnvelope := 'http://nfse.' + NomeCidade + '.gov.br/webservice/index/producao'
-  else ConfigCidade.NameSpaceEnvelope := 'http://nfse.' + NomeCidade + '.gov.br/webservice/index/homologacao';
+  else ConfigCidade.NameSpaceEnvelope := 'http://nfse.' + NomeCidade + '.gov.br:82/webservice/index/homologacao';
 
  ConfigCidade.AssinaRPS  := False;
- ConfigCidade.AssinaLote := False;
+ ConfigCidade.AssinaLote := True;
 
  Result := ConfigCidade;
 end;
@@ -191,7 +191,9 @@ end;
 
 function TProvedorDBSeller.GetValidarLote: Boolean;
 begin
- Result := True;
+ // O Schema que o provedor disponibilizou não esta em conformidade,
+ // gerando um erro ao executar a validação
+ Result := False;
 end;
 
 function TProvedorDBSeller.Gera_TagI(Acao: TnfseAcao; Prefixo3, Prefixo4,
@@ -241,16 +243,20 @@ end;
 function TProvedorDBSeller.GeraEnvelopeRecepcionarLoteRPS(URLNS: String;
   CabMsg, DadosMsg, DadosSenha: AnsiString): AnsiString;
 begin
+ DadosMsg := '<?xml version="1.0" encoding="utf-8"?>' + DadosMsg;
+ DadosMsg := StringReplace(StringReplace(DadosMsg, '<', '&lt;', [rfReplaceAll]),
+                           '>', '&gt;', [rfReplaceAll]);
+
  result := '<?xml version="1.0" encoding="utf-8"?>' +
            '<soap:Envelope xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" ' +
                           'xmlns:xsd="http://www.w3.org/2001/XMLSchema" ' +
                           'xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/">' +
             '<soap:Body>' +
-             '<RecepcionarLoteRpsRequest xmlns="' + URLNS + '/">' +
-              '<xml>' +
+             '<RecepcionarLoteRps xmlns="' + URLNS + '/">' +
+              '<xml xmlns="">' +
                 DadosMsg +
               '</xml>' +
-             '</RecepcionarLoteRpsRequest>' +
+             '</RecepcionarLoteRps>' +
             '</soap:Body>' +
            '</soap:Envelope>';
 end;
@@ -258,16 +264,20 @@ end;
 function TProvedorDBSeller.GeraEnvelopeConsultarSituacaoLoteRPS(
   URLNS: String; CabMsg, DadosMsg, DadosSenha: AnsiString): AnsiString;
 begin
+ DadosMsg := '<?xml version="1.0" encoding="utf-8"?>' + DadosMsg;
+ DadosMsg := StringReplace(StringReplace(DadosMsg, '<', '&lt;', [rfReplaceAll]),
+                           '>', '&gt;', [rfReplaceAll]);
+
  result := '<?xml version="1.0" encoding="utf-8"?>' +
            '<soap:Envelope xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" ' +
                           'xmlns:xsd="http://www.w3.org/2001/XMLSchema" ' +
                           'xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/">' +
             '<soap:Body>' +
-             '<ConsultarSituacaoLoteRpsRequest xmlns="' + URLNS + '">' +
-              '<xml>' +
+             '<ConsultarSituacaoLoteRps xmlns="' + URLNS + '">' +
+              '<xml xmlns="">' +
                 DadosMsg +
               '</xml>' +
-             '</ConsultarSituacaoLoteRpsRequest>' +
+             '</ConsultarSituacaoLoteRps>' +
             '</soap:Body>' +
            '</soap:Envelope>';
 end;
@@ -275,16 +285,20 @@ end;
 function TProvedorDBSeller.GeraEnvelopeConsultarLoteRPS(URLNS: String;
   CabMsg, DadosMsg, DadosSenha: AnsiString): AnsiString;
 begin
+ DadosMsg := '<?xml version="1.0" encoding="utf-8"?>' + DadosMsg;
+ DadosMsg := StringReplace(StringReplace(DadosMsg, '<', '&lt;', [rfReplaceAll]),
+                           '>', '&gt;', [rfReplaceAll]);
+
  result := '<?xml version="1.0" encoding="utf-8"?>' +
            '<soap:Envelope xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" ' +
                           'xmlns:xsd="http://www.w3.org/2001/XMLSchema" ' +
                           'xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/">' +
             '<soap:Body>' +
-             '<ConsultarLoteRpsRequest xmlns="' + URLNS + '">' +
-              '<xml>' +
+             '<ConsultarLoteRps xmlns="' + URLNS + '">' +
+              '<xml xmlns="">' +
                 DadosMsg +
               '</xml>' +
-             '</ConsultarLoteRpsRequest>' +
+             '</ConsultarLoteRps>' +
             '</soap:Body>' +
            '</soap:Envelope>';
 end;
@@ -292,16 +306,20 @@ end;
 function TProvedorDBSeller.GeraEnvelopeConsultarNFSeporRPS(URLNS: String;
   CabMsg, DadosMsg, DadosSenha: AnsiString): AnsiString;
 begin
+ DadosMsg := '<?xml version="1.0" encoding="utf-8"?>' + DadosMsg;
+ DadosMsg := StringReplace(StringReplace(DadosMsg, '<', '&lt;', [rfReplaceAll]),
+                           '>', '&gt;', [rfReplaceAll]);
+
  result := '<?xml version="1.0" encoding="utf-8"?>' +
            '<soap:Envelope xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" ' +
                           'xmlns:xsd="http://www.w3.org/2001/XMLSchema" ' +
                           'xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/">' +
             '<soap:Body>' +
-             '<ConsultarNfsePorRpsRequest xmlns="' + URLNS + '">' +
-              '<xml>' +
+             '<ConsultarNfsePorRps xmlns="' + URLNS + '">' +
+              '<xml xmlns="">' +
                 DadosMsg +
               '</xml>' +
-             '</ConsultarNfsePorRpsRequest>' +
+             '</ConsultarNfsePorRps>' +
             '</soap:Body>' +
            '</soap:Envelope>';
 end;
@@ -309,16 +327,20 @@ end;
 function TProvedorDBSeller.GeraEnvelopeConsultarNFSe(URLNS: String; CabMsg,
   DadosMsg, DadosSenha: AnsiString): AnsiString;
 begin
+ DadosMsg := '<?xml version="1.0" encoding="utf-8"?>' + DadosMsg;
+ DadosMsg := StringReplace(StringReplace(DadosMsg, '<', '&lt;', [rfReplaceAll]),
+                           '>', '&gt;', [rfReplaceAll]);
+
  result := '<?xml version="1.0" encoding="utf-8"?>' +
            '<soap:Envelope xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" ' +
                           'xmlns:xsd="http://www.w3.org/2001/XMLSchema" ' +
                           'xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/">' +
             '<soap:Body>' +
-             '<ConsultarNfseRequest xmlns="' + URLNS + '">' +
-              '<xml>' +
+             '<ConsultarNfse xmlns="' + URLNS + '">' +
+              '<xml xmlns="">' +
                 DadosMsg +
               '</xml>' +
-             '</ConsultarNfseRequest>' +
+             '</ConsultarNfse>' +
             '</soap:Body>' +
            '</soap:Envelope>';
 end;
@@ -326,16 +348,20 @@ end;
 function TProvedorDBSeller.GeraEnvelopeCancelarNFSe(URLNS: String; CabMsg,
   DadosMsg, DadosSenha: AnsiString): AnsiString;
 begin
+ DadosMsg := '<?xml version="1.0" encoding="utf-8"?>' + DadosMsg;
+ DadosMsg := StringReplace(StringReplace(DadosMsg, '<', '&lt;', [rfReplaceAll]),
+                           '>', '&gt;', [rfReplaceAll]);
+
  result := '<?xml version="1.0" encoding="utf-8"?>' +
            '<soap:Envelope xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" ' +
                           'xmlns:xsd="http://www.w3.org/2001/XMLSchema" ' +
                           'xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/">' +
             '<soap:Body>' +
-             '<CancelarNfseRequest xmlns="' + URLNS + '">' +
-              '<xml>' +
+             '<CancelarNfse xmlns="' + URLNS + '">' +
+              '<xml xmlns="">' +
                 DadosMsg +
               '</xml>' +
-             '</CancelarNfseRequest>' +
+             '</CancelarNfse>' +
             '</soap:Body>' +
            '</soap:Envelope>';
 end;
@@ -368,13 +394,17 @@ end;
 function TProvedorDBSeller.GetRetornoWS(Acao: TnfseAcao; RetornoWS: AnsiString): AnsiString;
 begin
  case Acao of
-   acRecepcionar: Result := SeparaDados( RetornoWS, 'SOAP-ENV:Body' );
-   acConsSit:     Result := SeparaDados( RetornoWS, 'SOAP-ENV:Body' );
-   acConsLote:    Result := SeparaDados( RetornoWS, 'SOAP-ENV:Body' );
-   acConsNFSeRps: Result := SeparaDados( RetornoWS, 'SOAP-ENV:Body' );
-   acConsNFSe:    Result := SeparaDados( RetornoWS, 'SOAP-ENV:Body' );
-   acCancelar:    Result := SeparaDados( RetornoWS, 'SOAP-ENV:Body' );
-   acGerar:       Result := '';
+   acRecepcionar,
+   acConsSit,
+   acConsLote,
+   acConsNFSeRps,
+   acConsNFSe,
+   acCancelar: begin
+                 Result := SeparaDados( RetornoWS, 'return' );
+                 if Result = '' then
+                   Result := SeparaDados( RetornoWS, 'SOAP-ENV:Body' );
+               end;
+   acGerar:    Result := '';
  end;
 end;
 

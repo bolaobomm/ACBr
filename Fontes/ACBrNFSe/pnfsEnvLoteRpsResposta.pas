@@ -213,6 +213,17 @@ begin
      end;
 
     i := 0;
+    while Leitor.rExtrai(iNivel, 'ErroWebServiceResposta', '', i + 1) <> '' do
+     begin
+       InfRec.FMsgRetorno.Add;
+       InfRec.FMsgRetorno[i].FCodigo   := Leitor.rCampo(tcStr, 'CodigoErro');
+       InfRec.FMsgRetorno[i].FMensagem := Leitor.rCampo(tcStr, 'MensagemErro');
+       InfRec.FMsgRetorno[i].FCorrecao := '';
+
+       inc(i);
+     end;
+
+    i := 0;
     while (Leitor.rExtrai(1, 'Fault', '', i + 1) <> '') do
      begin
        InfRec.FMsgRetorno.Add;

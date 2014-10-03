@@ -47,6 +47,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+03/10/2014
+[*] Alterações nas units: ACBrProvedorDBSeller, pnfsEnvLoteRpsResposta na tentativa
+    de fazer o provedor DBSeller funcionar.
+    por: Italo Jurisato Junior
+
 02/10/2014
 [*] Alteração para poder compilar com o instalador do DANFSe em Rave Report
 [*] Alterado o pacote inicial do Rave para suportar as diversas versões conforme delphi!
