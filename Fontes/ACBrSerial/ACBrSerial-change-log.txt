@@ -97,6 +97,14 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+Data: 03/10/2014
+-- ACBrDIS --
+[-] Correção de Bug que impedia o funcionamento dos efeitos de animações
+
+-- ACBrDISGertecTEC65lib --
+[+] Adicionado novo modelo "disGertec65Lib" (que depende da 'tec65_32.dll')
+
+
 Data: 02/10/2014
 -- ACBrETQ --
 [+] Adicionada procedure "IniciarEtiqueta" e "FinalizarEtiqueta", que

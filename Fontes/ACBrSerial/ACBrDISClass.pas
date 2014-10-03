@@ -178,8 +178,9 @@ end;
 
 procedure TACBrDISClass.LimparLinha(Linha: Integer);
 begin
-  { Deve ser implementada na ClassFilha }
-  raise EACBrDISNaoSuportaLimparLinha.Create( 'Este modelo não possui comando para limpar linha' ) ;
+  { Pode ser implementada na ClassFilha }
+  PosicionarCursor(Linha, 1);
+  Escrever( StringOfChar(' ',Colunas) );
 end;
 
 procedure TACBrDISClass.PosicionarCursor(Linha, Coluna: Integer);

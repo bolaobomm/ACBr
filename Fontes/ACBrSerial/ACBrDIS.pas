@@ -62,7 +62,7 @@ uses ACBrBase, ACBrDevice, ACBrDISClass,  {Units da ACBr}
 type
 
 TACBrDISModelo = ( disNenhum, disGertecSerial, disGertecTeclado,
-                   disKeytecTeclado, disSmakTeclado ) ;
+                   disKeytecTeclado, disSmakTeclado, disGertec65Lib ) ;
 TACBrDISAlinhamento = (alEsquerda, alDireita, alCentro, alJustificado) ;
 
 TACBrDISEfeitoExibir = (efeEsquerda_Direita, efeDireita_Esquerda) ;
@@ -72,7 +72,8 @@ TACBrDISEfeitoRolar = (rolParaEsquerda_Inicio, rolParaEsquerda_Sempre,
 
 TACBrDISAtualiza = procedure(Linha : Integer; TextoVisivel: String) of object ;
 
-{ Classe Linha }
+{ TACBrDISLinha }
+
 TACBrDISLinha = class
   private
     fsTexto: String;
@@ -234,7 +235,7 @@ end ;
 
 implementation
 Uses ACBrUtil, ACBrDISGertecSerial, ACBrDISGertecTeclado, ACBrDISKeytecTeclado,
-     ACBrDISSmakTeclado,
+     ACBrDISSmakTeclado, ACBrDISGertecTEC65lib,
      {$IFDEF COMPILER6_UP} StrUtils {$ELSE} ACBrD5{$ENDIF},
      Math;
 
@@ -394,6 +395,7 @@ begin
      disGertecTeclado   : fsDIS := TACBrDISGertecTeclado.create( Self ) ;
      disKeytecTeclado   : fsDIS := TACBrDISKeytecTeclado.Create( Self );
      disSmakTeclado     : fsDIS := TACBrDISSmakTeclado.Create( Self );
+     disGertec65Lib     : fsDIS := TACBrDISGertecTEC65lib.Create( Self );
   else
      fsDIS := TACBrDISClass.create( Self ) ;
   end;
@@ -678,9 +680,12 @@ begin
 
      with Linhas[Linha-1] do
      begin
-        Texto    := '' ;
-        Rolando  := false ;
-        Exibindo := false ;
+        if not fsTimer.Enabled then
+        begin
+           Texto := '' ;
+           Rolando  := false ;
+           Exibindo := false ;
+        end;
 
         if Assigned( fsOnAtualiza ) then
           fsOnAtualiza( Linha, TextoVisivel ) ;
