@@ -46,6 +46,9 @@ Símbolo : Significado
 [+]     : Novo recurso
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
+Data: 03/10/2014
+-- ACBrSAT --
+[-] Adicionado a uses StrUtils para resolver o problema no delphi da falta da função LeftStr na unit ACBrSAT.pas
 
 Data: 02/10/2014     (por: DSA)
 -- ACBrSAT --

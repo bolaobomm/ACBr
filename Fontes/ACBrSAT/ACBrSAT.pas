@@ -39,7 +39,7 @@ interface
 
 uses
   Classes, SysUtils, pcnCFe, pcnCFeCanc, ACBrSATClass,
-  ACBrSATExtratoClass, synacode
+  ACBrSATExtratoClass, synacode, StrUtils
   {$IFNDEF NOGUI}
     {$IFDEF FPC} ,LResources {$ENDIF}
   {$ENDIF};
