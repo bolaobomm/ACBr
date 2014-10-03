@@ -14,12 +14,13 @@ type
 
   TFPrincipal = class(TForm)
     ACBrETQ: TACBrETQ;
+    bEtqBloco: TButton;
     bImprimirImagem : TButton;
     bCarregarImg : TButton;
     cbModelo: TComboBox;
     cbDPI : TComboBox ;
     ckMemoria : TCheckBox;
-    eAvanco1 : TEdit ;
+    eTemperatura : TEdit ;
     Edit1 : TEdit;
     Image1 : TImage;
     Label1: TLabel;
@@ -37,6 +38,7 @@ type
     OpenPictureDialog1 : TOpenPictureDialog;
     rbStream : TRadioButton ;
     rbArquivo : TRadioButton ;
+    procedure bEtqBlocoClick(Sender: TObject);
     procedure bEtqSimplesClick(Sender: TObject);
     procedure bEtqCarreirasClick(Sender: TObject);
     procedure bImprimirImagemClick(Sender : TObject);
@@ -81,6 +83,70 @@ begin
       end ;
 
      Imprimir(StrToInt(eCopias.Text), StrToInt(eAvanco.Text));
+     Desativar;
+  end;
+end;
+
+procedure TFPrincipal.bEtqBlocoClick(Sender: TObject);
+begin
+  AtivarACBrETQ;
+
+  with ACBrETQ do
+  begin
+     if Modelo = etqPpla then
+     begin
+       IniciarEtiqueta;
+       ImprimirTexto(orNormal, 2, 2, 2, 190, 5, 'BISCOITO MARILAN RECH 335G');
+       ImprimirTexto(orNormal, 2, 2, 1, 158, 5, 'CHOC BRANCO');
+       ImprimirBarras(orNormal, 'F', '2', '2', 32, 0, '7896003701685', 90, becSIM);
+       ImprimirTexto(orNormal, 3, 3, 2, 15, 300, 'R$');
+       ImprimirTexto(orNormal, 3, 4, 4, 15, 450, '20.59');
+       FinalizarEtiqueta(StrToInt(eCopias.Text), StrToInt(eAvanco.Text));
+
+       IniciarEtiqueta;
+       ImprimirTexto(orNormal, 2, 2, 2, 190, 5, 'SABAO EM PO FLASH 1KG');
+       ImprimirTexto(orNormal, 2, 2, 1, 158, 5, 'ADVANCED - UNIDADE');
+       ImprimirBarras(orNormal, 'F', '2', '2', 32, 0, '7898903097042', 90, becSIM);
+       ImprimirTexto(orNormal, 3, 3, 2, 15, 300, 'R$');
+       ImprimirTexto(orNormal, 3, 4, 4, 15, 450, '3.18');
+       FinalizarEtiqueta(StrToInt(eCopias.Text), StrToInt(eAvanco.Text));
+
+       IniciarEtiqueta;
+       ImprimirTexto(orNormal, 2, 2, 2, 190, 5, 'AMACIANTE AMACIEX 5 LTS');
+       ImprimirTexto(orNormal, 2, 2, 1, 158, 5, 'MACIO MATRIX FIX');
+       ImprimirBarras(orNormal, 'F', '2', '2', 32, 0, '7898237690230', 90, becSIM);
+       ImprimirTexto(orNormal, 3, 3, 2, 15, 300, 'R$');
+       ImprimirTexto(orNormal, 3, 4, 4, 15, 450, '8.60');
+       FinalizarEtiqueta(StrToInt(eCopias.Text), StrToInt(eAvanco.Text));
+     end
+     else
+     begin
+       IniciarEtiqueta;
+       ImprimirTexto(orNormal, 2, 2, 2, 15, 55, 'BISCOITO MARILAN RECH 335G');
+       ImprimirTexto(orNormal, 3, 2, 1, 60, 55, 'CHOC BRANCO');
+       ImprimirBarras(orNormal, 'E30', '2', '2', 95, 55, '7896003701685', 90, becSIM);
+       ImprimirTexto(orNormal, 3, 3, 2, 110, 355, 'R$');
+       ImprimirTexto(orNormal, 3, 4, 5, 85, 515, '20.59');
+       FinalizarEtiqueta(StrToInt(eCopias.Text), StrToInt(eAvanco.Text));
+
+       IniciarEtiqueta;
+       ImprimirTexto(orNormal, 2, 2, 2, 15, 55, 'SABAO EM PO FLASH 1KG');
+       ImprimirTexto(orNormal, 3, 2, 1, 60, 55, 'ADVANCED - UNIDADE');
+       ImprimirBarras(orNormal, 'E30', '2', '2', 95, 55, '7898903097042', 90, becSIM);
+       ImprimirTexto(orNormal, 3, 3, 2, 110, 355, 'R$');
+       ImprimirTexto(orNormal, 3, 4, 5, 85, 515, '3.18');
+       FinalizarEtiqueta(StrToInt(eCopias.Text), StrToInt(eAvanco.Text));
+
+       IniciarEtiqueta;
+       ImprimirTexto(orNormal, 2, 2, 2, 15, 55, 'AMACIANTE AMACIEX 5 LTS');
+       ImprimirTexto(orNormal, 3, 2, 1, 60, 55, 'MACIO MATRIX FIX');
+       ImprimirBarras(orNormal, 'E30', '2', '2', 95, 55, '7898237690230', 90, becSIM);
+       ImprimirTexto(orNormal, 3, 3, 2, 110, 355, 'R$');
+       ImprimirTexto(orNormal, 3, 4, 5, 85, 515, '8.60');
+       FinalizarEtiqueta(StrToInt(eCopias.Text), StrToInt(eAvanco.Text));
+     end;
+
+     Imprimir(1, StrToInt(eAvanco.Text));
      Desativar;
   end;
 end;
