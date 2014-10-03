@@ -47,14 +47,17 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+03/10/2014 -ACBrPAF-
+[*] Atualização do layout dos registros gerados pelo ACBrPAF
+    http://www.projetoacbr.com.br/forum/index.php?/topic/17956-registros-do-paf-para-er-0202/
+    Contribuição: Luiz Paulo
+
 21/11/2013
 [*] Atualização do registro H2 
     por: Regys.Silveira
 
-
 13/08/2013
 [*] Removido memoryleaks nos registros R05,R06 e R07. (Juliana Tamizou)
-
 
 15/07/2013
 [*] Acertos na geração do arquivo "Registros do Paf-ECF", enviados pelo fórum.
