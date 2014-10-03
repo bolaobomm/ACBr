@@ -68,6 +68,7 @@ TACBrETQClass = class
     procedure SetTemperatura(const Value: Integer);
     procedure SetAvanco(const Value: Integer);
     procedure SetAdicionarComandoP(const Value: Boolean);
+
   protected
     fpDevice  : TACBrDevice ;
     fpAtivo   : Boolean ;
@@ -75,6 +76,8 @@ TACBrETQClass = class
     fpListaCmd: TStringList;
     fpCmd: AnsiString;
     fpLimparMemoria : Boolean;
+    fpEtqFinalizada: Boolean;
+    fpEtqInicializada: Boolean;
     FpAdicionarComandoP: Boolean;
 
     procedure SetUnidade(const AValue: TACBrETQUnidade); virtual;
@@ -84,6 +87,8 @@ TACBrETQClass = class
     property Ativo  : Boolean read fpAtivo write SetAtivo;
     property ModeloStr: String read fpModeloStr;
     property ListaCmd: TStringList read fpListaCmd write fpListaCmd;
+    property EtqInicializada: Boolean read fpEtqInicializada;
+    property EtqFinalizada: Boolean read fpEtqFinalizada;
     property Cmd: AnsiString read fpCmd write fpCmd;
     property Temperatura: Integer read FTemperatura write SetTemperatura;
     property Avanco: Integer read FAvanco write SetAvanco;
@@ -114,7 +119,9 @@ TACBrETQClass = class
     procedure ImprimirImagem(MultiplicadorImagem, Vertical, Horizontal: Integer;
        NomeImagem: String); virtual;
     procedure CarregarImagem(AStream : TStream; NomeImagem: String;
-       Flipped : Boolean = True; Tipo: String = 'BMP' ); virtual; 
+       Flipped : Boolean = True; Tipo: String = 'BMP' ); virtual;
+    procedure IniciarEtiqueta; virtual;
+    procedure FinalizarEtiqueta(Copias: Integer = 1; AvancoEtq: Integer = 0); virtual;
     procedure Imprimir(Copias: Integer = 1; AvancoEtq: Integer = 0); virtual;
 end;
 
@@ -141,6 +148,8 @@ begin
   fpModeloStr := 'Não Definida' ;
   fpListaCmd:= TStringList.Create;
   fpLimparMemoria := True ;
+  fpEtqInicializada := False;
+  fpEtqFinalizada := False;
   
   FAvanco      := 0;
   FTemperatura := 10 ;
@@ -152,7 +161,6 @@ destructor TACBrETQClass.Destroy;
 begin
   fpDevice := nil; { Apenas remove referencia (ponteiros internos) }
   FreeAndNil(fpListaCmd);
-
   inherited Destroy;
 end;
 
@@ -300,7 +308,7 @@ begin
    FDPI := AValue ;
 end ;
 
-procedure TACBrETQClass.Imprimir(Copias : Integer ; AvancoEtq : Integer) ;
+procedure TACBrETQClass.Imprimir(Copias: Integer; AvancoEtq: Integer);
 begin
   raise Exception.Create(ACBrStr('Função Imprimir não implementada em: ') + ModeloStr);
 end;
@@ -315,6 +323,16 @@ procedure TACBrETQClass.CarregarImagem(AStream : TStream; NomeImagem: String;
    Flipped : Boolean; Tipo: String);
 begin
   raise Exception.Create(ACBrStr('Função CarregarImagem não implementada em: ') + ModeloStr);
+end;
+
+procedure TACBrETQClass.IniciarEtiqueta;
+begin
+  //Sem Implementação
+end;
+
+procedure TACBrETQClass.FinalizarEtiqueta(Copias: Integer; AvancoEtq: Integer);
+begin
+  //Sem Implementação
 end;
 
 procedure TACBrETQClass.SetAdicionarComandoP(const Value: Boolean);

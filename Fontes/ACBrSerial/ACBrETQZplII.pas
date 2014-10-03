@@ -47,6 +47,9 @@ interface
 uses ACBrETQClass, ACBrUtil, ACBrDevice, Dialogs, Classes ;
 
 type
+
+  { TACBrETQZplII }
+
   TACBrETQZplII = class( TACBrETQClass )
   public
     constructor Create(AOwner: TComponent);
@@ -62,6 +65,9 @@ type
 
     procedure ImprimirCaixa(Vertical, Horizontal, Largura, Altura,
       EspessuraVertical, EspessuraHorizontal: Integer); override;
+
+    procedure IniciarEtiqueta; override;
+    procedure FinalizarEtiqueta(Copias: Integer = 1; AvancoEtq: Integer = 0); override;
 
     procedure Imprimir(Copias: Integer = 1; AvancoEtq: Integer = 0); override;
 
@@ -208,15 +214,34 @@ begin
 
 end;
 
-procedure TACBrETQZplII.Imprimir(Copias: Integer = 1; AvancoEtq: Integer = 0);
+procedure TACBrETQZplII.IniciarEtiqueta;
 begin
-  {Inserindo comando iniciais na posicao Zero}
-  ListaCmd.Insert(0, '^XA');
+  if not EtqInicializada then
+    ListaCmd.Insert(0, '^XA')     //Se Etiqueta não foi iniciada, comandos incluídos no início
+  else
+    ListaCmd.Add('^XA');          //Se Etiqueta foi iniciada, comandos são concatenados
 
+  fpEtqInicializada := True;
+  fpEtqFinalizada   := False;
+end;
+
+procedure TACBrETQZplII.FinalizarEtiqueta(Copias: Integer; AvancoEtq: Integer);
+begin
   if Copias > 1 then
     ListaCmd.Add('^PQ'+IntToStr(min(Copias,999)) );
 
   ListaCmd.Add('^XZ');
+
+  fpEtqFinalizada := True;
+end;
+
+procedure TACBrETQZplII.Imprimir(Copias: Integer; AvancoEtq: Integer);
+begin
+  if not EtqInicializada then
+    IniciarEtiqueta;
+
+  if not EtqFinalizada then
+    FinalizarEtiqueta(Copias, AvancoEtq);
 
   fpDevice.EnviaString(ListaCmd.Text);
   ListaCmd.Clear;

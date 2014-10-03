@@ -75,6 +75,8 @@ type
        NomeImagem: String); override;
     procedure CarregarImagem(AStream : TStream; NomeImagem: String;
        Flipped : Boolean = True; Tipo: String = 'BMP' ); override;
+    procedure IniciarEtiqueta; override;
+    procedure FinalizarEtiqueta(Copias: Integer = 1; AvancoEtq: Integer = 0); override;
     procedure Imprimir(Copias: Integer = 1; AvancoEtq: Integer = 0); override;
   end ;
 
@@ -341,30 +343,56 @@ begin
   fpDevice.EnviaString( Cmd );
 end;
 
-procedure TACBrETQEpl2.Imprimir(Copias : Integer ; AvancoEtq : Integer) ;
-Var
-  Buffer : AnsiString ;
+procedure TACBrETQEpl2.IniciarEtiqueta;
 begin
   Cmd := '';
 
   if (Temperatura < 0) or (Temperatura > 15) then
      Raise Exception.Create(ACBrStr('Informe um valor entre 0 e 15 para Temperatura'));
 
+  Cmd := 'D' + IntToStr(Temperatura) ;  // Densidade / temperatura
+
+  if LimparMemoria then
+    Cmd := Cmd + LF + 'N' + LF ; // Limpa "Canvas" da Etiqueta
+
+  Cmd := Cmd + 'R0,0' + LF +     // Anula as margens Horizontal e Vertical
+               'ZB' ;            // ZT = Printing from top of image buffer. (PADRÃO)
+                                 // ZB = Printing from bottom of image buffer.
+
+  if not EtqInicializada then
+    ListaCmd.Insert(0, Cmd)      //Se Etiqueta não foi iniciada, comandos incluídos no início
+  else
+    ListaCmd.Add(Cmd);           //Se Etiqueta foi iniciada, comandos são concatenados
+
+  fpEtqInicializada := True;
+  fpEtqFinalizada   := False;
+
+end;
+
+procedure TACBrETQEpl2.FinalizarEtiqueta(Copias: Integer; AvancoEtq: Integer);
+begin
+  Cmd := '';
+
   if (Copias < 0) or (Copias > 65535) then
      Raise Exception.Create(ACBrStr('Número de Cópias deve estar entre 0 e 65535'));
 
-  Cmd := 'D' + IntToStr(Temperatura) + LF ;  // Densidade / temperatura
-  if LimparMemoria then
-    Cmd := Cmd + LF + 'N' + LF ;             // Limpa "Canvas" da Etiqueta
-
-  Cmd := Cmd + 'R0,0' + LF +  // Anula as margens Horizontal e Vertical
-               'ZB' ;         // ZT = Printing from top of image buffer. (PADRÃO)
-                              // ZB = Printing from bottom of image buffer.
-
-  ListaCmd.Insert(0, Cmd);  // Inserindo comandos iniciais na posicao Zero
-
   Cmd := 'P' + IntToStr(Copias) ;
+
   ListaCmd.Add(Cmd);
+  fpEtqFinalizada := True;
+end;
+
+procedure TACBrETQEpl2.Imprimir(Copias: Integer; AvancoEtq: Integer);
+Var
+  Buffer : AnsiString ;
+begin
+  Cmd := '';
+
+  if not EtqInicializada then
+    IniciarEtiqueta;
+
+  if not EtqFinalizada then
+    FinalizarEtiqueta(Copias, AvancoEtq);
 
   Buffer := ListaCmd.Text;
   Buffer := StringReplace( Buffer, sLineBreak, LF, [rfReplaceAll] );

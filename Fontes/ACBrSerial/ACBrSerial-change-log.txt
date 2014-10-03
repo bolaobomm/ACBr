@@ -97,11 +97,45 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+Data: 02/10/2014
+-- ACBrETQ --
+[+] Adicionada procedure "IniciarEtiqueta" e "FinalizarEtiqueta", que
+possibilitam desenhar vários modelos de etiquetas antes de enviar os comandos de
+impressão  (por: Elias)
+
+-- ACBrETQClass --
+[+] Adicionada propriedade "ETQInicializada" que possibilitará verificar
+	se os comandos de inicialização da etiqueta já foram incluídos na variável
+	ListaCmd  
+[+] Adicionada propriedade "ETQFinalizada" que possibilitará verificar
+	se os comandos de finalização da etiqueta já foram incluídos na variável
+	ListaCmd  (por: Elias)
+	
+-- ACBrETQPpla --
+[+] Implementado método IniciarEtiqueta;
+[+] Implementado método FinalizarEtiqueta(Copias:Integer = 1;AvancoEtq:Integer = 0);
+[*] Ajuste na procedure Imprimir(Copias: Integer = 1; AvancoEtq: Integer = 0)
+	para que utilize as novas rotinas "IniciarEtiqueta" e "FinalizarEtiqueta" no
+	momento de enviar os comandos de impressão  (por: Elias)
+	
+-- ACBrETQPpla --
+[+] Implementado método IniciarEtiqueta;
+[+] Implementado método FinalizarEtiqueta(Copias:Integer = 1;AvancoEtq:Integer = 0);
+[*] Ajuste na procedure Imprimir(Copias: Integer = 1; AvancoEtq: Integer = 0)
+	para que utilize as novas rotinas "IniciarEtiqueta" e "FinalizarEtiqueta" no
+	momento de enviar os comandos de impressão  (por: Elias)
+	
+-- ACBrETQPEpl2 --
+[+] Implementado método IniciarEtiqueta;
+[+] Implementado método FinalizarEtiqueta(Copias:Integer = 1;AvancoEtq:Integer = 0);
+[*] Ajuste na procedure Imprimir(Copias: Integer = 1; AvancoEtq: Integer = 0)
+	para que utilize as novas rotinas "IniciarEtiqueta" e "FinalizarEtiqueta" no
+	momento de enviar os comandos de impressão  (por: Elias)
+
 Data: 10/09/2014
 -- ACBrECFEscECF --
 [+] Adicionado suporte aos métodos: EspelhoMFD_DLL, ArquivoMFD_DLL, ArquivoMF_DLL
     para o Modelo MP4200 da Bematech (por: DSA)
-
 
 Data: 11/08/2014
 -- ACBrECFFiscNet --

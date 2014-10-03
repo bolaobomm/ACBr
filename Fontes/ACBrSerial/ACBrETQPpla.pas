@@ -79,6 +79,8 @@ type
        NomeImagem: String); override;
     procedure CarregarImagem(AStream : TStream; NomeImagem: String;
        Flipped : Boolean = True; Tipo: String = 'BMP' ); override;
+    procedure IniciarEtiqueta; override;
+    procedure FinalizarEtiqueta(Copias: Integer = 1; AvancoEtq: Integer = 0); override;
     procedure Imprimir(Copias: Integer = 1; AvancoEtq: Integer = 0); override;
 
   end ;
@@ -86,7 +88,7 @@ type
 implementation
 Uses  ACBrConsts,
      {$IFNDEF COMPILER6_UP} ACBrD5, Windows, {$ENDIF}
-     SysUtils, StrUtils ;
+     SysUtils, StrUtils;
 
 { TACBrETQPpla }
 
@@ -332,47 +334,74 @@ begin
   fpDevice.EnviaString( Cmd );
 end;
 
-procedure TACBrETQPpla.Imprimir(Copias: Integer = 1; AvancoEtq: Integer = 0);
+procedure TACBrETQPpla.IniciarEtiqueta;
 var
-   Temp, NCop : String;
+   Temp: String;
 begin
   Cmd := '';
-
   if (Temperatura < 0) or (Temperatura > 20) then
-     Raise Exception.Create(ACBrStr('Informe um valor entre 0 e 20 para Temperatura'));
+    Raise Exception.Create(ACBrStr('Informe um valor entre 0 e 20 para Temperatura'));
   Temp := IntToStrZero(Temperatura, 2);
-
-  if (Copias < 0) or (Copias > 9999) then
-     Raise Exception.Create(ACBrStr('Tamanho máximo para o Número de Cópias 4 caracteres'));
-  NCop := IntToStrZero(Copias, 4);
 
   Cmd := STX + 'L'                     + CRLF +  // Enters label formatting state
          STX + UnidadeToStr( Unidade ) + CRLF +  // Informa a Unidade utilizada
          'H' + Temp                    + CRLF +  // Ajusta a Temperatura
-         'D11'                         + CRLF +  // Ajusta a resolução
-         'Q' + NCop;                             // Ajusta o número de cópias
+         'D11';                                  // Ajusta a resolução
 
-  {Inserindo comando iniciais na posicao Zero}
-  ListaCmd.Insert(0, Cmd);
+  if not EtqInicializada then
+    ListaCmd.Insert(0, Cmd)        //Se Etiqueta não foi iniciada, comandos incluídos no início
+  else
+    ListaCmd.Add(Cmd);             //Se Etiqueta foi iniciada, comandos são concatenados
 
+  fpEtqInicializada := True;
+  fpEtqFinalizada   := False;
+end;
+
+procedure TACBrETQPpla.FinalizarEtiqueta(Copias: Integer = 1; AvancoEtq: Integer = 0);
+var
+  NCop: String;
+begin
   Cmd := '';
+  if (Copias < 0) or (Copias > 9999) then
+    Raise Exception.Create(ACBrStr('Tamanho máximo para o Número de Cópias 4 caracteres'));
+  NCop := IntToStrZero(Copias, 4);
+
   if AvancoEtq = 0 then
-     AvancoEtq := Avanco;
+    AvancoEtq := Avanco;
   if (AvancoEtq < 0) or (AvancoEtq > 779) then
-     Raise Exception.Create(ACBrStr('O Valor máximo para o Avanço de Etiquetas é 779'));
+    Raise Exception.Create(ACBrStr('O Valor máximo para o Avanço de Etiquetas é 779'));
 
   AvancoEtq := AvancoEtq + 220;
 
-  Cmd := 'E'                                   + CRLF +   // Ends the job and exit from label formatting mode
-         STX + 'f' + IntToStrZero(AvancoEtq,3) + CRLF ;   // Ajusta o avanço para corte da etiqueta
-
-  if LimparMemoria then
-    Cmd := Cmd + STX + 'Q' ;
+  Cmd := 'Q' + NCop                            + CRLF +
+         'E'                                   + CRLF +   // Ends the job and exit from label formatting mode
+         STX + 'f' + IntToStrZero(AvancoEtq,3);           // Ajusta o avanço para corte da etiqueta
 
   ListaCmd.Add(Cmd);
+  fpEtqFinalizada := True;
+end;
+
+procedure TACBrETQPpla.Imprimir(Copias: Integer = 1; AvancoEtq: Integer = 0);
+begin
+  Cmd := '';
+
+  if not EtqInicializada then
+    IniciarEtiqueta;
+
+  if not EtqFinalizada then
+    FinalizarEtiqueta(Copias, AvancoEtq);
+
+  if LimparMemoria then
+  begin
+    Cmd := STX + 'Q' ;
+    ListaCmd.Add(Cmd);
+  end;
 
   fpDevice.EnviaString(ListaCmd.Text);
+
   ListaCmd.Clear;
+  fpEtqInicializada := False;
+  fpEtqFinalizada   := False;
 end;
 
 end.

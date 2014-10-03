@@ -86,12 +86,16 @@ TACBrETQ = class( TACBrComponent )
     procedure SetDPI(const AValue : TACBrETQDPI) ;
     function GetAdicionarComandoP: Boolean;
     procedure SetAdicionarComandoP(const Value: Boolean);
+    function GetEtqFinalizada: Boolean;
+    function GetEtqInicializada: Boolean;
   protected
 
   public
     property Ativo : Boolean read fsAtivo write SetAtivo ;
     property ETQ : TACBrETQClass read fsETQ;
     property ModeloStr : String read GetModeloStrClass;
+    property EtqInicializada: Boolean read GetEtqInicializada;
+    property EtqFinalizada: Boolean read GetEtqFinalizada;
 
     constructor Create(AOwner: TComponent); override;
     Destructor Destroy  ; override;
@@ -115,6 +119,8 @@ TACBrETQ = class( TACBrComponent )
        Flipped : Boolean = True; Tipo: String = 'BMP' ); overload;
     procedure CarregarImagem(ArquivoImagem, NomeImagem: String;
        Flipped : Boolean = True  ); overload;
+    procedure IniciarEtiqueta;
+    procedure FinalizarEtiqueta(Copias: Integer = 1; AvancoEtq: Integer = 0);
     procedure Imprimir(Copias: Integer = 1; AvancoEtq: Integer = 0);
 
   published
@@ -256,6 +262,16 @@ begin
    Result := fsETQ.LimparMemoria;
 end;
 
+function TACBrETQ.GetEtqFinalizada: Boolean;
+begin
+  Result := fsETQ.EtqFinalizada;
+end;
+
+function TACBrETQ.GetEtqInicializada: Boolean;
+begin
+  Result := fsETQ.EtqInicializada;
+end;
+
 procedure TACBrETQ.SetLimparMemoria(const AValue : Boolean);
 begin
    fsETQ.LimparMemoria := AValue;
@@ -324,7 +340,7 @@ begin
                         AlturaCodBarras, ExibeCodigo);
 end;
 
-procedure TACBrETQ.Imprimir(Copias : Integer ; AvancoEtq : Integer) ;
+procedure TACBrETQ.Imprimir(Copias: Integer; AvancoEtq: Integer);
 begin
   if not Ativo then
      Ativar ;
@@ -390,6 +406,22 @@ begin
      MS.Free;
   end ;
 end ;
+
+procedure TACBrETQ.IniciarEtiqueta;
+begin
+  if not Ativo then
+    Ativar;
+
+  fsETQ.IniciarEtiqueta;
+end;
+
+procedure TACBrETQ.FinalizarEtiqueta(Copias: Integer = 1; AvancoEtq: Integer = 0);
+begin
+  if not Ativo then
+    Ativar;
+
+  fsETQ.FinalizarEtiqueta(Copias, AvancoEtq);
+end;
 
 function TACBrETQ.GetUnidade: TACBrETQUnidade;
 begin
