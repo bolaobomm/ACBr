@@ -180,12 +180,12 @@ begin
                                            RFill(TIPO_ECF, 7) +
                                            RFill(MARCA_ECF, 20) +
                                            RFill(MODELO_ECF, 20, ifThen(RegistroValido, ' ', '?')) +
-                                           LFill(COO, 6) +
+                                           LFill(COO, 9) +
                                            RFill(NUM_DAV, 13) +
                                            LFill(DT_DAV, 'yyyymmdd') +
                                            RFill(TIT_DAV, 30) +
                                            LFill(VLT_DAV, 8, 2) +
-                                           LFill(COO_DFV, 6) +
+                                           LFill(COO_DFV, 9) +
                                            LFill(NUMERO_ECF, 3) +
                                            RFill(NOME_CLIENTE, 40) +
                                            LFill(CPF_CNPJ, 14) +
@@ -299,7 +299,7 @@ begin
                                          RFill(NUM_DAV, 13) +
                                          LFill(DT_ALT, 'yyyymmddhhmmss') +
                                          RFill(COD_ITEM, 14) +
-                                         RFill(DESC_ITEM, 100) +
+                                         RFill(DESC_ITEM, 100, ifThen(RegistroValido, ' ', '?')) +
                                          LFill(QTDE_ITEM, 7, DEC_QTDE_ITEM) +
                                          RFill(UNI_ITEM, 3) +
                                          LFill(VL_UNIT, 8, DEC_VL_UNIT) +

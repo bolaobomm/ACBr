@@ -386,7 +386,7 @@ begin
                                              RFill(RegR01.MODELO_ECF, 20, ifThen(RegistroValido, ' ', '?')) +
                                              LFill(NUM_USU, 2) +
                                              LFill(CRZ, 6) +
-                                             LFill(COO, 6) +
+                                             LFill(COO, 9) +
                                              LFill(CRO, 6) +
                                              LFill(DT_MOV, 'yyyymmdd') +
                                              LFill(DT_EMI, 'yyyymmdd') +
@@ -465,8 +465,8 @@ begin
                                              RFill(RegR01.MF_ADICIONAL, 1) +
                                              RFill(RegR01.MODELO_ECF, 20, ifThen(RegistroValido, ' ', '?')) +
                                              LFill(NUM_USU, 2) +
-                                             LFill(NUM_CONT, 6) +
-                                             LFill(COO, 6) +
+                                             LFill(NUM_CONT, 9) +
+                                             LFill(COO, 9) +
                                              LFill(DT_INI, 'yyyymmdd') +
                                              LFill(SUB_DOCTO, 14, 2) +
                                              LFill(SUB_DESCTO, 13, 2) +
@@ -515,8 +515,8 @@ begin
                                              RFill(RegR01.MF_ADICIONAL, 1) +
                                              RFill(RegR01.MODELO_ECF, 20, ifThen(RegistroValido, ' ', '?')) +
                                              LFill(RegR04.NUM_USU, 2) +
-                                             LFill(RegR04.COO, 6) +
-                                             LFill( IfThen(NUM_CONT=-1, RegR04.NUM_CONT, NUM_CONT), 6) +
+                                             LFill(RegR04.COO, 9) +
+                                             LFill( IfThen(NUM_CONT=-1, RegR04.NUM_CONT, NUM_CONT), 9) +
                                              LFill(NUM_ITEM, 3) +
                                              RFill(COD_ITEM, 14) +
                                              RFill(DESC_ITEM, 100) +
@@ -568,7 +568,7 @@ begin
                                              RFill(RegR01.MF_ADICIONAL, 1) +
                                              RFill(RegR01.MODELO_ECF, 20, ifThen(RegistroValido, ' ', '?')) +
                                              LFill(NUM_USU, 2) +
-                                             LFill(COO, 6) +
+                                             LFill(COO, 9) +
                                              LFill(GNF, 6) +
                                              LFill(GRG, 6) +
                                              LFill(CDC, 4) +
@@ -649,8 +649,8 @@ begin
                                              RFill(RegR01.MF_ADICIONAL, 1) +
                                              RFill(RegR01.MODELO_ECF, 20, ifThen(RegistroValido, ' ', '?')) +
                                              LFill(TRegistroR04(RegistroPai).NUM_USU, 2) +
-                                             LFill(COO, 6) +
-                                             LFill(CCF, 6) +
+                                             LFill(COO, 9) +
+                                             LFill(CCF, 9) +
                                              LFill(GNF, 6) +
                                              RFill(MP, 15) +
                                              LFill(VL_PAGTO, 13, 2) +
@@ -665,8 +665,8 @@ begin
                                              RFill(RegR01.MF_ADICIONAL, 1) +
                                              RFill(RegR01.MODELO_ECF, 20, ifThen(RegistroValido, ' ', '?')) +
                                              LFill(TRegistroR06(RegistroPai).NUM_USU, 2) +
-                                             LFill(COO, 6) +
-                                             LFill(CCF, 6) +
+                                             LFill(COO, 9) +
+                                             LFill(CCF, 9) +
                                              LFill(GNF, 6) +
                                              RFill(MP, 15) +
                                              LFill(VL_PAGTO, 13, 2) +

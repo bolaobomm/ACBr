@@ -84,6 +84,7 @@ type
     fDT_TROCO: TDateTime;   /// Data da emissão do Cupom Fiscal
     fCPF : string; /// CPF do adquirente do título de captalização
     fTitulo : string; /// Nº do título de captalização adquirido
+    FCNPJ: string; /// CNPJ da entidade recebedora da doação
   public
     constructor Create; virtual; /// Create
 
@@ -101,6 +102,7 @@ type
     property DT_TROCO: TDateTime read fDT_TROCO write fDT_TROCO;
     property CPF: string read fCPF write fCPF;
     property Titulo: string read fTitulo write fTitulo;
+    property CNPJ: string read FCNPJ write FCNPJ;
   end;
 
   /// REGISTRO H2 - Lista

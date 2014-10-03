@@ -168,6 +168,7 @@ begin
         with FRegistroH2.Items[intFor] do
         begin
           Check(funChecaCNPJ(FRegistroH1.CNPJ), '(H2) ESTOQUE: O CNPJ "%s" digitado é inválido!', [FRegistroH1.CNPJ]);
+          Check(funChecaCNPJ(CNPJ), '(H2) RECEBEDORA DA DOAÇÃO: O CNPJ "%s" digitado é inválido!', [CNPJ]);
           ///
           strRegistroH2 := strRegistroH2 + LFill('H2') +
                                            LFill(OnlyNumber(CNPJ_CRED_CARTAO), 14) +
@@ -177,12 +178,13 @@ begin
                                            RFill(MARCA_ECF, 20) +
                                            //RFill(MODELO_ECF, 20) +
 										   RFill(MODELO_ECF, 20,  ifThen(RegistroValido, ' ', '?')) +
-                                           LFill(COO, 6) +
-                                           LFill(CCF, 6) +
+                                           LFill(COO, 9) +
+                                           LFill(CCF, 9) +
                                            LFill(VLR_TROCO, 13) +
                                            LFill(DT_TROCO, 'yyyymmdd') +
                                            LFill(OnlyNumber(CPF), 14) +
                                            RFill(Titulo, 7) +
+                                           LFill(OnlyNumber(CNPJ), 14) +
                                            sLineBreak;
         end;
         ///

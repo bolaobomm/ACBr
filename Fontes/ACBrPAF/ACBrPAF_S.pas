@@ -51,16 +51,19 @@ type
     FCNPJ: String;             //CNPJ do estabelicimento usuário do PAF-ECF
     FDT_ABER: TDateTime;       //Data e Hora da abertura da mesa
     FSITU: String;             //Situação da mesa "A" para Aberta, "F" para Fechada
+    FNUM_MESA: String;         //Número da Mesa/Conta Cliente
     FVL_TOT: Currency;         //Valor total dos produtos
     FCOO_CM: String;           //COO da conferência de mesa
     FNUM_FAB_CM: String;       //Nºde fabricação do ECF que emitiu a conferência de mesa
     FCOO: String;              //COO do cupom fiscal
     FNUM_FAB: String;          //Nºde fabricação do ECF
     FRegistroS3: TRegistroS3List;
+    fRegistroValido: Boolean;
   public
     constructor Create; virtual;
     destructor Destroy; override; /// Destroy
-    
+
+    property RegistroValido: Boolean read fRegistroValido write fRegistroValido default True;
     property CNPJ: String       read FCNPJ       write FCNPJ;
     property DT_ABER: TDateTime read FDT_ABER    write FDT_ABER;
     property SITU: String       read FSITU       write FSITU;
@@ -69,6 +72,7 @@ type
     property NUM_FAB_CM: String read FNUM_FAB_CM write FNUM_FAB_CM;
     property COO: String        read FCOO        write FCOO;
     property NUM_FAB: String    read FNUM_FAB    write FNUM_FAB;
+    property NUM_MESA: String   read FNUM_MESA   write FNUM_MESA;
 
     property RegistroS3: TRegistroS3List read FRegistroS3 write FRegistroS3;
   end;
@@ -90,12 +94,22 @@ type
     fQTDE_ITEM: Currency;    //Quantidade comercializada
     fUNI_ITEM: string;       //Unidade de medida
     fVL_UNIT: Currency;      //Valor unitário
+    FNUM_MESA: String;       //Número da Mesa/Conta Cliente
+    fQTDE_DECIMAL: integer;  //Parâmetro de número de casas decimais da quantidade
+    fVL_DECIMAL: integer;    //Parâmetro de número de casas decimais de valor unitário
+    fRegistroValido: Boolean;
   public
+    constructor Create; virtual;
+
+    property RegistroValido: Boolean read fRegistroValido write fRegistroValido default True;
     property COD_ITEM: String       read fCOD_ITEM   write fCOD_ITEM;
     property DESC_ITEM: string      read fDESC_ITEM  write fDESC_ITEM;
     property QTDE_ITEM: Currency    read fQTDE_ITEM  write fQTDE_ITEM;
     property UNI_ITEM: string       read fUNI_ITEM   write fUNI_ITEM;
     property VL_UNIT: Currency      read fVL_UNIT    write fVL_UNIT;
+    property NUM_MESA: String       read FNUM_MESA   write FNUM_MESA;
+    property QTDE_DECIMAL: integer read FQTDE_DECIMAL write FQTDE_DECIMAL;
+    property VL_DECIMAL: integer read FVL_DECIMAL write FVL_DECIMAL;
   end;
 
   TRegistroS3List = class(TObjectList)
@@ -112,6 +126,7 @@ implementation
 { TRegistroS2 }
 constructor TRegistroS2.Create;
 begin
+  fRegistroValido:= True; 
   fRegistroS3:= TRegistroS3List.Create;
 end;
 
@@ -157,5 +172,14 @@ begin
   Put(Index, Value);
 end;
 
+{ TRegistroS3 }
+
+constructor TRegistroS3.Create;
+begin
+  fRegistroValido:= True;
+
+  fQTDE_DECIMAL:= 0; // Deixado esse padrão por que no Ato Cotepe a Quantidade está sem casas decimais
+  fVL_DECIMAL:= 2; // Deixado esse padrão por que no Ato Cotepe o Valor Unitário deve ser com 2 casas decimais
+end;
+
 end.
- 

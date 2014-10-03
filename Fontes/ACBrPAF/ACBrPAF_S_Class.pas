@@ -123,12 +123,13 @@ begin
           strRegistroS2 := strRegistroS2 + LFill('S2') +
                                            LFill(CNPJ, 14) +
                                            LFill(DT_ABER, 'yyyymmddhhmmss') +
-                                           RFill(SITU, 1) +
+                                           //RFill(SITU, 1) +
+                                           RFill(NUM_MESA, 13) +
                                            LFill(VL_TOT, 13, 2) +
                                            RFill(COO_CM, 9) +
                                            RFill(NUM_FAB_CM, 20) +
-                                           RFill(COO, 9) +
-                                           RFill(NUM_FAB, 20) +
+                                           //RFill(COO, 9) +
+                                           //RFill(NUM_FAB, 20) +
                                            sLineBreak;
         end;
 
@@ -155,11 +156,14 @@ begin
         strRegistroS3 := strRegistroS3 + LFill('S3') +
                                          LFill(RegS2.CNPJ, 14) +
                                          LFill(RegS2.DT_ABER, 'yyyymmddhhmmss') +
+                                         RFill(NUM_MESA, 13) +
                                          RFill(COD_ITEM, 14) +
                                          RFill(DESC_ITEM, 100) +
-                                         LFill(QTDE_ITEM, 7) +
+                                         LFill(QTDE_ITEM, 7, QTDE_DECIMAL) +
                                          RFill(UNI_ITEM, 3) +
-                                         LFill(VL_UNIT, 8) +
+                                         LFill(VL_UNIT, 8, VL_DECIMAL) +
+                                         LFill(QTDE_DECIMAL, 1) +
+                                         LFill(VL_DECIMAL, 1) +
                                          sLineBreak;
       end;
     end;  

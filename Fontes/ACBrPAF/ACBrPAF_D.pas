@@ -171,10 +171,14 @@ type
   //Registro D4 - Log de alterações do DAV
   TRegistroD4 = class(TRegistroD_Base)
   private
+    fRegistroValido: Boolean;
     FNUM_DAV: string;      //Número do DAV
     FDT_ALT: TDateTime;    //Data e Hora da alteração
     FTIP_ALT: String;      //Tipo Alteração ("A" para Alteração, "E" para Exclusão, "I" para Inclusão
   public
+    constructor Create; virtual;
+
+    property RegistroValido: Boolean read fRegistroValido write fRegistroValido default True;
     property NUM_DAV: string   read FNUM_DAV write FNUM_DAV;
     property DT_ALT: TDatetime read FDT_ALT  write FDT_ALT;
     property TIP_ALT: String   read FTIP_ALT write FTIP_ALT;
@@ -277,6 +281,13 @@ procedure TRegistroD4List.SetItem(Index: Integer;
   const Value: TRegistroD4);
 begin
   Put(Index, Value);
+end;
+
+{ TRegistroD4 }
+
+constructor TRegistroD4.Create;
+begin
+  fRegistroValido := True;
 end;
 
 end.
