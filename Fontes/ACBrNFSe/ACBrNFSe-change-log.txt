@@ -48,6 +48,10 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 03/10/2014
+[*] Alterações acrescentado a cidade Encantado/RS no provedor Tecnos
+    por: Italo Jurisato Junior a pedido de Rodrigo de Souza Crovador
+
+03/10/2014
 [*] Alterações nas units: ACBrProvedorDBSeller, pnfsEnvLoteRpsResposta na tentativa
     de fazer o provedor DBSeller funcionar.
     por: Italo Jurisato Junior

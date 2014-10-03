@@ -146,6 +146,11 @@ begin
             ConfigURL.ProNomeCidade := 'dois.nfse-tecnos.com.br';
             sHTTPPro := 'http://';
            end;
+  4306809: begin // Encantado/RS
+            ConfigURL.HomNomeCidade := 'homologaencan.nfse-tecnos.com.br';
+            ConfigURL.ProNomeCidade := 'encantado.nfse-tecnos.com.br';
+            sHTTPPro := 'http://';
+           end;
   4307609: begin // Estância Velha/RS
             ConfigURL.HomNomeCidade := 'homologaestan.nfse-tecnos.com.br';
             ConfigURL.ProNomeCidade := 'estanciavelha.nfse-tecnos.com.br';

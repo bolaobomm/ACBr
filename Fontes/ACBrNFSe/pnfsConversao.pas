@@ -1211,6 +1211,7 @@ begin
          : Provedor := 'SpeedGov';
 
   4306403, //Dois Irmãos/RS
+  4306809, // Encantado/RS
   4307609, // Estância Velha/RS
   4307807, // Estrela/RS
   4308201, // Flores da Cunha/RS
