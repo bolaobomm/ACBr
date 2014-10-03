@@ -4626,7 +4626,7 @@ begin
   inherited Executar;
 
   Result := False;
-
+  (*
   Texto := '<?xml version="1.0" encoding="utf-8"?>';
   Texto := Texto + '<soap12:Envelope xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap12="http://www.w3.org/2003/05/soap-envelope">';
   Texto := Texto +   '<soap12:Header>';
@@ -4640,10 +4640,23 @@ begin
 
   Texto := Texto +     '</nfeCabecMsg>';
   Texto := Texto +   '</soap12:Header>';
+
   Texto := Texto +   '<soap12:Body>';
   Texto := Texto +     '<nfeDadosMsg xmlns="http://www.portalfiscal.inf.br/nfe/wsdl/NFeDistribuicaoDFe">';
   Texto := Texto +       FDadosMsg;
   Texto := Texto +     '</nfeDadosMsg>';
+  Texto := Texto +   '</soap12:Body>';
+  Texto := Texto + '</soap12:Envelope>';
+  *)
+
+  Texto := '<?xml version="1.0" encoding="utf-8"?>';
+  Texto := Texto + '<soap12:Envelope xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap12="http://www.w3.org/2003/05/soap-envelope">';
+  Texto := Texto +   '<soap12:Body>';
+  Texto := Texto +     '<nfeDistDFeInteresse xmlns="http://www.portalfiscal.inf.br/nfe/wsdl/NFeDistribuicaoDFe">';
+  Texto := Texto +       '<nfeDadosMsg>';
+  Texto := Texto +         FDadosMsg;
+  Texto := Texto +       '</nfeDadosMsg>';
+  Texto := Texto +     '</nfeDistDFeInteresse>';
   Texto := Texto +   '</soap12:Body>';
   Texto := Texto + '</soap12:Envelope>';
 

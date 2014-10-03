@@ -48,6 +48,11 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 
+03/10/2014
+----------
+[*] Alterado a estrutura do envelope do metodo NFeDistribuicaoDFe
+    por: Italo Jurisato Junior
+
 02/10/2014
 ----------
 [+] Incluido a URL de homologação e produção (não liberado ainda) para consumir o Web Service
