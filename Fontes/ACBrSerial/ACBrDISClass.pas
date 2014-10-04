@@ -85,7 +85,7 @@ TACBrDISClass = class
   public
     Cursor : TPoint ;
 
-    constructor Create(AOwner: TComponent);
+    constructor Create(AOwner: TComponent); virtual;
     Destructor Destroy  ; override ;
 
     Property Ativo  : Boolean read fpAtivo write SetAtivo ;

@@ -68,7 +68,8 @@ TACBrDISGertecTEC65lib = class( TACBrDISClass )
       procedure LoadDLLFunctions;
       procedure UnLoadDLLFunctions;
   public
-    constructor Create(AOwner: TComponent);
+    constructor Create(AOwner: TComponent); override;
+    destructor Destroy; override;
 
     procedure Ativar ; override ;
     procedure Desativar; override;
@@ -96,20 +97,29 @@ begin
   fpIntervaloEnvioBytes := 0;
 end;
 
+destructor TACBrDISGertecTEC65lib.Destroy;
+begin
+  UnLoadDLLFunctions;
+  inherited Destroy;
+end;
+
 
 procedure TACBrDISGertecTEC65lib.LimparDisplay;
 begin
-  xFormFeed ;
+  if Assigned(xFormFeed) then
+    xFormFeed ;
 end;
 
 procedure TACBrDISGertecTEC65lib.PosicionarCursor(Linha, Coluna: Integer);
 begin
-  xGoToXY( Linha, Coluna);
+  if Assigned(xGoToXY) then
+    xGoToXY( Linha, Coluna);
 end;
 
 procedure TACBrDISGertecTEC65lib.Escrever(Texto: String);
 begin
-  xDispStr( PAnsiChar( ACBrStrToAnsi(Texto)) );
+  if Assigned(xDispStr) then
+    xDispStr( PAnsiChar( ACBrStrToAnsi(Texto)) );
 end;
 
 procedure TACBrDISGertecTEC65lib.Ativar;
@@ -121,7 +131,9 @@ end;
 
 procedure TACBrDISGertecTEC65lib.Desativar;
 begin
-  XCloseTec65;
+  if Assigned(XCloseTec65) then
+    XCloseTec65;
+
   UnLoadDLLFunctions;
   fpAtivo := false ;
 end;
@@ -143,7 +155,7 @@ begin
     if not FunctionDetect( CTEC65LIB, FuncName, LibPointer) then
     begin
        LibPointer := NIL ;
-       raise EACBrDISErro.Create( Format('Erro ao carregar a função: %s na Biblioteca: %s', [FuncName,CTEC65LIB]) ) ;
+       raise EACBrDISErro.Create( ACBrStr(Format('Erro ao carregar a função: %s na Biblioteca: %s', [FuncName,CTEC65LIB])) ) ;
     end ;
   end ;
 end ;
