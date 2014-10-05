@@ -77,6 +77,20 @@ TACBrECFVirtualClassItemCupom = class
     property AsString : String read GetAsString write SetAsString;
 end;
 
+{ TACBrECFVirtualClassItensCupom }
+
+TACBrECFVirtualClassItensCupom = class(TObjectList)
+  protected
+    procedure SetObject (Index: Integer; Item: TACBrECFVirtualClassItemCupom);
+    function GetObject (Index: Integer): TACBrECFVirtualClassItemCupom;
+  public
+    function New: TACBrECFVirtualClassItemCupom;
+    function Add (Obj: TACBrECFVirtualClassItemCupom): Integer;
+    procedure Insert (Index: Integer; Obj: TACBrECFVirtualClassItemCupom);
+    property Objects [Index: Integer]: TACBrECFVirtualClassItemCupom
+      read GetObject write SetObject; default;
+end;
+
 { TACBrECFVirtualClassPagamentoCupom }
 
 TACBrECFVirtualClassPagamentoCupom = class
@@ -94,6 +108,20 @@ TACBrECFVirtualClassPagamentoCupom = class
     property AsString : String read GetAsString write SetAsString;
 end;
 
+{ TACBrECFVirtualClassPagamentosCupom }
+
+TACBrECFVirtualClassPagamentosCupom = class(TObjectList)
+  protected
+    procedure SetObject (Index: Integer; Item: TACBrECFVirtualClassPagamentoCupom);
+    function GetObject (Index: Integer): TACBrECFVirtualClassPagamentoCupom;
+  public
+    function New: TACBrECFVirtualClassPagamentoCupom;
+    function Add (Obj: TACBrECFVirtualClassPagamentoCupom): Integer;
+    procedure Insert (Index: Integer; Obj: TACBrECFVirtualClassPagamentoCupom);
+    property Objects [Index: Integer]: TACBrECFVirtualClassPagamentoCupom
+      read GetObject write SetObject; default;
+end;
+
 { TACBrECFVirtualClassCNFCupom }
 
 TACBrECFVirtualClassCNFCupom = class
@@ -107,6 +135,20 @@ TACBrECFVirtualClassCNFCupom = class
     property Valor  : Double  read fsValor  write fsValor;
 
     property AsString : String read GetAsString write SetAsString;
+end;
+
+{ TACBrECFVirtualClassCNFsCupom }
+
+TACBrECFVirtualClassCNFsCupom = class(TObjectList)
+  protected
+    procedure SetObject (Index: Integer; Item: TACBrECFVirtualClassCNFCupom);
+    function GetObject (Index: Integer): TACBrECFVirtualClassCNFCupom;
+  public
+    function New: TACBrECFVirtualClassCNFCupom;
+    function Add (Obj: TACBrECFVirtualClassCNFCupom): Integer;
+    procedure Insert (Index: Integer; Obj: TACBrECFVirtualClassCNFCupom);
+    property Objects [Index: Integer]: TACBrECFVirtualClassCNFCupom
+      read GetObject write SetObject; default;
 end;
 
 TACBrECFVirtualClass = class;
@@ -176,6 +218,8 @@ end ;
 
 TACBrECFVirtualClass = class( TACBrECFClass )
   private
+    fpColunas: Integer;
+    fpDevice: TACBrDevice;
     // Não declare fpDevice ou fpColunas aqui... eles são protected em TACBrECFClass
     //fpDevice: TACBrDevice;
     //fpColunas: Integer;
@@ -187,6 +231,7 @@ TACBrECFVirtualClass = class( TACBrECFClass )
     procedure SetColunas(AValue: Integer);
     procedure SetNumCRO(AValue: Integer);
     procedure SetNumECF(AValue: Integer);
+    procedure SetNumSerie(AValue: String);
     procedure Zera ;
     procedure ZeraCupom ;
     function CalculaNomeArqINI: String ;
@@ -218,11 +263,11 @@ TACBrECFVirtualClass = class( TACBrECFClass )
     fpNumCCF     : Integer ;
     fpSubTotal   : Double ;
     fpTotalPago  : Double ;
-
     fpEXEName    : String ;
-    fpItensCupom      : TObjectList ;
-    fpPagamentosCupom : TObjectList ;
-    fpCNFCupom        : TObjectList ;
+
+    fpItensCupom      : TACBrECFVirtualClassItensCupom ;
+    fpPagamentosCupom : TACBrECFVirtualClassPagamentosCupom ;
+    fpCNFCupom        : TACBrECFVirtualClassCNFsCupom ;
 
     procedure AtivarVirtual ; virtual ;
     procedure INItoClass( ConteudoINI: TStrings ); virtual ;
@@ -304,7 +349,7 @@ TACBrECFVirtualClass = class( TACBrECFClass )
     property NomeArqINI : String read  fpNomeArqINI  write fpNomeArqINI ;
     Property Colunas    : Integer read fpColunas     write SetColunas;
 
-    property NumSerie   : String read  fpNumSerie    write fpNumSerie;
+    property NumSerie   : String read  fpNumSerie    write SetNumSerie;
     property NumECF     : Integer read fpNumECF      write SetNumECF;
     property NumCRO     : Integer read fpNumCRO      write SetNumCRO;
     property CNPJ       : String read  fpCNPJ        write fpCNPJ;
@@ -373,6 +418,102 @@ TACBrECFVirtualClass = class( TACBrECFClass )
 implementation
 
 Uses ACBrECF;
+
+{ TACBrECFVirtualClassCNFsCupom }
+
+procedure TACBrECFVirtualClassCNFsCupom.SetObject(Index: Integer;
+  Item: TACBrECFVirtualClassCNFCupom);
+begin
+  inherited SetItem (Index, Item) ;
+end;
+
+function TACBrECFVirtualClassCNFsCupom.GetObject(Index: Integer
+  ): TACBrECFVirtualClassCNFCupom;
+begin
+  Result := inherited GetItem(Index) as TACBrECFVirtualClassCNFCupom ;
+end;
+
+function TACBrECFVirtualClassCNFsCupom.New: TACBrECFVirtualClassCNFCupom;
+begin
+  Result := TACBrECFVirtualClassCNFCupom.Create;
+  Add(Result);
+end;
+
+function TACBrECFVirtualClassCNFsCupom.Add(Obj: TACBrECFVirtualClassCNFCupom
+  ): Integer;
+begin
+  Result := inherited Add(Obj) ;
+end;
+
+procedure TACBrECFVirtualClassCNFsCupom.Insert(Index: Integer;
+  Obj: TACBrECFVirtualClassCNFCupom);
+begin
+  inherited Insert(Index, Obj);
+end;
+
+{ TACBrECFVirtualClassPagamentosCupom }
+
+procedure TACBrECFVirtualClassPagamentosCupom.SetObject(Index: Integer;
+  Item: TACBrECFVirtualClassPagamentoCupom);
+begin
+  inherited SetItem (Index, Item) ;
+end;
+
+function TACBrECFVirtualClassPagamentosCupom.GetObject(Index: Integer
+  ): TACBrECFVirtualClassPagamentoCupom;
+begin
+  Result := inherited GetItem(Index) as TACBrECFVirtualClassPagamentoCupom ;
+end;
+
+function TACBrECFVirtualClassPagamentosCupom.New: TACBrECFVirtualClassPagamentoCupom;
+begin
+  Result := TACBrECFVirtualClassPagamentoCupom.Create;
+  Add(Result);
+end;
+
+function TACBrECFVirtualClassPagamentosCupom.Add(
+  Obj: TACBrECFVirtualClassPagamentoCupom): Integer;
+begin
+  Result := inherited Add(Obj) ;
+end;
+
+procedure TACBrECFVirtualClassPagamentosCupom.Insert(Index: Integer;
+  Obj: TACBrECFVirtualClassPagamentoCupom);
+begin
+  inherited Insert(Index, Obj);
+end;
+
+{ TACBrECFVirtualClassItensCupom }
+
+procedure TACBrECFVirtualClassItensCupom.SetObject(Index: Integer;
+  Item: TACBrECFVirtualClassItemCupom);
+begin
+  inherited SetItem (Index, Item) ;
+end;
+
+function TACBrECFVirtualClassItensCupom.GetObject(Index: Integer
+  ): TACBrECFVirtualClassItemCupom;
+begin
+  Result := inherited GetItem(Index) as TACBrECFVirtualClassItemCupom ;
+end;
+
+function TACBrECFVirtualClassItensCupom.New: TACBrECFVirtualClassItemCupom;
+begin
+  Result := TACBrECFVirtualClassItemCupom.Create;
+  Add(Result);
+end;
+
+function TACBrECFVirtualClassItensCupom.Add(Obj: TACBrECFVirtualClassItemCupom
+  ): Integer;
+begin
+  Result := inherited Add(Obj) ;
+end;
+
+procedure TACBrECFVirtualClassItensCupom.Insert(Index: Integer;
+  Obj: TACBrECFVirtualClassItemCupom);
+begin
+  inherited Insert(Index, Obj);
+end;
 
 { TACBrECFVirtualClassCNFCupom }
 
@@ -660,9 +801,9 @@ begin
 
   fpIdentificaConsumidorRodape := True ;
   fsECFVirtualOwner := TACBrECFVirtual(AOwner);
-  fpItensCupom      := TObjectList.Create( true );
-  fpPagamentosCupom := TObjectList.Create( true );
-  fpCNFCupom        := TObjectList.Create( true );
+  fpItensCupom      := TACBrECFVirtualClassItensCupom.Create( true );
+  fpPagamentosCupom := TACBrECFVirtualClassPagamentosCupom.Create( true );
+  fpCNFCupom        := TACBrECFVirtualClassCNFsCupom.Create( true );
 
   Zera ;
 end;
@@ -1033,13 +1174,13 @@ begin
   if (NumItem < 1) or (NumItem > fpItensCupom.Count) then
     raise EACBrECFERRO.create(ACBrStr('Item ('+IntToStrZero(NumItem,3)+') fora da Faixa.')) ;
 
-  if TACBrECFVirtualClassItemCupom( fpItensCupom[NumItem-1] ).Qtd = 0 then
+  if fpItensCupom[NumItem-1].Qtd = 0 then
     raise EACBrECFERRO.create(ACBrStr('Item ('+IntToStrZero(NumItem,3)+') já foi cancelado.')) ;
 
   try
     CancelaItemVendidoVirtual( NumItem );
 
-    with TACBrECFVirtualClassItemCupom( fpItensCupom[NumItem-1] ) do
+    with fpItensCupom[NumItem-1] do
     begin
       fpSubTotal := RoundTo(Subtotal - ( RoundABNT( Qtd * ValorUnit,-2) + DescAcres ) ,-2);
       Qtd        := 0;
@@ -1086,7 +1227,7 @@ begin
     begin
       For A := 0 to fpItensCupom.Count - 1 do
       begin
-        with TACBrECFVirtualClassItemCupom( fpItensCupom[A] ) do
+        with fpItensCupom[A] do
         begin
 	  ValTaxa := ( Qtd * ValorUnit * Taxa * AjusteSinal ) ;
 
@@ -1230,19 +1371,19 @@ begin
 
     { Removendo do TotalDiario por Aliquotas }
     For A := 0 to fpItensCupom.Count - 1 do
-      with TACBrECFVirtualClassItemCupom( fpItensCupom[A] ) do
+      with fpItensCupom[A] do
         with fpAliquotas[ PosAliq ] do
           Total := RoundTo(Total - BaseICMS,-2) ;
 
     { Removendo do TotalDiario por Pagamento }
     For A := 0 to fpPagamentosCupom.Count - 1 do
-      with TACBrECFVirtualClassPagamentoCupom( fpPagamentosCupom[A] ) do
+      with fpPagamentosCupom[A] do
         with fpFormasPagamentos[ PosFPG ] do
           Total := RoundTo(Total - ValorPago,-2) ;
 
     { Removendo do TotalDiario por CNF }
     For A := 0 to fpCNFCupom.Count - 1 do
-      with TACBrECFVirtualClassCNFCupom( fpCNFCupom[A] ) do
+      with fpCNFCupom[A] do
         with fpComprovantesNaoFiscais[ PosCNF ] do
           Total := RoundTo(Total - Valor,-2) ;
 
@@ -1401,7 +1542,7 @@ begin
   A := 0 ;
   while (not UsouPagamento) and (A < fpPagamentosCupom.Count) do
   begin
-    PosFPG := TACBrECFVirtualClassPagamentoCupom( fpPagamentosCupom[A] ).PosFPG ;
+    PosFPG := fpPagamentosCupom[A].PosFPG ;
     UsouPagamento := (fpFormasPagamentos[ PosFPG ].Indice = FPG.Indice ) ;
     Inc( A ) ;
   end ;
@@ -1808,21 +1949,21 @@ begin
     S := 'Items_Cupom';
     for A := 0 to fpItensCupom.Count - 1 do
     begin
-      with fpItensCupom[A] as TACBrECFVirtualClassItemCupom do
+      with fpItensCupom[A] do
         Ini.WriteString( S, IntToStrZero(A,3), AsString );
     end ;
 
     S := 'Pagamentos_Cupom';
     for A := 0 to fpPagamentosCupom.Count - 1 do
     begin
-      with fpPagamentosCupom[A] as TACBrECFVirtualClassPagamentoCupom do
+      with fpPagamentosCupom[A] do
         Ini.WriteString( S ,IntToStrZero( A, 2), AsString ) ;
     end ;
 
     S := 'Comprovantes_Nao_Fiscais_Cupom';
     for A := 0 to fpCNFCupom.Count - 1 do
     begin
-      with fpCNFCupom[A] as TACBrECFVirtualClassCNFCupom do
+      with fpCNFCupom[A] do
         Ini.WriteString( S ,IntToStrZero( A, 2), AsString ) ;
     end ;
 
@@ -1863,6 +2004,12 @@ procedure TACBrECFVirtualClass.SetNumECF(AValue: Integer);
 begin
   if fpNumECF = AValue then Exit;
   fpNumECF := min( max( AValue, 1), 999);
+end;
+
+procedure TACBrECFVirtualClass.SetNumSerie(AValue: String);
+begin
+  if fpNumSerie = AValue then Exit;
+  fpNumSerie := AValue;
 end;
 
 procedure TACBrECFVirtualClass.SetNumCRO(AValue: Integer);

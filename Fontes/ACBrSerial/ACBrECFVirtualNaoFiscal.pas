@@ -62,6 +62,20 @@ TACBrECFVirtualNaoFiscal = class( TACBrECFVirtualPrinter )
   published
     property ExibeAvisoLegal: Boolean read GetExibeAvisoLegal
       write SetExibeAvisoLegal;
+
+  published
+    property CmdImpCondensado ;
+    property CmdImpExpandidoUmaLinha ;
+    property CmdImpFimExpandido ;
+    property CmdImpZera ;
+    property CmdGaveta ;
+    property CmdCortaPapelCompleto ;
+    property CmdCortaPapelParcial ;
+
+    property Cabecalho ;
+    property CabecalhoItem ;
+    property MascaraItem ;
+
 end ;
 
 { TACBrECFVirtualNaoFiscalClass }

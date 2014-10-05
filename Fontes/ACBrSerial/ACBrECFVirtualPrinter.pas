@@ -82,7 +82,7 @@ TACBrECFVirtualPrinter = class( TACBrECFVirtual )
     procedure SetCmdImpZera(AValue: AnsiString);
   protected
     procedure CreateVirtualClass ; override ;
-  published
+
     property CmdImpCondensado : AnsiString read GetCmdImpCondensado
        write SetCmdImpCondensado ;
     property CmdImpExpandidoUmaLinha : AnsiString read GetCmdImpExpandidoUmaLinha
