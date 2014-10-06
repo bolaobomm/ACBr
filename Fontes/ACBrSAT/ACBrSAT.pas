@@ -509,7 +509,7 @@ begin
 
      if SalvarCFes then
      begin
-       NomeCFe := PastaCFeVenda + PathDelim + CFe.infCFe.ID + '-cfe.xml';
+       NomeCFe := PastaCFeVenda + PathDelim + CPREFIXO_CFe + CFe.infCFe.ID + '.xml';
        WriteToTXT(NomeCFe, XMLRecebido, False, False);
      end;
   end;
@@ -640,7 +640,7 @@ begin
   if fsModelo = AValue then exit ;
 
   if fsInicializado then
-     raise EACBrSATErro.Create( ACBrStr(cACBrSATSetModeloException));
+     raise EACBrSATErro.Create( cACBrSATSetModeloException );
 
   wArqLOG := ArqLOG ;
 

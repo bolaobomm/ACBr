@@ -46,6 +46,14 @@ Símbolo : Significado
 [+]     : Novo recurso
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
+
+
+Data: 06/10/2014     (por: DSA)
+-- ACBrSAT --
+[*] Nome do arquivo XML da Venda salvo modificado de:
+    PastaCFeVenda + Chave + '-cfe.xml', para: PastaCFeVenda + 'CFe' + Chave + '.xml'
+[-] Correção de encoding em alguns Exceptions
+
 Data: 03/10/2014
 -- ACBrSAT --
 [-] Adicionado a uses StrUtils para resolver o problema no delphi da falta da função LeftStr na unit ACBrSAT.pas

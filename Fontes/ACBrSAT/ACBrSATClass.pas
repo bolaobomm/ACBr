@@ -301,7 +301,7 @@ end ;
 constructor TACBrSATClass.Create(AOwner : TComponent) ;
 begin
   if not (AOwner is TACBrSAT) then
-     raise EACBrSATErro.create( ACBrStr(cACBrSATClassCreateException) );
+     raise EACBrSATErro.create( cACBrSATClassCreateException );
 
   inherited Create(AOwner) ;
 
