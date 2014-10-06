@@ -36,6 +36,7 @@
 |*
 |* 20/10/2012:  Daniel Simoes de Almeida
 |*   Primeira Versao: Criaçao e Distribuiçao da Primeira Versao
+|*   http://www1.fazenda.gov.br/confaz/confaz/atos/atos_cotepe/2011/ac042_11.htm
 ******************************************************************************}
 
 {$I ACBr.inc}
@@ -48,6 +49,7 @@ uses ACBrECFClass, ACBrUtil, ACBrDevice, ACBrConsts,
 
 const
     cEscECFMaxBuffer = 4096 ;
+    SYN = #22;
 
 type
 
@@ -119,10 +121,11 @@ TACBrECFEscECFResposta = class
     fsTBR      : Integer ;
     fsBRS      : AnsiString ;
     fsCHK      : Byte ;
+    fsOwner    : TACBrECFClass;
 
     procedure SetResposta(const Value: AnsiString);
  public
-    constructor create ;
+    constructor Create( AOwner: TACBrECFClass ) ;
     destructor Destroy ; override ;
 
     procedure Clear( ClearParams: Boolean = True ) ;
@@ -468,6 +471,8 @@ end;
 procedure TACBrECFEscECFComando.SetCMD(const Value: Byte);
 begin
   Inc( fsSEQ ) ;
+  while (chr(fsSEQ) in [SOH,STX,ETX,ENQ,ACK,WAK,NAK,SYN]) do   // não usa caracteres do protocolo
+    Inc( fsSEQ );
 
   fsCMD     := Value ;
   fsEXT     := 0;
@@ -542,22 +547,17 @@ end;
 
 { ----------------------------- TACBrECFEscECFResposta -------------------------- }
 
-constructor TACBrECFEscECFResposta.create;
+constructor TACBrECFEscECFResposta.Create(AOwner: TACBrECFClass);
 begin
   inherited create ;
 
+  fsOwner  := AOwner;
   fsParams := TStringList.create ;
   fsRET    := TACBrECFEscECFRET.Create;
-  fsSEQ    := 0 ;
-  fsCMD    := 0 ;
-  fsEXT    := 0  ;
-  fsCAT    := 0  ;
-  fsTBR    := 0  ;
-  fsBRS    := '' ;
-  fsCHK    := 0 ;
+  Clear;
 end;
 
-destructor TACBrECFEscECFResposta.destroy;
+destructor TACBrECFEscECFResposta.Destroy;
 begin
   fsParams.Free ;
   fsRET.Free;
@@ -612,6 +612,10 @@ begin
   fsBRS      := copy( Value, 12, fsTBR ) ;
   fsCHK      := ord( Value[ 12 + fsTBR ] ) ;
 
+  fsOwner.GravaLog( '         Resposta  -> SEQ:'+IntToStr(fsSEQ)+' CMD:'+IntToStr(fsCMD)+
+    ' EXT:'+IntToStr(fsEXT)+ ' CAT:'+IntToStr(fsCAT)+ ' RET:"'+fsRET.RET+
+    '" TBR:'+IntToStr(fsTBR)+ ' BRS:'+fsBRS+' CHK:'+IntToStr(fsCHK), True );
+
   Soma := 0 ;
   LenCmd := LenCmd-1 ;  { -1 por causa do CHK }
   For I := 2 to LenCmd do  
@@ -645,7 +649,7 @@ begin
   inherited create( AOwner ) ;
 
   fsEscECFComando  := TACBrECFEscECFComando.create ;
-  fsEscECFResposta := TACBrECFEscECFResposta.create ;
+  fsEscECFResposta := TACBrECFEscECFResposta.create(Self) ;
 
   fpDevice.HandShake := hsDTR_DSR ;
   fpPaginaDeCodigo   := 1252;
@@ -1208,9 +1212,10 @@ begin
 
    end;
 
-   Result := IntToStr(CAT)+'-'+IntToStr(Ocorrencia) + ' - ' + MsgCAT ;
+   Result := 'Categoria: '+IntToStr(CAT)+ '-' + MsgCAT + sLineBreak+
+             'Ocorrencia: '+IntToStr(Ocorrencia)  ;
    if MsgOcorrencia <> '' then
-      Result := Result + sLineBreak + MsgOcorrencia;
+      Result := Result + '-'+MsgOcorrencia;
 end;
 
 function TACBrECFEscECF.GetValorTotalizador(N, I : Integer) : Double ;

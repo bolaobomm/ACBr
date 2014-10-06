@@ -97,6 +97,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+Data: 06/10/2014   (por: DSA)
+-- ACBrECFEscECF --
+[*] Melhorias no gravação do Log, para tentativa de compatibilização com Epson
+    TM-T800F
+
 Data: 05/10/2014   (por: DSA)
 -- ACBrECFVirtual --
 [*] Coleção de objetos: ItensCupom, PagamentosCupom e CNFCupom modificados de
