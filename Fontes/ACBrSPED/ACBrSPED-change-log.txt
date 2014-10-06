@@ -47,6 +47,10 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+Data 06/10/2014
+[*] Correções de alterações do registro C175 ACBrSpedPisCofins
+http://www.projetoacbr.com.br/forum/index.php?/topic/15798-registro-c175/
+
 Versão 1.02 05/05/2015
 -- ACBrSPEDPisCofins --
 [+] Implementado Before Eventos nos registros C491 e C195 do Bloco_C.

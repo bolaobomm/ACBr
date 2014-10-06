@@ -1246,6 +1246,14 @@ begin
            QTD_REG_BLC := Bloco_C.RegistroC170Count;
          end;
        end;
+       if Bloco_C.RegistroC175Count > 0 then
+       begin
+         with New do
+         begin
+           REG_BLC := 'C175';
+           QTD_REG_BLC := Bloco_C.RegistroC175Count;
+         end;
+       end;
        if Bloco_C.RegistroC180Count > 0 then
        begin
          with New do
