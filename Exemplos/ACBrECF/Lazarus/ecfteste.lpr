@@ -13,8 +13,10 @@ uses
 {$R *.res}
 
 begin
-  //DeleteFile( 'c:\temp\heaptrclog.trc');
-  //SetHeapTraceOutput( 'c:\temp\heaptrclog.trc');
+  {$IFDEF DEBUG}
+   DeleteFile( 'c:\temp\heaptrclog.trc');
+   SetHeapTraceOutput( 'c:\temp\heaptrclog.trc');
+  {$ENDIF}
   Application.Initialize;
   Application.CreateForm(TForm1, Form1);
   Application.CreateForm(TfrConfiguraSerial, frConfiguraSerial);

@@ -1,5 +1,5 @@
 object Form1: TForm1
-  Left = 373
+  Left = 355
   Height = 418
   Top = 188
   Width = 547
@@ -153,7 +153,7 @@ object Form1: TForm1
   Menu = MainMenu1
   OnCreate = FormCreate
   Position = poScreenCenter
-  LCLVersion = '1.2.2.0'
+  LCLVersion = '1.2.4.0'
   object StatusBar1: TStatusBar
     Left = 0
     Height = 23
@@ -173,9 +173,9 @@ object Form1: TForm1
     Height = 335
     Top = 0
     Width = 547
-    ActivePage = TabSheet4
+    ActivePage = tsMenuFiscal
     Align = alClient
-    TabIndex = 0
+    TabIndex = 6
     TabOrder = 0
     object TabSheet4: TTabSheet
       Caption = 'ECF'
@@ -1426,7 +1426,7 @@ object Form1: TForm1
           AnchorSideLeft.Side = asrCenter
           Left = 89
           Height = 13
-          Top = 146
+          Top = 144
           Width = 357
           Caption = 'Dica: Para os menus que geram arquivos, verificar o DemoPAF'
           Font.CharSet = ANSI_CHARSET
@@ -1454,7 +1454,7 @@ object Form1: TForm1
           Width = 149
           Caption = 'LMFC'
           OnClick = btnMenuFiscalLMFCClick
-          TabOrder = 1
+          TabOrder = 3
         end
         object btnMenuFiscalLMFS: TButton
           Left = 10
@@ -1463,7 +1463,7 @@ object Form1: TForm1
           Width = 149
           Caption = 'LMFS'
           OnClick = btnMenuFiscalLMFSClick
-          TabOrder = 2
+          TabOrder = 6
         end
         object btnMenuFiscalMFDEspelho: TButton
           Left = 178
@@ -1472,7 +1472,7 @@ object Form1: TForm1
           Width = 149
           Caption = 'Espelho MFD'
           OnClick = btnMenuFiscalMFDEspelhoClick
-          TabOrder = 3
+          TabOrder = 1
         end
         object btnMenuFiscalMFDArq: TButton
           Left = 178
@@ -1486,11 +1486,11 @@ object Form1: TForm1
         object btnMenuFiscalRelMeiosPagto: TButton
           Left = 342
           Height = 25
-          Top = 10
+          Top = 8
           Width = 149
           Caption = 'Meios Pagto.'
           OnClick = btnMenuFiscalRelMeiosPagtoClick
-          TabOrder = 5
+          TabOrder = 2
         end
         object btnMenuFiscalRelDAVEmitidos: TButton
           Left = 342
@@ -1499,7 +1499,7 @@ object Form1: TForm1
           Width = 149
           Caption = 'DAV Emitidos'
           OnClick = btnMenuFiscalRelDAVEmitidosClick
-          TabOrder = 6
+          TabOrder = 5
         end
         object btnMenuFiscalRelIdentPAFECF: TButton
           Left = 342
@@ -1508,7 +1508,7 @@ object Form1: TForm1
           Width = 149
           Caption = 'Identificação PAF-ECF'
           OnClick = btnMenuFiscalRelIdentPAFECFClick
-          TabOrder = 7
+          TabOrder = 8
         end
         object chkMenuFiscalGerarArquivo: TCheckBox
           Left = 18
@@ -1522,7 +1522,7 @@ object Form1: TForm1
           Font.Name = 'MS Sans Serif'
           Font.Pitch = fpVariable
           ParentFont = False
-          TabOrder = 8
+          TabOrder = 12
         end
         object chkMenuFiscalCotepe1704: TCheckBox
           Left = 26
@@ -1530,25 +1530,43 @@ object Form1: TForm1
           Top = 194
           Width = 453
           Caption = 'Gerar o arquivo no formato do ato Cotepe 17/04 (Somente para os menus: LMFC, Arq.MFD)'
-          TabOrder = 9
+          TabOrder = 13
         end
         object btnMenuFiscalConfigPAFECF: TButton
+          Left = 342
+          Height = 25
+          Top = 104
+          Width = 149
+          Caption = 'Configurações do PAF-ECF'
+          OnClick = btnMenuFiscalConfigPAFECFClick
+          TabOrder = 11
+        end
+        object btnMenuFiscalNotaPaulista: TButton
           Left = 178
           Height = 25
           Top = 72
           Width = 149
-          Caption = 'Configurações do PAF-ECF'
-          OnClick = btnMenuFiscalConfigPAFECFClick
-          TabOrder = 10
-        end
-        object btnMenuFiscalNotaPaulista: TButton
-          Left = 10
-          Height = 25
-          Top = 106
-          Width = 149
           Caption = 'CAT52'
           OnClick = btnMenuFiscalNotaPaulistaClick
-          TabOrder = 11
+          TabOrder = 7
+        end
+        object btnArqMFNovo: TButton
+          Left = 10
+          Height = 25
+          Top = 104
+          Width = 149
+          Caption = 'Arq.MF (novo)'
+          OnClick = btnArqMFNovoClick
+          TabOrder = 9
+        end
+        object btnArqMFDNovo: TButton
+          Left = 178
+          Height = 25
+          Top = 104
+          Width = 149
+          Caption = 'Arq.MFD (novo)'
+          OnClick = btnArqMFDNovoClick
+          TabOrder = 10
         end
       end
     end
@@ -3310,6 +3328,7 @@ object Form1: TForm1
     end
   end
   object ACBrECF1: TACBrECF
+    QuebraLinhaRodape = False
     Porta = 'procurar'
     ReTentar = False
     DescricaoGrande = True
@@ -3355,7 +3374,7 @@ object Form1: TForm1
       'HTML_Font=<font size="5" face="Fixed">'
     )
     OnBobinaAdicionaLinhas = ACBrECF1BobinaAdicionaLinhas
-    ECFVirtual = ACBrECFVirtualNaoFiscal1
+    ECFVirtual = ACBrECFVirtualSAT1
     ArqLOG = 'acbrlog.txt'
     ConfigBarras.MostrarCodigo = True
     ConfigBarras.LarguraLinha = 3
@@ -3461,19 +3480,10 @@ object Form1: TForm1
     top = 329
   end
   object ACBrECFVirtualNaoFiscal1: TACBrECFVirtualNaoFiscal
-    ECF = ACBrECF1
-    Colunas = 48
-    NumSerie = '1234567890000'
-    NumECF = 2
-    NumCRO = 1
-    CNPJ = '05.441.336/0001-37'
-    IE = '2222.2222.222'
-    IM = '11111'
-    OnGravaArqINI = ACBrECFVirtualNaoFiscal1GravaArqINI
-    OnLeArqINI = ACBrECFVirtualNaoFiscal1LeArqINI
+    ExibeAvisoLegal = True
     CmdImpCondensado = '#15'
     CmdImpExpandidoUmaLinha = '#14'
-    CmdImpFimExpandido = '#35,#50,#48'
+    CmdImpFimExpandido = '#20'
     CmdImpZera = '#27,#64'
     CmdGaveta = '#27,#118,#150'
     CmdCortaPapelCompleto = '#27,#119'
@@ -3489,8 +3499,42 @@ object Form1: TForm1
       '------------------------------------------------'
     )
     MascaraItem = 'III CCCCCCCCCCCCC DDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDD QQQQQQQQ UUxVVVVVVVVV AAAAAAA TTTTTTTTTTT'
-    ExibeAvisoLegal = True
-    left = 424
+    left = 344
     top = 200
+  end
+  object ACBrECFVirtualSAT1: TACBrECFVirtualSAT
+    ECF = ACBrECF1
+    ACBrSAT = ACBrSAT1
+    left = 296
+    top = 264
+  end
+  object ACBrSAT1: TACBrSAT
+    Modelo = satDinamico_cdecl
+    Extrato = ACBrSATExtratoFortes1
+    NomeDLL = 'C:\SAT\SAT.DLL'
+    Config.infCFe_versaoDadosEnt = 0.04
+    Config.ide_CNPJ = '05481336000137'
+    Config.ide_numeroCaixa = 1
+    Config.ide_tpAmb = taHomologacao
+    Config.emit_CNPJ = '11111111111111'
+    Config.emit_IE = '111111111111'
+    Config.emit_IM = '123123'
+    Config.emit_cRegTrib = RTRegimeNormal
+    Config.emit_cRegTribISSQN = RTISSMicroempresaMunicipal
+    Config.emit_indRatISSQN = irSim
+    Config.EhUTF8 = False
+    Config.PaginaDeCodigo = 0
+    OnGetcodigoDeAtivacao = ACBrSAT1GetcodigoDeAtivacao
+    OnGetsignAC = ACBrSAT1GetsignAC
+    SalvarCFes = True
+    left = 376
+    top = 264
+  end
+  object ACBrSATExtratoFortes1: TACBrSATExtratoFortes
+    ACBrSAT = ACBrSAT1
+    Mask_qCom = '0.0000'
+    Mask_vUnCom = '0.000'
+    left = 336
+    top = 264
   end
 end

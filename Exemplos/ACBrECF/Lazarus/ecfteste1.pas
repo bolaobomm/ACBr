@@ -8,7 +8,9 @@ uses
   ACBrECF, ACBrECFClass, ACBrBase, ACBrRFD, ACBrDevice, ACBrECFVirtualNaoFiscal,
   ACBrAAC, ACBrConsts, ACBrGIF, LCLIntf, Classes, SysUtils, Forms, Controls,
   Graphics, LCLType, Dialogs, DateUtils, IpHtml, Menus, Buttons, StdCtrls,
-  ExtCtrls, ComCtrls, Spin, EditBtn, DBGrids, DbCtrls, memds, db, IniFiles, ACBrECFVirtual;
+  ExtCtrls, ComCtrls, Spin, EditBtn, DBGrids, DbCtrls, memds, db, IniFiles,
+  ACBrECFVirtual, ACBrECFVirtualSAT, ACBrSAT, ACBrSATClass,
+  ACBrSATExtratoFortesFr;
 
 type
   TSimpleIpHtml = class(TIpHtml)
@@ -27,8 +29,11 @@ type
     ACBrAAC1 : TACBrAAC ;
     ACBrECF1: TACBrECF;
     ACBrECFVirtualNaoFiscal1: TACBrECFVirtualNaoFiscal;
+    ACBrECFVirtualSAT1: TACBrECFVirtualSAT;
     ACBrGIF1: TACBrGIF;
     ACBrRFD1: TACBrRFD;
+    ACBrSAT1: TACBrSAT;
+    ACBrSATExtratoFortes1: TACBrSATExtratoFortes;
     Aliquotas1: TMenuItem;
     AliquotasICMS1: TMenuItem;
     Arredonda1: TMenuItem;
@@ -39,6 +44,8 @@ type
     BitBtn6 : TBitBtn ;
     bRFDLer: TButton;
     bRFDSalvar: TButton;
+    btnArqMFDNovo: TButton;
+    btnArqMFNovo: TButton;
     btnMenuFiscalConfigPAFECF : TButton ;
     btnMenuFiscalLMFC : TButton ;
     btnMenuFiscalLMFS : TButton ;
@@ -435,12 +442,16 @@ type
       var Tratado: Boolean);
     procedure ACBrECFVirtualNaoFiscal1LeArqINI(ConteudoINI: TStrings;
       var Tratado: Boolean);
+    procedure ACBrSAT1GetcodigoDeAtivacao(var Chave: AnsiString);
+    procedure ACBrSAT1GetsignAC(var Chave: AnsiString);
     procedure bAACAtualizarGTClick(Sender : TObject) ;
     procedure bAACGravarArquivoClick(Sender : TObject) ;
     procedure bAACAbrirArquivoClick(Sender : TObject) ;
     procedure bACCVerificarGTClick(Sender : TObject) ;
     procedure BitBtn6Click(Sender : TObject) ;
     procedure bLerDadosRedZClick(Sender : TObject) ;
+    procedure btnArqMFDNovoClick(Sender: TObject);
+    procedure btnArqMFNovoClick(Sender: TObject);
     procedure btnMenuFiscalConfigPAFECFClick(Sender : TObject) ;
     procedure btnMenuFiscalLMFCClick(Sender : TObject) ;
     procedure btnMenuFiscalLMFSClick(Sender : TObject) ;
@@ -936,6 +947,42 @@ begin
   end;
 end;
 
+procedure TForm1.btnArqMFDNovoClick(Sender: TObject);
+var
+  PathArquivo: String;
+begin
+  dlgDialogoSalvar.DefaultExt := '.mfd';
+  dlgDialogoSalvar.Filter := 'Arquivos binários MF|*.mfd';
+
+  if dlgDialogoSalvar.Execute then
+  begin
+    PathArquivo := dlgDialogoSalvar.FileName;
+    ACBrECF1.PafMF_ArqMFD(PathArquivo);
+
+    // será gerado o arquivo bináio e o arquivo .txt com a assinatura EAD
+
+    ShowMessage(Format('Arquivo MFD gerado com sucesso em:'#13#10' "%s"', [PathArquivo]));
+  end;
+end;
+
+procedure TForm1.btnArqMFNovoClick(Sender: TObject);
+var
+  PathArquivo: String;
+begin
+  dlgDialogoSalvar.DefaultExt := '.mf';
+  dlgDialogoSalvar.Filter := 'Arquivos binários MF|*.mf';
+
+  if dlgDialogoSalvar.Execute then
+  begin
+    PathArquivo := dlgDialogoSalvar.FileName;
+    ACBrECF1.PafMF_ArqMF(PathArquivo);
+
+    // será gerado o arquivo bináio e o arquivo .txt com a assinatura EAD
+
+    ShowMessage(Format('Arquivo MF gerado com sucesso em:'#13#10' "%s"', [PathArquivo]));
+  end;
+end;
+
 procedure TForm1.btnMenuFiscalConfigPAFECFClick(Sender : TObject) ;
 var
   Parametros: TACBrECFInfoPaf;
@@ -1259,7 +1306,7 @@ procedure TForm1.Button1Click(Sender : TObject) ;
 //var
 //  I: Extended;
 begin
-   ACBrECF1.RetornaInfoECF( edInfo.Text );
+    ACBrECF1.RetornaInfoECF( edInfo.Text );
 
    {
    I := CompareVersions('1.0.3', '01.00.04');    // -1
@@ -1384,6 +1431,16 @@ procedure TForm1.ACBrECFVirtualNaoFiscal1LeArqINI(ConteudoINI: TStrings;
   var Tratado: Boolean);
 begin
   mResp.Lines.Add( 'INI SERÁ LIDO'  );
+end;
+
+procedure TForm1.ACBrSAT1GetcodigoDeAtivacao(var Chave: AnsiString);
+begin
+  Chave := '99999999';
+end;
+
+procedure TForm1.ACBrSAT1GetsignAC(var Chave: AnsiString);
+begin
+  Chave := 'EAD9EABF09FFD24FDAC9800624BB1709EBE97691D008E8177024BB6A8F88C37593D2FAB15270CF73ED235B4B6FF16FBA7D55E79E340C9FC5DF5C49FAE42712F8309D4E832342834DB6D7C42BB0AE56D597B7F21AD54800F825A43ACC5288C9FFAD9CEA37430B6ED87D520B96775625AD7C3BC27BE55151476692583096280B62660AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA';
 end;
 
 procedure TForm1.bAACAtualizarGTClick(Sender : TObject) ;
