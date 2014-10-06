@@ -47,7 +47,10 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
-
+06/10/2014
+[*] Faltou um begin em um procedimento!
+	por: Juliomar Marchetti
+	
 06/10/2014
 ----------
 [-] Colocado uma condição checando se a UF=29 e versão 3.10, caso afirmativo

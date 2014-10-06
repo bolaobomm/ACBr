@@ -3306,6 +3306,7 @@ begin
     SoapAction := 'http://www.portalfiscal.inf.br/nfe/wsdl/' + Servico + '/NfeInutilizacao';
   end
   else
+  begin
     Servico := 'NfeInutilizacao2';
     SoapAction := 'http://www.portalfiscal.inf.br/nfe/wsdl/' + Servico;
   end;
