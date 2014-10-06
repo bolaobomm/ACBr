@@ -64,6 +64,15 @@ TACBrECFVirtualNaoFiscal = class( TACBrECFVirtualPrinter )
       write SetExibeAvisoLegal;
 
   published
+    property Colunas ;
+    property NomeArqINI ;
+    property NumSerie ;
+    property NumECF ;
+    property NumCRO ;
+    property CNPJ ;
+    property IE ;
+    property IM ;
+
     property CmdImpCondensado ;
     property CmdImpExpandidoUmaLinha ;
     property CmdImpFimExpandido ;
@@ -136,6 +145,8 @@ procedure TACBrECFVirtualNaoFiscalClass.AtivarVirtual;
 begin
   if fsExibeAvisoLegal then
     MostraAvisoLegal ;
+
+  inherited AtivarVirtual;
 end;
 
 procedure TACBrECFVirtualNaoFiscalClass.MostraAvisoLegal ;

@@ -98,6 +98,16 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 Data: 06/10/2014   (por: DSA)
+-- ACBrECFVirtual --
+[*] Modificada a visibilidade das propriedades: Colunas, NomeArqINI, NumSerie,
+    NumECF, NumCRO, CNPJ, IE, IM para  para Protected, elas devem ser
+    redeclaradas como Published nas classes filhas (Ex: ACBrECFVirtualNaoFiscal),
+    se necessário
+[*] Evento: OnGravaArqINI renomeado para: QuandoGravarArqINI
+[*] Evento: OnLeArqINI renomeado para: QuandoLerArqINI
+[+] Adicionada propriedade "ChaveCupom", para armazenar código externo do
+    documento gerado no ECFVirtual
+
 -- ACBrECFEscECF --
 [*] Melhorias no gravação do Log, para tentativa de compatibilização com Epson
     TM-T800F

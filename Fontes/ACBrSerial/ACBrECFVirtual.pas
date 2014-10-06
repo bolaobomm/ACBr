@@ -152,7 +152,7 @@ TACBrECFVirtualClassCNFsCupom = class(TObjectList)
 end;
 
 TACBrECFVirtualClass = class;
-TACBrECFVirtualLeGravaINI = procedure(ConteudoINI: TStrings; var Tratado: Boolean) of object;
+TACBrECFVirtualLerGravarINI = procedure(ConteudoINI: TStrings; var Tratado: Boolean) of object;
 
 { TACBrECFVirtual }
 
@@ -167,8 +167,8 @@ TACBrECFVirtual = class( TACBrComponent )
     function GetNumCRO: Integer;
     function GetNumECF: Integer;
     function GetNumSerie: String;
-    function GetOnGravaArqINI: TACBrECFVirtualLeGravaINI;
-    function GetOnLeArqINI: TACBrECFVirtualLeGravaINI;
+    function GetQuandoGravarArqINI: TACBrECFVirtualLerGravarINI;
+    function GetQuandoLerArqINI: TACBrECFVirtualLerGravarINI;
     procedure SetCNPJ(AValue: String);
     procedure SetColunas(AValue: Integer);
     procedure SetIE(AValue: String);
@@ -177,8 +177,8 @@ TACBrECFVirtual = class( TACBrComponent )
     procedure SetNumCRO(AValue: Integer);
     procedure SetNumECF(AValue: Integer);
     procedure SetNumSerie(AValue: String);
-    procedure SetOnGravaArqINI(AValue: TACBrECFVirtualLeGravaINI);
-    procedure SetOnLeArqINI(AValue: TACBrECFVirtualLeGravaINI);
+    procedure SetQuandoGravarArqINI(AValue: TACBrECFVirtualLerGravarINI);
+    procedure SetQuandoLerArqINI(AValue: TACBrECFVirtualLerGravarINI);
   protected
     fpECFVirtualClass: TACBrECFVirtualClass;
 
@@ -194,8 +194,6 @@ TACBrECFVirtual = class( TACBrComponent )
     procedure GravaArqINI ;
 
     property ECFVirtualClass : TACBrECFVirtualClass read fpECFVirtualClass ;
-  published
-    property ECF : TACBrComponent read fsECF write SetECF ;
 
     property Colunas    : Integer read GetColunas    write SetColunas;
     property NomeArqINI : String  read GetNomeArqINI write SetNomeArqINI;
@@ -205,11 +203,13 @@ TACBrECFVirtual = class( TACBrComponent )
     property CNPJ       : String  read GetCNPJ       write SetCNPJ;
     property IE         : String  read GetIE         write SetIE;
     property IM         : String  read GetIM         write SetIM;
+  published
+    property ECF : TACBrComponent read fsECF write SetECF ;
 
-    property OnGravaArqINI : TACBrECFVirtualLeGravaINI read GetOnGravaArqINI
-      write SetOnGravaArqINI ;
-    property OnLeArqINI : TACBrECFVirtualLeGravaINI read GetOnLeArqINI
-      write SetOnLeArqINI ;
+    property QuandoGravarArqINI : TACBrECFVirtualLerGravarINI read GetQuandoGravarArqINI
+      write SetQuandoGravarArqINI ;
+    property QuandoLerArqINI : TACBrECFVirtualLerGravarINI read GetQuandoLerArqINI
+      write SetQuandoLerArqINI ;
 end ;
 
 { Classe filha de TACBrECFClass com implementaçao para Virtual }
@@ -218,15 +218,13 @@ end ;
 
 TACBrECFVirtualClass = class( TACBrECFClass )
   private
-    fpColunas: Integer;
-    fpDevice: TACBrDevice;
     // Não declare fpDevice ou fpColunas aqui... eles são protected em TACBrECFClass
     //fpDevice: TACBrDevice;
     //fpColunas: Integer;
 
     fsECFVirtualOwner: TACBrECFVirtual;
-    fsOnGravaArqINI: TACBrECFVirtualLeGravaINI;
-    fsOnLeArqINI: TACBrECFVirtualLeGravaINI;
+    fsQuandoGravarArqINI: TACBrECFVirtualLerGravarINI;
+    fsQuandoLerArqINI: TACBrECFVirtualLerGravarINI;
 
     procedure SetColunas(AValue: Integer);
     procedure SetNumCRO(AValue: Integer);
@@ -254,6 +252,7 @@ TACBrECFVirtualClass = class( TACBrECFClass )
     fpCOOFinal   : Integer ;
     fpNumCRO     : Integer ;
     fpNumCupom   : Integer ;
+    fpChaveCupom : String;
     fpNumGNF     : Integer ;
     fpNumGRG     : Integer ;
     fpNumCDC     : Integer ;
@@ -338,10 +337,10 @@ TACBrECFVirtualClass = class( TACBrECFClass )
     procedure LeArqINI ;
     procedure GravaArqINI ;
 
-    property OnGravaArqINI : TACBrECFVirtualLeGravaINI read fsOnGravaArqINI
-      write fsOnGravaArqINI ;
-    property OnLeArqINI    : TACBrECFVirtualLeGravaINI read fsOnLeArqINI
-      write fsOnLeArqINI ;
+    property QuandoGravarArqINI : TACBrECFVirtualLerGravarINI read fsQuandoGravarArqINI
+      write fsQuandoGravarArqINI ;
+    property QuandoLerArqINI    : TACBrECFVirtualLerGravarINI read fsQuandoLerArqINI
+      write fsQuandoLerArqINI ;
 
     property ECFVirtual : TACBrECFVirtual read fsECFVirtualOwner ;
     property Device     : TACBrDevice     read fpDevice write fpDevice;
@@ -355,6 +354,8 @@ TACBrECFVirtualClass = class( TACBrECFClass )
     property CNPJ       : String read  fpCNPJ        write fpCNPJ;
     property IE         : String read  fpIE          write fpIE;
     property IM         : String read  fpIM          write fpIM;
+
+    property ChaveCupom : String read fpChaveCupom   write fpChaveCupom;
 
     procedure Ativar ; override ;
     procedure Desativar ; override ;
@@ -720,14 +721,14 @@ begin
   Result := fpECFVirtualClass.NumSerie;
 end;
 
-function TACBrECFVirtual.GetOnGravaArqINI: TACBrECFVirtualLeGravaINI;
+function TACBrECFVirtual.GetQuandoGravarArqINI: TACBrECFVirtualLerGravarINI;
 begin
-  Result := fpECFVirtualClass.OnGravaArqINI;
+  Result := fpECFVirtualClass.QuandoGravarArqINI;
 end;
 
-function TACBrECFVirtual.GetOnLeArqINI: TACBrECFVirtualLeGravaINI;
+function TACBrECFVirtual.GetQuandoLerArqINI: TACBrECFVirtualLerGravarINI;
 begin
-  Result := fpECFVirtualClass.OnLeArqINI;
+  Result := fpECFVirtualClass.QuandoLerArqINI;
 end;
 
 procedure TACBrECFVirtual.SetCNPJ(AValue: String);
@@ -770,14 +771,14 @@ begin
   fpECFVirtualClass.NumSerie := AValue;
 end;
 
-procedure TACBrECFVirtual.SetOnGravaArqINI(AValue: TACBrECFVirtualLeGravaINI);
+procedure TACBrECFVirtual.SetQuandoGravarArqINI(AValue: TACBrECFVirtualLerGravarINI);
 begin
-  fpECFVirtualClass.OnGravaArqINI := AValue;
+  fpECFVirtualClass.QuandoGravarArqINI := AValue;
 end;
 
-procedure TACBrECFVirtual.SetOnLeArqINI(AValue: TACBrECFVirtualLeGravaINI);
+procedure TACBrECFVirtual.SetQuandoLerArqINI(AValue: TACBrECFVirtualLerGravarINI);
 begin
-  fpECFVirtualClass.OnLeArqINI := AValue;
+  fpECFVirtualClass.QuandoLerArqINI := AValue;
 end;
 
 procedure TACBrECFVirtual.LeArqINI;
@@ -838,6 +839,7 @@ begin
   fpCOOInicial := 0 ;
   fpCOOFinal   := 0 ;
   fpNumCupom   := 0 ;
+  fpChaveCupom := '';
   fpNumGNF     := 0 ;
   fpNumGRG     := 0 ;
   fpNumCDC     := 0 ;
@@ -1680,8 +1682,8 @@ begin
   Tratado := false;
   SL      := TStringList.Create() ;
   try
-    if Assigned( fsOnLeArqINI ) then
-      fsOnLeArqINI( SL, Tratado );
+    if Assigned( fsQuandoLerArqINI ) then
+      fsQuandoLerArqINI( SL, Tratado );
 
     if not Tratado then
     begin
@@ -1720,6 +1722,7 @@ begin
     fpEstado      := TACBrECFEstado( Ini.ReadInteger('Variaveis','Estado',
                                    Integer( fpEstado) ) ) ;
     fpNumCupom    := Ini.ReadInteger('Variaveis','NumCupom',fpNumCupom) ;
+    fpChaveCupom  := Ini.ReadString('Variaveis','ChaveCupom',fpChaveCupom) ;
     fpNumGNF      := Ini.ReadInteger('Variaveis','NumGNF',fpNumGNF) ;
     fpNumGRG      := Ini.ReadInteger('Variaveis','NumGRG',fpNumGRG) ;
     fpNumCDC      := Ini.ReadInteger('Variaveis','NumCDC',fpNumCDC) ;
@@ -1903,8 +1906,8 @@ begin
   try
     ClasstoINI( SL );
 
-    if Assigned( fsOnGravaArqINI ) then
-      fsOnGravaArqINI( SL, Tratado );
+    if Assigned( fsQuandoGravarArqINI ) then
+      fsQuandoGravarArqINI( SL, Tratado );
 
     if not Tratado then
       SL.SaveToFile( fpNomeArqINI );
@@ -1926,6 +1929,7 @@ begin
 
     Ini.WriteInteger('Variaveis','Estado',Integer( fpEstado) ) ;
     Ini.WriteInteger('Variaveis','NumCupom',fpNumCupom) ;
+    Ini.WriteString('Variaveis','ChaveCupom',fpChaveCupom) ;
     Ini.WriteInteger('Variaveis','NumGNF',fpNumGNF) ;
     Ini.WriteInteger('Variaveis','NumGRG',fpNumGRG) ;
     Ini.WriteInteger('Variaveis','NumCDC',fpNumCDC) ;
