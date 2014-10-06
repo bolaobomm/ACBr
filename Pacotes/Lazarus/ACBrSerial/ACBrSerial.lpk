@@ -29,7 +29,7 @@
     <License Value="LGPL
 "/>
     <Version Minor="9"/>
-    <Files Count="59">
+    <Files Count="60">
       <Item1>
         <Filename Value="..\..\..\Fontes\ACBrSerial\ACBrCHQ.pas"/>
         <UnitName Value="ACBrCHQ"/>
@@ -267,6 +267,10 @@
         <Filename Value="..\..\..\Fontes\ACBrSerial\ACBrECFVirtualNaoFiscal.pas"/>
         <UnitName Value="ACBrECFVirtualNaoFiscal"/>
       </Item59>
+      <Item60>
+        <Filename Value="..\..\..\Fontes\ACBrSerial\ACBrDISGertecTEC65lib.pas"/>
+        <UnitName Value="ACBrDISGertecTEC65lib"/>
+      </Item60>
     </Files>
     <Type Value="RunAndDesignTime"/>
     <RequiredPkgs Count="5">
