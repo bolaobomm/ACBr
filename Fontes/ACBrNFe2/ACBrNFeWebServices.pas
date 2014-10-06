@@ -3294,16 +3294,21 @@ end;
 function TNFeInutilizacao.Executar: Boolean;
 var
   NFeRetorno: TRetInutNFe;
-  aMsg, SoapAction: String;
+  aMsg, SoapAction, Servico: String;
   Texto : String;
   wProc  : TStringList ;
 begin
   inherited Executar;
 
+  if (FConfiguracoes.WebServices.UFCodigo in [29]) and (FConfiguracoes.Geral.VersaoDF = ve310) then // 29 = BA
+    Servico := 'NfeInutilizacao'
+  else
+    Servico := 'NfeInutilizacao2';
+
   Texto := '<?xml version="1.0" encoding="utf-8"?>';
   Texto := Texto + '<soap12:Envelope xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap12="http://www.w3.org/2003/05/soap-envelope">';
   Texto := Texto +   '<soap12:Header>';
-  Texto := Texto +     '<nfeCabecMsg xmlns="http://www.portalfiscal.inf.br/nfe/wsdl/NfeInutilizacao2">';
+  Texto := Texto +     '<nfeCabecMsg xmlns="http://www.portalfiscal.inf.br/nfe/wsdl/' + Servico + '">';
   Texto := Texto +       '<cUF>'+IntToStr(FConfiguracoes.WebServices.UFCodigo)+'</cUF>';
 
   Texto := Texto + '<versaoDados>' + GetVersaoNFe(FConfiguracoes.Geral.ModeloDF,
@@ -3314,13 +3319,13 @@ begin
   Texto := Texto +     '</nfeCabecMsg>';
   Texto := Texto +   '</soap12:Header>';
   Texto := Texto +   '<soap12:Body>';
-  Texto := Texto +     '<nfeDadosMsg xmlns="http://www.portalfiscal.inf.br/nfe/wsdl/NfeInutilizacao2">';
+  Texto := Texto +     '<nfeDadosMsg xmlns="http://www.portalfiscal.inf.br/nfe/wsdl/' + Servico + '">';
   Texto := Texto + FDadosMsg;
   Texto := Texto +     '</nfeDadosMsg>';
   Texto := Texto +   '</soap12:Body>';
   Texto := Texto +'</soap12:Envelope>';
 
-  SoapAction := 'http://www.portalfiscal.inf.br/nfe/wsdl/NfeInutilizacao2';
+  SoapAction := 'http://www.portalfiscal.inf.br/nfe/wsdl/' + Servico;
 
   NFeRetorno := TRetInutNFe.Create;
   try

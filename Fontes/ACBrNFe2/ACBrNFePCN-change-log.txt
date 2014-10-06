@@ -48,6 +48,13 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 
+06/10/2014
+----------
+[*] Colocado uma condição checando se a UF=29 e versão 3.10, caso afirmativo
+    o nome do metodo é NfeInutilizacao em vez de NfeInutilizacao2
+    Motivo da alteração: Rejeicao: Cabecalho - Versao do arquivo XML nao suportada
+    por: Italo Jurisato Junior
+
 03/10/2014
 ----------
 [*] Alterado a estrutura do envelope do metodo NFeDistribuicaoDFe
