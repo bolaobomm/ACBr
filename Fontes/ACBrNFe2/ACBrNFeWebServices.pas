@@ -3301,9 +3301,14 @@ begin
   inherited Executar;
 
   if (FConfiguracoes.WebServices.UFCodigo in [29]) and (FConfiguracoes.Geral.VersaoDF = ve310) then // 29 = BA
-    Servico := 'NfeInutilizacao'
+  begin
+    Servico := 'NfeInutilizacao';
+    SoapAction := 'http://www.portalfiscal.inf.br/nfe/wsdl/' + Servico + '/NfeInutilizacao';
+  end
   else
     Servico := 'NfeInutilizacao2';
+    SoapAction := 'http://www.portalfiscal.inf.br/nfe/wsdl/' + Servico;
+  end;
 
   Texto := '<?xml version="1.0" encoding="utf-8"?>';
   Texto := Texto + '<soap12:Envelope xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap12="http://www.w3.org/2003/05/soap-envelope">';
@@ -3324,8 +3329,6 @@ begin
   Texto := Texto +     '</nfeDadosMsg>';
   Texto := Texto +   '</soap12:Body>';
   Texto := Texto +'</soap12:Envelope>';
-
-  SoapAction := 'http://www.portalfiscal.inf.br/nfe/wsdl/' + Servico;
 
   NFeRetorno := TRetInutNFe.Create;
   try

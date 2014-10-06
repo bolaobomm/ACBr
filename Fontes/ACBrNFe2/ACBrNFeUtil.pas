@@ -706,7 +706,7 @@ begin
      end
      else begin
       case ALayOut of
-        LayNfeInutilizacao   : Result := DFeUtil.SeSenao(AAmbiente=1, 'https://nfe.sefaz.ba.gov.br/webservices/nfenw/NfeInutilizacao2.asmx',              'https://hnfe.sefaz.ba.gov.br/webservices/nfenw/NfeInutilizacao2.asmx');
+        LayNfeInutilizacao   : Result := DFeUtil.SeSenao(AAmbiente=1, 'https://nfe.sefaz.ba.gov.br/webservices/NfeInutilizacao/NfeInutilizacao.asmx',     'https://hnfe.sefaz.ba.gov.br/webservices/NfeInutilizacao/NfeInutilizacao.asmx');
         // Alterado por Italo em 07/07/2014
         LayNfeConsulta       : Result := DFeUtil.SeSenao(AAmbiente=1, 'https://nfe.sefaz.ba.gov.br/webservices/NfeConsulta/NfeConsulta.asmx',             'https://hnfe.sefaz.ba.gov.br/webservices/NfeConsulta/NfeConsulta.asmx');
         LayNfeCadastro       : Result := DFeUtil.SeSenao(AAmbiente=1, 'https://nfe.sefaz.ba.gov.br/webservices/nfenw/CadConsultaCadastro2.asmx',          'https://hnfe.sefaz.ba.gov.br/webservices/nfenw/CadConsultaCadastro2.asmx');
