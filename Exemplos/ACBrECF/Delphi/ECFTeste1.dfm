@@ -1,6 +1,6 @@
 object Form1: TForm1
-  Left = 396
-  Top = 223
+  Left = 382
+  Top = 218
   Width = 806
   Height = 447
   VertScrollBar.Range = 59
@@ -2327,6 +2327,7 @@ object Form1: TForm1
     end
   end
   object ACBrECF1: TACBrECF
+    QuebraLinhaRodape = False
     Porta = 'procurar'
     ReTentar = False
     DescricaoGrande = True
@@ -2407,14 +2408,15 @@ object Form1: TForm1
   end
   object ACBrECFVirtualNaoFiscal1: TACBrECFVirtualNaoFiscal
     ECF = ACBrECF1
+    QuandoGravarArqINI = ACBrECFVirtualNaoFiscal1GravaArqINI
+    QuandoLerArqINI = ACBrECFVirtualNaoFiscal1LeArqINI
+    ExibeAvisoLegal = True
     Colunas = 48
     NumECF = 1
     NumCRO = 1
     CNPJ = '01.234.567/0001-22'
     IE = '012.345.678.90'
     IM = '1234-0'
-    OnGravaArqINI = ACBrECFVirtualNaoFiscal1GravaArqINI
-    OnLeArqINI = ACBrECFVirtualNaoFiscal1LeArqINI
     CmdImpCondensado = '#15'
     CmdImpExpandidoUmaLinha = '#14'
     CmdImpFimExpandido = '#35,#50,#48'
@@ -2433,7 +2435,6 @@ object Form1: TForm1
     MascaraItem = 
       'III CCCCCCCCCCCCC DDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDD QQQQQQQQ U' +
       'UxVVVVVVVVV AAAAAAA TTTTTTTTTTT'
-    ExibeAvisoLegal = True
     Left = 412
     Top = 88
   end
