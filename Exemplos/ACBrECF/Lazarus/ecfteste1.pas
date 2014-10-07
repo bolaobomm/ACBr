@@ -1,4 +1,4 @@
-unit ECFTeste1;
+Unit ECFTeste1;
 
 {$mode objfpc}{$H+}
 
@@ -9,8 +9,8 @@ uses
   ACBrAAC, ACBrConsts, ACBrGIF, LCLIntf, Classes, SysUtils, Forms, Controls,
   Graphics, LCLType, Dialogs, DateUtils, IpHtml, Menus, Buttons, StdCtrls,
   ExtCtrls, ComCtrls, Spin, EditBtn, DBGrids, DbCtrls, memds, db, IniFiles,
-  ACBrECFVirtual, ACBrECFVirtualSAT, ACBrSAT, ACBrSATClass,
-  ACBrSATExtratoFortesFr;
+  ACBrECFVirtualSAT, ACBrSAT, ACBrSATClass,
+  ACBrSATExtratoFortesFr, ACBrSATExtratoESCPOS, pcnCFe;
 
 type
   TSimpleIpHtml = class(TIpHtml)
@@ -33,6 +33,7 @@ type
     ACBrGIF1: TACBrGIF;
     ACBrRFD1: TACBrRFD;
     ACBrSAT1: TACBrSAT;
+    ACBrSATExtratoESCPOS1: TACBrSATExtratoESCPOS;
     ACBrSATExtratoFortes1: TACBrSATExtratoFortes;
     Aliquotas1: TMenuItem;
     AliquotasICMS1: TMenuItem;
@@ -41,6 +42,7 @@ type
     bAtivar: TBitBtn;
     bBobinaLimpar: TButton;
     bBobinaParams: TButton;
+    bImpressora: TButton;
     BitBtn6 : TBitBtn ;
     bRFDLer: TButton;
     bRFDSalvar: TButton;
@@ -63,6 +65,7 @@ type
     bACCVerificarGT : TButton ;
     bAACAtualizarGT : TButton ;
     btnMenuFiscalParametrosConfig: TButton;
+    btSerial1: TBitBtn;
     Button1 : TButton ;
     Button2: TButton;
     CancelaCupom1: TMenuItem;
@@ -74,8 +77,20 @@ type
     CarregaComprovantesNAOFiscais1: TMenuItem;
     CarregaUnidadesdeMedida1: TMenuItem;
     cbMemoHTML: TCheckBox;
+    cbPreview: TCheckBox;
+    cbUsarEscPos: TRadioButton;
+    cbUsarFortes: TRadioButton;
+    cbxAmbiente: TComboBox;
+    cbxFormatXML: TCheckBox;
+    cbxIndRatISSQN: TComboBox;
     cbxModelo: TComboBox;
+    cbxECFVirtual: TComboBox;
+    cbxModeloSAT: TComboBox;
     cbxPorta: TComboBox;
+    cbxRegTribISSQN: TComboBox;
+    cbxRegTributario: TComboBox;
+    cbxSalvarCFe: TCheckBox;
+    cbxUTF8: TCheckBox;
     chAACFlush : TCheckBox ;
     chCupomMania: TCheckBox;
     chIgnorarTagsFormatacao : TCheckBox ;
@@ -120,9 +135,71 @@ type
     edAAC_ECF_GT : TDBEdit ;
     edAAC_SH_RazaoSocial : TEdit ;
     edInfo: TEdit;
+    edLog1: TEdit;
+    edNomeDLL: TEdit;
+    edtCodigoAtivacao: TEdit;
+    edtCodUF: TEdit;
+    edtEmitCNPJ: TEdit;
+    edtEmitIE: TEdit;
+    edtEmitIM: TEdit;
+    edtPorta: TEdit;
+    edtSwHAssinatura: TEdit;
+    edtSwHCNPJ: TEdit;
+    GroupBox3: TGroupBox;
+    GroupBox4: TGroupBox;
+    Impressao: TTabSheet;
+    Label47: TLabel;
+    Label48: TLabel;
+    Label49: TLabel;
+    Label50: TLabel;
+    Label51: TLabel;
+    Label52: TLabel;
+    Label53: TLabel;
+    Label54: TLabel;
+    Label55: TLabel;
+    Label56: TLabel;
+    Label57: TLabel;
+    Label58: TLabel;
+    Label59: TLabel;
+    Label60: TLabel;
+    Label61: TLabel;
+    Label62: TLabel;
+    Label63: TLabel;
+    Label64: TLabel;
+    Label65: TLabel;
+    Label66: TLabel;
+    Label67: TLabel;
+    Label68: TLabel;
+    Label69: TLabel;
+    Label70: TLabel;
+    lImpressora: TLabel;
     MenuItem31: TMenuItem;
     mDataHoraUltimaReducaoZ : TMenuItem ;
+    mConsultarStatusSAT: TMenuItem;
+    mConsultarSAT: TMenuItem;
+    mConsultarSessaoSAT: TMenuItem;
+    MenuItem32: TMenuItem;
+    MenuItem33: TMenuItem;
+    MenuItem34: TMenuItem;
+    MenuItem35: TMenuItem;
+    MenuItem36: TMenuItem;
+    MenuItem37: TMenuItem;
+    MenuItem38: TMenuItem;
+    MenuItem39: TMenuItem;
+    MenuItem40: TMenuItem;
+    MenuItem41: TMenuItem;
+    mSAT: TMenuItem;
     mTotalTroco: TMenuItem;
+    OpenDialog1: TOpenDialog;
+    PageControl3: TPageControl;
+    SbArqLog1: TSpeedButton;
+    seLargura: TSpinEdit;
+    seMargemDireita: TSpinEdit;
+    seMargemEsquerda: TSpinEdit;
+    seMargemFundo: TSpinEdit;
+    seMargemTopo: TSpinEdit;
+    seNumeroCaixa: TSpinEdit;
+    sePagCod: TSpinEdit;
     sePaginaCodigo: TSpinEdit;
     edtDtInicial : TDateEdit ;
     edtDtFinal : TDateEdit ;
@@ -300,12 +377,17 @@ type
     seDecimaisQTD : TSpinEdit ;
     seDecimaisPreco : TSpinEdit ;
     seMaxLinhasBuffer : TSpinEdit ;
+    sfeVersaoEnt: TFloatSpinEdit;
     speBarrasAltura : TSpinEdit ;
     speBarrasLargura : TSpinEdit ;
+    tsSAT: TTabSheet;
     tsAACParams : TTabSheet ;
     tsAACECFs : TTabSheet ;
     tsAACDados : TTabSheet ;
     tsArqAuxCript : TTabSheet ;
+    tsDadosEmit: TTabSheet;
+    tsDadosSAT: TTabSheet;
+    tsDadosSwHouse: TTabSheet;
     tsMenuFiscal : TTabSheet ;
     tbsMenuFiscalTipoCOO : TTabSheet ;
     tbsMenuFiscalTipoData : TTabSheet ;
@@ -348,7 +430,6 @@ type
     mResp: TMemo;
     mRFDParam: TMemo;
     MudaArredondamento1: TMenuItem;
-    N1: TMenuItem;
     N10: TMenuItem;
     N11: TMenuItem;
     N12: TMenuItem;
@@ -420,7 +501,7 @@ type
     TabSheet1: TTabSheet;
     TabSheet2: TTabSheet;
     TabSheet3: TTabSheet;
-    TabSheet4: TTabSheet;
+    tsECF: TTabSheet;
     TabSheet5: TTabSheet;
     TabSheet6: TTabSheet;
     Termica1: TMenuItem;
@@ -438,12 +519,20 @@ type
     procedure ACBrAAC1AntesAbrirArquivo(var Continua : Boolean) ;
     procedure ACBrAAC1DepoisAbrirArquivo(Sender : TObject) ;
     procedure ACBrAAC1GetChave(var Chave : AnsiString) ;
-    procedure ACBrECFVirtualNaoFiscal1GravaArqINI(ConteudoINI: TStrings;
+    procedure ACBrECFVirtualNaoFiscal1QuandoGravarArqINI(ConteudoINI: TStrings;
       var Tratado: Boolean);
-    procedure ACBrECFVirtualNaoFiscal1LeArqINI(ConteudoINI: TStrings;
+    procedure ACBrECFVirtualNaoFiscal1QuandoLerArqINI(ConteudoINI: TStrings;
       var Tratado: Boolean);
+    procedure ACBrECFVirtualSAT1QuandoAbrirDocumento(CFe: TCFe);
+    procedure ACBrECFVirtualSAT1QuandoEfetuarPagamento(Det: TMPCollectionItem);
+    procedure ACBrECFVirtualSAT1QuandoGravarArqINI(ConteudoINI: TStrings;
+      var Tratado: Boolean);
+    procedure ACBrECFVirtualSAT1QuandoLerArqINI(ConteudoINI: TStrings;
+      var Tratado: Boolean);
+    procedure ACBrECFVirtualSAT1QuandoVenderItem(Det: TDetCollectionItem);
     procedure ACBrSAT1GetcodigoDeAtivacao(var Chave: AnsiString);
     procedure ACBrSAT1GetsignAC(var Chave: AnsiString);
+    procedure ACBrSAT1Log(const AString: String);
     procedure bAACAtualizarGTClick(Sender : TObject) ;
     procedure bAACGravarArquivoClick(Sender : TObject) ;
     procedure bAACAbrirArquivoClick(Sender : TObject) ;
@@ -463,8 +552,15 @@ type
     procedure btnMenuFiscalRelIdentPAFECFClick(Sender : TObject) ;
     procedure btnMenuFiscalRelMeiosPagtoClick(Sender : TObject) ;
     procedure btnMenuFiscalParametrosConfigClick(Sender: TObject);
+    procedure btSerial1Click(Sender: TObject);
     procedure Button1Click(Sender : TObject) ;
     procedure Button2Click(Sender: TObject);
+    procedure cbUsarEscPosChange(Sender: TObject);
+    procedure cbUsarFortesChange(Sender: TObject);
+    procedure cbxECFVirtualChange(Sender: TObject);
+    procedure cbxModeloSATChange(Sender: TObject);
+    procedure cbxSalvarCFeChange(Sender: TObject);
+    procedure cbxUTF8Change(Sender: TObject);
     procedure chAACFlushChange(Sender : TObject) ;
     procedure chAACUsarChange(Sender : TObject) ;
     procedure cbxModeloChange(Sender: TObject);
@@ -492,6 +588,9 @@ type
     procedure mARQMFDDLLCooClick(Sender : TObject) ;
     procedure mARQMFDDLLPeriodoClick(Sender : TObject) ;
     procedure mCancNaoFiscalClick(Sender : TObject) ;
+    procedure mConsultarSATClick(Sender: TObject);
+    procedure mConsultarSessaoSATClick(Sender: TObject);
+    procedure mConsultarStatusSATClick(Sender: TObject);
     procedure mDataHoraUltimaReducaoZClick(Sender : TObject) ;
     procedure mDAVClick(Sender: TObject);
     procedure mDAVOSClick(Sender: TObject);
@@ -503,6 +602,12 @@ type
     procedure MenuItem29Click(Sender: TObject);
     procedure MenuItem30Click(Sender: TObject);
     procedure MenuItem31Click(Sender: TObject);
+    procedure MenuItem33Click(Sender: TObject);
+    procedure MenuItem34Click(Sender: TObject);
+    procedure MenuItem35Click(Sender: TObject);
+    procedure MenuItem38Click(Sender: TObject);
+    procedure MenuItem39Click(Sender: TObject);
+    procedure MenuItem40Click(Sender: TObject);
     procedure miTesteArredondamentoClick(Sender: TObject);
     procedure miEstornoCCDClick(Sender : TObject) ;
     procedure miLeituraCMC7Click(Sender: TObject);
@@ -562,7 +667,9 @@ type
     procedure seDecimaisQTDChange(Sender : TObject) ;
     procedure seMaxLinhasBufferChange(Sender : TObject) ;
     procedure seBandWidthChange(Sender : TObject) ;
+    procedure sePagCodChange(Sender: TObject);
     procedure sePaginaCodigoChange(Sender: TObject);
+    procedure sfeVersaoEntChange(Sender: TObject);
     procedure speBarrasAlturaChange(Sender: TObject);
     procedure speBarrasLarguraChange(Sender: TObject);
     procedure Testar1Click(Sender: TObject);
@@ -683,6 +790,8 @@ type
   private
     { Private declarations }
     Function Converte( cmd : String) : String;
+    procedure AjustaACBrSAT;
+    procedure PrepararImpressao;
     procedure TrataErros(Sender: TObject; E: Exception);
     function EstadoECF: String;
     Procedure GravarINI ;
@@ -712,17 +821,44 @@ implementation
 {$R *.lfm}
 
 uses ACBrUtil, ACBrECFBematech, VendeItem, EfetuaPagamento,
-     Relatorio, Sobre, Math, strutils,
-     ConfiguraSerial, uDAV, uDAVOS, ACBrPAFClass, typinfo;
+     Relatorio, Sobre, Math, strutils, Printers,
+     ConfiguraSerial, uDAV, uDAVOS, ACBrPAFClass, typinfo, pcnConversao;
      
 procedure TForm1.FormCreate(Sender: TObject);
 Var
   I: TACBrECFModelo ;
   AppDir: String ;
+  N: TACBrSATModelo;
+  J: TpcnTipoAmbiente;
+  K: TpcnRegTribISSQN;
+  L: TpcnindRatISSQN;
+  M: TpcnRegTrib;
 begin
   cbxModelo.Items.Clear ;
   For I := Low(TACBrECFModelo) to High(TACBrECFModelo) do
      cbxModelo.Items.Add( GetEnumName(TypeInfo(TACBrECFModelo), integer(I) ) ) ;
+
+  cbxModeloSAT.Items.Clear ;
+  For N := Low(TACBrSATModelo) to High(TACBrSATModelo) do
+     cbxModeloSAT.Items.Add( GetEnumName(TypeInfo(TACBrSATModelo), integer(N) ) ) ;
+
+  cbxAmbiente.Items.Clear ;
+  For J := Low(TpcnTipoAmbiente) to High(TpcnTipoAmbiente) do
+     cbxAmbiente.Items.Add( GetEnumName(TypeInfo(TpcnTipoAmbiente), integer(J) ) ) ;
+
+  cbxRegTribISSQN.Items.Clear ;
+  For K := Low(TpcnRegTribISSQN) to High(TpcnRegTribISSQN) do
+     cbxRegTribISSQN.Items.Add( GetEnumName(TypeInfo(TpcnRegTribISSQN), integer(K) ) ) ;
+
+  cbxIndRatISSQN.Items.Clear ;
+  For L := Low(TpcnindRatISSQN) to High(TpcnindRatISSQN) do
+     cbxIndRatISSQN.Items.Add( GetEnumName(TypeInfo(TpcnindRatISSQN), integer(L) ) ) ;
+
+  cbxRegTributario.Items.Clear ;
+  For M := Low(TpcnRegTrib) to High(TpcnRegTrib) do
+     cbxRegTributario.Items.Add( GetEnumName(TypeInfo(TpcnRegTrib), integer(M) ) ) ;
+
+
   cbxModelo.Items[0] := 'Procurar' ;
   cbxModelo.ItemIndex := 0 ;
 
@@ -835,6 +971,7 @@ procedure TForm1.cbxModeloChange(Sender: TObject);
 begin
   try
      ACBrECF1.Modelo := TACBrECFModelo( cbxModelo.ItemIndex ) ;
+     cbxECFVirtual.Enabled := (ACBrECF1.Modelo = ecfECFVirtual);
   except
      cbxModelo.ItemIndex := Integer( ACBrECF1.Modelo ) ;
      raise ;
@@ -1302,6 +1439,25 @@ begin
 
 end;
 
+procedure TForm1.btSerial1Click(Sender: TObject);
+begin
+  frConfiguraSerial := TfrConfiguraSerial.Create(self);
+
+  try
+    frConfiguraSerial.Device.Porta        := ACBrSATExtratoESCPOS1.Device.Porta ;
+    frConfiguraSerial.cmbPortaSerial.Text := edtPorta.Text ;
+    frConfiguraSerial.Device.ParamsString := ACBrSATExtratoESCPOS1.Device.ParamsString ;
+
+    if frConfiguraSerial.ShowModal = mrOk then
+    begin
+       edtPorta.Text := frConfiguraSerial.Device.Porta ;
+       ACBrSATExtratoESCPOS1.Device.ParamsString := frConfiguraSerial.Device.ParamsString ;
+    end ;
+  finally
+     FreeAndNil( frConfiguraSerial ) ;
+  end ;
+end;
+
 procedure TForm1.Button1Click(Sender : TObject) ;
 //var
 //  I: Extended;
@@ -1329,6 +1485,57 @@ begin
     Str := Str + chr(A);
 
   ACBrECF1.LinhaRelatorioGerencial( Str );
+end;
+
+procedure TForm1.cbUsarEscPosChange(Sender: TObject);
+begin
+  cbUsarFortes.Checked := False;
+  ACBrSAT1.Extrato := ACBrSATExtratoESCPOS1;
+end;
+
+procedure TForm1.cbUsarFortesChange(Sender: TObject);
+begin
+  cbUsarEscPos.Checked := False;
+  ACBrSAT1.Extrato := ACBrSATExtratoFortes1
+end;
+
+procedure TForm1.cbxECFVirtualChange(Sender: TObject);
+begin
+  if ACBrECF1.Ativo then
+    bAtivar.Click;
+
+  if cbxECFVirtual.ItemIndex = 1 then
+  begin
+    ACBrECF1.ECFVirtual := ACBrECFVirtualSAT1
+  end
+  else if cbxECFVirtual.ItemIndex = 2 then
+  begin
+    MessageDlg('Erro','Modelo ACBrECFVirtualNFCe ainda não foi desenvolvido',mtError,[mbOK],0) ;
+    cbxECFVirtual.ItemIndex := 0;
+  end
+  else
+    ACBrECF1.ECFVirtual := ACBrECFVirtualNaoFiscal1;
+end;
+
+procedure TForm1.cbxModeloSATChange(Sender: TObject);
+begin
+  try
+    ACBrSAT1.Modelo := TACBrSATModelo( cbxModeloSAT.ItemIndex ) ;
+  except
+    cbxModeloSAT.ItemIndex := Integer( ACBrSAT1.Modelo ) ;
+    raise ;
+  end ;
+end;
+
+procedure TForm1.cbxSalvarCFeChange(Sender: TObject);
+begin
+  ACBrSAT1.SalvarCFes := cbxSalvarCFe.Checked;
+end;
+
+procedure TForm1.cbxUTF8Change(Sender: TObject);
+begin
+  ACBrSAT1.Config.EhUTF8 := cbxUTF8.Checked;
+  sePagCod.Value := ACBrSAT1.Config.PaginaDeCodigo;
 end;
 
 procedure TForm1.chAACFlushChange(Sender : TObject) ;
@@ -1421,26 +1628,61 @@ begin
    // Use Chr(nn) ou outra função para compor a chave
 end;
 
-procedure TForm1.ACBrECFVirtualNaoFiscal1GravaArqINI(ConteudoINI: TStrings;
-  var Tratado: Boolean);
+procedure TForm1.ACBrECFVirtualNaoFiscal1QuandoGravarArqINI(
+  ConteudoINI: TStrings; var Tratado: Boolean);
 begin
-  mResp.Lines.Add( 'INI SERÁ GRAVADO' );
+  mResp.Lines.Add( 'ECFVirtualNaoFiscal: INI será gravado' );
 end;
 
-procedure TForm1.ACBrECFVirtualNaoFiscal1LeArqINI(ConteudoINI: TStrings;
+procedure TForm1.ACBrECFVirtualNaoFiscal1QuandoLerArqINI(ConteudoINI: TStrings;
   var Tratado: Boolean);
 begin
-  mResp.Lines.Add( 'INI SERÁ LIDO'  );
+  mResp.Lines.Add( 'ECFVirtualNaoFiscal: INI será lido'  );
+end;
+
+procedure TForm1.ACBrECFVirtualSAT1QuandoAbrirDocumento(CFe: TCFe);
+begin
+  mResp.Lines.Add( 'ECFVirtualSAT: Documento Aberto'  );
+end;
+
+procedure TForm1.ACBrECFVirtualSAT1QuandoEfetuarPagamento(Det: TMPCollectionItem
+  );
+begin
+  mResp.Lines.Add( 'ECFVirtualSAT: Pagamento efetuado'  );
+end;
+
+procedure TForm1.ACBrECFVirtualSAT1QuandoGravarArqINI(ConteudoINI: TStrings;
+  var Tratado: Boolean);
+begin
+  mResp.Lines.Add( 'ECFVirtualSAT: INI será gravado'  );
+end;
+
+procedure TForm1.ACBrECFVirtualSAT1QuandoLerArqINI(ConteudoINI: TStrings;
+  var Tratado: Boolean);
+begin
+  mResp.Lines.Add( 'ECFVirtualSAT: INI será lido'  );
+  if not ACBrSAT1.Inicializado then
+     AjustaACBrSAT;
+end;
+
+procedure TForm1.ACBrECFVirtualSAT1QuandoVenderItem(Det: TDetCollectionItem);
+begin
+  mResp.Lines.Add( 'ECFVirtualSAT: Item Vendido'  );
 end;
 
 procedure TForm1.ACBrSAT1GetcodigoDeAtivacao(var Chave: AnsiString);
 begin
-  Chave := '99999999';
+  Chave := AnsiString( edtCodigoAtivacao.Text );
 end;
 
 procedure TForm1.ACBrSAT1GetsignAC(var Chave: AnsiString);
 begin
-  Chave := 'EAD9EABF09FFD24FDAC9800624BB1709EBE97691D008E8177024BB6A8F88C37593D2FAB15270CF73ED235B4B6FF16FBA7D55E79E340C9FC5DF5C49FAE42712F8309D4E832342834DB6D7C42BB0AE56D597B7F21AD54800F825A43ACC5288C9FFAD9CEA37430B6ED87D520B96775625AD7C3BC27BE55151476692583096280B62660AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA';
+  Chave := AnsiString( edtSwHAssinatura.Text );
+end;
+
+procedure TForm1.ACBrSAT1Log(const AString: String);
+begin
+  mResp.Lines.Add(AString);
 end;
 
 procedure TForm1.bAACAtualizarGTClick(Sender : TObject) ;
@@ -1869,6 +2111,33 @@ begin
   AtualizaMemos ;
 end;
 
+procedure TForm1.mConsultarSATClick(Sender: TObject);
+begin
+  ACBrSAT1.ConsultarSAT;
+end;
+
+procedure TForm1.mConsultarSessaoSATClick(Sender: TObject);
+Var
+  strSessao: String ;
+  nSessao : Integer ;
+begin
+  strSessao := '';
+  if not InputQuery('Consultar Número de Sessão',
+                    'Entre com o Número de Sessão a ser consultada:', strSessao ) then
+    Exit;
+
+  nSessao := StrToIntDef(strSessao, 0);
+  if nSessao <= 0 then
+    raise Exception.Create('Numero de sessão informado é inválido') ;
+
+  ACBrSAT1.ConsultarNumeroSessao( nSessao );
+end;
+
+procedure TForm1.mConsultarStatusSATClick(Sender: TObject);
+begin
+  ACBrSAT1.ConsultarStatusOperacional;
+end;
+
 procedure TForm1.mDataHoraUltimaReducaoZClick(Sender : TObject) ;
 begin
   mResp.Lines.Add( 'Data/Hora Última Redução Z: ('+ FormatDateTime('dd/mm/yy hh:nn:ss',
@@ -1945,6 +2214,38 @@ procedure TForm1.MenuItem31Click(Sender: TObject);
 begin
   mResp.Lines.Add( 'Colunas: ( '+ IntToStr(ACBrECF1.Colunas)+' )' );
   AtualizaMemos ;
+end;
+
+procedure TForm1.MenuItem33Click(Sender: TObject);
+begin
+  ACBrSAT1.ImprimirExtrato;
+end;
+
+procedure TForm1.MenuItem34Click(Sender: TObject);
+begin
+  ACBrSAT1.ImprimirExtratoResumido;
+end;
+
+procedure TForm1.MenuItem35Click(Sender: TObject);
+begin
+  ACBrSAT1.ImprimirExtratoCancelamento;
+end;
+
+procedure TForm1.MenuItem38Click(Sender: TObject);
+begin
+  OpenDialog1.Filter := 'Arquivo CFe|CFe*.xml';
+  if OpenDialog1.Execute then
+    ACBrSAT1.CFe.LoadFromFile( OpenDialog1.FileName );
+end;
+
+procedure TForm1.MenuItem39Click(Sender: TObject);
+begin
+  GravarINI;
+end;
+
+procedure TForm1.MenuItem40Click(Sender: TObject);
+begin
+  LerINI;
 end;
 
 procedure TForm1.miTesteArredondamentoClick(Sender: TObject);
@@ -2647,9 +2948,20 @@ begin
   ACBrECF1.Device.MaxBandwidth := seBandWidth.Value ;
 end;
 
+procedure TForm1.sePagCodChange(Sender: TObject);
+begin
+  ACBrSAT1.Config.PaginaDeCodigo := sePagCod.Value;
+  cbxUTF8.Checked := ACBrSAT1.Config.EhUTF8;
+end;
+
 procedure TForm1.sePaginaCodigoChange(Sender: TObject);
 begin
    ACBrECF1.PaginaDeCodigo := sePaginaCodigo.Value;
+end;
+
+procedure TForm1.sfeVersaoEntChange(Sender: TObject);
+begin
+  ACBrSAT1.Config.infCFe_versaoDadosEnt := sfeVersaoEnt.Value;
 end;
 
 procedure TForm1.speBarrasAlturaChange(Sender: TObject);
@@ -4186,6 +4498,7 @@ begin
   INI := TIniFile.Create(ArqINI);
   try
      INI.WriteInteger('ECF','Modelo',cbxModelo.ItemIndex);
+     INI.WriteInteger('ECF','Virtual',cbxECFVirtual.ItemIndex);
      INI.WriteString('ECF','Porta',cbxPorta.Text);
      INI.WriteInteger('ECF','TimeOut',seTimeOut.Value);
      INI.WriteInteger('ECF','IntervaloAposComando',seIntervaloAposComando.Value);
@@ -4219,6 +4532,41 @@ begin
      INI.WriteBool('AAC','GerarAAC',chAACUsar.Checked);
      INI.WriteString('AAC','NomeArquivo',edAACNomeArq.Text);
      INI.WriteString('AAC','ArqLog',edAACLog.Text);
+
+     INI.WriteInteger('SAT','Modelo',cbxModeloSAT.ItemIndex);
+     INI.WriteString('SAT','ArqLog',edLog.Text);
+     INI.WriteString('SAT','NomeDLL',edNomeDLL.Text);
+     INI.WriteString('SAT','CodigoAtivacao',edtCodigoAtivacao.Text);
+     INI.WriteString('SAT','CodigoUF',edtCodUF.Text);
+     INI.WriteInteger('SAT','NumeroCaixa',seNumeroCaixa.Value);
+     INI.WriteInteger('SAT','Ambiente',cbxAmbiente.ItemIndex);
+     INI.WriteInteger('SAT','PaginaDeCodigo',sePagCod.Value);
+     INI.WriteFloat('SAT','versaoDadosEnt',sfeVersaoEnt.Value);
+     INI.WriteBool('SAT','FormatarXML', cbxFormatXML.Checked);
+     INI.ReadBool('SAT','SalvarCFe', cbxSalvarCFe.Checked);
+
+     INI.WriteString('Extrato','Porta',edtPorta.Text);
+     INI.WriteString('Extrato','ParamsString',ACBrSATExtratoESCPOS1.Device.ParamsString);
+
+     INI.WriteString('Emit','CNPJ',edtEmitCNPJ.Text);
+     INI.WriteString('Emit','IE',edtEmitIE.Text);
+     INI.WriteString('Emit','IM',edtEmitIM.Text);
+     INI.WriteInteger('Emit','RegTributario',cbxRegTributario.ItemIndex);
+     INI.WriteInteger('Emit','RegTribISSQN',cbxRegTribISSQN.ItemIndex);
+     INI.WriteInteger('Emit','IndRatISSQN',cbxIndRatISSQN.ItemIndex);
+
+     INI.WriteString('SwH','CNPJ',edtSwHCNPJ.Text);
+     INI.WriteString('SwH','Assinatura',edtSwHAssinatura.Text);
+
+     INI.WriteBool('Fortes','UsarFortes',cbUsarFortes.Checked) ;
+     INI.WriteInteger('Fortes','Largura',seLargura.Value);
+     INI.WriteInteger('Fortes','MargemTopo',seMargemTopo.Value);
+     INI.WriteInteger('Fortes','MargemFundo',seMargemFundo.Value);
+     INI.WriteInteger('Fortes','MargemEsquerda',seMargemEsquerda.Value);
+     INI.WriteInteger('Fortes','MargemDireita',seMargemDireita.Value);
+     INI.WriteBool('Fortes','Preview',cbPreview.Checked);
+
+     INI.WriteString('Printer','Name',Printer.PrinterName);
   finally
      INI.Free ;
   end ;
@@ -4234,6 +4582,8 @@ begin
   try
      cbxModelo.ItemIndex := INI.ReadInteger('ECF','Modelo',cbxModelo.ItemIndex);
      cbxModeloChange(nil);
+     cbxECFVirtual.ItemIndex := INI.ReadInteger('ECF','Virtual',0);
+     cbxECFVirtualChange(nil);
      cbxPorta.Text := INI.ReadString('ECF','Porta',cbxPorta.Text);
      seTimeOut.Value := INI.ReadInteger('ECF','TimeOut',seTimeOut.Value);
      seIntervaloAposComando.Value := INI.ReadInteger('ECF','IntervaloAposComando',seIntervaloAposComando.Value);
@@ -4267,6 +4617,43 @@ begin
      chAACUsar.Checked := INI.ReadBool('AAC','GerarAAC',False);
      edAACNomeArq.Text := INI.ReadString('AAC','NomeArquivo',edAACNomeArq.Text);
      edAACLog.Text     := INI.ReadString('AAC','ArqLog',edAACLog.Text);
+
+     cbxModeloSAT.ItemIndex := INI.ReadInteger('SAT','Modelo',0);
+     edLog.Text             := INI.ReadString('SAT','ArqLog','ACBrSAT.log');
+     edNomeDLL.Text         := INI.ReadString('SAT','NomeDLL','C:\SAT\SAT.DLL');
+     edtCodigoAtivacao.Text := INI.ReadString('SAT','CodigoAtivacao','123456');
+     edtCodUF.Text          := INI.ReadString('SAT','CodigoUF','35');
+     seNumeroCaixa.Value    := INI.ReadInteger('SAT','NumeroCaixa',1);
+     cbxAmbiente.ItemIndex  := INI.ReadInteger('SAT','Ambiente',1);
+     sePagCod.Value         := INI.ReadInteger('SAT','PaginaDeCodigo',0);
+     sfeVersaoEnt.Value     := INI.ReadFloat('SAT','versaoDadosEnt', cversaoDadosEnt);
+     cbxFormatXML.Checked   := INI.ReadBool('SAT','FormatarXML', True);
+     cbxSalvarCFe.Checked   := INI.ReadBool('SAT','SalvarCFe', True);
+     sePagCodChange(self);
+
+     edtPorta.Text := INI.ReadString('Extrato','Porta','COM1');
+     ACBrSATExtratoESCPOS1.Device.ParamsString := INI.ReadString('Extrato','ParamsString','');
+
+     edtEmitCNPJ.Text := INI.ReadString('Emit','CNPJ','');
+     edtEmitIE.Text   := INI.ReadString('Emit','IE','');
+     edtEmitIM.Text   := INI.ReadString('Emit','IM','');
+     cbxRegTributario.ItemIndex := INI.ReadInteger('Emit','RegTributario',0);
+     cbxRegTribISSQN.ItemIndex  := INI.ReadInteger('Emit','RegTribISSQN',0);
+     cbxIndRatISSQN.ItemIndex   := INI.ReadInteger('Emit','IndRatISSQN',0);
+
+     edtSwHCNPJ.Text       := INI.ReadString('SwH','CNPJ','11111111111111');
+     edtSwHAssinatura.Text := INI.ReadString('SwH','Assinatura','');
+
+     cbUsarFortes.Checked   := INI.ReadBool('Fortes','UsarFortes', True) ;
+     cbUsarEscPos.Checked   := not cbUsarFortes.Checked;
+     seLargura.Value        := INI.ReadInteger('Fortes','Largura',ACBrSATExtratoFortes1.LarguraBobina);
+     seMargemTopo.Value     := INI.ReadInteger('Fortes','MargemTopo',ACBrSATExtratoFortes1.Margens.Topo);
+     seMargemFundo.Value    := INI.ReadInteger('Fortes','MargemFundo',ACBrSATExtratoFortes1.Margens.Fundo);
+     seMargemEsquerda.Value := INI.ReadInteger('Fortes','MargemEsquerda',ACBrSATExtratoFortes1.Margens.Esquerda);
+     seMargemDireita.Value  := INI.ReadInteger('Fortes','MargemDireita',ACBrSATExtratoFortes1.Margens.Direita);
+     cbPreview.Checked      := INI.ReadBool('Fortes','Preview',True);
+
+     lImpressora.Caption := INI.ReadString('Printer','Name',Printer.PrinterName);
   finally
      INI.Free ;
   end ;
@@ -4359,7 +4746,6 @@ end;
 procedure TForm1.btSerialClick(Sender: TObject);
   Var frConfiguraSerial : TfrConfiguraSerial ;
 begin
-
   frConfiguraSerial := TfrConfiguraSerial.Create(self);
 
   try
@@ -4375,6 +4761,56 @@ begin
   finally
      FreeAndNil( frConfiguraSerial ) ;
   end ;
+end;
+
+procedure TForm1.AjustaACBrSAT ;
+begin
+  with ACBrSAT1 do
+  begin
+    Modelo  := TACBrSATModelo( cbxModeloSAT.ItemIndex ) ;
+    ArqLOG  := edLog.Text;
+    NomeDLL := edNomeDLL.Text;
+    Config.ide_numeroCaixa := seNumeroCaixa.Value;
+    Config.ide_tpAmb       := TpcnTipoAmbiente( cbxAmbiente.ItemIndex );
+    Config.ide_CNPJ        := edtSwHCNPJ.Text;
+    Config.emit_CNPJ       := edtEmitCNPJ.Text;
+    Config.emit_IE         := edtEmitIE.Text;
+    Config.emit_IM         := edtEmitIM.Text;
+    Config.emit_cRegTrib      := TpcnRegTrib( cbxRegTributario.ItemIndex ) ;
+    Config.emit_cRegTribISSQN := TpcnRegTribISSQN( cbxRegTribISSQN.ItemIndex ) ;
+    Config.emit_indRatISSQN   := TpcnindRatISSQN( cbxIndRatISSQN.ItemIndex ) ;
+    Config.PaginaDeCodigo     := sePagCod.Value;
+    Config.EhUTF8             := cbxUTF8.Checked;
+    Config.infCFe_versaoDadosEnt := sfeVersaoEnt.Value;
+    SalvarCFes := cbxSalvarCFe.Checked;
+  end ;
+
+  PrepararImpressao;
+end ;
+
+procedure TForm1.PrepararImpressao;
+begin
+  if ACBrSAT1.Extrato = ACBrSATExtratoESCPOS1 then
+  begin
+    ACBrSATExtratoESCPOS1.Device.Porta := edtPorta.Text;
+    ACBrSATExtratoESCPOS1.Device.Ativar;
+    ACBrSATExtratoESCPOS1.ImprimeQRCode := True;
+  end
+  else
+  begin
+    ACBrSATExtratoFortes1.LarguraBobina    := seLargura.Value;
+    ACBrSATExtratoFortes1.Margens.Topo     := seMargemTopo.Value ;
+    ACBrSATExtratoFortes1.Margens.Fundo    := seMargemFundo.Value ;
+    ACBrSATExtratoFortes1.Margens.Esquerda := seMargemEsquerda.Value ;
+    ACBrSATExtratoFortes1.Margens.Direita  := seMargemDireita.Value ;
+    ACBrSATExtratoFortes1.MostrarPreview   := cbPreview.Checked;
+
+    try
+      if lImpressora.Caption <> '' then
+        ACBrSATExtratoFortes1.PrinterName := lImpressora.Caption;
+    except
+    end;
+  end;
 end;
 
 end.
