@@ -47,6 +47,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+07/10/2014
+[*] Incluido o provedor Betha na lista de provedores que não aceitam
+    o código do ItemListaServico com formatação.
+    por: Italo Jurisato Junior
+
 03/10/2014
 [*] Alterações acrescentado a cidade Encantado/RS no provedor Tecnos
     por: Italo Jurisato Junior a pedido de Rodrigo de Souza Crovador

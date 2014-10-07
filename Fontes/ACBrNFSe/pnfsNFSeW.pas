@@ -420,7 +420,7 @@ begin
 
    Gerador.wGrupoNFSe('/Valores');
 
-   if FProvedor in [proISSNet, proWebISS, proIssCuritiba, proAbaco, proRecife]
+   if FProvedor in [proISSNet, proWebISS, proIssCuritiba, proAbaco, proRecife, proBetha]
      then Gerador.wCampoNFSe(tcStr, '#29', 'ItemListaServico', 01, 05, 1, SomenteNumeros(NFSe.Servico.ItemListaServico), '')
      else Gerador.wCampoNFSe(tcStr, '#29', 'ItemListaServico', 01, 05, 1, NFSe.Servico.ItemListaServico, '');
 
