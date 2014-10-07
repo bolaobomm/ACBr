@@ -109,7 +109,7 @@ type
     procedure ClearSessao ;
 
     function LoadFromFile(AFileName : String): boolean;
-    function SaveToFile(AFileName : String): boolean;
+    function SaveToFile(AFileName : String; ApenasTagsAplicacao: Boolean = false): boolean;
     function GetXMLString( ApenasTagsAplicacao: Boolean = false) : AnsiString ;
     procedure SetXMLString(AValue : AnsiString) ;
 
@@ -1204,8 +1204,8 @@ begin
   FIM       := '' ;
   FenderEmit.Clear;
   FcRegTrib      := RTSimplesNacional;
-  FcRegTribISSQN := RTISSMicroempresaMunicipal;
-  FindRatISSQN   :=  irSim;
+  FcRegTribISSQN := RTISSNenhum;
+  FindRatISSQN   := irSim;
 end ;
 
 { TMPCollection }
@@ -1309,14 +1309,15 @@ begin
   end;
 end ;
 
-function TCFe.SaveToFile(AFileName : String) : boolean ;
+function TCFe.SaveToFile(AFileName: String; ApenasTagsAplicacao: Boolean
+  ): boolean;
 var
   SL : TStringList;
 begin
   Result := False;
   SL := TStringList.Create;
   try
-    SL.Text := AsXMLString;
+    SL.Text := GetXMLString( ApenasTagsAplicacao );
     SL.SaveToFile( AFileName );
     Result := True;
   finally

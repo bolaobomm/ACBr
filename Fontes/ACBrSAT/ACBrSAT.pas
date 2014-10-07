@@ -93,6 +93,7 @@ type
 
      procedure IniciaComando ;
      function FinalizaComando(AResult: String): String;
+     procedure VerificaCondicoesImpressao( EhCancelamento: Boolean = False);
 
      procedure GravaLog(AString : AnsiString ) ;
      procedure SetExtrato(const Value: TACBrSATExtratoClass);
@@ -292,6 +293,23 @@ begin
 
   DoLog( AStr );
 end ;
+
+procedure TACBrSAT.VerificaCondicoesImpressao(EhCancelamento: Boolean);
+begin
+  if not Assigned(Extrato) then
+    raise EACBrSATErro.Create( 'Nenhum componente "ACBrSATExtrato" associado' ) ;
+
+  if EhCancelamento then
+  begin
+    if (CFeCanc.infCFe.ID = '') and (CFe.infCFe.ID = '') then
+      raise EACBrSATErro.Create( 'Nenhum CFeCanc ou CFe carregado na memória' ) ;
+  end
+  else
+  begin
+    if (CFe.infCFe.ID = '') then
+      raise EACBrSATErro.Create( 'Nenhum CFe carregado na memória' ) ;
+  end;
+end;
 
 procedure TACBrSAT.DoLog(AString : String) ;
 begin
@@ -747,26 +765,20 @@ end;
 
 procedure TACBrSAT.ImprimirExtrato;
 begin
-   if not Assigned(Extrato) then
-      raise Exception.Create( ACBrStr('Nenhum componente "ACBrSATExtrato" associado' ) ) ;
-
-   Extrato.ImprimirExtrato;
-end;
-
-procedure TACBrSAT.ImprimirExtratoCancelamento;
-begin
-   if not Assigned(Extrato) then
-      raise Exception.Create( ACBrStr('Nenhum componente "ACBrSATExtrato" associado' ) ) ;
-
-   Extrato.ImprimirExtratoCancelamento;
+  VerificaCondicoesImpressao;
+  Extrato.ImprimirExtrato;
 end;
 
 procedure TACBrSAT.ImprimirExtratoResumido;
 begin
-   if not Assigned(Extrato) then
-      raise Exception.Create( ACBrStr('Nenhum componente "ACBrSATExtrato" associado' ) ) ;
+  VerificaCondicoesImpressao;
+  Extrato.ImprimirExtratoResumido;
+end;
 
-   Extrato.ImprimirExtratoResumido;
+procedure TACBrSAT.ImprimirExtratoCancelamento;
+begin
+  VerificaCondicoesImpressao;
+  Extrato.ImprimirExtratoCancelamento;
 end;
 
 function TACBrSAT.CodificarPaginaDeCodigoSAT(ATexto: String): AnsiString;

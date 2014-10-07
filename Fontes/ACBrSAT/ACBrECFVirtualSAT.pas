@@ -38,10 +38,11 @@ unit ACBrECFVirtualSAT;
 interface
 
 uses ACBrECFVirtual, ACBrECFVirtualPrinter, ACBrSAT, ACBrUtil, ACBrConsts,
-  Classes, SysUtils, pcnCFe, pcnConversao;
+  Classes, SysUtils, pcnCFe, pcnConversao, ACBrECF, ACBrDevice;
 
 const
   ACBrECFVirtualSAT_VERSAO = '0.1.0a';
+  estCupomAberto = [estVenda, estPagamento];
 
 type
 
@@ -88,8 +89,11 @@ type
     fsQuandoAbrirDocumento: TACBrECFVirtualSATQuandoAbrirDocumento;
     fsQuandoEfetuarPagamento: TACBrECFVirtualSATQuandoEfetuarPagamento;
     fsQuandoVenderItem: TACBrECFVirtualSATQuandoVenderItem;
+    fsNomeArqTempXML: String;
+    fsECF: TACBrECF;
 
     function AdivinharCodigoMP( const DescricaoPagto: String ): TpcnCodigoMP;
+    function GetACBrECF: TACBrECF;
   protected
     function GetSubModeloECF: string; override;
     function GetNumVersao: string; override;
@@ -105,6 +109,11 @@ type
     procedure FechaCupomVirtual(Observacao: AnsiString; IndiceBMP: Integer);
       override;
     Procedure CancelaCupomVirtual ; override ;
+
+    procedure LeArqINIVirtual( ConteudoINI: TStrings ) ; override;
+    procedure GravaArqINIVirtual( ConteudoINI: TStrings ) ; override;
+
+    property ECF: TACBrECF read GetACBrECF;
 
   public
     constructor Create(AOwner: TComponent);
@@ -123,7 +132,7 @@ procedure Register;
 
 implementation
 
-uses ACBrECF, ACBrECFClass, ACBrSATClass;
+uses ACBrECFClass, ACBrSATClass;
 
 procedure Register;
 begin
@@ -206,6 +215,13 @@ end;
 constructor TACBrECFVirtualSATClass.Create(AOwner: TComponent);
 begin
   inherited Create(AOwner);
+
+  fsACBrSAT := Nil;
+  fsECF     := Nil;
+  fsQuandoAbrirDocumento   := Nil;
+  fsQuandoEfetuarPagamento := Nil;
+  fsQuandoVenderItem       := Nil;
+  fsNomeArqTempXML := '';
 end;
 
 function TACBrECFVirtualSATClass.AdivinharCodigoMP(const DescricaoPagto: String
@@ -247,6 +263,14 @@ begin
   end;
 end;
 
+function TACBrECFVirtualSATClass.GetACBrECF: TACBrECF;
+begin
+  if not Assigned(fsECF) then
+    fsECF := GetECFComponente(Self);
+
+  Result := fsECF;
+end;
+
 function TACBrECFVirtualSATClass.GetSubModeloECF: string;
 begin
   Result := 'VirtualSAT';
@@ -261,19 +285,29 @@ procedure TACBrECFVirtualSATClass.AtivarVirtual;
 begin
   fsACBrSAT.Inicializar;
   inherited AtivarVirtual;
+
+  fsNomeArqTempXML := ChangeFileExt( NomeArqINI, '.xml' );
 end;
 
 procedure TACBrECFVirtualSATClass.AbreDocumentoVirtual;
 begin
-  with fsACBrSAT do
+  if fpEstado = estVenda then
   begin
-    InicializaCFe();
+    with fsACBrSAT do
+    begin
+      InicializaCFe();
+      Consumidor.Enviado := False ;
 
-    CFe.ide.numeroCaixa := NumECF;
+      CFe.ide.numeroCaixa := NumECF;
 
-    if Assigned( fsQuandoAbrirDocumento ) then
-      fsQuandoAbrirDocumento( CFe );
+      if Assigned( fsQuandoAbrirDocumento ) then
+        fsQuandoAbrirDocumento( CFe );
+    end;
+
+    exit; // Não Imprime
   end;
+
+  inherited AbreDocumentoVirtual;
 end;
 
 procedure TACBrECFVirtualSATClass.EnviaConsumidorVirtual;
@@ -292,9 +326,8 @@ procedure TACBrECFVirtualSATClass.VendeItemVirtual(
 var
   Det: TDetCollectionItem;
   Acres: Double;
-  ECF: TACBrECF;
+  AliqECF: TACBrECFAliquota;
 begin
-  ECF := GetECFComponente(Self);
 
   with fsACBrSAT do
   begin
@@ -324,11 +357,32 @@ begin
     if EAN13Valido(ItemCupom.Codigo) then
       Det.Prod.cEAN := ItemCupom.Codigo;
 
-    //TODO: Converter aliquota para CFOP ?
-    //Prod.CFOP := '5500';
+    AliqECF := fpAliquotas[ ItemCupom.PosAliq ];
 
-    //TODO: Converter a aliquota em grupos de imposto
-    //ItemCupom.PosAliq
+    Det.Prod.CFOP          := '5102';
+    Det.Imposto.ICMS.CST   := cst00;
+    Det.Imposto.ICMS.pICMS := AliqECF.Aliquota;
+
+    if ItemCupom.PosAliq = 0 then       // FF
+    begin
+      Det.Prod.CFOP        := '5405';
+      Det.Imposto.ICMS.CST := cst60;
+    end
+    else if ItemCupom.PosAliq = 1 then  // II
+    begin
+      Det.Imposto.ICMS.CST := cst40;
+    end
+    else if ItemCupom.PosAliq = 2 then  // NN
+    begin
+      Det.Imposto.ICMS.CST := cst41;
+    end
+    else if AliqECF.Tipo = 'S' then     // Serviços
+    begin
+      Det.Prod.CFOP           := '5949';
+      Det.Imposto.ICMS.CST    := cst90;
+      Det.Imposto.ICMS.pICMS  := 0;
+      Det.Imposto.ISSQN.vAliq := AliqECF.Aliquota;
+    end;
 
     if Assigned( fsQuandoVenderItem ) then
       fsQuandoVenderItem( Det );
@@ -337,7 +391,13 @@ end;
 
 procedure TACBrECFVirtualSATClass.CancelaItemVendidoVirtual(NumItem: Integer);
 begin
-  fsACBrSAT.CFe.Det.Delete(NumItem);
+  with fsACBrSAT do
+  begin
+    if (NumItem > CFe.Det.Count) or (NumItem < 1) then
+      exit;
+
+    CFe.Det.Delete(NumItem-1);
+  end;
 end;
 
 procedure TACBrECFVirtualSATClass.SubtotalizaCupomVirtual(
@@ -405,7 +465,14 @@ var
 begin
   with fsACBrSAT do
   begin
-    if ChaveCupom = CFe.infCFe.ID then
+    if (Estado in estCupomAberto) then    // Não precisa cancelar se ainda não enviou...d
+    begin
+      CFe.Clear;
+      CFeCanc.Clear;
+      exit ;
+    end;
+
+    if ChaveCupom = CFe.infCFe.ID then    // Está na memória ?
       CancelarUltimaVenda
     else
     begin
@@ -433,6 +500,30 @@ begin
 
     ImprimirExtratoCancelamento;
   end;
+end;
+
+procedure TACBrECFVirtualSATClass.LeArqINIVirtual(ConteudoINI: TStrings);
+begin
+  // Se o cupom está aberto, deve ler conteudo temporário do XML
+  if (fpEstado in estCupomAberto) then
+    if (fsNomeArqTempXML <> '') and FileExists( fsNomeArqTempXML ) then
+      fsACBrSAT.CFe.LoadFromFile( fsNomeArqTempXML );
+
+  inherited LeArqINIVirtual(ConteudoINI);
+end;
+
+procedure TACBrECFVirtualSATClass.GravaArqINIVirtual(ConteudoINI: TStrings);
+begin
+  // Se cupom está aberto, deve persistir o CFe //
+  if (fpEstado in estCupomAberto) then
+    fsACBrSAT.CFe.SaveToFile( fsNomeArqTempXML, True )
+  else
+  begin
+    if (fsNomeArqTempXML <> '') and FileExists( fsNomeArqTempXML ) then
+      DeleteFile( fsNomeArqTempXML );
+  end;
+
+  inherited GravaArqINIVirtual(ConteudoINI);
 end;
 
 end.

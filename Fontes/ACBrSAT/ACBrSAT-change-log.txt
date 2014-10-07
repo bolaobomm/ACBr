@@ -47,6 +47,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+Data: 07/10/2014     (por: DSA)
+-- ACBrSAT --
+[*] Metodo CFe.SaveToFile modificado para:
+    SaveToFile(AFileName : String; ApenasTagsAplicacao: Boolean = false): boolean;
+[*] Adicionada verificação na Impressão de Extrato, se existe CFe ou CFeCanc
+    carregado na memória
 
 Data: 06/10/2014     (por: DSA)
 -- ACBrSAT --
