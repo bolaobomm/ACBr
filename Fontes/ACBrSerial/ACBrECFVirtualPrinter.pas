@@ -177,7 +177,7 @@ TACBrECFVirtualPrinterClass = class( TACBrECFVirtualClass )
     function GetNumVersao: String; override ;
     function GetCliche: AnsiString ; override ;
 
- public
+  public
     Constructor create( AOwner : TComponent  )  ;
     Destructor Destroy  ; override ;
 

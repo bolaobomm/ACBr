@@ -5641,6 +5641,9 @@ begin
      begin
         AValue.FreeNotification(self);
         AValue.ECF := Self ;
+
+        if Modelo = ecfECFVirtual then   // Atualizando ECF Virtual em Classe interna
+          fsECF := fsECFVirtual.ECFVirtualClass;
      end ;
   end ;
 end;

@@ -97,6 +97,17 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+Data: 07/10/2014   (por: DSA)
+-- ACBrECF --
+[-] Corrigido bug na modificação de ECFVirtual em run-time, (não era atualizado
+    na classe interna)
+
+-- ACBrECFVirtual --
+[*] Adicionado ponto de herança em LeArqINI e GravaArqINI, permitindo aos ECFs
+    Virtuais, salvar outros arquivos ao mesmo tempo da persistência da memória
+    do ECF Virtual
+
+
 Data: 06/10/2014   (por: DSA)
 -- ACBrECFVirtual --
 [*] Modificada a visibilidade das propriedades: Colunas, NomeArqINI, NumSerie,

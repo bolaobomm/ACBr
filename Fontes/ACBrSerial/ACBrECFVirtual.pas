@@ -272,6 +272,8 @@ TACBrECFVirtualClass = class( TACBrECFClass )
     procedure INItoClass( ConteudoINI: TStrings ); virtual ;
     procedure ClasstoINI( ConteudoINI: TStrings ); virtual ;
     procedure CriarMemoriaInicial; virtual;
+    procedure LeArqINIVirtual( ConteudoINI: TStrings ) ; virtual;
+    procedure GravaArqINIVirtual( ConteudoINI: TStrings ) ; virtual ;
 
     Procedure AbreDia; virtual ;
     Procedure AbreDocumento ; virtual;
@@ -1686,20 +1688,23 @@ begin
       fsQuandoLerArqINI( SL, Tratado );
 
     if not Tratado then
-    begin
-      if not FileExists( fpNomeArqINI ) then
-      begin
-        CriarMemoriaInicial;
-        Exit;
-      end ;
-
-      SL.LoadFromFile( fpNomeArqINI );
-    end ;
+      LeArqINIVirtual( SL );
 
     INItoClass( SL );
   finally
     SL.Free;
   end;
+end;
+
+procedure TACBrECFVirtualClass.LeArqINIVirtual(ConteudoINI: TStrings);
+begin
+  if not FileExists( fpNomeArqINI ) then
+  begin
+    CriarMemoriaInicial;
+    Exit;
+  end ;
+
+  ConteudoINI.LoadFromFile( fpNomeArqINI );
 end;
 
 procedure TACBrECFVirtualClass.INItoClass(ConteudoINI: TStrings);
@@ -1910,10 +1915,15 @@ begin
       fsQuandoGravarArqINI( SL, Tratado );
 
     if not Tratado then
-      SL.SaveToFile( fpNomeArqINI );
+      GravaArqINIVirtual( SL );
   finally
     SL.Free;
   end;
+end;
+
+procedure TACBrECFVirtualClass.GravaArqINIVirtual(ConteudoINI: TStrings);
+begin
+   ConteudoINI.SaveToFile( fpNomeArqINI );
 end;
 
 procedure TACBrECFVirtualClass.ClasstoINI(ConteudoINI: TStrings);
