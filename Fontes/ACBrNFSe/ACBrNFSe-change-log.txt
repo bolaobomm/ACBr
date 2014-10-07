@@ -50,6 +50,7 @@ Símbolo : Significado
 07/10/2014
 [*] Incluido o provedor Betha na lista de provedores que não aceitam
     o código do ItemListaServico com formatação.
+[+] Incluida a cidade Gramado/RS no provedor Betha.
     por: Italo Jurisato Junior
 
 03/10/2014

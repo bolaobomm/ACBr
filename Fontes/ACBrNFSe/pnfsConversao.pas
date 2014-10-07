@@ -797,6 +797,7 @@ begin
   4219705, // Xaxim/SC
   4302105, // Bento Gonçalves/RS
   4305801, // Constantina/RS
+  4309100, // Gramado/RS
   4318002, // São Borja/RS
   4321907, // Tres Passos/RS
   5006200, // Nova Andradina/MS
