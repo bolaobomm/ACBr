@@ -66,7 +66,8 @@ type
      FTributosFonte: string;
      FTributosPercentual: TpcnPercentualTributos;
      FMarcaDaguaMSG: string;
-    FTamanhoCampoVlUnit: integer;
+     FTamanhoCampoVlUnit: integer;
+     FExpandirDadosAdicionaisAuto: boolean;
 
      function SeSenaoJPEG(ACondicao: Boolean; ATrue, AFalse: TJPEGImage): TJPEGImage;
    public
@@ -84,6 +85,7 @@ type
      property TamanhoFonte_ANTT:integer read FTamanhoFonte_ANTT write FTamanhoFonte_ANTT;
      property Fonte:TFont read FFonte write FFonte;
      property EspessuraBorda:Integer read FEspessuraBorda write FEspessuraBorda;
+     property ExpandirDadosAdicionaisAuto: boolean read FExpandirDadosAdicionaisAuto write FExpandirDadosAdicionaisAuto;
      property MostrarSetup: boolean read FMostrarSetup write FMostrarSetup;
      property TributosFonte: string read FTributosFonte write FTributosFonte;
      property TributosPercentual: TpcnPercentualTributos read FTributosPercentual write FTributosPercentual;
@@ -104,6 +106,7 @@ begin
   FEspessuraBorda:=2;
   FMostrarSetup:=False;
   FTributosPercentual:=ptValorProdutos;
+  FExpandirDadosAdicionaisAuto := False;
 end;
 
 destructor TACBrNFeDANFERaveCB.Destroy;
@@ -179,6 +182,7 @@ begin
                        TributosPercentual,
                        MarcaDaguaMSG,
                        LocalImpCanhoto,
+                       ExpandirDadosAdicionaisAuto,
                        NFe);
     finally
       LogoMarcaEmpresa.Free;
@@ -260,6 +264,7 @@ begin
                        TributosPercentual,
                        MarcaDaguaMSG,
                        LocalImpCanhoto,
+                       ExpandirDadosAdicionaisAuto,
                        NFE);
     finally
       LogoMarcaEmpresa.Free;

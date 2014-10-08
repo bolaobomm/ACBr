@@ -231,8 +231,10 @@ begin
         FontColor:=clSilver;
         Bold:=True;
         Underline:=True;
-        GotoXY(FFirstX+15,YY+10);
+        GotoXY(FFirstX+15,PageHeight / 2);
+        //GotoXY(FFirstX+15,YY-10);
         FontRotation:=45;
+        CenterX:=XPos+((PageWidth-MarginRight-XPos)/2);
         PrintCenter(MarcaDaguaMSG,CenterX);
       end;
 
@@ -992,29 +994,95 @@ end;
 function ImprimirDadosAdicionais(PosX,PosY,aHeigth: Double): Double;
 var wInfCpl, YFim:Double;
     qLin : integer;
+    TempPosX,TempPosY,TempHeight: Double;
+    TempYFim, TempYPos, TempXPos, TempFLastX: Double;
+    TempBaseReport: TBaseReport;
+    TempMemoInfCpl: TMemoBuf;
+
 begin
   with DANFeRave, DANFeRave.ACBrNFe.NotasFiscais.Items[DANFeRave.FNFIndex].NFe, DANFeRave.BaseReport do
-   begin
+  begin
+    //simulação de quantas linhas precisará para imprimir Dados Adicionais
+    if ExpandirDadosAdicionaisAuto then
+    begin
+      TempPosY := PosY;
+      TempYFim := YFim;
+      TempYPos := YPos;
+      TempPosX := PosX;
+      TempFLastX := FLastX;
+      TempXPos := XPos;
+      PosX := PosX-800;
+      FLastX := FLastX-800;
+      XPos := XPos-800;
+      TempHeight := aHeigth;
+      TempMemoInfCpl := TMemoBuf.Create;
+      try
+        repeat
+          if aHeigth <= 110 then
+          begin
+            TempHeight := Trunc(aHeigth);
+            TempMemoInfCpl.Text := FMemoInfCpl.Text;
+            PosY:=PosY-aHeigth-4;
+            TituloDoBloco(PosX,PosY,'DADOS ADICIONAIS');
+            YFim:=YPos+aHeigth;
+
+            wInfCpl:=124;
+            if FPageNum>1 then
+              wInfCpl:=FLastX-XPos;
+            Box([],PosX,YPos,wInfCpl,aHeigth,'Informações Complementares');
+            if FPageNum=1 then
+              Box([fsLeft],XPos,YPos,70,aHeigth,'Reservado ao Fisco','',taLeftJustify,True);
+
+            SetFont(FontNameUsed,FontSizeInfComplementares);
+            //informacoes complementares
+            GotoXY(PosX,PosY+4);
+            NewLine;
+            NewLine;
+
+            TempMemoInfCpl.BaseReport := BaseReport;
+            TempMemoInfCpl.PrintStart := PosX + 1;
+            TempMemoInfCpl.PrintEnd   := PosX + wInfCpl - 2;
+            TempMemoInfCpl.NoNewLine  := True;
+            qLin := Trunc((YFim-YPos) / GetFontHeigh) - Trunc((aHeigth*2/32));
+            TempMemoInfCpl.PrintLines(qLin,False);
+            if not TempMemoInfCpl.Empty then
+              aHeigth := Trunc((((qLin+4)*aHeigth)/qLin));
+          end;
+        until ((TempMemoInfCpl.Empty) or (aHeigth > 110));
+      finally
+        TempMemoInfCpl.Free;
+        PosX := TempPosX;
+        PosY := TempPosY;
+        YFim := TempYFim;
+        YPos := TempYPos;
+        FLastX := TempFLastX;
+        XPos := TempXPos;
+      end;
+      aHeigth := TempHeight;
+    end;
+
      PosY:=PosY-aHeigth-4;
      TituloDoBloco(PosX,PosY,'DADOS ADICIONAIS');
      YFim:=YPos+aHeigth;
+
      wInfCpl:=124;
      if FPageNum>1 then
         wInfCpl:=FLastX-XPos;
      Box([],PosX,YPos,wInfCpl,aHeigth,'Informações Complementares');
      if FPageNum=1 then
         Box([fsLeft],XPos,YPos,70,aHeigth,'Reservado ao Fisco','',taLeftJustify,True);
+
      SetFont(FontNameUsed,FontSizeInfComplementares);
      //informacoes complementares
      GotoXY(PosX,PosY+4);
      NewLine;
      NewLine;
 
-     FMemoInfCpl.BaseReport:=BaseReport;
-     FMemoInfCpl.PrintStart:=PosX+1;
-     FMemoInfCpl.PrintEnd:=PosX+wInfCpl-2;
-     FMemoInfCpl.NoNewLine:=True;
-     qLin:=Trunc((YFim-YPos)/GetFontHeigh)-1;
+     FMemoInfCpl.BaseReport := BaseReport;
+     FMemoInfCpl.PrintStart := PosX + 1;
+     FMemoInfCpl.PrintEnd   := PosX + wInfCpl - 2;
+     FMemoInfCpl.NoNewLine  := True;
+     qLin := Trunc( (YFim-YPos) / GetFontHeigh ) - Trunc(((aHeigth*2)/32));
      FMemoInfCpl.PrintLines(qLin,False);
 
      Result:=PosY;

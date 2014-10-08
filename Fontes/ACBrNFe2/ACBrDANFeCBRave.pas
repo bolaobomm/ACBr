@@ -110,6 +110,7 @@ type
     FMarcaDaguaMSG: string;
     FTamanhoCampoVlUnit: integer;
     FPosicaoCanhoto: integer;
+    FExpandirDadosAdicionaisAuto: boolean;
   public
      FCurrentPage, FPageNum, FNFIndex, FNumNFe:Integer;
      FChaveNFe, FNumeroNF, FSerie: String;
@@ -162,6 +163,7 @@ type
      property TributosPercentual: TpcnPercentualTributos read FTributosPercentual write FTributosPercentual;
      property MarcaDaguaMSG: string read FMarcaDaguaMSG write FMarcaDaguaMSG;
      property PosicaoCanhoto: integer read FPosicaoCanhoto write FPosicaoCanhoto;
+     property ExpandirDadosAdicionaisAuto: boolean read FExpandirDadosAdicionaisAuto write FExpandirDadosAdicionaisAuto;
   end;
 
   TEventoRave = class(TRvSystem)
@@ -313,6 +315,7 @@ procedure ImprimirDANFeRave(aACBrNFe:TACBrNFe;
                             aTributosPercentual:TpcnPercentualTributos=ptValorProdutos;
                             aMarcaDaguaMSG: string='';
                             aPosicaoCanhoto: integer = 0;
+                            aExpandirDadosAdicionaisAuto: boolean = false;
                             NFE : TNFe = nil);
 
 procedure ImprimirEventoRave(aACBrNFe:TACBrNFe;
@@ -413,6 +416,7 @@ procedure ImprimirDANFeRave(aACBrNFe:TACBrNFe;
                             aTributosPercentual:TpcnPercentualTributos=ptValorProdutos;
                             aMarcaDaguaMSG: string='';
                             aPosicaoCanhoto: integer = 0;
+                            aExpandirDadosAdicionaisAuto: boolean = false;
                             NFE : TNFe = nil);
 var DANFeRave:TDANFeRave;
     rvPDF:TRvRenderPDF;
@@ -486,6 +490,7 @@ begin
     DANFeRave.TributosPercentual:=aTributosPercentual;
     DANFeRave.MarcaDaguaMSG:=aMarcaDaguaMSG;
     DANFeRave.PosicaoCanhoto:=aPosicaoCanhoto;
+    DANFeRave.ExpandirDadosAdicionaisAuto:=aExpandirDadosAdicionaisAuto;
     if aFormularioContinuo then
        DANFeRave.FColorBorders:=clWhite
       else

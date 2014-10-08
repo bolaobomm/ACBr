@@ -221,13 +221,15 @@ begin
 
       //Marca Dagua
       begin
-        SetFont(FontNameUsed,28);
+        SetFont(FontNameUsed,25);
         FontColor:=clSilver;
         Bold:=True;
         Underline:=True;
-        GotoXY(PosX+15,YY+10);
+        GotoXY(FFirstX+15,PageHeight / 2);
+        //GotoXY(PosX+15,YY+10);
         FontRotation:=33;
-        Print(MarcaDaguaMSG);
+        CenterX:=XPos+((PageWidth-MarginRight-XPos)/2);
+        PrintCenter(MarcaDaguaMSG,CenterX);
       end;
 
 
@@ -1024,9 +1026,76 @@ end;
 function ImprimirDadosAdicionais(PosX,PosY,aHeigth: Double): Double;
 var qLin : integer;
     wInfCpl, YFim:Double;
+
+    TempPosX,TempPosY,TempHeight: Double;
+    TempYFim, TempYPos, TempXPos, TempFLastX: Double;
+    TempBaseReport: TBaseReport;
+    TempMemoInfCpl: TMemoBuf;
+
 begin
   with DANFeRave, DANFeRave.ACBrNFe.NotasFiscais.Items[DANFeRave.FNFIndex].NFe, DANFeRave.BaseReport do
    begin
+    //simulação de quantas linhas precisará para imprimir Dados Adicionais
+    if ExpandirDadosAdicionaisAuto then
+    begin
+      TempPosY := PosY;
+      TempYFim := YFim;
+      TempYPos := YPos;
+      TempPosX := PosX;
+      TempFLastX := FLastX;
+      TempXPos := XPos;
+      PosX := PosX-800;
+      FLastX := FLastX-800;
+      XPos := XPos-800;
+      TempHeight := aHeigth;
+      TempMemoInfCpl := TMemoBuf.Create;
+      try
+        repeat
+          if aHeigth <= 78 then
+          begin
+            TempHeight := Trunc(aHeigth);
+            TempMemoInfCpl.Text := FMemoInfCpl.Text;
+
+            YFim:=PosY;
+            PosX:=PosX+aWidthTituloBloco;
+            PosY:=PosY-aHeigth;
+            wInfCpl:=176;
+            if FPageNum>1 then
+              wInfCpl:=FLastX-PosX;
+            Box([],PosX,PosY,wInfCpl,aHeigth,'Informações Complementares');
+            if FPageNum=1 then
+              Box([fsLeft],XPos,YPos,75,aHeigth,'Reservado ao Fisco','',taLeftJustify,True);
+            SetFont(FontNameUsed,FontSizeInfComplementares);
+            //informacoes complementares
+            GotoXY(PosX,PosY);
+            NewLine;
+            NewLine;
+            TempMemoInfCpl.PrintStart:=PosX+1;
+            TempMemoInfCpl.PrintEnd:=PosX+wInfCpl-2;
+            TempMemoInfCpl.NoNewLine:=True;
+            qLin := Trunc((YFim-YPos) / GetFontHeigh) - Trunc((aHeigth*2/29));
+            TempMemoInfCpl.BaseReport:=BaseReport;
+            TempMemoInfCpl.PrintLines(qLin,False);
+
+            Result:=PosY;
+            TituloDoBloco([fsTop],PosY,PosX,PosY+aHeigth,'DADOS ADICIONAIS');
+
+            if not TempMemoInfCpl.Empty then
+              aHeigth := Trunc((((qLin+4)*aHeigth)/qLin));
+          end;
+        until ((TempMemoInfCpl.Empty) or (aHeigth > 78));
+      finally
+        TempMemoInfCpl.Free;
+        PosX := TempPosX;
+        PosY := TempPosY;
+        YFim := TempYFim;
+        YPos := TempYPos;
+        FLastX := TempFLastX;
+        XPos := TempXPos;
+      end;
+      aHeigth := TempHeight;
+    end;
+
      YFim:=PosY;
      PosX:=PosX+aWidthTituloBloco;
      PosY:=PosY-aHeigth;
@@ -1044,7 +1113,7 @@ begin
      FMemoInfCpl.PrintStart:=PosX+1;
      FMemoInfCpl.PrintEnd:=PosX+wInfCpl-2;
      FMemoInfCpl.NoNewLine:=True;
-     qLin:=Trunc((YFim-YPos)/GetFontHeigh)-1;
+     qLin := Trunc((YFim-YPos) / GetFontHeigh) - Trunc((aHeigth*2/29));
      FMemoInfCpl.BaseReport:=BaseReport;
      FMemoInfCpl.PrintLines(qLin,False);
 
