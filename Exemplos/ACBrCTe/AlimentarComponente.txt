@@ -9,7 +9,7 @@ var
  IE: String;
  OkConversao: Boolean;
 begin
- with DMCTE.CTe.Conhecimentos.Add.CTe do
+ with DMDFe.CTe.Conhecimentos.Add.CTe do
   begin
    //
    // Dados de Identificação do CT-e
@@ -30,11 +30,15 @@ begin
    Ide.tpImp  := tiRetrato;
 
    // TpcnTipoEmissao = (teNormal, teContingencia, teSCAN, teDPEC, teFSDA, teSVCRS, teSVCSP);
+   //  (AC,AL,AP,AM,BA,CE,DF,ES,GO,MA,MT,MS,MG,PA,PB,PR,PE,PI,RJ,RN,RS,RO,RR,SC,SP,SE,TO);
+   //  (12,27,16,13,29,23,53,32,52,21,51,50,31,15,25,41,26,22,33,24,43,11,14,42,35,28,17);
+
    case rgTipoEmissao.ItemIndex of
     0: Ide.tpEmis := teNormal;
     1: Ide.tpEmis := teFSDA; // Contingencia FSDA
-    2: Ide.tpEmis := teSVCRS;
-    3: Ide.tpEmis := teSVCSP;
+    2: if DMDFe.CTe.Configuracoes.WebServices.UFCodigo in [14, 16, 26, 35, 50, 51]
+        then Ide.tpEmis := teSVCRS
+        else Ide.tpEmis := teSVCSP;
    end;
 
    // TpcnTipoAmbiente = (taProducao, taHomologacao);
@@ -136,7 +140,7 @@ begin
      Ide.Toma4.EnderToma.xPais   := DM_CTA.PessoaFJPais.AsString;
     end;
 
-   if rgTipoEmissao.ItemIndex = 1
+   if rgTipoEmissao.ItemIndex >= 1
     then begin
      Ide.dhCont := StrToDateTime(edtDataCont.Text+' '+edtHoraCont.Text+':00');
      Ide.xJust  := edtJustificativa.Text;
@@ -750,6 +754,11 @@ begin
         Imp.ICMS.ICMS60.pICMSSTRet := RoundTo(DM_CNT.ConhecimentoAliqICMS.AsFloat, -2);
         Imp.ICMS.ICMS60.vICMSSTRet := RoundTo(DM_CNT.ConhecimentoValorICMS.AsFloat, -2);
         Imp.ICMS.ICMS60.vCred      := RoundTo(DM_CNT.ConhecimentoCreditoICMS.AsFloat, -2);
+
+        // Recalcula o valor a receber quando existe ICMS/ST retido
+        vPrest.vRec := RoundTo(vPrest.vTPrest - Imp.ICMS.ICMS60.vCred, -2);
+        // ou
+//        vPrest.vRec := RoundTo(vPrest.vTPrest - Imp.ICMS.ICMS60.vICMSSTRet, -2);
        end;
    90: begin
         Imp.ICMS.SituTrib      := cst90;
@@ -771,7 +780,7 @@ begin
      with compl.ObsCont.Add do
       begin
        xCampo := 'Lei da Transparencia';
-       xTexto := 'O valor aproximado de tributos incidentes sobre o preço deste servico e de R$ ' +
+       xTexto := 'O valor aproximado de tributos incidentes sobre o preco deste servico e de R$ ' +
                  FormatFloat('##0.00', imp.vTotTrib) + ' (' +
                  FormatFloat('#0.00', DM_CNT.ConhecimentoAliqNBS.AsFloat) + '%) ' +
                  'Fonte: IBPT';
@@ -928,7 +937,8 @@ begin
              5: respSeg := rsTomadorServico;
             end;
 
-            if trim(DM_CTA.ParamDFeSeguradora.AsString) <> ''
+            if (trim(DM_CTA.ParamDFeSeguradora.AsString) <> '') and
+               (DM_CTA.ParamDFeSeguradora.AsString <> '000000000000000')
              then begin
               DM_CTA.PessoaFJ.Close;
               DM_CTA.PessoaFJ.SQL.Clear;
@@ -1290,6 +1300,7 @@ begin
             {$ENDIF}
                  begin
                   chave             := DM_CNT.ComplementoCTe.AsString;
+              {$IFNDEF PL_200}
                   vPresComp.vTPrest := RoundTo(DM_CNT.ComplementoValorTotal.AsFloat, -2);
                   //
                   //  Informações dos Componentes Complementados
@@ -1387,13 +1398,14 @@ begin
                     with compl.ObsCont.Add do
                      begin
                       xCampo := 'Lei da Transparencia';
-                      xTexto := 'O valor aproximado de tributos incidentes sobre o preço deste servico e de R$ ' +
+                      xTexto := 'O valor aproximado de tributos incidentes sobre o preco deste servico e de R$ ' +
                                 FormatFloat('##0.00', impComp.vTotTrib) + ' (' +
                                 FormatFloat('#0.00', DM_CNT.ConhecimentoAliqNBS.AsFloat) + '%) ' +
                                 'Fonte: IBPT';
                      end;
                    end;
 
+              {$ENDIF}
                  end;
                end;
               DM_CNT.Complemento.Next;

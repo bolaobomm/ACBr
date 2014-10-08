@@ -1,16 +1,21 @@
 procedure TfrmMovCancelarCNT.CancelarConhecimentoEvento;
+var
+ dhEvento: TDateTime;
 begin
- DMCTe.CTe.EventoCTe.Evento.Clear;
+ DMDFe.CTe.EventoCTe.Evento.Clear;
 
- with DMCTe.CTe.EventoCTe.Evento.Add do
+ with DMDFe.CTe.EventoCTe.Evento.Add do
   begin
-   infevento.chCTe           := Chave;
+   infEvento.nSeqEvento      := 1;
+   infEvento.chCTe           := Chave;
    infEvento.CNPJ            := Copy(DM_CTA.EmpresaCNPJ.AsString, 2, 14);
    infEvento.dhEvento        := now;
    infEvento.tpEvento        := teCancelamento;
    infEvento.detEvento.xJust := trim(edtJustificativa.Text);
    infEvento.detEvento.nProt := Protocolo;
   end;
+
+ DMDFe.CTe.EventoCTe.Evento.Items[0].InfEvento.detEvento.infCorrecao.Clear;
 
  // Lote de Eventos
  DM_VEN.LoteEve.Close;
@@ -57,9 +62,9 @@ begin
    DM_VEN.IncAltDel.ExecSQL;
   end;
 
- DMCTe.CTe.EnviarEventoCTe(idLote);
+ DMDFe.CTe.EnviarEventoCTe(idLote);
 
- EveInicial := DMCTe.CTe.Conhecimentos.Items[0].CTe.Ide.nCT;
+ EveInicial := DMDFe.CTe.Conhecimentos.Items[0].CTe.Ide.nCT;
  EveFinal   := EveInicial;
 
  DM_VEN.IncAltDel.SQL.Clear;
@@ -81,14 +86,53 @@ begin
  MemoStatus.Lines.Add('-------------------------------------------------------------------------------------------');
  MemoStatus.Lines.Add('  Justificativa: ' + edtJustificativa.Text);
 
- sProtocolo := DMCTe.CTe.WebServices.EnvEvento.EventoRetorno.retEvento.Items[0].RetInfEvento.nProt;
- sStat      := IntToStr(DMCTe.CTe.WebServices.EnvEvento.EventoRetorno.retEvento.Items[0].RetInfEvento.cStat);
- sMotivo    := DMCTe.CTe.WebServices.EnvEvento.EventoRetorno.retEvento.Items[0].RetInfEvento.xMotivo;
- sDataHora  := DateTimeToStr(DMCTe.CTe.WebServices.EnvEvento.EventoRetorno.retEvento.Items[0].RetInfEvento.dhRegEvento);
+ sProtocolo := DMDFe.CTe.WebServices.EnvEvento.EventoRetorno.retEvento.Items[0].RetInfEvento.nProt;
+ sStat      := IntToStr(DMDFe.CTe.WebServices.EnvEvento.EventoRetorno.retEvento.Items[0].RetInfEvento.cStat);
+ sMotivo    := DMDFe.CTe.WebServices.EnvEvento.EventoRetorno.retEvento.Items[0].RetInfEvento.xMotivo;
+ dhEvento   := DMDFe.CTe.WebServices.EnvEvento.EventoRetorno.retEvento.Items[0].RetInfEvento.dhRegEvento;
+ sDataHora  := DateTimeToStr(dhEvento);
+
+ DM_CNT.IncAltDel.SQL.Clear;
+ DM_CNT.IncAltDel.SQL.Add('Insert into Cnt_Eventos');
+ DM_CNT.IncAltDel.SQL.Add('(Codigo, Serie, Numero, Evento, Sequencia, DataEvento, Protocolo)');
+ DM_CNT.IncAltDel.SQL.Add('Values (:xCodigo, :xSerie, :xNumero, :xEvento, :xSequencia, :xData, :xProtocolo)');
+ DM_CNT.IncAltDel.Params[0].AsInteger:=edtUnidade.ValueInt;
+ DM_CNT.IncAltDel.Params[1].AsInteger:=DM_CNT.Conhec2Serie.AsInteger;
+ DM_CNT.IncAltDel.Params[2].AsInteger:=edtNumero.ValueInt;
+ DM_CNT.IncAltDel.Params[3].AsInteger:=110111;
+ DM_CNT.IncAltDel.Params[4].AsInteger:=1;
+ DM_CNT.IncAltDel.Params[5].AsDateTime:=dhEvento;
+ DM_CNT.IncAltDel.Params[6].AsString:=sProtocolo;
+ DM_CNT.IncAltDel.ExecSQL;
+
+ DM_CNT.IncAltDel.SQL.Clear;
+ DM_CNT.IncAltDel.SQL.Add('Update Cnt_Conhecimento Set');
+ DM_CNT.IncAltDel.SQL.Add('Cancelado = :xCancelado,');
+ DM_CNT.IncAltDel.SQL.Add('CanProtocolo = :xProtocolo,');
+ DM_CNT.IncAltDel.SQL.Add('CanMotivo = :xMotivo');
+ DM_CNT.IncAltDel.SQL.Add('Where Codigo = :xCodigo');
+ DM_CNT.IncAltDel.SQL.Add('and Numero = :xNumero');
+ DM_CNT.IncAltDel.Params[0].AsString:='S';
+ DM_CNT.IncAltDel.Params[1].AsString:=sProtocolo;
+ DM_CNT.IncAltDel.Params[2].AsString:=edtJustificativa.Text;
+ DM_CNT.IncAltDel.Params[3].AsInteger:=edtUnidade.ValueInt;
+ DM_CNT.IncAltDel.Params[4].AsInteger:=edtNumero.ValueInt;
+ DM_CNT.IncAltDel.ExecSQL;
 
  MemoStatus.Lines.Add('  Protocolo    : ' + sProtocolo);
  MemoStatus.Lines.Add('  Status       : ' + sStat);
  MemoStatus.Lines.Add('  Motivo       : ' + sMotivo);
  MemoStatus.Lines.Add('  Data/Hora    : ' + sDataHora);
  MemoStatus.Lines.Add(' ');
+
+ MemoStatus.Lines.Add('-------------------------------------------------------------------------------------------');
+ MemoStatus.Lines.Add(' Aguarde a Impressão...');
+
+ PathEvento := DMDFe.CTe.Configuracoes.Arquivos.GetPathEvento(teCancelamento, dhEvento);
+ NomeEvento := PathEvento + '\' + DM_CNT.Conhec2ChaveCTe.AsString +
+                                  '110111' + '01' + '-procEventoCTe.xml';
+
+ DMDFe.CTe.EventoCTe.Evento.Clear;
+ DMDFe.CTe.EventoCTe.LerXML(NomeEvento);
+ DMDFe.CTe.ImprimirEvento;
 end;

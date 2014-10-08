@@ -71,6 +71,7 @@ type
     procedure btnLimparClick(Sender: TObject);
   private
     { Private declarations }
+    sDocumento: String;
     PathMensal: String;
   public
     { Public declarations }
@@ -83,7 +84,7 @@ implementation
 
 uses
  pcnConversao,
- CTA_DataModule, CNT_DataModule, DMCTe_DataModule;
+ CTA_DataModule, CNT_DataModule, DFe_DataModule;
 
 {$R *.dfm}
 
@@ -91,61 +92,66 @@ uses
 
 procedure TfrmAuxConsultaCadastroCTe.LimpaCampos;
 begin
- DM_CNT.Parametros.Close;
- DM_CNT.Parametros.SQL.Clear;
- DM_CNT.Parametros.SQL.Add('Select * From CNT_Parametros');
- DM_CNT.Parametros.SQL.Add('Where Empresa = :xEmpresa');
- DM_CNT.Parametros.Params[0].AsString:=DM_CTA.xCodEmpresa;
- DM_CNT.Parametros.Active:=True;
- DM_CNT.Parametros.Open;
+ sDocumento := 'CTE';
+
+ DM_CTA.ParamDFe.Close;
+ DM_CTA.ParamDFe.SQL.Clear;
+ DM_CTA.ParamDFe.SQL.Add('Select * From Sis_ParamDFe');
+ DM_CTA.ParamDFe.SQL.Add('Where Empresa = :xEmpresa');
+ DM_CTA.ParamDFe.SQL.Add('and Modulo = :xModulo');
+ DM_CTA.ParamDFe.SQL.Add('and Documento = :xDocumento');
+ DM_CTA.ParamDFe.Params[0].AsString := DM_CTA.xCodEmpresa;
+ DM_CTA.ParamDFe.Params[1].AsString := DM_CTA.xModulo;
+ DM_CTA.ParamDFe.Params[2].AsString := sDocumento;
+ DM_CTA.ParamDFe.Active:=True;
+ DM_CTA.ParamDFe.Open;
 
  // Configurações -> Arquivos
- DMCTe.CTe.Configuracoes.Arquivos.AdicionarLiteral:=True;
- DMCTe.CTe.Configuracoes.Arquivos.EmissaoPathCTe:=True;
- DMCTe.CTe.Configuracoes.Arquivos.PastaMensal:=True;
- DMCTe.CTe.Configuracoes.Arquivos.PathCan:=Trim(DM_CNT.ParametrosCTeGeralPathSalvar.AsString);
- DMCTe.CTe.Configuracoes.Arquivos.PathDPEC:=Trim(DM_CNT.ParametrosCTeGeralPathSalvar.AsString);
- DMCTe.CTe.Configuracoes.Arquivos.PathInu:=Trim(DM_CNT.ParametrosCTeGeralPathSalvar.AsString);
- DMCTe.CTe.Configuracoes.Arquivos.PathCTe:=Trim(DM_CNT.ParametrosCTeGeralPathSalvar.AsString);
- DMCTe.CTe.Configuracoes.Arquivos.Salvar:=True;
- PathMensal:=DMCTe.CTe.Configuracoes.Arquivos.GetPathCTe(0);
+ DMDFe.NFe.Configuracoes.Arquivos.AdicionarLiteral   := True;
+ DMDFe.NFe.Configuracoes.Arquivos.EmissaoPathNFe     := True;
+ DMDFe.NFe.Configuracoes.Arquivos.PastaMensal        := True;
+ DMDFe.NFe.Configuracoes.Arquivos.PathCan            := Trim(DM_CTA.ParamDFePathSalvar.AsString);
+ DMDFe.NFe.Configuracoes.Arquivos.PathCCe            := Trim(DM_CTA.ParamDFePathSalvar.AsString);
+ DMDFe.NFe.Configuracoes.Arquivos.PathDPEC           := Trim(DM_CTA.ParamDFePathSalvar.AsString);
+ DMDFe.NFe.Configuracoes.Arquivos.PathEvento         := Trim(DM_CTA.ParamDFePathSalvar.AsString);
+ DMDFe.NFe.Configuracoes.Arquivos.PathInu            := Trim(DM_CTA.ParamDFePathSalvar.AsString);
+ DMDFe.NFe.Configuracoes.Arquivos.PathNFe            := Trim(DM_CTA.ParamDFePathSalvar.AsString);
+ DMDFe.NFe.Configuracoes.Arquivos.Salvar             := True;
+ DMDFe.NFe.Configuracoes.Arquivos.SalvarCCeCanEvento := True;
+
+ PathMensal := DMDFe.NFe.Configuracoes.Arquivos.GetPathNFe(0);
 
  // Configurações -> Certificados
- DMCTe.CTe.Configuracoes.Certificados.NumeroSerie:=DM_CNT.ParametrosCTeCertNumSerie.AsString;
- DMCTe.CTe.Configuracoes.Certificados.Senha:=Trim(DM_CNT.ParametrosCTeCertSenha.AsString);
+ DMDFe.NFe.Configuracoes.Certificados.NumeroSerie := DM_CTA.ParamDFeCertNumSerie.AsString;
+ DMDFe.NFe.Configuracoes.Certificados.Senha       := Trim(DM_CTA.ParamDFeCertSenha.AsString);
 
  // Configurações -> Geral
- case DM_CNT.ParametrosCTeGeralFormaEm.AsInteger of
-  0: DMCTe.CTe.Configuracoes.Geral.FormaEmissao:=teNormal;
-  1: DMCTe.CTe.Configuracoes.Geral.FormaEmissao:=teContingencia;
-  2: DMCTe.CTe.Configuracoes.Geral.FormaEmissao:=teDPEC;
-  3: DMCTe.CTe.Configuracoes.Geral.FormaEmissao:=teFSDA;
-  4: DMCTe.CTe.Configuracoes.Geral.FormaEmissao:=teSCAN;
- end;
-
- DMCTe.CTe.Configuracoes.Geral.PathSalvar:=PathMensal;
- DMCTe.CTe.Configuracoes.Geral.PathSchemas:=Trim(DM_CNT.ParametrosCTeGeralPathSchema.AsString);
- DMCTe.CTe.Configuracoes.Geral.Salvar:=True;
+ DMDFe.NFe.Configuracoes.Geral.FormaEmissao := teNormal;
+ DMDFe.NFe.Configuracoes.Geral.PathSalvar   := PathMensal;
+ DMDFe.NFe.Configuracoes.Geral.PathSchemas  := Trim(DM_CTA.ParamDFePathSchema.AsString);
+ DMDFe.NFe.Configuracoes.Geral.Salvar       := True;
+ DMDFe.NFe.Configuracoes.Geral.ModeloDF     := moNFe;
+ DMDFe.NFe.Configuracoes.Geral.VersaoDF     := ve200;
 
  // Configurações -> WebServices
- DMCTe.CTe.Configuracoes.WebServices.AguardarConsultaRet:=0;
- DMCTe.CTe.Configuracoes.WebServices.AjustaAguardaConsultaRet:=False;
- case DM_CNT.ParametrosCTeWebServAmbiente.AsInteger of
-  0: DMCTe.CTe.Configuracoes.WebServices.Ambiente:=taHomologacao;
-  1: DMCTe.CTe.Configuracoes.WebServices.Ambiente:=taProducao;
+ case DM_CTA.ParamDFeWSAmbiente.AsInteger of
+  0: DMDFe.NFe.Configuracoes.WebServices.Ambiente := taHomologacao;
+  1: DMDFe.NFe.Configuracoes.WebServices.Ambiente := taProducao;
  end;
- DMCTe.CTe.Configuracoes.WebServices.IntervaloTentativas:=0;
- DMCTe.CTe.Configuracoes.WebServices.ProxyHost:=Trim(DM_CNT.ParametrosCTeProxyHost.AsString);
- DMCTe.CTe.Configuracoes.WebServices.ProxyPass:=Trim(DM_CNT.ParametrosCTeProxyPass.AsString);
- DMCTe.CTe.Configuracoes.WebServices.ProxyPort:=Trim(DM_CNT.ParametrosCTeProxyPorta.AsString);
- DMCTe.CTe.Configuracoes.WebServices.ProxyUser:=Trim(DM_CNT.ParametrosCTeProxyUser.AsString);
- DMCTe.CTe.Configuracoes.WebServices.Tentativas:=5;
- DMCTe.CTe.Configuracoes.WebServices.UF:=DM_CNT.ParametrosCTeWebServUF.AsString;
- DMCTe.CTe.Configuracoes.WebServices.Visualizar:=(DM_CNT.ParametrosCTeWebServVisualizar.AsString='S');
+ DMDFe.NFe.Configuracoes.WebServices.AguardarConsultaRet      := 0;
+ DMDFe.NFe.Configuracoes.WebServices.AjustaAguardaConsultaRet := False;
+ DMDFe.NFe.Configuracoes.WebServices.IntervaloTentativas      := 0;
+ DMDFe.NFe.Configuracoes.WebServices.ProxyHost                := Trim(DM_CTA.ParamDFeProxyHost.AsString);
+ DMDFe.NFe.Configuracoes.WebServices.ProxyPass                := Trim(DM_CTA.ParamDFeProxyPass.AsString);
+ DMDFe.NFe.Configuracoes.WebServices.ProxyPort                := Trim(DM_CTA.ParamDFeProxyPorta.AsString);
+ DMDFe.NFe.Configuracoes.WebServices.ProxyUser                := Trim(DM_CTA.ParamDFeProxyUser.AsString);
+ DMDFe.NFe.Configuracoes.WebServices.Tentativas               := 5;
+ DMDFe.NFe.Configuracoes.WebServices.UF                       := DM_CTA.ParamDFeWSUF.AsString;
+ DMDFe.NFe.Configuracoes.WebServices.Visualizar               := (DM_CTA.ParamDFeWSVisualizar.AsString='S');
 
  edtCNPJ.Text:='';
  edtCNPJ.SetFocus;
- cbUF.ItemIndex:= cbUF.Items.IndexOf(DM_CNT.ParametrosCTeWebServUF.AsString);
+ cbUF.ItemIndex:= cbUF.Items.IndexOf(DM_CTA.ParamDFeWSUF.AsString);
 
  pcDados.ActivePageIndex:=0;
  edtMotivo.Text:='';
@@ -207,39 +213,39 @@ begin
  if Copy(edtCNPJ.Text, 10, 4)='0000'
   then begin
    CNPJCPF:=Copy(edtCNPJ.Text, 1, 9)+Copy(edtCNPJ.Text, 14, 2);
-   DMCTe.CTe.WebServices.ConsultaCadastro.CNPJ := CNPJCPF;
+   DMDFe.CTe.WebServices.ConsultaCadastro.CNPJ := CNPJCPF;
   end
   else begin
    CNPJCPF:=Copy(edtCNPJ.Text, 2, 14);
-   DMCTe.CTe.WebServices.ConsultaCadastro.CPF := CNPJCPF;
+   DMDFe.CTe.WebServices.ConsultaCadastro.CPF := CNPJCPF;
   end;
- DMCTe.CTe.WebServices.ConsultaCadastro.UF := cbUF.Text;
- DMCTe.CTe.WebServices.ConsultaCadastro.Executar;
+ DMDFe.CTe.WebServices.ConsultaCadastro.UF := cbUF.Text;
+ DMDFe.CTe.WebServices.ConsultaCadastro.Executar;
 
- edtMotivo.Text:=DMCTe.CTe.WebServices.ConsultaCadastro.xMotivo;
- if DMCTe.CTe.WebServices.ConsultaCadastro.RetConsCad.InfCad.Count>0
+ edtMotivo.Text:=DMDFe.CTe.WebServices.ConsultaCadastro.xMotivo;
+ if DMDFe.CTe.WebServices.ConsultaCadastro.RetConsCad.InfCad.Count>0
   then begin
-   edtNome.Text:=DMCTe.CTe.WebServices.ConsultaCadastro.RetConsCad.InfCad.Items[0].xNome;
-   edtAbreviado.Text:=DMCTe.CTe.WebServices.ConsultaCadastro.RetConsCad.InfCad.Items[0].xFant;
-   edtIE.Text:=DMCTe.CTe.WebServices.ConsultaCadastro.RetConsCad.InfCad.Items[0].IE;
-   edtCNAE.Text:=IntToStr(DMCTe.CTe.WebServices.ConsultaCadastro.RetConsCad.InfCad.Items[0].CNAE);
-   edtIEUnica.Text:=DMCTe.CTe.WebServices.ConsultaCadastro.RetConsCad.InfCad.Items[0].IEUnica;
-   edtIEAtual.Text:=DMCTe.CTe.WebServices.ConsultaCadastro.RetConsCad.InfCad.Items[0].IEAtual;
+   edtNome.Text:=DMDFe.CTe.WebServices.ConsultaCadastro.RetConsCad.InfCad.Items[0].xNome;
+   edtAbreviado.Text:=DMDFe.CTe.WebServices.ConsultaCadastro.RetConsCad.InfCad.Items[0].xFant;
+   edtIE.Text:=DMDFe.CTe.WebServices.ConsultaCadastro.RetConsCad.InfCad.Items[0].IE;
+   edtCNAE.Text:=IntToStr(DMDFe.CTe.WebServices.ConsultaCadastro.RetConsCad.InfCad.Items[0].CNAE);
+   edtIEUnica.Text:=DMDFe.CTe.WebServices.ConsultaCadastro.RetConsCad.InfCad.Items[0].IEUnica;
+   edtIEAtual.Text:=DMDFe.CTe.WebServices.ConsultaCadastro.RetConsCad.InfCad.Items[0].IEAtual;
 
-   edtEndereco.Text:=DMCTe.CTe.WebServices.ConsultaCadastro.RetConsCad.InfCad.Items[0].xLgr;
-   edtNumero.Text:=DMCTe.CTe.WebServices.ConsultaCadastro.RetConsCad.InfCad.Items[0].nro;
-   edtComplemento.Text:=DMCTe.CTe.WebServices.ConsultaCadastro.RetConsCad.InfCad.Items[0].xCpl;
-   edtBairro.Text:=DMCTe.CTe.WebServices.ConsultaCadastro.RetConsCad.InfCad.Items[0].xBairro;
-   edtCodigoCidade.Text:=IntToStr(DMCTe.CTe.WebServices.ConsultaCadastro.RetConsCad.InfCad.Items[0].cMun);
-   edtNomeCidade.Text:=DMCTe.CTe.WebServices.ConsultaCadastro.RetConsCad.InfCad.Items[0].xMun;
-   edtCEP.Text:=IntToStr(DMCTe.CTe.WebServices.ConsultaCadastro.RetConsCad.InfCad.Items[0].CEP);
+   edtEndereco.Text:=DMDFe.CTe.WebServices.ConsultaCadastro.RetConsCad.InfCad.Items[0].xLgr;
+   edtNumero.Text:=DMDFe.CTe.WebServices.ConsultaCadastro.RetConsCad.InfCad.Items[0].nro;
+   edtComplemento.Text:=DMDFe.CTe.WebServices.ConsultaCadastro.RetConsCad.InfCad.Items[0].xCpl;
+   edtBairro.Text:=DMDFe.CTe.WebServices.ConsultaCadastro.RetConsCad.InfCad.Items[0].xBairro;
+   edtCodigoCidade.Text:=IntToStr(DMDFe.CTe.WebServices.ConsultaCadastro.RetConsCad.InfCad.Items[0].cMun);
+   edtNomeCidade.Text:=DMDFe.CTe.WebServices.ConsultaCadastro.RetConsCad.InfCad.Items[0].xMun;
+   edtCEP.Text:=IntToStr(DMDFe.CTe.WebServices.ConsultaCadastro.RetConsCad.InfCad.Items[0].CEP);
 
-   case DMCTe.CTe.WebServices.ConsultaCadastro.RetConsCad.InfCad.Items[0].cSit of
+   case DMDFe.CTe.WebServices.ConsultaCadastro.RetConsCad.InfCad.Items[0].cSit of
     0: edtSituacao.Text:='Não Habilitado.';
     1: edtSituacao.Text:='Habilitado.';
    end;
 
-   case DMCTe.CTe.WebServices.ConsultaCadastro.RetConsCad.InfCad.Items[0].indCredNFe of
+   case DMDFe.CTe.WebServices.ConsultaCadastro.RetConsCad.InfCad.Items[0].indCredNFe of
     0: edtIndCredNFe.Text:='Não credenciado para emissão da NF-e.';
     1: edtIndCredNFe.Text:='Credenciado.';
     2: edtIndCredNFe.Text:='Credenciado com obrigatoriedade para todas operações.';
@@ -247,7 +253,7 @@ begin
     4: edtIndCredNFe.Text:='a SEFAZ não fornece a informação.';
    end;
 
-   case DMCTe.CTe.WebServices.ConsultaCadastro.RetConsCad.InfCad.Items[0].indCredCTe of
+   case DMDFe.CTe.WebServices.ConsultaCadastro.RetConsCad.InfCad.Items[0].indCredCTe of
     0: edtIndCredCTe.Text:='Não credenciado para emissão do CT-e.';
     1: edtIndCredCTe.Text:='Credenciado.';
     2: edtIndCredCTe.Text:='Credenciado com obrigatoriedade para todas operações.';
@@ -255,18 +261,18 @@ begin
     4: edtIndCredCTe.Text:='a SEFAZ não fornece a informação.';
    end;
 
-   edtRegApur.Text:=DMCTe.CTe.WebServices.ConsultaCadastro.RetConsCad.InfCad.Items[0].xRegApur;
+   edtRegApur.Text:=DMDFe.CTe.WebServices.ConsultaCadastro.RetConsCad.InfCad.Items[0].xRegApur;
 
-   if DMCTe.CTe.WebServices.ConsultaCadastro.RetConsCad.InfCad.Items[0].dIniAtiv>0
-    then edtIniAtivi.Text:=DateToStr(DMCTe.CTe.WebServices.ConsultaCadastro.RetConsCad.InfCad.Items[0].dIniAtiv)
+   if DMDFe.CTe.WebServices.ConsultaCadastro.RetConsCad.InfCad.Items[0].dIniAtiv>0
+    then edtIniAtivi.Text:=DateToStr(DMDFe.CTe.WebServices.ConsultaCadastro.RetConsCad.InfCad.Items[0].dIniAtiv)
     else edtIniAtivi.Text:='';
 
-   if DMCTe.CTe.WebServices.ConsultaCadastro.RetConsCad.InfCad.Items[0].dUltSit>0
-    then edtUltSituacao.Text:=DateToStr(DMCTe.CTe.WebServices.ConsultaCadastro.RetConsCad.InfCad.Items[0].dUltSit)
+   if DMDFe.CTe.WebServices.ConsultaCadastro.RetConsCad.InfCad.Items[0].dUltSit>0
+    then edtUltSituacao.Text:=DateToStr(DMDFe.CTe.WebServices.ConsultaCadastro.RetConsCad.InfCad.Items[0].dUltSit)
     else edtUltSituacao.Text:='';
 
-   if DMCTe.CTe.WebServices.ConsultaCadastro.RetConsCad.InfCad.Items[0].dBaixa>0
-    then edtBaixa.Text:=DateToStr(DMCTe.CTe.WebServices.ConsultaCadastro.RetConsCad.InfCad.Items[0].dBaixa)
+   if DMDFe.CTe.WebServices.ConsultaCadastro.RetConsCad.InfCad.Items[0].dBaixa>0
+    then edtBaixa.Text:=DateToStr(DMDFe.CTe.WebServices.ConsultaCadastro.RetConsCad.InfCad.Items[0].dBaixa)
     else edtBaixa.Text:='';
   end;
 end;

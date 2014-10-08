@@ -8,18 +8,7 @@ uses
 
 type
   TfrmMovInutilizacaoCTe = class(TForm)
-    pcDados: TPageControl;
-    Conhecimentos: TTabSheet;
-    Label3: TLabel;
-    Panel1: TPanel;
-    btnInutilizar: TBitBtn;
-    btnLimpar: TBitBtn;
-    btnConsultaStatus: TBitBtn;
-    edtJustificativa: TEdit;
-    WebServices: TTabSheet;
-    Image1: TImage;
-    Image2: TImage;
-    MemoStatus: TMemo;
+    gbFaixa: TGroupBox;
     Label1: TLabel;
     edtAno: TEditNumber;
     Label2: TLabel;
@@ -30,6 +19,14 @@ type
     edtInicial: TEditNumber;
     Label6: TLabel;
     edtFinal: TEditNumber;
+    Label3: TLabel;
+    edtJustificativa: TEdit;
+    Panel1: TPanel;
+    btnInutilizar: TBitBtn;
+    btnLimpar: TBitBtn;
+    btnConsultaStatus: TBitBtn;
+    MemoStatus: TMemo;
+    btnInformacoes: TSpeedButton;
     procedure LimpaCampos;
     procedure FormShow(Sender: TObject);
     procedure FormKeyPress(Sender: TObject; var Key: Char);
@@ -42,9 +39,11 @@ type
     procedure btnInutilizarClick(Sender: TObject);
     procedure btnLimparClick(Sender: TObject);
     procedure btnConsultaStatusClick(Sender: TObject);
+    procedure btnInformacoesClick(Sender: TObject);
   private
     { Private declarations }
-    PathMensal, sDataHora, sStat, sMotivo, sProtocolo: String;
+    sDocumento: String;
+    sDataHora, sStat, sMotivo, sProtocolo: String;
   public
     { Public declarations }
   end;
@@ -56,8 +55,9 @@ implementation
 
 uses
  DateUtils, Math, Printers,
- pcnConversao,
- CTA_DataModule, CNT_DataModule, DMCTe_DataModule;
+ pcnConversao,  pcnAuxiliar, ACBrDFeUtil,
+ CTA_DataModule, CNT_DataModule, DFe_DataModule,
+ Frm_ACBrCTe;
 
 {$R *.dfm}
 
@@ -65,74 +65,81 @@ uses
 
 procedure TfrmMovInutilizacaoCTe.LimpaCampos;
 begin
- pcDados.ActivePageIndex:=0;
+ sDocumento := 'CTE';
 
- DM_CNT.Parametros.Close;
- DM_CNT.Parametros.SQL.Clear;
- DM_CNT.Parametros.SQL.Add('Select * From Cnt_Parametros');
- DM_CNT.Parametros.SQL.Add('Where Empresa = :xEmpresa');
- DM_CNT.Parametros.Params[0].AsString:=DM_CTA.xCodEmpresa;
- DM_CNT.Parametros.Active:=True;
- DM_CNT.Parametros.Open;
+ DMDFe.ConfigurarCTe(sDocumento);
+
+ (*
+ DM_CTA.ParamDFe.Close;
+ DM_CTA.ParamDFe.SQL.Clear;
+ DM_CTA.ParamDFe.SQL.Add('Select * From Sis_ParamDFe');
+ DM_CTA.ParamDFe.SQL.Add('Where Empresa = :xEmpresa');
+ DM_CTA.ParamDFe.SQL.Add('and Modulo = :xModulo');
+ DM_CTA.ParamDFe.SQL.Add('and Documento = :xDocumento');
+ DM_CTA.ParamDFe.Params[0].AsString := DM_CTA.xCodEmpresa;
+ DM_CTA.ParamDFe.Params[1].AsString := DM_CTA.xModulo;
+ DM_CTA.ParamDFe.Params[2].AsString := sDocumento;
+ DM_CTA.ParamDFe.Active:=True;
+ DM_CTA.ParamDFe.Open;
 
  // Configurações -> Arquivos
- DMCTe.CTe.Configuracoes.Arquivos.AdicionarLiteral:=True;
- DMCTe.CTe.Configuracoes.Arquivos.EmissaoPathCTe:=True;
- DMCTe.CTe.Configuracoes.Arquivos.PastaMensal:=True;
- DMCTe.CTe.Configuracoes.Arquivos.PathCan:=trim(DM_CNT.ParametrosCTeGeralPathSalvar.AsString);
- DMCTe.CTe.Configuracoes.Arquivos.PathDPEC:=trim(DM_CNT.ParametrosCTeGeralPathSalvar.AsString);
- DMCTe.CTe.Configuracoes.Arquivos.PathInu:=trim(DM_CNT.ParametrosCTeGeralPathSalvar.AsString);
- DMCTe.CTe.Configuracoes.Arquivos.PathCTe:=trim(DM_CNT.ParametrosCTeGeralPathSalvar.AsString);
- DMCTe.CTe.Configuracoes.Arquivos.Salvar:=True;
- PathMensal:=DMCTe.CTe.Configuracoes.Arquivos.GetPathCTe(0);
+ DMDFe.CTe.Configuracoes.Arquivos.AdicionarLiteral   := True;
+ DMDFe.CTe.Configuracoes.Arquivos.EmissaoPathCTe     := True;
+ DMDFe.CTe.Configuracoes.Arquivos.PastaMensal        := True;
+ DMDFe.CTe.Configuracoes.Arquivos.PathCTe            := Trim(DM_CTA.ParamDFePathSalvar.AsString);
+
+ PathMensal := DMDFe.CTe.Configuracoes.Arquivos.GetPathCTe(0);
+
+ DMDFe.CTe.Configuracoes.Arquivos.PathCan            := Trim(DM_CTA.ParamDFePathSalvar.AsString);
+ DMDFe.CTe.Configuracoes.Arquivos.PathCCe            := Trim(DM_CTA.ParamDFePathSalvar.AsString);
+ DMDFe.CTe.Configuracoes.Arquivos.PathEPEC           := PathMensal;
+ DMDFe.CTe.Configuracoes.Arquivos.PathInu            := PathMensal;
+ DMDFe.CTe.Configuracoes.Arquivos.Salvar             := True;
+ DMDFe.CTe.Configuracoes.Arquivos.SalvarCCeCanEvento := True;
+ DMDFe.CTe.Configuracoes.Arquivos.PathEvento         := PathMensal;
 
  // Configurações -> Certificados
- DMCTe.CTe.Configuracoes.Certificados.NumeroSerie:=trim(DM_CNT.ParametrosCTeCertNumSerie.AsString);
- DMCTe.CTe.Configuracoes.Certificados.Senha:=trim(DM_CNT.ParametrosCTeCertSenha.AsString);
+ DMDFe.CTe.Configuracoes.Certificados.NumeroSerie := trim(DM_CTA.ParamDFeCertNumSerie.AsString);
+ DMDFe.CTe.Configuracoes.Certificados.Senha       := trim(DM_CTA.ParamDFeCertSenha.AsString);
 
  // Configurações -> Geral
- case DM_CNT.ParametrosCTeGeralFormaEm.AsInteger of
-  0: DMCTe.CTe.Configuracoes.Geral.FormaEmissao:=teNormal;
-  1: DMCTe.CTe.Configuracoes.Geral.FormaEmissao:=teContingencia;
-  2: DMCTe.CTe.Configuracoes.Geral.FormaEmissao:=teDPEC;
-  3: DMCTe.CTe.Configuracoes.Geral.FormaEmissao:=teFSDA;
-  4: DMCTe.CTe.Configuracoes.Geral.FormaEmissao:=teSCAN;
- end;
- DMCTe.CTe.Configuracoes.Geral.PathSalvar:=PathMensal;
- DMCTe.CTe.Configuracoes.Geral.PathSchemas:=trim(DM_CNT.ParametrosCTeGeralPathSchema.AsString);
- DMCTe.CTe.Configuracoes.Geral.Salvar:=True;
+ DMDFe.CTe.Configuracoes.Geral.FormaEmissao := teNormal;
+ DMDFe.CTe.Configuracoes.Geral.PathSalvar   := PathMensal;
+ DMDFe.CTe.Configuracoes.Geral.PathSchemas  := trim(DM_CTA.ParamDFePathSchema.AsString);
+ DMDFe.CTe.Configuracoes.Geral.Salvar       := True;
 
  // Configurações -> WebServices
- DMCTe.CTe.Configuracoes.WebServices.AguardarConsultaRet:=0;
- DMCTe.CTe.Configuracoes.WebServices.AjustaAguardaConsultaRet:=False;
- case DM_CNT.ParametrosCTeWebServAmbiente.AsInteger of
-  0: DMCTe.CTe.Configuracoes.WebServices.Ambiente:=taHomologacao;
-  1: DMCTe.CTe.Configuracoes.WebServices.Ambiente:=taProducao;
+ case DM_CTA.ParamDFeWSAmbiente.AsInteger of
+  0: DMDFe.CTe.Configuracoes.WebServices.Ambiente := taHomologacao;
+  1: DMDFe.CTe.Configuracoes.WebServices.Ambiente := taProducao;
  end;
- DMCTe.CTe.Configuracoes.WebServices.IntervaloTentativas:=0;
- DMCTe.CTe.Configuracoes.WebServices.ProxyHost:=trim(DM_CNT.ParametrosCTeProxyHost.AsString);
- DMCTe.CTe.Configuracoes.WebServices.ProxyPass:=trim(DM_CNT.ParametrosCTeProxyPass.AsString);
- DMCTe.CTe.Configuracoes.WebServices.ProxyPort:=trim(DM_CNT.ParametrosCTeProxyPorta.AsString);
- DMCTe.CTe.Configuracoes.WebServices.ProxyUser:=trim(DM_CNT.ParametrosCTeProxyUser.AsString);
- DMCTe.CTe.Configuracoes.WebServices.Tentativas:=5;
- DMCTe.CTe.Configuracoes.WebServices.UF:=DM_CNT.ParametrosCTeWebServUF.AsString;
- DMCTe.CTe.Configuracoes.WebServices.Visualizar:=(DM_CNT.ParametrosCTeWebServVisualizar.AsString='S');
+ DMDFe.CTe.Configuracoes.WebServices.AguardarConsultaRet      := 0;
+ DMDFe.CTe.Configuracoes.WebServices.AjustaAguardaConsultaRet := False;
+ DMDFe.CTe.Configuracoes.WebServices.IntervaloTentativas      := 0;
+ DMDFe.CTe.Configuracoes.WebServices.ProxyHost                := trim(DM_CTA.ParamDFeProxyHost.AsString);
+ DMDFe.CTe.Configuracoes.WebServices.ProxyPass                := trim(DM_CTA.ParamDFeProxyPass.AsString);
+ DMDFe.CTe.Configuracoes.WebServices.ProxyPort                := trim(DM_CTA.ParamDFeProxyPorta.AsString);
+ DMDFe.CTe.Configuracoes.WebServices.ProxyUser                := trim(DM_CTA.ParamDFeProxyUser.AsString);
+ DMDFe.CTe.Configuracoes.WebServices.Tentativas               := 5;
+ DMDFe.CTe.Configuracoes.WebServices.UF                       := DM_CTA.ParamDFeWSUF.AsString;
+ DMDFe.CTe.Configuracoes.WebServices.Visualizar               := (DM_CTA.ParamDFeWSVisualizar.AsString='S');
+ *)
 
- MemoStatus.Clear;
  edtAno.StoreValue(YearOf(Date));
  edtModelo.StoreValue(57);
- edtSerie.StoreValue(DM_CNT.ParametrosSerie.AsInteger);
+ edtSerie.StoreValue(DM_CTA.ParamDFeSerie.AsInteger);
  edtInicial.StoreValue(0);
  edtInicial.SetFocus;
  edtFinal.StoreValue(0);
- edtJustificativa.Text:='';
+ edtJustificativa.Text := '';
 
- btnInutilizar.Enabled:=False;
- btnInutilizar.Visible:=DM_CTA.PermiteControlar;
+ btnInutilizar.Enabled := False;
+ btnInutilizar.Visible := DM_CTA.PermiteControlar;
 end;
 
 procedure TfrmMovInutilizacaoCTe.FormShow(Sender: TObject);
 begin
+ MemoStatus.Clear;
  LimpaCampos;
 end;
 
@@ -182,14 +189,16 @@ end;
 procedure TfrmMovInutilizacaoCTe.btnInutilizarClick(Sender: TObject);
 var
  CNPJ: String;
+ UF: Integer;
 begin
- pcDados.ActivePageIndex:=1;
+ DMDFe.DACTe.NumCopias      := 1;
+ DMDFe.DACTe.MostrarPreview := False;
 
  DM_CTA.Empresa.Close;
  DM_CTA.Empresa.SQL.Clear;
  DM_CTA.Empresa.SQL.Add('Select * From Sis_Empresa');
  DM_CTA.Empresa.SQL.Add('Where Codigo = :xCodigo');
- DM_CTA.Empresa.Params[0].AsString:=DM_CNT.ParametrosEmitente.AsString;
+ DM_CTA.Empresa.Params[0].AsString:=DM_CTA.ParamDFeEmitente.AsString;
  DM_CTA.Empresa.Active:=True;
  DM_CTA.Empresa.Open;
 
@@ -198,7 +207,7 @@ begin
   else CNPJ := Copy(DM_CTA.EmpresaCNPJ.AsString, 1, 9) +
                Copy(DM_CTA.EmpresaCNPJ.AsString, 14, 2);
 
- DMCTe.CTe.WebServices.Inutiliza(CNPJ, edtJustificativa.Text, edtAno.ValueInt,
+ DMDFe.CTe.WebServices.Inutiliza(CNPJ, edtJustificativa.Text, edtAno.ValueInt,
                            edtModelo.ValueInt, edtSerie.ValueInt,
                            edtInicial.ValueInt, edtFinal.ValueInt);
 
@@ -212,15 +221,25 @@ begin
  MemoStatus.Lines.Add('  Série        : ' + edtSerie.Text);
  MemoStatus.Lines.Add('  Justificativa: ' + edtJustificativa.Text);
 
- sProtocolo := DMCTe.CTe.WebServices.Inutilizacao.Protocolo;
- sMotivo    := DMCTe.CTe.WebServices.Inutilizacao.xMotivo;
- sStat      := IntToStr(DMCTe.CTe.WebServices.Inutilizacao.cStat);
- sDataHora  := DateTimeToStr(DMCTe.CTe.WebServices.Inutilizacao.dhRecbto);
+ UF         := DMDFe.CTe.WebServices.Inutilizacao.cUF;
+ sProtocolo := DMDFe.CTe.WebServices.Inutilizacao.Protocolo;
+ sMotivo    := DMDFe.CTe.WebServices.Inutilizacao.xMotivo;
+ sStat      := IntToStr(DMDFe.CTe.WebServices.Inutilizacao.cStat);
+ sDataHora  := DateTimeToStr(DMDFe.CTe.WebServices.Inutilizacao.dhRecbto);
  MemoStatus.Lines.Add('  Protocolo    : ' + sProtocolo);
  MemoStatus.Lines.Add('  Motivo       : ' + sMotivo);
  MemoStatus.Lines.Add('  Status       : ' + sStat);
  MemoStatus.Lines.Add('  Data/Hora    : ' + sDataHora);
  MemoStatus.Lines.Add(' ');
+
+ DMDFe.CTe.InutCTe.LerXML(DMDFe.CTe.Configuracoes.Arquivos.GetPathInu + '\' +
+                          IntToStr(UF) + // Copy(edtAno.Text, 3, 2) +
+                          CNPJ + edtModelo.Text + edtSerie.Text +
+                          FormatFloat('000000000', edtInicial.ValueInt) +
+                          FormatFloat('000000000', edtFinal.ValueInt) +
+                          '-ProcInutCTe');
+ DMDFe.CTe.ImprimirInutilizacao;
+ DMDFe.CTe.ImprimirInutilizacaoPDF;
 
  MessageDlg('Numeração Inutilizada', mtInformation, [mbOk], 0);
  LimpaCampos;
@@ -228,21 +247,41 @@ end;
 
 procedure TfrmMovInutilizacaoCTe.btnLimparClick(Sender: TObject);
 begin
+ MemoStatus.Clear;
  LimpaCampos;
 end;
 
 procedure TfrmMovInutilizacaoCTe.btnConsultaStatusClick(Sender: TObject);
+var
+ sAmbiente: String;
 begin
- pcDados.ActivePageIndex:=1;
+ DMDFe.CTe.WebServices.StatusServico.Executar;
+ sAmbiente := trim(TpAmbToStr( DMDFe.CTe.WebServices.StatusServico.tpAmb ));
+ if sAmbiente = '1'
+  then sAmbiente := sAmbiente + ' - Produção'
+  else sAmbiente := sAmbiente + ' - Homologação';
+
  MemoStatus.Lines.Add('-------------------------------------------------------------------------------------------');
  MemoStatus.Lines.Add(' =>  Consultando Status do Serviço');
  MemoStatus.Lines.Add('-------------------------------------------------------------------------------------------');
- DMCTe.CTe.WebServices.StatusServico.Executar;
- sDataHora:= DateTimeToStr(DMCTe.CTe.WebServices.StatusServico.dhRetorno);
- sStat := IntToStr(DMCTe.CTe.WebServices.StatusServico.cStat);
- sMotivo := DMCTe.CTe.WebServices.StatusServico.xMotivo;
- MemoStatus.Lines.Add('  ' + sStat + ' - ' + sMotivo);
+ MemoStatus.Lines.Add('  Ambiente          : ' + sAmbiente);
+ MemoStatus.Lines.Add('  Versão Aplicativo : ' + DMDFe.CTe.WebServices.StatusServico.verAplic);
+ MemoStatus.Lines.Add('  Status Código     : ' + IntToStr( DMDFe.CTe.WebServices.StatusServico.cStat ));
+ MemoStatus.Lines.Add('  Status Descrição  : ' + DMDFe.CTe.WebServices.StatusServico.xMotivo);
+ MemoStatus.Lines.Add('  UF                : ' + CodigoParaUF( DMDFe.CTe.WebServices.StatusServico.cUF ));
+ MemoStatus.Lines.Add('  Recebimento       : ' + DFeUtil.SeSenao(DMDFe.CTe.WebServices.StatusServico.dhRecbto = 0, '',
+                                                                DateTimeToStr(DMDFe.CTe.WebServices.StatusServico.dhRecbto)));
+ MemoStatus.Lines.Add('  Tempo Médio       : ' + IntToStr( DMDFe.CTe.WebServices.StatusServico.TMed ));
+ MemoStatus.Lines.Add('  Retorno           : ' + DFeUtil.SeSenao(DMDFe.CTe.WebServices.StatusServico.dhRetorno = 0, '',
+                                                                DateTimeToStr(DMDFe.CTe.WebServices.StatusServico.dhRetorno)));
+ MemoStatus.Lines.Add('  Observação        : ' + DMDFe.CTe.WebServices.StatusServico.xObs);
+ MemoStatus.Lines.Add('-------------------------------------------------------------------------------------------');
  MemoStatus.Lines.Add(' ');
+end;
+
+procedure TfrmMovInutilizacaoCTe.btnInformacoesClick(Sender: TObject);
+begin
+ frmACBrCTe.ShowModal;
 end;
 
 end.
