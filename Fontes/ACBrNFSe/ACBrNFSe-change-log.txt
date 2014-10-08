@@ -53,6 +53,9 @@ Símbolo : Significado
 [-] Ao fazer a conversão de str para int estava ocorrendo erro quando a str era 
     nula.
     por: Paulo Henrique
+[*] Diversas alterações realiadas conforme post:
+    http://www.projetoacbr.com.br/forum/index.php?/topic/17988-mudan%C3%A7a-da-cidade-de-governador-valadares-do-provedor-4r-para-actcon/#entry112822 
+    por: Herbert da Silva Costa
 
 07/10/2014
 [*] Incluido o provedor Betha na lista de provedores que não aceitam

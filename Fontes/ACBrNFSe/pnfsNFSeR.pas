@@ -734,6 +734,7 @@ begin
     proWebISS: Result := LerRPS_ABRASF_V1;
 
     pro4R,
+    proActcon,
     proAgili,
     proCoplan,
     proDigifred,
@@ -1580,7 +1581,6 @@ begin
 
  case FProvedor of
   proAbaco,
-  proActcon,
   proAraucaria,
   proBetha,
   proBHISS,
@@ -1604,6 +1604,7 @@ begin
   proWebISS: Result := LerNFSe_ABRASF_V1;
 
   pro4R,
+  proActcon,
   proAgili,
   proCoplan,
   proDigifred,

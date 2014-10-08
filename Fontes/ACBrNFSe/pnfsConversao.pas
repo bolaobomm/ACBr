@@ -687,7 +687,7 @@ var
 begin
  Provedor := 'Nenhum';
  case ACodigo of
-  3127701, // Governador Valadares/MG
+//  3127701, // Governador Valadares/MG
   3500105, // Adamantina/SP
   3510203, // Capão Bonito/SP
   3522109, // Itanhaem/SP
@@ -701,6 +701,7 @@ begin
   5107602  // Rondonopolis/MT
          : Provedor := 'Abaco';
 
+  3127701, // Governador Valadares/MG
   3131307  // Ipatinga/MG
          : Provedor := 'Actcon';
 

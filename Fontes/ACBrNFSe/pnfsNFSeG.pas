@@ -179,7 +179,7 @@ begin
                // Não Incluir a versão para os provedores abaixo
                DFeUtil.SeSenao(AProvedor in [proAbaco, proAraucaria, proBetha, proDBSeller,
                                              proGinfes, proGoiania, proGovBR, proIssCuritiba,
-                                             proISSNET, proNatal, proActcon, proRecife, proRJ,
+                                             proISSNET, proNatal, proRecife, proRJ,
                                              proSimplISS, proThema, proTiplan, proAgili,
                                              proFISSLex, proSpeedGov, proPronim, proCoplan,
                                              proSalvador],
@@ -197,7 +197,8 @@ begin
                 NumeroLote +
               '</' + Prefixo4 + 'NumeroLote>' +
 
-              DFeUtil.SeSenao((VersaoXML = '2') or (AProvedor = proISSNet),
+              DFeUtil.SeSenao((VersaoXML = '2') or
+                              (AProvedor in [proISSNet, proActcon]),
 
                 '<' + Prefixo4 + 'CpfCnpj>' +
                 DFeUtil.SeSenao(Length(OnlyNumber(Cnpj)) <= 11,
@@ -239,7 +240,8 @@ begin
 
  DadosMsg := '<' + Prefixo3 + 'Prestador' +
                DFeUtil.SeSenao(AProvedor = proSimplISS, ' ' + NameSpaceDad, '>') +
-               DFeUtil.SeSenao((VersaoXML = '2') or (AProvedor in [proISSNet, proActcon]),
+               DFeUtil.SeSenao((VersaoXML = '2') or
+                               (AProvedor in [proISSNet, proActcon]),
 
                  '<' + Prefixo4 + 'CpfCnpj>' +
                   DFeUtil.SeSenao(Length(OnlyNumber(Cnpj)) <= 11,
@@ -283,7 +285,8 @@ begin
  DadosMsg := '<' + Prefixo3 + 'Prestador' +
                DFeUtil.SeSenao(AProvedor = proSimplISS, ' ' + NameSpaceDad, '>') +
 
-               DFeUtil.SeSenao((VersaoXML = '2') or (AProvedor in [proISSNet, proActcon]),
+               DFeUtil.SeSenao((VersaoXML = '2') or
+                               (AProvedor in [proISSNet, proActcon]),
 
                  '<' + Prefixo4 + 'CpfCnpj>' +
                   DFeUtil.SeSenao(Length(OnlyNumber(Cnpj)) <= 11,
@@ -346,7 +349,8 @@ begin
              '<' + Prefixo3 + 'Prestador' +
                DFeUtil.SeSenao(AProvedor = proSimplISS, ' ' + NameSpaceDad, '>') +
 
-              DFeUtil.SeSenao((VersaoXML = '2') or (AProvedor in [proISSNet, proActcon]),
+              DFeUtil.SeSenao((VersaoXML = '2') or
+                              (AProvedor in [proISSNet, proActcon]),
 
                 '<' + Prefixo4 + 'CpfCnpj>' +
                   DFeUtil.SeSenao(Length(OnlyNumber(Cnpj)) <= 11,
@@ -394,7 +398,8 @@ begin
 
  DadosMsg := '<' + Prefixo3 + 'Prestador' +
                DFeUtil.SeSenao(AProvedor = proSimplISS, ' ' + NameSpaceDad, '>') +
-               DFeUtil.SeSenao((VersaoXML = '2') or (AProvedor in [proISSNet, proActcon] ),
+               DFeUtil.SeSenao((VersaoXML = '2') or
+                               (AProvedor in [proISSNet, proActcon]),
 
                  '<' + Prefixo4 + 'CpfCnpj>' +
                   DFeUtil.SeSenao(Length(OnlyNumber(Cnpj)) <= 11,
@@ -450,7 +455,8 @@ begin
  if (CNPJTomador <> '') or (IMTomador <> '')
   then begin
     DadosMsg := DadosMsg + '<Tomador>' +
-                            DFeUtil.SeSenao((VersaoXML = '2') or (AProvedor in [proThema]),
+                            DFeUtil.SeSenao((VersaoXML = '2') or
+                                            (AProvedor in [proThema]),
 
                             '<' + Prefixo4 + 'CpfCnpj>' +
                              DFeUtil.SeSenao(Length(OnlyNumber(CnpjTomador)) <= 11,
@@ -552,7 +558,8 @@ begin
                    DFeUtil.SeSenao(AProvedor in [pro4R, proISSe, profintelISS, proFiorilli,
                                                  proDigifred, proSystempro, proVirtual,
                                                  proISSDigital, proSaatri, proCoplan,
-                                                 proVitoria, proTecnos, proPVH, proSisPMJP],
+                                                 proVitoria, proTecnos, proPVH,
+                                                 proSisPMJP, proActcon],
 
                     //Adicionei o SeSenao para poder cancelar nota onde o pretador é pessoa física (Cartório em Vitória-ES). - Eduardo Silva dos Santos - 11/01/2014 - DRD SISTEMAS
                     DFeUtil.SeSenao( length(Cnpj)=14,

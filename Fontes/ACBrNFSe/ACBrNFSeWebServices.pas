@@ -2514,6 +2514,7 @@ begin
       proVirtual,
       proFreire,
       proLink3,
+      proActcon,
       proGovDigital: vNotas := vNotas + '<' + Prefixo4 + 'Rps>' +
                                '<' + Prefixo4 + 'InfDeclaracaoPrestacaoServico' +
                                  RetornarConteudoEntre(TNFSeEnviarSincrono(Self).FNotasFiscais.Items[I].XML_Rps,

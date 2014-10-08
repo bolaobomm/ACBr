@@ -132,11 +132,11 @@ var
  	ConfigURL: TConfigURL;
 begin
   case ACodCidade of
-   3127701:
-     begin
-         ConfigURL.ProNomeCidade := 'valadares';
-         ConfigURL.HomNomeCidade := 'valadares';
-	   end;
+//   3127701:
+//     begin
+//         ConfigURL.ProNomeCidade := 'valadares';
+//         ConfigURL.HomNomeCidade := 'valadares';
+//	   end;
    3500105:
      begin
          ConfigURL.ProNomeCidade := 'adamantina';
@@ -165,7 +165,8 @@ begin
   end;
 
   ConfigURL.ProRecepcaoLoteRPS    := '';
-  ConfigURL.ProConsultaLoteRPS    := '';
+  ConfigURL.ProConsultaLoteRPS    :=Format('http://%s.sistemas4r.com.br/abrasf/aconsultarloterps.aspx?wsdl',[ConfigURL.ProNomeCidade]);
+  //'';
   ConfigURL.ProConsultaNFSeRPS    := Format('http://%s.sistemas4r.com.br/abrasf/aconsultarnfseporrps.aspx?wsdl',[ConfigURL.ProNomeCidade]);
   ConfigURL.ProConsultaSitLoteRPS := '';
   ConfigURL.ProConsultaNFSe       := '';

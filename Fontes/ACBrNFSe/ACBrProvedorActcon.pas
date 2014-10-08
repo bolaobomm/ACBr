@@ -96,6 +96,7 @@ var
 begin
  case ACodCidade of
   3131307: NomeCidade:='ipatinga';
+  3127701: NomeCidade:='valadares'
  end;
 
  ConfigCidade.VersaoSoap    := '1.2';
@@ -104,8 +105,19 @@ begin
  ConfigCidade.Prefixo4      := '';
  ConfigCidade.Identificador := 'Id';
 
- if AAmbiente = 1  then  DescAmbiente:='nfseserv' else DescAmbiente:='homologacao';
- ConfigCidade.NameSpaceEnvelope:='http://nfe.'+NomeCidade+'.mg.gov.br/'+DescAmbiente+'/webservice/nfse.wsdl';
+ if AAmbiente = 1  then
+ begin
+  DescAmbiente:='nfseserv';
+  ConfigCidade.NameSpaceEnvelope:='http://nfe'+NomeCidade+'.portalfacil.com.br/'+DescAmbiente+'/webservice/nfse.wsdl';
+ end
+ else
+ begin
+  DescAmbiente:='homologacao';
+  ConfigCidade.NameSpaceEnvelope:='http://nfe'+NomeCidade+'.portalfacil.com.br/'+DescAmbiente+'/webservice/nfse.wsdl';
+ end;
+
+
+
  ConfigCidade.AssinaRPS  := false;
  ConfigCidade.AssinaLote := true;
 
@@ -119,19 +131,26 @@ var
 begin
  case ACodCidade of
   3131307: NomeCidade:='ipatinga';
+  3127701: NomeCidade:='valadares'
  end;
 ConfigSchema.VersaoCabecalho := '1.00';
-ConfigSchema.VersaoDados     := '1.00';
-ConfigSchema.VersaoXML       := '1';
-ConfigSchema.NameSpaceXML    := 'http://nfe.'+NomeCidade+'.mg.gov.br/'+DescAmbiente+'/schema/';
-ConfigSchema.Cabecalho       := 'nfse_v01.xsd';
-ConfigSchema.ServicoEnviar   := 'nfse_v01.xsd';
-ConfigSchema.ServicoConSit   := 'nfse_v01.xsd';
-ConfigSchema.ServicoConLot   := 'nfse_v01.xsd';
-ConfigSchema.ServicoConRps   := 'nfse_v01.xsd';
-ConfigSchema.ServicoConNfse  := 'nfse_v01.xsd';
-ConfigSchema.ServicoCancelar := 'nfse_v01.xsd';
-ConfigSchema.ServicoEnviarSincrono:='nfse_v01.xsd';
+ConfigSchema.VersaoDados     := '2.00';
+ConfigSchema.VersaoXML       := '2';
+
+if DescAmbiente = 'homologacao'  then
+ ConfigSchema.NameSpaceXML    := 'http://nfe'+NomeCidade+'.portalfacil.com.br/'+DescAmbiente+'/schema/'
+else
+ ConfigSchema.NameSpaceXML    := 'http://nfe'+NomeCidade+'.portalfacil.com.br/'+DescAmbiente+'/schema/';
+
+
+ConfigSchema.Cabecalho       := 'nfse_v201.xsd';
+ConfigSchema.ServicoEnviar   := 'nfse_v201.xsd';
+ConfigSchema.ServicoConSit   := 'nfse_v201.xsd';
+ConfigSchema.ServicoConLot   := 'nfse_v201.xsd';
+ConfigSchema.ServicoConRps   := 'nfse_v201.xsd';
+ConfigSchema.ServicoConNfse  := 'nfse_v201.xsd';
+ConfigSchema.ServicoCancelar := 'nfse_v201.xsd';
+ConfigSchema.ServicoEnviarSincrono:='nfse_v201.xsd';
 ConfigSchema.ServicoGerar    := '';
 ConfigSchema.DefTipos        := '';
 Result := ConfigSchema;
@@ -142,27 +161,41 @@ var
  ConfigURL: TConfigURL;
 begin
  case ACodCidade of
+  3127701:
+  begin
+   ConfigURL.HomNomeCidade := 'valadares';
+   ConfigURL.ProNomeCidade := 'valadares';
+  end;
   3131307: begin // Ipatinga
             ConfigURL.HomNomeCidade := 'ipatinga';
             ConfigURL.ProNomeCidade := 'ipatinga';
            end;
  end;
 
- ConfigURL.HomRecepcaoLoteRPS    := 'http://nfe.'+ConfigURL.HomNomeCidade+'.mg.gov.br/homologacao/webservice/servicos';
+ ConfigURL.HomRecepcaoLoteRPS    := 'http://nfe'+ConfigURL.HomNomeCidade+'.portalfacil.com.br/homologacao/webservice/servicos';
+ ConfigURL.HomConsultaLoteRPS    := 'http://nfe'+ConfigURL.HomNomeCidade+'.portalfacil.com.br/homologacao/webservice/servicos';
+ ConfigURL.HomConsultaNFSeRPS    := 'http://nfe'+ConfigURL.HomNomeCidade+'.portalfacil.com.br/homologacao/webservice/servicos';
+ ConfigURL.HomConsultaSitLoteRPS := 'http://nfe'+ConfigURL.HomNomeCidade+'.portalfacil.com.br/homologacao/webservice/servicos';
+ ConfigURL.HomConsultaNFSe       := 'http://nfe'+ConfigURL.HomNomeCidade+'.portalfacil.com.br/homologacao/webservice/servicos';
+ ConfigURL.HomCancelaNFSe        := 'http://nfe'+ConfigURL.HomNomeCidade+'.portalfacil.com.br/homologacao/webservice/servicos';
+ ConfigURL.HomRecepcaoSincrono   := 'http://nfe'+ConfigURL.HomNomeCidade+'.portalfacil.com.br/homologacao/webservice/servicos';
+
+
+(* ConfigURL.HomRecepcaoLoteRPS    := 'http://nfe.'+ConfigURL.HomNomeCidade+'.mg.gov.br/homologacao/webservice/servicos';
  ConfigURL.HomConsultaLoteRPS    := 'http://nfe.'+ConfigURL.HomNomeCidade+'.mg.gov.br/homologacao/webservice/servicos';
  ConfigURL.HomConsultaNFSeRPS    := 'http://nfe.'+ConfigURL.HomNomeCidade+'.mg.gov.br/homologacao/webservice/servicos';
  ConfigURL.HomConsultaSitLoteRPS := 'http://nfe.'+ConfigURL.HomNomeCidade+'.mg.gov.br/homologacao/webservice/servicos';
  ConfigURL.HomConsultaNFSe       := 'http://nfe.'+ConfigURL.HomNomeCidade+'.mg.gov.br/homologacao/webservice/servicos';
  ConfigURL.HomCancelaNFSe        := 'http://nfe.'+ConfigURL.HomNomeCidade+'.mg.gov.br/homologacao/webservice/servicos';
- ConfigURL.HomRecepcaoSincrono   := 'http://nfe.'+ConfigURL.HomNomeCidade+'.mg.gov.br/homologacao/webservice/servicos';
+ ConfigURL.HomRecepcaoSincrono   := 'http://nfe.'+ConfigURL.HomNomeCidade+'.mg.gov.br/homologacao/webservice/servicos';*)
 
- ConfigURL.ProRecepcaoLoteRPS    := 'http://nfe.'+ConfigURL.ProNomeCidade+'.mg.gov.br/nfseserv/webservice/servicos';
- ConfigURL.ProConsultaLoteRPS    := 'http://nfe.'+ConfigURL.ProNomeCidade+'.mg.gov.br/nfseserv/webservice/servicos';
- ConfigURL.ProConsultaNFSeRPS    := 'http://nfe.'+ConfigURL.ProNomeCidade+'.mg.gov.br/nfseserv/webservice/servicos';
- ConfigURL.ProConsultaSitLoteRPS := 'http://nfe.'+ConfigURL.ProNomeCidade+'.mg.gov.br/s/webservice/servicos';
- ConfigURL.ProConsultaNFSe       := 'http://nfe.'+ConfigURL.ProNomeCidade+'.mg.gov.br/nfseserv/webservice/servicos';
- ConfigURL.ProCancelaNFSe        := 'http://nfe.'+ConfigURL.ProNomeCidade+'.mg.gov.br/nfseserv/webservice/servicos';
- ConfigURL.ProRecepcaoSincrono   := 'http://nfe.'+ConfigURL.ProNomeCidade+'.mg.gov.br/nfseserv/webservice/servicos';
+ ConfigURL.ProRecepcaoLoteRPS    := 'http://nfe'+ConfigURL.ProNomeCidade+'.portalfacil.com.br/nfseserv/webservice/servicos';
+ ConfigURL.ProConsultaLoteRPS    := 'http://nfe'+ConfigURL.ProNomeCidade+'.portalfacil.com.br/nfseserv/webservice/servicos';
+ ConfigURL.ProConsultaNFSeRPS    := 'http://nfe'+ConfigURL.ProNomeCidade+'.portalfacil.com.br/nfseserv/webservice/servicos';
+ ConfigURL.ProConsultaSitLoteRPS := 'http://nfe'+ConfigURL.ProNomeCidade+'.portalfacil.com.br/s/webservice/servicos';
+ ConfigURL.ProConsultaNFSe       := 'http://nfe'+ConfigURL.ProNomeCidade+'.portalfacil.com.br/nfseserv/webservice/servicos';
+ ConfigURL.ProCancelaNFSe        := 'http://nfe'+ConfigURL.ProNomeCidade+'.portalfacil.com.br/nfseserv/webservice/servicos';
+ ConfigURL.ProRecepcaoSincrono   := 'http://nfe'+ConfigURL.ProNomeCidade+'.portalfacil.com.br/nfseserv/webservice/servicos';
 
  Result := ConfigURL;
 end;

@@ -286,7 +286,7 @@ begin
    exit;
   end;
 
- NotasFiscais.Assinar; 
+ NotasFiscais.Assinar;
 // NotasFiscais.Assinar(FConfiguracoes.WebServices.Provedor <> proPublica); // Assina os Rps
 
  Result := WebServices.Envia(ALote);
@@ -333,11 +333,26 @@ begin
       then aPath := PathWithDelim(aPath)+IntToStr(wAno)+IntToStrZero(wMes,2) + '\';
     end;
 
-   // Alterado por Rodrigo Cantelli
-   if FConfiguracoes.Arquivos.AdicionarLiteral
-    then NotasFiscais.LoadFromFile(aPath+'Ger\'+ANumLote+'-env-lot.xml')
-    else if FConfiguracoes.Arquivos.Salvar then
-           NotasFiscais.LoadFromFile(aPath+ANumLote+'-env-lot.xml');
+    // Alterado por Herbert Costa para quando o envio de lote não for
+    //sincrono o arquivo tem outro nome
+    if FilesExists(aPath+'Ger\'+ANumLote+'-env-lotS.xml') then
+    begin
+     // Alterado por Rodrigo Cantelli
+     if FConfiguracoes.Arquivos.AdicionarLiteral then
+        NotasFiscais.LoadFromFile(aPath+'Ger\'+ANumLote+'-env-lotS.xml')
+      else
+       if FConfiguracoes.Arquivos.Salvar then
+         NotasFiscais.LoadFromFile(aPath+'Ger\'+ANumLote+'-env-lotS.xml');
+    end
+    else
+    begin
+      if FConfiguracoes.Arquivos.AdicionarLiteral then
+        NotasFiscais.LoadFromFile(aPath+'Ger\'+ANumLote+'-env-lot.xml')
+      else
+       if FConfiguracoes.Arquivos.Salvar then
+         NotasFiscais.LoadFromFile(aPath+'Ger\'+ANumLote+'-env-lot.xml');
+    end;
+
 
    if NotasFiscais.Count <= 0
     then begin
@@ -348,7 +363,7 @@ begin
     end;
   end;
 
-  if (Trim(Self.WebServices.ConsLote.NumeroLote) = '') then 
+  if (Trim(Self.WebServices.ConsLote.NumeroLote) = '') then
     Self.WebServices.ConsLote.NumeroLote:= ANumLote;
 
   //obrigatorio passar a razao social para o provedor Tecnos
