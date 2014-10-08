@@ -47,9 +47,9 @@ type
    { protected }
   private
    { private }
+   DescAmbiente:String;
   public
    { public }
-   DescAmbiente:String;
    Constructor Create;
    function GetConfigCidade(ACodCidade, AAmbiente: Integer): TConfigCidade; OverRide;
    function GetConfigSchema(ACodCidade: Integer): TConfigSchema; OverRide;
@@ -92,68 +92,60 @@ function TProvedorActcon.GetConfigCidade(ACodCidade,
   AAmbiente: Integer): TConfigCidade;
 var
  ConfigCidade: TConfigCidade;
- NomeCidade:String;
+ NomeCidade: String;
 begin
- case ACodCidade of
-  3131307: NomeCidade:='ipatinga';
-  3127701: NomeCidade:='valadares'
- end;
+  case ACodCidade of
+   3131307: NomeCidade := 'ipatinga';
+   3127701: NomeCidade := 'valadares'
+  end;
 
- ConfigCidade.VersaoSoap    := '1.2';
- ConfigCidade.Prefixo2      := '';
- ConfigCidade.Prefixo3      := '';
- ConfigCidade.Prefixo4      := '';
- ConfigCidade.Identificador := 'Id';
+  ConfigCidade.VersaoSoap    := '1.2';
+  ConfigCidade.Prefixo2      := '';
+  ConfigCidade.Prefixo3      := '';
+  ConfigCidade.Prefixo4      := '';
+  ConfigCidade.Identificador := 'Id';
 
- if AAmbiente = 1  then
- begin
-  DescAmbiente:='nfseserv';
+  if AAmbiente = 1  then
+    DescAmbiente:='nfseserv'
+  else
+    DescAmbiente:='homologacao';
+
   ConfigCidade.NameSpaceEnvelope:='http://nfe'+NomeCidade+'.portalfacil.com.br/'+DescAmbiente+'/webservice/nfse.wsdl';
- end
- else
- begin
-  DescAmbiente:='homologacao';
-  ConfigCidade.NameSpaceEnvelope:='http://nfe'+NomeCidade+'.portalfacil.com.br/'+DescAmbiente+'/webservice/nfse.wsdl';
- end;
 
+  ConfigCidade.AssinaRPS  := false;
+  ConfigCidade.AssinaLote := true;
 
-
- ConfigCidade.AssinaRPS  := false;
- ConfigCidade.AssinaLote := true;
-
- Result := ConfigCidade;
+  Result := ConfigCidade;
 end;
 
 function TProvedorActcon.GetConfigSchema(ACodCidade: Integer): TConfigSchema;
 var
  ConfigSchema: TConfigSchema;
- NomeCidade:String;
+ NomeCidade: String;
 begin
- case ACodCidade of
-  3131307: NomeCidade:='ipatinga';
-  3127701: NomeCidade:='valadares'
- end;
-ConfigSchema.VersaoCabecalho := '1.00';
-ConfigSchema.VersaoDados     := '2.00';
-ConfigSchema.VersaoXML       := '2';
+  case ACodCidade of
+   3131307: NomeCidade := 'ipatinga';
+   3127701: NomeCidade := 'valadares'
+  end;
 
-if DescAmbiente = 'homologacao'  then
- ConfigSchema.NameSpaceXML    := 'http://nfe'+NomeCidade+'.portalfacil.com.br/'+DescAmbiente+'/schema/'
-else
- ConfigSchema.NameSpaceXML    := 'http://nfe'+NomeCidade+'.portalfacil.com.br/'+DescAmbiente+'/schema/';
+  ConfigSchema.VersaoCabecalho := '1.00';
+  ConfigSchema.VersaoDados     := '2.00';
+  ConfigSchema.VersaoXML       := '2';
 
+  ConfigSchema.NameSpaceXML    := 'http://nfe' + NomeCidade + '.portalfacil.com.br/' + DescAmbiente+ '/schema/';
 
-ConfigSchema.Cabecalho       := 'nfse_v201.xsd';
-ConfigSchema.ServicoEnviar   := 'nfse_v201.xsd';
-ConfigSchema.ServicoConSit   := 'nfse_v201.xsd';
-ConfigSchema.ServicoConLot   := 'nfse_v201.xsd';
-ConfigSchema.ServicoConRps   := 'nfse_v201.xsd';
-ConfigSchema.ServicoConNfse  := 'nfse_v201.xsd';
-ConfigSchema.ServicoCancelar := 'nfse_v201.xsd';
-ConfigSchema.ServicoEnviarSincrono:='nfse_v201.xsd';
-ConfigSchema.ServicoGerar    := '';
-ConfigSchema.DefTipos        := '';
-Result := ConfigSchema;
+  ConfigSchema.Cabecalho       := 'nfse_v201.xsd';
+  ConfigSchema.ServicoEnviar   := 'nfse_v201.xsd';
+  ConfigSchema.ServicoConSit   := 'nfse_v201.xsd';
+  ConfigSchema.ServicoConLot   := 'nfse_v201.xsd';
+  ConfigSchema.ServicoConRps   := 'nfse_v201.xsd';
+  ConfigSchema.ServicoConNfse  := 'nfse_v201.xsd';
+  ConfigSchema.ServicoCancelar := 'nfse_v201.xsd';
+  ConfigSchema.ServicoGerar    := '';
+  ConfigSchema.DefTipos        := '';
+  ConfigSchema.ServicoEnviarSincrono:='nfse_v201.xsd';
+
+  Result := ConfigSchema;
 end;
 
 function TProvedorActcon.GetConfigURL(ACodCidade: Integer): TConfigURL;
@@ -161,14 +153,13 @@ var
  ConfigURL: TConfigURL;
 begin
  case ACodCidade of
-  3127701:
-  begin
-   ConfigURL.HomNomeCidade := 'valadares';
-   ConfigURL.ProNomeCidade := 'valadares';
-  end;
+  3127701: begin
+             ConfigURL.HomNomeCidade := 'valadares';
+             ConfigURL.ProNomeCidade := 'valadares';
+           end;
   3131307: begin // Ipatinga
-            ConfigURL.HomNomeCidade := 'ipatinga';
-            ConfigURL.ProNomeCidade := 'ipatinga';
+             ConfigURL.HomNomeCidade := 'ipatinga';
+             ConfigURL.ProNomeCidade := 'ipatinga';
            end;
  end;
 
@@ -179,15 +170,6 @@ begin
  ConfigURL.HomConsultaNFSe       := 'http://nfe'+ConfigURL.HomNomeCidade+'.portalfacil.com.br/homologacao/webservice/servicos';
  ConfigURL.HomCancelaNFSe        := 'http://nfe'+ConfigURL.HomNomeCidade+'.portalfacil.com.br/homologacao/webservice/servicos';
  ConfigURL.HomRecepcaoSincrono   := 'http://nfe'+ConfigURL.HomNomeCidade+'.portalfacil.com.br/homologacao/webservice/servicos';
-
-
-(* ConfigURL.HomRecepcaoLoteRPS    := 'http://nfe.'+ConfigURL.HomNomeCidade+'.mg.gov.br/homologacao/webservice/servicos';
- ConfigURL.HomConsultaLoteRPS    := 'http://nfe.'+ConfigURL.HomNomeCidade+'.mg.gov.br/homologacao/webservice/servicos';
- ConfigURL.HomConsultaNFSeRPS    := 'http://nfe.'+ConfigURL.HomNomeCidade+'.mg.gov.br/homologacao/webservice/servicos';
- ConfigURL.HomConsultaSitLoteRPS := 'http://nfe.'+ConfigURL.HomNomeCidade+'.mg.gov.br/homologacao/webservice/servicos';
- ConfigURL.HomConsultaNFSe       := 'http://nfe.'+ConfigURL.HomNomeCidade+'.mg.gov.br/homologacao/webservice/servicos';
- ConfigURL.HomCancelaNFSe        := 'http://nfe.'+ConfigURL.HomNomeCidade+'.mg.gov.br/homologacao/webservice/servicos';
- ConfigURL.HomRecepcaoSincrono   := 'http://nfe.'+ConfigURL.HomNomeCidade+'.mg.gov.br/homologacao/webservice/servicos';*)
 
  ConfigURL.ProRecepcaoLoteRPS    := 'http://nfe'+ConfigURL.ProNomeCidade+'.portalfacil.com.br/nfseserv/webservice/servicos';
  ConfigURL.ProConsultaLoteRPS    := 'http://nfe'+ConfigURL.ProNomeCidade+'.portalfacil.com.br/nfseserv/webservice/servicos';
