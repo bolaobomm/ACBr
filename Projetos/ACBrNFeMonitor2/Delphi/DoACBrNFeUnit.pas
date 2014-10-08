@@ -1574,7 +1574,7 @@ begin
          ACBrNFe1.Configuracoes.Geral.VersaoDF := StrToVersaoDF(OK,versao);
          Ide.serie      := INIRec.ReadInteger( 'Identificacao','Serie'  ,1);
          Ide.nNF        := INIRec.ReadInteger( 'Identificacao','Numero' ,INIRec.ReadInteger( 'Identificacao','nNF' ,0));
-         Ide.dEmi       := NotaUtil.StringToDateTime(INIRec.ReadString( 'Identificacao','Emissao',INIRec.ReadString( 'Identificacao','dEmi','0')));
+         Ide.dEmi       := NotaUtil.StringToDateTime(INIRec.ReadString( 'Identificacao','Emissao',INIRec.ReadString( 'Identificacao','dEmi',INIRec.ReadString( 'Identificacao','dhEmi','0'))));
          Ide.dSaiEnt    := NotaUtil.StringToDateTime(INIRec.ReadString( 'Identificacao','Saida'  ,INIRec.ReadString( 'Identificacao','dSaiEnt'  ,'0')));
          Ide.hSaiEnt    := DFeUtil.StringToTime(INIRec.ReadString( 'Identificacao','hSaiEnt','0'));  //NFe2
          Ide.tpNF       := StrToTpNF(OK,INIRec.ReadString( 'Identificacao','Tipo',INIRec.ReadString( 'Identificacao','tpNF','1')));

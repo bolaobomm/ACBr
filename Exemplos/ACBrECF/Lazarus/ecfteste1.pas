@@ -1,6 +1,5 @@
+{$I ACBr.inc}
 Unit ECFTeste1;
-
-{$mode objfpc}{$H+}
 
 interface
 
@@ -9,8 +8,9 @@ uses
   ACBrAAC, ACBrConsts, ACBrGIF, LCLIntf, Classes, SysUtils, Forms, Controls,
   Graphics, LCLType, Dialogs, DateUtils, IpHtml, Menus, Buttons, StdCtrls,
   ExtCtrls, ComCtrls, Spin, EditBtn, DBGrids, DbCtrls, memds, db, IniFiles,
-  ACBrECFVirtualSAT, ACBrSAT, ACBrSATClass,
-  ACBrSATExtratoFortesFr, ACBrSATExtratoESCPOS, pcnCFe;
+  ACBrECFVirtualSAT, ACBrSAT, ACBrSATClass, ACBrSATExtratoFortesFr,
+  ACBrSATExtratoESCPOS, pcnCFe, ACBrECFVirtualNFCe, ACBrNFe, ACBrNFeDANFeESCPOS,
+  ACBrDANFCeFortesFr, pcnNFe, ACBrECFVirtual, ACBrNFeUtil;
 
 type
   TSimpleIpHtml = class(TIpHtml)
@@ -29,8 +29,12 @@ type
     ACBrAAC1 : TACBrAAC ;
     ACBrECF1: TACBrECF;
     ACBrECFVirtualNaoFiscal1: TACBrECFVirtualNaoFiscal;
+    ACBrECFVirtualNFCe1: TACBrECFVirtualNFCe;
     ACBrECFVirtualSAT1: TACBrECFVirtualSAT;
     ACBrGIF1: TACBrGIF;
+    ACBrNFe1: TACBrNFe;
+    ACBrNFeDANFCeFortes1: TACBrNFeDANFCeFortes;
+    ACBrNFeDANFeESCPOS1: TACBrNFeDANFeESCPOS;
     ACBrRFD1: TACBrRFD;
     ACBrSAT1: TACBrSAT;
     ACBrSATExtratoESCPOS1: TACBrSATExtratoESCPOS;
@@ -78,6 +82,7 @@ type
     CarregaUnidadesdeMedida1: TMenuItem;
     cbMemoHTML: TCheckBox;
     cbPreview: TCheckBox;
+    cbUF: TComboBox;
     cbUsarEscPos: TRadioButton;
     cbUsarFortes: TRadioButton;
     cbxAmbiente: TComboBox;
@@ -110,6 +115,8 @@ type
     chRFD: TCheckBox;
     chTentar: TCheckBox;
     chControlePorta: TCheckBox;
+    ckSalvar: TCheckBox;
+    ckVisualizar: TCheckBox;
     CNPJIE1: TMenuItem;
     ComprovantesNaoFiscais1: TMenuItem;
     CorrigeEstadodeErro1: TMenuItem;
@@ -135,18 +142,43 @@ type
     edAAC_ECF_GT : TDBEdit ;
     edAAC_SH_RazaoSocial : TEdit ;
     edInfo: TEdit;
-    edLog1: TEdit;
+    edLogSAT: TEdit;
     edNomeDLL: TEdit;
+    edtCaminho: TEdit;
     edtCodigoAtivacao: TEdit;
     edtCodUF: TEdit;
+    edtEmitBairro: TEdit;
+    edtEmitCEP: TEdit;
+    edtEmitCidade: TEdit;
     edtEmitCNPJ: TEdit;
+    edtEmitCNPJNFe: TEdit;
+    edtEmitCodCidade: TEdit;
+    edtEmitComp: TEdit;
+    edtEmitFantasia: TEdit;
+    edtEmitFone: TEdit;
     edtEmitIE: TEdit;
+    edtEmitIENFe: TEdit;
     edtEmitIM: TEdit;
+    edtEmitLogradouro: TEdit;
+    edtEmitNumero: TEdit;
+    edtEmitRazao: TEdit;
+    edtEmitUF: TEdit;
+    edtLogoMarca: TEdit;
+    edtNumSerie: TEdit;
+    edtPathLogs: TEdit;
     edtPorta: TEdit;
+    edtProxyHost: TEdit;
+    edtProxyPorta: TEdit;
+    edtProxySenha: TEdit;
+    edtProxyUser: TEdit;
+    edtSenha: TEdit;
     edtSwHAssinatura: TEdit;
     edtSwHCNPJ: TEdit;
+    gbProxy: TGroupBox;
+    GroupBox2: TGroupBox;
     GroupBox3: TGroupBox;
     GroupBox4: TGroupBox;
+    GroupBox6: TGroupBox;
     Impressao: TTabSheet;
     Label47: TLabel;
     Label48: TLabel;
@@ -172,6 +204,34 @@ type
     Label68: TLabel;
     Label69: TLabel;
     Label70: TLabel;
+    Label71: TLabel;
+    Label72: TLabel;
+    Label73: TLabel;
+    Label74: TLabel;
+    Label75: TLabel;
+    Label76: TLabel;
+    Label77: TLabel;
+    Label78: TLabel;
+    Label79: TLabel;
+    Label80: TLabel;
+    Label81: TLabel;
+    Label82: TLabel;
+    Label83: TLabel;
+    Label84: TLabel;
+    Label85: TLabel;
+    Label86: TLabel;
+    Label87: TLabel;
+    Label88: TLabel;
+    Label89: TLabel;
+    Label90: TLabel;
+    Label91: TLabel;
+    Label92: TLabel;
+    Label93: TLabel;
+    Label94: TLabel;
+    Label95: TLabel;
+    Label96: TLabel;
+    Label97: TLabel;
+    Label98: TLabel;
     lImpressora: TLabel;
     MenuItem31: TMenuItem;
     mDataHoraUltimaReducaoZ : TMenuItem ;
@@ -192,7 +252,15 @@ type
     mTotalTroco: TMenuItem;
     OpenDialog1: TOpenDialog;
     PageControl3: TPageControl;
+    PageControl4: TPageControl;
+    rgFormaEmissao: TRadioGroup;
+    rgTipoAmb: TRadioGroup;
+    rgTipoDanfe: TRadioGroup;
     SbArqLog1: TSpeedButton;
+    sbtnCaminhoCert: TSpeedButton;
+    sbtnGetCert: TSpeedButton;
+    sbtnLogoMarca: TSpeedButton;
+    sbtnPathSalvar: TSpeedButton;
     seLargura: TSpinEdit;
     seMargemDireita: TSpinEdit;
     seMargemEsquerda: TSpinEdit;
@@ -380,6 +448,11 @@ type
     sfeVersaoEnt: TFloatSpinEdit;
     speBarrasAltura : TSpinEdit ;
     speBarrasLargura : TSpinEdit ;
+    TabSheet4: TTabSheet;
+    TabSheet7: TTabSheet;
+    TabSheet8: TTabSheet;
+    TabSheet9: TTabSheet;
+    tsNFCe: TTabSheet;
     tsSAT: TTabSheet;
     tsAACParams : TTabSheet ;
     tsAACECFs : TTabSheet ;
@@ -523,6 +596,15 @@ type
       var Tratado: Boolean);
     procedure ACBrECFVirtualNaoFiscal1QuandoLerArqINI(ConteudoINI: TStrings;
       var Tratado: Boolean);
+    procedure ACBrECFVirtualNFCe1QuandoAbrirDocumento(NFe: TNFe);
+    procedure ACBrECFVirtualNFCe1QuandoEfetuarPagamento(Det: TpagCollectionItem
+      );
+    procedure ACBrECFVirtualNFCe1QuandoFecharDocumento(NFe: TNFe);
+    procedure ACBrECFVirtualNFCe1QuandoGravarArqINI(ConteudoINI: TStrings;
+      var Tratado: Boolean);
+    procedure ACBrECFVirtualNFCe1QuandoLerArqINI(ConteudoINI: TStrings;
+      var Tratado: Boolean);
+    procedure ACBrECFVirtualNFCe1QuandoVenderItem(Det: TDetCollectionItem);
     procedure ACBrECFVirtualSAT1QuandoAbrirDocumento(CFe: TCFe);
     procedure ACBrECFVirtualSAT1QuandoEfetuarPagamento(Det: TMPCollectionItem);
     procedure ACBrECFVirtualSAT1QuandoGravarArqINI(ConteudoINI: TStrings;
@@ -663,6 +745,10 @@ type
     procedure SbAACArqLogClick(Sender : TObject) ;
     procedure SbAACMD5AtualizarClick(Sender : TObject) ;
     procedure SbAACNomeArqClick(Sender : TObject) ;
+    procedure sbtnCaminhoCertClick(Sender: TObject);
+    procedure sbtnGetCertClick(Sender: TObject);
+    procedure sbtnLogoMarcaClick(Sender: TObject);
+    procedure sbtnPathSalvarClick(Sender: TObject);
     procedure seDecimaisPrecoChange(Sender : TObject) ;
     procedure seDecimaisQTDChange(Sender : TObject) ;
     procedure seMaxLinhasBufferChange(Sender : TObject) ;
@@ -792,6 +878,8 @@ type
     Function Converte( cmd : String) : String;
     procedure AjustaACBrSAT;
     procedure PrepararImpressao;
+    procedure AjustaACBrNFe;
+    procedure PrepararImpressaoNFCe;
     procedure TrataErros(Sender: TObject; E: Exception);
     function EstadoECF: String;
     Procedure GravarINI ;
@@ -812,6 +900,7 @@ const
   Estados : array[TACBrECFEstado] of string =
     ('Não Inicializada', 'Desconhecido', 'Livre', 'Venda',
     'Pagamento', 'Relatório', 'Bloqueada', 'Requer Z', 'Requer X', 'Nao Fiscal' );
+  SELDIRHELP = 1000;
 
 var
   Form1: TForm1; 
@@ -877,7 +966,7 @@ begin
   cbxPorta.Items.Add('/tmp/ecf.txt') ;
 
   mMsgChange( Sender );
-  Application.OnException := @TrataErros ;
+  Application.OnException := TrataErros ;
   PageControl1.ActivePageIndex := 0 ;
 
   LerINI ;
@@ -1510,8 +1599,7 @@ begin
   end
   else if cbxECFVirtual.ItemIndex = 2 then
   begin
-    MessageDlg('Erro','Modelo ACBrECFVirtualNFCe ainda não foi desenvolvido',mtError,[mbOK],0) ;
-    cbxECFVirtual.ItemIndex := 0;
+    ACBrECF1.ECFVirtual := ACBrECFVirtualNFCe1;
   end
   else
     ACBrECF1.ECFVirtual := ACBrECFVirtualNaoFiscal1;
@@ -1559,7 +1647,7 @@ begin
      except
         chAACUsar.OnChange := nil ;
         chAACUsar.Checked := Assigned( ACBrECF1.AAC )  ;
-        chAACUsar.OnChange := @chAACUsarChange ;
+        chAACUsar.OnChange := chAACUsarChange ;
 
         raise ;
      end ;
@@ -1638,6 +1726,146 @@ procedure TForm1.ACBrECFVirtualNaoFiscal1QuandoLerArqINI(ConteudoINI: TStrings;
   var Tratado: Boolean);
 begin
   mResp.Lines.Add( 'ECFVirtualNaoFiscal: INI será lido'  );
+end;
+
+procedure TForm1.ACBrECFVirtualNFCe1QuandoAbrirDocumento(NFe: TNFe);
+begin
+  mResp.Lines.Add( 'ECFVirtualNFCe: Documento Aberto'  );
+
+  with NFe do
+  begin
+    Ide.cNF       := StrToInt(ACBrECF1.NumCOO); //Caso não seja preenchido será gerado um número aleatório pelo componente
+    Ide.natOp     := 'VENDA CONSUMIDOR';
+    Ide.indPag    := ipVista;
+    Ide.dEmi      := Now;
+    Ide.dSaiEnt   := Now;
+    Ide.verProc   := 'ECFTeste NFCe';
+    Ide.tpNF      := tnSaida;
+    Ide.tpEmis    := teNormal;
+    Ide.tpAmb     := taHomologacao;  //Lembre-se de trocar esta variável quando for para ambiente de produção
+    Ide.cUF       := NotaUtil.UFtoCUF(edtEmitUF.Text);
+    Ide.cMunFG    := StrToInt(edtEmitCodCidade.Text);
+    Ide.finNFe    := fnNormal;
+    Ide.tpImp     := tiNFCe;
+    Ide.indFinal  := cfConsumidorFinal;
+    Ide.indPres   := pcPresencial;
+
+    Emit.CNPJCPF           := edtEmitCNPJNFe.Text;
+    Emit.IE                := edtEmitIENFe.Text;
+    Emit.xNome             := edtEmitRazao.Text;
+    Emit.xFant             := edtEmitFantasia.Text;
+
+    Emit.EnderEmit.fone    := edtEmitFone.Text;
+    Emit.EnderEmit.CEP     := StrToInt(edtEmitCEP.Text);
+    Emit.EnderEmit.xLgr    := edtEmitLogradouro.Text;
+    Emit.EnderEmit.nro     := edtEmitNumero.Text;
+    Emit.EnderEmit.xCpl    := edtEmitComp.Text;
+    Emit.EnderEmit.xBairro := edtEmitBairro.Text;
+    Emit.EnderEmit.cMun    := StrToInt(edtEmitCodCidade.Text);
+    Emit.EnderEmit.xMun    := edtEmitCidade.Text;
+    Emit.EnderEmit.UF      := edtEmitUF.Text;
+    Emit.enderEmit.cPais   := 1058;
+    Emit.enderEmit.xPais   := 'BRASIL';
+    Emit.CRT               := crtRegimeNormal;// (1-crtSimplesNacional, 2-crtSimplesExcessoReceita, 3-crtRegimeNormal)
+
+    Transp.modFrete := mfSemFrete; // NFC-e não pode ter FRETE
+  end;
+end;
+
+procedure TForm1.ACBrECFVirtualNFCe1QuandoEfetuarPagamento(
+  Det: TpagCollectionItem);
+begin
+  mResp.Lines.Add( 'ECFVirtualNFCe: Pagamento efetuado'  );
+end;
+
+procedure TForm1.ACBrECFVirtualNFCe1QuandoFecharDocumento(NFe: TNFe);
+begin
+  mResp.Lines.Add( 'ECFVirtualNFCe: Cupom Fechado'  );
+  //Recalcular Totais se necessário
+end;
+
+procedure TForm1.ACBrECFVirtualNFCe1QuandoGravarArqINI(ConteudoINI: TStrings;
+  var Tratado: Boolean);
+begin
+  mResp.Lines.Add( 'ECFVirtualNFCe: INI será gravado'  );
+end;
+
+procedure TForm1.ACBrECFVirtualNFCe1QuandoLerArqINI(ConteudoINI: TStrings;
+  var Tratado: Boolean);
+begin
+  mResp.Lines.Add( 'ECFVirtualNFCe: INI será lido'  );
+  AjustaACBrNFe;
+end;
+
+procedure TForm1.ACBrECFVirtualNFCe1QuandoVenderItem(Det: TDetCollectionItem);
+begin
+  mResp.Lines.Add( 'ECFVirtualNFCe: Item Vendido'  );
+
+  Det.Prod.NCM      := '94051010'; // Tabela NCM disponível em  http://www.receita.fazenda.gov.br/Aliquotas/DownloadArqTIPI.htm
+  with Det.Imposto do
+   begin
+     // lei da transparencia nos impostos
+     vTotTrib := 0.10;
+
+   { //Preencher com dados dos impostos - o componente virtual por padrão adiciona todos como CST00 caso o ICMS seja diferente de 0
+     with ICMS do
+      begin
+        CST          := cst00;
+        ICMS.orig    := oeNacional;
+        ICMS.modBC   := dbiValorOperacao;
+        ICMS.vBC     := 100;
+        ICMS.pICMS   := 18;
+        ICMS.vICMS   := 18;
+        ICMS.modBCST := dbisMargemValorAgregado;
+        ICMS.pMVAST  := 0;
+        ICMS.pRedBCST:= 0;
+        ICMS.vBCST   := 0;
+        ICMS.pICMSST := 0;
+        ICMS.vICMSST := 0;
+        ICMS.pRedBC  := 0;
+      end;
+     with PIS do
+      begin
+        CST      := pis99;
+        PIS.vBC  := 0;
+        PIS.pPIS := 0;
+        PIS.vPIS := 0;
+
+        PIS.qBCProd   := 0;
+        PIS.vAliqProd := 0;
+        PIS.vPIS      := 0;
+      end;
+
+     with PISST do
+      begin
+        vBc       := 0;
+        pPis      := 0;
+        qBCProd   := 0;
+        vAliqProd := 0;
+        vPIS      := 0;
+      end;
+
+     with COFINS do
+      begin
+        CST            := cof99;
+        COFINS.vBC     := 0;
+        COFINS.pCOFINS := 0;
+        COFINS.vCOFINS := 0;
+
+        COFINS.qBCProd   := 0;
+        COFINS.vAliqProd := 0;
+      end;
+
+     with COFINSST do
+      begin
+        vBC       := 0;
+        pCOFINS   := 0;
+        qBCProd   := 0;
+        vAliqProd := 0;
+        vCOFINS   := 0;
+      end;
+}
+   end;
 end;
 
 procedure TForm1.ACBrECFVirtualSAT1QuandoAbrirDocumento(CFe: TCFe);
@@ -2928,6 +3156,55 @@ begin
   OpenURL( ExtractFilePath( Application.ExeName ) + edAACNomeArq.Text);
 end;
 
+procedure TForm1.sbtnCaminhoCertClick(Sender: TObject);
+begin
+  OpenDialog1.Title := 'Selecione o Certificado';
+  OpenDialog1.DefaultExt := '*.pfx';
+  OpenDialog1.Filter := 'Arquivos PFX (*.pfx)|*.pfx|Todos os Arquivos (*.*)|*.*';
+  OpenDialog1.InitialDir := ExtractFileDir(application.ExeName);
+  if OpenDialog1.Execute then
+  begin
+    edtCaminho.Text := OpenDialog1.FileName;
+  end;
+end;
+
+procedure TForm1.sbtnGetCertClick(Sender: TObject);
+begin
+  {$IFNDEF ACBrNFeOpenSSL}
+  try
+  edtNumSerie.Text := ACBrNFe1.Configuracoes.Certificados.SelecionarCertificado;
+  except
+    on e: Exception do
+       MessageDlg('Erro', e.Message, mtError, [mbOK], '');
+  end;
+  {$ENDIF}
+end;
+
+procedure TForm1.sbtnLogoMarcaClick(Sender: TObject);
+begin
+  OpenDialog1.Title := 'Selecione o Logo';
+  OpenDialog1.DefaultExt := '*.bmp';
+  OpenDialog1.Filter := 'Arquivos BMP (*.bmp)|*.bmp|Todos os Arquivos (*.*)|*.*';
+  OpenDialog1.InitialDir := ExtractFileDir(application.ExeName);
+  if OpenDialog1.Execute then
+  begin
+    edtLogoMarca.Text := OpenDialog1.FileName;
+  end;
+end;
+
+procedure TForm1.sbtnPathSalvarClick(Sender: TObject);
+var
+  Dir: string;
+begin
+ if Length(edtPathLogs.Text) <= 0 then
+    Dir := ExtractFileDir(application.ExeName)
+ else
+    Dir := edtPathLogs.Text;
+
+ if SelectDirectory(Dir, [sdAllowCreate, sdPerformCreate, sdPrompt],SELDIRHELP) then
+   edtPathLogs.Text := Dir;
+end;
+
 procedure TForm1.seDecimaisPrecoChange(Sender : TObject) ;
 begin
   ACBrECF1.DecimaisPreco := seDecimaisPreco.Value ;
@@ -3491,7 +3768,7 @@ begin
 
            ACBrECF1.VendeItem( IntToStrZero(i,3),
                                'DESCRICAO PRODUTO: '+IntToStrZero(i,3),
-                               'NN',1,i/100,0,'UN') ;
+                               '18,00',1,i/100,0,'UN') ;
           { Aguarda 1 segundo ou até o ECF ficar Em linha novamente }
           ACBrECF1.EmLinha( 1 ) ;
           mResp.Lines.Add('Item '+IntToStr(i)+': '+  FormatFloat('###.##',SecondSpan(tIni,Now))+' segundos');
@@ -4142,7 +4419,7 @@ begin
      sl.SaveToStream(ms);
      ms.Seek(0, 0);
 
-     NewHTML.OnGetImageX:=@HTMLGetImageX;
+     NewHTML.OnGetImageX:=HTMLGetImageX;
      NewHTML.LoadFromStream(ms);
 
      WebBrowser.SetHtml(NewHTML);
@@ -4480,7 +4757,7 @@ begin
      except
         chRFD.OnClick := nil ;
         chRFD.Checked := Assigned( ACBrECF1.RFD )  ;
-        chRFD.OnClick := @chRFDClick ;
+        chRFD.OnClick := chRFDClick ;
 
         raise ;
      end ;
@@ -4567,6 +4844,39 @@ begin
      INI.WriteBool('Fortes','Preview',cbPreview.Checked);
 
      INI.WriteString('Printer','Name',Printer.PrinterName);
+
+     Ini.WriteString( 'Certificado','Caminho' ,edtCaminho.Text) ;
+     Ini.WriteString( 'Certificado','Senha'   ,edtSenha.Text) ;
+     Ini.WriteString( 'Certificado','NumSerie',edtNumSerie.Text) ;
+
+     Ini.WriteInteger( 'Geral','DANFE'       ,rgTipoDanfe.ItemIndex) ;
+     Ini.WriteInteger( 'Geral','FormaEmissao',rgFormaEmissao.ItemIndex) ;
+     Ini.WriteString( 'Geral','LogoMarca'   ,edtLogoMarca.Text) ;
+     Ini.WriteBool(   'Geral','Salvar'      ,ckSalvar.Checked) ;
+     Ini.WriteString( 'Geral','PathSalvar'  ,edtPathLogs.Text) ;
+
+     Ini.WriteString( 'WebService','UF'        ,cbUF.Text) ;
+     Ini.WriteInteger( 'WebService','Ambiente'  ,rgTipoAmb.ItemIndex) ;
+     Ini.WriteBool(   'WebService','Visualizar',ckVisualizar.Checked) ;
+
+     Ini.WriteString( 'Proxy','Host'   ,edtProxyHost.Text) ;
+     Ini.WriteString( 'Proxy','Porta'  ,edtProxyPorta.Text) ;
+     Ini.WriteString( 'Proxy','User'   ,edtProxyUser.Text) ;
+     Ini.WriteString( 'Proxy','Pass'   ,edtProxySenha.Text) ;
+
+     Ini.WriteString( 'Emitente','CNPJ'       ,edtEmitCNPJNFe.Text) ;
+     Ini.WriteString( 'Emitente','IE'         ,edtEmitIENFe.Text) ;
+     Ini.WriteString( 'Emitente','RazaoSocial',edtEmitRazao.Text) ;
+     Ini.WriteString( 'Emitente','Fantasia'   ,edtEmitFantasia.Text) ;
+     Ini.WriteString( 'Emitente','Fone'       ,edtEmitFone.Text) ;
+     Ini.WriteString( 'Emitente','CEP'        ,edtEmitCEP.Text) ;
+     Ini.WriteString( 'Emitente','Logradouro' ,edtEmitLogradouro.Text) ;
+     Ini.WriteString( 'Emitente','Numero'     ,edtEmitNumero.Text) ;
+     Ini.WriteString( 'Emitente','Complemento',edtEmitComp.Text) ;
+     Ini.WriteString( 'Emitente','Bairro'     ,edtEmitBairro.Text) ;
+     Ini.WriteString( 'Emitente','CodCidade'  ,edtEmitCodCidade.Text) ;
+     Ini.WriteString( 'Emitente','Cidade'     ,edtEmitCidade.Text) ;
+     Ini.WriteString( 'Emitente','UF'         ,edtEmitUF.Text) ;
   finally
      INI.Free ;
   end ;
@@ -4575,6 +4885,7 @@ end;
 procedure TForm1.LerINI;
   Var ArqINI : String ;
       INI : TIniFile ;
+      Ok : Boolean;
 begin
   ArqINI := ChangeFileExt( Application.ExeName,'.ini' ) ;
 
@@ -4619,7 +4930,7 @@ begin
      edAACLog.Text     := INI.ReadString('AAC','ArqLog',edAACLog.Text);
 
      cbxModeloSAT.ItemIndex := INI.ReadInteger('SAT','Modelo',0);
-     edLog.Text             := INI.ReadString('SAT','ArqLog','ACBrSAT.log');
+     edLogSAT.Text          := INI.ReadString('SAT','ArqLog','ACBrSAT.log');
      edNomeDLL.Text         := INI.ReadString('SAT','NomeDLL','C:\SAT\SAT.DLL');
      edtCodigoAtivacao.Text := INI.ReadString('SAT','CodigoAtivacao','123456');
      edtCodUF.Text          := INI.ReadString('SAT','CodigoUF','35');
@@ -4654,6 +4965,74 @@ begin
      cbPreview.Checked      := INI.ReadBool('Fortes','Preview',True);
 
      lImpressora.Caption := INI.ReadString('Printer','Name',Printer.PrinterName);
+
+     {$IFDEF ACBrNFeOpenSSL}
+        edtCaminho.Text  := Ini.ReadString( 'Certificado','Caminho' ,'') ;
+        edtSenha.Text    := Ini.ReadString( 'Certificado','Senha'   ,'') ;
+        ACBrNFe1.Configuracoes.Certificados.Certificado  := edtCaminho.Text;
+        ACBrNFe1.Configuracoes.Certificados.Senha        := edtSenha.Text;
+        edtNumSerie.Visible := False;
+        Label73.Visible := False;
+        sbtnGetCert.Visible := False;
+     {$ELSE}
+        edtNumSerie.Text := Ini.ReadString( 'Certificado','NumSerie','') ;
+        ACBrNFe1.Configuracoes.Certificados.NumeroSerie := edtNumSerie.Text;
+        edtNumSerie.Text := ACBrNFe1.Configuracoes.Certificados.NumeroSerie;
+        Label71.Caption := 'Informe o número de série do certificado'#13+
+                          'Disponível no Internet Explorer no menu'#13+
+                          'Ferramentas - Opções da Internet - Conteúdo '#13+
+                          'Certificados - Exibir - Detalhes - '#13+
+                          'Número do certificado';
+        Label72.Visible := False;
+        edtCaminho.Visible := False;
+        edtSenha.Visible   := False;
+        sbtnCaminhoCert.Visible := False;
+     {$ENDIF}
+
+      rgFormaEmissao.ItemIndex := Ini.ReadInteger( 'Geral','FormaEmissao',0) ;
+      ckSalvar.Checked    := Ini.ReadBool(   'Geral','Salvar'      ,True) ;
+      edtPathLogs.Text    := Ini.ReadString( 'Geral','PathSalvar'  ,'') ;
+      ACBrNFe1.Configuracoes.Geral.FormaEmissao := StrToTpEmis(OK,IntToStr(rgFormaEmissao.ItemIndex+1));
+      ACBrNFe1.Configuracoes.Geral.Salvar       := ckSalvar.Checked;
+      ACBrNFe1.Configuracoes.Geral.PathSalvar   := edtPathLogs.Text;
+
+      cbUF.ItemIndex       := cbUF.Items.IndexOf(Ini.ReadString( 'WebService','UF','SP')) ;
+      rgTipoAmb.ItemIndex  := Ini.ReadInteger( 'WebService','Ambiente'  ,0) ;
+      ckVisualizar.Checked :=Ini.ReadBool(    'WebService','Visualizar',False) ;
+      ACBrNFe1.Configuracoes.WebServices.UF         := cbUF.Text;
+      ACBrNFe1.Configuracoes.WebServices.Ambiente   := StrToTpAmb(Ok,IntToStr(rgTipoAmb.ItemIndex+1));
+      ACBrNFe1.Configuracoes.WebServices.Visualizar := ckVisualizar.Checked;
+
+      edtProxyHost.Text  := Ini.ReadString( 'Proxy','Host'   ,'') ;
+      edtProxyPorta.Text := Ini.ReadString( 'Proxy','Porta'  ,'') ;
+      edtProxyUser.Text  := Ini.ReadString( 'Proxy','User'   ,'') ;
+      edtProxySenha.Text := Ini.ReadString( 'Proxy','Pass'   ,'') ;
+      ACBrNFe1.Configuracoes.WebServices.ProxyHost := edtProxyHost.Text;
+      ACBrNFe1.Configuracoes.WebServices.ProxyPort := edtProxyPorta.Text;
+      ACBrNFe1.Configuracoes.WebServices.ProxyUser := edtProxyUser.Text;
+      ACBrNFe1.Configuracoes.WebServices.ProxyPass := edtProxySenha.Text;
+
+      rgTipoDanfe.ItemIndex     := Ini.ReadInteger( 'Geral','DANFE'       ,0) ;
+      edtLogoMarca.Text         := Ini.ReadString( 'Geral','LogoMarca'   ,'') ;
+      if ACBrNFe1.DANFE <> nil then
+       begin
+         ACBrNFe1.DANFE.TipoDANFE  := StrToTpImp(OK,IntToStr(rgTipoDanfe.ItemIndex+1));
+         ACBrNFe1.DANFE.Logo       := edtLogoMarca.Text;
+       end;
+
+      edtEmitCNPJNFe.Text    := Ini.ReadString( 'Emitente','CNPJ'       ,'') ;
+      edtEmitIENFe.Text      := Ini.ReadString( 'Emitente','IE'         ,'') ;
+      edtEmitRazao.Text      := Ini.ReadString( 'Emitente','RazaoSocial','') ;
+      edtEmitFantasia.Text   := Ini.ReadString( 'Emitente','Fantasia'   ,'') ;
+      edtEmitFone.Text       := Ini.ReadString( 'Emitente','Fone'       ,'') ;
+      edtEmitCEP.Text        := Ini.ReadString( 'Emitente','CEP'        ,'') ;
+      edtEmitLogradouro.Text := Ini.ReadString( 'Emitente','Logradouro' ,'') ;
+      edtEmitNumero.Text     := Ini.ReadString( 'Emitente','Numero'     ,'') ;
+      edtEmitComp.Text       := Ini.ReadString( 'Emitente','Complemento','') ;
+      edtEmitBairro.Text     := Ini.ReadString( 'Emitente','Bairro'     ,'') ;
+      edtEmitCodCidade.Text  := Ini.ReadString( 'Emitente','CodCidade'  ,'') ;
+      edtEmitCidade.Text     :=Ini.ReadString( 'Emitente','Cidade'     ,'') ;
+      edtEmitUF.Text         := Ini.ReadString( 'Emitente','UF'         ,'') ;
   finally
      INI.Free ;
   end ;
@@ -4810,6 +5189,24 @@ begin
         ACBrSATExtratoFortes1.PrinterName := lImpressora.Caption;
     except
     end;
+  end;
+end;
+
+procedure TForm1.AjustaACBrNFe;
+begin
+  PrepararImpressaoNFCe;
+end;
+
+procedure TForm1.PrepararImpressaoNFCe;
+begin
+  if ACBrNFe1.DANFE = ACBrNFeDANFeESCPOS1 then
+  begin
+    ACBrNFeDANFeESCPOS1.Device.Porta := edtPorta.Text;
+    ACBrNFeDANFeESCPOS1.Device.Ativar;
+  end
+  else
+  begin
+    ACBrNFeDANFCeFortes1.MostrarPreview   := cbPreview.Checked;
   end;
 end;
 

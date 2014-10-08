@@ -270,7 +270,7 @@ begin
   begin
     LoadLayout('<A>       NOTA FISCAL|1');
     LoadLayout('<A01>     A|versao¨|^id^');
-    LoadLayout('<B01>     B|cUF¨|cNF¨|NatOp¨|indPag¨|mod¨|serie¨|nNF¨|dhEmi¨|dhSaiEnt¨|tpNF¨|idDest¨|cMunFG¨|tpImp¨|tpEmis¨|CDV¨|tpAmb¨|finNFe¨|procEmi¨|verProc¨|dhCont¨|xJust¨');
+    LoadLayout('<B01>     B|cUF¨|cNF¨|NatOp¨|indPag¨|mod¨|serie¨|nNF¨|dhEmi¨|dhSaiEnt¨|tpNF¨|idDest¨|cMunFG¨|tpImp¨|tpEmis¨|CDV¨|tpAmb¨|finNFe¨|indFinal¨|indPres¨|procEmi¨|verProc¨|dhCont¨|xJust¨');
     LoadLayout('<BA>     BA|refNFe¨');
     LoadLayout('<BA03> BA03|cUF¨|AAMM¨|CNPJ¨|Mod¨|serie¨|nNF¨');
     LoadLayout('<BA10> BA10|cUF¨|AAMM¨|IE¨|Mod¨|serie¨|nNF¨|refCTe¨');
