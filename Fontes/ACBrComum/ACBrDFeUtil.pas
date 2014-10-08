@@ -781,10 +781,9 @@ begin
    end;
 end;
 
-// Incluido por Italo em 13/08/2013
 class function DFeUtil.Modulo11(Valor: string; Peso: Integer = 2; Base: Integer = 9): String;
 var
-  Soma: integer;
+  Soma, Resto: integer;
   Contador, Digito: integer;
 begin
   Soma := 0;
@@ -797,9 +796,12 @@ begin
       Peso := 2;
   end;
 
-  Digito := 11 - (Soma mod 11);
-  if (Digito > 9) or (Digito = 1) then
-    Digito := 0;
+  Resto := (Soma mod 11);
+
+  if Resto <= 1 then
+    Digito := 0
+  else
+    Digito := 11 - Resto;
 
   Result := IntToStr(Digito);
 end;

@@ -38,6 +38,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+Data: 08/10/2014
+-- ACBrDFeUtil 
+[-] Corrigito o calculo do DV na Função Modulo 11.
+    por: Italo Jurisato Junior 
+
 Data: 28/05/2014
 -- ACBrTXT ( por Isaque Pinheiro)
 [*] Renomeado a função LFill() com o tipo Variant para VLFill() para resolver
