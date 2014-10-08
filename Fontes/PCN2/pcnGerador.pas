@@ -422,6 +422,7 @@ const
   DSC_INDNFE = 'Indicador de NF-e consultada';
   DSC_INDEMI = 'Indicador do Emissor da NF-e';
   DSC_ULTNSU = 'Último NSU recebido pela Empresa';
+  DSC_NSU = 'NSU específico';
   DSC_QNF = 'Quantidade de Documento Fiscal';
   DSC_VTOTTRIB = 'Valor Aproximado Total de Tributos';
   DSC_IDDEST = 'Destino da Operação';

@@ -121,17 +121,18 @@ begin
   Gerador.wCampo(tcInt, 'A04', 'cUFAutor', 02, 02, 1, FcUFAutor, '***');
   Gerador.wCampoCNPJCPF('A05', 'A06', FCNPJCPF, 1058);
 
-  if FNSU = ''
-  then begin
+  if FNSU = '' then
+  begin
+    sNSU := IntToStrZero(StrToIntDef(FultNSU,0),15);
     Gerador.wGrupo('distNSU');
-    sNSU := FultNSU;
-    if sNSU = '' then sNSU := '0';
     Gerador.wCampo(tcStr, 'A08', 'ultNSU', 01, 15, 1, sNSU, DSC_ULTNSU);
     Gerador.wGrupo('/distNSU');
   end
-  else begin
+  else
+  begin
+    sNSU := IntToStrZero(StrToIntDef(FNSU,0),15);
     Gerador.wGrupo('consNSU');
-    Gerador.wCampo(tcStr, 'A10', 'NSU', 01, 15, 1, FNSU, 'DSC_NSU');
+    Gerador.wCampo(tcStr, 'A10', 'NSU', 01, 15, 1, sNSU, DSC_NSU);
     Gerador.wGrupo('/consNSU');
   end;
 
