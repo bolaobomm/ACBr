@@ -1224,6 +1224,7 @@ begin
          : Provedor := 'Tecnos';
 
   4303103, // Cachoeirinha/RS
+  4307708, // Esteio/RS
   4311403, // Lajeado/RS
   4312401, // Montenegro/RS
   4312658, // Nao-Me-Toque/RS

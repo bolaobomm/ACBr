@@ -1,3 +1,5 @@
+{$WARNINGS OFF}
+{$HINTS OFF}
 {******************************************************************************}
 { Projeto: Componente ACBrNFSe                                                 }
 {  Biblioteca multiplataforma de componentes Delphi                            }
@@ -145,8 +147,13 @@ begin
   4303103: begin // Cachoeirinha/RS
             ConfigURL.HomNomeCidade := 'nfsehomologacao.cachoeirinha.rs.gov.br/nfse';
             ConfigURL.ProNomeCidade := 'nfse.cachoeirinha.rs.gov.br/nfse';
-            sHTTPPro := 'http://';
+            sHTTPPro := 'https://';
            end;
+  4307708: begin // Esteio/Rs
+            ConfigURL.HomNomeCidade := 'grp.esteio.rs.gov.br/nfsehml';
+			ConfigURL.ProNomeCidade := 'grp.esteio.rs.gov.br/nfse';
+			sHTTPPro := 'http://';
+           end; 		
   4311403: begin // Lajeado/RS
             ConfigURL.HomNomeCidade := 'nfsehml.lajeado.rs.gov.br/thema-nfse';
             ConfigURL.ProNomeCidade := 'nfse.lajeado.rs.gov.br/thema-nfse';
@@ -476,3 +483,5 @@ begin
 end;
 
 end.
+{$HINTS ON}
+{$WARNINGS ON}

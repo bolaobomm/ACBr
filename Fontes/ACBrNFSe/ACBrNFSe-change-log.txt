@@ -47,6 +47,10 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+08/10/2014
+[+] Incluida a cidade Esteio/RS no provedor Thema.
+    por: Rodolfo
+
 07/10/2014
 [*] Incluido o provedor Betha na lista de provedores que não aceitam
     o código do ItemListaServico com formatação.
