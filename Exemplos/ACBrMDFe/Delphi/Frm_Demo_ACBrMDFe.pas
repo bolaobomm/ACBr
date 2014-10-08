@@ -895,6 +895,8 @@ begin
    ACBrMDFe1.Manifestos.Clear;
    ACBrMDFe1.Manifestos.LoadFromFile(OpenDialog1.FileName);
 
+   ACBrMDFe1.EventoMDFe.Evento.Clear;
+
    with ACBrMDFe1.EventoMDFe.Evento.Add do
     begin
      infEvento.chMDFe   := Copy(ACBrMDFe1.Manifestos.Items[0].MDFe.infMDFe.ID, 5, 44);
@@ -935,6 +937,8 @@ begin
    ACBrMDFe1.Manifestos.LoadFromFile(OpenDialog1.FileName);
    if not(InputQuery('WebServices Cancelamento', 'Justificativa', vAux))
     then exit;
+
+   ACBrMDFe1.EventoMDFe.Evento.Clear;
 
    with ACBrMDFe1.EventoMDFe.Evento.Add do
     begin
