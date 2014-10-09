@@ -256,8 +256,8 @@ begin
      end
     else
      begin
-       (*B09*)NFe.ide.dEmi := LerCampo(tcDat, 'dhEmi');
-              NFe.Ide.dSaiEnt := LerCampo(tcDat, 'dhSaiEnt');
+       (*B09*)NFe.ide.dEmi := LerCampo(tcDatHor, 'dhEmi');
+              NFe.Ide.dSaiEnt := LerCampo(tcDatHor, 'dhSaiEnt');
      end;
 
     (*B11*)NFe.ide.tpNF := StrToTpNF(ok, LerCampo(tcStr, 'tpNF'));
