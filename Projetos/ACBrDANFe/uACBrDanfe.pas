@@ -78,6 +78,7 @@ sLineBreak+
 sLineBreak+
 '[PROPRIEDADEs_DANFe_RAVECB]'+sLineBreak+
 'EspessuraBorda                 = 2'+sLineBreak+
+'ExpandirDadosAdicionaisAuto    = 0'+sLineBreak+
 '# Fonte                          = ftCourier'+sLineBreak+
 'Fonte                          = ftTimes'+sLineBreak+
 'TamanhoCampoCodigo             = 0'+sLineBreak+
@@ -235,6 +236,7 @@ begin
          with ACBrNFeDANFeRaveCB1 do
          begin
             EspessuraBorda                 := Ini.ReadInteger('PROPRIEDADEs_DANFe_RAVECB','EspessuraBorda' ,2);
+            ExpandirDadosAdicionaisAuto    := Ini.ReadBool('PROPRIEDADEs_DANFe_RAVECB','ExpandirDadosAdicionaisAuto' ,false);
             Fonte                          := DFeUtil.SeSenao(Trim(Ini.ReadString('PROPRIEDADEs_DANFe_RAVECB','Fonte' ,'ftTimes'))='ftTimes',ftTimes, ftCourier);
             TamanhoCampoCodigo             := Ini.ReadInteger('PROPRIEDADEs_DANFe_RAVECB','TamanhoCampoCodigo' ,10);
             TamanhoFonte_ANTT              := Ini.ReadInteger('PROPRIEDADES_DANFe_RAVE','TamanhoFonte_ANTT' ,10);

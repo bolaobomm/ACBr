@@ -1127,6 +1127,7 @@ object frm_danfe: Tfrm_danfe
     TamanhoFonte_ANTT = 10
     Fonte = ftTimes
     EspessuraBorda = 2
+    ExpandirDadosAdicionaisAuto = False
     MostrarSetup = False
     TributosPercentual = ptValorProdutos
     Left = 72
