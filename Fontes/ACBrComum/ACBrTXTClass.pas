@@ -370,7 +370,7 @@ begin
      strCurMascara := Mascara;
 
   // Se o parametro Nulo = true e Value = 0, será retornado '|'
-  if Value = Null then
+  if (Value = Null) or (Value=Unassigned) then
   begin
      Result := FDelimitador;
      Exit;
