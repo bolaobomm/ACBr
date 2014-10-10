@@ -835,7 +835,7 @@ begin
    Gerador.wCampoNFSe(tcDatHor, '#4', 'DataEmissao     ', 19, 19, 1, NFSe.DataEmissao, DSC_DEMI);
    Gerador.wCampoNFSe(tcStr,    '#5', 'NaturezaOperacao', 01, 01, 1, NaturezaOperacaoToStr(NFSe.NaturezaOperacao), '');
 
-   if FProvedor <> proPublica
+   if not (FProvedor in [proPublica, proDBSeller])
      then begin
        if (NFSe.RegimeEspecialTributacao <> retNenhum)
          then Gerador.wCampoNFSe(tcStr, '#6', 'RegimeEspecialTributacao', 01, 01, 0, RegimeEspecialTributacaoToStr(NFSe.RegimeEspecialTributacao), '');

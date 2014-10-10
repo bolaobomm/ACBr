@@ -575,7 +575,11 @@ begin
   if {(not ALote) and }(Aprovedor in [proPublica, proAraucaria, proDBSeller, proSalvador])
    then begin
      I := pos('Id=', AXMLAssinado);
-     AXMLAssinado[I] := 'i';
+     if i>0 then
+       AXMLAssinado[I] := 'i';
+     I := pos('InfRps Id=', AXMLAssinado);
+     if i>0 then
+       AXMLAssinado[I + 7] := 'i';
    end;
 
   Result := True;
@@ -1065,7 +1069,11 @@ begin
     if {(not ALote) and }(Aprovedor in [proPublica, proAraucaria, proDBSeller, proSalvador])
      then begin
        I := pos('Id=', XMLAssinado);
-       XMLAssinado[I] := 'i';
+       if i>0 then
+         XMLAssinado[I] := 'i';
+       I := pos('InfRps Id=', XMLAssinado);
+       if i>0 then
+         XMLAssinado[I + 7] := 'i';
      end;
 
    dsigKey   := nil;

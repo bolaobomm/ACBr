@@ -47,6 +47,10 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+10/10/2014
+[-] Ajustes na geração do XML para ficar de acordo com o Schema da DBSeller.
+    por: Italo Jurisato Junior
+
 08/10/2014
 [+] Incluida a cidade Esteio/RS no provedor Thema.
     por: Rodolfo
