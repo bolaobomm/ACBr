@@ -84,14 +84,14 @@
 
   <xsd:simpleType name="tsSimNao">
     <xsd:restriction base="xsd:byte">
-      <xsd:pattern value="1|2" use="required"/>
+      <xsd:pattern value="1|2" />
     </xsd:restriction>
   </xsd:simpleType>  
   
   <xsd:simpleType name="tsValor">
     <xsd:restriction base="xsd:decimal" >
-      <xsd:totalDigits value="15" use="required" />
-      <xsd:fractionDigits value="2" fixed="true" use="required" />
+      <xsd:totalDigits value="15"  />
+      <xsd:fractionDigits value="2" fixed="true"  />
     </xsd:restriction>
   </xsd:simpleType>
   
@@ -117,7 +117,7 @@
   
   <xsd:simpleType name="tsStatusRps">
     <xsd:restriction base="xsd:byte">
-      <xsd:pattern value="1|2" use="required"/>
+      <xsd:pattern value="1|2" />
     </xsd:restriction>
   </xsd:simpleType>
   
@@ -139,21 +139,21 @@
 
   <xsd:simpleType name="tsNumeroRps">
     <xsd:restriction base="xsd:nonNegativeInteger">
-      <xsd:totalDigits value="15" use="required"/>
+      <xsd:totalDigits value="15" />
     </xsd:restriction>
   </xsd:simpleType>
   
   <xsd:simpleType name="tsSerieRps">
     <xsd:restriction base="xsd:string">
-      <xsd:maxLength value="5" use="required"/>
-      <xsd:minLength value="1" use="required"/>
-      <xsd:whiteSpace value="collapse" use="required"/>
+      <xsd:maxLength value="5" />
+      <xsd:minLength value="1" />
+      <xsd:whiteSpace value="collapse" />
     </xsd:restriction>
   </xsd:simpleType>
   
   <xsd:simpleType name="tsTipoRps">
     <xsd:restriction base="xsd:byte">
-      <xsd:pattern value="1|2|3" use="required"/>
+      <xsd:pattern value="1|2|3" />
     </xsd:restriction>
   </xsd:simpleType>
   
@@ -171,8 +171,8 @@
   
   <xsd:simpleType name="tsCnpj">
     <xsd:restriction base="xsd:string">
-      <xsd:length value="14" fixed="true" use="required"/>
-      <xsd:whiteSpace value="collapse" use="required" />
+      <xsd:length value="14" fixed="true" />
+      <xsd:whiteSpace value="collapse"  />
     </xsd:restriction>
   </xsd:simpleType>
   
@@ -191,35 +191,35 @@
   
   <xsd:simpleType name="tsCodigoMunicipioIbge">
     <xsd:restriction base="xsd:int">
-      <xsd:totalDigits value="7" use="required"/>
+      <xsd:totalDigits value="7" />
     </xsd:restriction>
   </xsd:simpleType>
   
   <xsd:simpleType name="tsDiscriminacao">
     <xsd:restriction base="xsd:string">
-      <xsd:maxLength value="2000" use="required"/>
-      <xsd:minLength value="1" use="required"/>
-      <xsd:whiteSpace value="collapse" use="required"/>
+      <xsd:maxLength value="2000" />
+      <xsd:minLength value="1" />
+      <xsd:whiteSpace value="collapse" />
     </xsd:restriction>
   </xsd:simpleType>
   
   <xsd:simpleType name="tsNaturezaOperacao">
     <xsd:restriction base="xsd:byte">
-      <xsd:pattern value="1|2|3|4|5|6" use="required"/>
+      <xsd:pattern value="1|2|3|4|5|6" />
     </xsd:restriction>
   </xsd:simpleType>
   
   <xsd:simpleType name="tsItemListaServico">
     <xsd:restriction base="xsd:string">
-      <xsd:maxLength value="5" use="required"/>
-      <xsd:minLength value="1" use="required"/>
-      <xsd:whiteSpace value="collapse" use="required"/>
+      <xsd:maxLength value="5" />
+      <xsd:minLength value="1" />
+      <xsd:whiteSpace value="collapse" />
     </xsd:restriction>
   </xsd:simpleType>
   
   <xsd:simpleType name="tsCodigoCnae">
     <xsd:restriction base="xsd:int">
-      <xsd:totalDigits value="7" use="required"/>
+      <xsd:totalDigits value="7" />
     </xsd:restriction>
   </xsd:simpleType>
   
