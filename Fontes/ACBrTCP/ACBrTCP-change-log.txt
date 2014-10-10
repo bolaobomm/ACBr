@@ -37,6 +37,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+10/10/2014
+---ACBrNCMs -- 
+[+] Adicionando o componente ACBrNCMs (por: Datilas)
+http://www.projetoacbr.com.br/forum/index.php?/topic/17549-criar-componente-de-consulta-a-ncm-online/?p=109863
+[*] Alterado o local onde estava o pacote ACBrTCP.lpk para Lazarus seguindo o padrão já usado no Delphi
+
 28/09/2014
 -- ACBrSedex -- (por: DSA)
 [*] Propriedades "MaoPropria" e "AvisoRecebimento" modificadas para Boolean

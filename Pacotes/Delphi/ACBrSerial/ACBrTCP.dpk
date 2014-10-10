@@ -50,7 +50,8 @@ contains
   ACBrMail in '..\..\..\Fontes\ACBrTCP\ACBrMail.pas',
   ACBrNFPws in '..\..\..\Fontes\ACBrTCP\ACBrNFPws.pas',
   ACBrSpedTabelas in '..\..\..\Fontes\ACBrTCP\ACBrSpedTabelas.pas',
-  ACBrSedex in '..\..\..\Fontes\ACBrTCP\ACBrSedex.pas';
+  ACBrSedex in '..\..\..\Fontes\ACBrTCP\ACBrSedex.pas',
+  ACBrNCMs in '..\..\..\Fontes\ACBrTCP\ACBrNCMs.pas';
 
 end.
 
