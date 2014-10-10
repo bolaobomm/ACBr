@@ -113,6 +113,10 @@ type
     // Incluido por Italo em 27/03/2014
     // Destinado exclusivamente ao DANFE da NFC-e
     FImprimeItens: Boolean;
+    
+    // Incluido por Edilson Alves de Oliveira em 10/10/2014
+    // Destinado exclusivamente ao DANFE da NFC-e
+    FViaConsumidor : Boolean;
     FvTroco: Currency;
 
     procedure Notification(AComponent: TComponent; Operation: TOperation); override;
@@ -162,6 +166,7 @@ type
     // Destinado exclusivamente ao DANFE da NFC-e
     property ImprimeItens: Boolean                   read FImprimeItens                   write FImprimeItens;
     property vTroco: Currency                        read FvTroco                         write FvTroco;
+    property ViaConsumidor : Boolean                 read FViaConsumidor                  write FViaConsumidor;
   end;
 
 implementation
@@ -176,6 +181,7 @@ begin
 
   FQCom := 2;
   FvUnCom := 2;
+
 end;
 
 destructor TCasasDecimais.Destroy;
@@ -238,6 +244,7 @@ begin
   FCasasDecimais.Name:= 'CasasDecimais';
 
   FImprimeItens := True;
+  FViaConsumidor:= True;
   FvTroco       := 0.0;
 
   {$IFDEF COMPILER6_UP}

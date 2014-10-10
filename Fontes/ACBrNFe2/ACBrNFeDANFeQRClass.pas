@@ -151,6 +151,7 @@ begin
                                     , NFeCancelada
                                     , LocalImpCanhoto 
                                     , ImprimeItens
+                                    , ViaConsumidor
                                     , vTroco
                                     , ImprimirDescPorc
                                     , ImprimirDetalhamentoEspecifico);
@@ -180,6 +181,7 @@ begin
                                 , NFeCancelada
                                 , LocalImpCanhoto
                                 , ImprimeItens
+                                , ViaConsumidor
                                 , vTroco
                                 , ImprimirDescPorc
                                 , ImprimirDetalhamentoEspecifico);
@@ -245,6 +247,7 @@ begin
                                   , NFeCancelada
                                   , LocalImpCanhoto  
                                   , ImprimeItens
+                                  , ViaConsumidor
                                   , vTroco
                                   , ImprimirDescPorc
                                   , ImprimirDetalhamentoEspecifico);
@@ -276,6 +279,7 @@ begin
                               , NFeCancelada
                               , LocalImpCanhoto
                               , ImprimeItens
+                              , ViaConsumidor
                               , vTroco
                               , ImprimirDescPorc
                               , ImprimirDetalhamentoEspecifico);

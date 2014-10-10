@@ -106,6 +106,10 @@ type
     // Incluido por Italo em 27/03/2014
     // Destinado exclusivamente ao DANFE da NFC-e
     FImprimeItens: Boolean;
+    
+    // Incluido por Edilson Alves de Oliveira em 10/10/2014
+    // Destinado exclusivamente ao DANFE da NFC-e
+    FViaConsumidor : Boolean;
     FvTroco: Currency;
 
     procedure qrlSemValorFiscalPrint(sender: TObject; var Value: String);
@@ -137,6 +141,7 @@ type
                              ANFeCancelada        : Boolean  = False;
                              ALocalImpCanhoto     : Integer  = 0;
                              AImprimeItens        : Boolean  = True;
+                             AViaConsumidor       : Boolean  = True;
                              AvTroco              : Currency = 0.0;
                              AImprimirDescPorc    : Boolean  = False;
                              AImprimirDetalhamentoEspecifico : Boolean  = False);
@@ -163,6 +168,7 @@ type
                             ANFeCancelada        : Boolean  = False;
                             ALocalImpCanhoto     : Integer  = 0;
                             AImprimeItens        : Boolean  = True;
+                            AViaConsumidor       : Boolean  = True;
                             AvTroco              : Currency = 0.0;
                             AImprimirDescPorc    : Boolean  = False;
                             AImprimirDetalhamentoEspecifico : Boolean  = False);
@@ -201,6 +207,7 @@ class procedure TfqrDANFeQR.Imprimir(ANFe                 : TNFe;
                                      ANFeCancelada        : Boolean  = False;
                                      ALocalImpCanhoto     : Integer  = 0;
                                      AImprimeItens        : Boolean  = True;
+                                     AViaConsumidor       : Boolean  = True;
                                      AvTroco              : Currency = 0.0;
                                      AImprimirDescPorc    : Boolean  = False;
                                      AImprimirDetalhamentoEspecifico : Boolean  = False);
@@ -229,6 +236,7 @@ begin
         FNFeCancelada        := ANFeCancelada;
         FLocalImpCanhoto     := ALocalImpCanhoto;
         FImprimeItens        := AImprimeItens;
+        FViaConsumidor       := AViaConsumidor;
         FvTroco              := AvTroco;
         FImprimirDescPorc    := AImprimirDescPorc;
         FImprimirDetalhamentoEspecifico := AImprimirDetalhamentoEspecifico;
@@ -297,6 +305,7 @@ class procedure TfqrDANFeQR.SavePDF(AFile                : String;
                                     ANFeCancelada        : Boolean  = False;
                                     ALocalImpCanhoto     : Integer  = 0;
                                     AImprimeItens        : Boolean  = True;
+                                    AViaConsumidor       : Boolean  = True;
                                     AvTroco              : Currency = 0.0;
                                     AImprimirDescPorc    : Boolean  = False;
                                     AImprimirDetalhamentoEspecifico : Boolean  = False);
@@ -330,6 +339,7 @@ begin
         FNFeCancelada        := ANFeCancelada;
         FLocalImpCanhoto     := ALocalImpCanhoto;
         FImprimeItens        := AImprimeItens;
+        FAViaConsumidor      := AViaConsumidor;
         FvTroco              := AvTroco;
         FImprimirDescPorc    := AImprimirDescPorc;
         FImprimirDetalhamentoEspecifico := AImprimirDetalhamentoEspecifico;

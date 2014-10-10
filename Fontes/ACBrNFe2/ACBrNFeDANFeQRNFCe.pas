@@ -646,8 +646,11 @@ begin
   lblNumero.Caption := 'Número: ' + FormatFloat('000,000,000', FNFe.Ide.nNF) +
                        ' - Série: '+ FormatFloat('000', FNFe.Ide.serie);
 
+  { 10/10/2014 : Edilson Alves de Oliveira
+    - Descrição Via do consumidor e Via do estabelecimento como pedi o manual}
   qrlEmissao.Caption := 'Emissão: ' + DFeUtil.FormatDateTime(DateToStr(FNFe.Ide.dEmi)) +
-                       ' - Via do Consumidor';
+                       IfThen(FViaConsumidor,' - Via do consumidor', ' - Via do estabelecimento');
+                       
   qrlSiteConsulta.Caption := NotaUtil.GetURLConsultaNFCe(FNFE.Ide.cUF, FNFe.Ide.tpAmb);
 
   qrlChave.Caption := NotaUtil.FormatarChaveAcesso(Copy(FNFe.InfNFe.Id, 4, 44));

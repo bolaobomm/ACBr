@@ -47,6 +47,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+10/10/2014
+[*] Incluido a propriedade boolean: ViaConsumidor para alternar as Mensagens:
+    Via Consumidor / Via Estabelecimento quando se tratar de emissão do DANFE 
+    em contingência.
+    por: Italo Jurisato Junior - Implementação feita por: Edilson
+
 06/10/2014
 [*] Faltou um begin em um procedimento!
 	por: Juliomar Marchetti
