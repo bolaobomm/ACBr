@@ -121,11 +121,10 @@ TACBrECFEscECFResposta = class
     fsTBR      : Integer ;
     fsBRS      : AnsiString ;
     fsCHK      : Byte ;
-    fsOwner    : TACBrECFClass;
 
     procedure SetResposta(const Value: AnsiString);
  public
-    constructor Create( AOwner: TACBrECFClass ) ;
+    constructor Create ;
     destructor Destroy ; override ;
 
     procedure Clear( ClearParams: Boolean = True ) ;
@@ -148,6 +147,8 @@ TACBrECFEscECF = class( TACBrECFClass )
  private
     fsFalhas : Byte;
     fsACK    : Boolean;
+    fsSincronizou : Boolean;
+    fsTentouSincronizar : Boolean;
 
     fsSPR            : Byte;
     fsPAF            : AnsiString ;
@@ -165,10 +166,12 @@ TACBrECFEscECF = class( TACBrECFClass )
     fsArqMemoria     : String ;
 
     function IsBematech: Boolean;
+    function IsEpson: Boolean;
 
     procedure EnviaConsumidor;
     function PreparaCmd(CmdExtBcd: AnsiString): AnsiString;
-    Function TraduzErroMsg( CAT, Ocorrencia : Byte) : String;
+    Function TraduzErroMsg(EscECFResposta: TACBrECFEscECFResposta) : String;
+    procedure Sincronizar;
 
     Function GetValorTotalizador( N, I: Integer): Double;
     Function AjustaDescricao( ADescricao: String ): String;
@@ -357,6 +360,7 @@ TACBrECFEscECF = class( TACBrECFClass )
     procedure ReimpressaoVinculado; override;
 
     Procedure FechaRelatorio ; override ;
+    Procedure PulaLinhas( NumLinhas : Integer = 0 ) ; override ;
     Procedure CortaPapel( const CorteParcial : Boolean = false) ; override ;
 
     { TODO: Cheques
@@ -415,7 +419,7 @@ TACBrECFEscECF = class( TACBrECFClass )
  end ;
 
 implementation
-Uses SysUtils, Math, ACBrECF, ACBrECFBematech,
+Uses SysUtils, Math, ACBrECF, ACBrECFBematech, ACBrECFEpson,
     {$IFDEF COMPILER6_UP} DateUtils, StrUtils {$ELSE} ACBrD5, Windows{$ENDIF} ;
 
 { TACBrECFEscECFRET }
@@ -470,10 +474,6 @@ end;
 
 procedure TACBrECFEscECFComando.SetCMD(const Value: Byte);
 begin
-  Inc( fsSEQ ) ;
-  while (chr(fsSEQ) in [SOH,STX,ETX,ENQ,ACK,WAK,NAK,SYN]) do   // não usa caracteres do protocolo
-    Inc( fsSEQ );
-
   fsCMD     := Value ;
   fsEXT     := 0;
   fsTimeOut := 0 ;
@@ -547,11 +547,10 @@ end;
 
 { ----------------------------- TACBrECFEscECFResposta -------------------------- }
 
-constructor TACBrECFEscECFResposta.Create(AOwner: TACBrECFClass);
+constructor TACBrECFEscECFResposta.Create;
 begin
   inherited create ;
 
-  fsOwner  := AOwner;
   fsParams := TStringList.create ;
   fsRET    := TACBrECFEscECFRET.Create;
   Clear;
@@ -570,7 +569,7 @@ begin
      fsParams.Clear ;
 
   fsRET.Clear;
-  fsSEQ := 0 ;
+  fsSEQ := 5 ;
   fsCMD := 0 ;
   fsEXT := 0  ;
   fsCAT := 0  ;
@@ -612,10 +611,6 @@ begin
   fsBRS      := copy( Value, 12, fsTBR ) ;
   fsCHK      := ord( Value[ 12 + fsTBR ] ) ;
 
-  fsOwner.GravaLog( '         Resposta  -> SEQ:'+IntToStr(fsSEQ)+' CMD:'+IntToStr(fsCMD)+
-    ' EXT:'+IntToStr(fsEXT)+ ' CAT:'+IntToStr(fsCAT)+ ' RET:"'+fsRET.RET+
-    '" TBR:'+IntToStr(fsTBR)+ ' BRS:'+fsBRS+' CHK:'+IntToStr(fsCHK), True );
-
   Soma := 0 ;
   LenCmd := LenCmd-1 ;  { -1 por causa do CHK }
   For I := 2 to LenCmd do  
@@ -649,7 +644,7 @@ begin
   inherited create( AOwner ) ;
 
   fsEscECFComando  := TACBrECFEscECFComando.create ;
-  fsEscECFResposta := TACBrECFEscECFResposta.create(Self) ;
+  fsEscECFResposta := TACBrECFEscECFResposta.create ;
 
   fpDevice.HandShake := hsDTR_DSR ;
   fpPaginaDeCodigo   := 1252;
@@ -673,6 +668,9 @@ begin
   fsEmPagamento   := False ;
   fsFalhas        := 0;
   fsACK           := False;
+
+  fsSincronizou       := False;
+  fsTentouSincronizar := False;
 
   RespostasComando.Clear;
 end;
@@ -709,13 +707,18 @@ begin
   fsNumLoja      := '' ;
   fsMarcaECF     := '' ;
   fsModeloECF    := '' ;
-  
+  fsSincronizou       := False;
+  fsTentouSincronizar := False;
+
   fpMFD     := True ;
   fpTermica := True ;
 
   RespostasComando.Clear;
 
   try
+     { Ajusta a sequencia }
+     Sincronizar;
+
      { Testando a comunicaçao com a porta }
      Params := RetornaInfoECF( '15|0' );
 
@@ -738,12 +741,20 @@ begin
                         Poem_Zeros( fsNumECF, 3 )+'.txt';
 
      if IsBematech then
-     begin
+      begin
         fpColunas := 48;
 
         if MaxLinhasBuffer = 0 then  // Bematech congela se receber um Buffer muito grande
            MaxLinhasBuffer := 5;
-     end ;
+      end
+     else if IsEpson then
+      begin
+        fpPaginaDeCodigo := 850;
+      end;
+
+
+
+
 
      LeRespostasMemoria;
   except
@@ -758,11 +769,16 @@ Var
   ErroMsg : String ;
   OldTimeOut : Integer ;
 begin
+  Sincronizar;
+
   if cmd <> '' then
      cmd := PreparaCmd(cmd) ;  // Ajusta e move para EscECFcomando
 
   EscECFResposta.Clear( True ) ;       // Zera toda a Resposta
   cmd := EscECFComando.Comando ;
+
+  if fsTentouSincronizar then
+    GravaLog( '         Status TX -> '+cmd, True);
 
   fsACK             := False;
   fsFalhas          := 0 ;
@@ -793,13 +809,22 @@ begin
        Resposta fica gravada na váriavel "fpRespostaComando" }
      LeResposta ;
 
+     with EscECFResposta do
+     begin
+       GravaLog( '            Resposta: SEQ:'+IntToStr(SEQ)+' CMD:'+IntToStr(CMD)+
+         ' EXT:'+IntToStr(EXT)+ ' CAT:'+IntToStr(CAT)+ ' RET:'+RET.RET+
+         ' TBR:'+IntToStr(TBR)+ ' BRS:"'+BRS+'" CHK:'+IntToStr(CHK), True );
+     end;
+
+     EscECFComando.SEQ := EscECFComando.SEQ + 1;
+
      Try
         //EscECFResposta.Resposta := fpRespostaComando ;
         // Resposta já foi atribuida em VerificaFimLeitura();
 
         ErroMsg := '' ;
         if EscECFResposta.CAT > 0 then
-           ErroMsg := 'Erro: '+TraduzErroMsg(EscECFResposta.CAT, EscECFResposta.RET.ECF) ;
+           ErroMsg := TraduzErroMsg(EscECFResposta) ;
      except
         On E : Exception do
         begin
@@ -809,6 +834,16 @@ begin
 
      if ErroMsg <> '' then
       begin
+        if (not fsTentouSincronizar) and
+           (EscECFResposta.CAT = 15) and (EscECFResposta.RET.ECF = 1) then    // Erro de sincronização
+        begin
+          GravaLog( '    Falha SYN - RX <- '+EscECFResposta.Resposta, True);
+          fsSincronizou       := False;  // Força a sincronização
+          fsTentouSincronizar := True;   // Evita loop infinito, no caso de ocorrer o mesmo erro
+          EnviaComando_ECF();            // Gera chamada recursiva
+          exit;
+        end;
+
         ErroMsg := ACBrStr('Erro retornado pela Impressora: '+ModeloStr+
                            sLineBreak+sLineBreak + ErroMsg ) ;
 
@@ -822,6 +857,7 @@ begin
 
   finally
      TimeOut := OldTimeOut ;
+     fsTentouSincronizar := False;
   end ;
 end;
 
@@ -974,8 +1010,13 @@ end;
 
 function TACBrECFEscECF.IsBematech : Boolean ;
 begin
-   Result := (UpperCase(fsMarcaECF) = 'BEMATECH') ;
+   Result := (pos('BEMATECH',UpperCase(fsMarcaECF)) > 0) ;
 end ;
+
+function TACBrECFEscECF.IsEpson: Boolean;
+begin
+  Result := (pos('EPSON',UpperCase(fsMarcaECF)) > 0) ;
+end;
 
 procedure TACBrECFEscECF.EnviaConsumidor;
 begin
@@ -993,229 +1034,256 @@ begin
   end ;
 end;
 
-function TACBrECFEscECF.TraduzErroMsg(CAT, Ocorrencia: Byte): String;
+function TACBrECFEscECF.TraduzErroMsg(EscECFResposta: TACBrECFEscECFResposta
+  ): String;
 var
-   MsgCAT, MsgOcorrencia: String;
+   MsgCategoria, MsgMotivo: String;
+   Categoria, Motivo: Byte;
 begin
-   MsgCAT        := '';
-   MsgOcorrencia := '';
+   Categoria    := EscECFResposta.CAT;
+   Motivo       := EscECFResposta.RET.ECF ;
+   MsgCategoria := '';
+   MsgMotivo    := '';
 
-   case CAT of
+   case Categoria of
      01 :
        begin
-         MsgCAT := 'Comando Inválido';
+         MsgCategoria := 'Comando Inválido';
 
-         case Ocorrencia of
-           01 : MsgOcorrencia := 'O comando enviado para a impressora não existe no Software Básico' ;
+         case Motivo of
+           01 : MsgMotivo := 'O comando enviado para a impressora não existe no Software Básico' ;
          end;
        end;
 
      02 :
        begin
-         MsgCAT := 'Erro em parâmetro do comando';
+         MsgCategoria := 'Erro em parâmetro do comando';
 
-         case Ocorrencia of
-           01 : MsgOcorrencia := 'Conteúdo de parâmetro inválido no comando.' ;
-           02 : MsgOcorrencia := 'Falta parâmetro no comando' ;
-           03 : MsgOcorrencia := 'Excesso de parâmetros no comando' ;
-           04 : MsgOcorrencia := 'COO inicial maior que COO final.' ;
-           05 : MsgOcorrencia := 'CRZ inicial maior que CRZ final' ;
-           06 : MsgOcorrencia := 'Data inicial maior que Data final' ;
+         case Motivo of
+           01 : MsgMotivo := 'Conteúdo de parâmetro inválido no comando.' ;
+           02 : MsgMotivo := 'Falta parâmetro no comando' ;
+           03 : MsgMotivo := 'Excesso de parâmetros no comando' ;
+           04 : MsgMotivo := 'COO inicial maior que COO final.' ;
+           05 : MsgMotivo := 'CRZ inicial maior que CRZ final' ;
+           06 : MsgMotivo := 'Data inicial maior que Data final' ;
          end;
        end;
 
      03 :
        begin
-         MsgCAT := 'Overflow de capacidade';
+         MsgCategoria := 'Overflow de capacidade';
 
-         case Ocorrencia of
-           01 : MsgOcorrencia := 'Excedeu a capacidade máxima do totalizador.' ;
+         case Motivo of
+           01 : MsgMotivo := 'Excedeu a capacidade máxima do totalizador.' ;
          end;
        end;
 
      04 :
        begin
-         MsgCAT := 'Erro de contexto';
+         MsgCategoria := 'Erro de contexto';
 
-         case Ocorrencia of
-           01 : MsgOcorrencia := 'Comando só pode ser executado em intervenção' ;
-           02 : MsgOcorrencia := 'Comando não pode ser executado em intervenção' ;
-           03 : MsgOcorrencia := 'Comando não pode ser executado localmente' ;
-           04 : MsgOcorrencia := 'Comando não pode ser executado remotamente' ;
+         case Motivo of
+           01 : MsgMotivo := 'Comando só pode ser executado em intervenção' ;
+           02 : MsgMotivo := 'Comando não pode ser executado em intervenção' ;
+           03 : MsgMotivo := 'Comando não pode ser executado localmente' ;
+           04 : MsgMotivo := 'Comando não pode ser executado remotamente' ;
          end;
        end;
 
      05 :
        begin
-         MsgCAT := 'Erro em Cupom Fiscal';
+         MsgCategoria := 'Erro em Cupom Fiscal';
 
-         case Ocorrencia of
-           01 : MsgOcorrencia := 'Comando enviado não pode ser executado, pois existe um Cupom Fiscal aberto.' ;
-           02 : MsgOcorrencia := 'Comando enviado não pode ser executado, pois existe um Comprovante Não Fiscal aberto.' ;
-           03 : MsgOcorrencia := 'Comando enviado não pode ser executado, pois existe um Comprovante de Crédito ou Débito aberto.' ;
-           04 : MsgOcorrencia := 'Comando enviado não pode ser executado, pois existe um Estorno de Comprovante de Crédito ou Débito aberto.' ;
-           05 : MsgOcorrencia := 'Comando enviado não pode ser executado, pois existe um Relatório Gerencial aberto.' ;
-           06 : MsgOcorrencia := 'Comando enviado não pode ser executado, pois o ECF está em repouso.' ;
-           07 : MsgOcorrencia := 'A quantidade máxima de itens em um Cupom Fiscal foi ultrapassada.' ;
-           08 : MsgOcorrencia := 'A quantidade de parcelas somente pode ser especificada para os pagamentos que envolvam meios que aceitem a emissão de CCD.' ;
-           09 : MsgOcorrencia := 'Limite máximo de pagamentos por documento já foi atingido.' ;
-           10 : MsgOcorrencia := 'Cancelamento de um Cupom Fiscal somente será permitido após o estorno de todos os CCDs emitidos.' ;
-           11 : MsgOcorrencia := 'Comando não pode ser executado em documento não pago.';
-           12 : MsgOcorrencia := 'Comando não pode ser executado após desconto ou acréscimo em Subtotal' ;
-           13 : MsgOcorrencia := 'Comando de acréscimo/desconto já executado.' ;
-           14 : MsgOcorrencia := 'Comando de consumidor já executado no clichê' ;
+         case Motivo of
+           01 : MsgMotivo := 'Comando enviado não pode ser executado, pois existe um Cupom Fiscal aberto.' ;
+           02 : MsgMotivo := 'Comando enviado não pode ser executado, pois existe um Comprovante Não Fiscal aberto.' ;
+           03 : MsgMotivo := 'Comando enviado não pode ser executado, pois existe um Comprovante de Crédito ou Débito aberto.' ;
+           04 : MsgMotivo := 'Comando enviado não pode ser executado, pois existe um Estorno de Comprovante de Crédito ou Débito aberto.' ;
+           05 : MsgMotivo := 'Comando enviado não pode ser executado, pois existe um Relatório Gerencial aberto.' ;
+           06 : MsgMotivo := 'Comando enviado não pode ser executado, pois o ECF está em repouso.' ;
+           07 : MsgMotivo := 'A quantidade máxima de itens em um Cupom Fiscal foi ultrapassada.' ;
+           08 : MsgMotivo := 'A quantidade de parcelas somente pode ser especificada para os pagamentos que envolvam meios que aceitem a emissão de CCD.' ;
+           09 : MsgMotivo := 'Limite máximo de pagamentos por documento já foi atingido.' ;
+           10 : MsgMotivo := 'Cancelamento de um Cupom Fiscal somente será permitido após o estorno de todos os CCDs emitidos.' ;
+           11 : MsgMotivo := 'Comando não pode ser executado em documento não pago.';
+           12 : MsgMotivo := 'Comando não pode ser executado após desconto ou acréscimo em Subtotal' ;
+           13 : MsgMotivo := 'Comando de acréscimo/desconto já executado.' ;
+           14 : MsgMotivo := 'Comando de consumidor já executado no clichê' ;
          end;
        end;
 
      06 :
        begin
-         MsgCAT := 'Erro em Comprovante Não Fiscal';
+         MsgCategoria := 'Erro em Comprovante Não Fiscal';
 
-         case Ocorrencia of
-           01 : MsgOcorrencia := 'Comando enviado não pode ser executado, pois existe um Cupom Fiscal aberto.' ;
-           02 : MsgOcorrencia := 'Comando enviado não pode ser executado, pois existe um Comprovante Não Fiscal aberto.' ;
-           03 : MsgOcorrencia := 'Comando enviado não pode ser executado, pois existe um Comprovante de Crédito ou Débito aberto.' ;
-           04 : MsgOcorrencia := 'Comando enviado não pode ser executado, pois existe um Estorno de Comprovante de Crédito ou Débito aberto.' ;
-           05 : MsgOcorrencia := 'Comando enviado não pode ser executado, pois existe um Relatório Gerencial aberto.' ;
-           06 : MsgOcorrencia := 'A quantidade máxima de itens em um Comprovante Não Fiscal foi ultrapassada.' ;
-           07 : MsgOcorrencia := 'A quantidade de parcelas somente pode ser especificada para os pagamentos que envolvam meios que aceitem a emissão de CCD.' ;
-           08 : MsgOcorrencia := 'Limite máximo de pagamentos por documento já foi atingido.' ;
-           09 : MsgOcorrencia := 'Cancelamento de um Comprovante Não Fiscal somente será permitido após o estorno de todos os CCDs emitidos.' ;
-           10 : MsgOcorrencia := 'Comando não pode ser executado em documento não pago.' ;
-           11 : MsgOcorrencia := 'Comando não pode ser executado após desconto ou acréscimo em Subtotal';
-           12 : MsgOcorrencia := 'Comando de acréscimo/desconto já executado.' ;
-           13 : MsgOcorrencia := 'Comando de consumidor já executado no clichê' ;
+         case Motivo of
+           01 : MsgMotivo := 'Comando enviado não pode ser executado, pois existe um Cupom Fiscal aberto.' ;
+           02 : MsgMotivo := 'Comando enviado não pode ser executado, pois existe um Comprovante Não Fiscal aberto.' ;
+           03 : MsgMotivo := 'Comando enviado não pode ser executado, pois existe um Comprovante de Crédito ou Débito aberto.' ;
+           04 : MsgMotivo := 'Comando enviado não pode ser executado, pois existe um Estorno de Comprovante de Crédito ou Débito aberto.' ;
+           05 : MsgMotivo := 'Comando enviado não pode ser executado, pois existe um Relatório Gerencial aberto.' ;
+           06 : MsgMotivo := 'A quantidade máxima de itens em um Comprovante Não Fiscal foi ultrapassada.' ;
+           07 : MsgMotivo := 'A quantidade de parcelas somente pode ser especificada para os pagamentos que envolvam meios que aceitem a emissão de CCD.' ;
+           08 : MsgMotivo := 'Limite máximo de pagamentos por documento já foi atingido.' ;
+           09 : MsgMotivo := 'Cancelamento de um Comprovante Não Fiscal somente será permitido após o estorno de todos os CCDs emitidos.' ;
+           10 : MsgMotivo := 'Comando não pode ser executado em documento não pago.' ;
+           11 : MsgMotivo := 'Comando não pode ser executado após desconto ou acréscimo em Subtotal';
+           12 : MsgMotivo := 'Comando de acréscimo/desconto já executado.' ;
+           13 : MsgMotivo := 'Comando de consumidor já executado no clichê' ;
          end;
        end;
 
      07 :
        begin
-         MsgCAT := 'Erro em Relatório Gerencial ou CCD';
+         MsgCategoria := 'Erro em Relatório Gerencial ou CCD';
 
-         case Ocorrencia of
-           01 : MsgOcorrencia := 'Comando enviado não pode ser executado, pois existe um Cupom Fiscal aberto.' ;
-           02 : MsgOcorrencia := 'Comando enviado não pode ser executado, pois existe um Comprovante Não Fiscal aberto.' ;
-           03 : MsgOcorrencia := 'Comando enviado não pode ser executado, pois existe um Comprovante de Crédito ou Débito aberto.' ;
-           04 : MsgOcorrencia := 'Comando enviado não pode ser executado, pois existe um Estorno de Comprovante de Crédito ou Débito aberto.' ;
-           05 : MsgOcorrencia := 'Comando enviado não pode ser executado, pois existe um Relatório Gerencial aberto.' ;
-           06 : MsgOcorrencia := 'Não existe CCD para o pagamento especificado.' ;
-           07 : MsgOcorrencia := 'CCD especificado já foi impresso.' ;
-           08 : MsgOcorrencia := 'CCD especificado já foi re-impresso' ;
-           09 : MsgOcorrencia := 'CCD especificado já foi estornado.' ;
-           10 : MsgOcorrencia := 'CDD não especificado no estorno não foi impresso' ;
-           11 : MsgOcorrencia := 'limite máximo de CCD’s por cupom foi excedido.';
-           12 : MsgOcorrencia := 'Comando enviado não pode ser executado dentro de CCD' ;
-           13 : MsgOcorrencia := 'Documento anterior diferente de Cupom Fiscal e Comprovante Não fiscal.' ;
-           14 : MsgOcorrencia := 'Envio de texto genérico para CCD ou Relatório Gerencial já fechado.' ;
+         case Motivo of
+           01 : MsgMotivo := 'Comando enviado não pode ser executado, pois existe um Cupom Fiscal aberto.' ;
+           02 : MsgMotivo := 'Comando enviado não pode ser executado, pois existe um Comprovante Não Fiscal aberto.' ;
+           03 : MsgMotivo := 'Comando enviado não pode ser executado, pois existe um Comprovante de Crédito ou Débito aberto.' ;
+           04 : MsgMotivo := 'Comando enviado não pode ser executado, pois existe um Estorno de Comprovante de Crédito ou Débito aberto.' ;
+           05 : MsgMotivo := 'Comando enviado não pode ser executado, pois existe um Relatório Gerencial aberto.' ;
+           06 : MsgMotivo := 'Não existe CCD para o pagamento especificado.' ;
+           07 : MsgMotivo := 'CCD especificado já foi impresso.' ;
+           08 : MsgMotivo := 'CCD especificado já foi re-impresso' ;
+           09 : MsgMotivo := 'CCD especificado já foi estornado.' ;
+           10 : MsgMotivo := 'CDD não especificado no estorno não foi impresso' ;
+           11 : MsgMotivo := 'limite máximo de CCD’s por cupom foi excedido.';
+           12 : MsgMotivo := 'Comando enviado não pode ser executado dentro de CCD' ;
+           13 : MsgMotivo := 'Documento anterior diferente de Cupom Fiscal e Comprovante Não fiscal.' ;
+           14 : MsgMotivo := 'Envio de texto genérico para CCD ou Relatório Gerencial já fechado.' ;
          end;
        end;
 
      08 :
        begin
-         MsgCAT := 'Erro em Redução Z';
+         MsgCategoria := 'Erro em Redução Z';
 
-         case Ocorrencia of
-           01 : MsgOcorrencia := 'Redução Z pendente ou já realizada na data' ;
+         case Motivo of
+           01 : MsgMotivo := 'Redução Z pendente ou já realizada na data' ;
          end;
        end;
 
      09 :
        begin
-         MsgCAT := 'Integridade';
+         MsgCategoria := 'Integridade';
 
-         case Ocorrencia of
-           01 : MsgOcorrencia := 'Memória Fiscal inicializada em outro ECF' ;
-           02 : MsgOcorrencia := 'Memória de Fita Detalhe inicializada em outro de ECF.' ;
-           03 : MsgOcorrencia := 'Marca do ECF, Tipo ou Modelo incompatível com o gravado na Memória Fiscal.' ;
-           04 : MsgOcorrencia := 'Número de série da MF diferente do gravado na MFD.' ;
-           05 : MsgOcorrencia := 'Não foi localizado o número de série na MF.' ;
-           06 : MsgOcorrencia := 'Não foi localizado na MF o registro do BR.' ;
-           07 : MsgOcorrencia := 'Não foi localizado na MF o Símbolo da moeda.' ;
-           08 : MsgOcorrencia := 'Não foram localizados na MF os símbolos de criptografia do GT.' ;
-           09 : MsgOcorrencia := 'Não foi localizado na MF o CNPJ/ IE ou IM do usuário' ;
-           10 : MsgOcorrencia := 'Versão do Software básico inválida.' ;
-           11 : MsgOcorrencia := 'Memória Fiscal foi desconectada.';
-           12 : MsgOcorrencia := 'MFD foi desconectada' ;
-           13 : MsgOcorrencia := 'Erro de gravação na Memória fiscal.' ;
-           14 : MsgOcorrencia := 'Erro de gravação na MFD' ;
-           15 : MsgOcorrencia := 'Erro na recuperação de dados da MF.' ;
-           16 : MsgOcorrencia := 'Erro na recuperação de dados da MFD' ;
-           17 : MsgOcorrencia := 'Checksum inválido no comando recebido pelo ECF.' ;
+         case Motivo of
+           01 : MsgMotivo := 'Memória Fiscal inicializada em outro ECF' ;
+           02 : MsgMotivo := 'Memória de Fita Detalhe inicializada em outro de ECF.' ;
+           03 : MsgMotivo := 'Marca do ECF, Tipo ou Modelo incompatível com o gravado na Memória Fiscal.' ;
+           04 : MsgMotivo := 'Número de série da MF diferente do gravado na MFD.' ;
+           05 : MsgMotivo := 'Não foi localizado o número de série na MF.' ;
+           06 : MsgMotivo := 'Não foi localizado na MF o registro do BR.' ;
+           07 : MsgMotivo := 'Não foi localizado na MF o Símbolo da moeda.' ;
+           08 : MsgMotivo := 'Não foram localizados na MF os símbolos de criptografia do GT.' ;
+           09 : MsgMotivo := 'Não foi localizado na MF o CNPJ/ IE ou IM do usuário' ;
+           10 : MsgMotivo := 'Versão do Software básico inválida.' ;
+           11 : MsgMotivo := 'Memória Fiscal foi desconectada.';
+           12 : MsgMotivo := 'MFD foi desconectada' ;
+           13 : MsgMotivo := 'Erro de gravação na Memória fiscal.' ;
+           14 : MsgMotivo := 'Erro de gravação na MFD' ;
+           15 : MsgMotivo := 'Erro na recuperação de dados da MF.' ;
+           16 : MsgMotivo := 'Erro na recuperação de dados da MFD' ;
+           17 : MsgMotivo := 'Checksum inválido no comando recebido pelo ECF.' ;
          end;
        end;
 
      10 :
        begin
-         MsgCAT := 'Cheque/CMC-7';
+         MsgCategoria := 'Cheque/CMC-7';
 
-         case Ocorrencia of
-           01 : MsgOcorrencia := 'Documento não inserido' ;
+         case Motivo of
+           01 : MsgMotivo := 'Documento não inserido' ;
          end;
        end;
 
      11 :
        begin
-         MsgCAT := 'Autenticação';
+         MsgCategoria := 'Autenticação';
 
-         case Ocorrencia of
-           01 : MsgOcorrencia := 'Excedida a quantidade permitida.' ;
-           02 : MsgOcorrencia := 'Não permitida na condição' ;
+         case Motivo of
+           01 : MsgMotivo := 'Excedida a quantidade permitida.' ;
+           02 : MsgMotivo := 'Não permitida na condição' ;
          end;
        end;
 
      12 :
        begin
-         MsgCAT := 'Sem Papel';
+         MsgCategoria := 'Sem Papel';
        end;
 
      13 :
        begin
-         MsgCAT := 'Relógio';
+         MsgCategoria := 'Relógio';
 
-         case Ocorrencia of
-           01 : MsgOcorrencia := 'Qualquer alteração do relógio não permitida.' ;
-           02 : MsgOcorrencia := 'Entrada ou saída de verão não permitida' ;
-           03 : MsgOcorrencia := 'Relógio com data/hora anterior ao último documento gravado na MFD.' ;
-           04 : MsgOcorrencia := 'Data/hora do relógio inválida' ;
+         case Motivo of
+           01 : MsgMotivo := 'Qualquer alteração do relógio não permitida.' ;
+           02 : MsgMotivo := 'Entrada ou saída de verão não permitida' ;
+           03 : MsgMotivo := 'Relógio com data/hora anterior ao último documento gravado na MFD.' ;
+           04 : MsgMotivo := 'Data/hora do relógio inválida' ;
          end;
        end;
 
      14 :
        begin
-         MsgCAT := 'Programação';
+         MsgCategoria := 'Programação';
 
-         case Ocorrencia of
-           01 : MsgOcorrencia := 'Índice de alíquota de ICMS já existente.' ;
-           02 : MsgOcorrencia := 'Índice de alíquota de ISSQN já existente  ' ;
-           03 : MsgOcorrencia := 'Índice de ISSQN não permitido.' ;
-           04 : MsgOcorrencia := 'Índice de Meio de pagamento já existente' ;
-           05 : MsgOcorrencia := 'Índice de Não Fiscal já existente.' ;
-           06 : MsgOcorrencia := 'Índice de relatório gerencial já existente' ;
-           07 : MsgOcorrencia := 'Excedida a quantidade máxima' ;
+         case Motivo of
+           01 : MsgMotivo := 'Índice de alíquota de ICMS já existente.' ;
+           02 : MsgMotivo := 'Índice de alíquota de ISSQN já existente  ' ;
+           03 : MsgMotivo := 'Índice de ISSQN não permitido.' ;
+           04 : MsgMotivo := 'Índice de Meio de pagamento já existente' ;
+           05 : MsgMotivo := 'Índice de Não Fiscal já existente.' ;
+           06 : MsgMotivo := 'Índice de relatório gerencial já existente' ;
+           07 : MsgMotivo := 'Excedida a quantidade máxima' ;
          end;
        end;
 
      15 :
        begin
-         MsgCAT := 'Protocolo';
+         MsgCategoria := 'Protocolo';
 
-         case Ocorrencia of
-           01 : MsgOcorrencia := 'Caractere de controle inválido no comando recebido pelo ECF.' ;
-           02 : MsgOcorrencia := 'Checksum inválido no comando recebido pelo ECF' ;
+         case Motivo of
+           01 : MsgMotivo := 'Caractere de controle inválido no comando recebido pelo ECF.' ;
+           02 : MsgMotivo := 'Checksum inválido no comando recebido pelo ECF' ;
          end;
        end;
 
      16 :
        begin
-         MsgCAT := 'Erro específico do Fabricante';
-       end;
+         MsgCategoria := 'Erro específico do Fabricante';
 
+         if IsEpson then
+           MsgMotivo := DescricaoRetornoEpson( EscECFResposta.RET.SPR, Motivo );
+       end;
    end;
 
-   Result := 'Categoria: '+IntToStr(CAT)+ '-' + MsgCAT + sLineBreak+
-             'Ocorrencia: '+IntToStr(Ocorrencia)  ;
-   if MsgOcorrencia <> '' then
-      Result := Result + '-'+MsgOcorrencia;
+   Result := 'Categoria: '+IntToStr(Categoria)+ '-' + MsgCategoria + sLineBreak+
+             'Motivo: '+IntToStr(Motivo)  ;
+   if MsgMotivo <> '' then
+      Result := Result + '-'+MsgMotivo;
+end;
+
+procedure TACBrECFEscECF.Sincronizar;
+var
+  Resp: AnsiString;
+begin
+  if fsSincronizou then exit;
+
+  GravaLog( '    Sincronismo TX -> '+SYN, True);
+  fpDevice.Serial.SendByte( ord(SYN) );
+  Resp := fpDevice.Serial.RecvBufferStr(2,2000);
+  GravaLog( '         Status RX <- '+Resp, True);
+
+  if Length(Resp) = 2 then
+  begin
+    if Resp[1] = SYN then
+    begin
+      EscECFComando.SEQ := ord(Resp[2])+1;
+      fsSincronizou := True;
+    end;
+  end;
 end;
 
 function TACBrECFEscECF.GetValorTotalizador(N, I : Integer) : Double ;
@@ -1283,8 +1351,10 @@ end ;
 function TACBrECFEscECF.CriarECFClassPorMarca: TACBrECFClass;
 begin
   Result := nil;
-  if fsMarcaECF = 'BEMATECH' then
-    Result := TACBrECFBematech.create(fpOwner);
+  if IsBematech then
+    Result := TACBrECFBematech.create(fpOwner)
+  else if IsEpson then
+    Result := TACBrECFEpson.create(fpOwner)
 end;
 
 function TACBrECFEscECF.RetornaInfoECF(Registrador: String): AnsiString;
@@ -1297,7 +1367,7 @@ begin
   EnviaComando;
 
   Result := EscECFResposta.BRS;
-  if (RightStr(Result,1) = '|') then
+  while (RightStr(Result,1) = '|') do
      Delete( Result, Length(Result), 1 );
 end;
 
@@ -2038,7 +2108,7 @@ begin
   case Est of
     estRelatorio : FechaRelatorio ;
 
-    estVenda, estPagamento :
+    estVenda, estPagamento, estNaoFiscal :
       begin
         EscECFComando.CMD := 31;
         EnviaComando;
@@ -2282,7 +2352,15 @@ Var
   I, N :Integer ;
   Aliquota: TACBrECFAliquota;
 begin
-  RetornaInfoECF( '5' );
+  try
+    RetornaInfoECF( '5' );
+  except
+    on Exception do
+    begin
+      if not ( (EscECFResposta.CAT = 2) and (EscECFResposta.RET.ECF = 1) and IsEpson ) then
+         raise;
+    end;
+  end;
 
   inherited CarregaAliquotas;
 
@@ -2590,6 +2668,23 @@ begin
   RespostasComando.AddField( 'VendaBruta', EscECFResposta.Params[2] );
   fsEmPagamento := false ;
   SalvaRespostasMemoria(False);
+end;
+
+procedure TACBrECFEscECF.PulaLinhas(NumLinhas: Integer);
+var
+  Linha: String;
+begin
+  if NumLinhas = 0 then
+     NumLinhas := LinhasEntreCupons ;
+
+  if IsEpson then
+  begin
+    Linha := DupeString(' '+#10, NumLinhas ) ;
+    LinhaRelatorioGerencial( Linha ) ;
+    exit;
+  end;
+
+  inherited PulaLinhas(NumLinhas);
 end;
 
 procedure TACBrECFEscECF.CortaPapel(const CorteParcial: Boolean);

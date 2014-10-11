@@ -97,6 +97,27 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+Data: 11/10/2014   (por: DSA)
+-- ACBrECFEpson --
+[*] Refactoring no método de Descrição de Erro, para permitir o uso em outras
+    classes (EscEcf)
+
+-- ACBrECFEscECF --
+[*] Ajustes para compatibilização com Epson TM-T800F.
+[+] Adicionada rotina para sincronização da sequencia com o ECF
+[+] Adicionado tratamento de erro, para o caso de erro de falha na sincronização
+[+] Ajuste na rotina de Descrição dos Erros, para considerar códigos de erros
+    internos da Epson
+[*] Ajuste em "PulaLinhas", para correto funcionamento com a Epson
+[*] Melhorias no mecanismo de gravação de Log, refletindo toda a comunicação
+    serial
+[*] Ajuste na página de código para 850, quando ECF for Epson
+[*] Ajuste em RetornaInfoECF, para compatibilizar com a resposta da Epson
+[-] Correção para o Cancelamento de Comprovante Não Fiscal
+[*] Ajuste para evitar erros na Carga de Aliquotas, na Epson, quando não há
+    nenhuma aliquota programada
+
+
 Data: 07/10/2014   (por: DSA)
 -- ACBrECF --
 [-] Corrigido bug na modificação de ECFVirtual em run-time, (não era atualizado

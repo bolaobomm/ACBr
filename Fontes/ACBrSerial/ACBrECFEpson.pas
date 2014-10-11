@@ -385,6 +385,7 @@ TACBrECFEpson = class( TACBrECFClass )
     function TraduzirTag(const ATag: AnsiString): AnsiString; override;
  end ;
 
+function DescricaoRetornoEpson( Byte1, Byte2 : Byte ): String;
 function EpsonCheckSum(Dados: AnsiString): AnsiString;
 function RemoveEsc(const Campo : AnsiString) : AnsiString ;
 function RemoveCaracteresNaoImprimiveis(const AString : AnsiString) : AnsiString ;
@@ -399,11 +400,294 @@ Uses ACBrECF, ACBrConsts,
      {$ENDIF},
      SysUtils, Math ;
 
+function DescricaoRetornoEpson( Byte1, Byte2 : Byte ): String;
+begin
+  Case Byte1 of
+    0 :
+      begin
+        Case Byte2 of
+          0 : Result := '';
+          1 : Result := 'Erro interno.';
+          2 : Result := 'Erro de iniciação do equipamento.';
+          3 : Result := 'Erro de processo interno.';
+        end;
+      end;
+
+    1 :
+      begin
+        Case Byte2 of
+           1 : Result := 'Comando inválido para estado atual.';
+           2 : Result := 'Comando inválido para documento atual.';
+           6 : Result := 'Comando aceito apenas fora de intervenção.';
+           7 : Result := 'Comando aceito apenas dentro de intervenção.';
+           8 : Result := 'Comando inválido durante processo de scan.';
+           9 : Result := 'Exceço de intervenções.';
+        end;
+      end;
+
+    2 :
+      begin
+        Case Byte2 of
+           1  : Result := 'Comando com Frame inválido.';
+           2  : Result := 'Comando inválido.';
+           3  : Result := 'Campos em excesso.';
+           4  : Result := 'Campos em falta.';
+           5  : Result := 'Campo não opcional.';
+           6  : Result := 'Campo alfanumérico inválido.';
+           7  : Result := 'Campo alfabético inválido.';
+           8  : Result := 'Campo numérico inválido.';
+           9  : Result := 'Campo binário inválido.';
+           10 : Result := 'Campo imprimível inválido.';
+           11 : Result := 'Campo hexadecimal inválido.';
+           12 : Result := 'Campo data inválido.';
+           13 : Result := 'Campo hora inválido.';
+           14 : Result := 'Campos com atributos de impressão inválido.';
+           15 : Result := 'Campo booleano inválido.';
+           16 : Result := 'Campo com tamanho inválido.';
+           17 : Result := 'Extensão de comando inválida.';
+           18 : Result := 'Código de barras não permitido.';
+           19 : Result := 'Atributos de impressão não permitidos.';
+           20 : Result := 'Atributos de impressão inválidos.';
+           21 : Result := 'Código de barras incorretamente definido.';
+           22 : Result := 'Comando inválido para a porta selecionada.';
+        end;
+      end;
+
+    3 :
+      begin
+        Case Byte2 of
+           1  : Result := 'Erro de hardware.';
+           2  : Result := 'Impressora não está pronta.';
+           3  : Result := 'Erro de Impressão.';
+           4  : Result := 'Falta de papel.';
+           5  : Result := 'Pouco papel disponível.';
+           6  : Result := 'Erro em carga ou expulsão do papel.';
+           7  : Result := 'Característica não suportada pela impressora.';
+           8  : Result := 'Erro de display.';
+           9  : Result := 'Sequência de scan inválida.';
+           10 : Result := 'Número de área de recorte inválido.';
+           11 : Result := 'Scanner não preparado.';
+           12 : Result := 'Qualidade de logotipo não suportado pela impressora.';
+           14 : Result := 'Erro de leitura de microcódigo.';
+        end;
+      end;
+
+    4 :
+      begin
+        Case Byte2 of
+           1  : Result := 'Número de série inválido.';
+           2  : Result := 'Requer dados de fiscalização já configurados.';
+        end;
+      end;
+
+    5 :
+      begin
+        Case Byte2 of
+           1  : Result := 'Data / Hora não configurada.';
+           2  : Result := 'Data inválida.';
+           3  : Result := 'Data em intervalo inválido.';
+           4  : Result := 'Nome operador inválido.';
+           5  : Result := 'Número de caixa inválido.';
+           8  : Result := 'Dados de Cabeçalho ou rodapé inválidos.';
+           9  : Result := 'Excesso de fiscalização.';
+           12 : Result := 'Número máximo de meios de pagamento já definidos.';
+           13 : Result := 'Meio de pagamento já definido.';
+           14 : Result := 'Meio de pagamento inválido.';
+           15 : Result := 'Descrição do meio de pagamento inválido.';
+           16 : Result := 'Valor máximo de desconto inválido.';
+           19 : Result := 'Logotipo do usuário inválido.';
+           20 : Result := 'Seqüência de logotipo inválido.';
+           21 : Result := 'Configuração de display inválida.';
+           22 : Result := 'Dados do MICR inválidos.';
+           23 : Result := 'Campo de endereço inválido.';
+           24 : Result := 'Nome da loja não definido.';
+           25 : Result := 'Dados fiscais não definidos.';
+           26 : Result := 'Número seqüencial do ECF inválido.';
+           27 : Result := 'Simbologia do GT inválida, devem ser todos diferentes.';
+           28 : Result := 'Número de CNPJ inválido.';
+           29 : Result := 'Senha de fiscalização inválida.';
+           30 : Result := 'Último documento deve ser uma redução Z.';
+           31 : Result := 'Símbolo da moeda igual ao atualmente cadastrado.';
+           32 : Result := 'Identificação da alíquota não cadastrada.';
+           33 : Result := 'Alíquota não cadastrada.';
+        end;
+      end;
+
+    6 :
+      begin
+        Case Byte2 of
+           1  : Result := 'Memória de Fita-detalhe esgotada.';
+           5  : Result := 'Número de série invalido para a Memória de Fita-detalhe.';
+           6  : Result := 'Memória de Fita-detalhe não iniciada.';
+           7  : Result := 'Memória de Fita-detalhe não pode estar iniciada.';
+           8  : Result := 'Número de série da Memória de Fita-detalhe não confere.';
+           9  : Result := 'Erro Interno na Memória de Fita-detalhe.';
+        end;
+      end;
+
+    7 :
+      begin
+        Case Byte2 of
+           1  : Result := 'Valor inválido para o número do registro.';
+           2  : Result := 'Valor inválido para o número do item.';
+           3  : Result := 'Intervalo inválido para a leitura da MFD.';
+           4  : Result := 'Número de usuário inválido para MFD.';
+        end;
+      end;
+
+    8 :
+      begin
+        Case Byte2 of
+           1   : Result := 'Comando inválido com jornada fiscal fechada.';
+           2   : Result := 'Comando inválido com jornada fiscal aberta.';
+           3   : Result := 'Memória Fiscal esgotada.';
+           4   : Result := 'Jornada fiscal deve ser fechada.';
+           5   : Result := 'Não há meios de pagamento definidos.';
+           6   : Result := 'Excesso de meios de pagamento utilizados na jornada fiscal.';
+           7   : Result := 'Jornada fiscal sem movimento de vendas.';
+           8   : Result := 'Intervalo de jornada fiscal inválido.';
+           9   : Result := 'Existem mais dados para serem lidos.';
+           10  : Result := 'Não existem mais dados para serem lidos.';
+           11  : Result := 'Não pode abrir jornada fiscal.';
+           12  : Result := 'Não pode fechar jornada fiscal.';
+           13  : Result := 'Limite máximo do período fiscal atingido.';
+           14  : Result := 'Limite máximo do período fiscal não atingido.';
+           15  : Result := 'Abertura da jornada fiscal não permitida.';
+        end;
+      end;
+
+    9 :
+      begin
+        Case Byte2 of
+           1   : Result := 'Valor muito grande.';
+           2   : Result := 'Valor muito pequeno.';
+           3   : Result := 'Itens em excesso.';
+           4   : Result := 'Alíquotas em excesso.';
+           5   : Result := 'Desconto ou acréscimos em excesso.';
+           6   : Result := 'Meios de pagamento em excesso.';
+           7   : Result := 'Item não encontrado.';
+           8   : Result := 'Meio de pagamento não encontrado.';
+           9   : Result := 'Total nulo.';
+           12  : Result := 'Tipo de pagamento não definido.';
+           15  : Result := 'Alíquota não encontrada.';
+           16  : Result := 'Alíquota inválida.';
+           17  : Result := 'Excesso de meios de pagamento com CDC.';
+           18  : Result := 'Meio de pagamento com CDC já emitido.';
+           19  : Result := 'Meio de pagamento com CDC ainda não emitido.';
+           20  : Result := 'Leitura da Memória Fiscal – intervalo CRZ inválido.';
+           21  : Result := 'Leitura da Memória Fiscal – intervalo de data inválido.';
+        end;
+      end;
+
+     10:
+       begin
+         Case Byte2 of
+            01 : Result := 'Operação não permitida após desconto / acréscimo.';
+            02 : Result := 'Operação não permitida após registro de pagamentos.s';
+            03 : Result := 'Tipo de item inválido.';
+            04 : Result := 'Linha de descrição em branco.';
+            05 : Result := 'Quantidade muito pequena.';
+            06 : Result := 'Quantidade muito grande.';
+            07 : Result := 'Total do item com valor muito alto.';
+            08 : Result := 'Operação não permitida antes do registro de pagamentos.';
+            09 : Result := 'Registro de pagamento incompleto.';
+            10 : Result := 'Registro de pagamento finalizado.';
+            11 : Result := 'Valor pago inválido.';
+            12 : Result := 'Valor de desconto ou acréscimo não permitido.';
+            14 : Result := 'Valor não pode ser zero.';
+            15 : Result := 'Operação não permitida antes do registro de itens.';
+            17 : Result := 'Cancelamento de desconto e acréscimo somente para item atual.';
+            18 : Result := 'Não foi possível cancelar último Cupom Fiscal.';
+            19 : Result := 'Último Cupom Fiscal não encontrado.';
+            20 : Result := 'Último Comprovante Não-Fiscal não encontrado.';
+            21 : Result := 'Cancelamento de CDC necessária.';
+            22 : Result := 'Número de item em Cupom Fiscal inválido.';
+            23 : Result := 'Operação somente permitida após subtotalização.';
+            24 : Result := 'Operação somente permitida durante a venda de itens.';
+            25 : Result := 'Operação não permitida em item com desconto ou acréscimo.';
+            26 : Result := 'Dígitos de quantidade inválidos.';
+            27 : Result := 'Dígitos de valor unitário inválido.';
+            28 : Result := 'Não há desconto ou acréscimo a cancelar.';
+            29 : Result := 'Não há item para cancelar.';
+            30 : Result := 'Desconto ou acréscimo somente no item atual.';
+            31 : Result := 'Desconto ou acréscimo já efetuado.';
+            32 : Result := 'Desconto ou acréscimo nulo não permitido.';
+            33 : Result := 'Valor unitário inválido.';
+            34 : Result := 'Quantidade inválida.';
+            35 : Result := 'Código de item inválido.';
+            36 : Result := 'Descrição inválida.';
+            37 : Result := 'Operação de desconto ou acréscimo não permitida.';
+            38 : Result := 'Mensagem promocional já impressa.';
+            39 : Result := 'Mensagem promocional não pode ser impressa.';
+            40 : Result := 'Dados do consumidor já impresso.';
+            41 : Result := 'Dados do consumidor somente no fim do documento.';
+            42 : Result := 'Dados do consumidor somente no inicio do documento.';
+            43 : Result := 'Comando Inválido para o item.';
+         end;
+       end;
+
+     14:
+       begin
+         Case Byte2 of
+            01 : Result := 'Número de linhas em documento excedido.';
+            02 : Result := 'Número do relatório inválido.';
+            03 : Result := 'Operação não permitida após registro de itens.';
+            04 : Result := 'Registro de valor nulo não permitido.';
+            05 : Result := 'Não há desconto a cancelar.';
+            06 : Result := 'Não há acréscimo a cancelar.';
+            07 : Result := 'Operação somente permitida após subtotalização.';
+            08 : Result := 'Operação somente permitida durante registro de itens.';
+            09 : Result := 'Operação não-fiscal inválida.';
+            10 : Result := 'Último comprovante Não-Fiscal não encontrado.';
+            11 : Result := 'Meio de pagamento não encontrado.';
+            12 : Result := 'Não foi possível imprimir nova via.';
+            13 : Result := 'Não foi possível realizar reimpressão.';
+            14 : Result := 'Não foi possível imprimir nova parcela.';
+            15 : Result := 'Não há mais parcelas a imprimir.';
+            16 : Result := 'Registro de item Não-Fiscal inválido.';
+            17 : Result := 'Desconto ou acréscimo já efetuado.';
+            18 : Result := 'Valor de desconto ou acréscimo inválido.';
+            19 : Result := 'Não foi possível cancelar o item.';
+            20 : Result := 'Itens em excesso.';
+            21 : Result := 'Operação Não-Fiscal não cadastrada.';
+            22 : Result := 'Excesso de relatórios / operações não-fiscais cadastradas.';
+            23 : Result := 'Relatório não encontrado.';
+            24 : Result := 'Comando não permitido.';
+            25 : Result := 'Comando não permitido em operações não-fiscais para movimento de monetário.';
+            26 : Result := 'Comando permitido apenas em operações não-fiscais para movimento de monetário.';
+            27 : Result := 'Número de parcelas inválido para a emissão de CCD';
+            28 : Result := 'Operação não fiscal já cadastrada.';
+            29 : Result := 'Relatório gerencial já cadastrado.';
+            30 : Result := 'Relatório Gerencial Inválido.';
+         end;
+       end;
+
+     18:
+       begin
+         Case Byte2 of
+            01 : Result := 'Configuração de cheque não registrada.';
+            02 : Result := 'Configuração de cheque não encontrada.';
+            03 : Result := 'Valor do cheque já impresso.';
+            04 : Result := 'Nominal ao cheque já impresso.';
+            05 : Result := 'Linhas adicionais no cheque já impresso.';
+            06 : Result := 'Autenticação já impressa.';
+            07 : Result := 'Número máximo de autenticações já impresso.';
+         end;
+       end;
+
+     255 :
+       begin
+         Case Byte2 of
+            255 : Result := 'Erro desconhecido.';
+         end;
+       end;
+  end;
+end;
+
 function EpsonCheckSum(Dados: AnsiString): AnsiString;
 begin
   Result := IntToHex( SomaAscII(Dados), 4);
 end;
-
 
 function InsertEsc(const Campo: AnsiString): AnsiString;
 Var
@@ -725,275 +1009,9 @@ Var
   sRetorno : AnsiString ;
 begin
   Result   := '';
-  sRetorno := HexToAscii(fsRetorno) ;
+  sRetorno := HexToAscii(Retorno) ;
 
-  Case sRetorno[1] of
-
-    #0 : begin
-            Case sRetorno[2] of
-              #0 : Result := '';
-              #1 : Result := 'Erro interno.';
-              #2 : Result := 'Erro de iniciação do equipamento.';
-              #3 : Result := 'Erro de processo interno.';
-            end;
-          end;
-
-    #1 : begin
-           Case sRetorno[2] of
-             #1 : Result := 'Comando inválido para estado atual.';
-             #2 : Result := 'Comando inválido para documento atual.';
-             #6 : Result := 'Comando aceito apenas fora de intervenção.';
-             #7 : Result := 'Comando aceito apenas dentro de intervenção.';
-             #8 : Result := 'Comando inválido durante processo de scan.';
-             #9 : Result := 'Exceço de intervenções.';
-           end;
-         end;
-
-    #2 : begin
-           Case sRetorno[2] of
-             #1  : Result := 'Comando com Frame inválido.';
-             #2  : Result := 'Comando inválido.';
-             #3  : Result := 'Campos em excesso.';
-             #4  : Result := 'Campos em falta.';
-             #5  : Result := 'Campo não opcional.';
-             #6  : Result := 'Campo alfanumérico inválido.';
-             #7  : Result := 'Campo alfabético inválido.';
-             #8  : Result := 'Campo numérico inválido.';
-             #9  : Result := 'Campo binário inválido.';
-             #10 : Result := 'Campo imprimível inválido.';
-             #11 : Result := 'Campo hexadecimal inválido.';
-             #12 : Result := 'Campo data inválido.';
-             #13 : Result := 'Campo hora inválido.';
-             #14 : Result := 'Campos com atributos de impressão inválido.';
-             #15 : Result := 'Campo booleano inválido.';
-             #16 : Result := 'Campo com tamanho inválido.';
-             #17 : Result := 'Extensão de comando inválida.';
-             #18 : Result := 'Código de barras não permitido.';
-             #19 : Result := 'Atributos de impressão não permitidos.';
-             #20 : Result := 'Atributos de impressão inválidos.';
-             #21 : Result := 'Código de barras incorretamente definido.';
-             #22 : Result := 'Comando inválido para a porta selecionada.';
-           end;
-         end;
-
-    #3 : begin
-           Case sRetorno[2] of
-             #1  : Result := 'Erro de hardware.';
-             #2  : Result := 'Impressora não está pronta.';
-             #3  : Result := 'Erro de Impressão.';
-             #4  : Result := 'Falta de papel.';
-             #5  : Result := 'Pouco papel disponível.';
-             #6  : Result := 'Erro em carga ou expulsão do papel.';
-             #7  : Result := 'Característica não suportada pela impressora.';
-             #8  : Result := 'Erro de display.';
-             #9  : Result := 'Sequência de scan inválida.';
-             #10 : Result := 'Número de área de recorte inválido.';
-             #11 : Result := 'Scanner não preparado.';
-             #12 : Result := 'Qualidade de logotipo não suportado pela impressora.';
-             #14 : Result := 'Erro de leitura de microcódigo.';
-           end;
-         end;
-
-    #4 : begin
-           Case sRetorno[2] of
-             #1  : Result := 'Número de série inválido.';
-             #2  : Result := 'Requer dados de fiscalização já configurados.';
-           end;
-         end;
-
-    #5 : begin
-           Case sRetorno[2] of
-             #1  : Result := 'Data / Hora não configurada.';
-             #2  : Result := 'Data inválida.';
-             #3  : Result := 'Data em intervalo inválido.';
-             #4  : Result := 'Nome operador inválido.';
-             #5  : Result := 'Número de caixa inválido.';
-             #8  : Result := 'Dados de Cabeçalho ou rodapé inválidos.';
-             #9  : Result := 'Excesso de fiscalização.';
-             #12 : Result := 'Número máximo de meios de pagamento já definidos.';
-             #13 : Result := 'Meio de pagamento já definido.';
-             #14 : Result := 'Meio de pagamento inválido.';
-             #15 : Result := 'Descrição do meio de pagamento inválido.';
-             #16 : Result := 'Valor máximo de desconto inválido.';
-             #19 : Result := 'Logotipo do usuário inválido.';
-             #20 : Result := 'Seqüência de logotipo inválido.';
-             #21 : Result := 'Configuração de display inválida.';
-             #22 : Result := 'Dados do MICR inválidos.';
-             #23 : Result := 'Campo de endereço inválido.';
-             #24 : Result := 'Nome da loja não definido.';
-             #25 : Result := 'Dados fiscais não definidos.';
-             #26 : Result := 'Número seqüencial do ECF inválido.';
-             #27 : Result := 'Simbologia do GT inválida, devem ser todos diferentes.';
-             #28 : Result := 'Número de CNPJ inválido.';
-             #29 : Result := 'Senha de fiscalização inválida.';
-             #30 : Result := 'Último documento deve ser uma redução Z.';
-             #31 : Result := 'Símbolo da moeda igual ao atualmente cadastrado.';
-             #32 : Result := 'Identificação da alíquota não cadastrada.';
-             #33 : Result := 'Alíquota não cadastrada.';
-           end;
-         end;
-
-    #6 : begin
-           Case sRetorno[2] of
-             #1  : Result := 'Memória de Fita-detalhe esgotada.';
-             #5  : Result := 'Número de série invalido para a Memória de Fita-detalhe.';
-             #6  : Result := 'Memória de Fita-detalhe não iniciada.';
-             #7  : Result := 'Memória de Fita-detalhe não pode estar iniciada.';
-             #8  : Result := 'Número de série da Memória de Fita-detalhe não confere.';
-             #9  : Result := 'Erro Interno na Memória de Fita-detalhe.';
-           end;
-         end;
-
-    #7 : begin
-           Case sRetorno[2] of
-             #1  : Result := 'Valor inválido para o número do registro.';
-             #2  : Result := 'Valor inválido para o número do item.';
-             #3  : Result := 'Intervalo inválido para a leitura da MFD.';
-             #4  : Result := 'Número de usuário inválido para MFD.';
-           end;
-         end;
-
-    #8 : begin
-           Case sRetorno[2] of
-             #1   : Result := 'Comando inválido com jornada fiscal fechada.';
-             #2   : Result := 'Comando inválido com jornada fiscal aberta.';
-             #3   : Result := 'Memória Fiscal esgotada.';
-             #4   : Result := 'Jornada fiscal deve ser fechada.';
-             #5   : Result := 'Não há meios de pagamento definidos.';
-             #6   : Result := 'Excesso de meios de pagamento utilizados na jornada fiscal.';
-             #7   : Result := 'Jornada fiscal sem movimento de vendas.';
-             #8   : Result := 'Intervalo de jornada fiscal inválido.';
-             #9   : Result := 'Existem mais dados para serem lidos.';
-             #10  : Result := 'Não existem mais dados para serem lidos.';
-             #11  : Result := 'Não pode abrir jornada fiscal.';
-             #12  : Result := 'Não pode fechar jornada fiscal.';
-             #13  : Result := 'Limite máximo do período fiscal atingido.';
-             #14  : Result := 'Limite máximo do período fiscal não atingido.';
-             #15  : Result := 'Abertura da jornada fiscal não permitida.';
-           end;
-         end;
-
-    #9 : begin
-           Case sRetorno[2] of
-             #1   : Result := 'Valor muito grande.';
-             #2   : Result := 'Valor muito pequeno.';
-             #3   : Result := 'Itens em excesso.';
-             #4   : Result := 'Alíquotas em excesso.';
-             #5   : Result := 'Desconto ou acréscimos em excesso.';
-             #6   : Result := 'Meios de pagamento em excesso.';
-             #7   : Result := 'Item não encontrado.';
-             #8   : Result := 'Meio de pagamento não encontrado.';
-             #9   : Result := 'Total nulo.';
-             #12  : Result := 'Tipo de pagamento não definido.';
-             #15  : Result := 'Alíquota não encontrada.';
-             #16  : Result := 'Alíquota inválida.';
-             #17  : Result := 'Excesso de meios de pagamento com CDC.';
-             #18  : Result := 'Meio de pagamento com CDC já emitido.';
-             #19  : Result := 'Meio de pagamento com CDC ainda não emitido.';
-             #20  : Result := 'Leitura da Memória Fiscal – intervalo CRZ inválido.';
-             #21  : Result := 'Leitura da Memória Fiscal – intervalo de data inválido.';
-           end;
-         end;
-
-     #10: begin
-            Case sRetorno[2] of
-              #01 : Result := 'Operação não permitida após desconto / acréscimo.';
-              #02 : Result := 'Operação não permitida após registro de pagamentos.s';
-              #03 : Result := 'Tipo de item inválido.';
-              #04 : Result := 'Linha de descrição em branco.';
-              #05 : Result := 'Quantidade muito pequena.';
-              #06 : Result := 'Quantidade muito grande.';
-              #07 : Result := 'Total do item com valor muito alto.';
-              #08 : Result := 'Operação não permitida antes do registro de pagamentos.';
-              #09 : Result := 'Registro de pagamento incompleto.';
-              #10 : Result := 'Registro de pagamento finalizado.';
-              #11 : Result := 'Valor pago inválido.';
-              #12 : Result := 'Valor de desconto ou acréscimo não permitido.';
-              #14 : Result := 'Valor não pode ser zero.';
-              #15 : Result := 'Operação não permitida antes do registro de itens.';
-              #17 : Result := 'Cancelamento de desconto e acréscimo somente para item atual.';
-              #18 : Result := 'Não foi possível cancelar último Cupom Fiscal.';
-              #19 : Result := 'Último Cupom Fiscal não encontrado.';
-              #20 : Result := 'Último Comprovante Não-Fiscal não encontrado.';
-              #21 : Result := 'Cancelamento de CDC necessária.';
-              #22 : Result := 'Número de item em Cupom Fiscal inválido.';
-              #23 : Result := 'Operação somente permitida após subtotalização.';
-              #24 : Result := 'Operação somente permitida durante a venda de itens.';
-              #25 : Result := 'Operação não permitida em item com desconto ou acréscimo.';
-              #26 : Result := 'Dígitos de quantidade inválidos.';
-              #27 : Result := 'Dígitos de valor unitário inválido.';
-              #28 : Result := 'Não há desconto ou acréscimo a cancelar.';
-              #29 : Result := 'Não há item para cancelar.';
-              #30 : Result := 'Desconto ou acréscimo somente no item atual.';
-              #31 : Result := 'Desconto ou acréscimo já efetuado.';
-              #32 : Result := 'Desconto ou acréscimo nulo não permitido.';
-              #33 : Result := 'Valor unitário inválido.';
-              #34 : Result := 'Quantidade inválida.';
-              #35 : Result := 'Código de item inválido.';
-              #36 : Result := 'Descrição inválida.';
-              #37 : Result := 'Operação de desconto ou acréscimo não permitida.';
-              #38 : Result := 'Mensagem promocional já impressa.';
-              #39 : Result := 'Mensagem promocional não pode ser impressa.';
-              #40 : Result := 'Dados do consumidor já impresso.';
-              #41 : Result := 'Dados do consumidor somente no fim do documento.';
-              #42 : Result := 'Dados do consumidor somente no inicio do documento.';
-              #43 : Result := 'Comando Inválido para o item.';
-            end;
-          end;
-
-     #14: begin
-            Case sRetorno[2] of
-              #01 : Result := 'Número de linhas em documento excedido.';
-              #02 : Result := 'Número do relatório inválido.';
-              #03 : Result := 'Operação não permitida após registro de itens.';
-              #04 : Result := 'Registro de valor nulo não permitido.';
-              #05 : Result := 'Não há desconto a cancelar.';
-              #06 : Result := 'Não há acréscimo a cancelar.';
-              #07 : Result := 'Operação somente permitida após subtotalização.';
-              #08 : Result := 'Operação somente permitida durante registro de itens.';
-              #09 : Result := 'Operação não-fiscal inválida.';
-              #10 : Result := 'Último comprovante Não-Fiscal não encontrado.';
-              #11 : Result := 'Meio de pagamento não encontrado.';
-              #12 : Result := 'Não foi possível imprimir nova via.';
-              #13 : Result := 'Não foi possível realizar reimpressão.';
-              #14 : Result := 'Não foi possível imprimir nova parcela.';
-              #15 : Result := 'Não há mais parcelas a imprimir.';
-              #16 : Result := 'Registro de item Não-Fiscal inválido.';
-              #17 : Result := 'Desconto ou acréscimo já efetuado.';
-              #18 : Result := 'Valor de desconto ou acréscimo inválido.';
-              #19 : Result := 'Não foi possível cancelar o item.';
-              #20 : Result := 'Itens em excesso.';
-              #21 : Result := 'Operação Não-Fiscal não cadastrada.';
-              #22 : Result := 'Excesso de relatórios / operações não-fiscais cadastradas.';
-              #23 : Result := 'Relatório não encontrado.';
-              #24 : Result := 'Comando não permitido.';
-              #25 : Result := 'Comando não permitido em operações não-fiscais para movimento de monetário.';
-              #26 : Result := 'Comando permitido apenas em operações não-fiscais para movimento de monetário.';
-              #27 : Result := 'Número de parcelas inválido para a emissão de CCD';
-              #28 : Result := 'Operação não fiscal já cadastrada.';
-              #29 : Result := 'Relatório gerencial já cadastrado.';
-              #30 : Result := 'Relatório Gerencial Inválido.';
-            end;
-          end;
-
-     #18: begin
-            Case sRetorno[2] of
-              #01 : Result := 'Configuração de cheque não registrada.';
-              #02 : Result := 'Configuração de cheque não encontrada.';
-              #03 : Result := 'Valor do cheque já impresso.';
-              #04 : Result := 'Nominal ao cheque já impresso.';
-              #05 : Result := 'Linhas adicionais no cheque já impresso.';
-              #06 : Result := 'Autenticação já impressa.';
-              #07 : Result := 'Número máximo de autenticações já impresso.';
-            end;
-          end;
-
-     #255 : begin
-              Case sRetorno[2] of
-                #255 : Result := 'Erro desconhecido.';
-              end;
-            end;
-  end;
+  Result := DescricaoRetornoEpson( ord(fsRetorno[1]), ord(fsRetorno[2]));
 end;
 
 
