@@ -3089,7 +3089,8 @@ procedure TForm1.Ativcar1Click(Sender: TObject);
 begin
   try
      Self.Enabled := False;
-     ACBrECF1.Porta := cbxPorta.Text;
+     ACBrECF1.Porta  := cbxPorta.Text;
+     ACBrECF1.ArqLOG := edLog.Text;
      
      if cbxModelo.ItemIndex = 0 then
         if not ACBrECF1.AcharECF(true,False) then
@@ -4811,7 +4812,7 @@ begin
      INI.WriteString('AAC','ArqLog',edAACLog.Text);
 
      INI.WriteInteger('SAT','Modelo',cbxModeloSAT.ItemIndex);
-     INI.WriteString('SAT','ArqLog',edLog.Text);
+     INI.WriteString('SAT','ArqLog',edLogSAT.Text);
      INI.WriteString('SAT','NomeDLL',edNomeDLL.Text);
      INI.WriteString('SAT','CodigoAtivacao',edtCodigoAtivacao.Text);
      INI.WriteString('SAT','CodigoUF',edtCodUF.Text);
@@ -5147,7 +5148,7 @@ begin
   with ACBrSAT1 do
   begin
     Modelo  := TACBrSATModelo( cbxModeloSAT.ItemIndex ) ;
-    ArqLOG  := edLog.Text;
+    ArqLOG  := edLogSAT.Text;
     NomeDLL := edNomeDLL.Text;
     Config.ide_numeroCaixa := seNumeroCaixa.Value;
     Config.ide_tpAmb       := TpcnTipoAmbiente( cbxAmbiente.ItemIndex );
