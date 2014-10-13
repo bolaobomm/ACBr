@@ -125,19 +125,24 @@ type
 
   TdocZipCollectionItem = class(TCollectionItem)
   private
-    FresNFe: TresNFe;
-    FresEvento: TresEvento;
     // Atributos do resumo da NFe ou Evento
     FNSU: String;
     Fschema: String;
+    // A propriedade InfZip contem a informação Resumida ou documento fiscal
+    // eletrônico Compactado no padrão gZip
+    FInfZip: String;
+    // Resumos Descompactados
+    FresNFe: TresNFe;
+    FresEvento: TresEvento;
   public
     constructor Create; reintroduce;
     destructor Destroy; override;
   published
-    property resNFe: TresNFe       read FresNFe    write FresNFe;
-    property resEvento: TresEvento read FresEvento write FresEvento;
     property NSU: String           read FNSU       write FNSU;
     property schema: String        read Fschema    write Fschema;
+    property InfZip: String        read FInfZip    write FInfZip;
+    property resNFe: TresNFe       read FresNFe    write FresNFe;
+    property resEvento: TresEvento read FresEvento write FresEvento;
   end;
 
   TRetDistDFeInt = class(TPersistent)
@@ -259,8 +264,17 @@ begin
       while Leitor.rExtrai(2, 'docZip', '', i + 1) <> '' do
       begin
         FdocZip.Add;
-        FdocZip.Items[i].FNSU   := Leitor.rAtributo('NSU');
-        FdocZip.Items[i].schema := Leitor.rAtributo('schema');
+        FdocZip.Items[i].FNSU    := Leitor.rAtributo('NSU');
+        FdocZip.Items[i].schema  := Leitor.rAtributo('schema');
+
+        FdocZip.Items[i].FInfZip := Leitor.rCampo(tcStr, 'docZip');
+
+        //**********************************************************************
+        //
+        // É preciso implementar a partir deste ponto uma chamada para
+        // Descompactar o conteudo de FInfZip.
+        //
+        //**********************************************************************
 
         if (Leitor.rExtrai(3, 'resNFe') <> '') then
         begin
