@@ -1,6 +1,6 @@
 object frmPrincipal: TfrmPrincipal
-  Left = 0
-  Top = 0
+  Left = 428
+  Top = 226
   BorderIcons = [biSystemMenu, biMinimize]
   BorderStyle = bsDialog
   Caption = 'Consulta CPF (Receita Fazenda)'
@@ -19,11 +19,10 @@ object frmPrincipal: TfrmPrincipal
   PixelsPerInch = 96
   TextHeight = 13
   object Panel2: TPanel
-    AlignWithMargins = True
-    Left = 3
-    Top = 162
-    Width = 639
-    Height = 176
+    Left = 0
+    Top = 153
+    Width = 645
+    Height = 188
     Align = alClient
     BevelInner = bvRaised
     BevelOuter = bvLowered
@@ -175,10 +174,9 @@ object frmPrincipal: TfrmPrincipal
     end
   end
   object Panel1: TPanel
-    AlignWithMargins = True
-    Left = 3
-    Top = 3
-    Width = 639
+    Left = 0
+    Top = 0
+    Width = 645
     Height = 153
     Align = alTop
     BevelInner = bvRaised
