@@ -678,8 +678,8 @@ begin
     RespHTTP.LoadFromStream( HTTPSend.Document ) ;
 
     // DEBUG //
-    //WriteToTXT( 'c:\temp\HttpResp.txt', RespHTTP.Text );
-    //WriteToTXT( 'c:\temp\HeaderResp.txt', HTTPSend.Headers.Text );
+    //RespHTTP.SaveToFile('c:\temp\HttpResp.txt');
+    //HTTPSend.Headers.SaveToFile('c:\temp\HeaderResp.txt');
 
     if ParseText then
       RespHTTP.Text := ACBrUtil.ParseText( RespHTTP.Text, True, False );

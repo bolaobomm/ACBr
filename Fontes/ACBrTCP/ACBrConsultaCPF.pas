@@ -66,7 +66,7 @@ type
     Function GetCaptchaURL: String;
 
     function VerificarErros(Str: String): String;
-    function LerCampo(Texto: TStringList; NomeCampo: AnsiString): String;
+    function LerCampo(Texto: TStringList; NomeCampo: String): String;
   public
     procedure Captcha(Stream: TStream);
     function Consulta(const ACPF, ACaptcha: String;
@@ -142,45 +142,42 @@ begin
 end;
 
 function TACBrConsultaCPF.VerificarErros(Str: String): String;
-  var
-    Res: String;
+var
+  Res: String;
 begin
-  Res:= '';
+  Res := '';
   if Res = '' then
-    if Pos( ACBrStr('Erro na Consulta'), Str) > 0 then
-      Res:= 'Catpcha errado.';
+    if Pos( ACBrStr('Os caracteres da imagem não foram preenchidos corretamente'), Str) > 0 then
+      Res := 'Os caracteres da imagem não foram preenchidos corretamente.';
 
   if Res = '' then
-    if Pos(ACBrStr('O número do CPF não é válido. Verifique se o mesmo foi digitado c'+
-    'orretamente.'), Str) > 0 then
-      Res:= 'O número do CPF não é válido. Verifique se o mesmo foi digitado'+
-      ' corretamente.';
+    if Pos(ACBrStr('O número do CPF não é válido. Verifique se o mesmo foi digitado corretamente.'), Str) > 0 then
+      Res := 'O número do CPF não é válido. Verifique se o mesmo foi digitado corretamente.';
 
   if Res = '' then
-    if Pos(ACBrStr('Não existe no Cadastro de Pessoas Jurídicas o número de CPF infor'+
-    'mado. Verifique se o mesmo foi digitado corretamente.'), Str) > 0 then
-      Res:= 'Não existe no Cadastro de Pessoas Jurídicas o número de CPF info'+
-      'rmado. Verifique se o mesmo foi digitado corretamente.';
+    if Pos(ACBrStr('Não existe no Cadastro de Pessoas Jurídicas o número de CPF informado. '+
+                   'Verifique se o mesmo foi digitado corretamente.'), Str) > 0 then
+      Res := 'Não existe no Cadastro de Pessoas Jurídicas o número de CPF informado. '+
+             'Verifique se o mesmo foi digitado corretamente.';
 
   if Res = '' then
-    if Pos(ACBrStr('a. No momento não podemos atender a sua solicitação. Por favor tent'+
-    'e mais tarde.'), Str) > 0 then
-      Res:= 'Erro no site da receita federal. Tente mais tarde.';
+    if Pos(ACBrStr('a. No momento não podemos atender a sua solicitação. Por favor tente mais tarde.'), Str) > 0 then
+      Res := 'Erro no site da receita federal. Tente mais tarde.';
 
-  Result:= ACBrStr(Res);
+  Result := ACBrStr(Res);
 end;
 
-function TACBrConsultaCPF.LerCampo(Texto : TStringList ; NomeCampo : AnsiString
+function TACBrConsultaCPF.LerCampo(Texto : TStringList ; NomeCampo : String
   ) : String ;
 var
   i : integer;
   linha : String;
 begin
-  NomeCampo := ACBrStr(UpperCase(NomeCampo));
+  NomeCampo := ACBrStr(NomeCampo);
   Result := '';
   for i := 0 to Texto.Count-1 do
   begin
-    linha := ACBrStr(UpperCase(Texto[i]));
+    linha := Texto[i];
     if Pos(NomeCampo, linha) > 0 then
     begin
       Result := Trim(StringReplace(linha, NomeCampo, ' ',[rfReplaceAll]));
@@ -223,8 +220,8 @@ begin
         Resposta.Text := StripHTML(RespHTTP.Text);
         RemoveEmptyLines( Resposta );
 
-        //Resposta.Text := AnsiToUtf8(Resposta.Text);
-        //DEBUG: Resposta.SaveToFile('C:\cpf.txt');
+        //DEBUG:
+        //Resposta.SaveToFile('C:\temp\cpf.txt');
 
         FCPF      := LerCampo(Resposta,'No do CPF:');
         FNome     := LerCampo(Resposta,'Nome da Pessoa Física:');

@@ -37,6 +37,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+13/10/2014
+-- ACBrConsultaCPF --
+[*] Correção de bug na identificação dos Valores da Resposta
+www.projetoacbr.com.br/forum/index.php?/topic/15715-erro-não-foi-possível-obter-os-dados-acbrconsultacpf/
+
 10/10/2014
 ---ACBrNCMs -- 
 [+] Adicionando o componente ACBrNCMs (por: Datilas)
