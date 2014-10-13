@@ -339,7 +339,7 @@ begin
         FNFeCancelada        := ANFeCancelada;
         FLocalImpCanhoto     := ALocalImpCanhoto;
         FImprimeItens        := AImprimeItens;
-        FAViaConsumidor      := AViaConsumidor;
+        FViaConsumidor       := AViaConsumidor;
         FvTroco              := AvTroco;
         FImprimirDescPorc    := AImprimirDescPorc;
         FImprimirDetalhamentoEspecifico := AImprimirDetalhamentoEspecifico;

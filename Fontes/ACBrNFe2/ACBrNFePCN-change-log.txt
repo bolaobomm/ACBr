@@ -47,6 +47,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+13/10/2014
+[-] Na unit ACBrNFeDANFeQR a propriedade FViaConsumidor estava com uma letra
+    a mais (FAViaConsumidor - letra A).
+    por: Italo Jurisato Junior
+
 10/10/2014
 [*] Incluido a propriedade boolean: ViaConsumidor para alternar as Mensagens:
     Via Consumidor / Via Estabelecimento quando se tratar de emissão do DANFE 
