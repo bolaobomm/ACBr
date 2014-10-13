@@ -97,6 +97,13 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+Data: 13/10/2014   (por: DSA)
+-- ACBrECFEpson --
+[-] Removido o método interno "RemoveCaracteresNaoImprimiveis" criado em 28/05/2014
+    Pois esse metodo removia os caracteres de Controle de Impressão impossibilitando
+    o uso de TAGS de formatação.
+    A remoção de caracteres não imprimiveis dever ser tratada pela rotina chamadora...
+
 Data: 11/10/2014   (por: DSA)
 -- ACBrECFEpson --
 [*] Refactoring no método de Descrição de Erro, para permitir o uso em outras

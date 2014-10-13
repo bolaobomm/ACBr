@@ -388,7 +388,6 @@ TACBrECFEpson = class( TACBrECFClass )
 function DescricaoRetornoEpson( Byte1, Byte2 : Byte ): String;
 function EpsonCheckSum(Dados: AnsiString): AnsiString;
 function RemoveEsc(const Campo : AnsiString) : AnsiString ;
-function RemoveCaracteresNaoImprimiveis(const AString : AnsiString) : AnsiString ;
 Function InsertEsc(const Campo: AnsiString): AnsiString ;
 
 implementation
@@ -718,24 +717,6 @@ begin
        Inc(I);
 
     Result := Result + Campo[I];
-    Inc(I);
-  end ;
-end ;
-
-function RemoveCaracteresNaoImprimiveis(const AString : AnsiString) : AnsiString ;
-Var
-  I, L, A : Integer ;
-begin
-  Result := '' ;
-  L := Length(AString);
-  I := 1 ;
-
-  while I <= L do
-  begin
-    A := Ord(AString[I]) ;
-    if A >= 32 then
-       Result := Result + AString[I];
-
     Inc(I);
   end ;
 end ;
@@ -2461,7 +2442,6 @@ end;
 procedure TACBrECFEpson.LinhaRelatorioGerencial(Linha: AnsiString; IndiceBMP: Integer);
 Var I  : Integer ;
     SL : TStringList ;
-    L: String;
 begin
   Linha := AjustaLinhas( Linha, Colunas );  { Formata as Linhas de acordo com "Coluna" }
 
@@ -2470,11 +2450,12 @@ begin
      SL.Text := Linha ;
      For I := 0 to SL.Count-1 do
      begin
-        // Epson não consegue imprimir Caracteres abaixo de 32 em Linha de Gerencial ou CCD, retorna Erro //
-        L := RemoveCaracteresNaoImprimiveis( SL[I] );
+        // Epson não consegue imprimir Caracteres abaixo de 32 em Linha de Gerencial ou CCD, retorna Erro.
+        // Isso deve ser tratado pela rotina chamadora... filtrar esses caracteres aqui, afeta a rotina de
+        // TAGS de formatação (que usa caracteres de controle)
 
         EpsonComando.Comando  := '0E02' ;
-        EpsonComando.AddParamString( L ) ;
+        EpsonComando.AddParamString( SL[I] ) ;
         EnviaComando ;
      end ;
   finally
