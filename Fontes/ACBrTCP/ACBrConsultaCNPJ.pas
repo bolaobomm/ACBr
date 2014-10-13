@@ -77,11 +77,12 @@ type
     Function GetCaptchaURL: String;
 
     function VerificarErros(Str: String): String;
-    function LerCampo(Texto: TStringList; NomeCampo: AnsiString): String;
+    function LerCampo(Texto: TStringList; NomeCampo: String): String;
   public
     procedure Captcha(Stream: TStream);
     function Consulta(const ACNPJ, ACaptcha: String;
       ARemoverEspacosDuplos: Boolean = False): Boolean;
+    procedure Clear;
   published
     property CNPJ: String Read FCNPJ Write FCNPJ;
     property EmpresaTipo: String Read FEmpresaTipo;
@@ -105,7 +106,7 @@ type
 implementation
 
 uses
-  ACBrUtil, synacode, synautil, strutils;
+  ACBrUtil, ACBrValidador, synacode, synautil, strutils;
 
 function StrEntreStr(Str, StrInicial, StrFinal: String; ComecarDe: Integer = 1): String;
 var
@@ -167,41 +168,41 @@ function TACBrConsultaCNPJ.VerificarErros(Str: String): String;
   var
     Res: String;
 begin
-  Res:= '';
+  Res := '';
   if Res = '' then
-    if Pos( ACBrStr('Erro na Consulta'), Str) > 0 then
-      Res:= 'Catpcha errado.';
+    if Pos( ACBrStr('Imagem com os caracteres anti robô'), Str) > 0 then
+      Res := 'Catpcha errado.';
 
   if Res = '' then
-    if Pos(ACBrStr('O número do CNPJ não é válido. Verifique se o mesmo foi digitado c'+
-    'orretamente.'), Str) > 0 then
-      Res:= 'O número do CNPJ não é válido. Verifique se o mesmo foi digitado'+
-      ' corretamente.';
+    if Pos(ACBrStr('O número do CNPJ não é válido. Verifique se o mesmo foi digitado corretamente.'), Str) > 0 then
+      Res := 'O número do CNPJ não é válido. Verifique se o mesmo foi digitado'+
+             ' corretamente.';
 
   if Res = '' then
-    if Pos(ACBrStr('Não existe no Cadastro de Pessoas Jurídicas o número de CNPJ infor'+
-    'mado. Verifique se o mesmo foi digitado corretamente.'), Str) > 0 then
-      Res:= 'Não existe no Cadastro de Pessoas Jurídicas o número de CNPJ info'+
-      'rmado. Verifique se o mesmo foi digitado corretamente.';
+    if Pos(ACBrStr('Não existe no Cadastro de Pessoas Jurídicas o número de CNPJ informado. '+
+                   'Verifique se o mesmo foi digitado corretamente.'), Str) > 0 then
+      Res := 'Não existe no Cadastro de Pessoas Jurídicas o número de CNPJ informado. '+
+             'Verifique se o mesmo foi digitado corretamente.';
 
   if Res = '' then
-    if Pos(ACBrStr('a. No momento não podemos atender a sua solicitação. Por favor tent'+
-    'e mais tarde.'), Str) > 0 then
-      Res:= 'Erro no site da receita federal. Tente mais tarde.';
+    if Pos(ACBrStr('a. No momento não podemos atender a sua solicitação. Por favor tente mais tarde.'), Str) > 0 then
+      Res := 'Erro no site da receita federal. Tente mais tarde.';
 
-  Result:= ACBrStr(Res);
+  Result := ACBrStr(Res);
 end;
 
-function TACBrConsultaCNPJ.LerCampo(Texto : TStringList ; NomeCampo : AnsiString
-  ) : String ;
+function TACBrConsultaCNPJ.LerCampo(Texto: TStringList; NomeCampo: String
+  ): String;
 var
   i : integer;
+  linha: String;
 begin
-  NomeCampo := ACBrStr(UpperCase(NomeCampo));
+  NomeCampo := ACBrStr(NomeCampo);
   Result := '';
   for i := 0 to Texto.Count-1 do
   begin
-    if Trim(UpperCase(Texto[i])) = NomeCampo then
+    linha := Trim(Texto[i]);
+    if linha = NomeCampo then
     begin
       Result := StringReplace(Trim(Texto[i+1]),'&nbsp;',' ',[rfReplaceAll]);
       break;
@@ -216,6 +217,11 @@ var
   Erro: String;
   Resposta : TStringList;
 begin
+  Erro := ACBrValidadorValidarCNPJ( ACNPJ ) ;
+  if Erro <> '' then
+     raise EACBrConsultaCNPJException.Create(Erro);
+
+  Clear;
   Post:= TStringStream.Create('');
   try
     Post.WriteString('origem=comprovante&');
@@ -243,11 +249,12 @@ begin
         Resposta.Text := StripHTML(RespHTTP.Text);
         RemoveEmptyLines( Resposta );
 
-        //Resposta.Text := AnsiToUtf8(Resposta.Text);
-        //DEBUG: Resposta.SaveToFile('/tmp/bobo.txt');
+        //DEBUG:
+        //Resposta.SaveToFile('c:\temp\cnpj.txt');
 
         FCNPJ         := LerCampo(Resposta,'NÚMERO DE INSCRIÇÃO');
-        FEmpresaTipo  := LerCampo(Resposta,FCNPJ);
+        if FCNPJ <> '' then
+          FEmpresaTipo  := LerCampo(Resposta,FCNPJ);
         FAbertura     := StrToDateDef(LerCampo(Resposta,'DATA DE ABERTURA'),0);
         FRazaoSocial  := LerCampo(Resposta,'NOME EMPRESARIAL');
         FFantasia     := LerCampo(Resposta,'TÍTULO DO ESTABELECIMENTO (NOME DE FANTASIA)');
@@ -257,8 +264,9 @@ begin
         FNumero       := LerCampo(Resposta,'NÚMERO');
         FComplemento  := LerCampo(Resposta,'COMPLEMENTO');
         FCEP          := OnlyNumber( LerCampo(Resposta,'CEP') ) ;
-        FCEP          := copy(FCEP,1,5)+'-'+copy(FCEP,6,3) ;
-        FBairro        := LerCampo(Resposta,'BAIRRO/DISTRITO');
+        if FCEP <> '' then
+          FCEP        := copy(FCEP,1,5)+'-'+copy(FCEP,6,3) ;
+        FBairro       := LerCampo(Resposta,'BAIRRO/DISTRITO');
         FCidade       := LerCampo(Resposta,'MUNICÍPIO');
         FUF           := LerCampo(Resposta,'UF');
         FSituacao     := LerCampo(Resposta,'SITUAÇÃO CADASTRAL');
@@ -290,6 +298,27 @@ begin
   finally
     Post.Free;
   end;
+end;
+
+procedure TACBrConsultaCNPJ.Clear;
+begin
+  FNaturezaJuridica := '';
+  FEmpresaTipo      := '';
+  FAbertura         := 0;
+  FRazaoSocial      := '';
+  FFantasia         := '';
+  FCNAE1            := '';
+  FCNAE2            := '';
+  FEndereco         := '';
+  FNumero           := '';
+  FComplemento      := '';
+  FCEP              := '';
+  FBairro           := '';
+  FCidade           := '';
+  FUF               := '';
+  FSituacao         := '';
+  FCNPJ             := '';
+  FDataSituacao     := 0;
 end;
 
 end.

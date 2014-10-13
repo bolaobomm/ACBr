@@ -83,7 +83,7 @@ type
 implementation
 
 uses
-  ACBrUtil, synacode, synautil, strutils;
+  ACBrUtil, ACBrValidador, synacode, synautil, strutils;
 
 function StrEntreStr(Str, StrInicial, StrFinal: String; ComecarDe: Integer = 1): String;
 var
@@ -193,6 +193,10 @@ var
   Erro: String;
   Resposta : TStringList;
 begin
+  Erro := ACBrValidadorValidarCPF( ACPF ) ;
+  if Erro <> '' then
+     raise EACBrConsultaCPFException.Create(Erro);
+
   Post:= TStringStream.Create('');
   try
     Post.WriteString('origem=comprovante&');

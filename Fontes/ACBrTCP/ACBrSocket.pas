@@ -177,6 +177,7 @@ TACBrHTTP = class( TACBrComponent )
     fHTTPSend : THTTPSend ;
     fOnAntesAbrirHTTP : TACBrOnAntesAbrirHTTP ;
     fRespHTTP   : TStringList ;
+    fURL        : String;
     FParseText: Boolean;
     function GetProxyHost : string ;
     function GetProxyPass : string ;
@@ -203,6 +204,7 @@ TACBrHTTP = class( TACBrComponent )
 
     property HTTPSend  : THTTPSend read fHTTPSend ;
     property RespHTTP  : TStringList read fRespHTTP ;
+    property URL       : String read fURL;
   published
     property ProxyHost : string read GetProxyHost write SetProxyHost ;
     property ProxyPort : string read GetProxyPort write SetProxyPort ;
@@ -594,6 +596,7 @@ begin
   fHTTPSend := THTTPSend.Create;
   fRespHTTP   := TStringList.Create;
   fOnAntesAbrirHTTP := nil ;
+  fURL := '';
 end ;
 
 destructor TACBrHTTP.Destroy ;
@@ -652,6 +655,7 @@ begin
   {$ENDIF}
   try
     RespHTTP.Clear;
+    fURL := AURL;
 
     {$IFDEF UNICODE}
      HTTPSend.Headers.Add('Accept-Charset: utf-8;q=*;q=0.7') ;
@@ -676,6 +680,7 @@ begin
 
     OK := HTTPSend.ResultCode = 200;
     RespHTTP.LoadFromStream( HTTPSend.Document ) ;
+    fURL := AURL;
 
     // DEBUG //
     //RespHTTP.SaveToFile('c:\temp\HttpResp.txt');

@@ -38,9 +38,20 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 13/10/2014
--- ACBrConsultaCPF --
-[*] Correção de bug na identificação dos Valores da Resposta
+-- ACBrSocket --   (por: DSA)
+[+] Adicionada propriedade URL, que permite ler a URL final utilizada na consulta
+    ( a URL pode modificar, se a consulta retornar código de redirecionamento )
+
+-- ACBrConsultaCNPJ --   (por: DSA)
+[-] Correção de bug na identificação dos Valores da Resposta
+[-] Correção de Erro Index out of bound quando captcha estava errado
+http://www.projetoacbr.com.br/forum/index.php?/topic/17449-acbrcnpj-list-index-out-of-bounds-123
+[+] Adicionada verificação de CNPJ antes da Consulta
+
+-- ACBrConsultaCPF --   (por: DSA)
+[-] Correção de bug na identificação dos Valores da Resposta
 www.projetoacbr.com.br/forum/index.php?/topic/15715-erro-não-foi-possível-obter-os-dados-acbrconsultacpf/
+[+] Adicionada verificação de CPF antes da Consulta
 
 10/10/2014
 ---ACBrNCMs -- 
