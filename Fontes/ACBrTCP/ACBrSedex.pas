@@ -450,7 +450,7 @@ begin
   //DEBUG
   //Self.RespHTTP.SaveToFile('C:\TEMP\RASTREIO.HTML');
 
-  if Pos(ACBrStr('Não Disponível!'), Self.RespHTTP.Text) > 0 then
+  if Pos(ACBrStr('tente novamente mais tarde'), Self.RespHTTP.Text) > 0 then
   begin
     Erro := Trim(StripHTML(Self.RespHTTP.Text));
     Erro := Trim(StringReplace(Erro,'SRO - Internet','',[rfReplaceAll]));
