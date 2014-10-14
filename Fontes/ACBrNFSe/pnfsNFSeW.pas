@@ -825,7 +825,7 @@ end;
 
 procedure TNFSeW.GerarXML_ABRASF_V1;
 begin
-  if Aprovedor in [proAraucaria, proDBSeller, proPublica] then
+  if FProvedor in [proAraucaria, proDBSeller, proPublica] then
     FIdentificador := 'id';
 
   if (FIdentificador = '') {or (FProvedor = proPublica)}
